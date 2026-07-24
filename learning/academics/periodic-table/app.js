@@ -476,6 +476,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
             const token = document.createElement('div');
             token.className = 'atom-token';
+            token.dataset.atom = num;
             token.textContent = el.symbol;
             token.title = `${el.name} (${el.symbol})`;
 
@@ -544,14 +545,14 @@ document.addEventListener('DOMContentLoaded', () => {
      */
     function renderMoleculeSVG(container, compound, elementsMap) {
         const atomColors = {
-            1: { bg: '#e2e8f0', stroke: '#94a3b8', text: '#0f172a', r: 18 },  // H (Hydrogen - White/Silver)
-            6: { bg: '#334155', stroke: '#38ef7d', text: '#38ef7d', r: 24 },  // C (Carbon - Slate Dark)
-            7: { bg: '#2563eb', stroke: '#60a5fa', text: '#ffffff', r: 24 },  // N (Nitrogen - Blue)
-            8: { bg: '#ef4444', stroke: '#fca5a5', text: '#ffffff', r: 24 },  // O (Oxygen - Red)
-            11: { bg: '#f59e0b', stroke: '#fcd34d', text: '#000000', r: 26 }, // Na (Sodium - Gold)
-            17: { bg: '#10b981', stroke: '#6ee7b7', text: '#ffffff', r: 26 }, // Cl (Chlorine - Green)
-            20: { bg: '#eab308', stroke: '#fef08a', text: '#000000', r: 26 }, // Ca (Calcium - Yellow)
-            26: { bg: '#ef5777', stroke: '#f53b57', text: '#ffffff', r: 26 }  // Fe (Iron - Crimson)
+            1: { bg: '#e2e8f0', stroke: '#94a3b8', text: '#0f172a', r: 14 },  // H (Smallest - 14px)
+            6: { bg: '#334155', stroke: '#38ef7d', text: '#38ef7d', r: 23 },  // C (Medium Carbon - 23px)
+            7: { bg: '#2563eb', stroke: '#60a5fa', text: '#ffffff', r: 22 },  // N (Medium Nitrogen - 22px)
+            8: { bg: '#ef4444', stroke: '#fca5a5', text: '#ffffff', r: 21 },  // O (Medium Oxygen - 21px)
+            11: { bg: '#f59e0b', stroke: '#fcd34d', text: '#000000', r: 28 }, // Na (Large Sodium - 28px)
+            17: { bg: '#10b981', stroke: '#6ee7b7', text: '#ffffff', r: 28 }, // Cl (Large Chlorine - 28px)
+            20: { bg: '#eab308', stroke: '#fef08a', text: '#000000', r: 31 }, // Ca (Very Large Calcium - 31px)
+            26: { bg: '#ef5777', stroke: '#f53b57', text: '#ffffff', r: 29 }  // Fe (Large Iron - 29px)
         };
 
         let nodes = [];
