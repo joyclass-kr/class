@@ -1,7 +1,7 @@
 (function () {
   "use strict";
 
-  // 무지성 X 예측을 유발하는 '모두', '항상', '무조건', '언제나' 힌트 단어가 전면 정제된 수학 OX 데이터 세트
+  // 학년/과목별 상대적 문항 번호와 진행률 추적을 지원하는 수학 OX 데이터 세트
   const mathOxData = [
     // ==========================================
     // 🟡 [초등 3학년] (10문항)
@@ -21,7 +21,7 @@
       topic: "나눗셈 문맥",
       prompt: "사과 12개를 상자 3개에 똑같이 나누어 담을 때, 나눗셈 $12 \\div 3 = 4$에서 몫 4는 '필요한 상자의 개수'를 나타낸다.",
       answer: "X",
-      pitfall: "나눗셈의 몫이 무조건 상자 개수인지 1개당 개수인지 뭉뚱그려 착각하기 쉽습니다.",
+      pitfall: "나눗셈의 몫이 상자 개수인지 1개당 개수인지 뭉뚱그려 착각하기 쉽습니다.",
       reason: "상자 3개로 똑같이 나누었으므로(등분제), 몫 4는 **'상자 1개에 담긴 사과의 개수(4개)'**를 나타냅니다!"
     },
     {
@@ -1265,7 +1265,7 @@
     }
   ];
 
-  let currentSubject = "전체";
+  let currentSubject = "초3"; // 기본 탭을 '초3'으로 설정하여 부담 없이 시작하도록 최적화
   let answeredState = {};
 
   const filterNav = document.getElementById("filterNav");
@@ -1281,7 +1281,7 @@
   }
 
   function renderFilters() {
-    const subjects = ["전체", "초3", "초4", "초5", "초6", "중1", "중2", "중3", "공수1", "공수2", "대수", "미적1", "확률과 통계", "기하"];
+    const subjects = ["초3", "초4", "초5", "초6", "중1", "중2", "중3", "공수1", "공수2", "대수", "미적1", "확률과 통계", "기하", "전체"];
     filterNav.innerHTML = subjects
       .map(
         (subj) =>
@@ -1294,15 +1294,20 @@
         currentSubject = btn.dataset.subject;
         renderFilters();
         renderQuestions();
+        updateProgress();
       });
     });
   }
 
+  function getFilteredData() {
+    if (currentSubject === "전체") {
+      return mathOxData;
+    }
+    return mathOxData.filter((item) => item.subject === currentSubject);
+  }
+
   function renderQuestions() {
-    const filtered =
-      currentSubject === "전체"
-        ? mathOxData
-        : mathOxData.filter((item) => item.subject === currentSubject);
+    const filtered = getFilteredData();
 
     if (filtered.length === 0) {
       questionsList.innerHTML = `<div class="exp-box" style="text-align:center; padding: 40px;">등록된 문항이 없습니다.</div>`;
@@ -1310,17 +1315,21 @@
     }
 
     questionsList.innerHTML = filtered
-      .map((q) => {
+      .map((q, idx) => {
         const userState = answeredState[q.id];
         const isAnswered = Boolean(userState);
         const isCorrect = isAnswered && userState.isCorrect;
         const selectedChoice = isAnswered ? userState.selectedChoice : null;
 
+        // 선택된 학년/과목 탭 내에서의 상대적 문항 번호 (예: 초3 문항 01 / 10)
+        const relIndexStr = String(idx + 1).padStart(2, "0");
+        const numberLabel = currentSubject === "전체" ? `문항 ${relIndexStr}` : `${q.subject} 문항 ${relIndexStr}`;
+
         return `
           <div class="question-card ${isAnswered ? "answered " + (isCorrect ? "correct" : "wrong") : ""}" id="q-card-${q.id}">
             <div class="card-header">
               <div class="badge-group">
-                <span class="q-number">문항 ${String(q.id).padStart(2, "0")}</span>
+                <span class="q-number">${numberLabel}</span>
                 <span class="q-subject">${q.subject}</span>
                 <span class="q-topic">${q.topic}</span>
               </div>
@@ -1394,9 +1403,10 @@
   }
 
   function updateProgress() {
-    const total = mathOxData.length;
-    const answered = Object.keys(answeredState).length;
-    const percentage = Math.round((answered / total) * 100);
+    const filtered = getFilteredData();
+    const total = filtered.length;
+    const answered = filtered.filter((q) => answeredState[q.id]).length;
+    const percentage = total > 0 ? Math.round((answered / total) * 100) : 0;
 
     answeredCountEl.textContent = answered;
     totalCountEl.textContent = total;
