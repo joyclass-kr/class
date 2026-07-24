@@ -1,5 +1,5 @@
 /**
- * 주기율표 탐험가 (Periodic Table Explorer) App Logic
+ * 주기율표 (Periodic Table) App Logic
  */
 
 document.addEventListener('DOMContentLoaded', () => {
