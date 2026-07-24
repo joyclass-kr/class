@@ -1,0 +1,644 @@
+(function () {
+  "use strict";
+
+  // 54개 고등학교 수학 개념 OX 데이터 세트
+  const mathOxData = [
+    // 공통수학1
+    {
+      id: 1,
+      subject: "공통수학1",
+      topic: "다항식",
+      prompt: "임의의 실수 $x, y, z$에 대하여 $x^2+y^2+z^2-xy-yz-zx \\ge 0$ 이다.",
+      answer: "O",
+      pitfall: "식의 형태가 복잡하여 음수가 나올 가능성이 있다고 착각하기 쉽습니다.",
+      reason: "이 식은 $\\frac{1}{2}\\{(x-y)^2 + (y-z)^2 + (z-x)^2\\}$ 로 변형되므로, 제곱의 합은 실수 범위에서 항상 0 이상입니다."
+    },
+    {
+      id: 2,
+      subject: "공통수학1",
+      topic: "나머지정리",
+      prompt: "다항식 $f(x)$를 $(x-1)(x-2)$로 나눈 나머지는 $f(1)$과 $f(2)$의 값만 알면 항상 결정할 수 있다.",
+      answer: "O",
+      pitfall: "2차식으로 나눈 나머지가 1차식 $R(x)=ax+b$ 형태라는 점을 깜빡하기 쉽습니다.",
+      reason: "나머지는 $a x + b$ 꼴이므로, $R(1)=a+b=f(1)$과 $R(2)=2a+b=f(2)$ 두 식을 연립하면 $a, b$가 유일하게 결정됩니다."
+    },
+    {
+      id: 3,
+      subject: "공통수학1",
+      topic: "복소수",
+      prompt: "두 실수 $a, b$에 대하여 $a^2+b^2=0$이면 $a=b=0$이다.",
+      answer: "O",
+      pitfall: "복소수 범위($i$)를 떠올려 착각할 수 있으나, '실수' 전제 조건이 핵심입니다.",
+      reason: "$a, b$가 실수일 때 $a^2 \\ge 0, b^2 \\ge 0$ 이므로 두 제곱의 합이 0이면 각각 0일 수밖에 없습니다."
+    },
+    {
+      id: 4,
+      subject: "공통수학1",
+      topic: "이차방정식과 부등식",
+      prompt: "모든 실수 $x$에 대하여 부등식 $x^2-2x+k>0$이 성립하려면 $k>1$이어야 한다.",
+      answer: "O",
+      pitfall: "부등식이 0보다 크려면 판별식 $D>0$ 이어야 한다고 착각하기 쉽습니다.",
+      reason: "그래프가 $x$축과 만나지 않고 떠 있어야 하므로 판별식 $D/4 = 1 - k < 0 \\implies k > 1$ 이 맞습니다."
+    },
+    {
+      id: 5,
+      subject: "공통수학1",
+      topic: "도형의 방정식",
+      prompt: "서로 다른 두 점 $A, B$를 지나는 직선의 방정식은 항상 유일하게 하나로 결정된다.",
+      answer: "O",
+      pitfall: "기하학의 기본 공리로, 예외가 존재한다고 오해하는 경우입니다.",
+      reason: "서로 다른 두 점이 주어지면 그 두 점을 연결하는 직선은 오직 하나만 존재합니다."
+    },
+    {
+      id: 6,
+      subject: "공통수학1",
+      topic: "원의 방정식",
+      prompt: "원 $x^2+y^2=r^2$과 직선 $y=mx+n$이 접하려면 원점과 직선 사이의 거리가 $r$이어야 한다.",
+      answer: "O",
+      pitfall: "판별식 $D=0$ 조건과 중심-직선 거리가 동일함을 간과하기 쉽습니다.",
+      reason: "원의 중심에서 접선까지의 거리 $d$가 반지름 $r$과 같을 때 직선과 원이 한 점에서 접합니다."
+    },
+    {
+      id: 7,
+      subject: "공통수학1",
+      topic: "집합",
+      prompt: "두 집합 $A, B$에 대하여 $A \\subset B$이면 $A \\cap B = A$이다.",
+      answer: "O",
+      pitfall: "포함관계에서 교집합과 합집합의 결과를 헷갈릴 수 있습니다.",
+      reason: "$A$가 $B$에 부분집합으로 속해 있으면, 두 집합의 공통 부분은 더 작은 집합인 $A$가 됩니다."
+    },
+    {
+      id: 8,
+      subject: "공통수학1",
+      topic: "명제",
+      prompt: "명제 \"$x^2=4$이면 $x=2$이다\"의 역은 참인 명제이다.",
+      answer: "O",
+      pitfall: "원명제($x^2=4 \\implies x=2$ 거짓)에 취해서 역명제도 거짓이라고 착각하기 쉽습니다.",
+      reason: "이 명제의 역은 \"$x=2$이면 $x^2=4$이다\" 이므로 항상 참입니다."
+    },
+    {
+      id: 9,
+      subject: "공통수학1",
+      topic: "명제",
+      prompt: "명제 $p \\to q$가 참이면 그 대우 $\\sim q \\to \\sim p$도 반드시 참이다.",
+      answer: "O",
+      pitfall: "역과 대우의 진리값 일치 여부를 헷갈리기 쉽습니다.",
+      reason: "명제와 그 대우명제는 완전히 동일한 진리값을 가집니다."
+    },
+    {
+      id: 10,
+      subject: "공통수학1",
+      topic: "절댓값 방정식",
+      prompt: "방정식 $|x-1|=2x-1$의 해를 구할 때, 양변을 그냥 제곱하여 $(x-1)^2=(2x-1)^2$을 풀면 항상 올바른 해를 얻는다.",
+      answer: "X",
+      pitfall: "양변 제곱 시 $2x-1 < 0$인 부적절한 해(무연근)가 포함된다는 점을 간과합니다.",
+      reason: "우변 $2x-1 \\ge 0 \\implies x \\ge 1/2$ 조건이 필수입니다. 제곱으로 구한 $x=0$을 원래 식에 대입하면 $|-1| = -1$이 되어 성립하지 않는 무연근입니다."
+    },
+
+    // 공통수학2
+    {
+      id: 11,
+      subject: "공통수학2",
+      topic: "함수",
+      prompt: "두 유한집합 $X, Y$에 대하여 함수 $f:X \\to Y$가 일대일대응이면 $X$와 $Y$의 원소의 개수는 같다.",
+      answer: "O",
+      pitfall: "일대일함수와 일대일대응의 차이를 헷갈릴 수 있습니다.",
+      reason: "일대일대응은 일대일함수이면서 치역과 공역이 같아야 하므로, 두 유한집합의 원소 개수가 정확히 같아야 합니다."
+    },
+    {
+      id: 12,
+      subject: "공통수학2",
+      topic: "경우의 수",
+      prompt: "서로 다른 $n$개에서 $r$개를 택하는 조합의 수 $_nC_r$와 $_nC_{n-r}$는 항상 같다.",
+      answer: "O",
+      pitfall: "$r$개를 택하는 것과 남길 $(n-r)$개를 택하는 것이 같다는 조합의 대칭성을 놓치기 쉽습니다.",
+      reason: "$_nC_r = \\frac{n!}{r!(n-r)!}$ 이며 $_nC_{n-r} = \\frac{n!}{(n-r)!r!}$ 이므로 두 값은 완전히 같습니다."
+    },
+    {
+      id: 13,
+      subject: "공통수학2",
+      topic: "경우의 수",
+      prompt: "두 사건 $A, B$가 동시에 일어나지 않을 때, 사건 $A$ 또는 $B$가 일어나는 경우의 수는 각 경우의 수를 곱하여 구한다.",
+      answer: "X",
+      pitfall: "합의 법칙과 곱의 법칙의 적용 상황을 착각하기 쉽습니다.",
+      reason: "동시에 일어나지 않고 '또는'으로 연결된 사건은 곱하는 것이 아니라 **더해서 구합니다(합의 법칙)**."
+    },
+    {
+      id: 14,
+      subject: "공통수학2",
+      topic: "함수의 그래프",
+      prompt: "함수 $y=f(x)$의 그래프를 $x$축의 방향으로 $a$만큼 평행이동한 그래프의 식은 $y=f(x+a)$이다.",
+      answer: "X",
+      pitfall: "$x$축 양의 방향 $+a$ 이동 시 식에도 $+a$가 들어간다고 부호를 오해하기 쉽습니다.",
+      reason: "$x$축 방향으로 $a$만큼 평행이동하면 $x$ 대신 **$x-a$를 대입한 $y=f(x-a)$**가 됩니다."
+    },
+    {
+      id: 15,
+      subject: "공통수학2",
+      topic: "원순열",
+      prompt: "서로 다른 $n$개의 원소를 원형으로 배열하는 원순열의 수는 $n!$이다.",
+      answer: "X",
+      pitfall: "직선 나열($n!$)과 원형 회전 중복을 구분하지 못하기 쉽습니다.",
+      reason: "원형으로 배열하면 회전하여 겹치는 $n$가지 경우가 존재하므로 **$(n-1)!$** 이 맞습니다."
+    },
+    {
+      id: 16,
+      subject: "공통수학2",
+      topic: "합성함수",
+      prompt: "함수 $f, g$에 대하여 $(f \\circ g)(x) = (g \\circ f)(x)$가 항상 성립한다.",
+      answer: "X",
+      pitfall: "일반 교환법칙처럼 합성함수도 순서를 바꿔도 된다고 착각하기 쉽습니다.",
+      reason: "합성함수는 일반적으로 **교환법칙이 성립하지 않습니다** ($(f \\circ g)(x) \\neq (g \\circ f)(x)$)."
+    },
+    {
+      id: 17,
+      subject: "공통수학2",
+      topic: "역함수",
+      prompt: "함수 $f(x)$의 역함수가 존재하면 $f$는 일대일대응이다.",
+      answer: "O",
+      pitfall: "역함수 존재 조건에서 치역과 공역 일치 조건을 까먹기 쉽습니다.",
+      reason: "역함수가 정의되려면 거꾸로 가는 대응도 함수이어야 하므로 일대일대응이어야 합니다."
+    },
+
+    // 대수
+    {
+      id: 18,
+      subject: "대수",
+      topic: "로그",
+      prompt: "$\\log_a b$가 정의되려면 $a>0, a \\ne 1, b>0$이어야 한다.",
+      answer: "O",
+      pitfall: "밑 조건($a \\neq 1$)이나 진수 조건($b>0$) 중 하나를 누락하기 쉽습니다.",
+      reason: "로그가 실수로 정의되기 위한 밑 조건 $a>0, a \\neq 1$과 진수 조건 $b>0$의 표준 정의입니다."
+    },
+    {
+      id: 19,
+      subject: "대수",
+      topic: "로그방정식",
+      prompt: "모든 실수 $x$에 대하여 $\\log_2(x^2) = 2\\log_2 x$ 이다.",
+      answer: "X",
+      pitfall: "진수 조건에서 $x<0$ 가능성을 놓치고 지수를 무작정 앞으로 내리는 실수입니다.",
+      reason: "$x < 0$이면 좌변 $\\log_2(x^2)$은 정상이지만 우변 $\\log_2 x$는 정의되지 않습니다. 올바른 식은 $2\\log_2 |x|$ 입니다."
+    },
+    {
+      id: 20,
+      subject: "대수",
+      topic: "지수",
+      prompt: "임의의 실수 $a$에 대하여 $(a^2)^{1/2} = a$ 이다.",
+      answer: "X",
+      pitfall: "제곱과 $1/2$승을 단순 지수법칙 곱으로 소거하여 $a$라고 생각하는 낚시입니다.",
+      reason: "$(a^2)^{1/2} = \\sqrt{a^2} = |a|$ 이므로, $a < 0$이면 결과는 $-a$ (양수)가 됩니다."
+    },
+    {
+      id: 21,
+      subject: "대수",
+      topic: "삼각함수",
+      prompt: "두 각 $\\alpha, \\beta$에 대하여 $\\sin(\\alpha+\\beta) = \\sin\\alpha + \\sin\\beta$이다.",
+      answer: "X",
+      pitfall: "삼각함수 기호를 괄호 분배법칙처럼 착각하는 대표적 입문 오개념입니다.",
+      reason: "삼각함수는 선형함수가 아니며, $\\sin(\\alpha+\\beta) = \\sin\\alpha\\cos\\beta + \\cos\\alpha\\sin\\beta$ 덧셈정리가 성립합니다."
+    },
+    {
+      id: 22,
+      subject: "대수",
+      topic: "삼각함수의 그래프",
+      prompt: "함수 $y=\\sin 2x$의 주기는 $2\\pi$이다.",
+      answer: "X",
+      pitfall: "기본 $\\sin x$의 주기만 생각하고 계수 $2$로 나누는 것을 깜빡하기 쉽습니다.",
+      reason: "$y=\\sin(kx)$의 주기는 $2\\pi / |k|$ 이므로 $y=\\sin 2x$의 주기는 **$\\pi$** 입니다."
+    },
+    {
+      id: 23,
+      subject: "대수",
+      topic: "삼각함수의 값",
+      prompt: "모든 실수 $\\theta$에 대하여 $\\sqrt{\\sin^2\\theta} = \\sin\\theta$이다.",
+      answer: "X",
+      pitfall: "근호 탈출 시 사분면에 따른 삼각함수 부호를 고려하지 않는 낚시입니다.",
+      reason: "$\\sqrt{\\sin^2\\theta} = |\\sin\\theta|$ 이므로, $\\sin\\theta < 0$ 인 제3, 4사분면에서는 **$-\\sin\\theta$** 가 됩니다."
+    },
+    {
+      id: 24,
+      subject: "대수",
+      topic: "등비수열의 합",
+      prompt: "등비수열 $a_n = a r^{n-1}$의 합 $S = \\frac{a(r^n-1)}{r-1}$은 모든 공비 $r$에 대하여 성립한다.",
+      answer: "X",
+      pitfall: "공비 $r=1$일 때 분모가 0이 되는 예외 상황을 고려하지 않는 실수입니다.",
+      reason: "$r=1$ 일 때는 분모가 0이 되어 이 공식을 쓸 수 없으며, 합은 **$S_n = n \\cdot a$** 가 됩니다."
+    },
+    {
+      id: 25,
+      subject: "대수",
+      topic: "등차수열",
+      prompt: "세 수 $a, b, c$가 이 순서로 등차수열을 이루면 $2b = a+c$이다.",
+      answer: "O",
+      pitfall: "등차중항 공식의 단순 참/거짓 확인 문제입니다.",
+      reason: "중앙항 $b$는 앞뒤 항의 평균이므로 $b = \\frac{a+c}{2} \\implies 2b = a+c$가 맞습니다."
+    },
+    {
+      id: 26,
+      subject: "대수",
+      topic: "수학적 귀납법",
+      prompt: "어떤 명제가 $n=1$일 때 성립하고 $n=k$일 때 성립한다고 가정하면 $n=k+1$일 때도 성립함을 보이면, 모든 자연수 $n$에 대해 그 명제가 성립한다.",
+      answer: "O",
+      pitfall: "수학적 귀납법의 기본 증명 구조를 묻는 명제입니다.",
+      reason: "첫 단계 출발점과 도미노식 연결 단계가 증명되었으므로 모든 자연수 $n$에 대해 참이 됩니다."
+    },
+    {
+      id: 27,
+      subject: "대수",
+      topic: "수열의 극한",
+      prompt: "수렴하는 두 수열 \\{a_n\\}, \\{b_n\\}에서 $b_n \\ne 0$이고 $\\lim b_n \\ne 0$이면 $\\lim(a_n/b_n) = \\frac{\\lim a_n}{\\lim b_n}$이다.",
+      answer: "O",
+      pitfall: "분모의 극한값이 0이 아니라는 조건이 충족되었는지 확인하는 문항입니다.",
+      reason: "수렴하는 극한의 나눗셈 성질은 분모의 극한값이 0이 아닐 때 분모/분자 극한의 몫과 같습니다."
+    },
+
+    // 미적분Ⅰ
+    {
+      id: 28,
+      subject: "미적분Ⅰ",
+      topic: "함수의 극한",
+      prompt: "$\\lim_{x \\to a} f(x) = L$이면 $f(a) = L$이다.",
+      answer: "X",
+      pitfall: "극한값(다가가는 목표)과 함숫값(실제 지점의 값)을 동일시하는 착각입니다.",
+      reason: "함수 $f(x)$가 $x=a$에서 연속이 아니라면 극한값과 함숫값은 서로 다를 수 있습니다 (구멍 뚫린 함수)."
+    },
+    {
+      id: 29,
+      subject: "미적분Ⅰ",
+      topic: "함수의 극한",
+      prompt: "두 함수 $f(x), g(x)$에 대하여 $\\lim_{x \\to a} f(x)$와 $\\lim_{x \\to a} \\{f(x)+g(x)\\}$의 값이 각각 존재하면 $\\lim_{x \\to a} g(x)$의 값도 존재한다.",
+      answer: "O",
+      pitfall: "나눗셈에서만 분모 0을 따지고 뺄셈은 덧셈/뺄셈 극한 성질로 성립함을 간과하기 쉽습니다.",
+      reason: "$g(x) = \\{f(x)+g(x)\\} - f(x)$ 로 분해할 수 있으며, 수렴하는 두 극한의 차도 반드시 수렴합니다."
+    },
+    {
+      id: 30,
+      subject: "미적분Ⅰ",
+      topic: "함수의 연속",
+      prompt: "함수 $f(x)$가 $x=a$에서 미분가능하면 $x=a$에서 연속이다.",
+      answer: "O",
+      pitfall: "미분가능성과 연속성의 포함관계를 묻는 정석 명제입니다.",
+      reason: "미분가능하면 반드시 연속입니다 (역은 성립하지 않음)."
+    },
+    {
+      id: 31,
+      subject: "미적분Ⅰ",
+      topic: "함수의 연속",
+      prompt: "함수 $f(x)$가 $x=a$에서 연속이면 $x=a$에서 미분가능하다.",
+      answer: "X",
+      pitfall: "연속이면 무조건 부드럽게 연결되어 미분 가능하다고 생각하기 쉽습니다.",
+      reason: "연속이지만 뾰족점(첨점, 예: $f(x)=|x|$의 $x=0$)에서는 좌우 미분계수가 달라 미분불가능합니다."
+    },
+    {
+      id: 32,
+      subject: "미적분Ⅰ",
+      topic: "극대와 극소",
+      prompt: "함수 $f(x)$가 $x=a$에서 극댓값을 가지면 $f'(a) = 0$이다.",
+      answer: "X",
+      pitfall: "'미분가능한 함수'라는 전제 조건이 누락되었음을 놓치기 쉽습니다.",
+      reason: "$f(x)=-|x|$는 $x=0$에서 극댓값을 가지지만, 미분불가능하므로 $f'(0)$ 값 자체가 존재하지 않습니다."
+    },
+    {
+      id: 33,
+      subject: "미적분Ⅰ",
+      topic: "도함수와 극값",
+      prompt: "$f'(a) = 0$이면 함수 $f(x)$는 $x=a$에서 극값을 갖는다.",
+      answer: "X",
+      pitfall: "도함수가 0이라고 해서 무조건 극값이라고 착각하기 쉽습니다.",
+      reason: "$f'(a)=0$ 이어도 좌우 부호 변화가 없으면 극값이 아닙니다 (예: $f(x)=x^3$의 $x=0$)."
+    },
+    {
+      id: 34,
+      subject: "미적분Ⅰ",
+      topic: "이계도함수",
+      prompt: "$f'(a) = 0$이고 $f''(a) > 0$이면 함수 $f(x)$는 $x=a$에서 극솟값을 갖는다.",
+      answer: "O",
+      pitfall: "2계도함수가 양수($>0$)일 때 아래로 오목/위로 볼록과 극소 판정을 헷갈리기 쉽습니다.",
+      reason: "$f''(a)>0$ 이면 그래프가 아래로 볼록한 상태이므로 $f'(a)=0$인 점은 극솟점이 됩니다."
+    },
+    {
+      id: 35,
+      subject: "미적분Ⅰ",
+      topic: "평균값 정리",
+      prompt: "함수 $f(x)$가 닫힌구간 $[a,b]$에서 연속이고 열린구간 $(a,b)$에서 미분가능하면, $\\frac{f(b)-f(a)}{b-a} = f'(c)$를 만족시키는 $c$가 열린구간 $(a,b)$에 적어도 하나 존재한다.",
+      answer: "O",
+      pitfall: "평균값 정리의 조건과 결론을 정확히 기억하는지 확인하는 문항입니다.",
+      reason: "닫힌구간 연속, 열린구간 미분가능 조건하에서 평균변화율과 순간변화율이 같은 $c$가 존재합니다."
+    },
+    {
+      id: 36,
+      subject: "미적분Ⅰ",
+      topic: "정적분과 넓이",
+      prompt: "닫힌구간 $[a,b]$에서 연속인 함수 $f(x)$에 대하여 $\\int_a^b f(x)dx = 0$이면 $f(x) = 0$이다.",
+      answer: "X",
+      pitfall: "정적분 값 0이 '함수가 항상 0'임을 의미한다고 오해하기 쉽습니다.",
+      reason: "정적분은 부호가 있는 넓이입니다. $f(x)=x$의 $[-1, 1]$ 적분처럼 양수 면적과 음수 면적이 상쇄되면 적분값은 0이지만 함수가 0은 아닙니다."
+    },
+    {
+      id: 37,
+      subject: "미적분Ⅰ",
+      topic: "정적분과 넓이",
+      prompt: "곡선 $y=f(x)$와 $x$축 및 두 직선 $x=a, x=b$로 둘러싸인 도형의 넓이는 항상 $\\int_a^b f(x)dx$로 구할 수 있다.",
+      answer: "X",
+      pitfall: "정적분 값 자체를 도형의 실제 넓이라고 그대로 낚이기 쉽습니다.",
+      reason: "$f(x) < 0$ 인 구간에서는 정적분 값이 음수가 나오므로, 실제 넓이는 **$\\int_a^b |f(x)|dx$** 로 구해야 합니다."
+    },
+    {
+      id: 38,
+      subject: "미적분Ⅰ",
+      topic: "속도와 가속도",
+      prompt: "수직선 위를 움직이는 점의 시각 $t$에서의 위치가 $x(t)$일 때, 그 점이 원점을 다시 지나가는 순간의 속도는 항상 0이다.",
+      answer: "X",
+      pitfall: "원점을 지나는 순간 멈춰야 한다고 착각하기 쉽습니다.",
+      reason: "원점을 지나는 것은 **위치 $x(t) = 0$** 이며, 그 순간 지나쳐 가는 속도 $v(t) = x'(t)$는 0이 아닐 수 있습니다."
+    },
+
+    // 확률과 통계
+    {
+      id: 39,
+      subject: "확률과 통계",
+      topic: "확률의 뜻과 성질",
+      prompt: "두 사건 $A, B$가 서로 독립이면 $P(A \\cap B) = P(A)P(B)$이다.",
+      answer: "O",
+      pitfall: "독립사건의 수학적 정의를 묻는 문항입니다.",
+      reason: "두 사건이 독립이기 위한 필요충분조건이 바로 곱셈정리 $P(A \\cap B) = P(A)P(B)$ 입니다."
+    },
+    {
+      id: 40,
+      subject: "확률과 통계",
+      topic: "확률의 뜻과 성질",
+      prompt: "두 사건 $A, B$가 서로 배반사건이면 $P(A \\cup B) = P(A) + P(B)$이다.",
+      answer: "O",
+      pitfall: "배반사건일 때 교사건 확률이 0이 됨을 아는지 묻습니다.",
+      reason: "배반사건은 $A \\cap B = \\emptyset \\implies P(A \\cap B) = 0$ 이므로 덧셈정리에 의해 $P(A)+P(B)$가 맞습니다."
+    },
+    {
+      id: 41,
+      subject: "확률과 통계",
+      topic: "확률의 뜻과 성질",
+      prompt: "확률이 0이 아닌 두 사건 $A, B$가 서로 배반사건이면 $A$와 $B$는 서로 독립이다.",
+      answer: "X",
+      pitfall: "배반('겹치는 게 없다')과 독립('영향을 주지 않는다')을 일상 언어 의미로 착각하는 1순위 낚시입니다.",
+      reason: "배반이면 $P(A \\cap B) = 0$ 이지만 $P(A)P(B) > 0$ 이므로 $P(A \\cap B) \\neq P(A)P(B)$ 입니다. 따라서 배반사건은 **무조건 종속사건**입니다."
+    },
+    {
+      id: 42,
+      subject: "확률과 통계",
+      topic: "조건부확률",
+      prompt: "$P(A|B) = P(A)$이면 사건 $A$와 $B$는 서로 독립이다.",
+      answer: "O",
+      pitfall: "조건부확률에서 독립의 직관적 의미를 묻는 명제입니다.",
+      reason: "$B$가 일어났을 때 $A$가 일어날 확률이 그냥 $A$가 일어날 확률과 같으므로 $A$는 $B$에 영향을 받지 않아 독립입니다."
+    },
+    {
+      id: 43,
+      subject: "확률과 통계",
+      topic: "이항분포",
+      prompt: "확률변수 $X$가 이항분포 $B(n,p)$를 따를 때, $X$의 평균은 $np$, 분산은 $np(1-p)$이다.",
+      answer: "O",
+      pitfall: "이항분포 평균 및 분산 공식의 정확성을 확인합니다.",
+      reason: "이항분포 $B(n,p)$의 평균 $E(X)=np$, 분산 $V(X)=np(1-p)=npq$ 공식이 성립합니다."
+    },
+    {
+      id: 44,
+      subject: "확률과 통계",
+      topic: "정규분포",
+      prompt: "정규분포를 따르는 확률변수를 표준화하면 항상 표준정규분포 $N(0,1)$을 따른다.",
+      answer: "O",
+      pitfall: "표준화 $Z = \\frac{X-\\mu}{\\sigma}$의 목적을 묻습니다.",
+      reason: "평균을 0, 표준편차를 1로 변환하였으므로 표준정규분포 $N(0,1)$을 따르게 됩니다."
+    },
+    {
+      id: 45,
+      subject: "확률과 통계",
+      topic: "통계적 추정",
+      prompt: "표본의 크기가 커지면 표본평균의 표준편차(표준오차)는 작아진다.",
+      answer: "O",
+      pitfall: "표본 크기 $n$과 표본평균 표준편차의 관계를 묻는 문항입니다.",
+      reason: "표본평균의 표준편차는 $\\sigma_{\\overline{X}} = \\frac{\\sigma}{\\sqrt{n}}$ 이므로 표본 크기 $n$이 커지면 분모가 커져 전체 값은 작아집니다."
+    },
+    {
+      id: 46,
+      subject: "확률과 통계",
+      topic: "중복순열",
+      prompt: "서로 다른 $n$개에서 중복을 허락하여 $r$개를 택해 일렬로 나열하는 중복순열의 수는 $n^r$이다.",
+      answer: "O",
+      pitfall: "$n^r$과 $r^n$의 밑/지수 위치를 헷갈리기 쉽습니다.",
+      reason: "각 자리마다 선택할 수 있는 기회가 $n$가지씩 $r$번 반복되므로 $n \\times n \\times \\dots = n^r$이 맞습니다."
+    },
+    {
+      id: 47,
+      subject: "확률과 통계",
+      topic: "기댓값과 분산",
+      prompt: "두 확률변수 $X, Y$가 서로 독립이 아니어도 $E(X+Y) = E(X) + E(Y)$는 항상 성립한다.",
+      answer: "O",
+      pitfall: "기댓값의 선형성이 독립 조건이 필요한지로 착각하기 쉽습니다.",
+      reason: "기댓값의 선형성 $E(aX+bY) = aE(X)+bE(Y)$는 **독립 여부와 상관없이 항상 성립**합니다."
+    },
+    {
+      id: 48,
+      subject: "확률과 통계",
+      topic: "기댓값과 분산",
+      prompt: "두 확률변수 $X, Y$에 대하여 $V(X+Y) = V(X) + V(Y)$는 항상 성립한다.",
+      answer: "X",
+      pitfall: "기댓값처럼 분산도 조건 없이 그냥 더하면 된다고 착각하기 쉽습니다.",
+      reason: "분산의 합 $V(X+Y) = V(X) + V(Y)$는 **$X, Y$가 서로 독립일 때만 성립**합니다."
+    },
+
+    // 기하
+    {
+      id: 49,
+      subject: "기하",
+      topic: "벡터의 내적",
+      prompt: "두 벡터 $\\vec{a}, \\vec{b}$에 대하여 $\\vec{a} \\cdot \\vec{b} = 0$이면 $\\vec{a}=\\vec{0}$ 또는 $\\vec{b}=\\vec{0}$이다.",
+      answer: "X",
+      pitfall: "실수의 곱이 0인 성질과 벡터 내적 0을 동일시하는 낚시입니다.",
+      reason: "영벡터가 아니더라도 두 벡터가 **서로 수직($\\vec{a} \\perp \\vec{b}$)** 이면 내적은 0이 됩니다."
+    },
+    {
+      id: 50,
+      subject: "기하",
+      topic: "벡터의 크기",
+      prompt: "$|\\vec{a}+\\vec{b}| = |\\vec{a}| + |\\vec{b}|$는 두 벡터 $\\vec{a}$와 $\\vec{b}$가 서로 같은 방향일 때 성립한다.",
+      answer: "O",
+      pitfall: "삼각형 부등식 $\|\\vec{a}+\\vec{b}\| \\le \|\\vec{a}\| + \|\\vec{b}\|$에서 등호 성립 조건을 묻습니다.",
+      reason: "두 벡터의 방향이 완전히 같을 때만 크기의 합과 합벡터의 크기가 일치합니다."
+    },
+    {
+      id: 51,
+      subject: "기하",
+      topic: "포물선",
+      prompt: "포물선 $y^2=4px \\quad (p \\ne 0)$의 초점의 좌표는 $(p, 0)$이다.",
+      answer: "O",
+      pitfall: "포물선 기본형의 초점과 준선 위치를 제대로 암기했는지 확인합니다.",
+      reason: "$y^2=4px$의 초점은 $(p, 0)$, 준선은 $x=-p$ 입니다."
+    },
+    {
+      id: 52,
+      subject: "기하",
+      topic: "타원",
+      prompt: "타원 $\\frac{x^2}{a^2}+\\frac{y^2}{b^2}=1$에서 $a>b>0$이면 장축은 $x$축 위에 있다.",
+      answer: "O",
+      pitfall: "$a$와 $b$의 대소 관계에 따른 장축 방향을 확인합니다.",
+      reason: "$a>b$ 이면 $x$축 방향 장축의 길이가 $2a$가 되므로 장축은 $x$축 위에 있습니다."
+    },
+    {
+      id: 53,
+      subject: "기하",
+      topic: "공간에서의 위치관계",
+      prompt: "공간에서 한 직선에 평행한 두 평면은 서로 평행하다.",
+      answer: "X",
+      pitfall: "한 직선에 평행한 두 평면이 교선을 가지며 만날 가능성을 잊기 쉽습니다.",
+      reason: "한 직선에 평행한 두 평면은 서로 평행할 수도 있지만, 교선을 가지며 **서로 만날 수도 있습니다** (예: 삼각기둥의 두 옆면)."
+    },
+    {
+      id: 54,
+      subject: "기하",
+      topic: "공간에서의 위치관계",
+      prompt: "공간에서 두 직선이 만나지 않으면 두 직선은 서로 평행하다.",
+      answer: "X",
+      pitfall: "평면에서의 위치관계 성질을 공간 도형에 그대로 적용하는 낚시입니다.",
+      reason: "공간에서는 두 직선이 만나지도 않고 평행하지도 않은 **꼬인위치**에 있을 수 있습니다."
+    }
+  ];
+
+  let currentSubject = "전체";
+  let answeredState = {};
+
+  const filterNav = document.getElementById("filterNav");
+  const questionsList = document.getElementById("questionsList");
+  const answeredCountEl = document.getElementById("answeredCount");
+  const totalCountEl = document.getElementById("totalCount");
+  const progressFill = document.getElementById("progressFill");
+
+  function init() {
+    renderFilters();
+    renderQuestions();
+    updateProgress();
+  }
+
+  function renderFilters() {
+    const subjects = ["전체", "공통수학1", "공통수학2", "대수", "미적분Ⅰ", "확률과 통계", "기하"];
+    filterNav.innerHTML = subjects
+      .map(
+        (subj) =>
+          `<button type="button" class="filter-btn ${subj === currentSubject ? "active" : ""}" data-subject="${subj}">${subj}</button>`
+      )
+      .join("");
+
+    filterNav.querySelectorAll(".filter-btn").forEach((btn) => {
+      btn.addEventListener("click", () => {
+        currentSubject = btn.dataset.subject;
+        renderFilters();
+        renderQuestions();
+      });
+    });
+  }
+
+  function renderQuestions() {
+    const filtered =
+      currentSubject === "전체"
+        ? mathOxData
+        : mathOxData.filter((item) => item.subject === currentSubject);
+
+    if (filtered.length === 0) {
+      questionsList.innerHTML = `<div class="exp-box" style="text-align:center; padding: 40px;">등록된 문항이 없습니다.</div>`;
+      return;
+    }
+
+    questionsList.innerHTML = filtered
+      .map((q) => {
+        const userState = answeredState[q.id];
+        const isAnswered = Boolean(userState);
+        const isCorrect = isAnswered && userState.isCorrect;
+        const selectedChoice = isAnswered ? userState.selectedChoice : null;
+
+        return `
+          <div class="question-card ${isAnswered ? "answered " + (isCorrect ? "correct" : "wrong") : ""}" id="q-card-${q.id}">
+            <div class="card-header">
+              <div class="badge-group">
+                <span class="q-number">문항 ${String(q.id).padStart(2, "0")}</span>
+                <span class="q-subject">${q.subject}</span>
+                <span class="q-topic">${q.topic}</span>
+              </div>
+            </div>
+            
+            <div class="q-prompt">${q.prompt}</div>
+
+            <div class="ox-btn-group">
+              <button type="button" 
+                class="ox-btn btn-o ${selectedChoice === "O" ? (isCorrect ? "selected-correct" : "selected-wrong") : ""} ${isAnswered ? "disabled" : ""}" 
+                data-id="${q.id}" data-choice="O" ${isAnswered ? "disabled" : ""}>
+                O
+              </button>
+              <button type="button" 
+                class="ox-btn btn-x ${selectedChoice === "X" ? (isCorrect ? "selected-correct" : "selected-wrong") : ""} ${isAnswered ? "disabled" : ""}" 
+                data-id="${q.id}" data-choice="X" ${isAnswered ? "disabled" : ""}>
+                X
+              </button>
+            </div>
+
+            <div class="explanation-panel">
+              <div class="feedback-badge ${isCorrect ? "is-correct" : "is-wrong"}">
+                ${isCorrect ? "정답입니다! 🎉 (정답: " + q.answer + ")" : "아쉽습니다! 💡 (정답: " + q.answer + ")"}
+              </div>
+              <div class="explanation-section">
+                <div class="exp-box pitfall">
+                  <div class="exp-label">🎣 왜 낚일까요? (낚시 포인트)</div>
+                  <div class="exp-content">${q.pitfall}</div>
+                </div>
+                <div class="exp-box reason">
+                  <div class="exp-label">💡 명쾌한 이유 설명</div>
+                  <div class="exp-content">${q.reason}</div>
+                </div>
+              </div>
+            </div>
+          </div>
+        `;
+      })
+      .join("");
+
+    // O/X 이벤트 리스너 바인딩
+    questionsList.querySelectorAll(".ox-btn:not(.disabled)").forEach((btn) => {
+      btn.addEventListener("click", (e) => {
+        const id = Number(btn.dataset.id);
+        const choice = btn.dataset.choice;
+        handleAnswer(id, choice);
+      });
+    });
+
+    // KaTeX 수식 렌더링
+    if (window.renderMathInElement) {
+      window.renderMathInElement(questionsList, {
+        delimiters: [
+          { left: "$$", right: "$$", display: true },
+          { left: "$", right: "$", display: false },
+        ],
+        throwOnError: false,
+      });
+    }
+  }
+
+  function handleAnswer(id, choice) {
+    const item = mathOxData.find((q) => q.id === id);
+    if (!item || answeredState[id]) return;
+
+    const isCorrect = item.answer === choice;
+    answeredState[id] = { selectedChoice: choice, isCorrect };
+
+    renderQuestions();
+    updateProgress();
+  }
+
+  function updateProgress() {
+    const total = mathOxData.length;
+    const answered = Object.keys(answeredState).length;
+    const percentage = Math.round((answered / total) * 100);
+
+    answeredCountEl.textContent = answered;
+    totalCountEl.textContent = total;
+    progressFill.style.width = `${percentage}%`;
+  }
+
+  document.addEventListener("DOMContentLoaded", init);
+})();
