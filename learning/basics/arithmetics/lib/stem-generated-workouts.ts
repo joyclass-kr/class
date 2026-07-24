@@ -36,8 +36,8 @@ export function createPartialDerivativeProblems(seed: number): GeometryChoiceIte
   const m = integer(next, 2, 5);
   const n = integer(next, 2, 5);
   return [
-    item("pd1", "\\partial f/\\partial x", `f(x,y)=${a}x^{${m}}+${b}xy`, `${a * m}x^{${m - 1}}+${b}y`, [`${a * m}x^{${m - 1}}+${b}x`, `${a}x^{${m - 1}}+${b}y`, `${a * m}x^{${m - 1}}`]),
-    item("pd2", "\\partial f/\\partial y", `f(x,y)=${a}xy^{${n}}+${b}x^2`, `${a * n}xy^{${n - 1}}`, [`${a * n}y^{${n - 1}}`, `${a}xy^{${n - 1}}+${2 * b}x`, `${a * n}x^{${n - 1}}`]),
+    item("pd1", "x 편미분", `f(x,y)=${a}x^{${m}}+${b}xy`, `${a * m}x^{${m - 1}}+${b}y`, [`${a * m}x^{${m - 1}}+${b}x`, `${a}x^{${m - 1}}+${b}y`, `${a * m}x^{${m - 1}}`]),
+    item("pd2", "y 편미분", `f(x,y)=${a}xy^{${n}}+${b}x^2`, `${a * n}xy^{${n - 1}}`, [`${a * n}y^{${n - 1}}`, `${a}xy^{${n - 1}}+${2 * b}x`, `${a * n}x^{${n - 1}}`]),
     item("pd3", "편미분값", `f(x,y)=x^2y+${a}y^2,\\quad f_x(${b},1)=?`, `${2 * b}`, [`${b * b}`, `${2 * b + 2 * a}`, `${b * b + a}`]),
     item("pd4", "혼합편미분", `f(x,y)=${a}x^2y^2+${b}xy,\\quad f_{xy}=?`, `${4 * a}xy+${b}`, [`${2 * a}xy+${b}`, `${4 * a}xy`, `${2 * a}x^2+${b}`]),
     item("pd5", "그래디언트", `f(x,y)=x^2+${a}xy+y^2,\\quad \\nabla f=?`, `(2x+${a}y,\\ ${a}x+2y)`, [`(2x+${a}x,\\ ${a}y+2y)`, `(x+${a}y,\\ ${a}x+y)`, `(2x,\\ 2y)`]),
