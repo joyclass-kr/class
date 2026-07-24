@@ -409,14 +409,14 @@ document.addEventListener('DOMContentLoaded', () => {
         state.quiz.answered = false;
 
         // Quiz Question Pool:
-        // elem: 1~20 (기초 20종)
-        // mid: 1~50 (주요 50종)
-        // all: 1~92 (천연 원소 92종 - 100번대 인공 실습 원소는 무작위 출제에서 제외하여 실용성 극대화)
+        // elem: 1~20 (기초 필수 20종)
+        // mid: 1~50 (실생활 주요 50종)
+        // all: 1~92 (자연 원소 92종 - 암기 무의미한 100번대 인공 원소는 배제)
         const maxNum = state.difficulty === 'elem' ? 20 : state.difficulty === 'mid' ? 50 : 92;
         const available = window.ELEMENTS_DATA.slice(0, maxNum);
         const correctEl = available[Math.floor(Math.random() * available.length)];
 
-        // Select 3 random wrong options
+        // Select 3 wrong options from the same difficulty pool
         const wrongOpts = [];
         while (wrongOpts.length < 3) {
             const rand = available[Math.floor(Math.random() * available.length)];
@@ -428,30 +428,40 @@ document.addEventListener('DOMContentLoaded', () => {
         const options = [correctEl, ...wrongOpts].sort(() => Math.random() - 0.5);
         state.quiz.currentQuestion = { correctEl, options };
 
-        // Render Question
+        // Render SAT & Curriculum Aligned Question Types
         const qText = document.getElementById('quizQuestionText');
         const qSub = document.getElementById('quizSubText');
         const optGrid = document.getElementById('quizOptionsGrid');
 
-        const questionTypes = ['symbol', 'number', 'name'];
-        const qType = questionTypes[Math.floor(Math.random() * questionTypes.length)];
+        const catName = (window.PERIODIC_CATEGORIES[correctEl.category] || {}).name || '';
+        const useHint = (correctEl.uses && correctEl.uses.length > 0) ? correctEl.uses[0] : correctEl.desc;
 
-        if (qType === 'symbol') {
-            qText.textContent = `원소 기호 『 ${correctEl.symbol} 』 의 한글 이름은 무엇일까요?`;
-            qSub.textContent = `원자 번호: ${correctEl.number}번 | 분류: ${(window.PERIODIC_CATEGORIES[correctEl.category] || {}).name || ''}`;
-        } else if (qType === 'number') {
-            qText.textContent = `원자 번호 ${correctEl.number}번 원소는 무엇일까요?`;
-            qSub.textContent = `상온 상태: ${correctEl.state === 'gas' ? '기체' : correctEl.state === 'liquid' ? '액체' : '고체'}`;
+        // 4 Types of Educational Chemistry Questions
+        const qTypes = ['use_concept', 'category_prop', 'symbol_name', 'name_symbol'];
+        const chosenType = qTypes[Math.floor(Math.random() * qTypes.length)];
+
+        let isSymbolChoice = false;
+
+        if (chosenType === 'use_concept' && correctEl.uses && correctEl.uses.length > 0) {
+            qText.textContent = `💡 [실생활/성질] "${correctEl.uses[Math.floor(Math.random() * correctEl.uses.length)]}"에 핵심적으로 사용되는 원소는?`;
+            qSub.textContent = `힌트: ${correctEl.group}족 ${correctEl.period}주기 | 분류: ${catName}`;
+        } else if (chosenType === 'category_prop') {
+            qText.textContent = `🧪 다음 중 [${catName}] 분류에 속하며 ${correctEl.group}족에 위치하는 원소는?`;
+            qSub.textContent = `상온 상태: ${correctEl.state === 'gas' ? '기체 (Gas)' : correctEl.state === 'liquid' ? '액체 (Liquid)' : '고체 (Solid)'}`;
+        } else if (chosenType === 'symbol_name') {
+            qText.textContent = `원소 기호 『 ${correctEl.symbol} 』 의 올바른 한글 원소 이름은?`;
+            qSub.textContent = `특징: ${useHint}`;
         } else {
-            qText.textContent = `『 ${correctEl.name} (${correctEl.enName}) 』 의 올바른 원소 기호는?`;
-            qSub.textContent = `실생활 쓰임새: ${correctEl.uses ? correctEl.uses[0] : '화학 원소'}`;
+            isSymbolChoice = true;
+            qText.textContent = `『 ${correctEl.name} (${correctEl.enName}) 』 의 올바른 화학 원소 기호는?`;
+            qSub.textContent = `위치: ${correctEl.group}족 ${correctEl.period}주기 | 분류: ${catName}`;
         }
 
         optGrid.innerHTML = '';
         options.forEach(opt => {
             const btn = document.createElement('button');
             btn.className = 'quiz-opt-btn';
-            btn.textContent = qType === 'name' ? opt.symbol : `${opt.name} (${opt.symbol})`;
+            btn.textContent = isSymbolChoice ? opt.symbol : `${opt.name} (${opt.symbol})`;
             btn.addEventListener('click', () => checkAnswer(opt, btn));
             optGrid.appendChild(btn);
         });
