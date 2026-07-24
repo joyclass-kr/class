@@ -1,0 +1,225 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="songhwaplay 인터랙티브 주기율표 탐험가 - 118개 원소 탐색, 원자 보어 모델, 원소 퀴즈, 분자 조합 시뮬레이션">
+    <title>주기율표 탐험가 | songhwaplay 교과학습</title>
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+
+    <!-- Header Navigation -->
+    <header class="top-header">
+        <div class="brand-section">
+            <a href="../../index.html" class="home-btn" id="homePortalBtn">
+                <span>◀</span> 포털 메인으로
+            </a>
+            <h1 class="app-title">
+                🧪 주기율표 탐험가
+                <span class="badge">Class Science</span>
+            </h1>
+        </div>
+
+        <nav class="nav-tabs" aria-label="학습 모드 선택">
+            <button class="nav-tab active" data-tab="explore" id="tabExploreBtn">
+                <span>🗺️</span> 주기율표 탐색
+            </button>
+            <button class="nav-tab" data-tab="quiz" id="tabQuizBtn">
+                <span>🧩</span> 원소 퀴즈
+            </button>
+            <button class="nav-tab" data-tab="molecule" id="tabMoleculeBtn">
+                <span>🔬</span> 분자 조합실
+            </button>
+        </nav>
+    </header>
+
+    <!-- Exploration Toolbar Controls -->
+    <section class="toolbar" id="toolbarSection">
+        <div class="search-box">
+            <span class="search-icon">🔍</span>
+            <input type="text" id="searchInput" placeholder="원소 이름, 기호(H, Fe), 번호(1~118) 검색..." aria-label="원소 검색 입력창">
+        </div>
+
+        <div class="filter-group">
+            <span class="filter-label">상태:</span>
+            <button class="btn-filter active" data-state="all">전체</button>
+            <button class="btn-filter" data-state="solid">🧱 고체</button>
+            <button class="btn-filter" data-state="liquid">💧 액체</button>
+            <button class="btn-filter" data-state="gas">☁️ 기체</button>
+        </div>
+
+        <div class="filter-group">
+            <span class="filter-label">난이도:</span>
+            <div class="difficulty-selector">
+                <button class="difficulty-btn active" data-diff="all">전체 (118)</button>
+                <button class="difficulty-btn" data-diff="elem">초등 (1~20)</button>
+                <button class="difficulty-btn" data-diff="mid">중등 (1~50)</button>
+            </div>
+        </div>
+
+        <button class="btn-filter" id="togglePresentationBtn" style="border-color: #ffd18a; color: #ffd18a;">
+            🖥️ 전자칠판 모드
+        </button>
+    </section>
+
+    <!-- Category Legend Bar -->
+    <div class="category-bar" id="categoryBar">
+        <!-- JS Dyn Rendered Chips -->
+    </div>
+
+    <!-- Main Views Container -->
+    <main class="view-container">
+
+        <!-- Tab 1: Interactive Periodic Table -->
+        <section class="tab-pane active" id="tab-explore">
+            <div class="periodic-table-wrapper">
+                <div class="periodic-table-grid" id="elementsGrid">
+                    <!-- JS Rendered 118 Elements -->
+                </div>
+            </div>
+        </section>
+
+        <!-- Tab 2: Element Quiz Game -->
+        <section class="tab-pane" id="tab-quiz">
+            <div class="quiz-container">
+                <div class="quiz-header">
+                    <div>
+                        <h2>🧩 스피드 원소 퀴즈</h2>
+                        <p style="color: var(--text-secondary); font-size: 14px; margin-top: 4px;">주어진 힌트를 보고 올바른 원소를 맞혀보세요!</p>
+                    </div>
+                    <div style="display: flex; gap: 12px; align-items: center;">
+                        <span class="quiz-score-badge">연속 콤보: <span id="quizStreak">0</span> 🔥</span>
+                        <span class="quiz-score-badge">총 점수: <span id="quizScore">0</span>점</span>
+                    </div>
+                </div>
+
+                <div class="quiz-card">
+                    <div class="quiz-question-box">
+                        <div class="quiz-question-text" id="quizQuestionText">문제를 불러오는 중입니다...</div>
+                        <div class="quiz-subtext" id="quizSubText"></div>
+                    </div>
+
+                    <div class="quiz-options-grid" id="quizOptionsGrid">
+                        <!-- Options dynamically inserted -->
+                    </div>
+
+                    <div id="quizResultMsg" style="margin-top: 20px; font-weight: 800; font-size: 18px;"></div>
+                    
+                    <button class="nav-tab active" id="nextQuizBtn" style="margin: 24px auto 0; padding: 12px 28px; font-size: 16px;">
+                        다음 문제 풀기 ➔
+                    </button>
+                </div>
+            </div>
+        </section>
+
+        <!-- Tab 3: Molecule Synthesis Laboratory -->
+        <section class="tab-pane" id="tab-molecule">
+            <div class="molecule-lab-container">
+                <div class="lab-workbench">
+                    <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 12px;">
+                        <h3>🔬 분자 합성 실험실</h3>
+                        <button class="btn-filter" id="resetLabBtn" style="color: #ff5e57; border-color: #ff5e57;">비커 비우기 🧹</button>
+                    </div>
+                    <p style="color: var(--text-secondary); font-size: 14px; margin-bottom: 16px;">
+                        아래 주요 원소를 선택하여 비커에 넣으면 분자 결합이 형성됩니다! ($H_2O, CO_2, NaCl$ 등)
+                    </p>
+
+                    <div class="workbench-beaker" id="labBeaker">
+                        <div style="color: #64748b; font-size: 14px; font-weight: 600;">원소 토큰을 클릭하여 비커에 담아보세요!</div>
+                    </div>
+
+                    <div id="labStatusMsg" style="min-height: 40px; margin-bottom: 16px; text-align: center;"></div>
+
+                    <h4 style="font-size: 14px; color: var(--text-muted); margin-bottom: 10px;">사용 가능한 반응 원소:</h4>
+                    <div class="uses-tags" id="atomPalette" style="justify-content: center; gap: 10px;">
+                        <!-- JS Dyn Palette -->
+                    </div>
+                </div>
+
+                <div class="compounds-sidebar">
+                    <h3 style="margin-bottom: 14px; font-size: 16px; border-bottom: 1px solid var(--border-color); padding-bottom: 8px;">
+                        📖 도감 (해금된 화학식)
+                    </h3>
+                    <div id="compoundsList">
+                        <!-- JS Dyn Compound Cards -->
+                    </div>
+                </div>
+            </div>
+        </section>
+
+    </main>
+
+    <!-- Element Detail Modal Popup -->
+    <div class="modal-overlay" id="modalOverlay" aria-hidden="true">
+        <div class="element-modal">
+            <button class="close-modal-btn" id="closeModalBtn" aria-label="닫기">✕</button>
+            
+            <!-- Modal Left: Atom Orbit Visual Canvas -->
+            <div class="atom-visual-container">
+                <div class="atom-canvas-wrapper">
+                    <canvas id="bohrAtomCanvas"></canvas>
+                </div>
+                <div class="shell-info">
+                    보어 원자 모델 (전자 궤도 애니메이션)
+                </div>
+            </div>
+
+            <!-- Modal Right: Element Properties & Details -->
+            <div class="element-details">
+                <div class="modal-header-info">
+                    <div class="modal-title-row">
+                        <span class="z-num" id="modalZ">N° 1</span>
+                        <span class="name-ko" id="modalNameKo">수소</span>
+                        <span class="name-en" id="modalNameEn">Hydrogen</span>
+                    </div>
+                    <span class="modal-category-badge" id="modalCatBadge">반응성 비금속</span>
+                </div>
+
+                <div class="property-grid">
+                    <div class="property-card">
+                        <div class="prop-label">원소 기호</div>
+                        <div class="prop-val" id="modalSymbol" style="color: #38ef7d;">H</div>
+                    </div>
+                    <div class="property-card">
+                        <div class="prop-label">원자량 (Atomic Mass)</div>
+                        <div class="prop-val" id="modalMass">1.008</div>
+                    </div>
+                    <div class="property-card">
+                        <div class="prop-label">상온 상태 (STP)</div>
+                        <div class="prop-val" id="modalState">기체</div>
+                    </div>
+                    <div class="property-card">
+                        <div class="prop-label">위치 (족/주기)</div>
+                        <div class="prop-val" id="modalGroupPeriod">1족 / 1주기</div>
+                    </div>
+                    <div class="property-card" style="grid-column: span 2;">
+                        <div class="prop-label">발견 연도 및 발견자</div>
+                        <div class="prop-val" id="modalDiscovery">1766년 (헨리 캐번디시)</div>
+                    </div>
+                </div>
+
+                <div class="info-section">
+                    <h4>💡 원소 특징 및 설명</h4>
+                    <p id="modalDesc">원소 설명 내용입니다.</p>
+                </div>
+
+                <div class="info-section" style="border-left-color: #ffd18a;">
+                    <h4 style="color: #ffd18a;">✨ 재미있는 상식 (Trivia)</h4>
+                    <p id="modalTrivia">흥미로운 사실 내용입니다.</p>
+                </div>
+
+                <div>
+                    <h4 style="font-size: 13px; color: var(--text-muted); margin-bottom: 6px;">🛠️ 실생활 활용 분야</h4>
+                    <div class="uses-tags" id="modalUses">
+                        <!-- JS Tags -->
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script src="elements-data.js"></script>
+    <script src="app.js"></script>
+</body>
+</html>
