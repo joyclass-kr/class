@@ -6,7 +6,7 @@ document.addEventListener('DOMContentLoaded', () => {
     // State management
     const state = {
         currentTab: 'explore',
-        difficulty: 'all', // 'all', 'elem', 'mid'
+        difficulty: 'elem', // Default to 'elem' (초급 필수 20종)
         searchQuery: '',
         selectedCategory: 'all',
         selectedState: 'all',
@@ -17,7 +17,8 @@ document.addEventListener('DOMContentLoaded', () => {
             score: 0,
             streak: 0,
             currentQuestion: null,
-            answered: false
+            answered: false,
+            autoTimer: null
         },
 
         // Molecule lab state
@@ -369,16 +370,50 @@ document.addEventListener('DOMContentLoaded', () => {
     /**
      * Quiz Engine
      */
+    /**
+     * Quiz Engine
+     */
     function initQuiz() {
         const nextBtn = document.getElementById('nextQuizBtn');
         if (nextBtn) {
-            nextBtn.addEventListener('click', loadNewQuestion);
+            nextBtn.addEventListener('click', () => {
+                if (state.quiz.autoTimer) clearTimeout(state.quiz.autoTimer);
+                loadNewQuestion();
+            });
         }
+
+        const quizDiffBtns = document.querySelectorAll('.quiz-diff-btn');
+        quizDiffBtns.forEach(btn => {
+            btn.addEventListener('click', () => {
+                quizDiffBtns.forEach(b => b.classList.remove('active'));
+                btn.classList.add('active');
+
+                // Sync main difficulty too
+                state.difficulty = btn.dataset.diff;
+                document.querySelectorAll('.difficulty-btn').forEach(b => {
+                    b.classList.toggle('active', b.dataset.diff === state.difficulty);
+                });
+
+                if (state.quiz.autoTimer) clearTimeout(state.quiz.autoTimer);
+                loadNewQuestion();
+            });
+        });
     }
 
     function loadNewQuestion() {
+        if (state.quiz.autoTimer) {
+            clearTimeout(state.quiz.autoTimer);
+            state.quiz.autoTimer = null;
+        }
+
         state.quiz.answered = false;
-        const available = window.ELEMENTS_DATA.slice(0, state.difficulty === 'elem' ? 20 : state.difficulty === 'mid' ? 50 : 118);
+
+        // Quiz Question Pool:
+        // elem: 1~20 (기초 20종)
+        // mid: 1~50 (주요 50종)
+        // all: 1~92 (천연 원소 92종 - 100번대 인공 실습 원소는 무작위 출제에서 제외하여 실용성 극대화)
+        const maxNum = state.difficulty === 'elem' ? 20 : state.difficulty === 'mid' ? 50 : 92;
+        const available = window.ELEMENTS_DATA.slice(0, maxNum);
         const correctEl = available[Math.floor(Math.random() * available.length)];
 
         // Select 3 random wrong options
@@ -403,10 +438,10 @@ document.addEventListener('DOMContentLoaded', () => {
 
         if (qType === 'symbol') {
             qText.textContent = `원소 기호 『 ${correctEl.symbol} 』 의 한글 이름은 무엇일까요?`;
-            qSub.textContent = `Atomic Number: ${correctEl.number}`;
+            qSub.textContent = `원자 번호: ${correctEl.number}번 | 분류: ${(window.PERIODIC_CATEGORIES[correctEl.category] || {}).name || ''}`;
         } else if (qType === 'number') {
             qText.textContent = `원자 번호 ${correctEl.number}번 원소는 무엇일까요?`;
-            qSub.textContent = `분류: ${(window.PERIODIC_CATEGORIES[correctEl.category] || {}).name || ''}`;
+            qSub.textContent = `상온 상태: ${correctEl.state === 'gas' ? '기체' : correctEl.state === 'liquid' ? '액체' : '고체'}`;
         } else {
             qText.textContent = `『 ${correctEl.name} (${correctEl.enName}) 』 의 올바른 원소 기호는?`;
             qSub.textContent = `실생활 쓰임새: ${correctEl.uses ? correctEl.uses[0] : '화학 원소'}`;
@@ -436,12 +471,17 @@ document.addEventListener('DOMContentLoaded', () => {
             btn.classList.add('correct');
             state.quiz.score += 10;
             state.quiz.streak += 1;
-            msg.textContent = '🎉 정답입니다! (+10점)';
+            msg.textContent = '🎉 정답입니다! (+10점)  ➔ 잠시 후 다음 문제로 자동 이동합니다.';
             msg.style.color = '#38ef7d';
+
+            // Auto-advance after 1.2s on correct answer
+            state.quiz.autoTimer = setTimeout(() => {
+                loadNewQuestion();
+            }, 1200);
         } else {
             btn.classList.add('wrong');
             state.quiz.streak = 0;
-            msg.textContent = `❌ 아쉽네요! 정답은 ${correctEl.name} (${correctEl.symbol}) 입니다.`;
+            msg.textContent = `❌ 아쉽네요! 정답은 ${correctEl.name} (${correctEl.symbol}) 입니다.  ➔ 잠시 후 다음 문제로 자동 이동합니다.`;
             msg.style.color = '#ff5e57';
 
             // Highlight correct button
@@ -450,6 +490,11 @@ document.addEventListener('DOMContentLoaded', () => {
                     b.classList.add('correct');
                 }
             });
+
+            // Auto-advance after 2.0s on wrong answer
+            state.quiz.autoTimer = setTimeout(() => {
+                loadNewQuestion();
+            }, 2000);
         }
 
         document.getElementById('quizScore').textContent = state.quiz.score;

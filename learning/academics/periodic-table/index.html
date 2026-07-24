@@ -52,9 +52,9 @@
         <div class="filter-group">
             <span class="filter-label">난이도:</span>
             <div class="difficulty-selector">
-                <button class="difficulty-btn active" data-diff="all">전체 (118)</button>
-                <button class="difficulty-btn" data-diff="elem">초등 (1~20)</button>
-                <button class="difficulty-btn" data-diff="mid">중등 (1~50)</button>
+                <button class="difficulty-btn active" data-diff="elem">🌱 초급 (필수 20종)</button>
+                <button class="difficulty-btn" data-diff="mid">🌿 중급 (주요 50종)</button>
+                <button class="difficulty-btn" data-diff="all">🌳 고급 (전체 118종)</button>
             </div>
         </div>
 
@@ -86,7 +86,14 @@
                 <div class="quiz-header">
                     <div>
                         <h2>🧩 스피드 원소 퀴즈</h2>
-                        <p style="color: var(--text-secondary); font-size: 14px; margin-top: 4px;">주어진 힌트를 보고 올바른 원소를 맞혀보세요!</p>
+                        <div class="filter-group" style="margin-top: 8px;">
+                            <span class="filter-label">퀴즈 난이도:</span>
+                            <div class="difficulty-selector">
+                                <button class="quiz-diff-btn active" data-diff="elem">🌱 초급 (20종)</button>
+                                <button class="quiz-diff-btn" data-diff="mid">🌿 중급 (50종)</button>
+                                <button class="quiz-diff-btn" data-diff="all">🌳 고급 (118종)</button>
+                            </div>
+                        </div>
                     </div>
                     <div style="display: flex; gap: 12px; align-items: center;">
                         <span class="quiz-score-badge">연속 콤보: <span id="quizStreak">0</span> 🔥</span>
