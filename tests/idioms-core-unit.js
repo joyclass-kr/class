@@ -16,13 +16,10 @@ data.forEach((item) => {
     assert.match(item.reference, /^https:\/\//, `${item.word}의 근거 링크는 HTTPS여야 합니다.`);
 });
 
-const beginnerDeck = core.filterDeck(data, { status: "all", progress: {} }, "전체", "초급");
-assert.ok(beginnerDeck.length >= 20, "초급 학습 묶음은 충분한 분량이어야 합니다.");
-assert.ok(beginnerDeck.every((item) => item.level === "초급"), "초급 필터에는 초급 항목만 포함되어야 합니다.");
-const intermediateDeck = core.filterDeck(data, { status: "all", progress: {} }, "전체", "중급");
-assert.ok(intermediateDeck.length >= 10, "중급 퀴즈도 10문제를 만들 수 있어야 합니다.");
-const advancedDeck = core.filterDeck(data, { status: "all", progress: {} }, "전체", "고급");
-assert.ok(advancedDeck.length >= 10, "고급 퀴즈도 10문제를 만들 수 있어야 합니다.");
+const allDeck = core.filterDeck(data, { status: "all", progress: {} }, "전체");
+assert.strictEqual(allDeck.length, data.length, "전체 덱은 모든 고사성어를 포함해야 합니다.");
+const wisdomDeck = core.filterDeck(data, { status: "all", progress: {} }, "지혜·처세");
+assert.ok(wisdomDeck.length >= 10, "지혜·처세 주제 덱에 충분한 성어가 포함되어야 합니다.");
 
 ["망양보뢰", "계명구도", "완벽귀조", "배중사영"].forEach((word) => {
     assert.ok(!data.some((item) => item.word === word), `${word}은 핵심 학습 목록에서 제외되어야 합니다.`);

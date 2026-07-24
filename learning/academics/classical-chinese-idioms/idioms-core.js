@@ -41,13 +41,12 @@
         return summary;
     }
 
-    function filterDeck(data, filter, theme, level) {
+    function filterDeck(data, filter, theme) {
         return data.filter((idiom) => {
             const themeMatches = !theme || theme === "전체" || idiom.theme === theme;
-            const levelMatches = !level || level === "전체" || idiom.level === level;
             const status = filter?.progress?.[idiom.id]?.status;
             const statusMatches = filter?.status === "review" ? status === "review" : true;
-            return themeMatches && levelMatches && statusMatches;
+            return themeMatches && statusMatches;
         });
     }
 
