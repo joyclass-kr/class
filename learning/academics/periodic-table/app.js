@@ -499,72 +499,279 @@ document.addEventListener('DOMContentLoaded', () => {
 
     function renderBeaker() {
         const beaker = document.getElementById('labBeaker');
-        const statusMsg = document.getElementById('labStatusMsg');
         if (!beaker) return;
 
-        beaker.innerHTML = '';
         let totalCount = 0;
+        const currentElements = state.lab.selectedElements;
+        for (const count of Object.values(currentElements)) {
+            totalCount += count;
+        }
 
-        for (const [num, count] of Object.entries(state.lab.selectedElements)) {
-            const el = window.ELEMENTS_DATA.find(item => item.number === parseInt(num, 10));
-            if (!el) continue;
+        if (totalCount === 0) {
+            beaker.innerHTML = `<div style="color: #64748b; font-size: 14px; font-weight: 600; text-align: center;">아래의 원소 토큰을 클릭하여 비커에 담아보세요!</div>`;
+            checkCompoundMatch();
+            return;
+        }
 
-            for (let i = 0; i < count; i++) {
-                totalCount++;
-                const token = document.createElement('div');
-                token.className = 'atom-token';
-                token.textContent = el.symbol;
-                token.addEventListener('click', () => {
+        // Check if current mix matches a compound
+        const matchedComp = getMatchingCompound();
+        renderMoleculeSVG(beaker, matchedComp, currentElements);
+        checkCompoundMatch();
+    }
+
+    function getMatchingCompound() {
+        if (!window.COMPOUNDS_DATA) return null;
+        for (const comp of window.COMPOUNDS_DATA) {
+            const required = comp.elements;
+            const reqKeys = Object.keys(required);
+            const selKeys = Object.keys(state.lab.selectedElements);
+
+            if (reqKeys.length !== selKeys.length) continue;
+            let isMatch = true;
+            for (const num of reqKeys) {
+                if (state.lab.selectedElements[num] !== required[num]) {
+                    isMatch = false;
+                    break;
+                }
+            }
+            if (isMatch) return comp;
+        }
+        return null;
+    }
+
+    /**
+     * SVG 2D Molecule Visualizer with Chemical Bond Lines
+     */
+    function renderMoleculeSVG(container, compound, elementsMap) {
+        const atomColors = {
+            1: { bg: '#e2e8f0', stroke: '#94a3b8', text: '#0f172a', r: 18 },  // H (Hydrogen - White/Silver)
+            6: { bg: '#334155', stroke: '#38ef7d', text: '#38ef7d', r: 24 },  // C (Carbon - Slate Dark)
+            7: { bg: '#2563eb', stroke: '#60a5fa', text: '#ffffff', r: 24 },  // N (Nitrogen - Blue)
+            8: { bg: '#ef4444', stroke: '#fca5a5', text: '#ffffff', r: 24 },  // O (Oxygen - Red)
+            11: { bg: '#f59e0b', stroke: '#fcd34d', text: '#000000', r: 26 }, // Na (Sodium - Gold)
+            17: { bg: '#10b981', stroke: '#6ee7b7', text: '#ffffff', r: 26 }, // Cl (Chlorine - Green)
+            20: { bg: '#eab308', stroke: '#fef08a', text: '#000000', r: 26 }, // Ca (Calcium - Yellow)
+            26: { bg: '#ef5777', stroke: '#f53b57', text: '#ffffff', r: 26 }  // Fe (Iron - Crimson)
+        };
+
+        let nodes = [];
+        let bonds = []; // { x1, y1, x2, y2, type: 'single' | 'double' | 'ionic' }
+
+        const formula = compound ? compound.formula : null;
+
+        if (formula === 'H₂O') {
+            nodes = [
+                { id: 'O1', num: 8, sym: 'O', x: 0, y: -18 },
+                { id: 'H1', num: 1, sym: 'H', x: -50, y: 26 },
+                { id: 'H2', num: 1, sym: 'H', x: 50, y: 26 }
+            ];
+            bonds = [
+                { x1: 0, y1: -18, x2: -50, y2: 26, type: 'single' },
+                { x1: 0, y1: -18, x2: 50, y2: 26, type: 'single' }
+            ];
+        } else if (formula === 'CO₂') {
+            nodes = [
+                { id: 'C1', num: 6, sym: 'C', x: 0, y: 0 },
+                { id: 'O1', num: 8, sym: 'O', x: -70, y: 0 },
+                { id: 'O2', num: 8, sym: 'O', x: 70, y: 0 }
+            ];
+            bonds = [
+                { x1: -70, y1: 0, x2: 0, y2: 0, type: 'double' },
+                { x1: 0, y1: 0, x2: 70, y2: 0, type: 'double' }
+            ];
+        } else if (formula === 'NaCl') {
+            nodes = [
+                { id: 'Na1', num: 11, sym: 'Na', x: -45, y: 0, charge: '+' },
+                { id: 'Cl1', num: 17, sym: 'Cl', x: 45, y: 0, charge: '-' }
+            ];
+            bonds = [
+                { x1: -45, y1: 0, x2: 45, y2: 0, type: 'ionic' }
+            ];
+        } else if (formula === 'CH₄') {
+            nodes = [
+                { id: 'C1', num: 6, sym: 'C', x: 0, y: 0 },
+                { id: 'H1', num: 1, sym: 'H', x: 0, y: -58 },
+                { id: 'H2', num: 1, sym: 'H', x: 0, y: 58 },
+                { id: 'H3', num: 1, sym: 'H', x: -58, y: 0 },
+                { id: 'H4', num: 1, sym: 'H', x: 58, y: 0 }
+            ];
+            bonds = [
+                { x1: 0, y1: 0, x2: 0, y2: -58, type: 'single' },
+                { x1: 0, y1: 0, x2: 0, y2: 58, type: 'single' },
+                { x1: 0, y1: 0, x2: -58, y2: 0, type: 'single' },
+                { x1: 0, y1: 0, x2: 58, y2: 0, type: 'single' }
+            ];
+        } else if (formula === 'NH₃') {
+            nodes = [
+                { id: 'N1', num: 7, sym: 'N', x: 0, y: -18 },
+                { id: 'H1', num: 1, sym: 'H', x: -54, y: 28 },
+                { id: 'H2', num: 1, sym: 'H', x: 0, y: 48 },
+                { id: 'H3', num: 1, sym: 'H', x: 54, y: 28 }
+            ];
+            bonds = [
+                { x1: 0, y1: -18, x2: -54, y2: 28, type: 'single' },
+                { x1: 0, y1: -18, x2: 0, y2: 48, type: 'single' },
+                { x1: 0, y1: -18, x2: 54, y2: 28, type: 'single' }
+            ];
+        } else if (formula === 'H₂O₂') {
+            nodes = [
+                { id: 'O1', num: 8, sym: 'O', x: -28, y: -10 },
+                { id: 'O2', num: 8, sym: 'O', x: 28, y: -10 },
+                { id: 'H1', num: 1, sym: 'H', x: -72, y: 22 },
+                { id: 'H2', num: 1, sym: 'H', x: 72, y: 22 }
+            ];
+            bonds = [
+                { x1: -72, y1: 22, x2: -28, y2: -10, type: 'single' },
+                { x1: -28, y1: -10, x2: 28, y2: -10, type: 'single' },
+                { x1: 28, y1: -10, x2: 72, y2: 22, type: 'single' }
+            ];
+        } else if (formula === 'C₂H₆O') {
+            nodes = [
+                { id: 'C1', num: 6, sym: 'C', x: -50, y: 0 },
+                { id: 'C2', num: 6, sym: 'C', x: 10, y: 0 },
+                { id: 'O1', num: 8, sym: 'O', x: 70, y: 0 },
+                { id: 'H1', num: 1, sym: 'H', x: -50, y: -50 },
+                { id: 'H2', num: 1, sym: 'H', x: -50, y: 50 },
+                { id: 'H3', num: 1, sym: 'H', x: -95, y: 0 },
+                { id: 'H4', num: 1, sym: 'H', x: 10, y: -50 },
+                { id: 'H5', num: 1, sym: 'H', x: 10, y: 50 },
+                { id: 'H6', num: 1, sym: 'H', x: 112, y: 25 }
+            ];
+            bonds = [
+                { x1: -95, y1: 0, x2: -50, y2: 0, type: 'single' },
+                { x1: -50, y1: -50, x2: -50, y2: 0, type: 'single' },
+                { x1: -50, y1: 50, x2: -50, y2: 0, type: 'single' },
+                { x1: -50, y1: 0, x2: 10, y2: 0, type: 'single' },
+                { x1: 10, y1: -50, x2: 10, y2: 0, type: 'single' },
+                { x1: 10, y1: 50, x2: 10, y2: 0, type: 'single' },
+                { x1: 10, y1: 0, x2: 70, y2: 0, type: 'single' },
+                { x1: 70, y1: 0, x2: 112, y2: 25, type: 'single' }
+            ];
+        } else if (formula === 'CaCO₃') {
+            nodes = [
+                { id: 'Ca1', num: 20, sym: 'Ca', x: -80, y: 0, charge: '2+' },
+                { id: 'C1', num: 6, sym: 'C', x: 20, y: 0 },
+                { id: 'O1', num: 8, sym: 'O', x: 20, y: -52 },
+                { id: 'O2', num: 8, sym: 'O', x: -18, y: 35 },
+                { id: 'O3', num: 8, sym: 'O', x: 58, y: 35 }
+            ];
+            bonds = [
+                { x1: -80, y1: 0, x2: -18, y2: 35, type: 'ionic' },
+                { x1: 20, y1: 0, x2: 20, y2: -52, type: 'double' },
+                { x1: 20, y1: 0, x2: -18, y2: 35, type: 'single' },
+                { x1: 20, y1: 0, x2: 58, y2: 35, type: 'single' }
+            ];
+        } else if (formula === 'Fe₂O₃') {
+            nodes = [
+                { id: 'Fe1', num: 26, sym: 'Fe', x: -50, y: -20, charge: '3+' },
+                { id: 'Fe2', num: 26, sym: 'Fe', x: 50, y: -20, charge: '3+' },
+                { id: 'O1', num: 8, sym: 'O', x: 0, y: -52, charge: '2-' },
+                { id: 'O2', num: 8, sym: 'O', x: -50, y: 35, charge: '2-' },
+                { id: 'O3', num: 8, sym: 'O', x: 50, y: 35, charge: '2-' }
+            ];
+            bonds = [
+                { x1: -50, y1: -20, x2: 0, y2: -52, type: 'ionic' },
+                { x1: 50, y1: -20, x2: 0, y2: -52, type: 'ionic' },
+                { x1: -50, y1: -20, x2: -50, y2: 35, type: 'ionic' },
+                { x1: 50, y1: -20, x2: 50, y2: 35, type: 'ionic' }
+            ];
+        } else {
+            // Unmatched Mixture: Organic dynamic ring layout
+            const atomList = [];
+            for (const [numStr, count] of Object.entries(elementsMap)) {
+                const num = parseInt(numStr, 10);
+                const el = window.ELEMENTS_DATA.find(item => item.number === num);
+                if (!el) continue;
+                for (let i = 0; i < count; i++) {
+                    atomList.push({ num, sym: el.symbol });
+                }
+            }
+
+            const total = atomList.length;
+            const radius = Math.min(110, 35 + total * 12);
+
+            atomList.forEach((at, idx) => {
+                const angle = (Math.PI * 2 / total) * idx - Math.PI / 2;
+                const x = radius * Math.cos(angle);
+                const y = radius * Math.sin(angle);
+                nodes.push({ id: `unmatched_${idx}`, num: at.num, sym: at.sym, x, y });
+
+                // Connect adjacent atoms with valence bonds
+                if (idx > 0) {
+                    const prevNode = nodes[idx - 1];
+                    bonds.push({ x1: prevNode.x, y1: prevNode.y, x2: x, y2: y, type: 'single' });
+                }
+            });
+            if (total > 2) {
+                bonds.push({ x1: nodes[total - 1].x, y1: nodes[total - 1].y, x2: nodes[0].x, y2: nodes[0].y, type: 'single' });
+            }
+        }
+
+        // Generate SVG Markup
+        let svgHtml = `<svg class="molecule-svg-canvas" viewBox="-160 -100 320 200">`;
+
+        // Render Bonds
+        bonds.forEach(b => {
+            if (b.type === 'double') {
+                // Calculate perpendicular offset for double bond parallel lines
+                const dx = b.x2 - b.x1;
+                const dy = b.y2 - b.y1;
+                const len = Math.hypot(dx, dy) || 1;
+                const nx = (-dy / len) * 4;
+                const ny = (dx / len) * 4;
+
+                svgHtml += `
+                    <g class="bond-double-group">
+                        <line x1="${b.x1 + nx}" y1="${b.y1 + ny}" x2="${b.x2 + nx}" y2="${b.y2 + ny}" class="bond-double"/>
+                        <line x1="${b.x1 - nx}" y1="${b.y1 - ny}" x2="${b.x2 - nx}" y2="${b.y2 - ny}" class="bond-double"/>
+                    </g>
+                `;
+            } else if (b.type === 'ionic') {
+                svgHtml += `<line x1="${b.x1}" y1="${b.y1}" x2="${b.x2}" y2="${b.y2}" class="bond-ionic"/>`;
+            } else {
+                svgHtml += `<line x1="${b.x1}" y1="${b.y1}" x2="${b.x2}" y2="${b.y2}" class="bond-single"/>`;
+            }
+        });
+
+        // Render Atom Nodes
+        nodes.forEach(nd => {
+            const style = atomColors[nd.num] || { bg: '#38ef7d', stroke: '#ffffff', text: '#000', r: 22 };
+
+            svgHtml += `
+                <g class="atom-svg-group" data-num="${nd.num}" transform="translate(${nd.x}, ${nd.y})">
+                    <circle r="${style.r}" fill="${style.bg}" stroke="${style.stroke}" stroke-width="2.5" />
+                    <text text-anchor="middle" dy="5" fill="${style.text}" font-size="15" font-weight="900" font-family="Pretendard, sans-serif">${nd.sym}</text>
+                    ${nd.charge ? `<text text-anchor="middle" dx="14" dy="-10" fill="#ffd18a" font-size="11" font-weight="900">${nd.charge}</text>` : ''}
+                </g>
+            `;
+        });
+
+        svgHtml += `</svg>`;
+        container.innerHTML = svgHtml;
+
+        // Attach click handlers to SVG atom nodes to allow removing atoms
+        container.querySelectorAll('.atom-svg-group').forEach(group => {
+            group.addEventListener('click', (e) => {
+                e.stopPropagation();
+                const num = parseInt(group.dataset.num, 10);
+                if (state.lab.selectedElements[num]) {
                     state.lab.selectedElements[num]--;
                     if (state.lab.selectedElements[num] <= 0) {
                         delete state.lab.selectedElements[num];
                     }
                     renderBeaker();
-                });
-                beaker.appendChild(token);
-            }
-        }
-
-        if (totalCount === 0) {
-            beaker.innerHTML = `<div style="color: #64748b; font-size: 14px; font-weight: 600;">아래의 원소 토큰을 클릭하여 비커에 담아보세요!</div>`;
-        }
-
-        // Check matching compound
-        checkCompoundMatch();
+                }
+            });
+        });
     }
 
     function checkCompoundMatch() {
         const statusMsg = document.getElementById('labStatusMsg');
         if (!statusMsg || !window.COMPOUNDS_DATA) return;
 
-        let matched = null;
-        for (const comp of window.COMPOUNDS_DATA) {
-            let isMatch = true;
-            const required = comp.elements;
-
-            // Check if selected matches required exactly
-            const reqKeys = Object.keys(required);
-            const selKeys = Object.keys(state.lab.selectedElements);
-
-            if (reqKeys.length !== selKeys.length) {
-                isMatch = false;
-            } else {
-                for (const num of reqKeys) {
-                    if (state.lab.selectedElements[num] !== required[num]) {
-                        isMatch = false;
-                        break;
-                    }
-                }
-            }
-
-            if (isMatch) {
-                matched = comp;
-                break;
-            }
-        }
-
+        const matched = getMatchingCompound();
         if (matched) {
-            statusMsg.innerHTML = `<div style="color: #38ef7d; font-weight: 800; font-size: 16px;">✨ [합성 성공] ${matched.icon} ${matched.name} (${matched.formula}) 이(가) 만들어졌습니다!</div>`;
+            statusMsg.innerHTML = `<div style="color: #38ef7d; font-weight: 800; font-size: 16px; animation: fadeIn 0.3s ease;">✨ [합성 성공] ${matched.icon} ${matched.name} (${matched.formula}) 이(가) 완성되었습니다!</div>`;
             state.lab.unlockedCompounds.add(matched.formula);
             renderCompoundsList();
         } else {
