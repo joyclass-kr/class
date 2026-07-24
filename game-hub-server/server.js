@@ -160,7 +160,9 @@ app.use("/hanguksa", proxyToLearningApp(HANGUKSA_PORT));
 
 const LEGACY_LEARNING_PATHS = new Map([
   ["/learning/reading", "/learning/basics/reading"],
-  ["/learning/basics/idioms", "/learning/academics/classical-chinese-idioms"],
+  ["/learning/basics/idioms", "/learning/basics/classical-chinese-idioms"],
+  ["/learning/academics/classical-chinese-idioms", "/learning/basics/classical-chinese-idioms"],
+  ["/learning/academics/proverbs", "/learning/basics/proverbs"],
   ["/learning/simulations/body-explorer", "/learning/academics/body-explorer"],
   ["/learning/training/music-studio", "/learning/arts/music-studio"],
   ["/learning/art", "/learning/arts/art-appreciation/museum/"],

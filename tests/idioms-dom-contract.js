@@ -3,10 +3,10 @@
 const assert = require("node:assert");
 const fs = require("node:fs");
 
-const html = fs.readFileSync("learning/academics/classical-chinese-idioms/index.html", "utf8");
-const app = fs.readFileSync("learning/academics/classical-chinese-idioms/app.js", "utf8");
+const html = fs.readFileSync("learning/basics/classical-chinese-idioms/index.html", "utf8");
+const app = fs.readFileSync("learning/basics/classical-chinese-idioms/app.js", "utf8");
 const root = fs.readFileSync("index.html", "utf8");
-const data = require("../learning/academics/classical-chinese-idioms/idioms-data.js");
+const data = require("../learning/basics/classical-chinese-idioms/idioms-data.js");
 
 const htmlIds = [...html.matchAll(/\bid="([^"]+)"/g)].map((match) => match[1]);
 const duplicateIds = htmlIds.filter((id, index) => htmlIds.indexOf(id) !== index);
@@ -33,11 +33,11 @@ data.forEach((item) => {
     const illustration = illustrations.get(item.id);
     assert.ok(illustration, `${item.word} 삽화 매핑이 필요합니다.`);
     assert.ok(
-        fs.existsSync(`learning/academics/classical-chinese-idioms/${illustration}`),
+        fs.existsSync(`learning/basics/classical-chinese-idioms/${illustration}`),
         `${item.word} 삽화 파일이 필요합니다: ${illustration}`
     );
 });
 assert.ok(!/탐험대|뜻만 외우지 말고|이야기 박사|멋진 도전/.test(html + app), "과장된 홍보 문구를 사용하지 않습니다.");
-assert.ok(root.includes('href="learning/academics/classical-chinese-idioms/index.html"'), "메인 학습 메뉴에 고사성어 링크가 필요합니다.");
+assert.ok(root.includes('href="learning/basics/classical-chinese-idioms/index.html"'), "메인 학습 메뉴에 고사성어 링크가 필요합니다.");
 
 console.log(`idioms DOM contract: ok (${htmlIds.length} ids)`);
