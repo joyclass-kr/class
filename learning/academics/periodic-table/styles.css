@@ -748,7 +748,7 @@ canvas#bohrAtomCanvas {
 }
 
 .bond-single {
-    stroke: rgba(56, 239, 125, 0.7);
+    stroke: rgba(56, 239, 125, 0.75);
     stroke-width: 3.5;
     stroke-linecap: round;
     filter: drop-shadow(0 0 6px rgba(56, 239, 125, 0.4));
@@ -762,10 +762,48 @@ canvas#bohrAtomCanvas {
 }
 
 .bond-ionic {
-    stroke: rgba(75, 207, 250, 0.8);
+    stroke: rgba(75, 207, 250, 0.85);
     stroke-width: 2.5;
     stroke-dasharray: 5 4;
     filter: drop-shadow(0 0 6px rgba(75, 207, 250, 0.4));
+}
+
+/* Wedge-and-Dash 3D Projection Bonds (Chem 3D) */
+.bond-wedge-solid {
+    fill: url(#solidWedgeGrad);
+    stroke: rgba(56, 239, 125, 0.9);
+    stroke-width: 1;
+    filter: drop-shadow(0 0 8px rgba(56, 239, 125, 0.6));
+}
+
+.bond-wedge-dashed line {
+    stroke: rgba(148, 163, 184, 0.8);
+    stroke-width: 2.5;
+    stroke-dasharray: 2 4;
+}
+
+.mode-3d-toggle {
+    position: absolute;
+    top: 12px;
+    right: 12px;
+    z-index: 10;
+    background: rgba(255, 255, 255, 0.08);
+    border: 1px solid var(--border-color);
+    color: var(--gold);
+    padding: 5px 12px;
+    border-radius: 20px;
+    font-size: 12px;
+    font-weight: 700;
+    cursor: pointer;
+    transition: all 0.2s ease;
+    backdrop-filter: blur(8px);
+}
+
+.mode-3d-toggle:hover, .mode-3d-toggle.active {
+    background: linear-gradient(135deg, rgba(255, 209, 138, 0.3), rgba(181, 110, 32, 0.4));
+    border-color: var(--gold);
+    color: #fff;
+    box-shadow: 0 0 12px rgba(255, 209, 138, 0.3);
 }
 
 .atom-svg-group {

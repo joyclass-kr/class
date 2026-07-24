@@ -562,122 +562,124 @@ document.addEventListener('DOMContentLoaded', () => {
 
         if (formula === 'H₂O') {
             nodes = [
-                { id: 'O1', num: 8, sym: 'O', x: 0, y: -18 },
-                { id: 'H1', num: 1, sym: 'H', x: -50, y: 26 },
-                { id: 'H2', num: 1, sym: 'H', x: 50, y: 26 }
+                { id: 'O1', num: 8, sym: 'O', x: 0, y: -18, z: 0 },
+                { id: 'H1', num: 1, sym: 'H', x: -50, y: 26, z: 15 },
+                { id: 'H2', num: 1, sym: 'H', x: 50, y: 26, z: -15 }
             ];
             bonds = [
-                { x1: 0, y1: -18, x2: -50, y2: 26, type: 'single' },
-                { x1: 0, y1: -18, x2: 50, y2: 26, type: 'single' }
+                { x1: 0, y1: -18, z1: 0, x2: -50, y2: 26, z2: 15, type: 'single' },
+                { x1: 0, y1: -18, z1: 0, x2: 50, y2: 26, z2: -15, type: 'single' }
             ];
         } else if (formula === 'CO₂') {
             nodes = [
-                { id: 'C1', num: 6, sym: 'C', x: 0, y: 0 },
-                { id: 'O1', num: 8, sym: 'O', x: -70, y: 0 },
-                { id: 'O2', num: 8, sym: 'O', x: 70, y: 0 }
+                { id: 'C1', num: 6, sym: 'C', x: 0, y: 0, z: 0 },
+                { id: 'O1', num: 8, sym: 'O', x: -70, y: 0, z: 0 },
+                { id: 'O2', num: 8, sym: 'O', x: 70, y: 0, z: 0 }
             ];
             bonds = [
-                { x1: -70, y1: 0, x2: 0, y2: 0, type: 'double' },
-                { x1: 0, y1: 0, x2: 70, y2: 0, type: 'double' }
+                { x1: -70, y1: 0, z1: 0, x2: 0, y2: 0, z2: 0, type: 'double' },
+                { x1: 0, y1: 0, z1: 0, x2: 70, y2: 0, z2: 0, type: 'double' }
             ];
         } else if (formula === 'NaCl') {
             nodes = [
-                { id: 'Na1', num: 11, sym: 'Na', x: -45, y: 0, charge: '+' },
-                { id: 'Cl1', num: 17, sym: 'Cl', x: 45, y: 0, charge: '-' }
+                { id: 'Na1', num: 11, sym: 'Na', x: -45, y: 0, z: 0, charge: '+' },
+                { id: 'Cl1', num: 17, sym: 'Cl', x: 45, y: 0, z: 0, charge: '-' }
             ];
             bonds = [
-                { x1: -45, y1: 0, x2: 45, y2: 0, type: 'ionic' }
+                { x1: -45, y1: 0, z1: 0, x2: 45, y2: 0, z2: 0, type: 'ionic' }
             ];
         } else if (formula === 'CH₄') {
+            // Methane: Exact 109.5° Tetrahedral 3D Geometry & Wedge-Dash Chemical Projection
             nodes = [
-                { id: 'C1', num: 6, sym: 'C', x: 0, y: 0 },
-                { id: 'H1', num: 1, sym: 'H', x: 0, y: -58 },
-                { id: 'H2', num: 1, sym: 'H', x: 0, y: 58 },
-                { id: 'H3', num: 1, sym: 'H', x: -58, y: 0 },
-                { id: 'H4', num: 1, sym: 'H', x: 58, y: 0 }
+                { id: 'C1', num: 6, sym: 'C', x: 0, y: 5, z: 0 },
+                { id: 'H1', num: 1, sym: 'H', x: 0, y: -58, z: 0 },          // Top In-Plane
+                { id: 'H2', num: 1, sym: 'H', x: -56, y: -5, z: 0 },         // Left In-Plane
+                { id: 'H3', num: 1, sym: 'H', x: 42, y: 46, z: 45 },         // Solid Wedge (Front)
+                { id: 'H4', num: 1, sym: 'H', x: -36, y: 54, z: -45 }        // Dashed Wedge (Back)
             ];
             bonds = [
-                { x1: 0, y1: 0, x2: 0, y2: -58, type: 'single' },
-                { x1: 0, y1: 0, x2: 0, y2: 58, type: 'single' },
-                { x1: 0, y1: 0, x2: -58, y2: 0, type: 'single' },
-                { x1: 0, y1: 0, x2: 58, y2: 0, type: 'single' }
+                { x1: 0, y1: 5, z1: 0, x2: 0, y2: -58, z2: 0, type: 'single' },
+                { x1: 0, y1: 5, z1: 0, x2: -56, y2: -5, z2: 0, type: 'single' },
+                { x1: 0, y1: 5, z1: 0, x2: 42, y2: 46, z2: 45, type: 'solid-wedge' },   // 쐐기형 튀어나온 결합
+                { x1: 0, y1: 5, z1: 0, x2: -36, y2: 54, z2: -45, type: 'dash-wedge' }   // 점선형 들어간 결합
             ];
         } else if (formula === 'NH₃') {
+            // Ammonia: Trigonal Pyramid 3D Projection
             nodes = [
-                { id: 'N1', num: 7, sym: 'N', x: 0, y: -18 },
-                { id: 'H1', num: 1, sym: 'H', x: -54, y: 28 },
-                { id: 'H2', num: 1, sym: 'H', x: 0, y: 48 },
-                { id: 'H3', num: 1, sym: 'H', x: 54, y: 28 }
+                { id: 'N1', num: 7, sym: 'N', x: 0, y: -22, z: 0 },
+                { id: 'H1', num: 1, sym: 'H', x: 0, y: 46, z: -10 },
+                { id: 'H2', num: 1, sym: 'H', x: -52, y: 28, z: 40 },        // Solid Wedge
+                { id: 'H3', num: 1, sym: 'H', x: 52, y: 28, z: -40 }         // Dash Wedge
             ];
             bonds = [
-                { x1: 0, y1: -18, x2: -54, y2: 28, type: 'single' },
-                { x1: 0, y1: -18, x2: 0, y2: 48, type: 'single' },
-                { x1: 0, y1: -18, x2: 54, y2: 28, type: 'single' }
+                { x1: 0, y1: -22, z1: 0, x2: 0, y2: 46, z2: -10, type: 'single' },
+                { x1: 0, y1: -22, z1: 0, x2: -52, y2: 28, z2: 40, type: 'solid-wedge' },
+                { x1: 0, y1: -22, z1: 0, x2: 52, y2: 28, z2: -40, type: 'dash-wedge' }
             ];
         } else if (formula === 'H₂O₂') {
             nodes = [
-                { id: 'O1', num: 8, sym: 'O', x: -28, y: -10 },
-                { id: 'O2', num: 8, sym: 'O', x: 28, y: -10 },
-                { id: 'H1', num: 1, sym: 'H', x: -72, y: 22 },
-                { id: 'H2', num: 1, sym: 'H', x: 72, y: 22 }
+                { id: 'O1', num: 8, sym: 'O', x: -28, y: -10, z: 0 },
+                { id: 'O2', num: 8, sym: 'O', x: 28, y: -10, z: 0 },
+                { id: 'H1', num: 1, sym: 'H', x: -72, y: 22, z: 30 },
+                { id: 'H2', num: 1, sym: 'H', x: 72, y: 22, z: -30 }
             ];
             bonds = [
-                { x1: -72, y1: 22, x2: -28, y2: -10, type: 'single' },
-                { x1: -28, y1: -10, x2: 28, y2: -10, type: 'single' },
-                { x1: 28, y1: -10, x2: 72, y2: 22, type: 'single' }
+                { x1: -72, y1: 22, z1: 30, x2: -28, y2: -10, z2: 0, type: 'solid-wedge' },
+                { x1: -28, y1: -10, z1: 0, x2: 28, y2: -10, z2: 0, type: 'single' },
+                { x1: 28, y1: -10, z1: 0, x2: 72, y2: 22, z2: -30, type: 'dash-wedge' }
             ];
         } else if (formula === 'C₂H₆O') {
             nodes = [
-                { id: 'C1', num: 6, sym: 'C', x: -50, y: 0 },
-                { id: 'C2', num: 6, sym: 'C', x: 10, y: 0 },
-                { id: 'O1', num: 8, sym: 'O', x: 70, y: 0 },
-                { id: 'H1', num: 1, sym: 'H', x: -50, y: -50 },
-                { id: 'H2', num: 1, sym: 'H', x: -50, y: 50 },
-                { id: 'H3', num: 1, sym: 'H', x: -95, y: 0 },
-                { id: 'H4', num: 1, sym: 'H', x: 10, y: -50 },
-                { id: 'H5', num: 1, sym: 'H', x: 10, y: 50 },
-                { id: 'H6', num: 1, sym: 'H', x: 112, y: 25 }
+                { id: 'C1', num: 6, sym: 'C', x: -50, y: 0, z: 0 },
+                { id: 'C2', num: 6, sym: 'C', x: 10, y: 0, z: 0 },
+                { id: 'O1', num: 8, sym: 'O', x: 70, y: 0, z: 0 },
+                { id: 'H1', num: 1, sym: 'H', x: -50, y: -50, z: 0 },
+                { id: 'H2', num: 1, sym: 'H', x: -50, y: 50, z: 0 },
+                { id: 'H3', num: 1, sym: 'H', x: -95, y: 0, z: 0 },
+                { id: 'H4', num: 1, sym: 'H', x: 10, y: -50, z: 0 },
+                { id: 'H5', num: 1, sym: 'H', x: 10, y: 50, z: 0 },
+                { id: 'H6', num: 1, sym: 'H', x: 112, y: 25, z: 0 }
             ];
             bonds = [
-                { x1: -95, y1: 0, x2: -50, y2: 0, type: 'single' },
-                { x1: -50, y1: -50, x2: -50, y2: 0, type: 'single' },
-                { x1: -50, y1: 50, x2: -50, y2: 0, type: 'single' },
-                { x1: -50, y1: 0, x2: 10, y2: 0, type: 'single' },
-                { x1: 10, y1: -50, x2: 10, y2: 0, type: 'single' },
-                { x1: 10, y1: 50, x2: 10, y2: 0, type: 'single' },
-                { x1: 10, y1: 0, x2: 70, y2: 0, type: 'single' },
-                { x1: 70, y1: 0, x2: 112, y2: 25, type: 'single' }
+                { x1: -95, y1: 0, z1: 0, x2: -50, y2: 0, z2: 0, type: 'single' },
+                { x1: -50, y1: -50, z1: 0, x2: -50, y2: 0, z2: 0, type: 'single' },
+                { x1: -50, y1: 50, z1: 0, x2: -50, y2: 0, z2: 0, type: 'single' },
+                { x1: -50, y1: 0, z1: 0, x2: 10, y2: 0, z2: 0, type: 'single' },
+                { x1: 10, y1: -50, z1: 0, x2: 10, y2: 0, z2: 0, type: 'single' },
+                { x1: 10, y1: 50, z1: 0, x2: 10, y2: 0, z2: 0, type: 'single' },
+                { x1: 10, y1: 0, z1: 0, x2: 70, y2: 0, z2: 0, type: 'single' },
+                { x1: 70, y1: 0, z1: 0, x2: 112, y2: 25, z2: 0, type: 'single' }
             ];
         } else if (formula === 'CaCO₃') {
             nodes = [
-                { id: 'Ca1', num: 20, sym: 'Ca', x: -80, y: 0, charge: '2+' },
-                { id: 'C1', num: 6, sym: 'C', x: 20, y: 0 },
-                { id: 'O1', num: 8, sym: 'O', x: 20, y: -52 },
-                { id: 'O2', num: 8, sym: 'O', x: -18, y: 35 },
-                { id: 'O3', num: 8, sym: 'O', x: 58, y: 35 }
+                { id: 'Ca1', num: 20, sym: 'Ca', x: -80, y: 0, z: 0, charge: '2+' },
+                { id: 'C1', num: 6, sym: 'C', x: 20, y: 0, z: 0 },
+                { id: 'O1', num: 8, sym: 'O', x: 20, y: -52, z: 0 },
+                { id: 'O2', num: 8, sym: 'O', x: -18, y: 35, z: 0 },
+                { id: 'O3', num: 8, sym: 'O', x: 58, y: 35, z: 0 }
             ];
             bonds = [
-                { x1: -80, y1: 0, x2: -18, y2: 35, type: 'ionic' },
-                { x1: 20, y1: 0, x2: 20, y2: -52, type: 'double' },
-                { x1: 20, y1: 0, x2: -18, y2: 35, type: 'single' },
-                { x1: 20, y1: 0, x2: 58, y2: 35, type: 'single' }
+                { x1: -80, y1: 0, z1: 0, x2: -18, y2: 35, z2: 0, type: 'ionic' },
+                { x1: 20, y1: 0, z1: 0, x2: 20, y2: -52, z2: 0, type: 'double' },
+                { x1: 20, y1: 0, z1: 0, x2: -18, y2: 35, z2: 0, type: 'single' },
+                { x1: 20, y1: 0, z1: 0, x2: 58, y2: 35, z2: 0, type: 'single' }
             ];
         } else if (formula === 'Fe₂O₃') {
             nodes = [
-                { id: 'Fe1', num: 26, sym: 'Fe', x: -50, y: -20, charge: '3+' },
-                { id: 'Fe2', num: 26, sym: 'Fe', x: 50, y: -20, charge: '3+' },
-                { id: 'O1', num: 8, sym: 'O', x: 0, y: -52, charge: '2-' },
-                { id: 'O2', num: 8, sym: 'O', x: -50, y: 35, charge: '2-' },
-                { id: 'O3', num: 8, sym: 'O', x: 50, y: 35, charge: '2-' }
+                { id: 'Fe1', num: 26, sym: 'Fe', x: -50, y: -20, z: 0, charge: '3+' },
+                { id: 'Fe2', num: 26, sym: 'Fe', x: 50, y: -20, z: 0, charge: '3+' },
+                { id: 'O1', num: 8, sym: 'O', x: 0, y: -52, z: 0, charge: '2-' },
+                { id: 'O2', num: 8, sym: 'O', x: -50, y: 35, z: 0, charge: '2-' },
+                { id: 'O3', num: 8, sym: 'O', x: 50, y: 35, z: 0, charge: '2-' }
             ];
             bonds = [
-                { x1: -50, y1: -20, x2: 0, y2: -52, type: 'ionic' },
-                { x1: 50, y1: -20, x2: 0, y2: -52, type: 'ionic' },
-                { x1: -50, y1: -20, x2: -50, y2: 35, type: 'ionic' },
-                { x1: 50, y1: -20, x2: 50, y2: 35, type: 'ionic' }
+                { x1: -50, y1: -20, z1: 0, x2: 0, y2: -52, z2: 0, type: 'ionic' },
+                { x1: 50, y1: -20, z1: 0, x2: 0, y2: -52, z2: 0, type: 'ionic' },
+                { x1: -50, y1: -20, z1: 0, x2: -50, y2: 35, z2: 0, type: 'ionic' },
+                { x1: 50, y1: -20, z1: 0, x2: 50, y2: 35, z2: 0, type: 'ionic' }
             ];
         } else {
-            // Unmatched Mixture: Organic dynamic ring layout
+            // Unmatched Mixture: Dynamic ring layout
             const atomList = [];
             for (const [numStr, count] of Object.entries(elementsMap)) {
                 const num = parseInt(numStr, 10);
@@ -695,31 +697,67 @@ document.addEventListener('DOMContentLoaded', () => {
                 const angle = (Math.PI * 2 / total) * idx - Math.PI / 2;
                 const x = radius * Math.cos(angle);
                 const y = radius * Math.sin(angle);
-                nodes.push({ id: `unmatched_${idx}`, num: at.num, sym: at.sym, x, y });
+                nodes.push({ id: `unmatched_${idx}`, num: at.num, sym: at.sym, x, y, z: 0 });
 
-                // Connect adjacent atoms with valence bonds
                 if (idx > 0) {
                     const prevNode = nodes[idx - 1];
-                    bonds.push({ x1: prevNode.x, y1: prevNode.y, x2: x, y2: y, type: 'single' });
+                    bonds.push({ x1: prevNode.x, y1: prevNode.y, z1: 0, x2: x, y2: y, z2: 0, type: 'single' });
                 }
             });
             if (total > 2) {
-                bonds.push({ x1: nodes[total - 1].x, y1: nodes[total - 1].y, x2: nodes[0].x, y2: nodes[0].y, type: 'single' });
+                bonds.push({ x1: nodes[total - 1].x, y1: nodes[total - 1].y, z1: 0, x2: nodes[0].x, y2: nodes[0].y, z2: 0, type: 'single' });
             }
         }
 
-        // Generate SVG Markup
-        let svgHtml = `<svg class="molecule-svg-canvas" viewBox="-160 -100 320 200">`;
+        // Generate SVG Markup with linearGradients for Wedge 3D bonds
+        let svgHtml = `
+            <svg class="molecule-svg-canvas" viewBox="-160 -100 320 200">
+                <defs>
+                    <linearGradient id="solidWedgeGrad" x1="0%" y1="0%" x2="100%" y2="100%">
+                        <stop offset="0%" stop-color="#38ef7d" stop-opacity="0.2" />
+                        <stop offset="100%" stop-color="#38ef7d" stop-opacity="0.95" />
+                    </linearGradient>
+                </defs>
+        `;
 
-        // Render Bonds
+        // Render Bonds (Wedge, Dash, Double, Ionic, Single)
         bonds.forEach(b => {
-            if (b.type === 'double') {
-                // Calculate perpendicular offset for double bond parallel lines
+            if (b.type === 'solid-wedge') {
+                // Chemical Solid Wedge Bond (▲ 튀어나온 결합)
                 const dx = b.x2 - b.x1;
                 const dy = b.y2 - b.y1;
                 const len = Math.hypot(dx, dy) || 1;
-                const nx = (-dy / len) * 4;
-                const ny = (dx / len) * 4;
+                const nx = (-dy / len) * 8;
+                const ny = (dx / len) * 8;
+                
+                // Polygon triangle from origin atom to wider target atom
+                const points = `${b.x1},${b.y1} ${b.x2 + nx},${b.y2 + ny} ${b.x2 - nx},${b.y2 - ny}`;
+                svgHtml += `<polygon points="${points}" class="bond-wedge-solid" />`;
+            } else if (b.type === 'dash-wedge') {
+                // Chemical Dashed Wedge Bond (▨ 들어간 결합)
+                const steps = 6;
+                svgHtml += `<g class="bond-wedge-dashed">`;
+                for (let i = 1; i <= steps; i++) {
+                    const t1 = i / steps;
+                    const px = b.x1 + (b.x2 - b.x1) * t1;
+                    const py = b.y1 + (b.y2 - b.y1) * t1;
+                    const width = (i / steps) * 10;
+                    
+                    const dx = b.x2 - b.x1;
+                    const dy = b.y2 - b.y1;
+                    const len = Math.hypot(dx, dy) || 1;
+                    const nx = (-dy / len) * (width / 2);
+                    const ny = (dx / len) * (width / 2);
+
+                    svgHtml += `<line x1="${px - nx}" y1="${py - ny}" x2="${px + nx}" y2="${py + ny}" />`;
+                }
+                svgHtml += `</g>`;
+            } else if (b.type === 'double') {
+                const dx = b.x2 - b.x1;
+                const dy = b.y2 - b.y1;
+                const len = Math.hypot(dx, dy) || 1;
+                const nx = (-dy / len) * 4.5;
+                const ny = (dx / len) * 4.5;
 
                 svgHtml += `
                     <g class="bond-double-group">
@@ -734,14 +772,22 @@ document.addEventListener('DOMContentLoaded', () => {
             }
         });
 
+        // Sort nodes by Z depth so back atoms render behind front atoms
+        const sortedNodes = [...nodes].sort((a, b) => (a.z || 0) - (b.z || 0));
+
         // Render Atom Nodes
-        nodes.forEach(nd => {
+        sortedNodes.forEach(nd => {
             const style = atomColors[nd.num] || { bg: '#38ef7d', stroke: '#ffffff', text: '#000', r: 22 };
+
+            // Depth scale effect for 3D perspective projection
+            const zOffset = nd.z || 0;
+            const zScale = 1 + (zOffset / 200);
+            const rScaled = Math.round(style.r * zScale);
 
             svgHtml += `
                 <g class="atom-svg-group" data-num="${nd.num}" transform="translate(${nd.x}, ${nd.y})">
-                    <circle r="${style.r}" fill="${style.bg}" stroke="${style.stroke}" stroke-width="2.5" />
-                    <text text-anchor="middle" dy="5" fill="${style.text}" font-size="15" font-weight="900" font-family="Pretendard, sans-serif">${nd.sym}</text>
+                    <circle r="${rScaled}" fill="${style.bg}" stroke="${style.stroke}" stroke-width="2.5" />
+                    <text text-anchor="middle" dy="5" fill="${style.text}" font-size="${Math.round(14 * zScale)}" font-weight="900" font-family="Pretendard, sans-serif">${nd.sym}</text>
                     ${nd.charge ? `<text text-anchor="middle" dx="14" dy="-10" fill="#ffd18a" font-size="11" font-weight="900">${nd.charge}</text>` : ''}
                 </g>
             `;
