@@ -7,7 +7,7 @@ const data = require("../learning/academics/classical-chinese-idioms/idioms-data
 assert.ok(data.length >= 40, "검증된 핵심 고사성어가 40개 이상이어야 합니다.");
 assert.strictEqual(new Set(data.map((item) => item.id)).size, data.length, "id는 중복될 수 없습니다.");
 data.forEach((item) => {
-    ["word", "hanja", "level", "meaning", "story", "lesson", "source", "reference", "verification"].forEach((field) => {
+    ["word", "hanja", "hanjaExpl", "level", "meaning", "story", "lesson", "source", "reference", "verification"].forEach((field) => {
         assert.ok(item[field], `${item.id}.${field} 값이 필요합니다.`);
     });
     assert.ok([...item.word].length >= 2 && [...item.word].length <= 6, `${item.word}의 글자 수가 학습 범위를 벗어났습니다.`);

@@ -130,7 +130,7 @@
         cardPosition: byId("cardPosition"), cardProgress: byId("cardProgress"), idiomCard: byId("idiomCard"),
         themeBadge: byId("themeBadge"), verificationBadge: byId("verificationBadge"),
         idiomHanja: byId("idiomHanja"), idiomWord: byId("idiomWord"), cardDetails: byId("cardDetails"),
-        idiomMeaning: byId("idiomMeaning"), idiomStory: byId("idiomStory"),
+        idiomHanjaExpl: byId("idiomHanjaExpl"), idiomMeaning: byId("idiomMeaning"), idiomStory: byId("idiomStory"),
         idiomIllustration: byId("idiomIllustration"), idiomIllustrationImage: byId("idiomIllustrationImage"),
         idiomSource: byId("idiomSource"), sourceNote: byId("sourceNote"),
         previousCard: byId("previousCard"), nextCard: byId("nextCard"), revealCard: byId("revealCard"),
@@ -246,6 +246,19 @@
         elements.markReview.setAttribute("aria-pressed", String(status === "review"));
     }
 
+    function renderHanjaExpl(container, text) {
+        if (!container) return;
+        container.replaceChildren();
+        if (!text) return;
+        const parts = text.split(/\s*·\s*/);
+        parts.forEach((part) => {
+            const chip = document.createElement("span");
+            chip.className = "hanja-chip";
+            chip.textContent = part;
+            container.append(chip);
+        });
+    }
+
     function renderCard() {
         const idiom = currentIdiom();
         const hasCards = Boolean(idiom);
@@ -260,6 +273,7 @@
         elements.verificationBadge.classList.toggle("compare", idiom.verification !== "원전 확인");
         elements.idiomHanja.textContent = idiom.hanja;
         elements.idiomWord.textContent = idiom.word;
+        renderHanjaExpl(elements.idiomHanjaExpl, idiom.hanjaExpl);
         elements.idiomMeaning.textContent = idiom.meaning;
         elements.idiomStory.textContent = idiom.story;
         const illustration = ILLUSTRATIONS[idiom.id] || "";
@@ -521,7 +535,7 @@
         const filtered = data.filter((idiom) => {
             const levelMatches = selectedLibraryLevel === "전체" || idiom.level === selectedLibraryLevel;
             const themeMatches = selectedLibraryTheme === "전체" || idiom.theme === selectedLibraryTheme;
-            const haystack = `${idiom.word} ${idiom.hanja} ${idiom.meaning} ${idiom.story}`.toLocaleLowerCase("ko");
+            const haystack = `${idiom.word} ${idiom.hanja} ${idiom.hanjaExpl || ""} ${idiom.meaning} ${idiom.story}`.toLocaleLowerCase("ko");
             return levelMatches && themeMatches && (!query || haystack.includes(query));
         });
 
