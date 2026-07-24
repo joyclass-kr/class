@@ -648,6 +648,15 @@
         { id:"iljangildan", word:"일장일단", hanja:"一長一短", theme:"지혜", meaning:"한편으로는 장점이 있고 다른 한편으로는 단점이 있음.", story:"하나는 길고 하나는 짧다는 말에서 무엇에나 좋은 점과 부족한 점이 함께 있음을 나타냅니다.", lesson:"장단점을 함께 비교하여 상황에 맞게 선택해야 합니다.", source:"일반 한자 성어", sourceNote:"한 일, 길 장, 한 일, 짧을 단을 써서 장점과 단점이 함께 있음을 나타냅니다.", reference:"https://stdict.korean.go.kr/search/searchResult.do?pageNo=1&searchKeyword=%EC%9D%BC%EC%9E%A5%EC%9D%BC%EB%8B%A8", verification:"사전 확인" },
         { id:"sipinsipsaek", word:"십인십색", hanja:"十人十色", theme:"관계", meaning:"사람마다 생각과 성격, 취향이 모두 다름.", story:"열 사람이 있으면 열 가지 빛깔이 있다는 뜻으로 사람마다 다른 개성과 관점을 지님을 비유합니다.", lesson:"나와 다른 생각을 틀렸다고 여기지 않고 각자의 차이를 존중해야 합니다.", source:"일반 한자 성어", sourceNote:"열 십, 사람 인, 열 십, 빛 색을 써서 사람마다 특색이 다름을 나타냅니다.", reference:"https://stdict.korean.go.kr/search/searchResult.do?pageNo=1&searchKeyword=%EC%8B%AD%EC%9D%B8%EC%8B%AD%EC%83%89", verification:"사전 확인" },
         { id:"seongyeonjimyeong", word:"선견지명", hanja:"先見之明", theme:"지혜", meaning:"앞으로 일어날 일을 미리 내다보는 밝은 지혜.", story:"다른 사람보다 먼저 변화를 알아보고 앞날을 준비하는 통찰력을 밝은 눈에 빗댄 표현입니다.", lesson:"작은 징후를 관찰하고 경험과 지식을 바탕으로 미리 준비해야 합니다.", source:"일반 한자 성어", sourceNote:"먼저 선, 볼 견, 갈 지, 밝을 명을 써서 앞일을 미리 보는 지혜를 나타냅니다.", reference:"https://stdict.korean.go.kr/search/searchResult.do?pageNo=1&searchKeyword=%EC%84%A0%EA%B2%AC%EC%A7%80%EB%AA%85", verification:"사전 확인" }
+        ,
+        {
+            id: "dumunbulchul", word: "두문불출", hanja: "杜門不出", theme: "지혜",
+            meaning: "집에만 틀어박혀 밖에 나가지 않음.",
+            story: "문을 닫아 막고 밖으로 나가지 않는다는 뜻입니다. 세상과의 왕래를 끊고 집 안에만 머무는 모습을 나타내며, 오늘날에는 외출이나 사회 활동을 거의 하지 않는 경우에도 널리 씁니다.",
+            lesson: "혼자만의 시간이 필요할 때도 있지만 지나친 고립은 피하고, 휴식과 세상과의 교류 사이에서 균형을 찾아야 합니다.",
+            source: "일반 한자 성어", sourceNote: "막을 두, 문 문, 아닐 불, 날 출을 써서 문을 닫고 밖으로 나오지 않음을 나타냅니다.",
+            reference: "https://stdict.korean.go.kr/search/searchResult.do?pageNo=1&searchKeyword=%EB%91%90%EB%AC%B8%EB%B6%88%EC%B6%9C", verification: "사전 확인"
+        }
     ];
 
     const excludedIds = new Set([
@@ -659,7 +668,7 @@
 
     const intermediateIds = new Set([
         "ugongisan", "hogahowi", "jirokwima", "bulchihamun", "maengmosamcheon",
-        "gyeolchooseun", "pajukjise", "dongbyeongsangryeon", "gwontojungrae", "gyereuk",
+        "gyeolchooseun", "pajukjise", "dongbyeongsangryeon", "gwontojungrae", "gyereuk", "dumunbulchul",
         "isimjeonsim", "jumagapyeon", "suguchosim", "cheonjaeilu", "gogunbuntu",
         "cheonsinmango", "samsaileon", "geungeomjeoryak"
     ]);

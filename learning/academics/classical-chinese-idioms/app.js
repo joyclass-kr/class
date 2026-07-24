@@ -11,6 +11,7 @@
     const PROGRESS_KEY = `${LEGACY_PROGRESS_KEY}${playerKeySuffix}`;
     const BEST_SCORE_KEY = `${LEGACY_BEST_SCORE_KEY}${playerKeySuffix}`;
     const ILLUSTRATIONS = {
+        dumunbulchul: "assets/idioms/dumunbulchul.webp",
         dongseonambuk: "assets/idioms/dongseonambuk.webp",
         dongmunseodap: "assets/idioms/dongmunseodap.webp",
         iyeolchyeol: "assets/idioms/iyeolchyeol.webp",
