@@ -535,6 +535,84 @@
             );
             sunMesh.add(c1);
 
+            // ☀️ 3D DYNAMIC SUNSPOT ENGINE (Umbra/Penumbra 2-Layer Mesh + Mid-latitude 10-35° Rule + Life Cycle)
+            var sunspotGroup = new THREE.Object3D();
+            sunMesh.add(sunspotGroup);
+
+            var sunspotList = [];
+            var sunspotCount = 10;
+
+            for (var sp = 0; sp < sunspotCount; sp++) {
+                var spotGroup = new THREE.Object3D();
+
+                // 1. Mid-Latitude Restriction: South/North Latitude 10°~35°
+                var isNorth = Math.random() > 0.5;
+                var latDeg = (Math.random() * 25 + 10) * (isNorth ? 1 : -1);
+                var lonDeg = Math.random() * 360;
+
+                var latRad = latDeg * (Math.PI / 180);
+                var lonRad = lonDeg * (Math.PI / 180);
+
+                var spotR = sunR * 1.002;
+                var sx = spotR * Math.cos(latRad) * Math.cos(lonRad);
+                var sy = spotR * Math.sin(latRad);
+                var sz = spotR * Math.cos(latRad) * Math.sin(lonRad);
+
+                spotGroup.position.set(sx, sy, sz);
+
+                // Normal vector to align spot disk to sphere surface
+                var normal = new THREE.Vector3(sx, sy, sz).normalize();
+                spotGroup.quaternion.setFromUnitVectors(new THREE.Vector3(0, 0, 1), normal);
+
+                // 2. Irregular Shape Generator
+                var baseRadius = Math.random() * 2.5 + 1.8;
+
+                // Layer A: Penumbra (Outer lighter brown/orange boundary)
+                var pGeo = new THREE.DodecahedronGeometry(baseRadius * 1.4, 1);
+                var pPos = pGeo.attributes.position;
+                for (var p = 0; p < pPos.count; p++) {
+                    var px = pPos.getX(p);
+                    var py = pPos.getY(p);
+                    var pz = pPos.getZ(p);
+                    var n = 1.0 + (Math.sin(px * 4.0) + Math.cos(py * 4.0)) * 0.22;
+                    pPos.setXYZ(p, px * n, py * n, pz * 0.1); // Flat disk on surface
+                }
+                pGeo.computeVertexNormals();
+                var pMat = new THREE.MeshBasicMaterial({ color: 0x7c2d12, transparent: true, opacity: 0.85 });
+                var penumbraMesh = new THREE.Mesh(pGeo, pMat);
+                spotGroup.add(penumbraMesh);
+
+                // Layer B: Umbra (Inner deep dark core)
+                var uGeo = new THREE.DodecahedronGeometry(baseRadius * 0.75, 1);
+                var uPos = uGeo.attributes.position;
+                for (var u = 0; u < uPos.count; u++) {
+                    var ux = uPos.getX(u);
+                    var uy = uPos.getY(u);
+                    var uz = uPos.getZ(u);
+                    var un = 1.0 + (Math.sin(ux * 4.0) + Math.cos(uy * 4.0)) * 0.2;
+                    uPos.setXYZ(u, ux * un, uy * un, uz * 0.12);
+                }
+                uGeo.computeVertexNormals();
+                var uMat = new THREE.MeshBasicMaterial({ color: 0x0f0f11, transparent: true, opacity: 0.95 });
+                var umbraMesh = new THREE.Mesh(uGeo, uMat);
+                umbraMesh.position.z = 0.05;
+                spotGroup.add(umbraMesh);
+
+                spotGroup.scale.set(0, 0, 0); // Start born at 0 scale
+                sunspotGroup.add(spotGroup);
+
+                sunspotList.push({
+                    group: spotGroup,
+                    penumbraMat: pMat,
+                    umbraMat: uMat,
+                    latDeg: latDeg,
+                    baseRadius: baseRadius,
+                    life: Math.random() * 8.0,
+                    maxLife: Math.random() * 10.0 + 8.0,
+                    targetScale: Math.random() * 0.6 + 0.7
+                });
+            }
+
             if (state.simMode === '2d') {
                 sunMesh.visible = false;
                 var sunDiv = document.createElement('div');
@@ -555,7 +633,7 @@
             }
             scene.add(sunMesh);
 
-            celestialBodies['sun'] = { mesh: sunMesh, data: window.SOLAR_SYSTEM_DATA.sun };
+            celestialBodies['sun'] = { mesh: sunMesh, sunspotList: sunspotList, data: window.SOLAR_SYSTEM_DATA.sun };
 
             var planetKeys = ['mercury', 'venus', 'earth', 'mars', 'jupiter', 'saturn', 'uranus', 'neptune', 'pluto'];
 
@@ -953,6 +1031,48 @@
 
                 if (celestialBodies['sun'] && celestialBodies['sun'].mesh) {
                     celestialBodies['sun'].mesh.rotation.y += timeDelta * (Math.PI * 2) * 13.5;
+
+                    // ☀️ 3D Sunspot Life Cycle Animation (Birth -> Scale Growth -> Death -> Respawn)
+                    var sunObj = celestialBodies['sun'];
+                    if (sunObj.sunspotList && sunObj.sunspotList.length > 0) {
+                        var realDelta = Math.min(delta, 0.05);
+                        var sunR = getBodyScaleRadius('sun');
+
+                        sunObj.sunspotList.forEach(function(spot) {
+                            spot.life += realDelta;
+
+                            // Life Cycle Normalized Progress (0.0 -> 1.0)
+                            var normLife = spot.life / spot.maxLife;
+
+                            if (normLife >= 1.0) {
+                                // Respawn Sunspot to new mid-latitude location!
+                                spot.life = 0;
+                                spot.maxLife = Math.random() * 10.0 + 8.0;
+                                spot.targetScale = Math.random() * 0.6 + 0.7;
+
+                                var isNorth = Math.random() > 0.5;
+                                var newLatDeg = (Math.random() * 25 + 10) * (isNorth ? 1 : -1);
+                                var newLonDeg = Math.random() * 360;
+
+                                var newLatRad = newLatDeg * (Math.PI / 180);
+                                var newLonRad = newLonDeg * (Math.PI / 180);
+
+                                var spotR = sunR * 1.002;
+                                var sx = spotR * Math.cos(newLatRad) * Math.cos(newLonRad);
+                                var sy = spotR * Math.sin(newLatRad);
+                                var sz = spotR * Math.cos(newLatRad) * Math.sin(newLonRad);
+
+                                spot.group.position.set(sx, sy, sz);
+
+                                var normal = new THREE.Vector3(sx, sy, sz).normalize();
+                                spot.group.quaternion.setFromUnitVectors(new THREE.Vector3(0, 0, 1), normal);
+                            } else {
+                                // Sine Curve Life Scale (0.0 -> maxScale -> 0.0)
+                                var currentScale = Math.sin(normLife * Math.PI) * spot.targetScale;
+                                spot.group.scale.set(currentScale, currentScale, currentScale);
+                            }
+                        });
+                    }
                 }
 
                 Object.keys(celestialBodies).forEach(function (key) {
