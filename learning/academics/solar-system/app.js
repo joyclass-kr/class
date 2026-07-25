@@ -14,6 +14,7 @@
 
     function boot() {
         var state = {
+            simMode: '3d', // '3d' (Log Scale) or '2d' (True Scale Map)
             currentTab: 'sim',
             isPlaying: true,
             orbitSpeed: 1.0,
@@ -46,6 +47,7 @@
         var orbitLines = [];
         var raycaster, mouse;
         var is3DReady = false;
+        var mapLabels = []; // 2D DOM labels
 
         var moonScene, moonCamera, moonRenderer, moonControls;
         var earth3DMesh, moon3DMesh, moonPivotObj, moonOrbitLine;
@@ -89,7 +91,10 @@
         // Apply Logarithmic Scale for Distances
         function getBodyOrbitRadius(key) {
             var distAU = window.SOLAR_SYSTEM_DATA[key] ? window.SOLAR_SYSTEM_DATA[key].distAU : 1.0;
-            return Math.log2(distAU + 1) * LOG_SCALE_FACTOR;
+            if (state.simMode === '2d') {
+                return distAU * 23481.0; // 100% True Scale for 2D Map
+            }
+            return Math.log2(distAU + 1) * LOG_SCALE_FACTOR; // Educational Log Scale for 3D
         }
 
         initNavTabs();
@@ -123,8 +128,8 @@
             var h = canvasContainer.clientHeight || 540;
 
             scene = new THREE.Scene();
-            // Standard far plane for Log Scale
-            camera = new THREE.PerspectiveCamera(45, w / h, 0.1, 10000);
+            // Standard far plane for Log Scale, extended for True Scale 2D Map
+            camera = new THREE.PerspectiveCamera(45, w / h, 0.1, 2500000);
             
             // Initial Camera Position
             camera.position.set(0, 1500, 2000);
@@ -143,7 +148,7 @@
                 controls = new THREE.OrbitControls(camera, renderer.domElement);
                 controls.enableDamping = true;
                 controls.dampingFactor = 0.05;
-                controls.maxDistance = 6000;
+                controls.maxDistance = 1500000;
                 controls.minDistance = 2.0;
             }
 
@@ -225,6 +230,7 @@
         function buildCelestialBodies() {
             if (!window.SOLAR_SYSTEM_DATA) return;
 
+            // Clear old 3D objects
             Object.values(celestialBodies).forEach(function (b) {
                 if (b.mesh) scene.remove(b.mesh);
                 if (b.pivot) scene.remove(b.pivot);
@@ -234,19 +240,45 @@
             orbitLines = [];
             celestialBodies = {};
 
+            // Clear old 2D Labels
+            var lc = document.getElementById('labelsContainer');
+            if (lc) lc.innerHTML = '';
+            mapLabels = [];
+
+            function createLabel(key, data, isSun) {
+                if (!lc || state.simMode !== '2d') return null;
+                var div = document.createElement('div');
+                div.textContent = (isSun ? '태양' : data.nameKor);
+                div.style.position = 'absolute';
+                div.style.color = isSun ? '#fbbf24' : '#fff';
+                div.style.fontSize = isSun ? '16px' : '12px';
+                div.style.fontWeight = isSun ? 'bold' : 'normal';
+                div.style.textShadow = '1px 1px 2px #000';
+                div.style.transform = 'translate(-50%, -50%)';
+                div.style.pointerEvents = 'none';
+                lc.appendChild(div);
+                return div;
+            }
+
             var sunTex = loadPlanet3DTexture('sun');
             var sunR = getBodyScaleRadius('sun');
             var sunMesh = new THREE.Mesh(
                 new THREE.SphereGeometry(sunR, 64, 64),
                 new THREE.MeshBasicMaterial({ map: sunTex })
             );
-            scene.add(sunMesh);
-
+            
             var c1 = new THREE.Mesh(
                 new THREE.SphereGeometry(sunR * 1.02, 64, 64),
                 new THREE.MeshBasicMaterial({ color: 0xffaa00, transparent: true, opacity: 0.22, side: THREE.BackSide })
             );
             sunMesh.add(c1);
+
+            if (state.simMode === '2d') {
+                sunMesh.visible = false;
+                var sunLabel = createLabel('sun', window.SOLAR_SYSTEM_DATA.sun, true);
+                mapLabels.push({ obj: sunMesh, el: sunLabel });
+            }
+            scene.add(sunMesh);
 
             celestialBodies['sun'] = { mesh: sunMesh, data: window.SOLAR_SYSTEM_DATA.sun };
 
@@ -263,7 +295,7 @@
                 // Non-linear log scaling breaks the mathematical relationship between the semi-major axis (a) and focus offset (c=a*e).
                 // To maintain the perfect visual gaps correctly (e.g., Earth-Mars gap being 2x Venus-Earth gap) 
                 // in all directions, eccentricity must be set to 0 (perfect circle) in this mode.
-                var ecc = 0.0; 
+                var ecc = (state.simMode === '2d') ? (KEPLER_ECCENTRICITIES[key] || 0.01) : 0.0; 
                 
                 var incRad = (data.inclinationDeg || 0.0) * (Math.PI / 180);
 
@@ -289,16 +321,22 @@
                 // TRUE KEPLER ELLIPSE MATHEMATICAL FORMULA
                 var semiMajor = orbitR;
                 var semiMinor = orbitR * Math.sqrt(1 - ecc * ecc);
-                var focusOffset = semiMajor * ecc; // Distance from center to Sun focus
+                var focusOffset = semiMajor * ecc;
 
                 // Initial position at theta = 0
                 planetMesh.position.x = semiMajor - focusOffset;
+                
+                if (state.simMode === '2d') {
+                    planetMesh.visible = false;
+                    var pl = createLabel(key, data, false);
+                    mapLabels.push({ obj: planetMesh, el: pl });
+                }
                 planetMesh.userData = { key: key, data: data, semiMajor: semiMajor, semiMinor: semiMinor, focusOffset: focusOffset, ecc: ecc };
                 pivot.add(planetMesh);
 
                 // Saturn Ring
                 var saturnRingMesh = null;
-                if (key === 'saturn') {
+                if (key === 'saturn' && state.simMode === '3d') {
                     var ringTex = loadPlanet3DTexture('saturnRing');
                     var ringGeo = new THREE.RingGeometry(bodyR * 1.3, bodyR * 2.3, 64);
                     ringGeo.rotateX(Math.PI / 2);
@@ -308,7 +346,7 @@
                     pivot.add(saturnRingMesh);
                 }
 
-                if (key === 'earth') {
+                if (key === 'earth' && state.simMode === '3d') {
                     var atmosMesh = new THREE.Mesh(
                         new THREE.SphereGeometry(bodyR * 1.05, 32, 32),
                         new THREE.MeshBasicMaterial({ color: 0x38bdf8, transparent: true, opacity: 0.22, side: THREE.BackSide })
@@ -324,7 +362,7 @@
                         new THREE.SphereGeometry(moonR, 16, 16),
                         new THREE.MeshStandardMaterial({ map: loadPlanet3DTexture('moon'), roughness: 0.85 })
                     );
-                    var visMoonDist = 18.0; // Visual distance so it doesn't overlap Earth
+                    var visMoonDist = 18.0; 
                     moonMesh.position.x = visMoonDist; 
                     moonMesh.userData = { key: 'moon', data: window.SOLAR_SYSTEM_DATA.moon };
                     moonPivot.add(moonMesh);
@@ -346,8 +384,9 @@
                 // PRECISE KEPLER ELLIPSE ORBIT LINE
                 if (state.showOrbits) {
                     var pts = [];
-                    for (var i = 0; i <= 256; i++) { 
-                        var theta = (i / 256) * Math.PI * 2;
+                    var segments = 256; 
+                    for (var i = 0; i <= segments; i++) { 
+                        var theta = (i / segments) * Math.PI * 2;
                         var ox = Math.cos(theta) * semiMajor - focusOffset;
                         var oz = Math.sin(theta) * semiMinor;
                         pts.push(new THREE.Vector3(ox, 0, oz));
@@ -421,6 +460,7 @@
 
                         var dOrbit = timeDelta * (Math.PI * 2) * rate;
                         b.orbitAngle += dOrbit;
+                        b.orbitAngle %= (Math.PI * 2);
 
                         var a = b.semiMajor || b.orbitRadius || 100;
                         var c = b.semiMinor || b.orbitRadius || 100;
@@ -447,8 +487,40 @@
 
             if (controls) controls.update();
             if (renderer && scene && camera) {
-                try { renderer.render(scene, camera); } catch (e) { }
+                try {
+                    renderer.render(scene, camera);
+                    update2DLabels();
+                } catch (e) {
+                    console.error('Render error:', e);
+                }
             }
+        }
+
+        function update2DLabels() {
+            if (state.simMode !== '2d' || !camera || !renderer) return;
+            var w = renderer.domElement.width;
+            var h = renderer.domElement.height;
+            var hw = w / 2;
+            var hh = h / 2;
+            var vec = new THREE.Vector3();
+            
+            mapLabels.forEach(function(item) {
+                vec.setFromMatrixPosition(item.obj.matrixWorld);
+                vec.project(camera);
+                
+                // Check if behind camera
+                if (vec.z > 1.0) {
+                    item.el.style.display = 'none';
+                    return;
+                }
+                
+                var x = (vec.x * hw) + hw;
+                var y = -(vec.y * hh) + hh;
+                
+                item.el.style.display = 'block';
+                item.el.style.left = x + 'px';
+                item.el.style.top = y + 'px';
+            });
         }
 
         function onWindowResize() {
@@ -719,6 +791,49 @@
 
         // ========== UI CONTROLS ==========
         function initSimUIControls() {
+            var simModeToggle = document.getElementById('simModeToggle');
+            var simModeLabel = document.getElementById('simModeLabel');
+            var simWarningAlert = document.getElementById('simWarningAlert');
+
+            if (simModeToggle) {
+                simModeToggle.addEventListener('change', function (e) {
+                    state.simMode = e.target.checked ? '2d' : '3d';
+                    
+                    if (state.simMode === '2d') {
+                        simModeLabel.textContent = '🗺️ 2D 리얼리티 (1:1 Map)';
+                        simModeLabel.style.color = '#10b981'; // emerald
+                        simModeLabel.style.background = 'rgba(16,185,129,0.15)';
+                        if(simWarningAlert) {
+                            simWarningAlert.textContent = '※ 이 화면은 실제 천문 비율(1:1)을 나타내며, 너무 멀어 행성은 보이지 않아 한글 텍스트로 표기됩니다.';
+                            simWarningAlert.style.color = '#10b981';
+                            simWarningAlert.style.background = 'rgba(16,185,129,0.1)';
+                            simWarningAlert.style.border = '1px solid rgba(16,185,129,0.2)';
+                        }
+                        if (camera && controls) {
+                            camera.position.set(0, 1500000, 0); // Zoomed way out top-down
+                            controls.target.set(0, 0, 0);
+                            controls.update();
+                        }
+                    } else {
+                        simModeLabel.textContent = '🔭 3D 관측용 (Log Scale)';
+                        simModeLabel.style.color = '#38bdf8'; // sky
+                        simModeLabel.style.background = 'rgba(56,189,248,0.15)';
+                        if(simWarningAlert) {
+                            simWarningAlert.textContent = '※ 이 화면은 교육적 시각화를 위해 거리와 크기가 로그 스케일(Log Scale)로 왜곡되었습니다.';
+                            simWarningAlert.style.color = '#f59e0b';
+                            simWarningAlert.style.background = 'rgba(245,158,11,0.1)';
+                            simWarningAlert.style.border = '1px solid rgba(245,158,11,0.2)';
+                        }
+                        if (camera && controls) {
+                            camera.position.set(0, 1500, 2000); 
+                            controls.target.set(0, 0, 0);
+                            controls.update();
+                        }
+                    }
+                    buildCelestialBodies(); // Rebuild scene with new rules
+                });
+            }
+
             if (playPauseBtn) {
                 playPauseBtn.addEventListener('click', function () {
                     state.isPlaying = !state.isPlaying;
