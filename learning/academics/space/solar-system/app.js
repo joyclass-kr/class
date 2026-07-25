@@ -2169,19 +2169,45 @@
 
             var propGrid = document.getElementById('modalPropGrid');
             if (propGrid) {
+                // Earth Comparison Calculations
+                var earthR = 6371;
+                var sizeCompareStr = body.radiusKm ? (body.radiusKm === earthR ? '지구와 동일 (1.0배)' : ('지구의 약 ' + (body.radiusKm / earthR).toFixed(2) + '배')) : '-';
+                var gravCompareStr = body.gravityRatio ? (body.gravityRatio === 1 ? '지구와 동일 (1.0 G)' : ('지구의 약 ' + body.gravityRatio + '배 (' + body.gravityRatio + ' G)')) : '-';
+                
+                var ringStr = '없음';
+                if (key === 'saturn') ringStr = '✨ 거대 빙설 고리 보유';
+                else if (key === 'jupiter') ringStr = '🪐 미세 기체/암석 고리';
+                else if (key === 'uranus') ringStr = '🪐 13개 세로 좁은 고리';
+                else if (key === 'neptune') ringStr = '🪐 5개 어두운 미세 고리';
+
+                var moonDetailStr = (body.moons !== undefined) ? (body.moons + '개' + (body.satellites && body.satellites.length > 0 ? ' (' + body.satellites.map(function(s){ return s.name; }).join(', ') + ')' : '')) : '-';
+
+                propGrid.style.cssText = 'display: grid; grid-template-columns: repeat(2, 1fr); gap: 10px; margin-bottom: 12px;';
                 propGrid.innerHTML =
-                    '<div style="background:rgba(255,255,255,0.04);padding:10px 14px;border-radius:8px;border:1px solid var(--border-color);">' +
-                    '<div style="font-size:11px;color:var(--text-muted);">표면 온도</div>' +
-                    '<div style="font-size:14px;font-weight:800;color:#fff;">' + (body.tempC || '-') + '</div></div>' +
-                    '<div style="background:rgba(255,255,255,0.04);padding:10px 14px;border-radius:8px;border:1px solid var(--border-color);">' +
-                    '<div style="font-size:11px;color:var(--text-muted);">자전 주기</div>' +
-                    '<div style="font-size:14px;font-weight:800;color:#38bdf8;">' + (body.rotationDays || '-') + '</div></div>' +
-                    '<div style="background:rgba(255,255,255,0.04);padding:10px 14px;border-radius:8px;border:1px solid var(--border-color);">' +
-                    '<div style="font-size:11px;color:var(--text-muted);">공전 주기</div>' +
-                    '<div style="font-size:14px;font-weight:800;color:#ffd18a;">' + (body.orbitDays ? (body.orbitDays > 365 ? (body.orbitDays / 365).toFixed(1) + '년 (' + body.orbitDays.toLocaleString() + '일)' : body.orbitDays + '일') : '-') + '</div></div>' +
-                    '<div style="background:rgba(255,255,255,0.04);padding:10px 14px;border-radius:8px;border:1px solid var(--border-color);">' +
-                    '<div style="font-size:11px;color:var(--text-muted);">위성 수</div>' +
-                    '<div style="font-size:14px;font-weight:800;color:#fff;">' + (body.moons !== undefined ? body.moons + '개' : '-') + '</div></div>';
+                    '<div style="background:rgba(255,255,255,0.06);padding:10px 14px;border-radius:10px;border:1px solid rgba(255,255,255,0.12);">' +
+                        '<div style="font-size:11.5px;color:#cbd5e1;font-weight:700;">📏 지구 대비 크기 (반지름)</div>' +
+                        '<div style="font-size:13.5px;font-weight:800;color:#f8fafc;margin-top:2px;">' + sizeCompareStr + '</div>' +
+                    '</div>' +
+                    '<div style="background:rgba(255,255,255,0.06);padding:10px 14px;border-radius:10px;border:1px solid rgba(255,255,255,0.12);">' +
+                        '<div style="font-size:11.5px;color:#cbd5e1;font-weight:700;">⚖️ 지구 대비 중력</div>' +
+                        '<div style="font-size:13.5px;font-weight:800;color:#38bdf8;margin-top:2px;">' + gravCompareStr + '</div>' +
+                    '</div>' +
+                    '<div style="background:rgba(255,255,255,0.06);padding:10px 14px;border-radius:10px;border:1px solid rgba(255,255,255,0.12);">' +
+                        '<div style="font-size:11.5px;color:#cbd5e1;font-weight:700;">🌡️ 평균 표면 온도</div>' +
+                        '<div style="font-size:13.5px;font-weight:800;color:#fef08a;margin-top:2px;">' + (body.tempC || '-') + '</div>' +
+                    '</div>' +
+                    '<div style="background:rgba(255,255,255,0.06);padding:10px 14px;border-radius:10px;border:1px solid rgba(255,255,255,0.12);">' +
+                        '<div style="font-size:11.5px;color:#cbd5e1;font-weight:700;">🪐 고리(Ring) 보유 유무</div>' +
+                        '<div style="font-size:13.5px;font-weight:800;color:#c084fc;margin-top:2px;">' + ringStr + '</div>' +
+                    '</div>' +
+                    '<div style="background:rgba(255,255,255,0.06);padding:10px 14px;border-radius:10px;border:1px solid rgba(255,255,255,0.12);">' +
+                        '<div style="font-size:11.5px;color:#cbd5e1;font-weight:700;">🔄 자전 주기</div>' +
+                        '<div style="font-size:13.5px;font-weight:800;color:#38bdf8;margin-top:2px;">' + (body.rotationDays || '-') + '</div>' +
+                    '</div>' +
+                    '<div style="background:rgba(255,255,255,0.06);padding:10px 14px;border-radius:10px;border:1px solid rgba(255,255,255,0.12);">' +
+                        '<div style="font-size:11.5px;color:#cbd5e1;font-weight:700;">🌙 위성 시스템 및 주요 위성</div>' +
+                        '<div style="font-size:13.5px;font-weight:800;color:#34d399;margin-top:2px;">' + moonDetailStr + '</div>' +
+                    '</div>';
             }
 
             document.getElementById('modalDesc').textContent = body.desc;
