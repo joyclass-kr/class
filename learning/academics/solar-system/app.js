@@ -1,12 +1,11 @@
 /**
- * 태양계 탐험 (Solar System Explorer) Three.js & App Engine
- * Clean rewrite - all features preserved
+ * 태양계 탐험 (Solar System Explorer) Three.js & HTML5 Canvas Multi-Engine
+ * Zero-Fail Architecture (3D WebGL + 2D HTML5 Canvas Automatic Fallback)
  */
 
 (function () {
     'use strict';
 
-    // Wait for DOM
     if (document.readyState === 'loading') {
         document.addEventListener('DOMContentLoaded', boot);
     } else {
@@ -45,19 +44,29 @@
         var orbitLines = [];
         var raycaster, mouse;
 
-        // ========== INIT ALL ==========
+        // Init UI components
         initNavTabs();
         initQuickBar();
         initAtlasGrid();
         initSpaceCalc();
         initSpaceQuiz();
         initModal();
-        init3D();
+
+        // Attempt 3D WebGL Engine, fallback to 2D Engine on any failure
+        try {
+            if (typeof THREE !== 'undefined') {
+                init3D();
+            } else {
+                init2DFallback();
+            }
+        } catch (e) {
+            console.warn('3D WebGL Engine init failed, starting 2D Canvas Fallback:', e);
+            init2DFallback();
+        }
 
         // ========== 3D ENGINE ==========
         function init3D() {
             if (!canvasContainer || !canvas) return;
-            if (typeof THREE === 'undefined') return;
 
             var w = canvasContainer.clientWidth || 900;
             var h = canvasContainer.clientHeight || 540;
@@ -86,21 +95,114 @@
             raycaster = new THREE.Raycaster();
             mouse = new THREE.Vector2();
 
-            // Lights
+            // Ambient & Sun Point Light
             scene.add(new THREE.AmbientLight(0x505060, 1.4));
             scene.add(new THREE.PointLight(0xfffaed, 2.5, 1000));
 
-            // Build scene
+            // Build Starfield & Solar System
             buildStarfield();
             buildCelestialBodies();
 
-            // Events
+            // Event Listeners
             initSimUIControls();
             window.addEventListener('resize', onWindowResize);
             canvas.addEventListener('click', onCanvasClick);
 
-            // Start render loop
-            animate();
+            // Start 3D Loop
+            animate3D();
+        }
+
+        // ========== 2D ENGINE FALLBACK ==========
+        function init2DFallback() {
+            if (!canvas) return;
+            var ctx = canvas.getContext('2d');
+            if (!ctx) return;
+
+            initSimUIControls();
+
+            var angle = 0;
+            var planetKeys = ['mercury', 'venus', 'earth', 'mars', 'jupiter', 'saturn', 'uranus', 'neptune', 'pluto'];
+            var orbitRates = { mercury: 4.1, venus: 1.6, earth: 1.0, mars: 0.53, jupiter: 0.08, saturn: 0.03, uranus: 0.012, neptune: 0.006, pluto: 0.004 };
+            var dists = { mercury: 45, venus: 70, earth: 100, mars: 135, jupiter: 180, saturn: 220, uranus: 255, neptune: 285, pluto: 310 };
+
+            function render2D() {
+                var w = canvasContainer ? (canvasContainer.clientWidth || 900) : 900;
+                var h = canvasContainer ? (canvasContainer.clientHeight || 540) : 540;
+                if (canvas.width !== w) canvas.width = w;
+                if (canvas.height !== h) canvas.height = h;
+
+                ctx.fillStyle = '#030712';
+                ctx.fillRect(0, 0, w, h);
+
+                var cx = w / 2;
+                var cy = h / 2;
+
+                // Draw Starfield Background
+                ctx.fillStyle = 'rgba(255, 255, 255, 0.7)';
+                for (var i = 0; i < 150; i++) {
+                    var sx = (Math.sin(i * 99) * 0.5 + 0.5) * w;
+                    var sy = (Math.cos(i * 33) * 0.5 + 0.5) * h;
+                    ctx.fillRect(sx, sy, 1.5, 1.5);
+                }
+
+                // Draw Central Sun
+                ctx.fillStyle = '#ffaa00';
+                ctx.shadowColor = '#ff8800';
+                ctx.shadowBlur = 24;
+                ctx.beginPath();
+                ctx.arc(cx, cy, 24, 0, Math.PI * 2);
+                ctx.fill();
+                ctx.shadowBlur = 0;
+
+                if (state.isPlaying) {
+                    angle += 0.008 * state.orbitSpeed;
+                    state.simTimeYears += 0.002 * state.orbitSpeed;
+                    if (simTimeVal) simTimeVal.textContent = state.simTimeYears.toFixed(1) + ' yrs';
+                }
+
+                planetKeys.forEach(function (key) {
+                    var bodyData = (window.SOLAR_SYSTEM_DATA && window.SOLAR_SYSTEM_DATA[key]) || {};
+                    var r = dists[key] || 100;
+                    var rate = orbitRates[key] || 0.1;
+                    var curAngle = angle * rate * 2;
+
+                    var px = cx + Math.cos(curAngle) * r;
+                    var py = cy + Math.sin(curAngle) * (r * 0.5);
+
+                    // Orbit Line
+                    if (state.showOrbits) {
+                        ctx.strokeStyle = 'rgba(255, 255, 255, 0.15)';
+                        ctx.lineWidth = 1;
+                        ctx.beginPath();
+                        ctx.ellipse(cx, cy, r, r * 0.5, 0, 0, Math.PI * 2);
+                        ctx.stroke();
+                    }
+
+                    // Planet Sphere
+                    ctx.fillStyle = bodyData.color || '#3b82f6';
+                    ctx.beginPath();
+                    ctx.arc(px, py, getBodyScaleRadius(key) * 1.5, 0, Math.PI * 2);
+                    ctx.fill();
+
+                    // Saturn Ring
+                    if (key === 'saturn') {
+                        ctx.strokeStyle = '#eab308';
+                        ctx.lineWidth = 3;
+                        ctx.beginPath();
+                        ctx.ellipse(px, py, 16, 6, 0.3, 0, Math.PI * 2);
+                        ctx.stroke();
+                    }
+
+                    // Label
+                    ctx.fillStyle = '#94a3b8';
+                    ctx.font = '11px Pretendard, sans-serif';
+                    ctx.fillText(bodyData.name || key, px + 10, py + 4);
+                });
+
+                requestAnimationFrame(render2D);
+            }
+
+            render2D();
         }
 
         // ========== TEXTURE LOADING ==========
@@ -122,17 +224,23 @@
         };
 
         function loadPlanetTexture(key) {
-            var canvasEl = (key === 'saturnRing')
-                ? window.createSaturnRingCanvas()
-                : window.createPlanetCanvas(key);
+            var canvasEl;
+            if (key === 'saturnRing' && typeof window.createSaturnRingCanvas === 'function') {
+                canvasEl = window.createSaturnRingCanvas();
+            } else if (typeof window.createPlanetCanvas === 'function') {
+                canvasEl = window.createPlanetCanvas(key);
+            } else {
+                canvasEl = document.createElement('canvas');
+                canvasEl.width = 512;
+                canvasEl.height = 256;
+            }
 
             var texture = new THREE.CanvasTexture(canvasEl);
             texture.wrapS = THREE.RepeatWrapping;
             texture.wrapT = THREE.ClampToEdgeWrapping;
             texture.needsUpdate = true;
 
-            // Try loading hi-res file in background
-            if (TEX_FILES[key]) {
+            if (TEX_FILES[key] && typeof THREE.TextureLoader !== 'undefined') {
                 try {
                     var loader = new THREE.TextureLoader();
                     loader.load(TEX_FILES[key], function (loadedTex) {
@@ -143,10 +251,10 @@
                                     ctx.drawImage(loadedTex.image, 0, 0, canvasEl.width, canvasEl.height);
                                     texture.needsUpdate = true;
                                 }
-                            } catch (e) { /* ignore */ }
+                            } catch (e) { }
                         }
-                    }, undefined, function () { /* ignore load error */ });
-                } catch (e) { /* ignore */ }
+                    }, undefined, function () { });
+                } catch (e) { }
             }
 
             return texture;
@@ -189,6 +297,8 @@
         }
 
         function buildCelestialBodies() {
+            if (!window.SOLAR_SYSTEM_DATA) return;
+
             // Clear previous
             Object.values(celestialBodies).forEach(function (b) {
                 if (b.mesh) scene.remove(b.mesh);
@@ -207,7 +317,7 @@
             );
             scene.add(sunMesh);
 
-            // Sun corona glow
+            // Sun Corona Glow
             var c1 = new THREE.Mesh(
                 new THREE.SphereGeometry(sunR * 1.15, 32, 32),
                 new THREE.MeshBasicMaterial({ color: 0xff8800, transparent: true, opacity: 0.35, side: THREE.BackSide })
@@ -226,6 +336,8 @@
 
             planetKeys.forEach(function (key) {
                 var data = window.SOLAR_SYSTEM_DATA[key];
+                if (!data) return;
+
                 var orbitR = getBodyOrbitRadius(key);
                 var bodyR = getBodyScaleRadius(key);
 
@@ -239,7 +351,6 @@
                     metalness: 0.1
                 };
 
-                // Earth night city lights
                 if (key === 'earth') {
                     var nightTex = loadPlanetTexture('earthNight');
                     matParams.emissiveMap = nightTex;
@@ -255,7 +366,7 @@
                 planetMesh.userData = { key: key, data: data };
                 pivot.add(planetMesh);
 
-                // Saturn ring
+                // Saturn Ring
                 if (key === 'saturn') {
                     var ringTex = loadPlanetTexture('saturnRing');
                     var ringGeo = new THREE.RingGeometry(bodyR * 1.3, bodyR * 2.4, 64);
@@ -266,7 +377,7 @@
                     planetMesh.add(ringMesh);
                 }
 
-                // Earth atmosphere + Moon
+                // Earth Atmosphere Glow & Moon
                 if (key === 'earth') {
                     var atmosMesh = new THREE.Mesh(
                         new THREE.SphereGeometry(bodyR * 1.12, 32, 32),
@@ -289,7 +400,7 @@
 
                 celestialBodies[key] = { mesh: planetMesh, pivot: pivot, orbitRadius: orbitR, data: data };
 
-                // Orbit line
+                // Orbit Line
                 if (state.showOrbits) {
                     var pts = [];
                     for (var i = 0; i <= 128; i++) {
@@ -304,18 +415,20 @@
             });
         }
 
-        // ========== ANIMATION ==========
+        // ========== ANIMATION LOOP ==========
         var ORBIT_RATES = { mercury: 4.1, venus: 1.6, earth: 1.0, mars: 0.53, jupiter: 0.08, saturn: 0.03, uranus: 0.012, neptune: 0.006, pluto: 0.004 };
 
-        function animate() {
-            requestAnimationFrame(animate);
+        function animate3D() {
+            requestAnimationFrame(animate3D);
             var delta = clock ? clock.getDelta() : 0.016;
 
             if (state.isPlaying) {
                 state.simTimeYears += delta * 0.05 * state.orbitSpeed;
                 if (simTimeVal) simTimeVal.textContent = state.simTimeYears.toFixed(1) + ' yrs';
 
-                if (celestialBodies['sun']) celestialBodies['sun'].mesh.rotation.y += 0.003;
+                if (celestialBodies['sun'] && celestialBodies['sun'].mesh) {
+                    celestialBodies['sun'].mesh.rotation.y += 0.003;
+                }
 
                 Object.keys(celestialBodies).forEach(function (key) {
                     var b = celestialBodies[key];
@@ -326,7 +439,7 @@
                     } else if (b.pivot) {
                         var rate = ORBIT_RATES[key] || 0.1;
                         b.pivot.rotation.y += delta * 0.5 * rate * state.orbitSpeed;
-                        b.mesh.rotation.y += 0.01;
+                        if (b.mesh) b.mesh.rotation.y += 0.01;
                     }
                 });
             }
@@ -345,7 +458,7 @@
         }
 
         function onCanvasClick(event) {
-            if (!raycaster || !camera) return;
+            if (!raycaster || !camera || !scene) return;
             var rect = canvas.getBoundingClientRect();
             mouse.x = ((event.clientX - rect.left) / rect.width) * 2 - 1;
             mouse.y = -((event.clientY - rect.top) / rect.height) * 2 + 1;
@@ -401,13 +514,13 @@
                     scaleVisualBtn.classList.add('active');
                     scaleRealisticBtn.classList.remove('active');
                     state.scaleMode = 'visual';
-                    buildCelestialBodies();
+                    if (typeof THREE !== 'undefined' && scene) buildCelestialBodies();
                 });
                 scaleRealisticBtn.addEventListener('click', function () {
                     scaleRealisticBtn.classList.add('active');
                     scaleVisualBtn.classList.remove('active');
                     state.scaleMode = 'realistic';
-                    buildCelestialBodies();
+                    if (typeof THREE !== 'undefined' && scene) buildCelestialBodies();
                 });
             }
             if (showOrbitsToggle) {
@@ -459,7 +572,7 @@
             grid.innerHTML = '';
             Object.keys(window.SOLAR_SYSTEM_DATA).forEach(function (key) {
                 var body = window.SOLAR_SYSTEM_DATA[key];
-                var texData = window.createPlanetTexture(key);
+                var texData = (typeof window.createPlanetTexture === 'function') ? window.createPlanetTexture(key) : '';
                 var card = document.createElement('div');
                 card.className = 'planet-card';
                 card.innerHTML =
@@ -487,12 +600,12 @@
                 var weight = parseFloat(weightInput.value) || 60;
                 var age = parseFloat(ageInput.value) || 12;
                 grid.innerHTML = '';
-                Object.keys(window.SOLAR_SYSTEM_DATA).forEach(function (key) {
+                Object.keys(window.SOLAR_SYSTEM_DATA || {}).forEach(function (key) {
                     if (key === 'sun') return;
                     var body = window.SOLAR_SYSTEM_DATA[key];
                     var calcWeight = (weight * (body.gravityRatio || 1.0)).toFixed(1);
                     var calcAge = body.orbitDays ? ((age * 365.25) / body.orbitDays).toFixed(2) : '-';
-                    var texData = window.createPlanetTexture(key);
+                    var texData = (typeof window.createPlanetTexture === 'function') ? window.createPlanetTexture(key) : '';
                     var card = document.createElement('div');
                     card.className = 'calc-result-card';
                     card.innerHTML =
@@ -525,14 +638,15 @@
         }
 
         function openPlanetModal(key) {
-            var body = window.SOLAR_SYSTEM_DATA[key];
+            var body = (window.SOLAR_SYSTEM_DATA && window.SOLAR_SYSTEM_DATA[key]);
             if (!body) return;
             state.selectedBody = body;
             document.getElementById('modalPlanetName').textContent = body.name;
             document.getElementById('modalPlanetSub').textContent = body.enName + ' | ' + body.type;
 
             var preview = document.getElementById('modalPlanetPreview');
-            if (preview) preview.style.background = "url('" + window.createPlanetTexture(key) + "') center/cover";
+            var texData = (typeof window.createPlanetTexture === 'function') ? window.createPlanetTexture(key) : '';
+            if (preview) preview.style.background = "url('" + texData + "') center/cover";
 
             var propGrid = document.getElementById('modalPropGrid');
             propGrid.innerHTML =
