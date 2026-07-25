@@ -341,7 +341,38 @@ document.addEventListener('DOMContentLoaded', () => {
 
     function createTextureFromUrlData(dataUrl) {
         const texture = new THREE.TextureLoader().load(dataUrl);
+        texture.wrapS = THREE.RepeatWrapping;
+        texture.wrapT = THREE.ClampToEdgeWrapping;
         return texture;
+    }
+
+    // High-Res NASA Planet Textures Loader with Procedural Fallback
+    const textureLoader = new THREE.TextureLoader();
+    
+    // High Quality NASA & SolarSystemScope Texture Maps
+    const NASA_TEXTURE_URLS = {
+        sun: 'https://raw.githubusercontent.com/mrdoob/three.js/dev/examples/textures/lava/lavatile.jpg',
+        earth: 'https://raw.githubusercontent.com/mrdoob/three.js/dev/examples/textures/planets/earth_atmo_2048.jpg',
+        earthCloud: 'https://raw.githubusercontent.com/mrdoob/three.js/dev/examples/textures/planets/earth_clouds_1024.png',
+        moon: 'https://raw.githubusercontent.com/mrdoob/three.js/dev/examples/textures/planets/moon_1024.jpg'
+    };
+
+    function loadPlanetTexture(key) {
+        const fallbackUrl = window.createPlanetTexture(key);
+        const fallbackTex = createTextureFromUrlData(fallbackUrl);
+
+        if (NASA_TEXTURE_URLS[key]) {
+            return textureLoader.load(
+                NASA_TEXTURE_URLS[key],
+                (tex) => {
+                    tex.wrapS = THREE.RepeatWrapping;
+                    tex.wrapT = THREE.ClampToEdgeWrapping;
+                },
+                undefined,
+                () => fallbackTex // Seamless fallback on error/offline
+            );
+        }
+        return fallbackTex;
     }
 
     function buildCelestialBodies() {
@@ -354,19 +385,23 @@ document.addEventListener('DOMContentLoaded', () => {
         orbitLines = [];
         celestialBodies = {};
 
-        // 1. Build Sun
-        const sunTexData = window.createPlanetTexture('sun');
-        const sunTex = createTextureFromUrlData(sunTexData);
-        const sunGeo = new THREE.SphereGeometry(getBodyScaleRadius('sun'), 32, 32);
+        // 1. Build Photorealistic Sun
+        const sunTex = loadPlanetTexture('sun');
+        const sunGeo = new THREE.SphereGeometry(getBodyScaleRadius('sun'), 48, 48);
         const sunMat = new THREE.MeshBasicMaterial({ map: sunTex });
         const sunMesh = new THREE.Mesh(sunGeo, sunMat);
         scene.add(sunMesh);
 
-        // Sun Glow Atmosphere Corona Mesh
-        const coronaGeo = new THREE.SphereGeometry(getBodyScaleRadius('sun') * 1.15, 32, 32);
-        const coronaMat = new THREE.MeshBasicMaterial({ color: 0xffaa00, transparent: true, opacity: 0.25, side: THREE.BackSide });
-        const coronaMesh = new THREE.Mesh(coronaGeo, coronaMat);
-        sunMesh.add(coronaMesh);
+        // Double Layer Sun Glow Atmosphere Corona Mesh
+        const coronaGeo1 = new THREE.SphereGeometry(getBodyScaleRadius('sun') * 1.15, 32, 32);
+        const coronaMat1 = new THREE.MeshBasicMaterial({ color: 0xff8800, transparent: true, opacity: 0.35, side: THREE.BackSide });
+        const coronaMesh1 = new THREE.Mesh(coronaGeo1, coronaMat1);
+        sunMesh.add(coronaMesh1);
+
+        const coronaGeo2 = new THREE.SphereGeometry(getBodyScaleRadius('sun') * 1.35, 32, 32);
+        const coronaMat2 = new THREE.MeshBasicMaterial({ color: 0xffcc00, transparent: true, opacity: 0.15, side: THREE.BackSide });
+        const coronaMesh2 = new THREE.Mesh(coronaGeo2, coronaMat2);
+        sunMesh.add(coronaMesh2);
 
         celestialBodies['sun'] = { mesh: sunMesh, data: window.SOLAR_SYSTEM_DATA.sun };
 
@@ -382,12 +417,18 @@ document.addEventListener('DOMContentLoaded', () => {
             const pivot = new THREE.Object3D();
             scene.add(pivot);
 
-            // Planet Mesh with Procedural NASA-quality Canvas Texture
-            const texData = window.createPlanetTexture(key);
-            const texture = createTextureFromUrlData(texData);
+            // Planet Mesh with TextureLoader
+            const texture = loadPlanetTexture(key);
+            const geo = new THREE.SphereGeometry(bodyR, 48, 48);
+            
+            // Material tuning (Earth & Moon get realistic specularity)
+            const roughnessVal = key === 'earth' ? 0.35 : key === 'jupiter' || key === 'saturn' ? 0.8 : 0.6;
+            const mat = new THREE.MeshStandardMaterial({
+                map: texture,
+                roughness: roughnessVal,
+                metalness: 0.1
+            });
 
-            const geo = new THREE.SphereGeometry(bodyR, 32, 32);
-            const mat = new THREE.MeshStandardMaterial({ map: texture, roughness: 0.7, metalness: 0.1 });
             const planetMesh = new THREE.Mesh(geo, mat);
             planetMesh.position.x = orbitR;
             planetMesh.userData = { key, data };
@@ -398,11 +439,10 @@ document.addEventListener('DOMContentLoaded', () => {
             if (key === 'saturn') {
                 const ringTexData = window.createSaturnRingTexture();
                 const ringTex = createTextureFromUrlData(ringTexData);
-                const ringGeo = new THREE.RingGeometry(bodyR * 1.3, bodyR * 2.3, 64);
+                const ringGeo = new THREE.RingGeometry(bodyR * 1.3, bodyR * 2.4, 64);
 
-                // Rotate ring flat along planet equator
-                ringGeo.rotateX(Math.PI / 2.3);
-                const ringMat = new THREE.MeshStandardMaterial({ map: ringTex, side: THREE.DoubleSide, transparent: true, opacity: 0.9 });
+                ringGeo.rotateX(Math.PI / 2.2);
+                const ringMat = new THREE.MeshStandardMaterial({ map: ringTex, side: THREE.DoubleSide, transparent: true, opacity: 0.92 });
                 const ringMesh = new THREE.Mesh(ringGeo, ringMat);
                 planetMesh.add(ringMesh);
             }
@@ -410,17 +450,16 @@ document.addEventListener('DOMContentLoaded', () => {
             // Earth 3D Clouds & Atmosphere Glow
             if (key === 'earth') {
                 // 1. Semi-transparent 3D Cloud Sphere Layer
-                const cloudTexData = window.createEarthCloudTexture();
-                const cloudTex = createTextureFromUrlData(cloudTexData);
-                const cloudGeo = new THREE.SphereGeometry(bodyR * 1.02, 32, 32);
-                const cloudMat = new THREE.MeshStandardMaterial({ map: cloudTex, transparent: true, opacity: 0.5, depthWrite: false });
+                const cloudTex = loadPlanetTexture('earthCloud');
+                const cloudGeo = new THREE.SphereGeometry(bodyR * 1.025, 48, 48);
+                const cloudMat = new THREE.MeshStandardMaterial({ map: cloudTex, transparent: true, opacity: 0.55, depthWrite: false });
                 const cloudMesh = new THREE.Mesh(cloudGeo, cloudMat);
                 planetMesh.add(cloudMesh);
                 celestialBodies['earthCloud'] = cloudMesh;
 
                 // 2. Cyan Blue Atmosphere Halo Glow
-                const atmosGeo = new THREE.SphereGeometry(bodyR * 1.1, 32, 32);
-                const atmosMat = new THREE.MeshBasicMaterial({ color: 0x38bdf8, transparent: true, opacity: 0.22, side: THREE.BackSide });
+                const atmosGeo = new THREE.SphereGeometry(bodyR * 1.12, 32, 32);
+                const atmosMat = new THREE.MeshBasicMaterial({ color: 0x38bdf8, transparent: true, opacity: 0.25, side: THREE.BackSide });
                 const atmosMesh = new THREE.Mesh(atmosGeo, atmosMat);
                 planetMesh.add(atmosMesh);
 
@@ -428,11 +467,10 @@ document.addEventListener('DOMContentLoaded', () => {
                 const moonPivot = new THREE.Object3D();
                 planetMesh.add(moonPivot);
 
-                const moonTexData = window.createPlanetTexture('moon');
-                const moonTex = createTextureFromUrlData(moonTexData);
+                const moonTex = loadPlanetTexture('moon');
                 const moonR = getBodyScaleRadius('moon');
-                const moonGeo = new THREE.SphereGeometry(moonR, 16, 16);
-                const moonMat = new THREE.MeshStandardMaterial({ map: moonTex, roughness: 0.8 });
+                const moonGeo = new THREE.SphereGeometry(moonR, 24, 24);
+                const moonMat = new THREE.MeshStandardMaterial({ map: moonTex, roughness: 0.85 });
                 const moonMesh = new THREE.Mesh(moonGeo, moonMat);
                 moonMesh.position.x = bodyR + 6;
                 moonMesh.userData = { key: 'moon', data: window.SOLAR_SYSTEM_DATA.moon };
