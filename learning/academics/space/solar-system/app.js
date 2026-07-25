@@ -175,9 +175,17 @@
             var headGeo = new THREE.SphereGeometry(1.6, 32, 32);
             var headMat = new THREE.MeshStandardMaterial({ map: faceTex, roughness: 0.3 });
             var head = new THREE.Mesh(headGeo, headMat);
-            head.rotation.y = -Math.PI / 2; // Orient face texture directly forward facing console
+            // Orient face texture directly toward user's 3rd-person camera view!
+            head.rotation.y = Math.PI / 2;
             head.position.set(0, 2.7, 0.3);
             pilotGroup.add(head);
+
+            // Add Front-facing Avatar Sprite Plate for 100% Face Visibility
+            var spriteMat = new THREE.SpriteMaterial({ map: faceTex, transparent: true });
+            var sprite = new THREE.Sprite(spriteMat);
+            sprite.scale.set(3.4, 3.4, 1.0);
+            sprite.position.set(0, 2.7, 0.3);
+            pilotGroup.add(sprite);
 
             // Cute Animal Ears
             var earGeo = new THREE.SphereGeometry(0.55, 16, 16);
