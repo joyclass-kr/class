@@ -528,11 +528,13 @@
                 new THREE.SphereGeometry(sunR, 64, 64),
                 new THREE.MeshBasicMaterial({ map: sunTex })
             );
+            sunMesh.userData = { key: 'sun', data: window.SOLAR_SYSTEM_DATA.sun };
             
             var c1 = new THREE.Mesh(
                 new THREE.SphereGeometry(sunR * 1.02, 64, 64),
                 new THREE.MeshBasicMaterial({ color: 0xffaa00, transparent: true, opacity: 0.22, side: THREE.BackSide })
             );
+            c1.userData = { key: 'sun', data: window.SOLAR_SYSTEM_DATA.sun };
             sunMesh.add(c1);
 
             // ☀️ 3D DYNAMIC SUNSPOT ENGINE (Umbra/Penumbra 2-Layer Mesh + Mid-latitude 10-35° Rule + Life Cycle)
@@ -1434,10 +1436,10 @@
             var worldPos = new THREE.Vector3();
             bodyObj.mesh.getWorldPosition(worldPos);
 
-            // 🛸 UFO Flight Mode Rule: Must fly close (Distance <= 130) to open card!
+            // 🛸 UFO Flight Mode Rule: Must fly close (Distance <= 140, Sun <= 450) to open card!
             if (ufoState.active && ufoMesh) {
                 var dist = ufoState.pos.distanceTo(worldPos);
-                var maxExploreDist = (key === 'sun') ? 220 : 130;
+                var maxExploreDist = (key === 'sun') ? 450 : 140;
                 if (dist > maxExploreDist) {
                     showSpaceToast('🛸 [탐사 거리 경고] 더 가까이 다가가세요! (현재 거리: ' + Math.round(dist) + ' / 필요 거리: ' + maxExploreDist + ' 이내)');
                     return; // Block opening card from far away!
