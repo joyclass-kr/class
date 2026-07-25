@@ -199,11 +199,12 @@ window.SOLAR_SYSTEM_DATA = {
 
 /**
  * Photorealistic Equirectangular Map Generator for Earth & All Solar Bodies
+ * Returns HTML5 Canvas Element directly (100% synchronous, zero CORS errors on file://)
  */
-window.createPlanetTexture = function (planetKey) {
+window.createPlanetCanvas = function (planetKey) {
     const canvas = document.createElement('canvas');
-    canvas.width = 2048;
-    canvas.height = 1024;
+    canvas.width = 1024;
+    canvas.height = 512;
     const ctx = canvas.getContext('2d');
     const w = canvas.width;
     const h = canvas.height;
@@ -477,16 +478,20 @@ window.createPlanetTexture = function (planetKey) {
         ctx.fill();
     }
 
-    return canvas.toDataURL('image/png');
+    return canvas;
+};
+
+window.createPlanetTexture = function (planetKey) {
+    return window.createPlanetCanvas(planetKey).toDataURL('image/png');
 };
 
 /**
- * Photorealistic Earth 3D Cloud Texture Map
+ * Photorealistic Earth 3D Cloud Texture Map Canvas
  */
-window.createEarthCloudTexture = function () {
+window.createEarthCloudCanvas = function () {
     const canvas = document.createElement('canvas');
-    canvas.width = 2048;
-    canvas.height = 1024;
+    canvas.width = 1024;
+    canvas.height = 512;
     const ctx = canvas.getContext('2d');
     const w = canvas.width;
     const h = canvas.height;
@@ -504,13 +509,17 @@ window.createEarthCloudTexture = function () {
         ctx.fill();
     }
 
-    return canvas.toDataURL('image/png');
+    return canvas;
+};
+
+window.createEarthCloudTexture = function () {
+    return window.createEarthCloudCanvas().toDataURL('image/png');
 };
 
 /**
- * Saturn Ring Texture Generator
+ * Saturn Ring Texture Generator Canvas
  */
-window.createSaturnRingTexture = function () {
+window.createSaturnRingCanvas = function () {
     const canvas = document.createElement('canvas');
     canvas.width = 1024;
     canvas.height = 64;
@@ -527,5 +536,9 @@ window.createSaturnRingTexture = function () {
 
     ctx.fillStyle = grad;
     ctx.fillRect(0, 0, canvas.width, canvas.height);
-    return canvas.toDataURL('image/png');
+    return canvas;
+};
+
+window.createSaturnRingTexture = function () {
+    return window.createSaturnRingCanvas().toDataURL('image/png');
 };

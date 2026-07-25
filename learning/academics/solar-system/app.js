@@ -339,40 +339,21 @@ document.addEventListener('DOMContentLoaded', () => {
         }
     }
 
-    function createTextureFromUrlData(dataUrl) {
-        const texture = new THREE.TextureLoader().load(dataUrl);
+    function loadPlanetTexture(key) {
+        let canvasEl;
+        if (key === 'earthCloud') {
+            canvasEl = window.createEarthCloudCanvas();
+        } else if (key === 'saturnRing') {
+            canvasEl = window.createSaturnRingCanvas();
+        } else {
+            canvasEl = window.createPlanetCanvas(key);
+        }
+
+        const texture = new THREE.CanvasTexture(canvasEl);
         texture.wrapS = THREE.RepeatWrapping;
         texture.wrapT = THREE.ClampToEdgeWrapping;
+        texture.needsUpdate = true;
         return texture;
-    }
-
-    // High-Res NASA Planet Textures Loader with Procedural Fallback
-    const textureLoader = new THREE.TextureLoader();
-    
-    // High Quality NASA & SolarSystemScope Texture Maps
-    const NASA_TEXTURE_URLS = {
-        sun: 'https://raw.githubusercontent.com/mrdoob/three.js/dev/examples/textures/lava/lavatile.jpg',
-        earth: 'https://raw.githubusercontent.com/mrdoob/three.js/dev/examples/textures/planets/earth_atmo_2048.jpg',
-        earthCloud: 'https://raw.githubusercontent.com/mrdoob/three.js/dev/examples/textures/planets/earth_clouds_1024.png',
-        moon: 'https://raw.githubusercontent.com/mrdoob/three.js/dev/examples/textures/planets/moon_1024.jpg'
-    };
-
-    function loadPlanetTexture(key) {
-        const fallbackUrl = window.createPlanetTexture(key);
-        const fallbackTex = createTextureFromUrlData(fallbackUrl);
-
-        if (NASA_TEXTURE_URLS[key]) {
-            return textureLoader.load(
-                NASA_TEXTURE_URLS[key],
-                (tex) => {
-                    tex.wrapS = THREE.RepeatWrapping;
-                    tex.wrapT = THREE.ClampToEdgeWrapping;
-                },
-                undefined,
-                () => fallbackTex // Seamless fallback on error/offline
-            );
-        }
-        return fallbackTex;
     }
 
     function buildCelestialBodies() {
@@ -437,8 +418,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
             // Saturn Ring Mesh
             if (key === 'saturn') {
-                const ringTexData = window.createSaturnRingTexture();
-                const ringTex = createTextureFromUrlData(ringTexData);
+                const ringTex = loadPlanetTexture('saturnRing');
                 const ringGeo = new THREE.RingGeometry(bodyR * 1.3, bodyR * 2.4, 64);
 
                 ringGeo.rotateX(Math.PI / 2.2);
