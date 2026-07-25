@@ -290,28 +290,24 @@
 
         window.addEventListener('keydown', function(e) {
             if (!ufoState.active) return;
-            if (['ArrowUp', 'ArrowDown', 'ArrowLeft', 'ArrowRight', 'w', 'W', 's', 'S', 'a', 'A', 'd', 'D', 'q', 'Q', 'e', 'E'].indexOf(e.key) !== -1) {
+            if (['ArrowUp', 'ArrowDown', 'ArrowLeft', 'ArrowRight', 'w', 'W', 's', 'S', 'a', 'A', 'd', 'D'].indexOf(e.key) !== -1) {
                 e.preventDefault();
             }
             if (e.key === 'ArrowUp' || e.key === 'w' || e.key === 'W') ufoState.keys.forward = true;
             if (e.key === 'ArrowDown' || e.key === 's' || e.key === 'S') ufoState.keys.backward = true;
             if (e.key === 'ArrowLeft' || e.key === 'a' || e.key === 'A') ufoState.keys.left = true;
             if (e.key === 'ArrowRight' || e.key === 'd' || e.key === 'D') ufoState.keys.right = true;
-            if (e.key === 'q' || e.key === 'Q') ufoState.keys.up = true;
-            if (e.key === 'e' || e.key === 'E') ufoState.keys.down = true;
         });
 
         window.addEventListener('keyup', function(e) {
             if (!ufoState.active) return;
-            if (['ArrowUp', 'ArrowDown', 'ArrowLeft', 'ArrowRight', 'w', 'W', 's', 'S', 'a', 'A', 'd', 'D', 'q', 'Q', 'e', 'E'].indexOf(e.key) !== -1) {
+            if (['ArrowUp', 'ArrowDown', 'ArrowLeft', 'ArrowRight', 'w', 'W', 's', 'S', 'a', 'A', 'd', 'D'].indexOf(e.key) !== -1) {
                 e.preventDefault();
             }
             if (e.key === 'ArrowUp' || e.key === 'w' || e.key === 'W') ufoState.keys.forward = false;
             if (e.key === 'ArrowDown' || e.key === 's' || e.key === 'S') ufoState.keys.backward = false;
             if (e.key === 'ArrowLeft' || e.key === 'a' || e.key === 'A') ufoState.keys.left = false;
             if (e.key === 'ArrowRight' || e.key === 'd' || e.key === 'D') ufoState.keys.right = false;
-            if (e.key === 'q' || e.key === 'Q') ufoState.keys.up = false;
-            if (e.key === 'e' || e.key === 'E') ufoState.keys.down = false;
         });
 
         var moonScene, moonCamera, moonRenderer, moonControls;
@@ -532,13 +528,11 @@
                 new THREE.SphereGeometry(sunR, 64, 64),
                 new THREE.MeshBasicMaterial({ map: sunTex })
             );
-            sunMesh.userData = { key: 'sun', data: window.SOLAR_SYSTEM_DATA.sun };
             
             var c1 = new THREE.Mesh(
                 new THREE.SphereGeometry(sunR * 1.02, 64, 64),
                 new THREE.MeshBasicMaterial({ color: 0xffaa00, transparent: true, opacity: 0.22, side: THREE.BackSide })
             );
-            c1.userData = { key: 'sun', data: window.SOLAR_SYSTEM_DATA.sun };
             sunMesh.add(c1);
 
             // ☀️ 3D DYNAMIC SUNSPOT ENGINE (Umbra/Penumbra 2-Layer Mesh + Mid-latitude 10-35° Rule + Life Cycle)
@@ -1301,7 +1295,6 @@
             }
 
             // 🛸 Kartrider-Style 3rd-Person Pursuit Camera System for UFO Explorer
-            // 🛸 Kartrider-Style 3rd-Person Pursuit Camera System with Smart Orbital Elevation Assist
             if (ufoState.active && ufoMesh && camera) {
                 var moveSpeed = 2.2 * Math.min(state.orbitSpeed || 1.0, 2.5);
 
@@ -1326,34 +1319,11 @@
                     isMoving = true;
                 }
 
-                // 🛸 100% Seamless Smart Orbital Plane Elevation Assist (Auto-tracks inclined orbit planes like Pluto 17.16°!)
-                var nearestBodyDist = Infinity;
-                var targetTargetY = 0;
-
-                Object.keys(celestialBodies).forEach(function(k) {
-                    var bObj = celestialBodies[k];
-                    if (bObj && bObj.mesh) {
-                        var bWorldPos = new THREE.Vector3();
-                        bObj.mesh.getWorldPosition(bWorldPos);
-                        var d = ufoState.pos.distanceTo(bWorldPos);
-                        if (d < nearestBodyDist && d < 420) {
-                            nearestBodyDist = d;
-                            targetTargetY = bWorldPos.y;
-                        }
-                    }
-                });
-
-                if (nearestBodyDist < 420) {
-                    // Seamlessly lerp Y altitude toward inclined orbit plane (Pluto 17.16deg incline auto-tracking!)
-                    var blendRatio = Math.max(0.0, 1.0 - nearestBodyDist / 420);
-                    ufoState.pos.y += (targetTargetY - ufoState.pos.y) * 0.12 * blendRatio;
-                }
-
                 ufoMesh.position.copy(ufoState.pos);
                 ufoMesh.rotation.y = ufoState.heading;
 
                 // 🚗 Kartrider Pursuit Camera Locked Offset (Always behind & slightly above UFO)
-                var camDistance = 38.0; // Fixed distance
+                var camDistance = 38.0; // Fixed distance (No drifting!)
                 var camHeight = 18.0;   // Fixed elevation height
                 
                 var desiredCamPos = ufoState.pos.clone()
@@ -1463,19 +1433,8 @@
             if (!bodyObj || !bodyObj.mesh) return;
             var worldPos = new THREE.Vector3();
             bodyObj.mesh.getWorldPosition(worldPos);
-
-            // 🛸 UFO Flight Mode Rule: Must fly close (Distance <= 140, Sun <= 450) to open card!
-            if (ufoState.active && ufoMesh) {
-                var dist = ufoState.pos.distanceTo(worldPos);
-                var maxExploreDist = (key === 'sun') ? 450 : 140;
-                if (dist > maxExploreDist) {
-                    showSpaceToast('🛸 [탐사 거리 경고] 더 가까이 다가가세요! (현재 거리: ' + Math.round(dist) + ' / 필요 거리: ' + maxExploreDist + ' 이내)');
-                    return; // Block opening card from far away!
-                }
-            }
-
             var r = getBodyScaleRadius(key);
-            if (controls && !ufoState.active) {
+            if (controls) {
                 controls.target.copy(worldPos);
                 // Adjust zoom factor based on log scale sizes
                 var offset = (key === 'sun') ? r * 3.5 : (key === 'asteroid' ? 80.0 : (key === 'comet' ? 35.0 : r * 10.0));
@@ -1485,36 +1444,6 @@
                 controls.update();
             }
             openPlanetModal(key);
-        }
-
-        // 🛸 Custom Toast Notification for Space Exploration
-        function showSpaceToast(msg) {
-            var old = document.getElementById('spaceToastMsg');
-            if (old && old.parentNode) old.parentNode.removeChild(old);
-
-            var toast = document.createElement('div');
-            toast.id = 'spaceToastMsg';
-            toast.textContent = msg;
-            toast.style.position = 'fixed';
-            toast.style.top = '75px';
-            toast.style.left = '50%';
-            toast.style.transform = 'translateX(-50%)';
-            toast.style.background = 'rgba(15, 23, 42, 0.95)';
-            toast.style.color = '#38bdf8';
-            toast.style.border = '1px solid rgba(56, 189, 248, 0.7)';
-            toast.style.padding = '10px 20px';
-            toast.style.borderRadius = '24px';
-            toast.style.fontSize = '14px';
-            toast.style.fontWeight = 'bold';
-            toast.style.zIndex = '9999';
-            toast.style.boxShadow = '0 10px 30px rgba(0,0,0,0.8)';
-            toast.style.pointerEvents = 'none';
-            toast.style.backdropFilter = 'blur(8px)';
-            document.body.appendChild(toast);
-
-            setTimeout(function() {
-                if (toast && toast.parentNode) toast.parentNode.removeChild(toast);
-            }, 2500);
         }
 
         // ========== 2. EARTH-MOON OBSERVATORY (Tab 2) ==========
@@ -1753,7 +1682,6 @@
             if (ufoModeBtn) {
                 ufoModeBtn.addEventListener('click', function() {
                     ufoState.active = !ufoState.active;
-
                     if (ufoState.active) {
                         ufoModeBtn.textContent = '🛸 UFO 탐험 (UFO Flight) ON';
                         ufoModeBtn.style.background = 'rgba(56, 189, 248, 0.3)';
@@ -1765,7 +1693,6 @@
                             controls.target.copy(ufoState.pos);
                             controls.update();
                         }
-                        showSpaceToast('🛸 UFO 탐험 시작! 천체에 직접 가까이 비행하여 3D로 클릭하세요.');
                     } else {
                         ufoModeBtn.textContent = '🛸 UFO 탐험 (UFO Flight) OFF';
                         ufoModeBtn.style.background = 'rgba(56, 189, 248, 0.15)';
@@ -2200,7 +2127,13 @@
             }
 
             document.getElementById('modalDesc').textContent = body.desc;
-        }
+
+            var missionsBox = document.getElementById('modalMissions');
+            if (missionsBox) {
+                missionsBox.innerHTML = (body.missions || ['국제 우주 관측선']).map(function (m) {
+                    return '<span style="background:rgba(56,189,248,0.15);color:#38bdf8;border:1px solid rgba(56,189,248,0.3);padding:4px 12px;border-radius:6px;font-size:12px;font-weight:700;">🚀 ' + m + '</span>';
+                }).join('');
+            }
 
             if (modalOverlay) modalOverlay.classList.add('active');
         }

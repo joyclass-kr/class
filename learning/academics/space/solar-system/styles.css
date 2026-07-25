@@ -216,7 +216,7 @@ body {
 
 .solar-canvas-wrapper {
     width: 100%;
-    height: clamp(520px, 68vh, 760px);
+    height: 540px;
     position: relative;
     background: #000;
     cursor: grab;

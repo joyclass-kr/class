@@ -68,18 +68,16 @@
                     <div id="labelsContainer" style="position:absolute; top:0; left:0; width:100%; height:100%; pointer-events:none; overflow:hidden;"></div>
                     
                     <!-- UFO Flight Touch/Arrow Controls Overlay -->
-                    <div id="ufoControlsPanel" style="display: none; position: absolute; bottom: 16px; left: 16px; background: rgba(15, 23, 42, 0.9); border: 1px solid rgba(56, 189, 248, 0.4); border-radius: 12px; padding: 10px 14px; backdrop-filter: blur(8px); z-index: 12;">
-                        <div style="font-size: 12px; color: #38bdf8; font-weight: 800; margin-bottom: 2px;">🛸 UFO 비행 탐험 조종</div>
-                        <div style="font-size: 10.5px; color: #cbd5e1; margin-bottom: 6px;">방향: WASD / 화살표 (자동 궤도 고도 보정)</div>
-                        
-                        <!-- Direction Pad -->
-                        <div style="display: grid; grid-template-columns: repeat(3, 34px); gap: 4px; justify-content: center;">
+                    <div id="ufoControlsPanel" style="display: none; position: absolute; bottom: 16px; left: 16px; background: rgba(15, 23, 42, 0.85); border: 1px solid rgba(56, 189, 248, 0.4); border-radius: 12px; padding: 10px 14px; backdrop-filter: blur(8px); z-index: 12;">
+                        <div style="font-size: 11px; color: #38bdf8; font-weight: 700; margin-bottom: 6px;">🛸 UFO 조종 (화살표 / WASD)</div>
+                        <div style="font-size: 11px; color: #94a3b8; margin-bottom: 8px;">드래그: 구도 변경 | 휠: 확대/축소</div>
+                        <div style="display: grid; grid-template-columns: repeat(3, 36px); gap: 4px; justify-content: center;">
                             <div></div>
-                            <button id="ufoUpBtn" style="height: 34px; background: rgba(56,189,248,0.2); border: 1px solid #38bdf8; color: #fff; border-radius: 6px; font-weight: bold; cursor: pointer;">▲</button>
+                            <button id="ufoUpBtn" style="height: 36px; background: rgba(56,189,248,0.2); border: 1px solid #38bdf8; color: #fff; border-radius: 6px; font-weight: bold; cursor: pointer;">▲</button>
                             <div></div>
-                            <button id="ufoLeftBtn" style="height: 34px; background: rgba(56,189,248,0.2); border: 1px solid #38bdf8; color: #fff; border-radius: 6px; font-weight: bold; cursor: pointer;">◄</button>
-                            <button id="ufoDownBtn" style="height: 34px; background: rgba(56,189,248,0.2); border: 1px solid #38bdf8; color: #fff; border-radius: 6px; font-weight: bold; cursor: pointer;">▼</button>
-                            <button id="ufoRightBtn" style="height: 34px; background: rgba(56,189,248,0.2); border: 1px solid #38bdf8; color: #fff; border-radius: 6px; font-weight: bold; cursor: pointer;">►</button>
+                            <button id="ufoLeftBtn" style="height: 36px; background: rgba(56,189,248,0.2); border: 1px solid #38bdf8; color: #fff; border-radius: 6px; font-weight: bold; cursor: pointer;">◄</button>
+                            <button id="ufoDownBtn" style="height: 36px; background: rgba(56,189,248,0.2); border: 1px solid #38bdf8; color: #fff; border-radius: 6px; font-weight: bold; cursor: pointer;">▼</button>
+                            <button id="ufoRightBtn" style="height: 36px; background: rgba(56,189,248,0.2); border: 1px solid #38bdf8; color: #fff; border-radius: 6px; font-weight: bold; cursor: pointer;">►</button>
                         </div>
                     </div>
                     
@@ -148,6 +146,11 @@
                             </label>
                         </div>
 
+                    </div>
+
+                    <!-- Planet Quick Jump Bar -->
+                    <div class="planet-quick-bar" id="planetQuickBar">
+                        <!-- JS Dyn Rendered Planet Chips -->
                     </div>
 
                 </div>
@@ -437,47 +440,6 @@
                         <span class="slider-val-badge" style="background: linear-gradient(135deg, #ffd18a, #b56e20); color: #000; padding: 6px 14px; border-radius: 20px; font-weight: 800; font-size: 13px;">연속 콤보: <span id="quizStreak">0</span> 🔥</span>
                         <span class="slider-val-badge" style="background: linear-gradient(135deg, #38bdf8, #0284c7); color: #000; padding: 6px 14px; border-radius: 20px; font-weight: 800; font-size: 13px;">점수: <span id="quizScore">0</span>점</span>
                     </div>
-<thead>
-                        <tr style="background: rgba(255,255,255,0.06); border-bottom: 2px solid var(--border-color); color: #38bdf8;">
-                            <th style="padding: 10px 14px;">천체명</th>
-                            <th style="padding: 10px 14px;">분류</th>
-                            <th style="padding: 10px 14px;">반지름 (km)</th>
-                            <th style="padding: 10px 14px;">지구 대비 질량</th>
-                            <th style="padding: 10px 14px;">평균 밀도</th>
-                            <th style="padding: 10px 14px;">표면 중력</th>
-                            <th style="padding: 10px 14px;">공전 주기</th>
-                            <th style="padding: 10px 14px;">자전 주기</th>
-                        </tr>
-                    </thead>
-                    <tbody id="specTableBody">
-                        <!-- JS Dyn Rendered Table Rows -->
-                    </tbody>
-                </table>
-            </div>
-
-            <!-- Celestial Atlas Cards Grid -->
-            <h3 style="color: #ffd18a; font-size: 18px; margin-bottom: 16px; display: flex; align-items: center; gap: 8px;">
-                🌌 천체별 입체 정보 카드
-            </h3>
-            <div class="atlas-grid" id="atlasGrid">
-                <!-- JS Dyn Rendered Cards -->
-            </div>
-        </section>
-
-        <!-- Tab 4: Space Quiz -->
-        <section class="tab-pane" id="tab-quiz">
-            <div style="max-width: 850px; margin: 20px auto; background: var(--bg-card); border: 1px solid var(--border-color); border-radius: var(--radius-lg); padding: 32px; box-shadow: 0 15px 40px rgba(0,0,0,0.6);">
-                <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 24px; border-bottom: 1px solid var(--border-color); padding-bottom: 16px; flex-wrap: wrap; gap: 12px;">
-                    <div>
-                        <div style="display: flex; align-items: center; gap: 10px;">
-                            <h2>🧩 핵심 출제 문제</h2>
-                        </div>
-                    </div>
-                    <div style="display: flex; gap: 10px; align-items: center;">
-                        <span class="slider-val-badge" style="background: rgba(255,255,255,0.06); border: 1px solid var(--border-color); color: #fff; padding: 6px 14px; border-radius: 20px; font-size: 13px; font-weight: 700;" id="quizProgressText">문제 1 / 10</span>
-                        <span class="slider-val-badge" style="background: linear-gradient(135deg, #ffd18a, #b56e20); color: #000; padding: 6px 14px; border-radius: 20px; font-weight: 800; font-size: 13px;">연속 콤보: <span id="quizStreak">0</span> 🔥</span>
-                        <span class="slider-val-badge" style="background: linear-gradient(135deg, #38bdf8, #0284c7); color: #000; padding: 6px 14px; border-radius: 20px; font-weight: 800; font-size: 13px;">점수: <span id="quizScore">0</span>점</span>
-                    </div>
                 </div>
 
                 <div style="text-align: left;">
@@ -495,7 +457,7 @@
                     <!-- Result Feedback Banner -->
                     <div id="quizResultMsg" style="margin-top: 20px; font-weight: 800; font-size: 17px; text-align: center;"></div>
 
-                    <!-- Detailed Explanation Box -->
+                    <!-- Detailed Explanation Box (Revealed on answer) -->
                     <div id="quizExpBox" style="display: none; margin-top: 20px; background: rgba(56, 189, 248, 0.08); border: 1px solid rgba(56, 189, 248, 0.3); border-left: 4px solid #38bdf8; border-radius: 10px; padding: 16px 20px;">
                         <div style="font-size: 14px; font-weight: 800; color: #38bdf8; margin-bottom: 6px; display: flex; align-items: center; gap: 6px;">
                             <span>💡</span> <span>핵심 개념 해설</span>
@@ -558,12 +520,212 @@
                         <p id="modalDesc" style="font-size: 13.5px; color: #cbd5e1; line-height: 1.6; margin: 0;"></p>
                     </div>
 
+                    <!-- Missions -->
+                    <div style="background: rgba(255, 255, 255, 0.02); padding: 12px 16px; border-radius: 10px; border: 1px solid var(--border-color);">
+                        <h4 style="font-size: 13px; color: var(--text-muted); margin-bottom: 6px;">🚀 대표 우주 탐사선</h4>
+                        <div style="display: flex; flex-wrap: wrap; gap: 6px;" id="modalMissions"></div>
+                    </div>
+                    </div>
+                </div>
+
+                <div class="solar-canvas-wrapper" id="moonCanvasContainer" style="height: 520px;">
+                    <canvas id="moonCanvas"></canvas>
+                    
+                    <!-- Overlay Earth-View Phase Preview Box (지구에서 본 달의 모양) -->
+                    <div style="position: absolute; bottom: 20px; right: 20px; background: rgba(10, 15, 29, 0.9); border: 1px solid var(--border-color); border-radius: 12px; padding: 14px 18px; text-align: center; backdrop-filter: blur(8px); box-shadow: 0 10px 25px rgba(0,0,0,0.7); min-width: 180px;">
+                        <div style="font-size: 11px; color: var(--text-muted); margin-bottom: 4px;">🔭 지구에서 본 달의 위상</div>
+                        <div id="moonPhaseName" style="font-size: 18px; font-weight: 900; color: #ffd18a; margin-bottom: 6px;">상현달 (First Quarter)</div>
+                        <div style="font-size: 12px; color: #38bdf8; font-weight: 700;" id="moonObsTimeInfo">남중 시각: 오후 6시 (18:00)</div>
+                    </div>
+
+                    <!-- Sunlight Direction Indicator -->
+                    <div style="position: absolute; top: 20px; right: 20px; background: rgba(234, 179, 8, 0.15); border: 1px solid rgba(234, 179, 8, 0.4); color: #fef08a; padding: 6px 14px; border-radius: 20px; font-size: 12px; font-weight: 800;">
+                        ☀️ 태양빛 방향 ➔ (오른쪽에서 햇빛 입사)
+                    </div>
+                </div>
+
+                <div class="sim-controls-panel">
+                    <div class="sim-time-display">
+                        <span class="sim-time-label">달 공전 진행: </span>
+                        <span class="sim-time-value" id="moonProgressVal">음력 7~8일 경 (상현)</span>
+                    </div>
+
+                    <div style="display: flex; gap: 16px; align-items: center; flex-wrap: wrap; justify-content: center;">
+                        <button class="nav-tab active" id="moonPlayBtn" style="padding: 6px 18px; font-size: 14px;">⏸ 일시정지</button>
+                        
+                        <div style="display: flex; align-items: center; gap: 8px;">
+                            <span style="font-size: 13px; color: var(--text-muted);">공전 속도:</span>
+                            <input type="range" id="moonSpeedSlider" min="0.2" max="3.0" step="0.1" value="1.0" style="width: 120px;">
+                        </div>
+
+                        <label class="toggle-switch">
+                            <input type="checkbox" id="showMoonOrbitToggle" checked>
+                            <span class="slider-knob"></span>
+                        </label>
+                        <span style="font-size: 13px; color: var(--text-secondary);">달 공전 궤도선 표시</span>
+                    </div>
+                </div>
+            </div>
+
+            <!-- CSAT Knowledge Box for Moon Phases -->
+            <div style="margin-top: 24px; background: var(--bg-card); border: 1px solid var(--border-color); border-radius: var(--radius-lg); padding: 24px;">
+                <h3 style="color: #38bdf8; font-size: 18px; margin-bottom: 12px; display: flex; align-items: center; gap: 8px;">
+                    🎓 핵심 출제: 달의 위상과 남중 시각 핵심 정리
+                </h3>
+                <div style="display: grid; grid-template-columns: repeat(auto-fill, minmax(240px, 1fr)); gap: 14px;">
+                    <div style="background: rgba(255,255,255,0.03); padding: 14px; border-radius: 8px; border: 1px solid var(--border-color);">
+                        <div style="font-weight: 800; color: #ffd18a; font-size: 14px;">🌑 삭 (New Moon)</div>
+                        <div style="font-size: 12px; color: var(--text-muted); margin-top: 4px;">태양-달-지구 위치 / 남중: 정오(12:00) / 관측 불가</div>
+                    </div>
+                    <div style="background: rgba(255,255,255,0.03); padding: 14px; border-radius: 8px; border: 1px solid var(--border-color);">
+                        <div style="font-weight: 800; color: #ffd18a; font-size: 14px;">🌓 상현달 (First Quarter)</div>
+                        <div style="font-size: 12px; color: var(--text-muted); margin-top: 4px;">오른쪽 반달 / 남중: 오후 6시(18:00) / 초저녁 서쪽 하늘</div>
+                    </div>
+                    <div style="background: rgba(255,255,255,0.03); padding: 14px; border-radius: 8px; border: 1px solid var(--border-color);">
+                        <div style="font-weight: 800; color: #ffd18a; font-size: 14px;">🌕 망/보름달 (Full Moon)</div>
+                        <div style="font-size: 12px; color: var(--text-muted); margin-top: 4px;">태양-지구-달 위치 / 남중: 한밤중(24:00) / 밤새도록 관측</div>
+                    </div>
+                    <div style="background: rgba(255,255,255,0.03); padding: 14px; border-radius: 8px; border: 1px solid var(--border-color);">
+                        <div style="font-weight: 800; color: #ffd18a; font-size: 14px;">🌗 하현달 (Third Quarter)</div>
+                        <div style="font-size: 12px; color: var(--text-muted); margin-top: 4px;">왼쪽 반달 / 남중: 새벽 6시(06:00) / 새벽 동쪽 하늘</div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Tab 3: Planet Atlas & Explorer -->
+        <section class="tab-pane" id="tab-atlas">
+            <h2 style="margin-bottom: 8px;">🪐 태양계 천체 입체 도감</h2>
+            <p style="color: var(--text-secondary); font-size: 14px;">태양과 8개 행성, 위성 달과 명왕성의 상세 정보 및 탐사선 역사를 확인해보세요.</p>
+
+            <div class="atlas-grid" id="atlasGrid">
+                <!-- JS Dyn Rendered Cards -->
+            </div>
+        </section>
+
+        <!-- Tab 3: Solar System Members Spec Comparison -->
+        <section class="tab-pane" id="tab-calc">
+            <div class="calc-container">
+                <h2 style="margin-bottom: 6px;">⚖️ 태양계 구성원 스펙 비교 (핵심 출제 지표)</h2>
+                <p style="color: var(--text-secondary); font-size: 14px; margin-bottom: 24px;">
+                    태양을 포함한 모든 천체의 반지름, 부피, 질량, 표면 중력, 밀도, 그리고 자전/공전 주기를 한눈에 비교해보세요.
+                </p>
+
+                <div class="calc-results-grid" id="calcResultsGrid">
+                    <!-- JS Dyn Rendered Orbit & Rotation Comparison Cards -->
+                </div>
+            </div>
+        </section>
+                    <!-- JS Dyn Calculated Results -->
+                </div>
+            </div>
+        </section>
+
+        <!-- Tab 4: Space Quiz -->
+        <section class="tab-pane" id="tab-quiz">
+            <div style="max-width: 850px; margin: 20px auto; background: var(--bg-card); border: 1px solid var(--border-color); border-radius: var(--radius-lg); padding: 32px; box-shadow: 0 15px 40px rgba(0,0,0,0.6);">
+                <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 24px; border-bottom: 1px solid var(--border-color); padding-bottom: 16px; flex-wrap: wrap; gap: 12px;">
+                    <div>
+                        <div style="display: flex; align-items: center; gap: 10px;">
+                            <h2>🧩 핵심 출제 문제</h2>
+                        </div>
+                    </div>
+                    <div style="display: flex; gap: 10px; align-items: center;">
+                        <span class="slider-val-badge" style="background: rgba(255,255,255,0.06); border: 1px solid var(--border-color); color: #fff; padding: 6px 14px; border-radius: 20px; font-size: 13px; font-weight: 700;" id="quizProgressText">문제 1 / 10</span>
+                        <span class="slider-val-badge" style="background: linear-gradient(135deg, #ffd18a, #b56e20); color: #000; padding: 6px 14px; border-radius: 20px; font-weight: 800; font-size: 13px;">연속 콤보: <span id="quizStreak">0</span> 🔥</span>
+                        <span class="slider-val-badge" style="background: linear-gradient(135deg, #38bdf8, #0284c7); color: #000; padding: 6px 14px; border-radius: 20px; font-weight: 800; font-size: 13px;">점수: <span id="quizScore">0</span>점</span>
+                    </div>
+                </div>
+
+                <div style="text-align: left;">
+                    <!-- Question Box -->
+                    <div style="background: rgba(10, 16, 28, 0.8); border: 1px solid var(--border-color); border-radius: var(--radius-md); padding: 24px 28px; margin-bottom: 24px;">
+                        <div style="font-size: 20px; font-weight: 800; color: #fff; line-height: 1.5; margin-bottom: 8px;" id="quizQuestionText">문제를 불러오는 중입니다...</div>
+                        <div style="font-size: 14px; color: var(--text-muted);" id="quizSubText">💡 힌트: 문제를 주의 깊게 읽어보세요.</div>
+                    </div>
+
+                    <!-- Options Grid -->
+                    <div style="display: grid; grid-template-columns: repeat(2, 1fr); gap: 14px;" id="quizOptionsGrid">
+                        <!-- Options dynamically inserted -->
+                    </div>
+
+                    <!-- Result Feedback Banner -->
+                    <div id="quizResultMsg" style="margin-top: 20px; font-weight: 800; font-size: 17px; text-align: center;"></div>
+
+                    <!-- Detailed Explanation Box (Revealed on answer) -->
+                    <div id="quizExpBox" style="display: none; margin-top: 20px; background: rgba(56, 189, 248, 0.08); border: 1px solid rgba(56, 189, 248, 0.3); border-left: 4px solid #38bdf8; border-radius: 10px; padding: 16px 20px;">
+                        <div style="font-size: 14px; font-weight: 800; color: #38bdf8; margin-bottom: 6px; display: flex; align-items: center; gap: 6px;">
+                            <span>💡</span> <span>핵심 개념 해설</span>
+                        </div>
+                        <div id="quizExpText" style="font-size: 13.5px; color: #e2e8f0; line-height: 1.6;"></div>
+                    </div>
+                    
+                    <!-- Next Question Action Button -->
+                    <div style="text-align: center; margin-top: 24px;">
+                        <button class="nav-tab active" id="nextQuizBtn" style="padding: 12px 32px; font-size: 16px; font-weight: 800; border-radius: 30px; cursor: pointer;">
+                            다음 문제 풀기 ➔
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+    </main>
+
+    <!-- Planet Detail Modal Popup -->
+    <div class="modal-overlay" id="modalOverlay" aria-hidden="true">
+        <div class="planet-modal">
+            <button class="close-modal-btn" id="closeModalBtn" aria-label="닫기">✕</button>
+            
+            <div class="modal-split-container">
+                <!-- Left Column: Big Real Photo & Category Badge -->
+                <div class="modal-left-col">
+                    <div class="modal-planet-photo" id="modalPlanetPhoto"></div>
+                    <div>
+                        <span id="modalPlanetCategory" style="background: rgba(56,189,248,0.2); color: #38bdf8; border: 1px solid rgba(56,189,248,0.4); padding: 4px 12px; border-radius: 20px; font-size: 12px; font-weight: 800; display: inline-block; margin-bottom: 8px;">지구형 행성</span>
+                        <div id="modalPlanetDensity" style="font-size: 12px; color: var(--text-muted);">평균 밀도: 5.51 g/cm³</div>
+                    </div>
+                </div>
+
+                <!-- Right Column: CSAT Knowledge & Physics Stats -->
+                <div class="modal-right-col">
+                    <div>
+                        <h2 id="modalPlanetName" style="font-size: 30px; font-weight: 900; color: #fff; margin-bottom: 2px;">지구</h2>
+                        <div id="modalPlanetSub" style="color: var(--text-secondary); font-size: 15px; font-weight: 600;">Earth | 3번째 행성</div>
+                    </div>
+
+                    <!-- Knowledge Box -->
+                    <div class="sat-exam-box">
+                        <div class="sat-exam-title">
+                            🎓 <span>핵심 출제 지식</span>
+                        </div>
+                        <ul class="sat-exam-list" id="modalSatExamPoints">
+                            <!-- JS Dyn Rendered CSAT Points -->
+                        </ul>
+                    </div>
+
+                    <!-- Physics Specs Grid -->
+                    <div style="display: grid; grid-template-columns: repeat(2, 1fr); gap: 10px;" id="modalPropGrid">
+                        <!-- JS Dyn Props -->
+                    </div>
+
+                    <!-- General Desc -->
+                    <div style="background: rgba(255, 255, 255, 0.03); padding: 14px 18px; border-radius: 10px; border-left: 3px solid #38bdf8;">
+                        <h4 style="color: #38bdf8; margin-bottom: 4px; font-size: 14px;">💡 행성 주요 특징</h4>
+                        <p id="modalDesc" style="font-size: 13.5px; color: #cbd5e1; line-height: 1.6; margin: 0;"></p>
+                    </div>
+
+                    <!-- Missions -->
+                    <div style="background: rgba(255, 255, 255, 0.02); padding: 12px 16px; border-radius: 10px; border: 1px solid var(--border-color);">
+                        <h4 style="font-size: 13px; color: var(--text-muted); margin-bottom: 6px;">🚀 대표 우주 탐사선</h4>
+                        <div style="display: flex; flex-wrap: wrap; gap: 6px;" id="modalMissions"></div>
+                    </div>
                 </div>
             </div>
         </div>
     </div>
 
-    <script src="solar-data.js?v=js_quickbar_null_bug_completely_fixed"></script>
-    <script src="app.js?v=js_quickbar_null_bug_completely_fixed"></script>
+    <script src="solar-data.js?v=perfectly_restored_golden_version"></script>
+    <script src="app.js?v=perfectly_restored_golden_version"></script>
 </body>
 </html>
