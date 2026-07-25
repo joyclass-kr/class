@@ -587,6 +587,10 @@
                     moveVec.normalize().multiplyScalar(moveSpeed);
                     ufoState.pos.add(moveVec);
 
+                    // 🛸 Self-Centered Camera Follow (Art Gallery Exploration Style!)
+                    // Move camera position along with UFO so camera NEVER drifts away from UFO
+                    camera.position.add(moveVec);
+
                     // Smoothly turn UFO mesh toward moving direction
                     var targetHeading = Math.atan2(-moveVec.x, -moveVec.z);
                     ufoMesh.rotation.y = targetHeading;
@@ -594,7 +598,7 @@
 
                 ufoMesh.position.copy(ufoState.pos);
 
-                // Sync OrbitControls target to UFO position so Drag & Mouse Wheel work naturally!
+                // Sync OrbitControls target to UFO position
                 if (controls) {
                     controls.target.copy(ufoState.pos);
                 }
