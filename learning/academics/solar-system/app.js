@@ -258,7 +258,13 @@
 
                 var orbitR = getBodyOrbitRadius(key);
                 var bodyR = getBodyScaleRadius(key);
-                var ecc = KEPLER_ECCENTRICITIES[key] || 0.01;
+                
+                // EDUCATIONAL LOG SCALE FIX:
+                // Non-linear log scaling breaks the mathematical relationship between the semi-major axis (a) and focus offset (c=a*e).
+                // To maintain the perfect visual gaps correctly (e.g., Earth-Mars gap being 2x Venus-Earth gap) 
+                // in all directions, eccentricity must be set to 0 (perfect circle) in this mode.
+                var ecc = 0.0; 
+                
                 var incRad = (data.inclinationDeg || 0.0) * (Math.PI / 180);
 
                 var pivot = new THREE.Object3D();
