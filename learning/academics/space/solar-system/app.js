@@ -497,13 +497,13 @@
                     if (key === 'sun') return;
 
                     if (key === 'moon') {
-                        // Moon Orbits Earth 13.37 times per Earth year (Synchronous Rotation)
+                        // Moon Orbits Earth exactly 12.37 times per Earth year (Synodic Month: 365.25 / 29.53 days)
                         var earthBody = celestialBodies['earth'];
                         if (earthBody && earthBody.mesh && b.pivot) {
                             var earthAngle = earthBody.orbitAngle || 0;
-                            var moonAngle = earthAngle * 13.37;
+                            var moonAngle = earthAngle * 12.3688; // Exact synodic month count (12.37 rev/yr)
                             b.pivot.rotation.y = moonAngle;
-                            if (b.mesh) b.mesh.rotation.y = moonAngle; // Synchronous
+                            if (b.mesh) b.mesh.rotation.y = moonAngle; // Synchronous rotation
                         }
                     } else if (b.pivot && b.mesh) {
                         var rate = ORBIT_RATES[key] || 0.1;
