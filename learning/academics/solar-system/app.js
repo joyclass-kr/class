@@ -339,6 +339,22 @@ document.addEventListener('DOMContentLoaded', () => {
         }
     }
 
+    const LOCAL_TEXTURE_FILES = {
+        sun: './assets/textures/2k_sun.jpg',
+        earth: './assets/textures/2k_earth_daymap.jpg',
+        earthCloud: './assets/textures/2k_earth_clouds.png',
+        moon: './assets/textures/2k_moon.jpg',
+        mars: './assets/textures/2k_mars.jpg',
+        jupiter: './assets/textures/2k_jupiter.jpg',
+        saturn: './assets/textures/2k_saturn.jpg',
+        saturnRing: './assets/textures/2k_saturn_ring.png',
+        venus: './assets/textures/2k_venus.jpg',
+        mercury: './assets/textures/2k_mercury.jpg',
+        uranus: './assets/textures/2k_uranus.jpg',
+        neptune: './assets/textures/2k_neptune.jpg',
+        pluto: './assets/textures/2k_pluto.jpg'
+    };
+
     function loadPlanetTexture(key) {
         let canvasEl;
         if (key === 'earthCloud') {
@@ -349,11 +365,24 @@ document.addEventListener('DOMContentLoaded', () => {
             canvasEl = window.createPlanetCanvas(key);
         }
 
-        const texture = new THREE.CanvasTexture(canvasEl);
-        texture.wrapS = THREE.RepeatWrapping;
-        texture.wrapT = THREE.ClampToEdgeWrapping;
-        texture.needsUpdate = true;
-        return texture;
+        const fallbackTex = new THREE.CanvasTexture(canvasEl);
+        fallbackTex.wrapS = THREE.RepeatWrapping;
+        fallbackTex.wrapT = THREE.ClampToEdgeWrapping;
+        fallbackTex.needsUpdate = true;
+
+        if (LOCAL_TEXTURE_FILES[key] && typeof THREE.TextureLoader !== 'undefined') {
+            const loader = new THREE.TextureLoader();
+            return loader.load(
+                LOCAL_TEXTURE_FILES[key],
+                (tex) => {
+                    tex.wrapS = THREE.RepeatWrapping;
+                    tex.wrapT = THREE.ClampToEdgeWrapping;
+                },
+                undefined,
+                () => fallbackTex
+            );
+        }
+        return fallbackTex;
     }
 
     function buildCelestialBodies() {
