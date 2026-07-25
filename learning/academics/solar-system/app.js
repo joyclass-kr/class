@@ -340,37 +340,42 @@ document.addEventListener('DOMContentLoaded', () => {
     }
 
     const LOCAL_REAL_TEXTURES = {
-        sun: './assets/textures/2k_sun.jpg',
-        earth: './assets/textures/2k_earth_daymap.jpg',
-        moon: './assets/textures/2k_moon.jpg',
-        mars: './assets/textures/2k_mars.jpg',
-        jupiter: './assets/textures/2k_jupiter.jpg',
-        saturn: './assets/textures/2k_saturn.jpg',
-        saturnRing: './assets/textures/2k_saturn_ring.png',
-        venus: './assets/textures/2k_venus.jpg',
-        mercury: './assets/textures/2k_mercury.jpg',
-        uranus: './assets/textures/2k_uranus.jpg',
-        neptune: './assets/textures/2k_neptune.jpg'
+        sun: 'assets/textures/2k_sun.jpg',
+        earth: 'assets/textures/2k_earth_daymap.jpg',
+        moon: 'assets/textures/2k_moon.jpg',
+        mars: 'assets/textures/2k_mars.jpg',
+        jupiter: 'assets/textures/2k_jupiter.jpg',
+        saturn: 'assets/textures/2k_saturn.jpg',
+        saturnRing: 'assets/textures/2k_saturn_ring.png',
+        venus: 'assets/textures/2k_venus.jpg',
+        mercury: 'assets/textures/2k_mercury.jpg',
+        uranus: 'assets/textures/2k_uranus.jpg',
+        neptune: 'assets/textures/2k_neptune.jpg'
     };
 
     function loadPlanetTexture(key) {
+        if (LOCAL_REAL_TEXTURES[key] && typeof THREE !== 'undefined' && THREE.TextureLoader) {
+            try {
+                const loader = new THREE.TextureLoader();
+                const tex = loader.load(LOCAL_REAL_TEXTURES[key]);
+                if (tex) {
+                    tex.wrapS = THREE.RepeatWrapping;
+                    tex.wrapT = THREE.ClampToEdgeWrapping;
+                    return tex;
+                }
+            } catch (e) {
+                console.warn('Texture load fallback:', e);
+            }
+        }
+
         // Canvas texture fallback
         const canvasEl = (key === 'saturnRing')
             ? window.createSaturnRingCanvas()
             : window.createPlanetCanvas(key);
 
         const canvasTex = new THREE.CanvasTexture(canvasEl);
-
-        if (LOCAL_REAL_TEXTURES[key]) {
-            try {
-                const loader = new THREE.TextureLoader();
-                const realTex = loader.load(LOCAL_REAL_TEXTURES[key]);
-                if (realTex) return realTex;
-            } catch (e) {
-                // Fallback to canvasTex on local file restriction
-            }
-        }
-
+        canvasTex.wrapS = THREE.RepeatWrapping;
+        canvasTex.wrapT = THREE.ClampToEdgeWrapping;
         return canvasTex;
     }
 
