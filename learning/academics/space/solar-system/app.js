@@ -1483,12 +1483,21 @@
                 var rEarth = 6371;
                 var radiusKm = body.radiusKm || rEarth;
                 var volumeRatio = Math.pow(radiusKm / rEarth, 3);
-                var volumeStr = volumeRatio > 100 ? volumeRatio.toLocaleString('en-US', {maximumFractionDigits: 0}) : volumeRatio.toFixed(3);
-                
-                var radiusRatio = (radiusKm / rEarth).toFixed(2);
-                
+                var volumeStr = volumeRatio >= 10 ? Math.round(volumeRatio).toLocaleString('en-US') + '배' : (volumeRatio >= 1 ? volumeRatio.toFixed(1) + '배' : volumeRatio.toFixed(2) + '배');
+
+                var rRatioVal = radiusKm / rEarth;
+                var radiusRatio = rRatioVal >= 10 ? Math.round(rRatioVal) + '배' : (rRatioVal >= 1 ? rRatioVal.toFixed(1) + '배' : rRatioVal.toFixed(2) + '배');
+
                 // Mass string
-                var massStr = body.massEarth || (body.gravityRatio ? '지구의 약 ' + (Math.pow(radiusKm/rEarth, 2) * body.gravityRatio).toFixed(3) + '배' : '알 수 없음');
+                var massStr = body.massEarth;
+                if (!massStr) {
+                    if (body.gravityRatio) {
+                        var calcMass = Math.pow(radiusKm / rEarth, 2) * body.gravityRatio;
+                        massStr = '지구의 약 ' + (calcMass >= 10 ? Math.round(calcMass) + '배' : (calcMass >= 1 ? calcMass.toFixed(1) + '배' : calcMass.toFixed(2) + '배'));
+                    } else {
+                        massStr = '알 수 없음';
+                    }
+                }
 
                 var card = document.createElement('div');
                 card.className = 'calc-result-card';
