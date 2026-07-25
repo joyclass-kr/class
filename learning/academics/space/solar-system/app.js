@@ -1433,8 +1433,19 @@
             if (!bodyObj || !bodyObj.mesh) return;
             var worldPos = new THREE.Vector3();
             bodyObj.mesh.getWorldPosition(worldPos);
+
+            // 🛸 UFO Flight Mode Rule: Must fly close (Distance <= 130) to open card!
+            if (ufoState.active && ufoMesh) {
+                var dist = ufoState.pos.distanceTo(worldPos);
+                var maxExploreDist = (key === 'sun') ? 220 : 130;
+                if (dist > maxExploreDist) {
+                    showSpaceToast('🛸 [탐사 거리 경고] 더 가까이 다가가세요! (현재 거리: ' + Math.round(dist) + ' / 필요 거리: ' + maxExploreDist + ' 이내)');
+                    return; // Block opening card from far away!
+                }
+            }
+
             var r = getBodyScaleRadius(key);
-            if (controls) {
+            if (controls && !ufoState.active) {
                 controls.target.copy(worldPos);
                 // Adjust zoom factor based on log scale sizes
                 var offset = (key === 'sun') ? r * 3.5 : (key === 'asteroid' ? 80.0 : (key === 'comet' ? 35.0 : r * 10.0));
@@ -1444,6 +1455,36 @@
                 controls.update();
             }
             openPlanetModal(key);
+        }
+
+        // 🛸 Custom Toast Notification for Space Exploration
+        function showSpaceToast(msg) {
+            var old = document.getElementById('spaceToastMsg');
+            if (old && old.parentNode) old.parentNode.removeChild(old);
+
+            var toast = document.createElement('div');
+            toast.id = 'spaceToastMsg';
+            toast.textContent = msg;
+            toast.style.position = 'fixed';
+            toast.style.top = '75px';
+            toast.style.left = '50%';
+            toast.style.transform = 'translateX(-50%)';
+            toast.style.background = 'rgba(15, 23, 42, 0.95)';
+            toast.style.color = '#38bdf8';
+            toast.style.border = '1px solid rgba(56, 189, 248, 0.7)';
+            toast.style.padding = '10px 20px';
+            toast.style.borderRadius = '24px';
+            toast.style.fontSize = '14px';
+            toast.style.fontWeight = 'bold';
+            toast.style.zIndex = '9999';
+            toast.style.boxShadow = '0 10px 30px rgba(0,0,0,0.8)';
+            toast.style.pointerEvents = 'none';
+            toast.style.backdropFilter = 'blur(8px)';
+            document.body.appendChild(toast);
+
+            setTimeout(function() {
+                if (toast && toast.parentNode) toast.parentNode.removeChild(toast);
+            }, 2500);
         }
 
         // ========== 2. EARTH-MOON OBSERVATORY (Tab 2) ==========
@@ -1682,6 +1723,8 @@
             if (ufoModeBtn) {
                 ufoModeBtn.addEventListener('click', function() {
                     ufoState.active = !ufoState.active;
+                    var quickBtns = document.querySelectorAll('.quick-bar-btn');
+
                     if (ufoState.active) {
                         ufoModeBtn.textContent = '🛸 UFO 탐험 (UFO Flight) ON';
                         ufoModeBtn.style.background = 'rgba(56, 189, 248, 0.3)';
@@ -1693,6 +1736,16 @@
                             controls.target.copy(ufoState.pos);
                             controls.update();
                         }
+
+                        // 🛸 Lock & Disable Quick Bar Buttons during UFO Flight Exploration!
+                        quickBtns.forEach(function(b) {
+                            b.disabled = true;
+                            b.style.opacity = '0.35';
+                            b.style.pointerEvents = 'none';
+                            b.style.cursor = 'not-allowed';
+                            b.title = '🛸 UFO 탐험 중에는 상단 버튼이 잠깁니다. 행성에 3D로 직접 다가가서 클릭하세요!';
+                        });
+                        showSpaceToast('🛸 UFO 탐험 시작! 천체에 직접 가까이 비행하여 3D로 클릭하세요.');
                     } else {
                         ufoModeBtn.textContent = '🛸 UFO 탐험 (UFO Flight) OFF';
                         ufoModeBtn.style.background = 'rgba(56, 189, 248, 0.15)';
@@ -1704,6 +1757,15 @@
                             camera.position.set(0, 1500, 2000);
                             controls.update();
                         }
+
+                        // Re-enable Quick Bar Buttons
+                        quickBtns.forEach(function(b) {
+                            b.disabled = false;
+                            b.style.opacity = '1.0';
+                            b.style.pointerEvents = 'auto';
+                            b.style.cursor = 'pointer';
+                            b.title = '';
+                        });
                     }
                 });
             }
