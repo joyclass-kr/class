@@ -342,6 +342,7 @@ document.addEventListener('DOMContentLoaded', () => {
     const LOCAL_TEXTURE_FILES = {
         sun: './assets/textures/2k_sun.jpg',
         earth: './assets/textures/2k_earth_daymap.jpg',
+        earthNight: './assets/textures/2k_earth_nightmap.jpg',
         earthCloud: './assets/textures/2k_earth_clouds.png',
         moon: './assets/textures/2k_moon.jpg',
         mars: './assets/textures/2k_mars.jpg',
@@ -352,7 +353,8 @@ document.addEventListener('DOMContentLoaded', () => {
         mercury: './assets/textures/2k_mercury.jpg',
         uranus: './assets/textures/2k_uranus.jpg',
         neptune: './assets/textures/2k_neptune.jpg',
-        pluto: './assets/textures/2k_pluto.jpg'
+        pluto: './assets/textures/2k_pluto.jpg',
+        milkyWay: './assets/textures/2k_stars_milky_way.jpg'
     };
 
     function loadPlanetTexture(key) {
@@ -431,13 +433,22 @@ document.addEventListener('DOMContentLoaded', () => {
             const texture = loadPlanetTexture(key);
             const geo = new THREE.SphereGeometry(bodyR, 48, 48);
             
-            // Material tuning (Earth & Moon get realistic specularity)
-            const roughnessVal = key === 'earth' ? 0.35 : key === 'jupiter' || key === 'saturn' ? 0.8 : 0.6;
-            const mat = new THREE.MeshStandardMaterial({
+            // Material tuning
+            const matParams = {
                 map: texture,
-                roughness: roughnessVal,
+                roughness: key === 'earth' ? 0.35 : key === 'jupiter' || key === 'saturn' ? 0.8 : 0.6,
                 metalness: 0.1
-            });
+            };
+
+            // Earth Night Map City Lights Integration!
+            if (key === 'earth') {
+                const nightTex = loadPlanetTexture('earthNight');
+                matParams.emissiveMap = nightTex;
+                matParams.emissive = new THREE.Color(0xffd18a);
+                matParams.emissiveIntensity = 0.85;
+            }
+
+            const mat = new THREE.MeshStandardMaterial(matParams);
 
             const planetMesh = new THREE.Mesh(geo, mat);
             planetMesh.position.x = orbitR;
