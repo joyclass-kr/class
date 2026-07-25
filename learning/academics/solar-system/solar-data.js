@@ -1,5 +1,5 @@
 /**
- * 태양계 관찰 (Solar System Observation) Data Definition
+ * 태양계 관찰 (Solar System Observation) Data Definition & Canvas Texture Generators
  */
 
 window.SOLAR_SYSTEM_DATA = {
@@ -286,4 +286,188 @@ window.SOLAR_SYSTEM_DATA = {
         photoUrl: 'https://upload.wikimedia.org/wikipedia/commons/e/ef/Pluto_in_True_Color_-_February_2010.jpg',
         color: '#94a3b8'
     }
+};
+
+/**
+ * Procedural Realistic Planet Textures Generator via HTML5 Canvas (DataURL Return for 3D Renderer)
+ */
+window.createPlanetTexture = function (planetKey) {
+    const canvas = document.createElement('canvas');
+    canvas.width = 1024;
+    canvas.height = 512;
+    const ctx = canvas.getContext('2d');
+    const w = canvas.width;
+    const h = canvas.height;
+
+    if (planetKey === 'sun') {
+        const grad = ctx.createLinearGradient(0, 0, 0, h);
+        grad.addColorStop(0, '#ff4500');
+        grad.addColorStop(0.3, '#ffaa00');
+        grad.addColorStop(0.7, '#ffcc00');
+        grad.addColorStop(1, '#ff3300');
+        ctx.fillStyle = grad;
+        ctx.fillRect(0, 0, w, h);
+
+        ctx.fillStyle = 'rgba(255, 255, 255, 0.25)';
+        for (let i = 0; i < 400; i++) {
+            const rx = Math.random() * w;
+            const ry = Math.random() * h;
+            const r = Math.random() * 30 + 5;
+            ctx.beginPath();
+            ctx.arc(rx, ry, r, 0, Math.PI * 2);
+            ctx.fill();
+        }
+        ctx.fillStyle = 'rgba(100, 20, 0, 0.6)';
+        for (let i = 0; i < 15; i++) {
+            const rx = Math.random() * w;
+            const ry = Math.random() * h;
+            ctx.beginPath();
+            ctx.arc(rx, ry, Math.random() * 12 + 4, 0, Math.PI * 2);
+            ctx.fill();
+        }
+    } else if (planetKey === 'earth') {
+        ctx.fillStyle = '#0f52ba';
+        ctx.fillRect(0, 0, w, h);
+
+        ctx.fillStyle = '#2e8b57';
+        for (let i = 0; i < 35; i++) {
+            const cx = Math.random() * w;
+            const cy = Math.random() * (h * 0.7) + (h * 0.15);
+            const r = Math.random() * 90 + 30;
+            ctx.beginPath();
+            ctx.ellipse(cx, cy, r * 1.5, r, Math.random(), 0, Math.PI * 2);
+            ctx.fill();
+        }
+        ctx.fillStyle = 'rgba(255, 255, 255, 0.65)';
+        for (let i = 0; i < 50; i++) {
+            const cx = Math.random() * w;
+            const cy = Math.random() * h;
+            ctx.beginPath();
+            ctx.ellipse(cx, cy, Math.random() * 120 + 20, Math.random() * 15 + 4, Math.random(), 0, Math.PI * 2);
+            ctx.fill();
+        }
+    } else if (planetKey === 'jupiter') {
+        const bandColors = ['#c86432', '#e6c8a0', '#a05028', '#f0dcbe', '#8c3c14', '#d29664', '#b4461e'];
+        const bandH = h / bandColors.length;
+        bandColors.forEach((col, idx) => {
+            ctx.fillStyle = col;
+            ctx.fillRect(0, idx * bandH, w, bandH + 2);
+        });
+
+        ctx.fillStyle = 'rgba(255, 255, 255, 0.15)';
+        for (let i = 0; i < 80; i++) {
+            const rx = Math.random() * w;
+            const ry = Math.random() * h;
+            ctx.fillRect(rx, ry, Math.random() * 80 + 20, Math.random() * 6 + 2);
+        }
+
+        ctx.fillStyle = '#b91c1c';
+        ctx.beginPath();
+        ctx.ellipse(w * 0.65, h * 0.62, 55, 35, -0.1, 0, Math.PI * 2);
+        ctx.fill();
+        ctx.strokeStyle = '#ef4444';
+        ctx.lineWidth = 4;
+        ctx.stroke();
+    } else if (planetKey === 'saturn') {
+        const saturnBands = ['#d4a373', '#faedcd', '#e9edc9', '#ccd5ae', '#d4a373', '#e07a5f'];
+        const bH = h / saturnBands.length;
+        saturnBands.forEach((col, idx) => {
+            ctx.fillStyle = col;
+            ctx.fillRect(0, idx * bH, w, bH + 2);
+        });
+    } else if (planetKey === 'mars') {
+        const grad = ctx.createLinearGradient(0, 0, 0, h);
+        grad.addColorStop(0, '#991b1b');
+        grad.addColorStop(0.5, '#dc2626');
+        grad.addColorStop(1, '#7f1d1d');
+        ctx.fillStyle = grad;
+        ctx.fillRect(0, 0, w, h);
+
+        ctx.fillStyle = 'rgba(60, 10, 10, 0.4)';
+        for (let i = 0; i < 40; i++) {
+            ctx.beginPath();
+            ctx.arc(Math.random() * w, Math.random() * h, Math.random() * 40 + 10, 0, Math.PI * 2);
+            ctx.fill();
+        }
+        ctx.fillStyle = 'rgba(255, 255, 255, 0.85)';
+        ctx.fillRect(0, 0, w, h * 0.08);
+        ctx.fillRect(0, h * 0.92, w, h * 0.08);
+    } else if (planetKey === 'venus') {
+        const grad = ctx.createLinearGradient(0, 0, w, h);
+        grad.addColorStop(0, '#eab308');
+        grad.addColorStop(0.5, '#fef08a');
+        grad.addColorStop(1, '#ca8a04');
+        ctx.fillStyle = grad;
+        ctx.fillRect(0, 0, w, h);
+
+        ctx.fillStyle = 'rgba(255, 255, 255, 0.25)';
+        for (let i = 0; i < 60; i++) {
+            ctx.fillRect(Math.random() * w, Math.random() * h, Math.random() * 100 + 30, Math.random() * 8 + 2);
+        }
+    } else if (planetKey === 'uranus') {
+        const grad = ctx.createLinearGradient(0, 0, 0, h);
+        grad.addColorStop(0, '#06b6d4');
+        grad.addColorStop(0.5, '#67e8f9');
+        grad.addColorStop(1, '#0891b2');
+        ctx.fillStyle = grad;
+        ctx.fillRect(0, 0, w, h);
+    } else if (planetKey === 'neptune') {
+        const grad = ctx.createLinearGradient(0, 0, 0, h);
+        grad.addColorStop(0, '#1d4ed8');
+        grad.addColorStop(0.5, '#2563eb');
+        grad.addColorStop(1, '#1e40af');
+        ctx.fillStyle = grad;
+        ctx.fillRect(0, 0, w, h);
+
+        ctx.fillStyle = '#0f172a';
+        ctx.beginPath();
+        ctx.ellipse(w * 0.4, h * 0.5, 40, 25, 0.2, 0, Math.PI * 2);
+        ctx.fill();
+    } else if (planetKey === 'mercury') {
+        ctx.fillStyle = '#78716c';
+        ctx.fillRect(0, 0, w, h);
+        ctx.fillStyle = 'rgba(0, 0, 0, 0.35)';
+        for (let i = 0; i < 90; i++) {
+            ctx.beginPath();
+            ctx.arc(Math.random() * w, Math.random() * h, Math.random() * 20 + 3, 0, Math.PI * 2);
+            ctx.fill();
+        }
+    } else if (planetKey === 'moon') {
+        ctx.fillStyle = '#94a3b8';
+        ctx.fillRect(0, 0, w, h);
+        ctx.fillStyle = 'rgba(30, 41, 59, 0.4)';
+        for (let i = 0; i < 70; i++) {
+            ctx.beginPath();
+            ctx.arc(Math.random() * w, Math.random() * h, Math.random() * 25 + 4, 0, Math.PI * 2);
+            ctx.fill();
+        }
+    } else {
+        ctx.fillStyle = '#a1a1aa';
+        ctx.fillRect(0, 0, w, h);
+    }
+
+    return canvas.toDataURL('image/png');
+};
+
+/**
+ * Saturn Ring Texture Generator (DataURL Return)
+ */
+window.createSaturnRingTexture = function () {
+    const canvas = document.createElement('canvas');
+    canvas.width = 512;
+    canvas.height = 64;
+    const ctx = canvas.getContext('2d');
+
+    const grad = ctx.createLinearGradient(0, 0, canvas.width, 0);
+    grad.addColorStop(0.0, 'rgba(0, 0, 0, 0)');
+    grad.addColorStop(0.2, 'rgba(212, 163, 115, 0.9)');
+    grad.addColorStop(0.4, 'rgba(250, 237, 205, 0.95)');
+    grad.addColorStop(0.55, 'rgba(0, 0, 0, 0.1)');
+    grad.addColorStop(0.7, 'rgba(212, 163, 115, 0.85)');
+    grad.addColorStop(0.9, 'rgba(204, 160, 100, 0.4)');
+    grad.addColorStop(1.0, 'rgba(0, 0, 0, 0)');
+
+    ctx.fillStyle = grad;
+    ctx.fillRect(0, 0, canvas.width, canvas.height);
+    return canvas.toDataURL('image/png');
 };

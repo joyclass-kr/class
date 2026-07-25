@@ -189,16 +189,20 @@
             render2D();
         }
 
-        // Safe 3D Procedural Canvas Texture Loader (Guarantees zero WebGL security errors)
+        // 3D Procedural Canvas Texture Loader (DataURL based - safe & colorful 3D rendering)
         function loadPlanet3DTexture(key) {
-            var canvasEl = (key === 'saturnRing' && typeof window.createSaturnRingCanvas === 'function')
-                ? window.createSaturnRingCanvas()
-                : (typeof window.createPlanetCanvas === 'function' ? window.createPlanetCanvas(key) : document.createElement('canvas'));
+            var textureUrl = (key === 'saturnRing' && typeof window.createSaturnRingTexture === 'function')
+                ? window.createSaturnRingTexture()
+                : (typeof window.createPlanetTexture === 'function' ? window.createPlanetTexture(key) : '');
 
-            var canvasTex = new THREE.CanvasTexture(canvasEl);
-            canvasTex.wrapS = THREE.RepeatWrapping;
-            canvasTex.wrapT = THREE.ClampToEdgeWrapping;
-            return canvasTex;
+            if (textureUrl && typeof THREE !== 'undefined' && THREE.TextureLoader) {
+                var loader = new THREE.TextureLoader();
+                var tex = loader.load(textureUrl);
+                tex.wrapS = THREE.RepeatWrapping;
+                tex.wrapT = THREE.ClampToEdgeWrapping;
+                return tex;
+            }
+            return null;
         }
 
         function getBodyScaleRadius(key) {
