@@ -2178,13 +2178,7 @@
             }
 
             document.getElementById('modalDesc').textContent = body.desc;
-
-            var missionsBox = document.getElementById('modalMissions');
-            if (missionsBox) {
-                missionsBox.innerHTML = (body.missions || ['국제 우주 관측선']).map(function (m) {
-                    return '<span style="background:rgba(56,189,248,0.15);color:#38bdf8;border:1px solid rgba(56,189,248,0.3);padding:4px 12px;border-radius:6px;font-size:12px;font-weight:700;">🚀 ' + m + '</span>';
-                }).join('');
-            }
+        }
 
             if (modalOverlay) modalOverlay.classList.add('active');
         }
