@@ -452,7 +452,6 @@ document.addEventListener('DOMContentLoaded', () => {
         sun: './assets/textures/2k_sun.jpg',
         earth: './assets/textures/2k_earth_daymap.jpg',
         earthNight: './assets/textures/2k_earth_nightmap.jpg',
-        earthCloud: './assets/textures/2k_earth_clouds.png',
         moon: './assets/textures/2k_moon.jpg',
         mars: './assets/textures/2k_mars.jpg',
         jupiter: './assets/textures/2k_jupiter.jpg',
