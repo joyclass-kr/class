@@ -881,9 +881,9 @@
                     var flashStarLine = new THREE.LineSegments(starGeo, starMat);
                     mGroup.add(flashStarLine);
 
-                    // Friendly & Large Glowing Click Target Mesh (Easy to click for students!)
+                    // Invisible Click Target Mesh (No ugly circle rendered on screen!)
                     var mHeadGeo = new THREE.SphereGeometry(6.5, 16, 16);
-                    var mHeadMat = new THREE.MeshBasicMaterial({ color: 0xfef08a, transparent: true, opacity: 0.15, blending: THREE.AdditiveBlending });
+                    var mHeadMat = new THREE.MeshBasicMaterial({ visible: false });
                     var mHeadMesh = new THREE.Mesh(mHeadGeo, mHeadMat);
                     mHeadMesh.position.set(0, 18, 0);
                     mGroup.add(mHeadMesh);
