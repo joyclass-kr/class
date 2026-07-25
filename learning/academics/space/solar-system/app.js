@@ -49,6 +49,66 @@
         var is3DReady = false;
         var mapLabels = []; // 2D DOM labels
 
+        // 🛸 UFO Flight Exploration Mode State & Objects
+        var ufoMesh = null;
+        var ufoState = {
+            active: false,
+            pos: new THREE.Vector3(0, 50, 450),
+            heading: 0.0,
+            keys: { forward: false, backward: false, left: false, right: false }
+        };
+
+        function buildUFOMesh() {
+            if (ufoMesh && scene) scene.remove(ufoMesh);
+            var group = new THREE.Group();
+            
+            // UFO Center Dome
+            var domeGeo = new THREE.SphereGeometry(6, 16, 16, 0, Math.PI * 2, 0, Math.PI / 2);
+            var domeMat = new THREE.MeshStandardMaterial({ color: 0x38bdf8, roughness: 0.2, metalness: 0.8, transparent: true, opacity: 0.8 });
+            var dome = new THREE.Mesh(domeGeo, domeMat);
+            group.add(dome);
+
+            // UFO Metallic Outer Ring
+            var ringGeo = new THREE.TorusGeometry(12, 2.5, 16, 32);
+            var ringMat = new THREE.MeshStandardMaterial({ color: 0x94a3b8, metalness: 0.9, roughness: 0.3 });
+            var ring = new THREE.Mesh(ringGeo, ringMat);
+            ring.rotation.x = Math.PI / 2;
+            group.add(ring);
+
+            // UFO Glowing Bottom Energy Ring
+            var glowGeo = new THREE.TorusGeometry(8, 1.2, 16, 32);
+            var glowMat = new THREE.MeshBasicMaterial({ color: 0x06b6d4 });
+            var glow = new THREE.Mesh(glowGeo, glowMat);
+            glow.rotation.x = Math.PI / 2;
+            glow.position.y = -1.5;
+            group.add(glow);
+
+            var light = new THREE.PointLight(0x06b6d4, 3, 100);
+            light.position.y = -2;
+            group.add(light);
+
+            group.position.copy(ufoState.pos);
+            group.visible = false;
+            ufoMesh = group;
+            scene.add(ufoMesh);
+        }
+
+        window.addEventListener('keydown', function(e) {
+            if (!ufoState.active) return;
+            if (e.key === 'ArrowUp' || e.key === 'w' || e.key === 'W') ufoState.keys.forward = true;
+            if (e.key === 'ArrowDown' || e.key === 's' || e.key === 'S') ufoState.keys.backward = true;
+            if (e.key === 'ArrowLeft' || e.key === 'a' || e.key === 'A') ufoState.keys.left = true;
+            if (e.key === 'ArrowRight' || e.key === 'd' || e.key === 'D') ufoState.keys.right = true;
+        });
+
+        window.addEventListener('keyup', function(e) {
+            if (!ufoState.active) return;
+            if (e.key === 'ArrowUp' || e.key === 'w' || e.key === 'W') ufoState.keys.forward = false;
+            if (e.key === 'ArrowDown' || e.key === 's' || e.key === 'S') ufoState.keys.backward = false;
+            if (e.key === 'ArrowLeft' || e.key === 'a' || e.key === 'A') ufoState.keys.left = false;
+            if (e.key === 'ArrowRight' || e.key === 'd' || e.key === 'D') ufoState.keys.right = false;
+        });
+
         var moonScene, moonCamera, moonRenderer, moonControls;
         var earth3DMesh, moon3DMesh, moonPivotObj, moonOrbitLine;
 
@@ -158,8 +218,8 @@
             scene.add(new THREE.AmbientLight(0x707080, 1.6));
             scene.add(new THREE.PointLight(0xfffaed, 4.0, 5000, 0.5));
 
-            // buildStarfield(); // Removed as per user request to reduce visual confusion
             buildCelestialBodies();
+            buildUFOMesh();
 
             window.addEventListener('resize', onWindowResize);
             canvas.addEventListener('click', onCanvasClick);
@@ -189,42 +249,6 @@
                 return tex;
             }
             return null;
-        }
-
-        function createStarTexture() {
-            var canvas = document.createElement('canvas');
-            canvas.width = 16;
-            canvas.height = 16;
-            var ctx = canvas.getContext('2d');
-            var grad = ctx.createRadialGradient(8, 8, 0, 8, 8, 8);
-            grad.addColorStop(0, 'rgba(255, 255, 255, 1)');
-            grad.addColorStop(0.4, 'rgba(255, 255, 255, 0.8)');
-            grad.addColorStop(1, 'rgba(255, 255, 255, 0)');
-            ctx.fillStyle = grad;
-            ctx.fillRect(0, 0, 16, 16);
-            return new THREE.CanvasTexture(canvas);
-        }
-
-        function buildStarfield() {
-            var geo = new THREE.BufferGeometry();
-            var count = 3000;
-            var pos = new Float32Array(count * 3);
-            for (var i = 0; i < count * 3; i += 3) {
-                pos[i] = (Math.random() - 0.5) * 8000;
-                pos[i + 1] = (Math.random() - 0.5) * 8000;
-                pos[i + 2] = (Math.random() - 0.5) * 8000;
-            }
-            geo.setAttribute('position', new THREE.BufferAttribute(pos, 3));
-            var starTex = createStarTexture();
-            var mat = new THREE.PointsMaterial({
-                map: starTex,
-                size: 15.0,
-                transparent: true,
-                opacity: 0.85,
-                depthWrite: false,
-                blending: THREE.AdditiveBlending
-            });
-            scene.add(new THREE.Points(geo, mat));
         }
 
         function buildCelestialBodies() {
@@ -341,10 +365,6 @@
                 var orbitR = getBodyOrbitRadius(key);
                 var bodyR = getBodyScaleRadius(key);
                 
-                // EDUCATIONAL LOG SCALE FIX:
-                // Non-linear log scaling breaks the mathematical relationship between the semi-major axis (a) and focus offset (c=a*e).
-                // To maintain the perfect visual gaps correctly (e.g., Earth-Mars gap being 2x Venus-Earth gap) 
-                // in all directions, eccentricity must be set to 0 (perfect circle) in this mode.
                 var ecc = (state.simMode === '2d') ? (KEPLER_ECCENTRICITIES[key] || 0.01) : 0.0; 
                 
                 var incRad = (data.inclinationDeg || 0.0) * (Math.PI / 180);
@@ -405,7 +425,6 @@
                     planetMesh.add(atmosMesh);
 
                     // MOON VISUAL SCALE DISTANCE
-                    // FIX: Attach to orbit pivot instead of Earth mesh so Moon doesn't inherit Earth's 365.25x self-rotation!
                     var moonPivot = new THREE.Object3D();
                     moonPivot.rotation.z = 28.58 * (Math.PI / 180);
                     pivot.add(moonPivot);
@@ -467,17 +486,16 @@
         };
 
         // 5. TRUE SELF-ROTATION RATES (Earth = 365.25)
-        // Calculated by: 365.25 / Rotation Period in Days
         var SELF_ROTATION_RATES = {
-            mercury: 6.23,      // 365.25 / 58.6
-            venus: -1.50,       // 365.25 / 243 (Retrograde)
-            earth: 365.25,      // BOOM! Exact 1-year rotation count
-            mars: 354.6,        // 365.25 / 1.03
-            jupiter: 890.8,     // 365.25 / 0.41 (Super Fast!)
-            saturn: 811.6,      // 365.25 / 0.45
-            uranus: -507.3,     // 365.25 / 0.72 (Retrograde)
-            neptune: 545.1,     // 365.25 / 0.67
-            pluto: -57.1        // 365.25 / 6.39 (Retrograde)
+            mercury: 6.23,
+            venus: -1.50,
+            earth: 365.25,
+            mars: 354.6,
+            jupiter: 890.8,
+            saturn: 811.6,
+            uranus: -507.3,
+            neptune: 545.1,
+            pluto: -57.1
         };
 
         function animate3D() {
@@ -485,13 +503,12 @@
             var delta = clock ? clock.getDelta() : 0.016;
 
             if (state.isPlaying) {
-                // Slower time progression because real rotations are extremely fast!
                 var timeDelta = delta * 0.005 * state.orbitSpeed;
                 state.simTimeYears += timeDelta;
                 if (simTimeVal) simTimeVal.textContent = state.simTimeYears.toFixed(1) + ' yrs';
 
                 if (celestialBodies['sun'] && celestialBodies['sun'].mesh) {
-                    celestialBodies['sun'].mesh.rotation.y += timeDelta * (Math.PI * 2) * 13.5; // 365.25 / 27
+                    celestialBodies['sun'].mesh.rotation.y += timeDelta * (Math.PI * 2) * 13.5;
                 }
 
                 Object.keys(celestialBodies).forEach(function (key) {
@@ -499,15 +516,13 @@
                     if (key === 'sun') return;
 
                     if (key === 'moon') {
-                        // Moon Orbits Earth exactly 12.37 times per Earth year (Synodic Month: 365.25 / 29.53 days)
                         var earthBody = celestialBodies['earth'];
                         if (earthBody && earthBody.mesh && b.pivot) {
-                            // Synchronize Moon pivot position to Earth mesh (Isolates Moon from Earth's 365.25x self-rotation!)
                             b.pivot.position.copy(earthBody.mesh.position);
                             var earthAngle = earthBody.orbitAngle || 0;
-                            var moonAngle = earthAngle * 12.3688; // Exact synodic month count (12.37 rev/yr)
+                            var moonAngle = earthAngle * 12.3688;
                             b.pivot.rotation.y = moonAngle;
-                            if (b.mesh) b.mesh.rotation.y = moonAngle; // Synchronous rotation
+                            if (b.mesh) b.mesh.rotation.y = moonAngle;
                         }
                     } else if (b.pivot && b.mesh) {
                         var rate = ORBIT_RATES[key] || 0.1;
@@ -516,12 +531,12 @@
                         var dOrbit = timeDelta * (Math.PI * 2) * rate;
                         b.orbitAngle += dOrbit;
                         b.orbitAngle %= (Math.PI * 2);
+                        b.orbitAngle = b.orbitAngle;
 
                         var a = b.semiMajor || b.orbitRadius || 100;
                         var c = b.semiMinor || b.orbitRadius || 100;
                         var fo = b.focusOffset || 0;
 
-                        // 100% PRECISE KEPLER ELLIPSE PATH EQUATION
                         var px = Math.cos(b.orbitAngle) * a - fo;
                         var pz = Math.sin(b.orbitAngle) * c;
 
@@ -533,11 +548,41 @@
                             b.ringMesh.position.z = pz;
                         }
 
-                        // TRUE REALISM ROTATION
-                        var rotSpeed = SELF_ROTATION_RATES[key] || 1.0;
-                        b.mesh.rotation.y += timeDelta * (Math.PI * 2) * rotSpeed;
+                        if (state.simMode === '3d') {
+                            var selfRate = SELF_ROTATION_RATES[key] || 1.0;
+                            b.mesh.rotation.y += timeDelta * (Math.PI * 2) * selfRate;
+                        }
                     }
                 });
+            }
+
+            // 🛸 UFO Flight Exploration Mode Physics
+            if (ufoState.active && ufoMesh) {
+                var moveSpeed = 6.0 * (state.orbitSpeed || 1.0);
+                var rotSpeed = 0.04;
+
+                if (ufoState.keys.left) ufoState.heading += rotSpeed;
+                if (ufoState.keys.right) ufoState.heading -= rotSpeed;
+
+                var dirX = Math.sin(ufoState.heading);
+                var dirZ = Math.cos(ufoState.heading);
+
+                if (ufoState.keys.forward) {
+                    ufoState.pos.x -= dirX * moveSpeed;
+                    ufoState.pos.z -= dirZ * moveSpeed;
+                }
+                if (ufoState.keys.backward) {
+                    ufoState.pos.x += dirX * moveSpeed;
+                    ufoState.pos.z += dirZ * moveSpeed;
+                }
+
+                ufoMesh.position.copy(ufoState.pos);
+                ufoMesh.rotation.y = ufoState.heading;
+
+                // Sync OrbitControls target to UFO position so Drag & Mouse Wheel work naturally!
+                if (controls) {
+                    controls.target.copy(ufoState.pos);
+                }
             }
 
             if (controls) controls.update();
@@ -846,6 +891,56 @@
 
         // ========== UI CONTROLS ==========
         function initSimUIControls() {
+            var ufoModeBtn = document.getElementById('ufoModeBtn');
+            var ufoControlsPanel = document.getElementById('ufoControlsPanel');
+            var ufoUpBtn = document.getElementById('ufoUpBtn');
+            var ufoDownBtn = document.getElementById('ufoDownBtn');
+            var ufoLeftBtn = document.getElementById('ufoLeftBtn');
+            var ufoRightBtn = document.getElementById('ufoRightBtn');
+
+            if (ufoModeBtn) {
+                ufoModeBtn.addEventListener('click', function() {
+                    ufoState.active = !ufoState.active;
+                    if (ufoState.active) {
+                        ufoModeBtn.textContent = '🛸 UFO 탐험 (UFO Flight) ON';
+                        ufoModeBtn.style.background = 'rgba(56, 189, 248, 0.3)';
+                        ufoModeBtn.style.color = '#fff';
+                        if (ufoControlsPanel) ufoControlsPanel.style.display = 'block';
+                        if (ufoMesh) ufoMesh.visible = true;
+                        if (camera && controls) {
+                            camera.position.set(ufoState.pos.x, ufoState.pos.y + 50, ufoState.pos.z + 120);
+                            controls.target.copy(ufoState.pos);
+                            controls.update();
+                        }
+                    } else {
+                        ufoModeBtn.textContent = '🛸 UFO 탐험 (UFO Flight) OFF';
+                        ufoModeBtn.style.background = 'rgba(56, 189, 248, 0.15)';
+                        ufoModeBtn.style.color = '#38bdf8';
+                        if (ufoControlsPanel) ufoControlsPanel.style.display = 'none';
+                        if (ufoMesh) ufoMesh.visible = false;
+                        if (camera && controls) {
+                            controls.target.set(0, 0, 0);
+                            camera.position.set(0, 1500, 2000);
+                            controls.update();
+                        }
+                    }
+                });
+            }
+
+            // Touch / On-screen Arrow Buttons Event Listeners
+            function bindArrowBtn(btn, keyProp) {
+                if (!btn) return;
+                btn.addEventListener('mousedown', function() { ufoState.keys[keyProp] = true; });
+                btn.addEventListener('mouseup', function() { ufoState.keys[keyProp] = false; });
+                btn.addEventListener('mouseleave', function() { ufoState.keys[keyProp] = false; });
+                btn.addEventListener('touchstart', function(e) { e.preventDefault(); ufoState.keys[keyProp] = true; });
+                btn.addEventListener('touchend', function(e) { e.preventDefault(); ufoState.keys[keyProp] = false; });
+            }
+            bindArrowBtn(ufoUpBtn, 'forward');
+            bindArrowBtn(ufoDownBtn, 'backward');
+            bindArrowBtn(ufoLeftBtn, 'left');
+            bindArrowBtn(ufoRightBtn, 'right');
+
             var simModeToggle = document.getElementById('simModeToggle');
             var simModeLabel = document.getElementById('simModeLabel');
             var simWarningAlert = document.getElementById('simWarningAlert');
