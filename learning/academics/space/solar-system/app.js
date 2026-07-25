@@ -1117,49 +1117,53 @@
                 });
             }
 
-            // 🛸 UFO Flight Exploration Mode Physics (Camera-Relative Steering)
+            // 🛸 Kartrider-Style 3rd-Person Pursuit Camera System for UFO Explorer
             if (ufoState.active && ufoMesh && camera) {
-                // Smooth & Gentle Flight Speed for Relaxed Art Gallery Exploration
                 var moveSpeed = 2.2 * Math.min(state.orbitSpeed || 1.0, 2.5);
 
-                // Calculate Camera Forward Vector on XZ Plane
-                var camDir = new THREE.Vector3();
-                camera.getWorldDirection(camDir);
-                camDir.y = 0; // Constrain to orbital plane
-                camDir.normalize();
+                // Smooth Heading Angle for Kartrider Steering
+                if (ufoState.heading === undefined) ufoState.heading = ufoMesh.rotation.y || 0;
 
-                // Calculate Camera Right Vector
-                var camRight = new THREE.Vector3();
-                camRight.crossVectors(camDir, new THREE.Vector3(0, 1, 0)).normalize();
+                // Kartrider Turning Math
+                var turnSpeed = 2.4;
+                if (ufoState.keys.left) ufoState.heading += turnSpeed * delta;
+                if (ufoState.keys.right) ufoState.heading -= turnSpeed * delta;
 
-                var moveVec = new THREE.Vector3(0, 0, 0);
+                // Heading Vector
+                var forwardDir = new THREE.Vector3(-Math.sin(ufoState.heading), 0, -Math.cos(ufoState.heading));
 
-                if (ufoState.keys.forward) moveVec.add(camDir);
-                if (ufoState.keys.backward) moveVec.sub(camDir);
-                if (ufoState.keys.right) moveVec.add(camRight);
-                if (ufoState.keys.left) moveVec.sub(camRight);
-
-                if (moveVec.lengthSq() > 0) {
-                    moveVec.normalize().multiplyScalar(moveSpeed);
-                    ufoState.pos.add(moveVec);
-
-                    // 🛸 Self-Centered Camera Follow (Art Gallery Exploration Style!)
-                    // Move camera position along with UFO so camera NEVER drifts away from UFO
-                    camera.position.add(moveVec);
-
-                    // Smoothly turn UFO mesh toward moving direction
-                    var targetHeading = Math.atan2(-moveVec.x, -moveVec.z);
-                    ufoMesh.rotation.y = targetHeading;
+                var isMoving = false;
+                if (ufoState.keys.forward) {
+                    ufoState.pos.add(forwardDir.clone().multiplyScalar(moveSpeed));
+                    isMoving = true;
+                }
+                if (ufoState.keys.backward) {
+                    ufoState.pos.sub(forwardDir.clone().multiplyScalar(moveSpeed * 0.6));
+                    isMoving = true;
                 }
 
                 ufoMesh.position.copy(ufoState.pos);
+                ufoMesh.rotation.y = ufoState.heading;
 
-                // Art Gallery Viewport Math: Offset camera target far ahead & high above UFO so UFO mesh sits at bottom 15-20% of screen
+                // 🚗 Kartrider Pursuit Camera Locked Offset (Always behind & slightly above UFO)
+                var camDistance = 38.0; // Fixed distance (No drifting!)
+                var camHeight = 18.0;   // Fixed elevation height
+                
+                var desiredCamPos = ufoState.pos.clone()
+                    .sub(forwardDir.clone().multiplyScalar(camDistance))
+                    .add(new THREE.Vector3(0, camHeight, 0));
+
+                // Smoothly lerp camera position to avoid jitter
+                camera.position.lerp(desiredCamPos, 0.15);
+
+                // Target camera look-at far ahead of UFO so UFO sits locked at bottom 15% of screen!
+                var lookAtTarget = ufoState.pos.clone()
+                    .add(forwardDir.clone().multiplyScalar(40))
+                    .add(new THREE.Vector3(0, 10, 0));
+                
+                camera.lookAt(lookAtTarget);
                 if (controls) {
-                    var lookTarget = ufoState.pos.clone()
-                        .add(camDir.clone().multiplyScalar(55))
-                        .add(new THREE.Vector3(0, 26, 0));
-                    controls.target.copy(lookTarget);
+                    controls.target.copy(lookAtTarget);
                 }
             }
 
