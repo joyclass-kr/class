@@ -20,7 +20,7 @@ window.SOLAR_SYSTEM_DATA = {
             '흑점 수의 변화 주기: 약 11년 주기 극대기/극소기 반복 (흑점 부근은 주위보다 온도가 낮아 어둡게 보임)'
         ],
         trivia: '태양 빛이 지구까지 도착하는 데 걸리는 시간은 약 8분 20초입니다.',
-        photoUrl: 'https://upload.wikimedia.org/wikipedia/commons/b/b4/The_Sun_by_the_Atmospheric_Imaging_Assembly_of_NASA%27s_Solar_Dynamics_Observatory_-_20100819.jpg',
+        photoUrl: 'assets/images/sun.jpg',
         color: '#ffaa00'
     },
     mercury: {
@@ -49,7 +49,7 @@ window.SOLAR_SYSTEM_DATA = {
         ],
         trivia: '태양 주변을 가장 빨리 공전하며, 위성과 고리가 전혀 없습니다.',
         missions: ['메신저(MESSENGER)', '베피콜롬보(BepiColombo)'],
-        photoUrl: 'https://upload.wikimedia.org/wikipedia/commons/4/4a/Mercury_in_true_color.jpg',
+        photoUrl: 'assets/images/mercury.jpg',
         color: '#a8a29e'
     },
     venus: {
@@ -77,7 +77,7 @@ window.SOLAR_SYSTEM_DATA = {
         ],
         trivia: '지구와 반대 방향으로 자전하므로 금성에서는 태양이 서쪽에서 떠서 동쪽으로 집니다.',
         missions: ['마젤란(Magellan)', '아카츠키(Akatsuki)'],
-        photoUrl: 'https://upload.wikimedia.org/wikipedia/commons/0/08/Venus-real_color.jpg',
+        photoUrl: 'assets/images/venus.jpg',
         color: '#eab308'
     },
     earth: {
@@ -105,7 +105,7 @@ window.SOLAR_SYSTEM_DATA = {
         ],
         trivia: '지구 표면의 약 71%가 푸른 바다로 덮여 있습니다.',
         missions: ['국제우주정거장(ISS)', '허블/제임스웹 우주망원경'],
-        photoUrl: 'https://upload.wikimedia.org/wikipedia/commons/9/97/The_Earth_seen_from_Apollo_17.jpg',
+        photoUrl: 'assets/images/earth.jpg',
         color: '#3b82f6'
     },
     moon: {
@@ -132,7 +132,7 @@ window.SOLAR_SYSTEM_DATA = {
         ],
         trivia: '인류가 직접 발을 디뎌본 유일한 지구 밖 천체입니다.',
         missions: ['아폴로 11호', '아르테미스 계획', '다누리호'],
-        photoUrl: 'https://upload.wikimedia.org/wikipedia/commons/e/e1/Full_Moon_Luc_Viatour.jpg',
+        photoUrl: 'assets/images/moon.jpg',
         color: '#cbd5e1'
     },
     mars: {
@@ -165,7 +165,7 @@ window.SOLAR_SYSTEM_DATA = {
         ],
         trivia: '지구와 자전 주기(24.6시간) 및 자전축 기울기(25.2°)가 매우 유사하여 4계절이 존재합니다.',
         missions: ['퍼서비어런스(Perseverance)', '큐리오시티(Curiosity)', '인사이트'],
-        photoUrl: 'https://upload.wikimedia.org/wikipedia/commons/0/02/OSIRIS_Mars_true_color.jpg',
+        photoUrl: 'assets/images/mars.jpg',
         color: '#ef4444'
     },
     jupiter: {
@@ -201,7 +201,7 @@ window.SOLAR_SYSTEM_DATA = {
         ],
         trivia: '목성의 위성 가니메데는 수성보다도 크기가 큰 태양계 최대 위성입니다.',
         missions: ['주노(Juno)', '갈릴레오(Galileo)', '보아저 1/2호'],
-        photoUrl: 'https://upload.wikimedia.org/wikipedia/commons/e/e2/Jupiter.jpg',
+        photoUrl: 'assets/images/jupiter.jpg',
         color: '#f97316'
     },
     saturn: {
@@ -235,7 +235,7 @@ window.SOLAR_SYSTEM_DATA = {
         ],
         trivia: '토성의 고리는 두께가 불과 수십 미터에 불과하지만 폭은 수십만 킬로미터에 달합니다.',
         missions: ['카시니-하위헌스(Cassini-Huygens)'],
-        photoUrl: 'https://upload.wikimedia.org/wikipedia/commons/c/c7/Saturn_during_Equinox.jpg',
+        photoUrl: 'assets/images/saturn.jpg',
         color: '#eab308'
     },
     uranus: {
@@ -263,7 +263,7 @@ window.SOLAR_SYSTEM_DATA = {
         ],
         trivia: '천왕성은 극지방이 42년 동안 태양 빛을 계속 받습니다.',
         missions: ['보이저 2호(Voyager 2)'],
-        photoUrl: 'https://upload.wikimedia.org/wikipedia/commons/3/3d/Uranus2.jpg',
+        photoUrl: 'assets/images/uranus.jpg',
         color: '#06b6d4'
     },
     neptune: {
@@ -295,7 +295,7 @@ window.SOLAR_SYSTEM_DATA = {
         ],
         trivia: '해왕성이 태양을 한 바퀴 도는 데는 164.8년이나 걸립니다.',
         missions: ['보이저 2호(Voyager 2)'],
-        photoUrl: 'https://upload.wikimedia.org/wikipedia/commons/6/63/Neptune_-_Voyager_2_%2829347980845%29_flatten_crop.jpg',
+        photoUrl: 'assets/images/neptune.jpg',
         color: '#2563eb'
     },
     pluto: {
@@ -325,7 +325,7 @@ window.SOLAR_SYSTEM_DATA = {
         ],
         trivia: '달보다도 크기가 작은 아담한 왜소행성입니다.',
         missions: ['뉴 하이라이즌스(New Horizons)'],
-        photoUrl: 'https://upload.wikimedia.org/wikipedia/commons/e/ef/Pluto_in_True_Color_-_February_2010.jpg',
+        photoUrl: 'assets/images/pluto.jpg',
         color: '#94a3b8'
     },
     comet: {
@@ -343,7 +343,7 @@ window.SOLAR_SYSTEM_DATA = {
         ],
         trivia: '가장 유명한 핼리 혜성은 약 75~76년 주기로 태양 주위를 공전합니다.',
         missions: ['로제타(Rosetta)', '지오토(Giotto)'],
-        photoUrl: 'https://upload.wikimedia.org/wikipedia/commons/4/46/Comet_Neowise_14072020.jpg',
+        photoUrl: 'assets/images/comet.jpg',
         color: '#38bdf8'
     },
     meteor: {
@@ -361,7 +361,7 @@ window.SOLAR_SYSTEM_DATA = {
         ],
         trivia: '지구에는 매일 약 100톤 이상의 우주 먼지와 유성체가 쏟아집니다.',
         missions: ['지구 대기 관측망'],
-        photoUrl: 'https://upload.wikimedia.org/wikipedia/commons/6/6f/Perseids_over_VLT.jpg',
+        photoUrl: 'assets/images/meteor.jpg',
         color: '#fbbf24'
     },
     asteroid: {
@@ -379,7 +379,7 @@ window.SOLAR_SYSTEM_DATA = {
         ],
         trivia: '소행성대에서 가장 큰 왜소행성 세레스(Ceres)는 지름이 약 940km입니다.',
         missions: ['하야부사 2호', '오시리스-렉스(OSIRIS-REx)'],
-        photoUrl: 'https://upload.wikimedia.org/wikipedia/commons/2/22/Ceres_-_RC3_-_PIA19546_%28crop%29.jpg',
+        photoUrl: 'assets/images/asteroid.jpg',
         color: '#a8a29e'
     }
 };
