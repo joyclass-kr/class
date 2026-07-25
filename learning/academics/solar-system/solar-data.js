@@ -466,6 +466,22 @@ window.createPlanetCanvas = function (planetKey) {
             ctx.stroke();
         }
 
+    } else if (planetKey === 'earthNight') {
+        // Dark Earth Base with Golden City Lights
+        ctx.fillStyle = '#030712';
+        ctx.fillRect(0, 0, w, h);
+        ctx.fillStyle = '#ffd18a';
+        for (let i = 0; i < 400; i++) {
+            const rx = Math.random() * w;
+            const ry = Math.random() * (h * 0.7) + (h * 0.15);
+            ctx.fillRect(rx, ry, Math.random() * 3 + 1, Math.random() * 3 + 1);
+        }
+    } else if (planetKey === 'milkyWay') {
+        // Deep Space Nebula Background
+        ctx.fillStyle = '#030712';
+        ctx.fillRect(0, 0, w, h);
+        ctx.fillStyle = 'rgba(56, 189, 248, 0.12)';
+        ctx.fillRect(0, h * 0.35, w, h * 0.3);
     } else {
         // Pluto / Default
         ctx.fillStyle = '#a1a1aa';

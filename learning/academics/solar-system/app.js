@@ -359,32 +359,37 @@ document.addEventListener('DOMContentLoaded', () => {
 
     function loadPlanetTexture(key) {
         let canvasEl;
-        if (key === 'earthCloud') {
-            canvasEl = window.createEarthCloudCanvas();
-        } else if (key === 'saturnRing') {
+        if (key === 'saturnRing') {
             canvasEl = window.createSaturnRingCanvas();
         } else {
             canvasEl = window.createPlanetCanvas(key);
         }
 
-        const fallbackTex = new THREE.CanvasTexture(canvasEl);
-        fallbackTex.wrapS = THREE.RepeatWrapping;
-        fallbackTex.wrapT = THREE.ClampToEdgeWrapping;
-        fallbackTex.needsUpdate = true;
+        const texture = new THREE.CanvasTexture(canvasEl);
+        texture.wrapS = THREE.RepeatWrapping;
+        texture.wrapT = THREE.ClampToEdgeWrapping;
+        texture.needsUpdate = true;
 
         if (LOCAL_TEXTURE_FILES[key] && typeof THREE.TextureLoader !== 'undefined') {
             const loader = new THREE.TextureLoader();
-            return loader.load(
+            loader.load(
                 LOCAL_TEXTURE_FILES[key],
-                (tex) => {
-                    tex.wrapS = THREE.RepeatWrapping;
-                    tex.wrapT = THREE.ClampToEdgeWrapping;
+                (loadedTex) => {
+                    if (loadedTex && loadedTex.image) {
+                        loadedTex.wrapS = THREE.RepeatWrapping;
+                        loadedTex.wrapT = THREE.ClampToEdgeWrapping;
+                        texture.image = loadedTex.image;
+                        texture.needsUpdate = true;
+                    }
                 },
                 undefined,
-                () => fallbackTex
+                () => {
+                    // Fail-proof silent fallback to CanvasTexture on file:// CORS restrictions
+                }
             );
         }
-        return fallbackTex;
+
+        return texture;
     }
 
     function buildCelestialBodies() {
