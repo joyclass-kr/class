@@ -861,17 +861,42 @@
                     }
                 }
 
-                // 3. 🌠 3D Interactive Meteor / Meteor Shower
+                // 3. 🌠 3D Interactive Meteor Shower (Falling Shooting Stars Stream from Comet Debris)
                 var meteorData = window.SOLAR_SYSTEM_DATA.meteor;
                 if (meteorData) {
                     var mGroup = new THREE.Object3D();
-                    var mHeadGeo = new THREE.SphereGeometry(2.5, 16, 16);
-                    var mHeadMat = new THREE.MeshBasicMaterial({ color: 0xfef08a });
+                    
+                    // Shooting Stars Stream Mesh (25 Animated Falling Meteor Lines)
+                    var starCount = 30;
+                    var starGeo = new THREE.BufferGeometry();
+                    var starPositions = new Float32Array(starCount * 6); // Line start and end points
+                    var earthOrbitR = getBodyOrbitRadius('earth');
+
+                    for (var s = 0; s < starCount; s++) {
+                        var sx = (Math.random() - 0.5) * 120 + earthOrbitR;
+                        var sy = Math.random() * 50 + 20;
+                        var sz = (Math.random() - 0.5) * 120;
+
+                        starPositions[s * 6] = sx;
+                        starPositions[s * 6 + 1] = sy;
+                        starPositions[s * 6 + 2] = sz;
+
+                        starPositions[s * 6 + 3] = sx - 15;
+                        starPositions[s * 6 + 4] = sy - 20;
+                        starPositions[s * 6 + 5] = sz - 15;
+                    }
+                    starGeo.setAttribute('position', new THREE.BufferAttribute(starPositions, 3));
+                    var starMat = new THREE.LineBasicMaterial({ color: 0xfef08a, transparent: true, opacity: 0.8 });
+                    var starLines = new THREE.LineSegments(starGeo, starMat);
+                    mGroup.add(starLines);
+
+                    // Meteor Core Click Target Mesh
+                    var mHeadGeo = new THREE.SphereGeometry(3.5, 16, 16);
+                    var mHeadMat = new THREE.MeshBasicMaterial({ color: 0xfbfb24, transparent: true, opacity: 0.9 });
                     var mHeadMesh = new THREE.Mesh(mHeadGeo, mHeadMat);
+                    mHeadMesh.position.set(earthOrbitR, 30, 0);
                     mGroup.add(mHeadMesh);
 
-                    var earthOrbitR = getBodyOrbitRadius('earth');
-                    mGroup.position.set(earthOrbitR * 1.15, 30, earthOrbitR * 0.4);
                     mHeadMesh.userData = { key: 'meteor', data: meteorData };
                     scene.add(mGroup);
                     celestialBodies['meteor'] = { mesh: mHeadMesh, bodyTiltGroup: mGroup, data: meteorData };
@@ -984,6 +1009,14 @@
                         // 🪐 3D Asteroid Belt Rotation (Living Asteroid Belt Orbiting the Sun!)
                         if (b.mesh) {
                             b.mesh.rotation.y -= timeDelta * (Math.PI * 2) * 0.03;
+                        }
+                    } else if (key === 'meteor') {
+                        // 🌠 3D Meteor Shower Shooting Stars (Falling Streams Following Earth Orbit!)
+                        var earthBody = celestialBodies['earth'];
+                        if (earthBody && b.bodyTiltGroup) {
+                            var earthPos = earthBody.bodyTiltGroup ? earthBody.bodyTiltGroup.position : earthBody.mesh.position;
+                            b.bodyTiltGroup.position.set(earthPos.x + 35.0, 15.0, earthPos.z + 25.0);
+                            b.bodyTiltGroup.rotation.y += timeDelta * 2.5;
                         }
                     } else if (b.pivot && b.mesh) {
                         var rate = ORBIT_RATES[key] || 0.1;
