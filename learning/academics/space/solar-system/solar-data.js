@@ -327,6 +327,60 @@ window.SOLAR_SYSTEM_DATA = {
         missions: ['뉴 하이라이즌스(New Horizons)'],
         photoUrl: 'https://upload.wikimedia.org/wikipedia/commons/e/ef/Pluto_in_True_Color_-_February_2010.jpg',
         color: '#94a3b8'
+    },
+    comet: {
+        name: '혜성 (Comet)',
+        enName: 'Comet',
+        type: '소천체 (Small Body)',
+        category: '소천체 (Comet)',
+        radiusKm: 10,
+        density: '0.6 g/cm³',
+        tempC: '-150°C ~ 100°C',
+        desc: '얼음과 먼지 조각으로 구성된 천체로, 태양에 가까워지면 얼음이 기화하며 태양 반대 방향으로 기다란 꼬리를 형성합니다.',
+        satExamKeyPoints: [
+            '☄️ [혜성의 꼬리 방향] 혜성의 꼬리는 태양풍과 방사압에 의해 [항상 태양의 반대 방향]으로 길게 뻗어나감',
+            '❄️ [구성 성분] 주로 얼음, 먼지, 이산화탄소, 메탄 등으로 이루어져 있어 "더러운 눈덩이(Dirty Snowball)"라 불림'
+        ],
+        trivia: '가장 유명한 핼리 혜성은 약 75~76년 주기로 태양 주위를 공전합니다.',
+        missions: ['로제타(Rosetta)', '지오토(Giotto)'],
+        photoUrl: 'https://upload.wikimedia.org/wikipedia/commons/4/46/Comet_Neowise_14072020.jpg',
+        color: '#38bdf8'
+    },
+    meteor: {
+        name: '유성 & 유성우 (별똥별)',
+        enName: 'Meteor & Meteor Shower',
+        type: '소천체 (Small Body)',
+        category: '소천체 (Meteor)',
+        radiusKm: 0.001,
+        density: '2.5 g/cm³',
+        tempC: '1,500°C (대기 마찰열)',
+        desc: '우주 공간의 먼지나 소행성 파편(유성체)이 지구 대기권에 마찰하여 빛을 내며 타오르는 현상입니다. 지표면에 남은 잔해는 운석(Meteorite)이라 부릅니다.',
+        satExamKeyPoints: [
+            '🌠 [유성과 운석의 차이] 대기 마찰열로 빛을 발하며 타서 사라지면 유성(Meteor), 타다 남은 암석 덩어리가 지표에 떨어지면 운석(Meteorite)',
+            '💫 [유성우] 혜성이 지나간 궤도에 남은 먼지 무리를 지구가 통과할 때 무수한 별똥별이 비처럼 내리는 현상'
+        ],
+        trivia: '지구에는 매일 약 100톤 이상의 우주 먼지와 유성체가 쏟아집니다.',
+        missions: ['지구 대기 관측망'],
+        photoUrl: 'https://upload.wikimedia.org/wikipedia/commons/6/6f/Perseids_over_VLT.jpg',
+        color: '#fbbf24'
+    },
+    asteroid: {
+        name: '소행성 (Asteroid)',
+        enName: 'Asteroid',
+        type: '소천체 (Small Body)',
+        category: '소천체 (Asteroid)',
+        radiusKm: 470,
+        density: '2.16 g/cm³',
+        tempC: '-100°C',
+        desc: '행성이 되지 못한 암석 조각들로, 대부분 화성과 목성 궤도 사이의 소행성대(Asteroid Belt)에 빽빽하게 분포합니다.',
+        satExamKeyPoints: [
+            '🪨 [소행성대 위치] 화성 궤도(1.52 AU)와 목성 궤도(5.2 AU) 사이에 수십만 개의 소행성이 밀집하여 태양을 공전함',
+            '📌 [구조적 특성] 크기가 작아 자체 중력이 부족하므로 완벽한 구형이 아닌 울퉁불퉁하고 불규칙한 암석 형태를 띰'
+        ],
+        trivia: '소행성대에서 가장 큰 왜소행성 세레스(Ceres)는 지름이 약 940km입니다.',
+        missions: ['하야부사 2호', '오시리스-렉스(OSIRIS-REx)'],
+        photoUrl: 'https://upload.wikimedia.org/wikipedia/commons/2/22/Ceres_-_RC3_-_PIA19546_%28crop%29.jpg',
+        color: '#a8a29e'
     }
 };
 
