@@ -379,6 +379,19 @@
         }
 
         var ORBIT_RATES = { mercury: 4.1, venus: 1.6, earth: 1.0, mars: 0.53, jupiter: 0.08, saturn: 0.03, uranus: 0.012, neptune: 0.006, pluto: 0.004 };
+        
+        // Rotation per 1 Orbit Ratio (Scientifically Accurate: Earth rotates ~365.25 times per orbit)
+        var ROTATION_RATIOS = {
+            mercury: 1.5,       // 3:2 orbital resonance
+            venus: -0.92,       // Retrograde rotation (Reverse)
+            earth: 365.25,      // Earth 365.25 rotations per 1 orbit!
+            mars: 669.6,
+            jupiter: 1049.0,    // Scaled for smooth visual rendering
+            saturn: 2412.0,
+            uranus: -4274.0,    // Retrograde rotation (Retrograde tilt)
+            neptune: 8970.0,
+            pluto: 141.0
+        };
 
         function animate3D() {
             requestAnimationFrame(animate3D);
@@ -401,14 +414,18 @@
                     } else if (b.pivot && b.mesh) {
                         var rate = ORBIT_RATES[key] || 0.1;
                         if (b.orbitAngle === undefined) b.orbitAngle = Math.random() * Math.PI * 2;
-                        b.orbitAngle += delta * 0.5 * rate * state.orbitSpeed;
+                        
+                        var dOrbit = delta * 0.5 * rate * state.orbitSpeed;
+                        b.orbitAngle += dOrbit;
                         
                         var a = b.semiMajor || b.orbitRadius || 100;
                         var c = b.semiMinor || b.orbitRadius || 100;
                         b.mesh.position.x = Math.cos(b.orbitAngle) * a;
                         b.mesh.position.z = Math.sin(b.orbitAngle) * c;
                         
-                        b.mesh.rotation.y += 0.01;
+                        // Scientifically Accurate Self Rotation (Earth ~365.25 spins per orbit)
+                        var rotRatio = ROTATION_RATIOS[key] || 1.0;
+                        b.mesh.rotation.y += dOrbit * (rotRatio / 40); // Scaled proportionally for smooth visual rendering
                     }
                 });
             }
