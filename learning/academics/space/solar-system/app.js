@@ -946,6 +946,39 @@
                                 b.mesh.rotation.y = moonAngle;
                             }
                         }
+                    } else if (key === 'comet') {
+                        // ☄️ 3D Comet Elliptic Orbit + Anti-Solar Tail Alignment + Distance-Based Fading/Growth!
+                        b.orbitAngle = (b.orbitAngle || 0.5) - timeDelta * (Math.PI * 2) * 0.008;
+                        var cA = b.semiMajor || 650;
+                        var cEcc = b.ecc || 0.88;
+                        var cB = cA * Math.sqrt(1 - cEcc * cEcc);
+                        var cFo = b.focusOffset || (cA * cEcc);
+
+                        var cPx = Math.cos(b.orbitAngle) * cA - cFo;
+                        var cPz = Math.sin(b.orbitAngle) * cB;
+
+                        if (b.bodyTiltGroup) {
+                            b.bodyTiltGroup.position.set(cPx, 12, cPz);
+
+                            // 1. 🌟 CSAT Key Point: Comet tail ALWAYS points away from the Sun (Anti-Solar Direction)
+                            var dirFromSun = new THREE.Vector3(cPx, 12, cPz).normalize();
+                            var targetAngle = Math.atan2(dirFromSun.x, dirFromSun.z);
+                            b.bodyTiltGroup.rotation.y = targetAngle;
+
+                            // 2. 🌟 CSAT Key Point: Thermal Sublimation (Comet tail grows near the Sun, shrinks & fades far away)
+                            var distToSun = Math.sqrt(cPx * cPx + cPz * cPz);
+                            var minSublimationDist = 120; // Near perihelion
+                            var maxSublimationDist = 800; // Near aphelion
+
+                            var sublimationFactor = Math.max(0.0, Math.min(1.0, 1.0 - (distToSun - minSublimationDist) / (maxSublimationDist - minSublimationDist)));
+
+                            b.bodyTiltGroup.traverse(function(child) {
+                                if (child.isPoints) {
+                                    child.material.opacity = 0.1 + sublimationFactor * 0.85;
+                                    child.scale.set(1.0 + sublimationFactor * 0.8, 1.0 + sublimationFactor * 0.8, 1.0 + sublimationFactor * 1.5);
+                                }
+                            });
+                        }
                     } else if (b.pivot && b.mesh) {
                         var rate = ORBIT_RATES[key] || 0.1;
                         if (b.orbitAngle === undefined) b.orbitAngle = Math.random() * Math.PI * 2;
