@@ -1348,37 +1348,97 @@
             });
         }
 
-        // ========== PLANET ATLAS GRID (Tab 3) ==========
+        // ========== PLANET ATLAS GRID (Tab 3) - Premium Redesign ==========
         function initAtlasGrid() {
             var grid = document.getElementById('atlasGrid');
             if (!grid || !window.SOLAR_SYSTEM_DATA) return;
             grid.innerHTML = '';
+
+            grid.style.display = 'grid';
+            grid.style.gridTemplateColumns = 'repeat(auto-fill, minmax(320px, 1fr))';
+            grid.style.gap = '20px';
+
             Object.keys(window.SOLAR_SYSTEM_DATA).forEach(function (key) {
                 var body = window.SOLAR_SYSTEM_DATA[key];
                 var photo = body.photoUrl || (typeof window.createPlanetTexture === 'function' ? window.createPlanetTexture(key) : '');
-                
-                var card = document.createElement('div');
-                card.className = 'planet-card';
-                card.style.cssText = 'overflow: hidden; padding: 0; position: relative; border-radius: 16px; border: 1px solid var(--border-color); background: rgba(10,15,29,0.9); cursor: pointer; transition: all 0.3s ease;';
-                
-                var keyPointsHtml = '';
-                if (body.satExamKeyPoints && body.satExamKeyPoints.length > 0) {
-                    keyPointsHtml = '<div style="font-size:12px; color:#38bdf8; background:rgba(56,189,248,0.1); border-left:3px solid #38bdf8; padding:8px 12px; border-radius:4px; margin-top:8px;">' + body.satExamKeyPoints[0] + '</div>';
+
+                // Badge Color Palette
+                var badgeBg = 'rgba(56, 189, 248, 0.15)';
+                var badgeColor = '#38bdf8';
+                var categoryText = body.category || body.type;
+
+                if (categoryText.indexOf('항성') !== -1) {
+                    badgeBg = 'rgba(234, 179, 8, 0.2)'; badgeColor = '#fef08a';
+                } else if (categoryText.indexOf('지구형') !== -1) {
+                    badgeBg = 'rgba(56, 189, 248, 0.2)'; badgeColor = '#38bdf8';
+                } else if (categoryText.indexOf('목성형') !== -1) {
+                    badgeBg = 'rgba(168, 85, 247, 0.2)'; badgeColor = '#c084fc';
+                } else if (categoryText.indexOf('위성') !== -1) {
+                    badgeBg = 'rgba(16, 185, 129, 0.2)'; badgeColor = '#34d399';
+                } else if (categoryText.indexOf('왜소행성') !== -1) {
+                    badgeBg = 'rgba(236, 72, 153, 0.2)'; badgeColor = '#f472b6';
                 }
 
+                var card = document.createElement('div');
+                card.className = 'planet-card';
+                card.style.cssText = 'overflow: hidden; padding: 0; position: relative; border-radius: 18px; border: 1px solid rgba(255, 255, 255, 0.12); background: rgba(15, 23, 42, 0.85); backdrop-filter: blur(12px); cursor: pointer; transition: all 0.35s cubic-bezier(0.4, 0, 0.2, 1); box-shadow: 0 10px 30px rgba(0,0,0,0.5);';
+
+                // Hover Effects
+                card.addEventListener('mouseenter', function() {
+                    card.style.transform = 'translateY(-6px)';
+                    card.style.borderColor = badgeColor;
+                    card.style.boxShadow = '0 16px 35px rgba(0,0,0,0.7), 0 0 20px ' + badgeColor + '44';
+                });
+                card.addEventListener('mouseleave', function() {
+                    card.style.transform = 'translateY(0)';
+                    card.style.borderColor = 'rgba(255, 255, 255, 0.12)';
+                    card.style.boxShadow = '0 10px 30px rgba(0,0,0,0.5)';
+                });
+
+                var keyPointsHtml = '';
+                if (body.satExamKeyPoints && body.satExamKeyPoints.length > 0) {
+                    keyPointsHtml = '<div style="font-size:12px; color:#e2e8f0; background:rgba(15, 23, 42, 0.9); border-left:3px solid ' + badgeColor + '; padding:9px 12px; border-radius:8px; line-height:1.5;">' +
+                        '<div style="font-weight:800; color:' + badgeColor + '; font-size:11px; margin-bottom:2px;">🎓 내신·수능 핵심 포인트</div>' +
+                        body.satExamKeyPoints[0] +
+                        '</div>';
+                }
+
+                var radiusKmStr = body.radiusKm ? body.radiusKm.toLocaleString() + ' km' : '-';
+                var densityStr = body.density || '-';
+                var rotStr = body.rotationDays || '-';
+                var orbStr = body.orbitDays ? body.orbitDays + '일' : (body.distAU ? body.distAU + ' AU' : '-');
+
                 card.innerHTML =
-                    '<div style="width:100%; height:200px; background: url(\'' + photo + '\') center/cover no-repeat; position:relative; border-bottom:1px solid var(--border-color);">' +
-                    '<span style="position:absolute; top:12px; left:12px; background:rgba(3,7,18,0.85); color:#38bdf8; padding:4px 10px; border-radius:20px; font-size:12px; font-weight:800;">' + (body.category || body.type) + '</span>' +
+                    '<div style="width:100%; height:190px; background: url(\'' + photo + '\') center/cover no-repeat; position:relative; border-bottom:1px solid rgba(255,255,255,0.1);">' +
+                        '<div style="position:absolute; inset:0; background: linear-gradient(to top, rgba(15, 23, 42, 0.95), transparent 60%);"></div>' +
+                        '<span style="position:absolute; top:12px; left:12px; background:' + badgeBg + '; color:' + badgeColor + '; border: 1px solid ' + badgeColor + '66; padding:4px 12px; border-radius:20px; font-size:11.5px; font-weight:800; backdrop-filter:blur(4px);">' + categoryText + '</span>' +
+                        '<div style="position:absolute; bottom:12px; left:16px; font-size:22px; font-weight:900; color:#fff; text-shadow:0 2px 10px rgba(0,0,0,0.8);">' +
+                            body.name + ' <span style="font-size:13px; color:rgba(255,255,255,0.7); font-weight:500;">(' + body.enName + ')</span>' +
+                        '</div>' +
                     '</div>' +
-                    '<div style="padding: 18px 20px; display:flex; flex-direction:column; gap:10px;">' +
-                    '<div><div style="font-size:20px; font-weight:900; color:#fff;">' + body.name + ' <small style="font-size:13px; color:var(--text-muted); font-weight:500;">(' + body.enName + ')</small></div></div>' +
-                    '<div style="font-size:13px; color:var(--text-secondary); line-height:1.5;">' + body.desc + '</div>' +
-                    keyPointsHtml +
-                    '<div style="display:flex; justify-content:space-between; font-size:12px; color:var(--text-muted); border-top:1px solid var(--border-color); padding-top:10px; margin-top:4px;">' +
-                    '<span>자전: ' + (body.rotationDays || '-') + '</span>' +
-                    '<span>공전: ' + (body.orbitDays ? body.orbitDays + '일' : '-') + '</span>' +
-                    '</div></div>';
-                
+                    '<div style="padding: 18px; display:flex; flex-direction:column; gap:12px;">' +
+                        '<div style="font-size:13px; color:#94a3b8; line-height:1.55; display:-webkit-box; -webkit-line-clamp:2; -webkit-box-orient:vertical; overflow:hidden;">' + body.desc + '</div>' +
+                        keyPointsHtml +
+                        '<div style="display:grid; grid-template-columns: 1fr 1fr; gap:8px; font-size:11.5px; margin-top:4px;">' +
+                            '<div style="background:rgba(255,255,255,0.04); padding:7px 10px; border-radius:8px; border:1px solid rgba(255,255,255,0.05);">' +
+                                '<div style="color:#64748b; font-size:10.5px;">📏 반지름</div>' +
+                                '<div style="color:#f8fafc; font-weight:700; margin-top:1px;">' + radiusKmStr + '</div>' +
+                            '</div>' +
+                            '<div style="background:rgba(255,255,255,0.04); padding:7px 10px; border-radius:8px; border:1px solid rgba(255,255,255,0.05);">' +
+                                '<div style="color:#64748b; font-size:10.5px;">🧊 평균 밀도</div>' +
+                                '<div style="color:#f8fafc; font-weight:700; margin-top:1px;">' + densityStr + '</div>' +
+                            '</div>' +
+                            '<div style="background:rgba(255,255,255,0.04); padding:7px 10px; border-radius:8px; border:1px solid rgba(255,255,255,0.05);">' +
+                                '<div style="color:#64748b; font-size:10.5px;">🔄 자전 주기</div>' +
+                                '<div style="color:#f8fafc; font-weight:700; margin-top:1px;">' + rotStr + '</div>' +
+                            '</div>' +
+                            '<div style="background:rgba(255,255,255,0.04); padding:7px 10px; border-radius:8px; border:1px solid rgba(255,255,255,0.05);">' +
+                                '<div style="color:#64748b; font-size:10.5px;">🌀 공전 정보</div>' +
+                                '<div style="color:#f8fafc; font-weight:700; margin-top:1px;">' + orbStr + '</div>' +
+                            '</div>' +
+                        '</div>' +
+                    '</div>';
+
                 card.addEventListener('click', function () { openPlanetModal(key); });
                 grid.appendChild(card);
             });
