@@ -257,6 +257,7 @@
             group.add(light);
 
             group.position.copy(ufoState.pos);
+            group.scale.set(0.6, 0.6, 0.6); // Compact scale to avoid blocking planet observation
             group.visible = false;
             ufoMesh = group;
             scene.add(ufoMesh);
@@ -816,10 +817,10 @@
             var hh = h / 2;
             var vec = new THREE.Vector3();
 
-            // Update UFO Pilot Floating Name Tag Position
+            // Update UFO Pilot Floating Name Tag Position (Tight Fit)
             if (ufoState.active && ufoMesh && ufoState.nameLabel) {
                 vec.copy(ufoState.pos);
-                vec.y += 10.0; // Position name tag above UFO dome
+                vec.y += 3.2; // Tightly attach name tag directly above UFO dome
                 vec.project(camera);
                 if (vec.z <= 1.0) {
                     var ux = (vec.x * hw) + hw;
