@@ -95,6 +95,9 @@
 
         window.addEventListener('keydown', function(e) {
             if (!ufoState.active) return;
+            if (['ArrowUp', 'ArrowDown', 'ArrowLeft', 'ArrowRight', 'w', 'W', 's', 'S', 'a', 'A', 'd', 'D'].indexOf(e.key) !== -1) {
+                e.preventDefault();
+            }
             if (e.key === 'ArrowUp' || e.key === 'w' || e.key === 'W') ufoState.keys.forward = true;
             if (e.key === 'ArrowDown' || e.key === 's' || e.key === 'S') ufoState.keys.backward = true;
             if (e.key === 'ArrowLeft' || e.key === 'a' || e.key === 'A') ufoState.keys.left = true;
@@ -103,6 +106,9 @@
 
         window.addEventListener('keyup', function(e) {
             if (!ufoState.active) return;
+            if (['ArrowUp', 'ArrowDown', 'ArrowLeft', 'ArrowRight', 'w', 'W', 's', 'S', 'a', 'A', 'd', 'D'].indexOf(e.key) !== -1) {
+                e.preventDefault();
+            }
             if (e.key === 'ArrowUp' || e.key === 'w' || e.key === 'W') ufoState.keys.forward = false;
             if (e.key === 'ArrowDown' || e.key === 's' || e.key === 'S') ufoState.keys.backward = false;
             if (e.key === 'ArrowLeft' || e.key === 'a' || e.key === 'A') ufoState.keys.left = false;
@@ -556,28 +562,37 @@
                 });
             }
 
-            // 🛸 UFO Flight Exploration Mode Physics
-            if (ufoState.active && ufoMesh) {
-                var moveSpeed = 6.0 * (state.orbitSpeed || 1.0);
-                var rotSpeed = 0.04;
+            // 🛸 UFO Flight Exploration Mode Physics (Camera-Relative Steering)
+            if (ufoState.active && ufoMesh && camera) {
+                var moveSpeed = 7.0 * (state.orbitSpeed || 1.0);
 
-                if (ufoState.keys.left) ufoState.heading += rotSpeed;
-                if (ufoState.keys.right) ufoState.heading -= rotSpeed;
+                // Calculate Camera Forward Vector on XZ Plane
+                var camDir = new THREE.Vector3();
+                camera.getWorldDirection(camDir);
+                camDir.y = 0; // Constrain to orbital plane
+                camDir.normalize();
 
-                var dirX = Math.sin(ufoState.heading);
-                var dirZ = Math.cos(ufoState.heading);
+                // Calculate Camera Right Vector
+                var camRight = new THREE.Vector3();
+                camRight.crossVectors(camDir, new THREE.Vector3(0, 1, 0)).negate().normalize();
 
-                if (ufoState.keys.forward) {
-                    ufoState.pos.x -= dirX * moveSpeed;
-                    ufoState.pos.z -= dirZ * moveSpeed;
-                }
-                if (ufoState.keys.backward) {
-                    ufoState.pos.x += dirX * moveSpeed;
-                    ufoState.pos.z += dirZ * moveSpeed;
+                var moveVec = new THREE.Vector3(0, 0, 0);
+
+                if (ufoState.keys.forward) moveVec.add(camDir);
+                if (ufoState.keys.backward) moveVec.sub(camDir);
+                if (ufoState.keys.right) moveVec.add(camRight);
+                if (ufoState.keys.left) moveVec.sub(camRight);
+
+                if (moveVec.lengthSq() > 0) {
+                    moveVec.normalize().multiplyScalar(moveSpeed);
+                    ufoState.pos.add(moveVec);
+
+                    // Smoothly turn UFO mesh toward moving direction
+                    var targetHeading = Math.atan2(-moveVec.x, -moveVec.z);
+                    ufoMesh.rotation.y = targetHeading;
                 }
 
                 ufoMesh.position.copy(ufoState.pos);
-                ufoMesh.rotation.y = ufoState.heading;
 
                 // Sync OrbitControls target to UFO position so Drag & Mouse Wheel work naturally!
                 if (controls) {
