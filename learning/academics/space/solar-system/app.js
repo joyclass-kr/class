@@ -941,12 +941,19 @@
                             }
                         }
                     } else if (key === 'comet') {
-                        // ☄️ Dynamic 3D Comet Fast Motion (Elliptic Orbit + Anti-Solar Tail Alignment + Thermal Sublimation)
-                        b.orbitAngle = (b.orbitAngle || 0.5) - timeDelta * (Math.PI * 2) * 0.08;
+                        // ☄️ Kepler 2nd Law: Angular speed increases near Sun (perihelion) and slows down far away (aphelion)
                         var cA = b.semiMajor || 650;
                         var cEcc = b.ecc || 0.88;
                         var cB = cA * Math.sqrt(1 - cEcc * cEcc);
                         var cFo = b.focusOffset || (cA * cEcc);
+
+                        var lastPx = Math.cos(b.orbitAngle || 0.5) * cA - cFo;
+                        var lastPz = Math.sin(b.orbitAngle || 0.5) * cB;
+                        var distToSun = Math.sqrt(lastPx * lastPx + lastPz * lastPz);
+                        
+                        // Kepler 2nd Law Speed Factor: Faster near Sun, slower far away!
+                        var speedFactor = Math.pow(cA / Math.max(80, distToSun), 1.5);
+                        b.orbitAngle = (b.orbitAngle || 0.5) - timeDelta * (Math.PI * 2) * 0.03 * speedFactor;
 
                         var cPx = Math.cos(b.orbitAngle) * cA - cFo;
                         var cPz = Math.sin(b.orbitAngle) * cB;
