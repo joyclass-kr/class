@@ -1428,22 +1428,52 @@
             }
         }
 
+        var cameraAnimTimer = null;
+
         function focusCameraOnBody(key) {
             var bodyObj = celestialBodies[key];
             if (!bodyObj || !bodyObj.mesh) return;
             var worldPos = new THREE.Vector3();
             bodyObj.mesh.getWorldPosition(worldPos);
             var r = getBodyScaleRadius(key);
-            if (controls) {
-                controls.target.copy(worldPos);
-                // Adjust zoom factor based on log scale sizes
-                var offset = (key === 'sun') ? r * 3.5 : (key === 'asteroid' ? 80.0 : (key === 'comet' ? 35.0 : r * 10.0));
-                if (offset < 5) offset = 5; 
-                
-                camera.position.set(worldPos.x + offset, worldPos.y + offset * 0.5, worldPos.z + offset);
-                controls.update();
+
+            var offset = (key === 'sun') ? r * 3.5 : (key === 'asteroid' ? 80.0 : (key === 'comet' ? 35.0 : r * 10.0));
+            if (offset < 5) offset = 5;
+
+            var targetCamPos = new THREE.Vector3(
+                worldPos.x + offset,
+                worldPos.y + offset * 0.4,
+                worldPos.z + offset
+            );
+
+            if (controls && camera) {
+                // Cancel ongoing animation
+                if (cameraAnimTimer) clearInterval(cameraAnimTimer);
+
+                var startCamPos = camera.position.clone();
+                var startTargetPos = controls.target.clone();
+                var progress = 0;
+                var duration = 28; // ~0.85s smooth approach animation
+
+                cameraAnimTimer = setInterval(function() {
+                    progress += 1;
+                    var t = progress / duration;
+                    // Ease-out cubic curve for smooth space flight
+                    var easeT = 1 - Math.pow(1 - t, 3);
+
+                    camera.position.lerpVectors(startCamPos, targetCamPos, easeT);
+                    controls.target.lerpVectors(startTargetPos, worldPos, easeT);
+                    controls.update();
+
+                    if (progress >= duration) {
+                        clearInterval(cameraAnimTimer);
+                        cameraAnimTimer = null;
+                        openPlanetModal(key);
+                    }
+                }, 30);
+            } else {
+                openPlanetModal(key);
             }
-            openPlanetModal(key);
         }
 
         // ========== 2. EARTH-MOON OBSERVATORY (Tab 2) ==========
@@ -1846,17 +1876,38 @@
             });
         }
 
-        // ========== QUICK BAR ==========
+        // ========== QUICK BAR (Compact Korean Only Chips) ==========
         function initQuickBar() {
             var bar = document.getElementById('planetQuickBar');
             if (!bar || !window.SOLAR_SYSTEM_DATA) return;
             bar.innerHTML = '';
-            Object.keys(window.SOLAR_SYSTEM_DATA).forEach(function (key) {
+            
+            // All 13 Solar System Bodies (Sun, Mercury, Venus, Earth, Moon, Mars, Jupiter, Saturn, Uranus, Neptune, Pluto, Comet, Meteor)
+            var allKeys = ['sun', 'mercury', 'venus', 'earth', 'moon', 'mars', 'jupiter', 'saturn', 'uranus', 'neptune', 'pluto', 'comet', 'meteor'];
+            
+            allKeys.forEach(function (key) {
                 var body = window.SOLAR_SYSTEM_DATA[key];
+                if (!body) return;
                 var chip = document.createElement('button');
                 chip.className = 'planet-chip';
                 chip.dataset.key = key;
-                chip.innerHTML = body.name + ' <small>(' + body.enName + ')</small>';
+                chip.style.cssText = 'background: rgba(15, 23, 42, 0.85); border: 1px solid rgba(56, 189, 248, 0.3); color: #e2e8f0; padding: 6px 14px; border-radius: 20px; font-size: 12.5px; font-weight: 700; cursor: pointer; transition: all 0.2s ease; backdrop-filter: blur(6px);';
+                
+                chip.addEventListener('mouseenter', function() {
+                    chip.style.background = 'rgba(56, 189, 248, 0.25)';
+                    chip.style.borderColor = '#38bdf8';
+                    chip.style.color = '#fff';
+                    chip.style.transform = 'translateY(-2px)';
+                });
+                chip.addEventListener('mouseleave', function() {
+                    chip.style.background = 'rgba(15, 23, 42, 0.85)';
+                    chip.style.borderColor = 'rgba(56, 189, 248, 0.3)';
+                    chip.style.color = '#e2e8f0';
+                    chip.style.transform = 'translateY(0)';
+                });
+
+                // Pure Korean Name Only (No long English text in parentheses!)
+                chip.textContent = body.name;
                 chip.addEventListener('click', function () { focusCameraOnBody(key); });
                 bar.appendChild(chip);
             });
