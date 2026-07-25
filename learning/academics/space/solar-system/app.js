@@ -849,7 +849,8 @@
 
             // 🛸 UFO Flight Exploration Mode Physics (Camera-Relative Steering)
             if (ufoState.active && ufoMesh && camera) {
-                var moveSpeed = 7.0 * (state.orbitSpeed || 1.0);
+                // Smooth & Gentle Flight Speed for Relaxed Art Gallery Exploration
+                var moveSpeed = 2.2 * Math.min(state.orbitSpeed || 1.0, 2.5);
 
                 // Calculate Camera Forward Vector on XZ Plane
                 var camDir = new THREE.Vector3();
