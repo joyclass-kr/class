@@ -1,0 +1,221 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="songhwaplay 인터랙티브 태양계 탐험 - 3D 태양계 공전 시뮬레이션, 행성 입체 도감, 우주 몸무게 & 나이 계산기">
+    <title>태양계 탐험 | songhwaplay 교과학습</title>
+    <link rel="stylesheet" href="styles.css">
+    <!-- Three.js & OrbitControls for 3D Space WebGL Renderer -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/three@0.128.0/examples/js/controls/OrbitControls.js"></script>
+</head>
+<body>
+
+    <!-- Header Navigation -->
+    <header class="top-header">
+        <div class="brand-section">
+            <a href="../../index.html" class="home-btn" id="homePortalBtn">
+                <span>◀</span> 포털 메인으로
+            </a>
+            <h1 class="app-title">
+                🪐 태양계 탐험
+                <span class="badge">Class Astronomy</span>
+            </h1>
+        </div>
+
+        <nav class="nav-tabs" aria-label="학습 모드 선택">
+            <button class="nav-tab active" data-tab="sim" id="tabSimBtn">
+                <span>🛰️</span> 3D 궤도 시뮬레이션
+            </button>
+            <button class="nav-tab" data-tab="atlas" id="tabAtlasBtn">
+                <span>🪐</span> 행성 입체 도감
+            </button>
+            <button class="nav-tab" data-tab="calc" id="tabCalcBtn">
+                <span>⚖️</span> 우주 몸무게 &amp; 나이
+            </button>
+            <button class="nav-tab" data-tab="quiz" id="tabQuizBtn">
+                <span>🧩</span> 우주 천문 퀴즈
+            </button>
+        </nav>
+    </header>
+
+    <!-- Main Views Container -->
+    <main class="view-container">
+
+        <!-- Tab 1: 3D Solar System Simulator Viewport -->
+        <section class="tab-pane active" id="tab-sim">
+            <div class="sim-viewport-card">
+                
+                <!-- Viewport Top Floating Controls -->
+                <div class="viewport-header-bar">
+                    <h2 class="sim-title">Solar System Simulation</h2>
+                    <div class="sim-top-btns">
+                        <button class="icon-btn" id="playPauseBtn" title="시뮬레이션 일시정지 / 재생">⏸</button>
+                        <button class="icon-btn" id="resetCamBtn" title="카메라 위치 초기화">🔄</button>
+                    </div>
+                </div>
+
+                <!-- 3D Canvas Viewport -->
+                <div class="solar-canvas-wrapper" id="solarCanvasContainer">
+                    <canvas id="solarCanvas"></canvas>
+                </div>
+
+                <!-- Floating Control Panel Below Viewport (Matching UI Design) -->
+                <div class="sim-controls-panel">
+                    
+                    <!-- Simulation Time Display -->
+                    <div class="sim-time-display">
+                        <div class="sim-time-label">SIMULATION TIME</div>
+                        <div class="sim-time-val" id="simTimeVal">0.0 yrs</div>
+                    </div>
+
+                    <!-- Control Rows -->
+                    <div class="control-rows">
+                        
+                        <!-- Row 1: Orbit Speed Slider -->
+                        <div class="ctrl-row">
+                            <span class="ctrl-label">Orbit Speed</span>
+                            <div class="slider-group">
+                                <input type="range" class="sim-slider" id="speedSlider" min="0.1" max="10" step="0.1" value="1">
+                                <span class="slider-val-badge" id="speedValBadge">1.0x</span>
+                            </div>
+                        </div>
+
+                        <!-- Row 2: Scale Mode Toggle -->
+                        <div class="ctrl-row">
+                            <span class="ctrl-label">Scale Mode</span>
+                            <div class="segmented-toggle">
+                                <button class="seg-btn" id="scaleRealisticBtn" data-scale="realistic">Realistic</button>
+                                <button class="seg-btn active" id="scaleVisualBtn" data-scale="visual">Visual</button>
+                            </div>
+                        </div>
+
+                        <!-- Row 3: Show Orbits Toggle Switch -->
+                        <div class="ctrl-row">
+                            <span class="ctrl-label">Show Orbits</span>
+                            <label class="toggle-switch">
+                                <input type="checkbox" id="showOrbitsToggle" checked>
+                                <span class="slider-knob"></span>
+                            </label>
+                        </div>
+
+                    </div>
+
+                    <!-- Planet Quick Jump Bar -->
+                    <div class="planet-quick-bar" id="planetQuickBar">
+                        <!-- JS Dyn Rendered Planet Chips -->
+                    </div>
+
+                </div>
+            </div>
+        </section>
+
+        <!-- Tab 2: Planet Atlas & Explorer -->
+        <section class="tab-pane" id="tab-atlas">
+            <h2 style="margin-bottom: 8px;">🪐 태양계 천체 입체 도감</h2>
+            <p style="color: var(--text-secondary); font-size: 14px;">태양과 8개 행성, 위성 달과 명왕성의 상세 정보 및 탐사선 역사를 확인해보세요.</p>
+
+            <div class="atlas-grid" id="atlasGrid">
+                <!-- JS Dyn Rendered Cards -->
+            </div>
+        </section>
+
+        <!-- Tab 3: Space Weight & Age Calculator -->
+        <section class="tab-pane" id="tab-calc">
+            <div class="calc-container">
+                <h2 style="margin-bottom: 6px;">⚖️ 다른 행성에서의 내 몸무게 &amp; 나이 계산기</h2>
+                <p style="color: var(--text-secondary); font-size: 14px; margin-bottom: 24px;">
+                    행성마다 중력의 크기와 공전 주기가 다릅니다. 지구에서의 내 정보가 우주 다른 곳에서는 어떻게 변하는지 확인해보세요!
+                </p>
+
+                <div class="calc-input-box">
+                    <div class="calc-field">
+                        <label for="userWeightInput">지구에서의 몸무게 (kg)</label>
+                        <input type="number" id="userWeightInput" value="60" min="1" max="300" step="1">
+                    </div>
+                    <div class="calc-field">
+                        <label for="userAgeInput">지구에서의 나이 (세)</label>
+                        <input type="number" id="userAgeInput" value="12" min="1" max="120" step="1">
+                    </div>
+                </div>
+
+                <div class="calc-results-grid" id="calcResultsGrid">
+                    <!-- JS Dyn Calculated Results -->
+                </div>
+            </div>
+        </section>
+
+        <!-- Tab 4: Space Quiz -->
+        <section class="tab-pane" id="tab-quiz">
+            <div style="max-width: 800px; margin: 20px auto; background: var(--bg-card); border: 1px solid var(--border-color); border-radius: var(--radius-lg); padding: 32px;">
+                <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 24px; border-bottom: 1px solid var(--border-color); padding-bottom: 16px;">
+                    <div>
+                        <h2>🧩 태양계 우주 천문 퀴즈</h2>
+                        <p style="color: var(--text-secondary); font-size: 14px; margin-top: 4px;">흥미로운 태양계와 행성에 관한 퀴즈를 풀어보세요!</p>
+                    </div>
+                    <div style="display: flex; gap: 12px; align-items: center;">
+                        <span class="slider-val-badge" style="background: linear-gradient(135deg, #ffd18a, #b56e20); color: #000; padding: 6px 16px; border-radius: 20px; font-weight: 800;">연속 콤보: <span id="quizStreak">0</span> 🔥</span>
+                        <span class="slider-val-badge" style="background: linear-gradient(135deg, #ffd18a, #b56e20); color: #000; padding: 6px 16px; border-radius: 20px; font-weight: 800;">점수: <span id="quizScore">0</span>점</span>
+                    </div>
+                </div>
+
+                <div style="text-align: center;">
+                    <div style="background: rgba(10, 16, 28, 0.6); border: 1px solid var(--border-color); border-radius: var(--radius-md); padding: 30px; margin-bottom: 24px;">
+                        <div style="font-size: 22px; font-weight: 800; color: #fff; margin-bottom: 10px;" id="quizQuestionText">문제를 불러오는 중입니다...</div>
+                        <div style="font-size: 14px; color: var(--text-secondary);" id="quizSubText"></div>
+                    </div>
+
+                    <div style="display: grid; grid-template-columns: repeat(2, 1fr); gap: 14px;" id="quizOptionsGrid">
+                        <!-- Options dynamically inserted -->
+                    </div>
+
+                    <div id="quizResultMsg" style="margin-top: 20px; font-weight: 800; font-size: 18px;"></div>
+                    
+                    <button class="nav-tab active" id="nextQuizBtn" style="margin: 24px auto 0; padding: 12px 28px; font-size: 16px;">
+                        다음 문제 풀기 ➔
+                    </button>
+                </div>
+            </div>
+        </section>
+
+    </main>
+
+    <!-- Planet Detail Modal Popup -->
+    <div class="modal-overlay" id="modalOverlay" aria-hidden="true">
+        <div class="planet-modal">
+            <button class="close-modal-btn" id="closeModalBtn" aria-label="닫기">✕</button>
+            
+            <div style="display: flex; align-items: center; gap: 16px; border-bottom: 1px solid var(--border-color); padding-bottom: 16px;">
+                <div class="planet-sphere-preview" id="modalPlanetPreview" style="width: 64px; height: 64px;"></div>
+                <div>
+                    <h2 id="modalPlanetName" style="font-size: 26px; font-weight: 900;">지구</h2>
+                    <div id="modalPlanetSub" style="color: var(--text-secondary); font-size: 14px;">Earth | 3번째 행성</div>
+                </div>
+            </div>
+
+            <div style="display: grid; grid-template-columns: repeat(2, 1fr); gap: 12px;" id="modalPropGrid">
+                <!-- JS Dyn Props -->
+            </div>
+
+            <div style="background: rgba(255, 255, 255, 0.03); padding: 14px; border-radius: var(--radius-sm); border-left: 3px solid #38bdf8;">
+                <h4 style="color: #38bdf8; margin-bottom: 6px;">💡 행성 특징</h4>
+                <p id="modalDesc" style="font-size: 14px; color: #cbd5e1; line-height: 1.5;"></p>
+            </div>
+
+            <div style="background: rgba(255, 255, 255, 0.03); padding: 14px; border-radius: var(--radius-sm); border-left: 3px solid #ffd18a;">
+                <h4 style="color: #ffd18a; margin-bottom: 6px;">✨ 재미있는 상식 (Trivia)</h4>
+                <p id="modalTrivia" style="font-size: 14px; color: #cbd5e1; line-height: 1.5;"></p>
+            </div>
+
+            <div>
+                <h4 style="font-size: 14px; color: var(--text-muted); margin-bottom: 8px;">🚀 대표 우주 탐사선</h4>
+                <div style="display: flex; flex-wrap: wrap; gap: 6px;" id="modalMissions"></div>
+            </div>
+        </div>
+    </div>
+
+    <script src="solar-data.js"></script>
+    <script src="app.js"></script>
+</body>
+</html>
