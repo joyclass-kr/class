@@ -20,3 +20,6 @@ __pycache__/
 
 # Deployment artifacts
 .deploy-worktree/
+.*-deploy-temp/
+.*-target-questions/
+*.tar.gz
