@@ -319,7 +319,20 @@
 
                 var orbitR = getBodyOrbitRadius(key);
                 var bodyR = getBodyScaleRadius(key);
-                var ecc = data.eccentricity || 0.02;
+                
+                // Visually Enhanced Eccentricity so Kepler's First Law is clearly visible!
+                var VISUAL_ECCENTRICITY = {
+                    mercury: 0.32,  // Highly elliptical!
+                    venus: 0.05,
+                    earth: 0.10,
+                    mars: 0.22,     // Clearly elliptical!
+                    jupiter: 0.14,
+                    saturn: 0.16,
+                    uranus: 0.12,
+                    neptune: 0.08,
+                    pluto: 0.38     // Extreme elliptical & tilted!
+                };
+                var ecc = VISUAL_ECCENTRICITY[key] || (data.eccentricity ? data.eccentricity * 1.8 : 0.05);
                 var incRad = (data.inclinationDeg || 0.0) * (Math.PI / 180);
 
                 var pivot = new THREE.Object3D();
