@@ -769,13 +769,13 @@
                 scene.add(astParticles);
                 celestialBodies['asteroid'] = { mesh: astParticles, data: window.SOLAR_SYSTEM_DATA.asteroid };
 
-                // 2. ☄️ 3D Radiant Glowing Comet (Compact Real Rock Core + Fast Dynamic Motion)
+                // 2. ☄️ 3D Radiant Glowing Comet (Tiny Ice-Rock Head + Ultra-Fine 1000 Dust Particles Tail)
                 var cometData = window.SOLAR_SYSTEM_DATA.comet;
                 if (cometData) {
                     var cometGroup = new THREE.Object3D();
                     
-                    // 1) Irregular Ice-Rock Nucleus (NOT a round sphere!)
-                    var cGeo = new THREE.DodecahedronGeometry(1.8, 1);
+                    // 1) Tiny Irregular Ice-Rock Nucleus (Shrunk 50% for realistic proportion)
+                    var cGeo = new THREE.DodecahedronGeometry(0.85, 1);
                     var posAttr = cGeo.attributes.position;
                     for (var i = 0; i < posAttr.count; i++) {
                         var vx = posAttr.getX(i);
@@ -795,28 +795,28 @@
                     var cometMesh = new THREE.Mesh(cGeo, cMat);
                     cometGroup.add(cometMesh);
 
-                    // 2) Luminous Point Light Core (Gentle Point Light, NO round sphere mesh!)
-                    var cLight = new THREE.PointLight(0x00f0ff, 3.0, 60);
+                    // 2) Luminous Point Light Core (Gentle Point Light)
+                    var cLight = new THREE.PointLight(0x00f0ff, 2.0, 40);
                     cometGroup.add(cLight);
 
-                    // 3) Outer Cyan Coma Halo Glow (Soft Halo, NO sharp sphere!)
-                    var comaGeo = new THREE.DodecahedronGeometry(2.6, 1);
+                    // 3) Outer Cyan Coma Halo Glow (Soft Mini Halo)
+                    var comaGeo = new THREE.DodecahedronGeometry(1.2, 1);
                     var comaMat = new THREE.MeshBasicMaterial({ color: 0x00f0ff, transparent: true, opacity: 0.35, blending: THREE.AdditiveBlending });
                     var comaMesh = new THREE.Mesh(comaGeo, comaMat);
                     cometGroup.add(comaMesh);
 
-                    // 4) Dual 3D Particle Tail (Compact & Elegant Tail - 400 Additive Particles)
-                    var tailCount = 400;
+                    // 4) Ultra-Fine 1,000 Particle Tail (Sub-divided fine dust & ion stream)
+                    var tailCount = 1000;
                     var tGeo = new THREE.BufferGeometry();
                     var tPos = new Float32Array(tailCount * 3);
                     var tColors = new Float32Array(tailCount * 3);
 
                     for (var t = 0; t < tailCount; t++) {
                         var progress = Math.random();
-                        var spread = Math.pow(progress, 1.2) * 3.5;
+                        var spread = Math.pow(progress, 1.3) * 2.2;
                         tPos[t * 3] = (Math.random() - 0.5) * spread;
                         tPos[t * 3 + 1] = (Math.random() - 0.5) * spread;
-                        tPos[t * 3 + 2] = progress * 12.0 + 1.0; // Ultra compact 12 unit tail length!
+                        tPos[t * 3 + 2] = progress * 10.0 + 0.6; // Refined 10 unit fine tail
 
                         // Dual Tail Colors: Inner Dust Tail vs Outer Ion Tail
                         var isIon = t % 2 === 0;
@@ -828,7 +828,7 @@
                     tGeo.setAttribute('color', new THREE.BufferAttribute(tColors, 3));
 
                     var tMat = new THREE.PointsMaterial({
-                        size: 1.4,
+                        size: 0.45, // Ultra fine particles!
                         vertexColors: true,
                         transparent: true,
                         opacity: 0.75,
