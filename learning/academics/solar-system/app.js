@@ -153,7 +153,7 @@
             scene.add(new THREE.AmbientLight(0x707080, 1.6));
             scene.add(new THREE.PointLight(0xfffaed, 4.0, 5000, 0.5));
 
-            buildStarfield();
+            // buildStarfield(); // Removed as per user request to reduce visual confusion
             buildCelestialBodies();
 
             window.addEventListener('resize', onWindowResize);
