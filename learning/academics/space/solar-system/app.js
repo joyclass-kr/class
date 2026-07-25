@@ -1281,11 +1281,18 @@
                             var selfRate = SELF_ROTATION_RATES[key] || 1.0;
                             b.mesh.rotation.y += timeDelta * (Math.PI * 2) * selfRate;
 
-                            // Animate Sub-Satellites (Phobos, Deimos, Galilean 4 Moons, Titan, Triton) inside bodyTiltGroup
+                            // Animate Sub-Satellites (Charon, Phobos, Deimos, Galilean 4 Moons, Titan, Triton) inside bodyTiltGroup
                             if (b.satList && b.satList.length > 0) {
                                 b.satList.forEach(function(sat) {
                                     var dSat = timeDelta * (Math.PI * 2) * (sat.data.speed || 1.0) * 8.0;
-                                    sat.angle += dSat;
+                                    // 🌟 CSAT Astronomy Rule: Prograde Orbit is Counter-Clockwise (CCW: West -> East as viewed from North Pole)
+                                    // Except retrograde moons like Neptune's Triton
+                                    var isRetrograde = sat.data && sat.data.retrograde;
+                                    if (isRetrograde) {
+                                        sat.angle += dSat; // Retrograde (Clockwise)
+                                    } else {
+                                        sat.angle -= dSat; // Prograde (Counter-Clockwise: West -> East)
+                                    }
                                     sat.pivot.rotation.y = sat.angle;
                                 });
                             }

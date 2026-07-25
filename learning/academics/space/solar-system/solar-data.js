@@ -295,7 +295,7 @@ window.SOLAR_SYSTEM_DATA = {
             '🔄 [트리톤 역공전 위성] 거대 위성 트리톤(Triton)은 해왕성 자전 방향과 반대로 도는 핵심 출제 역공전 위성'
         ],
         satellites: [
-            { id: 'triton', name: '트리톤', enName: 'Triton', orbitR: 28, size: 2.0, speed: -1.5, color: '#a5f3fc' } // Retrograde!
+            { id: 'triton', name: '트리톤', enName: 'Triton', orbitR: 28, size: 2.0, speed: 1.5, retrograde: true, color: '#a5f3fc' } // Retrograde!
         ],
         trivia: '해왕성이 태양을 한 바퀴 도는 데는 164.8년이나 걸립니다.',
         missions: ['보이저 2호(Voyager 2)'],
