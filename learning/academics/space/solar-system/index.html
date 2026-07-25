@@ -289,82 +289,83 @@
                     </div>
 
                     <!-- Options Grid -->
-                    <div style="display: grid; grid-template-columns: repeat(2, 1fr); gap: 14px;" id="quizOptionsGrid">
-                        <!-- Options dynamically inserted -->
-                    </div>
-
-                    <!-- Result Feedback Banner -->
-                    <div id="quizResultMsg" style="margin-top: 20px; font-weight: 800; font-size: 17px; text-align: center;"></div>
-
-                    <!-- Detailed Explanation Box (Revealed on answer) -->
-                    <div id="quizExpBox" style="display: none; margin-top: 20px; background: rgba(56, 189, 248, 0.08); border: 1px solid rgba(56, 189, 248, 0.3); border-left: 4px solid #38bdf8; border-radius: 10px; padding: 16px 20px;">
-                        <div style="font-size: 14px; font-weight: 800; color: #38bdf8; margin-bottom: 6px; display: flex; align-items: center; gap: 6px;">
-                            <span>💡</span> <span>수능 &amp; 교과 핵심 개념 해설</span>
+                            <p style="margin: 0 0 8px 0; color: #cbd5e1; font-size: 11.5px;">
+                                지구 반지름은 6,371km인데, 지구-태양 거리(1 AU)는 무려 <strong>1억 4,960만 km</strong>입니다. (거리 : 반지름 비약 <strong>23,500 : 1</strong>)
+                            </p>
+                            <div style="background: rgba(0,0,0,0.3); padding: 8px 10px; border-radius: 6px; font-size: 11px; color: #fbbf24; margin-bottom: 8px;">
+                                💡 만약 지구를 화면에서 <strong>1cm 크기</strong>로 그리면, 지구 궤도는 화면 밖 <strong>235m 멀리</strong> 나가버립니다!
+                            </div>
+                            <p style="margin: 0; color: #94a3b8; font-size: 11px;">
+                                따라서 실제 1:1 비율에서는 행성이 1픽셀보다 훨씬 작아져 눈에 안 보이기 때문에 <strong>선과 한글 라벨</strong>로 표기됩니다.
+                            </p>
                         </div>
-                        <div id="quizExpText" style="font-size: 13.5px; color: #e2e8f0; line-height: 1.6;"></div>
                     </div>
+                </div>
+
+                <!-- Floating Control Panel Below Viewport (Matching UI Design) -->
+                <div class="sim-controls-panel">
                     
-                    <!-- Next Question Action Button -->
-                    <div style="text-align: center; margin-top: 24px;">
-                        <button class="nav-tab active" id="nextQuizBtn" style="padding: 12px 32px; font-size: 16px; font-weight: 800; border-radius: 30px; cursor: pointer;">
-                            다음 문제 풀기 ➔
-                        </button>
+                    <!-- Simulation Time Display -->
+                    <div class="sim-time-display">
+                        <div class="sim-time-label">SIMULATION TIME</div>
+                        <div class="sim-time-val" id="simTimeVal">0.0 yrs</div>
                     </div>
+
+                    <!-- Control Rows -->
+                    <div class="control-rows">
+                        
+                        <!-- Row 1: Orbit Speed Slider -->
+                        <div class="ctrl-row">
+                            <span class="ctrl-label">Orbit Speed</span>
+                            <div class="slider-group">
+                                <input type="range" class="sim-slider" id="speedSlider" min="0.1" max="10" step="0.1" value="1">
+                                <span class="slider-val-badge" id="speedValBadge">1.0x</span>
+                            </div>
+                        </div>
+
+                        <!-- Row 2: Dual Simulation Mode Toggle -->
+                        <div class="ctrl-row">
+                            <span class="ctrl-label">Simulation Mode</span>
+                            <div style="display:flex; align-items:center; gap:8px;">
+                                <label class="toggle-switch">
+                                    <input type="checkbox" id="simModeToggle">
+                                    <span class="slider-knob"></span>
+                                </label>
+                                <span id="simModeLabel" style="font-size: 12px; font-weight: 800; color: #38bdf8; background: rgba(56,189,248,0.15); padding: 4px 12px; border-radius: 20px;">🔭 3D 관찰용 (Log Scale)</span>
+                            </div>
+                        </div>
+
+                        <!-- Row 3: Show Orbits Toggle Switch -->
+                        <div class="ctrl-row">
+                            <span class="ctrl-label">Show Orbits</span>
+                            <label class="toggle-switch">
+                                <input type="checkbox" id="showOrbitsToggle" checked>
+                                <span class="slider-knob"></span>
+                            </label>
+                        </div>
+
+                    </div>
+
+                    <!-- Planet Quick Jump Bar -->
+                    <div class="planet-quick-bar" id="planetQuickBar">
+                        <!-- JS Dyn Rendered Planet Chips -->
+                    </div>
+
                 </div>
             </div>
         </section>
 
-    </main>
-
-    <!-- Planet Detail Modal Popup -->
-    <div class="modal-overlay" id="modalOverlay" aria-hidden="true">
-        <div class="planet-modal">
-            <button class="close-modal-btn" id="closeModalBtn" aria-label="닫기">✕</button>
-            
-            <div class="modal-split-container">
-                <!-- Left Column: Big Real Photo & Category Badge -->
-                <div class="modal-left-col">
-                    <div class="modal-planet-photo" id="modalPlanetPhoto"></div>
-                    <div>
-                        <span id="modalPlanetCategory" style="background: rgba(56,189,248,0.2); color: #38bdf8; border: 1px solid rgba(56,189,248,0.4); padding: 4px 12px; border-radius: 20px; font-size: 12px; font-weight: 800; display: inline-block; margin-bottom: 8px;">지구형 행성</span>
-                        <div id="modalPlanetDensity" style="font-size: 12px; color: var(--text-muted);">평균 밀도: 5.51 g/cm³</div>
+        <!-- Tab 2: Earth & Moon Interactive Observatory -->
+        <section class="tab-pane" id="tab-moon">
+            <div class="sim-viewport-card">
+                <div class="viewport-header-bar">
+                    <div class="sim-title">🌕 지구-달 상호작용 &amp; 위상 변화 관측관</div>
+                    <div class="sim-top-btns">
+                        <button class="icon-btn" id="resetMoonCamBtn" title="시점 리셋">🔄</button>
                     </div>
                 </div>
 
-                <!-- Right Column: CSAT Knowledge & Physics Stats -->
-                <div class="modal-right-col">
-                    <div>
-                        <h2 id="modalPlanetName" style="font-size: 30px; font-weight: 900; color: #fff; margin-bottom: 2px;">지구</h2>
-                        <div id="modalPlanetSub" style="color: var(--text-secondary); font-size: 15px; font-weight: 600;">Earth | 3번째 행성</div>
-                    </div>
-
-                    <!-- CSAT Exam Essential Points -->
-                    <div class="sat-exam-box">
-                        <div class="sat-exam-title">
-                            🎓 <span>지구과학 Ⅰ 수능 &amp; 내신 핵심 출제 지식</span>
-                        </div>
-                        <ul class="sat-exam-list" id="modalSatExamPoints">
-                            <!-- JS Dyn Rendered CSAT Points -->
-                        </ul>
-                    </div>
-
-                    <!-- Physics Specs Grid -->
-                    <div style="display: grid; grid-template-columns: repeat(2, 1fr); gap: 10px;" id="modalPropGrid">
-                        <!-- JS Dyn Props -->
-                    </div>
-
-                    <!-- General Desc -->
-                    <div style="background: rgba(255, 255, 255, 0.03); padding: 14px 18px; border-radius: 10px; border-left: 3px solid #38bdf8;">
-                        <h4 style="color: #38bdf8; margin-bottom: 4px; font-size: 14px;">💡 행성 주요 특징</h4>
-                        <p id="modalDesc" style="font-size: 13.5px; color: #cbd5e1; line-height: 1.6; margin: 0;"></p>
-                    </div>
-
-                    <!-- Missions -->
-                    <div style="background: rgba(255, 255, 255, 0.02); padding: 12px 16px; border-radius: 10px; border: 1px solid var(--border-color);">
-                        <h4 style="font-size: 13px; color: var(--text-muted); margin-bottom: 6px;">🚀 대표 우주 탐사선</h4>
-                        <div style="display: flex; flex-wrap: wrap; gap: 6px;" id="modalMissions"></div>
-                    </div>
-<div class="solar-canvas-wrapper" id="moonCanvasContainer" style="height: 520px;">
+                <div class="solar-canvas-wrapper" id="moonCanvasContainer" style="height: 520px;">
                     <canvas id="moonCanvas"></canvas>
                     
                     <!-- Overlay Earth-View Phase Preview Box (지구에서 본 달의 모양) -->
@@ -406,7 +407,7 @@
             <!-- CSAT Knowledge Box for Moon Phases -->
             <div style="margin-top: 24px; background: var(--bg-card); border: 1px solid var(--border-color); border-radius: var(--radius-lg); padding: 24px;">
                 <h3 style="color: #38bdf8; font-size: 18px; margin-bottom: 12px; display: flex; align-items: center; gap: 8px;">
-                    🎓 내신·수능 필수: 달의 위상과 남중 시각 핵심 정리
+                    🎓 수능 지구과학 Ⅰ 필수: 달의 위상과 남중 시각 핵심 정리
                 </h3>
                 <div style="display: grid; grid-template-columns: repeat(auto-fill, minmax(240px, 1fr)); gap: 14px;">
                     <div style="background: rgba(255,255,255,0.03); padding: 14px; border-radius: 8px; border: 1px solid var(--border-color);">
@@ -563,7 +564,7 @@
         </div>
     </div>
 
-    <script src="solar-data.js?v=clean_spec_numbers_formatted"></script>
-    <script src="app.js?v=clean_spec_numbers_formatted"></script>
+    <script src="solar-data.js?v=modal_layout_bug_fixed"></script>
+    <script src="app.js?v=modal_layout_bug_fixed"></script>
 </body>
 </html>
