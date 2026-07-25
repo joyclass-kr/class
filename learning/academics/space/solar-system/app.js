@@ -847,43 +847,52 @@
                 scene.add(astParticles);
                 celestialBodies['asteroid'] = { mesh: astParticles, data: window.SOLAR_SYSTEM_DATA.asteroid };
 
-                // 2. ☄️ 3D Radiant Glowing Comet (Tiny Ice-Rock Head + Ultra-Fine 1000 Dust Particles Tail)
+                // 2. ☄️ 3D Radiant Glowing Comet (Irregular Asymmetric Rock Head + Soft Eye-Friendly Mini Tail)
                 var cometData = window.SOLAR_SYSTEM_DATA.comet;
                 if (cometData) {
                     var cometGroup = new THREE.Object3D();
                     
-                    // 1) Tiny Irregular Ice-Rock Nucleus (Shrunk 50% for realistic proportion)
-                    var cGeo = new THREE.DodecahedronGeometry(0.85, 1);
+                    // 1) Irregular Asymmetric Rock Nucleus (Strong Noise 0.45 - NOT round!)
+                    var cGeo = new THREE.DodecahedronGeometry(0.7, 1);
                     var posAttr = cGeo.attributes.position;
                     for (var i = 0; i < posAttr.count; i++) {
                         var vx = posAttr.getX(i);
                         var vy = posAttr.getY(i);
                         var vz = posAttr.getZ(i);
-                        var noise = 1.0 + (Math.sin(vx * 3.0) + Math.cos(vy * 3.0)) * 0.25;
+                        var noise = 1.0 + (Math.sin(vx * 4.0) + Math.cos(vy * 4.0)) * 0.45;
                         posAttr.setXYZ(i, vx * noise, vy * noise, vz * noise);
                     }
                     cGeo.computeVertexNormals();
 
                     var cMat = new THREE.MeshStandardMaterial({
                         map: loadPlanet3DTexture('comet'),
-                        roughness: 0.9,
+                        roughness: 0.95,
                         emissive: 0x00f0ff,
-                        emissiveIntensity: 1.2
+                        emissiveIntensity: 0.8
                     });
                     var cometMesh = new THREE.Mesh(cGeo, cMat);
                     cometGroup.add(cometMesh);
 
-                    // 2) Luminous Point Light Core (Gentle Point Light)
-                    var cLight = new THREE.PointLight(0x00f0ff, 2.0, 40);
+                    // 2) Soft Point Light (Gentle, non-glaring)
+                    var cLight = new THREE.PointLight(0x00f0ff, 1.2, 30);
                     cometGroup.add(cLight);
 
-                    // 3) Outer Cyan Coma Halo Glow (Soft Mini Halo)
-                    var comaGeo = new THREE.DodecahedronGeometry(1.2, 1);
-                    var comaMat = new THREE.MeshBasicMaterial({ color: 0x00f0ff, transparent: true, opacity: 0.35, blending: THREE.AdditiveBlending });
+                    // 3) Asymmetric Coma Halo Glow (NOT a round sphere!)
+                    var comaGeo = new THREE.DodecahedronGeometry(1.0, 1);
+                    var comaPos = comaGeo.attributes.position;
+                    for (var cm = 0; cm < comaPos.count; cm++) {
+                        var cx = comaPos.getX(cm);
+                        var cy = comaPos.getY(cm);
+                        var cz = comaPos.getZ(cm);
+                        var cNoise = 1.0 + (Math.sin(cx * 3.0) + Math.cos(cy * 3.0)) * 0.35;
+                        comaPos.setXYZ(cm, cx * cNoise, cy * cNoise, cz * cNoise);
+                    }
+                    comaGeo.computeVertexNormals();
+                    var comaMat = new THREE.MeshBasicMaterial({ color: 0x00f0ff, transparent: true, opacity: 0.25, blending: THREE.AdditiveBlending });
                     var comaMesh = new THREE.Mesh(comaGeo, comaMat);
                     cometGroup.add(comaMesh);
 
-                    // 4) Ultra-Fine 1,000 Particle Tail (Sub-divided fine dust & ion stream)
+                    // 4) Soft Eye-Friendly Mini Particle Tail (Compact 6.5 Length)
                     var tailCount = 1000;
                     var tGeo = new THREE.BufferGeometry();
                     var tPos = new Float32Array(tailCount * 3);
@@ -891,25 +900,25 @@
 
                     for (var t = 0; t < tailCount; t++) {
                         var progress = Math.random();
-                        var spread = Math.pow(progress, 1.3) * 2.2;
+                        var spread = Math.pow(progress, 1.3) * 1.6;
                         tPos[t * 3] = (Math.random() - 0.5) * spread;
                         tPos[t * 3 + 1] = (Math.random() - 0.5) * spread;
-                        tPos[t * 3 + 2] = progress * 10.0 + 0.6; // Refined 10 unit fine tail
+                        tPos[t * 3 + 2] = progress * 6.5 + 0.5; // Shortened 6.5 unit soft tail!
 
-                        // Dual Tail Colors: Inner Dust Tail vs Outer Ion Tail
+                        // Dual Tail Colors: Softened Cyan & Light White
                         var isIon = t % 2 === 0;
-                        tColors[t * 3] = isIon ? 0.0 : 0.85;       // R
-                        tColors[t * 3 + 1] = isIon ? 0.94 : 0.95;  // G
-                        tColors[t * 3 + 2] = 1.0;                  // B
+                        tColors[t * 3] = isIon ? 0.0 : 0.7;        // R
+                        tColors[t * 3 + 1] = isIon ? 0.85 : 0.88;  // G
+                        tColors[t * 3 + 2] = 0.95;                 // B
                     }
                     tGeo.setAttribute('position', new THREE.BufferAttribute(tPos, 3));
                     tGeo.setAttribute('color', new THREE.BufferAttribute(tColors, 3));
 
                     var tMat = new THREE.PointsMaterial({
-                        size: 0.45, // Ultra fine particles!
+                        size: 0.38, // Soft mini particles
                         vertexColors: true,
                         transparent: true,
-                        opacity: 0.75,
+                        opacity: 0.45, // Soft eye-friendly opacity!
                         blending: THREE.AdditiveBlending
                     });
                     var tailParticles = new THREE.Points(tGeo, tMat);
@@ -1137,12 +1146,12 @@
                                 var curTime = clock ? clock.getElapsedTime() : Date.now() * 0.001;
 
                                 for (var t = 0; t < 1000; t++) {
-                                    // 1) Particle Backward Flow Loop
-                                    tPosArr[t * 3 + 2] += delta * 14.0;
-                                    if (tPosArr[t * 3 + 2] > 10.5) {
-                                        tPosArr[t * 3 + 2] = 0.6;
-                                        var pProgress = 0.06;
-                                        var pSpread = Math.pow(pProgress, 1.3) * 2.2;
+                                    // 1) Particle Backward Flow Loop (Shortened 6.5 length)
+                                    tPosArr[t * 3 + 2] += delta * 10.0;
+                                    if (tPosArr[t * 3 + 2] > 6.8) {
+                                        tPosArr[t * 3 + 2] = 0.5;
+                                        var pProgress = 0.05;
+                                        var pSpread = Math.pow(pProgress, 1.3) * 1.6;
                                         tPosArr[t * 3] = (Math.random() - 0.5) * pSpread;
                                         tPosArr[t * 3 + 1] = (Math.random() - 0.5) * pSpread;
                                     }
