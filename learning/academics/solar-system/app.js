@@ -817,32 +817,76 @@
             });
         }
 
-        // ========== ORBIT & ROTATION PERIOD COMPARISON (Tab 4) ==========
+        // ========== 100% TRUE SCALE & PHYSICS SPECS COMPARISON (Tab 4) ==========
         function initSpaceCalc() {
             var grid = document.getElementById('calcResultsGrid');
             if (!grid || !window.SOLAR_SYSTEM_DATA) return;
             grid.innerHTML = '';
+            
+            // Layout grid configuration
+            grid.style.display = 'grid';
+            grid.style.gridTemplateColumns = 'repeat(auto-fill, minmax(320px, 1fr))';
+            grid.style.gap = '16px';
+
             Object.keys(window.SOLAR_SYSTEM_DATA).forEach(function (key) {
-                if (key === 'sun') return;
+                // Removed 'if (key === "sun") return;' to include the Sun!
                 var body = window.SOLAR_SYSTEM_DATA[key];
                 var photo = body.photoUrl || (typeof window.createPlanetTexture === 'function' ? window.createPlanetTexture(key) : '');
                 
+                // Volume ratio relative to Earth
+                var rEarth = 6371;
+                var radiusKm = body.radiusKm || rEarth;
+                var volumeRatio = Math.pow(radiusKm / rEarth, 3);
+                var volumeStr = volumeRatio > 100 ? volumeRatio.toLocaleString('en-US', {maximumFractionDigits: 0}) : volumeRatio.toFixed(3);
+                
+                var radiusRatio = (radiusKm / rEarth).toFixed(2);
+                
+                // Mass string
+                var massStr = body.massEarth || (body.gravityRatio ? '지구의 약 ' + (Math.pow(radiusKm/rEarth, 2) * body.gravityRatio).toFixed(3) + '배' : '알 수 없음');
+
                 var card = document.createElement('div');
                 card.className = 'calc-result-card';
+                card.style.cssText = 'background: rgba(255,255,255,0.03); border: 1px solid var(--border-color); border-radius: 12px; padding: 16px; display: flex; flex-direction: column; gap: 12px;';
+                
                 card.innerHTML =
-                    '<div class="planet-sphere-preview" style="width:48px;height:48px;background:url(\'' + photo + '\') center/cover;"></div>' +
-                    '<div style="flex:1;">' +
-                    '<div style="font-size:16px;font-weight:800;color:#fff;margin-bottom:4px;">' + body.name + ' (' + body.enName + ')</div>' +
-                    '<div style="font-size:13px;color:var(--text-secondary);margin-bottom:2px;">' +
-                    '🔄 <strong>자전 주기 (1일):</strong> <span style="color:#38bdf8;font-weight:700;">' + (body.rotationDays || '-') + '</span>' +
+                    '<div style="display:flex; align-items:center; gap: 12px; border-bottom: 1px solid var(--border-color); padding-bottom: 12px;">' +
+                        '<div style="width:48px;height:48px;border-radius:50%;background:url(\'' + photo + '\') center/cover; box-shadow: 0 0 10px rgba(0,0,0,0.5);"></div>' +
+                        '<div>' +
+                            '<div style="font-size:18px;font-weight:900;color:#fff;">' + body.name + ' <span style="font-size:12px;color:var(--text-muted);font-weight:600;">(' + body.enName + ')</span></div>' +
+                            '<div style="font-size:12px;color:#38bdf8;font-weight:700;">' + (body.category || body.type) + '</div>' +
+                        '</div>' +
                     '</div>' +
-                    '<div style="font-size:13px;color:var(--text-secondary);margin-bottom:2px;">' +
-                    '☀️ <strong>공전 주기 (1년):</strong> <span style="color:#ffd18a;font-weight:700;">' + (body.orbitDays ? body.orbitDays + '일' : '-') + '</span>' +
-                    '</div>' +
-                    '<div style="font-size:12px;color:var(--text-muted);">' +
-                    '⚖️ 표면 중력: 지구의 ' + (body.gravityRatio || 1) + '배' +
-                    '</div>' +
+                    '<div style="display:grid; grid-template-columns: 1fr 1fr; gap: 8px; font-size:12px;">' +
+                        '<div style="background:rgba(0,0,0,0.3); padding:8px; border-radius:6px;">' +
+                            '<div style="color:var(--text-muted); margin-bottom:2px;">📏 반지름 (지구=1)</div>' +
+                            '<div style="color:#fff; font-weight:700;">' + radiusRatio + '배 <span style="font-size:10px;color:#888;">(' + radiusKm.toLocaleString() + 'km)</span></div>' +
+                        '</div>' +
+                        '<div style="background:rgba(0,0,0,0.3); padding:8px; border-radius:6px;">' +
+                            '<div style="color:var(--text-muted); margin-bottom:2px;">📦 부피 (지구=1)</div>' +
+                            '<div style="color:#fff; font-weight:700;">' + volumeStr + '배</div>' +
+                        '</div>' +
+                        '<div style="background:rgba(0,0,0,0.3); padding:8px; border-radius:6px; grid-column: span 2;">' +
+                            '<div style="color:var(--text-muted); margin-bottom:2px;">⚖️ 질량</div>' +
+                            '<div style="color:#fff; font-weight:700;">' + massStr + '</div>' +
+                        '</div>' +
+                        '<div style="background:rgba(0,0,0,0.3); padding:8px; border-radius:6px;">' +
+                            '<div style="color:var(--text-muted); margin-bottom:2px;">🧊 평균 밀도</div>' +
+                            '<div style="color:#fff; font-weight:700;">' + (body.density || '-') + '</div>' +
+                        '</div>' +
+                        '<div style="background:rgba(0,0,0,0.3); padding:8px; border-radius:6px;">' +
+                            '<div style="color:var(--text-muted); margin-bottom:2px;">🍎 표면 중력</div>' +
+                            '<div style="color:#fff; font-weight:700;">' + (body.gravityRatio ? '지구의 ' + body.gravityRatio + '배' : '-') + '</div>' +
+                        '</div>' +
+                        '<div style="background:rgba(56,189,248,0.1); border:1px solid rgba(56,189,248,0.2); padding:8px; border-radius:6px;">' +
+                            '<div style="color:#38bdf8; margin-bottom:2px;">🔄 자전 주기 (1일)</div>' +
+                            '<div style="color:#fff; font-weight:700;">' + (body.rotationDays || '-') + '</div>' +
+                        '</div>' +
+                        '<div style="background:rgba(255,209,138,0.1); border:1px solid rgba(255,209,138,0.2); padding:8px; border-radius:6px;">' +
+                            '<div style="color:#ffd18a; margin-bottom:2px;">☀️ 공전 주기 (1년)</div>' +
+                            '<div style="color:#fff; font-weight:700;">' + (body.orbitDays ? body.orbitDays + '일' : '-') + '</div>' +
+                        '</div>' +
                     '</div>';
+                
                 grid.appendChild(card);
             });
         }
