@@ -725,6 +725,18 @@
                     orbitAngle: (state.simMode === '2d') ? (Math.random() * Math.PI * 2) : (key === 'earth' ? 0 : Math.random() * Math.PI * 2)
                 };
 
+                // PRECISE KEPLER ELLIPSE ORBIT LINE
+                if (state.showOrbits) {
+                    var pts = [];
+                    var segments = 256; 
+                    for (var i = 0; i <= segments; i++) { 
+                        var theta = (i / segments) * Math.PI * 2;
+                        var ox = Math.cos(theta) * semiMajor - focusOffset;
+                        var oz = Math.sin(theta) * semiMinor;
+                        pts.push(new THREE.Vector3(ox, 0, oz));
+                    }
+                    var oGeo = new THREE.BufferGeometry().setFromPoints(pts);
+                    var line = new THREE.LineLoop(oGeo, new THREE.LineBasicMaterial({ color: 0xffffff, transparent: true, opacity: 0.25 }));
                     line.rotation.z = incRad;
                     scene.add(line);
                     orbitLines.push(line);
