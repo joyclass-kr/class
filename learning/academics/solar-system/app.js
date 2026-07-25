@@ -880,7 +880,7 @@
                         }
                     } else {
                         if (auInfoCard) auInfoCard.style.display = 'none';
-                        simModeLabel.textContent = '🔭 3D 관측용 (Log Scale)';
+                        simModeLabel.textContent = '🔭 3D 관찰용 (Log Scale)';
                         simModeLabel.style.color = '#38bdf8'; // sky
                         simModeLabel.style.background = 'rgba(56,189,248,0.15)';
                         if(simWarningAlert) {
