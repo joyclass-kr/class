@@ -6,9 +6,14 @@
     <meta name="description" content="songhwaplay 인터랙티브 태양계 탐험 - 3D 태양계 공전 시뮬레이션, 행성 입체 도감, 우주 몸무게 & 나이 계산기">
     <title>태양계 탐험 | songhwaplay 교과학습</title>
     <link rel="stylesheet" href="styles.css">
-    <!-- Three.js & OrbitControls for 3D Space WebGL Renderer -->
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
-    <script src="https://cdn.jsdelivr.net/npm/three@0.128.0/examples/js/controls/OrbitControls.js"></script>
+    <!-- Three.js & OrbitControls for 3D Space WebGL Renderer (Local + CDN Fallback) -->
+    <script src="libs/three.min.js"></script>
+    <script src="libs/OrbitControls.js"></script>
+    <script>
+        if (typeof THREE === 'undefined') {
+            document.write('<script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"><\/script>');
+        }
+    </script>
 </head>
 <body>
 

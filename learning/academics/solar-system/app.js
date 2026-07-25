@@ -248,56 +248,165 @@ document.addEventListener('DOMContentLoaded', () => {
      * 3D WebGL Engine via Three.js
      */
     function initThreeDScene() {
-        if (!canvasContainer || !canvas || typeof THREE === 'undefined') {
-            console.warn('Three.js not loaded, fallback mode initialized.');
-            return;
+        if (!canvasContainer || !canvas) return;
+
+        try {
+            if (typeof THREE === 'undefined') {
+                console.warn('Three.js not loaded, starting 2D Canvas Fallback Renderer.');
+                initCanvas2DFallback();
+                return;
+            }
+
+            const width = canvasContainer.clientWidth || 900;
+            const height = canvasContainer.clientHeight || 540;
+
+            scene = new THREE.Scene();
+            scene.fog = new THREE.FogExp2(0x030712, 0.001);
+
+            camera = new THREE.PerspectiveCamera(45, width / height, 0.1, 2000);
+            camera.position.set(0, 120, 220);
+
+            renderer = new THREE.WebGLRenderer({ canvas, antialias: true, alpha: true });
+            renderer.setSize(width, height);
+            renderer.setPixelRatio(Math.min(window.devicePixelRatio, 2));
+
+            if (typeof THREE.OrbitControls !== 'undefined') {
+                controls = new THREE.OrbitControls(camera, renderer.domElement);
+                controls.enableDamping = true;
+                controls.dampingFactor = 0.05;
+                controls.maxDistance = 600;
+                controls.minDistance = 10;
+            }
+
+            raycaster = new THREE.Raycaster();
+            mouse = new THREE.Vector2();
+
+            // Ambient Lighting & Central Sun Light
+            const ambientLight = new THREE.AmbientLight(0x505060, 1.4);
+            scene.add(ambientLight);
+
+            const sunLight = new THREE.PointLight(0xfffaed, 2.5, 1000);
+            scene.add(sunLight);
+
+            // Build 3D Starfield Background Particles
+            buildStarfield();
+
+            // Build Celestial Objects & Orbits
+            buildCelestialBodies();
+
+            // Wire Up UI Controls
+            initSimUIControls();
+
+            window.addEventListener('resize', onWindowResize);
+            canvas.addEventListener('click', onCanvasClick);
+
+            // Animation Loop
+            animate();
+        } catch (err) {
+            console.error('WebGL init error, falling back to 2D Canvas Renderer:', err);
+            initCanvas2DFallback();
         }
+    }
 
-        const width = canvasContainer.clientWidth || 900;
-        const height = canvasContainer.clientHeight || 540;
+    /**
+     * Bulletproof 2D HTML5 Canvas Solar System Renderer Fallback
+     */
+    function initCanvas2DFallback() {
+        const ctx = canvas.getContext('2d');
+        if (!ctx) return;
 
-        scene = new THREE.Scene();
-        scene.fog = new THREE.FogExp2(0x030712, 0.001);
+        let width = canvasContainer.clientWidth || 900;
+        let height = canvasContainer.clientHeight || 540;
+        canvas.width = width;
+        canvas.height = height;
 
-        camera = new THREE.PerspectiveCamera(45, width / height, 0.1, 2000);
-        camera.position.set(0, 120, 220);
-
-        renderer = new THREE.WebGLRenderer({ canvas, antialias: true, alpha: true });
-        renderer.setSize(width, height);
-        renderer.setPixelRatio(Math.min(window.devicePixelRatio, 2));
-
-        if (typeof THREE.OrbitControls !== 'undefined') {
-            controls = new THREE.OrbitControls(camera, renderer.domElement);
-            controls.enableDamping = true;
-            controls.dampingFactor = 0.05;
-            controls.maxDistance = 600;
-            controls.minDistance = 10;
-        }
-
-        raycaster = new THREE.Raycaster();
-        mouse = new THREE.Vector2();
-
-        // Ambient Lighting & Central Sun Light
-        const ambientLight = new THREE.AmbientLight(0x404050, 1.2);
-        scene.add(ambientLight);
-
-        const sunLight = new THREE.PointLight(0xfffaed, 2.5, 1000);
-        scene.add(sunLight);
-
-        // Build 3D Starfield Background Particles
-        buildStarfield();
-
-        // Build Celestial Objects & Orbits
-        buildCelestialBodies();
-
-        // Wire Up UI Controls
         initSimUIControls();
 
-        window.addEventListener('resize', onWindowResize);
-        canvas.addEventListener('click', onCanvasClick);
+        // 2D Solar System State
+        let angle = 0;
+        const planetKeys = ['mercury', 'venus', 'earth', 'mars', 'jupiter', 'saturn', 'uranus', 'neptune', 'pluto'];
 
-        // Animation Loop
-        animate();
+        function render2DFallback() {
+            width = canvasContainer.clientWidth || 900;
+            height = canvasContainer.clientHeight || 540;
+            canvas.width = width;
+            canvas.height = height;
+
+            ctx.fillStyle = '#030712';
+            ctx.fillRect(0, 0, width, height);
+
+            const cx = width / 2;
+            const cy = height / 2;
+
+            // Draw Stars
+            ctx.fillStyle = 'rgba(255, 255, 255, 0.7)';
+            for (let i = 0; i < 150; i++) {
+                const sx = (Math.sin(i * 99) * 0.5 + 0.5) * width;
+                const sy = (Math.cos(i * 33) * 0.5 + 0.5) * height;
+                ctx.fillRect(sx, sy, 1.5, 1.5);
+            }
+
+            // Draw Sun
+            ctx.fillStyle = '#ffaa00';
+            ctx.shadowColor = '#ff8800';
+            ctx.shadowBlur = 24;
+            ctx.beginPath();
+            ctx.arc(cx, cy, 24, 0, Math.PI * 2);
+            ctx.fill();
+            ctx.shadowBlur = 0;
+
+            if (state.isPlaying) {
+                angle += 0.008 * state.orbitSpeed;
+                state.simTimeYears += 0.002 * state.orbitSpeed;
+                if (simTimeVal) simTimeVal.textContent = `${state.simTimeYears.toFixed(1)} yrs`;
+            }
+
+            const orbitRates = { mercury: 4.1, venus: 1.6, earth: 1.0, mars: 0.53, jupiter: 0.08, saturn: 0.03, uranus: 0.012, neptune: 0.006, pluto: 0.004 };
+            const dists = { mercury: 45, venus: 70, earth: 100, mars: 135, jupiter: 180, saturn: 220, uranus: 255, neptune: 285, pluto: 310 };
+
+            planetKeys.forEach(key => {
+                const bodyData = window.SOLAR_SYSTEM_DATA[key];
+                const r = dists[key];
+                const rate = orbitRates[key] || 0.1;
+                const currentAngle = angle * rate * 2;
+
+                const px = cx + Math.cos(currentAngle) * r;
+                const py = cy + Math.sin(currentAngle) * (r * 0.5); // Elliptical 3D perspective tilt
+
+                // Draw Orbit Ellipse
+                if (state.showOrbits) {
+                    ctx.strokeStyle = 'rgba(255, 255, 255, 0.12)';
+                    ctx.lineWidth = 1;
+                    ctx.beginPath();
+                    ctx.ellipse(cx, cy, r, r * 0.5, 0, 0, Math.PI * 2);
+                    ctx.stroke();
+                }
+
+                // Draw Planet
+                ctx.fillStyle = bodyData.color || '#3b82f6';
+                ctx.beginPath();
+                ctx.arc(px, py, getBodyScaleRadius(key) * 1.5, 0, Math.PI * 2);
+                ctx.fill();
+
+                // Draw Saturn Ring in 2D
+                if (key === 'saturn') {
+                    ctx.strokeStyle = '#eab308';
+                    ctx.lineWidth = 3;
+                    ctx.beginPath();
+                    ctx.ellipse(px, py, 16, 6, 0.3, 0, Math.PI * 2);
+                    ctx.stroke();
+                }
+
+                // Planet Label
+                ctx.fillStyle = '#94a3b8';
+                ctx.font = '11px Pretendard, sans-serif';
+                ctx.fillText(bodyData.name, px + 10, py + 4);
+            });
+
+            requestAnimationFrame(render2DFallback);
+        }
+
+        render2DFallback();
     }
 
     function buildStarfield() {
