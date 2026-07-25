@@ -730,7 +730,8 @@
                         if (b.orbitAngle === undefined) b.orbitAngle = Math.random() * Math.PI * 2;
 
                         var dOrbit = timeDelta * (Math.PI * 2) * rate;
-                        b.orbitAngle += dOrbit;
+                        // Counter-Clockwise Orbit (CCW: West -> East) as viewed from Ecliptic North Pole
+                        b.orbitAngle -= dOrbit;
                         b.orbitAngle %= (Math.PI * 2);
                         b.orbitAngle = b.orbitAngle;
 
