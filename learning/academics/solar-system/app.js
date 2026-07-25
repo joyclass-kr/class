@@ -225,6 +225,20 @@
             }
         }
 
+        function createStarTexture() {
+            var canvas = document.createElement('canvas');
+            canvas.width = 16;
+            canvas.height = 16;
+            var ctx = canvas.getContext('2d');
+            var grad = ctx.createRadialGradient(8, 8, 0, 8, 8, 8);
+            grad.addColorStop(0, 'rgba(255, 255, 255, 1)');
+            grad.addColorStop(0.4, 'rgba(255, 255, 255, 0.8)');
+            grad.addColorStop(1, 'rgba(255, 255, 255, 0)');
+            ctx.fillStyle = grad;
+            ctx.fillRect(0, 0, 16, 16);
+            return new THREE.CanvasTexture(canvas);
+        }
+
         function buildStarfield() {
             var geo = new THREE.BufferGeometry();
             var count = 2500;
@@ -235,7 +249,15 @@
                 pos[i + 2] = (Math.random() - 0.5) * 1200;
             }
             geo.setAttribute('position', new THREE.BufferAttribute(pos, 3));
-            var mat = new THREE.PointsMaterial({ color: 0xffffff, size: 1.2, transparent: true, opacity: 0.8 });
+            var starTex = createStarTexture();
+            var mat = new THREE.PointsMaterial({
+                map: starTex,
+                size: 2.2,
+                transparent: true,
+                opacity: 0.85,
+                depthWrite: false,
+                blending: THREE.AdditiveBlending
+            });
             scene.add(new THREE.Points(geo, mat));
         }
 
