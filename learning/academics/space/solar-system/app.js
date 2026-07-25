@@ -1417,7 +1417,7 @@
                 var keyPointsHtml = '';
                 if (body.satExamKeyPoints && body.satExamKeyPoints.length > 0) {
                     keyPointsHtml = '<div style="font-size:12px; color:#e2e8f0; background:rgba(15, 23, 42, 0.9); border-left:3px solid ' + badgeColor + '; padding:9px 12px; border-radius:8px; line-height:1.5;">' +
-                        '<div style="font-weight:800; color:' + badgeColor + '; font-size:11px; margin-bottom:2px;">🎓 내신·수능 핵심 포인트</div>' +
+                        '<div style="font-weight:800; color:' + badgeColor + '; font-size:11px; margin-bottom:2px;">🎓 핵심 출제 포인트</div>' +
                         body.satExamKeyPoints[0] +
                         '</div>';
                 }

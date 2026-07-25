@@ -288,7 +288,7 @@ window.SOLAR_SYSTEM_DATA = {
         satExamKeyPoints: [
             '🔵 [대흑점(Great Dark Spot)] 대기에 지구 크기만한 거대한 대기 소용돌이인 대흑점이 관측됨',
             '💨 [강력한 대기 풍속] 메탄 대기로 인해 짙은 파란색을 띠며 태양계 행성 중 대기 풍속이 가장 빠름 (시속 2,000km 이상)',
-            '🔄 [트리톤 역공전 위성] 거대 위성 트리톤(Triton)은 해왕성 자전 방향과 반대로 도는 수능 필수 역공전 위성'
+            '🔄 [트리톤 역공전 위성] 거대 위성 트리톤(Triton)은 해왕성 자전 방향과 반대로 도는 핵심 출제 역공전 위성'
         ],
         satellites: [
             { id: 'triton', name: '트리톤', enName: 'Triton', orbitR: 28, size: 2.0, speed: -1.5, color: '#a5f3fc' } // Retrograde!
