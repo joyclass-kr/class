@@ -619,10 +619,16 @@
                 }
                 planetMesh.userData = { key: key, data: data, semiMajor: semiMajor, semiMinor: semiMinor, focusOffset: focusOffset, ecc: ecc };
 
-                // Saturn & Uranus & Neptune Rings
+                // All 4 Jovian Planet Rings (Jupiter, Saturn, Uranus, Neptune)
                 var saturnRingMesh = null;
                 if (state.simMode === '3d') {
-                    if (key === 'saturn') {
+                    if (key === 'jupiter') {
+                        // Jupiter Faint Golden Dust Ring
+                        var jRingGeo = new THREE.RingGeometry(bodyR * 1.2, bodyR * 1.5, 64);
+                        jRingGeo.rotateX(Math.PI / 2);
+                        var jRingMesh = new THREE.Mesh(jRingGeo, new THREE.MeshStandardMaterial({ color: 0xf59e0b, side: THREE.DoubleSide, transparent: true, opacity: 0.25 }));
+                        bodyTiltGroup.add(jRingMesh);
+                    } else if (key === 'saturn') {
                         var ringTex = loadPlanet3DTexture('saturnRing');
                         var ringGeo = new THREE.RingGeometry(bodyR * 1.3, bodyR * 2.3, 64);
                         ringGeo.rotateX(Math.PI / 2);
