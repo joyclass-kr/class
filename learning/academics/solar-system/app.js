@@ -168,7 +168,7 @@ document.addEventListener('DOMContentLoaded', () => {
                     <div style="flex: 1;">
                         <div style="font-size: 15px; font-weight: 800; color: #fff;">${body.name} (${body.enName})</div>
                         <div style="font-size: 12px; color: var(--text-muted);">몸무게: <span class="calc-val-main">${calcWeight} kg</span></div>
-                        <div style="font-size: 12px; color: var(--text-muted);">행성 나이: <span class="calc-val-main" style="color: #ffd18a;">${calcAge} 세</span></div>
+                        <div style="font-size: 12px; color: var(--text-muted);">해당 행성 기준 나이: <span class="calc-val-main" style="color: #ffd18a;">${calcAge} 세</span></div>
                     </div>
                 `;
                 grid.appendChild(card);
