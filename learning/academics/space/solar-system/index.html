@@ -296,71 +296,32 @@
                     </div>
 
                     <!-- Options Grid -->
-                            <p style="margin: 0 0 8px 0; color: #cbd5e1; font-size: 11.5px;">
-                                지구 반지름은 6,371km인데, 지구-태양 거리(1 AU)는 무려 <strong>1억 4,960만 km</strong>입니다. (거리 : 반지름 비약 <strong>23,500 : 1</strong>)
-                            </p>
-                            <div style="background: rgba(0,0,0,0.3); padding: 8px 10px; border-radius: 6px; font-size: 11px; color: #fbbf24; margin-bottom: 8px;">
-                                💡 만약 지구를 화면에서 <strong>1cm 크기</strong>로 그리면, 지구 궤도는 화면 밖 <strong>235m 멀리</strong> 나가버립니다!
-                            </div>
-                            <p style="margin: 0; color: #94a3b8; font-size: 11px;">
-                                따라서 실제 1:1 비율에서는 행성이 1픽셀보다 훨씬 작아져 눈에 안 보이기 때문에 <strong>선과 한글 라벨</strong>로 표기됩니다.
-                            </p>
-                        </div>
+                    <div style="display: grid; grid-template-columns: repeat(2, 1fr); gap: 14px;" id="quizOptionsGrid">
+                        <!-- Options dynamically inserted -->
                     </div>
-                </div>
 
-                <!-- Floating Control Panel Below Viewport (Matching UI Design) -->
-                <div class="sim-controls-panel">
+                    <!-- Result Feedback Banner -->
+                    <div id="quizResultMsg" style="margin-top: 20px; font-weight: 800; font-size: 17px; text-align: center;"></div>
+
+                    <!-- Detailed Explanation Box -->
+                    <div id="quizExpBox" style="display: none; margin-top: 20px; background: rgba(56, 189, 248, 0.08); border: 1px solid rgba(56, 189, 248, 0.3); border-left: 4px solid #38bdf8; border-radius: 10px; padding: 16px 20px;">
+                        <div style="font-size: 14px; font-weight: 800; color: #38bdf8; margin-bottom: 6px; display: flex; align-items: center; gap: 6px;">
+                            <span>💡</span> <span>핵심 개념 해설</span>
+                        </div>
+                        <div id="quizExpText" style="font-size: 13.5px; color: #e2e8f0; line-height: 1.6;"></div>
+                    </div>
                     
-                    <!-- Simulation Time Display -->
-                    <div class="sim-time-display">
-                        <div class="sim-time-label">SIMULATION TIME</div>
-                        <div class="sim-time-val" id="simTimeVal">0.0 yrs</div>
+                    <!-- Next Question Action Button -->
+                    <div style="text-align: center; margin-top: 24px;">
+                        <button class="nav-tab active" id="nextQuizBtn" style="padding: 12px 32px; font-size: 16px; font-weight: 800; border-radius: 30px; cursor: pointer;">
+                            다음 문제 풀기 ➔
+                        </button>
                     </div>
-
-                    <!-- Control Rows -->
-                    <div class="control-rows">
-                        
-                        <!-- Row 1: Orbit Speed Slider -->
-                        <div class="ctrl-row">
-                            <span class="ctrl-label">Orbit Speed</span>
-                            <div class="slider-group">
-                                <input type="range" class="sim-slider" id="speedSlider" min="0.1" max="10" step="0.1" value="1">
-                                <span class="slider-val-badge" id="speedValBadge">1.0x</span>
-                            </div>
-                        </div>
-
-                        <!-- Row 2: Dual Simulation Mode Toggle -->
-                        <div class="ctrl-row">
-                            <span class="ctrl-label">Simulation Mode</span>
-                            <div style="display:flex; align-items:center; gap:8px;">
-                                <label class="toggle-switch">
-                                    <input type="checkbox" id="simModeToggle">
-                                    <span class="slider-knob"></span>
-                                </label>
-                                <span id="simModeLabel" style="font-size: 12px; font-weight: 800; color: #38bdf8; background: rgba(56,189,248,0.15); padding: 4px 12px; border-radius: 20px;">🔭 3D 관찰용 (Log Scale)</span>
-                            </div>
-                        </div>
-
-                        <!-- Row 3: Show Orbits Toggle Switch -->
-                        <div class="ctrl-row">
-                            <span class="ctrl-label">Show Orbits</span>
-                            <label class="toggle-switch">
-                                <input type="checkbox" id="showOrbitsToggle" checked>
-                                <span class="slider-knob"></span>
-                            </label>
-                        </div>
-
-                    </div>
-
-                    <!-- Planet Quick Jump Bar -->
-                    <div class="planet-quick-bar" id="planetQuickBar">
-                        <!-- JS Dyn Rendered Planet Chips -->
-                    </div>
-
                 </div>
             </div>
         </section>
+
+
 
         <!-- Tab 2: Earth & Moon Interactive Observatory -->
         <section class="tab-pane" id="tab-moon">
@@ -569,7 +530,7 @@
         </div>
     </div>
 
-    <script src="solar-data.js?v=unified_celestial_atlas_table"></script>
-    <script src="app.js?v=unified_celestial_atlas_table"></script>
+    <script src="solar-data.js?v=quiz_layout_leak_fixed_perfect"></script>
+    <script src="app.js?v=quiz_layout_leak_fixed_perfect"></script>
 </body>
 </html>
