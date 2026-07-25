@@ -2,7 +2,7 @@
  * 태양계 탐험 (Solar System Explorer) Three.js & App Engine
  */
 
-document.addEventListener('DOMContentLoaded', () => {
+function initSolarApp() {
     // App State
     const state = {
         currentTab: 'sim',
@@ -880,4 +880,10 @@ document.addEventListener('DOMContentLoaded', () => {
         document.getElementById('quizScore').textContent = state.quiz.score;
         document.getElementById('quizStreak').textContent = state.quiz.streak;
     }
-});
+}
+
+if (document.readyState === 'loading') {
+    document.addEventListener('DOMContentLoaded', initSolarApp);
+} else {
+    initSolarApp();
+}
