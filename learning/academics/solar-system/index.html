@@ -141,33 +141,51 @@
 
         <!-- Tab 4: Space Quiz -->
         <section class="tab-pane" id="tab-quiz">
-            <div style="max-width: 800px; margin: 20px auto; background: var(--bg-card); border: 1px solid var(--border-color); border-radius: var(--radius-lg); padding: 32px;">
-                <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 24px; border-bottom: 1px solid var(--border-color); padding-bottom: 16px;">
+            <div style="max-width: 850px; margin: 20px auto; background: var(--bg-card); border: 1px solid var(--border-color); border-radius: var(--radius-lg); padding: 32px; box-shadow: 0 15px 40px rgba(0,0,0,0.6);">
+                <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 24px; border-bottom: 1px solid var(--border-color); padding-bottom: 16px; flex-wrap: wrap; gap: 12px;">
                     <div>
-                        <h2>🧩 태양계 우주 천문 퀴즈</h2>
-                        <p style="color: var(--text-secondary); font-size: 14px; margin-top: 4px;">흥미로운 태양계와 행성에 관한 퀴즈를 풀어보세요!</p>
+                        <div style="display: flex; align-items: center; gap: 10px;">
+                            <h2>🧩 수능 &amp; 교과 필수 우주 천문 퀴즈</h2>
+                            <span id="quizCategoryBadge" style="background: rgba(56,189,248,0.2); color: #38bdf8; border: 1px solid rgba(56,189,248,0.4); padding: 4px 12px; border-radius: 20px; font-size: 12px; font-weight: 800;">[수능 핵심]</span>
+                        </div>
+                        <p style="color: var(--text-secondary); font-size: 14px; margin-top: 4px;">수능 지구과학 Ⅰ 및 중고등 과학 교과에 직접 출제되는 핵심 우주 개념 퀴즈!</p>
                     </div>
-                    <div style="display: flex; gap: 12px; align-items: center;">
-                        <span class="slider-val-badge" style="background: linear-gradient(135deg, #ffd18a, #b56e20); color: #000; padding: 6px 16px; border-radius: 20px; font-weight: 800;">연속 콤보: <span id="quizStreak">0</span> 🔥</span>
-                        <span class="slider-val-badge" style="background: linear-gradient(135deg, #ffd18a, #b56e20); color: #000; padding: 6px 16px; border-radius: 20px; font-weight: 800;">점수: <span id="quizScore">0</span>점</span>
+                    <div style="display: flex; gap: 10px; align-items: center;">
+                        <span class="slider-val-badge" style="background: rgba(255,255,255,0.06); border: 1px solid var(--border-color); color: #fff; padding: 6px 14px; border-radius: 20px; font-size: 13px; font-weight: 700;" id="quizProgressText">문제 1 / 10</span>
+                        <span class="slider-val-badge" style="background: linear-gradient(135deg, #ffd18a, #b56e20); color: #000; padding: 6px 14px; border-radius: 20px; font-weight: 800; font-size: 13px;">연속 콤보: <span id="quizStreak">0</span> 🔥</span>
+                        <span class="slider-val-badge" style="background: linear-gradient(135deg, #38bdf8, #0284c7); color: #000; padding: 6px 14px; border-radius: 20px; font-weight: 800; font-size: 13px;">점수: <span id="quizScore">0</span>점</span>
                     </div>
                 </div>
 
-                <div style="text-align: center;">
-                    <div style="background: rgba(10, 16, 28, 0.6); border: 1px solid var(--border-color); border-radius: var(--radius-md); padding: 30px; margin-bottom: 24px;">
-                        <div style="font-size: 22px; font-weight: 800; color: #fff; margin-bottom: 10px;" id="quizQuestionText">문제를 불러오는 중입니다...</div>
-                        <div style="font-size: 14px; color: var(--text-secondary);" id="quizSubText"></div>
+                <div style="text-align: left;">
+                    <!-- Question Box -->
+                    <div style="background: rgba(10, 16, 28, 0.8); border: 1px solid var(--border-color); border-radius: var(--radius-md); padding: 24px 28px; margin-bottom: 24px;">
+                        <div style="font-size: 20px; font-weight: 800; color: #fff; line-height: 1.5; margin-bottom: 8px;" id="quizQuestionText">문제를 불러오는 중입니다...</div>
+                        <div style="font-size: 14px; color: var(--text-muted);" id="quizSubText">💡 힌트: 문제를 주의 깊게 읽어보세요.</div>
                     </div>
 
+                    <!-- Options Grid -->
                     <div style="display: grid; grid-template-columns: repeat(2, 1fr); gap: 14px;" id="quizOptionsGrid">
                         <!-- Options dynamically inserted -->
                     </div>
 
-                    <div id="quizResultMsg" style="margin-top: 20px; font-weight: 800; font-size: 18px;"></div>
+                    <!-- Result Feedback Banner -->
+                    <div id="quizResultMsg" style="margin-top: 20px; font-weight: 800; font-size: 17px; text-align: center;"></div>
+
+                    <!-- Detailed Explanation Box (Revealed on answer) -->
+                    <div id="quizExpBox" style="display: none; margin-top: 20px; background: rgba(56, 189, 248, 0.08); border: 1px solid rgba(56, 189, 248, 0.3); border-left: 4px solid #38bdf8; border-radius: 10px; padding: 16px 20px;">
+                        <div style="font-size: 14px; font-weight: 800; color: #38bdf8; margin-bottom: 6px; display: flex; align-items: center; gap: 6px;">
+                            <span>💡</span> <span>수능 &amp; 교과 핵심 개념 해설</span>
+                        </div>
+                        <div id="quizExpText" style="font-size: 13.5px; color: #e2e8f0; line-height: 1.6;"></div>
+                    </div>
                     
-                    <button class="nav-tab active" id="nextQuizBtn" style="margin: 24px auto 0; padding: 12px 28px; font-size: 16px;">
-                        다음 문제 풀기 ➔
-                    </button>
+                    <!-- Next Question Action Button -->
+                    <div style="text-align: center; margin-top: 24px;">
+                        <button class="nav-tab active" id="nextQuizBtn" style="padding: 12px 32px; font-size: 16px; font-weight: 800; border-radius: 30px; cursor: pointer;">
+                            다음 문제 풀기 ➔
+                        </button>
+                    </div>
                 </div>
             </div>
         </section>

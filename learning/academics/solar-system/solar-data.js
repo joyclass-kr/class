@@ -1,5 +1,5 @@
 /**
- * 태양계 관찰 (Solar System Observation) Data Definition & High-Res Real Photos
+ * 태양계 관찰 (Solar System Observation) Data Definition
  */
 
 window.SOLAR_SYSTEM_DATA = {
@@ -20,7 +20,7 @@ window.SOLAR_SYSTEM_DATA = {
             '흑점 수의 변화 주기: 약 11년 주기 극대기/극소기 반복 (흑점 부근은 주위보다 온도가 낮아 어둡게 보임)'
         ],
         trivia: '태양 빛이 지구까지 도착하는 데 걸리는 시간은 약 8분 20초입니다.',
-        imgUrl: 'https://upload.wikimedia.org/wikipedia/commons/b/b4/The_Sun_by_the_Atmospheric_Imaging_Assembly_of_NASA%27s_Solar_Dynamics_Observatory_-_20100819.jpg',
+        photoUrl: 'https://upload.wikimedia.org/wikipedia/commons/b/b4/The_Sun_by_the_Atmospheric_Imaging_Assembly_of_NASA%27s_Solar_Dynamics_Observatory_-_20100819.jpg',
         color: '#ffaa00'
     },
     mercury: {
@@ -47,7 +47,7 @@ window.SOLAR_SYSTEM_DATA = {
         ],
         trivia: '태양 주변을 가장 빨리 공전하며, 위성과 고리가 전혀 없습니다.',
         missions: ['메신저(MESSENGER)', '베피콜롬보(BepiColombo)'],
-        imgUrl: 'https://upload.wikimedia.org/wikipedia/commons/4/4a/Mercury_in_true_color.jpg',
+        photoUrl: 'https://upload.wikimedia.org/wikipedia/commons/4/4a/Mercury_in_true_color.jpg',
         color: '#a8a29e'
     },
     venus: {
@@ -73,7 +73,7 @@ window.SOLAR_SYSTEM_DATA = {
         ],
         trivia: '지구와 반대 방향으로 자전하므로 금성에서는 태양이 서쪽에서 떠서 동쪽으로 집니다.',
         missions: ['마젤란(Magellan)', '아카츠키(Akatsuki)'],
-        imgUrl: 'https://upload.wikimedia.org/wikipedia/commons/0/08/Venus-real_color.jpg',
+        photoUrl: 'https://upload.wikimedia.org/wikipedia/commons/0/08/Venus-real_color.jpg',
         color: '#eab308'
     },
     earth: {
@@ -99,7 +99,7 @@ window.SOLAR_SYSTEM_DATA = {
         ],
         trivia: '지구 표면의 약 71%가 푸른 바다로 덮여 있습니다.',
         missions: ['국제우주정거장(ISS)', '허블/제임스웹 우주망원경'],
-        imgUrl: 'https://upload.wikimedia.org/wikipedia/commons/9/97/The_Earth_seen_from_Apollo_17.jpg',
+        photoUrl: 'https://upload.wikimedia.org/wikipedia/commons/9/97/The_Earth_seen_from_Apollo_17.jpg',
         color: '#3b82f6'
     },
     moon: {
@@ -118,13 +118,13 @@ window.SOLAR_SYSTEM_DATA = {
         atmosphere: '대기 없음 (진공)',
         desc: '지구의 유일한 자연위성이며 자전 주기와 공전 주기가 같아 지구에서는 항상 같은 면만 관측됩니다.',
         satExamKeyPoints: [
-             me: '🌕 [동주기 자전] 자전 주기 = 항성월 공전 주기 = 27.3일로 동일하여 지구에서는 항상 달의 앞면만 보임',
+            '🌕 [동주기 자전] 자전 주기 = 항성월 공전 주기 = 27.3일로 동일하여 지구에서는 항상 달의 앞면만 보임',
             '🌒 [위상 변화] 위상 변화 주기(삭망월)는 약 29.5일 (지구가 공전하는 동안 달도 이동하기 때문)',
             '🌊 달과 태양의 인력으로 지구 해수면이 높아지고 낮아지는 조석 현상(밀물과 썰물) 발생'
         ],
         trivia: '인류가 직접 발을 디뎌본 유일한 지구 밖 천체입니다.',
         missions: ['아폴로 11호', '아르테미스 계획', '다누리호'],
-        imgUrl: 'https://upload.wikimedia.org/wikipedia/commons/e/e1/Full_Moon_Luc_Viatour.jpg',
+        photoUrl: 'https://upload.wikimedia.org/wikipedia/commons/e/e1/Full_Moon_Luc_Viatour.jpg',
         color: '#cbd5e1'
     },
     mars: {
@@ -151,7 +151,7 @@ window.SOLAR_SYSTEM_DATA = {
         ],
         trivia: '지구와 자전 주기(24.6시간) 및 자전축 기울기(25.2°)가 매우 유사하여 4계절이 존재합니다.',
         missions: ['퍼서비어런스(Perseverance)', '큐리오시티(Curiosity)', '인사이트'],
-        imgUrl: 'https://upload.wikimedia.org/wikipedia/commons/0/02/OSIRIS_Mars_true_color.jpg',
+        photoUrl: 'https://upload.wikimedia.org/wikipedia/commons/0/02/OSIRIS_Mars_true_color.jpg',
         color: '#ef4444'
     },
     jupiter: {
@@ -178,7 +178,7 @@ window.SOLAR_SYSTEM_DATA = {
         ],
         trivia: '목성의 위성 가니메데는 수성보다도 크기가 큰 태양계 최대 위성입니다.',
         missions: ['주노(Juno)', '갈릴레오(Galileo)', '보아저 1/2호'],
-        imgUrl: 'https://upload.wikimedia.org/wikipedia/commons/e/e2/Jupiter.jpg',
+        photoUrl: 'https://upload.wikimedia.org/wikipedia/commons/e/e2/Jupiter.jpg',
         color: '#f97316'
     },
     saturn: {
@@ -205,7 +205,7 @@ window.SOLAR_SYSTEM_DATA = {
         ],
         trivia: '토성의 고리는 두께가 불과 수십 미터에 불과하지만 폭은 수십만 킬로미터에 달합니다.',
         missions: ['카시니-하위헌스(Cassini-Huygens)'],
-        imgUrl: 'https://upload.wikimedia.org/wikipedia/commons/c/c7/Saturn_during_Equinox.jpg',
+        photoUrl: 'https://upload.wikimedia.org/wikipedia/commons/c/c7/Saturn_during_Equinox.jpg',
         color: '#eab308'
     },
     uranus: {
@@ -229,9 +229,9 @@ window.SOLAR_SYSTEM_DATA = {
             '💎 [메탄 대기와 색상] 대기 중의 메탄(CH₄) 성분이 붉은 빛을 흡수하고 푸른 빛을 반사하여 영롱한 청록색으로 관측됨',
             '❄️ 표면 온도가 매우 낮아 태양계에서 가장 차가운 대기를 가진 행성 중 하나'
         ],
-        trivia: '천왕성은 남극이나 북극이 태양을 직등으로 바라보는 상태로 공전하여 극지방은 42년 동안 낮이 지속됩니다.',
+        trivia: '천왕성은 극지방이 42년 동안 태양 빛을 계속 받습니다.',
         missions: ['보이저 2호(Voyager 2)'],
-        imgUrl: 'https://upload.wikimedia.org/wikipedia/commons/3/3d/Uranus2.jpg',
+        photoUrl: 'https://upload.wikimedia.org/wikipedia/commons/3/3d/Uranus2.jpg',
         color: '#06b6d4'
     },
     neptune: {
@@ -253,11 +253,11 @@ window.SOLAR_SYSTEM_DATA = {
         satExamKeyPoints: [
             '🔵 [대흑점(Great Dark Spot)] 대기에 지구 크기만한 거대한 대기 소용돌이인 대흑점이 관측됨',
             '💨 [강력한 대기 풍속] 메탄 대기로 인해 짙은 파란색을 띠며 태양계 행성 중 대기 풍속이 가장 빠름 (시속 2,000km 이상)',
-            '❄️ 역방향으로 공전하는 거대 위성 트리톤(Triton) 보유 (질소 분출 간헐천 존재)'
+            '❄️ 역방향으로 공전하는 거대 위성 트리톤(Triton) 보유'
         ],
         trivia: '해왕성이 태양을 한 바퀴 도는 데는 164.8년이나 걸립니다.',
         missions: ['보이저 2호(Voyager 2)'],
-        imgUrl: 'https://upload.wikimedia.org/wikipedia/commons/6/63/Neptune_-_Voyager_2_%2829347980845%29_flatten_crop.jpg',
+        photoUrl: 'https://upload.wikimedia.org/wikipedia/commons/6/63/Neptune_-_Voyager_2_%2829347980845%29_flatten_crop.jpg',
         color: '#2563eb'
     },
     pluto: {
@@ -277,13 +277,13 @@ window.SOLAR_SYSTEM_DATA = {
         atmosphere: '희박한 질소, 메탄',
         desc: '2006년 국제천문연맹(IAU) 기준에 따라 행성에서 왜소행성으로 분류 변경된 차가운 천체입니다.',
         satExamKeyPoints: [
-            '📌 [왜소행성 재분류 이유 (2006 IAU)] ① 태양 주위를 공전하고 ② 자체 중력으로 구형을 이루지만 ③ [자신의 궤도 주변의 다른 천체를 청소하지 못함(Clear the neighborhood)] 조건 미충족',
+            '📌 [왜소행성 재분류 이유 (2006 IAU)] ① 태양 주위를 공전하고 ② 자체 중력으로 구형을 이루지만 ③ [자신의 궤도 주변의 다른 천체를 청소하지 못함] 조건 미충족',
             '❄️ 표면에 하트 모양의 질소 얼음 평원(스푸트니크 평원) 존재',
-            '🌕 위성 카론(Charon)과의 크기 차이가 작아 서로의 질량 중심을 중심으로 마주보며 공전'
+            '🌕 위성 카론(Charon)과 서로 마주보며 공전'
         ],
-        trivia: '달보다도 크기가 작으며, 위성 카론과 서로 같은 면만 바라보며 회전합니다.',
+        trivia: '달보다도 크기가 작은 아담한 왜소행성입니다.',
         missions: ['뉴 하이라이즌스(New Horizons)'],
-        imgUrl: 'https://upload.wikimedia.org/wikipedia/commons/e/ef/Pluto_in_True_Color_-_February_2010.jpg',
+        photoUrl: 'https://upload.wikimedia.org/wikipedia/commons/e/ef/Pluto_in_True_Color_-_February_2010.jpg',
         color: '#94a3b8'
     }
 };
