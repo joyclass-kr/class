@@ -257,7 +257,7 @@
             group.add(light);
 
             group.position.copy(ufoState.pos);
-            group.scale.set(0.35, 0.35, 0.35); // Micro compact scale to avoid blocking planet observation
+            group.scale.set(0.25, 0.25, 0.25); // Micro compact scale for art gallery style lower viewport observation
             group.visible = false;
             ufoMesh = group;
             scene.add(ufoMesh);
@@ -875,9 +875,11 @@
 
                 ufoMesh.position.copy(ufoState.pos);
 
-                // Offset camera target ahead & slightly above UFO so UFO is positioned at lower screen area (Art Gallery Viewport Style)
+                // Art Gallery Viewport Math: Offset camera target far ahead & high above UFO so UFO mesh sits at bottom 15-20% of screen
                 if (controls) {
-                    var lookTarget = ufoState.pos.clone().add(camDir.clone().multiplyScalar(30)).add(new THREE.Vector3(0, 10, 0));
+                    var lookTarget = ufoState.pos.clone()
+                        .add(camDir.clone().multiplyScalar(55))
+                        .add(new THREE.Vector3(0, 26, 0));
                     controls.target.copy(lookTarget);
                 }
             }
