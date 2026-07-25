@@ -1326,12 +1326,7 @@
                     isMoving = true;
                 }
 
-                // 🛸 Manual Height Control (Q: Ascend, E: Descend)
-                var verticalSpeed = 1.8 * moveSpeed;
-                if (ufoState.keys.up) ufoState.pos.y += verticalSpeed;
-                if (ufoState.keys.down) ufoState.pos.y -= verticalSpeed;
-
-                // 🛸 Smart Orbital Plane Elevation Assist (Auto-tracking inclined orbit planes like Pluto 17.16°!)
+                // 🛸 100% Seamless Smart Orbital Plane Elevation Assist (Auto-tracks inclined orbit planes like Pluto 17.16°!)
                 var nearestBodyDist = Infinity;
                 var targetTargetY = 0;
 
@@ -1341,17 +1336,17 @@
                         var bWorldPos = new THREE.Vector3();
                         bObj.mesh.getWorldPosition(bWorldPos);
                         var d = ufoState.pos.distanceTo(bWorldPos);
-                        if (d < nearestBodyDist && d < 350) {
+                        if (d < nearestBodyDist && d < 420) {
                             nearestBodyDist = d;
                             targetTargetY = bWorldPos.y;
                         }
                     }
                 });
 
-                if (nearestBodyDist < 350) {
-                    // Smoothly blend Y altitude toward inclined orbit plane (Pluto 17.16deg incline assist!)
-                    var blendRatio = Math.max(0.0, 1.0 - nearestBodyDist / 350);
-                    ufoState.pos.y += (targetTargetY - ufoState.pos.y) * 0.08 * blendRatio;
+                if (nearestBodyDist < 420) {
+                    // Seamlessly lerp Y altitude toward inclined orbit plane (Pluto 17.16deg incline auto-tracking!)
+                    var blendRatio = Math.max(0.0, 1.0 - nearestBodyDist / 420);
+                    ufoState.pos.y += (targetTargetY - ufoState.pos.y) * 0.12 * blendRatio;
                 }
 
                 ufoMesh.position.copy(ufoState.pos);
