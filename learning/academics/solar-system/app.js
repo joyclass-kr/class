@@ -28,7 +28,7 @@
                 isPlaying: true,
                 speed: 1.0,
                 showOrbit: true,
-                angle: Math.PI / 2 // Start at First Quarter (상현달)
+                angle: Math.PI / 2
             },
 
             quiz: { score: 0, streak: 0, currentQuestion: null, answered: false, autoTimer: null }
@@ -69,7 +69,7 @@
         initSimUIControls();
         initMoonUIControls();
 
-        // 2. Initialize Solar System 3D Engine
+        // 2. Initialize 3D Engines
         try {
             if (typeof THREE !== 'undefined') {
                 init3D();
@@ -136,7 +136,7 @@
 
             var angle = 0;
             var planetKeys = ['mercury', 'venus', 'earth', 'mars', 'jupiter', 'saturn', 'uranus', 'neptune', 'pluto'];
-            var orbitRates = { mercury: 4.1, venus: 1.6, earth: 1.0, mars: 0.53, jupiter: 0.08, saturn: 0.03, uranus: 0.012, neptune: 0.006, pluto: 0.004 };
+            var orbitRates = { mercury: 4.15, venus: 1.62, earth: 1.0, mars: 0.53, jupiter: 0.084, saturn: 0.034, uranus: 0.012, neptune: 0.006, pluto: 0.004 };
             var dists = { mercury: 45, venus: 70, earth: 100, mars: 135, jupiter: 180, saturn: 220, uranus: 255, neptune: 285, pluto: 310 };
 
             function render2D() {
@@ -222,11 +222,9 @@
 
         function getBodyScaleRadius(key) {
             if (state.scaleMode === 'realistic') {
-                // Realistic Astronomical Relative Radius Proportions
                 var r = { sun: 28, jupiter: 7.2, saturn: 6.0, uranus: 3.8, neptune: 3.6, earth: 1.6, venus: 1.5, mars: 1.1, mercury: 0.8, moon: 0.4, pluto: 0.5 };
                 return r[key] || 2;
             } else {
-                // Visual Mode: Adjusted for comfortable viewing
                 var v = { sun: 16, jupiter: 8.5, saturn: 7.2, uranus: 5.5, neptune: 5.2, earth: 3.8, venus: 3.6, mars: 2.8, mercury: 2.2, moon: 1.2, pluto: 1.8 };
                 return v[key] || 3;
             }
@@ -234,11 +232,9 @@
 
         function getBodyOrbitRadius(key) {
             if (state.scaleMode === 'realistic') {
-                // Realistic Astronomical AU Distance Proportions (0.39 AU to 39.5 AU)
                 var r = { mercury: 28, venus: 48, earth: 68, mars: 98, jupiter: 180, saturn: 270, uranus: 370, neptune: 470, pluto: 550 };
                 return r[key] || 0;
             } else {
-                // Visual Mode: Evenly spaced orbits for UI clarity
                 var v = { mercury: 32, venus: 50, earth: 72, mars: 98, jupiter: 135, saturn: 175, uranus: 215, neptune: 255, pluto: 295 };
                 return v[key] || 0;
             }
@@ -286,6 +282,7 @@
             Object.values(celestialBodies).forEach(function (b) {
                 if (b.mesh) scene.remove(b.mesh);
                 if (b.pivot) scene.remove(b.pivot);
+                if (b.ringMesh) scene.remove(b.ringMesh);
             });
             orbitLines.forEach(function (l) { scene.remove(l); });
             orbitLines = [];
@@ -330,26 +327,29 @@
                     metalness: 0.1
                 });
                 var planetMesh = new THREE.Mesh(geo, mat);
-                
+
+                // Planet Axial Tilts
+                if (key === 'earth') planetMesh.rotation.z = 23.44 * (Math.PI / 180);
+                if (key === 'mars') planetMesh.rotation.z = 25.19 * (Math.PI / 180);
+                if (key === 'saturn') planetMesh.rotation.z = 26.73 * (Math.PI / 180);
+                if (key === 'uranus') planetMesh.rotation.z = 97.77 * (Math.PI / 180);
+
                 var semiMajor = orbitR;
                 var semiMinor = orbitR * Math.sqrt(1 - ecc * ecc);
                 planetMesh.position.x = semiMajor;
                 planetMesh.userData = { key: key, data: data, semiMajor: semiMajor, semiMinor: semiMinor };
                 pivot.add(planetMesh);
 
+                // SATURN RING FIX: Create Ring independently attached to Saturn's position without inheriting Y-rotation wobbles!
+                var saturnRingMesh = null;
                 if (key === 'saturn') {
                     var ringTex = loadPlanet3DTexture('saturnRing');
                     var ringGeo = new THREE.RingGeometry(bodyR * 1.3, bodyR * 2.3, 64);
-                    ringGeo.rotateX(Math.PI / 2); // Exactly perpendicular to Saturn's equator!
-                    var ringMesh = new THREE.Mesh(ringGeo, new THREE.MeshStandardMaterial({ map: ringTex, side: THREE.DoubleSide, transparent: true, opacity: 0.9 }));
-                    planetMesh.add(ringMesh);
-                    // Saturn Axial Tilt: ~26.73°
-                    planetMesh.rotation.z = 26.73 * (Math.PI / 180);
-                }
-
-                if (key === 'uranus') {
-                    // Uranus Axial Tilt: ~97.77° (Lying on its side)
-                    planetMesh.rotation.z = 97.77 * (Math.PI / 180);
+                    ringGeo.rotateX(Math.PI / 2); // Perpendicular to equator
+                    saturnRingMesh = new THREE.Mesh(ringGeo, new THREE.MeshStandardMaterial({ map: ringTex, side: THREE.DoubleSide, transparent: true, opacity: 0.9 }));
+                    saturnRingMesh.rotation.z = 26.73 * (Math.PI / 180); // Exact 26.73° fixed tilt!
+                    pivot.add(saturnRingMesh); // Attached to pivot directly, NOT planetMesh so no Y-axis wobble!
+                    saturnRingMesh.position.x = semiMajor;
                 }
 
                 if (key === 'earth') {
@@ -372,7 +372,7 @@
                     celestialBodies['moon'] = { mesh: moonMesh, pivot: moonPivot, orbitRadius: 6, data: window.SOLAR_SYSTEM_DATA.moon };
                 }
 
-                celestialBodies[key] = { mesh: planetMesh, pivot: pivot, orbitRadius: orbitR, semiMajor: semiMajor, semiMinor: semiMinor, data: data };
+                celestialBodies[key] = { mesh: planetMesh, ringMesh: saturnRingMesh, pivot: pivot, orbitRadius: orbitR, semiMajor: semiMajor, semiMinor: semiMinor, data: data };
 
                 if (state.showOrbits) {
                     var pts = [];
@@ -389,19 +389,30 @@
             });
         }
 
-        var ORBIT_RATES = { mercury: 4.1, venus: 1.6, earth: 1.0, mars: 0.53, jupiter: 0.08, saturn: 0.03, uranus: 0.012, neptune: 0.006, pluto: 0.004 };
-        
-        // Rotation per 1 Orbit Ratio (Scientifically Accurate: Earth rotates ~365.25 times per orbit)
-        var ROTATION_RATIOS = {
-            mercury: 1.5,       // 3:2 orbital resonance
-            venus: -0.92,       // Retrograde rotation (Reverse)
-            earth: 365.25,      // Earth 365.25 rotations per 1 orbit!
-            mars: 669.6,
-            jupiter: 1049.0,    // Scaled for smooth visual rendering
-            saturn: 2412.0,
-            uranus: -4274.0,    // Retrograde rotation (Retrograde tilt)
-            neptune: 8970.0,
-            pluto: 141.0
+        // Scientifically Proportional Orbital & Self-Rotation Speed Ratios
+        var ORBIT_RATES = {
+            mercury: 4.15,
+            venus: 1.62,
+            earth: 1.00,    // Base Benchmark (1.0 = Earth 1 Year Orbit)
+            mars: 0.53,
+            jupiter: 0.084,
+            saturn: 0.034,
+            uranus: 0.012,
+            neptune: 0.006,
+            pluto: 0.004
+        };
+
+        // Visually Smooth & Proportional Self-Rotation Ratios (No 60fps stroboscopic artifacts)
+        var SELF_ROTATION_RATES = {
+            mercury: 0.049,
+            venus: -0.030,   // Retrograde Rotation (Reverse)
+            earth: 12.0,     // Smooth Earth Self-Rotation
+            mars: 11.6,
+            jupiter: 29.0,   // 9.9h Fast Spin
+            saturn: 26.8,    // 10.7h Fast Spin
+            uranus: -16.7,   // Retrograde Tilt
+            neptune: 17.8,
+            pluto: 1.8
         };
 
         function animate3D() {
@@ -419,30 +430,40 @@
                 Object.keys(celestialBodies).forEach(function (key) {
                     var b = celestialBodies[key];
                     if (key === 'sun') return;
+
                     if (key === 'moon') {
-                        // Moon Orbits Earth 13.37 times per Earth Year with Synchronous Self-Rotation (동주기 자전)
+                        // Moon Orbits Earth 13.37 times per Earth Year with 100% Synchronous Self-Rotation (동주기 자전!)
                         var earthBody = celestialBodies['earth'];
                         if (earthBody && earthBody.mesh && b.pivot) {
                             var earthAngle = earthBody.orbitAngle || 0;
-                            var moonAngle = earthAngle * 13.37; // 13.37 Moon orbits per 1 Earth orbit
+                            var moonAngle = earthAngle * 13.37; // Exactly 13.37 Moon orbits per Earth year
                             b.pivot.rotation.y = moonAngle;
-                            if (b.mesh) b.mesh.rotation.y = moonAngle; // Synchronous Rotation (1 Moon Orbit = 1 Moon Rotation)
+                            if (b.mesh) b.mesh.rotation.y = moonAngle; // Synchronous Rotation
                         }
                     } else if (b.pivot && b.mesh) {
                         var rate = ORBIT_RATES[key] || 0.1;
                         if (b.orbitAngle === undefined) b.orbitAngle = Math.random() * Math.PI * 2;
-                        
+
                         var dOrbit = delta * 0.5 * rate * state.orbitSpeed;
                         b.orbitAngle += dOrbit;
-                        
+
                         var a = b.semiMajor || b.orbitRadius || 100;
                         var c = b.semiMinor || b.orbitRadius || 100;
-                        b.mesh.position.x = Math.cos(b.orbitAngle) * a;
-                        b.mesh.position.z = Math.sin(b.orbitAngle) * c;
-                        
-                        // 100% Exact Mathematical Self Rotation (Earth spins EXACTLY 365.25 times per orbit!)
-                        var rotRatio = ROTATION_RATIOS[key] || 1.0;
-                        b.mesh.rotation.y = b.orbitAngle * rotRatio;
+                        var px = Math.cos(b.orbitAngle) * a;
+                        var pz = Math.sin(b.orbitAngle) * c;
+
+                        b.mesh.position.x = px;
+                        b.mesh.position.z = pz;
+
+                        // Keep Saturn's Ring synchronized to Saturn's position WITHOUT Y-axis wobble!
+                        if (b.ringMesh) {
+                            b.ringMesh.position.x = px;
+                            b.ringMesh.position.z = pz;
+                        }
+
+                        // Smooth & Accurate Self Rotation
+                        var rotSpeed = SELF_ROTATION_RATES[key] || 1.0;
+                        b.mesh.rotation.y += delta * 0.4 * rotSpeed * state.orbitSpeed;
                     }
                 });
             }
@@ -518,38 +539,35 @@
                 moonControls.minDistance = 25;
             }
 
-            // Strong Directional Light coming from +X (Right side Sunlight)
             var sunLight = new THREE.DirectionalLight(0xffffff, 2.5);
             sunLight.position.set(500, 0, 0);
             moonScene.add(sunLight);
-            moonScene.add(new THREE.AmbientLight(0x222233, 0.4)); // Space Ambient
+            moonScene.add(new THREE.AmbientLight(0x222233, 0.4));
 
-            // 3D Earth
             var earthTex = loadPlanet3DTexture('earth');
             var earthGeo = new THREE.SphereGeometry(10, 32, 32);
             var earthMat = new THREE.MeshStandardMaterial({ map: earthTex, roughness: 0.4 });
             earth3DMesh = new THREE.Mesh(earthGeo, earthMat);
+            earth3DMesh.rotation.z = 23.44 * (Math.PI / 180); // Earth Tilt
             moonScene.add(earth3DMesh);
 
-            // Earth Atmosphere Glow
             var atmosMesh = new THREE.Mesh(
                 new THREE.SphereGeometry(11.2, 32, 32),
                 new THREE.MeshBasicMaterial({ color: 0x38bdf8, transparent: true, opacity: 0.2, side: THREE.BackSide })
             );
             earth3DMesh.add(atmosMesh);
 
-            // 3D Moon
             moonPivotObj = new THREE.Object3D();
+            moonPivotObj.rotation.z = 5.14 * (Math.PI / 180); // Moon Orbit Tilt 5.14° (백도면 경사)
             moonScene.add(moonPivotObj);
 
             var moonTex = loadPlanet3DTexture('moon');
             var moonGeo = new THREE.SphereGeometry(2.8, 24, 24);
             var moonMat = new THREE.MeshStandardMaterial({ map: moonTex, roughness: 0.8 });
             moon3DMesh = new THREE.Mesh(moonGeo, moonMat);
-            moon3DMesh.position.x = 35; // Moon Orbit Distance
+            moon3DMesh.position.x = 35;
             moonPivotObj.add(moon3DMesh);
 
-            // Moon Orbit Line
             var pts = [];
             for (var i = 0; i <= 128; i++) {
                 var theta = (i / 128) * Math.PI * 2;
@@ -557,6 +575,7 @@
             }
             var oGeo = new THREE.BufferGeometry().setFromPoints(pts);
             moonOrbitLine = new THREE.LineLoop(oGeo, new THREE.LineBasicMaterial({ color: 0x38bdf8, transparent: true, opacity: 0.35 }));
+            moonOrbitLine.rotation.z = 5.14 * (Math.PI / 180);
             moonScene.add(moonOrbitLine);
 
             isMoon3DReady = true;
@@ -582,13 +601,11 @@
                 var cx = w / 2;
                 var cy = h / 2;
 
-                // Earth
                 ctx.fillStyle = '#3b82f6';
                 ctx.beginPath();
                 ctx.arc(cx, cy, 30, 0, Math.PI * 2);
                 ctx.fill();
 
-                // Moon Orbit
                 ctx.strokeStyle = 'rgba(56, 189, 248, 0.4)';
                 ctx.beginPath();
                 ctx.arc(cx, cy, 140, 0, Math.PI * 2);
@@ -619,9 +636,9 @@
             if (state.moonState.isPlaying) {
                 state.moonState.angle += 0.008 * state.moonState.speed;
 
-                if (earth3DMesh) earth3DMesh.rotation.y += 0.004; // Earth Self Rotation
-                if (moonPivotObj) moonPivotObj.rotation.y = state.moonState.angle; // Moon Orbit Rotation
-                if (moon3DMesh) moon3DMesh.rotation.y = state.moonState.angle; // Synchronous Rotation (동주기 자전!)
+                if (earth3DMesh) earth3DMesh.rotation.y += 0.01; // Earth Self Rotation
+                if (moonPivotObj) moonPivotObj.rotation.y = state.moonState.angle; // Moon Orbit
+                if (moon3DMesh) moon3DMesh.rotation.y = state.moonState.angle; // Synchronous Self-Rotation (동주기 자전!)
 
                 updateMoonPhaseDisplay(state.moonState.angle);
             }
@@ -639,11 +656,6 @@
             var progressVal = document.getElementById('moonProgressVal');
 
             if (!phaseName || !timeInfo || !progressVal) return;
-
-            // Angle 0: Right (Sun Direction) -> New Moon (삭)
-            // Angle PI/2: Bottom/Top -> First Quarter (상현)
-            // Angle PI: Left (Opposite Sun) -> Full Moon (망)
-            // Angle 3PI/2: Top/Bottom -> Third Quarter (하현)
 
             if (normAngle >= 0 && normAngle < 0.35 || normAngle >= Math.PI * 2 - 0.35) {
                 phaseName.textContent = '🌑 삭 (New Moon)';
