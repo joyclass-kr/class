@@ -261,7 +261,6 @@ document.addEventListener('DOMContentLoaded', () => {
             const height = canvasContainer.clientHeight || 540;
 
             scene = new THREE.Scene();
-            scene.fog = new THREE.FogExp2(0x030712, 0.001);
 
             camera = new THREE.PerspectiveCamera(45, width / height, 0.1, 2000);
             camera.position.set(0, 120, 220);
@@ -486,16 +485,19 @@ document.addEventListener('DOMContentLoaded', () => {
                 LOCAL_TEXTURE_FILES[key],
                 (loadedTex) => {
                     if (loadedTex && loadedTex.image) {
-                        loadedTex.wrapS = THREE.RepeatWrapping;
-                        loadedTex.wrapT = THREE.ClampToEdgeWrapping;
-                        texture.image = loadedTex.image;
-                        texture.needsUpdate = true;
+                        try {
+                            const ctx = canvasEl.getContext('2d');
+                            if (ctx) {
+                                ctx.drawImage(loadedTex.image, 0, 0, canvasEl.width, canvasEl.height);
+                                texture.needsUpdate = true;
+                            }
+                        } catch (e) {
+                            console.warn('Texture draw warning:', e);
+                        }
                     }
                 },
                 undefined,
-                () => {
-                    // Fail-proof silent fallback to CanvasTexture on file:// CORS restrictions
-                }
+                () => {}
             );
         }
 
