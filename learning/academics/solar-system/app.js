@@ -247,8 +247,9 @@
 
             function createPlanetLabel(key, data) {
                 if (!lc || state.simMode !== '2d') return null;
+                var korName = data.name || data.nameKor || key;
                 var div = document.createElement('div');
-                div.innerHTML = '<span style="color:#38bdf8;">●</span> ' + data.nameKor;
+                div.innerHTML = '<span style="color:#38bdf8;">●</span> ' + korName;
                 div.style.position = 'absolute';
                 div.style.color = '#ffffff';
                 div.style.background = 'rgba(2, 132, 199, 0.85)';
@@ -275,9 +276,10 @@
                 marker.position.set(ox, 0, oz);
                 pivot.add(marker);
 
+                var korName = data.name || data.nameKor || key;
                 var div = document.createElement('div');
                 var distStr = data.distAU !== undefined ? data.distAU.toFixed(2) + ' AU' : '';
-                div.textContent = '📍 ' + data.nameKor + ' 궤도 (' + distStr + ')';
+                div.textContent = '📍 ' + korName + ' 궤도 (' + distStr + ')';
                 div.style.position = 'absolute';
                 div.style.color = '#38bdf8';
                 div.style.background = 'rgba(15, 23, 42, 0.85)';
