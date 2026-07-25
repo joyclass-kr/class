@@ -652,7 +652,46 @@
                     celestialBodies['moon'] = { mesh: moonMesh, pivot: moonPivot, orbitRadius: visMoonDist, data: window.SOLAR_SYSTEM_DATA.moon };
                 }
 
-                celestialBodies[key] = { mesh: planetMesh, ringMesh: saturnRingMesh, pivot: pivot, orbitRadius: orbitR, semiMajor: semiMajor, semiMinor: semiMinor, focusOffset: focusOffset, ecc: ecc, data: data };
+                // Build Sub-Satellites (Mars, Jupiter, Saturn, Neptune, Pluto)
+                var satList = [];
+                if (data.satellites && state.simMode === '3d') {
+                    data.satellites.forEach(function(satData) {
+                        var satPivot = new THREE.Object3D();
+                        pivot.add(satPivot);
+
+                        var satGeo = new THREE.SphereGeometry(satData.size || 1.2, 16, 16);
+                        var satMat = new THREE.MeshStandardMaterial({ color: parseInt(satData.color.replace('#', '0x'), 16), roughness: 0.5 });
+                        var satMesh = new THREE.Mesh(satGeo, satMat);
+                        satMesh.position.x = satData.orbitR;
+                        satPivot.add(satMesh);
+
+                        // Satellite Orbit Line
+                        var lineGeo = new THREE.BufferGeometry();
+                        var pts = [];
+                        for (var i = 0; i <= 64; i++) {
+                            var a = (i / 64) * Math.PI * 2;
+                            pts.push(new THREE.Vector3(Math.cos(a) * satData.orbitR, 0, Math.sin(a) * satData.orbitR));
+                        }
+                        lineGeo.setFromPoints(pts);
+                        var lineMat = new THREE.LineBasicMaterial({ color: 0x64748b, transparent: true, opacity: 0.35 });
+                        var satOrbitLine = new THREE.Line(lineGeo, lineMat);
+                        satPivot.add(satOrbitLine);
+
+                        satList.push({ data: satData, mesh: satMesh, pivot: satPivot, angle: Math.random() * Math.PI * 2 });
+                    });
+                }
+
+                celestialBodies[key] = {
+                    mesh: planetMesh,
+                    pivot: pivot,
+                    ringMesh: saturnRingMesh,
+                    satList: satList,
+                    orbitRadius: orbitR,
+                    semiMajor: semiMajor,
+                    semiMinor: semiMinor,
+                    focusOffset: focusOffset,
+                    orbitAngle: (state.simMode === '2d') ? (Math.random() * Math.PI * 2) : (key === 'earth' ? 0 : Math.random() * Math.PI * 2)
+                };
 
                 // PRECISE KEPLER ELLIPSE ORBIT LINE
                 if (state.showOrbits) {
@@ -754,6 +793,16 @@
                         if (state.simMode === '3d') {
                             var selfRate = SELF_ROTATION_RATES[key] || 1.0;
                             b.mesh.rotation.y += timeDelta * (Math.PI * 2) * selfRate;
+
+                            // Animate Sub-Satellites (Mars Phobos/Deimos, Galilean 4 Moons, Titan, Triton)
+                            if (b.satList && b.satList.length > 0) {
+                                b.satList.forEach(function(sat) {
+                                    sat.pivot.position.copy(b.mesh.position);
+                                    var dSat = timeDelta * (Math.PI * 2) * (sat.data.speed || 1.0) * 8.0;
+                                    sat.angle -= dSat; // CCW orbit (Negative speed for Triton's retrograde orbit!)
+                                    sat.pivot.rotation.y = sat.angle;
+                                });
+                            }
                         }
                     }
                 });

@@ -156,7 +156,12 @@ window.SOLAR_SYSTEM_DATA = {
         satExamKeyPoints: [
             '🔴 [산화철 토양] 지표 표면에 산화철 성분이 많아 붉은색으로 관측됨',
             '❄️ [극관의 계절 변화] 남극과 북극의 극관(얼음+드라이아이스)이 여름에는 얇아지고 겨울에는 커짐 (자전축이 약 25° 기울어져 계절 존재)',
-            '📌 [외행성 관측] 지구 궤도 밖을 공전하므로 충(Opposition) 위치일 때 한밤중에 남쪽 하늘에서 가장 밝게 관측 가능'
+            '📌 [외행성 관측] 지구 궤도 밖을 공전하므로 충(Opposition) 위치일 때 한밤중에 남쪽 하늘에서 가장 밝게 관측 가능',
+            '🥔 [화성 2대 위성] 감자 모양의 포보스(Phobos)와 데이모스(Deimos) 2개의 위성 보유'
+        ],
+        satellites: [
+            { id: 'phobos', name: '포보스', enName: 'Phobos', orbitR: 18, size: 1.2, speed: 2.5, color: '#a8a29e' },
+            { id: 'deimos', name: '데이모스', enName: 'Deimos', orbitR: 26, size: 0.9, speed: 1.2, color: '#78716c' }
         ],
         trivia: '지구와 자전 주기(24.6시간) 및 자전축 기울기(25.2°)가 매우 유사하여 4계절이 존재합니다.',
         missions: ['퍼서비어런스(Perseverance)', '큐리오시티(Curiosity)', '인사이트'],
@@ -184,7 +189,14 @@ window.SOLAR_SYSTEM_DATA = {
         satExamKeyPoints: [
             '📌 [목성형 행성 특성] 질량과 반지름이 매우 크지만 수소/헬륨 위주로 구성되어 평균 밀도가 매우 작음 (1.33 g/cm³)',
             '⚡ [빠른 자전과 편평도] 자전 주기가 약 9.9시간으로 매우 빠르고 자전축 직경보다 적도 직경이 큰 편평한 타원체 구조 (편평도가 큼)',
-            '🌀 [대적점 및 줄무늬] 적도와 평행한 대기 줄무늬가 뚜렷하며, 지구보다 큰 고기압 소용돌이 폭풍인 대적점(Great Red Spot) 존재'
+            '🌀 [대적점 및 줄무늬] 적도와 평행한 대기 줄무늬가 뚜렷하며, 지구보다 큰 고기압 소용돌이 폭풍인 대적점(Great Red Spot) 존재',
+            '🌕 [갈릴레이 4대 위성] 이오(화산), 유로파(얼음바다), 가니메데(최대 위성), 칼리스토 4대 주요 위성 보유'
+        ],
+        satellites: [
+            { id: 'io', name: '이오', enName: 'Io', orbitR: 24, size: 1.8, speed: 2.8, color: '#fde047' },
+            { id: 'europa', name: '유로파', enName: 'Europa', orbitR: 32, size: 1.6, speed: 2.0, color: '#e0f2fe' },
+            { id: 'ganymede', name: '가니메데', enName: 'Ganymede', orbitR: 42, size: 2.4, speed: 1.4, color: '#cbd5e1' },
+            { id: 'callisto', name: '칼리스토', enName: 'Callisto', orbitR: 54, size: 2.1, speed: 0.9, color: '#64748b' }
         ],
         trivia: '목성의 위성 가니메데는 수성보다도 크기가 큰 태양계 최대 위성입니다.',
         missions: ['주노(Juno)', '갈릴레오(Galileo)', '보아저 1/2호'],
@@ -212,7 +224,12 @@ window.SOLAR_SYSTEM_DATA = {
         satExamKeyPoints: [
             '🌊 [물보다 낮은 밀도] 평균 밀도가 0.69g/cm³로 태양계 행성 중 유일하게 물(1.0g/cm³)보다 밀도가 작아 물에 띄우면 뜸',
             '🪐 [화려한 얼음 고리] 적도면에 얼음 알갱이와 암석 조각으로 이루어진 무수한 얇고 뚜렷한 고리 보유',
-            '📐 [최대 편평도] 자전에 의한 편평도가 태양계 행성 중 가장 큼 (동그란 공보다 납작한 형태)'
+            '📐 [최대 편평도] 자전에 의한 편평도가 태양계 행성 중 가장 큼 (동그란 공보다 납작한 형태)',
+            '🌌 [타이탄 & 엔켈라두스] 메탄 대기/바다를 갖춘 타이탄(Titan) 및 얼음 간헐천을 뿜는 엔켈라두스(Enceladus) 보유'
+        ],
+        satellites: [
+            { id: 'titan', name: '타이탄', enName: 'Titan', orbitR: 44, size: 2.3, speed: 1.3, color: '#f97316' },
+            { id: 'enceladus', name: '엔켈라두스', enName: 'Enceladus', orbitR: 28, size: 1.3, speed: 2.2, color: '#f8fafc' }
         ],
         trivia: '토성의 고리는 두께가 불과 수십 미터에 불과하지만 폭은 수십만 킬로미터에 달합니다.',
         missions: ['카시니-하위헌스(Cassini-Huygens)'],
@@ -266,7 +283,11 @@ window.SOLAR_SYSTEM_DATA = {
         desc: '태양계 최외곽의 푸른 얼음 거인 행성으로, 대흑점 소용돌이와 시속 2,100km의 강력한 대기 풍속을 갖추고 있습니다.',
         satExamKeyPoints: [
             '🔵 [대흑점(Great Dark Spot)] 대기에 지구 크기만한 거대한 대기 소용돌이인 대흑점이 관측됨',
-            '💨 [강력한 대기 풍속] 메탄 대기로 인해 짙은 파란색을 띠며 태양계 행성 중 대기 풍속이 가장 빠름 (시속 2,000km 이상)'
+            '💨 [강력한 대기 풍속] 메탄 대기로 인해 짙은 파란색을 띠며 태양계 행성 중 대기 풍속이 가장 빠름 (시속 2,000km 이상)',
+            '🔄 [트리톤 역공전 위성] 거대 위성 트리톤(Triton)은 해왕성 자전 방향과 반대로 도는 수능 필수 역공전 위성'
+        ],
+        satellites: [
+            { id: 'triton', name: '트리톤', enName: 'Triton', orbitR: 28, size: 2.0, speed: -1.5, color: '#a5f3fc' } // Retrograde!
         ],
         trivia: '해왕성이 태양을 한 바퀴 도는 데는 164.8년이나 걸립니다.',
         missions: ['보이저 2호(Voyager 2)'],
@@ -286,6 +307,9 @@ window.SOLAR_SYSTEM_DATA = {
         gravityRatio: 0.063,
         eccentricity: 0.249, // 매우 찌그러진 타원!
         inclinationDeg: 17.1, // 무려 17도나 기울어짐!
+        satellites: [
+            { id: 'charon', name: '카론', enName: 'Charon', orbitR: 16, size: 1.8, speed: 1.0, color: '#94a3b8' }
+        ],
         density: '1.85 g/cm³',
         tempC: '-230°C',
         moons: 5,
