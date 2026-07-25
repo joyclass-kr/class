@@ -142,7 +142,7 @@
             var dome = new THREE.Mesh(domeGeo, domeMat);
             group.add(dome);
 
-            // 2. 🛸 Animal Pilot Avatar (Sitting inside Dome)
+            // 2. 🛸 Single Authentic 3D Space Bear Pilot Avatar (Unified for Guest)
             var pilotGroup = new THREE.Group();
             pilotGroup.position.set(0, 0.5, 0);
 
@@ -153,43 +153,23 @@
             seat.position.set(0, 1.6, 1.2);
             pilotGroup.add(seat);
 
-            // Color Palette by Animal Type
-            var colors = {
-                bear: { bgHex: '#fbbf24', suit: 0xf59e0b, ear: 0xd97706 },
-                rabbit: { bgHex: '#ffedd5', suit: 0xec4899, ear: 0xf472b6 },
-                cat: { bgHex: '#fde68a', suit: 0x8b5cf6, ear: 0x7c3aed },
-                penguin: { bgHex: '#38bdf8', suit: 0x0284c7, ear: 0x0369a1 },
-                fox: { bgHex: '#f97316', suit: 0xe11d48, ear: 0xc2410c }
-            };
-            var c = colors[ufoState.animalType] || colors.bear;
-
-            // Pilot Body
+            // Space Bear Suit Body (Warm Orange)
             var bodyGeo = new THREE.SphereGeometry(1.6, 16, 16);
-            var bodyMat = new THREE.MeshStandardMaterial({ color: ufoState.animal.ear });
+            var bodyMat = new THREE.MeshStandardMaterial({ color: 0xf59e0b, roughness: 0.4 });
             var body = new THREE.Mesh(bodyGeo, bodyMat);
             body.position.set(0, 1.3, 0.3);
             pilotGroup.add(body);
 
-            // Pilot Head with Official 36 ClassTool Animal Face Texture
-            var faceTex = createClassToolFaceTexture(ufoState.animal);
-            var headGeo = new THREE.SphereGeometry(1.6, 32, 32);
-            var headMat = new THREE.MeshStandardMaterial({ map: faceTex, roughness: 0.3 });
+            // Space Bear Head (Cute Golden Brown)
+            var headGeo = new THREE.SphereGeometry(1.5, 24, 24);
+            var headMat = new THREE.MeshStandardMaterial({ color: 0xfbbf24, roughness: 0.4 });
             var head = new THREE.Mesh(headGeo, headMat);
-            // Orient face texture directly toward user's 3rd-person camera view!
-            head.rotation.y = Math.PI / 2;
             head.position.set(0, 2.7, 0.3);
             pilotGroup.add(head);
 
-            // Add Front-facing Avatar Sprite Plate for 100% Face Visibility
-            var spriteMat = new THREE.SpriteMaterial({ map: faceTex, transparent: true });
-            var sprite = new THREE.Sprite(spriteMat);
-            sprite.scale.set(3.4, 3.4, 1.0);
-            sprite.position.set(0, 2.7, 0.3);
-            pilotGroup.add(sprite);
-
-            // Cute Animal Ears
+            // Cute Bear Ears (Left & Right)
             var earGeo = new THREE.SphereGeometry(0.55, 16, 16);
-            var earMat = new THREE.MeshStandardMaterial({ color: ufoState.animal.ear });
+            var earMat = new THREE.MeshStandardMaterial({ color: 0xd97706, roughness: 0.4 });
             var lEar = new THREE.Mesh(earGeo, earMat);
             lEar.position.set(-1.0, 3.7, 0.3);
             var rEar = new THREE.Mesh(earGeo, earMat);
@@ -197,39 +177,48 @@
             pilotGroup.add(lEar);
             pilotGroup.add(rEar);
 
-            // Ears according to Animal Type
-            if (ufoState.animalType === 'rabbit') {
-                var rEarGeo = new THREE.CylinderGeometry(0.3, 0.4, 2.2, 16);
-                var rEarMat = new THREE.MeshStandardMaterial({ color: c.ear });
-                var lEar = new THREE.Mesh(rEarGeo, rEarMat);
-                lEar.position.set(-0.8, 4.3, 0.3);
-                lEar.rotation.z = -0.15;
-                var rEar = new THREE.Mesh(rEarGeo, rEarMat);
-                rEar.position.set(0.8, 4.3, 0.3);
-                rEar.rotation.z = 0.15;
-                pilotGroup.add(lEar);
-                pilotGroup.add(rEar);
-            } else if (ufoState.animalType === 'cat' || ufoState.animalType === 'fox') {
-                var cEarGeo = new THREE.ConeGeometry(0.6, 1.4, 16);
-                var cEarMat = new THREE.MeshStandardMaterial({ color: c.ear });
-                var lEar = new THREE.Mesh(cEarGeo, cEarMat);
-                lEar.position.set(-0.8, 3.8, 0.3);
-                lEar.rotation.z = -0.2;
-                var rEar = new THREE.Mesh(cEarGeo, cEarMat);
-                rEar.position.set(0.8, 3.8, 0.3);
-                rEar.rotation.z = 0.2;
-                pilotGroup.add(lEar);
-                pilotGroup.add(rEar);
-            } else {
-                var earGeo = new THREE.SphereGeometry(0.55, 16, 16);
-                var earMat = new THREE.MeshStandardMaterial({ color: c.ear });
-                var lEar = new THREE.Mesh(earGeo, earMat);
-                lEar.position.set(-1.0, 3.7, 0.3);
-                var rEar = new THREE.Mesh(earGeo, earMat);
-                rEar.position.set(1.0, 3.7, 0.3);
-                pilotGroup.add(lEar);
-                pilotGroup.add(rEar);
-            }
+            // 3D Facial Features facing directly toward Camera (Z = +0.3 offset forward)
+            var faceGroup = new THREE.Group();
+            faceGroup.position.set(0, 2.7, 0.3);
+
+            // 3D Black Eyes (Placed facing camera Z = +1.4)
+            var eyeGeo = new THREE.SphereGeometry(0.22, 16, 16);
+            var eyeMat = new THREE.MeshBasicMaterial({ color: 0x0f172a });
+            var lEye = new THREE.Mesh(eyeGeo, eyeMat);
+            lEye.position.set(-0.5, 0.2, 1.35);
+            var rEye = new THREE.Mesh(eyeGeo, eyeMat);
+            rEye.position.set(0.5, 0.2, 1.35);
+            faceGroup.add(lEye);
+            faceGroup.add(rEye);
+
+            // 3D White Eye Pupils
+            var pupilGeo = new THREE.SphereGeometry(0.08, 12, 12);
+            var pupilMat = new THREE.MeshBasicMaterial({ color: 0xffffff });
+            var lPupil = new THREE.Mesh(pupilGeo, pupilMat);
+            lPupil.position.set(-0.43, 0.27, 1.5);
+            var rPupil = new THREE.Mesh(pupilGeo, pupilMat);
+            rPupil.position.set(0.57, 0.27, 1.5);
+            faceGroup.add(lPupil);
+            faceGroup.add(rPupil);
+
+            // 3D Cute Nose
+            var noseGeo = new THREE.SphereGeometry(0.18, 16, 16);
+            var noseMat = new THREE.MeshBasicMaterial({ color: 0x1e293b });
+            var nose = new THREE.Mesh(noseGeo, noseMat);
+            nose.position.set(0, 0.0, 1.52);
+            faceGroup.add(nose);
+
+            // 3D Pink Cheeks (Blush)
+            var cheekGeo = new THREE.SphereGeometry(0.26, 16, 16);
+            var cheekMat = new THREE.MeshBasicMaterial({ color: 0xf472b6, transparent: true, opacity: 0.85 });
+            var lCheek = new THREE.Mesh(cheekGeo, cheekMat);
+            lCheek.position.set(-0.75, -0.1, 1.25);
+            var rCheek = new THREE.Mesh(cheekGeo, cheekMat);
+            rCheek.position.set(0.75, -0.1, 1.25);
+            faceGroup.add(lCheek);
+            faceGroup.add(rCheek);
+
+            pilotGroup.add(faceGroup);
 
             // Headset Band
             var headsetGeo = new THREE.TorusGeometry(1.5, 0.2, 12, 24, Math.PI);
