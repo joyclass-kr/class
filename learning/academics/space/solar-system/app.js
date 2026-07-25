@@ -1809,15 +1809,10 @@
                 btn.addEventListener('touchstart', function(e) { e.preventDefault(); ufoState.keys[keyProp] = true; });
                 btn.addEventListener('touchend', function(e) { e.preventDefault(); ufoState.keys[keyProp] = false; });
             }
-            var ufoRiseBtn = document.getElementById('ufoRiseBtn');
-            var ufoDescendBtn = document.getElementById('ufoDescendBtn');
-
             bindArrowBtn(ufoUpBtn, 'forward');
             bindArrowBtn(ufoDownBtn, 'backward');
             bindArrowBtn(ufoLeftBtn, 'left');
             bindArrowBtn(ufoRightBtn, 'right');
-            bindArrowBtn(ufoRiseBtn, 'up');
-            bindArrowBtn(ufoDescendBtn, 'down');
 
             var simModeToggle = document.getElementById('simModeToggle');
             var simModeLabel = document.getElementById('simModeLabel');
