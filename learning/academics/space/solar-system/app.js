@@ -1753,7 +1753,6 @@
             if (ufoModeBtn) {
                 ufoModeBtn.addEventListener('click', function() {
                     ufoState.active = !ufoState.active;
-                    var quickBtns = document.querySelectorAll('.quick-bar-btn');
 
                     if (ufoState.active) {
                         ufoModeBtn.textContent = '🛸 UFO 탐험 (UFO Flight) ON';
@@ -1766,15 +1765,6 @@
                             controls.target.copy(ufoState.pos);
                             controls.update();
                         }
-
-                        // 🛸 Lock & Disable Quick Bar Buttons during UFO Flight Exploration!
-                        quickBtns.forEach(function(b) {
-                            b.disabled = true;
-                            b.style.opacity = '0.35';
-                            b.style.pointerEvents = 'none';
-                            b.style.cursor = 'not-allowed';
-                            b.title = '🛸 UFO 탐험 중에는 상단 버튼이 잠깁니다. 행성에 3D로 직접 다가가서 클릭하세요!';
-                        });
                         showSpaceToast('🛸 UFO 탐험 시작! 천체에 직접 가까이 비행하여 3D로 클릭하세요.');
                     } else {
                         ufoModeBtn.textContent = '🛸 UFO 탐험 (UFO Flight) OFF';
@@ -1787,15 +1777,6 @@
                             camera.position.set(0, 1500, 2000);
                             controls.update();
                         }
-
-                        // Re-enable Quick Bar Buttons
-                        quickBtns.forEach(function(b) {
-                            b.disabled = false;
-                            b.style.opacity = '1.0';
-                            b.style.pointerEvents = 'auto';
-                            b.style.cursor = 'pointer';
-                            b.title = '';
-                        });
                     }
                 });
             }
