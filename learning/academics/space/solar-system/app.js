@@ -290,24 +290,28 @@
 
         window.addEventListener('keydown', function(e) {
             if (!ufoState.active) return;
-            if (['ArrowUp', 'ArrowDown', 'ArrowLeft', 'ArrowRight', 'w', 'W', 's', 'S', 'a', 'A', 'd', 'D'].indexOf(e.key) !== -1) {
+            if (['ArrowUp', 'ArrowDown', 'ArrowLeft', 'ArrowRight', 'w', 'W', 's', 'S', 'a', 'A', 'd', 'D', 'q', 'Q', 'e', 'E'].indexOf(e.key) !== -1) {
                 e.preventDefault();
             }
             if (e.key === 'ArrowUp' || e.key === 'w' || e.key === 'W') ufoState.keys.forward = true;
             if (e.key === 'ArrowDown' || e.key === 's' || e.key === 'S') ufoState.keys.backward = true;
             if (e.key === 'ArrowLeft' || e.key === 'a' || e.key === 'A') ufoState.keys.left = true;
             if (e.key === 'ArrowRight' || e.key === 'd' || e.key === 'D') ufoState.keys.right = true;
+            if (e.key === 'q' || e.key === 'Q') ufoState.keys.up = true;
+            if (e.key === 'e' || e.key === 'E') ufoState.keys.down = true;
         });
 
         window.addEventListener('keyup', function(e) {
             if (!ufoState.active) return;
-            if (['ArrowUp', 'ArrowDown', 'ArrowLeft', 'ArrowRight', 'w', 'W', 's', 'S', 'a', 'A', 'd', 'D'].indexOf(e.key) !== -1) {
+            if (['ArrowUp', 'ArrowDown', 'ArrowLeft', 'ArrowRight', 'w', 'W', 's', 'S', 'a', 'A', 'd', 'D', 'q', 'Q', 'e', 'E'].indexOf(e.key) !== -1) {
                 e.preventDefault();
             }
             if (e.key === 'ArrowUp' || e.key === 'w' || e.key === 'W') ufoState.keys.forward = false;
             if (e.key === 'ArrowDown' || e.key === 's' || e.key === 'S') ufoState.keys.backward = false;
             if (e.key === 'ArrowLeft' || e.key === 'a' || e.key === 'A') ufoState.keys.left = false;
             if (e.key === 'ArrowRight' || e.key === 'd' || e.key === 'D') ufoState.keys.right = false;
+            if (e.key === 'q' || e.key === 'Q') ufoState.keys.up = false;
+            if (e.key === 'e' || e.key === 'E') ufoState.keys.down = false;
         });
 
         var moonScene, moonCamera, moonRenderer, moonControls;
@@ -1297,6 +1301,7 @@
             }
 
             // 🛸 Kartrider-Style 3rd-Person Pursuit Camera System for UFO Explorer
+            // 🛸 Kartrider-Style 3rd-Person Pursuit Camera System with Smart Orbital Elevation Assist
             if (ufoState.active && ufoMesh && camera) {
                 var moveSpeed = 2.2 * Math.min(state.orbitSpeed || 1.0, 2.5);
 
@@ -1321,11 +1326,39 @@
                     isMoving = true;
                 }
 
+                // 🛸 Manual Height Control (Q: Ascend, E: Descend)
+                var verticalSpeed = 1.8 * moveSpeed;
+                if (ufoState.keys.up) ufoState.pos.y += verticalSpeed;
+                if (ufoState.keys.down) ufoState.pos.y -= verticalSpeed;
+
+                // 🛸 Smart Orbital Plane Elevation Assist (Auto-tracking inclined orbit planes like Pluto 17.16°!)
+                var nearestBodyDist = Infinity;
+                var targetTargetY = 0;
+
+                Object.keys(celestialBodies).forEach(function(k) {
+                    var bObj = celestialBodies[k];
+                    if (bObj && bObj.mesh) {
+                        var bWorldPos = new THREE.Vector3();
+                        bObj.mesh.getWorldPosition(bWorldPos);
+                        var d = ufoState.pos.distanceTo(bWorldPos);
+                        if (d < nearestBodyDist && d < 350) {
+                            nearestBodyDist = d;
+                            targetTargetY = bWorldPos.y;
+                        }
+                    }
+                });
+
+                if (nearestBodyDist < 350) {
+                    // Smoothly blend Y altitude toward inclined orbit plane (Pluto 17.16deg incline assist!)
+                    var blendRatio = Math.max(0.0, 1.0 - nearestBodyDist / 350);
+                    ufoState.pos.y += (targetTargetY - ufoState.pos.y) * 0.08 * blendRatio;
+                }
+
                 ufoMesh.position.copy(ufoState.pos);
                 ufoMesh.rotation.y = ufoState.heading;
 
                 // 🚗 Kartrider Pursuit Camera Locked Offset (Always behind & slightly above UFO)
-                var camDistance = 38.0; // Fixed distance (No drifting!)
+                var camDistance = 38.0; // Fixed distance
                 var camHeight = 18.0;   // Fixed elevation height
                 
                 var desiredCamPos = ufoState.pos.clone()
@@ -1781,10 +1814,15 @@
                 btn.addEventListener('touchstart', function(e) { e.preventDefault(); ufoState.keys[keyProp] = true; });
                 btn.addEventListener('touchend', function(e) { e.preventDefault(); ufoState.keys[keyProp] = false; });
             }
+            var ufoRiseBtn = document.getElementById('ufoRiseBtn');
+            var ufoDescendBtn = document.getElementById('ufoDescendBtn');
+
             bindArrowBtn(ufoUpBtn, 'forward');
             bindArrowBtn(ufoDownBtn, 'backward');
             bindArrowBtn(ufoLeftBtn, 'left');
             bindArrowBtn(ufoRightBtn, 'right');
+            bindArrowBtn(ufoRiseBtn, 'up');
+            bindArrowBtn(ufoDescendBtn, 'down');
 
             var simModeToggle = document.getElementById('simModeToggle');
             var simModeLabel = document.getElementById('simModeLabel');

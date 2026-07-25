@@ -68,16 +68,26 @@
                     <div id="labelsContainer" style="position:absolute; top:0; left:0; width:100%; height:100%; pointer-events:none; overflow:hidden;"></div>
                     
                     <!-- UFO Flight Touch/Arrow Controls Overlay -->
-                    <div id="ufoControlsPanel" style="display: none; position: absolute; bottom: 16px; left: 16px; background: rgba(15, 23, 42, 0.85); border: 1px solid rgba(56, 189, 248, 0.4); border-radius: 12px; padding: 10px 14px; backdrop-filter: blur(8px); z-index: 12;">
-                        <div style="font-size: 11px; color: #38bdf8; font-weight: 700; margin-bottom: 6px;">🛸 UFO 조종 (화살표 / WASD)</div>
-                        <div style="font-size: 11px; color: #94a3b8; margin-bottom: 8px;">드래그: 구도 변경 | 휠: 확대/축소</div>
-                        <div style="display: grid; grid-template-columns: repeat(3, 36px); gap: 4px; justify-content: center;">
-                            <div></div>
-                            <button id="ufoUpBtn" style="height: 36px; background: rgba(56,189,248,0.2); border: 1px solid #38bdf8; color: #fff; border-radius: 6px; font-weight: bold; cursor: pointer;">▲</button>
-                            <div></div>
-                            <button id="ufoLeftBtn" style="height: 36px; background: rgba(56,189,248,0.2); border: 1px solid #38bdf8; color: #fff; border-radius: 6px; font-weight: bold; cursor: pointer;">◄</button>
-                            <button id="ufoDownBtn" style="height: 36px; background: rgba(56,189,248,0.2); border: 1px solid #38bdf8; color: #fff; border-radius: 6px; font-weight: bold; cursor: pointer;">▼</button>
-                            <button id="ufoRightBtn" style="height: 36px; background: rgba(56,189,248,0.2); border: 1px solid #38bdf8; color: #fff; border-radius: 6px; font-weight: bold; cursor: pointer;">►</button>
+                    <div id="ufoControlsPanel" style="display: none; position: absolute; bottom: 16px; left: 16px; background: rgba(15, 23, 42, 0.9); border: 1px solid rgba(56, 189, 248, 0.4); border-radius: 12px; padding: 12px 16px; backdrop-filter: blur(8px); z-index: 12;">
+                        <div style="font-size: 12px; color: #38bdf8; font-weight: 800; margin-bottom: 4px;">🛸 UFO 비행 탐험 조종</div>
+                        <div style="font-size: 11px; color: #cbd5e1; margin-bottom: 8px;">이동: WASD / 화살표 | 고도: Q(상승) E(하강)</div>
+                        
+                        <div style="display: flex; gap: 12px; align-items: center;">
+                            <!-- Direction Pad -->
+                            <div style="display: grid; grid-template-columns: repeat(3, 34px); gap: 4px; justify-content: center;">
+                                <div></div>
+                                <button id="ufoUpBtn" style="height: 34px; background: rgba(56,189,248,0.2); border: 1px solid #38bdf8; color: #fff; border-radius: 6px; font-weight: bold; cursor: pointer;">▲</button>
+                                <div></div>
+                                <button id="ufoLeftBtn" style="height: 34px; background: rgba(56,189,248,0.2); border: 1px solid #38bdf8; color: #fff; border-radius: 6px; font-weight: bold; cursor: pointer;">◄</button>
+                                <button id="ufoDownBtn" style="height: 34px; background: rgba(56,189,248,0.2); border: 1px solid #38bdf8; color: #fff; border-radius: 6px; font-weight: bold; cursor: pointer;">▼</button>
+                                <button id="ufoRightBtn" style="height: 34px; background: rgba(56,189,248,0.2); border: 1px solid #38bdf8; color: #fff; border-radius: 6px; font-weight: bold; cursor: pointer;">►</button>
+                            </div>
+
+                            <!-- Height Altitude Pad for Inclined Orbits like Pluto 17.16° -->
+                            <div style="display: flex; flex-direction: column; gap: 4px;">
+                                <button id="ufoRiseBtn" style="height: 34px; padding: 0 10px; background: rgba(234,179,8,0.25); border: 1px solid #fef08a; color: #fef08a; border-radius: 6px; font-size: 11px; font-weight: bold; cursor: pointer;" title="Q키: 고도 상승 (기울어진 명왕성 궤도 전용)">⬆️ 상승 (Q)</button>
+                                <button id="ufoDescendBtn" style="height: 34px; padding: 0 10px; background: rgba(234,179,8,0.25); border: 1px solid #fef08a; color: #fef08a; border-radius: 6px; font-size: 11px; font-weight: bold; cursor: pointer;" title="E키: 고도 하강">⬇️ 하강 (E)</button>
+                            </div>
                         </div>
                     </div>
                     
@@ -561,7 +571,7 @@
         </div>
     </div>
 
-    <script src="solar-data.js?v=missions_section_completely_removed_curriculum_focused"></script>
-    <script src="app.js?v=missions_section_completely_removed_curriculum_focused"></script>
+    <script src="solar-data.js?v=smart_orbital_elevation_assist_pluto_inclination_fixed"></script>
+    <script src="app.js?v=smart_orbital_elevation_assist_pluto_inclination_fixed"></script>
 </body>
 </html>
