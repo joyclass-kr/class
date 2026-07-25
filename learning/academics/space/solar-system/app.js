@@ -749,7 +749,7 @@
 
                 // Calculate Camera Right Vector
                 var camRight = new THREE.Vector3();
-                camRight.crossVectors(camDir, new THREE.Vector3(0, 1, 0)).negate().normalize();
+                camRight.crossVectors(camDir, new THREE.Vector3(0, 1, 0)).normalize();
 
                 var moveVec = new THREE.Vector3(0, 0, 0);
 
