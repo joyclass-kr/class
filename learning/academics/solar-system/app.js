@@ -18,10 +18,19 @@
             currentTab: 'sim',
             isPlaying: true,
             orbitSpeed: 1.0,
-            scaleMode: 'visual', // 'visual' | 'realistic'
+            scaleMode: 'visual',
             showOrbits: true,
             simTimeYears: 0.0,
             selectedBody: null,
+
+            // Moon Observatory State
+            moonState: {
+                isPlaying: true,
+                speed: 1.0,
+                showOrbit: true,
+                angle: Math.PI / 2 // Start at First Quarter (상현달)
+            },
+
             quiz: { score: 0, streak: 0, currentQuestion: null, answered: false, autoTimer: null }
         };
 
@@ -38,14 +47,19 @@
         var simTimeVal = document.getElementById('simTimeVal');
         var modalOverlay = document.getElementById('modalOverlay');
 
-        // 3D Engine Vars
+        // 3D Engine Vars (Solar System)
         var scene, camera, renderer, controls, clock;
         var celestialBodies = {};
         var orbitLines = [];
         var raycaster, mouse;
         var is3DReady = false;
 
-        // 1. ALWAYS initialize UI Event Listeners FIRST so buttons ALWAYS work 100%!
+        // 3D Engine Vars (Earth-Moon Observatory)
+        var moonScene, moonCamera, moonRenderer, moonControls;
+        var earth3DMesh, moon3DMesh, moonPivotObj, moonOrbitLine;
+        var isMoon3DReady = false;
+
+        // 1. ALWAYS initialize UI Event Listeners FIRST
         initNavTabs();
         initQuickBar();
         initAtlasGrid();
@@ -53,20 +67,24 @@
         initSpaceQuiz();
         initModal();
         initSimUIControls();
+        initMoonUIControls();
 
-        // 2. Initialize 3D Engine safely with 2D Fallback
+        // 2. Initialize Solar System 3D Engine
         try {
             if (typeof THREE !== 'undefined') {
                 init3D();
+                initMoon3D();
             } else {
                 init2DFallback();
+                initMoon2DFallback();
             }
         } catch (e) {
             console.warn('3D Init Exception, falling back to 2D engine:', e);
             init2DFallback();
+            initMoon2DFallback();
         }
 
-        // ========== 3D ENGINE (Pure Safe Procedural Textures - No WebGL Security Exceptions) ==========
+        // ========== 1. SOLAR SYSTEM 3D ENGINE ==========
         function init3D() {
             if (!canvasContainer || !canvas) return;
 
@@ -98,11 +116,9 @@
             raycaster = new THREE.Raycaster();
             mouse = new THREE.Vector2();
 
-            // Lighting
             scene.add(new THREE.AmbientLight(0x505060, 1.4));
             scene.add(new THREE.PointLight(0xfffaed, 2.5, 1000));
 
-            // Starfield & Solar System
             buildStarfield();
             buildCelestialBodies();
 
@@ -189,7 +205,6 @@
             render2D();
         }
 
-        // 3D Procedural Canvas Texture Loader (DataURL based - safe & colorful 3D rendering)
         function loadPlanet3DTexture(key) {
             var textureUrl = (key === 'saturnRing' && typeof window.createSaturnRingTexture === 'function')
                 ? window.createSaturnRingTexture()
@@ -272,7 +287,6 @@
             orbitLines = [];
             celestialBodies = {};
 
-            // Sun
             var sunTex = loadPlanet3DTexture('sun');
             var sunR = getBodyScaleRadius('sun');
             var sunMesh = new THREE.Mesh(
@@ -289,7 +303,6 @@
 
             celestialBodies['sun'] = { mesh: sunMesh, data: window.SOLAR_SYSTEM_DATA.sun };
 
-            // Planets
             var planetKeys = ['mercury', 'venus', 'earth', 'mars', 'jupiter', 'saturn', 'uranus', 'neptune', 'pluto'];
 
             planetKeys.forEach(function (key) {
@@ -302,7 +315,6 @@
                 var incRad = (data.inclinationDeg || 0.0) * (Math.PI / 180);
 
                 var pivot = new THREE.Object3D();
-                // Apply Orbit Inclination Tilt
                 pivot.rotation.z = incRad;
                 scene.add(pivot);
 
@@ -315,7 +327,6 @@
                 });
                 var planetMesh = new THREE.Mesh(geo, mat);
                 
-                // Elliptical Orbit Position
                 var semiMajor = orbitR;
                 var semiMinor = orbitR * Math.sqrt(1 - ecc * ecc);
                 planetMesh.position.x = semiMajor;
@@ -446,6 +457,239 @@
             openPlanetModal(key);
         }
 
+        // ========== 2. EARTH-MOON OBSERVATORY (3D Dedicated Engine) ==========
+        function initMoon3D() {
+            var container = document.getElementById('moonCanvasContainer');
+            var moonCanvas = document.getElementById('moonCanvas');
+            if (!container || !moonCanvas) return;
+
+            var w = container.clientWidth || 900;
+            var h = container.clientHeight || 520;
+
+            moonScene = new THREE.Scene();
+            moonCamera = new THREE.PerspectiveCamera(40, w / h, 0.1, 1000);
+            moonCamera.position.set(0, 40, 75);
+            moonCamera.lookAt(0, 0, 0);
+
+            moonRenderer = new THREE.WebGLRenderer({ canvas: moonCanvas, antialias: true });
+            moonRenderer.setSize(w, h);
+            moonRenderer.setPixelRatio(Math.min(window.devicePixelRatio, 2));
+            moonRenderer.setClearColor(0x030712);
+
+            if (typeof THREE.OrbitControls !== 'undefined') {
+                moonControls = new THREE.OrbitControls(moonCamera, moonRenderer.domElement);
+                moonControls.enableDamping = true;
+                moonControls.dampingFactor = 0.05;
+                moonControls.maxDistance = 180;
+                moonControls.minDistance = 25;
+            }
+
+            // Strong Directional Light coming from +X (Right side Sunlight)
+            var sunLight = new THREE.DirectionalLight(0xffffff, 2.5);
+            sunLight.position.set(500, 0, 0);
+            moonScene.add(sunLight);
+            moonScene.add(new THREE.AmbientLight(0x222233, 0.4)); // Space Ambient
+
+            // 3D Earth
+            var earthTex = loadPlanet3DTexture('earth');
+            var earthGeo = new THREE.SphereGeometry(10, 32, 32);
+            var earthMat = new THREE.MeshStandardMaterial({ map: earthTex, roughness: 0.4 });
+            earth3DMesh = new THREE.Mesh(earthGeo, earthMat);
+            moonScene.add(earth3DMesh);
+
+            // Earth Atmosphere Glow
+            var atmosMesh = new THREE.Mesh(
+                new THREE.SphereGeometry(11.2, 32, 32),
+                new THREE.MeshBasicMaterial({ color: 0x38bdf8, transparent: true, opacity: 0.2, side: THREE.BackSide })
+            );
+            earth3DMesh.add(atmosMesh);
+
+            // 3D Moon
+            moonPivotObj = new THREE.Object3D();
+            moonScene.add(moonPivotObj);
+
+            var moonTex = loadPlanet3DTexture('moon');
+            var moonGeo = new THREE.SphereGeometry(2.8, 24, 24);
+            var moonMat = new THREE.MeshStandardMaterial({ map: moonTex, roughness: 0.8 });
+            moon3DMesh = new THREE.Mesh(moonGeo, moonMat);
+            moon3DMesh.position.x = 35; // Moon Orbit Distance
+            moonPivotObj.add(moon3DMesh);
+
+            // Moon Orbit Line
+            var pts = [];
+            for (var i = 0; i <= 128; i++) {
+                var theta = (i / 128) * Math.PI * 2;
+                pts.push(new THREE.Vector3(Math.cos(theta) * 35, 0, Math.sin(theta) * 35));
+            }
+            var oGeo = new THREE.BufferGeometry().setFromPoints(pts);
+            moonOrbitLine = new THREE.LineLoop(oGeo, new THREE.LineBasicMaterial({ color: 0x38bdf8, transparent: true, opacity: 0.35 }));
+            moonScene.add(moonOrbitLine);
+
+            isMoon3DReady = true;
+            animateMoon3D();
+        }
+
+        function initMoon2DFallback() {
+            var container = document.getElementById('moonCanvasContainer');
+            var moonCanvas = document.getElementById('moonCanvas');
+            if (!container || !moonCanvas) return;
+            var ctx = moonCanvas.getContext('2d');
+            if (!ctx) return;
+
+            function renderMoon2D() {
+                var w = container.clientWidth || 900;
+                var h = container.clientHeight || 520;
+                moonCanvas.width = w;
+                moonCanvas.height = h;
+
+                ctx.fillStyle = '#030712';
+                ctx.fillRect(0, 0, w, h);
+
+                var cx = w / 2;
+                var cy = h / 2;
+
+                // Earth
+                ctx.fillStyle = '#3b82f6';
+                ctx.beginPath();
+                ctx.arc(cx, cy, 30, 0, Math.PI * 2);
+                ctx.fill();
+
+                // Moon Orbit
+                ctx.strokeStyle = 'rgba(56, 189, 248, 0.4)';
+                ctx.beginPath();
+                ctx.arc(cx, cy, 140, 0, Math.PI * 2);
+                ctx.stroke();
+
+                if (state.moonState.isPlaying) {
+                    state.moonState.angle += 0.008 * state.moonState.speed;
+                }
+
+                var mx = cx + Math.cos(state.moonState.angle) * 140;
+                var my = cy + Math.sin(state.moonState.angle) * 140;
+
+                ctx.fillStyle = '#cbd5e1';
+                ctx.beginPath();
+                ctx.arc(mx, my, 12, 0, Math.PI * 2);
+                ctx.fill();
+
+                updateMoonPhaseDisplay(state.moonState.angle);
+                requestAnimationFrame(renderMoon2D);
+            }
+
+            renderMoon2D();
+        }
+
+        function animateMoon3D() {
+            requestAnimationFrame(animateMoon3D);
+
+            if (state.moonState.isPlaying) {
+                state.moonState.angle += 0.008 * state.moonState.speed;
+
+                if (earth3DMesh) earth3DMesh.rotation.y += 0.004; // Earth Self Rotation
+                if (moonPivotObj) moonPivotObj.rotation.y = state.moonState.angle; // Moon Orbit Rotation
+                if (moon3DMesh) moon3DMesh.rotation.y = state.moonState.angle; // Synchronous Rotation (동주기 자전!)
+
+                updateMoonPhaseDisplay(state.moonState.angle);
+            }
+
+            if (moonControls) moonControls.update();
+            if (moonRenderer && moonScene && moonCamera) {
+                try { moonRenderer.render(moonScene, moonCamera); } catch (e) { }
+            }
+        }
+
+        function updateMoonPhaseDisplay(angle) {
+            var normAngle = (angle % (Math.PI * 2) + Math.PI * 2) % (Math.PI * 2);
+            var phaseName = document.getElementById('moonPhaseName');
+            var timeInfo = document.getElementById('moonObsTimeInfo');
+            var progressVal = document.getElementById('moonProgressVal');
+
+            if (!phaseName || !timeInfo || !progressVal) return;
+
+            // Angle 0: Right (Sun Direction) -> New Moon (삭)
+            // Angle PI/2: Bottom/Top -> First Quarter (상현)
+            // Angle PI: Left (Opposite Sun) -> Full Moon (망)
+            // Angle 3PI/2: Top/Bottom -> Third Quarter (하현)
+
+            if (normAngle >= 0 && normAngle < 0.35 || normAngle >= Math.PI * 2 - 0.35) {
+                phaseName.textContent = '🌑 삭 (New Moon)';
+                timeInfo.textContent = '남중 시각: 정오 (12:00) | 관측 불가';
+                progressVal.textContent = '음력 1일 경 (삭)';
+            } else if (normAngle >= 0.35 && normAngle < 1.22) {
+                phaseName.textContent = '🌒 초승달 (Waxing Crescent)';
+                timeInfo.textContent = '남중 시각: 오후 3시 (15:00) | 초저녁 서쪽 하늘';
+                progressVal.textContent = '음력 3~4일 경 (초승)';
+            } else if (normAngle >= 1.22 && normAngle < 1.92) {
+                phaseName.textContent = '🌓 상현달 (First Quarter)';
+                timeInfo.textContent = '남중 시각: 오후 6시 (18:00) | 초저녁 서쪽 하늘 관측';
+                progressVal.textContent = '음력 7~8일 경 (상현)';
+            } else if (normAngle >= 1.92 && normAngle < 2.79) {
+                phaseName.textContent = '🌔 차오르는 달 (Waxing Gibbous)';
+                timeInfo.textContent = '남중 시각: 밤 9시 (21:00) | 저녁 동쪽~남쪽 하늘';
+                progressVal.textContent = '음력 11~12일 경';
+            } else if (normAngle >= 2.79 && normAngle < 3.49) {
+                phaseName.textContent = '🌕 망 / 보름달 (Full Moon)';
+                timeInfo.textContent = '남중 시각: 한밤중 (24:00) | 밤새도록 관측';
+                progressVal.textContent = '음력 15일 경 (망/보름)';
+            } else if (normAngle >= 3.49 && normAngle < 4.36) {
+                phaseName.textContent = '🌖 기울어가는 달 (Waning Gibbous)';
+                timeInfo.textContent = '남중 시각: 새벽 3시 (03:00) | 늦은 밤~새벽 관측';
+                progressVal.textContent = '음력 18~19일 경';
+            } else if (normAngle >= 4.36 && normAngle < 5.06) {
+                phaseName.textContent = '🌗 하현달 (Third Quarter)';
+                timeInfo.textContent = '남중 시각: 새벽 6시 (06:00) | 새벽 동쪽 하늘 관측';
+                progressVal.textContent = '음력 22~23일 경 (하현)';
+            } else {
+                phaseName.textContent = '🌘 그믐달 (Waning Crescent)';
+                timeInfo.textContent = '남중 시각: 오전 9시 (09:00) | 새벽 동쪽 하늘';
+                progressVal.textContent = '음력 26~27일 경 (그믐)';
+            }
+        }
+
+        function onMoonWindowResize() {
+            var container = document.getElementById('moonCanvasContainer');
+            if (!container || !moonCamera || !moonRenderer) return;
+            var w = container.clientWidth || 900;
+            var h = container.clientHeight || 520;
+            moonCamera.aspect = w / h;
+            moonCamera.updateProjectionMatrix();
+            moonRenderer.setSize(w, h);
+        }
+
+        function initMoonUIControls() {
+            var moonPlayBtn = document.getElementById('moonPlayBtn');
+            var resetMoonCamBtn = document.getElementById('resetMoonCamBtn');
+            var moonSpeedSlider = document.getElementById('moonSpeedSlider');
+            var showMoonOrbitToggle = document.getElementById('showMoonOrbitToggle');
+
+            if (moonPlayBtn) {
+                moonPlayBtn.addEventListener('click', function () {
+                    state.moonState.isPlaying = !state.moonState.isPlaying;
+                    moonPlayBtn.textContent = state.moonState.isPlaying ? '⏸ 일시정지' : '▶ 재생';
+                });
+            }
+            if (resetMoonCamBtn) {
+                resetMoonCamBtn.addEventListener('click', function () {
+                    if (moonCamera && moonControls) {
+                        moonCamera.position.set(0, 40, 75);
+                        moonControls.target.set(0, 0, 0);
+                        moonControls.update();
+                    }
+                });
+            }
+            if (moonSpeedSlider) {
+                moonSpeedSlider.addEventListener('input', function (e) {
+                    state.moonState.speed = parseFloat(e.target.value);
+                });
+            }
+            if (showMoonOrbitToggle) {
+                showMoonOrbitToggle.addEventListener('change', function (e) {
+                    state.moonState.showOrbit = e.target.checked;
+                    if (moonOrbitLine) moonOrbitLine.visible = state.moonState.showOrbit;
+                });
+            }
+        }
+
         // ========== UI CONTROLS ==========
         function initSimUIControls() {
             if (playPauseBtn) {
@@ -505,6 +749,7 @@
                     state.currentTab = target;
                     if (target === 'quiz' && !state.quiz.currentQuestion) loadNewQuizQuestion();
                     if (target === 'sim' && renderer) onWindowResize();
+                    if (target === 'moon' && moonRenderer) onMoonWindowResize();
                 });
             });
         }
@@ -525,7 +770,7 @@
             });
         }
 
-        // ========== PLANET ATLAS GRID (Tab 2: High-Res Large Fixed Photos) ==========
+        // ========== PLANET ATLAS GRID (Tab 3) ==========
         function initAtlasGrid() {
             var grid = document.getElementById('atlasGrid');
             if (!grid || !window.SOLAR_SYSTEM_DATA) return;
@@ -561,7 +806,7 @@
             });
         }
 
-        // ========== ORBIT & ROTATION PERIOD COMPARISON (Tab 3) ==========
+        // ========== ORBIT & ROTATION PERIOD COMPARISON (Tab 4) ==========
         function initSpaceCalc() {
             var grid = document.getElementById('calcResultsGrid');
             if (!grid || !window.SOLAR_SYSTEM_DATA) return;
@@ -591,7 +836,7 @@
             });
         }
 
-        // ========== MODAL POPUP (Large HD Photo & CSAT Key Points) ==========
+        // ========== MODAL POPUP ==========
         function initModal() {
             var closeBtn = document.getElementById('closeModalBtn');
             if (closeBtn) closeBtn.addEventListener('click', closeModal);
@@ -665,7 +910,7 @@
             if (modalOverlay) modalOverlay.classList.remove('active');
         }
 
-        // ========== QUIZ SYSTEM ==========
+        // ========== QUIZ SYSTEM (Tab 5) ==========
         function initSpaceQuiz() {
             var nextBtn = document.getElementById('nextQuizBtn');
             if (nextBtn) nextBtn.addEventListener('click', loadNewQuizQuestion);
