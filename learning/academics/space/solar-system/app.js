@@ -799,7 +799,8 @@
                                 b.satList.forEach(function(sat) {
                                     sat.pivot.position.copy(b.mesh.position);
                                     var dSat = timeDelta * (Math.PI * 2) * (sat.data.speed || 1.0) * 8.0;
-                                    sat.angle -= dSat; // CCW orbit (Negative speed for Triton's retrograde orbit!)
+                                    // Positive speed: Counter-Clockwise (CCW, West -> East) | Negative speed (Triton): Clockwise Retrograde!
+                                    sat.angle += dSat;
                                     sat.pivot.rotation.y = sat.angle;
                                 });
                             }
