@@ -363,8 +363,11 @@ document.addEventListener('DOMContentLoaded', () => {
         texture.wrapT = THREE.ClampToEdgeWrapping;
         texture.needsUpdate = true;
 
-        if (LOCAL_REAL_TEXTURES[key]) {
+        // Only swap image if not on file:// protocol (or if CORS is safe) to prevent WebGL Tainted Canvas crash
+        const isLocalFile = window.location.protocol === 'file:';
+        if (!isLocalFile && LOCAL_REAL_TEXTURES[key]) {
             const img = new Image();
+            img.crossOrigin = 'Anonymous';
             img.onload = function () {
                 try {
                     const ctx = canvasEl.getContext('2d');
@@ -373,7 +376,7 @@ document.addEventListener('DOMContentLoaded', () => {
                         texture.needsUpdate = true;
                     }
                 } catch (e) {
-                    console.warn('Real texture swap notice:', e);
+                    console.warn('Real texture swap bypassed due to CORS:', e);
                 }
             };
             img.src = LOCAL_REAL_TEXTURES[key];
@@ -578,7 +581,7 @@ document.addEventListener('DOMContentLoaded', () => {
     function animate() {
         requestAnimationFrame(animate);
 
-        const delta = clock.getDelta();
+        const delta = clock ? clock.getDelta() : 0.016;
 
         if (state.isPlaying) {
             state.simTimeYears += delta * 0.05 * state.orbitSpeed;
@@ -587,7 +590,7 @@ document.addEventListener('DOMContentLoaded', () => {
             }
 
             // Rotate Sun
-            if (celestialBodies['sun']) {
+            if (celestialBodies['sun'] && celestialBodies['sun'].mesh) {
                 celestialBodies['sun'].mesh.rotation.y += 0.003;
             }
 
@@ -609,18 +612,22 @@ document.addEventListener('DOMContentLoaded', () => {
 
                 if (key === 'moon' && bodyObj.pivot) {
                     bodyObj.pivot.rotation.y += delta * 2.0 * state.orbitSpeed;
-                    bodyObj.mesh.rotation.y += 0.01;
+                    if (bodyObj.mesh) bodyObj.mesh.rotation.y += 0.01;
                 } else if (bodyObj.pivot) {
                     const rate = orbitSpeedRates[key] || 0.1;
                     bodyObj.pivot.rotation.y += delta * 0.5 * rate * state.orbitSpeed;
-                    bodyObj.mesh.rotation.y += 0.01;
+                    if (bodyObj.mesh) bodyObj.mesh.rotation.y += 0.01;
                 }
             }
         }
 
         if (controls) controls.update();
         if (renderer && scene && camera) {
-            renderer.render(scene, camera);
+            try {
+                renderer.render(scene, camera);
+            } catch (e) {
+                console.warn('Render loop safety catch:', e);
+            }
         }
     }
 
