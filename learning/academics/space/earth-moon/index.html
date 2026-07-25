@@ -1,0 +1,193 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="songhwaplay 지구와 달 (Earth &amp; Moon) - 3D/2D 자전 및 공전 시뮬레이션, 위상 지식 카드, 일식/월식 비교, 지구와 달 퀴즈">
+    <title>지구와 달 (Earth &amp; Moon) | Class Astronomy</title>
+    <link rel="stylesheet" href="../solar-system/styles.css">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/three@0.128.0/examples/js/controls/OrbitControls.js"></script>
+</head>
+<body>
+
+    <!-- Header Navigation -->
+    <header class="top-header">
+        <div class="brand-section">
+            <a href="../../../index.html" class="home-btn">
+                <span>◀</span> 포털 메인 (Home)
+            </a>
+            <h1 class="app-title">
+                🌌 우주 (Space)
+                <span class="badge">Class Astronomy</span>
+            </h1>
+            
+            <!-- Main Unit Navigation (3 Categories) -->
+            <nav class="space-unit-nav" style="display:flex; gap:8px; margin-left:16px;">
+                <a href="../solar-system/index.html" class="unit-btn" style="padding:6px 12px; background:rgba(255,255,255,0.05); border:1px solid rgba(255,255,255,0.15); border-radius:20px; color:#cbd5e1; text-decoration:none; font-size:13px; font-weight:600;">🪐 태양계 (Solar System)</a>
+                <a href="../earth-moon/index.html" class="unit-btn active" style="padding:6px 12px; background:rgba(56,189,248,0.2); border:1px solid #38bdf8; border-radius:20px; color:#fff; text-decoration:none; font-size:13px; font-weight:700;">🌕 지구와 달 (Earth &amp; Moon)</a>
+                <a href="../constellations/index.html" class="unit-btn" style="padding:6px 12px; background:rgba(255,255,255,0.05); border:1px solid rgba(255,255,255,0.15); border-radius:20px; color:#cbd5e1; text-decoration:none; font-size:13px; font-weight:600;">⭐ 별과 별자리 (Stars &amp; Constellations)</a>
+            </nav>
+        </div>
+
+        <!-- Sub Tabs for Earth & Moon Module -->
+        <nav class="nav-tabs">
+            <button class="nav-tab active" data-tab="sim">
+                <span>🛰️</span> 시뮬레이션 (Simulation)
+            </button>
+            <button class="nav-tab" data-tab="cards">
+                <span>🌕</span> 위상 지식 카드 (Phase Cards)
+            </button>
+            <button class="nav-tab" data-tab="calc">
+                <span>⚖️</span> 운동 &amp; 현상 비교 (Comparison)
+            </button>
+            <button class="nav-tab" data-tab="quiz">
+                <span>🧩</span> 단원 퀴즈 (Quiz)
+            </button>
+        </nav>
+    </header>
+
+    <main class="view-container">
+        <!-- Sub-Tab 1: Simulation -->
+        <section class="tab-pane active" id="tab-sim">
+            <div class="sim-viewport-card">
+                <div class="viewport-header-bar">
+                    <h2 class="sim-title">Earth &amp; Moon Orbit Simulation</h2>
+                    <div style="font-size: 13px; color: #38bdf8; font-weight: 700;">
+                        지구 자전 &amp; 달 공전 동주기 상호작용
+                    </div>
+                </div>
+
+                <div class="solar-canvas-wrapper" style="height: 520px; position: relative;">
+                    <canvas id="moonCanvas"></canvas>
+                    <div style="position: absolute; bottom: 20px; right: 20px; background: rgba(15, 23, 42, 0.9); border: 1px solid rgba(56, 189, 248, 0.4); border-radius: 12px; padding: 14px 18px; text-align: center; backdrop-filter: blur(8px);">
+                        <div style="font-size: 11px; color: #94a3b8; margin-bottom: 4px;">🔭 지구에서 본 달의 위상 (Moon Phase)</div>
+                        <div id="moonPhaseName" style="font-size: 18px; font-weight: 900; color: #fbbf24; margin-bottom: 6px;">상현달 (First Quarter)</div>
+                        <div style="font-size: 12px; color: #38bdf8; font-weight: 700;" id="moonObsTimeInfo">남중 시각: 오후 6시 (18:00) | 초저녁 서쪽 하늘 관측</div>
+                    </div>
+                </div>
+
+                <div style="padding: 16px; background: rgba(15, 23, 42, 0.6); display: flex; gap: 16px; align-items: center;">
+                    <button id="moonPlayBtn" class="btn btn-primary">⏸ 일시정지</button>
+                    <div style="display:flex; align-items:center; gap:8px;">
+                        <span style="font-size:12px; color:#cbd5e1;">공전 속도 (Speed):</span>
+                        <input type="range" id="moonSpeedSlider" min="0.2" max="3" step="0.1" value="1" style="accent-color:#38bdf8;">
+                    </div>
+                    <div style="font-size:12px; color:#94a3b8;">
+                        💡 달은 공전 주기와 자전 주기가 약 27.3일로 같아(동주기 자전) 지구에서는 항상 <strong>달의 같은 면만 관측</strong>됩니다.
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Sub-Tab 2: Phase Knowledge Cards -->
+        <section class="tab-pane" id="tab-cards">
+            <div class="atlas-grid-container">
+                <div style="margin-bottom: 20px;">
+                    <h2 style="font-size: 22px; color: #fff; margin-bottom: 6px;">🌕 달의 위상 변화 지식 카드 (Moon Phase Cards)</h2>
+                    <p style="color: #94a3b8; font-size: 13px;">지구-태양-달의 상대적 위치에 따라 달라지는 달의 자전/공전과 남중 시각 수능 필수 지식입니다.</p>
+                </div>
+
+                <div class="atlas-grid" style="display: grid; grid-template-columns: repeat(auto-fill, minmax(280px, 1fr)); gap: 16px;">
+                    <div class="atlas-card" style="background: rgba(15,23,42,0.8); border:1px solid rgba(56,189,248,0.3); border-radius:12px; padding:16px;">
+                        <h3 style="color:#fbbf24; margin-bottom:8px;">🌑 삭 (New Moon)</h3>
+                        <p style="font-size:13px; color:#cbd5e1; line-height:1.5;">태양-달-지구 순서로 일직선에 위치. 달의 어두운 면이 지구를 향해 보이지 않음.<br><strong>남중 시각:</strong> 정오 (12:00)</p>
+                    </div>
+                    <div class="atlas-card" style="background: rgba(15,23,42,0.8); border:1px solid rgba(56,189,248,0.3); border-radius:12px; padding:16px;">
+                        <h3 style="color:#fbbf24; margin-bottom:8px;">🌒 초승달 (Waxing Crescent)</h3>
+                        <p style="font-size:13px; color:#cbd5e1; line-height:1.5;">삭 이후 오른쪽 눈썹 모양으로 살짝 밝아짐.<br><strong>관측 시각:</strong> 초저녁 서쪽 하늘 (18시 경)</p>
+                    </div>
+                    <div class="atlas-card" style="background: rgba(15,23,42,0.8); border:1px solid rgba(56,189,248,0.3); border-radius:12px; padding:16px;">
+                        <h3 style="color:#fbbf24; margin-bottom:8px;">🌓 상현달 (First Quarter)</h3>
+                        <p style="font-size:13px; color:#cbd5e1; line-height:1.5;">오른쪽 반쪽이 밝게 빛나는 반달.<br><strong>남중 시각:</strong> 오후 6시 (18:00) | 저녁 6시 남쪽 하늘 관측</p>
+                    </div>
+                    <div class="atlas-card" style="background: rgba(15,23,42,0.8); border:1px solid rgba(56,189,248,0.3); border-radius:12px; padding:16px;">
+                        <h3 style="color:#fbbf24; margin-bottom:8px;">🌕 보름달 / 망 (Full Moon)</h3>
+                        <p style="font-size:13px; color:#cbd5e1; line-height:1.5;">태양-지구-달 순서로 위치. 완전히 밝은 원형 달.<br><strong>남중 시각:</strong> 자정 (00:00) | 밤새도록 관측 가능</p>
+                    </div>
+                    <div class="atlas-card" style="background: rgba(15,23,42,0.8); border:1px solid rgba(56,189,248,0.3); border-radius:12px; padding:16px;">
+                        <h3 style="color:#fbbf24; margin-bottom:8px;">🌗 하현달 (Third Quarter)</h3>
+                        <p style="font-size:13px; color:#cbd5e1; line-height:1.5;">왼쪽 반쪽이 밝게 빛나는 반달.<br><strong>남중 시각:</strong> 자정 지난 새벽 6시 (06:00) 남쪽 하늘</p>
+                    </div>
+                    <div class="atlas-card" style="background: rgba(15,23,42,0.8); border:1px solid rgba(56,189,248,0.3); border-radius:12px; padding:16px;">
+                        <h3 style="color:#fbbf24; margin-bottom:8px;">🌘 그믐달 (Waning Crescent)</h3>
+                        <p style="font-size:13px; color:#cbd5e1; line-height:1.5;">왼쪽 눈썹 모양의 가는 달.<br><strong>관측 시각:</strong> 새벽녘 동쪽 하늘 (06시 경)</p>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Sub-Tab 3: Comparison -->
+        <section class="tab-pane" id="tab-calc">
+            <div class="calc-container" style="padding:20px;">
+                <h2 style="font-size: 22px; color: #fff; margin-bottom: 12px;">⚖️ 지구-달 운동 &amp; 천문 현상 비교 (Comparison)</h2>
+                <table style="width:100%; border-collapse:collapse; color:#e2e8f0; background:rgba(15,23,42,0.8); border-radius:8px; overflow:hidden;">
+                    <thead>
+                        <tr style="background:rgba(56,189,248,0.2); color:#38bdf8;">
+                            <th style="padding:12px; text-align:left;">구분 (Category)</th>
+                            <th style="padding:12px; text-align:left;">지구 (Earth)</th>
+                            <th style="padding:12px; text-align:left;">달 (Moon)</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr style="border-bottom:1px solid rgba(255,255,255,0.05);">
+                            <td style="padding:12px; font-weight:bold; color:#fbbf24;">반지름 (Radius)</td>
+                            <td style="padding:12px;">6,371 km (1.00 R⊕)</td>
+                            <td style="padding:12px;">1,737 km (약 0.27 R⊕)</td>
+                        </tr>
+                        <tr style="border-bottom:1px solid rgba(255,255,255,0.05);">
+                            <td style="padding:12px; font-weight:bold; color:#fbbf24;">질량 (Mass)</td>
+                            <td style="padding:12px;">5.97 × 10²⁴ kg (1.00 M⊕)</td>
+                            <td style="padding:12px;">7.35 × 10²² kg (지구의 1/81)</td>
+                        </tr>
+                        <tr style="border-bottom:1px solid rgba(255,255,255,0.05);">
+                            <td style="padding:12px; font-weight:bold; color:#fbbf24;">표면 중력 (Gravity)</td>
+                            <td style="padding:12px;">1.0 g (9.8 m/s²)</td>
+                            <td style="padding:12px;">약 0.166 g (지구의 1/6)</td>
+                        </tr>
+                        <tr style="border-bottom:1px solid rgba(255,255,255,0.05);">
+                            <td style="padding:12px; font-weight:bold; color:#fbbf24;">자전 주기 (Rotation)</td>
+                            <td style="padding:12px;">23시간 56분 (1일)</td>
+                            <td style="padding:12px;">27.3일 (항성월)</td>
+                        </tr>
+                        <tr style="border-bottom:1px solid rgba(255,255,255,0.05);">
+                            <td style="padding:12px; font-weight:bold; color:#fbbf24;">공전 주기 (Orbit)</td>
+                            <td style="padding:12px;">365.25일 (1년)</td>
+                            <td style="padding:12px;">27.3일 (자전주기와 같음 = 동주기)</td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+        </section>
+
+        <!-- Sub-Tab 4: Quiz -->
+        <section class="tab-pane" id="tab-quiz">
+            <div style="padding:20px; max-width:700px; margin:0 auto; background:rgba(15,23,42,0.8); border:1px solid rgba(56,189,248,0.3); border-radius:16px;">
+                <h2 style="color:#38bdf8; margin-bottom:12px;">🧩 지구와 달 단원 실전 퀴즈 (Earth &amp; Moon Quiz)</h2>
+                <div id="earthMoonQuizBox">
+                    <p style="font-size:16px; color:#fff; font-weight:bold; margin-bottom:16px;">Q1. 달의 자전 주기와 공전 주기가 같아서 일어나는 현상으로 옳은 것은?</p>
+                    <div style="display:flex; flex-direction:column; gap:10px;">
+                        <button class="btn btn-secondary" style="text-align:left;" onclick="alert('정답입니다! 달의 자전과 공전 주기가 같아(동주기 자전) 지구에서는 달의 앞면만 보입니다.');">① 지구에서는 항상 달의 같은 표면만 관측된다.</button>
+                        <button class="btn btn-secondary" style="text-align:left;" onclick="alert('오답입니다. 다시 생각해보세요.');">② 매달 일식과 월식이 번갈아 일어난다.</button>
+                        <button class="btn btn-secondary" style="text-align:left;" onclick="alert('오답입니다. 다시 생각해보세요.');">③ 달의 표면 중력이 지구의 6배가 된다.</button>
+                    </div>
+                </div>
+            </div>
+        </section>
+    </main>
+
+    <script>
+        // Tab Switch Logic for Earth & Moon Module
+        const tabs = document.querySelectorAll('.nav-tab');
+        const panes = document.querySelectorAll('.tab-pane');
+        tabs.forEach((tab, index) => {
+            tab.addEventListener('click', () => {
+                tabs.forEach(t => t.classList.remove('active'));
+                panes.forEach(p => p.classList.remove('active'));
+                tab.classList.add('active');
+                panes[index].classList.add('active');
+            });
+        });
+    </script>
+</body>
+</html>

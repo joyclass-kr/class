@@ -1,0 +1,198 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="songhwaplay 별과 별자리 (Stars &amp; Constellations) - 사계절 성도 시뮬레이션, 대표 별자리 지식 카드, 별의 등급 비교, 별자리 퀴즈">
+    <title>별과 별자리 (Stars &amp; Constellations) | Class Astronomy</title>
+    <link rel="stylesheet" href="../solar-system/styles.css">
+</head>
+<body>
+
+    <!-- Header Navigation -->
+    <header class="top-header">
+        <div class="brand-section">
+            <a href="../../../index.html" class="home-btn">
+                <span>◀</span> 포털 메인 (Home)
+            </a>
+            <h1 class="app-title">
+                🌌 우주 (Space)
+                <span class="badge">Class Astronomy</span>
+            </h1>
+            
+            <!-- Main Unit Navigation (3 Categories) -->
+            <nav class="space-unit-nav" style="display:flex; gap:8px; margin-left:16px;">
+                <a href="../solar-system/index.html" class="unit-btn" style="padding:6px 12px; background:rgba(255,255,255,0.05); border:1px solid rgba(255,255,255,0.15); border-radius:20px; color:#cbd5e1; text-decoration:none; font-size:13px; font-weight:600;">🪐 태양계 (Solar System)</a>
+                <a href="../earth-moon/index.html" class="unit-btn" style="padding:6px 12px; background:rgba(255,255,255,0.05); border:1px solid rgba(255,255,255,0.15); border-radius:20px; color:#cbd5e1; text-decoration:none; font-size:13px; font-weight:600;">🌕 지구와 달 (Earth &amp; Moon)</a>
+                <a href="../constellations/index.html" class="unit-btn active" style="padding:6px 12px; background:rgba(56,189,248,0.2); border:1px solid #38bdf8; border-radius:20px; color:#fff; text-decoration:none; font-size:13px; font-weight:700;">⭐ 별과 별자리 (Stars &amp; Constellations)</a>
+            </nav>
+        </div>
+
+        <!-- Sub Tabs for Constellations Module -->
+        <nav class="nav-tabs">
+            <button class="nav-tab active" data-tab="sim">
+                <span>🛰️</span> 성도 지도 (Star Map)
+            </button>
+            <button class="nav-tab" data-tab="cards">
+                <span>✨</span> 별자리 지식 카드 (Constellation Cards)
+            </button>
+            <button class="nav-tab" data-tab="calc">
+                <span>⚖️</span> 별의 등급 비교 (Star Specs)
+            </button>
+            <button class="nav-tab" data-tab="quiz">
+                <span>🧩</span> 단원 퀴즈 (Quiz)
+            </button>
+        </nav>
+    </header>
+
+    <main class="view-container">
+        <!-- Sub-Tab 1: Star Map Simulator -->
+        <section class="tab-pane active" id="tab-sim">
+            <div class="sim-viewport-card">
+                <div class="viewport-header-bar">
+                    <h2 class="sim-title">Interactive Seasonal Star Map</h2>
+                    <div style="font-size: 13px; color: #38bdf8; font-weight: 700;">
+                        사계절 대표 별자리 &amp; 북극점 일주 운동
+                    </div>
+                </div>
+
+                <div style="height: 500px; background: #030712; display: flex; align-items: center; justify-content: center; position: relative; border-radius: 12px; overflow: hidden;">
+                    <svg width="460" height="460" viewBox="0 0 500 500" style="background: radial-gradient(circle, #0f172a 0%, #030712 100%); border-radius: 50%; border: 2px solid rgba(56,189,248,0.3);">
+                        <!-- Grid concentric circles -->
+                        <circle cx="250" cy="250" r="80" stroke="rgba(255,255,255,0.1)" stroke-dasharray="4" fill="none" />
+                        <circle cx="250" cy="250" r="160" stroke="rgba(255,255,255,0.1)" stroke-dasharray="4" fill="none" />
+                        <circle cx="250" cy="250" r="230" stroke="rgba(56,189,248,0.3)" fill="none" />
+
+                        <!-- Polaris Central Star -->
+                        <circle cx="250" cy="250" r="6" fill="#38bdf8" />
+                        <text x="250" y="235" fill="#38bdf8" font-size="12" text-anchor="middle" font-weight="bold">북극성 (Polaris)</text>
+
+                        <!-- Big Dipper (Ursa Major) -->
+                        <polyline points="150,150 170,140 190,145 200,165 180,185 160,180 150,150" stroke="#fbbf24" stroke-width="1.5" fill="rgba(251,191,36,0.1)" />
+                        <text x="175" y="130" fill="#fbbf24" font-size="11" text-anchor="middle">북두칠성 (봄)</text>
+
+                        <!-- Cassiopeia -->
+                        <polyline points="330,350 350,330 360,355 385,340 400,360" stroke="#38bdf8" stroke-width="1.5" fill="none" />
+                        <text x="365" y="375" fill="#38bdf8" font-size="11" text-anchor="middle">카시오페이아 (가을)</text>
+
+                        <!-- Orion -->
+                        <polygon points="120,330 150,320 160,360 110,370" stroke="#f43f5e" stroke-width="1.5" fill="rgba(244,63,94,0.1)" />
+                        <line x1="130" y1="345" x2="145" y2="345" stroke="#fff" stroke-width="2" />
+                        <text x="135" y="390" fill="#f43f5e" font-size="11" text-anchor="middle">오리온자리 (겨울)</text>
+
+                        <!-- Cygnus -->
+                        <line x1="330" y1="160" x2="370" y2="140" stroke="#34d399" stroke-width="1.5" />
+                        <line x1="340" y1="135" x2="360" y2="165" stroke="#34d399" stroke-width="1.5" />
+                        <text x="350" y="125" fill="#34d399" font-size="11" text-anchor="middle">백조자리 (여름)</text>
+                    </svg>
+                </div>
+            </div>
+        </section>
+
+        <!-- Sub-Tab 2: Constellation Cards -->
+        <section class="tab-pane" id="tab-cards">
+            <div class="atlas-grid-container">
+                <div style="margin-bottom: 20px;">
+                    <h2 style="font-size: 22px; color: #fff; margin-bottom: 6px;">✨ 사계절 대표 별자리 지식 카드 (Constellation Cards)</h2>
+                    <p style="color: #94a3b8; font-size: 13px;">지구의 공전에 따른 계절별 길잡이 별자리와 밝은 길잡이 별들의 수능 핵심 정리입니다.</p>
+                </div>
+
+                <div class="atlas-grid" style="display: grid; grid-template-columns: repeat(auto-fill, minmax(280px, 1fr)); gap: 16px;">
+                    <div class="atlas-card" style="background: rgba(15,23,42,0.8); border:1px solid rgba(56,189,248,0.3); border-radius:12px; padding:16px;">
+                        <h3 style="color:#fbbf24; margin-bottom:8px;">🌸 봄철 대표 별자리</h3>
+                        <p style="font-size:13px; color:#cbd5e1; line-height:1.5;"><strong>봄철 대삼각형:</strong> 아르크투루스(목동), 스피카(처녀), 데네볼라(사자)<br><strong>길잡이:</strong> 북두칠성 손잡이 곡선을 연장하면 대곡선 형성.</p>
+                    </div>
+                    <div class="atlas-card" style="background: rgba(15,23,42,0.8); border:1px solid rgba(56,189,248,0.3); border-radius:12px; padding:16px;">
+                        <h3 style="color:#34d399; margin-bottom:8px;">🌿 여름철 대표 별자리</h3>
+                        <p style="font-size:13px; color:#cbd5e1; line-height:1.5;"><strong>여름철 대삼각형:</strong> 베가(거문고/직녀성), 알타이르(독수리/견우성), 데네브(백조)<br>은하수가 하늘 중앙을 통과함.</p>
+                    </div>
+                    <div class="atlas-card" style="background: rgba(15,23,42,0.8); border:1px solid rgba(56,189,248,0.3); border-radius:12px; padding:16px;">
+                        <h3 style="color:#38bdf8; margin-bottom:8px;">🍁 가을철 대표 별자리</h3>
+                        <p style="font-size:13px; color:#cbd5e1; line-height:1.5;"><strong>가을철 대사각형:</strong> 페가수스자리 사각형<br><strong>길잡이:</strong> 카시오페이아자리(W 모양)와 안드로메다 은하 관측.</p>
+                    </div>
+                    <div class="atlas-card" style="background: rgba(15,23,42,0.8); border:1px solid rgba(56,189,248,0.3); border-radius:12px; padding:16px;">
+                        <h3 style="color:#f43f5e; margin-bottom:8px;">❄️ 겨울철 대표 별자리</h3>
+                        <p style="font-size:13px; color:#cbd5e1; line-height:1.5;"><strong>겨울철 대육각형:</strong> 베텔게우스(오리온), 시리우스(큰개), 프로키온(작은개), 리겔, 카스토르, 카펠라<br>가장 밝은 1등성들이 화려함.</p>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Sub-Tab 3: Star Specs Comparison -->
+        <section class="tab-pane" id="tab-calc">
+            <div class="calc-container" style="padding:20px;">
+                <h2 style="font-size: 22px; color: #fff; margin-bottom: 12px;">⚖️ 별의 밝기 &amp; 등급 스펙 비교 (Star Specs)</h2>
+                <table style="width:100%; border-collapse:collapse; color:#e2e8f0; background:rgba(15,23,42,0.8); border-radius:8px; overflow:hidden;">
+                    <thead>
+                        <tr style="background:rgba(56,189,248,0.2); color:#38bdf8;">
+                            <th style="padding:12px; text-align:left;">별 이름 (Star)</th>
+                            <th style="padding:12px; text-align:left;">별자리 (Constellation)</th>
+                            <th style="padding:12px; text-align:left;">겉보기 등급 (m)</th>
+                            <th style="padding:12px; text-align:left;">절대 등급 (M)</th>
+                            <th style="padding:12px; text-align:left;">표면 색깔 &amp; 온도</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr style="border-bottom:1px solid rgba(255,255,255,0.05);">
+                            <td style="padding:12px; font-weight:bold; color:#fbbf24;">시리우스 (Sirius)</td>
+                            <td style="padding:12px;">큰개자리</td>
+                            <td style="padding:12px;">-1.46 등성 (가장 밝음)</td>
+                            <td style="padding:12px;">+1.4 등성</td>
+                            <td style="padding:12px; color:#93c5fd;">청백색 (약 9,900 K)</td>
+                        </tr>
+                        <tr style="border-bottom:1px solid rgba(255,255,255,0.05);">
+                            <td style="padding:12px; font-weight:bold; color:#fbbf24;">베텔게우스 (Betelgeuse)</td>
+                            <td style="padding:12px;">오리온자리</td>
+                            <td style="padding:12px;">+0.50 등성</td>
+                            <td style="padding:12px;">-5.85 등성 (초거성)</td>
+                            <td style="padding:12px; color:#fca5a5;">붉은색 (약 3,500 K)</td>
+                        </tr>
+                        <tr style="border-bottom:1px solid rgba(255,255,255,0.05);">
+                            <td style="padding:12px; font-weight:bold; color:#fbbf24;">리겔 (Rigel)</td>
+                            <td style="padding:12px;">오리온자리</td>
+                            <td style="padding:12px;">+0.12 등성</td>
+                            <td style="padding:12px;">-7.84 등성</td>
+                            <td style="padding:12px; color:#93c5fd;">청백색 (약 12,000 K)</td>
+                        </tr>
+                        <tr style="border-bottom:1px solid rgba(255,255,255,0.05);">
+                            <td style="padding:12px; font-weight:bold; color:#fbbf24;">베가 / 직녀성 (Vega)</td>
+                            <td style="padding:12px;">거문고자리</td>
+                            <td style="padding:12px;">+0.03 등성</td>
+                            <td style="padding:12px;">+0.58 등성</td>
+                            <td style="padding:12px; color:#93c5fd;">청백색 (약 9,600 K)</td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+        </section>
+
+        <!-- Sub-Tab 4: Quiz -->
+        <section class="tab-pane" id="tab-quiz">
+            <div style="padding:20px; max-width:700px; margin:0 auto; background:rgba(15,23,42,0.8); border:1px solid rgba(56,189,248,0.3); border-radius:16px;">
+                <h2 style="color:#38bdf8; margin-bottom:12px;">🧩 별과 별자리 단원 실전 퀴즈 (Constellation Quiz)</h2>
+                <div>
+                    <p style="font-size:16px; color:#fff; font-weight:bold; margin-bottom:16px;">Q1. 별의 표면 온도가 가장 높은 별의 색깔로 옳은 것은?</p>
+                    <div style="display:flex; flex-direction:column; gap:10px;">
+                        <button class="btn btn-secondary" style="text-align:left;" onclick="alert('정답입니다! 별의 표면 온도가 높을수록 파란색(청색)을 띠고 온도가 낮을수록 붉은색을 띱니다.');">① 청색 (파란색)</button>
+                        <button class="btn btn-secondary" style="text-align:left;" onclick="alert('오답입니다. 붉은색 별은 표면 온도가 가장 낮은 별입니다.');">② 적색 (붉은색)</button>
+                        <button class="btn btn-secondary" style="text-align:left;" onclick="alert('오답입니다. 노란색(태양)은 중간 정도 온도(약 6000K)입니다.');">③ 황색 (노란색)</button>
+                    </div>
+                </div>
+            </div>
+        </section>
+    </main>
+
+    <script>
+        const tabs = document.querySelectorAll('.nav-tab');
+        const panes = document.querySelectorAll('.tab-pane');
+        tabs.forEach((tab, index) => {
+            tab.addEventListener('click', () => {
+                tabs.forEach(t => t.classList.remove('active'));
+                panes.forEach(p => p.classList.remove('active'));
+                tab.classList.add('active');
+                panes[index].classList.add('active');
+            });
+        });
+    </script>
+</body>
+</html>

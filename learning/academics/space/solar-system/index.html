@@ -15,30 +15,35 @@
     <!-- Header Navigation -->
     <header class="top-header">
         <div class="brand-section">
-            <a href="../../index.html" class="home-btn" id="homePortalBtn">
-                <span>◀</span> 포털 메인으로
+            <a href="../../../index.html" class="home-btn" id="homePortalBtn">
+                <span>◀</span> 포털 메인 (Home)
             </a>
             <h1 class="app-title">
-                🪐 태양계 관찰
+                🌌 우주 (Space)
                 <span class="badge">Class Astronomy</span>
             </h1>
+            
+            <!-- Main Unit Navigation (3 Categories) -->
+            <nav class="space-unit-nav" style="display:flex; gap:8px; margin-left:16px;">
+                <a href="../solar-system/index.html" class="unit-btn active" style="padding:6px 12px; background:rgba(56,189,248,0.2); border:1px solid #38bdf8; border-radius:20px; color:#fff; text-decoration:none; font-size:13px; font-weight:700;">🪐 태양계 (Solar System)</a>
+                <a href="../earth-moon/index.html" class="unit-btn" style="padding:6px 12px; background:rgba(255,255,255,0.05); border:1px solid rgba(255,255,255,0.15); border-radius:20px; color:#cbd5e1; text-decoration:none; font-size:13px; font-weight:600;">🌕 지구와 달 (Earth & Moon)</a>
+                <a href="../constellations/index.html" class="unit-btn" style="padding:6px 12px; background:rgba(255,255,255,0.05); border:1px solid rgba(255,255,255,0.15); border-radius:20px; color:#cbd5e1; text-decoration:none; font-size:13px; font-weight:600;">⭐ 별과 별자리 (Stars & Constellations)</a>
+            </nav>
         </div>
 
-        <nav class="nav-tabs" aria-label="학습 모드 선택">
+        <!-- Sub Tabs for Solar System Module -->
+        <nav class="nav-tabs" aria-label="태양계 세부 학습 모드">
             <button class="nav-tab active" data-tab="sim" id="tabSimBtn">
-                <span>🛰️</span> 태양계 행성 관찰관
-            </button>
-            <button class="nav-tab" data-tab="moon" id="tabMoonBtn">
-                <span>🌕</span> 지구-달 관찰관
+                <span>🛰️</span> 시뮬레이션 (Simulation)
             </button>
             <button class="nav-tab" data-tab="atlas" id="tabAtlasBtn">
-                <span>🪐</span> 행성 입체 도감
+                <span>🪐</span> 행성 도감 (Planetary Atlas)
             </button>
             <button class="nav-tab" data-tab="calc" id="tabCalcBtn">
-                <span>⚖️</span> 태양계 구성원
+                <span>⚖️</span> 스펙 비교 (Spec Comparison)
             </button>
             <button class="nav-tab" data-tab="quiz" id="tabQuizBtn">
-                <span>🧩</span> 우주 천문 퀴즈
+                <span>🧩</span> 단원 퀴즈 (Quiz)
             </button>
         </nav>
     </header>
