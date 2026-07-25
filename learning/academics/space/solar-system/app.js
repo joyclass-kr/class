@@ -861,45 +861,56 @@
                     }
                 }
 
-                // 3. 🌠 3D Interactive Meteor Shower (Falling Shooting Stars Stream from Comet Debris)
+                // 3. 🌠 3D Interactive Meteor Shower (Luminous Falling Shooting Stars Stream over Earth)
                 var meteorData = window.SOLAR_SYSTEM_DATA.meteor;
                 if (meteorData) {
                     var mGroup = new THREE.Object3D();
                     
-                    // Shooting Stars Stream Mesh (25 Animated Falling Meteor Lines)
-                    var starCount = 30;
+                    // Compact Glowing Shooting Star Lines (Falling toward Earth Atmosphere!)
+                    var starCount = 20;
                     var starGeo = new THREE.BufferGeometry();
-                    var starPositions = new Float32Array(starCount * 6); // Line start and end points
-                    var earthOrbitR = getBodyOrbitRadius('earth');
+                    var starPositions = new Float32Array(starCount * 6);
+                    var starDataArr = [];
 
                     for (var s = 0; s < starCount; s++) {
-                        var sx = (Math.random() - 0.5) * 120 + earthOrbitR;
-                        var sy = Math.random() * 50 + 20;
-                        var sz = (Math.random() - 0.5) * 120;
+                        var rx = (Math.random() - 0.5) * 35;
+                        var ry = Math.random() * 25 + 10;
+                        var rz = (Math.random() - 0.5) * 35;
+                        var len = Math.random() * 6.0 + 5.0; // Compact 5~11 unit shooting star line length!
 
-                        starPositions[s * 6] = sx;
-                        starPositions[s * 6 + 1] = sy;
-                        starPositions[s * 6 + 2] = sz;
+                        // Line start (tail) and end (head)
+                        starPositions[s * 6] = rx;
+                        starPositions[s * 6 + 1] = ry;
+                        starPositions[s * 6 + 2] = rz;
 
-                        starPositions[s * 6 + 3] = sx - 15;
-                        starPositions[s * 6 + 4] = sy - 20;
-                        starPositions[s * 6 + 5] = sz - 15;
+                        starPositions[s * 6 + 3] = rx - len * 0.5;
+                        starPositions[s * 6 + 4] = ry - len;
+                        starPositions[s * 6 + 5] = rz - len * 0.5;
+
+                        starDataArr.push({ rx: rx, ry: ry, rz: rz, len: len, speed: Math.random() * 25 + 20 });
                     }
                     starGeo.setAttribute('position', new THREE.BufferAttribute(starPositions, 3));
-                    var starMat = new THREE.LineBasicMaterial({ color: 0xfef08a, transparent: true, opacity: 0.8 });
+                    
+                    // Ultra Luminous Additive Blending Material (Bright White & Gold)
+                    var starMat = new THREE.LineBasicMaterial({
+                        color: 0xffffff,
+                        transparent: true,
+                        opacity: 0.95,
+                        blending: THREE.AdditiveBlending
+                    });
                     var starLines = new THREE.LineSegments(starGeo, starMat);
                     mGroup.add(starLines);
 
-                    // Meteor Core Click Target Mesh
-                    var mHeadGeo = new THREE.SphereGeometry(3.5, 16, 16);
-                    var mHeadMat = new THREE.MeshBasicMaterial({ color: 0xfbfb24, transparent: true, opacity: 0.9 });
+                    // Glowing Core Click Target
+                    var mHeadGeo = new THREE.SphereGeometry(2.2, 16, 16);
+                    var mHeadMat = new THREE.MeshBasicMaterial({ color: 0xfef08a, transparent: true, opacity: 0.9, blending: THREE.AdditiveBlending });
                     var mHeadMesh = new THREE.Mesh(mHeadGeo, mHeadMat);
-                    mHeadMesh.position.set(earthOrbitR, 30, 0);
+                    mHeadMesh.position.set(0, 15, 0);
                     mGroup.add(mHeadMesh);
 
                     mHeadMesh.userData = { key: 'meteor', data: meteorData };
                     scene.add(mGroup);
-                    celestialBodies['meteor'] = { mesh: mHeadMesh, bodyTiltGroup: mGroup, data: meteorData };
+                    celestialBodies['meteor'] = { mesh: mHeadMesh, bodyTiltGroup: mGroup, starGeo: starGeo, starDataArr: starDataArr, data: meteorData };
                 }
             }
         }
@@ -1011,12 +1022,38 @@
                             b.mesh.rotation.y -= timeDelta * (Math.PI * 2) * 0.03;
                         }
                     } else if (key === 'meteor') {
-                        // 🌠 3D Meteor Shower Shooting Stars (Falling Streams Following Earth Orbit!)
+                        // 🌠 Dynamic 3D Falling Meteor Shower (Shooting Stars Stream Falling Directly into Earth Atmosphere!)
                         var earthBody = celestialBodies['earth'];
                         if (earthBody && b.bodyTiltGroup) {
                             var earthPos = earthBody.bodyTiltGroup ? earthBody.bodyTiltGroup.position : earthBody.mesh.position;
-                            b.bodyTiltGroup.position.set(earthPos.x + 35.0, 15.0, earthPos.z + 25.0);
-                            b.bodyTiltGroup.rotation.y += timeDelta * 2.5;
+                            b.bodyTiltGroup.position.set(earthPos.x, 0, earthPos.z); // Center directly at Earth orbital position!
+
+                            // Animate falling shooting star lines toward Earth surface
+                            if (b.starGeo && b.starDataArr) {
+                                var positions = b.starGeo.attributes.position.array;
+                                for (var s = 0; s < b.starDataArr.length; s++) {
+                                    var item = b.starDataArr[s];
+                                    item.ry -= timeDelta * item.speed * 2.0; // Fall downward
+                                    item.rx -= timeDelta * item.speed * 0.8; // Diagonal fall angle
+                                    item.rz -= timeDelta * item.speed * 0.8;
+
+                                    // Respawn shooting star back to upper atmosphere when hitting Earth level
+                                    if (item.ry < 2.0) {
+                                        item.rx = (Math.random() - 0.5) * 35;
+                                        item.ry = Math.random() * 25 + 20;
+                                        item.rz = (Math.random() - 0.5) * 35;
+                                    }
+
+                                    positions[s * 6] = item.rx;
+                                    positions[s * 6 + 1] = item.ry;
+                                    positions[s * 6 + 2] = item.rz;
+
+                                    positions[s * 6 + 3] = item.rx - item.len * 0.4;
+                                    positions[s * 6 + 4] = item.ry - item.len;
+                                    positions[s * 6 + 5] = item.rz - item.len * 0.4;
+                                }
+                                b.starGeo.attributes.position.needsUpdate = true;
+                            }
                         }
                     } else if (b.pivot && b.mesh) {
                         var rate = ORBIT_RATES[key] || 0.1;
