@@ -816,7 +816,7 @@
                         var spread = Math.pow(progress, 1.2) * 3.5;
                         tPos[t * 3] = (Math.random() - 0.5) * spread;
                         tPos[t * 3 + 1] = (Math.random() - 0.5) * spread;
-                        tPos[t * 3 + 2] = progress * 28.0 + 1.5; // Compact 28 unit tail length!
+                        tPos[t * 3 + 2] = progress * 12.0 + 1.0; // Ultra compact 12 unit tail length!
 
                         // Dual Tail Colors: Inner Dust Tail vs Outer Ion Tail
                         var isIon = t % 2 === 0;
@@ -976,7 +976,7 @@
                             b.bodyTiltGroup.traverse(function(child) {
                                 if (child.isPoints) {
                                     child.material.opacity = 0.1 + sublimationFactor * 0.85;
-                                    child.scale.set(1.0 + sublimationFactor * 0.8, 1.0 + sublimationFactor * 0.8, 1.0 + sublimationFactor * 1.5);
+                                    child.scale.set(0.7 + sublimationFactor * 0.3, 0.7 + sublimationFactor * 0.3, 0.7 + sublimationFactor * 0.5);
                                 }
                             });
                         }
