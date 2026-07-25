@@ -794,8 +794,8 @@
                             b.pivot.position.set(0, 0, 0);
                             
                             var earthAngle = earthBody.orbitAngle || 0;
-                            // Counter-Clockwise Moon Orbit (CCW: West -> East) around Earth
-                            var moonAngle = -earthAngle * 12.3688;
+                            // True Counter-Clockwise Moon Orbit (CCW: West -> East) around Earth
+                            var moonAngle = earthAngle * 12.3688;
                             var visMoonDist = b.orbitRadius || 18.0;
 
                             if (b.mesh) {
