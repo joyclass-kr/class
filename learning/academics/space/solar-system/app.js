@@ -49,64 +49,76 @@
         var is3DReady = false;
         var mapLabels = []; // 2D DOM labels
 
+        // 36 Unique ClassTool Animal Avatars (1~36)
+        var CLASSTOOL_ANIMALS = [
+            { num: 1,  name: "판다", icon: "🐼", bg: "#f8fafc", ear: "#334155" },
+            { num: 2,  name: "토끼", icon: "🐰", bg: "#ffedd5", ear: "#f472b6" },
+            { num: 3,  name: "여우", icon: "🦊", bg: "#ffedd5", ear: "#ea580c" },
+            { num: 4,  name: "곰",   icon: "🐻", bg: "#fef3c7", ear: "#d97706" },
+            { num: 5,  name: "사자", icon: "🦁", bg: "#fef08a", ear: "#b45309" },
+            { num: 6,  name: "호랑이", icon: "🐯", bg: "#ffedd5", ear: "#d97706" },
+            { num: 7,  name: "고양이", icon: "🐱", bg: "#fef3c7", ear: "#7c3aed" },
+            { num: 8,  name: "강아지", icon: "🐶", bg: "#ffedd5", ear: "#b45309" },
+            { num: 9,  name: "개구리", icon: "🐸", bg: "#dcfce7", ear: "#16a34a" },
+            { num: 10, name: "아기새", icon: "🐥", bg: "#fef08a", ear: "#ca8a04" },
+            { num: 11, name: "유니콘", icon: "🦄", bg: "#fce7f3", ear: "#a855f7" },
+            { num: 12, name: "공룡", icon: "🦖", bg: "#dcfce7", ear: "#15803d" },
+            { num: 13, name: "꿀벌", icon: "🐝", bg: "#fef08a", ear: "#ca8a04" },
+            { num: 14, name: "아기쥐", icon: "🐭", bg: "#f1f5f9", ear: "#94a3b8" },
+            { num: 15, name: "코끼리", icon: "🐘", bg: "#e2e8f0", ear: "#64748b" },
+            { num: 16, name: "아기말", icon: "🐴", bg: "#ffedd5", ear: "#b45309" },
+            { num: 17, name: "아기양", icon: "🐑", bg: "#f8fafc", ear: "#cbd5e1" },
+            { num: 18, name: "펭귄", icon: "🐧", bg: "#e0f2fe", ear: "#0284c7" },
+            { num: 19, name: "부엉이", icon: "🦉", bg: "#ffedd5", ear: "#9a3412" },
+            { num: 20, name: "다람쥐", icon: "🐿️", bg: "#ffedd5", ear: "#c2410c" },
+            { num: 21, name: "너구리", icon: "🦝", bg: "#f1f5f9", ear: "#475569" },
+            { num: 22, name: "수달", icon: "🦦", bg: "#ffedd5", ear: "#9a3412" },
+            { num: 23, name: "사슴", icon: "🦌", bg: "#ffedd5", ear: "#b45309" },
+            { num: 24, name: "돌고래", icon: "🐬", bg: "#e0f2fe", ear: "#0284c7" },
+            { num: 25, name: "늑대", icon: "🐺", bg: "#e2e8f0", ear: "#475569" },
+            { num: 26, name: "원숭이", icon: "🐒", bg: "#ffedd5", ear: "#b45309" },
+            { num: 27, name: "코알라", icon: "🐨", bg: "#e2e8f0", ear: "#64748b" },
+            { num: 28, name: "캥거루", icon: "🦘", bg: "#ffedd5", ear: "#b45309" },
+            { num: 29, name: "바다표범", icon: "🦭", bg: "#e2e8f0", ear: "#0284c7" },
+            { num: 30, name: "고슴도치", icon: "🦔", bg: "#ffedd5", ear: "#b45309" },
+            { num: 31, name: "나무늘보", icon: "🦥", bg: "#ffedd5", ear: "#9a3412" },
+            { num: 32, name: "악어", icon: "🐊", bg: "#dcfce7", ear: "#15803d" },
+            { num: 33, name: "햄스터", icon: "🐹", bg: "#ffedd5", ear: "#d97706" },
+            { num: 34, name: "아기거북이", icon: "🐢", bg: "#dcfce7", ear: "#16a34a" },
+            { num: 35, name: "병아리", icon: "🐣", bg: "#fef08a", ear: "#ca8a04" },
+            { num: 36, name: "아기드래곤", icon: "🐲", bg: "#dcfce7", ear: "#15803d" }
+        ];
+
         // 🛸 UFO Flight Exploration Mode State & Objects
         var ufoMesh = null;
+        var savedAvatarId = parseInt(localStorage.getItem('userAvatarNum') || localStorage.getItem('studentNum') || '0', 10);
+        var chosenAnimal = CLASSTOOL_ANIMALS[(savedAvatarId > 0 ? (savedAvatarId - 1) % 36 : Math.floor(Math.random() * 36))];
+
         var ufoState = {
             active: false,
             pos: new THREE.Vector3(0, 50, 450),
             heading: 0.0,
             keys: { forward: false, backward: false, left: false, right: false },
             pilotName: localStorage.getItem('userName') || localStorage.getItem('guestName') || localStorage.getItem('studentName') || '우주 탐험가',
-            animalType: localStorage.getItem('userAnimal') || ['bear', 'rabbit', 'cat', 'penguin', 'fox'][Math.floor(Math.random() * 5)]
+            animal: chosenAnimal
         };
 
-        // Canvas2D Animal Face Texture Generator
-        function createAnimalFaceTexture(bgHex) {
+        // ClassTool Authentic Face Texture Generator (Draws Character Icon & Face)
+        function createClassToolFaceTexture(animal) {
             var canvas = document.createElement('canvas');
             canvas.width = 256;
             canvas.height = 256;
             var ctx = canvas.getContext('2d');
 
             // Head Background Color
-            ctx.fillStyle = bgHex;
+            ctx.fillStyle = animal.bg;
             ctx.fillRect(0, 0, 256, 256);
 
-            // Cute Eyes (Black + White Catchlight)
-            ctx.fillStyle = '#0f172a';
-            ctx.beginPath();
-            ctx.arc(85, 120, 18, 0, Math.PI * 2);
-            ctx.arc(171, 120, 18, 0, Math.PI * 2);
-            ctx.fill();
-
-            ctx.fillStyle = '#ffffff';
-            ctx.beginPath();
-            ctx.arc(80, 114, 6, 0, Math.PI * 2);
-            ctx.arc(166, 114, 6, 0, Math.PI * 2);
-            ctx.fill();
-
-            // Pink Cheeks (Blush)
-            ctx.fillStyle = 'rgba(244, 114, 182, 0.55)';
-            ctx.beginPath();
-            ctx.arc(65, 140, 14, 0, Math.PI * 2);
-            ctx.arc(191, 140, 14, 0, Math.PI * 2);
-            ctx.fill();
-
-            // Nose
-            ctx.fillStyle = '#1e293b';
-            ctx.beginPath();
-            ctx.arc(128, 135, 8, 0, Math.PI * 2);
-            ctx.fill();
-
-            // Cute Mouth (w)
-            ctx.strokeStyle = '#1e293b';
-            ctx.lineWidth = 4;
-            ctx.lineCap = 'round';
-            ctx.beginPath();
-            ctx.arc(118, 148, 8, 0.1 * Math.PI, 0.9 * Math.PI);
-            ctx.stroke();
-            ctx.beginPath();
-            ctx.arc(138, 148, 8, 0.1 * Math.PI, 0.9 * Math.PI);
-            ctx.stroke();
+            // Draw Official ClassTool Emoji Face Icon
+            ctx.font = 'bold 140px "Segoe UI Emoji", "Apple Color Emoji", sans-serif';
+            ctx.textAlign = 'center';
+            ctx.textBaseline = 'middle';
+            ctx.fillText(animal.icon, 128, 128);
 
             return new THREE.CanvasTexture(canvas);
         }
@@ -153,60 +165,29 @@
 
             // Pilot Body
             var bodyGeo = new THREE.SphereGeometry(1.6, 16, 16);
-            var bodyMat = new THREE.MeshStandardMaterial({ color: c.suit });
+            var bodyMat = new THREE.MeshStandardMaterial({ color: ufoState.animal.ear });
             var body = new THREE.Mesh(bodyGeo, bodyMat);
             body.position.set(0, 1.3, 0.3);
             pilotGroup.add(body);
 
-            // Pilot Head
-            var headGeo = new THREE.SphereGeometry(1.5, 24, 24);
-            var headMat = new THREE.MeshStandardMaterial({ color: c.bgHex, roughness: 0.4 });
+            // Pilot Head with Official 36 ClassTool Animal Face Texture
+            var faceTex = createClassToolFaceTexture(ufoState.animal);
+            var headGeo = new THREE.SphereGeometry(1.6, 32, 32);
+            var headMat = new THREE.MeshStandardMaterial({ map: faceTex, roughness: 0.3 });
             var head = new THREE.Mesh(headGeo, headMat);
+            head.rotation.y = -Math.PI / 2; // Orient face texture directly forward facing console
             head.position.set(0, 2.7, 0.3);
             pilotGroup.add(head);
 
-            // 3D Physical Facial Features (Facing forward Z-axis)
-            var faceGroup = new THREE.Group();
-            faceGroup.position.set(0, 2.7, 0.3);
-
-            // 3D Black Eyes
-            var eyeGeo = new THREE.SphereGeometry(0.24, 16, 16);
-            var eyeMat = new THREE.MeshBasicMaterial({ color: 0x0f172a });
-            var lEye = new THREE.Mesh(eyeGeo, eyeMat);
-            lEye.position.set(-0.55, 0.25, -1.32);
-            var rEye = new THREE.Mesh(eyeGeo, eyeMat);
-            rEye.position.set(0.55, 0.25, -1.32);
-            faceGroup.add(lEye);
-            faceGroup.add(rEye);
-
-            // 3D White Catchlights
-            var pupilGeo = new THREE.SphereGeometry(0.09, 12, 12);
-            var pupilMat = new THREE.MeshBasicMaterial({ color: 0xffffff });
-            var lPupil = new THREE.Mesh(pupilGeo, pupilMat);
-            lPupil.position.set(-0.62, 0.32, -1.48);
-            var rPupil = new THREE.Mesh(pupilGeo, pupilMat);
-            rPupil.position.set(0.48, 0.32, -1.48);
-            faceGroup.add(lPupil);
-            faceGroup.add(rPupil);
-
-            // 3D Cute Nose
-            var noseGeo = new THREE.SphereGeometry(0.2, 16, 16);
-            var noseMat = new THREE.MeshBasicMaterial({ color: 0x1e293b });
-            var nose = new THREE.Mesh(noseGeo, noseMat);
-            nose.position.set(0, 0.05, -1.45);
-            faceGroup.add(nose);
-
-            // 3D Pink Cheeks (Blush)
-            var cheekGeo = new THREE.SphereGeometry(0.3, 16, 16);
-            var cheekMat = new THREE.MeshBasicMaterial({ color: 0xf472b6, transparent: true, opacity: 0.85 });
-            var lCheek = new THREE.Mesh(cheekGeo, cheekMat);
-            lCheek.position.set(-0.8, -0.05, -1.22);
-            var rCheek = new THREE.Mesh(cheekGeo, cheekMat);
-            rCheek.position.set(0.8, -0.05, -1.22);
-            faceGroup.add(lCheek);
-            faceGroup.add(rCheek);
-
-            pilotGroup.add(faceGroup);
+            // Cute Animal Ears
+            var earGeo = new THREE.SphereGeometry(0.55, 16, 16);
+            var earMat = new THREE.MeshStandardMaterial({ color: ufoState.animal.ear });
+            var lEar = new THREE.Mesh(earGeo, earMat);
+            lEar.position.set(-1.0, 3.7, 0.3);
+            var rEar = new THREE.Mesh(earGeo, earMat);
+            rEar.position.set(1.0, 3.7, 0.3);
+            pilotGroup.add(lEar);
+            pilotGroup.add(rEar);
 
             // Ears according to Animal Type
             if (ufoState.animalType === 'rabbit') {
