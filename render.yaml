@@ -3,13 +3,13 @@ services:
     name: classroom-game-hub
     runtime: node
     plan: free
-    buildCommand: npm --prefix game-hub-server ci
+    buildCommand: npm --prefix game-hub-server install
     startCommand: npm --prefix game-hub-server start
     healthCheckPath: /health
     autoDeployTrigger: commit
     envVars:
       - key: NODE_VERSION
-        value: 22.17.0
+        value: 22
       - key: NODE_OPTIONS
         value: --max-old-space-size=384
       - key: NODE_ENV
