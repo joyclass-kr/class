@@ -50,17 +50,18 @@
         var moonScene, moonCamera, moonRenderer, moonControls;
         var earth3DMesh, moon3DMesh, moonPivotObj, moonOrbitLine;
 
-        // 1. TRUE DISTANCE SCALE (1 AU = 400.0 px)
+        // 1. TRUE DISTANCE SCALE (1 AU = 23481.0 px)
+        // Earth Radius = 1.0 (6,371 km), 1 AU = 149,597,870 km -> 149597870 / 6371 = 23481
         var AU_ORBIT_DISTANCES = {
-            mercury: 156.0,  // 0.39 AU
-            venus: 288.0,    // 0.72 AU
-            earth: 400.0,    // 1.00 AU
-            mars: 608.0,     // 1.52 AU
-            jupiter: 2080.0, // 5.20 AU
-            saturn: 3832.0,  // 9.58 AU
-            uranus: 7680.0,  // 19.20 AU
-            neptune: 12000.0,// 30.00 AU
-            pluto: 15800.0   // 39.50 AU
+            mercury: 9087.0,   // 0.387 AU
+            venus: 16977.0,    // 0.723 AU
+            earth: 23481.0,    // 1.000 AU
+            mars: 35691.0,     // 1.520 AU
+            jupiter: 122101.0, // 5.200 AU
+            saturn: 224948.0,  // 9.580 AU
+            uranus: 450835.0,  // 19.200 AU
+            neptune: 704430.0, // 30.000 AU
+            pluto: 927499.0    // 39.500 AU
         };
 
         // 2. TRUE ECCENTRICITY
@@ -129,11 +130,12 @@
             var h = canvasContainer.clientHeight || 540;
 
             scene = new THREE.Scene();
-            // Far plane extended to 40000 to see Pluto at 15800px!
-            camera = new THREE.PerspectiveCamera(45, w / h, 0.1, 40000);
+            // Far plane extended to 2,000,000 to see Pluto at 927,499px!
+            camera = new THREE.PerspectiveCamera(45, w / h, 0.1, 2000000);
             
-            camera.position.set(0, 1500, 2500);
-            camera.lookAt(0, 0, 0);
+            // Initial Camera looks at Earth
+            camera.position.set(23481.0 + 500, 200, 500);
+            camera.lookAt(23481.0, 0, 0);
 
             try {
                 clock = new THREE.Clock();
@@ -148,7 +150,7 @@
                 controls = new THREE.OrbitControls(camera, renderer.domElement);
                 controls.enableDamping = true;
                 controls.dampingFactor = 0.05;
-                controls.maxDistance = 25000;
+                controls.maxDistance = 1500000;
                 controls.minDistance = 2.0;
             }
 
@@ -156,8 +158,8 @@
             mouse = new THREE.Vector2();
 
             scene.add(new THREE.AmbientLight(0x707080, 1.6));
-            // Increased distance & decay for 100% scale
-            scene.add(new THREE.PointLight(0xfffaed, 4.0, 30000, 0.5));
+            // Increased distance & decay for 100% extreme scale
+            scene.add(new THREE.PointLight(0xfffaed, 5.0, 2000000, 0.2));
 
             buildStarfield();
             buildCelestialBodies();
@@ -211,15 +213,15 @@
             var count = 5000;
             var pos = new Float32Array(count * 3);
             for (var i = 0; i < count * 3; i += 3) {
-                pos[i] = (Math.random() - 0.5) * 35000;
-                pos[i + 1] = (Math.random() - 0.5) * 35000;
-                pos[i + 2] = (Math.random() - 0.5) * 35000;
+                pos[i] = (Math.random() - 0.5) * 1800000;
+                pos[i + 1] = (Math.random() - 0.5) * 1800000;
+                pos[i + 2] = (Math.random() - 0.5) * 1800000;
             }
             geo.setAttribute('position', new THREE.BufferAttribute(pos, 3));
             var starTex = createStarTexture();
             var mat = new THREE.PointsMaterial({
                 map: starTex,
-                size: 35.0, // Scale up stars so they are visible from far distances
+                size: 2000.0, // Scale up stars for extreme distances
                 transparent: true,
                 opacity: 0.85,
                 depthWrite: false,
@@ -315,7 +317,7 @@
                     );
                     planetMesh.add(atmosMesh);
 
-                    // MOON TRUE SCALE (Distance 1.03 from Earth)
+                    // MOON TRUE SCALE (True Distance = 384,400km / 6371km = 60.3)
                     var moonPivot = new THREE.Object3D();
                     moonPivot.rotation.z = 28.58 * (Math.PI / 180);
                     planetMesh.add(moonPivot);
@@ -324,20 +326,20 @@
                         new THREE.SphereGeometry(moonR, 16, 16),
                         new THREE.MeshStandardMaterial({ map: loadPlanet3DTexture('moon'), roughness: 0.85 })
                     );
-                    moonMesh.position.x = 1.03; // Real Scale Distance
+                    moonMesh.position.x = 60.3; // 100% Real Scale Distance
                     moonMesh.userData = { key: 'moon', data: window.SOLAR_SYSTEM_DATA.moon };
                     moonPivot.add(moonMesh);
 
                     var mPts = [];
                     for (var m = 0; m <= 64; m++) {
                         var mt = (m / 64) * Math.PI * 2;
-                        mPts.push(new THREE.Vector3(Math.cos(mt) * 1.03, 0, Math.sin(mt) * 1.03));
+                        mPts.push(new THREE.Vector3(Math.cos(mt) * 60.3, 0, Math.sin(mt) * 60.3));
                     }
                     var mGeo = new THREE.BufferGeometry().setFromPoints(mPts);
                     var mLine = new THREE.LineLoop(mGeo, new THREE.LineBasicMaterial({ color: 0x38bdf8, transparent: true, opacity: 0.35 }));
                     moonPivot.add(mLine);
 
-                    celestialBodies['moon'] = { mesh: moonMesh, pivot: moonPivot, orbitRadius: 1.03, data: window.SOLAR_SYSTEM_DATA.moon };
+                    celestialBodies['moon'] = { mesh: moonMesh, pivot: moonPivot, orbitRadius: 60.3, data: window.SOLAR_SYSTEM_DATA.moon };
                 }
 
                 celestialBodies[key] = { mesh: planetMesh, ringMesh: saturnRingMesh, pivot: pivot, orbitRadius: orbitR, semiMajor: semiMajor, semiMinor: semiMinor, focusOffset: focusOffset, ecc: ecc, data: data };
@@ -345,8 +347,8 @@
                 // PRECISE KEPLER ELLIPSE ORBIT LINE
                 if (state.showOrbits) {
                     var pts = [];
-                    for (var i = 0; i <= 256; i++) { // Increased resolution for huge orbits
-                        var theta = (i / 256) * Math.PI * 2;
+                    for (var i = 0; i <= 512; i++) { // Increased resolution for massive True Scale orbits
+                        var theta = (i / 512) * Math.PI * 2;
                         var ox = Math.cos(theta) * semiMajor - focusOffset;
                         var oz = Math.sin(theta) * semiMinor;
                         pts.push(new THREE.Vector3(ox, 0, oz));
@@ -482,9 +484,11 @@
             var r = getBodyScaleRadius(key);
             if (controls) {
                 controls.target.copy(worldPos);
-                // Adjust zoom factor based on extreme size scale differences
-                var offset = (key === 'sun') ? r * 2.5 : r * 15.0;
+                // Adjust zoom factor based on extreme true scale distances
+                var offset = (key === 'sun') ? r * 3.5 : r * 15.0;
                 if (offset < 5) offset = 5; // Prevent clipping into tiny planets
+                
+                // For Sun, zoom out enough to see it. For planets, get close enough to see the speck.
                 camera.position.set(worldPos.x + offset, worldPos.y + offset * 0.5, worldPos.z + offset);
                 controls.update();
             }
