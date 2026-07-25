@@ -60,137 +60,212 @@
             animalType: localStorage.getItem('userAnimal') || ['bear', 'rabbit', 'cat', 'penguin', 'fox'][Math.floor(Math.random() * 5)]
         };
 
+        // Canvas2D Animal Face Texture Generator
+        function createAnimalFaceTexture(bgHex) {
+            var canvas = document.createElement('canvas');
+            canvas.width = 256;
+            canvas.height = 256;
+            var ctx = canvas.getContext('2d');
+
+            // Head Background Color
+            ctx.fillStyle = bgHex;
+            ctx.fillRect(0, 0, 256, 256);
+
+            // Cute Eyes (Black + White Catchlight)
+            ctx.fillStyle = '#0f172a';
+            ctx.beginPath();
+            ctx.arc(85, 120, 18, 0, Math.PI * 2);
+            ctx.arc(171, 120, 18, 0, Math.PI * 2);
+            ctx.fill();
+
+            ctx.fillStyle = '#ffffff';
+            ctx.beginPath();
+            ctx.arc(80, 114, 6, 0, Math.PI * 2);
+            ctx.arc(166, 114, 6, 0, Math.PI * 2);
+            ctx.fill();
+
+            // Pink Cheeks (Blush)
+            ctx.fillStyle = 'rgba(244, 114, 182, 0.55)';
+            ctx.beginPath();
+            ctx.arc(65, 140, 14, 0, Math.PI * 2);
+            ctx.arc(191, 140, 14, 0, Math.PI * 2);
+            ctx.fill();
+
+            // Nose
+            ctx.fillStyle = '#1e293b';
+            ctx.beginPath();
+            ctx.arc(128, 135, 8, 0, Math.PI * 2);
+            ctx.fill();
+
+            // Cute Mouth (w)
+            ctx.strokeStyle = '#1e293b';
+            ctx.lineWidth = 4;
+            ctx.lineCap = 'round';
+            ctx.beginPath();
+            ctx.arc(118, 148, 8, 0.1 * Math.PI, 0.9 * Math.PI);
+            ctx.stroke();
+            ctx.beginPath();
+            ctx.arc(138, 148, 8, 0.1 * Math.PI, 0.9 * Math.PI);
+            ctx.stroke();
+
+            return new THREE.CanvasTexture(canvas);
+        }
+
         function buildUFOMesh() {
             if (ufoMesh && scene) scene.remove(ufoMesh);
             var group = new THREE.Group();
             
-            // 1. UFO Crystal Clear Glass Dome
-            var domeGeo = new THREE.SphereGeometry(7, 32, 32, 0, Math.PI * 2, 0, Math.PI / 2);
+            // 1. UFO Compact Crystal Glass Dome
+            var domeGeo = new THREE.SphereGeometry(4.5, 32, 32, 0, Math.PI * 2, 0, Math.PI / 2);
             var domeMat = new THREE.MeshPhysicalMaterial({ 
                 color: 0xe0f2fe, 
                 roughness: 0.05, 
                 metalness: 0.1, 
                 transparent: true, 
                 opacity: 0.35, 
-                transmission: 0.9, 
+                transmission: 0.95, 
                 ior: 1.5,
                 clearcoat: 1.0
             });
             var dome = new THREE.Mesh(domeGeo, domeMat);
             group.add(dome);
 
-            // 2. 🛸 Animal Pilot Avatar (Based on assigned animalType)
+            // 2. 🛸 Animal Pilot Avatar (Sitting inside Dome)
             var pilotGroup = new THREE.Group();
-            pilotGroup.position.set(0, 1.5, 0);
+            pilotGroup.position.set(0, 0.5, 0);
 
             // Pilot Seat
-            var seatGeo = new THREE.BoxGeometry(4, 5, 1.5);
+            var seatGeo = new THREE.BoxGeometry(2.5, 3.2, 1.0);
             var seatMat = new THREE.MeshStandardMaterial({ color: 0x1e293b, roughness: 0.5 });
             var seat = new THREE.Mesh(seatGeo, seatMat);
-            seat.position.set(0, 2.5, 2);
+            seat.position.set(0, 1.6, 1.2);
             pilotGroup.add(seat);
 
             // Color Palette by Animal Type
             var colors = {
-                bear: { head: 0xfbbf24, suit: 0xf59e0b, ear: 0xd97706 },
-                rabbit: { head: 0xffedd5, suit: 0xec4899, ear: 0xf472b6 },
-                cat: { head: 0xfde68a, suit: 0x8b5cf6, ear: 0x7c3aed },
-                penguin: { head: 0x38bdf8, suit: 0x0284c7, ear: 0x0369a1 },
-                fox: { head: 0xf97316, suit: 0xe11d48, ear: 0xc2410c }
+                bear: { bgHex: '#fbbf24', suit: 0xf59e0b, ear: 0xd97706 },
+                rabbit: { bgHex: '#ffedd5', suit: 0xec4899, ear: 0xf472b6 },
+                cat: { bgHex: '#fde68a', suit: 0x8b5cf6, ear: 0x7c3aed },
+                penguin: { bgHex: '#38bdf8', suit: 0x0284c7, ear: 0x0369a1 },
+                fox: { bgHex: '#f97316', suit: 0xe11d48, ear: 0xc2410c }
             };
             var c = colors[ufoState.animalType] || colors.bear;
 
             // Pilot Body
-            var bodyGeo = new THREE.SphereGeometry(2.5, 16, 16);
+            var bodyGeo = new THREE.SphereGeometry(1.6, 16, 16);
             var bodyMat = new THREE.MeshStandardMaterial({ color: c.suit });
             var body = new THREE.Mesh(bodyGeo, bodyMat);
-            body.position.set(0, 2, 0.5);
+            body.position.set(0, 1.3, 0.3);
             pilotGroup.add(body);
 
-            // Pilot Head
-            var headGeo = new THREE.SphereGeometry(2.2, 24, 24);
-            var headMat = new THREE.MeshStandardMaterial({ color: c.head, roughness: 0.4 });
+            // Pilot Head with Face Texture
+            var faceTex = createAnimalFaceTexture(c.bgHex);
+            var headGeo = new THREE.SphereGeometry(1.5, 24, 24);
+            var headMat = new THREE.MeshStandardMaterial({ map: faceTex, roughness: 0.4 });
             var head = new THREE.Mesh(headGeo, headMat);
-            head.position.set(0, 4.2, 0.5);
+            head.rotation.y = -Math.PI / 2; // Orient face forward
+            head.position.set(0, 2.7, 0.3);
             pilotGroup.add(head);
 
             // Ears according to Animal Type
             if (ufoState.animalType === 'rabbit') {
-                // Long Rabbit Ears
-                var rEarGeo = new THREE.CylinderGeometry(0.5, 0.6, 3.5, 16);
+                var rEarGeo = new THREE.CylinderGeometry(0.3, 0.4, 2.2, 16);
                 var rEarMat = new THREE.MeshStandardMaterial({ color: c.ear });
                 var lEar = new THREE.Mesh(rEarGeo, rEarMat);
-                lEar.position.set(-1.2, 6.8, 0.5);
+                lEar.position.set(-0.8, 4.3, 0.3);
                 lEar.rotation.z = -0.15;
                 var rEar = new THREE.Mesh(rEarGeo, rEarMat);
-                rEar.position.set(1.2, 6.8, 0.5);
+                rEar.position.set(0.8, 4.3, 0.3);
                 rEar.rotation.z = 0.15;
                 pilotGroup.add(lEar);
                 pilotGroup.add(rEar);
             } else if (ufoState.animalType === 'cat' || ufoState.animalType === 'fox') {
-                // Pointy Cat/Fox Ears
-                var cEarGeo = new THREE.ConeGeometry(0.9, 2.0, 16);
+                var cEarGeo = new THREE.ConeGeometry(0.6, 1.4, 16);
                 var cEarMat = new THREE.MeshStandardMaterial({ color: c.ear });
                 var lEar = new THREE.Mesh(cEarGeo, cEarMat);
-                lEar.position.set(-1.3, 6.0, 0.5);
+                lEar.position.set(-0.8, 3.8, 0.3);
                 lEar.rotation.z = -0.2;
                 var rEar = new THREE.Mesh(cEarGeo, cEarMat);
-                rEar.position.set(1.3, 6.0, 0.5);
+                rEar.position.set(0.8, 3.8, 0.3);
                 rEar.rotation.z = 0.2;
                 pilotGroup.add(lEar);
                 pilotGroup.add(rEar);
             } else {
-                // Round Bear / Penguin Ears
-                var earGeo = new THREE.SphereGeometry(0.8, 16, 16);
+                var earGeo = new THREE.SphereGeometry(0.55, 16, 16);
                 var earMat = new THREE.MeshStandardMaterial({ color: c.ear });
                 var lEar = new THREE.Mesh(earGeo, earMat);
-                lEar.position.set(-1.6, 5.8, 0.5);
+                lEar.position.set(-1.0, 3.7, 0.3);
                 var rEar = new THREE.Mesh(earGeo, earMat);
-                rEar.position.set(1.6, 5.8, 0.5);
+                rEar.position.set(1.0, 3.7, 0.3);
                 pilotGroup.add(lEar);
                 pilotGroup.add(rEar);
             }
 
             // Headset Band
-            var headsetGeo = new THREE.TorusGeometry(2.3, 0.3, 12, 24, Math.PI);
+            var headsetGeo = new THREE.TorusGeometry(1.5, 0.2, 12, 24, Math.PI);
             var headsetMat = new THREE.MeshStandardMaterial({ color: 0x38bdf8, metalness: 0.8 });
             var headset = new THREE.Mesh(headsetGeo, headsetMat);
             headset.rotation.x = Math.PI / 2;
-            headset.position.set(0, 4.3, 0.5);
+            headset.position.set(0, 2.8, 0.3);
             pilotGroup.add(headset);
 
             // Glowing Control Console Panel
-            var consoleGeo = new THREE.BoxGeometry(4, 1.5, 2);
+            var consoleGeo = new THREE.BoxGeometry(2.5, 1.0, 1.2);
             var consoleMat = new THREE.MeshBasicMaterial({ color: 0x0284c7 });
             var consoleObj = new THREE.Mesh(consoleGeo, consoleMat);
-            consoleObj.position.set(0, 1.2, -1.5);
+            consoleObj.position.set(0, 0.8, -1.0);
             pilotGroup.add(consoleObj);
 
             group.add(pilotGroup);
 
-            // 3. UFO Metallic Outer Ring
-            var ringGeo = new THREE.TorusGeometry(12, 2.5, 16, 32);
+            // 3. UFO Compact Metallic Outer Ring
+            var ringGeo = new THREE.TorusGeometry(6.5, 1.4, 16, 32);
             var ringMat = new THREE.MeshStandardMaterial({ color: 0x64748b, metalness: 0.9, roughness: 0.2 });
             var ring = new THREE.Mesh(ringGeo, ringMat);
             ring.rotation.x = Math.PI / 2;
             group.add(ring);
 
-            // 4. UFO Glowing Bottom Energy Ring
-            var glowGeo = new THREE.TorusGeometry(8, 1.2, 16, 32);
+            // 4. UFO Compact Glowing Bottom Energy Ring
+            var glowGeo = new THREE.TorusGeometry(4.5, 0.8, 16, 32);
             var glowMat = new THREE.MeshBasicMaterial({ color: 0x06b6d4 });
             var glow = new THREE.Mesh(glowGeo, glowMat);
             glow.rotation.x = Math.PI / 2;
-            glow.position.y = -1.5;
+            glow.position.y = -1.0;
             group.add(glow);
 
-            var light = new THREE.PointLight(0x06b6d4, 3, 100);
-            light.position.y = -2;
+            var light = new THREE.PointLight(0x06b6d4, 3, 60);
+            light.position.y = -1;
             group.add(light);
 
             group.position.copy(ufoState.pos);
             group.visible = false;
             ufoMesh = group;
             scene.add(ufoMesh);
+
+            // Create Floating 2D Name Tag for Pilot
+            var lc = document.getElementById('labelsContainer');
+            if (lc) {
+                var oldLabel = document.getElementById('ufoPilotNameTag');
+                if (oldLabel) oldLabel.remove();
+
+                var div = document.createElement('div');
+                div.id = 'ufoPilotNameTag';
+                div.textContent = '🛸 ' + ufoState.pilotName;
+                div.style.position = 'absolute';
+                div.style.color = '#38bdf8';
+                div.style.background = 'rgba(15, 23, 42, 0.9)';
+                div.style.border = '1px solid rgba(56, 189, 248, 0.7)';
+                div.style.padding = '3px 9px';
+                div.style.borderRadius = '12px';
+                div.style.fontSize = '12px';
+                div.style.fontWeight = 'bold';
+                div.style.transform = 'translate(-50%, -100%)';
+                div.style.pointerEvents = 'none';
+                div.style.boxShadow = '0 0 12px rgba(56, 189, 248, 0.5)';
+                div.style.display = 'none';
+                lc.appendChild(div);
+                ufoState.nameLabel = div;
+            }
         }
 
         window.addEventListener('keydown', function(e) {
@@ -716,13 +791,32 @@
         }
 
         function update2DLabels() {
-            if (state.simMode !== '2d' || !camera || !renderer) return;
             var w = renderer.domElement.width;
             var h = renderer.domElement.height;
             var hw = w / 2;
             var hh = h / 2;
             var vec = new THREE.Vector3();
-            
+
+            // Update UFO Pilot Floating Name Tag Position
+            if (ufoState.active && ufoMesh && ufoState.nameLabel) {
+                vec.copy(ufoState.pos);
+                vec.y += 10.0; // Position name tag above UFO dome
+                vec.project(camera);
+                if (vec.z <= 1.0) {
+                    var ux = (vec.x * hw) + hw;
+                    var uy = -(vec.y * hh) + hh;
+                    ufoState.nameLabel.style.display = 'block';
+                    ufoState.nameLabel.style.left = ux + 'px';
+                    ufoState.nameLabel.style.top = uy + 'px';
+                } else {
+                    ufoState.nameLabel.style.display = 'none';
+                }
+            } else if (ufoState.nameLabel) {
+                ufoState.nameLabel.style.display = 'none';
+            }
+
+            if (state.simMode !== '2d' || !camera || !renderer) return;
+
             mapLabels.forEach(function(item) {
                 vec.setFromMatrixPosition(item.obj.matrixWorld);
                 vec.project(camera);
