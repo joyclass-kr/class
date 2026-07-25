@@ -1620,7 +1620,7 @@
             if (modalOverlay) modalOverlay.classList.remove('active');
         }
 
-        // ========== QUIZ SYSTEM (Tab 5) ==========
+        // ========== QUIZ SYSTEM (Tab 5) - Enhanced & Robust ==========
         function initSpaceQuiz() {
             var nextBtn = document.getElementById('nextQuizBtn');
             if (nextBtn) nextBtn.addEventListener('click', loadNewQuizQuestion);
@@ -1629,6 +1629,8 @@
         function loadNewQuizQuestion() {
             if (state.quiz.autoTimer) { clearTimeout(state.quiz.autoTimer); state.quiz.autoTimer = null; }
             state.quiz.answered = false;
+            if (!state.quiz.qIndex) state.quiz.qIndex = 0;
+            state.quiz.qIndex++;
 
             var quizPool = [
                 { cat: "지구형 vs 목성형", q: "지구형 행성과 비교할 때 목성형 행성의 일반적인 물리적 특징으로 옳은 것은?", ans: "질량과 반지름이 크고 평균 밀도가 작다.", opts: ["질량과 반지름이 크고 평균 밀도가 작다.", "평균 밀도가 크고 자전 속도가 매우 늙다.", "위성의 수가 거의 없거나 적다.", "단단한 암석 표면을 가지고 있다."], exp: "목성형 행성은 수소와 헬륨 등 가벼운 기체 위주로 구성되어 있어 질량과 반지름은 크지만 평균 밀도는 매우 작습니다." },
@@ -1641,36 +1643,48 @@
                 { cat: "달의 운동", q: "지구에서 항상 달의 앞면만 볼 수 있는 과학적 원인은?", ans: "달의 자전 주기와 공전 주기가 27.3일로 같아서", opts: ["달이 자전을 전혀 하지 않아서", "달의 자전 주기와 공전 주기가 27.3일로 같아서", "지구의 자전 속도가 달보다 2배 빨라서", "달이 지구 주변을 멈춰 서 있어서"], exp: "달은 자전 주기와 공전 주기가 27.3일로 완전히 같은 '동주기 자전'을 하므로 지구를 향하는 면이 항상 같습니다." }
             ];
 
-            var qObj = quizPool[Math.floor(Math.random() * quizPool.length)];
+            var qIndexInPool = (state.quiz.qIndex - 1) % quizPool.length;
+            var qObj = quizPool[qIndexInPool];
             state.quiz.currentQuestion = qObj;
 
             var catBadge = document.getElementById('quizCategoryBadge');
             if (catBadge) catBadge.textContent = '[' + qObj.cat + ']';
 
-            document.getElementById('quizQuestionText').textContent = '🪐 ' + qObj.q;
+            var progressText = document.getElementById('quizProgressText');
+            if (progressText) progressText.textContent = '문제 ' + (qIndexInPool + 1) + ' / ' + quizPool.length;
+
+            var qTextEl = document.getElementById('quizQuestionText');
+            if (qTextEl) qTextEl.textContent = '🪐 ' + qObj.q;
 
             var expBox = document.getElementById('quizExpBox');
             if (expBox) expBox.style.display = 'none';
 
             var optGrid = document.getElementById('quizOptionsGrid');
-            optGrid.innerHTML = '';
+            if (optGrid) {
+                optGrid.innerHTML = '';
+                var shuffled = qObj.opts.slice().sort(function () { return Math.random() - 0.5; });
+                shuffled.forEach(function (optText) {
+                    var btn = document.createElement('button');
+                    btn.className = 'quiz-opt-btn';
+                    btn.style.cssText = 'background:rgba(255,255,255,0.05);border:1px solid var(--border-color);padding:16px;border-radius:10px;color:#fff;font-size:15px;font-weight:700;cursor:pointer;transition:all 0.2s;text-align:left;line-height:1.4;';
+                    btn.textContent = optText;
+                    btn.addEventListener('click', function () { checkQuizAnswer(optText, btn, qObj.ans, qObj.exp); });
+                    optGrid.appendChild(btn);
+                });
+            }
 
-            var shuffled = qObj.opts.slice().sort(function () { return Math.random() - 0.5; });
-            shuffled.forEach(function (optText) {
-                var btn = document.createElement('button');
-                btn.className = 'quiz-opt-btn';
-                btn.style.cssText = 'background:rgba(255,255,255,0.05);border:1px solid var(--border-color);padding:16px;border-radius:10px;color:#fff;font-size:15px;font-weight:700;cursor:pointer;transition:all 0.2s;text-align:left;line-height:1.4;';
-                btn.textContent = optText;
-                btn.addEventListener('click', function () { checkQuizAnswer(optText, btn, qObj.ans, qObj.exp); });
-                optGrid.appendChild(btn);
-            });
-
-            document.getElementById('quizResultMsg').textContent = '';
+            var resMsg = document.getElementById('quizResultMsg');
+            if (resMsg) resMsg.textContent = '';
         }
 
         function checkQuizAnswer(selectedOpt, btn, correctAns, expText) {
             if (state.quiz.answered) return;
             state.quiz.answered = true;
+
+            // Disable all option buttons after answer
+            var allBtns = document.querySelectorAll('.quiz-opt-btn');
+            allBtns.forEach(function(b) { b.disabled = true; b.style.cursor = 'default'; });
+
             var isCorrect = selectedOpt === correctAns;
             var msg = document.getElementById('quizResultMsg');
             var expBox = document.getElementById('quizExpBox');
@@ -1681,13 +1695,17 @@
                 btn.style.color = '#000';
                 state.quiz.score += 10;
                 state.quiz.streak += 1;
-                msg.textContent = '🎉 정답입니다! (+10점)';
-                msg.style.color = '#38bdf8';
+                if (msg) {
+                    msg.textContent = '🎉 정답입니다! (+10점)';
+                    msg.style.color = '#38bdf8';
+                }
             } else {
                 btn.style.background = '#ef4444';
                 state.quiz.streak = 0;
-                msg.textContent = '❌ 아쉽네요! 정답은 『 ' + correctAns + ' 』 입니다.';
-                msg.style.color = '#ef4444';
+                if (msg) {
+                    msg.textContent = '❌ 아쉽네요! 정답은 『 ' + correctAns + ' 』 입니다.';
+                    msg.style.color = '#ef4444';
+                }
             }
 
             if (expBox && expContent) {
@@ -1695,8 +1713,10 @@
                 expBox.style.display = 'block';
             }
 
-            document.getElementById('quizScore').textContent = state.quiz.score;
-            document.getElementById('quizStreak').textContent = state.quiz.streak;
+            var scoreEl = document.getElementById('quizScore');
+            if (scoreEl) scoreEl.textContent = state.quiz.score;
+            var streakEl = document.getElementById('quizStreak');
+            if (streakEl) streakEl.textContent = state.quiz.streak;
         }
     }
 })();
