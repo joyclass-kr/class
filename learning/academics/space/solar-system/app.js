@@ -980,6 +980,11 @@
                                 }
                             });
                         }
+                    } else if (key === 'asteroid') {
+                        // 🪐 3D Asteroid Belt Rotation (Living Asteroid Belt Orbiting the Sun!)
+                        if (b.mesh) {
+                            b.mesh.rotation.y -= timeDelta * (Math.PI * 2) * 0.03;
+                        }
                     } else if (b.pivot && b.mesh) {
                         var rate = ORBIT_RATES[key] || 0.1;
                         if (b.orbitAngle === undefined) b.orbitAngle = Math.random() * Math.PI * 2;
@@ -1140,6 +1145,9 @@
             mouse.x = ((event.clientX - rect.left) / rect.width) * 2 - 1;
             mouse.y = -((event.clientY - rect.top) / rect.height) * 2 + 1;
             raycaster.setFromCamera(mouse, camera);
+            if (raycaster.params && raycaster.params.Points) {
+                raycaster.params.Points.threshold = 12.0; // Responsive 3D click detection for Asteroid Belt particles
+            }
             var intersects = raycaster.intersectObjects(scene.children, true);
             for (var i = 0; i < intersects.length; i++) {
                 if (intersects[i].object.userData && intersects[i].object.userData.key) {
@@ -1158,7 +1166,7 @@
             if (controls) {
                 controls.target.copy(worldPos);
                 // Adjust zoom factor based on log scale sizes
-                var offset = (key === 'sun') ? r * 3.5 : r * 10.0;
+                var offset = (key === 'sun') ? r * 3.5 : (key === 'asteroid' ? 80.0 : (key === 'comet' ? 35.0 : r * 10.0));
                 if (offset < 5) offset = 5; 
                 
                 camera.position.set(worldPos.x + offset, worldPos.y + offset * 0.5, worldPos.z + offset);
