@@ -190,40 +190,61 @@ document.addEventListener('DOMContentLoaded', () => {
         if (!body) return;
 
         state.selectedBody = body;
+
+        // Big Real Photo Visual
+        const photo = document.getElementById('modalPlanetPhoto');
+        if (photo) {
+            const fallbackTex = window.createPlanetTexture(key);
+            const imgUrl = body.imgUrl || fallbackTex;
+            photo.style.backgroundImage = `url('${imgUrl}')`;
+        }
+
+        // Category Badge & Density
+        const catBadge = document.getElementById('modalPlanetCategory');
+        if (catBadge) catBadge.textContent = body.category || body.type;
+
+        const densityBox = document.getElementById('modalPlanetDensity');
+        if (densityBox) densityBox.textContent = `평균 밀도: ${body.density || '-'}`;
+
+        // Header Title
         document.getElementById('modalPlanetName').textContent = body.name;
         document.getElementById('modalPlanetSub').textContent = `${body.enName} | ${body.type}`;
 
-        const preview = document.getElementById('modalPlanetPreview');
-        if (preview) {
-            preview.style.background = `url('${window.createPlanetTexture(key)}') center/cover`;
+        // CSAT Exam Essential Points
+        const satPointsBox = document.getElementById('modalSatExamPoints');
+        if (satPointsBox) {
+            const points = body.satExamKeyPoints || [body.desc];
+            satPointsBox.innerHTML = points.map(pt => `<li>${pt}</li>`).join('');
         }
 
+        // Physical Specs Grid
         const propGrid = document.getElementById('modalPropGrid');
-        propGrid.innerHTML = `
-            <div style="background: rgba(255,255,255,0.04); padding: 10px; border-radius: 6px;">
-                <div style="font-size: 11px; color: var(--text-muted);">표면 온도</div>
-                <div style="font-size: 14px; font-weight: 800; color: #fff;">${body.tempC || '-'}</div>
-            </div>
-            <div style="background: rgba(255,255,255,0.04); padding: 10px; border-radius: 6px;">
-                <div style="font-size: 11px; color: var(--text-muted);">자전 주기</div>
-                <div style="font-size: 14px; font-weight: 800; color: #fff;">${body.rotationDays || '-'}</div>
-            </div>
-            <div style="background: rgba(255,255,255,0.04); padding: 10px; border-radius: 6px;">
-                <div style="font-size: 11px; color: var(--text-muted);">공전 주기</div>
-                <div style="font-size: 14px; font-weight: 800; color: #fff;">${body.orbitDays ? body.orbitDays + '일' : '-'}</div>
-            </div>
-            <div style="background: rgba(255,255,255,0.04); padding: 10px; border-radius: 6px;">
-                <div style="font-size: 11px; color: var(--text-muted);">위성 수</div>
-                <div style="font-size: 14px; font-weight: 800; color: #fff;">${body.moons !== undefined ? body.moons + '개' : '-'}</div>
-            </div>
-        `;
+        if (propGrid) {
+            propGrid.innerHTML = `
+                <div style="background: rgba(255,255,255,0.04); padding: 10px 14px; border-radius: 8px; border: 1px solid var(--border-color);">
+                    <div style="font-size: 11px; color: var(--text-muted);">표면 온도</div>
+                    <div style="font-size: 14px; font-weight: 800; color: #fff;">${body.tempC || '-'}</div>
+                </div>
+                <div style="background: rgba(255,255,255,0.04); padding: 10px 14px; border-radius: 8px; border: 1px solid var(--border-color);">
+                    <div style="font-size: 11px; color: var(--text-muted);">자전 주기 (1일)</div>
+                    <div style="font-size: 14px; font-weight: 800; color: #38bdf8;">${body.rotationDays || '-'}</div>
+                </div>
+                <div style="background: rgba(255,255,255,0.04); padding: 10px 14px; border-radius: 8px; border: 1px solid var(--border-color);">
+                    <div style="font-size: 11px; color: var(--text-muted);">공전 주기 (1년)</div>
+                    <div style="font-size: 14px; font-weight: 800; color: #ffd18a;">${body.orbitDays ? body.orbitDays + '일' : '-'}</div>
+                </div>
+                <div style="background: rgba(255,255,255,0.04); padding: 10px 14px; border-radius: 8px; border: 1px solid var(--border-color);">
+                    <div style="font-size: 11px; color: var(--text-muted);">위성 수</div>
+                    <div style="font-size: 14px; font-weight: 800; color: #fff;">${body.moons !== undefined ? body.moons + '개' : '-'}</div>
+                </div>
+            `;
+        }
 
         document.getElementById('modalDesc').textContent = body.desc;
-        document.getElementById('modalTrivia').textContent = body.trivia || '알려진 흥미로운 특성 기록.';
 
         const missionsBox = document.getElementById('modalMissions');
         if (missionsBox) {
-            missionsBox.innerHTML = (body.missions || ['국제 우주 관측선']).map(m => `<span style="background: rgba(56,189,248,0.15); color: #38bdf8; padding: 4px 10px; border-radius: 4px; font-size: 12px; font-weight: 700;">🚀 ${m}</span>`).join('');
+            missionsBox.innerHTML = (body.missions || ['국제 우주 관측선']).map(m => `<span style="background: rgba(56,189,248,0.15); color: #38bdf8; border: 1px solid rgba(56,189,248,0.3); padding: 4px 12px; border-radius: 6px; font-size: 12px; font-weight: 700;">🚀 ${m}</span>`).join('');
         }
 
         modalOverlay.classList.add('active');

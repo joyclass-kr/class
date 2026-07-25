@@ -552,36 +552,123 @@ input:checked + .slider-knob:before {
 }
 
 .planet-modal {
-    background: rgba(15, 23, 42, 0.95);
-    border: 1px solid rgba(255, 255, 255, 0.2);
-    border-radius: var(--radius-lg);
+    background: rgba(10, 15, 29, 0.98);
+    border: 1px solid rgba(56, 189, 248, 0.3);
+    border-radius: 20px;
     width: 100%;
-    max-width: 760px;
+    max-width: 950px;
     max-height: 90vh;
     overflow-y: auto;
-    box-shadow: 0 20px 50px rgba(0, 0, 0, 0.8);
+    box-shadow: 0 25px 60px rgba(0, 0, 0, 0.9), 0 0 30px rgba(56, 189, 248, 0.15);
     position: relative;
-    padding: 28px;
+    padding: 32px;
+}
+
+.modal-split-container {
+    display: flex;
+    gap: 32px;
+    align-items: flex-start;
+}
+
+@media (max-width: 840px) {
+    .modal-split-container {
+        flex-direction: column;
+    }
+}
+
+.modal-left-col {
+    width: 320px;
+    flex-shrink: 0;
     display: flex;
     flex-direction: column;
-    gap: 20px;
+    align-items: center;
+    gap: 16px;
+    background: rgba(255, 255, 255, 0.02);
+    border: 1px solid var(--border-color);
+    border-radius: 16px;
+    padding: 24px;
+    text-align: center;
+}
+
+@media (max-width: 840px) {
+    .modal-left-col {
+        width: 100%;
+    }
+}
+
+.modal-planet-photo {
+    width: 240px;
+    height: 240px;
+    border-radius: 50%;
+    box-shadow: 0 0 35px rgba(56, 189, 248, 0.35), inset 0 0 20px rgba(0, 0, 0, 0.5);
+    border: 3px solid rgba(255, 255, 255, 0.2);
+    background-size: cover;
+    background-position: center;
+    transition: transform 0.4s ease;
+}
+
+.modal-planet-photo:hover {
+    transform: scale(1.04) rotate(2deg);
+}
+
+.modal-right-col {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    gap: 18px;
+    width: 100%;
+}
+
+.sat-exam-box {
+    background: linear-gradient(135deg, rgba(56, 189, 248, 0.1), rgba(16, 185, 129, 0.08));
+    border: 1px solid rgba(56, 189, 248, 0.3);
+    border-left: 4px solid #38bdf8;
+    border-radius: 12px;
+    padding: 16px 20px;
+}
+
+.sat-exam-title {
+    font-size: 15px;
+    font-weight: 800;
+    color: #38bdf8;
+    margin-bottom: 10px;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+}
+
+.sat-exam-list {
+    margin: 0;
+    padding-left: 18px;
+    display: flex;
+    flex-direction: column;
+    gap: 6px;
+}
+
+.sat-exam-list li {
+    font-size: 13px;
+    color: #e2e8f0;
+    line-height: 1.5;
 }
 
 .close-modal-btn {
     position: absolute;
-    top: 16px; right: 16px;
+    top: 20px; right: 20px;
     background: rgba(255, 255, 255, 0.1);
-    border: none;
+    border: 1px solid var(--border-color);
     color: #fff;
-    width: 36px; height: 36px;
+    width: 40px; height: 40px;
     border-radius: 50%;
-    font-size: 18px;
+    font-size: 20px;
     cursor: pointer;
     display: flex;
     align-items: center;
     justify-content: center;
+    transition: all 0.2s ease;
+    z-index: 10;
 }
 
 .close-modal-btn:hover {
-    background: rgba(239, 68, 68, 0.8);
+    background: rgba(239, 68, 68, 0.85);
+    transform: rotate(90deg);
 }

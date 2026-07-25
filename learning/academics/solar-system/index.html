@@ -179,31 +179,50 @@
         <div class="planet-modal">
             <button class="close-modal-btn" id="closeModalBtn" aria-label="닫기">✕</button>
             
-            <div style="display: flex; align-items: center; gap: 16px; border-bottom: 1px solid var(--border-color); padding-bottom: 16px;">
-                <div class="planet-sphere-preview" id="modalPlanetPreview" style="width: 64px; height: 64px;"></div>
-                <div>
-                    <h2 id="modalPlanetName" style="font-size: 26px; font-weight: 900;">지구</h2>
-                    <div id="modalPlanetSub" style="color: var(--text-secondary); font-size: 14px;">Earth | 3번째 행성</div>
+            <div class="modal-split-container">
+                <!-- Left Column: Big Real Photo & Category Badge -->
+                <div class="modal-left-col">
+                    <div class="modal-planet-photo" id="modalPlanetPhoto"></div>
+                    <div>
+                        <span id="modalPlanetCategory" style="background: rgba(56,189,248,0.2); color: #38bdf8; border: 1px solid rgba(56,189,248,0.4); padding: 4px 12px; border-radius: 20px; font-size: 12px; font-weight: 800; display: inline-block; margin-bottom: 8px;">지구형 행성</span>
+                        <div id="modalPlanetDensity" style="font-size: 12px; color: var(--text-muted);">평균 밀도: 5.51 g/cm³</div>
+                    </div>
                 </div>
-            </div>
 
-            <div style="display: grid; grid-template-columns: repeat(2, 1fr); gap: 12px;" id="modalPropGrid">
-                <!-- JS Dyn Props -->
-            </div>
+                <!-- Right Column: CSAT Knowledge & Physics Stats -->
+                <div class="modal-right-col">
+                    <div>
+                        <h2 id="modalPlanetName" style="font-size: 30px; font-weight: 900; color: #fff; margin-bottom: 2px;">지구</h2>
+                        <div id="modalPlanetSub" style="color: var(--text-secondary); font-size: 15px; font-weight: 600;">Earth | 3번째 행성</div>
+                    </div>
 
-            <div style="background: rgba(255, 255, 255, 0.03); padding: 14px; border-radius: var(--radius-sm); border-left: 3px solid #38bdf8;">
-                <h4 style="color: #38bdf8; margin-bottom: 6px;">💡 행성 특징</h4>
-                <p id="modalDesc" style="font-size: 14px; color: #cbd5e1; line-height: 1.5;"></p>
-            </div>
+                    <!-- CSAT Exam Essential Points -->
+                    <div class="sat-exam-box">
+                        <div class="sat-exam-title">
+                            🎓 <span>지구과학 Ⅰ 수능 &amp; 내신 핵심 출제 지식</span>
+                        </div>
+                        <ul class="sat-exam-list" id="modalSatExamPoints">
+                            <!-- JS Dyn Rendered CSAT Points -->
+                        </ul>
+                    </div>
 
-            <div style="background: rgba(255, 255, 255, 0.03); padding: 14px; border-radius: var(--radius-sm); border-left: 3px solid #ffd18a;">
-                <h4 style="color: #ffd18a; margin-bottom: 6px;">✨ 재미있는 상식 (Trivia)</h4>
-                <p id="modalTrivia" style="font-size: 14px; color: #cbd5e1; line-height: 1.5;"></p>
-            </div>
+                    <!-- Physics Specs Grid -->
+                    <div style="display: grid; grid-template-columns: repeat(2, 1fr); gap: 10px;" id="modalPropGrid">
+                        <!-- JS Dyn Props -->
+                    </div>
 
-            <div>
-                <h4 style="font-size: 14px; color: var(--text-muted); margin-bottom: 8px;">🚀 대표 우주 탐사선</h4>
-                <div style="display: flex; flex-wrap: wrap; gap: 6px;" id="modalMissions"></div>
+                    <!-- General Desc -->
+                    <div style="background: rgba(255, 255, 255, 0.03); padding: 14px 18px; border-radius: 10px; border-left: 3px solid #38bdf8;">
+                        <h4 style="color: #38bdf8; margin-bottom: 4px; font-size: 14px;">💡 행성 주요 특징</h4>
+                        <p id="modalDesc" style="font-size: 13.5px; color: #cbd5e1; line-height: 1.6; margin: 0;"></p>
+                    </div>
+
+                    <!-- Missions -->
+                    <div style="background: rgba(255, 255, 255, 0.02); padding: 12px 16px; border-radius: 10px; border: 1px solid var(--border-color);">
+                        <h4 style="font-size: 13px; color: var(--text-muted); margin-bottom: 6px;">🚀 대표 우주 탐사선</h4>
+                        <div style="display: flex; flex-wrap: wrap; gap: 6px;" id="modalMissions"></div>
+                    </div>
+                </div>
             </div>
         </div>
     </div>
