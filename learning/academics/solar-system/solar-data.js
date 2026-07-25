@@ -1,5 +1,5 @@
 /**
- * 태양계 탐험 (Solar System Explorer) Data & Texture Generator
+ * 태양계 관찰 (Solar System Observation) Data Definition & Canvas Texture Generators
  */
 
 window.SOLAR_SYSTEM_DATA = {

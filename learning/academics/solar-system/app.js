@@ -1,5 +1,5 @@
 /**
- * 태양계 탐험 (Solar System Explorer) Three.js & App Engine
+ * 태양계 관찰 (Solar System Observation) Three.js & App Engine
  */
 
 document.addEventListener('DOMContentLoaded', () => {
