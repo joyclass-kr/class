@@ -136,48 +136,37 @@ document.addEventListener('DOMContentLoaded', () => {
     }
 
     /**
-     * Space Weight & Age Calculator in Tab 3
+     * Orbit & Rotation Period Comparison Grid in Tab 3
      */
     function initSpaceCalc() {
-        const weightInput = document.getElementById('userWeightInput');
-        const ageInput = document.getElementById('userAgeInput');
         const grid = document.getElementById('calcResultsGrid');
+        if (!grid || !window.SOLAR_SYSTEM_DATA) return;
 
-        if (!weightInput || !ageInput || !grid) return;
+        grid.innerHTML = '';
+        for (const [key, body] of Object.entries(window.SOLAR_SYSTEM_DATA)) {
+            if (key === 'sun') continue;
 
-        function updateCalc() {
-            const weight = parseFloat(weightInput.value) || 60;
-            const age = parseFloat(ageInput.value) || 12;
+            const texData = window.createPlanetTexture(key);
 
-            grid.innerHTML = '';
-            for (const [key, body] of Object.entries(window.SOLAR_SYSTEM_DATA)) {
-                if (key === 'sun') continue;
-
-                const calcWeight = (weight * (body.gravityRatio || 1.0)).toFixed(1);
-                let calcAge = '-';
-                if (body.orbitDays) {
-                    calcAge = ((age * 365.25) / body.orbitDays).toFixed(2);
-                }
-
-                const texData = window.createPlanetTexture(key);
-
-                const card = document.createElement('div');
-                card.className = 'calc-result-card';
-                card.innerHTML = `
-                    <div class="planet-sphere-preview" style="width: 42px; height: 42px; background: url('${texData}') center/cover;"></div>
-                    <div style="flex: 1;">
-                        <div style="font-size: 15px; font-weight: 800; color: #fff;">${body.name} (${body.enName})</div>
-                        <div style="font-size: 12px; color: var(--text-muted);">몸무게: <span class="calc-val-main">${calcWeight} kg</span></div>
-                        <div style="font-size: 12px; color: var(--text-muted);">해당 행성 기준 나이: <span class="calc-val-main" style="color: #ffd18a;">${calcAge} 세</span></div>
+            const card = document.createElement('div');
+            card.className = 'calc-result-card';
+            card.innerHTML = `
+                <div class="planet-sphere-preview" style="width: 48px; height: 48px; background: url('${texData}') center/cover;"></div>
+                <div style="flex: 1;">
+                    <div style="font-size: 16px; font-weight: 800; color: #fff; margin-bottom: 4px;">${body.name} (${body.enName})</div>
+                    <div style="font-size: 13px; color: var(--text-secondary); margin-bottom: 2px;">
+                        🔄 <strong>자전 주기 (1일):</strong> <span style="color: #38bdf8; font-weight: 700;">${body.rotationDays || '-'}</span>
                     </div>
-                `;
-                grid.appendChild(card);
-            }
+                    <div style="font-size: 13px; color: var(--text-secondary); margin-bottom: 2px;">
+                        ☀️ <strong>공전 주기 (1년):</strong> <span style="color: #ffd18a; font-weight: 700;">${body.orbitDays ? body.orbitDays + '일' : '-'}</span>
+                    </div>
+                    <div style="font-size: 12px; color: var(--text-muted);">
+                        ⚖️ 표면 중력: 지구의 ${body.gravityRatio || 1}배
+                    </div>
+                </div>
+            `;
+            grid.appendChild(card);
         }
-
-        weightInput.addEventListener('input', updateCalc);
-        ageInput.addEventListener('input', updateCalc);
-        updateCalc();
     }
 
     /**

@@ -32,7 +32,7 @@
                 <span>🪐</span> 행성 입체 도감
             </button>
             <button class="nav-tab" data-tab="calc" id="tabCalcBtn">
-                <span>⚖️</span> 우주 몸무게 &amp; 나이
+                <span>⏱️</span> 자전 &amp; 공전주기 비교
             </button>
             <button class="nav-tab" data-tab="quiz" id="tabQuizBtn">
                 <span>🧩</span> 우주 천문 퀴즈
@@ -121,31 +121,19 @@
             </div>
         </section>
 
-        <!-- Tab 3: Space Weight & Age Calculator -->
+        <!-- Tab 3: Orbit & Rotation Period Comparison -->
         <section class="tab-pane" id="tab-calc">
             <div class="calc-container">
-                <h2 style="margin-bottom: 6px;">⚖️ 다른 행성에서의 내 몸무게 &amp; 나이 계산기</h2>
+                <h2 style="margin-bottom: 6px;">⏱️ 태양계 행성 자전주기 &amp; 공전주기 비교</h2>
                 <p style="color: var(--text-secondary); font-size: 14px; margin-bottom: 24px;">
-                    행성마다 중력의 크기와 공전 주기가 다릅니다. 지구에서의 내 정보가 우주 다른 곳에서는 어떻게 변하는지 확인해보세요!
+                    각 행성의 1일(자전 주기, 스스로 한 바퀴 도는 시간)과 1년(공전 주기, 태양을 한 바퀴 도는 시간)을 지구와 직접 비교해보세요!
                 </p>
 
-                <div class="calc-input-box">
-                    <div class="calc-field">
-                        <label for="userWeightInput">현재 내 몸무게 (kg)</label>
-                        <input type="number" id="userWeightInput" value="64" min="1" max="300" step="1">
-                    </div>
-                    <div class="calc-field">
-                        <label for="userAgeInput">현재 내 나이 (세)</label>
-                        <input type="number" id="userAgeInput" value="10" min="1" max="120" step="1">
-                    </div>
-                </div>
-
-                <div style="font-size: 13px; color: var(--text-muted); background: rgba(255,255,255,0.03); border: 1px dashed var(--border-color); padding: 12px 16px; border-radius: 8px; margin-bottom: 20px;">
-                    💡 <strong>우주 행성 나이의 원리:</strong> 지구에서는 태양을 한 바퀴 도는 데 365일(1년)이 걸려 1살을 먹습니다. 
-                    공전 주기가 짧은 수성(88일)에서는 나이를 더 자주 먹고, 공전 주기가 긴 해왕성(165년)에서는 1살을 먹는 데 아주 오랜 시간이 걸립니다!
-                </div>
-
                 <div class="calc-results-grid" id="calcResultsGrid">
+                    <!-- JS Dyn Rendered Orbit & Rotation Comparison Cards -->
+                </div>
+            </div>
+        </section>
                     <!-- JS Dyn Calculated Results -->
                 </div>
             </div>
