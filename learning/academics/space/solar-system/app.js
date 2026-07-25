@@ -1051,7 +1051,9 @@
                                     st.endPos.set(tx, ty, tz);
                                 }
                             } else {
-                                st.progress += delta * 0.45; // Relaxed 2.2s flight time so students can easily click!
+                                // 🌟 CSAT UI/UX Rule: Meteor flight speed is ALWAYS constant (Independent of orbitSpeed slider!)
+                                var realDelta = Math.min(delta, 0.05); // Fixed real-world time step
+                                st.progress += realDelta * 0.45; // Constant 2.2s flight time regardless of orbit speed!
                                 if (st.progress >= 1.0) {
                                     st.isShooting = false;
                                     st.starMat.opacity = 0.0; // Disappear into deep space!
