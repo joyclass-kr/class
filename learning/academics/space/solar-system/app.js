@@ -583,6 +583,11 @@
                 });
                 var planetMesh = new THREE.Mesh(geo, mat);
 
+                // TRUE KEPLER ELLIPSE MATHEMATICAL FORMULA
+                var semiMajor = orbitR;
+                var semiMinor = orbitR * Math.sqrt(1 - ecc * ecc);
+                var focusOffset = semiMajor * ecc;
+
                 // Planet Axial Tilts (Astronomical Real Physics)
                 var AXIAL_TILTS = {
                     mercury: 0.03,
