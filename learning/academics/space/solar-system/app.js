@@ -62,20 +62,81 @@
             if (ufoMesh && scene) scene.remove(ufoMesh);
             var group = new THREE.Group();
             
-            // UFO Center Dome
-            var domeGeo = new THREE.SphereGeometry(6, 16, 16, 0, Math.PI * 2, 0, Math.PI / 2);
-            var domeMat = new THREE.MeshStandardMaterial({ color: 0x38bdf8, roughness: 0.2, metalness: 0.8, transparent: true, opacity: 0.8 });
+            // 1. UFO Crystal Clear Glass Dome
+            var domeGeo = new THREE.SphereGeometry(7, 32, 32, 0, Math.PI * 2, 0, Math.PI / 2);
+            var domeMat = new THREE.MeshPhysicalMaterial({ 
+                color: 0xe0f2fe, 
+                roughness: 0.05, 
+                metalness: 0.1, 
+                transparent: true, 
+                opacity: 0.35, 
+                transmission: 0.9, 
+                ior: 1.5,
+                clearcoat: 1.0
+            });
             var dome = new THREE.Mesh(domeGeo, domeMat);
             group.add(dome);
 
-            // UFO Metallic Outer Ring
+            // 2. 🛸 Cute Animal Pilot Avatar (Sitting inside Dome)
+            var pilotGroup = new THREE.Group();
+            pilotGroup.position.set(0, 1.5, 0);
+
+            // Pilot Seat (Backrest)
+            var seatGeo = new THREE.BoxGeometry(4, 5, 1.5);
+            var seatMat = new THREE.MeshStandardMaterial({ color: 0x1e293b, roughness: 0.5 });
+            var seat = new THREE.Mesh(seatGeo, seatMat);
+            seat.position.set(0, 2.5, 2);
+            pilotGroup.add(seat);
+
+            // Pilot Body
+            var bodyGeo = new THREE.SphereGeometry(2.5, 16, 16);
+            var bodyMat = new THREE.MeshStandardMaterial({ color: 0xf59e0b }); // Warm Orange Space Suit
+            var body = new THREE.Mesh(bodyGeo, bodyMat);
+            body.position.set(0, 2, 0.5);
+            pilotGroup.add(body);
+
+            // Pilot Head
+            var headGeo = new THREE.SphereGeometry(2.2, 24, 24);
+            var headMat = new THREE.MeshStandardMaterial({ color: 0xfbbf24, roughness: 0.4 }); // Cute Bear/Rabbit Pilot Head
+            var head = new THREE.Mesh(headGeo, headMat);
+            head.position.set(0, 4.2, 0.5);
+            pilotGroup.add(head);
+
+            // Cute Animal Ears (Left & Right)
+            var earGeo = new THREE.SphereGeometry(0.8, 16, 16);
+            var earMat = new THREE.MeshStandardMaterial({ color: 0xd97706 });
+            var leftEar = new THREE.Mesh(earGeo, earMat);
+            leftEar.position.set(-1.6, 5.8, 0.5);
+            var rightEar = new THREE.Mesh(earGeo, earMat);
+            rightEar.position.set(1.6, 5.8, 0.5);
+            pilotGroup.add(leftEar);
+            pilotGroup.add(rightEar);
+
+            // Pilot Headset Band (Visible from Backside)
+            var headsetGeo = new THREE.TorusGeometry(2.3, 0.3, 12, 24, Math.PI);
+            var headsetMat = new THREE.MeshStandardMaterial({ color: 0x38bdf8, metalness: 0.8 });
+            var headset = new THREE.Mesh(headsetGeo, headsetMat);
+            headset.rotation.x = Math.PI / 2;
+            headset.position.set(0, 4.3, 0.5);
+            pilotGroup.add(headset);
+
+            // Glowing Control Console Panel
+            var consoleGeo = new THREE.BoxGeometry(4, 1.5, 2);
+            var consoleMat = new THREE.MeshBasicMaterial({ color: 0x0284c7 });
+            var consoleObj = new THREE.Mesh(consoleGeo, consoleMat);
+            consoleObj.position.set(0, 1.2, -1.5);
+            pilotGroup.add(consoleObj);
+
+            group.add(pilotGroup);
+
+            // 3. UFO Metallic Outer Ring
             var ringGeo = new THREE.TorusGeometry(12, 2.5, 16, 32);
-            var ringMat = new THREE.MeshStandardMaterial({ color: 0x94a3b8, metalness: 0.9, roughness: 0.3 });
+            var ringMat = new THREE.MeshStandardMaterial({ color: 0x64748b, metalness: 0.9, roughness: 0.2 });
             var ring = new THREE.Mesh(ringGeo, ringMat);
             ring.rotation.x = Math.PI / 2;
             group.add(ring);
 
-            // UFO Glowing Bottom Energy Ring
+            // 4. UFO Glowing Bottom Energy Ring
             var glowGeo = new THREE.TorusGeometry(8, 1.2, 16, 32);
             var glowMat = new THREE.MeshBasicMaterial({ color: 0x06b6d4 });
             var glow = new THREE.Mesh(glowGeo, glowMat);
