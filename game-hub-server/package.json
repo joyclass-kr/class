@@ -4,7 +4,7 @@
   "private": true,
   "scripts": {
     "start": "node server.js",
-    "postinstall": "npm --prefix ../learning/basics/arithmetics ci --include=dev && npm --prefix ../learning/basics/arithmetics run build && npm --prefix ../learning/academics/korean-history ci --include=dev && npm --prefix ../learning/academics/korean-history run build",
+    "postinstall": "NODE_OPTIONS=--max-old-space-size=384 npm --prefix ../learning/basics/arithmetics ci --include=dev && NODE_OPTIONS=--max-old-space-size=384 npm --prefix ../learning/basics/arithmetics run build && NODE_OPTIONS=--max-old-space-size=384 npm --prefix ../learning/academics/korean-history ci --include=dev && NODE_OPTIONS=--max-old-space-size=384 npm --prefix ../learning/academics/korean-history run build",
     "build:reading-seed": "node ../scripts/build-reading-seed.js"
   },
   "dependencies": {
