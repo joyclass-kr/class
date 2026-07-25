@@ -1013,40 +1013,51 @@
                             b.mesh.rotation.y -= timeDelta * (Math.PI * 2) * 0.03;
                         }
                     } else if (key === 'meteor') {
-                        // 🌠 Intermittent Flash & Burn-Up Shooting Star Engine (Natural Earth Entry)
-                        var earthBody = celestialBodies['earth'];
-                        if (earthBody && b.bodyTiltGroup && b.animState) {
-                            var earthPos = earthBody.bodyTiltGroup ? earthBody.bodyTiltGroup.position : earthBody.mesh.position;
-                            b.bodyTiltGroup.position.set(earthPos.x, 0, earthPos.z);
-
+                        // 🌠 Universal Space Meteor Engine (Flashes randomly anywhere across the Solar System!)
+                        if (b.bodyTiltGroup && b.animState) {
                             var st = b.animState;
                             if (!st.isShooting) {
                                 st.cooldown -= delta;
                                 if (st.cooldown <= 0) {
-                                    // Trigger a new single shooting star!
+                                    // Trigger a new shooting star anywhere in space!
                                     st.isShooting = true;
                                     st.progress = 0.0;
-                                    st.cooldown = Math.random() * 3.0 + 2.5; // Next shooting star in 2.5~5.5 seconds
+                                    st.cooldown = Math.random() * 2.5 + 1.5; // Next meteor in 1.5~4.0 seconds
 
-                                    var rx = (Math.random() - 0.5) * 28;
-                                    var ry = Math.random() * 15 + 25;
-                                    var rz = (Math.random() - 0.5) * 28;
+                                    // Pick a random target celestial body or space coordinate (Earth, Mars, Venus, Jupiter, Asteroid Belt, or deep space)
+                                    var targets = ['earth', 'mars', 'venus', 'jupiter', 'asteroid', 'sun'];
+                                    var randomTargetKey = targets[Math.floor(Math.random() * targets.length)];
+                                    var targetBody = celestialBodies[randomTargetKey];
+
+                                    var basePos = new THREE.Vector3(0, 0, 0);
+                                    if (targetBody && targetBody.mesh) {
+                                        targetBody.mesh.getWorldPosition(basePos);
+                                    } else {
+                                        basePos.set((Math.random() - 0.5) * 400, (Math.random() - 0.5) * 40, (Math.random() - 0.5) * 400);
+                                    }
+
+                                    // Anchor mGroup to this space location
+                                    b.bodyTiltGroup.position.copy(basePos);
+
+                                    var rx = (Math.random() - 0.5) * 60;
+                                    var ry = Math.random() * 25 + 15;
+                                    var rz = (Math.random() - 0.5) * 60;
                                     st.startPos.set(rx, ry, rz);
 
-                                    // Target toward Earth surface
-                                    var tx = rx * 0.3;
-                                    var ty = 2.0;
-                                    var tz = rz * 0.3;
+                                    // Random flight trajectory
+                                    var tx = rx + (Math.random() - 0.5) * 40;
+                                    var ty = ry - Math.random() * 30 - 10;
+                                    var tz = rz + (Math.random() - 0.5) * 40;
                                     st.endPos.set(tx, ty, tz);
                                 }
                             } else {
                                 st.progress += delta * 2.8; // 0.35s fast flash flight
                                 if (st.progress >= 1.0) {
                                     st.isShooting = false;
-                                    st.starMat.opacity = 0.0; // Completely disappear!
+                                    st.starMat.opacity = 0.0; // Disappear into deep space!
                                 } else {
                                     var curHead = new THREE.Vector3().lerpVectors(st.startPos, st.endPos, st.progress);
-                                    var trailLen = 8.0 * (1.0 - st.progress * 0.5);
+                                    var trailLen = 10.0 * (1.0 - st.progress * 0.5);
                                     var dir = new THREE.Vector3().subVectors(st.endPos, st.startPos).normalize();
                                     var curTail = new THREE.Vector3().subVectors(curHead, dir.clone().multiplyScalar(trailLen));
 
@@ -1055,7 +1066,6 @@
                                     pos[3] = curTail.x; pos[4] = curTail.y; pos[5] = curTail.z;
                                     st.starGeo.attributes.position.needsUpdate = true;
 
-                                    // Flash bright white then fade out as it enters atmosphere
                                     st.starMat.opacity = Math.sin(st.progress * Math.PI) * 0.95;
                                 }
                             }
