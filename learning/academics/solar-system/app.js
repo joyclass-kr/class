@@ -339,8 +339,46 @@ document.addEventListener('DOMContentLoaded', () => {
         }
     }
 
-    function createTextureFromUrlData(dataUrl) {
-        const texture = new THREE.TextureLoader().load(dataUrl);
+    const LOCAL_REAL_TEXTURES = {
+        sun: './assets/textures/2k_sun.jpg',
+        earth: './assets/textures/2k_earth_daymap.jpg',
+        moon: './assets/textures/2k_moon.jpg',
+        mars: './assets/textures/2k_mars.jpg',
+        jupiter: './assets/textures/2k_jupiter.jpg',
+        saturn: './assets/textures/2k_saturn.jpg',
+        saturnRing: './assets/textures/2k_saturn_ring.png',
+        venus: './assets/textures/2k_venus.jpg',
+        mercury: './assets/textures/2k_mercury.jpg',
+        uranus: './assets/textures/2k_uranus.jpg',
+        neptune: './assets/textures/2k_neptune.jpg'
+    };
+
+    function loadPlanetTexture(key) {
+        let canvasEl = (key === 'saturnRing')
+            ? window.createSaturnRingCanvas()
+            : window.createPlanetCanvas(key);
+
+        const texture = new THREE.CanvasTexture(canvasEl);
+        texture.wrapS = THREE.RepeatWrapping;
+        texture.wrapT = THREE.ClampToEdgeWrapping;
+        texture.needsUpdate = true;
+
+        if (LOCAL_REAL_TEXTURES[key]) {
+            const img = new Image();
+            img.onload = function () {
+                try {
+                    const ctx = canvasEl.getContext('2d');
+                    if (ctx) {
+                        ctx.drawImage(img, 0, 0, canvasEl.width, canvasEl.height);
+                        texture.needsUpdate = true;
+                    }
+                } catch (e) {
+                    console.warn('Real texture swap notice:', e);
+                }
+            };
+            img.src = LOCAL_REAL_TEXTURES[key];
+        }
+
         return texture;
     }
 
@@ -354,9 +392,8 @@ document.addEventListener('DOMContentLoaded', () => {
         orbitLines = [];
         celestialBodies = {};
 
-        // 1. Build Sun
-        const sunTexData = window.createPlanetTexture('sun');
-        const sunTex = createTextureFromUrlData(sunTexData);
+        // 1. Build Sun with Real Texture
+        const sunTex = loadPlanetTexture('sun');
         const sunGeo = new THREE.SphereGeometry(getBodyScaleRadius('sun'), 32, 32);
         const sunMat = new THREE.MeshBasicMaterial({ map: sunTex });
         const sunMesh = new THREE.Mesh(sunGeo, sunMat);
@@ -370,7 +407,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
         celestialBodies['sun'] = { mesh: sunMesh, data: window.SOLAR_SYSTEM_DATA.sun };
 
-        // 2. Build Planets & Moon
+        // 2. Build Planets & Moon with Real Textures
         const planetKeys = ['mercury', 'venus', 'earth', 'mars', 'jupiter', 'saturn', 'uranus', 'neptune', 'pluto'];
 
         planetKeys.forEach(key => {
@@ -382,22 +419,24 @@ document.addEventListener('DOMContentLoaded', () => {
             const pivot = new THREE.Object3D();
             scene.add(pivot);
 
-            // Planet Mesh with Procedural NASA-quality Canvas Texture
-            const texData = window.createPlanetTexture(key);
-            const texture = createTextureFromUrlData(texData);
+            // Planet Mesh with Real 2K Texture
+            const texture = loadPlanetTexture(key);
 
             const geo = new THREE.SphereGeometry(bodyR, 32, 32);
-            const mat = new THREE.MeshStandardMaterial({ map: texture, roughness: 0.7, metalness: 0.1 });
+            const mat = new THREE.MeshStandardMaterial({
+                map: texture,
+                roughness: key === 'earth' ? 0.35 : (key === 'jupiter' || key === 'saturn') ? 0.8 : 0.6,
+                metalness: 0.1
+            });
             const planetMesh = new THREE.Mesh(geo, mat);
             planetMesh.position.x = orbitR;
             planetMesh.userData = { key, data };
 
             pivot.add(planetMesh);
 
-            // Saturn Ring Mesh
+            // Saturn Ring Mesh with Real Ring Texture
             if (key === 'saturn') {
-                const ringTexData = window.createSaturnRingTexture();
-                const ringTex = createTextureFromUrlData(ringTexData);
+                const ringTex = loadPlanetTexture('saturnRing');
                 const ringGeo = new THREE.RingGeometry(bodyR * 1.3, bodyR * 2.3, 64);
 
                 // Rotate ring flat along planet equator
@@ -407,16 +446,22 @@ document.addEventListener('DOMContentLoaded', () => {
                 planetMesh.add(ringMesh);
             }
 
-            // Earth's Moon
+            // Earth Atmosphere Glow & Moon
             if (key === 'earth') {
+                // Earth Atmosphere Blue Halo
+                const atmosGeo = new THREE.SphereGeometry(bodyR * 1.12, 32, 32);
+                const atmosMat = new THREE.MeshBasicMaterial({ color: 0x38bdf8, transparent: true, opacity: 0.22, side: THREE.BackSide });
+                const atmosMesh = new THREE.Mesh(atmosGeo, atmosMat);
+                planetMesh.add(atmosMesh);
+
+                // Earth's Moon
                 const moonPivot = new THREE.Object3D();
                 planetMesh.add(moonPivot);
 
-                const moonTexData = window.createPlanetTexture('moon');
-                const moonTex = createTextureFromUrlData(moonTexData);
+                const moonTex = loadPlanetTexture('moon');
                 const moonR = getBodyScaleRadius('moon');
                 const moonGeo = new THREE.SphereGeometry(moonR, 16, 16);
-                const moonMat = new THREE.MeshStandardMaterial({ map: moonTex });
+                const moonMat = new THREE.MeshStandardMaterial({ map: moonTex, roughness: 0.85 });
                 const moonMesh = new THREE.Mesh(moonGeo, moonMat);
                 moonMesh.position.x = bodyR + 6;
                 moonMesh.userData = { key: 'moon', data: window.SOLAR_SYSTEM_DATA.moon };
