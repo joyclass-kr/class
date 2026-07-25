@@ -96,7 +96,7 @@
 
         var ufoState = {
             active: false,
-            pos: new THREE.Vector3(0, 50, 450),
+            pos: new THREE.Vector3(0, 3.0, 450), // Aligned with orbital plane (Y=0)
             heading: 0.0,
             keys: { forward: false, backward: false, left: false, right: false },
             pilotName: localStorage.getItem('userName') || localStorage.getItem('guestName') || localStorage.getItem('studentName') || '우주 탐험가',
@@ -1141,7 +1141,7 @@
                         if (ufoControlsPanel) ufoControlsPanel.style.display = 'block';
                         if (ufoMesh) ufoMesh.visible = true;
                         if (camera && controls) {
-                            camera.position.set(ufoState.pos.x, ufoState.pos.y + 50, ufoState.pos.z + 120);
+                            camera.position.set(ufoState.pos.x, ufoState.pos.y + 18, ufoState.pos.z + 65);
                             controls.target.copy(ufoState.pos);
                             controls.update();
                         }
