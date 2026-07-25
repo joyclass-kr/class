@@ -845,12 +845,25 @@
             var simModeToggle = document.getElementById('simModeToggle');
             var simModeLabel = document.getElementById('simModeLabel');
             var simWarningAlert = document.getElementById('simWarningAlert');
+            var auInfoCard = document.getElementById('auInfoCard');
+            var auCardToggleBtn = document.getElementById('auCardToggleBtn');
+            var auCardContent = document.getElementById('auCardContent');
+
+            if (auCardToggleBtn && auCardContent) {
+                var isExpanded = true;
+                auCardToggleBtn.addEventListener('click', function() {
+                    isExpanded = !isExpanded;
+                    auCardContent.style.display = isExpanded ? 'block' : 'none';
+                    auCardToggleBtn.textContent = isExpanded ? '➖' : '➕';
+                });
+            }
 
             if (simModeToggle) {
                 simModeToggle.addEventListener('change', function (e) {
                     state.simMode = e.target.checked ? '2d' : '3d';
                     
                     if (state.simMode === '2d') {
+                        if (auInfoCard) auInfoCard.style.display = 'block';
                         simModeLabel.textContent = '🗺️ 2D 리얼리티 (1:1 Map)';
                         simModeLabel.style.color = '#10b981'; // emerald
                         simModeLabel.style.background = 'rgba(16,185,129,0.15)';
@@ -866,6 +879,7 @@
                             controls.update();
                         }
                     } else {
+                        if (auInfoCard) auInfoCard.style.display = 'none';
                         simModeLabel.textContent = '🔭 3D 관측용 (Log Scale)';
                         simModeLabel.style.color = '#38bdf8'; // sky
                         simModeLabel.style.background = 'rgba(56,189,248,0.15)';

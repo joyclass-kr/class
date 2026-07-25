@@ -60,9 +60,30 @@
                 </div>
 
                 <!-- 3D Canvas Viewport -->
-                <div class="solar-canvas-wrapper" id="solarCanvasContainer">
+                <div class="solar-canvas-wrapper" id="solarCanvasContainer" style="position: relative;">
                     <canvas id="solarCanvas"></canvas>
                     <div id="labelsContainer" style="position:absolute; top:0; left:0; width:100%; height:100%; pointer-events:none; overflow:hidden;"></div>
+                    
+                    <!-- 1 AU Concept Educational Card (Visible in 2D Mode) -->
+                    <div id="auInfoCard" style="display: none; position: absolute; top: 16px; left: 16px; max-width: 320px; background: rgba(15, 23, 42, 0.92); border: 1px solid rgba(56, 189, 248, 0.4); border-radius: 12px; padding: 14px 16px; color: #e2e8f0; font-size: 12px; line-height: 1.5; backdrop-filter: blur(8px); box-shadow: 0 10px 25px rgba(0, 0, 0, 0.5); z-index: 10;">
+                        <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 8px; border-bottom: 1px solid rgba(255,255,255,0.1); padding-bottom: 6px;">
+                            <span style="font-weight: 800; font-size: 13px; color: #38bdf8;">💡 1 AU (천문단위)란?</span>
+                            <button id="auCardToggleBtn" style="background: none; border: none; color: #94a3b8; cursor: pointer; font-size: 14px; padding: 0 4px;">➖</button>
+                        </div>
+                        <div id="auCardContent">
+                            <p style="margin: 0 0 8px 0; color: #f8fafc;">
+                                <strong>1 AU</strong>는 태양계 거리를 재기 위해 <span style="color: #fbbf24; font-weight: 700;">태양과 지구 사이의 평균 거리</span>를 1로 약속한 단위입니다.
+                            </p>
+                            <ul style="margin: 0 0 8px 0; padding-left: 16px; color: #cbd5e1;">
+                                <li><strong>실제 거리</strong>: 약 1억 4,960만 km</li>
+                                <li>빛의 속도로 약 <span style="color: #38bdf8; font-weight: 700;">8분 20초</span> 걸림!</li>
+                            </ul>
+                            <div style="background: rgba(56, 189, 248, 0.1); border-left: 3px solid #38bdf8; padding: 6px 8px; border-radius: 4px; font-size: 11px; color: #93c5fd;">
+                                <strong>왜 AU를 쓸까?</strong><br>
+                                우주는 너무 커서 km 대신 <strong>수성(0.39 AU), 목성(5.2 AU), 해왕성(30 AU)</strong> 처럼 지구 기준으로 쉽게 비교하기 위해서입니다.
+                            </div>
+                        </div>
+                    </div>
                 </div>
 
                 <!-- Floating Control Panel Below Viewport (Matching UI Design) -->
@@ -327,7 +348,7 @@
         </div>
     </div>
 
-    <script src="solar-data.js?v=fixed_names"></script>
-    <script src="app.js?v=fixed_names"></script>
+    <script src="solar-data.js?v=au_info"></script>
+    <script src="app.js?v=au_info"></script>
 </body>
 </html>
