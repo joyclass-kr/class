@@ -1,6 +1,6 @@
 /**
  * 태양계 관찰 (Solar System Observation) Three.js Engine
- * True Astronomical AU Proportions & Kepler Focus Ellipse Engine
+ * 100% Strict Astronomical AU Orbit Distance Scaling
  */
 
 (function () {
@@ -50,6 +50,21 @@
         var moonScene, moonCamera, moonRenderer, moonControls;
         var earth3DMesh, moon3DMesh, moonPivotObj, moonOrbitLine;
 
+        // STRICT ASTRONOMICAL AU ORBIT DISTANCES (1 AU Earth = 45px)
+        // Inner terrestrial planets are compact near Sun; outer gas giants expand vastly!
+        var AU_ORBIT_DISTANCES = {
+            mercury: 17.55,  // 0.39 AU
+            venus: 32.40,    // 0.72 AU
+            earth: 45.00,    // 1.00 AU Benchmark
+            mars: 68.40,     // 1.52 AU
+            // ASTEROID BELT GAP
+            jupiter: 234.00, // 5.20 AU (5.2x Earth Distance!)
+            saturn: 431.10,  // 9.58 AU (9.58x Earth Distance!)
+            uranus: 864.00,  // 19.20 AU (19.2x Earth Distance!)
+            neptune: 1350.00,// 30.00 AU (30x Earth Distance!)
+            pluto: 1777.50   // 39.50 AU (39.5x Earth Distance!)
+        };
+
         initNavTabs();
         initQuickBar();
         initAtlasGrid();
@@ -81,10 +96,10 @@
             var h = canvasContainer.clientHeight || 540;
 
             scene = new THREE.Scene();
-            camera = new THREE.PerspectiveCamera(45, w / h, 0.1, 4000);
+            camera = new THREE.PerspectiveCamera(45, w / h, 0.1, 8000);
             
-            // Panoramic Camera Angle showing full solar system scale
-            camera.position.set(0, 320, 480);
+            // Panoramic Camera Angle showing full AU scale (compact inner + vast outer)
+            camera.position.set(0, 450, 650);
             camera.lookAt(0, 0, 0);
 
             try {
@@ -100,15 +115,15 @@
                 controls = new THREE.OrbitControls(camera, renderer.domElement);
                 controls.enableDamping = true;
                 controls.dampingFactor = 0.05;
-                controls.maxDistance = 1800;
-                controls.minDistance = 25;
+                controls.maxDistance = 4500;
+                controls.minDistance = 15;
             }
 
             raycaster = new THREE.Raycaster();
             mouse = new THREE.Vector2();
 
             scene.add(new THREE.AmbientLight(0x707080, 1.6));
-            scene.add(new THREE.PointLight(0xfffaed, 3.0, 2000));
+            scene.add(new THREE.PointLight(0xfffaed, 3.0, 4000));
 
             buildStarfield();
             buildCelestialBodies();
@@ -128,7 +143,6 @@
             var angle = 0;
             var planetKeys = ['mercury', 'venus', 'earth', 'mars', 'jupiter', 'saturn', 'uranus', 'neptune', 'pluto'];
             var orbitRates = { mercury: 4.15, venus: 1.62, earth: 1.0, mars: 0.53, jupiter: 0.084, saturn: 0.034, uranus: 0.012, neptune: 0.006, pluto: 0.004 };
-            var dists = { mercury: 28, venus: 48, earth: 68, mars: 100, jupiter: 210, saturn: 320, uranus: 450, neptune: 580, pluto: 680 };
 
             function render2D() {
                 var w = canvasContainer ? (canvasContainer.clientWidth || 900) : 900;
@@ -153,7 +167,7 @@
                 ctx.shadowColor = '#ff8800';
                 ctx.shadowBlur = 24;
                 ctx.beginPath();
-                ctx.arc(cx, cy, 18, 0, Math.PI * 2);
+                ctx.arc(cx, cy, 14, 0, Math.PI * 2);
                 ctx.fill();
                 ctx.shadowBlur = 0;
 
@@ -165,7 +179,7 @@
 
                 planetKeys.forEach(function (key) {
                     var bodyData = (window.SOLAR_SYSTEM_DATA && window.SOLAR_SYSTEM_DATA[key]) || {};
-                    var r = dists[key] || 100;
+                    var r = AU_ORBIT_DISTANCES[key] || 100;
                     var rate = orbitRates[key] || 0.1;
                     var curAngle = angle * rate * 2;
 
@@ -214,37 +228,23 @@
         // ACCURATE RELATIVE BODY SIZES
         function getBodyScaleRadius(key) {
             var r = {
-                sun: 16,
-                mercury: 2.2,
-                venus: 3.6,
-                earth: 3.8,
-                moon: 1.2,
-                mars: 2.8,
-                jupiter: 9.5,
-                saturn: 8.0,
-                uranus: 5.5,
-                neptune: 5.2,
-                pluto: 1.8
+                sun: 12.0,      // Compact Sun so Mercury & Venus are 100% visible!
+                mercury: 1.8,
+                venus: 2.8,
+                earth: 3.0,
+                moon: 1.0,
+                mars: 2.2,
+                jupiter: 8.5,
+                saturn: 7.2,
+                uranus: 5.0,
+                neptune: 4.8,
+                pluto: 1.5
             };
-            return r[key] || 3.0;
+            return r[key] || 2.5;
         }
 
-        // TRUE ASTRONOMICAL AU PROPORTIONAL ORBIT DISTANCES (1 AU Earth = 65px)
-        // Inner planets (Terrestrial) are compact; Outer planets (Gas Giants) expand vastly across space!
         function getBodyOrbitRadius(key) {
-            var r = {
-                mercury: 25.3,  // 0.39 AU
-                venus: 46.8,    // 0.72 AU
-                earth: 65.0,    // 1.00 AU
-                mars: 98.8,     // 1.52 AU
-                // Asteroid Belt Space Gap
-                jupiter: 230.0, // 5.20 AU (Vast realistic space distance!)
-                saturn: 360.0,  // 9.58 AU
-                uranus: 520.0,  // 19.2 AU
-                neptune: 680.0, // 30.0 AU
-                pluto: 810.0    // 39.5 AU
-            };
-            return r[key] || 100;
+            return AU_ORBIT_DISTANCES[key] || 100;
         }
 
         function createStarTexture() {
@@ -263,18 +263,18 @@
 
         function buildStarfield() {
             var geo = new THREE.BufferGeometry();
-            var count = 3000;
+            var count = 3500;
             var pos = new Float32Array(count * 3);
             for (var i = 0; i < count * 3; i += 3) {
-                pos[i] = (Math.random() - 0.5) * 2400;
-                pos[i + 1] = (Math.random() - 0.5) * 2400;
-                pos[i + 2] = (Math.random() - 0.5) * 2400;
+                pos[i] = (Math.random() - 0.5) * 4500;
+                pos[i + 1] = (Math.random() - 0.5) * 4500;
+                pos[i + 2] = (Math.random() - 0.5) * 4500;
             }
             geo.setAttribute('position', new THREE.BufferAttribute(pos, 3));
             var starTex = createStarTexture();
             var mat = new THREE.PointsMaterial({
                 map: starTex,
-                size: 2.2,
+                size: 2.5,
                 transparent: true,
                 opacity: 0.85,
                 depthWrite: false,
@@ -368,29 +368,29 @@
                     );
                     planetMesh.add(atmosMesh);
 
-                    // MOON ORBIT TILT: Not perpendicular to Earth equator! Tilted by ~28.58° (Earth tilt 23.44° + Lunar inclination 5.14°)
+                    // MOON ORBIT TILT: 28.58° relative to Earth spin axis (Not perpendicular!)
                     var moonPivot = new THREE.Object3D();
-                    moonPivot.rotation.z = 28.58 * (Math.PI / 180); // Tilted relative to Earth spin axis!
+                    moonPivot.rotation.z = 28.58 * (Math.PI / 180);
                     planetMesh.add(moonPivot);
                     var moonR = getBodyScaleRadius('moon');
                     var moonMesh = new THREE.Mesh(
                         new THREE.SphereGeometry(moonR, 16, 16),
                         new THREE.MeshStandardMaterial({ map: loadPlanet3DTexture('moon'), roughness: 0.85 })
                     );
-                    moonMesh.position.x = 12.0;
+                    moonMesh.position.x = 8.5; // Clear & Beautiful Distance!
                     moonMesh.userData = { key: 'moon', data: window.SOLAR_SYSTEM_DATA.moon };
                     moonPivot.add(moonMesh);
 
                     var mPts = [];
                     for (var m = 0; m <= 64; m++) {
                         var mt = (m / 64) * Math.PI * 2;
-                        mPts.push(new THREE.Vector3(Math.cos(mt) * 12.0, 0, Math.sin(mt) * 12.0));
+                        mPts.push(new THREE.Vector3(Math.cos(mt) * 8.5, 0, Math.sin(mt) * 8.5));
                     }
                     var mGeo = new THREE.BufferGeometry().setFromPoints(mPts);
                     var mLine = new THREE.LineLoop(mGeo, new THREE.LineBasicMaterial({ color: 0x38bdf8, transparent: true, opacity: 0.35 }));
                     moonPivot.add(mLine);
 
-                    celestialBodies['moon'] = { mesh: moonMesh, pivot: moonPivot, orbitRadius: 12.0, data: window.SOLAR_SYSTEM_DATA.moon };
+                    celestialBodies['moon'] = { mesh: moonMesh, pivot: moonPivot, orbitRadius: 8.5, data: window.SOLAR_SYSTEM_DATA.moon };
                 }
 
                 celestialBodies[key] = { mesh: planetMesh, ringMesh: saturnRingMesh, pivot: pivot, orbitRadius: orbitR, semiMajor: semiMajor, semiMinor: semiMinor, focusOffset: focusOffset, data: data };
@@ -770,7 +770,7 @@
             if (resetCamBtn) {
                 resetCamBtn.addEventListener('click', function () {
                     if (camera && controls) {
-                        camera.position.set(0, 320, 480);
+                        camera.position.set(0, 450, 650);
                         controls.target.set(0, 0, 0);
                         controls.update();
                     }
