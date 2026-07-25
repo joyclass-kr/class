@@ -368,8 +368,9 @@
                     );
                     planetMesh.add(atmosMesh);
 
-                    // CLEAR MOON DISTANCE: Positioned 12.0 units away from Earth center
+                    // MOON ORBIT TILT: Not perpendicular to Earth equator! Tilted by ~28.58° (Earth tilt 23.44° + Lunar inclination 5.14°)
                     var moonPivot = new THREE.Object3D();
+                    moonPivot.rotation.z = 28.58 * (Math.PI / 180); // Tilted relative to Earth spin axis!
                     planetMesh.add(moonPivot);
                     var moonR = getBodyScaleRadius('moon');
                     var moonMesh = new THREE.Mesh(
