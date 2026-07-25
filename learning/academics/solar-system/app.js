@@ -407,8 +407,24 @@ document.addEventListener('DOMContentLoaded', () => {
                 planetMesh.add(ringMesh);
             }
 
-            // Earth's Moon
+            // Earth 3D Clouds & Atmosphere Glow
             if (key === 'earth') {
+                // 1. Semi-transparent 3D Cloud Sphere Layer
+                const cloudTexData = window.createEarthCloudTexture();
+                const cloudTex = createTextureFromUrlData(cloudTexData);
+                const cloudGeo = new THREE.SphereGeometry(bodyR * 1.02, 32, 32);
+                const cloudMat = new THREE.MeshStandardMaterial({ map: cloudTex, transparent: true, opacity: 0.5, depthWrite: false });
+                const cloudMesh = new THREE.Mesh(cloudGeo, cloudMat);
+                planetMesh.add(cloudMesh);
+                celestialBodies['earthCloud'] = cloudMesh;
+
+                // 2. Cyan Blue Atmosphere Halo Glow
+                const atmosGeo = new THREE.SphereGeometry(bodyR * 1.1, 32, 32);
+                const atmosMat = new THREE.MeshBasicMaterial({ color: 0x38bdf8, transparent: true, opacity: 0.22, side: THREE.BackSide });
+                const atmosMesh = new THREE.Mesh(atmosGeo, atmosMat);
+                planetMesh.add(atmosMesh);
+
+                // 3. Earth's Moon
                 const moonPivot = new THREE.Object3D();
                 planetMesh.add(moonPivot);
 
@@ -416,7 +432,7 @@ document.addEventListener('DOMContentLoaded', () => {
                 const moonTex = createTextureFromUrlData(moonTexData);
                 const moonR = getBodyScaleRadius('moon');
                 const moonGeo = new THREE.SphereGeometry(moonR, 16, 16);
-                const moonMat = new THREE.MeshStandardMaterial({ map: moonTex });
+                const moonMat = new THREE.MeshStandardMaterial({ map: moonTex, roughness: 0.8 });
                 const moonMesh = new THREE.Mesh(moonGeo, moonMat);
                 moonMesh.position.x = bodyR + 6;
                 moonMesh.userData = { key: 'moon', data: window.SOLAR_SYSTEM_DATA.moon };
@@ -541,9 +557,12 @@ document.addEventListener('DOMContentLoaded', () => {
                 simTimeVal.textContent = `${state.simTimeYears.toFixed(1)} yrs`;
             }
 
-            // Rotate Sun
+            // Rotate Sun & Earth Clouds
             if (celestialBodies['sun']) {
                 celestialBodies['sun'].mesh.rotation.y += 0.003;
+            }
+            if (celestialBodies['earthCloud']) {
+                celestialBodies['earthCloud'].rotation.y += 0.006;
             }
 
             // Orbit & Rotate Planets
