@@ -583,20 +583,29 @@
                 });
                 var planetMesh = new THREE.Mesh(geo, mat);
 
-                // Planet Axial Tilts
-                if (key === 'earth') planetMesh.rotation.z = 23.44 * (Math.PI / 180);
-                if (key === 'mars') planetMesh.rotation.z = 25.19 * (Math.PI / 180);
-                if (key === 'saturn') planetMesh.rotation.z = 26.73 * (Math.PI / 180);
-                if (key === 'uranus') planetMesh.rotation.z = 97.77 * (Math.PI / 180);
+                // Planet Axial Tilts (Astronomical Real Physics)
+                var AXIAL_TILTS = {
+                    mercury: 0.03,
+                    venus: 177.3,
+                    earth: 23.44,
+                    mars: 25.19,
+                    jupiter: 3.13,
+                    saturn: 26.73,
+                    uranus: 97.77,  // 98 degrees lying down sideways!
+                    neptune: 28.32,
+                    pluto: 122.53
+                };
 
-                // TRUE KEPLER ELLIPSE MATHEMATICAL FORMULA
-                var semiMajor = orbitR;
-                var semiMinor = orbitR * Math.sqrt(1 - ecc * ecc);
-                var focusOffset = semiMajor * ecc;
+                // Create Axial Tilt Frame Group (Rotates along Z axis according to axial tilt)
+                var bodyTiltGroup = new THREE.Object3D();
+                bodyTiltGroup.rotation.z = (AXIAL_TILTS[key] || 0) * (Math.PI / 180);
+                bodyTiltGroup.position.x = semiMajor - focusOffset;
+                pivot.add(bodyTiltGroup);
 
-                // Initial position at theta = 0
-                planetMesh.position.x = semiMajor - focusOffset;
-                
+                // Add planet mesh inside tiltGroup
+                bodyTiltGroup.add(planetMesh);
+                planetMesh.position.set(0, 0, 0);
+
                 if (state.simMode === '2d') {
                     planetMesh.visible = false;
                     var pl = createPlanetLabel(key, data);
@@ -604,18 +613,29 @@
                     createOrbitLabel(key, data, semiMajor, semiMinor, focusOffset, pivot);
                 }
                 planetMesh.userData = { key: key, data: data, semiMajor: semiMajor, semiMinor: semiMinor, focusOffset: focusOffset, ecc: ecc };
-                pivot.add(planetMesh);
 
-                // Saturn Ring
+                // Saturn & Uranus & Neptune Rings
                 var saturnRingMesh = null;
-                if (key === 'saturn' && state.simMode === '3d') {
-                    var ringTex = loadPlanet3DTexture('saturnRing');
-                    var ringGeo = new THREE.RingGeometry(bodyR * 1.3, bodyR * 2.3, 64);
-                    ringGeo.rotateX(Math.PI / 2);
-                    saturnRingMesh = new THREE.Mesh(ringGeo, new THREE.MeshStandardMaterial({ map: ringTex, side: THREE.DoubleSide, transparent: true, opacity: 0.9 }));
-                    saturnRingMesh.rotation.z = 26.73 * (Math.PI / 180);
-                    saturnRingMesh.position.x = semiMajor - focusOffset;
-                    pivot.add(saturnRingMesh);
+                if (state.simMode === '3d') {
+                    if (key === 'saturn') {
+                        var ringTex = loadPlanet3DTexture('saturnRing');
+                        var ringGeo = new THREE.RingGeometry(bodyR * 1.3, bodyR * 2.3, 64);
+                        ringGeo.rotateX(Math.PI / 2);
+                        saturnRingMesh = new THREE.Mesh(ringGeo, new THREE.MeshStandardMaterial({ map: ringTex, side: THREE.DoubleSide, transparent: true, opacity: 0.9 }));
+                        bodyTiltGroup.add(saturnRingMesh);
+                    } else if (key === 'uranus') {
+                        // Uranus Faint Vertical Ring (98 deg tilted)
+                        var uRingGeo = new THREE.RingGeometry(bodyR * 1.4, bodyR * 1.8, 64);
+                        uRingGeo.rotateX(Math.PI / 2);
+                        var uRingMesh = new THREE.Mesh(uRingGeo, new THREE.MeshStandardMaterial({ color: 0x38bdf8, side: THREE.DoubleSide, transparent: true, opacity: 0.4 }));
+                        bodyTiltGroup.add(uRingMesh);
+                    } else if (key === 'neptune') {
+                        // Neptune Faint Blue Ring
+                        var nRingGeo = new THREE.RingGeometry(bodyR * 1.3, bodyR * 1.6, 64);
+                        nRingGeo.rotateX(Math.PI / 2);
+                        var nRingMesh = new THREE.Mesh(nRingGeo, new THREE.MeshStandardMaterial({ color: 0x60a5fa, side: THREE.DoubleSide, transparent: true, opacity: 0.3 }));
+                        bodyTiltGroup.add(nRingMesh);
+                    }
                 }
 
                 if (key === 'earth' && state.simMode === '3d') {
@@ -628,7 +648,7 @@
                     // MOON VISUAL SCALE DISTANCE
                     var moonPivot = new THREE.Object3D();
                     moonPivot.rotation.z = 28.58 * (Math.PI / 180);
-                    pivot.add(moonPivot);
+                    bodyTiltGroup.add(moonPivot);
                     
                     var moonR = getBodyScaleRadius('moon');
                     var moonMesh = new THREE.Mesh(
@@ -652,12 +672,12 @@
                     celestialBodies['moon'] = { mesh: moonMesh, pivot: moonPivot, orbitRadius: visMoonDist, data: window.SOLAR_SYSTEM_DATA.moon };
                 }
 
-                // Build Sub-Satellites (Mars, Jupiter, Saturn, Neptune, Pluto)
+                // Build Sub-Satellites (Mars, Jupiter, Saturn, Neptune, Pluto) attached to bodyTiltGroup
                 var satList = [];
                 if (data.satellites && state.simMode === '3d') {
                     data.satellites.forEach(function(satData) {
                         var satPivot = new THREE.Object3D();
-                        pivot.add(satPivot);
+                        bodyTiltGroup.add(satPivot);
 
                         var satGeo = new THREE.SphereGeometry(satData.size || 1.2, 16, 16);
                         var satMat = new THREE.MeshStandardMaterial({ color: parseInt(satData.color.replace('#', '0x'), 16), roughness: 0.5 });
@@ -683,6 +703,7 @@
 
                 celestialBodies[key] = {
                     mesh: planetMesh,
+                    bodyTiltGroup: bodyTiltGroup,
                     pivot: pivot,
                     ringMesh: saturnRingMesh,
                     satList: satList,
@@ -782,24 +803,22 @@
                         var px = Math.cos(b.orbitAngle) * a - fo;
                         var pz = Math.sin(b.orbitAngle) * c;
 
-                        b.mesh.position.x = px;
-                        b.mesh.position.z = pz;
-
-                        if (b.ringMesh) {
-                            b.ringMesh.position.x = px;
-                            b.ringMesh.position.z = pz;
+                        if (b.bodyTiltGroup) {
+                            b.bodyTiltGroup.position.x = px;
+                            b.bodyTiltGroup.position.z = pz;
+                        } else {
+                            b.mesh.position.x = px;
+                            b.mesh.position.z = pz;
                         }
 
                         if (state.simMode === '3d') {
                             var selfRate = SELF_ROTATION_RATES[key] || 1.0;
                             b.mesh.rotation.y += timeDelta * (Math.PI * 2) * selfRate;
 
-                            // Animate Sub-Satellites (Mars Phobos/Deimos, Galilean 4 Moons, Titan, Triton)
+                            // Animate Sub-Satellites (Phobos, Deimos, Galilean 4 Moons, Titan, Triton) inside bodyTiltGroup
                             if (b.satList && b.satList.length > 0) {
                                 b.satList.forEach(function(sat) {
-                                    sat.pivot.position.copy(b.mesh.position);
                                     var dSat = timeDelta * (Math.PI * 2) * (sat.data.speed || 1.0) * 8.0;
-                                    // Positive speed: Counter-Clockwise (CCW, West -> East) | Negative speed (Triton): Clockwise Retrograde!
                                     sat.angle += dSat;
                                     sat.pivot.rotation.y = sat.angle;
                                 });
