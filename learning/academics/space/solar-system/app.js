@@ -769,13 +769,13 @@
                 scene.add(astParticles);
                 celestialBodies['asteroid'] = { mesh: astParticles, data: window.SOLAR_SYSTEM_DATA.asteroid };
 
-                // 2. ☄️ 3D Interactive Comet (Irregular Ice Nucleus + Coma Glow + 3D Particle Tail)
+                // 2. ☄️ 3D Radiant Glowing Comet (Reference Image Match: Luminous Core + Dual Ion & Dust Particle Tail)
                 var cometData = window.SOLAR_SYSTEM_DATA.comet;
                 if (cometData) {
                     var cometGroup = new THREE.Object3D();
                     
-                    // Irregular Ice-Rock Nucleus (Not a round sphere!)
-                    var cGeo = new THREE.DodecahedronGeometry(3.0, 1);
+                    // Irregular Ice-Rock Nucleus
+                    var cGeo = new THREE.DodecahedronGeometry(3.2, 1);
                     var posAttr = cGeo.attributes.position;
                     for (var i = 0; i < posAttr.count; i++) {
                         var vx = posAttr.getX(i);
@@ -788,33 +788,58 @@
 
                     var cMat = new THREE.MeshStandardMaterial({
                         map: loadPlanet3DTexture('comet'),
-                        roughness: 0.95,
-                        metalness: 0.1,
-                        emissive: 0x06b6d4,
-                        emissiveIntensity: 0.4
+                        roughness: 0.6,
+                        emissive: 0x00f0ff,
+                        emissiveIntensity: 1.5
                     });
                     var cometMesh = new THREE.Mesh(cGeo, cMat);
                     cometGroup.add(cometMesh);
 
-                    // Coma Cloud Glow
-                    var comaGeo = new THREE.SphereGeometry(4.8, 16, 16);
-                    var comaMat = new THREE.MeshBasicMaterial({ color: 0x38bdf8, transparent: true, opacity: 0.35, side: THREE.BackSide });
+                    // 1) Luminous Point Light Core (Bright Glowing Head matching reference image)
+                    var cLight = new THREE.PointLight(0x00f0ff, 6.0, 140);
+                    cometGroup.add(cLight);
+
+                    // 2) Inner White Hot Core Glow (Additive Blending)
+                    var coreGeo = new THREE.SphereGeometry(4.2, 16, 16);
+                    var coreMat = new THREE.MeshBasicMaterial({ color: 0xffffff, transparent: true, opacity: 0.85, blending: THREE.AdditiveBlending });
+                    var coreMesh = new THREE.Mesh(coreGeo, coreMat);
+                    cometGroup.add(coreMesh);
+
+                    // 3) Outer Cyan Coma Halo Glow (Additive Blending)
+                    var comaGeo = new THREE.SphereGeometry(7.5, 16, 16);
+                    var comaMat = new THREE.MeshBasicMaterial({ color: 0x00f0ff, transparent: true, opacity: 0.4, blending: THREE.AdditiveBlending });
                     var comaMesh = new THREE.Mesh(comaGeo, comaMat);
                     cometGroup.add(comaMesh);
 
-                    // Radiant 3D Particle Stream Tail (No images needed, 100% procedural & safe!)
-                    var tailParticleCount = 450;
+                    // 4) Dual 3D Particle Tail (Ion Blue Tail + Dust White Tail - 1,200 Additive Particles)
+                    var tailCount = 1200;
                     var tGeo = new THREE.BufferGeometry();
-                    var tPos = new Float32Array(tailParticleCount * 3);
-                    for (var t = 0; t < tailParticleCount; t++) {
+                    var tPos = new Float32Array(tailCount * 3);
+                    var tColors = new Float32Array(tailCount * 3);
+
+                    for (var t = 0; t < tailCount; t++) {
                         var progress = Math.random();
-                        var spread = progress * 7.5;
+                        var spread = Math.pow(progress, 1.2) * 12.0;
                         tPos[t * 3] = (Math.random() - 0.5) * spread;
                         tPos[t * 3 + 1] = (Math.random() - 0.5) * spread;
-                        tPos[t * 3 + 2] = progress * 65.0 + 2.0;
+                        tPos[t * 3 + 2] = progress * 90.0 + 2.0;
+
+                        // Dual Tail Colors: Inner Dust Tail (White/Light Cyan) vs Outer Ion Tail (Deep Cyan/Blue)
+                        var isIon = t % 2 === 0;
+                        tColors[t * 3] = isIon ? 0.0 : 0.85;       // R
+                        tColors[t * 3 + 1] = isIon ? 0.94 : 0.95;  // G
+                        tColors[t * 3 + 2] = 1.0;                  // B
                     }
                     tGeo.setAttribute('position', new THREE.BufferAttribute(tPos, 3));
-                    var tMat = new THREE.PointsMaterial({ color: 0x38bdf8, size: 2.0, transparent: true, opacity: 0.65 });
+                    tGeo.setAttribute('color', new THREE.BufferAttribute(tColors, 3));
+
+                    var tMat = new THREE.PointsMaterial({
+                        size: 2.4,
+                        vertexColors: true,
+                        transparent: true,
+                        opacity: 0.75,
+                        blending: THREE.AdditiveBlending
+                    });
                     var tailParticles = new THREE.Points(tGeo, tMat);
                     cometGroup.add(tailParticles);
 
