@@ -769,62 +769,56 @@
                 scene.add(astParticles);
                 celestialBodies['asteroid'] = { mesh: astParticles, data: window.SOLAR_SYSTEM_DATA.asteroid };
 
-                // 2. ☄️ 3D Radiant Glowing Comet (Reference Image Match: Luminous Core + Dual Ion & Dust Particle Tail)
+                // 2. ☄️ 3D Radiant Glowing Comet (Compact Real Rock Core + Fast Dynamic Motion)
                 var cometData = window.SOLAR_SYSTEM_DATA.comet;
                 if (cometData) {
                     var cometGroup = new THREE.Object3D();
                     
-                    // Irregular Ice-Rock Nucleus
-                    var cGeo = new THREE.DodecahedronGeometry(3.2, 1);
+                    // 1) Irregular Ice-Rock Nucleus (NOT a round sphere!)
+                    var cGeo = new THREE.DodecahedronGeometry(1.8, 1);
                     var posAttr = cGeo.attributes.position;
                     for (var i = 0; i < posAttr.count; i++) {
                         var vx = posAttr.getX(i);
                         var vy = posAttr.getY(i);
                         var vz = posAttr.getZ(i);
-                        var noise = 1.0 + (Math.sin(vx * 3.0) + Math.cos(vy * 3.0)) * 0.18;
+                        var noise = 1.0 + (Math.sin(vx * 3.0) + Math.cos(vy * 3.0)) * 0.25;
                         posAttr.setXYZ(i, vx * noise, vy * noise, vz * noise);
                     }
                     cGeo.computeVertexNormals();
 
                     var cMat = new THREE.MeshStandardMaterial({
                         map: loadPlanet3DTexture('comet'),
-                        roughness: 0.6,
+                        roughness: 0.9,
                         emissive: 0x00f0ff,
-                        emissiveIntensity: 1.5
+                        emissiveIntensity: 1.2
                     });
                     var cometMesh = new THREE.Mesh(cGeo, cMat);
                     cometGroup.add(cometMesh);
 
-                    // 1) Luminous Point Light Core (Bright Glowing Head matching reference image)
-                    var cLight = new THREE.PointLight(0x00f0ff, 6.0, 140);
+                    // 2) Luminous Point Light Core (Gentle Point Light, NO round sphere mesh!)
+                    var cLight = new THREE.PointLight(0x00f0ff, 3.0, 60);
                     cometGroup.add(cLight);
 
-                    // 2) Inner White Hot Core Glow (Additive Blending)
-                    var coreGeo = new THREE.SphereGeometry(4.2, 16, 16);
-                    var coreMat = new THREE.MeshBasicMaterial({ color: 0xffffff, transparent: true, opacity: 0.85, blending: THREE.AdditiveBlending });
-                    var coreMesh = new THREE.Mesh(coreGeo, coreMat);
-                    cometGroup.add(coreMesh);
-
-                    // 3) Outer Cyan Coma Halo Glow (Additive Blending)
-                    var comaGeo = new THREE.SphereGeometry(7.5, 16, 16);
-                    var comaMat = new THREE.MeshBasicMaterial({ color: 0x00f0ff, transparent: true, opacity: 0.4, blending: THREE.AdditiveBlending });
+                    // 3) Outer Cyan Coma Halo Glow (Soft Halo, NO sharp sphere!)
+                    var comaGeo = new THREE.DodecahedronGeometry(2.6, 1);
+                    var comaMat = new THREE.MeshBasicMaterial({ color: 0x00f0ff, transparent: true, opacity: 0.35, blending: THREE.AdditiveBlending });
                     var comaMesh = new THREE.Mesh(comaGeo, comaMat);
                     cometGroup.add(comaMesh);
 
-                    // 4) Dual 3D Particle Tail (Ion Blue Tail + Dust White Tail - 1,200 Additive Particles)
-                    var tailCount = 1200;
+                    // 4) Dual 3D Particle Tail (Compact & Elegant Tail - 400 Additive Particles)
+                    var tailCount = 400;
                     var tGeo = new THREE.BufferGeometry();
                     var tPos = new Float32Array(tailCount * 3);
                     var tColors = new Float32Array(tailCount * 3);
 
                     for (var t = 0; t < tailCount; t++) {
                         var progress = Math.random();
-                        var spread = Math.pow(progress, 1.2) * 12.0;
+                        var spread = Math.pow(progress, 1.2) * 3.5;
                         tPos[t * 3] = (Math.random() - 0.5) * spread;
                         tPos[t * 3 + 1] = (Math.random() - 0.5) * spread;
-                        tPos[t * 3 + 2] = progress * 90.0 + 2.0;
+                        tPos[t * 3 + 2] = progress * 28.0 + 1.5; // Compact 28 unit tail length!
 
-                        // Dual Tail Colors: Inner Dust Tail (White/Light Cyan) vs Outer Ion Tail (Deep Cyan/Blue)
+                        // Dual Tail Colors: Inner Dust Tail vs Outer Ion Tail
                         var isIon = t % 2 === 0;
                         tColors[t * 3] = isIon ? 0.0 : 0.85;       // R
                         tColors[t * 3 + 1] = isIon ? 0.94 : 0.95;  // G
@@ -834,7 +828,7 @@
                     tGeo.setAttribute('color', new THREE.BufferAttribute(tColors, 3));
 
                     var tMat = new THREE.PointsMaterial({
-                        size: 2.4,
+                        size: 1.4,
                         vertexColors: true,
                         transparent: true,
                         opacity: 0.75,
@@ -947,8 +941,8 @@
                             }
                         }
                     } else if (key === 'comet') {
-                        // ☄️ 3D Comet Elliptic Orbit + Anti-Solar Tail Alignment + Distance-Based Fading/Growth!
-                        b.orbitAngle = (b.orbitAngle || 0.5) - timeDelta * (Math.PI * 2) * 0.008;
+                        // ☄️ Dynamic 3D Comet Fast Motion (Elliptic Orbit + Anti-Solar Tail Alignment + Thermal Sublimation)
+                        b.orbitAngle = (b.orbitAngle || 0.5) - timeDelta * (Math.PI * 2) * 0.08;
                         var cA = b.semiMajor || 650;
                         var cEcc = b.ecc || 0.88;
                         var cB = cA * Math.sqrt(1 - cEcc * cEcc);
