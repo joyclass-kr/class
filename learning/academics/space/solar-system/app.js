@@ -656,9 +656,9 @@
                     );
                     planetMesh.add(atmosMesh);
 
-                    // MOON VISUAL SCALE DISTANCE
+                    // REAL ASTRONOMICAL LUNAR ORBITAL INCLINATION (5.14 deg relative to Ecliptic Plane)
                     var moonPivot = new THREE.Object3D();
-                    moonPivot.rotation.z = 28.58 * (Math.PI / 180);
+                    moonPivot.rotation.x = 5.14 * (Math.PI / 180);
                     bodyTiltGroup.add(moonPivot);
                     
                     var moonR = getBodyScaleRadius('moon');
