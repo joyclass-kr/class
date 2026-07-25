@@ -222,9 +222,11 @@
 
         function getBodyScaleRadius(key) {
             if (state.scaleMode === 'realistic') {
-                var r = { sun: 14, jupiter: 5.5, saturn: 4.5, uranus: 3.2, neptune: 3.0, earth: 1.8, venus: 1.7, mars: 1.2, mercury: 0.9, moon: 0.5, pluto: 0.7 };
+                // Realistic Astronomical Relative Radius Proportions
+                var r = { sun: 28, jupiter: 7.2, saturn: 6.0, uranus: 3.8, neptune: 3.6, earth: 1.6, venus: 1.5, mars: 1.1, mercury: 0.8, moon: 0.4, pluto: 0.5 };
                 return r[key] || 2;
             } else {
+                // Visual Mode: Adjusted for comfortable viewing
                 var v = { sun: 16, jupiter: 8.5, saturn: 7.2, uranus: 5.5, neptune: 5.2, earth: 3.8, venus: 3.6, mars: 2.8, mercury: 2.2, moon: 1.2, pluto: 1.8 };
                 return v[key] || 3;
             }
@@ -232,9 +234,11 @@
 
         function getBodyOrbitRadius(key) {
             if (state.scaleMode === 'realistic') {
-                var r = { mercury: 25, venus: 40, earth: 60, mars: 85, jupiter: 140, saturn: 200, uranus: 270, neptune: 340, pluto: 400 };
+                // Realistic Astronomical AU Distance Proportions (0.39 AU to 39.5 AU)
+                var r = { mercury: 28, venus: 48, earth: 68, mars: 98, jupiter: 180, saturn: 270, uranus: 370, neptune: 470, pluto: 550 };
                 return r[key] || 0;
             } else {
+                // Visual Mode: Evenly spaced orbits for UI clarity
                 var v = { mercury: 32, venus: 50, earth: 72, mars: 98, jupiter: 135, saturn: 175, uranus: 215, neptune: 255, pluto: 295 };
                 return v[key] || 0;
             }
