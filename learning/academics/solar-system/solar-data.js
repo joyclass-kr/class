@@ -1,6 +1,5 @@
 /**
- * 태양계 탐험 (Solar System Explorer) Data & Realistic Texture Generator
- * Equirectangular NASA-style Planet Map Generator
+ * 태양계 탐험 (Solar System Explorer) Data & Texture Generator
  */
 
 window.SOLAR_SYSTEM_DATA = {
@@ -111,7 +110,7 @@ window.SOLAR_SYSTEM_DATA = {
         type: '가스 행성 (Gas Giant)',
         order: 5,
         distAU: 5.20,
-        orbitDays: 4333,
+        orbitDays: 4333, // 11.86년
         rotationDays: '9.9시간 (태양계 가장 빠름)',
         radiusKm: 69911,
         gravityRatio: 2.53,
@@ -120,7 +119,7 @@ window.SOLAR_SYSTEM_DATA = {
         atmosphere: '수소 90%, 헬륨 10%',
         desc: '태양계에서 가장 거대한 행성으로, 다른 모든 행성을 합친 것보다 2.5배 이상 무게가 나가는 가스 거인입니다.',
         trivia: '목성 표면의 대적점(Great Red Spot)은 지구 크기보다 큰 엄청난 거대 소용돌이 폭풍입니다.',
-        missions: ['주노(Juno)', '갈릴레오(Galileo)'],
+        missions: ['주노(Juno)', '갈릴레오(Galileo)', '탐사선 탐사'],
         color: '#f97316'
     },
     saturn: {
@@ -129,7 +128,7 @@ window.SOLAR_SYSTEM_DATA = {
         type: '가스 행성 (Gas Giant)',
         order: 6,
         distAU: 9.58,
-        orbitDays: 10759,
+        orbitDays: 10759, // 29.45년
         rotationDays: '10.7시간',
         radiusKm: 58232,
         gravityRatio: 1.07,
@@ -147,7 +146,7 @@ window.SOLAR_SYSTEM_DATA = {
         type: '얼음 가스 행성 (Ice Giant)',
         order: 7,
         distAU: 19.22,
-        orbitDays: 30687,
+        orbitDays: 30687, // 84년
         rotationDays: '17.2시간 (98도 기울어진 자전)',
         radiusKm: 25362,
         gravityRatio: 0.89,
@@ -165,7 +164,7 @@ window.SOLAR_SYSTEM_DATA = {
         type: '얼음 가스 행성 (Ice Giant)',
         order: 8,
         distAU: 30.05,
-        orbitDays: 60190,
+        orbitDays: 60190, // 164.8년
         rotationDays: '16.1시간',
         radiusKm: 24622,
         gravityRatio: 1.14,
@@ -183,7 +182,7 @@ window.SOLAR_SYSTEM_DATA = {
         type: '왜소행성 (Dwarf Planet)',
         order: 9,
         distAU: 39.48,
-        orbitDays: 90560,
+        orbitDays: 90560, // 248년
         rotationDays: '6.4일',
         radiusKm: 1188.3,
         gravityRatio: 0.063,
@@ -198,363 +197,206 @@ window.SOLAR_SYSTEM_DATA = {
 };
 
 /**
- * Photorealistic Equirectangular Map Generator for Earth & All Solar Bodies
- * Returns HTML5 Canvas Element directly (100% synchronous, zero CORS errors on file://)
+ * Procedural Realistic Planet Textures Generator via HTML5 Canvas
  */
-window.createPlanetCanvas = function (planetKey) {
+window.createPlanetTexture = function (planetKey) {
     const canvas = document.createElement('canvas');
     canvas.width = 1024;
     canvas.height = 512;
     const ctx = canvas.getContext('2d');
+
     const w = canvas.width;
     const h = canvas.height;
 
-    // Convert Longitude [-180..180] and Latitude [-90..90] to Canvas (X, Y)
-    function toCanvasXY(lonDeg, latDeg) {
-        const x = ((lonDeg + 180) / 360) * w;
-        const y = ((90 - latDeg) / 180) * h;
-        return { x, y };
-    }
-
-    function drawPoly(coords, fillColor, strokeColor) {
-        if (!coords || coords.length < 2) return;
-        ctx.fillStyle = fillColor;
-        ctx.beginPath();
-        const start = toCanvasXY(coords[0][0], coords[0][1]);
-        ctx.moveTo(start.x, start.y);
-
-        for (let i = 1; i < coords.length; i++) {
-            const pt = toCanvasXY(coords[i][0], coords[i][1]);
-            ctx.lineTo(pt.x, pt.y);
-        }
-        ctx.closePath();
-        ctx.fill();
-        if (strokeColor) {
-            ctx.strokeStyle = strokeColor;
-            ctx.lineWidth = 2;
-            ctx.stroke();
-        }
-    }
-
-    if (planetKey === 'earth') {
-        // --- Photorealistic Earth Map ---
-        // 1. Deep Ocean Base with Depth Variations
-        const oceanGrad = ctx.createLinearGradient(0, 0, 0, h);
-        oceanGrad.addColorStop(0, '#0f2b48'); // Arctic ocean
-        oceanGrad.addColorStop(0.3, '#104e8b'); // North Atlantic
-        oceanGrad.addColorStop(0.5, '#0d6efd'); // Tropical Pacific
-        oceanGrad.addColorStop(0.8, '#104e8b'); // Southern Ocean
-        oceanGrad.addColorStop(1, '#0f2b48'); // Antarctic
-        ctx.fillStyle = oceanGrad;
-        ctx.fillRect(0, 0, w, h);
-
-        // 2. Realistic Continent Shapes (North/South America, Eurasia, Africa, Australia, Antarctica)
-        const landGreen = '#2e6f40';
-        const landBrown = '#8b5a2b';
-        const desertYellow = '#c29b38';
-        const iceWhite = '#f8fafc';
-
-        // Eurasia (유라시아)
-        drawPoly([
-            [-10, 36], [0, 44], [10, 54], [30, 70], [70, 72], [110, 75], [170, 68],
-            [140, 35], [120, 22], [105, 10], [90, 8], [78, 22], [60, 25], [50, 12],
-            [44, 15], [35, 32], [26, 38], [14, 38], [-5, 36]
-        ], landGreen);
-
-        // Africa (아프리카 & 사하라 사막)
-        drawPoly([
-            [-17, 15], [-5, 36], [12, 34], [32, 31], [43, 12], [51, 11], [40, -10],
-            [33, -26], [20, -34], [12, -15], [0, 6], [-15, 12]
-        ], landGreen);
-        // Sahara Desert patch
-        drawPoly([[-15, 16], [35, 30], [40, 15], [10, 12], [-15, 16]], desertYellow);
-
-        // North America (북아메리카)
-        drawPoly([
-            [-168, 65], [-140, 60], [-125, 48], [-117, 32], [-105, 20], [-90, 16],
-            [-80, 25], [-75, 35], [-64, 45], [-55, 52], [-80, 68], [-120, 70]
-        ], landGreen);
-
-        // South America (남아메리카 & 아마존)
-        drawPoly([
-            [-80, 8], [-75, 11], [-60, 2], [-35, -5], [-38, -20], [-50, -38],
-            [-70, -53], [-75, -45], [-80, -18]
-        ], landGreen);
-
-        // Australia (오스트레일리아)
-        drawPoly([
-            [113, -22], [130, -12], [142, -11], [153, -28], [148, -38], [135, -34], [115, -34]
-        ], desertYellow);
-
-        // Antarctica (남극 빙하)
-        drawPoly([
-            [-180, -65], [180, -65], [180, -90], [-180, -90]
-        ], iceWhite);
-
-        // Greenland & Arctic Ice (그린란드/북극)
-        drawPoly([
-            [-70, 60], [-20, 65], [-30, 83], [-60, 82]
-        ], iceWhite);
-
-        // 3. Realistic Atmosphere Cloud Swirls
-        ctx.fillStyle = 'rgba(255, 255, 255, 0.45)';
-        for (let i = 0; i < 40; i++) {
-            const cx = Math.random() * w;
-            const cy = Math.random() * h;
-            const rx = Math.random() * 180 + 40;
-            const ry = Math.random() * 20 + 5;
-            ctx.beginPath();
-            ctx.ellipse(cx, cy, rx, ry, Math.random() * 0.2, 0, Math.PI * 2);
-            ctx.fill();
-        }
-
-    } else if (planetKey === 'sun') {
-        // --- Photorealistic Sun Corona & Flares ---
+    if (planetKey === 'sun') {
+        // Sun: Glowing Fire & Flares Plasma Texture
         const grad = ctx.createLinearGradient(0, 0, 0, h);
-        grad.addColorStop(0, '#ea580c');
-        grad.addColorStop(0.25, '#f97316');
-        grad.addColorStop(0.5, '#eab308');
-        grad.addColorStop(0.75, '#f97316');
-        grad.addColorStop(1, '#c2410c');
+        grad.addColorStop(0, '#ff4500');
+        grad.addColorStop(0.3, '#ffaa00');
+        grad.addColorStop(0.7, '#ffcc00');
+        grad.addColorStop(1, '#ff3300');
         ctx.fillStyle = grad;
         ctx.fillRect(0, 0, w, h);
 
-        // Solar Granulation Turbulence
-        ctx.fillStyle = 'rgba(254, 240, 138, 0.25)';
-        for (let i = 0; i < 600; i++) {
+        // Sunspot & Solar Flare noise
+        ctx.fillStyle = 'rgba(255, 255, 255, 0.25)';
+        for (let i = 0; i < 400; i++) {
             const rx = Math.random() * w;
             const ry = Math.random() * h;
+            const r = Math.random() * 30 + 5;
             ctx.beginPath();
-            ctx.arc(rx, ry, Math.random() * 25 + 6, 0, Math.PI * 2);
+            ctx.arc(rx, ry, r, 0, Math.PI * 2);
             ctx.fill();
         }
         // Sunspots
-        ctx.fillStyle = 'rgba(67, 20, 7, 0.7)';
-        for (let i = 0; i < 20; i++) {
+        ctx.fillStyle = 'rgba(100, 20, 0, 0.6)';
+        for (let i = 0; i < 15; i++) {
             const rx = Math.random() * w;
             const ry = Math.random() * h;
             ctx.beginPath();
-            ctx.ellipse(rx, ry, Math.random() * 18 + 4, Math.random() * 10 + 3, Math.random(), 0, Math.PI * 2);
+            ctx.arc(rx, ry, Math.random() * 12 + 4, 0, Math.PI * 2);
             ctx.fill();
         }
-
-    } else if (planetKey === 'jupiter') {
-        // --- Jupiter Gas Giant Stripes & Great Red Spot ---
-        const bands = [
-            { c: '#9a3412', y: 0.0 }, { c: '#fed7aa', y: 0.12 },
-            { c: '#c2410c', y: 0.25 }, { c: '#fef08a', y: 0.38 },
-            { c: '#7c2d12', y: 0.5 }, { c: '#ffedd5', y: 0.65 },
-            { c: '#9a3412', y: 0.8 }, { c: '#7c2d12', y: 0.92 }
-        ];
-        const grad = ctx.createLinearGradient(0, 0, 0, h);
-        bands.forEach(b => grad.addColorStop(b.y, b.c));
-        ctx.fillStyle = grad;
+    } else if (planetKey === 'earth') {
+        // Ocean blue base
+        ctx.fillStyle = '#0f52ba';
         ctx.fillRect(0, 0, w, h);
 
-        // Turbulent Wave Ripples
-        ctx.fillStyle = 'rgba(255, 255, 255, 0.2)';
-        for (let i = 0; i < 120; i++) {
+        // Continents (Green/Brown organic shapes)
+        ctx.fillStyle = '#2e8b57';
+        for (let i = 0; i < 35; i++) {
+            const cx = Math.random() * w;
+            const cy = Math.random() * (h * 0.7) + (h * 0.15);
+            const r = Math.random() * 90 + 30;
+            ctx.beginPath();
+            ctx.ellipse(cx, cy, r * 1.5, r, Math.random(), 0, Math.PI * 2);
+            ctx.fill();
+        }
+        // White cloud swirl overlays
+        ctx.fillStyle = 'rgba(255, 255, 255, 0.65)';
+        for (let i = 0; i < 50; i++) {
+            const cx = Math.random() * w;
+            const cy = Math.random() * h;
+            ctx.beginPath();
+            ctx.ellipse(cx, cy, Math.random() * 120 + 20, Math.random() * 15 + 4, Math.random(), 0, Math.PI * 2);
+            ctx.fill();
+        }
+    } else if (planetKey === 'jupiter') {
+        // Gas Giant Stripes (Orange, Beige, Brown bands)
+        const bandColors = ['#c86432', '#e6c8a0', '#a05028', '#f0dcbe', '#8c3c14', '#d29664', '#b4461e'];
+        const bandH = h / bandColors.length;
+        bandColors.forEach((col, idx) => {
+            ctx.fillStyle = col;
+            ctx.fillRect(0, idx * bandH, w, bandH + 2);
+        });
+
+        // Wavy atmospheric storm noise
+        ctx.fillStyle = 'rgba(255, 255, 255, 0.15)';
+        for (let i = 0; i < 80; i++) {
             const rx = Math.random() * w;
             const ry = Math.random() * h;
-            ctx.fillRect(rx, ry, Math.random() * 160 + 30, Math.random() * 8 + 3);
+            ctx.fillRect(rx, ry, Math.random() * 80 + 20, Math.random() * 6 + 2);
         }
 
-        // Great Red Spot (목성 대적점)
-        const spotPos = toCanvasXY(60, -22);
+        // Great Red Spot (목성 대적점!)
         ctx.fillStyle = '#b91c1c';
         ctx.beginPath();
-        ctx.ellipse(spotPos.x, spotPos.y, 90, 50, -0.05, 0, Math.PI * 2);
+        ctx.ellipse(w * 0.65, h * 0.62, 55, 35, -0.1, 0, Math.PI * 2);
         ctx.fill();
-        ctx.strokeStyle = '#f87171';
-        ctx.lineWidth = 6;
+        ctx.strokeStyle = '#ef4444';
+        ctx.lineWidth = 4;
         ctx.stroke();
-
     } else if (planetKey === 'saturn') {
-        // --- Saturn Bands ---
-        const grad = ctx.createLinearGradient(0, 0, 0, h);
-        grad.addColorStop(0, '#a16207');
-        grad.addColorStop(0.3, '#fef08a');
-        grad.addColorStop(0.6, '#ca8a04');
-        grad.addColorStop(1, '#854d0e');
-        ctx.fillStyle = grad;
-        ctx.fillRect(0, 0, w, h);
-
-        ctx.fillStyle = 'rgba(255, 255, 255, 0.15)';
-        for (let i = 0; i < 60; i++) {
-            ctx.fillRect(Math.random() * w, Math.random() * h, Math.random() * 140 + 40, Math.random() * 6 + 2);
-        }
-
+        // Golden beige gas bands
+        const saturnBands = ['#d4a373', '#faedcd', '#e9edc9', '#ccd5ae', '#d4a373', '#e07a5f'];
+        const bH = h / saturnBands.length;
+        saturnBands.forEach((col, idx) => {
+            ctx.fillStyle = col;
+            ctx.fillRect(0, idx * bH, w, bH + 2);
+        });
     } else if (planetKey === 'mars') {
-        // --- Mars Red Deserts & Craters & Polar Caps ---
+        // Red rust surface + polar caps
         const grad = ctx.createLinearGradient(0, 0, 0, h);
-        grad.addColorStop(0, '#7f1d1d');
+        grad.addColorStop(0, '#991b1b');
         grad.addColorStop(0.5, '#dc2626');
-        grad.addColorStop(1, '#991b1b');
+        grad.addColorStop(1, '#7f1d1d');
         ctx.fillStyle = grad;
         ctx.fillRect(0, 0, w, h);
 
-        // Valles Marineris canyon & dark basaltic regions
-        ctx.fillStyle = 'rgba(60, 10, 10, 0.5)';
-        for (let i = 0; i < 45; i++) {
+        // Dark crater patches
+        ctx.fillStyle = 'rgba(60, 10, 10, 0.4)';
+        for (let i = 0; i < 40; i++) {
             ctx.beginPath();
-            ctx.ellipse(Math.random() * w, Math.random() * h, Math.random() * 80 + 20, Math.random() * 40 + 10, Math.random(), 0, Math.PI * 2);
+            ctx.arc(Math.random() * w, Math.random() * h, Math.random() * 40 + 10, 0, Math.PI * 2);
             ctx.fill();
         }
-
-        // Polar Ice Caps (북극/남극 흰 빙하)
-        ctx.fillStyle = '#ffffff';
-        ctx.fillRect(0, 0, w, h * 0.07);
-        ctx.fillRect(0, h * 0.93, w, h * 0.07);
-
+        // Polar Ice Caps (북극/남극 흰 얼음)
+        ctx.fillStyle = 'rgba(255, 255, 255, 0.85)';
+        ctx.fillRect(0, 0, w, h * 0.08);
+        ctx.fillRect(0, h * 0.92, w, h * 0.08);
     } else if (planetKey === 'venus') {
-        // --- Venus Sulfuric Cloud Swirls ---
+        // Dense yellow-cream atmosphere
         const grad = ctx.createLinearGradient(0, 0, w, h);
-        grad.addColorStop(0, '#d97706');
+        grad.addColorStop(0, '#eab308');
         grad.addColorStop(0.5, '#fef08a');
         grad.addColorStop(1, '#ca8a04');
         ctx.fillStyle = grad;
         ctx.fillRect(0, 0, w, h);
 
-        ctx.fillStyle = 'rgba(255, 255, 255, 0.3)';
-        for (let i = 0; i < 80; i++) {
-            ctx.fillRect(Math.random() * w, Math.random() * h, Math.random() * 180 + 40, Math.random() * 12 + 3);
+        ctx.fillStyle = 'rgba(255, 255, 255, 0.25)';
+        for (let i = 0; i < 60; i++) {
+            ctx.fillRect(Math.random() * w, Math.random() * h, Math.random() * 100 + 30, Math.random() * 8 + 2);
         }
-
     } else if (planetKey === 'uranus') {
-        // --- Uranus Cyan Ice Atmosphere ---
+        // Cyan cyan-blue smooth atmosphere
         const grad = ctx.createLinearGradient(0, 0, 0, h);
-        grad.addColorStop(0, '#0891b2');
-        grad.addColorStop(0.5, '#a5f3fc');
-        grad.addColorStop(1, '#06b6d4');
+        grad.addColorStop(0, '#06b6d4');
+        grad.addColorStop(0.5, '#67e8f9');
+        grad.addColorStop(1, '#0891b2');
         ctx.fillStyle = grad;
         ctx.fillRect(0, 0, w, h);
-
     } else if (planetKey === 'neptune') {
-        // --- Neptune Azure Blue Atmosphere + Dark Spot ---
+        // Deep blue stormy atmosphere + Dark Spot
         const grad = ctx.createLinearGradient(0, 0, 0, h);
-        grad.addColorStop(0, '#1e3a8a');
-        grad.addColorStop(0.5, '#3b82f6');
-        grad.addColorStop(1, '#1d4ed8');
+        grad.addColorStop(0, '#1d4ed8');
+        grad.addColorStop(0.5, '#2563eb');
+        grad.addColorStop(1, '#1e40af');
         ctx.fillStyle = grad;
         ctx.fillRect(0, 0, w, h);
 
         // Great Dark Spot
-        const spot = toCanvasXY(-30, -20);
         ctx.fillStyle = '#0f172a';
         ctx.beginPath();
-        ctx.ellipse(spot.x, spot.y, 60, 35, 0.2, 0, Math.PI * 2);
+        ctx.ellipse(w * 0.4, h * 0.5, 40, 25, 0.2, 0, Math.PI * 2);
         ctx.fill();
-
-    } else if (planetKey === 'mercury' || planetKey === 'moon') {
-        // --- Mercury / Moon Rocky Cratered Surface ---
-        ctx.fillStyle = planetKey === 'moon' ? '#94a3b8' : '#78716c';
+    } else if (planetKey === 'mercury') {
+        // Grey rocky cratered surface
+        ctx.fillStyle = '#78716c';
         ctx.fillRect(0, 0, w, h);
-
-        // Lunar Maria (달의 바다 / 수선 웅덩이)
-        ctx.fillStyle = 'rgba(30, 41, 59, 0.5)';
-        for (let i = 0; i < 50; i++) {
+        ctx.fillStyle = 'rgba(0, 0, 0, 0.35)';
+        for (let i = 0; i < 90; i++) {
             ctx.beginPath();
-            ctx.ellipse(Math.random() * w, Math.random() * h, Math.random() * 100 + 20, Math.random() * 60 + 15, Math.random(), 0, Math.PI * 2);
+            ctx.arc(Math.random() * w, Math.random() * h, Math.random() * 20 + 3, 0, Math.PI * 2);
             ctx.fill();
         }
-        // Impact Craters
-        ctx.strokeStyle = 'rgba(255, 255, 255, 0.4)';
-        ctx.lineWidth = 2;
-        for (let i = 0; i < 80; i++) {
+    } else if (planetKey === 'moon') {
+        // Grey lunar crater surface
+        ctx.fillStyle = '#94a3b8';
+        ctx.fillRect(0, 0, w, h);
+        ctx.fillStyle = 'rgba(30, 41, 59, 0.4)';
+        for (let i = 0; i < 70; i++) {
             ctx.beginPath();
-            ctx.arc(Math.random() * w, Math.random() * h, Math.random() * 15 + 3, 0, Math.PI * 2);
-            ctx.stroke();
+            ctx.arc(Math.random() * w, Math.random() * h, Math.random() * 25 + 4, 0, Math.PI * 2);
+            ctx.fill();
         }
-
-    } else if (planetKey === 'earthNight') {
-        // Dark Earth Base with Golden City Lights
-        ctx.fillStyle = '#030712';
-        ctx.fillRect(0, 0, w, h);
-        ctx.fillStyle = '#ffd18a';
-        for (let i = 0; i < 400; i++) {
-            const rx = Math.random() * w;
-            const ry = Math.random() * (h * 0.7) + (h * 0.15);
-            ctx.fillRect(rx, ry, Math.random() * 3 + 1, Math.random() * 3 + 1);
-        }
-    } else if (planetKey === 'milkyWay') {
-        // Deep Space Nebula Background
-        ctx.fillStyle = '#030712';
-        ctx.fillRect(0, 0, w, h);
-        ctx.fillStyle = 'rgba(56, 189, 248, 0.12)';
-        ctx.fillRect(0, h * 0.35, w, h * 0.3);
     } else {
-        // Pluto / Default
+        // Default Pluto / Dwarf planet
         ctx.fillStyle = '#a1a1aa';
         ctx.fillRect(0, 0, w, h);
-        // Tombaugh Regio Heart-shaped Ice Sheet
-        ctx.fillStyle = '#ffffff';
-        const heartPos = toCanvasXY(0, 0);
-        ctx.beginPath();
-        ctx.arc(heartPos.x, heartPos.y, 70, 0, Math.PI * 2);
-        ctx.fill();
     }
 
-    return canvas;
-};
-
-window.createPlanetTexture = function (planetKey) {
-    return window.createPlanetCanvas(planetKey).toDataURL('image/png');
+    return canvas.toDataURL('image/png');
 };
 
 /**
- * Photorealistic Earth 3D Cloud Texture Map Canvas
+ * Saturn Ring Texture Generator
  */
-window.createEarthCloudCanvas = function () {
+window.createSaturnRingTexture = function () {
     const canvas = document.createElement('canvas');
-    canvas.width = 1024;
-    canvas.height = 512;
-    const ctx = canvas.getContext('2d');
-    const w = canvas.width;
-    const h = canvas.height;
-
-    ctx.clearRect(0, 0, w, h);
-    ctx.fillStyle = 'rgba(255, 255, 255, 0.65)';
-
-    for (let i = 0; i < 120; i++) {
-        const cx = Math.random() * w;
-        const cy = Math.random() * h;
-        const rx = Math.random() * 180 + 30;
-        const ry = Math.random() * 25 + 5;
-        ctx.beginPath();
-        ctx.ellipse(cx, cy, rx, ry, Math.random() * 0.3, 0, Math.PI * 2);
-        ctx.fill();
-    }
-
-    return canvas;
-};
-
-window.createEarthCloudTexture = function () {
-    return window.createEarthCloudCanvas().toDataURL('image/png');
-};
-
-/**
- * Saturn Ring Texture Generator Canvas
- */
-window.createSaturnRingCanvas = function () {
-    const canvas = document.createElement('canvas');
-    canvas.width = 1024;
+    canvas.width = 512;
     canvas.height = 64;
     const ctx = canvas.getContext('2d');
 
     const grad = ctx.createLinearGradient(0, 0, canvas.width, 0);
     grad.addColorStop(0.0, 'rgba(0, 0, 0, 0)');
-    grad.addColorStop(0.15, 'rgba(212, 163, 115, 0.9)');
+    grad.addColorStop(0.2, 'rgba(212, 163, 115, 0.9)');
     grad.addColorStop(0.4, 'rgba(250, 237, 205, 0.95)');
-    grad.addColorStop(0.55, 'rgba(0, 0, 0, 0.05)'); // Cassini Division Gap!
+    grad.addColorStop(0.55, 'rgba(0, 0, 0, 0.1)'); // Cassini Division Gap!
     grad.addColorStop(0.7, 'rgba(212, 163, 115, 0.85)');
     grad.addColorStop(0.9, 'rgba(204, 160, 100, 0.4)');
     grad.addColorStop(1.0, 'rgba(0, 0, 0, 0)');
 
     ctx.fillStyle = grad;
     ctx.fillRect(0, 0, canvas.width, canvas.height);
-    return canvas;
-};
-
-window.createSaturnRingTexture = function () {
-    return window.createSaturnRingCanvas().toDataURL('image/png');
+    return canvas.toDataURL('image/png');
 };
