@@ -158,14 +158,55 @@
             body.position.set(0, 1.3, 0.3);
             pilotGroup.add(body);
 
-            // Pilot Head with Face Texture
-            var faceTex = createAnimalFaceTexture(c.bgHex);
+            // Pilot Head
             var headGeo = new THREE.SphereGeometry(1.5, 24, 24);
-            var headMat = new THREE.MeshStandardMaterial({ map: faceTex, roughness: 0.4 });
+            var headMat = new THREE.MeshStandardMaterial({ color: c.bgHex, roughness: 0.4 });
             var head = new THREE.Mesh(headGeo, headMat);
-            head.rotation.y = -Math.PI / 2; // Orient face forward
             head.position.set(0, 2.7, 0.3);
             pilotGroup.add(head);
+
+            // 3D Physical Facial Features (Facing forward Z-axis)
+            var faceGroup = new THREE.Group();
+            faceGroup.position.set(0, 2.7, 0.3);
+
+            // 3D Black Eyes
+            var eyeGeo = new THREE.SphereGeometry(0.24, 16, 16);
+            var eyeMat = new THREE.MeshBasicMaterial({ color: 0x0f172a });
+            var lEye = new THREE.Mesh(eyeGeo, eyeMat);
+            lEye.position.set(-0.55, 0.25, -1.32);
+            var rEye = new THREE.Mesh(eyeGeo, eyeMat);
+            rEye.position.set(0.55, 0.25, -1.32);
+            faceGroup.add(lEye);
+            faceGroup.add(rEye);
+
+            // 3D White Catchlights
+            var pupilGeo = new THREE.SphereGeometry(0.09, 12, 12);
+            var pupilMat = new THREE.MeshBasicMaterial({ color: 0xffffff });
+            var lPupil = new THREE.Mesh(pupilGeo, pupilMat);
+            lPupil.position.set(-0.62, 0.32, -1.48);
+            var rPupil = new THREE.Mesh(pupilGeo, pupilMat);
+            rPupil.position.set(0.48, 0.32, -1.48);
+            faceGroup.add(lPupil);
+            faceGroup.add(rPupil);
+
+            // 3D Cute Nose
+            var noseGeo = new THREE.SphereGeometry(0.2, 16, 16);
+            var noseMat = new THREE.MeshBasicMaterial({ color: 0x1e293b });
+            var nose = new THREE.Mesh(noseGeo, noseMat);
+            nose.position.set(0, 0.05, -1.45);
+            faceGroup.add(nose);
+
+            // 3D Pink Cheeks (Blush)
+            var cheekGeo = new THREE.SphereGeometry(0.3, 16, 16);
+            var cheekMat = new THREE.MeshBasicMaterial({ color: 0xf472b6, transparent: true, opacity: 0.85 });
+            var lCheek = new THREE.Mesh(cheekGeo, cheekMat);
+            lCheek.position.set(-0.8, -0.05, -1.22);
+            var rCheek = new THREE.Mesh(cheekGeo, cheekMat);
+            rCheek.position.set(0.8, -0.05, -1.22);
+            faceGroup.add(lCheek);
+            faceGroup.add(rCheek);
+
+            pilotGroup.add(faceGroup);
 
             // Ears according to Animal Type
             if (ufoState.animalType === 'rabbit') {
