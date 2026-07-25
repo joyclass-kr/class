@@ -316,16 +316,19 @@ window.SOLAR_SYSTEM_DATA = {
         eccentricity: 0.249, // 매우 찌그러진 타원!
         inclinationDeg: 17.1, // 무려 17도나 기울어짐!
         satellites: [
-            { id: 'charon', name: '카론', enName: 'Charon', orbitR: 16, size: 1.8, speed: 1.0, color: '#94a3b8' }
+            { id: 'charon', name: '카론', enName: 'Charon', orbitR: 16, size: 1.8, speed: 1.0, color: '#94a3b8' },
+            { id: 'nix', name: '닉스', enName: 'Nix', orbitR: 26, size: 0.8, speed: 1.4, color: '#cbd5e1' },
+            { id: 'hydra', name: '하이드라', enName: 'Hydra', orbitR: 35, size: 0.9, speed: 1.8, color: '#e2e8f0' }
         ],
         density: '1.85 g/cm³',
         tempC: '-230°C',
         moons: 5,
         atmosphere: '희박한 질소, 메탄',
-        desc: '2006년 국제천문연맹(IAU) 기준에 따라 행성에서 왜소행성으로 분류 변경된 천체로, 공전 궤도가 17.1° 기울어진 타원(이심률 0.249) 형태입니다.',
+        desc: '2006년 왜소행성으로 재분류된 천체로, 거대 위성 카론(Charon) 외에도 닉스(Nix), 하이드라(Hydra), 스틱스(Styx), 케르베로스(Kerberos) 등 4개의 작고 불규칙한 미세 얼음 위성을 포함하여 총 5개의 위성 시스템을 구성합니다.',
         satExamKeyPoints: [
             '📐 [큰 경사각과 이심률] 황도면과의 경사각이 17.1°로 매우 크고 이심률이 0.249로 매우 찌그러진 타원 공전 궤도를 가짐',
-            '📌 [왜소행성 재분류 이유 (2006 IAU)] ① 태양 주위를 공전하고 ② 자체 중력으로 구형을 이루지만 ③ [자신의 궤도 주변의 다른 천체를 청소하지 못함] 조건 미충족'
+            '📌 [왜소행성 재분류 이유 (2006 IAU)] ① 태양 주위를 공전하고 ② 자체 중력으로 구형을 이루지만 ③ [자신의 궤도 주변의 다른 천체를 청소하지 못함] 조건 미충족',
+            '🌕 [명왕성 5개 위성계] 거대 위성 카론(Charon)과 질량 중심이 명왕성 외부에 존재하는 이중 행성계를 이루며, 외곽에 닉스(Nix), 하이드라(Hydra), 스틱스(Styx), 케르베로스(Kerberos) 등 4개의 미세 얼음 위성을 보유함'
         ],
         trivia: '달보다도 크기가 작은 아담한 왜소행성입니다.',
         missions: ['뉴 하이라이즌스(New Horizons)'],
