@@ -55,7 +55,9 @@
             active: false,
             pos: new THREE.Vector3(0, 50, 450),
             heading: 0.0,
-            keys: { forward: false, backward: false, left: false, right: false }
+            keys: { forward: false, backward: false, left: false, right: false },
+            pilotName: localStorage.getItem('userName') || localStorage.getItem('guestName') || localStorage.getItem('studentName') || '우주 탐험가',
+            animalType: localStorage.getItem('userAnimal') || ['bear', 'rabbit', 'cat', 'penguin', 'fox'][Math.floor(Math.random() * 5)]
         };
 
         function buildUFOMesh() {
@@ -77,42 +79,79 @@
             var dome = new THREE.Mesh(domeGeo, domeMat);
             group.add(dome);
 
-            // 2. 🛸 Cute Animal Pilot Avatar (Sitting inside Dome)
+            // 2. 🛸 Animal Pilot Avatar (Based on assigned animalType)
             var pilotGroup = new THREE.Group();
             pilotGroup.position.set(0, 1.5, 0);
 
-            // Pilot Seat (Backrest)
+            // Pilot Seat
             var seatGeo = new THREE.BoxGeometry(4, 5, 1.5);
             var seatMat = new THREE.MeshStandardMaterial({ color: 0x1e293b, roughness: 0.5 });
             var seat = new THREE.Mesh(seatGeo, seatMat);
             seat.position.set(0, 2.5, 2);
             pilotGroup.add(seat);
 
+            // Color Palette by Animal Type
+            var colors = {
+                bear: { head: 0xfbbf24, suit: 0xf59e0b, ear: 0xd97706 },
+                rabbit: { head: 0xffedd5, suit: 0xec4899, ear: 0xf472b6 },
+                cat: { head: 0xfde68a, suit: 0x8b5cf6, ear: 0x7c3aed },
+                penguin: { head: 0x38bdf8, suit: 0x0284c7, ear: 0x0369a1 },
+                fox: { head: 0xf97316, suit: 0xe11d48, ear: 0xc2410c }
+            };
+            var c = colors[ufoState.animalType] || colors.bear;
+
             // Pilot Body
             var bodyGeo = new THREE.SphereGeometry(2.5, 16, 16);
-            var bodyMat = new THREE.MeshStandardMaterial({ color: 0xf59e0b }); // Warm Orange Space Suit
+            var bodyMat = new THREE.MeshStandardMaterial({ color: c.suit });
             var body = new THREE.Mesh(bodyGeo, bodyMat);
             body.position.set(0, 2, 0.5);
             pilotGroup.add(body);
 
             // Pilot Head
             var headGeo = new THREE.SphereGeometry(2.2, 24, 24);
-            var headMat = new THREE.MeshStandardMaterial({ color: 0xfbbf24, roughness: 0.4 }); // Cute Bear/Rabbit Pilot Head
+            var headMat = new THREE.MeshStandardMaterial({ color: c.head, roughness: 0.4 });
             var head = new THREE.Mesh(headGeo, headMat);
             head.position.set(0, 4.2, 0.5);
             pilotGroup.add(head);
 
-            // Cute Animal Ears (Left & Right)
-            var earGeo = new THREE.SphereGeometry(0.8, 16, 16);
-            var earMat = new THREE.MeshStandardMaterial({ color: 0xd97706 });
-            var leftEar = new THREE.Mesh(earGeo, earMat);
-            leftEar.position.set(-1.6, 5.8, 0.5);
-            var rightEar = new THREE.Mesh(earGeo, earMat);
-            rightEar.position.set(1.6, 5.8, 0.5);
-            pilotGroup.add(leftEar);
-            pilotGroup.add(rightEar);
+            // Ears according to Animal Type
+            if (ufoState.animalType === 'rabbit') {
+                // Long Rabbit Ears
+                var rEarGeo = new THREE.CylinderGeometry(0.5, 0.6, 3.5, 16);
+                var rEarMat = new THREE.MeshStandardMaterial({ color: c.ear });
+                var lEar = new THREE.Mesh(rEarGeo, rEarMat);
+                lEar.position.set(-1.2, 6.8, 0.5);
+                lEar.rotation.z = -0.15;
+                var rEar = new THREE.Mesh(rEarGeo, rEarMat);
+                rEar.position.set(1.2, 6.8, 0.5);
+                rEar.rotation.z = 0.15;
+                pilotGroup.add(lEar);
+                pilotGroup.add(rEar);
+            } else if (ufoState.animalType === 'cat' || ufoState.animalType === 'fox') {
+                // Pointy Cat/Fox Ears
+                var cEarGeo = new THREE.ConeGeometry(0.9, 2.0, 16);
+                var cEarMat = new THREE.MeshStandardMaterial({ color: c.ear });
+                var lEar = new THREE.Mesh(cEarGeo, cEarMat);
+                lEar.position.set(-1.3, 6.0, 0.5);
+                lEar.rotation.z = -0.2;
+                var rEar = new THREE.Mesh(cEarGeo, cEarMat);
+                rEar.position.set(1.3, 6.0, 0.5);
+                rEar.rotation.z = 0.2;
+                pilotGroup.add(lEar);
+                pilotGroup.add(rEar);
+            } else {
+                // Round Bear / Penguin Ears
+                var earGeo = new THREE.SphereGeometry(0.8, 16, 16);
+                var earMat = new THREE.MeshStandardMaterial({ color: c.ear });
+                var lEar = new THREE.Mesh(earGeo, earMat);
+                lEar.position.set(-1.6, 5.8, 0.5);
+                var rEar = new THREE.Mesh(earGeo, earMat);
+                rEar.position.set(1.6, 5.8, 0.5);
+                pilotGroup.add(lEar);
+                pilotGroup.add(rEar);
+            }
 
-            // Pilot Headset Band (Visible from Backside)
+            // Headset Band
             var headsetGeo = new THREE.TorusGeometry(2.3, 0.3, 12, 24, Math.PI);
             var headsetMat = new THREE.MeshStandardMaterial({ color: 0x38bdf8, metalness: 0.8 });
             var headset = new THREE.Mesh(headsetGeo, headsetMat);
