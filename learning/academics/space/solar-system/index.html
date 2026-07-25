@@ -84,24 +84,25 @@
                         </div>
                     </div>
                     
-                    <!-- 1 AU Concept Educational Card (Visible in 2D Mode) -->
-                    <div id="auInfoCard" style="display: none; position: absolute; top: 16px; left: 16px; max-width: 320px; background: rgba(15, 23, 42, 0.92); border: 1px solid rgba(56, 189, 248, 0.4); border-radius: 12px; padding: 14px 16px; color: #e2e8f0; font-size: 12px; line-height: 1.5; backdrop-filter: blur(8px); box-shadow: 0 10px 25px rgba(0, 0, 0, 0.5); z-index: 10;">
+                    <!-- 1 AU & 2D Reality Scale Educational Card (Visible in 2D Mode) -->
+                    <div id="auInfoCard" style="display: none; position: absolute; top: 16px; left: 16px; max-width: 340px; background: rgba(15, 23, 42, 0.94); border: 1px solid rgba(16, 185, 129, 0.5); border-radius: 14px; padding: 14px 16px; color: #e2e8f0; font-size: 12px; line-height: 1.5; backdrop-filter: blur(10px); box-shadow: 0 10px 30px rgba(0, 0, 0, 0.7); z-index: 10;">
                         <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 8px; border-bottom: 1px solid rgba(255,255,255,0.1); padding-bottom: 6px;">
-                            <span style="font-weight: 800; font-size: 13px; color: #38bdf8;">💡 1 AU (천문단위)란?</span>
+                            <span style="font-weight: 800; font-size: 13px; color: #10b981;">🗺️ 2D 리얼리티 (1:1 비율) 왜 행성이 안 보일까?</span>
                             <button id="auCardToggleBtn" style="background: none; border: none; color: #94a3b8; cursor: pointer; font-size: 14px; padding: 0 4px;">➖</button>
                         </div>
                         <div id="auCardContent">
-                            <p style="margin: 0 0 8px 0; color: #f8fafc;">
-                                <strong>1 AU</strong>는 태양계 거리를 재기 위해 <span style="color: #fbbf24; font-weight: 700;">태양과 지구 사이의 평균 거리</span>를 1로 약속한 단위입니다.
-                            </p>
-                            <ul style="margin: 0 0 8px 0; padding-left: 16px; color: #cbd5e1;">
-                                <li><strong>실제 거리</strong>: 약 1억 4,960만 km</li>
-                                <li>빛의 속도로 약 <span style="color: #38bdf8; font-weight: 700;">8분 20초</span> 걸림!</li>
-                            </ul>
-                            <div style="background: rgba(56, 189, 248, 0.1); border-left: 3px solid #38bdf8; padding: 6px 8px; border-radius: 4px; font-size: 11px; color: #93c5fd;">
-                                <strong>왜 AU를 쓸까?</strong><br>
-                                우주는 너무 커서 km 대신 <strong>수성(0.39 AU), 목성(5.2 AU), 해왕성(30 AU)</strong> 처럼 지구 기준으로 쉽게 비교하기 위해서입니다.
+                            <div style="background: rgba(16, 185, 129, 0.12); border-left: 3px solid #10b981; padding: 8px 10px; border-radius: 6px; font-size: 11.5px; color: #a7f3d0; margin-bottom: 8px;">
+                                <strong>우주는 우리가 생각하는 것보다 훨씬 넓고 비어있습니다!</strong>
                             </div>
+                            <p style="margin: 0 0 8px 0; color: #cbd5e1; font-size: 11.5px;">
+                                지구 반지름은 6,371km인데, 지구-태양 거리(1 AU)는 무려 <strong>1억 4,960만 km</strong>입니다. (거리 : 반지름 비약 <strong>23,500 : 1</strong>)
+                            </p>
+                            <div style="background: rgba(0,0,0,0.3); padding: 8px 10px; border-radius: 6px; font-size: 11px; color: #fbbf24; margin-bottom: 8px;">
+                                💡 만약 지구를 화면에서 <strong>1cm 크기</strong>로 그리면, 지구 궤도는 화면 밖 <strong>235m 멀리</strong> 나가버립니다!
+                            </div>
+                            <p style="margin: 0; color: #94a3b8; font-size: 11px;">
+                                따라서 실제 1:1 비율에서는 행성이 1픽셀보다 훨씬 작아져 눈에 안 보이기 때문에 <strong>선과 한글 라벨</strong>로 표기됩니다.
+                            </p>
                         </div>
                     </div>
                 </div>
@@ -562,7 +563,7 @@
         </div>
     </div>
 
-    <script src="solar-data.js?v=atlas_redesign_naesin_csat"></script>
-    <script src="app.js?v=atlas_redesign_naesin_csat"></script>
+    <script src="solar-data.js?v=2d_reality_ufo_disabled_scale_card_added"></script>
+    <script src="app.js?v=2d_reality_ufo_disabled_scale_card_added"></script>
 </body>
 </html>

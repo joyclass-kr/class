@@ -1248,12 +1248,23 @@
                     state.simMode = e.target.checked ? '2d' : '3d';
                     
                     if (state.simMode === '2d') {
+                        // Disable UFO Flight Mode in 2D Reality Mode
+                        if (ufoState.active) {
+                            if (ufoModeBtn) ufoModeBtn.click(); // Turn off active UFO mode
+                        }
+                        if (ufoModeBtn) {
+                            ufoModeBtn.disabled = true;
+                            ufoModeBtn.style.opacity = '0.4';
+                            ufoModeBtn.style.cursor = 'not-allowed';
+                            ufoModeBtn.title = '2D 리얼리티 모드에서는 UFO 탐험을 이용할 수 없습니다.';
+                        }
+
                         if (auInfoCard) auInfoCard.style.display = 'block';
                         simModeLabel.textContent = '🗺️ 2D 리얼리티 (1:1 Map)';
                         simModeLabel.style.color = '#10b981'; // emerald
                         simModeLabel.style.background = 'rgba(16,185,129,0.15)';
                         if(simWarningAlert) {
-                            simWarningAlert.textContent = '※ 이 화면은 실제 천문 비율(1:1)을 나타내며, 너무 멀어 행성은 보이지 않아 한글 텍스트로 표기됩니다.';
+                            simWarningAlert.textContent = '※ 실제 천문 비율(1:1)에서는 행성들이 1픽셀보다 훨씬 작아져 눈에 보이지 않으므로 한글 텍스트 라벨로 표기됩니다.';
                             simWarningAlert.style.color = '#10b981';
                             simWarningAlert.style.background = 'rgba(16,185,129,0.1)';
                             simWarningAlert.style.border = '1px solid rgba(16,185,129,0.2)';
@@ -1264,12 +1275,20 @@
                             controls.update();
                         }
                     } else {
+                        // Enable UFO Flight Mode in 3D Mode
+                        if (ufoModeBtn) {
+                            ufoModeBtn.disabled = false;
+                            ufoModeBtn.style.opacity = '1.0';
+                            ufoModeBtn.style.cursor = 'pointer';
+                            ufoModeBtn.title = 'UFO 탐험 (UFO Flight) 온/오프';
+                        }
+
                         if (auInfoCard) auInfoCard.style.display = 'none';
                         simModeLabel.textContent = '🔭 3D 관찰용 (Log Scale)';
                         simModeLabel.style.color = '#38bdf8'; // sky
                         simModeLabel.style.background = 'rgba(56,189,248,0.15)';
                         if(simWarningAlert) {
-                            simWarningAlert.textContent = '※ 이 화면은 교육적 시각화를 위해 거리와 크기가 로그 스케일(Log Scale)로 왜곡되었습니다.';
+                            simWarningAlert.textContent = '※ 이 화면은 교육적 시각화를 위해 거리와 크기가 로그 스케일(Log Scale)로 조절되었습니다.';
                             simWarningAlert.style.color = '#f59e0b';
                             simWarningAlert.style.background = 'rgba(245,158,11,0.1)';
                             simWarningAlert.style.border = '1px solid rgba(245,158,11,0.2)';
