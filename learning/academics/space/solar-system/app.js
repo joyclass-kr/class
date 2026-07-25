@@ -725,23 +725,95 @@
                     orbitAngle: (state.simMode === '2d') ? (Math.random() * Math.PI * 2) : (key === 'earth' ? 0 : Math.random() * Math.PI * 2)
                 };
 
-                // PRECISE KEPLER ELLIPSE ORBIT LINE
-                if (state.showOrbits) {
-                    var pts = [];
-                    var segments = 256; 
-                    for (var i = 0; i <= segments; i++) { 
-                        var theta = (i / segments) * Math.PI * 2;
-                        var ox = Math.cos(theta) * semiMajor - focusOffset;
-                        var oz = Math.sin(theta) * semiMinor;
-                        pts.push(new THREE.Vector3(ox, 0, oz));
-                    }
-                    var oGeo = new THREE.BufferGeometry().setFromPoints(pts);
-                    var line = new THREE.LineLoop(oGeo, new THREE.LineBasicMaterial({ color: 0xffffff, transparent: true, opacity: 0.25 }));
                     line.rotation.z = incRad;
                     scene.add(line);
                     orbitLines.push(line);
                 }
             });
+
+            // ========== 🌟 3D SMALL SYSTEM BODIES (Asteroid Belt, Comet, Meteor) ==========
+            if (state.simMode === '3d') {
+                // 1. 🪐 3D Asteroid Belt (Main Belt between Mars and Jupiter)
+                var asteroidCount = 1800;
+                var astGeo = new THREE.BufferGeometry();
+                var astPositions = new Float32Array(asteroidCount * 3);
+                var marsR = getBodyOrbitRadius('mars');
+                var jupR = getBodyOrbitRadius('jupiter');
+                var minBeltR = marsR + (jupR - marsR) * 0.25;
+                var maxBeltR = marsR + (jupR - marsR) * 0.75;
+
+                for (var i = 0; i < asteroidCount; i++) {
+                    var r = minBeltR + Math.random() * (maxBeltR - minBeltR);
+                    var theta = Math.random() * Math.PI * 2;
+                    var yOffset = (Math.random() - 0.5) * 15;
+                    astPositions[i * 3] = Math.cos(theta) * r;
+                    astPositions[i * 3 + 1] = yOffset;
+                    astPositions[i * 3 + 2] = Math.sin(theta) * r;
+                }
+                astGeo.setAttribute('position', new THREE.BufferAttribute(astPositions, 3));
+                var astMat = new THREE.PointsMaterial({ color: 0x94a3b8, size: 2.2, transparent: true, opacity: 0.75 });
+                var astParticles = new THREE.Points(astGeo, astMat);
+                astParticles.userData = { key: 'asteroid', data: window.SOLAR_SYSTEM_DATA.asteroid };
+                scene.add(astParticles);
+                celestialBodies['asteroid'] = { mesh: astParticles, data: window.SOLAR_SYSTEM_DATA.asteroid };
+
+                // 2. ☄️ 3D Interactive Comet (Halley Elliptic Orbit + Glowing Tail)
+                var cometData = window.SOLAR_SYSTEM_DATA.comet;
+                if (cometData) {
+                    var cometGroup = new THREE.Object3D();
+                    var cGeo = new THREE.SphereGeometry(3.5, 16, 16);
+                    var cMat = new THREE.MeshStandardMaterial({ map: loadPlanet3DTexture('comet'), roughness: 0.9, emissive: 0x38bdf8, emissiveIntensity: 0.3 });
+                    var cometMesh = new THREE.Mesh(cGeo, cMat);
+                    cometGroup.add(cometMesh);
+
+                    // Glowing Gas/Dust Tail
+                    var tailGeo = new THREE.ConeGeometry(4.5, 45, 16);
+                    tailGeo.rotateX(-Math.PI / 2);
+                    var tailMat = new THREE.MeshBasicMaterial({ color: 0x38bdf8, transparent: true, opacity: 0.45, side: THREE.DoubleSide });
+                    var tailMesh = new THREE.Mesh(tailGeo, tailMat);
+                    tailMesh.position.z = 24;
+                    cometGroup.add(tailMesh);
+
+                    var cSemiMajor = 650;
+                    var cEcc = 0.88;
+                    var cFocusOffset = cSemiMajor * cEcc;
+                    cometGroup.position.set(cSemiMajor - cFocusOffset, 12, 0);
+
+                    cometMesh.userData = { key: 'comet', data: cometData, semiMajor: cSemiMajor, focusOffset: cFocusOffset, ecc: cEcc };
+                    scene.add(cometGroup);
+                    celestialBodies['comet'] = { mesh: cometMesh, bodyTiltGroup: cometGroup, semiMajor: cSemiMajor, focusOffset: cFocusOffset, ecc: cEcc, orbitAngle: 0.5, data: cometData };
+
+                    // Comet Orbit Line
+                    if (state.showOrbits) {
+                        var cPts = [];
+                        var cSemiMinor = cSemiMajor * Math.sqrt(1 - cEcc * cEcc);
+                        for (var k = 0; k <= 128; k++) {
+                            var ct = (k / 128) * Math.PI * 2;
+                            cPts.push(new THREE.Vector3(Math.cos(ct) * cSemiMajor - cFocusOffset, 12, Math.sin(ct) * cSemiMinor));
+                        }
+                        var cLineGeo = new THREE.BufferGeometry().setFromPoints(cPts);
+                        var cLine = new THREE.LineLoop(cLineGeo, new THREE.LineBasicMaterial({ color: 0x38bdf8, transparent: true, opacity: 0.35 }));
+                        scene.add(cLine);
+                        orbitLines.push(cLine);
+                    }
+                }
+
+                // 3. 🌠 3D Interactive Meteor / Meteor Shower
+                var meteorData = window.SOLAR_SYSTEM_DATA.meteor;
+                if (meteorData) {
+                    var mGroup = new THREE.Object3D();
+                    var mHeadGeo = new THREE.SphereGeometry(2.5, 16, 16);
+                    var mHeadMat = new THREE.MeshBasicMaterial({ color: 0xfef08a });
+                    var mHeadMesh = new THREE.Mesh(mHeadGeo, mHeadMat);
+                    mGroup.add(mHeadMesh);
+
+                    var earthOrbitR = getBodyOrbitRadius('earth');
+                    mGroup.position.set(earthOrbitR * 1.15, 30, earthOrbitR * 0.4);
+                    mHeadMesh.userData = { key: 'meteor', data: meteorData };
+                    scene.add(mGroup);
+                    celestialBodies['meteor'] = { mesh: mHeadMesh, bodyTiltGroup: mGroup, data: meteorData };
+                }
+            }
         }
 
         // 4. TRUE ORBIT RATES (Earth = 1.0)
