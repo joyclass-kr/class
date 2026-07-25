@@ -245,19 +245,54 @@
             if (lc) lc.innerHTML = '';
             mapLabels = [];
 
-            function createLabel(key, data, isSun) {
+            function createPlanetLabel(key, data) {
                 if (!lc || state.simMode !== '2d') return null;
                 var div = document.createElement('div');
-                div.textContent = (isSun ? '태양' : data.nameKor);
+                div.innerHTML = '<span style="color:#38bdf8;">●</span> ' + data.nameKor;
                 div.style.position = 'absolute';
-                div.style.color = isSun ? '#fbbf24' : '#fff';
-                div.style.fontSize = isSun ? '16px' : '12px';
-                div.style.fontWeight = isSun ? 'bold' : 'normal';
-                div.style.textShadow = '1px 1px 2px #000';
+                div.style.color = '#ffffff';
+                div.style.background = 'rgba(2, 132, 199, 0.85)';
+                div.style.border = '1px solid rgba(56, 189, 248, 0.6)';
+                div.style.padding = '3px 8px';
+                div.style.borderRadius = '12px';
+                div.style.fontSize = '12px';
+                div.style.fontWeight = 'bold';
+                div.style.whiteSpace = 'nowrap';
+                div.style.transform = 'translate(-50%, -50%)';
+                div.style.pointerEvents = 'none';
+                div.style.boxShadow = '0 0 10px rgba(56, 189, 248, 0.3)';
+                lc.appendChild(div);
+                return div;
+            }
+
+            function createOrbitLabel(key, data, semiMajor, semiMinor, focusOffset, pivot) {
+                if (!lc || state.simMode !== '2d') return null;
+                var theta = Math.PI / 4; // Place label at 45-degree angle on orbit line
+                var ox = Math.cos(theta) * semiMajor - focusOffset;
+                var oz = Math.sin(theta) * semiMinor;
+
+                var marker = new THREE.Object3D();
+                marker.position.set(ox, 0, oz);
+                pivot.add(marker);
+
+                var div = document.createElement('div');
+                var distStr = data.distAU !== undefined ? data.distAU.toFixed(2) + ' AU' : '';
+                div.textContent = '📍 ' + data.nameKor + ' 궤도 (' + distStr + ')';
+                div.style.position = 'absolute';
+                div.style.color = '#38bdf8';
+                div.style.background = 'rgba(15, 23, 42, 0.85)';
+                div.style.border = '1px solid rgba(56, 189, 248, 0.4)';
+                div.style.padding = '2px 6px';
+                div.style.borderRadius = '4px';
+                div.style.fontSize = '11px';
+                div.style.fontWeight = '600';
+                div.style.whiteSpace = 'nowrap';
                 div.style.transform = 'translate(-50%, -50%)';
                 div.style.pointerEvents = 'none';
                 lc.appendChild(div);
-                return div;
+
+                mapLabels.push({ obj: marker, el: div });
+                return marker;
             }
 
             var sunTex = loadPlanet3DTexture('sun');
@@ -275,8 +310,21 @@
 
             if (state.simMode === '2d') {
                 sunMesh.visible = false;
-                var sunLabel = createLabel('sun', window.SOLAR_SYSTEM_DATA.sun, true);
-                mapLabels.push({ obj: sunMesh, el: sunLabel });
+                var sunDiv = document.createElement('div');
+                sunDiv.textContent = '☀️ 태양 (Sun)';
+                sunDiv.style.position = 'absolute';
+                sunDiv.style.color = '#fbbf24';
+                sunDiv.style.background = 'rgba(180, 83, 9, 0.85)';
+                sunDiv.style.border = '1px solid rgba(251, 191, 36, 0.6)';
+                sunDiv.style.padding = '4px 10px';
+                sunDiv.style.borderRadius = '14px';
+                sunDiv.style.fontSize = '13px';
+                sunDiv.style.fontWeight = 'bold';
+                sunDiv.style.whiteSpace = 'nowrap';
+                sunDiv.style.transform = 'translate(-50%, -50%)';
+                sunDiv.style.pointerEvents = 'none';
+                lc.appendChild(sunDiv);
+                mapLabels.push({ obj: sunMesh, el: sunDiv });
             }
             scene.add(sunMesh);
 
@@ -328,8 +376,9 @@
                 
                 if (state.simMode === '2d') {
                     planetMesh.visible = false;
-                    var pl = createLabel(key, data, false);
+                    var pl = createPlanetLabel(key, data);
                     mapLabels.push({ obj: planetMesh, el: pl });
+                    createOrbitLabel(key, data, semiMajor, semiMinor, focusOffset, pivot);
                 }
                 planetMesh.userData = { key: key, data: data, semiMajor: semiMajor, semiMinor: semiMinor, focusOffset: focusOffset, ecc: ecc };
                 pivot.add(planetMesh);
