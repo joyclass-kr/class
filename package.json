@@ -3,7 +3,7 @@
   "version": "1.0.0",
   "private": true,
   "scripts": {
-    "build": "npm --prefix game-hub-server install && npm --prefix game-hub-server run build:reading-seed",
+    "build": "npm --prefix game-hub-server install",
     "start": "npm --prefix game-hub-server start"
   },
   "engines": {
