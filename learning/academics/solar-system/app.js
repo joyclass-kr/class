@@ -467,19 +467,11 @@ document.addEventListener('DOMContentLoaded', () => {
                 planetMesh.add(ringMesh);
             }
 
-            // Earth 3D Clouds & Atmosphere Glow
+            // Earth Atmosphere Glow
             if (key === 'earth') {
-                // 1. Semi-transparent 3D Cloud Sphere Layer
-                const cloudTex = loadPlanetTexture('earthCloud');
-                const cloudGeo = new THREE.SphereGeometry(bodyR * 1.025, 48, 48);
-                const cloudMat = new THREE.MeshStandardMaterial({ map: cloudTex, transparent: true, opacity: 0.55, depthWrite: false });
-                const cloudMesh = new THREE.Mesh(cloudGeo, cloudMat);
-                planetMesh.add(cloudMesh);
-                celestialBodies['earthCloud'] = cloudMesh;
-
-                // 2. Cyan Blue Atmosphere Halo Glow
+                // Cyan Blue Atmosphere Halo Glow
                 const atmosGeo = new THREE.SphereGeometry(bodyR * 1.12, 32, 32);
-                const atmosMat = new THREE.MeshBasicMaterial({ color: 0x38bdf8, transparent: true, opacity: 0.25, side: THREE.BackSide });
+                const atmosMat = new THREE.MeshBasicMaterial({ color: 0x38bdf8, transparent: true, opacity: 0.22, side: THREE.BackSide });
                 const atmosMesh = new THREE.Mesh(atmosGeo, atmosMat);
                 planetMesh.add(atmosMesh);
 
