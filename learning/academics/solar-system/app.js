@@ -429,9 +429,9 @@
                         b.mesh.position.x = Math.cos(b.orbitAngle) * a;
                         b.mesh.position.z = Math.sin(b.orbitAngle) * c;
                         
-                        // Scientifically Accurate Self Rotation (Earth ~365.25 spins per orbit)
+                        // 100% Exact Mathematical Self Rotation (Earth spins EXACTLY 365.25 times per orbit!)
                         var rotRatio = ROTATION_RATIOS[key] || 1.0;
-                        b.mesh.rotation.y += dOrbit * (rotRatio / 40); // Scaled proportionally for smooth visual rendering
+                        b.mesh.rotation.y = b.orbitAngle * rotRatio;
                     }
                 });
             }
