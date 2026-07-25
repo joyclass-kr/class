@@ -844,7 +844,17 @@
 
                     cometMesh.userData = { key: 'comet', data: cometData, semiMajor: cSemiMajor, focusOffset: cFocusOffset, ecc: cEcc };
                     scene.add(cometGroup);
-                    celestialBodies['comet'] = { mesh: cometMesh, bodyTiltGroup: cometGroup, semiMajor: cSemiMajor, focusOffset: cFocusOffset, ecc: cEcc, orbitAngle: 0.5, data: cometData };
+                    celestialBodies['comet'] = {
+                        mesh: cometMesh,
+                        bodyTiltGroup: cometGroup,
+                        tailParticles: tailParticles,
+                        tGeo: tGeo,
+                        semiMajor: cSemiMajor,
+                        focusOffset: cFocusOffset,
+                        ecc: cEcc,
+                        orbitAngle: 0.5,
+                        data: cometData
+                    };
 
                     // Comet Orbit Line
                     if (state.showOrbits) {
@@ -1000,10 +1010,40 @@
 
                             var sublimationFactor = Math.max(0.0, Math.min(1.0, 1.0 - (distToSun - minSublimationDist) / (maxSublimationDist - minSublimationDist)));
 
+                            // 3. 🌟 Dynamic Shimmering & Flowing Particle Tail Engine (Live Particle Flow & Pixel Color Shimmering!)
+                            if (b.tGeo) {
+                                var tPosArr = b.tGeo.attributes.position.array;
+                                var tColArr = b.tGeo.attributes.color.array;
+                                var curTime = clock ? clock.getElapsedTime() : Date.now() * 0.001;
+
+                                for (var t = 0; t < 1000; t++) {
+                                    // 1) Particle Backward Flow Loop
+                                    tPosArr[t * 3 + 2] += delta * 14.0;
+                                    if (tPosArr[t * 3 + 2] > 10.5) {
+                                        tPosArr[t * 3 + 2] = 0.6;
+                                        var pProgress = 0.06;
+                                        var pSpread = Math.pow(pProgress, 1.3) * 2.2;
+                                        tPosArr[t * 3] = (Math.random() - 0.5) * pSpread;
+                                        tPosArr[t * 3 + 1] = (Math.random() - 0.5) * pSpread;
+                                    }
+
+                                    // 2) Pixel Color Shimmering Noise (Shimmering Aurora Gas Sparkle!)
+                                    var shimmer = 0.7 + Math.sin(curTime * 18.0 + t * 0.5) * 0.3;
+                                    var isIon = t % 2 === 0;
+                                    
+                                    tColArr[t * 3] = isIon ? 0.0 : (0.85 * shimmer);       // R
+                                    tColArr[t * 3 + 1] = (isIon ? 0.94 : 0.95) * shimmer;  // G
+                                    tColArr[t * 3 + 2] = 1.0 * shimmer;                  // B
+                                }
+
+                                b.tGeo.attributes.position.needsUpdate = true;
+                                b.tGeo.attributes.color.needsUpdate = true;
+                            }
+
                             b.bodyTiltGroup.traverse(function(child) {
                                 if (child.isPoints) {
-                                    child.material.opacity = 0.1 + sublimationFactor * 0.85;
-                                    child.scale.set(0.7 + sublimationFactor * 0.3, 0.7 + sublimationFactor * 0.3, 0.7 + sublimationFactor * 0.5);
+                                    child.material.opacity = 0.15 + sublimationFactor * 0.85;
+                                    child.scale.set(0.75 + sublimationFactor * 0.3, 0.75 + sublimationFactor * 0.3, 0.75 + sublimationFactor * 0.5);
                                 }
                             });
                         }
