@@ -340,9 +340,16 @@
                 if (key === 'saturn') {
                     var ringTex = loadPlanet3DTexture('saturnRing');
                     var ringGeo = new THREE.RingGeometry(bodyR * 1.3, bodyR * 2.3, 64);
-                    ringGeo.rotateX(Math.PI / 2.3);
+                    ringGeo.rotateX(Math.PI / 2); // Exactly perpendicular to Saturn's equator!
                     var ringMesh = new THREE.Mesh(ringGeo, new THREE.MeshStandardMaterial({ map: ringTex, side: THREE.DoubleSide, transparent: true, opacity: 0.9 }));
                     planetMesh.add(ringMesh);
+                    // Saturn Axial Tilt: ~26.73°
+                    planetMesh.rotation.z = 26.73 * (Math.PI / 180);
+                }
+
+                if (key === 'uranus') {
+                    // Uranus Axial Tilt: ~97.77° (Lying on its side)
+                    planetMesh.rotation.z = 97.77 * (Math.PI / 180);
                 }
 
                 if (key === 'earth') {
