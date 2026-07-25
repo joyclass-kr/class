@@ -49,7 +49,7 @@ document.addEventListener('DOMContentLoaded', () => {
     let celestialBodies = {}; // { sun, mercury, venus, earth, moon, mars, jupiter, saturn, uranus, neptune, pluto }
     let orbitLines = [];
     let raycaster, mouse;
-    let clock = new THREE.Clock();
+    let clock = null;
 
     initThreeDScene();
 
@@ -265,6 +265,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
             camera = new THREE.PerspectiveCamera(45, width / height, 0.1, 2000);
             camera.position.set(0, 120, 220);
+            clock = new THREE.Clock();
 
             renderer = new THREE.WebGLRenderer({ canvas, antialias: true, alpha: true });
             renderer.setSize(width, height);
@@ -713,7 +714,7 @@ document.addEventListener('DOMContentLoaded', () => {
     function animate() {
         requestAnimationFrame(animate);
 
-        const delta = clock.getDelta();
+        const delta = clock ? clock.getDelta() : 0.016;
 
         if (state.isPlaying) {
             state.simTimeYears += delta * 0.05 * state.orbitSpeed;
