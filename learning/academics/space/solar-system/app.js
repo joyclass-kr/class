@@ -405,9 +405,11 @@
                     planetMesh.add(atmosMesh);
 
                     // MOON VISUAL SCALE DISTANCE
+                    // FIX: Attach to orbit pivot instead of Earth mesh so Moon doesn't inherit Earth's 365.25x self-rotation!
                     var moonPivot = new THREE.Object3D();
                     moonPivot.rotation.z = 28.58 * (Math.PI / 180);
-                    planetMesh.add(moonPivot);
+                    pivot.add(moonPivot);
+                    
                     var moonR = getBodyScaleRadius('moon');
                     var moonMesh = new THREE.Mesh(
                         new THREE.SphereGeometry(moonR, 16, 16),
@@ -500,6 +502,8 @@
                         // Moon Orbits Earth exactly 12.37 times per Earth year (Synodic Month: 365.25 / 29.53 days)
                         var earthBody = celestialBodies['earth'];
                         if (earthBody && earthBody.mesh && b.pivot) {
+                            // Synchronize Moon pivot position to Earth mesh (Isolates Moon from Earth's 365.25x self-rotation!)
+                            b.pivot.position.copy(earthBody.mesh.position);
                             var earthAngle = earthBody.orbitAngle || 0;
                             var moonAngle = earthAngle * 12.3688; // Exact synodic month count (12.37 rev/yr)
                             b.pivot.rotation.y = moonAngle;
