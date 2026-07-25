@@ -276,8 +276,12 @@
 
                 var orbitR = getBodyOrbitRadius(key);
                 var bodyR = getBodyScaleRadius(key);
+                var ecc = data.eccentricity || 0.02;
+                var incRad = (data.inclinationDeg || 0.0) * (Math.PI / 180);
 
                 var pivot = new THREE.Object3D();
+                // Apply Orbit Inclination Tilt
+                pivot.rotation.z = incRad;
                 scene.add(pivot);
 
                 var texture = loadPlanet3DTexture(key);
@@ -288,8 +292,12 @@
                     metalness: 0.1
                 });
                 var planetMesh = new THREE.Mesh(geo, mat);
-                planetMesh.position.x = orbitR;
-                planetMesh.userData = { key: key, data: data };
+                
+                // Elliptical Orbit Position
+                var semiMajor = orbitR;
+                var semiMinor = orbitR * Math.sqrt(1 - ecc * ecc);
+                planetMesh.position.x = semiMajor;
+                planetMesh.userData = { key: key, data: data, semiMajor: semiMajor, semiMinor: semiMinor };
                 pivot.add(planetMesh);
 
                 if (key === 'saturn') {
@@ -320,16 +328,17 @@
                     celestialBodies['moon'] = { mesh: moonMesh, pivot: moonPivot, orbitRadius: 6, data: window.SOLAR_SYSTEM_DATA.moon };
                 }
 
-                celestialBodies[key] = { mesh: planetMesh, pivot: pivot, orbitRadius: orbitR, data: data };
+                celestialBodies[key] = { mesh: planetMesh, pivot: pivot, orbitRadius: orbitR, semiMajor: semiMajor, semiMinor: semiMinor, data: data };
 
                 if (state.showOrbits) {
                     var pts = [];
                     for (var i = 0; i <= 128; i++) {
                         var theta = (i / 128) * Math.PI * 2;
-                        pts.push(new THREE.Vector3(Math.cos(theta) * orbitR, 0, Math.sin(theta) * orbitR));
+                        pts.push(new THREE.Vector3(Math.cos(theta) * semiMajor, 0, Math.sin(theta) * semiMinor));
                     }
                     var oGeo = new THREE.BufferGeometry().setFromPoints(pts);
-                    var line = new THREE.LineLoop(oGeo, new THREE.LineBasicMaterial({ color: 0xffffff, transparent: true, opacity: 0.15 }));
+                    var line = new THREE.LineLoop(oGeo, new THREE.LineBasicMaterial({ color: 0xffffff, transparent: true, opacity: 0.2 }));
+                    line.rotation.z = incRad;
                     scene.add(line);
                     orbitLines.push(line);
                 }
@@ -356,10 +365,17 @@
                     if (key === 'moon' && b.pivot) {
                         b.pivot.rotation.y += delta * 2.0 * state.orbitSpeed;
                         if (b.mesh) b.mesh.rotation.y += 0.01;
-                    } else if (b.pivot) {
+                    } else if (b.pivot && b.mesh) {
                         var rate = ORBIT_RATES[key] || 0.1;
-                        b.pivot.rotation.y += delta * 0.5 * rate * state.orbitSpeed;
-                        if (b.mesh) b.mesh.rotation.y += 0.01;
+                        if (b.orbitAngle === undefined) b.orbitAngle = Math.random() * Math.PI * 2;
+                        b.orbitAngle += delta * 0.5 * rate * state.orbitSpeed;
+                        
+                        var a = b.semiMajor || b.orbitRadius || 100;
+                        var c = b.semiMinor || b.orbitRadius || 100;
+                        b.mesh.position.x = Math.cos(b.orbitAngle) * a;
+                        b.mesh.position.z = Math.sin(b.orbitAngle) * c;
+                        
+                        b.mesh.rotation.y += 0.01;
                     }
                 });
             }
