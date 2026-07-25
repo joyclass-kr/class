@@ -327,10 +327,10 @@ function initSolarApp() {
         const planetKeys = ['mercury', 'venus', 'earth', 'mars', 'jupiter', 'saturn', 'uranus', 'neptune', 'pluto'];
 
         function render2DFallback() {
-            width = canvasContainer.clientWidth || 900;
-            height = canvasContainer.clientHeight || 540;
-            canvas.width = width;
-            canvas.height = height;
+            const cw = canvasContainer.clientWidth || 900;
+            const ch = canvasContainer.clientHeight || 540;
+            if (canvas.width !== cw) { canvas.width = cw; width = cw; }
+            if (canvas.height !== ch) { canvas.height = ch; height = ch; }
 
             ctx.fillStyle = '#030712';
             ctx.fillRect(0, 0, width, height);
