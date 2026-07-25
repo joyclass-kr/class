@@ -721,7 +721,8 @@
                         if (earthBody && earthBody.mesh && b.pivot) {
                             b.pivot.position.copy(earthBody.mesh.position);
                             var earthAngle = earthBody.orbitAngle || 0;
-                            var moonAngle = earthAngle * 12.3688;
+                            // Counter-Clockwise Moon Orbit (CCW: West -> East) around Earth
+                            var moonAngle = -earthAngle * 12.3688;
                             b.pivot.rotation.y = moonAngle;
                             if (b.mesh) b.mesh.rotation.y = moonAngle;
                         }
