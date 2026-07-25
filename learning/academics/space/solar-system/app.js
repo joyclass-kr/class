@@ -881,9 +881,9 @@
                     var flashStarLine = new THREE.LineSegments(starGeo, starMat);
                     mGroup.add(flashStarLine);
 
-                    // Subtle Glowing Click Target (Non-intrusive)
-                    var mHeadGeo = new THREE.SphereGeometry(1.8, 16, 16);
-                    var mHeadMat = new THREE.MeshBasicMaterial({ color: 0xfef08a, transparent: true, opacity: 0.5, blending: THREE.AdditiveBlending });
+                    // Friendly & Large Glowing Click Target Mesh (Easy to click for students!)
+                    var mHeadGeo = new THREE.SphereGeometry(6.5, 16, 16);
+                    var mHeadMat = new THREE.MeshBasicMaterial({ color: 0xfef08a, transparent: true, opacity: 0.15, blending: THREE.AdditiveBlending });
                     var mHeadMesh = new THREE.Mesh(mHeadGeo, mHeadMat);
                     mHeadMesh.position.set(0, 18, 0);
                     mGroup.add(mHeadMesh);
@@ -1051,13 +1051,13 @@
                                     st.endPos.set(tx, ty, tz);
                                 }
                             } else {
-                                st.progress += delta * 2.8; // 0.35s fast flash flight
+                                st.progress += delta * 0.45; // Relaxed 2.2s flight time so students can easily click!
                                 if (st.progress >= 1.0) {
                                     st.isShooting = false;
                                     st.starMat.opacity = 0.0; // Disappear into deep space!
                                 } else {
                                     var curHead = new THREE.Vector3().lerpVectors(st.startPos, st.endPos, st.progress);
-                                    var trailLen = 10.0 * (1.0 - st.progress * 0.5);
+                                    var trailLen = 12.0 * (1.0 - st.progress * 0.4);
                                     var dir = new THREE.Vector3().subVectors(st.endPos, st.startPos).normalize();
                                     var curTail = new THREE.Vector3().subVectors(curHead, dir.clone().multiplyScalar(trailLen));
 
@@ -1065,6 +1065,11 @@
                                     pos[0] = curHead.x; pos[1] = curHead.y; pos[2] = curHead.z;
                                     pos[3] = curTail.x; pos[4] = curTail.y; pos[5] = curTail.z;
                                     st.starGeo.attributes.position.needsUpdate = true;
+
+                                    // Track click hit-box mesh to shooting star head position
+                                    if (b.mesh) {
+                                        b.mesh.position.copy(curHead);
+                                    }
 
                                     st.starMat.opacity = Math.sin(st.progress * Math.PI) * 0.95;
                                 }
