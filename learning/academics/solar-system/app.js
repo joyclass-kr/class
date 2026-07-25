@@ -408,9 +408,15 @@
                 Object.keys(celestialBodies).forEach(function (key) {
                     var b = celestialBodies[key];
                     if (key === 'sun') return;
-                    if (key === 'moon' && b.pivot) {
-                        b.pivot.rotation.y += delta * 2.0 * state.orbitSpeed;
-                        if (b.mesh) b.mesh.rotation.y += 0.01;
+                    if (key === 'moon') {
+                        // Moon Orbits Earth 13.37 times per Earth Year with Synchronous Self-Rotation (동주기 자전)
+                        var earthBody = celestialBodies['earth'];
+                        if (earthBody && earthBody.mesh && b.pivot) {
+                            var earthAngle = earthBody.orbitAngle || 0;
+                            var moonAngle = earthAngle * 13.37; // 13.37 Moon orbits per 1 Earth orbit
+                            b.pivot.rotation.y = moonAngle;
+                            if (b.mesh) b.mesh.rotation.y = moonAngle; // Synchronous Rotation (1 Moon Orbit = 1 Moon Rotation)
+                        }
                     } else if (b.pivot && b.mesh) {
                         var rate = ORBIT_RATES[key] || 0.1;
                         if (b.orbitAngle === undefined) b.orbitAngle = Math.random() * Math.PI * 2;
