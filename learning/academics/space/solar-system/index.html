@@ -39,9 +39,6 @@
             <button class="nav-tab" data-tab="atlas" id="tabAtlasBtn">
                 <span>🪐</span> 천체 도감 (Celestial Atlas)
             </button>
-            <button class="nav-tab" data-tab="calc" id="tabCalcBtn">
-                <span>⚖️</span> 스펙 비교 (Spec Comparison)
-            </button>
             <button class="nav-tab" data-tab="quiz" id="tabQuizBtn">
                 <span>🧩</span> 단원 퀴즈 (Quiz)
             </button>
@@ -235,31 +232,43 @@
             </div>
         </section>
 
-        <!-- Tab 3: Planet Atlas & Explorer -->
+        <!-- Tab 2: Celestial Atlas & Spec Comparison -->
         <section class="tab-pane" id="tab-atlas">
-            <h2 style="margin-bottom: 8px;">🪐 태양계 천체 도감</h2>
-            <p style="color: var(--text-secondary); font-size: 14px;">태양과 8개 행성, 위성 달과 명왕성의 상세 정보 및 탐사선 역사를 확인해보세요.</p>
+            <div style="margin-bottom: 20px;">
+                <h2 style="margin-bottom: 6px;">🪐 태양계 천체 도감 &amp; 스펙 비교</h2>
+                <p style="color: var(--text-secondary); font-size: 14px;">태양, 8개 행성, 주요 위성 및 소천체들의 주요 물리 지표와 핵심 출제 포인트를 한눈에 비교해보세요.</p>
+            </div>
 
+            <!-- Integrated Spec Comparison Table Component -->
+            <div style="margin-bottom: 32px; background: var(--bg-card); border: 1px solid var(--border-color); border-radius: var(--radius-lg); padding: 20px; overflow-x: auto; box-shadow: 0 10px 30px rgba(0,0,0,0.5);">
+                <h3 style="color: #38bdf8; font-size: 16px; margin-bottom: 14px; display: flex; align-items: center; gap: 8px;">
+                    📊 태양계 주요 천체 물리 스펙 비교표
+                </h3>
+                <table style="width: 100%; border-collapse: collapse; font-size: 13px; color: #e2e8f0; text-align: left;" id="specComparisonTable">
+                    <thead>
+                        <tr style="background: rgba(255,255,255,0.06); border-bottom: 2px solid var(--border-color); color: #38bdf8;">
+                            <th style="padding: 10px 14px;">천체명</th>
+                            <th style="padding: 10px 14px;">분류</th>
+                            <th style="padding: 10px 14px;">반지름 (km)</th>
+                            <th style="padding: 10px 14px;">지구 대비 질량</th>
+                            <th style="padding: 10px 14px;">평균 밀도</th>
+                            <th style="padding: 10px 14px;">표면 중력</th>
+                            <th style="padding: 10px 14px;">공전 주기</th>
+                            <th style="padding: 10px 14px;">자전 주기</th>
+                        </tr>
+                    </thead>
+                    <tbody id="specTableBody">
+                        <!-- JS Dyn Rendered Table Rows -->
+                    </tbody>
+                </table>
+            </div>
+
+            <!-- Celestial Atlas Cards Grid -->
+            <h3 style="color: #ffd18a; font-size: 18px; margin-bottom: 16px; display: flex; align-items: center; gap: 8px;">
+                🌌 천체별 입체 정보 카드
+            </h3>
             <div class="atlas-grid" id="atlasGrid">
                 <!-- JS Dyn Rendered Cards -->
-            </div>
-        </section>
-
-        <!-- Tab 3: Solar System Members Spec Comparison -->
-        <section class="tab-pane" id="tab-calc">
-            <div class="calc-container">
-                <h2 style="margin-bottom: 6px;">⚖️ 태양계 구성원 스펙 비교 (핵심 출제 지표)</h2>
-                <p style="color: var(--text-secondary); font-size: 14px; margin-bottom: 24px;">
-                    태양을 포함한 모든 천체의 반지름, 부피, 질량, 표면 중력, 밀도, 그리고 자전/공전 주기를 한눈에 비교해보세요.
-                </p>
-
-                <div class="calc-results-grid" id="calcResultsGrid">
-                    <!-- JS Dyn Rendered Orbit & Rotation Comparison Cards -->
-                </div>
-            </div>
-        </section>
-                    <!-- JS Dyn Calculated Results -->
-                </div>
             </div>
         </section>
 
@@ -560,7 +569,7 @@
         </div>
     </div>
 
-    <script src="solar-data.js?v=satellite_inclusive_planet_photos"></script>
-    <script src="app.js?v=satellite_inclusive_planet_photos"></script>
+    <script src="solar-data.js?v=unified_celestial_atlas_table"></script>
+    <script src="app.js?v=unified_celestial_atlas_table"></script>
 </body>
 </html>

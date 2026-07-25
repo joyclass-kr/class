@@ -1367,19 +1367,44 @@
             });
         }
 
-        // ========== PLANET ATLAS GRID (Tab 3) - Premium Redesign ==========
+        // ========== PLANET ATLAS GRID & SPEC TABLE (Tab 2) ==========
         function initAtlasGrid() {
             var grid = document.getElementById('atlasGrid');
+            var tableBody = document.getElementById('specTableBody');
             if (!grid || !window.SOLAR_SYSTEM_DATA) return;
             grid.innerHTML = '';
+            if (tableBody) tableBody.innerHTML = '';
 
             grid.style.display = 'grid';
             grid.style.gridTemplateColumns = 'repeat(auto-fill, minmax(320px, 1fr))';
             grid.style.gap = '20px';
 
+            var tableRowsHtml = '';
+
             Object.keys(window.SOLAR_SYSTEM_DATA).forEach(function (key) {
                 var body = window.SOLAR_SYSTEM_DATA[key];
                 var photo = body.photoUrl || (typeof window.createPlanetTexture === 'function' ? window.createPlanetTexture(key) : '');
+
+                // Table Row Construction
+                var mStr = body.massEarth || (body.gravityRatio ? (body.gravityRatio + 'g') : '-');
+                var orbStr = body.orbitDays ? (body.orbitDays > 365 ? (body.orbitDays / 365).toFixed(1) + '년' : body.orbitDays + '일') : '-';
+                var rotStr = body.rotationDays || '-';
+                var gravStr = body.gravityRatio ? (body.gravityRatio + ' G') : '-';
+                var radiusKmStr = body.radiusKm ? Number(body.radiusKm).toLocaleString() + ' km' : '-';
+
+                tableRowsHtml += '<tr style="border-bottom: 1px solid rgba(255,255,255,0.06); cursor:pointer;" onclick="window.showPlanetModal(\'' + key + '\')" onmouseover="this.style.background=\'rgba(56,189,248,0.08)\'" onmouseout="this.style.background=\'transparent\'">' +
+                    '<td style="padding:10px 14px; font-weight:800; color:' + (body.color || '#38bdf8') + '; display:flex; align-items:center; gap:8px;">' +
+                        '<img src="' + photo + '" style="width:24px; height:24px; border-radius:50%; object-fit:cover; border:1px solid ' + (body.color || '#38bdf8') + ';" />' +
+                        body.name +
+                    '</td>' +
+                    '<td style="padding:10px 14px; color:#94a3b8; font-size:12px;">' + (body.type || '-') + '</td>' +
+                    '<td style="padding:10px 14px; font-weight:700; color:#fff;">' + radiusKmStr + '</td>' +
+                    '<td style="padding:10px 14px; color:#cbd5e1;">' + mStr + '</td>' +
+                    '<td style="padding:10px 14px; color:#cbd5e1;">' + (body.density || '-') + '</td>' +
+                    '<td style="padding:10px 14px; color:#cbd5e1;">' + gravStr + '</td>' +
+                    '<td style="padding:10px 14px; color:#38bdf8; font-weight:700;">' + orbStr + '</td>' +
+                    '<td style="padding:10px 14px; color:#ffd18a;">' + rotStr + '</td>' +
+                '</tr>';
 
                 // Badge Color Palette
                 var badgeBg = 'rgba(56, 189, 248, 0.15)';
@@ -1461,6 +1486,8 @@
                 card.addEventListener('click', function () { openPlanetModal(key); });
                 grid.appendChild(card);
             });
+
+            if (tableBody) tableBody.innerHTML = tableRowsHtml;
         }
 
         // ========== 100% TRUE SCALE & PHYSICS SPECS COMPARISON (Tab 4) ==========
