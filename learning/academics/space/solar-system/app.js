@@ -790,8 +790,8 @@
                     if (key === 'moon') {
                         var earthBody = celestialBodies['earth'];
                         if (earthBody && b.pivot) {
-                            var earthPos = earthBody.bodyTiltGroup ? earthBody.bodyTiltGroup.position : earthBody.mesh.position;
-                            b.pivot.position.copy(earthPos);
+                            // moonPivot is a child of earth bodyTiltGroup; keep centered at Earth origin to avoid double offset
+                            b.pivot.position.set(0, 0, 0);
                             
                             var earthAngle = earthBody.orbitAngle || 0;
                             // Counter-Clockwise Moon Orbit (CCW: West -> East) around Earth
@@ -799,7 +799,7 @@
                             var visMoonDist = b.orbitRadius || 18.0;
 
                             if (b.mesh) {
-                                // Orbit moon mesh smoothly on fixed inclination plane without wobbling orbit line
+                                // Orbit moon mesh smoothly on fixed inclination plane around Earth center
                                 b.mesh.position.x = Math.cos(moonAngle) * visMoonDist;
                                 b.mesh.position.z = Math.sin(moonAngle) * visMoonDist;
                                 b.mesh.rotation.y = moonAngle;
