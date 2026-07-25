@@ -2174,11 +2174,11 @@
                     '<div style="font-size:11px;color:var(--text-muted);">표면 온도</div>' +
                     '<div style="font-size:14px;font-weight:800;color:#fff;">' + (body.tempC || '-') + '</div></div>' +
                     '<div style="background:rgba(255,255,255,0.04);padding:10px 14px;border-radius:8px;border:1px solid var(--border-color);">' +
-                    '<div style="font-size:11px;color:var(--text-muted);">자전 주기 (1일)</div>' +
+                    '<div style="font-size:11px;color:var(--text-muted);">자전 주기</div>' +
                     '<div style="font-size:14px;font-weight:800;color:#38bdf8;">' + (body.rotationDays || '-') + '</div></div>' +
                     '<div style="background:rgba(255,255,255,0.04);padding:10px 14px;border-radius:8px;border:1px solid var(--border-color);">' +
-                    '<div style="font-size:11px;color:var(--text-muted);">공전 주기 (1년)</div>' +
-                    '<div style="font-size:14px;font-weight:800;color:#ffd18a;">' + (body.orbitDays ? body.orbitDays + '일' : '-') + '</div></div>' +
+                    '<div style="font-size:11px;color:var(--text-muted);">공전 주기</div>' +
+                    '<div style="font-size:14px;font-weight:800;color:#ffd18a;">' + (body.orbitDays ? (body.orbitDays > 365 ? (body.orbitDays / 365).toFixed(1) + '년 (' + body.orbitDays.toLocaleString() + '일)' : body.orbitDays + '일') : '-') + '</div></div>' +
                     '<div style="background:rgba(255,255,255,0.04);padding:10px 14px;border-radius:8px;border:1px solid var(--border-color);">' +
                     '<div style="font-size:11px;color:var(--text-muted);">위성 수</div>' +
                     '<div style="font-size:14px;font-weight:800;color:#fff;">' + (body.moons !== undefined ? body.moons + '개' : '-') + '</div></div>';
