@@ -769,22 +769,54 @@
                 scene.add(astParticles);
                 celestialBodies['asteroid'] = { mesh: astParticles, data: window.SOLAR_SYSTEM_DATA.asteroid };
 
-                // 2. ☄️ 3D Interactive Comet (Halley Elliptic Orbit + Glowing Tail)
+                // 2. ☄️ 3D Interactive Comet (Irregular Ice Nucleus + Coma Glow + 3D Particle Tail)
                 var cometData = window.SOLAR_SYSTEM_DATA.comet;
                 if (cometData) {
                     var cometGroup = new THREE.Object3D();
-                    var cGeo = new THREE.SphereGeometry(3.5, 16, 16);
-                    var cMat = new THREE.MeshStandardMaterial({ map: loadPlanet3DTexture('comet'), roughness: 0.9, emissive: 0x38bdf8, emissiveIntensity: 0.3 });
+                    
+                    // Irregular Ice-Rock Nucleus (Not a round sphere!)
+                    var cGeo = new THREE.DodecahedronGeometry(3.0, 1);
+                    var posAttr = cGeo.attributes.position;
+                    for (var i = 0; i < posAttr.count; i++) {
+                        var vx = posAttr.getX(i);
+                        var vy = posAttr.getY(i);
+                        var vz = posAttr.getZ(i);
+                        var noise = 1.0 + (Math.sin(vx * 3.0) + Math.cos(vy * 3.0)) * 0.18;
+                        posAttr.setXYZ(i, vx * noise, vy * noise, vz * noise);
+                    }
+                    cGeo.computeVertexNormals();
+
+                    var cMat = new THREE.MeshStandardMaterial({
+                        map: loadPlanet3DTexture('comet'),
+                        roughness: 0.95,
+                        metalness: 0.1,
+                        emissive: 0x06b6d4,
+                        emissiveIntensity: 0.4
+                    });
                     var cometMesh = new THREE.Mesh(cGeo, cMat);
                     cometGroup.add(cometMesh);
 
-                    // Glowing Gas/Dust Tail
-                    var tailGeo = new THREE.ConeGeometry(4.5, 45, 16);
-                    tailGeo.rotateX(-Math.PI / 2);
-                    var tailMat = new THREE.MeshBasicMaterial({ color: 0x38bdf8, transparent: true, opacity: 0.45, side: THREE.DoubleSide });
-                    var tailMesh = new THREE.Mesh(tailGeo, tailMat);
-                    tailMesh.position.z = 24;
-                    cometGroup.add(tailMesh);
+                    // Coma Cloud Glow
+                    var comaGeo = new THREE.SphereGeometry(4.8, 16, 16);
+                    var comaMat = new THREE.MeshBasicMaterial({ color: 0x38bdf8, transparent: true, opacity: 0.35, side: THREE.BackSide });
+                    var comaMesh = new THREE.Mesh(comaGeo, comaMat);
+                    cometGroup.add(comaMesh);
+
+                    // Radiant 3D Particle Stream Tail (No images needed, 100% procedural & safe!)
+                    var tailParticleCount = 450;
+                    var tGeo = new THREE.BufferGeometry();
+                    var tPos = new Float32Array(tailParticleCount * 3);
+                    for (var t = 0; t < tailParticleCount; t++) {
+                        var progress = Math.random();
+                        var spread = progress * 7.5;
+                        tPos[t * 3] = (Math.random() - 0.5) * spread;
+                        tPos[t * 3 + 1] = (Math.random() - 0.5) * spread;
+                        tPos[t * 3 + 2] = progress * 65.0 + 2.0;
+                    }
+                    tGeo.setAttribute('position', new THREE.BufferAttribute(tPos, 3));
+                    var tMat = new THREE.PointsMaterial({ color: 0x38bdf8, size: 2.0, transparent: true, opacity: 0.65 });
+                    var tailParticles = new THREE.Points(tGeo, tMat);
+                    cometGroup.add(tailParticles);
 
                     var cSemiMajor = 650;
                     var cEcc = 0.88;
