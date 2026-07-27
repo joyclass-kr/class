@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="description" content="교육과정 함수 그래프를 계수와 함께 탐구하는 교사용 수학 그래프 도구">
+  <title>수학 그래프 스튜디오 - songhwaplay</title>
+  <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+  <main class="page">
+    <header class="header">
+      <div>
+        <a href="../../../" class="back">← 기초학력</a>
+        <h1>수학 그래프 스튜디오 <span>교사용</span></h1>
+        <p>교육과정의 그래프를 선택하고, 계수를 움직이며 바로 설명하세요.</p>
+      </div>
+      <div class="headerActions">
+        <button type="button" id="printButton">수업 자료 인쇄</button>
+        <button type="button" class="primary" id="saveButton">PNG 저장</button>
+      </div>
+    </header>
+    <section class="workspace">
+      <aside class="library">
+        <div class="sectionHeading"><span>01</span><div><strong>교육과정 그래프</strong><small>단원을 선택하세요</small></div></div>
+        <div id="presetLibrary"></div>
+      </aside>
+      <section class="stage">
+        <div class="formulaBar">
+          <span>ƒ(x)</span>
+          <input id="expressionInput" value="a*(x-h)^2+k" aria-label="함수식" spellcheck="false">
+          <small id="formulaHelp">사용 가능: sin, cos, tan, sqrt, abs, log, exp, pi</small>
+        </div>
+        <div class="canvasWrap">
+          <canvas id="graphCanvas" aria-label="함수 그래프"></canvas>
+          <div class="legend" id="legend"><span><i style="background:#6558d9"></i>ƒ(x)</span></div>
+          <div class="rangeControl" aria-label="좌표 범위">
+            <button type="button" data-range="5">−5 · 5</button>
+            <button type="button" data-range="10">−10 · 10</button>
+            <button type="button" data-range="20">−20 · 20</button>
+          </div>
+        </div>
+      </section>
+      <aside class="controls">
+        <div class="sectionHeading"><span>02</span><div><strong>그래프 움직이기</strong><small>값을 드래그하세요</small></div></div>
+        <div id="sliders"></div>
+        <button type="button" class="reset" id="resetButton">계수 초기화</button>
+        <div class="sectionHeading"><span>03</span><div><strong>수업 보조선</strong><small>설명 요소를 켜세요</small></div></div>
+        <label class="toggle"><span><b>좌표점 표시</b><small>x = −2, −1, 0, 1, 2</small></span><input id="showPoints" type="checkbox" checked></label>
+        <label class="toggle"><span><b>도함수 표시</b><small>원함수와 변화율 비교</small></span><input id="showDerivative" type="checkbox"></label>
+        <label class="toggle"><span><b>정적분 넓이</b><small>x = −2부터 2까지</small></span><input id="showIntegral" type="checkbox"></label>
+        <div class="tip"><strong>수업 질문</strong><p id="lessonQuestion">a의 부호가 바뀌면 그래프의 모양은 어떻게 달라질까요?</p></div>
+      </aside>
+    </section>
+  </main>
+  <script src="app.js"></script>
+</body>
+</html>

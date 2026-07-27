@@ -21,10 +21,11 @@ test("learning menus use the four top-level domains", () => {
 
   const menu = read("index.html");
   for (const href of [
-    "learning/basics/reading/index.html",
-    "learning/basics/classical-chinese-idioms/index.html",
-    "learning/academics/body-explorer/index.html",
-    "learning/arts/music-studio/index.html",
+    "learning/basics/reading/",
+    "learning/basics/classical-chinese-idioms/",
+    "learning/basics/graph-studio/",
+    "learning/academics/body-explorer/",
+    "learning/arts/music-studio/",
     "learning/arts/art-appreciation/museum/",
     "learning/arts/classical-music/",
     "learning/arts/korean-music/",
