@@ -71,6 +71,28 @@ function nonzero(next: () => number, minimum: number, maximum: number) {
   return value;
 }
 
+function gcd(left: number, right: number): number {
+  return right === 0 ? Math.abs(left) : gcd(right, left % right);
+}
+
+function coprimeNonzero(
+  next: () => number,
+  relativeTo: number,
+  minimum: number,
+  maximum: number,
+) {
+  let value = nonzero(next, minimum, maximum);
+  while (gcd(relativeTo, value) !== 1) value = nonzero(next, minimum, maximum);
+  return value;
+}
+
+function coprimePositivePair(next: () => number, minimum: number, maximum: number) {
+  const left = integer(next, minimum, maximum);
+  let right = integer(next, minimum, maximum);
+  while (gcd(left, right) !== 1) right = integer(next, minimum, maximum);
+  return [left, right] as const;
+}
+
 function coefficient(value: number, variable: string, first = false) {
   if (value === 0) return "";
   const sign = value < 0 ? "-" : first ? "" : "+";
@@ -89,6 +111,22 @@ function signed(value: number) {
 
 function linear(variable: string, constant: number, leading = 1) {
   return `${leading === 1 ? "" : leading === -1 ? "-" : leading}${variable}${signed(constant)}`;
+}
+
+export function formatNormalizedLinearCombination(
+  leading: number,
+  constant: number,
+  sharedConstant: number,
+) {
+  const common = gcd(leading, constant);
+  const primitiveLeading = leading / common;
+  const primitiveConstant = constant / common;
+  const sharedFactor = linear("x", sharedConstant);
+  const remainingFactor = linear("x", primitiveConstant, primitiveLeading);
+  const outside = common === 1 ? "" : String(common);
+  return sharedFactor === remainingFactor
+    ? `${outside}(${sharedFactor})^2`
+    : `${outside}(${sharedFactor})(${remainingFactor})`;
 }
 
 function uniqueDistractors(answer: string, candidates: string[]) {
@@ -117,14 +155,13 @@ function make(
 function build(kind: MiddleFactorizationKind, next: () => number, id: string): MiddleFactorizationProblem {
   const p = nonzero(next, -6, 6);
   let q = nonzero(next, -6, 6);
-  if (q === p) q = q === 6 ? 5 : q + 1;
-  const m = integer(next, 2, 5);
-  const n = integer(next, 2, 5);
+  while (q === p) q = nonzero(next, -6, 6);
+  const [m, n] = coprimePositivePair(next, 2, 5);
 
   if (kind === "common-factor") {
     const common = integer(next, 2, 6);
     const left = integer(next, 2, 6);
-    const right = nonzero(next, -6, 6);
+    const right = coprimeNonzero(next, left, -6, 6);
     const expression = polynomial([[common * left, "x^2"], [common * right, "x"]]);
     const answer = `${common}x(${linear("x", right, left)})`;
     return make(id, kind, expression, answer, [
@@ -137,7 +174,7 @@ function build(kind: MiddleFactorizationKind, next: () => number, id: string): M
   if (kind === "multiple-variables") {
     const common = integer(next, 2, 5);
     const left = integer(next, 2, 5);
-    const right = nonzero(next, -5, 5);
+    const right = coprimeNonzero(next, left, -5, 5);
     const expression = polynomial([[common * left, "a^2b"], [common * right, "ab^2"]]);
     const answer = `${common}ab(${left}a${signed(right)}b)`;
     return make(id, kind, expression, answer, [
@@ -190,12 +227,14 @@ function build(kind: MiddleFactorizationKind, next: () => number, id: string): M
   if (kind === "nonmonic-trinomial") {
     const a = integer(next, 2, 4);
     const b = integer(next, 2, 4);
-    const expression = polynomial([[a * b, "x^2"], [a * q + b * p, "x"], [p * q, ""]]);
-    const answer = `(${linear("x", p, a)})(${linear("x", q, b)})`;
+    const firstConstant = coprimeNonzero(next, a, -6, 6);
+    const secondConstant = coprimeNonzero(next, b, -6, 6);
+    const expression = polynomial([[a * b, "x^2"], [a * secondConstant + b * firstConstant, "x"], [firstConstant * secondConstant, ""]]);
+    const answer = `(${linear("x", firstConstant, a)})(${linear("x", secondConstant, b)})`;
     return make(id, kind, expression, answer, [
-      `(${linear("x", -p, a)})(${linear("x", -q, b)})`,
-      `(${linear("x", q, a)})(${linear("x", p, b)})`,
-      `(${linear("x", p, a * b)})(${linear("x", q)})`,
+      `(${linear("x", -firstConstant, a)})(${linear("x", -secondConstant, b)})`,
+      `(${linear("x", secondConstant, a)})(${linear("x", firstConstant, b)})`,
+      `(${linear("x", firstConstant, a * b)})(${linear("x", secondConstant)})`,
     ]);
   }
 
@@ -238,11 +277,11 @@ function build(kind: MiddleFactorizationKind, next: () => number, id: string): M
   if (kind === "normalize-first") {
     const a = integer(next, 2, 5);
     const expression = `${a}x(${linear("x", p)})${signed(q)}(${linear("x", p)})`;
-    const answer = `(${linear("x", p)})(${linear("x", q, a)})`;
+    const answer = formatNormalizedLinearCombination(a, q, p);
     return make(id, kind, expression, answer, [
+      `(${linear("x", p)})(${linear("x", q, a)})`,
       `(${linear("x", -p)})(${linear("x", q, a)})`,
       `(${linear("x", p)})(${linear("x", -q, a)})`,
-      `(${linear("x", p + q, a)})`,
     ]);
   }
 

@@ -4,6 +4,7 @@ import test from "node:test";
 import {
   createMiddleFactorizationProblemSet,
   createMiddleFactorizationReviewProblems,
+  formatNormalizedLinearCombination,
   MIDDLE_FACTORIZATION_KINDS,
   MIDDLE_FACTORIZATION_TITLES,
 } from "../lib/middle-factorization-workouts.ts";
@@ -54,4 +55,37 @@ test("핵심 문자식과 3차식 유형이 실제 식 형태로 생성된다", 
 
   const cubicGrouping = createMiddleFactorizationProblemSet("cubic-grouping", 5);
   assert.ok(cubicGrouping.problems.every(({ latex }) => /x\^3/.test(latex)));
+});
+
+test("괄호 안의 숫자 공통인수까지 밖으로 꺼내 완전히 인수분해한다", () => {
+  assert.equal(
+    formatNormalizedLinearCombination(2, -2, -1),
+    "2(x-1)^2",
+  );
+  assert.equal(
+    formatNormalizedLinearCombination(4, 2, -1),
+    "2(x-1)(2x+1)",
+  );
+  assert.equal(
+    formatNormalizedLinearCombination(3, -2, 4),
+    "(x+4)(3x-2)",
+  );
+});
+
+test("생성된 일차 인수 안에는 다시 꺼낼 숫자 공통인수가 남지 않는다", () => {
+  const gcd = (left: number, right: number): number => (
+    right === 0 ? Math.abs(left) : gcd(right, left % right)
+  );
+
+  for (const kind of MIDDLE_FACTORIZATION_KINDS) {
+    for (let seed = 1; seed <= 100; seed += 1) {
+      for (const { answerLatex } of createMiddleFactorizationProblemSet(kind, seed).problems) {
+        for (const match of answerLatex.matchAll(/\((\d*)x([+-]\d+)\)/g)) {
+          const leading = match[1] ? Number(match[1]) : 1;
+          const constant = Number(match[2]);
+          assert.equal(gcd(leading, constant), 1, `${answerLatex} has a hidden common factor`);
+        }
+      }
+    }
+  }
 });
