@@ -11,7 +11,7 @@ assert.ok(scripts.length > 0, '인덱스 인라인 스크립트를 찾지 못했
 scripts.forEach((match, index) => new vm.Script(match[1], { filename: `index.html#script${index + 1}` }));
 assert.match(html, /href="\/arithmetic"/);
 assert.match(html, /href="\/hanguksa"/);
-assert.match(html, /href="https:\/\/world-voyage-classroom\.onrender\.com\/"/);
+assert.match(html, /href="\/learn\/world-voyage\/"/);
 assert.doesNotMatch(html, /<a href="\/arithmetic"[^>]*data-player-handoff=/);
 
 console.log(JSON.stringify({ ok: true, handoff: 'index-to-arithmetic' }));

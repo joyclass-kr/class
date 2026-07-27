@@ -36,7 +36,7 @@ button,input,select{font:inherit}.hidden{display:none!important}
 <body>
 <audio id="bgm" src="/learning/games/janggi/assets/sound/bgm.mp3" loop></audio>
 <div class="shell">
-<section id="missingScreen" class="hidden"><h1 class="title">장기</h1><div class="panel"><strong>이름이 없습니다.</strong><br>이름 변경은 메인 화면에서만 가능합니다.<div class="row"><button class="btn primary" type="button" onclick="location.href='../../../index.html'">메인 화면으로</button></div></div></section>
+<section id="missingScreen" class="hidden"><h1 class="title">장기</h1><div class="panel"><strong>이름이 없습니다.</strong><br>이름 변경은 메인 화면에서만 가능합니다.<div class="row"><button class="btn primary" type="button" onclick="location.href='../../../'">메인 화면으로</button></div></div></section>
 <section id="lobby" class="hidden mp-lobby-compact" data-multiplayer-lobby>
 <h1 class="title">KOREAN CHESS</h1><div class="sub">장기 · 1대1 대국</div>
 <div class="mp-lobby-player-name">PLAYER · <strong id="savedName">-</strong></div>
@@ -86,7 +86,7 @@ function initJanggiLobby(){
  $('choFormation').addEventListener('change',syncFormationChoice);$('hanFormation').addEventListener('change',syncFormationChoice);
  lobby=ClassroomMultiplayerLobby.create({
   gameId:GAME_ID,ids:{lobbyScreen:'lobby'},getPlayerName,maxPlayers:2,allowedPlayerCounts:[2],
-  rulesButtonIds:['rulesBtnLobby','rulesBtnGame'],leaveButtonIds:['leaveBtn'],onRules:showRules,onLeave:()=>location.href='../../../index.html',
+  rulesButtonIds:['rulesBtnLobby','rulesBtnGame'],leaveButtonIds:['leaveBtn'],onRules:showRules,onLeave:()=>location.href='../../../',
   onNotice:text=>{const target=$('hostStatus');if(target)target.textContent=text},onStateChange:syncLobbyState,
   canStart:canStartJanggi,getLobbyPresentation:janggiLobbyPresentation,createStartData:createJanggiStartData,
   onStarted:startJanggiGame,onGameMessage:(_sender,payload)=>handlePacket(payload),onAbort:disconnect

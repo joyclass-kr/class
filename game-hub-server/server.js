@@ -26,7 +26,9 @@ const classroomPlatform = createClassroomPlatform({
 const PORT = Number(process.env.PORT) || 10000;
 const ARITHMETIC_PORT = Number(process.env.ARITHMETIC_PORT) || 10001;
 const HANGUKSA_PORT = Number(process.env.HANGUKSA_PORT) || 10002;
+const WORLD_VOYAGE_PORT = Number(process.env.WORLD_VOYAGE_PORT) || 10003;
 const SITE_ROOT = path.resolve(__dirname, "..");
+const WORLD_VOYAGE_PREFIX = "/learn/world-voyage";
 
 function startLearningApp(relativeDirectory, port, label) {
   const appDirectory = path.join(SITE_ROOT, relativeDirectory);
@@ -47,14 +49,35 @@ function startLearningApp(relativeDirectory, port, label) {
   return child;
 }
 
-function proxyToLearningApp(port) {
+function startNodeLearningApp(relativeDirectory, port, label) {
+  const appDirectory = path.join(SITE_ROOT, relativeDirectory);
+  const child = spawn(
+    process.execPath,
+    ["server.js"],
+    {
+      cwd: appDirectory,
+      env: { ...process.env, PORT: String(port) },
+      stdio: ["ignore", "inherit", "inherit"],
+    },
+  );
+
+  child.on("exit", (code, signal) => {
+    console.error(`${label} stopped (code=${code}, signal=${signal})`);
+  });
+  return child;
+}
+
+function proxyToLearningApp(port, options = {}) {
   return (req, res) => {
     const headers = { ...req.headers, host: `127.0.0.1:${port}` };
+    const proxyPath = options.stripPrefix && req.originalUrl.startsWith(options.stripPrefix)
+      ? req.originalUrl.slice(options.stripPrefix.length) || "/"
+      : req.originalUrl;
     const proxyRequest = http.request(
       {
         hostname: "127.0.0.1",
         port,
-        path: req.originalUrl,
+        path: options.rewritePath ? options.rewritePath(proxyPath) : proxyPath,
         method: req.method,
         headers,
       },
@@ -85,10 +108,16 @@ const hanguksaApp = startLearningApp(
   HANGUKSA_PORT,
   "Hanguksa app",
 );
+const worldVoyageApp = startNodeLearningApp(
+  "learning/academics/age-of-exploration",
+  WORLD_VOYAGE_PORT,
+  "World Voyage app",
+);
 
 const stopLearningApps = () => {
   arithmeticApp.kill();
   hanguksaApp.kill();
+  worldVoyageApp.kill();
 };
 process.once("SIGTERM", stopLearningApps);
 process.once("SIGINT", stopLearningApps);
@@ -152,11 +181,27 @@ const FINISHER_DATA_FILE =
   process.env.FINISHERS_DATA_PATH ||
   path.join(__dirname, "finishers.json");
 
-app.use(["/admin", "/arithmetic", "/fraction", "/api/arithmetic-race", "/hanguksa", "/classtools", "/learning"], classroomPlatform.requireSiteAccess);
+app.use(["/admin", "/arithmetic", "/fraction", "/api/arithmetic-race", "/hanguksa", "/classtools", "/learning", "/learn"], classroomPlatform.requireSiteAccess);
 app.use("/arithmetic", proxyToLearningApp(ARITHMETIC_PORT));
 app.use("/fraction", proxyToLearningApp(ARITHMETIC_PORT));
 app.use("/api/arithmetic-race", proxyToLearningApp(ARITHMETIC_PORT));
 app.use("/hanguksa", proxyToLearningApp(HANGUKSA_PORT));
+app.get(WORLD_VOYAGE_PREFIX, (req, res, next) => {
+  if (req.originalUrl.split("?")[0].endsWith("/")) return next();
+  const query = req.originalUrl.includes("?") ? req.originalUrl.slice(req.originalUrl.indexOf("?")) : "";
+  res.redirect(308, `${WORLD_VOYAGE_PREFIX}/${query}`);
+});
+app.use(
+  WORLD_VOYAGE_PREFIX,
+  proxyToLearningApp(WORLD_VOYAGE_PORT, {
+    stripPrefix: WORLD_VOYAGE_PREFIX,
+    rewritePath(proxyPath) {
+      const [pathname, query = ""] = proxyPath.split("?");
+      const cleanPath = pathname === "/teacher" ? "/teacher.html" : pathname;
+      return query ? `${cleanPath}?${query}` : cleanPath;
+    },
+  }),
+);
 
 const LEGACY_LEARNING_PATHS = new Map([
   ["/learning/reading", "/learning/basics/reading"],
@@ -185,6 +230,41 @@ app.use((req, res, next) => {
 });
 
 app.use("/api", classroomPlatform.router);
+
+const CLEAN_HTML_ROOTS = ["/admin", "/classtools", "/learning"];
+app.use((req, res, next) => {
+  if (req.method !== "GET" && req.method !== "HEAD") return next();
+
+  let pathname;
+  try {
+    pathname = decodeURIComponent(req.path);
+  } catch (_) {
+    return res.status(400).send("잘못된 주소입니다.");
+  }
+
+  const isPublicHtmlPath = pathname === "/index.html"
+    || CLEAN_HTML_ROOTS.some(root => pathname === root || pathname.startsWith(`${root}/`));
+  if (!isPublicHtmlPath) return next();
+
+  if (pathname.endsWith("/index.html")) {
+    const cleanPath = pathname.slice(0, -"index.html".length);
+    const query = req.originalUrl.includes("?") ? req.originalUrl.slice(req.originalUrl.indexOf("?")) : "";
+    return res.redirect(308, `${cleanPath}${query}`);
+  }
+  if (pathname.endsWith(".html")) {
+    const cleanPath = pathname.slice(0, -".html".length);
+    const query = req.originalUrl.includes("?") ? req.originalUrl.slice(req.originalUrl.indexOf("?")) : "";
+    return res.redirect(308, `${cleanPath}${query}`);
+  }
+
+  if (path.extname(pathname) || pathname.endsWith("/")) return next();
+  const candidate = path.resolve(SITE_ROOT, `.${pathname}.html`);
+  if (!candidate.startsWith(`${SITE_ROOT}${path.sep}`)) return res.sendStatus(400);
+  fs.stat(candidate, (error, stats) => {
+    if (error || !stats.isFile()) return next();
+    res.sendFile(candidate);
+  });
+});
 
 for (const directory of ["admin", "classtools", "css", "js", "learning"]) {
   app.use(`/${directory}`, express.static(path.join(SITE_ROOT, directory), { dotfiles: "ignore" }));
