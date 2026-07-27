@@ -298,6 +298,20 @@ test("renders the middle-school statistics calculation worksheet", async () => {
   assert.match(html, /aria-label="A4 통계: 평균 계산 정답지"/);
 });
 
+test("renders the middle-school core calculation worksheet", async () => {
+  const response = await render("/arithmetic/middle-school/core-calculations");
+  assert.equal(response.status, 200);
+  const html = await response.text();
+  assert.equal((html.match(/data-testid="middle-core-question"/g) ?? []).length, 16);
+  assert.equal((html.match(/data-testid="middle-core-difficulty-label"/g) ?? []).length, 6);
+  assert.equal((html.match(/data-testid="middle-core-solution-hint"/g) ?? []).length, 8);
+  assert.match(html, /소인수분해/);
+  assert.match(html, /답안 입력/);
+  assert.match(html, /전체 채점/);
+  assert.match(html, /aria-label="A4 소인수분해 문제지"/);
+  assert.match(html, /aria-label="A4 소인수분해 정답지"/);
+});
+
 test("keeps geometry worksheet formulas compact without inline answer controls", async () => {
   const css = await readFile("app/globals.css", "utf8");
   const highSchoolCss = await readFile("app/arithmetic/high-school/high-school.css", "utf8");
