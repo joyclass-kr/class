@@ -33,18 +33,20 @@ export default function ArithmeticCatalog() {
           <a className="catalog-back" href="/arithmetic" aria-label="연산 모드 선택으로 돌아가기">← 연산</a>
           <div className="catalog-header-copy">
             <a className="catalog-race-link" href="/arithmetic/race">순위 모드 <span aria-hidden="true">→</span></a>
-            <h1>기초 연산</h1>
+            <div className="catalog-title-row">
+              <h1>기초 연산</h1>
+              <nav className="catalog-stage-nav" aria-label="수학 과정">
+                {(Object.keys(stageMeta) as LearningStage[]).map((stage) => {
+                  const meta = stageMeta[stage];
+                  const isAvailable = availableStages.has(stage);
+                  return isAvailable
+                    ? <button key={stage} className={`catalog-stage-link stage-${stage}`} type="button" onClick={() => scrollToStage(stage)}>{meta.label}</button>
+                    : <span key={stage} className={`catalog-stage-link stage-${stage} is-upcoming`} aria-disabled="true">{meta.label}<small>준비 중</small></span>;
+                })}
+              </nav>
+            </div>
           </div>
         </header>
-        <nav className="catalog-stage-nav" aria-label="수학 과정">
-          {(Object.keys(stageMeta) as LearningStage[]).map((stage) => {
-            const meta = stageMeta[stage];
-            const isAvailable = availableStages.has(stage);
-            return isAvailable
-              ? <button key={stage} className={`catalog-stage-link stage-${stage}`} type="button" onClick={() => scrollToStage(stage)}>{meta.label}</button>
-              : <span key={stage} className={`catalog-stage-link stage-${stage} is-upcoming`} aria-disabled="true">{meta.label}<small>준비 중</small></span>;
-          })}
-        </nav>
         <ol className="worksheet-catalog" aria-label="연산 학습지 목록">
           {learningWorksheetCatalog.map(({ route, grade, title }, index) => {
             const stage = worksheetStage(grade);
