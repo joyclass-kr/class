@@ -9,6 +9,133 @@ import {
   MIDDLE_FACTORIZATION_TITLES,
 } from "../lib/middle-factorization-workouts.ts";
 
+type Polynomial = Map<string, bigint>;
+
+const constantPolynomial = (value: bigint): Polynomial => (
+  value === 0n ? new Map() : new Map([["", value]])
+);
+
+function monomialKey(variables: Record<string, number>) {
+  return Object.entries(variables)
+    .filter(([, exponent]) => exponent !== 0)
+    .sort(([left], [right]) => left.localeCompare(right))
+    .map(([variable, exponent]) => `${variable}${exponent}`)
+    .join(",");
+}
+
+function multiplyMonomialKeys(left: string, right: string) {
+  const variables: Record<string, number> = {};
+  for (const key of [left, right]) {
+    if (!key) continue;
+    for (const part of key.split(",")) {
+      const match = /^([a-z])(\d+)$/.exec(part);
+      assert.ok(match, `invalid monomial key: ${part}`);
+      variables[match[1]] = (variables[match[1]] ?? 0) + Number(match[2]);
+    }
+  }
+  return monomialKey(variables);
+}
+
+function addPolynomials(left: Polynomial, right: Polynomial, sign = 1n) {
+  const result = new Map(left);
+  for (const [key, coefficient] of right) {
+    const next = (result.get(key) ?? 0n) + sign * coefficient;
+    if (next === 0n) result.delete(key);
+    else result.set(key, next);
+  }
+  return result;
+}
+
+function multiplyPolynomials(left: Polynomial, right: Polynomial) {
+  const result: Polynomial = new Map();
+  for (const [leftKey, leftCoefficient] of left) {
+    for (const [rightKey, rightCoefficient] of right) {
+      const key = multiplyMonomialKeys(leftKey, rightKey);
+      const coefficient = (result.get(key) ?? 0n) + leftCoefficient * rightCoefficient;
+      if (coefficient === 0n) result.delete(key);
+      else result.set(key, coefficient);
+    }
+  }
+  return result;
+}
+
+function powerPolynomial(base: Polynomial, exponent: number) {
+  let result = constantPolynomial(1n);
+  for (let index = 0; index < exponent; index += 1) {
+    result = multiplyPolynomials(result, base);
+  }
+  return result;
+}
+
+function parsePolynomial(source: string): Polynomial {
+  const tokens = source.replace(/\s+/g, "").match(/\d+|[a-z]|[()+\-*^]/g) ?? [];
+  assert.equal(tokens.join(""), source.replace(/\s+/g, ""), `unsupported formula: ${source}`);
+  let position = 0;
+
+  const startsFactor = () => (
+    position < tokens.length
+    && (/^\d+$/.test(tokens[position]) || /^[a-z]$/.test(tokens[position]) || tokens[position] === "(")
+  );
+
+  const parseAtom = (): Polynomial => {
+    const token = tokens[position++];
+    assert.ok(token, `unexpected end of formula: ${source}`);
+    let result: Polynomial;
+    if (/^\d+$/.test(token)) {
+      result = constantPolynomial(BigInt(token));
+    } else if (/^[a-z]$/.test(token)) {
+      result = new Map([[monomialKey({ [token]: 1 }), 1n]]);
+    } else {
+      assert.equal(token, "(", `unexpected token ${token} in ${source}`);
+      result = parseSum();
+      assert.equal(tokens[position++], ")", `unclosed parenthesis in ${source}`);
+    }
+    if (tokens[position] === "^") {
+      position += 1;
+      const exponent = Number(tokens[position++]);
+      assert.ok(Number.isInteger(exponent) && exponent >= 0, `invalid exponent in ${source}`);
+      result = powerPolynomial(result, exponent);
+    }
+    return result;
+  };
+
+  const parseProduct = (): Polynomial => {
+    let result = parseAtom();
+    while (tokens[position] === "*" || startsFactor()) {
+      if (tokens[position] === "*") position += 1;
+      result = multiplyPolynomials(result, parseAtom());
+    }
+    return result;
+  };
+
+  const parseSignedProduct = (): Polynomial => {
+    if (tokens[position] === "+") position += 1;
+    if (tokens[position] !== "-") return parseProduct();
+    position += 1;
+    return multiplyPolynomials(constantPolynomial(-1n), parseProduct());
+  };
+
+  const parseSum = (): Polynomial => {
+    let result = parseSignedProduct();
+    while (tokens[position] === "+" || tokens[position] === "-") {
+      const operator = tokens[position++];
+      result = addPolynomials(result, parseProduct(), operator === "+" ? 1n : -1n);
+    }
+    return result;
+  };
+
+  const result = parseSum();
+  assert.equal(position, tokens.length, `unparsed token ${tokens[position]} in ${source}`);
+  return result;
+}
+
+function normalizedPolynomial(polynomial: Polynomial) {
+  return [...polynomial.entries()]
+    .sort(([left], [right]) => left.localeCompare(right))
+    .map(([key, coefficient]) => `${coefficient}:${key}`)
+    .join("|");
+}
+
 test("인수분해 12개 세부 유형이 각각 8문제를 생성한다", () => {
   assert.equal(MIDDLE_FACTORIZATION_KINDS.length, 12);
   for (const kind of MIDDLE_FACTORIZATION_KINDS) {
@@ -16,6 +143,20 @@ test("인수분해 12개 세부 유형이 각각 8문제를 생성한다", () =>
     assert.equal(problemSet.problems.length, 8);
     assert.ok(problemSet.problems.every((problem) => problem.kind === kind || kind === "comprehensive"));
     assert.ok(problemSet.problems.every((problem) => problem.label === MIDDLE_FACTORIZATION_TITLES[problem.kind]));
+  }
+});
+
+test("모든 인수분해 정답을 전개하면 출제식과 정확히 일치한다", () => {
+  for (const kind of MIDDLE_FACTORIZATION_KINDS) {
+    for (let seed = 1; seed <= 200; seed += 1) {
+      for (const problem of createMiddleFactorizationProblemSet(kind, seed).problems) {
+        assert.equal(
+          normalizedPolynomial(parsePolynomial(problem.answerLatex)),
+          normalizedPolynomial(parsePolynomial(problem.latex)),
+          `${kind}/${seed}/${problem.structure}: ${problem.latex} != ${problem.answerLatex}`,
+        );
+      }
+    }
   }
 });
 
