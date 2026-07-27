@@ -606,6 +606,7 @@ textarea,
 .player-name-help.error { color: #e0786f; }
 
 .finishers-panel {
+    box-sizing: border-box;
     width: min(460px, 100%);
     margin: 14px auto;
     padding: 11px 13px;
@@ -915,6 +916,11 @@ textarea,
 
 /* 휴대폰 세로모드도 화면 밖으로 넘치지 않게 */
 @media (orientation: portrait) and (max-width: 620px) {
+    html {
+        width: 100%;
+        overflow-x: hidden;
+    }
+
     body {
         padding: 0;
         align-items: flex-start;
@@ -1053,9 +1059,9 @@ textarea,
 }
 
 </style>
-<script src="../../../assets/network/game-network.js"></script>
+<script src="../../../assets/network/game-network.js?v=20260727"></script>
 <script src="../../../assets/network/finisher-api.js"></script>
-<script src="../../../assets/network/finisher-board.js"></script>
+<script src="../../../assets/network/finisher-board.js?v=20260727"></script>
 <script src="../../../assets/sound/music-control.js" defer></script>
 <link rel="stylesheet" href="../../../assets/device-game.css">
 </head>

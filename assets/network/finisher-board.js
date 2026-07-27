@@ -7,8 +7,8 @@
         stylesheet.rel = "stylesheet";
         stylesheet.dataset.classFinisherStyle = "true";
         stylesheet.href = currentScript
-            ? new URL("finisher-board.css", currentScript.src).href
-            : "../../assets/network/finisher-board.css";
+            ? new URL("finisher-board.css?v=20260727", currentScript.src).href
+            : "../../assets/network/finisher-board.css?v=20260727";
         document.head.appendChild(stylesheet);
     }
 

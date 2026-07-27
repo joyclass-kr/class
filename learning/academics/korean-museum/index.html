@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>대한민국 고속도로 한국사 보물 지도 탐험대 | 3D 박물관</title>
+  <title>대한민국 고속도로 한국사 보물 지도 탐험대</title>
   <meta name="description" content="고속도로 노선을 따라 한반도 주요 유물과 출토지, 박물관을 탐험하고 내신/수능 핵심 문제를 푸는 인터랙티브 한국사 보물 지도 앱">
   
   <!-- Leaflet CSS -->
@@ -12,11 +12,9 @@
   <!-- App Styles -->
   <link rel="stylesheet" href="styles.css">
   
-  <!-- Three.js (for 3D Museum mode) -->
-  <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
 </head>
 <body>
-  <!-- Global App Header / Mode Switcher & Smart Filters -->
+  <!-- Global App Header & Smart Filters -->
   <header class="app-header">
     <div class="header-main">
       <div class="brand">
@@ -24,18 +22,9 @@
         <h1 class="brand-title">🗺️ 대한민국 고속도로 한국사 보물 지도 탐험대</h1>
       </div>
       
-      <!-- Mode Toggle Switcher -->
-      <div class="mode-switch">
-        <button id="btn-mode-map" class="mode-btn active" type="button">
-          🗺️ 전국 보물 지도 탐험
-        </button>
-        <button id="btn-mode-3d" class="mode-btn" type="button">
-          🏛️ 3D 박물관 관람
-        </button>
-      </div>
     </div>
 
-    <!-- Smart Filter Controls (Map Mode Only) -->
+    <!-- Smart Filter Controls -->
     <div id="filter-bar" class="filter-bar">
       <!-- Era Filters -->
       <div class="filter-group">
@@ -69,18 +58,6 @@
       </div>
     </div>
 
-    <!-- 3D Museum Room Nav (3D Mode Only, hidden by default) -->
-    <nav class="gallery-nav" id="gallery-nav" style="display: none;">
-      <div class="nav-scroll">
-        <button class="nav-btn active" data-gallery="0">선사시대 & 고조선</button>
-        <button class="nav-btn" data-gallery="1">고구려관</button>
-        <button class="nav-btn" data-gallery="2">백제관</button>
-        <button class="nav-btn" data-gallery="3">신라&통일신라관</button>
-        <button class="nav-btn" data-gallery="4">고려시대관</button>
-        <button class="nav-btn" data-gallery="5">조선시대관</button>
-        <button class="nav-btn" data-gallery="6">근현대관</button>
-      </div>
-    </nav>
   </header>
 
   <!-- Main View Container -->
@@ -88,8 +65,6 @@
     <!-- Map Container -->
     <div id="map-container" class="map-container"></div>
 
-    <!-- 3D Canvas Container -->
-    <div id="museum-3d-container" class="museum-3d-container" style="display: none;"></div>
   </main>
 
   <!-- Relic Docent & Quiz Modal -->
@@ -151,6 +126,6 @@
   <!-- App Logic Scripts -->
   <script src="vendor/leaflet/leaflet.js"></script>
   <script src="history-data.js"></script>
-  <script src="museum.js"></script>
+  <script src="treasure-map.js"></script>
 </body>
 </html>

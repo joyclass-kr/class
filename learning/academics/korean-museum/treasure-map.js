@@ -2,7 +2,6 @@
   'use strict';
 
   // --- State Variables ---
-  let currentMode = 'map'; // 'map' or '3d'
   let activeEraFilter = 'all';
   let activeRouteFilter = 'all';
   
@@ -10,17 +9,7 @@
   let mapMarkersGroup = null;
   let currentActiveRelic = null;
 
-  // Three.js State
-  let scene, camera, renderer;
-  let is3DInitialized = false;
-
   // --- DOM Elements ---
-  const btnModeMap = document.getElementById('btn-mode-map');
-  const btnMode3D = document.getElementById('btn-mode-3d');
-  const filterBar = document.getElementById('filter-bar');
-  const galleryNav = document.getElementById('gallery-nav');
-  const mapContainer = document.getElementById('map-container');
-  const museum3DContainer = document.getElementById('museum-3d-container');
   const relicQuickSelect = document.getElementById('relic-quick-select');
 
   // Modal DOM
@@ -48,45 +37,13 @@
 
   // Initialize App
   document.addEventListener('DOMContentLoaded', () => {
-    initModeSwitcher();
     initLeafletMap();
     initSmartFilters();
     initQuickSelectDropdown();
     initModalEvents();
   });
 
-  // --- 1. Mode Switcher (Map vs 3D Museum) ---
-  function initModeSwitcher() {
-    btnModeMap.addEventListener('click', () => switchMode('map'));
-    btnMode3D.addEventListener('click', () => switchMode('3d'));
-  }
-
-  function switchMode(mode) {
-    currentMode = mode;
-    if (mode === 'map') {
-      btnModeMap.classList.add('active');
-      btnMode3D.classList.remove('active');
-      filterBar.style.display = 'flex';
-      galleryNav.style.display = 'none';
-      mapContainer.style.display = 'block';
-      museum3DContainer.style.display = 'none';
-      if (leafletMap) leafletMap.invalidateSize();
-    } else {
-      btnMode3D.classList.add('active');
-      btnModeMap.classList.remove('active');
-      filterBar.style.display = 'none';
-      galleryNav.style.display = 'block';
-      mapContainer.style.display = 'none';
-      museum3DContainer.style.display = 'block';
-      
-      if (!is3DInitialized) {
-        init3DMuseum();
-        is3DInitialized = true;
-      }
-    }
-  }
-
-  // --- 2. Leaflet Map Initialization & Markers ---
+  // --- 1. Leaflet Map Initialization & Markers ---
   function initLeafletMap() {
     if (typeof L === 'undefined') return;
 
@@ -338,61 +295,4 @@
     }
   }
 
-  // --- 5. 3D Museum Fallback Engine ---
-  function init3DMuseum() {
-    const container = museum3DContainer;
-    container.innerHTML = '';
-
-    scene = new THREE.Scene();
-    scene.background = new THREE.Color(0x0a0c10);
-
-    camera = new THREE.PerspectiveCamera(60, container.clientWidth / container.clientHeight, 0.1, 1000);
-    camera.position.set(0, 1.6, 5);
-
-    renderer = new THREE.WebGLRenderer({ antialias: true });
-    renderer.setSize(container.clientWidth, container.clientHeight);
-    renderer.setPixelRatio(Math.min(window.devicePixelRatio, 2));
-    container.appendChild(renderer.domElement);
-
-    const ambLight = new THREE.AmbientLight(0xffffff, 0.7);
-    scene.add(ambLight);
-
-    const dirLight = new THREE.DirectionalLight(0xfff5e6, 1.2);
-    dirLight.position.set(5, 10, 5);
-    scene.add(dirLight);
-
-    // Simple Gallery Pedestal & Display
-    const floorGeo = new THREE.PlaneGeometry(20, 20);
-    const floorMat = new THREE.MeshStandardMaterial({ color: 0x1a1d24, roughness: 0.8 });
-    const floor = new THREE.Mesh(floorGeo, floorMat);
-    floor.rotation.x = -Math.PI / 2;
-    scene.add(floor);
-
-    const pedGeo = new THREE.CylinderGeometry(0.8, 1, 1.2, 32);
-    const pedMat = new THREE.MeshStandardMaterial({ color: 0x2a2e39, metalness: 0.3 });
-    const ped = new THREE.Mesh(pedGeo, pedMat);
-    ped.position.set(0, 0.6, 0);
-    scene.add(ped);
-
-    // Artifact Frame
-    const artGeo = new THREE.BoxGeometry(1.2, 1.6, 0.1);
-    const artMat = new THREE.MeshStandardMaterial({ color: 0xd4af37, metalness: 0.8, roughness: 0.2 });
-    const art = new THREE.Mesh(artGeo, artMat);
-    art.position.set(0, 2, 0);
-    scene.add(art);
-
-    function animate() {
-      requestAnimationFrame(animate);
-      art.rotation.y += 0.005;
-      renderer.render(scene, camera);
-    }
-    animate();
-
-    window.addEventListener('resize', () => {
-      if (!renderer || !camera) return;
-      camera.aspect = container.clientWidth / container.clientHeight;
-      camera.updateProjectionMatrix();
-      renderer.setSize(container.clientWidth, container.clientHeight);
-    });
-  }
 })();

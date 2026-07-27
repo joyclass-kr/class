@@ -1,4 +1,5 @@
 .class-network-status {
+    box-sizing: border-box;
     position: fixed;
     top: 10px;
     left: 50%;
@@ -29,5 +30,5 @@
 .class-network-status small { display: block; margin-top: 3px; font-size: 11px; }
 
 @media (max-width: 760px), (max-height: 520px) and (orientation: landscape) {
-    .class-network-status { top: 6px; min-width: calc(100vw - 12px); padding: 7px 10px; }
+    .class-network-status { top: 6px; width: calc(100vw - 12px); min-width: 0; padding: 7px 10px; }
 }

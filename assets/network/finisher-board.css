@@ -1,4 +1,5 @@
 .finishers-panel {
+    box-sizing: border-box;
     width: min(560px, 100%);
     margin: 18px auto 0;
     padding: 13px 15px;

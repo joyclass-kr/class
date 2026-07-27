@@ -20,8 +20,8 @@
         link.rel = "stylesheet";
         link.dataset.classNetworkStyle = "true";
         link.href = script
-            ? new URL("game-network.css", script.src).href
-            : "../../assets/network/game-network.css";
+            ? new URL("game-network.css?v=20260727", script.src).href
+            : "../../assets/network/game-network.css?v=20260727";
         document.head.appendChild(link);
     }
 

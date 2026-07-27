@@ -1,4 +1,4 @@
-/* Clean Dark & Gold Museum Theme System */
+/* Korean History Treasure Map Theme */
 :root {
   --bg-dark: #0f172a;
   --bg-card: #1e293b;
@@ -69,38 +69,6 @@ body {
   font-weight: 800;
   color: var(--gold-light);
   letter-spacing: -0.5px;
-}
-
-/* Mode Switcher */
-.mode-switch {
-  display: flex;
-  background: #090d16;
-  border: 1px solid var(--border-gold);
-  border-radius: 30px;
-  padding: 4px;
-  gap: 4px;
-}
-
-.mode-btn {
-  background: transparent;
-  border: none;
-  color: var(--text-muted);
-  font-size: 13px;
-  font-weight: 700;
-  padding: 8px 16px;
-  border-radius: 20px;
-  cursor: pointer;
-  transition: all 0.2s ease;
-}
-
-.mode-btn:hover {
-  color: var(--text-light);
-}
-
-.mode-btn.active {
-  background: linear-gradient(135deg, #d97706, #f59e0b);
-  color: #000;
-  box-shadow: 0 0 12px var(--gold-glow);
 }
 
 /* Smart Filter Bar */
@@ -185,34 +153,6 @@ body {
 .filter-btn.route-hn.active { background: #f59e0b; color: #000; }
 .filter-btn.route-ov.active { background: #8b5cf6; color: #fff; }
 
-/* 3D Gallery Nav */
-.gallery-nav {
-  padding: 4px 0;
-  overflow-x: auto;
-}
-
-.nav-scroll {
-  display: flex;
-  gap: 8px;
-}
-
-.nav-btn {
-  background: rgba(30, 41, 59, 0.7);
-  border: 1px solid var(--border-gold);
-  color: var(--text-muted);
-  padding: 6px 14px;
-  border-radius: 16px;
-  font-size: 12px;
-  font-weight: 600;
-  cursor: pointer;
-  white-space: nowrap;
-}
-
-.nav-btn.active {
-  background: var(--gold-primary);
-  color: #000;
-}
-
 /* Viewports */
 .main-content {
   flex: 1;
@@ -226,20 +166,6 @@ body {
   width: 100%;
   height: 100%;
   background: #0b0f19;
-}
-
-#museum-3d-container {
-  width: 100%;
-  height: 100%;
-  position: absolute;
-  top: 0;
-  left: 0;
-}
-
-#museum-canvas {
-  width: 100%;
-  height: 100%;
-  display: block;
 }
 
 /* Leaflet Custom Marker Pins */
