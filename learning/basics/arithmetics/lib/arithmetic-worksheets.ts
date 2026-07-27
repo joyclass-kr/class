@@ -250,6 +250,18 @@ export const middleSchoolWorksheetCatalog: ArithmeticWorksheet[] = [
   { grade: "중3", name: "원의 성질: 현에서 중심까지의 거리", title: "원의 성질: 현에서 중심까지의 거리", route: "/arithmetic/middle-school/circle-properties?kind=center-to-chord" },
   { grade: "중3", name: "원의 성질: 호의 크기 합산", title: "원의 성질: 호의 크기 합산", route: "/arithmetic/middle-school/circle-properties?kind=arc-sum" },
   { grade: "중3", name: "원의 성질 계산 종합", title: "원의 성질 계산 종합", route: "/arithmetic/middle-school/circle-properties?kind=comprehensive" },
+  { grade: "중3", name: "통계: 평균 계산", title: "통계: 평균 계산", route: "/arithmetic/middle-school/statistics?kind=mean" },
+  { grade: "중3", name: "통계: 평균으로 빠진 값 구하기", title: "통계: 평균으로 빠진 값 구하기", route: "/arithmetic/middle-school/statistics?kind=missing-from-mean" },
+  { grade: "중3", name: "통계: 도수 자료의 평균", title: "통계: 도수 자료의 평균", route: "/arithmetic/middle-school/statistics?kind=frequency-mean" },
+  { grade: "중3", name: "통계: 중앙값 계산", title: "통계: 중앙값 계산", route: "/arithmetic/middle-school/statistics?kind=median" },
+  { grade: "중3", name: "통계: 최빈값 찾기", title: "통계: 최빈값 찾기", route: "/arithmetic/middle-school/statistics?kind=mode" },
+  { grade: "중3", name: "통계: 범위 계산", title: "통계: 범위 계산", route: "/arithmetic/middle-school/statistics?kind=range" },
+  { grade: "중3", name: "통계: 편차 계산", title: "통계: 편차 계산", route: "/arithmetic/middle-school/statistics?kind=deviations" },
+  { grade: "중3", name: "통계: 분산 계산", title: "통계: 분산 계산", route: "/arithmetic/middle-school/statistics?kind=variance" },
+  { grade: "중3", name: "통계: 표준편차 계산", title: "통계: 표준편차 계산", route: "/arithmetic/middle-school/statistics?kind=standard-deviation" },
+  { grade: "중3", name: "통계: 편차에서 분산 구하기", title: "통계: 편차에서 분산 구하기", route: "/arithmetic/middle-school/statistics?kind=variance-from-deviations" },
+  { grade: "중3", name: "통계: 두 자료의 산포도 비교", title: "통계: 두 자료의 산포도 비교", route: "/arithmetic/middle-school/statistics?kind=compare-spread" },
+  { grade: "중3", name: "대푯값과 산포도 계산 종합", title: "대푯값과 산포도 계산 종합", route: "/arithmetic/middle-school/statistics?kind=comprehensive" },
 ];
 
 export const highSchoolWorksheetCatalog: ArithmeticWorksheet[] = [
