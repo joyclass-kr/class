@@ -226,6 +226,18 @@ export const middleSchoolWorksheetCatalog: ArithmeticWorksheet[] = [
   { grade: "중3", name: "이차함수: 식 정리 후 꼭짓점", title: "이차함수: 식 정리 후 꼭짓점", route: "/arithmetic/middle-school/quadratic-functions?kind=normalize-first" },
   { grade: "중3", name: "이차함수: 분수·소수 계수", title: "이차함수: 분수·소수 계수", route: "/arithmetic/middle-school/quadratic-functions?kind=fraction-decimal" },
   { grade: "중3", name: "이차함수 계산 종합", title: "이차함수 계산 종합", route: "/arithmetic/middle-school/quadratic-functions?kind=comprehensive" },
+  { grade: "중3", name: "삼각비: 세 변에서 한 비 구하기", title: "삼각비: 세 변에서 한 비 구하기", route: "/arithmetic/middle-school/trigonometry?kind=single-ratio" },
+  { grade: "중3", name: "삼각비: sin·cos·tan 한꺼번에", title: "삼각비: sin·cos·tan 한꺼번에", route: "/arithmetic/middle-school/trigonometry?kind=three-ratios" },
+  { grade: "중3", name: "삼각비: 피타고라스 정리 후 계산", title: "삼각비: 피타고라스 정리 후 계산", route: "/arithmetic/middle-school/trigonometry?kind=pythagorean-first" },
+  { grade: "중3", name: "삼각비: 30°·45°·60°의 값", title: "삼각비: 30°·45°·60°의 값", route: "/arithmetic/middle-school/trigonometry?kind=special-angle" },
+  { grade: "중3", name: "삼각비: 특수각 식 계산", title: "삼각비: 특수각 식 계산", route: "/arithmetic/middle-school/trigonometry?kind=special-angle-expression" },
+  { grade: "중3", name: "삼각비: sin으로 변의 길이", title: "삼각비: sin으로 변의 길이", route: "/arithmetic/middle-school/trigonometry?kind=side-from-sine" },
+  { grade: "중3", name: "삼각비: cos으로 변의 길이", title: "삼각비: cos으로 변의 길이", route: "/arithmetic/middle-school/trigonometry?kind=side-from-cosine" },
+  { grade: "중3", name: "삼각비: tan으로 변의 길이", title: "삼각비: tan으로 변의 길이", route: "/arithmetic/middle-school/trigonometry?kind=side-from-tangent" },
+  { grade: "중3", name: "삼각비: 닮음비와 변의 길이", title: "삼각비: 닮음비와 변의 길이", route: "/arithmetic/middle-school/trigonometry?kind=ratio-scale" },
+  { grade: "중3", name: "삼각비: 특수각과 근호 길이", title: "삼각비: 특수각과 근호 길이", route: "/arithmetic/middle-school/trigonometry?kind=radical-side" },
+  { grade: "중3", name: "삼각비: 분수·소수로 길이 계산", title: "삼각비: 분수·소수로 길이 계산", route: "/arithmetic/middle-school/trigonometry?kind=fraction-decimal" },
+  { grade: "중3", name: "삼각비 계산 종합", title: "삼각비 계산 종합", route: "/arithmetic/middle-school/trigonometry?kind=comprehensive" },
 ];
 
 export const highSchoolWorksheetCatalog: ArithmeticWorksheet[] = [
