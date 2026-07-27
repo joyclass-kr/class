@@ -238,6 +238,18 @@ export const middleSchoolWorksheetCatalog: ArithmeticWorksheet[] = [
   { grade: "중3", name: "삼각비: 특수각과 근호 길이", title: "삼각비: 특수각과 근호 길이", route: "/arithmetic/middle-school/trigonometry?kind=radical-side" },
   { grade: "중3", name: "삼각비: 분수·소수로 길이 계산", title: "삼각비: 분수·소수로 길이 계산", route: "/arithmetic/middle-school/trigonometry?kind=fraction-decimal" },
   { grade: "중3", name: "삼각비 계산 종합", title: "삼각비 계산 종합", route: "/arithmetic/middle-school/trigonometry?kind=comprehensive" },
+  { grade: "중3", name: "원의 성질: 중심각에서 원주각", title: "원의 성질: 중심각에서 원주각", route: "/arithmetic/middle-school/circle-properties?kind=central-to-inscribed" },
+  { grade: "중3", name: "원의 성질: 원주각에서 중심각", title: "원의 성질: 원주각에서 중심각", route: "/arithmetic/middle-school/circle-properties?kind=inscribed-to-central" },
+  { grade: "중3", name: "원의 성질: 호의 크기에서 원주각", title: "원의 성질: 호의 크기에서 원주각", route: "/arithmetic/middle-school/circle-properties?kind=arc-to-inscribed" },
+  { grade: "중3", name: "원의 성질: 같은 호의 원주각", title: "원의 성질: 같은 호의 원주각", route: "/arithmetic/middle-school/circle-properties?kind=same-arc" },
+  { grade: "중3", name: "원의 성질: 지름과 원주각", title: "원의 성질: 지름과 원주각", route: "/arithmetic/middle-school/circle-properties?kind=semicircle-angle" },
+  { grade: "중3", name: "원의 성질: 원에 내접하는 사각형", title: "원의 성질: 원에 내접하는 사각형", route: "/arithmetic/middle-school/circle-properties?kind=cyclic-quadrilateral" },
+  { grade: "중3", name: "원의 성질: 접선과 현이 이루는 각", title: "원의 성질: 접선과 현이 이루는 각", route: "/arithmetic/middle-school/circle-properties?kind=tangent-chord-angle" },
+  { grade: "중3", name: "원의 성질: 한 점에서 그은 두 접선", title: "원의 성질: 한 점에서 그은 두 접선", route: "/arithmetic/middle-school/circle-properties?kind=tangent-length" },
+  { grade: "중3", name: "원의 성질: 중심과 현의 길이", title: "원의 성질: 중심과 현의 길이", route: "/arithmetic/middle-school/circle-properties?kind=chord-length" },
+  { grade: "중3", name: "원의 성질: 현에서 중심까지의 거리", title: "원의 성질: 현에서 중심까지의 거리", route: "/arithmetic/middle-school/circle-properties?kind=center-to-chord" },
+  { grade: "중3", name: "원의 성질: 호의 크기 합산", title: "원의 성질: 호의 크기 합산", route: "/arithmetic/middle-school/circle-properties?kind=arc-sum" },
+  { grade: "중3", name: "원의 성질 계산 종합", title: "원의 성질 계산 종합", route: "/arithmetic/middle-school/circle-properties?kind=comprehensive" },
 ];
 
 export const highSchoolWorksheetCatalog: ArithmeticWorksheet[] = [
