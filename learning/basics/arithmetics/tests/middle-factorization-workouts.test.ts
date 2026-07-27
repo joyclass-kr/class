@@ -204,12 +204,15 @@ test("세제곱의 합과 차는 공식부터 공통인수와 고차식 결합�
 
   assert.equal(problems.length, 8);
   assert.equal(new Set(problems.map(({ structure }) => structure)).size, 7);
-  assert.match(problems[0].latex, /^x\^3\+\d+$/);
-  assert.match(problems[1].latex, /^x\^3-\d+$/);
+  assert.match(problems[0].latex, /^[a-z]\^3\+\d+$/);
+  assert.match(problems[1].latex, /^[a-z]\^3-\d+$/);
   assert.ok(problems.some(({ structure }) => structure === "two-variable-cube-sum"));
   assert.ok(problems.some(({ structure }) => structure === "common-then-cube-difference"));
   assert.ok(problems.some(({ structure }) => structure === "shifted-cube-sum"));
-  assert.equal(problems.at(-1)?.answerLatex, "(2x^2-3y)(4x^4+6x^2y+9y^2)");
+  assert.match(
+    problems.at(-1)?.answerLatex ?? "",
+    /^\(2[a-z]\^2-3[a-z]\)\(4[a-z]\^4\+6[a-z]\^2[a-z]\+9[a-z]\^2\)$/,
+  );
 });
 
 test("인수분해 오답은 임의의 수를 덧붙이지 않고 실제로 틀린 식만 사용한다", () => {
@@ -260,6 +263,34 @@ test("새 문제를 반복 생성해도 각 카드에 충분히 다양한 식이
       uniqueFormulas.size >= 120,
       `${kind} generated only ${uniqueFormulas.size} unique formulas out of ${formulas.length}`,
     );
+  }
+});
+
+test("난이도별 계수와 식 길이는 연산 훈련에 적절한 상한을 넘지 않는다", () => {
+  const coefficientLimits = {
+    basic: 150,
+    application: 200,
+    advanced: 300,
+  };
+
+  for (const kind of MIDDLE_FACTORIZATION_KINDS) {
+    for (let seed = 1; seed <= 500; seed += 1) {
+      for (const problem of createMiddleFactorizationProblemSet(kind, seed).problems) {
+        const largestLiteral = Math.max(
+          0,
+          ...[...problem.latex.matchAll(/\d+/g)].map(([value]) => Number(value)),
+        );
+        assert.ok(
+          largestLiteral <= coefficientLimits[problem.difficulty],
+          `${kind}/${seed}/${problem.difficulty} has an oversized coefficient: ${problem.latex}`,
+        );
+        assert.ok(problem.latex.length <= 44, `${kind}/${seed} prompt is too long: ${problem.latex}`);
+        assert.ok(
+          problem.answerLatex.length <= 30,
+          `${kind}/${seed} answer is too long: ${problem.answerLatex}`,
+        );
+      }
+    }
   }
 });
 

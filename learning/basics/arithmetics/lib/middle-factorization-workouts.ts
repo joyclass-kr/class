@@ -395,9 +395,12 @@ function build(
   }
 
   if (kind === "monic-trinomial") {
-    const firstMagnitude = integer(next, 1, 12);
-    let secondMagnitude = integer(next, 1, 12);
-    while (secondMagnitude === firstMagnitude) secondMagnitude = integer(next, 1, 12);
+    const magnitudeMaximum = variantHint < 2 ? 6 : variantHint < 5 ? 9 : 12;
+    const firstMagnitude = integer(next, 1, magnitudeMaximum);
+    let secondMagnitude = integer(next, 1, magnitudeMaximum);
+    while (secondMagnitude === firstMagnitude) {
+      secondMagnitude = integer(next, 1, magnitudeMaximum);
+    }
     const variant = progressionVariant % 4;
     const firstRoot = variant === 1 ? -firstMagnitude : firstMagnitude;
     const secondRoot = variant === 1
@@ -481,11 +484,14 @@ function build(
     const common = integer(next, 2, 5);
     const primitive = coprimeNonzero(next, m, -6, 6);
     const distance = integer(next, 2, 6);
+    const firstRoot = nonzero(next, -5, 5);
+    let secondRoot = nonzero(next, -5, 5);
+    while (secondRoot === firstRoot) secondRoot = nonzero(next, -5, 5);
     const variant = progressionVariant % 4;
     const forms = [
       {
-        expression: polynomial([[common, "x^3"], [common * (p + q), "x^2"], [common * p * q, "x"]]),
-        answer: `${common}x(${linear("x", p)})(${linear("x", q)})`,
+        expression: polynomial([[common, "x^3"], [common * (firstRoot + secondRoot), "x^2"], [common * firstRoot * secondRoot, "x"]]),
+        answer: `${common}x(${linear("x", firstRoot)})(${linear("x", secondRoot)})`,
         structure: "common-then-trinomial",
       },
       {
@@ -548,48 +554,54 @@ function build(
   }
 
   if (kind === "cubic-sum-difference") {
-    const r = integer(next, 2, 9);
-    const common = integer(next, 2, 7);
+    const r = integer(next, 2, 4);
+    const common = integer(next, 2, 4);
+    const [cubeM, cubeN] = coprimePositivePair(next, 2, 5);
+    const [cubeVariable, cubeOtherVariable] = [
+      ["x", "y"],
+      ["a", "b"],
+      ["p", "q"],
+    ][integer(next, 0, 2)];
     const variant = variantHint % 8;
     const forms = [
       {
-        expression: `x^3+${r ** 3}`,
-        answer: `(x+${r})(x^2-${r}x+${r ** 2})`,
+        expression: `${cubeVariable}^3+${r ** 3}`,
+        answer: `(${cubeVariable}+${r})(${cubeVariable}^2-${r}${cubeVariable}+${r ** 2})`,
         structure: "monic-cube-formula",
       },
       {
-        expression: `x^3-${r ** 3}`,
-        answer: `(x-${r})(x^2+${r}x+${r ** 2})`,
+        expression: `${cubeVariable}^3-${r ** 3}`,
+        answer: `(${cubeVariable}-${r})(${cubeVariable}^2+${r}${cubeVariable}+${r ** 2})`,
         structure: "monic-cube-formula",
       },
       {
-        expression: `${m ** 3}x^3+${n ** 3}`,
-        answer: `(${m}x+${n})(${m ** 2}x^2-${m * n}x+${n ** 2})`,
+        expression: `${cubeM ** 3}${cubeVariable}^3+${cubeN ** 3}`,
+        answer: `(${cubeM}${cubeVariable}+${cubeN})(${cubeM ** 2}${cubeVariable}^2-${cubeM * cubeN}${cubeVariable}+${cubeN ** 2})`,
         structure: "coefficient-cube-sum",
       },
       {
-        expression: `${m ** 3}x^3-${n ** 3}`,
-        answer: `(${m}x-${n})(${m ** 2}x^2+${m * n}x+${n ** 2})`,
+        expression: `${cubeM ** 3}${cubeVariable}^3-${cubeN ** 3}`,
+        answer: `(${cubeM}${cubeVariable}-${cubeN})(${cubeM ** 2}${cubeVariable}^2+${cubeM * cubeN}${cubeVariable}+${cubeN ** 2})`,
         structure: "coefficient-cube-difference",
       },
       {
-        expression: `a^3+${r ** 3}b^3`,
-        answer: `(a+${r}b)(a^2-${r}ab+${r ** 2}b^2)`,
+        expression: `${cubeVariable}^3+${r ** 3}${cubeOtherVariable}^3`,
+        answer: `(${cubeVariable}+${r}${cubeOtherVariable})(${cubeVariable}^2-${r}${cubeVariable}${cubeOtherVariable}+${r ** 2}${cubeOtherVariable}^2)`,
         structure: "two-variable-cube-sum",
       },
       {
-        expression: `${common}x^4-${common * r ** 3}x`,
-        answer: `${common}x(x-${r})(x^2+${r}x+${r ** 2})`,
+        expression: `${common}${cubeVariable}^4-${common * r ** 3}${cubeVariable}`,
+        answer: `${common}${cubeVariable}(${cubeVariable}-${r})(${cubeVariable}^2+${r}${cubeVariable}+${r ** 2})`,
         structure: "common-then-cube-difference",
       },
       {
-        expression: `(${linear("x", p)})^3+${r ** 3}`,
-        answer: `(${linear("x", p + r)})((${linear("x", p)})^2-${r}(${linear("x", p)})+${r ** 2})`,
+        expression: `(${linear(cubeVariable, p)})^3+${r ** 3}`,
+        answer: `(${linear(cubeVariable, p + r)})((${linear(cubeVariable, p)})^2-${r}(${linear(cubeVariable, p)})+${r ** 2})`,
         structure: "shifted-cube-sum",
       },
       {
-        expression: `8x^6-27y^3`,
-        answer: `(2x^2-3y)(4x^4+6x^2y+9y^2)`,
+        expression: `8${cubeVariable}^6-27${cubeOtherVariable}^3`,
+        answer: `(2${cubeVariable}^2-3${cubeOtherVariable})(4${cubeVariable}^4+6${cubeVariable}^2${cubeOtherVariable}+9${cubeOtherVariable}^2)`,
         structure: "higher-power-cube-difference",
       },
     ];
