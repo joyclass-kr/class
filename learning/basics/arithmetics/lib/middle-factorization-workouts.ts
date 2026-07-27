@@ -23,6 +23,7 @@ export type MiddleFactorizationProblem = {
   label: string;
   latex: string;
   answerLatex: string;
+  solutionHint: string;
   distractors: string[];
 };
 
@@ -56,6 +57,22 @@ export const MIDDLE_FACTORIZATION_TITLES: Record<MiddleFactorizationKind, string
   "cubic-sum-difference": "인수분해: 세제곱의 합과 차",
   "normalize-first": "인수분해: 식 정리 후 인수분해",
   comprehensive: "인수분해 종합",
+};
+
+const MIDDLE_FACTORIZATION_SOLUTION_HINTS: Record<MiddleFactorizationKind, string> = {
+  "common-factor": "계수의 최대공약수와 공통 문자의 낮은 차수를 먼저 묶는다.",
+  "multiple-variables": "계수의 최대공약수와 모든 항에 겹치는 문자를 함께 묶는다.",
+  grouping: "두 항씩 묶어 같은 괄호를 만든 뒤 그 괄호를 다시 묶는다.",
+  "perfect-square": "첫째 항과 끝항의 제곱근을 찾고 가운데항의 부호를 확인한다.",
+  "difference-squares": "두 제곱의 차를 합과 차의 곱으로 바꾼다.",
+  "monic-trinomial": "합이 일차항의 계수이고 곱이 상수항인 두 수를 찾는다.",
+  "nonmonic-trinomial": "첫 계수와 상수항의 곱을 이용해 가운데항을 나누어 묶는다.",
+  "three-variables": "공통 부분끼리 묶고 남은 식에서 같은 인수를 다시 찾는다.",
+  "cubic-common": "공통인수를 먼저 묶은 뒤 남은 이차식을 끝까지 인수분해한다.",
+  "cubic-grouping": "두 항씩 묶어 공통인 이차식이나 일차식을 만든다.",
+  "cubic-sum-difference": "세제곱의 합·차 공식을 적용하고 공통인수까지 확인한다.",
+  "normalize-first": "동류항이나 반복되는 괄호를 정리한 뒤 공통인수를 묶는다.",
+  comprehensive: "공통인수와 인수분해 공식을 차례로 확인한다.",
 };
 
 function random(seed: number) {
@@ -204,6 +221,7 @@ function make(
     label: MIDDLE_FACTORIZATION_TITLES[kind],
     latex,
     answerLatex,
+    solutionHint: MIDDLE_FACTORIZATION_SOLUTION_HINTS[kind],
     distractors: uniqueDistractors(answerLatex, distractors),
   };
 }

@@ -206,6 +206,8 @@ test("marks the three difficulty sections on middle-school factorization sheets"
   assert.equal((html.match(/>기본<\/span>/g) ?? []).length, 2);
   assert.equal((html.match(/>응용<\/span>/g) ?? []).length, 2);
   assert.equal((html.match(/>고난도<\/span>/g) ?? []).length, 2);
+  assert.equal((html.match(/data-testid="factorization-solution-hint"/g) ?? []).length, 8);
+  assert.equal((html.match(/<strong>핵심<\/strong>/g) ?? []).length, 8);
 });
 
 test("keeps geometry worksheet formulas compact without inline answer controls", async () => {

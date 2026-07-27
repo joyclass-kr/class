@@ -118,6 +118,12 @@ export default function MiddleFactorizationPage() {
           <div className="logarithm-expression">
             <MathFormula latex={`${problem.latex}${answerSheet ? `=${problem.answerLatex}` : ""}`} display />
           </div>
+          {answerSheet && (
+            <p className="factorization-solution-hint" data-testid="factorization-solution-hint">
+              <strong>핵심</strong>
+              {problem.solutionHint}
+            </p>
+          )}
         </div>
       </article>
     );

@@ -189,6 +189,17 @@ test("각 인수분해 학습지는 기본에서 응용과 고난도 순서로 �
   }
 });
 
+test("모든 인수분해 문제는 정답지용 한 줄 핵심 풀이를 제공한다", () => {
+  for (const kind of MIDDLE_FACTORIZATION_KINDS) {
+    const problems = createMiddleFactorizationProblemSet(kind, 20260728).problems;
+    for (const problem of problems) {
+      assert.ok(problem.solutionHint.length >= 15, `${kind}/${problem.structure} hint is too short`);
+      assert.ok(problem.solutionHint.length <= 50, `${kind}/${problem.structure} hint is too long`);
+      assert.match(problem.solutionHint, /\.$/);
+    }
+  }
+});
+
 test("세 문자식은 ab, bc, ca가 섞인 묶어내기부터 세 일차인수까지 확장한다", () => {
   const problems = createMiddleFactorizationProblemSet("three-variables", 20260728).problems;
 
