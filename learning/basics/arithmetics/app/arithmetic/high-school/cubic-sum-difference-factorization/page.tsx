@@ -1,0 +1,182 @@
+"use client";
+
+import { useEffect, useMemo, useState } from "react";
+import MathFormula from "../../../components/math-formula";
+import WorksheetChoicePanel, {
+  type WorksheetChoiceProblem,
+} from "../components/worksheet-choice-panel";
+import {
+  createHighCubicFactorizationProblemSet,
+  createHighCubicFactorizationReviewProblems,
+  type HighCubicFactorizationProblem,
+} from "../../../../lib/high-cubic-factorization-workouts";
+
+const INITIAL_SEED = 20260804;
+const DIFFICULTY_LABELS: Record<HighCubicFactorizationProblem["difficulty"], string> = {
+  basic: "기본",
+  application: "응용",
+  advanced: "고난도",
+};
+
+function choiceProblem(problem: HighCubicFactorizationProblem): WorksheetChoiceProblem {
+  const choices = [
+    { id: `${problem.id}-correct`, latex: problem.answerLatex, correct: true },
+    ...problem.distractors.map((latex, index) => ({
+      id: `${problem.id}-wrong-${index}`,
+      latex,
+      correct: false,
+    })),
+  ];
+  const shift = [...problem.id].reduce((total, character) => total + character.charCodeAt(0), 0) % 4;
+  return {
+    id: problem.id,
+    label: "인수분해한 식은?",
+    correctLatex: problem.answerLatex,
+    choices: [...choices.slice(shift), ...choices.slice(0, shift)],
+  };
+}
+
+export default function CubicSumDifferenceFactorizationPage() {
+  const [problemSet, setProblemSet] = useState(() => (
+    createHighCubicFactorizationProblemSet(INITIAL_SEED)
+  ));
+  const [reviews, setReviews] = useState<HighCubicFactorizationProblem[]>([]);
+  const [selected, setSelected] = useState<Record<string, string>>({});
+  const [results, setResults] = useState<Record<string, boolean>>({});
+  const [panelOpen, setPanelOpen] = useState(false);
+  const [scale, setScale] = useState(0.6);
+
+  useEffect(() => {
+    const fit = () => setScale(Math.min((window.innerWidth - 32) / 794, 1));
+    fit();
+    window.addEventListener("resize", fit);
+    return () => window.removeEventListener("resize", fit);
+  }, []);
+
+  const problems = useMemo(() => [...problemSet.problems, ...reviews], [problemSet.problems, reviews]);
+  const choiceProblems = useMemo(() => problems.map(choiceProblem), [problems]);
+  const wrong = problemSet.problems.filter((problem) => results[problem.id] === false);
+
+  function reset() {
+    setSelected({});
+    setResults({});
+    setReviews([]);
+  }
+
+  function choose(problemId: string, choiceId: string) {
+    setSelected((current) => ({ ...current, [problemId]: choiceId }));
+    setResults((current) => {
+      const next = { ...current };
+      delete next[problemId];
+      return next;
+    });
+  }
+
+  function grade() {
+    const next: Record<string, boolean> = {};
+    for (const item of choiceProblems) {
+      const choice = item.choices.find(({ id }) => id === selected[item.id]);
+      if (choice) next[item.id] = choice.correct;
+    }
+    setResults(next);
+  }
+
+  function row(problem: HighCubicFactorizationProblem, index: number, answerSheet: boolean) {
+    const beginsDifficultySection = index === 0 || index === 2 || index === 5;
+    return (
+      <article
+        className={`polynomial-question logarithm-question middle-equation-difficulty-${problem.difficulty}${beginsDifficultySection ? " middle-equation-difficulty-start" : ""}`}
+        data-testid="high-cubic-factorization-question"
+        key={`${answerSheet ? "answer" : "question"}-${problem.id}`}
+      >
+        <div className="polynomial-question-number">{String(index + 1).padStart(2, "0")}</div>
+        {beginsDifficultySection && (
+          <span className="middle-equation-difficulty-label" data-testid="high-cubic-factorization-difficulty-label">
+            {DIFFICULTY_LABELS[problem.difficulty]}
+          </span>
+        )}
+        <div className="polynomial-question-body">
+          <span className="polynomial-focus-label">{problem.label}</span>
+          <div className="logarithm-expression"><MathFormula latex={problem.latex} /></div>
+          {answerSheet && (
+            <>
+              <div className="middle-equation-static-answer">
+                <strong>정답</strong>
+                <MathFormula latex={problem.answerLatex} />
+              </div>
+              <p className="middle-equation-solution-hint" data-testid="high-cubic-factorization-solution-hint">
+                <strong>핵심</strong> {problem.solutionHint}
+              </p>
+            </>
+          )}
+        </div>
+      </article>
+    );
+  }
+
+  function sheet(answerSheet: boolean) {
+    return (
+      <div className={`a4-sheet counting-sheet polynomial-sheet logarithm-sheet polynomial-sheet-${problems.length}`} style={{ transform: `scale(${scale})` }}>
+        <header className="counting-sheet-header polynomial-sheet-header">
+          <div className="counting-sheet-title">
+            <span>공통수학 1</span>
+            <strong>세제곱의 합·차 인수분해{answerSheet ? " 정답" : ""}</strong>
+          </div>
+          <div className="counting-sheet-info">
+            <span>이름 <i /></span><span>날짜 <i /></span><small>문제지 {problemSet.seed}</small>
+          </div>
+        </header>
+        <div className="polynomial-instruction">
+          <b>세제곱 구조를 찾아 완전히 인수분해하세요.</b>
+          <span>답안 입력에서 4지선다 채점 · 오답 보충 최대 2문제</span>
+        </div>
+        <div className="polynomial-problem-grid logarithm-grid">
+          {problems.map((item, index) => row(item, index, answerSheet))}
+        </div>
+      </div>
+    );
+  }
+
+  return (
+    <main className="counting-page polynomial-page logarithm-page numeric-choice-page middle-quadratic-page">
+      <div className="counting-toolbar">
+        <a className="counting-back" href="/arithmetic">← 연산</a>
+        <div className="counting-progress">
+          <strong>{Object.values(results).filter(Boolean).length}<small>/{problems.length} 정답</small></strong>
+        </div>
+        <div className="toolbar">
+          <button className="button secondary" type="button" onClick={() => { setProblemSet(createHighCubicFactorizationProblemSet(Date.now() >>> 0)); reset(); }}>새 문제</button>
+          <button className="button ghost" type="button" onClick={reset}>다시 풀기</button>
+          {wrong.length > 0 && (
+            <button
+              className="button secondary"
+              type="button"
+              onClick={() => setReviews(createHighCubicFactorizationReviewProblems(
+                wrong.map(({ structure }) => structure),
+                problemSet.seed ^ 0x9e3779b9,
+              ))}
+            >
+              오답 보충
+            </button>
+          )}
+          <button className="button secondary" type="button" onClick={() => setPanelOpen(true)}>답안 입력</button>
+          <button className="button ghost" type="button" onClick={() => window.print()}>인쇄</button>
+          <button className="button primary" type="button" onClick={grade}>전체 채점</button>
+        </div>
+      </div>
+      <div className="a4-stage counting-a4-stage worksheet-stage" style={{ width: 794 * scale, height: 1123 * scale }} aria-label="A4 세제곱의 합·차 인수분해 문제지">{sheet(false)}</div>
+      <div className="a4-stage counting-a4-stage answer-stage" style={{ width: 794 * scale, height: 1123 * scale }} aria-label="A4 세제곱의 합·차 인수분해 정답지">{sheet(true)}</div>
+      {panelOpen && (
+        <WorksheetChoicePanel
+          title="세제곱의 합·차 인수분해"
+          problems={choiceProblems}
+          selected={selected}
+          results={results}
+          onSelect={choose}
+          onGrade={grade}
+          onClose={() => setPanelOpen(false)}
+        />
+      )}
+    </main>
+  );
+}

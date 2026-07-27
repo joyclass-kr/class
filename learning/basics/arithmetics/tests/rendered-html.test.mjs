@@ -312,6 +312,19 @@ test("renders the middle-school core calculation worksheet", async () => {
   assert.match(html, /aria-label="A4 소인수분해 정답지"/);
 });
 
+test("renders the high-school cubic sum-and-difference factorization worksheet", async () => {
+  const response = await render("/arithmetic/high-school/cubic-sum-difference-factorization");
+  assert.equal(response.status, 200);
+  const html = await response.text();
+  assert.equal((html.match(/data-testid="high-cubic-factorization-question"/g) ?? []).length, 16);
+  assert.equal((html.match(/data-testid="high-cubic-factorization-difficulty-label"/g) ?? []).length, 6);
+  assert.equal((html.match(/data-testid="high-cubic-factorization-solution-hint"/g) ?? []).length, 8);
+  assert.match(html, /세제곱의 합·차 인수분해/);
+  assert.match(html, /답안 입력/);
+  assert.match(html, /aria-label="A4 세제곱의 합·차 인수분해 문제지"/);
+  assert.match(html, /aria-label="A4 세제곱의 합·차 인수분해 정답지"/);
+});
+
 test("keeps geometry worksheet formulas compact without inline answer controls", async () => {
   const css = await readFile("app/globals.css", "utf8");
   const highSchoolCss = await readFile("app/arithmetic/high-school/high-school.css", "utf8");
