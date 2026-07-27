@@ -89,3 +89,11 @@ test("생성된 일차 인수 안에는 다시 꺼낼 숫자 공통인수가 남
     }
   }
 });
+
+test("문자식의 계수가 1 또는 -1이면 숫자 1을 표기하지 않는다", () => {
+  for (let seed = 1; seed <= 500; seed += 1) {
+    for (const problem of createMiddleFactorizationProblemSet("normalize-first", seed).problems) {
+      assert.doesNotMatch(problem.latex, /[+-]1\(/);
+    }
+  }
+});

@@ -109,6 +109,12 @@ function signed(value: number) {
   return value < 0 ? String(value) : `+${value}`;
 }
 
+function signedFactorCoefficient(value: number) {
+  if (value === 1) return "+";
+  if (value === -1) return "-";
+  return signed(value);
+}
+
 function linear(variable: string, constant: number, leading = 1) {
   return `${leading === 1 ? "" : leading === -1 ? "-" : leading}${variable}${signed(constant)}`;
 }
@@ -276,7 +282,7 @@ function build(kind: MiddleFactorizationKind, next: () => number, id: string): M
 
   if (kind === "normalize-first") {
     const a = integer(next, 2, 5);
-    const expression = `${a}x(${linear("x", p)})${signed(q)}(${linear("x", p)})`;
+    const expression = `${a}x(${linear("x", p)})${signedFactorCoefficient(q)}(${linear("x", p)})`;
     const answer = formatNormalizedLinearCombination(a, q, p);
     return make(id, kind, expression, answer, [
       `(${linear("x", p)})(${linear("x", q, a)})`,
