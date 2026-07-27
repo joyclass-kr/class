@@ -331,10 +331,9 @@
     }
 
     function startQuiz(mistakeIds = null) {
-        const levelPool = data.filter((idiom) => selectedQuizLevel === "전체" || idiom.level === selectedQuizLevel);
         const quizPool = selectedQuizMode === "image"
-            ? levelPool.filter((idiom) => Boolean(ILLUSTRATIONS[idiom.id]))
-            : levelPool;
+            ? data.filter((idiom) => Boolean(ILLUSTRATIONS[idiom.id]))
+            : data;
         if (quizPool.length < 4) {
             showToast("이 단계에는 삽화 문제가 없습니다.");
             return;
@@ -563,11 +562,6 @@
         button.addEventListener("click", () => switchView(button.dataset.view));
     });
 
-    elements.levelSelect.addEventListener("change", () => {
-        selectedLevel = elements.levelSelect.value;
-        buildDeck();
-    });
-
     elements.themeSelect.addEventListener("change", () => {
         selectedTheme = elements.themeSelect.value;
         buildDeck();
@@ -608,20 +602,12 @@
             });
         });
     });
-    elements.quizLevelSelect.addEventListener("change", () => {
-        selectedQuizLevel = elements.quizLevelSelect.value;
-    });
     elements.startQuiz.addEventListener("click", () => startQuiz());
     elements.nextQuestion.addEventListener("click", goToNextQuestion);
     elements.retryQuiz.addEventListener("click", () => startQuiz());
     elements.retryMistakes.addEventListener("click", retryQuizMistakes);
     elements.reviewMistakes.addEventListener("click", reviewQuizMistakes);
     elements.librarySearch.addEventListener("input", renderLibrary);
-    elements.libraryLevelSelect.addEventListener("change", () => {
-        selectedLibraryLevel = elements.libraryLevelSelect.value;
-        renderLibrary();
-    });
-
     document.addEventListener("keydown", (event) => {
         if (event.target.matches("input, select, textarea")) return;
         const learnVisible = !byId("learnView").hidden;
