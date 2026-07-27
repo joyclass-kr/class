@@ -47,11 +47,12 @@ test("같은 번호는 같은 문제를 만들고 오답 보충은 최대 두 �
 
 test("핵심 문자식과 3차식 유형이 실제 식 형태로 생성된다", () => {
   const severalVariables = createMiddleFactorizationProblemSet("multiple-variables", 5);
-  assert.ok(severalVariables.problems.every(({ latex }) => /a\^2b|ab\^2/.test(latex)));
+  assert.ok(severalVariables.problems.every(({ latex }) => /[a-z].*[a-z]/.test(latex)));
+  assert.ok(severalVariables.problems.some(({ latex }) => /abc/.test(latex)));
 
   const cubicCommon = createMiddleFactorizationProblemSet("cubic-common", 5);
-  assert.ok(cubicCommon.problems.every(({ latex }) => /x\^3/.test(latex)));
-  assert.ok(cubicCommon.problems.every(({ answerLatex }) => /x\(/.test(answerLatex)));
+  assert.ok(cubicCommon.problems.every(({ latex }) => /[xa]\^3/.test(latex)));
+  assert.ok(cubicCommon.problems.some(({ answerLatex }) => /x\(/.test(answerLatex)));
 
   const cubicGrouping = createMiddleFactorizationProblemSet("cubic-grouping", 5);
   assert.ok(cubicGrouping.problems.every(({ latex }) => /x\^3/.test(latex)));
@@ -108,4 +109,19 @@ test("식 정리 후 인수분해 한 장은 숫자만 다른 문제가 아니�
   assert.ok(formulas.some((latex) => /\)\^2-\d+$/.test(latex)), "이동된 제곱의 차");
   assert.ok(formulas.some((latex) => /^\d+x\^2/.test(latex)), "네 항 정리와 묶어내기");
   assert.ok(formulas.some((latex) => /^\(.+\)\(.+\)\+\(.+\)\(.+\)$/.test(latex)), "두 곱을 합친 뒤 재인수분해");
+});
+
+test("모든 인수분해 카드가 숫자만 바꾸지 않고 여러 식 구조를 섞는다", () => {
+  for (const kind of MIDDLE_FACTORIZATION_KINDS) {
+    const structures = new Set(
+      createMiddleFactorizationProblemSet(kind, 20260728)
+        .problems
+        .map(({ structure }) => structure),
+    );
+    const minimum = kind === "three-variables" || kind === "normalize-first" ? 5 : 4;
+    assert.ok(
+      structures.size >= minimum,
+      `${kind} only generated ${structures.size} structures: ${[...structures].join(", ")}`,
+    );
+  }
 });

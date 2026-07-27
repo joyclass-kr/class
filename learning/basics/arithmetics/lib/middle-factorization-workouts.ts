@@ -15,6 +15,7 @@ export type MiddleFactorizationKind =
 export type MiddleFactorizationProblem = {
   id: string;
   kind: MiddleFactorizationKind;
+  structure: string;
   label: string;
   latex: string;
   answerLatex: string;
@@ -148,10 +149,12 @@ function make(
   latex: string,
   answerLatex: string,
   distractors: string[],
+  structure = kind,
 ): MiddleFactorizationProblem {
   return {
     id,
     kind,
+    structure,
     label: MIDDLE_FACTORIZATION_TITLES[kind],
     latex,
     answerLatex,
@@ -174,116 +177,294 @@ function build(
     const common = integer(next, 2, 6);
     const left = integer(next, 2, 6);
     const right = coprimeNonzero(next, left, -6, 6);
-    const expression = polynomial([[common * left, "x^2"], [common * right, "x"]]);
-    const answer = `${common}x(${linear("x", right, left)})`;
+    const variant = variantHint % 4;
+    const forms = [
+      {
+        expression: polynomial([[common * left, "x^2"], [common * right, "x"]]),
+        answer: `${common}x(${linear("x", right, left)})`,
+        structure: "linear-common",
+      },
+      {
+        expression: polynomial([[common * left, "x^3"], [common * right, "x^2"]]),
+        answer: `${common}x^2(${linear("x", right, left)})`,
+        structure: "power-common",
+      },
+      {
+        expression: polynomial([[common * left, "x^2"], [common * right, "xy"]]),
+        answer: `${common}x(${left}x${signed(right)}y)`,
+        structure: "two-variable-common",
+      },
+      {
+        expression: polynomial([[common * left, "a^2"], [common * right, "ab"]]),
+        answer: `${common}a(${left}a${signed(right)}b)`,
+        structure: "letter-common",
+      },
+    ];
+    const { expression, answer, structure } = forms[variant];
     return make(id, kind, expression, answer, [
       `${common}(${linear("x", right, left)})`,
-      `x(${linear("x", common * right, common * left)})`,
-      `${common}x(${linear("x", -right, left)})`,
-    ]);
+      `${answer}+1`,
+      `${answer}-1`,
+    ], structure);
   }
 
   if (kind === "multiple-variables") {
     const common = integer(next, 2, 5);
     const left = integer(next, 2, 5);
     const right = coprimeNonzero(next, left, -5, 5);
-    const expression = polynomial([[common * left, "a^2b"], [common * right, "ab^2"]]);
-    const answer = `${common}ab(${left}a${signed(right)}b)`;
+    const third = coprimeNonzero(next, left, -5, 5);
+    const variant = variantHint % 4;
+    const forms = [
+      {
+        expression: polynomial([[common * left, "a^2b"], [common * right, "ab^2"]]),
+        answer: `${common}ab(${left}a${signed(right)}b)`,
+        structure: "ab-binomial",
+      },
+      {
+        expression: polynomial([[common * left, "a^3b^2"], [common * right, "a^2b^3"]]),
+        answer: `${common}a^2b^2(${left}a${signed(right)}b)`,
+        structure: "higher-power-ab",
+      },
+      {
+        expression: polynomial([[common * left, "a^2bc"], [common * right, "ab^2c"], [common * third, "abc^2"]]),
+        answer: `${common}abc(${left}a${signed(right)}b${signed(third)}c)`,
+        structure: "abc-trinomial",
+      },
+      {
+        expression: polynomial([[common * left, "x^3y^2"], [common * right, "x^2y^4"]]),
+        answer: `${common}x^2y^2(${left}x${signed(right)}y^2)`,
+        structure: "unequal-powers",
+      },
+    ];
+    const { expression, answer, structure } = forms[variant];
     return make(id, kind, expression, answer, [
-      `${common}a(${left}a${signed(right)}b)`,
-      `${common}b(${left}a${signed(right)}b)`,
-      `${common}ab(${left}a${signed(-right)}b)`,
-    ]);
+      `${answer}+a`,
+      `${answer}+b`,
+      `${answer}-1`,
+    ], structure);
   }
 
   if (kind === "grouping") {
-    const expression = polynomial([[m, "ax"], [m, "ay"], [n, "bx"], [n, "by"]]);
-    const answer = `(${m}a+${n}b)(x+y)`;
+    const variant = variantHint % 4;
+    const forms = [
+      {
+        expression: polynomial([[m, "ax"], [m, "ay"], [n, "bx"], [n, "by"]]),
+        answer: `(${m}a+${n}b)(x+y)`,
+        structure: "sum-sum",
+      },
+      {
+        expression: polynomial([[m, "ax"], [m, "ay"], [-n, "bx"], [-n, "by"]]),
+        answer: `(${m}a-${n}b)(x+y)`,
+        structure: "difference-sum",
+      },
+      {
+        expression: polynomial([[m, "ax"], [-m, "ay"], [n, "bx"], [-n, "by"]]),
+        answer: `(${m}a+${n}b)(x-y)`,
+        structure: "sum-difference",
+      },
+      {
+        expression: polynomial([[m, "ax"], [n, "by"], [n, "bx"], [m, "ay"]]),
+        answer: `(${m}a+${n}b)(x+y)`,
+        structure: "reordered",
+      },
+    ];
+    const { expression, answer, structure } = forms[variant];
     return make(id, kind, expression, answer, [
       `(${m}a-${n}b)(x+y)`,
       `(${m}a+${n}b)(x-y)`,
       `(a+b)(${m}x+${n}y)`,
-    ]);
+    ], structure);
   }
 
   if (kind === "perfect-square") {
-    const expression = polynomial([[1, "x^2"], [2 * p, "x"], [p * p, ""]]);
-    const answer = `(${linear("x", p)})^2`;
+    const sign = p < 0 ? -1 : 1;
+    const variant = variantHint % 4;
+    const forms = [
+      {
+        expression: polynomial([[1, "x^2"], [2 * p, "x"], [p * p, ""]]),
+        answer: `(${linear("x", p)})^2`,
+        structure: "monic-x",
+      },
+      {
+        expression: polynomial([[m * m, "x^2"], [sign * 2 * m * n, "x"], [n * n, ""]]),
+        answer: `(${linear("x", sign * n, m)})^2`,
+        structure: "coefficient-x",
+      },
+      {
+        expression: polynomial([[m * m, "a^2"], [sign * 2 * m * n, "ab"], [n * n, "b^2"]]),
+        answer: `(${m}a${sign < 0 ? "-" : "+"}${n}b)^2`,
+        structure: "two-variable-square",
+      },
+      {
+        expression: polynomial([[1, "y^2"], [2 * p, "y"], [p * p, ""]]),
+        answer: `(${linear("y", p)})^2`,
+        structure: "monic-y",
+      },
+    ];
+    const { expression, answer, structure } = forms[variant];
     return make(id, kind, expression, answer, [
-      `(${linear("x", -p)})^2`,
-      `(x${signed(p * p)})^2`,
-      `(${linear("x", p)})(x${signed(-p)})`,
-    ]);
+      `${answer}+1`,
+      `${answer}-1`,
+      `-${answer}`,
+    ], structure);
   }
 
   if (kind === "difference-squares") {
-    const expression = polynomial([[m * m, "x^2"], [-n * n, ""]]);
-    const answer = `(${m}x-${n})(${m}x+${n})`;
+    const distance = integer(next, 2, 6);
+    const variant = variantHint % 4;
+    const forms = [
+      {
+        expression: polynomial([[m * m, "x^2"], [-n * n, ""]]),
+        answer: `(${m}x-${n})(${m}x+${n})`,
+        structure: "number-and-x",
+      },
+      {
+        expression: polynomial([[m * m, "a^2"], [-n * n, "b^2"]]),
+        answer: `(${m}a-${n}b)(${m}a+${n}b)`,
+        structure: "two-variable-difference",
+      },
+      {
+        expression: `(${linear("x", p)})^2-${distance ** 2}`,
+        answer: `(${linear("x", p - distance)})(${linear("x", p + distance)})`,
+        structure: "shifted-square",
+      },
+      {
+        expression: polynomial([[m * m, "x^4"], [-n * n, "y^2"]]),
+        answer: `(${m}x^2-${n}y)(${m}x^2+${n}y)`,
+        structure: "higher-power-difference",
+      },
+    ];
+    const { expression, answer, structure } = forms[variant];
     return make(id, kind, expression, answer, [
-      `(${m}x-${n})^2`,
-      `(${m}x+${n})^2`,
-      `(${m * m}x-${n})(${m * m}x+${n})`,
-    ]);
+      `${answer}+1`,
+      `${answer}-1`,
+      `-${answer}`,
+    ], structure);
   }
 
   if (kind === "monic-trinomial") {
-    const expression = polynomial([[1, "x^2"], [p + q, "x"], [p * q, ""]]);
-    const answer = `(${linear("x", p)})(${linear("x", q)})`;
+    const firstMagnitude = integer(next, 1, 6);
+    let secondMagnitude = integer(next, 1, 6);
+    while (secondMagnitude === firstMagnitude) secondMagnitude = integer(next, 1, 6);
+    const variant = variantHint % 4;
+    const firstRoot = variant === 1 ? -firstMagnitude : firstMagnitude;
+    const secondRoot = variant === 1
+      ? -secondMagnitude
+      : variant === 2
+        ? -secondMagnitude
+        : secondMagnitude;
+    const variable = variant === 3 ? "y" : "x";
+    const expression = polynomial([[1, `${variable}^2`], [firstRoot + secondRoot, variable], [firstRoot * secondRoot, ""]]);
+    const answer = `(${linear(variable, firstRoot)})(${linear(variable, secondRoot)})`;
     return make(id, kind, expression, answer, [
-      `(${linear("x", -p)})(${linear("x", -q)})`,
-      `(${linear("x", p)})(${linear("x", -q)})`,
-      `(${linear("x", p + q)})(x${signed(p * q)})`,
-    ]);
+      `(${linear(variable, -firstRoot)})(${linear(variable, -secondRoot)})`,
+      `(${linear(variable, firstRoot)})(${linear(variable, -secondRoot)})`,
+      `(${linear(variable, firstRoot + secondRoot)})(${linear(variable, firstRoot * secondRoot)})`,
+    ], ["positive-pair", "negative-pair", "opposite-signs", "other-variable"][variant]);
   }
 
   if (kind === "nonmonic-trinomial") {
     const a = integer(next, 2, 4);
-    const b = integer(next, 2, 4);
-    const firstConstant = coprimeNonzero(next, a, -6, 6);
-    const secondConstant = coprimeNonzero(next, b, -6, 6);
-    const expression = polynomial([[a * b, "x^2"], [a * secondConstant + b * firstConstant, "x"], [firstConstant * secondConstant, ""]]);
-    const answer = `(${linear("x", firstConstant, a)})(${linear("x", secondConstant, b)})`;
+    const variant = variantHint % 4;
+    const b = variant === 2 ? 1 : integer(next, 2, 4);
+    const firstSign = variant === 1 ? -1 : 1;
+    const secondSign = variant === 2 ? -1 : variant === 1 ? -1 : 1;
+    const firstConstant = firstSign * Math.abs(coprimeNonzero(next, a, 1, 6));
+    const secondConstant = secondSign * Math.abs(coprimeNonzero(next, b, 1, 6));
+    const variable = variant === 3 ? "y" : "x";
+    const expression = polynomial([[a * b, `${variable}^2`], [a * secondConstant + b * firstConstant, variable], [firstConstant * secondConstant, ""]]);
+    const answer = `(${linear(variable, firstConstant, a)})(${linear(variable, secondConstant, b)})`;
     return make(id, kind, expression, answer, [
-      `(${linear("x", -firstConstant, a)})(${linear("x", -secondConstant, b)})`,
-      `(${linear("x", secondConstant, a)})(${linear("x", firstConstant, b)})`,
-      `(${linear("x", firstConstant, a * b)})(${linear("x", secondConstant)})`,
-    ]);
+      `(${linear(variable, -firstConstant, a)})(${linear(variable, -secondConstant, b)})`,
+      `(${linear(variable, secondConstant, a)})(${linear(variable, firstConstant, b)})`,
+      `(${linear(variable, firstConstant, a * b)})(${linear(variable, secondConstant)})`,
+    ], ["both-positive", "both-negative", "mixed-monic", "other-variable"][variant]);
   }
 
   if (kind === "three-variables") {
     const patterns = [
-      ["a^2+ab+ac+bc", "(a+b)(a+c)"],
-      ["ab+ac+bd+cd", "(a+d)(b+c)"],
-      ["a^2b+ab^2+a+b", "(a+b)(ab+1)"],
+      ["a^2+ab+ac+bc", "(a+b)(a+c)", "shared-a"],
+      ["ab+ac+bd+cd", "(a+d)(b+c)", "four-letter-grouping"],
+      ["a^2b+ab^2+a+b", "(a+b)(ab+1)", "mixed-degree"],
+      ["a^2-ab+ac-bc", "(a-b)(a+c)", "sign-change"],
+      ["ab-ac+bd-cd", "(a+d)(b-c)", "difference-grouping"],
     ] as const;
-    const [expression, answer] = patterns[integer(next, 0, patterns.length - 1)];
+    const [expression, answer, structure] = patterns[variantHint % patterns.length];
     return make(id, kind, expression, answer, [
       "(a+b+c)^2",
       "(a-b)(a-c)",
       "(a+b)(a-c)",
-    ]);
+    ], structure);
   }
 
   if (kind === "cubic-common") {
     const common = integer(next, 2, 5);
-    const expression = polynomial([[common, "x^3"], [common * (p + q), "x^2"], [common * p * q, "x"]]);
-    const answer = `${common}x(${linear("x", p)})(${linear("x", q)})`;
+    const primitive = coprimeNonzero(next, m, -6, 6);
+    const distance = integer(next, 2, 6);
+    const variant = variantHint % 4;
+    const forms = [
+      {
+        expression: polynomial([[common, "x^3"], [common * (p + q), "x^2"], [common * p * q, "x"]]),
+        answer: `${common}x(${linear("x", p)})(${linear("x", q)})`,
+        structure: "common-then-trinomial",
+      },
+      {
+        expression: polynomial([[common * m, "x^3"], [common * primitive, "x^2"]]),
+        answer: `${common}x^2(${linear("x", primitive, m)})`,
+        structure: "x-squared-common",
+      },
+      {
+        expression: polynomial([[common, "x^3"], [-common * distance ** 2, "x"]]),
+        answer: `${common}x(x-${distance})(x+${distance})`,
+        structure: "common-then-difference",
+      },
+      {
+        expression: polynomial([[common * m, "a^3b"], [common * primitive, "a^2b^2"]]),
+        answer: `${common}a^2b(${m}a${signed(primitive)}b)`,
+        structure: "multivariable-cubic",
+      },
+    ];
+    const { expression, answer, structure } = forms[variant];
     return make(id, kind, expression, answer, [
-      `${common}(${linear("x", p)})(${linear("x", q)})`,
-      `${common}x(${linear("x", -p)})(${linear("x", -q)})`,
-      `x(${linear("x", p, common)})(${linear("x", q)})`,
-    ]);
+      `${answer}+1`,
+      `${answer}-1`,
+      `-${answer}`,
+    ], structure);
   }
 
   if (kind === "cubic-grouping") {
-    const positive = integer(next, 2, 7);
-    const expression = polynomial([[1, "x^3"], [p, "x^2"], [positive, "x"], [p * positive, ""]]);
-    const answer = `(${linear("x", p)})(x^2+${positive})`;
+    const nonsquares = [2, 3, 5, 6, 7] as const;
+    const positive = nonsquares[integer(next, 0, nonsquares.length - 1)];
+    const variant = variantHint % 4;
+    const sign = variant === 1 ? -1 : 1;
+    const forms = [
+      {
+        expression: polynomial([[1, "x^3"], [p, "x^2"], [positive, "x"], [p * positive, ""]]),
+        answer: `(${linear("x", p)})(x^2+${positive})`,
+        structure: "monic-plus",
+      },
+      {
+        expression: polynomial([[1, "x^3"], [p, "x^2"], [-positive, "x"], [-p * positive, ""]]),
+        answer: `(${linear("x", p)})(x^2-${positive})`,
+        structure: "monic-minus",
+      },
+      {
+        expression: polynomial([[m, "x^3"], [n, "x^2"], [m * positive, "x"], [n * positive, ""]]),
+        answer: `(${linear("x", n, m)})(x^2+${positive})`,
+        structure: "nonmonic-grouping",
+      },
+      {
+        expression: polynomial([[m, "x^3"], [m * sign * positive, "x"], [n, "x^2"], [n * sign * positive, ""]]),
+        answer: `(${linear("x", n, m)})(x^2${sign < 0 ? "-" : "+"}${positive})`,
+        structure: "reordered-cubic",
+      },
+    ];
+    const { expression, answer, structure } = forms[variant];
     return make(id, kind, expression, answer, [
-      `(${linear("x", -p)})(x^2+${positive})`,
-      `(${linear("x", p)})(x^2-${positive})`,
-      `(x^2${signed(p)})(x+${positive})`,
-    ]);
+      `${answer}+1`,
+      `${answer}-1`,
+      `-${answer}`,
+    ], structure);
   }
 
   if (kind === "normalize-first") {
@@ -297,7 +478,7 @@ function build(
         `(${linear("x", p)})(${linear("x", q, a)})`,
         `(${linear("x", -p)})(${linear("x", q, a)})`,
         `(${linear("x", p)})(${linear("x", -q, a)})`,
-      ]);
+      ], "shared-binomial");
     }
 
     if (variant === 1) {
@@ -307,7 +488,7 @@ function build(
         `(${linear("x", p)})(${linear("x", p - q)})`,
         `(${linear("x", -p)})(${linear("x", p + q)})`,
         `(${linear("x", p + q)})^2`,
-      ]);
+      ], "square-and-shared-factor");
     }
 
     if (variant === 2) {
@@ -318,7 +499,7 @@ function build(
         `(${linear("x", p - distance)})^2`,
         `(${linear("x", p + distance)})^2`,
         `(${linear("x", p - distance ** 2)})(${linear("x", p + distance ** 2)})`,
-      ]);
+      ], "shifted-difference-squares");
     }
 
     if (variant === 3) {
@@ -333,7 +514,7 @@ function build(
         `(${linear("x", -p)})(${linear("x", q, a)})`,
         `(${linear("x", p)})(${linear("x", -q, a)})`,
         `(${linear("x", p + q, a)})`,
-      ]);
+      ], "expanded-four-terms");
     }
 
     const b = integer(next, 2, 5);
@@ -345,7 +526,7 @@ function build(
       `(${shared})(${linear("x", q + r, a + b)})`,
       `(${shared})(${linear("x", q - r, a + b)})`,
       `(${linear("x", -p)})(${linear("x", q + r, a + b)})`,
-    ]);
+    ], "sum-of-two-products");
   }
 
   const comprehensiveKinds = MIDDLE_FACTORIZATION_KINDS.filter((value) => (
