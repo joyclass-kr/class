@@ -187,6 +187,27 @@ test("각 인수분해 학습지는 기본에서 응용과 고난도 순서로 �
   }
 });
 
+test("세 문자식은 ab, bc, ca가 섞인 묶어내기부터 세 일차인수까지 확장한다", () => {
+  const problems = createMiddleFactorizationProblemSet("three-variables", 20260728).problems;
+
+  assert.equal(new Set(problems.map(({ structure }) => structure)).size, 7);
+  assert.ok(
+    problems.some(({ latex, answerLatex }) => (
+      latex.includes("ab") && latex.includes("bc") && latex.includes("ac")
+      && answerLatex === "(a+c)(b+c)"
+    )),
+  );
+  assert.ok(
+    problems.some(({ latex, answerLatex }) => (
+      latex.includes("abc") && answerLatex === "ab(a+b+c)"
+    )),
+  );
+  assert.equal(
+    problems.at(-1)?.answerLatex,
+    "(a+b)(b+c)(c+a)",
+  );
+});
+
 test("모든 인수분해 문제는 정답과 겹치지 않는 오답 세 개를 갖는다", () => {
   for (const kind of MIDDLE_FACTORIZATION_KINDS) {
     for (let seed = 1; seed <= 20; seed += 1) {

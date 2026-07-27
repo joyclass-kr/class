@@ -396,12 +396,18 @@ function build(
     const patterns = [
       ["a^2+ab+ac+bc", "(a+b)(a+c)", "shared-a"],
       ["ab+ac+bd+cd", "(a+d)(b+c)", "four-letter-grouping"],
+      ["ab+ac+bc+c^2", "(a+c)(b+c)", "ab-bc-ca-pattern"],
+      ["a^2b+ab^2+abc", "ab(a+b+c)", "three-variable-common-factor"],
       ["a^2b+ab^2+a+b", "(a+b)(ab+1)", "mixed-degree"],
-      ["a^2-ab+ac-bc", "(a-b)(a+c)", "sign-change"],
       ["ab-ac+bd-cd", "(a+d)(b-c)", "difference-grouping"],
+      [
+        "a^2b+a^2c+ab^2+ac^2+b^2c+bc^2+2abc",
+        "(a+b)(b+c)(c+a)",
+        "cyclic-three-factors",
+      ],
     ] as const;
-    const fiveStepVariant = [0, 0, 1, 2, 3, 3, 4, 4][variantHint] ?? variantHint % patterns.length;
-    const [expression, answer, structure] = patterns[fiveStepVariant];
+    const progressiveVariant = [0, 0, 1, 2, 3, 4, 5, 6][variantHint] ?? variantHint % patterns.length;
+    const [expression, answer, structure] = patterns[progressiveVariant];
     return make(id, kind, expression, answer, [
       "(a+b+c)^2",
       "(a-b)(a-c)",
