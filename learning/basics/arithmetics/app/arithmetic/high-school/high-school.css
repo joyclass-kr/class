@@ -3,6 +3,19 @@
   --high-school-math-font: "Suneung Math", "STIX Two Math", "KoPubWorld Batang", "Cambria Math", "Times New Roman", serif;
 }
 
+.polynomial-page :where(input, select, textarea),
+.trig-derivative-answer-panel :where(input, select, textarea),
+.trig-derivative-answer-panel .trig-derivative-choice {
+  font-family: var(--high-school-math-font, "Suneung Math", "STIX Two Math", "Cambria Math", serif);
+  font-variant-numeric: lining-nums tabular-nums;
+}
+
+.trig-derivative-answer-panel .math-formula {
+  font-family: var(--high-school-math-font, "Suneung Math", "STIX Two Math", "Cambria Math", serif);
+  font-kerning: normal;
+  text-rendering: optimizeLegibility;
+}
+
 /* Every high-school prompt starts at the upper-left; the remaining row is working space. */
 .polynomial-page .polynomial-question {
   align-items: start;

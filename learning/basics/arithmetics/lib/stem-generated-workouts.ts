@@ -25,8 +25,25 @@ function choices(id: string, answer: string, alternatives: string[]) {
   return values.map((latex, index) => ({ id: `${id}-${index}`, latex, correct: index === 0 }));
 }
 
+function normalizeMathLatex(latex: string) {
+  return latex
+    .replace(/([A-Za-z])\^\{1\}/g, "$1")
+    .replace(/([A-Za-z])\^1(?!\d)/g, "$1");
+}
+
+function normalizeMathLabel(label: string) {
+  return label.replace(/^([xyz])(?=\s)/, "$$$1$$");
+}
+
 function item(id: string, label: string, latex: string, answer: string, alternatives: string[]): GeometryChoiceItem {
-  return { id, label, latex, correctLatex: answer, choices: choices(id, answer, alternatives) };
+  const normalizedAnswer = normalizeMathLatex(answer);
+  return {
+    id,
+    label: normalizeMathLabel(label),
+    latex: normalizeMathLatex(latex),
+    correctLatex: normalizedAnswer,
+    choices: choices(id, normalizedAnswer, alternatives.map(normalizeMathLatex)),
+  };
 }
 
 export function createPartialDerivativeProblems(seed: number): GeometryChoiceItem[] {

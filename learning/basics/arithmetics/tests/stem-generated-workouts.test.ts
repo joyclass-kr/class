@@ -25,3 +25,17 @@ test("STEM worksheets generate fresh, gradeable problem sets", () => {
     }
   }
 });
+
+test("STEM worksheet labels and choices use clean math notation", () => {
+  for (const seed of [1, 20260725, 314159265]) {
+    const problems = createPartialDerivativeProblems(seed);
+    assert.equal(problems[1].label.startsWith("$y$ "), true);
+
+    for (const problem of problems) {
+      assert.doesNotMatch(problem.correctLatex, /[A-Za-z]\^(?:\{1\}|1(?!\d))/);
+      for (const choice of problem.choices) {
+        assert.doesNotMatch(choice.latex, /[A-Za-z]\^(?:\{1\}|1(?!\d))/);
+      }
+    }
+  }
+});
