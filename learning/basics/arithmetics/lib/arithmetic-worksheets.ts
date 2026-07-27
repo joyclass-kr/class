@@ -214,6 +214,18 @@ export const middleSchoolWorksheetCatalog: ArithmeticWorksheet[] = [
   { grade: "중3", name: "이차방정식: 전개·이항 후 풀이", title: "이차방정식: 전개·이항 후 풀이", route: "/arithmetic/middle-school/quadratic-equations?kind=expand-and-solve" },
   { grade: "중3", name: "이차방정식: 분수·소수 계수", title: "이차방정식: 분수·소수 계수", route: "/arithmetic/middle-school/quadratic-equations?kind=fraction-decimal" },
   { grade: "중3", name: "이차방정식 종합", title: "이차방정식 종합", route: "/arithmetic/middle-school/quadratic-equations?kind=comprehensive" },
+  { grade: "중3", name: "이차함수: y=ax²의 함숫값", title: "이차함수: y=ax²의 함숫값", route: "/arithmetic/middle-school/quadratic-functions?kind=basic-value" },
+  { grade: "중3", name: "이차함수: 꼭짓점형의 함숫값", title: "이차함수: 꼭짓점형의 함숫값", route: "/arithmetic/middle-school/quadratic-functions?kind=vertex-value" },
+  { grade: "중3", name: "이차함수: 꼭짓점형 전개", title: "이차함수: 꼭짓점형 전개", route: "/arithmetic/middle-school/quadratic-functions?kind=expand-vertex-form" },
+  { grade: "중3", name: "이차함수: 일반형을 꼭짓점형으로", title: "이차함수: 일반형을 꼭짓점형으로", route: "/arithmetic/middle-school/quadratic-functions?kind=complete-square" },
+  { grade: "중3", name: "이차함수: 꼭짓점과 대칭축", title: "이차함수: 꼭짓점과 대칭축", route: "/arithmetic/middle-school/quadratic-functions?kind=vertex-axis" },
+  { grade: "중3", name: "이차함수: 한 점으로 계수 구하기", title: "이차함수: 한 점으로 계수 구하기", route: "/arithmetic/middle-school/quadratic-functions?kind=coefficient-from-point" },
+  { grade: "중3", name: "이차함수: 꼭짓점과 한 점으로 식 구하기", title: "이차함수: 꼭짓점과 한 점으로 식 구하기", route: "/arithmetic/middle-school/quadratic-functions?kind=equation-from-vertex-point" },
+  { grade: "중3", name: "이차함수: x절편과 y절편", title: "이차함수: x절편과 y절편", route: "/arithmetic/middle-school/quadratic-functions?kind=intercepts" },
+  { grade: "중3", name: "이차함수와 직선의 교점 계산", title: "이차함수와 직선의 교점 계산", route: "/arithmetic/middle-school/quadratic-functions?kind=line-intersections" },
+  { grade: "중3", name: "이차함수: 식 정리 후 꼭짓점", title: "이차함수: 식 정리 후 꼭짓점", route: "/arithmetic/middle-school/quadratic-functions?kind=normalize-first" },
+  { grade: "중3", name: "이차함수: 분수·소수 계수", title: "이차함수: 분수·소수 계수", route: "/arithmetic/middle-school/quadratic-functions?kind=fraction-decimal" },
+  { grade: "중3", name: "이차함수 계산 종합", title: "이차함수 계산 종합", route: "/arithmetic/middle-school/quadratic-functions?kind=comprehensive" },
 ];
 
 export const highSchoolWorksheetCatalog: ArithmeticWorksheet[] = [

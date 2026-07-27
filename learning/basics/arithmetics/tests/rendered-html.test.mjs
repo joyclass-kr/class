@@ -52,8 +52,8 @@ test("renders the learning index and arithmetic catalog in workbook order", asyn
   const indexCss = await readFile(new URL("../app/globals.css", import.meta.url), "utf8");
   assert.equal(indexResponse.status, 200);
   assert.match(indexHtml, /href="\/arithmetic"/);
-  assert.equal((indexHtml.match(/data-testid="worksheet-choice"/g) ?? []).length, 172);
-  assert.equal((indexHtml.match(/class="worksheet-grade"/g) ?? []).length, 172);
+  assert.equal((indexHtml.match(/data-testid="worksheet-choice"/g) ?? []).length, 184);
+  assert.equal((indexHtml.match(/class="worksheet-grade"/g) ?? []).length, 184);
   assert.doesNotMatch(indexHtml, /data-testid="learning-area-card"/);
   assert.match(indexHtml, /href="\/fraction"[^>]*data-testid="worksheet-choice"/);
   assert.match(indexHtml, /href="\/arithmetic\/high-school\/trigonometric-derivatives-2"[^>]*data-testid="worksheet-choice"/);
@@ -71,14 +71,14 @@ test("renders the learning index and arithmetic catalog in workbook order", asyn
   const catalogResponse = await render("/arithmetic");
   const catalogHtml = await catalogResponse.text();
   assert.match(catalogHtml, /href="\/arithmetic\/race"/);
-  assert.equal((catalogHtml.match(/data-testid="worksheet-choice"/g) ?? []).length, 172);
+  assert.equal((catalogHtml.match(/data-testid="worksheet-choice"/g) ?? []).length, 184);
   assert.match(catalogHtml, /기초 연산/);
   assert.match(catalogHtml, /초·중·고부터 이공계 기초까지/);
   assert.match(catalogHtml, /data-stage="elementary"/);
   assert.match(catalogHtml, /data-stage="middle"/);
   assert.match(catalogHtml, /data-stage="high"/);
   assert.match(catalogHtml, /이공계 기초/);
-  assert.equal((catalogHtml.match(/class="worksheet-grade"/g) ?? []).length, 172);
+  assert.equal((catalogHtml.match(/class="worksheet-grade"/g) ?? []).length, 184);
   assert.match(catalogHtml, /href="\/arithmetic\/stem\/partial-derivatives"/);
   assert.match(catalogHtml, /href="\/arithmetic\/stem\/euler-complex"/);
   assert.ok(catalogHtml.indexOf("수 세기") < catalogHtml.indexOf("덧셈·뺄셈 ①"));
@@ -169,6 +169,10 @@ test("renders the learning index and arithmetic catalog in workbook order", asyn
   assert.match(catalogHtml, /href="\/arithmetic\/middle-school\/quadratic-equations\?kind=quadratic-formula-general"/);
   assert.match(catalogHtml, /href="\/arithmetic\/middle-school\/quadratic-equations\?kind=fraction-decimal"/);
   assert.match(catalogHtml, /href="\/arithmetic\/middle-school\/quadratic-equations\?kind=comprehensive"/);
+  assert.match(catalogHtml, /href="\/arithmetic\/middle-school\/quadratic-functions\?kind=basic-value"/);
+  assert.match(catalogHtml, /href="\/arithmetic\/middle-school\/quadratic-functions\?kind=complete-square"/);
+  assert.match(catalogHtml, /href="\/arithmetic\/middle-school\/quadratic-functions\?kind=line-intersections"/);
+  assert.match(catalogHtml, /href="\/arithmetic\/middle-school\/quadratic-functions\?kind=comprehensive"/);
   assert.match(catalogHtml, /세제곱의 합·차 인수분해/);
   assert.ok(catalogHtml.indexOf("이차방정식 종합") < catalogHtml.indexOf("다항식", catalogHtml.indexOf("이차방정식 종합")));
   assert.match(catalogHtml, /href="\/arithmetic\/high-school\/polynomial-add-subtract"[^>]*data-testid="worksheet-choice"/);
@@ -227,6 +231,19 @@ test("renders the middle-school quadratic-equation worksheet with grading and an
   assert.match(html, /A4 이차방정식: x²=a와 제곱근 정답지/);
 });
 
+test("renders the middle-school quadratic-function calculation worksheet", async () => {
+  const response = await render("/arithmetic/middle-school/quadratic-functions");
+  assert.equal(response.status, 200);
+  const html = await response.text();
+  assert.equal((html.match(/data-testid="middle-quadratic-function-question"/g) ?? []).length, 16);
+  assert.equal((html.match(/data-testid="middle-function-difficulty-label"/g) ?? []).length, 6);
+  assert.equal((html.match(/data-testid="middle-function-solution-hint"/g) ?? []).length, 8);
+  assert.match(html, />답안 입력<\/button>/);
+  assert.match(html, />전체 채점<\/button>/);
+  assert.match(html, /A4 이차함수: y=ax²의 함숫값 문제지/);
+  assert.match(html, /A4 이차함수: y=ax²의 함숫값 정답지/);
+});
+
 test("keeps geometry worksheet formulas compact without inline answer controls", async () => {
   const css = await readFile("app/globals.css", "utf8");
   const highSchoolCss = await readFile("app/arithmetic/high-school/high-school.css", "utf8");
@@ -248,7 +265,7 @@ test("renders the unified arithmetic catalog and high-school worksheets", async 
   const hubResponse = await render("/arithmetic/high-school");
   assert.equal(hubResponse.status, 200);
   const hubHtml = await hubResponse.text();
-  assert.equal((hubHtml.match(/data-testid="worksheet-choice"/g) ?? []).length, 172);
+  assert.equal((hubHtml.match(/data-testid="worksheet-choice"/g) ?? []).length, 184);
   assert.match(hubHtml, /href="\/fraction"[^>]*data-testid="worksheet-choice"/);
   assert.match(hubHtml, /href="\/arithmetic\/high-school\/polynomial-add-subtract"/);
   assert.match(hubHtml, /href="\/arithmetic\/high-school\/factorization-rational"/);
