@@ -61,12 +61,37 @@ body { margin: 0; }
 .presetGroup button:hover { background: #f0f1f6; }
 .presetGroup .activePreset { background: #ebe9ff; color: #4b3fc2; }
 
-.stage { min-width: 0; display: grid; grid-template-rows: auto 1fr; background: #fff; }
-.formulaBar { min-width: 0; display: grid; grid-template-columns: auto minmax(0, 1fr); align-items: center; gap: 12px; border-bottom: 1px solid #e6e8ef; padding: 16px 20px 12px; }
-.formulaBar > span { width: 38px; height: 38px; display: grid; place-items: center; border-radius: 10px; background: var(--purple); color: #fff; font-family: Georgia, serif; font-size: 17px; font-weight: 800; }
-.formulaBar input { min-width: 0; height: 42px; border: 1px solid #dfe1e9; border-radius: 10px; outline: none; padding: 0 13px; color: #25293b; font-family: "Suneung Math", Georgia, serif; font-size: 20px; }
-.formulaBar input:focus { border-color: var(--purple); box-shadow: 0 0 0 3px rgba(101,88,217,.12); }
+.stage { min-width: 0; display: grid; grid-template-rows: auto auto minmax(440px, 1fr); background: #fff; }
+.formulaBar { min-width: 0; display: grid; grid-template-columns: 46px minmax(0, 1fr) auto; align-items: center; gap: 10px; border-bottom: 1px solid #e6e8ef; padding: 16px 20px 12px; }
+.formulaBar > span { width: 46px; height: 42px; display: grid; place-items: center; border-radius: 10px; background: var(--purple); color: #fff; font-family: Georgia, serif; font-size: 17px; font-weight: 800; white-space: nowrap; }
+.formulaDisplay { min-width: 0; width: 100%; min-height: 52px; display: flex; align-items: center; overflow-x: auto; border: 1px solid #dfe1e9; border-radius: 10px; background: #fff; padding: 7px 15px; color: #25293b; font-family: "Times New Roman", "Suneung Math", serif; font-size: clamp(19px, 2vw, 25px); white-space: nowrap; }
 .formulaBar small { grid-column: 2; color: #9a9dac; font-size: 9px; }
+.formulaDisplay sup { font-size: .68em; line-height: 0; }
+.formulaDisplay .mathFraction { display: inline-grid; grid-template-rows: auto auto; align-items: center; margin-left: 5px; font-size: .78em; text-align: center; }
+.formulaDisplay .mathFraction > span:first-child { border-bottom: 1.5px solid currentColor; padding: 0 5px 2px; }
+.formulaDisplay .mathFraction > span:last-child { padding: 2px 5px 0; }
+.formulaDisplay .root { display: inline-flex; align-items: flex-start; }
+.formulaDisplay .radicand { border-top: 1.5px solid currentColor; padding: 0 2px; }
+.functionComposer { border-bottom: 1px solid #e6e8ef; background: #f8f8fc; padding: 13px 20px 14px; }
+.functionComposer header { display: flex; align-items: center; justify-content: space-between; gap: 14px; margin-bottom: 9px; }
+.functionComposer header > div { display: grid; gap: 2px; }
+.functionComposer header strong { font-size: 12px; }
+.functionComposer header small, .syntaxGuide { color: #8a8e9d; font-size: 9px; }
+.functionComposer header button { height: 31px; border: 1px solid #cbc7ed; border-radius: 8px; background: #eeecff; padding: 0 11px; color: #5146bf; font-size: 10px; font-weight: 850; cursor: pointer; }
+.functionRows { display: grid; gap: 6px; }
+.functionRow { min-width: 0; display: grid; grid-template-columns: 24px 28px minmax(0, 1fr) 30px; align-items: center; gap: 7px; }
+.functionVisibility { width: 22px; height: 22px; position: relative; display: grid; place-items: center; cursor: pointer; }
+.functionVisibility input { position: absolute; opacity: 0; }
+.functionVisibility i { width: 13px; height: 13px; border: 3px solid #fff; border-radius: 50%; box-shadow: 0 0 0 1px #bbc0ce; }
+.functionVisibility input:not(:checked) + i { background: #d7d9e0 !important; opacity: .55; }
+.functionRow > b { color: #555b70; font: 800 13px Georgia, serif; }
+.functionInput { min-width: 0; height: 34px; border: 1px solid #d9dce6; border-radius: 8px; outline: none; background: #fff; padding: 0 10px; color: #25293b; font: 16px "Times New Roman", monospace; }
+.functionInput:focus { border-color: var(--purple); box-shadow: 0 0 0 2px rgba(101,88,217,.1); }
+.removeFunction { width: 28px; height: 28px; border: 0; border-radius: 7px; background: #ececf2; color: #747989; font-size: 17px; cursor: pointer; }
+.removeFunction:disabled { opacity: .35; cursor: default; }
+.functionError { grid-column: 3 / 5; min-height: 0; color: #c44b42; font-size: 9px; }
+.functionError:empty { display: none; }
+.syntaxGuide { margin: 8px 0 0 59px; line-height: 1.45; }
 .canvasWrap { position: relative; min-height: 540px; padding: 20px; }
 .canvasWrap canvas { width: 100%; height: 100%; display: block; border: 1px solid #e1e4ed; border-radius: 13px; }
 .legend { position: absolute; top: 33px; left: 33px; display: flex; flex-wrap: wrap; gap: 8px; border: 1px solid #e4e6ed; border-radius: 10px; background: rgba(255,255,255,.92); padding: 8px 10px; font-size: 10px; font-weight: 800; }
@@ -96,7 +121,10 @@ body { margin: 0; }
   .workspace { grid-template-columns: 190px minmax(380px, 1fr); }
   .controls { grid-column: 1 / -1; display: grid; grid-template-columns: repeat(4, 1fr); gap: 12px 18px; border-top: 1px solid #e6e8ef; border-left: 0; }
   .controls .sectionHeading { grid-column: 1 / -1; margin-bottom: 4px; }
-  .controls .reset, .controls .tip { margin: 0; }
+  .controls #sliders { grid-column: 1 / -1; display: grid; grid-template-columns: repeat(4, minmax(120px, 1fr)); gap: 18px; }
+  .controls .slider { min-width: 0; margin: 0; }
+  .controls .reset { grid-column: 1 / -1; margin: 0; }
+  .controls .tip { margin: 0; }
 }
 
 @media (max-width: 700px) {
@@ -109,7 +137,13 @@ body { margin: 0; }
   .presetGroup div { grid-template-columns: repeat(2, 1fr); }
   .canvasWrap { min-height: 460px; padding: 10px; }
   .controls { display: block; }
+  .controls #sliders { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 16px; margin-bottom: 18px; }
   .controls .sectionHeading { margin-top: 15px; }
+  .formulaBar { grid-template-columns: 42px minmax(0, 1fr); padding: 12px 10px 9px; }
+  .formulaBar > span { width: 42px; }
+  .formulaBar small { grid-column: 2; }
+  .functionComposer { padding: 12px 10px; }
+  .syntaxGuide { margin-left: 0; }
 }
 
 @media print {

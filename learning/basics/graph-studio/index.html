@@ -28,9 +28,17 @@
       <section class="stage">
         <div class="formulaBar">
           <span>ƒ(x)</span>
-          <input id="expressionInput" value="a*(x-h)^2+k" aria-label="함수식" spellcheck="false">
-          <small id="formulaHelp">사용 가능: sin, cos, tan, sqrt, abs, log, exp, pi</small>
+          <div class="formulaDisplay" id="formulaDisplay"></div>
+          <small id="formulaHelp">선택한 함수의 교과서식 표현</small>
         </div>
+        <section class="functionComposer" aria-labelledby="composerTitle">
+          <header>
+            <div><strong id="composerTitle">함수 직접 입력</strong><small>여러 함수와 합성함수를 동시에 그릴 수 있습니다.</small></div>
+            <button type="button" id="addFunctionButton">＋ 함수 추가</button>
+          </header>
+          <div class="functionRows" id="functionRows"></div>
+          <p class="syntaxGuide"><b>입력 예:</b> sin(x^2), ln(x^2+1), exp(sin(x)), sqrt(abs(x)) · 곱셈기호는 생략해도 됩니다.</p>
+        </section>
         <div class="canvasWrap">
           <canvas id="graphCanvas" aria-label="함수 그래프"></canvas>
           <div class="legend" id="legend"><span><i style="background:#6558d9"></i>ƒ(x)</span></div>
