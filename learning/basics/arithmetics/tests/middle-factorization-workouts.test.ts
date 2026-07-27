@@ -97,3 +97,15 @@ test("문자식의 계수가 1 또는 -1이면 숫자 1을 표기하지 않는�
     }
   }
 });
+
+test("식 정리 후 인수분해 한 장은 숫자만 다른 문제가 아니라 다섯 구조를 섞는다", () => {
+  const formulas = createMiddleFactorizationProblemSet("normalize-first", 20260727)
+    .problems
+    .map(({ latex }) => latex);
+
+  assert.ok(formulas.some((latex) => /^\d+x\(/.test(latex)), "공통 괄호 묶기");
+  assert.ok(formulas.some((latex) => /\)\^2[+-](?:\d+)?\(/.test(latex)), "제곱식에서 공통인수 묶기");
+  assert.ok(formulas.some((latex) => /\)\^2-\d+$/.test(latex)), "이동된 제곱의 차");
+  assert.ok(formulas.some((latex) => /^\d+x\^2/.test(latex)), "네 항 정리와 묶어내기");
+  assert.ok(formulas.some((latex) => /^\(.+\)\(.+\)\+\(.+\)\(.+\)$/.test(latex)), "두 곱을 합친 뒤 재인수분해");
+});

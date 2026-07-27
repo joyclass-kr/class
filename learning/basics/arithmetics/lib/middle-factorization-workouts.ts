@@ -116,7 +116,8 @@ function signedFactorCoefficient(value: number) {
 }
 
 function linear(variable: string, constant: number, leading = 1) {
-  return `${leading === 1 ? "" : leading === -1 ? "-" : leading}${variable}${signed(constant)}`;
+  const variableTerm = `${leading === 1 ? "" : leading === -1 ? "-" : leading}${variable}`;
+  return constant === 0 ? variableTerm : `${variableTerm}${signed(constant)}`;
 }
 
 export function formatNormalizedLinearCombination(
@@ -158,7 +159,12 @@ function make(
   };
 }
 
-function build(kind: MiddleFactorizationKind, next: () => number, id: string): MiddleFactorizationProblem {
+function build(
+  kind: MiddleFactorizationKind,
+  next: () => number,
+  id: string,
+  variantHint = 0,
+): MiddleFactorizationProblem {
   const p = nonzero(next, -6, 6);
   let q = nonzero(next, -6, 6);
   while (q === p) q = nonzero(next, -6, 6);
@@ -282,19 +288,75 @@ function build(kind: MiddleFactorizationKind, next: () => number, id: string): M
 
   if (kind === "normalize-first") {
     const a = integer(next, 2, 5);
-    const expression = `${a}x(${linear("x", p)})${signedFactorCoefficient(q)}(${linear("x", p)})`;
-    const answer = formatNormalizedLinearCombination(a, q, p);
+    const variant = variantHint % 5;
+
+    if (variant === 0) {
+      const expression = `${a}x(${linear("x", p)})${signedFactorCoefficient(q)}(${linear("x", p)})`;
+      const answer = formatNormalizedLinearCombination(a, q, p);
+      return make(id, kind, expression, answer, [
+        `(${linear("x", p)})(${linear("x", q, a)})`,
+        `(${linear("x", -p)})(${linear("x", q, a)})`,
+        `(${linear("x", p)})(${linear("x", -q, a)})`,
+      ]);
+    }
+
+    if (variant === 1) {
+      const expression = `(${linear("x", p)})^2${signedFactorCoefficient(q)}(${linear("x", p)})`;
+      const answer = `(${linear("x", p)})(${linear("x", p + q)})`;
+      return make(id, kind, expression, answer, [
+        `(${linear("x", p)})(${linear("x", p - q)})`,
+        `(${linear("x", -p)})(${linear("x", p + q)})`,
+        `(${linear("x", p + q)})^2`,
+      ]);
+    }
+
+    if (variant === 2) {
+      const distance = integer(next, 2, 6);
+      const expression = `(${linear("x", p)})^2-${distance ** 2}`;
+      const answer = `(${linear("x", p - distance)})(${linear("x", p + distance)})`;
+      return make(id, kind, expression, answer, [
+        `(${linear("x", p - distance)})^2`,
+        `(${linear("x", p + distance)})^2`,
+        `(${linear("x", p - distance ** 2)})(${linear("x", p + distance ** 2)})`,
+      ]);
+    }
+
+    if (variant === 3) {
+      const expression = polynomial([
+        [a, "x^2"],
+        [a * p, "x"],
+        [q, "x"],
+        [p * q, ""],
+      ]);
+      const answer = formatNormalizedLinearCombination(a, q, p);
+      return make(id, kind, expression, answer, [
+        `(${linear("x", -p)})(${linear("x", q, a)})`,
+        `(${linear("x", p)})(${linear("x", -q, a)})`,
+        `(${linear("x", p + q, a)})`,
+      ]);
+    }
+
+    const b = integer(next, 2, 5);
+    const r = nonzero(next, -6, 6);
+    const shared = linear("x", p);
+    const expression = `(${shared})(${linear("x", q, a)})+(${shared})(${linear("x", r, b)})`;
+    const answer = formatNormalizedLinearCombination(a + b, q + r, p);
     return make(id, kind, expression, answer, [
-      `(${linear("x", p)})(${linear("x", q, a)})`,
-      `(${linear("x", -p)})(${linear("x", q, a)})`,
-      `(${linear("x", p)})(${linear("x", -q, a)})`,
+      `(${shared})(${linear("x", q + r, a + b)})`,
+      `(${shared})(${linear("x", q - r, a + b)})`,
+      `(${linear("x", -p)})(${linear("x", q + r, a + b)})`,
     ]);
   }
 
   const comprehensiveKinds = MIDDLE_FACTORIZATION_KINDS.filter((value) => (
     value !== "comprehensive" && value !== "three-variables"
   ));
-  return build(comprehensiveKinds[integer(next, 0, comprehensiveKinds.length - 1)], next, id);
+  return build(
+    comprehensiveKinds[integer(next, 0, comprehensiveKinds.length - 1)],
+    next,
+    id,
+    variantHint,
+  );
 }
 
 export function isMiddleFactorizationKind(value: string | null): value is MiddleFactorizationKind {
@@ -307,7 +369,7 @@ export function createMiddleFactorizationProblemSet(kind: MiddleFactorizationKin
     seed,
     kind,
     problems: Array.from({ length: 8 }, (_, index) => (
-      build(kind, next, `middle-factorization-${kind}-${index}`)
+      build(kind, next, `middle-factorization-${kind}-${index}`, index)
     )),
   };
 }
@@ -318,6 +380,6 @@ export function createMiddleFactorizationReviewProblems(
 ) {
   const next = random(seed);
   return [...new Set(kinds)].slice(0, 2).map((kind, index) => (
-    build(kind, next, `middle-factorization-review-${kind}-${index}-${seed}`)
+    build(kind, next, `middle-factorization-review-${kind}-${index}-${seed}`, index)
   ));
 }
