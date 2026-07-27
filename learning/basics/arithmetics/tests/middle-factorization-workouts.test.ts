@@ -179,11 +179,13 @@ test("각 인수분해 학습지는 기본에서 응용과 고난도 순서로 �
       expected,
       `${kind} difficulty order`,
     );
-    assert.equal(
-      new Set(problems.slice(0, 2).map(({ structure }) => structure)).size,
-      1,
-      `${kind} should begin with two repetitions of its foundational structure`,
-    );
+    if (kind !== "comprehensive") {
+      assert.equal(
+        new Set(problems.slice(0, 2).map(({ structure }) => structure)).size,
+        1,
+        `${kind} should begin with two repetitions of its foundational structure`,
+      );
+    }
   }
 });
 
@@ -191,21 +193,10 @@ test("세 문자식은 ab, bc, ca가 섞인 묶어내기부터 세 일차인수�
   const problems = createMiddleFactorizationProblemSet("three-variables", 20260728).problems;
 
   assert.equal(new Set(problems.map(({ structure }) => structure)).size, 7);
-  assert.ok(
-    problems.some(({ latex, answerLatex }) => (
-      latex.includes("ab") && latex.includes("bc") && latex.includes("ac")
-      && answerLatex === "(a+c)(b+c)"
-    )),
-  );
-  assert.ok(
-    problems.some(({ latex, answerLatex }) => (
-      latex.includes("abc") && answerLatex === "ab(a+b+c)"
-    )),
-  );
-  assert.equal(
-    problems.at(-1)?.answerLatex,
-    "(a+b)(b+c)(c+a)",
-  );
+  assert.ok(problems.some(({ structure }) => structure === "ab-bc-ca-pattern"));
+  assert.ok(problems.some(({ structure }) => structure === "three-variable-common-factor"));
+  assert.equal(problems.at(-1)?.structure, "cyclic-three-factors");
+  assert.match(problems.at(-1)?.answerLatex ?? "", /(?:^\d+)?\([a-z][+-][a-z]\)\([a-z][+-][a-z]\)\([a-z][+-][a-z]\)$/);
 });
 
 test("세제곱의 합과 차는 공식부터 공통인수와 고차식 결합까지 독립 훈련한다", () => {
@@ -240,6 +231,35 @@ test("인수분해 오답은 임의의 수를 덧붙이지 않고 실제로 틀�
         }
       }
     }
+  }
+});
+
+test("종합 카드는 세 세트마다 전체 세부 유형을 정확히 두 번씩 순환한다", () => {
+  const counts = new Map<string, number>();
+  for (let seed = 1; seed <= 3; seed += 1) {
+    for (const { kind } of createMiddleFactorizationProblemSet("comprehensive", seed).problems) {
+      counts.set(kind, (counts.get(kind) ?? 0) + 1);
+    }
+  }
+
+  assert.equal(counts.size, MIDDLE_FACTORIZATION_KINDS.length - 1);
+  for (const kind of MIDDLE_FACTORIZATION_KINDS) {
+    if (kind === "comprehensive") continue;
+    assert.equal(counts.get(kind), 2, `${kind} is not balanced in comprehensive rotation`);
+  }
+});
+
+test("새 문제를 반복 생성해도 각 카드에 충분히 다양한 식이 나온다", () => {
+  for (const kind of MIDDLE_FACTORIZATION_KINDS) {
+    const formulas = Array.from({ length: 100 }, (_, index) => (
+      createMiddleFactorizationProblemSet(kind, index + 1).problems.map(({ latex }) => latex)
+    )).flat();
+    const uniqueFormulas = new Set(formulas);
+
+    assert.ok(
+      uniqueFormulas.size >= 120,
+      `${kind} generated only ${uniqueFormulas.size} unique formulas out of ${formulas.length}`,
+    );
   }
 });
 

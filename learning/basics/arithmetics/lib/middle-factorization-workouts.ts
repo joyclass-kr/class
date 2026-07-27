@@ -220,10 +220,10 @@ function build(
         : variantHint < 6 ? 2
           : 3
   );
-  const p = nonzero(next, -6, 6);
-  let q = nonzero(next, -6, 6);
-  while (q === p) q = nonzero(next, -6, 6);
-  const [m, n] = coprimePositivePair(next, 2, 5);
+  const p = nonzero(next, -9, 9);
+  let q = nonzero(next, -9, 9);
+  while (q === p) q = nonzero(next, -9, 9);
+  const [m, n] = coprimePositivePair(next, 2, 9);
 
   if (kind === "common-factor") {
     const common = integer(next, 2, 6);
@@ -395,9 +395,9 @@ function build(
   }
 
   if (kind === "monic-trinomial") {
-    const firstMagnitude = integer(next, 1, 6);
-    let secondMagnitude = integer(next, 1, 6);
-    while (secondMagnitude === firstMagnitude) secondMagnitude = integer(next, 1, 6);
+    const firstMagnitude = integer(next, 1, 12);
+    let secondMagnitude = integer(next, 1, 12);
+    while (secondMagnitude === firstMagnitude) secondMagnitude = integer(next, 1, 12);
     const variant = progressionVariant % 4;
     const firstRoot = variant === 1 ? -firstMagnitude : firstMagnitude;
     const secondRoot = variant === 1
@@ -416,13 +416,13 @@ function build(
   }
 
   if (kind === "nonmonic-trinomial") {
-    const a = integer(next, 2, 4);
+    const a = integer(next, 2, 6);
     const variant = progressionVariant % 4;
-    const b = variant === 2 ? 1 : integer(next, 2, 4);
+    const b = variant === 2 ? 1 : integer(next, 2, 6);
     const firstSign = variant === 1 ? -1 : 1;
     const secondSign = variant === 2 ? -1 : variant === 1 ? -1 : 1;
-    const firstConstant = firstSign * Math.abs(coprimeNonzero(next, a, 1, 6));
-    const secondConstant = secondSign * Math.abs(coprimeNonzero(next, b, 1, 6));
+    const firstConstant = firstSign * Math.abs(coprimeNonzero(next, a, 1, 9));
+    const secondConstant = secondSign * Math.abs(coprimeNonzero(next, b, 1, 9));
     const variable = variant === 3 ? "y" : "x";
     const expression = polynomial([[a * b, `${variable}^2`], [a * secondConstant + b * firstConstant, variable], [firstConstant * secondConstant, ""]]);
     const answer = `(${linear(variable, firstConstant, a)})(${linear(variable, secondConstant, b)})`;
@@ -448,11 +448,32 @@ function build(
       ],
     ] as const;
     const progressiveVariant = [0, 0, 1, 2, 3, 4, 5, 6][variantHint] ?? variantHint % patterns.length;
-    const [expression, answer, structure] = patterns[progressiveVariant];
+    const [baseExpression, baseAnswer, structure] = patterns[progressiveVariant];
+    const letterSets = [
+      ["a", "b", "c", "d"],
+      ["x", "y", "z", "w"],
+      ["p", "q", "r", "s"],
+    ] as const;
+    const letters = letterSets[integer(next, 0, letterSets.length - 1)];
+    const rename = (formula: string) => formula.replace(/[abcd]/g, (letter) => (
+      letters[["a", "b", "c", "d"].indexOf(letter)]
+    ));
+    const scale = integer(next, 1, 9);
+    const expression = rename(baseExpression).replace(
+      /(^|[+-])(\d*)(?=[a-z])/g,
+      (_, sign: string, digits: string) => (
+        `${sign}${digits ? Number(digits) * scale : scale === 1 ? "" : scale}`
+      ),
+    );
+    const renamedAnswer = rename(baseAnswer);
+    const answer = scale === 1 ? renamedAnswer : `${scale}${renamedAnswer}`;
+    const scaledWrongAnswer = (formula: string) => (
+      scale === 1 ? rename(formula) : `${scale}${rename(formula)}`
+    );
     return make(id, kind, expression, answer, [
-      "(a+b+c)^2",
-      "(a-b)(a-c)",
-      "(a+b)(a-c)",
+      scaledWrongAnswer("(a+b+c)^2"),
+      scaledWrongAnswer("(a-b)(a-c)"),
+      scaledWrongAnswer("(a+b)(a-c)"),
     ], structure);
   }
 
@@ -527,8 +548,8 @@ function build(
   }
 
   if (kind === "cubic-sum-difference") {
-    const r = integer(next, 2, 5);
-    const common = integer(next, 2, 5);
+    const r = integer(next, 2, 9);
+    const common = integer(next, 2, 7);
     const variant = variantHint % 8;
     const forms = [
       {
@@ -666,6 +687,16 @@ function difficultyForIndex(index: number): MiddleFactorizationDifficulty {
   return "advanced";
 }
 
+const COMPREHENSIVE_ROTATION = MIDDLE_FACTORIZATION_KINDS.filter(
+  (kind) => kind !== "comprehensive",
+);
+
+function comprehensiveKind(seed: number, index: number) {
+  const offset = (((seed - 1) * 8) % COMPREHENSIVE_ROTATION.length + COMPREHENSIVE_ROTATION.length)
+    % COMPREHENSIVE_ROTATION.length;
+  return COMPREHENSIVE_ROTATION[(offset + index) % COMPREHENSIVE_ROTATION.length];
+}
+
 export function isMiddleFactorizationKind(value: string | null): value is MiddleFactorizationKind {
   return MIDDLE_FACTORIZATION_KINDS.includes(value as MiddleFactorizationKind);
 }
@@ -677,7 +708,12 @@ export function createMiddleFactorizationProblemSet(kind: MiddleFactorizationKin
     kind,
     problems: Array.from({ length: 8 }, (_, index) => (
       {
-        ...build(kind, next, `middle-factorization-${kind}-${index}`, index),
+        ...build(
+          kind === "comprehensive" ? comprehensiveKind(seed, index) : kind,
+          next,
+          `middle-factorization-${kind}-${index}`,
+          index,
+        ),
         difficulty: difficultyForIndex(index),
       }
     )),
