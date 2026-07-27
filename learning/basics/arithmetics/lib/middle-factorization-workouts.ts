@@ -12,9 +12,12 @@ export type MiddleFactorizationKind =
   | "normalize-first"
   | "comprehensive";
 
+export type MiddleFactorizationDifficulty = "basic" | "application" | "advanced";
+
 export type MiddleFactorizationProblem = {
   id: string;
   kind: MiddleFactorizationKind;
+  difficulty: MiddleFactorizationDifficulty;
   structure: string;
   label: string;
   latex: string;
@@ -150,10 +153,12 @@ function make(
   answerLatex: string,
   distractors: string[],
   structure = kind,
+  difficulty: MiddleFactorizationDifficulty = "basic",
 ): MiddleFactorizationProblem {
   return {
     id,
     kind,
+    difficulty,
     structure,
     label: MIDDLE_FACTORIZATION_TITLES[kind],
     latex,
@@ -168,6 +173,12 @@ function build(
   id: string,
   variantHint = 0,
 ): MiddleFactorizationProblem {
+  const progressionVariant = (
+    variantHint < 2 ? 0
+      : variantHint < 4 ? 1
+        : variantHint < 6 ? 2
+          : 3
+  );
   const p = nonzero(next, -6, 6);
   let q = nonzero(next, -6, 6);
   while (q === p) q = nonzero(next, -6, 6);
@@ -177,7 +188,7 @@ function build(
     const common = integer(next, 2, 6);
     const left = integer(next, 2, 6);
     const right = coprimeNonzero(next, left, -6, 6);
-    const variant = variantHint % 4;
+    const variant = progressionVariant % 4;
     const forms = [
       {
         expression: polynomial([[common * left, "x^2"], [common * right, "x"]]),
@@ -213,7 +224,7 @@ function build(
     const left = integer(next, 2, 5);
     const right = coprimeNonzero(next, left, -5, 5);
     const third = coprimeNonzero(next, left, -5, 5);
-    const variant = variantHint % 4;
+    const variant = progressionVariant % 4;
     const forms = [
       {
         expression: polynomial([[common * left, "a^2b"], [common * right, "ab^2"]]),
@@ -245,7 +256,7 @@ function build(
   }
 
   if (kind === "grouping") {
-    const variant = variantHint % 4;
+    const variant = progressionVariant % 4;
     const forms = [
       {
         expression: polynomial([[m, "ax"], [m, "ay"], [n, "bx"], [n, "by"]]),
@@ -278,7 +289,7 @@ function build(
 
   if (kind === "perfect-square") {
     const sign = p < 0 ? -1 : 1;
-    const variant = variantHint % 4;
+    const variant = progressionVariant % 4;
     const forms = [
       {
         expression: polynomial([[1, "x^2"], [2 * p, "x"], [p * p, ""]]),
@@ -311,7 +322,7 @@ function build(
 
   if (kind === "difference-squares") {
     const distance = integer(next, 2, 6);
-    const variant = variantHint % 4;
+    const variant = progressionVariant % 4;
     const forms = [
       {
         expression: polynomial([[m * m, "x^2"], [-n * n, ""]]),
@@ -346,7 +357,7 @@ function build(
     const firstMagnitude = integer(next, 1, 6);
     let secondMagnitude = integer(next, 1, 6);
     while (secondMagnitude === firstMagnitude) secondMagnitude = integer(next, 1, 6);
-    const variant = variantHint % 4;
+    const variant = progressionVariant % 4;
     const firstRoot = variant === 1 ? -firstMagnitude : firstMagnitude;
     const secondRoot = variant === 1
       ? -secondMagnitude
@@ -365,7 +376,7 @@ function build(
 
   if (kind === "nonmonic-trinomial") {
     const a = integer(next, 2, 4);
-    const variant = variantHint % 4;
+    const variant = progressionVariant % 4;
     const b = variant === 2 ? 1 : integer(next, 2, 4);
     const firstSign = variant === 1 ? -1 : 1;
     const secondSign = variant === 2 ? -1 : variant === 1 ? -1 : 1;
@@ -389,7 +400,8 @@ function build(
       ["a^2-ab+ac-bc", "(a-b)(a+c)", "sign-change"],
       ["ab-ac+bd-cd", "(a+d)(b-c)", "difference-grouping"],
     ] as const;
-    const [expression, answer, structure] = patterns[variantHint % patterns.length];
+    const fiveStepVariant = [0, 0, 1, 2, 3, 3, 4, 4][variantHint] ?? variantHint % patterns.length;
+    const [expression, answer, structure] = patterns[fiveStepVariant];
     return make(id, kind, expression, answer, [
       "(a+b+c)^2",
       "(a-b)(a-c)",
@@ -401,7 +413,7 @@ function build(
     const common = integer(next, 2, 5);
     const primitive = coprimeNonzero(next, m, -6, 6);
     const distance = integer(next, 2, 6);
-    const variant = variantHint % 4;
+    const variant = progressionVariant % 4;
     const forms = [
       {
         expression: polynomial([[common, "x^3"], [common * (p + q), "x^2"], [common * p * q, "x"]]),
@@ -435,7 +447,7 @@ function build(
   if (kind === "cubic-grouping") {
     const nonsquares = [2, 3, 5, 6, 7] as const;
     const positive = nonsquares[integer(next, 0, nonsquares.length - 1)];
-    const variant = variantHint % 4;
+    const variant = progressionVariant % 4;
     const sign = variant === 1 ? -1 : 1;
     const forms = [
       {
@@ -469,7 +481,7 @@ function build(
 
   if (kind === "normalize-first") {
     const a = integer(next, 2, 5);
-    const variant = variantHint % 5;
+    const variant = ([0, 0, 1, 2, 3, 3, 4, 4][variantHint] ?? variantHint) % 5;
 
     if (variant === 0) {
       const expression = `${a}x(${linear("x", p)})${signedFactorCoefficient(q)}(${linear("x", p)})`;
@@ -529,15 +541,28 @@ function build(
     ], "sum-of-two-products");
   }
 
-  const comprehensiveKinds = MIDDLE_FACTORIZATION_KINDS.filter((value) => (
-    value !== "comprehensive" && value !== "three-variables"
-  ));
+  const comprehensiveKinds = [
+    "common-factor",
+    "common-factor",
+    "perfect-square",
+    "difference-squares",
+    "nonmonic-trinomial",
+    "cubic-common",
+    "cubic-grouping",
+    "normalize-first",
+  ] as const;
   return build(
-    comprehensiveKinds[integer(next, 0, comprehensiveKinds.length - 1)],
+    comprehensiveKinds[variantHint] ?? comprehensiveKinds[integer(next, 0, comprehensiveKinds.length - 1)],
     next,
     id,
     variantHint,
   );
+}
+
+function difficultyForIndex(index: number): MiddleFactorizationDifficulty {
+  if (index < 2) return "basic";
+  if (index < 5) return "application";
+  return "advanced";
 }
 
 export function isMiddleFactorizationKind(value: string | null): value is MiddleFactorizationKind {
@@ -550,7 +575,10 @@ export function createMiddleFactorizationProblemSet(kind: MiddleFactorizationKin
     seed,
     kind,
     problems: Array.from({ length: 8 }, (_, index) => (
-      build(kind, next, `middle-factorization-${kind}-${index}`, index)
+      {
+        ...build(kind, next, `middle-factorization-${kind}-${index}`, index),
+        difficulty: difficultyForIndex(index),
+      }
     )),
   };
 }
@@ -561,6 +589,9 @@ export function createMiddleFactorizationReviewProblems(
 ) {
   const next = random(seed);
   return [...new Set(kinds)].slice(0, 2).map((kind, index) => (
-    build(kind, next, `middle-factorization-review-${kind}-${index}-${seed}`, index)
+    {
+      ...build(kind, next, `middle-factorization-review-${kind}-${index}-${seed}`, index),
+      difficulty: difficultyForIndex(index),
+    }
   ));
 }

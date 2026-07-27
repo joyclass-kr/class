@@ -160,6 +160,33 @@ test("모든 인수분해 정답을 전개하면 출제식과 정확히 일치�
   }
 });
 
+test("각 인수분해 학습지는 기본에서 응용과 고난도 순서로 진행한다", () => {
+  const expected = [
+    "basic",
+    "basic",
+    "application",
+    "application",
+    "application",
+    "advanced",
+    "advanced",
+    "advanced",
+  ];
+
+  for (const kind of MIDDLE_FACTORIZATION_KINDS) {
+    const problems = createMiddleFactorizationProblemSet(kind, 20260728).problems;
+    assert.deepEqual(
+      problems.map(({ difficulty }) => difficulty),
+      expected,
+      `${kind} difficulty order`,
+    );
+    assert.equal(
+      new Set(problems.slice(0, 2).map(({ structure }) => structure)).size,
+      1,
+      `${kind} should begin with two repetitions of its foundational structure`,
+    );
+  }
+});
+
 test("모든 인수분해 문제는 정답과 겹치지 않는 오답 세 개를 갖는다", () => {
   for (const kind of MIDDLE_FACTORIZATION_KINDS) {
     for (let seed = 1; seed <= 20; seed += 1) {
