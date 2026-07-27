@@ -3,6 +3,31 @@
  * 100% TRUE ASTRONOMICAL SCALE (Size, Distance, Eccentricity, Rotation)
  */
 
+(function syncSpaceViewportHeight() {
+    function updateHeaderHeight() {
+        var header = document.querySelector('.top-header');
+        if (header) {
+            document.documentElement.style.setProperty('--space-header-height', header.offsetHeight + 'px');
+        }
+    }
+
+    function start() {
+        updateHeaderHeight();
+        var header = document.querySelector('.top-header');
+        if (header && typeof ResizeObserver !== 'undefined') {
+            new ResizeObserver(updateHeaderHeight).observe(header);
+        }
+    }
+
+    if (document.readyState === 'loading') {
+        document.addEventListener('DOMContentLoaded', start, { once: true });
+    } else {
+        start();
+    }
+    window.addEventListener('resize', updateHeaderHeight, { passive: true });
+    window.addEventListener('orientationchange', updateHeaderHeight);
+})();
+
 (function () {
     'use strict';
 
@@ -13,6 +38,13 @@
     }
 
     function boot() {
+        // The Moon simulator belongs to its own tab, not in planet detail cards.
+        document.querySelectorAll('.planet-modal').forEach(function (modal) {
+            modal.querySelectorAll('.solar-canvas-wrapper, .sim-controls-panel').forEach(function (element) {
+                element.remove();
+            });
+        });
+
         var state = {
             simMode: '3d', // '3d' (Log Scale) or '2d' (True Scale Map)
             currentTab: 'sim',
@@ -99,9 +131,12 @@
             pos: new THREE.Vector3(0, 25.0, 450), // Optimal hover altitude above planets (Y=25.0)
             heading: 0.0,
             keys: { forward: false, backward: false, left: false, right: false },
-            pilotName: localStorage.getItem('userName') || localStorage.getItem('guestName') || localStorage.getItem('studentName') || '우주 탐험가',
+            pilotName: (localStorage.getItem('classPlayerName') || '').trim(),
             animal: chosenAnimal
         };
+        var ufoLobby = null;
+        var ufoRoomRole = null;
+        var ufoTimeSyncTimer = null;
 
         // ClassTool Authentic Face Texture Generator (Draws Character Icon & Face)
         function createClassToolFaceTexture(animal) {
@@ -1707,6 +1742,177 @@
             }
         }
 
+        function setUfoTimeAuthority(isTeacher) {
+            var locked = ufoState.active && !isTeacher;
+            if (playPauseBtn) {
+                playPauseBtn.disabled = locked;
+                playPauseBtn.classList.toggle('ufo-time-locked', locked);
+                playPauseBtn.title = locked ? 'UFO Flight의 시간은 교사가 조작합니다.' : '시뮬레이션 일시정지 / 재생';
+            }
+            if (speedSlider) {
+                speedSlider.disabled = locked;
+                speedSlider.classList.toggle('ufo-time-locked', locked);
+                speedSlider.title = locked ? 'UFO Flight의 공전 속도는 교사가 조작합니다.' : '';
+            }
+        }
+
+        function setUfoFlightActive(active) {
+            var ufoModeBtn = document.getElementById('ufoModeBtn');
+            var ufoControlsPanel = document.getElementById('ufoControlsPanel');
+            var ufoRoomStatus = document.getElementById('ufoRoomStatus');
+            ufoState.active = active;
+
+            if (active) {
+                var roomCode = ufoLobby ? ufoLobby.snapshot().roomCode : '';
+                var isTeacher = ufoRoomRole === 'host';
+                if (ufoModeBtn) {
+                    ufoModeBtn.textContent = '🛸 UFO Flight · ROOM ' + (roomCode || '----');
+                    ufoModeBtn.style.background = 'rgba(56, 189, 248, 0.3)';
+                    ufoModeBtn.style.color = '#fff';
+                }
+                if (ufoRoomStatus) {
+                    ufoRoomStatus.textContent = isTeacher
+                        ? '교사 · 시간 및 공전 속도 조작 가능'
+                        : '학생 · 시간은 교사 화면과 동기화';
+                }
+                if (ufoControlsPanel) ufoControlsPanel.style.display = 'block';
+                if (ufoMesh) ufoMesh.visible = true;
+                if (camera && controls) {
+                    camera.position.set(ufoState.pos.x, ufoState.pos.y + 22, ufoState.pos.z + 75);
+                    controls.target.copy(ufoState.pos);
+                    controls.update();
+                }
+                setUfoTimeAuthority(isTeacher);
+            } else {
+                if (ufoModeBtn) {
+                    ufoModeBtn.textContent = '🛸 UFO Flight (방번호 입력)';
+                    ufoModeBtn.style.background = 'rgba(56, 189, 248, 0.15)';
+                    ufoModeBtn.style.color = '#38bdf8';
+                }
+                if (ufoControlsPanel) ufoControlsPanel.style.display = 'none';
+                if (ufoMesh) ufoMesh.visible = false;
+                setUfoTimeAuthority(true);
+                if (camera && controls) {
+                    controls.target.set(0, 0, 0);
+                    camera.position.set(0, 1500, 2000);
+                    controls.update();
+                }
+            }
+        }
+
+        function beginUfoTeacherTimeSync() {
+            if (ufoTimeSyncTimer) clearInterval(ufoTimeSyncTimer);
+            if (!ufoLobby || ufoRoomRole !== 'host') return;
+            ufoTimeSyncTimer = setInterval(function () {
+                if (!ufoState.active || !ufoLobby) return;
+                ufoLobby.broadcast({
+                    type: 'UFO_TIME_SYNC',
+                    simTimeYears: state.simTimeYears,
+                    orbitSpeed: state.orbitSpeed,
+                    isPlaying: state.isPlaying
+                });
+            }, 350);
+        }
+
+        function initUfoClassroomLobby() {
+            var overlay = document.getElementById('ufoRoomOverlay');
+            var closeBtn = document.getElementById('ufoRoomCloseBtn');
+            var ufoModeBtn = document.getElementById('ufoModeBtn');
+            if (!overlay || !ufoModeBtn) return;
+
+            ufoModeBtn.addEventListener('click', function () {
+                overlay.classList.remove('hidden');
+            });
+            if (closeBtn) closeBtn.addEventListener('click', function () {
+                overlay.classList.add('hidden');
+            });
+            overlay.addEventListener('click', function (event) {
+                if (event.target === overlay) overlay.classList.add('hidden');
+            });
+
+            if (!window.ClassroomMultiplayerLobby) {
+                var joinStatus = document.getElementById('ufoJoinStatus');
+                if (joinStatus) joinStatus.textContent = '교실 통신 기능을 불러오지 못했습니다.';
+                return;
+            }
+
+            ufoLobby = window.ClassroomMultiplayerLobby.create({
+                gameId: 'solar-system-ufo-flight',
+                getPlayerName: function () {
+                    return (localStorage.getItem('classPlayerName') || '').trim();
+                },
+                initialMode: 'guest',
+                allowedPlayerCounts: Array.from({ length: 30 }, function (_, index) { return index + 1; }),
+                maxPlayers: 30,
+                ids: {
+                    missingScreen: 'ufoMissingName',
+                    lobbyScreen: 'ufoLobbyScreen',
+                    savedName: 'ufoSavedName',
+                    hostTab: 'ufoHostTab',
+                    joinTab: 'ufoJoinTab',
+                    hostPane: 'ufoHostPane',
+                    joinPane: 'ufoJoinPane',
+                    roomCode: 'ufoRoomCode',
+                    hostStatus: 'ufoHostStatus',
+                    joinCode: 'ufoJoinCode',
+                    joinButton: 'ufoJoinBtn',
+                    joinStatus: 'ufoJoinStatus',
+                    copyButton: 'ufoCopyBtn',
+                    playerList: 'ufoLobbyPlayers',
+                    guide: 'ufoLobbyGuide',
+                    startButton: 'ufoStartBtn'
+                },
+                getLobbyPresentation: function (info) {
+                    return {
+                        canStart: info.role === 'host' && info.count >= 1,
+                        startText: info.role === 'host' ? 'UFO FLIGHT 시작' : '교사의 시작을 기다리는 중',
+                        guideText: info.role === 'host'
+                            ? '방번호를 학생들에게 알려주세요. 현재 ' + info.count + '명'
+                            : '교사가 비행을 시작하면 자동으로 입장합니다.'
+                    };
+                },
+                createStartData: function () {
+                    return {
+                        teacherTime: {
+                            simTimeYears: state.simTimeYears,
+                            orbitSpeed: state.orbitSpeed,
+                            isPlaying: state.isPlaying
+                        }
+                    };
+                },
+                onStarted: function (session) {
+                    ufoRoomRole = session.role;
+                    var teacherTime = session.data && session.data.teacherTime;
+                    if (session.role !== 'host' && teacherTime) {
+                        state.simTimeYears = Number(teacherTime.simTimeYears) || 0;
+                        state.orbitSpeed = Number(teacherTime.orbitSpeed) || 1;
+                        state.isPlaying = teacherTime.isPlaying !== false;
+                        if (speedSlider) speedSlider.value = String(state.orbitSpeed);
+                        if (speedValBadge) speedValBadge.textContent = state.orbitSpeed.toFixed(1) + 'x';
+                        if (playPauseBtn) playPauseBtn.textContent = state.isPlaying ? '⏸' : '▶';
+                    }
+                    overlay.classList.add('hidden');
+                    setUfoFlightActive(true);
+                    beginUfoTeacherTimeSync();
+                },
+                onGameMessage: function (_senderId, payload) {
+                    if (!payload || payload.type !== 'UFO_TIME_SYNC' || ufoRoomRole === 'host') return;
+                    state.simTimeYears = Number(payload.simTimeYears) || 0;
+                    state.orbitSpeed = Number(payload.orbitSpeed) || 1;
+                    state.isPlaying = payload.isPlaying !== false;
+                    if (speedSlider) speedSlider.value = String(state.orbitSpeed);
+                    if (speedValBadge) speedValBadge.textContent = state.orbitSpeed.toFixed(1) + 'x';
+                    if (playPauseBtn) playPauseBtn.textContent = state.isPlaying ? '⏸' : '▶';
+                    if (simTimeVal) simTimeVal.textContent = state.simTimeYears.toFixed(1) + ' yrs';
+                },
+                onAbort: function () {
+                    ufoRoomRole = null;
+                    setUfoFlightActive(false);
+                    overlay.classList.remove('hidden');
+                }
+            }).mount();
+        }
+
         // ========== UI CONTROLS ==========
         function initSimUIControls() {
             var ufoModeBtn = document.getElementById('ufoModeBtn');
@@ -1716,34 +1922,7 @@
             var ufoLeftBtn = document.getElementById('ufoLeftBtn');
             var ufoRightBtn = document.getElementById('ufoRightBtn');
 
-            if (ufoModeBtn) {
-                ufoModeBtn.addEventListener('click', function() {
-                    ufoState.active = !ufoState.active;
-                    if (ufoState.active) {
-                        ufoModeBtn.textContent = '🛸 UFO 탐험 (UFO Flight) ON';
-                        ufoModeBtn.style.background = 'rgba(56, 189, 248, 0.3)';
-                        ufoModeBtn.style.color = '#fff';
-                        if (ufoControlsPanel) ufoControlsPanel.style.display = 'block';
-                        if (ufoMesh) ufoMesh.visible = true;
-                        if (camera && controls) {
-                            camera.position.set(ufoState.pos.x, ufoState.pos.y + 22, ufoState.pos.z + 75);
-                            controls.target.copy(ufoState.pos);
-                            controls.update();
-                        }
-                    } else {
-                        ufoModeBtn.textContent = '🛸 UFO 탐험 (UFO Flight) OFF';
-                        ufoModeBtn.style.background = 'rgba(56, 189, 248, 0.15)';
-                        ufoModeBtn.style.color = '#38bdf8';
-                        if (ufoControlsPanel) ufoControlsPanel.style.display = 'none';
-                        if (ufoMesh) ufoMesh.visible = false;
-                        if (camera && controls) {
-                            controls.target.set(0, 0, 0);
-                            camera.position.set(0, 1500, 2000);
-                            controls.update();
-                        }
-                    }
-                });
-            }
+            initUfoClassroomLobby();
 
             // Touch / On-screen Arrow Buttons Event Listeners
             function bindArrowBtn(btn, keyProp) {
@@ -1782,13 +1961,13 @@
                     if (state.simMode === '2d') {
                         // Disable UFO Flight Mode in 2D Reality Mode
                         if (ufoState.active) {
-                            if (ufoModeBtn) ufoModeBtn.click(); // Turn off active UFO mode
+                            setUfoFlightActive(false);
                         }
                         if (ufoModeBtn) {
                             ufoModeBtn.disabled = true;
                             ufoModeBtn.style.opacity = '0.4';
                             ufoModeBtn.style.cursor = 'not-allowed';
-                            ufoModeBtn.title = '2D 리얼리티 모드에서는 UFO 탐험을 이용할 수 없습니다.';
+                            ufoModeBtn.title = '2D 리얼리티 모드에서는 UFO Flight를 이용할 수 없습니다.';
                         }
 
                         if (auInfoCard) auInfoCard.style.display = 'block';
@@ -1812,7 +1991,7 @@
                             ufoModeBtn.disabled = false;
                             ufoModeBtn.style.opacity = '1.0';
                             ufoModeBtn.style.cursor = 'pointer';
-                            ufoModeBtn.title = 'UFO 탐험 (UFO Flight) 온/오프';
+                            ufoModeBtn.title = '교실 UFO Flight 방번호 입력';
                         }
 
                         if (auInfoCard) auInfoCard.style.display = 'none';
@@ -1939,19 +2118,43 @@
                 var photo = body.photoUrl || (typeof window.createPlanetTexture === 'function' ? window.createPlanetTexture(key) : '');
 
                 // Table Row Construction
-                var mStr = body.massEarth || (body.gravityRatio ? (body.gravityRatio + 'g') : '-');
+                var earthMassRatioLabels = {
+                    sun: '약 333,000배',
+                    mercury: '약 0.055배',
+                    venus: '약 0.815배',
+                    earth: '1배',
+                    moon: '약 0.0123배',
+                    mars: '약 0.107배',
+                    jupiter: '약 318배',
+                    saturn: '약 95.2배',
+                    uranus: '약 14.5배',
+                    neptune: '약 17.1배',
+                    pluto: '약 0.00218배',
+                    comet: '매우 작음',
+                    meteor: '-',
+                    asteroid: '매우 작음'
+                };
+                var mStr = earthMassRatioLabels[key] || '-';
                 var orbStr = body.orbitDays ? (body.orbitDays > 365 ? (body.orbitDays / 365).toFixed(1) + '년' : body.orbitDays + '일') : '-';
                 var rotStr = body.rotationDays || '-';
                 var gravStr = body.gravityRatio ? (body.gravityRatio + ' G') : '-';
-                var radiusKmStr = body.radiusKm ? Number(body.radiusKm).toLocaleString() + ' km' : '-';
+                var radiusRatioStr = '-';
+                if (body.radiusKm) {
+                    var radiusRatio = body.radiusKm / 6371;
+                    var radiusRatioDigits = radiusRatio >= 10 ? 1 :
+                        (radiusRatio >= 1 ? 2 :
+                        (radiusRatio >= 0.01 ? 3 :
+                        (radiusRatio >= 0.0001 ? 5 : 8)));
+                    radiusRatioStr = '약 ' + radiusRatio.toFixed(radiusRatioDigits) + '배';
+                }
 
-                tableRowsHtml += '<tr style="border-bottom: 1px solid rgba(255,255,255,0.06); cursor:pointer;" onclick="window.showPlanetModal(\'' + key + '\')" onmouseover="this.style.background=\'rgba(56,189,248,0.08)\'" onmouseout="this.style.background=\'transparent\'">' +
+                tableRowsHtml += '<tr class="spec-table-row" data-planet-key="' + key + '" tabindex="0" role="button" aria-label="' + body.name + ' 카드로 이동">' +
                     '<td style="padding:10px 14px; font-weight:800; color:' + (body.color || '#38bdf8') + '; display:flex; align-items:center; gap:8px;">' +
                         '<img src="' + photo + '" style="width:24px; height:24px; border-radius:50%; object-fit:cover; border:1px solid ' + (body.color || '#38bdf8') + ';" />' +
                         body.name +
                     '</td>' +
                     '<td style="padding:10px 14px; color:#94a3b8; font-size:12px;">' + (body.type || '-') + '</td>' +
-                    '<td style="padding:10px 14px; font-weight:700; color:#fff;">' + radiusKmStr + '</td>' +
+                    '<td style="padding:10px 14px; font-weight:700; color:#fff;">' + radiusRatioStr + '</td>' +
                     '<td style="padding:10px 14px; color:#cbd5e1;">' + mStr + '</td>' +
                     '<td style="padding:10px 14px; color:#cbd5e1;">' + (body.density || '-') + '</td>' +
                     '<td style="padding:10px 14px; color:#cbd5e1;">' + gravStr + '</td>' +
@@ -1978,6 +2181,7 @@
 
                 var card = document.createElement('div');
                 card.className = 'planet-card';
+                card.id = 'planet-card-' + key;
                 card.style.cssText = 'overflow: hidden; padding: 0; position: relative; border-radius: 18px; border: 1px solid rgba(255, 255, 255, 0.12); background: rgba(15, 23, 42, 0.85); backdrop-filter: blur(12px); cursor: pointer; transition: all 0.35s cubic-bezier(0.4, 0, 0.2, 1); box-shadow: 0 10px 30px rgba(0,0,0,0.5);';
 
                 // Hover Effects
@@ -2040,7 +2244,30 @@
                 grid.appendChild(card);
             });
 
-            if (tableBody) tableBody.innerHTML = tableRowsHtml;
+            if (tableBody) {
+                tableBody.innerHTML = tableRowsHtml;
+                tableBody.querySelectorAll('.spec-table-row').forEach(function (row) {
+                    var key = row.dataset.planetKey;
+                    row.addEventListener('click', function () { focusPlanetCard(key); });
+                    row.addEventListener('keydown', function (event) {
+                        if (event.key === 'Enter' || event.key === ' ') {
+                            event.preventDefault();
+                            focusPlanetCard(key);
+                        }
+                    });
+                });
+            }
+        }
+
+        function focusPlanetCard(key) {
+            var card = document.getElementById('planet-card-' + key);
+            if (!card) return;
+
+            card.scrollIntoView({ behavior: 'smooth', block: 'center' });
+            card.classList.remove('table-focus');
+            void card.offsetWidth;
+            card.classList.add('table-focus');
+            window.setTimeout(function () { card.classList.remove('table-focus'); }, 1800);
         }
 
         // ========== 100% TRUE SCALE & PHYSICS SPECS COMPARISON (Tab 4) ==========
@@ -2144,6 +2371,14 @@
             var body = (window.SOLAR_SYSTEM_DATA && window.SOLAR_SYSTEM_DATA[key]);
             if (!body) return;
             state.selectedBody = body;
+
+            var moonPhaseHeading = Array.from(document.querySelectorAll('.planet-modal h3')).find(function (heading) {
+                return heading.textContent.indexOf('달의 위상') !== -1;
+            });
+            var moonPhaseStudy = moonPhaseHeading ? moonPhaseHeading.parentElement : null;
+            if (moonPhaseStudy) {
+                moonPhaseStudy.hidden = key !== 'moon';
+            }
 
             var photo = document.getElementById('modalPlanetPhoto');
             if (photo) {

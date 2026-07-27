@@ -3,127 +3,14 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <meta name="description" content="songhwaplay 별과 별자리 (Stars &amp; Constellations) - 사계절 성도 시뮬레이션, 대표 별자리 지식 카드, 별의 등급 비교, 별자리 퀴즈">
+    <meta name="description" content="songhwaplay 별과 별자리 (Stars &amp; Constellations) - 사계절 성도 시뮬레이션, 대표 별자리 지식, 별의 등급, Quiz">
     <title>별과 별자리 | songhwaplay 교과학습</title>
-    <link rel="stylesheet" href="../solar-system/styles.css">
+    <link rel="stylesheet" href="base.css">
     <!-- Three.js & OrbitControls for 3D Celestial Sphere -->
     <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/three@0.128.0/examples/js/controls/OrbitControls.js"></script>
-    <style>
-        .phase-btn-grid {
-            display: flex;
-            flex-wrap: wrap;
-            gap: 6px;
-            margin-top: 6px;
-        }
-
-        .phase-chip {
-            background: rgba(15, 23, 42, 0.85);
-            border: 1px solid rgba(56, 189, 248, 0.3);
-            color: #cbd5e1;
-            padding: 5px 11px;
-            border-radius: 14px;
-            font-size: 12px;
-            font-weight: 700;
-            cursor: pointer;
-            transition: all 0.2s ease;
-        }
-
-        .phase-chip:hover, .phase-chip.active {
-            background: #0284c7;
-            border-color: #38bdf8;
-            color: #ffffff;
-            box-shadow: 0 0 10px rgba(56, 189, 248, 0.4);
-        }
-
-        .earth-view-box {
-            position: absolute;
-            bottom: 20px;
-            right: 20px;
-            background: rgba(10, 15, 29, 0.92);
-            border: 1px solid rgba(56, 189, 248, 0.4);
-            border-radius: 14px;
-            padding: 14px 18px;
-            text-align: center;
-            backdrop-filter: blur(10px);
-            box-shadow: 0 12px 30px rgba(0, 0, 0, 0.7);
-            min-width: 220px;
-            z-index: 20;
-        }
-    </style>
-            <script>
-        window.switchMainTab = function(targetTab) {
-            var tabs = document.querySelectorAll('.nav-tab');
-            var panes = document.querySelectorAll('.tab-pane');
-
-            for (var i = 0; i < tabs.length; i++) {
-                var t = tabs[i];
-                if (t.getAttribute('data-tab') === targetTab) {
-                    t.classList.add('active');
-                } else {
-                    t.classList.remove('active');
-                }
-            }
-
-            for (var j = 0; j < panes.length; j++) {
-                var p = panes[j];
-                if (p.id === 'tab-' + targetTab) {
-                    p.classList.add('active');
-                    p.style.display = 'block';
-                } else {
-                    p.classList.remove('active');
-                    p.style.display = 'none';
-                }
-            }
-        };
-
-        window.switchSimMode = function(targetMode) {
-            var modeBtns = document.querySelectorAll('#simModeSwitcher .sim-mode-btn');
-            var modeContainers = document.querySelectorAll('.sim-mode-container');
-            var subpanels = document.querySelectorAll('.sim-controls-subpanel');
-
-            for (var i = 0; i < modeBtns.length; i++) {
-                var b = modeBtns[i];
-                if (b.getAttribute('data-sim-mode') === targetMode) {
-                    b.classList.add('active');
-                    b.style.background = 'rgba(56,189,248,0.2)';
-                    b.style.color = '#38bdf8';
-                    b.style.borderColor = '#38bdf8';
-                } else {
-                    b.classList.remove('active');
-                    b.style.background = 'transparent';
-                    b.style.color = '#94a3b8';
-                    b.style.borderColor = 'transparent';
-                }
-            }
-
-            for (var j = 0; j < modeContainers.length; j++) {
-                var c = modeContainers[j];
-                if (c.id === 'mode-' + targetMode) {
-                    c.style.display = 'flex';
-                } else {
-                    c.style.display = 'none';
-                }
-            }
-
-            for (var k = 0; k < subpanels.length; k++) {
-                var p = subpanels[k];
-                if (p.id === 'controls-' + targetMode) {
-                    p.style.display = 'flex';
-                } else {
-                    p.style.display = 'none';
-                }
-            }
-
-            if (targetMode === 'diurnal' && typeof window.updateDiurnalUI === 'function') {
-                window.updateDiurnalUI();
-            } else if (targetMode === 'zodiac' && typeof window.updateZodiacUI === 'function') {
-                window.updateZodiacUI();
-            } else if (targetMode === '3ddepth' && typeof window.onResize3D === 'function') {
-                window.onResize3D();
-            }
-        };
-    </script>
+    <link rel="stylesheet" href="styles.css">
+    <script src="navigation.js"></script>
 </head>
 <body>
 
@@ -153,14 +40,11 @@
             <button class="nav-tab active" data-tab="sim" onclick="switchMainTab('sim')" style="padding: 6px 12px; font-size: 13px;">
                 <span>🛰️</span> Simulation
             </button>
-            <button class="nav-tab" data-tab="cards" onclick="switchMainTab('cards')" style="padding: 6px 12px; font-size: 13px;">
-                <span>✨</span> 별자리 지식 카드
-            </button>
-            <button class="nav-tab" data-tab="calc" onclick="switchMainTab('calc')" style="padding: 6px 12px; font-size: 13px;">
-                <span>⚖️</span> 별의 등급 비교
+            <button class="nav-tab" data-tab="knowledge" onclick="switchMainTab('knowledge')" style="padding: 6px 12px; font-size: 13px;">
+                <span>📚</span> Knowledge
             </button>
             <button class="nav-tab" data-tab="quiz" onclick="switchMainTab('quiz')" style="padding: 6px 12px; font-size: 13px;">
-                <span>🧩</span> 단원 퀴즈
+                <span>🧩</span> Quiz
             </button>
         </nav>
     </header>
@@ -177,7 +61,7 @@
                     <!-- 4 Modes Switcher -->
                     <div style="display:flex; gap:6px; margin-right:16px; pointer-events:auto; z-index:30;" id="simModeSwitcher">
                         <button class="sim-mode-btn active" data-sim-mode="zodiac" onclick="switchSimMode('zodiac')" style="padding:4px 10px; font-size:12px; font-weight:700; border-radius:12px; background:rgba(56,189,248,0.2); color:#38bdf8; border:1px solid #38bdf8; cursor:pointer; pointer-events:auto;">☀️ 황도 12궁</button>
-                        <button class="sim-mode-btn" data-sim-mode="diurnal" onclick="switchSimMode('diurnal')" style="padding:4px 10px; font-size:12px; font-weight:700; border-radius:12px; background:transparent; color:#94a3b8; border:1px solid transparent; cursor:pointer; pointer-events:auto;">🧭 사계절 별자리</button>
+                        <button class="sim-mode-btn" data-sim-mode="diurnal" onclick="switchSimMode('diurnal')" style="padding:4px 10px; font-size:12px; font-weight:700; border-radius:12px; background:transparent; color:#94a3b8; border:1px solid transparent; cursor:pointer; pointer-events:auto;">🧭 북쪽 하늘</button>
                         <button class="sim-mode-btn" data-sim-mode="3ddepth" onclick="switchSimMode('3ddepth')" style="padding:4px 10px; font-size:12px; font-weight:700; border-radius:12px; background:transparent; color:#94a3b8; border:1px solid transparent; cursor:pointer; pointer-events:auto;">🌐 천구</button>
                         <button class="sim-mode-btn" data-sim-mode="compare" onclick="switchSimMode('compare')" style="padding:4px 10px; font-size:12px; font-weight:700; border-radius:12px; background:transparent; color:#94a3b8; border:1px solid transparent; cursor:pointer; pointer-events:auto;">⏰ 일주 vs 연주</button>
                     </div>
@@ -267,7 +151,7 @@
                                 <button class="phase-chip active" id="btnObsKorea">🇰🇷 한국 (37.5°N)</button>
                                 <button class="phase-chip" id="btnObsEquator">🌴 적도 (0°)</button>
                                 <button class="phase-chip" id="btnObsNorth">🧊 북극 (90°N)</button>
-                                <button class="phase-chip" id="btnObsAus">🇦🇺 남반구 (호주 35°S)</button>
+                                <button class="phase-chip" id="btnObsAus">🇦🇺 호주 (35°S)</button>
                             </div>
                             <!-- Row 2: Equator & Equinoxes Toggle + View Perspective Toggle -->
                             <div style="display: flex; gap: 6px;">
@@ -381,11 +265,11 @@
                         <!-- Controls -->
                         <div style="margin-top: 6px;">
                             <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 4px;">
-                                <span style="font-size: 11.5px; color: #cbd5e1; font-weight: 700;">관측 시간 진행: <strong id="diurnalTimeLabel" style="color: #38bdf8;">저녁 7시 (0시간 경과)</strong></span>
-                                <span style="font-size: 11px; color: #fbbf24; font-weight: 800;">회전 각도: <strong id="diurnalAngleLabel">0°</strong></span>
+                                <span style="font-size: 14px; color: #e2e8f0; font-weight: 800;">관측 시간 진행: <strong id="diurnalTimeLabel" style="color: #38bdf8;">저녁 7시 (0시간 경과)</strong></span>
+                                <span style="font-size: 13.5px; color: #fbbf24; font-weight: 900;">회전 각도: <strong id="diurnalAngleLabel">0°</strong></span>
                             </div>
-                            <input type="range" id="diurnalSlider" min="0" max="12" step="1" value="0" style="width: 100%; accent-color: #38bdf8; cursor: pointer; margin-bottom: 6px;">
-                            <div style="background: rgba(56,189,248,0.1); border: 1px solid rgba(56,189,248,0.3); border-radius: 8px; padding: 6px 10px; font-size: 11px; color: #e2e8f0; line-height: 1.4;">
+                            <input type="range" id="diurnalSlider" min="0" max="12" step="1" value="0" style="width: 100%; height: 8px; accent-color: #38bdf8; cursor: pointer; margin-bottom: 9px;">
+                            <div style="background: rgba(56,189,248,0.12); border: 1px solid rgba(56,189,248,0.45); border-radius: 9px; padding: 10px 12px; font-size: 14px; font-weight: 700; color: #f1f5f9; line-height: 1.55;">
                                 💡 <strong>[일주 운동 비교]</strong> 한국(북반구)은 <strong>시계 반대 방향(🔄)</strong> 회전 vs 호주(남반구)는 <strong>시계 방향(🔃)</strong>으로 회전합니다!
                             </div>
                         </div>
@@ -466,11 +350,11 @@
                         <!-- Controls -->
                         <div style="margin-top: 6px;">
                             <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 4px;">
-                                <span style="font-size: 11.5px; color: #cbd5e1; font-weight: 700;">관측 날짜 (매일 밤 9시): <strong id="annualDateLabel" style="color: #fbbf24;">1월 1일 (봄)</strong></span>
-                                <span style="font-size: 11px; color: #38bdf8; font-weight: 800;">연주 이동: <strong id="annualAngleLabel">0°</strong></span>
+                                <span style="font-size: 14px; color: #e2e8f0; font-weight: 800;">관측 날짜 (매일 밤 9시): <strong id="annualDateLabel" style="color: #fbbf24;">1월 (+0달)</strong></span>
+                                <span style="font-size: 13.5px; color: #38bdf8; font-weight: 900;">연주 이동: <strong id="annualAngleLabel">0°</strong></span>
                             </div>
-                            <input type="range" id="annualSlider" min="1" max="12" step="1" value="1" style="width: 100%; accent-color: #fbbf24; cursor: pointer; margin-bottom: 6px;">
-                            <div style="background: rgba(251,191,36,0.1); border: 1px solid rgba(251,191,36,0.3); border-radius: 8px; padding: 6px 10px; font-size: 11px; color: #e2e8f0; line-height: 1.4;">
+                            <input type="range" id="annualSlider" min="1" max="12" step="1" value="1" style="width: 100%; height: 8px; accent-color: #fbbf24; cursor: pointer; margin-bottom: 9px;">
+                            <div style="background: rgba(251,191,36,0.12); border: 1px solid rgba(251,191,36,0.45); border-radius: 9px; padding: 10px 12px; font-size: 14px; font-weight: 700; color: #f1f5f9; line-height: 1.55;">
                                 💡 <strong>[연주 운동 비교]</strong> 매일 밤 9시 기준 한국(북반구)은 <strong>한 달에 30°씩 시계반대(🔄)</strong> vs 호주(남반구)는 <strong>시계방향(🔃)</strong> 이동!
                             </div>
                         </div>
@@ -482,7 +366,7 @@
                     
                     <!-- SVG Star Map Canvas Container -->
                     <div style="width:100%; height:100%; display:flex; align-items:center; justify-content:center; background: radial-gradient(circle at 50% 50%, #0f172a 0%, #030712 100%);">
-                        <svg id="starMapSvg" width="480" height="480" viewBox="0 0 500 500" style="overflow:visible;">
+                        <svg id="starMapSvg" width="480" height="525" viewBox="0 0 500 560" style="overflow:visible;">
                             <!-- Outer Horizon Circles & Axis Lines -->
                             <circle cx="250" cy="250" r="230" stroke="rgba(56,189,248,0.35)" stroke-width="2" fill="none" />
                             <circle cx="250" cy="250" r="160" stroke="rgba(255,255,255,0.12)" stroke-dasharray="4" fill="none" />
@@ -491,10 +375,18 @@
                             <line x1="20" y1="250" x2="480" y2="250" stroke="rgba(255,255,255,0.06)" stroke-dasharray="2" />
 
                             <!-- Compass Direction Labels -->
-                            <text x="250" y="14" fill="#38bdf8" font-size="12" font-weight="bold" text-anchor="middle">북 (North)</text>
+                            <text x="250" y="14" fill="#fbbf24" font-size="13" font-weight="900" text-anchor="middle">북 (North)</text>
                             <text x="490" y="254" fill="#94a3b8" font-size="12" font-weight="bold" text-anchor="start">동 (East)</text>
-                            <text x="250" y="493" fill="#94a3b8" font-size="12" font-weight="bold" text-anchor="middle">남 (South)</text>
                             <text x="10" y="254" fill="#94a3b8" font-size="12" font-weight="bold" text-anchor="end">서 (West)</text>
+
+                            <!-- Observer facing north: south is behind the observer -->
+                            <g transform="translate(250, 501)" fill="#0f291e" stroke="#10b981" stroke-width="1.8">
+                                <circle cx="0" cy="-15" r="8" />
+                                <path d="M -10,4 L -6,-7 L 6,-7 L 10,4 L 7,24 L -7,24 Z" />
+                                <path d="M 6,-5 L 14,-13" fill="none" stroke-linecap="round" />
+                            </g>
+                            <text x="250" y="540" fill="#fbbf24" font-size="13" font-weight="900" text-anchor="middle">남 (South)</text>
+                            <text x="250" y="556" fill="#94a3b8" font-size="11.5" font-weight="800" text-anchor="middle">관측자 뒤쪽</text>
 
                             <!-- Rotating Group for Diurnal Motion around Polaris (Exact Constellation Shapes & Lines) -->
                             <g id="starRotationGroup" transform="rotate(0 250 250)">
@@ -503,7 +395,7 @@
                                 <circle cx="250" cy="250" r="6.5" fill="#38bdf8" />
                                 <circle cx="250" cy="250" r="12" stroke="rgba(56,189,248,0.4)" stroke-width="1.5" fill="none" stroke-dasharray="3" />
 
-                                <!-- 🌸 1. Big Dipper (북두칠성 - 봄철 7개 별 국자 모양 + Polaris Pointer) -->
+                                <!-- Big Dipper (북두칠성 - 7개 별 국자 모양 + Polaris Pointer) -->
                                 <g class="constellation-group" id="groupSpring" style="cursor: pointer;">
                                     <!-- Polaris Guide Line from Merak -> Dubhe to Polaris -->
                                     <line x1="150" y1="140" x2="250" y2="250" stroke="rgba(251,191,36,0.4)" stroke-dasharray="4" stroke-width="1.5" />
@@ -523,7 +415,7 @@
                                     <circle cx="248" cy="80" r="4.0" fill="#fff" /><!-- Alkaid -->
                                 </g>
 
-                                <!-- 🍁 2. Cassiopeia (카시오페이아 - 가을철 5개 별 W 자 모양 + Polaris Pointer) -->
+                                <!-- Cassiopeia (5개 별 W 자 모양 + Polaris Pointer) -->
                                 <g class="constellation-group" id="groupAutumn" style="cursor: pointer;">
                                     <!-- Polaris Guide Extension Lines -->
                                     <line x1="375" y1="365" x2="250" y2="250" stroke="rgba(56,189,248,0.4)" stroke-dasharray="4" stroke-width="1.5" />
@@ -539,46 +431,6 @@
                                     <circle cx="415" cy="370" r="3.8" fill="#fff" /><!-- Segin -->
                                 </g>
 
-                                <!-- ❄️ 3. Orion (오리온자리 - 겨울철 모래시계 4개 별 + 삼태성 3개 별) -->
-                                <g class="constellation-group" id="groupWinter" style="cursor: pointer;">
-                                    <!-- Hourglass Frame Quad -->
-                                    <polygon points="130,330 165,325 170,385 125,390" stroke="#f43f5e" stroke-width="2" fill="rgba(244,63,94,0.12)" />
-                                    <!-- Three Belt Line (삼태성) -->
-                                    <line x1="138" y1="355" x2="154" y2="355" stroke="#fff" stroke-width="2" />
-
-                                    <!-- 4 Corner Stars + 3 Belt Stars -->
-                                    <circle cx="130" cy="330" r="5.0" fill="#f43f5e" /><!-- Betelgeuse (붉은 초거성 1등성) -->
-                                    <circle cx="165" cy="325" r="4.0" fill="#fff" /><!-- Bellatrix -->
-                                    <circle cx="170" cy="385" r="5.0" fill="#38bdf8" /><!-- Rigel (푸른 1등성) -->
-                                    <circle cx="125" cy="390" r="3.8" fill="#fff" /><!-- Saiph -->
-                                    <!-- Belt Stars (삼태성) -->
-                                    <circle cx="138" cy="355" r="3.0" fill="#fff" />
-                                    <circle cx="146" cy="355" r="3.0" fill="#fff" />
-                                    <circle cx="154" cy="355" r="3.0" fill="#fff" />
-                                </g>
-
-                                <!-- 🌿 4. Cygnus & Summer Triangle (백조자리 북십자 + 여름철 대삼각형) -->
-                                <g class="constellation-group" id="groupSummer" style="cursor: pointer;">
-                                    <!-- Summer Triangle Dashed Guide (Deneb - Vega - Altair) -->
-                                    <polygon points="375,140 290,120 390,210" stroke="rgba(52,211,153,0.35)" stroke-width="1.5" stroke-dasharray="4" fill="rgba(52,211,153,0.06)" />
-
-                                    <!-- Cygnus Northern Cross Lines -->
-                                    <line x1="375" y1="140" x2="310" y2="185" stroke="#34d399" stroke-width="2" /><!-- Spine (Deneb -> Albireo) -->
-                                    <line x1="365" y1="190" x2="325" y2="130" stroke="#34d399" stroke-width="2" /><!-- Wings -->
-
-                                    <!-- Cygnus Main Stars -->
-                                    <circle cx="375" cy="140" r="5.0" fill="#34d399" /><!-- Deneb (데네브 1등성) -->
-                                    <circle cx="345" cy="160" r="4.0" fill="#fff" /><!-- Sadr (Center) -->
-                                    <circle cx="310" cy="185" r="3.5" fill="#fff" /><!-- Albireo (Head) -->
-                                    <circle cx="365" cy="190" r="3.5" fill="#fff" /><!-- Gienah -->
-                                    <circle cx="325" cy="130" r="3.5" fill="#fff" /><!-- Delta Cygni -->
-
-                                    <!-- Other 2 Stars of Summer Triangle -->
-                                    <circle cx="290" cy="120" r="4.5" fill="#93c5fd" /><!-- Vega (직녀성) -->
-                                    <text x="285" y="110" fill="#93c5fd" font-size="10" font-weight="bold">직녀성(Vega)</text>
-                                    <circle cx="390" cy="210" r="4.5" fill="#fef08a" /><!-- Altair (견우성) -->
-                                    <text x="395" y="222" fill="#fef08a" font-size="10" font-weight="bold">견우성(Altair)</text>
-                                </g>
                             </g>
 
                             <!-- Un-rotated Upright Text Overlay Group (Always 100% Upright & Clear) -->
@@ -587,37 +439,16 @@
                                 <text x="250" y="232" fill="#38bdf8" font-size="12.5" text-anchor="middle" font-weight="bold">북극성 (Polaris)</text>
 
                                 <!-- Dynamic Upright Constellation Labels orbiting Polaris -->
-                                <text id="textSpring" x="180" y="98" fill="#fbbf24" font-size="12" text-anchor="middle" font-weight="bold">🌸 북두칠성 (봄 - 국자 모양)</text>
-                                <text id="textAutumn" x="375" y="392" fill="#38bdf8" font-size="12" text-anchor="middle" font-weight="bold">🍁 카시오페이아 (가을 - W 모양)</text>
-                                <text id="textWinter" x="148" y="408" fill="#f43f5e" font-size="12" text-anchor="middle" font-weight="bold">❄️ 오리온 (겨울 - 삼태성)</text>
-                                <text id="textSummer" x="350" y="105" fill="#34d399" font-size="12" text-anchor="middle" font-weight="bold">🌿 백조자리 (여름 - 북십자)</text>
+                                <text id="textSpring" x="180" y="98" fill="#fbbf24" font-size="12" text-anchor="middle" font-weight="bold">북두칠성 (국자 모양)</text>
+                                <text id="textAutumn" x="375" y="392" fill="#38bdf8" font-size="12" text-anchor="middle" font-weight="bold">카시오페이아 (W 모양)</text>
                             </g>
                         </svg>
                     </div>
-                    <!-- Top-Left Quick Season Selector Chips (Placed in empty space) -->
-                    <div style="position: absolute; top: 65px; left: 20px; z-index: 25; max-width: 540px;">
-                        <div style="font-size: 11px; color: #94a3b8; font-weight: 700; margin-bottom: 4px;">사계절 별자리 선택:</div>
-                        <div class="phase-btn-grid" id="seasonChipsGrid">
-                            <button class="phase-chip active" data-angle="0" onclick="setSeasonAngle(0)">🌸 봄철 (북두칠성/국자)</button>
-                            <button class="phase-chip" data-angle="90" onclick="setSeasonAngle(90)">🌿 여름철 (백조/대삼각)</button>
-                            <button class="phase-chip" data-angle="180" onclick="setSeasonAngle(180)">🍁 가을철 (카시오페이아/W)</button>
-                            <button class="phase-chip" data-angle="270" onclick="setSeasonAngle(270)">❄️ 겨울철 (오리온/삼태성)</button>
-                        </div>
-                    </div>
-
-                    <!-- Top-Right Floating Constellation Myth Story Card for Mode 2 -->
-                    <div id="stStoryCard" style="position: absolute; top: 65px; right: 20px; background: rgba(10, 15, 29, 0.95); border: 1px solid rgba(56, 189, 248, 0.5); border-radius: 16px; padding: 18px 22px; backdrop-filter: blur(14px); max-width: 380px; z-index: 25; box-shadow: 0 14px 40px rgba(0,0,0,0.92);">
-                        <div style="font-size: 12px; color: #fbbf24; font-weight: 800; margin-bottom: 4px;">📖 사계절 대표 별자리 전설 &amp; 이야기</div>
-                        <div id="stStoryTitle" style="font-size: 18px; font-weight: 900; color: #38bdf8; margin-bottom: 8px; letter-spacing: -0.3px;">🌸 봄철 - 북두칠성 (큰곰자리)</div>
-                        <div id="stStoryDesc" style="font-size: 15px; color: #f8fafc; line-height: 1.65; font-weight: 500;">
-                            우리 조상들이 길흉화복을 빌던 칠성님 이야기! 제우스의 사랑을 받다 여신 헤라의 질투로 큰곰이 된 아름다운 님프 칼리스토와 작은곰 아들 알카스가 영원히 북극성 주변을 도는 큰곰자리 신화입니다.
-                        </div>
-                    </div>
 
                     <div class="earth-view-box" style="bottom: 85px; right: 20px; z-index: 25;">
-                        <div style="font-size: 11px; color: #38bdf8; font-weight: 700; margin-bottom: 2px;">북반구(한국) 밤하늘 관측</div>
-                        <div id="stSeasonTitle" style="font-size: 17px; font-weight: 900; color: #fbbf24; margin-top: 4px;">봄철 별자리 (Spring Sky)</div>
-                        <div id="stObsInfo" style="font-size: 12px; color: #38bdf8; font-weight: 700; margin-top: 4px;">북두칠성과 봄철 대곡선 (아르크투루스·스피카)</div>
+                        <div style="font-size: 11px; color: #38bdf8; font-weight: 700; margin-bottom: 2px;">북반구(한국) 북쪽 하늘</div>
+                        <div style="font-size: 17px; font-weight: 900; color: #fbbf24; margin-top: 4px;">북극성 중심 일주운동</div>
+                        <div style="font-size: 12px; color: #38bdf8; font-weight: 700; margin-top: 4px;">별들은 반시계 방향으로 회전</div>
                     </div>
                 </div>
 
@@ -653,8 +484,8 @@
                     <!-- Mode 2 (Diurnal) Controls -->
                     <div id="controls-diurnal" class="sim-controls-subpanel" style="display:none; width:100%; gap:20px; align-items: center;">
                         <div class="sim-time-display" style="min-width: 150px;">
-                            <div class="sim-time-label">SEASON &amp; DIURNAL ROTATION</div>
-                            <div class="sim-time-val" id="stOrbitProgressText">봄철 밤하늘 (Spring Sky)</div>
+                            <div class="sim-time-label">DIURNAL MOTION</div>
+                            <div class="sim-time-val">북쪽 하늘의 일주운동</div>
                         </div>
                         <div class="control-rows" style="flex:1; gap: 8px;">
                             <!-- Row 1: Rotation Speed Slider (0.0x = Stopped / Paused) -->
@@ -686,9 +517,9 @@
                 <!-- Section 1: Academic Seasons -->
                 <div style="margin-bottom: 18px;">
                     <h2 style="font-size: 20px; color: #fff; margin-bottom: 6px; display:flex; align-items:center; gap:8px;">
-                        <span>🌸</span> 사계절 대표 길잡이 별자리 (교과 핵심 정리)
+                        <span>🌸</span> 사계절 대표 길잡이 별자리
                     </h2>
-                    <p style="color: #94a3b8; font-size: 13.5px; line-height: 1.6; margin-top: 4px;">지구의 공전에 따른 계절별 길잡이 별자리 요약입니다. <span style="color: #38bdf8; font-weight: 700;">💡 [시험 팁] 별자리 이름을 암기할 필요는 없고, '지구의 공전으로 인해 한밤중(자정) 남쪽 하늘 별자리가 6개월 차이(반대 방향)로 달라진다'는 원리가 출제됩니다.</span></p>
+                    <p style="color: #38bdf8; font-size: 13.5px; line-height: 1.6; margin-top: 4px; font-weight: 700;">별자리 이름을 암기할 필요는 없고, 지구의 공전으로 인해 한밤중(자정) 남쪽 하늘의 별자리가 6개월 후 반대 방향에서 보인다는 원리가 시험에 출제됩니다.</p>
                 </div>
 
                 
@@ -717,7 +548,6 @@
                     <h2 style="font-size: 20px; color: #fff; margin-bottom: 6px; display:flex; align-items:center; gap:8px;">
                         <span>📖</span> 주요 별자리 신화 &amp; 천체 유래
                     </h2>
-                    <p style="color: #94a3b8; font-size: 13px;">별자리에 얽힌 동서양의 신화 배경과 학술적 유래 요약입니다.</p>
                 </div>
 
                 <div class="atlas-grid" style="display: grid; grid-template-columns: repeat(auto-fill, minmax(290px, 1fr)); gap: 16px;">
@@ -803,7 +633,7 @@
                         <h2 style="font-size: 24px; color: #fff; margin-bottom: 6px; display:flex; align-items:center; gap:10px;">
                             <span>✨</span> 별의 탄생부터 사멸까지 (Stellar Evolution &amp; Life Cycle)
                         </h2>
-                        <p style="color: #94a3b8; font-size: 14px;">성운에서 아기 별이 태어나 거성이 되고, 초신성 대폭발 및 블랙홀/백색왜성으로 일생을 마감하는 전체 진화 과정 시각자료입니다.</p>
+                        <p style="color: #94a3b8; font-size: 14px;">성운의 가스와 먼지가 중력으로 수축해 원시별을 형성하고, 질량에 따라 적색거성·초거성 단계를 거쳐 백색왜성·중성자별·블랙홀로 진화하는 과정을 보여줍니다.</p>
                     </div>
                     
                     <!-- Track Switcher Buttons -->
@@ -818,7 +648,6 @@
                     
                     <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom: 18px;">
                         <h3 id="lifeTrackTitle" style="font-size: 18px; color: #fbbf24; font-weight: 900;">☀️ [태양급 별의 일생] 성운 ➔ 주계열성 ➔ 적색거성 ➔ 행성상 성운 ➔ 백색왜성</h3>
-                        <span style="font-size: 12px; color: #94a3b8;">💡 원하는 진화 단계를 클릭하여 자세한 모습을 관찰하세요</span>
                     </div>
 
                     <!-- 5 Interactive Stage Nodes Bar -->
@@ -829,13 +658,14 @@
                     <!-- Selected Stage Detail Graphic Box -->
                     
                     <!-- Interactive Life Cycle Time Knob Slider -->
-                    <div style="background: rgba(15, 23, 42, 0.85); border: 1px solid rgba(56, 189, 248, 0.3); border-radius: 12px; padding: 14px 20px; margin-bottom: 20px; display: flex; align-items: center; gap: 20px; flex-wrap: wrap;">
-                        <div style="font-weight: 800; color: #fbbf24; font-size: 14px; display: flex; align-items: center; gap: 8px; flex-shrink: 0;">
-                            <span>🎛️</span> 별의 일생 시간 노브 (Timeline Knob):
+                    <div style="background: rgba(15, 23, 42, 0.85); border: 1px solid rgba(56, 189, 248, 0.3); border-radius: 12px; padding: 14px 0; margin-bottom: 20px;">
+                        <div style="display:flex; align-items:center; justify-content:space-between; gap:20px; padding:0 4px 10px;">
+                            <div style="font-weight: 800; color: #fbbf24; font-size: 14px; display: flex; align-items: center; gap: 8px;">
+                                <span>🎛️</span> 별의 일생 시간 노브 (Timeline Knob):
+                            </div>
+                            <span id="stellarTimeValText" style="font-size: 13.5px; font-weight: 800; color: #38bdf8; text-align: right;">진화 0% ~ 10% (탄생기)</span>
                         </div>
-                        <input type="range" id="stellarTimeKnob" min="0" max="100" value="0" style="flex: 1; min-width: 200px; accent-color: #38bdf8; height: 8px; cursor: pointer;">
-                        
-                        <span id="stellarTimeValText" style="font-size: 13.5px; font-weight: 800; color: #38bdf8; min-width: 170px; text-align: right;">진화 0% ~ 10% (탄생기)</span>
+                        <input type="range" id="stellarTimeKnob" min="0" max="100" value="10" style="display:block; width:100%; margin:0; box-sizing:border-box; accent-color: #38bdf8; height: 8px; cursor: pointer;">
                     </div>
 
                     <div id="stageDetailBox" style="background: rgba(15, 23, 42, 0.9); border: 1px solid rgba(56, 189, 248, 0.35); border-radius: 14px; padding: 20px; display: flex; gap: 24px; align-items: center; box-shadow: inset 0 0 20px rgba(0,0,0,0.6);">
@@ -937,1554 +767,7 @@
         </section>
     </main>
 
-    <script>
-        // Sub-Tab Navigation handled by global window.switchMainTab(targetTab)
+    <script src="app.js"></script>
 
-                        // Mode 1: Zodiac (황도 12궁 & 지구 공전) Engine
-                        (function() {
-            const zodiacConstellations = [
-                { month: 1, name: "쌍둥이자리", emoji: "👯", date: "5/21~6/21",
-                  story: "죽음도 갈라놓지 못한 우애 깊은 쌍둥이 형제 카스토르와 폴룩스의 신화입니다. 1월 한밤중 남쪽 하늘에서 나란히 빛나는 두 형제가 높이 남중합니다. (반면 1월 낮 태양 위치인 궁수자리는 햇빛에 가려 보이지 않습니다!)",
-                  stars: [[20, -40], [20, -10], [35, 35], [5, 40], [-15, -35], [-15, -5], [-5, 45], [-30, 40], [5, -20]],
-                  lines: [[0, 1], [1, 2], [1, 3], [1, 8], [4, 5], [5, 6], [5, 7], [5, 8]] },
-                { month: 2, name: "게자리", emoji: "🦀", date: "6/22~7/22",
-                  story: "영웅 헤라클레스가 히드라와 겨룰 때 발목을 물었던 거대 게의 신화입니다. 2월 한밤중 남쪽 하늘에서 가장 높게 남중하여 밤새도록 아주 잘 보입니다.",
-                  stars: [[0, 0], [-5, -20], [-25, 25], [30, 20]],
-                  lines: [[0, 1], [0, 2], [0, 3]] },
-                { month: 3, name: "사자자리", emoji: "🦁", date: "7/23~8/22",
-                  story: "네메아 골짜기의 무적 사자 신화입니다. 3월 한밤중 남쪽 하늘에서 으뜸 1등성 레굴루스(Regulus)와 낫 모양 머리가 위엄 있게 남중합니다.",
-                  stars: [[30, 25], [40, 5], [35, -15], [20, -25], [10, -15], [-15, -10], [-15, 20], [-45, 0]],
-                  lines: [[0, 1], [1, 2], [2, 3], [3, 4], [0, 6], [6, 7], [7, 5], [5, 2]] },
-                { month: 4, name: "처녀자리", emoji: "🧚‍♀️", date: "8/23~9/22",
-                  story: "정의의 여신 아스트라이아 전설입니다. 4월 한밤중 남쪽 하늘에서 청백색 1등성 스피카(Spica)와 함께 봄철 대표 길잡이 별자리로 남중합니다.",
-                  stars: [[30, -35], [20, -20], [10, -5], [-10, -20], [-30, -30], [20, 15], [-15, 10], [-5, 45], [25, 40]],
-                  lines: [[0, 1], [1, 2], [2, 3], [3, 4], [2, 5], [2, 6], [5, 6], [6, 7], [5, 8]] },
-                { month: 5, name: "천칭자리", emoji: "⚖️", date: "9/23~10/23",
-                  story: "정의의 여신이 인간의 선악을 달던 황금 저울입니다. 5월 한밤중 남쪽 하늘에서 다이아몬드 저울판 형상으로 남중합니다.",
-                  stars: [[0, -25], [25, 15], [-25, 15], [45, -5]],
-                  lines: [[0, 1], [0, 2], [1, 2], [1, 3], [0, 3]] },
-                { month: 6, name: "전갈자리", emoji: "🦂", date: "10/24~11/21",
-                  story: "사냥꾼 오리온을 벌하기 위해 보낸 무적의 전갈 신화입니다. 6월 하지 무렵 한밤중 남쪽 하늘에서 붉은 초거성 안타레스(Antares) 심장과 J자형 독침 꼬리가 남중합니다.",
-                  stars: [[15, 0], [30, -20], [35, -5], [30, 10], [5, 20], [-5, 35], [-20, 45], [-35, 40], [-45, 25], [-25, 15]],
-                  lines: [[1, 2], [2, 3], [2, 0], [0, 4], [4, 5], [5, 6], [6, 7], [7, 8], [8, 9]] },
-                { month: 7, name: "궁수자리", emoji: "🏹", date: "11/22~12/21",
-                  story: "현자 케이론이 활을 당기는 모습의 신화입니다. 7월 한밤중 남쪽 하늘에서 은하수 한가운데 찻주전자(Teapot) 모양으로 남중합니다.",
-                  stars: [[40, 0], [25, -5], [10, -20], [-5, -5], [15, 25], [-15, 20], [-25, 0], [-30, 15]],
-                  lines: [[1, 2], [2, 3], [3, 1], [1, 4], [4, 5], [5, 3], [1, 0], [4, 0], [3, 6], [6, 7], [7, 5]] },
-                { month: 8, name: "염소자리", emoji: "🐐", date: "12/22~1/19",
-                  story: "목신 판(Pan)이 물고기로 도망치다 상반신은 염소, 하반신은 물고기로 어설프게 변신한 신화입니다. 8월 한밤중 남쪽 하늘에서 역삼각형 해마 모양으로 남중합니다.",
-                  stars: [[35, -25], [25, -15], [-35, -20], [-10, 35], [5, 40], [-25, 5]],
-                  lines: [[0, 1], [1, 4], [4, 3], [3, 5], [5, 2], [2, 0]] },
-                { month: 9, name: "물병자리", emoji: "🏺", date: "1/20~2/18",
-                  story: "가장 아름다운 미소년 가니메데스가 영생의 술을 따르는 물병 신화입니다. 9월 추분 무렵 한밤중 남쪽 하늘에서 Y자형 물항아리와 물줄기 형상으로 남중합니다.",
-                  stars: [[35, -25], [20, -30], [15, -15], [30, -10], [20, 5], [0, 20], [-20, 10], [-15, 35], [-35, 30], [-30, 50]],
-                  lines: [[0, 1], [1, 2], [2, 3], [3, 0], [2, 4], [4, 5], [5, 6], [6, 7], [7, 8], [8, 9]] },
-                { month: 10, name: "물고기자리", emoji: "🐟", date: "2/19~3/20",
-                  story: "아프로디테와 에로스 모자가 발목을 끈으로 묶고 도망친 숭고한 모성애 신화입니다. 10월 한밤중 남쪽 하늘에서 V자 끈으로 묶인 두 물고기 형상이 남중합니다.",
-                  stars: [[0, 45], [15, 20], [25, -5], [40, -15], [30, -30], [45, -40], [55, -25], [-15, 25], [-30, 10], [-45, 0], [-60, -10], [-50, -25], [-35, -15]],
-                  lines: [[0, 1], [1, 2], [2, 3], [3, 4], [4, 5], [5, 6], [6, 3], [0, 7], [7, 8], [8, 9], [9, 10], [10, 11], [11, 12], [12, 9]] },
-                { month: 11, name: "양자리", emoji: "🐏", date: "3/21~4/19",
-                  story: "위기에 처한 남매를 구하기 위해 제우스가 보낸 황금 털 날개 양 신화입니다. 11월 한밤중 남쪽 하늘에서 알파성 하말(Hamal)과 뿔 곡선 모양으로 남중합니다.",
-                  stars: [[20, -15], [0, -5], [-10, 10], [-25, 25]],
-                  lines: [[0, 1], [1, 2], [2, 3]] },
-                { month: 12, name: "황소자리", emoji: "🐂", date: "4/20~5/20",
-                  story: "제우스가 에우로파 공주를 위해 눈처럼 흰 순한 황소로 변신한 신화입니다. 12월 동지 무렵 한밤중 남쪽 하늘에서 붉은 알데바란 눈, V자 얼굴, 길게 뻗은 두 뿔 및 묘성 성단이 남중합니다.",
-                  stars: [[-15, 5], [-5, 15], [5, 25], [15, 15], [25, 0], [-30, -35], [40, -45]],
-                  lines: [[0, 1], [1, 2], [2, 3], [3, 4], [0, 5], [4, 6]] }
-            ];
-
-            let zScene, zCamera, zRenderer, zControls;
-            let zEarth, zSun, zOrbitPath;
-            let zMidLine, zSunLine, zMidText, zSunText;
-            let reqId = null;
-
-            function initThreeZodiac() {
-                const container = document.getElementById('zodiac3dContainer');
-                const canvas = document.getElementById('zodiac3dCanvas');
-                if (!container || !canvas) return;
-
-                const width = container.clientWidth > 0 ? container.clientWidth : 800;
-                const height = container.clientHeight > 0 ? container.clientHeight : 600;
-
-                // Cleanup previous instance if re-initialized
-                if (zRenderer) {
-                    zRenderer.dispose();
-                }
-
-                zScene = new THREE.Scene();
-                zScene.background = new THREE.Color(0x020617);
-
-                zCamera = new THREE.PerspectiveCamera(45, width / height, 0.1, 2000);
-                zCamera.position.set(0, 300, 450);
-
-                zRenderer = new THREE.WebGLRenderer({ canvas: canvas, antialias: true });
-                zRenderer.setSize(width, height);
-                zRenderer.setPixelRatio(window.devicePixelRatio);
-
-                zControls = new THREE.OrbitControls(zCamera, zRenderer.domElement);
-                zControls.enableDamping = true;
-                zControls.dampingFactor = 0.05;
-                zControls.maxPolarAngle = Math.PI / 2 - 0.05; // Prevent camera going below ground
-                zControls.minDistance = 200;
-                zControls.maxDistance = 800;
-
-                // Lighting
-                zScene.add(new THREE.AmbientLight(0xffffff, 0.4));
-                const pointLight = new THREE.PointLight(0xfbbf24, 2.5, 1000);
-                zScene.add(pointLight);
-
-                // Sun
-                const sunGeo = new THREE.SphereGeometry(18, 32, 32);
-                const sunMat = new THREE.MeshBasicMaterial({ color: 0xfbbf24 });
-                zSun = new THREE.Mesh(sunGeo, sunMat);
-                zScene.add(zSun);
-                
-                // Sun Glow
-                const glowGeo = new THREE.SphereGeometry(24, 32, 32);
-                const glowMat = new THREE.MeshBasicMaterial({ color: 0xfbbf24, transparent: true, opacity: 0.3 });
-                zScene.add(new THREE.Mesh(glowGeo, glowMat));
-
-                // Orbit Path (radius 80)
-                const orbitCurve = new THREE.EllipseCurve(0, 0, 80, 80, 0, 2 * Math.PI, false, 0);
-                const orbitPoints = orbitCurve.getPoints(128);
-                const orbitGeo = new THREE.BufferGeometry().setFromPoints(orbitPoints);
-                const orbitMat = new THREE.LineDashedMaterial({ color: 0xffffff, transparent: true, opacity: 0.2, dashSize: 5, gapSize: 5 });
-                zOrbitPath = new THREE.Line(orbitGeo, orbitMat);
-                zOrbitPath.rotation.x = -Math.PI / 2;
-                zOrbitPath.computeLineDistances();
-                zScene.add(zOrbitPath);
-
-                // Cylinder Floor Indicator
-                const floorCurve = new THREE.EllipseCurve(0, 0, 260, 260, 0, 2 * Math.PI, false, 0);
-                const floorPoints = floorCurve.getPoints(128);
-                const floorGeo = new THREE.BufferGeometry().setFromPoints(floorPoints);
-                const floorMat = new THREE.LineBasicMaterial({ color: 0x38bdf8, transparent: true, opacity: 0.1 });
-                const floorLine = new THREE.Line(floorGeo, floorMat);
-                floorLine.rotation.x = -Math.PI / 2;
-                zScene.add(floorLine);
-
-                // Earth
-                const earthGeo = new THREE.SphereGeometry(8, 32, 32);
-                const earthMat = new THREE.MeshStandardMaterial({ color: 0x38bdf8, emissive: 0x0284c7, emissiveIntensity: 0.6 });
-                zEarth = new THREE.Mesh(earthGeo, earthMat);
-                zScene.add(zEarth);
-
-                // Sightlines
-                const matMid = new THREE.LineBasicMaterial({ color: 0x38bdf8, transparent: true, opacity: 0.9 });
-                const matSun = new THREE.LineBasicMaterial({ color: 0xfbbf24, transparent: true, opacity: 0.7 });
-                zMidLine = new THREE.Line(new THREE.BufferGeometry(), matMid);
-                zSunLine = new THREE.Line(new THREE.BufferGeometry(), matSun);
-                zScene.add(zMidLine);
-                zScene.add(zSunLine);
-
-                // Canvas Texture Generator for Panels
-                function createZodiacTexture(z) {
-                    const cvs = document.createElement('canvas');
-                    cvs.width = 512;
-                    cvs.height = 512;
-                    const ctx = cvs.getContext('2d');
-                    
-                    ctx.clearRect(0, 0, 512, 512);
-                    
-                    ctx.save();
-                    ctx.translate(256, 180); // Center stars a bit higher
-                    const scale = 2.2;
-                    
-                    if (z.stars) {
-                        ctx.strokeStyle = "rgba(255,255,255,0.4)";
-                        ctx.lineWidth = 3;
-                        z.lines.forEach(idx => {
-                            const p1 = z.stars[idx[0]];
-                            const p2 = z.stars[idx[1]];
-                            ctx.beginPath();
-                            ctx.moveTo(p1[0]*scale, p1[1]*scale);
-                            ctx.lineTo(p2[0]*scale, p2[1]*scale);
-                            ctx.stroke();
-                        });
-                        
-                        z.stars.forEach(p => {
-                            ctx.beginPath();
-                            ctx.arc(p[0]*scale, p[1]*scale, 5, 0, 2*Math.PI);
-                            ctx.fillStyle = "#fbbf24";
-                            ctx.shadowColor = "#fbbf24";
-                            ctx.shadowBlur = 12;
-                            ctx.fill();
-                            ctx.shadowBlur = 0;
-                        });
-                    }
-                    ctx.restore();
-                    
-                    ctx.fillStyle = "white";
-                    ctx.font = "bold 44px 'Noto Sans KR', sans-serif";
-                    ctx.textAlign = "center";
-                    ctx.shadowColor = "rgba(0,0,0,0.8)";
-                    ctx.shadowBlur = 6;
-                    ctx.fillText(z.name, 256, 420);
-                    
-                    ctx.fillStyle = "#94a3b8";
-                    ctx.font = "bold 28px 'Noto Sans KR', sans-serif";
-                    ctx.fillText(z.date || '', 256, 470);
-                    
-                    const texture = new THREE.CanvasTexture(cvs);
-                    texture.anisotropy = zRenderer.capabilities.getMaxAnisotropy();
-                    return texture;
-                }
-
-                // Create 12 Panels (radius 260)
-                zodiacConstellations.forEach((z, i) => {
-                    const tex = createZodiacTexture(z);
-                    const planeGeo = new THREE.PlaneGeometry(160, 160);
-                    const planeMat = new THREE.MeshBasicMaterial({ map: tex, transparent: true, side: THREE.DoubleSide, depthWrite: false });
-                    const plane = new THREE.Mesh(planeGeo, planeMat);
-                    
-                    const angle = -i * 30 * Math.PI / 180; // CCW: 1=Gemini(Top/-Z)
-                    const px = 260 * Math.sin(angle);
-                    const pz = -260 * Math.cos(angle);
-                    
-                    plane.position.set(px, 40, pz);
-                    plane.lookAt(0, 40, 0); // Front face points to center
-                    
-                    zScene.add(plane);
-                });
-
-                // Text Sprites for Lasers
-                function createTextSprite(text, color) {
-                    const cvs = document.createElement('canvas');
-                    cvs.width = 512;
-                    cvs.height = 64;
-                    const ctx = cvs.getContext('2d');
-                    ctx.fillStyle = color;
-                    ctx.font = "bold 32px 'Noto Sans KR', sans-serif";
-                    ctx.textAlign = "center";
-                    ctx.shadowColor = "black";
-                    ctx.shadowBlur = 4;
-                    ctx.fillText(text, 256, 42);
-                    const tex = new THREE.CanvasTexture(cvs);
-                    const mat = new THREE.SpriteMaterial({ map: tex, transparent: true, depthWrite: false });
-                    const sprite = new THREE.Sprite(mat);
-                    sprite.scale.set(160, 20, 1);
-                    return sprite;
-                }
-                zMidText = createTextSprite("한밤중 남쪽 하늘 (관측)", "#38bdf8");
-                zSunText = createTextSprite("이달의 황도 별자리 (안 보임)", "#fbbf24");
-                zScene.add(zMidText);
-                zScene.add(zSunText);
-
-                // Handle resize
-                window.addEventListener('resize', () => {
-                    if (zRenderer && zCamera && container) {
-                        const w = container.clientWidth;
-                        const h = container.clientHeight;
-                        zCamera.aspect = w / h;
-                        zCamera.updateProjectionMatrix();
-                        zRenderer.setSize(w, h);
-                    }
-                });
-            }
-
-            window.currentZodiacMonth = 1.0;
-
-            window.updateZodiacUI = function updateZodiacUI() {
-                const monthSlider = document.getElementById('zodiacMonthSlider');
-                const monthBadge = document.getElementById('zodiacMonthBadge');
-                const monthDisplay = document.getElementById('zodiacCurrentMonth');
-                const monthDisplay2 = document.getElementById('zodiacCurrentMonth2');
-                const bigMonthDisplay = document.getElementById('zodiacMonthDisplay');
-                const txtSunConst = document.getElementById('zodiacSunConst');
-                const txtMidConst = document.getElementById('zodiacMidConst');
-                const storyTitle = document.getElementById('zodiacStoryTitle');
-                const storyDesc = document.getElementById('zodiacStoryDesc');
-                const skyGroup = document.getElementById('zodiacSkyConstellation');
-
-                if (!monthSlider) return;
-                const monthVal = parseFloat(monthSlider.value) || window.currentZodiacMonth || 1.0;
-                let monthBase = Math.floor(monthVal + 0.3);
-                if (monthBase < 1) monthBase = 12;
-                if (monthBase > 12) monthBase = 1;
-
-                if (monthBadge) monthBadge.textContent = `${monthBase}월`;
-                if (monthDisplay) monthDisplay.textContent = `${monthBase}월`;
-                if (monthDisplay2) monthDisplay2.textContent = `${monthBase}월`;
-                const engMonths = ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec'];
-                if (bigMonthDisplay) bigMonthDisplay.textContent = `${monthBase}월 (${engMonths[monthBase-1]})`;
-
-                // Update Earth & Lasers
-                const orbitAngle = -(monthVal - 1) * 30 * Math.PI / 180; 
-                const ex = 80 * Math.sin(orbitAngle);
-                const ez = -80 * Math.cos(orbitAngle);
-                
-                if (zEarth) zEarth.position.set(ex, 0, ez);
-                
-                if (zMidLine && zSunLine) {
-                    const mx = 260 * Math.sin(orbitAngle);
-                    const mz = -260 * Math.cos(orbitAngle);
-                    zMidLine.geometry.setFromPoints([new THREE.Vector3(ex, 0, ez), new THREE.Vector3(mx, 0, mz)]);
-                    
-                    const sx = 260 * Math.sin(orbitAngle + Math.PI);
-                    const sz = -260 * Math.cos(orbitAngle + Math.PI);
-                    zSunLine.geometry.setFromPoints([new THREE.Vector3(ex, 0, ez), new THREE.Vector3(sx, 0, sz)]);
-                    
-                    if (zMidText) zMidText.position.set(mx + 20*Math.sin(orbitAngle), 30, mz - 20*Math.cos(orbitAngle));
-                    if (zSunText) zSunText.position.set(sx + 20*Math.sin(orbitAngle + Math.PI), 30, sz - 20*Math.cos(orbitAngle + Math.PI));
-                }
-
-                // Update right panel info
-                const zData = zodiacConstellations[monthBase - 1];
-                if (zData) {
-                    if (txtSunConst) txtSunConst.textContent = zData.sunConst || (monthBase >= 7 ? zodiacConstellations[monthBase-7].name : zodiacConstellations[monthBase>6?monthBase-7:monthBase+5].name);
-                    if (txtMidConst) txtMidConst.textContent = zData.name;
-                    if (storyTitle) storyTitle.innerHTML = `<span style="font-size:24px;">${zData.emoji}</span> <span style="color:#fbbf24;">${zData.name}</span>`;
-                    if (storyDesc && zData.story) storyDesc.innerHTML = zData.story;
-
-                    if (skyGroup) {
-                        skyGroup.innerHTML = '';
-                        if (zData.stars) {
-                            zData.lines.forEach(lineIdx => {
-                                const p1 = zData.stars[lineIdx[0]];
-                                const p2 = zData.stars[lineIdx[1]];
-                                const line = document.createElementNS("http://www.w3.org/2000/svg", "line");
-                                line.setAttribute("x1", p1[0]);
-                                line.setAttribute("y1", p1[1]);
-                                line.setAttribute("x2", p2[0]);
-                                line.setAttribute("y2", p2[1]);
-                                line.setAttribute("stroke", "#38bdf8");
-                                line.setAttribute("stroke-width", "2");
-                                skyGroup.appendChild(line);
-                            });
-
-                            zData.stars.forEach(p => {
-                                const circle = document.createElementNS("http://www.w3.org/2000/svg", "circle");
-                                circle.setAttribute("cx", p[0]);
-                                circle.setAttribute("cy", p[1]);
-                                circle.setAttribute("r", "5.5");
-                                circle.setAttribute("fill", "#fbbf24");
-                                circle.setAttribute("style", "filter: drop-shadow(0 0 8px rgba(251,191,36,0.9));");
-                                skyGroup.appendChild(circle);
-                            });
-                        }
-                    }
-                }
-            };
-
-            const speedSlider = document.getElementById('zodiacSpeedSlider');
-            const speedBadge = document.getElementById('zodiacSpeedBadge');
-            const monthSlider = document.getElementById('zodiacMonthSlider');
-
-            if (monthSlider) {
-                monthSlider.addEventListener('input', function() {
-                    window.currentZodiacMonth = parseFloat(this.value);
-                    updateZodiacUI();
-                });
-            }
-
-            if (speedSlider) {
-                speedSlider.addEventListener('input', function() {
-                    const spd = parseFloat(this.value);
-                    if (speedBadge) {
-                        speedBadge.textContent = (spd === 0) ? '0.0x (정지)' : spd.toFixed(1) + 'x';
-                    }
-                });
-            }
-
-            function animateZodiacOrbit() {
-                if (reqId) cancelAnimationFrame(reqId);
-                const spd = speedSlider ? parseFloat(speedSlider.value) || 0 : 0;
-                if (spd > 0) {
-                    window.currentZodiacMonth += 0.015 * spd;
-                    if (window.currentZodiacMonth > 12.99) window.currentZodiacMonth = 1.0;
-                    if (monthSlider) monthSlider.value = window.currentZodiacMonth;
-                    updateZodiacUI();
-                }
-                if (zControls) zControls.update();
-                if (zRenderer && zScene && zCamera) {
-                    zRenderer.render(zScene, zCamera);
-                }
-                reqId = requestAnimationFrame(animateZodiacOrbit);
-            }
-            
-            // Allow tab switching to re-init
-            window.addEventListener('simModeChanged', (e) => {
-                if(e.detail.mode === 'zodiac') {
-                    if(!zRenderer) {
-                        initThreeZodiac();
-                        updateZodiacUI();
-                        animateZodiacOrbit();
-                    } else {
-                        // resize
-                        const container = document.getElementById('zodiac3dContainer');
-                        if(container) {
-                            zCamera.aspect = container.clientWidth / container.clientHeight;
-                            zCamera.updateProjectionMatrix();
-                            zRenderer.setSize(container.clientWidth, container.clientHeight);
-                        }
-                    }
-                }
-            });
-
-            // Initial init
-            initThreeZodiac();
-            updateZodiacUI();
-            animateZodiacOrbit();
-        })();
-
-// Interactive Seasonal Star Map Rotation & Upright Text Engine (Unified Global State)
-        window.currentAngle = 0;
-        window.diurnalSpeed = 1.0;
-        window.diurnalPlaying = true;
-        window.diurnalLinesOn = true;
-
-        window.setSeasonAngle = function(angle) {
-            window.currentAngle = parseFloat(angle) || 0;
-            if (typeof window.updateDiurnalUI === 'function') {
-                window.updateDiurnalUI();
-            }
-        };
-
-        (function() {
-            const seasonStories = {
-                0: {
-                    title: "🌸 봄철 - 북두칠성 (큰곰자리)",
-                    desc: "우리 조상들이 길흉화복을 빌던 칠성님 이야기! 제우스의 사랑을 받다 여신 헤라의 질투로 큰곰이 된 아름다운 님프 칼리스토와 작은곰 아들 알카스가 영원히 북극성 주변을 도는 큰곰자리 신화입니다."
-                },
-                90: {
-                    title: "🌿 여름철 - 백조자리 & 여름철 대삼각형 (견우와 직녀)",
-                    desc: "은하수를 향해 십자가 모양 날개를 펼친 백조자리(Cygnus - 데네브)와 양옆의 직녀성(Vega), 견우성(Altair) 신화입니다! 제우스가 변신한 성스러운 백조 전설 및 강에 떨어진 친구 파에톤을 찾으러 물속에 몸을 던진 충직한 친구 키크노스(Cycnus)의 깊은 우정, 그리고 칠월칠석 오작교를 건너 만나는 견우와 직녀의 아름다운 전설이 담겨 있습니다."
-                },
-                180: {
-                    title: "🍁 가을철 - 카시오페이아 (W 모양)",
-                    desc: "허영심이 많았던 에티오피아의 왕비 카시오페이아의 신화입니다. '내 딸 안드로메다가 바다 님프보다 아름답다'고 자랑하다 포세이돈의 분노를 샀고, 벌로 의자에 묶여 거꾸로 뒤집혀 북극성 주변을 도는 'W' 자 별자리가 되었습니다."
-                },
-                270: {
-                    title: "❄️ 겨울철 - 오리온자리 (삼태성)",
-                    desc: "밤하늘에서 가장 장엄하고 밝은 사냥꾼 오리온의 별자리입니다. 사냥의 여신 아르테미스와 사랑에 빠졌으나 아폴론의 흉계로 아르테미스가 쏜 화살에 맞아 안타깝게 목숨을 잃자 제우스가 겨울 밤하늘의 주인으로 만들어주었습니다."
-                }
-            };
-
-            const seasonData = [
-                { angle: 0, title: "봄철 별자리 (Spring Sky)", info: "북두칠성과 봄철 대곡선 (아르크투루스·스피카)", progress: "봄철 밤하늘 (Spring Sky)" },
-                { angle: 90, title: "여름철 별자리 (Summer Sky)", info: "여름철 대삼각형 (직녀성·견우성·데네브)", progress: "여름철 밤하늘 (Summer Sky)" },
-                { angle: 180, title: "가을철 별자리 (Autumn Sky)", info: "가을철 대사각형 (페가수스) & 카시오페이아", progress: "가을철 밤하늘 (Autumn Sky)" },
-                { angle: 270, title: "겨울철 별자리 (Winter Sky)", info: "겨울철 대육각형 (베텔게우스·시리우스·리겔)", progress: "겨울철 밤하늘 (Winter Sky)" }
-            ];
-
-            const textConfig = [
-                { id: 'textSpring', initX: 180, initY: 98 },
-                { id: 'textAutumn', initX: 375, initY: 392 },
-                { id: 'textWinter', initX: 148, initY: 408 },
-                { id: 'textSummer', initX: 350, initY: 105 }
-            ];
-
-            window.updateDiurnalUI = function updateUI() {
-                const rotationGroup = document.getElementById('starRotationGroup');
-                if (isNaN(window.currentAngle)) window.currentAngle = 0;
-
-                // 1. Rotate Star Constellation Lines & Dots
-                if (rotationGroup) {
-                    rotationGroup.setAttribute('transform', `rotate(${-window.currentAngle} 250 250)`);
-                }
-
-                // 2. Compute Rotated Coordinates for Text Labels to keep them 100% Upright & Horizontal!
-                const rad = -window.currentAngle * (Math.PI / 180);
-                textConfig.forEach(cfg => {
-                    const el = document.getElementById(cfg.id);
-                    if (el) {
-                        const dx = cfg.initX - 250;
-                        const dy = cfg.initY - 250;
-                        const nx = 250 + dx * Math.cos(rad) - dy * Math.sin(rad);
-                        const ny = 250 + dx * Math.sin(rad) + dy * Math.cos(rad);
-                        el.setAttribute('x', nx);
-                        el.setAttribute('y', ny);
-                    }
-                });
-
-                let normAngle = (window.currentAngle % 360 + 360) % 360;
-                let closestIdx = 0;
-                let minDist = 360;
-                seasonData.forEach((s, idx) => {
-                    let d = Math.abs(normAngle - s.angle);
-                    if (d > 180) d = 360 - d;
-                    if (d < minDist) { minDist = d; closestIdx = idx; }
-                });
-
-                const sData = seasonData[closestIdx];
-                const elTitle = document.getElementById('stSeasonTitle');
-                const elInfo = document.getElementById('stObsInfo');
-                const elProgress = document.getElementById('stOrbitProgressText');
-                if (elTitle) elTitle.textContent = sData.title;
-                if (elInfo) elInfo.textContent = sData.info;
-                if (elProgress) elProgress.textContent = sData.progress;
-
-                // Dynamically update Story Card in real-time as Star Map rotates!
-                const stStoryTitle = document.getElementById('stStoryTitle');
-                const stStoryDesc = document.getElementById('stStoryDesc');
-                const storyObj = seasonStories[sData.angle];
-                if (stStoryTitle && storyObj) stStoryTitle.textContent = storyObj.title;
-                if (stStoryDesc && storyObj) stStoryDesc.textContent = storyObj.desc;
-
-                const chips = document.querySelectorAll('#seasonChipsGrid .phase-chip');
-                chips.forEach(c => {
-                    if (parseInt(c.dataset.angle, 10) === sData.angle) {
-                        c.classList.add('active');
-                    } else {
-                        c.classList.remove('active');
-                    }
-                });
-            };
-
-            function animateDiurnal() {
-                if (window.diurnalPlaying && window.diurnalSpeed > 0) {
-                    window.currentAngle += 0.2 * window.diurnalSpeed;
-                    window.updateDiurnalUI();
-                }
-                requestAnimationFrame(animateDiurnal);
-            }
-            requestAnimationFrame(animateDiurnal);
-
-            // Bind Control Elements
-            const stPlayBtn = document.getElementById('stPlayBtn');
-            const stResetBtn = document.getElementById('stResetBtn');
-            const stSpeedSlider = document.getElementById('stSpeedSlider');
-            const stSpeedValBadge = document.getElementById('stSpeedValBadge');
-            const stLinesToggleBtn = document.getElementById('stLinesToggleBtn');
-
-            if (stPlayBtn) {
-                stPlayBtn.onclick = function() {
-                    window.diurnalPlaying = !window.diurnalPlaying;
-                    if (window.diurnalPlaying) {
-                        this.textContent = '⏸️ 자동 회전: ON';
-                        this.style.background = 'rgba(56, 189, 248, 0.25)';
-                        this.style.color = '#38bdf8';
-                        this.style.borderColor = '#38bdf8';
-                    } else {
-                        this.textContent = '▶️ 자동 회전: 일시정지';
-                        this.style.background = 'rgba(251, 191, 36, 0.2)';
-                        this.style.color = '#fbbf24';
-                        this.style.borderColor = '#fbbf24';
-                    }
-                };
-            }
-
-            if (stResetBtn) {
-                stResetBtn.onclick = function() {
-                    // 1. Reset Mode 3 (3D Celestial Sphere) Camera, Controls & Observer State
-                    if (window.reset3DCelestialView) {
-                        window.reset3DCelestialView();
-                    }
-
-                    // 2. Reset Mode 2 (Diurnal Constellations)
-                    window.currentAngle = 0;
-                    if (window.updateDiurnalUI) window.updateDiurnalUI();
-
-                    // 3. Reset Mode 1 (Zodiac Orbit Angle)
-                    if (window.resetZodiacOrbit) window.resetZodiacOrbit();
-
-                    // 4. Reset Mode 4 (Compare Sliders)
-                    if (window.resetCompareSliders) window.resetCompareSliders();
-                };
-            }
-
-            if (stSpeedSlider) {
-                stSpeedSlider.oninput = function() {
-                    window.diurnalSpeed = parseFloat(this.value);
-                    if (stSpeedValBadge) {
-                        stSpeedValBadge.textContent = (window.diurnalSpeed === 0) ? '0.0x (정지)' : window.diurnalSpeed.toFixed(1) + 'x';
-                    }
-                };
-            }
-
-            if (stLinesToggleBtn) {
-                stLinesToggleBtn.onclick = function() {
-                    window.diurnalLinesOn = !window.diurnalLinesOn;
-                    this.textContent = `⭐ 별자리 선 표시: ${window.diurnalLinesOn ? 'ON' : 'OFF'}`;
-                    const rotationGroup = document.getElementById('starRotationGroup');
-                    if (rotationGroup) {
-                        const polylines = rotationGroup.querySelectorAll('polyline, polygon, line');
-                        polylines.forEach(p => {
-                            p.style.display = window.diurnalLinesOn ? 'block' : 'none';
-                        });
-                    }
-                };
-            }
-        })();
-
-// Mode 4: Diurnal vs Annual Motion Interactive JS Engine
-        (function() {
-            const diurnalSlider = document.getElementById('diurnalSlider');
-            const diurnalRotGroup = document.getElementById('diurnalRotGroup');
-            const diurnalTimeLabel = document.getElementById('diurnalTimeLabel');
-            const diurnalAngleLabel = document.getElementById('diurnalAngleLabel');
-
-            const annualSlider = document.getElementById('annualSlider');
-            const annualRotGroup = document.getElementById('annualRotGroup');
-            const annualDateLabel = document.getElementById('annualDateLabel');
-            const annualAngleLabel = document.getElementById('annualAngleLabel');
-
-            const monthNames = ["1월", "2월", "3월", "4월", "5월", "6월", "7월", "8월", "9월", "10월", "11월", "12월"];
-
-            function getKoreanNightTimeStr(h) {
-                if (h === 19) return "저녁 7시";
-                if (h === 20) return "저녁 8시";
-                if (h === 21) return "밤 9시";
-                if (h === 22) return "밤 10시";
-                if (h === 23) return "밤 11시";
-                if (h === 0 || h === 24) return "자정 12시 (한밤중)";
-                if (h >= 1 && h <= 6) return `새벽 ${h}시`;
-                return `${h}시`;
-            }
-
-            const diurnalRotGroupAU = document.getElementById('diurnalRotGroupAU');
-            const annualRotGroupAU = document.getElementById('annualRotGroupAU');
-
-            if (diurnalSlider) {
-                diurnalSlider.oninput = function() {
-                    const hours = Math.round(parseFloat(this.value));
-                    const angle = hours * 15; // Discrete 15° increments (0°, 15°, 30°, 45°... 180°)
-                    
-                    // 🇰🇷 Korea (KR Northern Sky): Counter-Clockwise (-angle)
-                    if (diurnalRotGroup) diurnalRotGroup.setAttribute('transform', `rotate(${-angle} 120 78)`);
-                    
-                    // 🇦🇺 Australia (AU Southern Sky): Clockwise (+angle)
-                    if (diurnalRotGroupAU) diurnalRotGroupAU.setAttribute('transform', `rotate(${angle} 120 78)`);
-
-                    const currentHour = (19 + hours) % 24;
-                    const periodStr = getKoreanNightTimeStr(currentHour);
-                    
-                    if (diurnalTimeLabel) diurnalTimeLabel.textContent = `${periodStr} (+${hours}시간)`;
-                    if (diurnalAngleLabel) diurnalAngleLabel.textContent = `${angle}° (KR: 🔄 / AU: 🔃)`;
-                };
-            }
-
-            if (annualSlider) {
-                annualSlider.oninput = function() {
-                    const monthVal = Math.round(parseFloat(this.value));
-                    const monthsPassed = monthVal - 1;
-                    const angle = monthsPassed * 30; // Discrete 30° increments (0°, 30°, 60°, 90°... 330°)
-                    
-                    // 🇰🇷 Korea (KR Northern Sky): Counter-Clockwise (-angle)
-                    if (annualRotGroup) annualRotGroup.setAttribute('transform', `rotate(${-angle} 120 78)`);
-
-                    // 🇦🇺 Australia (AU Southern Sky): Clockwise (+angle)
-                    if (annualRotGroupAU) annualRotGroupAU.setAttribute('transform', `rotate(${angle} 120 78)`);
-
-                    const mIdx = (monthVal - 1) % 12;
-                    if (annualDateLabel) annualDateLabel.textContent = `${monthNames[mIdx]} (+${monthsPassed}달)`;
-                    if (annualAngleLabel) annualAngleLabel.textContent = `${angle}° (KR: 🔄 / AU: 🔃)`;
-                };
-            }
-        })();
-
-        
-        // Photorealistic Stellar Evolution Interactive Knob Engine
-        (function() {
-            const trackSunData = [
-                {
-                    stage: "1단계",
-                    name: "성간 물질 & 성운 (Stellar Nebula)", emoji: "", date: "",
-                    timeText: "진화 0% ~ 10% (탄생기)",
-                    desc: "우주 공간에 흩어져 있던 수소 가스와 미세한 먼지들이 중력에 의해 밀집하며 수축하기 시작합니다. 내부 중심 온도가 약 1,000만 K에 도달하면 수소 핵융합 반응이 시작되며 빛나는 아기 별이 탄생합니다.",
-                    specs: "• 대표 예시: 오리온 성운 (M42) | 소요 시간: 수백만 년 | 상태: 수축하는 성간 가스 구름",
-                    img: "assets/images/stellar/nebula.jpg"
-                },
-                {
-                    stage: "2단계",
-                    name: "주계열성 (Main Sequence - 예: 태양)", emoji: "", date: "",
-                    desc: "중심부 수소 핵융합 반응으로 내부 압력과 중력이 완벽한 균형을 이루어 별의 전성기(전체 일생의 90%)를 보냅니다. 태양은 현재 이 단계에 위치해 있습니다.",
-                    timeText: "진화 10% ~ 70% (주계열 안정기)",
-                    specs: "• 대표 예시: 태양 (Sun), 시리우스 A | 수명: 약 100억 년 | 표면 온도: 약 5,800 K",
-                    img: "assets/images/stellar/main_sequence.jpg"
-                },
-                {
-                    stage: "3단계",
-                    name: "적색거성 (Red Giant - 예: 알데바란)", emoji: "", date: "",
-                    desc: "중심부 수소가 모두 소진되면 중심부는 수축하고 바깥 껍질은 거대하게 팽창합니다. 표면 온도가 낮아져 붉은색으로 크게 부풀어 오릅니다. (태양도 약 50억 년 후 지구 궤도까지 부풀어 오름)",
-                    timeText: "진화 70% ~ 90% (거성 팽창기)",
-                    specs: "• 대표 예시: 황소자리 알데바란 | 크기: 태양의 100배 팽창 | 표면 색상: 붉은색 (3,000 K)",
-                    img: "assets/images/stellar/red_giant.jpg"
-                },
-                {
-                    stage: "4단계",
-                    name: "행성상 성운 (Planetary Nebula)", emoji: "", date: "",
-                    desc: "적색거성의 바깥 껍질 가스가 우주 공간으로 방출되어 화려한 고리 모양의 성운을 이룹니다. 방출된 가스와 원소들은 다음 세대 별과 행성의 재료로 환원됩니다.",
-                    timeText: "진화 90% ~ 98% (가스 방출기)",
-                    specs: "• 대표 예시: 거문고자리 고리 성운 (M57) | 상태: 우주로 퍼져나가는 팽창 가스 껍질",
-                    img: "assets/images/stellar/planetary_nebula.jpg"
-                },
-                {
-                    stage: "5단계",
-                    name: "백색왜성 (White Dwarf - 종말)", emoji: "", date: "",
-                    desc: "행성상 성운이 벗겨지고 남은 고밀도의 고온 중심핵입니다. 지구 크기로 매우 작지만 밀도가 엄청나게 높아 수십억 년 동안 서서히 차갑게 식어갑니다.",
-                    timeText: "진화 98% ~ 100% (사멸 및 서서히 식음)",
-                    specs: "• 대표 예시: 시리우스 B | 크기: 지구 크기 | 밀도: 1cm³ 당 약 1톤 | 상태: 별의 최종 사체",
-                    img: "assets/images/stellar/white_dwarf.jpg"
-                }
-            ];
-
-            const trackMassiveData = [
-                {
-                    stage: "1단계",
-                    name: "거대 성간 물질 (Massive Nebula)", emoji: "", date: "",
-                    desc: "태양보다 10배 이상 무거운 거대 가스 구름이 막대한 중력으로 빠르게 수축합니다. 일반 성운보다 훨씬 격렬하게 붕괴하며 초대형 아기 별을 형성합니다.",
-                    timeText: "진화 0% ~ 10% (거대 탄생기)",
-                    specs: "• 대표 예시: 독수리 성운 (창조의 기둥) | 밀도: 초고밀도 수소 구름",
-                    img: "assets/images/stellar/nebula.jpg"
-                },
-                {
-                    stage: "2단계",
-                    name: "청색 초거성 (Blue Supergiant - 예: 리겔)", emoji: "", date: "",
-                    desc: "질량이 엄청나게 커서 수소 핵융합이 매우 격렬하게 일어납니다. 표면 온도가 10,000~20,000 K 이상으로 극도로 높아 푸른빛을 강렬하게 발산합니다.",
-                    timeText: "진화 10% ~ 65% (고온 초거성기)",
-                    specs: "• 대표 예시: 오리온자리 리겔 (Rigel) | 수명: 수천만 년 (연료 폭발적 소모)",
-                    img: "assets/images/stellar/blue_supergiant.jpg"
-                },
-                {
-                    stage: "3단계",
-                    name: "적색 초거성 (Red Supergiant - 예: 베텔게우스)", emoji: "", date: "",
-                    desc: "내부에서 헬륨, 탄소, 산소, 규소, 철까지 연속 핵융합이 일어나며 목성 궤도까지 상상을 초월할 정도로 거대하게 부풀어 오른 붉은 거대 별입니다.",
-                    timeText: "진화 65% ~ 88% (초거대 팽창기)",
-                    specs: "• 대표 예시: 베텔게우스 (Betelgeuse) | 크기: 태양의 1,000배 이상 | 초신성 폭발 임박",
-                    img: "assets/images/stellar/red_supergiant.jpg"
-                },
-                {
-                    stage: "4단계",
-                    name: "초신성 대폭발 (Supernova - 우주 최강 대폭발!)", emoji: "", date: "",
-                    desc: "중심부에 철(Fe)이 형성되어 핵융합이 멈추면 자중으로 붕괴하다가 일시에 엄청난 우주 대폭발을 일으킵니다! 이때 은하 전체보다 밝은 빛을 내며 금, 은, 우라늄 중원소를 우주로 살포합니다.",
-                    timeText: "진화 88% ~ 95% (초신성 폭발 순간)",
-                    specs: "• 대표 예시: 게 성운 (SN 1054) | 밝기: 은하 1개 전체 밝기 상회",
-                    img: "assets/images/stellar/supernova.jpg"
-                },
-                {
-                    stage: "5단계",
-                    name: "중성자성 또는 블랙홀 (Neutron Star / Black Hole)", emoji: "", date: "",
-                    desc: "초신성 폭발 후 잔해가 극도로 압축되어 중성자성이 되거나, 질량이 극도로 큰 경우 빛조차 탈출할 수 없는 시공간의 구멍 블랙홀이 생성됩니다.",
-                    timeText: "진화 95% ~ 100% (시공간 붕괴 사멸)",
-                    specs: "• 밀도: 무한대 (티스푼 1개당 10억 톤 이상) | 블랙홀 사건의 지평선 형성",
-                    img: "assets/images/stellar/black_hole.jpg"
-                }
-            ];
-
-            let activeTrack = 'sun';
-            let activeIdx = 0;
-
-            const btnSun = document.getElementById('btnTrackSun');
-            const btnMassive = document.getElementById('btnTrackMassive');
-            const sliderKnob = document.getElementById('stellarTimeKnob');
-            const timeValText = document.getElementById('stellarTimeValText');
-            const nodesBox = document.getElementById('stellarStageNodes');
-            const titleEl = document.getElementById('lifeTrackTitle');
-            const stageNameEl = document.getElementById('stageName');
-            const stageDescEl = document.getElementById('stageDesc');
-            const stageSpecsEl = document.getElementById('stageSpecs');
-            const realImgEl = document.getElementById('stageRealImage');
-
-            function getStageIdxFromPercent(pct) {
-                if (pct < 20) return 0;
-                if (pct < 60) return 1;
-                if (pct < 85) return 2;
-                if (pct < 95) return 3;
-                return 4;
-            }
-
-            function updateStellarVisualizer() {
-                const data = activeTrack === 'sun' ? trackSunData : trackMassiveData;
-                const item = data[activeIdx];
-
-                if(titleEl) {
-                    titleEl.textContent = activeTrack === 'sun' 
-                        ? '☀️ [태양급 보통 별] 성운 ➔ 주계열성 ➔ 적색거성 ➔ 행성상 성운 ➔ 백색왜성'
-                        : '💥 [초대질량 거대 별] 성운 ➔ 청색 초거성 ➔ 적색 초거성 ➔ 초신성 폭발 ➔ 블랙홀';
-                }
-
-                if(nodesBox) {
-                    nodesBox.innerHTML = '';
-                    data.forEach((st, idx) => {
-                        const btn = document.createElement('button');
-                        const isSel = idx === activeIdx;
-                        btn.style.cssText = `padding: 8px; background: ${isSel ? 'rgba(56,189,248,0.25)' : 'rgba(15,23,42,0.8)'}; border: 1.5px solid ${isSel ? '#38bdf8' : 'rgba(255,255,255,0.15)'}; border-radius: 12px; cursor: pointer; text-align: center; transition: all 0.2s;`;
-                        btn.innerHTML = `<div style="width: 100%; height: 95px; background: #030712; display: flex; align-items: center; justify-content: center; border-radius: 8px; overflow: hidden; margin-bottom: 6px; border: 1px solid rgba(255,255,255,0.2);"><img src="${st.img}" style="width:100%; height:100%; object-fit:cover;"></div><div style="font-size: 11.5px; font-weight: 800; color: ${isSel ? '#38bdf8' : '#e2e8f0'};">${st.stage}</div><div style="font-size: 10.5px; color: #94a3b8; margin-top: 2px;">${st.name.split('(')[0]}</div>`;
-                        btn.onclick = () => {
-                            activeIdx = idx;
-                            const samplePcts = [5, 35, 75, 90, 98];
-                            if(sliderKnob) sliderKnob.value = samplePcts[idx];
-                            updateStellarVisualizer();
-                        };
-                        nodesBox.appendChild(btn);
-                    });
-                }
-
-                if (stageNameEl) stageNameEl.textContent = item.name;
-                if (stageDescEl) stageDescEl.textContent = item.desc;
-                if (stageSpecsEl) stageSpecsEl.textContent = item.specs;
-                if (timeValText) timeValText.textContent = item.timeText;
-                
-                if (realImgEl) {
-                    realImgEl.src = item.img;
-                    realImgEl.alt = item.name;
-                }
-            }
-
-            if (sliderKnob) {
-                sliderKnob.oninput = function() {
-                    const val = parseInt(sliderKnob.value);
-                    activeIdx = getStageIdxFromPercent(val);
-                    updateStellarVisualizer();
-                };
-            }
-
-            if (btnSun) {
-                btnSun.onclick = function() {
-                    activeTrack = 'sun';
-                    activeIdx = 0;
-                    if(sliderKnob) sliderKnob.value = 0;
-                    btnSun.style.background = '#0284c7';
-                    btnSun.style.color = '#fff';
-                    btnSun.style.borderColor = '#38bdf8';
-
-                    btnMassive.style.background = 'rgba(15,23,42,0.85)';
-                    btnMassive.style.color = '#94a3b8';
-                    btnMassive.style.borderColor = 'rgba(255,255,255,0.2)';
-                    updateStellarVisualizer();
-                };
-            }
-
-            if (btnMassive) {
-                btnMassive.onclick = function() {
-                    activeTrack = 'massive';
-                    activeIdx = 0;
-                    if(sliderKnob) sliderKnob.value = 0;
-                    btnMassive.style.background = '#ef4444';
-                    btnMassive.style.color = '#fff';
-                    btnMassive.style.borderColor = '#f87171';
-
-                    btnSun.style.background = 'rgba(15,23,42,0.85)';
-                    btnSun.style.color = '#94a3b8';
-                    btnSun.style.borderColor = 'rgba(255,255,255,0.2)';
-                    updateStellarVisualizer();
-                };
-            }
-
-            updateStellarVisualizer();
-        })();
-
-                // Dedicated Stars & Constellations Quiz Engine (100% Curriculum Exam Aligned)
-        (function() {
-            const quizData = [
-                {
-                    q: "1. [회전 각도 & 자전] 관측자가 북쪽 하늘을 관찰할 때 카시오페이아자리가 북극성을 중심으로 시계 반대 방향으로 90° 회전하였습니다. 이 회전 운동에 소요된 시간과 원인으로 가장 적절한 것은?",
-                    ans: 1,
-                    opts: ["4시간, 지구의 자전", "6시간, 지구의 자전", "6시간, 지구의 공전", "4시간, 지구의 공전"],
-                    exp: "해설: 별은 1시간에 15°씩 회전하므로 90° ÷ 15°/시간 = 6시간이 소요되며, 이는 지구가 하루에 한 바퀴씩 자전하기 때문에 나타나는 겉보기 운동입니다."
-                },
-                {
-                    q: "2. [일주 운동 원인] 북반구에서 북쪽 하늘을 바라볼 때 별들이 북극성을 중심으로 시계 반대 방향으로 회전하는 근본적인 원인은 무엇인가?",
-                    ans: 0,
-                    opts: ["지구가 서에서 동으로 자전하기 때문에", "지구가 동에서 서 자전하기 때문에", "별들이 우주에서 시계 반대 방향으로 공전하기 때문에", "지구가 태양 주위를 서에서 동으로 공전하기 때문에"],
-                    exp: "해설: 지구가 서쪽에서 동쪽으로 자전하기 때문에, 북쪽 밤하늘의 별들은 반대 방향인 동쪽에서 서쪽(시계 반대 방향)으로 회전하는 것처럼 보입니다."
-                },
-                {
-                    q: "3. [북극성 고도 보존] 어느 날 밤 9시부터 다음 날 새벽 3시까지 같은 장소(위도 37.5°N)에서 북쪽 하늘을 지속적으로 관찰하였습니다. 이 시간 동안 북극성의 고도 변화에 대한 설명으로 옳은 것은?",
-                    ans: 1,
-                    opts: ["고도는 밤 12시에 최고에 달한 후 낮아진다.", "고도는 37.5°로 변화가 없다.", "고도는 시간이 지남에 따라 점차 높아진다.", "고도는 시간이 지남에 따라 점차 낮아진다."],
-                    exp: "해설: 북극성은 지구 자전축의 연장선상에 위치하므로, 밤이 지나고 지구가 자전해도 북극성의 고도는 변하지 않고 그 지역의 위도 값(37.5°)으로 일정하게 유지됩니다."
-                },
-                {
-                    q: "4. [북쪽 하늘 방향 계산] 밤 8시에 북두칠성이 북극성을 기준 6시 방향(북극성 바로 아래)에서 관찰되었습니다. 6시간 후인 새벽 2시에 북두칠성이 위치하는 방향은 어디인가?",
-                    ans: 0,
-                    opts: ["북극성의 동쪽 (3시 방향)", "북극성의 서쪽 (9시 방향)", "북극성의 남쪽 (6시 방향)", "북극성의 북쪽 (12시 방향)"],
-                    exp: "해설: 북쪽 하늘의 별들은 북극성을 중심으로 시계 반대 방향으로 1시간에 15°씩(6시간 동안 90°) 회전합니다. 6시 방향에서 시계 반대 방향으로 90° 회전하면 3시 방향(동쪽)에 위치하게 됩니다."
-                },
-                {
-                    q: "5. [위도와 북극성 고도] 적도(위도 0°) 지방에서 북쪽 하늘을 바라볼 때, 북극성의 위치 및 주변 별들의 일주 운동 모습에 대한 설명으로 옳은 것은?",
-                    ans: 1,
-                    opts: ["북극성이 45° 고도에 떠 있다.", "북극성이 지평선 위에 있고 지평선과 수직으로 운동한다.", "북극성이 머리 바로 위(90°)에 위치한다.", "북극성이 지평선 아래로 들어가 보이지 않는다."],
-                    exp: "해설: [관측자의 위도 = 북극성의 고도] 원리에 따라, 적도(위도 0°)에서는 북극성의 고도가 0°가 되어 북쪽 지평선 위에 걸쳐 보이며 주변 별들이 지평선과 수직으로 운동합니다."
-                },
-                {
-                    q: "6. [황도 12궁 & 남쪽 하늘] 지구가 8월 위치에 있을 때(태양이 게자리 방향), 한밤중(자정) 남쪽 하늘에서 잘 보이는 별자리는?\n\n📌 [황도 12궁 월별 위치 순서 참고표]\n• 1월: 궁수 | 2월: 염소 | 3월: 물병 | 4월: 물고기 | 5월: 양 | 6월: 황소\n• 7월: 쌍둥이 | 8월: 게   | 9월: 사자 | 10월: 처녀 | 11월: 천칭 | 12월: 전갈",
-                    ans: 1,
-                    opts: ["전갈자리 (6월 황도)", "염소자리 (8월 남중)", "물병자리 (9월 남중)", "황소자리 (12월 남중)"],
-                    exp: "해설: 한밤중(자정) 남쪽 하늘은 관측자가 '태양의 정반대 방향(180° 반대 / 6개월 차이)'을 바라볼 때입니다. 8월 태양 방향(게자리)의 맞은편(6개월 차이)은 남중하는 염소자리입니다."
-                },
-                {
-                    q: "7. [연주 운동 원인] 매일 밤 같은 시간(밤 9시)에 북쪽 하늘의 별자리를 관찰하면, 별자리의 위치가 하루에 약 1°씩 시계 반대 방향으로 이동합니다. 같은 시간에 관찰했을 때 발생하는 이 현상의 원인은 무엇인가?",
-                    ans: 0,
-                    opts: ["지구의 공전", "지구의 자전", "태양의 자전", "달의 공전"],
-                    exp: "해설: 매일 같은 시간에 관찰할 때 별자리가 하루에 약 1°씩(1달에 30°) 시계 반대 방향으로 이동하는 현상은 '별의 연주 운동'이며, 그 근본적인 원인은 지구가 태양 주위를 1년에 한 바퀴씩 서에서 동으로 공전하기 때문입니다."
-                }
-            ];
-
-            let curr = 0;
-            function loadQuestion() {
-                const item = quizData[curr];
-                document.getElementById('stQuizProgress').textContent = `문제 ${curr + 1} / ${quizData.length}`;
-                document.getElementById('stQuestionText').textContent = item.q;
-                const optsBox = document.getElementById('stOptionsBox');
-                optsBox.innerHTML = '';
-                const expBox = document.getElementById('stExpBox');
-                expBox.style.display = 'none';
-                const nextBtn = document.getElementById('stNextBtn');
-                nextBtn.style.display = 'none';
-
-                item.opts.forEach((opt, idx) => {
-                    const btn = document.createElement('button');
-                    btn.style.cssText = 'text-align:left; padding:10px 14px; background:rgba(255,255,255,0.06); border:1px solid rgba(255,255,255,0.15); color:#fff; border-radius:8px; font-size:14px; cursor:pointer; transition:all 0.2s;';
-                    btn.textContent = `${idx + 1}. ${opt}`;
-                    btn.onclick = () => {
-                        Array.from(optsBox.children).forEach(b => b.disabled = true);
-                        if (idx === item.ans) {
-                            btn.style.background = 'rgba(16, 185, 129, 0.3)';
-                            btn.style.borderColor = '#10b981';
-                        } else {
-                            btn.style.background = 'rgba(239, 68, 68, 0.3)';
-                            btn.style.borderColor = '#ef4444';
-                            optsBox.children[item.ans].style.background = 'rgba(16, 185, 129, 0.3)';
-                        }
-                        expBox.textContent = item.exp;
-                        expBox.style.display = 'block';
-                        nextBtn.style.display = 'inline-block';
-                    };
-                    optsBox.appendChild(btn);
-                });
-            }
-
-            document.getElementById('stNextBtn').onclick = () => {
-                curr = (curr + 1) % quizData.length;
-                loadQuestion();
-            };
-
-            loadQuestion();
-        })();
-    </script>
-<script>
-        // Three.js 3D Celestial Sphere Engine (Mode 3)
-        (function() {
-            let scene, camera, renderer, controls;
-            let earthMesh, axisLine, polarisStar, southernCrossGroup, celestialSphereGrid;
-            let observerMarker, sightLine;
-            let isInitialized = false;
-
-            function init3DCelestial() {
-                const container = document.getElementById('celestial3dContainer');
-                const canvas = document.getElementById('celestial3dCanvas');
-                if (!container || !canvas) return;
-
-                const width = container.clientWidth > 0 ? container.clientWidth : (container.parentElement.clientWidth > 0 ? container.parentElement.clientWidth : 900);
-                const height = container.clientHeight > 0 ? container.clientHeight : 580;
-
-                if (isInitialized) {
-                    if (renderer && camera) {
-                        camera.aspect = width / height;
-                        camera.updateProjectionMatrix();
-                        renderer.setSize(width, height);
-                    }
-                    return;
-                }
-
-                // Scene setup
-                scene = new THREE.Scene();
-                scene.background = new THREE.Color(0x020617);
-
-                // Camera
-                camera = new THREE.PerspectiveCamera(45, width / height, 0.1, 1000);
-                camera.position.set(0, 6, 48);
-
-                // Renderer
-                renderer = new THREE.WebGLRenderer({ canvas: canvas, antialias: true });
-                renderer.setSize(width, height);
-                renderer.setPixelRatio(Math.min(window.devicePixelRatio, 2));
-
-                // Controls
-                controls = new THREE.OrbitControls(camera, renderer.domElement);
-                controls.enableDamping = true;
-                controls.dampingFactor = 0.05;
-
-                // Lighting
-                const ambientLight = new THREE.AmbientLight(0xffffff, 0.6);
-                scene.add(ambientLight);
-                const dirLight = new THREE.DirectionalLight(0xffffff, 0.8);
-                dirLight.position.set(20, 10, 20);
-                scene.add(dirLight);
-
-                // 1. Earth Mesh
-                const earthGeo = new THREE.SphereGeometry(3.5, 32, 32);
-                const earthMat = new THREE.MeshPhongMaterial({
-                    color: 0x1d4ed8,
-                    emissive: 0x0284c7,
-                    emissiveIntensity: 0.2,
-                    wireframe: false
-                });
-                earthMesh = new THREE.Mesh(earthGeo, earthMat);
-                // Tilt Earth by 23.5 degrees (0.41 radians)
-                earthMesh.rotation.z = 23.5 * (Math.PI / 180);
-                scene.add(earthMesh);
-
-                // Earth Equator Line
-                const eqGeo = new THREE.RingGeometry(3.52, 3.6, 64);
-                const eqMat = new THREE.MeshBasicMaterial({ color: 0x38bdf8, side: THREE.DoubleSide });
-                const eqMesh = new THREE.Mesh(eqGeo, eqMat);
-                eqMesh.rotation.x = Math.PI / 2;
-                earthMesh.add(eqMesh);
-
-                // 2. Earth Rotational Axis (23.5 deg tilted long cyan line)
-                const axisGeo = new THREE.BufferGeometry().setFromPoints([
-                    new THREE.Vector3(0, -18, 0),
-                    new THREE.Vector3(0, 18, 0)
-                ]);
-                const axisMat = new THREE.LineDashedMaterial({ color: 0x38bdf8, dashSize: 0.5, gapSize: 0.2 });
-                axisLine = new THREE.Line(axisGeo, axisMat);
-                axisLine.computeLineDistances();
-                // Rotational Axis attached to fixed group
-                fixedCelestialObjectsGroup = new THREE.Group();
-                fixedCelestialObjectsGroup.rotation.z = 23.5 * (Math.PI / 180);
-                fixedCelestialObjectsGroup.add(axisLine);
-
-                // 3. Polaris & Circumpolar Group (North Pole: Polaris, Big Dipper, Cassiopeia)
-                const northPoleGroup = new THREE.Group();
-                northPoleGroup.position.set(0, 18, 0); // Top of North Axis
-
-                // Polaris Central Star
-                const polarisGeo = new THREE.SphereGeometry(0.65, 16, 16);
-                const polarisMat = new THREE.MeshBasicMaterial({ color: 0xfbbf24 });
-                const polarisStarMesh = new THREE.Mesh(polarisGeo, polarisMat);
-                northPoleGroup.add(polarisStarMesh);
-
-                const polarisLabel = createTextSprite("⭐ 북극성 (Polaris - 밝은 2.0등성)", "#fbbf24");
-                polarisLabel.position.set(0, 1.8, 0);
-                northPoleGroup.add(polarisLabel);
-
-                const ncpLabel = createTextSprite("천구의 북극 (North Celestial Pole)", "#fbbf24");
-                ncpLabel.position.set(0, 3.4, 0);
-                northPoleGroup.add(ncpLabel);
-
-                // --- 🌸 3D Big Dipper (북두칠성 7개 별 + 국자 모양 + Pointer Line) ---
-                const bdGroup = new THREE.Group();
-                const bdMat = new THREE.MeshBasicMaterial({ color: 0x38bdf8 });
-                const bdLineMat = new THREE.LineBasicMaterial({ color: 0x38bdf8, linewidth: 2 });
-                const bdPointerMat = new THREE.LineDashedMaterial({ color: 0x38bdf8, dashSize: 0.3, gapSize: 0.2 });
-
-                // 7 Star Positions relative to Polaris
-                const bdStars = [
-                    new THREE.Vector3(-4.0, -1.0, 3.5),  // 0: Merak (Pointer 1)
-                    new THREE.Vector3(-3.0, -0.5, 2.2),  // 1: Dubhe (Pointer 2)
-                    new THREE.Vector3(-5.0, -1.8, 2.8),  // 2: Phecda
-                    new THREE.Vector3(-4.2, -1.4, 1.5),  // 3: Megrez
-                    new THREE.Vector3(-5.2, -1.8, 0.4),  // 4: Alioth
-                    new THREE.Vector3(-6.2, -2.2, -0.6), // 5: Mizar
-                    new THREE.Vector3(-7.2, -2.6, -1.8)  // 6: Alkaid
-                ];
-
-                bdStars.forEach((p, idx) => {
-                    const starMesh = new THREE.Mesh(new THREE.SphereGeometry(idx === 1 ? 0.45 : 0.35, 12, 12), bdMat);
-                    starMesh.position.copy(p);
-                    bdGroup.add(starMesh);
-                });
-
-                // Bowl Lines (0 -> 1 -> 3 -> 2 -> 0)
-                const bowlGeo = new THREE.BufferGeometry().setFromPoints([bdStars[0], bdStars[1], bdStars[3], bdStars[2], bdStars[0]]);
-                bdGroup.add(new THREE.Line(bowlGeo, bdLineMat));
-
-                // Handle Line (3 -> 4 -> 5 -> 6)
-                const handleGeo = new THREE.BufferGeometry().setFromPoints([bdStars[3], bdStars[4], bdStars[5], bdStars[6]]);
-                bdGroup.add(new THREE.Line(handleGeo, bdLineMat));
-
-                // Pointer Line (Merak -> Dubhe -> Polaris 0,0,0)
-                const pointerGeo = new THREE.BufferGeometry().setFromPoints([bdStars[0], bdStars[1], new THREE.Vector3(0,0,0)]);
-                const pointerLine = new THREE.Line(pointerGeo, bdPointerMat);
-                pointerLine.computeLineDistances();
-                bdGroup.add(pointerLine);
-
-                const bdLabel = createTextSprite("✨ 북두칠성 (Big Dipper)", "#38bdf8");
-                bdLabel.position.set(-4.5, 0.8, 1.5);
-                bdGroup.add(bdLabel);
-                northPoleGroup.add(bdGroup);
-
-                // --- 🍁 3D Cassiopeia (카시오페이아 5개 별 + W자 모양) ---
-                const casGroup = new THREE.Group();
-                const casMat = new THREE.MeshBasicMaterial({ color: 0x38bdf8 });
-                const casLineMat = new THREE.LineBasicMaterial({ color: 0x38bdf8, linewidth: 2 });
-
-                const casStars = [
-                    new THREE.Vector3(3.5, -1.0, -3.5), // Caph
-                    new THREE.Vector3(4.2, -1.2, -2.2), // Schedar
-                    new THREE.Vector3(5.0, -1.5, -3.2), // Navi
-                    new THREE.Vector3(5.8, -1.8, -2.0), // Ruchbah
-                    new THREE.Vector3(6.5, -2.2, -2.8)  // Segin
-                ];
-
-                casStars.forEach(p => {
-                    const starMesh = new THREE.Mesh(new THREE.SphereGeometry(0.35, 12, 12), casMat);
-                    starMesh.position.copy(p);
-                    casGroup.add(starMesh);
-                });
-
-                const wLineGeo = new THREE.BufferGeometry().setFromPoints(casStars);
-                casGroup.add(new THREE.Line(wLineGeo, casLineMat));
-
-                const casLabel = createTextSprite("✨ 카시오페이아 (Cassiopeia)", "#38bdf8");
-                casLabel.position.set(5.0, 0.8, -2.5);
-                casGroup.add(casLabel);
-                northPoleGroup.add(casGroup);
-
-                fixedCelestialObjectsGroup.add(northPoleGroup);
-
-                // 4. Southern Cross Group (At bottom of South Axis - Orient in X-Z Plane for 3D Cross View)
-                southernCrossGroup = new THREE.Group();
-                southernCrossGroup.position.set(4, -14, 5); // Positioned at ~60°S (Southern Cross is NOT at the South Celestial Pole!)
-
-                const scMat = new THREE.MeshBasicMaterial({ color: 0x38bdf8 });
-                // 5 Stars of Southern Cross in X-Z plane (normal to Earth sightline)
-                const scPositions = [
-                    [0, 0, 2.0],    // Acrux (Bottom)
-                    [0, 0, -2.0],   // Gacrux (Top)
-                    [-1.3, 0, -0.3],// Mimosa (Left)
-                    [1.3, 0, -0.3], // Delta Crucis (Right)
-                    [0.4, 0, 0.4]   // Epsilon Crucis (5th star)
-                ];
-                scPositions.forEach((p, idx) => {
-                    const scStar = new THREE.Mesh(new THREE.SphereGeometry(idx === 0 ? 0.45 : 0.35, 12, 12), scMat);
-                    scStar.position.set(p[0], p[1], p[2]);
-                    southernCrossGroup.add(scStar);
-                });
-
-                // Connecting Lines for the Cross (+)
-                const scLineMat = new THREE.LineBasicMaterial({ color: 0x38bdf8, linewidth: 2 });
-                // Spine line (Top to Bottom)
-                const spineGeo = new THREE.BufferGeometry().setFromPoints([
-                    new THREE.Vector3(0, 0, -2.0),
-                    new THREE.Vector3(0, 0, 2.0)
-                ]);
-                southernCrossGroup.add(new THREE.Line(spineGeo, scLineMat));
-                
-                // Crossbar line (Left to Right)
-                const crossbarGeo = new THREE.BufferGeometry().setFromPoints([
-                    new THREE.Vector3(-1.3, 0, -0.3),
-                    new THREE.Vector3(1.3, 0, -0.3)
-                ]);
-                southernCrossGroup.add(new THREE.Line(crossbarGeo, scLineMat));
-
-                const scLabel = createTextSprite("✨ 남십자성 (Southern Cross)", "#38bdf8");
-                scLabel.position.set(0, -2.5, 0);
-                southernCrossGroup.add(scLabel);
-
-                // South Celestial Pole Marker (Faint 5.5-mag South Star Sigma Octantis)
-                const scpMarkerGroup = new THREE.Group();
-                scpMarkerGroup.position.set(0, -18, 0);
-
-                // Faint South Star (Sigma Octantis - 5.5 mag dim star dot, r=0.2)
-                const scpStarGeo = new THREE.SphereGeometry(0.10, 10, 10);
-                const scpStarMat = new THREE.MeshBasicMaterial({ color: 0x94a3b8 });
-                const scpStarMesh = new THREE.Mesh(scpStarGeo, scpStarMat);
-                scpMarkerGroup.add(scpStarMesh);
-
-                const scpStarLabel = createTextSprite("⭐ 남극성 (Sigma Octantis - 어두운 5.5등성)", "#94a3b8");
-                scpStarLabel.position.set(0, -1.6, 0);
-                scpMarkerGroup.add(scpStarLabel);
-
-                const scpLabel = createTextSprite("천구의 남극 (South Celestial Pole)", "#fbbf24");
-                scpLabel.position.set(0, -3.2, 0);
-                scpMarkerGroup.add(scpLabel);
-                fixedCelestialObjectsGroup.add(scpMarkerGroup);
-                fixedCelestialObjectsGroup.add(southernCrossGroup);
-                scene.add(fixedCelestialObjectsGroup);
-
-                // 5. Celestial Sphere Grid (Outer Translucent Wireframe)
-                const csGeo = new THREE.SphereGeometry(18, 24, 18);
-                const csMat = new THREE.MeshBasicMaterial({
-                    color: 0x1e293b,
-                    wireframe: true,
-                    transparent: true,
-                    opacity: 0.25
-                });
-                celestialSphereGrid = new THREE.Mesh(csGeo, csMat);
-                scene.add(celestialSphereGrid);
-
-                // --- ✨ Celestial Equator (천구의 적도) & Vernal/Autumnal Equinoxes (춘분점/추분점) ---
-                celestialEquatorGroup = new THREE.Group();
-                // Tilt Celestial Equator by 23.5 degrees relative to Ecliptic
-                celestialEquatorGroup.rotation.z = 23.5 * (Math.PI / 180);
-
-                // Celestial Equator Cyan Ring
-                const ceRingGeo = new THREE.RingGeometry(17.8, 18.2, 64);
-                const ceRingMat = new THREE.MeshBasicMaterial({ color: 0x06b6d4, side: THREE.DoubleSide, transparent: true, opacity: 0.85 });
-                const ceRingMesh = new THREE.Mesh(ceRingGeo, ceRingMat);
-                ceRingMesh.rotation.x = Math.PI / 2;
-                celestialEquatorGroup.add(ceRingMesh);
-
-                const ceRingLabel = createTextSprite("🌐 천구의 적도 (지구 적도 연장선)", "#06b6d4");
-                ceRingLabel.position.set(0, 19.5, 0); // Positioned high on Cyan Ring away from Ecliptic intersection!
-                celestialEquatorGroup.add(ceRingLabel);
-
-                // 🌸 Vernal Equinox (춘분점 - Exact Ring Intersection 1 at Z = +18)
-                const veDot = new THREE.Mesh(new THREE.SphereGeometry(0.22, 12, 12), new THREE.MeshBasicMaterial({ color: 0xf97316 }));
-                veDot.position.set(0, 0, 18);
-                celestialEquatorGroup.add(veDot);
-                const veLabel = createTextSprite("🌸 춘분점 (3월 21일 적도 교차점)", "#f97316");
-                veLabel.position.set(0, 1.8, 18);
-                celestialEquatorGroup.add(veLabel);
-
-                // 🍁 Autumnal Equinox (추분점 - Exact Ring Intersection 2 at Z = -18)
-                const aeDot = new THREE.Mesh(new THREE.SphereGeometry(0.22, 12, 12), new THREE.MeshBasicMaterial({ color: 0xf97316 }));
-                aeDot.position.set(0, 0, -18);
-                celestialEquatorGroup.add(aeDot);
-                const aeLabel = createTextSprite("🍁 추분점 (9월 23일 적도 교차점)", "#f97316");
-                aeLabel.position.set(0, 1.8, -18);
-                celestialEquatorGroup.add(aeLabel);
-
-                // ☀️ Summer Solstice (하지점 - Point on Ecliptic at +X)
-                const ssDot = new THREE.Mesh(new THREE.SphereGeometry(0.22, 12, 12), new THREE.MeshBasicMaterial({ color: 0xf97316 }));
-                ssDot.position.set(18, 0, 0);
-                celestialEquatorGroup.add(ssDot);
-                const ssLabel = createTextSprite("☀️ 하지점 (6월 22일)", "#f97316");
-                ssLabel.position.set(18, 1.8, 0);
-                celestialEquatorGroup.add(ssLabel);
-
-                // ❄️ Winter Solstice (동지점 - Point on Ecliptic at -X)
-                const wsDot = new THREE.Mesh(new THREE.SphereGeometry(0.22, 12, 12), new THREE.MeshBasicMaterial({ color: 0xf97316 }));
-                wsDot.position.set(-18, 0, 0);
-                celestialEquatorGroup.add(wsDot);
-                const wsLabel = createTextSprite("❄️ 동지점 (12월 22일)", "#f97316");
-                wsLabel.position.set(-18, 1.8, 0);
-                celestialEquatorGroup.add(wsLabel);
-
-                // Default state: OFF (Hidden)
-                celestialEquatorGroup.visible = false;
-                scene.add(celestialEquatorGroup); // Added to scene so it stays fixed at 23.5° tilt intersecting Ecliptic!
-
-                // --- ☀️ 3D Sun Orbiting Along Ecliptic Ring ---
-                const sun3DGeo = new THREE.SphereGeometry(0.9, 16, 16);
-                const sun3DMat = new THREE.MeshBasicMaterial({ color: 0xfbbf24 });
-                sun3DMesh = new THREE.Mesh(sun3DGeo, sun3DMat);
-                const sun3DLabel = createTextSprite("☀️ 태양 (황도 이동)", "#fbbf24");
-                sun3DLabel.position.set(0, 1.8, 0);
-                sun3DMesh.add(sun3DLabel);
-                scene.add(sun3DMesh);
-
-                // Ecliptic Plane Yellow Ring (Horizontal 0 deg)
-                const eclGeo = new THREE.RingGeometry(17.8, 18.2, 64);
-                const eclMat = new THREE.MeshBasicMaterial({ color: 0xfde047, side: THREE.DoubleSide, transparent: true, opacity: 0.4 });
-                const eclRing = new THREE.Mesh(eclGeo, eclMat);
-                eclRing.rotation.x = Math.PI / 2;
-                scene.add(eclRing);
-
-                // Ecliptic Label
-                const eclLabel = createTextSprite("황도 (태양의 겉보기 길)", "#fde047");
-                const axisLabel = createTextSprite("지구 자전축 (23.5° Tilt Axis)", "#38bdf8");
-                axisLabel.position.set(0, 10, 0);
-                earthMesh.add(axisLabel);
-                eclLabel.position.set(19.5, 0, -8);
-                scene.add(eclLabel);
-
-                // 6. Observer Marker (Cute 3D Person Standing Erect on Earth with Yellow Cap, Torso, Arms, Legs)
-                observerMarker = new THREE.Group();
-                const obsRedMat = new THREE.MeshBasicMaterial({ color: 0xef4444 });
-                const obsCapMat = new THREE.MeshBasicMaterial({ color: 0xfbbf24 }); // Bright Yellow Cap/Hat
-                
-                // 🎩 Stylish Brimmed Explorer Hat (Brim + Dark Band + Round Crown)
-                const hatBandMat = new THREE.MeshBasicMaterial({ color: 0x0f172a }); // Slate Dark Ribbon
-                
-                // Brim (모자 챙)
-                const brimMesh = new THREE.Mesh(new THREE.CylinderGeometry(0.30, 0.30, 0.03, 16), obsCapMat);
-                brimMesh.position.set(0, 0.54, 0);
-                observerMarker.add(brimMesh);
-
-                // Ribbon / Band (모자 띠)
-                const bandMesh = new THREE.Mesh(new THREE.CylinderGeometry(0.185, 0.185, 0.04, 16), hatBandMat);
-                bandMesh.position.set(0, 0.57, 0);
-                observerMarker.add(bandMesh);
-
-                // Crown (모자 윗부분)
-                const crownMesh = new THREE.Mesh(new THREE.CylinderGeometry(0.17, 0.18, 0.16, 16), obsCapMat);
-                crownMesh.position.set(0, 0.65, 0);
-                observerMarker.add(crownMesh);
-
-                // 🧠 Head (Sphere)
-                const headMesh = new THREE.Mesh(new THREE.SphereGeometry(0.18, 12, 12), obsRedMat);
-                headMesh.position.set(0, 0.42, 0);
-                observerMarker.add(headMesh);
-
-                // 👕 Torso / Body (Cylinder)
-                const bodyMesh = new THREE.Mesh(new THREE.CylinderGeometry(0.12, 0.16, 0.38, 12), obsRedMat);
-                bodyMesh.position.set(0, 0.16, 0);
-                observerMarker.add(bodyMesh);
-
-                // 🦾 Arms (Left & Right)
-                const lArm = new THREE.Mesh(new THREE.CylinderGeometry(0.05, 0.05, 0.3, 8), obsRedMat);
-                lArm.position.set(0.18, 0.2, 0);
-                lArm.rotation.z = -Math.PI / 6;
-                observerMarker.add(lArm);
-
-                const rArm = new THREE.Mesh(new THREE.CylinderGeometry(0.05, 0.05, 0.3, 8), obsRedMat);
-                rArm.position.set(-0.18, 0.2, 0);
-                rArm.rotation.z = Math.PI / 6;
-                observerMarker.add(rArm);
-
-                // 🦵 Legs (Left & Right)
-                const lLeg = new THREE.Mesh(new THREE.CylinderGeometry(0.06, 0.06, 0.3, 8), obsRedMat);
-                lLeg.position.set(0.08, -0.15, 0);
-                observerMarker.add(lLeg);
-
-                const rLeg = new THREE.Mesh(new THREE.CylinderGeometry(0.06, 0.06, 0.3, 8), obsRedMat);
-                rLeg.position.set(-0.08, -0.15, 0);
-                observerMarker.add(rLeg);
-
-                earthMesh.add(observerMarker);
-
-                // Observer Zenith & Nadir Sight Line (Red Lines attached to Earth)
-                const sightMat = new THREE.LineBasicMaterial({ color: 0xef4444, linewidth: 3 });
-                const sightGeo = new THREE.BufferGeometry();
-                sightLine = new THREE.Line(sightGeo, sightMat);
-                earthMesh.add(sightLine);
-
-                // Physical 3D Red Sphere Dots at Zenith & Nadir Points on Celestial Sphere Wireframe
-                const redDotGeo = new THREE.SphereGeometry(0.12, 10, 10);
-                const redDotMat = new THREE.MeshBasicMaterial({ color: 0xef4444 });
-                zenithDotMesh = new THREE.Mesh(redDotGeo, redDotMat);
-                nadirDotMesh = new THREE.Mesh(redDotGeo, redDotMat);
-                earthMesh.add(zenithDotMesh);
-                earthMesh.add(nadirDotMesh);
-
-                // Zenith Label & Nadir Label (Clean Text Sprites without emoji)
-                zenithLabel = createTextSprite("천정 (Zenith - 관측자 머리 위)", "#ef4444");
-                nadirLabel = createTextSprite("천저 (Nadir - 관측자 발 아래)", "#ef4444");
-                earthMesh.add(zenithLabel);
-                earthMesh.add(nadirLabel);
-
-                // Set initial observer to Korea (37.5 N)
-                setObserverLatitude(37.5);
-
-                // Event Listeners for Observer Buttons (Includes Altitude = Latitude proof)
-                const btnEquatorToggle = document.getElementById('btnToggleEquator');
-                if (btnEquatorToggle) {
-                    btnEquatorToggle.onclick = function() {
-                        if (celestialEquatorGroup) {
-                            celestialEquatorGroup.visible = !celestialEquatorGroup.visible;
-                            if (celestialEquatorGroup.visible) {
-                                this.style.background = '#0284c7';
-                                this.style.color = '#ffffff';
-                                this.textContent = '✨ 천구 적도 & 춘/추분점 (ON)';
-                            } else {
-                                this.style.background = 'transparent';
-                                this.style.color = '#06b6d4';
-                                this.textContent = '✨ 천구 적도 & 춘/추분점 (OFF)';
-                            }
-                        }
-                    };
-                }
-
-                const btnKorea = document.getElementById('btnObsKorea');
-                const btnEquator = document.getElementById('btnObsEquator');
-                const btnNorth = document.getElementById('btnObsNorth');
-                const btnAus = document.getElementById('btnObsAus');
-                const statusTitle = document.getElementById('obsViewStatusTitle');
-                const statusDetail = document.getElementById('obsViewStatusDetail');
-
-                function updateObsBtns(activeBtn) {
-                    [btnKorea, btnEquator, btnNorth, btnAus].forEach(b => {
-                        if(b) {
-                            b.classList.remove('active');
-                            b.style.background = 'rgba(15, 23, 42, 0.85)';
-                        }
-                    });
-                    if(activeBtn) {
-                        activeBtn.classList.add('active');
-                        activeBtn.style.background = '#0284c7';
-                    }
-                }
-
-                if(btnKorea) {
-                    btnKorea.onclick = function() {
-                        setObserverLatitude(37.5);
-                        updateObsBtns(this);
-                        if(statusTitle) statusTitle.textContent = "📍 관측자 위도 (37.5°N) = ⭐ 북극성 고도 (37.5°)";
-                        if(statusDetail) statusDetail.textContent = "💡 한국(중위도 37.5°N)에서는 북쪽 지평선으로부터 북극성까지의 높이각(고도)이 정확히 37.5°로 보입니다!";
-                    };
-                }
-                if(btnEquator) {
-                    btnEquator.onclick = function() {
-                        setObserverLatitude(0);
-                        updateObsBtns(this);
-                        if(statusTitle) statusTitle.textContent = "📍 관측자 위도 (0° 적도) = ⭐ 북극성 고도 (0°)";
-                        if(statusDetail) statusDetail.textContent = "💡 적도(위도 0°)에서는 북극성이 북쪽 지평선 바로 위(고도 0°)에 걸쳐서 보입니다!";
-                    };
-                }
-                if(btnNorth) {
-                    btnNorth.onclick = function() {
-                        setObserverLatitude(90);
-                        updateObsBtns(this);
-                        if(statusTitle) statusTitle.textContent = "📍 관측자 위도 (90°N 북극점) = ⭐ 북극성 고도 (90°)";
-                        if(statusDetail) statusDetail.textContent = "💡 북극점(위도 90°N)에서는 북극성이 관측자 머리 정중앙 천정(고도 90°)에 위치합니다!";
-                    };
-                }
-                if(btnAus) {
-                    btnAus.onclick = function() {
-                        setObserverLatitude(-35);
-                        updateObsBtns(this);
-                        if(statusTitle) statusTitle.textContent = "📍 관측자 위도 (35°S 남반구) ➔ ⭐ 북극성 관측 불가";
-                        if(statusDetail) statusDetail.textContent = "💡 남반구에서는 지구가 북극성을 가리므로 북극성이 지평선 아래에 위치해 보이지 않으며, 남십자성이 관측됩니다!";
-                    };
-                }
-
-                // Animation loop (Supports Speed Control & Dual View Perspectives)
-                let celestialViewMode = 'celestial'; // 'celestial' or 'space'
-                let celestialSpeedMult = 1.0; // Rotation speed multiplier
-                let sunEclipticAngle = Math.PI / 2;
-                const baseEarthRotStep = 0.015; // Base speed
-
-                // Speed Slider & Preset Handlers
-                window.setCelestialSpeed = function(val) {
-                    celestialSpeedMult = parseFloat(val);
-                    const slider = document.getElementById('celestialSpeedSlider');
-                    if (slider) slider.value = val;
-                    updateSpeedBadgeLabel();
-                };
-
-                function updateSpeedBadgeLabel() {
-                    const badge = document.getElementById('celestialSpeedBadge');
-                    if (!badge) return;
-                    if (celestialSpeedMult === 0) badge.textContent = '0.0x (정지)';
-                    else if (celestialSpeedMult === 1.0) badge.textContent = '1.0x (보통)';
-                    else if (celestialSpeedMult === 3.0) badge.textContent = '3.0x (3배속)';
-                    else if (celestialSpeedMult === 10.0) badge.textContent = '10.0x (고속)';
-                    else if (celestialSpeedMult === 30.0) badge.textContent = '30.0x (30배속)';
-                    else badge.textContent = `${celestialSpeedMult.toFixed(0)}x`;
-                }
-
-                const speedSlider = document.getElementById('celestialSpeedSlider');
-                if (speedSlider) {
-                    speedSlider.oninput = function() {
-                        celestialSpeedMult = parseFloat(this.value);
-                        updateSpeedBadgeLabel();
-                    };
-                }
-
-                // View Mode Toggle Handler
-                const btnToggleViewMode = document.getElementById('btnToggleViewMode');
-                if (btnToggleViewMode) {
-                    btnToggleViewMode.onclick = function() {
-                        if (celestialViewMode === 'celestial') {
-                            celestialViewMode = 'space';
-                            this.textContent = '🚀 우주 실체 뷰 (지구 자전)';
-                            this.style.background = '#0284c7';
-                            this.style.color = '#ffffff';
-                        } else {
-                            celestialViewMode = 'celestial';
-                            this.textContent = '🌐 천구 겉보기 뷰 (사람 고정)';
-                            this.style.background = 'transparent';
-                            this.style.color = '#fbbf24';
-                        }
-                    };
-                }
-
-                function animate3D() {
-                    requestAnimationFrame(animate3D);
-                    const currentEarthStep = baseEarthRotStep * celestialSpeedMult;
-                    const currentSunStep = (baseEarthRotStep / 360) * celestialSpeedMult;
-
-                    if (celestialViewMode === 'space') {
-                        // Space Real View: Earth rotates, Celestial Sphere is static
-                        if (earthMesh && currentEarthStep !== 0) earthMesh.rotateOnAxis(new THREE.Vector3(0, 1, 0), currentEarthStep);
-                    } else {
-                        // Celestial Apparent View: Earth/Observer fixed, Celestial Sphere rotates Counter-Clockwise
-                        if (fixedCelestialObjectsGroup && currentEarthStep !== 0) {
-                            fixedCelestialObjectsGroup.rotateOnAxis(new THREE.Vector3(0, 1, 0), -currentEarthStep);
-                        }
-                        if (celestialSphereGrid && currentEarthStep !== 0) {
-                            celestialSphereGrid.rotateY(-currentEarthStep);
-                        }
-                    }
-
-                    if (sun3DMesh && currentSunStep !== 0) {
-                        sunEclipticAngle -= currentSunStep;
-                        sun3DMesh.position.set(18 * Math.cos(sunEclipticAngle), 0, 18 * Math.sin(sunEclipticAngle));
-                    }
-
-                    controls.update();
-                    renderer.render(scene, camera);
-                }
-                animate3D();
-                
-                // Export global 3D view reset function
-                window.reset3DCelestialView = function() {
-                    if (camera && controls) {
-                        camera.position.set(0, 18, 42);
-                        controls.target.set(0, 0, 0);
-                        controls.update();
-                    }
-                    if (window.setCelestialSpeed) window.setCelestialSpeed(1.0);
-                    const btnKorea = document.getElementById('btnObsKorea');
-                    if (btnKorea) btnKorea.click();
-                };
-
-                isInitialized = true;
-            }
-
-            function setObserverLatitude(latDeg) {
-                if(!observerMarker) return;
-                const latRad = latDeg * (Math.PI / 180);
-                const rEarth = 3.5;
-                const rSky = 18.0;
-                
-                // Position 3D Person on Earth sphere
-                const oy = rEarth * Math.sin(latRad);
-                const oz = rEarth * Math.cos(latRad);
-                observerMarker.position.set(0, oy, oz);
-                
-                // Orient person standing ERECT facing straight UP away from Earth center (Normal Vector)
-                const normalDir = new THREE.Vector3(0, Math.sin(latRad), Math.cos(latRad)).normalize();
-                observerMarker.quaternion.setFromUnitVectors(new THREE.Vector3(0, 1, 0), normalDir);
-
-                // Zenith (천정) & Nadir (천저) Red Sight Line (-rSky to +rSky)
-                const zy = rSky * Math.sin(latRad);
-                const zz = rSky * Math.cos(latRad);
-                
-                if (sightLine) {
-                    const points = [
-                        new THREE.Vector3(0, -zy, -zz), // Nadir (발 밑)
-                        new THREE.Vector3(0, zy, zz)   // Zenith (머리 위)
-                    ];
-                    sightLine.geometry.setFromPoints(points);
-                    sightLine.geometry.attributes.position.needsUpdate = true;
-                }
-
-                // Position physical 3D Red Sphere Dots exactly on the Celestial Sphere wireframe
-                if (zenithDotMesh) zenithDotMesh.position.set(0, zy, zz);
-                if (nadirDotMesh) nadirDotMesh.position.set(0, -zy, -zz);
-
-                // Position 3D Zenith & Nadir Text Labels next to physical dots
-                if (zenithLabel) zenithLabel.position.set(0, zy + 1.2, zz);
-                if (nadirLabel) nadirLabel.position.set(0, -zy - 1.2, -zz);
-            }
-
-            function createTextSprite(text, colorStr) {
-                const canvas = document.createElement('canvas');
-                canvas.width = 512;
-                canvas.height = 64;
-                const ctx = canvas.getContext('2d');
-                ctx.font = 'Bold 20px sans-serif';
-                ctx.fillStyle = colorStr;
-                ctx.textAlign = 'center';
-                ctx.shadowColor = 'rgba(0, 0, 0, 0.8)';
-                ctx.shadowBlur = 6;
-                ctx.fillText(text, 256, 40);
-
-                const texture = new THREE.CanvasTexture(canvas);
-                const spriteMat = new THREE.SpriteMaterial({ map: texture, transparent: true, depthTest: false });
-                const sprite = new THREE.Sprite(spriteMat);
-                sprite.scale.set(10, 1.25, 1);
-                return sprite;
-            }
-
-            // Trigger init & resize when Mode 3 is selected
-            const modeBtns = document.querySelectorAll('.sim-mode-btn');
-            modeBtns.forEach(btn => {
-                btn.addEventListener('click', () => {
-                    if (btn.dataset.simMode === '3ddepth') {
-                        setTimeout(init3DCelestial, 100);
-                    }
-                });
-            });
-            window.addEventListener('resize', () => {
-                if (isInitialized) init3DCelestial();
-            });
-        })();</script>
 </body>
 </html>

@@ -6,9 +6,12 @@
     <meta name="description" content="songhwaplay 인터랙티브 태양계 관찰 - 3D 태양계 공전 시뮬레이션, 행성 입체 도감, 자전 &amp; 공전주기 비교">
     <title>태양계 관찰 | songhwaplay 교과학습</title>
     <link rel="stylesheet" href="styles.css">
+    <link rel="stylesheet" href="../../../../assets/network/multiplayer-lobby.css">
     <!-- Three.js & OrbitControls for 3D Space WebGL Renderer -->
     <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/three@0.128.0/examples/js/controls/OrbitControls.js"></script>
+    <script src="../../../../assets/network/game-network.js"></script>
+    <script src="../../../../assets/network/multiplayer-lobby.js"></script>
 </head>
 <body>
 
@@ -34,13 +37,13 @@
         <!-- Sub Tabs for Solar System Module -->
         <nav class="nav-tabs" aria-label="태양계 세부 학습 모드">
             <button class="nav-tab active" data-tab="sim" id="tabSimBtn">
-                <span>🛰️</span> 시뮬레이션 (Simulation)
+                <span>🛰️</span> Simulation
             </button>
             <button class="nav-tab" data-tab="atlas" id="tabAtlasBtn">
-                <span>🪐</span> 천체 도감 (Celestial Atlas)
+                <span>📚</span> Knowledge
             </button>
             <button class="nav-tab" data-tab="quiz" id="tabQuizBtn">
-                <span>🧩</span> 핵심 출제 문제 (Quiz)
+                <span>🧩</span> Quiz
             </button>
         </nav>
     </header>
@@ -56,7 +59,7 @@
                 <div class="viewport-header-bar">
                     <h2 class="sim-title">Solar System Simulation</h2>
                     <div class="sim-top-btns">
-                        <button class="btn btn-secondary" id="ufoModeBtn" style="padding: 4px 10px; font-size: 12px; font-weight: 700; background: rgba(56, 189, 248, 0.15); border: 1px solid #38bdf8; color: #38bdf8; border-radius: 14px;">🛸 UFO 탐험 (UFO Flight) OFF</button>
+                        <button class="btn btn-secondary" id="ufoModeBtn" style="padding: 4px 10px; font-size: 12px; font-weight: 700; background: rgba(56, 189, 248, 0.15); border: 1px solid #38bdf8; color: #38bdf8; border-radius: 14px;">🛸 UFO Flight (방번호 입력)</button>
                         <button class="icon-btn" id="playPauseBtn" title="시뮬레이션 일시정지 / 재생">⏸</button>
                         <button class="icon-btn" id="resetCamBtn" title="카메라 위치 초기화">🔄</button>
                     </div>
@@ -70,6 +73,7 @@
                     <!-- UFO Flight Touch/Arrow Controls Overlay -->
                     <div id="ufoControlsPanel" style="display: none; position: absolute; bottom: 16px; left: 16px; background: rgba(15, 23, 42, 0.85); border: 1px solid rgba(56, 189, 248, 0.4); border-radius: 12px; padding: 10px 14px; backdrop-filter: blur(8px); z-index: 12;">
                         <div style="font-size: 11px; color: #38bdf8; font-weight: 700; margin-bottom: 6px;">🛸 UFO 조종 (화살표 / WASD)</div>
+                        <div id="ufoRoomStatus" style="font-size: 11px; color: #fbbf24; font-weight: 800; margin-bottom: 6px;">교실 방 연결 대기</div>
                         <div style="font-size: 11px; color: #94a3b8; margin-bottom: 8px;">드래그: 구도 변경 | 휠: 확대/축소</div>
                         <div style="display: grid; grid-template-columns: repeat(3, 36px); gap: 4px; justify-content: center;">
                             <div></div>
@@ -235,8 +239,7 @@
         <!-- Tab 2: Celestial Atlas & Spec Comparison -->
         <section class="tab-pane" id="tab-atlas">
             <div style="margin-bottom: 20px;">
-                <h2 style="margin-bottom: 6px;">🪐 태양계 천체 도감 &amp; 스펙 비교</h2>
-                <p style="color: var(--text-secondary); font-size: 14px;">태양, 8개 행성, 주요 위성 및 소천체들의 주요 물리 지표와 핵심 출제 포인트를 한눈에 비교해보세요.</p>
+                <h2 style="margin-bottom: 6px;">🪐 태양계 천체 비교</h2>
             </div>
 
             <!-- Integrated Spec Comparison Table Component -->
@@ -249,7 +252,7 @@
                         <tr style="background: rgba(255,255,255,0.06); border-bottom: 2px solid var(--border-color); color: #38bdf8;">
                             <th style="padding: 10px 14px;">천체명</th>
                             <th style="padding: 10px 14px;">분류</th>
-                            <th style="padding: 10px 14px;">반지름 (km)</th>
+                            <th style="padding: 10px 14px;">지구 대비 반지름</th>
                             <th style="padding: 10px 14px;">지구 대비 질량</th>
                             <th style="padding: 10px 14px;">평균 밀도</th>
                             <th style="padding: 10px 14px;">표면 중력</th>
@@ -265,7 +268,7 @@
 
             <!-- Celestial Atlas Cards Grid -->
             <h3 style="color: #ffd18a; font-size: 18px; margin-bottom: 16px; display: flex; align-items: center; gap: 8px;">
-                🌌 천체별 입체 정보 카드
+                🌌 천체 알아보기
             </h3>
             <div class="atlas-grid" id="atlasGrid">
                 <!-- JS Dyn Rendered Cards -->
@@ -490,6 +493,9 @@
                         <span id="modalPlanetCategory" style="background: rgba(56,189,248,0.2); color: #38bdf8; border: 1px solid rgba(56,189,248,0.4); padding: 4px 12px; border-radius: 20px; font-size: 12px; font-weight: 800; display: inline-block; margin-bottom: 8px;">지구형 행성</span>
                         <div id="modalPlanetDensity" style="font-size: 12px; color: var(--text-muted);">평균 밀도: 5.51 g/cm³</div>
                     </div>
+                    <div class="modal-prop-grid" id="modalPropGrid">
+                        <!-- JS Dyn Props -->
+                    </div>
                 </div>
 
                 <!-- Right Column: CSAT Knowledge & Physics Stats -->
@@ -509,22 +515,12 @@
                         </ul>
                     </div>
 
-                    <!-- Physics Specs Grid -->
-                    <div style="display: grid; grid-template-columns: repeat(2, 1fr); gap: 10px;" id="modalPropGrid">
-                        <!-- JS Dyn Props -->
-                    </div>
-
                     <!-- General Desc -->
                     <div style="background: rgba(255, 255, 255, 0.03); padding: 14px 18px; border-radius: 10px; border-left: 3px solid #38bdf8;">
                         <h4 style="color: #38bdf8; margin-bottom: 4px; font-size: 14px;">💡 행성 주요 특징</h4>
                         <p id="modalDesc" style="font-size: 13.5px; color: #cbd5e1; line-height: 1.6; margin: 0;"></p>
                     </div>
 
-                    <!-- Missions -->
-                    <div style="background: rgba(255, 255, 255, 0.02); padding: 12px 16px; border-radius: 10px; border: 1px solid var(--border-color);">
-                        <h4 style="font-size: 13px; color: var(--text-muted); margin-bottom: 6px;">🚀 대표 우주 탐사선</h4>
-                        <div style="display: flex; flex-wrap: wrap; gap: 6px;" id="modalMissions"></div>
-                    </div>
                     </div>
                 </div>
 
@@ -718,6 +714,52 @@
             </div>
         </div>
     </div>
+
+    <!-- Classroom UFO Flight Lobby -->
+    <section class="ufo-room-overlay hidden" id="ufoRoomOverlay" role="dialog" aria-modal="true" aria-labelledby="ufoRoomTitle">
+        <div class="ufo-room-dialog">
+            <button class="ufo-room-close" id="ufoRoomCloseBtn" type="button" aria-label="닫기">×</button>
+            <div class="ufo-room-kicker">CLASSROOM FLIGHT</div>
+            <h2 id="ufoRoomTitle">🛸 UFO Flight</h2>
+            <p class="ufo-room-intro">학생은 교사가 알려준 방번호로 참가합니다. 태양계 시간과 공전 속도는 교사가 조작합니다.</p>
+
+            <section class="hidden ufo-missing-name" id="ufoMissingName">
+                <strong>로그인 이름이 없습니다.</strong>
+                <p>이름은 대문 페이지에서 로그인할 때만 입력할 수 있습니다.</p>
+                <a class="ufo-room-primary ufo-room-login-link" href="../../../../">대문 로그인으로 이동</a>
+            </section>
+
+            <div class="hidden" id="ufoLobbyScreen">
+                <p class="ufo-saved-name">탑승자 · <strong id="ufoSavedName">-</strong></p>
+                <div class="mp-lobby-tabs ufo-room-tabs">
+                    <button class="ufo-room-tab" id="ufoHostTab" type="button">교사용 방 만들기</button>
+                    <button class="ufo-room-tab active" id="ufoJoinTab" type="button">방번호 입력</button>
+                </div>
+
+                <div class="mp-lobby-card hidden" id="ufoHostPane">
+                    <div class="ufo-room-code-label">ROOM NUMBER</div>
+                    <div class="mp-lobby-room-code ufo-room-code" id="ufoRoomCode">----</div>
+                    <button class="ufo-room-secondary" id="ufoCopyBtn" type="button">방번호 복사</button>
+                    <div class="mp-lobby-status" id="ufoHostStatus">방을 만드는 중입니다.</div>
+                </div>
+
+                <div class="mp-lobby-card" id="ufoJoinPane">
+                    <div class="mp-lobby-row">
+                        <input class="mp-lobby-code-input" id="ufoJoinCode" inputmode="numeric" maxlength="4" placeholder="4자리 방번호">
+                        <button class="ufo-room-primary" id="ufoJoinBtn" type="button">참가</button>
+                    </div>
+                    <div class="mp-lobby-status" id="ufoJoinStatus">교사가 알려준 4자리 방번호를 입력하세요.</div>
+                </div>
+
+                <div class="ufo-room-roster">
+                    <div class="ufo-room-code-label">참가자</div>
+                    <div class="mp-lobby-players" id="ufoLobbyPlayers"></div>
+                    <p class="mp-lobby-guide" id="ufoLobbyGuide">방 연결을 기다리는 중입니다.</p>
+                </div>
+                <button class="ufo-room-primary" id="ufoStartBtn" type="button" disabled>교사가 비행을 시작합니다</button>
+            </div>
+        </div>
+    </section>
 
     <script src="solar-data.js?v=modal_dom_leak_fixed_high_contrast_text_earth_comparison_enriched"></script>
     <script src="app.js?v=modal_dom_leak_fixed_high_contrast_text_earth_comparison_enriched"></script>

@@ -1,0 +1,79 @@
+.phase-btn-grid {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 6px;
+            margin-top: 6px;
+        }
+
+        .phase-chip {
+            background: rgba(15, 23, 42, 0.85);
+            border: 1px solid rgba(56, 189, 248, 0.3);
+            color: #cbd5e1;
+            padding: 5px 11px;
+            border-radius: 14px;
+            font-size: 12px;
+            font-weight: 700;
+            cursor: pointer;
+            transition: all 0.2s ease;
+        }
+
+        .phase-chip:hover, .phase-chip.active {
+            background: #0284c7;
+            border-color: #38bdf8;
+            color: #ffffff;
+            box-shadow: 0 0 10px rgba(56, 189, 248, 0.4);
+        }
+
+/* All constellation simulator modes fill the available device screen while
+   the atlas and quiz continue to use the normal centered reading layout. */
+#tab-sim {
+    width: 100vw;
+    margin-top: 0;
+    margin-left: calc(50% - 50vw);
+}
+
+body {
+    padding-bottom: 0;
+}
+
+.view-container {
+    margin-top: 0;
+}
+
+.tab-pane:not(#tab-sim) {
+    padding-top: 20px;
+}
+
+#tab-sim .sim-viewport-card {
+    width: 100%;
+    height: calc(100vh - var(--space-header-height, 76px));
+    height: calc(100dvh - var(--space-header-height, 76px));
+    min-height: 0;
+    border-right: 0;
+    border-left: 0;
+    border-radius: 0;
+}
+
+#tab-sim .sim-mode-container {
+    width: 100%;
+    height: 100% !important;
+    max-height: none !important;
+    min-height: 0 !important;
+    aspect-ratio: auto !important;
+}
+
+
+        .earth-view-box {
+            position: absolute;
+            bottom: 20px;
+            right: 20px;
+            background: rgba(10, 15, 29, 0.92);
+            border: 1px solid rgba(56, 189, 248, 0.4);
+            border-radius: 14px;
+            padding: 14px 18px;
+            text-align: center;
+            backdrop-filter: blur(10px);
+            box-shadow: 0 12px 30px rgba(0, 0, 0, 0.7);
+            min-width: 220px;
+            z-index: 20;
+        }

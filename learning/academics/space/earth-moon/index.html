@@ -5,62 +5,9 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta name="description" content="songhwaplay 지구와 달 - 3D/2D 태양 중심 지구 공전, 지구 자전 및 달 공전 위상 변화 시뮬레이션">
     <title>지구와 달 | Class Astronomy</title>
-    <link rel="stylesheet" href="../solar-system/styles.css">
     <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/three@0.128.0/examples/js/controls/OrbitControls.js"></script>
-    <style>
-        .phase-btn-grid {
-            display: flex;
-            flex-wrap: wrap;
-            gap: 6px;
-            margin-top: 6px;
-        }
-
-        .phase-chip {
-            background: rgba(15, 23, 42, 0.85);
-            border: 1px solid rgba(56, 189, 248, 0.3);
-            color: #cbd5e1;
-            padding: 5px 11px;
-            border-radius: 14px;
-            font-size: 12px;
-            font-weight: 700;
-            cursor: pointer;
-            transition: all 0.2s ease;
-        }
-
-        .phase-chip:hover, .phase-chip.active {
-            background: #0284c7;
-            border-color: #38bdf8;
-            color: #ffffff;
-            box-shadow: 0 0 10px rgba(56, 189, 248, 0.4);
-        }
-
-        .earth-view-box {
-            position: absolute;
-            bottom: 20px;
-            right: 20px;
-            background: rgba(10, 15, 29, 0.92);
-            border: 1px solid rgba(56, 189, 248, 0.4);
-            border-radius: 14px;
-            padding: 14px 18px;
-            text-align: center;
-            backdrop-filter: blur(10px);
-            box-shadow: 0 12px 30px rgba(0, 0, 0, 0.7);
-            min-width: 220px;
-            z-index: 20;
-        }
-
-        #moonPhaseCanvas {
-            width: 80px;
-            height: 80px;
-            margin: 8px auto;
-            display: block;
-            background: #090d16;
-            border-radius: 50%;
-            border: 1px solid rgba(255, 255, 255, 0.2);
-            box-shadow: 0 0 15px rgba(255, 255, 255, 0.15);
-        }
-    </style>
+    <link rel="stylesheet" href="styles.css">
 </head>
 <body>
 
@@ -88,16 +35,13 @@
         <!-- Sub Tabs for Earth & Moon Module -->
         <nav class="nav-tabs">
             <button class="nav-tab active" data-tab="sim">
-                <span>🛰️</span> 시뮬레이션 (Simulation)
+                <span>🛰️</span> Simulation
             </button>
-            <button class="nav-tab" data-tab="cards">
-                <span>🌕</span> 위상 지식 카드 (Phase Cards)
-            </button>
-            <button class="nav-tab" data-tab="calc">
-                <span>⚖️</span> 운동 &amp; 현상 비교 (Comparison)
+            <button class="nav-tab" data-tab="knowledge">
+                <span>📚</span> Knowledge
             </button>
             <button class="nav-tab" data-tab="quiz">
-                <span>🧩</span> 단원 퀴즈 (Quiz)
+                <span>🧩</span> Quiz
             </button>
         </nav>
     </header>
@@ -105,21 +49,48 @@
     <main class="view-container">
         <!-- Sub-Tab 1: Simulation -->
         <section class="tab-pane active" id="tab-sim">
-            <div class="sim-viewport-card">
-                <div class="viewport-header-bar">
-                    <h2 class="sim-title">지구와 달</h2>
+            <div class="em-simulation-toolbar">
+                <h2>Earth &amp; Moon Simulation</h2>
+                <div class="em-simulator-switch" role="group" aria-label="지구와 달 시뮬레이터 선택">
+                    <button class="em-simulator-switch-btn active" type="button" data-em-simulator="moon" aria-pressed="true">🌍 지구와 달</button>
+                    <button class="em-simulator-switch-btn" type="button" data-em-simulator="sunpath" aria-pressed="false">☀️ 계절별 태양 고도</button>
                 </div>
+            </div>
 
+            <div class="em-simulator-panel active" id="emMoonSimulator">
+            <div class="sim-viewport-card">
                 <div class="solar-canvas-wrapper" id="emCanvasContainer" style="height: 520px; position: relative;">
                     <canvas id="em3DCanvas"></canvas>
                     
-                    <!-- Top-Right Sunlight Indicator -->
-                    <div style="position: absolute; top: 16px; right: 16px; background: rgba(234, 179, 8, 0.15); border: 1px solid rgba(234, 179, 8, 0.4); color: #fef08a; padding: 6px 14px; border-radius: 20px; font-size: 12.5px; font-weight: 800; z-index: 10;">
-                        ☀️ 태양 빛
+                    <!-- Simulation Date & Time -->
+                    <div class="em-simulation-clock" aria-label="시뮬레이션 날짜와 시각">
+                        <span class="em-clock-label">시뮬레이션 시각</span>
+                        <time id="emDateTimeDisplay" datetime="01-01T00:00">
+                            <span id="emDateTimeMain">1월 1일 0시</span>
+                            <span id="emTimePeriodNote" class="em-time-period-note">(자정)</span>
+                        </time>
+                    </div>
+
+                    <!-- Earth Observer Location Controls -->
+                    <div class="em-observer-panel" aria-label="지구 관측 위치 선택">
+                        <div class="em-observer-title">
+                            <span>📍 지구 관측 위치</span>
+                            <span class="em-axis-key">⋯ 자전축 23.5°</span>
+                        </div>
+                        <div class="em-observer-buttons">
+                            <button class="phase-chip em-observer-btn active" type="button" data-observer-location="korea">🇰🇷 한국 (37.5°N)</button>
+                            <button class="phase-chip em-observer-btn" type="button" data-observer-location="equator">🌴 적도 (0°)</button>
+                            <button class="phase-chip em-observer-btn" type="button" data-observer-location="north">🧊 북극 (90°N)</button>
+                            <button class="phase-chip em-observer-btn" type="button" data-observer-location="australia">🇦🇺 호주 (35°S)</button>
+                        </div>
+                        <div class="em-season-toggle-row">
+                            <button class="phase-chip em-season-toggle" id="emSeasonPointsToggle" type="button" aria-pressed="false">🌐 춘분·하지·추분·동지점 (OFF)</button>
+                        </div>
+                        <div id="emObserverStatus" class="em-observer-status">한국 관측자 · 북위 37.5°</div>
                     </div>
 
                     <!-- Bottom-Left Quick Phase Selector Chips -->
-                    <div style="position: absolute; bottom: 16px; left: 16px; z-index: 10; max-width: 520px;">
+                    <div class="em-phase-selector" style="position: absolute; left: 16px; z-index: 10; max-width: 520px;">
                         <div style="font-size: 11px; color: #94a3b8; font-weight: 700; margin-bottom: 4px;">달의 위상 선택:</div>
                         <div class="phase-btn-grid" id="phaseChipsGrid">
                             <button class="phase-chip" data-angle="0">🌑 삭 (0°)</button>
@@ -135,41 +106,116 @@
 
                     <!-- Bottom-Right Earth View Phase Box -->
                     <div class="earth-view-box">
-                        <div style="font-size: 11px; color: #38bdf8; font-weight: 700; margin-bottom: 2px;">북반구(한국) 관측 시선</div>
-                        <canvas id="moonPhaseCanvas" width="80" height="80"></canvas>
+                        <div id="emMoonObserverLabel" style="font-size: 11px; color: #38bdf8; font-weight: 700; margin-bottom: 2px;">북반구(한국) 관측 시선</div>
+                        <canvas id="moonPhaseCanvas" width="80" height="80" role="img" aria-label="현재 달의 위상과 실제 달 앞면 무늬" title="NASA LRO 달 앞면 영상 기반"></canvas>
                         <div id="moonPhaseTitle" style="font-size: 17px; font-weight: 900; color: #fbbf24; margin-top: 4px;">상현달 (First Quarter)</div>
                         <div id="moonObsInfo" style="font-size: 12px; color: #38bdf8; font-weight: 700; margin-top: 4px;">남중 시각: 오후 6시 (18:00) | 초저녁 서쪽 관측</div>
+                        <div class="em-moon-progress">
+                            <span>달 공전 진행:</span>
+                            <strong id="emOrbitProgressText">음력 7~8일 경 (상현)</strong>
+                        </div>
                     </div>
                 </div>
 
-                <!-- Simulation Control Panel -->
+                <!-- Floating Simulation Controls -->
                 <div class="sim-controls-panel" style="padding: 16px 24px; background: rgba(10, 15, 29, 0.95); border-top: 1px solid var(--border-color); display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 16px;">
-                    <div class="sim-time-display">
-                        <span style="color: #94a3b8; font-size: 13px;">달 공전 진행: </span>
-                        <span id="emOrbitProgressText" style="color: #fbbf24; font-weight: 800; font-size: 14px;">음력 7~8일 경 (상현)</span>
-                    </div>
-
                     <div style="display: flex; gap: 16px; align-items: center; flex-wrap: wrap; justify-content: center;">
                         <button class="btn btn-primary" id="emPlayBtn" style="padding: 6px 18px; font-size: 14px; font-weight: 700;">⏸ 일시정지</button>
                         
                         <div style="display: flex; align-items: center; gap: 8px;">
                             <span style="font-size: 13px; color: #cbd5e1;">공전 속도:</span>
-                            <input type="range" id="emSpeedSlider" min="0.2" max="3.0" step="0.1" value="1.0" style="width: 110px; accent-color: #38bdf8;">
+                            <input type="range" id="emSpeedSlider" min="-26" max="34" step="1" value="0" aria-label="공전 속도 0.05배에서 50배까지 조절" style="width: 140px; accent-color: #38bdf8;">
+                            <span id="emSpeedValue" style="min-width: 52px; color: #fbbf24; font-size: 12px; font-weight: 900;">1.00×</span>
                         </div>
 
                         <label style="display: inline-flex; align-items: center; gap: 8px; cursor: pointer;">
                             <input type="checkbox" id="emOrbitLineToggle" checked style="accent-color: #38bdf8;">
-                            <span style="font-size: 13px; color: #cbd5e1;">궤도선 표시</span>
+                            <span style="font-size: 13px; color: #cbd5e1;">Orbit</span>
+                        </label>
+
+                        <label style="display: inline-flex; align-items: center; gap: 8px; cursor: pointer;">
+                            <input type="checkbox" id="emSunRayToggle" checked style="accent-color: #fbbf24;">
+                            <span style="font-size: 13px; color: #cbd5e1;">Sun Ray</span>
                         </label>
 
                         <button class="btn btn-secondary" id="emViewModeBtn" style="padding: 6px 14px; font-size: 13px;">지구 시선</button>
                     </div>
                 </div>
             </div>
+            </div>
+
+            <div class="em-simulator-panel" id="emSunPathSimulator" hidden>
+                <div class="em-sunpath-card">
+                    <div class="em-sunpath-heading">
+                        <div>
+                            <span class="em-sunpath-kicker">SPACE VIEW + MY VIEW</span>
+                            <h2>계절별 태양의 남중 고도와 일주 경로</h2>
+                        </div>
+                    </div>
+
+                    <div class="em-dual-view-grid">
+                        <figure class="em-dual-view-panel">
+                            <figcaption>
+                                <strong>Space View</strong>
+                                <span>드래그해 궤도를 회전 · 계절 지점을 클릭</span>
+                            </figcaption>
+                            <canvas id="emOrbitSeasonCanvas" role="img" aria-label="태양 주위를 공전하는 지구와 계절 위치"></canvas>
+                        </figure>
+
+                        <figure class="em-dual-view-panel">
+                            <figcaption>
+                                <strong>My View</strong>
+                                <span id="emSunPathObserverCaption">한국에서 남쪽 하늘을 바라본 모습</span>
+                            </figcaption>
+                            <div class="em-sunpath-readout" aria-live="polite">
+                                <strong id="emSunPathDate">3월 21일</strong>
+                                <span id="emSunPathTime">12:00</span>
+                                <span id="emSunPathSeason">춘분 · 태양 적위 0.0°</span>
+                            </div>
+                            <canvas id="emObserverSkyCanvas" role="img" aria-label="관측자가 보는 계절별 태양의 일주 경로"></canvas>
+                            <div class="em-sunpath-legend" aria-hidden="true">
+                                <span><i class="summer"></i>하지</span>
+                                <span><i class="equinox"></i>춘분·추분</span>
+                                <span><i class="winter"></i>동지</span>
+                                <span><i class="current"></i>현재 날짜</span>
+                            </div>
+                        </figure>
+                    </div>
+
+                    <div class="em-sunpath-controls">
+                        <div class="em-sunpath-chip-row">
+                            <span class="em-control-label">관측 위치</span>
+                            <button type="button" class="em-location-chip active" data-sunpath-lat="37.5" data-sunpath-place="한국">한국 (37.5°N)</button>
+                            <button type="button" class="em-location-chip" data-sunpath-lat="0" data-sunpath-place="적도">적도 (0°)</button>
+                            <button type="button" class="em-location-chip" data-sunpath-lat="90" data-sunpath-place="북극">북극 (90°N)</button>
+                            <button type="button" class="em-location-chip" data-sunpath-lat="-35" data-sunpath-place="호주">호주 (35°S)</button>
+                        </div>
+
+                        <div class="em-sunpath-slider-row">
+                            <button type="button" class="em-sunpath-play-btn" id="emSunPathPlayBtn">⏸ 일시정지</button>
+                            <label>
+                                <span>날짜</span>
+                                <input type="range" id="emSunPathDaySlider" min="1" max="365" step="1" value="80" aria-label="1월 1일부터 12월 31일까지 날짜 선택">
+                            </label>
+                            <label>
+                                <span>시각</span>
+                                <input type="range" id="emSunPathTimeSlider" min="0" max="95" step="1" value="48" aria-label="0시부터 23시 45분까지 시각 선택">
+                            </label>
+                            <div class="em-sunpath-speed" aria-label="계절별 태양 고도 재생 속도">
+                                <span class="em-speed-title">속도</span>
+                                <span class="em-speed-edge">느림 0.02×</span>
+                                <input type="range" id="emSunPathSpeed" min="0" max="6" step="1" value="4" aria-label="느림에서 빠름까지 재생 속도">
+                                <span class="em-speed-edge">빠름 20×</span>
+                                <strong id="emSunPathSpeedValue">1×</strong>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
         </section>
 
-        <!-- Sub-Tab 2: Phase Knowledge Cards -->
-        <section class="tab-pane" id="tab-cards">
+        <!-- Sub-Tab 2: Knowledge -->
+        <section class="tab-pane" id="tab-knowledge">
             <div class="atlas-grid-container">
                 <div style="margin-bottom: 20px;">
                     <h2 style="font-size: 22px; color: #fff; margin: 0;">달의 위상</h2>
@@ -202,11 +248,8 @@
                     </div>
                 </div>
             </div>
-        </section>
 
-        <!-- Sub-Tab 3: Comparison -->
-        <section class="tab-pane" id="tab-calc">
-            <div class="calc-container" style="padding:20px;">
+            <div class="calc-container" style="padding:28px 20px 20px; margin-top:28px; border-top:1px solid rgba(56,189,248,0.25);">
                 <h2 style="font-size: 22px; color: #fff; margin-bottom: 12px;">⚖️ 지구-달 운동 &amp; 천문 현상 비교 (Comparison)</h2>
                 <table style="width:100%; border-collapse:collapse; color:#e2e8f0; background:rgba(15,23,42,0.8); border-radius:8px; overflow:hidden;">
                     <thead>
@@ -247,7 +290,7 @@
             </div>
         </section>
 
-        <!-- Sub-Tab 4: Quiz -->
+        <!-- Sub-Tab 3: Quiz -->
         <section class="tab-pane" id="tab-quiz">
             <div style="padding:24px; max-width:750px; margin:0 auto; background:rgba(15,23,42,0.9); border:1px solid rgba(56,189,248,0.4); border-radius:16px;">
                 <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:18px; border-bottom:1px solid rgba(255,255,255,0.1); padding-bottom:12px;">
@@ -267,525 +310,6 @@
     </main>
 
     <!-- Heliocentric 3D Earth-Moon Physics Simulation Engine -->
-    <script>
-        // Tab Navigation Logic
-        const tabs = document.querySelectorAll('.nav-tab');
-        const panes = document.querySelectorAll('.tab-pane');
-        tabs.forEach((tab, index) => {
-            tab.addEventListener('click', () => {
-                tabs.forEach(t => t.classList.remove('active'));
-                panes.forEach(p => p.classList.remove('active'));
-                tab.classList.add('active');
-                panes[index].classList.add('active');
-            });
-        });
-
-        // Heliocentric 3D Engine
-        (function() {
-            const container = document.getElementById('emCanvasContainer');
-            const canvas = document.getElementById('em3DCanvas');
-            if (!container || !canvas || typeof THREE === 'undefined') return;
-
-            let scene, camera, renderer, controls;
-            let sunMesh, earthSystemGroup, earthMesh, moonPivot, moonMesh;
-            let earthOrbitLine, moonOrbitLine, sunLightLinesGroup;
-            
-            let earthOrbitAngle = 0; // Earth orbit around Sun (365.25 days)
-            let moonRelAngle = Math.PI / 2; // Moon orbit around Earth relative to Sun (Start at First Quarter 90deg)
-            
-            let isPlaying = true;
-            let speed = 1.0;
-            let viewMode = 'solarOverview'; // Default view mode: Solar System Overview
-
-            const SUN_ORBIT_RADIUS = 135.0;
-            const MOON_ORBIT_RADIUS = 34.0;
-
-            const phases = [
-                { angleDeg: 0, name: "🌑 삭 (New Moon)", info: "남중: 정오 (12:00) | 관측 불가 (태양과 함께 이동)", calendar: "음력 1일 경 (삭)" },
-                { angleDeg: 45, name: "🌒 초승달 (Waxing Crescent)", info: "남중: 오후 3시 (15:00) | 초저녁 서쪽 관측", calendar: "음력 3~4일 경 (초승)" },
-                { angleDeg: 90, name: "🌓 상현달 (First Quarter)", info: "남중: 오후 6시 (18:00) | 초저녁 서쪽 관측", calendar: "음력 7~8일 경 (상현)" },
-                { angleDeg: 135, name: "🌔 팽대달 (Waxing Gibbous)", info: "남중: 밤 9시 (21:00) | 저녁~한밤중 관측", calendar: "음력 10~11일 경" },
-                { angleDeg: 180, name: "🌕 망 / 보름달 (Full Moon)", info: "남중: 자정 (00:00) | 밤새도록 관측 가능", calendar: "음력 15일 경 (망)" },
-                { angleDeg: 225, name: "🌖 팽대달 (Waning Gibbous)", info: "남중: 새벽 3시 (03:00) | 한밤중~새벽 관측", calendar: "음력 18~19일 경" },
-                { angleDeg: 270, name: "🌗 하현달 (Third Quarter)", info: "남중: 새벽 6시 (06:00) | 새벽 동쪽 관측", calendar: "음력 22~23일 경 (하현)" },
-                { angleDeg: 315, name: "🌘 그믐달 (Waning Crescent)", info: "남중: 오전 9시 (09:00) | 새벽녘 동쪽 관측", calendar: "음력 27~28일 경 (그믐)" }
-            ];
-
-            function init3D() {
-                const w = container.clientWidth || 900;
-                const h = container.clientHeight || 520;
-
-                scene = new THREE.Scene();
-                camera = new THREE.PerspectiveCamera(40, w / h, 0.1, 1500);
-                camera.position.set(0, 60, 110);
-
-                renderer = new THREE.WebGLRenderer({ canvas: canvas, antialias: true, alpha: true });
-                renderer.setSize(w, h);
-                renderer.setPixelRatio(Math.min(window.devicePixelRatio, 2));
-                renderer.setClearColor(0x030712);
-
-                if (typeof THREE.OrbitControls !== 'undefined') {
-                    controls = new THREE.OrbitControls(camera, renderer.domElement);
-                    controls.enableDamping = true;
-                    controls.dampingFactor = 0.05;
-                    controls.target.set(0, 0, 0);
-                    controls.maxDistance = 450;
-                    controls.minDistance = 20;
-                }
-
-                // ☀️ 1. SUN (Center of Solar System: 0, 0, 0)
-                const sunGeo = new THREE.SphereGeometry(16, 32, 32);
-                const sunMat = new THREE.MeshBasicMaterial({ color: 0xffd700 });
-                sunMesh = new THREE.Mesh(sunGeo, sunMat);
-                sunMesh.position.set(0, 0, 0);
-                scene.add(sunMesh);
-
-                // Sun Corona
-                const coronaMesh = new THREE.Mesh(
-                    new THREE.SphereGeometry(19, 32, 32),
-                    new THREE.MeshBasicMaterial({ color: 0xfde047, transparent: true, opacity: 0.35, side: THREE.BackSide })
-                );
-                sunMesh.add(coronaMesh);
-
-                // Sun Point & Directional Lights
-                const sunPointLight = new THREE.PointLight(0xfffaed, 3.5, 900);
-                sunPointLight.position.set(0, 0, 0);
-                scene.add(sunPointLight);
-
-                const sunDirLight = new THREE.DirectionalLight(0xfffaed, 2.8);
-                sunDirLight.position.set(0, 0, 0);
-                scene.add(sunDirLight);
-                scene.add(sunDirLight.target);
-
-                const ambLight = new THREE.AmbientLight(0x1e293b, 0.25);
-                scene.add(ambLight);
-
-                // Earth Orbit Line around Sun (Radius = SUN_ORBIT_RADIUS)
-                const eOrbitGeo = new THREE.BufferGeometry();
-                const eOrbitPts = [];
-                for (let i = 0; i <= 96; i++) {
-                    const a = (i / 96) * Math.PI * 2;
-                    eOrbitPts.push(new THREE.Vector3(Math.cos(a) * SUN_ORBIT_RADIUS, 0, Math.sin(a) * SUN_ORBIT_RADIUS));
-                }
-                eOrbitGeo.setFromPoints(eOrbitPts);
-                earthOrbitLine = new THREE.Line(eOrbitGeo, new THREE.LineBasicMaterial({ color: 0xe2e8f0, transparent: true, opacity: 0.25 }));
-                scene.add(earthOrbitLine);
-
-                // 🌍 2. EARTH-MOON SYSTEM GROUP (Orbits Sun at SUN_ORBIT_RADIUS)
-                earthSystemGroup = new THREE.Group();
-                scene.add(earthSystemGroup);
-
-                // Earth Mesh inside System Group (at center 0,0,0 of system)
-                const earthGeo = new THREE.SphereGeometry(10, 32, 32);
-                const earthTex = createEarthCanvasTexture();
-                const earthMat = new THREE.MeshStandardMaterial({ map: earthTex, roughness: 0.4 });
-                earthMesh = new THREE.Mesh(earthGeo, earthMat);
-                earthMesh.rotation.z = 23.44 * (Math.PI / 180);
-                earthSystemGroup.add(earthMesh);
-
-                // Earth Atmosphere Glow
-                const atmosMesh = new THREE.Mesh(
-                    new THREE.SphereGeometry(11.2, 32, 32),
-                    new THREE.MeshBasicMaterial({ color: 0x38bdf8, transparent: true, opacity: 0.18, side: THREE.BackSide })
-                );
-                earthMesh.add(atmosMesh);
-
-                // 🌕 3. MOON PIVOT & MESH inside System Group
-                moonPivot = new THREE.Object3D();
-                earthSystemGroup.add(moonPivot);
-
-                const moonGeo = new THREE.SphereGeometry(3.0, 24, 24);
-                const moonTex = createMoonCanvasTexture();
-                const moonMat = new THREE.MeshStandardMaterial({ map: moonTex, roughness: 0.8 });
-                moonMesh = new THREE.Mesh(moonGeo, moonMat);
-                moonMesh.position.set(MOON_ORBIT_RADIUS, 0, 0);
-                moonPivot.add(moonMesh);
-
-                // Moon Orbit Line Circle around Earth
-                const mOrbitGeo = new THREE.BufferGeometry();
-                const mOrbitPts = [];
-                for (let i = 0; i <= 64; i++) {
-                    const a = (i / 64) * Math.PI * 2;
-                    mOrbitPts.push(new THREE.Vector3(Math.cos(a) * MOON_ORBIT_RADIUS, 0, Math.sin(a) * MOON_ORBIT_RADIUS));
-                }
-                mOrbitGeo.setFromPoints(mOrbitPts);
-                moonOrbitLine = new THREE.Line(mOrbitGeo, new THREE.LineBasicMaterial({ color: 0x38bdf8, transparent: true, opacity: 0.4 }));
-                earthSystemGroup.add(moonOrbitLine);
-
-                // ☀️ 4. DYNAMIC SUNLIGHT RAY BEAMS & FLAT ARROWHEADS (<)
-                sunLightLinesGroup = new THREE.Group();
-                const rayMat = new THREE.LineDashedMaterial({ color: 0xfde047, dashSize: 3, gapSize: 2, transparent: true, opacity: 0.7 });
-                const arrowMat = new THREE.LineBasicMaterial({ color: 0xfde047, linewidth: 2, transparent: true, opacity: 0.95 });
-
-                for (let offsetZ = -22; offsetZ <= 22; offsetZ += 11) {
-                    const rayGeo = new THREE.BufferGeometry().setFromPoints([
-                        new THREE.Vector3(0, 0, 0), // Will be updated dynamically
-                        new THREE.Vector3(0, 0, 0)
-                    ]);
-                    const rayLine = new THREE.Line(rayGeo, rayMat);
-                    sunLightLinesGroup.add(rayLine);
-
-                    const arrowGeo = new THREE.BufferGeometry().setFromPoints([
-                        new THREE.Vector3(0, 0, 0),
-                        new THREE.Vector3(0, 0, 0),
-                        new THREE.Vector3(0, 0, 0)
-                    ]);
-                    const arrowLine = new THREE.Line(arrowGeo, arrowMat);
-                    sunLightLinesGroup.add(arrowLine);
-                }
-                scene.add(sunLightLinesGroup);
-
-                // Window Resize
-                window.addEventListener('resize', () => {
-                    const nw = container.clientWidth || 900;
-                    const nh = container.clientHeight || 520;
-                    camera.aspect = nw / nh;
-                    camera.updateProjectionMatrix();
-                    renderer.setSize(nw, nh);
-                });
-
-                animate();
-            }
-
-            function createEarthCanvasTexture() {
-                const c = document.createElement('canvas');
-                c.width = 512; c.height = 256;
-                const ctx = c.getContext('2d');
-                ctx.fillStyle = '#0f3d69'; ctx.fillRect(0, 0, 512, 256);
-                ctx.fillStyle = '#1e7045';
-                for (let i = 0; i < 20; i++) {
-                    ctx.beginPath();
-                    ctx.arc(Math.random() * 512, Math.random() * 256, Math.random() * 40 + 20, 0, Math.PI * 2);
-                    ctx.fill();
-                }
-                return new THREE.CanvasTexture(c);
-            }
-
-            function createMoonCanvasTexture() {
-                const c = document.createElement('canvas');
-                c.width = 256; c.height = 128;
-                const ctx = c.getContext('2d');
-                ctx.fillStyle = '#cbd5e1'; ctx.fillRect(0, 0, 256, 128);
-                ctx.fillStyle = '#a1a1aa';
-                for (let i = 0; i < 35; i++) {
-                    ctx.beginPath();
-                    ctx.arc(Math.random() * 256, Math.random() * 128, Math.random() * 4 + 1, 0, Math.PI * 2);
-                    ctx.fill();
-                }
-                return new THREE.CanvasTexture(c);
-            }
-
-            function updatePhasesUI() {
-                // Phase angle is moonRelAngle (relative to Sun-Earth vector)
-                let a = (moonRelAngle % (Math.PI * 2) + Math.PI * 2) % (Math.PI * 2);
-                let deg = a * (180 / Math.PI);
-                
-                let closestIdx = 0;
-                let minDist = 360;
-                phases.forEach((p, idx) => {
-                    let d = Math.abs(deg - p.angleDeg);
-                    if (d > 180) d = 360 - d;
-                    if (d < minDist) { minDist = d; closestIdx = idx; }
-                });
-
-                const pData = phases[closestIdx];
-                document.getElementById('moonPhaseTitle').textContent = pData.name;
-                document.getElementById('moonObsInfo').textContent = pData.info;
-                document.getElementById('emOrbitProgressText').textContent = pData.calendar;
-
-                const chips = document.querySelectorAll('.phase-chip');
-                chips.forEach(c => {
-                    if (parseInt(c.dataset.angle, 10) === pData.angleDeg) {
-                        c.classList.add('active');
-                    } else {
-                        c.classList.remove('active');
-                    }
-                });
-
-                draw2DMoonPhase(a);
-            }
-
-            function draw2DMoonPhase(angleRad) {
-                const c = document.getElementById('moonPhaseCanvas');
-                if (!c) return;
-                const ctx = c.getContext('2d');
-                const r = 35;
-                ctx.clearRect(0, 0, 80, 80);
-
-                ctx.save();
-                ctx.translate(40, 40);
-
-                // Base dark circle (Night side)
-                ctx.fillStyle = '#1e293b';
-                ctx.beginPath();
-                ctx.arc(0, 0, r, 0, Math.PI * 2);
-                ctx.fill();
-
-                const a = (angleRad % (Math.PI * 2) + Math.PI * 2) % (Math.PI * 2);
-                const cosA = Math.cos(a);
-
-                // 🌑 삭 (New Moon ~ 0 rad): 100% Dark
-                if (a < 0.08 || a > Math.PI * 2 - 0.08) {
-                    ctx.restore();
-                    return;
-                }
-
-                // 🌕 망 / 보름달 (Full Moon ~ PI rad): 100% Yellow
-                if (Math.abs(a - Math.PI) < 0.08) {
-                    ctx.fillStyle = '#fef08a';
-                    ctx.beginPath();
-                    ctx.arc(0, 0, r, 0, Math.PI * 2);
-                    ctx.fill();
-                    ctx.restore();
-                    return;
-                }
-
-                ctx.fillStyle = '#fef08a';
-                ctx.beginPath();
-
-                if (a > 0 && a < Math.PI) {
-                    // Waxing phase (0 -> 180deg): Right side is illuminated in Northern Hemisphere
-                    ctx.arc(0, 0, r, -Math.PI / 2, Math.PI / 2, false);
-                    if (cosA > 0) {
-                        // Crescent (0 -> 90deg): terminator curves inside right side
-                        ctx.ellipse(0, 0, cosA * r, r, 0, Math.PI / 2, -Math.PI / 2, true);
-                    } else {
-                        // Gibbous (90 -> 180deg): terminator extends into left side
-                        ctx.ellipse(0, 0, Math.abs(cosA) * r, r, 0, Math.PI / 2, -Math.PI / 2, false);
-                    }
-                } else {
-                    // Waning phase (180 -> 360deg): Left side is illuminated in Northern Hemisphere
-                    ctx.arc(0, 0, r, Math.PI / 2, -Math.PI / 2, false);
-                    if (cosA < 0) {
-                        // Gibbous (180 -> 270deg): terminator extends into right side
-                        ctx.ellipse(0, 0, Math.abs(cosA) * r, r, 0, -Math.PI / 2, Math.PI / 2, false);
-                    } else {
-                        // Crescent (270 -> 360deg): terminator curves inside left side
-                        ctx.ellipse(0, 0, cosA * r, r, 0, -Math.PI / 2, Math.PI / 2, true);
-                    }
-                }
-
-                ctx.fill();
-                ctx.restore();
-            }
-
-            function updateDynamicSunRays() {
-                if (!earthSystemGroup || !sunLightLinesGroup) return;
-                const ex = earthSystemGroup.position.x;
-                const ez = earthSystemGroup.position.z;
-
-                // Direction vector from Sun (0,0) to Earth (ex, ez)
-                const len = Math.sqrt(ex * ex + ez * ez);
-                if (len < 0.1) return;
-
-                const ux = ex / len; // Unit direction vector towards Earth
-                const uz = ez / len;
-                const px = -uz;      // Perpendicular vector
-                const pz = ux;
-
-                const rayLines = sunLightLinesGroup.children.filter((_, idx) => idx % 2 === 0);
-                const arrowLines = sunLightLinesGroup.children.filter((_, idx) => idx % 2 === 1);
-
-                const offsets = [-22, -11, 0, 11, 22];
-
-                offsets.forEach((off, idx) => {
-                    const startX = ux * 22 + px * off;
-                    const startZ = uz * 22 + pz * off;
-                    const endX = ux * (SUN_ORBIT_RADIUS - 42) + px * off;
-                    const endZ = uz * (SUN_ORBIT_RADIUS - 42) + pz * off;
-
-                    // Update ray dashed line
-                    const rayLine = rayLines[idx];
-                    if (rayLine) {
-                        const pts = [new THREE.Vector3(startX, 0, startZ), new THREE.Vector3(endX, 0, endZ)];
-                        rayLine.geometry.setFromPoints(pts);
-                        rayLine.computeLineDistances();
-                    }
-
-                    // Update arrowhead (<)
-                    const arrowLine = arrowLines[idx];
-                    if (arrowLine) {
-                        const wing1X = endX - ux * 5 + px * 3;
-                        const wing1Z = endZ - uz * 5 + pz * 3;
-                        const wing2X = endX - ux * 5 - px * 3;
-                        const wing2Z = endZ - uz * 5 - pz * 3;
-
-                        const aPts = [
-                            new THREE.Vector3(wing1X, 0, wing1Z),
-                            new THREE.Vector3(endX, 0, endZ),
-                            new THREE.Vector3(wing2X, 0, wing2Z)
-                        ];
-                        arrowLine.geometry.setFromPoints(aPts);
-                    }
-                });
-            }
-
-            function animate() {
-                requestAnimationFrame(animate);
-
-                // Physical speed steps:
-                // Earth Orbit around Sun: 1 full circle = 365.25 days
-                // Moon Orbit around Earth: 13.38 full circles = 365.25 days
-                // Earth Self Rotation: 365.25 full circles = 365.25 days
-                const dEarthOrbitStep = 0.00025 * speed;
-                const dMoonStep = dEarthOrbitStep * 13.38;
-
-                if (isPlaying) {
-                    earthOrbitAngle += dEarthOrbitStep;
-                    moonRelAngle += dMoonStep;
-
-                    if (earthOrbitAngle >= Math.PI * 2) earthOrbitAngle -= Math.PI * 2;
-                    if (moonRelAngle >= Math.PI * 2) moonRelAngle -= Math.PI * 2;
-                }
-
-                // 1. Move Earth-Moon System Group around Sun at SUN_ORBIT_RADIUS
-                if (earthSystemGroup) {
-                    const ex = Math.cos(earthOrbitAngle) * SUN_ORBIT_RADIUS;
-                    const ez = Math.sin(earthOrbitAngle) * SUN_ORBIT_RADIUS;
-                    earthSystemGroup.position.set(ex, 0, ez);
-                }
-
-                // 2. Rotate Moon Pivot inside Earth System (relative to Sun-Earth line)
-                if (moonPivot) {
-                    // Absolute moon orbit angle = earthOrbitAngle + Math.PI + moonRelAngle
-                    // Adding Math.PI aligns moonRelAngle = 0 with New Moon (Moon between Earth and Sun)
-                    moonPivot.rotation.y = earthOrbitAngle + Math.PI + moonRelAngle;
-                }
-
-                // 3. Moon Tidal Locking (faces Earth center 0,0,0)
-                if (moonMesh) {
-                    moonMesh.lookAt(0, 0, 0);
-                }
-
-                // 4. Earth Self Rotation: 365.25 rotations per Earth year
-                if (earthMesh && isPlaying) {
-                    earthMesh.rotation.y += dEarthOrbitStep * 365.25;
-                }
-
-                // 5. Update Dynamic Sunlight Rays pointing from Sun to Earth
-                updateDynamicSunRays();
-
-                // 6. Camera Tracking Mode
-                if (controls && earthSystemGroup) {
-                    if (viewMode === 'trackEarth') {
-                        const targetPos = earthSystemGroup.position;
-                        controls.target.copy(targetPos);
-                        camera.position.set(targetPos.x, targetPos.y + 48, targetPos.z + 85);
-                    } else {
-                        controls.target.set(0, 0, 0); // Solar System Overview
-                    }
-                    controls.update();
-                }
-
-                updatePhasesUI();
-                renderer.render(scene, camera);
-            }
-
-            // Controls listeners
-            document.getElementById('emPlayBtn').onclick = function() {
-                isPlaying = !isPlaying;
-                this.textContent = isPlaying ? '⏸ 일시정지' : '▶ 재생';
-            };
-
-            document.getElementById('emSpeedSlider').oninput = function() {
-                speed = parseFloat(this.value);
-            };
-
-            document.getElementById('emOrbitLineToggle').onchange = function() {
-                if (earthOrbitLine) earthOrbitLine.visible = this.checked;
-                if (moonOrbitLine) moonOrbitLine.visible = this.checked;
-            };
-
-            document.getElementById('emViewModeBtn').onclick = function() {
-                if (viewMode === 'trackEarth') {
-                    viewMode = 'solarOverview';
-                    this.textContent = '태양계 시선';
-                    camera.position.set(0, 180, 260);
-                } else {
-                    viewMode = 'trackEarth';
-                    this.textContent = '지구 시선';
-                }
-            };
-
-            // Phase quick selector chips click event
-            const chips = document.querySelectorAll('.phase-chip');
-            chips.forEach(chip => {
-                chip.onclick = function() {
-                    const deg = parseFloat(this.dataset.angle);
-                    moonRelAngle = deg * (Math.PI / 180);
-                    isPlaying = false;
-                    document.getElementById('emPlayBtn').textContent = '▶ 재생';
-
-                    // Immediately update 3D Moon position to match selected phase angle
-                    if (moonPivot) {
-                        moonPivot.rotation.y = earthOrbitAngle + Math.PI + moonRelAngle;
-                    }
-                    if (moonMesh) {
-                        moonMesh.lookAt(0, 0, 0);
-                    }
-                    updateDynamicSunRays();
-                    updatePhasesUI();
-
-                    if (renderer && scene && camera) {
-                        renderer.render(scene, camera);
-                    }
-                };
-            });
-
-            init3D();
-        })();
-
-        // Dedicated Earth & Moon Quiz Engine
-        (function() {
-            const quizData = [
-                { q: "1. 달의 자전 주기와 공전 주기가 같아서(27.3일) 나타나는 현상으로 옳은 것은?", ans: 0, opts: ["지구에서는 항상 달의 같은 앞면만 보인다.", "매달 일식과 월식이 번갈아 일어난다.", "달의 표면 중력이 지구의 6배가 된다.", "달의 위상이 변화하지 않는다."], exp: "해설: 달의 자전 주기와 공전 주기가 27.3일로 같은 '동주기 자전'을 하므로 지구에서는 달의 앞면만 관측됩니다." },
-                { q: "2. 음력 7~8일 경에 오른쪽 반달 형태로 보이며, 초저녁 서쪽 하늘에서 관측되는 달의 위상은?", ans: 1, opts: ["초승달", "상현달", "보름달(망)", "하현달"], exp: "해설: 오른쪽 반쪽이 밝은 상현달은 오후 6시(초저녁)에 서쪽 하늘에서 관측됩니다." },
-                { q: "3. 태양-달-지구 순서로 일직선 배치되어 달이 태양을 가리는 천문 현상은?", ans: 2, opts: ["월식", "환상선", "일식", "자전축 경사"], exp: "해설: 달이 태양과 지구 사이에 들어와 태양 빛을 가리는 현상을 일식(Solar Eclipse)이라고 합니다." },
-                { q: "4. 지구의 공전과 자전축 기울기(약 23.5°)로 인해 나타나는 주요 현상은?", ans: 0, opts: ["계절의 변화", "낮과 밤의 반복", "달의 위상 변화", "조석 간만의 차"], exp: "해설: 자전축이 23.5° 기울어진 채 태양 주위를 공전하기 때문에 입사각이 달라져 계절의 변화가 일어납니다." },
-                { q: "5. 한밤중(24시) 남쪽 하늘에서 가장 높게 떠오르는 달의 위상은?", ans: 2, opts: ["삭", "상현달", "보름달(망)", "하현달"], exp: "해설: 태양-지구-달 위치일 때 보름달(망)은 태양 반대쪽에 위치하여 한밤중(24시) 남쪽 하늘에서 정점에 섭니다." }
-            ];
-
-            let curr = 0;
-            function loadQuestion() {
-                const item = quizData[curr];
-                document.getElementById('emQuizProgress').textContent = `문제 ${curr + 1} / ${quizData.length}`;
-                document.getElementById('emQuestionText').textContent = item.q;
-                const optsBox = document.getElementById('emOptionsBox');
-                optsBox.innerHTML = '';
-                const expBox = document.getElementById('emExpBox');
-                expBox.style.display = 'none';
-                const nextBtn = document.getElementById('emNextBtn');
-                nextBtn.style.display = 'none';
-
-                item.opts.forEach((opt, idx) => {
-                    const btn = document.createElement('button');
-                    btn.style.cssText = 'text-align:left; padding:10px 14px; background:rgba(255,255,255,0.06); border:1px solid rgba(255,255,255,0.15); color:#fff; border-radius:8px; font-size:14px; cursor:pointer; transition:all 0.2s;';
-                    btn.textContent = `${idx + 1}. ${opt}`;
-                    btn.onclick = () => {
-                        Array.from(optsBox.children).forEach(b => b.disabled = true);
-                        if (idx === item.ans) {
-                            btn.style.background = 'rgba(16, 185, 129, 0.3)';
-                            btn.style.borderColor = '#10b981';
-                        } else {
-                            btn.style.background = 'rgba(239, 68, 68, 0.3)';
-                            btn.style.borderColor = '#ef4444';
-                            optsBox.children[item.ans].style.background = 'rgba(16, 185, 129, 0.3)';
-                        }
-                        expBox.textContent = item.exp;
-                        expBox.style.display = 'block';
-                        nextBtn.style.display = 'inline-block';
-                    };
-                    optsBox.appendChild(btn);
-                });
-            }
-
-            document.getElementById('emNextBtn').onclick = () => {
-                curr = (curr + 1) % quizData.length;
-                loadQuestion();
-            };
-
-            loadQuestion();
-        })();
-    </script>
+    <script src="app.js"></script>
 </body>
 </html>
