@@ -1,0 +1,156 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>대한민국 고속도로 한국사 보물 지도 탐험대 | 3D 박물관</title>
+  <meta name="description" content="고속도로 노선을 따라 한반도 주요 유물과 출토지, 박물관을 탐험하고 내신/수능 핵심 문제를 푸는 인터랙티브 한국사 보물 지도 앱">
+  
+  <!-- Leaflet CSS -->
+  <link rel="stylesheet" href="vendor/leaflet/leaflet.css" />
+  
+  <!-- App Styles -->
+  <link rel="stylesheet" href="styles.css">
+  
+  <!-- Three.js (for 3D Museum mode) -->
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
+</head>
+<body>
+  <!-- Global App Header / Mode Switcher & Smart Filters -->
+  <header class="app-header">
+    <div class="header-main">
+      <div class="brand">
+        <span class="brand-badge">내신/수능 핵심</span>
+        <h1 class="brand-title">🗺️ 대한민국 고속도로 한국사 보물 지도 탐험대</h1>
+      </div>
+      
+      <!-- Mode Toggle Switcher -->
+      <div class="mode-switch">
+        <button id="btn-mode-map" class="mode-btn active" type="button">
+          🗺️ 전국 보물 지도 탐험
+        </button>
+        <button id="btn-mode-3d" class="mode-btn" type="button">
+          🏛️ 3D 박물관 관람
+        </button>
+      </div>
+    </div>
+
+    <!-- Smart Filter Controls (Map Mode Only) -->
+    <div id="filter-bar" class="filter-bar">
+      <!-- Era Filters -->
+      <div class="filter-group">
+        <span class="filter-label">📅 시대 선택:</span>
+        <button class="filter-btn active" data-filter-type="era" data-value="all">전체</button>
+        <button class="filter-btn" data-filter-type="era" data-value="prehistoric">1. 선사·고조선</button>
+        <button class="filter-btn" data-filter-type="era" data-value="three_kingdoms">2. 삼국 시대</button>
+        <button class="filter-btn" data-filter-type="era" data-value="unified_silla">3. 통일신라·발해</button>
+        <button class="filter-btn" data-filter-type="era" data-value="goryeo">4. 고려 시대</button>
+        <button class="filter-btn" data-filter-type="era" data-value="joseon">5. 조선 시대</button>
+        <button class="filter-btn" data-filter-type="era" data-value="modern">6. 근현대</button>
+      </div>
+
+      <!-- Route Filters -->
+      <div class="filter-group">
+        <span class="filter-label">🛣️ 고속도로 코스:</span>
+        <button class="filter-btn active" data-filter-type="route" data-value="all">전체 노선</button>
+        <button class="filter-btn route-kb" data-filter-type="route" data-value="경부선">🔴 경부선</button>
+        <button class="filter-btn route-sh" data-filter-type="route" data-value="서해안선">🔵 서해안선</button>
+        <button class="filter-btn route-yd" data-filter-type="route" data-value="영동선">🟢 영동선</button>
+        <button class="filter-btn route-hn" data-filter-type="route" data-value="호남선">🟡 호남선</button>
+        <button class="filter-btn route-ov" data-filter-type="route" data-value="해외선">✈️ 해외 유출</button>
+      </div>
+
+      <!-- Quick Relic Jump Select -->
+      <div class="filter-group search-group">
+        <span class="filter-label">⚡ 유물 빠른 이동:</span>
+        <select id="relic-quick-select" class="relic-select">
+          <option value="">✨ 찾으시는 유물/비석 선택 (63종)</option>
+        </select>
+      </div>
+    </div>
+
+    <!-- 3D Museum Room Nav (3D Mode Only, hidden by default) -->
+    <nav class="gallery-nav" id="gallery-nav" style="display: none;">
+      <div class="nav-scroll">
+        <button class="nav-btn active" data-gallery="0">선사시대 & 고조선</button>
+        <button class="nav-btn" data-gallery="1">고구려관</button>
+        <button class="nav-btn" data-gallery="2">백제관</button>
+        <button class="nav-btn" data-gallery="3">신라&통일신라관</button>
+        <button class="nav-btn" data-gallery="4">고려시대관</button>
+        <button class="nav-btn" data-gallery="5">조선시대관</button>
+        <button class="nav-btn" data-gallery="6">근현대관</button>
+      </div>
+    </nav>
+  </header>
+
+  <!-- Main View Container -->
+  <main class="main-content">
+    <!-- Map Container -->
+    <div id="map-container" class="map-container"></div>
+
+    <!-- 3D Canvas Container -->
+    <div id="museum-3d-container" class="museum-3d-container" style="display: none;"></div>
+  </main>
+
+  <!-- Relic Docent & Quiz Modal -->
+  <dialog id="art-modal" class="art-modal">
+    <div class="modal-card">
+      <button id="modal-close" class="modal-close-btn" aria-label="닫기">✕</button>
+      
+      <div class="modal-grid">
+        <!-- Relic Real Image Section -->
+        <div class="modal-media-col">
+          <div class="image-frame">
+            <img id="modal-image" src="" alt="유물 원작 사진" class="relic-real-img">
+            <span id="modal-designation" class="badge-designation">국보 유물</span>
+          </div>
+        </div>
+
+        <!-- Details & Interactive Quiz Section -->
+        <div class="modal-info-col">
+          <div class="modal-header">
+            <div class="badges">
+              <span id="modal-era" class="badge-era">삼국 시대</span>
+              <span id="modal-route" class="badge-route">🔴 경부선</span>
+            </div>
+            <h2 id="modal-title" class="modal-title-text">광개토대왕릉비</h2>
+            <p id="modal-subtitle" class="modal-subtitle-text">Gwanggaeto Stele</p>
+          </div>
+
+          <div class="meta-box">
+            <p>📍 <strong>발굴 장소 (출토지):</strong> <span id="modal-location">중국 길림성 집안시</span></p>
+            <p>🏛️ <strong>현재 소장 박물관:</strong> <span id="modal-museum">고구려 금석문 유적</span></p>
+          </div>
+
+          <!-- Tab Navigation (Docent vs Quiz) -->
+          <div class="modal-tabs">
+            <button id="tab-docent-btn" class="tab-btn active" type="button">🎓 도슨트 해설</button>
+            <button id="tab-quiz-btn" class="tab-btn" type="button">🎯 내신/수능 핵심</button>
+          </div>
+
+          <!-- Tab Content 1: Docent -->
+          <div id="tab-docent-content" class="tab-content docent-content">
+            <p id="modal-docent" class="docent-text"></p>
+            <div class="exam-tip-card">
+              <p>📌 <strong>내신/수능 핵심</strong></p>
+              <p id="modal-exam-tip" class="exam-tip-text"></p>
+            </div>
+          </div>
+
+          <!-- Tab Content 2: Quiz -->
+          <div id="tab-quiz-content" class="tab-content quiz-content" style="display: none;">
+            <p id="quiz-question" class="quiz-question-text"></p>
+            <div id="quiz-options" class="quiz-options-list"></div>
+            <div id="quiz-result" class="quiz-result-card" style="display: none;"></div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </dialog>
+
+  <!-- App Logic Scripts -->
+  <script src="vendor/leaflet/leaflet.js"></script>
+  <script src="history-data.js"></script>
+  <script src="museum.js"></script>
+</body>
+</html>

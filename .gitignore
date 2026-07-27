@@ -23,3 +23,17 @@ __pycache__/
 .*-deploy-temp/
 .*-target-questions/
 *.tar.gz
+
+# Local repair, recovery, and visual verification artifacts
+/.github-render-deploy/
+/.site-deploy-worktree/
+/research/
+/learning/academics/space - 복사본/
+/screenshot_*.png
+/recovered_*.txt
+/add_*.js
+/calibrate_*.js
+/debug.js
+/fix*.js
+/insert_*.js
+/update_*.js

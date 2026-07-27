@@ -2211,8 +2211,6 @@
             }
 
             document.getElementById('modalDesc').textContent = body.desc;
-        }
-
             if (modalOverlay) modalOverlay.classList.add('active');
         }
 

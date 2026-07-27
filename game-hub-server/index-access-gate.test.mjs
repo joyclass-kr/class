@@ -30,7 +30,7 @@ assert.match(
 );
 assert.match(
     html,
-    /updatePlayerLearningLinks\(playerName\);\s*setHubLocked\(false\);\s*setStatus\(`PLAYER/,
+    /updatePlayerLearningLinks\((?:playerName|guest\.name)\);\s*setHubLocked\(false\);\s*setStatus\(`PLAYER/,
     'Submitting a valid player name must unlock the hub.',
 );
 assert.match(
