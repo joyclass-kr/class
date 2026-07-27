@@ -198,6 +198,7 @@ export const middleSchoolWorksheetCatalog: ArithmeticWorksheet[] = [
   { grade: "중3", name: "인수분해: 세 문자식", title: "인수분해: 세 문자식", route: "/arithmetic/middle-school/factorization?kind=three-variables" },
   { grade: "중3", name: "인수분해: 3차식 공통인수", title: "인수분해: 3차식 공통인수", route: "/arithmetic/middle-school/factorization?kind=cubic-common" },
   { grade: "중3", name: "인수분해: 3차식 묶어내기", title: "인수분해: 3차식 묶어내기", route: "/arithmetic/middle-school/factorization?kind=cubic-grouping" },
+  { grade: "중3", name: "인수분해: 세제곱의 합과 차", title: "인수분해: 세제곱의 합과 차", route: "/arithmetic/middle-school/factorization?kind=cubic-sum-difference" },
   { grade: "중3", name: "인수분해: 식 정리 후 인수분해", title: "인수분해: 식 정리 후 인수분해", route: "/arithmetic/middle-school/factorization?kind=normalize-first" },
   { grade: "중3", name: "인수분해 종합", title: "인수분해 종합", route: "/arithmetic/middle-school/factorization?kind=comprehensive" },
   { grade: "중3", name: "이차방정식: 인수분해 풀이", title: "이차방정식: 인수분해 풀이", route: null },

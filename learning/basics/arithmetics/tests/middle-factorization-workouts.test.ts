@@ -136,8 +136,8 @@ function normalizedPolynomial(polynomial: Polynomial) {
     .join("|");
 }
 
-test("인수분해 12개 세부 유형이 각각 8문제를 생성한다", () => {
-  assert.equal(MIDDLE_FACTORIZATION_KINDS.length, 12);
+test("인수분해 13개 세부 유형이 각각 8문제를 생성한다", () => {
+  assert.equal(MIDDLE_FACTORIZATION_KINDS.length, 13);
   for (const kind of MIDDLE_FACTORIZATION_KINDS) {
     const problemSet = createMiddleFactorizationProblemSet(kind, 20260727);
     assert.equal(problemSet.problems.length, 8);
@@ -206,6 +206,19 @@ test("세 문자식은 ab, bc, ca가 섞인 묶어내기부터 세 일차인수�
     problems.at(-1)?.answerLatex,
     "(a+b)(b+c)(c+a)",
   );
+});
+
+test("세제곱의 합과 차는 공식부터 공통인수와 고차식 결합까지 독립 훈련한다", () => {
+  const problems = createMiddleFactorizationProblemSet("cubic-sum-difference", 20260728).problems;
+
+  assert.equal(problems.length, 8);
+  assert.equal(new Set(problems.map(({ structure }) => structure)).size, 7);
+  assert.match(problems[0].latex, /^x\^3\+\d+$/);
+  assert.match(problems[1].latex, /^x\^3-\d+$/);
+  assert.ok(problems.some(({ structure }) => structure === "two-variable-cube-sum"));
+  assert.ok(problems.some(({ structure }) => structure === "common-then-cube-difference"));
+  assert.ok(problems.some(({ structure }) => structure === "shifted-cube-sum"));
+  assert.equal(problems.at(-1)?.answerLatex, "(2x^2-3y)(4x^4+6x^2y+9y^2)");
 });
 
 test("모든 인수분해 문제는 정답과 겹치지 않는 오답 세 개를 갖는다", () => {

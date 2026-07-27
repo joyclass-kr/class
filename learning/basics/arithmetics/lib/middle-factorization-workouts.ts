@@ -9,6 +9,7 @@ export type MiddleFactorizationKind =
   | "three-variables"
   | "cubic-common"
   | "cubic-grouping"
+  | "cubic-sum-difference"
   | "normalize-first"
   | "comprehensive";
 
@@ -36,6 +37,7 @@ export const MIDDLE_FACTORIZATION_KINDS: MiddleFactorizationKind[] = [
   "three-variables",
   "cubic-common",
   "cubic-grouping",
+  "cubic-sum-difference",
   "normalize-first",
   "comprehensive",
 ];
@@ -51,6 +53,7 @@ export const MIDDLE_FACTORIZATION_TITLES: Record<MiddleFactorizationKind, string
   "three-variables": "인수분해: 세 문자식",
   "cubic-common": "인수분해: 3차식 공통인수",
   "cubic-grouping": "인수분해: 3차식 묶어내기",
+  "cubic-sum-difference": "인수분해: 세제곱의 합과 차",
   "normalize-first": "인수분해: 식 정리 후 인수분해",
   comprehensive: "인수분해 종합",
 };
@@ -485,6 +488,60 @@ function build(
     ], structure);
   }
 
+  if (kind === "cubic-sum-difference") {
+    const r = integer(next, 2, 5);
+    const common = integer(next, 2, 5);
+    const variant = variantHint % 8;
+    const forms = [
+      {
+        expression: `x^3+${r ** 3}`,
+        answer: `(x+${r})(x^2-${r}x+${r ** 2})`,
+        structure: "monic-cube-formula",
+      },
+      {
+        expression: `x^3-${r ** 3}`,
+        answer: `(x-${r})(x^2+${r}x+${r ** 2})`,
+        structure: "monic-cube-formula",
+      },
+      {
+        expression: `${m ** 3}x^3+${n ** 3}`,
+        answer: `(${m}x+${n})(${m ** 2}x^2-${m * n}x+${n ** 2})`,
+        structure: "coefficient-cube-sum",
+      },
+      {
+        expression: `${m ** 3}x^3-${n ** 3}`,
+        answer: `(${m}x-${n})(${m ** 2}x^2+${m * n}x+${n ** 2})`,
+        structure: "coefficient-cube-difference",
+      },
+      {
+        expression: `a^3+${r ** 3}b^3`,
+        answer: `(a+${r}b)(a^2-${r}ab+${r ** 2}b^2)`,
+        structure: "two-variable-cube-sum",
+      },
+      {
+        expression: `${common}x^4-${common * r ** 3}x`,
+        answer: `${common}x(x-${r})(x^2+${r}x+${r ** 2})`,
+        structure: "common-then-cube-difference",
+      },
+      {
+        expression: `(${linear("x", p)})^3+${r ** 3}`,
+        answer: `(${linear("x", p + r)})((${linear("x", p)})^2-${r}(${linear("x", p)})+${r ** 2})`,
+        structure: "shifted-cube-sum",
+      },
+      {
+        expression: `8x^6-27y^3`,
+        answer: `(2x^2-3y)(4x^4+6x^2y+9y^2)`,
+        structure: "higher-power-cube-difference",
+      },
+    ];
+    const { expression, answer, structure } = forms[variant];
+    return make(id, kind, expression, answer, [
+      `${answer}+1`,
+      `${answer}-1`,
+      `-${answer}`,
+    ], structure);
+  }
+
   if (kind === "normalize-first") {
     const a = integer(next, 2, 5);
     const variant = ([0, 0, 1, 2, 3, 3, 4, 4][variantHint] ?? variantHint) % 5;
@@ -554,7 +611,7 @@ function build(
     "difference-squares",
     "nonmonic-trinomial",
     "cubic-common",
-    "cubic-grouping",
+    "cubic-sum-difference",
     "normalize-first",
   ] as const;
   return build(
