@@ -16,6 +16,11 @@ import {
 
 const DEFAULT_KIND: MiddleFactorizationKind = "common-factor";
 const INITIAL_SEED = 20260727;
+const DIFFICULTY_LABELS: Record<MiddleFactorizationProblem["difficulty"], string> = {
+  basic: "기본",
+  application: "응용",
+  advanced: "고난도",
+};
 
 function choiceProblem(problem: MiddleFactorizationProblem): WorksheetChoiceProblem {
   const choices = [
@@ -89,9 +94,25 @@ export default function MiddleFactorizationPage() {
   }
 
   function row(problem: MiddleFactorizationProblem, index: number, answerSheet: boolean) {
+    const previousDifficulty = index > 0 ? problemSet.problems[index - 1]?.difficulty : undefined;
+    const beginsDifficultySection = (
+      index < problemSet.problems.length
+      && problem.difficulty !== previousDifficulty
+    );
+
     return (
-      <article className="polynomial-question logarithm-question" data-testid="middle-factorization-question" key={`${problem.id}-${answerSheet}`}>
+      <article
+        className={`polynomial-question logarithm-question factorization-difficulty-${problem.difficulty}${beginsDifficultySection ? " factorization-difficulty-start" : ""}`}
+        data-difficulty={problem.difficulty}
+        data-testid="middle-factorization-question"
+        key={`${problem.id}-${answerSheet}`}
+      >
         <div className="polynomial-question-number">{String(index + 1).padStart(2, "0")}</div>
+        {beginsDifficultySection && (
+          <span className="factorization-difficulty-label" data-testid="factorization-difficulty-label">
+            {DIFFICULTY_LABELS[problem.difficulty]}
+          </span>
+        )}
         <div className="polynomial-question-body">
           <span className="polynomial-focus-label">{problem.label}</span>
           <div className="logarithm-expression">

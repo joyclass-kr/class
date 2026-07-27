@@ -194,6 +194,20 @@ test("uses four worksheet cards per row on wide catalog screens", async () => {
   assert.match(css, /@media \(max-width: 820px\)[\s\S]*?\.worksheet-catalog\s*\{[^}]*repeat\(2, minmax\(0, 1fr\)\)/);
 });
 
+test("marks the three difficulty sections on middle-school factorization sheets", async () => {
+  const response = await render("/arithmetic/middle-school/factorization");
+  assert.equal(response.status, 200);
+  const html = await response.text();
+  assert.equal((html.match(/data-testid="middle-factorization-question"/g) ?? []).length, 16);
+  assert.equal((html.match(/data-testid="factorization-difficulty-label"/g) ?? []).length, 6);
+  assert.equal((html.match(/data-difficulty="basic"/g) ?? []).length, 4);
+  assert.equal((html.match(/data-difficulty="application"/g) ?? []).length, 6);
+  assert.equal((html.match(/data-difficulty="advanced"/g) ?? []).length, 6);
+  assert.equal((html.match(/>기본<\/span>/g) ?? []).length, 2);
+  assert.equal((html.match(/>응용<\/span>/g) ?? []).length, 2);
+  assert.equal((html.match(/>고난도<\/span>/g) ?? []).length, 2);
+});
+
 test("keeps geometry worksheet formulas compact without inline answer controls", async () => {
   const css = await readFile("app/globals.css", "utf8");
   const highSchoolCss = await readFile("app/arithmetic/high-school/high-school.css", "utf8");

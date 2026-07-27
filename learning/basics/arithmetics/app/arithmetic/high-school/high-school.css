@@ -781,6 +781,40 @@
 .logarithm-expression { display: flex; width: 100%; justify-content: flex-start; margin-top: 10px; font-size: 20px; }
 .polynomial-page.logarithm-page .logarithm-expression .math-formula-display,
 .polynomial-page.logarithm-page .logarithm-expression .katex-display { display: flex; width: 100%; justify-content: flex-start; margin: 0; text-align: left; }
+.numeric-choice-page .factorization-difficulty-start:not(:first-child) {
+  border-top: 2px solid #b9c5da;
+}
+.numeric-choice-page .factorization-difficulty-label {
+  position: absolute;
+  z-index: 2;
+  top: 11px;
+  right: 14px;
+  display: inline-flex;
+  align-items: center;
+  min-width: 38px;
+  justify-content: center;
+  border: 1px solid currentColor;
+  border-radius: 999px;
+  padding: 3px 8px;
+  font-family: var(--high-school-korean-font);
+  font-size: 9px;
+  font-weight: 900;
+  line-height: 1.1;
+  letter-spacing: -0.035em;
+  background: #fff;
+}
+.numeric-choice-page .factorization-difficulty-basic .factorization-difficulty-label {
+  color: #28705f;
+  background: #f1faf7;
+}
+.numeric-choice-page .factorization-difficulty-application .factorization-difficulty-label {
+  color: #395aa1;
+  background: #f2f5fc;
+}
+.numeric-choice-page .factorization-difficulty-advanced .factorization-difficulty-label {
+  color: #9a453c;
+  background: #fff4f1;
+}
 .logarithm-response { display: flex; align-items: center; justify-content: flex-end; gap: 8px; padding-top: 34px; }
 .logarithm-response label { display: flex; align-items: center; gap: 6px; }
 .logarithm-response input { width: 68px; height: 38px; border: 1px solid #aab8cf; border-radius: 6px; color: #10213d; font-family: var(--high-school-math-font); font-size: 17px; text-align: center; }
