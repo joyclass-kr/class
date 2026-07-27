@@ -837,6 +837,67 @@
   font-size: 9px;
   font-weight: 900;
 }
+.middle-quadratic-page .middle-equation-difficulty-start:not(:first-child) {
+  border-top: 2px solid #b9c5da;
+}
+.middle-quadratic-page .middle-equation-difficulty-label {
+  position: absolute;
+  z-index: 2;
+  top: 11px;
+  right: 14px;
+  display: inline-flex;
+  align-items: center;
+  min-width: 38px;
+  justify-content: center;
+  border: 1px solid currentColor;
+  border-radius: 999px;
+  padding: 3px 8px;
+  font-family: var(--high-school-korean-font);
+  font-size: 9px;
+  font-weight: 900;
+  line-height: 1.1;
+  background: #fff;
+}
+.middle-quadratic-page .middle-equation-difficulty-basic .middle-equation-difficulty-label {
+  color: #28705f;
+  background: #f1faf7;
+}
+.middle-quadratic-page .middle-equation-difficulty-application .middle-equation-difficulty-label {
+  color: #395aa1;
+  background: #f2f5fc;
+}
+.middle-quadratic-page .middle-equation-difficulty-advanced .middle-equation-difficulty-label {
+  color: #9a453c;
+  background: #fff4f1;
+}
+.middle-equation-static-answer,
+.middle-equation-solution-hint {
+  display: flex;
+  align-items: baseline;
+  gap: 7px;
+  max-width: 680px;
+  margin: 6px 0 0;
+  color: #536176;
+  font-family: var(--high-school-korean-font);
+  font-size: 10px;
+  font-weight: 650;
+  line-height: 1.3;
+  white-space: nowrap;
+}
+.middle-equation-static-answer strong,
+.middle-equation-solution-hint strong {
+  flex: 0 0 auto;
+  border-radius: 4px;
+  padding: 2px 5px;
+  color: #31466f;
+  background: #edf2fb;
+  font-size: 9px;
+  font-weight: 900;
+}
+.middle-equation-static-answer .math-formula {
+  color: #142342;
+  font-size: 13px;
+}
 .logarithm-response { display: flex; align-items: center; justify-content: flex-end; gap: 8px; padding-top: 34px; }
 .logarithm-response label { display: flex; align-items: center; gap: 6px; }
 .logarithm-response input { width: 68px; height: 38px; border: 1px solid #aab8cf; border-radius: 6px; color: #10213d; font-family: var(--high-school-math-font); font-size: 17px; text-align: center; }

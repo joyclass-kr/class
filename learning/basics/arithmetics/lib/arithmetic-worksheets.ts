@@ -201,10 +201,19 @@ export const middleSchoolWorksheetCatalog: ArithmeticWorksheet[] = [
   { grade: "중3", name: "인수분해: 세제곱의 합과 차", title: "인수분해: 세제곱의 합과 차", route: "/arithmetic/middle-school/factorization?kind=cubic-sum-difference" },
   { grade: "중3", name: "인수분해: 식 정리 후 인수분해", title: "인수분해: 식 정리 후 인수분해", route: "/arithmetic/middle-school/factorization?kind=normalize-first" },
   { grade: "중3", name: "인수분해 종합", title: "인수분해 종합", route: "/arithmetic/middle-school/factorization?kind=comprehensive" },
-  { grade: "중3", name: "이차방정식: 인수분해 풀이", title: "이차방정식: 인수분해 풀이", route: null },
-  { grade: "중3", name: "이차방정식: 제곱근 이용", title: "이차방정식: 제곱근 이용", route: null },
-  { grade: "중3", name: "이차방정식: 근의 공식", title: "이차방정식: 근의 공식", route: null },
-  { grade: "중3", name: "이차방정식 종합", title: "이차방정식 종합", route: null },
+  { grade: "중3", name: "이차방정식: x²=a와 제곱근", title: "이차방정식: x²=a와 제곱근", route: "/arithmetic/middle-school/quadratic-equations?kind=square-root-basic" },
+  { grade: "중3", name: "이차방정식: 인수의 곱이 0", title: "이차방정식: 인수의 곱이 0", route: "/arithmetic/middle-school/quadratic-equations?kind=zero-product" },
+  { grade: "중3", name: "이차방정식: 인수분해 풀이", title: "이차방정식: 인수분해 풀이", route: "/arithmetic/middle-school/quadratic-equations?kind=monic-factorization" },
+  { grade: "중3", name: "이차방정식: ax²+bx+c 인수분해", title: "이차방정식: ax²+bx+c 인수분해", route: "/arithmetic/middle-school/quadratic-equations?kind=nonmonic-factorization" },
+  { grade: "중3", name: "이차방정식: 공통인수로 묶기", title: "이차방정식: 공통인수로 묶기", route: "/arithmetic/middle-school/quadratic-equations?kind=common-factor" },
+  { grade: "중3", name: "이차방정식: 완전제곱식", title: "이차방정식: 완전제곱식", route: "/arithmetic/middle-school/quadratic-equations?kind=perfect-square" },
+  { grade: "중3", name: "이차방정식: 완전제곱꼴로 변형", title: "이차방정식: 완전제곱꼴로 변형", route: "/arithmetic/middle-school/quadratic-equations?kind=completing-square" },
+  { grade: "중3", name: "이차방정식: 근의 공식 기초", title: "이차방정식: 근의 공식 기초", route: "/arithmetic/middle-school/quadratic-equations?kind=quadratic-formula-monic" },
+  { grade: "중3", name: "이차방정식: 근의 공식 일반형", title: "이차방정식: 근의 공식 일반형", route: "/arithmetic/middle-school/quadratic-equations?kind=quadratic-formula-general" },
+  { grade: "중3", name: "이차방정식: 음의 최고차항 정리", title: "이차방정식: 음의 최고차항 정리", route: "/arithmetic/middle-school/quadratic-equations?kind=negative-leading" },
+  { grade: "중3", name: "이차방정식: 전개·이항 후 풀이", title: "이차방정식: 전개·이항 후 풀이", route: "/arithmetic/middle-school/quadratic-equations?kind=expand-and-solve" },
+  { grade: "중3", name: "이차방정식: 분수·소수 계수", title: "이차방정식: 분수·소수 계수", route: "/arithmetic/middle-school/quadratic-equations?kind=fraction-decimal" },
+  { grade: "중3", name: "이차방정식 종합", title: "이차방정식 종합", route: "/arithmetic/middle-school/quadratic-equations?kind=comprehensive" },
 ];
 
 export const highSchoolWorksheetCatalog: ArithmeticWorksheet[] = [
