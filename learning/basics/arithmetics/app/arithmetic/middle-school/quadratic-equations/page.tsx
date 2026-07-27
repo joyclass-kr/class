@@ -34,7 +34,7 @@ function choiceProblem(problem: MiddleQuadraticEquationProblem): WorksheetChoice
   const shift = [...problem.id].reduce((total, character) => total + character.charCodeAt(0), 0) % choices.length;
   return {
     id: problem.id,
-    label: problem.label,
+    label: "이차방정식의 해",
     correctLatex: problem.answerLatex,
     choices: [...choices.slice(shift), ...choices.slice(0, shift)],
   };

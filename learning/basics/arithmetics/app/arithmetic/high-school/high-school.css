@@ -898,6 +898,12 @@
   color: #142342;
   font-size: 13px;
 }
+.middle-quadratic-page .trig-derivative-choice .math-formula {
+  scrollbar-width: none;
+}
+.middle-quadratic-page .trig-derivative-choice .math-formula::-webkit-scrollbar {
+  display: none;
+}
 .logarithm-response { display: flex; align-items: center; justify-content: flex-end; gap: 8px; padding-top: 34px; }
 .logarithm-response label { display: flex; align-items: center; gap: 6px; }
 .logarithm-response input { width: 68px; height: 38px; border: 1px solid #aab8cf; border-radius: 6px; color: #10213d; font-family: var(--high-school-math-font); font-size: 17px; text-align: center; }
