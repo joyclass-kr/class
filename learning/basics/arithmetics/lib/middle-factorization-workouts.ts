@@ -143,9 +143,47 @@ export function formatNormalizedLinearCombination(
     : `${outside}(${sharedFactor})(${remainingFactor})`;
 }
 
+function flipFirstOperation(expression: string) {
+  const index = expression.slice(1).search(/[+-]/);
+  if (index < 0) return expression;
+  const actualIndex = index + 1;
+  const flipped = expression[actualIndex] === "+" ? "-" : "+";
+  return `${expression.slice(0, actualIndex)}${flipped}${expression.slice(actualIndex + 1)}`;
+}
+
+function omitFirstFactor(expression: string) {
+  const firstParenthesis = expression.indexOf("(");
+  if (firstParenthesis > 0) return expression.slice(firstParenthesis);
+  const firstFactor = /^\([^)]*\)/.exec(expression)?.[0];
+  if (
+    firstFactor
+    && expression.length > firstFactor.length
+    && expression[firstFactor.length] !== "^"
+  ) {
+    return expression.slice(firstFactor.length);
+  }
+  return expression;
+}
+
 function uniqueDistractors(answer: string, candidates: string[]) {
-  const unique = [...new Set(candidates.filter((candidate) => candidate !== answer))];
-  while (unique.length < 3) unique.push(`${answer}+${unique.length + 1}`);
+  const isPlaceholder = (candidate: string) => {
+    if (!candidate.startsWith(answer)) return false;
+    return /^[+-](?:1|a|b)$/.test(candidate.slice(answer.length));
+  };
+  const realisticFallbacks = [
+    omitFirstFactor(answer),
+    flipFirstOperation(answer),
+    answer.replace("^2", ""),
+    answer.replace(/^(\d+)(?=[a-z(])/, ""),
+    `-(${answer})`,
+    `2(${answer})`,
+  ];
+  const unique = [
+    ...new Set(
+      [...candidates, ...realisticFallbacks]
+        .filter((candidate) => candidate !== answer && !isPlaceholder(candidate)),
+    ),
+  ];
   return unique.slice(0, 3);
 }
 
@@ -390,7 +428,7 @@ function build(
     const answer = `(${linear(variable, firstConstant, a)})(${linear(variable, secondConstant, b)})`;
     return make(id, kind, expression, answer, [
       `(${linear(variable, -firstConstant, a)})(${linear(variable, -secondConstant, b)})`,
-      `(${linear(variable, secondConstant, a)})(${linear(variable, firstConstant, b)})`,
+      `(${linear(variable, -firstConstant, a)})(${linear(variable, secondConstant, b)})`,
       `(${linear(variable, firstConstant, a * b)})(${linear(variable, secondConstant)})`,
     ], ["both-positive", "both-negative", "mixed-monic", "other-variable"][variant]);
   }
@@ -550,7 +588,7 @@ function build(
       const expression = `${a}x(${linear("x", p)})${signedFactorCoefficient(q)}(${linear("x", p)})`;
       const answer = formatNormalizedLinearCombination(a, q, p);
       return make(id, kind, expression, answer, [
-        `(${linear("x", p)})(${linear("x", q, a)})`,
+        `(${linear("x", p)})(${linear("x", q, a - 1)})`,
         `(${linear("x", -p)})(${linear("x", q, a)})`,
         `(${linear("x", p)})(${linear("x", -q, a)})`,
       ], "shared-binomial");
@@ -598,7 +636,7 @@ function build(
     const expression = `(${shared})(${linear("x", q, a)})+(${shared})(${linear("x", r, b)})`;
     const answer = formatNormalizedLinearCombination(a + b, q + r, p);
     return make(id, kind, expression, answer, [
-      `(${shared})(${linear("x", q + r, a + b)})`,
+      `(${shared})(${linear("x", q + r, a + b - 1)})`,
       `(${shared})(${linear("x", q - r, a + b)})`,
       `(${linear("x", -p)})(${linear("x", q + r, a + b)})`,
     ], "sum-of-two-products");

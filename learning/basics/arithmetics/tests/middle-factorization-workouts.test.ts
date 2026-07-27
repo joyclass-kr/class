@@ -221,6 +221,28 @@ test("세제곱의 합과 차는 공식부터 공통인수와 고차식 결합�
   assert.equal(problems.at(-1)?.answerLatex, "(2x^2-3y)(4x^4+6x^2y+9y^2)");
 });
 
+test("인수분해 오답은 임의의 수를 덧붙이지 않고 실제로 틀린 식만 사용한다", () => {
+  for (const kind of MIDDLE_FACTORIZATION_KINDS) {
+    for (let seed = 1; seed <= 100; seed += 1) {
+      for (const problem of createMiddleFactorizationProblemSet(kind, seed).problems) {
+        const source = normalizedPolynomial(parsePolynomial(problem.latex));
+        for (const distractor of problem.distractors) {
+          assert.doesNotMatch(
+            distractor.slice(problem.answerLatex.length),
+            /^[+-](?:1|a|b)$/,
+            `${problem.answerLatex} has a placeholder distractor: ${distractor}`,
+          );
+          assert.notEqual(
+            normalizedPolynomial(parsePolynomial(distractor)),
+            source,
+            `${kind}/${seed}/${problem.structure}: distractor is also correct: ${distractor}`,
+          );
+        }
+      }
+    }
+  }
+});
+
 test("모든 인수분해 문제는 정답과 겹치지 않는 오답 세 개를 갖는다", () => {
   for (const kind of MIDDLE_FACTORIZATION_KINDS) {
     for (let seed = 1; seed <= 20; seed += 1) {
