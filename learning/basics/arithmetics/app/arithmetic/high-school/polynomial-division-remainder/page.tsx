@@ -1,6 +1,9 @@
 "use client";
 
-import { polynomialDivisionRemainderProblems } from "../../../../lib/polynomial-division-remainder-workouts";
+import {
+  createPolynomialDivisionRemainderProblems,
+  polynomialDivisionRemainderProblems,
+} from "../../../../lib/polynomial-division-remainder-workouts";
 import GeometryChoiceWorksheet from "../components/geometry-choice-worksheet";
 
 export default function PolynomialDivisionRemainderPage() {
@@ -10,6 +13,7 @@ export default function PolynomialDivisionRemainderPage() {
       title="다항식의 곱셈·나눗셈과 나머지정리"
       seed={20260826}
       problems={polynomialDivisionRemainderProblems}
+      createSet={createPolynomialDivisionRemainderProblems}
     />
   );
 }
