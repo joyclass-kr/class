@@ -1,6 +1,9 @@
 "use client";
 
-import { cubicQuarticEquationProblems } from "../../../../lib/cubic-quartic-equation-workouts";
+import {
+  createCubicQuarticEquationProblems,
+  cubicQuarticEquationProblems,
+} from "../../../../lib/cubic-quartic-equation-workouts";
 import GeometryChoiceWorksheet from "../components/geometry-choice-worksheet";
 
 export default function CubicQuarticEquationsPage() {
@@ -10,6 +13,7 @@ export default function CubicQuarticEquationsPage() {
       title="삼차방정식과 사차방정식"
       seed={20260825}
       problems={cubicQuarticEquationProblems}
+      createSet={createCubicQuarticEquationProblems}
     />
   );
 }
