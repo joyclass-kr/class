@@ -1,6 +1,9 @@
 "use client";
 
-import { financialSequenceProblems } from "../../../../lib/financial-sequence-workouts";
+import {
+  createFinancialSequenceProblems,
+  financialSequenceProblems,
+} from "../../../../lib/financial-sequence-workouts";
 import GeometryChoiceWorksheet from "../components/geometry-choice-worksheet";
 
 export default function FinancialSequencesPage() {
@@ -10,6 +13,7 @@ export default function FinancialSequencesPage() {
       title="등비수열의 활용·원리합계와 적립"
       seed={20260828}
       problems={financialSequenceProblems}
+      createSet={createFinancialSequenceProblems}
     />
   );
 }
