@@ -1,6 +1,6 @@
 "use client";
 
-import { matrixProblems } from "../../../../lib/matrix-workouts";
+import { createMatrixProblems, matrixProblems } from "../../../../lib/matrix-workouts";
 import GeometryChoiceWorksheet from "../components/geometry-choice-worksheet";
 
 export default function MatricesPage() {
@@ -10,6 +10,7 @@ export default function MatricesPage() {
       title="행렬의 뜻과 기본 연산"
       seed={20260821}
       problems={matrixProblems}
+      createSet={createMatrixProblems}
     />
   );
 }

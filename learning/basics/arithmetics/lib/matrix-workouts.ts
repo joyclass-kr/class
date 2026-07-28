@@ -1,7 +1,106 @@
 import type { GeometryChoiceItem } from "../app/arithmetic/high-school/components/geometry-choice-worksheet";
 
+export type MatrixWorkoutKind =
+  | "equal-matrices"
+  | "addition"
+  | "linear-combination"
+  | "scalar-unknown"
+  | "multiplication"
+  | "square-component"
+  | "matrix-equation";
+
+export type MatrixWorkoutProblem = GeometryChoiceItem & {
+  kind: MatrixWorkoutKind;
+};
+
+type Matrix = number[][];
+
+function random(seed: number) {
+  let value = seed >>> 0;
+  return () => {
+    value += 0x6d2b79f5;
+    let next = value;
+    next = Math.imul(next ^ (next >>> 15), next | 1);
+    next ^= next + Math.imul(next ^ (next >>> 7), next | 61);
+    return ((next ^ (next >>> 14)) >>> 0) / 4294967296;
+  };
+}
+
+const integer = (next: () => number, minimum: number, maximum: number) =>
+  minimum + Math.floor(next() * (maximum - minimum + 1));
+
+function nonzero(next: () => number, minimum: number, maximum: number) {
+  let value = 0;
+  while (value === 0) value = integer(next, minimum, maximum);
+  return value;
+}
+
+function randomMatrix(
+  next: () => number,
+  rows: number,
+  columns: number,
+  minimum = -5,
+  maximum = 5,
+) {
+  return Array.from({ length: rows }, () =>
+    Array.from({ length: columns }, () => nonzero(next, minimum, maximum)),
+  );
+}
+
+function mapMatrix(matrix: Matrix, mapper: (value: number, row: number, column: number) => number) {
+  return matrix.map((row, rowIndex) =>
+    row.map((value, columnIndex) => mapper(value, rowIndex, columnIndex)),
+  );
+}
+
+function add(left: Matrix, right: Matrix) {
+  return mapMatrix(left, (value, row, column) => value + right[row]![column]!);
+}
+
+function subtract(left: Matrix, right: Matrix) {
+  return mapMatrix(left, (value, row, column) => value - right[row]![column]!);
+}
+
+function scale(coefficient: number, matrix: Matrix) {
+  return mapMatrix(matrix, (value) => coefficient * value);
+}
+
+function multiply(left: Matrix, right: Matrix) {
+  return left.map((row) =>
+    right[0]!.map((_, column) =>
+      row.reduce(
+        (sum, value, index) => sum + value * right[index]![column]!,
+        0,
+      ),
+    ),
+  );
+}
+
+function elementwiseMultiply(left: Matrix, right: Matrix) {
+  return mapMatrix(left, (value, row, column) => value * right[row]![column]!);
+}
+
+function formatMatrix(matrix: Array<Array<number | string>>) {
+  return `\\begin{pmatrix}${matrix.map((row) => row.join("&")).join("\\\\")}\\end{pmatrix}`;
+}
+
+function pair(A: Matrix, B: Matrix) {
+  return `A=${formatMatrix(A)},\\quad B=${formatMatrix(B)}`;
+}
+
 function choices(id: string, answer: string, distractors: string[]) {
-  return [answer, ...distractors].map((latex, index) => ({
+  const unique = [...new Set(distractors.filter((candidate) => candidate !== answer))];
+  const fallbacks = [
+    formatMatrix([[0, 0], [0, 0]]),
+    formatMatrix([[1, 0], [0, 1]]),
+    "0",
+    "-1",
+  ];
+  for (const fallback of fallbacks) {
+    if (unique.length === 3) break;
+    if (fallback !== answer && !unique.includes(fallback)) unique.push(fallback);
+  }
+  return [answer, ...unique.slice(0, 3)].map((latex, index) => ({
     id: `${id}-${index}`,
     latex,
     correct: index === 0,
@@ -9,15 +108,19 @@ function choices(id: string, answer: string, distractors: string[]) {
 }
 
 function item(
-  id: string,
+  seed: number,
+  index: number,
+  kind: MatrixWorkoutKind,
   label: string,
   prompt: string,
   latex: string,
   answer: string,
   distractors: string[],
-): GeometryChoiceItem {
+): MatrixWorkoutProblem {
+  const id = `matrix-${seed}-${index}`;
   return {
     id,
+    kind,
     label,
     prompt,
     latex,
@@ -26,61 +129,166 @@ function item(
   };
 }
 
-export const matrixProblems: GeometryChoiceItem[] = [
-  item(
-    "m1",
-    "행렬의 성분",
-    "두 행렬이 같을 때 $x$와 $y$는?",
-    String.raw`\begin{pmatrix}x&-2\\3&y\end{pmatrix}=\begin{pmatrix}4&-2\\3&5\end{pmatrix}`,
-    String.raw`x=4,\quad y=5`,
-    [String.raw`x=5,\quad y=4`, String.raw`x=-4,\quad y=5`, String.raw`x=4,\quad y=-5`],
-  ),
-  item(
-    "m2",
-    "행렬의 덧셈",
-    "$A+B$는?",
-    String.raw`A=\begin{pmatrix}2&-1\\3&4\end{pmatrix},\quad B=\begin{pmatrix}-5&2\\1&-3\end{pmatrix}`,
-    String.raw`\begin{pmatrix}-3&1\\4&1\end{pmatrix}`,
-    [String.raw`\begin{pmatrix}7&-3\\2&7\end{pmatrix}`, String.raw`\begin{pmatrix}-3&-3\\4&-7\end{pmatrix}`, String.raw`\begin{pmatrix}3&1\\4&1\end{pmatrix}`],
-  ),
-  item(
-    "m3",
-    "행렬의 뺄셈",
-    "$2A-B$는?",
-    String.raw`A=\begin{pmatrix}1&3\\-2&4\end{pmatrix},\quad B=\begin{pmatrix}2&-1\\5&3\end{pmatrix}`,
-    String.raw`\begin{pmatrix}0&7\\-9&5\end{pmatrix}`,
-    [String.raw`\begin{pmatrix}0&5\\1&5\end{pmatrix}`, String.raw`\begin{pmatrix}4&5\\1&11\end{pmatrix}`, String.raw`\begin{pmatrix}-1&4\\-7&1\end{pmatrix}`],
-  ),
-  item(
-    "m4",
-    "행렬의 실수배",
-    "$kA$의 $(2,1)$성분이 12일 때 $k$는?",
-    String.raw`A=\begin{pmatrix}2&-1\\3&5\end{pmatrix}`,
-    String.raw`k=4`,
-    [String.raw`k=3`, String.raw`k=5`, String.raw`k=6`],
-  ),
-  item(
-    "m5",
-    "행렬의 곱셈",
-    "$AB$는?",
-    String.raw`A=\begin{pmatrix}1&2\\-1&3\end{pmatrix},\quad B=\begin{pmatrix}4&-2\\1&5\end{pmatrix}`,
-    String.raw`\begin{pmatrix}6&8\\-1&17\end{pmatrix}`,
-    [String.raw`\begin{pmatrix}4&10\\-1&15\end{pmatrix}`, String.raw`\begin{pmatrix}2&12\\-7&17\end{pmatrix}`, String.raw`\begin{pmatrix}6&-8\\1&17\end{pmatrix}`],
-  ),
-  item(
-    "m6",
-    "행렬의 곱의 성분",
-    "$AB$의 $(1,2)$성분은?",
-    String.raw`A=\begin{pmatrix}2&-1&3\\4&0&1\end{pmatrix},\quad B=\begin{pmatrix}1&2\\-2&5\\3&-1\end{pmatrix}`,
-    String.raw`-4`,
-    [String.raw`10`, String.raw`4`, String.raw`-10`],
-  ),
-  item(
-    "m7",
-    "행렬 방정식",
-    "행렬 $X$는?",
-    String.raw`2X+\begin{pmatrix}1&-3\\2&4\end{pmatrix}=\begin{pmatrix}7&5\\-4&10\end{pmatrix}`,
-    String.raw`X=\begin{pmatrix}3&4\\-3&3\end{pmatrix}`,
-    [String.raw`X=\begin{pmatrix}4&1\\-1&7\end{pmatrix}`, String.raw`X=\begin{pmatrix}3&1\\-3&7\end{pmatrix}`, String.raw`X=\begin{pmatrix}6&8\\-6&6\end{pmatrix}`],
-  ),
-];
+export function createMatrixProblems(seed: number) {
+  const next = random(seed);
+  const problems: MatrixWorkoutProblem[] = [];
+
+  {
+    const x = integer(next, 1, 6);
+    let y = integer(next, 1, 6);
+    while (y === x) y = integer(next, 1, 6);
+    const fixed = randomMatrix(next, 2, 2);
+    const xPosition = integer(next, 0, 3);
+    let yPosition = integer(next, 0, 3);
+    while (yPosition === xPosition) yPosition = integer(next, 0, 3);
+    const right = fixed.map((row) => [...row]);
+    right[Math.floor(xPosition / 2)]![xPosition % 2] = x;
+    right[Math.floor(yPosition / 2)]![yPosition % 2] = y;
+    const left: Array<Array<number | string>> = fixed.map((row) => [...row]);
+    left[Math.floor(xPosition / 2)]![xPosition % 2] = "x";
+    left[Math.floor(yPosition / 2)]![yPosition % 2] = "y";
+    const answer = `x=${x},\\quad y=${y}`;
+    problems.push(item(
+      seed,
+      0,
+      "equal-matrices",
+      "행렬의 성분",
+      "두 행렬이 같을 때 $x$와 $y$는?",
+      `${formatMatrix(left)}=${formatMatrix(right)}`,
+      answer,
+      [
+        `x=${y},\\quad y=${x}`,
+        `x=${-x},\\quad y=${y}`,
+        `x=${x},\\quad y=${-y}`,
+      ],
+    ));
+  }
+
+  {
+    const A = randomMatrix(next, 2, 2);
+    const B = randomMatrix(next, 2, 2);
+    const answerMatrix = add(A, B);
+    const signError = answerMatrix.map((row) => [...row]);
+    signError[0]![0] = signError[0]![0] === 0 ? 1 : -signError[0]![0]!;
+    problems.push(item(
+      seed,
+      1,
+      "addition",
+      "행렬의 덧셈",
+      "$A+B$는?",
+      pair(A, B),
+      formatMatrix(answerMatrix),
+      [
+        formatMatrix(subtract(A, B)),
+        formatMatrix(signError),
+        formatMatrix(elementwiseMultiply(A, B)),
+      ],
+    ));
+  }
+
+  {
+    const coefficient = integer(next, 2, 3);
+    const A = randomMatrix(next, 2, 2);
+    const B = randomMatrix(next, 2, 2);
+    const answerMatrix = subtract(scale(coefficient, A), B);
+    problems.push(item(
+      seed,
+      2,
+      "linear-combination",
+      "행렬의 실수배와 뺄셈",
+      `$${coefficient}A-B$는?`,
+      pair(A, B),
+      formatMatrix(answerMatrix),
+      [
+        formatMatrix(subtract(A, B)),
+        formatMatrix(add(scale(coefficient, A), B)),
+        formatMatrix(scale(coefficient, subtract(A, B))),
+      ],
+    ));
+  }
+
+  {
+    const A = randomMatrix(next, 2, 2, -4, 4);
+    const row = integer(next, 0, 1);
+    const column = integer(next, 0, 1);
+    const coefficient = integer(next, 2, 5);
+    const target = coefficient * A[row]![column]!;
+    problems.push(item(
+      seed,
+      3,
+      "scalar-unknown",
+      "행렬의 실수배",
+      `$kA$의 $(${row + 1},${column + 1})$성분이 ${target}일 때 $k$는?`,
+      `A=${formatMatrix(A)}`,
+      `k=${coefficient}`,
+      [`k=${coefficient - 1}`, `k=${coefficient + 1}`, `k=${-coefficient}`],
+    ));
+  }
+
+  {
+    const A = randomMatrix(next, 2, 2, -3, 3);
+    const B = randomMatrix(next, 2, 2, -3, 3);
+    const product = multiply(A, B);
+    const signError = product.map((row) => [...row]);
+    signError[1]![1] = signError[1]![1] === 0 ? 1 : -signError[1]![1]!;
+    problems.push(item(
+      seed,
+      4,
+      "multiplication",
+      "행렬의 곱셈",
+      "$AB$는?",
+      pair(A, B),
+      formatMatrix(product),
+      [
+        formatMatrix(multiply(B, A)),
+        formatMatrix(elementwiseMultiply(A, B)),
+        formatMatrix(signError),
+      ],
+    ));
+  }
+
+  {
+    const A = randomMatrix(next, 2, 2, -4, 4);
+    const row = integer(next, 0, 1);
+    const column = integer(next, 0, 1);
+    const square = multiply(A, A);
+    const answer = square[row]![column]!;
+    const rowProduct = A[row]![0]! * A[row]![1]!;
+    const entrySquare = A[row]![column]! ** 2;
+    problems.push(item(
+      seed,
+      5,
+      "square-component",
+      "행렬의 거듭제곱",
+      `$A^2$의 $(${row + 1},${column + 1})$성분은?`,
+      `A=${formatMatrix(A)}`,
+      `${answer}`,
+      [`${-answer}`, `${rowProduct}`, `${entrySquare}`],
+    ));
+  }
+
+  {
+    const coefficient = integer(next, 2, 3);
+    const X = randomMatrix(next, 2, 2, -4, 4);
+    const A = randomMatrix(next, 2, 2, -5, 5);
+    const B = add(scale(coefficient, X), A);
+    problems.push(item(
+      seed,
+      6,
+      "matrix-equation",
+      "행렬 방정식",
+      "행렬 $X$는?",
+      `${coefficient}X+${formatMatrix(A)}=${formatMatrix(B)}`,
+      `X=${formatMatrix(X)}`,
+      [
+        `X=${formatMatrix(scale(coefficient, X))}`,
+        `X=${formatMatrix(add(X, A))}`,
+        `X=${formatMatrix(scale(-1, X))}`,
+      ],
+    ));
+  }
+
+  return problems;
+}
+
+export const matrixProblems = createMatrixProblems(20260821);
