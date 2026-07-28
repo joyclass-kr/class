@@ -1,6 +1,9 @@
 "use client";
 
-import { sineCosineLawProblems } from "../../../../lib/sine-cosine-law-workouts";
+import {
+  createSineCosineLawProblems,
+  sineCosineLawProblems,
+} from "../../../../lib/sine-cosine-law-workouts";
 import GeometryChoiceWorksheet from "../components/geometry-choice-worksheet";
 
 export default function SineCosineLawsPage() {
@@ -10,6 +13,7 @@ export default function SineCosineLawsPage() {
       title="사인법칙과 코사인법칙"
       seed={20260827}
       problems={sineCosineLawProblems}
+      createSet={createSineCosineLawProblems}
     />
   );
 }
