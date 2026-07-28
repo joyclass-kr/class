@@ -24,7 +24,8 @@ const state={
   preset:"이차함수",
   functions:[{expression:"a*(x-h)^2+k",visible:true}],
   params:{a:1,b:1,h:0,k:0},
-  range:10,showPoints:true,showDerivative:false,showIntegral:false
+  range:10,showPoints:true,showDerivative:false,showIntegral:false,
+  activeFunctionIndex:0
 };
 const canvas=document.getElementById("graphCanvas");
 const formulaDisplay=document.getElementById("formulaDisplay");
@@ -55,18 +56,36 @@ function buildFunctionRows(){
   const root=document.getElementById("functionRows");root.innerHTML="";
   state.functions.forEach((fn,index)=>{
     const row=document.createElement("div");row.className="functionRow";
+    row.classList.toggle("isActive",index===state.activeFunctionIndex);
     row.innerHTML=`<label class="functionVisibility" title="그래프 표시"><input type="checkbox" ${fn.visible?"checked":""}><i style="background:${colors[index%colors.length]}"></i></label>
-      <b>y${index+1}</b><input class="functionInput" value="${fn.expression.replace(/"/g,"&quot;")}" aria-label="${index+1}번 함수 수식" spellcheck="false">
+      <b>y${index+1}</b><input class="functionInput" value="${escapeAttribute(fn.expression)}" aria-label="${index+1}번 함수 수식" spellcheck="false" inputmode="text">
       <button type="button" class="removeFunction" aria-label="${index+1}번 함수 삭제" ${state.functions.length===1?"disabled":""}>×</button>
       <small class="functionError" aria-live="polite"></small>`;
     row.querySelector(".functionVisibility input").onchange=e=>{fn.visible=e.target.checked;draw();};
-    row.querySelector(".functionInput").oninput=e=>{fn.expression=e.target.value;state.preset="직접 입력";buildLibrary();renderFormula();draw();};
-    row.querySelector(".removeFunction").onclick=()=>{state.functions.splice(index,1);buildFunctionRows();renderFormula();draw();};
+    const input=row.querySelector(".functionInput");
+    input.onfocus=()=>setActiveFunction(index);
+    input.onclick=()=>setActiveFunction(index);
+    input.oninput=e=>{fn.expression=e.target.value;state.preset="직접 입력";buildLibrary();renderFormula();draw();};
+    row.querySelector(".removeFunction").onclick=()=>{
+      state.functions.splice(index,1);
+      state.activeFunctionIndex=Math.min(state.activeFunctionIndex,state.functions.length-1);
+      buildFunctionRows();renderFormula();draw();
+    };
     root.appendChild(row);
   });
+  updateActiveFunctionLabel();
+}
+function escapeAttribute(value){return value.replace(/&/g,"&amp;").replace(/"/g,"&quot;").replace(/</g,"&lt;").replace(/>/g,"&gt;");}
+function setActiveFunction(index){
+  state.activeFunctionIndex=index;
+  document.querySelectorAll(".functionRow").forEach((row,rowIndex)=>row.classList.toggle("isActive",rowIndex===index));
+  updateActiveFunctionLabel();
+}
+function updateActiveFunctionLabel(){
+  document.getElementById("activeFunctionLabel").textContent=`y${state.activeFunctionIndex+1} 편집 중`;
 }
 function selectPreset(item){
-  state.preset=item[0];state.functions[0]={expression:item[2],visible:true};
+  state.preset=item[0];state.functions[0]={expression:item[2],visible:true};state.activeFunctionIndex=0;
   document.getElementById("lessonQuestion").textContent=item[3];buildLibrary();buildFunctionRows();renderFormula();draw();
 }
 function renderFormula(){
@@ -79,7 +98,7 @@ function prettyFormula(source){
 }
 function normalizeExpression(source){
   return source
-    .replace(/[−–]/g,"-").replace(/×|·/g,"*").replace(/π/gi,"pi")
+    .replace(/[−–]/g,"-").replace(/×|·/g,"*").replace(/÷/g,"/").replace(/π/gi,"pi")
     .replace(/\^/g,"**")
     .replace(/\bln\b/gi,"log")
     .replace(/\be\b/g,"E")
@@ -121,8 +140,50 @@ function draw(){
 document.getElementById("addFunctionButton").onclick=()=>{
   if(state.functions.length>=6)return;
   state.functions.push({expression:state.functions.length===1?"ln(x^2+1)":"sin(x)",visible:true});
+  state.activeFunctionIndex=state.functions.length-1;
   state.preset="직접 입력";buildLibrary();buildFunctionRows();renderFormula();draw();
+  requestAnimationFrame(()=>getActiveInput()?.focus());
 };
+function getActiveInput(){return document.querySelectorAll(".functionInput")[state.activeFunctionIndex]||null;}
+function updateActiveExpression(value,cursorStart,cursorEnd=cursorStart){
+  const fn=state.functions[state.activeFunctionIndex];if(!fn)return;
+  fn.expression=value;state.preset="직접 입력";
+  const input=getActiveInput();
+  if(input){input.value=value;input.focus();input.setSelectionRange(cursorStart,cursorEnd);}
+  buildLibrary();renderFormula();draw();
+}
+function insertIntoActive(before,after=""){
+  const input=getActiveInput();if(!input)return;
+  const start=input.selectionStart??input.value.length,end=input.selectionEnd??start;
+  const selected=input.value.slice(start,end);
+  const value=input.value.slice(0,start)+before+selected+after+input.value.slice(end);
+  const cursor=selected?start+before.length+selected.length+after.length:start+before.length;
+  updateActiveExpression(value,cursor);
+}
+document.getElementById("mathKeyboard").addEventListener("mousedown",event=>{
+  if(event.target.closest("button"))event.preventDefault();
+});
+document.getElementById("mathKeyboard").addEventListener("click",event=>{
+  const button=event.target.closest("button");if(!button)return;
+  if(button.dataset.example!==undefined){
+    updateActiveExpression(button.dataset.example,button.dataset.example.length);return;
+  }
+  if(button.dataset.insert!==undefined){
+    insertIntoActive(button.dataset.insert);return;
+  }
+  if(button.dataset.wrapBefore!==undefined){
+    insertIntoActive(button.dataset.wrapBefore,button.dataset.wrapAfter||"");return;
+  }
+  if(button.dataset.action==="clear"){
+    updateActiveExpression("",0);return;
+  }
+  if(button.dataset.action==="backspace"){
+    const input=getActiveInput();if(!input)return;
+    const start=input.selectionStart??0,end=input.selectionEnd??start;
+    if(start!==end){updateActiveExpression(input.value.slice(0,start)+input.value.slice(end),start);}
+    else if(start>0){updateActiveExpression(input.value.slice(0,start-1)+input.value.slice(end),start-1);}
+  }
+});
 document.querySelectorAll("[data-range]").forEach(button=>button.onclick=()=>{state.range=Number(button.dataset.range);draw();});
 ["showPoints","showDerivative","showIntegral"].forEach(id=>document.getElementById(id).onchange=e=>{state[id]=e.target.checked;draw();});
 document.getElementById("resetButton").onclick=()=>{state.params={a:1,b:1,h:0,k:0};buildSliders();draw();};

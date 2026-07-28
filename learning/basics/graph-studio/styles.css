@@ -79,7 +79,8 @@ body { margin: 0; }
 .functionComposer header small, .syntaxGuide { color: #8a8e9d; font-size: 9px; }
 .functionComposer header button { height: 31px; border: 1px solid #cbc7ed; border-radius: 8px; background: #eeecff; padding: 0 11px; color: #5146bf; font-size: 10px; font-weight: 850; cursor: pointer; }
 .functionRows { display: grid; gap: 6px; }
-.functionRow { min-width: 0; display: grid; grid-template-columns: 24px 28px minmax(0, 1fr) 30px; align-items: center; gap: 7px; }
+.functionRow { min-width: 0; display: grid; grid-template-columns: 24px 28px minmax(0, 1fr) 30px; align-items: center; gap: 7px; border-radius: 9px; padding: 2px; transition: background .15s, box-shadow .15s; }
+.functionRow.isActive { background: #efedff; box-shadow: 0 0 0 2px rgba(101,88,217,.12); }
 .functionVisibility { width: 22px; height: 22px; position: relative; display: grid; place-items: center; cursor: pointer; }
 .functionVisibility input { position: absolute; opacity: 0; }
 .functionVisibility i { width: 13px; height: 13px; border: 3px solid #fff; border-radius: 50%; box-shadow: 0 0 0 1px #bbc0ce; }
@@ -91,6 +92,17 @@ body { margin: 0; }
 .removeFunction:disabled { opacity: .35; cursor: default; }
 .functionError { grid-column: 3 / 5; min-height: 0; color: #c44b42; font-size: 9px; }
 .functionError:empty { display: none; }
+.mathKeyboard { margin: 11px 0 0 59px; border: 1px solid #dedfec; border-radius: 11px; background: #fff; padding: 10px; }
+.keyboardHeading { display: flex; align-items: center; justify-content: space-between; gap: 10px; margin-bottom: 8px; }
+.keyboardHeading strong { font-size: 10px; }
+.keyboardHeading span { border-radius: 99px; background: #eeecff; padding: 4px 8px; color: #5146bf; font-size: 9px; font-weight: 850; }
+.keyboardKeys { display: grid; grid-template-columns: repeat(10, minmax(32px, 1fr)); gap: 5px; }
+.keyboardKeys button, .formulaExamples button { min-width: 0; height: 30px; border: 1px solid #d9dbe5; border-radius: 7px; background: #fafafd; color: #34384b; font: 750 12px "Times New Roman", "Malgun Gothic", sans-serif; cursor: pointer; }
+.keyboardKeys button:hover, .keyboardKeys button:focus-visible, .formulaExamples button:hover, .formulaExamples button:focus-visible { border-color: #8e85e2; background: #f0eeff; outline: none; }
+.keyboardKeys .keyboardUtility { color: #656a79; font-family: "Malgun Gothic", sans-serif; font-size: 9px; }
+.formulaExamples { display: flex; align-items: center; flex-wrap: wrap; gap: 5px; margin-top: 7px; }
+.formulaExamples > span { margin-right: 2px; color: #898d9b; font-size: 9px; font-weight: 850; }
+.formulaExamples button { height: 27px; padding: 0 9px; font-size: 10px; }
 .syntaxGuide { margin: 8px 0 0 59px; line-height: 1.45; }
 .canvasWrap { position: relative; min-height: 540px; padding: 20px; }
 .canvasWrap canvas { width: 100%; height: 100%; display: block; border: 1px solid #e1e4ed; border-radius: 13px; }
@@ -143,7 +155,8 @@ body { margin: 0; }
   .formulaBar > span { width: 42px; }
   .formulaBar small { grid-column: 2; }
   .functionComposer { padding: 12px 10px; }
-  .syntaxGuide { margin-left: 0; }
+  .mathKeyboard, .syntaxGuide { margin-left: 0; }
+  .keyboardKeys { grid-template-columns: repeat(5, minmax(38px, 1fr)); }
 }
 
 @media print {

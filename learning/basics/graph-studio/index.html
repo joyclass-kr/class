@@ -37,7 +37,43 @@
             <button type="button" id="addFunctionButton">＋ 함수 추가</button>
           </header>
           <div class="functionRows" id="functionRows"></div>
-          <p class="syntaxGuide"><b>입력 예:</b> sin(x^2), ln(x^2+1), exp(sin(x)), sqrt(abs(x)) · 곱셈기호는 생략해도 됩니다.</p>
+          <div class="mathKeyboard" id="mathKeyboard">
+            <div class="keyboardHeading">
+              <strong>수학 키패드</strong>
+              <span id="activeFunctionLabel">y1 편집 중</span>
+            </div>
+            <div class="keyboardKeys" aria-label="수학 수식 키패드">
+              <button type="button" data-insert="x">x</button>
+              <button type="button" data-insert="(">(</button>
+              <button type="button" data-insert=")">)</button>
+              <button type="button" data-insert="^2">x²</button>
+              <button type="button" data-insert="^">xⁿ</button>
+              <button type="button" data-insert="+">＋</button>
+              <button type="button" data-insert="-">−</button>
+              <button type="button" data-insert="*">×</button>
+              <button type="button" data-insert="/">÷</button>
+              <button type="button" data-wrap-before="sin(" data-wrap-after=")">sin</button>
+              <button type="button" data-wrap-before="cos(" data-wrap-after=")">cos</button>
+              <button type="button" data-wrap-before="tan(" data-wrap-after=")">tan</button>
+              <button type="button" data-wrap-before="ln(" data-wrap-after=")">ln</button>
+              <button type="button" data-wrap-before="log10(" data-wrap-after=")">log</button>
+              <button type="button" data-wrap-before="sqrt(" data-wrap-after=")">√</button>
+              <button type="button" data-wrap-before="abs(" data-wrap-after=")">|x|</button>
+              <button type="button" data-wrap-before="exp(" data-wrap-after=")">eˣ</button>
+              <button type="button" data-insert="pi">π</button>
+              <button type="button" class="keyboardUtility" data-action="backspace">⌫</button>
+              <button type="button" class="keyboardUtility" data-action="clear">지우기</button>
+            </div>
+            <div class="formulaExamples">
+              <span>합성함수 예시</span>
+              <button type="button" data-example="sin(x^2)">sin(x²)</button>
+              <button type="button" data-example="ln(x^2+1)">ln(x²+1)</button>
+              <button type="button" data-example="exp(sin(x))">e<sup>sin x</sup></button>
+              <button type="button" data-example="sqrt(abs(x))">√|x|</button>
+              <button type="button" data-example="(x^2+1)/(x-1)">유리함수</button>
+            </div>
+          </div>
+          <p class="syntaxGuide"><b>도움말:</b> 수식창을 먼저 선택한 뒤 키패드를 누르세요. 곱셈기호는 `2x`, `a(x-h)`처럼 생략해도 됩니다.</p>
         </section>
         <div class="canvasWrap">
           <canvas id="graphCanvas" aria-label="함수 그래프"></canvas>
