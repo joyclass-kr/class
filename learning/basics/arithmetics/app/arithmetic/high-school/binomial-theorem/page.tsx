@@ -1,6 +1,9 @@
 "use client";
 
-import { binomialTheoremProblems } from "../../../../lib/binomial-theorem-workouts";
+import {
+  binomialTheoremProblems,
+  createBinomialTheoremProblems,
+} from "../../../../lib/binomial-theorem-workouts";
 import GeometryChoiceWorksheet from "../components/geometry-choice-worksheet";
 
 export default function BinomialTheoremPage() {
@@ -10,6 +13,7 @@ export default function BinomialTheoremPage() {
       title="이항정리"
       seed={20260822}
       problems={binomialTheoremProblems}
+      createSet={createBinomialTheoremProblems}
     />
   );
 }
