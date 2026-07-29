@@ -2173,15 +2173,16 @@ html[data-race-mode="true"] body { padding-bottom: 72px; }
 }
 
 .grade-four-multiply-vertical-operation > strong {
+  width: 134px;
   min-height: 35px;
-  padding-right: 8px;
+  justify-self: end;
   font: inherit;
 }
 
 .grade-four-multiply-vertical-operation > span {
   min-height: 38px;
   display: grid;
-  grid-template-columns: 30px minmax(0, 1fr);
+  grid-template-columns: 14px 134px;
   align-items: center;
 }
 
@@ -2192,13 +2193,14 @@ html[data-race-mode="true"] body { padding-bottom: 72px; }
 }
 
 .grade-four-multiply-vertical-operation > span strong {
-  padding-right: 8px;
   font: inherit;
   text-align: right;
 }
 
 .grade-four-multiply-vertical-operation > b {
+  width: 134px;
   height: 0;
+  justify-self: end;
   margin-bottom: 9px;
   border-top: 2px solid #17233c;
 }
@@ -4661,15 +4663,16 @@ button.prime-number-question:focus-visible {
 }
 
 .vertical-operation > strong {
+  width: 92px;
   min-height: 35px;
-  padding-right: 7px;
+  justify-self: end;
   font: inherit;
 }
 
 .vertical-operation > span {
   min-height: 38px;
   display: grid;
-  grid-template-columns: 28px minmax(0, 1fr);
+  grid-template-columns: 13px 92px;
   align-items: center;
 }
 
@@ -4680,13 +4683,14 @@ button.prime-number-question:focus-visible {
 }
 
 .vertical-operation > span strong {
-  padding-right: 7px;
   font: inherit;
   text-align: right;
 }
 
 .vertical-operation > b {
+  width: 92px;
   height: 0;
+  justify-self: end;
   margin-bottom: 9px;
   border-top: 2px solid #17233c;
 }
