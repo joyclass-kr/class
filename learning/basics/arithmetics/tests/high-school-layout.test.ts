@@ -7,6 +7,23 @@ const css = fs.readFileSync(
   path.join(process.cwd(), "app/arithmetic/high-school/high-school.css"),
   "utf8",
 );
+const middleCss = fs.readFileSync(
+  path.join(process.cwd(), "app/arithmetic/middle-school/middle-school.css"),
+  "utf8",
+);
+const middleLayout = fs.readFileSync(
+  path.join(process.cwd(), "app/arithmetic/middle-school/layout.tsx"),
+  "utf8",
+);
+
+test("middle-school worksheets use the same split Korean and math typography as high school", () => {
+  assert.match(middleLayout, /import "\.\/middle-school\.css"/);
+  assert.match(middleLayout, /className="middle-school-scope"/);
+  assert.match(middleCss, /--high-school-korean-font:\s*"KoPubWorld Batang"/);
+  assert.match(middleCss, /--high-school-math-font:\s*"Suneung Math"/);
+  assert.match(middleCss, /\.middle-school-scope \.polynomial-page\s*\{[\s\S]*?font-family:\s*var\(--high-school-korean-font\)/);
+  assert.match(middleCss, /input,[\s\S]*?font-family:\s*var\(--high-school-math-font\)/);
+});
 
 test("고등 학습지는 공통 글자 크기 토큰을 사용한다", () => {
   for (const token of [
