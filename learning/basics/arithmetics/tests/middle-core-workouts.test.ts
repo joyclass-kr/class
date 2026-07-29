@@ -118,16 +118,26 @@ test("gcd-lcm worksheets progress through middle-school prime factorization", ()
   assert.deepEqual(
     problems.map(({ structure }) => structure),
     [
-      "two-gcd",
-      "two-lcm",
+      "factored-two-both",
+      "factored-three-gcd",
       "two-both",
       "three-gcd",
       "three-lcm",
-      "factored-two-both",
-      "factored-three-gcd",
-      "factored-three-lcm",
+      "product-relation",
+      "missing-exponents",
+      "gcd-lcm-condition",
     ],
   );
-  assert.ok(problems.slice(5).every(({ latex }) => latex.includes("^")));
-  assert.ok(problems.every(({ solutionHint }) => solutionHint.includes("소인수분해")));
+  assert.ok(problems.slice(5).every(({ structure }) => structure.includes("relation") || structure.includes("exponent") || structure.includes("condition")));
+  assert.ok(problems.slice(0, 5).every(({ solutionHint }) => solutionHint.includes("소인수")));
+});
+
+test("prime factorization advances from exponent notation to middle-school applications", () => {
+  const problems = createMiddleCoreProblemSet("prime-factorization", 29).problems;
+  assert.deepEqual(
+    problems.slice(5).map(({ structure }) => structure),
+    ["make-perfect-square-product", "make-perfect-square-quotient", "divisor-count-exponent"],
+  );
+  assert.ok(problems.slice(0, 5).every(({ answerLatex }) => answerLatex.includes("^")));
+  assert.ok(problems.slice(5).every(({ latex }) => /n|a/.test(latex)));
 });
