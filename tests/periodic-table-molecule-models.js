@@ -67,6 +67,16 @@ assert.ok(
     compounds.filter(item => item.labGroup === "frequent").length >= 5,
     "frequent exam applications are required"
 );
+assert.deepEqual(
+    JSON.parse(JSON.stringify(compounds.filter(item => item.labGroup === "ionic").map(item => item.formula))),
+    ["NaCl", "CaCO₃"],
+    "only ionic crystal models belong in the ionic group"
+);
+assert.deepEqual(
+    JSON.parse(JSON.stringify(compounds.filter(item => item.labGroup === "explore").map(item => item.formula))),
+    ["H₂O₂", "C₂H₆O"],
+    "covalent exploration molecules must be separate from ionic crystals"
+);
 assert.ok(
     compounds.filter(item => item.labGroup === "explore").every(item => models[item.formula]),
     "every exploration item needs a 3D model"

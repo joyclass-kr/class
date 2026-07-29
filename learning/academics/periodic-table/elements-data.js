@@ -103,7 +103,7 @@ window.COMPOUNDS_DATA = [
         elements: { 11: 1, 17: 1 },
         desc: '바닷물의 주요 성분이자 음식의 맛을 내는 대표적 이온 결정입니다.',
         icon: '🧂',
-        labGroup: 'explore'
+        labGroup: 'ionic'
     },
     {
         name: '탄산 칼슘 (석회석/계란껍질)',
@@ -111,7 +111,7 @@ window.COMPOUNDS_DATA = [
         elements: { 20: 1, 6: 1, 8: 3 },
         desc: '조개껍데기, 달걀껍질, 대리석의 주성분인 이온 결정입니다.',
         icon: '🐚',
-        labGroup: 'explore'
+        labGroup: 'ionic'
     },
     {
         name: '과산화 수소',

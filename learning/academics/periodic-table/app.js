@@ -896,7 +896,8 @@ document.addEventListener('DOMContentLoaded', () => {
         const groups = [
             { id: 'core', title: '⭐ 시험 필수 5형', note: '구조·결합각·극성 필수' },
             { id: 'frequent', title: '📝 시험 빈출 응용', note: '다중 결합과 평면성 비교' },
-            { id: 'explore', title: '🔬 이온 결정·추가 탐구', note: '필수 구조 학습 후 살펴보기' }
+            { id: 'ionic', title: '🧂 이온 결정', note: '분자가 아닌 이온 격자 물질' },
+            { id: 'explore', title: '🔬 추가 탐구 분자', note: '비평면·복합 구조 살펴보기' }
         ];
         const compounds = getLabCompounds();
         const selectedFormula = findLabCompound()?.formula;
