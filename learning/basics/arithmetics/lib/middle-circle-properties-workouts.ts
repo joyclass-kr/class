@@ -1,4 +1,4 @@
-export type MiddleCirclePropertiesKind =
+export type MiddleCirclePropertiesMethodKind =
   | "central-to-inscribed"
   | "inscribed-to-central"
   | "arc-to-inscribed"
@@ -9,14 +9,19 @@ export type MiddleCirclePropertiesKind =
   | "tangent-length"
   | "chord-length"
   | "center-to-chord"
-  | "arc-sum"
+  | "arc-sum";
+
+export type MiddleCirclePropertiesKind =
+  | "inscribed-angles"
+  | "angle-applications"
+  | "circle-lengths"
   | "comprehensive";
 
 export type MiddleCirclePropertiesDifficulty = "basic" | "application" | "advanced";
 
 export type MiddleCirclePropertiesProblem = {
   id: string;
-  kind: MiddleCirclePropertiesKind;
+  kind: MiddleCirclePropertiesMethodKind;
   difficulty: MiddleCirclePropertiesDifficulty;
   structure: string;
   label: string;
@@ -27,6 +32,13 @@ export type MiddleCirclePropertiesProblem = {
 };
 
 export const MIDDLE_CIRCLE_PROPERTIES_KINDS: MiddleCirclePropertiesKind[] = [
+  "inscribed-angles",
+  "angle-applications",
+  "circle-lengths",
+  "comprehensive",
+];
+
+export const MIDDLE_CIRCLE_PROPERTIES_METHOD_KINDS: MiddleCirclePropertiesMethodKind[] = [
   "central-to-inscribed",
   "inscribed-to-central",
   "arc-to-inscribed",
@@ -38,10 +50,16 @@ export const MIDDLE_CIRCLE_PROPERTIES_KINDS: MiddleCirclePropertiesKind[] = [
   "chord-length",
   "center-to-chord",
   "arc-sum",
-  "comprehensive",
 ];
 
 export const MIDDLE_CIRCLE_PROPERTIES_TITLES: Record<MiddleCirclePropertiesKind, string> = {
+  "inscribed-angles": "원의 성질: 중심각·원주각·호",
+  "angle-applications": "원의 성질: 사각형과 접선의 각",
+  "circle-lengths": "원의 성질: 접선과 현의 길이",
+  comprehensive: "원의 성질 계산 종합",
+};
+
+const MIDDLE_CIRCLE_PROPERTIES_METHOD_TITLES: Record<MiddleCirclePropertiesMethodKind, string> = {
   "central-to-inscribed": "원의 성질: 중심각에서 원주각",
   "inscribed-to-central": "원의 성질: 원주각에서 중심각",
   "arc-to-inscribed": "원의 성질: 호의 크기에서 원주각",
@@ -53,12 +71,8 @@ export const MIDDLE_CIRCLE_PROPERTIES_TITLES: Record<MiddleCirclePropertiesKind,
   "chord-length": "원의 성질: 중심과 현의 길이",
   "center-to-chord": "원의 성질: 현에서 중심까지의 거리",
   "arc-sum": "원의 성질: 호의 크기 합산",
-  comprehensive: "원의 성질 계산 종합",
 };
 
-const REAL_KINDS = MIDDLE_CIRCLE_PROPERTIES_KINDS.filter(
-  (kind): kind is Exclude<MiddleCirclePropertiesKind, "comprehensive"> => kind !== "comprehensive",
-);
 const RIGHT_TRIANGLES = [
   [3, 4, 5],
   [5, 12, 13],
@@ -101,7 +115,7 @@ function difficultyForIndex(index: number): MiddleCirclePropertiesDifficulty {
 
 function make(
   id: string,
-  kind: MiddleCirclePropertiesKind,
+  kind: MiddleCirclePropertiesMethodKind,
   latex: string,
   answerLatex: string,
   solutionHint: string,
@@ -113,7 +127,7 @@ function make(
     kind,
     difficulty: "basic",
     structure,
-    label: MIDDLE_CIRCLE_PROPERTIES_TITLES[kind],
+    label: MIDDLE_CIRCLE_PROPERTIES_METHOD_TITLES[kind],
     latex,
     answerLatex,
     solutionHint,
@@ -126,7 +140,7 @@ function angleValue(next: () => number, index: number) {
 }
 
 function build(
-  kind: Exclude<MiddleCirclePropertiesKind, "comprehensive">,
+  kind: MiddleCirclePropertiesMethodKind,
   next: () => number,
   id: string,
   index: number,
@@ -254,11 +268,53 @@ function build(
 }
 
 function comprehensiveKind(seed: number, index: number) {
-  return REAL_KINDS[(seed * 8 + index) % REAL_KINDS.length];
+  return MIDDLE_CIRCLE_PROPERTIES_METHOD_KINDS[
+    (seed * 8 + index) % MIDDLE_CIRCLE_PROPERTIES_METHOD_KINDS.length
+  ];
 }
+
+const GROUP_METHOD_PLANS: Record<Exclude<MiddleCirclePropertiesKind, "comprehensive">, MiddleCirclePropertiesMethodKind[]> = {
+  "inscribed-angles": [
+    "central-to-inscribed", "inscribed-to-central",
+    "arc-to-inscribed", "same-arc", "semicircle-angle",
+    "arc-sum", "same-arc", "arc-to-inscribed",
+  ],
+  "angle-applications": [
+    "cyclic-quadrilateral", "tangent-chord-angle",
+    "cyclic-quadrilateral", "tangent-chord-angle", "cyclic-quadrilateral",
+    "tangent-chord-angle", "cyclic-quadrilateral", "tangent-chord-angle",
+  ],
+  "circle-lengths": [
+    "tangent-length", "chord-length",
+    "center-to-chord", "tangent-length", "chord-length",
+    "center-to-chord", "chord-length", "center-to-chord",
+  ],
+};
+
+const LEGACY_KIND_GROUPS: Record<MiddleCirclePropertiesMethodKind, MiddleCirclePropertiesKind> = {
+  "central-to-inscribed": "inscribed-angles",
+  "inscribed-to-central": "inscribed-angles",
+  "arc-to-inscribed": "inscribed-angles",
+  "same-arc": "inscribed-angles",
+  "semicircle-angle": "inscribed-angles",
+  "arc-sum": "inscribed-angles",
+  "cyclic-quadrilateral": "angle-applications",
+  "tangent-chord-angle": "angle-applications",
+  "tangent-length": "circle-lengths",
+  "chord-length": "circle-lengths",
+  "center-to-chord": "circle-lengths",
+};
 
 export function isMiddleCirclePropertiesKind(value: string | null): value is MiddleCirclePropertiesKind {
   return MIDDLE_CIRCLE_PROPERTIES_KINDS.includes(value as MiddleCirclePropertiesKind);
+}
+
+export function resolveMiddleCirclePropertiesKind(value: string | null): MiddleCirclePropertiesKind | null {
+  if (isMiddleCirclePropertiesKind(value)) return value;
+  if (MIDDLE_CIRCLE_PROPERTIES_METHOD_KINDS.includes(value as MiddleCirclePropertiesMethodKind)) {
+    return LEGACY_KIND_GROUPS[value as MiddleCirclePropertiesMethodKind];
+  }
+  return null;
 }
 
 export function createMiddleCirclePropertiesProblemSet(
@@ -270,7 +326,9 @@ export function createMiddleCirclePropertiesProblemSet(
     seed,
     kind,
     problems: Array.from({ length: 8 }, (_, index) => {
-      const actualKind = kind === "comprehensive" ? comprehensiveKind(seed, index) : kind;
+      const actualKind = kind === "comprehensive"
+        ? comprehensiveKind(seed, index)
+        : GROUP_METHOD_PLANS[kind][index];
       return {
         ...build(actualKind, next, `middle-circle-properties-${kind}-${index}`, index),
         difficulty: difficultyForIndex(index),
@@ -280,15 +338,14 @@ export function createMiddleCirclePropertiesProblemSet(
 }
 
 export function createMiddleCirclePropertiesReviewProblems(
-  wrongKinds: MiddleCirclePropertiesKind[],
+  wrongKinds: MiddleCirclePropertiesMethodKind[],
   seed: number,
 ) {
   const uniqueKinds = [...new Set(wrongKinds)].slice(0, 2);
   const next = random(seed);
   return uniqueKinds.map((kind, index) => {
-    const actualKind = kind === "comprehensive" ? comprehensiveKind(seed, index) : kind;
     return {
-      ...build(actualKind, next, `middle-circle-properties-review-${seed}-${index}`, 6 + index),
+      ...build(kind, next, `middle-circle-properties-review-${seed}-${index}`, 6 + index),
       difficulty: "advanced" as const,
     };
   });

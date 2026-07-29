@@ -8,20 +8,21 @@ import WorksheetChoicePanel, {
 import {
   createMiddleTrigonometryProblemSet,
   createMiddleTrigonometryReviewProblems,
-  isMiddleTrigonometryKind,
   MIDDLE_TRIGONOMETRY_TITLES,
+  resolveMiddleTrigonometryKind,
   type MiddleTrigonometryKind,
+  type MiddleTrigonometryMethodKind,
   type MiddleTrigonometryProblem,
 } from "../../../../lib/middle-trigonometry-workouts";
 
-const DEFAULT_KIND: MiddleTrigonometryKind = "single-ratio";
+const DEFAULT_KIND: MiddleTrigonometryKind = "ratios";
 const INITIAL_SEED = 20260731;
 const DIFFICULTY_LABELS: Record<MiddleTrigonometryProblem["difficulty"], string> = {
   basic: "기본",
   application: "응용",
   advanced: "고난도",
 };
-const TARGET_LABELS: Record<MiddleTrigonometryKind, string> = {
+const TARGET_LABELS: Record<MiddleTrigonometryMethodKind, string> = {
   "single-ratio": "삼각비의 값은?",
   "three-ratios": "(sin A, cos A, tan A)는?",
   "pythagorean-first": "삼각비의 값은?",
@@ -33,7 +34,6 @@ const TARGET_LABELS: Record<MiddleTrigonometryKind, string> = {
   "ratio-scale": "구하는 변의 길이는?",
   "radical-side": "구하는 변의 길이는?",
   "fraction-decimal": "BC의 길이는?",
-  comprehensive: "구하는 값은?",
 };
 
 function choiceProblem(problem: MiddleTrigonometryProblem): WorksheetChoiceProblem {
@@ -66,8 +66,10 @@ export default function MiddleTrigonometryPage() {
   const [scale, setScale] = useState(0.6);
 
   useEffect(() => {
-    const requestedKind = new URLSearchParams(window.location.search).get("kind");
-    if (!isMiddleTrigonometryKind(requestedKind) || requestedKind === kind) return;
+    const requestedKind = resolveMiddleTrigonometryKind(
+      new URLSearchParams(window.location.search).get("kind"),
+    );
+    if (!requestedKind || requestedKind === kind) return;
     setKind(requestedKind);
     setProblemSet(createMiddleTrigonometryProblemSet(requestedKind, INITIAL_SEED));
     setReviews([]);

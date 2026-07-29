@@ -8,20 +8,21 @@ import WorksheetChoicePanel, {
 import {
   createMiddleQuadraticFunctionProblemSet,
   createMiddleQuadraticFunctionReviewProblems,
-  isMiddleQuadraticFunctionKind,
   MIDDLE_QUADRATIC_FUNCTION_TITLES,
+  resolveMiddleQuadraticFunctionKind,
   type MiddleQuadraticFunctionKind,
+  type MiddleQuadraticFunctionMethodKind,
   type MiddleQuadraticFunctionProblem,
 } from "../../../../lib/middle-quadratic-function-workouts";
 
-const DEFAULT_KIND: MiddleQuadraticFunctionKind = "basic-value";
+const DEFAULT_KIND: MiddleQuadraticFunctionKind = "values-and-forms";
 const INITIAL_SEED = 20260730;
 const DIFFICULTY_LABELS: Record<MiddleQuadraticFunctionProblem["difficulty"], string> = {
   basic: "기본",
   application: "응용",
   advanced: "고난도",
 };
-const TARGET_LABELS: Record<MiddleQuadraticFunctionKind, string> = {
+const TARGET_LABELS: Record<MiddleQuadraticFunctionMethodKind, string> = {
   "basic-value": "함숫값",
   "vertex-value": "함숫값",
   "expand-vertex-form": "전개한 이차함수의 식",
@@ -33,7 +34,6 @@ const TARGET_LABELS: Record<MiddleQuadraticFunctionKind, string> = {
   "line-intersections": "교점의 x좌표",
   "normalize-first": "꼭짓점과 대칭축",
   "fraction-decimal": "함숫값",
-  comprehensive: "구하는 값 또는 식",
 };
 
 function choiceProblem(problem: MiddleQuadraticFunctionProblem): WorksheetChoiceProblem {
@@ -66,8 +66,10 @@ export default function MiddleQuadraticFunctionsPage() {
   const [scale, setScale] = useState(0.6);
 
   useEffect(() => {
-    const requestedKind = new URLSearchParams(window.location.search).get("kind");
-    if (!isMiddleQuadraticFunctionKind(requestedKind) || requestedKind === kind) return;
+    const requestedKind = resolveMiddleQuadraticFunctionKind(
+      new URLSearchParams(window.location.search).get("kind"),
+    );
+    if (!requestedKind || requestedKind === kind) return;
     setKind(requestedKind);
     setProblemSet(createMiddleQuadraticFunctionProblemSet(requestedKind, INITIAL_SEED));
     setReviews([]);

@@ -1,4 +1,4 @@
-export type MiddleStatisticsKind =
+export type MiddleStatisticsMethodKind =
   | "mean"
   | "missing-from-mean"
   | "frequency-mean"
@@ -9,14 +9,19 @@ export type MiddleStatisticsKind =
   | "variance"
   | "standard-deviation"
   | "variance-from-deviations"
-  | "compare-spread"
+  | "compare-spread";
+
+export type MiddleStatisticsKind =
+  | "representative-values"
+  | "mean-applications"
+  | "dispersion"
   | "comprehensive";
 
 export type MiddleStatisticsDifficulty = "basic" | "application" | "advanced";
 
 export type MiddleStatisticsProblem = {
   id: string;
-  kind: MiddleStatisticsKind;
+  kind: MiddleStatisticsMethodKind;
   difficulty: MiddleStatisticsDifficulty;
   structure: string;
   label: string;
@@ -27,6 +32,13 @@ export type MiddleStatisticsProblem = {
 };
 
 export const MIDDLE_STATISTICS_KINDS: MiddleStatisticsKind[] = [
+  "representative-values",
+  "mean-applications",
+  "dispersion",
+  "comprehensive",
+];
+
+export const MIDDLE_STATISTICS_METHOD_KINDS: MiddleStatisticsMethodKind[] = [
   "mean",
   "missing-from-mean",
   "frequency-mean",
@@ -38,10 +50,16 @@ export const MIDDLE_STATISTICS_KINDS: MiddleStatisticsKind[] = [
   "standard-deviation",
   "variance-from-deviations",
   "compare-spread",
-  "comprehensive",
 ];
 
 export const MIDDLE_STATISTICS_TITLES: Record<MiddleStatisticsKind, string> = {
+  "representative-values": "통계: 대푯값 계산",
+  "mean-applications": "통계: 평균 활용",
+  dispersion: "통계: 산포도 계산",
+  comprehensive: "대푯값과 산포도 계산 종합",
+};
+
+const MIDDLE_STATISTICS_METHOD_TITLES: Record<MiddleStatisticsMethodKind, string> = {
   mean: "통계: 평균 계산",
   "missing-from-mean": "통계: 평균으로 빠진 값 구하기",
   "frequency-mean": "통계: 도수 자료의 평균",
@@ -53,12 +71,8 @@ export const MIDDLE_STATISTICS_TITLES: Record<MiddleStatisticsKind, string> = {
   "standard-deviation": "통계: 표준편차 계산",
   "variance-from-deviations": "통계: 편차에서 분산 구하기",
   "compare-spread": "통계: 두 자료의 산포도 비교",
-  comprehensive: "대푯값과 산포도 계산 종합",
 };
 
-const REAL_KINDS = MIDDLE_STATISTICS_KINDS.filter(
-  (kind): kind is Exclude<MiddleStatisticsKind, "comprehensive"> => kind !== "comprehensive",
-);
 const DEVIATION_PATTERNS = [
   [-2, -1, 0, 1, 2],
   [-3, -1, 0, 1, 3],
@@ -121,7 +135,7 @@ function difficultyForIndex(index: number): MiddleStatisticsDifficulty {
 
 function make(
   id: string,
-  kind: MiddleStatisticsKind,
+  kind: MiddleStatisticsMethodKind,
   latex: string,
   answerLatex: string,
   solutionHint: string,
@@ -133,7 +147,7 @@ function make(
     kind,
     difficulty: "basic",
     structure,
-    label: MIDDLE_STATISTICS_TITLES[kind],
+    label: MIDDLE_STATISTICS_METHOD_TITLES[kind],
     latex,
     answerLatex,
     solutionHint,
@@ -161,7 +175,7 @@ function rotate<T>(values: T[], shift: number) {
 }
 
 function build(
-  kind: Exclude<MiddleStatisticsKind, "comprehensive">,
+  kind: MiddleStatisticsMethodKind,
   next: () => number,
   id: string,
   index: number,
@@ -299,11 +313,53 @@ function build(
 }
 
 function comprehensiveKind(seed: number, index: number) {
-  return REAL_KINDS[(seed * 8 + index) % REAL_KINDS.length];
+  return MIDDLE_STATISTICS_METHOD_KINDS[
+    (seed * 8 + index) % MIDDLE_STATISTICS_METHOD_KINDS.length
+  ];
 }
+
+const GROUP_METHOD_PLANS: Record<Exclude<MiddleStatisticsKind, "comprehensive">, MiddleStatisticsMethodKind[]> = {
+  "representative-values": [
+    "mean", "median",
+    "mode", "range", "mean",
+    "median", "mode", "range",
+  ],
+  "mean-applications": [
+    "mean", "missing-from-mean",
+    "frequency-mean", "mean", "missing-from-mean",
+    "frequency-mean", "missing-from-mean", "frequency-mean",
+  ],
+  dispersion: [
+    "deviations", "variance",
+    "standard-deviation", "variance-from-deviations", "compare-spread",
+    "variance", "standard-deviation", "compare-spread",
+  ],
+};
+
+const LEGACY_KIND_GROUPS: Record<MiddleStatisticsMethodKind, MiddleStatisticsKind> = {
+  mean: "representative-values",
+  median: "representative-values",
+  mode: "representative-values",
+  range: "representative-values",
+  "missing-from-mean": "mean-applications",
+  "frequency-mean": "mean-applications",
+  deviations: "dispersion",
+  variance: "dispersion",
+  "standard-deviation": "dispersion",
+  "variance-from-deviations": "dispersion",
+  "compare-spread": "dispersion",
+};
 
 export function isMiddleStatisticsKind(value: string | null): value is MiddleStatisticsKind {
   return MIDDLE_STATISTICS_KINDS.includes(value as MiddleStatisticsKind);
+}
+
+export function resolveMiddleStatisticsKind(value: string | null): MiddleStatisticsKind | null {
+  if (isMiddleStatisticsKind(value)) return value;
+  if (MIDDLE_STATISTICS_METHOD_KINDS.includes(value as MiddleStatisticsMethodKind)) {
+    return LEGACY_KIND_GROUPS[value as MiddleStatisticsMethodKind];
+  }
+  return null;
 }
 
 export function createMiddleStatisticsProblemSet(kind: MiddleStatisticsKind, seed: number) {
@@ -312,7 +368,9 @@ export function createMiddleStatisticsProblemSet(kind: MiddleStatisticsKind, see
     seed,
     kind,
     problems: Array.from({ length: 8 }, (_, index) => {
-      const actualKind = kind === "comprehensive" ? comprehensiveKind(seed, index) : kind;
+      const actualKind = kind === "comprehensive"
+        ? comprehensiveKind(seed, index)
+        : GROUP_METHOD_PLANS[kind][index];
       return {
         ...build(actualKind, next, `middle-statistics-${kind}-${index}`, index),
         difficulty: difficultyForIndex(index),
@@ -322,15 +380,14 @@ export function createMiddleStatisticsProblemSet(kind: MiddleStatisticsKind, see
 }
 
 export function createMiddleStatisticsReviewProblems(
-  wrongKinds: MiddleStatisticsKind[],
+  wrongKinds: MiddleStatisticsMethodKind[],
   seed: number,
 ) {
   const uniqueKinds = [...new Set(wrongKinds)].slice(0, 2);
   const next = random(seed);
   return uniqueKinds.map((kind, index) => {
-    const actualKind = kind === "comprehensive" ? comprehensiveKind(seed, index) : kind;
     return {
-      ...build(actualKind, next, `middle-statistics-review-${seed}-${index}`, 6 + index),
+      ...build(kind, next, `middle-statistics-review-${seed}-${index}`, 6 + index),
       difficulty: "advanced" as const,
     };
   });

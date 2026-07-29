@@ -8,20 +8,21 @@ import WorksheetChoicePanel, {
 import {
   createMiddleCirclePropertiesProblemSet,
   createMiddleCirclePropertiesReviewProblems,
-  isMiddleCirclePropertiesKind,
   MIDDLE_CIRCLE_PROPERTIES_TITLES,
+  resolveMiddleCirclePropertiesKind,
   type MiddleCirclePropertiesKind,
+  type MiddleCirclePropertiesMethodKind,
   type MiddleCirclePropertiesProblem,
 } from "../../../../lib/middle-circle-properties-workouts";
 
-const DEFAULT_KIND: MiddleCirclePropertiesKind = "central-to-inscribed";
+const DEFAULT_KIND: MiddleCirclePropertiesKind = "inscribed-angles";
 const INITIAL_SEED = 20260801;
 const DIFFICULTY_LABELS: Record<MiddleCirclePropertiesProblem["difficulty"], string> = {
   basic: "기본",
   application: "응용",
   advanced: "고난도",
 };
-const TARGET_LABELS: Record<MiddleCirclePropertiesKind, string> = {
+const TARGET_LABELS: Record<MiddleCirclePropertiesMethodKind, string> = {
   "central-to-inscribed": "원주각의 크기는?",
   "inscribed-to-central": "중심각의 크기는?",
   "arc-to-inscribed": "원주각의 크기는?",
@@ -33,7 +34,6 @@ const TARGET_LABELS: Record<MiddleCirclePropertiesKind, string> = {
   "chord-length": "현 AB의 길이는?",
   "center-to-chord": "OM의 길이는?",
   "arc-sum": "호 CA의 크기는?",
-  comprehensive: "구하는 값은?",
 };
 
 function choiceProblem(problem: MiddleCirclePropertiesProblem): WorksheetChoiceProblem {
@@ -66,8 +66,10 @@ export default function MiddleCirclePropertiesPage() {
   const [scale, setScale] = useState(0.6);
 
   useEffect(() => {
-    const requestedKind = new URLSearchParams(window.location.search).get("kind");
-    if (!isMiddleCirclePropertiesKind(requestedKind) || requestedKind === kind) return;
+    const requestedKind = resolveMiddleCirclePropertiesKind(
+      new URLSearchParams(window.location.search).get("kind"),
+    );
+    if (!requestedKind || requestedKind === kind) return;
     setKind(requestedKind);
     setProblemSet(createMiddleCirclePropertiesProblemSet(requestedKind, INITIAL_SEED));
     setReviews([]);

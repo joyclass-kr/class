@@ -1,4 +1,4 @@
-export type MiddleTrigonometryKind =
+export type MiddleTrigonometryMethodKind =
   | "single-ratio"
   | "three-ratios"
   | "pythagorean-first"
@@ -9,14 +9,19 @@ export type MiddleTrigonometryKind =
   | "side-from-tangent"
   | "ratio-scale"
   | "radical-side"
-  | "fraction-decimal"
+  | "fraction-decimal";
+
+export type MiddleTrigonometryKind =
+  | "ratios"
+  | "special-angles"
+  | "side-lengths"
   | "comprehensive";
 
 export type MiddleTrigonometryDifficulty = "basic" | "application" | "advanced";
 
 export type MiddleTrigonometryProblem = {
   id: string;
-  kind: MiddleTrigonometryKind;
+  kind: MiddleTrigonometryMethodKind;
   difficulty: MiddleTrigonometryDifficulty;
   structure: string;
   label: string;
@@ -27,6 +32,13 @@ export type MiddleTrigonometryProblem = {
 };
 
 export const MIDDLE_TRIGONOMETRY_KINDS: MiddleTrigonometryKind[] = [
+  "ratios",
+  "special-angles",
+  "side-lengths",
+  "comprehensive",
+];
+
+export const MIDDLE_TRIGONOMETRY_METHOD_KINDS: MiddleTrigonometryMethodKind[] = [
   "single-ratio",
   "three-ratios",
   "pythagorean-first",
@@ -38,10 +50,16 @@ export const MIDDLE_TRIGONOMETRY_KINDS: MiddleTrigonometryKind[] = [
   "ratio-scale",
   "radical-side",
   "fraction-decimal",
-  "comprehensive",
 ];
 
 export const MIDDLE_TRIGONOMETRY_TITLES: Record<MiddleTrigonometryKind, string> = {
+  ratios: "삼각비: 세 변과 삼각비",
+  "special-angles": "삼각비: 특수각 계산",
+  "side-lengths": "삼각비: 변의 길이 계산",
+  comprehensive: "삼각비 계산 종합",
+};
+
+const MIDDLE_TRIGONOMETRY_METHOD_TITLES: Record<MiddleTrigonometryMethodKind, string> = {
   "single-ratio": "삼각비: 세 변에서 한 비 구하기",
   "three-ratios": "삼각비: sin·cos·tan 한꺼번에",
   "pythagorean-first": "삼각비: 피타고라스 정리 후 계산",
@@ -53,14 +71,10 @@ export const MIDDLE_TRIGONOMETRY_TITLES: Record<MiddleTrigonometryKind, string> 
   "ratio-scale": "삼각비: 닮음비와 변의 길이",
   "radical-side": "삼각비: 특수각과 근호 길이",
   "fraction-decimal": "삼각비: 분수·소수로 길이 계산",
-  comprehensive: "삼각비 계산 종합",
 };
 
 type Triple = readonly [opposite: number, adjacent: number, hypotenuse: number];
 const TRIPLES: Triple[] = [[3, 4, 5], [5, 12, 13], [8, 15, 17], [7, 24, 25]];
-const REAL_KINDS = MIDDLE_TRIGONOMETRY_KINDS.filter(
-  (kind): kind is Exclude<MiddleTrigonometryKind, "comprehensive"> => kind !== "comprehensive",
-);
 
 function random(seed: number) {
   let value = seed >>> 0;
@@ -117,7 +131,7 @@ function ratioAnswer(name: "sin" | "cos" | "tan", triple: Triple) {
 
 function make(
   id: string,
-  kind: MiddleTrigonometryKind,
+  kind: MiddleTrigonometryMethodKind,
   latex: string,
   answerLatex: string,
   solutionHint: string,
@@ -129,7 +143,7 @@ function make(
     kind,
     difficulty: "basic",
     structure,
-    label: MIDDLE_TRIGONOMETRY_TITLES[kind],
+    label: MIDDLE_TRIGONOMETRY_METHOD_TITLES[kind],
     latex,
     answerLatex,
     solutionHint,
@@ -161,7 +175,7 @@ const SPECIAL_EXPRESSIONS = [
 ] as const;
 
 function build(
-  kind: Exclude<MiddleTrigonometryKind, "comprehensive">,
+  kind: MiddleTrigonometryMethodKind,
   next: () => number,
   id: string,
   variantHint: number,
@@ -298,11 +312,53 @@ function build(
 }
 
 function comprehensiveKind(seed: number, index: number) {
-  return REAL_KINDS[(seed * 8 + index) % REAL_KINDS.length];
+  return MIDDLE_TRIGONOMETRY_METHOD_KINDS[
+    (seed * 8 + index) % MIDDLE_TRIGONOMETRY_METHOD_KINDS.length
+  ];
 }
+
+const GROUP_METHOD_PLANS: Record<Exclude<MiddleTrigonometryKind, "comprehensive">, MiddleTrigonometryMethodKind[]> = {
+  ratios: [
+    "single-ratio", "three-ratios",
+    "pythagorean-first", "single-ratio", "three-ratios",
+    "pythagorean-first", "single-ratio", "three-ratios",
+  ],
+  "special-angles": [
+    "special-angle", "special-angle-expression",
+    "special-angle", "radical-side", "special-angle-expression",
+    "radical-side", "special-angle-expression", "radical-side",
+  ],
+  "side-lengths": [
+    "side-from-sine", "side-from-cosine",
+    "side-from-tangent", "ratio-scale", "fraction-decimal",
+    "side-from-sine", "radical-side", "fraction-decimal",
+  ],
+};
+
+const LEGACY_KIND_GROUPS: Record<MiddleTrigonometryMethodKind, MiddleTrigonometryKind> = {
+  "single-ratio": "ratios",
+  "three-ratios": "ratios",
+  "pythagorean-first": "ratios",
+  "special-angle": "special-angles",
+  "special-angle-expression": "special-angles",
+  "radical-side": "special-angles",
+  "side-from-sine": "side-lengths",
+  "side-from-cosine": "side-lengths",
+  "side-from-tangent": "side-lengths",
+  "ratio-scale": "side-lengths",
+  "fraction-decimal": "side-lengths",
+};
 
 export function isMiddleTrigonometryKind(value: string | null): value is MiddleTrigonometryKind {
   return MIDDLE_TRIGONOMETRY_KINDS.includes(value as MiddleTrigonometryKind);
+}
+
+export function resolveMiddleTrigonometryKind(value: string | null): MiddleTrigonometryKind | null {
+  if (isMiddleTrigonometryKind(value)) return value;
+  if (MIDDLE_TRIGONOMETRY_METHOD_KINDS.includes(value as MiddleTrigonometryMethodKind)) {
+    return LEGACY_KIND_GROUPS[value as MiddleTrigonometryMethodKind];
+  }
+  return null;
 }
 
 export function createMiddleTrigonometryProblemSet(kind: MiddleTrigonometryKind, seed: number) {
@@ -311,7 +367,9 @@ export function createMiddleTrigonometryProblemSet(kind: MiddleTrigonometryKind,
     seed,
     kind,
     problems: Array.from({ length: 8 }, (_, index) => {
-      const actualKind = kind === "comprehensive" ? comprehensiveKind(seed, index) : kind;
+      const actualKind = kind === "comprehensive"
+        ? comprehensiveKind(seed, index)
+        : GROUP_METHOD_PLANS[kind][index];
       return {
         ...build(actualKind, next, `middle-trigonometry-${kind}-${index}`, index),
         difficulty: difficultyForIndex(index),
@@ -321,15 +379,14 @@ export function createMiddleTrigonometryProblemSet(kind: MiddleTrigonometryKind,
 }
 
 export function createMiddleTrigonometryReviewProblems(
-  wrongKinds: MiddleTrigonometryKind[],
+  wrongKinds: MiddleTrigonometryMethodKind[],
   seed: number,
 ) {
   const uniqueKinds = [...new Set(wrongKinds)].slice(0, 2);
   const next = random(seed);
   return uniqueKinds.map((kind, index) => {
-    const actualKind = kind === "comprehensive" ? comprehensiveKind(seed, index) : kind;
     return {
-      ...build(actualKind, next, `middle-trigonometry-review-${seed}-${index}`, 6 + index),
+      ...build(kind, next, `middle-trigonometry-review-${seed}-${index}`, 6 + index),
       difficulty: "advanced" as const,
     };
   });

@@ -8,20 +8,21 @@ import WorksheetChoicePanel, {
 import {
   createMiddleStatisticsProblemSet,
   createMiddleStatisticsReviewProblems,
-  isMiddleStatisticsKind,
   MIDDLE_STATISTICS_TITLES,
+  resolveMiddleStatisticsKind,
   type MiddleStatisticsKind,
+  type MiddleStatisticsMethodKind,
   type MiddleStatisticsProblem,
 } from "../../../../lib/middle-statistics-workouts";
 
-const DEFAULT_KIND: MiddleStatisticsKind = "mean";
+const DEFAULT_KIND: MiddleStatisticsKind = "representative-values";
 const INITIAL_SEED = 20260802;
 const DIFFICULTY_LABELS: Record<MiddleStatisticsProblem["difficulty"], string> = {
   basic: "기본",
   application: "응용",
   advanced: "고난도",
 };
-const TARGET_LABELS: Record<MiddleStatisticsKind, string> = {
+const TARGET_LABELS: Record<MiddleStatisticsMethodKind, string> = {
   mean: "평균은?",
   "missing-from-mean": "x의 값은?",
   "frequency-mean": "평균은?",
@@ -33,7 +34,6 @@ const TARGET_LABELS: Record<MiddleStatisticsKind, string> = {
   "standard-deviation": "표준편차는?",
   "variance-from-deviations": "분산은?",
   "compare-spread": "산포도가 더 작은 자료는?",
-  comprehensive: "구하는 값은?",
 };
 
 function choiceProblem(problem: MiddleStatisticsProblem): WorksheetChoiceProblem {
@@ -66,8 +66,10 @@ export default function MiddleStatisticsPage() {
   const [scale, setScale] = useState(0.6);
 
   useEffect(() => {
-    const requestedKind = new URLSearchParams(window.location.search).get("kind");
-    if (!isMiddleStatisticsKind(requestedKind) || requestedKind === kind) return;
+    const requestedKind = resolveMiddleStatisticsKind(
+      new URLSearchParams(window.location.search).get("kind"),
+    );
+    if (!requestedKind || requestedKind === kind) return;
     setKind(requestedKind);
     setProblemSet(createMiddleStatisticsProblemSet(requestedKind, INITIAL_SEED));
     setReviews([]);

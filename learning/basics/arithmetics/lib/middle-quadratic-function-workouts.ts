@@ -1,4 +1,4 @@
-export type MiddleQuadraticFunctionKind =
+export type MiddleQuadraticFunctionMethodKind =
   | "basic-value"
   | "vertex-value"
   | "expand-vertex-form"
@@ -9,14 +9,20 @@ export type MiddleQuadraticFunctionKind =
   | "intercepts"
   | "line-intersections"
   | "normalize-first"
-  | "fraction-decimal"
+  | "fraction-decimal";
+
+export type MiddleQuadraticFunctionKind =
+  | "values-and-forms"
+  | "vertex-and-axis"
+  | "determine-equation"
+  | "intercepts-and-intersections"
   | "comprehensive";
 
 export type MiddleQuadraticFunctionDifficulty = "basic" | "application" | "advanced";
 
 export type MiddleQuadraticFunctionProblem = {
   id: string;
-  kind: MiddleQuadraticFunctionKind;
+  kind: MiddleQuadraticFunctionMethodKind;
   difficulty: MiddleQuadraticFunctionDifficulty;
   structure: string;
   label: string;
@@ -27,6 +33,14 @@ export type MiddleQuadraticFunctionProblem = {
 };
 
 export const MIDDLE_QUADRATIC_FUNCTION_KINDS: MiddleQuadraticFunctionKind[] = [
+  "values-and-forms",
+  "vertex-and-axis",
+  "determine-equation",
+  "intercepts-and-intersections",
+  "comprehensive",
+];
+
+export const MIDDLE_QUADRATIC_FUNCTION_METHOD_KINDS: MiddleQuadraticFunctionMethodKind[] = [
   "basic-value",
   "vertex-value",
   "expand-vertex-form",
@@ -38,10 +52,17 @@ export const MIDDLE_QUADRATIC_FUNCTION_KINDS: MiddleQuadraticFunctionKind[] = [
   "line-intersections",
   "normalize-first",
   "fraction-decimal",
-  "comprehensive",
 ];
 
 export const MIDDLE_QUADRATIC_FUNCTION_TITLES: Record<MiddleQuadraticFunctionKind, string> = {
+  "values-and-forms": "이차함수: 함숫값과 식의 전개",
+  "vertex-and-axis": "이차함수: 꼭짓점과 대칭축",
+  "determine-equation": "이차함수: 조건으로 식 구하기",
+  "intercepts-and-intersections": "이차함수: 절편과 교점",
+  comprehensive: "이차함수 계산 종합",
+};
+
+const MIDDLE_QUADRATIC_FUNCTION_METHOD_TITLES: Record<MiddleQuadraticFunctionMethodKind, string> = {
   "basic-value": "이차함수: y=ax²의 함숫값",
   "vertex-value": "이차함수: 꼭짓점형의 함숫값",
   "expand-vertex-form": "이차함수: 꼭짓점형 전개",
@@ -53,7 +74,6 @@ export const MIDDLE_QUADRATIC_FUNCTION_TITLES: Record<MiddleQuadraticFunctionKin
   "line-intersections": "이차함수와 직선의 교점 계산",
   "normalize-first": "이차함수: 식 정리 후 꼭짓점",
   "fraction-decimal": "이차함수: 분수·소수 계수",
-  comprehensive: "이차함수 계산 종합",
 };
 
 function random(seed: number) {
@@ -138,7 +158,7 @@ function uniqueDistractors(answer: string, candidates: string[]) {
 
 function make(
   id: string,
-  kind: MiddleQuadraticFunctionKind,
+  kind: MiddleQuadraticFunctionMethodKind,
   latex: string,
   answerLatex: string,
   solutionHint: string,
@@ -150,7 +170,7 @@ function make(
     kind,
     difficulty: "basic",
     structure,
-    label: MIDDLE_QUADRATIC_FUNCTION_TITLES[kind],
+    label: MIDDLE_QUADRATIC_FUNCTION_METHOD_TITLES[kind],
     latex,
     answerLatex,
     solutionHint,
@@ -176,7 +196,7 @@ function substitutedSquare(a: number, x: number) {
 }
 
 function build(
-  kind: MiddleQuadraticFunctionKind,
+  kind: MiddleQuadraticFunctionMethodKind,
   next: () => number,
   id: string,
   variantHint = 0,
@@ -336,10 +356,7 @@ function build(
       variantHint % 2 === 0 ? "fraction-value" : "decimal-value");
   }
 
-  const comprehensiveKinds = MIDDLE_QUADRATIC_FUNCTION_KINDS.filter(
-    (candidate) => candidate !== "comprehensive",
-  );
-  return build(comprehensiveKinds[variantHint % comprehensiveKinds.length], next, id, variantHint);
+  throw new Error(`지원하지 않는 이차함수 계산 유형: ${kind}`);
 }
 
 function difficultyForIndex(index: number): MiddleQuadraticFunctionDifficulty {
@@ -348,18 +365,62 @@ function difficultyForIndex(index: number): MiddleQuadraticFunctionDifficulty {
   return "advanced";
 }
 
-const COMPREHENSIVE_ROTATION = MIDDLE_QUADRATIC_FUNCTION_KINDS.filter(
-  (kind) => kind !== "comprehensive",
-);
-
 function comprehensiveKind(seed: number, index: number) {
-  const offset = (((seed - 1) * 8) % COMPREHENSIVE_ROTATION.length + COMPREHENSIVE_ROTATION.length)
-    % COMPREHENSIVE_ROTATION.length;
-  return COMPREHENSIVE_ROTATION[(offset + index) % COMPREHENSIVE_ROTATION.length];
+  const offset = (((seed - 1) * 8) % MIDDLE_QUADRATIC_FUNCTION_METHOD_KINDS.length
+    + MIDDLE_QUADRATIC_FUNCTION_METHOD_KINDS.length)
+    % MIDDLE_QUADRATIC_FUNCTION_METHOD_KINDS.length;
+  return MIDDLE_QUADRATIC_FUNCTION_METHOD_KINDS[
+    (offset + index) % MIDDLE_QUADRATIC_FUNCTION_METHOD_KINDS.length
+  ];
 }
+
+const GROUP_METHOD_PLANS: Record<Exclude<MiddleQuadraticFunctionKind, "comprehensive">, MiddleQuadraticFunctionMethodKind[]> = {
+  "values-and-forms": [
+    "basic-value", "vertex-value",
+    "basic-value", "vertex-value", "expand-vertex-form",
+    "fraction-decimal", "fraction-decimal", "expand-vertex-form",
+  ],
+  "vertex-and-axis": [
+    "vertex-axis", "complete-square",
+    "vertex-axis", "complete-square", "normalize-first",
+    "normalize-first", "complete-square", "vertex-axis",
+  ],
+  "determine-equation": [
+    "coefficient-from-point", "equation-from-vertex-point",
+    "coefficient-from-point", "equation-from-vertex-point", "coefficient-from-point",
+    "equation-from-vertex-point", "coefficient-from-point", "equation-from-vertex-point",
+  ],
+  "intercepts-and-intersections": [
+    "intercepts", "line-intersections",
+    "intercepts", "line-intersections", "intercepts",
+    "line-intersections", "intercepts", "line-intersections",
+  ],
+};
+
+const LEGACY_KIND_GROUPS: Record<MiddleQuadraticFunctionMethodKind, MiddleQuadraticFunctionKind> = {
+  "basic-value": "values-and-forms",
+  "vertex-value": "values-and-forms",
+  "expand-vertex-form": "values-and-forms",
+  "fraction-decimal": "values-and-forms",
+  "complete-square": "vertex-and-axis",
+  "vertex-axis": "vertex-and-axis",
+  "normalize-first": "vertex-and-axis",
+  "coefficient-from-point": "determine-equation",
+  "equation-from-vertex-point": "determine-equation",
+  intercepts: "intercepts-and-intersections",
+  "line-intersections": "intercepts-and-intersections",
+};
 
 export function isMiddleQuadraticFunctionKind(value: string | null): value is MiddleQuadraticFunctionKind {
   return MIDDLE_QUADRATIC_FUNCTION_KINDS.includes(value as MiddleQuadraticFunctionKind);
+}
+
+export function resolveMiddleQuadraticFunctionKind(value: string | null): MiddleQuadraticFunctionKind | null {
+  if (isMiddleQuadraticFunctionKind(value)) return value;
+  if (MIDDLE_QUADRATIC_FUNCTION_METHOD_KINDS.includes(value as MiddleQuadraticFunctionMethodKind)) {
+    return LEGACY_KIND_GROUPS[value as MiddleQuadraticFunctionMethodKind];
+  }
+  return null;
 }
 
 export function createMiddleQuadraticFunctionProblemSet(
@@ -372,7 +433,7 @@ export function createMiddleQuadraticFunctionProblemSet(
     kind,
     problems: Array.from({ length: 8 }, (_, index) => ({
       ...build(
-        kind === "comprehensive" ? comprehensiveKind(seed, index) : kind,
+        kind === "comprehensive" ? comprehensiveKind(seed, index) : GROUP_METHOD_PLANS[kind][index],
         next,
         `middle-quadratic-function-${kind}-${index}`,
         index,
@@ -383,7 +444,7 @@ export function createMiddleQuadraticFunctionProblemSet(
 }
 
 export function createMiddleQuadraticFunctionReviewProblems(
-  kinds: MiddleQuadraticFunctionKind[],
+  kinds: MiddleQuadraticFunctionMethodKind[],
   seed: number,
 ) {
   const next = random(seed);

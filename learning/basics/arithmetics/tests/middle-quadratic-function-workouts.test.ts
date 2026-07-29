@@ -5,15 +5,38 @@ import {
   createMiddleQuadraticFunctionProblemSet,
   createMiddleQuadraticFunctionReviewProblems,
   MIDDLE_QUADRATIC_FUNCTION_KINDS,
+  MIDDLE_QUADRATIC_FUNCTION_METHOD_KINDS,
+  resolveMiddleQuadraticFunctionKind,
+  type MiddleQuadraticFunctionMethodKind,
 } from "../lib/middle-quadratic-function-workouts.ts";
 
-test("중3 이차함수 계산 12개 세부 유형이 각각 8문제를 생성한다", () => {
-  assert.equal(MIDDLE_QUADRATIC_FUNCTION_KINDS.length, 12);
+test("중3 이차함수 계산은 쉬운 세부 유형을 합친 5개 학습지로 구성된다", () => {
+  assert.equal(MIDDLE_QUADRATIC_FUNCTION_KINDS.length, 5);
   for (const kind of MIDDLE_QUADRATIC_FUNCTION_KINDS) {
-    const problems = createMiddleQuadraticFunctionProblemSet(kind, 20260730).problems;
-    assert.equal(problems.length, 8, kind);
-    assert.equal(new Set(problems.map(({ id }) => id)).size, 8, kind);
+    const set = createMiddleQuadraticFunctionProblemSet(kind, 20260730);
+    assert.equal(set.problems.length, 8, kind);
+    assert.equal(set.kind, kind);
+    assert.equal(new Set(set.problems.map(({ id }) => id)).size, 8, kind);
   }
+});
+
+test("묶음 학습지는 필요한 세부 계산 유형을 빠짐없이 섞는다", () => {
+  assert.deepEqual(
+    new Set(createMiddleQuadraticFunctionProblemSet("values-and-forms", 7).problems.map(({ kind }) => kind)),
+    new Set(["basic-value", "vertex-value", "expand-vertex-form", "fraction-decimal"]),
+  );
+  assert.deepEqual(
+    new Set(createMiddleQuadraticFunctionProblemSet("vertex-and-axis", 7).problems.map(({ kind }) => kind)),
+    new Set(["vertex-axis", "complete-square", "normalize-first"]),
+  );
+  assert.deepEqual(
+    new Set(createMiddleQuadraticFunctionProblemSet("determine-equation", 7).problems.map(({ kind }) => kind)),
+    new Set(["coefficient-from-point", "equation-from-vertex-point"]),
+  );
+  assert.deepEqual(
+    new Set(createMiddleQuadraticFunctionProblemSet("intercepts-and-intersections", 7).problems.map(({ kind }) => kind)),
+    new Set(["intercepts", "line-intersections"]),
+  );
 });
 
 test("모든 이차함수 문제는 네 선택지와 한 줄 핵심 풀이를 제공한다", () => {
@@ -29,9 +52,10 @@ test("모든 이차함수 문제는 네 선택지와 한 줄 핵심 풀이를 �
   }
 });
 
-test("계수 1과 -1은 핵심 풀이에서도 숫자 1을 억지로 쓰지 않는다", () => {
+test("계수 1과 -1은 풀이에서도 불필요한 숫자 1을 쓰지 않는다", () => {
   for (let seed = 1; seed <= 100; seed += 1) {
-    const problems = createMiddleQuadraticFunctionProblemSet("basic-value", seed).problems;
+    const problems = createMiddleQuadraticFunctionProblemSet("values-and-forms", seed).problems
+      .filter(({ kind }) => kind === "basic-value");
     for (const problem of problems) {
       assert.doesNotMatch(problem.solutionHint, /(?:^|[^0-9])-?1\\times/);
     }
@@ -53,22 +77,21 @@ test("각 이차함수 학습지는 기본 2, 응용 3, 고난도 3문제로 진
   }
 });
 
-test("순수 연산 범위만 사용하고 그래프 개형·최대최소 활용은 출제하지 않는다", () => {
+test("함수 연산 범위만 사용하고 그래프 개형·최대·최소 활용은 출제하지 않는다", () => {
   for (const kind of MIDDLE_QUADRATIC_FUNCTION_KINDS) {
-    const problems = createMiddleQuadraticFunctionProblemSet(kind, 20260730).problems;
-    for (const problem of problems) {
+    for (const problem of createMiddleQuadraticFunctionProblemSet(kind, 20260730).problems) {
       assert.doesNotMatch(
         `${problem.label}${problem.solutionHint}`,
-        /그래프의 개형|그래프를 그|최댓값|최솟값|넓이|속력|거리/,
+        /그래프의 개형|그래프를 그|최댓값|최솟값|넓이|거리/,
       );
     }
   }
 });
 
-test("분수·소수 학습지는 두 계수 표기를 모두 반복한다", () => {
-  const problems = createMiddleQuadraticFunctionProblemSet("fraction-decimal", 20260730).problems;
-  assert.equal(problems.filter(({ structure }) => structure === "fraction-value").length, 4);
-  assert.equal(problems.filter(({ structure }) => structure === "decimal-value").length, 4);
+test("분수·소수 계수는 한 묶음 안에서 두 표기를 모두 연습한다", () => {
+  const problems = createMiddleQuadraticFunctionProblemSet("values-and-forms", 20260730).problems
+    .filter(({ kind }) => kind === "fraction-decimal");
+  assert.deepEqual(problems.map(({ structure }) => structure).sort(), ["decimal-value", "fraction-value"]);
   assert.ok(problems.some(({ latex }) => latex.includes("\\dfrac{1}{2}")));
   assert.ok(problems.some(({ latex }) => latex.includes("-0.5")));
 });
@@ -77,15 +100,23 @@ test("이차함수 종합은 연속 세 세트에서 모든 계산 유형을 순
   const kinds = [1, 2, 3].flatMap((seed) => (
     createMiddleQuadraticFunctionProblemSet("comprehensive", seed).problems.map(({ kind }) => kind)
   ));
-  const expected = MIDDLE_QUADRATIC_FUNCTION_KINDS.filter((kind) => kind !== "comprehensive");
-  assert.deepEqual([...new Set(kinds)].sort(), [...expected].sort());
+  assert.deepEqual([...new Set(kinds)].sort(), [...MIDDLE_QUADRATIC_FUNCTION_METHOD_KINDS].sort());
+});
+
+test("기존 세부 유형 주소는 해당 묶음 학습지로 연결된다", () => {
+  assert.equal(resolveMiddleQuadraticFunctionKind("basic-value"), "values-and-forms");
+  assert.equal(resolveMiddleQuadraticFunctionKind("complete-square"), "vertex-and-axis");
+  assert.equal(resolveMiddleQuadraticFunctionKind("coefficient-from-point"), "determine-equation");
+  assert.equal(resolveMiddleQuadraticFunctionKind("line-intersections"), "intercepts-and-intersections");
+  assert.equal(resolveMiddleQuadraticFunctionKind("comprehensive"), "comprehensive");
+  assert.equal(resolveMiddleQuadraticFunctionKind("unknown"), null);
 });
 
 test("오답 보충은 서로 다른 틀린 유형 중 최대 두 문제만 만든다", () => {
-  const reviews = createMiddleQuadraticFunctionReviewProblems(
-    ["basic-value", "complete-square", "basic-value", "intercepts"],
-    88,
-  );
+  const kinds: MiddleQuadraticFunctionMethodKind[] = [
+    "basic-value", "complete-square", "basic-value", "intercepts",
+  ];
+  const reviews = createMiddleQuadraticFunctionReviewProblems(kinds, 88);
   assert.equal(reviews.length, 2);
   assert.deepEqual(reviews.map(({ kind }) => kind), ["basic-value", "complete-square"]);
 });
