@@ -5991,6 +5991,15 @@ button.prime-number-question:focus-visible {
     font-size: 16px;
     line-height: 1.3;
     letter-spacing: -0.035em;
+    word-break: keep-all;
+  }
+
+  .worksheet-title-formula {
+    display: inline-flex;
+    white-space: nowrap;
+    font-size: 0.96em;
+    letter-spacing: 0;
+    vertical-align: -0.05em;
   }
 
   .worksheet-arrow {

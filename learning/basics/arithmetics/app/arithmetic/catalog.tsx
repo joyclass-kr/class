@@ -1,7 +1,8 @@
 "use client";
 
-import { Fragment } from "react";
+import { Fragment, type ReactNode } from "react";
 import { learningWorksheetCatalog } from "../../lib/arithmetic-worksheets";
+import MathFormula from "../components/math-formula";
 
 type LearningStage = "elementary" | "middle" | "high" | "stem";
 
@@ -11,6 +12,44 @@ const stageMeta: Record<LearningStage, { label: string; shortLabel: string }> = 
   high: { label: "고", shortLabel: "고" },
   stem: { label: "이공계 기초", shortLabel: "이공계 기초" },
 };
+
+const catalogMathTokens = [
+  { text: "x²+(a+b)x+ab", latex: "x^2+(a+b)x+ab" },
+  { text: "30°·45°·60°", latex: "30^\\circ,\\ 45^\\circ,\\ 60^\\circ" },
+  { text: "sin·cos·tan", latex: "\\sin,\\ \\cos,\\ \\tan" },
+  { text: "ax²+bx+c", latex: "ax^2+bx+c" },
+  { text: "y=ax²", latex: "y=ax^2" },
+  { text: "x²=a", latex: "x^2=a" },
+] as const;
+
+function renderWorksheetTitle(title: string): ReactNode {
+  const parts: ReactNode[] = [];
+  let cursor = 0;
+
+  while (cursor < title.length) {
+    const nextToken = catalogMathTokens
+      .map((token) => ({ ...token, index: title.indexOf(token.text, cursor) }))
+      .filter(({ index }) => index >= 0)
+      .sort((left, right) => left.index - right.index || right.text.length - left.text.length)[0];
+
+    if (!nextToken) {
+      parts.push(title.slice(cursor));
+      break;
+    }
+
+    if (nextToken.index > cursor) parts.push(title.slice(cursor, nextToken.index));
+    parts.push(
+      <MathFormula
+        key={`${nextToken.text}-${nextToken.index}`}
+        latex={nextToken.latex}
+        className="worksheet-title-formula"
+      />,
+    );
+    cursor = nextToken.index + nextToken.text.length;
+  }
+
+  return parts.length ? parts : title;
+}
 
 function worksheetStage(grade: string): LearningStage {
   if (grade.startsWith("초")) return "elementary";
@@ -55,7 +94,7 @@ export default function ArithmeticCatalog() {
               <span className="worksheet-number">{String(index + 1).padStart(2, "0")}</span>
               <span className="worksheet-title">
                 <small className="worksheet-grade">{`(${grade})`}</small>
-                <strong>{title}</strong>
+                <strong>{renderWorksheetTitle(title)}</strong>
               </span>
               {route && <span className="worksheet-arrow" aria-hidden="true">→</span>}
             </>;
