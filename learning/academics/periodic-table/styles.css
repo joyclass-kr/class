@@ -430,18 +430,20 @@ body {
 }
 
 .periodic-table-grid.short-table {
-    grid-template-columns: 62px repeat(8, minmax(82px, 1fr));
+    width: 100%;
+    grid-template-columns: minmax(44px, 62px) repeat(8, minmax(0, 1fr));
     grid-template-rows: 34px repeat(4, minmax(96px, 1fr));
     gap: 8px;
-    min-width: 820px;
+    min-width: 0;
     max-width: 1040px;
 }
 
 .periodic-table-grid.full-table {
-    grid-template-columns: repeat(18, minmax(64px, 1fr));
+    width: 100%;
+    grid-template-columns: repeat(18, minmax(0, 1fr));
     grid-template-rows: repeat(10, minmax(72px, 1fr));
-    gap: 6px;
-    min-width: 1180px;
+    gap: clamp(2px, 0.35vw, 6px);
+    min-width: 0;
     max-width: none;
 }
 
@@ -451,6 +453,25 @@ body {
 
 .full-table .element-cell {
     min-height: 72px;
+    padding-inline: clamp(2px, 0.3vw, 4px);
+}
+
+/* Full-table mode uses the available viewport instead of the exam card width. */
+body[data-table-mode="full"] .exam-focus {
+    width: calc(100% - 32px);
+    max-width: 1600px;
+}
+
+body[data-table-mode="full"] .toolbar,
+body[data-table-mode="full"] .category-bar,
+body[data-table-mode="full"] .view-container {
+    width: 100%;
+    max-width: 1600px;
+    padding-inline: clamp(8px, 1.5vw, 24px);
+}
+
+body[data-table-mode="full"] .periodic-table-wrapper {
+    overflow-x: hidden;
 }
 
 /* Element Cell Component */
@@ -1096,6 +1117,35 @@ body.presentation-mode .element-name {
 }
 
 /* Responsive design adjustments */
+@media (max-width: 1100px) {
+    .periodic-table-grid.full-table {
+        grid-template-rows: repeat(10, minmax(64px, 1fr));
+    }
+
+    .full-table .element-cell {
+        min-height: 64px;
+        padding: 4px 2px;
+    }
+
+    .full-table .element-mass,
+    .full-table .state-indicator {
+        display: none;
+    }
+
+    .full-table .element-header {
+        justify-content: flex-start;
+        font-size: 9px;
+    }
+
+    .full-table .element-symbol {
+        font-size: 17px;
+    }
+
+    .full-table .element-name {
+        font-size: 9px;
+    }
+}
+
 @media (max-width: 900px) {
     .exam-focus {
         align-items: flex-start;
@@ -1134,6 +1184,39 @@ body.presentation-mode .element-name {
     .molecule-lab-container {
         grid-template-columns: 1fr;
     }
+
+    .periodic-table-grid.short-table {
+        grid-template-columns: 46px repeat(8, minmax(0, 1fr));
+        gap: 5px;
+    }
+
+    .periodic-table-grid.full-table {
+        grid-template-rows: repeat(10, minmax(58px, 1fr));
+        gap: 2px;
+    }
+
+    .full-table .element-cell {
+        min-height: 58px;
+        padding: 3px 1px;
+        border-left-width: 2px;
+        border-radius: 4px;
+    }
+
+    .full-table .element-symbol {
+        font-size: clamp(13px, 2.1vw, 16px);
+    }
+
+    .full-table .element-name {
+        font-size: clamp(7px, 1.15vw, 9px);
+    }
+
+    .full-table .element-number {
+        font-size: 8px;
+    }
+
+    .full-table .series-placeholder {
+        font-size: 7px;
+    }
 }
 
 @media (max-width: 560px) {
@@ -1162,5 +1245,20 @@ body.presentation-mode .element-name {
 
     .quiz-options-grid {
         grid-template-columns: 1fr;
+    }
+
+    .periodic-table-grid.short-table {
+        grid-template-columns: 36px repeat(8, minmax(0, 1fr));
+        grid-template-rows: 30px repeat(4, minmax(82px, 1fr));
+        gap: 3px;
+    }
+
+    .short-table .element-cell {
+        padding-inline: 2px;
+    }
+
+    .short-table .element-mass,
+    .short-table .state-indicator {
+        display: none;
     }
 }
