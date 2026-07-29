@@ -615,7 +615,10 @@
                     const handoff = link.dataset.playerHandoff;
                     if (handoff !== 'fragment' && handoff !== 'query') return;
 
-                    const baseHref = link.dataset.baseHref || link.href;
+                    const baseHref = link.dataset.baseHref
+                        || link.dataset.lockedHref
+                        || link.getAttribute('href');
+                    if (!baseHref) return;
                     link.dataset.baseHref = baseHref;
                     const targetUrl = new URL(baseHref, window.location.href);
                     if (handoff === 'fragment') {
@@ -634,7 +637,12 @@
                         targetUrl.searchParams.delete('school');
                         targetUrl.searchParams.delete('grade');
                     }
-                    link.href = targetUrl.toString();
+                    const nextHref = targetUrl.toString();
+                    if (link.hasAttribute('href')) {
+                        link.setAttribute('href', nextHref);
+                    } else {
+                        link.dataset.lockedHref = nextHref;
+                    }
                 });
             }
 
