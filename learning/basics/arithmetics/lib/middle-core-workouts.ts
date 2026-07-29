@@ -83,7 +83,6 @@ const COMPREHENSIVE_PARTS: Exclude<MiddleCoreKind, "formula-comprehensive">[] = 
   "formula-sum-difference",
 ];
 const PRIME_PAIRS = [[2, 3], [2, 5], [3, 5], [2, 7]] as const;
-const COPRIME_PAIRS = [[2, 3], [3, 4], [4, 5], [5, 6]] as const;
 const SQUARE_FREE = [2, 3, 5, 6, 7] as const;
 
 function random(seed: number) {
@@ -114,6 +113,14 @@ function nonUnit(next: () => number, minimum: number, maximum: number) {
 
 function gcd(left: number, right: number): number {
   return right === 0 ? Math.abs(left) : gcd(right, left % right);
+}
+
+function gcdOf(values: number[]) {
+  return values.reduce((result, value) => gcd(result, value));
+}
+
+function lcmOf(values: number[]) {
+  return values.reduce((result, value) => Math.abs(result * value) / gcd(result, value));
 }
 
 function fraction(numerator: number, denominator: number) {
@@ -191,13 +198,14 @@ function make(
   solutionHint: string,
   distractors: string[],
   structure = kind,
+  label = MIDDLE_CORE_TITLES[kind],
 ): MiddleCoreProblem {
   return {
     id,
     kind,
     difficulty: "basic",
     structure,
-    label: MIDDLE_CORE_TITLES[kind],
+    label,
     latex,
     answerLatex,
     solutionHint,
@@ -228,20 +236,61 @@ function build(
   }
 
   if (kind === "gcd-lcm") {
-    const [leftBase, rightBase] = COPRIME_PAIRS[index % COPRIME_PAIRS.length];
-    const common = 2 + index + integer(next, 0, 2);
-    const left = common * leftBase;
-    const right = common * rightBase;
-    const gcdMode = index % 2 === 0;
-    const answer = gcdMode ? common : common * leftBase * rightBase;
-    return make(id, kind,
-      `(${left},\\ ${right})\\text{의 }${gcdMode ? "\\text{최대공약수}" : "\\text{최소공배수}"}`,
-      `${answer}`,
-      gcdMode
-        ? `두 수의 공통인수 중 가장 큰 수 ${common}을 구한다.`
-        : `최소공배수는 ${common}\\times${leftBase}\\times${rightBase}로 계산한다.`,
-      [`${common * 2}`, `${leftBase * rightBase}`, `${left * right}`],
-      gcdMode ? "gcd" : "lcm");
+    const exercises = [
+      { values: [72, 108], mode: "gcd", structure: "two-gcd", label: "두 수의 최대공약수" },
+      { values: [84, 126], mode: "lcm", structure: "two-lcm", label: "두 수의 최소공배수" },
+      { values: [120, 168], mode: "both", structure: "two-both", label: "두 수의 소인수분해" },
+      { values: [72, 108, 180], mode: "gcd", structure: "three-gcd", label: "세 수의 최대공약수" },
+      { values: [60, 84, 90], mode: "lcm", structure: "three-lcm", label: "세 수의 최소공배수" },
+      {
+        values: [144, 540], mode: "both", structure: "factored-two-both", label: "소인수 지수 비교",
+        display: ["2^4\\times3^2", "2^2\\times3^3\\times5"],
+      },
+      {
+        values: [144, 216, 180], mode: "gcd", structure: "factored-three-gcd", label: "소인수 지수 비교",
+        display: ["2^4\\times3^2", "2^3\\times3^3", "2^2\\times3^2\\times5"],
+      },
+      {
+        values: [72, 540, 450], mode: "lcm", structure: "factored-three-lcm", label: "소인수 지수 비교",
+        display: ["2^3\\times3^2", "2^2\\times3^3\\times5", "2\\times3^2\\times5^2"],
+      },
+    ] as const;
+    const exercise = exercises[index];
+    const values = [...exercise.values];
+    const greatest = gcdOf(values);
+    const least = lcmOf(values);
+    const answer = exercise.mode === "gcd"
+      ? `${greatest}`
+      : exercise.mode === "lcm"
+        ? `${least}`
+        : `\\text{최대공약수 }${greatest},\\quad\\text{최소공배수 }${least}`;
+    const request = exercise.mode === "gcd"
+      ? "\\text{최대공약수를 구하여라.}"
+      : exercise.mode === "lcm"
+        ? "\\text{최소공배수를 구하여라.}"
+        : "\\text{최대공약수와 최소공배수를 모두 구하여라.}";
+    const displayedValues = "display" in exercise
+      ? exercise.display
+      : exercise.values.map((value) => `${value}`);
+    const latex = `\\begin{gathered}${displayedValues.join(",\\quad")}\\\\${request}\\end{gathered}`;
+    return make(
+      id,
+      kind,
+      latex,
+      answer,
+      "각 수를 소인수분해한 뒤 최대공약수는 공통 소인수의 작은 지수, 최소공배수는 모든 소인수의 큰 지수를 택한다.",
+      exercise.mode === "both"
+        ? [
+          `\\text{최대공약수 }${greatest * 2},\\quad\\text{최소공배수 }${least}`,
+          `\\text{최대공약수 }${greatest},\\quad\\text{최소공배수 }${Math.floor(least / 2)}`,
+          `\\text{최대공약수 }${greatest},\\quad\\text{최소공배수 }${values.reduce((product, value) => product * value)}`,
+        ]
+        : exercise.mode === "gcd"
+          ? [`${greatest * 2}`, `${greatest * 3}`, `${least}`]
+          : [`${Math.floor(least / 2)}`, `${least * 2}`, `${greatest}`],
+      exercise.structure,
+      exercise.label,
+    );
   }
 
   if (kind === "linear-expression") {

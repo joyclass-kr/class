@@ -112,3 +112,22 @@ test("중학교 연산 목록 55개는 모두 연결되며 이름과 경로가 �
     middleSchoolWorksheetCatalog.length,
   );
 });
+
+test("gcd-lcm worksheets progress through middle-school prime factorization", () => {
+  const problems = createMiddleCoreProblemSet("gcd-lcm", 29).problems;
+  assert.deepEqual(
+    problems.map(({ structure }) => structure),
+    [
+      "two-gcd",
+      "two-lcm",
+      "two-both",
+      "three-gcd",
+      "three-lcm",
+      "factored-two-both",
+      "factored-three-gcd",
+      "factored-three-lcm",
+    ],
+  );
+  assert.ok(problems.slice(5).every(({ latex }) => latex.includes("^")));
+  assert.ok(problems.every(({ solutionHint }) => solutionHint.includes("소인수분해")));
+});
