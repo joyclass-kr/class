@@ -37,6 +37,7 @@ window.SOLAR_SYSTEM_DATA = {
         gravityRatio: 0.38,
         eccentricity: 0.205,
         inclinationDeg: 7.0,
+        axialTiltDeg: 0.034,
         density: '5.43 g/cm³ (높은 밀도)',
         tempC: '-180°C ~ 430°C (일교차 극대)',
         moons: 0,
@@ -66,6 +67,7 @@ window.SOLAR_SYSTEM_DATA = {
         gravityRatio: 0.91,
         eccentricity: 0.007,
         inclinationDeg: 3.4,
+        axialTiltDeg: 177.36,
         density: '5.24 g/cm³',
         tempC: '465°C (태양계 최고 온도의 행성)',
         moons: 0,
@@ -94,6 +96,7 @@ window.SOLAR_SYSTEM_DATA = {
         gravityRatio: 1.0,
         eccentricity: 0.017,
         inclinationDeg: 0.0, // 기준 평면 (황도면)
+        axialTiltDeg: 23.44,
         density: '5.51 g/cm³ (태양계 최고의 밀도)',
         tempC: '-89°C ~ 58°C (평균 15°C)',
         moons: 1,
@@ -149,6 +152,7 @@ window.SOLAR_SYSTEM_DATA = {
         gravityRatio: 0.38,
         eccentricity: 0.093,
         inclinationDeg: 1.85,
+        axialTiltDeg: 25.19,
         density: '3.93 g/cm³',
         tempC: '-140°C ~ 20°C (평균 -63°C)',
         moons: 2,
@@ -161,8 +165,8 @@ window.SOLAR_SYSTEM_DATA = {
             '🥔 [화성 2대 위성] 감자 모양의 포보스(Phobos)와 데이모스(Deimos) 2개의 위성 보유'
         ],
         satellites: [
-            { id: 'phobos', name: '포보스', enName: 'Phobos', orbitR: 18, size: 1.2, speed: 2.5, color: '#a8a29e' },
-            { id: 'deimos', name: '데이모스', enName: 'Deimos', orbitR: 26, size: 0.9, speed: 1.2, color: '#78716c' }
+            { id: 'phobos', name: '포보스', enName: 'Phobos', orbitR: 18, size: 1.2, periodDays: 0.3187, inclinationDeg: 1.1, color: '#a8a29e' },
+            { id: 'deimos', name: '데이모스', enName: 'Deimos', orbitR: 26, size: 0.9, periodDays: 1.2625, inclinationDeg: 1.8, color: '#78716c' }
         ],
         trivia: '지구와 자전 주기(24.6시간) 및 자전축 기울기(25.2°)가 매우 유사하여 4계절이 존재합니다.',
         missions: ['퍼서비어런스(Perseverance)', '큐리오시티(Curiosity)', '인사이트'],
@@ -183,9 +187,10 @@ window.SOLAR_SYSTEM_DATA = {
         massEarth: '지구의 약 318배',
         eccentricity: 0.048,
         inclinationDeg: 1.3,
+        axialTiltDeg: 3.13,
         density: '1.33 g/cm³ (밀도가 작음)',
         tempC: '-110°C (표면 구름층)',
-        moons: 95,
+        moons: 101,
         atmosphere: '수소 90%, 헬륨 10%',
         desc: '태양계에서 가장 거대한 가스 거인 행성으로, 빠른 자전으로 인한 적도 줄무늬와 대적점이 특징입니다.',
         satExamKeyPoints: [
@@ -196,10 +201,10 @@ window.SOLAR_SYSTEM_DATA = {
             '🌕 [갈릴레이 4대 위성] 이오(화산), 유로파(얼음바다), 가니메데(최대 위성), 칼리스토 4대 주요 위성 보유'
         ],
         satellites: [
-            { id: 'io', name: '이오', enName: 'Io', orbitR: 24, size: 1.8, speed: 2.8, color: '#fde047' },
-            { id: 'europa', name: '유로파', enName: 'Europa', orbitR: 32, size: 1.6, speed: 2.0, color: '#e0f2fe' },
-            { id: 'ganymede', name: '가니메데', enName: 'Ganymede', orbitR: 42, size: 2.4, speed: 1.4, color: '#cbd5e1' },
-            { id: 'callisto', name: '칼리스토', enName: 'Callisto', orbitR: 54, size: 2.1, speed: 0.9, color: '#64748b' }
+            { id: 'io', name: '이오', enName: 'Io', orbitR: 36, size: 1.8, periodDays: 1.7627, inclinationDeg: 0.0, color: '#fde047' },
+            { id: 'europa', name: '유로파', enName: 'Europa', orbitR: 42, size: 1.6, periodDays: 3.5255, inclinationDeg: 0.5, color: '#e0f2fe' },
+            { id: 'ganymede', name: '가니메데', enName: 'Ganymede', orbitR: 48, size: 2.4, periodDays: 7.1556, inclinationDeg: 0.2, color: '#cbd5e1' },
+            { id: 'callisto', name: '칼리스토', enName: 'Callisto', orbitR: 56, size: 2.1, periodDays: 16.6904, inclinationDeg: 0.3, color: '#64748b' }
         ],
         trivia: '목성의 위성 가니메데는 수성보다도 크기가 큰 태양계 최대 위성입니다.',
         missions: ['주노(Juno)', '갈릴레오(Galileo)', '보아저 1/2호'],
@@ -220,9 +225,10 @@ window.SOLAR_SYSTEM_DATA = {
         massEarth: '지구의 약 95배',
         eccentricity: 0.056,
         inclinationDeg: 2.5,
+        axialTiltDeg: 26.73,
         density: '0.69 g/cm³ (물보다 낮은 밀도!)',
         tempC: '-140°C',
-        moons: 146,
+        moons: 274,
         atmosphere: '수소 96%, 헬륨 3%',
         desc: '얼음 입자와 암석 조각으로 이루어진 화려한 고리를 가진 행성으로, 밀도가 물보다 낮습니다.',
         satExamKeyPoints: [
@@ -232,8 +238,13 @@ window.SOLAR_SYSTEM_DATA = {
             '🌌 [타이탄 & 엔켈라두스] 메탄 대기/바다를 갖춘 타이탄(Titan) 및 얼음 간헐천을 뿜는 엔켈라두스(Enceladus) 보유'
         ],
         satellites: [
-            { id: 'titan', name: '타이탄', enName: 'Titan', orbitR: 44, size: 2.3, speed: 1.3, color: '#f97316' },
-            { id: 'enceladus', name: '엔켈라두스', enName: 'Enceladus', orbitR: 28, size: 1.3, speed: 2.2, color: '#f8fafc' }
+            { id: 'mimas', name: '미마스', enName: 'Mimas', orbitR: 46, size: 0.8, periodDays: 0.9424, inclinationDeg: 1.6, color: '#d6d3d1' },
+            { id: 'enceladus', name: '엔켈라두스', enName: 'Enceladus', orbitR: 49, size: 1.0, periodDays: 1.3702, inclinationDeg: 0.0, color: '#f8fafc' },
+            { id: 'tethys', name: '테티스', enName: 'Tethys', orbitR: 52, size: 1.2, periodDays: 1.8878, inclinationDeg: 1.1, color: '#e7e5e4' },
+            { id: 'dione', name: '디오네', enName: 'Dione', orbitR: 55, size: 1.3, periodDays: 2.7369, inclinationDeg: 0.0, color: '#cbd5e1' },
+            { id: 'rhea', name: '레아', enName: 'Rhea', orbitR: 58, size: 1.5, periodDays: 4.5175, inclinationDeg: 0.3, color: '#d1d5db' },
+            { id: 'titan', name: '타이탄', enName: 'Titan', orbitR: 61, size: 2.3, periodDays: 15.9454, inclinationDeg: 0.3, color: '#f97316' },
+            { id: 'iapetus', name: '이아페투스', enName: 'Iapetus', orbitR: 65, size: 1.4, periodDays: 79.3310, inclinationDeg: 15.5, color: '#94a3b8' }
         ],
         trivia: '토성의 고리는 두께가 불과 수십 미터에 불과하지만 폭은 수십만 킬로미터에 달합니다.',
         missions: ['카시니-하위헌스(Cassini-Huygens)'],
@@ -254,6 +265,7 @@ window.SOLAR_SYSTEM_DATA = {
         massEarth: '지구의 약 14.5배',
         eccentricity: 0.046,
         inclinationDeg: 0.77,
+        axialTiltDeg: 97.77,
         density: '1.27 g/cm³',
         tempC: '-195°C ~ -224°C',
         moons: 28,
@@ -262,7 +274,15 @@ window.SOLAR_SYSTEM_DATA = {
         satExamKeyPoints: [
             '🛌 [누워서 자전하는 행성] 자전축 기울기가 약 98°로 공전 궤도면에 거의 누운 상태로 공전 및 시계 방향 역자전',
             '🪐 [98° 누운 세로 고리 보유] 자전축이 98도 누워있어 13개의 얇고 어두운 고리와 위성 궤도도 세로로 누운 채 공전함',
-            '💎 [메탄 대기와 색상] 대기 중의 메탄(CH₄) 성분이 붉은 빛을 흡수하고 푸른 빛을 반사하여 영롱한 청록색으로 관측됨'
+            '💎 [메탄 대기와 색상] 대기 중의 메탄(CH₄) 성분이 붉은 빛을 흡수하고 푸른 빛을 반사하여 영롱한 청록색으로 관측됨',
+            '🌕 [5대 주요 위성] 미란다, 아리엘, 움브리엘, 티타니아, 오베론이 천왕성의 적도면을 따라 공전함'
+        ],
+        satellites: [
+            { id: 'miranda', name: '미란다', enName: 'Miranda', orbitR: 29, size: 1.0, periodDays: 1.4135, inclinationDeg: 4.4, color: '#dbeafe' },
+            { id: 'ariel', name: '아리엘', enName: 'Ariel', orbitR: 34, size: 1.4, periodDays: 2.5204, inclinationDeg: 0.0, color: '#e0f2fe' },
+            { id: 'umbriel', name: '움브리엘', enName: 'Umbriel', orbitR: 39, size: 1.4, periodDays: 4.1442, inclinationDeg: 0.1, color: '#64748b' },
+            { id: 'titania', name: '티타니아', enName: 'Titania', orbitR: 45, size: 1.8, periodDays: 8.7059, inclinationDeg: 0.1, color: '#cbd5e1' },
+            { id: 'oberon', name: '오베론', enName: 'Oberon', orbitR: 52, size: 1.7, periodDays: 13.4632, inclinationDeg: 0.1, color: '#94a3b8' }
         ],
         trivia: '천왕성은 극지방이 42년 동안 태양 빛을 계속 받습니다.',
         missions: ['보이저 2호(Voyager 2)'],
@@ -283,6 +303,7 @@ window.SOLAR_SYSTEM_DATA = {
         massEarth: '지구의 약 17.1배',
         eccentricity: 0.010,
         inclinationDeg: 1.77,
+        axialTiltDeg: 28.32,
         density: '1.64 g/cm³',
         tempC: '-200°C',
         moons: 16,
@@ -295,7 +316,8 @@ window.SOLAR_SYSTEM_DATA = {
             '🔄 [트리톤 역공전 위성] 거대 위성 트리톤(Triton)은 해왕성 자전 방향과 반대로 도는 핵심 출제 역공전 위성'
         ],
         satellites: [
-            { id: 'triton', name: '트리톤', enName: 'Triton', orbitR: 28, size: 2.0, speed: 1.5, retrograde: true, color: '#a5f3fc' } // Retrograde!
+            { id: 'proteus', name: '프로테우스', enName: 'Proteus', orbitR: 24, size: 1.0, periodDays: 1.1223, inclinationDeg: 0.0, color: '#64748b' },
+            { id: 'triton', name: '트리톤', enName: 'Triton', orbitR: 31, size: 2.0, periodDays: 5.8770, inclinationDeg: 22.7, retrograde: true, color: '#a5f3fc' }
         ],
         trivia: '해왕성이 태양을 한 바퀴 도는 데는 164.8년이나 걸립니다.',
         missions: ['보이저 2호(Voyager 2)'],
@@ -310,15 +332,18 @@ window.SOLAR_SYSTEM_DATA = {
         order: 9,
         distAU: 39.48,
         orbitDays: 90560, // 248년
-        rotationDays: '6.4일',
+        rotationDays: '6.4일 (시계 방향 역자전)',
         radiusKm: 1188.3,
         gravityRatio: 0.063,
         eccentricity: 0.249, // 매우 찌그러진 타원!
         inclinationDeg: 17.1, // 무려 17도나 기울어짐!
+        axialTiltDeg: 119.51,
         satellites: [
-            { id: 'charon', name: '카론', enName: 'Charon', orbitR: 16, size: 1.8, speed: 1.0, color: '#94a3b8' },
-            { id: 'nix', name: '닉스', enName: 'Nix', orbitR: 26, size: 0.8, speed: 1.4, color: '#cbd5e1' },
-            { id: 'hydra', name: '하이드라', enName: 'Hydra', orbitR: 35, size: 0.9, speed: 1.8, color: '#e2e8f0' }
+            { id: 'charon', name: '카론', enName: 'Charon', orbitR: 10, size: 1.8, periodDays: 6.3872, inclinationDeg: 0.0, color: '#94a3b8' },
+            { id: 'styx', name: '스틱스', enName: 'Styx', orbitR: 14, size: 0.55, periodDays: 20.16, inclinationDeg: 0.0, color: '#e2e8f0' },
+            { id: 'nix', name: '닉스', enName: 'Nix', orbitR: 18, size: 0.8, periodDays: 24.85, inclinationDeg: 0.0, color: '#cbd5e1' },
+            { id: 'kerberos', name: '케르베로스', enName: 'Kerberos', orbitR: 22, size: 0.6, periodDays: 32.17, inclinationDeg: 0.4, color: '#a8a29e' },
+            { id: 'hydra', name: '하이드라', enName: 'Hydra', orbitR: 26, size: 0.9, periodDays: 38.20, inclinationDeg: 0.3, color: '#f1f5f9' }
         ],
         density: '1.85 g/cm³',
         tempC: '-230°C',

@@ -38,13 +38,6 @@
     }
 
     function boot() {
-        // The Moon simulator belongs to its own tab, not in planet detail cards.
-        document.querySelectorAll('.planet-modal').forEach(function (modal) {
-            modal.querySelectorAll('.solar-canvas-wrapper, .sim-controls-panel').forEach(function (element) {
-                element.remove();
-            });
-        });
-
         var state = {
             simMode: '3d', // '3d' (Log Scale) or '2d' (True Scale Map)
             currentTab: 'sim',
@@ -80,6 +73,15 @@
         var raycaster, mouse;
         var is3DReady = false;
         var mapLabels = []; // 2D DOM labels
+        var galaxyBackdrop = null;
+        var galaxyScaleIndicator = document.getElementById('galaxyScaleIndicator');
+        var GALAXY_VIEW = {
+            fadeStart: 6500,
+            fadeEnd: 22000,
+            planeSize: 70000,
+            max3DDistance: 85000,
+            max2DDistance: 1500000
+        };
 
         // 36 Unique ClassTool Animal Avatars (1~36)
         var CLASSTOOL_ANIMALS = [
@@ -444,7 +446,7 @@
                 controls = new THREE.OrbitControls(camera, renderer.domElement);
                 controls.enableDamping = true;
                 controls.dampingFactor = 0.05;
-                controls.maxDistance = 1500000;
+                controls.maxDistance = GALAXY_VIEW.max3DDistance;
                 controls.minDistance = 2.0;
             }
 
@@ -454,6 +456,7 @@
             scene.add(new THREE.AmbientLight(0x707080, 1.6));
             scene.add(new THREE.PointLight(0xfffaed, 4.0, 5000, 0.5));
 
+            createGalaxyBackdrop();
             buildCelestialBodies();
             buildUFOMesh();
 
@@ -462,6 +465,78 @@
 
             is3DReady = true;
             animate3D();
+        }
+
+        function createGalaxyBackdrop() {
+            if (!scene || typeof THREE === 'undefined' || !THREE.TextureLoader) return;
+
+            var texture = new THREE.TextureLoader().load(
+                'assets/images/milky-way-top-view.png',
+                function (loadedTexture) {
+                    loadedTexture.anisotropy = renderer && renderer.capabilities
+                        ? Math.min(8, renderer.capabilities.getMaxAnisotropy())
+                        : 1;
+                    loadedTexture.needsUpdate = true;
+                },
+                undefined,
+                function () {
+                    console.warn('Milky Way backdrop texture could not be loaded.');
+                }
+            );
+
+            if (typeof THREE.sRGBEncoding !== 'undefined') {
+                texture.encoding = THREE.sRGBEncoding;
+            }
+
+            var galaxyMaterial = new THREE.MeshBasicMaterial({
+                map: texture,
+                color: 0xffffff,
+                transparent: true,
+                opacity: 0,
+                depthWrite: false,
+                depthTest: true,
+                side: THREE.DoubleSide,
+                blending: THREE.AdditiveBlending
+            });
+
+            galaxyBackdrop = new THREE.Mesh(
+                new THREE.PlaneGeometry(GALAXY_VIEW.planeSize, GALAXY_VIEW.planeSize),
+                galaxyMaterial
+            );
+            // The Solar System sits away from the galactic center, on a local
+            // spur of the Orion Arm. Distances remain a conceptual view scale.
+            galaxyBackdrop.position.set(-14500, -1200, 0);
+            galaxyBackdrop.rotation.x = -Math.PI / 2;
+            galaxyBackdrop.rotation.z = -0.16;
+            galaxyBackdrop.renderOrder = -100;
+            galaxyBackdrop.visible = false;
+            galaxyBackdrop.userData.isPersistentBackdrop = true;
+            scene.add(galaxyBackdrop);
+        }
+
+        function smoothStep01(value) {
+            var t = Math.max(0, Math.min(1, value));
+            return t * t * (3 - 2 * t);
+        }
+
+        function updateGalaxyBackdrop() {
+            if (!camera || !galaxyBackdrop) return;
+
+            var viewTarget = controls ? controls.target : new THREE.Vector3(0, 0, 0);
+            var cameraDistance = camera.position.distanceTo(viewTarget);
+            var range = GALAXY_VIEW.fadeEnd - GALAXY_VIEW.fadeStart;
+            var fade = smoothStep01((cameraDistance - GALAXY_VIEW.fadeStart) / range);
+            var canShow = state.simMode === '3d' && !ufoState.active;
+            var visibility = canShow ? fade : 0;
+
+            galaxyBackdrop.visible = visibility > 0.002;
+            galaxyBackdrop.material.opacity = visibility * 0.72;
+
+            if (galaxyScaleIndicator) {
+                var indicatorVisibility = smoothStep01((visibility - 0.08) / 0.52);
+                galaxyScaleIndicator.style.setProperty('--galaxy-visibility', indicatorVisibility.toFixed(3));
+                galaxyScaleIndicator.setAttribute('aria-hidden', indicatorVisibility > 0.02 ? 'false' : 'true');
+            }
         }
 
         function init2DFallback() {
@@ -679,7 +754,7 @@
                 var orbitR = getBodyOrbitRadius(key);
                 var bodyR = getBodyScaleRadius(key);
                 
-                var ecc = (state.simMode === '2d') ? (KEPLER_ECCENTRICITIES[key] || 0.01) : 0.0; 
+                var ecc = KEPLER_ECCENTRICITIES[key] || 0.0;
                 
                 var incRad = (data.inclinationDeg || 0.0) * (Math.PI / 180);
 
@@ -701,24 +776,18 @@
                 var semiMinor = orbitR * Math.sqrt(1 - ecc * ecc);
                 var focusOffset = semiMajor * ecc;
 
-                // Planet Axial Tilts (Astronomical Real Physics)
-                var AXIAL_TILTS = {
-                    mercury: 0.03,
-                    venus: 177.3,
-                    earth: 23.44,
-                    mars: 25.19,
-                    jupiter: 3.13,
-                    saturn: 26.73,
-                    uranus: 97.77,  // 98 degrees lying down sideways!
-                    neptune: 28.32,
-                    pluto: 122.53
-                };
+                // Keep orbital translation separate from the body's axial frame.
+                // This prevents satellite planes from accidentally inheriting an
+                // unrelated body tilt (notably Earth's Moon).
+                var planetPositionGroup = new THREE.Object3D();
+                planetPositionGroup.position.x = semiMajor - focusOffset;
+                pivot.add(planetPositionGroup);
 
-                // Create Axial Tilt Frame Group (Rotates along Z axis according to axial tilt)
+                // Directed obliquity: values over 90 degrees already encode a
+                // retrograde spin axis, so the mesh rotation rate stays positive.
                 var bodyTiltGroup = new THREE.Object3D();
-                bodyTiltGroup.rotation.z = (AXIAL_TILTS[key] || 0) * (Math.PI / 180);
-                bodyTiltGroup.position.x = semiMajor - focusOffset;
-                pivot.add(bodyTiltGroup);
+                bodyTiltGroup.rotation.z = (data.axialTiltDeg || 0) * (Math.PI / 180);
+                planetPositionGroup.add(bodyTiltGroup);
 
                 // Add planet mesh inside tiltGroup
                 bodyTiltGroup.add(planetMesh);
@@ -769,10 +838,11 @@
                     );
                     planetMesh.add(atmosMesh);
 
-                    // REAL ASTRONOMICAL LUNAR ORBITAL INCLINATION (5.14 deg relative to Ecliptic Plane)
+                    // Lunar orbit inclination is measured from the ecliptic, not
+                    // from Earth's tilted equatorial plane.
                     var moonPivot = new THREE.Object3D();
-                    moonPivot.rotation.x = 5.14 * (Math.PI / 180);
-                    bodyTiltGroup.add(moonPivot);
+                    moonPivot.rotation.z = 5.14 * (Math.PI / 180);
+                    planetPositionGroup.add(moonPivot);
                     
                     var moonR = getBodyScaleRadius('moon');
                     var moonMesh = new THREE.Mesh(
@@ -800,8 +870,12 @@
                 var satList = [];
                 if (data.satellites && state.simMode === '3d') {
                     data.satellites.forEach(function(satData) {
+                        var satPlane = new THREE.Object3D();
+                        satPlane.rotation.z = (satData.inclinationDeg || 0) * (Math.PI / 180);
+                        bodyTiltGroup.add(satPlane);
+
                         var satPivot = new THREE.Object3D();
-                        bodyTiltGroup.add(satPivot);
+                        satPlane.add(satPivot);
 
                         var satGeo = new THREE.SphereGeometry(satData.size || 1.2, 16, 16);
                         var satMat = new THREE.MeshStandardMaterial({ color: parseInt(satData.color.replace('#', '0x'), 16), roughness: 0.5 });
@@ -819,7 +893,7 @@
                         lineGeo.setFromPoints(pts);
                         var lineMat = new THREE.LineBasicMaterial({ color: 0x64748b, transparent: true, opacity: 0.35 });
                         var satOrbitLine = new THREE.Line(lineGeo, lineMat);
-                        satPivot.add(satOrbitLine);
+                        satPlane.add(satOrbitLine);
 
                         satList.push({ data: satData, mesh: satMesh, pivot: satPivot, angle: Math.random() * Math.PI * 2 });
                     });
@@ -827,6 +901,7 @@
 
                 celestialBodies[key] = {
                     mesh: planetMesh,
+                    planetPositionGroup: planetPositionGroup,
                     bodyTiltGroup: bodyTiltGroup,
                     pivot: pivot,
                     ringMesh: saturnRingMesh,
@@ -1057,14 +1132,14 @@
         // 5. TRUE SELF-ROTATION RATES (Earth = 365.25)
         var SELF_ROTATION_RATES = {
             mercury: 6.23,
-            venus: -1.50,
+            venus: 1.50,
             earth: 365.25,
             mars: 354.6,
             jupiter: 890.8,
             saturn: 811.6,
-            uranus: -507.3,
+            uranus: 507.3,
             neptune: 545.1,
-            pluto: -57.1
+            pluto: 57.1
         };
 
         function animate3D() {
@@ -1129,19 +1204,21 @@
                     if (key === 'moon') {
                         var earthBody = celestialBodies['earth'];
                         if (earthBody && b.pivot) {
-                            // moonPivot is a child of earth bodyTiltGroup; keep centered at Earth origin to avoid double offset
+                            // The Moon has its own ecliptic-relative frame centered
+                            // on Earth, independent of Earth's axial tilt.
                             b.pivot.position.set(0, 0, 0);
-                            
-                            var earthAngle = earthBody.orbitAngle || 0;
-                            // True Counter-Clockwise Moon Orbit (CCW: West -> East) around Earth
-                            var moonAngle = earthAngle * 12.3688;
+
+                            var lunarCyclesPerEarthYear = 365.25 / 27.321661;
+                            b.orbitAngle = (b.orbitAngle || 0) - timeDelta * (Math.PI * 2) * lunarCyclesPerEarthYear;
+                            b.orbitAngle %= (Math.PI * 2);
+                            var moonAngle = b.orbitAngle;
                             var visMoonDist = b.orbitRadius || 18.0;
 
                             if (b.mesh) {
-                                // Orbit moon mesh smoothly on fixed inclination plane around Earth center
                                 b.mesh.position.x = Math.cos(moonAngle) * visMoonDist;
                                 b.mesh.position.z = Math.sin(moonAngle) * visMoonDist;
-                                b.mesh.rotation.y = moonAngle;
+                                // Keep the same lunar hemisphere facing Earth.
+                                b.mesh.rotation.y = -moonAngle;
                             }
                         }
                     } else if (key === 'comet') {
@@ -1304,7 +1381,10 @@
                         var px = Math.cos(b.orbitAngle) * a - fo;
                         var pz = Math.sin(b.orbitAngle) * c;
 
-                        if (b.bodyTiltGroup) {
+                        if (b.planetPositionGroup) {
+                            b.planetPositionGroup.position.x = px;
+                            b.planetPositionGroup.position.z = pz;
+                        } else if (b.bodyTiltGroup) {
                             b.bodyTiltGroup.position.x = px;
                             b.bodyTiltGroup.position.z = pz;
                         } else {
@@ -1316,17 +1396,24 @@
                             var selfRate = SELF_ROTATION_RATES[key] || 1.0;
                             b.mesh.rotation.y += timeDelta * (Math.PI * 2) * selfRate;
 
-                            // Animate Sub-Satellites (Charon, Phobos, Deimos, Galilean 4 Moons, Titan, Triton) inside bodyTiltGroup
+                            // Animate each planet's representative major moons.
                             if (b.satList && b.satList.length > 0) {
                                 b.satList.forEach(function(sat) {
-                                    var dSat = timeDelta * (Math.PI * 2) * (sat.data.speed || 1.0) * 8.0;
-                                    // 🌟 CSAT Astronomy Rule: Prograde Orbit is Counter-Clockwise (CCW: West -> East as viewed from North Pole)
-                                    // Except retrograde moons like Neptune's Triton
+                                    var physicalCyclesPerEarthYear = sat.data.periodDays
+                                        ? (365.25 / sat.data.periodDays)
+                                        : ((sat.data.speed || 1.0) * 8.0);
+                                    // Moon periods span several orders of magnitude.
+                                    // Square-root compression keeps the physical
+                                    // ordering while leaving direction observable.
+                                    var visibleCyclesPerEarthYear = sat.data.periodDays
+                                        ? Math.sqrt(physicalCyclesPerEarthYear)
+                                        : physicalCyclesPerEarthYear;
+                                    var dSat = timeDelta * (Math.PI * 2) * visibleCyclesPerEarthYear;
                                     var isRetrograde = sat.data && sat.data.retrograde;
                                     if (isRetrograde) {
-                                        sat.angle += dSat; // Retrograde (Clockwise)
+                                        sat.angle -= dSat;
                                     } else {
-                                        sat.angle -= dSat; // Prograde (Counter-Clockwise: West -> East)
+                                        sat.angle += dSat;
                                     }
                                     sat.pivot.rotation.y = sat.angle;
                                 });
@@ -1387,6 +1474,7 @@
             }
 
             if (controls) controls.update();
+            updateGalaxyBackdrop();
             if (renderer && scene && camera) {
                 try {
                     renderer.render(scene, camera);
@@ -1644,7 +1732,6 @@
 
                 if (earth3DMesh) earth3DMesh.rotation.y += 0.01;
                 if (moonPivotObj) moonPivotObj.rotation.y = state.moonState.angle;
-                if (moon3DMesh) moon3DMesh.rotation.y = state.moonState.angle;
 
                 updateMoonPhaseDisplay(state.moonState.angle);
             }
@@ -1981,6 +2068,7 @@
                             simWarningAlert.style.border = '1px solid rgba(16,185,129,0.2)';
                         }
                         if (camera && controls) {
+                            controls.maxDistance = GALAXY_VIEW.max2DDistance;
                             camera.position.set(0, 1500000, 0); // Zoomed way out top-down
                             controls.target.set(0, 0, 0);
                             controls.update();
@@ -2005,6 +2093,7 @@
                             simWarningAlert.style.border = '1px solid rgba(245,158,11,0.2)';
                         }
                         if (camera && controls) {
+                            controls.maxDistance = GALAXY_VIEW.max3DDistance;
                             camera.position.set(0, 1500, 2000); 
                             controls.target.set(0, 0, 0);
                             controls.update();
@@ -2045,7 +2134,7 @@
 
         // ========== NAV TABS ==========
         function initNavTabs() {
-            var tabs = document.querySelectorAll('.nav-tab');
+            var tabs = document.querySelectorAll('.nav-tabs .nav-tab[data-tab]');
             tabs.forEach(function (tab) {
                 tab.addEventListener('click', function () {
                     var target = tab.dataset.tab;

@@ -135,6 +135,24 @@ body {
     box-shadow: 0 2px 10px rgba(56, 189, 248, 0.3);
 }
 
+.quiz-action-btn {
+    border: 1px solid rgba(56, 189, 248, 0.55);
+    background: linear-gradient(135deg, #38bdf8, #0284c7);
+    color: #030712;
+    box-shadow: 0 2px 10px rgba(56, 189, 248, 0.3);
+    transition: transform 0.2s ease, box-shadow 0.2s ease;
+}
+
+.quiz-action-btn:hover {
+    transform: translateY(-1px);
+    box-shadow: 0 6px 18px rgba(56, 189, 248, 0.35);
+}
+
+.quiz-action-btn:focus-visible {
+    outline: 3px solid rgba(125, 211, 252, 0.45);
+    outline-offset: 3px;
+}
+
 /* Main Views Container */
 .view-container {
     max-width: 1440px;
@@ -230,6 +248,61 @@ canvas#solarCanvas {
     width: 100%;
     height: 100%;
     display: block;
+}
+
+.galaxy-scale-indicator {
+    --galaxy-visibility: 0;
+    position: absolute;
+    right: 20px;
+    bottom: 18px;
+    z-index: 8;
+    display: flex;
+    align-items: center;
+    gap: 11px;
+    max-width: min(290px, calc(100% - 40px));
+    padding: 10px 13px;
+    color: #e0f2fe;
+    background: linear-gradient(135deg, rgba(7, 12, 28, 0.78), rgba(26, 19, 48, 0.68));
+    border: 1px solid rgba(125, 211, 252, 0.28);
+    border-radius: 14px;
+    box-shadow: 0 12px 34px rgba(0, 0, 0, 0.38), inset 0 1px 0 rgba(255, 255, 255, 0.06);
+    backdrop-filter: blur(10px);
+    opacity: var(--galaxy-visibility);
+    pointer-events: none;
+    will-change: opacity;
+}
+
+.galaxy-scale-indicator__marker {
+    width: 11px;
+    height: 11px;
+    flex: 0 0 auto;
+    border: 2px solid #7dd3fc;
+    border-radius: 50%;
+    box-shadow: 0 0 0 5px rgba(56, 189, 248, 0.12), 0 0 18px rgba(125, 211, 252, 0.8);
+}
+
+.galaxy-scale-indicator__copy {
+    display: grid;
+    gap: 1px;
+    min-width: 0;
+}
+
+.galaxy-scale-indicator__copy strong {
+    color: #f8fafc;
+    font-size: 12px;
+    letter-spacing: 0.02em;
+}
+
+.galaxy-scale-indicator__copy span {
+    color: #bae6fd;
+    font-size: 11px;
+    font-weight: 700;
+}
+
+.galaxy-scale-indicator__copy small {
+    color: #94a3b8;
+    font-size: 9px;
+    line-height: 1.35;
 }
 
 /* Floating Control Panel Below Viewport (Matching Screenshot UI) */
@@ -919,11 +992,4 @@ body {
 
 #tab-sim .sim-controls-panel {
     flex: 0 0 auto;
-}
-
-/* Planet detail cards end at the split information panel.
-   Stray duplicated Moon-simulator sections must never appear underneath them. */
-#modalOverlay .planet-modal > .modal-split-container ~ .solar-canvas-wrapper,
-#modalOverlay .planet-modal > .modal-split-container ~ .sim-controls-panel {
-    display: none !important;
 }
