@@ -1191,9 +1191,11 @@ canvas#bohrAtomCanvas {
 
 /* Proportional Atomic Radius Sizes (CPK Chemistry Scale) */
 .atom-token[data-atom="1"]  { width: 36px; height: 36px; font-size: 14px; background: linear-gradient(135deg, #e2e8f0, #94a3b8); color: #0f172a; }
+.atom-token[data-atom="5"]  { width: 43px; height: 43px; font-size: 15px; background: linear-gradient(135deg, #f59e0b, #b45309); color: #111827; }
 .atom-token[data-atom="6"]  { width: 48px; height: 48px; font-size: 16px; background: linear-gradient(135deg, #334155, #1e293b); color: #38ef7d; border-color: #38ef7d; }
 .atom-token[data-atom="7"]  { width: 46px; height: 46px; font-size: 16px; background: linear-gradient(135deg, #3b82f6, #1d4ed8); color: #fff; }
 .atom-token[data-atom="8"]  { width: 44px; height: 44px; font-size: 16px; background: linear-gradient(135deg, #ef4444, #b91c1c); color: #fff; }
+.atom-token[data-atom="9"]  { width: 42px; height: 42px; font-size: 15px; background: linear-gradient(135deg, #a3e635, #4d7c0f); color: #102000; }
 .atom-token[data-atom="11"] { width: 56px; height: 56px; font-size: 18px; background: linear-gradient(135deg, #f59e0b, #d97706); color: #000; }
 .atom-token[data-atom="17"] { width: 58px; height: 58px; font-size: 18px; background: linear-gradient(135deg, #10b981, #047857); color: #fff; }
 .atom-token[data-atom="20"] { width: 62px; height: 62px; font-size: 19px; background: linear-gradient(135deg, #eab308, #ca8a04); color: #000; }
@@ -1203,6 +1205,38 @@ canvas#bohrAtomCanvas {
     border: 1px solid var(--border-color);
     border-radius: var(--radius-lg);
     padding: 20px;
+    max-height: min(780px, calc(100vh - 165px));
+    overflow-y: auto;
+    scrollbar-width: thin;
+    scrollbar-color: rgba(56, 239, 125, 0.55) transparent;
+}
+
+.compound-group + .compound-group {
+    margin-top: 18px;
+    padding-top: 16px;
+    border-top: 1px solid rgba(148, 163, 184, 0.2);
+}
+
+.compound-group-heading {
+    display: flex;
+    flex-direction: column;
+    gap: 3px;
+    margin-bottom: 9px;
+}
+
+.compound-group-heading strong {
+    color: #e2e8f0;
+    font-size: 13px;
+}
+
+.compound-group-heading span {
+    color: #64748b;
+    font-size: 10px;
+    font-weight: 700;
+}
+
+.compound-group-core .compound-group-heading strong {
+    color: #38ef7d;
 }
 
 .compound-card {
@@ -1343,6 +1377,11 @@ body.presentation-mode .element-name {
     
     .molecule-lab-container {
         grid-template-columns: 1fr;
+    }
+
+    .compounds-sidebar {
+        max-height: none;
+        overflow-y: visible;
     }
 
     .periodic-table-grid.short-table {

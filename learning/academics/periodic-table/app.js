@@ -893,23 +893,45 @@ document.addEventListener('DOMContentLoaded', () => {
         if (!list) return;
 
         list.innerHTML = '';
-        getLabCompounds().forEach(compound => {
-            const model = window.MOLECULE_MODELS_3D[compound.formula];
-            const selected = findLabCompound()?.formula === compound.formula;
-            const card = document.createElement('button');
-            card.type = 'button';
-            card.className = 'compound-card';
-            card.classList.toggle('active', selected);
-            card.innerHTML = `
-                <div class="compound-header">
-                    <span>${compound.icon} ${compound.name}</span>
-                    <span class="compound-formula">${compound.formula}</span>
+        const groups = [
+            { id: 'core', title: '⭐ 시험 필수 5형', note: '구조·결합각·극성 필수' },
+            { id: 'frequent', title: '📝 시험 빈출 응용', note: '다중 결합과 평면성 비교' },
+            { id: 'explore', title: '🔬 이온 결정·추가 탐구', note: '필수 구조 학습 후 살펴보기' }
+        ];
+        const compounds = getLabCompounds();
+        const selectedFormula = findLabCompound()?.formula;
+
+        groups.forEach(group => {
+            const groupedCompounds = compounds.filter(compound => compound.labGroup === group.id);
+            if (groupedCompounds.length === 0) return;
+
+            const section = document.createElement('section');
+            section.className = `compound-group compound-group-${group.id}`;
+            section.innerHTML = `
+                <div class="compound-group-heading">
+                    <strong>${group.title}</strong>
+                    <span>${group.note}</span>
                 </div>
-                <div class="compound-geometry">${model.kind} · ${model.geometry}</div>
-                <span class="compound-action">3D 모형 보기 →</span>
             `;
-            card.addEventListener('click', () => setLabComposition(compound));
-            list.appendChild(card);
+
+            groupedCompounds.forEach(compound => {
+                const model = window.MOLECULE_MODELS_3D[compound.formula];
+                const card = document.createElement('button');
+                card.type = 'button';
+                card.className = 'compound-card';
+                card.classList.toggle('active', selectedFormula === compound.formula);
+                card.innerHTML = `
+                    <div class="compound-header">
+                        <span>${compound.icon} ${compound.name}</span>
+                        <span class="compound-formula">${compound.formula}</span>
+                    </div>
+                    <div class="compound-geometry">${model.kind} · ${model.geometry}</div>
+                    <span class="compound-action">3D 모형 보기 →</span>
+                `;
+                card.addEventListener('click', () => setLabComposition(compound));
+                section.appendChild(card);
+            });
+            list.appendChild(section);
         });
     }
 
@@ -1074,6 +1096,10 @@ document.addEventListener('DOMContentLoaded', () => {
         if (bond.type === 'double') {
             drawLine(offsetX, offsetY);
             drawLine(-offsetX, -offsetY);
+        } else if (bond.type === 'triple') {
+            drawLine(offsetX * 1.7, offsetY * 1.7);
+            drawLine(0, 0);
+            drawLine(-offsetX * 1.7, -offsetY * 1.7);
         } else {
             drawLine(0, 0);
         }
@@ -1124,9 +1150,11 @@ document.addEventListener('DOMContentLoaded', () => {
     function getMoleculeAtomStyle(number) {
         const styles = {
             1: { color: '#e2e8f0', highlight: '#ffffff', shadow: '#94a3b8', text: '#0f172a', radius: 14 },
+            5: { color: '#f59e0b', highlight: '#fde68a', shadow: '#b45309', text: '#111827', radius: 20 },
             6: { color: '#334155', highlight: '#64748b', shadow: '#0f172a', text: '#38ef7d', radius: 22 },
             7: { color: '#2563eb', highlight: '#60a5fa', shadow: '#1e3a8a', text: '#ffffff', radius: 21 },
             8: { color: '#ef4444', highlight: '#fca5a5', shadow: '#991b1b', text: '#ffffff', radius: 20 },
+            9: { color: '#84cc16', highlight: '#d9f99d', shadow: '#3f6212', text: '#102000', radius: 19 },
             11: { color: '#f59e0b', highlight: '#fde68a', shadow: '#b45309', text: '#111827', radius: 28 },
             17: { color: '#10b981', highlight: '#6ee7b7', shadow: '#047857', text: '#ffffff', radius: 29 },
             20: { color: '#eab308', highlight: '#fef08a', shadow: '#a16207', text: '#111827', radius: 31 }

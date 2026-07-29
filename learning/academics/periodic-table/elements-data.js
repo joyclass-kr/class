@@ -22,70 +22,112 @@ window.COMPOUNDS_DATA = [
         formula: 'H₂O',
         elements: { 1: 2, 8: 1 },
         desc: '모든 생명체의 근원이 되는 가장 보편적인 화학 물질입니다.',
-        icon: '💧'
+        icon: '💧',
+        labGroup: 'core'
     },
     {
         name: '이산화 탄소',
         formula: 'CO₂',
         elements: { 6: 1, 8: 2 },
         desc: '동물이 호흡할 때 배출하고 식물이 광합성에 사용하는 기체입니다.',
-        icon: '🫧'
+        icon: '🫧',
+        labGroup: 'core'
     },
     {
-        name: '염화 나트륨 (소금)',
-        formula: 'NaCl',
-        elements: { 11: 1, 17: 1 },
-        desc: '바닷물의 주요 성분이자 음식의 맛을 내는 대표적 조미료입니다.',
-        icon: '🧂'
+        name: '삼플루오린화 붕소',
+        formula: 'BF₃',
+        elements: { 5: 1, 9: 3 },
+        desc: '평면 삼각형 구조와 분자의 극성을 판단할 때 사용하는 대표 분자입니다.',
+        icon: '🔺',
+        labGroup: 'core'
     },
     {
         name: '메탄 (메테인)',
         formula: 'CH₄',
         elements: { 6: 1, 1: 4 },
         desc: '천연가스의 주성분으로 연료로 널리 사용되는 가장 단순한 탄화수소입니다.',
-        icon: '🔥'
+        icon: '🔥',
+        labGroup: 'core'
     },
     {
         name: '암모니아',
         formula: 'NH₃',
         elements: { 7: 1, 1: 3 },
         desc: '자극적인 냄새가 나는 기체로 비료와 세제의 원료로 쓰입니다.',
-        icon: '🧪'
+        icon: '🧪',
+        labGroup: 'core'
     },
     {
-        name: '포도당',
-        formula: 'C₆H₁₂O₆',
-        elements: { 6: 6, 1: 12, 8: 6 },
-        desc: '생명체가 에너지원으로 사용하는 가장 중요한 단당류입니다.',
-        icon: '🍬'
+        name: '폼알데하이드',
+        formula: 'HCHO',
+        elements: { 1: 2, 6: 1, 8: 1 },
+        desc: '탄소 주변이 평면 삼각형인 극성 분자의 대표적인 예입니다.',
+        icon: '📐',
+        labGroup: 'frequent'
+    },
+    {
+        name: '사이안화 수소',
+        formula: 'HCN',
+        elements: { 1: 1, 6: 1, 7: 1 },
+        desc: '직선형이지만 결합의 극성 때문에 극성 분자가 되는 예입니다.',
+        icon: '↔️',
+        labGroup: 'frequent'
+    },
+    {
+        name: '에타인 (아세틸렌)',
+        formula: 'C₂H₂',
+        elements: { 1: 2, 6: 2 },
+        desc: '탄소 사이 삼중 결합을 가지며 모든 원자가 일직선에 놓입니다.',
+        icon: '➖',
+        labGroup: 'frequent'
+    },
+    {
+        name: '에텐 (에틸렌)',
+        formula: 'C₂H₄',
+        elements: { 1: 4, 6: 2 },
+        desc: '탄소 사이 이중 결합을 가지며 모든 원자가 한 평면에 놓입니다.',
+        icon: '▱',
+        labGroup: 'frequent'
+    },
+    {
+        name: '에테인',
+        formula: 'C₂H₆',
+        elements: { 1: 6, 6: 2 },
+        desc: '각 탄소 주변이 정사면체형인 대표적인 단일 결합 탄화수소입니다.',
+        icon: '🔗',
+        labGroup: 'frequent'
+    },
+    {
+        name: '염화 나트륨 (소금)',
+        formula: 'NaCl',
+        elements: { 11: 1, 17: 1 },
+        desc: '바닷물의 주요 성분이자 음식의 맛을 내는 대표적 이온 결정입니다.',
+        icon: '🧂',
+        labGroup: 'explore'
     },
     {
         name: '탄산 칼슘 (석회석/계란껍질)',
         formula: 'CaCO₃',
         elements: { 20: 1, 6: 1, 8: 3 },
-        desc: '조개껍데기, 달걀껍질, 대리석의 주성분입니다.',
-        icon: '🐚'
+        desc: '조개껍데기, 달걀껍질, 대리석의 주성분인 이온 결정입니다.',
+        icon: '🐚',
+        labGroup: 'explore'
     },
     {
         name: '과산화 수소',
         formula: 'H₂O₂',
         elements: { 1: 2, 8: 2 },
         desc: '강한 산화력을 가진 소독제이자 표백제로 사용됩니다.',
-        icon: '🩹'
-    },
-    {
-        name: '산화 철(III) (녹)',
-        formula: 'Fe₂O₃',
-        elements: { 26: 2, 8: 3 },
-        desc: '철이 공기 중의 산소와 수분으로 인해 붉게 녹슨 상태입니다.',
-        icon: '🧲'
+        icon: '🩹',
+        labGroup: 'explore'
     },
     {
         name: '에탄올 (알코올)',
         formula: 'C₂H₆O',
         elements: { 6: 2, 1: 6, 8: 1 },
         desc: '손 소독제 및 음료, 소독용 알코올의 주성분입니다.',
-        icon: '🧴'
+        icon: '🧴',
+        labGroup: 'explore'
     }
 ];
 

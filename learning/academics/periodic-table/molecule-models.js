@@ -29,6 +29,21 @@ window.MOLECULE_MODELS_3D = {
             { from: 'C1', to: 'O2', type: 'double' }
         ]
     },
+    'BF₃': {
+        kind: '분자',
+        geometry: '평면 삼각형 · 결합각 120° · 무극성',
+        atoms: [
+            { id: 'B1', num: 5, symbol: 'B', x: 0, y: 0, z: 0 },
+            { id: 'F1', num: 9, symbol: 'F', x: 0, y: -76, z: 0 },
+            { id: 'F2', num: 9, symbol: 'F', x: -66, y: 38, z: 0 },
+            { id: 'F3', num: 9, symbol: 'F', x: 66, y: 38, z: 0 }
+        ],
+        bonds: [
+            { from: 'B1', to: 'F1', type: 'single' },
+            { from: 'B1', to: 'F2', type: 'single' },
+            { from: 'B1', to: 'F3', type: 'single' }
+        ]
+    },
     'NaCl': {
         kind: '이온쌍',
         geometry: 'Na⁺–Cl⁻ 이온쌍 · 고체에서는 이온 결정',
@@ -70,6 +85,91 @@ window.MOLECULE_MODELS_3D = {
             { from: 'N1', to: 'H1', type: 'single' },
             { from: 'N1', to: 'H2', type: 'single' },
             { from: 'N1', to: 'H3', type: 'single' }
+        ]
+    },
+    'HCHO': {
+        kind: '분자',
+        geometry: '평면 삼각형 · 탄소 중심 결합각 약 120° · 극성',
+        atoms: [
+            { id: 'C1', num: 6, symbol: 'C', x: 0, y: 0, z: 0 },
+            { id: 'O1', num: 8, symbol: 'O', x: 76, y: 0, z: 0 },
+            { id: 'H1', num: 1, symbol: 'H', x: -42, y: -62, z: 0 },
+            { id: 'H2', num: 1, symbol: 'H', x: -42, y: 62, z: 0 }
+        ],
+        bonds: [
+            { from: 'C1', to: 'O1', type: 'double' },
+            { from: 'C1', to: 'H1', type: 'single' },
+            { from: 'C1', to: 'H2', type: 'single' }
+        ]
+    },
+    'HCN': {
+        kind: '분자',
+        geometry: '직선형 · 결합각 180° · 극성',
+        atoms: [
+            { id: 'H1', num: 1, symbol: 'H', x: -72, y: 0, z: 0 },
+            { id: 'C1', num: 6, symbol: 'C', x: -12, y: 0, z: 0 },
+            { id: 'N1', num: 7, symbol: 'N', x: 68, y: 0, z: 0 }
+        ],
+        bonds: [
+            { from: 'H1', to: 'C1', type: 'single' },
+            { from: 'C1', to: 'N1', type: 'triple' }
+        ]
+    },
+    'C₂H₂': {
+        kind: '분자',
+        geometry: '직선형 · 탄소 중심 결합각 180°',
+        atoms: [
+            { id: 'H1', num: 1, symbol: 'H', x: -112, y: 0, z: 0 },
+            { id: 'C1', num: 6, symbol: 'C', x: -40, y: 0, z: 0 },
+            { id: 'C2', num: 6, symbol: 'C', x: 40, y: 0, z: 0 },
+            { id: 'H2', num: 1, symbol: 'H', x: 112, y: 0, z: 0 }
+        ],
+        bonds: [
+            { from: 'H1', to: 'C1', type: 'single' },
+            { from: 'C1', to: 'C2', type: 'triple' },
+            { from: 'C2', to: 'H2', type: 'single' }
+        ]
+    },
+    'C₂H₄': {
+        kind: '분자',
+        geometry: '평면형 · 각 탄소 주변 평면 삼각형',
+        atoms: [
+            { id: 'C1', num: 6, symbol: 'C', x: -38, y: 0, z: 0 },
+            { id: 'C2', num: 6, symbol: 'C', x: 38, y: 0, z: 0 },
+            { id: 'H1', num: 1, symbol: 'H', x: -78, y: -58, z: 0 },
+            { id: 'H2', num: 1, symbol: 'H', x: -78, y: 58, z: 0 },
+            { id: 'H3', num: 1, symbol: 'H', x: 78, y: -58, z: 0 },
+            { id: 'H4', num: 1, symbol: 'H', x: 78, y: 58, z: 0 }
+        ],
+        bonds: [
+            { from: 'C1', to: 'C2', type: 'double' },
+            { from: 'C1', to: 'H1', type: 'single' },
+            { from: 'C1', to: 'H2', type: 'single' },
+            { from: 'C2', to: 'H3', type: 'single' },
+            { from: 'C2', to: 'H4', type: 'single' }
+        ]
+    },
+    'C₂H₆': {
+        kind: '분자',
+        geometry: '입체형 · 각 탄소 주변 정사면체형',
+        atoms: [
+            { id: 'C1', num: 6, symbol: 'C', x: -36, y: 0, z: 0 },
+            { id: 'C2', num: 6, symbol: 'C', x: 36, y: 0, z: 0 },
+            { id: 'H1', num: 1, symbol: 'H', x: -75, y: -50, z: 38 },
+            { id: 'H2', num: 1, symbol: 'H', x: -75, y: 50, z: 38 },
+            { id: 'H3', num: 1, symbol: 'H', x: -75, y: 0, z: -56 },
+            { id: 'H4', num: 1, symbol: 'H', x: 75, y: -50, z: -38 },
+            { id: 'H5', num: 1, symbol: 'H', x: 75, y: 50, z: -38 },
+            { id: 'H6', num: 1, symbol: 'H', x: 75, y: 0, z: 56 }
+        ],
+        bonds: [
+            { from: 'C1', to: 'C2', type: 'single' },
+            { from: 'C1', to: 'H1', type: 'single' },
+            { from: 'C1', to: 'H2', type: 'single' },
+            { from: 'C1', to: 'H3', type: 'single' },
+            { from: 'C2', to: 'H4', type: 'single' },
+            { from: 'C2', to: 'H5', type: 'single' },
+            { from: 'C2', to: 'H6', type: 'single' }
         ]
     },
     'H₂O₂': {

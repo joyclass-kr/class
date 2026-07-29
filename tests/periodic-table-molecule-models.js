@@ -20,7 +20,10 @@ const supportedFormulas = Object.keys(models);
 
 assert.deepEqual(
     [...supportedFormulas].sort(),
-    ["C₂H₆O", "CH₄", "CO₂", "CaCO₃", "H₂O", "H₂O₂", "NH₃", "NaCl"].sort()
+    [
+        "BF₃", "C₂H₂", "C₂H₄", "C₂H₆", "C₂H₆O", "CH₄", "CO₂",
+        "CaCO₃", "H₂O", "H₂O₂", "HCHO", "HCN", "NH₃", "NaCl"
+    ].sort()
 );
 
 for (const formula of supportedFormulas) {
@@ -50,9 +53,24 @@ for (const formula of supportedFormulas) {
     for (const bond of model.bonds) {
         assert.ok(ids.has(bond.from), `${formula}: missing bond atom ${bond.from}`);
         assert.ok(ids.has(bond.to), `${formula}: missing bond atom ${bond.to}`);
-        assert.ok(["single", "double", "ionic"].includes(bond.type), `${formula}: invalid bond type`);
+        assert.ok(["single", "double", "triple", "ionic"].includes(bond.type), `${formula}: invalid bond type`);
     }
 }
+
+const coreShapes = compounds.filter(item => item.labGroup === "core");
+assert.deepEqual(
+    JSON.parse(JSON.stringify(coreShapes.map(item => item.formula))),
+    ["H₂O", "CO₂", "BF₃", "CH₄", "NH₃"],
+    "the five exam-core shapes must be ordered first"
+);
+assert.ok(
+    compounds.filter(item => item.labGroup === "frequent").length >= 5,
+    "frequent exam applications are required"
+);
+assert.ok(
+    compounds.filter(item => item.labGroup === "explore").every(item => models[item.formula]),
+    "every exploration item needs a 3D model"
+);
 
 const appSource = fs.readFileSync("learning/academics/periodic-table/app.js", "utf8");
 const pageSource = fs.readFileSync("learning/academics/periodic-table/index.html", "utf8");
