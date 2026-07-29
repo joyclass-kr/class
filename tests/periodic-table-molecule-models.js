@@ -1,0 +1,70 @@
+"use strict";
+
+const assert = require("node:assert/strict");
+const fs = require("node:fs");
+const vm = require("node:vm");
+
+const context = { window: {} };
+vm.runInNewContext(
+    fs.readFileSync("learning/academics/periodic-table/elements-data.js", "utf8"),
+    context
+);
+vm.runInNewContext(
+    fs.readFileSync("learning/academics/periodic-table/molecule-models.js", "utf8"),
+    context
+);
+
+const models = context.window.MOLECULE_MODELS_3D;
+const compounds = context.window.COMPOUNDS_DATA;
+const supportedFormulas = Object.keys(models);
+
+assert.deepEqual(
+    [...supportedFormulas].sort(),
+    ["C₂H₆O", "CH₄", "CO₂", "CaCO₃", "H₂O", "H₂O₂", "NH₃", "NaCl"].sort()
+);
+
+for (const formula of supportedFormulas) {
+    const model = models[formula];
+    const compound = compounds.find(item => item.formula === formula);
+    assert.ok(compound, `${formula}: matching compound data is required`);
+    assert.ok(model.geometry, `${formula}: geometry description is required`);
+    assert.ok(model.atoms.length > 0, `${formula}: atoms are required`);
+
+    const ids = new Set();
+    const composition = {};
+    for (const atom of model.atoms) {
+        assert.ok(!ids.has(atom.id), `${formula}: duplicate atom id ${atom.id}`);
+        ids.add(atom.id);
+        assert.ok(Number.isFinite(atom.x), `${formula}: atom x must be finite`);
+        assert.ok(Number.isFinite(atom.y), `${formula}: atom y must be finite`);
+        assert.ok(Number.isFinite(atom.z), `${formula}: atom z must be finite`);
+        composition[atom.num] = (composition[atom.num] || 0) + 1;
+    }
+
+    assert.deepEqual(
+        JSON.parse(JSON.stringify(composition)),
+        JSON.parse(JSON.stringify(compound.elements)),
+        `${formula}: 3D atom counts must match the formula`
+    );
+
+    for (const bond of model.bonds) {
+        assert.ok(ids.has(bond.from), `${formula}: missing bond atom ${bond.from}`);
+        assert.ok(ids.has(bond.to), `${formula}: missing bond atom ${bond.to}`);
+        assert.ok(["single", "double", "ionic"].includes(bond.type), `${formula}: invalid bond type`);
+    }
+}
+
+const appSource = fs.readFileSync("learning/academics/periodic-table/app.js", "utf8");
+const pageSource = fs.readFileSync("learning/academics/periodic-table/index.html", "utf8");
+
+assert.match(appSource, /function initLab3D\(\)/);
+assert.match(appSource, /function drawMolecule3D\(\)/);
+assert.match(appSource, /activePointers: new Map\(\)/);
+assert.doesNotMatch(appSource, /function renderMoleculeSVG\(/);
+assert.match(pageSource, /id="molecule3dCanvas"/);
+assert.ok(
+    pageSource.indexOf('src="molecule-models.js"') < pageSource.indexOf('src="app.js"'),
+    "3D model data must load before the app"
+);
+
+console.log(`periodic-table molecule models: ${supportedFormulas.length} validated`);

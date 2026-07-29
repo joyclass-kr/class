@@ -29,7 +29,7 @@
                 <span>🧩</span> 시험 퀴즈
             </button>
             <button class="nav-tab" data-tab="molecule" id="tabMoleculeBtn">
-                <span>🔬</span> 분자 조합실
+                <span>🧊</span> 3D 분자실
             </button>
         </nav>
     </header>
@@ -141,18 +141,28 @@
             <div class="molecule-lab-container">
                 <div class="lab-workbench">
                     <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 12px;">
-                        <h3>🔬 분자 합성 실험실</h3>
-                        <button class="btn-filter" id="resetLabBtn" style="color: #ff5e57; border-color: #ff5e57;">비커 비우기 🧹</button>
+                        <h3>🧊 3D 분자·이온 모형실</h3>
+                        <button class="btn-filter" id="resetLabBtn" style="color: #ff5e57; border-color: #ff5e57;">모형 비우기 🧹</button>
                     </div>
                     <p style="color: var(--text-secondary); font-size: 14px; margin-bottom: 16px;">
-                        아래 주요 원소를 선택하여 비커에 넣으면 입체 분자 결합이 형성됩니다! (H₂O, CO₂, NaCl 등)
+                        원소를 조합하거나 오른쪽 물질을 선택하세요. 완성된 구조는 마우스나 손가락으로 직접 돌려 볼 수 있습니다.
                     </p>
 
                     <div class="workbench-beaker" id="labBeaker">
-                        <div style="color: #64748b; font-size: 14px; font-weight: 600;">원소 토큰을 클릭하여 비커에 담아보세요!</div>
+                        <canvas id="molecule3dCanvas" aria-label="회전 가능한 3D 분자 모형"></canvas>
+                        <div class="molecule-empty-state" id="moleculeEmptyState">
+                            <strong>원소를 조합해 보세요</strong>
+                            <span>완성된 구조만 정확한 결합으로 표시됩니다.</span>
+                        </div>
+                        <div class="molecule-3d-controls">
+                            <button type="button" id="toggleMoleculeRotationBtn">⏸ 자동 회전</button>
+                            <button type="button" id="resetMoleculeViewBtn">↺ 시점 초기화</button>
+                        </div>
+                        <div class="molecule-drag-hint">드래그·터치: 회전 · 휠·두 손가락: 확대/축소</div>
                     </div>
 
-                    <div id="labStatusMsg" style="min-height: 40px; margin-bottom: 16px; text-align: center;"></div>
+                    <div id="labStatusMsg" class="lab-status-message" aria-live="polite"></div>
+                    <div id="labSelectionSummary" class="lab-selection-summary" aria-label="선택한 원소"></div>
 
                     <h4 style="font-size: 14px; color: var(--text-muted); margin-bottom: 10px;">사용 가능한 반응 원소:</h4>
                     <div class="uses-tags" id="atomPalette" style="justify-content: center; gap: 10px;">
@@ -162,7 +172,7 @@
 
                 <div class="compounds-sidebar">
                     <h3 style="margin-bottom: 14px; font-size: 16px; border-bottom: 1px solid var(--border-color); padding-bottom: 8px;">
-                        📖 도감 (해금된 화학식)
+                        📖 정확한 구조 모형
                     </h3>
                     <div id="compoundsList">
                         <!-- JS Dyn Compound Cards -->
@@ -243,6 +253,7 @@
     </div>
 
     <script src="elements-data.js"></script>
+    <script src="molecule-models.js"></script>
     <script src="app.js"></script>
 </body>
 </html>

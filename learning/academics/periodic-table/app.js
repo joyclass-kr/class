@@ -25,7 +25,18 @@ document.addEventListener('DOMContentLoaded', () => {
         // Molecule lab state
         lab: {
             selectedElements: {}, // { number: count }
-            unlockedCompounds: new Set()
+            unlockedCompounds: new Set(),
+            model: null,
+            animationId: null,
+            rotationX: -0.28,
+            rotationY: 0.5,
+            zoom: 1,
+            autoRotate: true,
+            dragging: false,
+            pointerX: 0,
+            pointerY: 0,
+            activePointers: new Map(),
+            pinchDistance: null
         },
 
         // Animation state
@@ -50,7 +61,7 @@ document.addEventListener('DOMContentLoaded', () => {
     initFilters();
     initModal();
     initQuiz();
-    initLab();
+    initLab3D();
     initTeacherMode();
 
     function getExamElements() {
@@ -68,6 +79,13 @@ document.addEventListener('DOMContentLoaded', () => {
 
     function isExamCompound(compound) {
         return Object.keys(compound.elements).every(number => Number(number) <= EXAM_MAX_ATOMIC_NUMBER);
+    }
+
+    function getLabCompounds() {
+        if (!window.COMPOUNDS_DATA || !window.MOLECULE_MODELS_3D) return [];
+        return window.COMPOUNDS_DATA.filter(compound =>
+            isExamCompound(compound) && Boolean(window.MOLECULE_MODELS_3D[compound.formula])
+        );
     }
 
     /**
@@ -90,6 +108,12 @@ document.addEventListener('DOMContentLoaded', () => {
                 state.currentTab = target;
                 if (target === 'quiz' && !state.quiz.currentQuestion) {
                     loadNewQuestion();
+                }
+                if (target === 'molecule') {
+                    drawMolecule3D();
+                    ensureMoleculeAnimation();
+                } else {
+                    stopMoleculeAnimation();
                 }
             });
         });
@@ -599,378 +623,519 @@ document.addEventListener('DOMContentLoaded', () => {
     /**
      * Molecule Synthesis Laboratory Engine
      */
-    function initLab() {
-        const beaker = document.getElementById('labBeaker');
-        const resetBtn = document.getElementById('resetLabBtn');
+    /**
+     * Interactive 3D molecule laboratory.
+     * Uses real XYZ coordinates and perspective projection on a Canvas.
+     */
+    function initLab3D() {
+        const canvas = document.getElementById('molecule3dCanvas');
         const atomPalette = document.getElementById('atomPalette');
+        const resetBtn = document.getElementById('resetLabBtn');
+        const resetViewBtn = document.getElementById('resetMoleculeViewBtn');
+        const rotateBtn = document.getElementById('toggleMoleculeRotationBtn');
+        const summary = document.getElementById('labSelectionSummary');
 
-        if (!beaker || !atomPalette) return;
+        if (!canvas || !atomPalette || !window.MOLECULE_MODELS_3D) return;
 
-        // Keep the molecule lab inside the same 1-20 exam scope.
-        const commonAtoms = [1, 6, 7, 8, 11, 17, 20];
+        const atomNumbers = [...new Set(
+            getLabCompounds().flatMap(compound => Object.keys(compound.elements).map(Number))
+        )].sort((a, b) => a - b);
+
         atomPalette.innerHTML = '';
+        atomNumbers.forEach(number => {
+            const element = window.ELEMENTS_DATA.find(item => item.number === number);
+            if (!element) return;
 
-        commonAtoms.forEach(num => {
-            const el = window.ELEMENTS_DATA.find(item => item.number === num);
-            if (!el) return;
-
-            const token = document.createElement('div');
+            const token = document.createElement('button');
+            token.type = 'button';
             token.className = 'atom-token';
-            token.dataset.atom = num;
-            token.textContent = el.symbol;
-            token.title = `${el.name} (${el.symbol})`;
-
-            token.addEventListener('click', () => {
-                state.lab.selectedElements[num] = (state.lab.selectedElements[num] || 0) + 1;
-                renderBeaker();
-            });
-
+            token.dataset.atom = String(number);
+            token.title = `${element.name} (${element.symbol}) 추가`;
+            token.setAttribute('aria-label', `${element.name} 원자 추가`);
+            token.innerHTML = `<span>${element.symbol}</span><small class="atom-token-count">0</small>`;
+            token.addEventListener('click', () => addLabAtom(number));
             atomPalette.appendChild(token);
         });
+
+        if (summary) {
+            summary.addEventListener('click', event => {
+                const removeBtn = event.target.closest('[data-remove-atom]');
+                if (!removeBtn) return;
+                removeLabAtom(Number(removeBtn.dataset.removeAtom));
+            });
+        }
 
         if (resetBtn) {
             resetBtn.addEventListener('click', () => {
                 state.lab.selectedElements = {};
-                renderBeaker();
+                render3DLab();
             });
         }
 
-        renderCompoundsList();
-    }
-
-    function renderBeaker() {
-        const beaker = document.getElementById('labBeaker');
-        if (!beaker) return;
-
-        let totalCount = 0;
-        const currentElements = state.lab.selectedElements;
-        for (const count of Object.values(currentElements)) {
-            totalCount += count;
+        if (resetViewBtn) {
+            resetViewBtn.addEventListener('click', () => {
+                resetMoleculeView();
+                drawMolecule3D();
+            });
         }
 
-        if (totalCount === 0) {
-            beaker.innerHTML = `<div style="color: #64748b; font-size: 14px; font-weight: 600; text-align: center;">아래의 원소 토큰을 클릭하여 비커에 담아보세요!</div>`;
-            checkCompoundMatch();
+        if (rotateBtn) {
+            rotateBtn.addEventListener('click', () => {
+                state.lab.autoRotate = !state.lab.autoRotate;
+                rotateBtn.textContent = state.lab.autoRotate ? '⏸ 자동 회전' : '▶ 자동 회전';
+                rotateBtn.classList.toggle('active', state.lab.autoRotate);
+                ensureMoleculeAnimation();
+            });
+            rotateBtn.classList.add('active');
+        }
+
+        canvas.addEventListener('pointerdown', event => {
+            if (!state.lab.model) return;
+            state.lab.activePointers.set(event.pointerId, { x: event.clientX, y: event.clientY });
+            state.lab.pointerX = event.clientX;
+            state.lab.pointerY = event.clientY;
+            state.lab.dragging = state.lab.activePointers.size === 1;
+            if (state.lab.activePointers.size === 2) {
+                state.lab.pinchDistance = getPointerDistance(state.lab.activePointers);
+            }
+            canvas.setPointerCapture(event.pointerId);
+        });
+
+        canvas.addEventListener('pointermove', event => {
+            if (!state.lab.activePointers.has(event.pointerId)) return;
+            state.lab.activePointers.set(event.pointerId, { x: event.clientX, y: event.clientY });
+
+            if (state.lab.activePointers.size === 2) {
+                const distance = getPointerDistance(state.lab.activePointers);
+                if (state.lab.pinchDistance) {
+                    state.lab.zoom = clamp(state.lab.zoom * (distance / state.lab.pinchDistance), 0.65, 1.8);
+                }
+                state.lab.pinchDistance = distance;
+                drawMolecule3D();
+                return;
+            }
+
+            if (!state.lab.dragging) return;
+            const deltaX = event.clientX - state.lab.pointerX;
+            const deltaY = event.clientY - state.lab.pointerY;
+            state.lab.pointerX = event.clientX;
+            state.lab.pointerY = event.clientY;
+            state.lab.rotationY += deltaX * 0.012;
+            state.lab.rotationX = clamp(state.lab.rotationX + deltaY * 0.012, -Math.PI / 2, Math.PI / 2);
+            drawMolecule3D();
+        });
+
+        const endDrag = event => {
+            state.lab.activePointers.delete(event.pointerId);
+            state.lab.pinchDistance = null;
+            const remainingPointer = state.lab.activePointers.values().next().value;
+            state.lab.dragging = Boolean(remainingPointer);
+            if (remainingPointer) {
+                state.lab.pointerX = remainingPointer.x;
+                state.lab.pointerY = remainingPointer.y;
+            }
+            if (canvas.hasPointerCapture(event.pointerId)) {
+                canvas.releasePointerCapture(event.pointerId);
+            }
+        };
+        canvas.addEventListener('pointerup', endDrag);
+        canvas.addEventListener('pointercancel', endDrag);
+
+        canvas.addEventListener('wheel', event => {
+            if (!state.lab.model) return;
+            event.preventDefault();
+            state.lab.zoom = clamp(state.lab.zoom - event.deltaY * 0.001, 0.65, 1.8);
+            drawMolecule3D();
+        }, { passive: false });
+
+        window.addEventListener('resize', () => {
+            if (state.lab.model) drawMolecule3D();
+        });
+
+        render3DCompoundList();
+        render3DLab();
+    }
+
+    function addLabAtom(number) {
+        const status = document.getElementById('labStatusMsg');
+        const maximum = getMaxLabAtomCount(number);
+        const current = state.lab.selectedElements[number] || 0;
+        if (current >= maximum) {
+            const element = window.ELEMENTS_DATA.find(item => item.number === number);
+            if (status && element) {
+                status.innerHTML = `<span class="lab-warning">${element.symbol} 원자는 지원 모형에서 최대 ${maximum}개까지 사용합니다.</span>`;
+            }
+            return;
+        }
+        state.lab.selectedElements[number] = current + 1;
+        render3DLab();
+    }
+
+    function removeLabAtom(number) {
+        if (!state.lab.selectedElements[number]) return;
+        state.lab.selectedElements[number] -= 1;
+        if (state.lab.selectedElements[number] <= 0) {
+            delete state.lab.selectedElements[number];
+        }
+        render3DLab();
+    }
+
+    function getMaxLabAtomCount(number) {
+        return Math.max(0, ...getLabCompounds().map(compound => compound.elements[number] || 0));
+    }
+
+    function getPointerDistance(pointers) {
+        const [first, second] = [...pointers.values()];
+        if (!first || !second) return 0;
+        return Math.hypot(second.x - first.x, second.y - first.y);
+    }
+
+    function setLabComposition(compound) {
+        state.lab.selectedElements = { ...compound.elements };
+        resetMoleculeView();
+        render3DLab();
+    }
+
+    function resetMoleculeView() {
+        state.lab.rotationX = -0.28;
+        state.lab.rotationY = 0.5;
+        state.lab.zoom = 1;
+    }
+
+    function findLabCompound() {
+        const selectedKeys = Object.keys(state.lab.selectedElements);
+        return getLabCompounds().find(compound => {
+            const requiredKeys = Object.keys(compound.elements);
+            return requiredKeys.length === selectedKeys.length &&
+                requiredKeys.every(key => compound.elements[key] === state.lab.selectedElements[key]);
+        }) || null;
+    }
+
+    function render3DLab() {
+        const beaker = document.getElementById('labBeaker');
+        const emptyState = document.getElementById('moleculeEmptyState');
+        const status = document.getElementById('labStatusMsg');
+        const totalAtoms = Object.values(state.lab.selectedElements).reduce((sum, count) => sum + count, 0);
+        const matched = findLabCompound();
+
+        updateLabAtomCounts();
+        renderLabSelectionSummary();
+
+        if (totalAtoms === 0) {
+            state.lab.model = null;
+            beaker?.classList.remove('has-model');
+            if (emptyState) {
+                emptyState.innerHTML = '<strong>원소를 조합해 보세요</strong><span>완성된 구조만 정확한 결합으로 표시됩니다.</span>';
+            }
+            if (status) status.textContent = '';
+            clearMoleculeCanvas();
+            stopMoleculeAnimation();
             return;
         }
 
-        // Check if current mix matches a compound
-        const matchedComp = getMatchingCompound();
-        renderMoleculeSVG(beaker, matchedComp, currentElements);
-        checkCompoundMatch();
-    }
-
-    function getMatchingCompound() {
-        if (!window.COMPOUNDS_DATA) return null;
-        for (const comp of window.COMPOUNDS_DATA.filter(isExamCompound)) {
-            const required = comp.elements;
-            const reqKeys = Object.keys(required);
-            const selKeys = Object.keys(state.lab.selectedElements);
-
-            if (reqKeys.length !== selKeys.length) continue;
-            let isMatch = true;
-            for (const num of reqKeys) {
-                if (state.lab.selectedElements[num] !== required[num]) {
-                    isMatch = false;
-                    break;
-                }
-            }
-            if (isMatch) return comp;
-        }
-        return null;
-    }
-
-    /**
-     * SVG 2D Molecule Visualizer with Chemical Bond Lines
-     */
-    function renderMoleculeSVG(container, compound, elementsMap) {
-        const atomColors = {
-            1: { bg: '#e2e8f0', stroke: '#94a3b8', text: '#0f172a', r: 14 },  // H (Smallest - 14px)
-            6: { bg: '#334155', stroke: '#38ef7d', text: '#38ef7d', r: 23 },  // C (Medium Carbon - 23px)
-            7: { bg: '#2563eb', stroke: '#60a5fa', text: '#ffffff', r: 22 },  // N (Medium Nitrogen - 22px)
-            8: { bg: '#ef4444', stroke: '#fca5a5', text: '#ffffff', r: 21 },  // O (Medium Oxygen - 21px)
-            11: { bg: '#f59e0b', stroke: '#fcd34d', text: '#000000', r: 28 }, // Na (Large Sodium - 28px)
-            17: { bg: '#10b981', stroke: '#6ee7b7', text: '#ffffff', r: 28 }, // Cl (Large Chlorine - 28px)
-            20: { bg: '#eab308', stroke: '#fef08a', text: '#000000', r: 31 } // Ca (Very Large Calcium - 31px)
-        };
-
-        let nodes = [];
-        let bonds = []; // { x1, y1, x2, y2, type: 'single' | 'double' | 'ionic' }
-
-        const formula = compound ? compound.formula : null;
-
-        if (formula === 'H₂O') {
-            nodes = [
-                { id: 'O1', num: 8, sym: 'O', x: 0, y: -18, z: 0 },
-                { id: 'H1', num: 1, sym: 'H', x: -50, y: 26, z: 15 },
-                { id: 'H2', num: 1, sym: 'H', x: 50, y: 26, z: -15 }
-            ];
-            bonds = [
-                { x1: 0, y1: -18, z1: 0, x2: -50, y2: 26, z2: 15, type: 'single' },
-                { x1: 0, y1: -18, z1: 0, x2: 50, y2: 26, z2: -15, type: 'single' }
-            ];
-        } else if (formula === 'CO₂') {
-            nodes = [
-                { id: 'C1', num: 6, sym: 'C', x: 0, y: 0, z: 0 },
-                { id: 'O1', num: 8, sym: 'O', x: -70, y: 0, z: 0 },
-                { id: 'O2', num: 8, sym: 'O', x: 70, y: 0, z: 0 }
-            ];
-            bonds = [
-                { x1: -70, y1: 0, z1: 0, x2: 0, y2: 0, z2: 0, type: 'double' },
-                { x1: 0, y1: 0, z1: 0, x2: 70, y2: 0, z2: 0, type: 'double' }
-            ];
-        } else if (formula === 'NaCl') {
-            nodes = [
-                { id: 'Na1', num: 11, sym: 'Na', x: -45, y: 0, z: 0, charge: '+' },
-                { id: 'Cl1', num: 17, sym: 'Cl', x: 45, y: 0, z: 0, charge: '-' }
-            ];
-            bonds = [
-                { x1: -45, y1: 0, z1: 0, x2: 45, y2: 0, z2: 0, type: 'ionic' }
-            ];
-        } else if (formula === 'CH₄') {
-            // Methane: Exact 109.5° Tetrahedral 3D Geometry & Wedge-Dash Chemical Projection
-            nodes = [
-                { id: 'C1', num: 6, sym: 'C', x: 0, y: 5, z: 0 },
-                { id: 'H1', num: 1, sym: 'H', x: 0, y: -58, z: 0 },          // Top In-Plane
-                { id: 'H2', num: 1, sym: 'H', x: -56, y: -5, z: 0 },         // Left In-Plane
-                { id: 'H3', num: 1, sym: 'H', x: 42, y: 46, z: 45 },         // Solid Wedge (Front)
-                { id: 'H4', num: 1, sym: 'H', x: -36, y: 54, z: -45 }        // Dashed Wedge (Back)
-            ];
-            bonds = [
-                { x1: 0, y1: 5, z1: 0, x2: 0, y2: -58, z2: 0, type: 'single' },
-                { x1: 0, y1: 5, z1: 0, x2: -56, y2: -5, z2: 0, type: 'single' },
-                { x1: 0, y1: 5, z1: 0, x2: 42, y2: 46, z2: 45, type: 'solid-wedge' },   // 쐐기형 튀어나온 결합
-                { x1: 0, y1: 5, z1: 0, x2: -36, y2: 54, z2: -45, type: 'dash-wedge' }   // 점선형 들어간 결합
-            ];
-        } else if (formula === 'NH₃') {
-            // Ammonia: Trigonal Pyramid 3D Projection
-            nodes = [
-                { id: 'N1', num: 7, sym: 'N', x: 0, y: -22, z: 0 },
-                { id: 'H1', num: 1, sym: 'H', x: 0, y: 46, z: -10 },
-                { id: 'H2', num: 1, sym: 'H', x: -52, y: 28, z: 40 },        // Solid Wedge
-                { id: 'H3', num: 1, sym: 'H', x: 52, y: 28, z: -40 }         // Dash Wedge
-            ];
-            bonds = [
-                { x1: 0, y1: -22, z1: 0, x2: 0, y2: 46, z2: -10, type: 'single' },
-                { x1: 0, y1: -22, z1: 0, x2: -52, y2: 28, z2: 40, type: 'solid-wedge' },
-                { x1: 0, y1: -22, z1: 0, x2: 52, y2: 28, z2: -40, type: 'dash-wedge' }
-            ];
-        } else if (formula === 'H₂O₂') {
-            nodes = [
-                { id: 'O1', num: 8, sym: 'O', x: -28, y: -10, z: 0 },
-                { id: 'O2', num: 8, sym: 'O', x: 28, y: -10, z: 0 },
-                { id: 'H1', num: 1, sym: 'H', x: -72, y: 22, z: 30 },
-                { id: 'H2', num: 1, sym: 'H', x: 72, y: 22, z: -30 }
-            ];
-            bonds = [
-                { x1: -72, y1: 22, z1: 30, x2: -28, y2: -10, z2: 0, type: 'solid-wedge' },
-                { x1: -28, y1: -10, z1: 0, x2: 28, y2: -10, z2: 0, type: 'single' },
-                { x1: 28, y1: -10, z1: 0, x2: 72, y2: 22, z2: -30, type: 'dash-wedge' }
-            ];
-        } else if (formula === 'C₂H₆O') {
-            nodes = [
-                { id: 'C1', num: 6, sym: 'C', x: -50, y: 0, z: 0 },
-                { id: 'C2', num: 6, sym: 'C', x: 10, y: 0, z: 0 },
-                { id: 'O1', num: 8, sym: 'O', x: 70, y: 0, z: 0 },
-                { id: 'H1', num: 1, sym: 'H', x: -50, y: -50, z: 0 },
-                { id: 'H2', num: 1, sym: 'H', x: -50, y: 50, z: 0 },
-                { id: 'H3', num: 1, sym: 'H', x: -95, y: 0, z: 0 },
-                { id: 'H4', num: 1, sym: 'H', x: 10, y: -50, z: 0 },
-                { id: 'H5', num: 1, sym: 'H', x: 10, y: 50, z: 0 },
-                { id: 'H6', num: 1, sym: 'H', x: 112, y: 25, z: 0 }
-            ];
-            bonds = [
-                { x1: -95, y1: 0, z1: 0, x2: -50, y2: 0, z2: 0, type: 'single' },
-                { x1: -50, y1: -50, z1: 0, x2: -50, y2: 0, z2: 0, type: 'single' },
-                { x1: -50, y1: 50, z1: 0, x2: -50, y2: 0, z2: 0, type: 'single' },
-                { x1: -50, y1: 0, z1: 0, x2: 10, y2: 0, z2: 0, type: 'single' },
-                { x1: 10, y1: -50, z1: 0, x2: 10, y2: 0, z2: 0, type: 'single' },
-                { x1: 10, y1: 50, z1: 0, x2: 10, y2: 0, z2: 0, type: 'single' },
-                { x1: 10, y1: 0, z1: 0, x2: 70, y2: 0, z2: 0, type: 'single' },
-                { x1: 70, y1: 0, z1: 0, x2: 112, y2: 25, z2: 0, type: 'single' }
-            ];
-        } else if (formula === 'CaCO₃') {
-            nodes = [
-                { id: 'Ca1', num: 20, sym: 'Ca', x: -80, y: 0, z: 0, charge: '2+' },
-                { id: 'C1', num: 6, sym: 'C', x: 20, y: 0, z: 0 },
-                { id: 'O1', num: 8, sym: 'O', x: 20, y: -52, z: 0 },
-                { id: 'O2', num: 8, sym: 'O', x: -18, y: 35, z: 0 },
-                { id: 'O3', num: 8, sym: 'O', x: 58, y: 35, z: 0 }
-            ];
-            bonds = [
-                { x1: -80, y1: 0, z1: 0, x2: -18, y2: 35, z2: 0, type: 'ionic' },
-                { x1: 20, y1: 0, z1: 0, x2: 20, y2: -52, z2: 0, type: 'double' },
-                { x1: 20, y1: 0, z1: 0, x2: -18, y2: 35, z2: 0, type: 'single' },
-                { x1: 20, y1: 0, z1: 0, x2: 58, y2: 35, z2: 0, type: 'single' }
-            ];
-        } else {
-            // Unmatched Mixture: Dynamic ring layout
-            const atomList = [];
-            for (const [numStr, count] of Object.entries(elementsMap)) {
-                const num = parseInt(numStr, 10);
-                const el = window.ELEMENTS_DATA.find(item => item.number === num);
-                if (!el) continue;
-                for (let i = 0; i < count; i++) {
-                    atomList.push({ num, sym: el.symbol });
-                }
-            }
-
-            const total = atomList.length;
-            const radius = Math.min(110, 35 + total * 12);
-
-            atomList.forEach((at, idx) => {
-                const angle = (Math.PI * 2 / total) * idx - Math.PI / 2;
-                const x = radius * Math.cos(angle);
-                const y = radius * Math.sin(angle);
-                nodes.push({ id: `unmatched_${idx}`, num: at.num, sym: at.sym, x, y, z: 0 });
-
-                if (idx > 0) {
-                    const prevNode = nodes[idx - 1];
-                    bonds.push({ x1: prevNode.x, y1: prevNode.y, z1: 0, x2: x, y2: y, z2: 0, type: 'single' });
-                }
-            });
-            if (total > 2) {
-                bonds.push({ x1: nodes[total - 1].x, y1: nodes[total - 1].y, z1: 0, x2: nodes[0].x, y2: nodes[0].y, z2: 0, type: 'single' });
-            }
-        }
-
-        // Generate SVG Markup with linearGradients for Wedge 3D bonds
-        let svgHtml = `
-            <svg class="molecule-svg-canvas" viewBox="-160 -100 320 200">
-                <defs>
-                    <linearGradient id="solidWedgeGrad" x1="0%" y1="0%" x2="100%" y2="100%">
-                        <stop offset="0%" stop-color="#38ef7d" stop-opacity="0.2" />
-                        <stop offset="100%" stop-color="#38ef7d" stop-opacity="0.95" />
-                    </linearGradient>
-                </defs>
-        `;
-
-        // Render Bonds (Wedge, Dash, Double, Ionic, Single)
-        bonds.forEach(b => {
-            if (b.type === 'solid-wedge') {
-                // Chemical Solid Wedge Bond (▲ 튀어나온 결합)
-                const dx = b.x2 - b.x1;
-                const dy = b.y2 - b.y1;
-                const len = Math.hypot(dx, dy) || 1;
-                const nx = (-dy / len) * 8;
-                const ny = (dx / len) * 8;
-                
-                // Polygon triangle from origin atom to wider target atom
-                const points = `${b.x1},${b.y1} ${b.x2 + nx},${b.y2 + ny} ${b.x2 - nx},${b.y2 - ny}`;
-                svgHtml += `<polygon points="${points}" class="bond-wedge-solid" />`;
-            } else if (b.type === 'dash-wedge') {
-                // Chemical Dashed Wedge Bond (▨ 들어간 결합)
-                const steps = 6;
-                svgHtml += `<g class="bond-wedge-dashed">`;
-                for (let i = 1; i <= steps; i++) {
-                    const t1 = i / steps;
-                    const px = b.x1 + (b.x2 - b.x1) * t1;
-                    const py = b.y1 + (b.y2 - b.y1) * t1;
-                    const width = (i / steps) * 10;
-                    
-                    const dx = b.x2 - b.x1;
-                    const dy = b.y2 - b.y1;
-                    const len = Math.hypot(dx, dy) || 1;
-                    const nx = (-dy / len) * (width / 2);
-                    const ny = (dx / len) * (width / 2);
-
-                    svgHtml += `<line x1="${px - nx}" y1="${py - ny}" x2="${px + nx}" y2="${py + ny}" />`;
-                }
-                svgHtml += `</g>`;
-            } else if (b.type === 'double') {
-                const dx = b.x2 - b.x1;
-                const dy = b.y2 - b.y1;
-                const len = Math.hypot(dx, dy) || 1;
-                const nx = (-dy / len) * 4.5;
-                const ny = (dx / len) * 4.5;
-
-                svgHtml += `
-                    <g class="bond-double-group">
-                        <line x1="${b.x1 + nx}" y1="${b.y1 + ny}" x2="${b.x2 + nx}" y2="${b.y2 + ny}" class="bond-double"/>
-                        <line x1="${b.x1 - nx}" y1="${b.y1 - ny}" x2="${b.x2 - nx}" y2="${b.y2 - ny}" class="bond-double"/>
-                    </g>
-                `;
-            } else if (b.type === 'ionic') {
-                svgHtml += `<line x1="${b.x1}" y1="${b.y1}" x2="${b.x2}" y2="${b.y2}" class="bond-ionic"/>`;
-            } else {
-                svgHtml += `<line x1="${b.x1}" y1="${b.y1}" x2="${b.x2}" y2="${b.y2}" class="bond-single"/>`;
-            }
-        });
-
-        // Sort nodes by Z depth so back atoms render behind front atoms
-        const sortedNodes = [...nodes].sort((a, b) => (a.z || 0) - (b.z || 0));
-
-        // Render Atom Nodes
-        sortedNodes.forEach(nd => {
-            const style = atomColors[nd.num] || { bg: '#38ef7d', stroke: '#ffffff', text: '#000', r: 22 };
-
-            // Depth scale effect for 3D perspective projection
-            const zOffset = nd.z || 0;
-            const zScale = 1 + (zOffset / 200);
-            const rScaled = Math.round(style.r * zScale);
-
-            svgHtml += `
-                <g class="atom-svg-group" data-num="${nd.num}" transform="translate(${nd.x}, ${nd.y})">
-                    <circle r="${rScaled}" fill="${style.bg}" stroke="${style.stroke}" stroke-width="2.5" />
-                    <text text-anchor="middle" dy="5" fill="${style.text}" font-size="${Math.round(14 * zScale)}" font-weight="900" font-family="Pretendard, sans-serif">${nd.sym}</text>
-                    ${nd.charge ? `<text text-anchor="middle" dx="14" dy="-10" fill="#ffd18a" font-size="11" font-weight="900">${nd.charge}</text>` : ''}
-                </g>
-            `;
-        });
-
-        svgHtml += `</svg>`;
-        container.innerHTML = svgHtml;
-
-        // Attach click handlers to SVG atom nodes to allow removing atoms
-        container.querySelectorAll('.atom-svg-group').forEach(group => {
-            group.addEventListener('click', (e) => {
-                e.stopPropagation();
-                const num = parseInt(group.dataset.num, 10);
-                if (state.lab.selectedElements[num]) {
-                    state.lab.selectedElements[num]--;
-                    if (state.lab.selectedElements[num] <= 0) {
-                        delete state.lab.selectedElements[num];
-                    }
-                    renderBeaker();
-                }
-            });
-        });
-    }
-
-    function checkCompoundMatch() {
-        const statusMsg = document.getElementById('labStatusMsg');
-        if (!statusMsg || !window.COMPOUNDS_DATA) return;
-
-        const matched = getMatchingCompound();
+        beaker?.classList.add('has-model');
         if (matched) {
-            statusMsg.innerHTML = `<div style="color: #38ef7d; font-weight: 800; font-size: 16px; animation: fadeIn 0.3s ease;">✨ [합성 성공] ${matched.icon} ${matched.name} (${matched.formula}) 이(가) 완성되었습니다!</div>`;
+            state.lab.model = window.MOLECULE_MODELS_3D[matched.formula];
             state.lab.unlockedCompounds.add(matched.formula);
-            renderCompoundsList();
+            if (status) {
+                status.innerHTML = `
+                    <strong>${matched.icon} ${matched.name} (${matched.formula})</strong>
+                    <span>${state.lab.model.geometry}</span>
+                `;
+            }
         } else {
-            statusMsg.innerHTML = ``;
+            state.lab.model = buildLooseAtomModel(state.lab.selectedElements);
+            if (status) {
+                status.innerHTML = `
+                    <strong>조합 중</strong>
+                    <span>등록된 구조와 아직 일치하지 않습니다. 잘못된 결합선은 표시하지 않습니다.</span>
+                `;
+            }
         }
+
+        render3DCompoundList();
+        drawMolecule3D();
+        ensureMoleculeAnimation();
     }
 
-    function renderCompoundsList() {
+    function updateLabAtomCounts() {
+        document.querySelectorAll('.atom-token[data-atom]').forEach(token => {
+            const count = state.lab.selectedElements[Number(token.dataset.atom)] || 0;
+            const badge = token.querySelector('.atom-token-count');
+            if (badge) badge.textContent = String(count);
+            token.classList.toggle('selected', count > 0);
+        });
+    }
+
+    function renderLabSelectionSummary() {
+        const summary = document.getElementById('labSelectionSummary');
+        if (!summary) return;
+
+        const entries = Object.entries(state.lab.selectedElements);
+        if (entries.length === 0) {
+            summary.innerHTML = '<span class="selection-placeholder">선택한 원소가 없습니다.</span>';
+            return;
+        }
+
+        summary.innerHTML = entries.map(([number, count]) => {
+            const element = window.ELEMENTS_DATA.find(item => item.number === Number(number));
+            if (!element) return '';
+            return `
+                <button type="button" class="selection-chip" data-remove-atom="${number}" aria-label="${element.name} 원자 1개 빼기">
+                    ${element.symbol}<span>×${count}</span><b>−</b>
+                </button>
+            `;
+        }).join('');
+    }
+
+    function render3DCompoundList() {
         const list = document.getElementById('compoundsList');
-        if (!list || !window.COMPOUNDS_DATA) return;
+        if (!list) return;
 
         list.innerHTML = '';
-        window.COMPOUNDS_DATA.filter(isExamCompound).forEach(comp => {
-            const isUnlocked = state.lab.unlockedCompounds.has(comp.formula);
-            const card = document.createElement('div');
+        getLabCompounds().forEach(compound => {
+            const model = window.MOLECULE_MODELS_3D[compound.formula];
+            const selected = findLabCompound()?.formula === compound.formula;
+            const card = document.createElement('button');
+            card.type = 'button';
             card.className = 'compound-card';
-            card.style.borderColor = isUnlocked ? '#38ef7d' : 'rgba(255,255,255,0.1)';
-
+            card.classList.toggle('active', selected);
             card.innerHTML = `
                 <div class="compound-header">
-                    <span>${comp.icon} ${comp.name}</span>
-                    <span class="compound-formula">${comp.formula}</span>
+                    <span>${compound.icon} ${compound.name}</span>
+                    <span class="compound-formula">${compound.formula}</span>
                 </div>
-                <div style="font-size: 12px; color: #94a3b8;">${comp.desc}</div>
+                <div class="compound-geometry">${model.kind} · ${model.geometry}</div>
+                <span class="compound-action">3D 모형 보기 →</span>
             `;
+            card.addEventListener('click', () => setLabComposition(compound));
             list.appendChild(card);
         });
+    }
+
+    function buildLooseAtomModel(elementsMap) {
+        const atoms = [];
+        const expanded = [];
+        for (const [numberText, count] of Object.entries(elementsMap)) {
+            const number = Number(numberText);
+            const element = window.ELEMENTS_DATA.find(item => item.number === number);
+            if (!element) continue;
+            for (let index = 0; index < count; index += 1) {
+                expanded.push({ num: number, symbol: element.symbol });
+            }
+        }
+
+        const total = expanded.length;
+        expanded.forEach((atom, index) => {
+            const angle = (Math.PI * 2 * index) / Math.max(total, 1);
+            const layer = index % 2 === 0 ? 1 : -1;
+            atoms.push({
+                id: `loose-${index}`,
+                ...atom,
+                x: Math.cos(angle) * Math.min(92, 34 + total * 7),
+                y: Math.sin(angle) * Math.min(68, 24 + total * 5),
+                z: layer * (16 + (index % 3) * 8)
+            });
+        });
+
+        return {
+            kind: '미완성 조합',
+            geometry: '결합 정보 없음',
+            atoms,
+            bonds: []
+        };
+    }
+
+    function ensureMoleculeAnimation() {
+        if (state.lab.animationId || !state.lab.model) return;
+        const animate = () => {
+            if (!state.lab.model) {
+                state.lab.animationId = null;
+                return;
+            }
+            if (state.lab.autoRotate && !state.lab.dragging && state.currentTab === 'molecule') {
+                state.lab.rotationY += 0.004;
+            }
+            drawMolecule3D();
+            state.lab.animationId = requestAnimationFrame(animate);
+        };
+        state.lab.animationId = requestAnimationFrame(animate);
+    }
+
+    function stopMoleculeAnimation() {
+        if (!state.lab.animationId) return;
+        cancelAnimationFrame(state.lab.animationId);
+        state.lab.animationId = null;
+    }
+
+    function clearMoleculeCanvas() {
+        const canvas = document.getElementById('molecule3dCanvas');
+        const context = canvas?.getContext('2d');
+        if (!canvas || !context) return;
+        context.clearRect(0, 0, canvas.width, canvas.height);
+    }
+
+    function drawMolecule3D() {
+        const canvas = document.getElementById('molecule3dCanvas');
+        const model = state.lab.model;
+        const context = canvas?.getContext('2d');
+        if (!canvas || !context || !model) return;
+
+        const rect = canvas.getBoundingClientRect();
+        if (rect.width <= 0 || rect.height <= 0) return;
+        const dpr = Math.min(window.devicePixelRatio || 1, 2);
+        const pixelWidth = Math.round(rect.width * dpr);
+        const pixelHeight = Math.round(rect.height * dpr);
+        if (canvas.width !== pixelWidth || canvas.height !== pixelHeight) {
+            canvas.width = pixelWidth;
+            canvas.height = pixelHeight;
+        }
+
+        context.setTransform(dpr, 0, 0, dpr, 0, 0);
+        context.clearRect(0, 0, rect.width, rect.height);
+        drawMoleculeBackdrop(context, rect.width, rect.height);
+
+        const baseScale = Math.min(rect.width / 330, rect.height / 290) * state.lab.zoom;
+        const projectedAtoms = model.atoms.map(atom => ({
+            ...atom,
+            ...projectMoleculePoint(atom, rect.width, rect.height, baseScale)
+        }));
+        const atomMap = new Map(projectedAtoms.map(atom => [atom.id, atom]));
+
+        [...model.bonds]
+            .map(bond => ({ ...bond, a: atomMap.get(bond.from), b: atomMap.get(bond.to) }))
+            .filter(bond => bond.a && bond.b)
+            .sort((first, second) => ((first.a.depth + first.b.depth) - (second.a.depth + second.b.depth)))
+            .forEach(bond => drawMoleculeBond(context, bond));
+
+        projectedAtoms
+            .sort((first, second) => first.depth - second.depth)
+            .forEach(atom => drawMoleculeAtom(context, atom, baseScale));
+    }
+
+    function projectMoleculePoint(point, width, height, baseScale) {
+        const cosX = Math.cos(state.lab.rotationX);
+        const sinX = Math.sin(state.lab.rotationX);
+        const cosY = Math.cos(state.lab.rotationY);
+        const sinY = Math.sin(state.lab.rotationY);
+
+        const rotatedY = point.y * cosX - point.z * sinX;
+        const firstDepth = point.y * sinX + point.z * cosX;
+        const rotatedX = point.x * cosY + firstDepth * sinY;
+        const rotatedZ = -point.x * sinY + firstDepth * cosY;
+        const perspective = 460 / (460 - rotatedZ);
+
+        return {
+            screenX: width / 2 + rotatedX * baseScale * perspective,
+            screenY: height / 2 + rotatedY * baseScale * perspective,
+            depth: rotatedZ,
+            perspective
+        };
+    }
+
+    function drawMoleculeBackdrop(context, width, height) {
+        context.save();
+        context.strokeStyle = 'rgba(75, 207, 250, 0.07)';
+        context.lineWidth = 1;
+        for (let radius = 48; radius < Math.min(width, height); radius += 48) {
+            context.beginPath();
+            context.ellipse(width / 2, height / 2, radius * 1.45, radius * 0.48, 0, 0, Math.PI * 2);
+            context.stroke();
+        }
+        context.restore();
+    }
+
+    function drawMoleculeBond(context, bond) {
+        const dx = bond.b.screenX - bond.a.screenX;
+        const dy = bond.b.screenY - bond.a.screenY;
+        const length = Math.hypot(dx, dy) || 1;
+        const offsetX = (-dy / length) * 3.5;
+        const offsetY = (dx / length) * 3.5;
+        const averagePerspective = (bond.a.perspective + bond.b.perspective) / 2;
+
+        context.save();
+        context.lineCap = 'round';
+        context.lineWidth = Math.max(2.2, 5.5 * averagePerspective);
+        context.strokeStyle = bond.type === 'ionic' ? 'rgba(75, 207, 250, 0.8)' : 'rgba(226, 232, 240, 0.72)';
+        context.shadowColor = bond.type === 'ionic' ? '#4bcffa' : 'rgba(255,255,255,0.35)';
+        context.shadowBlur = 7;
+
+        if (bond.type === 'ionic') {
+            context.setLineDash([7, 7]);
+        }
+
+        const drawLine = (xOffset, yOffset) => {
+            context.beginPath();
+            context.moveTo(bond.a.screenX + xOffset, bond.a.screenY + yOffset);
+            context.lineTo(bond.b.screenX + xOffset, bond.b.screenY + yOffset);
+            context.stroke();
+        };
+
+        if (bond.type === 'double') {
+            drawLine(offsetX, offsetY);
+            drawLine(-offsetX, -offsetY);
+        } else {
+            drawLine(0, 0);
+        }
+        context.restore();
+    }
+
+    function drawMoleculeAtom(context, atom, baseScale) {
+        const style = getMoleculeAtomStyle(atom.num);
+        const radius = Math.max(11, style.radius * baseScale * atom.perspective);
+        const gradient = context.createRadialGradient(
+            atom.screenX - radius * 0.35,
+            atom.screenY - radius * 0.38,
+            radius * 0.12,
+            atom.screenX,
+            atom.screenY,
+            radius
+        );
+        gradient.addColorStop(0, style.highlight);
+        gradient.addColorStop(0.48, style.color);
+        gradient.addColorStop(1, style.shadow);
+
+        context.save();
+        context.beginPath();
+        context.arc(atom.screenX, atom.screenY, radius, 0, Math.PI * 2);
+        context.fillStyle = gradient;
+        context.shadowColor = style.color;
+        context.shadowBlur = 12;
+        context.fill();
+        context.lineWidth = 2;
+        context.strokeStyle = 'rgba(255,255,255,0.68)';
+        context.stroke();
+        context.shadowBlur = 0;
+
+        context.fillStyle = style.text;
+        context.font = `900 ${Math.max(10, radius * 0.72)}px Pretendard, sans-serif`;
+        context.textAlign = 'center';
+        context.textBaseline = 'middle';
+        context.fillText(atom.symbol, atom.screenX, atom.screenY + 1);
+
+        if (atom.charge) {
+            context.fillStyle = '#ffd18a';
+            context.font = `900 ${Math.max(9, radius * 0.44)}px Pretendard, sans-serif`;
+            context.fillText(atom.charge, atom.screenX + radius * 0.72, atom.screenY - radius * 0.65);
+        }
+        context.restore();
+    }
+
+    function getMoleculeAtomStyle(number) {
+        const styles = {
+            1: { color: '#e2e8f0', highlight: '#ffffff', shadow: '#94a3b8', text: '#0f172a', radius: 14 },
+            6: { color: '#334155', highlight: '#64748b', shadow: '#0f172a', text: '#38ef7d', radius: 22 },
+            7: { color: '#2563eb', highlight: '#60a5fa', shadow: '#1e3a8a', text: '#ffffff', radius: 21 },
+            8: { color: '#ef4444', highlight: '#fca5a5', shadow: '#991b1b', text: '#ffffff', radius: 20 },
+            11: { color: '#f59e0b', highlight: '#fde68a', shadow: '#b45309', text: '#111827', radius: 28 },
+            17: { color: '#10b981', highlight: '#6ee7b7', shadow: '#047857', text: '#ffffff', radius: 29 },
+            20: { color: '#eab308', highlight: '#fef08a', shadow: '#a16207', text: '#111827', radius: 31 }
+        };
+        return styles[number] || { color: '#38ef7d', highlight: '#bbf7d0', shadow: '#047857', text: '#06130d', radius: 22 };
+    }
+
+    function clamp(value, minimum, maximum) {
+        return Math.min(maximum, Math.max(minimum, value));
     }
 
     /**
