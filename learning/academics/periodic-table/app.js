@@ -1,16 +1,17 @@
 /**
- * 주기율표 (Periodic Table) App Logic
+ * 시험 대비 단주기 주기율표 (Elements 1-20) App Logic
  */
 
 document.addEventListener('DOMContentLoaded', () => {
     // State management
     const state = {
         currentTab: 'explore',
-        difficulty: 'elem', // Default to 'elem' (초급 필수 20종)
         searchQuery: '',
         selectedCategory: 'all',
         selectedState: 'all',
         selectedElement: null,
+        memorizeHidden: false,
+        tableMode: 'exam',
         
         // Quiz state
         quiz: {
@@ -40,6 +41,7 @@ document.addEventListener('DOMContentLoaded', () => {
     const closeModalBtn = document.getElementById('closeModalBtn');
     const bohrCanvas = document.getElementById('bohrAtomCanvas');
     const ctx = bohrCanvas ? bohrCanvas.getContext('2d') : null;
+    const EXAM_MAX_ATOMIC_NUMBER = 20;
 
     // Initialize App
     initNavTabs();
@@ -50,6 +52,23 @@ document.addEventListener('DOMContentLoaded', () => {
     initQuiz();
     initLab();
     initTeacherMode();
+
+    function getExamElements() {
+        return window.ELEMENTS_DATA.filter(el => el.number <= EXAM_MAX_ATOMIC_NUMBER);
+    }
+
+    function getVisibleElements() {
+        return state.tableMode === 'exam' ? getExamElements() : window.ELEMENTS_DATA;
+    }
+
+    function getShortGroup(group) {
+        if (group <= 2) return group;
+        return group - 10;
+    }
+
+    function isExamCompound(compound) {
+        return Object.keys(compound.elements).every(number => Number(number) <= EXAM_MAX_ATOMIC_NUMBER);
+    }
 
     /**
      * Navigation Tabs setup
@@ -82,17 +101,13 @@ document.addEventListener('DOMContentLoaded', () => {
     function initCategoryBar() {
         if (!categoryBar || !window.PERIODIC_CATEGORIES) return;
 
-        let html = `<div class="cat-chip ${state.selectedCategory === 'all' ? 'active' : ''}" data-cat="all" style="background: rgba(255,255,255,0.1); color: #fff;">전체 보기</div>`;
-        for (const [key, cat] of Object.entries(window.PERIODIC_CATEGORIES)) {
-            html += `<div class="cat-chip" data-cat="${key}" style="background: ${cat.bg}; border-color: ${cat.border}; color: ${cat.color};">${cat.name}</div>`;
-        }
-        categoryBar.innerHTML = html;
+        renderCategoryBar();
 
         categoryBar.addEventListener('click', (e) => {
             const chip = e.target.closest('.cat-chip');
             if (!chip) return;
 
-            document.querySelectorAll('.cat-chip').forEach(c => c.classList.remove('active'));
+            categoryBar.querySelectorAll('.cat-chip').forEach(c => c.classList.remove('active'));
             chip.classList.add('active');
 
             state.selectedCategory = chip.dataset.cat;
@@ -100,25 +115,31 @@ document.addEventListener('DOMContentLoaded', () => {
         });
     }
 
+    function renderCategoryBar() {
+        const visibleCategories = new Set(getVisibleElements().map(el => el.category));
+        const allLabel = state.tableMode === 'exam' ? '시험 범위 전체' : '118개 전체';
+        let html = `<div class="cat-chip ${state.selectedCategory === 'all' ? 'active' : ''}" data-cat="all" style="background: rgba(255,255,255,0.1); color: #fff;">${allLabel}</div>`;
+        for (const [key, cat] of Object.entries(window.PERIODIC_CATEGORIES).filter(([key]) => visibleCategories.has(key))) {
+            html += `<div class="cat-chip" data-cat="${key}" style="background: ${cat.bg}; border-color: ${cat.border}; color: ${cat.color};">${cat.name}</div>`;
+        }
+        categoryBar.innerHTML = html;
+    }
+
     /**
-     * Compute Grid position for standard 18-column Periodic Table layout
+     * Compute positions for short-form and full periodic tables.
      */
-    function getGridPosition(el) {
-        const num = el.number;
-        const group = el.group;
-        const period = el.period;
+    function getShortGridPosition(el) {
+        return { col: getShortGroup(el.group) + 1, row: el.period + 1 };
+    }
 
-        // Lanthanides (57 - 71) -> row 9, cols 4..18
-        if (num >= 57 && num <= 71) {
-            return { col: (num - 57) + 4, row: 9 };
+    function getFullGridPosition(el) {
+        if (el.number >= 57 && el.number <= 71) {
+            return { col: (el.number - 57) + 4, row: 9 };
         }
-        // Actinides (89 - 103) -> row 10, cols 4..18
-        if (num >= 89 && num <= 103) {
-            return { col: (num - 89) + 4, row: 10 };
+        if (el.number >= 89 && el.number <= 103) {
+            return { col: (el.number - 89) + 4, row: 10 };
         }
-
-        // Standard 1..7 periods
-        return { col: group, row: period };
+        return { col: el.group, row: el.period };
     }
 
     /**
@@ -128,32 +149,55 @@ document.addEventListener('DOMContentLoaded', () => {
         if (!elementsGrid || !window.ELEMENTS_DATA) return;
 
         elementsGrid.innerHTML = '';
+        elementsGrid.classList.toggle('short-table', state.tableMode === 'exam');
+        elementsGrid.classList.toggle('full-table', state.tableMode === 'full');
+        elementsGrid.classList.toggle('memorize-mode', state.memorizeHidden);
 
-        // Lanthanide & Actinide placeholders in main grid (Row 6 col 3 & Row 7 col 3)
-        const lanthHold = document.createElement('div');
-        lanthHold.className = 'lanthanide-placeholder';
-        lanthHold.innerHTML = '57-71<br>란타넘족';
-        lanthHold.style.gridColumn = '3';
-        lanthHold.style.gridRow = '6';
+        if (state.tableMode === 'exam') {
+            for (let group = 1; group <= 8; group += 1) {
+                const label = document.createElement('div');
+                label.className = 'axis-label group-label';
+                label.textContent = `${group}족`;
+                label.style.gridColumn = String(group + 1);
+                label.style.gridRow = '1';
+                elementsGrid.appendChild(label);
+            }
 
-        const actHold = document.createElement('div');
-        actHold.className = 'actinide-placeholder';
-        actHold.innerHTML = '89-103<br>악티늄족';
-        actHold.style.gridColumn = '3';
-        actHold.style.gridRow = '7';
+            for (let period = 1; period <= 4; period += 1) {
+                const label = document.createElement('div');
+                label.className = 'axis-label period-label';
+                label.textContent = `${period}주기`;
+                label.style.gridColumn = '1';
+                label.style.gridRow = String(period + 1);
+                elementsGrid.appendChild(label);
+            }
+        } else {
+            const lanthanideLabel = document.createElement('div');
+            lanthanideLabel.className = 'series-placeholder';
+            lanthanideLabel.innerHTML = '57–71<br>란타넘족';
+            lanthanideLabel.style.gridColumn = '3';
+            lanthanideLabel.style.gridRow = '6';
+            elementsGrid.appendChild(lanthanideLabel);
 
-        elementsGrid.appendChild(lanthHold);
-        elementsGrid.appendChild(actHold);
+            const actinideLabel = document.createElement('div');
+            actinideLabel.className = 'series-placeholder';
+            actinideLabel.innerHTML = '89–103<br>악티늄족';
+            actinideLabel.style.gridColumn = '3';
+            actinideLabel.style.gridRow = '7';
+            elementsGrid.appendChild(actinideLabel);
+        }
 
-        window.ELEMENTS_DATA.forEach(el => {
-            const pos = getGridPosition(el);
-            const cell = document.createElement('div');
+        getVisibleElements().forEach(el => {
+            const pos = state.tableMode === 'exam' ? getShortGridPosition(el) : getFullGridPosition(el);
+            const cell = document.createElement('button');
+            cell.type = 'button';
             cell.className = 'element-cell';
             cell.dataset.number = el.number;
             cell.dataset.category = el.category;
             cell.dataset.state = el.state;
             cell.style.gridColumn = pos.col;
             cell.style.gridRow = pos.row;
+            cell.setAttribute('aria-label', `${el.number}번 ${el.name}, 원소 기호 ${el.symbol}`);
 
             const catInfo = window.PERIODIC_CATEGORIES[el.category] || {};
             const stateIcon = el.state === 'gas' ? '☁️' : el.state === 'liquid' ? '💧' : el.state === 'solid' ? '🧱' : '⚛️';
@@ -165,6 +209,7 @@ document.addEventListener('DOMContentLoaded', () => {
                 </div>
                 <div class="element-symbol" style="color: ${catInfo.color || '#fff'}">${el.symbol}</div>
                 <div class="element-name">${el.name}</div>
+                <div class="element-shells" title="전자 배치">${el.shells.join(' · ')}</div>
                 <span class="state-indicator" title="상온 상태: ${el.state}">${stateIcon}</span>
             `;
 
@@ -177,6 +222,33 @@ document.addEventListener('DOMContentLoaded', () => {
      * Search and Filter Handler
      */
     function initFilters() {
+        const tableModeBtns = document.querySelectorAll('.table-mode-btn');
+        tableModeBtns.forEach(btn => {
+            btn.addEventListener('click', () => {
+                const nextMode = btn.dataset.tableMode;
+                if (nextMode === state.tableMode) return;
+
+                state.tableMode = nextMode;
+                state.searchQuery = '';
+                state.selectedCategory = 'all';
+                state.selectedState = 'all';
+                searchInput.value = '';
+
+                tableModeBtns.forEach(modeBtn => {
+                    const isActive = modeBtn.dataset.tableMode === state.tableMode;
+                    modeBtn.classList.toggle('active', isActive);
+                    modeBtn.setAttribute('aria-pressed', String(isActive));
+                });
+                document.querySelectorAll('.btn-filter[data-state]').forEach(stateBtn => {
+                    stateBtn.classList.toggle('active', stateBtn.dataset.state === 'all');
+                });
+
+                updateTableModeUI();
+                renderCategoryBar();
+                initGrid();
+            });
+        });
+
         if (searchInput) {
             searchInput.addEventListener('input', (e) => {
                 state.searchQuery = e.target.value.trim().toLowerCase();
@@ -194,15 +266,49 @@ document.addEventListener('DOMContentLoaded', () => {
             });
         });
 
-        const diffBtns = document.querySelectorAll('.difficulty-btn');
-        diffBtns.forEach(btn => {
-            btn.addEventListener('click', () => {
-                diffBtns.forEach(b => b.classList.remove('active'));
-                btn.classList.add('active');
-                state.difficulty = btn.dataset.diff;
-                applyFilters();
+        const memorizeBtn = document.getElementById('toggleMemorizeBtn');
+        if (memorizeBtn) {
+            memorizeBtn.addEventListener('click', () => {
+                state.memorizeHidden = !state.memorizeHidden;
+                elementsGrid.classList.toggle('memorize-mode', state.memorizeHidden);
+                memorizeBtn.classList.toggle('active', state.memorizeHidden);
+                memorizeBtn.setAttribute('aria-pressed', String(state.memorizeHidden));
+                memorizeBtn.textContent = state.memorizeHidden ? '👀 이름 다시 보기' : '🙈 이름 가리고 외우기';
             });
-        });
+        }
+    }
+
+    function updateTableModeUI() {
+        const isExam = state.tableMode === 'exam';
+        document.body.dataset.tableMode = state.tableMode;
+        document.title = isExam
+            ? '단주기 주기율표 | songhwaplay 교과학습'
+            : '실제 주기율표 | songhwaplay 교과학습';
+
+        document.getElementById('appTitleText').textContent = isExam ? '단주기 주기율표' : '실제 주기율표';
+        document.getElementById('appTitleBadge').textContent = isExam ? '시험 대비 · 1~20' : '전체 원소 · 1~118';
+        document.getElementById('tabExploreLabel').textContent = isExam ? '단주기표' : '실제 주기율표';
+        document.getElementById('tableModeKicker').textContent = isExam ? '시험 범위만 한눈에' : '전체 원소를 한눈에';
+        document.getElementById('examFocusTitle').textContent = isExam
+            ? '원자번호 1번 수소부터 20번 칼슘까지'
+            : '1번 수소부터 118번 오가네손까지';
+        document.getElementById('examFocusDescription').textContent = isExam
+            ? '원소 기호·이름·원자번호와 전자 배치, 족과 주기를 연결해서 외워 보세요.'
+            : '현재 표준 18족 배열과 란타넘족·악티늄족을 포함한 전체 주기율표입니다.';
+        document.getElementById('elementCountStat').textContent = isExam ? '20' : '118';
+        document.getElementById('elementCountLabel').textContent = isExam ? '필수 원소' : '전체 원소';
+        document.getElementById('groupCountStat').textContent = isExam ? '8' : '18';
+        document.getElementById('periodCountStat').textContent = isExam ? '4' : '7';
+        document.getElementById('guidePeriod').innerHTML = isExam ? '<b>가로</b>는 주기' : '<b>7개</b> 주기';
+        document.getElementById('guideGroup').innerHTML = isExam ? '<b>세로</b>는 족' : '<b>18개</b> 족';
+        document.getElementById('guideDetail').innerHTML = isExam
+            ? '<b>전자 배치</b>는 아래 숫자로 확인'
+            : '<b>아래 두 줄</b>은 란타넘족·악티늄족';
+
+        searchInput.placeholder = isExam
+            ? '이름, 기호(H, Na), 원자번호(1~20) 검색'
+            : '이름, 기호(Fe, Au), 원자번호(1~118) 검색';
+        searchInput.setAttribute('aria-label', isExam ? '시험 범위 원소 검색' : '전체 원소 검색');
     }
 
     function applyFilters() {
@@ -223,14 +329,7 @@ document.addEventListener('DOMContentLoaded', () => {
             let matchesCat = state.selectedCategory === 'all' || el.category === state.selectedCategory;
             let matchesState = state.selectedState === 'all' || el.state === state.selectedState;
 
-            let matchesDiff = true;
-            if (state.difficulty === 'elem') {
-                matchesDiff = num <= 20; // 초등 기초 20개
-            } else if (state.difficulty === 'mid') {
-                matchesDiff = num <= 50; // 중등 50개
-            }
-
-            if (matchesSearch && matchesCat && matchesState && matchesDiff) {
+            if (matchesSearch && matchesCat && matchesState) {
                 cell.classList.remove('filtered-out');
             } else {
                 cell.classList.add('filtered-out');
@@ -273,7 +372,10 @@ document.addEventListener('DOMContentLoaded', () => {
         document.getElementById('modalSymbol').textContent = el.symbol;
         document.getElementById('modalMass').textContent = el.mass;
         document.getElementById('modalState').textContent = el.state === 'gas' ? '기체 (Gas)' : el.state === 'liquid' ? '액체 (Liquid)' : el.state === 'solid' ? '고체 (Solid)' : '합성/미정';
-        document.getElementById('modalGroupPeriod').textContent = `${el.group}족 / ${el.period}주기 (${el.block} 블록)`;
+        document.getElementById('modalGroupPeriod').textContent = state.tableMode === 'exam'
+            ? `${getShortGroup(el.group)}족 / ${el.period}주기`
+            : `${el.group}족 / ${el.period}주기 (${el.block} 블록)`;
+        document.getElementById('modalShells').textContent = el.shells.join(' - ');
         document.getElementById('modalDiscovery').textContent = el.discovery || '선사 시대';
 
         document.getElementById('modalDesc').textContent = el.desc;
@@ -382,22 +484,6 @@ document.addEventListener('DOMContentLoaded', () => {
             });
         }
 
-        const quizDiffBtns = document.querySelectorAll('.quiz-diff-btn');
-        quizDiffBtns.forEach(btn => {
-            btn.addEventListener('click', () => {
-                quizDiffBtns.forEach(b => b.classList.remove('active'));
-                btn.classList.add('active');
-
-                // Sync main difficulty too
-                state.difficulty = btn.dataset.diff;
-                document.querySelectorAll('.difficulty-btn').forEach(b => {
-                    b.classList.toggle('active', b.dataset.diff === state.difficulty);
-                });
-
-                if (state.quiz.autoTimer) clearTimeout(state.quiz.autoTimer);
-                loadNewQuestion();
-            });
-        });
     }
 
     function loadNewQuestion() {
@@ -408,12 +494,8 @@ document.addEventListener('DOMContentLoaded', () => {
 
         state.quiz.answered = false;
 
-        // Quiz Question Pool:
-        // elem: 1~20 (기초 필수 20종)
-        // mid: 1~50 (실생활 주요 50종)
-        // all: 1~92 (자연 원소 92종 - 암기 무의미한 100번대 인공 원소는 배제)
-        const maxNum = state.difficulty === 'elem' ? 20 : state.difficulty === 'mid' ? 50 : 92;
-        const available = window.ELEMENTS_DATA.slice(0, maxNum);
+        // Every question stays inside the exam scope: elements 1 through 20.
+        const available = getExamElements();
         const correctEl = available[Math.floor(Math.random() * available.length)];
 
         // Select 3 wrong options from the same difficulty pool
@@ -428,40 +510,43 @@ document.addEventListener('DOMContentLoaded', () => {
         const options = [correctEl, ...wrongOpts].sort(() => Math.random() - 0.5);
         state.quiz.currentQuestion = { correctEl, options };
 
-        // Render SAT & Curriculum Aligned Question Types
+        // Render short-form periodic table exam questions.
         const qText = document.getElementById('quizQuestionText');
         const qSub = document.getElementById('quizSubText');
         const optGrid = document.getElementById('quizOptionsGrid');
 
-        const catName = (window.PERIODIC_CATEGORIES[correctEl.category] || {}).name || '';
-        const useHint = (correctEl.uses && correctEl.uses.length > 0) ? correctEl.uses[0] : correctEl.desc;
-
-        // 4 Types of Educational Chemistry Questions
-        const qTypes = ['use_concept', 'category_prop', 'symbol_name', 'name_symbol'];
+        const qTypes = ['symbol_name', 'name_symbol', 'atomic_number', 'electron_arrangement', 'position'];
         const chosenType = qTypes[Math.floor(Math.random() * qTypes.length)];
 
-        let isSymbolChoice = false;
+        let optionLabel = opt => opt.name;
 
-        if (chosenType === 'use_concept' && correctEl.uses && correctEl.uses.length > 0) {
-            qText.textContent = `💡 [실생활/성질] "${correctEl.uses[Math.floor(Math.random() * correctEl.uses.length)]}"에 핵심적으로 사용되는 원소는?`;
-            qSub.textContent = `힌트: ${correctEl.group}족 ${correctEl.period}주기 | 분류: ${catName}`;
-        } else if (chosenType === 'category_prop') {
-            qText.textContent = `🧪 다음 중 [${catName}] 분류에 속하며 ${correctEl.group}족에 위치하는 원소는?`;
-            qSub.textContent = `상온 상태: ${correctEl.state === 'gas' ? '기체 (Gas)' : correctEl.state === 'liquid' ? '액체 (Liquid)' : '고체 (Solid)'}`;
-        } else if (chosenType === 'symbol_name') {
+        if (chosenType === 'symbol_name') {
             qText.textContent = `원소 기호 『 ${correctEl.symbol} 』 의 올바른 한글 원소 이름은?`;
-            qSub.textContent = `특징: ${useHint}`;
+            qSub.textContent = '기호의 첫 글자는 대문자, 두 번째 글자는 소문자입니다.';
+        } else if (chosenType === 'name_symbol') {
+            qText.textContent = `『 ${correctEl.name} 』의 올바른 원소 기호는?`;
+            qSub.textContent = '시험 필수 원소 1~20번에서 고르세요.';
+            optionLabel = opt => opt.symbol;
+        } else if (chosenType === 'atomic_number') {
+            qText.textContent = `『 ${correctEl.name} (${correctEl.symbol}) 』의 원자번호는?`;
+            qSub.textContent = '원자번호는 원자핵 속 양성자 수와 같습니다.';
+            optionLabel = opt => `${opt.number}번`;
+        } else if (chosenType === 'electron_arrangement') {
+            qText.textContent = `『 ${correctEl.name} (${correctEl.symbol}) 』의 전자 배치는?`;
+            qSub.textContent = '안쪽 전자 껍질부터 차례대로 고르세요.';
+            optionLabel = opt => opt.shells.join(' - ');
         } else {
-            isSymbolChoice = true;
-            qText.textContent = `『 ${correctEl.name} (${correctEl.enName}) 』 의 올바른 화학 원소 기호는?`;
-            qSub.textContent = `위치: ${correctEl.group}족 ${correctEl.period}주기 | 분류: ${catName}`;
+            qText.textContent = `단주기표에서 『 ${correctEl.name} (${correctEl.symbol}) 』의 위치는?`;
+            qSub.textContent = '가로줄은 주기, 세로줄은 족입니다.';
+            optionLabel = opt => `${getShortGroup(opt.group)}족 · ${opt.period}주기`;
         }
 
         optGrid.innerHTML = '';
         options.forEach(opt => {
             const btn = document.createElement('button');
             btn.className = 'quiz-opt-btn';
-            btn.textContent = isSymbolChoice ? opt.symbol : `${opt.name} (${opt.symbol})`;
+            btn.dataset.number = String(opt.number);
+            btn.textContent = optionLabel(opt);
             btn.addEventListener('click', () => checkAnswer(opt, btn));
             optGrid.appendChild(btn);
         });
@@ -496,7 +581,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
             // Highlight correct button
             document.querySelectorAll('.quiz-opt-btn').forEach(b => {
-                if (b.textContent.includes(correctEl.symbol) || b.textContent.includes(correctEl.name)) {
+                if (Number(b.dataset.number) === correctEl.number) {
                     b.classList.add('correct');
                 }
             });
@@ -521,8 +606,8 @@ document.addEventListener('DOMContentLoaded', () => {
 
         if (!beaker || !atomPalette) return;
 
-        // Render basic atom tokens palette (H, O, C, Na, Cl, N, Ca, Fe)
-        const commonAtoms = [1, 6, 7, 8, 11, 17, 20, 26];
+        // Keep the molecule lab inside the same 1-20 exam scope.
+        const commonAtoms = [1, 6, 7, 8, 11, 17, 20];
         atomPalette.innerHTML = '';
 
         commonAtoms.forEach(num => {
@@ -577,7 +662,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
     function getMatchingCompound() {
         if (!window.COMPOUNDS_DATA) return null;
-        for (const comp of window.COMPOUNDS_DATA) {
+        for (const comp of window.COMPOUNDS_DATA.filter(isExamCompound)) {
             const required = comp.elements;
             const reqKeys = Object.keys(required);
             const selKeys = Object.keys(state.lab.selectedElements);
@@ -606,8 +691,7 @@ document.addEventListener('DOMContentLoaded', () => {
             8: { bg: '#ef4444', stroke: '#fca5a5', text: '#ffffff', r: 21 },  // O (Medium Oxygen - 21px)
             11: { bg: '#f59e0b', stroke: '#fcd34d', text: '#000000', r: 28 }, // Na (Large Sodium - 28px)
             17: { bg: '#10b981', stroke: '#6ee7b7', text: '#ffffff', r: 28 }, // Cl (Large Chlorine - 28px)
-            20: { bg: '#eab308', stroke: '#fef08a', text: '#000000', r: 31 }, // Ca (Very Large Calcium - 31px)
-            26: { bg: '#ef5777', stroke: '#f53b57', text: '#ffffff', r: 29 }  // Fe (Large Iron - 29px)
+            20: { bg: '#eab308', stroke: '#fef08a', text: '#000000', r: 31 } // Ca (Very Large Calcium - 31px)
         };
 
         let nodes = [];
@@ -718,20 +802,6 @@ document.addEventListener('DOMContentLoaded', () => {
                 { x1: 20, y1: 0, z1: 0, x2: 20, y2: -52, z2: 0, type: 'double' },
                 { x1: 20, y1: 0, z1: 0, x2: -18, y2: 35, z2: 0, type: 'single' },
                 { x1: 20, y1: 0, z1: 0, x2: 58, y2: 35, z2: 0, type: 'single' }
-            ];
-        } else if (formula === 'Fe₂O₃') {
-            nodes = [
-                { id: 'Fe1', num: 26, sym: 'Fe', x: -50, y: -20, z: 0, charge: '3+' },
-                { id: 'Fe2', num: 26, sym: 'Fe', x: 50, y: -20, z: 0, charge: '3+' },
-                { id: 'O1', num: 8, sym: 'O', x: 0, y: -52, z: 0, charge: '2-' },
-                { id: 'O2', num: 8, sym: 'O', x: -50, y: 35, z: 0, charge: '2-' },
-                { id: 'O3', num: 8, sym: 'O', x: 50, y: 35, z: 0, charge: '2-' }
-            ];
-            bonds = [
-                { x1: -50, y1: -20, z1: 0, x2: 0, y2: -52, z2: 0, type: 'ionic' },
-                { x1: 50, y1: -20, z1: 0, x2: 0, y2: -52, z2: 0, type: 'ionic' },
-                { x1: -50, y1: -20, z1: 0, x2: -50, y2: 35, z2: 0, type: 'ionic' },
-                { x1: 50, y1: -20, z1: 0, x2: 50, y2: 35, z2: 0, type: 'ionic' }
             ];
         } else {
             // Unmatched Mixture: Dynamic ring layout
@@ -886,7 +956,7 @@ document.addEventListener('DOMContentLoaded', () => {
         if (!list || !window.COMPOUNDS_DATA) return;
 
         list.innerHTML = '';
-        window.COMPOUNDS_DATA.forEach(comp => {
+        window.COMPOUNDS_DATA.filter(isExamCompound).forEach(comp => {
             const isUnlocked = state.lab.unlockedCompounds.has(comp.formula);
             const card = document.createElement('div');
             card.className = 'compound-card';

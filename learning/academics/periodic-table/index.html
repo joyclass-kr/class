@@ -3,8 +3,8 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <meta name="description" content="songhwaplay 인터랙티브 주기율표 - 118개 원소 탐색, 원자 보어 모델, 원소 퀴즈, 분자 조합 시뮬레이션">
-    <title>주기율표 | songhwaplay 교과학습</title>
+    <meta name="description" content="시험용 단주기 주기율표와 118개 실제 주기율표를 전환하며 학습하는 원소 탐색·퀴즈">
+    <title>단주기 주기율표 | songhwaplay 교과학습</title>
     <link rel="stylesheet" href="styles.css">
 </head>
 <body>
@@ -16,17 +16,17 @@
                 <span>◀</span> 포털 메인으로
             </a>
             <h1 class="app-title">
-                🧪 주기율표
-                <span class="badge">Class Science</span>
+                🧪 <span id="appTitleText">단주기 주기율표</span>
+                <span class="badge" id="appTitleBadge">시험 대비 · 1~20</span>
             </h1>
         </div>
 
         <nav class="nav-tabs" aria-label="학습 모드 선택">
             <button class="nav-tab active" data-tab="explore" id="tabExploreBtn">
-                <span>🗺️</span> 주기율표 탐색
+                <span>🗺️</span> <span id="tabExploreLabel">단주기표</span>
             </button>
             <button class="nav-tab" data-tab="quiz" id="tabQuizBtn">
-                <span>🧩</span> 원소 퀴즈
+                <span>🧩</span> 시험 퀴즈
             </button>
             <button class="nav-tab" data-tab="molecule" id="tabMoleculeBtn">
                 <span>🔬</span> 분자 조합실
@@ -34,11 +34,33 @@
         </nav>
     </header>
 
+    <section class="exam-focus" aria-labelledby="examFocusTitle">
+        <div>
+            <span class="exam-kicker" id="tableModeKicker">시험 범위만 한눈에</span>
+            <h2 id="examFocusTitle">원자번호 1번 수소부터 20번 칼슘까지</h2>
+            <p id="examFocusDescription">원소 기호·이름·원자번호와 전자 배치, 족과 주기를 연결해서 외워 보세요.</p>
+        </div>
+        <div class="exam-points" aria-label="핵심 학습 항목">
+            <span><strong id="elementCountStat">20</strong><span id="elementCountLabel">필수 원소</span></span>
+            <span><strong id="groupCountStat">8</strong>개 족</span>
+            <span><strong id="periodCountStat">4</strong>개 주기</span>
+        </div>
+    </section>
+
     <!-- Exploration Toolbar Controls -->
     <section class="toolbar" id="toolbarSection">
+        <div class="table-mode-switch" role="group" aria-label="주기율표 종류 선택">
+            <button class="table-mode-btn active" type="button" data-table-mode="exam" aria-pressed="true">
+                🎯 시험용 단주기표
+            </button>
+            <button class="table-mode-btn" type="button" data-table-mode="full" aria-pressed="false">
+                ⚛️ 실제 주기율표
+            </button>
+        </div>
+
         <div class="search-box">
             <span class="search-icon">🔍</span>
-            <input type="text" id="searchInput" placeholder="원소 이름, 기호(H, Fe), 번호(1~118) 검색..." aria-label="원소 검색 입력창">
+            <input type="text" id="searchInput" placeholder="이름, 기호(H, Na), 원자번호(1~20) 검색" aria-label="시험 범위 원소 검색">
         </div>
 
         <div class="filter-group">
@@ -49,14 +71,9 @@
             <button class="btn-filter" data-state="gas">☁️ 기체</button>
         </div>
 
-        <div class="filter-group">
-            <span class="filter-label">난이도:</span>
-            <div class="difficulty-selector">
-                <button class="difficulty-btn active" data-diff="elem">🌱 초급 (필수 20종)</button>
-                <button class="difficulty-btn" data-diff="mid">🌿 중급 (주요 50종)</button>
-                <button class="difficulty-btn" data-diff="all">🌳 고급 (전체 118종)</button>
-            </div>
-        </div>
+        <button class="btn-filter practice-toggle" id="toggleMemorizeBtn" type="button" aria-pressed="false">
+            🙈 이름 가리고 외우기
+        </button>
 
         <button class="btn-filter" id="togglePresentationBtn" style="border-color: #ffd18a; color: #ffd18a;">
             🖥️ 전자칠판 모드
@@ -73,9 +90,14 @@
 
         <!-- Tab 1: Interactive Periodic Table -->
         <section class="tab-pane active" id="tab-explore">
+            <div class="table-guide">
+                <span id="guidePeriod"><b>가로</b>는 주기</span>
+                <span id="guideGroup"><b>세로</b>는 족</span>
+                <span id="guideDetail"><b>전자 배치</b>는 아래 숫자로 확인</span>
+            </div>
             <div class="periodic-table-wrapper">
                 <div class="periodic-table-grid" id="elementsGrid">
-                    <!-- JS Rendered 118 Elements -->
+                    <!-- JS Rendered Exam Scope Elements 1~20 -->
                 </div>
             </div>
         </section>
@@ -85,15 +107,9 @@
             <div class="quiz-container">
                 <div class="quiz-header">
                     <div>
-                        <h2>🧩 스피드 원소 퀴즈</h2>
-                        <div class="filter-group" style="margin-top: 8px;">
-                            <span class="filter-label">퀴즈 난이도:</span>
-                            <div class="difficulty-selector">
-                                <button class="quiz-diff-btn active" data-diff="elem">🌱 초급 (20종)</button>
-                                <button class="quiz-diff-btn" data-diff="mid">🌿 중급 (50종)</button>
-                                <button class="quiz-diff-btn" data-diff="all">🌳 고급 (118종)</button>
-                            </div>
-                        </div>
+                        <span class="exam-kicker">1~20번 고정 출제</span>
+                        <h2>🧩 단주기표 시험 퀴즈</h2>
+                        <p class="quiz-scope">기호 · 이름 · 원자번호 · 전자 배치 · 족/주기</p>
                     </div>
                     <div style="display: flex; gap: 12px; align-items: center;">
                         <span class="quiz-score-badge">연속 콤보: <span id="quizStreak">0</span> 🔥</span>
@@ -168,7 +184,7 @@
                     <canvas id="bohrAtomCanvas"></canvas>
                 </div>
                 <div class="shell-info">
-                    보어 원자 모델 (전자 궤도 애니메이션)
+                    보어 원자 모델 · 전자 배치 <strong id="modalShells">1</strong>
                 </div>
             </div>
 
