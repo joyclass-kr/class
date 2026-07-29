@@ -5942,6 +5942,7 @@ button.prime-number-question:focus-visible {
 
   .worksheet-choice {
     min-height: 82px;
+    height: 100%;
     display: grid;
     grid-template-columns: 30px minmax(0, 1fr) auto;
     align-items: center;

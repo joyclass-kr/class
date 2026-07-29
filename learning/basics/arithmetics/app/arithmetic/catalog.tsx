@@ -20,6 +20,11 @@ const catalogMathTokens = [
   { text: "ax²+bx+c", latex: "ax^2+bx+c" },
   { text: "y=ax²", latex: "y=ax^2" },
   { text: "x²=a", latex: "x^2=a" },
+  { text: "sin", latex: "\\sin" },
+  { text: "cos", latex: "\\cos" },
+  { text: "tan", latex: "\\tan" },
+  { text: "x", latex: "x" },
+  { text: "y", latex: "y" },
 ] as const;
 
 function renderWorksheetTitle(title: string): ReactNode {
