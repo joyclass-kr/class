@@ -1,28 +1,28 @@
 const presets = [
-  ["일차함수","중학교","a*x+b","기울기 a가 커지면 직선은 어떻게 달라질까요?","y = ax + b"],
-  ["이차함수","중학교","a*(x-h)^2+k","a의 부호가 바뀌면 그래프의 모양은 어떻게 달라질까요?","y = a(x − h)<sup>2</sup> + k"],
+  ["일차함수","중학교","ax+b","기울기 a가 커지면 직선은 어떻게 달라질까요?","y = ax + b"],
+  ["이차함수","중학교","a(x-h)^2+k","a의 부호가 바뀌면 그래프의 모양은 어떻게 달라질까요?","y = a(x − h)<sup>2</sup> + k"],
   ["반비례","중학교","a/x","a의 부호에 따라 그래프는 어느 사분면을 지날까요?",'y = <span class="mathFraction"><span>a</span><span>x</span></span>'],
-  ["삼차함수","고등학교","a*(x-h)^3+k","변곡점과 그래프의 대칭성을 찾아보세요.","y = a(x − h)<sup>3</sup> + k"],
-  ["사차함수","고등학교","a*(x-h)^4+k","짝수 차수 함수의 양 끝 행동을 관찰해 보세요.","y = a(x − h)<sup>4</sup> + k"],
-  ["절댓값","고등학교","a*abs(x-h)+k","h와 k는 꼭짓점을 어느 방향으로 움직일까요?","y = a|x − h| + k"],
+  ["삼차함수","고등학교","a(x-h)^3+k","변곡점과 그래프의 대칭성을 찾아보세요.","y = a(x − h)<sup>3</sup> + k"],
+  ["사차함수","고등학교","a(x-h)^4+k","짝수 차수 함수의 양 끝 행동을 관찰해 보세요.","y = a(x − h)<sup>4</sup> + k"],
+  ["절댓값","고등학교","a abs(x-h)+k","h와 k는 꼭짓점을 어느 방향으로 움직일까요?","y = a|x − h| + k"],
   ["유리함수","고등학교","a/(x-h)+k","점근선의 방정식을 h와 k로 표현해 보세요.",'y = <span class="mathFraction"><span>a</span><span>x − h</span></span> + k'],
-  ["무리함수","고등학교","a*sqrt(x-h)+k","이 함수의 정의역은 어디에서 시작할까요?",'y = a<span class="root">√<span class="radicand">x − h</span></span> + k'],
-  ["지수함수","고등학교","a*2^(x-h)+k","x가 1씩 증가할 때 함숫값은 몇 배가 될까요?","y = a · 2<sup>x − h</sup> + k"],
-  ["자연지수함수","고등학교","a*exp(x-h)+k","자연상수 e를 밑으로 하는 증가율을 관찰해 보세요.","y = ae<sup>x − h</sup> + k"],
-  ["상용로그","고등학교","a*log10(x-h)+k","밑이 10인 로그함수의 점근선을 찾아보세요.","y = a log<sub>10</sub>(x − h) + k"],
-  ["자연로그 ln","고등학교","a*ln(x-h)+k","ln과 자연지수함수의 역함수 관계를 확인해 보세요.","y = a ln(x − h) + k"],
-  ["사인함수","고등학교","a*sin(b*x+h)+k","a와 b는 진폭과 주기를 어떻게 바꿀까요?","y = a sin(bx + h) + k"],
-  ["코사인함수","고등학교","a*cos(b*x+h)+k","사인함수와 코사인함수는 어떻게 평행이동 관계일까요?","y = a cos(bx + h) + k"],
-  ["탄젠트함수","고등학교","a*tan(b*x+h)+k","탄젠트함수의 주기와 점근선을 찾아보세요.","y = a tan(bx + h) + k"],
+  ["무리함수","고등학교","a sqrt(x-h)+k","이 함수의 정의역은 어디에서 시작할까요?",'y = a<span class="root">√<span class="radicand">x − h</span></span> + k'],
+  ["지수함수","고등학교","a×2^(x-h)+k","x가 1씩 증가할 때 함숫값은 몇 배가 될까요?","y = a · 2<sup>x − h</sup> + k"],
+  ["자연지수함수","고등학교","a exp(x-h)+k","자연상수 e를 밑으로 하는 증가율을 관찰해 보세요.","y = ae<sup>x − h</sup> + k"],
+  ["상용로그","고등학교","a log10(x-h)+k","밑이 10인 로그함수의 점근선을 찾아보세요.","y = a log<sub>10</sub>(x − h) + k"],
+  ["자연로그 ln","고등학교","a ln(x-h)+k","ln과 자연지수함수의 역함수 관계를 확인해 보세요.","y = a ln(x − h) + k"],
+  ["사인함수","고등학교","a sin(bx+h)+k","a와 b는 진폭과 주기를 어떻게 바꿀까요?","y = a sin(bx + h) + k"],
+  ["코사인함수","고등학교","a cos(bx+h)+k","사인함수와 코사인함수는 어떻게 평행이동 관계일까요?","y = a cos(bx + h) + k"],
+  ["탄젠트함수","고등학교","a tan(bx+h)+k","탄젠트함수의 주기와 점근선을 찾아보세요.","y = a tan(bx + h) + k"],
   ["역삼각함수","심화","asin(x)","정의역과 치역이 제한되는 이유를 살펴보세요.","y = sin<sup>−1</sup>x"],
   ["합성함수 예시","심화","sin(x^2)","안쪽 함수와 바깥쪽 함수가 그래프에 미치는 영향을 나눠 보세요.","y = sin(x<sup>2</sup>)"],
-  ["정규분포","확률과 통계","exp(-((x-h)^2)/(2*a^2))/(a*sqrt(2*pi))","표준편차가 커지면 곡선의 높이와 폭은 어떻게 변할까요?",'y = <span class="mathFraction"><span>e<sup>−(x − h)²/(2a²)</sup></span><span>a√(2π)</span></span>']
+  ["정규분포","확률과 통계","exp(-((x-h)^2)/(2×a^2))/(a×sqrt(2×pi))","표준편차가 커지면 곡선의 높이와 폭은 어떻게 변할까요?",'y = <span class="mathFraction"><span>e<sup>−(x − h)²/(2a²)</sup></span><span>a√(2π)</span></span>']
 ];
 
 const colors=["#6558d9","#ef7456","#139e88","#e0a52b","#3975ce","#b24f9b"];
 const state={
   preset:"이차함수",
-  functions:[{expression:"a*(x-h)^2+k",visible:true}],
+  functions:[{expression:"a(x-h)^2+k",visible:true}],
   params:{a:1,b:1,h:0,k:0},
   range:10,showPoints:true,showDerivative:false,showIntegral:false,
   activeFunctionIndex:0
@@ -97,16 +97,24 @@ function prettyFormula(source){
   return `y = ${escaped.replace(/\*/g," · ").replace(/\^2/g,"²").replace(/\^3/g,"³").replace(/\^4/g,"⁴").replace(/\bpi\b/gi,"π")}`;
 }
 function normalizeExpression(source){
-  return source
+  const mathFunctions=["asin","acos","atan","sqrt","log10","floor","round","sign","sin","cos","tan","abs","log","exp","ceil","min","max"];
+  let normalized=source
     .replace(/[−–]/g,"-").replace(/×|·/g,"*").replace(/÷/g,"/").replace(/π/gi,"pi")
-    .replace(/\^/g,"**")
     .replace(/\bln\b/gi,"log")
-    .replace(/\be\b/g,"E")
+    .replace(/\^/g,"**");
+  mathFunctions.forEach((name,index)=>{
+    normalized=normalized.replace(new RegExp(`\\b${name}\\b`,"gi"),`§${String.fromCharCode(0xE000+index)}§`);
+  });
+  normalized=normalized
+    .replace(/pi/gi,"§P§").replace(/\be\b/g,"§E§")
     .replace(/(\d|\)|[abhkx])\s*(?=\()/g,"$1*")
     .replace(/(\d|\)|[abhkx])\s*(?=[abhkx])/g,"$1*")
-    .replace(/(\d|\)|[abhkx])\s*(?=(?:sin|cos|tan|asin|acos|atan|sqrt|abs|log10|log|exp)\b)/g,"$1*")
-    .replace(/\bpi\b/gi,"Math.PI").replace(/\bE\b/g,"Math.E")
-    .replace(/\b(sin|cos|tan|asin|acos|atan|sqrt|abs|log10|log|exp|floor|ceil|round|sign|min|max)\b/g,"Math.$1");
+    .replace(/(\d|\)|[abhkx])\s*(?=§)/g,"$1*")
+    .replace(/(§P§|§E§)\s*(?=[abhkx\d(])/g,"$1*");
+  mathFunctions.forEach((name,index)=>{
+    normalized=normalized.replaceAll(`§${String.fromCharCode(0xE000+index)}§`,`Math.${name}`);
+  });
+  return normalized.replaceAll("§P§","Math.PI").replaceAll("§E§","Math.E");
 }
 function compileExpression(source){
   const safe=normalizeExpression(source);
@@ -190,3 +198,4 @@ document.getElementById("resetButton").onclick=()=>{state.params={a:1,b:1,h:0,k:
 document.getElementById("printButton").onclick=()=>window.print();
 document.getElementById("saveButton").onclick=()=>{const link=document.createElement("a");link.download=`${state.preset}-그래프.png`;link.href=canvas.toDataURL("image/png");link.click();};
 buildLibrary();buildSliders();buildFunctionRows();renderFormula();new ResizeObserver(draw).observe(canvas);draw();
+if(document.fonts?.ready)document.fonts.ready.then(draw);

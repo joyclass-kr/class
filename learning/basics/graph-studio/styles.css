@@ -1,3 +1,19 @@
+@font-face {
+  font-family: "STIX Two Math";
+  src: url("../arithmetics/public/fonts/STIXTwoMath-Regular.woff2") format("woff2");
+  font-style: normal;
+  font-weight: 400;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: "KoPubWorld Batang";
+  src: url("../arithmetics/public/fonts/KoPubWorld-Batang-Medium.woff2") format("woff2");
+  font-style: normal;
+  font-weight: 500;
+  font-display: swap;
+}
+
 * { box-sizing: border-box; }
 body { margin: 0; }
 .page {
@@ -22,8 +38,8 @@ body { margin: 0; }
 
 .header h1 { margin: 9px 0 4px; font-size: clamp(26px, 3vw, 40px); letter-spacing: -.055em; }
 .header h1 span { display: inline-block; margin-left: 7px; border-radius: 99px; background: #e5e2ff; padding: 5px 10px; color: var(--purple); font-size: 12px; vertical-align: middle; }
-.header p { margin: 0; color: #717585; font-size: 14px; font-weight: 650; }
-.back { color: #777c8c; font-size: 13px; font-weight: 800; text-decoration: none; }
+.header p { margin: 0; color: #5d6474; font-size: 16px; font-weight: 650; }
+.back { color: #606778; font-size: 14px; font-weight: 800; text-decoration: none; }
 .headerActions { display: flex; gap: 9px; }
 .headerActions button, .rangeControl button {
   height: 43px; border: 1px solid #d9dbe4; border-radius: 11px; background: #fff; padding: 0 16px; color: #555b70; font-weight: 800; cursor: pointer;
@@ -34,7 +50,7 @@ body { margin: 0; }
   width: min(1480px, 100%);
   min-height: 690px;
   display: grid;
-  grid-template-columns: 220px minmax(420px, 1fr) 270px;
+  grid-template-columns: 245px minmax(460px, 1fr) 300px;
   margin: 0 auto;
   overflow: hidden;
   border: 1px solid #dde0e9;
@@ -43,29 +59,29 @@ body { margin: 0; }
   box-shadow: 0 18px 60px rgba(31, 35, 56, .09);
 }
 
-.library, .controls { padding: 24px 20px; background: #fafafd; }
+.library, .controls { padding: 26px 22px; background: #fafafd; }
 .library { border-right: 1px solid #e6e8ef; }
 .controls { border-left: 1px solid #e6e8ef; }
 .sectionHeading { display: flex; align-items: center; gap: 10px; margin-bottom: 23px; }
-.sectionHeading > span { width: 30px; height: 30px; display: grid; place-items: center; border-radius: 9px; background: #eceaff; color: var(--purple); font-size: 11px; font-weight: 900; }
+.sectionHeading > span { width: 34px; height: 34px; display: grid; place-items: center; border-radius: 10px; background: #eceaff; color: var(--purple); font-size: 12px; font-weight: 900; }
 .sectionHeading div { display: grid; gap: 2px; }
-.sectionHeading strong { font-size: 14px; }
-.sectionHeading small { color: #9a9dac; font-size: 10px; }
+.sectionHeading strong { font-size: 16px; }
+.sectionHeading small { color: #73798a; font-size: 11px; }
 .presetGroup { margin-bottom: 22px; }
-.presetGroup p { margin: 0 0 8px; color: #9a9dac; font-size: 10px; font-weight: 900; letter-spacing: .08em; }
+.presetGroup p { margin: 0 0 8px; color: #747a8b; font-size: 12px; font-weight: 900; letter-spacing: .08em; }
 .presetGroup div { display: grid; gap: 5px; }
 .presetGroup button {
-  height: 36px; display: flex; align-items: center; gap: 9px; border: 0; border-radius: 9px; background: transparent; padding: 0 10px; color: #565b6c; font-size: 12px; font-weight: 750; text-align: left; cursor: pointer;
+  height: 41px; display: flex; align-items: center; gap: 10px; border: 0; border-radius: 10px; background: transparent; padding: 0 11px; color: #414758; font-size: 14px; font-weight: 750; text-align: left; cursor: pointer;
 }
-.presetGroup button i { width: 7px; height: 7px; border-radius: 50%; }
+.presetGroup button i { width: 8px; height: 8px; border-radius: 50%; }
 .presetGroup button:hover { background: #f0f1f6; }
 .presetGroup .activePreset { background: #ebe9ff; color: #4b3fc2; }
 
 .stage { min-width: 0; display: grid; grid-template-rows: auto auto minmax(440px, 1fr); background: #fff; }
 .formulaBar { min-width: 0; display: grid; grid-template-columns: 46px minmax(0, 1fr) auto; align-items: center; gap: 10px; border-bottom: 1px solid #e6e8ef; padding: 16px 20px 12px; }
-.formulaBar > span { width: 46px; height: 42px; display: grid; place-items: center; border-radius: 10px; background: var(--purple); color: #fff; font-family: Georgia, serif; font-size: 17px; font-weight: 800; white-space: nowrap; }
-.formulaDisplay { min-width: 0; width: 100%; min-height: 52px; display: flex; align-items: center; overflow-x: auto; border: 1px solid #dfe1e9; border-radius: 10px; background: #fff; padding: 7px 15px; color: #25293b; font-family: "Times New Roman", "Suneung Math", serif; font-size: clamp(19px, 2vw, 25px); white-space: nowrap; }
-.formulaBar small { grid-column: 2; color: #9a9dac; font-size: 9px; }
+.formulaBar > span { width: 46px; height: 46px; display: grid; place-items: center; border-radius: 10px; background: var(--purple); color: #fff; font-family: "STIX Two Math", serif; font-size: 21px; font-weight: 700; white-space: nowrap; }
+.formulaDisplay { min-width: 0; width: 100%; min-height: 58px; display: flex; align-items: center; overflow-x: auto; border: 1px solid #d3d7e2; border-radius: 11px; background: #fff; padding: 8px 17px; color: #171b2b; font-family: "STIX Two Math", serif; font-size: clamp(25px, 2.2vw, 32px); line-height: 1.25; white-space: nowrap; }
+.formulaBar small { grid-column: 2; color: #687084; font-size: 11px; }
 .formulaDisplay sup { font-size: .68em; line-height: 0; }
 .formulaDisplay .mathFraction { display: inline-grid; grid-template-rows: auto auto; align-items: center; margin-left: 5px; font-size: .78em; text-align: center; }
 .formulaDisplay .mathFraction > span:first-child { border-bottom: 1.5px solid currentColor; padding: 0 5px 2px; }
@@ -75,9 +91,9 @@ body { margin: 0; }
 .functionComposer { border-bottom: 1px solid #e6e8ef; background: #f8f8fc; padding: 13px 20px 14px; }
 .functionComposer header { display: flex; align-items: center; justify-content: space-between; gap: 14px; margin-bottom: 9px; }
 .functionComposer header > div { display: grid; gap: 2px; }
-.functionComposer header strong { font-size: 12px; }
-.functionComposer header small, .syntaxGuide { color: #8a8e9d; font-size: 9px; }
-.functionComposer header button { height: 31px; border: 1px solid #cbc7ed; border-radius: 8px; background: #eeecff; padding: 0 11px; color: #5146bf; font-size: 10px; font-weight: 850; cursor: pointer; }
+.functionComposer header strong { font-size: 15px; }
+.functionComposer header small, .syntaxGuide { color: #697083; font-size: 11px; }
+.functionComposer header button { height: 36px; border: 1px solid #bcb6e8; border-radius: 9px; background: #eeecff; padding: 0 13px; color: #4439b4; font-size: 12px; font-weight: 850; cursor: pointer; }
 .functionRows { display: grid; gap: 6px; }
 .functionRow { min-width: 0; display: grid; grid-template-columns: 24px 28px minmax(0, 1fr) 30px; align-items: center; gap: 7px; border-radius: 9px; padding: 2px; transition: background .15s, box-shadow .15s; }
 .functionRow.isActive { background: #efedff; box-shadow: 0 0 0 2px rgba(101,88,217,.12); }
@@ -85,28 +101,28 @@ body { margin: 0; }
 .functionVisibility input { position: absolute; opacity: 0; }
 .functionVisibility i { width: 13px; height: 13px; border: 3px solid #fff; border-radius: 50%; box-shadow: 0 0 0 1px #bbc0ce; }
 .functionVisibility input:not(:checked) + i { background: #d7d9e0 !important; opacity: .55; }
-.functionRow > b { color: #555b70; font: 800 13px Georgia, serif; }
-.functionInput { min-width: 0; height: 34px; border: 1px solid #d9dce6; border-radius: 8px; outline: none; background: #fff; padding: 0 10px; color: #25293b; font: 16px "Times New Roman", monospace; }
+.functionRow > b { color: #42485d; font: 700 17px "STIX Two Math", serif; }
+.functionInput { min-width: 0; height: 42px; border: 1px solid #cfd3df; border-radius: 9px; outline: none; background: #fff; padding: 0 12px; color: #171b2b; font: 21px "STIX Two Math", serif; }
 .functionInput:focus { border-color: var(--purple); box-shadow: 0 0 0 2px rgba(101,88,217,.1); }
 .removeFunction { width: 28px; height: 28px; border: 0; border-radius: 7px; background: #ececf2; color: #747989; font-size: 17px; cursor: pointer; }
 .removeFunction:disabled { opacity: .35; cursor: default; }
-.functionError { grid-column: 3 / 5; min-height: 0; color: #c44b42; font-size: 9px; }
+.functionError { grid-column: 3 / 5; min-height: 0; color: #ad352e; font-size: 11px; font-weight: 700; }
 .functionError:empty { display: none; }
 .mathKeyboard { margin: 11px 0 0 59px; border: 1px solid #dedfec; border-radius: 11px; background: #fff; padding: 10px; }
 .keyboardHeading { display: flex; align-items: center; justify-content: space-between; gap: 10px; margin-bottom: 8px; }
-.keyboardHeading strong { font-size: 10px; }
-.keyboardHeading span { border-radius: 99px; background: #eeecff; padding: 4px 8px; color: #5146bf; font-size: 9px; font-weight: 850; }
+.keyboardHeading strong { font-size: 13px; }
+.keyboardHeading span { border-radius: 99px; background: #eeecff; padding: 5px 9px; color: #5146bf; font-size: 11px; font-weight: 850; }
 .keyboardKeys { display: grid; grid-template-columns: repeat(10, minmax(32px, 1fr)); gap: 5px; }
-.keyboardKeys button, .formulaExamples button { min-width: 0; height: 30px; border: 1px solid #d9dbe5; border-radius: 7px; background: #fafafd; color: #34384b; font: 750 12px "Times New Roman", "Malgun Gothic", sans-serif; cursor: pointer; }
+.keyboardKeys button, .formulaExamples button { min-width: 0; height: 38px; border: 1px solid #ced2df; border-radius: 8px; background: #fafafd; color: #252a3d; font: 400 17px "STIX Two Math", serif; cursor: pointer; }
 .keyboardKeys button:hover, .keyboardKeys button:focus-visible, .formulaExamples button:hover, .formulaExamples button:focus-visible { border-color: #8e85e2; background: #f0eeff; outline: none; }
-.keyboardKeys .keyboardUtility { color: #656a79; font-family: "Malgun Gothic", sans-serif; font-size: 9px; }
+.keyboardKeys .keyboardUtility { color: #545a6a; font-family: Pretendard, "Malgun Gothic", sans-serif; font-size: 11px; font-weight: 800; }
 .formulaExamples { display: flex; align-items: center; flex-wrap: wrap; gap: 5px; margin-top: 7px; }
-.formulaExamples > span { margin-right: 2px; color: #898d9b; font-size: 9px; font-weight: 850; }
-.formulaExamples button { height: 27px; padding: 0 9px; font-size: 10px; }
+.formulaExamples > span { margin-right: 4px; color: #666d7e; font-size: 11px; font-weight: 850; }
+.formulaExamples button { height: 32px; padding: 0 10px; font-size: 14px; }
 .syntaxGuide { margin: 8px 0 0 59px; line-height: 1.45; }
 .canvasWrap { position: relative; min-height: 540px; padding: 20px; }
 .canvasWrap canvas { width: 100%; height: 100%; display: block; border: 1px solid #e1e4ed; border-radius: 13px; }
-.legend { position: absolute; top: 33px; left: 33px; display: flex; flex-wrap: wrap; gap: 8px; border: 1px solid #e4e6ed; border-radius: 10px; background: rgba(255,255,255,.92); padding: 8px 10px; font-size: 10px; font-weight: 800; }
+.legend { position: absolute; top: 33px; left: 33px; display: flex; flex-wrap: wrap; gap: 9px; border: 1px solid #d9dce5; border-radius: 10px; background: rgba(255,255,255,.94); padding: 9px 11px; font-family: "STIX Two Math", serif; font-size: 14px; font-weight: 700; }
 .legend span { display: flex; align-items: center; gap: 5px; }
 .legend i { width: 15px; height: 3px; border-radius: 9px; }
 .legend .areaSwatch { height: 9px; background: rgba(101,88,217,.2); }
@@ -115,18 +131,18 @@ body { margin: 0; }
 
 .slider { display: grid; gap: 8px; margin-bottom: 18px; }
 .slider div { display: flex; align-items: center; justify-content: space-between; }
-.slider b { width: 27px; height: 27px; display: grid; place-items: center; border-radius: 7px; background: #eeeef5; font: 800 15px Georgia, serif; }
-.slider output { min-width: 42px; border-radius: 7px; background: #fff; padding: 5px 7px; color: var(--purple); font-size: 11px; font-weight: 900; text-align: center; }
+.slider b { width: 32px; height: 32px; display: grid; place-items: center; border-radius: 8px; background: #eeeef5; font: 700 19px "STIX Two Math", serif; }
+.slider output { min-width: 48px; border-radius: 7px; background: #fff; padding: 6px 8px; color: #5146c8; font-family: "STIX Two Math", serif; font-size: 15px; font-weight: 700; text-align: center; }
 .slider input { width: 100%; accent-color: var(--purple); cursor: pointer; }
 .reset { width: 100%; height: 36px; margin: -2px 0 28px; border: 1px solid #dadce5; border-radius: 9px; background: #fff; color: #6c7182; font-size: 11px; font-weight: 800; cursor: pointer; }
 .toggle { display: flex; align-items: center; justify-content: space-between; gap: 10px; border-bottom: 1px solid #eceef3; padding: 11px 0; }
 .toggle span { display: grid; gap: 3px; }
-.toggle b { font-size: 12px; }
-.toggle small { color: #9a9dac; font-size: 9px; }
+.toggle b { font-size: 14px; }
+.toggle small { color: #73798a; font-size: 11px; }
 .toggle input { width: 34px; height: 18px; accent-color: var(--purple); }
 .tip { margin-top: 19px; border-radius: 12px; background: #26283a; padding: 15px; color: #fff; }
-.tip strong { color: #bcb6ff; font-size: 10px; }
-.tip p { margin: 7px 0 0; font-size: 11px; font-weight: 650; line-height: 1.55; }
+.tip strong { color: #c9c4ff; font-size: 12px; }
+.tip p { margin: 7px 0 0; font-size: 13px; font-weight: 650; line-height: 1.6; }
 
 @media (max-width: 980px) {
   .page { padding: 18px; }
