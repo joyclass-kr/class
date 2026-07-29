@@ -8,13 +8,13 @@ import WorksheetChoicePanel, {
 import {
   createMiddleQuadraticEquationProblemSet,
   createMiddleQuadraticEquationReviewProblems,
-  isMiddleQuadraticEquationKind,
   MIDDLE_QUADRATIC_EQUATION_TITLES,
+  resolveMiddleQuadraticEquationKind,
   type MiddleQuadraticEquationKind,
   type MiddleQuadraticEquationProblem,
 } from "../../../../lib/middle-quadratic-equation-workouts";
 
-const DEFAULT_KIND: MiddleQuadraticEquationKind = "square-root-basic";
+const DEFAULT_KIND: MiddleQuadraticEquationKind = "roots-and-squares";
 const INITIAL_SEED = 20260729;
 const DIFFICULTY_LABELS: Record<MiddleQuadraticEquationProblem["difficulty"], string> = {
   basic: "기본",
@@ -52,8 +52,10 @@ export default function MiddleQuadraticEquationsPage() {
   const [scale, setScale] = useState(0.6);
 
   useEffect(() => {
-    const requestedKind = new URLSearchParams(window.location.search).get("kind");
-    if (!isMiddleQuadraticEquationKind(requestedKind) || requestedKind === kind) return;
+    const requestedKind = resolveMiddleQuadraticEquationKind(
+      new URLSearchParams(window.location.search).get("kind"),
+    );
+    if (!requestedKind || requestedKind === kind) return;
     setKind(requestedKind);
     setProblemSet(createMiddleQuadraticEquationProblemSet(requestedKind, INITIAL_SEED));
     setReviews([]);

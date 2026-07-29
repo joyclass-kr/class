@@ -1,4 +1,4 @@
-export type MiddleQuadraticEquationKind =
+export type MiddleQuadraticEquationMethodKind =
   | "square-root-basic"
   | "zero-product"
   | "monic-factorization"
@@ -10,7 +10,13 @@ export type MiddleQuadraticEquationKind =
   | "quadratic-formula-general"
   | "negative-leading"
   | "expand-and-solve"
-  | "fraction-decimal"
+  | "fraction-decimal";
+
+export type MiddleQuadraticEquationKind =
+  | "roots-and-squares"
+  | "factorization"
+  | "quadratic-formula"
+  | "normalize-and-solve"
   | "comprehensive";
 
 export type MiddleQuadraticEquationDifficulty = "basic" | "application" | "advanced";
@@ -18,7 +24,7 @@ type Fraction = readonly [numerator: number, denominator: number];
 
 export type MiddleQuadraticEquationProblem = {
   id: string;
-  kind: MiddleQuadraticEquationKind;
+  kind: MiddleQuadraticEquationMethodKind;
   difficulty: MiddleQuadraticEquationDifficulty;
   structure: string;
   label: string;
@@ -30,6 +36,14 @@ export type MiddleQuadraticEquationProblem = {
 };
 
 export const MIDDLE_QUADRATIC_EQUATION_KINDS: MiddleQuadraticEquationKind[] = [
+  "roots-and-squares",
+  "factorization",
+  "quadratic-formula",
+  "normalize-and-solve",
+  "comprehensive",
+];
+
+export const MIDDLE_QUADRATIC_EQUATION_METHOD_KINDS: MiddleQuadraticEquationMethodKind[] = [
   "square-root-basic",
   "zero-product",
   "monic-factorization",
@@ -42,10 +56,17 @@ export const MIDDLE_QUADRATIC_EQUATION_KINDS: MiddleQuadraticEquationKind[] = [
   "negative-leading",
   "expand-and-solve",
   "fraction-decimal",
-  "comprehensive",
 ];
 
 export const MIDDLE_QUADRATIC_EQUATION_TITLES: Record<MiddleQuadraticEquationKind, string> = {
+  "roots-and-squares": "이차방정식: 제곱근·완전제곱",
+  factorization: "이차방정식: 인수분해로 풀기",
+  "quadratic-formula": "이차방정식: 근의 공식",
+  "normalize-and-solve": "이차방정식: 식 정리 후 풀기",
+  comprehensive: "이차방정식 종합",
+};
+
+const MIDDLE_QUADRATIC_EQUATION_METHOD_TITLES: Record<MiddleQuadraticEquationMethodKind, string> = {
   "square-root-basic": "이차방정식: x²=a와 제곱근",
   "zero-product": "이차방정식: 인수의 곱이 0",
   "monic-factorization": "이차방정식: 인수분해 풀이",
@@ -58,7 +79,6 @@ export const MIDDLE_QUADRATIC_EQUATION_TITLES: Record<MiddleQuadraticEquationKin
   "negative-leading": "이차방정식: 음의 최고차항 정리",
   "expand-and-solve": "이차방정식: 전개·이항 후 풀이",
   "fraction-decimal": "이차방정식: 분수·소수 계수",
-  comprehensive: "이차방정식 종합",
 };
 
 function random(seed: number) {
@@ -172,7 +192,7 @@ function uniqueDistractors(answer: string, candidates: string[]) {
 
 function make(
   id: string,
-  kind: MiddleQuadraticEquationKind,
+  kind: MiddleQuadraticEquationMethodKind,
   latex: string,
   answerLatex: string,
   solutionHint: string,
@@ -185,7 +205,7 @@ function make(
     kind,
     difficulty: "basic",
     structure,
-    label: MIDDLE_QUADRATIC_EQUATION_TITLES[kind],
+    label: MIDDLE_QUADRATIC_EQUATION_METHOD_TITLES[kind],
     latex,
     answerLatex,
     solutionHint,
@@ -202,7 +222,7 @@ function distinctIntegerRoots(next: () => number, limit: number) {
 }
 
 function build(
-  kind: MiddleQuadraticEquationKind,
+  kind: MiddleQuadraticEquationMethodKind,
   next: () => number,
   id: string,
   variantHint = 0,
@@ -389,10 +409,7 @@ function build(
       variantHint % 2 === 0 ? "fraction-coefficients" : "decimal-coefficients");
   }
 
-  const comprehensiveKinds = MIDDLE_QUADRATIC_EQUATION_KINDS.filter(
-    (candidate) => candidate !== "comprehensive",
-  );
-  return build(comprehensiveKinds[variantHint % comprehensiveKinds.length], next, id, variantHint);
+  throw new Error(`지원하지 않는 이차방정식 풀이 유형: ${kind}`);
 }
 
 function difficultyForIndex(index: number): MiddleQuadraticEquationDifficulty {
@@ -401,18 +418,83 @@ function difficultyForIndex(index: number): MiddleQuadraticEquationDifficulty {
   return "advanced";
 }
 
-const COMPREHENSIVE_ROTATION = MIDDLE_QUADRATIC_EQUATION_KINDS.filter(
-  (kind) => kind !== "comprehensive",
-);
+const GROUP_METHOD_PLANS: Record<Exclude<MiddleQuadraticEquationKind, "comprehensive">, MiddleQuadraticEquationMethodKind[]> = {
+  "roots-and-squares": [
+    "square-root-basic",
+    "perfect-square",
+    "square-root-basic",
+    "perfect-square",
+    "completing-square",
+    "completing-square",
+    "perfect-square",
+    "completing-square",
+  ],
+  factorization: [
+    "zero-product",
+    "common-factor",
+    "monic-factorization",
+    "monic-factorization",
+    "nonmonic-factorization",
+    "nonmonic-factorization",
+    "negative-leading",
+    "nonmonic-factorization",
+  ],
+  "quadratic-formula": [
+    "quadratic-formula-monic",
+    "quadratic-formula-monic",
+    "quadratic-formula-general",
+    "quadratic-formula-monic",
+    "quadratic-formula-general",
+    "quadratic-formula-general",
+    "quadratic-formula-monic",
+    "quadratic-formula-general",
+  ],
+  "normalize-and-solve": [
+    "expand-and-solve",
+    "fraction-decimal",
+    "expand-and-solve",
+    "expand-and-solve",
+    "fraction-decimal",
+    "fraction-decimal",
+    "expand-and-solve",
+    "fraction-decimal",
+  ],
+};
+
+const LEGACY_KIND_GROUPS: Record<MiddleQuadraticEquationMethodKind, MiddleQuadraticEquationKind> = {
+  "square-root-basic": "roots-and-squares",
+  "perfect-square": "roots-and-squares",
+  "completing-square": "roots-and-squares",
+  "zero-product": "factorization",
+  "common-factor": "factorization",
+  "monic-factorization": "factorization",
+  "nonmonic-factorization": "factorization",
+  "negative-leading": "factorization",
+  "quadratic-formula-monic": "quadratic-formula",
+  "quadratic-formula-general": "quadratic-formula",
+  "expand-and-solve": "normalize-and-solve",
+  "fraction-decimal": "normalize-and-solve",
+};
 
 function comprehensiveKind(seed: number, index: number) {
-  const offset = (((seed - 1) * 8) % COMPREHENSIVE_ROTATION.length + COMPREHENSIVE_ROTATION.length)
-    % COMPREHENSIVE_ROTATION.length;
-  return COMPREHENSIVE_ROTATION[(offset + index) % COMPREHENSIVE_ROTATION.length];
+  const offset = (((seed - 1) * 8) % MIDDLE_QUADRATIC_EQUATION_METHOD_KINDS.length
+    + MIDDLE_QUADRATIC_EQUATION_METHOD_KINDS.length)
+    % MIDDLE_QUADRATIC_EQUATION_METHOD_KINDS.length;
+  return MIDDLE_QUADRATIC_EQUATION_METHOD_KINDS[
+    (offset + index) % MIDDLE_QUADRATIC_EQUATION_METHOD_KINDS.length
+  ];
 }
 
 export function isMiddleQuadraticEquationKind(value: string | null): value is MiddleQuadraticEquationKind {
   return MIDDLE_QUADRATIC_EQUATION_KINDS.includes(value as MiddleQuadraticEquationKind);
+}
+
+export function resolveMiddleQuadraticEquationKind(value: string | null): MiddleQuadraticEquationKind | null {
+  if (isMiddleQuadraticEquationKind(value)) return value;
+  if (MIDDLE_QUADRATIC_EQUATION_METHOD_KINDS.includes(value as MiddleQuadraticEquationMethodKind)) {
+    return LEGACY_KIND_GROUPS[value as MiddleQuadraticEquationMethodKind];
+  }
+  return null;
 }
 
 export function createMiddleQuadraticEquationProblemSet(
@@ -423,20 +505,20 @@ export function createMiddleQuadraticEquationProblemSet(
   return {
     seed,
     kind,
-    problems: Array.from({ length: 8 }, (_, index) => ({
-      ...build(
-        kind === "comprehensive" ? comprehensiveKind(seed, index) : kind,
-        next,
-        `middle-quadratic-${kind}-${index}`,
-        index,
-      ),
-      difficulty: difficultyForIndex(index),
-    })),
+    problems: Array.from({ length: 8 }, (_, index) => {
+      const method = kind === "comprehensive"
+        ? comprehensiveKind(seed, index)
+        : GROUP_METHOD_PLANS[kind][index];
+      return {
+        ...build(method, next, `middle-quadratic-${kind}-${index}`, index),
+        difficulty: difficultyForIndex(index),
+      };
+    }),
   };
 }
 
 export function createMiddleQuadraticEquationReviewProblems(
-  kinds: MiddleQuadraticEquationKind[],
+  kinds: MiddleQuadraticEquationMethodKind[],
   seed: number,
 ) {
   const next = random(seed);

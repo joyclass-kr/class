@@ -100,8 +100,8 @@ test("오답 보충은 서로 다른 유형에서 최대 두 문제만 만든다
   assert.ok(reviews.every(({ difficulty }) => difficulty === "advanced"));
 });
 
-test("중학교 연산 목록 94개는 모두 연결되며 이름과 경로가 중복되지 않는다", () => {
-  assert.equal(middleSchoolWorksheetCatalog.length, 94);
+test("중학교 연산 목록 86개는 모두 연결되며 이름과 경로가 중복되지 않는다", () => {
+  assert.equal(middleSchoolWorksheetCatalog.length, 86);
   assert.ok(middleSchoolWorksheetCatalog.every(({ route }) => route !== null));
   assert.equal(
     new Set(middleSchoolWorksheetCatalog.map(({ name }) => name)).size,
