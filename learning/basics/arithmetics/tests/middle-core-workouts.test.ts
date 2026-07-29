@@ -8,8 +8,8 @@ import {
 } from "../lib/middle-core-workouts.ts";
 import { middleSchoolWorksheetCatalog } from "../lib/arithmetic-worksheets.ts";
 
-test("중등 핵심 연산 19개 유형이 각각 8문제를 생성한다", () => {
-  assert.equal(MIDDLE_CORE_KINDS.length, 19);
+test("중등 핵심 연산 21개 유형이 각각 8문제를 생성한다", () => {
+  assert.equal(MIDDLE_CORE_KINDS.length, 21);
   for (const kind of MIDDLE_CORE_KINDS) {
     const set = createMiddleCoreProblemSet(kind, 20260803);
     assert.equal(set.problems.length, 8);
@@ -87,6 +87,17 @@ test("종합 곱셈공식은 다항식의 곱셈, 완전제곱식, 합과 차를
   assert.ok(structures.some((structure) => structure.endsWith("-leading")));
 });
 
+test("통합 학습지는 쉬운 하위 유형을 한 문제지 안에서 순환한다", () => {
+  assert.deepEqual(
+    new Set(createMiddleCoreProblemSet("monomial-comprehensive", 31).problems.map(({ kind }) => kind)),
+    new Set(["monomial-multiply", "monomial-divide"]),
+  );
+  assert.deepEqual(
+    new Set(createMiddleCoreProblemSet("linear-system-comprehensive", 31).problems.map(({ kind }) => kind)),
+    new Set(["linear-inequality", "simultaneous-substitution", "simultaneous-elimination"]),
+  );
+});
+
 test("오답 보충은 서로 다른 유형에서 최대 두 문제만 만든다", () => {
   const kinds: MiddleCoreKind[] = [
     "linear-equation",
@@ -100,8 +111,8 @@ test("오답 보충은 서로 다른 유형에서 최대 두 문제만 만든다
   assert.ok(reviews.every(({ difficulty }) => difficulty === "advanced"));
 });
 
-test("중학교 연산 목록 55개는 모두 연결되며 이름과 경로가 중복되지 않는다", () => {
-  assert.equal(middleSchoolWorksheetCatalog.length, 55);
+test("중학교 연산 목록 49개는 모두 연결되며 이름과 경로가 중복되지 않는다", () => {
+  assert.equal(middleSchoolWorksheetCatalog.length, 49);
   assert.ok(middleSchoolWorksheetCatalog.every(({ route }) => route !== null));
   assert.equal(
     new Set(middleSchoolWorksheetCatalog.map(({ name }) => name)).size,

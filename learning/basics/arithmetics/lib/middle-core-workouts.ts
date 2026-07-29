@@ -8,10 +8,12 @@ export type MiddleCoreKind =
   | "exponent-laws"
   | "monomial-multiply"
   | "monomial-divide"
+  | "monomial-comprehensive"
   | "polynomial-add-subtract"
   | "linear-inequality"
   | "simultaneous-substitution"
   | "simultaneous-elimination"
+  | "linear-system-comprehensive"
   | "square-roots-real"
   | "radical-calculation"
   | "polynomial-multiply"
@@ -43,10 +45,12 @@ export const MIDDLE_CORE_KINDS: MiddleCoreKind[] = [
   "exponent-laws",
   "monomial-multiply",
   "monomial-divide",
+  "monomial-comprehensive",
   "polynomial-add-subtract",
   "linear-inequality",
   "simultaneous-substitution",
   "simultaneous-elimination",
+  "linear-system-comprehensive",
   "square-roots-real",
   "radical-calculation",
   "polynomial-multiply",
@@ -65,19 +69,35 @@ export const MIDDLE_CORE_TITLES: Record<MiddleCoreKind, string> = {
   "exponent-laws": "지수법칙",
   "monomial-multiply": "단항식의 곱셈",
   "monomial-divide": "단항식의 나눗셈",
+  "monomial-comprehensive": "단항식의 곱셈과 나눗셈",
   "polynomial-add-subtract": "다항식의 덧셈·뺄셈",
   "linear-inequality": "일차부등식",
   "simultaneous-substitution": "연립일차방정식 대입법",
   "simultaneous-elimination": "연립일차방정식 가감법",
+  "linear-system-comprehensive": "일차부등식과 연립일차방정식",
   "square-roots-real": "제곱근과 실수",
   "radical-calculation": "근호를 포함한 식의 계산",
   "polynomial-multiply": "다항식의 곱셈",
   "formula-square": "곱셈공식: 완전제곱식",
   "formula-sum-difference": "곱셈공식: 합과 차",
-  "formula-comprehensive": "곱셈공식 종합",
+  "formula-comprehensive": "다항식의 곱셈과 곱셈공식",
 };
 
-const COMPREHENSIVE_PARTS: Exclude<MiddleCoreKind, "formula-comprehensive">[] = [
+type AtomicMiddleCoreKind = Exclude<
+  MiddleCoreKind,
+  "monomial-comprehensive" | "linear-system-comprehensive" | "formula-comprehensive"
+>;
+
+const MONOMIAL_COMPREHENSIVE_PARTS: AtomicMiddleCoreKind[] = [
+  "monomial-multiply",
+  "monomial-divide",
+];
+const LINEAR_SYSTEM_COMPREHENSIVE_PARTS: AtomicMiddleCoreKind[] = [
+  "linear-inequality",
+  "simultaneous-substitution",
+  "simultaneous-elimination",
+];
+const FORMULA_COMPREHENSIVE_PARTS: AtomicMiddleCoreKind[] = [
   "polynomial-multiply",
   "formula-square",
   "formula-sum-difference",
@@ -727,9 +747,17 @@ function build(
     a === 1 ? "unit-leading" : "nonunit-leading");
 }
 
-function actualKind(kind: MiddleCoreKind, index: number): Exclude<MiddleCoreKind, "formula-comprehensive"> {
-  if (kind !== "formula-comprehensive") return kind;
-  return COMPREHENSIVE_PARTS[index % COMPREHENSIVE_PARTS.length];
+function actualKind(kind: MiddleCoreKind, index: number): AtomicMiddleCoreKind {
+  if (kind === "monomial-comprehensive") {
+    return MONOMIAL_COMPREHENSIVE_PARTS[index % MONOMIAL_COMPREHENSIVE_PARTS.length];
+  }
+  if (kind === "linear-system-comprehensive") {
+    return LINEAR_SYSTEM_COMPREHENSIVE_PARTS[index % LINEAR_SYSTEM_COMPREHENSIVE_PARTS.length];
+  }
+  if (kind === "formula-comprehensive") {
+    return FORMULA_COMPREHENSIVE_PARTS[index % FORMULA_COMPREHENSIVE_PARTS.length];
+  }
+  return kind;
 }
 
 export function isMiddleCoreKind(value: string | null): value is MiddleCoreKind {
