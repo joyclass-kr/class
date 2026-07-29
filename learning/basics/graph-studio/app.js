@@ -133,7 +133,7 @@ function draw(){
     catch(error){if(errorNode)errorNode.textContent=error.message||"수식을 확인하세요.";return null;}
   });
   formulaHelp.textContent=evaluators.some(Boolean)?"ln, log10, sin, cos, tan, sqrt, abs, exp, pi 사용 가능":"수식을 확인해 주세요.";
-  ctx.fillStyle="#fbfcff";ctx.fillRect(0,0,w,h);const step=state.range<=5?1:state.range<=10?2:5;ctx.font="11px sans-serif";
+  ctx.fillStyle="#fbfcff";ctx.fillRect(0,0,w,h);const step=state.range<=5?1:state.range<=10?2:5;ctx.font='12px "STIX Two Math", serif';
   for(let v=min;v<=max;v+=step){ctx.strokeStyle=v===0?"#697386":"#e8ebf2";ctx.lineWidth=1;ctx.beginPath();ctx.moveTo(px(v),0);ctx.lineTo(px(v),h);ctx.stroke();ctx.beginPath();ctx.moveTo(0,py(v));ctx.lineTo(w,py(v));ctx.stroke();if(v!==0){ctx.fillStyle="#8891a3";ctx.textAlign="center";ctx.fillText(v,px(v),Math.min(h-15,Math.max(12,py(0)+16)));ctx.textAlign="right";ctx.fillText(v,Math.min(w-5,Math.max(24,px(0)-7)),py(v)+3);}}
   const primary=evaluators[0];
   if(state.showIntegral&&primary){ctx.beginPath();ctx.moveTo(px(-2),py(0));for(let i=0;i<=160;i++){const x=-2+i/40,y=primary(x);if(Number.isFinite(y))ctx.lineTo(px(x),py(y));}ctx.lineTo(px(2),py(0));ctx.closePath();ctx.fillStyle="rgba(101,88,217,.16)";ctx.fill();}
