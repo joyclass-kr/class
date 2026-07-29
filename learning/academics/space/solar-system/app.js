@@ -503,9 +503,10 @@
                 new THREE.PlaneGeometry(GALAXY_VIEW.planeSize, GALAXY_VIEW.planeSize),
                 galaxyMaterial
             );
-            // The Solar System sits away from the galactic center, on a local
-            // spur of the Orion Arm. Distances remain a conceptual view scale.
-            galaxyBackdrop.position.set(-14500, -1200, 0);
+            // Anchor the Solar System over a bright section of the texture's
+            // Orion-side spiral arm instead of the dark inter-arm gap.
+            // Distances remain a conceptual view scale.
+            galaxyBackdrop.position.set(-11800, -1200, 0);
             galaxyBackdrop.rotation.x = -Math.PI / 2;
             galaxyBackdrop.rotation.z = -0.16;
             galaxyBackdrop.renderOrder = -100;
@@ -517,6 +518,59 @@
         function smoothStep01(value) {
             var t = Math.max(0, Math.min(1, value));
             return t * t * (3 - 2 * t);
+        }
+
+        function updateSolarSystemGalaxyBlend(galaxyVisibility) {
+            // Compress the complete Solar System until it becomes
+            // indistinguishable from the surrounding arm. Orbit guides
+            // disappear earlier, and the final sub-pixel remnant is hidden.
+            var assimilation = smoothStep01((galaxyVisibility - 0.08) / 0.92);
+            var remainingPresence = 1 - assimilation;
+            var systemScale = Math.max(0.0001, Math.pow(remainingPresence, 2.4));
+            var hideSolarSystem = assimilation >= 0.94;
+            var orbitFade = 1 - smoothStep01((galaxyVisibility - 0.02) / 0.58);
+            var scaledRoots = [];
+
+            Object.keys(celestialBodies).forEach(function (key) {
+                var body = celestialBodies[key];
+                if (!body) return;
+
+                var root = null;
+                if (body.pivot && body.pivot.parent === scene) {
+                    root = body.pivot;
+                } else if (body.bodyTiltGroup && body.bodyTiltGroup.parent === scene) {
+                    root = body.bodyTiltGroup;
+                } else if (body.mesh && body.mesh.parent === scene) {
+                    root = body.mesh;
+                }
+
+                if (root && scaledRoots.indexOf(root) === -1) {
+                    root.scale.setScalar(systemScale);
+
+                    if (hideSolarSystem && root.visible) {
+                        root.visible = false;
+                        root.userData.hiddenByGalaxyTransition = true;
+                    } else if (!hideSolarSystem && root.userData.hiddenByGalaxyTransition) {
+                        root.visible = true;
+                        delete root.userData.hiddenByGalaxyTransition;
+                    }
+
+                    scaledRoots.push(root);
+                }
+            });
+
+            orbitLines.forEach(function (line) {
+                line.scale.setScalar(systemScale);
+
+                if (line.material) {
+                    if (typeof line.material.userData.galaxyBaseOpacity !== 'number') {
+                        line.material.userData.galaxyBaseOpacity = line.material.opacity;
+                    }
+                    line.material.opacity = line.material.userData.galaxyBaseOpacity * orbitFade;
+                }
+
+                line.visible = state.showOrbits && orbitFade > 0.012;
+            });
         }
 
         function updateGalaxyBackdrop() {
@@ -531,6 +585,7 @@
 
             galaxyBackdrop.visible = visibility > 0.002;
             galaxyBackdrop.material.opacity = visibility * 0.72;
+            updateSolarSystemGalaxyBlend(visibility);
 
             if (galaxyScaleIndicator) {
                 var indicatorVisibility = smoothStep01((visibility - 0.08) / 0.52);
