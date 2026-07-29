@@ -1,6 +1,7 @@
 "use client";
 
 import { useEffect, useMemo, useState } from "react";
+import InlineMathText from "../../../components/inline-math-text";
 import MathFormula from "../../../components/math-formula";
 import WorksheetChoicePanel, {
   type WorksheetChoiceProblem,
@@ -133,7 +134,7 @@ export default function MiddleQuadraticFunctionsPage() {
           </span>
         )}
         <div className="polynomial-question-body">
-          <span className="polynomial-focus-label">{problem.label}</span>
+          <span className="polynomial-focus-label"><InlineMathText text={problem.label} /></span>
           <div className="logarithm-expression">
             <MathFormula latex={problem.latex} display />
           </div>
@@ -158,7 +159,7 @@ export default function MiddleQuadraticFunctionsPage() {
     return (
       <div className={`a4-sheet counting-sheet polynomial-sheet logarithm-sheet polynomial-sheet-${problems.length}`} style={{ transform: `scale(${scale})` }}>
         <header className="counting-sheet-header polynomial-sheet-header">
-          <div className="counting-sheet-title"><span>중학교 3학년</span><strong>{title}{answerSheet ? " 정답" : ""}</strong></div>
+          <div className="counting-sheet-title"><span>중학교 3학년</span><strong><InlineMathText text={title} />{answerSheet ? " 정답" : ""}</strong></div>
           <div className="counting-sheet-info"><span>이름 <i /></span><span>날짜 <i /></span><small>문제지 {problemSet.seed}</small></div>
         </header>
         <div className="polynomial-instruction"><b>주어진 이차함수의 값 또는 식을 구하세요.</b><span>답안 입력에서 4지선다 채점 · 오답 보충 최대 2문제</span></div>

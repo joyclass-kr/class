@@ -1,6 +1,7 @@
 "use client";
 
 import { useEffect, useMemo, useState } from "react";
+import InlineMathText from "../../../components/inline-math-text";
 import MathFormula from "../../../components/math-formula";
 import WorksheetChoicePanel, {
   type WorksheetChoiceProblem,
@@ -133,7 +134,7 @@ export default function MiddleCoreCalculationsPage() {
           </span>
         )}
         <div className="polynomial-question-body">
-          <span className="polynomial-focus-label">{problem.label}</span>
+          <span className="polynomial-focus-label"><InlineMathText text={problem.label} /></span>
           <div className="logarithm-expression">
             <MathFormula latex={problem.latex} />
           </div>
@@ -157,7 +158,7 @@ export default function MiddleCoreCalculationsPage() {
     return (
       <div className={`a4-sheet counting-sheet polynomial-sheet logarithm-sheet polynomial-sheet-${problems.length}`} style={{ transform: `scale(${scale})` }}>
         <header className="counting-sheet-header polynomial-sheet-header">
-          <div className="counting-sheet-title"><span>중학교 연산</span><strong>{title}{answerSheet ? " 정답" : ""}</strong></div>
+          <div className="counting-sheet-title"><span>중학교 연산</span><strong><InlineMathText text={title} />{answerSheet ? " 정답" : ""}</strong></div>
           <div className="counting-sheet-info"><span>이름 <i /></span><span>날짜 <i /></span><small>문제지 {problemSet.seed}</small></div>
         </header>
         <div className="polynomial-instruction"><b>식을 정확히 계산하고 알맞은 답을 고르세요.</b><span>답안 입력에서 4지선다 채점 · 오답 보충 최대 2문제</span></div>

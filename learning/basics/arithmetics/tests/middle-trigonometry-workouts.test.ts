@@ -45,6 +45,7 @@ test("모든 삼각비 문제는 서로 다른 네 선택지와 한 줄 핵심 �
         assert.equal(choices.length, 4);
         assert.equal(new Set(choices).size, 4);
         assert.ok(problem.solutionHint.length >= 15);
+        assert.doesNotMatch(problem.label, /^삼각비:|[²³⁴⁵⁶⁷⁸⁹]/);
         assert.doesNotMatch(`${problem.latex}${problem.answerLatex}${problem.solutionHint}`, /NaN|undefined|\+\-|\-\-/);
       }
     }

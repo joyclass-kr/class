@@ -34,6 +34,7 @@ test("모든 문제는 실수해를 갖고 서로 다른 네 선택지를 제공
         assert.equal(problem.distractors.length, 3, `${kind}/${seed} distractor count`);
         assert.equal(new Set([problem.answerLatex, ...problem.distractors]).size, 4);
         assert.ok(problem.solutionHint.length >= 15);
+        assert.doesNotMatch(problem.label, /^이차방정식:|[²³⁴⁵⁶⁷⁸⁹]/);
       }
     }
   }

@@ -60,17 +60,17 @@ export const MIDDLE_TRIGONOMETRY_TITLES: Record<MiddleTrigonometryKind, string> 
 };
 
 const MIDDLE_TRIGONOMETRY_METHOD_TITLES: Record<MiddleTrigonometryMethodKind, string> = {
-  "single-ratio": "삼각비: 세 변에서 한 비 구하기",
-  "three-ratios": "삼각비: sin·cos·tan 한꺼번에",
-  "pythagorean-first": "삼각비: 피타고라스 정리 후 계산",
-  "special-angle": "삼각비: 30°·45°·60°의 값",
-  "special-angle-expression": "삼각비: 특수각 식 계산",
-  "side-from-sine": "삼각비: sin으로 변의 길이",
-  "side-from-cosine": "삼각비: cos으로 변의 길이",
-  "side-from-tangent": "삼각비: tan으로 변의 길이",
-  "ratio-scale": "삼각비: 닮음비와 변의 길이",
-  "radical-side": "삼각비: 특수각과 근호 길이",
-  "fraction-decimal": "삼각비: 분수·소수로 길이 계산",
+  "single-ratio": "세 변에서 한 비 구하기",
+  "three-ratios": "세 삼각비 한꺼번에",
+  "pythagorean-first": "피타고라스 정리 후 계산",
+  "special-angle": "특수각의 값",
+  "special-angle-expression": "특수각 식 계산",
+  "side-from-sine": "사인으로 변의 길이",
+  "side-from-cosine": "코사인으로 변의 길이",
+  "side-from-tangent": "탄젠트로 변의 길이",
+  "ratio-scale": "닮음비와 변의 길이",
+  "radical-side": "특수각과 근호 길이",
+  "fraction-decimal": "분수·소수로 길이 계산",
 };
 
 type Triple = readonly [opposite: number, adjacent: number, hypotenuse: number];

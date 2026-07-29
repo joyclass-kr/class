@@ -60,17 +60,17 @@ export const MIDDLE_CIRCLE_PROPERTIES_TITLES: Record<MiddleCirclePropertiesKind,
 };
 
 const MIDDLE_CIRCLE_PROPERTIES_METHOD_TITLES: Record<MiddleCirclePropertiesMethodKind, string> = {
-  "central-to-inscribed": "원의 성질: 중심각에서 원주각",
-  "inscribed-to-central": "원의 성질: 원주각에서 중심각",
-  "arc-to-inscribed": "원의 성질: 호의 크기에서 원주각",
-  "same-arc": "원의 성질: 같은 호의 원주각",
-  "semicircle-angle": "원의 성질: 지름과 원주각",
-  "cyclic-quadrilateral": "원의 성질: 원에 내접하는 사각형",
-  "tangent-chord-angle": "원의 성질: 접선과 현이 이루는 각",
-  "tangent-length": "원의 성질: 한 점에서 그은 두 접선",
-  "chord-length": "원의 성질: 중심과 현의 길이",
-  "center-to-chord": "원의 성질: 현에서 중심까지의 거리",
-  "arc-sum": "원의 성질: 호의 크기 합산",
+  "central-to-inscribed": "중심각에서 원주각",
+  "inscribed-to-central": "원주각에서 중심각",
+  "arc-to-inscribed": "호의 크기에서 원주각",
+  "same-arc": "같은 호의 원주각",
+  "semicircle-angle": "지름과 원주각",
+  "cyclic-quadrilateral": "원에 내접하는 사각형",
+  "tangent-chord-angle": "접선과 현이 이루는 각",
+  "tangent-length": "한 점에서 그은 두 접선",
+  "chord-length": "중심과 현의 길이",
+  "center-to-chord": "현에서 중심까지의 거리",
+  "arc-sum": "호의 크기 합산",
 };
 
 const RIGHT_TRIANGLES = [

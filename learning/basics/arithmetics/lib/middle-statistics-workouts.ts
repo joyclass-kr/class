@@ -60,17 +60,17 @@ export const MIDDLE_STATISTICS_TITLES: Record<MiddleStatisticsKind, string> = {
 };
 
 const MIDDLE_STATISTICS_METHOD_TITLES: Record<MiddleStatisticsMethodKind, string> = {
-  mean: "통계: 평균 계산",
-  "missing-from-mean": "통계: 평균으로 빠진 값 구하기",
-  "frequency-mean": "통계: 도수 자료의 평균",
-  median: "통계: 중앙값 계산",
-  mode: "통계: 최빈값 찾기",
-  range: "통계: 범위 계산",
-  deviations: "통계: 편차 계산",
-  variance: "통계: 분산 계산",
-  "standard-deviation": "통계: 표준편차 계산",
-  "variance-from-deviations": "통계: 편차에서 분산 구하기",
-  "compare-spread": "통계: 두 자료의 산포도 비교",
+  mean: "평균 계산",
+  "missing-from-mean": "평균으로 빠진 값 구하기",
+  "frequency-mean": "도수 자료의 평균",
+  median: "중앙값 계산",
+  mode: "최빈값 찾기",
+  range: "범위 계산",
+  deviations: "편차 계산",
+  variance: "분산 계산",
+  "standard-deviation": "표준편차 계산",
+  "variance-from-deviations": "편차에서 분산 구하기",
+  "compare-spread": "두 자료의 산포도 비교",
 };
 
 const DEVIATION_PATTERNS = [

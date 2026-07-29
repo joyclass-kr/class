@@ -45,6 +45,7 @@ test("모든 원의 성질 문제는 서로 다른 네 선택지와 한 줄 핵�
         assert.equal(choices.length, 4);
         assert.equal(new Set(choices).size, 4);
         assert.ok(problem.solutionHint.length >= 15);
+        assert.doesNotMatch(problem.label, /^원의 성질:|[²³⁴⁵⁶⁷⁸⁹]/);
         assert.doesNotMatch(`${problem.latex}${problem.answerLatex}${problem.solutionHint}`, /NaN|undefined|\+\-|\-\-/);
       }
     }

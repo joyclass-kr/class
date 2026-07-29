@@ -67,18 +67,18 @@ export const MIDDLE_QUADRATIC_EQUATION_TITLES: Record<MiddleQuadraticEquationKin
 };
 
 const MIDDLE_QUADRATIC_EQUATION_METHOD_TITLES: Record<MiddleQuadraticEquationMethodKind, string> = {
-  "square-root-basic": "이차방정식: x²=a와 제곱근",
-  "zero-product": "이차방정식: 인수의 곱이 0",
-  "monic-factorization": "이차방정식: 인수분해 풀이",
-  "nonmonic-factorization": "이차방정식: ax²+bx+c 인수분해",
-  "common-factor": "이차방정식: 공통인수로 묶기",
-  "perfect-square": "이차방정식: 완전제곱식",
-  "completing-square": "이차방정식: 완전제곱꼴로 변형",
-  "quadratic-formula-monic": "이차방정식: 근의 공식 기초",
-  "quadratic-formula-general": "이차방정식: 근의 공식 일반형",
-  "negative-leading": "이차방정식: 음의 최고차항 정리",
-  "expand-and-solve": "이차방정식: 전개·이항 후 풀이",
-  "fraction-decimal": "이차방정식: 분수·소수 계수",
+  "square-root-basic": "제곱근으로 풀기",
+  "zero-product": "인수의 곱이 0",
+  "monic-factorization": "계수가 1인 식의 인수분해",
+  "nonmonic-factorization": "일반 이차삼항식의 인수분해",
+  "common-factor": "공통인수로 묶기",
+  "perfect-square": "완전제곱식",
+  "completing-square": "완전제곱꼴로 변형",
+  "quadratic-formula-monic": "근의 공식 기초",
+  "quadratic-formula-general": "근의 공식 일반형",
+  "negative-leading": "음의 최고차항 정리",
+  "expand-and-solve": "전개·이항 후 풀이",
+  "fraction-decimal": "분수·소수 계수",
 };
 
 function random(seed: number) {

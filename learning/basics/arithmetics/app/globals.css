@@ -5995,7 +5995,7 @@ button.prime-number-question:focus-visible {
     word-break: keep-all;
   }
 
-  .worksheet-title-formula {
+  .inline-math-text-formula {
     display: inline-flex;
     white-space: nowrap;
     font-size: 0.96em;

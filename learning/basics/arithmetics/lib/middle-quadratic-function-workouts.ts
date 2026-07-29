@@ -63,17 +63,17 @@ export const MIDDLE_QUADRATIC_FUNCTION_TITLES: Record<MiddleQuadraticFunctionKin
 };
 
 const MIDDLE_QUADRATIC_FUNCTION_METHOD_TITLES: Record<MiddleQuadraticFunctionMethodKind, string> = {
-  "basic-value": "이차함수: y=ax²의 함숫값",
-  "vertex-value": "이차함수: 꼭짓점형의 함숫값",
-  "expand-vertex-form": "이차함수: 꼭짓점형 전개",
-  "complete-square": "이차함수: 일반형을 꼭짓점형으로",
-  "vertex-axis": "이차함수: 꼭짓점과 대칭축",
-  "coefficient-from-point": "이차함수: 한 점으로 계수 구하기",
-  "equation-from-vertex-point": "이차함수: 꼭짓점과 한 점으로 식 구하기",
-  intercepts: "이차함수: x절편과 y절편",
-  "line-intersections": "이차함수와 직선의 교점 계산",
-  "normalize-first": "이차함수: 식 정리 후 꼭짓점",
-  "fraction-decimal": "이차함수: 분수·소수 계수",
+  "basic-value": "기본형의 함숫값",
+  "vertex-value": "꼭짓점형의 함숫값",
+  "expand-vertex-form": "꼭짓점형 전개",
+  "complete-square": "일반형을 꼭짓점형으로",
+  "vertex-axis": "꼭짓점과 대칭축",
+  "coefficient-from-point": "한 점으로 계수 구하기",
+  "equation-from-vertex-point": "꼭짓점과 한 점으로 식 구하기",
+  intercepts: "x절편과 y절편",
+  "line-intersections": "직선과의 교점 계산",
+  "normalize-first": "식 정리 후 꼭짓점",
+  "fraction-decimal": "분수·소수 계수",
 };
 
 function random(seed: number) {

@@ -46,6 +46,7 @@ test("모든 이차함수 문제는 네 선택지와 한 줄 핵심 풀이를 �
         assert.equal(problem.distractors.length, 3, `${kind}/${seed}`);
         assert.equal(new Set([problem.answerLatex, ...problem.distractors]).size, 4, `${kind}/${seed}`);
         assert.ok(problem.solutionHint.length >= 15);
+        assert.doesNotMatch(problem.label, /^이차함수:|[²³⁴⁵⁶⁷⁸⁹]/);
         assert.doesNotMatch(`${problem.latex}${problem.answerLatex}${problem.solutionHint}`, /NaN|undefined|\+\-|--/);
       }
     }
