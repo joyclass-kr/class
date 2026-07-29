@@ -1,0 +1,63 @@
+/*
+ * Middle-school worksheets share the high-school typography system.
+ * Korean prose, mathematical notation, and interface chrome deliberately use
+ * separate stacks so global lesson styles cannot change them page by page.
+ */
+.middle-school-scope {
+  --high-school-korean-font: "KoPubWorld Batang", "Noto Serif KR", "Batang", serif;
+  --high-school-math-font: "Suneung Math", "STIX Two Math", "KoPubWorld Batang", "Cambria Math", "Times New Roman", serif;
+  --high-school-sans-font: Pretendard, "Noto Sans KR", "Malgun Gothic", sans-serif;
+  --high-school-serif-font: var(--high-school-korean-font);
+  min-height: 100dvh;
+}
+
+/* Explanations and Korean problem text follow the high-school textbook face. */
+.middle-school-scope .polynomial-page {
+  font-family: var(--high-school-korean-font);
+  font-kerning: normal;
+  text-rendering: optimizeLegibility;
+}
+
+/* Navigation and controls stay compact and immediately distinguishable. */
+.middle-school-scope :where(
+  button,
+  .counting-back,
+  .counting-toolbar,
+  .counting-progress,
+  .polynomial-toolbar,
+  .worksheet-toolbar,
+  .polynomial-sheet-header .counting-sheet-info
+) {
+  font-family: var(--high-school-sans-font);
+}
+
+/* Formulae, variables, answers, and numeric labels use the math stack. */
+.middle-school-scope :where(
+  .math-formula,
+  .polynomial-expression,
+  .rational-expression,
+  .exponent-radical-expression,
+  .equation-expression,
+  .inequality-expression,
+  .function-expression,
+  .derivative-expression,
+  .logarithm-expression,
+  .polynomial-focus-label,
+  .polynomial-question-number,
+  .trig-derivative-choice,
+  input,
+  select,
+  textarea
+) {
+  font-family: var(--high-school-math-font);
+  font-variant-numeric: lining-nums tabular-nums;
+}
+
+/* KaTeX keeps its purpose-built glyphs while inheriting the same visual scale. */
+.middle-school-scope .math-formula .katex .mathnormal {
+  font-family: "KaTeX_Math", "STIX Two Math", "Cambria Math", serif;
+}
+
+.middle-school-scope .math-formula .katex .mathrm {
+  font-family: "KaTeX_Main", "STIX Two Math", "Cambria Math", serif;
+}
