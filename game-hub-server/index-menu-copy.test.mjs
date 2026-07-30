@@ -24,4 +24,15 @@ assert.doesNotMatch(
   "The portal menu must not use an exploration metaphor or an overly broad label.",
 );
 
+assert.match(
+  html,
+  /href="learning\/academics\/korean-museum\/"[\s\S]*?<strong>\uD55C\uAD6D\uC0AC \uC720\uBB3C\u00B7\uC720\uC801<\/strong><small>\(Korean Artifacts &amp; Sites\)<\/small>/,
+  "The Korean-history museum menu must name the artifacts and sites it teaches.",
+);
+assert.doesNotMatch(
+  html,
+  /<strong>\uD55C\uAD6D\uC0AC \uBCF4\uBB3C\uC9C0\uB3C4<\/strong><small>\(Korean History Treasure Map\)<\/small>/,
+  "The Korean-history museum menu must not use a treasure-map metaphor.",
+);
+
 console.log("Index menu copy contract passed.");
