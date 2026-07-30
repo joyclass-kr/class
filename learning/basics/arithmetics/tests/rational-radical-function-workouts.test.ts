@@ -2,10 +2,13 @@ import test from "node:test";
 import assert from "node:assert/strict";
 import { readFile } from "node:fs/promises";
 import { createRationalRadicalProblemSet, createRationalRadicalReviewProblems, sameRationalRadicalAnswer } from "../lib/rational-radical-function-workouts.ts";
-test("each set covers five rational and radical function skills", () => {
+test("each set covers seven rational and radical function calculations", () => {
   for (let seed = 1; seed <= 100; seed += 1) {
     const problems = createRationalRadicalProblemSet(seed).problems;
-    assert.deepEqual(problems.map(({ kind }) => kind), ["rational-asymptotes", "rational-coefficient", "rational-equation", "radical-endpoint", "radical-equation"]);
+    assert.deepEqual(problems.map(({ kind }) => kind), [
+      "rational-asymptotes", "rational-coefficient", "rational-value", "rational-equation",
+      "radical-endpoint", "radical-coefficient", "radical-equation",
+    ]);
     assert.ok(problems.every(({ answer }) => answer.every(Number.isInteger)));
   }
 });

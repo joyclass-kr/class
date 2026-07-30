@@ -1,4 +1,6 @@
-export type CircleKind = "center-to-equation" | "equation-to-center" | "three-points" | "line-intersections" | "tangent-parameter";
+export type CircleKind =
+  | "center-to-equation" | "equation-to-center" | "three-points" | "line-intersections"
+  | "line-position" | "tangent-parameter" | "circle-translation";
 export type CircleProblem = {
   id: string;
   kind: CircleKind;
@@ -9,7 +11,10 @@ export type CircleProblem = {
   answerMode: "equation" | "center-radius" | "two-points" | "scalar";
 };
 
-const KINDS: CircleKind[] = ["center-to-equation", "equation-to-center", "three-points", "line-intersections", "tangent-parameter"];
+const KINDS: CircleKind[] = [
+  "center-to-equation", "equation-to-center", "three-points", "line-intersections",
+  "line-position", "tangent-parameter", "circle-translation",
+];
 const LATTICE_CIRCLES = [
   { radius: 5, offsets: [[5, 0], [3, 4], [-4, 3], [-3, -4], [0, -5]] },
   { radius: 10, offsets: [[10, 0], [6, 8], [-8, 6], [-6, -8], [0, -10]] },
@@ -84,6 +89,30 @@ function buildProblem(kind: CircleKind, next: () => number, id: string): CircleP
       .sort((left, right) => left[0] - right[0] || left[1] - right[1]);
     const line = normalizeLine(points[0], points[1]);
     return { id, kind, label: "원과 직선의 교점", prompt: "원과 직선의 두 교점의 좌표를 구하세요. 가로 좌표가 작은 점부터 입력하세요.", latex: `${circleGeneralLatex(coefficients)},\\qquad ${lineLatex(line)}`, answer: points.flat(), answerMode: "two-points" };
+  }
+  if (kind === "line-position") {
+    const relation = integer(next, 0, 2);
+    const offset = relation === 0 ? radius + 1 : relation === 1 ? radius : radius - 1;
+    return {
+      id, kind, label: "원과 직선의 위치 관계",
+      prompt: "원과 직선의 교점 개수는?",
+      latex: `${circleGeneralLatex(coefficients)},\\qquad y=${k + offset}`,
+      answer: [relation === 0 ? 0 : relation === 1 ? 1 : 2],
+      answerMode: "scalar",
+    };
+  }
+  if (kind === "circle-translation") {
+    let p = 0;
+    let q = 0;
+    while (p === 0) p = integer(next, -4, 4);
+    while (q === 0) q = integer(next, -4, 4);
+    const translated = circleCoefficients(h + p, k + q, radius);
+    return {
+      id, kind, label: "원의 평행이동",
+      prompt: "원을 주어진 방향으로 평행이동한 뒤 일반형으로 나타내세요.",
+      latex: `${circleGeneralLatex(coefficients)},\\qquad (x,y)\\mapsto(x${p < 0 ? "" : "+"}${p},\\ y${q < 0 ? "" : "+"}${q})`,
+      answer: translated, answerMode: "equation",
+    };
   }
   const parameter = h + radius;
   return { id, kind, label: "접선 조건", prompt: "직선이 원에 접할 때, 주어진 조건을 만족하는 값을 구하세요.", latex: `${circleGeneralLatex(coefficients)},\\qquad x=m`, answer: [parameter], answerMode: "scalar" };

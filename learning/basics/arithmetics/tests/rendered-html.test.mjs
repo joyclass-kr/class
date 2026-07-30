@@ -367,14 +367,14 @@ test("renders the unified arithmetic catalog and high-school worksheets", async 
   assert.match(hubHtml, /href="\/arithmetic\/high-school\/sigma-recurrence"/);
   assert.match(hubHtml, /href="\/arithmetic\/high-school\/limits-continuity"/);
   assert.ok(hubHtml.indexOf("/arithmetic/high-school/inequality-intervals") < hubHtml.indexOf("/arithmetic/high-school/permutations-combinations"));
-  assert.ok(hubHtml.indexOf("/arithmetic/high-school/combinations") < hubHtml.indexOf("/arithmetic/high-school/coordinate-lines"));
+  assert.ok(hubHtml.indexOf("/arithmetic/high-school/permutations-combinations") < hubHtml.indexOf("/arithmetic/high-school/coordinate-lines"));
   assert.ok(hubHtml.indexOf("/arithmetic/high-school/rational-radical-functions") < hubHtml.indexOf("/arithmetic/high-school/logarithms"));
   assert.ok(hubHtml.indexOf("/arithmetic/high-school/trigonometric-equations") < hubHtml.indexOf("/arithmetic/high-school/sequences"));
   assert.ok(
     hubHtml.indexOf('href="/arithmetic/high-school/permutations-combinations"') <
     hubHtml.indexOf('href="/arithmetic/high-school/combinations"'),
   );
-  assert.match(hubHtml, /href="\/arithmetic\/high-school\/geometric-transformations"/);
+  assert.doesNotMatch(hubHtml, /href="\/arithmetic\/high-school\/geometric-transformations"/);
   assert.match(hubHtml, /href="\/arithmetic\/high-school\/sets-propositions"/);
   assert.match(hubHtml, /href="\/arithmetic\/high-school\/derivative-practice"/);
   assert.match(hubHtml, /href="\/arithmetic\/high-school\/derivative-applications"/);

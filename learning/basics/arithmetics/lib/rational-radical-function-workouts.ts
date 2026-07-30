@@ -1,6 +1,11 @@
-export type RationalRadicalKind = "rational-asymptotes" | "rational-coefficient" | "rational-equation" | "radical-endpoint" | "radical-equation";
+export type RationalRadicalKind =
+  | "rational-asymptotes" | "rational-coefficient" | "rational-value" | "rational-equation"
+  | "radical-endpoint" | "radical-coefficient" | "radical-equation";
 export type RationalRadicalProblem = { id: string; kind: RationalRadicalKind; label: string; prompt: string; latex: string; answer: number[]; answerLabels: string[] };
-const KINDS: RationalRadicalKind[] = ["rational-asymptotes", "rational-coefficient", "rational-equation", "radical-endpoint", "radical-equation"];
+const KINDS: RationalRadicalKind[] = [
+  "rational-asymptotes", "rational-coefficient", "rational-value", "rational-equation",
+  "radical-endpoint", "radical-coefficient", "radical-equation",
+];
 function random(seed: number) { let value = seed >>> 0; return () => { value += 0x6d2b79f5; let n = value; n = Math.imul(n ^ (n >>> 15), n | 1); n ^= n + Math.imul(n ^ (n >>> 7), n | 61); return ((n ^ (n >>> 14)) >>> 0) / 4294967296; }; }
 function integer(next: () => number, min: number, max: number) { return min + Math.floor(next() * (max - min + 1)); }
 function nonzero(next: () => number, min = -5, max = 5) { let value = 0; while (!value) value = integer(next, min, max); return value; }
@@ -15,11 +20,31 @@ function build(kind: RationalRadicalKind, next: () => number, id: string): Ratio
     const offset = nonzero(next, -4, 4); const x = h + offset;
     return { id, kind, label: "상수 결정", prompt: "그래프가 점 P를 지날 때, 𝑐는?", latex: `y=\\dfrac{c}{x${signed(-h)}}${signed(k)},\\qquad P${point(x, k + a * offset / offset)}`, answer: [a * offset], answerLabels: ["c"] };
   }
+  if (kind === "rational-value") {
+    const offset = nonzero(next, -4, 4);
+    return {
+      id, kind, label: "유리함수의 함숫값",
+      prompt: `f(${h + offset})의 값은?`,
+      latex: `f(x)=\\dfrac{${a * offset}}{x${signed(-h)}}${signed(k)}`,
+      answer: [a + k], answerLabels: ["값"],
+    };
+  }
   if (kind === "rational-equation") {
     const offset = nonzero(next, -4, 4); const target = k + a;
     return { id, kind, label: "유리방정식의 해", prompt: "주어진 함수값을 만족하는 𝑥는?", latex: `${rational(a * offset, h, k)},\\qquad y=${target}`, answer: [h + offset], answerLabels: ["x"] };
   }
   if (kind === "radical-endpoint") return { id, kind, label: "시작점", prompt: "그래프의 시작점은?", latex: radical(a, h, k), answer: [h, k], answerLabels: ["x", "y"] };
+  if (kind === "radical-coefficient") {
+    const step = integer(next, 1, 4);
+    const x = h + step * step;
+    const y = a * step + k;
+    return {
+      id, kind, label: "무리함수의 계수 결정",
+      prompt: "그래프가 점 P를 지날 때, a는?",
+      latex: `y=a\\sqrt{x${signed(-h)}}${signed(k)},\\qquad P${point(x, y)}`,
+      answer: [a], answerLabels: ["a"],
+    };
+  }
   const step = integer(next, 1, 4); const x = h + step * step; const target = a * step + k;
   return { id, kind, label: "무리방정식의 해", prompt: "주어진 함수값을 만족하는 𝑥는?", latex: `${radical(a, h, k)},\\qquad y=${target}`, answer: [x], answerLabels: ["x"] };
 }

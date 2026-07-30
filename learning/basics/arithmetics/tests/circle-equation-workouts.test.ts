@@ -2,10 +2,13 @@ import test from "node:test";
 import assert from "node:assert/strict";
 import { circleAnswerLatex, createCircleProblemSet, createCircleReviewProblems, sameCircleAnswer } from "../lib/circle-equation-workouts.ts";
 
-test("each set covers five circle equation types with integer answers", () => {
+test("each set covers circle equations, positions, tangency, and absorbed translation", () => {
   for (let seed = 1; seed <= 100; seed += 1) {
     const set = createCircleProblemSet(seed);
-    assert.deepEqual(set.problems.map(({ kind }) => kind), ["center-to-equation", "equation-to-center", "three-points", "line-intersections", "tangent-parameter"]);
+    assert.deepEqual(set.problems.map(({ kind }) => kind), [
+      "center-to-equation", "equation-to-center", "three-points", "line-intersections",
+      "line-position", "tangent-parameter", "circle-translation",
+    ]);
     assert.ok(set.problems.every(({ answer }) => answer.every(Number.isInteger)));
   }
 });

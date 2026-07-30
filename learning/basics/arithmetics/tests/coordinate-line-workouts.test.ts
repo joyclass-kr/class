@@ -2,10 +2,13 @@ import test from "node:test";
 import assert from "node:assert/strict";
 import { coordinateLineAnswerLatex, createCoordinateLineProblemSet, createCoordinateLineReviewProblems, sameCoordinateLineAnswer } from "../lib/coordinate-line-workouts.ts";
 
-test("each set covers five coordinate and line types", () => {
+test("each set covers coordinate, line, distance, and absorbed transform types", () => {
   for (let seed = 1; seed <= 100; seed += 1) {
     const set = createCoordinateLineProblemSet(seed);
-    assert.deepEqual(set.problems.map(({ kind }) => kind), ["distance", "internal-division", "two-point-line", "parallel-line", "perpendicular-line"]);
+    assert.deepEqual(set.problems.map(({ kind }) => kind), [
+      "distance", "internal-division", "two-point-line", "parallel-line",
+      "perpendicular-line", "point-line-distance", "line-translation", "point-reflection",
+    ]);
     assert.ok(set.problems.every(({ answer }) => answer.every(Number.isInteger)));
   }
 });

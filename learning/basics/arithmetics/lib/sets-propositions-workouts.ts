@@ -1,9 +1,14 @@
-export type LogicKind = "set-cardinality" | "subset-condition" | "truth-value" | "contrapositive" | "condition-relation";
+export type LogicKind =
+  | "set-cardinality" | "subset-condition" | "set-law" | "truth-value"
+  | "quantifier-negation" | "contrapositive" | "condition-relation";
 export type LogicProblem = {
   id: string; kind: LogicKind; label: string; prompt: string; latex: string;
   choices: { id: string; latex: string }[]; answer: string;
 };
-const KINDS: LogicKind[] = ["set-cardinality", "subset-condition", "truth-value", "contrapositive", "condition-relation"];
+const KINDS: LogicKind[] = [
+  "set-cardinality", "subset-condition", "set-law", "truth-value",
+  "quantifier-negation", "contrapositive", "condition-relation",
+];
 function random(seed: number) {
   let value = seed >>> 0;
   return () => {
@@ -35,9 +40,41 @@ function build(kind: LogicKind, next: () => number, id: string): LogicProblem {
     const answer = 2 ** (size - required - excluded);
     return { id, kind, label: "부분집합", prompt: "지정한 원소는 모두 포함하고 제외할 원소는 포함하지 않는 부분집합의 개수를 구하세요.", latex: `n(U)=${size},\\quad \\text{반드시 포함 }${required}\\text{개},\\quad \\text{반드시 제외 }${excluded}\\text{개}`, choices: numericChoices(answer, next), answer: String(answer) };
   }
+  if (kind === "set-law") {
+    const complement = next() < 0.5;
+    return {
+      id, kind, label: "집합의 연산과 드모르간 법칙",
+      prompt: "다음과 같은 집합을 고르세요.",
+      latex: complement ? `(A\\cup B)^C` : `(A\\cap B)^C`,
+      choices: shuffled([
+        { id: "answer", latex: complement ? "A^C\\cap B^C" : "A^C\\cup B^C" },
+        { id: "wrong-1", latex: complement ? "A^C\\cup B^C" : "A^C\\cap B^C" },
+        { id: "wrong-2", latex: complement ? "A\\cap B" : "A\\cup B" },
+        { id: "wrong-3", latex: complement ? "A\\cup B" : "A\\cap B" },
+      ], next),
+      answer: "answer",
+    };
+  }
   if (kind === "truth-value") {
     const trueCase = next() < 0.5;
     return { id, kind, label: "명제의 참거짓", prompt: "다음 명제의 참, 거짓을 판단하세요.", latex: trueCase ? `\\forall x\\in\\mathbb{R},\\quad x^2-2x+2>0` : `\\forall x\\in\\mathbb{R},\\quad x^2-2x-3\\ge 0`, choices: [{ id: "true", latex: "\\text{참}" }, { id: "false", latex: "\\text{거짓}" }], answer: trueCase ? "true" : "false" };
+  }
+  if (kind === "quantifier-negation") {
+    const universal = next() < 0.5;
+    return {
+      id, kind, label: "모든·어떤 명제의 부정",
+      prompt: "주어진 명제의 부정을 고르세요.",
+      latex: universal
+        ? `\\forall x\\in\\mathbb{R},\\quad P(x)`
+        : `\\exists x\\in\\mathbb{R},\\quad P(x)`,
+      choices: shuffled([
+        { id: "answer", latex: universal ? `\\exists x\\in\\mathbb{R},\\quad\\lnot P(x)` : `\\forall x\\in\\mathbb{R},\\quad\\lnot P(x)` },
+        { id: "wrong-1", latex: universal ? `\\forall x\\in\\mathbb{R},\\quad\\lnot P(x)` : `\\exists x\\in\\mathbb{R},\\quad\\lnot P(x)` },
+        { id: "wrong-2", latex: universal ? `\\exists x\\in\\mathbb{R},\\quad P(x)` : `\\forall x\\in\\mathbb{R},\\quad P(x)` },
+        { id: "wrong-3", latex: universal ? `\\lnot\\exists x\\in\\mathbb{R},\\quad\\lnot P(x)` : `\\lnot\\forall x\\in\\mathbb{R},\\quad\\lnot P(x)` },
+      ], next),
+      answer: "answer",
+    };
   }
   if (kind === "contrapositive") {
     const choices = [

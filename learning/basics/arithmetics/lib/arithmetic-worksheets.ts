@@ -262,7 +262,6 @@ export const highSchoolWorksheetCatalog: ArithmeticWorksheet[] = [
   { grade: "공수1", name: "행렬의 뜻과 기본 연산", title: "행렬의 뜻과 기본 연산", route: "/arithmetic/high-school/matrices" },
   { grade: "공수2", name: "좌표와 직선의 방정식", title: "좌표와 직선의 방정식", route: "/arithmetic/high-school/coordinate-lines" },
   { grade: "공수2", name: "원의 방정식", title: "원의 방정식", route: "/arithmetic/high-school/circle-equations" },
-  { grade: "공수2", name: "도형의 이동", title: "도형의 이동", route: "/arithmetic/high-school/geometric-transformations" },
   { grade: "공수2", name: "집합과 명제", title: "집합과 명제", route: "/arithmetic/high-school/sets-propositions" },
   { grade: "공수2", name: "합성함수와 역함수", title: "합성함수와 역함수", route: "/arithmetic/high-school/function-transformations" },
   { grade: "공수2", name: "유리함수와 무리함수", title: "유리함수와 무리함수", route: "/arithmetic/high-school/rational-radical-functions" },

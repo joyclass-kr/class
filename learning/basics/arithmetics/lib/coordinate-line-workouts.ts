@@ -1,4 +1,6 @@
-export type CoordinateLineKind = "distance" | "internal-division" | "two-point-line" | "parallel-line" | "perpendicular-line";
+export type CoordinateLineKind =
+  | "distance" | "internal-division" | "two-point-line" | "parallel-line" | "perpendicular-line"
+  | "point-line-distance" | "line-translation" | "point-reflection";
 export type CoordinateLineProblem = {
   id: string;
   kind: CoordinateLineKind;
@@ -9,7 +11,10 @@ export type CoordinateLineProblem = {
   answerMode: "scalar" | "point" | "line";
 };
 
-const KINDS: CoordinateLineKind[] = ["distance", "internal-division", "two-point-line", "parallel-line", "perpendicular-line"];
+const KINDS: CoordinateLineKind[] = [
+  "distance", "internal-division", "two-point-line", "parallel-line",
+  "perpendicular-line", "point-line-distance", "line-translation", "point-reflection",
+];
 
 function random(seed: number) {
   let value = seed >>> 0;
@@ -63,6 +68,45 @@ function buildProblem(kind: CoordinateLineKind, next: () => number, id: string):
     const first = [target[0] - m * vector[0], target[1] - m * vector[1]];
     const second = [target[0] + n * vector[0], target[1] + n * vector[1]];
     return { id, kind, label: "내분점", prompt: `선분 AB를 ${m}:${n}으로 내분하는 점 P의 좌표를 구하세요.`, latex: `A${pointLatex(first)},\\qquad B${pointLatex(second)}`, answer: target, answerMode: "point" };
+  }
+  if (kind === "point-line-distance") {
+    const base = [integer(next, -5, 5), integer(next, -5, 5)];
+    const multiple = nonzero(next, -3, 3);
+    const line = [3, 4, -3 * base[0] - 4 * base[1]];
+    const point = [base[0] + 3 * multiple, base[1] + 4 * multiple];
+    return {
+      id, kind, label: "점과 직선 사이의 거리",
+      prompt: "점 P와 직선 l 사이의 거리를 구하세요.",
+      latex: `P${pointLatex(point)},\\qquad l:\\ ${lineLatex(line)}`,
+      answer: [5 * Math.abs(multiple)], answerMode: "scalar",
+    };
+  }
+  if (kind === "line-translation") {
+    const a = integer(next, 1, 5);
+    const b = nonzero(next, -5, 5);
+    const c = integer(next, -8, 8);
+    const p = nonzero(next, -4, 4);
+    const q = nonzero(next, -4, 4);
+    const original = normalizeLine(a, b, c);
+    const answer = normalizeLine(original[0], original[1], original[2] - original[0] * p - original[1] * q);
+    return {
+      id, kind, label: "직선의 평행이동",
+      prompt: "직선을 주어진 방향으로 평행이동한 방정식을 구하세요.",
+      latex: `${lineLatex(original)},\\qquad (x,y)\\mapsto(x${p < 0 ? "" : "+"}${p},\\ y${q < 0 ? "" : "+"}${q})`,
+      answer, answerMode: "line",
+    };
+  }
+  if (kind === "point-reflection") {
+    const point = [nonzero(next, -6, 6), nonzero(next, -6, 6)];
+    const mode = integer(next, 0, 2);
+    const labels = ["x\\text{축}", "y\\text{축}", "y=x"];
+    const answers = [[point[0], -point[1]], [-point[0], point[1]], [point[1], point[0]]];
+    return {
+      id, kind, label: "점의 대칭이동",
+      prompt: "점 P를 주어진 직선에 대하여 대칭이동한 좌표를 구하세요.",
+      latex: `P${pointLatex(point)},\\qquad \\text{대칭축 }${labels[mode]}`,
+      answer: answers[mode], answerMode: "point",
+    };
   }
 
   const a = integer(next, 1, 5);

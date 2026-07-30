@@ -2,10 +2,13 @@ import test from "node:test";
 import assert from "node:assert/strict";
 import { createLogicProblemSet, createLogicReviewProblems } from "../lib/sets-propositions-workouts.ts";
 
-test("each set covers five useful set and proposition types", () => {
+test("each set progresses from set calculations to quantified propositions", () => {
   for (let seed = 1; seed <= 100; seed += 1) {
     const problems = createLogicProblemSet(seed).problems;
-    assert.deepEqual(problems.map(({ kind }) => kind), ["set-cardinality", "subset-condition", "truth-value", "contrapositive", "condition-relation"]);
+    assert.deepEqual(problems.map(({ kind }) => kind), [
+      "set-cardinality", "subset-condition", "set-law", "truth-value",
+      "quantifier-negation", "contrapositive", "condition-relation",
+    ]);
     assert.ok(problems.every((problem) => problem.choices.some((choice) => choice.id === problem.answer)));
     assert.ok(problems.every((problem) => new Set(problem.choices.map(({ id }) => id)).size === problem.choices.length));
   }
