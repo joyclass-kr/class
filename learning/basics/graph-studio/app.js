@@ -60,15 +60,17 @@ function buildFunctionRows(){
     const row=document.createElement("div");row.className="functionRow";
     row.classList.toggle("isActive",index===state.activeFunctionIndex);
     row.innerHTML=`<label class="functionVisibility" title="그래프 표시"><input type="checkbox" ${fn.visible?"checked":""}><i style="background:${colors[index%colors.length]}"></i></label>
-      <b class="functionName" data-latex="y_${index+1}">y${index+1}</b><input class="functionInput" value="${escapeAttribute(fn.expression)}" aria-label="${index+1}번 함수 수식" spellcheck="false" inputmode="text">
+      <b class="functionName" data-latex="y_${index+1}">y${index+1}</b>
+      <span class="functionEditor"><span class="functionTypeset" aria-hidden="true"></span><input class="functionInput" value="${escapeAttribute(fn.expression)}" aria-label="${index+1}번 함수 수식" spellcheck="false" inputmode="text"></span>
       <button type="button" class="removeFunction" aria-label="${index+1}번 함수 삭제" ${state.functions.length===1?"disabled":""}>×</button>
       <small class="functionError" aria-live="polite"></small>`;
     row.querySelector(".functionVisibility input").onchange=e=>{fn.visible=e.target.checked;draw();};
     renderMath(row.querySelector(".functionName"),`y_${index+1}`);
     const input=row.querySelector(".functionInput");
+    renderFunctionPreview(row,fn.expression);
     input.onfocus=()=>setActiveFunction(index);
     input.onclick=()=>setActiveFunction(index);
-    input.oninput=e=>{fn.expression=e.target.value;state.preset="직접 입력";buildLibrary();renderFormula();draw();};
+    input.oninput=e=>{fn.expression=e.target.value;state.preset="직접 입력";renderFunctionPreview(row,fn.expression);buildLibrary();renderFormula();draw();};
     row.querySelector(".removeFunction").onclick=()=>{
       state.functions.splice(index,1);
       state.activeFunctionIndex=Math.min(state.activeFunctionIndex,state.functions.length-1);
@@ -79,6 +81,10 @@ function buildFunctionRows(){
   updateActiveFunctionLabel();
 }
 function escapeAttribute(value){return value.replace(/&/g,"&amp;").replace(/"/g,"&quot;").replace(/</g,"&lt;").replace(/>/g,"&gt;");}
+function renderFunctionPreview(row,source){
+  const preview=row?.querySelector(".functionTypeset");
+  renderMath(preview,expressionToLatex(source).replace(/^y=/,""));
+}
 function setActiveFunction(index){
   state.activeFunctionIndex=index;
   document.querySelectorAll(".functionRow").forEach((row,rowIndex)=>row.classList.toggle("isActive",rowIndex===index));
@@ -174,7 +180,12 @@ function updateActiveExpression(value,cursorStart,cursorEnd=cursorStart){
   const fn=state.functions[state.activeFunctionIndex];if(!fn)return;
   fn.expression=value;state.preset="직접 입력";
   const input=getActiveInput();
-  if(input){input.value=value;input.focus();input.setSelectionRange(cursorStart,cursorEnd);}
+  if(input){
+    input.value=value;
+    renderFunctionPreview(input.closest(".functionRow"),value);
+    input.focus();
+    input.setSelectionRange(cursorStart,cursorEnd);
+  }
   buildLibrary();renderFormula();draw();
 }
 function insertIntoActive(before,after=""){
