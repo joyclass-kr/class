@@ -9,12 +9,13 @@
 
     g01: 'assets/relics/g01.jpg', g02: 'assets/relics/g02.jpg', g03: 'assets/relics/g03.jpg', g04: 'assets/relics/g04.jpg', g05: 'assets/relics/g05.jpg',
 
-    b01: 'assets/relics/b01.jpg', b02: 'assets/relics/b02.jpg', b03: 'assets/relics/b03.jpg',
+    b01: 'assets/relics/b01.jpg', b02: 'assets/relics/b02.jpg', b03: 'assets/relics/b03.jpg', b04: 'assets/relics/b04.jpg',
+    a01: 'assets/relics/a01.jpg',
 
     s01: 'assets/relics/s01.jpg', s02: 'assets/relics/s02.jpg', s03: 'assets/relics/s03.jpg', s04: 'assets/relics/s04.jpg',
     s05: 'assets/relics/s05.jpg', s06: 'assets/relics/s06.jpg', s07: 'assets/relics/s07.jpg', s08: 'assets/relics/s08.jpg',
     s09: 'assets/relics/s09.jpg', s10: 'assets/relics/s10.jpg', s11: 'assets/relics/s11.jpg', s12: 'assets/relics/s12.jpg',
-    s13: 'assets/relics/s13.jpg', s14: 'assets/relics/s14.jpg',
+    s13: 'assets/relics/s13.jpg', s14: 'assets/relics/s14.jpg', s15: 'assets/relics/s15.jpg',
 
     k01: 'assets/relics/k01.jpg', k02: 'assets/relics/k02.jpg', k03: 'assets/relics/k03.jpg', k04: 'assets/relics/k04.jpg',
     k05: 'assets/relics/k05.jpg', k06: 'assets/relics/k06.jpg', k07: 'assets/relics/k07.jpg', k08: 'assets/relics/k08.jpg',
@@ -23,18 +24,19 @@
     j05: 'assets/relics/j05.jpg', j06: 'assets/relics/j06.jpg', j07: 'assets/relics/j07.jpg', j08: 'assets/relics/j08.jpg',
     j09: 'assets/relics/j09.jpg', j10: 'assets/relics/j10.jpg', j11: 'assets/relics/j11.jpg', j12: 'assets/relics/j12.jpg',
     j13: 'assets/relics/j13.jpg', j15: 'assets/relics/j15.jpg', j16: 'assets/relics/j16.jpg', j17: 'assets/relics/j17.jpg',
+    j18: 'assets/relics/j18.jpg', j19: 'assets/relics/j19.jpg',
 
     l01: 'assets/relics/l01.jpg', l02: 'assets/relics/l02.jpg', l03: 'assets/relics/l03.jpg',
 
-    m01: 'assets/relics/m01.jpg', m02: 'assets/relics/m02.jpg', m03: 'assets/relics/m03.png', m04: 'assets/relics/m04.jpg',
-    m05: 'assets/relics/m05.jpg', m06: 'assets/relics/m06.jpg'
+    m01: 'assets/relics/m01.jpg', m02: 'assets/relics/m02.jpg', m03: 'assets/relics/m03.jpg', m04: 'assets/relics/m04.jpg',
+    m05: 'assets/relics/m05.jpg', m06: 'assets/relics/m06.jpg', m07: 'assets/relics/m07.gif'
   };
 
   function getArtifactImageURL(id) {
-    const unverifiedImages = new Set(['p06', 's04', 's13', 's14', 'k07', 'j12', 'j14', 'm03']);
+    const unverifiedImages = new Set(['s13', 's14', 'j12', 'j14']);
     if (unverifiedImages.has(id)) return null;
     const imagePath = REAL_RELIC_IMAGES[id] || `assets/relics/${id}.jpg`;
-    return `${imagePath}?v=20260730-3`;
+    return `${imagePath}?v=20260730-4`;
   }
 
   const RELIC_CONTEXT = {
@@ -192,21 +194,145 @@
     { id: 'm06', title: '대한제국 덕수궁 석조전', titleEn: 'Deoksugung Seokjojeon', eraCategory: 'modern', era: '대한제국 (1910년)', route: '경부선', lat: 37.5658, lng: 126.9751, location: '서울 중구 덕수궁', museum: '덕수궁 석조전 대한제국역사관', designation: '사적 제124호', docent: '1910년 완성된 대한제국 고종 황제의 양식 궁전으로 광복 후 미·소 공동위원회가 개최되었습니다.', examTip: '📌 [내신/수능 핵심] 덕수궁 석조전 = 대한제국 대표 서양식 석조 궁전, 미·소 공동위원회 개최 장소!', quiz: { question: '대한제국 고종 황제의 대표 서양식 궁전으로 광복 후 미·소 공동위원회가 개최된 건물은?', options: ['덕수궁 석조전', '경복궁 근정전', '독립문', '수원 화성'], answer: 0, explanation: '대한제국 대표 서양식 궁전 덕수궁 석조전입니다.' } }
   ];
 
-  RELICS_MASTER.forEach(relic => {
-    relic.context = RELIC_CONTEXT[relic.id] || '';
+  const relicById = id => RELICS_MASTER.find(relic => relic.id === id);
+
+  Object.assign(relicById('p09'), {
+    title: '세형 동검 (한국식 동검)'
+  });
+
+  Object.assign(relicById('b02'), {
+    title: '공주 무령왕릉과 왕릉원',
+    titleEn: 'Tomb of King Muryeong and Royal Tombs, Gongju',
+    era: '백제 웅진 시기 (6세기)',
+    location: '충남 공주시 금성동 무령왕릉과 왕릉원',
+    museum: '공주 무령왕릉과 왕릉원 / 국립공주박물관',
+    designation: '사적·유네스코 세계유산',
+    docent: '1971년 배수로 공사 중 발견된 무령왕과 왕비의 벽돌무덤입니다. 지석이 함께 출토되어 무덤의 주인과 매장 연대를 정확히 알 수 있습니다.',
+    examTip: '무령왕릉 = 웅진 시기 / 벽돌무덤 / 지석 / 중국 남조와 일본 교류',
+    context: '왕릉 자체와 출토품은 구분해야 합니다. 금제 관식은 무령왕릉에서 나온 부장품이고, 왕릉은 공주 왕릉원 안에 자리한 벽돌무덤입니다.'
+  });
+
+  Object.assign(relicById('k04'), {
+    eraCategory: 'three_kingdoms',
+    era: '백제 근초고왕 무렵 (4세기)',
+    docent: '백제가 왜왕에게 보낸 것으로 해석되는 일곱 갈래 철제 칼입니다. 칼에 새긴 명문은 백제와 왜의 외교 관계를 보여 줍니다.',
+    examTip: '칠지도 = 백제와 왜의 교류를 보여 주는 금석문 자료'
+  });
+
+  Object.assign(relicById('m03'), {
+    title: '대한민국 임시정부 상하이 청사',
+    titleEn: 'Provisional Government of the Republic of Korea in Shanghai',
+    era: '일제강점기 (1919년 수립)',
+    lat: 31.2172,
+    lng: 121.4746,
+    location: '중국 상하이시 황푸구 마당로 306농 4호',
+    museum: '대한민국 임시정부 상하이 청사 유적지',
+    designation: '국외 독립운동 사적지',
+    docent: '3·1 운동을 계기로 수립된 대한민국 임시정부가 상하이에서 활동한 사실을 보여 주는 청사 유적입니다.',
+    examTip: '대한민국 임시정부 = 3·1 운동 계기 / 상하이 / 민주 공화제 / 임시헌장',
+    context: '현재 보존된 마당로 청사는 임시정부가 1926년부터 1932년까지 사용한 곳입니다. 지도 표시는 독립기념관이 아니라 실제 상하이 청사 위치입니다.',
+    quiz: {
+      question: '3·1 운동을 계기로 상하이에서 수립된 정부는?',
+      options: ['대한민국 임시정부', '통감부', '조선총독부', '대한광복회'],
+      answer: 0,
+      explanation: '대한민국 임시정부는 1919년 상하이에서 수립되었습니다.'
+    }
+  });
+
+  const EXAM_RELIC_ADDITIONS = [
+    {
+      id: 'a01', title: '가야 철제 갑옷과 투구', titleEn: 'Gaya Iron Armor and Helmet',
+      eraCategory: 'three_kingdoms', era: '가야 (4~5세기)', lat: 35.2061, lng: 129.0900,
+      location: '부산 복천동 고분군 등 가야권', museum: '국립중앙박물관·복천박물관',
+      designation: '가야 대표 철기 유물',
+      docent: '판 모양의 철을 이어 만든 갑옷과 투구로, 철 생산과 교역을 바탕으로 성장한 가야의 모습을 보여 줍니다.',
+      context: '가야는 낙동강 유역의 풍부한 철을 생산해 한반도와 왜에 수출했습니다. 시험에서는 철제 갑옷·덩이쇠와 함께 가야의 철기 문화를 연결해 묻습니다.',
+      examTip: '가야 = 낙동강 유역 / 철 생산·수출 / 철제 갑옷과 덩이쇠',
+      quiz: { question: '철제 갑옷과 덩이쇠가 대표하는 연맹 왕국은?', options: ['가야', '부여', '옥저', '동예'], answer: 0, explanation: '가야는 풍부한 철을 생산하고 수출했습니다.' }
+    },
+    {
+      id: 'b04', title: '익산 미륵사지 석탑', titleEn: 'Iksan Mireuksaji Stone Pagoda',
+      eraCategory: 'three_kingdoms', era: '백제 무왕 (7세기)', lat: 36.0123, lng: 127.0295,
+      location: '전북 익산 미륵사지', museum: '익산 미륵사지',
+      designation: '국보·백제역사유적지구',
+      docent: '목탑의 구조를 돌로 옮긴 백제 최대 규모의 석탑으로, 백제 석탑 양식의 전개를 보여 줍니다.',
+      context: '탑을 해체·수리하는 과정에서 사리장엄구와 금제 사리봉영기가 발견되어 미륵사 창건과 백제 왕실 불교를 이해하는 핵심 자료가 되었습니다.',
+      examTip: '미륵사지 석탑 = 백제 무왕 / 목탑 양식 계승 / 익산',
+      quiz: { question: '백제 무왕 때 익산에 세워진 목탑 계통의 석탑은?', options: ['미륵사지 석탑', '다보탑', '석가탑', '경천사지 십층석탑'], answer: 0, explanation: '익산 미륵사지 석탑은 백제의 대표 석탑입니다.' }
+    },
+    {
+      id: 's15', title: '불국사 다보탑과 석가탑', titleEn: 'Dabotap and Seokgatap at Bulguksa',
+      eraCategory: 'unified_silla', era: '통일신라 (8세기)', lat: 35.7898, lng: 129.3321,
+      location: '경북 경주 불국사', museum: '경주 불국사',
+      designation: '국보·유네스코 세계유산',
+      docent: '화려하고 독창적인 다보탑과 간결하고 균형 잡힌 석가탑은 통일신라 석탑 예술을 대표합니다.',
+      context: '두 탑은 법화경의 다보여래와 석가여래가 나란히 앉은 장면을 건축으로 표현했습니다. 석가탑에서는 무구정광대다라니경이 발견되었습니다.',
+      examTip: '불국사 = 통일신라 불교 미술 / 다보탑·석가탑 / 석가탑에서 무구정광대다라니경 발견',
+      quiz: { question: '무구정광대다라니경이 발견된 탑은?', options: ['불국사 석가탑', '불국사 다보탑', '미륵사지 석탑', '정림사지 오층석탑'], answer: 0, explanation: '무구정광대다라니경은 불국사 석가탑에서 발견되었습니다.' }
+    },
+    {
+      id: 'j18', title: '분청사기 철화 물고기무늬 병', titleEn: 'Buncheong Bottle with Fish Design',
+      eraCategory: 'joseon', era: '조선 전기 (15~16세기)', lat: 36.3500, lng: 127.2000,
+      location: '충남 공주 계룡산 일대 가마', museum: '국립중앙박물관',
+      designation: '조선 전기 대표 도자기',
+      docent: '회청색 그릇 표면에 백토를 입히고 철화 안료로 물고기와 연꽃을 힘차게 그린 분청사기입니다.',
+      context: '분청사기는 고려청자의 전통을 이으면서도 자유롭고 소박한 무늬를 발전시켰습니다. 시험에서는 고려청자·조선 전기 분청사기·조선 백자를 시대순으로 구분합니다.',
+      examTip: '조선 전기 = 분청사기 / 회청색 바탕에 백토 분장 / 자유롭고 소박한 무늬',
+      quiz: { question: '회청색 바탕에 백토를 입혀 다양한 무늬를 낸 조선 전기 도자기는?', options: ['분청사기', '상감청자', '청화백자', '빗살무늬토기'], answer: 0, explanation: '분청사기는 조선 전기의 대표 도자기입니다.' }
+    },
+    {
+      id: 'j19', title: '조선왕조실록', titleEn: 'Veritable Records of the Joseon Dynasty',
+      eraCategory: 'joseon', era: '조선 시대', lat: 37.4620, lng: 126.9510,
+      location: '춘추관 편찬·사고 분산 보관', museum: '규장각한국학연구원·국가기록유산 보관기관',
+      designation: '국보·유네스코 세계기록유산',
+      docent: '태조부터 철종까지 역대 왕의 정치와 사회를 편년체로 기록한 조선의 공식 역사서입니다.',
+      context: '왕이 죽은 뒤 실록청에서 사초와 시정기 등을 바탕으로 편찬했으며, 왕조차 함부로 열람할 수 없었습니다. 여러 사고에 나누어 보관해 전쟁과 화재에 대비했습니다.',
+      examTip: '조선왕조실록 = 편년체 / 사관의 독립성 / 사고에 분산 보관',
+      quiz: { question: '조선 역대 왕의 통치 기록을 편년체로 정리한 역사서는?', options: ['조선왕조실록', '승정원일기', '동국통감', '삼국사기'], answer: 0, explanation: '조선왕조실록은 태조부터 철종까지의 공식 기록입니다.' }
+    },
+    {
+      id: 'm07', title: '3·1 독립선언서', titleEn: 'Korean Declaration of Independence',
+      eraCategory: 'modern', era: '일제강점기 (1919년)', lat: 37.5710, lng: 126.9880,
+      location: '서울 태화관·탑골공원', museum: '독립기념관 등',
+      designation: '3·1 운동 핵심 기록',
+      docent: '민족 대표들이 조선의 독립국임과 자주민임을 선언한 문서로 3·1 운동의 전국적 확산을 이끌었습니다.',
+      context: '민족 대표는 태화관에서 선언식을 열었고, 탑골공원에서는 학생과 시민이 독립선언서를 낭독하고 만세 시위를 시작했습니다. 이후 대한민국 임시정부 수립에 영향을 주었습니다.',
+      examTip: '3·1 운동 = 독립선언서 / 비폭력 만세 시위 / 대한민국 임시정부 수립의 계기',
+      quiz: { question: '대한민국 임시정부 수립의 직접적 계기가 된 운동은?', options: ['3·1 운동', '갑신정변', '임오군란', '6월 민주 항쟁'], answer: 0, explanation: '3·1 운동을 계기로 대한민국 임시정부가 수립되었습니다.' }
+    }
+  ];
+
+  RELICS_MASTER.push(...EXAM_RELIC_ADDITIONS);
+
+  const EXAM_CORE_IDS = [
+    'p01', 'p02', 'p03', 'p05', 'p07', 'p08', 'p09', 'p11',
+    'g01', 'g02', 'g04', 'g05',
+    'b01', 'b02', 'b03', 'b04', 'k04', 'a01',
+    's01', 's02', 's03', 's04', 's05', 's06', 's07', 's08', 's09', 's11', 's13', 's14', 's15',
+    'k01', 'k02', 'k03', 'k06', 'k07', 'k08',
+    'j01', 'j02', 'j03', 'j06', 'j07', 'j08', 'j12', 'j13', 'j14', 'j15', 'j17', 'j18', 'j19',
+    'l01', 'l03',
+    'm01', 'm03', 'm04', 'm05', 'm06', 'm07'
+  ];
+
+  const EXAM_RELICS = EXAM_CORE_IDS
+    .map(id => RELICS_MASTER.find(relic => relic.id === id))
+    .filter(Boolean);
+
+  EXAM_RELICS.forEach(relic => {
+    relic.context = relic.context || RELIC_CONTEXT[relic.id] || '';
   });
 
   window.KOREAN_MUSEUM_DATA = {
     rooms: [
-      { id: 'prehistoric', kicker: 'GALLERY 01', title: '선사시대 & 고조선관', subtitle: '한반도 인류의 시작과 단군왕검의 고조선 건국', themeColor: '#78350f', wallColor: 0x1e1b18, floorColor: 0x2e241c, works: RELICS_MASTER.filter(r => r.eraCategory === 'prehistoric') },
-      { id: 'goguryeo', kicker: 'GALLERY 02', title: '고구려관', subtitle: '대륙을 호령한 광개토대왕과 기상 넘치는 고구려', themeColor: '#991b1b', wallColor: 0x241010, floorColor: 0x1a0b0b, works: RELICS_MASTER.filter(r => r.id.startsWith('g')) },
-      { id: 'baekje', kicker: 'GALLERY 03', title: '백제관', subtitle: '검소하지만 누추하지 않고 화려하지만 사치스럽지 않은 백제 미학', themeColor: '#047857', wallColor: 0x0c2118, floorColor: 0x081711, works: RELICS_MASTER.filter(r => r.id.startsWith('b')) },
-      { id: 'silla', kicker: 'GALLERY 04', title: '신라 & 통일신라관', subtitle: '황금의 나라 신라와 불교 예술의 정수 통일신라', themeColor: '#b45309', wallColor: 0x2b1a09, floorColor: 0x1c1106, works: RELICS_MASTER.filter(r => r.eraCategory === 'silla' || r.eraCategory === 'unified_silla') },
-      { id: 'goryeo', kicker: 'GALLERY 05', title: '고려시대관', subtitle: '푸른 빛의 고려청자와 팔만대장경, 세계 최초 금속활자', themeColor: '#0f766e', wallColor: 0x092623, floorColor: 0x051a18, works: RELICS_MASTER.filter(r => r.eraCategory === 'goryeo') },
-      { id: 'joseon_early', kicker: 'GALLERY 06', title: '조선시대관', subtitle: '훈민정음 창제와 성왕의 시대, 과학과 유교 문화의 꽃', themeColor: '#1e3a8a', wallColor: 0x0f182e, floorColor: 0x090f1f, works: RELICS_MASTER.filter(r => r.eraCategory === 'joseon') },
-      { id: 'modern', kicker: 'GALLERY 07', title: '근현대관', subtitle: '독립을 향한 열망과 자주독립국가, 현대 한국의 발전', themeColor: '#0369a1', wallColor: 0x091b29, floorColor: 0x05111c, works: RELICS_MASTER.filter(r => r.eraCategory === 'modern') }
+      { id: 'prehistoric', kicker: 'GALLERY 01', title: '선사시대 & 고조선관', subtitle: '한반도 인류의 시작과 단군왕검의 고조선 건국', themeColor: '#78350f', wallColor: 0x1e1b18, floorColor: 0x2e241c, works: EXAM_RELICS.filter(r => r.eraCategory === 'prehistoric') },
+      { id: 'three_kingdoms', kicker: 'GALLERY 02', title: '삼국 & 가야관', subtitle: '고구려·백제·신라·가야의 성장과 문화 교류', themeColor: '#991b1b', wallColor: 0x241010, floorColor: 0x1a0b0b, works: EXAM_RELICS.filter(r => r.eraCategory === 'three_kingdoms') },
+      { id: 'unified_silla', kicker: 'GALLERY 03', title: '통일신라 & 발해관', subtitle: '남북국의 발전과 불교 문화', themeColor: '#b45309', wallColor: 0x2b1a09, floorColor: 0x1c1106, works: EXAM_RELICS.filter(r => r.eraCategory === 'unified_silla') },
+      { id: 'goryeo', kicker: 'GALLERY 04', title: '고려시대관', subtitle: '고려청자와 대장경, 금속활자', themeColor: '#0f766e', wallColor: 0x092623, floorColor: 0x051a18, works: EXAM_RELICS.filter(r => r.eraCategory === 'goryeo') },
+      { id: 'joseon', kicker: 'GALLERY 05', title: '조선시대관', subtitle: '유교 통치와 과학·문화의 발달', themeColor: '#1e3a8a', wallColor: 0x0f182e, floorColor: 0x090f1f, works: EXAM_RELICS.filter(r => r.eraCategory === 'joseon') },
+      { id: 'modern', kicker: 'GALLERY 06', title: '근현대관', subtitle: '근대 국가 수립과 독립운동', themeColor: '#0369a1', wallColor: 0x091b29, floorColor: 0x05111c, works: EXAM_RELICS.filter(r => r.eraCategory === 'modern') }
     ],
-    relicsMaster: RELICS_MASTER,
+    relicsMaster: EXAM_RELICS,
     makeArtifactTextureSVG: getArtifactImageURL
   };
 })();

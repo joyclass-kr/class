@@ -147,12 +147,6 @@ body {
 }
 
 /* Route colors */
-.filter-btn.route-kb.active { background: #ef4444; color: #fff; }
-.filter-btn.route-sh.active { background: #3b82f6; color: #fff; }
-.filter-btn.route-yd.active { background: #10b981; color: #fff; }
-.filter-btn.route-hn.active { background: #f59e0b; color: #000; }
-.filter-btn.route-ov.active { background: #8b5cf6; color: #fff; }
-
 /* Viewports */
 .main-content {
   flex: 1;

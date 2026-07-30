@@ -3,14 +3,14 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>대한민국 고속도로 한국사 보물 지도 탐험대</title>
-  <meta name="description" content="고속도로 노선을 따라 한반도 주요 유물과 출토지, 박물관을 탐험하고 내신/수능 핵심 문제를 푸는 인터랙티브 한국사 보물 지도 앱">
+  <title>시험에 나오는 한국사 핵심 유물 지도</title>
+  <meta name="description" content="중·고등 한국사 시험 핵심 유물과 유적의 실제 위치, 사진, 핵심 개념을 익히는 인터랙티브 지도">
   
   <!-- Leaflet CSS -->
   <link rel="stylesheet" href="vendor/leaflet/leaflet.css" />
   
   <!-- App Styles -->
-  <link rel="stylesheet" href="styles.css?v=20260730-3">
+  <link rel="stylesheet" href="styles.css?v=20260730-4">
   
 </head>
 <body>
@@ -19,7 +19,7 @@
     <div class="header-main">
       <div class="brand">
         <span class="brand-badge">내신/수능 핵심</span>
-        <h1 class="brand-title">🗺️ 대한민국 고속도로 한국사 보물 지도 탐험대</h1>
+        <h1 class="brand-title">🗺️ 시험에 나오는 한국사 핵심 유물 지도</h1>
       </div>
       
     </div>
@@ -36,17 +36,6 @@
         <button class="filter-btn" data-filter-type="era" data-value="goryeo">4. 고려 시대</button>
         <button class="filter-btn" data-filter-type="era" data-value="joseon">5. 조선 시대</button>
         <button class="filter-btn" data-filter-type="era" data-value="modern">6. 근현대</button>
-      </div>
-
-      <!-- Route Filters -->
-      <div class="filter-group">
-        <span class="filter-label">🛣️ 고속도로 코스:</span>
-        <button class="filter-btn active" data-filter-type="route" data-value="all">전체 노선</button>
-        <button class="filter-btn route-kb" data-filter-type="route" data-value="경부선">🔴 경부선</button>
-        <button class="filter-btn route-sh" data-filter-type="route" data-value="서해안선">🔵 서해안선</button>
-        <button class="filter-btn route-yd" data-filter-type="route" data-value="영동선">🟢 영동선</button>
-        <button class="filter-btn route-hn" data-filter-type="route" data-value="호남선">🟡 호남선</button>
-        <button class="filter-btn route-ov" data-filter-type="route" data-value="해외선">✈️ 해외 유출</button>
       </div>
 
       <!-- Quick Relic Jump Select -->
@@ -102,7 +91,7 @@
 
           <dl class="meta-box">
             <div class="meta-item">
-              <dt><span aria-hidden="true">📍</span> 출토·발견</dt>
+              <dt><span aria-hidden="true">📍</span> 관련 장소</dt>
               <dd id="modal-location">중국 길림성 집안시</dd>
             </div>
             <div class="meta-item">
@@ -148,7 +137,7 @@
 
   <!-- App Logic Scripts -->
   <script src="vendor/leaflet/leaflet.js"></script>
-  <script src="history-data.js?v=20260730-3"></script>
-  <script src="treasure-map.js?v=20260730-3"></script>
+  <script src="history-data.js?v=20260730-4"></script>
+  <script src="treasure-map.js?v=20260730-4"></script>
 </body>
 </html>

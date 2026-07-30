@@ -3,7 +3,6 @@
 
   // --- State Variables ---
   let activeEraFilter = 'all';
-  let activeRouteFilter = 'all';
   
   let leafletMap = null;
   let mapMarkersGroup = null;
@@ -91,9 +90,7 @@
     relics.forEach(relic => {
       // Check filters
       const matchEra = (activeEraFilter === 'all' || relic.eraCategory === activeEraFilter);
-      const matchRoute = (activeRouteFilter === 'all' || relic.route === activeRouteFilter);
-
-      if (!matchEra || !matchRoute) return;
+      if (!matchEra) return;
 
       // Custom Gold Icon Pin
       const pinIcon = L.divIcon({
@@ -119,11 +116,7 @@
     });
 
     // Automatically adjust zoom/bounds safely
-    if (activeRouteFilter === '해외선') {
-      if (mapMarkersGroup.getLayers().length > 0) {
-        leafletMap.fitBounds(mapMarkersGroup.getBounds(), { padding: [60, 60], maxZoom: 6 });
-      }
-    } else if (activeEraFilter !== 'all' || activeRouteFilter !== 'all') {
+    if (activeEraFilter !== 'all') {
       if (mapMarkersGroup.getLayers().length > 0) {
         leafletMap.fitBounds(mapMarkersGroup.getBounds(), { padding: [60, 60], maxZoom: 9 });
       }
@@ -148,8 +141,6 @@
 
         if (type === 'era') {
           activeEraFilter = val;
-        } else if (type === 'route') {
-          activeRouteFilter = val;
         }
 
         renderMapMarkers();
@@ -180,7 +171,6 @@
       if (relic && leafletMap) {
         // Reset filters if necessary so marker is visible
         activeEraFilter = 'all';
-        activeRouteFilter = 'all';
 
         document.querySelectorAll('.filter-btn').forEach(b => {
           if (b.getAttribute('data-value') === 'all') {
