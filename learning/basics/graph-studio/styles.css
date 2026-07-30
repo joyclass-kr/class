@@ -85,7 +85,7 @@ body { margin: 0; }
 .formulaBar > span { width: 52px; height: 48px; display: grid; place-items: center; overflow: hidden; border-radius: 11px; background: var(--purple); color: #fff; font-family: var(--math-font); font-size: 21px; font-weight: 700; white-space: nowrap; }
 .formulaDisplay { min-width: 0; width: 100%; min-height: 62px; display: flex; align-items: center; overflow-x: auto; overflow-y: hidden; border: 1px solid #d3d7e2; border-radius: 11px; background: #fff; padding: 8px 17px; color: #171b2b; font-family: var(--math-font); font-size: clamp(27px, 2.2vw, 32px); line-height: 1.35; white-space: nowrap; scrollbar-width: thin; }
 .formulaBar small { grid-column: 2; color: #687084; font-family: var(--korean-font); font-size: 12px; line-height: 1.4; }
-.formulaDisplay sup { position: relative; top: -.45em; font-size: .68em; line-height: 0; }
+.formulaDisplay .katex { font-size: 1em; }
 .formulaDisplay .mathFraction { display: inline-grid; grid-template-rows: auto auto; align-items: center; margin-left: 5px; font-size: .78em; text-align: center; }
 .formulaDisplay .mathFraction > span:first-child { border-bottom: 1.5px solid currentColor; padding: 0 5px 2px; }
 .formulaDisplay .mathFraction > span:last-child { padding: 2px 5px 0; }
@@ -105,6 +105,7 @@ body { margin: 0; }
 .functionVisibility i { width: 13px; height: 13px; border: 3px solid #fff; border-radius: 50%; box-shadow: 0 0 0 1px #bbc0ce; }
 .functionVisibility input:not(:checked) + i { background: #d7d9e0 !important; opacity: .55; }
 .functionRow > b { color: #42485d; font: 700 18px var(--math-font); }
+.functionRow > b .katex { font-size: 1em; }
 .functionInput { min-width: 0; height: 42px; border: 1px solid #cfd3df; border-radius: 9px; outline: none; background: #fff; padding: 0 12px; color: #171b2b; font: 21px var(--math-font); font-variant-numeric: lining-nums tabular-nums; }
 .functionInput:focus { border-color: var(--purple); box-shadow: 0 0 0 2px rgba(101,88,217,.1); }
 .removeFunction { width: 28px; height: 28px; border: 0; border-radius: 7px; background: #ececf2; color: #747989; font-size: 17px; cursor: pointer; }
@@ -117,6 +118,7 @@ body { margin: 0; }
 .keyboardHeading span { border-radius: 99px; background: #eeecff; padding: 5px 9px; color: #5146bf; font-size: 12px; font-weight: 850; }
 .keyboardKeys { display: grid; grid-template-columns: repeat(10, minmax(32px, 1fr)); gap: 5px; }
 .keyboardKeys button, .formulaExamples button { min-width: 0; height: 38px; border: 1px solid #ced2df; border-radius: 8px; background: #fafafd; color: #252a3d; font: 400 17px var(--math-font); cursor: pointer; }
+.keyboardKeys button .katex, .formulaExamples button .katex { font-size: 1em; }
 .keyboardKeys button:hover, .keyboardKeys button:focus-visible, .formulaExamples button:hover, .formulaExamples button:focus-visible { border-color: #8e85e2; background: #f0eeff; outline: none; }
 .keyboardKeys .keyboardUtility { color: #545a6a; font-family: Pretendard, "Malgun Gothic", sans-serif; font-size: 12px; font-weight: 800; }
 .formulaExamples { display: flex; align-items: center; flex-wrap: wrap; gap: 5px; margin-top: 7px; }
