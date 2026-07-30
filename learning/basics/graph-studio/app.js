@@ -31,6 +31,7 @@ const canvas=document.getElementById("graphCanvas");
 const formulaDisplay=document.getElementById("formulaDisplay");
 const formulaHelp=document.getElementById("formulaHelp");
 const legend=document.getElementById("legend");
+const {expressionToLatex}=window.GraphMath;
 
 function buildLibrary(){
   const root=document.getElementById("presetLibrary");root.innerHTML="";
@@ -102,20 +103,6 @@ function renderMath(node,latex){
     node.textContent=latex;
   }
 }
-function expressionToLatex(source){
-  let latex=source.trim()
-    .replace(/[−–]/g,"-")
-    .replace(/×|\*/g,String.raw`\cdot `)
-    .replace(/÷/g,String.raw`\div `)
-    .replace(/\bpi\b/gi,String.raw`\pi `)
-    .replace(/\blog10\b/gi,String.raw`\log_{10}`)
-    .replace(/\bln\b/gi,String.raw`\ln`)
-    .replace(/\b(sin|cos|tan|asin|acos|atan|exp|log)\b/gi,(_,name)=>String.raw`\operatorname{${name}}`)
-    .replace(/\babs\s*\(([^()]*)\)/gi,String.raw`\left|$1\right|`)
-    .replace(/\bsqrt\s*\(([^()]*)\)/gi,String.raw`\sqrt{$1}`)
-    .replace(/\^(\([^()]+\)|[A-Za-z0-9.+-]+)/g,(_,power)=>`^{${power.startsWith("(")?power.slice(1,-1):power}}`);
-  return `y=${latex||String.raw`\square`}`;
-}
 function normalizeExpression(source){
   const mathFunctions=["asin","acos","atan","sqrt","log10","floor","round","sign","sin","cos","tan","abs","log","exp","ceil","min","max"];
   let normalized=source
@@ -137,9 +124,19 @@ function normalizeExpression(source){
   return normalized.replaceAll("§P§","Math.PI").replaceAll("§E§","Math.E");
 }
 function compileExpression(source){
+  if(/\(\s*\)/.test(source))throw new Error("빈 괄호 안에 수식을 입력하세요.");
+  let depth=0;
+  for(const character of source){
+    if(character==="(")depth+=1;
+    if(character===")")depth-=1;
+    if(depth<0)throw new Error("닫는 괄호가 너무 많습니다.");
+  }
+  if(depth>0)throw new Error("닫는 괄호가 필요합니다.");
   const safe=normalizeExpression(source);
   if(!/^[0-9xabhk+\-*/().,\s_MathPIEabcdefghijklmnopqrstuvwxyz*]+$/i.test(safe))throw new Error("지원하지 않는 기호가 있습니다.");
-  const fn=new Function("x","a","b","h","k",`"use strict";return (${safe});`);
+  let fn;
+  try{fn=new Function("x","a","b","h","k",`"use strict";return (${safe});`);}
+  catch{throw new Error("괄호와 연산기호를 확인하세요.");}
   return x=>fn(x,state.params.a,state.params.b,state.params.h,state.params.k);
 }
 function draw(){
