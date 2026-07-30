@@ -7,6 +7,7 @@
   let leafletMap = null;
   let mapMarkersGroup = null;
   let mapLabelsGroup = null;
+  let koreaSigunguLabels = [];
   let currentActiveRelic = null;
 
   const KOREA_MAP_LABELS = [
@@ -122,6 +123,7 @@
     mapMarkersGroup = L.featureGroup().addTo(leafletMap);
 
     renderMapLabels();
+    loadSigunguLabels();
     renderMapMarkers();
     leafletMap.on('zoomend moveend', renderMapLabels);
 
@@ -134,14 +136,61 @@
     });
   }
 
+  async function loadSigunguLabels() {
+    try {
+      const response = await fetch('data/korea-sigungu-centers.csv?v=20260730-7');
+      if (!response.ok) throw new Error(`HTTP ${response.status}`);
+
+      const bytes = await response.arrayBuffer();
+      const csvText = new TextDecoder('euc-kr').decode(bytes);
+      const retiredIncheonCodes = new Set(['28110', '28140', '28260']);
+
+      koreaSigunguLabels = csvText
+        .trim()
+        .split(/\r?\n/)
+        .slice(1)
+        .map(line => line.split(','))
+        .filter(columns => columns.length >= 5 && !retiredIncheonCodes.has(columns[2]))
+        .map(columns => ({
+          name: columns[columns.length - 1].trim(),
+          lat: Number(columns[1]),
+          lng: Number(columns[0]),
+          minZoom: 10,
+          maxZoom: 14,
+          kind: 'district'
+        }))
+        .filter(label => label.name && Number.isFinite(label.lat) && Number.isFinite(label.lng));
+
+      // Administrative changes made after the source centroids were published.
+      koreaSigunguLabels.push(
+        { name: '부천시 원미구', lat: 37.5034, lng: 126.7659, minZoom: 10, maxZoom: 14, kind: 'district' },
+        { name: '부천시 소사구', lat: 37.4800, lng: 126.7957, minZoom: 10, maxZoom: 14, kind: 'district' },
+        { name: '부천시 오정구', lat: 37.5278, lng: 126.8040, minZoom: 10, maxZoom: 14, kind: 'district' },
+        { name: '제물포구', lat: 37.4780, lng: 126.6240, minZoom: 10, maxZoom: 14, kind: 'district' },
+        { name: '영종구', lat: 37.4930, lng: 126.5310, minZoom: 10, maxZoom: 14, kind: 'district' },
+        { name: '인천 서구', lat: 37.5530, lng: 126.6760, minZoom: 10, maxZoom: 14, kind: 'district' },
+        { name: '검단구', lat: 37.5980, lng: 126.6570, minZoom: 10, maxZoom: 14, kind: 'district' }
+      );
+
+      renderMapLabels();
+    } catch (error) {
+      console.warn('시·군·구 지도 이름을 불러오지 못했습니다.', error);
+    }
+  }
+
   function renderMapLabels() {
     if (!leafletMap || !mapLabelsGroup) return;
 
     const zoom = leafletMap.getZoom();
     const visibleBounds = leafletMap.getBounds().pad(0.15);
+    const labels = koreaSigunguLabels.length
+      ? KOREA_MAP_LABELS.filter(label => label.kind !== 'district').concat(koreaSigunguLabels)
+      : KOREA_MAP_LABELS;
+    const focusedLabel = findFocusedAdminLabel(visibleBounds, zoom);
+    if (focusedLabel) labels.push(focusedLabel);
     mapLabelsGroup.clearLayers();
 
-    KOREA_MAP_LABELS.forEach(label => {
+    labels.forEach(label => {
       if (zoom < label.minZoom || zoom > label.maxZoom) return;
       if (!visibleBounds.contains([label.lat, label.lng])) return;
 
@@ -157,6 +206,36 @@
         interactive: false
       }));
     });
+  }
+
+  function findFocusedAdminLabel(visibleBounds, zoom) {
+    if (!currentActiveRelic || !koreaSigunguLabels.length || zoom < 10) return null;
+
+    const relicText = `${currentActiveRelic.title} ${currentActiveRelic.location} ${currentActiveRelic.museum}`;
+    const candidates = koreaSigunguLabels.filter(label => {
+      const stem = label.name
+        .replace(/^인천\s+/, '')
+        .replace(/(특별자치시|특별시|광역시|시|군|구)$/u, '')
+        .trim();
+      return stem.length >= 2 && relicText.includes(stem);
+    });
+    if (!candidates.length) return null;
+
+    candidates.sort((a, b) => {
+      const distanceA = ((a.lat - currentActiveRelic.lat) ** 2) + ((a.lng - currentActiveRelic.lng) ** 2);
+      const distanceB = ((b.lat - currentActiveRelic.lat) ** 2) + ((b.lng - currentActiveRelic.lng) ** 2);
+      return distanceA - distanceB;
+    });
+
+    const match = candidates[0];
+    if (visibleBounds.contains([match.lat, match.lng])) return null;
+
+    return {
+      ...match,
+      lat: currentActiveRelic.lat,
+      lng: currentActiveRelic.lng,
+      kind: 'focus'
+    };
   }
 
   function renderMapMarkers() {
@@ -250,6 +329,8 @@
 
       const relic = relics.find(r => r.id === selectedId);
       if (relic && leafletMap) {
+        currentActiveRelic = relic;
+
         // Reset filters if necessary so marker is visible
         activeEraFilter = 'all';
 
