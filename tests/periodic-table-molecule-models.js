@@ -90,6 +90,13 @@ assert.match(appSource, /function drawMolecule3D\(\)/);
 assert.match(appSource, /activePointers: new Map\(\)/);
 assert.doesNotMatch(appSource, /function renderMoleculeSVG\(/);
 assert.match(pageSource, /id="molecule3dCanvas"/);
+assert.doesNotMatch(pageSource, /id="modalDiscovery"/);
+assert.doesNotMatch(pageSource, /id="modalTrivia"/);
+assert.doesNotMatch(pageSource, /id="modalUses"/);
+assert.doesNotMatch(pageSource, /id="modalNameEn"/);
+assert.match(pageSource, /id="modalElectronConfig"/);
+assert.match(pageSource, /id="modalShellCount"/);
+assert.match(pageSource, /id="modalValenceElectrons"/);
 assert.ok(
     pageSource.indexOf('src="molecule-models.js"') < pageSource.indexOf('src="app.js"'),
     "3D model data must load before the app"

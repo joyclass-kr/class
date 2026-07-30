@@ -383,9 +383,8 @@ document.addEventListener('DOMContentLoaded', () => {
         state.selectedElement = el;
         const cat = window.PERIODIC_CATEGORIES[el.category] || {};
 
-        document.getElementById('modalZ').textContent = `N° ${el.number}`;
+        document.getElementById('modalZ').textContent = `원자번호 ${el.number}`;
         document.getElementById('modalNameKo').textContent = el.name;
-        document.getElementById('modalNameEn').textContent = el.enName;
         
         const badge = document.getElementById('modalCatBadge');
         badge.textContent = cat.name || el.category;
@@ -395,20 +394,16 @@ document.addEventListener('DOMContentLoaded', () => {
 
         document.getElementById('modalSymbol').textContent = el.symbol;
         document.getElementById('modalMass').textContent = el.mass;
-        document.getElementById('modalState').textContent = el.state === 'gas' ? '기체 (Gas)' : el.state === 'liquid' ? '액체 (Liquid)' : el.state === 'solid' ? '고체 (Solid)' : '합성/미정';
+        document.getElementById('modalState').textContent = el.state === 'gas' ? '기체' : el.state === 'liquid' ? '액체' : el.state === 'solid' ? '고체' : '합성/미정';
         document.getElementById('modalGroupPeriod').textContent = state.tableMode === 'exam'
             ? `${getShortGroup(el.group)}족 / ${el.period}주기`
             : `${el.group}족 / ${el.period}주기 (${el.block} 블록)`;
-        document.getElementById('modalShells').textContent = el.shells.join(' - ');
-        document.getElementById('modalDiscovery').textContent = el.discovery || '선사 시대';
-
-        document.getElementById('modalDesc').textContent = el.desc;
-        document.getElementById('modalTrivia').textContent = el.trivia || '알려진 흥미로운 특성이 기록되어 있습니다.';
-
-        const usesContainer = document.getElementById('modalUses');
-        if (usesContainer && el.uses) {
-            usesContainer.innerHTML = el.uses.map(u => `<span class="use-tag"># ${u}</span>`).join('');
-        }
+        const electronConfig = el.shells.join(' - ');
+        const valenceElectrons = el.shells[el.shells.length - 1];
+        document.getElementById('modalShells').textContent = electronConfig;
+        document.getElementById('modalElectronConfig').textContent = electronConfig;
+        document.getElementById('modalShellCount').textContent = `${el.shells.length}개`;
+        document.getElementById('modalValenceElectrons').textContent = `${valenceElectrons}개`;
 
         modalOverlay.classList.add('active');
         startBohrAtomAnimation(el);
