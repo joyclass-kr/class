@@ -404,7 +404,7 @@ test("renders the unified arithmetic catalog and high-school worksheets", async 
   assert.match(rationalHtml, /답안 입력에서 4지선다 채점 · 오답 보충 최대 2문제/);
   assert.match(rationalHtml, />답안 입력<\/button>/);
   assert.match(rationalHtml, /aria-label="A4 분수식의 계산 문제지"/);
-  assert.match(rationalHtml, /aria-label="A4 인수분해와 분수식 정답지"/);
+  assert.match(rationalHtml, /aria-label="A4 분수식의 계산 정답지"/);
   assert.equal((rationalHtml.match(/data-testid="rational-expression-question"/g) ?? []).length, 8);
   assert.equal((rationalHtml.match(/class="rational-coefficient-input"/g) ?? []).length, 0);
   assert.doesNotMatch(rationalHtml, /rational-restrictions|단,\s*<span/);
