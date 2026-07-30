@@ -1,22 +1,22 @@
 const presets = [
-  ["일차함수","중학교","ax+b","기울기 a가 커지면 직선은 어떻게 달라질까요?","y = ax + b"],
-  ["이차함수","중학교","a(x-h)^2+k","a의 부호가 바뀌면 그래프의 모양은 어떻게 달라질까요?","y = a(x − h)<sup>2</sup> + k"],
-  ["반비례","중학교","a/x","a의 부호에 따라 그래프는 어느 사분면을 지날까요?",'y = <span class="mathFraction"><span>a</span><span>x</span></span>'],
-  ["삼차함수","고등학교","a(x-h)^3+k","변곡점과 그래프의 대칭성을 찾아보세요.","y = a(x − h)<sup>3</sup> + k"],
-  ["사차함수","고등학교","a(x-h)^4+k","짝수 차수 함수의 양 끝 행동을 관찰해 보세요.","y = a(x − h)<sup>4</sup> + k"],
-  ["절댓값","고등학교","a abs(x-h)+k","h와 k는 꼭짓점을 어느 방향으로 움직일까요?","y = a|x − h| + k"],
-  ["유리함수","고등학교","a/(x-h)+k","점근선의 방정식을 h와 k로 표현해 보세요.",'y = <span class="mathFraction"><span>a</span><span>x − h</span></span> + k'],
-  ["무리함수","고등학교","a sqrt(x-h)+k","이 함수의 정의역은 어디에서 시작할까요?",'y = a<span class="root">√<span class="radicand">x − h</span></span> + k'],
-  ["지수함수","고등학교","a×2^(x-h)+k","x가 1씩 증가할 때 함숫값은 몇 배가 될까요?","y = a · 2<sup>x − h</sup> + k"],
-  ["자연지수함수","고등학교","a exp(x-h)+k","자연상수 e를 밑으로 하는 증가율을 관찰해 보세요.","y = ae<sup>x − h</sup> + k"],
-  ["상용로그","고등학교","a log10(x-h)+k","밑이 10인 로그함수의 점근선을 찾아보세요.","y = a log<sub>10</sub>(x − h) + k"],
-  ["자연로그 ln","고등학교","a ln(x-h)+k","ln과 자연지수함수의 역함수 관계를 확인해 보세요.","y = a ln(x − h) + k"],
-  ["사인함수","고등학교","a sin(bx+h)+k","a와 b는 진폭과 주기를 어떻게 바꿀까요?","y = a sin(bx + h) + k"],
-  ["코사인함수","고등학교","a cos(bx+h)+k","사인함수와 코사인함수는 어떻게 평행이동 관계일까요?","y = a cos(bx + h) + k"],
-  ["탄젠트함수","고등학교","a tan(bx+h)+k","탄젠트함수의 주기와 점근선을 찾아보세요.","y = a tan(bx + h) + k"],
-  ["역삼각함수","심화","asin(x)","정의역과 치역이 제한되는 이유를 살펴보세요.","y = sin<sup>−1</sup>x"],
-  ["합성함수 예시","심화","sin(x^2)","안쪽 함수와 바깥쪽 함수가 그래프에 미치는 영향을 나눠 보세요.","y = sin(x<sup>2</sup>)"],
-  ["정규분포","확률과 통계","exp(-((x-h)^2)/(2×a^2))/(a×sqrt(2×pi))","표준편차가 커지면 곡선의 높이와 폭은 어떻게 변할까요?",'y = <span class="mathFraction"><span>e<sup>−(x − h)²/(2a²)</sup></span><span>a√(2π)</span></span>']
+  ["일차함수","중학교","ax+b","기울기 a가 커지면 직선은 어떻게 달라질까요?",String.raw`y=ax+b`],
+  ["이차함수","중학교","a(x-h)^2+k","a의 부호가 바뀌면 그래프의 모양은 어떻게 달라질까요?",String.raw`y=a(x-h)^2+k`],
+  ["반비례","중학교","a/x","a의 부호에 따라 그래프는 어느 사분면을 지날까요?",String.raw`y=\frac{a}{x}`],
+  ["삼차함수","고등학교","a(x-h)^3+k","변곡점과 그래프의 대칭성을 찾아보세요.",String.raw`y=a(x-h)^3+k`],
+  ["사차함수","고등학교","a(x-h)^4+k","짝수 차수 함수의 양 끝 행동을 관찰해 보세요.",String.raw`y=a(x-h)^4+k`],
+  ["절댓값","고등학교","a abs(x-h)+k","h와 k는 꼭짓점을 어느 방향으로 움직일까요?",String.raw`y=a\lvert x-h\rvert+k`],
+  ["유리함수","고등학교","a/(x-h)+k","점근선의 방정식을 h와 k로 표현해 보세요.",String.raw`y=\frac{a}{x-h}+k`],
+  ["무리함수","고등학교","a sqrt(x-h)+k","이 함수의 정의역은 어디에서 시작할까요?",String.raw`y=a\sqrt{x-h}+k`],
+  ["지수함수","고등학교","a×2^(x-h)+k","x가 1씩 증가할 때 함숫값은 몇 배가 될까요?",String.raw`y=a\cdot2^{x-h}+k`],
+  ["자연지수함수","고등학교","a exp(x-h)+k","자연상수 e를 밑으로 하는 증가율을 관찰해 보세요.",String.raw`y=ae^{x-h}+k`],
+  ["상용로그","고등학교","a log10(x-h)+k","밑이 10인 로그함수의 점근선을 찾아보세요.",String.raw`y=a\log_{10}(x-h)+k`],
+  ["자연로그 ln","고등학교","a ln(x-h)+k","ln과 자연지수함수의 역함수 관계를 확인해 보세요.",String.raw`y=a\ln(x-h)+k`],
+  ["사인함수","고등학교","a sin(bx+h)+k","a와 b는 진폭과 주기를 어떻게 바꿀까요?",String.raw`y=a\sin(bx+h)+k`],
+  ["코사인함수","고등학교","a cos(bx+h)+k","사인함수와 코사인함수는 어떻게 평행이동 관계일까요?",String.raw`y=a\cos(bx+h)+k`],
+  ["탄젠트함수","고등학교","a tan(bx+h)+k","탄젠트함수의 주기와 점근선을 찾아보세요.",String.raw`y=a\tan(bx+h)+k`],
+  ["역삼각함수","심화","asin(x)","정의역과 치역이 제한되는 이유를 살펴보세요.",String.raw`y=\sin^{-1}x`],
+  ["합성함수 예시","심화","sin(x^2)","안쪽 함수와 바깥쪽 함수가 그래프에 미치는 영향을 나눠 보세요.",String.raw`y=\sin(x^2)`],
+  ["정규분포","확률과 통계","exp(-((x-h)^2)/(2×a^2))/(a×sqrt(2×pi))","표준편차가 커지면 곡선의 높이와 폭은 어떻게 변할까요?",String.raw`y=\frac{e^{-\frac{(x-h)^2}{2a^2}}}{a\sqrt{2\pi}}`]
 ];
 
 const colors=["#6558d9","#ef7456","#139e88","#e0a52b","#3975ce","#b24f9b"];
@@ -48,6 +48,7 @@ function buildSliders(){
   Object.keys(state.params).forEach(key=>{
     const label=document.createElement("label");label.className="slider";const limit=key==="a"||key==="b"?5:8;
     label.innerHTML=`<div><b>${key}</b><output>${state.params[key].toFixed(1)}</output></div><input type="range" min="${-limit}" max="${limit}" step="0.1" value="${state.params[key]}" aria-label="${key} 값">`;
+    renderMath(label.querySelector("b"),key);
     label.querySelector("input").oninput=e=>{state.params[key]=Number(e.target.value);label.querySelector("output").textContent=state.params[key].toFixed(1);draw();};
     root.appendChild(label);
   });
@@ -58,10 +59,11 @@ function buildFunctionRows(){
     const row=document.createElement("div");row.className="functionRow";
     row.classList.toggle("isActive",index===state.activeFunctionIndex);
     row.innerHTML=`<label class="functionVisibility" title="그래프 표시"><input type="checkbox" ${fn.visible?"checked":""}><i style="background:${colors[index%colors.length]}"></i></label>
-      <b>y${index+1}</b><input class="functionInput" value="${escapeAttribute(fn.expression)}" aria-label="${index+1}번 함수 수식" spellcheck="false" inputmode="text">
+      <b class="functionName" data-latex="y_${index+1}">y${index+1}</b><input class="functionInput" value="${escapeAttribute(fn.expression)}" aria-label="${index+1}번 함수 수식" spellcheck="false" inputmode="text">
       <button type="button" class="removeFunction" aria-label="${index+1}번 함수 삭제" ${state.functions.length===1?"disabled":""}>×</button>
       <small class="functionError" aria-live="polite"></small>`;
     row.querySelector(".functionVisibility input").onchange=e=>{fn.visible=e.target.checked;draw();};
+    renderMath(row.querySelector(".functionName"),`y_${index+1}`);
     const input=row.querySelector(".functionInput");
     input.onfocus=()=>setActiveFunction(index);
     input.onclick=()=>setActiveFunction(index);
@@ -90,11 +92,29 @@ function selectPreset(item){
 }
 function renderFormula(){
   const preset=presets.find(p=>p[0]===state.preset&&p[2]===state.functions[0]?.expression);
-  formulaDisplay.innerHTML=preset?preset[4]:prettyFormula(state.functions[0]?.expression||"");
+  renderMath(formulaDisplay,preset?preset[4]:expressionToLatex(state.functions[0]?.expression||""));
 }
-function prettyFormula(source){
-  const escaped=source.replace(/&/g,"&amp;").replace(/</g,"&lt;").replace(/>/g,"&gt;");
-  return `y = ${escaped.replace(/\*/g," · ").replace(/\^2/g,"²").replace(/\^3/g,"³").replace(/\^4/g,"⁴").replace(/\bpi\b/gi,"π")}`;
+function renderMath(node,latex){
+  if(!node)return;
+  if(window.katex){
+    window.katex.render(latex,node,{throwOnError:false,strict:false,output:"html"});
+  }else{
+    node.textContent=latex;
+  }
+}
+function expressionToLatex(source){
+  let latex=source.trim()
+    .replace(/[−–]/g,"-")
+    .replace(/×|\*/g,String.raw`\cdot `)
+    .replace(/÷/g,String.raw`\div `)
+    .replace(/\bpi\b/gi,String.raw`\pi `)
+    .replace(/\blog10\b/gi,String.raw`\log_{10}`)
+    .replace(/\bln\b/gi,String.raw`\ln`)
+    .replace(/\b(sin|cos|tan|asin|acos|atan|exp|log)\b/gi,(_,name)=>String.raw`\operatorname{${name}}`)
+    .replace(/\babs\s*\(([^()]*)\)/gi,String.raw`\left|$1\right|`)
+    .replace(/\bsqrt\s*\(([^()]*)\)/gi,String.raw`\sqrt{$1}`)
+    .replace(/\^(\([^()]+\)|[A-Za-z0-9.+-]+)/g,(_,power)=>`^{${power.startsWith("(")?power.slice(1,-1):power}}`);
+  return `y=${latex||String.raw`\square`}`;
 }
 function normalizeExpression(source){
   const mathFunctions=["asin","acos","atan","sqrt","log10","floor","round","sign","sin","cos","tan","abs","log","exp","ceil","min","max"];
@@ -198,4 +218,13 @@ document.getElementById("resetButton").onclick=()=>{state.params={a:1,b:1,h:0,k:
 document.getElementById("printButton").onclick=()=>window.print();
 document.getElementById("saveButton").onclick=()=>{const link=document.createElement("a");link.download=`${state.preset}-그래프.png`;link.href=canvas.toDataURL("image/png");link.click();};
 buildLibrary();buildSliders();buildFunctionRows();renderFormula();new ResizeObserver(draw).observe(canvas);draw();
+document.querySelectorAll("[data-insert],[data-wrap-before],[data-example]").forEach(button=>{
+  const latex=button.dataset.example?expressionToLatex(button.dataset.example).replace(/^y=/,""):
+    button.dataset.wrapBefore?String.raw`\operatorname{${button.textContent.trim()}}`:
+    button.dataset.insert==="pi"?String.raw`\pi`:
+    button.dataset.insert==="^2"?String.raw`x^2`:
+    button.dataset.insert==="^"?String.raw`x^n`:
+    button.textContent.trim();
+  if(!button.classList.contains("keyboardUtility"))renderMath(button,latex);
+});
 if(document.fonts?.ready)document.fonts.ready.then(draw);
