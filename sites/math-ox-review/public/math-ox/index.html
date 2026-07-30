@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>기초수학 개념 OX - songhwaplay</title>
+  
+  <!-- KaTeX CSS & JS CDN -->
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.16.8/dist/katex.min.css">
+  <script defer src="https://cdn.jsdelivr.net/npm/katex@0.16.8/dist/katex.min.js"></script>
+  <script defer src="https://cdn.jsdelivr.net/npm/katex@0.16.8/dist/contrib/auto-render.min.js"></script>
+  
+  <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+
+  <div class="math-ox-container">
+    <header class="page-header">
+      <span class="back-link">문항 검토용 배포</span>
+      <h1 class="page-title">수학 OX</h1>
+    </header>
+
+    <!-- 과목 필터 탭 -->
+    <nav class="filter-nav" id="filterNav" aria-label="과목 선택 탭">
+      <!-- JavaScript로 과목 탭 자동 생성 -->
+    </nav>
+
+    <!-- 진행 상황 프로그레스 바 -->
+    <div class="stats-bar">
+      <div class="stats-count">
+        진행 상황: <strong id="answeredCount">0</strong> / <span id="totalCount">54</span> 문항 완료
+      </div>
+      <div class="progress-track" aria-label="풀이 진행률">
+        <div class="progress-fill" id="progressFill"></div>
+      </div>
+    </div>
+
+    <!-- 문항 카드 리스트 -->
+    <main class="questions-list" id="questionsList" aria-live="polite">
+      <!-- JavaScript로 문항 카드 dynamic 렌더링 -->
+    </main>
+  </div>
+
+  <script src="app.js"></script>
+</body>
+</html>

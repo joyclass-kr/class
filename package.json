@@ -4,7 +4,8 @@
   "private": true,
   "scripts": {
     "build": "npm --prefix game-hub-server install",
-    "start": "npm --prefix game-hub-server start"
+    "start": "npm --prefix game-hub-server start",
+    "test:math-ox": "node --test tests/math-ox-data.test.js"
   },
   "engines": {
     "node": ">=20"
