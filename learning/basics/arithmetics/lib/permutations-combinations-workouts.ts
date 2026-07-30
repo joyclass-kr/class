@@ -1,4 +1,5 @@
 export type PermutationCombinationKind =
+  | "sum-rule" | "product-rule"
   | "basic-permutation" | "adjacent-arrangement" | "circular-permutation" | "repeated-permutation" | "identical-permutation"
   | "basic-combination" | "mixed-committee" | "not-together-selection" | "required-selection" | "repeated-combination";
 
@@ -11,11 +12,12 @@ export type PermutationCombinationProblem = {
   answer: number;
 };
 
-const PERMUTATION_KINDS: PermutationCombinationKind[] = [
-  "basic-permutation", "adjacent-arrangement", "circular-permutation", "repeated-permutation", "identical-permutation",
+const COMMON_COUNTING_KINDS: PermutationCombinationKind[] = [
+  "sum-rule", "product-rule", "basic-permutation", "adjacent-arrangement",
+  "basic-combination", "required-selection", "not-together-selection",
 ];
-const COMBINATION_KINDS: PermutationCombinationKind[] = [
-  "basic-combination", "mixed-committee", "not-together-selection", "required-selection", "repeated-combination",
+const PROBABILITY_COUNTING_KINDS: PermutationCombinationKind[] = [
+  "circular-permutation", "repeated-permutation", "identical-permutation", "repeated-combination",
 ];
 
 function random(seed: number) {
@@ -45,6 +47,34 @@ export function choose(total: number, count: number) {
 }
 
 function buildProblem(kind: PermutationCombinationKind, next: () => number, id: string): PermutationCombinationProblem {
+  if (kind === "sum-rule") {
+    const first = integer(next, 4, 9);
+    const second = integer(next, 3, 8);
+    return {
+      id, kind, label: "합의 법칙",
+      prompt: pick(next, [
+        `서로 겹치지 않는 A형 상품 ${first}개와 B형 상품 ${second}개 중 하나를 고르는 경우의 수를 구하세요.`,
+        `버스 노선 ${first}개와 지하철 노선 ${second}개 중 한 가지 방법으로 이동할 때 경우의 수를 구하세요.`,
+        `국어 선택지 ${first}개와 수학 선택지 ${second}개 중 한 과목의 선택지 하나만 고를 때 경우의 수를 구하세요.`,
+      ]),
+      latex: `${first}+${second}`,
+      answer: first + second,
+    };
+  }
+  if (kind === "product-rule") {
+    const first = integer(next, 3, 7);
+    const second = integer(next, 3, 6);
+    return {
+      id, kind, label: "곱의 법칙",
+      prompt: pick(next, [
+        `상의 ${first}벌과 하의 ${second}벌 중 하나씩 골라 입는 경우의 수를 구하세요.`,
+        `출발지에서 중간 지점까지 ${first}개, 중간 지점에서 도착지까지 ${second}개의 길이 있을 때 경우의 수를 구하세요.`,
+        `메인 메뉴 ${first}가지와 음료 ${second}가지 중 하나씩 고르는 경우의 수를 구하세요.`,
+      ]),
+      latex: `${first}\\times${second}`,
+      answer: first * second,
+    };
+  }
   if (kind === "basic-permutation") {
     const total = integer(next, 6, 9);
     const roles = pick(next, [["회장", "부회장", "총무"], ["대표", "부대표", "서기"], ["금상", "은상", "동상"]] as const);
@@ -184,11 +214,11 @@ function createSet(kinds: PermutationCombinationKind[], seed: number, prefix: st
   const next = random(seed);
   return { seed, problems: kinds.map((kind, index) => buildProblem(kind, next, `${prefix}-${index}`)) };
 }
-export function createPermutationProblemSet(seed: number) {
-  return createSet(PERMUTATION_KINDS, seed, "permutation");
+export function createCommonCountingProblemSet(seed: number) {
+  return createSet(COMMON_COUNTING_KINDS, seed, "common-counting");
 }
-export function createCombinationProblemSet(seed: number) {
-  return createSet(COMBINATION_KINDS, seed, "combination");
+export function createProbabilityCountingProblemSet(seed: number) {
+  return createSet(PROBABILITY_COUNTING_KINDS, seed, "probability-counting");
 }
 export function createPermutationCombinationReviewProblems(kinds: PermutationCombinationKind[], seed: number) {
   const next = random(seed);
