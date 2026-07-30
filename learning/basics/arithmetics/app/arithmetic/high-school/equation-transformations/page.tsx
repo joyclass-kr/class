@@ -129,7 +129,7 @@ export default function EquationTransformationsPage() {
     return (
       <div className={`a4-sheet counting-sheet polynomial-sheet equation-sheet polynomial-sheet-${problems.length}`} style={{ transform: `scale(${sheetScale})` }}>
         <header className="counting-sheet-header polynomial-sheet-header">
-          <div className="counting-sheet-title"><span>공통수학 1</span><strong>방정식{answerSheet ? " 정답" : ""}</strong></div>
+          <div className="counting-sheet-title"><span>보충</span><strong>유리·무리·절댓값 방정식{answerSheet ? " 정답" : ""}</strong></div>
           <div className="counting-sheet-info"><span>이름 <i /></span><span>날짜 <i /></span><small>문제지 {questionSet.seed}</small></div>
         </header>
         <div className="polynomial-instruction">

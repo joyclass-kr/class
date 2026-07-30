@@ -253,7 +253,9 @@ export const highSchoolWorksheetCatalog: ArithmeticWorksheet[] = [
   { grade: "공수1", name: "인수분해와 분수식", title: "인수분해와 분수식", route: "/arithmetic/high-school/factorization-rational" },
   { grade: "공수1", name: "복소수", title: "복소수", route: "/arithmetic/high-school/complex-numbers" },
   { grade: "공수1", name: "지수와 근호", title: "지수와 근호", route: "/arithmetic/high-school/exponents-radicals" },
-  { grade: "공수1", name: "방정식", title: "방정식", route: "/arithmetic/high-school/equation-transformations" },
+  { grade: "공수1", name: "이차방정식: 판별식·근과 계수", title: "이차방정식: 판별식·근과 계수", route: "/arithmetic/high-school/quadratic-root-relations" },
+  { grade: "공수1", name: "이차방정식과 이차함수", title: "이차방정식과 이차함수", route: "/arithmetic/high-school/quadratic-function-relations" },
+  { grade: "공수1", name: "연립이차방정식", title: "연립이차방정식", route: "/arithmetic/high-school/simultaneous-quadratic-equations" },
   { grade: "공수1", name: "삼차방정식과 사차방정식", title: "삼차방정식과 사차방정식", route: "/arithmetic/high-school/cubic-quartic-equations" },
   { grade: "공수1", name: "부등식", title: "부등식", route: "/arithmetic/high-school/inequality-intervals" },
   { grade: "공수1", name: "순열", title: "순열", route: "/arithmetic/high-school/permutations-combinations" },
@@ -302,6 +304,7 @@ export const highSchoolWorksheetCatalog: ArithmeticWorksheet[] = [
   { grade: "확통", name: "확률의 계산", title: "확률의 계산", route: "/arithmetic/high-school/probability-rules" },
   { grade: "확통", name: "확률분포와 통계", title: "확률분포와 통계", route: "/arithmetic/high-school/probability-distributions" },
   { grade: "확통", name: "모집단과 표본·통계적 추정", title: "모집단과 표본·통계적 추정", route: "/arithmetic/high-school/statistical-inference" },
+  { grade: "보충", name: "유리·무리·절댓값 방정식", title: "유리·무리·절댓값 방정식", route: "/arithmetic/high-school/equation-transformations" },
 ];
 
 export const stemWorksheetCatalog: ArithmeticWorksheet[] = [
