@@ -57,12 +57,12 @@
       zoomControl: true
     });
 
-    // CARTO Voyager keeps coastlines, roads, and place names readable.
-    // A restrained navy treatment is applied in CSS to preserve the treasure-map mood.
-    L.tileLayer('https://{s}.basemaps.cartocdn.com/rastertiles/voyager/{z}/{x}/{y}{r}.png', {
-      attribution: '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> &copy; <a href="https://carto.com/">CARTO</a>',
-      subdomains: 'abcd',
-      maxZoom: 19
+    // The standard OSM layer uses each place's local name, so Korean labels stay
+    // readable before users zoom in instead of switching from romanized English.
+    L.tileLayer('https://tile.openstreetmap.org/{z}/{x}/{y}.png', {
+      attribution: '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap contributors</a>',
+      maxZoom: 19,
+      detectRetina: true
     }).addTo(leafletMap);
 
     mapMarkersGroup = L.featureGroup().addTo(leafletMap);

@@ -168,7 +168,7 @@ body {
  * Keep the dark navy atmosphere without losing coastlines, roads, and labels.
  */
 #map-container .leaflet-tile-pane {
-  filter: brightness(0.72) saturate(0.58) contrast(0.88) sepia(0.08);
+  filter: brightness(0.78) saturate(0.55) contrast(0.92) sepia(0.06);
 }
 
 #map-container::after {
