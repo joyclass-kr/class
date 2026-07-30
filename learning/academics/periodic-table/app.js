@@ -312,17 +312,6 @@ document.addEventListener('DOMContentLoaded', () => {
         document.getElementById('appTitleText').textContent = isExam ? '단주기 주기율표' : '실제 주기율표';
         document.getElementById('appTitleBadge').textContent = isExam ? '시험 대비 · 1~20' : '전체 원소 · 1~118';
         document.getElementById('tabExploreLabel').textContent = isExam ? '단주기표' : '실제 주기율표';
-        document.getElementById('tableModeKicker').textContent = isExam ? '시험 범위만 한눈에' : '전체 원소를 한눈에';
-        document.getElementById('examFocusTitle').textContent = isExam
-            ? '원자번호 1번 수소부터 20번 칼슘까지'
-            : '1번 수소부터 118번 오가네손까지';
-        document.getElementById('examFocusDescription').textContent = isExam
-            ? '원소 기호·이름·원자번호와 전자 배치, 족과 주기를 연결해서 외워 보세요.'
-            : '현재 표준 18족 배열과 란타넘족·악티늄족을 포함한 전체 주기율표입니다.';
-        document.getElementById('elementCountStat').textContent = isExam ? '20' : '118';
-        document.getElementById('elementCountLabel').textContent = isExam ? '필수 원소' : '전체 원소';
-        document.getElementById('groupCountStat').textContent = isExam ? '8' : '18';
-        document.getElementById('periodCountStat').textContent = isExam ? '4' : '7';
         document.getElementById('guidePeriod').innerHTML = isExam ? '<b>가로</b>는 주기' : '<b>7개</b> 주기';
         document.getElementById('guideGroup').innerHTML = isExam ? '<b>세로</b>는 족' : '<b>18개</b> 족';
         document.getElementById('guideDetail').innerHTML = isExam

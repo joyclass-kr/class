@@ -90,6 +90,8 @@ assert.match(appSource, /function drawMolecule3D\(\)/);
 assert.match(appSource, /activePointers: new Map\(\)/);
 assert.doesNotMatch(appSource, /function renderMoleculeSVG\(/);
 assert.match(pageSource, /id="molecule3dCanvas"/);
+assert.doesNotMatch(pageSource, /시험 범위만 한눈에/);
+assert.doesNotMatch(pageSource, /class="exam-focus"/);
 assert.doesNotMatch(pageSource, /id="modalDiscovery"/);
 assert.doesNotMatch(pageSource, /id="modalNameEn"/);
 assert.match(pageSource, /id="modalDesc"/);
