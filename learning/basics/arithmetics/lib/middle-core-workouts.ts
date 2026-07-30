@@ -304,6 +304,86 @@ function buildGcdLcm(id: string, index: number): MiddleCoreProblem {
   return make(id, "gcd-lcm", exercise.latex, exercise.answer, hint, distractors, exercise.structure, exercise.label);
 }
 
+function buildPolynomialAddSubtract(id: string, index: number): MiddleCoreProblem {
+  const exercises = [
+    {
+      latex: "(3x^2-2x+5)+(-5x^2+7x-9)",
+      answer: "-2x^2+5x-4",
+      structure: "two-add",
+      label: "두 다항식의 덧셈",
+      hint: "괄호를 풀고 x²항, x항, 상수항끼리 각각 더한다.",
+      distractors: ["8x^2+5x-4", "-2x^2+9x-14", "-2x^2-5x+4"],
+    },
+    {
+      latex: "(4x^2-3x+2)-(-2x^2+5x-7)",
+      answer: "6x^2-8x+9",
+      structure: "two-subtract",
+      label: "괄호 앞의 음수",
+      hint: "두 번째 괄호 안 모든 항의 부호를 바꾼 뒤 동류항을 계산한다.",
+      distractors: ["2x^2+2x-5", "6x^2+2x-5", "6x^2-8x-5"],
+    },
+    {
+      latex: "2(x^2-3x+4)-3(2x^2+x-5)",
+      answer: "-4x^2-9x+23",
+      structure: "scalar-two-polynomials",
+      label: "계수가 있는 두 다항식",
+      hint: "각 괄호에 2와 -3을 먼저 분배한 다음 동류항을 정리한다.",
+      distractors: ["-4x^2-3x-7", "8x^2-9x+23", "-4x^2-9x-7"],
+    },
+    {
+      latex: "(2x^2-x+3)-(-x^2+4x-5)+(3x^2-2x-1)",
+      answer: "6x^2-7x+7",
+      structure: "three-polynomials",
+      label: "세 다항식의 계산",
+      hint: "가운데 괄호의 부호를 모두 바꾸고 세 식의 동류항을 한 번에 모은다.",
+      distractors: ["4x^2+x-3", "6x^2+x-3", "6x^2-7x-3"],
+    },
+    {
+      latex: "(3x^2-2xy+y^2)-2(x^2+3xy-2y^2)",
+      answer: "x^2-8xy+5y^2",
+      structure: "two-variables",
+      label: "두 문자 다항식",
+      hint: "x², xy, y²는 서로 다른 항이므로 같은 문자와 차수의 항끼리만 계산한다.",
+      distractors: ["x^2+4xy-3y^2", "x^2-8xy-3y^2", "5x^2-8xy+5y^2"],
+    },
+    {
+      latex: "\\left(\\dfrac12x^2-\\dfrac23x+\\dfrac14\\right)+\\left(\\dfrac34x^2+\\dfrac16x-\\dfrac58\\right)",
+      answer: "\\dfrac54x^2-\\dfrac12x-\\dfrac38",
+      structure: "fraction-coefficients",
+      label: "분수 계수의 계산",
+      hint: "각 동류항의 분모를 통분하여 계수를 더하고 뺀다.",
+      distractors: ["\\dfrac54x^2-\\dfrac56x-\\dfrac38", "\\dfrac58x^2-\\dfrac12x-\\dfrac14", "\\dfrac54x^2+\\dfrac12x+\\dfrac78"],
+    },
+    {
+      latex: "3\\left\\{2(x^2-x+1)-(2x^2+3x-4)\\right\\}",
+      answer: "-15x+18",
+      structure: "nested-parentheses",
+      label: "이중 괄호 계산",
+      hint: "중괄호 안을 먼저 정리하면 -5x+6이고, 마지막으로 3을 분배한다.",
+      distractors: ["-5x+6", "-15x+6", "12x^2-15x+18"],
+    },
+    {
+      latex: "A+(2x^2-3x+4)=-x^2+5x-7",
+      answer: "A=-3x^2+8x-11",
+      structure: "missing-polynomial",
+      label: "다항식 역산",
+      hint: "A는 오른쪽 다항식에서 더해진 다항식을 빼서 구한다.",
+      distractors: ["A=x^2+2x-3", "A=-3x^2+2x-3", "A=-3x^2+8x+11"],
+    },
+  ] as const;
+  const exercise = exercises[index];
+  return make(
+    id,
+    "polynomial-add-subtract",
+    exercise.latex,
+    exercise.answer,
+    exercise.hint,
+    [...exercise.distractors],
+    exercise.structure,
+    exercise.label,
+  );
+}
+
 function build(
   kind: Exclude<MiddleCoreKind, "formula-comprehensive">,
   next: () => number,
@@ -312,6 +392,7 @@ function build(
 ): MiddleCoreProblem {
   if (kind === "prime-factorization") return buildPrimeFactorization(id, index);
   if (kind === "gcd-lcm") return buildGcdLcm(id, index);
+  if (kind === "polynomial-add-subtract") return buildPolynomialAddSubtract(id, index);
 
   if (kind === "prime-factorization") {
     const [p, q] = PRIME_PAIRS[index % PRIME_PAIRS.length];

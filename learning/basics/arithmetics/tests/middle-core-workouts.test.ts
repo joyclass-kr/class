@@ -152,3 +152,22 @@ test("prime factorization advances from exponent notation to middle-school appli
   assert.ok(problems.slice(0, 5).every(({ answerLatex }) => answerLatex.includes("^")));
   assert.ok(problems.slice(5).every(({ latex }) => /n|a/.test(latex)));
 });
+
+test("polynomial addition and subtraction progresses beyond repeated two-polynomial drills", () => {
+  const problems = createMiddleCoreProblemSet("polynomial-add-subtract", 29).problems;
+  assert.deepEqual(
+    problems.map(({ structure }) => structure),
+    [
+      "two-add",
+      "two-subtract",
+      "scalar-two-polynomials",
+      "three-polynomials",
+      "two-variables",
+      "fraction-coefficients",
+      "nested-parentheses",
+      "missing-polynomial",
+    ],
+  );
+  assert.equal(new Set(problems.map(({ label }) => label)).size, 8);
+  assert.ok(problems.slice(2).every(({ structure }) => !["two-add", "two-subtract"].includes(structure)));
+});
