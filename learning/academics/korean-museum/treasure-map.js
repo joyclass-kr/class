@@ -12,22 +12,22 @@
 
   const KOREA_MAP_LABELS = [
     // Low-zoom labels: keep only the administrative regions students need.
-    { name: '서울특별시', lat: 37.5665, lng: 126.9780, minZoom: 7, maxZoom: 9, kind: 'region' },
-    { name: '인천광역시', lat: 37.4563, lng: 126.7052, minZoom: 8, maxZoom: 9, kind: 'region' },
+    { name: '서울특별시', lat: 37.5665, lng: 126.9780, minZoom: 7, maxZoom: 14, kind: 'region' },
+    { name: '인천광역시', lat: 37.4563, lng: 126.7052, minZoom: 8, maxZoom: 14, kind: 'region' },
     { name: '경기도', lat: 37.2751, lng: 127.0095, minZoom: 6, maxZoom: 8, kind: 'region' },
     { name: '강원특별자치도', lat: 37.8228, lng: 128.1555, minZoom: 6, maxZoom: 8, kind: 'region' },
     { name: '충청북도', lat: 36.6357, lng: 127.4917, minZoom: 6, maxZoom: 8, kind: 'region' },
     { name: '충청남도', lat: 36.6588, lng: 126.6728, minZoom: 6, maxZoom: 8, kind: 'region' },
-    { name: '세종특별자치시', lat: 36.4800, lng: 127.2890, minZoom: 8, maxZoom: 9, kind: 'region' },
-    { name: '대전광역시', lat: 36.3504, lng: 127.3845, minZoom: 8, maxZoom: 9, kind: 'region' },
+    { name: '세종특별자치시', lat: 36.4800, lng: 127.2890, minZoom: 8, maxZoom: 14, kind: 'region' },
+    { name: '대전광역시', lat: 36.3504, lng: 127.3845, minZoom: 8, maxZoom: 14, kind: 'region' },
     { name: '전북특별자치도', lat: 35.8203, lng: 127.1088, minZoom: 6, maxZoom: 8, kind: 'region' },
     { name: '전라남도', lat: 34.8161, lng: 126.4629, minZoom: 6, maxZoom: 8, kind: 'region' },
-    { name: '광주광역시', lat: 35.1595, lng: 126.8526, minZoom: 8, maxZoom: 9, kind: 'region' },
+    { name: '광주광역시', lat: 35.1595, lng: 126.8526, minZoom: 8, maxZoom: 14, kind: 'region' },
     { name: '경상북도', lat: 36.5760, lng: 128.5058, minZoom: 6, maxZoom: 8, kind: 'region' },
-    { name: '대구광역시', lat: 35.8714, lng: 128.6014, minZoom: 8, maxZoom: 9, kind: 'region' },
-    { name: '울산광역시', lat: 35.5384, lng: 129.3114, minZoom: 8, maxZoom: 9, kind: 'region' },
+    { name: '대구광역시', lat: 35.8714, lng: 128.6014, minZoom: 8, maxZoom: 14, kind: 'region' },
+    { name: '울산광역시', lat: 35.5384, lng: 129.3114, minZoom: 8, maxZoom: 14, kind: 'region' },
     { name: '경상남도', lat: 35.2383, lng: 128.6924, minZoom: 6, maxZoom: 8, kind: 'region' },
-    { name: '부산광역시', lat: 35.1796, lng: 129.0756, minZoom: 8, maxZoom: 9, kind: 'region' },
+    { name: '부산광역시', lat: 35.1796, lng: 129.0756, minZoom: 8, maxZoom: 14, kind: 'region' },
     { name: '제주특별자치도', lat: 33.3617, lng: 126.5292, minZoom: 6, maxZoom: 8, kind: 'region' },
 
     // Seoul's 25 districts: always show them together at city-level zoom.
@@ -147,7 +147,7 @@
       const csvText = new TextDecoder('euc-kr').decode(bytes);
       const retiredIncheonCodes = new Set(['28110', '28140', '28260']);
 
-      koreaSigunguLabels = csvText
+      const rawSigunguLabels = csvText
         .trim()
         .split(/\r?\n/)
         .slice(1)
@@ -159,20 +159,43 @@
           lng: Number(columns[0]),
           minZoom: 10,
           maxZoom: 14,
-          kind: 'district'
+          kind: 'municipality',
+          code: columns[2]
         }))
         .filter(label => label.name && Number.isFinite(label.lat) && Number.isFinite(label.lng));
 
-      // Administrative changes made after the source centroids were published.
-      koreaSigunguLabels.push(
-        { name: '부천시 원미구', lat: 37.5034, lng: 126.7659, minZoom: 10, maxZoom: 14, kind: 'district' },
-        { name: '부천시 소사구', lat: 37.4800, lng: 126.7957, minZoom: 10, maxZoom: 14, kind: 'district' },
-        { name: '부천시 오정구', lat: 37.5278, lng: 126.8040, minZoom: 10, maxZoom: 14, kind: 'district' },
-        { name: '제물포구', lat: 37.4780, lng: 126.6240, minZoom: 10, maxZoom: 14, kind: 'district' },
-        { name: '영종구', lat: 37.4930, lng: 126.5310, minZoom: 10, maxZoom: 14, kind: 'district' },
-        { name: '인천 서구', lat: 37.5530, lng: 126.6760, minZoom: 10, maxZoom: 14, kind: 'district' },
-        { name: '검단구', lat: 37.5980, lng: 126.6570, minZoom: 10, maxZoom: 14, kind: 'district' }
-      );
+      // Seoul alone keeps district-level names. Outside Seoul, merge subdivided
+      // cities (for example, "수원시 팔달구") into one city label and omit
+      // metropolitan-city districts such as "부산진구".
+      const municipalityGroups = new Map();
+      rawSigunguLabels.forEach(label => {
+        if (label.code.startsWith('11')) return;
+
+        const subdividedCity = label.name.match(/^(.+시)\s+.+구$/u);
+        const displayName = subdividedCity ? subdividedCity[1] : label.name;
+        if (!subdividedCity && displayName.endsWith('구')) return;
+        if (!/(시|군)$/u.test(displayName)) return;
+
+        const group = municipalityGroups.get(displayName) || {
+          name: displayName,
+          latTotal: 0,
+          lngTotal: 0,
+          count: 0
+        };
+        group.latTotal += label.lat;
+        group.lngTotal += label.lng;
+        group.count += 1;
+        municipalityGroups.set(displayName, group);
+      });
+
+      koreaSigunguLabels = Array.from(municipalityGroups.values(), group => ({
+        name: group.name,
+        lat: group.latTotal / group.count,
+        lng: group.lngTotal / group.count,
+        minZoom: 10,
+        maxZoom: 14,
+        kind: 'municipality'
+      }));
 
       renderMapLabels();
     } catch (error) {
@@ -185,9 +208,7 @@
 
     const zoom = leafletMap.getZoom();
     const visibleBounds = leafletMap.getBounds().pad(0.15);
-    const labels = koreaSigunguLabels.length
-      ? KOREA_MAP_LABELS.filter(label => label.kind !== 'district').concat(koreaSigunguLabels)
-      : KOREA_MAP_LABELS;
+    const labels = KOREA_MAP_LABELS.concat(koreaSigunguLabels);
     const focusedLabel = findFocusedAdminLabel(visibleBounds, zoom);
     if (focusedLabel) labels.push(focusedLabel);
     mapLabelsGroup.clearLayers();

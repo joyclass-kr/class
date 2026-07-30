@@ -216,6 +216,10 @@ body {
   font-size: clamp(10px, 0.9vw, 13px);
 }
 
+.map-admin-label--municipality {
+  font-size: clamp(11px, 1vw, 14px);
+}
+
 .map-admin-label--focus {
   transform: translate(-50%, -42px);
   padding: 4px 8px;
