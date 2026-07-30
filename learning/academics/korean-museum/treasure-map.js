@@ -6,8 +6,10 @@
   
   let leafletMap = null;
   let mapMarkersGroup = null;
+  let mapMarkerLinksGroup = null;
   let mapLabelsGroup = null;
   let mapProvinceBoundariesGroup = null;
+  let mapMarkerEntries = [];
   let koreaSigunguLabels = [];
   let currentActiveRelic = null;
 
@@ -148,15 +150,23 @@
     leafletMap.getPane('provinceBoundaries').style.zIndex = 430;
     leafletMap.getPane('provinceBoundaries').style.pointerEvents = 'none';
 
+    leafletMap.createPane('markerLinks');
+    leafletMap.getPane('markerLinks').style.zIndex = 575;
+    leafletMap.getPane('markerLinks').style.pointerEvents = 'none';
+
     mapProvinceBoundariesGroup = L.layerGroup().addTo(leafletMap);
     mapLabelsGroup = L.layerGroup().addTo(leafletMap);
+    mapMarkerLinksGroup = L.layerGroup().addTo(leafletMap);
     mapMarkersGroup = L.featureGroup().addTo(leafletMap);
 
     loadProvinceBoundaries();
     renderMapLabels();
     loadSigunguLabels();
     renderMapMarkers();
-    leafletMap.on('zoomend moveend', renderMapLabels);
+    leafletMap.on('zoomend moveend', () => {
+      renderMapLabels();
+      resolveMarkerOverlaps();
+    });
 
     setTimeout(() => {
       if (leafletMap) leafletMap.invalidateSize();
@@ -374,6 +384,8 @@
 
     // Clear existing markers
     mapMarkersGroup.clearLayers();
+    if (mapMarkerLinksGroup) mapMarkerLinksGroup.clearLayers();
+    mapMarkerEntries = [];
 
     const relics = window.KOREAN_MUSEUM_DATA.relicsMaster;
     if (!relics || !relics.length) return;
@@ -404,7 +416,14 @@
       });
 
       mapMarkersGroup.addLayer(marker);
+      mapMarkerEntries.push({
+        relic,
+        marker,
+        originalLatLng: L.latLng(relic.lat, relic.lng)
+      });
     });
+
+    resolveMarkerOverlaps();
 
     // Automatically adjust zoom/bounds safely
     if (activeEraFilter !== 'all') {
@@ -415,6 +434,91 @@
       // Default view comfortably frames Korean Peninsula & Manchuria Ji'an (Gwanggaeto Stele)
       leafletMap.setView([38.2, 127.5], 6);
     }
+  }
+
+  function resolveMarkerOverlaps() {
+    if (!leafletMap || !mapMarkerEntries.length || !mapMarkerLinksGroup) return;
+
+    const collisionDistance = 50;
+    const markerSpacing = 56;
+    const mapSize = leafletMap.getSize();
+    const visibleBounds = leafletMap.getBounds().pad(0.12);
+    mapMarkerLinksGroup.clearLayers();
+
+    mapMarkerEntries.forEach(entry => {
+      entry.marker.setLatLng(entry.originalLatLng);
+    });
+
+    const visibleEntries = mapMarkerEntries
+      .filter(entry => visibleBounds.contains(entry.originalLatLng))
+      .map(entry => ({
+        ...entry,
+        point: leafletMap.latLngToContainerPoint(entry.originalLatLng)
+      }));
+
+    const parents = visibleEntries.map((_, index) => index);
+    const find = index => {
+      while (parents[index] !== index) {
+        parents[index] = parents[parents[index]];
+        index = parents[index];
+      }
+      return index;
+    };
+    const union = (left, right) => {
+      const leftRoot = find(left);
+      const rightRoot = find(right);
+      if (leftRoot !== rightRoot) parents[rightRoot] = leftRoot;
+    };
+
+    for (let left = 0; left < visibleEntries.length; left += 1) {
+      for (let right = left + 1; right < visibleEntries.length; right += 1) {
+        if (visibleEntries[left].point.distanceTo(visibleEntries[right].point) < collisionDistance) {
+          union(left, right);
+        }
+      }
+    }
+
+    const clusters = new Map();
+    visibleEntries.forEach((entry, index) => {
+      const root = find(index);
+      const cluster = clusters.get(root) || [];
+      cluster.push(entry);
+      clusters.set(root, cluster);
+    });
+
+    clusters.forEach(cluster => {
+      if (cluster.length < 2) return;
+
+      cluster.sort((left, right) => left.relic.id.localeCompare(right.relic.id));
+      const center = cluster.reduce(
+        (sum, entry) => L.point(sum.x + entry.point.x, sum.y + entry.point.y),
+        L.point(0, 0)
+      ).divideBy(cluster.length);
+      const radius = Math.max(
+        32,
+        Math.min(118, markerSpacing / (2 * Math.sin(Math.PI / cluster.length)))
+      );
+
+      cluster.forEach((entry, index) => {
+        const angle = (-Math.PI / 2) + ((Math.PI * 2 * index) / cluster.length);
+        const targetPoint = L.point(
+          Math.max(24, Math.min(mapSize.x - 24, center.x + (Math.cos(angle) * radius))),
+          Math.max(24, Math.min(mapSize.y - 24, center.y + (Math.sin(angle) * radius)))
+        );
+        const displayLatLng = leafletMap.containerPointToLatLng(targetPoint);
+
+        entry.marker.setLatLng(displayLatLng);
+        L.polyline([entry.originalLatLng, displayLatLng], {
+          pane: 'markerLinks',
+          interactive: false,
+          className: 'relic-marker-link',
+          color: '#a96a00',
+          weight: 1.4,
+          opacity: 0.58,
+          dashArray: '3 4'
+        }).addTo(mapMarkerLinksGroup);
+      });
+    });
   }
 
   // --- 3. Smart Filtering & Quick Select System ---
