@@ -1362,7 +1362,7 @@
                     ctx.beginPath();
                     ctx.moveTo(
                         cx + ux * sunRadius * 0.85 + px * offset,
-                        cy + uy * sunRadius * 0.85 + py * offse
+                        cy + uy * sunRadius * 0.85 + py * offset
                     );
                     ctx.lineTo(
                         earthPosition.x - ux * earthRadius + px * offset * 0.45,
