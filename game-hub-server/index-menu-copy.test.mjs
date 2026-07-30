@@ -15,13 +15,13 @@ assert.doesNotMatch(
 );
 assert.match(
   html,
-  /href="learning\/academics\/body-explorer\/"[\s\S]*?<strong>인체<\/strong><small>\(Human Body\)<\/small>/,
-  "The body-learning menu must use a concise subject name, not an exploration metaphor.",
+  /href="learning\/academics\/body-explorer\/"[\s\S]*?<strong>인체의 구조와 기능<\/strong><small>\(Human Body Systems\)<\/small>/,
+  "The body-learning menu must describe both anatomy and how body systems work.",
 );
 assert.doesNotMatch(
   html,
-  /<strong>인체 탐험<\/strong><small>\(Human Body Explorer\)<\/small>/,
-  "The portal menu must not present the human body as an explorer destination.",
+  /<strong>인체 탐험<\/strong><small>\(Human Body Explorer\)<\/small>|<strong>인체<\/strong><small>\(Human Body\)<\/small>/,
+  "The portal menu must not use an exploration metaphor or an overly broad label.",
 );
 
 console.log("Index menu copy contract passed.");
