@@ -246,7 +246,7 @@ window.ELEMENTS_DATA = [
         category: 'post-transition', group: 13, period: 3, state: 'solid',
         shells: [2, 8, 3], valency: 3, block: 'p',
         desc: '가볍고 녹슬지 않으며 가공하기 쉬운 은색 금속입니다.',
-        trivia: '음료수 캔, 호일, 비행기 물체 제작에 가장 널리 쓰입니다.',
+        trivia: '음료수 캔, 호일, 비행기 동체 제작에 널리 쓰입니다.',
         uses: ['음료수 캔', '주방용 호일', '비행기 동체', '창틀'],
         discovery: '1825년 (한스 크리스티안 외르스테드)'
     },

@@ -809,6 +809,50 @@ canvas#bohrAtomCanvas {
     grid-column: span 2;
 }
 
+.exam-context-grid {
+    display: grid;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: 10px;
+}
+
+.exam-info-card,
+.exam-uses-section {
+    background: rgba(255, 255, 255, 0.035);
+    border: 1px solid rgba(255, 255, 255, 0.07);
+    border-left: 3px solid #38ef7d;
+    border-radius: var(--radius-sm);
+    padding: 11px 12px;
+}
+
+.exam-info-card h4,
+.exam-uses-section h4 {
+    margin-bottom: 5px;
+    color: #38ef7d;
+    font-size: 12px;
+}
+
+.exam-info-card p {
+    color: #cbd5e1;
+    font-size: 12px;
+    line-height: 1.5;
+}
+
+.exam-info-card.exam-trivia-card {
+    border-left-color: #ffd18a;
+}
+
+.exam-info-card.exam-trivia-card h4 {
+    color: #ffd18a;
+}
+
+.exam-uses-section {
+    border-left-color: #4bcffa;
+}
+
+.exam-uses-section h4 {
+    color: #4bcffa;
+}
+
 .uses-tags {
     display: flex;
     flex-wrap: wrap;
@@ -1433,6 +1477,10 @@ body.presentation-mode .element-name {
     }
 
     .quiz-options-grid {
+        grid-template-columns: 1fr;
+    }
+
+    .exam-context-grid {
         grid-template-columns: 1fr;
     }
 

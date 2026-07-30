@@ -404,6 +404,11 @@ document.addEventListener('DOMContentLoaded', () => {
         document.getElementById('modalElectronConfig').textContent = electronConfig;
         document.getElementById('modalShellCount').textContent = `${el.shells.length}개`;
         document.getElementById('modalValenceElectrons').textContent = `${valenceElectrons}개`;
+        document.getElementById('modalDesc').textContent = el.desc;
+        document.getElementById('modalTrivia').textContent = el.trivia || '교과서에서 다루는 주요 특징을 확인하세요.';
+
+        const usesContainer = document.getElementById('modalUses');
+        usesContainer.innerHTML = (el.uses || []).map(use => `<span class="use-tag"># ${use}</span>`).join('');
 
         modalOverlay.classList.add('active');
         startBohrAtomAnimation(el);
