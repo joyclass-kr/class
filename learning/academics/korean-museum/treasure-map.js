@@ -16,6 +16,7 @@
   const modal = document.getElementById('art-modal');
   const modalClose = document.getElementById('modal-close');
   const modalImage = document.getElementById('modal-image');
+  const modalMediaTitle = document.getElementById('modal-media-title');
   const modalTitle = document.getElementById('modal-title');
   const modalSubtitle = document.getElementById('modal-subtitle');
   const modalDesignation = document.getElementById('modal-designation');
@@ -210,15 +211,19 @@
     tabDocentBtn.addEventListener('click', () => {
       tabDocentBtn.classList.add('active');
       tabQuizBtn.classList.remove('active');
-      tabDocentContent.style.display = 'flex';
-      tabQuizContent.style.display = 'none';
+      tabDocentBtn.setAttribute('aria-selected', 'true');
+      tabQuizBtn.setAttribute('aria-selected', 'false');
+      tabDocentContent.hidden = false;
+      tabQuizContent.hidden = true;
     });
 
     tabQuizBtn.addEventListener('click', () => {
       tabQuizBtn.classList.add('active');
       tabDocentBtn.classList.remove('active');
-      tabDocentContent.style.display = 'none';
-      tabQuizContent.style.display = 'flex';
+      tabQuizBtn.setAttribute('aria-selected', 'true');
+      tabDocentBtn.setAttribute('aria-selected', 'false');
+      tabDocentContent.hidden = true;
+      tabQuizContent.hidden = false;
     });
   }
 
@@ -227,6 +232,8 @@
 
     // Set Modal Fields
     modalImage.src = window.KOREAN_MUSEUM_DATA.makeArtifactTextureSVG(relic.id);
+    modalImage.alt = `${relic.title} 실물 자료`;
+    modalMediaTitle.textContent = relic.title;
     modalTitle.textContent = relic.title;
     modalSubtitle.textContent = relic.titleEn;
     modalDesignation.textContent = relic.designation || '국보 유물';
@@ -235,7 +242,7 @@
     modalLocation.textContent = relic.location;
     modalMuseum.textContent = relic.museum;
     modalDocent.textContent = relic.docent;
-    modalExamTip.textContent = relic.examTip;
+    modalExamTip.textContent = relic.examTip.replace(/^📌\s*\[내신\/수능 핵심\]\s*/, '');
 
     // Reset Tabs
     tabDocentBtn.click();
@@ -262,7 +269,8 @@
     if (!quiz) return;
     quizQuestion.textContent = quiz.question;
     quizOptions.innerHTML = '';
-    quizResult.style.display = 'none';
+    quizResult.hidden = true;
+    quizResult.className = 'quiz-result-card';
 
     quiz.options.forEach((optText, idx) => {
       const btn = document.createElement('button');
@@ -286,7 +294,7 @@
       }
     });
 
-    quizResult.style.display = 'block';
+    quizResult.hidden = false;
     if (selectedIdx === correctIdx) {
       quizResult.className = 'quiz-result-card success';
       quizResult.innerHTML = `🎉 <strong>정답입니다! (+100점)</strong><p>${explanation}</p>`;

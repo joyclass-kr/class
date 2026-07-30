@@ -68,22 +68,27 @@
   </main>
 
   <!-- Relic Docent & Quiz Modal -->
-  <dialog id="art-modal" class="art-modal">
-    <div class="modal-card">
-      <button id="modal-close" class="modal-close-btn" aria-label="닫기">✕</button>
+  <dialog id="art-modal" class="art-modal" aria-labelledby="modal-title">
+    <article class="modal-card">
+      <button id="modal-close" class="modal-close-btn" type="button" aria-label="유물 설명 닫기">✕</button>
       
       <div class="modal-grid">
         <!-- Relic Real Image Section -->
-        <div class="modal-media-col">
+        <figure class="modal-media-col">
           <div class="image-frame">
             <img id="modal-image" src="" alt="유물 원작 사진" class="relic-real-img">
             <span id="modal-designation" class="badge-designation">국보 유물</span>
           </div>
-        </div>
+          <figcaption class="image-caption">
+            <span>실물 자료</span>
+            <strong id="modal-media-title">광개토대왕릉비</strong>
+          </figcaption>
+        </figure>
 
         <!-- Details & Interactive Quiz Section -->
-        <div class="modal-info-col">
+        <section class="modal-info-col">
           <div class="modal-header">
+            <p class="modal-eyebrow">한국사 보물 카드</p>
             <div class="badges">
               <span id="modal-era" class="badge-era">삼국 시대</span>
               <span id="modal-route" class="badge-route">🔴 경부선</span>
@@ -92,35 +97,49 @@
             <p id="modal-subtitle" class="modal-subtitle-text">Gwanggaeto Stele</p>
           </div>
 
-          <div class="meta-box">
-            <p>📍 <strong>발굴 장소 (출토지):</strong> <span id="modal-location">중국 길림성 집안시</span></p>
-            <p>🏛️ <strong>현재 소장 박물관:</strong> <span id="modal-museum">고구려 금석문 유적</span></p>
-          </div>
+          <dl class="meta-box">
+            <div class="meta-item">
+              <dt><span aria-hidden="true">📍</span> 출토·발견</dt>
+              <dd id="modal-location">중국 길림성 집안시</dd>
+            </div>
+            <div class="meta-item">
+              <dt><span aria-hidden="true">🏛️</span> 현재 위치</dt>
+              <dd id="modal-museum">고구려 금석문 유적</dd>
+            </div>
+          </dl>
 
           <!-- Tab Navigation (Docent vs Quiz) -->
-          <div class="modal-tabs">
-            <button id="tab-docent-btn" class="tab-btn active" type="button">🎓 도슨트 해설</button>
-            <button id="tab-quiz-btn" class="tab-btn" type="button">🎯 내신/수능 핵심</button>
+          <div class="modal-tabs" role="tablist" aria-label="유물 학습 메뉴">
+            <button id="tab-docent-btn" class="tab-btn active" type="button" role="tab"
+              aria-selected="true" aria-controls="tab-docent-content">핵심 정리</button>
+            <button id="tab-quiz-btn" class="tab-btn" type="button" role="tab"
+              aria-selected="false" aria-controls="tab-quiz-content">1문제 확인</button>
           </div>
 
           <!-- Tab Content 1: Docent -->
-          <div id="tab-docent-content" class="tab-content docent-content">
-            <p id="modal-docent" class="docent-text"></p>
+          <div id="tab-docent-content" class="tab-content docent-content" role="tabpanel"
+            aria-labelledby="tab-docent-btn">
+            <section class="learning-block" aria-labelledby="story-heading">
+              <p id="story-heading" class="section-label">왜 중요한가</p>
+              <p id="modal-docent" class="docent-text"></p>
+            </section>
             <div class="exam-tip-card">
-              <p>📌 <strong>내신/수능 핵심</strong></p>
+              <p class="section-label"><span aria-hidden="true">📌</span> 시험에 나오는 핵심</p>
               <p id="modal-exam-tip" class="exam-tip-text"></p>
             </div>
           </div>
 
           <!-- Tab Content 2: Quiz -->
-          <div id="tab-quiz-content" class="tab-content quiz-content" style="display: none;">
+          <div id="tab-quiz-content" class="tab-content quiz-content" role="tabpanel"
+            aria-labelledby="tab-quiz-btn" hidden>
+            <p class="section-label">사진을 보고 바로 확인해 보세요</p>
             <p id="quiz-question" class="quiz-question-text"></p>
             <div id="quiz-options" class="quiz-options-list"></div>
-            <div id="quiz-result" class="quiz-result-card" style="display: none;"></div>
+            <div id="quiz-result" class="quiz-result-card" hidden aria-live="polite"></div>
           </div>
-        </div>
+        </section>
       </div>
-    </div>
+    </article>
   </dialog>
 
   <!-- App Logic Scripts -->
