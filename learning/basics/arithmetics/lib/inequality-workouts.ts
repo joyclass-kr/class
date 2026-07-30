@@ -1,8 +1,11 @@
 export type InequalityKind =
-  | "rational-inequality"
-  | "absolute-inequality"
-  | "system-inequality"
-  | "repeated-root-inequality";
+  | "linear-system"
+  | "absolute-inside"
+  | "absolute-outside"
+  | "quadratic-between"
+  | "quadratic-outside"
+  | "quadratic-repeated-root"
+  | "quadratic-system";
 
 export type SolutionPiece =
   | {
@@ -36,79 +39,24 @@ export type InequalityChoice = {
 };
 
 const LABELS: Record<InequalityKind, string> = {
-  "rational-inequality": "분수부등식 · 분모 제외",
-  "absolute-inequality": "절댓값부등식 · 경우 나누기",
-  "system-inequality": "연립 이차부등식 · 교집합",
-  "repeated-root-inequality": "고차부등식 · 중근의 부호",
+  "linear-system": "연립일차부등식 · 공통해",
+  "absolute-inside": "절댓값부등식 · 안쪽 구간",
+  "absolute-outside": "절댓값부등식 · 바깥 구간",
+  "quadratic-between": "이차부등식 · 두 근 사이",
+  "quadratic-outside": "이차부등식 · 두 근 바깥",
+  "quadratic-repeated-root": "이차부등식 · 중근의 부호",
+  "quadratic-system": "연립이차부등식 · 교집합",
 };
 
-const VARIANTS: Record<InequalityKind, Array<Omit<InequalityProblem, "id" | "kind" | "label">>> = {
-  "rational-inequality": [
-    {
-      expression: "((x − 3)(x + 1))/((x − 2)(x + 4)) ≤ 0",
-      solution: [
-        { kind: "interval", left: -4, right: -1, leftClosed: false, rightClosed: true },
-        { kind: "interval", left: 2, right: 3, leftClosed: false, rightClosed: true },
-      ],
-    },
-    {
-      expression: "((x − 4)(x + 2))/((x − 1)(x + 3)) ≥ 0",
-      solution: [
-        { kind: "interval", left: "-inf", right: -3, leftClosed: false, rightClosed: false },
-        { kind: "interval", left: -2, right: 1, leftClosed: true, rightClosed: false },
-        { kind: "interval", left: 4, right: "inf", leftClosed: true, rightClosed: false },
-      ],
-    },
-  ],
-  "absolute-inequality": [
-    {
-      expression: "|2x − 3| > x + 3",
-      solution: [
-        { kind: "interval", left: "-inf", right: 0, leftClosed: false, rightClosed: false },
-        { kind: "interval", left: 6, right: "inf", leftClosed: false, rightClosed: false },
-      ],
-    },
-    {
-      expression: "|3x − 2| ≤ x + 6",
-      solution: [
-        { kind: "interval", left: -1, right: 4, leftClosed: true, rightClosed: true },
-      ],
-    },
-  ],
-  "system-inequality": [
-    {
-      expression: "x² − 5x + 6 ≤ 0  그리고  x² − x − 6 < 0",
-      solution: [
-        { kind: "interval", left: 2, right: 3, leftClosed: true, rightClosed: false },
-      ],
-    },
-    {
-      expression: "x² − 4x − 5 < 0  그리고  x² − x − 6 ≥ 0",
-      solution: [
-        { kind: "interval", left: 3, right: 5, leftClosed: true, rightClosed: false },
-      ],
-    },
-  ],
-  "repeated-root-inequality": [
-    {
-      expression: "(x − 1)²(x + 2)(x − 4) ≥ 0",
-      solution: [
-        { kind: "interval", left: "-inf", right: -2, leftClosed: false, rightClosed: true },
-        { kind: "point", value: 1 },
-        { kind: "interval", left: 4, right: "inf", leftClosed: true, rightClosed: false },
-      ],
-    },
-    {
-      expression: "(x + 3)²(x − 1)(x − 5) ≤ 0",
-      solution: [
-        { kind: "point", value: -3 },
-        { kind: "interval", left: 1, right: 5, leftClosed: true, rightClosed: true },
-      ],
-    },
-  ],
-};
-
-const KINDS = Object.keys(VARIANTS) as InequalityKind[];
+const KINDS: InequalityKind[] = [
+  "linear-system",
+  "absolute-inside",
+  "absolute-outside",
+  "quadratic-between",
+  "quadratic-outside",
+  "quadratic-repeated-root",
+  "quadratic-system",
+];
 
 function random(seed: number) {
   let value = seed >>> 0;
@@ -121,16 +69,91 @@ function random(seed: number) {
   };
 }
 
+function integer(next: () => number, minimum: number, maximum: number) {
+  return minimum + Math.floor(next() * (maximum - minimum + 1));
+}
+
+function orderedRoots(next: () => number, minimum = -6, maximum = 6) {
+  let first = integer(next, minimum, maximum);
+  let second = integer(next, minimum, maximum);
+  while (second === first) second = integer(next, minimum, maximum);
+  return [Math.min(first, second), Math.max(first, second)] as const;
+}
+
+function factor(root: number) {
+  if (root === 0) return "x";
+  return root > 0 ? `(x − ${root})` : `(x + ${Math.abs(root)})`;
+}
+
+function shiftedAbsolute(center: number) {
+  if (center === 0) return "|x|";
+  return center > 0 ? `|x − ${center}|` : `|x + ${Math.abs(center)}|`;
+}
+
+function interval(
+  left: number | "-inf",
+  right: number | "inf",
+  leftClosed = false,
+  rightClosed = false,
+): SolutionPiece {
+  return { kind: "interval", left, right, leftClosed, rightClosed };
+}
+
 function buildProblem(kind: InequalityKind, next: () => number, id: string): InequalityProblem {
-  const variants = VARIANTS[kind];
-  const variant = variants[Math.floor(next() * variants.length)];
-  return {
-    id,
-    kind,
-    label: LABELS[kind],
-    expression: variant.expression,
-    solution: variant.solution.map((piece) => ({ ...piece })),
-  };
+  let expression: string;
+  let solution: SolutionPiece[];
+
+  if (kind === "linear-system") {
+    const [left, right] = orderedRoots(next);
+    const leftClosed = integer(next, 0, 1) === 1;
+    const rightClosed = integer(next, 0, 1) === 1;
+    expression = `x ${leftClosed ? "≥" : ">"} ${left}  그리고  x ${rightClosed ? "≤" : "<"} ${right}`;
+    solution = [interval(left, right, leftClosed, rightClosed)];
+  } else if (kind === "absolute-inside") {
+    const center = integer(next, -5, 5);
+    const radius = integer(next, 2, 6);
+    const closed = integer(next, 0, 1) === 1;
+    expression = `${shiftedAbsolute(center)} ${closed ? "≤" : "<"} ${radius}`;
+    solution = [interval(center - radius, center + radius, closed, closed)];
+  } else if (kind === "absolute-outside") {
+    const center = integer(next, -5, 5);
+    const radius = integer(next, 2, 6);
+    const closed = integer(next, 0, 1) === 1;
+    expression = `${shiftedAbsolute(center)} ${closed ? "≥" : ">"} ${radius}`;
+    solution = [
+      interval("-inf", center - radius, false, closed),
+      interval(center + radius, "inf", closed, false),
+    ];
+  } else if (kind === "quadratic-between") {
+    const [left, right] = orderedRoots(next);
+    const closed = integer(next, 0, 1) === 1;
+    expression = `${factor(left)}${factor(right)} ${closed ? "≤" : "<"} 0`;
+    solution = [interval(left, right, closed, closed)];
+  } else if (kind === "quadratic-outside") {
+    const [left, right] = orderedRoots(next);
+    const closed = integer(next, 0, 1) === 1;
+    expression = `${factor(left)}${factor(right)} ${closed ? "≥" : ">"} 0`;
+    solution = [
+      interval("-inf", left, false, closed),
+      interval(right, "inf", closed, false),
+    ];
+  } else if (kind === "quadratic-repeated-root") {
+    const root = integer(next, -5, 5);
+    expression = `${factor(root)}² > 0`;
+    solution = [
+      interval("-inf", root),
+      interval(root, "inf"),
+    ];
+  } else {
+    const start = integer(next, -7, -3);
+    const firstMiddle = integer(next, start + 1, 0);
+    const secondMiddle = integer(next, 1, 4);
+    const end = integer(next, secondMiddle + 1, 8);
+    expression = `${factor(start)}${factor(secondMiddle)} ≤ 0  그리고  ${factor(firstMiddle)}${factor(end)} < 0`;
+    solution = [interval(firstMiddle, secondMiddle, false, true)];
+  }
+
+  return { id, kind, label: LABELS[kind], expression, solution };
 }
 
 export function createInequalityProblemSet(seed: number): InequalityProblemSet {
@@ -175,11 +198,30 @@ export function createInequalityChoices(problem: InequalityProblem): InequalityC
       left: typeof piece.left === "number" ? piece.left + 1 : piece.left,
       right: typeof piece.right === "number" ? piece.right + 1 : piece.right,
     });
+  const expand = correct.map((piece) => piece.kind === "point"
+    ? { ...piece, value: piece.value - 1 }
+    : {
+      ...piece,
+      left: typeof piece.left === "number" ? piece.left - 1 : piece.left,
+      right: typeof piece.right === "number" ? piece.right + 1 : piece.right,
+    });
+  const reflect = correct.map((piece) => piece.kind === "point"
+    ? { ...piece, value: -piece.value }
+    : {
+      ...piece,
+      left: typeof piece.right === "number" ? -piece.right : "-inf" as const,
+      right: typeof piece.left === "number" ? -piece.left : "inf" as const,
+      leftClosed: piece.rightClosed,
+      rightClosed: piece.leftClosed,
+    });
   const dropPiece = correct.length > 1 ? correct.slice(0, -1) : correct.map((piece) => piece.kind === "point"
     ? { ...piece, value: -piece.value }
     : { ...piece, leftClosed: false, rightClosed: false });
-  const candidates = [correct, toggleEndpoints, shiftRight, dropPiece];
-  const offset = [...problem.id].reduce((sum, character) => sum + character.charCodeAt(0), 0) % 4;
+  const candidates = [...new Map(
+    [correct, toggleEndpoints, shiftRight, expand, reflect, dropPiece]
+      .map((solution) => [solutionKey(solution), solution]),
+  ).values()].slice(0, 4);
+  const offset = [...problem.id].reduce((sum, character) => sum + character.charCodeAt(0), 0) % candidates.length;
   return [...candidates.slice(offset), ...candidates.slice(0, offset)].map((solution) => ({
     solution,
     correct: solutionKey(solution) === solutionKey(correct),

@@ -257,7 +257,7 @@ export const highSchoolWorksheetCatalog: ArithmeticWorksheet[] = [
   { grade: "공수1", name: "이차방정식과 이차함수", title: "이차방정식과 이차함수", route: "/arithmetic/high-school/quadratic-function-relations" },
   { grade: "공수1", name: "연립이차방정식", title: "연립이차방정식", route: "/arithmetic/high-school/simultaneous-quadratic-equations" },
   { grade: "공수1", name: "삼차방정식과 사차방정식", title: "삼차방정식과 사차방정식", route: "/arithmetic/high-school/cubic-quartic-equations" },
-  { grade: "공수1", name: "부등식", title: "부등식", route: "/arithmetic/high-school/inequality-intervals" },
+  { grade: "공수1", name: "연립·절댓값·이차부등식", title: "연립·절댓값·이차부등식", route: "/arithmetic/high-school/inequality-intervals" },
   { grade: "공수1", name: "순열", title: "순열", route: "/arithmetic/high-school/permutations-combinations" },
   { grade: "공수1", name: "조합", title: "조합", route: "/arithmetic/high-school/combinations" },
   { grade: "공수1", name: "행렬의 뜻과 기본 연산", title: "행렬의 뜻과 기본 연산", route: "/arithmetic/high-school/matrices" },

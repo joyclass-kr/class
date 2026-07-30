@@ -100,7 +100,7 @@ export default function InequalityIntervalsPage() {
     return (
       <div className={`a4-sheet counting-sheet polynomial-sheet inequality-sheet polynomial-sheet-${problems.length}`} style={{ transform: `scale(${sheetScale})` }}>
         <header className="counting-sheet-header polynomial-sheet-header">
-          <div className="counting-sheet-title"><span>공통수학 1</span><strong>부등식{answerSheet ? " 정답" : ""}</strong></div>
+          <div className="counting-sheet-title"><span>공통수학1</span><strong>연립·절댓값·이차부등식{answerSheet ? " 정답" : ""}</strong></div>
           <div className="counting-sheet-info"><span>이름 <i /></span><span>날짜 <i /></span><small>문제지 {questionSet.seed}</small></div>
         </header>
         <div className="polynomial-instruction"><b>부등식의 해를 구하세요. 빈 공간에 풀이 과정을 쓰세요.</b><span>답안 입력에서 4지선다 채점 · 오답 보충 최대 2문제</span></div>
@@ -125,7 +125,7 @@ export default function InequalityIntervalsPage() {
       </div>
       <div className="a4-stage counting-a4-stage worksheet-stage" style={{ width: 794 * sheetScale, height: 1123 * sheetScale }} aria-label="A4 부등식 문제지">{renderSheet(false)}</div>
       <div className="a4-stage counting-a4-stage answer-stage" style={{ width: 794 * sheetScale, height: 1123 * sheetScale }} aria-label="A4 부등식 정답지">{renderSheet(true)}</div>
-      {answerPanelOpen && <WorksheetChoicePanel title="부등식" problems={choiceProblems} selected={selected} results={results} onSelect={choose} onGrade={checkAll} onClose={() => setAnswerPanelOpen(false)} />}
+      {answerPanelOpen && <WorksheetChoicePanel title="연립·절댓값·이차부등식" problems={choiceProblems} selected={selected} results={results} onSelect={choose} onGrade={checkAll} onClose={() => setAnswerPanelOpen(false)} />}
     </main>
   );
 }
