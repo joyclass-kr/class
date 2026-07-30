@@ -7,6 +7,7 @@
   let leafletMap = null;
   let mapMarkersGroup = null;
   let mapLabelsGroup = null;
+  let mapProvinceBoundariesGroup = null;
   let koreaSigunguLabels = [];
   let currentActiveRelic = null;
 
@@ -121,9 +122,15 @@
     leafletMap.getPane('adminLabels').style.zIndex = 550;
     leafletMap.getPane('adminLabels').style.pointerEvents = 'none';
 
+    leafletMap.createPane('provinceBoundaries');
+    leafletMap.getPane('provinceBoundaries').style.zIndex = 430;
+    leafletMap.getPane('provinceBoundaries').style.pointerEvents = 'none';
+
+    mapProvinceBoundariesGroup = L.layerGroup().addTo(leafletMap);
     mapLabelsGroup = L.layerGroup().addTo(leafletMap);
     mapMarkersGroup = L.featureGroup().addTo(leafletMap);
 
+    loadProvinceBoundaries();
     renderMapLabels();
     loadSigunguLabels();
     renderMapMarkers();
@@ -136,6 +143,85 @@
     window.addEventListener('resize', () => {
       if (leafletMap) leafletMap.invalidateSize();
     });
+  }
+
+  async function loadProvinceBoundaries() {
+    try {
+      const response = await fetch('data/skorea-provinces-topo-simple.json?v=20260730-1');
+      if (!response.ok) throw new Error(`HTTP ${response.status}`);
+
+      const topology = await response.json();
+      const features = topologyToGeoJsonFeatures(topology);
+      if (!features.length) throw new Error('No province boundary features');
+
+      L.geoJSON({
+        type: 'FeatureCollection',
+        features
+      }, {
+        pane: 'provinceBoundaries',
+        interactive: false,
+        className: 'leaflet-province-boundaries',
+        style: {
+          color: '#59758b',
+          weight: 1.35,
+          opacity: 0.62,
+          fill: false,
+          lineCap: 'round',
+          lineJoin: 'round'
+        }
+      }).addTo(mapProvinceBoundariesGroup);
+
+      leafletMap.attributionControl.addAttribution(
+        '<a href="https://github.com/southkorea/southkorea-maps">시·도 경계: KOSTAT</a>'
+      );
+    } catch (error) {
+      console.warn('시·도 경계선을 불러오지 못했습니다.', error);
+    }
+  }
+
+  function topologyToGeoJsonFeatures(topology) {
+    if (!topology || topology.type !== 'Topology' || !Array.isArray(topology.arcs)) return [];
+
+    const object = Object.values(topology.objects || {})[0];
+    if (!object || object.type !== 'GeometryCollection') return [];
+
+    const transform = topology.transform || { scale: [1, 1], translate: [0, 0] };
+    const decodedArcs = topology.arcs.map(arc => {
+      let x = 0;
+      let y = 0;
+      return arc.map(point => {
+        x += point[0];
+        y += point[1];
+        return [
+          (x * transform.scale[0]) + transform.translate[0],
+          (y * transform.scale[1]) + transform.translate[1]
+        ];
+      });
+    });
+
+    const joinArcs = arcIndexes => {
+      const coordinates = [];
+      arcIndexes.forEach((arcIndex, index) => {
+        const arc = arcIndex >= 0
+          ? decodedArcs[arcIndex]
+          : decodedArcs[~arcIndex].slice().reverse();
+        coordinates.push(...(index === 0 ? arc : arc.slice(1)));
+      });
+      return coordinates;
+    };
+
+    return object.geometries
+      .filter(geometry => geometry.type === 'Polygon' || geometry.type === 'MultiPolygon')
+      .map(geometry => ({
+        type: 'Feature',
+        properties: geometry.properties || {},
+        geometry: {
+          type: geometry.type,
+          coordinates: geometry.type === 'Polygon'
+            ? geometry.arcs.map(joinArcs)
+            : geometry.arcs.map(polygon => polygon.map(joinArcs))
+        }
+      }));
   }
 
   async function loadSigunguLabels() {
