@@ -159,16 +159,17 @@ body {
 #map-container {
   width: 100%;
   height: 100%;
-  background: #607080;
+  background: #d7dde0;
   isolation: isolate;
 }
 
 /*
- * Readable dusk map
- * Keep the dark navy atmosphere without losing coastlines, roads, and labels.
+ * Quiet study map
+ * Roads and terrain remain available, while commercial POI labels stay hidden.
  */
 #map-container .leaflet-tile-pane {
-  filter: brightness(0.78) saturate(0.55) contrast(0.92) sepia(0.06);
+  filter: brightness(0.94) saturate(0.38) contrast(0.86) sepia(0.03);
+  opacity: 0.78;
 }
 
 #map-container::after {
@@ -177,9 +178,42 @@ body {
   inset: 0;
   z-index: 250;
   pointer-events: none;
-  background:
-    linear-gradient(180deg, rgba(22, 42, 62, 0.08), rgba(10, 28, 46, 0.18)),
-    rgba(36, 60, 78, 0.08);
+  background: linear-gradient(180deg, rgba(30, 52, 70, 0.03), rgba(18, 39, 57, 0.08));
+}
+
+.map-admin-label-wrapper {
+  width: 0 !important;
+  height: 0 !important;
+  background: transparent !important;
+  border: 0 !important;
+}
+
+.map-admin-label {
+  position: absolute;
+  transform: translate(-50%, -50%);
+  white-space: nowrap;
+  color: #17263a;
+  font-weight: 900;
+  letter-spacing: -0.035em;
+  text-shadow:
+    0 1px 0 rgba(255, 255, 255, 0.98),
+    1px 0 0 rgba(255, 255, 255, 0.98),
+    -1px 0 0 rgba(255, 255, 255, 0.98),
+    0 -1px 0 rgba(255, 255, 255, 0.98),
+    0 2px 6px rgba(255, 255, 255, 0.95);
+}
+
+.map-admin-label--region {
+  font-size: clamp(12px, 1.15vw, 16px);
+}
+
+.map-admin-label--district {
+  padding: 3px 7px;
+  border: 1px solid rgba(42, 64, 84, 0.2);
+  border-radius: 999px;
+  background: rgba(255, 255, 255, 0.82);
+  box-shadow: 0 1px 5px rgba(31, 49, 67, 0.12);
+  font-size: clamp(11px, 1vw, 14px);
 }
 
 /* Leaflet Custom Marker Pins */

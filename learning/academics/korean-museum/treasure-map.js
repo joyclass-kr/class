@@ -6,7 +6,56 @@
   
   let leafletMap = null;
   let mapMarkersGroup = null;
+  let mapLabelsGroup = null;
   let currentActiveRelic = null;
+
+  const KOREA_MAP_LABELS = [
+    // Low-zoom labels: keep only the administrative regions students need.
+    { name: '서울특별시', lat: 37.5665, lng: 126.9780, minZoom: 7, maxZoom: 9, kind: 'region' },
+    { name: '인천광역시', lat: 37.4563, lng: 126.7052, minZoom: 8, maxZoom: 9, kind: 'region' },
+    { name: '경기도', lat: 37.2751, lng: 127.0095, minZoom: 6, maxZoom: 8, kind: 'region' },
+    { name: '강원특별자치도', lat: 37.8228, lng: 128.1555, minZoom: 6, maxZoom: 8, kind: 'region' },
+    { name: '충청북도', lat: 36.6357, lng: 127.4917, minZoom: 6, maxZoom: 8, kind: 'region' },
+    { name: '충청남도', lat: 36.6588, lng: 126.6728, minZoom: 6, maxZoom: 8, kind: 'region' },
+    { name: '세종특별자치시', lat: 36.4800, lng: 127.2890, minZoom: 8, maxZoom: 9, kind: 'region' },
+    { name: '대전광역시', lat: 36.3504, lng: 127.3845, minZoom: 8, maxZoom: 9, kind: 'region' },
+    { name: '전북특별자치도', lat: 35.8203, lng: 127.1088, minZoom: 6, maxZoom: 8, kind: 'region' },
+    { name: '전라남도', lat: 34.8161, lng: 126.4629, minZoom: 6, maxZoom: 8, kind: 'region' },
+    { name: '광주광역시', lat: 35.1595, lng: 126.8526, minZoom: 8, maxZoom: 9, kind: 'region' },
+    { name: '경상북도', lat: 36.5760, lng: 128.5058, minZoom: 6, maxZoom: 8, kind: 'region' },
+    { name: '대구광역시', lat: 35.8714, lng: 128.6014, minZoom: 8, maxZoom: 9, kind: 'region' },
+    { name: '울산광역시', lat: 35.5384, lng: 129.3114, minZoom: 8, maxZoom: 9, kind: 'region' },
+    { name: '경상남도', lat: 35.2383, lng: 128.6924, minZoom: 6, maxZoom: 8, kind: 'region' },
+    { name: '부산광역시', lat: 35.1796, lng: 129.0756, minZoom: 8, maxZoom: 9, kind: 'region' },
+    { name: '제주특별자치도', lat: 33.3617, lng: 126.5292, minZoom: 6, maxZoom: 8, kind: 'region' },
+
+    // Seoul's 25 districts: always show them together at city-level zoom.
+    { name: '종로구', lat: 37.5735, lng: 126.9790, minZoom: 11, maxZoom: 14, kind: 'district' },
+    { name: '중구', lat: 37.5641, lng: 126.9979, minZoom: 11, maxZoom: 14, kind: 'district' },
+    { name: '용산구', lat: 37.5326, lng: 126.9900, minZoom: 11, maxZoom: 14, kind: 'district' },
+    { name: '성동구', lat: 37.5635, lng: 127.0369, minZoom: 11, maxZoom: 14, kind: 'district' },
+    { name: '광진구', lat: 37.5385, lng: 127.0824, minZoom: 11, maxZoom: 14, kind: 'district' },
+    { name: '동대문구', lat: 37.5744, lng: 127.0396, minZoom: 11, maxZoom: 14, kind: 'district' },
+    { name: '중랑구', lat: 37.6063, lng: 127.0927, minZoom: 11, maxZoom: 14, kind: 'district' },
+    { name: '성북구', lat: 37.5894, lng: 127.0167, minZoom: 11, maxZoom: 14, kind: 'district' },
+    { name: '강북구', lat: 37.6396, lng: 127.0257, minZoom: 11, maxZoom: 14, kind: 'district' },
+    { name: '도봉구', lat: 37.6688, lng: 127.0471, minZoom: 11, maxZoom: 14, kind: 'district' },
+    { name: '노원구', lat: 37.6542, lng: 127.0568, minZoom: 11, maxZoom: 14, kind: 'district' },
+    { name: '은평구', lat: 37.6027, lng: 126.9291, minZoom: 11, maxZoom: 14, kind: 'district' },
+    { name: '서대문구', lat: 37.5791, lng: 126.9368, minZoom: 11, maxZoom: 14, kind: 'district' },
+    { name: '마포구', lat: 37.5663, lng: 126.9019, minZoom: 11, maxZoom: 14, kind: 'district' },
+    { name: '양천구', lat: 37.5170, lng: 126.8665, minZoom: 11, maxZoom: 14, kind: 'district' },
+    { name: '강서구', lat: 37.5509, lng: 126.8497, minZoom: 11, maxZoom: 14, kind: 'district' },
+    { name: '구로구', lat: 37.4954, lng: 126.8874, minZoom: 11, maxZoom: 14, kind: 'district' },
+    { name: '금천구', lat: 37.4569, lng: 126.8955, minZoom: 11, maxZoom: 14, kind: 'district' },
+    { name: '영등포구', lat: 37.5264, lng: 126.8963, minZoom: 11, maxZoom: 14, kind: 'district' },
+    { name: '동작구', lat: 37.5124, lng: 126.9393, minZoom: 11, maxZoom: 14, kind: 'district' },
+    { name: '관악구', lat: 37.4784, lng: 126.9516, minZoom: 11, maxZoom: 14, kind: 'district' },
+    { name: '서초구', lat: 37.4837, lng: 127.0324, minZoom: 11, maxZoom: 14, kind: 'district' },
+    { name: '강남구', lat: 37.5172, lng: 127.0473, minZoom: 11, maxZoom: 14, kind: 'district' },
+    { name: '송파구', lat: 37.5145, lng: 127.1059, minZoom: 11, maxZoom: 14, kind: 'district' },
+    { name: '강동구', lat: 37.5301, lng: 127.1238, minZoom: 11, maxZoom: 14, kind: 'district' }
+  ];
 
   // --- DOM Elements ---
   const relicQuickSelect = document.getElementById('relic-quick-select');
@@ -53,21 +102,28 @@
       center: [38.2, 127.5],
       zoom: 6,
       minZoom: 3,
-      maxZoom: 18,
+      maxZoom: 14,
       zoomControl: true
     });
 
-    // The standard OSM layer uses each place's local name, so Korean labels stay
-    // readable before users zoom in instead of switching from romanized English.
-    L.tileLayer('https://tile.openstreetmap.org/{z}/{x}/{y}.png', {
-      attribution: '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap contributors</a>',
-      maxZoom: 19,
-      detectRetina: true
+    // Use a label-free basemap so shops and restaurants do not compete with relics.
+    // Korean administrative labels are rendered locally in a separate layer below.
+    L.tileLayer('https://{s}.basemaps.cartocdn.com/light_nolabels/{z}/{x}/{y}{r}.png', {
+      attribution: '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> &copy; <a href="https://carto.com/">CARTO</a>',
+      subdomains: 'abcd',
+      maxZoom: 20
     }).addTo(leafletMap);
 
+    leafletMap.createPane('adminLabels');
+    leafletMap.getPane('adminLabels').style.zIndex = 650;
+    leafletMap.getPane('adminLabels').style.pointerEvents = 'none';
+
+    mapLabelsGroup = L.layerGroup().addTo(leafletMap);
     mapMarkersGroup = L.featureGroup().addTo(leafletMap);
 
+    renderMapLabels();
     renderMapMarkers();
+    leafletMap.on('zoomend moveend', renderMapLabels);
 
     setTimeout(() => {
       if (leafletMap) leafletMap.invalidateSize();
@@ -75,6 +131,31 @@
 
     window.addEventListener('resize', () => {
       if (leafletMap) leafletMap.invalidateSize();
+    });
+  }
+
+  function renderMapLabels() {
+    if (!leafletMap || !mapLabelsGroup) return;
+
+    const zoom = leafletMap.getZoom();
+    const visibleBounds = leafletMap.getBounds().pad(0.15);
+    mapLabelsGroup.clearLayers();
+
+    KOREA_MAP_LABELS.forEach(label => {
+      if (zoom < label.minZoom || zoom > label.maxZoom) return;
+      if (!visibleBounds.contains([label.lat, label.lng])) return;
+
+      const icon = L.divIcon({
+        className: 'map-admin-label-wrapper',
+        html: `<span class="map-admin-label map-admin-label--${label.kind}">${label.name}</span>`,
+        iconSize: null
+      });
+
+      mapLabelsGroup.addLayer(L.marker([label.lat, label.lng], {
+        icon,
+        pane: 'adminLabels',
+        interactive: false
+      }));
     });
   }
 
@@ -183,7 +264,7 @@
         renderMapMarkers();
 
         // Smooth Fly to location
-        leafletMap.flyTo([relic.lat, relic.lng], 10, { animate: true, duration: 1.2 });
+        leafletMap.flyTo([relic.lat, relic.lng], 11, { animate: true, duration: 1.2 });
 
         setTimeout(() => {
           openRelicModal(relic);
