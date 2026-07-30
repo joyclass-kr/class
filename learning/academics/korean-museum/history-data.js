@@ -22,7 +22,6 @@
 
     k01: 'assets/relics/k01.jpg', k02: 'assets/relics/k02.jpg', k03: 'assets/relics/k03.jpg', k04: 'assets/relics/k04.jpg',
     k05: 'assets/relics/k05.jpg', k06: 'assets/relics/k06.jpg', k07: 'assets/relics/k07.jpg', k08: 'assets/relics/k08.jpg',
-    k09: 'assets/relics/k09.jpg',
 
     j01: 'assets/relics/j01.jpg', j02: 'assets/relics/j02.jpg', j03: 'assets/relics/j03.jpg', j04: 'assets/relics/j04.jpg',
     j05: 'assets/relics/j05.jpg', j06: 'assets/relics/j06.jpg', j07: 'assets/relics/j07.jpg', j08: 'assets/relics/j08.jpg',
@@ -357,16 +356,6 @@
       quiz: { question: '벽돌무덤과 인물 벽화로 발해 문화의 국제성을 보여 주는 무덤은?', options: ['정효공주묘', '무령왕릉', '장군총', '천마총'], answer: 0, explanation: '정효공주묘는 발해 왕실 문화의 핵심 자료입니다.' }
     },
     {
-      id: 'k09', title: '고려 수월관음도', titleEn: 'Water-Moon Avalokiteshvara',
-      eraCategory: 'goryeo', era: '고려 후기 (14세기)', lat: 40.7794, lng: -73.9632,
-      location: '고려 제작 → 해외 이동 경위 미상', museum: '미국 메트로폴리탄 미술관 (1929년 유증)',
-      designation: '고려 불화',
-      docent: '달빛 아래 물가의 관음보살과 선재동자를 섬세하고 화려하게 그린 고려 불화입니다.',
-      context: '귀족 불교 문화가 발달한 고려에서는 금니와 선명한 색, 정교한 무늬를 사용한 불화가 제작되었습니다. 사진의 작품은 메트로폴리탄 미술관이 1929년 H. O. 해브마이어 컬렉션의 유증으로 입수했지만, 그보다 앞서 한국에서 해외로 이동한 경위는 미술관의 공개 기록만으로 확인되지 않습니다.',
-      examTip: '내신·학평 출제 사례: 수월관음도 = 고려 후기 불화 / 귀족 문화 / 섬세하고 화려한 색채 (해외 소장처는 암기 대상 아님)',
-      quiz: { question: '섬세한 금니와 화려한 색채로 귀족 불교 문화를 보여 주는 그림은?', options: ['수월관음도', '고사관수도', '단오풍정', '몽유도원도'], answer: 0, explanation: '수월관음도는 고려 불화를 대표합니다.' }
-    },
-    {
       id: 'j20', title: '강희안 고사관수도', titleEn: 'Scholar Contemplating Water',
       eraCategory: 'joseon', era: '조선 전기 (15세기)', lat: 37.5239, lng: 126.9804,
       location: '조선 전기 제작', museum: '국립중앙박물관',
@@ -395,7 +384,7 @@
     'g01', 'g02', 'g04', 'g05', 'g06',
     'b01', 'b02', 'b03', 'b04', 'b05', 'k04', 'a01',
     's01', 's02', 's03', 's04', 's05', 's06', 's07', 's08', 's09', 's11', 's13', 's14', 's15', 's16', 's17',
-    'k01', 'k02', 'k03', 'k05', 'k06', 'k07', 'k08', 'k09',
+    'k01', 'k02', 'k03', 'k05', 'k06', 'k07', 'k08',
     'j01', 'j02', 'j03', 'j06', 'j07', 'j08', 'j12', 'j13', 'j14', 'j15', 'j16', 'j17', 'j18', 'j19', 'j20',
     'l01', 'l02', 'l03', 'l04',
     'm01', 'm03', 'm04', 'm05', 'm06', 'm07'
