@@ -167,7 +167,7 @@ export default function FactorizationRationalPage() {
   function renderAnswerPanel() {
     return (
       <div className="trig-derivative-answer-panel-backdrop" onClick={() => setAnswerPanelOpen(false)}>
-        <aside className="trig-derivative-answer-panel" aria-label="인수분해와 분수식 답안 입력" onClick={(event) => event.stopPropagation()}>
+        <aside className="trig-derivative-answer-panel" aria-label="분수식의 계산 답안 입력" onClick={(event) => event.stopPropagation()}>
           <header>
             <div><strong>답안 입력</strong><small>풀이를 마친 뒤 답만 선택하세요.</small></div>
             <button type="button" onClick={() => setAnswerPanelOpen(false)} aria-label="답안 입력 닫기">×</button>
@@ -198,7 +198,7 @@ export default function FactorizationRationalPage() {
     return (
       <div className={`a4-sheet counting-sheet polynomial-sheet rational-sheet polynomial-sheet-${problems.length}`} style={{ transform: `scale(${sheetScale})` }}>
         <header className="counting-sheet-header polynomial-sheet-header">
-          <div className="counting-sheet-title"><span>공통수학 1</span><strong>인수분해와 분수식{answerSheet ? " 정답" : ""}</strong></div>
+          <div className="counting-sheet-title"><span>보충</span><strong>분수식의 계산{answerSheet ? " 정답" : ""}</strong></div>
           <div className="counting-sheet-info"><span>이름 <i /></span><span>날짜 <i /></span><small>문제지 {questionSet.seed}</small></div>
         </header>
         <div className="polynomial-instruction"><b>인수분해하고 빈 공간에 약분 과정을 쓰세요.</b><span>답안 입력에서 4지선다 채점 · 오답 보충 최대 2문제</span></div>
@@ -231,8 +231,8 @@ export default function FactorizationRationalPage() {
         </div>
       </div>
       {answerPanelOpen && renderAnswerPanel()}
-      <div className="a4-stage counting-a4-stage worksheet-stage" style={{ width: 794 * sheetScale, height: 1123 * sheetScale }} aria-label="A4 인수분해와 분수식 문제지">{renderSheet(false)}</div>
-      <div className="a4-stage counting-a4-stage answer-stage" style={{ width: 794 * sheetScale, height: 1123 * sheetScale }} aria-label="A4 인수분해와 분수식 정답지">{renderSheet(true)}</div>
+      <div className="a4-stage counting-a4-stage worksheet-stage" style={{ width: 794 * sheetScale, height: 1123 * sheetScale }} aria-label="A4 분수식의 계산 문제지">{renderSheet(false)}</div>
+      <div className="a4-stage counting-a4-stage answer-stage" style={{ width: 794 * sheetScale, height: 1123 * sheetScale }} aria-label="A4 분수식의 계산 정답지">{renderSheet(true)}</div>
     </main>
   );
 }

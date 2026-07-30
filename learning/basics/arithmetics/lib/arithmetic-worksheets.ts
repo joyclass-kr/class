@@ -250,7 +250,7 @@ export const highSchoolWorksheetCatalog: ArithmeticWorksheet[] = [
   { grade: "공수1", name: "다항식의 나눗셈·조립제법", title: "다항식의 나눗셈·조립제법", route: "/arithmetic/high-school/polynomial-division-remainder" },
   { grade: "공수1", name: "항등식과 나머지정리", title: "항등식과 나머지정리", route: "/arithmetic/high-school/polynomial-identities-remainders" },
   { grade: "공수1", name: "세제곱의 합·차 인수분해", title: "세제곱의 합·차 인수분해", route: "/arithmetic/high-school/cubic-sum-difference-factorization" },
-  { grade: "공수1", name: "인수분해와 분수식", title: "인수분해와 분수식", route: "/arithmetic/high-school/factorization-rational" },
+  { grade: "공수1", name: "고차식·대칭식 인수분해", title: "고차식·대칭식 인수분해", route: "/arithmetic/high-school/advanced-factorization" },
   { grade: "공수1", name: "복소수", title: "복소수", route: "/arithmetic/high-school/complex-numbers" },
   { grade: "공수1", name: "지수와 근호", title: "지수와 근호", route: "/arithmetic/high-school/exponents-radicals" },
   { grade: "공수1", name: "이차방정식: 판별식·근과 계수", title: "이차방정식: 판별식·근과 계수", route: "/arithmetic/high-school/quadratic-root-relations" },
@@ -305,6 +305,7 @@ export const highSchoolWorksheetCatalog: ArithmeticWorksheet[] = [
   { grade: "확통", name: "확률분포와 통계", title: "확률분포와 통계", route: "/arithmetic/high-school/probability-distributions" },
   { grade: "확통", name: "모집단과 표본·통계적 추정", title: "모집단과 표본·통계적 추정", route: "/arithmetic/high-school/statistical-inference" },
   { grade: "보충", name: "유리·무리·절댓값 방정식", title: "유리·무리·절댓값 방정식", route: "/arithmetic/high-school/equation-transformations" },
+  { grade: "보충", name: "분수식의 계산", title: "분수식의 계산", route: "/arithmetic/high-school/factorization-rational" },
 ];
 
 export const stemWorksheetCatalog: ArithmeticWorksheet[] = [

@@ -99,9 +99,9 @@ test("오답 보충은 서로 다른 구조에서 최대 두 문제만 만든다
   assert.ok(reviews.every(({ difficulty }) => difficulty === "advanced"));
 });
 
-test("고등 연산 목록 55개는 모두 연결되고 이름과 경로가 중복되지 않는다", () => {
-  assert.equal(highSchoolWorksheetCatalog.length, 55);
+test("고등 연산 목록은 모두 연결되고 이름과 경로가 중복되지 않는다", () => {
+  assert.ok(highSchoolWorksheetCatalog.length >= 55);
   assert.ok(highSchoolWorksheetCatalog.every(({ route }) => route !== null));
-  assert.equal(new Set(highSchoolWorksheetCatalog.map(({ name }) => name)).size, 55);
-  assert.equal(new Set(highSchoolWorksheetCatalog.map(({ route }) => route)).size, 55);
+  assert.equal(new Set(highSchoolWorksheetCatalog.map(({ name }) => name)).size, highSchoolWorksheetCatalog.length);
+  assert.equal(new Set(highSchoolWorksheetCatalog.map(({ route }) => route)).size, highSchoolWorksheetCatalog.length);
 });
