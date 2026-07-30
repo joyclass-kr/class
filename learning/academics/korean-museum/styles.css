@@ -362,6 +362,37 @@ body {
   object-fit: contain;
 }
 
+.relic-real-img[hidden],
+.image-placeholder[hidden] {
+  display: none !important;
+}
+
+.image-placeholder {
+  display: flex;
+  max-width: 320px;
+  padding: 28px;
+  flex-direction: column;
+  align-items: center;
+  gap: 9px;
+  color: #d7e0ea;
+  text-align: center;
+}
+
+.image-placeholder > span {
+  font-size: 34px;
+}
+
+.image-placeholder strong {
+  font-size: 15px;
+  line-height: 1.5;
+}
+
+.image-placeholder small {
+  color: #8fa0b2;
+  font-size: 12px;
+  line-height: 1.5;
+}
+
 .badge-designation {
   position: absolute;
   top: 12px;
@@ -431,15 +462,6 @@ body {
   padding-right: 22px;
 }
 
-.modal-eyebrow {
-  margin-bottom: 10px;
-  color: #9a6700;
-  font-size: 11px;
-  font-weight: 900;
-  letter-spacing: 0.12em;
-  text-transform: uppercase;
-}
-
 .badges {
   display: flex;
   flex-wrap: wrap;
@@ -447,8 +469,7 @@ body {
   margin-bottom: 12px;
 }
 
-.badge-era,
-.badge-route {
+.badge-era {
   font-size: 11px;
   font-weight: 800;
   padding: 5px 10px;
@@ -458,11 +479,6 @@ body {
 .badge-era {
   background: #e5edf5;
   color: #24435f;
-}
-
-.badge-route {
-  background: #fff0c2;
-  color: #7a4b00;
 }
 
 .modal-title-text {
@@ -575,6 +591,15 @@ body {
 .docent-text {
   color: #303b4a;
   font-size: 15px;
+  line-height: 1.72;
+}
+
+.context-text {
+  margin-top: 10px;
+  padding-top: 10px;
+  border-top: 1px solid #ece7dc;
+  color: #4a5565;
+  font-size: 14px;
   line-height: 1.72;
 }
 

@@ -16,15 +16,16 @@
   const modal = document.getElementById('art-modal');
   const modalClose = document.getElementById('modal-close');
   const modalImage = document.getElementById('modal-image');
+  const modalImagePlaceholder = document.getElementById('modal-image-placeholder');
   const modalMediaTitle = document.getElementById('modal-media-title');
   const modalTitle = document.getElementById('modal-title');
   const modalSubtitle = document.getElementById('modal-subtitle');
   const modalDesignation = document.getElementById('modal-designation');
   const modalEra = document.getElementById('modal-era');
-  const modalRoute = document.getElementById('modal-route');
   const modalLocation = document.getElementById('modal-location');
   const modalMuseum = document.getElementById('modal-museum');
   const modalDocent = document.getElementById('modal-docent');
+  const modalContext = document.getElementById('modal-context');
   const modalExamTip = document.getElementById('modal-exam-tip');
 
   // Quiz DOM
@@ -231,17 +232,27 @@
     currentActiveRelic = relic;
 
     // Set Modal Fields
-    modalImage.src = window.KOREAN_MUSEUM_DATA.makeArtifactTextureSVG(relic.id);
-    modalImage.alt = `${relic.title} 실물 자료`;
+    const artifactImageURL = window.KOREAN_MUSEUM_DATA.makeArtifactTextureSVG(relic.id);
+    if (artifactImageURL) {
+      modalImage.src = artifactImageURL;
+      modalImage.alt = `${relic.title} 실물 자료`;
+      modalImage.hidden = false;
+      modalImagePlaceholder.hidden = true;
+    } else {
+      modalImage.removeAttribute('src');
+      modalImage.alt = '';
+      modalImage.hidden = true;
+      modalImagePlaceholder.hidden = false;
+    }
     modalMediaTitle.textContent = relic.title;
     modalTitle.textContent = relic.title;
     modalSubtitle.textContent = relic.titleEn;
     modalDesignation.textContent = relic.designation || '국보 유물';
     modalEra.textContent = relic.era;
-    modalRoute.textContent = `🛣️ ${relic.route}`;
     modalLocation.textContent = relic.location;
     modalMuseum.textContent = relic.museum;
     modalDocent.textContent = relic.docent;
+    modalContext.textContent = relic.context || '';
     modalExamTip.textContent = relic.examTip.replace(/^📌\s*\[내신\/수능 핵심\]\s*/, '');
 
     // Reset Tabs

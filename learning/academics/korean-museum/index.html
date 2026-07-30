@@ -10,7 +10,7 @@
   <link rel="stylesheet" href="vendor/leaflet/leaflet.css" />
   
   <!-- App Styles -->
-  <link rel="stylesheet" href="styles.css">
+  <link rel="stylesheet" href="styles.css?v=20260730-3">
   
 </head>
 <body>
@@ -77,6 +77,11 @@
         <figure class="modal-media-col">
           <div class="image-frame">
             <img id="modal-image" src="" alt="유물 원작 사진" class="relic-real-img">
+            <div id="modal-image-placeholder" class="image-placeholder" hidden>
+              <span aria-hidden="true">🏛️</span>
+              <strong>정확한 자료 사진을 확인하고 있습니다</strong>
+              <small>잘못된 사진 대신 검증된 자료만 제공합니다.</small>
+            </div>
             <span id="modal-designation" class="badge-designation">국보 유물</span>
           </div>
           <figcaption class="image-caption">
@@ -88,10 +93,8 @@
         <!-- Details & Interactive Quiz Section -->
         <section class="modal-info-col">
           <div class="modal-header">
-            <p class="modal-eyebrow">한국사 보물 카드</p>
             <div class="badges">
               <span id="modal-era" class="badge-era">삼국 시대</span>
-              <span id="modal-route" class="badge-route">🔴 경부선</span>
             </div>
             <h2 id="modal-title" class="modal-title-text">광개토대왕릉비</h2>
             <p id="modal-subtitle" class="modal-subtitle-text">Gwanggaeto Stele</p>
@@ -120,8 +123,9 @@
           <div id="tab-docent-content" class="tab-content docent-content" role="tabpanel"
             aria-labelledby="tab-docent-btn">
             <section class="learning-block" aria-labelledby="story-heading">
-              <p id="story-heading" class="section-label">왜 중요한가</p>
+              <p id="story-heading" class="section-label">유물 해설</p>
               <p id="modal-docent" class="docent-text"></p>
+              <p id="modal-context" class="context-text"></p>
             </section>
             <div class="exam-tip-card">
               <p class="section-label"><span aria-hidden="true">📌</span> 시험에 나오는 핵심</p>
@@ -144,7 +148,7 @@
 
   <!-- App Logic Scripts -->
   <script src="vendor/leaflet/leaflet.js"></script>
-  <script src="history-data.js"></script>
-  <script src="treasure-map.js"></script>
+  <script src="history-data.js?v=20260730-3"></script>
+  <script src="treasure-map.js?v=20260730-3"></script>
 </body>
 </html>
