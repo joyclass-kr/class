@@ -106,8 +106,13 @@ body { margin: 0; }
 .functionVisibility input:not(:checked) + i { background: #d7d9e0 !important; opacity: .55; }
 .functionRow > b { color: #42485d; font: 700 18px var(--math-font); }
 .functionRow > b .katex { font-size: 1em; }
-.functionInput { min-width: 0; height: 42px; border: 1px solid #cfd3df; border-radius: 9px; outline: none; background: #fff; padding: 0 12px; color: #171b2b; font: 21px var(--math-font); font-variant-numeric: lining-nums tabular-nums; }
-.functionInput:focus { border-color: var(--purple); box-shadow: 0 0 0 2px rgba(101,88,217,.1); }
+.functionEditor { position: relative; min-width: 0; height: 42px; overflow: hidden; border: 1px solid #cfd3df; border-radius: 9px; background: #fff; }
+.functionEditor:focus-within { border-color: var(--purple); box-shadow: 0 0 0 2px rgba(101,88,217,.1); }
+.functionTypeset { position: absolute; z-index: 1; inset: 0; min-width: 0; display: flex; align-items: center; overflow-x: auto; overflow-y: hidden; padding: 0 12px; color: #171b2b; font-size: 21px; white-space: nowrap; pointer-events: none; scrollbar-width: none; }
+.functionTypeset .katex { font-size: 1em; }
+.functionInput { position: relative; z-index: 2; min-width: 0; width: 100%; height: 100%; border: 0; outline: none; background: transparent; padding: 0 12px; color: transparent; caret-color: transparent; font: 21px var(--math-font); font-variant-numeric: lining-nums tabular-nums; }
+.functionEditor:focus-within .functionTypeset { visibility: hidden; }
+.functionEditor:focus-within .functionInput { color: #171b2b; caret-color: var(--purple); }
 .removeFunction { width: 28px; height: 28px; border: 0; border-radius: 7px; background: #ececf2; color: #747989; font-size: 17px; cursor: pointer; }
 .removeFunction:disabled { opacity: .35; cursor: default; }
 .functionError { grid-column: 3 / 5; min-height: 0; color: #ad352e; font-size: 11px; font-weight: 700; }
@@ -123,7 +128,7 @@ body { margin: 0; }
 .keyboardKeys .keyboardUtility { color: #545a6a; font-family: Pretendard, "Malgun Gothic", sans-serif; font-size: 12px; font-weight: 800; }
 .formulaExamples { display: flex; align-items: center; flex-wrap: wrap; gap: 5px; margin-top: 7px; }
 .formulaExamples > span { margin-right: 4px; color: #666d7e; font-family: var(--korean-font); font-size: 12px; font-weight: 700; }
-.formulaExamples button { height: 32px; padding: 0 10px; font-size: 15px; }
+.formulaExamples button { flex: 0 0 auto; width: auto; min-width: max-content; height: 34px; padding: 0 11px; font-size: 15px; white-space: nowrap; }
 .syntaxGuide { margin: 8px 0 0 59px; line-height: 1.45; }
 .canvasWrap { position: relative; min-height: 540px; padding: 20px; }
 .canvasWrap canvas { width: 100%; height: 100%; display: block; border: 1px solid #e1e4ed; border-radius: 13px; }

@@ -16,10 +16,15 @@ assert.match(html, /vendor\/katex\.min\.css/);
 assert.match(html, /vendor\/katex\.min\.js/);
 assert.match(html, /math-format\.js/);
 assert.match(script, /window\.katex\.render/);
+assert.match(script, /class="functionEditor"/);
+assert.match(script, /class="functionTypeset"/);
+assert.match(script, /renderFunctionPreview\(row,fn\.expression\)/);
 assert.match(script, /String\.raw`y=\\frac\{a\}\{x\}`/);
 assert.match(script, /String\.raw`y=a\\ln\(x-h\)\+k`/);
 assert.doesNotMatch(script, /formulaDisplay\.innerHTML/);
 assert.match(script, /빈 괄호 안에 수식을 입력하세요/);
+assert.match(css, /\.functionEditor:focus-within \.functionTypeset\s*\{[^}]*visibility:\s*hidden/);
+assert.match(css, /\.formulaExamples button\s*\{[^}]*min-width:\s*max-content/);
 
 const nested = expressionToLatex("x()ln(log10(sqrt(exp(xxxxxxx))))a(x-h)^2+k");
 assert.match(nested, /\\ln\\left\(\\log_\{10\}\\left\(\\sqrt\{e\^\{xxxxxxx\}\}\\right\)\\right\)/);
