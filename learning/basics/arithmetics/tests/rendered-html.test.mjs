@@ -52,8 +52,8 @@ test("renders the learning index and arithmetic catalog in workbook order", asyn
   const indexCss = await readFile(new URL("../app/globals.css", import.meta.url), "utf8");
   assert.equal(indexResponse.status, 200);
   assert.match(indexHtml, /href="\/arithmetic"/);
-  assert.equal((indexHtml.match(/data-testid="worksheet-choice"/g) ?? []).length, 172);
-  assert.equal((indexHtml.match(/class="worksheet-grade"/g) ?? []).length, 172);
+  assert.equal((indexHtml.match(/data-testid="worksheet-choice"/g) ?? []).length, 173);
+  assert.equal((indexHtml.match(/class="worksheet-grade"/g) ?? []).length, 173);
   assert.doesNotMatch(indexHtml, /data-testid="learning-area-card"/);
   assert.match(indexHtml, /href="\/fraction"[^>]*data-testid="worksheet-choice"/);
   assert.match(indexHtml, /href="\/arithmetic\/high-school\/trigonometric-derivatives-2"[^>]*data-testid="worksheet-choice"/);
@@ -71,14 +71,14 @@ test("renders the learning index and arithmetic catalog in workbook order", asyn
   const catalogResponse = await render("/arithmetic");
   const catalogHtml = await catalogResponse.text();
   assert.match(catalogHtml, /href="\/arithmetic\/race"/);
-  assert.equal((catalogHtml.match(/data-testid="worksheet-choice"/g) ?? []).length, 172);
+  assert.equal((catalogHtml.match(/data-testid="worksheet-choice"/g) ?? []).length, 173);
   assert.match(catalogHtml, /기초 연산/);
   assert.match(catalogHtml, /초·중·고부터 이공계 기초까지/);
   assert.match(catalogHtml, /data-stage="elementary"/);
   assert.match(catalogHtml, /data-stage="middle"/);
   assert.match(catalogHtml, /data-stage="high"/);
   assert.match(catalogHtml, /이공계 기초/);
-  assert.equal((catalogHtml.match(/class="worksheet-grade"/g) ?? []).length, 172);
+  assert.equal((catalogHtml.match(/class="worksheet-grade"/g) ?? []).length, 173);
   assert.match(catalogHtml, /href="\/arithmetic\/stem\/partial-derivatives"/);
   assert.match(catalogHtml, /href="\/arithmetic\/stem\/euler-complex"/);
   assert.ok(catalogHtml.indexOf("수 세기") < catalogHtml.indexOf("덧셈·뺄셈 ①"));
@@ -202,7 +202,7 @@ test("renders the learning index and arithmetic catalog in workbook order", asyn
   assert.match(catalogHtml, /href="\/arithmetic\/high-school\/vector-geometry"[^>]*data-testid="worksheet-choice"/);
   assert.match(catalogHtml, /href="\/arithmetic\/high-school\/space-coordinates"[^>]*data-testid="worksheet-choice"/);
   assert.match(catalogHtml, /href="\/arithmetic\/high-school\/radian-measure"[^>]*data-testid="worksheet-choice"/);
-  assert.match(catalogHtml, /href="\/arithmetic\/high-school\/arc-sector"[^>]*data-testid="worksheet-choice"/);
+  assert.doesNotMatch(catalogHtml, /href="\/arithmetic\/high-school\/arc-sector"[^>]*data-testid="worksheet-choice"/);
   assert.match(catalogHtml, /href="\/arithmetic\/high-school\/probability-rules"[^>]*data-testid="worksheet-choice"/);
   assert.match(catalogHtml, /href="\/arithmetic\/high-school\/probability-distributions"[^>]*data-testid="worksheet-choice"/);
   assert.doesNotMatch(catalogHtml, /2시계①|2시계②/);
@@ -348,7 +348,7 @@ test("renders the unified arithmetic catalog and high-school worksheets", async 
   const hubResponse = await render("/arithmetic/high-school");
   assert.equal(hubResponse.status, 200);
   const hubHtml = await hubResponse.text();
-  assert.equal((hubHtml.match(/data-testid="worksheet-choice"/g) ?? []).length, 172);
+  assert.equal((hubHtml.match(/data-testid="worksheet-choice"/g) ?? []).length, 173);
   assert.match(hubHtml, /href="\/fraction"[^>]*data-testid="worksheet-choice"/);
   assert.match(hubHtml, /href="\/arithmetic\/high-school\/polynomial-add-subtract"/);
   assert.match(hubHtml, /href="\/arithmetic\/high-school\/factorization-rational"/);
@@ -358,6 +358,7 @@ test("renders the unified arithmetic catalog and high-school worksheets", async 
   assert.match(hubHtml, /href="\/arithmetic\/high-school\/function-transformations"/);
   assert.match(hubHtml, /href="\/arithmetic\/high-school\/rational-radical-functions"/);
   assert.match(hubHtml, /href="\/arithmetic\/high-school\/logarithms"/);
+  assert.match(hubHtml, /href="\/arithmetic\/high-school\/exponential-log-functions"/);
   assert.match(hubHtml, /href="\/arithmetic\/high-school\/exponential-log-equations"/);
   assert.match(hubHtml, /href="\/arithmetic\/high-school\/exponential-log-inequalities"/);
   assert.match(hubHtml, /href="\/arithmetic\/high-school\/trigonometric-values"/);
@@ -365,6 +366,7 @@ test("renders the unified arithmetic catalog and high-school worksheets", async 
   assert.match(hubHtml, /href="\/arithmetic\/high-school\/trigonometric-equations"/);
   assert.match(hubHtml, /href="\/arithmetic\/high-school\/sequences"/);
   assert.match(hubHtml, /href="\/arithmetic\/high-school\/sigma-recurrence"/);
+  assert.match(hubHtml, /href="\/arithmetic\/high-school\/mathematical-induction"/);
   assert.match(hubHtml, /href="\/arithmetic\/high-school\/limits-continuity"/);
   assert.ok(hubHtml.indexOf("/arithmetic/high-school/inequality-intervals") < hubHtml.indexOf("/arithmetic/high-school/permutations-combinations"));
   assert.ok(hubHtml.indexOf("/arithmetic/high-school/permutations-combinations") < hubHtml.indexOf("/arithmetic/high-school/coordinate-lines"));
@@ -504,8 +506,8 @@ test("every high-school worksheet keeps answers outside the A4 sheet", async () 
     "equation-transformations", "inequality-intervals", "coordinate-lines", "circle-equations",
     "geometric-transformations", "sets-propositions", "function-transformations",
     "rational-radical-functions", "permutations-combinations", "combinations", "logarithms",
-    "exponential-log-equations", "exponential-log-inequalities", "trigonometric-values",
-    "trigonometric-graphs", "trigonometric-equations", "sequences", "sigma-recurrence",
+    "exponential-log-functions", "exponential-log-equations", "exponential-log-inequalities", "trigonometric-values",
+    "trigonometric-graphs", "trigonometric-equations", "sequences", "sigma-recurrence", "mathematical-induction",
     "limits-continuity", "derivative-practice", "derivative-applications", "polynomial-integrals",
     "exponential-log-derivatives", "trigonometric-derivatives", "trigonometric-derivatives-2", "transcendental-integrals", "integration-techniques", "definite-integrals", "definite-integral-applications",
   ];

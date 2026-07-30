@@ -10,7 +10,7 @@ export default function FinancialSequencesPage() {
   return (
     <GeometryChoiceWorksheet
       subject="대수"
-      title="등비수열의 활용·원리합계와 적립"
+      title="등비수열의 활용"
       seed={20260828}
       problems={financialSequenceProblems}
       createSet={createFinancialSequenceProblems}

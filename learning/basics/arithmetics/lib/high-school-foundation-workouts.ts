@@ -62,6 +62,17 @@ export const arcSectorProblems: GeometryChoiceItem[] = [
   item("a7", "회전수", String.raw`5\pi\text{ rad}`, String.raw`\frac52\text{회}`, [String.raw`5\text{회}`, String.raw`\frac54\text{회}`, String.raw`10\text{회}`]),
 ];
 
+export const radianArcSectorProblems: GeometryChoiceItem[] = [
+  radianProblems[0],
+  radianProblems[1],
+  radianProblems[3],
+  radianProblems[4],
+  arcSectorProblems[0],
+  arcSectorProblems[1],
+  arcSectorProblems[2],
+  arcSectorProblems[4],
+];
+
 export const probabilityProblems: GeometryChoiceItem[] = [
   item("q1", "여사건", String.raw`P(A)=\frac{3}{8}`, String.raw`P(A^c)=\frac58`, [String.raw`\frac38`, String.raw`\frac18`, String.raw`\frac78`]),
   item("q2", "합사건", String.raw`P(A)=\frac12,\ P(B)=\frac25,\ P(A\cap B)=\frac15`, String.raw`P(A\cup B)=\frac7{10}`, [String.raw`\frac9{10}`, String.raw`\frac12`, String.raw`\frac15`]),

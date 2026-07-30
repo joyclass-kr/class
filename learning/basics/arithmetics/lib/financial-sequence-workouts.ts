@@ -1,13 +1,12 @@
 import type { GeometryChoiceItem } from "../app/arithmetic/high-school/components/geometry-choice-worksheet";
 
 export type FinancialSequenceKind =
-  | "simple-future-value"
+  | "geometric-growth"
+  | "geometric-decay"
+  | "geometric-total"
   | "compound-future-value"
   | "compound-principal"
-  | "compound-rate"
-  | "ordinary-annuity"
-  | "annuity-due"
-  | "simple-compound-difference";
+  | "compound-rate";
 
 export type FinancialSequenceProblem = GeometryChoiceItem & {
   kind: FinancialSequenceKind;
@@ -40,28 +39,17 @@ function money(value: number) {
   return `${cleanNumber(value)}\\text{만 원}`;
 }
 
+function amount(value: number) {
+  return `${cleanNumber(value)}\\text{개}`;
+}
+
 function compound(principal: number, rate: number, years: number) {
   return principal * ((100 + rate) / 100) ** years;
 }
 
-function simple(principal: number, rate: number, years: number) {
-  return principal * (1 + (rate * years) / 100);
-}
-
-function ordinaryAnnuity(payment: number, rate: number, years: number) {
-  const factor = (100 + rate) / 100;
-  return payment * Array.from({ length: years }, (_, index) => factor ** index)
-    .reduce((sum, value) => sum + value, 0);
-}
-
 function choices(id: string, answer: string, distractors: string[]) {
   const unique = [...new Set(distractors.filter((candidate) => candidate !== answer))];
-  for (const fallback of [
-    "0\\text{만 원}",
-    "1\\text{만 원}",
-    "5\\%",
-    "10\\%",
-  ]) {
+  for (const fallback of ["0", "1", "5\\%", "10\\%"]) {
     if (unique.length === 3) break;
     if (fallback !== answer && !unique.includes(fallback)) unique.push(fallback);
   }
@@ -94,54 +82,83 @@ function item(
   };
 }
 
-function terms(principal: number, rate: number) {
-  return `\\text{원금 }${principal}\\text{만 원},\\quad \\text{연이율 }${rate}\\%`;
-}
-
 export function createFinancialSequenceProblems(seed: number) {
   const next = random(seed);
   const problems: FinancialSequenceProblem[] = [];
-  const rates = [5, 10, 20] as const;
-  const accumulationRates = [10, 20] as const;
-  const principals = [50, 100, 150, 200, 300] as const;
-  const payments = [20, 50, 100] as const;
 
   {
-    const principal = pick(next, principals);
-    const rate = pick(next, rates);
-    const years = integer(next, 2, 5);
-    const answer = simple(principal, rate, years);
+    const first = integer(next, 2, 6);
+    const ratio = pick(next, [2, 3] as const);
+    const period = integer(next, 3, 5);
+    const answer = first * ratio ** period;
     problems.push(item(
       seed,
       0,
-      "simple-future-value",
-      "단리의 원리합계",
-      `${years}년 후 원리합계는?`,
-      terms(principal, rate),
-      money(answer),
-      [
-        money(compound(principal, rate, years)),
-        money(simple(principal, rate, 1)),
-        money(principal * (1 + years / 100)),
-      ],
+      "geometric-growth",
+      "등비적 증가",
+      `${period}번 증가한 뒤의 양은?`,
+      `a_0=${first},\\quad a_{n+1}=${ratio}a_n`,
+      amount(answer),
+      [amount(first * ratio ** (period - 1)), amount(first * ratio * period), amount(first + ratio * period)],
     ));
   }
 
   {
-    const principal = pick(next, principals);
-    const rate = pick(next, rates);
-    const years = integer(next, 2, rate === 5 ? 3 : 4);
-    const answer = compound(principal, rate, years);
+    const divisor = pick(next, [2, 3] as const);
+    const period = integer(next, 2, 4);
+    const answer = integer(next, 2, 8);
+    const first = answer * divisor ** period;
     problems.push(item(
       seed,
       1,
+      "geometric-decay",
+      "등비적 감소",
+      `${period}번 감소한 뒤의 양은?`,
+      `a_0=${first},\\quad a_{n+1}=\\frac{1}{${divisor}}a_n`,
+      amount(answer),
+      [amount(answer * divisor), amount(first / divisor), amount(first - divisor * period)],
+    ));
+  }
+
+  {
+    const first = integer(next, 1, 5);
+    const ratio = pick(next, [2, 3] as const);
+    const count = integer(next, 4, 6);
+    const answer = first * (ratio ** count - 1) / (ratio - 1);
+    problems.push(item(
+      seed,
+      2,
+      "geometric-total",
+      "등비수열의 합 활용",
+      `처음 ${count}번의 양을 모두 더한 값은?`,
+      `a_1=${first},\\quad a_{n+1}=${ratio}a_n`,
+      amount(answer),
+      [
+        amount(first * ratio ** (count - 1)),
+        amount(first * (ratio ** (count - 1) - 1) / (ratio - 1)),
+        amount(first * ratio * count),
+      ],
+    ));
+  }
+
+  const rates = [10, 20] as const;
+  const principals = [50, 100, 150, 200, 300] as const;
+
+  {
+    const principal = pick(next, principals);
+    const rate = pick(next, rates);
+    const years = integer(next, 2, 4);
+    const answer = compound(principal, rate, years);
+    problems.push(item(
+      seed,
+      3,
       "compound-future-value",
       "복리의 원리합계",
       `${years}년 후 원리합계는?`,
-      terms(principal, rate),
+      `\\text{원금 }${principal}\\text{만 원},\\quad \\text{연이율 }${rate}\\%`,
       money(answer),
       [
-        money(simple(principal, rate, years)),
+        money(principal * (1 + (rate * years) / 100)),
         money(compound(principal, rate, years - 1)),
         money(compound(principal, rate, years + 1)),
       ],
@@ -151,20 +168,20 @@ export function createFinancialSequenceProblems(seed: number) {
   {
     const principal = pick(next, principals);
     const rate = pick(next, rates);
-    const years = integer(next, 2, rate === 5 ? 3 : 4);
+    const years = integer(next, 2, 4);
     const futureValue = compound(principal, rate, years);
     problems.push(item(
       seed,
-      2,
+      4,
       "compound-principal",
       "복리에서 원금",
       "처음 예금한 원금은?",
       `\\text{연이율 }${rate}\\%,\\quad ${years}\\text{년 후 }${money(futureValue)}`,
       money(principal),
       [
-        money(futureValue / (1 + (rate * years) / 100)),
-        money(futureValue / ((100 + rate) / 100) ** (years - 1)),
         money(futureValue),
+        money(futureValue / ((100 + rate) / 100) ** (years - 1)),
+        money(futureValue / (1 + (rate * years) / 100)),
       ],
     ));
   }
@@ -176,78 +193,13 @@ export function createFinancialSequenceProblems(seed: number) {
     const futureValue = compound(principal, rate, years);
     problems.push(item(
       seed,
-      3,
+      5,
       "compound-rate",
       "복리에서 이율",
       "연이율은?",
       `${principal}\\text{만 원}\\longrightarrow${money(futureValue)}\\quad(${years}\\text{년})`,
       `${rate}\\%`,
       [`${rate / 2}\\%`, `${rate + 5}\\%`, `${3 * rate}\\%`],
-    ));
-  }
-
-  {
-    const payment = pick(next, payments);
-    const rate = pick(next, accumulationRates);
-    const years = integer(next, 3, 4);
-    const answer = ordinaryAnnuity(payment, rate, years);
-    const due = answer * ((100 + rate) / 100);
-    problems.push(item(
-      seed,
-      4,
-      "ordinary-annuity",
-      "매년 말 적립",
-      `${years}년째 말의 적립금은?`,
-      `\\text{매년 말 }${payment}\\text{만 원},\\quad \\text{연이율 }${rate}\\%`,
-      money(answer),
-      [
-        money(payment * years),
-        money(due),
-        money(ordinaryAnnuity(payment, rate, years - 1)),
-      ],
-    ));
-  }
-
-  {
-    const payment = pick(next, payments);
-    const rate = pick(next, accumulationRates);
-    const years = integer(next, 3, 4);
-    const ordinary = ordinaryAnnuity(payment, rate, years);
-    const answer = ordinary * ((100 + rate) / 100);
-    problems.push(item(
-      seed,
-      5,
-      "annuity-due",
-      "매년 초 적립",
-      `${years}년째 말의 적립금은?`,
-      `\\text{매년 초 }${payment}\\text{만 원},\\quad \\text{연이율 }${rate}\\%`,
-      money(answer),
-      [
-        money(ordinary),
-        money(payment * years),
-        money(answer * ((100 + rate) / 100)),
-      ],
-    ));
-  }
-
-  {
-    const principal = pick(next, principals);
-    const rate = pick(next, rates);
-    const years = integer(next, 2, rate === 5 ? 3 : 4);
-    const answer = compound(principal, rate, years) - simple(principal, rate, years);
-    problems.push(item(
-      seed,
-      6,
-      "simple-compound-difference",
-      "단리와 복리의 비교",
-      `${years}년 후 복리 원리합계에서 단리 원리합계를 뺀 값은?`,
-      terms(principal, rate),
-      money(answer),
-      [
-        money(0),
-        money(compound(principal, rate, years - 1) - simple(principal, rate, years - 1)),
-        money(principal * rate / 100),
-      ],
     ));
   }
 

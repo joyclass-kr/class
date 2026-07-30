@@ -96,6 +96,22 @@ export function createArcSectorProblems(seed: number): GeometryChoiceItem[] {
   ];
 }
 
+export function createRadianArcSectorProblems(seed: number): GeometryChoiceItem[] {
+  const radians = createRadianProblems(seed);
+  const sectors = createArcSectorProblems(seed ^ 0x9e3779b9);
+
+  return [
+    radians[0],
+    radians[1],
+    radians[3],
+    radians[4],
+    sectors[0],
+    sectors[1],
+    sectors[2],
+    sectors[4],
+  ];
+}
+
 export function createProbabilityProblems(seed: number): GeometryChoiceItem[] {
   const next = rng(seed);
   const denominator = pick(next, [6, 8, 10, 12] as const);
