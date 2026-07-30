@@ -8,32 +8,36 @@
     p09: 'assets/relics/p09.jpg', p10: 'assets/relics/p10.jpg', p11: 'assets/relics/p11.jpg',
 
     g01: 'assets/relics/g01.jpg', g02: 'assets/relics/g02.jpg', g03: 'assets/relics/g03.jpg', g04: 'assets/relics/g04.jpg', g05: 'assets/relics/g05.jpg',
+    g06: 'assets/relics/g06.jpg',
 
     b01: 'assets/relics/b01.jpg', b02: 'assets/relics/b02.jpg', b03: 'assets/relics/b03.jpg', b04: 'assets/relics/b04.jpg',
+    b05: 'assets/relics/b05.jpg',
     a01: 'assets/relics/a01.jpg',
 
     s01: 'assets/relics/s01.jpg', s02: 'assets/relics/s02.jpg', s03: 'assets/relics/s03.jpg', s04: 'assets/relics/s04.jpg',
     s05: 'assets/relics/s05.jpg', s06: 'assets/relics/s06.jpg', s07: 'assets/relics/s07.jpg', s08: 'assets/relics/s08.jpg',
     s09: 'assets/relics/s09.jpg', s10: 'assets/relics/s10.jpg', s11: 'assets/relics/s11.jpg', s12: 'assets/relics/s12.jpg',
     s13: 'assets/relics/s13.jpg', s14: 'assets/relics/s14.jpg', s15: 'assets/relics/s15.jpg',
+    s16: 'assets/relics/s16.jpg', s17: 'assets/relics/s17.jpg',
 
     k01: 'assets/relics/k01.jpg', k02: 'assets/relics/k02.jpg', k03: 'assets/relics/k03.jpg', k04: 'assets/relics/k04.jpg',
     k05: 'assets/relics/k05.jpg', k06: 'assets/relics/k06.jpg', k07: 'assets/relics/k07.jpg', k08: 'assets/relics/k08.jpg',
+    k09: 'assets/relics/k09.jpg',
 
     j01: 'assets/relics/j01.jpg', j02: 'assets/relics/j02.jpg', j03: 'assets/relics/j03.jpg', j04: 'assets/relics/j04.jpg',
     j05: 'assets/relics/j05.jpg', j06: 'assets/relics/j06.jpg', j07: 'assets/relics/j07.jpg', j08: 'assets/relics/j08.jpg',
     j09: 'assets/relics/j09.jpg', j10: 'assets/relics/j10.jpg', j11: 'assets/relics/j11.jpg', j12: 'assets/relics/j12.jpg',
     j13: 'assets/relics/j13.jpg', j15: 'assets/relics/j15.jpg', j16: 'assets/relics/j16.jpg', j17: 'assets/relics/j17.jpg',
-    j18: 'assets/relics/j18.jpg', j19: 'assets/relics/j19.jpg',
+    j18: 'assets/relics/j18.jpg', j19: 'assets/relics/j19.jpg', j20: 'assets/relics/j20.jpg',
 
-    l01: 'assets/relics/l01.jpg', l02: 'assets/relics/l02.jpg', l03: 'assets/relics/l03.jpg',
+    l01: 'assets/relics/l01.jpg', l02: 'assets/relics/l02.jpg', l03: 'assets/relics/l03.jpg', l04: 'assets/relics/l04.jpg',
 
     m01: 'assets/relics/m01.jpg', m02: 'assets/relics/m02.jpg', m03: 'assets/relics/m03.jpg', m04: 'assets/relics/m04.jpg',
     m05: 'assets/relics/m05.jpg', m06: 'assets/relics/m06.jpg', m07: 'assets/relics/m07.gif'
   };
 
   function getArtifactImageURL(id) {
-    const unverifiedImages = new Set(['s13', 's14', 'j12', 'j14']);
+    const unverifiedImages = new Set(['p06', 's13', 's14', 'j12', 'j14']);
     if (unverifiedImages.has(id)) return null;
     const imagePath = REAL_RELIC_IMAGES[id] || `assets/relics/${id}.jpg`;
     return `${imagePath}?v=20260730-4`;
@@ -109,7 +113,7 @@
     m06: '대한제국 황실이 사용하기 위해 서양 신고전주의 양식으로 지은 궁전입니다. 해방 뒤 미소공동위원회가 열린 장소로 대한제국과 현대사가 겹치는 공간입니다.'
   };
 
-  // Master Korean History Relics & Monuments Dataset (63 Total Items)
+  // Master Korean History Relics & Monuments Dataset
   const RELICS_MASTER = [
     // --- 1. 선사 시대 & 고조선 ---
     { id: 'p01', title: '빗살무늬토기', titleEn: 'Comb-pattern Pottery', eraCategory: 'prehistoric', era: '신석기 시대 (B.C. 4000년경)', route: '경부선', lat: 37.5583, lng: 127.1306, location: '서울 암사동 선사 유적지', museum: '국립중앙박물관 (보물 제1544호)', designation: '보물 제1544호', docent: '신석기 시대 농경과 정착을 상징하는 대표 토기입니다.', examTip: '📌 [내신/수능 핵심] 신석기 = 농경, 정착, 빗살무늬토기, 가락바퀴, 움집!', quiz: { question: '신석기 시대 곡식을 저장했던 토기는?', options: ['빗살무늬토기', '미송리식 토기', '민무늬 토기', '분청사기'], answer: 0, explanation: '신석기 대표 토기입니다.' } },
@@ -313,19 +317,89 @@
       context: '민족 대표는 태화관에서 선언식을 열었고, 탑골공원에서는 학생과 시민이 독립선언서를 낭독하고 만세 시위를 시작했습니다. 이후 대한민국 임시정부 수립에 영향을 주었습니다.',
       examTip: '3·1 운동 = 독립선언서 / 비폭력 만세 시위 / 대한민국 임시정부 수립의 계기',
       quiz: { question: '대한민국 임시정부 수립의 직접적 계기가 된 운동은?', options: ['3·1 운동', '갑신정변', '임오군란', '6월 민주 항쟁'], answer: 0, explanation: '3·1 운동을 계기로 대한민국 임시정부가 수립되었습니다.' }
+    },
+    {
+      id: 'g06', title: '강서대묘 사신도 (현무)', titleEn: 'Four Guardian Mural (Black Tortoise)',
+      eraCategory: 'three_kingdoms', era: '고구려 후기 (6~7세기)', lat: 38.8670, lng: 125.4500,
+      location: '평남 강서군 강서대묘', museum: '고구려 고분군 현지 보존',
+      designation: '유네스코 세계유산 고구려 고분군',
+      docent: '강서대묘 널방 북벽에 그린 현무입니다. 거북과 뱀이 얽힌 형상은 북쪽을 지키는 수호신을 뜻합니다.',
+      context: '고구려 후기에는 무덤 주인의 생활 장면보다 청룡·백호·주작·현무의 사신도가 중심이 되었습니다. 강서대묘 벽화는 힘찬 선과 선명한 색으로 고구려 고분 벽화의 높은 수준을 보여 줍니다.',
+      examTip: '강서대묘 = 고구려 후기 / 굴식 돌방무덤 / 사신도 / 도교·방위 수호',
+      quiz: { question: '거북과 뱀이 얽힌 모습으로 북쪽을 지키는 사신은?', options: ['현무', '청룡', '백호', '주작'], answer: 0, explanation: '현무는 북쪽을 지키는 사신입니다.' }
+    },
+    {
+      id: 'b05', title: '부여 외리 산수무늬 벽돌', titleEn: 'Landscape-design Brick from Buyeo',
+      eraCategory: 'three_kingdoms', era: '백제 사비기 (7세기)', lat: 36.2790, lng: 126.9140,
+      location: '충남 부여 외리 유적 출토', museum: '국립부여박물관',
+      designation: '보물 부여 외리 문양전 일괄',
+      docent: '산과 구름, 나무와 건물을 한 폭의 풍경처럼 새긴 백제의 벽돌입니다.',
+      context: '도교적 신선 세계를 연상시키는 산수 표현과 부드러운 선은 백제 미술의 세련미를 보여 줍니다. 시험에서는 백제 사비기 문화와 산수무늬 벽돌을 연결해 묻습니다.',
+      examTip: '산수무늬 벽돌 = 백제 사비기 / 부여 외리 / 도교적 신선 세계',
+      quiz: { question: '부여 외리에서 출토된 백제 사비기의 대표 문양 벽돌은?', options: ['산수무늬 벽돌', '무령왕릉 지석', '호우명 그릇', '청동 은입사 포류수금문 정병'], answer: 0, explanation: '산수무늬 벽돌은 백제 사비기 미술을 대표합니다.' }
+    },
+    {
+      id: 's16', title: '호우명 그릇', titleEn: 'Bronze Bowl with the Inscription Hou',
+      eraCategory: 'three_kingdoms', era: '신라 (5세기)', lat: 35.8418, lng: 129.2110,
+      location: '경북 경주 호우총 출토', museum: '국립중앙박물관',
+      designation: '보물 호우총 출토 청동 그릇',
+      docent: '그릇 바닥에 광개토 대왕을 가리키는 명문이 새겨진 고구려계 청동 그릇입니다.',
+      context: '신라 무덤인 호우총에서 고구려 광개토 대왕 관련 명문이 발견된 사실은 5세기 고구려와 신라의 밀접한 관계를 보여 줍니다. 유물의 제작 문화와 출토 장소를 구분하는 것이 핵심입니다.',
+      examTip: '호우명 그릇 = 경주 호우총 출토 / 광개토 대왕 명문 / 고구려와 신라의 관계',
+      quiz: { question: '신라 호우총에서 출토되어 고구려와 신라의 관계를 보여 주는 유물은?', options: ['호우명 그릇', '칠지도', '금관총 금관', '정효공주묘 벽화'], answer: 0, explanation: '호우명 그릇에는 광개토 대왕 관련 명문이 있습니다.' }
+    },
+    {
+      id: 's17', title: '발해 정효공주묘 벽화', titleEn: 'Murals of Princess Jeonghyo’s Tomb',
+      eraCategory: 'unified_silla', era: '발해 문왕 (792년)', lat: 42.5600, lng: 129.0000,
+      location: '중국 지린성 허룽 용두산 고분군', museum: '정효공주묘 현지 보존',
+      designation: '발해 왕실 고분 벽화',
+      docent: '발해 문왕의 딸 정효공주 무덤에 그려진 인물 벽화로 발해 왕실의 생활과 복식을 보여 줍니다.',
+      context: '무덤은 당의 영향을 받은 벽돌무덤이지만 천장에는 고구려 계통의 모줄임 구조가 나타납니다. 벽화와 묘지석을 통해 발해가 고구려 문화를 계승하면서 당 문화를 받아들였음을 확인할 수 있습니다.',
+      examTip: '정효공주묘 = 발해 / 벽돌무덤·인물 벽화 / 고구려 계승과 당 문화 수용',
+      quiz: { question: '벽돌무덤과 인물 벽화로 발해 문화의 국제성을 보여 주는 무덤은?', options: ['정효공주묘', '무령왕릉', '장군총', '천마총'], answer: 0, explanation: '정효공주묘는 발해 왕실 문화의 핵심 자료입니다.' }
+    },
+    {
+      id: 'k09', title: '고려 수월관음도', titleEn: 'Water-Moon Avalokiteshvara',
+      eraCategory: 'goryeo', era: '고려 후기 (14세기)', lat: 40.7794, lng: -73.9632,
+      location: '고려 제작 → 미국 뉴욕 소장', museum: '미국 메트로폴리탄 미술관',
+      designation: '고려 불화',
+      docent: '달빛 아래 물가의 관음보살과 선재동자를 섬세하고 화려하게 그린 고려 불화입니다.',
+      context: '귀족 불교 문화가 발달한 고려에서는 금니와 선명한 색, 정교한 무늬를 사용한 불화가 제작되었습니다. 현존 고려 불화의 상당수는 국외에 있어 현재 소장처와 제작지를 구분해야 합니다.',
+      examTip: '수월관음도 = 고려 후기 불화 / 귀족 문화 / 섬세하고 화려한 색채',
+      quiz: { question: '섬세한 금니와 화려한 색채로 귀족 불교 문화를 보여 주는 그림은?', options: ['수월관음도', '고사관수도', '단오풍정', '몽유도원도'], answer: 0, explanation: '수월관음도는 고려 불화를 대표합니다.' }
+    },
+    {
+      id: 'j20', title: '강희안 고사관수도', titleEn: 'Scholar Contemplating Water',
+      eraCategory: 'joseon', era: '조선 전기 (15세기)', lat: 37.5239, lng: 126.9804,
+      location: '조선 전기 제작', museum: '국립중앙박물관',
+      designation: '보물 고사관수도',
+      docent: '선비가 물을 바라보며 사색하는 모습을 간결하고 힘찬 먹선으로 표현한 강희안의 그림입니다.',
+      context: '인물을 화면 한쪽에 두고 넓은 여백을 살린 구도는 조선 전기 문인화의 특징을 보여 줍니다. 시험에서는 안견의 몽유도원도와 함께 조선 전기 회화로 자주 비교됩니다.',
+      examTip: '고사관수도 = 강희안 / 조선 전기 문인화 / 사색하는 선비·여백',
+      quiz: { question: '물가에서 사색하는 선비를 그린 강희안의 조선 전기 회화는?', options: ['고사관수도', '몽유도원도', '인왕제색도', '단오풍정'], answer: 0, explanation: '고사관수도는 강희안의 대표 문인화입니다.' }
+    },
+    {
+      id: 'l04', title: '신윤복 단오풍정', titleEn: 'Dano Day by Shin Yun-bok',
+      eraCategory: 'joseon', era: '조선 후기 (18세기 말~19세기 초)', lat: 37.5920, lng: 126.9980,
+      location: '조선 후기 한양 풍속', museum: '간송미술문화재단',
+      designation: '국보 혜원전신첩 수록',
+      docent: '단옷날 그네를 타고 머리를 감는 여성들의 모습을 밝은 색채와 섬세한 선으로 그린 풍속화입니다.',
+      context: '신윤복은 양반과 여성의 생활, 남녀의 정취를 감각적으로 묘사했습니다. 서민의 생업과 공동체 생활을 익살스럽게 그린 김홍도의 풍속화와 비교하면 작가의 특징이 선명해집니다.',
+      examTip: '단오풍정 = 신윤복 / 조선 후기 풍속화 / 여성 생활·섬세한 색채',
+      quiz: { question: '단옷날 여성들의 생활을 섬세한 색채로 그린 화가는?', options: ['신윤복', '김홍도', '정선', '강희안'], answer: 0, explanation: '단오풍정은 신윤복의 혜원전신첩에 실린 작품입니다.' }
     }
   ];
 
   RELICS_MASTER.push(...EXAM_RELIC_ADDITIONS);
 
   const EXAM_CORE_IDS = [
-    'p01', 'p02', 'p03', 'p05', 'p07', 'p08', 'p09', 'p11',
-    'g01', 'g02', 'g04', 'g05',
-    'b01', 'b02', 'b03', 'b04', 'k04', 'a01',
-    's01', 's02', 's03', 's04', 's05', 's06', 's07', 's08', 's09', 's11', 's13', 's14', 's15',
-    'k01', 'k02', 'k03', 'k06', 'k07', 'k08',
-    'j01', 'j02', 'j03', 'j06', 'j07', 'j08', 'j12', 'j13', 'j14', 'j15', 'j17', 'j18', 'j19',
-    'l01', 'l03',
+    'p01', 'p02', 'p03', 'p05', 'p06', 'p07', 'p08', 'p09', 'p11',
+    'g01', 'g02', 'g04', 'g05', 'g06',
+    'b01', 'b02', 'b03', 'b04', 'b05', 'k04', 'a01',
+    's01', 's02', 's03', 's04', 's05', 's06', 's07', 's08', 's09', 's11', 's13', 's14', 's15', 's16', 's17',
+    'k01', 'k02', 'k03', 'k05', 'k06', 'k07', 'k08', 'k09',
+    'j01', 'j02', 'j03', 'j06', 'j07', 'j08', 'j12', 'j13', 'j14', 'j15', 'j16', 'j17', 'j18', 'j19', 'j20',
+    'l01', 'l02', 'l03', 'l04',
     'm01', 'm03', 'm04', 'm05', 'm06', 'm07'
   ];
 
