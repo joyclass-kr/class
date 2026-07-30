@@ -436,7 +436,7 @@ test("renders the unified arithmetic catalog and high-school worksheets", async 
   const inequalityHtml = await inequalityResponse.text();
   assert.match(inequalityHtml, /부등식의 해를 구하세요. 빈 공간에 풀이 과정을 쓰세요/);
   assert.match(inequalityHtml, />답안 입력<\/button>/);
-  assert.equal((inequalityHtml.match(/data-testid="inequality-question"/g) ?? []).length, 8);
+  assert.equal((inequalityHtml.match(/data-testid="inequality-question"/g) ?? []).length, 14);
   assert.equal((inequalityHtml.match(/<input/g) ?? []).length, 0);
 
   const functionResponse = await render("/arithmetic/high-school/function-transformations");
