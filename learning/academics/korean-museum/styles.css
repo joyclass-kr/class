@@ -207,6 +207,18 @@ body {
   font-size: clamp(12px, 1.15vw, 16px);
 }
 
+.map-admin-label--north-region {
+  color: #334c63;
+  font-size: clamp(11px, 1vw, 14px);
+}
+
+.map-admin-label--north-city {
+  color: #4a6073;
+  font-size: clamp(9px, 0.78vw, 11px);
+  font-weight: 800;
+  opacity: 0.88;
+}
+
 .map-admin-label--district {
   padding: 3px 6px;
   border: 1px solid rgba(42, 64, 84, 0.2);

@@ -31,6 +31,28 @@
     { name: '부산광역시', lat: 35.1796, lng: 129.0756, minZoom: 8, maxZoom: 14, kind: 'region' },
     { name: '제주특별자치도', lat: 33.3617, lng: 126.5292, minZoom: 6, maxZoom: 8, kind: 'region' },
 
+    // North Korea: province names at overview zoom, major cities when enlarged.
+    { name: '평안북도', lat: 40.10, lng: 124.95, minZoom: 6, maxZoom: 7, kind: 'north-region' },
+    { name: '평안남도', lat: 39.45, lng: 126.05, minZoom: 6, maxZoom: 7, kind: 'north-region' },
+    { name: '황해북도', lat: 38.55, lng: 126.15, minZoom: 6, maxZoom: 7, kind: 'north-region' },
+    { name: '황해남도', lat: 38.35, lng: 125.45, minZoom: 6, maxZoom: 7, kind: 'north-region' },
+    { name: '강원도(북)', lat: 39.20, lng: 127.15, minZoom: 6, maxZoom: 7, kind: 'north-region' },
+    { name: '함경남도', lat: 40.20, lng: 127.65, minZoom: 6, maxZoom: 7, kind: 'north-region' },
+    { name: '함경북도', lat: 41.85, lng: 129.45, minZoom: 6, maxZoom: 7, kind: 'north-region' },
+    { name: '자강도', lat: 40.90, lng: 126.35, minZoom: 6, maxZoom: 7, kind: 'north-region' },
+    { name: '량강도', lat: 41.50, lng: 128.05, minZoom: 6, maxZoom: 7, kind: 'north-region' },
+    { name: '평양', lat: 39.0392, lng: 125.7625, minZoom: 8, maxZoom: 14, kind: 'north-city' },
+    { name: '개성', lat: 37.9382, lng: 126.5878, minZoom: 8, maxZoom: 14, kind: 'north-city' },
+    { name: '해주', lat: 38.0400, lng: 125.7150, minZoom: 8, maxZoom: 14, kind: 'north-city' },
+    { name: '남포', lat: 38.7375, lng: 125.4078, minZoom: 8, maxZoom: 14, kind: 'north-city' },
+    { name: '신의주', lat: 40.1006, lng: 124.3980, minZoom: 8, maxZoom: 14, kind: 'north-city' },
+    { name: '원산', lat: 39.1528, lng: 127.4436, minZoom: 8, maxZoom: 14, kind: 'north-city' },
+    { name: '함흥', lat: 39.9183, lng: 127.5364, minZoom: 8, maxZoom: 14, kind: 'north-city' },
+    { name: '청진', lat: 41.7956, lng: 129.7758, minZoom: 8, maxZoom: 14, kind: 'north-city' },
+    { name: '라선', lat: 42.2569, lng: 130.2844, minZoom: 8, maxZoom: 14, kind: 'north-city' },
+    { name: '강계', lat: 40.9695, lng: 126.5850, minZoom: 8, maxZoom: 14, kind: 'north-city' },
+    { name: '혜산', lat: 41.4017, lng: 128.1770, minZoom: 8, maxZoom: 14, kind: 'north-city' },
+
     // Seoul's 25 districts: always show them together at city-level zoom.
     { name: '종로구', lat: 37.5735, lng: 126.9790, minZoom: 11, maxZoom: 14, kind: 'district' },
     { name: '중구', lat: 37.5641, lng: 126.9979, minZoom: 11, maxZoom: 14, kind: 'district' },
