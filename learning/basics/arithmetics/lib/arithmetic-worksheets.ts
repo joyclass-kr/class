@@ -246,8 +246,9 @@ export const middleSchoolWorksheetCatalog: ArithmeticWorksheet[] = [
   });
 
 export const highSchoolWorksheetCatalog: ArithmeticWorksheet[] = [
-  { grade: "공수1", name: "다항식", title: "다항식", route: "/arithmetic/high-school/polynomial-add-subtract" },
-  { grade: "공수1", name: "다항식의 곱셈·나눗셈과 나머지정리", title: "다항식의 곱셈·나눗셈과 나머지정리", route: "/arithmetic/high-school/polynomial-division-remainder" },
+  { grade: "공수1", name: "다항식의 연산", title: "다항식의 연산", route: "/arithmetic/high-school/polynomial-add-subtract" },
+  { grade: "공수1", name: "다항식의 나눗셈·조립제법", title: "다항식의 나눗셈·조립제법", route: "/arithmetic/high-school/polynomial-division-remainder" },
+  { grade: "공수1", name: "항등식과 나머지정리", title: "항등식과 나머지정리", route: "/arithmetic/high-school/polynomial-identities-remainders" },
   { grade: "공수1", name: "세제곱의 합·차 인수분해", title: "세제곱의 합·차 인수분해", route: "/arithmetic/high-school/cubic-sum-difference-factorization" },
   { grade: "공수1", name: "인수분해와 분수식", title: "인수분해와 분수식", route: "/arithmetic/high-school/factorization-rational" },
   { grade: "공수1", name: "복소수", title: "복소수", route: "/arithmetic/high-school/complex-numbers" },

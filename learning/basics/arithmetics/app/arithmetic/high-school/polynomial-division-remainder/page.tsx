@@ -1,8 +1,8 @@
 "use client";
 
 import {
-  createPolynomialDivisionRemainderProblems,
-  polynomialDivisionRemainderProblems,
+  createPolynomialDivisionProblems,
+  polynomialDivisionProblems,
 } from "../../../../lib/polynomial-division-remainder-workouts";
 import GeometryChoiceWorksheet from "../components/geometry-choice-worksheet";
 
@@ -10,10 +10,10 @@ export default function PolynomialDivisionRemainderPage() {
   return (
     <GeometryChoiceWorksheet
       subject="공통수학1"
-      title="다항식의 곱셈·나눗셈과 나머지정리"
+      title="다항식의 나눗셈·조립제법"
       seed={20260826}
-      problems={polynomialDivisionRemainderProblems}
-      createSet={createPolynomialDivisionRemainderProblems}
+      problems={polynomialDivisionProblems}
+      createSet={createPolynomialDivisionProblems}
     />
   );
 }
