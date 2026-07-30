@@ -59,6 +59,8 @@ export const MIDDLE_TRIGONOMETRY_TITLES: Record<MiddleTrigonometryKind, string> 
   comprehensive: "삼각비 계산 종합",
 };
 
+MIDDLE_TRIGONOMETRY_TITLES.ratios = "삼각비의 값과 특수각";
+
 const MIDDLE_TRIGONOMETRY_METHOD_TITLES: Record<MiddleTrigonometryMethodKind, string> = {
   "single-ratio": "세 변에서 한 비 구하기",
   "three-ratios": "세 삼각비 한꺼번에",
@@ -320,8 +322,8 @@ function comprehensiveKind(seed: number, index: number) {
 const GROUP_METHOD_PLANS: Record<Exclude<MiddleTrigonometryKind, "comprehensive">, MiddleTrigonometryMethodKind[]> = {
   ratios: [
     "single-ratio", "three-ratios",
-    "pythagorean-first", "single-ratio", "three-ratios",
-    "pythagorean-first", "single-ratio", "three-ratios",
+    "pythagorean-first", "special-angle", "special-angle-expression",
+    "pythagorean-first", "special-angle-expression", "radical-side",
   ],
   "special-angles": [
     "special-angle", "special-angle-expression",

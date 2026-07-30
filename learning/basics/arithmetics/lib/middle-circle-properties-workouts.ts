@@ -59,6 +59,8 @@ export const MIDDLE_CIRCLE_PROPERTIES_TITLES: Record<MiddleCirclePropertiesKind,
   comprehensive: "원의 성질 계산 종합",
 };
 
+MIDDLE_CIRCLE_PROPERTIES_TITLES["inscribed-angles"] = "원주각과 각의 응용";
+
 const MIDDLE_CIRCLE_PROPERTIES_METHOD_TITLES: Record<MiddleCirclePropertiesMethodKind, string> = {
   "central-to-inscribed": "중심각에서 원주각",
   "inscribed-to-central": "원주각에서 중심각",
@@ -277,7 +279,7 @@ const GROUP_METHOD_PLANS: Record<Exclude<MiddleCirclePropertiesKind, "comprehens
   "inscribed-angles": [
     "central-to-inscribed", "inscribed-to-central",
     "arc-to-inscribed", "same-arc", "semicircle-angle",
-    "arc-sum", "same-arc", "arc-to-inscribed",
+    "cyclic-quadrilateral", "tangent-chord-angle", "arc-sum",
   ],
   "angle-applications": [
     "cyclic-quadrilateral", "tangent-chord-angle",

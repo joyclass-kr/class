@@ -59,6 +59,8 @@ export const MIDDLE_STATISTICS_TITLES: Record<MiddleStatisticsKind, string> = {
   comprehensive: "대푯값과 산포도 계산 종합",
 };
 
+MIDDLE_STATISTICS_TITLES["representative-values"] = "대푯값과 평균 활용";
+
 const MIDDLE_STATISTICS_METHOD_TITLES: Record<MiddleStatisticsMethodKind, string> = {
   mean: "평균 계산",
   "missing-from-mean": "평균으로 빠진 값 구하기",
@@ -321,8 +323,8 @@ function comprehensiveKind(seed: number, index: number) {
 const GROUP_METHOD_PLANS: Record<Exclude<MiddleStatisticsKind, "comprehensive">, MiddleStatisticsMethodKind[]> = {
   "representative-values": [
     "mean", "median",
-    "mode", "range", "mean",
-    "median", "mode", "range",
+    "mode", "range", "missing-from-mean",
+    "frequency-mean", "missing-from-mean", "frequency-mean",
   ],
   "mean-applications": [
     "mean", "missing-from-mean",

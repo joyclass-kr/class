@@ -23,7 +23,10 @@ test("중3 이차함수 계산은 쉬운 세부 유형을 합친 5개 학습지�
 test("묶음 학습지는 필요한 세부 계산 유형을 빠짐없이 섞는다", () => {
   assert.deepEqual(
     new Set(createMiddleQuadraticFunctionProblemSet("values-and-forms", 7).problems.map(({ kind }) => kind)),
-    new Set(["basic-value", "vertex-value", "expand-vertex-form", "fraction-decimal"]),
+    new Set([
+      "basic-value", "vertex-value", "expand-vertex-form", "fraction-decimal",
+      "vertex-axis", "complete-square", "normalize-first",
+    ]),
   );
   assert.deepEqual(
     new Set(createMiddleQuadraticFunctionProblemSet("vertex-and-axis", 7).problems.map(({ kind }) => kind)),

@@ -111,8 +111,8 @@ test("오답 보충은 서로 다른 유형에서 최대 두 문제만 만든다
   assert.ok(reviews.every(({ difficulty }) => difficulty === "advanced"));
 });
 
-test("중학교 연산 목록 49개는 모두 연결되며 이름과 경로가 중복되지 않는다", () => {
-  assert.equal(middleSchoolWorksheetCatalog.length, 49);
+test("중학교 연산 목록 42개는 쉬운 유형을 통합하고 모두 연결된다", () => {
+  assert.equal(middleSchoolWorksheetCatalog.length, 42);
   assert.ok(middleSchoolWorksheetCatalog.every(({ route }) => route !== null));
   assert.equal(
     new Set(middleSchoolWorksheetCatalog.map(({ name }) => name)).size,
@@ -122,6 +122,17 @@ test("중학교 연산 목록 49개는 모두 연결되며 이름과 경로가 �
     new Set(middleSchoolWorksheetCatalog.map(({ route }) => route)).size,
     middleSchoolWorksheetCatalog.length,
   );
+});
+
+test("통합된 쉬운 중등 학습지는 목록에서 별도 페이지로 중복 노출하지 않는다", () => {
+  const routes = middleSchoolWorksheetCatalog.map(({ route }) => route);
+  assert.ok(!routes.some((route) => route?.includes("linear-equation-application")));
+  assert.ok(!routes.some((route) => route?.includes("kind=square-roots-real")));
+  assert.ok(!routes.some((route) => route?.includes("kind=roots-and-squares")));
+  assert.ok(!routes.some((route) => route?.includes("kind=vertex-and-axis")));
+  assert.ok(!routes.some((route) => route?.includes("kind=special-angles")));
+  assert.ok(!routes.some((route) => route?.includes("kind=angle-applications")));
+  assert.ok(!routes.some((route) => route?.includes("kind=mean-applications")));
 });
 
 test("gcd-lcm worksheets progress through middle-school prime factorization", () => {

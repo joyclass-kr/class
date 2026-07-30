@@ -25,6 +25,7 @@ test("묶음 학습지는 필요한 세부 계산 유형을 빠짐없이 섞는�
     new Set([
       "central-to-inscribed", "inscribed-to-central", "arc-to-inscribed",
       "same-arc", "semicircle-angle", "arc-sum",
+      "cyclic-quadrilateral", "tangent-chord-angle",
     ]),
   );
   assert.deepEqual(

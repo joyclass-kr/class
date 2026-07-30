@@ -165,6 +165,25 @@ export const arithmeticWorksheetCatalog: ArithmeticWorksheet[] = worksheetNames.
   };
 });
 
+const mergedMiddleSchoolRoutes = new Set([
+  "/arithmetic/middle-school/core-calculations?kind=linear-equation-application",
+  "/arithmetic/middle-school/core-calculations?kind=square-roots-real",
+  "/arithmetic/middle-school/quadratic-equations?kind=roots-and-squares",
+  "/arithmetic/middle-school/quadratic-functions?kind=vertex-and-axis",
+  "/arithmetic/middle-school/trigonometry?kind=special-angles",
+  "/arithmetic/middle-school/circle-properties?kind=angle-applications",
+  "/arithmetic/middle-school/statistics?kind=mean-applications",
+]);
+
+const combinedMiddleSchoolTitles: Record<string, string> = {
+  "/arithmetic/middle-school/core-calculations?kind=linear-equation": "일차방정식과 활용 계산",
+  "/arithmetic/middle-school/core-calculations?kind=radical-calculation": "제곱근과 근호 계산",
+  "/arithmetic/middle-school/quadratic-functions?kind=values-and-forms": "이차함수의 식과 꼭짓점",
+  "/arithmetic/middle-school/trigonometry?kind=ratios": "삼각비의 값과 특수각",
+  "/arithmetic/middle-school/circle-properties?kind=inscribed-angles": "원주각과 각의 응용",
+  "/arithmetic/middle-school/statistics?kind=representative-values": "대푯값과 평균 활용",
+};
+
 export const middleSchoolWorksheetCatalog: ArithmeticWorksheet[] = [
   { grade: "중1", name: "소인수분해", title: "소인수분해", route: "/arithmetic/middle-school/core-calculations?kind=prime-factorization" },
   { grade: "중1", name: "최대공약수와 최소공배수", title: "최대공약수와 최소공배수", route: "/arithmetic/middle-school/core-calculations?kind=gcd-lcm" },
@@ -217,7 +236,14 @@ export const middleSchoolWorksheetCatalog: ArithmeticWorksheet[] = [
   { grade: "중3", name: "통계: 평균 활용", title: "통계: 평균 활용", route: "/arithmetic/middle-school/statistics?kind=mean-applications" },
   { grade: "중3", name: "통계: 산포도 계산", title: "통계: 산포도 계산", route: "/arithmetic/middle-school/statistics?kind=dispersion" },
   { grade: "중3", name: "대푯값과 산포도 계산 종합", title: "대푯값과 산포도 계산 종합", route: "/arithmetic/middle-school/statistics?kind=comprehensive" },
-];
+]
+  .filter(({ route }) => route !== null && !mergedMiddleSchoolRoutes.has(route))
+  .map((worksheet) => {
+    const combinedTitle = worksheet.route ? combinedMiddleSchoolTitles[worksheet.route] : undefined;
+    return combinedTitle
+      ? { ...worksheet, name: combinedTitle, title: combinedTitle }
+      : worksheet;
+  });
 
 export const highSchoolWorksheetCatalog: ArithmeticWorksheet[] = [
   { grade: "공수1", name: "다항식", title: "다항식", route: "/arithmetic/high-school/polynomial-add-subtract" },

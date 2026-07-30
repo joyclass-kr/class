@@ -62,6 +62,8 @@ export const MIDDLE_QUADRATIC_FUNCTION_TITLES: Record<MiddleQuadraticFunctionKin
   comprehensive: "이차함수 계산 종합",
 };
 
+MIDDLE_QUADRATIC_FUNCTION_TITLES["values-and-forms"] = "이차함수의 식과 꼭짓점";
+
 const MIDDLE_QUADRATIC_FUNCTION_METHOD_TITLES: Record<MiddleQuadraticFunctionMethodKind, string> = {
   "basic-value": "기본형의 함숫값",
   "vertex-value": "꼭짓점형의 함숫값",
@@ -377,8 +379,8 @@ function comprehensiveKind(seed: number, index: number) {
 const GROUP_METHOD_PLANS: Record<Exclude<MiddleQuadraticFunctionKind, "comprehensive">, MiddleQuadraticFunctionMethodKind[]> = {
   "values-and-forms": [
     "basic-value", "vertex-value",
-    "basic-value", "vertex-value", "expand-vertex-form",
-    "fraction-decimal", "fraction-decimal", "expand-vertex-form",
+    "expand-vertex-form", "vertex-axis", "fraction-decimal",
+    "fraction-decimal", "normalize-first", "complete-square",
   ],
   "vertex-and-axis": [
     "vertex-axis", "complete-square",

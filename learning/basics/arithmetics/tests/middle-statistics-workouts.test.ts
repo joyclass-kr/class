@@ -28,7 +28,7 @@ test("중3 통계 계산은 쉬운 세부 유형을 합친 4개 학습지로 구
 test("묶음 학습지는 필요한 세부 계산 유형을 빠짐없이 섞는다", () => {
   assert.deepEqual(
     new Set(createMiddleStatisticsProblemSet("representative-values", 7).problems.map(({ kind }) => kind)),
-    new Set(["mean", "median", "mode", "range"]),
+    new Set(["mean", "median", "mode", "range", "missing-from-mean", "frequency-mean"]),
   );
   assert.deepEqual(
     new Set(createMiddleStatisticsProblemSet("mean-applications", 7).problems.map(({ kind }) => kind)),
@@ -91,6 +91,7 @@ test("평균·중앙값·최빈값·범위·분산·표준편차의 정답을 �
   for (let seed = 1; seed <= 50; seed += 1) {
     const representativeProblems = createMiddleStatisticsProblemSet("representative-values", seed).problems;
     for (const problem of representativeProblems) {
+      if (!["mean", "median", "mode", "range"].includes(problem.kind)) continue;
       const values = dataValues(problem.latex);
       if (problem.kind === "mean") {
         assert.equal(values.reduce((sum, value) => sum + value, 0) / values.length, Number(problem.answerLatex));

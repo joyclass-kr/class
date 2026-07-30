@@ -88,6 +88,9 @@ type AtomicMiddleCoreKind = Exclude<
   "monomial-comprehensive" | "linear-system-comprehensive" | "formula-comprehensive"
 >;
 
+MIDDLE_CORE_TITLES["linear-equation"] = "일차방정식과 활용 계산";
+MIDDLE_CORE_TITLES["radical-calculation"] = "제곱근과 근호 계산";
+
 const MONOMIAL_COMPREHENSIVE_PARTS: AtomicMiddleCoreKind[] = [
   "monomial-multiply",
   "monomial-divide",
@@ -829,6 +832,12 @@ function build(
 }
 
 function actualKind(kind: MiddleCoreKind, index: number): AtomicMiddleCoreKind {
+  if (kind === "linear-equation" && index >= 5) {
+    return "linear-equation-application";
+  }
+  if (kind === "radical-calculation" && index < 2) {
+    return "square-roots-real";
+  }
   if (kind === "monomial-comprehensive") {
     return MONOMIAL_COMPREHENSIVE_PARTS[index % MONOMIAL_COMPREHENSIVE_PARTS.length];
   }
@@ -870,6 +879,7 @@ export function createMiddleCoreReviewProblems(wrongKinds: MiddleCoreKind[], see
   const next = random(seed);
   return uniqueKinds.map((kind, index) => ({
     ...build(actualKind(kind, 6 + index), next, `middle-core-review-${seed}-${index}`, 6 + index),
+    kind,
     difficulty: "advanced" as const,
   }));
 }

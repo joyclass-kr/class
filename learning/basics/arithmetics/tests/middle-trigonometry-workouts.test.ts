@@ -22,7 +22,10 @@ test("중3 삼각비 계산은 쉬운 세부 유형을 합친 4개 학습지로 
 test("묶음 학습지는 필요한 세부 계산 유형을 빠짐없이 섞는다", () => {
   assert.deepEqual(
     new Set(createMiddleTrigonometryProblemSet("ratios", 7).problems.map(({ kind }) => kind)),
-    new Set(["single-ratio", "three-ratios", "pythagorean-first"]),
+    new Set([
+      "single-ratio", "three-ratios", "pythagorean-first",
+      "special-angle", "special-angle-expression", "radical-side",
+    ]),
   );
   assert.deepEqual(
     new Set(createMiddleTrigonometryProblemSet("special-angles", 7).problems.map(({ kind }) => kind)),
