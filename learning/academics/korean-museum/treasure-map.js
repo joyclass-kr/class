@@ -116,7 +116,9 @@
     }).addTo(leafletMap);
 
     leafletMap.createPane('adminLabels');
-    leafletMap.getPane('adminLabels').style.zIndex = 650;
+    // Administrative names provide context, but relic markers must stay clickable
+    // and visually dominant whenever the two overlap.
+    leafletMap.getPane('adminLabels').style.zIndex = 550;
     leafletMap.getPane('adminLabels').style.pointerEvents = 'none';
 
     mapLabelsGroup = L.layerGroup().addTo(leafletMap);
