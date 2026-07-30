@@ -61,7 +61,11 @@ function buildFunctionRows(){
     row.classList.toggle("isActive",index===state.activeFunctionIndex);
     row.innerHTML=`<label class="functionVisibility" title="그래프 표시"><input type="checkbox" ${fn.visible?"checked":""}><i style="background:${colors[index%colors.length]}"></i></label>
       <b class="functionName" data-latex="y_${index+1}">y${index+1}</b>
-      <span class="functionEditor"><span class="functionTypeset" aria-hidden="true"></span><input class="functionInput" value="${escapeAttribute(fn.expression)}" aria-label="${index+1}번 함수 수식" spellcheck="false" inputmode="text"></span>
+      <span class="functionEditor">
+        <span class="functionTypeset" aria-hidden="true"></span>
+        <span class="functionSourceLabel" aria-hidden="true">입력식</span>
+        <input class="functionInput" value="${escapeAttribute(fn.expression)}" aria-label="${index+1}번 함수 수식" spellcheck="false" inputmode="text">
+      </span>
       <button type="button" class="removeFunction" aria-label="${index+1}번 함수 삭제" ${state.functions.length===1?"disabled":""}>×</button>
       <small class="functionError" aria-live="polite"></small>`;
     row.querySelector(".functionVisibility input").onchange=e=>{fn.visible=e.target.checked;draw();};
