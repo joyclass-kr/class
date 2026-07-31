@@ -19,11 +19,11 @@ const TOPICS = [
       ["물의 순환을 움직이는 주요 에너지원은 태양이다.", "The Sun is the main energy source that drives the water cycle."]
     ],
     wrong: [
-      ["구름은 공기 중 수증기가 더 뜨거워질 때 만들어진다.", "Clouds form when water vapor becomes warmer."],
-      ["비가 내리면 물의 순환은 그 자리에서 끝난다.", "The water cycle ends whenever rain reaches the ground."],
-      ["땅속으로 스며든 물은 강이나 바다로 이동할 수 없다.", "Water that enters the soil cannot move toward rivers or oceans."],
-      ["식물은 뿌리로만 물을 내보내므로 대기 중 수증기와 관계없다.", "Plants release water only through roots, so they do not affect atmospheric vapor."],
-      ["물의 순환은 바람이 만들며 태양 에너지는 필요하지 않다.", "Wind alone drives the water cycle, so solar energy is unnecessary."]
+      ["구름은 수증기가 높은 곳에서 빗방울 크기로 자라면서 처음 만들어진다.", "Clouds first form when vapor grows directly into raindrop-sized drops high in the air."],
+      ["지표에 내린 비는 땅의 경사를 따라 바다로 흐르는 과정을 중심으로 순환한다.", "Rain on the ground cycles mainly by following slopes directly toward the ocean."],
+      ["땅속으로 스며든 물은 지표의 물보다 먼저 수증기로 변해 대기로 돌아간다.", "Water in the soil returns to the air as vapor before water on the surface does."],
+      ["식물은 뿌리에서 흡수한 물을 줄기 안에 저장하면서 물의 순환 속도를 늦춘다.", "Plants slow the water cycle by storing water from their roots inside their stems."],
+      ["바람의 세기가 물의 순환을 움직이는 주된 에너지의 양을 결정한다.", "Wind strength determines the main supply of energy that drives the water cycle."]
     ],
     applications: [
       ["햇볕에 널어 둔 젖은 수건의 물이 공기 중으로 이동할 수 있다.", "Water in a wet towel can move into the air when the towel is left in sunlight."],
@@ -51,16 +51,16 @@ const TOPICS = [
       ["에너지는 먹이 관계를 따라 이동하지만 양은 단계마다 줄어든다.", "Energy moves through feeding relationships but decreases at each step."]
     ],
     wrong: [
-      ["생산자는 다른 생물을 먹은 뒤에만 에너지를 얻을 수 있다.", "Producers obtain energy only after eating other organisms."],
-      ["분해자가 줄어도 생태계의 물질 순환 속도는 달라지지 않는다.", "A decline in decomposers does not change the rate of matter cycling."],
-      ["포식자의 수가 변해도 먹이가 되는 종의 수에는 영향이 없다.", "A change in predator numbers does not affect prey populations."],
-      ["먹이와 물이 충분하면 공간은 서식지의 조건이 되지 않는다.", "If food and water are available, space is not a habitat requirement."],
-      ["먹이 단계가 높아질수록 이용할 수 있는 에너지의 양이 커진다.", "More usable energy is available at each higher feeding level."]
+      ["생산자는 다른 생물에서 얻은 물질을 햇빛으로 바꾸어 자신의 양분을 만든다.", "Producers use sunlight to change material taken from other organisms into their own food."],
+      ["분해자가 줄면 낙엽과 사체에 저장된 물질이 토양으로 더 빠르게 이동한다.", "When decomposers decline, matter stored in leaves and remains moves into the soil more quickly."],
+      ["포식자의 수가 늘면 먹이가 되는 종도 함께 늘어 먹이 그물이 안정된다.", "When predator numbers rise, prey numbers rise with them and stabilize the food web."],
+      ["먹이와 물의 양이 한 서식지에서 생물이 사용할 수 있는 공간의 크기를 결정한다.", "The amount of food and water determines how much space organisms can use in a habitat."],
+      ["먹이 단계가 높아질수록 에너지가 모여 상위 포식자에게 더 많이 전달된다.", "Energy accumulates at higher feeding levels and reaches top predators in larger amounts."]
     ],
     applications: [
-      ["풀은 다른 생물을 먹지 않고도 먹이 관계의 출발점이 될 수 있다.", "Grass can begin a feeding relationship without eating another organism."],
+      ["풀은 햇빛 에너지로 양분을 만들어 먹이 관계의 출발점이 될 수 있다.", "Grass can use sunlight to make food and begin a feeding relationship."],
+      ["사슴이 풀을 먹으면 풀에 저장된 에너지가 사슴으로 이동할 수 있다.", "When a deer eats grass, energy stored in the grass can move to the deer."],
       ["토양의 분해자가 줄면 낙엽이 분해되는 속도가 느려질 수 있다.", "Fewer soil decomposers can slow the breakdown of fallen leaves."],
-      ["토끼를 먹는 여우의 수가 변하면 토끼 개체군도 영향을 받을 수 있다.", "A change in fox numbers can affect the rabbit population they feed on."],
       ["여러 먹이 사슬에 동시에 등장하는 생물이 있을 수 있다.", "One organism can appear in several food chains at the same time."],
       ["곤충 한 종이 크게 줄면 그 곤충을 먹는 새도 영향을 받을 수 있다.", "A sharp decline in one insect species can affect birds that eat it."],
       ["연못이 마르면 그곳에서 먹이와 물을 얻던 생물의 생활이 어려워진다.", "If a pond dries up, organisms that relied on it for food and water may struggle."],
@@ -83,16 +83,16 @@ const TOPICS = [
       ["기후의 평균이 비슷해도 극한 날씨의 빈도는 달라질 수 있다.", "Places with similar climate averages can differ in extreme weather frequency."]
     ],
     wrong: [
-      ["이번 주의 기온만 알면 그 지역의 기후를 충분히 설명할 수 있다.", "One week of temperatures is enough to describe a region's climate."],
-      ["평년보다 추운 하루가 나타나면 장기 기후 추세도 즉시 반대가 된다.", "One colder-than-average day immediately reverses a long-term climate trend."],
-      ["두 지역의 평균 기온이 같으면 강수와 바람의 특징도 같다.", "Regions with the same mean temperature also have the same rainfall and wind."],
-      ["해안과 내륙은 바다의 영향과 관계없이 같은 기온 변화를 보인다.", "Coastal and inland areas show the same temperature changes regardless of the ocean."],
-      ["관측값이 충분하면 예보 모형 없이도 미래 날씨를 정확히 알 수 있다.", "Enough observations can predict future weather exactly without a model."]
+      ["일주일의 평균 기온은 그 지역의 계절별 기후를 대표하는 자료가 된다.", "A weekly mean temperature represents the seasonal climate of a region."],
+      ["평년보다 추운 날이 이어지면 장기 기후 추세는 그 기간의 방향으로 이동한다.", "A run of colder-than-average days shifts the long-term climate trend in the same direction."],
+      ["평균 기온이 같은 지역은 비슷한 대기 순환을 겪어 강수와 바람도 비슷해진다.", "Regions with the same mean temperature develop similar rainfall and wind through similar air circulation."],
+      ["해안과 내륙의 기온 변화 차이는 주로 두 지역의 위도 차이에서 생긴다.", "Differences between coastal and inland temperatures mainly result from differences in latitude."],
+      ["관측 지점이 많아질수록 예보 모형이 계산해야 할 날씨 변화의 범위는 줄어든다.", "As observation sites increase, the range of weather changes a forecast model must calculate becomes smaller."]
     ],
     applications: [
       ["내일 우산이 필요한지 판단하려면 장기 평균보다 단기 예보가 더 직접적이다.", "A short-term forecast is more useful than a long-term average for deciding whether to carry an umbrella tomorrow."],
       ["한 도시의 계절적 특징을 알려면 여러 해의 기록을 살펴봐야 한다.", "To identify a city's seasonal pattern, records from many years should be examined."],
-      ["한파가 하루 있었다는 사실만으로 수십 년의 변화 방향을 결론 내릴 수 없다.", "One day of extreme cold cannot establish the direction of change over decades."],
+      ["수십 년의 변화 방향은 한파가 있었던 하루보다 장기간의 관측 자료로 판단해야 한다.", "A decades-long direction should be judged from long-term observations rather than one extremely cold day."],
       ["기온이 같아도 비와 바람이 다르면 두 날의 날씨는 다르게 설명된다.", "Two days with equal temperatures can have different weather if rain and wind differ."],
       ["10년 자료보다 30년 자료가 지역 기후를 판단하는 데 일반적으로 더 적합하다.", "Thirty years of data generally describes regional climate better than ten years."],
       ["산의 양쪽 지역은 공기의 상승과 강수 차이 때문에 서로 다른 기후가 나타날 수 있다.", "Opposite sides of a mountain can have different climates because of rising air and rainfall."],
@@ -115,11 +115,11 @@ const TOPICS = [
       ["기계의 효율은 들어간 에너지 중 유용하게 전환된 비율과 관련된다.", "Machine efficiency relates to the fraction of input energy changed usefully."]
     ],
     wrong: [
-      ["전구에 들어간 전기 에너지는 모두 빛으로만 전환된다.", "All electrical energy entering a lamp becomes light."],
-      ["두 물체의 속력이 같으면 질량과 관계없이 운동 에너지도 같다.", "Objects moving at the same speed have equal kinetic energy regardless of mass."],
-      ["높이가 같은 물체는 질량이 달라도 위치 에너지가 같다.", "Objects at the same height have equal potential energy even if their masses differ."],
-      ["마찰로 생긴 열은 원래 운동 에너지와 별개의 에너지다.", "Heat from friction is unrelated to the original kinetic energy."],
-      ["효율이 80%인 기계는 들어간 에너지의 80%가 사라진다는 뜻이다.", "An 80% efficient machine loses 80% of its input energy."]
+      ["전구는 빛이 강해질수록 전기 에너지에서 빛으로 바뀌는 비율도 같은 폭으로 커진다.", "As a lamp becomes brighter, the fraction of electrical energy changed into light rises by the same amount."],
+      ["같은 속력과 방향으로 움직이는 물체는 질량이 달라도 운동 에너지의 크기가 비슷하다.", "Objects moving at the same speed and direction have similar kinetic energy even when their masses differ."],
+      ["같은 높이의 물체는 바닥과의 거리가 같아 위치 에너지의 크기도 비슷하다.", "Objects at the same height have similar potential energy because their distance from the ground is equal."],
+      ["마찰로 생긴 열에너지는 접촉한 물질의 성질에서 새롭게 만들어진다.", "Thermal energy from friction is newly produced by the properties of the touching materials."],
+      ["효율이 80%인 기계는 입력 에너지 가운데 80%를 열에너지로 전환한다.", "A machine with 80 percent efficiency changes 80 percent of its input into thermal energy."]
     ],
     applications: [
       ["전구가 켜질 때 빛뿐 아니라 열도 생길 수 있다.", "A lamp can produce heat as well as light when switched on."],
@@ -147,16 +147,16 @@ const TOPICS = [
       ["온라인 정보는 여러 신뢰할 만한 출처와 비교해 확인해야 한다.", "Online information should be checked against several reliable sources."]
     ],
     wrong: [
-      ["긴 비밀번호 하나를 여러 서비스에 함께 쓰면 관리와 보안을 모두 높일 수 있다.", "One long password reused across services improves both convenience and security."],
-      ["보낸 사람의 이름이 아는 사람과 같으면 링크 주소는 확인하지 않아도 된다.", "If the sender's name is familiar, there is no need to inspect a link address."],
-      ["다단계 인증을 켜면 비밀번호가 유출되어도 추가 확인 없이 로그인된다.", "With multi-factor authentication, a leaked password allows login without another check."],
-      ["파일을 클라우드에 저장하면 별도의 백업은 고려할 필요가 없다.", "Saving files in the cloud removes any need to consider backups."],
-      ["검색 결과의 맨 위에 표시된 정보가 가장 신뢰할 만하다.", "The first search result is necessarily the most reliable source."]
+      ["긴 비밀번호를 여러 서비스에 함께 쓰면 짧고 서로 다른 비밀번호보다 유출 위험을 낮출 수 있다.", "Reusing one long password across services can lower breach risk more than using shorter unique passwords."],
+      ["아는 사람의 계정에서 온 링크는 주소보다 메시지 내용의 자연스러움을 먼저 확인하는 편이 효율적이다.", "For a link from a familiar account, checking whether the message sounds natural is more useful than checking its address."],
+      ["다단계 인증은 비밀번호 확인 뒤 로그인 기록을 저장해 다음 접속의 안전성을 높이는 기능이다.", "Multi-factor authentication improves later access by saving a login record after the password is checked."],
+      ["클라우드 동기화는 파일을 여러 기기에 복사해 별도의 백업과 같은 복구 효과를 제공한다.", "Cloud synchronization copies files across devices and provides the same recovery effect as a separate backup."],
+      ["검색 결과 상단의 정보는 이용자가 많이 선택한 자료이므로 출처 신뢰도가 높은 편이다.", "Information near the top of search results tends to be reliable because many users select it."]
     ],
     applications: [
       ["비밀번호의 길이를 늘리면 가능한 조합이 많아져 추측이 더 어려워질 수 있다.", "Increasing password length can create more possible combinations and make guessing harder."],
       ["한 사이트의 비밀번호가 새어도 다른 사이트의 비밀번호가 다르면 피해 확산을 줄일 수 있다.", "If passwords differ, a breach at one site is less likely to spread to other accounts."],
-      ["비밀번호를 알아낸 공격자도 추가 인증 수단이 없으면 로그인이 막힐 수 있다.", "An attacker with the password may still be blocked without the second authentication factor."],
+      ["비밀번호를 알아낸 공격자도 추가 인증 수단까지 갖춰야 로그인을 마칠 수 있다.", "An attacker who knows the password still needs the additional factor to complete login."],
       ["친구 이름으로 온 메시지도 링크 주소가 이상하면 다른 방법으로 본인에게 확인하는 편이 안전하다.", "Even a message using a friend's name should be verified another way if its link looks unusual."],
       ["보안 수정이 포함된 업데이트를 미루면 알려진 취약점이 남을 수 있다.", "Delaying an update with security fixes can leave a known vulnerability open."],
       ["공개 사진의 명찰이나 배경도 개인정보를 드러낼 수 있다.", "A name tag or background in a public photo can reveal private information."],
@@ -179,11 +179,11 @@ const TOPICS = [
       ["결정 뒤에도 결과를 살펴보고 필요하면 규칙을 고칠 수 있다.", "After a decision, people can review results and revise rules when needed."]
     ],
     wrong: [
-      ["참여자가 많으면 서로 다른 의견을 듣는 절차는 생략해도 된다.", "When many people participate, procedures for hearing different views can be skipped."],
-      ["모든 의견을 공정하게 다루려면 근거의 신뢰도 차이는 비교하지 않아야 한다.", "Fairness requires ignoring differences in the reliability of evidence."],
-      ["과반수의 찬성을 얻은 결정은 기본권에 미치는 영향을 따로 검토하지 않아도 된다.", "A majority decision needs no separate review of its effect on basic rights."],
-      ["토론에서 상대의 동기를 비판하면 제시된 근거도 자동으로 반박된다.", "Criticizing a speaker's motive automatically refutes the evidence presented."],
-      ["결정 절차가 공개되면 결과를 다시 평가할 필요는 줄어든다.", "A transparent process reduces the need to evaluate later outcomes."]
+      ["참여자가 많을수록 대표 의견을 먼저 정리한 뒤 소수 의견을 추가로 듣는 방식이 효율적이다.", "With many participants, it is efficient to settle the representative view first and hear minority views afterward."],
+      ["근거의 신뢰도보다 각 의견에 같은 시간을 배정하는 것이 공정한 비교에 더 중요하다.", "Giving every view equal time matters more to a fair comparison than differences in evidence quality."],
+      ["과반수 결정을 먼저 확정한 뒤 소수 권리 문제를 시행 과정에서 조정하면 갈등을 줄일 수 있다.", "Confirming the majority decision first and adjusting minority-rights issues during implementation can reduce conflict."],
+      ["토론에서는 주장 내용과 함께 말한 사람의 책임과 동기를 평가해야 쟁점을 정확히 판단할 수 있다.", "A discussion judges an issue accurately by evaluating the speaker's responsibility and motives along with the claim."],
+      ["절차가 투명하면 결정 이후의 평가는 참여자의 만족도를 중심으로 진행하는 것이 적절하다.", "When a process is transparent, later evaluation should focus mainly on participant satisfaction."]
     ],
     applications: [
       ["회의에서 발언 기회를 고르게 주는 것은 의견 수렴의 공정성을 높일 수 있다.", "Giving balanced speaking opportunities can make consultation fairer."],
@@ -192,7 +192,7 @@ const TOPICS = [
       ["사람이 아니라 그 사람이 제시한 주장과 근거를 비판하는 것이 토론 목적에 맞다.", "Discussion should criticize claims and evidence rather than the person presenting them."],
       ["선정 기준과 회의 기록을 공개하면 결정한 사람에게 이유를 물을 수 있다.", "Publishing criteria and meeting records makes decision-makers answerable for their reasons."],
       ["통학로 변경은 보행 학생과 차량 이용자에게 서로 다른 영향을 줄 수 있다.", "A school-route change can affect walkers and drivers differently."],
-      ["모두가 가장 좋아하지는 않아도 받아들일 수 있는 안을 찾는 것이 합의가 될 수 있다.", "Consensus can be an option everyone accepts even if it is nobody's favorite."],
+      ["선호가 다른 사람들이 함께 받아들일 수 있는 안을 찾는 것이 합의가 될 수 있다.", "Consensus can be an option that people with different preferences can accept together."],
       ["새 규칙의 부작용이 확인되면 시행 결과를 근거로 수정할 수 있다.", "If a new rule has harmful effects, its results can justify revision."]
     ]
   },
@@ -211,11 +211,11 @@ const TOPICS = [
       ["단위가 다른 비율을 비교할 때는 단위를 같게 맞춰야 한다.", "Rates with different units should be converted to matching units before comparison."]
     ],
     wrong: [
-      ["비의 앞항과 뒷항의 순서를 바꾸어도 나타내는 비교는 같다.", "Reversing the two terms of a ratio preserves the same comparison."],
-      ["동치비를 만들 때는 두 항에 서로 다른 수를 곱해도 된다.", "Equivalent ratios can be made by multiplying the two terms by different numbers."],
-      ["전체가 커지면 부분의 수가 같아도 그 부분의 비율은 커진다.", "When the whole grows and the part stays fixed, the part's fraction increases."],
-      ["두 양이 일정한 차이로 늘어나면 반드시 비례 관계다.", "Two quantities are proportional whenever they increase by a constant difference."],
-      ["50%는 전체의 크기와 관계없이 항상 수량 50을 뜻한다.", "Fifty percent always means a quantity of 50 regardless of the whole."]
+      ["비의 앞항과 뒷항을 바꾸면 비교 기준이 달라져도 두 양의 관계는 유지된다.", "Reversing the terms changes the reference point while preserving the relationship between the quantities."],
+      ["동치비는 두 항의 차이가 같도록 같은 수를 더해 만들 수 있다.", "Equivalent ratios can be formed by adding the same number to keep the difference between terms equal."],
+      ["전체가 커져도 부분의 수가 같으면 부분이 차지하는 비율도 같은 수준으로 유지된다.", "When the total grows but the part stays fixed, the part keeps about the same share."],
+      ["두 양이 같은 양만큼 꾸준히 늘면 변화가 일정해 비례 관계로 볼 수 있다.", "When two quantities rise by equal amounts, their steady change represents a proportional relationship."],
+      ["50%는 전체를 100으로 바꾸었을 때 기준 수량 50과 비교한 결과를 뜻한다.", "Fifty percent compares a quantity with the reference value 50 after the whole is converted to 100."]
     ],
     applications: [
       ["빨간 공 2개와 파란 공 5개를 비교하면 빨강 대 파랑의 비는 2 대 5다.", "With 2 red balls and 5 blue balls, the ratio of red to blue is 2 to 5."],
@@ -243,11 +243,11 @@ const TOPICS = [
       ["감상에서는 관찰한 사실과 개인의 느낌을 구분해 말할 수 있다.", "In art discussion, viewers can distinguish observations from personal reactions."]
     ],
     wrong: [
-      ["작품의 의미를 먼저 정한 뒤 그 의미와 맞는 부분만 관찰하는 것이 좋다.", "Viewers should decide the meaning first and observe only details that support it."],
-      ["색과 선을 정확히 나열하면 작품의 해석도 하나로 결정된다.", "Listing colors and lines accurately produces one fixed interpretation."],
-      ["작가의 의도를 알면 시대와 관람자의 경험은 해석에 영향을 주지 않는다.", "Knowing the artist's intention removes the influence of history and viewer experience."],
-      ["같은 형태의 작품은 재료가 달라도 같은 느낌을 준다.", "Works with the same shape create the same effect even when materials differ."],
-      ["강한 감정을 느꼈다면 작품 속 근거를 따로 말할 필요가 없다.", "A strong emotional reaction needs no supporting detail from the artwork."]
+      ["처음 떠오른 느낌을 기준으로 색과 선의 특징을 정리하면 작품 해석의 방향이 분명해진다.", "Using the first emotional response to organize colors and lines makes the direction of interpretation clearer."],
+      ["색과 선을 정확히 기록하면 관람자의 경험 차이가 줄어 비슷한 해석에 도달하게 된다.", "Accurately recording colors and lines reduces differences in viewer experience and leads to similar interpretations."],
+      ["작가의 의도를 알게 되면 시대 배경보다 제작 과정의 설명이 작품 해석의 중심이 된다.", "Once the artist's intention is known, explanations of the making process become more central than historical context."],
+      ["같은 형태를 사용한 작품에서는 재료보다 화면의 구성 방식이 느낌을 결정한다.", "In works using the same forms, composition determines the effect more strongly than material."],
+      ["강한 감정 반응을 먼저 공유하면 작품의 세부 요소도 그 감정에 맞추어 해석된다.", "Sharing a strong emotional response first guides the interpretation of details toward that emotion."]
     ],
     applications: [
       ["그림에 파란색 곡선이 반복된다는 말은 해석보다 관찰에 가깝다.", "Saying that blue curves repeat in a painting is closer to observation than interpretation."],
@@ -267,6 +267,46 @@ function rotate(values, amount) {
   return values.slice(offset).concat(values.slice(0, offset));
 }
 
+const TOKEN_STOP_WORDS = new Set([
+  "about", "after", "again", "also", "among", "another", "because", "before",
+  "between", "from", "have", "into", "more", "other", "should", "than", "that",
+  "their", "there", "these", "they", "this", "through", "toward", "when",
+  "where", "which", "while", "with",
+  "같다", "같은", "그리고", "따라", "대한", "된다", "되는", "되어", "또는",
+  "때문", "보다", "있다", "하는", "한다", "하여"
+]);
+
+function contentTokens(value, track) {
+  const matches = String(value || "").toLocaleLowerCase().match(track === "en" ? /[a-z]{3,}/g : /[가-힣]{2,}/g) || [];
+  return new Set(matches.map((token) => {
+    if (track === "en") return token;
+    return token.replace(/(에서는|으로는|에게는|까지는|부터는|이라는|라는|에서|으로|에게|까지|부터|처럼|에는|과는|와는|은|는|이|가|을|를|도|의|에|로|과|와)$/u, "");
+  }).filter((token) => token.length >= 2 && !TOKEN_STOP_WORDS.has(token)));
+}
+
+function contentOverlapScore(left, right, track) {
+  const leftTokens = contentTokens(left, track);
+  const rightTokens = contentTokens(right, track);
+  let score = 0;
+  leftTokens.forEach((token) => {
+    if (rightTokens.has(token)) score += 1;
+  });
+  return score;
+}
+
+function buildDistractors(topic, track, passageText, choiceCount, factIndex, variant) {
+  const languageIndex = track === "ko" ? 0 : 1;
+  return rotate(topic.wrong, factIndex + variant)
+    .map((pair, order) => ({ text: pair[languageIndex], order }))
+    .sort((left, right) =>
+      contentOverlapScore(right.text, passageText, track)
+        - contentOverlapScore(left.text, passageText, track)
+        || left.order - right.order
+    )
+    .slice(0, choiceCount - 1)
+    .map((entry) => entry.text);
+}
+
 const VARIANTS_PER_LEVEL = 4;
 
 const QUESTION_TYPE_SETS = {
@@ -283,12 +323,12 @@ function questionTypeFor(level, variant) {
 function promptFor(track, questionType) {
   const prompts = track === "ko"
     ? {
-        content_match: "윗글의 내용과 일치하는 것을 고르세요.",
+        content_match: "윗글을 바탕으로 판단한 내용으로 가장 적절한 것을 고르세요.",
         inference: "윗글을 바탕으로 추론한 내용으로 가장 적절한 것을 고르세요.",
         implication: "윗글의 원리를 가장 잘 적용한 사례를 고르세요."
       }
     : {
-        content_match: "Which statement agrees with the passage?",
+        content_match: "Which statement is best supported by the passage?",
         inference: "Which conclusion can best be inferred from the passage?",
         implication: "Which example best applies the idea in the passage?"
       };
@@ -298,12 +338,13 @@ function promptFor(track, questionType) {
 function buildItem(topic, track, level, variant = 0) {
   const languageIndex = track === "ko" ? 0 : 1;
   const factIndex = (level - 1 + variant * 2) % topic.facts.length;
-  const detailCount = level <= 2 ? 2 : level <= 5 ? 3 : 4;
+  const choiceCount = level <= 2 ? 3 : level <= 4 ? 4 : 5;
+  const detailCount = level <= 2 ? 4 : level <= 4 ? 6 : 8;
   const facts = rotate(topic.facts, factIndex).slice(0, detailCount);
   const answer = topic.applications[factIndex][languageIndex];
   const evidence = topic.facts[factIndex][languageIndex];
-  const choiceCount = level <= 2 ? 3 : level <= 4 ? 4 : 5;
-  const distractors = rotate(topic.wrong, factIndex + variant).slice(0, choiceCount - 1).map((pair) => pair[languageIndex]);
+  const passageText = facts.map((pair) => pair[languageIndex]).join(" ");
+  const distractors = buildDistractors(topic, track, passageText, choiceCount, factIndex, variant);
   const correctIndex = (level * 2 + topic.key.length + variant) % choiceCount;
   const choices = distractors.slice();
   choices.splice(correctIndex, 0, answer);
@@ -316,7 +357,7 @@ function buildItem(topic, track, level, variant = 0) {
     track,
     targetLevel: level,
     questionType,
-    passageText: facts.map((pair) => pair[languageIndex]).join(isKorean ? " " : " "),
+    passageText,
     promptText: promptFor(track, questionType),
     choices,
     correctIndex,
@@ -336,4 +377,4 @@ function createSelfStudyItems() {
   ));
 }
 
-module.exports = { createSelfStudyItems };
+module.exports = { contentOverlapScore, createSelfStudyItems };
