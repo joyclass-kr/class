@@ -654,6 +654,47 @@
             ctx.globalCompositeOperation = 'source-over';
         }
 
+        function drawDistantLightPoints(ctx, width, height, random) {
+            var referenceArea = 1280 * 720;
+            var areaScale = (width * height) / referenceArea;
+            var pointCount = Math.max(2400, Math.min(6200, Math.round(3600 * areaScale)));
+            var colors = [
+                [188, 211, 255],
+                [232, 226, 255],
+                [255, 220, 174],
+                [151, 187, 255]
+            ];
+
+            ctx.save();
+            ctx.globalCompositeOperation = 'screen';
+            for (var i = 0; i < pointCount; i++) {
+                var x = random() * width;
+                var y = random() * height;
+                var color = colors[Math.floor(random() * colors.length)];
+                var intensity = Math.pow(random(), 2.25);
+                var radius = 0.18 + Math.pow(random(), 4.2) * 0.82;
+                var alpha = 0.055 + intensity * 0.34;
+
+                // Only a small minority gets a halo. Most marks remain faint,
+                // unresolved galaxies rather than a distracting star field.
+                if (random() > 0.94) {
+                    var haloRadius = 1.6 + radius * 3.6;
+                    var halo = ctx.createRadialGradient(x, y, 0, x, y, haloRadius);
+                    halo.addColorStop(0, 'rgba(' + color.join(',') + ',' +
+                        Math.min(0.52, alpha + 0.16).toFixed(3) + ')');
+                    halo.addColorStop(1, 'rgba(' + color.join(',') + ',0)');
+                    ctx.fillStyle = halo;
+                    ctx.beginPath();
+                    ctx.arc(x, y, haloRadius, 0, Math.PI * 2);
+                    ctx.fill();
+                } else {
+                    ctx.fillStyle = 'rgba(' + color.join(',') + ',' + alpha.toFixed(3) + ')';
+                    ctx.fillRect(x, y, Math.max(0.45, radius), Math.max(0.45, radius));
+                }
+            }
+            ctx.restore();
+        }
+
         function drawEllipticalGalaxy(ctx, x, y, radius, rotation, flatten, palette) {
             ctx.save();
             ctx.translate(x, y);
@@ -798,7 +839,8 @@
             var width = prepared.width;
             var height = prepared.height;
             var random = createSeededRandom(49979687);
-            drawBackgroundGalaxies(ctx, width, height, 1250, random, 0.45, 5.2);
+            drawDistantLightPoints(ctx, width, height, random);
+            drawBackgroundGalaxies(ctx, width, height, 1750, random, 0.4, 5.2);
             drawDistantGalaxyClusters(ctx, width, height, random);
 
             // A few visually prominent field galaxies keep the intermediate
