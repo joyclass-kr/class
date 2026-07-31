@@ -19,7 +19,7 @@ const files = {
     server: path.join(root, "game-hub-server", "server.js")
 };
 const images = [
-    path.join(dir, "assets", "images", "respiration-hero.webp"),
+    path.join(dir, "assets", "images", "respiration-hero-v2.webp"),
     path.join(dir, "assets", "images", "respiration-airway.webp"),
     path.join(dir, "assets", "images", "respiration-alveoli.webp"),
     path.join(dir, "assets", "images", "oxygen-explorer.webp")
@@ -84,7 +84,7 @@ assert.ok(html.includes("학급 순위 탐험"), "Class ranking mode is missing.
 assert.ok(html.includes("나의 오답노트"), "Personal wrong-answer notebook is missing.");
 assert.ok(html.includes('src="respiration-data.js"'), "Respiration data is not linked.");
 assert.ok(html.includes("nhlbi.nih.gov/health/lungs/breathing-benefits"), "The official breathing source should be visible.");
-for (const asset of ["respiration-hero.webp", "respiration-airway.webp", "respiration-alveoli.webp", "oxygen-explorer.webp"]) {
+for (const asset of ["respiration-hero-v2.webp", "respiration-airway.webp", "respiration-alveoli.webp", "oxygen-explorer.webp"]) {
     assert.ok(html.includes(asset) || fs.readFileSync(files.styles, "utf8").includes(asset), `Generated visual is not wired: ${asset}`);
 }
 

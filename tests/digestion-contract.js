@@ -18,7 +18,7 @@ const files = {
     server: path.join(root, "game-hub-server", "server.js")
 };
 const images = [
-    path.join(dir, "assets", "images", "digestion-hero.webp"),
+    path.join(dir, "assets", "images", "digestion-hero-v2.webp"),
     path.join(dir, "assets", "images", "digestion-stomach.webp"),
     path.join(dir, "assets", "images", "digestion-villi.webp"),
     path.join(dir, "assets", "images", "food-explorer.webp")
@@ -84,7 +84,7 @@ assert.ok(html.includes("나의 오답노트"), "Personal wrong-answer notebook 
 assert.ok(html.includes('src="digestion-data.js"'), "Digestion data is not linked.");
 assert.match(html, /src="app\.js(?:\?[^"]+)?"/, "Shared explorer app is not linked.");
 assert.ok(html.includes("niddk.nih.gov/health-information/digestive-diseases/digestive-system-how-it-works"), "The official digestion source should be visible.");
-for (const asset of ["digestion-hero.webp", "digestion-stomach.webp", "digestion-villi.webp", "food-explorer.webp"]) {
+for (const asset of ["digestion-hero-v2.webp", "digestion-stomach.webp", "digestion-villi.webp", "food-explorer.webp"]) {
     assert.ok(html.includes(asset) || fs.readFileSync(files.styles, "utf8").includes(asset), `Generated visual is not wired: ${asset}`);
 }
 

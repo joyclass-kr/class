@@ -162,7 +162,7 @@ button {
 }
 
 .hero-art {
-    background: url("assets/images/circulation-hero.webp") center / cover no-repeat;
+    background: url("assets/images/circulation-hero-v2.webp") center / cover no-repeat;
     transform: scale(1.015);
 }
 
@@ -381,7 +381,7 @@ button {
     overflow: hidden;
     background:
         linear-gradient(rgba(22, 6, 24, 0.06), rgba(22, 6, 24, 0.48)),
-        url("assets/images/circulation-hero.webp") 28% center / cover no-repeat;
+        url("assets/images/circulation-hero-v2.webp") 28% center / cover no-repeat;
 }
 
 .briefing-art img {
@@ -760,7 +760,7 @@ button {
 }
 
 .scene-panel[data-scene="body"] .scene-image {
-    background-image: url("assets/images/circulation-hero.webp");
+    background-image: url("assets/images/circulation-hero-v2.webp");
 }
 
 .scene-panel[data-scene="heart"] .scene-image {

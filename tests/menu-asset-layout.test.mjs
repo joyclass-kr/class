@@ -39,7 +39,7 @@ test("menu-specific asset groups live with their menu", () => {
   const expected = [
     "learning/basics/vocabulary/assets/data/english-vocabulary-3000-v2.json",
     "learning/basics/vocabulary/assets/images/apple-v2.webp",
-    "learning/academics/body-explorer/assets/images/circulation-hero.webp",
+    "learning/academics/body-explorer/assets/images/circulation-hero-v2.webp",
     "learning/arts/art-appreciation/assets/sound/museum/gallery-01-portrait.mp3",
     "learning/arts/art-appreciation/assets/sound/museum/gallery-02-nature.mp3",
     "learning/arts/art-appreciation/assets/sound/museum/gallery-03-story.mp3",

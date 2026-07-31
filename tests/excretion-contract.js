@@ -16,7 +16,7 @@ const files = {
     teacherApp: path.join(dir, "teacher.js"),
     server: path.join(root, "game-hub-server", "server.js")
 };
-const images = ["excretion-hero.webp", "excretion-kidney.webp", "excretion-path.webp", "excretion-explorer.webp"]
+const images = ["excretion-hero-v2.webp", "excretion-kidney.webp", "excretion-path.webp", "excretion-explorer.webp"]
     .map((name) => path.join(dir, "assets", "images", name));
 
 for (const file of [...Object.values(files), ...images]) {
@@ -81,7 +81,7 @@ assert.ok(html.includes("niddk.nih.gov/health-information/kidney-disease/kidneys
 assert.ok(html.includes("niddk.nih.gov/health-information/urologic-diseases/urinary-tract-how-it-works"));
 
 const styles = fs.readFileSync(files.styles, "utf8");
-for (const asset of ["excretion-hero.webp", "excretion-kidney.webp", "excretion-path.webp", "excretion-explorer.webp"]) {
+for (const asset of ["excretion-hero-v2.webp", "excretion-kidney.webp", "excretion-path.webp", "excretion-explorer.webp"]) {
     assert.ok(html.includes(asset) || styles.includes(asset), `Generated visual is not wired: ${asset}`);
 }
 assert.ok(styles.includes(".excretion-live-visual") && styles.includes(".bladder-fluid"));

@@ -19,7 +19,7 @@ const files = {
     server: path.join(root, "game-hub-server", "server.js")
 };
 const imageFiles = [
-    path.join(simulationDir, "assets", "images", "circulation-hero.webp"),
+    path.join(simulationDir, "assets", "images", "circulation-hero-v2.webp"),
     path.join(simulationDir, "assets", "images", "heart-interior.webp"),
     path.join(simulationDir, "assets", "images", "alveoli.webp"),
     path.join(simulationDir, "assets", "images", "red-cell-explorer.webp")
@@ -79,7 +79,7 @@ assert.ok(html.includes("학급 순위 탐험"), "Class ranking mode is missing.
 assert.ok(html.includes("나의 오답노트"), "Personal wrong-route review is missing.");
 assert.ok(html.includes("nhlbi.nih.gov/health/heart/blood-flow"), "The NHLBI blood-flow source should be visible.");
 assert.ok(html.includes("openstax.org/books/anatomy-and-physiology-2e/pages/20-5-circulatory-pathways"), "The OpenStax circulation source should be visible.");
-for (const asset of ["circulation-hero.webp", "heart-interior.webp", "alveoli.webp", "red-cell-explorer.webp"]) {
+for (const asset of ["circulation-hero-v2.webp", "heart-interior.webp", "alveoli.webp", "red-cell-explorer.webp"]) {
     assert.ok(html.includes(asset) || fs.readFileSync(files.styles, "utf8").includes(asset), `Generated visual is not wired: ${asset}`);
 }
 

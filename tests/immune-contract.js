@@ -18,7 +18,7 @@ const files = {
     server: path.join(root, "game-hub-server", "server.js")
 };
 const images = [
-    path.join(dir, "assets", "images", "immune-hero.webp"),
+    path.join(dir, "assets", "images", "immune-hero-v2.webp"),
     path.join(dir, "assets", "images", "immune-barrier.webp"),
     path.join(dir, "assets", "images", "immune-defense.webp"),
     path.join(dir, "assets", "images", "immune-explorer.webp")
@@ -110,7 +110,7 @@ assert.ok(html.includes("nigms.nih.gov/biobeat") && html.includes("cdc.gov/vacci
 assert.ok(html.includes('class="nervous-page immune-page"'), "Immune must reuse the tested responsive simulator layout.");
 
 const styles = fs.readFileSync(files.styles, "utf8");
-for (const asset of ["immune-hero.webp", "immune-barrier.webp", "immune-defense.webp", "immune-explorer.webp"]) {
+for (const asset of ["immune-hero-v2.webp", "immune-barrier.webp", "immune-defense.webp", "immune-explorer.webp"]) {
     assert.ok(html.includes(asset) || styles.includes(asset), `Generated visual is not wired: ${asset}`);
 }
 for (const episodeFile of ["index.html", "digestion.html", "respiration.html", "nervous.html"]) {

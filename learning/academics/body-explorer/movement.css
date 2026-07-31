@@ -31,7 +31,7 @@ body.movement-page {
 
 .movement-page .hero-copy { width: min(820px, 100%); }
 .movement-page .hero-art {
-    background-image: url("assets/images/movement-hero.webp");
+    background-image: url("assets/images/movement-hero-v2.webp");
     background-position: center;
 }
 
@@ -62,7 +62,7 @@ body.movement-page {
 .movement-briefing-art {
     background:
         linear-gradient(155deg, rgba(11, 24, 45, 0.08), rgba(12, 28, 52, 0.68)),
-        url("assets/images/movement-hero.webp") center / cover;
+        url("assets/images/movement-hero-v2.webp") center / cover;
 }
 .movement-briefing-art img { width: min(64%, 325px); }
 .movement-page .movement-orb {
@@ -173,7 +173,7 @@ body.movement-page {
 .movement-page .teacher-hero {
     background:
         linear-gradient(90deg, rgba(7, 14, 29, 0.98), rgba(83, 48, 54, 0.74), rgba(198, 103, 57, 0.16)),
-        url("assets/images/movement-hero.webp") center / cover no-repeat;
+        url("assets/images/movement-hero-v2.webp") center / cover no-repeat;
 }
 .movement-page .teacher-hero p:last-child { color: #fff0dc; }
 .movement-page .teacher-room-card { border-color: #dfba98; background: #fff5e8; }
