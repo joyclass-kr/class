@@ -36,11 +36,7 @@ document.addEventListener('DOMContentLoaded', () => {
             pointerY: 0,
             activePointers: new Map(),
             pinchDistance: null
-        },
-
-        // Animation state
-        animFrameId: null,
-        atomAngle: 0
+        }
     };
 
     // DOM Elements
@@ -390,6 +386,13 @@ document.addEventListener('DOMContentLoaded', () => {
         const valenceElectrons = el.shells[el.shells.length - 1];
         document.getElementById('modalShells').textContent = electronConfig;
         document.getElementById('modalElectronConfig').textContent = electronConfig;
+        const shellColors = ['#4bcffa', '#a78bfa', '#fbbf24', '#fb7185', '#34d399', '#60a5fa', '#f472b6'];
+        document.getElementById('shellLegend').innerHTML = el.shells.map((count, index) => `
+            <span class="shell-legend-item${index === el.shells.length - 1 ? ' valence' : ''}">
+                <i style="--shell-color: ${shellColors[index % shellColors.length]}"></i>
+                ${index + 1}껍질 <strong>${count}개</strong>
+            </span>
+        `).join('');
         document.getElementById('modalShellCount').textContent = `${el.shells.length}개`;
         document.getElementById('modalValenceElectrons').textContent = `${valenceElectrons}개`;
         document.getElementById('modalDesc').textContent = el.desc;
@@ -399,21 +402,17 @@ document.addEventListener('DOMContentLoaded', () => {
         usesContainer.innerHTML = (el.uses || []).map(use => `<span class="use-tag"># ${use}</span>`).join('');
 
         modalOverlay.classList.add('active');
-        startBohrAtomAnimation(el);
+        drawBohrAtom(el);
     }
 
     function closeModal() {
         modalOverlay.classList.remove('active');
-        if (state.animFrameId) {
-            cancelAnimationFrame(state.animFrameId);
-            state.animFrameId = null;
-        }
     }
 
     /**
-     * Canvas Bohr Atom 2D Orbit Animation
+     * Canvas Bohr Atom 2D Diagram
      */
-    function startBohrAtomAnimation(el) {
+    function drawBohrAtom(el) {
         if (!bohrCanvas || !ctx) return;
 
         const width = bohrCanvas.width = 240;
@@ -421,6 +420,9 @@ document.addEventListener('DOMContentLoaded', () => {
         const centerX = width / 2;
         const centerY = height / 2;
         const shells = el.shells || [1];
+        const shellColors = ['#4bcffa', '#a78bfa', '#fbbf24', '#fb7185', '#34d399', '#60a5fa', '#f472b6'];
+        bohrCanvas.setAttribute('role', 'img');
+        bohrCanvas.setAttribute('aria-label', `${el.name} 보어 원자 모형. 전자 배치 ${shells.join('-')}`);
 
         function drawFrame() {
             ctx.clearRect(0, 0, width, height);
@@ -441,41 +443,45 @@ document.addEventListener('DOMContentLoaded', () => {
             ctx.fillText(el.symbol, centerX, centerY);
 
             // Draw Shell orbits & Electrons
-            state.atomAngle += 0.015;
             const maxRadius = 95;
             const baseRadius = 32;
             const radiusStep = (maxRadius - baseRadius) / Math.max(shells.length, 1);
 
             shells.forEach((electronCount, shellIdx) => {
                 const r = baseRadius + (shellIdx * radiusStep);
+                const shellColor = shellColors[shellIdx % shellColors.length];
+                const isValenceShell = shellIdx === shells.length - 1;
 
                 // Orbit path
                 ctx.beginPath();
                 ctx.arc(centerX, centerY, r, 0, Math.PI * 2);
-                ctx.strokeStyle = 'rgba(255, 255, 255, 0.15)';
-                ctx.lineWidth = 1;
+                ctx.strokeStyle = `${shellColor}4d`;
+                ctx.lineWidth = isValenceShell ? 2 : 1;
                 ctx.stroke();
 
-                // Electrons on orbit
+                // Keep exam diagrams still so students can count every electron.
                 for (let i = 0; i < electronCount; i++) {
-                    const angleOffset = (Math.PI * 2 / electronCount) * i;
-                    const speedMultiplier = 1 - (shellIdx * 0.1);
-                    const currentAngle = (state.atomAngle * speedMultiplier) + angleOffset;
+                    const currentAngle = (-Math.PI / 2)
+                        + ((Math.PI * 2 / electronCount) * i)
+                        + ((shellIdx % 2) * (Math.PI / Math.max(electronCount, 1)));
 
                     const ex = centerX + r * Math.cos(currentAngle);
                     const ey = centerY + r * Math.sin(currentAngle);
 
                     ctx.beginPath();
-                    ctx.arc(ex, ey, 4.5, 0, Math.PI * 2);
-                    ctx.fillStyle = '#4bcffa';
-                    ctx.shadowColor = '#4bcffa';
+                    ctx.arc(ex, ey, isValenceShell ? 5.2 : 4.5, 0, Math.PI * 2);
+                    ctx.fillStyle = shellColor;
+                    ctx.shadowColor = shellColor;
                     ctx.shadowBlur = 8;
                     ctx.fill();
                     ctx.shadowBlur = 0;
+                    if (isValenceShell) {
+                        ctx.strokeStyle = '#ffffff';
+                        ctx.lineWidth = 1.25;
+                        ctx.stroke();
+                    }
                 }
             });
-
-            state.animFrameId = requestAnimationFrame(drawFrame);
         }
 
         drawFrame();
