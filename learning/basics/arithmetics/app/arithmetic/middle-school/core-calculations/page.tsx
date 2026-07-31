@@ -43,6 +43,26 @@ const TARGET_LABELS: Record<MiddleCoreKind, string> = {
   "formula-comprehensive": "전개한 식은?",
 };
 
+function problemQuestion(problem: MiddleCoreProblem) {
+  if (problem.kind !== "radical-calculation") return TARGET_LABELS[problem.kind];
+  if (problem.structure === "simplify-radical") {
+    return "근호 안의 수가 가장 작은 자연수가 되도록 간단히 하면?";
+  }
+  if (problem.structure === "simplify-then-combine") {
+    return "각 근호를 간단히 한 뒤 정리한 식은?";
+  }
+  if (problem.structure === "like-radicals-combined") {
+    return "동류 제곱근을 정리한 식은?";
+  }
+  if (problem.structure === "radical-parentheses") {
+    return "괄호를 풀어 정리한 식은?";
+  }
+  if (problem.structure === "rationalize-denominator") {
+    return "분모를 유리화한 식은?";
+  }
+  return "계산한 값은?";
+}
+
 function choiceProblem(problem: MiddleCoreProblem): WorksheetChoiceProblem {
   const choices = [
     { id: `${problem.id}-correct`, latex: problem.answerLatex, correct: true },
@@ -129,7 +149,7 @@ export default function MiddleCoreCalculationsPage() {
         <div className="polynomial-question-number">{String(index + 1).padStart(2, "0")}</div>
         <div className="polynomial-question-body">
           <span className="polynomial-focus-label"><InlineMathText text={problem.label} /></span>
-          <WorksheetQuestionPrompt label={problem.label} />
+          <WorksheetQuestionPrompt label={problem.label} prompt={problemQuestion(problem)} />
           <div className="logarithm-expression">
             <MathFormula latex={problem.latex} />
           </div>

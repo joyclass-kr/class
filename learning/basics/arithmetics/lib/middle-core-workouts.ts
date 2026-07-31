@@ -777,32 +777,43 @@ function build(
         [`${a * n}`, `\\sqrt{${a * n}}`, `${n}\\sqrt{${a}}`], "simplify-radical");
     }
     if (mode === 1) {
-      const left = a * a * n;
-      const right = left + integer(next, 1, a + 2);
-      return make(id, kind, `\\sqrt{${left}}\\ \\square\\ \\sqrt{${right}}`, "<",
-        "두 양의 제곱근은 근호 안의 수의 대소 관계와 같다.",
-        [">", "=", "\\text{비교할 수 없음}"], "compare-radicals");
+      return make(id, kind,
+        `\\sqrt{${4 * n}}+\\sqrt{${9 * n}}-\\sqrt{${n}}`,
+        `4\\sqrt{${n}}`,
+        "각 근호를 먼저 간단히 한 뒤 근호 안이 같은 항의 계수를 계산한다.",
+        [`5\\sqrt{${n}}`, `3\\sqrt{${n}}`, `4\\sqrt{${2 * n}}`],
+        "simplify-then-combine");
     }
     if (mode === 2) {
-      return make(id, kind, `${a}\\sqrt{${n}}+${b}\\sqrt{${n}}`, `${a + b}\\sqrt{${n}}`,
-        "근호 안이 같은 항끼리 근호 앞의 계수를 더한다.",
-        [`${a * b}\\sqrt{${n}}`, `${a + b}\\sqrt{${n * 2}}`, `${a - b}\\sqrt{${n}}`], "like-radicals-add");
+      return make(id, kind,
+        `${a}\\sqrt{${n}}+${b}\\sqrt{${n}}-\\sqrt{${n}}`,
+        `${a + b - 1}\\sqrt{${n}}`,
+        "근호 안이 같은 항끼리 근호 앞의 계수를 한 번에 더하고 뺀다.",
+        [`${a + b}\\sqrt{${n}}`, `${a * b - 1}\\sqrt{${n}}`, `${a + b - 1}\\sqrt{${2 * n}}`],
+        "like-radicals-combined");
     }
     if (mode === 3) {
-      return make(id, kind, `${a + b}\\sqrt{${n}}-${b}\\sqrt{${n}}`, `${a}\\sqrt{${n}}`,
-        "근호 안이 같은 항끼리 근호 앞의 계수를 뺀다.",
-        [`${a + 2 * b}\\sqrt{${n}}`, `${a}\\sqrt{${n * 2}}`, `${b}\\sqrt{${n}}`], "like-radicals-subtract");
+      const other = SQUARE_FREE[(index + 1) % SQUARE_FREE.length];
+      return make(id, kind,
+        `2(\\sqrt{${n}}+\\sqrt{${other}})-(\\sqrt{${n}}-2\\sqrt{${other}})`,
+        `\\sqrt{${n}}+4\\sqrt{${other}}`,
+        "괄호를 풀고 근호 안이 같은 항끼리 각각 정리한다.",
+        [
+          `\\sqrt{${n}}`,
+          `3\\sqrt{${n}}`,
+          `\\sqrt{${n}}+2\\sqrt{${other}}`,
+        ],
+        "radical-parentheses");
     }
     if (mode === 4) {
-      return make(id, kind, `\\sqrt{${n}}\\times\\sqrt{${n * 4}}`, `${n * 2}`,
-        `근호를 합쳐 \\sqrt{${n * n * 4}}을 계산한다.`,
-        [`${n * 4}`, `${n}\\sqrt{2}`, `\\sqrt{${n * 5}}`], "radical-multiply");
+      return make(id, kind, `2\\sqrt{3}\\times3\\sqrt{6}`, `18\\sqrt{2}`,
+        "계수끼리 곱하고 근호끼리 곱한 뒤 √18을 3√2로 간단히 한다.",
+        [`6\\sqrt{2}`, `6\\sqrt{18}`, `18\\sqrt{3}`], "radical-multiply");
     }
     if (mode === 5) {
-      const quotient = 2 + (index % 4);
-      return make(id, kind, `\\sqrt{${n * quotient * quotient}}\\div\\sqrt{${n}}`, `${quotient}`,
-        "두 근호를 하나로 합쳐 근호 안에서 나눈 뒤 양의 제곱근을 구한다.",
-        [`${quotient ** 2}`, `${n * quotient}`, `\\sqrt{${quotient}}`], "radical-divide");
+      return make(id, kind, `4\\sqrt{15}\\div2\\sqrt{3}`, `2\\sqrt{5}`,
+        "계수끼리 나누고 근호 안의 수를 나눈 뒤 √5로 정리한다.",
+        [`2\\sqrt{12}`, `2\\sqrt{18}`, `4\\sqrt{5}`], "radical-divide");
     }
     if (mode === 6) {
       const numerator = n + 1;

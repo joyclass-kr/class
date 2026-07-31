@@ -100,6 +100,28 @@ test("통합 학습지는 쉬운 하위 유형을 한 문제지 안에서 순환
   );
 });
 
+test("근호 계산은 중복 덧셈·뺄셈과 단순 대소 비교 없이 필수 계산 유형을 한 번씩 다룬다", () => {
+  const problems = createMiddleCoreProblemSet("radical-calculation", 20260803).problems;
+  assert.deepEqual(
+    problems.map(({ structure }) => structure),
+    [
+      "simplify-radical",
+      "simplify-then-combine",
+      "like-radicals-combined",
+      "radical-parentheses",
+      "radical-multiply",
+      "radical-divide",
+      "rationalize-denominator",
+      "conjugates",
+    ],
+  );
+  assert.ok(!problems.some(({ structure }) => structure === "compare-radicals"));
+  assert.equal(
+    problems.filter(({ structure }) => structure.startsWith("like-radicals")).length,
+    1,
+  );
+});
+
 test("오답 보충은 서로 다른 유형에서 최대 두 문제만 만든다", () => {
   const kinds: MiddleCoreKind[] = [
     "linear-equation",
