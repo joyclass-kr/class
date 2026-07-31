@@ -1402,10 +1402,10 @@
             const locationButtons = Array.from(document.querySelectorAll('[data-sunpath-lat]'));
             const monthDays = [31, 28, 31, 30, 31, 30, 31, 31, 30, 31, 30, 31];
             const seasonPoints = [
-                { day: 80, label: '춘분', date: '3/21', color: '#fb7185' },
-                { day: 172, label: '하지', date: '6/21', color: '#fbbf24' },
-                { day: 266, label: '추분', date: '9/23', color: '#fb923c' },
-                { day: 356, label: '동지', date: '12/22', color: '#60a5fa' }
+                { day: 80, label: '춘분', date: '3/21', icon: '🌸', color: '#fb7185' },
+                { day: 172, label: '하지', date: '6/21', icon: '☀️', color: '#fbbf24' },
+                { day: 266, label: '추분', date: '9/23', icon: '🍁', color: '#fb923c' },
+                { day: 356, label: '동지', date: '12/22', icon: '❄️', color: '#60a5fa' }
             ];
             const state = {
                 day: 80,
@@ -1563,12 +1563,12 @@
                 seasonPoints.forEach(point => {
                     const position = viewOrbitPoint(point.day, cx, cy, rx, ry);
                     ctx.save();
-                    ctx.fillStyle = point.color;
                     ctx.shadowColor = point.color;
-                    ctx.shadowBlur = 10;
-                    ctx.beginPath();
-                    ctx.arc(position.x, position.y, 4.5, 0, Math.PI * 2);
-                    ctx.fill();
+                    ctx.shadowBlur = 12;
+                    ctx.font = '18px "Segoe UI Emoji", "Apple Color Emoji", sans-serif';
+                    ctx.textAlign = 'center';
+                    ctx.textBaseline = 'middle';
+                    ctx.fillText(point.icon, position.x, position.y + 1);
                     ctx.restore();
 
                     const outwardLength = Math.max(1, Math.hypot(position.x - cx, position.y - cy));
@@ -1842,11 +1842,6 @@
                 ctx.fill();
                 ctx.stroke();
                 ctx.restore();
-
-                ctx.fillStyle = '#e2e8f0';
-                ctx.font = '800 10px Pretendard, sans-serif';
-                ctx.textAlign = 'center';
-                ctx.fillText('자전축 23.5°', earthPosition.x, earthPosition.y + earthRadius + 19);
 
                 const date = dayToDate(state.day);
                 ctx.fillStyle = '#f8fafc';
