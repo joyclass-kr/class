@@ -1520,86 +1520,142 @@
                 scene.add(astParticles);
                 celestialBodies['asteroid'] = { mesh: astParticles, data: window.SOLAR_SYSTEM_DATA.asteroid };
 
-                // 2. ☄️ 3D Radiant Glowing Comet (Tiny Nucleus + Natural Curved Particle Tail + Relaxed Shimmer)
+                // 2. ☄️ 3D comet: faceted nucleus, soft coma, straight ion tail,
+                // and a broad dust tail that curves behind the orbital motion.
                 var cometData = window.SOLAR_SYSTEM_DATA.comet;
                 if (cometData) {
                     try {
                     var cometGroup = new THREE.Object3D();
                     
-                    // 1) Micro Irregular Nucleus (Tiny 0.38 radius for perfect proportion)
-                    var cGeo = new THREE.DodecahedronGeometry(0.38, 1);
+                    // 1) The solid nucleus is a jagged, elongated ice-rock body.
+                    // The coma stays soft, but the core should not look spherical.
+                    var cGeo = new THREE.DodecahedronGeometry(0.62, 0);
                     var posAttr = cGeo.attributes.position;
                     for (var i = 0; i < posAttr.count; i++) {
                         var vx = posAttr.getX(i);
                         var vy = posAttr.getY(i);
                         var vz = posAttr.getZ(i);
-                        var noise = 1.0 + (Math.sin(vx * 4.0) + Math.cos(vy * 4.0)) * 0.45;
-                        posAttr.setXYZ(i, vx * noise, vy * noise, vz * noise);
+                        var vertexNoise =
+                            0.82 +
+                            Math.sin((i + 1) * 2.17) * 0.16 +
+                            Math.cos((i + 3) * 1.31) * 0.09;
+                        posAttr.setXYZ(
+                            i,
+                            vx * vertexNoise * 1.18,
+                            vy * vertexNoise * 0.78,
+                            vz * vertexNoise * 0.92
+                        );
                     }
                     cGeo.computeVertexNormals();
 
                     var cMat = new THREE.MeshStandardMaterial({
                         map: loadPlanet3DTexture('comet'),
-                        roughness: 0.95,
-                        emissive: 0x00f0ff,
-                        emissiveIntensity: 0.7
+                        color: 0x756a5d,
+                        roughness: 1.0,
+                        metalness: 0.0,
+                        flatShading: true,
+                        emissive: 0x17202a,
+                        emissiveIntensity: 0.18
                     });
                     var cometMesh = new THREE.Mesh(cGeo, cMat);
                     cometGroup.add(cometMesh);
 
-                    // 2) Soft Micro Point Light
-                    var cLight = new THREE.PointLight(0x00f0ff, 0.8, 20);
+                    // 2) Small cyan-white coma around the angular nucleus.
+                    var cLight = new THREE.PointLight(0xb9f7ff, 0.55, 18);
                     cometGroup.add(cLight);
 
-                    // 3) Micro Coma Halo Glow (0.55 radius)
-                    var comaGeo = new THREE.DodecahedronGeometry(0.55, 1);
-                    var comaPos = comaGeo.attributes.position;
-                    for (var cm = 0; cm < comaPos.count; cm++) {
-                        var cx = comaPos.getX(cm);
-                        var cy = comaPos.getY(cm);
-                        var cz = comaPos.getZ(cm);
-                        var cNoise = 1.0 + (Math.sin(cx * 3.0) + Math.cos(cy * 3.0)) * 0.35;
-                        comaPos.setXYZ(cm, cx * cNoise, cy * cNoise, cz * cNoise);
-                    }
-                    comaGeo.computeVertexNormals();
-                    var comaMat = new THREE.MeshBasicMaterial({ color: 0x00f0ff, transparent: true, opacity: 0.2, blending: THREE.AdditiveBlending });
-                    var comaMesh = new THREE.Mesh(comaGeo, comaMat);
-                    cometGroup.add(comaMesh);
-
-                    // 4) Natural Curved Particle Tail (Shortened 4.2 length + Soft Curved Spread)
-                    var tailCount = 1000;
-                    var tGeo = new THREE.BufferGeometry();
-                    var tPos = new Float32Array(tailCount * 3);
-                    var tColors = new Float32Array(tailCount * 3);
-
-                    for (var t = 0; t < tailCount; t++) {
-                        var progress = Math.random();
-                        var spread = Math.pow(progress, 1.4) * 1.8;
-                        var curveX = Math.sin(progress * Math.PI) * 0.45; // Natural curved dust trail!
-                        var curveY = Math.cos(progress * Math.PI * 0.5) * 0.25;
-
-                        tPos[t * 3] = (Math.random() - 0.5) * spread + curveX;
-                        tPos[t * 3 + 1] = (Math.random() - 0.5) * spread + curveY;
-                        tPos[t * 3 + 2] = progress * 4.2 + 0.3; // Shortened 4.2 unit mini tail!
-
-                        // Dual Tail Colors: Soft Eye-Friendly Tones
-                        var isIon = t % 2 === 0;
-                        tColors[t * 3] = isIon ? 0.0 : 0.6;        // R
-                        tColors[t * 3 + 1] = isIon ? 0.8 : 0.82;   // G
-                        tColors[t * 3 + 2] = 0.9;                  // B
-                    }
-                    tGeo.setAttribute('position', new THREE.BufferAttribute(tPos, 3));
-                    tGeo.setAttribute('color', new THREE.BufferAttribute(tColors, 3));
-
-                    var tMat = new THREE.PointsMaterial({
-                        size: 0.32, // Soft mini particles
-                        vertexColors: true,
+                    var comaGeo = new THREE.IcosahedronGeometry(0.9, 2);
+                    var comaMat = new THREE.MeshBasicMaterial({
+                        color: 0xb9f7ff,
                         transparent: true,
-                        opacity: 0.4, // Eye-friendly soft opacity
+                        opacity: 0.11,
+                        depthWrite: false,
+                        side: THREE.BackSide,
                         blending: THREE.AdditiveBlending
                     });
-                    var tailParticles = new THREE.Points(tGeo, tMat);
-                    cometGroup.add(tailParticles);
+                    var comaMesh = new THREE.Mesh(comaGeo, comaMat);
+                    comaMesh.scale.set(1.05, 0.9, 1.35);
+                    cometGroup.add(comaMesh);
+
+                    // 3) Narrow blue ion tail: almost straight and anti-solar.
+                    var ionCount = 620;
+                    var ionGeo = new THREE.BufferGeometry();
+                    var ionPos = new Float32Array(ionCount * 3);
+                    var ionColors = new Float32Array(ionCount * 3);
+                    var ionProgress = new Float32Array(ionCount);
+                    var ionSeedX = new Float32Array(ionCount);
+                    var ionSeedY = new Float32Array(ionCount);
+
+                    for (var ionIndex = 0; ionIndex < ionCount; ionIndex++) {
+                        var ionP = Math.random();
+                        ionProgress[ionIndex] = ionP;
+                        ionSeedX[ionIndex] = Math.random() - 0.5;
+                        ionSeedY[ionIndex] = Math.random() - 0.5;
+                        var ionWidth = 0.06 + Math.pow(ionP, 1.3) * 0.42;
+                        ionPos[ionIndex * 3] = ionSeedX[ionIndex] * ionWidth;
+                        ionPos[ionIndex * 3 + 1] = ionSeedY[ionIndex] * ionWidth;
+                        ionPos[ionIndex * 3 + 2] = 0.45 + ionP * 10.5;
+                        ionColors[ionIndex * 3] = 0.25;
+                        ionColors[ionIndex * 3 + 1] = 0.82;
+                        ionColors[ionIndex * 3 + 2] = 1.0;
+                    }
+
+                    ionGeo.setAttribute('position', new THREE.BufferAttribute(ionPos, 3));
+                    ionGeo.setAttribute('color', new THREE.BufferAttribute(ionColors, 3));
+                    var ionMat = new THREE.PointsMaterial({
+                        size: 0.24,
+                        vertexColors: true,
+                        transparent: true,
+                        opacity: 0.58,
+                        depthWrite: false,
+                        blending: THREE.AdditiveBlending,
+                        sizeAttenuation: true
+                    });
+                    var ionTailParticles = new THREE.Points(ionGeo, ionMat);
+                    cometGroup.add(ionTailParticles);
+
+                    // 4) Warm dust tail: wider, slower, and curved opposite the
+                    // comet's orbital velocity (local -X direction).
+                    var dustCount = 1120;
+                    var dustGeo = new THREE.BufferGeometry();
+                    var dustPos = new Float32Array(dustCount * 3);
+                    var dustColors = new Float32Array(dustCount * 3);
+                    var dustProgress = new Float32Array(dustCount);
+                    var dustSeedX = new Float32Array(dustCount);
+                    var dustSeedY = new Float32Array(dustCount);
+
+                    for (var dustIndex = 0; dustIndex < dustCount; dustIndex++) {
+                        var dustP = Math.random();
+                        dustProgress[dustIndex] = dustP;
+                        dustSeedX[dustIndex] = Math.random() - 0.5;
+                        dustSeedY[dustIndex] = Math.random() - 0.5;
+                        var dustSpread = 0.16 + Math.pow(dustP, 1.15) * 2.35;
+                        dustPos[dustIndex * 3] =
+                            -Math.pow(dustP, 1.62) * 5.2 +
+                            dustSeedX[dustIndex] * dustSpread;
+                        dustPos[dustIndex * 3 + 1] =
+                            Math.sin(dustP * Math.PI) * 0.24 +
+                            dustSeedY[dustIndex] * dustSpread * 0.62;
+                        dustPos[dustIndex * 3 + 2] = 0.32 + dustP * 8.4;
+                        var dustFade = 1.0 - dustP * 0.58;
+                        dustColors[dustIndex * 3] = 1.0 * dustFade;
+                        dustColors[dustIndex * 3 + 1] = 0.78 * dustFade;
+                        dustColors[dustIndex * 3 + 2] = 0.46 * dustFade;
+                    }
+
+                    dustGeo.setAttribute('position', new THREE.BufferAttribute(dustPos, 3));
+                    dustGeo.setAttribute('color', new THREE.BufferAttribute(dustColors, 3));
+                    var dustMat = new THREE.PointsMaterial({
+                        size: 0.34,
+                        vertexColors: true,
+                        transparent: true,
+                        opacity: 0.46,
+                        depthWrite: false,
+                        blending: THREE.AdditiveBlending,
+                        sizeAttenuation: true
+                    });
+                    var dustTailParticles = new THREE.Points(dustGeo, dustMat);
+                    cometGroup.add(dustTailParticles);
 
                     var cSemiMajor = 650;
                     var cEcc = 0.88;
@@ -1611,8 +1667,22 @@
                     celestialBodies['comet'] = {
                         mesh: cometMesh,
                         bodyTiltGroup: cometGroup,
-                        tailParticles: tailParticles,
-                        tGeo: tGeo,
+                        comaMesh: comaMesh,
+                        comaLight: cLight,
+                        ionTail: {
+                            particles: ionTailParticles,
+                            geometry: ionGeo,
+                            progress: ionProgress,
+                            seedX: ionSeedX,
+                            seedY: ionSeedY
+                        },
+                        dustTail: {
+                            particles: dustTailParticles,
+                            geometry: dustGeo,
+                            progress: dustProgress,
+                            seedX: dustSeedX,
+                            seedY: dustSeedY
+                        },
                         semiMajor: cSemiMajor,
                         focusOffset: cFocusOffset,
                         ecc: cEcc,
@@ -1798,44 +1868,94 @@
                             var sublimationFactor = Math.max(0.0, Math.min(1.0, 1.0 - (distToSun - minSublimationDist) / (maxSublimationDist - minSublimationDist)));
 
                             // 3. 🌟 Dynamic Shimmering & Flowing Particle Tail Engine (Live Particle Flow & Pixel Color Shimmering!)
-                            if (b.tGeo) {
-                                var tPosArr = b.tGeo.attributes.position.array;
-                                var tColArr = b.tGeo.attributes.color.array;
-                                var curTime = clock ? clock.getElapsedTime() : Date.now() * 0.001;
+                            var curTime = clock ? clock.getElapsedTime() : Date.now() * 0.001;
 
-                                for (var t = 0; t < 1000; t++) {
-                                    // 1) Particle Backward Flow Loop (Shortened 4.2 length)
-                                    tPosArr[t * 3 + 2] += delta * 6.0;
-                                    if (tPosArr[t * 3 + 2] > 4.5) {
-                                        tPosArr[t * 3 + 2] = 0.3;
-                                        var pProgress = 0.04;
-                                        var pSpread = Math.pow(pProgress, 1.4) * 1.8;
-                                        var pCurveX = Math.sin(pProgress * Math.PI) * 0.45;
-                                        var pCurveY = Math.cos(pProgress * Math.PI * 0.5) * 0.25;
-
-                                        tPosArr[t * 3] = (Math.random() - 0.5) * pSpread + pCurveX;
-                                        tPosArr[t * 3 + 1] = (Math.random() - 0.5) * pSpread + pCurveY;
-                                    }
-
-                                    // 2) Pixel Color Shimmering Noise (Slow & Soft Aurora Wave - 10x Slower for Eye Comfort!)
-                                    var shimmer = 0.8 + Math.sin(curTime * 1.8 + t * 0.15) * 0.2;
-                                    var isIon = t % 2 === 0;
-                                    
-                                    tColArr[t * 3] = isIon ? 0.0 : (0.6 * shimmer);        // R
-                                    tColArr[t * 3 + 1] = (isIon ? 0.8 : 0.82) * shimmer;   // G
-                                    tColArr[t * 3 + 2] = 0.9 * shimmer;                  // B
-                                }
-
-                                b.tGeo.attributes.position.needsUpdate = true;
-                                b.tGeo.attributes.color.needsUpdate = true;
+                            if (b.mesh) {
+                                b.mesh.rotation.x += delta * 0.32;
+                                b.mesh.rotation.y += delta * 0.47;
                             }
 
-                            b.bodyTiltGroup.traverse(function(child) {
-                                if (child.isPoints) {
-                                    child.material.opacity = 0.15 + sublimationFactor * 0.85;
-                                    child.scale.set(0.75 + sublimationFactor * 0.3, 0.75 + sublimationFactor * 0.3, 0.75 + sublimationFactor * 0.5);
+                            if (b.comaMesh) {
+                                var comaPulse = 1.0 + Math.sin(curTime * 1.2) * 0.025;
+                                b.comaMesh.material.opacity = 0.045 + sublimationFactor * 0.12;
+                                b.comaMesh.scale.set(
+                                    1.05 * comaPulse,
+                                    0.9 * comaPulse,
+                                    (1.2 + sublimationFactor * 0.28) * comaPulse
+                                );
+                            }
+                            if (b.comaLight) {
+                                b.comaLight.intensity = 0.12 + sublimationFactor * 0.58;
+                            }
+
+                            if (b.ionTail) {
+                                var ionPos = b.ionTail.geometry.attributes.position.array;
+                                var ionCol = b.ionTail.geometry.attributes.color.array;
+                                var ionCount = b.ionTail.progress.length;
+
+                                for (var ionIndex = 0; ionIndex < ionCount; ionIndex++) {
+                                    var ionProgress = (b.ionTail.progress[ionIndex] + delta * (0.18 + sublimationFactor * 0.16)) % 1;
+                                    b.ionTail.progress[ionIndex] = ionProgress;
+
+                                    var ionOffset = ionIndex * 3;
+                                    var ionWidth = 0.05 + Math.pow(ionProgress, 1.35) * 0.42;
+                                    var ionWave = Math.sin(curTime * 1.6 + ionIndex * 0.37) * 0.035 * ionProgress;
+                                    ionPos[ionOffset] = b.ionTail.seedX[ionIndex] * ionWidth + ionWave;
+                                    ionPos[ionOffset + 1] = b.ionTail.seedY[ionIndex] * ionWidth
+                                        + Math.cos(curTime * 1.2 + ionIndex * 0.29) * 0.025 * ionProgress;
+                                    ionPos[ionOffset + 2] = 0.45 + ionProgress * 10.5;
+
+                                    var ionFade = 0.55 + 0.45 * (1 - ionProgress);
+                                    var ionShimmer = 0.86 + Math.sin(curTime * 2.0 + ionIndex * 0.17) * 0.14;
+                                    ionCol[ionOffset] = 0.2 * ionFade * ionShimmer;
+                                    ionCol[ionOffset + 1] = 0.82 * ionFade * ionShimmer;
+                                    ionCol[ionOffset + 2] = 1.0 * ionFade * ionShimmer;
                                 }
-                            });
+
+                                b.ionTail.geometry.attributes.position.needsUpdate = true;
+                                b.ionTail.geometry.attributes.color.needsUpdate = true;
+                                b.ionTail.particles.material.opacity = 0.08 + sublimationFactor * 0.5;
+                                b.ionTail.particles.scale.set(
+                                    0.8 + sublimationFactor * 0.2,
+                                    0.8 + sublimationFactor * 0.2,
+                                    0.32 + sublimationFactor * 0.88
+                                );
+                            }
+
+                            if (b.dustTail) {
+                                var dustPos = b.dustTail.geometry.attributes.position.array;
+                                var dustCol = b.dustTail.geometry.attributes.color.array;
+                                var dustCount = b.dustTail.progress.length;
+
+                                for (var dustIndex = 0; dustIndex < dustCount; dustIndex++) {
+                                    var dustProgress = (b.dustTail.progress[dustIndex] + delta * (0.07 + sublimationFactor * 0.07)) % 1;
+                                    b.dustTail.progress[dustIndex] = dustProgress;
+
+                                    var dustOffset = dustIndex * 3;
+                                    var dustSpread = 0.14 + Math.pow(dustProgress, 1.15) * 2.35;
+                                    var dustCurve = -Math.pow(dustProgress, 1.62) * 5.2;
+                                    dustPos[dustOffset] = dustCurve + b.dustTail.seedX[dustIndex] * dustSpread
+                                        + Math.sin(curTime * 0.45 + dustIndex * 0.11) * 0.08 * dustProgress;
+                                    dustPos[dustOffset + 1] = Math.sin(dustProgress * Math.PI) * 0.24
+                                        + b.dustTail.seedY[dustIndex] * dustSpread * 0.62;
+                                    dustPos[dustOffset + 2] = 0.32 + dustProgress * 8.4;
+
+                                    var dustFade = (1 - dustProgress * 0.64)
+                                        * (0.9 + Math.sin(curTime * 0.8 + dustIndex * 0.21) * 0.1);
+                                    dustCol[dustOffset] = 1.0 * dustFade;
+                                    dustCol[dustOffset + 1] = 0.78 * dustFade;
+                                    dustCol[dustOffset + 2] = 0.46 * dustFade;
+                                }
+
+                                b.dustTail.geometry.attributes.position.needsUpdate = true;
+                                b.dustTail.geometry.attributes.color.needsUpdate = true;
+                                b.dustTail.particles.material.opacity = 0.05 + sublimationFactor * 0.41;
+                                b.dustTail.particles.scale.set(
+                                    0.65 + sublimationFactor * 0.35,
+                                    0.65 + sublimationFactor * 0.35,
+                                    0.28 + sublimationFactor * 0.82
+                                );
+                            }
                         }
                     } else if (key === 'asteroid') {
                         // 🪐 3D Asteroid Belt Rotation (Living Asteroid Belt Orbiting the Sun!)
