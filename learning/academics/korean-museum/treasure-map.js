@@ -276,7 +276,7 @@
           name: columns[columns.length - 1].trim(),
           lat: Number(columns[1]),
           lng: Number(columns[0]),
-          minZoom: 10,
+          minZoom: 8,
           maxZoom: 14,
           kind: 'municipality',
           code: columns[2]
@@ -311,7 +311,7 @@
         name: group.name,
         lat: group.latTotal / group.count,
         lng: group.lngTotal / group.count,
-        minZoom: 10,
+        minZoom: 8,
         maxZoom: 14,
         kind: 'municipality'
       }));
