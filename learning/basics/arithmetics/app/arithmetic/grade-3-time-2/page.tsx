@@ -164,7 +164,7 @@ export default function GradeThreeTimeTwoPage() {
     const graded = problem.id in results;
     const isCorrect = results[problem.id] === true;
     return (
-      <div className={`time-calculation-question${graded ? isCorrect ? " is-correct" : " is-wrong" : ""}`} data-testid="grade-three-time-two-question" key={problem.id}>
+      <div className={`time-calculation-question parts-${problem.parts.length === 2 ? "two" : "three"}${graded ? isCorrect ? " is-correct" : " is-wrong" : ""}`} data-testid="grade-three-time-two-question" key={problem.id}>
         <span className="time-calculation-number">{index + 1}</span>
         <div className="time-calculation-line"><b aria-hidden="true" />{renderValue(problem, problem.left)}</div>
         <div className="time-calculation-line"><b>{problem.operator}</b>{renderValue(problem, problem.right)}</div>
