@@ -11,6 +11,9 @@
   const celebration = document.getElementById('celebration');
   const resultSummary = document.getElementById('resultSummary');
   const soundButton = document.getElementById('soundButton');
+  const startScreen = document.getElementById('startScreen');
+  const gameScreen = document.getElementById('gameScreen');
+  const modeLabel = document.getElementById('modeLabel');
 
   let size = new URLSearchParams(location.search).get('size') === '4' ? 4 : 3;
   let tiles = [];
@@ -168,6 +171,7 @@
     size = nextSize;
     const puzzleName = size === 3 ? '8 퍼즐' : '15 퍼즐';
     titleElement.textContent = puzzleName;
+    modeLabel.textContent = `${size} × ${size}`;
     introElement.textContent = `숫자 타일을 밀어 1부터 ${size * size - 1}까지 순서대로 맞춰 보세요.`;
     document.title = `${puzzleName} | songhwaplay`;
     history.replaceState(null, '', `?size=${size}`);
@@ -175,7 +179,21 @@
       button.setAttribute('aria-pressed', String(Number(button.dataset.size) === size));
     });
     updateBest();
+  }
+
+  function showSettings() {
+    stopTimer();
+    gameScreen.hidden = true;
+    startScreen.hidden = false;
+    document.getElementById('startButton').focus();
+  }
+
+  function startGame() {
+    startScreen.hidden = true;
+    gameScreen.hidden = false;
     newGame();
+    window.scrollTo({ top: 0, behavior: 'instant' });
+    boardElement.querySelector('.tile')?.focus({ preventScroll: true });
   }
 
   document.querySelectorAll('[data-size]').forEach(button => {
@@ -184,6 +202,8 @@
   document.getElementById('newGameButton').addEventListener('click', newGame);
   document.getElementById('resetButton').addEventListener('click', () => resetRound(initialTiles));
   document.getElementById('playAgainButton').addEventListener('click', newGame);
+  document.getElementById('startButton').addEventListener('click', startGame);
+  document.getElementById('settingsButton').addEventListener('click', showSettings);
   soundButton.addEventListener('click', () => {
     soundEnabled = !soundEnabled;
     soundButton.textContent = soundEnabled ? '소리 켬' : '소리 끔';
@@ -207,4 +227,5 @@
   });
 
   selectMode(size);
+  showSettings();
 })();

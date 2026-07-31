@@ -7,11 +7,13 @@ const hub = fs.readFileSync(path.join(root, 'index.html'), 'utf8');
 const html = fs.readFileSync(path.join(root, 'learning/games/sliding-puzzle/index.html'), 'utf8');
 const app = fs.readFileSync(path.join(root, 'learning/games/sliding-puzzle/app.js'), 'utf8');
 
-assert.match(hub, /sliding-puzzle\/\?size=3[^]*?<strong>8 퍼즐<\/strong>/);
-assert.match(hub, /sliding-puzzle\/\?size=4[^]*?<strong>15 퍼즐<\/strong>/);
+assert.match(hub, /sliding-puzzle\/[^]*?<strong>8 퍼즐·15 퍼즐<\/strong>/);
+assert.equal((hub.match(/href="learning\/games\/sliding-puzzle\//g) || []).length, 1);
 assert.match(html, /data-size="3"/);
 assert.match(html, /data-size="4"/);
 assert.match(html, /id="board"[^>]+role="grid"/);
+assert.match(html, /id="startScreen"/);
+assert.match(html, /id="gameScreen"[^>]+hidden/);
 assert.match(app, /function shuffledSolvableTiles\(\)/);
 assert.match(app, /neighboringIndexes\(blank\)/);
 assert.match(app, /document\.addEventListener\('keydown'/);
