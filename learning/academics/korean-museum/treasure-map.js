@@ -12,6 +12,11 @@
   let mapMarkerEntries = [];
   let koreaSigunguLabels = [];
   let currentActiveRelic = null;
+  let quizSessionRelics = [];
+  let quizSessionIndex = 0;
+  let quizSessionScore = 0;
+  let quizSessionAnswered = false;
+  let quizSessionScope = 'all';
 
   const KOREA_MAP_LABELS = [
     // Low-zoom labels: keep only the administrative regions students need.
@@ -112,12 +117,28 @@
   const quizOptions = document.getElementById('quiz-options');
   const quizResult = document.getElementById('quiz-result');
 
+  // Five-question practice DOM
+  const quizScopeSelect = document.getElementById('quiz-scope-select');
+  const quizSessionStart = document.getElementById('quiz-session-start');
+  const quizSessionModal = document.getElementById('quiz-session-modal');
+  const quizSessionClose = document.getElementById('quiz-session-close');
+  const quizSessionTitle = document.getElementById('quiz-session-title');
+  const quizSessionProgress = document.getElementById('quiz-session-progress');
+  const quizProgressFill = document.getElementById('quiz-progress-fill');
+  const quizSessionEra = document.getElementById('quiz-session-era');
+  const quizSessionQuestion = document.getElementById('quiz-session-question');
+  const quizSessionOptions = document.getElementById('quiz-session-options');
+  const quizSessionFeedback = document.getElementById('quiz-session-feedback');
+  const quizSessionNext = document.getElementById('quiz-session-next');
+  const quizSessionRestart = document.getElementById('quiz-session-restart');
+
   // Initialize App
   document.addEventListener('DOMContentLoaded', () => {
     initLeafletMap();
     initSmartFilters();
     initQuickSelectDropdown();
     initModalEvents();
+    initQuizSession();
   });
 
   // --- 1. Leaflet Map Initialization & Markers ---
@@ -614,6 +635,147 @@
       tabDocentContent.hidden = true;
       tabQuizContent.hidden = false;
     });
+  }
+
+  function initQuizSession() {
+    if (!quizSessionStart || !quizSessionModal || !quizScopeSelect) return;
+
+    quizSessionStart.addEventListener('click', startQuizSession);
+    quizSessionRestart.addEventListener('click', startQuizSession);
+    quizSessionNext.addEventListener('click', () => {
+      if (!quizSessionAnswered) return;
+      quizSessionIndex += 1;
+      renderQuizSessionQuestion();
+    });
+    quizSessionClose.addEventListener('click', closeQuizSession);
+    quizSessionModal.addEventListener('click', (event) => {
+      if (event.target === quizSessionModal) closeQuizSession();
+    });
+  }
+
+  function shuffledCopy(items) {
+    const shuffled = items.slice();
+    for (let index = shuffled.length - 1; index > 0; index -= 1) {
+      const randomIndex = Math.floor(Math.random() * (index + 1));
+      [shuffled[index], shuffled[randomIndex]] = [shuffled[randomIndex], shuffled[index]];
+    }
+    return shuffled;
+  }
+
+  function startQuizSession() {
+    if (!window.KOREAN_MUSEUM_DATA) return;
+
+    quizSessionScope = quizScopeSelect.value;
+    const pool = window.KOREAN_MUSEUM_DATA.relicsMaster.filter(relic => (
+      relic.quiz && (quizSessionScope === 'all' || relic.eraCategory === quizSessionScope)
+    ));
+    quizSessionRelics = shuffledCopy(pool).slice(0, 5);
+    quizSessionIndex = 0;
+    quizSessionScore = 0;
+    quizSessionAnswered = false;
+
+    const selectedOption = quizScopeSelect.options[quizScopeSelect.selectedIndex];
+    quizSessionTitle.textContent = `${selectedOption.textContent} 5문제`;
+    renderQuizSessionQuestion();
+
+    if (!quizSessionModal.open) {
+      if (quizSessionModal.showModal) {
+        quizSessionModal.showModal();
+      } else {
+        quizSessionModal.setAttribute('open', 'true');
+      }
+    }
+  }
+
+  function renderQuizSessionQuestion() {
+    const total = quizSessionRelics.length;
+    if (quizSessionIndex >= total) {
+      renderQuizSessionResult();
+      return;
+    }
+
+    const relic = quizSessionRelics[quizSessionIndex];
+    const randomizedOptions = shuffledCopy(
+      relic.quiz.options.map((text, index) => ({ text, correct: index === relic.quiz.answer }))
+    );
+
+    quizSessionAnswered = false;
+    quizSessionEra.hidden = false;
+    quizSessionEra.textContent = relic.era;
+    quizSessionQuestion.textContent = relic.quiz.question;
+    quizSessionProgress.textContent = `${quizSessionIndex + 1} / ${total} · 현재 ${quizSessionScore}점`;
+    quizProgressFill.style.width = `${(quizSessionIndex / total) * 100}%`;
+    quizSessionOptions.innerHTML = '';
+    quizSessionFeedback.hidden = true;
+    quizSessionFeedback.className = 'quiz-result-card';
+    quizSessionNext.hidden = true;
+    quizSessionRestart.hidden = true;
+
+    randomizedOptions.forEach((option, index) => {
+      const button = document.createElement('button');
+      button.className = 'quiz-opt-btn';
+      button.type = 'button';
+      button.dataset.correct = String(option.correct);
+      button.textContent = `${index + 1}. ${option.text}`;
+      button.addEventListener('click', () => answerQuizSession(button, option.correct, relic));
+      quizSessionOptions.appendChild(button);
+    });
+  }
+
+  function answerQuizSession(selectedButton, isCorrect, relic) {
+    if (quizSessionAnswered) return;
+    quizSessionAnswered = true;
+    if (isCorrect) quizSessionScore += 1;
+
+    quizSessionOptions.querySelectorAll('.quiz-opt-btn').forEach(button => {
+      button.disabled = true;
+      if (button.dataset.correct === 'true') button.classList.add('correct');
+    });
+    if (!isCorrect) selectedButton.classList.add('wrong');
+
+    quizSessionFeedback.innerHTML = '';
+    const resultTitle = document.createElement('strong');
+    resultTitle.textContent = isCorrect ? '정답입니다!' : `정답: ${relic.quiz.options[relic.quiz.answer]}`;
+    const explanation = document.createElement('p');
+    explanation.textContent = `${relic.title} · ${relic.quiz.explanation}`;
+    quizSessionFeedback.append(resultTitle, explanation);
+    quizSessionFeedback.className = `quiz-result-card ${isCorrect ? 'success' : 'fail'}`;
+    quizSessionFeedback.hidden = false;
+    quizSessionProgress.textContent = `${quizSessionIndex + 1} / ${quizSessionRelics.length} · 현재 ${quizSessionScore}점`;
+    quizProgressFill.style.width = `${((quizSessionIndex + 1) / quizSessionRelics.length) * 100}%`;
+    quizSessionNext.textContent = quizSessionIndex === quizSessionRelics.length - 1 ? '결과 보기' : '다음 문제';
+    quizSessionNext.hidden = false;
+  }
+
+  function renderQuizSessionResult() {
+    const total = quizSessionRelics.length;
+    const percentage = Math.round((quizSessionScore / total) * 100);
+    quizSessionEra.hidden = true;
+    quizSessionQuestion.textContent = '5문제 풀이 완료';
+    quizSessionProgress.textContent = `완료 · ${quizSessionScore} / ${total}`;
+    quizProgressFill.style.width = '100%';
+    quizSessionOptions.innerHTML = '';
+    quizSessionFeedback.innerHTML = '';
+
+    const resultTitle = document.createElement('strong');
+    resultTitle.textContent = `${quizSessionScore}개 정답 · ${percentage}점`;
+    const resultMessage = document.createElement('p');
+    resultMessage.textContent = percentage >= 80
+      ? '핵심 유물과 유적을 잘 구분하고 있습니다.'
+      : '틀린 문제의 유물 카드를 다시 확인해 보세요.';
+    quizSessionFeedback.append(resultTitle, resultMessage);
+    quizSessionFeedback.className = `quiz-result-card ${percentage >= 80 ? 'success' : 'fail'}`;
+    quizSessionFeedback.hidden = false;
+    quizSessionNext.hidden = true;
+    quizSessionRestart.hidden = false;
+  }
+
+  function closeQuizSession() {
+    if (quizSessionModal.close) {
+      quizSessionModal.close();
+    } else {
+      quizSessionModal.removeAttribute('open');
+    }
   }
 
   function openRelicModal(relic) {

@@ -38,6 +38,20 @@
         <button class="filter-btn" data-filter-type="era" data-value="modern">6. 근현대</button>
       </div>
 
+      <!-- Five-question practice -->
+      <div class="filter-group quiz-launcher-group" aria-label="한국사 5문제 퀴즈">
+        <select id="quiz-scope-select" class="quiz-scope-select" aria-label="퀴즈 시대 선택">
+          <option value="all">전 시대 무작위</option>
+          <option value="prehistoric">선사·고조선</option>
+          <option value="three_kingdoms">삼국 시대</option>
+          <option value="unified_silla">통일신라·발해</option>
+          <option value="goryeo">고려 시대</option>
+          <option value="joseon">조선 시대</option>
+          <option value="modern">근현대</option>
+        </select>
+        <button id="quiz-session-start" class="quiz-session-start" type="button">5문제 풀기</button>
+      </div>
+
       <!-- Quick Relic Jump Select -->
       <div class="filter-group search-group">
         <select id="relic-quick-select" class="relic-select" aria-label="빠른 이동">
@@ -134,9 +148,35 @@
     </article>
   </dialog>
 
+  <!-- Era / all-era random quiz -->
+  <dialog id="quiz-session-modal" class="quiz-session-modal" aria-labelledby="quiz-session-title">
+    <article class="quiz-session-card">
+      <button id="quiz-session-close" class="modal-close-btn quiz-session-close" type="button"
+        aria-label="5문제 퀴즈 닫기">✕</button>
+      <header class="quiz-session-header">
+        <p class="quiz-session-eyebrow">한국사 실전 퀴즈</p>
+        <h2 id="quiz-session-title">전 시대 무작위 5문제</h2>
+        <p id="quiz-session-progress" class="quiz-session-progress" aria-live="polite"></p>
+        <div class="quiz-progress-track" aria-hidden="true">
+          <span id="quiz-progress-fill"></span>
+        </div>
+      </header>
+      <section class="quiz-session-body">
+        <p id="quiz-session-era" class="quiz-session-era"></p>
+        <p id="quiz-session-question" class="quiz-session-question"></p>
+        <div id="quiz-session-options" class="quiz-options-list"></div>
+        <div id="quiz-session-feedback" class="quiz-result-card" hidden aria-live="polite"></div>
+        <div class="quiz-session-actions">
+          <button id="quiz-session-next" class="quiz-session-next" type="button" hidden>다음 문제</button>
+          <button id="quiz-session-restart" class="quiz-session-restart" type="button" hidden>다시 5문제</button>
+        </div>
+      </section>
+    </article>
+  </dialog>
+
   <!-- App Logic Scripts -->
   <script src="vendor/leaflet/leaflet.js"></script>
   <script src="history-data.js?v=20260731-5"></script>
-  <script src="treasure-map.js?v=20260801-2"></script>
+  <script src="treasure-map.js?v=20260801-3"></script>
 </body>
 </html>
