@@ -1085,4 +1085,91 @@ body {
 
 #tab-sim .sim-controls-panel {
     flex: 0 0 auto;
+    display: grid;
+    grid-template-columns: 105px minmax(0, 1fr);
+    grid-template-areas:
+        "time controls"
+        "quick quick";
+    align-items: center;
+    column-gap: 18px;
+    row-gap: 6px;
+    padding: 8px 16px;
+}
+
+#tab-sim .sim-time-display {
+    grid-area: time;
+}
+
+#tab-sim .sim-time-label {
+    font-size: 9px;
+}
+
+#tab-sim .sim-time-val {
+    margin-top: 0;
+    font-size: 17px;
+}
+
+#tab-sim .control-rows {
+    grid-area: controls;
+    display: grid;
+    grid-template-columns: minmax(330px, 1.7fr) minmax(215px, auto) minmax(125px, auto);
+    align-items: center;
+    gap: 14px;
+    width: 100%;
+    max-width: none;
+}
+
+#tab-sim .ctrl-row {
+    gap: 8px;
+}
+
+#tab-sim .ctrl-label {
+    min-width: auto;
+    font-size: 12px;
+    white-space: nowrap;
+}
+
+#tab-sim .slider-group {
+    gap: 7px;
+}
+
+#tab-sim .planet-quick-bar {
+    grid-area: quick;
+    gap: 6px !important;
+    padding-top: 6px !important;
+}
+
+@media (max-width: 1050px) {
+    #tab-sim .sim-controls-panel {
+        grid-template-columns: 90px minmax(0, 1fr);
+        column-gap: 12px;
+    }
+
+    #tab-sim .control-rows {
+        grid-template-columns: minmax(270px, 1fr) auto;
+        gap: 8px 12px;
+    }
+
+    #tab-sim .control-rows .ctrl-row:last-child {
+        grid-column: 2;
+    }
+}
+
+@media (max-width: 760px) {
+    #tab-sim .sim-controls-panel {
+        grid-template-columns: 1fr;
+        grid-template-areas:
+            "time"
+            "controls"
+            "quick";
+        padding: 7px 10px;
+    }
+
+    #tab-sim .control-rows {
+        grid-template-columns: 1fr;
+    }
+
+    #tab-sim .control-rows .ctrl-row:last-child {
+        grid-column: auto;
+    }
 }

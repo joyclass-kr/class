@@ -1201,6 +1201,7 @@
                 new THREE.SphereGeometry(sunR, 64, 64),
                 new THREE.MeshBasicMaterial({ map: sunTex })
             );
+            sunMesh.userData = { key: 'sun', data: window.SOLAR_SYSTEM_DATA.sun };
             
             var c1 = new THREE.Mesh(
                 new THREE.SphereGeometry(sunR * 1.02, 64, 64),
@@ -1526,6 +1527,7 @@
                 if (cometData) {
                     try {
                     var cometGroup = new THREE.Object3D();
+                    cometGroup.userData = { key: 'comet', data: cometData };
                     
                     // 1) The solid nucleus is a jagged, elongated ice-rock body.
                     // The coma stays soft, but the core should not look spherical.
@@ -2216,8 +2218,12 @@
             }
             var intersects = raycaster.intersectObjects(scene.children, true);
             for (var i = 0; i < intersects.length; i++) {
-                if (intersects[i].object.userData && intersects[i].object.userData.key) {
-                    focusCameraOnBody(intersects[i].object.userData.key);
+                var hitObject = intersects[i].object;
+                while (hitObject && (!hitObject.userData || !hitObject.userData.key)) {
+                    hitObject = hitObject.parent;
+                }
+                if (hitObject && hitObject.userData && hitObject.userData.key) {
+                    focusCameraOnBody(hitObject.userData.key);
                     break;
                 }
             }
@@ -2831,7 +2837,7 @@
                 var chip = document.createElement('button');
                 chip.className = 'planet-chip';
                 chip.dataset.key = key;
-                chip.style.cssText = 'background: rgba(15, 23, 42, 0.85); border: 1px solid rgba(56, 189, 248, 0.3); color: #e2e8f0; padding: 6px 14px; border-radius: 20px; font-size: 12.5px; font-weight: 700; cursor: pointer; transition: all 0.2s ease; backdrop-filter: blur(6px);';
+                chip.style.cssText = 'background: rgba(15, 23, 42, 0.85); border: 1px solid rgba(56, 189, 248, 0.3); color: #e2e8f0; padding: 4px 10px; border-radius: 18px; font-size: 11.5px; font-weight: 700; cursor: pointer; transition: all 0.2s ease; backdrop-filter: blur(6px);';
                 
                 chip.addEventListener('mouseenter', function() {
                     chip.style.background = 'rgba(56, 189, 248, 0.25)';
