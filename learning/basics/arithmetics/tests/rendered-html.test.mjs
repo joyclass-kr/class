@@ -2333,3 +2333,48 @@ test("uses arrived-only mistake-first ranking with correction attempts", async (
   assert.match(schemaSource, /mistakeCount: integer\("mistake_count"\)\.notNull\(\)\.default\(0\)/);
   assert.match(migrationSource, /ADD `mistake_count` integer DEFAULT 0 NOT NULL/);
 });
+
+test("middle, high-school, and STEM answer panels reuse the worksheet question", async () => {
+  const sharedPanel = await readFile(
+    new URL("../app/arithmetic/high-school/components/worksheet-choice-panel.tsx", import.meta.url),
+    "utf8",
+  );
+  assert.match(sharedPanel, /worksheetQuestion\(problem\.label, problem\.prompt\)/);
+
+  const explicitPromptPages = [
+    "../app/arithmetic/middle-school/factorization/page.tsx",
+    "../app/arithmetic/middle-school/quadratic-equations/page.tsx",
+    "../app/arithmetic/middle-school/quadratic-functions/page.tsx",
+    "../app/arithmetic/high-school/cubic-sum-difference-factorization/page.tsx",
+    "../app/arithmetic/high-school/definite-integrals/page.tsx",
+    "../app/arithmetic/high-school/exponential-log-derivatives/page.tsx",
+    "../app/arithmetic/high-school/inequality-intervals/page.tsx",
+    "../app/arithmetic/high-school/integration-techniques/page.tsx",
+    "../app/arithmetic/high-school/sets-propositions/page.tsx",
+    "../app/arithmetic/high-school/transcendental-integrals/page.tsx",
+    "../app/arithmetic/high-school/trigonometric-derivatives-2/page.tsx",
+  ];
+  for (const relativePath of explicitPromptPages) {
+    const source = await readFile(new URL(relativePath, import.meta.url), "utf8");
+    assert.match(source, /prompt:\s*(?:problem\.prompt|QUESTION_PROMPTS\[problem\.kind\]|"[^"]+\?")/, relativePath);
+  }
+
+  const customPanelPages = [
+    "../app/arithmetic/high-school/complex-numbers/page.tsx",
+    "../app/arithmetic/high-school/equation-transformations/page.tsx",
+    "../app/arithmetic/high-school/exponents-radicals/page.tsx",
+    "../app/arithmetic/high-school/factorization-rational/page.tsx",
+    "../app/arithmetic/high-school/polynomial-add-subtract/page.tsx",
+    "../app/arithmetic/high-school/trigonometric-derivatives/page.tsx",
+  ];
+  for (const relativePath of customPanelPages) {
+    const source = await readFile(new URL(relativePath, import.meta.url), "utf8");
+    assert.match(source, /worksheetQuestion\(problem\.label/, relativePath);
+  }
+
+  const stemPage = await readFile(
+    new URL("../app/arithmetic/stem/foundation/page.tsx", import.meta.url),
+    "utf8",
+  );
+  assert.match(stemPage, /GeometryChoiceWorksheet/);
+});

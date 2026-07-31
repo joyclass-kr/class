@@ -43,6 +43,7 @@ export default function InequalityIntervalsPage() {
   const choiceProblems: WorksheetChoiceProblem[] = problems.map((problem) => ({
     id: problem.id,
     label: problem.label,
+    prompt: "해는?",
     correctLatex: solutionLatex(problem.solution),
     choices: createInequalityChoices(problem).map((choice, index) => ({
       id: `${problem.id}-${index}`,

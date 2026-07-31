@@ -32,6 +32,7 @@ function choiceProblem(problem: MiddleQuadraticEquationProblem): WorksheetChoice
   return {
     id: problem.id,
     label: "이차방정식의 해",
+    prompt: "해는?",
     correctLatex: problem.answerLatex,
     choices: [...choices.slice(shift), ...choices.slice(0, shift)],
   };

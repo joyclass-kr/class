@@ -22,6 +22,7 @@ export default function ExponentialLogDerivativesPage() {
   const choiceProblems: WorksheetChoiceProblem[] = problems.map((problem) => ({
     id: problem.id,
     label: problem.label,
+    prompt: "도함수는?",
     correctLatex: problem.answerLatex,
     choices: problem.choices.map((choice) => ({ ...choice, latex: `f^{\\prime}(x)=${choice.latex}` })),
   }));

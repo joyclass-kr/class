@@ -22,6 +22,7 @@ export default function DefiniteIntegralsPage() {
   const choiceProblems: WorksheetChoiceProblem[] = problems.map((problem) => ({
     id: problem.id,
     label: problem.label,
+    prompt: problem.prompt,
     correctLatex: problem.answerLatex,
     choices: problem.choices,
   }));

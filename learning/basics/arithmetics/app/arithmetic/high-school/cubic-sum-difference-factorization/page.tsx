@@ -27,6 +27,7 @@ function choiceProblem(problem: HighCubicFactorizationProblem): WorksheetChoiceP
   return {
     id: problem.id,
     label: "인수분해한 식은?",
+    prompt: "인수분해한 식은?",
     correctLatex: problem.answerLatex,
     choices: [...choices.slice(shift), ...choices.slice(0, shift)],
   };

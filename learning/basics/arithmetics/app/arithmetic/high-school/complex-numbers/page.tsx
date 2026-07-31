@@ -2,7 +2,8 @@
 
 import { useEffect, useMemo, useState } from "react";
 import MathFormula from "../../../components/math-formula";
-import WorksheetQuestionPrompt from "../../../components/worksheet-question-prompt";
+import InlineMathText from "../../../components/inline-math-text";
+import WorksheetQuestionPrompt, { worksheetQuestion } from "../../../components/worksheet-question-prompt";
 import {
   createComplexChoices,
   createComplexProblemSet,
@@ -90,7 +91,7 @@ export default function ComplexNumbersPage() {
       <aside className="trig-derivative-answer-panel" aria-label="복소수 답안 입력" onClick={(event) => event.stopPropagation()}>
         <header><div><strong>답안 입력</strong><small>풀이를 마친 뒤 답만 선택하세요.</small></div><button type="button" onClick={() => setAnswerPanelOpen(false)} aria-label="답안 입력 닫기">×</button></header>
         <div className="trig-derivative-answer-list">{problems.map((problem, problemIndex) => <section className="trig-derivative-answer-item" key={problem.id}>
-          <div className="trig-derivative-answer-item-heading"><strong>{String(problemIndex + 1).padStart(2, "0")}</strong><span>{problem.label}</span></div>
+          <div className="trig-derivative-answer-item-heading"><strong>{String(problemIndex + 1).padStart(2, "0")}</strong><span><InlineMathText text={worksheetQuestion(problem.label)} /></span></div>
           <div className="trig-derivative-choices">{createComplexChoices(problem).map((choice, choiceIndex) => {
             const selected = selectedChoices[problem.id] === choice.id;
             return <button className={`trig-derivative-choice${selected ? " is-selected" : ""}`} data-testid="complex-answer-choice" type="button" aria-pressed={selected} key={choice.id} onClick={() => { setSelectedChoices((current) => ({ ...current, [problem.id]: choice.id })); setResults((current) => { const next = { ...current }; delete next[problem.id]; return next; }); }}><span>{markers[choiceIndex]}</span><MathFormula latex={choice.latex} /></button>;

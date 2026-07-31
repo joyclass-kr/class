@@ -10,7 +10,8 @@ import {
   type EquationProblem,
 } from "../../../../lib/equation-workouts";
 import MathFormula from "../../../components/math-formula";
-import WorksheetQuestionPrompt from "../../../components/worksheet-question-prompt";
+import InlineMathText from "../../../components/inline-math-text";
+import WorksheetQuestionPrompt, { worksheetQuestion } from "../../../components/worksheet-question-prompt";
 
 type PrintMode = "worksheet" | "answers" | "both";
 const INITIAL_SEED = 20260724;
@@ -173,7 +174,7 @@ export default function EquationTransformationsPage() {
             <div className="trig-derivative-answer-list">
               {problems.map((problem, problemIndex) => (
                 <section className="trig-derivative-answer-item" key={problem.id}>
-                  <div className="trig-derivative-answer-item-heading"><strong>{String(problemIndex + 1).padStart(2, "0")}</strong><span>{problem.label}</span></div>
+                    <div className="trig-derivative-answer-item-heading"><strong>{String(problemIndex + 1).padStart(2, "0")}</strong><span><InlineMathText text={worksheetQuestion(problem.label, "해는?")} /></span></div>
                   <div className="trig-derivative-choices">
                     {createEquationChoices(problem).map((choice, choiceIndex) => (
                       <button className={selectedChoices[problem.id] === choiceIndex ? "is-selected" : ""} type="button" key={choiceIndex} onClick={() => selectChoice(problem, choiceIndex)}>

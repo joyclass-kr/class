@@ -24,6 +24,7 @@ export default function TrigonometricDerivativesTwoPage() {
   const choiceProblems: WorksheetChoiceProblem[] = problems.map((problem) => ({
     id: problem.id,
     label: problem.label,
+    prompt: "도함수는?",
     correctLatex: problem.answer.latex,
     choices: createTrigonometricDerivativeTwoChoices(problem).map((choice) => ({
       id: choice.id,

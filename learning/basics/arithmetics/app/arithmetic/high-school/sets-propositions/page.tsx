@@ -18,6 +18,7 @@ export default function SetsPropositionsPage() {
   const choiceProblems: WorksheetChoiceProblem[] = problems.map((problem) => ({
     id: problem.id,
     label: problem.label,
+    prompt: problem.prompt,
     correctLatex: problem.choices.find((choice) => choice.id === problem.answer)?.latex ?? "",
     choices: problem.choices.map((choice) => ({ ...choice, correct: choice.id === problem.answer })),
   }));

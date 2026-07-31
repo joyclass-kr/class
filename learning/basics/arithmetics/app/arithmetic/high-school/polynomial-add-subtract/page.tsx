@@ -2,7 +2,8 @@
 
 import { useEffect, useMemo, useState } from "react";
 import MathFormula from "../../../components/math-formula";
-import WorksheetQuestionPrompt from "../../../components/worksheet-question-prompt";
+import InlineMathText from "../../../components/inline-math-text";
+import WorksheetQuestionPrompt, { worksheetQuestion } from "../../../components/worksheet-question-prompt";
 import {
   createPolynomialChoices,
   createPolynomialProblemSet,
@@ -150,7 +151,7 @@ export default function PolynomialAdditionSubtractionPage() {
                 <section className="trig-derivative-answer-item" key={problem.id}>
                   <div className="trig-derivative-answer-item-heading">
                     <strong>{String(index + 1).padStart(2, "0")}</strong>
-                    <span>{problem.label}</span>
+                      <span><InlineMathText text={worksheetQuestion(problem.label, "계산 결과는?")} /></span>
                   </div>
                   {renderChoices(problem, index + 1)}
                   {graded && <span className={`counting-result ${isCorrect ? "correct" : "wrong"}`} role="status">{isCorrect ? "맞음" : <>정답 <MathFormula latex={createPolynomialChoices(problem).find(({ correct }) => correct)?.latex ?? "0"} /></>}</span>}
