@@ -6,6 +6,8 @@ const page = fs.readFileSync('learning/academics/science-lab/earthquake/index.ht
 const app = fs.readFileSync('learning/academics/science-lab/earthquake/app.js', 'utf8');
 const styles = fs.readFileSync('learning/academics/science-lab/earthquake/styles.css', 'utf8');
 
+assert.doesNotMatch(page, /항상/);
+
 assert.match(scienceLab, /href="earthquake\/">지진파와 진앙<\/a><small>고등학교<\/small>/);
 assert.match(page, /<h1 id="page-title">지진파와 진앙<\/h1>/);
 assert.match(page, /<a class="back-link" href="\.\.\/">← 과학 실험실<\/a>/);
