@@ -62,8 +62,15 @@
         // Heliocentric 3D Engine
         (function() {
             const container = document.getElementById('emCanvasContainer');
+            const spacePane = document.getElementById('emMoonSpacePane');
             const canvas = document.getElementById('em3DCanvas');
-            if (!container || !canvas || typeof THREE === 'undefined') return;
+            const observerView = document.getElementById('emMoonMyView');
+            const observerSkyCanvas = document.getElementById('emMoonSkyCanvas');
+            const observerSkyCaption = document.getElementById('emMoonSkyCaption');
+            const observerSkySolarDate = document.getElementById('emMoonSkySolarDate');
+            const observerSkyLunarDate = document.getElementById('emMoonSkyLunarDate');
+            const observerSkyStatus = document.getElementById('emMoonSkyStatus');
+            if (!container || !spacePane || !canvas || !observerView || !observerSkyCanvas || typeof THREE === 'undefined') return;
             const seasonRaycaster = new THREE.Raycaster();
             const seasonPointer = new THREE.Vector2();
             let seasonPointerDown = null;
@@ -91,6 +98,8 @@
             let elapsedSimulationHours = 0;
             let moonRelAngle = 0; // Lunar month begins at New Moon (lunar January 1, 0deg).
             let currentObserverLatitude = 37.5;
+            let currentObserverKey = 'korea';
+            let currentObserverPlace = '한국';
 
             let isPlaying = true;
             let speed = 1.0;
@@ -116,8 +125,8 @@
             ];
 
             function init3D() {
-                const w = container.clientWidth || 900;
-                const h = container.clientHeight || 520;
+                const w = spacePane.clientWidth || 900;
+                const h = spacePane.clientHeight || 520;
 
                 scene = new THREE.Scene();
                 camera = new THREE.PerspectiveCamera(40, w / h, 0.1, 1500);
@@ -284,13 +293,16 @@
                 scene.add(sunLightLinesGroup);
 
                 // Window Resize
-                window.addEventListener('resize', () => {
-                    const nw = container.clientWidth || 900;
-                    const nh = container.clientHeight || 520;
+                const resizeRenderer = () => {
+                    const nw = spacePane.clientWidth || 900;
+                    const nh = spacePane.clientHeight || 520;
                     camera.aspect = nw / nh;
                     camera.updateProjectionMatrix();
                     renderer.setSize(nw, nh);
-                });
+                    drawMoonObserverSky();
+                };
+                window.addEventListener('resize', resizeRenderer, { passive: true });
+                window.addEventListener('earthmoon:view-resize', resizeRenderer);
 
                 animate();
             }
@@ -668,7 +680,7 @@
                 }
 
                 const hourNote = hour === 0 ? '(자정)' : (hour === 12 ? '(정오)' : '');
-                mainText.textContent = `${monthIndex + 1}월 ${dayOfMonth + 1}일 ${hour}시`;
+                mainText.textContent = `양력 ${monthIndex + 1}월 ${dayOfMonth + 1}일 ${hour}시`;
                 periodNote.textContent = hourNote;
                 display.setAttribute(
                     'datetime',
@@ -759,6 +771,10 @@
                     }
                 };
                 const location = locations[locationKey] || locations.korea;
+                currentObserverKey = locations[locationKey] ? locationKey : 'korea';
+                currentObserverPlace = currentObserverKey === 'australia' ? '호주' :
+                    currentObserverKey === 'equator' ? '적도' :
+                    currentObserverKey === 'north' ? '북극' : '한국';
                 currentObserverLatitude = location.latitude;
                 const latitudeRad = location.latitude * (Math.PI / 180);
                 const surfaceRadius = 10.3;
@@ -776,8 +792,8 @@
                     observerDiskMaterial.needsUpdate = true;
                 }
 
-                document.querySelectorAll('.em-observer-btn').forEach(button => {
-                    button.classList.toggle('active', button.dataset.observerLocation === locationKey);
+                document.querySelectorAll('#emMoonSimulator .em-observer-btn').forEach(button => {
+                    button.classList.toggle('active', button.dataset.observerLocation === currentObserverKey);
                 });
 
                 const status = document.getElementById('emObserverStatus');
@@ -785,14 +801,278 @@
                 if (status) status.textContent = location.status;
                 if (moonLabel) moonLabel.textContent = location.moonLabel;
                 draw2DMoonPhase(moonRelAngle);
+                drawMoonObserverSky();
             }
 
             function bindObserverControls() {
-                document.querySelectorAll('.em-observer-btn').forEach(button => {
+                document.querySelectorAll('#emMoonSimulator .em-observer-btn').forEach(button => {
                     button.addEventListener('click', function() {
-                        setObserverLocation(this.dataset.observerLocation);
+                        const locationKey = this.dataset.observerLocation;
+                        setObserverLocation(locationKey);
+                        window.dispatchEvent(new CustomEvent('earthmoon:observer-change', {
+                            detail: { locationKey, source: 'moon' }
+                        }));
                     });
                 });
+
+                window.addEventListener('earthmoon:observer-change', event => {
+                    if (!event.detail || event.detail.source === 'moon') return;
+                    setObserverLocation(event.detail.locationKey);
+                });
+            }
+
+            function normalizeRadians(angle) {
+                return (angle % (Math.PI * 2) + Math.PI * 2) % (Math.PI * 2);
+            }
+
+            function normalizeDegreesSigned(angle) {
+                return ((angle + 540) % 360) - 180;
+            }
+
+            function getMainSimulationDate() {
+                const monthDays = [31, 28, 31, 30, 31, 30, 31, 31, 30, 31, 30, 31];
+                const totalHours = ((elapsedSimulationHours % HOURS_PER_YEAR) + HOURS_PER_YEAR) % HOURS_PER_YEAR;
+                let dayOfYear = Math.floor(totalHours / 24) + 1;
+                let month = 0;
+                while (dayOfYear > monthDays[month]) {
+                    dayOfYear -= monthDays[month];
+                    month += 1;
+                }
+                return {
+                    month: month + 1,
+                    day: dayOfYear,
+                    dayOfYear: Math.floor(totalHours / 24) + 1,
+                    hour: Math.floor(totalHours % 24)
+                };
+            }
+
+            function equatorialFromEcliptic(longitude) {
+                const obliquity = 23.44 * Math.PI / 180;
+                return {
+                    rightAscension: Math.atan2(
+                        Math.cos(obliquity) * Math.sin(longitude),
+                        Math.cos(longitude)
+                    ),
+                    declination: Math.asin(Math.sin(obliquity) * Math.sin(longitude))
+                };
+            }
+
+            function horizontalPosition(rightAscension, declination, siderealTime) {
+                const latitude = currentObserverLatitude * Math.PI / 180;
+                const hourAngle = normalizeDegreesSigned(
+                    (siderealTime - rightAscension) * 180 / Math.PI
+                ) * Math.PI / 180;
+                const east = -Math.cos(declination) * Math.sin(hourAngle);
+                const north =
+                    Math.cos(latitude) * Math.sin(declination) -
+                    Math.sin(latitude) * Math.cos(declination) * Math.cos(hourAngle);
+                const up =
+                    Math.sin(latitude) * Math.sin(declination) +
+                    Math.cos(latitude) * Math.cos(declination) * Math.cos(hourAngle);
+                return {
+                    altitude: Math.asin(Math.max(-1, Math.min(1, up))) * 180 / Math.PI,
+                    azimuth: (Math.atan2(east, north) * 180 / Math.PI + 360) % 360
+                };
+            }
+
+            function prepareMoonSkyCanvas() {
+                const rect = observerSkyCanvas.getBoundingClientRect();
+                const width = Math.max(1, rect.width);
+                const height = Math.max(1, rect.height);
+                const dpr = Math.min(window.devicePixelRatio || 1, 2);
+                const pixelWidth = Math.round(width * dpr);
+                const pixelHeight = Math.round(height * dpr);
+                if (observerSkyCanvas.width !== pixelWidth || observerSkyCanvas.height !== pixelHeight) {
+                    observerSkyCanvas.width = pixelWidth;
+                    observerSkyCanvas.height = pixelHeight;
+                }
+                const ctx = observerSkyCanvas.getContext('2d');
+                ctx.setTransform(dpr, 0, 0, dpr, 0, 0);
+                return { ctx, width, height };
+            }
+
+            function drawMoonObserverSky() {
+                if (observerView.hidden) return;
+                const prepared = prepareMoonSkyCanvas();
+                const ctx = prepared.ctx;
+                const width = prepared.width;
+                const height = prepared.height;
+                const horizon = height - 54;
+                const date = getMainSimulationDate();
+                const solarHourAngle = (date.hour - 12) * 15 * Math.PI / 180;
+                const sunLongitude = normalizeRadians(
+                    ((date.dayOfYear - 80) / EARTH_DAYS_PER_YEAR) * Math.PI * 2
+                );
+                const moonLongitude = normalizeRadians(sunLongitude + moonRelAngle);
+                const sunEquatorial = equatorialFromEcliptic(sunLongitude);
+                const moonEquatorial = equatorialFromEcliptic(moonLongitude);
+                const siderealTime = sunEquatorial.rightAscension + solarHourAngle;
+                const sunPosition = horizontalPosition(
+                    sunEquatorial.rightAscension,
+                    sunEquatorial.declination,
+                    siderealTime
+                );
+                const moonPosition = horizontalPosition(
+                    moonEquatorial.rightAscension,
+                    moonEquatorial.declination,
+                    siderealTime
+                );
+                const daylight = Math.max(0, Math.min(1, (sunPosition.altitude + 8) / 24));
+
+                const skyGradient = ctx.createLinearGradient(0, 0, 0, horizon);
+                skyGradient.addColorStop(0, daylight > 0.05 ? '#1597df' : '#020617');
+                skyGradient.addColorStop(1, daylight > 0.05 ? '#bae6fd' : '#0f2744');
+                ctx.fillStyle = skyGradient;
+                ctx.fillRect(0, 0, width, horizon);
+
+                if (daylight < 0.35) {
+                    ctx.save();
+                    ctx.globalAlpha = 1 - daylight;
+                    ctx.fillStyle = '#f8fafc';
+                    for (let index = 0; index < 52; index += 1) {
+                        const x = (index * 89 + 37) % width;
+                        const y = (index * 47 + 23) % Math.max(1, horizon - 50);
+                        ctx.beginPath();
+                        ctx.arc(x, y, index % 9 === 0 ? 1.2 : 0.65, 0, Math.PI * 2);
+                        ctx.fill();
+                    }
+                    ctx.restore();
+                }
+
+                const groundGradient = ctx.createLinearGradient(0, horizon, 0, height);
+                groundGradient.addColorStop(0, daylight > 0.05 ? '#15803d' : '#064e3b');
+                groundGradient.addColorStop(1, daylight > 0.05 ? '#14532d' : '#022c22');
+                ctx.fillStyle = groundGradient;
+                ctx.fillRect(0, horizon, width, height - horizon);
+                ctx.strokeStyle = '#22d3ee';
+                ctx.lineWidth = 2;
+                ctx.beginPath();
+                ctx.moveTo(0, horizon);
+                ctx.quadraticCurveTo(width / 2, horizon - 5, width, horizon);
+                ctx.stroke();
+
+                const polarView = Math.abs(currentObserverLatitude) >= 89.5;
+                const viewCenter = currentObserverLatitude < 0 ? 0 : 180;
+                function project(position) {
+                    if (position.altitude <= 0) return null;
+                    if (polarView) {
+                        return {
+                            x: (position.azimuth / 360) * width,
+                            y: horizon - (position.altitude / 90) * (horizon - 68)
+                        };
+                    }
+                    const relativeAzimuth = normalizeDegreesSigned(position.azimuth - viewCenter);
+                    if (Math.abs(relativeAzimuth) > 92) return null;
+                    return {
+                        x: width / 2 + (relativeAzimuth / 180) * width,
+                        y: horizon - (position.altitude / 90) * (horizon - 68)
+                    };
+                }
+
+                const sunPoint = project(sunPosition);
+                if (sunPoint) {
+                    const glow = ctx.createRadialGradient(sunPoint.x, sunPoint.y, 2, sunPoint.x, sunPoint.y, 28);
+                    glow.addColorStop(0, 'rgba(255,255,220,1)');
+                    glow.addColorStop(0.35, 'rgba(250,204,21,0.9)');
+                    glow.addColorStop(1, 'rgba(250,204,21,0)');
+                    ctx.fillStyle = glow;
+                    ctx.beginPath();
+                    ctx.arc(sunPoint.x, sunPoint.y, 28, 0, Math.PI * 2);
+                    ctx.fill();
+                    ctx.fillStyle = '#facc15';
+                    ctx.beginPath();
+                    ctx.arc(sunPoint.x, sunPoint.y, 11, 0, Math.PI * 2);
+                    ctx.fill();
+                    ctx.fillStyle = '#713f12';
+                    ctx.font = '900 11px Pretendard, sans-serif';
+                    ctx.textAlign = 'center';
+                    ctx.fillText('태양', sunPoint.x, sunPoint.y + 25);
+                }
+
+                const phaseAngle = normalizeRadians(moonRelAngle);
+                const elongationDegrees = Math.min(
+                    phaseAngle,
+                    Math.PI * 2 - phaseAngle
+                ) * 180 / Math.PI;
+                const moonPoint = project(moonPosition);
+                if (moonPoint && elongationDegrees > 8) {
+                    const phaseCanvas = document.getElementById('moonPhaseCanvas');
+                    ctx.save();
+                    ctx.shadowColor = 'rgba(226,232,240,0.65)';
+                    ctx.shadowBlur = 12;
+                    if (phaseCanvas) {
+                        ctx.drawImage(phaseCanvas, moonPoint.x - 22, moonPoint.y - 22, 44, 44);
+                    } else {
+                        ctx.fillStyle = '#e2e8f0';
+                        ctx.beginPath();
+                        ctx.arc(moonPoint.x, moonPoint.y, 18, 0, Math.PI * 2);
+                        ctx.fill();
+                    }
+                    ctx.restore();
+                    ctx.fillStyle = '#f8fafc';
+                    ctx.font = '900 11px Pretendard, sans-serif';
+                    ctx.textAlign = 'center';
+                    ctx.fillText('달', moonPoint.x, moonPoint.y + 32);
+                }
+
+                ctx.fillStyle = '#f8fafc';
+                ctx.font = '900 13px Pretendard, sans-serif';
+                ctx.textBaseline = 'bottom';
+                if (polarView) {
+                    ctx.textAlign = 'center';
+                    ctx.fillText(
+                        currentObserverLatitude > 0 ? '360° 지평선 · 모든 방향이 남쪽' : '360° 지평선 · 모든 방향이 북쪽',
+                        width / 2,
+                        horizon - 8
+                    );
+                } else {
+                    const leftLabel = currentObserverLatitude < 0 ? '서 (West)' : '동 (East)';
+                    const centerLabel = currentObserverLatitude < 0 ? '북 (North)' : '남 (South)';
+                    const rightLabel = currentObserverLatitude < 0 ? '동 (East)' : '서 (West)';
+                    ctx.textAlign = 'left';
+                    ctx.fillText(leftLabel, 12, horizon - 8);
+                    ctx.textAlign = 'center';
+                    ctx.fillStyle = '#fbbf24';
+                    ctx.fillText(centerLabel, width / 2, 30);
+                    ctx.fillStyle = '#f8fafc';
+                    ctx.textAlign = 'right';
+                    ctx.fillText(rightLabel, width - 12, horizon - 8);
+                }
+
+                ctx.fillStyle = '#0ea5e9';
+                ctx.beginPath();
+                ctx.arc(width / 2, horizon - 12, 7, 0, Math.PI * 2);
+                ctx.fill();
+                ctx.fillRect(width / 2 - 5, horizon - 5, 10, 22);
+
+                const lunarDay = Math.floor((phaseAngle / (Math.PI * 2)) * 29.53) + 1;
+                const elapsedDays = elapsedSimulationHours / 24;
+                const lunarMonth = Math.floor(elapsedDays / 29.53) % 12 + 1;
+                const phaseNames = ['삭', '초승달', '상현달', '팽대달', '망/보름달', '팽대달', '하현달', '그믐달'];
+                const phaseIndex = Math.round((phaseAngle / (Math.PI * 2)) * 8) % 8;
+                if (observerSkySolarDate) {
+                    observerSkySolarDate.textContent = '양력 ' + date.month + '월 ' + date.day + '일 ' + date.hour + '시';
+                }
+                if (observerSkyLunarDate) {
+                    observerSkyLunarDate.textContent = '음력 ' + lunarMonth + '월 ' + lunarDay + '일 경 · ' + phaseNames[phaseIndex];
+                }
+                if (observerSkyCaption) {
+                    if (polarView) {
+                        observerSkyCaption.textContent = currentObserverPlace + '의 360° 지평선';
+                    } else {
+                        observerSkyCaption.textContent =
+                            currentObserverPlace + '에서 ' +
+                            (currentObserverLatitude < 0 ? '북쪽' : '남쪽') +
+                            ' 하늘을 바라본 모습';
+                    }
+                }
+                if (observerSkyStatus) {
+                    const sunState = sunPosition.altitude > 0 ? '태양은 지평선 위' : '태양은 지평선 아래';
+                    const moonState = elongationDegrees <= 8
+                        ? '달은 태양과 같은 방향이라 관측 불가'
+                        : (moonPosition.altitude > 0 ? '달은 지평선 위' : '달은 지평선 아래');
+                    observerSkyStatus.textContent = sunState + ' · ' + moonState;
+                }
             }
 
             function updatePhasesUI() {
@@ -823,6 +1103,7 @@
                 });
 
                 draw2DMoonPhase(a);
+                drawMoonObserverSky();
             }
 
             function draw2DMoonPhase(angleRad) {
@@ -1069,11 +1350,19 @@
                 if (viewMode === 'trackEarth') {
                     viewMode = 'solarOverview';
                     this.textContent = '지구 시선';
+                    container.classList.remove('earth-view-mode');
+                    observerView.hidden = true;
                     camera.position.set(0, 190, 300);
                 } else {
                     viewMode = 'trackEarth';
                     this.textContent = '태양계 시선';
+                    container.classList.add('earth-view-mode');
+                    observerView.hidden = false;
+                    drawMoonObserverSky();
                 }
+                requestAnimationFrame(() => {
+                    window.dispatchEvent(new Event('earthmoon:view-resize'));
+                });
             };
 
             // Phase quick selector chips click even
@@ -1122,7 +1411,6 @@
             const observerCaption = document.getElementById('emSunPathObserverCaption');
             const locationButtons = Array.from(document.querySelectorAll('[data-sunpath-lat]'));
             const monthDays = [31, 28, 31, 30, 31, 30, 31, 31, 30, 31, 30, 31];
-            const speedSteps = [0.02, 0.05, 0.1, 0.25, 1, 5, 20];
             const seasonPoints = [
                 { day: 80, label: '춘분', date: '3/21', color: '#fb7185' },
                 { day: 172, label: '하지', date: '6/21', color: '#fbbf24' },
@@ -2064,8 +2352,10 @@
             });
 
             speedSlider.addEventListener('input', () => {
-                state.speed = speedSteps[Number(speedSlider.value)] || 1;
-                if (speedValue) speedValue.textContent = `${state.speed}×`;
+                state.speed = Math.pow(10, Number(speedSlider.value) / 20);
+                if (speedValue) {
+                    speedValue.textContent = `${state.speed < 1 ? state.speed.toFixed(2) : state.speed.toFixed(1)}×`;
+                }
             });
 
             daySlider.addEventListener('input', () => {
@@ -2146,13 +2436,32 @@
                 render();
             });
 
+            function setSeasonalObserver(button) {
+                if (!button) return;
+                state.latitude = Number(button.dataset.sunpathLat);
+                state.place = button.dataset.sunpathPlace || '관측자';
+                locationButtons.forEach(item => item.classList.toggle('active', item === button));
+                render();
+            }
+
             locationButtons.forEach(button => {
                 button.addEventListener('click', () => {
-                    state.latitude = Number(button.dataset.sunpathLat);
-                    state.place = button.dataset.sunpathPlace || '관측자';
-                    locationButtons.forEach(item => item.classList.toggle('active', item === button));
-                    render();
+                    setSeasonalObserver(button);
+                    window.dispatchEvent(new CustomEvent('earthmoon:observer-change', {
+                        detail: {
+                            locationKey: button.dataset.observerLocation,
+                            source: 'sunpath'
+                        }
+                    }));
                 });
+            });
+
+            window.addEventListener('earthmoon:observer-change', event => {
+                if (!event.detail || event.detail.source === 'sunpath') return;
+                const button = locationButtons.find(item =>
+                    item.dataset.observerLocation === event.detail.locationKey
+                );
+                setSeasonalObserver(button);
             });
 
             window.addEventListener('resize', render, { passive: true });

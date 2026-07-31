@@ -226,6 +226,124 @@ body {
     cursor: grabbing;
 }
 
+.em-moon-space-pane {
+    position: relative;
+    min-width: 0;
+    min-height: 0;
+    width: 100%;
+    height: 100%;
+    overflow: hidden;
+    background: #030712;
+}
+
+#em3DCanvas,
+#emMoonSkyCanvas {
+    display: block;
+    width: 100%;
+    height: 100%;
+}
+
+.solar-canvas-wrapper.earth-view-mode {
+    display: grid;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: 10px;
+    padding: 10px;
+    background: #020617;
+    cursor: default;
+}
+
+.solar-canvas-wrapper.earth-view-mode .em-moon-space-pane,
+.em-moon-my-view {
+    overflow: hidden;
+    border: 1px solid rgba(56, 189, 248, 0.3);
+    border-radius: 15px;
+}
+
+.em-moon-my-view {
+    position: relative;
+    min-width: 0;
+    min-height: 0;
+    background: #06152a;
+}
+
+.em-moon-my-view[hidden] {
+    display: none;
+}
+
+.em-moon-view-caption {
+    position: absolute;
+    top: 12px;
+    left: 14px;
+    z-index: 5;
+    display: flex;
+    flex-direction: column;
+    gap: 2px;
+    padding: 7px 10px;
+    border-radius: 10px;
+    background: rgba(2, 6, 23, 0.78);
+    pointer-events: none;
+}
+
+.em-moon-view-caption strong {
+    color: #f8fafc;
+    font-size: 16px;
+}
+
+.em-moon-view-caption span {
+    color: #7dd3fc;
+    font-size: 11px;
+    font-weight: 800;
+}
+
+.em-moon-sky-readout {
+    position: absolute;
+    top: 12px;
+    right: 14px;
+    z-index: 5;
+    display: flex;
+    flex-direction: column;
+    align-items: flex-end;
+    gap: 2px;
+    padding: 7px 10px;
+    border: 1px solid rgba(251, 191, 36, 0.35);
+    border-radius: 10px;
+    background: rgba(2, 6, 23, 0.82);
+    pointer-events: none;
+}
+
+.em-moon-sky-readout strong {
+    color: #fbbf24;
+    font-size: 13px;
+}
+
+.em-moon-sky-readout span {
+    color: #e0f2fe;
+    font-size: 11px;
+    font-weight: 800;
+}
+
+.em-moon-sky-status {
+    position: absolute;
+    right: 14px;
+    bottom: 14px;
+    left: 14px;
+    z-index: 5;
+    color: #e0f2fe;
+    font-size: 11px;
+    font-weight: 800;
+    text-align: center;
+    text-shadow: 0 1px 4px rgba(2, 6, 23, 0.9);
+    pointer-events: none;
+}
+
+.solar-canvas-wrapper.earth-view-mode .earth-view-box {
+    display: none;
+}
+
+.solar-canvas-wrapper.earth-view-mode .em-observer-panel {
+    max-width: calc(100% - 32px);
+}
+
 canvas#solarCanvas {
     width: 100%;
     height: 100%;
@@ -241,6 +359,22 @@ canvas#solarCanvas {
     flex-direction: column;
     gap: 16px;
     align-items: center;
+}
+
+.em-shared-controls {
+    color: #cbd5e1;
+}
+
+.em-shared-control-row {
+    display: flex;
+    align-items: center;
+    justify-content: flex-start;
+    flex-wrap: wrap;
+    gap: 12px;
+}
+
+.em-main-controls {
+    padding: 8px 12px;
 }
 
 .sim-time-display {
@@ -1236,6 +1370,13 @@ body {
     background: rgba(8, 15, 30, 0.97);
 }
 
+.em-sunpath-controls.em-shared-controls {
+    border: 1px solid rgba(56, 189, 248, 0.35);
+    border-radius: 12px;
+    margin: 0 10px 10px;
+    background: rgba(10, 15, 29, 0.95);
+}
+
 .em-sunpath-chip-row,
 .em-sunpath-slider-row {
     display: flex;
@@ -1243,6 +1384,10 @@ body {
     justify-content: center;
     flex-wrap: wrap;
     gap: 6px;
+}
+
+.em-sunpath-location-btn {
+    font-size: 11px;
 }
 
 .em-control-label {
@@ -1351,6 +1496,32 @@ body {
 }
 
 @media (max-width: 900px) {
+    .solar-canvas-wrapper.earth-view-mode {
+        grid-template-columns: 1fr;
+        grid-template-rows: repeat(2, minmax(0, 1fr));
+        gap: 7px;
+        padding: 7px;
+    }
+
+    .solar-canvas-wrapper.earth-view-mode .em-observer-panel {
+        right: 10px;
+        left: 10px;
+        max-width: none;
+    }
+
+    .em-moon-view-caption,
+    .em-moon-sky-readout {
+        top: 8px;
+    }
+
+    .em-moon-view-caption {
+        left: 8px;
+    }
+
+    .em-moon-sky-readout {
+        right: 8px;
+    }
+
     .em-sunpath-card {
         min-height: 640px;
     }
