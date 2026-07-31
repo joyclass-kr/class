@@ -73,7 +73,7 @@ export const MIDDLE_CORE_TITLES: Record<MiddleCoreKind, string> = {
   "monomial-multiply": "단항식의 곱셈",
   "monomial-divide": "단항식의 나눗셈",
   "monomial-comprehensive": "단항식의 곱셈과 나눗셈",
-  "polynomial-add-subtract": "다항식의 덧셈·뺄셈",
+  "polynomial-add-subtract": "문자식 기본연산 종합",
   "linear-inequality": "일차부등식",
   "simultaneous-substitution": "연립일차방정식 대입법",
   "simultaneous-elimination": "연립일차방정식 가감법",
@@ -98,6 +98,16 @@ MIDDLE_CORE_TITLES["radical-calculation"] = "제곱근과 근호 계산";
 const MONOMIAL_COMPREHENSIVE_PARTS: AtomicMiddleCoreKind[] = [
   "monomial-multiply",
   "monomial-divide",
+];
+const ALGEBRAIC_EXPRESSION_COMPREHENSIVE_PARTS: AtomicMiddleCoreKind[] = [
+  "exponent-laws",
+  "monomial-multiply",
+  "monomial-divide",
+  "polynomial-multiply",
+  "polynomial-add-subtract",
+  "polynomial-divide",
+  "polynomial-add-subtract",
+  "polynomial-add-subtract",
 ];
 const LINEAR_SYSTEM_COMPREHENSIVE_PARTS: AtomicMiddleCoreKind[] = [
   "linear-inequality",
@@ -875,6 +885,9 @@ function actualKind(kind: MiddleCoreKind, index: number): AtomicMiddleCoreKind {
   }
   if (kind === "monomial-comprehensive") {
     return MONOMIAL_COMPREHENSIVE_PARTS[index % MONOMIAL_COMPREHENSIVE_PARTS.length];
+  }
+  if (kind === "polynomial-add-subtract") {
+    return ALGEBRAIC_EXPRESSION_COMPREHENSIVE_PARTS[index];
   }
   if (kind === "linear-system-comprehensive") {
     return LINEAR_SYSTEM_COMPREHENSIVE_PARTS[index % LINEAR_SYSTEM_COMPREHENSIVE_PARTS.length];

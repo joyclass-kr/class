@@ -77,7 +77,9 @@ function makeProblem(
     id,
     kind,
     label,
-    prompt: "",
+    prompt: kind === "integer-comparison" || kind === "fraction-comparison"
+      ? "알맞은 부등호는?"
+      : "",
     latex: expression,
     answers: answer[1] === 1 ? [answer[0]] : answer,
     answerLabels: answer[1] === 1 ? ["답"] : ["분자", "분모"],

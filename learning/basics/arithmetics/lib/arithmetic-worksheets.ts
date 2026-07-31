@@ -199,8 +199,7 @@ export const middleSchoolWorksheetCatalog: ArithmeticWorksheet[] = [
 
   { grade: "중2", name: "유리수와 순환소수", title: "유리수와 순환소수", route: "/arithmetic/middle-school/core-calculations?kind=repeating-decimal" },
   { grade: "중2", name: "지수법칙", title: "지수법칙", route: "/arithmetic/middle-school/core-calculations?kind=exponent-laws" },
-  { grade: "중2", name: "단항식의 곱셈과 나눗셈", title: "단항식의 곱셈과 나눗셈", route: "/arithmetic/middle-school/core-calculations?kind=monomial-comprehensive" },
-  { grade: "중2", name: "다항식의 덧셈·뺄셈", title: "다항식의 덧셈·뺄셈", route: "/arithmetic/middle-school/core-calculations?kind=polynomial-add-subtract" },
+  { grade: "중2", name: "문자식 기본연산 종합", title: "문자식 기본연산 종합", route: "/arithmetic/middle-school/core-calculations?kind=polynomial-add-subtract" },
   { grade: "중2", name: "일차부등식과 연립일차방정식", title: "일차부등식과 연립일차방정식", route: "/arithmetic/middle-school/core-calculations?kind=linear-system-comprehensive" },
   { grade: "중2", name: "일차함수의 값·기울기·절편", title: "일차함수의 값·기울기·절편", route: "/arithmetic/middle-school/curriculum-calculations?kind=linear-function-basics" },
   { grade: "중2", name: "일차함수의 식과 방정식", title: "일차함수의 식과 방정식", route: "/arithmetic/middle-school/curriculum-calculations?kind=linear-function-equations" },

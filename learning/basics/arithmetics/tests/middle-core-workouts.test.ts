@@ -135,8 +135,8 @@ test("오답 보충은 서로 다른 유형에서 최대 두 문제만 만든다
   assert.ok(reviews.every(({ difficulty }) => difficulty === "advanced"));
 });
 
-test("중학교 연산 목록 54개는 쉬운 유형을 통합하고 모두 연결된다", () => {
-  assert.equal(middleSchoolWorksheetCatalog.length, 54);
+test("중학교 연산 목록 53개는 쉬운 유형을 통합하고 모두 연결된다", () => {
+  assert.equal(middleSchoolWorksheetCatalog.length, 53);
   assert.ok(middleSchoolWorksheetCatalog.every(({ route }) => route !== null));
   assert.equal(
     new Set(middleSchoolWorksheetCatalog.map(({ name }) => name)).size,
@@ -157,6 +157,7 @@ test("통합된 쉬운 중등 학습지는 목록에서 별도 페이지로 중�
   assert.ok(!routes.some((route) => route?.includes("kind=special-angles")));
   assert.ok(!routes.some((route) => route?.includes("kind=angle-applications")));
   assert.ok(!routes.some((route) => route?.includes("kind=mean-applications")));
+  assert.ok(!routes.some((route) => route?.includes("kind=monomial-comprehensive")));
 });
 
 test("gcd-lcm worksheets progress through middle-school prime factorization", () => {
@@ -212,21 +213,23 @@ test("최대공약수와 최소공배수 문제는 식 안의 중복 질문 없�
   }
 });
 
-test("polynomial addition and subtraction progresses beyond repeated two-polynomial drills", () => {
+test("문자식 기본연산 종합은 쉬운 반복 대신 필수 연산을 한 번씩 순환한다", () => {
   const problems = createMiddleCoreProblemSet("polynomial-add-subtract", 29).problems;
   assert.deepEqual(
-    problems.map(({ structure }) => structure),
+    problems.map(({ kind }) => kind),
     [
-      "two-add",
-      "two-subtract",
-      "scalar-two-polynomials",
-      "three-polynomials",
-      "two-variables",
-      "fraction-coefficients",
-      "nested-parentheses",
-      "missing-polynomial",
+      "exponent-laws",
+      "monomial-multiply",
+      "monomial-divide",
+      "polynomial-multiply",
+      "polynomial-add-subtract",
+      "polynomial-divide",
+      "polynomial-add-subtract",
+      "polynomial-add-subtract",
     ],
   );
-  assert.equal(new Set(problems.map(({ label }) => label)).size, 8);
-  assert.ok(problems.slice(2).every(({ structure }) => !["two-add", "two-subtract"].includes(structure)));
+  assert.deepEqual(
+    problems.filter(({ kind }) => kind === "polynomial-add-subtract").map(({ structure }) => structure),
+    ["two-variables", "nested-parentheses", "missing-polynomial"],
+  );
 });
