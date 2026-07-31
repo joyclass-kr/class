@@ -1236,9 +1236,14 @@
                 const sourceX = (moonNearsideImage.naturalWidth - sourceSize) / 2;
                 const sourceY = (moonNearsideImage.naturalHeight - sourceSize) / 2;
                 const imageRadius = radius * 1.075;
+                const isShadowSurface = brightness < 1;
 
                 ctx.save();
-                ctx.filter = `grayscale(1) brightness(${brightness}) contrast(1.06)`;
+                // Blend the real maria over a light base instead of letting the
+                // darkest pixels become ink-black. The phase shadow stays dark,
+                // while the illuminated surface keeps a soft, readable pattern.
+                ctx.globalAlpha = isShadowSurface ? 0.42 : 0.48;
+                ctx.filter = `grayscale(1) brightness(${brightness}) contrast(0.72)`;
                 ctx.drawImage(
                     moonNearsideImage,
                     sourceX,
