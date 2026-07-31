@@ -58,7 +58,7 @@ function buildProblem(kind: CoordinateLineKind, next: () => number, id: string):
     const [dx, dy, distance] = [[3, 4, 5], [5, 12, 13], [6, 8, 10]][integer(next, 0, 2)];
     const first = [integer(next, -6, 4), integer(next, -6, 4)];
     const second = [first[0] + (integer(next, 0, 1) ? dx : -dx), first[1] + (integer(next, 0, 1) ? dy : -dy)];
-    return { id, kind, label: "두 점 사이의 거리", prompt: "두 점 A, B 사이의 거리를 구하세요.", latex: `A${pointLatex(first)},\\qquad B${pointLatex(second)}`, answer: [distance], answerMode: "scalar" };
+    return { id, kind, label: "두 점 사이의 거리", prompt: "두 점 $A, B$ 사이의 거리는?", latex: `A${pointLatex(first)},\\qquad B${pointLatex(second)}`, answer: [distance], answerMode: "scalar" };
   }
   if (kind === "internal-division") {
     const m = integer(next, 1, 4);
@@ -67,7 +67,7 @@ function buildProblem(kind: CoordinateLineKind, next: () => number, id: string):
     const vector = [nonzero(next, -3, 3), nonzero(next, -3, 3)];
     const first = [target[0] - m * vector[0], target[1] - m * vector[1]];
     const second = [target[0] + n * vector[0], target[1] + n * vector[1]];
-    return { id, kind, label: "내분점", prompt: `선분 AB를 ${m}:${n}으로 내분하는 점 P의 좌표를 구하세요.`, latex: `A${pointLatex(first)},\\qquad B${pointLatex(second)}`, answer: target, answerMode: "point" };
+    return { id, kind, label: "내분점", prompt: `선분 $AB$를 ${m}:${n}으로 내분하는 점 $P$의 좌표는?`, latex: `A${pointLatex(first)},\\qquad B${pointLatex(second)}`, answer: target, answerMode: "point" };
   }
   if (kind === "point-line-distance") {
     const base = [integer(next, -5, 5), integer(next, -5, 5)];
@@ -76,7 +76,7 @@ function buildProblem(kind: CoordinateLineKind, next: () => number, id: string):
     const point = [base[0] + 3 * multiple, base[1] + 4 * multiple];
     return {
       id, kind, label: "점과 직선 사이의 거리",
-      prompt: "점 P와 직선 l 사이의 거리를 구하세요.",
+      prompt: "점 $P$와 직선 $l$ 사이의 거리는?",
       latex: `P${pointLatex(point)},\\qquad l:\\ ${lineLatex(line)}`,
       answer: [5 * Math.abs(multiple)], answerMode: "scalar",
     };
@@ -91,7 +91,7 @@ function buildProblem(kind: CoordinateLineKind, next: () => number, id: string):
     const answer = normalizeLine(original[0], original[1], original[2] - original[0] * p - original[1] * q);
     return {
       id, kind, label: "직선의 평행이동",
-      prompt: "직선을 주어진 방향으로 평행이동한 방정식을 구하세요.",
+      prompt: "평행이동한 직선의 방정식은?",
       latex: `${lineLatex(original)},\\qquad (x,y)\\mapsto(x${p < 0 ? "" : "+"}${p},\\ y${q < 0 ? "" : "+"}${q})`,
       answer, answerMode: "line",
     };
@@ -103,7 +103,7 @@ function buildProblem(kind: CoordinateLineKind, next: () => number, id: string):
     const answers = [[point[0], -point[1]], [-point[0], point[1]], [point[1], point[0]]];
     return {
       id, kind, label: "점의 대칭이동",
-      prompt: "점 P를 주어진 직선에 대하여 대칭이동한 좌표를 구하세요.",
+      prompt: "대칭이동한 점 $P$의 좌표는?",
       latex: `P${pointLatex(point)},\\qquad \\text{대칭축 }${labels[mode]}`,
       answer: answers[mode], answerMode: "point",
     };
@@ -116,15 +116,15 @@ function buildProblem(kind: CoordinateLineKind, next: () => number, id: string):
   if (kind === "two-point-line") {
     const step = nonzero(next, -3, 3);
     const second = [base[0] + original[1] * step, base[1] - original[0] * step];
-    return { id, kind, label: "두 점을 지나는 직선", prompt: "두 점 A, B를 지나는 직선의 방정식을 ax+by+c=0 꼴로 구하세요. 단, a>0이고 a, b, c의 최대공약수는 1입니다.", latex: `A${pointLatex(base)},\\qquad B${pointLatex(second)}`, answer: original, answerMode: "line" };
+    return { id, kind, label: "두 점을 지나는 직선", prompt: "$a>0$, 계수가 서로소인 $ax+by+c=0$ 꼴의 식은?", latex: `A${pointLatex(base)},\\qquad B${pointLatex(second)}`, answer: original, answerMode: "line" };
   }
   const point = [integer(next, -5, 5), integer(next, -5, 5)];
   if (kind === "parallel-line") {
     const answer = normalizeLine(original[0], original[1], -original[0] * point[0] - original[1] * point[1]);
-    return { id, kind, label: "평행한 직선", prompt: "주어진 점 P를 지나고 직선 l과 평행한 직선의 방정식을 ax+by+c=0 꼴로 구하세요. 단, 계수는 서로소이고 a>0입니다.", latex: `P${pointLatex(point)},\\qquad l:\\ ${lineLatex(original)}`, answer, answerMode: "line" };
+    return { id, kind, label: "평행한 직선", prompt: "$a>0$, 계수가 서로소인 $ax+by+c=0$ 꼴의 식은?", latex: `P${pointLatex(point)},\\qquad l:\\ ${lineLatex(original)}`, answer, answerMode: "line" };
   }
   const answer = normalizeLine(original[1], -original[0], -original[1] * point[0] + original[0] * point[1]);
-  return { id, kind, label: "수직인 직선", prompt: "주어진 점 P를 지나고 직선 l과 수직인 직선의 방정식을 ax+by+c=0 꼴로 구하세요. 단, 계수는 서로소이고 a>0입니다.", latex: `P${pointLatex(point)},\\qquad l:\\ ${lineLatex(original)}`, answer, answerMode: "line" };
+  return { id, kind, label: "수직인 직선", prompt: "$a>0$, 계수가 서로소인 $ax+by+c=0$ 꼴의 식은?", latex: `P${pointLatex(point)},\\qquad l:\\ ${lineLatex(original)}`, answer, answerMode: "line" };
 }
 
 export function createCoordinateLineProblemSet(seed: number) {

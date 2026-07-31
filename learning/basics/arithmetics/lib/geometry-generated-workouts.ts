@@ -35,8 +35,8 @@ function choiceList(id: string, answer: string, distractors: string[]) {
   return unique.map((latex, index) => ({ id: `${id}-${index}`, latex, correct: index === 0 }));
 }
 
-function item(id: string, label: string, latex: string, answer: string, distractors: string[]): GeometryChoiceItem {
-  return { id, label, latex, correctLatex: answer, choices: choiceList(id, answer, distractors) };
+function item(id: string, label: string, latex: string, answer: string, distractors: string[], prompt?: string): GeometryChoiceItem {
+  return { id, label, prompt, latex, correctLatex: answer, choices: choiceList(id, answer, distractors) };
 }
 
 export function createConicProblems(seed: number): GeometryChoiceItem[] {
@@ -116,7 +116,7 @@ export function createProjectionProblems(seed: number): GeometryChoiceItem[] {
     item("p4", "스칼라 정사영", `\\vec a=(${3 * scale},${4 * scale}),\\quad\\vec b=(1,0),\\quad\\frac{\\vec a\\cdot\\vec b}{|\\vec b|}=?`, `${3 * scale}`, [`${4 * scale}`, `${5 * scale}`, `${12 * scale * scale}`]),
     item("p5", "벡터 정사영", `\\vec a=(${ax},${ay}),\\quad\\vec b=(${bx},${by}),\\quad\\mathrm{proj}_{\\vec b}\\vec a=?`, `\\frac{${projectionFactorNumerator}}{${projectionFactorDenominator}}(${bx},${by})`, [`\\frac{${projectionFactorDenominator}}{${projectionFactorNumerator || 1}}(${bx},${by})`, `(${ax},${ay})`, `${dot}(${bx},${by})`, `-\\frac{${projectionFactorNumerator}}{${projectionFactorDenominator}}(${bx},${by})`, `\\frac{${projectionFactorNumerator}}{${projectionFactorDenominator}}(${ax},${ay})`, `\\frac{${projectionFactorNumerator}}{\\sqrt{${projectionFactorDenominator}}}(${bx},${by})`]),
     item("p6", "수직 성분", `\\vec a=(${ax},${ay}),\\quad\\vec b=(${bx},${by}),\\quad\\vec a_{\\perp}=?`, `\\vec a-\\frac{${projectionFactorNumerator}}{${projectionFactorDenominator}}\\vec b`, [`\\frac{${projectionFactorNumerator}}{${projectionFactorDenominator}}\\vec b`, `\\vec a+\\vec b`, `\\vec a-\\vec b`]),
-    item("p7", "좌표축과 이루는 각", `\\vec a=(${3 * scale},${4 * scale}),\\quad\\cos\\angle(\\vec a,\\ x\\text{축})=?`, `\\frac35`, [`\\frac45`, `\\frac34`, `\\frac53`]),
+    item("p7", "좌표축과 이루는 각", `\\vec a=(${3 * scale},${4 * scale}),\\quad\\cos\\angle(\\vec a,\\ x\\text{축})=?`, `\\frac35`, [`\\frac45`, `\\frac34`, `\\frac53`], "$\\cos\\angle(\\vec a, x\\text{축})$는?"),
   ];
 }
 
@@ -132,7 +132,7 @@ export function createVectorGeometryProblems(seed: number): GeometryChoiceItem[]
     item("g3", "벡터로 나타낸 직선", `P(${px},${py}),\\quad\\vec d=(${dx},${dy})`, `(x,y)=(${px},${py})+t(${dx},${dy})`, [`(x,y)=(${px},${py})+t(${-dy},${dx})`, `(x,y)=(${px - dy},${py + dx})+t(${dx},${dy})`, `(x,y)=(${px - 2 * dy},${py + 2 * dx})+t(${dx},${dy})`]),
     item("g4", "점과 직선 사이의 거리", `P(${px},${py}),\\quad ${a}x${signed(b)}y${signed(c)}=0`, `\\frac{${distanceNumerator}}{\\sqrt{${a * a + b * b}}}`, [`\\frac{${distanceNumerator}}{${a * a + b * b}}`, `${distanceNumerator}`, `\\sqrt{${a * a + b * b}}`]),
     item("g5", "삼각형의 넓이", `\\overrightarrow{AB}=(${ax(next)},${ay(next)}),\\quad\\overrightarrow{AC}=(${dx},${dy})`, `\\frac12|\\det(\\overrightarrow{AB},\\overrightarrow{AC})|`, [`|\\overrightarrow{AB}\\cdot\\overrightarrow{AC}|`, `|\\det(\\overrightarrow{AB},\\overrightarrow{AC})|`, `\\frac12|\\overrightarrow{AB}\\cdot\\overrightarrow{AC}|`]),
-    item("g6", "좌표축에 내린 수선의 발", `P(${px},${py}),\\quad x\\text{축에 내린 수선의 발 }H=?`, `H=(${px},0)`, [`H=(0,${py})`, `H=(${px},${py})`, `H=(0,${px})`, `H=(${px},${-py})`, `H=(${-px},0)`]),
+    item("g6", "좌표축에 내린 수선의 발", `P(${px},${py}),\\quad x\\text{축에 내린 수선의 발 }H=?`, `H=(${px},0)`, [`H=(0,${py})`, `H=(${px},${py})`, `H=(0,${px})`, `H=(${px},${-py})`, `H=(${-px},0)`], "수선의 발 $H$는?"),
     item("g7", "두 직선의 수직 조건", `\\vec d_1=(${dx},${dy}),\\quad\\vec d_2=(k,${dx}),\\quad\\vec d_1\\perp\\vec d_2`, `k=${-dy}`, [`k=${dy}`, `k=${dx}`, `k=${-dx}`, "k=0", `k=${dx + dy}`, `k=${dx - dy}`]),
   ];
 }
@@ -154,8 +154,8 @@ export function createSpaceCoordinateProblems(seed: number): GeometryChoiceItem[
     item("s3", "내분점", `AP:PB=${ratio}:1,\\quad A(${ax},${ay},${az}),\\quad B(${bx},${by},${bz})`, `P=\\frac{A+${ratio}B}{${ratio + 1}}`, [`P=\\frac{${ratio}A+B}{${ratio + 1}}`, `P=\\frac{A+B}{2}`, `P=A+${ratio}B`]),
     item("s4", "구의 중심과 반지름", `${shifted("x", cx)}^2+${shifted("y", cy)}^2+${shifted("z", cz)}^2=${radius * radius}`, `C=(${cx},${cy},${cz}),\\quad r=${radius}`, [`C=(${-cx},${-cy},${-cz}),\\quad r=${radius}`, `C=(${cx},${cy},${cz}),\\quad r=${radius * radius}`, `C=(${cy},${cz},${cx}),\\quad r=${radius}`, `C=(${-cx},${cy},${cz}),\\quad r=${radius}`, `C=(${cx},${-cy},${cz}),\\quad r=${radius}`]),
     item("s5", "구의 방정식", `C=(${cx},${cy},${cz}),\\quad r=${radius}`, `${shifted("x", cx)}^2+${shifted("y", cy)}^2+${shifted("z", cz)}^2=${radius * radius}`, [`${shifted("x", -cx)}^2+${shifted("y", -cy)}^2+${shifted("z", -cz)}^2=${radius * radius}`, `${shifted("x", cx)}^2+${shifted("y", cy)}^2+${shifted("z", cz)}^2=${radius}`, `x^2+y^2+z^2=${radius * radius}`]),
-    item("s6", "좌표평면에 대한 대칭", `P(${ax},${ay},${az})\\text{를 }xy\\text{평면에 대칭이동}`, `(${ax},${ay},${-az})`, [`(${-ax},${-ay},${az})`, `(${ax},${-ay},${az})`, `(${-ax},${ay},${az})`]),
-    item("s7", "좌표평면 위의 점", `P(a,b,c)\\text{가 }yz\\text{평면 위}`, `a=0`, [`b=0`, `c=0`, `a=b=c`]),
+    item("s6", "좌표평면에 대한 대칭", `P(${ax},${ay},${az})\\text{를 }xy\\text{평면에 대칭이동}`, `(${ax},${ay},${-az})`, [`(${-ax},${-ay},${az})`, `(${ax},${-ay},${az})`, `(${-ax},${ay},${az})`], "대칭이동한 점의 좌표는?"),
+    item("s7", "좌표평면 위의 점", `P(a,b,c)\\text{가 }yz\\text{평면 위}`, `a=0`, [`b=0`, `c=0`, `a=b=c`], "$a$는?"),
   ];
 }
 

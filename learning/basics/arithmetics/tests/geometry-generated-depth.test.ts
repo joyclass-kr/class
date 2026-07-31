@@ -2,7 +2,10 @@ import test from "node:test";
 import assert from "node:assert/strict";
 import {
   createConicMoveTangentProblems,
+  createProjectionProblems,
+  createSpaceCoordinateProblems,
   createSpaceGeometryProjectionProblems,
+  createVectorGeometryProblems,
 } from "../lib/geometry-generated-workouts.ts";
 
 test("이차곡선 접선은 쉬운 이동 문제 대신 일반점과 매개변수 계산을 훈련한다", () => {
@@ -40,4 +43,13 @@ test("공간도형 학습지는 위치 관계·거리·정사영을 서로 다�
     assert.equal(problem.choices.filter(({ correct }) => correct).length, 1);
     assert.doesNotMatch(problem.choices.map(({ latex }) => latex).join(" "), /\+1(?:$|\s)/);
   }
+});
+
+test("좌표가 들어간 벡터 문항도 실제로 구할 대상을 정확히 묻는다", () => {
+  assert.equal(createProjectionProblems(20260910)[6].prompt, "$\\cos\\angle(\\vec a, x\\text{축})$는?");
+  assert.equal(createVectorGeometryProblems(20260910)[5].prompt, "수선의 발 $H$는?");
+  assert.deepEqual(
+    createSpaceCoordinateProblems(20260910).slice(5).map(({ prompt }) => prompt),
+    ["대칭이동한 점의 좌표는?", "$a$는?"],
+  );
 });
