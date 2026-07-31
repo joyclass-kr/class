@@ -6,7 +6,7 @@ const path = require("node:path");
 const vm = require("node:vm");
 
 const root = path.resolve(__dirname, "..");
-const dir = path.join(root, "learning", "simulations", "body-explorer");
+const dir = path.join(root, "learning", "academics", "body-explorer");
 const files = {
     html: path.join(dir, "digestion.html"),
     data: path.join(dir, "digestion-data.js"),
@@ -18,10 +18,10 @@ const files = {
     server: path.join(root, "game-hub-server", "server.js")
 };
 const images = [
-    path.join(root, "assets", "images", "body-explorer", "digestion-hero.webp"),
-    path.join(root, "assets", "images", "body-explorer", "digestion-stomach.webp"),
-    path.join(root, "assets", "images", "body-explorer", "digestion-villi.webp"),
-    path.join(root, "assets", "images", "body-explorer", "food-explorer.webp")
+    path.join(dir, "assets", "images", "digestion-hero.webp"),
+    path.join(dir, "assets", "images", "digestion-stomach.webp"),
+    path.join(dir, "assets", "images", "digestion-villi.webp"),
+    path.join(dir, "assets", "images", "food-explorer.webp")
 ];
 
 for (const file of [...Object.values(files), ...images]) {
@@ -82,15 +82,15 @@ assert.ok(html.includes("개인 탐험"), "Personal mode is missing.");
 assert.ok(html.includes("학급 순위 탐험"), "Class ranking mode is missing.");
 assert.ok(html.includes("나의 오답노트"), "Personal wrong-answer notebook is missing.");
 assert.ok(html.includes('src="digestion-data.js"'), "Digestion data is not linked.");
-assert.ok(html.includes('src="app.js"'), "Shared explorer app is not linked.");
+assert.match(html, /src="app\.js(?:\?[^"]+)?"/, "Shared explorer app is not linked.");
 assert.ok(html.includes("niddk.nih.gov/health-information/digestive-diseases/digestive-system-how-it-works"), "The official digestion source should be visible.");
 for (const asset of ["digestion-hero.webp", "digestion-stomach.webp", "digestion-villi.webp", "food-explorer.webp"]) {
     assert.ok(html.includes(asset) || fs.readFileSync(files.styles, "utf8").includes(asset), `Generated visual is not wired: ${asset}`);
 }
 
 const seriesHtml = fs.readFileSync(files.seriesHtml, "utf8");
-assert.ok(seriesHtml.includes('href="digestion.html"'), "Episode 01 page must offer episode 02.");
-assert.ok(html.includes('href="index.html"'), "Episode 02 page must offer episode 01.");
+assert.match(seriesHtml, /href="digestion(?:\.html)?"/, "Episode 01 page must offer episode 02.");
+assert.match(html, /href="(?:index\.html|\.\/)"/, "Episode 02 page must offer episode 01.");
 
 const teacherHtml = fs.readFileSync(files.teacherHtml, "utf8");
 assert.ok(teacherHtml.includes('data-game-id="digestion"'), "Teacher page must create a digestion classroom.");

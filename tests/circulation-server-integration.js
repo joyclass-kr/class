@@ -65,6 +65,12 @@ function connectClient() {
     });
 }
 
+function reportStages(client, type, sessionId, score) {
+    for (let stageIndex = 0; stageIndex < 10; stageIndex += 1) {
+        client.send({ type, action: "PROGRESS", sessionId, stageIndex, firstTry: stageIndex < score });
+    }
+}
+
 async function joinStudent(name, clients) {
     const client = await connectClient();
     clients.push(client);
@@ -109,6 +115,25 @@ async function run() {
         assert.equal(firstStart.state.sessionId, secondStart.state.sessionId, "모든 학생의 탐험 세션이 같아야 합니다.");
         assert.equal(hostStart.state.rankings.length, 0);
 
+        first.client.send({
+            type: "CIRCULATION_ACTION",
+            action: "SUBMIT",
+            sessionId: firstStart.state.sessionId,
+            score: 10
+        });
+        const earlySubmitError = await first.client.waitFor((message) => message.type === "CIRCULATION_ERROR", "조기 결과 제출 거절");
+        assert.match(earlySubmitError.message, /10개 관문/);
+
+        first.client.send({
+            type: "CIRCULATION_ACTION",
+            action: "PROGRESS",
+            sessionId: firstStart.state.sessionId,
+            stageIndex: 1,
+            firstTry: true
+        });
+        const skippedStageError = await first.client.waitFor((message) => message.type === "CIRCULATION_ERROR", "관문 건너뛰기 거절");
+        assert.match(skippedStageError.message, /차례대로/);
+
         const late = await connectClient();
         clients.push(late);
         await late.waitFor((message) => message.type === "CONNECTED", "늦은 학생 연결");
@@ -116,22 +141,22 @@ async function run() {
         const lateError = await late.waitFor((message) => message.type === "ERROR", "진행 중 입장 거절");
         assert.match(lateError.message, /이미 출발한/);
 
+        reportStages(first.client, "CIRCULATION_ACTION", firstStart.state.sessionId, 8);
         first.client.send({
             type: "CIRCULATION_ACTION",
             action: "SUBMIT",
-            sessionId: firstStart.state.sessionId,
-            score: 8
+            sessionId: firstStart.state.sessionId
         });
         const firstResult = await first.client.waitFor((message) => message.type === "CIRCULATION_STATE" && message.state.rankings.length === 1, "첫 결과");
         assert.equal(firstResult.state.rankings[0].name, "하늘");
         assert.equal(firstResult.state.rankings[0].score, 8);
         assert.ok(Number.isFinite(firstResult.state.rankings[0].elapsedMs), "완주 시간은 서버에서 기록되어야 합니다.");
 
+        reportStages(second.client, "CIRCULATION_ACTION", secondStart.state.sessionId, 10);
         second.client.send({
             type: "CIRCULATION_ACTION",
             action: "SUBMIT",
-            sessionId: secondStart.state.sessionId,
-            score: 10
+            sessionId: secondStart.state.sessionId
         });
         const finalState = await second.client.waitFor((message) => message.type === "CIRCULATION_STATE" && message.state.phase === "ended", "최종 순위");
         assert.deepEqual(finalState.state.rankings.map((entry) => [entry.rank, entry.name, entry.score]), [

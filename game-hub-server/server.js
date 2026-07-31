@@ -778,6 +778,47 @@ function temperatureError(socket, message) {
   safeSend(socket, { type: "TEMPERATURE_ERROR", message });
 }
 
+const BODY_EXPLORER_STAGE_COUNT = 10;
+
+function createBodyExplorerGame() {
+  return {
+    phase: "lobby",
+    sessionId: "",
+    startedAt: 0,
+    players: [],
+    results: {},
+    progress: {}
+  };
+}
+
+function trackBodyExplorerProgress(game, playerId, message) {
+  if (game.phase !== "running") return "현재 진행 중인 탐험이 없습니다.";
+  if (cleanToken(message.sessionId, 80) !== game.sessionId) return "현재 탐험의 진행 기록이 아닙니다.";
+  if (!game.players.some(player => player.id === playerId)) return "참가 학생만 진행 기록을 보낼 수 있습니다.";
+
+  const stageIndex = Number(message.stageIndex);
+  if (!Number.isInteger(stageIndex) || stageIndex < 0 || stageIndex >= BODY_EXPLORER_STAGE_COUNT) {
+    return "관문 번호가 올바르지 않습니다.";
+  }
+  if (typeof message.firstTry !== "boolean") return "관문 결과 형식이 올바르지 않습니다.";
+
+  game.progress ||= {};
+  const current = game.progress[playerId] || { nextStageIndex: 0, score: 0 };
+  if (stageIndex < current.nextStageIndex) return null;
+  if (stageIndex !== current.nextStageIndex) return "앞 관문부터 차례대로 완료해야 합니다.";
+
+  game.progress[playerId] = {
+    nextStageIndex: current.nextStageIndex + 1,
+    score: current.score + (message.firstTry ? 1 : 0)
+  };
+  return null;
+}
+
+function verifiedBodyExplorerScore(game, playerId) {
+  const progress = game.progress?.[playerId];
+  return progress?.nextStageIndex === BODY_EXPLORER_STAGE_COUNT ? progress.score : null;
+}
+
 const AVALON_TEAM_SIZES = {
   5: [2, 3, 2, 3, 3], 6: [2, 3, 4, 3, 4], 7: [2, 3, 3, 4, 4],
   8: [3, 4, 4, 5, 5]
@@ -1183,76 +1224,28 @@ wss.on("connection", socket => {
         };
       }
       if (gameId === "circulation") {
-        room.circulation = {
-          phase: "lobby",
-          sessionId: "",
-          startedAt: 0,
-          players: [],
-          results: {}
-        };
+        room.circulation = createBodyExplorerGame();
       }
       if (gameId === "digestion") {
-        room.digestion = {
-          phase: "lobby",
-          sessionId: "",
-          startedAt: 0,
-          players: [],
-          results: {}
-        };
+        room.digestion = createBodyExplorerGame();
       }
       if (gameId === "respiration") {
-        room.respiration = {
-          phase: "lobby",
-          sessionId: "",
-          startedAt: 0,
-          players: [],
-          results: {}
-        };
+        room.respiration = createBodyExplorerGame();
       }
       if (gameId === "nervous") {
-        room.nervous = {
-          phase: "lobby",
-          sessionId: "",
-          startedAt: 0,
-          players: [],
-          results: {}
-        };
+        room.nervous = createBodyExplorerGame();
       }
       if (gameId === "immune") {
-        room.immune = {
-          phase: "lobby",
-          sessionId: "",
-          startedAt: 0,
-          players: [],
-          results: {}
-        };
+        room.immune = createBodyExplorerGame();
       }
       if (gameId === "movement") {
-        room.movement = {
-          phase: "lobby",
-          sessionId: "",
-          startedAt: 0,
-          players: [],
-          results: {}
-        };
+        room.movement = createBodyExplorerGame();
       }
       if (gameId === "excretion") {
-        room.excretion = {
-          phase: "lobby",
-          sessionId: "",
-          startedAt: 0,
-          players: [],
-          results: {}
-        };
+        room.excretion = createBodyExplorerGame();
       }
       if (gameId === "temperature") {
-        room.temperature = {
-          phase: "lobby",
-          sessionId: "",
-          startedAt: 0,
-          players: [],
-          results: {}
-        };
+        room.temperature = createBodyExplorerGame();
       }
       rooms.set(key, room);
       socket.meta.roomKey = key;
@@ -1713,7 +1706,14 @@ wss.on("connection", socket => {
         game.sessionId = crypto.randomUUID();
         game.startedAt = Date.now();
         game.results = {};
+        game.progress = {};
         circulationBroadcast(room);
+        return;
+      }
+
+      if (action === "PROGRESS") {
+        const progressError = trackBodyExplorerProgress(game, playerId, message);
+        if (progressError) circulationError(socket, progressError);
         return;
       }
 
@@ -1730,9 +1730,9 @@ wss.on("connection", socket => {
           circulationError(socket, "참가 학생만 결과를 제출할 수 있습니다.");
           return;
         }
-        const score = Number(message.score);
-        if (!Number.isInteger(score) || score < 0 || score > 10) {
-          circulationError(socket, "점수가 올바르지 않습니다.");
+        const score = verifiedBodyExplorerScore(game, playerId);
+        if (score === null) {
+          circulationError(socket, "10개 관문을 모두 완료한 뒤 결과를 제출해 주세요.");
           return;
         }
         if (!game.results[playerId]) {
@@ -1757,6 +1757,7 @@ wss.on("connection", socket => {
         game.sessionId = "";
         game.startedAt = 0;
         game.results = {};
+        game.progress = {};
         game.players = game.players.filter(player => room.clients.has(player.id));
         circulationBroadcast(room);
         return;
@@ -1792,7 +1793,14 @@ wss.on("connection", socket => {
         game.sessionId = crypto.randomUUID();
         game.startedAt = Date.now();
         game.results = {};
+        game.progress = {};
         digestionBroadcast(room);
+        return;
+      }
+
+      if (action === "PROGRESS") {
+        const progressError = trackBodyExplorerProgress(game, playerId, message);
+        if (progressError) digestionError(socket, progressError);
         return;
       }
 
@@ -1809,9 +1817,9 @@ wss.on("connection", socket => {
           digestionError(socket, "참가 학생만 결과를 제출할 수 있습니다.");
           return;
         }
-        const score = Number(message.score);
-        if (!Number.isInteger(score) || score < 0 || score > 10) {
-          digestionError(socket, "점수가 올바르지 않습니다.");
+        const score = verifiedBodyExplorerScore(game, playerId);
+        if (score === null) {
+          digestionError(socket, "10개 관문을 모두 완료한 뒤 결과를 제출해 주세요.");
           return;
         }
         if (!game.results[playerId]) {
@@ -1836,6 +1844,7 @@ wss.on("connection", socket => {
         game.sessionId = "";
         game.startedAt = 0;
         game.results = {};
+        game.progress = {};
         game.players = game.players.filter(player => room.clients.has(player.id));
         digestionBroadcast(room);
         return;
@@ -1871,7 +1880,14 @@ wss.on("connection", socket => {
         game.sessionId = crypto.randomUUID();
         game.startedAt = Date.now();
         game.results = {};
+        game.progress = {};
         respirationBroadcast(room);
+        return;
+      }
+
+      if (action === "PROGRESS") {
+        const progressError = trackBodyExplorerProgress(game, playerId, message);
+        if (progressError) respirationError(socket, progressError);
         return;
       }
 
@@ -1888,9 +1904,9 @@ wss.on("connection", socket => {
           respirationError(socket, "참가 학생만 결과를 제출할 수 있습니다.");
           return;
         }
-        const score = Number(message.score);
-        if (!Number.isInteger(score) || score < 0 || score > 10) {
-          respirationError(socket, "점수가 올바르지 않습니다.");
+        const score = verifiedBodyExplorerScore(game, playerId);
+        if (score === null) {
+          respirationError(socket, "10개 관문을 모두 완료한 뒤 결과를 제출해 주세요.");
           return;
         }
         if (!game.results[playerId]) {
@@ -1915,6 +1931,7 @@ wss.on("connection", socket => {
         game.sessionId = "";
         game.startedAt = 0;
         game.results = {};
+        game.progress = {};
         game.players = game.players.filter(player => room.clients.has(player.id));
         respirationBroadcast(room);
         return;
@@ -1950,7 +1967,14 @@ wss.on("connection", socket => {
         game.sessionId = crypto.randomUUID();
         game.startedAt = Date.now();
         game.results = {};
+        game.progress = {};
         nervousBroadcast(room);
+        return;
+      }
+
+      if (action === "PROGRESS") {
+        const progressError = trackBodyExplorerProgress(game, playerId, message);
+        if (progressError) nervousError(socket, progressError);
         return;
       }
 
@@ -1967,9 +1991,9 @@ wss.on("connection", socket => {
           nervousError(socket, "참가 학생만 결과를 제출할 수 있습니다.");
           return;
         }
-        const score = Number(message.score);
-        if (!Number.isInteger(score) || score < 0 || score > 10) {
-          nervousError(socket, "점수가 올바르지 않습니다.");
+        const score = verifiedBodyExplorerScore(game, playerId);
+        if (score === null) {
+          nervousError(socket, "10개 관문을 모두 완료한 뒤 결과를 제출해 주세요.");
           return;
         }
         if (!game.results[playerId]) {
@@ -1994,6 +2018,7 @@ wss.on("connection", socket => {
         game.sessionId = "";
         game.startedAt = 0;
         game.results = {};
+        game.progress = {};
         game.players = game.players.filter(player => room.clients.has(player.id));
         nervousBroadcast(room);
         return;
@@ -2029,7 +2054,14 @@ wss.on("connection", socket => {
         game.sessionId = crypto.randomUUID();
         game.startedAt = Date.now();
         game.results = {};
+        game.progress = {};
         immuneBroadcast(room);
+        return;
+      }
+
+      if (action === "PROGRESS") {
+        const progressError = trackBodyExplorerProgress(game, playerId, message);
+        if (progressError) immuneError(socket, progressError);
         return;
       }
 
@@ -2046,9 +2078,9 @@ wss.on("connection", socket => {
           immuneError(socket, "참가 학생만 결과를 제출할 수 있습니다.");
           return;
         }
-        const score = Number(message.score);
-        if (!Number.isInteger(score) || score < 0 || score > 10) {
-          immuneError(socket, "점수가 올바르지 않습니다.");
+        const score = verifiedBodyExplorerScore(game, playerId);
+        if (score === null) {
+          immuneError(socket, "10개 관문을 모두 완료한 뒤 결과를 제출해 주세요.");
           return;
         }
         if (!game.results[playerId]) {
@@ -2073,6 +2105,7 @@ wss.on("connection", socket => {
         game.sessionId = "";
         game.startedAt = 0;
         game.results = {};
+        game.progress = {};
         game.players = game.players.filter(player => room.clients.has(player.id));
         immuneBroadcast(room);
         return;
@@ -2108,7 +2141,14 @@ wss.on("connection", socket => {
         game.sessionId = crypto.randomUUID();
         game.startedAt = Date.now();
         game.results = {};
+        game.progress = {};
         movementBroadcast(room);
+        return;
+      }
+
+      if (action === "PROGRESS") {
+        const progressError = trackBodyExplorerProgress(game, playerId, message);
+        if (progressError) movementError(socket, progressError);
         return;
       }
 
@@ -2125,9 +2165,9 @@ wss.on("connection", socket => {
           movementError(socket, "참가 학생만 결과를 제출할 수 있습니다.");
           return;
         }
-        const score = Number(message.score);
-        if (!Number.isInteger(score) || score < 0 || score > 10) {
-          movementError(socket, "점수가 올바르지 않습니다.");
+        const score = verifiedBodyExplorerScore(game, playerId);
+        if (score === null) {
+          movementError(socket, "10개 관문을 모두 완료한 뒤 결과를 제출해 주세요.");
           return;
         }
         if (!game.results[playerId]) {
@@ -2152,6 +2192,7 @@ wss.on("connection", socket => {
         game.sessionId = "";
         game.startedAt = 0;
         game.results = {};
+        game.progress = {};
         game.players = game.players.filter(player => room.clients.has(player.id));
         movementBroadcast(room);
         return;
@@ -2187,7 +2228,14 @@ wss.on("connection", socket => {
         game.sessionId = crypto.randomUUID();
         game.startedAt = Date.now();
         game.results = {};
+        game.progress = {};
         excretionBroadcast(room);
+        return;
+      }
+
+      if (action === "PROGRESS") {
+        const progressError = trackBodyExplorerProgress(game, playerId, message);
+        if (progressError) excretionError(socket, progressError);
         return;
       }
 
@@ -2204,9 +2252,9 @@ wss.on("connection", socket => {
           excretionError(socket, "참가 학생만 결과를 제출할 수 있습니다.");
           return;
         }
-        const score = Number(message.score);
-        if (!Number.isInteger(score) || score < 0 || score > 10) {
-          excretionError(socket, "점수가 올바르지 않습니다.");
+        const score = verifiedBodyExplorerScore(game, playerId);
+        if (score === null) {
+          excretionError(socket, "10개 관문을 모두 완료한 뒤 결과를 제출해 주세요.");
           return;
         }
         if (!game.results[playerId]) {
@@ -2231,6 +2279,7 @@ wss.on("connection", socket => {
         game.sessionId = "";
         game.startedAt = 0;
         game.results = {};
+        game.progress = {};
         game.players = game.players.filter(player => room.clients.has(player.id));
         excretionBroadcast(room);
         return;
@@ -2266,7 +2315,14 @@ wss.on("connection", socket => {
         game.sessionId = crypto.randomUUID();
         game.startedAt = Date.now();
         game.results = {};
+        game.progress = {};
         temperatureBroadcast(room);
+        return;
+      }
+
+      if (action === "PROGRESS") {
+        const progressError = trackBodyExplorerProgress(game, playerId, message);
+        if (progressError) temperatureError(socket, progressError);
         return;
       }
 
@@ -2283,9 +2339,9 @@ wss.on("connection", socket => {
           temperatureError(socket, "참가 학생만 결과를 제출할 수 있습니다.");
           return;
         }
-        const score = Number(message.score);
-        if (!Number.isInteger(score) || score < 0 || score > 10) {
-          temperatureError(socket, "점수가 올바르지 않습니다.");
+        const score = verifiedBodyExplorerScore(game, playerId);
+        if (score === null) {
+          temperatureError(socket, "10개 관문을 모두 완료한 뒤 결과를 제출해 주세요.");
           return;
         }
         if (!game.results[playerId]) {
@@ -2310,6 +2366,7 @@ wss.on("connection", socket => {
         game.sessionId = "";
         game.startedAt = 0;
         game.results = {};
+        game.progress = {};
         game.players = game.players.filter(player => room.clients.has(player.id));
         temperatureBroadcast(room);
         return;

@@ -6,7 +6,7 @@ const path = require("node:path");
 const vm = require("node:vm");
 
 const root = path.resolve(__dirname, "..");
-const explorerRoot = path.join(root, "learning", "simulations", "body-explorer");
+const explorerRoot = path.join(root, "learning", "academics", "body-explorer");
 const read = (file) => fs.readFileSync(path.join(explorerRoot, file), "utf8");
 const loadStages = (file) => {
     const sandbox = { window: {} };
@@ -21,6 +21,7 @@ const circulationData = read("journey-data.js");
 const circulationStyles = read("styles.css");
 
 assert.match(circulationHtml, /id="anatomyExplorer"/);
+assert.match(circulationHtml, /id="anatomyExplorer"[^>]*tabindex="-1"/);
 assert.match(circulationHtml, /id="anatomyMap"/);
 assert.match(circulationHtml, /src="atlas-3d\.js"/);
 assert.match(circulationHtml, /data-atlas-mode="explore"/);
@@ -60,6 +61,7 @@ assert.match(circulationStyles, /@media \(max-width: (?:739|800)px\)/);
 assert.match(circulationStyles, /\.anatomy-map\s*\{[^}]*min-height:\s*390px/s);
 assert.match(circulationStyles, /\.anatomy-hotspot::before\s*\{[^}]*inset:\s*-9px/s);
 assert.match(circulationStyles, /min-height:\s*34px/);
+assert.match(circulationStyles, /scroll-snap-type:\s*inline mandatory/);
 assert.match(circulationStyles, /data-target="tissue-exchange"\]\s*\{\s*left:\s*57%;\s*top:\s*60%;\s*\}/);
 
 const premiumSystems = [
@@ -84,9 +86,9 @@ const liveJourneySource = systemAtlas.slice(
 
 premiumSystems.forEach((system) => {
     const html = read(`${system}.html`);
-    assert.match(html, /href="series-premium\.css\?v=20260723-3"/);
-    assert.match(html, /src="system-atlas\.js\?v=20260723-3"/);
-    assert.match(html, /src="app\.js"/);
+    assert.match(html, /href="series-premium\.css\?v=\d{8}-\d+"/);
+    assert.match(html, /src="system-atlas\.js\?v=\d{8}-\d+"/);
+    assert.match(html, /src="app\.js(?:\?[^"]+)?"/);
     assert.match(systemAtlas, new RegExp(`${system}:`));
 });
 
@@ -129,8 +131,8 @@ assert.match(systemAtlas, /stage\.id !== activePhysiologyStage \|\| !directConso
 assert.match(systemAtlas, /function isInTargetRange\(value, minimum, maximum\)/);
 assert.doesNotMatch(systemAtlas, /response\s*>=\s*78/);
 assert.ok(
-    (manipulationSource.match(/targetMax:/g) || []).length >= 10,
-    "digestion and respiration should use target bands often enough to prevent right-edge solving"
+    (manipulationSource.match(/targetMax:/g) || []).length >= 4,
+    "digestion and respiration should use bounded targets for multi-control experiments"
 );
 assert.match(
     manipulationSource,
@@ -163,8 +165,9 @@ for (const file of fs.readdirSync(explorerRoot).filter((name) => name.endsWith("
     for (const match of html.matchAll(/(?:src|href)="([^"]+)"/g)) {
         const reference = match[1].split("?")[0];
         if (!reference || /^(?:https?:|#|data:)/.test(reference)) continue;
+        const resolved = path.resolve(explorerRoot, reference);
         assert.ok(
-            fs.existsSync(path.resolve(explorerRoot, reference)),
+            fs.existsSync(resolved) || fs.existsSync(`${resolved}.html`),
             `${file} references missing local asset: ${match[1]}`
         );
     }

@@ -6,7 +6,7 @@ const path = require("node:path");
 const vm = require("node:vm");
 
 const root = path.resolve(__dirname, "..");
-const dir = path.join(root, "learning", "simulations", "body-explorer");
+const dir = path.join(root, "learning", "academics", "body-explorer");
 const files = {
     html: path.join(dir, "immune.html"),
     data: path.join(dir, "immune-data.js"),
@@ -18,10 +18,10 @@ const files = {
     server: path.join(root, "game-hub-server", "server.js")
 };
 const images = [
-    path.join(root, "assets", "images", "body-explorer", "immune-hero.webp"),
-    path.join(root, "assets", "images", "body-explorer", "immune-barrier.webp"),
-    path.join(root, "assets", "images", "body-explorer", "immune-defense.webp"),
-    path.join(root, "assets", "images", "body-explorer", "immune-explorer.webp")
+    path.join(dir, "assets", "images", "immune-hero.webp"),
+    path.join(dir, "assets", "images", "immune-barrier.webp"),
+    path.join(dir, "assets", "images", "immune-defense.webp"),
+    path.join(dir, "assets", "images", "immune-explorer.webp")
 ];
 
 for (const file of [...Object.values(files), ...images]) {
@@ -114,7 +114,7 @@ for (const asset of ["immune-hero.webp", "immune-barrier.webp", "immune-defense.
     assert.ok(html.includes(asset) || styles.includes(asset), `Generated visual is not wired: ${asset}`);
 }
 for (const episodeFile of ["index.html", "digestion.html", "respiration.html", "nervous.html"]) {
-    assert.ok(fs.readFileSync(path.join(dir, episodeFile), "utf8").includes('href="immune.html"'), `${episodeFile} must offer episode 05.`);
+    assert.match(fs.readFileSync(path.join(dir, episodeFile), "utf8"), /href="immune(?:\.html)?"/, `${episodeFile} must offer episode 05.`);
 }
 
 const teacherHtml = fs.readFileSync(files.teacherHtml, "utf8");
@@ -130,10 +130,11 @@ for (const file of [files.data, files.app, files.teacherApp, files.server]) {
 const app = fs.readFileSync(files.app, "utf8");
 assert.ok(app.includes('config.experienceType === "immune-simulation"'));
 assert.ok(app.includes("function runInteractiveExperiment()"));
-assert.ok(app.includes("intensity < scenario.threshold"));
-assert.ok(app.includes("state.experimentPath.findIndex"));
-assert.ok(app.includes('state.experimentPath.join(" → ")'));
-assert.ok(app.includes("simulationCopy.reviewLabel"));
+assert.ok(app.includes("intensity < intensityGoal.min || intensity > intensityGoal.max"));
+assert.ok(app.includes("function experimentIntensityGoal(stage)"));
+assert.ok(app.includes("function prepareExperimentChoices(stage)"));
+assert.ok(app.includes("component !== expected"));
+assert.ok(app.includes("중간 원인을 건너뛰었어요"));
 
 for (const selector of [".immune-page .hero-art", ".immune-briefing-art", ".immune-page .scene-panel", ".immune-page .simulation-card"]) {
     assert.ok(styles.includes(selector), `Immune styling is missing ${selector}`);

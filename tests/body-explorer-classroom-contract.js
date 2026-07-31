@@ -6,7 +6,7 @@ const path = require("node:path");
 const vm = require("node:vm");
 
 const root = path.resolve(__dirname, "..");
-const explorerRoot = path.join(root, "learning", "simulations", "body-explorer");
+const explorerRoot = path.join(root, "learning", "academics", "body-explorer");
 const serverSource = fs.readFileSync(path.join(root, "game-hub-server", "server.js"), "utf8");
 const teacherSource = fs.readFileSync(path.join(explorerRoot, "teacher.js"), "utf8");
 
@@ -29,7 +29,8 @@ for (const [studentPage, dataFile, teacherPage, gameId, prefix] of episodes) {
 
     assert.equal(context.window.BODY_EXPLORER_CONFIG.gameId, gameId, `${studentPage} gameId`);
     assert.equal(context.window.BODY_EXPLORER_CONFIG.messagePrefix, prefix, `${studentPage} message prefix`);
-    assert.match(studentHtml, new RegExp(`href=["']${teacherPage.replace(".", "\\.")}["']`), `${studentPage} teacher link`);
+    const teacherRoute = teacherPage.replace(/\.html$/, "");
+    assert.match(studentHtml, new RegExp(`href=["']${teacherRoute}(?:\\.html)?["']`), `${studentPage} teacher link`);
     assert.match(studentHtml, new RegExp(`src=["']${dataFile.replace(".", "\\.")}`), `${studentPage} data script`);
     assert.match(studentHtml, /src=["']app\.js/, `${studentPage} shared student controller`);
 
@@ -43,6 +44,9 @@ for (const [studentPage, dataFile, teacherPage, gameId, prefix] of episodes) {
 
 assert.match(teacherSource, /type: `\$\{MESSAGE_PREFIX\}_ACTION`/);
 assert.match(teacherSource, /message\.type !== `\$\{MESSAGE_PREFIX\}_STATE`/);
+assert.match(serverSource, /function trackBodyExplorerProgress\(/);
+assert.match(serverSource, /function verifiedBodyExplorerScore\(/);
+assert.match(serverSource, /nextStageIndex === BODY_EXPLORER_STAGE_COUNT/);
 assert.match(teacherSource, /action: "RESET"/);
 assert.match(teacherSource, /state\.phase === "ended" \? "최종 순위" : "탐험 중"/);
 

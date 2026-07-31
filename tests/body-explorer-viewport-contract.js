@@ -5,7 +5,7 @@ const fs = require("node:fs");
 const path = require("node:path");
 
 const root = path.resolve(__dirname, "..");
-const dir = path.join(root, "learning", "simulations", "body-explorer");
+const dir = path.join(root, "learning", "academics", "body-explorer");
 const app = fs.readFileSync(path.join(dir, "app.js"), "utf8");
 const styles = fs.readFileSync(path.join(dir, "styles.css"), "utf8");
 const nervousStyles = fs.readFileSync(path.join(dir, "nervous.css"), "utf8");
@@ -22,7 +22,8 @@ assert.ok(app.includes('elements.factCard.classList.add("is-revealed")'), "Facts
 const selectRouteSource = app.slice(app.indexOf("function selectRoute"), app.indexOf("function goToNextStage"));
 assert.ok(selectRouteSource.indexOf("revealFact(stage)") > selectRouteSource.indexOf("if (!isCorrect)"), "Quiz facts must only be revealed in the correct-answer path.");
 const experimentSource = app.slice(app.indexOf("function runInteractiveExperiment"), app.indexOf("function renderStage"));
-assert.ok(experimentSource.indexOf("revealFact(stage)") > experimentSource.indexOf("mismatchIndex !== -1"), "Experiment facts must only be revealed after a successful run.");
+assert.ok(experimentSource.indexOf("revealFact(stage)") > experimentSource.indexOf("intensity < intensityGoal.min"), "Experiment facts must only be revealed after a successful observation.");
+assert.doesNotMatch(experimentSource, /recordStageMistake/, "Exploratory manipulation must not reduce the assessment score.");
 assert.doesNotMatch(app, /announcer\.textContent = `[^`]*stage\.fact/, "Announcements must not reveal facts before answering.");
 
 for (const [index, html] of pages.entries()) {

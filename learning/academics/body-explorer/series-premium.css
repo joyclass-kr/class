@@ -1076,6 +1076,23 @@ body.series-premium .intensity-control input {
     padding: 14px 0;
     background-clip: content-box;
 }
+
+body.series-premium .stimulus-console {
+    color: #213644;
+}
+
+body.series-premium .stimulus-identity small,
+body.series-premium .intensity-control small {
+    color: #526b78;
+}
+
+body.series-premium .path-heading {
+    color: #f7ece8;
+}
+
+body.series-premium .path-heading span {
+    color: #cbbdc4;
+}
 .physiology-control label small { color: #8f858c; font-size: 10px; }
 
 .physiology-status {
@@ -1139,6 +1156,7 @@ body.series-premium .intensity-control input {
 }
 
 @media (max-width: 739px) {
+    body.series-premium .hero-screen { min-height: 760px; }
     .gallery-ceiling { height: 25%; clip-path: polygon(0 0, 100% 0, 88% 100%, 12% 100%); }
     .gallery-side-wall { top: 15%; bottom: 24%; width: 64%; opacity: .68; }
     .gallery-back-wall { right: 12%; left: 12%; }
@@ -1161,6 +1179,14 @@ body.series-premium .intensity-control input {
     .physiology-visual { grid-row: auto; min-height: 140px; }
     .organ-lab-visual { grid-row: auto; min-height: 150px; }
     .organ-lab-status { align-items: flex-start; flex-direction: column; gap: 5px; }
+
+    body.series-premium .component-button,
+    body.series-premium .signal-path-step > button,
+    body.series-premium .sim-secondary-button,
+    body.series-premium .simulation-actions .primary-button,
+    body.series-premium .system-atlas-toolbar button {
+        min-height: 44px;
+    }
 }
 
 @media (prefers-reduced-motion: reduce) {

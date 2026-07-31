@@ -29,27 +29,41 @@
         || config.experienceType === "temperature-simulation";
     const simulationCopy = {
         thresholdWord: "감지 기준",
-        slotLabel: "경로",
-        selectedTitle: "경로를 조립하고 있어요",
-        selectedText: "경로가 완성되면 신호를 보내 보세요.",
-        removeTitle: "경로를 다시 연결해 보세요",
-        undoTitle: "마지막 연결을 지웠어요",
-        undoText: "기관을 이동 순서대로 다시 선택하세요.",
-        clearTitle: "경로를 비웠어요",
-        clearText: "자극을 받아들이는 곳부터 다시 연결하세요.",
-        runLabel: "신호 보내기",
-        idleTitle: "먼저 자극 세기와 신호 경로를 조절하세요",
-        idleText: "실행하면 구성한 경로에 따라 몸의 반응이 달라집니다.",
-        incompleteTitle: "신호 경로가 아직 이어지지 않았어요",
-        incompleteText: "빈칸 {count}개를 연결한 뒤 다시 실행하세요.",
+        slotLabel: "다음 변화",
+        selectedTitle: "원인과 결과를 한 단계 연결했어요",
+        selectedText: "방금 나타난 변화를 단서로 바로 다음 결과를 예측하세요.",
+        removeTitle: "이 단계부터 다시 예측해 보세요",
+        undoTitle: "이전 예측으로 돌아왔어요",
+        undoText: "현재 변화에서 바로 이어질 결과를 다시 골라 보세요.",
+        clearTitle: "시작 상황으로 돌아왔어요",
+        clearText: "관찰값을 바꾸고 첫 번째 변화를 다시 예측하세요.",
+        runLabel: "내 예측으로 실험하기",
+        idleTitle: "관찰값을 바꾸고 다음 변화를 예측하세요",
+        idleText: "시작 상황은 제시되어 있습니다. 한 번에 하나씩 직접 이어지는 결과를 고르세요.",
+        incompleteTitle: "아직 확인할 인과 단계가 남아 있어요",
+        incompleteText: "남은 변화 {count}개를 한 단계씩 예측한 뒤 실험하세요.",
         lowTitle: "자극은 도착했지만 반응이 시작되지 않았어요",
         lowText: "{message} 자극 세기를 높여 다시 관찰해 보세요.",
-        mismatchTitle: "{index}번째 연결에서 신호가 멈췄어요",
-        successTitle: "신호가 끝까지 전달됐어요!",
+        mismatchTitle: "중간 원인을 건너뛰었어요",
+        successTitle: "예측한 원인과 결과가 관찰 결과와 맞았어요!",
         completeLabel: "실험 완료",
         nextLabel: "관찰 확인 문제로",
         reviewLabel: "처음 실행한 경로",
-        ...config.simulationCopy
+        ...config.simulationCopy,
+        slotLabel: "다음 변화",
+        selectedTitle: "원인과 결과를 한 단계 연결했어요",
+        selectedText: "방금 나타난 변화를 단서로 바로 다음 결과를 예측하세요.",
+        removeTitle: "이 단계부터 다시 예측해 보세요",
+        undoTitle: "이전 예측으로 돌아왔어요",
+        undoText: "현재 변화에서 바로 이어질 결과를 다시 골라 보세요.",
+        clearTitle: "시작 상황으로 돌아왔어요",
+        clearText: "관찰값을 바꾸고 첫 번째 변화를 다시 예측하세요.",
+        runLabel: "관찰 결과 확인하기",
+        idleTitle: "관찰값을 바꾸고 다음 변화를 예측하세요",
+        idleText: "시작 상황은 제시되어 있습니다. 한 번에 하나씩 직접 이어지는 결과를 고르세요.",
+        incompleteTitle: "아직 확인할 인과 단계가 남아 있어요",
+        incompleteText: "남은 변화 {count}개를 한 단계씩 예측한 뒤 실험하세요.",
+        mismatchTitle: "중간 원인을 건너뛰었어요"
     };
 
     const elements = {
@@ -113,6 +127,8 @@
         stimulusThreshold: document.getElementById("stimulusThreshold"),
         signalPath: document.getElementById("signalPath"),
         componentBank: document.getElementById("componentBank"),
+        pathTitle: document.querySelector(".path-heading strong"),
+        pathGuide: document.querySelector(".path-heading span"),
         undoPathButton: document.getElementById("undoPathButton"),
         clearPathButton: document.getElementById("clearPathButton"),
         runSimulationButton: document.getElementById("runSimulationButton"),
@@ -230,6 +246,28 @@
         screens.forEach((screen) => screen?.classList.toggle("hidden", screen !== activeScreen));
         document.body.classList.toggle("journey-active", activeScreen === elements.journeyScreen);
         document.body.classList.toggle("anatomy-active", activeScreen === elements.journeyScreen && HAS_ANATOMY_EXPLORER);
+        if (activeScreen !== elements.journeyScreen) {
+            document.body.classList.remove("experiment-stage-active");
+        }
+    }
+
+    function centerActiveEpisode() {
+        const switcher = document.querySelector(".episode-switcher");
+        const activeEpisode = switcher?.querySelector('[aria-current="page"]');
+        if (!switcher || !activeEpisode) return;
+        const target = activeEpisode.offsetLeft - ((switcher.clientWidth - activeEpisode.offsetWidth) / 2);
+        switcher.scrollLeft = Math.max(0, target);
+    }
+
+    function reportClassStageCompletion(firstTry = state.attempts === 0) {
+        if (state.mode !== "class" || !state.classSessionId || !lobby) return;
+        lobby.sendServer({
+            type: `${MESSAGE_PREFIX}_ACTION`,
+            action: "PROGRESS",
+            sessionId: state.classSessionId,
+            stageIndex: state.currentIndex,
+            firstTry
+        });
     }
 
     function setGreeting() {
@@ -489,6 +527,7 @@
             state.score += 1;
             elements.currentScore.textContent = String(state.score);
         }
+        reportClassStageCompletion();
         revealFact(stage);
         updateAnatomyMap(stage, true);
         setExplorerFeedback(
@@ -718,56 +757,116 @@
             item.classList.toggle("is-filled", Boolean(component));
             item.classList.toggle("is-mismatch", index === mismatchIndex);
             item.classList.toggle("is-signal", animate && Boolean(component));
+            item.classList.toggle("is-given", index === 0 && Boolean(component));
+            item.classList.toggle("is-current", !component && index === state.experimentPath.length);
 
             if (component) {
                 const button = document.createElement("button");
                 button.type = "button";
                 button.dataset.sfx = "none";
                 button.textContent = component;
-                button.title = `${component}부터 경로 다시 만들기`;
-                button.disabled = state.stageSolved;
+                button.title = index === 0 ? "관찰에서 주어진 시작 상황" : `${component}부터 다시 예측하기`;
+                button.disabled = state.stageSolved || index === 0;
                 button.addEventListener("click", () => removeExperimentComponent(index));
                 item.append(button);
             } else {
                 const placeholder = document.createElement("span");
-                placeholder.innerHTML = `<b>${index + 1}</b><small>${simulationCopy.slotLabel}</small>`;
+                placeholder.innerHTML = `<b>${index + 1}</b><small>${index === state.experimentPath.length ? simulationCopy.slotLabel : "결과"}</small>`;
                 item.append(placeholder);
             }
             elements.signalPath.append(item);
         });
+        requestAnimationFrame(() => {
+            const currentStep = elements.signalPath.children[
+                Math.min(state.experimentPath.length, elements.signalPath.children.length - 1)
+            ];
+            if (!currentStep) return;
+            elements.signalPath.scrollLeft = Math.max(
+                0,
+                currentStep.offsetLeft - ((elements.signalPath.clientWidth - currentStep.offsetWidth) / 2)
+            );
+        });
+    }
+
+    function prepareExperimentChoices(stage) {
+        const nextIndex = state.experimentPath.length;
+        const path = stage.scenario.correctPath;
+        if (nextIndex >= path.length) {
+            state.componentOrder = [];
+            return;
+        }
+
+        const expected = path[nextIndex];
+        const skippedStep = path[nextIndex + 1];
+        const priorStep = path[Math.max(0, nextIndex - 2)];
+        const alternative = skippedStep && skippedStep !== expected
+            ? skippedStep
+            : priorStep && priorStep !== expected
+                ? priorStep
+                : "현재 반응이 같은 세기로 계속된다";
+        state.componentOrder = shuffledChoices([expected, alternative]);
     }
 
     function renderComponentBank(stage) {
         elements.componentBank.replaceChildren();
         state.componentOrder.forEach((component) => {
             const button = document.createElement("button");
-            const isSelected = state.experimentPath.includes(component);
             button.type = "button";
             button.className = "component-button";
             button.dataset.sfx = "none";
             button.textContent = component;
-            button.classList.toggle("is-selected", isSelected);
-            button.disabled = isSelected || state.experimentPath.length >= stage.scenario.correctPath.length || state.stageSolved;
-            button.addEventListener("click", () => addExperimentComponent(component));
+            button.disabled = state.experimentPath.length >= stage.scenario.correctPath.length || state.stageSolved;
+            button.addEventListener("click", () => addExperimentComponent(component, button));
             elements.componentBank.append(button);
         });
+        elements.undoPathButton.disabled = state.stageSolved || state.experimentPath.length <= 1;
+        elements.clearPathButton.disabled = state.stageSolved || state.experimentPath.length <= 1;
+        elements.runSimulationButton.disabled = state.stageSolved || state.experimentPath.length < stage.scenario.correctPath.length;
+        if (elements.pathGuide) {
+            const remaining = Math.max(0, stage.scenario.correctPath.length - state.experimentPath.length);
+            elements.pathGuide.textContent = remaining > 0
+                ? `“${state.experimentPath[state.experimentPath.length - 1]}” 다음에 바로 일어날 변화는? · ${remaining}단계 남음`
+                : "인과 연결 완성 · 관찰값을 확인하고 실험하세요";
+        }
     }
 
-    function addExperimentComponent(component) {
+    function addExperimentComponent(component, sourceButton) {
         const stage = stages[state.currentIndex];
-        if (!isExperimentStage(stage) || state.stageSolved || state.experimentPath.includes(component)) return;
+        if (!isExperimentStage(stage) || state.stageSolved) return;
         if (state.experimentPath.length >= stage.scenario.correctPath.length) return;
+        const nextIndex = state.experimentPath.length;
+        const expected = stage.scenario.correctPath[nextIndex];
+        if (component !== expected) {
+            sourceButton?.classList.add("is-wrong");
+            if (sourceButton) sourceButton.disabled = true;
+            const skippedAhead = stage.scenario.correctPath.slice(nextIndex + 1).includes(component);
+            setSimulationFeedback(
+                "correcting",
+                skippedAhead ? "방향은 맞지만 중간 원인을 건너뛰었어요" : "이 변화는 지금 단계에서 바로 이어지지 않아요",
+                stage.scenario.hints[nextIndex]
+            );
+            elements.announcer.textContent = `${elements.simulationFeedbackTitle.textContent}. ${elements.simulationFeedbackText.textContent}`;
+            window.ClassGameSfx?.play("error");
+            return;
+        }
         state.experimentPath.push(component);
+        prepareExperimentChoices(stage);
         renderExperimentPath(stage);
         renderComponentBank(stage);
-        setSimulationFeedback("idle", simulationCopy.selectedTitle, `${state.experimentPath.length}/${stage.scenario.correctPath.length}칸을 연결했습니다. ${simulationCopy.selectedText}`);
+        const remaining = stage.scenario.correctPath.length - state.experimentPath.length;
+        setSimulationFeedback(
+            "idle",
+            remaining > 0 ? simulationCopy.selectedTitle : "원인과 결과를 모두 연결했어요",
+            remaining > 0 ? simulationCopy.selectedText : "이제 관찰 구간을 확인하고 내 예측으로 실험해 보세요."
+        );
         window.ClassGameSfx?.play("click");
     }
 
     function removeExperimentComponent(index) {
         const stage = stages[state.currentIndex];
-        if (!isExperimentStage(stage) || state.stageSolved) return;
+        if (!isExperimentStage(stage) || state.stageSolved || index <= 0) return;
         state.experimentPath.splice(index);
+        prepareExperimentChoices(stage);
         renderExperimentPath(stage);
         renderComponentBank(stage);
         setSimulationFeedback("idle", simulationCopy.removeTitle, `${index + 1}번째 칸부터 비웠습니다.`);
@@ -775,8 +874,9 @@
 
     function undoExperimentPath() {
         const stage = stages[state.currentIndex];
-        if (!isExperimentStage(stage) || state.stageSolved || state.experimentPath.length === 0) return;
+        if (!isExperimentStage(stage) || state.stageSolved || state.experimentPath.length <= 1) return;
         state.experimentPath.pop();
+        prepareExperimentChoices(stage);
         renderExperimentPath(stage);
         renderComponentBank(stage);
         setSimulationFeedback("idle", simulationCopy.undoTitle, simulationCopy.undoText);
@@ -785,7 +885,8 @@
     function clearExperimentPath() {
         const stage = stages[state.currentIndex];
         if (!isExperimentStage(stage) || state.stageSolved) return;
-        state.experimentPath = [];
+        state.experimentPath = [stage.scenario.correctPath[0]];
+        prepareExperimentChoices(stage);
         renderExperimentPath(stage);
         renderComponentBank(stage);
         setSimulationFeedback("idle", simulationCopy.clearTitle, simulationCopy.clearText);
@@ -794,27 +895,32 @@
     function renderExperimentStage(stage) {
         elements.questionCard.classList.add("hidden");
         elements.simulationCard.classList.remove("hidden");
-        elements.simulationTitle.textContent = stage.question;
+        elements.signalPath.setAttribute("aria-label", "관찰한 원인과 결과");
+        elements.componentBank.setAttribute("aria-label", "다음 변화 예측 선택지");
+        elements.simulationTitle.textContent = `${stage.scenario.stimulus}에서 몸의 다음 변화를 예측해 보세요.`;
         elements.stimulusIcon.textContent = stage.scenario.icon;
         elements.stimulusName.textContent = stage.scenario.stimulus;
         elements.stimulusIntensity.value = String(experimentIntensityGoal(stage).start);
         elements.stimulusIntensity.disabled = false;
-        elements.undoPathButton.disabled = false;
-        elements.clearPathButton.disabled = false;
-        elements.runSimulationButton.disabled = false;
+        elements.undoPathButton.disabled = true;
+        elements.clearPathButton.disabled = true;
+        elements.runSimulationButton.disabled = true;
         elements.runSimulationButton.textContent = simulationCopy.runLabel;
+        elements.undoPathButton.textContent = "이전 단계";
+        elements.clearPathButton.textContent = "처음부터";
+        if (elements.pathTitle) elements.pathTitle.textContent = "원인에서 결과로";
         elements.motionVisual?.classList.remove("hidden", "is-success");
         elements.excretionVisual?.classList.remove("hidden", "is-success");
         elements.temperatureVisual?.classList.remove("hidden", "is-success");
-        state.experimentPath = [];
-        state.componentOrder = shuffledChoices(stage.scenario.components);
+        state.experimentPath = [stage.scenario.correctPath[0]];
+        prepareExperimentChoices(stage);
         updateStimulusReadout();
         renderExperimentPath(stage);
         renderComponentBank(stage);
         setSimulationFeedback("idle", simulationCopy.idleTitle, simulationCopy.idleText);
         updateRouteMap();
         elements.stimulusIntensity.focus({ preventScroll: true });
-        elements.announcer.textContent = `${stage.location}. ${stage.mission}`;
+        elements.announcer.textContent = `${stage.location}. ${elements.stageMission.textContent}`;
     }
 
     function runInteractiveExperiment() {
@@ -836,7 +942,6 @@
             const observation = intensity < intensityGoal.min
                 ? scenario.lowMessage
                 : "자극이나 반응이 지나치게 강하면 관찰하려는 과정이 안정적으로 나타나지 않아요.";
-            recordStageMistake(stage, `${scenario.intensityLabel} ${intensity} (관찰 구간 ${intensityGoal.min}–${intensityGoal.max})`);
             setSimulationFeedback("observing", "관찰 조건을 다시 맞춰 보세요", `${observation} 값을 ${direction} ${intensityGoal.min}–${intensityGoal.max} 구간에 맞추세요.`);
             elements.announcer.textContent = `${elements.simulationFeedbackTitle.textContent}. ${elements.simulationFeedbackText.textContent}`;
             window.ClassGameSfx?.play("click");
@@ -844,22 +949,10 @@
             return;
         }
 
-        const mismatchIndex = state.experimentPath.findIndex((component, index) => component !== scenario.correctPath[index]);
-        if (mismatchIndex !== -1) {
-            recordStageMistake(stage, state.experimentPath.join(" → "));
-            renderExperimentPath(stage, mismatchIndex);
-            setSimulationFeedback("correcting", simulationCopy.mismatchTitle.replace("{index}", String(mismatchIndex + 1)), scenario.hints[mismatchIndex]);
-            elements.announcer.textContent = `${elements.simulationFeedbackTitle.textContent}. ${elements.simulationFeedbackText.textContent}`;
-            window.ClassGameSfx?.play("error");
-            elements.signalPath.children[mismatchIndex]?.querySelector("button")?.focus({ preventScroll: true });
-            return;
-        }
-
         state.stageSolved = true;
-        if (state.attempts === 0) {
-            state.score += 1;
-            elements.currentScore.textContent = String(state.score);
-        }
+        state.score += 1;
+        elements.currentScore.textContent = String(state.score);
+        reportClassStageCompletion(true);
         revealFact(stage);
         renderExperimentPath(stage, -1, true);
         renderComponentBank(stage);
@@ -883,13 +976,16 @@
 
     function renderStage() {
         const stage = stages[state.currentIndex];
+        document.body.classList.toggle("experiment-stage-active", isExperimentStage(stage));
         state.attempts = 0;
         state.stageSolved = false;
         elements.stageNumber.textContent = String(state.currentIndex + 1);
         elements.scenePanel.dataset.scene = stage.scene;
         elements.chapterLabel.textContent = stage.chapter;
         elements.stageLocation.textContent = stage.location;
-        elements.stageMission.textContent = stage.mission;
+        elements.stageMission.textContent = isExperimentStage(stage)
+            ? `${stage.scenario.stimulus}의 세기를 바꾸며 몸의 반응이 어떤 원인과 결과로 이어지는지 관찰하세요.`
+            : stage.mission;
         elements.scenePanel.classList.remove("simulation-reacting");
         elements.motionVisual?.classList.toggle("hidden", !isExperimentStage(stage));
         elements.excretionVisual?.classList.toggle("hidden", !isExperimentStage(stage));
@@ -965,6 +1061,7 @@
             state.score += 1;
             elements.currentScore.textContent = String(state.score);
         }
+        reportClassStageCompletion();
         [...elements.choiceList.querySelectorAll("button")].forEach((choiceButton) => {
             choiceButton.disabled = true;
             if (choiceButton.dataset.choice === stage.answer) choiceButton.classList.add("is-correct");
@@ -1047,7 +1144,7 @@
             elements.restartButton.classList.remove("hidden");
             updateBestScore();
         } else {
-            elements.bestMessage.textContent = "첫 도전 정답 수가 같으면 먼저 완주한 탐험가가 앞서요.";
+            elements.bestMessage.textContent = "탐구 관문은 완수 점수, 확인 문제는 첫 도전 정답으로 집계하며 동점이면 먼저 완주한 탐험가가 앞서요.";
             elements.classRankArea.classList.remove("hidden");
             elements.restartButton.classList.add("hidden");
             if (!state.classResultSubmitted && lobby) {
@@ -1055,8 +1152,7 @@
                 lobby.sendServer({
                     type: `${MESSAGE_PREFIX}_ACTION`,
                     action: "SUBMIT",
-                    sessionId: state.classSessionId,
-                    score: state.score
+                    sessionId: state.classSessionId
                 });
             }
             renderClassRanking(state.classState, lobby?.snapshot().myId);
@@ -1147,13 +1243,15 @@
     elements.runSimulationButton?.addEventListener("click", runInteractiveExperiment);
     elements.simulationNextButton?.addEventListener("click", goToNextStage);
     document.addEventListener("body-explorer-manipulation-error", (event) => {
-        const stage = stages[state.currentIndex];
-        recordStageMistake(stage, event.detail?.chosen || "조작 조건을 잘못 선택함");
+        elements.announcer.textContent = `${event.detail?.chosen || "선택한 조건"}은 관찰 결과와 맞지 않습니다. 다른 조건으로 다시 확인해 보세요.`;
     });
     document.querySelectorAll(".mode-back-button").forEach((button) => button.addEventListener("click", showModeScreen));
     document.addEventListener("keydown", handleKeyboard);
 
     setGreeting();
     updateBestScore();
+    const scoreLabel = document.querySelector(".score-meter > span");
+    if (scoreLabel) scoreLabel.textContent = "탐험 점수";
     setScreen(elements.modeScreen);
+    requestAnimationFrame(centerActiveEpisode);
 })();

@@ -6,7 +6,7 @@ const path = require("node:path");
 const vm = require("node:vm");
 
 const root = path.resolve(__dirname, "..");
-const dir = path.join(root, "learning", "simulations", "body-explorer");
+const dir = path.join(root, "learning", "academics", "body-explorer");
 const files = {
     html: path.join(dir, "nervous.html"),
     data: path.join(dir, "nervous-data.js"),
@@ -20,10 +20,10 @@ const files = {
     server: path.join(root, "game-hub-server", "server.js")
 };
 const images = [
-    path.join(root, "assets", "images", "body-explorer", "nervous-hero.webp"),
-    path.join(root, "assets", "images", "body-explorer", "nervous-sensory.webp"),
-    path.join(root, "assets", "images", "body-explorer", "nervous-response.webp"),
-    path.join(root, "assets", "images", "body-explorer", "signal-explorer.webp")
+    path.join(dir, "assets", "images", "nervous-hero.webp"),
+    path.join(dir, "assets", "images", "nervous-sensory.webp"),
+    path.join(dir, "assets", "images", "nervous-response.webp"),
+    path.join(dir, "assets", "images", "signal-explorer.webp")
 ];
 
 for (const file of [...Object.values(files), ...images]) {
@@ -113,9 +113,11 @@ for (const asset of ["nervous-hero.webp", "nervous-sensory.webp", "nervous-respo
 }
 
 for (const episodeHtml of [files.circulationHtml, files.digestionHtml, files.respirationHtml]) {
-    assert.ok(fs.readFileSync(episodeHtml, "utf8").includes('href="nervous.html"'), `${path.basename(episodeHtml)} must offer episode 04.`);
+    assert.match(fs.readFileSync(episodeHtml, "utf8"), /href="nervous(?:\.html)?"/, `${path.basename(episodeHtml)} must offer episode 04.`);
 }
-assert.ok(html.includes('href="index.html"') && html.includes('href="digestion.html"') && html.includes('href="respiration.html"'), "Episode 04 must offer episodes 01–03.");
+assert.match(html, /href="(?:index\.html|\.\/)"/, "Episode 04 must offer episode 01.");
+assert.match(html, /href="digestion(?:\.html)?"/, "Episode 04 must offer episode 02.");
+assert.match(html, /href="respiration(?:\.html)?"/, "Episode 04 must offer episode 03.");
 
 const teacherHtml = fs.readFileSync(files.teacherHtml, "utf8");
 assert.ok(teacherHtml.includes('data-game-id="nervous"'), "Teacher page must create a nervous classroom.");
@@ -132,9 +134,11 @@ assert.ok(app.includes("config.gameId"), "Shared student app must read the episo
 assert.ok(app.includes('action: "SUBMIT"'), "Student results must be submitted to the server.");
 assert.ok(app.includes("state.missed.push"), "Wrong answers must be collected for review.");
 assert.ok(app.includes("function runInteractiveExperiment()"), "The nervous episode must execute learner-built experiments.");
-assert.ok(app.includes("intensity < scenario.threshold"), "Experiments must respond differently below the detection threshold.");
-assert.ok(app.includes("state.experimentPath.findIndex"), "Experiments must evaluate the learner-built signal route.");
-assert.ok(app.includes('state.experimentPath.join(" → ")'), "An incorrect experiment route must be recorded for review.");
+assert.ok(app.includes("intensity < intensityGoal.min || intensity > intensityGoal.max"), "Experiments must respond differently outside the observation range.");
+assert.ok(app.includes("function experimentIntensityGoal(stage)"), "Experiments must derive a stage-specific observation range.");
+assert.ok(app.includes("function prepareExperimentChoices(stage)"), "Experiments must present one causal prediction at a time.");
+assert.ok(app.includes("component !== expected"), "Experiments must check the learner's next-step prediction.");
+assert.ok(app.includes("skippedAhead"), "Experiments must explain when a learner skips an intermediate cause.");
 assert.ok(app.includes('setSimulationFeedback("success"'), "A completed route must show the observed body response.");
 
 const nervousStyles = fs.readFileSync(files.styles, "utf8");
@@ -142,6 +146,7 @@ for (const selector of [".stimulus-console", ".signal-path", ".component-bank", 
     assert.ok(nervousStyles.includes(selector), `Nervous simulator is missing styles for ${selector}`);
 }
 assert.ok(nervousStyles.includes("@keyframes nerve-pulse"), "The signal route needs a visible propagation animation.");
+assert.match(nervousStyles, /\.component-bank\s*\{[^}]*grid-template-columns:\s*repeat\(2,/s, "The learner should compare two focused causal predictions instead of a large word bank.");
 assert.match(nervousStyles, /@media \(min-width: 740px\)[\s\S]*?\.simulation-card[\s\S]*?grid-column:\s*2/, "The simulator must share one viewport with the scene on tablets and PCs.");
 
 const server = fs.readFileSync(files.server, "utf8");

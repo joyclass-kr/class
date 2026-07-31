@@ -6,7 +6,7 @@ const path = require("node:path");
 const vm = require("node:vm");
 
 const root = path.resolve(__dirname, "..");
-const dir = path.join(root, "learning", "simulations", "body-explorer");
+const dir = path.join(root, "learning", "academics", "body-explorer");
 const files = {
     html: path.join(dir, "temperature.html"),
     data: path.join(dir, "temperature-data.js"),
@@ -17,7 +17,7 @@ const files = {
     server: path.join(root, "game-hub-server", "server.js")
 };
 const images = ["temperature-hero.webp", "temperature-hot.webp", "temperature-cold.webp", "temperature-explorer.webp"]
-    .map((name) => path.join(root, "assets", "images", "body-explorer", name));
+    .map((name) => path.join(dir, "assets", "images", name));
 
 for (const file of [...Object.values(files), ...images]) {
     assert.ok(fs.existsSync(file), `Missing temperature explorer file: ${file}`);
@@ -89,7 +89,7 @@ assert.ok(styles.includes(".temperature-live-visual") && styles.includes(".skin-
 assert.ok(styles.includes("@media (min-width: 740px) and (max-height: 820px)"));
 
 for (const episodeFile of ["index.html", "digestion.html", "respiration.html", "nervous.html", "immune.html", "movement.html", "excretion.html"]) {
-    assert.ok(fs.readFileSync(path.join(dir, episodeFile), "utf8").includes('href="temperature.html"'), `${episodeFile} must offer episode 08.`);
+    assert.match(fs.readFileSync(path.join(dir, episodeFile), "utf8"), /href="temperature(?:\.html)?"/, `${episodeFile} must offer episode 08.`);
 }
 
 const teacherHtml = fs.readFileSync(files.teacherHtml, "utf8");

@@ -55,13 +55,13 @@ for (const stage of stages) {
 assert.deepEqual(Array.from(stages, (stage) => stage.answer), [
     "대정맥",
     "우심방",
-    "삼첨판",
-    "폐동맥",
+    "심실이 수축할 때 혈액 일부가 우심방 쪽으로 되돌아갈 수 있다",
+    "심장에서 폐 쪽으로 나가는 혈관이기 때문에",
     "산소는 혈액으로, 이산화탄소는 폐포로",
-    "폐정맥",
-    "이첨판(승모판)",
-    "좌심실",
-    "대동맥",
+    "폐에서 심장으로 돌아오는 혈관이기 때문에",
+    "좌심실이 수축할 때 혈액이 좌심방으로 역류하지 않게 하기 위해",
+    "혈액을 온몸의 먼 곳까지 보낼 큰 힘이 필요하기 때문에",
+    "온몸으로 나가는 혈액의 양이 줄어들 수 있다",
     "모세혈관"
 ]);
 assert.match(stages[0].fact, /파란색이 아니라 짙은 붉은색/, "The blue-blood misconception should be corrected.");
@@ -94,6 +94,7 @@ for (const scriptPath of [files.data, files.app, files.teacherApp, files.server]
 const app = fs.readFileSync(files.app, "utf8");
 assert.ok(app.includes("config.gameId"), "Student app must read the episode classroom game id.");
 assert.ok(app.includes('action: "SUBMIT"'), "Student results must be submitted to the server.");
+assert.ok(app.includes('action: "PROGRESS"'), "Each completed class stage must be reported to the server.");
 assert.ok(app.includes("state.missed.push"), "Wrong routes must be collected for review.");
 assert.ok(app.includes('button.classList.add("is-wrong")'), "A wrong route should provide immediate feedback.");
 
@@ -107,8 +108,8 @@ assert.ok(server.includes("CIRCULATION_STATE"), "Server is missing circulation b
 assert.ok(server.includes("elapsedMs: Math.max(0, Date.now() - game.startedAt)"), "Completion time must be server-authoritative.");
 
 const hub = fs.readFileSync(files.hub, "utf8");
-assert.ok(hub.includes('href="learning/academics/body-explorer/index.html"'), "Hub is missing the body explorer link.");
-assert.ok(hub.includes("인체 탐험"), "Hub is missing the Korean title.");
-assert.ok(hub.includes("(Human Body Explorer)"), "Hub is missing the English subtitle.");
+assert.match(hub, /href="learning\/academics\/body-explorer\/(?:index\.html)?"/, "Hub is missing the body explorer link.");
+assert.ok(hub.includes("인체의 구조와 기능"), "Hub is missing the Korean title.");
+assert.ok(hub.includes("(Human Body Systems)"), "Hub is missing the English subtitle.");
 
 console.log("circulation-contract: 10 stages, modes, review notebook, generated art and classroom wiring ok");

@@ -6,7 +6,7 @@ const path = require("node:path");
 const vm = require("node:vm");
 
 const root = path.resolve(__dirname, "..");
-const dir = path.join(root, "learning", "simulations", "body-explorer");
+const dir = path.join(root, "learning", "academics", "body-explorer");
 const files = {
     html: path.join(dir, "respiration.html"),
     data: path.join(dir, "respiration-data.js"),
@@ -19,10 +19,10 @@ const files = {
     server: path.join(root, "game-hub-server", "server.js")
 };
 const images = [
-    path.join(root, "assets", "images", "body-explorer", "respiration-hero.webp"),
-    path.join(root, "assets", "images", "body-explorer", "respiration-airway.webp"),
-    path.join(root, "assets", "images", "body-explorer", "respiration-alveoli.webp"),
-    path.join(root, "assets", "images", "body-explorer", "oxygen-explorer.webp")
+    path.join(dir, "assets", "images", "respiration-hero.webp"),
+    path.join(dir, "assets", "images", "respiration-airway.webp"),
+    path.join(dir, "assets", "images", "respiration-alveoli.webp"),
+    path.join(dir, "assets", "images", "oxygen-explorer.webp")
 ];
 
 for (const file of [...Object.values(files), ...images]) {
@@ -89,9 +89,10 @@ for (const asset of ["respiration-hero.webp", "respiration-airway.webp", "respir
 }
 
 for (const episodeHtml of [files.circulationHtml, files.digestionHtml]) {
-    assert.ok(fs.readFileSync(episodeHtml, "utf8").includes('href="respiration.html"'), `${path.basename(episodeHtml)} must offer episode 03.`);
+    assert.match(fs.readFileSync(episodeHtml, "utf8"), /href="respiration(?:\.html)?"/, `${path.basename(episodeHtml)} must offer episode 03.`);
 }
-assert.ok(html.includes('href="index.html"') && html.includes('href="digestion.html"'), "Episode 03 must offer episodes 01 and 02.");
+assert.match(html, /href="(?:index\.html|\.\/)"/, "Episode 03 must offer episode 01.");
+assert.match(html, /href="digestion(?:\.html)?"/, "Episode 03 must offer episode 02.");
 
 const teacherHtml = fs.readFileSync(files.teacherHtml, "utf8");
 assert.ok(teacherHtml.includes('data-game-id="respiration"'), "Teacher page must create a respiration classroom.");

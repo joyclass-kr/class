@@ -313,17 +313,24 @@ body.nervous-page {
 }
 
 .nervous-page .signal-path {
-    display: grid;
+    display: flex;
+    gap: 7px;
     margin: 0;
-    padding: 0;
-    grid-template-columns: repeat(5, minmax(0, 1fr));
+    padding: 0 0 5px;
     list-style: none;
+    overflow-x: auto;
+    overscroll-behavior-inline: contain;
+    scroll-behavior: smooth;
+    scroll-snap-type: inline mandatory;
+    scrollbar-width: thin;
 }
 
 .nervous-page .signal-path-step {
     position: relative;
-    min-width: 0;
-    padding-right: 9px;
+    flex: 0 0 min(42%, 205px);
+    min-width: 150px;
+    padding-right: 13px;
+    scroll-snap-align: start;
 }
 
 .nervous-page .signal-path-step:last-child {
@@ -334,7 +341,7 @@ body.nervous-page {
     position: absolute;
     top: 50%;
     right: 1px;
-    width: 8px;
+    width: 11px;
     height: 2px;
     background: #b9aad8;
     content: "";
@@ -393,6 +400,20 @@ body.nervous-page {
     animation: path-nudge 320ms ease;
 }
 
+.nervous-page .signal-path-step.is-given > button {
+    border-color: #6a96b9;
+    background: #eaf7ff;
+    color: #214f70;
+    opacity: 1;
+}
+
+.nervous-page .signal-path-step.is-current > span {
+    border-style: solid;
+    border-color: #d8a73d;
+    background: #fff8dc;
+    color: #765414;
+}
+
 .nervous-page .signal-path-step.is-signal > button {
     border-color: #b27a11;
     background: #fff1a8;
@@ -403,19 +424,19 @@ body.nervous-page {
 .nervous-page .component-bank {
     display: grid;
     margin-top: 8px;
-    grid-template-columns: repeat(3, minmax(0, 1fr));
-    gap: 5px;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: 8px;
 }
 
 .nervous-page .component-button {
-    min-height: 33px;
-    padding: 5px 7px;
+    min-height: 52px;
+    padding: 9px 12px;
     border: 1px solid #c7bbe1;
     border-radius: 9px;
     background: white;
     color: #3f315e;
     font: inherit;
-    font-size: 11px;
+    font-size: 12px;
     font-weight: 800;
     line-height: 1.2;
     word-break: keep-all;
@@ -434,6 +455,13 @@ body.nervous-page {
     background: #e8e2f1;
     color: #8d839e;
     opacity: 0.62;
+}
+
+.nervous-page .component-button.is-wrong {
+    border-color: #c4566f;
+    background: #fff0f3;
+    color: #8c2943;
+    opacity: 0.72;
 }
 
 .nervous-page .simulation-actions {

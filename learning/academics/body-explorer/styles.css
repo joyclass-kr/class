@@ -2469,7 +2469,7 @@ footer a {
     }
 
     .hero-screen {
-        min-height: 980px;
+        min-height: 760px;
         border-radius: 20px;
     }
 
@@ -2486,7 +2486,22 @@ footer a {
     }
 
     .episode-switcher {
-        grid-template-columns: 1fr;
+        display: flex;
+        margin-right: -20px;
+        margin-left: -20px;
+        padding: 0 20px 8px;
+        gap: 10px;
+        overflow-x: auto;
+        overscroll-behavior-inline: contain;
+        scroll-snap-type: inline mandatory;
+        scrollbar-width: thin;
+        scrollbar-color: rgba(255, 218, 181, 0.64) transparent;
+    }
+
+    .episode-switcher a {
+        flex: 0 0 min(76vw, 270px);
+        min-height: 66px;
+        scroll-snap-align: center;
     }
 
     .mode-grid {
@@ -2495,6 +2510,11 @@ footer a {
 
     .mode-card {
         min-height: 92px;
+    }
+
+    .teacher-link {
+        min-height: 44px;
+        align-items: center;
     }
 
     .briefing-copy,
@@ -2539,9 +2559,20 @@ footer a {
     }
 
     .scene-panel {
-        min-height: 560px;
+        min-height: 390px;
         border-radius: 20px 20px 0 0;
     }
+
+    body.experiment-stage-active .journey-screen:not(.hidden) {
+        display: flex;
+        flex-direction: column;
+    }
+
+    body.experiment-stage-active .journey-status { order: 1; }
+    body.experiment-stage-active .route-strip { order: 2; }
+    body.experiment-stage-active .simulation-card { order: 3; }
+    body.experiment-stage-active .scene-panel { order: 4; }
+    body.experiment-stage-active .question-card { order: 5; }
 
     .scene-panel[data-scene="heart"] .scene-image {
         background-position: 48% center;

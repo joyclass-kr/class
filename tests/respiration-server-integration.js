@@ -65,6 +65,12 @@ function connectClient() {
     });
 }
 
+function reportStages(client, type, sessionId, score) {
+    for (let stageIndex = 0; stageIndex < 10; stageIndex += 1) {
+        client.send({ type, action: "PROGRESS", sessionId, stageIndex, firstTry: stageIndex < score });
+    }
+}
+
 async function joinStudent(name, clients) {
     const client = await connectClient();
     clients.push(client);
@@ -112,13 +118,15 @@ async function run() {
         const lateError = await late.waitFor((message) => message.type === "ERROR", "진행 중 입장 거절");
         assert.match(lateError.message, /이미 출발한/);
 
-        first.client.send({ type: "RESPIRATION_ACTION", action: "SUBMIT", sessionId: firstStart.state.sessionId, score: 8 });
+        reportStages(first.client, "RESPIRATION_ACTION", firstStart.state.sessionId, 8);
+        first.client.send({ type: "RESPIRATION_ACTION", action: "SUBMIT", sessionId: firstStart.state.sessionId });
         const firstResult = await first.client.waitFor((message) => message.type === "RESPIRATION_STATE" && message.state.rankings.length === 1, "첫 완주 결과");
         assert.equal(firstResult.state.rankings[0].name, "하늘");
         assert.equal(firstResult.state.rankings[0].score, 8);
         assert.ok(Number.isFinite(firstResult.state.rankings[0].elapsedMs));
 
-        second.client.send({ type: "RESPIRATION_ACTION", action: "SUBMIT", sessionId: secondStart.state.sessionId, score: 10 });
+        reportStages(second.client, "RESPIRATION_ACTION", secondStart.state.sessionId, 10);
+        second.client.send({ type: "RESPIRATION_ACTION", action: "SUBMIT", sessionId: secondStart.state.sessionId });
         const finalState = await second.client.waitFor((message) => message.type === "RESPIRATION_STATE" && message.state.phase === "ended", "최종 순위");
         assert.deepEqual(finalState.state.rankings.map((entry) => [entry.rank, entry.name, entry.score]), [
             [1, "바다", 10],
