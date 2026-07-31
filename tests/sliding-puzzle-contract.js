@@ -24,6 +24,10 @@ assert.match(fs.readFileSync(path.join(root, 'learning/games/sliding-puzzle/styl
 assert.match(html, /8 PUZZLE 해결 순서/);
 assert.match(html, /15 PUZZLE 해결 순서/);
 assert.match(html, /마지막 2×2/);
+assert.match(html, /id="guidePanel"[^>]+hidden/);
+assert.match(html, /id="guideButton"[^>]+aria-expanded="false"/);
+assert.doesNotMatch(html, /class="start-copy"/);
+assert.doesNotMatch(html, /id="intro"/);
 assert.match(app, /function shuffledSolvableTiles\(\)/);
 assert.match(app, /neighboringIndexes\(blank\)/);
 assert.match(app, /document\.addEventListener\('keydown'/);
@@ -31,6 +35,8 @@ assert.match(app, /localStorage\.setItem\(bestKey\(\)/);
 assert.match(app, /gameId:\s*'slidingpuzzle'/);
 assert.match(app, /finisherBoard\.register/);
 assert.match(app, /ClassGameSfx\?\.play/);
+assert.match(app, /function openGuide\(\)/);
+assert.match(app, /function closeGuide\(\)/);
 assert.match(server, /FINISHER_GAMES[^\n]+slidingpuzzle/);
 
 console.log('sliding puzzle contract: ok');

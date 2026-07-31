@@ -3,7 +3,6 @@
 
   const boardElement = document.getElementById('board');
   const titleElement = document.getElementById('gameTitle');
-  const introElement = document.getElementById('intro');
   const moveElement = document.getElementById('moveCount');
   const timerElement = document.getElementById('timer');
   const bestElement = document.getElementById('bestScore');
@@ -15,6 +14,9 @@
   const modeLabel = document.getElementById('modeLabel');
   const playerLine = document.getElementById('playerLine');
   const startButton = document.getElementById('startButton');
+  const guideButton = document.getElementById('guideButton');
+  const guidePanel = document.getElementById('guidePanel');
+  const guideBackdrop = document.getElementById('guideBackdrop');
 
   let size = new URLSearchParams(location.search).get('size') === '4' ? 4 : 3;
   let tiles = [];
@@ -140,7 +142,7 @@
     [tiles[blank], tiles[index]] = [tiles[index], tiles[blank]];
     moves += 1;
     moveElement.textContent = moves;
-    statusElement.textContent = '빈칸 옆의 타일을 눌러 이동하세요.';
+    statusElement.textContent = 'READY';
     playSfx('stone');
     render();
     if (isSolved()) completeGame();
@@ -160,7 +162,7 @@
     started = false;
     moveElement.textContent = '0';
     timerElement.textContent = '00:00';
-    statusElement.textContent = '빈칸 옆의 타일을 눌러 이동하세요.';
+    statusElement.textContent = 'READY';
     statusElement.classList.remove('success');
     celebration.hidden = true;
     render();
@@ -176,7 +178,6 @@
     const puzzleName = size === 3 ? '8 PUZZLE' : '15 PUZZLE';
     titleElement.textContent = puzzleName;
     modeLabel.textContent = `${size} × ${size}`;
-    introElement.textContent = `숫자 타일을 밀어 1부터 ${size * size - 1}까지 순서대로 맞춰 보세요.`;
     document.title = `${puzzleName} | songhwaplay`;
     history.replaceState(null, '', `?size=${size}`);
     document.querySelectorAll('[data-size]').forEach(button => {
@@ -187,6 +188,7 @@
 
   function showSettings() {
     stopTimer();
+    closeGuide();
     gameScreen.hidden = true;
     startScreen.hidden = false;
     document.getElementById('startButton').focus();
@@ -204,6 +206,23 @@
     boardElement.querySelector('.tile')?.focus({ preventScroll: true });
   }
 
+  function openGuide() {
+    guidePanel.hidden = false;
+    guideBackdrop.hidden = false;
+    gameScreen.classList.add('guide-open');
+    guideButton.setAttribute('aria-expanded', 'true');
+    document.getElementById('guideCloseButton').focus({ preventScroll: true });
+  }
+
+  function closeGuide() {
+    if (guidePanel.hidden) return;
+    guidePanel.hidden = true;
+    guideBackdrop.hidden = true;
+    gameScreen.classList.remove('guide-open');
+    guideButton.setAttribute('aria-expanded', 'false');
+    guideButton.focus({ preventScroll: true });
+  }
+
   document.querySelectorAll('[data-size]').forEach(button => {
     button.addEventListener('click', () => selectMode(Number(button.dataset.size)));
   });
@@ -212,7 +231,14 @@
   document.getElementById('playAgainButton').addEventListener('click', newGame);
   document.getElementById('startButton').addEventListener('click', startGame);
   document.getElementById('settingsButton').addEventListener('click', showSettings);
+  guideButton.addEventListener('click', openGuide);
+  document.getElementById('guideCloseButton').addEventListener('click', closeGuide);
+  guideBackdrop.addEventListener('click', closeGuide);
   document.addEventListener('keydown', event => {
+    if (event.key === 'Escape' && !guidePanel.hidden) {
+      closeGuide();
+      return;
+    }
     if (celebration.hidden === false) return;
     const blank = tiles.indexOf(0);
     const row = Math.floor(blank / size);
