@@ -913,10 +913,13 @@
                 const width = prepared.width;
                 const height = prepared.height;
                 const horizon = height - 54;
-                const date = getMainSimulationDate();
-                const solarHourAngle = (date.hour - 12) * 15 * Math.PI / 180;
+                const continuousHours =
+                    ((elapsedSimulationHours % HOURS_PER_YEAR) + HOURS_PER_YEAR) % HOURS_PER_YEAR;
+                const continuousHour = continuousHours % 24;
+                const continuousDayOfYear = continuousHours / 24 + 1;
+                const solarHourAngle = (continuousHour - 12) * 15 * Math.PI / 180;
                 const sunLongitude = normalizeRadians(
-                    ((date.dayOfYear - 80) / EARTH_DAYS_PER_YEAR) * Math.PI * 2
+                    ((continuousDayOfYear - 80) / EARTH_DAYS_PER_YEAR) * Math.PI * 2
                 );
                 const moonLongitude = normalizeRadians(sunLongitude + moonRelAngle);
                 const sunEquatorial = equatorialFromEcliptic(sunLongitude);
