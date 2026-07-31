@@ -186,6 +186,14 @@
                 earthOrbitLine = new THREE.Line(eOrbitGeo, new THREE.LineBasicMaterial({ color: 0xe2e8f0, transparent: true, opacity: 0.25 }));
                 scene.add(earthOrbitLine);
 
+                // Keep the four seasonal landmarks visible in the lunar-based view.
+                // The labels intentionally use simple season names rather than
+                // solar-calendar equinox/solstice terminology.
+                seasonPointsGroup = createSeasonPointsGroup();
+                seasonPointsGroup.visible = true;
+                scene.add(seasonPointsGroup);
+                bindSeasonPointTimeTravel();
+
                 // 🌍 2. EARTH-MOON SYSTEM GROUP (Orbits Sun at SUN_ORBIT_RADIUS)
                 earthSystemGroup = new THREE.Group();
                 scene.add(earthSystemGroup);
@@ -340,10 +348,10 @@
                 const seasonPoints = [
                     // With the north axis leaning toward +X, Earth at -X is northern summer
                     // and Earth at +X is northern winter. The equinoxes lie at ±Z.
-                    { angle: 0, dayOfYear: 355, icon: '❄️', label: '동지점 · 12월 22일', color: '#60a5fa' },
-                    { angle: Math.PI / 2, dayOfYear: 79, icon: '🌸', label: '춘분점 · 3월 21일', color: '#fb7185' },
-                    { angle: Math.PI, dayOfYear: 172, icon: '☀️', label: '하지점 · 6월 22일', color: '#facc15' },
-                    { angle: Math.PI * 1.5, dayOfYear: 265, icon: '🍁', label: '추분점 · 9월 23일', color: '#fb923c' }
+                    { angle: 0, dayOfYear: 355, icon: '❄️', label: '겨울', color: '#60a5fa' },
+                    { angle: Math.PI / 2, dayOfYear: 79, icon: '🌸', label: '봄', color: '#fb7185' },
+                    { angle: Math.PI, dayOfYear: 172, icon: '☀️', label: '여름', color: '#facc15' },
+                    { angle: Math.PI * 1.5, dayOfYear: 265, icon: '🍁', label: '가을', color: '#fb923c' }
                 ];
 
                 seasonPoints.forEach(point => {
