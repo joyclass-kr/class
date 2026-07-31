@@ -286,6 +286,42 @@ function problems(
   ));
 }
 
+function greatestCommonDivisor(left: number, right: number) {
+  let a = Math.abs(left);
+  let b = Math.abs(right);
+  while (b !== 0) [a, b] = [b, a % b];
+  return a;
+}
+
+function fractionLatex(numerator: number, denominator: number) {
+  const divisor = greatestCommonDivisor(numerator, denominator);
+  const reducedNumerator = numerator / divisor;
+  const reducedDenominator = denominator / divisor;
+  return reducedDenominator === 1
+    ? `${reducedNumerator}`
+    : `\\frac{${reducedNumerator}}{${reducedDenominator}}`;
+}
+
+function piFractionLatex(numerator: number, denominator: number) {
+  const divisor = greatestCommonDivisor(numerator, denominator);
+  const reducedNumerator = numerator / divisor;
+  const reducedDenominator = denominator / divisor;
+  if (reducedDenominator === 1) return reducedNumerator === 1 ? "\\pi" : `${reducedNumerator}\\pi`;
+  return reducedNumerator === 1
+    ? `\\frac{\\pi}{${reducedDenominator}}`
+    : `\\frac{${reducedNumerator}\\pi}{${reducedDenominator}}`;
+}
+
+function coefficientTerm(coefficient: number, term: string) {
+  if (coefficient === 1) return term;
+  if (coefficient === -1) return `-${term}`;
+  return `${coefficient}${term}`;
+}
+
+function powerTerm(variable: string, exponent: number) {
+  return exponent === 1 ? variable : `${variable}^{${exponent}}`;
+}
+
 export function createStemFoundationProblems(
   kind: StemFoundationKind,
   seed: number,
@@ -308,14 +344,18 @@ export function createStemFoundationProblems(
     const cubeRoot = seededInteger(7, 2, 5);
     const oddPower = 2 * seededInteger(8, 1, 4) - 1;
     const rootOrder = seededInteger(9, 3, 6);
+    const rectangularImaginary = coefficientTerm(rectangularScale, "\\sqrt3i");
+    const rectangularUnitImaginary = coefficientTerm(rectangularScale, "i");
+    const powerMagnitude = powerRadius ** 4;
+    const powerBase = powerRadius === 1 ? "" : `${powerRadius}`;
     return problems(kind, [
       ["절댓값과 편각", `z=${k}+${k}i`, `|z|=${k}\\sqrt2,\\ \\arg z=\\frac\\pi4`, [`|z|=${2 * k},\\ \\arg z=\\frac\\pi4`, `|z|=${k}\\sqrt2,\\ \\arg z=\\frac{3\\pi}4`, `|z|=${k},\\ \\arg z=\\frac\\pi2`]],
-      ["극형식에서 직교형식", `${2 * rectangularScale}\\left(\\cos\\frac\\pi3+i\\sin\\frac\\pi3\\right)`, `${rectangularScale}+${rectangularScale}\\sqrt3i`, [`${rectangularScale}\\sqrt3+${rectangularScale}i`, `${rectangularScale}-${rectangularScale}\\sqrt3i`, `${2 * rectangularScale}+${rectangularScale}\\sqrt3i`]],
+      ["극형식에서 직교형식", `${2 * rectangularScale}\\left(\\cos\\frac\\pi3+i\\sin\\frac\\pi3\\right)`, `${rectangularScale}+${rectangularImaginary}`, [`${coefficientTerm(rectangularScale, "\\sqrt3")}+${rectangularUnitImaginary}`, `${rectangularScale}-${rectangularImaginary}`, `${2 * rectangularScale}+${rectangularImaginary}`]],
       ["극형식의 곱", `${productLeft}\\operatorname{cis}\\frac\\pi6\\cdot${productRight}\\operatorname{cis}\\frac\\pi3`, `${productLeft * productRight}\\operatorname{cis}\\frac\\pi2`, [`${productLeft * productRight + 1}\\operatorname{cis}\\frac\\pi2`, `${productLeft * productRight}\\operatorname{cis}\\frac\\pi6`, `${productLeft * productRight}\\operatorname{cis}\\frac\\pi{18}`]],
       ["극형식의 나눗셈", `\\frac{${2 * quotient}\\operatorname{cis}(5\\pi/6)}{2\\operatorname{cis}(\\pi/3)}`, `${quotient}\\operatorname{cis}\\frac\\pi2`, [`${quotient}\\operatorname{cis}\\frac{7\\pi}6`, `${quotient + 1}\\operatorname{cis}\\frac\\pi2`, `${quotient}\\operatorname{cis}\\frac{5\\pi}{18}`]],
-      ["드므아브르 정리", `\\left(${powerRadius}\\operatorname{cis}\\frac\\pi4\\right)^4`, `${-(powerRadius ** 4)}`, [`${powerRadius ** 4}`, `${-(powerRadius ** 4 + 1)}`, `${powerRadius ** 4}i`]],
+      ["드므아브르 정리", `\\left(${powerBase}\\operatorname{cis}\\frac\\pi4\\right)^4`, `${-powerMagnitude}`, [`${powerMagnitude}`, `${-(powerMagnitude + 1)}`, coefficientTerm(powerMagnitude, "i")]],
       ["복소수의 세제곱근", `z^3=${cubeRoot ** 3}`, `z=${cubeRoot}\\operatorname{cis}\\frac{2k\\pi}{3}\\ (k=0,1,2)`, [`z=${cubeRoot ** 3}\\operatorname{cis}\\frac{2k\\pi}{3}`, `z=${cubeRoot}\\operatorname{cis}\\frac{k\\pi}{3}`, `z=${cubeRoot}\\operatorname{cis}\\frac{2k\\pi}{3}\\ (k=0,1)`]],
-      ["오일러 공식", `e^{${oddPower}i\\pi}+1`, `0`, [`1`, `-1`, `i`]],
+      ["오일러 공식", `e^{${coefficientTerm(oddPower, "i\\pi")}}+1`, `0`, [`1`, `-1`, `i`]],
       ["단위근의 합", `1+\\omega+\\cdots+\\omega^{${rootOrder - 1}}\\quad(\\omega^{${rootOrder}}=1,\\ \\omega\\ne1)`, `0`, [`1`, `-1`, `${rootOrder}`]],
     ]);
   }
@@ -389,7 +429,7 @@ export function createStemFoundationProblems(
       ["선형결합", `${k}\\begin{pmatrix}1\\\\0\\\\1\\end{pmatrix}-\\begin{pmatrix}0\\\\1\\\\1\\end{pmatrix}`, `\\begin{pmatrix}${k}\\\\-1\\\\${k - 1}\\end{pmatrix}`, [`\\begin{pmatrix}${k}\\\\1\\\\${k - 1}\\end{pmatrix}`, `\\begin{pmatrix}${k - 1}\\\\-1\\\\${k}\\end{pmatrix}`, `\\begin{pmatrix}${k}\\\\-1\\\\${k + 1}\\end{pmatrix}`]],
       ["생성공간 판정", `\\begin{pmatrix}${spanA + spanB}\\\\${spanA + 2 * spanB}\\end{pmatrix}=a\\begin{pmatrix}1\\\\1\\end{pmatrix}+b\\begin{pmatrix}1\\\\2\\end{pmatrix}`, `(a,b)=(${spanA},${spanB})`, [`(a,b)=(${spanA + 1},${spanB})`, `(a,b)=(${spanA},${spanB + 1})`, `(a,b)=(${spanA + 1},${spanB + 1})`]],
       ["일차독립 판정", `v_1=(1,0),\\ v_2=(${independentSlope},1)`, `\\text{일차독립}`, [`\\text{일차종속}`, `v_2=${independentSlope}v_1`, `\\dim\\operatorname{span}=1`]],
-      ["기저와 차원", `W=\\{(x,y,z):${planeA}x+${planeB}y+z=0\\}`, `\\dim W=2`, [`\\dim W=1`, `\\dim W=3`, `\\dim W=0`]],
+      ["기저와 차원", `W=\\{(x,y,z):${coefficientTerm(planeA, "x")}+${coefficientTerm(planeB, "y")}+z=0\\}`, `\\dim W=2`, [`\\dim W=1`, `\\dim W=3`, `\\dim W=0`]],
       ["영공간", `A=\\begin{pmatrix}1&${nullCoefficient}\\\\2&${2 * nullCoefficient}\\end{pmatrix},\\quad Ax=0`, `N(A)=\\operatorname{span}\\left\\{\\begin{pmatrix}${-nullCoefficient}\\\\1\\end{pmatrix}\\right\\}`, [`N(A)=\\operatorname{span}\\left\\{\\begin{pmatrix}${nullCoefficient}\\\\1\\end{pmatrix}\\right\\}`, `N(A)=\\{0\\}`, `N(A)=\\mathbb R^2`]],
       ["열공간의 기저", `A=\\begin{pmatrix}1&${columnCoefficient}&0\\\\0&0&1\\end{pmatrix}`, `\\left\\{\\begin{pmatrix}1\\\\0\\end{pmatrix},\\begin{pmatrix}0\\\\1\\end{pmatrix}\\right\\}`, [`\\left\\{\\begin{pmatrix}1\\\\0\\end{pmatrix}\\right\\}`, `\\left\\{\\begin{pmatrix}${columnCoefficient}\\\\0\\end{pmatrix}\\right\\}`, `\\left\\{\\begin{pmatrix}1\\\\1\\end{pmatrix}\\right\\}`]],
       ["고유값 입문", `A=\\begin{pmatrix}${eigenB}&1\\\\0&${eigenA}\\end{pmatrix}`, `\\lambda=${eigenB},${eigenA}`, [`\\lambda=${eigenB},${eigenA - 1}`, `\\lambda=${eigenB - 1},${eigenA}`, `\\lambda=${eigenA + eigenB},0`]],
@@ -449,10 +489,10 @@ export function createStemFoundationProblems(
     const directionScale = seededInteger(10, 1, 4);
     return problems(kind, [
       ["1계 편미분", `f(x,y)=x^3+${k}xy^2`, `f_x=3x^2+${k}y^2`, [`f_x=3x^2+${2 * k}xy`, `f_x=x^2+${k}y^2`, `f_x=3x^2`]],
-      ["혼합편미분", `f(x,y)=x^{${xExponent}}y^{${yExponent}}`, `f_{xy}=${xExponent * yExponent}x^{${xExponent - 1}}y^{${yExponent - 1}}`, [`f_{xy}=${xExponent}x^{${xExponent - 1}}y^{${yExponent}}`, `f_{xy}=${yExponent}x^{${xExponent}}y^{${yExponent - 1}}`, `f_{xy}=${xExponent * yExponent}x^{${xExponent}}y^{${yExponent}}`]],
+      ["혼합편미분", `f(x,y)=x^{${xExponent}}y^{${yExponent}}`, `f_{xy}=${xExponent * yExponent}${powerTerm("x", xExponent - 1)}${powerTerm("y", yExponent - 1)}`, [`f_{xy}=${xExponent}${powerTerm("x", xExponent - 1)}y^{${yExponent}}`, `f_{xy}=${yExponent}x^{${xExponent}}${powerTerm("y", yExponent - 1)}`, `f_{xy}=${xExponent * yExponent}x^{${xExponent}}y^{${yExponent}}`]],
       ["다변수 연쇄법칙", `z=x^2+y^2,\\ x=t,\\ y=t^{${chainExponent}}`, `\\frac{dz}{dt}=2t+${2 * chainExponent}t^{${2 * chainExponent - 1}}`, [`\\frac{dz}{dt}=2t+2t^{${chainExponent}}`, `\\frac{dz}{dt}=2x+2y`, `\\frac{dz}{dt}=2t+${2 * chainExponent}t^{${chainExponent}}`]],
       ["음함수 미분", `x^2+y^2=${circleRadius ** 2}`, `\\frac{dy}{dx}=-\\frac{x}{y}`, [`\\frac{dy}{dx}=\\frac{x}{y}`, `\\frac{dy}{dx}=-\\frac{y}{x}`, `\\frac{dy}{dx}=2x+2y`]],
-      ["전미분", `z=${differentialA}x^2+xy+${differentialB}y^2`, `dz=(${2 * differentialA}x+y)dx+(x+${2 * differentialB}y)dy`, [`dz=${2 * differentialA}x\\,dx+${2 * differentialB}y\\,dy`, `dz=(x+y)dx+(x+y)dy`, `dz=(${2 * differentialA}x+y)dy+(x+${2 * differentialB}y)dx`]],
+      ["전미분", `z=${coefficientTerm(differentialA, "x^2")}+xy+${coefficientTerm(differentialB, "y^2")}`, `dz=(${2 * differentialA}x+y)dx+(x+${2 * differentialB}y)dy`, [`dz=${2 * differentialA}x\\,dx+${2 * differentialB}y\\,dy`, `dz=(x+y)dx+(x+y)dy`, `dz=(${2 * differentialA}x+y)dy+(x+${2 * differentialB}y)dx`]],
       ["접평면", `z=x^2+y^2,\\quad(${pointX},${pointY},${pointZ})`, `z-${pointZ}=${2 * pointX}(x-${pointX})+${2 * pointY}(y-${pointY})`, [`z-${pointZ}=${pointX}(x-${pointX})+${pointY}(y-${pointY})`, `z=${2 * pointX}x+${2 * pointY}y`, `z-${pointZ}=${2 * pointY}(x-${pointX})+${2 * pointX}(y-${pointY})`]],
       ["그래디언트 입문", `f=x^2+xy+y^2,\\quad(${pointX},${pointY})`, `\\nabla f(${pointX},${pointY})=(${2 * pointX + pointY},${pointX + 2 * pointY})`, [`\\nabla f=(${pointX + pointY},${pointX + pointY})`, `\\nabla f(${pointX},${pointY})=(${pointX + 2 * pointY},${2 * pointX + pointY})`, `\\nabla f(${pointX},${pointY})=(${2 * pointX},${2 * pointY})`]],
       ["방향미분 입문", `\\nabla f(1,1)=(${3 * directionScale},${4 * directionScale}),\\quad u=\\left(\\frac35,\\frac45\\right)`, `D_uf=${5 * directionScale}`, [`D_uf=${7 * directionScale}`, `D_uf=${directionScale}`, `D_uf=${4 * directionScale}`]],
@@ -482,15 +522,18 @@ export function createStemFoundationProblems(
     const jacobianA = seededInteger(8, 2, 5);
     const jacobianB = seededInteger(9, 2, 5);
     const polarRadius = seededInteger(10, 1, 3);
+    const weightedDiskPower = weightedDiskRadius ** 4;
+    const triangleSquare = triangleSide ** 2;
+    const polarPower = polarRadius ** 4;
     return problems(kind, [
       ["이중적분", `\\int_0^1\\int_0^{${k}}(x+y)\\,dy\\,dx`, `${k * (k + 1) / 2}`, [`${k * k}`, `${k}`, `${k * (k + 1)}`]],
       ["적분순서 교환", `0\\le x\\le${boundary},\\quad x\\le y\\le${boundary}`, `0\\le y\\le${boundary},\\quad0\\le x\\le y`, [`0\\le y\\le${boundary},\\quad y\\le x\\le${boundary}`, `0\\le y\\le x,\\quad0\\le x\\le${boundary}`, `0\\le x\\le y\\le${boundary + 1}`]],
-      ["영역의 넓이", `\\iint_D1\\,dA,\\quad D=[0,${rectangleA}]\\times[0,${rectangleB}]`, `${rectangleA * rectangleB}`, [`${rectangleA * rectangleB + 1}`, `${rectangleA * rectangleB - 1}`, `${2 * rectangleA * rectangleB}`]],
+      ["영역의 넓이", `\\iint_D 1\\,dA,\\quad D=[0,${rectangleA}]\\times[0,${rectangleB}]`, `${rectangleA * rectangleB}`, [`${rectangleA * rectangleB + 1}`, `${rectangleA * rectangleB - 1}`, `${2 * rectangleA * rectangleB}`]],
       ["극좌표 이중적분", `\\int_0^{2\\pi}\\int_0^{${diskRadius}} r\\,dr\\,d\\theta`, `${diskRadius ** 2}\\pi`, [`${diskRadius}\\pi`, `${2 * diskRadius ** 2}\\pi`, `${diskRadius ** 2}`]],
-      ["원판의 이중적분", `\\iint_{x^2+y^2\\le${weightedDiskRadius ** 2}}(x^2+y^2)\\,dA`, `${weightedDiskRadius ** 4 === 2 ? "\\pi" : `\\frac{${weightedDiskRadius ** 4}\\pi}{2}`}`, [`${weightedDiskRadius ** 2}\\pi`, `${weightedDiskRadius ** 4}\\pi`, `\\frac{${weightedDiskRadius ** 4}\\pi}{4}`]],
-      ["삼각영역의 이중적분", `\\int_0^{${triangleSide}}\\int_0^{${triangleSide}-x}1\\,dy\\,dx`, `\\frac{${triangleSide ** 2}}2`, [`\\frac{${triangleSide ** 2 + 2}}2`, `\\frac{${triangleSide ** 2 - 2}}2`, `${triangleSide ** 2}`]],
+      ["원판의 이중적분", `\\iint_{x^2+y^2\\le${weightedDiskRadius ** 2}}(x^2+y^2)\\,dA`, piFractionLatex(weightedDiskPower, 2), [`${weightedDiskRadius ** 2}\\pi`, `${weightedDiskPower}\\pi`, piFractionLatex(weightedDiskPower, 8)]],
+      ["삼각영역의 이중적분", `\\int_0^{${triangleSide}}\\int_0^{${triangleSide}-x}1\\,dy\\,dx`, fractionLatex(triangleSquare, 2), [fractionLatex(triangleSquare + 2, 2), fractionLatex(triangleSquare - 2, 2), `${triangleSquare}`]],
       ["좌표변환의 야코비안", `x=${jacobianA}u,\\quad y=${jacobianB}v`, `\\left|\\frac{\\partial(x,y)}{\\partial(u,v)}\\right|=${jacobianA * jacobianB}`, [`${jacobianA * jacobianB + 1}`, `${jacobianA * jacobianB - 1}`, `${-jacobianA * jacobianB}`]],
-      ["극좌표 함수 적분", `\\int_0^{\\pi/2}\\int_0^{${polarRadius}} r^3\\,dr\\,d\\theta`, `\\frac{${polarRadius ** 4}\\pi}{8}`, [`\\frac{${polarRadius ** 4}\\pi}{4}`, `\\frac{${polarRadius ** 4}\\pi}{2}`, `\\frac{${polarRadius ** 4}}8`]],
+      ["극좌표 함수 적분", `\\int_0^{\\pi/2}\\int_0^{${polarRadius}} r^3\\,dr\\,d\\theta`, piFractionLatex(polarPower, 8), [piFractionLatex(polarPower, 4), piFractionLatex(polarPower, 2), fractionLatex(polarPower, 8)]],
     ]);
   }
 
@@ -532,15 +575,25 @@ export function createStemFoundationProblems(
     const rootA = seededInteger(10, 1, 3);
     const rootB = rootA + seededInteger(11, 1, 3);
     const frequency = seededInteger(12, 1, 4);
+    const decayExponent = coefficientTerm(-decayRate, "x");
+    const positiveExponent = coefficientTerm(linearQ, "x");
+    const homogeneousExponent = coefficientTerm(-linearP, "x");
+    const integratingPowerLatex = powerTerm("x", integratingPower);
+    const exactXTerm = coefficientTerm(exactA / 2, "x^2");
+    const exactYTerm = coefficientTerm(exactB / 2, "y^2");
+    const bernoulliExponent = coefficientTerm(bernoulliRate, "x");
+    const rootAExponent = coefficientTerm(rootA, "x");
+    const rootBExponent = coefficientTerm(rootB, "x");
+    const frequencyArgument = coefficientTerm(frequency, "x");
     return problems(kind, [
       ["변수분리형", `y'=${k}y,\\quad y(0)=1`, `y=e^{${k}x}`, [`y=${k}e^x`, `y=e^x+${k}`, `y=e^{-${k}x}`]],
-      ["성장·감쇠", `y'=-${decayRate}y,\\quad y(0)=${initialValue}`, `y=${initialValue}e^{-${decayRate}x}`, [`y=${initialValue}e^{${decayRate}x}`, `y=e^{-${decayRate * initialValue}x}`, `y=${initialValue}-${decayRate}x`]],
-      ["1계 선형식", `y'+${linearP}y=e^{${linearQ}x}`, `y=\\frac1{${linearP + linearQ}}e^{${linearQ}x}+Ce^{-${linearP}x}`, [`y=e^{${linearQ}x}+Ce^{-${linearP}x}`, `y=\\frac1{${linearP + linearQ}}e^{${linearQ}x}+Ce^{${linearP}x}`, `y=e^{-${linearP}x}+Ce^{${linearQ}x}`]],
-      ["적분인자", `y'+\\frac{${integratingPower}}x y=x^2`, `\\mu(x)=x^{${integratingPower}}`, [`\\mu=x^{${integratingPower + 1}}`, `\\mu=e^{${integratingPower}x}`, `\\mu=x^{-${integratingPower}}`]],
-      ["완전미분방정식", `(${exactA}x+y)dx+(x+${exactB}y)dy=0`, `${exactA / 2}x^2+xy+${exactB / 2}y^2=C`, [`${exactA}x+y+x+${exactB}y=C`, `${exactA / 2}x^2-xy+${exactB / 2}y^2=C`, `xy=C`]],
-      ["베르누이 방정식", `y'+${bernoulliRate}y=${bernoulliRate}y^2`, `y=\\frac1{1+Ce^{${bernoulliRate}x}}`, [`y=\\frac1{1+Ce^{-${bernoulliRate}x}}`, `y=1+Ce^{${bernoulliRate}x}`, `y=\\frac{e^{${bernoulliRate}x}}{1+C}`]],
-      ["2계 상수계수 방정식", `y''-${rootA + rootB}y'+${rootA * rootB}y=0`, `y=C_1e^{${rootA}x}+C_2e^{${rootB}x}`, [`y=C_1e^{-${rootA}x}+C_2e^{-${rootB}x}`, `y=(C_1+C_2x)e^{${rootA}x}`, `y=C_1\\cos ${rootA}x+C_2\\sin ${rootB}x`]],
-      ["2계 초기값 문제", `y''+${frequency ** 2}y=0,\\quad y(0)=0,\\ y'(0)=${frequency}`, `y=\\sin ${frequency}x`, [`y=\\cos ${frequency}x`, `y=e^{${frequency}x}`, `y=\\sin ${frequency + 1}x`]],
+      ["성장·감쇠", `y'=${coefficientTerm(-decayRate, "y")},\\quad y(0)=${initialValue}`, `y=${initialValue}e^{${decayExponent}}`, [`y=${initialValue}e^{${coefficientTerm(decayRate, "x")}}`, `y=e^{${coefficientTerm(-(decayRate * initialValue), "x")}}`, `y=${initialValue}-${coefficientTerm(decayRate, "x")}`]],
+      ["1계 선형식", `y'+${coefficientTerm(linearP, "y")}=e^{${positiveExponent}}`, `y=\\frac1{${linearP + linearQ}}e^{${positiveExponent}}+Ce^{${homogeneousExponent}}`, [`y=e^{${positiveExponent}}+Ce^{${homogeneousExponent}}`, `y=\\frac1{${linearP + linearQ}}e^{${positiveExponent}}+Ce^{${coefficientTerm(linearP, "x")}}`, `y=e^{${homogeneousExponent}}+Ce^{${positiveExponent}}`]],
+      ["적분인자", `y'+\\frac{${integratingPower}}x y=x^2`, `\\mu(x)=${integratingPowerLatex}`, [`\\mu=x^{${integratingPower + 1}}`, `\\mu=e^{${coefficientTerm(integratingPower, "x")}}`, `\\mu=x^{-${integratingPower}}`]],
+      ["완전미분방정식", `(${exactA}x+y)dx+(x+${exactB}y)dy=0`, `${exactXTerm}+xy+${exactYTerm}=C`, [`${exactA}x+y+x+${exactB}y=C`, `${exactXTerm}-xy+${exactYTerm}=C`, `xy=C`]],
+      ["베르누이 방정식", `y'+${coefficientTerm(bernoulliRate, "y")}=${coefficientTerm(bernoulliRate, "y^2")}`, `y=\\frac1{1+Ce^{${bernoulliExponent}}}`, [`y=\\frac1{1+Ce^{${coefficientTerm(-bernoulliRate, "x")}}}`, `y=1+Ce^{${bernoulliExponent}}`, `y=\\frac{e^{${bernoulliExponent}}}{1+C}`]],
+      ["2계 상수계수 방정식", `y''-${rootA + rootB}y'+${rootA * rootB}y=0`, `y=C_1e^{${rootAExponent}}+C_2e^{${rootBExponent}}`, [`y=C_1e^{${coefficientTerm(-rootA, "x")}}+C_2e^{${coefficientTerm(-rootB, "x")}}`, `y=(C_1+C_2x)e^{${rootAExponent}}`, `y=C_1\\cos ${rootAExponent}+C_2\\sin ${rootBExponent}`]],
+      ["2계 초기값 문제", `y''+${coefficientTerm(frequency ** 2, "y")}=0,\\quad y(0)=0,\\ y'(0)=${frequency}`, `y=\\sin ${frequencyArgument}`, [`y=\\cos ${frequencyArgument}`, `y=e^{${frequencyArgument}}`, `y=\\sin ${coefficientTerm(frequency + 1, "x")}`]],
     ]);
   }
 

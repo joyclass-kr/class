@@ -17,6 +17,109 @@ test("공개 이공계 기초 주소는 진학 준비 6개 유형만 허용한�
   assert.equal(isStemBridgeKind(null), false);
 });
 
+test("공개 이공계 기초 48문항의 기준 정답을 모두 검산한다", () => {
+  const expectedAnswers: Record<(typeof STEM_BRIDGE_KINDS)[number], string[]> = {
+    "complex-polar": [
+      "|z|=3\\sqrt2,\\ \\arg z=\\frac\\pi4",
+      "3+3\\sqrt3i",
+      "10\\operatorname{cis}\\frac\\pi2",
+      "4\\operatorname{cis}\\frac\\pi2",
+      "-1",
+      "z=3\\operatorname{cis}\\frac{2k\\pi}{3}\\ (k=0,1,2)",
+      "0",
+      "0",
+    ],
+    "matrix-systems": [
+      "\\begin{pmatrix}-1&0\\\\1&9\\\\1&0\\end{pmatrix}",
+      "\\begin{pmatrix}12&0\\\\0&-12\\end{pmatrix}",
+      "36",
+      "A^{-1}=\\begin{pmatrix}1&-1&1\\\\0&1&-1\\\\0&0&1\\end{pmatrix}",
+      "(x,y,z)=(2,2,1)",
+      "\\left[\\begin{array}{ccc|c}1&0&0&2\\\\0&1&0&1\\\\0&0&1&1\\end{array}\\right]",
+      "a=-1:\\text{ 무수히 많음},\\quad a\\ne-1:\\text{ 유일해}",
+      "X=\\begin{pmatrix}4&0\\\\0&2\\\\0&-1\\end{pmatrix}",
+    ],
+    "vector-spaces-rank": [
+      "\\begin{pmatrix}3\\\\-1\\\\2\\end{pmatrix}",
+      "(a,b)=(3,4)",
+      "\\text{일차독립}",
+      "\\dim W=2",
+      "N(A)=\\operatorname{span}\\left\\{\\begin{pmatrix}-3\\\\1\\end{pmatrix}\\right\\}",
+      "\\left\\{\\begin{pmatrix}1\\\\0\\end{pmatrix},\\begin{pmatrix}0\\\\1\\end{pmatrix}\\right\\}",
+      "\\lambda=5,3",
+      "\\operatorname{span}\\{(1,0)\\}",
+    ],
+    "partial-derivatives": [
+      "f_x=3x^2+3y^2",
+      "f_{xy}=9x^{2}y^{2}",
+      "\\frac{dz}{dt}=2t+8t^{7}",
+      "\\frac{dy}{dx}=-\\frac{x}{y}",
+      "dz=(4x+y)dx+(x+4y)dy",
+      "z-5=2(x-1)+4(y-2)",
+      "\\nabla f(1,2)=(4,5)",
+      "D_uf=15",
+    ],
+    "multiple-integrals": [
+      "6",
+      "0\\le y\\le4,\\quad0\\le x\\le y",
+      "10",
+      "4\\pi",
+      "8\\pi",
+      "\\frac{9}{2}",
+      "\\left|\\frac{\\partial(x,y)}{\\partial(u,v)}\\right|=9",
+      "2\\pi",
+    ],
+    "first-order-ode": [
+      "y=e^{3x}",
+      "y=5e^{-3x}",
+      "y=\\frac1{4}e^{x}+Ce^{-3x}",
+      "\\mu(x)=x^{2}",
+      "x^2+xy+y^2=C",
+      "y=\\frac1{1+Ce^{2x}}",
+      "y=C_1e^{2x}+C_2e^{4x}",
+      "y=\\sin 4x",
+    ],
+  };
+
+  for (const kind of STEM_BRIDGE_KINDS) {
+    assert.deepEqual(
+      createStemFoundationProblems(kind, 20260910).map(({ correctLatex }) => correctLatex),
+      expectedAnswers[kind],
+      kind,
+    );
+  }
+});
+
+test("공개 이공계 식은 계수 1과 약분 가능한 파이 분수를 남기지 않는다", () => {
+  const forbiddenNotation = /e\^\{(?:-?1x)\}|\\(?:sin|cos) 1x|(?:^|[^0-9])1[xyi](?:\^|\b)|[xy]\^\{1\}/;
+  const reduciblePiFraction = /\\frac\{(\d+)\\pi\}\{(\d+)\}/;
+
+  for (const kind of STEM_BRIDGE_KINDS) {
+    for (let seed = 1; seed <= 200; seed += 1) {
+      for (const problem of createStemFoundationProblems(kind, seed)) {
+        for (const latex of [problem.latex, problem.correctLatex, ...problem.choices.map(({ latex }) => latex)]) {
+          assert.doesNotMatch(latex, forbiddenNotation, `${problem.id}: ${latex}`);
+          const fraction = latex.match(reduciblePiFraction);
+          if (fraction) {
+            assert.equal(
+              greatestCommonDivisorForTest(Number(fraction[1]), Number(fraction[2])),
+              1,
+              `${problem.id}: ${latex}`,
+            );
+          }
+        }
+      }
+    }
+  }
+});
+
+function greatestCommonDivisorForTest(left: number, right: number) {
+  let a = Math.abs(left);
+  let b = Math.abs(right);
+  while (b !== 0) [a, b] = [b, a % b];
+  return a;
+}
+
 test("기존 주소를 위한 이공계 확장 문제은행 18종은 각각 8문제를 유지한다", () => {
   assert.equal(STEM_FOUNDATION_KINDS.length, 18);
 
