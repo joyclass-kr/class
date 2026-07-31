@@ -22,6 +22,14 @@
   };
   const $ = (id) => document.getElementById(id);
   const node = (tag, className, text) => { const el = document.createElement(tag); if (className) el.className = className; if (text !== undefined) el.textContent = text; return el; };
+  const shuffle = (items) => {
+    const result = [...items];
+    for (let index = result.length - 1; index > 0; index -= 1) {
+      const randomIndex = Math.floor(Math.random() * (index + 1));
+      [result[index], result[randomIndex]] = [result[randomIndex], result[index]];
+    }
+    return result;
+  };
 
   function show(view) {
     $("dashboardView").hidden = view !== "dashboard";
@@ -83,10 +91,11 @@
     $("studentPassage").textContent = item.passageText; $("studentPrompt").textContent = item.promptText;
     $("feedback").hidden = true; $("answerStatus").textContent = "";
     const choices = $("studentChoices"); choices.replaceChildren();
-    item.choices.forEach((choice, index) => {
+    shuffle(item.choices.map((choice, originalIndex) => ({ choice, originalIndex }))).forEach(({ choice, originalIndex }, index) => {
       const button = node("button", "student-choice", ""); button.type = "button";
+      button.dataset.choiceIndex = String(originalIndex);
       button.append(node("span", "choice-number", String(index + 1)), node("span", "", choice));
-      button.addEventListener("click", () => choose(index, button)); choices.append(button);
+      button.addEventListener("click", () => choose(originalIndex, button)); choices.append(button);
     });
     $("nextButton").disabled = true; $("nextButton").textContent = "정답 확인";
   }
@@ -103,7 +112,7 @@
     if (correct) state.score += 1;
     state.deckHistory = window.ReadingQuestionDeck.recordAnswer(state.deckHistory, item.id, correct);
     saveDeckHistory();
-    [...$("studentChoices").children].forEach((button, choiceIndex) => { button.disabled = true; if (choiceIndex === item.correctIndex) button.classList.add("correct"); else if (choiceIndex === index) button.classList.add("wrong"); });
+    [...$("studentChoices").children].forEach((button) => { const choiceIndex = Number(button.dataset.choiceIndex); button.disabled = true; if (choiceIndex === item.correctIndex) button.classList.add("correct"); else if (choiceIndex === index) button.classList.add("wrong"); });
     const feedback = $("feedback"); feedback.className = `feedback ${correct ? "is-correct" : "is-wrong"}`; feedback.textContent = `${correct ? "정답 · " : "오답 · "}${item.explanation}`; feedback.hidden = false;
     $("nextButton").textContent = state.index === state.set.length - 1 ? "결과 보기" : "다음 문제";
   }

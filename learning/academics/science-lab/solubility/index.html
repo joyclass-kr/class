@@ -4,42 +4,44 @@
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <meta name="theme-color" content="#08131c">
-    <title>화학 실험실 | 초등·중등 과학</title>
-    <meta name="description" content="용해도와 물질 변화를 학습하는 초등·중등 화학 실험실">
+    <title>과학 실험실</title>
+    <meta name="description" content="초등·중등·고등학교 과학 실험">
     <link rel="stylesheet" href="styles.css">
 </head>
 <body>
-    <header class="site-header">
-        <a class="back-link" href="../../../">← 학습 포털</a>
-        <div class="brand" aria-label="화학 실험실">
-            <span class="brand-mark" aria-hidden="true">⚗</span>
-            <span>화학 실험실</span>
-        </div>
-        <a class="periodic-link" href="../periodic-table/">주기율표 보기</a>
-    </header>
-
     <main>
         <section class="hero" aria-labelledby="page-title">
             <div class="hero-copy">
-                <h1 id="page-title">화학 실험실</h1>
+                <div class="hero-links">
+                    <a href="../">← 과학 실험실</a>
+                    <a href="../../periodic-table/">주기율표</a>
+                </div>
+                <h1 id="page-title">과학 실험실</h1>
             </div>
             <div class="level-control">
                 <span>학습 수준</span>
                 <div class="level-switch" role="group" aria-label="학습 수준 선택">
                     <button type="button" data-level="elementary" aria-pressed="false">초등 3~6</button>
                     <button type="button" data-level="middle" aria-pressed="false">중학교</button>
-                    <button type="button" data-level="all" aria-pressed="true">함께 보기</button>
+                    <button type="button" data-level="all" aria-pressed="true">전체</button>
                 </div>
             </div>
         </section>
 
-        <section class="lab-shell" aria-labelledby="dissolve-title">
+        <nav class="field-nav" aria-label="과학 분야">
+            <span>분야</span>
+            <a href="#chemistry">화학</a>
+            <a href="#physics">물리</a>
+            <a href="#earth-science">지구과학</a>
+            <a href="#biology">생명과학</a>
+        </nav>
+
+        <section class="lab-shell" id="chemistry" aria-labelledby="dissolve-title">
             <div class="lab-heading">
                 <div>
                     <p class="lab-number">실험 01 · 용액</p>
                     <h2 id="dissolve-title">물의 온도에 따라 녹는 양이 달라질까?</h2>
                 </div>
-                <span class="ready-badge">지금 실험 가능</span>
             </div>
 
             <div class="experiment-grid">
@@ -51,7 +53,7 @@
                         <option value="salt">소금</option>
                         <option value="sugar">설탕</option>
                     </select>
-                    <p class="condition-note">기준: 물 100mL</p>
+                    <p class="condition-note">기준: 물 100g(약 100mL)</p>
 
                     <div class="range-heading">
                         <label for="temperatureRange">물의 온도</label>
@@ -95,6 +97,11 @@
 
                 <section class="result-panel" aria-labelledby="result-title" aria-live="polite">
                     <h3 id="result-title">관찰 결과</h3>
+                    <div class="dissolution-principles" aria-label="용해 실험 결과의 의미">
+                        <p><strong>용해</strong><span>용질이 없어지는 것이 아니라 작은 입자로 물속에 고르게 퍼집니다.</span></p>
+                        <p><strong>용해도</strong><span>특정 온도에서 물 100g에 최대로 녹는 용질의 질량입니다.</span></p>
+                        <p><strong>온도의 영향</strong><span>소금의 용해도는 조금 변하고, 설탕의 용해도는 크게 변합니다.</span></p>
+                    </div>
                     <div class="result-empty" id="resultEmpty">
                         실험 전에는 결과를 보여주지 않습니다.<br>예상한 뒤 직접 확인하세요.
                     </div>
@@ -117,17 +124,65 @@
 
         <section class="roadmap" aria-labelledby="roadmap-title">
             <div class="section-heading">
-                <h2 id="roadmap-title">실험 목록</h2>
+                <h2 id="roadmap-title">화학 실험</h2>
             </div>
             <div class="roadmap-grid">
-                <article class="roadmap-card current"><span>01</span><h3>용해와 용해도</h3><p>녹는 현상 → 포화 용액과 용해도 계산</p><b>실험 가능</b></article>
-                <article class="roadmap-card"><span>02</span><h3>물질의 상태 변화</h3><p>얼음·물·수증기 → 입자 운동과 온도 그래프</p><b>다음 제작</b></article>
-                <article class="roadmap-card"><span>03</span><h3>혼합물 분리</h3><p>체·자석·거름 → 증류와 크로마토그래피</p><b>설계 예정</b></article>
-                <article class="roadmap-card"><span>04</span><h3>산과 염기</h3><p>생활 물질 분류 → pH와 중화 반응</p><b>설계 예정</b></article>
-                <article class="roadmap-card"><span>05</span><h3>기체의 성질</h3><p>공기의 존재 → 기체 발생과 검출</p><b>설계 예정</b></article>
-                <article class="roadmap-card"><span>06</span><h3>연소와 에너지</h3><p>타는 조건 → 산화와 발열 반응</p><b>설계 예정</b></article>
+                <article class="roadmap-card current"><span>01</span><h3>용해와 용해도</h3><p>녹는 양, 포화 용액, 용해도</p></article>
+                <article class="roadmap-card"><span>02</span><h3>물질의 상태 변화</h3><p>고체·액체·기체, 입자 운동, 온도</p></article>
+                <article class="roadmap-card"><span>03</span><h3>혼합물 분리</h3><p>거름, 증류, 분별결정, 크로마토그래피</p></article>
+                <article class="roadmap-card"><span>04</span><h3>산과 염기</h3><p>지시약, pH, 중화 반응</p></article>
+                <article class="roadmap-card"><span>05</span><h3>기체의 성질</h3><p>산소, 수소, 이산화탄소의 발생과 확인</p></article>
+                <article class="roadmap-card"><span>06</span><h3>연소와 에너지</h3><p>연소 조건, 산화, 발열·흡열 반응</p></article>
             </div>
         </section>
+
+        <div class="subject-grid">
+            <section class="subject-catalog" id="physics" aria-labelledby="physics-title">
+                <h2 id="physics-title">물리 실험</h2>
+                <ul>
+                    <li>속력과 가속도</li>
+                    <li>힘의 합성과 평형</li>
+                    <li>일과 에너지</li>
+                    <li>전기 회로</li>
+                    <li>전자기 유도</li>
+                    <li>파동과 간섭</li>
+                    <li>빛의 반사와 굴절</li>
+                    <li>렌즈와 상</li>
+                </ul>
+            </section>
+
+            <section class="subject-catalog" id="earth-science" aria-labelledby="earth-title">
+                <h2 id="earth-title">지구과학 실험·관측</h2>
+                <ul>
+                    <li>광물의 굳기·조흔·쪼개짐</li>
+                    <li>지층의 선후 관계</li>
+                    <li><a href="../earthquake/">지진파와 진앙</a><span class="grade-tag">고등학교</span></li>
+                    <li>판의 이동</li>
+                    <li>기압과 바람</li>
+                    <li>단열 변화와 구름</li>
+                    <li>일기도와 전선</li>
+                    <li>해수의 수온·염분·밀도</li>
+                    <li>해류와 엘니뇨·라니냐</li>
+                    <li>달의 위상과 식</li>
+                    <li>별의 일주·연주 운동</li>
+                    <li>연주시차와 HR도</li>
+                </ul>
+            </section>
+
+            <section class="subject-catalog" id="biology" aria-labelledby="biology-title">
+                <h2 id="biology-title">생명과학 실험·관찰</h2>
+                <ul>
+                    <li>현미경 사용</li>
+                    <li>세포 관찰</li>
+                    <li>삼투와 확산</li>
+                    <li>광합성</li>
+                    <li>소화 효소</li>
+                    <li>호흡과 순환</li>
+                    <li>자극과 반응</li>
+                    <li>유전 자료 분석</li>
+                </ul>
+            </section>
+        </div>
     </main>
 
     <script src="app.js"></script>

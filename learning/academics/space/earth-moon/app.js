@@ -2820,19 +2820,25 @@
                 const nextBtn = document.getElementById('emNextBtn');
                 nextBtn.style.display = 'none';
 
-                item.opts.forEach((opt, idx) => {
+                const randomizedOptions = item.opts.map((text, index) => ({ text, correct: index === item.ans }));
+                for (let index = randomizedOptions.length - 1; index > 0; index -= 1) {
+                    const randomIndex = Math.floor(Math.random() * (index + 1));
+                    [randomizedOptions[index], randomizedOptions[randomIndex]] = [randomizedOptions[randomIndex], randomizedOptions[index]];
+                }
+                randomizedOptions.forEach((option, idx) => {
                     const btn = document.createElement('button');
                     btn.style.cssText = 'text-align:left; padding:10px 14px; background:rgba(255,255,255,0.06); border:1px solid rgba(255,255,255,0.15); color:#fff; border-radius:8px; font-size:14px; cursor:pointer; transition:all 0.2s;';
-                    btn.textContent = `${idx + 1}. ${opt}`;
+                    btn.textContent = `${idx + 1}. ${option.text}`;
+                    btn.dataset.correct = String(option.correct);
                     btn.onclick = () => {
                         Array.from(optsBox.children).forEach(b => b.disabled = true);
-                        if (idx === item.ans) {
+                        if (option.correct) {
                             btn.style.background = 'rgba(16, 185, 129, 0.3)';
                             btn.style.borderColor = '#10b981';
                         } else {
                             btn.style.background = 'rgba(239, 68, 68, 0.3)';
                             btn.style.borderColor = '#ef4444';
-                            optsBox.children[item.ans].style.background = 'rgba(16, 185, 129, 0.3)';
+                            optsBox.querySelector('[data-correct="true"]').style.background = 'rgba(16, 185, 129, 0.3)';
                         }
                         expBox.textContent = item.exp;
                         expBox.style.display = 'block';

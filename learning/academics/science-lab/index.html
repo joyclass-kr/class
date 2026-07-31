@@ -1,0 +1,157 @@
+<!doctype html>
+<html lang="ko">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="theme-color" content="#07131c">
+    <title>과학 실험실</title>
+    <meta name="description" content="초등학교부터 고등학교까지 물리, 화학, 생명과학, 지구과학 실험 목록">
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+    <main>
+        <header class="page-header">
+            <div class="title-row">
+                <a href="../../../">← 학습 메뉴</a>
+                <h1>과학 실험실</h1>
+            </div>
+            <div class="grade-filter" role="group" aria-label="학교급 선택">
+                <button type="button" data-grade="all" aria-pressed="true">전체</button>
+                <button type="button" data-grade="elementary" aria-pressed="false">초등학교</button>
+                <button type="button" data-grade="middle" aria-pressed="false">중학교</button>
+                <button type="button" data-grade="high" aria-pressed="false">고등학교</button>
+            </div>
+        </header>
+
+        <nav class="subject-nav" aria-label="과학 분야 바로가기">
+            <a href="#physics">물리</a>
+            <a href="#chemistry">화학</a>
+            <a href="#biology">생명과학</a>
+            <a href="#earth-science">지구과학</a>
+        </nav>
+
+        <section class="catalog" aria-labelledby="catalog-title">
+            <h2 id="catalog-title">실험 목록</h2>
+            <div class="subject-grid">
+                <section class="subject-card physics" id="physics">
+                    <header><span>물리</span><h3>물리 실험</h3></header>
+                    <ul>
+                        <li data-grades="elementary"><span>빛의 직진과 그림자</span><small>초등 3~4</small></li>
+                        <li data-grades="elementary"><span>자석의 성질</span><small>초등 3~4</small></li>
+                        <li data-grades="elementary"><span>소리와 진동</span><small>초등 3~4</small></li>
+                        <li data-grades="elementary"><span>용수철저울과 무게</span><small>초등 5~6</small></li>
+                        <li data-grades="elementary"><span>전구의 연결</span><small>초등 5~6</small></li>
+                        <li data-grades="elementary"><span>온도 측정과 열의 이동</span><small>초등 5~6</small></li>
+                        <li data-grades="elementary"><span>수평 잡기와 지레</span><small>초등 5~6</small></li>
+                        <li data-grades="middle"><span>속력과 운동 기록</span><small>중학교</small></li>
+                        <li data-grades="middle"><span>힘의 합성과 평형</span><small>중학교</small></li>
+                        <li data-grades="middle"><span>밀도와 부력</span><small>중학교</small></li>
+                        <li data-grades="middle"><span>기체의 압력과 부피</span><small>중학교</small></li>
+                        <li data-grades="middle"><span>비열과 열팽창</span><small>중학교</small></li>
+                        <li data-grades="middle"><span>전류·전압·저항</span><small>중학교</small></li>
+                        <li data-grades="middle"><span>빛의 반사와 굴절</span><small>중학교</small></li>
+                        <li data-grades="high"><span>전자기 유도</span><small>고등학교</small></li>
+                        <li data-grades="high"><span>등가속도 운동</span><small>고등학교</small></li>
+                        <li data-grades="high"><span>운동량 보존과 충돌</span><small>고등학교</small></li>
+                        <li data-grades="high"><span>역학적 에너지 보존</span><small>고등학교</small></li>
+                        <li data-grades="high"><span>전기장과 전위</span><small>고등학교</small></li>
+                        <li data-grades="high"><span>직류 회로 분석</span><small>고등학교</small></li>
+                        <li data-grades="high"><span>파동의 간섭</span><small>고등학교</small></li>
+                        <li data-grades="high"><span>정상파와 공명</span><small>고등학교</small></li>
+                        <li data-grades="high"><span>렌즈와 상</span><small>고등학교</small></li>
+                        <li data-grades="high"><span>광전 효과</span><small>고등학교</small></li>
+                    </ul>
+                </section>
+
+                <section class="subject-card chemistry" id="chemistry">
+                    <header><span>화학</span><h3>화학 실험</h3></header>
+                    <ul>
+                        <li data-grades="elementary"><span>물질의 성질과 분류</span><small>초등 3~4</small></li>
+                        <li data-grades="elementary"><span>혼합물 분리</span><small>초등 3~4</small></li>
+                        <li data-grades="elementary"><span>물의 상태 변화</span><small>초등 5~6</small></li>
+                        <li data-grades="elementary"><span>기체의 무게와 압력</span><small>초등 5~6</small></li>
+                        <li class="available" data-grades="elementary middle"><a href="solubility/">용해와 용해도</a><small>초등 5~6·중학교</small></li>
+                        <li data-grades="middle"><span>밀도 측정</span><small>중학교</small></li>
+                        <li data-grades="middle"><span>거름·증류·크로마토그래피</span><small>중학교</small></li>
+                        <li data-grades="middle"><span>재결정과 분별결정</span><small>중학교</small></li>
+                        <li data-grades="middle"><span>원소의 불꽃 반응</span><small>중학교</small></li>
+                        <li data-grades="middle"><span>입자의 확산</span><small>중학교</small></li>
+                        <li data-grades="middle"><span>기체의 발생과 확인</span><small>중학교</small></li>
+                        <li data-grades="middle"><span>산과 염기·지시약</span><small>중학교</small></li>
+                        <li data-grades="middle"><span>화학 반응과 질량</span><small>중학교</small></li>
+                        <li data-grades="middle"><span>발열 반응과 흡열 반응</span><small>중학교</small></li>
+                        <li data-grades="high"><span>몰 농도 용액 만들기</span><small>고등학교</small></li>
+                        <li data-grades="high"><span>중화 적정</span><small>고등학교</small></li>
+                        <li data-grades="high"><span>산화·환원 반응</span><small>고등학교</small></li>
+                        <li data-grades="high"><span>전기 분해</span><small>고등학교</small></li>
+                        <li data-grades="high"><span>반응 엔탈피</span><small>고등학교</small></li>
+                        <li data-grades="high"><span>반응 속도</span><small>고등학교</small></li>
+                        <li data-grades="high"><span>화학 평형의 이동</span><small>고등학교</small></li>
+                    </ul>
+                </section>
+
+                <section class="subject-card biology" id="biology">
+                    <header><span>생명</span><h3>생명과학 실험</h3></header>
+                    <ul>
+                        <li data-grades="elementary"><span>현미경과 세포 관찰</span><small>초등 5~6</small></li>
+                        <li data-grades="elementary"><span>식물의 구조와 기능</span><small>초등 5~6</small></li>
+                        <li data-grades="elementary"><span>증산 작용</span><small>초등 5~6</small></li>
+                        <li data-grades="elementary"><span>씨앗의 발아와 식물의 한살이</span><small>초등 3~4</small></li>
+                        <li data-grades="elementary"><span>동물의 한살이</span><small>초등 3~4</small></li>
+                        <li data-grades="elementary"><span>우리 몸의 기관</span><small>초등 5~6</small></li>
+                        <li data-grades="elementary"><span>생태계와 먹이 관계</span><small>초등 5~6</small></li>
+                        <li data-grades="middle"><span>동물세포와 식물세포 관찰</span><small>중학교</small></li>
+                        <li data-grades="middle"><span>광합성</span><small>중학교</small></li>
+                        <li data-grades="middle"><span>소화 효소</span><small>중학교</small></li>
+                        <li data-grades="middle"><span>삼투와 확산</span><small>중학교</small></li>
+                        <li data-grades="middle"><span>호흡과 순환</span><small>중학교</small></li>
+                        <li data-grades="middle"><span>자극과 반응</span><small>중학교</small></li>
+                        <li data-grades="high"><span>효소 반응과 조건</span><small>고등학교</small></li>
+                        <li data-grades="high"><span>DNA 추출</span><small>고등학교</small></li>
+                        <li data-grades="high"><span>광합성과 세포 호흡</span><small>고등학교</small></li>
+                        <li data-grades="high"><span>세포 분열 관찰</span><small>고등학교</small></li>
+                        <li data-grades="high"><span>감수 분열 모형</span><small>고등학교</small></li>
+                        <li data-grades="high"><span>유전 자료 분석</span><small>고등학교</small></li>
+                        <li data-grades="high"><span>개체군 생장과 군집 조사</span><small>고등학교</small></li>
+                    </ul>
+                </section>
+
+                <section class="subject-card earth" id="earth-science">
+                    <header><span>지구</span><h3>지구과학 실험·관측</h3></header>
+                    <ul>
+                        <li data-grades="elementary"><span>암석과 광물 관찰</span><small>초등 3~4</small></li>
+                        <li data-grades="elementary"><span>화산 분출 모형과 분출물</span><small>초등 3~4</small></li>
+                        <li data-grades="elementary"><span>지층과 화석</span><small>초등 3~4</small></li>
+                        <li data-grades="elementary"><span>물의 순환</span><small>초등 5~6</small></li>
+                        <li data-grades="elementary"><span>달의 모양 변화</span><small>초등 5~6</small></li>
+                        <li data-grades="elementary"><span>흐르는 물의 침식과 퇴적</span><small>초등 3~4</small></li>
+                        <li data-grades="elementary"><span>기온·바람·구름 관측</span><small>초등 5~6</small></li>
+                        <li data-grades="elementary"><span>태양계 행성 모형</span><small>초등 5~6</small></li>
+                        <li data-grades="middle"><span>광물의 성질과 암석 분류</span><small>중학교</small></li>
+                        <li data-grades="middle"><span>지층의 선후 관계</span><small>중학교</small></li>
+                        <li data-grades="middle"><span>기압과 바람</span><small>중학교</small></li>
+                        <li data-grades="middle"><span>일기도와 전선</span><small>중학교</small></li>
+                        <li data-grades="middle"><span>판의 이동</span><small>중학교</small></li>
+                        <li data-grades="middle"><span>수온·염분과 해수 순환</span><small>중학교</small></li>
+                        <li data-grades="middle"><span>달의 위상과 식</span><small>중학교</small></li>
+                        <li data-grades="middle"><span>별의 일주 운동</span><small>중학교</small></li>
+                        <li class="available" data-grades="high"><a href="earthquake/">지진파와 진앙</a><small>고등학교</small></li>
+                        <li data-grades="high"><span>마그마의 점성과 화산 분출</span><small>고등학교</small></li>
+                        <li data-grades="high"><span>지질 구조 해석</span><small>고등학교</small></li>
+                        <li data-grades="high"><span>방사성 동위원소와 절대 연령</span><small>고등학교</small></li>
+                        <li data-grades="high"><span>단열 변화와 구름</span><small>고등학교</small></li>
+                        <li data-grades="high"><span>기상 자료와 일기도 분석</span><small>고등학교</small></li>
+                        <li data-grades="high"><span>해수의 수온·염분·밀도</span><small>고등학교</small></li>
+                        <li data-grades="high"><span>표층 순환과 심층 순환</span><small>고등학교</small></li>
+                        <li data-grades="high"><span>엘니뇨·라니냐 자료 분석</span><small>고등학교</small></li>
+                        <li data-grades="high"><span>별의 스펙트럼과 물리량</span><small>고등학교</small></li>
+                        <li data-grades="high"><span>연주시차와 HR도</span><small>고등학교</small></li>
+                        <li data-grades="high"><span>외계 행성 탐사 자료</span><small>고등학교</small></li>
+                    </ul>
+                </section>
+            </div>
+        </section>
+    </main>
+    <script src="app.js"></script>
+</body>
+</html>

@@ -673,12 +673,19 @@
     quizResult.hidden = true;
     quizResult.className = 'quiz-result-card';
 
-    quiz.options.forEach((optText, idx) => {
+    const randomizedOptions = quiz.options.map((text, index) => ({ text, correct: index === quiz.answer }));
+    for (let index = randomizedOptions.length - 1; index > 0; index -= 1) {
+      const randomIndex = Math.floor(Math.random() * (index + 1));
+      [randomizedOptions[index], randomizedOptions[randomIndex]] = [randomizedOptions[randomIndex], randomizedOptions[index]];
+    }
+    const correctIdx = randomizedOptions.findIndex((option) => option.correct);
+
+    randomizedOptions.forEach((option, idx) => {
       const btn = document.createElement('button');
       btn.className = 'quiz-opt-btn';
-      btn.textContent = `${idx + 1}. ${optText}`;
+      btn.textContent = `${idx + 1}. ${option.text}`;
       btn.addEventListener('click', () => {
-        checkQuizAnswer(idx, quiz.answer, quiz.explanation);
+        checkQuizAnswer(idx, correctIdx, quiz.explanation);
       });
       quizOptions.appendChild(btn);
     });

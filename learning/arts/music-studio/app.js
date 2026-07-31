@@ -505,14 +505,19 @@
         elements.voicingQuizFeedback.textContent = "";
         elements.voicingQuizChoices.innerHTML = "";
         const optionCount = state.useSevenths ? 4 : 3;
-        for (let inversion = 0; inversion < optionCount; inversion += 1) {
+        const inversions = Array.from({ length: optionCount }, function (_, index) { return index; });
+        for (let index = inversions.length - 1; index > 0; index -= 1) {
+            const randomIndex = Math.floor(Math.random() * (index + 1));
+            [inversions[index], inversions[randomIndex]] = [inversions[randomIndex], inversions[index]];
+        }
+        inversions.forEach(function (inversion) {
             const button = document.createElement("button");
             button.type = "button";
             button.textContent = INVERSION_LABELS[inversion];
             button.setAttribute("aria-label", INVERSION_LABELS[inversion] + " 선택");
             button.addEventListener("click", function () { answerVoicingQuiz(inversion, button); });
             elements.voicingQuizChoices.appendChild(button);
-        }
+        });
     }
 
     function listenToVoicingQuiz() {

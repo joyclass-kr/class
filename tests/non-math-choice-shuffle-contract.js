@@ -1,0 +1,33 @@
+const assert = require('node:assert/strict');
+const fs = require('node:fs');
+const path = require('node:path');
+
+const root = path.resolve(__dirname, '..');
+const read = (relativePath) => fs.readFileSync(path.join(root, relativePath), 'utf8');
+
+const checks = [
+  ['독해', 'learning/basics/reading/app.js', /shuffle\(item\.choices\.map/],
+  ['파닉스', 'learning/basics/phonics/app.js', /options: \[answer, \.\.\.distractorsFor\(answer\)\]\.sort/],
+  ['맞춤법', 'learning/basics/spelling/app.js', /choices: shuffle\(question\.choices\)/],
+  ['어휘', 'learning/basics/vocabulary/vocabulary-core.js', /choices: shuffleWords\(\[target, \.\.\.distractors\]/],
+  ['속담', 'learning/basics/proverbs/app.js', /shuffle\(\[correctIndex, \.\.\.distractors\]\)/],
+  ['고사성어', 'learning/basics/classical-chinese-idioms/idioms-core.js', /const options = shuffle\(\[idiom, \.\.\.wrong\]/],
+  ['인체', 'learning/academics/body-explorer/app.js', /shuffledChoices\(stage\.choices\)/],
+  ['대항해시대', 'learning/academics/age-of-exploration/lib/final-quiz.js', /function shuffledQuestion\(source\)/],
+  ['한국 문화유산', 'learning/academics/korean-museum/treasure-map.js', /const randomizedOptions = quiz\.options\.map/],
+  ['주기율표', 'learning/academics/periodic-table/app.js', /const options = \[correctEl, \.\.\.wrongOpts\]\.sort/],
+  ['지진파와 진앙', 'learning/academics/science-lab/earthquake/app.js', /shuffleQuizOptions\(card\)/],
+  ['별과 별자리', 'learning/academics/space/constellations/app.js', /const randomizedOptions = item\.opts\.map/],
+  ['지구와 달', 'learning/academics/space/earth-moon/app.js', /const randomizedOptions = item\.opts\.map/],
+  ['태양계', 'learning/academics/space/solar-system/app.js', /var shuffled = qObj\.opts\.slice\(\)\.sort/],
+  ['클래식 음악', 'learning/arts/classical-music/app.js', /const answer=p\[key\], choices=shuffle/],
+  ['음악 화음', 'learning/arts/music-studio/app.js', /const choices = Array\.from\(choiceSet\)\.sort/],
+  ['음악 전위형', 'learning/arts/music-studio/app.js', /inversions\.forEach\(function \(inversion\)/],
+  ['미술 감상', 'learning/arts/art-appreciation/museum/museum.js', /const randomizedChoices=shuffledCopy\(choices\)/]
+];
+
+for (const [name, file, pattern] of checks) {
+  assert.match(read(file), pattern, `${name}: 보기 무작위 배열이 필요합니다.`);
+}
+
+console.log(`non-math choice shuffle contract: ${checks.length} banks validated`);
