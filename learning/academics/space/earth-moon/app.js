@@ -67,8 +67,8 @@
             const observerView = document.getElementById('emMoonMyView');
             const observerSkyCanvas = document.getElementById('emMoonSkyCanvas');
             const observerSkyCaption = document.getElementById('emMoonSkyCaption');
-            const observerSkySolarDate = document.getElementById('emMoonSkySolarDate');
-            const observerSkyLunarDate = document.getElementById('emMoonSkyLunarDate');
+            const observerSkyLunarClock = document.getElementById('emMoonSkyLunarClock');
+            const observerSkyPhase = document.getElementById('emMoonSkyPhase');
             const observerSkyStatus = document.getElementById('emMoonSkyStatus');
             if (!container || !spacePane || !canvas || !observerView || !observerSkyCanvas || typeof THREE === 'undefined') return;
             const seasonRaycaster = new THREE.Raycaster();
@@ -671,25 +671,11 @@
                 const periodNote = document.getElementById('emTimePeriodNote');
                 if (!display || !mainText || !periodNote) return;
 
-                const wholeHour = Math.floor(elapsedSimulationHours + 0.000001) % HOURS_PER_YEAR;
-                const dayOfYear = Math.floor(wholeHour / 24);
-                const hour = wholeHour % 24;
-                const monthLengths = [31, 28, 31, 30, 31, 30, 31, 31, 30, 31, 30, 31];
-
-                let monthIndex = 0;
-                let dayOfMonth = dayOfYear;
-                while (dayOfMonth >= monthLengths[monthIndex]) {
-                    dayOfMonth -= monthLengths[monthIndex];
-                    monthIndex += 1;
-                }
-
-                const hourNote = hour === 0 ? '(자정)' : (hour === 12 ? '(정오)' : '');
-                mainText.textContent = `${monthIndex + 1}월 ${dayOfMonth + 1}일 ${hour}시`;
+                const lunar = getLunarSimulationDate();
+                const hourNote = lunar.hour === 0 ? '(자정)' : (lunar.hour === 12 ? '(정오)' : '');
+                mainText.textContent = `음력 ${lunar.month}월 ${lunar.day}일 ${lunar.hour}시`;
                 periodNote.textContent = hourNote;
-                display.setAttribute(
-                    'datetime',
-                    `${String(monthIndex + 1).padStart(2, '0')}-${String(dayOfMonth + 1).padStart(2, '0')}T${String(hour).padStart(2, '0')}:00`
-                );
+                display.removeAttribute('datetime');
             }
 
             function createObserverMarker() {
@@ -847,6 +833,18 @@
                     day: dayOfYear,
                     dayOfYear: Math.floor(totalHours / 24) + 1,
                     hour: Math.floor(totalHours % 24)
+                };
+            }
+
+            function getLunarSimulationDate() {
+                const phaseAngle = normalizeRadians(moonRelAngle);
+                const elapsedDays = Math.max(0, elapsedSimulationHours / 24);
+                const phaseNames = ['삭', '초승달', '상현달', '팽대달', '망/보름달', '팽대달', '하현달', '그믐달'];
+                return {
+                    month: Math.floor(elapsedDays / 29.53) % 12 + 1,
+                    day: Math.floor((phaseAngle / (Math.PI * 2)) * 29.53) + 1,
+                    hour: Math.floor(elapsedSimulationHours + 0.000001) % 24,
+                    phase: phaseNames[Math.round((phaseAngle / (Math.PI * 2)) * 8) % 8]
                 };
             }
 
@@ -1041,16 +1039,12 @@
                 ctx.fill();
                 ctx.fillRect(width / 2 - 5, horizon - 5, 10, 22);
 
-                const lunarDay = Math.floor((phaseAngle / (Math.PI * 2)) * 29.53) + 1;
-                const elapsedDays = elapsedSimulationHours / 24;
-                const lunarMonth = Math.floor(elapsedDays / 29.53) % 12 + 1;
-                const phaseNames = ['삭', '초승달', '상현달', '팽대달', '망/보름달', '팽대달', '하현달', '그믐달'];
-                const phaseIndex = Math.round((phaseAngle / (Math.PI * 2)) * 8) % 8;
-                if (observerSkySolarDate) {
-                    observerSkySolarDate.textContent = date.month + '월 ' + date.day + '일 ' + date.hour + '시';
+                const lunar = getLunarSimulationDate();
+                if (observerSkyLunarClock) {
+                    observerSkyLunarClock.textContent = '음력 ' + lunar.month + '월 ' + lunar.day + '일 ' + lunar.hour + '시';
                 }
-                if (observerSkyLunarDate) {
-                    observerSkyLunarDate.textContent = '음력 ' + lunarMonth + '월 ' + lunarDay + '일 경 · ' + phaseNames[phaseIndex];
+                if (observerSkyPhase) {
+                    observerSkyPhase.textContent = lunar.phase;
                 }
                 if (observerSkyCaption) {
                     if (polarView) {

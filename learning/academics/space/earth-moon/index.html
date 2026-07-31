@@ -49,8 +49,8 @@
                     <!-- Simulation Date & Time -->
                     <div class="em-simulation-clock" aria-label="시뮬레이션 날짜와 시각">
                         <span class="em-clock-label">시뮬레이션 시각</span>
-                        <time id="emDateTimeDisplay" datetime="01-01T00:00">
-                            <span id="emDateTimeMain">1월 1일 0시</span>
+                        <time id="emDateTimeDisplay">
+                            <span id="emDateTimeMain">음력 1월 1일 0시</span>
                             <span id="emTimePeriodNote" class="em-time-period-note">(자정)</span>
                         </time>
                     </div>
@@ -103,8 +103,8 @@
                             <span id="emMoonSkyCaption">한국에서 남쪽 하늘을 바라본 모습</span>
                         </div>
                         <div class="em-moon-sky-readout" aria-live="polite">
-                            <strong id="emMoonSkySolarDate">1월 1일 0시</strong>
-                            <span id="emMoonSkyLunarDate">음력 1월 1일 · 삭</span>
+                            <strong id="emMoonSkyLunarClock">음력 1월 1일 0시</strong>
+                            <span id="emMoonSkyPhase">삭</span>
                         </div>
                         <canvas id="emMoonSkyCanvas" role="img" aria-label="현재 관측 위치에서 보는 태양과 달의 위치"></canvas>
                         <div class="em-moon-sky-status" id="emMoonSkyStatus"></div>
@@ -302,6 +302,6 @@
     </main>
 
     <!-- Heliocentric 3D Earth-Moon Physics Simulation Engine -->
-    <script src="app.js?v=season-text-only-20260731"></script>
+    <script src="app.js?v=lunar-clock-only-20260731"></script>
 </body>
 </html>
