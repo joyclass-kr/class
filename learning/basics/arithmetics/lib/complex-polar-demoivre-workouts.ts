@@ -78,7 +78,7 @@ export const complexPolarDemoivreProblems: GeometryChoiceItem[] = [
   make(
     "cp6",
     "드므아브르 정리",
-    "값은?",
+    "주어진 복소수의 세제곱은?",
     String.raw`\left\{2\left(\cos\frac{\pi}{6}+i\sin\frac{\pi}{6}\right)\right\}^3`,
     String.raw`8i`,
     [String.raw`-8i`, String.raw`8`, String.raw`4i`],

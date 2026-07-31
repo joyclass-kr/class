@@ -173,7 +173,7 @@ function questionFor(kind: MiddleTrigonometryMethodKind, structure: string) {
   if (kind === "radical-side") {
     return structure === "45-leg-to-hypotenuse" ? "$\\overline{AB}$의 길이는?" : "$\\overline{AC}$의 길이는?";
   }
-  return "구하는 값은?";
+  return "변의 길이는?";
 }
 
 const SPECIAL_VALUES = [

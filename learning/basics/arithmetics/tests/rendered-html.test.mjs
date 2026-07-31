@@ -282,6 +282,11 @@ test("every middle, high-school, and STEM worksheet states what each problem ask
     assert.equal(promptCount, questionCount, `${title}: 질문 문구가 없는 문항이 있음`);
     for (const prompt of prompts) {
       assert.doesNotMatch(prompt, /하세요|하시오|하여라|구하라|고르세요|쓰세요|판단하세요|나타내세요|확인하세요/, `${title}: 명령형 발문이 남아 있음`);
+      assert.doesNotMatch(
+        prompt.trim(),
+        /^(?:구할 값은\?|구하는 값은\?|값은\?)$/,
+        `${title}: 무엇을 구하는지 밝히지 않은 발문이 남아 있음`,
+      );
     }
   }
 });

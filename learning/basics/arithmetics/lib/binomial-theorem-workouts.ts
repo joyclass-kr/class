@@ -288,7 +288,7 @@ export function createBinomialTheoremProblems(seed: number) {
       6,
       "binomial-coefficient-sum",
       "이항계수의 합",
-      "값은?",
+      "이항계수의 합은?",
       `\\sum_{k=0}^{${n}}\\binom{${n}}{k}`,
       answer,
       [2 ** (n - 1), 2 ** (n + 1), n * 2 ** (n - 1)],

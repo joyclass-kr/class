@@ -252,7 +252,7 @@ function questionFor(kind: MiddleCoreKind, structure: string) {
   }
   const questions: Record<MiddleCoreKind, string> = {
     "prime-factorization": "소인수분해한 결과는?",
-    "gcd-lcm": "구하는 값은?",
+    "gcd-lcm": "최대공약수 또는 최소공배수는?",
     "linear-expression": "정리한 식은?",
     "linear-equation": "x의 값은?",
     "linear-equation-application": "x의 값은?",

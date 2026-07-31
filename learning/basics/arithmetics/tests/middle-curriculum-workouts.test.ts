@@ -9,6 +9,58 @@ import {
   MIDDLE_CURRICULUM_TITLES,
   type MiddleCurriculumKind,
 } from "../lib/middle-curriculum-workouts.ts";
+import { worksheetQuestionForLabel } from "../lib/worksheet-question.ts";
+
+test("중등 교육과정 공통 발문은 구할 대상을 정확히 밝힌다", () => {
+  assert.deepEqual(
+    [
+      "좌표와 사분면",
+      "좌표축 위의 점",
+      "정비례 상수",
+      "반비례의 값",
+      "정비례 표의 빈칸",
+      "함숫값에서 x 구하기",
+      "두 점으로 일차함수 구하기",
+      "그래프와 연립방정식",
+      "다각형의 대각선",
+      "구의 부피와 겉넓이",
+      "합의 법칙",
+      "직각삼각형 판별",
+      "중심각에서 원주각",
+      "한 점에서 그은 두 접선",
+      "제1사분위수",
+      "제3사분위수",
+      "사분위범위",
+      "범위",
+      "다섯 수 요약",
+      "상자그림에서 최댓값",
+      "두 상자그림의 산포도 비교",
+    ].map(worksheetQuestionForLabel),
+    [
+      "점이 속한 사분면은?",
+      "점이 놓인 좌표축은?",
+      "상수 $a$는?",
+      "$y$의 값은?",
+      "빈칸에 들어갈 수는?",
+      "$x$는?",
+      "일차함수의 식은?",
+      "$(x, y)$는?",
+      "대각선의 개수는?",
+      "부피와 겉넓이는?",
+      "경우의 수는?",
+      "직각삼각형인가?",
+      "각의 크기는?",
+      "접선의 길이는?",
+      "제1사분위수는?",
+      "제3사분위수는?",
+      "사분위범위는?",
+      "범위는?",
+      "다섯 수 요약은?",
+      "최댓값은?",
+      "사분위범위가 더 큰 자료는?",
+    ],
+  );
+});
 
 const EXPECTED_METHODS: Record<MiddleCurriculumKind, string[]> = {
   "coordinate-proportion": [
@@ -60,7 +112,7 @@ test("교육과정 보완 학습지 10개는 필수 계산 유형을 각각 8문
     assert.equal(set.problems.length, 8, kind);
     assert.deepEqual(set.problems.map(({ kind: method }) => method), EXPECTED_METHODS[kind], kind);
     assert.ok(MIDDLE_CURRICULUM_TITLES[kind]);
-    assert.match(MIDDLE_CURRICULUM_GRADES[kind], /^중학교 [123]학년$/);
+    assert.match(MIDDLE_CURRICULUM_GRADES[kind], /^중[123]$/);
   }
 });
 
