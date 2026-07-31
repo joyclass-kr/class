@@ -27,6 +27,10 @@ const middleLayout = fs.readFileSync(
   path.join(process.cwd(), "app/arithmetic/middle-school/layout.tsx"),
   "utf8",
 );
+const inlineMathText = fs.readFileSync(
+  path.join(process.cwd(), "app/components/inline-math-text.tsx"),
+  "utf8",
+);
 
 test("middle-school worksheets use the same split Korean and math typography as high school", () => {
   assert.match(highLayout, /import "\.\.\/worksheet-typography\.css"/);
@@ -89,6 +93,7 @@ test("다항식 복합 연산은 전체 폭을 사용하고 긴 식을 한 줄�
 test("질문 속 인라인 수식은 한글 본문보다 작아 보이지 않는다", () => {
   assert.match(css, /\.geometry-choice-prompt \.math-formula,[\s\S]*?font-size:\s*1\.18em/);
   assert.match(css, /\.geometry-choice-prompt \.math-formula \.katex,[\s\S]*?font-size:\s*1em/);
+  assert.match(inlineMathText, /latex=\{part\.slice\(1, -1\)\}\s+displayStyle/);
 });
 
 test("일반 고등 연산 문제에는 줄 없는 계산 여백이 있다", () => {

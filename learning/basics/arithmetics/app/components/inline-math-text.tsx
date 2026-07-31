@@ -69,7 +69,7 @@ function renderPlainText(text: string, keyPrefix: string): ReactNode[] {
 export default function InlineMathText({ text }: { text: string }) {
   return text.split(/(\$[^$]+\$)/g).map((part, index) => {
     if (part.startsWith("$") && part.endsWith("$")) {
-      return <MathFormula key={`${part}-${index}`} latex={part.slice(1, -1)} />;
+      return <MathFormula key={`${part}-${index}`} latex={part.slice(1, -1)} displayStyle />;
     }
     return (
       <Fragment key={`plain-${index}`}>
