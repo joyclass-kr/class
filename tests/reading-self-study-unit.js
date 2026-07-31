@@ -28,8 +28,10 @@ for (const item of items) {
   assert(item.explanation.length > 0);
   item.choices.forEach((choice, index) => {
     if (index === item.correctIndex) return;
-    const obviousKoreanCue = /(없다|않다|아니다|관계없|필요하지|오직|항상|반드시|만으로|만을)/u;
-    const obviousEnglishCue = /\b(no|not|never|only|always|cannot|without|regardless|unnecessary|exactly)\b/i;
+    const obviousKoreanCue =
+      /(없다|않다|아니다|관계없|필요하지|오직|항상|반드시|전혀|모두|완전히|무조건|절대로|만으로|만을|만이)/u;
+    const obviousEnglishCue =
+      /\b(no|not|never|only|always|cannot|without|regardless|unnecessary|exactly|every|all|entirely|completely|impossible|useless|guarantee|must)\b/i;
     assert(
       !(item.track === "ko" ? obviousKoreanCue : obviousEnglishCue).test(choice),
       `${item.id} has an obvious false-answer cue: ${choice}`

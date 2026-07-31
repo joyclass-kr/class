@@ -87,7 +87,7 @@ const TOPICS = [
       ["평년보다 추운 날이 이어지면 장기 기후 추세는 그 기간의 방향으로 이동한다.", "A run of colder-than-average days shifts the long-term climate trend in the same direction."],
       ["평균 기온이 같은 지역은 비슷한 대기 순환을 겪어 강수와 바람도 비슷해진다.", "Regions with the same mean temperature develop similar rainfall and wind through similar air circulation."],
       ["해안과 내륙의 기온 변화 차이는 주로 두 지역의 위도 차이에서 생긴다.", "Differences between coastal and inland temperatures mainly result from differences in latitude."],
-      ["관측 지점이 많아질수록 예보 모형이 계산해야 할 날씨 변화의 범위는 줄어든다.", "As observation sites increase, the range of weather changes a forecast model must calculate becomes smaller."]
+      ["관측 지점이 많아질수록 예보 모형이 계산해야 할 날씨 변화의 범위는 줄어든다.", "As observation sites increase, the range of weather changes a forecast model needs to calculate becomes smaller."]
     ],
     applications: [
       ["내일 우산이 필요한지 판단하려면 장기 평균보다 단기 예보가 더 직접적이다.", "A short-term forecast is more useful than a long-term average for deciding whether to carry an umbrella tomorrow."],
@@ -180,7 +180,7 @@ const TOPICS = [
     ],
     wrong: [
       ["참여자가 많을수록 대표 의견을 먼저 정리한 뒤 소수 의견을 추가로 듣는 방식이 효율적이다.", "With many participants, it is efficient to settle the representative view first and hear minority views afterward."],
-      ["근거의 신뢰도보다 각 의견에 같은 시간을 배정하는 것이 공정한 비교에 더 중요하다.", "Giving every view equal time matters more to a fair comparison than differences in evidence quality."],
+      ["근거의 신뢰도보다 각 의견에 같은 시간을 배정하는 것이 공정한 비교에 더 중요하다.", "Giving each view equal time matters more to a fair comparison than differences in evidence quality."],
       ["과반수 결정을 먼저 확정한 뒤 소수 권리 문제를 시행 과정에서 조정하면 갈등을 줄일 수 있다.", "Confirming the majority decision first and adjusting minority-rights issues during implementation can reduce conflict."],
       ["토론에서는 주장 내용과 함께 말한 사람의 책임과 동기를 평가해야 쟁점을 정확히 판단할 수 있다.", "A discussion judges an issue accurately by evaluating the speaker's responsibility and motives along with the claim."],
       ["절차가 투명하면 결정 이후의 평가는 참여자의 만족도를 중심으로 진행하는 것이 적절하다.", "When a process is transparent, later evaluation should focus mainly on participant satisfaction."]
