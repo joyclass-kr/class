@@ -37,7 +37,7 @@
 
   function getArtifactImageURL(id) {
     const imagePath = REAL_RELIC_IMAGES[id] || `assets/relics/${id}.jpg`;
-    return `${imagePath}?v=20260731-2`;
+    return `${imagePath}?v=20260731-3`;
   }
 
   const RELIC_CONTEXT = {
@@ -184,7 +184,7 @@
 
     { id: 'l01', title: '김홍도 씨름도 (풍속화)', titleEn: 'Ssireum by Kim Hong-do', eraCategory: 'joseon', era: '조선 후기 정조 (18세기)', route: '경부선', lat: 37.5892, lng: 126.9981, location: '조선 도화서', museum: '간송미술관 (보물 제527호)', designation: '보물 제527호', docent: '조선 후기 서민들의 생동감 넘치는 씨름 경기를 그린 단원 김홍도의 대표 풍속화입니다.', examTip: '📌 [내신/수능 핵심] 조선 후기 풍속화 = 김홍도, 신윤복!', quiz: { question: '조선 후기 씨름 경기 장면을 그린 단원 김홍도의 풍속화는?', options: ['씨름도', '몽유도원도', '미인도', '세한도'], answer: 0, explanation: '김홍도 대표 풍속화 씨름도입니다.' } },
     { id: 'l02', title: '백자 달항아리', titleEn: 'White Porcelain Moon Jar', eraCategory: 'joseon', era: '조선 후기 (18세기)', route: '경부선', lat: 37.5238, lng: 126.9805, location: '조선 광주 관요 가마터', museum: '국립중앙박물관 (국보 제310호)', designation: '국보 제310호', docent: '보름달을 닮은 순백의 둥근 조선 백자로 조선 선비의 청렴하고 담백한 미학을 보여줍니다.', examTip: '📌 [내신/수능 핵심] 조선 후기 도자기 = 백자 달항아리, 청화백자!', quiz: { question: '보름달을 닮은 순백의 빛깔로 조선 선비 미학을 보여주는 18세기 백자는?', options: ['백자 달항아리', '고려청자 매병', '분청사기', '빗살무늬토기'], answer: 0, explanation: '18세기 대표 백자 달항아리입니다.' } },
-    { id: 'l03', title: '김정호 대동여지도', titleEn: 'Daedongyeojido', eraCategory: 'joseon', era: '조선 후기 철종 (1861년)', route: '경부선', lat: 37.5240, lng: 126.9806, location: '조선 전 국토 탐사 인쇄', museum: '국립중앙박물관 (보물 제850호)', designation: '보물 제850호', docent: '김정호가 조선 국토를 정밀 탐사하여 10리마다 점을 찍어 인쇄한 22첩 목판 한반도 지도입니다.', examTip: '📌 [내신/수능 핵심] 김정호 대동여지도 = 10리 점 표기, 22첩 분첩 목판 지도!', quiz: { question: '김정호가 제작하였으며 10리마다 점을 찍은 22첩 접경식 목판 지도는?', options: ['대동여지도', '혼일강리역대국도지도', '동국지도', '곤여만국전도'], answer: 0, explanation: '김정호 제작 10리 눈금 표시 목판 지도입니다.' } },
+    { id: 'l03', title: '김정호 대동여지도', titleEn: 'Daedongyeojido', eraCategory: 'joseon', era: '조선 후기 철종 (1861년)', route: '경부선', lat: 37.5240, lng: 126.9806, location: '조선 전 국토를 22층으로 나누어 제작', museum: '국립중앙박물관 (보물 제850호)', designation: '보물 제850호', mediaLabel: '공식 전시 포스터 · 22첩 연결본', docent: '김정호가 기존 지도와 지리 정보를 집대성하여 국토를 22층으로 나누고, 도로에 10리마다 점을 표시해 목판으로 간행한 전국 지도입니다.', examTip: '📌 [내신/수능 핵심] 김정호 대동여지도 = 10리 점 표기, 22첩 분첩 목판 지도!', quiz: { question: '김정호가 제작하였으며 10리마다 점을 찍은 22첩 절첩식 목판 지도는?', options: ['대동여지도', '혼일강리역대국도지도', '동국지도', '곤여만국전도'], answer: 0, explanation: '김정호 제작 10리 눈금 표시 목판 지도입니다.' } },
 
     // --- 6. 근현대 ---
     { id: 'm01', title: '독립문과 서재필', titleEn: 'Dongnibmum', eraCategory: 'modern', era: '대한제국 / 근대 (1897년)', route: '경부선', lat: 37.5724, lng: 126.9595, location: '서울 서대문구 현저동', museum: '서울 서대문 독립공원', designation: '사적 제32호', docent: '독립협회가 영은문을 헐고 건립한 자주독립 석조문입니다.', examTip: '📌 [내신/수능 핵심] 독립협회 = 영은문 헐고 독립문 건립!', quiz: { question: '1897년 독립협회가 영은문을 헐고 세운 자주독립 문은?', options: ['독립문', '척화비', '광개토대왕비', '참성단'], answer: 0, explanation: '독립협회가 건립한 자주독립 석조문입니다.' } },
