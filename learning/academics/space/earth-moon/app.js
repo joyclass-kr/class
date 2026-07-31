@@ -1611,7 +1611,10 @@
                 ctx.stroke();
                 ctx.restore();
 
-                const currentOrbitPosition = viewOrbitPoint(state.day, cx, cy, rx, ry);
+                // A calendar day identifies noon; add the fractional offset from
+                // noon so Earth's orbit advances continuously between dates.
+                const continuousOrbitDay = state.day + (state.hour - 12) / 24;
+                const currentOrbitPosition = viewOrbitPoint(continuousOrbitDay, cx, cy, rx, ry);
                 seasonPoints.forEach(point => {
                     const position = viewOrbitPoint(point.day, cx, cy, rx, ry);
                     ctx.save();
