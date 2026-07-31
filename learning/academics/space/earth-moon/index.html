@@ -66,9 +66,6 @@
                             <button class="phase-chip em-observer-btn" type="button" data-observer-location="north">🧊 북극 (90°N)</button>
                             <button class="phase-chip em-observer-btn" type="button" data-observer-location="australia">🇦🇺 호주 (35°S)</button>
                         </div>
-                        <div class="em-season-toggle-row">
-                            <button class="phase-chip em-season-toggle" id="emSeasonPointsToggle" type="button" aria-pressed="false">🌐 춘분·하지·추분·동지점 (OFF)</button>
-                        </div>
                         <div id="emObserverStatus" class="em-observer-status">한국 관측자 · 북위 37.5°</div>
                     </div>
 
@@ -76,9 +73,9 @@
                     <div class="em-phase-selector" style="position: absolute; left: 16px; z-index: 10; max-width: 520px;">
                         <div style="font-size: 11px; color: #94a3b8; font-weight: 700; margin-bottom: 4px;">달의 위상 선택:</div>
                         <div class="phase-btn-grid" id="phaseChipsGrid">
-                            <button class="phase-chip" data-angle="0">🌑 삭 (0°)</button>
+                            <button class="phase-chip active" data-angle="0">🌑 삭 (0°)</button>
                             <button class="phase-chip" data-angle="45">🌒 초승달 (45°)</button>
-                            <button class="phase-chip active" data-angle="90">🌓 상현달 (90°)</button>
+                            <button class="phase-chip" data-angle="90">🌓 상현달 (90°)</button>
                             <button class="phase-chip" data-angle="135">🌔 팽대달 (135°)</button>
                             <button class="phase-chip" data-angle="180">🌕 망/보름달 (180°)</button>
                             <button class="phase-chip" data-angle="225">🌖 팽대달 (225°)</button>
@@ -91,11 +88,11 @@
                     <div class="earth-view-box">
                         <div id="emMoonObserverLabel" style="font-size: 11px; color: #38bdf8; font-weight: 700; margin-bottom: 2px;">북반구(한국) 관측 시선</div>
                         <canvas id="moonPhaseCanvas" width="80" height="80" role="img" aria-label="현재 달의 위상과 실제 달 앞면 무늬" title="NASA LRO 달 앞면 영상 기반"></canvas>
-                        <div id="moonPhaseTitle" style="font-size: 17px; font-weight: 900; color: #fbbf24; margin-top: 4px;">상현달 (First Quarter)</div>
-                        <div id="moonObsInfo" style="font-size: 12px; color: #38bdf8; font-weight: 700; margin-top: 4px;">남중 시각: 오후 6시 (18:00) | 초저녁 서쪽 관측</div>
+                        <div id="moonPhaseTitle" style="font-size: 17px; font-weight: 900; color: #fbbf24; margin-top: 4px;">삭 (New Moon)</div>
+                        <div id="moonObsInfo" style="font-size: 12px; color: #38bdf8; font-weight: 700; margin-top: 4px;">남중: 정오 (12:00) | 관측 불가 (태양과 함께 이동)</div>
                         <div class="em-moon-progress">
                             <span>달 공전 진행:</span>
-                            <strong id="emOrbitProgressText">음력 7~8일 경 (상현)</strong>
+                            <strong id="emOrbitProgressText">음력 1일 경 (삭)</strong>
                         </div>
                     </div>
                 </div>

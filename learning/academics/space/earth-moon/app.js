@@ -89,7 +89,7 @@
             let earthOrbitAngle = JANUARY_FIRST_ORBIT_ANGLE;
             let earthSpinAngle = Math.PI / 2 + JANUARY_FIRST_ORBIT_ANGLE;
             let elapsedSimulationHours = 0;
-            let moonRelAngle = Math.PI / 2; // Moon orbit around Earth relative to Sun (Start at First Quarter 90deg)
+            let moonRelAngle = 0; // Lunar month begins at New Moon (lunar January 1, 0deg).
             let currentObserverLatitude = 37.5;
 
             let isPlaying = true;
@@ -176,12 +176,6 @@
                 eOrbitGeo.setFromPoints(eOrbitPts);
                 earthOrbitLine = new THREE.Line(eOrbitGeo, new THREE.LineBasicMaterial({ color: 0xe2e8f0, transparent: true, opacity: 0.25 }));
                 scene.add(earthOrbitLine);
-
-                seasonPointsGroup = createSeasonPointsGroup();
-                seasonPointsGroup.visible = false;
-                scene.add(seasonPointsGroup);
-                bindSeasonPointsToggle();
-                bindSeasonPointTimeTravel();
 
                 // 🌍 2. EARTH-MOON SYSTEM GROUP (Orbits Sun at SUN_ORBIT_RADIUS)
                 earthSystemGroup = new THREE.Group();
