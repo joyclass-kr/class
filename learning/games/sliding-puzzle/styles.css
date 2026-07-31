@@ -114,6 +114,23 @@ h1 { margin: 0; font-family: Georgia, "Times New Roman", serif; font-size: clamp
 .solve-guide li { margin: 7px 0; }
 .solve-guide strong { color: var(--ink); }
 .solve-tip { padding: 12px 14px; border-left: 3px solid var(--gold); background: rgba(0,0,0,.22); }
+.pair-example { display: grid; grid-template-columns: minmax(130px,1fr) auto minmax(130px,1fr); gap: 10px; align-items: center; margin: 14px 0 22px; }
+.pair-example > div > span { display: block; margin-bottom: 5px; color: var(--muted); font-size: .72rem; font-weight: 800; text-align: center; }
+.pair-arrow { color: var(--gold-bright); font-size: .72rem; line-height: 1.6; text-align: center; white-space: nowrap; }
+.mini-board { display: grid; gap: 3px; padding: 5px; border: 1px solid var(--line); background: rgba(0,0,0,.28); }
+.mini-board.cols-3 { grid-template-columns: repeat(3,1fr); }
+.mini-board > * { display: grid; place-items: center; min-height: 29px; margin: 0; border: 1px solid rgba(229,173,75,.3); color: var(--ink); background: rgba(109,57,23,.72); font-style: normal; }
+.mini-board > i { background: rgba(0,0,0,.4); }
+.mini-board > em { color: rgba(216,195,166,.42); background: transparent; }
+.mini-board > .fixed { color: #211209; background: var(--gold-bright); }
+.pair-note { margin: 16px 0; padding: 13px 15px; border: 1px solid var(--line); background: rgba(0,0,0,.2); }
+.pair-note > strong { color: var(--gold-bright); }
+.pair-note p { margin-top: 8px; }
+
+@media (max-width: 420px) {
+  .pair-example { grid-template-columns: 1fr; }
+  .pair-arrow { padding: 2px 0; }
+}
 
 .celebration { position: fixed; inset: 0; z-index: 10; display: grid; place-items: center; padding: 20px; background: rgba(8,5,3,.78); backdrop-filter: blur(7px); }
 .celebration[hidden] { display: none; }

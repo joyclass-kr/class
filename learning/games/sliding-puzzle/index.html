@@ -87,24 +87,58 @@
 
           <h3>8 PUZZLE 해결 순서</h3>
           <ol>
-            <li><strong>1 배치:</strong> 1을 왼쪽 위로 옮깁니다. 빈칸을 1 주변으로 돌려 이동 방향을 만드세요.</li>
-            <li><strong>2 배치:</strong> 1을 유지하면서 2를 위쪽 가운데에 놓습니다.</li>
-            <li><strong>3 배치:</strong> 3을 오른쪽 위에 놓아 첫째 줄을 <strong>1–2–3</strong>으로 완성합니다.</li>
-            <li><strong>왼쪽 세로줄 준비:</strong> 7을 왼쪽 아래에 먼저 놓습니다.</li>
-            <li><strong>4 배치:</strong> 4를 가운데 칸에 가져온 뒤 빈칸을 왼쪽 가운데에 두고, 4를 왼쪽으로 밀어 <strong>4–7</strong> 세로쌍을 완성합니다.</li>
-            <li><strong>마지막 2×2:</strong> 남은 5·6·8을 빈칸과 함께 한 방향으로 계속 회전시키면 정답 배열이 됩니다.</li>
+            <li><strong>1 고정:</strong> 1만 왼쪽 위에 놓습니다. 아직 2와 3은 고정하지 않습니다.</li>
+            <li><strong>2·3 짝 만들기:</strong> 오른쪽 2×2 공간에서 3을 <strong>2의 목표 칸</strong>, 2를 그 바로 아래, 빈칸을 오른쪽 위에 놓습니다.</li>
+          </ol>
+
+          <div class="pair-example" aria-label="8 퍼즐에서 2와 3을 완성하는 배치">
+            <div>
+              <span>임시 배치</span>
+              <div class="mini-board cols-3"><b class="fixed">1</b><b>3</b><i></i><em>·</em><b>2</b><em>·</em></div>
+            </div>
+            <strong class="pair-arrow">→ 3 오른쪽<br>→ 2 위쪽</strong>
+            <div>
+              <span>첫째 줄 완성</span>
+              <div class="mini-board cols-3"><b class="fixed">1</b><b class="fixed">2</b><b class="fixed">3</b><em>·</em><i></i><em>·</em></div>
+            </div>
+          </div>
+
+          <ol start="3">
+            <li><strong>4·7 짝 만들기:</strong> 첫째 줄을 건드리지 않은 채 7을 <strong>4의 목표 칸</strong>, 4를 그 오른쪽, 빈칸을 7의 바로 아래에 놓습니다.</li>
+          </ol>
+
+          <div class="pair-example" aria-label="8 퍼즐에서 4와 7을 완성하는 배치">
+            <div>
+              <span>임시 배치</span>
+              <div class="mini-board cols-3"><b class="fixed">1</b><b class="fixed">2</b><b class="fixed">3</b><b>7</b><b>4</b><em>·</em><i></i><em>·</em><em>·</em></div>
+            </div>
+            <strong class="pair-arrow">→ 7 아래쪽<br>→ 4 왼쪽</strong>
+            <div>
+              <span>왼쪽 세로 완성</span>
+              <div class="mini-board cols-3"><b class="fixed">1</b><b class="fixed">2</b><b class="fixed">3</b><b class="fixed">4</b><i></i><em>·</em><b class="fixed">7</b><em>·</em><em>·</em></div>
+            </div>
+          </div>
+
+          <ol start="4">
+            <li><strong>마지막 2×2:</strong> 오른쪽 아래에 남은 5·6·8과 빈칸을 한 방향으로 회전시켜 완성합니다.</li>
           </ol>
 
           <h3>15 PUZZLE 해결 순서</h3>
           <ol>
             <li><strong>1·2 배치:</strong> 맨 윗줄 왼쪽부터 1, 2를 차례로 고정합니다.</li>
-            <li><strong>3·4 배치:</strong> 4를 오른쪽 위에 먼저 놓습니다. 3을 그 아래에 두고 빈칸을 3의 목표 칸에 만든 다음, 3을 위로 밀어 첫째 줄 <strong>1–2–3–4</strong>를 완성합니다.</li>
+            <li><strong>3·4 짝 만들기:</strong> 4를 <strong>3의 목표 칸</strong>, 3을 그 바로 아래, 빈칸을 오른쪽 위에 놓습니다. 4를 오른쪽으로, 3을 위쪽으로 밀면 첫째 줄이 완성됩니다.</li>
             <li><strong>5·6 배치:</strong> 둘째 줄 왼쪽부터 5, 6을 고정합니다.</li>
-            <li><strong>7·8 배치:</strong> 8을 둘째 줄 오른쪽 끝에 먼저 놓고, 7을 그 아래에서 위로 밀어 둘째 줄 <strong>5–6–7–8</strong>을 완성합니다.</li>
-            <li><strong>9·13 세로쌍:</strong> 13을 왼쪽 아래에 먼저 놓습니다. 9를 그 오른쪽에 두고 빈칸을 9의 목표 칸에 만든 뒤 9를 왼쪽으로 밀어 고정합니다.</li>
-            <li><strong>10·14 세로쌍:</strong> 같은 방법으로 두 번째 열에 10과 14를 위아래로 고정합니다.</li>
+            <li><strong>7·8 짝 만들기:</strong> 8을 <strong>7의 목표 칸</strong>, 7을 그 바로 아래, 빈칸을 오른쪽에 놓습니다. 8을 오른쪽으로, 7을 위쪽으로 밀어 둘째 줄을 완성합니다.</li>
+            <li><strong>9·13 세로쌍:</strong> 13을 <strong>9의 목표 칸</strong>, 9를 그 오른쪽, 빈칸을 13의 목표 칸인 왼쪽 아래에 놓습니다. 13을 아래쪽으로, 9를 왼쪽으로 밀어 첫 번째 세로쌍을 완성합니다.</li>
+            <li><strong>10·14 세로쌍:</strong> 14를 <strong>10의 목표 칸</strong>, 10을 그 오른쪽, 빈칸을 14의 목표 칸에 놓습니다. 14를 아래쪽으로, 10을 왼쪽으로 밀어 두 번째 세로쌍을 완성합니다.</li>
             <li><strong>마지막 2×2:</strong> 남은 11·12·15와 빈칸을 한 방향으로 회전시켜 완성합니다.</li>
           </ol>
+
+          <div class="pair-note">
+            <strong>짝 배치 공식</strong>
+            <p>가로 마지막 두 칸: <strong>큰 번호를 작은 번호의 목표 칸</strong>에 놓고, 작은 번호를 그 아래에 둡니다.</p>
+            <p>세로 마지막 두 칸: <strong>아래 번호를 위 번호의 목표 칸</strong>에 놓고, 위 번호를 그 오른쪽에 둡니다.</p>
+          </div>
 
           <p class="solve-tip"><strong>중요:</strong> 마지막 두 타일만 서로 뒤집힌 상태라면 그 둘만 바꿀 수 없습니다. 한 줄 또는 한 세로쌍을 풀어 더 넓은 공간에서 다시 회전하세요. 이 게임은 항상 해결 가능한 상태로 시작합니다.</p>
           <p>키보드에서는 방향키로도 타일을 움직일 수 있습니다.</p>

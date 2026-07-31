@@ -24,6 +24,9 @@ assert.match(fs.readFileSync(path.join(root, 'learning/games/sliding-puzzle/styl
 assert.match(html, /8 PUZZLE 해결 순서/);
 assert.match(html, /15 PUZZLE 해결 순서/);
 assert.match(html, /마지막 2×2/);
+assert.match(html, /3 오른쪽[^]*2 위쪽/);
+assert.match(html, /7 아래쪽[^]*4 왼쪽/);
+assert.match(html, /13을 아래쪽으로, 9를 왼쪽으로/);
 assert.match(html, /id="guidePanel"[^>]+hidden/);
 assert.match(html, /id="guideButton"[^>]+aria-expanded="false"/);
 assert.doesNotMatch(html, /class="start-copy"/);
