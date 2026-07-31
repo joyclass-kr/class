@@ -24,6 +24,7 @@ document.addEventListener('DOMContentLoaded', () => {
     const water = document.getElementById('water');
     const sediment = document.getElementById('sediment');
     const particles = document.getElementById('particles');
+    const particleLegend = document.getElementById('particleLegend');
     const thermometerFill = document.getElementById('thermometerFill');
 
     let prediction = null;
@@ -31,13 +32,13 @@ document.addEventListener('DOMContentLoaded', () => {
     const solutes = {
         salt: {
             name: '소금',
-            color: '#fff3c4',
+            particleType: 'ion',
             amount: { min: 32, max: 42, step: 0.5, initial: 36 },
             points: [[0, 35.5], [20, 36], [40, 36.5], [60, 37.5], [80, 38], [100, 39]]
         },
         sugar: {
             name: '설탕',
-            color: '#f6d7ff',
+            particleType: 'molecule',
             amount: { min: 160, max: 500, step: 5, initial: 205 },
             points: [[0, 179], [20, 204], [40, 241], [60, 288], [80, 363], [100, 487]]
         }
@@ -66,16 +67,31 @@ document.addEventListener('DOMContentLoaded', () => {
         amountMaxLabel.textContent = `${formatGrams(amount.max)}g`;
     }
 
-    function createParticles() {
+    function renderDissolvedParticles(solute, concentrationRatio) {
         particles.innerHTML = '';
-        for (let index = 0; index < 32; index += 1) {
+        const targetCount = solute.particleType === 'ion'
+            ? Math.max(8, Math.round((10 + (24 * concentrationRatio)) / 2) * 2)
+            : Math.max(6, Math.round(8 + (16 * concentrationRatio)));
+
+        for (let index = 0; index < targetCount; index += 1) {
             const particle = document.createElement('i');
-            particle.className = 'particle';
+            if (solute.particleType === 'ion') {
+                const isSodium = index % 2 === 0;
+                particle.className = `particle ion ${isSodium ? 'sodium-ion' : 'chloride-ion'}`;
+                particle.textContent = isSodium ? 'Na⁺' : 'Cl⁻';
+            } else {
+                particle.className = 'particle sugar-molecule';
+            }
             particle.style.left = `${8 + ((index * 23) % 84)}%`;
             particle.style.top = `${10 + ((index * 31) % 70)}%`;
             particle.style.setProperty('--delay', `${-(index % 7) * 0.45}s`);
             particles.appendChild(particle);
         }
+
+        particleLegend.hidden = false;
+        particleLegend.innerHTML = solute.particleType === 'ion'
+            ? '<span><i class="legend-dot sodium-ion"></i>Na⁺ 나트륨 이온</span><span><i class="legend-dot chloride-ion"></i>Cl⁻ 염화 이온</span>'
+            : '<span><i class="legend-dot sugar-molecule"></i>물속에 퍼진 설탕 분자</span>';
     }
 
     function syncControls() {
@@ -91,6 +107,8 @@ document.addEventListener('DOMContentLoaded', () => {
         resultEmpty.hidden = false;
         resultContent.hidden = true;
         beaker.classList.remove('mixed');
+        particles.innerHTML = '';
+        particleLegend.hidden = true;
         sediment.style.height = '0';
         stageCaption.textContent = '조건을 정하고 결과를 예상해 보세요.';
     }
@@ -111,7 +129,7 @@ document.addEventListener('DOMContentLoaded', () => {
         const remaining = Math.max(0, amount - maximum);
         const actual = remaining < 0.05 ? 'all' : 'some';
 
-        particles.style.setProperty('--particle-color', solute.color);
+        renderDissolvedParticles(solute, dissolved / maximum);
         beaker.classList.remove('mixed');
         void beaker.offsetWidth;
         beaker.classList.add('mixed');
@@ -138,7 +156,10 @@ document.addEventListener('DOMContentLoaded', () => {
             elementaryExplanation.textContent = `물에 녹을 수 있는 양에는 한계가 있습니다. 이미 충분히 녹은 뒤 넣은 ${solute.name}은 바닥에 남습니다.`;
         }
 
-        middleExplanation.textContent = `${temperature}℃에서 물 100mL에 녹을 수 있는 ${solute.name}의 최대 질량은 약 ${formatGrams(maximum)}g입니다. 넣은 양과 용해도를 비교하면 포화 여부와 남는 양을 판단할 수 있습니다.`;
+        const particleExplanation = solute.particleType === 'ion'
+            ? '녹은 소금은 Na⁺와 Cl⁻ 이온으로 나뉘어 물속에 퍼집니다.'
+            : '설탕은 이온으로 나뉘지 않고 설탕 분자 상태로 물속에 퍼집니다.';
+        middleExplanation.textContent = `${temperature}℃에서 물 100mL에 녹을 수 있는 ${solute.name}의 최대 질량은 약 ${formatGrams(maximum)}g입니다. ${particleExplanation} 넣은 양과 용해도를 비교하면 포화 여부와 남는 양을 판단할 수 있습니다.`;
         solubilityFormula.textContent = `${formatGrams(amount)}g - ${formatGrams(maximum)}g = ${formatGrams(remaining)}g ${remaining > 0 ? '남음' : '→ 모두 용해'}`;
     }
 
@@ -167,7 +188,6 @@ document.addEventListener('DOMContentLoaded', () => {
         clearResult();
     });
 
-    createParticles();
     setLevel('all');
     syncAmountRange(true);
     syncControls();
