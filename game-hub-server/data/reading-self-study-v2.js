@@ -222,10 +222,10 @@ const TOPICS = [
       ["2 대 3의 두 항에 같은 수 2를 곱하면 4 대 6이 된다.", "Multiplying both terms of 2 to 3 by 2 gives 4 to 6."],
       ["180킬로미터를 3시간에 갔다면 한 시간당 거리는 60킬로미터다.", "Traveling 180 kilometers in 3 hours gives a unit rate of 60 kilometers per hour."],
       ["5명 중 2명과 10명 중 2명은 사람 수가 같아도 차지하는 비율은 다르다.", "Two out of five and two out of ten use the same count but represent different fractions."],
-      ["재료를 모두 3배로 늘리면 비례하는 조리법의 맛의 비율은 유지된다.", "Tripling every ingredient preserves the ratios in a proportional recipe."],
+      ["각 재료의 양을 3배로 늘리면 비례하는 조리법의 맛의 비율은 유지된다.", "Multiplying each ingredient by three preserves the ratios in a proportional recipe."],
       ["거리와 시간이 비례하고 시작 거리가 0이라면 그래프는 원점을 지난다.", "If distance is proportional to time and starts at zero, its graph passes through the origin."],
       ["학생 200명의 25%는 전체를 네 등분한 한 부분인 50명이다.", "Twenty-five percent of 200 students is one quarter, or 50 students."],
-      ["시속과 분속을 바로 비교하려면 먼저 시간 단위를 맞춰야 한다.", "Hourly and per-minute rates must use matching time units before comparison."]
+      ["시속과 분속을 바로 비교하려면 먼저 시간 단위를 맞춰야 한다.", "Comparing hourly and per-minute rates requires matching time units."]
     ]
   },
   {
@@ -280,7 +280,8 @@ function contentTokens(value, track) {
   const matches = String(value || "").toLocaleLowerCase().match(track === "en" ? /[a-z]{3,}/g : /[가-힣]{2,}/g) || [];
   return new Set(matches.map((token) => {
     if (track === "en") return token;
-    return token.replace(/(에서는|으로는|에게는|까지는|부터는|이라는|라는|에서|으로|에게|까지|부터|처럼|에는|과는|와는|은|는|이|가|을|를|도|의|에|로|과|와)$/u, "");
+    const stripped = token.replace(/(에서는|으로는|에게는|까지는|부터는|이라는|라는|에서|으로|에게|까지|부터|처럼|에는|과는|와는|은|는|이|가|을|를|도|의|에|로|과|와)$/u, "");
+    return stripped.length >= 2 ? stripped : token;
   }).filter((token) => token.length >= 2 && !TOKEN_STOP_WORDS.has(token)));
 }
 
@@ -289,7 +290,13 @@ function contentOverlapScore(left, right, track) {
   const rightTokens = contentTokens(right, track);
   let score = 0;
   leftTokens.forEach((token) => {
-    if (rightTokens.has(token)) score += 1;
+    const related = [...rightTokens].some((candidate) =>
+      candidate === token
+      || (track === "ko"
+        && Math.min(candidate.length, token.length) >= 2
+        && (candidate.startsWith(token) || token.startsWith(candidate)))
+    );
+    if (related) score += 1;
   });
   return score;
 }
@@ -309,15 +316,83 @@ function buildDistractors(topic, track, passageText, choiceCount, factIndex, var
 
 const VARIANTS_PER_LEVEL = 4;
 
-const QUESTION_TYPE_SETS = {
-  lower: ["content_match", "implication", "content_match", "implication"],
-  middle: ["content_match", "inference", "implication", "inference"],
-  upper: ["content_match", "inference", "implication", "inference"]
-};
+const LEVEL_PROFILES = Object.freeze({
+  1: {
+    schoolBand: "초3~4",
+    focus: "핵심 사실 찾기",
+    detailCount: 2,
+    choiceCount: 3,
+    factIndexes: [0, 2, 1, 3],
+    questionTypes: ["content_match", "content_match", "implication", "content_match"],
+    distractorMode: "misconception"
+  },
+  2: {
+    schoolBand: "초4~5",
+    focus: "직접 적용",
+    detailCount: 3,
+    choiceCount: 3,
+    factIndexes: [1, 2, 3, 4],
+    questionTypes: ["content_match", "implication", "content_match", "implication"],
+    distractorMode: "misconception"
+  },
+  3: {
+    schoolBand: "초5~6",
+    focus: "내용 관계 파악",
+    detailCount: 4,
+    choiceCount: 4,
+    factIndexes: [2, 3, 4, 5],
+    questionTypes: ["content_match", "inference", "implication", "inference"],
+    distractorMode: "misconception"
+  },
+  4: {
+    schoolBand: "중1",
+    focus: "원인과 결과",
+    detailCount: 5,
+    choiceCount: 4,
+    factIndexes: [3, 4, 5, 6],
+    questionTypes: ["causal_reasoning", "inference", "causal_reasoning", "implication"],
+    distractorMode: "misconception"
+  },
+  5: {
+    schoolBand: "중2",
+    focus: "정보 종합",
+    detailCount: 6,
+    choiceCount: 5,
+    factIndexes: [4, 5, 6, 7],
+    questionTypes: ["synthesis", "inference", "synthesis", "implication"],
+    distractorMode: "misconception"
+  },
+  6: {
+    schoolBand: "중3",
+    focus: "조건 판단",
+    detailCount: 7,
+    choiceCount: 5,
+    factIndexes: [5, 6, 7, 4],
+    questionTypes: ["condition_analysis", "synthesis", "condition_analysis", "inference"],
+    distractorMode: "misconception"
+  },
+  7: {
+    schoolBand: "고1",
+    focus: "근거 대응",
+    detailCount: 8,
+    choiceCount: 5,
+    factIndexes: [6, 7, 5, 4],
+    questionTypes: ["evidence_application", "claim_evaluation", "evidence_application", "claim_evaluation"],
+    distractorMode: "reference"
+  },
+  8: {
+    schoolBand: "고2~3",
+    focus: "조건·범위 평가",
+    detailCount: 8,
+    choiceCount: 5,
+    factIndexes: [7, 6, 5, 4],
+    questionTypes: ["boundary_reasoning", "claim_evaluation", "boundary_reasoning", "claim_evaluation"],
+    distractorMode: "misconception"
+  }
+});
 
 function questionTypeFor(level, variant) {
-  const band = level <= 2 ? "lower" : level <= 4 ? "middle" : "upper";
-  return QUESTION_TYPE_SETS[band][variant];
+  return LEVEL_PROFILES[level].questionTypes[variant];
 }
 
 function promptFor(track, questionType) {
@@ -325,27 +400,51 @@ function promptFor(track, questionType) {
     ? {
         content_match: "윗글을 바탕으로 판단한 내용으로 가장 적절한 것을 고르세요.",
         inference: "윗글을 바탕으로 추론한 내용으로 가장 적절한 것을 고르세요.",
-        implication: "윗글의 원리를 가장 잘 적용한 사례를 고르세요."
+        implication: "윗글의 원리를 가장 잘 적용한 사례를 고르세요.",
+        causal_reasoning: "윗글에 제시된 원인과 결과의 관계를 가장 정확히 적용한 것을 고르세요.",
+        synthesis: "윗글의 여러 정보를 함께 고려할 때 가장 타당한 판단을 고르세요.",
+        condition_analysis: "윗글에서 설명한 조건을 바꾸었을 때 예상되는 결과로 가장 타당한 것을 고르세요.",
+        evidence_application: "첫 문장에서 설명한 원리에 정확히 대응하는 사례를 고르세요.",
+        claim_evaluation: "첫 문장을 근거로 다음 판단을 평가할 때 가장 타당한 것을 고르세요.",
+        boundary_reasoning: "첫 문장의 조건과 적용 범위를 가장 정확하게 반영한 판단을 고르세요."
       }
     : {
         content_match: "Which statement is best supported by the passage?",
         inference: "Which conclusion can best be inferred from the passage?",
-        implication: "Which example best applies the idea in the passage?"
+        implication: "Which example best applies the idea in the passage?",
+        causal_reasoning: "Which choice most accurately applies the cause-and-effect relationship in the passage?",
+        synthesis: "Which judgment is strongest when the information in the passage is considered together?",
+        condition_analysis: "Which result is most reasonable if a condition described in the passage changes?",
+        evidence_application: "Which example corresponds precisely to the principle in the first sentence?",
+        claim_evaluation: "Which judgment is best supported when the first sentence is used as evidence?",
+        boundary_reasoning: "Which judgment most accurately preserves the conditions and scope of the first sentence?"
       };
   return prompts[questionType];
 }
 
-function buildItem(topic, track, level, variant = 0) {
+function buildReferenceDistractors(topic, track, factIndexes, choiceCount, variant) {
   const languageIndex = track === "ko" ? 0 : 1;
-  const factIndex = (level - 1 + variant * 2) % topic.facts.length;
-  const choiceCount = level <= 2 ? 3 : level <= 4 ? 4 : 5;
-  const detailCount = level <= 2 ? 4 : level <= 4 ? 6 : 8;
-  const facts = rotate(topic.facts, factIndex).slice(0, detailCount);
+  return rotate(factIndexes.slice(1), variant)
+    .slice(0, choiceCount - 1)
+    .map((index) => topic.applications[index][languageIndex]);
+}
+
+function buildItem(topic, track, level, variant = 0) {
+  const profile = LEVEL_PROFILES[level];
+  const languageIndex = track === "ko" ? 0 : 1;
+  const factIndex = profile.factIndexes[variant];
+  const factIndexes = rotate(
+    Array.from({ length: topic.facts.length }, (_, index) => index),
+    factIndex
+  ).slice(0, profile.detailCount);
+  const facts = factIndexes.map((index) => topic.facts[index]);
   const answer = topic.applications[factIndex][languageIndex];
   const evidence = topic.facts[factIndex][languageIndex];
   const passageText = facts.map((pair) => pair[languageIndex]).join(" ");
-  const distractors = buildDistractors(topic, track, passageText, choiceCount, factIndex, variant);
-  const correctIndex = (level * 2 + topic.key.length + variant) % choiceCount;
+  const distractors = profile.distractorMode === "reference"
+    ? buildReferenceDistractors(topic, track, factIndexes, profile.choiceCount, variant)
+    : buildDistractors(topic, track, passageText, profile.choiceCount, factIndex, variant);
+  const correctIndex = (level * 2 + topic.key.length + variant) % profile.choiceCount;
   const choices = distractors.slice();
   choices.splice(correctIndex, 0, answer);
   const isKorean = track === "ko";
@@ -356,14 +455,22 @@ function buildItem(topic, track, level, variant = 0) {
     topicTitle: isKorean ? topic.ko : topic.en,
     track,
     targetLevel: level,
+    schoolBand: profile.schoolBand,
+    skillFocus: profile.focus,
+    reasoningDemand: questionType,
+    distractorMode: profile.distractorMode,
     questionType,
     passageText,
     promptText: promptFor(track, questionType),
     choices,
     correctIndex,
-    explanation: isKorean
-      ? `“${evidence}”라는 내용을 적용하면 판단할 수 있습니다.`
-      : `This follows by applying the statement: “${evidence}”`
+    explanation: level >= 7
+      ? (isKorean
+          ? `첫 문장의 “${evidence}”가 제시한 조건과 관계를 그대로 적용해야 합니다.`
+          : `Apply the conditions and relationship stated in the first sentence: “${evidence}”`)
+      : (isKorean
+          ? `“${evidence}”라는 내용을 적용하면 판단할 수 있습니다.`
+          : `This follows by applying the statement: “${evidence}”`)
   };
 }
 
@@ -377,4 +484,4 @@ function createSelfStudyItems() {
   ));
 }
 
-module.exports = { contentOverlapScore, createSelfStudyItems };
+module.exports = { LEVEL_PROFILES, contentOverlapScore, createSelfStudyItems };

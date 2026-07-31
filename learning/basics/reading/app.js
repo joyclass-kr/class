@@ -10,6 +10,16 @@
     deckHistory: null,
     deckStorageKey: ""
   };
+  const LEVEL_INFO = {
+    1: ["초3~4", "핵심 사실 찾기"],
+    2: ["초4~5", "직접 적용"],
+    3: ["초5~6", "내용 관계 파악"],
+    4: ["중1", "원인과 결과"],
+    5: ["중2", "정보 종합"],
+    6: ["중3", "조건 판단"],
+    7: ["고1", "근거 대응"],
+    8: ["고2~3", "조건·범위 평가"]
+  };
   const $ = (id) => document.getElementById(id);
   const node = (tag, className, text) => { const el = document.createElement(tag); if (className) el.className = className; if (text !== undefined) el.textContent = text; return el; };
 
@@ -25,16 +35,19 @@
     for (let level = 1; level <= 8; level += 1) {
       const count = items.filter((item) => item.targetLevel === level).length;
       const card = node("button", "level-card", ""); card.type = "button"; card.disabled = !count;
+      const [schoolBand, skillFocus] = LEVEL_INFO[level];
       card.append(
         node("strong", "level-code", `${state.track === "en" ? "E" : "K"}${level}`),
-        node("span", "", count ? `${count}문항 · 5문제 출제` : "준비 중")
+        node("span", "level-band", schoolBand),
+        node("span", "level-focus", skillFocus),
+        node("span", "level-count", count ? `${count}문항 · 5문제 출제` : "준비 중")
       );
       card.addEventListener("click", () => startSet(level)); list.append(card);
     }
   }
 
   function deckStorageKey(level) {
-    return `reading-self-study-deck-v1:${state.track}:${level}`;
+    return `reading-self-study-deck-v2:${state.track}:${level}`;
   }
 
   function loadDeckHistory(key) {
@@ -66,7 +79,7 @@
 
   function renderQuestion() {
     const item = state.set[state.index]; state.answered = false;
-    $("questionLevel").textContent = `${item.track === "en" ? "E" : "K"}${item.targetLevel}`;
+    $("questionLevel").textContent = `${item.track === "en" ? "E" : "K"}${item.targetLevel} · ${LEVEL_INFO[item.targetLevel][0]}`;
     $("questionProgress").textContent = `${state.index + 1} / ${state.set.length}`;
     $("questionTopic").textContent = item.topicTitle;
     $("progressFill").style.width = `${((state.index + 1) / state.set.length) * 100}%`;
