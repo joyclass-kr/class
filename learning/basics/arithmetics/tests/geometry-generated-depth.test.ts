@@ -49,7 +49,7 @@ test("좌표가 들어간 벡터 문항도 실제로 구할 대상을 정확히 
   assert.equal(createProjectionProblems(20260910)[6].prompt, "$\\cos\\angle(\\vec a, x\\text{축})$는?");
   assert.equal(createVectorGeometryProblems(20260910)[5].prompt, "수선의 발 $H$는?");
   assert.deepEqual(
-    createSpaceCoordinateProblems(20260910).slice(5).map(({ prompt }) => prompt),
-    ["대칭이동한 점의 좌표는?", "$a$는?"],
+    createSpaceCoordinateProblems(20260910).slice(4).map(({ prompt }) => prompt),
+    ["구의 방정식은?", "대칭이동한 점의 좌표는?", "$a$는?"],
   );
 });
