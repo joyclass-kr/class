@@ -3,6 +3,7 @@ export type ArithmeticWorksheet = {
   route: string | null;
   grade: string;
   title: string;
+  badge?: "암산";
 };
 
 const readyRoutes: Record<string, string> = {
@@ -89,15 +90,15 @@ const explicitGrades: Record<string, string> = {
 };
 
 const elementaryTitles: Record<string, string> = {
-  "1수세기①": "수 세기",
-  "1덧셈뺄셈①": "덧셈·뺄셈 ①",
-  "1덧셈뺄셈②": "덧셈·뺄셈 ②",
-  "1주고받기": "주고받기 계산",
-  "1보수": "보수(10 만들기)",
-  "1덧셈뺄셈③": "덧셈·뺄셈 ③",
-  "1덧셈뺄셈④": "덧셈·뺄셈 ④",
-  "1수읽기": "수 읽기",
-  "1뛰어세기": "뛰어 세기",
+  "1수세기①": "1부터 9까지 수 세기",
+  "1덧셈뺄셈①": "한 자리 수 덧셈·뺄셈",
+  "1덧셈뺄셈②": "받아올림·받아내림 없는 두 자리 수 계산",
+  "1주고받기": "주고받은 뒤의 수 구하기",
+  "1보수": "10 모으기·가르기",
+  "1덧셈뺄셈③": "10을 넘는 덧셈·뺄셈",
+  "1덧셈뺄셈④": "덧셈·뺄셈 빈칸 채우기",
+  "1수읽기": "두 자리 수 읽기",
+  "1뛰어세기": "여러 간격으로 뛰어 세기",
   "2덧셈뺄셈①": "덧셈·뺄셈 ①",
   "2덧셈뺄셈②": "덧셈·뺄셈 ②",
   "2덧셈뺄셈③": "덧셈·뺄셈 ③",
@@ -154,6 +155,10 @@ const elementaryTitles: Record<string, string> = {
   "6원기둥": "원기둥의 계산",
 };
 
+const elementaryMentalMathWorksheets = new Set([
+  "1덧셈뺄셈①", "1덧셈뺄셈②", "1보수", "1덧셈뺄셈③", "1덧셈뺄셈④", "1뛰어세기",
+]);
+
 export const arithmeticWorksheetCatalog: ArithmeticWorksheet[] = worksheetNames.map((name) => {
   const gradeMatch = name.match(/^([1-6])(?!\d)(.+)$/);
   const grade = explicitGrades[name] ?? gradeMatch?.[1] ?? "";
@@ -162,6 +167,7 @@ export const arithmeticWorksheetCatalog: ArithmeticWorksheet[] = worksheetNames.
     route: readyRoutes[name] ?? null,
     grade: `초${grade}`,
     title: elementaryTitles[name] ?? (explicitGrades[name] ? name : gradeMatch ? gradeMatch[2] : name),
+    badge: elementaryMentalMathWorksheets.has(name) ? "암산" : undefined,
   };
 });
 

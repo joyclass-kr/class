@@ -415,12 +415,12 @@ export function AdditionSubtractionWorksheet({ variant }: { variant: AdditionSub
     variant === "grade-two-missing-parts"
       ? "덧셈뺄셈③"
       : variant === "two-digit"
-      ? "덧셈뺄셈②"
+      ? "받아올림·받아내림 없는 두 자리 수 계산"
       : variant === "within-twenty"
-        ? "덧셈뺄셈③"
+        ? "10을 넘는 덧셈·뺄셈"
         : variant === "missing-parts"
-          ? "덧셈뺄셈④"
-          : "덧셈뺄셈①";
+          ? "덧셈·뺄셈 빈칸 채우기"
+          : "한 자리 수 덧셈·뺄셈";
   const maxLength = variant === "single-digit" ? 1 : variant === "grade-two-missing-parts" ? 3 : 2;
   const grade = variant === "grade-two-missing-parts" ? "2학년" : "1학년";
   const [questionSet, setQuestionSet] = useState(() => createProblemSet(INITIAL_SEED, variant));

@@ -49,7 +49,7 @@ export default function ArithmeticCatalog() {
           </div>
         </header>
         <ol className="worksheet-catalog" aria-label="연산 학습지 목록">
-          {learningWorksheetCatalog.map(({ route, grade, title }, index) => {
+          {learningWorksheetCatalog.map(({ route, grade, title, badge }, index) => {
             const stage = worksheetStage(grade);
             const previousStage = index > 0 ? worksheetStage(learningWorksheetCatalog[index - 1].grade) : null;
             const content = <>
@@ -57,6 +57,7 @@ export default function ArithmeticCatalog() {
               <span className="worksheet-title">
                 <small className="worksheet-grade">{`(${grade})`}</small>
                 <strong><InlineMathText text={title} /></strong>
+                {badge && <span className="worksheet-badge">{badge}</span>}
               </span>
               {route && <span className="worksheet-arrow" aria-hidden="true">→</span>}
             </>;

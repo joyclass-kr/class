@@ -177,7 +177,7 @@ export default function SkipCountingOnePage() {
         <header className="counting-sheet-header">
           <div className="counting-sheet-title">
             <span>1학년</span>
-            <strong>뛰어 세기{answerSheet ? " 정답" : ""}</strong>
+            <strong>여러 간격으로 뛰어 세기{answerSheet ? " 정답" : ""}</strong>
           </div>
           <div className="counting-sheet-info">
             <span>이름 <i /></span>

@@ -188,7 +188,7 @@ export default function GiveAndTakeOnePage() {
         <header className="counting-sheet-header">
           <div className="counting-sheet-title">
             <span>1학년</span>
-            <strong>주고받기{answerSheet ? " 정답" : ""}</strong>
+            <strong>주고받은 뒤의 수 구하기{answerSheet ? " 정답" : ""}</strong>
           </div>
           <div className="counting-sheet-info">
             <span>이름 <i /></span>

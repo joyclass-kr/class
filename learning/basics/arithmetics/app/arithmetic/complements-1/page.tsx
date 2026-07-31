@@ -171,7 +171,7 @@ export default function ComplementsOnePage() {
         <header className="counting-sheet-header">
           <div className="counting-sheet-title">
             <span>1학년</span>
-            <strong>10으로 모으거나 가르기{answerSheet ? " 정답" : ""}</strong>
+            <strong>10 모으기·가르기{answerSheet ? " 정답" : ""}</strong>
           </div>
           <div className="counting-sheet-info">
             <span>이름 <i /></span>

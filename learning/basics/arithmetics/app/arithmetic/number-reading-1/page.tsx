@@ -163,7 +163,7 @@ export default function NumberReadingOnePage() {
         <header className="counting-sheet-header">
           <div className="counting-sheet-title">
             <span>1학년</span>
-            <strong>수 읽기{answerSheet ? " 정답" : ""}</strong>
+            <strong>두 자리 수 읽기{answerSheet ? " 정답" : ""}</strong>
           </div>
           <div className="counting-sheet-info">
             <span>이름 <i /></span>

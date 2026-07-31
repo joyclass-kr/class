@@ -175,7 +175,7 @@ export default function CountingOnePage() {
         <header className="counting-sheet-header">
           <div className="counting-sheet-title">
             <span>1학년</span>
-            <strong>수 세기①{answerSheet ? " 정답" : ""}</strong>
+            <strong>1부터 9까지 수 세기{answerSheet ? " 정답" : ""}</strong>
           </div>
           <div className="counting-sheet-info">
             <span>이름 <i /></span>
