@@ -37,6 +37,9 @@ test("learning menus use the four top-level domains", () => {
   const teacherMenu = read("classtools/index.html");
   assert.match(teacherMenu, /href="\/learning\/basics\/graph-studio\/"/);
   assert.match(teacherMenu, /<h3 class="tool-name">그래프 그리기<\/h3>/);
+  assert.match(teacherMenu, /<h3 class="tool-name">학급 대시보드<\/h3>/);
+  assert.doesNotMatch(teacherMenu, /스마트 학급 대시보드|href="seating"|교실 자리 배치/);
+  assert.doesNotMatch(teacherMenu, /class="tool-(?:icon|desc|arrow)"/);
 });
 
 test("menu-specific asset groups live with their menu", () => {
