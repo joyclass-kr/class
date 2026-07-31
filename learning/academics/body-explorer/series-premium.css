@@ -1209,3 +1209,175 @@ body.series-premium .simulation-card::before,
 .system-atlas-toolbar [data-system-atlas="zoom-in"] {
     display: none !important;
 }
+
+/*
+ * Readable anatomy atlas
+ * Keep the current structure prominent, move explanation out of the drawing,
+ * and let narrow scene columns use their full width.
+ */
+body.has-system-atlas .scene-panel {
+    container-type: inline-size;
+}
+
+.system-process-atlas {
+    width: min(60%, 330px);
+    border-color: color-mix(in srgb, var(--system-accent) 58%, transparent);
+    background:
+        radial-gradient(circle at 50% 42%, var(--system-accent-soft), transparent 58%),
+        rgba(10, 9, 20, .94);
+    box-shadow: inset 0 0 24px rgba(0,0,0,.22), 0 14px 32px rgba(0,0,0,.28);
+    backdrop-filter: none;
+    cursor: default;
+}
+
+.system-process-atlas::before {
+    top: 12px;
+    left: 14px;
+    max-width: calc(100% - 142px);
+    overflow: hidden;
+    color: color-mix(in srgb, var(--system-accent) 72%, white);
+    font-family: inherit;
+    font-size: 11px;
+    letter-spacing: 0;
+    line-height: 1.25;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+}
+
+.system-process-atlas svg {
+    height: calc(100% - 76px);
+    margin-top: 24px;
+    transform: none;
+    filter: none;
+}
+
+.system-process-atlas .atlas-organ {
+    opacity: .38;
+}
+
+.system-process-atlas .atlas-organ.is-active {
+    opacity: 1;
+    filter: drop-shadow(0 0 7px var(--system-accent));
+}
+
+.system-process-atlas .atlas-label {
+    opacity: 0;
+    fill: #fffaf6;
+    font-family: "Pretendard", "Noto Sans KR", sans-serif;
+    font-size: 12px;
+    font-weight: 900;
+    paint-order: stroke;
+    stroke: #0b0812;
+    stroke-width: 5px;
+    stroke-linejoin: round;
+    transition: opacity 180ms ease;
+}
+
+.system-process-atlas .atlas-organ.is-active .atlas-label,
+.system-process-atlas.is-free-explore .atlas-label {
+    opacity: 1;
+}
+
+.atlas-marker-text {
+    font: 900 6.5px/1 "Pretendard", "Noto Sans KR", sans-serif;
+}
+
+.atlas-telemetry {
+    grid-template-columns: 1fr;
+    gap: 5px;
+    padding: 11px 13px 12px;
+    border-color: color-mix(in srgb, var(--system-accent) 34%, rgba(255,255,255,.18));
+    background: rgba(7, 8, 17, .96);
+    box-shadow: 0 7px 18px rgba(0,0,0,.28);
+    backdrop-filter: none;
+}
+
+.atlas-telemetry strong {
+    margin-top: 0;
+    font-size: 15px;
+    line-height: 1.3;
+    text-overflow: initial;
+    white-space: normal;
+}
+
+.atlas-telemetry p {
+    color: #eee7eb;
+    font-size: 11.5px;
+    line-height: 1.5;
+}
+
+.system-atlas-toolbar {
+    top: 8px;
+    right: 8px;
+    padding: 2px;
+    background: rgba(7, 8, 17, .94);
+    backdrop-filter: none;
+}
+
+.system-atlas-toolbar button {
+    min-height: 36px;
+    padding: 7px 9px;
+    color: #f2e9ed;
+    font-family: inherit;
+    font-size: 11px;
+}
+
+.system-atlas-inspector {
+    padding: 13px 14px;
+    background: rgba(7, 8, 17, .97);
+    backdrop-filter: none;
+}
+
+.system-atlas-inspector span {
+    font-family: inherit;
+    font-size: 10px;
+    letter-spacing: .04em;
+}
+
+.system-atlas-inspector strong {
+    margin: 4px 0;
+    font-size: 16px;
+    line-height: 1.3;
+}
+
+.system-atlas-inspector p {
+    color: #eee7eb;
+    font-size: 12px;
+    line-height: 1.5;
+}
+
+@container (max-width: 420px) {
+    .system-process-atlas {
+        top: 112px;
+        right: 10px;
+        bottom: 104px;
+        left: 10px;
+        width: auto;
+        height: auto;
+        max-width: none;
+        aspect-ratio: auto;
+        border-radius: 16px;
+    }
+
+    .system-process-atlas svg {
+        height: calc(100% - 88px);
+        margin-top: 26px;
+    }
+
+    .system-process-atlas.is-free-explore {
+        top: 72px;
+        right: 8px;
+        bottom: 22px;
+        left: 8px;
+        width: auto;
+        max-width: none;
+    }
+
+    .system-process-atlas.is-free-explore svg {
+        height: calc(100% - 108px);
+    }
+
+    body.has-system-atlas .scene-panel .fact-card {
+        width: calc(100% - 36px);
+    }
+}

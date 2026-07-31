@@ -136,25 +136,25 @@
 
     const svgBySystem = { digestion: digestionSvg, respiration: respirationSvg, nervous: nervousSvg, immune: immuneSvg, movement: movementSvg, excretion: excretionSvg, temperature: temperatureSvg };
     const atlasTitles = {
-        digestion: "DIGESTIVE TRACT · LIVE",
-        respiration: "RESPIRATORY TRACT · LIVE",
-        nervous: "NERVOUS SYSTEM · LIVE",
-        immune: "IMMUNE DEFENSE · LIVE",
-        movement: "MUSCULOSKELETAL · LIVE",
-        excretion: "URINARY SYSTEM · LIVE",
-        temperature: "THERMOREGULATION · LIVE"
+        digestion: "소화기관 · 현재 단계",
+        respiration: "호흡기관 · 현재 단계",
+        nervous: "신경계 · 현재 단계",
+        immune: "면역계 · 현재 단계",
+        movement: "뼈와 근육 · 현재 단계",
+        excretion: "배설기관 · 현재 단계",
+        temperature: "체온 조절계 · 현재 단계"
     };
     atlas.innerHTML = svgBySystem[system];
     atlas.dataset.title = atlasTitles[system];
     atlas.insertAdjacentHTML("afterbegin", `
         <div class="system-atlas-toolbar" aria-label="3D 기관 지도 조작">
-            <button type="button" data-system-atlas="explore" aria-pressed="false"><i></i>자유 탐험</button>
+            <button type="button" data-system-atlas="explore" aria-pressed="false"><i></i>기관 살펴보기</button>
             <button type="button" data-system-atlas="zoom-out" aria-label="기관 지도 축소">−</button>
             <button type="button" data-system-atlas="reset" aria-label="기관 지도 3D 초기화">3D</button>
             <button type="button" data-system-atlas="zoom-in" aria-label="기관 지도 확대">＋</button>
         </div>
         <div class="system-atlas-inspector" aria-live="polite">
-            <span>FREE ANATOMY</span>
+            <span>기관 기능</span>
             <strong>기관을 선택하세요</strong>
             <p>빛나는 기관을 누르면 구조와 기능을 자세히 볼 수 있습니다.</p>
         </div>
@@ -244,7 +244,7 @@
         });
         if (active) {
             systemAtlasInspector.querySelector("strong").textContent = `${systemNames[system]}을 선택하세요`;
-            systemAtlasInspector.querySelector("p").textContent = "모델을 회전하거나 확대하고, 빛나는 구조를 눌러 기능을 확인하세요.";
+            systemAtlasInspector.querySelector("p").textContent = "기관을 눌러 구조와 기능을 확인하세요.";
         }
         const announcer = document.getElementById("announcer");
         if (announcer) {
