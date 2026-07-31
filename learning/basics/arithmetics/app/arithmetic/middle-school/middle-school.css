@@ -61,3 +61,33 @@
 .middle-school-scope .math-formula .katex .mathrm {
   font-family: "KaTeX_Main", "STIX Two Math", "Cambria Math", serif;
 }
+
+@media print {
+  .middle-core-page .answer-stage .logarithm-question .polynomial-question-body {
+    display: grid;
+    grid-template-columns: minmax(0, 1fr) 170px;
+    grid-template-rows: auto auto minmax(0, 1fr);
+    column-gap: 14px;
+    align-items: start;
+  }
+
+  .middle-core-page .answer-stage .logarithm-question .polynomial-focus-label,
+  .middle-core-page .answer-stage .logarithm-question .worksheet-question-prompt,
+  .middle-core-page .answer-stage .logarithm-question .logarithm-expression {
+    grid-column: 1;
+  }
+
+  .middle-core-page .answer-stage .logarithm-question .logarithm-expression {
+    margin-top: 6px;
+    font-size: 18px;
+  }
+
+  .middle-core-page .answer-stage .logarithm-question .middle-equation-static-answer {
+    grid-column: 2;
+    grid-row: 1 / span 3;
+    align-self: center;
+    min-width: 0;
+    margin: 0;
+    white-space: normal;
+  }
+}

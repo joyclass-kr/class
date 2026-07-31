@@ -31,6 +31,10 @@ const inlineMathText = fs.readFileSync(
   path.join(process.cwd(), "app/components/inline-math-text.tsx"),
   "utf8",
 );
+const middleCorePage = fs.readFileSync(
+  path.join(process.cwd(), "app/arithmetic/middle-school/core-calculations/page.tsx"),
+  "utf8",
+);
 
 test("middle-school worksheets use the same split Korean and math typography as high school", () => {
   assert.match(highLayout, /import "\.\.\/worksheet-typography\.css"/);
@@ -130,4 +134,24 @@ test("7문제와 오답 보충 문제도 모든 행의 높이가 같다", () => 
       new RegExp(`\\.polynomial-sheet-${count} \\.polynomial-problem-grid\\s*\\{\\s*grid-template-rows:\\s*repeat\\(${count},\\s*minmax\\(0,\\s*1fr\\)\\)`),
     );
   }
+});
+
+test("print answer sheets keep long secondary answers inside their A4 rows", () => {
+  assert.match(middleCorePage, /middle-core-page/);
+  assert.match(
+    middleCss,
+    /\.middle-core-page \.answer-stage \.logarithm-question \.polynomial-question-body\s*\{[\s\S]*?grid-template-columns:/,
+  );
+  assert.match(
+    css,
+    /\.answer-stage \.geometry-choice-question \.polynomial-question-body\s*\{[\s\S]*?grid-template-columns:/,
+  );
+  assert.match(
+    css,
+    /\.inequality-page \.answer-stage \.inequality-question\s*\{[\s\S]*?grid-template-columns:\s*minmax\(0,\s*1fr\)\s*!important/,
+  );
+  assert.match(
+    css,
+    /\.stem-foundation-page \.answer-stage \.geometry-choice-expression\s*\{[\s\S]*?font-size:\s*13px\s*!important/,
+  );
 });

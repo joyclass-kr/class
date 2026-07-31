@@ -694,6 +694,44 @@
     background: white;
     color: black;
   }
+
+  /*
+   * Answer sheets share the same fixed row count as their question sheets.
+   * A 92px answer card below every expression made the final rows collide or
+   * fall outside A4, especially on eight-question STEM sheets. Keep ordinary
+   * derivative answers compact and place geometry-choice answers beside the
+   * question content so both sheets retain the same printable rhythm.
+   */
+  .answer-stage .derivative-static-answer {
+    min-height: 0;
+    margin-top: 6px;
+    padding: 2px 0;
+    justify-content: flex-start;
+    text-align: left;
+  }
+
+  .answer-stage .geometry-choice-question .polynomial-question-body {
+    display: grid;
+    grid-template-columns: minmax(0, 1.15fr) minmax(180px, 0.85fr);
+    grid-template-rows: auto auto minmax(0, 1fr);
+    column-gap: 16px;
+    align-items: start;
+  }
+
+  .answer-stage .geometry-choice-question .polynomial-focus-label,
+  .answer-stage .geometry-choice-question .geometry-choice-prompt,
+  .answer-stage .geometry-choice-question .geometry-choice-expression {
+    grid-column: 1;
+  }
+
+  .answer-stage .geometry-choice-question .derivative-static-answer {
+    grid-column: 2;
+    grid-row: 1 / span 3;
+    align-self: center;
+    min-width: 0;
+    margin: 0;
+    font-size: 15px;
+  }
 }
 
 .trig-value-editor { display: grid; grid-template-columns: 30px 46px 64px; grid-template-rows: 34px 1px 34px; align-items: center; gap: 3px 5px; }
@@ -1343,4 +1381,57 @@
 .polynomial-page.coordinate-page .worksheet-stage .polynomial-question-body,
 .polynomial-page.circle-page .worksheet-stage .polynomial-question-body {
   max-width: 100%;
+}
+
+@media print {
+  .inequality-page .answer-stage .a4-sheet {
+    position: relative;
+    inset: auto;
+  }
+
+  .inequality-page .answer-stage .inequality-question {
+    grid-template-columns: minmax(0, 1fr) !important;
+  }
+
+  .inequality-page .answer-stage .inequality-question .polynomial-question-body {
+    display: grid;
+    max-width: 100%;
+    grid-template-columns: minmax(0, 1fr) minmax(250px, 0.8fr);
+    grid-template-rows: auto auto minmax(0, 1fr);
+    column-gap: 14px;
+    align-items: start;
+  }
+
+  .inequality-page .answer-stage .inequality-question .polynomial-focus-label,
+  .inequality-page .answer-stage .inequality-question .worksheet-question-prompt,
+  .inequality-page .answer-stage .inequality-question .inequality-expression {
+    grid-column: 1;
+  }
+
+  .inequality-page .answer-stage .inequality-question .inequality-static-answer {
+    grid-column: 2;
+    grid-row: 1 / span 3;
+    align-self: center;
+    min-height: 0;
+    min-width: 0;
+    padding: 2px 0;
+    background: white;
+    font-size: 15px;
+    text-align: left;
+  }
+
+  .stem-foundation-page .answer-stage .geometry-choice-question .polynomial-question-body {
+    grid-template-columns: minmax(0, 1.4fr) minmax(230px, 0.85fr);
+    column-gap: 10px;
+  }
+
+  .stem-foundation-page .answer-stage .geometry-choice-expression {
+    font-size: 13px !important;
+    line-height: 1.05;
+  }
+
+  .stem-foundation-page .answer-stage .geometry-choice-question .derivative-static-answer {
+    font-size: 13px;
+    line-height: 1.1;
+  }
 }
