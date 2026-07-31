@@ -420,19 +420,19 @@
 
             function createSeasonLabelSprite(text, color) {
                 const c = document.createElement('canvas');
-                c.width = 256;
-                c.height = 96;
+                c.width = 384;
+                c.height = 144;
                 const ctx = c.getContext('2d');
 
                 ctx.clearRect(0, 0, c.width, c.height);
                 ctx.strokeStyle = 'rgba(2, 6, 23, 0.92)';
-                ctx.lineWidth = 8;
+                ctx.lineWidth = 12;
                 ctx.fillStyle = color;
-                ctx.font = '900 54px Pretendard, "Segoe UI", sans-serif';
+                ctx.font = '900 86px Pretendard, "Segoe UI", sans-serif';
                 ctx.textAlign = 'center';
                 ctx.textBaseline = 'middle';
-                ctx.strokeText(text, 128, 50);
-                ctx.fillText(text, 128, 50);
+                ctx.strokeText(text, 192, 76);
+                ctx.fillText(text, 192, 76);
 
                 const texture = new THREE.CanvasTexture(c);
                 texture.needsUpdate = true;
@@ -443,7 +443,7 @@
                     depthWrite: false
                 });
                 const sprite = new THREE.Sprite(material);
-                sprite.scale.set(12, 4.5, 1);
+                sprite.scale.set(22, 8.25, 1);
                 return sprite;
             }
 
