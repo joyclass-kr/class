@@ -238,16 +238,107 @@ body {
     position: relative;
     background: #000;
     cursor: grab;
+    overflow: hidden;
+    perspective: 1200px;
 }
 
 .solar-canvas-wrapper:active {
     cursor: grabbing;
 }
 
+.galaxy-backdrop-layer {
+    --galaxy-center-x: 44%;
+    --galaxy-center-y: 54.3%;
+    --galaxy-detail-opacity: 1;
+    --core-point-opacity: 0;
+    --core-point-counter-scale: 1;
+    position: absolute;
+    inset: -70%;
+    z-index: 0;
+    background-color: #030712;
+    background:
+        radial-gradient(circle at var(--galaxy-center-x) var(--galaxy-center-y), rgba(13, 25, 52, 0.12), rgba(3, 7, 18, 0.48) 54%, #030712 82%);
+    opacity: 0;
+    transform: translate3d(0, 0, 0) rotateX(0deg) rotateZ(-4deg) scale(2.4);
+    transform-origin: 50% 50%;
+    transform-style: preserve-3d;
+    pointer-events: none;
+    will-change: opacity, transform;
+}
+
+.galaxy-backdrop-layer::before {
+    content: '';
+    position: absolute;
+    top: var(--galaxy-center-y);
+    left: var(--galaxy-center-x);
+    height: 43%;
+    aspect-ratio: 1;
+    background: url('assets/images/milky-way-top-view.png') center / contain no-repeat;
+    transform: translate(-50%, -50%);
+    opacity: var(--galaxy-detail-opacity);
+    -webkit-mask-image: radial-gradient(circle, #000 0%, #000 68%, rgba(0, 0, 0, 0.9) 78%, transparent 100%);
+    mask-image: radial-gradient(circle, #000 0%, #000 68%, rgba(0, 0, 0, 0.9) 78%, transparent 100%);
+    pointer-events: none;
+}
+
+.milky-way-core-point {
+    position: absolute;
+    top: var(--galaxy-center-y);
+    left: var(--galaxy-center-x);
+    z-index: 2;
+    width: 2.2px;
+    height: 2.2px;
+    border-radius: 50%;
+    background: #fff9df;
+    box-shadow:
+        0 0 2px 0.8px rgba(255, 224, 164, 0.92),
+        0 0 5px 2px rgba(133, 178, 255, 0.42);
+    opacity: var(--core-point-opacity);
+    transform:
+        translate(-50%, -50%)
+        scale(var(--core-point-counter-scale));
+    transform-origin: center;
+    pointer-events: none;
+    will-change: opacity, transform;
+}
+
+.cosmic-viewport-layer {
+    position: absolute;
+    inset: 0;
+    z-index: 0;
+    overflow: hidden;
+    background: #01030a;
+    opacity: 0;
+    pointer-events: none;
+    will-change: opacity, transform;
+}
+
+.cosmic-viewport-layer canvas {
+    width: 100%;
+    height: 100%;
+    display: block;
+}
+
+.local-group-layer {
+    z-index: 1;
+    background: transparent;
+}
+
+.deep-space-layer {
+    z-index: 0;
+    background:
+        radial-gradient(circle at 52% 48%, rgba(24, 18, 48, 0.22), transparent 58%),
+        #000108;
+}
+
 canvas#solarCanvas {
     width: 100%;
     height: 100%;
     display: block;
+    position: relative;
+    z-index: 2;
+    opacity: 1;
+    will-change: opacity;
 }
 
 .galaxy-scale-indicator {
@@ -259,8 +350,8 @@ canvas#solarCanvas {
     display: flex;
     align-items: center;
     gap: 11px;
-    max-width: min(290px, calc(100% - 40px));
-    padding: 10px 13px;
+    max-width: min(340px, calc(100% - 40px));
+    padding: 12px 15px;
     color: #e0f2fe;
     background: linear-gradient(135deg, rgba(7, 12, 28, 0.78), rgba(26, 19, 48, 0.68));
     border: 1px solid rgba(125, 211, 252, 0.28);
@@ -273,8 +364,8 @@ canvas#solarCanvas {
 }
 
 .galaxy-scale-indicator__marker {
-    width: 11px;
-    height: 11px;
+    width: 12px;
+    height: 12px;
     flex: 0 0 auto;
     border: 2px solid #7dd3fc;
     border-radius: 50%;
@@ -289,20 +380,22 @@ canvas#solarCanvas {
 
 .galaxy-scale-indicator__copy strong {
     color: #f8fafc;
-    font-size: 12px;
+    font-size: 14px;
+    line-height: 1.35;
     letter-spacing: 0.02em;
 }
 
 .galaxy-scale-indicator__copy span {
     color: #bae6fd;
-    font-size: 11px;
+    font-size: 12.5px;
+    line-height: 1.4;
     font-weight: 700;
 }
 
 .galaxy-scale-indicator__copy small {
     color: #94a3b8;
-    font-size: 9px;
-    line-height: 1.35;
+    font-size: 10.5px;
+    line-height: 1.45;
 }
 
 /* Floating Control Panel Below Viewport (Matching Screenshot UI) */

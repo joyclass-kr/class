@@ -74,14 +74,49 @@
         var is3DReady = false;
         var mapLabels = []; // 2D DOM labels
         var galaxyBackdrop = null;
+        var galaxyBackdropDom = document.getElementById('galaxyBackdropLayer');
+        var localGroupLayer = document.getElementById('localGroupLayer');
+        var localGroupCanvas = document.getElementById('localGroupCanvas');
+        var deepSpaceLayer = document.getElementById('deepSpaceLayer');
+        var deepSpaceCanvas = document.getElementById('deepSpaceCanvas');
         var galaxyScaleIndicator = document.getElementById('galaxyScaleIndicator');
+        var galaxyInteractionLocked = false;
+        var simulationErrorShown = false;
         var GALAXY_VIEW = {
             fadeStart: 6500,
             fadeEnd: 22000,
             planeSize: 70000,
-            max3DDistance: 85000,
+            localGroupStart: 78000,
+            milkyWayFullView: 85000,
+            localGroupEnd: 260000,
+            deepSpaceStart: 300000,
+            deepSpaceEnd: 1100000,
+            max3DDistance: 1500000,
             max2DDistance: 1500000
         };
+
+        function reportSimulationError(error) {
+            if (simulationErrorShown || !canvasContainer) return;
+            simulationErrorShown = true;
+
+            var message = error && error.message ? error.message : String(error || '알 수 없는 초기화 오류');
+            var panel = document.createElement('div');
+            panel.id = 'solarSimulationError';
+            panel.style.cssText =
+                'position:absolute;left:50%;top:50%;transform:translate(-50%,-50%);z-index:30;' +
+                'max-width:min(620px,86%);padding:18px 22px;border-radius:14px;' +
+                'border:1px solid rgba(248,113,113,.65);background:rgba(15,23,42,.96);' +
+                'box-shadow:0 18px 48px rgba(0,0,0,.45);color:#f8fafc;text-align:center;' +
+                'font:700 14px/1.55 system-ui,sans-serif;';
+            panel.innerHTML =
+                '<div style="color:#fca5a5;font-size:16px;margin-bottom:6px;">3D 시뮬레이션을 시작하지 못했습니다</div>' +
+                '<div style="color:#cbd5e1;font-weight:600;word-break:break-word;">' +
+                message.replace(/[&<>"']/g, function (char) {
+                    return { '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;' }[char];
+                }) +
+                '</div><div style="margin-top:9px;color:#7dd3fc;font-size:12px;">Ctrl+F5 후에도 반복되면 이 문구를 알려주세요.</div>';
+            canvasContainer.appendChild(panel);
+        }
 
         // 36 Unique ClassTool Animal Avatars (1~36)
         var CLASSTOOL_ANIMALS = [
@@ -367,6 +402,32 @@
             pluto: 0.249
         };
 
+        // These lookup tables must exist before init3D() starts its first
+        // synchronous animation frame.
+        var ORBIT_RATES = {
+            mercury: 4.15,
+            venus: 1.62,
+            earth: 1.00,
+            mars: 0.53,
+            jupiter: 0.084,
+            saturn: 0.034,
+            uranus: 0.012,
+            neptune: 0.006,
+            pluto: 0.004
+        };
+
+        var SELF_ROTATION_RATES = {
+            mercury: 6.23,
+            venus: 1.50,
+            earth: 365.25,
+            mars: 354.6,
+            jupiter: 890.8,
+            saturn: 811.6,
+            uranus: 507.3,
+            neptune: 545.1,
+            pluto: 57.1
+        };
+
         // 3. EDUCATIONAL VISUAL SIZE SCALE
         // Actual true sizes would make planets invisible points. We use fixed aesthetic sizes.
         function getBodyScaleRadius(key) {
@@ -409,11 +470,13 @@
                 init3D();
                 initMoon3D();
             } else {
+                reportSimulationError(new Error('Three.js 파일이 로드되지 않았습니다.'));
                 init2DFallback();
                 initMoon2DFallback();
             }
         } catch (e) {
             console.warn('3D Init Exception:', e);
+            reportSimulationError(e);
             init2DFallback();
             initMoon2DFallback();
         }
@@ -437,15 +500,30 @@
                 clock = new THREE.Clock();
             } catch (e) { clock = null; }
 
-            renderer = new THREE.WebGLRenderer({ canvas: canvas, antialias: true, logarithmicDepthBuffer: true });
+            try {
+                renderer = new THREE.WebGLRenderer({
+                    canvas: canvas,
+                    antialias: true,
+                    logarithmicDepthBuffer: true,
+                    alpha: true
+                });
+            } catch (webglError) {
+                console.warn('Enhanced WebGL context unavailable; retrying basic mode.', webglError);
+                renderer = new THREE.WebGLRenderer({
+                    canvas: canvas,
+                    antialias: false,
+                    alpha: true
+                });
+            }
             renderer.setSize(w, h);
             renderer.setPixelRatio(Math.min(window.devicePixelRatio, 2));
-            renderer.setClearColor(0x030712);
+            renderer.setClearColor(0x030712, 0);
 
             if (typeof THREE.OrbitControls !== 'undefined') {
                 controls = new THREE.OrbitControls(camera, renderer.domElement);
                 controls.enableDamping = true;
                 controls.dampingFactor = 0.05;
+                controls.enablePan = false;
                 controls.maxDistance = GALAXY_VIEW.max3DDistance;
                 controls.minDistance = 2.0;
             }
@@ -468,56 +546,279 @@
         }
 
         function createGalaxyBackdrop() {
-            if (!scene || typeof THREE === 'undefined' || !THREE.TextureLoader) return;
-
-            var texture = new THREE.TextureLoader().load(
-                'assets/images/milky-way-top-view.png',
-                function (loadedTexture) {
-                    loadedTexture.anisotropy = renderer && renderer.capabilities
-                        ? Math.min(8, renderer.capabilities.getMaxAnisotropy())
-                        : 1;
-                    loadedTexture.needsUpdate = true;
-                },
-                undefined,
-                function () {
-                    console.warn('Milky Way backdrop texture could not be loaded.');
-                }
-            );
-
-            if (typeof THREE.sRGBEncoding !== 'undefined') {
-                texture.encoding = THREE.sRGBEncoding;
-            }
-
-            var galaxyMaterial = new THREE.MeshBasicMaterial({
-                map: texture,
-                color: 0xffffff,
-                transparent: true,
-                opacity: 0,
-                depthWrite: false,
-                depthTest: true,
-                side: THREE.DoubleSide,
-                blending: THREE.AdditiveBlending
-            });
-
-            galaxyBackdrop = new THREE.Mesh(
-                new THREE.PlaneGeometry(GALAXY_VIEW.planeSize, GALAXY_VIEW.planeSize),
-                galaxyMaterial
-            );
-            // Anchor the Solar System over a bright section of the texture's
-            // Orion-side spiral arm instead of the dark inter-arm gap.
-            // Distances remain a conceptual view scale.
-            galaxyBackdrop.position.set(-11800, -1200, 0);
-            galaxyBackdrop.rotation.x = -Math.PI / 2;
-            galaxyBackdrop.rotation.z = -0.16;
-            galaxyBackdrop.renderOrder = -100;
-            galaxyBackdrop.visible = false;
-            galaxyBackdrop.userData.isPersistentBackdrop = true;
-            scene.add(galaxyBackdrop);
+            if (!galaxyBackdropDom) return;
+            galaxyBackdropDom.style.opacity = '0';
+            galaxyBackdropDom.style.transform =
+                'translate3d(0,0,0) rotateX(0deg) rotateZ(-4deg) scale(2.4)';
+            renderCosmicScaleCanvases();
         }
 
         function smoothStep01(value) {
             var t = Math.max(0, Math.min(1, value));
             return t * t * (3 - 2 * t);
+        }
+
+        function createSeededRandom(seed) {
+            var value = seed >>> 0;
+            return function () {
+                value = (value * 1664525 + 1013904223) >>> 0;
+                return value / 4294967296;
+            };
+        }
+
+        function prepareCosmicCanvas(targetCanvas) {
+            if (!targetCanvas || !canvasContainer) return null;
+            var width = Math.max(1, canvasContainer.clientWidth || 900);
+            var height = Math.max(1, canvasContainer.clientHeight || 540);
+            var pixelRatio = Math.min(window.devicePixelRatio || 1, 1.5);
+            targetCanvas.width = Math.round(width * pixelRatio);
+            targetCanvas.height = Math.round(height * pixelRatio);
+            var context = targetCanvas.getContext('2d');
+            if (!context) return null;
+            context.setTransform(pixelRatio, 0, 0, pixelRatio, 0, 0);
+            context.clearRect(0, 0, width, height);
+            return { ctx: context, width: width, height: height };
+        }
+
+        function drawSoftGalaxy(ctx, x, y, radius, rotation, flatten, palette, random) {
+            ctx.save();
+            ctx.translate(x, y);
+            ctx.rotate(rotation);
+            ctx.scale(1, flatten);
+
+            var halo = ctx.createRadialGradient(0, 0, 0, 0, 0, radius);
+            halo.addColorStop(0, palette.core);
+            halo.addColorStop(0.12, palette.inner);
+            halo.addColorStop(0.48, palette.arm);
+            halo.addColorStop(1, 'rgba(0,0,0,0)');
+            ctx.globalCompositeOperation = 'screen';
+            ctx.fillStyle = halo;
+            ctx.beginPath();
+            ctx.arc(0, 0, radius, 0, Math.PI * 2);
+            ctx.fill();
+
+            var particleCount = Math.max(70, Math.round(radius * 9));
+            for (var i = 0; i < particleCount; i++) {
+                var arm = i % 2;
+                var radial = Math.pow(random(), 0.72) * radius * 0.92;
+                var theta = arm * Math.PI + radial / radius * 5.4 + (random() - 0.5) * 0.62;
+                var px = Math.cos(theta) * radial;
+                var py = Math.sin(theta) * radial;
+                var size = 0.28 + random() * Math.max(0.8, radius * 0.012);
+                ctx.globalAlpha = (0.15 + random() * 0.55) * (1 - radial / radius * 0.62);
+                ctx.fillStyle = random() > 0.84 ? palette.spark : palette.dust;
+                ctx.beginPath();
+                ctx.arc(px, py, size, 0, Math.PI * 2);
+                ctx.fill();
+            }
+            ctx.restore();
+            ctx.globalAlpha = 1;
+            ctx.globalCompositeOperation = 'source-over';
+        }
+
+        function drawBackgroundGalaxies(ctx, width, height, count, random, minSize, maxSize, exclusion) {
+            var palettes = [
+                ['rgba(220,232,255,.72)', 'rgba(115,166,255,.28)'],
+                ['rgba(255,235,208,.72)', 'rgba(255,153,88,.25)'],
+                ['rgba(235,221,255,.66)', 'rgba(158,116,255,.24)']
+            ];
+            for (var i = 0; i < count; i++) {
+                var x = random() * width;
+                var y = random() * height;
+                if (exclusion) {
+                    var exclusionDx = x - exclusion.x;
+                    var exclusionDy = y - exclusion.y;
+                    if (Math.sqrt(exclusionDx * exclusionDx + exclusionDy * exclusionDy) <
+                        exclusion.radius) {
+                        i--;
+                        continue;
+                    }
+                }
+                var radius = minSize + Math.pow(random(), 3.2) * (maxSize - minSize);
+                var palette = palettes[Math.floor(random() * palettes.length)];
+                ctx.save();
+                ctx.translate(x, y);
+                ctx.rotate(random() * Math.PI);
+                ctx.scale(1, 0.18 + random() * 0.48);
+                var glow = ctx.createRadialGradient(0, 0, 0, 0, 0, radius);
+                glow.addColorStop(0, palette[0]);
+                glow.addColorStop(0.28, palette[1]);
+                glow.addColorStop(1, 'rgba(0,0,0,0)');
+                ctx.globalCompositeOperation = 'screen';
+                ctx.fillStyle = glow;
+                ctx.beginPath();
+                ctx.arc(0, 0, radius, 0, Math.PI * 2);
+                ctx.fill();
+                ctx.restore();
+            }
+            ctx.globalCompositeOperation = 'source-over';
+        }
+
+        function drawEllipticalGalaxy(ctx, x, y, radius, rotation, flatten, palette) {
+            ctx.save();
+            ctx.translate(x, y);
+            ctx.rotate(rotation);
+            ctx.scale(1, flatten);
+            ctx.globalCompositeOperation = 'screen';
+
+            var halo = ctx.createRadialGradient(0, 0, 0, 0, 0, radius);
+            halo.addColorStop(0, palette.core);
+            halo.addColorStop(0.16, palette.body);
+            halo.addColorStop(0.58, palette.halo);
+            halo.addColorStop(1, 'rgba(0,0,0,0)');
+            ctx.fillStyle = halo;
+            ctx.beginPath();
+            ctx.arc(0, 0, radius, 0, Math.PI * 2);
+            ctx.fill();
+
+            if (flatten < 0.24) {
+                ctx.globalCompositeOperation = 'source-over';
+                ctx.fillStyle = 'rgba(3,5,12,.46)';
+                ctx.fillRect(-radius * 0.72, -radius * 0.035, radius * 1.44, radius * 0.07);
+            }
+            ctx.restore();
+            ctx.globalCompositeOperation = 'source-over';
+        }
+
+        function drawDistantGalaxyClusters(ctx, width, height, random) {
+            var clusters = [
+                [0.16, 0.22, 0.11], [0.48, 0.28, 0.14], [0.79, 0.20, 0.1],
+                [0.27, 0.67, 0.13], [0.62, 0.62, 0.15], [0.88, 0.75, 0.09]
+            ];
+            var minDimension = Math.min(width, height);
+            var warmPalette = {
+                core: 'rgba(255,245,218,.92)',
+                body: 'rgba(255,201,139,.54)',
+                halo: 'rgba(216,135,79,.12)'
+            };
+            var coolPalette = {
+                core: 'rgba(240,244,255,.9)',
+                body: 'rgba(161,184,239,.5)',
+                halo: 'rgba(96,113,194,.12)'
+            };
+
+            clusters.forEach(function (cluster, clusterIndex) {
+                var members = 14 + Math.floor(random() * 12);
+                for (var i = 0; i < members; i++) {
+                    // Sum several samples to concentrate galaxies around a
+                    // cluster while preserving a few outlying members.
+                    var spreadX = ((random() + random() + random()) / 3 - 0.5) * 2;
+                    var spreadY = ((random() + random() + random()) / 3 - 0.5) * 2;
+                    var x = width * (cluster[0] + spreadX * cluster[2]);
+                    var y = height * (cluster[1] + spreadY * cluster[2] * 1.45);
+                    var radius = minDimension * (0.007 + Math.pow(random(), 2.2) * 0.025);
+                    var rotation = random() * Math.PI;
+                    var galaxyType = random();
+                    var isWarm = (clusterIndex + i) % 3 === 0;
+
+                    if (galaxyType < 0.38) {
+                        drawEllipticalGalaxy(ctx, x, y, radius, rotation,
+                            0.34 + random() * 0.54, isWarm ? warmPalette : coolPalette);
+                    } else if (galaxyType < 0.58) {
+                        drawEllipticalGalaxy(ctx, x, y, radius * 1.15, rotation,
+                            0.1 + random() * 0.1, isWarm ? warmPalette : coolPalette);
+                    } else {
+                        drawSoftGalaxy(ctx, x, y, radius, rotation,
+                            0.28 + random() * 0.48, {
+                                core: isWarm ? 'rgba(255,239,202,.88)' : 'rgba(228,236,255,.88)',
+                                inner: isWarm ? 'rgba(240,185,125,.46)' : 'rgba(172,194,244,.46)',
+                                arm: isWarm ? 'rgba(174,104,65,.15)' : 'rgba(92,125,201,.17)',
+                                dust: isWarm ? 'rgba(255,204,145,.55)' : 'rgba(184,207,255,.58)',
+                                spark: 'rgba(255,245,218,.72)'
+                            }, random);
+                    }
+                }
+            });
+        }
+
+        function renderLocalGroupCanvas() {
+            var prepared = prepareCosmicCanvas(localGroupCanvas);
+            if (!prepared) return;
+            var ctx = prepared.ctx;
+            var width = prepared.width;
+            var height = prepared.height;
+            var random = createSeededRandom(32452843);
+
+            // At Local Group scale individual stars are not resolvable.  The
+            // faint background marks are therefore kept small and elliptical,
+            // representing much more distant galaxies.
+            drawBackgroundGalaxies(ctx, width, height, 520, random, 0.35, 1.8, {
+                x: width * 0.5,
+                y: height * 0.5,
+                radius: Math.min(width, height) * 0.1
+            });
+            // The Milky Way itself is intentionally not redrawn here. The
+            // original high-detail galaxy layer remains visible and shrinks
+            // continuously, so its real luminous nucleus becomes the final
+            // point without a duplicate or positional hand-off.
+            drawSoftGalaxy(ctx, width * 0.24, height * 0.37, Math.min(width, height) * 0.032,
+                -0.12, 0.22, {
+                    core: 'rgba(255,244,206,.94)',
+                    inner: 'rgba(219,224,255,.62)',
+                    arm: 'rgba(104,145,220,.22)',
+                    dust: 'rgba(188,210,255,.7)',
+                    spark: 'rgba(255,236,191,.9)'
+                }, random);
+            // M33 belongs to the Andromeda side of the Local Group rather than
+            // floating alone on the opposite edge of the scene.
+            drawSoftGalaxy(ctx, width * 0.18, height * 0.59, Math.min(width, height) * 0.013,
+                0.42, 0.55, {
+                    core: 'rgba(255,238,197,.88)',
+                    inner: 'rgba(197,216,255,.48)',
+                    arm: 'rgba(93,145,225,.18)',
+                    dust: 'rgba(188,214,255,.62)',
+                    spark: 'rgba(255,226,174,.85)'
+                }, random);
+
+            [
+                // Milky Way satellite group
+                [0.46, 0.56, 0.0042], [0.55, 0.44, 0.0035], [0.53, 0.59, 0.0028],
+                [0.43, 0.43, 0.0024],
+                // Andromeda / Triangulum satellite group
+                [0.29, 0.31, 0.0040], [0.20, 0.43, 0.0031], [0.27, 0.52, 0.0026],
+                [0.14, 0.51, 0.0022],
+                // Isolated Local Group dwarfs
+                [0.68, 0.68, 0.0024], [0.73, 0.29, 0.0020], [0.36, 0.76, 0.0018]
+            ].forEach(function (dwarf) {
+                drawSoftGalaxy(ctx, width * dwarf[0], height * dwarf[1],
+                    Math.min(width, height) * dwarf[2], random() * Math.PI, 0.55, {
+                        core: 'rgba(224,232,255,.72)',
+                        inner: 'rgba(145,174,224,.28)',
+                        arm: 'rgba(77,109,173,.12)',
+                        dust: 'rgba(186,207,244,.45)',
+                        spark: 'rgba(255,239,201,.6)'
+                    }, random);
+            });
+        }
+
+        function renderDeepSpaceCanvas() {
+            var prepared = prepareCosmicCanvas(deepSpaceCanvas);
+            if (!prepared) return;
+            var ctx = prepared.ctx;
+            var width = prepared.width;
+            var height = prepared.height;
+            var random = createSeededRandom(49979687);
+            drawBackgroundGalaxies(ctx, width, height, 1250, random, 0.45, 5.2);
+            drawDistantGalaxyClusters(ctx, width, height, random);
+
+            // A few visually prominent field galaxies keep the intermediate
+            // scale readable before the smallest background population fills in.
+            for (var i = 0; i < 34; i++) {
+                var radius = Math.min(width, height) * (0.009 + random() * 0.025);
+                drawSoftGalaxy(ctx, random() * width, random() * height, radius,
+                    random() * Math.PI, 0.2 + random() * 0.48, {
+                        core: random() > 0.45 ? 'rgba(255,237,207,.82)' : 'rgba(220,230,255,.82)',
+                        inner: 'rgba(173,190,235,.38)',
+                        arm: 'rgba(101,132,195,.16)',
+                        dust: 'rgba(190,207,244,.52)',
+                        spark: 'rgba(255,218,176,.72)'
+                    }, random);
+            }
+        }
+
+        function renderCosmicScaleCanvases() {
+            renderLocalGroupCanvas();
+            renderDeepSpaceCanvas();
         }
 
         function updateSolarSystemGalaxyBlend(galaxyVisibility) {
@@ -527,9 +828,14 @@
             var assimilation = smoothStep01((galaxyVisibility - 0.08) / 0.92);
             var remainingPresence = 1 - assimilation;
             var systemScale = Math.max(0.0001, Math.pow(remainingPresence, 2.4));
-            var hideSolarSystem = assimilation >= 0.94;
-            var orbitFade = 1 - smoothStep01((galaxyVisibility - 0.02) / 0.58);
+            var systemOpacity = 1 - smoothStep01((galaxyVisibility - 0.04) / 0.38);
+            var hideSolarSystem = assimilation >= 0.86;
+            var orbitFade = 1 - smoothStep01((galaxyVisibility - 0.01) / 0.28);
             var scaledRoots = [];
+
+            if (canvas) {
+                canvas.style.opacity = Math.max(0, systemOpacity).toFixed(3);
+            }
 
             Object.keys(celestialBodies).forEach(function (key) {
                 var body = celestialBodies[key];
@@ -574,23 +880,190 @@
         }
 
         function updateGalaxyBackdrop() {
-            if (!camera || !galaxyBackdrop) return;
+            if (!camera || (!galaxyBackdrop && !galaxyBackdropDom)) return;
 
             var viewTarget = controls ? controls.target : new THREE.Vector3(0, 0, 0);
             var cameraDistance = camera.position.distanceTo(viewTarget);
+            if (controls) {
+                var shouldLockGalaxyView = galaxyInteractionLocked
+                    ? cameraDistance >= GALAXY_VIEW.fadeStart * 0.82
+                    : cameraDistance >= GALAXY_VIEW.fadeStart * 0.95;
+
+                if (shouldLockGalaxyView && !galaxyInteractionLocked) {
+                    // Preserve the current viewing direction and distance while
+                    // recentering the Solar System before the galaxy becomes visible.
+                    var lockedCameraOffset = camera.position.clone().sub(controls.target);
+                    controls.target.set(0, 0, 0);
+                    camera.position.copy(lockedCameraOffset);
+                    camera.lookAt(controls.target);
+                    controls.update();
+                    viewTarget = controls.target;
+                    cameraDistance = camera.position.distanceTo(viewTarget);
+                }
+
+                galaxyInteractionLocked = shouldLockGalaxyView;
+                controls.enableRotate = !galaxyInteractionLocked;
+                controls.enablePan = false;
+                controls.enableZoom = true;
+            }
             var range = GALAXY_VIEW.fadeEnd - GALAXY_VIEW.fadeStart;
             var fade = smoothStep01((cameraDistance - GALAXY_VIEW.fadeStart) / range);
             var canShow = state.simMode === '3d' && !ufoState.active;
             var visibility = canShow ? fade : 0;
+            var localGroupPresence = canShow ? smoothStep01(
+                (cameraDistance - GALAXY_VIEW.localGroupStart) /
+                (GALAXY_VIEW.localGroupEnd - GALAXY_VIEW.localGroupStart)
+            ) : 0;
+            var deepSpacePresence = canShow ? smoothStep01(
+                (cameraDistance - GALAXY_VIEW.deepSpaceStart) /
+                (GALAXY_VIEW.deepSpaceEnd - GALAXY_VIEW.deepSpaceStart)
+            ) : 0;
+            // Hand the real image nucleus to a sub-pixel point only after the
+            // detailed galaxy is already very small. The overlap prevents a
+            // blink, while the point itself later fades into the deep field.
+            var milkyWayDetailDissolve = smoothStep01(
+                (cameraDistance - 235000) / 320000
+            );
+            var milkyWayCoreReveal = smoothStep01(
+                (cameraDistance - 300000) / 200000
+            );
+            var milkyWayCoreFinalFade = 1 - smoothStep01(
+                (cameraDistance - 900000) /
+                (GALAXY_VIEW.max3DDistance - 900000)
+            );
+            var milkyWayCoreOpacity = canShow
+                ? milkyWayCoreReveal * milkyWayCoreFinalFade
+                : 0;
 
-            galaxyBackdrop.visible = visibility > 0.002;
-            galaxyBackdrop.material.opacity = visibility * 0.72;
+            if (galaxyBackdrop) {
+                galaxyBackdrop.visible = visibility > 0.002;
+                galaxyBackdrop.material.opacity =
+                    visibility * (1 - milkyWayDetailDissolve) * 0.72;
+            }
+            if (galaxyBackdropDom) {
+                var galaxyPresence = smoothStep01((visibility - 0.025) / 0.86);
+                var viewportWidth = canvasContainer ? Math.max(1, canvasContainer.clientWidth) : 1;
+                var viewportHeight = canvasContainer ? Math.max(1, canvasContainer.clientHeight) : 1;
+                var viewportAspect = viewportWidth / viewportHeight;
+                // The source PNG contains a wide transparent-looking black margin:
+                // its luminous galactic disk radius is about 36.7% of the full
+                // square image width.  Place the Sun at 53% of that *visible disk*
+                // radius (about 26,500 ly in a 50,000 ly disk), on the same
+                // Orion-side bright arm direction used by the artwork.
+                var visibleDiskRadiusRatio = 0.367;
+                var solarGalactocentricRadiusRatio = 0.53;
+                var orionArmAngle = -0.369; // about -21.1 degrees in image space
+                var armOffsetRatio =
+                    visibleDiskRadiusRatio * solarGalactocentricRadiusRatio * Math.cos(orionArmAngle);
+                var armVerticalOffsetRatio =
+                    visibleDiskRadiusRatio * solarGalactocentricRadiusRatio * Math.sin(orionArmAngle);
+                var galaxyCenterPercent = 50 - (armOffsetRatio * 43 / viewportAspect);
+                var galaxyCenterYPercent = 50 - (armVerticalOffsetRatio * 43);
+                galaxyBackdropDom.style.setProperty(
+                    '--galaxy-center-x',
+                    galaxyCenterPercent.toFixed(2) + '%'
+                );
+                galaxyBackdropDom.style.setProperty(
+                    '--galaxy-center-y',
+                    galaxyCenterYPercent.toFixed(2) + '%'
+                );
+                var galaxyOverviewZoom = smoothStep01(
+                    (cameraDistance - GALAXY_VIEW.fadeStart) /
+                    (GALAXY_VIEW.milkyWayFullView - GALAXY_VIEW.fadeStart)
+                );
+                var localGroupShrink = smoothStep01(
+                    (cameraDistance - GALAXY_VIEW.milkyWayFullView) /
+                    (GALAXY_VIEW.deepSpaceStart - GALAXY_VIEW.milkyWayFullView)
+                );
+                var deepSpaceShrink = smoothStep01(
+                    (cameraDistance - GALAXY_VIEW.deepSpaceStart) /
+                    (GALAXY_VIEW.max3DDistance - GALAXY_VIEW.deepSpaceStart)
+                );
+                var galaxyScale = (2.4 - galaxyOverviewZoom * 1.55) -
+                    localGroupShrink * 0.73 - deepSpaceShrink * 0.07;
+                var azimuth = controls && typeof controls.getAzimuthalAngle === 'function'
+                    ? controls.getAzimuthalAngle()
+                    : Math.atan2(camera.position.x, camera.position.z);
+                var polar = controls && typeof controls.getPolarAngle === 'function'
+                    ? controls.getPolarAngle()
+                    : Math.acos(camera.position.y / Math.max(1, camera.position.length()));
+                var azimuthDeg = azimuth * (180 / Math.PI);
+                var tiltDeg = Math.max(-14, Math.min(14, (polar - 0.9273) * 24));
+                var spinDeg = -4 - azimuthDeg * 0.35;
+                var parallaxX = Math.sin(azimuth) * 1.2;
+                var parallaxY = Math.max(-1.5, Math.min(1.5, (polar - 0.9273) * 2.6));
+                galaxyScale += Math.abs(tiltDeg) * 0.0015;
+                galaxyBackdropDom.style.opacity = (galaxyPresence * 0.98).toFixed(3);
+                galaxyBackdropDom.style.setProperty(
+                    '--galaxy-detail-opacity',
+                    (1 - milkyWayDetailDissolve).toFixed(3)
+                );
+                galaxyBackdropDom.style.setProperty(
+                    '--core-point-opacity',
+                    milkyWayCoreOpacity.toFixed(3)
+                );
+                galaxyBackdropDom.style.setProperty(
+                    '--core-point-counter-scale',
+                    (1 / Math.max(0.05, galaxyScale)).toFixed(3)
+                );
+                galaxyBackdropDom.style.transform =
+                    'translate3d(' + parallaxX.toFixed(2) + '%,' + parallaxY.toFixed(2) + '%,0)' +
+                    ' rotateX(' + tiltDeg.toFixed(2) + 'deg)' +
+                    ' rotateZ(' + spinDeg.toFixed(2) + 'deg)' +
+                    ' scale(' + galaxyScale.toFixed(3) + ')';
+            }
+            var logarithmicCosmicZoom = smoothStep01(
+                Math.log(Math.max(cameraDistance, GALAXY_VIEW.localGroupStart) /
+                    GALAXY_VIEW.localGroupStart) /
+                Math.log(GALAXY_VIEW.max3DDistance / GALAXY_VIEW.localGroupStart)
+            );
+            if (localGroupLayer) {
+                // Keep the exact same Local Group galaxies alive through the
+                // whole journey. They continuously contract toward the zoom
+                // focus instead of being replaced by another picture.
+                localGroupLayer.style.opacity = localGroupPresence.toFixed(3);
+                localGroupLayer.style.transform =
+                    'scale(' + (1.04 - logarithmicCosmicZoom * 0.91).toFixed(3) + ')';
+            }
+            if (deepSpaceLayer) {
+                // Distant galaxies begin as a barely visible background while
+                // the Local Group is still identifiable. Scaling this same
+                // field down reveals progressively more galaxies from the
+                // edges, avoiding a cut between two unrelated random fields.
+                var distantFieldPresence = smoothStep01(
+                    (logarithmicCosmicZoom - 0.10) / 0.90
+                );
+                deepSpaceLayer.style.opacity = distantFieldPresence.toFixed(3);
+                deepSpaceLayer.style.transform =
+                    'scale(' + (1.82 - logarithmicCosmicZoom * 0.82).toFixed(3) + ')';
+            }
             updateSolarSystemGalaxyBlend(visibility);
 
             if (galaxyScaleIndicator) {
                 var indicatorVisibility = smoothStep01((visibility - 0.08) / 0.52);
                 galaxyScaleIndicator.style.setProperty('--galaxy-visibility', indicatorVisibility.toFixed(3));
                 galaxyScaleIndicator.setAttribute('aria-hidden', indicatorVisibility > 0.02 ? 'false' : 'true');
+                var stage = deepSpacePresence > 0.28 ? 'deep-space' :
+                    (localGroupPresence > 0.2 ? 'local-group' : 'milky-way');
+                if (galaxyScaleIndicator.dataset.stage !== stage) {
+                    galaxyScaleIndicator.dataset.stage = stage;
+                    var title = galaxyScaleIndicator.querySelector('strong');
+                    var subtitle = galaxyScaleIndicator.querySelector('.galaxy-scale-indicator__copy > span');
+                    var note = galaxyScaleIndicator.querySelector('small');
+                    if (stage === 'deep-space') {
+                        if (title) title.textContent = '심우주 은하 분포';
+                        if (subtitle) subtitle.textContent = '광점 하나하나가 거대한 은하';
+                        if (note) note.textContent = '관측 가능한 우주를 개념적으로 축약한 화면';
+                    } else if (stage === 'local-group') {
+                        if (title) title.textContent = '국부은하군';
+                        if (subtitle) subtitle.textContent = '은하수 · 안드로메다 · 삼각형자리은하';
+                        if (note) note.textContent = '약 1천만 광년 규모의 개념 축척';
+                    } else {
+                        if (title) title.textContent = '은하수 은하';
+                        if (subtitle) subtitle.textContent = '태양계 · 오리온자리 팔';
+                        if (note) note.textContent = '위치와 크기는 관찰을 위한 개념 축척';
+                    }
+                }
             }
         }
 
@@ -598,8 +1071,43 @@
             if (!canvas) return;
             var ctx = canvas.getContext('2d');
             if (!ctx) return;
-            var angle = 0;
-            // Omitted complex 2D fallback for brevity, assuming WebGL works.
+            var width = canvasContainer ? (canvasContainer.clientWidth || 900) : 900;
+            var height = canvasContainer ? (canvasContainer.clientHeight || 540) : 540;
+            canvas.width = width;
+            canvas.height = height;
+
+            ctx.fillStyle = '#030712';
+            ctx.fillRect(0, 0, width, height);
+            ctx.save();
+            ctx.translate(width / 2, height / 2);
+
+            var orbitRadii = [55, 78, 104, 132, 172, 215, 255, 294];
+            ctx.strokeStyle = 'rgba(148,163,184,.3)';
+            ctx.lineWidth = 1;
+            orbitRadii.forEach(function (radius) {
+                ctx.beginPath();
+                ctx.ellipse(0, 0, radius, radius * 0.38, 0, 0, Math.PI * 2);
+                ctx.stroke();
+            });
+
+            var sunGlow = ctx.createRadialGradient(0, 0, 2, 0, 0, 34);
+            sunGlow.addColorStop(0, '#fff7b2');
+            sunGlow.addColorStop(0.38, '#fbbf24');
+            sunGlow.addColorStop(1, 'rgba(245,158,11,0)');
+            ctx.fillStyle = sunGlow;
+            ctx.beginPath();
+            ctx.arc(0, 0, 34, 0, Math.PI * 2);
+            ctx.fill();
+
+            var colors = ['#a8a29e', '#f0b46b', '#60a5fa', '#ef4444', '#d6a66e', '#e8c47c', '#67e8f9', '#3b82f6'];
+            orbitRadii.forEach(function (radius, index) {
+                var angle = index * 0.84 + 0.35;
+                ctx.fillStyle = colors[index];
+                ctx.beginPath();
+                ctx.arc(Math.cos(angle) * radius, Math.sin(angle) * radius * 0.38, index < 4 ? 3.5 : 6, 0, Math.PI * 2);
+                ctx.fill();
+            });
+            ctx.restore();
         }
 
         function loadPlanet3DTexture(key) {
@@ -1015,6 +1523,7 @@
                 // 2. ☄️ 3D Radiant Glowing Comet (Tiny Nucleus + Natural Curved Particle Tail + Relaxed Shimmer)
                 var cometData = window.SOLAR_SYSTEM_DATA.comet;
                 if (cometData) {
+                    try {
                     var cometGroup = new THREE.Object3D();
                     
                     // 1) Micro Irregular Nucleus (Tiny 0.38 radius for perfect proportion)
@@ -1124,6 +1633,11 @@
                         scene.add(cLine);
                         orbitLines.push(cLine);
                     }
+                    } catch (cometError) {
+                        // A decorative body must never prevent the complete
+                        // Solar System and galaxy backdrop from rendering.
+                        console.error('Comet construction error:', cometError);
+                    }
                 }
 
                 // 3. 🌠 3D Interactive Meteor Shower (Intermittent Flash & Burn-Up Shooting Star Engine)
@@ -1170,32 +1684,6 @@
                 }
             }
         }
-
-        // 4. TRUE ORBIT RATES (Earth = 1.0)
-        var ORBIT_RATES = {
-            mercury: 4.15,
-            venus: 1.62,
-            earth: 1.00,
-            mars: 0.53,
-            jupiter: 0.084,
-            saturn: 0.034,
-            uranus: 0.012,
-            neptune: 0.006,
-            pluto: 0.004
-        };
-
-        // 5. TRUE SELF-ROTATION RATES (Earth = 365.25)
-        var SELF_ROTATION_RATES = {
-            mercury: 6.23,
-            venus: 1.50,
-            earth: 365.25,
-            mars: 354.6,
-            jupiter: 890.8,
-            saturn: 811.6,
-            uranus: 507.3,
-            neptune: 545.1,
-            pluto: 57.1
-        };
 
         function animate3D() {
             requestAnimationFrame(animate3D);
@@ -1536,6 +2024,7 @@
                     update2DLabels();
                 } catch (e) {
                     console.error('Render error:', e);
+                    reportSimulationError(e);
                 }
             }
         }
@@ -1593,6 +2082,7 @@
             camera.aspect = w / h;
             camera.updateProjectionMatrix();
             renderer.setSize(w, h);
+            renderCosmicScaleCanvases();
         }
 
         function onCanvasClick(event) {
@@ -2101,7 +2591,7 @@
                     state.simMode = e.target.checked ? '2d' : '3d';
                     
                     if (state.simMode === '2d') {
-                        // Disable UFO Flight Mode in 2D Reality Mode
+                        // Disable UFO Flight Mode in the true-distance reality view.
                         if (ufoState.active) {
                             setUfoFlightActive(false);
                         }
@@ -2109,11 +2599,11 @@
                             ufoModeBtn.disabled = true;
                             ufoModeBtn.style.opacity = '0.4';
                             ufoModeBtn.style.cursor = 'not-allowed';
-                            ufoModeBtn.title = '2D 리얼리티 모드에서는 UFO Flight를 이용할 수 없습니다.';
+                            ufoModeBtn.title = '리얼리티 모드에서는 UFO Flight를 이용할 수 없습니다.';
                         }
 
                         if (auInfoCard) auInfoCard.style.display = 'block';
-                        simModeLabel.textContent = '🗺️ 2D 리얼리티 (1:1 Map)';
+                        simModeLabel.textContent = '🌐 리얼리티 (실제 거리 비율)';
                         simModeLabel.style.color = '#10b981'; // emerald
                         simModeLabel.style.background = 'rgba(16,185,129,0.15)';
                         if(simWarningAlert) {
@@ -2138,7 +2628,7 @@
                         }
 
                         if (auInfoCard) auInfoCard.style.display = 'none';
-                        simModeLabel.textContent = '🔭 3D 관찰용 (Log Scale)';
+                        simModeLabel.textContent = '🔭 관찰용 (Log Scale)';
                         simModeLabel.style.color = '#38bdf8'; // sky
                         simModeLabel.style.background = 'rgba(56,189,248,0.15)';
                         if(simWarningAlert) {
