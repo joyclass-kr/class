@@ -5,7 +5,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <meta name="theme-color" content="#08131c">
     <title>화학 실험실 | 초등·중등 과학</title>
-    <meta name="description" content="초등 관찰에서 중등 계산까지 이어지는 조작형 화학 실험실">
+    <meta name="description" content="용해도와 물질 변화를 학습하는 초등·중등 화학 실험실">
     <link rel="stylesheet" href="styles.css">
 </head>
 <body>
@@ -21,14 +21,15 @@
     <main>
         <section class="hero" aria-labelledby="page-title">
             <div class="hero-copy">
-                <p class="eyebrow">직접 바꾸고, 관찰하고, 설명하기</p>
-                <h1 id="page-title">초등 관찰에서<br><em>중등 계산까지</em></h1>
-                <p>결과를 먼저 예상한 뒤 조건을 바꿔 실험하세요. 같은 현상을 학년에 맞는 언어와 깊이로 배울 수 있습니다.</p>
+                <h1 id="page-title">화학 실험실</h1>
             </div>
-            <div class="level-switch" role="group" aria-label="학습 수준 선택">
-                <button type="button" data-level="elementary" aria-pressed="false">초등 3~6</button>
-                <button type="button" data-level="middle" aria-pressed="false">중학교</button>
-                <button type="button" data-level="all" aria-pressed="true">함께 보기</button>
+            <div class="level-control">
+                <span>학습 수준</span>
+                <div class="level-switch" role="group" aria-label="학습 수준 선택">
+                    <button type="button" data-level="elementary" aria-pressed="false">초등 3~6</button>
+                    <button type="button" data-level="middle" aria-pressed="false">중학교</button>
+                    <button type="button" data-level="all" aria-pressed="true">함께 보기</button>
+                </div>
             </div>
         </section>
 
@@ -50,20 +51,21 @@
                         <option value="salt">소금</option>
                         <option value="sugar">설탕</option>
                     </select>
+                    <p class="condition-note">기준: 물 100mL</p>
 
                     <div class="range-heading">
                         <label for="temperatureRange">물의 온도</label>
                         <output id="temperatureOutput" for="temperatureRange">20℃</output>
                     </div>
-                    <input id="temperatureRange" type="range" min="10" max="80" step="5" value="20">
-                    <div class="range-scale" aria-hidden="true"><span>10℃</span><span>80℃</span></div>
+                    <input id="temperatureRange" type="range" min="0" max="100" step="5" value="20">
+                    <div class="range-scale" aria-hidden="true"><span>0℃</span><span>100℃</span></div>
 
                     <div class="range-heading">
                         <label for="amountRange">넣는 양</label>
-                        <output id="amountOutput" for="amountRange">40g</output>
+                        <output id="amountOutput" for="amountRange">36g</output>
                     </div>
-                    <input id="amountRange" type="range" min="5" max="250" step="5" value="40">
-                    <div class="range-scale" aria-hidden="true"><span>5g</span><span>250g</span></div>
+                    <input id="amountRange" type="range" min="32" max="42" step="0.5" value="36">
+                    <div class="range-scale" aria-hidden="true"><span id="amountMinLabel">32g</span><span id="amountMaxLabel">42g</span></div>
 
                     <fieldset class="prediction-field">
                         <legend>먼저 예상해 보세요</legend>
@@ -114,8 +116,7 @@
 
         <section class="roadmap" aria-labelledby="roadmap-title">
             <div class="section-heading">
-                <p class="eyebrow">초등과 중등을 잇는 실험 지도</p>
-                <h2 id="roadmap-title">다음에 만들 핵심 실험</h2>
+                <h2 id="roadmap-title">실험 목록</h2>
             </div>
             <div class="roadmap-grid">
                 <article class="roadmap-card current"><span>01</span><h3>용해와 용해도</h3><p>녹는 현상 → 포화 용액과 용해도 계산</p><b>실험 가능</b></article>
