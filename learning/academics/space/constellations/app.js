@@ -23,6 +23,62 @@
     window.addEventListener('orientationchange', updateHeaderHeight);
 })();
 
+(function initSubtleDiurnalNightSky() {
+    function seededRandom(seed) {
+        let value = seed >>> 0;
+        return function random() {
+            value = (value * 1664525 + 1013904223) >>> 0;
+            return value / 4294967296;
+        };
+    }
+
+    function render() {
+        const canvas = document.getElementById('diurnalAmbientStars');
+        if (!canvas || !canvas.parentElement) return;
+        const width = Math.max(1, canvas.parentElement.clientWidth);
+        const height = Math.max(1, canvas.parentElement.clientHeight);
+        const pixelRatio = Math.min(window.devicePixelRatio || 1, 1.5);
+        canvas.width = Math.round(width * pixelRatio);
+        canvas.height = Math.round(height * pixelRatio);
+        const ctx = canvas.getContext('2d');
+        if (!ctx) return;
+        ctx.setTransform(pixelRatio, 0, 0, pixelRatio, 0, 0);
+        ctx.clearRect(0, 0, width, height);
+
+        const random = seededRandom(20260731);
+        const count = Math.max(58, Math.min(128, Math.round(width * height / 14500)));
+        for (let i = 0; i < count; i++) {
+            const x = random() * width;
+            const y = random() * height;
+            const radius = 0.28 + Math.pow(random(), 2.6) * 0.62;
+            const alpha = 0.035 + Math.pow(random(), 2.2) * 0.12;
+            const warm = random() > 0.91;
+            ctx.fillStyle = warm
+                ? `rgba(255,231,196,${alpha.toFixed(3)})`
+                : `rgba(213,228,255,${alpha.toFixed(3)})`;
+            ctx.beginPath();
+            ctx.arc(x, y, radius, 0, Math.PI * 2);
+            ctx.fill();
+        }
+    }
+
+    function start() {
+        const canvas = document.getElementById('diurnalAmbientStars');
+        if (!canvas) return;
+        render();
+        if (typeof ResizeObserver !== 'undefined' && canvas.parentElement) {
+            new ResizeObserver(render).observe(canvas.parentElement);
+        }
+    }
+
+    if (document.readyState === 'loading') {
+        document.addEventListener('DOMContentLoaded', start, { once: true });
+    } else {
+        start();
+    }
+    window.addEventListener('resize', render, { passive: true });
+})();
+
 // Sub-Tab Navigation handled by global window.switchMainTab(targetTab)
 
                         // Mode 1: Zodiac (황도 12궁 & 지구 공전) Engine

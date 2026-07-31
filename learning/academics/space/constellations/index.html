@@ -9,7 +9,7 @@
     <!-- Three.js & OrbitControls for 3D Celestial Sphere -->
     <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/three@0.128.0/examples/js/controls/OrbitControls.js"></script>
-    <link rel="stylesheet" href="styles.css">
+    <link rel="stylesheet" href="styles.css?v=subtle_night_sky_20260731">
     <script src="navigation.js"></script>
     <script src="../../../../assets/sound/music-control.js" defer></script>
 </head>
@@ -361,8 +361,9 @@
                 <div class="sim-mode-container" id="mode-diurnal" style="aspect-ratio: 16 / 9; max-height: calc(100vh - 110px); min-height: 520px; padding-bottom: 75px; box-sizing: border-box; position: relative; display: none; overflow: hidden;">
                     
                     <!-- SVG Star Map Canvas Container -->
-                    <div style="width:100%; height:100%; display:flex; align-items:center; justify-content:center; background: radial-gradient(circle at 50% 50%, #0f172a 0%, #030712 100%);">
-                        <svg id="starMapSvg" width="480" height="525" viewBox="0 0 500 560" style="overflow:visible;">
+                    <div class="diurnal-night-sky" style="width:100%; height:100%; display:flex; align-items:center; justify-content:center; background: radial-gradient(circle at 50% 50%, #0f172a 0%, #030712 100%);">
+                        <canvas id="diurnalAmbientStars" class="diurnal-ambient-stars" aria-hidden="true"></canvas>
+                        <svg id="starMapSvg" width="480" height="525" viewBox="0 0 500 560" style="overflow:visible; position:relative; z-index:1;">
                             <!-- Outer Horizon Circles & Axis Lines -->
                             <circle cx="250" cy="250" r="230" stroke="rgba(56,189,248,0.35)" stroke-width="2" fill="none" />
                             <circle cx="250" cy="250" r="160" stroke="rgba(255,255,255,0.12)" stroke-dasharray="4" fill="none" />
@@ -763,7 +764,7 @@
         </section>
     </main>
 
-    <script src="app.js"></script>
+    <script src="app.js?v=subtle_night_sky_20260731"></script>
 
 </body>
 </html>
