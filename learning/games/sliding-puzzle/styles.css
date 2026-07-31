@@ -31,7 +31,7 @@ button { -webkit-tap-highlight-color: transparent; }
 .screen[hidden] { display: none; }
 .back-link { color: var(--muted); text-decoration: none; font-weight: 800; }
 .back-link:hover { color: var(--gold-bright); }
-.sound-button, .text-button { min-height: 44px; border: 1px solid var(--line); background: rgba(0,0,0,.2); color: var(--muted); padding: 9px 15px; cursor: pointer; }
+.text-button { min-height: 44px; border: 1px solid var(--line); background: rgba(0,0,0,.2); color: var(--muted); padding: 9px 15px; cursor: pointer; }
 
 .start-screen {
   width: min(100%, 720px);
@@ -104,6 +104,10 @@ h1 { margin: 0; font-family: Georgia, "Times New Roman", serif; font-size: clamp
 .rules summary { color: var(--ink); font-weight: 800; cursor: pointer; text-align: center; }
 .rules ol { padding-left: 1.3rem; }
 .rules p { margin-bottom: 0; }
+.solve-guide h3 { margin: 24px 0 8px; color: var(--gold-bright); font-size: .98rem; letter-spacing: .04em; }
+.solve-guide li { margin: 7px 0; }
+.solve-guide strong { color: var(--ink); }
+.solve-tip { padding: 12px 14px; border-left: 3px solid var(--gold); background: rgba(0,0,0,.22); }
 
 .celebration { position: fixed; inset: 0; z-index: 10; display: grid; place-items: center; padding: 20px; background: rgba(8,5,3,.78); backdrop-filter: blur(7px); }
 .celebration[hidden] { display: none; }
@@ -125,7 +129,7 @@ button:focus-visible, a:focus-visible, summary:focus-visible { outline: 3px soli
   .board-wrap { border-radius: 16px; }
   .actions button { flex: 1; padding-inline: 10px; }
   .start-actions { width: 100%; }
-  .start-actions button { flex: 1; }
+  .start-actions button { width: min(100%, 230px); }
 }
 
 @media (max-height: 560px) and (orientation: landscape) {

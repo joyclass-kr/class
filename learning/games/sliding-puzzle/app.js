@@ -10,7 +10,6 @@
   const statusElement = document.getElementById('status');
   const celebration = document.getElementById('celebration');
   const resultSummary = document.getElementById('resultSummary');
-  const soundButton = document.getElementById('soundButton');
   const startScreen = document.getElementById('startScreen');
   const gameScreen = document.getElementById('gameScreen');
   const modeLabel = document.getElementById('modeLabel');
@@ -24,8 +23,6 @@
   let elapsed = 0;
   let timerId = null;
   let started = false;
-  let soundEnabled = true;
-  let audioContext = null;
   let playerName = '';
 
   const KOREAN_NAME_PATTERN = /^[가-힣]{2,6}$/;
@@ -85,6 +82,7 @@
       button.textContent = value;
       button.setAttribute('role', 'gridcell');
       button.setAttribute('aria-label', `${value}번 타일`);
+      button.dataset.sfx = 'none';
       button.addEventListener('click', () => moveTile(index));
       boardElement.append(button);
     });
@@ -104,18 +102,7 @@
     timerId = null;
   }
 
-  function tone(frequency, duration = .06) {
-    if (!soundEnabled) return;
-    audioContext ||= new (window.AudioContext || window.webkitAudioContext)();
-    const oscillator = audioContext.createOscillator();
-    const gain = audioContext.createGain();
-    oscillator.frequency.value = frequency;
-    gain.gain.setValueAtTime(.035, audioContext.currentTime);
-    gain.gain.exponentialRampToValueAtTime(.001, audioContext.currentTime + duration);
-    oscillator.connect(gain).connect(audioContext.destination);
-    oscillator.start();
-    oscillator.stop(audioContext.currentTime + duration);
-  }
+  const playSfx = name => window.ClassGameSfx?.play(name);
 
   function isSolved() {
     return tiles.every((value, index) => value === solvedTiles()[index]);
@@ -139,14 +126,14 @@
     window.setTimeout(() => {
       celebration.hidden = false;
       document.getElementById('playAgainButton').focus();
-      tone(659, .18);
+      playSfx('success');
     }, 220);
   }
 
   function moveTile(index) {
     const blank = tiles.indexOf(0);
     if (!neighboringIndexes(blank).includes(index)) {
-      tone(150, .04);
+      playSfx('error');
       return;
     }
     startTimer();
@@ -154,7 +141,7 @@
     moves += 1;
     moveElement.textContent = moves;
     statusElement.textContent = '빈칸 옆의 타일을 눌러 이동하세요.';
-    tone(300 + tiles[blank] * 10);
+    playSfx('stone');
     render();
     if (isSolved()) completeGame();
   }
@@ -225,11 +212,6 @@
   document.getElementById('playAgainButton').addEventListener('click', newGame);
   document.getElementById('startButton').addEventListener('click', startGame);
   document.getElementById('settingsButton').addEventListener('click', showSettings);
-  soundButton.addEventListener('click', () => {
-    soundEnabled = !soundEnabled;
-    soundButton.textContent = soundEnabled ? 'SOUND ON' : 'SOUND OFF';
-    soundButton.setAttribute('aria-pressed', String(soundEnabled));
-  });
   document.addEventListener('keydown', event => {
     if (celebration.hidden === false) return;
     const blank = tiles.indexOf(0);

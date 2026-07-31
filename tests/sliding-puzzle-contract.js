@@ -17,12 +17,18 @@ assert.match(html, /id="startScreen"/);
 assert.match(html, /id="gameScreen"[^>]+hidden/);
 assert.match(html, /TODAY’S FINISHERS/);
 assert.match(html, /finisher-board\.js/);
+assert.match(html, /id="bgm"[^>]+assets\/sound\/bgm\.mp3/);
+assert.match(html, /music-control\.js/);
+assert.match(html, /8 PUZZLE 해결 순서/);
+assert.match(html, /15 PUZZLE 해결 순서/);
+assert.match(html, /마지막 2×2/);
 assert.match(app, /function shuffledSolvableTiles\(\)/);
 assert.match(app, /neighboringIndexes\(blank\)/);
 assert.match(app, /document\.addEventListener\('keydown'/);
 assert.match(app, /localStorage\.setItem\(bestKey\(\)/);
 assert.match(app, /gameId:\s*'slidingpuzzle'/);
 assert.match(app, /finisherBoard\.register/);
+assert.match(app, /ClassGameSfx\?\.play/);
 assert.match(server, /FINISHER_GAMES[^\n]+slidingpuzzle/);
 
 console.log('sliding puzzle contract: ok');
