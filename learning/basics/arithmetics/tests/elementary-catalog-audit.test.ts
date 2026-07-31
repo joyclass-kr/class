@@ -4,7 +4,7 @@ import test from "node:test";
 import { arithmeticWorksheetCatalog } from "../lib/arithmetic-worksheets.ts";
 import { readFileSync } from "node:fs";
 
-test("초1 학습지는 실제 유형명과 암산 표시를 구분한다", () => {
+test("초1 학습지는 실제 유형명을 쓰고 암산 표시를 붙이지 않는다", () => {
   const gradeOne = arithmeticWorksheetCatalog.filter(({ grade }) => grade === "초1");
   assert.deepEqual(gradeOne.map(({ title }) => title), [
     "1부터 9까지 수 세기",
@@ -17,9 +17,16 @@ test("초1 학습지는 실제 유형명과 암산 표시를 구분한다", () =
     "두 자리 수 읽기",
     "뛰어 세기",
   ]);
+  assert.equal(gradeOne.some(({ badge }) => badge === "암산"), false);
+});
+
+test("암산 표시는 3학년 이상 가로셈 학습지에만 붙인다", () => {
+  const elementary = arithmeticWorksheetCatalog.filter(({ grade }) => /^초[1-6]$/.test(grade));
+  assert.equal(elementary.filter(({ grade }) => grade === "초2").some(({ badge }) => badge === "암산"), false);
+  assert.equal(elementary.filter(({ badge }) => badge === "암산").every(({ grade }) => Number(grade.slice(1)) >= 3), true);
   assert.deepEqual(
-    gradeOne.filter(({ badge }) => badge === "암산").map(({ name }) => name),
-    ["1덧셈뺄셈①", "1덧셈뺄셈②", "1보수", "1덧셈뺄셈③", "1덧셈뺄셈④", "1뛰어세기"],
+    elementary.filter(({ grade, badge }) => grade === "초3" && badge === "암산").map(({ name }) => name),
+    ["3덧셈뺄셈빈칸", "3보수뺄셈100", "3보수뺄셈1000", "3덧셈뺄셈②", "3곱셈②", "3곱셈③", "19단", "제곱수", "3나눗셈②", "3나눗셈③"],
   );
 });
 

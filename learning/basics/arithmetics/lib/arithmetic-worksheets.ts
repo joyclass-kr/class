@@ -155,8 +155,12 @@ const elementaryTitles: Record<string, string> = {
   "6원기둥": "원기둥의 계산",
 };
 
-const elementaryMentalMathWorksheets = new Set([
-  "1덧셈뺄셈①", "1덧셈뺄셈②", "1보수", "1덧셈뺄셈③", "1덧셈뺄셈④", "1뛰어세기",
+const elementaryHorizontalMentalMathWorksheets = new Set([
+  "3덧셈뺄셈빈칸", "3보수뺄셈100", "3보수뺄셈1000", "3덧셈뺄셈②",
+  "3곱셈②", "3곱셈③", "19단", "제곱수", "3나눗셈②", "3나눗셈③",
+  "4분수", "4소수",
+  "5혼합계산", "5분수①", "5분수②", "5분수③", "5소수",
+  "6분수", "6소수①", "6소수②", "6소수③", "6혼합계산",
 ]);
 
 export const arithmeticWorksheetCatalog: ArithmeticWorksheet[] = worksheetNames.map((name) => {
@@ -167,7 +171,7 @@ export const arithmeticWorksheetCatalog: ArithmeticWorksheet[] = worksheetNames.
     route: readyRoutes[name] ?? null,
     grade: `초${grade}`,
     title: elementaryTitles[name] ?? (explicitGrades[name] ? name : gradeMatch ? gradeMatch[2] : name),
-    badge: elementaryMentalMathWorksheets.has(name) ? "암산" : undefined,
+    badge: Number(grade) >= 3 && elementaryHorizontalMentalMathWorksheets.has(name) ? "암산" : undefined,
   };
 });
 
