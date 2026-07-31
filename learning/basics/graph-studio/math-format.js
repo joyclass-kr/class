@@ -74,7 +74,7 @@
         continue;
       }
 
-      if (/^pi\b/i.test(rest)) {
+      if (/^pi/i.test(rest)) {
         latex += "\\pi ";
         index += 2;
         continue;

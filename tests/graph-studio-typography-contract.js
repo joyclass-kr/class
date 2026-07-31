@@ -58,4 +58,8 @@ assert.equal(malformed, "y=(x^{2}+1)/(x-1)abs)");
 assert.doesNotMatch(malformed, /\\left|\\right/);
 assert.doesNotThrow(() => katex.renderToString(malformed, { throwOnError: true, strict: false }));
 
+const piProduct = expressionToLatex("cos(pix)");
+assert.equal(piProduct, String.raw`y=\cos\left(\pi x\right)`);
+assert.doesNotThrow(() => katex.renderToString(piProduct, { throwOnError: true, strict: false }));
+
 console.log("graph studio typography contract passed");
