@@ -23,7 +23,6 @@ test("learning menus use the four top-level domains", () => {
   for (const href of [
     "learning/basics/reading/",
     "learning/basics/classical-chinese-idioms/",
-    "learning/basics/graph-studio/",
     "learning/academics/body-explorer/",
     "learning/arts/music-studio/",
     "learning/arts/art-appreciation/museum/",
@@ -33,6 +32,7 @@ test("learning menus use the four top-level domains", () => {
     assert.match(menu, new RegExp(`href="${href.replaceAll(".", "\\.")}"`));
     assert.equal(fs.existsSync(path.join(root, href)), true, href);
   }
+  assert.doesNotMatch(menu, /href="learning\/basics\/graph-studio\/"/);
 });
 
 test("menu-specific asset groups live with their menu", () => {
