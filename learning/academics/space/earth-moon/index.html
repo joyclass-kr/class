@@ -7,7 +7,7 @@
     <title>지구와 달 | Class Astronomy</title>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/three@0.128.0/examples/js/controls/OrbitControls.js"></script>
-    <link rel="stylesheet" href="styles.css?v=dual-view-20260731">
+    <link rel="stylesheet" href="styles.css?v=moon-texture-fix-20260731">
     <script src="../../../../assets/sound/music-control.js" defer></script>
 </head>
 <body>
@@ -50,7 +50,7 @@
                     <div class="em-simulation-clock" aria-label="시뮬레이션 날짜와 시각">
                         <span class="em-clock-label">시뮬레이션 시각</span>
                         <time id="emDateTimeDisplay" datetime="01-01T00:00">
-                            <span id="emDateTimeMain">양력 1월 1일 0시</span>
+                            <span id="emDateTimeMain">1월 1일 0시</span>
                             <span id="emTimePeriodNote" class="em-time-period-note">(자정)</span>
                         </time>
                     </div>
@@ -103,7 +103,7 @@
                             <span id="emMoonSkyCaption">한국에서 남쪽 하늘을 바라본 모습</span>
                         </div>
                         <div class="em-moon-sky-readout" aria-live="polite">
-                            <strong id="emMoonSkySolarDate">양력 1월 1일 0시</strong>
+                            <strong id="emMoonSkySolarDate">1월 1일 0시</strong>
                             <span id="emMoonSkyLunarDate">음력 1월 1일 · 삭</span>
                         </div>
                         <canvas id="emMoonSkyCanvas" role="img" aria-label="현재 관측 위치에서 보는 태양과 달의 위치"></canvas>
@@ -302,6 +302,6 @@
     </main>
 
     <!-- Heliocentric 3D Earth-Moon Physics Simulation Engine -->
-    <script src="app.js?v=dual-view-20260731"></script>
+    <script src="app.js?v=moon-texture-fix-20260731"></script>
 </body>
 </html>

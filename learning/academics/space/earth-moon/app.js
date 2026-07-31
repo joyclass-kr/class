@@ -680,7 +680,7 @@
                 }
 
                 const hourNote = hour === 0 ? '(자정)' : (hour === 12 ? '(정오)' : '');
-                mainText.textContent = `양력 ${monthIndex + 1}월 ${dayOfMonth + 1}일 ${hour}시`;
+                mainText.textContent = `${monthIndex + 1}월 ${dayOfMonth + 1}일 ${hour}시`;
                 periodNote.textContent = hourNote;
                 display.setAttribute(
                     'datetime',
@@ -1051,7 +1051,7 @@
                 const phaseNames = ['삭', '초승달', '상현달', '팽대달', '망/보름달', '팽대달', '하현달', '그믐달'];
                 const phaseIndex = Math.round((phaseAngle / (Math.PI * 2)) * 8) % 8;
                 if (observerSkySolarDate) {
-                    observerSkySolarDate.textContent = '양력 ' + date.month + '월 ' + date.day + '일 ' + date.hour + '시';
+                    observerSkySolarDate.textContent = date.month + '월 ' + date.day + '일 ' + date.hour + '시';
                 }
                 if (observerSkyLunarDate) {
                     observerSkyLunarDate.textContent = '음력 ' + lunarMonth + '월 ' + lunarDay + '일 경 · ' + phaseNames[phaseIndex];
@@ -1189,7 +1189,7 @@
 
                 const sourceSize = Math.min(
                     moonNearsideImage.naturalWidth,
-                    moonNearsideImage.naturalHeigh
+                    moonNearsideImage.naturalHeight
                 );
                 const sourceX = (moonNearsideImage.naturalWidth - sourceSize) / 2;
                 const sourceY = (moonNearsideImage.naturalHeight - sourceSize) / 2;
