@@ -53,3 +53,28 @@ test("좌표가 들어간 벡터 문항도 실제로 구할 대상을 정확히 
     ["구의 방정식은?", "대칭이동한 점의 좌표는?", "$a$는?"],
   );
 });
+
+test("벡터 수직 조건의 정답은 근삿값이 아닌 기약분수이고 내적을 정확히 0으로 만든다", () => {
+  const parseRational = (latex: string) => {
+    const value = latex.replace(/^k=/, "");
+    const fraction = value.match(/^(-?)\\frac\{(\d+)\}\{(\d+)\}$/);
+    if (fraction) return `${fraction[1]}${fraction[2]}/${fraction[3]}`;
+    return value;
+  };
+
+  for (let seed = 1; seed <= 100; seed += 1) {
+    const problem = createProjectionProblems(seed)[1];
+    const values = problem.latex.match(/^\(k,(-?\d+)\)\\perp\((-?\d+),(-?\d+)\)/);
+    assert.ok(values);
+    const scale = BigInt(values[1]);
+    const perpendicularX = BigInt(values[2]);
+    const perpendicularY = BigInt(values[3]);
+    const rational = parseRational(problem.correctLatex);
+    const [numeratorText, denominatorText = "1"] = rational.split("/");
+    const numerator = BigInt(numeratorText);
+    const denominator = BigInt(denominatorText);
+
+    assert.equal(numerator * perpendicularX + scale * perpendicularY * denominator, 0n);
+    assert.doesNotMatch(problem.correctLatex, /\d+\.\d+/);
+  }
+});

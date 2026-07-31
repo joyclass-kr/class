@@ -20,6 +20,25 @@ function nonzero(next: Next, min = -6, max = 6) {
   return value;
 }
 
+function greatestCommonDivisor(left: number, right: number) {
+  let a = Math.abs(left);
+  let b = Math.abs(right);
+  while (b !== 0) [a, b] = [b, a % b];
+  return a;
+}
+
+function fractionLatex(numerator: number, denominator: number) {
+  if (denominator === 0) throw new Error("분모는 0일 수 없습니다.");
+  if (numerator === 0) return "0";
+  const sign = numerator * denominator < 0 ? "-" : "";
+  const divisor = greatestCommonDivisor(numerator, denominator);
+  const absoluteNumerator = Math.abs(numerator) / divisor;
+  const absoluteDenominator = Math.abs(denominator) / divisor;
+  return absoluteDenominator === 1
+    ? `${sign}${absoluteNumerator}`
+    : `${sign}\\frac{${absoluteNumerator}}{${absoluteDenominator}}`;
+}
+
 function signed(value: number) {
   return value < 0 ? `${value}` : `+${value}`;
 }
@@ -111,7 +130,7 @@ export function createProjectionProblems(seed: number): GeometryChoiceItem[] {
   const projectionFactorDenominator = bx * bx + by * by;
   return [
     item("p1", "내적", `\\vec a=(${ax},${ay}),\\quad\\vec b=(${bx},${by}),\\quad\\vec a\\cdot\\vec b=?`, `${dot}`, [`${ax * bx - ay * by}`, `${ax + ay + bx + by}`, `${-dot}`, `${ax * by + ay * bx}`, `${ax * bx}`, `${ay * by}`]),
-    item("p2", "수직 조건", `(k,${scale})\\perp(${perpendicularX},${perpendicularY}),\\quad k=?`, `k=${scale * bx / by}`, [`k=${-scale * bx / by}`, `k=${scale}`, `k=${perpendicularX}`, `k=${-scale * by / bx}`, `k=${scale * perpendicularX}`, `k=${-scale}`, "k=0"]),
+    item("p2", "수직 조건", `(k,${scale})\\perp(${perpendicularX},${perpendicularY}),\\quad k=?`, `k=${fractionLatex(scale * bx, by)}`, [`k=${fractionLatex(-scale * bx, by)}`, `k=${scale}`, `k=${perpendicularX}`, `k=${fractionLatex(-scale * by, bx)}`, `k=${scale * perpendicularX}`, `k=${-scale}`, "k=0"]),
     item("p3", "두 벡터가 이루는 각", `\\vec a=(1,0),\\quad\\vec b=(1,1),\\quad\\theta=?`, `\\frac{\\pi}{4}`, [`\\frac{\\pi}{3}`, `\\frac{\\pi}{6}`, `\\frac{3\\pi}{4}`]),
     item("p4", "스칼라 정사영", `\\vec a=(${3 * scale},${4 * scale}),\\quad\\vec b=(1,0),\\quad\\frac{\\vec a\\cdot\\vec b}{|\\vec b|}=?`, `${3 * scale}`, [`${4 * scale}`, `${5 * scale}`, `${12 * scale * scale}`]),
     item("p5", "벡터 정사영", `\\vec a=(${ax},${ay}),\\quad\\vec b=(${bx},${by}),\\quad\\mathrm{proj}_{\\vec b}\\vec a=?`, `\\frac{${projectionFactorNumerator}}{${projectionFactorDenominator}}(${bx},${by})`, [`\\frac{${projectionFactorDenominator}}{${projectionFactorNumerator || 1}}(${bx},${by})`, `(${ax},${ay})`, `${dot}(${bx},${by})`, `-\\frac{${projectionFactorNumerator}}{${projectionFactorDenominator}}(${bx},${by})`, `\\frac{${projectionFactorNumerator}}{${projectionFactorDenominator}}(${ax},${ay})`, `\\frac{${projectionFactorNumerator}}{\\sqrt{${projectionFactorDenominator}}}(${bx},${by})`]),

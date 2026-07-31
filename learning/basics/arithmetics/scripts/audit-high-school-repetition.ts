@@ -9,6 +9,10 @@ type AuditedProblem = {
   skill?: string;
   prompt?: string;
   question?: string;
+  correctLatex?: string;
+  answerLatex?: string;
+  answer?: string;
+  choices?: Array<{ id?: string; latex?: string; correct?: boolean }>;
 };
 
 type FactoryResult = AuditedProblem[] | { problems: AuditedProblem[] };
@@ -108,6 +112,48 @@ async function createProblems(route: string): Promise<AuditedProblem[]> {
 const rows = await Promise.all(highSchoolWorksheetCatalog.map(async (worksheet) => {
   if (!worksheet.route) throw new Error(`주소가 없는 고등 학습지: ${worksheet.title}`);
   const problems = await createProblems(worksheet.route);
+  const serialized = JSON.stringify(problems);
+  if (/NaN|undefined/.test(serialized)) {
+    throw new Error(`${worksheet.route}: 계산할 수 없는 정답 또는 선택지가 있습니다.`);
+  }
+  const displayedText = problems.flatMap((problem) => [
+    problem.label,
+    problem.prompt,
+    problem.question,
+    problem.correctLatex,
+    problem.answerLatex,
+    ...((problem.choices ?? []).map(({ latex }) => latex)),
+  ]).filter((value): value is string => typeof value === "string").join(" ");
+  if (/\d+\.\d{7,}/.test(displayedText)) {
+    throw new Error(`${worksheet.route}: 정확한 값 대신 긴 부동소수점 근삿값이 노출됩니다.`);
+  }
+  for (const problem of problems) {
+    if (!Array.isArray(problem.choices)) continue;
+    const hasCorrectFlags = problem.choices.some(({ correct }) => typeof correct === "boolean");
+    if (hasCorrectFlags) {
+      const markedChoices = problem.choices.filter(({ correct }) => correct);
+      if (markedChoices.length !== 1) {
+        throw new Error(`${worksheet.route}: 정답으로 표시된 선택지가 정확히 하나가 아닙니다.`);
+      }
+      const expectedLatex = problem.correctLatex ?? problem.answerLatex;
+      const markedLatex = markedChoices[0]?.latex;
+      const matchesExpected = !expectedLatex
+        || markedLatex === expectedLatex
+        || (typeof markedLatex === "string" && expectedLatex.endsWith(`=${markedLatex}`));
+      if (!matchesExpected) {
+        throw new Error(`${worksheet.route}: 문제 정답과 정답 선택지가 서로 다릅니다.`);
+      }
+    } else if (typeof problem.answer === "string") {
+      const matchingChoices = problem.choices.filter(({ id }) => id === problem.answer);
+      if (matchingChoices.length !== 1) {
+        throw new Error(`${worksheet.route}: 정답 식별자와 일치하는 선택지가 정확히 하나가 아닙니다.`);
+      }
+    }
+    const latexChoices = problem.choices.map(({ latex }) => latex).filter((latex): latex is string => typeof latex === "string");
+    if (latexChoices.length === problem.choices.length && new Set(latexChoices).size !== latexChoices.length) {
+      throw new Error(`${worksheet.route}: 서로 같은 선택지가 중복됩니다.`);
+    }
+  }
   const counts = new Map<string, number>();
   for (const problem of problems) {
     const signature = signatureOf(problem);

@@ -71,6 +71,13 @@ function createProblems(route: string): AuditedProblem[] {
 const rows = middleSchoolWorksheetCatalog.map((worksheet) => {
   if (!worksheet.route) throw new Error(`주소가 없는 중등 학습지: ${worksheet.title}`);
   const problems = createProblems(worksheet.route);
+  const serialized = JSON.stringify(problems);
+  if (/NaN|undefined/.test(serialized)) {
+    throw new Error(`${worksheet.route}: 계산할 수 없는 정답 또는 선택지가 있습니다.`);
+  }
+  if (/\d+\.\d{7,}/.test(serialized)) {
+    throw new Error(`${worksheet.route}: 정확한 값 대신 긴 부동소수점 근삿값이 노출됩니다.`);
+  }
   const signatures = problems.map((problem) => problem.structure ?? problem.kind ?? problem.label);
   const counts = new Map<string, number>();
   for (const signature of signatures) counts.set(signature, (counts.get(signature) ?? 0) + 1);
