@@ -52,6 +52,7 @@ button { -webkit-tap-highlight-color: transparent; }
 .start-copy { margin: 0 0 28px; color: var(--muted); line-height: 1.65; }
 .difficulty-container { width: min(100%, 460px); }
 .setting-label { margin: 0 0 10px; color: #d9c5a5; font-weight: 800; letter-spacing: .08em; }
+.player-line { min-height: 1.4em; margin: 0 0 18px; color: var(--gold-bright); font-size: .88rem; font-weight: 900; letter-spacing: .08em; }
 .start-actions { display: flex; justify-content: center; gap: 10px; margin-top: 22px; }
 .start-button { min-width: 150px; }
 .start-back { margin-top: 26px; font-size: .9rem; }
@@ -97,6 +98,7 @@ h1 { margin: 0; font-family: Georgia, "Times New Roman", serif; font-size: clamp
 .primary, .secondary { min-height: 46px; border-radius: 4px; padding: 0 22px; font-weight: 900; cursor: pointer; }
 .primary { border: 1px solid var(--gold-bright); color: #251409; background: linear-gradient(180deg, var(--gold-bright), var(--gold)); }
 .secondary { border: 1px solid var(--line); color: var(--ink); background: rgba(0,0,0,.2); }
+.primary:disabled { opacity: .45; cursor: not-allowed; filter: grayscale(.5); }
 
 .rules { margin-top: 22px; border-top: 1px solid rgba(255,255,255,.08); padding-top: 15px; color: var(--muted); text-align: left; line-height: 1.7; }
 .rules summary { color: var(--ink); font-weight: 800; cursor: pointer; text-align: center; }
@@ -108,6 +110,8 @@ h1 { margin: 0; font-family: Georgia, "Times New Roman", serif; font-size: clamp
 .result-card { width: min(100%, 400px); border: 1px solid var(--gold); border-radius: 22px; padding: 34px; text-align: center; background: linear-gradient(145deg, #4e2b17, #21140d); box-shadow: 0 25px 70px #000; }
 .result-card h2 { margin: 4px 0 10px; font-size: 2rem; }
 .result-card p:not(.eyebrow) { color: var(--muted); }
+.result-card .finishers-panel { max-height: 190px; overflow: auto; }
+.result-card .primary { margin-top: 16px; }
 .result-mark { display: grid; place-items: center; width: 60px; height: 60px; margin: 0 auto 15px; border-radius: 50%; color: #2a170b; background: var(--gold-bright); font-size: 2rem; font-weight: 900; }
 
 button:focus-visible, a:focus-visible, summary:focus-visible { outline: 3px solid #fff; outline-offset: 3px; }

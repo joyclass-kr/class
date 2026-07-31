@@ -14,6 +14,8 @@
   const startScreen = document.getElementById('startScreen');
   const gameScreen = document.getElementById('gameScreen');
   const modeLabel = document.getElementById('modeLabel');
+  const playerLine = document.getElementById('playerLine');
+  const startButton = document.getElementById('startButton');
 
   let size = new URLSearchParams(location.search).get('size') === '4' ? 4 : 3;
   let tiles = [];
@@ -24,6 +26,16 @@
   let started = false;
   let soundEnabled = true;
   let audioContext = null;
+  let playerName = '';
+
+  const KOREAN_NAME_PATTERN = /^[가-힣]{2,6}$/;
+  const normalizePlayerName = value => String(value || '').replace(/[^가-힣]/g, '').slice(0, 6);
+  const isValidPlayerName = value => KOREAN_NAME_PATTERN.test(String(value || ''));
+  const finisherBoard = window.ClassroomFinisherBoard.create({
+    gameId: 'slidingpuzzle',
+    getPlayerName: () => playerName,
+    isValidPlayerName
+  });
 
   const solvedTiles = () => [...Array(size * size - 1)].map((_, index) => index + 1).concat(0);
   const formatTime = seconds => `${String(Math.floor(seconds / 60)).padStart(2, '0')}:${String(seconds % 60).padStart(2, '0')}`;
@@ -111,14 +123,19 @@
 
   function completeGame() {
     stopTimer();
-    statusElement.textContent = '완성했습니다!';
+    statusElement.textContent = 'PUZZLE COMPLETE!';
     statusElement.classList.add('success');
     const previous = JSON.parse(localStorage.getItem(bestKey()) || 'null');
     if (!previous || moves < previous.moves || (moves === previous.moves && elapsed < previous.time)) {
       localStorage.setItem(bestKey(), JSON.stringify({ moves, time: elapsed }));
     }
     updateBest();
-    resultSummary.textContent = `${moves}번 이동 · ${formatTime(elapsed)}`;
+    resultSummary.textContent = `${moves} MOVES · ${formatTime(elapsed)}`;
+    finisherBoard.register({
+      difficulty: `${size === 3 ? '8 PUZZLE' : '15 PUZZLE'} · ${moves} MOVES`,
+      rank: size === 3 ? 8 : 15,
+      targetId: 'result-finishers-list'
+    });
     window.setTimeout(() => {
       celebration.hidden = false;
       document.getElementById('playAgainButton').focus();
@@ -169,7 +186,7 @@
 
   function selectMode(nextSize) {
     size = nextSize;
-    const puzzleName = size === 3 ? '8 퍼즐' : '15 퍼즐';
+    const puzzleName = size === 3 ? '8 PUZZLE' : '15 PUZZLE';
     titleElement.textContent = puzzleName;
     modeLabel.textContent = `${size} × ${size}`;
     introElement.textContent = `숫자 타일을 밀어 1부터 ${size * size - 1}까지 순서대로 맞춰 보세요.`;
@@ -189,6 +206,10 @@
   }
 
   function startGame() {
+    if (!isValidPlayerName(playerName)) {
+      location.href = '../../../';
+      return;
+    }
     startScreen.hidden = true;
     gameScreen.hidden = false;
     newGame();
@@ -206,7 +227,7 @@
   document.getElementById('settingsButton').addEventListener('click', showSettings);
   soundButton.addEventListener('click', () => {
     soundEnabled = !soundEnabled;
-    soundButton.textContent = soundEnabled ? '소리 켬' : '소리 끔';
+    soundButton.textContent = soundEnabled ? 'SOUND ON' : 'SOUND OFF';
     soundButton.setAttribute('aria-pressed', String(soundEnabled));
   });
   document.addEventListener('keydown', event => {
@@ -226,6 +247,12 @@
     }
   });
 
+  playerName = normalizePlayerName(localStorage.getItem('classPlayerName'));
+  const hasPlayer = isValidPlayerName(playerName);
+  playerLine.textContent = hasPlayer ? `PLAYER · ${playerName}` : 'SAVE YOUR NAME ON THE MAIN PAGE';
+  startButton.disabled = !hasPlayer;
+  startButton.textContent = hasPlayer ? 'START GAME' : 'GO TO MAIN PAGE';
+  finisherBoard.load('today-finishers-list');
   selectMode(size);
   showSettings();
 })();

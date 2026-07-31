@@ -4,45 +4,55 @@
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <meta name="theme-color" content="#1d130d">
-  <title>8·15 퍼즐 | songhwaplay</title>
+  <title>8 Puzzle · 15 Puzzle | songhwaplay</title>
   <link rel="stylesheet" href="styles.css">
+  <script src="../../../assets/network/game-network.js"></script>
+  <script src="../../../assets/network/finisher-api.js"></script>
+  <script src="../../../assets/network/finisher-board.js"></script>
 </head>
 <body>
   <main class="page-shell">
     <section class="start-screen screen" id="startScreen" aria-labelledby="startTitle">
-      <p class="eyebrow">개인 퍼즐</p>
-      <h1 class="start-title" id="startTitle">8 퍼즐 · 15 퍼즐</h1>
+      <p class="eyebrow">SOLO PUZZLE</p>
+      <h1 class="start-title" id="startTitle">8 PUZZLE · 15 PUZZLE</h1>
       <p class="start-subtitle">NUMBER SLIDING PUZZLE</p>
       <p class="start-copy">빈칸을 이용해 숫자 타일을 순서대로 맞춰 보세요.</p>
 
+      <p class="player-line" id="playerLine"></p>
+
       <div class="difficulty-container">
-        <p class="setting-label">퍼즐 선택</p>
+        <p class="setting-label">PUZZLE</p>
         <div class="mode-switch" aria-label="퍼즐 크기 선택">
-          <button type="button" data-size="3" aria-pressed="true"><strong>8 퍼즐</strong><span>3 × 3 · 입문</span></button>
-          <button type="button" data-size="4" aria-pressed="false"><strong>15 퍼즐</strong><span>4 × 4 · 도전</span></button>
+          <button type="button" data-size="3" aria-pressed="true"><strong>8 PUZZLE</strong><span>3 × 3 · EASY</span></button>
+          <button type="button" data-size="4" aria-pressed="false"><strong>15 PUZZLE</strong><span>4 × 4 · HARD</span></button>
         </div>
       </div>
 
       <div class="start-actions">
-        <button class="sound-button" id="soundButton" type="button" aria-pressed="true">소리 켬</button>
-        <button class="primary start-button" id="startButton" type="button">게임 시작</button>
+        <button class="sound-button" id="soundButton" type="button" aria-pressed="true">SOUND ON</button>
+        <button class="primary start-button" id="startButton" type="button">START GAME</button>
       </div>
-      <a class="back-link start-back" href="../../../#puzzle-title">← 개인 퍼즐로 돌아가기</a>
+      <a class="back-link start-back" href="../../../#puzzle-title">← MAIN MENU</a>
+
+      <div class="finishers-panel">
+        <div class="finishers-title">🏆 TODAY’S FINISHERS</div>
+        <div class="finishers-list" id="today-finishers-list"></div>
+      </div>
     </section>
 
     <section class="game-panel screen" id="gameScreen" aria-labelledby="gameTitle" hidden>
       <header class="game-topbar">
-        <button class="text-button" id="settingsButton" type="button">← 게임 설정</button>
+        <button class="text-button" id="settingsButton" type="button">← SETTINGS</button>
         <span id="modeLabel">3 × 3</span>
       </header>
-      <p class="eyebrow">숫자 슬라이딩 퍼즐</p>
-      <h1 id="gameTitle">8 퍼즐</h1>
+      <p class="eyebrow">NUMBER SLIDING PUZZLE</p>
+      <h1 id="gameTitle">8 PUZZLE</h1>
       <p class="intro" id="intro">숫자 타일을 밀어 1부터 8까지 순서대로 맞춰 보세요.</p>
 
       <div class="stats" aria-label="게임 기록">
-        <div><span>이동</span><strong id="moveCount">0</strong></div>
-        <div><span>시간</span><strong id="timer">00:00</strong></div>
-        <div><span>최고</span><strong id="bestScore">—</strong></div>
+        <div><span>MOVES</span><strong id="moveCount">0</strong></div>
+        <div><span>TIME</span><strong id="timer">00:00</strong></div>
+        <div><span>BEST</span><strong id="bestScore">—</strong></div>
       </div>
 
       <div class="board-wrap">
@@ -52,12 +62,12 @@
       <p class="status" id="status" role="status" aria-live="polite">빈칸 옆의 타일을 눌러 이동하세요.</p>
 
       <div class="actions">
-        <button class="primary" id="newGameButton" type="button">새 게임</button>
-        <button class="secondary" id="resetButton" type="button">처음 배치</button>
+        <button class="primary" id="newGameButton" type="button">NEW GAME</button>
+        <button class="secondary" id="resetButton" type="button">RESET</button>
       </div>
 
       <details class="rules">
-        <summary>게임 방법</summary>
+        <summary>HOW TO PLAY</summary>
         <ol>
           <li>빈칸과 맞닿은 숫자 타일을 눌러 이동합니다.</li>
           <li>숫자를 왼쪽 위부터 차례대로 배열합니다.</li>
@@ -71,10 +81,14 @@
   <div class="celebration" id="celebration" hidden>
     <div class="result-card" role="dialog" aria-modal="true" aria-labelledby="resultTitle">
       <span class="result-mark" aria-hidden="true">✓</span>
-      <p class="eyebrow">퍼즐 완성</p>
-      <h2 id="resultTitle">정답입니다!</h2>
+      <p class="eyebrow">PUZZLE COMPLETE</p>
+      <h2 id="resultTitle">CONGRATULATIONS!</h2>
       <p id="resultSummary"></p>
-      <button class="primary" id="playAgainButton" type="button">다시 도전</button>
+      <div class="finishers-panel result-finishers">
+        <div class="finishers-title">🏆 TODAY’S FINISHERS</div>
+        <div class="finishers-list" id="result-finishers-list"></div>
+      </div>
+      <button class="primary" id="playAgainButton" type="button">PLAY AGAIN</button>
     </div>
   </div>
 

@@ -176,7 +176,7 @@ const MAX_ROOM_PLAYERS = {
   temperature: 61
 };
 
-const FINISHER_GAMES = new Set(["coinweighing", "hanoitower", "sphinx"]);
+const FINISHER_GAMES = new Set(["coinweighing", "hanoitower", "sphinx", "slidingpuzzle"]);
 
 app.use(["/admin", "/arithmetic", "/fraction", "/api/arithmetic-race", "/hanguksa", "/classtools", "/learning", "/learn"], classroomPlatform.requireSiteAccess);
 app.use("/arithmetic", proxyToLearningApp(ARITHMETIC_PORT));
