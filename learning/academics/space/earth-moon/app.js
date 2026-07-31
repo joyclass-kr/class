@@ -73,21 +73,9 @@
             const observerSkyStatus = document.getElementById('emMoonSkyStatus');
             if (!container || !spacePane || !canvas || !observerView || !observerSkyCanvas || typeof THREE === 'undefined') return;
             const seasonRaycaster = new THREE.Raycaster();
-            const seasonOcclusionRaycaster = new THREE.Raycaster();
             const seasonPointer = new THREE.Vector2();
             const seasonLabelWorldPosition = new THREE.Vector3();
             const seasonLabelProjectedPosition = new THREE.Vector3();
-            const seasonOcclusionDirection = new THREE.Vector3();
-            const seasonBodyWorldPosition = new THREE.Vector3();
-            const seasonBodyScale = new THREE.Vector3();
-            const seasonBodyEdgePosition = new THREE.Vector3();
-            const seasonBodyProjectedPosition = new THREE.Vector3();
-            const seasonBodyEdgeProjectedPosition = new THREE.Vector3();
-            const seasonCameraUp = new THREE.Vector3();
-            const seasonGuideStartWorld = new THREE.Vector3();
-            const seasonGuideEndWorld = new THREE.Vector3();
-            const seasonGuideStartProjected = new THREE.Vector3();
-            const seasonGuideEndProjected = new THREE.Vector3();
             const seasonScreenLabels = [];
             let seasonPointerDown = null;
 
@@ -379,40 +367,35 @@
 
                     const icon = createSeasonIconSprite(point.icon, point.color);
                     icon.position.set(x, 2.2, z);
-                    icon.renderOrder = -100;
                     icon.userData.seasonJump = point;
                     group.add(icon);
 
-                    const guideMaterial = new THREE.LineDashedMaterial({
-                        color: color,
-                        dashSize: 0.7,
-                        gapSize: 0.4,
-                        transparent: true,
-                        opacity: 0.78,
-                        depthTest: true,
-                        depthWrite: false
-                    });
                     const guide = new THREE.Line(
                         new THREE.BufferGeometry().setFromPoints([
                             new THREE.Vector3(x, 5, z),
                             new THREE.Vector3(x, 8, z)
                         ]),
-                        guideMaterial
+                        new THREE.LineDashedMaterial({
+                            color: color,
+                            dashSize: 0.7,
+                            gapSize: 0.4,
+                            transparent: true,
+                            opacity: 0.78
+                        })
                     );
-                    guide.renderOrder = -100;
                     guide.computeLineDistances();
                     group.add(guide);
 
                     const labelAnchor = new THREE.Object3D();
                     labelAnchor.position.set(x, 11, z);
                     group.add(labelAnchor);
-                    createSeasonScreenLabel(point, labelAnchor, icon, guide);
+                    createSeasonScreenLabel(point, labelAnchor);
                 });
 
                 return group;
             }
 
-            function createSeasonScreenLabel(point, anchor, icon, guide) {
+            function createSeasonScreenLabel(point, anchor) {
                 if (!seasonLabelsOverlay) return;
 
                 const label = document.createElement('button');
@@ -426,7 +409,7 @@
                     jumpToSeasonPoint(point);
                 });
                 seasonLabelsOverlay.appendChild(label);
-                seasonScreenLabels.push({ element: label, anchor, icon, guide });
+                seasonScreenLabels.push({ element: label, anchor });
             }
 
             function createSeasonIconSprite(icon, color) {
@@ -456,90 +439,12 @@
                 return sprite;
             }
 
-            function getSeasonOccluderDisks(width, height) {
-                const disks = [];
-                const bodies = [
-                    { mesh: sunMesh, radius: 19 },
-                    { mesh: earthMesh, radius: 11.2 },
-                    { mesh: moonMesh, radius: 3.2 }
-                ];
-
-                seasonCameraUp.set(0, 1, 0).applyQuaternion(camera.quaternion).normalize();
-                bodies.forEach(body => {
-                    if (!body.mesh || body.mesh.visible === false) return;
-                    body.mesh.updateWorldMatrix(true, false);
-                    body.mesh.getWorldPosition(seasonBodyWorldPosition);
-                    seasonBodyProjectedPosition.copy(seasonBodyWorldPosition).project(camera);
-                    if (seasonBodyProjectedPosition.z < -1 || seasonBodyProjectedPosition.z > 1) return;
-
-                    body.mesh.getWorldScale(seasonBodyScale);
-                    const radius = body.radius * Math.max(seasonBodyScale.x, seasonBodyScale.y, seasonBodyScale.z);
-                    seasonBodyEdgePosition
-                        .copy(seasonBodyWorldPosition)
-                        .addScaledVector(seasonCameraUp, radius);
-                    seasonBodyEdgeProjectedPosition.copy(seasonBodyEdgePosition).project(camera);
-
-                    const centerX = (seasonBodyProjectedPosition.x * 0.5 + 0.5) * width;
-                    const centerY = (-seasonBodyProjectedPosition.y * 0.5 + 0.5) * height;
-                    const edgeX = (seasonBodyEdgeProjectedPosition.x * 0.5 + 0.5) * width;
-                    const edgeY = (-seasonBodyEdgeProjectedPosition.y * 0.5 + 0.5) * height;
-                    const radiusPx = Math.hypot(edgeX - centerX, edgeY - centerY);
-                    if (Number.isFinite(radiusPx) && radiusPx > 0) {
-                        disks.push({ x: centerX, y: centerY, radius: radiusPx });
-                    }
-                });
-                return disks;
-            }
-
-            function pointTouchesOccluder(x, y, padding, disks) {
-                return disks.some(disk => Math.hypot(x - disk.x, y - disk.y) <= disk.radius + padding);
-            }
-
-            function labelTouchesOccluder(x, y, element, disks) {
-                const halfWidth = Math.max(18, element.offsetWidth / 2);
-                const halfHeight = Math.max(9, element.offsetHeight / 2);
-                return disks.some(disk => {
-                    const nearestX = Math.max(x - halfWidth, Math.min(disk.x, x + halfWidth));
-                    const nearestY = Math.max(y - halfHeight, Math.min(disk.y, y + halfHeight));
-                    return Math.hypot(disk.x - nearestX, disk.y - nearestY) <= disk.radius + 3;
-                });
-            }
-
-            function guideTouchesOccluder(guide, width, height, disks) {
-                if (!guide || !guide.geometry || !guide.geometry.attributes.position) return false;
-                const position = guide.geometry.attributes.position;
-                seasonGuideStartWorld.fromBufferAttribute(position, 0).applyMatrix4(guide.matrixWorld);
-                seasonGuideEndWorld.fromBufferAttribute(position, position.count - 1).applyMatrix4(guide.matrixWorld);
-                seasonGuideStartProjected.copy(seasonGuideStartWorld).project(camera);
-                seasonGuideEndProjected.copy(seasonGuideEndWorld).project(camera);
-
-                const startX = (seasonGuideStartProjected.x * 0.5 + 0.5) * width;
-                const startY = (-seasonGuideStartProjected.y * 0.5 + 0.5) * height;
-                const endX = (seasonGuideEndProjected.x * 0.5 + 0.5) * width;
-                const endY = (-seasonGuideEndProjected.y * 0.5 + 0.5) * height;
-                const segmentX = endX - startX;
-                const segmentY = endY - startY;
-                const segmentLengthSquared = segmentX * segmentX + segmentY * segmentY;
-
-                return disks.some(disk => {
-                    const ratio = segmentLengthSquared > 0
-                        ? Math.max(0, Math.min(1,
-                            ((disk.x - startX) * segmentX + (disk.y - startY) * segmentY)
-                            / segmentLengthSquared))
-                        : 0;
-                    const nearestX = startX + segmentX * ratio;
-                    const nearestY = startY + segmentY * ratio;
-                    return Math.hypot(disk.x - nearestX, disk.y - nearestY) <= disk.radius + 2;
-                });
-            }
-
             function updateSeasonScreenLabels() {
                 if (!seasonLabelsOverlay || !seasonPointsGroup || !camera) return;
 
                 const width = spacePane.clientWidth;
                 const height = spacePane.clientHeight;
                 const labelsVisible = seasonPointsGroup.visible && width > 0 && height > 0;
-                const occluderDisks = labelsVisible ? getSeasonOccluderDisks(width, height) : [];
                 seasonLabelsOverlay.setAttribute('aria-hidden', String(!labelsVisible));
 
                 seasonScreenLabels.forEach(item => {
@@ -551,28 +456,12 @@
                     item.anchor.getWorldPosition(seasonLabelWorldPosition);
                     seasonLabelProjectedPosition.copy(seasonLabelWorldPosition).project(camera);
 
-                    let hiddenBehindBody = false;
-                    const occluderMeshes = [sunMesh, earthMesh, moonMesh].filter(Boolean);
-                    if (occluderMeshes.length) {
-                        const labelDistance = camera.position.distanceTo(seasonLabelWorldPosition);
-                        seasonOcclusionDirection
-                            .copy(seasonLabelWorldPosition)
-                            .sub(camera.position)
-                            .normalize();
-                        seasonOcclusionRaycaster.set(camera.position, seasonOcclusionDirection);
-                        seasonOcclusionRaycaster.near = 0.1;
-                        seasonOcclusionRaycaster.far = Math.max(0.1, labelDistance - 0.35);
-                        hiddenBehindBody = seasonOcclusionRaycaster.intersectObjects(occluderMeshes, true).length > 0;
-                    }
-
                     const inFront = seasonLabelProjectedPosition.z >= -1
                         && seasonLabelProjectedPosition.z <= 1;
                     const nearViewport = Math.abs(seasonLabelProjectedPosition.x) <= 1.15
                         && Math.abs(seasonLabelProjectedPosition.y) <= 1.15;
-                    if (!inFront || !nearViewport || hiddenBehindBody) {
+                    if (!inFront || !nearViewport) {
                         item.element.hidden = true;
-                        if (item.icon) item.icon.visible = false;
-                        if (item.guide) item.guide.visible = false;
                         return;
                     }
 
@@ -580,24 +469,6 @@
                     const projectedY = (-seasonLabelProjectedPosition.y * 0.5 + 0.5) * height;
                     const x = Math.min(width - 52, Math.max(52, projectedX));
                     const y = Math.min(height - 18, Math.max(18, projectedY));
-
-                    item.anchor.parent.updateWorldMatrix(true, false);
-                    if (item.icon) {
-                        item.icon.getWorldPosition(seasonLabelWorldPosition);
-                        seasonLabelProjectedPosition.copy(seasonLabelWorldPosition).project(camera);
-                        const iconX = (seasonLabelProjectedPosition.x * 0.5 + 0.5) * width;
-                        const iconY = (-seasonLabelProjectedPosition.y * 0.5 + 0.5) * height;
-                        item.icon.visible = !pointTouchesOccluder(iconX, iconY, 18, occluderDisks);
-                    }
-                    if (item.guide) {
-                        item.guide.updateWorldMatrix(true, false);
-                        item.guide.visible = !guideTouchesOccluder(item.guide, width, height, occluderDisks);
-                    }
-
-                    if (labelTouchesOccluder(x, y, item.element, occluderDisks)) {
-                        item.element.hidden = true;
-                        return;
-                    }
 
                     item.element.hidden = false;
                     item.element.style.transform =
