@@ -173,7 +173,8 @@ body {
     right: 20px;
     z-index: 10;
     display: flex;
-    justify-content: space-between;
+    justify-content: flex-start;
+    gap: 14px;
     align-items: center;
     pointer-events: none;
 }
