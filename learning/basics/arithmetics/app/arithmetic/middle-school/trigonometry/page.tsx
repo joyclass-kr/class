@@ -14,26 +14,11 @@ import {
   MIDDLE_TRIGONOMETRY_TITLES,
   resolveMiddleTrigonometryKind,
   type MiddleTrigonometryKind,
-  type MiddleTrigonometryMethodKind,
   type MiddleTrigonometryProblem,
 } from "../../../../lib/middle-trigonometry-workouts";
 
 const DEFAULT_KIND: MiddleTrigonometryKind = "ratios";
 const INITIAL_SEED = 20260731;
-const TARGET_LABELS: Record<MiddleTrigonometryMethodKind, string> = {
-  "single-ratio": "삼각비의 값은?",
-  "three-ratios": "(sin A, cos A, tan A)는?",
-  "pythagorean-first": "삼각비의 값은?",
-  "special-angle": "정확한 값은?",
-  "special-angle-expression": "계산한 값은?",
-  "side-from-sine": "BC의 길이는?",
-  "side-from-cosine": "AC의 길이는?",
-  "side-from-tangent": "BC의 길이는?",
-  "ratio-scale": "구하는 변의 길이는?",
-  "radical-side": "구하는 변의 길이는?",
-  "fraction-decimal": "BC의 길이는?",
-};
-
 function choiceProblem(problem: MiddleTrigonometryProblem): WorksheetChoiceProblem {
   const choices = [
     { id: `${problem.id}-correct`, latex: problem.answerLatex, correct: true },
@@ -46,7 +31,7 @@ function choiceProblem(problem: MiddleTrigonometryProblem): WorksheetChoiceProbl
   const shift = [...problem.id].reduce((total, character) => total + character.charCodeAt(0), 0) % choices.length;
   return {
     id: problem.id,
-    label: TARGET_LABELS[problem.kind],
+    label: problem.question,
     correctLatex: problem.answerLatex,
     choices: [...choices.slice(shift), ...choices.slice(0, shift)],
   };
@@ -122,7 +107,7 @@ export default function MiddleTrigonometryPage() {
         <div className="polynomial-question-number">{String(index + 1).padStart(2, "0")}</div>
         <div className="polynomial-question-body">
           <span className="polynomial-focus-label"><InlineMathText text={problem.label} /></span>
-          <WorksheetQuestionPrompt label={problem.label} />
+          <WorksheetQuestionPrompt label={problem.label} prompt={problem.question} />
           <div className="logarithm-expression">
             <MathFormula latex={problem.latex} />
           </div>

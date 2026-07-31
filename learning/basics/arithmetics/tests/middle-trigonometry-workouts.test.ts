@@ -48,10 +48,21 @@ test("모든 삼각비 문제는 서로 다른 네 선택지와 한 줄 핵심 �
         assert.equal(choices.length, 4);
         assert.equal(new Set(choices).size, 4);
         assert.ok(problem.solutionHint.length >= 15);
+        assert.match(problem.question, /\?$/);
         assert.doesNotMatch(problem.label, /^삼각비:|[²³⁴⁵⁶⁷⁸⁹]/);
         assert.doesNotMatch(`${problem.latex}${problem.answerLatex}${problem.solutionHint}`, /NaN|undefined|\+\-|\-\-/);
       }
     }
+  }
+});
+
+test("문제지와 답안 입력은 같은 구체적 발문을 사용하고 변의 길이는 선분 기호로 쓴다", () => {
+  const problems = createMiddleTrigonometryProblemSet("side-lengths", 20260731).problems;
+  for (const problem of problems) {
+    if (!problem.question.includes("길이는?")) continue;
+    assert.match(problem.question, /\$\\overline\{(?:AB|AC|BC)\}\$의 길이는\?/);
+    assert.match(problem.latex, /\\overline\{(?:AB|AC|BC)\}/);
+    assert.doesNotMatch(problem.question, /^구할 값은\?|^계산 결과는\?|^구하는 변의 길이는\?/);
   }
 });
 

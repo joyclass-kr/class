@@ -25,6 +25,7 @@ export type MiddleTrigonometryProblem = {
   difficulty: MiddleTrigonometryDifficulty;
   structure: string;
   label: string;
+  question: string;
   latex: string;
   answerLatex: string;
   solutionHint: string;
@@ -122,7 +123,7 @@ function difficultyForIndex(index: number): MiddleTrigonometryDifficulty {
 }
 
 function triangleLatex(opposite: number, adjacent: number, hypotenuse: number) {
-  return `\\triangle ABC,\\quad \\angle C=90^\\circ,\\quad BC=${opposite},\\ AC=${adjacent},\\ AB=${hypotenuse}`;
+  return `\\triangle ABC,\\quad \\angle C=90^\\circ,\\quad \\overline{BC}=${opposite},\\ \\overline{AC}=${adjacent},\\ \\overline{AB}=${hypotenuse}`;
 }
 
 function ratioAnswer(name: "sin" | "cos" | "tan", triple: Triple) {
@@ -141,17 +142,38 @@ function make(
   distractors: string[],
   structure = kind,
 ): MiddleTrigonometryProblem {
+  const question = questionFor(kind, structure);
   return {
     id,
     kind,
     difficulty: "basic",
     structure,
     label: MIDDLE_TRIGONOMETRY_METHOD_TITLES[kind],
+    question,
     latex,
     answerLatex,
     solutionHint,
     distractors: uniqueDistractors(answerLatex, distractors),
   };
+}
+
+function questionFor(kind: MiddleTrigonometryMethodKind, structure: string) {
+  if (kind === "single-ratio") return `$\\${structure.replace("single-", "")} A$의 값은?`;
+  if (kind === "three-ratios") return "$\\sin A,\\ \\cos A,\\ \\tan A$의 값은?";
+  if (kind === "pythagorean-first") return `$\\${structure.replace("pythagorean-", "")} A$의 값은?`;
+  if (kind === "special-angle") return `$${structure}$의 값은?`;
+  if (kind === "special-angle-expression") return `$${structure}$의 계산 결과는?`;
+  if (kind === "side-from-sine" || kind === "side-from-tangent" || kind === "fraction-decimal") {
+    return "$\\overline{BC}$의 길이는?";
+  }
+  if (kind === "side-from-cosine") return "$\\overline{AC}$의 길이는?";
+  if (kind === "ratio-scale") {
+    return structure === "scale-height" ? "$\\overline{BC}$의 길이는?" : "$\\overline{AC}$의 길이는?";
+  }
+  if (kind === "radical-side") {
+    return structure === "45-leg-to-hypotenuse" ? "$\\overline{AB}$의 길이는?" : "$\\overline{AC}$의 길이는?";
+  }
+  return "구하는 값은?";
 }
 
 const SPECIAL_VALUES = [
@@ -219,7 +241,7 @@ function build(
     const ratioName = variantHint % 2 === 0 ? "sin" : "cos";
     const answer = ratioAnswer(ratioName, triple);
     return make(id, kind,
-      `\\triangle ABC,\\quad \\angle C=90^\\circ,\\quad BC=${opposite},\\ AC=${adjacent},\\quad \\${ratioName} A`,
+      `\\triangle ABC,\\quad \\angle C=90^\\circ,\\quad \\overline{BC}=${opposite},\\ \\overline{AC}=${adjacent},\\quad \\${ratioName} A`,
       answer,
       `AB=\\sqrt{${opposite}^2+${adjacent}^2}=${hypotenuse}를 먼저 구한 뒤 ${ratioName}의 비를 만든다.`,
       [
@@ -250,7 +272,7 @@ function build(
 
   if (kind === "side-from-sine") {
     const answer = `${opposite}`;
-    return make(id, kind, `\\angle C=90^\\circ,\\quad \\sin A=${fraction(base[0], base[2])},\\quad AB=${hypotenuse},\\quad BC`,
+    return make(id, kind, `\\angle C=90^\\circ,\\quad \\sin A=${fraction(base[0], base[2])},\\quad \\overline{AB}=${hypotenuse},\\quad \\overline{BC}`,
       answer,
       `BC=AB\\times\\sin A=${hypotenuse}\\times${fraction(base[0], base[2])}로 계산한다.`,
       [`${adjacent}`, `${base[0]}`, `${hypotenuse - opposite}`]);
@@ -258,7 +280,7 @@ function build(
 
   if (kind === "side-from-cosine") {
     const answer = `${adjacent}`;
-    return make(id, kind, `\\angle C=90^\\circ,\\quad \\cos A=${fraction(base[1], base[2])},\\quad AB=${hypotenuse},\\quad AC`,
+    return make(id, kind, `\\angle C=90^\\circ,\\quad \\cos A=${fraction(base[1], base[2])},\\quad \\overline{AB}=${hypotenuse},\\quad \\overline{AC}`,
       answer,
       `AC=AB\\times\\cos A=${hypotenuse}\\times${fraction(base[1], base[2])}로 계산한다.`,
       [`${opposite}`, `${base[1]}`, `${hypotenuse - adjacent}`]);
@@ -266,7 +288,7 @@ function build(
 
   if (kind === "side-from-tangent") {
     const answer = `${opposite}`;
-    return make(id, kind, `\\angle C=90^\\circ,\\quad \\tan A=${fraction(base[0], base[1])},\\quad AC=${adjacent},\\quad BC`,
+    return make(id, kind, `\\angle C=90^\\circ,\\quad \\tan A=${fraction(base[0], base[1])},\\quad \\overline{AC}=${adjacent},\\quad \\overline{BC}`,
       answer,
       `BC=AC\\times\\tan A=${adjacent}\\times${fraction(base[0], base[1])}로 계산한다.`,
       [`${adjacent}`, `${base[0]}`, `${hypotenuse}`]);
@@ -279,9 +301,10 @@ function build(
     const heightMode = variantHint % 2 === 0;
     const target = heightMode ? ratioBase[0] : ratioBase[1];
     const ratioName = heightMode ? "sin" : "cos";
+    const targetSegment = heightMode ? "BC" : "AC";
     const answer = `${target * newScale}`;
     return make(id, kind,
-      `\\${ratioName} A=${fraction(target, ratioBase[2])},\\quad \\text{빗변}=${known},\\quad \\text{구하는 변}`,
+      `\\${ratioName} A=${fraction(target, ratioBase[2])},\\quad \\overline{AB}=${known},\\quad \\overline{${targetSegment}}`,
       answer,
       `구하는 변:빗변=${target}:${ratioBase[2]}이므로 빗변에 맞춘 배수를 구하는 변에도 곱한다.`,
       [`${(heightMode ? ratioBase[1] : ratioBase[0]) * newScale}`, `${target}`, `${known - target * newScale}`],
@@ -292,21 +315,21 @@ function build(
     const k = integer(next, 2, variantHint < 5 ? 8 : 12);
     const mode = variantHint % 4;
     if (mode === 0) {
-      return make(id, kind, `\\angle C=90^\\circ,\\quad \\angle A=45^\\circ,\\quad AC=${k},\\quad AB`,
+      return make(id, kind, `\\angle C=90^\\circ,\\quad \\angle A=45^\\circ,\\quad \\overline{AC}=${k},\\quad \\overline{AB}`,
         `${k}\\sqrt{2}`, "45° 직각삼각형의 변의 비 1:1:√2를 적용한다.",
         [`${k}`, `${2 * k}`, `${k}\\sqrt{3}`], "45-leg-to-hypotenuse");
     }
     if (mode === 1) {
-      return make(id, kind, `\\angle C=90^\\circ,\\quad \\angle A=45^\\circ,\\quad AB=${2 * k},\\quad AC`,
+      return make(id, kind, `\\angle C=90^\\circ,\\quad \\angle A=45^\\circ,\\quad \\overline{AB}=${2 * k},\\quad \\overline{AC}`,
         `${k}\\sqrt{2}`, `AC=${2 * k}\\times\\cos45^\\circ=${2 * k}\\times\\dfrac{\\sqrt2}{2}로 계산한다.`,
         [`${k}`, `${2 * k}\\sqrt{2}`, `${k}\\sqrt{3}`], "45-hypotenuse-to-leg");
     }
     if (mode === 2) {
-      return make(id, kind, `\\angle C=90^\\circ,\\quad \\angle A=30^\\circ,\\quad BC=${k},\\quad AC`,
+      return make(id, kind, `\\angle C=90^\\circ,\\quad \\angle A=30^\\circ,\\quad \\overline{BC}=${k},\\quad \\overline{AC}`,
         `${k}\\sqrt{3}`, "30° 직각삼각형의 변의 비 1:√3:2를 적용한다.",
         [`${k}\\sqrt{2}`, `${2 * k}`, `${k}`], "30-short-to-long");
     }
-    return make(id, kind, `\\angle C=90^\\circ,\\quad \\angle A=30^\\circ,\\quad AB=${2 * k},\\quad AC`,
+    return make(id, kind, `\\angle C=90^\\circ,\\quad \\angle A=30^\\circ,\\quad \\overline{AB}=${2 * k},\\quad \\overline{AC}`,
       `${k}\\sqrt{3}`, `AC=${2 * k}\\times\\cos30^\\circ=${2 * k}\\times\\dfrac{\\sqrt3}{2}로 계산한다.`,
       [`${k}\\sqrt{2}`, `${2 * k}\\sqrt{3}`, `${k}`], "30-hypotenuse-to-long");
   }
@@ -319,7 +342,7 @@ function build(
   const ratio = decimalBase[0] / decimalBase[2];
   const ratioLatex = decimalMode ? `${ratio}` : fraction(decimalBase[0], decimalBase[2]);
   const answer = `${decimalOpposite}`;
-  return make(id, kind, `\\angle C=90^\\circ,\\quad \\sin A=${ratioLatex},\\quad AB=${decimalHypotenuse},\\quad BC`,
+  return make(id, kind, `\\angle C=90^\\circ,\\quad \\sin A=${ratioLatex},\\quad \\overline{AB}=${decimalHypotenuse},\\quad \\overline{BC}`,
     answer,
     `BC=AB\\times\\sin A=${decimalHypotenuse}\\times${ratioLatex}로 계산한다.`,
     [`${decimalBase[1] * decimalScale}`, `${decimalBase[0]}`, `${decimalHypotenuse}`],
