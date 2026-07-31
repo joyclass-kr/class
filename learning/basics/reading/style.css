@@ -49,13 +49,11 @@ button, input { font: inherit; }
 .tab { min-height: 40px; padding: 0 18px; border: 1px solid var(--line); border-radius: 8px; color: var(--muted); background: rgba(255, 253, 248, .9); cursor: pointer; font-weight: 850; }
 .tab.active { border-color: var(--green); color: #fff; background: var(--green); }
 .level-list { display: grid; grid-template-columns: repeat(4, minmax(0, 1fr)); gap: 12px; }
-.level-card { min-height: 142px; display: flex; flex-direction: column; align-items: flex-start; padding: 16px; border: 1px solid rgba(112, 105, 83, .3); border-radius: 10px; color: var(--ink); background: rgba(255, 253, 248, .93); cursor: pointer; text-align: left; backdrop-filter: blur(4px); }
+.level-card { min-height: 104px; display: flex; flex-direction: column; align-items: flex-start; justify-content: space-between; padding: 16px; border: 1px solid rgba(112, 105, 83, .3); border-radius: 10px; color: var(--ink); background: rgba(255, 253, 248, .93); cursor: pointer; text-align: left; backdrop-filter: blur(4px); }
 .level-card:hover:not(:disabled) { border-color: var(--green); }
 .level-card:disabled { opacity: .55; cursor: default; }
 .level-code { color: var(--green); font-size: 1.4rem; font-weight: 950; letter-spacing: .06em; }
-.level-band { margin-top: 8px; font-size: 13px; font-weight: 900; }
-.level-focus { margin-top: 3px; color: var(--muted); font-size: 12px; }
-.level-count { margin-top: auto; padding-top: 12px; color: var(--muted); font-size: 11px; }
+.level-band { color: var(--ink); font-size: 13px; font-weight: 900; }
 .student-pilot-card { display: grid; gap: 14px; padding: 22px; border: 1px solid var(--line); border-radius: 18px; background: var(--white); box-shadow: 0 10px 32px rgba(56,45,26,.06); }
 .student-pilot-card h3 { margin: 0; font-family: Georgia, "Noto Serif KR", serif; font-size: 1.45rem; }
 .student-pilot-card p { margin: 0; color: var(--muted); font-size: 13px; line-height: 1.55; }
