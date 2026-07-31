@@ -4,7 +4,7 @@ import { useEffect, useMemo, useState } from "react";
 import { useSearchParams } from "next/navigation";
 import InlineMathText from "../../../components/inline-math-text";
 import MathFormula from "../../../components/math-formula";
-import WorksheetQuestionPrompt from "../../../components/worksheet-question-prompt";
+import WorksheetQuestionPrompt, { worksheetQuestion } from "../../../components/worksheet-question-prompt";
 import WorksheetChoicePanel, {
   type WorksheetChoiceProblem,
 } from "../../high-school/components/worksheet-choice-panel";
@@ -35,7 +35,8 @@ function choiceProblem(problem: MiddleCurriculumProblem): WorksheetChoiceProblem
   ) % choices.length;
   return {
     id: problem.id,
-    label: `${problem.label}의 답은?`,
+    label: problem.label,
+    prompt: worksheetQuestion(problem.label),
     correctLatex: problem.answerLatex,
     choices: [...choices.slice(shift), ...choices.slice(0, shift)],
   };

@@ -2344,12 +2344,18 @@ test("middle, high-school, and STEM answer panels reuse the worksheet question",
     new URL("../app/arithmetic/high-school/components/worksheet-choice-panel.tsx", import.meta.url),
     "utf8",
   );
+  assert.match(sharedPanel, /prompt:\s*string;/);
   assert.match(sharedPanel, /worksheetQuestion\(problem\.label, problem\.prompt\)/);
 
   const explicitPromptPages = [
+    "../app/arithmetic/middle-school/circle-properties/page.tsx",
+    "../app/arithmetic/middle-school/core-calculations/page.tsx",
+    "../app/arithmetic/middle-school/curriculum-calculations/page.tsx",
     "../app/arithmetic/middle-school/factorization/page.tsx",
     "../app/arithmetic/middle-school/quadratic-equations/page.tsx",
     "../app/arithmetic/middle-school/quadratic-functions/page.tsx",
+    "../app/arithmetic/middle-school/statistics/page.tsx",
+    "../app/arithmetic/middle-school/trigonometry/page.tsx",
     "../app/arithmetic/high-school/cubic-sum-difference-factorization/page.tsx",
     "../app/arithmetic/high-school/definite-integrals/page.tsx",
     "../app/arithmetic/high-school/exponential-log-derivatives/page.tsx",
@@ -2361,7 +2367,11 @@ test("middle, high-school, and STEM answer panels reuse the worksheet question",
   ];
   for (const relativePath of explicitPromptPages) {
     const source = await readFile(new URL(relativePath, import.meta.url), "utf8");
-    assert.match(source, /prompt:\s*(?:problem\.prompt|QUESTION_PROMPTS\[problem\.kind\]|"[^"]+\?")/, relativePath);
+    assert.match(
+      source,
+      /prompt:\s*(?:problem\.(?:prompt|question)|(?:QUESTION_PROMPTS|TARGET_LABELS)\[problem\.kind\]|worksheetQuestion\(problem\.label\)|"[^"]+\?")/,
+      relativePath,
+    );
   }
 
   const customPanelPages = [

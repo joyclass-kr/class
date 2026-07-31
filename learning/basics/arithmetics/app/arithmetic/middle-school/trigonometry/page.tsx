@@ -31,7 +31,8 @@ function choiceProblem(problem: MiddleTrigonometryProblem): WorksheetChoiceProbl
   const shift = [...problem.id].reduce((total, character) => total + character.charCodeAt(0), 0) % choices.length;
   return {
     id: problem.id,
-    label: problem.question,
+    label: problem.label,
+    prompt: problem.question,
     correctLatex: problem.answerLatex,
     choices: [...choices.slice(shift), ...choices.slice(0, shift)],
   };

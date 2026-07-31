@@ -13,7 +13,7 @@ export type WorksheetChoice = {
 export type WorksheetChoiceProblem = {
   id: string;
   label: string;
-  prompt?: string;
+  prompt: string;
   choices: WorksheetChoice[];
   correctLatex: string;
 };
