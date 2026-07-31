@@ -19,6 +19,7 @@ export default function SetsPropositionsPage() {
     id: problem.id,
     label: problem.label,
     prompt: problem.prompt,
+    latex: problem.latex,
     correctLatex: problem.choices.find((choice) => choice.id === problem.answer)?.latex ?? "",
     choices: problem.choices.map((choice) => ({ ...choice, correct: choice.id === problem.answer })),
   }));

@@ -960,25 +960,35 @@
   inset: 0;
   z-index: 100;
   display: flex;
-  justify-content: flex-end;
-  background: rgba(15, 23, 42, 0.2);
+  align-items: center;
+  justify-content: center;
+  padding: 20px;
+  background: rgba(15, 23, 42, 0.42);
+  backdrop-filter: blur(3px);
 }
 
 .trig-derivative-answer-panel {
-  width: min(420px, 100vw);
-  height: 100vh;
+  width: min(1120px, calc(100vw - 40px));
+  max-height: calc(100vh - 40px);
   display: flex;
   flex-direction: column;
+  overflow: hidden;
   background: #fbfaf6;
-  border-left: 1px solid #d9d2c6;
-  box-shadow: -12px 0 32px rgba(15, 23, 42, 0.16);
+  border: 1px solid #d9d2c6;
+  border-radius: 18px;
+  box-shadow: 0 24px 70px rgba(15, 23, 42, 0.28);
+}
+
+.trig-derivative-answer-panel.worksheet-choice-modal {
+  width: min(1240px, calc(100vw - 40px));
 }
 
 .trig-derivative-answer-panel > header {
+  flex: 0 0 auto;
   display: flex;
   align-items: flex-start;
   justify-content: space-between;
-  padding: 22px 22px 16px;
+  padding: 18px 22px 14px;
   border-bottom: 1px solid #d9d2c6;
 }
 
@@ -993,7 +1003,8 @@
   font-size: 23px;
 }
 
-.trig-derivative-answer-panel > header small {
+.trig-derivative-answer-panel > header small,
+.trig-derivative-answer-panel > header span {
   color: #667085;
   font-size: 13px;
 }
@@ -1012,16 +1023,43 @@
 
 .trig-derivative-answer-list {
   flex: 1;
+  min-height: 0;
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  align-content: start;
+  gap: 12px;
   overflow-y: auto;
-  padding: 8px 18px 20px;
+  overscroll-behavior: contain;
+  padding: 16px 20px;
+}
+
+.worksheet-choice-modal .trig-derivative-answer-list {
+  grid-template-columns: repeat(auto-fit, minmax(330px, 1fr));
 }
 
 .trig-derivative-answer-item {
   position: relative;
   display: grid;
-  gap: 12px;
-  padding: 16px 4px;
-  border-bottom: 0;
+  align-content: start;
+  gap: 9px;
+  min-width: 0;
+  border: 1px solid #dce2ec;
+  border-radius: 13px;
+  background: #fff;
+  padding: 13px;
+  transition: border-color 160ms ease, background 160ms ease, box-shadow 160ms ease;
+}
+
+.trig-derivative-answer-item.is-correct {
+  border-color: #68b596;
+  background: #f2fbf6;
+  box-shadow: inset 4px 0 #2f8f68;
+}
+
+.trig-derivative-answer-item.is-wrong {
+  border-color: #df8b84;
+  background: #fff6f4;
+  box-shadow: inset 4px 0 #c64f47;
 }
 
 .trig-derivative-answer-item-heading {
@@ -1036,9 +1074,49 @@
 }
 
 .trig-derivative-answer-item-heading > span {
+  min-width: 0;
+  flex: 1;
   color: #31416a;
-  font-size: 13px;
+  font-size: 14px;
   font-weight: 800;
+}
+
+.trig-derivative-answer-status {
+  flex: 0 0 auto;
+  border-radius: 999px;
+  padding: 4px 9px;
+  font-family: var(--high-school-sans-font);
+  font-size: 12px;
+  font-weight: 900;
+}
+
+.trig-derivative-answer-status.is-correct {
+  background: #dff5e9;
+  color: #176744;
+}
+
+.trig-derivative-answer-status.is-wrong {
+  background: #fde3df;
+  color: #a4352f;
+}
+
+.trig-derivative-answer-question {
+  min-width: 0;
+  border-radius: 9px;
+  background: #f5f7fb;
+  padding: 8px 10px;
+  color: #142342;
+  font-size: 18px;
+  overflow-x: auto;
+  overflow-y: hidden;
+}
+
+.trig-derivative-answer-question .math-formula,
+.trig-derivative-answer-question .katex-display {
+  width: 100%;
+  margin: 0;
+  justify-content: flex-start;
+  text-align: left;
 }
 
 .trig-derivative-answer-panel .trig-derivative-term-fields {
@@ -1046,11 +1124,11 @@
 }
 
 .trig-derivative-answer-panel .trig-derivative-choices {
-  grid-template-columns: 1fr;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
 }
 
 .trig-derivative-answer-panel .trig-derivative-choice {
-  min-height: 54px;
+  min-height: 48px;
 }
 
 .trig-derivative-answer-panel .math-formula .katex .mathnormal {
@@ -1063,7 +1141,27 @@
 }
 
 .trig-derivative-panel-grade {
-  margin: 14px 18px 18px;
+  min-width: 150px;
+  margin: 0;
+}
+
+.trig-derivative-answer-item > .trig-derivative-panel-grade {
+  min-width: 0;
+  border-radius: 8px;
+  padding: 8px 10px;
+  font-family: var(--high-school-korean-font);
+  font-size: 13px;
+  font-weight: 800;
+}
+
+.trig-derivative-panel-grade.is-correct {
+  background: #e6f7ee;
+  color: #176744;
+}
+
+.trig-derivative-panel-grade.is-wrong {
+  background: #fde8e5;
+  color: #a4352f;
 }
 
 .trig-derivative-choices {
@@ -1116,6 +1214,97 @@
   border-color: #4b68b2;
   background: #eef2ff;
   box-shadow: inset 0 0 0 1px #4b68b2;
+}
+
+.trig-derivative-choice.is-correct-answer,
+.trig-derivative-choices button.is-correct-answer {
+  border-color: #2f8f68;
+  background: #e6f7ee;
+  color: #155f41;
+  box-shadow: inset 0 0 0 2px #2f8f68;
+}
+
+.trig-derivative-choice.is-wrong-answer,
+.trig-derivative-choices button.is-wrong-answer {
+  border-color: #c64f47;
+  background: #fde8e5;
+  color: #9f302a;
+  box-shadow: inset 0 0 0 2px #c64f47;
+}
+
+.trig-derivative-answer-feedback {
+  min-height: 24px;
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  font-family: var(--high-school-korean-font);
+  font-size: 13px;
+  font-weight: 700;
+}
+
+.trig-derivative-answer-feedback.is-correct {
+  color: #176744;
+}
+
+.trig-derivative-answer-feedback.is-wrong {
+  color: #a4352f;
+}
+
+.trig-derivative-answer-feedback > span {
+  display: inline-flex;
+  align-items: center;
+  gap: 5px;
+  color: #5b2630;
+}
+
+.trig-derivative-answer-actions {
+  flex: 0 0 auto;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 18px;
+  border-top: 1px solid #d9d2c6;
+  background: #fbfaf6;
+  padding: 12px 20px;
+}
+
+.trig-derivative-answer-actions > span {
+  color: #536176;
+  font-family: var(--high-school-korean-font);
+  font-size: 14px;
+  font-weight: 800;
+}
+
+@media (max-width: 760px) {
+  .trig-derivative-answer-panel-backdrop {
+    align-items: stretch;
+    padding: 0;
+  }
+
+  .trig-derivative-answer-panel {
+    width: 100vw;
+    max-height: 100vh;
+    border-radius: 0;
+  }
+
+  .trig-derivative-answer-list {
+    grid-template-columns: minmax(0, 1fr);
+    padding: 12px;
+  }
+
+  .worksheet-choice-modal .trig-derivative-answer-list {
+    grid-template-columns: minmax(0, 1fr);
+  }
+
+  .trig-derivative-answer-actions {
+    align-items: stretch;
+    flex-direction: column;
+    gap: 8px;
+  }
+
+  .trig-derivative-panel-grade {
+    width: 100%;
+  }
 }
 
 .polynomial-page.trig-derivative-page .polynomial-sheet-5 .trig-derivative-question {

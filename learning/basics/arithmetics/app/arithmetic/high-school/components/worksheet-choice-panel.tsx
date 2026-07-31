@@ -14,6 +14,7 @@ export type WorksheetChoiceProblem = {
   id: string;
   label: string;
   prompt: string;
+  latex?: string;
   choices: WorksheetChoice[];
   correctLatex: string;
 };
@@ -31,29 +32,62 @@ type Props = {
 
 export default function WorksheetChoicePanel({ title, problems, displayStyle = false, selected, results, onSelect, onGrade, onClose }: Props) {
   const completed = problems.filter((problem) => selected[problem.id] !== undefined).length;
+  const graded = Object.keys(results).length > 0;
+  const correct = Object.values(results).filter(Boolean).length;
   return (
     <div className="trig-derivative-answer-panel-backdrop" role="presentation" onClick={onClose}>
-      <aside className="trig-derivative-answer-panel" role="dialog" aria-modal="true" aria-label={`${title} 답안 입력`} onClick={(event) => event.stopPropagation()}>
+      <aside className="trig-derivative-answer-panel worksheet-choice-modal" role="dialog" aria-modal="true" aria-label={`${title} 답안 입력`} onClick={(event) => event.stopPropagation()}>
         <header>
-          <div><strong>답안 입력</strong><span>{completed}/{problems.length}문제 선택</span></div>
+          <div>
+            <strong>답안 입력</strong>
+            <span>{graded ? `${correct}/${problems.length}문제 정답` : `${completed}/${problems.length}문제 선택`}</span>
+          </div>
           <button type="button" onClick={onClose} aria-label="닫기">×</button>
         </header>
         <div className="trig-derivative-answer-list">
-          {problems.map((problem, problemIndex) => (
-            <section className="trig-derivative-answer-item" key={problem.id}>
-              <div className="trig-derivative-answer-item-heading"><strong>{String(problemIndex + 1).padStart(2, "0")}</strong><span><InlineMathText text={worksheetQuestion(problem.label, problem.prompt)} /></span></div>
-              <div className="trig-derivative-choices">
-                {problem.choices.map((choice, choiceIndex) => (
-                  <button className={`trig-derivative-choice${selected[problem.id] === choice.id ? " is-selected" : ""}`} type="button" key={choice.id} aria-pressed={selected[problem.id] === choice.id} onClick={() => onSelect(problem.id, choice.id)}>
-                    <span>{choiceIndex + 1}</span><MathFormula latex={choice.latex} displayStyle={displayStyle} />
-                  </button>
-                ))}
-              </div>
-              {problem.id in results && <div className={`trig-derivative-panel-grade ${results[problem.id] ? "is-correct" : "is-wrong"}`}>{results[problem.id] ? "정답" : <>정답 <MathFormula latex={problem.correctLatex} displayStyle={displayStyle} /></>}</div>}
-            </section>
-          ))}
+          {problems.map((problem, problemIndex) => {
+            const problemGraded = problem.id in results;
+            const problemCorrect = results[problem.id] === true;
+            return (
+              <section className={`trig-derivative-answer-item${problemGraded ? problemCorrect ? " is-correct" : " is-wrong" : ""}`} key={problem.id}>
+                <div className="trig-derivative-answer-item-heading">
+                  <strong>{String(problemIndex + 1).padStart(2, "0")}</strong>
+                  <span><InlineMathText text={worksheetQuestion(problem.label, problem.prompt)} /></span>
+                  {problemGraded && <b className={`trig-derivative-answer-status ${problemCorrect ? "is-correct" : "is-wrong"}`}>{problemCorrect ? "맞음" : "틀림"}</b>}
+                </div>
+                {problem.latex && <div className="trig-derivative-answer-question"><MathFormula latex={problem.latex} displayStyle /></div>}
+                <div className="trig-derivative-choices">
+                  {problem.choices.map((choice, choiceIndex) => {
+                    const isSelected = selected[problem.id] === choice.id;
+                    const isCorrectAnswer = problemGraded && choice.correct;
+                    const isWrongAnswer = problemGraded && isSelected && !choice.correct;
+                    return (
+                      <button
+                        className={`trig-derivative-choice${isSelected ? " is-selected" : ""}${isCorrectAnswer ? " is-correct-answer" : ""}${isWrongAnswer ? " is-wrong-answer" : ""}`}
+                        type="button"
+                        key={choice.id}
+                        aria-pressed={isSelected}
+                        onClick={() => onSelect(problem.id, choice.id)}
+                      >
+                        <span>{choiceIndex + 1}</span><MathFormula latex={choice.latex} displayStyle={displayStyle} />
+                      </button>
+                    );
+                  })}
+                </div>
+                {problemGraded && (
+                  <div className={`trig-derivative-answer-feedback ${problemCorrect ? "is-correct" : "is-wrong"}`} role="status">
+                    <strong>{problemCorrect ? "정답입니다" : "오답입니다"}</strong>
+                    {!problemCorrect && <span>정답 <MathFormula latex={problem.correctLatex} displayStyle={displayStyle} /></span>}
+                  </div>
+                )}
+              </section>
+            );
+          })}
         </div>
-        <button className="button primary trig-derivative-panel-grade" type="button" disabled={completed === 0} onClick={onGrade}>전체 채점</button>
+        <footer className="trig-derivative-answer-actions">
+          <span>{graded ? `${correct}문제 맞음 · ${problems.length - correct}문제 틀림` : "답을 고른 뒤 채점하세요."}</span>
+          <button className="button primary trig-derivative-panel-grade" type="button" disabled={completed === 0} onClick={onGrade}>{graded ? "다시 채점" : "전체 채점"}</button>
+        </footer>
       </aside>
     </div>
   );

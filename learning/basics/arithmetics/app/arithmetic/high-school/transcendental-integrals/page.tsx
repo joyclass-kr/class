@@ -20,7 +20,7 @@ export default function TranscendentalIntegralsPage() {
   const problems = useMemo(() => [...set.problems, ...reviews], [set.problems, reviews]);
   const wrong = set.problems.filter((problem) => results[problem.id] === false);
   const choiceProblems: WorksheetChoiceProblem[] = problems.map((problem) => ({
-    id: problem.id, label: problem.label, prompt: problem.prompt, correctLatex: problem.answerLatex, choices: problem.choices,
+    id: problem.id, label: problem.label, prompt: problem.prompt, latex: `${problem.latex}=?`, correctLatex: problem.answerLatex, choices: problem.choices,
   }));
 
   useEffect(() => {

@@ -2377,6 +2377,11 @@ test("middle, high-school, and STEM answer panels reuse the worksheet question",
       /prompt:\s*(?:problem\.(?:prompt|question)|(?:QUESTION_PROMPTS|TARGET_LABELS)\[problem\.kind\]|worksheetQuestion\(problem\.label\)|"[^"]+\?")/,
       relativePath,
     );
+    assert.match(
+      source,
+      /latex:\s*(?:problem\.latex|`\$\{problem\.latex\}=\?`|expressionLatex\(problem\.expression\)|formatTrigonometricDerivativeTwoProblemLatex\(problem\))/,
+      relativePath,
+    );
   }
 
   const customPanelPages = [

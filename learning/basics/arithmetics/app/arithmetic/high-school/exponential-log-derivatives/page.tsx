@@ -23,6 +23,7 @@ export default function ExponentialLogDerivativesPage() {
     id: problem.id,
     label: problem.label,
     prompt: "도함수는?",
+    latex: problem.latex,
     correctLatex: problem.answerLatex,
     choices: problem.choices.map((choice) => ({ ...choice, latex: `f^{\\prime}(x)=${choice.latex}` })),
   }));

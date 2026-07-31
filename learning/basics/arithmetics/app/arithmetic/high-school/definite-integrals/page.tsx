@@ -23,6 +23,7 @@ export default function DefiniteIntegralsPage() {
     id: problem.id,
     label: problem.label,
     prompt: problem.prompt,
+    latex: `${problem.latex}=?`,
     correctLatex: problem.answerLatex,
     choices: problem.choices,
   }));

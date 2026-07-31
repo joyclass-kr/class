@@ -110,7 +110,7 @@ export default function PolynomialAdditionSubtractionPage() {
           const selected = selectedChoices[problem.id] === choice.id;
           return (
             <button
-              className={`trig-derivative-choice${selected ? " is-selected" : ""}`}
+              className={`trig-derivative-choice${selected ? " is-selected" : ""}${problem.id in results && choice.correct ? " is-correct-answer" : ""}${problem.id in results && selected && !choice.correct ? " is-wrong-answer" : ""}`}
               data-testid="polynomial-answer-choice"
               type="button"
               aria-label={`${problemNumber}번 ${index + 1}번 선택지`}
@@ -138,7 +138,7 @@ export default function PolynomialAdditionSubtractionPage() {
   function renderAnswerPanel() {
     return (
       <div className="trig-derivative-answer-panel-backdrop" onClick={() => setAnswerPanelOpen(false)}>
-        <aside className="trig-derivative-answer-panel" aria-label="다항식 답안 입력" onClick={(event) => event.stopPropagation()}>
+        <aside className="trig-derivative-answer-panel worksheet-choice-modal" aria-label="다항식 답안 입력" onClick={(event) => event.stopPropagation()}>
           <header>
             <div><strong>답안 입력</strong><small>풀이를 마친 뒤 답만 선택하세요.</small></div>
             <button type="button" onClick={() => setAnswerPanelOpen(false)} aria-label="답안 입력 닫기">×</button>
@@ -148,11 +148,12 @@ export default function PolynomialAdditionSubtractionPage() {
               const graded = problem.id in results;
               const isCorrect = results[problem.id] === true;
               return (
-                <section className="trig-derivative-answer-item" key={problem.id}>
+                <section className={`trig-derivative-answer-item${graded ? isCorrect ? " is-correct" : " is-wrong" : ""}`} key={problem.id}>
                   <div className="trig-derivative-answer-item-heading">
                     <strong>{String(index + 1).padStart(2, "0")}</strong>
                       <span><InlineMathText text={worksheetQuestion(problem.label, "계산 결과는?")} /></span>
                   </div>
+                  <div className="trig-derivative-answer-question"><div className="polynomial-expression">{formatPolynomialExpression(problem.operations)}</div></div>
                   {renderChoices(problem, index + 1)}
                   {graded && <span className={`counting-result ${isCorrect ? "correct" : "wrong"}`} role="status">{isCorrect ? "맞음" : <>정답 <MathFormula latex={createPolynomialChoices(problem).find(({ correct }) => correct)?.latex ?? "0"} /></>}</span>}
                 </section>

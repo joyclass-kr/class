@@ -78,7 +78,7 @@ export default function TrigonometricDerivativesPage() {
           const selected = selectedChoices[problem.id] === choice.id;
           return (
             <button
-              className={`trig-derivative-choice${selected ? " is-selected" : ""}`}
+              className={`trig-derivative-choice${selected ? " is-selected" : ""}${problem.id in results && choice.correct ? " is-correct-answer" : ""}${problem.id in results && selected && !choice.correct ? " is-wrong-answer" : ""}`}
               data-testid="trigonometric-derivative-choice"
               type="button"
               aria-label={`${problemNumber}번 ${index + 1}번 선택지`}
@@ -122,7 +122,7 @@ export default function TrigonometricDerivativesPage() {
   function renderAnswerPanel() {
     return (
       <div className="trig-derivative-answer-panel-backdrop" onClick={() => setAnswerPanelOpen(false)}>
-        <aside className="trig-derivative-answer-panel" aria-label="삼각함수 미분 답안 입력" onClick={(event) => event.stopPropagation()}>
+        <aside className="trig-derivative-answer-panel worksheet-choice-modal" aria-label="삼각함수 미분 답안 입력" onClick={(event) => event.stopPropagation()}>
           <header>
             <div><strong>답안 입력</strong><small>풀이를 마친 뒤 답만 입력하세요.</small></div>
             <button type="button" onClick={() => setAnswerPanelOpen(false)} aria-label="답안 입력 닫기">×</button>
@@ -132,12 +132,13 @@ export default function TrigonometricDerivativesPage() {
               const graded = problem.id in results;
               const isCorrect = results[problem.id] === true;
               return (
-                <section className="trig-derivative-answer-item" key={problem.id}>
+                  <section className={`trig-derivative-answer-item${graded ? isCorrect ? " is-correct" : " is-wrong" : ""}`} key={problem.id}>
                   <div className="trig-derivative-answer-item-heading">
                     <strong>{String(index + 1).padStart(2, "0")}</strong>
                       <span><InlineMathText text={worksheetQuestion(problem.label, "도함수는?")} /></span>
-                  </div>
-                  {renderChoices(problem, index + 1)}
+                    </div>
+                    <div className="trig-derivative-answer-question"><MathFormula latex={`${formatTrigonometricDerivativeProblemLatex(problem)},\\quad f^{\\prime}(x)=?`} display /></div>
+                    {renderChoices(problem, index + 1)}
                   {graded && <span className={`counting-result ${isCorrect ? "correct" : "wrong"}`} role="status">{isCorrect ? "맞음" : <>정답 <MathFormula latex={formatTrigonometricDerivativeAnswerLatex(problem)} /></>}</span>}
                 </section>
               );

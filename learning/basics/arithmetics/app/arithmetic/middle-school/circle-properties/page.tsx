@@ -48,6 +48,7 @@ function choiceProblem(problem: MiddleCirclePropertiesProblem): WorksheetChoiceP
     id: problem.id,
     label: problem.label,
     prompt: worksheetQuestion(problem.label),
+    latex: problem.latex,
     correctLatex: problem.answerLatex,
     choices: [...choices.slice(shift), ...choices.slice(0, shift)],
   };

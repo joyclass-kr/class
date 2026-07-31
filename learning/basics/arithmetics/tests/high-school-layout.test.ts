@@ -81,12 +81,11 @@ test("KaTeX 수식 안의 한글도 본문과 같은 교재용 한글 글꼴을 
   assert.match(typographyCss, /\.katex \.mathrm,[\s\S]*?font-family:\s*"KaTeX_Main"/);
 });
 
-test("중등·고등·이공계 기초 문제 칸은 점선 대신 얇은 실선으로 구분한다", () => {
+test("중등·고등·이공계 기초 문제지에는 가로 점선을 사용하지 않는다", () => {
   assert.match(typographyCss, /\.polynomial-page \.polynomial-question,[\s\S]*?border-bottom:\s*0;[\s\S]*?font-family:\s*var\(--worksheet-korean-font\)/);
   assert.match(typographyCss, /\.trig-derivative-answer-panel \.trig-derivative-answer-item[\s\S]*?border-bottom:\s*0/);
   assert.doesNotMatch(typographyCss, /border-bottom:\s*1px dashed/);
   assert.match(globalCss, /\.polynomial-question\s*\{[\s\S]*?border-bottom:\s*0/);
-  assert.match(css, /\.trig-derivative-answer-item\s*\{[\s\S]*?border-bottom:\s*0/);
 });
 
 test("다항식 복합 연산은 전체 폭을 사용하고 긴 식을 한 줄로 유지한다", () => {

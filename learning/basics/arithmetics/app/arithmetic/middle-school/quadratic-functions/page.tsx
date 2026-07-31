@@ -64,6 +64,7 @@ function choiceProblem(problem: MiddleQuadraticFunctionProblem): WorksheetChoice
     id: problem.id,
     label: TARGET_LABELS[problem.kind],
     prompt: QUESTION_PROMPTS[problem.kind],
+    latex: problem.latex,
     correctLatex: problem.answerLatex,
     choices: [...choices.slice(shift), ...choices.slice(0, shift)],
   };

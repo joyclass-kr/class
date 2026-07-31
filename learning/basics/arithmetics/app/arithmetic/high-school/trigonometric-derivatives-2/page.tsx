@@ -25,6 +25,7 @@ export default function TrigonometricDerivativesTwoPage() {
     id: problem.id,
     label: problem.label,
     prompt: "도함수는?",
+    latex: formatTrigonometricDerivativeTwoProblemLatex(problem),
     correctLatex: problem.answer.latex,
     choices: createTrigonometricDerivativeTwoChoices(problem).map((choice) => ({
       id: choice.id,

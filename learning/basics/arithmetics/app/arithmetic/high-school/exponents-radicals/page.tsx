@@ -178,22 +178,28 @@ export default function ExponentsRadicalsPage() {
       <div className="a4-stage counting-a4-stage answer-stage" style={{ width: 794 * sheetScale, height: 1123 * sheetScale }} aria-label="A4 지수와 근호 정답지">{renderSheet(true)}</div>
       {answerPanelOpen && (
         <div className="trig-derivative-answer-panel-backdrop" role="presentation" onClick={() => setAnswerPanelOpen(false)}>
-          <aside className="trig-derivative-answer-panel" role="dialog" aria-modal="true" aria-label="지수와 근호 답안 입력" onClick={(event) => event.stopPropagation()}>
+          <aside className="trig-derivative-answer-panel worksheet-choice-modal" role="dialog" aria-modal="true" aria-label="지수와 근호 답안 입력" onClick={(event) => event.stopPropagation()}>
             <header><div><strong>답안 입력</strong><span>{completed}/{problems.length}문제 선택</span></div><button type="button" onClick={() => setAnswerPanelOpen(false)} aria-label="닫기">×</button></header>
             <div className="trig-derivative-answer-list">
-              {problems.map((problem, problemIndex) => (
-                <section className="trig-derivative-answer-item" key={problem.id}>
+              {problems.map((problem, problemIndex) => {
+                const graded = problem.id in results;
+                const isCorrect = results[problem.id] === true;
+                return (
+                <section className={`trig-derivative-answer-item${graded ? isCorrect ? " is-correct" : " is-wrong" : ""}`} key={problem.id}>
                     <div className="trig-derivative-answer-item-heading"><strong>{String(problemIndex + 1).padStart(2, "0")}</strong><span><InlineMathText text={worksheetQuestion(problem.label)} /></span></div>
+                  <div className="trig-derivative-answer-question"><MathFormula latex={expressionLatex(problem.expression)} display /></div>
                   <div className="trig-derivative-choices">
-                    {createExponentRadicalChoices(problem).map((choice, choiceIndex) => (
-                      <button className={selectedChoices[problem.id] === choiceIndex ? "is-selected" : ""} type="button" key={choiceIndex} onClick={() => selectChoice(problem, choiceIndex)}>
+                    {createExponentRadicalChoices(problem).map((choice, choiceIndex) => {
+                      const selected = selectedChoices[problem.id] === choiceIndex;
+                      return (
+                      <button className={`${selected ? "is-selected" : ""}${graded && choice.correct ? " is-correct-answer" : ""}${graded && selected && !choice.correct ? " is-wrong-answer" : ""}`} type="button" key={choiceIndex} onClick={() => selectChoice(problem, choiceIndex)}>
                         <span>{choiceIndex + 1}</span><MathFormula latex={answerLatex(choice.answer)} />
                       </button>
-                    ))}
+                    )})}
                   </div>
                   {problem.id in results && <div className={`trig-derivative-panel-grade ${results[problem.id] ? "is-correct" : "is-wrong"}`}>{results[problem.id] ? "정답" : <>정답 <MathFormula latex={answerLatex(problem.answer)} /></>}</div>}
                 </section>
-              ))}
+              )})}
             </div>
           </aside>
         </div>

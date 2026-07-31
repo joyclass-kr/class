@@ -54,6 +54,7 @@ export default function NumericChoiceWorksheet({ initialSeed, subject, title, in
     id: problem.id,
     label: problem.label,
     prompt: problem.prompt,
+    latex: problem.latex,
     correctLatex: formatChoice(problem, problem.answers),
     choices: (makeChoices?.(problem) ?? createNumericChoices(problem.answers, problem.id)).map((choice) => ({
       id: choice.id,

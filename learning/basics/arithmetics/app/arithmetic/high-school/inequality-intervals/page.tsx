@@ -44,6 +44,7 @@ export default function InequalityIntervalsPage() {
     id: problem.id,
     label: problem.label,
     prompt: "해는?",
+    latex: expressionLatex(problem.expression),
     correctLatex: solutionLatex(problem.solution),
     choices: createInequalityChoices(problem).map((choice, index) => ({
       id: `${problem.id}-${index}`,

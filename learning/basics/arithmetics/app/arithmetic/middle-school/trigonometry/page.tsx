@@ -33,6 +33,7 @@ function choiceProblem(problem: MiddleTrigonometryProblem): WorksheetChoiceProbl
     id: problem.id,
     label: problem.label,
     prompt: problem.question,
+    latex: problem.latex,
     correctLatex: problem.answerLatex,
     choices: [...choices.slice(shift), ...choices.slice(0, shift)],
   };

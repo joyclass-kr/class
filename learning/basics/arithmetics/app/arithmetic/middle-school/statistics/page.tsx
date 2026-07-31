@@ -52,6 +52,7 @@ function choiceProblem(problem: MiddleStatisticsProblem): WorksheetChoiceProblem
     id: problem.id,
     label: problem.label,
     prompt: TARGET_LABELS[problem.kind],
+    latex: problem.latex,
     correctLatex: problem.answerLatex,
     choices: [...choices.slice(shift), ...choices.slice(0, shift)],
   };

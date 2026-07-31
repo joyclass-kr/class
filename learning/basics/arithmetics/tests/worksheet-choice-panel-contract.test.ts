@@ -30,5 +30,45 @@ test("공통 객관식 패널은 선택 상태와 패널 내부 채점 버튼을
   );
   assert.match(source, /aria-pressed=/);
   assert.match(source, /onClick=\{onGrade\}/);
-  assert.match(source, />전체 채점<\/button>/);
+  assert.match(source, /전체 채점/);
+  assert.match(source, /is-correct-answer/);
+  assert.match(source, /is-wrong-answer/);
+  assert.match(source, /정답입니다/);
+  assert.match(source, /오답입니다/);
+  assert.match(source, /problem\.latex/);
+});
+
+test("shared choice panel is a centered multi-column modal with visible grading states", () => {
+  const css = fs.readFileSync(
+    path.join(process.cwd(), "app", "arithmetic", "high-school", "high-school.css"),
+    "utf8",
+  );
+  assert.match(css, /\.trig-derivative-answer-panel-backdrop\s*\{[\s\S]*?align-items:\s*center;[\s\S]*?justify-content:\s*center/);
+  assert.match(css, /\.worksheet-choice-modal \.trig-derivative-answer-list\s*\{[\s\S]*?repeat\(auto-fit,\s*minmax\(330px,\s*1fr\)\)/);
+  assert.match(css, /\.trig-derivative-choice\.is-correct-answer[\s\S]*?\{/);
+  assert.match(css, /\.trig-derivative-choice\.is-wrong-answer[\s\S]*?\{/);
+});
+
+test("legacy high-school answer panels use the same modal, question preview, and grading colors", () => {
+  const routes = [
+    "complex-numbers",
+    "equation-transformations",
+    "exponents-radicals",
+    "factorization-rational",
+    "polynomial-add-subtract",
+    "trigonometric-derivatives",
+  ];
+
+  for (const route of routes) {
+    const source = fs.readFileSync(
+      path.join(process.cwd(), "app", "arithmetic", "high-school", route, "page.tsx"),
+      "utf8",
+    );
+    assert.match(source, /trig-derivative-answer-panel worksheet-choice-modal/, route);
+    assert.match(source, /trig-derivative-answer-question/, route);
+    assert.match(source, /is-correct/, route);
+    assert.match(source, /is-wrong/, route);
+    assert.match(source, /is-correct-answer/, route);
+    assert.match(source, /is-wrong-answer/, route);
+  }
 });
