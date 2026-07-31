@@ -177,9 +177,6 @@ const MAX_ROOM_PLAYERS = {
 };
 
 const FINISHER_GAMES = new Set(["coinweighing", "hanoitower", "sphinx"]);
-const FINISHER_DATA_FILE =
-  process.env.FINISHERS_DATA_PATH ||
-  path.join(__dirname, "finishers.json");
 
 app.use(["/admin", "/arithmetic", "/fraction", "/api/arithmetic-race", "/hanguksa", "/classtools", "/learning", "/learn"], classroomPlatform.requireSiteAccess);
 app.use("/arithmetic", proxyToLearningApp(ARITHMETIC_PORT));
@@ -272,7 +269,6 @@ for (const directory of ["admin", "classtools", "css", "js", "learning"]) {
 
 const rooms = new Map();
 const museumClasses = new Map();
-let finisherStore = loadFinisherStore();
 
 function safeSend(socket, payload) {
   if (socket && socket.readyState === WebSocket.OPEN) {
@@ -973,42 +969,6 @@ function getKoreaDateParts(date = new Date()) {
   };
 }
 
-function loadFinisherStore() {
-  try {
-    if (!fs.existsSync(FINISHER_DATA_FILE)) return {};
-    const parsed = JSON.parse(fs.readFileSync(FINISHER_DATA_FILE, "utf8"));
-    return parsed && typeof parsed === "object" ? parsed : {};
-  } catch (error) {
-    console.error("Failed to read finisher data:", error);
-    return {};
-  }
-}
-
-function persistFinisherStore() {
-  try {
-    fs.mkdirSync(path.dirname(FINISHER_DATA_FILE), { recursive: true });
-    const tempFile = `${FINISHER_DATA_FILE}.tmp`;
-    fs.writeFileSync(tempFile, JSON.stringify(finisherStore, null, 2), "utf8");
-    fs.renameSync(tempFile, FINISHER_DATA_FILE);
-  } catch (error) {
-    console.error("Failed to save finisher data:", error);
-  }
-}
-
-function cleanOldFinisherDates() {
-  const dates = Object.keys(finisherStore).sort().reverse();
-  dates.slice(14).forEach(date => delete finisherStore[date]);
-}
-
-function getTodayRecords(gameId) {
-  const { date } = getKoreaDateParts();
-  const records = finisherStore[date]?.[gameId] || {};
-  return Object.values(records).sort((a, b) => {
-    const timeCompare = String(a.time).localeCompare(String(b.time));
-    return timeCompare || String(a.name).localeCompare(String(b.name), "ko");
-  });
-}
-
 // Some older pages still link to the physical entry file.  The deployed app
 // exposes the home screen at `/`, so normalize that legacy URL before serving
 // the page instead of returning Express's "Cannot GET /index.html" response.
@@ -1030,21 +990,23 @@ app.get("/health", (req, res) => {
   });
 });
 
-app.get("/api/finishers", (req, res) => {
+app.get("/api/finishers", async (req, res) => {
   const gameId = cleanToken(req.query.gameId, 30);
   if (!FINISHER_GAMES.has(gameId)) {
     return res.status(400).json({ error: "INVALID_GAME" });
   }
 
   const { date } = getKoreaDateParts();
-  return res.json({
-    date,
-    gameId,
-    records: getTodayRecords(gameId)
-  });
+  try {
+    const records = await classroomPlatform.listFinisherRecords(date, gameId);
+    return res.json({ date, gameId, records });
+  } catch (error) {
+    console.error("Failed to read finisher records:", error);
+    return res.status(503).json({ error: "FINISHER_STORAGE_UNAVAILABLE" });
+  }
 });
 
-app.post("/api/finishers", (req, res) => {
+app.post("/api/finishers", async (req, res) => {
   const gameId = cleanToken(req.body?.gameId, 30);
   const name = cleanToken(req.body?.name, 10);
   const difficulty = cleanToken(req.body?.difficulty, 50);
@@ -1064,27 +1026,20 @@ app.post("/api/finishers", (req, res) => {
   }
 
   const now = getKoreaDateParts();
-  finisherStore[now.date] ||= {};
-  finisherStore[now.date][gameId] ||= {};
-
-  const existing = finisherStore[now.date][gameId][name];
-  if (!existing || rank > Number(existing.rank || 0)) {
-    finisherStore[now.date][gameId][name] = {
+  try {
+    const records = await classroomPlatform.saveFinisherRecord({
+      date: now.date,
+      gameId,
       name,
       difficulty,
       rank,
       time: now.time
-    };
-    cleanOldFinisherDates();
-    persistFinisherStore();
+    });
+    return res.json({ ok: true, date: now.date, gameId, records });
+  } catch (error) {
+    console.error("Failed to save finisher record:", error);
+    return res.status(503).json({ error: "FINISHER_STORAGE_UNAVAILABLE" });
   }
-
-  return res.json({
-    ok: true,
-    date: now.date,
-    gameId,
-    records: getTodayRecords(gameId)
-  });
 });
 
 wss.on("connection", socket => {
@@ -2874,6 +2829,6 @@ wss.on("close", () => clearInterval(heartbeatTimer));
 classroomPlatform.initialize().finally(() => {
   server.listen(PORT, "0.0.0.0", () => {
     console.log(`Classroom Game Hub listening on port ${PORT}`);
-    console.log(`Finisher data file: ${FINISHER_DATA_FILE}`);
+    console.log("Finisher records use the classroom PostgreSQL database.");
   });
 });

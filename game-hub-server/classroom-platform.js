@@ -327,6 +327,19 @@ function createClassroomPlatform(options = {}) {
         ADD COLUMN IF NOT EXISTS birth_date TEXT`,
       `CREATE INDEX IF NOT EXISTS classroom_students_class_idx
         ON classroom_students (class_id)`,
+      `CREATE TABLE IF NOT EXISTS game_finisher_records (
+        record_date DATE NOT NULL,
+        game_id TEXT NOT NULL,
+        player_name TEXT NOT NULL,
+        difficulty TEXT NOT NULL,
+        rank INTEGER NOT NULL CHECK (rank BETWEEN 0 AND 10000),
+        finished_time CHAR(5) NOT NULL,
+        created_at TIMESTAMPTZ NOT NULL DEFAULT NOW(),
+        updated_at TIMESTAMPTZ NOT NULL DEFAULT NOW(),
+        PRIMARY KEY (record_date, game_id, player_name)
+      )`,
+      `CREATE INDEX IF NOT EXISTS game_finisher_records_lookup_idx
+        ON game_finisher_records (record_date, game_id, finished_time, player_name)`,
       `ALTER TABLE classroom_classes
         DROP CONSTRAINT IF EXISTS classroom_classes_grade_check`,
       `ALTER TABLE classroom_classes
@@ -380,6 +393,48 @@ function createClassroomPlatform(options = {}) {
       [hashSessionToken(token)]
     );
     return result.rows[0] || null;
+  }
+
+  function requireDatabaseReady() {
+    if (!pool || !databaseReady) {
+      const error = new Error("Classroom database is not ready.");
+      error.code = "DATABASE_NOT_READY";
+      throw error;
+    }
+  }
+
+  async function listFinisherRecords(date, gameId) {
+    requireDatabaseReady();
+    const result = await pool.query(
+      `SELECT player_name AS name, difficulty, rank, finished_time AS time
+       FROM game_finisher_records
+       WHERE record_date = $1::date AND game_id = $2
+       ORDER BY finished_time ASC, player_name ASC`,
+      [date, gameId]
+    );
+    return result.rows.map((row) => ({ ...row, rank: Number(row.rank) }));
+  }
+
+  async function saveFinisherRecord({ date, gameId, name, difficulty, rank, time }) {
+    requireDatabaseReady();
+    await pool.query(
+      `INSERT INTO game_finisher_records
+         (record_date, game_id, player_name, difficulty, rank, finished_time)
+       VALUES ($1::date, $2, $3, $4, $5, $6)
+       ON CONFLICT (record_date, game_id, player_name) DO UPDATE
+       SET difficulty = EXCLUDED.difficulty,
+           rank = EXCLUDED.rank,
+           finished_time = EXCLUDED.finished_time,
+           updated_at = NOW()
+       WHERE EXCLUDED.rank > game_finisher_records.rank`,
+      [date, gameId, name, difficulty, rank, time]
+    );
+    await pool.query(
+      `DELETE FROM game_finisher_records
+       WHERE record_date < $1::date - 13`,
+      [date]
+    );
+    return listFinisherRecords(date, gameId);
   }
 
   async function requireUser(req) {
@@ -1543,7 +1598,15 @@ function createClassroomPlatform(options = {}) {
     return res.status(500).json({ error: "INTERNAL_ERROR", message: "The server could not complete the request." });
   });
 
-  return { router, initialize, configuration, requireSiteAccess, verifyMuseumPresenceTicket };
+  return {
+    router,
+    initialize,
+    configuration,
+    requireSiteAccess,
+    verifyMuseumPresenceTicket,
+    listFinisherRecords,
+    saveFinisherRecord
+  };
 }
 
 module.exports = {
