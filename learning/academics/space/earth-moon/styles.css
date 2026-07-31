@@ -78,6 +78,21 @@ body {
     transform: translateY(-1px);
 }
 
+.space-home-btn {
+    flex: 0 0 auto;
+    border-color: rgba(56, 189, 248, 0.55);
+    background: rgba(2, 132, 199, 0.14);
+    color: #38bdf8;
+}
+
+.space-home-btn:hover,
+.space-home-btn:focus-visible {
+    border-color: #38bdf8;
+    background: rgba(2, 132, 199, 0.3);
+    color: #e0f2fe;
+    outline: none;
+}
+
 .app-title {
     font-size: 22px;
     font-weight: 800;
