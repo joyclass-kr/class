@@ -24,6 +24,14 @@ for (const { item } of items) {
   assert.equal(item.choices.length, readingBank.expectedChoiceCount(item.targetLevel));
   assert.equal(item.distractorReasons.length, item.choices.length);
   assert.ok(item.correctIndex >= 0 && item.correctIndex < item.choices.length);
+
+  const obviousCuePattern =
+    /(없다|않다|아니다|관계없다|항상|반드시|오직|전혀|모두|완전히|무조건|절대로|만으로|만을|만이|\bnot\b|\bno\b|\bnever\b|\bonly\b|\balways\b|\bcannot\b|\bwithout\b|\bregardless\b|\bevery\b|\ball\b|\bentirely\b|\bcompletely\b|\bimpossible\b|\buseless\b|\bguarantee\b|\bmust\b)/i;
+  item.choices.forEach((choice, index) => {
+    if (index !== item.correctIndex) {
+      assert.doesNotMatch(choice, obviousCuePattern, `${item.itemKey}: distractor exposes an obvious cue`);
+    }
+  });
 }
 
 assert.equal(path.basename(seed.sourceDocuments[0]), "수면과_기억_수직샘플_v0.1.md");

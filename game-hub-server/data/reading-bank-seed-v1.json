@@ -67,7 +67,7 @@
           "promptText": "자는 동안 서준이의 뇌가 한 일은 무엇입니까?",
           "choices": [
             "낮에 배운 것을 정리했습니다.",
-            "배운 것을 모두 지웠습니다.",
+            "다음 날 배울 낱말을 정리했습니다.",
             "밖에 나가서 놀았습니다."
           ],
           "correctIndex": 0,
@@ -92,7 +92,7 @@
           "passageText": "지우는 받아쓰기 낱말을 연습했습니다. 더 오래 공부하려고 밤늦게까지 깨어 있고 싶었습니다. 하지만 잠을 자는 동안 뇌가 배운 내용을 정리하는 데 도움을 받는다는 말을 떠올렸습니다. 지우는 낱말을 한 번 더 확인한 뒤 잠자리에 들었습니다.",
           "promptText": "지우가 잠자리에 든 까닭으로 알맞은 것은 무엇입니까?",
           "choices": [
-            "연습은 전혀 필요하지 않기 때문입니다.",
+            "잠을 자는 동안 연습한 낱말을 다시 써 보기 때문입니다.",
             "잠이 배운 내용을 정리하는 데 도움이 되기 때문입니다.",
             "자는 동안 처음 보는 낱말을 저절로 배울 수 있기 때문입니다."
           ],
@@ -146,7 +146,7 @@
           "passageText": "잠은 학습의 앞뒤에서 서로 다른 역할을 한다. 학습 전에 잠이 부족하면 주의를 집중하기 어려워 새로운 정보를 제대로 받아들이지 못할 수 있다. 반대로 무언가를 배운 뒤에 자는 잠은 새 기억이 안정되도록 돕는다. 그렇다고 잠만 자면 공부한 적 없는 내용까지 알게 되는 것은 아니다. 정보가 먼저 머릿속에 들어와야 정리할 기억도 생기기 때문이다.",
           "promptText": "이 글에서 추론한 내용으로 가장 알맞은 것은 무엇입니까?",
           "choices": [
-            "잠은 공부를 완전히 대신할 수 있다.",
+            "잠은 새로운 정보를 처음 입력하는 학습 단계이다.",
             "공부 시간을 늘리려면 잠을 줄이는 것이 언제나 유리하다.",
             "학습과 잠은 기억을 만드는 과정에서 서로 보완할 수 있다.",
             "잠을 자면 배우지 않은 정보도 기억에 저장된다."
@@ -175,7 +175,7 @@
           "promptText": "윗글의 주장으로 가장 적절한 것은 무엇입니까?",
           "choices": [
             "시험 전에는 수면보다 공부 시간을 우선해야 한다.",
-            "기억은 오직 깨어 있는 동안에만 형성된다.",
+            "기억의 안정은 학습 직후의 집중 상태에 가장 크게 좌우된다.",
             "수면시간을 늘리면 학습하지 않은 내용도 알 수 있다.",
             "학습 효과를 판단할 때 공부 시간과 수면의 역할을 함께 고려해야 한다.",
             "수면 부족은 단순한 기억 과제에만 영향을 준다."
@@ -204,7 +204,7 @@
           "passageText": "기억 형성은 정보를 받아들이는 부호화, 새 기억을 안정시키는 공고화, 필요할 때 기억을 꺼내는 인출로 구분할 수 있다. 수면은 특히 공고화와 관련되지만, 세 과정은 완전히 독립되어 있지 않다. 잠이 부족해 집중력이 떨어진 상태에서는 부호화할 정보 자체가 빈약해질 수 있다. 반대로 잠을 충분히 자더라도 처음부터 주의를 기울이지 않은 정보가 저절로 완전한 기억이 되지는 않는다. 따라서 공부와 수면 중 어느 하나만을 늘리면 다른 하나는 필요 없다는 생각은 기억 형성의 여러 단계를 지나치게 단순화한다.",
           "promptText": "윗글을 바탕으로 할 때 가장 적절한 판단은 무엇입니까?",
           "choices": [
-            "공고화가 일어나면 부호화와 인출은 필요하지 않다.",
+            "공고화는 부호화가 끝난 뒤 인출을 대신하는 단계이다.",
             "잠은 이미 완전해진 기억을 지우는 과정이다.",
             "주의를 기울이지 않은 정보일수록 수면 중에 더 잘 학습된다.",
             "학습과 수면은 기억 형성의 서로 다른 단계에 기여할 수 있다.",
@@ -236,9 +236,9 @@
           "choices": [
             "관찰 연구에서 상관관계가 나타나면 인과관계도 자동으로 확정된다.",
             "실험 연구는 모든 연령과 기억 과제에서 동일한 효과를 보장한다.",
-            "수면 외의 요인이 존재하므로 수면과 기억의 관계는 연구할 수 없다.",
+            "관찰 연구는 생활 습관의 영향을 포함하므로 실험보다 인과관계를 더 분명히 보여 준다.",
             "여러 연구가 수면의 기여를 지지하더라도 효과의 조건과 범위를 함께 살펴야 한다.",
-            "생활 습관을 조사한 연구는 과학적 근거로 사용할 가치가 없다."
+            "연구 방식이 다르면 같은 방향의 결과도 설명의 신뢰도를 낮춘다."
           ],
           "correctIndex": 3,
           "answerEvidence": "글은 서로 다른 연구가 수면의 기여를 지지할 수 있음을 인정하면서도 조건에 따른 차이를 강조한다.",
@@ -267,7 +267,7 @@
             "기억의 재활성화가 수면이 아닌 각성 상태에서만 일어난다고 전제한다.",
             "기억의 재활성화를 사전에 부호화된 정보의 재구성이 아니라 새로운 정보의 최초 입력으로 오해한다.",
             "해마가 장기 기억의 모든 내용을 영구적으로 단독 저장한다고 주장한다.",
-            "비렘수면이 기존 기억을 무조건 제거하는 단계라고 해석한다.",
+            "비렘수면이 기존 기억을 약하게 만든 뒤 새 정보로 교체하는 단계라고 해석한다.",
             "대뇌피질이 학습 직후 모든 기억을 완성한다는 연구 결과를 부정한다."
           ],
           "correctIndex": 1,
@@ -321,8 +321,8 @@
           "promptText": "What does Mina's brain do during sleep?",
           "choices": [
             "It organizes what she learned.",
-            "It forgets every English word.",
-            "It learns words Mina never studied."
+            "It rearranges the spelling of each English word.",
+            "It prepares tomorrow's new words for her."
           ],
           "correctIndex": 0,
           "answerEvidence": "넷째 문장이 정답 근거다.",
@@ -348,8 +348,8 @@
           "choices": [
             "Sleep makes studying unnecessary.",
             "Study and sleep can work together for memory.",
-            "The brain stops all activity during sleep.",
-            "Students should learn only before bed."
+            "The brain focuses on taking in new lessons during sleep.",
+            "Students should place sleep before each study session."
           ],
           "correctIndex": 1,
           "answerEvidence": "첫 문장부터 마지막 문장까지 학습과 수면의 상호보완성을 설명한다.",
@@ -375,9 +375,9 @@
           "promptText": "Which is the best title for the passage?",
           "choices": [
             "Two Ways Sleep Supports Learning",
-            "How to Learn Without Paying Attention",
+            "Sleep as a Substitute for Attention",
             "Why Sleep Removes New Memories",
-            "The Only Time Students Should Study"
+            "Why Learning Ends at Bedtime"
           ],
           "correctIndex": 0,
           "answerEvidence": "글은 학습 전의 주의와 학습 후의 기억 안정이라는 두 역할을 제시한다.",
@@ -402,11 +402,11 @@
           "passageText": "Before an exam, students may treat study time and sleep time as simple opposites. If they sleep one hour less, they seem to gain one more hour for study. Yet this calculation ignores the quality of learning. A tired student may have trouble focusing on new material. In addition, sleep after studying is related to the process that makes new memories more stable. This does not mean that sleep can create knowledge without study. Rather, effective learning depends on both the attention used to take in information and the later process that helps preserve it. Therefore, ______.",
           "promptText": "Which best completes the blank?",
           "choices": [
-            "every hour of sleep produces the same test score",
+            "each extra hour of sleep raises a test score by the same amount",
             "reducing sleep does not always produce more effective study",
             "students can learn difficult material while remaining asleep",
-            "memory is formed only while a person is awake",
-            "the total number of study hours is the only useful measure"
+            "memory is completed during the initial period of study",
+            "total study time is the best predictor of learning quality"
           ],
           "correctIndex": 1,
           "answerEvidence": "글은 수면을 줄이면 공부 시간이 늘어난다는 계산이 학습의 질과 기억 안정 과정을 빠뜨린다고 설명한다.",
@@ -463,10 +463,10 @@
           "promptText": "Which statement is best supported by the passage?",
           "choices": [
             "Any correlation between sleep and grades proves a direct causal relationship.",
-            "Experimental findings apply equally to every learner and every memory task.",
+            "Experimental findings predict a similar benefit across learners and memory tasks.",
             "Evidence can support a role for sleep while leaving its conditions and effect size open.",
-            "Observational studies are useless whenever other variables may be involved.",
-            "Sleep is the only factor that can influence academic performance."
+            "Observational studies provide more direct causal evidence than controlled experiments.",
+            "Sleep explains the largest share of differences in academic performance."
           ],
           "correctIndex": 2,
           "answerEvidence": "글은 여러 방법의 증거가 수면의 역할을 지지할 수 있지만 효과의 크기와 적용 조건은 달라질 수 있다고 말한다.",
@@ -492,11 +492,11 @@
           "passageText": "Students often treat study time and sleep time as if they were competing investments. On this view, every hour spent sleeping is an hour taken from learning. The reasoning appears mathematical, but it assumes that all waking study hours have equal value. When sleep is insufficient, attention during later study may weaken, reducing the quality of initial encoding. Sleep after learning is also associated with consolidation, through which fragile memories become more stable. Yet it would be equally misleading to claim that sleep can replace study. Consolidation requires material that has already been attended to and encoded. The relationship is therefore not a choice between two independent routes to the same result. Study supplies and processes information, whereas sleep helps create conditions in which that learning can be preserved. The simple trade-off model fails because it ______.",
           "promptText": "Which best completes the blank?",
           "choices": [
-            "assumes that memories must be encoded before they can be consolidated",
+            "treats prior encoding as a requirement for consolidation",
             "counts added waking time but ignores changes in learning quality and memory stability",
             "distinguishes the initial learning of information from its later preservation",
             "claims that studying and sleeping are exactly the same cognitive process",
-            "rejects the assumption that every waking study hour has equal value"
+            "challenges the idea that waking study hours have equal value"
           ],
           "correctIndex": 1,
           "answerEvidence": "단순 교환 모형은 잠을 줄여 얻은 시간만 계산하고, 수면 부족에 따른 주의·부호화의 질과 학습 후 기억 안정의 차이를 계산하지 않으므로 2가 적절하다.",
@@ -606,7 +606,7 @@
           "choices": [
             "가장 많이 읽은 사람이 6권을 읽었기 때문입니다.",
             "모두 읽은 18권을 세 사람에게 똑같이 나누면 6권이기 때문입니다.",
-            "세 사람 모두 실제로 6권씩 읽었기 때문입니다."
+            "세 사람의 책 수를 크기순으로 놓았을 때 가운데가 6권이기 때문입니다."
           ],
           "correctIndex": 1,
           "answerEvidence": "평균을 ‘모두 합해 똑같이 나눈 값’으로 설명한 문장을 찾으면 2가 된다.",
@@ -690,7 +690,7 @@
             "중앙값은 언제나 전체 금액의 규모를 정확히 보여 준다.",
             "평균과 중앙값이 다르면 중앙값만 공개해야 한다.",
             "자료의 목적과 분포를 고려하여 대표값을 선택해야 한다.",
-            "극단값이 있는 자료에서는 어떤 통계도 사용할 수 없다."
+            "극단값이 포함되면 중앙값이 자료의 전체 규모를 가장 잘 나타낸다."
           ],
           "correctIndex": 3,
           "answerEvidence": "전체 지급 규모에는 평균, 전형적 직원의 월급에는 중앙값이 유용할 수 있다는 대조가 4로 요약된다.",
@@ -719,8 +719,8 @@
             "두 집단의 평균이 같으면 모든 구성원의 값도 같다.",
             "B반의 중앙값은 점수가 넓게 퍼져 있으므로 90점이다.",
             "대표값 하나만으로는 자료의 퍼짐 차이를 확인하기 어렵다.",
-            "자료가 넓게 퍼져 있으면 평균을 계산할 수 없다.",
-            "평균이 같을 때는 그래프와 변동성 정보를 볼 필요가 없다."
+            "자료가 넓게 퍼질수록 평균은 중앙값보다 크게 계산된다.",
+            "평균이 같은 두 집단은 그래프에서도 비슷한 분포를 보인다."
           ],
           "correctIndex": 2,
           "answerEvidence": "두 반의 평균·중앙값은 같지만 퍼짐은 다르므로 3이 핵심이다.",
@@ -776,7 +776,7 @@
           "passageText": "집단 전체의 평균 변화는 각 하위 집단의 값 변화뿐 아니라 집단 구성비의 변화에도 영향을 받는다. 가상의 교육기관에서 심화 과정의 첫해 평균은 90점, 기초 과정은 60점이었다. 둘째 해에는 각각 89점과 59점으로 두 과정의 평균이 모두 1점씩 하락했다. 그런데 첫해에는 전체 수강생의 20%만 심화 과정을 들었고, 둘째 해에는 80%가 심화 과정을 들었다. 이에 따라 전체 평균은 첫해 66점에서 둘째 해 83점으로 상승한다. 각 과정의 성취도는 모두 낮아졌지만 원래 평균이 높은 심화 과정의 비중이 크게 늘었기 때문이다. 따라서 전체 평균의 상승만으로 교육 효과가 개선되었다고 결론 내리면, 하위 집단의 변화와 구성비의 변화를 구분하지 못하게 된다.",
           "promptText": "윗글의 사례에 대한 해석으로 가장 적절한 것은 무엇입니까?",
           "choices": [
-            "전체 평균이 상승했으므로 두 과정의 평균도 모두 상승했다.",
+            "전체 평균의 상승은 두 과정 평균의 변화를 합친 결과이다.",
             "둘째 해의 교육 방법이 더 효과적이었다는 사실이 전체 평균으로 증명되었다.",
             "각 과정의 평균 하락보다 전체 평균 상승을 언제나 우선하여 해석해야 한다.",
             "원래 평균이 높은 집단의 비중 증가가 전체 평균을 높일 수 있다.",
@@ -858,10 +858,10 @@
           "passageText": "Five children wait 9, 10, 10, 11, and 40 minutes for a bus. The mean is 16 minutes because the long wait of 40 minutes pulls it up. The median is 10 minutes, the middle number. For most children in this group, 10 minutes describes the wait better.",
           "promptText": "Why is the median useful here?",
           "choices": [
-            "Every child waits ten minutes.",
+            "The middle waiting time pulls the mean toward ten minutes.",
             "The long wait changes the mean greatly.",
-            "The mean does not use all five numbers.",
-            "The median is always larger than the mean."
+            "The mean gives greater weight to the middle three waits.",
+            "The median moves upward more than the mean when a long wait is added."
           ],
           "correctIndex": 1,
           "answerEvidence": "40이라는 큰 값이 평균을 높였다는 설명이 2의 근거다.",
@@ -887,9 +887,9 @@
           "promptText": "What is the best title for the passage?",
           "choices": [
             "Choosing Between the Mean and the Median",
-            "Why the Median Is Always Correct",
+            "Why the Median Handles Extreme Values Better",
             "How to Remove Large Values from Data",
-            "The Only Way to Find the Center"
+            "Using the Mean to Describe the Shape of Data"
           ],
           "correctIndex": 0,
           "answerEvidence": "글은 두 대표값의 차이와 선택 기준을 설명하므로 1이 적절하다.",
@@ -914,11 +914,11 @@
           "passageText": "Imagine that five workers earn 25, 26, 27, 28, and 144 units of money. Their mean income is 50, but four of the five workers earn far less than 50. The unusually high income pulls the mean upward. The median, which is the middle value, is 27. If we want to know the total amount paid per worker, the mean is useful because it includes every value. If we want to describe a typical worker's income, the median may be more informative. Thus, ______.",
           "promptText": "Which best completes the blank?",
           "choices": [
-            "the mean should never be used for income data",
-            "the median always shows the total amount paid",
+            "income data are best summarized by the median",
+            "the median is the better measure for the total amount paid",
             "the purpose of the question helps determine the useful measure",
-            "an extreme value makes all statistics impossible to calculate",
-            "every worker usually earns exactly the mean income"
+            "an extreme value makes the median more useful for each purpose",
+            "a typical worker earns an amount close to the mean income"
           ],
           "correctIndex": 2,
           "answerEvidence": "평균과 중앙값의 유용성이 질문 목적에 따라 달라진다는 앞선 대조를 3이 종합한다.",
@@ -974,10 +974,10 @@
           "passageText": "Two data sets can have the same mean while presenting very different patterns. Consider Set A: 70, 70, 70, 70, and 70, and Set B: 50, 60, 70, 80, and 90. Both have a mean of 70, yet the values in Set A are identical while those in Set B are widely spread. If a report gives only the mean, this difference disappears. Measures such as the range, interquartile range, and standard deviation describe variability rather than center. Graphs can also show whether values cluster together, spread out, or form separate groups. A measure of center is therefore a useful summary, but it is not a complete picture of a distribution.",
           "promptText": "Which statement is best supported by the passage?",
           "choices": [
-            "Equal means guarantee equal distributions.",
-            "Variability cannot be described with numbers.",
-            "A mean should always be replaced by a graph.",
-            "Data sets with different ranges cannot share a mean.",
+            "Equal means indicate similar overall distributions.",
+            "Variability is represented most clearly by the mean.",
+            "A graph provides a more complete summary than numerical measures of spread.",
+            "Data sets with wider ranges tend to have different means.",
             "Information about spread can reveal differences hidden by the mean."
           ],
           "correctIndex": 4,
@@ -1005,10 +1005,10 @@
           "promptText": "Which best completes the blank?",
           "choices": [
             "whether the measure answers the particular question being asked",
-            "whether every value can be replaced with the mean",
-            "why extreme values must always be removed from a data set",
-            "whether the median is larger than every individual value",
-            "why all measures of center should produce the same result"
+            "whether replacing the values with the mean preserves the distribution's shape",
+            "why removing extreme values gives a more representative mean",
+            "whether the median lies above the largest ordinary value",
+            "why the mean and median differ within the same distribution"
           ],
           "correctIndex": 0,
           "answerEvidence": "글은 평균이 계산상 틀린 것이 아니라 ‘대부분의 전형적 임대료’를 묻는 목적에 충분하지 않을 수 있다고 설명하므로 1이 적절하다.",
