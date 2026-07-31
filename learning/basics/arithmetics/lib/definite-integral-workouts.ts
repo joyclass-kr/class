@@ -100,7 +100,7 @@ function build(
     const constant = integer(next, 1, 5);
     const answer = 2 * bound * constant;
     return {
-      id, kind, label: "대칭성", prompt: "함수의 홀짝성을 이용하여 값을 구하세요.",
+      id, kind, label: "대칭성", prompt: "정적분 값은?",
       latex: `\\int_{-${bound}}^{${bound}}\\left(${oddCoefficient}x^3-${oddCoefficient + 1}x+${constant}\\right)\\,dx`,
       answerLatex: String(answer),
       choices: numericChoices(answer, next),
@@ -112,7 +112,7 @@ function build(
     const right = left + 2;
     const answer = (left ** 2 + right ** 2) / 2;
     return {
-      id, kind, label: "절댓값", prompt: "부호가 바뀌는 지점에서 구간을 나누어 계산하세요.",
+      id, kind, label: "절댓값", prompt: "정적분 값은?",
       latex: `\\int_{-${left}}^{${right}}|x|\\,dx`,
       answerLatex: String(answer),
       choices: numericChoices(answer, next),
@@ -125,7 +125,7 @@ function build(
     const rightConstant = integer(next, 1, 4);
     const answer = 2 * leftSlope + (3 * rightSlope) / 2 + rightConstant;
     return {
-      id, kind, label: "구간 분할", prompt: "함수의 식이 바뀌는 지점에서 정적분을 나누어 계산하세요.",
+      id, kind, label: "구간 분할", prompt: "정적분 값은?",
       latex: `f(x)=\\begin{cases}${leftSlope}x+${leftSlope}&(-1\\le x<1)\\\\${rightSlope}x+${rightConstant}&(1\\le x\\le2)\\end{cases},\\quad \\int_{-1}^{2}f(x)\\,dx`,
       answerLatex: String(answer),
       choices: numericChoices(answer, next),
@@ -136,7 +136,7 @@ function build(
     const value = integer(next, 3, 8);
     const answer = value - 1;
     return {
-      id, kind, label: "지수함수", prompt: "적분 구간과 지수함수의 관계를 이용하여 값을 구하세요.",
+      id, kind, label: "지수함수", prompt: "정적분 값은?",
       latex: `\\int_{0}^{\\ln ${value}}e^x\\,dx`,
       answerLatex: String(answer),
       choices: numericChoices(answer, next),
@@ -162,7 +162,7 @@ function build(
     ? String(height / (width ** 2))
     : `\\dfrac{${height}}{${width ** 2}}`;
   return {
-    id, kind, label: "두 그래프 사이의 넓이", prompt: "두 그래프로 둘러싸인 부분의 넓이를 구하세요.",
+    id, kind, label: "두 그래프 사이의 넓이", prompt: "넓이는?",
     latex: `y=${height},\\quad y=${quadraticCoefficient}x^2\\quad(-${width}\\le x\\le ${width})`,
     answerLatex: String(answer),
     choices: numericChoices(answer, next),

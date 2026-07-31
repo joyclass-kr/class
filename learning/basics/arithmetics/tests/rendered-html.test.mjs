@@ -276,8 +276,13 @@ test("every middle, high-school, and STEM worksheet states what each problem ask
     const html = await response.text();
     const questionCount = (html.match(/<article class="[^"]*polynomial-question/g) ?? []).length;
     const promptCount = (html.match(/data-testid="worksheet-question-prompt"/g) ?? []).length;
+    const prompts = [...html.matchAll(/<p[^>]*data-testid="worksheet-question-prompt"[^>]*>([\s\S]*?)<\/p>/g)]
+      .map((match) => match[1]);
     assert.ok(questionCount > 0, `${title}: 문항을 찾을 수 없음`);
     assert.equal(promptCount, questionCount, `${title}: 질문 문구가 없는 문항이 있음`);
+    for (const prompt of prompts) {
+      assert.doesNotMatch(prompt, /하세요|하시오|하여라|구하라|고르세요|쓰세요|판단하세요|나타내세요|확인하세요/, `${title}: 명령형 발문이 남아 있음`);
+    }
   }
 });
 
