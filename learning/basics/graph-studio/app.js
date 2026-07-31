@@ -113,6 +113,27 @@ function renderMath(node,latex){
     node.textContent=latex;
   }
 }
+function renderFormulaHelp(valid){
+  const status=valid?"valid":"invalid";
+  if(formulaHelp.dataset.status===status)return;
+  formulaHelp.dataset.status=status;
+  formulaHelp.replaceChildren();
+  if(!valid){
+    formulaHelp.textContent="수식을 확인해 주세요.";
+    return;
+  }
+  formulaHelp.append("사용 가능: ");
+  [
+    String.raw`\ln x`,String.raw`\log_{10}x`,String.raw`\sin x`,String.raw`\cos x`,
+    String.raw`\tan x`,String.raw`\sqrt{x}`,String.raw`\lvert x\rvert`,String.raw`e^x`,String.raw`\pi`
+  ].forEach((latex,index,list)=>{
+    const item=document.createElement("span");
+    item.className="formulaHelpMath";
+    renderMath(item,latex);
+    formulaHelp.append(item);
+    if(index<list.length-1)formulaHelp.append(" · ");
+  });
+}
 function normalizeExpression(source){
   const mathFunctions=["asin","acos","atan","sqrt","log10","floor","round","sign","sin","cos","tan","abs","log","exp","ceil","min","max"];
   let normalized=source
@@ -159,7 +180,7 @@ function draw(){
     try{const evaluator=compileExpression(fn.expression);if(errorNode)errorNode.textContent="";return fn.visible?evaluator:null;}
     catch(error){if(errorNode)errorNode.textContent=error.message||"수식을 확인하세요.";return null;}
   });
-  formulaHelp.textContent=evaluators.some(Boolean)?"ln, log10, sin, cos, tan, sqrt, abs, exp, pi 사용 가능":"수식을 확인해 주세요.";
+  renderFormulaHelp(evaluators.some(Boolean));
   ctx.fillStyle="#fbfcff";ctx.fillRect(0,0,w,h);const step=state.range<=5?1:state.range<=10?2:5;ctx.font='12px "STIX Two Math", serif';
   for(let v=min;v<=max;v+=step){ctx.strokeStyle=v===0?"#697386":"#e8ebf2";ctx.lineWidth=1;ctx.beginPath();ctx.moveTo(px(v),0);ctx.lineTo(px(v),h);ctx.stroke();ctx.beginPath();ctx.moveTo(0,py(v));ctx.lineTo(w,py(v));ctx.stroke();if(v!==0){ctx.fillStyle="#8891a3";ctx.textAlign="center";ctx.fillText(v,px(v),Math.min(h-15,Math.max(12,py(0)+16)));ctx.textAlign="right";ctx.fillText(v,Math.min(w-5,Math.max(24,px(0)-7)),py(v)+3);}}
   const primary=evaluators[0];
@@ -239,4 +260,5 @@ document.querySelectorAll("[data-insert],[data-wrap-before],[data-example]").for
     button.textContent.trim();
   if(!button.classList.contains("keyboardUtility"))renderMath(button,latex);
 });
+document.querySelectorAll(".inlineMath[data-latex]").forEach(node=>renderMath(node,node.dataset.latex));
 if(document.fonts?.ready)document.fonts.ready.then(draw);
