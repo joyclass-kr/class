@@ -31,7 +31,7 @@ function choiceProblem(problem: MiddleCoreProblem): WorksheetChoiceProblem {
   const shift = [...problem.id].reduce((total, character) => total + character.charCodeAt(0), 0) % choices.length;
   return {
     id: problem.id,
-    label: TARGET_LABELS[problem.kind],
+    label: problem.question,
     correctLatex: problem.answerLatex,
     choices: [...choices.slice(shift), ...choices.slice(0, shift)],
   };
