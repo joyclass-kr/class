@@ -410,11 +410,11 @@
                 const material = new THREE.SpriteMaterial({
                     map: texture,
                     transparent: true,
-                    depthTest: false
+                    depthTest: true,
+                    depthWrite: false
                 });
                 const sprite = new THREE.Sprite(material);
                 sprite.scale.set(10, 10, 1);
-                sprite.renderOrder = 29;
                 return sprite;
             }
 
@@ -439,11 +439,11 @@
                 const material = new THREE.SpriteMaterial({
                     map: texture,
                     transparent: true,
-                    depthTest: false
+                    depthTest: true,
+                    depthWrite: false
                 });
                 const sprite = new THREE.Sprite(material);
                 sprite.scale.set(12, 4.5, 1);
-                sprite.renderOrder = 30;
                 return sprite;
             }
 
