@@ -91,7 +91,7 @@ document.addEventListener('DOMContentLoaded', () => {
      * Navigation Tabs setup
      */
     function initNavTabs() {
-        const tabs = document.querySelectorAll('.nav-tab');
+        const tabs = document.querySelectorAll('.nav-tabs .nav-tab[data-tab]');
         tabs.forEach(tab => {
             tab.addEventListener('click', () => {
                 const target = tab.dataset.tab;
