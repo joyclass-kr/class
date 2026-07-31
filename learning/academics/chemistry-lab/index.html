@@ -1,0 +1,133 @@
+<!doctype html>
+<html lang="ko">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="theme-color" content="#08131c">
+    <title>화학 실험실 | 초등·중등 과학</title>
+    <meta name="description" content="초등 관찰에서 중등 계산까지 이어지는 조작형 화학 실험실">
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+    <header class="site-header">
+        <a class="back-link" href="../../../">← 학습 포털</a>
+        <div class="brand" aria-label="화학 실험실">
+            <span class="brand-mark" aria-hidden="true">⚗</span>
+            <span>화학 실험실</span>
+        </div>
+        <a class="periodic-link" href="../periodic-table/">주기율표 보기</a>
+    </header>
+
+    <main>
+        <section class="hero" aria-labelledby="page-title">
+            <div class="hero-copy">
+                <p class="eyebrow">직접 바꾸고, 관찰하고, 설명하기</p>
+                <h1 id="page-title">초등 관찰에서<br><em>중등 계산까지</em></h1>
+                <p>결과를 먼저 예상한 뒤 조건을 바꿔 실험하세요. 같은 현상을 학년에 맞는 언어와 깊이로 배울 수 있습니다.</p>
+            </div>
+            <div class="level-switch" role="group" aria-label="학습 수준 선택">
+                <button type="button" data-level="elementary" aria-pressed="false">초등 3~6</button>
+                <button type="button" data-level="middle" aria-pressed="false">중학교</button>
+                <button type="button" data-level="all" aria-pressed="true">함께 보기</button>
+            </div>
+        </section>
+
+        <section class="lab-shell" aria-labelledby="dissolve-title">
+            <div class="lab-heading">
+                <div>
+                    <p class="lab-number">실험 01 · 용액</p>
+                    <h2 id="dissolve-title">물의 온도에 따라 녹는 양이 달라질까?</h2>
+                </div>
+                <span class="ready-badge">지금 실험 가능</span>
+            </div>
+
+            <div class="experiment-grid">
+                <section class="control-panel" aria-labelledby="control-title">
+                    <h3 id="control-title">실험 조건</h3>
+
+                    <label class="field-label" for="soluteSelect">넣을 물질</label>
+                    <select id="soluteSelect">
+                        <option value="salt">소금</option>
+                        <option value="sugar">설탕</option>
+                    </select>
+
+                    <div class="range-heading">
+                        <label for="temperatureRange">물의 온도</label>
+                        <output id="temperatureOutput" for="temperatureRange">20℃</output>
+                    </div>
+                    <input id="temperatureRange" type="range" min="10" max="80" step="5" value="20">
+                    <div class="range-scale" aria-hidden="true"><span>10℃</span><span>80℃</span></div>
+
+                    <div class="range-heading">
+                        <label for="amountRange">넣는 양</label>
+                        <output id="amountOutput" for="amountRange">40g</output>
+                    </div>
+                    <input id="amountRange" type="range" min="5" max="250" step="5" value="40">
+                    <div class="range-scale" aria-hidden="true"><span>5g</span><span>250g</span></div>
+
+                    <fieldset class="prediction-field">
+                        <legend>먼저 예상해 보세요</legend>
+                        <div class="prediction-buttons">
+                            <button type="button" data-prediction="all">모두 녹는다</button>
+                            <button type="button" data-prediction="some">일부 남는다</button>
+                        </div>
+                    </fieldset>
+
+                    <button class="run-button" id="runExperimentBtn" type="button">넣고 저어보기</button>
+                    <button class="reset-button" id="resetExperimentBtn" type="button">처음 상태로</button>
+                </section>
+
+                <section class="beaker-stage" aria-label="용해 실험 관찰 화면">
+                    <div class="thermometer" aria-hidden="true"><span id="thermometerFill"></span></div>
+                    <div class="beaker" id="beaker">
+                        <div class="water" id="water">
+                            <div class="particles" id="particles" aria-hidden="true"></div>
+                            <div class="sediment" id="sediment"></div>
+                        </div>
+                        <span class="beaker-mark mark-100">100 mL</span>
+                        <span class="beaker-mark mark-50">50</span>
+                    </div>
+                    <p class="stage-caption" id="stageCaption">조건을 정하고 결과를 예상해 보세요.</p>
+                </section>
+
+                <section class="result-panel" aria-labelledby="result-title" aria-live="polite">
+                    <h3 id="result-title">관찰 결과</h3>
+                    <div class="result-empty" id="resultEmpty">
+                        실험 전에는 결과를 보여주지 않습니다.<br>예상한 뒤 직접 확인하세요.
+                    </div>
+                    <div class="result-content" id="resultContent" hidden>
+                        <div class="result-numbers">
+                            <article><span>녹은 양</span><strong id="dissolvedValue">0g</strong></article>
+                            <article><span>남은 양</span><strong id="remainingValue">0g</strong></article>
+                        </div>
+                        <p class="prediction-result" id="predictionResult"></p>
+                        <div class="explanation elementary-copy" id="elementaryExplanation"></div>
+                        <div class="explanation middle-copy" id="middleExplanation"></div>
+                        <div class="formula middle-copy">
+                            <span>용해도 판단</span>
+                            <strong id="solubilityFormula">-</strong>
+                        </div>
+                    </div>
+                </section>
+            </div>
+        </section>
+
+        <section class="roadmap" aria-labelledby="roadmap-title">
+            <div class="section-heading">
+                <p class="eyebrow">초등과 중등을 잇는 실험 지도</p>
+                <h2 id="roadmap-title">다음에 만들 핵심 실험</h2>
+            </div>
+            <div class="roadmap-grid">
+                <article class="roadmap-card current"><span>01</span><h3>용해와 용해도</h3><p>녹는 현상 → 포화 용액과 용해도 계산</p><b>실험 가능</b></article>
+                <article class="roadmap-card"><span>02</span><h3>물질의 상태 변화</h3><p>얼음·물·수증기 → 입자 운동과 온도 그래프</p><b>다음 제작</b></article>
+                <article class="roadmap-card"><span>03</span><h3>혼합물 분리</h3><p>체·자석·거름 → 증류와 크로마토그래피</p><b>설계 예정</b></article>
+                <article class="roadmap-card"><span>04</span><h3>산과 염기</h3><p>생활 물질 분류 → pH와 중화 반응</p><b>설계 예정</b></article>
+                <article class="roadmap-card"><span>05</span><h3>기체의 성질</h3><p>공기의 존재 → 기체 발생과 검출</p><b>설계 예정</b></article>
+                <article class="roadmap-card"><span>06</span><h3>연소와 에너지</h3><p>타는 조건 → 산화와 발열 반응</p><b>설계 예정</b></article>
+            </div>
+        </section>
+    </main>
+
+    <script src="app.js"></script>
+</body>
+</html>
