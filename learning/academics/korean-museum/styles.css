@@ -1,4 +1,4 @@
-/* Korean History Treasure Map Theme */
+/* Korean history artifacts and sites */
 :root {
   --bg-dark: #0f172a;
   --bg-card: #1e293b;
@@ -52,16 +52,33 @@ body {
   display: flex;
   align-items: center;
   gap: 12px;
+  min-width: 0;
 }
 
-.brand-badge {
-  background: linear-gradient(135deg, #b45309, #f59e0b);
-  color: #fff;
-  font-size: 11px;
-  font-weight: 700;
-  padding: 3px 8px;
-  border-radius: 20px;
-  text-transform: uppercase;
+.home-link {
+  min-height: 36px;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  flex: 0 0 auto;
+  padding: 7px 12px;
+  border: 1px solid rgba(255, 255, 255, 0.18);
+  border-radius: 9px;
+  background: rgba(30, 41, 59, 0.9);
+  color: var(--text-light);
+  font-size: 12px;
+  font-weight: 750;
+  line-height: 1;
+  text-decoration: none;
+  white-space: nowrap;
+  transition: background-color 0.2s ease, border-color 0.2s ease;
+}
+
+.home-link:hover,
+.home-link:focus-visible {
+  border-color: var(--gold-light);
+  background: rgba(245, 158, 11, 0.16);
+  outline: none;
 }
 
 .brand-title {
@@ -792,6 +809,19 @@ body {
 @media (max-width: 600px) {
   .app-header {
     padding-inline: 12px;
+  }
+
+  .brand {
+    gap: 9px;
+  }
+
+  .home-link {
+    min-height: 34px;
+    padding-inline: 10px;
+  }
+
+  .brand-title {
+    font-size: 16px;
   }
 
   .filter-bar,
