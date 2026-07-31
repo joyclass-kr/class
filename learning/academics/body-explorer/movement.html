@@ -163,14 +163,13 @@
                     <div class="simulation-heading"><p class="question-kicker">직접 조작 실험</p><h2 id="simulationTitle">근육의 힘과 움직임 과정을 조절하세요.</h2></div>
                     <div class="stimulus-console">
                         <div class="stimulus-identity"><span id="stimulusIcon" class="stimulus-icon" aria-hidden="true">🦴</span><span><small>현재 상황</small><strong id="stimulusName">팔꿈치 관절</strong></span></div>
-                        <label class="intensity-control" for="stimulusIntensity">
-                            <span><b>움직임 조건</b><output id="stimulusValue" for="stimulusIntensity">50</output></span>
-                            <input id="stimulusIntensity" type="range" min="0" max="100" value="50">
-                            <small id="stimulusThreshold">목표 세기를 확인해 보세요.</small>
-                        </label>
+                        <div class="observation-guide">
+                            <b>관찰 조건</b>
+                            <small id="stimulusThreshold">제시된 상황에서 다음 변화를 예측하세요.</small>
+                        </div>
                     </div>
                     <div class="path-builder">
-                        <div class="path-heading"><strong>힘과 움직임의 과정</strong><span>아래 단계를 일어나는 순서대로 누르세요</span></div>
+                        <div class="path-heading"><strong>힘과 움직임의 과정</strong><span>아래 단계를 일어나는 순서에 맞게 누르세요</span></div>
                         <ol id="signalPath" class="signal-path" aria-label="조립한 뼈와 근육 움직임 과정"></ol>
                         <div id="componentBank" class="component-bank" aria-label="사용할 움직임 단계"></div>
                     </div>

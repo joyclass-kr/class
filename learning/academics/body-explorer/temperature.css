@@ -192,11 +192,7 @@ body.temperature-page {
 .temperature-page .teacher-room-card > strong { color: #167a9c; }
 .temperature-page .stimulus-console { border-color: #bad8df; background: #eef8fa; }
 .temperature-page .stimulus-icon { background: linear-gradient(145deg, #ddf5fa, #ffe0ab); box-shadow: inset 0 0 0 1px rgba(24, 112, 147, 0.16); }
-.temperature-page .intensity-control output { background: #177f9f; }
-.temperature-page .intensity-control input {
-    accent-color: #1789a9;
-    background: linear-gradient(90deg, #2394b3 var(--stimulus-level, 50%), #d5dcdd var(--stimulus-level, 50%));
-}
+.temperature-page .observation-guide b { color: #177f9f; }
 .temperature-page .signal-path-step > button { border-color: #64aebb; background: #edf9fb; color: #155d70; }
 .temperature-page .signal-path-step > button:hover:not(:disabled),
 .temperature-page .signal-path-step > button:focus-visible:not(:disabled) { border-color: #d28b34; background: #fff5d9; }

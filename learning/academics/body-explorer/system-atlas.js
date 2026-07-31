@@ -48,7 +48,16 @@
         excretion: "배설기관",
         temperature: "체온 조절계"
     };
-    atlas.setAttribute("aria-label", `3D ${systemNames[system]} 자유 탐험`);
+
+    function withKoreanParticle(value, consonantParticle, vowelParticle) {
+        const text = String(value || "");
+        const lastHangul = [...text].reverse().find((character) => /[가-힣]/.test(character));
+        if (!lastHangul) return `${text}${vowelParticle}`;
+        const hasFinalConsonant = (lastHangul.charCodeAt(0) - 0xac00) % 28 !== 0;
+        return `${text}${hasFinalConsonant ? consonantParticle : vowelParticle}`;
+    }
+
+    atlas.setAttribute("aria-label", `3D ${systemNames[system]} 기관 살펴보기`);
     scenePanel.append(atlas);
 
     const digestionSvg = `
@@ -243,13 +252,13 @@
             part.classList.remove("is-inspected");
         });
         if (active) {
-            systemAtlasInspector.querySelector("strong").textContent = `${systemNames[system]}을 선택하세요`;
+            systemAtlasInspector.querySelector("strong").textContent = `${withKoreanParticle(systemNames[system], "을", "를")} 선택하세요`;
             systemAtlasInspector.querySelector("p").textContent = "기관을 눌러 구조와 기능을 확인하세요.";
         }
         const announcer = document.getElementById("announcer");
         if (announcer) {
             announcer.textContent = active
-                ? `${systemNames[system]} 자유 탐험을 시작했습니다.`
+                ? `${systemNames[system]} 기관 살펴보기를 시작했습니다.`
                 : "학습 단계 보기로 돌아왔습니다.";
         }
     }
@@ -913,8 +922,8 @@
             directConsole.querySelector(".physiology-status").innerHTML = stimulusReady
                 ? (responseReady
                     ? "<b>균형 완성</b><span>자극과 생리 반응이 모두 안정 구간에 들어왔습니다.</span>"
-                    : `<b>자극 적정</b><span>${physiologyProfile.label}을 ${responseDirection} (${goal.responseMin}–${goal.responseMax}%)</span>`)
-                : `<b>자극 조정</b><span>${stage.scenario.intensityLabel}를 ${stimulusDirection} (${goal.stimulusMin}–${goal.stimulusMax}%)</span>`;
+                    : `<b>자극 적정</b><span>${withKoreanParticle(physiologyProfile.label, "을", "를")} ${responseDirection} (${goal.responseMin}–${goal.responseMax}%)</span>`)
+                : `<b>자극 조정</b><span>${withKoreanParticle(stage.scenario.intensityLabel, "을", "를")} ${stimulusDirection} (${goal.stimulusMin}–${goal.stimulusMax}%)</span>`;
             if (stimulusReady && responseReady) completePhysiologyExperiment(stage, directConsole, responseInput);
         };
 

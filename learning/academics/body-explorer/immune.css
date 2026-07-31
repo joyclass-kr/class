@@ -213,14 +213,7 @@ body.immune-page {
     box-shadow: inset 0 0 0 1px rgba(20, 108, 101, 0.16);
 }
 
-.immune-page .intensity-control output {
-    background: #147a71;
-}
-
-.immune-page .intensity-control input {
-    accent-color: #168d80;
-    background: linear-gradient(90deg, #168d80 var(--stimulus-level, 50%), #cedfd9 var(--stimulus-level, 50%));
-}
+.immune-page .observation-guide b { color: #147a71; }
 
 .immune-page .signal-path-step > button {
     border-color: #5ba99b;

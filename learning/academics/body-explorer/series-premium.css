@@ -1070,19 +1070,12 @@ body.has-system-atlas .scene-panel .fact-card { right: auto; width: min(53%, 300
     cursor: ew-resize;
 }
 
-body.series-premium .intensity-control input {
-    height: 36px;
-    margin: -11px 0;
-    padding: 14px 0;
-    background-clip: content-box;
-}
-
 body.series-premium .stimulus-console {
     color: #213644;
 }
 
 body.series-premium .stimulus-identity small,
-body.series-premium .intensity-control small {
+body.series-premium .observation-guide small {
     color: #526b78;
 }
 

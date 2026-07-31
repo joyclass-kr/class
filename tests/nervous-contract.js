@@ -98,7 +98,7 @@ const html = fs.readFileSync(files.html, "utf8");
 for (const id of [
     "modeScreen", "personalModeButton", "classModeButton", "personalScreen", "lobbyScreen",
     "journeyScreen", "routeMap", "scenePanel", "choiceList", "feedback", "resultScreen",
-    "simulationCard", "stimulusIntensity", "signalPath", "componentBank", "runSimulationButton", "simulationFeedback", "simulationNextButton",
+    "simulationCard", "stimulusThreshold", "signalPath", "componentBank", "runSimulationButton", "simulationFeedback", "simulationNextButton",
     "classRankingList", "perfectReview", "missedList"
 ]) {
     assert.ok(html.includes(`id="${id}"`), `Student page is missing #${id}`);
@@ -135,8 +135,8 @@ assert.ok(app.includes('action: "SUBMIT"'), "Student results must be submitted t
 assert.ok(app.includes("state.missed.push"), "Wrong answers must be collected for review.");
 assert.ok(app.includes("function runInteractiveExperiment()"), "The nervous episode must execute learner-built experiments.");
 assert.doesNotMatch(app, /intensity < intensityGoal\.min \|\| intensity > intensityGoal\.max/, "Exploration must not become a disclosed number-range gate.");
-assert.ok(app.includes("값을 움직여 몸의 변화를 관찰하세요"), "The slider must be framed as observation, not a numeric answer.");
-assert.ok(app.includes("function experimentIntensityGoal(stage)"), "Experiments must derive a stage-specific observation range.");
+assert.doesNotMatch(html, /id="stimulusIntensity"|type="range"/, "A control that does not affect learning must not be shown.");
+assert.ok(app.includes("function renderObservationVisual(stage)"), "Experiments must render a meaningful fixed observation state.");
 assert.ok(app.includes("function prepareExperimentChoices(stage)"), "Experiments must present one causal prediction at a time.");
 assert.ok(app.includes("component !== expected"), "Experiments must check the learner's next-step prediction.");
 assert.ok(app.includes("skippedAhead"), "Experiments must explain when a learner skips an intermediate cause.");

@@ -75,6 +75,8 @@ const premiumSystems = [
 ];
 const systemAtlas = read("system-atlas.js");
 const premiumStyles = read("series-premium.css");
+assert.match(systemAtlas, /withKoreanParticle\(systemNames\[system\], "을", "를"\)/);
+assert.doesNotMatch(systemAtlas, /\$\{systemNames\[system\]\}을 선택하세요/);
 const manipulationSource = systemAtlas.slice(
     systemAtlas.indexOf("const manipulationStages ="),
     systemAtlas.indexOf("const choiceList =")
@@ -90,6 +92,7 @@ premiumSystems.forEach((system) => {
     assert.match(html, /src="system-atlas\.js\?v=\d{8}-\d+"/);
     assert.match(html, /src="app\.js(?:\?[^"]+)?"/);
     assert.match(systemAtlas, new RegExp(`${system}:`));
+    assert.doesNotMatch(html, /아래 단계를 일어나는 순서대로 누르세요/);
 });
 
 ["digestion", "respiration"].forEach((system) => {

@@ -86,9 +86,10 @@ for (const idea of ["관절", "수축", "이완", "힘줄", "뼈", "물체의 �
 assert.doesNotMatch(learningText, /근원섬유|액틴|미오신|ATP|근방추|등척성|회전 모멘트|토크/, "Advanced biomechanics vocabulary should stay out of the elementary journey.");
 
 const html = fs.readFileSync(files.html, "utf8");
-for (const id of ["modeScreen", "personalModeButton", "classModeButton", "journeyScreen", "simulationCard", "stimulusIntensity", "signalPath", "componentBank", "motionVisual", "motionForearm", "motionFrontMuscle", "motionBackMuscle", "motionAngle", "resultScreen", "classRankingList", "missedList"]) {
+for (const id of ["modeScreen", "personalModeButton", "classModeButton", "journeyScreen", "simulationCard", "stimulusThreshold", "signalPath", "componentBank", "motionVisual", "motionForearm", "motionFrontMuscle", "motionBackMuscle", "motionAngle", "resultScreen", "classRankingList", "missedList"]) {
     assert.ok(html.includes(`id="${id}"`), `Student page is missing #${id}`);
 }
+assert.doesNotMatch(html, /id="stimulusIntensity"|type="range"/);
 assert.ok(html.includes("개인 학습") && html.includes("학급 도전") && html.includes("나의 오답노트"));
 assert.ok(html.includes('src="movement-data.js"'));
 assert.ok(html.includes("niams.nih.gov/health-topics/educational-resources/health-lesson-learning-about-joints"));

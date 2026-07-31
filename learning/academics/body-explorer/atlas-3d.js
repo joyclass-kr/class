@@ -55,9 +55,9 @@
         if (!feedbackTitle || !feedbackText) return;
         const focus = map.dataset.focus || "body";
         const overview = {
-            body: ["전신 순환계 자유 탐험", "피부와 혈관 레이어를 분리하고 대정맥·대동맥·모세혈관을 눌러 기능을 확인하세요."],
-            heart: ["심장 절개 자유 탐험", "네 개의 방과 판막, 심장에 연결된 큰 혈관을 눌러 혈액이 한 방향으로 흐르는 원리를 살펴보세요."],
-            lung: ["폐와 기체교환 자유 탐험", "폐동맥·폐포·폐정맥을 눌러 산소와 이산화탄소가 이동하는 방향을 비교하세요."]
+            body: ["전신 순환계 기관 관찰", "피부와 혈관 레이어를 분리하고 대정맥·대동맥·모세혈관을 눌러 기능을 확인하세요."],
+            heart: ["심장 내부 기관 관찰", "네 개의 방과 판막, 심장에 연결된 큰 혈관을 눌러 혈액이 한 방향으로 흐르는 원리를 살펴보세요."],
+            lung: ["폐와 기체교환 관찰", "폐동맥·폐포·폐정맥을 눌러 산소와 이산화탄소가 이동하는 방향을 비교하세요."]
         }[focus];
         feedback.dataset.state = "explore";
         feedbackTitle.textContent = overview[0];
@@ -80,7 +80,7 @@
                 };
             }
             showExploreOverview();
-            announce("자유 해부 탐험을 시작했습니다. 구조를 눌러 기능을 확인하세요.");
+            announce("기관 살펴보기를 시작했습니다. 구조를 눌러 기능을 확인하세요.");
             return;
         }
 
@@ -90,7 +90,7 @@
             feedback.dataset.state = savedFeedback.state;
         }
         savedFeedback = null;
-        announce("혈액순환 경로 탐험으로 돌아왔습니다.");
+        announce("혈액순환 경로 학습으로 돌아왔습니다.");
     }
 
     function announce(message) {

@@ -237,7 +237,7 @@ body.nervous-page {
 }
 
 .nervous-page .stimulus-identity small,
-.nervous-page .intensity-control small {
+.nervous-page .observation-guide small {
     color: var(--muted);
     font-size: 11px;
     font-weight: 800;
@@ -262,37 +262,18 @@ body.nervous-page {
     font-size: 24px;
 }
 
-.nervous-page .intensity-control {
+.nervous-page .observation-guide {
     display: grid;
     align-content: center;
-    gap: 3px;
+    gap: 5px;
+    padding: 8px 12px;
+    border-left: 1px solid rgba(79, 55, 145, 0.18);
 }
 
-.nervous-page .intensity-control > span {
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
-}
-
-.nervous-page .intensity-control output {
-    min-width: 38px;
-    padding: 2px 8px;
-    border-radius: 999px;
-    background: #4f3b9b;
-    color: white;
-    font-size: 12px;
+.nervous-page .observation-guide b {
+    color: #3f3179;
+    font-size: 14px;
     font-weight: 900;
-    text-align: center;
-}
-
-.nervous-page .intensity-control input {
-    width: 100%;
-    height: 8px;
-    margin: 3px 0;
-    border-radius: 999px;
-    accent-color: #6e58c9;
-    background: linear-gradient(90deg, #6e58c9 var(--stimulus-level, 50%), #d8d0e7 var(--stimulus-level, 50%));
-    cursor: pointer;
 }
 
 .nervous-page .path-builder {
@@ -492,8 +473,7 @@ body.nervous-page {
     background: #f1ebff;
 }
 
-.nervous-page .simulation-actions button:disabled,
-.nervous-page .intensity-control input:disabled {
+.nervous-page .simulation-actions button:disabled {
     cursor: default;
     opacity: 0.62;
 }
@@ -614,6 +594,11 @@ body.nervous-page {
 
     .nervous-page .stimulus-console {
         grid-template-columns: 1fr;
+    }
+
+    .nervous-page .observation-guide {
+        border-top: 1px solid rgba(79, 55, 145, 0.18);
+        border-left: 0;
     }
 
     .nervous-page .path-heading {

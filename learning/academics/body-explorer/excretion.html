@@ -165,14 +165,13 @@
                     <div class="simulation-heading"><p class="question-kicker">직접 조작 실험</p><h2 id="simulationTitle">콩팥과 소변의 흐름을 조절하세요.</h2></div>
                     <div class="stimulus-console">
                         <div class="stimulus-identity"><span id="stimulusIcon" class="stimulus-icon" aria-hidden="true">🫘</span><span><small>현재 상황</small><strong id="stimulusName">콩팥으로 들어온 혈액</strong></span></div>
-                        <label class="intensity-control" for="stimulusIntensity">
-                            <span><b>배설 조건</b><output id="stimulusValue" for="stimulusIntensity">50</output></span>
-                            <input id="stimulusIntensity" type="range" min="0" max="100" value="50">
-                            <small id="stimulusThreshold">목표 세기를 확인해 보세요.</small>
-                        </label>
+                        <div class="observation-guide">
+                            <b>관찰 조건</b>
+                            <small id="stimulusThreshold">제시된 상황에서 다음 변화를 예측하세요.</small>
+                        </div>
                     </div>
                     <div class="path-builder">
-                        <div class="path-heading"><strong>노폐물과 물의 이동 과정</strong><span>아래 단계를 일어나는 순서대로 누르세요</span></div>
+                        <div class="path-heading"><strong>노폐물과 물의 이동 과정</strong><span>아래 단계를 일어나는 순서에 맞게 누르세요</span></div>
                         <ol id="signalPath" class="signal-path" aria-label="조립한 배설 과정"></ol>
                         <div id="componentBank" class="component-bank" aria-label="사용할 배설 단계"></div>
                     </div>

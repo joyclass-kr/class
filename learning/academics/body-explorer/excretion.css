@@ -203,11 +203,7 @@ body.excretion-page {
 .excretion-page .teacher-room-card > strong { color: #147c8b; }
 .excretion-page .stimulus-console { border-color: #bdd7d5; background: #eff9f8; }
 .excretion-page .stimulus-icon { background: linear-gradient(145deg, #dff7f5, #ffe2a8); box-shadow: inset 0 0 0 1px rgba(21, 116, 130, 0.16); }
-.excretion-page .intensity-control output { background: #147e8e; }
-.excretion-page .intensity-control input {
-    accent-color: #168b9b;
-    background: linear-gradient(90deg, #1a9aac var(--stimulus-level, 50%), #d5deda var(--stimulus-level, 50%));
-}
+.excretion-page .observation-guide b { color: #147e8e; }
 .excretion-page .signal-path-step > button { border-color: #61aeb4; background: #eaf9f8; color: #155e68; }
 .excretion-page .signal-path-step > button:hover:not(:disabled),
 .excretion-page .signal-path-step > button:focus-visible:not(:disabled) { border-color: #d29835; background: #fff6d9; }

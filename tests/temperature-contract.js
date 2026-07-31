@@ -73,9 +73,10 @@ for (const idea of ["뇌", "피부 혈관", "땀", "증발", "열", "근육", "�
 assert.doesNotMatch(learningText, /시상하부|교감신경|콜린성|카테콜아민|갑상샘호르몬|갈색지방|혈관운동/, "Medical-school vocabulary should stay out of the school journey.");
 
 const html = fs.readFileSync(files.html, "utf8");
-for (const id of ["modeScreen", "personalModeButton", "classModeButton", "journeyScreen", "simulationCard", "stimulusIntensity", "signalPath", "componentBank", "temperatureVisual", "temperatureColumn", "skinVessel", "sweatDrops", "heatArrows", "muscleShiver", "temperatureState", "vesselState", "responseState", "resultScreen", "classRankingList", "missedList"]) {
+for (const id of ["modeScreen", "personalModeButton", "classModeButton", "journeyScreen", "simulationCard", "stimulusThreshold", "signalPath", "componentBank", "temperatureVisual", "temperatureColumn", "skinVessel", "sweatDrops", "heatArrows", "muscleShiver", "temperatureState", "vesselState", "responseState", "resultScreen", "classRankingList", "missedList"]) {
     assert.ok(html.includes(`id="${id}"`), `Student page is missing #${id}`);
 }
+assert.doesNotMatch(html, /id="stimulusIntensity"|type="range"/);
 assert.ok(html.includes("개인 학습") && html.includes("학급 도전") && html.includes("나의 오답노트"));
 assert.ok(html.includes('src="temperature-data.js"'));
 assert.ok(html.includes("ncbi.nlm.nih.gov/books/NBK507838"));

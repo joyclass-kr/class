@@ -36,9 +36,9 @@
         undoTitle: "이전 예측으로 돌아왔어요",
         undoText: "현재 변화에서 바로 이어질 결과를 다시 골라 보세요.",
         clearTitle: "시작 상황으로 돌아왔어요",
-        clearText: "관찰값을 바꾸고 첫 번째 변화를 다시 예측하세요.",
+        clearText: "제시된 상황에서 첫 번째 변화를 다시 예측하세요.",
         runLabel: "내 예측으로 실험하기",
-        idleTitle: "관찰값을 바꾸고 다음 변화를 예측하세요",
+        idleTitle: "제시된 상황에서 다음 변화를 예측하세요",
         idleText: "시작 상황은 제시되어 있습니다. 한 번에 하나씩 직접 이어지는 결과를 고르세요.",
         incompleteTitle: "아직 확인할 인과 단계가 남아 있어요",
         incompleteText: "남은 변화 {count}개를 한 단계씩 예측한 뒤 실험하세요.",
@@ -57,14 +57,22 @@
         undoTitle: "이전 예측으로 돌아왔어요",
         undoText: "현재 변화에서 바로 이어질 결과를 다시 골라 보세요.",
         clearTitle: "시작 상황으로 돌아왔어요",
-        clearText: "관찰값을 바꾸고 첫 번째 변화를 다시 예측하세요.",
+        clearText: "제시된 상황에서 첫 번째 변화를 다시 예측하세요.",
         runLabel: "관찰 결과 확인하기",
-        idleTitle: "관찰값을 바꾸고 다음 변화를 예측하세요",
+        idleTitle: "제시된 상황에서 다음 변화를 예측하세요",
         idleText: "시작 상황은 제시되어 있습니다. 한 번에 하나씩 직접 이어지는 결과를 고르세요.",
         incompleteTitle: "아직 확인할 인과 단계가 남아 있어요",
         incompleteText: "남은 변화 {count}개를 한 단계씩 예측한 뒤 실험하세요.",
         mismatchTitle: "중간 원인을 건너뛰었어요"
     };
+
+    function withKoreanParticle(value, consonantParticle, vowelParticle) {
+        const text = String(value || "");
+        const lastHangul = [...text].reverse().find((character) => /[가-힣]/.test(character));
+        if (!lastHangul) return `${text}${vowelParticle}`;
+        const hasFinalConsonant = (lastHangul.charCodeAt(0) - 0xac00) % 28 !== 0;
+        return `${text}${hasFinalConsonant ? consonantParticle : vowelParticle}`;
+    }
 
     const elements = {
         modeScreen: document.getElementById("modeScreen"),
@@ -122,8 +130,6 @@
         simulationTitle: document.getElementById("simulationTitle"),
         stimulusIcon: document.getElementById("stimulusIcon"),
         stimulusName: document.getElementById("stimulusName"),
-        stimulusIntensity: document.getElementById("stimulusIntensity"),
-        stimulusValue: document.getElementById("stimulusValue"),
         stimulusThreshold: document.getElementById("stimulusThreshold"),
         signalPath: document.getElementById("signalPath"),
         componentBank: document.getElementById("componentBank"),
@@ -571,42 +577,13 @@
         state.attempts += 1;
     }
 
-    function experimentIntensityGoal(stage) {
-        if (stage.scenario.targetMin != null) {
-            return {
-                min: stage.scenario.targetMin,
-                max: stage.scenario.targetMax ?? 100,
-                start: stage.scenario.startIntensity ?? Math.max(10, stage.scenario.targetMin - 20)
-            };
-        }
-        const experimentStages = stages.filter((item) => isExperimentStage(item));
-        const experimentIndex = Math.max(0, experimentStages.findIndex((item) => item.id === stage.id));
-        const patterns = [
-            { offset: [0, 12], startOffset: 30 },
-            { offset: [-6, 8], startOffset: -28 },
-            { offset: [3, 15], startOffset: 30 },
-            { offset: [-4, 7], startOffset: -26 },
-            { offset: [0, 10], startOffset: 28 }
-        ];
-        const pattern = patterns[experimentIndex % patterns.length];
-        const clamp = (value) => Math.max(0, Math.min(100, value));
-        return {
-            min: clamp(stage.scenario.threshold + pattern.offset[0]),
-            max: clamp(stage.scenario.threshold + pattern.offset[1]),
-            start: clamp(stage.scenario.threshold + pattern.startOffset)
-        };
-    }
-
-    function updateStimulusReadout() {
-        const stage = stages[state.currentIndex];
+    function renderObservationVisual(stage) {
         if (!isExperimentStage(stage)) return;
-        const intensity = Number(elements.stimulusIntensity.value);
-        elements.stimulusValue.textContent = String(intensity);
-        elements.stimulusThreshold.textContent = `${stage.scenario.intensityLabel} · 값을 움직여 몸의 변화를 관찰하세요`;
-        elements.stimulusIntensity.style.setProperty("--stimulus-level", `${intensity}%`);
-        updateMovementVisual(stage, intensity);
-        updateExcretionVisual(stage, intensity);
-        updateTemperatureVisual(stage, intensity);
+        const observationLevel = Math.min(100, (stage.scenario.threshold ?? 60) + 10);
+        elements.stimulusThreshold.textContent = `${stage.scenario.intensityLabel} · 다음 변화를 한 단계씩 예측하세요.`;
+        updateMovementVisual(stage, observationLevel);
+        updateExcretionVisual(stage, observationLevel);
+        updateTemperatureVisual(stage, observationLevel);
     }
 
     function updateMovementVisual(stage, intensity) {
@@ -854,7 +831,7 @@
         setSimulationFeedback(
             "idle",
             remaining > 0 ? simulationCopy.selectedTitle : "원인과 결과를 모두 연결했어요",
-            remaining > 0 ? simulationCopy.selectedText : "슬라이더로 몸의 변화를 비교한 뒤 관찰 결과를 확인하세요."
+            remaining > 0 ? simulationCopy.selectedText : "구성한 원인과 결과를 다시 확인한 뒤 관찰 결과를 확인하세요."
         );
         window.ClassGameSfx?.play("click");
     }
@@ -897,8 +874,6 @@
         elements.simulationTitle.textContent = `${stage.scenario.stimulus}에서 몸의 다음 변화를 예측해 보세요.`;
         elements.stimulusIcon.textContent = stage.scenario.icon;
         elements.stimulusName.textContent = stage.scenario.stimulus;
-        elements.stimulusIntensity.value = String(experimentIntensityGoal(stage).start);
-        elements.stimulusIntensity.disabled = false;
         elements.undoPathButton.disabled = true;
         if (elements.clearPathButton) elements.clearPathButton.disabled = true;
         elements.runSimulationButton.disabled = true;
@@ -911,12 +886,12 @@
         elements.temperatureVisual?.classList.remove("hidden", "is-success");
         state.experimentPath = [stage.scenario.correctPath[0]];
         prepareExperimentChoices(stage);
-        updateStimulusReadout();
+        renderObservationVisual(stage);
         renderExperimentPath(stage);
         renderComponentBank(stage);
         setSimulationFeedback("idle", simulationCopy.idleTitle, simulationCopy.idleText);
         updateRouteMap();
-        elements.stimulusIntensity.focus({ preventScroll: true });
+        elements.componentBank.querySelector("button:not(:disabled)")?.focus({ preventScroll: true });
         elements.announcer.textContent = `${stage.location}. ${elements.stageMission.textContent}`;
     }
 
@@ -938,7 +913,6 @@
         revealFact(stage);
         renderExperimentPath(stage, -1, true);
         renderComponentBank(stage);
-        elements.stimulusIntensity.disabled = true;
         elements.undoPathButton.disabled = true;
         if (elements.clearPathButton) elements.clearPathButton.disabled = true;
         elements.runSimulationButton.disabled = true;
@@ -966,7 +940,7 @@
         elements.chapterLabel.textContent = stage.chapter;
         elements.stageLocation.textContent = stage.location;
         elements.stageMission.textContent = isExperimentStage(stage)
-            ? `${stage.scenario.stimulus}의 세기를 바꾸며 몸의 반응이 어떤 원인과 결과로 이어지는지 관찰하세요.`
+            ? `${stage.scenario.stimulus}에서 몸의 반응이 어떤 원인과 결과로 이어지는지 예측하세요.`
             : stage.mission;
         elements.scenePanel.classList.remove("simulation-reacting");
         elements.motionVisual?.classList.toggle("hidden", !isExperimentStage(stage));
@@ -1219,13 +1193,13 @@
         button.addEventListener("click", () => selectAnatomyTarget(button));
     });
     elements.explorerNextButton?.addEventListener("click", goToNextStage);
-    elements.stimulusIntensity?.addEventListener("input", updateStimulusReadout);
     elements.undoPathButton?.addEventListener("click", undoExperimentPath);
     elements.clearPathButton?.addEventListener("click", clearExperimentPath);
     elements.runSimulationButton?.addEventListener("click", runInteractiveExperiment);
     elements.simulationNextButton?.addEventListener("click", goToNextStage);
     document.addEventListener("body-explorer-manipulation-error", (event) => {
-        elements.announcer.textContent = `${event.detail?.chosen || "선택한 조건"}은 관찰 결과와 맞지 않습니다. 다른 조건으로 다시 확인해 보세요.`;
+        const chosen = event.detail?.chosen || "선택한 조건";
+        elements.announcer.textContent = `${withKoreanParticle(chosen, "은", "는")} 관찰 결과와 맞지 않습니다. 다른 조건으로 다시 확인해 보세요.`;
     });
     document.querySelectorAll(".mode-back-button").forEach((button) => button.addEventListener("click", showModeScreen));
     document.addEventListener("keydown", handleKeyboard);

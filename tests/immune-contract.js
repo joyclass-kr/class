@@ -98,7 +98,7 @@ const html = fs.readFileSync(files.html, "utf8");
 for (const id of [
     "modeScreen", "personalModeButton", "classModeButton", "personalScreen", "lobbyScreen",
     "journeyScreen", "routeMap", "scenePanel", "choiceList", "feedback", "resultScreen",
-    "simulationCard", "stimulusIntensity", "signalPath", "componentBank", "runSimulationButton",
+    "simulationCard", "stimulusThreshold", "signalPath", "componentBank", "runSimulationButton",
     "simulationFeedback", "simulationNextButton", "classRankingList", "perfectReview", "missedList"
 ]) {
     assert.ok(html.includes(`id="${id}"`), `Student page is missing #${id}`);
@@ -131,8 +131,8 @@ const app = fs.readFileSync(files.app, "utf8");
 assert.ok(app.includes('config.experienceType === "immune-simulation"'));
 assert.ok(app.includes("function runInteractiveExperiment()"));
 assert.doesNotMatch(app, /intensity < intensityGoal\.min \|\| intensity > intensityGoal\.max/);
-assert.ok(app.includes("값을 움직여 몸의 변화를 관찰하세요"));
-assert.ok(app.includes("function experimentIntensityGoal(stage)"));
+assert.doesNotMatch(html, /id="stimulusIntensity"|type="range"/);
+assert.ok(app.includes("function renderObservationVisual(stage)"));
 assert.ok(app.includes("function prepareExperimentChoices(stage)"));
 assert.ok(app.includes("component !== expected"));
 assert.ok(app.includes("중간 원인을 건너뛰었어요"));
