@@ -893,6 +893,19 @@
                 return { ctx, width, height };
             }
 
+            function smoothMoonSkyStep(edge0, edge1, value) {
+                const progress = Math.max(0, Math.min(1, (value - edge0) / (edge1 - edge0)));
+                return progress * progress * (3 - 2 * progress);
+            }
+
+            function mixMoonSkyRgb(from, to, amount) {
+                const t = Math.max(0, Math.min(1, amount));
+                const channels = from.map((channel, index) =>
+                    Math.round(channel + (to[index] - channel) * t)
+                );
+                return `rgb(${channels[0]}, ${channels[1]}, ${channels[2]})`;
+            }
+
             function drawMoonObserverSky() {
                 if (observerView.hidden) return;
                 const prepared = prepareMoonSkyCanvas();
@@ -919,17 +932,47 @@
                     moonEquatorial.declination,
                     siderealTime
                 );
-                const daylight = Math.max(0, Math.min(1, (sunPosition.altitude + 8) / 24));
+                const skyLight = smoothMoonSkyStep(-12, 6, sunPosition.altitude);
+                const fullDaylight = smoothMoonSkyStep(-4, 12, sunPosition.altitude);
+                const nightStrength = 1 - smoothMoonSkyStep(-10, 2, sunPosition.altitude);
+                const twilightStrength =
+                    smoothMoonSkyStep(-18, -4, sunPosition.altitude) *
+                    (1 - smoothMoonSkyStep(3, 12, sunPosition.altitude));
 
                 const skyGradient = ctx.createLinearGradient(0, 0, 0, horizon);
-                skyGradient.addColorStop(0, daylight > 0.05 ? '#1597df' : '#020617');
-                skyGradient.addColorStop(1, daylight > 0.05 ? '#bae6fd' : '#0f2744');
+                skyGradient.addColorStop(
+                    0,
+                    mixMoonSkyRgb([2, 6, 23], [21, 151, 223], fullDaylight)
+                );
+                skyGradient.addColorStop(
+                    0.55,
+                    mixMoonSkyRgb([7, 18, 41], [85, 197, 239], skyLight)
+                );
+                skyGradient.addColorStop(
+                    1,
+                    mixMoonSkyRgb([15, 23, 42], [217, 244, 255], skyLight)
+                );
                 ctx.fillStyle = skyGradient;
                 ctx.fillRect(0, 0, width, horizon);
 
-                if (daylight < 0.35) {
+                if (twilightStrength > 0.001) {
+                    const twilightGradient = ctx.createLinearGradient(0, horizon * 0.32, 0, horizon);
+                    twilightGradient.addColorStop(0, 'rgba(251, 113, 133, 0)');
+                    twilightGradient.addColorStop(
+                        0.7,
+                        `rgba(251, 146, 60, ${0.2 * twilightStrength})`
+                    );
+                    twilightGradient.addColorStop(
+                        1,
+                        `rgba(253, 186, 116, ${0.72 * twilightStrength})`
+                    );
+                    ctx.fillStyle = twilightGradient;
+                    ctx.fillRect(0, 0, width, horizon);
+                }
+
+                if (nightStrength > 0.001) {
                     ctx.save();
-                    ctx.globalAlpha = 1 - daylight;
+                    ctx.globalAlpha = nightStrength;
                     ctx.fillStyle = '#f8fafc';
                     for (let index = 0; index < 52; index += 1) {
                         const x = (index * 89 + 37) % width;
@@ -942,8 +985,14 @@
                 }
 
                 const groundGradient = ctx.createLinearGradient(0, horizon, 0, height);
-                groundGradient.addColorStop(0, daylight > 0.05 ? '#15803d' : '#064e3b');
-                groundGradient.addColorStop(1, daylight > 0.05 ? '#14532d' : '#022c22');
+                groundGradient.addColorStop(
+                    0,
+                    mixMoonSkyRgb([2, 24, 22], [21, 128, 61], skyLight)
+                );
+                groundGradient.addColorStop(
+                    1,
+                    mixMoonSkyRgb([1, 10, 18], [20, 83, 45], skyLight)
+                );
                 ctx.fillStyle = groundGradient;
                 ctx.fillRect(0, horizon, width, height - horizon);
                 ctx.strokeStyle = '#22d3ee';
