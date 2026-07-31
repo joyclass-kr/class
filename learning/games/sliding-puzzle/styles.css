@@ -8,7 +8,6 @@
   --wood-dark: #2b170d;
   --line: rgba(235, 183, 91, .4);
 }
-
 * { box-sizing: border-box; }
 
 body {
@@ -119,6 +118,8 @@ h1 { margin: 0; font-family: Georgia, "Times New Roman", serif; font-size: clamp
 .pair-arrow { color: var(--gold-bright); font-size: .72rem; line-height: 1.6; text-align: center; white-space: nowrap; }
 .mini-board { display: grid; gap: 3px; padding: 5px; border: 1px solid var(--line); background: rgba(0,0,0,.28); }
 .mini-board.cols-3 { grid-template-columns: repeat(3,1fr); }
+.mini-board.cols-4 { grid-template-columns: repeat(4,1fr); }
+.board-example .mini-board > * { min-height: 27px; }
 .mini-board > * { display: grid; place-items: center; min-height: 29px; margin: 0; border: 1px solid rgba(229,173,75,.3); color: var(--ink); background: rgba(109,57,23,.72); font-style: normal; }
 .mini-board > i { background: rgba(0,0,0,.4); }
 .mini-board > em { color: rgba(216,195,166,.42); background: transparent; }

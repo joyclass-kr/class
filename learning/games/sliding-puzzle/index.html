@@ -125,17 +125,78 @@
 
           <h3>15 PUZZLE 해결 순서</h3>
           <ol>
-            <li><strong>1·2 배치:</strong> 맨 윗줄 왼쪽부터 1, 2를 차례로 고정합니다.</li>
-            <li><strong>3·4 짝 만들기:</strong> 4를 <strong>3의 목표 칸</strong>, 3을 그 바로 아래, 빈칸을 오른쪽 위에 놓습니다. 4를 오른쪽으로, 3을 위쪽으로 밀면 첫째 줄이 완성됩니다.</li>
-            <li><strong>5·6 배치:</strong> 둘째 줄 왼쪽부터 5, 6을 고정합니다.</li>
-            <li><strong>7·8 짝 만들기:</strong> 8을 <strong>7의 목표 칸</strong>, 7을 그 바로 아래, 빈칸을 오른쪽에 놓습니다. 8을 오른쪽으로, 7을 위쪽으로 밀어 둘째 줄을 완성합니다.</li>
-            <li><strong>9·13 세로쌍:</strong> 13을 <strong>9의 목표 칸</strong>, 9를 그 오른쪽, 빈칸을 13의 목표 칸인 왼쪽 아래에 놓습니다. 13을 아래쪽으로, 9를 왼쪽으로 밀어 첫 번째 세로쌍을 완성합니다.</li>
-            <li><strong>10·14 세로쌍:</strong> 14를 <strong>10의 목표 칸</strong>, 10을 그 오른쪽, 빈칸을 14의 목표 칸에 놓습니다. 14를 아래쪽으로, 10을 왼쪽으로 밀어 두 번째 세로쌍을 완성합니다.</li>
-            <li><strong>마지막 2×2:</strong> 남은 11·12·15와 빈칸을 한 방향으로 회전시켜 완성합니다.</li>
+            <li><strong>첫째 줄 시작:</strong> 1과 2를 왼쪽 두 칸에 고정합니다.</li>
+            <li><strong>3·4 동시 완성:</strong> 아래의 ‘넣기 전’ 모양을 만든 뒤 <strong>4 →, 3 ↑</strong> 순서로 움직입니다.</li>
+          </ol>
+
+          <div class="pair-example board-example" aria-label="15 퍼즐 첫째 줄에서 3과 4를 완성하는 순서">
+            <div>
+              <span>넣기 전</span>
+              <div class="mini-board cols-4"><b class="fixed">1</b><b class="fixed">2</b><b>4</b><i></i><em>·</em><em>·</em><b>3</b><em>·</em></div>
+            </div>
+            <strong class="pair-arrow">① 4 →<br>② 3 ↑</strong>
+            <div>
+              <span>첫째 줄 완성</span>
+              <div class="mini-board cols-4"><b class="fixed">1</b><b class="fixed">2</b><b class="fixed">3</b><b class="fixed">4</b><em>·</em><em>·</em><i></i><em>·</em></div>
+            </div>
+          </div>
+
+          <ol start="3">
+            <li><strong>둘째 줄 시작:</strong> 완성한 첫째 줄은 움직이지 말고, 5와 6을 둘째 줄 왼쪽 두 칸에 고정합니다.</li>
+            <li><strong>7·8 동시 완성:</strong> 아래 모양을 만든 뒤 <strong>8 →, 7 ↑</strong> 순서로 움직입니다.</li>
+          </ol>
+
+          <div class="pair-example board-example" aria-label="15 퍼즐 둘째 줄에서 7과 8을 완성하는 순서">
+            <div>
+              <span>넣기 전</span>
+              <div class="mini-board cols-4"><b class="fixed">5</b><b class="fixed">6</b><b>8</b><i></i><em>·</em><em>·</em><b>7</b><em>·</em></div>
+            </div>
+            <strong class="pair-arrow">① 8 →<br>② 7 ↑</strong>
+            <div>
+              <span>둘째 줄 완성</span>
+              <div class="mini-board cols-4"><b class="fixed">5</b><b class="fixed">6</b><b class="fixed">7</b><b class="fixed">8</b><em>·</em><em>·</em><i></i><em>·</em></div>
+            </div>
+          </div>
+
+          <ol start="5">
+            <li><strong>9·13 동시 완성:</strong> 위의 두 줄은 움직이지 말고 아래 모양을 만든 뒤 <strong>13 ↓, 9 ←</strong> 순서로 움직입니다.</li>
+          </ol>
+
+          <div class="pair-example board-example" aria-label="15 퍼즐 첫 번째 세로줄에서 9와 13을 완성하는 순서">
+            <div>
+              <span>넣기 전</span>
+              <div class="mini-board cols-4"><b>13</b><b>9</b><em>·</em><em>·</em><i></i><em>·</em><em>·</em><em>·</em></div>
+            </div>
+            <strong class="pair-arrow">① 13 ↓<br>② 9 ←</strong>
+            <div>
+              <span>첫째 세로쌍 완성</span>
+              <div class="mini-board cols-4"><b class="fixed">9</b><i></i><em>·</em><em>·</em><b class="fixed">13</b><em>·</em><em>·</em><em>·</em></div>
+            </div>
+          </div>
+
+          <ol start="6">
+            <li><strong>10·14 동시 완성:</strong> 9와 13도 움직이지 말고 아래 모양을 만든 뒤 <strong>14 ↓, 10 ←</strong> 순서로 움직입니다.</li>
+          </ol>
+
+          <div class="pair-example board-example" aria-label="15 퍼즐 두 번째 세로줄에서 10과 14를 완성하는 순서">
+            <div>
+              <span>넣기 전</span>
+              <div class="mini-board cols-4"><b class="fixed">9</b><b>14</b><b>10</b><em>·</em><b class="fixed">13</b><i></i><em>·</em><em>·</em></div>
+            </div>
+            <strong class="pair-arrow">① 14 ↓<br>② 10 ←</strong>
+            <div>
+              <span>둘째 세로쌍 완성</span>
+              <div class="mini-board cols-4"><b class="fixed">9</b><b class="fixed">10</b><i></i><em>·</em><b class="fixed">13</b><b class="fixed">14</b><em>·</em><em>·</em></div>
+            </div>
+          </div>
+
+          <ol start="7">
+            <li><strong>마지막 2×2:</strong> 오른쪽 아래에 남은 11·12·15와 빈칸을 회전시켜 완성합니다.</li>
           </ol>
 
           <div class="pair-note">
-            <strong>짝 배치 공식</strong>
+            <strong>그림 읽는 법</strong>
+            <p><strong>금색 칸</strong>은 이미 완성되어 더 움직이면 안 되는 타일, 검은 칸은 빈칸, ·은 아직 정리하지 않은 타일입니다.</p>
             <p>가로 마지막 두 칸: <strong>큰 번호를 작은 번호의 목표 칸</strong>에 놓고, 작은 번호를 그 아래에 둡니다.</p>
             <p>세로 마지막 두 칸: <strong>아래 번호를 위 번호의 목표 칸</strong>에 놓고, 위 번호를 그 오른쪽에 둡니다.</p>
           </div>
