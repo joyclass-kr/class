@@ -3,86 +3,86 @@
 <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
-    <meta name="theme-color" content="#08131c">
-    <title>과학 실험실</title>
-    <meta name="description" content="초등·중등·고등학교 과학 실험">
+    <meta name="theme-color" content="#07131c">
+    <title>물의 온도와 소금의 용해 | 과학 실험실</title>
+    <meta name="description" content="물의 온도에 따라 녹는 소금의 양을 비교하는 초등 과학 모의실험">
     <link rel="stylesheet" href="styles.css">
 </head>
 <body>
     <main>
-        <section class="hero" aria-labelledby="page-title">
-            <div class="hero-copy">
-                <div class="hero-links">
-                    <a href="../">← 과학 실험실</a>
-                    <a href="../../periodic-table/">주기율표</a>
-                </div>
-                <h1 id="page-title">과학 실험실</h1>
+        <header class="page-header">
+            <div class="title-row">
+                <a href="../">← 과학 실험실</a>
+                <h1>물의 온도와 소금의 용해</h1>
             </div>
-            <div class="level-control">
-                <span>학습 수준</span>
-                <div class="level-switch" role="group" aria-label="학습 수준 선택">
-                    <button type="button" data-level="elementary" aria-pressed="false">초등 3~6</button>
-                    <button type="button" data-level="middle" aria-pressed="false">중학교</button>
-                    <button type="button" data-level="all" aria-pressed="true">전체</button>
-                </div>
-            </div>
-        </section>
+            <div class="grade-tags"><span>초등 5~6</span><span>화학</span></div>
+        </header>
 
-        <nav class="field-nav" aria-label="과학 분야">
-            <span>분야</span>
-            <a href="#chemistry">화학</a>
-            <a href="#physics">물리</a>
-            <a href="#earth-science">지구과학</a>
-            <a href="#biology">생명과학</a>
-        </nav>
-
-        <section class="lab-shell" id="chemistry" aria-labelledby="dissolve-title">
-            <div class="lab-heading">
-                <div>
-                    <p class="lab-number">실험 01 · 용액</p>
-                    <h2 id="dissolve-title">물의 온도에 따라 녹는 양이 달라질까?</h2>
-                </div>
-            </div>
-
-            <div class="experiment-grid">
-                <section class="control-panel" aria-labelledby="control-title">
-                    <h3 id="control-title">실험 조건</h3>
-
-                    <label class="field-label" for="soluteSelect">넣을 물질</label>
-                    <select id="soluteSelect">
-                        <option value="salt">소금</option>
-                        <option value="sugar">설탕</option>
-                    </select>
-                    <p class="condition-note">기준: 물 100g(약 100mL)</p>
-
-                    <div class="range-heading">
-                        <label for="temperatureRange">물의 온도</label>
-                        <output id="temperatureOutput" for="temperatureRange">20℃</output>
-                    </div>
-                    <input id="temperatureRange" type="range" min="0" max="100" step="5" value="20">
-                    <div class="range-scale" aria-hidden="true"><span>0℃</span><span>100℃</span></div>
-
-                    <div class="range-heading">
-                        <label for="amountRange">넣는 양</label>
-                        <output id="amountOutput" for="amountRange">36g</output>
-                    </div>
-                    <input id="amountRange" type="range" min="32" max="42" step="0.5" value="36">
-                    <div class="range-scale" aria-hidden="true"><span id="amountMinLabel">32g</span><span id="amountMaxLabel">42g</span></div>
-
-                    <fieldset class="prediction-field">
-                        <legend>먼저 예상해 보세요</legend>
-                        <div class="prediction-buttons">
-                            <button type="button" data-prediction="all">모두 녹는다</button>
-                            <button type="button" data-prediction="some">일부 남는다</button>
-                        </div>
-                    </fieldset>
-
-                    <button class="run-button" id="runExperimentBtn" type="button">넣고 저어보기</button>
-                    <button class="reset-button" id="resetExperimentBtn" type="button">처음 상태로</button>
+        <div class="experiment-layout">
+            <aside class="guide-column">
+                <section class="panel method">
+                    <h2>실험 방법</h2>
+                    <ol>
+                        <li>물 100g의 온도를 정합니다.</li>
+                        <li>넣을 소금의 양을 정합니다.</li>
+                        <li>결과를 예상하고 소금을 넣어 저어 봅니다.</li>
+                        <li>녹은 양과 바닥에 남은 양을 비교합니다.</li>
+                    </ol>
                 </section>
+                <section class="panel meaning">
+                    <h2>실험 결과의 의미</h2>
+                    <p><strong>용해</strong> 소금이 사라지는 것이 아니라 작은 입자로 물속에 고르게 퍼집니다.</p>
+                    <p><strong>용해도</strong> 일정한 온도에서 물 100g에 최대로 녹는 소금의 양입니다.</p>
+                    <p>소금은 물의 온도가 높아져도 녹는 양이 조금만 증가합니다.</p>
+                </section>
+            </aside>
 
-                <section class="beaker-stage" aria-label="용해 실험 관찰 화면">
-                    <div class="thermometer" aria-hidden="true"><span id="thermometerFill"></span></div>
+            <section class="panel control-panel" aria-labelledby="control-title">
+                <h2 id="control-title">실험 조건</h2>
+                <p class="water-standard">물 100g</p>
+
+                <div class="range-heading">
+                    <label for="temperatureRange">물의 온도</label>
+                    <output id="temperatureOutput" for="temperatureRange">20℃</output>
+                </div>
+                <input id="temperatureRange" type="range" min="0" max="100" step="20" value="20">
+                <div class="range-scale" aria-hidden="true"><span>0℃</span><span>20</span><span>40</span><span>60</span><span>80</span><span>100℃</span></div>
+
+                <div class="range-heading amount-heading">
+                    <label for="amountRange">넣는 소금</label>
+                    <output id="amountOutput" for="amountRange">37g</output>
+                </div>
+                <input id="amountRange" type="range" min="33" max="39" step="0.5" value="37">
+                <div class="range-scale two-point" aria-hidden="true"><span id="amountMinLabel">33g</span><span id="amountMaxLabel">39g</span></div>
+                <p class="amount-guide" id="amountGuide">20℃에서 녹는 양의 근처만 조절합니다.</p>
+
+                <fieldset class="prediction-field">
+                    <legend>결과 예상</legend>
+                    <div class="prediction-buttons">
+                        <button type="button" data-prediction="all">모두 녹는다</button>
+                        <button type="button" data-prediction="some">바닥에 남는다</button>
+                    </div>
+                </fieldset>
+
+                <button class="run-button" id="runExperimentBtn" type="button">소금 넣고 저어 보기</button>
+
+                <section class="result-box" aria-labelledby="result-title" aria-live="polite">
+                    <h3 id="result-title">관찰 결과</h3>
+                    <p id="resultEmpty">예상한 뒤 실험해 보세요.</p>
+                    <div id="resultContent" hidden>
+                        <div class="result-numbers">
+                            <article><span>녹은 소금</span><strong id="dissolvedValue">0g</strong></article>
+                            <article><span>남은 소금</span><strong id="remainingValue">0g</strong></article>
+                        </div>
+                        <p class="prediction-result" id="predictionResult"></p>
+                        <p class="explanation" id="elementaryExplanation"></p>
+                    </div>
+                </section>
+            </section>
+
+            <section class="panel beaker-stage" aria-label="소금 용해 관찰 화면">
+                <div class="stage-heading"><h2>관찰</h2><span id="solubilityBadge">용해도 36g</span></div>
+                <div class="apparatus">
                     <div class="beaker" id="beaker">
                         <div class="water" id="water">
                             <div class="particles" id="particles" aria-hidden="true"></div>
@@ -91,100 +91,16 @@
                         <span class="beaker-mark mark-100">100 mL</span>
                         <span class="beaker-mark mark-50">50</span>
                     </div>
-                    <div class="particle-legend" id="particleLegend" hidden></div>
-                    <p class="stage-caption" id="stageCaption">조건을 정하고 결과를 예상해 보세요.</p>
-                </section>
-
-                <section class="result-panel" aria-labelledby="result-title" aria-live="polite">
-                    <h3 id="result-title">관찰 결과</h3>
-                    <div class="dissolution-principles" aria-label="용해 실험 결과의 의미">
-                        <p><strong>용해</strong><span>용질이 없어지는 것이 아니라 작은 입자로 물속에 고르게 퍼집니다.</span></p>
-                        <p><strong>용해도</strong><span>특정 온도에서 물 100g에 최대로 녹는 용질의 질량입니다.</span></p>
-                        <p><strong>온도의 영향</strong><span>소금의 용해도는 조금 변하고, 설탕의 용해도는 크게 변합니다.</span></p>
-                    </div>
-                    <div class="result-empty" id="resultEmpty">
-                        실험 전에는 결과를 보여주지 않습니다.<br>예상한 뒤 직접 확인하세요.
-                    </div>
-                    <div class="result-content" id="resultContent" hidden>
-                        <div class="result-numbers">
-                            <article><span>녹은 양</span><strong id="dissolvedValue">0g</strong></article>
-                            <article><span>남은 양</span><strong id="remainingValue">0g</strong></article>
-                        </div>
-                        <p class="prediction-result" id="predictionResult"></p>
-                        <div class="explanation elementary-copy" id="elementaryExplanation"></div>
-                        <div class="explanation middle-copy" id="middleExplanation"></div>
-                        <div class="formula middle-copy">
-                            <span>용해도 판단</span>
-                            <strong id="solubilityFormula">-</strong>
-                        </div>
-                    </div>
-                </section>
-            </div>
-        </section>
-
-        <section class="roadmap" aria-labelledby="roadmap-title">
-            <div class="section-heading">
-                <h2 id="roadmap-title">화학 실험</h2>
-            </div>
-            <div class="roadmap-grid">
-                <article class="roadmap-card current"><span>01</span><h3>용해와 용해도</h3><p>녹는 양, 포화 용액, 용해도</p></article>
-                <article class="roadmap-card"><span>02</span><h3>물질의 상태 변화</h3><p>고체·액체·기체, 입자 운동, 온도</p></article>
-                <article class="roadmap-card"><span>03</span><h3>혼합물 분리</h3><p>거름, 증류, 분별결정, 크로마토그래피</p></article>
-                <article class="roadmap-card"><span>04</span><h3>산과 염기</h3><p>지시약, pH, 중화 반응</p></article>
-                <article class="roadmap-card"><span>05</span><h3>기체의 성질</h3><p>산소, 수소, 이산화탄소의 발생과 확인</p></article>
-                <article class="roadmap-card"><span>06</span><h3>연소와 에너지</h3><p>연소 조건, 산화, 발열·흡열 반응</p></article>
-            </div>
-        </section>
-
-        <div class="subject-grid">
-            <section class="subject-catalog" id="physics" aria-labelledby="physics-title">
-                <h2 id="physics-title">물리 실험</h2>
-                <ul>
-                    <li>속력과 가속도</li>
-                    <li>힘의 합성과 평형</li>
-                    <li>일과 에너지</li>
-                    <li>전기 회로</li>
-                    <li>전자기 유도</li>
-                    <li>파동과 간섭</li>
-                    <li>빛의 반사와 굴절</li>
-                    <li>렌즈와 상</li>
-                </ul>
-            </section>
-
-            <section class="subject-catalog" id="earth-science" aria-labelledby="earth-title">
-                <h2 id="earth-title">지구과학 실험·관측</h2>
-                <ul>
-                    <li>광물의 굳기·조흔·쪼개짐</li>
-                    <li>지층의 선후 관계</li>
-                    <li><a href="../earthquake/">지진파와 진앙</a><span class="grade-tag">고등학교</span></li>
-                    <li>판의 이동</li>
-                    <li>기압과 바람</li>
-                    <li>단열 변화와 구름</li>
-                    <li>일기도와 전선</li>
-                    <li>해수의 수온·염분·밀도</li>
-                    <li>해류와 엘니뇨·라니냐</li>
-                    <li>달의 위상과 식</li>
-                    <li>별의 일주·연주 운동</li>
-                    <li>연주시차와 HR도</li>
-                </ul>
-            </section>
-
-            <section class="subject-catalog" id="biology" aria-labelledby="biology-title">
-                <h2 id="biology-title">생명과학 실험·관찰</h2>
-                <ul>
-                    <li>현미경 사용</li>
-                    <li>세포 관찰</li>
-                    <li>삼투와 확산</li>
-                    <li>광합성</li>
-                    <li>소화 효소</li>
-                    <li>호흡과 순환</li>
-                    <li>자극과 반응</li>
-                    <li>유전 자료 분석</li>
-                </ul>
+                    <div class="thermometer" aria-hidden="true"><span id="thermometerFill"></span></div>
+                </div>
+                <div class="particle-legend" id="particleLegend" hidden>
+                    <span><i class="legend-dot sodium-ion"></i>나트륨 이온</span>
+                    <span><i class="legend-dot chloride-ion"></i>염화 이온</span>
+                </div>
+                <p class="stage-caption" id="stageCaption">온도와 소금의 양을 정하세요.</p>
             </section>
         </div>
     </main>
-
     <script src="app.js"></script>
 </body>
 </html>

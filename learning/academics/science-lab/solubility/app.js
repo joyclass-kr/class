@@ -1,25 +1,21 @@
 document.addEventListener('DOMContentLoaded', () => {
-    const body = document.body;
-    const levelButtons = [...document.querySelectorAll('[data-level]')];
-    const soluteSelect = document.getElementById('soluteSelect');
     const temperatureRange = document.getElementById('temperatureRange');
     const amountRange = document.getElementById('amountRange');
     const temperatureOutput = document.getElementById('temperatureOutput');
     const amountOutput = document.getElementById('amountOutput');
     const amountMinLabel = document.getElementById('amountMinLabel');
     const amountMaxLabel = document.getElementById('amountMaxLabel');
+    const amountGuide = document.getElementById('amountGuide');
     const predictionButtons = [...document.querySelectorAll('[data-prediction]')];
     const runButton = document.getElementById('runExperimentBtn');
-    const resetButton = document.getElementById('resetExperimentBtn');
     const resultEmpty = document.getElementById('resultEmpty');
     const resultContent = document.getElementById('resultContent');
     const dissolvedValue = document.getElementById('dissolvedValue');
     const remainingValue = document.getElementById('remainingValue');
     const predictionResult = document.getElementById('predictionResult');
-    const elementaryExplanation = document.getElementById('elementaryExplanation');
-    const middleExplanation = document.getElementById('middleExplanation');
-    const solubilityFormula = document.getElementById('solubilityFormula');
+    const explanation = document.getElementById('elementaryExplanation');
     const stageCaption = document.getElementById('stageCaption');
+    const solubilityBadge = document.getElementById('solubilityBadge');
     const beaker = document.getElementById('beaker');
     const water = document.getElementById('water');
     const sediment = document.getElementById('sediment');
@@ -27,169 +23,104 @@ document.addEventListener('DOMContentLoaded', () => {
     const particleLegend = document.getElementById('particleLegend');
     const thermometerFill = document.getElementById('thermometerFill');
 
+    const points = [[0, 35.7], [20, 36], [40, 36.5], [60, 37.3], [80, 38.4], [100, 39.8]];
     let prediction = null;
 
-    const solutes = {
-        salt: {
-            name: '소금',
-            particleType: 'ion',
-            amount: { min: 32, max: 42, step: 0.5, initial: 36 },
-            points: [[0, 35.5], [20, 36], [40, 36.5], [60, 37.5], [80, 38], [100, 39]]
-        },
-        sugar: {
-            name: '설탕',
-            particleType: 'molecule',
-            amount: { min: 160, max: 500, step: 5, initial: 205 },
-            points: [[0, 179], [20, 204], [40, 241], [60, 288], [80, 363], [100, 487]]
-        }
-    };
-
-    function interpolateSolubility(points, temperature) {
-        const upperIndex = points.findIndex(([pointTemperature]) => pointTemperature >= temperature);
-        if (upperIndex <= 0) return points[0][1];
-        const [lowerTemperature, lowerValue] = points[upperIndex - 1];
-        const [upperTemperature, upperValue] = points[upperIndex];
-        const ratio = (temperature - lowerTemperature) / (upperTemperature - lowerTemperature);
-        return lowerValue + ((upperValue - lowerValue) * ratio);
+    function solubilityAt(temperature) {
+        return points.find(([pointTemperature]) => pointTemperature === temperature)[1];
     }
 
-    function formatGrams(value) {
+    function grams(value) {
         return Number(value).toLocaleString('ko-KR', { maximumFractionDigits: 1 });
     }
 
-    function syncAmountRange(resetValue = false) {
-        const { amount } = solutes[soluteSelect.value];
-        amountRange.min = String(amount.min);
-        amountRange.max = String(amount.max);
-        amountRange.step = String(amount.step);
-        if (resetValue) amountRange.value = String(amount.initial);
-        amountMinLabel.textContent = `${formatGrams(amount.min)}g`;
-        amountMaxLabel.textContent = `${formatGrams(amount.max)}g`;
+    function setAmountRange(resetValue = true) {
+        const maximum = solubilityAt(Number(temperatureRange.value));
+        const minimum = Math.floor((maximum - 3) * 2) / 2;
+        const upper = Math.ceil((maximum + 3) * 2) / 2;
+        amountRange.min = String(minimum);
+        amountRange.max = String(upper);
+        if (resetValue) amountRange.value = String(Math.min(upper, Math.ceil((maximum + 1) * 2) / 2));
+        amountMinLabel.textContent = `${grams(minimum)}g`;
+        amountMaxLabel.textContent = `${grams(upper)}g`;
+        amountGuide.textContent = `${temperatureRange.value}℃에서 녹는 양의 근처만 조절합니다.`;
+        solubilityBadge.textContent = `용해도 ${grams(maximum)}g`;
     }
 
-    function renderDissolvedParticles(solute, concentrationRatio) {
-        particles.innerHTML = '';
-        const targetCount = solute.particleType === 'ion'
-            ? Math.max(8, Math.round((10 + (24 * concentrationRatio)) / 2) * 2)
-            : Math.max(6, Math.round(8 + (16 * concentrationRatio)));
-
-        for (let index = 0; index < targetCount; index += 1) {
-            const particle = document.createElement('i');
-            if (solute.particleType === 'ion') {
-                const isSodium = index % 2 === 0;
-                particle.className = `particle ion ${isSodium ? 'sodium-ion' : 'chloride-ion'}`;
-                particle.textContent = isSodium ? 'Na⁺' : 'Cl⁻';
-            } else {
-                particle.className = 'particle sugar-molecule';
-            }
-            particle.style.left = `${8 + ((index * 23) % 84)}%`;
-            particle.style.top = `${10 + ((index * 31) % 70)}%`;
-            particle.style.setProperty('--delay', `${-(index % 7) * 0.45}s`);
-            particles.appendChild(particle);
+    function renderIons(ratio) {
+        particles.replaceChildren();
+        const count = Math.max(10, Math.round((12 + ratio * 18) / 2) * 2);
+        for (let index = 0; index < count; index += 1) {
+            const ion = document.createElement('i');
+            const sodium = index % 2 === 0;
+            ion.className = `particle ion ${sodium ? 'sodium-ion' : 'chloride-ion'}`;
+            ion.textContent = sodium ? 'Na⁺' : 'Cl⁻';
+            ion.style.left = `${8 + ((index * 23) % 84)}%`;
+            ion.style.top = `${10 + ((index * 31) % 70)}%`;
+            ion.style.setProperty('--delay', `${-(index % 7) * .7}s`);
+            particles.appendChild(ion);
         }
-
         particleLegend.hidden = false;
-        particleLegend.innerHTML = solute.particleType === 'ion'
-            ? '<span><i class="legend-dot sodium-ion"></i>Na⁺ 나트륨 이온</span><span><i class="legend-dot chloride-ion"></i>Cl⁻ 염화 이온</span>'
-            : '<span><i class="legend-dot sugar-molecule"></i>물속에 퍼진 설탕 분자</span>';
-    }
-
-    function syncControls() {
-        temperatureOutput.textContent = `${temperatureRange.value}℃`;
-        amountOutput.textContent = `${formatGrams(amountRange.value)}g`;
-        const temperaturePercent = (Number(temperatureRange.value) / 100) * 86 + 8;
-        thermometerFill.style.height = `${temperaturePercent}%`;
-        const warmth = Number(temperatureRange.value) / 100;
-        water.style.background = `linear-gradient(180deg, rgba(${Math.round(69 + 90 * warmth)}, ${Math.round(189 - 35 * warmth)}, ${Math.round(231 - 65 * warmth)}, .46), rgba(29, 111, 165, .68))`;
     }
 
     function clearResult() {
         resultEmpty.hidden = false;
         resultContent.hidden = true;
         beaker.classList.remove('mixed');
-        particles.innerHTML = '';
+        particles.replaceChildren();
         particleLegend.hidden = true;
         sediment.style.height = '0';
-        stageCaption.textContent = '조건을 정하고 결과를 예상해 보세요.';
+        stageCaption.textContent = '온도와 소금의 양을 정하세요.';
     }
 
-    function setLevel(level) {
-        body.dataset.level = level;
-        levelButtons.forEach(button => {
-            button.setAttribute('aria-pressed', String(button.dataset.level === level));
-        });
+    function syncControls(resetAmount = false) {
+        if (resetAmount) setAmountRange(true);
+        temperatureOutput.textContent = `${temperatureRange.value}℃`;
+        amountOutput.textContent = `${grams(amountRange.value)}g`;
+        thermometerFill.style.height = `${8 + Number(temperatureRange.value) * .86}%`;
+        const warmth = Number(temperatureRange.value) / 100;
+        water.style.background = `linear-gradient(180deg, rgba(${Math.round(69 + 90 * warmth)}, ${Math.round(189 - 35 * warmth)}, ${Math.round(231 - 65 * warmth)}, .46), rgba(29,111,165,.68))`;
     }
 
     function runExperiment() {
         const temperature = Number(temperatureRange.value);
         const amount = Number(amountRange.value);
-        const solute = solutes[soluteSelect.value];
-        const maximum = interpolateSolubility(solute.points, temperature);
+        const maximum = solubilityAt(temperature);
         const dissolved = Math.min(amount, maximum);
         const remaining = Math.max(0, amount - maximum);
-        const actual = remaining < 0.05 ? 'all' : 'some';
+        const actual = remaining < .05 ? 'all' : 'some';
 
-        renderDissolvedParticles(solute, dissolved / maximum);
+        renderIons(dissolved / maximum);
         beaker.classList.remove('mixed');
         void beaker.offsetWidth;
         beaker.classList.add('mixed');
-        sediment.style.height = `${Math.min(34, remaining / 3)}%`;
-
-        dissolvedValue.textContent = `${formatGrams(dissolved)}g`;
-        remainingValue.textContent = `${formatGrams(remaining)}g`;
+        sediment.style.height = remaining > 0 ? `${Math.max(5, Math.min(24, remaining * 6))}%` : '0';
+        dissolvedValue.textContent = `${grams(dissolved)}g`;
+        remainingValue.textContent = `${grams(remaining)}g`;
         resultEmpty.hidden = true;
         resultContent.hidden = false;
 
-        if (!prediction) {
-            predictionResult.textContent = '다음에는 결과를 먼저 예상하고 실험해 보세요.';
-        } else if (prediction === actual) {
-            predictionResult.textContent = '예상이 맞았습니다! 관찰 결과와 까닭도 확인하세요.';
-        } else {
-            predictionResult.textContent = '예상과 다른 결과입니다. 어떤 조건이 영향을 주었는지 살펴보세요.';
-        }
-
+        predictionResult.textContent = !prediction
+            ? '다음에는 결과를 먼저 예상해 보세요.'
+            : prediction === actual ? '예상이 맞았습니다.' : '예상과 다른 결과입니다.';
         if (actual === 'all') {
-            stageCaption.textContent = `${temperature}℃ 물 100mL에 ${solute.name} ${formatGrams(amount)}g이 모두 녹았습니다.`;
-            elementaryExplanation.textContent = `물속에서 ${solute.name}이 눈에 보이지 않을 만큼 고르게 퍼졌습니다. 없어지는 것이 아니라 아주 작은 입자로 물속에 섞여 있습니다.`;
+            stageCaption.textContent = `${temperature}℃의 물 100g에 소금 ${grams(amount)}g이 모두 녹았습니다.`;
+            explanation.textContent = `이온 모형은 녹지 않은 결정이 아니라 물속에 퍼진 소금 입자를 나타냅니다. 바닥에 남은 소금은 없습니다.`;
         } else {
-            stageCaption.textContent = `${solute.name}이 더는 녹지 않고 비커 바닥에 남았습니다.`;
-            elementaryExplanation.textContent = `물에 녹을 수 있는 양에는 한계가 있습니다. 이미 충분히 녹은 뒤 넣은 ${solute.name}은 바닥에 남습니다.`;
+            stageCaption.textContent = `${temperature}℃에서 ${grams(maximum)}g까지 녹고 ${grams(remaining)}g이 바닥에 남았습니다.`;
+            explanation.textContent = `이 온도에서 더 녹을 수 있는 양을 넘었기 때문에 남은 소금이 바닥에 모였습니다.`;
         }
-
-        const particleExplanation = solute.particleType === 'ion'
-            ? '녹은 소금은 Na⁺와 Cl⁻ 이온으로 나뉘어 물속에 퍼집니다.'
-            : '설탕은 이온으로 나뉘지 않고 설탕 분자 상태로 물속에 퍼집니다.';
-        middleExplanation.textContent = `${temperature}℃에서 물 100mL에 녹을 수 있는 ${solute.name}의 최대 질량은 약 ${formatGrams(maximum)}g입니다. ${particleExplanation} 넣은 양과 용해도를 비교하면 포화 여부와 남는 양을 판단할 수 있습니다.`;
-        solubilityFormula.textContent = `${formatGrams(amount)}g - ${formatGrams(maximum)}g = ${formatGrams(remaining)}g ${remaining > 0 ? '남음' : '→ 모두 용해'}`;
     }
 
-    levelButtons.forEach(button => button.addEventListener('click', () => setLevel(button.dataset.level)));
+    temperatureRange.addEventListener('input', () => { syncControls(true); clearResult(); });
+    amountRange.addEventListener('input', () => { syncControls(); clearResult(); });
     predictionButtons.forEach(button => button.addEventListener('click', () => {
         prediction = button.dataset.prediction;
         predictionButtons.forEach(item => item.classList.toggle('selected', item === button));
     }));
-    [temperatureRange, amountRange].forEach(input => input.addEventListener('input', () => {
-        syncControls();
-        clearResult();
-    }));
-    soluteSelect.addEventListener('change', () => {
-        syncAmountRange(true);
-        syncControls();
-        clearResult();
-    });
     runButton.addEventListener('click', runExperiment);
-    resetButton.addEventListener('click', () => {
-        soluteSelect.value = 'salt';
-        temperatureRange.value = '20';
-        syncAmountRange(true);
-        prediction = null;
-        predictionButtons.forEach(button => button.classList.remove('selected'));
-        syncControls();
-        clearResult();
-    });
 
-    setLevel('all');
-    syncAmountRange(true);
+    setAmountRange(true);
     syncControls();
     clearResult();
 });
