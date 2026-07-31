@@ -80,9 +80,13 @@ test("겹치던 옛 이공계 주소는 새 통합 학습지로 이동한다", (
     const source = fs.readFileSync(path.join(stemRoot, directory, "page.tsx"), "utf8");
     assert.match(
       source,
-      new RegExp(`redirect\\("\\/arithmetic\\/stem\\/foundation\\?kind=${kind}"\\)`),
+      new RegExp(`StemLegacyRedirect target="\\/arithmetic\\/stem\\/foundation\\?kind=${kind}"`),
       directory,
     );
     assert.doesNotMatch(source, /GeometryChoiceWorksheet/, directory);
   }
+
+  const redirectSource = fs.readFileSync(path.join(stemRoot, "stem-legacy-redirect.tsx"), "utf8");
+  assert.match(redirectSource, /window\.location\.replace\(target\)/);
+  assert.match(redirectSource, /href=\{target\}/);
 });

@@ -1,5 +1,5 @@
-import { redirect } from "next/navigation";
+import StemLegacyRedirect from "../stem-legacy-redirect";
 
 export default function ArcLengthSurfaceAreaPage() {
-  redirect("/arithmetic/stem/foundation?kind=multiple-integrals");
+  return <StemLegacyRedirect target="/arithmetic/stem/foundation?kind=multiple-integrals" />;
 }

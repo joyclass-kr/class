@@ -1,5 +1,5 @@
-import { redirect } from "next/navigation";
+import StemLegacyRedirect from "../stem-legacy-redirect";
 
 export default function DeterminantsInversesPage() {
-  redirect("/arithmetic/stem/foundation?kind=matrix-systems");
+  return <StemLegacyRedirect target="/arithmetic/stem/foundation?kind=matrix-systems" />;
 }
