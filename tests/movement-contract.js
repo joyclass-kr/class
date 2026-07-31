@@ -89,7 +89,7 @@ const html = fs.readFileSync(files.html, "utf8");
 for (const id of ["modeScreen", "personalModeButton", "classModeButton", "journeyScreen", "simulationCard", "stimulusIntensity", "signalPath", "componentBank", "motionVisual", "motionForearm", "motionFrontMuscle", "motionBackMuscle", "motionAngle", "resultScreen", "classRankingList", "missedList"]) {
     assert.ok(html.includes(`id="${id}"`), `Student page is missing #${id}`);
 }
-assert.ok(html.includes("개인 탐험") && html.includes("학급 순위 탐험") && html.includes("나의 오답노트"));
+assert.ok(html.includes("개인 학습") && html.includes("학급 도전") && html.includes("나의 오답노트"));
 assert.ok(html.includes('src="movement-data.js"'));
 assert.ok(html.includes("niams.nih.gov/health-topics/educational-resources/health-lesson-learning-about-joints"));
 assert.ok(html.includes("ncbi.nlm.nih.gov/books/NBK613072"));

@@ -3,7 +3,7 @@ window.BODY_EXPLORER_CONFIG = {
     messagePrefix: "MOVEMENT",
     bestScoreKey: "movementBestScore",
     experienceType: "movement-simulation",
-    namedGreeting: "{name} 탐험가, 뼈·관절·근육이 힘을 이어 움직이는 모습을 직접 관찰해 볼까요?",
+    namedGreeting: "{name} 학생, 뼈·관절·근육이 힘을 이어 움직이는 모습을 직접 관찰해 볼까요?",
     guestGreeting: "관절을 움직이고 근육의 수축과 이완을 조절해 팔이 굽혀지고 펴지는 원리를 확인해 보세요.",
     resetAnnouncement: "새 뼈와 근육 움직임 실험을 기다립니다.",
     stateLabels: {

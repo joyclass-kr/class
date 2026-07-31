@@ -2,9 +2,9 @@ window.BODY_EXPLORER_CONFIG = {
     gameId: "digestion",
     messagePrefix: "DIGESTION",
     bestScoreKey: "digestionBestScore",
-    namedGreeting: "{name} 탐험가, 음식 알갱이와 함께 소화 여행을 떠나 볼까요?",
+    namedGreeting: "{name} 학생, 음식이 소화되는 과정을 살펴볼까요?",
     guestGreeting: "음식 알갱이가 되어 입에서 몸 밖까지 소화기관을 여행해 보세요.",
-    resetAnnouncement: "새 소화 탐험을 기다립니다.",
+    resetAnnouncement: "새 소화 학습을 시작할 수 있습니다.",
     stateLabels: {
         breaking: "잘게 부수는 중",
         moving: "이동 중",

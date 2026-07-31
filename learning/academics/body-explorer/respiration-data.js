@@ -2,9 +2,9 @@ window.BODY_EXPLORER_CONFIG = {
     gameId: "respiration",
     messagePrefix: "RESPIRATION",
     bestScoreKey: "respirationBestScore",
-    namedGreeting: "{name} 탐험가, 산소 방울과 함께 호흡 여행을 떠나 볼까요?",
+    namedGreeting: "{name} 학생, 산소가 이동하는 호흡 과정을 살펴볼까요?",
     guestGreeting: "산소 방울이 되어 코에서 폐와 온몸까지 호흡의 길을 여행해 보세요.",
-    resetAnnouncement: "새 호흡 탐험을 기다립니다.",
+    resetAnnouncement: "새 호흡 학습을 시작할 수 있습니다.",
     stateLabels: {
         entering: "들이마시는 중",
         moving: "공기 길 이동 중",

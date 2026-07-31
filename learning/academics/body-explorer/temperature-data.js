@@ -3,9 +3,9 @@ window.BODY_EXPLORER_CONFIG = {
     messagePrefix: "TEMPERATURE",
     bestScoreKey: "temperatureBestScore",
     experienceType: "temperature-simulation",
-    namedGreeting: "{name} 탐험가, 더울 때와 추울 때 몸이 체온을 조절하는 과정을 직접 바꾸어 볼까요?",
+    namedGreeting: "{name} 학생, 더울 때와 추울 때 몸이 체온을 조절하는 과정을 직접 바꾸어 볼까요?",
     guestGreeting: "피부 혈관, 땀, 근육이 함께 체온을 알맞게 유지하는 과정을 직접 확인해 보세요.",
-    resetAnnouncement: "새 체온 조절 탐험을 기다립니다.",
+    resetAnnouncement: "새 체온 조절 학습을 시작할 수 있습니다.",
     stateLabels: {
         sense: "온도 변화 감지 실험",
         cool: "열 내보내기 실험",

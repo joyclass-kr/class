@@ -61,8 +61,8 @@
 
     function resetCompetition() {
         const prompt = expeditionState?.phase === "running"
-            ? "진행 중인 탐험과 순위를 지우고 새 탐험을 준비할까요?"
-            : "현재 순위와 결과를 지우고 새 탐험을 준비할까요?";
+            ? "진행 중인 학급 도전과 순위를 지우고 새 도전을 준비할까요?"
+            : "현재 순위와 결과를 지우고 새 학급 도전을 준비할까요?";
         if (!window.confirm(prompt)) return;
         lobby.sendServer({ type: `${MESSAGE_PREFIX}_ACTION`, action: "RESET" });
     }
@@ -75,7 +75,7 @@
         elements.raceTotalCount.textContent = `${participants.length}명`;
         elements.raceFinishedCount.textContent = `${rankings.length}명`;
         elements.racePlayingCount.textContent = `${playingCount}명`;
-        elements.racePhaseBadge.textContent = state.phase === "ended" ? "최종 순위" : "탐험 중";
+        elements.racePhaseBadge.textContent = state.phase === "ended" ? "최종 순위" : "진행 중";
         elements.racePhaseBadge.classList.toggle("ended", state.phase === "ended");
         elements.rankingList.replaceChildren();
 
@@ -113,9 +113,9 @@
                 name.className = "teacher-rank-name";
                 name.textContent = participant.name;
                 status.className = "teacher-rank-score";
-                status.textContent = state.phase === "lobby" ? "출발 대기" : "탐험 중";
+                status.textContent = state.phase === "lobby" ? "시작 대기" : "진행 중";
                 time.className = "teacher-rank-time";
-                time.textContent = "완주 대기";
+                time.textContent = "완료 대기";
                 row.append(rank, name, status, time);
                 elements.rankingList.append(row);
             });
@@ -123,10 +123,10 @@
         elements.emptyRanking.classList.toggle("hidden", participants.length > 0);
         elements.emptyRanking.textContent = state.phase === "ended"
             ? "완료된 결과가 없습니다."
-            : "아직 완주한 학생이 없습니다.";
+            : "아직 완료한 학생이 없습니다.";
         elements.raceNotice.textContent = state.phase === "ended"
-            ? `${participants.length}명 모두 완주했습니다.`
-            : `${rankings.length}명 완주 · ${playingCount}명 탐험 중`;
+            ? `${participants.length}명 모두 완료했습니다.`
+            : `${rankings.length}명 완료 · ${playingCount}명 진행 중`;
     }
 
     function handleServerMessage(message, snapshot) {
@@ -134,7 +134,7 @@
             const target = expeditionState?.phase === "running" || expeditionState?.phase === "ended"
                 ? elements.raceNotice
                 : elements.teacherNotice;
-            target.textContent = message.message || "탐험 요청을 처리하지 못했습니다.";
+            target.textContent = message.message || "학급 요청을 처리하지 못했습니다.";
             syncLobby(snapshot);
             return;
         }

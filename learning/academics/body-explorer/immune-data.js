@@ -3,7 +3,7 @@ window.BODY_EXPLORER_CONFIG = {
     messagePrefix: "IMMUNE",
     bestScoreKey: "immuneBestScore",
     experienceType: "immune-simulation",
-    namedGreeting: "{name} 면역 탐험가, 우리 몸의 방어 작전을 직접 지휘해 볼까요?",
+    namedGreeting: "{name} 학생, 우리 몸의 면역 반응을 직접 확인해 볼까요?",
     guestGreeting: "병원체가 들어오는 길을 살피고 장벽·백혈구·항체·기억 세포의 방어를 직접 조절해 보세요.",
     resetAnnouncement: "새 면역 방어 실험을 기다립니다.",
     stateLabels: {

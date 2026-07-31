@@ -3,9 +3,9 @@ window.BODY_EXPLORER_CONFIG = {
     messagePrefix: "CIRCULATION",
     bestScoreKey: "circulationBestScore",
     experienceType: "circulation-explorer",
-    namedGreeting: "{name} 탐험가, 적혈구와 함께 혈액순환 한 바퀴를 출발해 볼까요?",
+    namedGreeting: "{name} 학생, 적혈구와 함께 혈액순환 과정을 살펴볼까요?",
     guestGreeting: "적혈구가 되어 심장과 폐, 온몸을 직접 한 바퀴 돌아보세요.",
-    resetAnnouncement: "새 혈액순환 탐험을 기다립니다.",
+    resetAnnouncement: "새 혈액순환 학습을 시작할 수 있습니다.",
     stateLabels: {
         low: "산소 적음",
         exchange: "기체 교환 중",

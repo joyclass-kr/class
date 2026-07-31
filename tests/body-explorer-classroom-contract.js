@@ -33,10 +33,15 @@ for (const [studentPage, dataFile, teacherPage, gameId, prefix] of episodes) {
     assert.match(studentHtml, new RegExp(`href=["']${teacherRoute}(?:\\.html)?["']`), `${studentPage} teacher link`);
     assert.match(studentHtml, new RegExp(`src=["']${dataFile.replace(".", "\\.")}`), `${studentPage} data script`);
     assert.match(studentHtml, /src=["']app\.js/, `${studentPage} shared student controller`);
+    assert.match(studentHtml, /개인 학습/, `${studentPage} personal learning label`);
+    assert.match(studentHtml, /학급 도전/, `${studentPage} class challenge label`);
+    assert.doesNotMatch(studentHtml, /개인 탐험|학급 순위 탐험|CLASS EXPEDITION|탐험대 참가/, `${studentPage} avoids expedition jargon`);
 
     assert.match(teacherHtml, new RegExp(`data-game-id=["']${gameId}["']`), `${teacherPage} gameId`);
     assert.match(teacherHtml, new RegExp(`data-message-prefix=["']${prefix}["']`), `${teacherPage} message prefix`);
     assert.match(teacherHtml, /src=["']teacher\.js["']/, `${teacherPage} shared teacher controller`);
+    assert.match(teacherHtml, /학급 시작 준비/, `${teacherPage} classroom-ready label`);
+    assert.doesNotMatch(teacherHtml, /EXPEDITION|전체 탐험가|새 탐험 준비/, `${teacherPage} avoids expedition jargon`);
 
     assert.match(serverSource, new RegExp(`type: ["']${prefix}_STATE["']`), `${prefix} state broadcast`);
     assert.match(serverSource, new RegExp(`type === ["']${prefix}_ACTION["']`), `${prefix} action handler`);
@@ -48,6 +53,6 @@ assert.match(serverSource, /function trackBodyExplorerProgress\(/);
 assert.match(serverSource, /function verifiedBodyExplorerScore\(/);
 assert.match(serverSource, /nextStageIndex === BODY_EXPLORER_STAGE_COUNT/);
 assert.match(teacherSource, /action: "RESET"/);
-assert.match(teacherSource, /state\.phase === "ended" \? "최종 순위" : "탐험 중"/);
+assert.match(teacherSource, /state\.phase === "ended" \? "최종 순위" : "진행 중"/);
 
 console.log("body-explorer-classroom-contract: eight student/teacher/server classroom routes agree");

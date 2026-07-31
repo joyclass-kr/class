@@ -29,7 +29,7 @@
         <main>
             <section class="teacher-hero">
                 <div>
-                    <p class="series-kicker">TEACHER EXPEDITION BOARD</p>
+                    <p class="series-kicker">학급 도전 관리</p>
                     <h1>면역 편</h1>
                     <p>모든 학생이 같은 10개 방어 관문을 동시에 출발합니다.</p>
                 </div>
@@ -38,7 +38,7 @@
 
             <section id="missingScreen" class="hidden"></section>
             <section id="lobbyScreen" class="teacher-panel hidden" aria-labelledby="teacherLobbyTitle">
-                <p class="section-kicker">CLASS EXPEDITION READY</p>
+                <p class="section-kicker">학급 시작 준비</p>
                 <h2 id="teacherLobbyTitle">학생들에게 학급 코드를 알려 주세요</h2>
                 <p class="teacher-guide">학생이 모두 참가하면 ‘전원 출발’을 누르세요. 장벽에서 면역 기억까지 같은 방어 관문이 동시에 열립니다.</p>
                 <span id="savedName" class="hidden">교사</span>
@@ -47,7 +47,7 @@
                     <span>학급 코드</span>
                     <strong id="roomCode">----</strong>
                     <button id="copyBtn" class="secondary-button" type="button">코드 복사</button>
-                    <p id="hostStatus" class="lobby-status">탐험대를 만드는 중입니다.</p>
+                    <p id="hostStatus" class="lobby-status">학급을 만드는 중입니다.</p>
                 </div>
 
                 <div class="teacher-counts">
@@ -68,21 +68,21 @@
                         <p class="section-kicker">학급 코드 <strong id="raceRoomCode">----</strong></p>
                         <h2 id="raceTitle">면역 방어 순위</h2>
                     </div>
-                    <span id="racePhaseBadge" class="phase-badge">탐험 중</span>
+                    <span id="racePhaseBadge" class="phase-badge">진행 중</span>
                 </div>
 
                 <div class="teacher-counts">
-                    <div><span>전체 탐험가</span><strong id="raceTotalCount">0명</strong></div>
+                    <div><span>전체 학생</span><strong id="raceTotalCount">0명</strong></div>
                     <div><span>완주</span><strong id="raceFinishedCount">0명</strong></div>
-                    <div><span>탐험 중</span><strong id="racePlayingCount">0명</strong></div>
+                    <div><span>진행 중</span><strong id="racePlayingCount">0명</strong></div>
                 </div>
 
-                <div class="ranking-head" aria-hidden="true"><span>순위</span><span>탐험가</span><span>첫 정답</span><span>완주 시간</span></div>
+                <div class="ranking-head" aria-hidden="true"><span>순위</span><span>학생</span><span>첫 정답</span><span>완료 시간</span></div>
                 <ol id="teacherRankingList" class="teacher-ranking-list" aria-label="학급 순위"></ol>
                 <p id="emptyRanking" class="empty-ranking">아직 완주한 학생이 없습니다.</p>
 
                 <div class="teacher-actions">
-                    <button id="resetRaceButton" class="secondary-button" type="button">새 탐험 준비</button>
+                    <button id="resetRaceButton" class="secondary-button" type="button">새 학급 도전 준비</button>
                 </div>
                 <p id="raceNotice" class="teacher-notice" role="status" aria-live="polite"></p>
             </section>

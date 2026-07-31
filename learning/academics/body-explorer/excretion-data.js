@@ -3,9 +3,9 @@ window.BODY_EXPLORER_CONFIG = {
     messagePrefix: "EXCRETION",
     bestScoreKey: "excretionBestScore",
     experienceType: "excretion-simulation",
-    namedGreeting: "{name} 탐험가, 콩팥이 혈액을 깨끗하게 하고 소변을 만드는 과정을 직접 조절해 볼까요?",
+    namedGreeting: "{name} 학생, 콩팥이 혈액을 거르고 소변을 만드는 과정을 직접 조절해 볼까요?",
     guestGreeting: "혈액에서 노폐물과 남는 물을 걸러 소변으로 내보내는 과정을 직접 확인해 보세요.",
-    resetAnnouncement: "새 배설 탐험을 기다립니다.",
+    resetAnnouncement: "새 배설 학습을 시작할 수 있습니다.",
     stateLabels: {
         filter: "혈액 거르기 실험",
         reclaim: "필요한 물질 회수 실험",

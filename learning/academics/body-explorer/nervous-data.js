@@ -3,7 +3,7 @@ window.BODY_EXPLORER_CONFIG = {
     messagePrefix: "NERVOUS",
     bestScoreKey: "nervousBestScore",
     experienceType: "nervous-simulation",
-    namedGreeting: "{name} 신호 탐험가, 자극을 직접 조절하고 몸의 반응을 만들어 볼까요?",
+    namedGreeting: "{name} 학생, 자극을 직접 조절하고 몸의 반응을 만들어 볼까요?",
     guestGreeting: "자극의 세기와 신경 경로를 직접 조절해 몸이 어떻게 반응하는지 실험해 보세요.",
     resetAnnouncement: "새 신경 실험을 기다립니다.",
     stateLabels: {

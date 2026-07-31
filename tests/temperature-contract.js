@@ -76,7 +76,7 @@ const html = fs.readFileSync(files.html, "utf8");
 for (const id of ["modeScreen", "personalModeButton", "classModeButton", "journeyScreen", "simulationCard", "stimulusIntensity", "signalPath", "componentBank", "temperatureVisual", "temperatureColumn", "skinVessel", "sweatDrops", "heatArrows", "muscleShiver", "temperatureState", "vesselState", "responseState", "resultScreen", "classRankingList", "missedList"]) {
     assert.ok(html.includes(`id="${id}"`), `Student page is missing #${id}`);
 }
-assert.ok(html.includes("개인 탐험") && html.includes("학급 순위 탐험") && html.includes("나의 오답노트"));
+assert.ok(html.includes("개인 학습") && html.includes("학급 도전") && html.includes("나의 오답노트"));
 assert.ok(html.includes('src="temperature-data.js"'));
 assert.ok(html.includes("ncbi.nlm.nih.gov/books/NBK507838"));
 assert.ok(html.includes("ncbi.nlm.nih.gov/books/NBK541107"));

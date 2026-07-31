@@ -52,11 +52,11 @@
                     <div class="mode-grid">
                         <button id="personalModeButton" class="mode-card" type="button">
                             <span class="mode-icon movement-mode-icon" aria-hidden="true">💪</span>
-                            <span><strong>개인 탐험</strong><small>내 속도로 배우고 오답노트 확인</small></span><b>PERSONAL</b>
+                            <span><strong>개인 학습</strong><small>내 속도로 학습하고 오답노트 확인</small></span><b>PERSONAL</b>
                         </button>
                         <button id="classModeButton" class="mode-card" type="button">
                             <span class="mode-icon class-icon" aria-hidden="true">🏫</span>
-                            <span><strong>학급 순위 탐험</strong><small>같이 출발해 정확도와 시간으로 순위 결정</small></span><b>CLASS</b>
+                            <span><strong>학급 도전</strong><small>함께 시작해 정확도와 시간으로 순위 결정</small></span><b>CLASS</b>
                         </button>
                     </div>
                     <a class="teacher-link" href="movement-teacher">교사용 학급 만들기·순위판 →</a>
@@ -93,14 +93,14 @@
             </section>
 
             <section id="lobbyScreen" class="screen compact-screen class-lobby hidden" aria-labelledby="classLobbyTitle">
-                <p class="section-kicker">CLASS EXPEDITION</p>
-                <h2 id="classLobbyTitle">학급 코드로 움직임 탐험에 참가하세요</h2>
-                <p><strong id="savedName"></strong> 탐험가로 참가합니다. 교사가 알려 준 숫자 4자리를 입력하세요.</p>
+                <p class="section-kicker">학급 참여</p>
+                <h2 id="classLobbyTitle">학급 코드로 참여하세요</h2>
+                <p><strong id="savedName"></strong> 학생으로 참여합니다. 선생님이 알려 준 숫자 4자리를 입력하세요.</p>
                 <div id="joinPane" class="join-pane">
                     <label for="joinCode">학급 코드</label>
                     <div class="join-row">
                         <input id="joinCode" class="room-code-input" inputmode="numeric" maxlength="4" autocomplete="one-time-code" placeholder="0000">
-                        <button id="joinBtn" class="primary-button" type="button">탐험대 참가</button>
+                        <button id="joinBtn" class="primary-button" type="button">학급 참여</button>
                     </div>
                     <p id="joinStatus" class="lobby-status" role="status">교사가 만든 학급 코드를 입력하세요.</p>
                 </div>
@@ -110,12 +110,12 @@
                     <div id="lobbyPlayers" class="mp-lobby-players" aria-label="참가 학생"></div>
                     <p id="lobbyGuide" class="lobby-status">학급과 연결하는 중입니다.</p>
                 </div>
-                <button id="leaveClassButton" class="text-button" type="button">← 탐험대에서 나가기</button>
+                <button id="leaveClassButton" class="text-button" type="button">← 시작 화면으로</button>
             </section>
 
             <section id="journeyScreen" class="journey-screen hidden" aria-label="뼈와 근육 조작 실험과 확인 문제">
                 <div class="journey-status">
-                    <div><span id="journeyModeLabel">개인 탐험</span><strong><span id="stageNumber">1</span>/10 관문</strong></div>
+                    <div><span id="journeyModeLabel">개인 학습</span><strong><span id="stageNumber">1</span>/10 단계</strong></div>
                     <div class="oxygen-meter"><span id="oxygenDot"></span><b id="oxygenLabel">관절 구조 실험</b></div>
                     <div class="score-meter"><span>첫 도전 정답</span><b><span id="currentScore">0</span>/10</b></div>
                 </div>

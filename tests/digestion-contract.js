@@ -78,8 +78,8 @@ for (const id of [
 ]) {
     assert.ok(html.includes(`id="${id}"`), `Student page is missing #${id}`);
 }
-assert.ok(html.includes("개인 탐험"), "Personal mode is missing.");
-assert.ok(html.includes("학급 순위 탐험"), "Class ranking mode is missing.");
+assert.ok(html.includes("개인 학습"), "Personal mode is missing.");
+assert.ok(html.includes("학급 도전"), "Class ranking mode is missing.");
 assert.ok(html.includes("나의 오답노트"), "Personal wrong-answer notebook is missing.");
 assert.ok(html.includes('src="digestion-data.js"'), "Digestion data is not linked.");
 assert.match(html, /src="app\.js(?:\?[^"]+)?"/, "Shared explorer app is not linked.");

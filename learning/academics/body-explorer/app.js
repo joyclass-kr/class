@@ -6,9 +6,9 @@
         messagePrefix: "CIRCULATION",
         bestScoreKey: "circulationBestScore",
         experienceType: "quiz",
-        namedGreeting: "{name} 탐험가, 인체 탐험을 출발해 볼까요?",
+        namedGreeting: "{name} 학생, 인체 학습을 시작해 볼까요?",
         guestGreeting: "우리 몸속을 직접 여행하며 배워 보세요.",
-        resetAnnouncement: "새 인체 탐험을 기다립니다.",
+        resetAnnouncement: "새 인체 학습을 시작할 수 있습니다.",
         stateLabels: {},
         resultMessages: {},
         ...window.BODY_EXPLORER_CONFIG
@@ -352,7 +352,7 @@
 
     function handleClassServerMessage(message, snapshot) {
         if (message.type === `${MESSAGE_PREFIX}_ERROR`) {
-            elements.joinStatus.textContent = message.message || "학급 탐험 요청을 처리하지 못했습니다.";
+            elements.joinStatus.textContent = message.message || "학급 참여 요청을 처리하지 못했습니다.";
             elements.announcer.textContent = elements.joinStatus.textContent;
             return;
         }
@@ -379,7 +379,7 @@
 
     function startJourney() {
         if (TOTAL_STAGES !== 10) {
-            elements.announcer.textContent = "탐험 관문을 불러오지 못했습니다.";
+            elements.announcer.textContent = "학습 단계를 불러오지 못했습니다.";
             return;
         }
         state.currentIndex = 0;
@@ -392,7 +392,7 @@
         state.startedAt = performance.now();
         state.classResultSubmitted = false;
         elements.currentScore.textContent = "0";
-        elements.journeyModeLabel.textContent = state.mode === "class" ? "학급 순위 탐험" : "개인 탐험";
+        elements.journeyModeLabel.textContent = state.mode === "class" ? "학급 도전" : "개인 학습";
         buildRouteMap();
         setScreen(elements.journeyScreen);
         renderStage();
@@ -1075,7 +1075,7 @@
 
     function resultMessage(score) {
         const name = getPlayerName();
-        const subject = name ? `${name} 탐험가, ` : "";
+        const subject = name ? `${name} 학생, ` : "";
         if (score === TOTAL_STAGES) return `${subject}${config.resultMessages.perfect}`;
         if (score >= 8) return `${subject}${config.resultMessages.great}`;
         if (score >= 6) return `${subject}${config.resultMessages.good}`;
@@ -1121,12 +1121,12 @@
             if (isNewBest) writeStored(BEST_SCORE_KEY, state.score);
             elements.bestMessage.textContent = isNewBest
                 ? `새 개인 최고 기록 ${best}/${TOTAL_STAGES} · ${formatElapsed(elapsedMs)}`
-                : `개인 최고 기록 ${best}/${TOTAL_STAGES} · 이번 탐험 ${formatElapsed(elapsedMs)}`;
+                : `개인 최고 기록 ${best}/${TOTAL_STAGES} · 이번 학습 ${formatElapsed(elapsedMs)}`;
             elements.classRankArea.classList.add("hidden");
             elements.restartButton.classList.remove("hidden");
             updateBestScore();
         } else {
-            elements.bestMessage.textContent = "탐구 관문은 완수 점수, 확인 문제는 첫 도전 정답으로 집계하며 동점이면 먼저 완주한 탐험가가 앞서요.";
+            elements.bestMessage.textContent = "활동 단계는 완료 점수, 확인 문제는 첫 도전 정답으로 집계하며 동점이면 먼저 마친 학생이 앞서요.";
             elements.classRankArea.classList.remove("hidden");
             elements.restartButton.classList.add("hidden");
             if (!state.classResultSubmitted && lobby) {
@@ -1188,7 +1188,7 @@
         elements.rankingWaiting.textContent = classState.phase === "ended"
             ? `최종 순위 · ${participants.length}명 모두 완주`
             : waitingCount > 0
-                ? `${rankings.length}명 완주 · ${waitingCount}명 탐험 중`
+                ? `${rankings.length}명 완료 · ${waitingCount}명 진행 중`
                 : "첫 완주자를 기다리고 있어요.";
     }
 
@@ -1233,7 +1233,7 @@
     setGreeting();
     updateBestScore();
     const scoreLabel = document.querySelector(".score-meter > span");
-    if (scoreLabel) scoreLabel.textContent = "탐험 점수";
+    if (scoreLabel) scoreLabel.textContent = "학습 점수";
     setScreen(elements.modeScreen);
     requestAnimationFrame(centerActiveEpisode);
 })();

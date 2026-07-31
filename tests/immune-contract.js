@@ -103,7 +103,7 @@ for (const id of [
 ]) {
     assert.ok(html.includes(`id="${id}"`), `Student page is missing #${id}`);
 }
-assert.ok(html.includes("개인 탐험") && html.includes("학급 순위 탐험"));
+assert.ok(html.includes("개인 학습") && html.includes("학급 도전"));
 assert.ok(html.includes("나의 오답노트"));
 assert.ok(html.includes('src="immune-data.js"'));
 assert.ok(html.includes("nigms.nih.gov/biobeat") && html.includes("cdc.gov/vaccines/basics/explaining-how-vaccines-work"));
