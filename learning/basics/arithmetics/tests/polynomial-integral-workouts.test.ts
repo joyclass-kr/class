@@ -21,6 +21,13 @@ test("대칭구간과 부호가 바뀌는 넓이는 서로 다른 계산 유형�
   assert.ok(absoluteArea.answers[0] > 0);
 });
 
+test("정적분 발문은 명령형 대신 짧은 직접 질문형을 쓴다", () => {
+  const prompts = createIntegralSet(20260809).problems
+    .filter(({ kind }) => kind === "definite-integral" || kind === "definite-integral-symmetry")
+    .map(({ prompt }) => prompt);
+  assert.deepEqual(prompts, ["정적분 값은?", "정적분 값은?"]);
+});
+
 test("부정적분은 소문자 미정계수와 표준 적분상수 C를 쓴다", () => {
   const problem = createIntegralSet(20260809).problems.find(({ kind }) => kind === "antiderivative");
   assert.ok(problem);

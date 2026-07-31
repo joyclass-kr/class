@@ -38,3 +38,10 @@ test("정적분 문제 생성은 같은 시드에서 재현된다", () => {
     createDefiniteIntegralProblemSet(41),
   );
 });
+
+test("정적분 계산 발문은 짧은 직접 질문형을 쓴다", () => {
+  const prompts = createDefiniteIntegralProblemSet(20260810).problems
+    .filter(({ kind }) => kind === "polynomial" || kind === "trigonometric")
+    .map(({ prompt }) => prompt);
+  assert.deepEqual(prompts, ["정적분 값은?", "정적분 값은?"]);
+});

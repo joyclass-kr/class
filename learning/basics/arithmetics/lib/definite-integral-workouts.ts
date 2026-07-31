@@ -87,7 +87,7 @@ function build(
     const constant = sampledConstant === 0 ? 1 : sampledConstant;
     const answer = (quadratic / 3) * upper ** 3 + (linear / 2) * upper ** 2 + constant * upper;
     return {
-      id, kind, label: "다항함수", prompt: "정적분의 값을 구하세요.",
+      id, kind, label: "다항함수", prompt: "정적분 값은?",
       latex: `\\int_{0}^{${upper}}\\left(${quadratic}x^2${linear < 0 ? "" : "+"}${linear}x${constant < 0 ? "" : "+"}${constant}\\right)\\,dx`,
       answerLatex: String(answer),
       choices: numericChoices(answer, next),
@@ -148,7 +148,7 @@ function build(
     const cosine = integer(next, 2, 6);
     const answer = sine + cosine;
     return {
-      id, kind, label: "삼각함수", prompt: "정적분의 값을 구하세요.",
+      id, kind, label: "삼각함수", prompt: "정적분 값은?",
       latex: `\\int_{0}^{\\frac{\\pi}{2}}\\left(${sine}\\sin x+${cosine}\\cos x\\right)\\,dx`,
       answerLatex: String(answer),
       choices: numericChoices(answer, next),

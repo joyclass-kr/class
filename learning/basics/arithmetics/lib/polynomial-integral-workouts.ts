@@ -74,7 +74,7 @@ function build(kind: IntegralKind, next: () => number, id: string): IntegralProb
     const n = integer(next, 2, 5);
     const b = integer(next, -4, 4);
     return {
-      id, kind, label: "정적분", prompt: "정적분의 값을 구하세요.",
+      id, kind, label: "정적분", prompt: "정적분 값은?",
       latex: `\\int_0^{${n}}\\left(${2 * a}x${signed(b)}\\right)dx`,
       answerLabels: ["값"], answers: [a * n * n + b * n],
     };
@@ -85,7 +85,7 @@ function build(kind: IntegralKind, next: () => number, id: string): IntegralProb
     const b = integer(next, -5, 5);
     const c = integer(next, -4, 4);
     return {
-      id, kind, label: "대칭구간의 정적분", prompt: "정적분의 값을 구하세요.",
+      id, kind, label: "대칭구간의 정적분", prompt: "정적분 값은?",
       latex: `\\int_{-${n}}^{${n}}\\left(${a}x^2${signed(b)}x${signed(c)}\\right)dx`,
       answerLabels: ["값"], answers: [2 * a * n ** 3 / 3 + 2 * c * n],
     };
