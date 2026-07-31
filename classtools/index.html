@@ -181,6 +181,10 @@
             gap: 20px;
         }
 
+        .teaching-tools-grid {
+            grid-template-columns: repeat(auto-fill, minmax(310px, 1fr));
+        }
+
         .tool-card {
             position: relative;
             display: flex;
@@ -357,6 +361,21 @@
                 </div>
             </a>
 
+        </div>
+
+        <h2 class="section-title">수업 도구</h2>
+        <div class="tools-grid teaching-tools-grid">
+            <a class="tool-card" href="/learning/basics/graph-studio/">
+                <div>
+                    <div class="tool-icon">📈</div>
+                    <h3 class="tool-name">그래프 그리기</h3>
+                    <p class="tool-desc">함수 그래프 도구</p>
+                </div>
+                <div class="tool-arrow">
+                    <span>이동</span>
+                    <span>→</span>
+                </div>
+            </a>
         </div>
 
         <div class="status-bar">

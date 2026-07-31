@@ -33,6 +33,10 @@ test("learning menus use the four top-level domains", () => {
     assert.equal(fs.existsSync(path.join(root, href)), true, href);
   }
   assert.doesNotMatch(menu, /href="learning\/basics\/graph-studio\/"/);
+
+  const teacherMenu = read("classtools/index.html");
+  assert.match(teacherMenu, /href="\/learning\/basics\/graph-studio\/"/);
+  assert.match(teacherMenu, /<h3 class="tool-name">그래프 그리기<\/h3>/);
 });
 
 test("menu-specific asset groups live with their menu", () => {
