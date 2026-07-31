@@ -7,6 +7,8 @@
     <title>물의 온도와 소금의 용해 | 과학 실험실</title>
     <meta name="description" content="물의 온도에 따라 녹는 소금의 양을 비교하는 초등 과학 모의실험">
     <link rel="stylesheet" href="styles.css">
+    <link rel="stylesheet" href="salt-visual.css">
+    <link rel="stylesheet" href="quiz.css">
 </head>
 <body>
     <main>
@@ -83,9 +85,13 @@
             <section class="panel beaker-stage" aria-label="소금 용해 관찰 화면">
                 <div class="stage-heading"><h2>관찰</h2><span id="solubilityBadge">용해도 36g</span></div>
                 <div class="apparatus">
+                    <div class="salt-dose" id="saltDose" aria-label="넣을 소금의 양">
+                        <strong>넣을 소금</strong>
+                        <div class="salt-cup"><span class="salt-pile" id="saltPile"></span></div>
+                        <output id="saltDoseValue">37g</output>
+                    </div>
                     <div class="beaker" id="beaker">
                         <div class="water" id="water">
-                            <div class="particles" id="particles" aria-hidden="true"></div>
                             <div class="sediment" id="sediment"></div>
                         </div>
                         <span class="beaker-mark mark-100">100 mL</span>
@@ -93,13 +99,66 @@
                     </div>
                     <div class="thermometer" aria-hidden="true"><span id="thermometerFill"></span></div>
                 </div>
-                <div class="particle-legend" id="particleLegend" hidden>
-                    <span><i class="legend-dot sodium-ion"></i>나트륨 이온</span>
-                    <span><i class="legend-dot chloride-ion"></i>염화 이온</span>
-                </div>
                 <p class="stage-caption" id="stageCaption">온도와 소금의 양을 정하세요.</p>
             </section>
         </div>
+
+        <section class="quiz-section" aria-labelledby="quiz-title">
+            <div class="quiz-heading"><h2 id="quiz-title">확인 문제</h2><span>4문제</span></div>
+            <div class="quiz-grid">
+                <article class="quiz-card" data-answer="b">
+                    <h3>소금이 물에 녹는 현상을 바르게 설명한 것은?</h3>
+                    <div class="quiz-options">
+                        <label><input type="radio" name="q1" value="a"> 소금이 물속에서 완전히 없어지는 것이다.</label>
+                        <label><input type="radio" name="q1" value="b"> 소금이 작은 입자로 물속에 고르게 퍼지는 것이다.</label>
+                        <label><input type="radio" name="q1" value="c"> 소금이 모두 물로 변하는 것이다.</label>
+                        <label><input type="radio" name="q1" value="d"> 소금이 비커 바닥에만 모이는 것이다.</label>
+                    </div>
+                    <button class="answer-button" type="button">정답 확인</button>
+                    <p class="answer-result" aria-live="polite"></p>
+                    <p class="answer-explanation" hidden>녹은 소금은 사라진 것이 아니라 눈에 보이지 않을 만큼 작은 입자로 물속에 고르게 퍼집니다.</p>
+                </article>
+
+                <article class="quiz-card" data-answer="c">
+                    <h3>20℃의 물 100g에 소금이 최대 36g 녹는다. 소금 38g을 넣으면 남는 양은?</h3>
+                    <div class="quiz-options">
+                        <label><input type="radio" name="q2" value="a"> 0g</label>
+                        <label><input type="radio" name="q2" value="b"> 1g</label>
+                        <label><input type="radio" name="q2" value="c"> 2g</label>
+                        <label><input type="radio" name="q2" value="d"> 36g</label>
+                    </div>
+                    <button class="answer-button" type="button">정답 확인</button>
+                    <p class="answer-result" aria-live="polite"></p>
+                    <p class="answer-explanation" hidden>38g 중 36g이 녹으므로 38－36＝2g이 바닥에 남습니다.</p>
+                </article>
+
+                <article class="quiz-card" data-answer="a">
+                    <h3>물의 온도가 높아질 때 소금이 녹는 양의 변화로 알맞은 것은?</h3>
+                    <div class="quiz-options">
+                        <label><input type="radio" name="q3" value="a"> 조금 증가한다.</label>
+                        <label><input type="radio" name="q3" value="b"> 매우 크게 증가한다.</label>
+                        <label><input type="radio" name="q3" value="c"> 항상 절반으로 감소한다.</label>
+                        <label><input type="radio" name="q3" value="d"> 온도와 관계없이 정확히 같다.</label>
+                    </div>
+                    <button class="answer-button" type="button">정답 확인</button>
+                    <p class="answer-result" aria-live="polite"></p>
+                    <p class="answer-explanation" hidden>물 100g에 녹는 소금은 20℃에서 약 36g, 80℃에서 약 38.4g으로 조금 증가합니다.</p>
+                </article>
+
+                <article class="quiz-card" data-answer="d">
+                    <h3>온도에 따라 녹는 소금의 양을 비교할 때 같게 해야 하는 조건은?</h3>
+                    <div class="quiz-options">
+                        <label><input type="radio" name="q4" value="a"> 물의 온도만 같게 한다.</label>
+                        <label><input type="radio" name="q4" value="b"> 소금의 종류를 매번 바꾼다.</label>
+                        <label><input type="radio" name="q4" value="c"> 비커마다 물의 양을 다르게 한다.</label>
+                        <label><input type="radio" name="q4" value="d"> 물의 양과 소금의 종류를 같게 한다.</label>
+                    </div>
+                    <button class="answer-button" type="button">정답 확인</button>
+                    <p class="answer-result" aria-live="polite"></p>
+                    <p class="answer-explanation" hidden>온도의 영향만 비교하려면 물의 양과 소금의 종류 등 다른 조건은 같게 해야 합니다.</p>
+                </article>
+            </div>
+        </section>
     </main>
     <script src="app.js"></script>
 </body>

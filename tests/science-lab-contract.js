@@ -8,6 +8,8 @@ const styles = fs.readFileSync('learning/academics/science-lab/styles.css', 'utf
 const solubilityPage = fs.readFileSync('learning/academics/science-lab/solubility/index.html', 'utf8');
 const solubilityApp = fs.readFileSync('learning/academics/science-lab/solubility/app.js', 'utf8');
 const solubilityStyles = fs.readFileSync('learning/academics/science-lab/solubility/styles.css', 'utf8');
+const saltVisualStyles = fs.readFileSync('learning/academics/science-lab/solubility/salt-visual.css', 'utf8');
+const solubilityQuizStyles = fs.readFileSync('learning/academics/science-lab/solubility/quiz.css', 'utf8');
 
 assert.match(root, /href="learning\/academics\/science-lab\/"/);
 assert.match(root, /<strong>과학 실험실<\/strong>/);
@@ -59,9 +61,21 @@ assert.match(solubilityApp, /function setAmountRange\(resetValue = true\)/);
 assert.match(solubilityApp, /maximum - 3/);
 assert.match(solubilityApp, /maximum \+ 3/);
 assert.match(solubilityApp, /remaining > 0 \?/);
-assert.match(solubilityApp, /녹지 않은 결정이 아니라 물속에 퍼진 소금 입자/);
-assert.match(solubilityStyles, /\.sodium-ion/);
-assert.match(solubilityStyles, /\.chloride-ion/);
+assert.match(solubilityPage, /id="saltPile"/);
+assert.match(solubilityPage, /id="saltDoseValue"/);
+assert.doesNotMatch(solubilityPage, /particles|나트륨 이온|염화 이온/);
+assert.doesNotMatch(solubilityApp, /renderIons|createElement\('i'\)|Na⁺|Cl⁻/);
+assert.match(solubilityApp, /saltPile\.style\.setProperty\('--salt-level'/);
+assert.match(solubilityApp, /saltDose\.classList\.add\('poured'\)/);
+assert.match(solubilityApp, /눈에 보이는 소금 결정은 없습니다/);
+assert.match(saltVisualStyles, /\.salt-cup/);
+assert.match(saltVisualStyles, /\.salt-pile/);
+assert.match(solubilityPage, /<h2 id="quiz-title">확인 문제<\/h2>/);
+assert.equal((solubilityPage.match(/class="quiz-card"/g) || []).length, 4);
+assert.doesNotMatch(solubilityPage, /개념|자료 해석|공간 추론|수능 대비|내신 대비/);
+assert.match(solubilityApp, /function shuffleQuizOptions\(card\)/);
+assert.match(solubilityApp, /shuffleQuizOptions\(card\)/);
+assert.match(solubilityQuizStyles, /grid-template-columns:repeat\(2,minmax\(0,1fr\)\)/);
 assert.match(solubilityStyles, /grid-template-columns:310px minmax\(360px,430px\) minmax\(440px,1fr\)/);
 assert.match(solubilityStyles, /@media\(max-width:820px\)/);
 
