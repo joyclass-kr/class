@@ -826,6 +826,42 @@ input:checked + .slider-knob:before {
     flex-direction: column;
     gap: 18px;
     width: 100%;
+    min-width: 0;
+}
+
+#modalPropGrid {
+    width: 100%;
+    min-width: 0;
+    grid-template-columns: repeat(2, minmax(0, 1fr)) !important;
+}
+
+#modalPropGrid > div {
+    min-width: 0;
+    overflow-wrap: anywhere;
+}
+
+@media (min-width: 841px) and (max-width: 1040px) {
+    .modal-overlay {
+        padding: 14px;
+    }
+
+    .planet-modal {
+        padding: 24px;
+    }
+
+    .modal-split-container {
+        gap: 18px;
+    }
+
+    .modal-left-col {
+        width: 300px;
+        padding: 18px;
+    }
+
+    .modal-planet-photo {
+        width: 220px;
+        height: 220px;
+    }
 }
 
 .sat-exam-box {

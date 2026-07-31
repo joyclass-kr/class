@@ -3219,7 +3219,7 @@
 
                 var moonDetailStr = (body.moons !== undefined) ? (body.moons + '개' + (body.satellites && body.satellites.length > 0 ? ' (' + body.satellites.map(function(s){ return s.name; }).join(', ') + ')' : '')) : '-';
 
-                propGrid.style.cssText = 'display: grid; grid-template-columns: repeat(2, 1fr); gap: 10px; margin-bottom: 12px;';
+                propGrid.style.cssText = 'display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:10px;margin-bottom:12px;width:100%;min-width:0;';
                 propGrid.innerHTML =
                     '<div style="background:rgba(255,255,255,0.06);padding:10px 14px;border-radius:10px;border:1px solid rgba(255,255,255,0.12);">' +
                         '<div style="font-size:11.5px;color:#cbd5e1;font-weight:700;">📏 지구 대비 크기 (반지름)</div>' +
@@ -3261,35 +3261,74 @@
             if (nextBtn) nextBtn.addEventListener('click', loadNewQuizQuestion);
         }
 
+        function makeSpaceQuizOrder(length, previousQuestion) {
+            var order = Array.from({ length: length }, function (_, index) { return index; });
+            for (var index = order.length - 1; index > 0; index--) {
+                var randomIndex = Math.floor(Math.random() * (index + 1));
+                var temp = order[index];
+                order[index] = order[randomIndex];
+                order[randomIndex] = temp;
+            }
+            if (order.length > 1 && order[0] === previousQuestion) {
+                var first = order[0];
+                order[0] = order[1];
+                order[1] = first;
+            }
+            return order;
+        }
+
         function loadNewQuizQuestion() {
             if (state.quiz.autoTimer) { clearTimeout(state.quiz.autoTimer); state.quiz.autoTimer = null; }
             state.quiz.answered = false;
-            if (!state.quiz.qIndex) state.quiz.qIndex = 0;
-            state.quiz.qIndex++;
 
             var quizPool = [
-                { cat: "지구형 vs 목성형", q: "지구형 행성과 비교할 때 목성형 행성의 일반적인 물리적 특징으로 옳은 것은?", ans: "질량과 반지름이 크고 평균 밀도가 작다.", opts: ["질량과 반지름이 크고 평균 밀도가 작다.", "평균 밀도가 크고 자전 속도가 매우 늙다.", "위성의 수가 거의 없거나 적다.", "단단한 암석 표면을 가지고 있다."], exp: "목성형 행성은 수소와 헬륨 등 가벼운 기체 위주로 구성되어 있어 질량과 반지름은 크지만 평균 밀도는 매우 작습니다." },
+                { cat: "태양계의 중심", q: "태양계 전체 질량의 대부분을 차지하며 행성의 공전을 지배하는 천체는?", ans: "태양", opts: ["태양", "목성", "지구", "토성"], exp: "태양은 태양계 전체 질량의 약 99.8%를 차지하며 강한 중력으로 행성과 작은 천체들을 붙잡고 있습니다." },
+                { cat: "행성 순서", q: "태양에서 가까운 순서대로 처음 네 행성을 바르게 나열한 것은?", ans: "수성-금성-지구-화성", opts: ["수성-금성-지구-화성", "수성-지구-금성-화성", "금성-수성-화성-지구", "지구-금성-수성-화성"], exp: "태양에서 바깥쪽으로 수성, 금성, 지구, 화성 순이며 이 네 행성은 지구형 행성입니다." },
+                { cat: "지구형 vs 목성형", q: "지구형 행성과 비교할 때 목성형 행성의 일반적인 물리적 특징으로 옳은 것은?", ans: "질량과 반지름이 크고 평균 밀도가 작다.", opts: ["질량과 반지름이 크고 평균 밀도가 작다.", "평균 밀도가 크고 자전 속도가 매우 느리다.", "위성의 수가 거의 없거나 적다.", "단단한 암석 표면을 가지고 있다."], exp: "목성형 행성은 가벼운 물질의 비중이 커 질량과 반지름은 크지만 평균 밀도는 비교적 작습니다." },
+                { cat: "지구형 행성", q: "지구형 행성에 공통으로 나타나는 특징은?", ans: "크기가 비교적 작고 암석질 표면이 있다.", opts: ["크기가 비교적 작고 암석질 표면이 있다.", "모두 뚜렷한 고리를 가지고 있다.", "대부분 수소와 헬륨으로 이루어져 있다.", "모두 위성이 10개 이상이다."], exp: "수성, 금성, 지구, 화성은 비교적 작고 밀도가 크며 암석과 금속으로 이루어진 고체 표면을 가집니다." },
+                { cat: "목성형 행성", q: "목성형 행성에 해당하는 행성만으로 묶인 것은?", ans: "목성·토성·천왕성·해왕성", opts: ["목성·토성·천왕성·해왕성", "화성·목성·토성·천왕성", "지구·화성·목성·토성", "수성·금성·천왕성·해왕성"], exp: "태양계 바깥쪽의 목성, 토성, 천왕성, 해왕성이 목성형 행성으로 분류됩니다." },
+                { cat: "공전 주기", q: "태양에서 멀어질수록 행성의 공전 주기는 일반적으로 어떻게 변하는가?", ans: "길어진다.", opts: ["길어진다.", "짧아진다.", "모두 1년으로 같다.", "행성의 크기에만 따라 변한다."], exp: "태양에서 먼 행성일수록 공전 궤도가 크고 공전 속도도 느려지는 경향이 있어 공전 주기가 길어집니다." },
                 { cat: "내행성 관측", q: "수성과 금성 같은 내행성을 지상에서 관측할 수 있는 조건으로 옳은 것은?", ans: "해진 직후 서쪽 하늘 또는 해뜨기 직전 동쪽 하늘", opts: ["해진 직후 서쪽 하늘 또는 해뜨기 직전 동쪽 하늘", "한밤중에 남쪽 하늘", "한밤중에 북쪽 하늘", "하루 중 아무 때나 항상 관측 가능"], exp: "내행성은 지구 궤도 안쪽을 공전하므로 최대 이각 범위 내에서만 관측 가능하여 한밤중에는 볼 수 없고 해질녘 서쪽이나 새벽 동쪽 하늘에서만 관측됩니다." },
+                { cat: "내행성 관측", q: "금성이 달처럼 위상 변화를 보이는 까닭은?", ans: "지구보다 안쪽에서 태양을 공전하기 때문에", opts: ["지구보다 안쪽에서 태양을 공전하기 때문에", "금성이 스스로 밝기를 바꾸기 때문에", "지구 그림자가 매달 금성을 가리기 때문에", "금성에 큰 바다가 있기 때문에"], exp: "금성은 내행성이므로 공전 위치에 따라 태양빛을 받는 면을 보는 각도가 달라져 위상이 변합니다." },
                 { cat: "역자전 행성", q: "자전 방향이 지구와 반대(시계 방향 / 동->서)이며 자전 주기가 공전 주기보다 긴 행성은?", ans: "금성 (Venus)", opts: ["수성 (Mercury)", "금성 (Venus)", "화성 (Mars)", "목성 (Jupiter)"], exp: "금성은 시계 방향(동->서)으로 역자전하며, 자전 주기(243일)가 공전 주기(224.7일)보다 길어 하루가 1년보다 깁니다." },
+                { cat: "수성", q: "수성 표면의 낮과 밤 온도 차가 매우 큰 주된 이유는?", ans: "열을 붙잡아 줄 대기가 거의 없어서", opts: ["열을 붙잡아 줄 대기가 거의 없어서", "태양에서 가장 멀어서", "표면이 모두 얼음으로 덮여서", "자전축이 90° 기울어서"], exp: "수성은 대기가 거의 없어 낮에 받은 열을 저장하거나 밤으로 전달하기 어렵기 때문에 일교차가 매우 큽니다." },
+                { cat: "화성", q: "화성이 붉게 보이는 주된 까닭은?", ans: "표면에 산화 철이 많이 있어서", opts: ["표면에 산화 철이 많이 있어서", "붉은 식물이 자라서", "대기가 모두 불꽃으로 이루어져서", "태양빛 중 붉은빛만 방출해서"], exp: "화성의 토양과 먼지에는 녹과 비슷한 산화 철 성분이 많아 붉게 보입니다." },
                 { cat: "밀도 특징", q: "평균 밀도가 0.69 g/cm³로 태양계 행성 중 유일하게 물(1.0 g/cm³)보다 밀도가 작아 물에 뜨는 행성은?", ans: "토성 (Saturn)", opts: ["목성 (Jupiter)", "토성 (Saturn)", "천왕성 (Uranus)", "해왕성 (Neptune)"], exp: "토성은 얼음과 가스로 이루어져 평균 밀도가 0.69g/cm³에 불과하여 만약 토성을 담을 거대한 바다가 있다면 물 위에 떠오릅니다." },
+                { cat: "행성의 고리", q: "행성의 고리는 주로 무엇으로 이루어져 있는가?", ans: "얼음과 암석의 수많은 작은 조각", opts: ["얼음과 암석의 수많은 작은 조각", "하나의 단단한 원반", "뜨거운 용암 띠", "행성에서 나온 연속적인 빛"], exp: "행성의 고리는 크기가 다양한 얼음과 암석 조각들이 행성 주위를 공전하며 만든 구조입니다." },
                 { cat: "자전축 기울기", q: "자전축 기울기가 약 98도로 공전 궤도면에 거의 누운 상태로 공전하는 행성은?", ans: "천왕성 (Uranus)", opts: ["화성 (Mars)", "목성 (Jupiter)", "천왕성 (Uranus)", "해왕성 (Neptune)"], exp: "천왕성은 자전축이 98도 누워 있어서 남극이나 북극이 태양을 직등으로 향한 채 누워서 공전합니다." },
+                { cat: "해왕성", q: "태양계의 8개 행성 중 태양에서 가장 멀리 있는 행성은?", ans: "해왕성 (Neptune)", opts: ["토성 (Saturn)", "천왕성 (Uranus)", "해왕성 (Neptune)", "명왕성 (Pluto)"], exp: "현재 행성으로 분류되는 8개 천체 가운데 태양에서 가장 먼 행성은 해왕성입니다. 명왕성은 왜소행성입니다." },
                 { cat: "외행성 관측", q: "외행성이 지구에서 보았을 때 한밤중에 남쪽 하늘에서 가장 밝게 관측되는 위치는?", ans: "충 (Opposition)", opts: ["합 (Conjunction)", "충 (Opposition)", "동방 최대 이각", "서방 최대 이각"], exp: "태양-지구-외행성이 일직선상에 놓이는 '충' 위치일 때 외행성은 지구와 가장 가깝고 한밤중 남쪽 하늘에서 가장 밝게 관측됩니다." },
                 { cat: "왜소행성 재분류", q: "2006년 국제천문연맹(IAU)에서 명왕성이 행성에서 왜소행성으로 재분류된 결정적 사유는?", ans: "자신의 궤도 주변의 다른 천체를 청소하지 못함", opts: ["태양 주위를 공전하지 않음", "자체 중력으로 구형을 이루지 못함", "자신의 궤도 주변의 다른 천체를 청소하지 못함", "위성을 보유하지 않음"], exp: "명왕성은 태양 공전과 구형 형태는 만족하지만, 카이퍼 벨트에 위치하여 자신의 궤도 주변 천체를 청소(Clear the neighborhood)하지 못해 왜소행성으로 재분류되었습니다." },
-                { cat: "달의 운동", q: "지구에서 항상 달의 앞면만 볼 수 있는 과학적 원인은?", ans: "달의 자전 주기와 공전 주기가 27.3일로 같아서", opts: ["달이 자전을 전혀 하지 않아서", "달의 자전 주기와 공전 주기가 27.3일로 같아서", "지구의 자전 속도가 달보다 2배 빨라서", "달이 지구 주변을 멈춰 서 있어서"], exp: "달은 자전 주기와 공전 주기가 27.3일로 완전히 같은 '동주기 자전'을 하므로 지구를 향하는 면이 항상 같습니다." },
+                { cat: "자연위성", q: "행성 주위를 공전하는 천체를 부르는 일반적인 명칭은?", ans: "자연위성", opts: ["자연위성", "왜소행성", "유성", "성운"], exp: "달처럼 행성의 중력에 묶여 그 행성 주위를 공전하는 천체를 자연위성이라고 합니다." },
+                { cat: "소행성대", q: "태양계의 주 소행성대가 위치한 곳은?", ans: "화성과 목성 궤도 사이", opts: ["수성과 금성 궤도 사이", "지구와 화성 궤도 사이", "화성과 목성 궤도 사이", "천왕성과 해왕성 궤도 사이"], exp: "주 소행성대는 화성과 목성의 공전 궤도 사이에 있으며 많은 암석질 소천체가 태양을 공전합니다." },
                 { cat: "혜성의 특성", q: "혜성이 태양에 가까워질수록 길게 형성되는 꼬리의 방향으로 옳은 것은?", ans: "항상 태양의 반대 방향", opts: ["항상 태양의 반대 방향", "항상 태양을 향하는 방향", "혜성의 이동 방향 뒤쪽", "혜성의 자전축 방향"], exp: "혜성의 꼬리는 태양풍과 태양 방사압의 영향을 직접 받아 항상 태양의 반대 방향으로 늘어납니다." },
+                { cat: "혜성의 구성", q: "혜성의 핵을 이루는 물질의 조합으로 가장 알맞은 것은?", ans: "얼음·먼지·암석 물질", opts: ["얼음·먼지·암석 물질", "순수한 철과 니켈", "액체 수소만", "뜨거운 플라스마만"], exp: "혜성핵은 여러 종류의 얼음과 먼지, 암석질 물질이 섞인 작은 천체입니다." },
                 { cat: "유성과 운석", q: "우주 먼지나 소행성 파편이 지구 대기권에 진입할 때 타지 않고 지표면에 떨어진 잔해를 부르는 명칭은?", ans: "운석 (Meteorite)", opts: ["유성 (Meteor)", "운석 (Meteorite)", "혜성 (Comet)", "왜소행성 (Dwarf Planet)"], exp: "대기 마찰열로 빛을 내며 타고 사라지면 유성(별똥별), 타다 남아서 지표에 떨어진 암석 잔해는 운석이라 부릅니다." },
-                { cat: "소행성대 위치", q: "수많은 암석 천체들이 밀집해 있는 소행성대(Asteroid Belt)의 태양계 내 주요 위치는?", ans: "화성과 목성 궤도 사이", opts: ["수성과 금성 궤도 사이", "지구와 화성 궤도 사이", "화성과 목성 궤도 사이", "토성과 천왕성 궤도 사이"], exp: "소행성대는 화성(1.52 AU)과 목성(5.2 AU) 사이에 형성되어 있으며 수십만 개의 불규칙한 암석 조각들이 태양을 공전합니다." }
+                { cat: "유성체·유성·운석", q: "우주 공간의 작은 암석 조각이 지구 대기권에 들어와 빛나는 현상은?", ans: "유성 (Meteor)", opts: ["유성 (Meteor)", "운석 (Meteorite)", "위성 (Satellite)", "왜소행성 (Dwarf Planet)"], exp: "우주 공간의 작은 물체가 대기권에 진입해 가열되며 빛나는 현상을 유성이라고 합니다." },
+                { cat: "태양계 외곽", q: "해왕성 바깥쪽에서 많은 얼음 천체와 왜소행성이 공전하는 영역은?", ans: "카이퍼 벨트", opts: ["카이퍼 벨트", "주 소행성대", "광구", "밴앨런대"], exp: "카이퍼 벨트는 해왕성 궤도 바깥쪽에 펼쳐진 얼음 소천체의 영역이며 명왕성도 이 영역에 속합니다." }
             ];
 
-            var qIndexInPool = (state.quiz.qIndex - 1) % quizPool.length;
+            if (!Array.isArray(state.quiz.questionOrder) || state.quiz.questionOrder.length !== quizPool.length) {
+                state.quiz.questionOrder = makeSpaceQuizOrder(quizPool.length, state.quiz.previousQuestion);
+                state.quiz.questionPosition = 0;
+            }
+
+            var displayPosition = state.quiz.questionPosition;
+            var qIndexInPool = state.quiz.questionOrder[displayPosition];
             var qObj = quizPool[qIndexInPool];
             state.quiz.currentQuestion = qObj;
+            state.quiz.previousQuestion = qIndexInPool;
+            state.quiz.questionPosition += 1;
+            if (state.quiz.questionPosition >= quizPool.length) {
+                state.quiz.questionOrder = null;
+                state.quiz.questionPosition = 0;
+            }
 
             var catBadge = document.getElementById('quizCategoryBadge');
             if (catBadge) catBadge.textContent = '[' + qObj.cat + ']';
 
             var progressText = document.getElementById('quizProgressText');
-            if (progressText) progressText.textContent = '문제 ' + (qIndexInPool + 1) + ' / ' + quizPool.length;
+            if (progressText) progressText.textContent = '문제 ' + (displayPosition + 1) + ' / ' + quizPool.length;
 
             var qTextEl = document.getElementById('quizQuestionText');
             if (qTextEl) qTextEl.textContent = '🪐 ' + qObj.q;
@@ -3300,7 +3339,13 @@
             var optGrid = document.getElementById('quizOptionsGrid');
             if (optGrid) {
                 optGrid.innerHTML = '';
-                var shuffled = qObj.opts.slice().sort(function () { return Math.random() - 0.5; });
+                var shuffled = qObj.opts.slice();
+                for (var optionIndex = shuffled.length - 1; optionIndex > 0; optionIndex--) {
+                    var optionRandomIndex = Math.floor(Math.random() * (optionIndex + 1));
+                    var optionTemp = shuffled[optionIndex];
+                    shuffled[optionIndex] = shuffled[optionRandomIndex];
+                    shuffled[optionRandomIndex] = optionTemp;
+                }
                 shuffled.forEach(function (optText) {
                     var btn = document.createElement('button');
                     btn.className = 'quiz-opt-btn';
