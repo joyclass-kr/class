@@ -31,7 +31,7 @@ const canvas=document.getElementById("graphCanvas");
 const formulaDisplay=document.getElementById("formulaDisplay");
 const formulaHelp=document.getElementById("formulaHelp");
 const legend=document.getElementById("legend");
-const {expressionToLatex}=window.GraphMath;
+const {expressionToLatex,createGraphViewport}=window.GraphMath;
 
 function buildLibrary(){
   const root=document.getElementById("presetLibrary");root.innerHTML="";
@@ -174,21 +174,39 @@ function draw(){
   const rect=canvas.getBoundingClientRect();if(!rect.width||!rect.height)return;
   const ratio=window.devicePixelRatio||1;canvas.width=rect.width*ratio;canvas.height=rect.height*ratio;
   const ctx=canvas.getContext("2d");ctx.setTransform(ratio,0,0,ratio,0,0);
-  const w=rect.width,h=rect.height,min=-state.range,max=state.range,px=x=>(x-min)/(max-min)*w,py=y=>h-(y-min)/(max-min)*h;
+  const w=rect.width,h=rect.height;
+  const {px,py,xMin,xMax,yMin,yMax}=createGraphViewport(w,h,state.range);
   const evaluators=state.functions.map((fn,index)=>{
     const errorNode=document.querySelectorAll(".functionError")[index];
     try{const evaluator=compileExpression(fn.expression);if(errorNode)errorNode.textContent="";return fn.visible?evaluator:null;}
     catch(error){if(errorNode)errorNode.textContent=error.message||"수식을 확인하세요.";return null;}
   });
   renderFormulaHelp(evaluators.some(Boolean));
-  ctx.fillStyle="#fbfcff";ctx.fillRect(0,0,w,h);const step=state.range<=5?1:state.range<=10?2:5;ctx.font='12px "STIX Two Math", serif';
-  for(let v=min;v<=max;v+=step){ctx.strokeStyle=v===0?"#697386":"#e8ebf2";ctx.lineWidth=1;ctx.beginPath();ctx.moveTo(px(v),0);ctx.lineTo(px(v),h);ctx.stroke();ctx.beginPath();ctx.moveTo(0,py(v));ctx.lineTo(w,py(v));ctx.stroke();if(v!==0){ctx.fillStyle="#8891a3";ctx.textAlign="center";ctx.fillText(v,px(v),Math.min(h-15,Math.max(12,py(0)+16)));ctx.textAlign="right";ctx.fillText(v,Math.min(w-5,Math.max(24,px(0)-7)),py(v)+3);}}
+  ctx.fillStyle="#fbfcff";ctx.fillRect(0,0,w,h);
+  const step=state.range<=3?.5:state.range<=6?1:state.range<=12?2:state.range<=25?5:10;
+  const firstTick=(minimum)=>Math.ceil((minimum-1e-9)/step)*step;
+  const tickLabel=(value)=>String(Number(value.toFixed(2)));
+  const xLabelY=Math.min(h-8,Math.max(14,py(0)+16));
+  const yLabelX=Math.min(w-6,Math.max(25,px(0)-7));
+  ctx.font='12px "STIX Two Math", serif';
+  for(let value=firstTick(xMin);value<=xMax+1e-9;value+=step){
+    const x=px(value);
+    ctx.strokeStyle=Math.abs(value)<1e-9?"#697386":"#e8ebf2";ctx.lineWidth=1;
+    ctx.beginPath();ctx.moveTo(x,0);ctx.lineTo(x,h);ctx.stroke();
+    if(Math.abs(value)>1e-9){ctx.fillStyle="#8891a3";ctx.textAlign="center";ctx.fillText(tickLabel(value),x,xLabelY);}
+  }
+  for(let value=firstTick(yMin);value<=yMax+1e-9;value+=step){
+    const y=py(value);
+    ctx.strokeStyle=Math.abs(value)<1e-9?"#697386":"#e8ebf2";ctx.lineWidth=1;
+    ctx.beginPath();ctx.moveTo(0,y);ctx.lineTo(w,y);ctx.stroke();
+    if(Math.abs(value)>1e-9){ctx.fillStyle="#8891a3";ctx.textAlign="right";ctx.fillText(tickLabel(value),yLabelX,y+3);}
+  }
   const primary=evaluators[0];
   if(state.showIntegral&&primary){ctx.beginPath();ctx.moveTo(px(-2),py(0));for(let i=0;i<=160;i++){const x=-2+i/40,y=primary(x);if(Number.isFinite(y))ctx.lineTo(px(x),py(y));}ctx.lineTo(px(2),py(0));ctx.closePath();ctx.fillStyle="rgba(101,88,217,.16)";ctx.fill();}
-  function plot(fn,color,width){ctx.strokeStyle=color;ctx.lineWidth=width;ctx.lineJoin="round";ctx.beginPath();let previous=null;for(let i=0;i<=w;i++){const x=min+i/w*(max-min),sy=py(fn(x));if(!Number.isFinite(sy)||Math.abs(sy)>h*4||(previous!==null&&Math.abs(sy-previous)>h)){previous=null;continue;}previous===null?ctx.moveTo(i,sy):ctx.lineTo(i,sy);previous=sy;}ctx.stroke();}
+  function plot(fn,color,width){ctx.strokeStyle=color;ctx.lineWidth=width;ctx.lineJoin="round";ctx.beginPath();let previous=null;for(let i=0;i<=w;i++){const x=xMin+i/w*(xMax-xMin),sy=py(fn(x));if(!Number.isFinite(sy)||Math.abs(sy)>h*4||(previous!==null&&Math.abs(sy-previous)>h)){previous=null;continue;}previous===null?ctx.moveTo(i,sy):ctx.lineTo(i,sy);previous=sy;}ctx.stroke();}
   evaluators.forEach((fn,index)=>{if(fn)plot(fn,colors[index%colors.length],index?2.4:3);});
   if(state.showDerivative&&primary)plot(x=>(primary(x+.0005)-primary(x-.0005))/.001,"#202334",2);
-  if(state.showPoints&&primary){ctx.fillStyle=colors[0];[-2,-1,0,1,2].forEach(x=>{const y=primary(x);if(!Number.isFinite(y)||y<min||y>max)return;ctx.beginPath();ctx.arc(px(x),py(y),4.5,0,Math.PI*2);ctx.fill();});}
+  if(state.showPoints&&primary){ctx.fillStyle=colors[0];[-2,-1,0,1,2].forEach(x=>{const y=primary(x);if(!Number.isFinite(y)||x<xMin||x>xMax||y<yMin||y>yMax)return;ctx.beginPath();ctx.arc(px(x),py(y),4.5,0,Math.PI*2);ctx.fill();});}
   legend.innerHTML=state.functions.map((fn,index)=>fn.visible&&evaluators[index]?`<span><i style="background:${colors[index%colors.length]}"></i>y${index+1}</span>`:"").join("");
   if(state.showDerivative&&primary)legend.innerHTML+=`<span><i style="background:#202334"></i>y1′</span>`;
   if(state.showIntegral&&primary)legend.innerHTML+=`<span><i class="areaSwatch"></i>−2부터 2까지 넓이</span>`;
@@ -245,7 +263,16 @@ document.getElementById("mathKeyboard").addEventListener("click",event=>{
     else if(start>0){updateActiveExpression(input.value.slice(0,start-1)+input.value.slice(end),start-1);}
   }
 });
-document.querySelectorAll("[data-range]").forEach(button=>button.onclick=()=>{state.range=Number(button.dataset.range);draw();});
+const zoomLevel=document.getElementById("zoomLevel");
+function setGraphRange(range){
+  state.range=Math.max(2,Math.min(40,Number(range)||10));
+  zoomLevel.textContent=`${Math.round(10/state.range*100)}%`;
+  draw();
+}
+document.querySelectorAll("[data-range]").forEach(button=>button.onclick=()=>setGraphRange(Number(button.dataset.range)));
+document.querySelectorAll("[data-zoom]").forEach(button=>button.onclick=()=>setGraphRange(state.range*(button.dataset.zoom==="in"?.8:1.25)));
+canvas.addEventListener("wheel",event=>{event.preventDefault();setGraphRange(state.range*(event.deltaY<0?.88:1.14));},{passive:false});
+canvas.addEventListener("dblclick",()=>setGraphRange(10));
 ["showPoints","showDerivative","showIntegral"].forEach(id=>document.getElementById(id).onchange=e=>{state[id]=e.target.checked;draw();});
 document.getElementById("resetButton").onclick=()=>{state.params={a:1,b:1,h:0,k:0};buildSliders();draw();};
 document.getElementById("printButton").onclick=()=>window.print();

@@ -105,5 +105,24 @@
     return `y=${source.trim() ? formatSegment(source.trim()) : "\\square"}`;
   }
 
-  return { expressionToLatex, formatSegment };
+  function createGraphViewport(width, height, range) {
+    const safeWidth = Math.max(1, Number(width) || 1);
+    const safeHeight = Math.max(1, Number(height) || 1);
+    const safeRange = Math.max(2, Math.min(40, Number(range) || 10));
+    const scale = Math.min(safeWidth, safeHeight) / (safeRange * 2);
+    const halfX = safeWidth / (2 * scale);
+    const halfY = safeHeight / (2 * scale);
+
+    return {
+      scale,
+      xMin: -halfX,
+      xMax: halfX,
+      yMin: -halfY,
+      yMax: halfY,
+      px: (x) => safeWidth / 2 + x * scale,
+      py: (y) => safeHeight / 2 - y * scale,
+    };
+  }
+
+  return { expressionToLatex, formatSegment, createGraphViewport };
 });

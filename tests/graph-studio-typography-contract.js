@@ -4,7 +4,7 @@ const fs = require("node:fs");
 const css = fs.readFileSync("learning/basics/graph-studio/styles.css", "utf8");
 const html = fs.readFileSync("learning/basics/graph-studio/index.html", "utf8");
 const script = fs.readFileSync("learning/basics/graph-studio/app.js", "utf8");
-const { expressionToLatex } = require("../learning/basics/graph-studio/math-format.js");
+const { expressionToLatex, createGraphViewport } = require("../learning/basics/graph-studio/math-format.js");
 const katex = require("../learning/basics/graph-studio/vendor/katex.min.js");
 
 assert.match(css, /\.sectionHeading small[^}]*font-size:\s*12px/);
@@ -36,6 +36,17 @@ assert.match(css, /\.functionEditor:focus-within \.functionTypeset\s*\{[^}]*bord
 assert.doesNotMatch(css, /\.functionEditor:focus-within \.functionTypeset\s*\{[^}]*visibility:\s*hidden/);
 assert.match(css, /\.functionEditor:focus-within \.functionInput\s*\{[^}]*top:\s*42px/);
 assert.match(css, /\.formulaExamples button\s*\{[^}]*min-width:\s*max-content/);
+assert.match(html, /data-zoom="in"/);
+assert.match(html, /data-zoom="out"/);
+assert.match(html, /id="zoomLevel"/);
+assert.match(script, /canvas\.addEventListener\("wheel"/);
+
+const viewport = createGraphViewport(900, 540, 10);
+assert.equal(viewport.scale, 27);
+assert.equal(viewport.yMin, -10);
+assert.equal(viewport.yMax, 10);
+assert.ok(viewport.xMax > 10);
+assert.equal(viewport.px(2) - viewport.px(0), viewport.py(0) - viewport.py(2));
 
 const nested = expressionToLatex("x()ln(log10(sqrt(exp(xxxxxxx))))a(x-h)^2+k");
 assert.match(nested, /\\ln\\left\(\\log_\{10\}\\left\(\\sqrt\{e\^\{xxxxxxx\}\}\\right\)\\right\)/);

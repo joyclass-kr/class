@@ -141,8 +141,9 @@ body { margin: 0; }
 .legend span { display: flex; align-items: center; gap: 5px; }
 .legend i { width: 15px; height: 3px; border-radius: 9px; }
 .legend .areaSwatch { height: 9px; background: rgba(101,88,217,.2); }
-.rangeControl { position: absolute; right: 33px; bottom: 33px; display: flex; gap: 4px; }
-.rangeControl button { height: 32px; border-radius: 7px; padding: 0 9px; font-size: 11px; }
+.rangeControl { position: absolute; right: 33px; bottom: 33px; display: flex; align-items: center; gap: 4px; border: 1px solid #d9dce5; border-radius: 10px; background: rgba(255,255,255,.95); padding: 4px; box-shadow: 0 3px 12px rgba(29,35,62,.08); }
+.rangeControl button { min-width: 34px; height: 32px; border-radius: 7px; padding: 0 9px; font-size: 12px; }
+.rangeControl output { min-width: 48px; color: #4f46c7; font: 700 12px var(--math-font); font-variant-numeric: lining-nums tabular-nums; text-align: center; }
 
 .slider { display: grid; gap: 8px; margin-bottom: 18px; }
 .slider div { display: flex; align-items: center; justify-content: space-between; }

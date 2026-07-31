@@ -81,12 +81,13 @@
           </p>
         </section>
         <div class="canvasWrap">
-          <canvas id="graphCanvas" aria-label="함수 그래프"></canvas>
+          <canvas id="graphCanvas" aria-label="함수 그래프" title="마우스 휠로 확대·축소하고, 두 번 클릭하면 초기화됩니다."></canvas>
           <div class="legend" id="legend"><span><i style="background:#6558d9"></i>ƒ(x)</span></div>
-          <div class="rangeControl" aria-label="좌표 범위">
-            <button type="button" data-range="5">−5 · 5</button>
-            <button type="button" data-range="10">−10 · 10</button>
-            <button type="button" data-range="20">−20 · 20</button>
+          <div class="rangeControl" aria-label="그래프 확대와 축소">
+            <button type="button" data-zoom="out" aria-label="축소">−</button>
+            <output id="zoomLevel" aria-live="polite">100%</output>
+            <button type="button" data-zoom="in" aria-label="확대">+</button>
+            <button type="button" data-range="10" aria-label="확대 축소 초기화">초기화</button>
           </div>
         </div>
       </section>
