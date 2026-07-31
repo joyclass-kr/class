@@ -64,6 +64,7 @@
             const container = document.getElementById('emCanvasContainer');
             const spacePane = document.getElementById('emMoonSpacePane');
             const canvas = document.getElementById('em3DCanvas');
+            const seasonLabelsOverlay = document.getElementById('emSeasonLabelsOverlay');
             const observerView = document.getElementById('emMoonMyView');
             const observerSkyCanvas = document.getElementById('emMoonSkyCanvas');
             const observerSkyCaption = document.getElementById('emMoonSkyCaption');
@@ -73,6 +74,9 @@
             if (!container || !spacePane || !canvas || !observerView || !observerSkyCanvas || typeof THREE === 'undefined') return;
             const seasonRaycaster = new THREE.Raycaster();
             const seasonPointer = new THREE.Vector2();
+            const seasonLabelWorldPosition = new THREE.Vector3();
+            const seasonLabelProjectedPosition = new THREE.Vector3();
+            const seasonScreenLabels = [];
             let seasonPointerDown = null;
 
             let scene, camera, renderer, controls;
@@ -382,13 +386,30 @@
                     guide.computeLineDistances();
                     group.add(guide);
 
-                    const label = createSeasonLabelSprite(point.label, point.color);
-                    label.position.set(x, 11, z);
-                    label.userData.seasonJump = point;
-                    group.add(label);
+                    const labelAnchor = new THREE.Object3D();
+                    labelAnchor.position.set(x, 11, z);
+                    group.add(labelAnchor);
+                    createSeasonScreenLabel(point, labelAnchor);
                 });
 
                 return group;
+            }
+
+            function createSeasonScreenLabel(point, anchor) {
+                if (!seasonLabelsOverlay) return;
+
+                const label = document.createElement('button');
+                label.type = 'button';
+                label.className = 'em-season-screen-label';
+                label.textContent = point.label;
+                label.style.setProperty('--season-color', point.color);
+                label.setAttribute('aria-label', `${point.label} 계절 위치로 시간 이동`);
+                label.addEventListener('click', function(event) {
+                    event.stopPropagation();
+                    jumpToSeasonPoint(point);
+                });
+                seasonLabelsOverlay.appendChild(label);
+                seasonScreenLabels.push({ element: label, anchor });
             }
 
             function createSeasonIconSprite(icon, color) {
@@ -418,33 +439,41 @@
                 return sprite;
             }
 
-            function createSeasonLabelSprite(text, color) {
-                const c = document.createElement('canvas');
-                c.width = 384;
-                c.height = 144;
-                const ctx = c.getContext('2d');
+            function updateSeasonScreenLabels() {
+                if (!seasonLabelsOverlay || !seasonPointsGroup || !camera) return;
 
-                ctx.clearRect(0, 0, c.width, c.height);
-                ctx.strokeStyle = 'rgba(2, 6, 23, 0.92)';
-                ctx.lineWidth = 12;
-                ctx.fillStyle = color;
-                ctx.font = '900 86px Pretendard, "Segoe UI", sans-serif';
-                ctx.textAlign = 'center';
-                ctx.textBaseline = 'middle';
-                ctx.strokeText(text, 192, 76);
-                ctx.fillText(text, 192, 76);
+                const width = spacePane.clientWidth;
+                const height = spacePane.clientHeight;
+                const labelsVisible = seasonPointsGroup.visible && width > 0 && height > 0;
+                seasonLabelsOverlay.setAttribute('aria-hidden', String(!labelsVisible));
 
-                const texture = new THREE.CanvasTexture(c);
-                texture.needsUpdate = true;
-                const material = new THREE.SpriteMaterial({
-                    map: texture,
-                    transparent: true,
-                    depthTest: true,
-                    depthWrite: false
+                seasonScreenLabels.forEach(item => {
+                    if (!labelsVisible) {
+                        item.element.hidden = true;
+                        return;
+                    }
+
+                    item.anchor.getWorldPosition(seasonLabelWorldPosition);
+                    seasonLabelProjectedPosition.copy(seasonLabelWorldPosition).project(camera);
+
+                    const inFront = seasonLabelProjectedPosition.z >= -1
+                        && seasonLabelProjectedPosition.z <= 1;
+                    const nearViewport = Math.abs(seasonLabelProjectedPosition.x) <= 1.15
+                        && Math.abs(seasonLabelProjectedPosition.y) <= 1.15;
+                    if (!inFront || !nearViewport) {
+                        item.element.hidden = true;
+                        return;
+                    }
+
+                    const projectedX = (seasonLabelProjectedPosition.x * 0.5 + 0.5) * width;
+                    const projectedY = (-seasonLabelProjectedPosition.y * 0.5 + 0.5) * height;
+                    const x = Math.min(width - 52, Math.max(52, projectedX));
+                    const y = Math.min(height - 18, Math.max(18, projectedY));
+
+                    item.element.hidden = false;
+                    item.element.style.transform =
+                        `translate3d(${x}px, ${y}px, 0) translate(-50%, -50%)`;
                 });
-                const sprite = new THREE.Sprite(material);
-                sprite.scale.set(22, 8.25, 1);
-                return sprite;
             }
 
             function pickSeasonPoint(event) {
@@ -489,6 +518,7 @@
                 updateDynamicSunRays();
                 updatePhasesUI();
                 updateSimulationClock();
+                updateSeasonScreenLabels();
                 renderer.render(scene, camera);
             }
 
@@ -1130,10 +1160,19 @@
                     if (d < minDist) { minDist = d; closestIdx = idx; }
                 });
 
+                // Immediately before the cycle wraps, the Moon is still a
+                // waning crescent (그믐), not the next cycle's new moon (삭).
+                if (deg >= 337.5) closestIdx = phases.length - 1;
+
                 const pData = phases[closestIdx];
+                const synodicMonthDays = 29.530588;
+                const lunarAgeDays = (a / (Math.PI * 2)) * synodicMonthDays;
+                const lunarDay = Math.min(30, Math.floor(lunarAgeDays) + 1);
+                const shortPhaseName = pData.name.split(' (')[0];
                 document.getElementById('moonPhaseTitle').textContent = pData.name;
                 document.getElementById('moonObsInfo').textContent = pData.info;
-                document.getElementById('emOrbitProgressText').textContent = pData.calendar;
+                document.getElementById('emOrbitProgressText').textContent =
+                    `음력 약 ${lunarDay}일 · ${shortPhaseName}`;
 
                 const chips = document.querySelectorAll('#phaseChipsGrid .phase-chip');
                 chips.forEach(c => {
@@ -1152,11 +1191,12 @@
                 const c = document.getElementById('moonPhaseCanvas');
                 if (!c) return;
                 const ctx = c.getContext('2d');
-                const r = 35;
-                ctx.clearRect(0, 0, 80, 80);
+                const center = c.width / 2;
+                const r = c.width * 0.43;
+                ctx.clearRect(0, 0, c.width, c.height);
 
                 ctx.save();
-                ctx.translate(40, 40);
+                ctx.translate(center, center);
                 // From the Southern Hemisphere the same lunar phase appears rotated
                 // approximately 180 degrees compared with the Northern Hemisphere.
                 if (currentObserverLatitude < 0) {
@@ -1168,7 +1208,7 @@
                 ctx.arc(0, 0, r, 0, Math.PI * 2);
                 ctx.save();
                 ctx.clip();
-                drawMoonNearsideSurface(ctx, r, 0.48, '#334155');
+                drawMoonNearsideSurface(ctx, r, 0.62, '#334155');
                 ctx.restore();
 
                 const a = (angleRad % (Math.PI * 2) + Math.PI * 2) % (Math.PI * 2);
@@ -1186,7 +1226,7 @@
                     ctx.arc(0, 0, r, 0, Math.PI * 2);
                     ctx.save();
                     ctx.clip();
-                    drawMoonNearsideSurface(ctx, r, 1.55, '#f1f0e8');
+                    drawMoonNearsideSurface(ctx, r, 1.45, '#fff3cf');
                     ctx.restore();
                     ctx.restore();
                     return;
@@ -1218,7 +1258,7 @@
 
                 ctx.save();
                 ctx.clip();
-                drawMoonNearsideSurface(ctx, r, 1.55, '#f1f0e8');
+                drawMoonNearsideSurface(ctx, r, 1.45, '#fff3cf');
                 ctx.restore();
                 ctx.restore();
             }
@@ -1239,11 +1279,12 @@
                 const isShadowSurface = brightness < 1;
 
                 ctx.save();
-                // Blend the real maria over a light base instead of letting the
-                // darkest pixels become ink-black. The phase shadow stays dark,
-                // while the illuminated surface keeps a soft, readable pattern.
-                ctx.globalAlpha = isShadowSurface ? 0.42 : 0.48;
-                ctx.filter = `grayscale(1) brightness(${brightness}) contrast(0.72)`;
+                // Preserve recognizable maria on a warm, luminous surface.
+                // Dark pixels are softened by reduced contrast, not erased.
+                ctx.globalAlpha = isShadowSurface ? 0.58 : 0.88;
+                ctx.filter = isShadowSurface
+                    ? `grayscale(1) brightness(${brightness}) contrast(0.76)`
+                    : `grayscale(1) sepia(0.5) saturate(1.15) brightness(${brightness}) contrast(0.88)`;
                 ctx.drawImage(
                     moonNearsideImage,
                     sourceX,
@@ -1255,6 +1296,14 @@
                     imageRadius * 2,
                     imageRadius * 2
                 );
+
+                if (!isShadowSurface) {
+                    ctx.globalCompositeOperation = 'screen';
+                    ctx.globalAlpha = 0.16;
+                    ctx.filter = 'none';
+                    ctx.fillStyle = '#fff0b8';
+                    ctx.fillRect(-radius, -radius, radius * 2, radius * 2);
+                }
                 ctx.restore();
             }
 
@@ -1367,6 +1416,7 @@
 
                 updatePhasesUI();
                 updateSimulationClock();
+                updateSeasonScreenLabels();
                 renderer.render(scene, camera);
             }
 

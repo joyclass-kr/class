@@ -7,7 +7,7 @@
     <title>지구와 달 | Class Astronomy</title>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/three@0.128.0/examples/js/controls/OrbitControls.js"></script>
-    <link rel="stylesheet" href="styles.css?v=moon-texture-fix-20260731">
+    <link rel="stylesheet" href="styles.css?v=lunar-layout-20260731">
     <script src="../../../../assets/sound/music-control.js" defer></script>
 </head>
 <body>
@@ -45,6 +45,7 @@
                 <div class="solar-canvas-wrapper" id="emCanvasContainer" style="height: 520px; position: relative;">
                     <div class="em-moon-space-pane" id="emMoonSpacePane">
                     <canvas id="em3DCanvas"></canvas>
+                    <div id="emSeasonLabelsOverlay" class="em-season-labels-overlay" aria-hidden="false"></div>
                     
                     <!-- Simulation Date & Time -->
                     <div class="em-simulation-clock" aria-label="시뮬레이션 날짜와 시각">
@@ -66,33 +67,39 @@
                             <button class="phase-chip em-observer-btn" type="button" data-observer-location="north">🧊 북극 (90°N)</button>
                             <button class="phase-chip em-observer-btn" type="button" data-observer-location="australia">🇦🇺 호주 (35°S)</button>
                         </div>
-                        <div id="emObserverStatus" class="em-observer-status">한국 관측자 · 북위 37.5°</div>
-                    </div>
-
-                    <!-- Bottom-Left Quick Phase Selector Chips -->
-                    <div class="em-phase-selector" style="position: absolute; left: 16px; z-index: 10; max-width: 520px;">
-                        <div style="font-size: 11px; color: #94a3b8; font-weight: 700; margin-bottom: 4px;">달의 위상 선택:</div>
-                        <div class="phase-btn-grid" id="phaseChipsGrid">
-                            <button class="phase-chip active" data-angle="0">🌑 삭 (0°)</button>
-                            <button class="phase-chip" data-angle="45">🌒 초승달 (45°)</button>
-                            <button class="phase-chip" data-angle="90">🌓 상현달 (90°)</button>
-                            <button class="phase-chip" data-angle="135">🌔 팽대달 (135°)</button>
-                            <button class="phase-chip" data-angle="180">🌕 망/보름달 (180°)</button>
-                            <button class="phase-chip" data-angle="225">🌖 팽대달 (225°)</button>
-                            <button class="phase-chip" data-angle="270">🌗 하현달 (270°)</button>
-                            <button class="phase-chip" data-angle="315">🌘 그믐달 (315°)</button>
+                        <div class="em-phase-selector">
+                            <div class="em-phase-selector-title">달의 위상 선택</div>
+                            <div class="phase-btn-grid" id="phaseChipsGrid">
+                                <button class="phase-chip active" data-angle="0">🌑 삭 (0°)</button>
+                                <button class="phase-chip" data-angle="45">🌒 초승달 (45°)</button>
+                                <button class="phase-chip" data-angle="90">🌓 상현달 (90°)</button>
+                                <button class="phase-chip" data-angle="135">🌔 팽대달 (135°)</button>
+                                <button class="phase-chip" data-angle="180">🌕 망/보름달 (180°)</button>
+                                <button class="phase-chip" data-angle="225">🌖 팽대달 (225°)</button>
+                                <button class="phase-chip" data-angle="270">🌗 하현달 (270°)</button>
+                                <button class="phase-chip" data-angle="315">🌘 그믐달 (315°)</button>
+                            </div>
                         </div>
+                        <div id="emObserverStatus" class="em-observer-status">한국 관측자 · 북위 37.5°</div>
                     </div>
 
                     <!-- Bottom-Right Earth View Phase Box -->
                     <div class="earth-view-box">
                         <div id="emMoonObserverLabel" style="font-size: 11px; color: #38bdf8; font-weight: 700; margin-bottom: 2px;">북반구(한국) 관측 시선</div>
-                        <canvas id="moonPhaseCanvas" width="80" height="80" role="img" aria-label="현재 달의 위상과 실제 달 앞면 무늬" title="NASA LRO 달 앞면 영상 기반"></canvas>
-                        <div id="moonPhaseTitle" style="font-size: 17px; font-weight: 900; color: #fbbf24; margin-top: 4px;">삭 (New Moon)</div>
-                        <div id="moonObsInfo" style="font-size: 12px; color: #38bdf8; font-weight: 700; margin-top: 4px;">남중: 정오 (12:00) | 관측 불가 (태양과 함께 이동)</div>
-                        <div class="em-moon-progress">
-                            <span>달 공전 진행:</span>
-                            <strong id="emOrbitProgressText">음력 1일 경 (삭)</strong>
+                        <canvas id="moonPhaseCanvas" width="160" height="160" role="img" aria-label="현재 달의 위상과 실제 달 앞면 무늬" title="NASA LRO 달 앞면 영상 기반"></canvas>
+                        <div class="em-moon-facts">
+                            <div class="em-moon-fact-row">
+                                <span>현재 위상</span>
+                                <strong id="moonPhaseTitle">삭 (New Moon)</strong>
+                            </div>
+                            <div class="em-moon-fact-row">
+                                <span>음력 기준</span>
+                                <strong id="emOrbitProgressText">음력 약 1일 · 🌑 삭</strong>
+                            </div>
+                            <div class="em-moon-fact-row em-moon-observation-row">
+                                <span>관측 안내</span>
+                                <strong id="moonObsInfo">남중: 정오 (12:00) | 관측 불가 (태양과 함께 이동)</strong>
+                            </div>
                         </div>
                     </div>
                     </div>
@@ -302,6 +309,6 @@
     </main>
 
     <!-- Heliocentric 3D Earth-Moon Physics Simulation Engine -->
-    <script src="app.js?v=soft-moon-texture-20260731"></script>
+    <script src="app.js?v=lunar-layout-20260731"></script>
 </body>
 </html>
