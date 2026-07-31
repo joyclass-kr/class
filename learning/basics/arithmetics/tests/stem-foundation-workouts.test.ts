@@ -90,6 +90,79 @@ test("공개 이공계 기초 48문항의 기준 정답을 모두 검산한다",
   }
 });
 
+test("공개 이공계 기초 48문항은 구할 대상을 짧고 정확하게 묻는다", () => {
+  const expectedPrompts: Record<(typeof STEM_BRIDGE_KINDS)[number], string[]> = {
+    "complex-polar": [
+      "$|z|$와 $\\arg z$는?",
+      "직교형식은?",
+      "곱의 극형식은?",
+      "몫의 극형식은?",
+      "거듭제곱 값은?",
+      "모든 해 $z$는?",
+      "복소지수식의 값은?",
+      "합은?",
+    ],
+    "matrix-systems": [
+      "$2A^{T}-3B$는?",
+      "$AB-BA$는?",
+      "행렬식은?",
+      "역행렬 $A^{-1}$은?",
+      "해 $(x,y,z)$는?",
+      "기약행사다리꼴은?",
+      "해의 개수는?",
+      "$X$는?",
+    ],
+    "vector-spaces-rank": [
+      "결과 벡터는?",
+      "계수 $(a,b)$는?",
+      "두 벡터는 일차독립인가?",
+      "$\\dim W$는?",
+      "$N(A)$의 기저는?",
+      "$\\operatorname{Col}(A)$의 기저는?",
+      "$A$의 고유값은?",
+      "고유공간은?",
+    ],
+    "partial-derivatives": [
+      "$f_x$는?",
+      "$f_{xy}$는?",
+      "$\\dfrac{dz}{dt}$는?",
+      "$\\dfrac{dy}{dx}$는?",
+      "전미분 $dz$는?",
+      "접평면 방정식은?",
+      "$\\nabla f$는?",
+      "$D_u f$는?",
+    ],
+    "multiple-integrals": [
+      "이중적분 값은?",
+      "바꾼 적분 범위는?",
+      "영역 $D$의 넓이는?",
+      "극좌표 이중적분 값은?",
+      "원판 위 이중적분 값은?",
+      "삼각영역 위 이중적분 값은?",
+      "야코비안 절댓값은?",
+      "극좌표로 바꾼 이중적분 값은?",
+    ],
+    "first-order-ode": [
+      "해 $y(x)$는?",
+      "해 $y(x)$는?",
+      "일반해 $y(x)$는?",
+      "적분인자 $\\mu(x)$는?",
+      "음함수형 일반해는?",
+      "베르누이 방정식의 일반해 $y(x)$는?",
+      "2계 방정식의 일반해 $y(x)$는?",
+      "초기조건을 만족하는 2계 방정식의 해 $y(x)$는?",
+    ],
+  };
+
+  for (const kind of STEM_BRIDGE_KINDS) {
+    assert.deepEqual(
+      createStemFoundationProblems(kind, 20260910).map(({ prompt }) => prompt),
+      expectedPrompts[kind],
+      kind,
+    );
+  }
+});
+
 test("공개 이공계 식은 계수 1과 약분 가능한 파이 분수를 남기지 않는다", () => {
   const forbiddenNotation = /e\^\{(?:-?1x)\}|\\(?:sin|cos) 1x|(?:^|[^0-9])1[xyi](?:\^|\b)|[xy]\^\{1\}/;
   const reduciblePiFraction = /\\frac\{(\d+)\\pi\}\{(\d+)\}/;
@@ -217,14 +290,14 @@ test("공식 이름만 고르는 문항 대신 실제 계산 자료를 제시한
   }
 });
 
-test("144문항 모두 무엇을 구할지 질문에 명시한다", () => {
+test("144문항 모두 무엇을 구할지 질문 또는 지시문에 명시한다", () => {
   const prompts = STEM_FOUNDATION_KINDS.flatMap((kind) => (
     createStemFoundationProblems(kind, 20260910).map(({ prompt }) => prompt)
   ));
   assert.equal(prompts.length, 144);
-  assert.ok(prompts.every((prompt) => typeof prompt === "string" && prompt.length >= 10));
+  assert.ok(prompts.every((prompt) => typeof prompt === "string" && prompt.length >= 3));
   assert.ok(prompts.every((prompt) => !prompt.includes("값이나 식")));
-  assert.ok(prompts.every((prompt) => /구하세요|나타내세요|판정하세요|쓰세요/.test(prompt)));
+  assert.ok(prompts.every((prompt) => /[?？]$/.test(prompt) || /구하세요|나타내세요|판정하세요|쓰세요/.test(prompt)));
 });
 
 test("이공계 질문의 수학 기호는 모두 수식 구간 안에서 표준 표기로 렌더링한다", () => {

@@ -70,7 +70,7 @@ const rows = stemWorksheetCatalog.map((worksheet, index) => {
   if (labels.some((label) => EXCLUDED_UNIVERSITY_COURSE_LABELS.some((word) => label.includes(word)))) {
     throw new Error(`${worksheet.title}: 공대 진학 준비 범위를 넘는 대학 전공 유형이 섞였습니다.`);
   }
-  if (prompts.some((prompt) => prompt.length < 4 || !/[?？.]$/.test(prompt))) {
+  if (prompts.some((prompt) => prompt.length < 3 || !/[?？.]$/.test(prompt))) {
     throw new Error(`${worksheet.title}: 무엇을 묻는지 분명하지 않은 발문이 있습니다.`);
   }
 
