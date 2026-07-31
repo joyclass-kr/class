@@ -97,15 +97,13 @@ premiumSystems.forEach((system) => {
     assert.strictEqual(stages.length, 10, `${system} should keep ten journey stages`);
     stages.forEach((stage) => {
         assert.ok(
-            manipulationSource.includes(`"${stage.id}"`) || manipulationSource.includes(`${stage.id}:`),
-            `${system} stage ${stage.id} is missing a direct-manipulation configuration`
-        );
-        assert.ok(
             liveJourneySource.includes(`"${stage.id}"`) || liveJourneySource.includes(`${stage.id}:`),
             `${system} stage ${stage.id} is missing live-atlas telemetry`
         );
     });
 });
+assert.match(systemAtlas, /const enabledManipulationStages = \{\};/);
+assert.match(systemAtlas, /const config = enabledManipulationStages\[system\]\?\.\[stage\?\.id\]/);
 
 ["nervous", "immune", "movement", "excretion", "temperature"].forEach((system) => {
     const stages = loadStages(`${system}-data.js`);
@@ -123,42 +121,13 @@ premiumSystems.forEach((system) => {
 });
 
 assert.match(systemAtlas, /className = "system-process-atlas"/);
-assert.match(systemAtlas, /className = "physiology-direct-console"/);
 assert.match(systemAtlas, /body-explorer-stage-rendered/);
 assert.match(systemAtlas, /MutationObserver/);
-assert.match(systemAtlas, /if \(!isExperiment\)\s*\{[\s\S]*?activePhysiologyStage = "";[\s\S]*?physiologyCompleting = false;/);
-assert.match(systemAtlas, /stage\.id !== activePhysiologyStage \|\| !directConsole\.isConnected/);
-assert.match(systemAtlas, /function isInTargetRange\(value, minimum, maximum\)/);
-assert.doesNotMatch(systemAtlas, /response\s*>=\s*78/);
-assert.ok(
-    (manipulationSource.match(/targetMax:/g) || []).length >= 4,
-    "digestion and respiration should use bounded targets for multi-control experiments"
-);
-assert.match(
-    manipulationSource,
-    /controls:\s*\[\{[^}]*targetMin:[^}]*targetMax:[^}]*\},\s*\{[^}]*targetMin:[^}]*targetMax:/,
-    "dual controls should define independent target bands"
-);
-
-const goalPatternsSource = systemAtlas.match(/const physiologyGoalPatterns = (\[[\s\S]*?\]);\s*\n\s*function physiologyGoalFor/);
-assert.ok(goalPatternsSource, "physiology target patterns should be inspectable");
-const physiologyGoalPatterns = Function(`"use strict"; return (${goalPatternsSource[1]});`)();
-assert.strictEqual(physiologyGoalPatterns.length, 5);
-physiologyGoalPatterns.forEach((pattern, index) => {
-    assert.ok(
-        pattern.responseStart < pattern.response[0] || pattern.responseStart > pattern.response[1],
-        `physiology pattern ${index + 1} should start outside its response target`
-    );
-    assert.ok(pattern.response[1] < 100, `physiology pattern ${index + 1} must reject the right edge`);
-});
 assert.match(premiumStyles, /\.system-process-atlas/);
-assert.match(premiumStyles, /\.physiology-direct-console/);
 assert.match(premiumStyles, /@media \(max-width: 739px\)/);
-assert.match(premiumStyles, /\.physiology-direct-console\s*\{\s*grid-template-columns:\s*1fr;/);
 assert.match(premiumStyles, /\.system-atlas-toolbar button\s*\{[^}]*min-height:\s*32px/s);
-assert.match(premiumStyles, /\.atlas-journey-rail button\s*\{[^}]*height:\s*24px/s);
-assert.match(premiumStyles, /\.physiology-control input\s*\{[^}]*height:\s*36px/s);
-assert.match(premiumStyles, /@media \(max-width: 739px\)[\s\S]*?\.atlas-journey-rail\s*\{[^}]*repeat\(5,\s*1fr\)/);
+assert.match(premiumStyles, /\.atlas-journey-rail,[\s\S]*?display:\s*none !important;/);
+assert.match(premiumStyles, /\[data-system-atlas="zoom-out"\],[\s\S]*?display:\s*none !important;/);
 
 for (const file of fs.readdirSync(explorerRoot).filter((name) => name.endsWith(".html"))) {
     const html = read(file);

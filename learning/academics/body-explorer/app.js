@@ -295,8 +295,7 @@
 
     function selectPersonalMode() {
         state.mode = "personal";
-        setScreen(elements.personalScreen);
-        elements.personalStartButton.focus({ preventScroll: true });
+        startJourney();
     }
 
     function selectClassMode() {
@@ -602,9 +601,8 @@
         const stage = stages[state.currentIndex];
         if (!isExperimentStage(stage)) return;
         const intensity = Number(elements.stimulusIntensity.value);
-        const goal = experimentIntensityGoal(stage);
         elements.stimulusValue.textContent = String(intensity);
-        elements.stimulusThreshold.textContent = `${stage.scenario.intensityLabel} · 관찰 구간 ${goal.min}–${goal.max}`;
+        elements.stimulusThreshold.textContent = `${stage.scenario.intensityLabel} · 값을 움직여 몸의 변화를 관찰하세요`;
         elements.stimulusIntensity.style.setProperty("--stimulus-level", `${intensity}%`);
         updateMovementVisual(stage, intensity);
         updateExcretionVisual(stage, intensity);
@@ -765,9 +763,8 @@
                 button.type = "button";
                 button.dataset.sfx = "none";
                 button.textContent = component;
-                button.title = index === 0 ? "관찰에서 주어진 시작 상황" : `${component}부터 다시 예측하기`;
-                button.disabled = state.stageSolved || index === 0;
-                button.addEventListener("click", () => removeExperimentComponent(index));
+                button.title = index === 0 ? "관찰에서 주어진 시작 상황" : "확인한 원인과 결과";
+                button.disabled = true;
                 item.append(button);
             } else {
                 const placeholder = document.createElement("span");
@@ -820,13 +817,13 @@
             elements.componentBank.append(button);
         });
         elements.undoPathButton.disabled = state.stageSolved || state.experimentPath.length <= 1;
-        elements.clearPathButton.disabled = state.stageSolved || state.experimentPath.length <= 1;
+        if (elements.clearPathButton) elements.clearPathButton.disabled = true;
         elements.runSimulationButton.disabled = state.stageSolved || state.experimentPath.length < stage.scenario.correctPath.length;
         if (elements.pathGuide) {
             const remaining = Math.max(0, stage.scenario.correctPath.length - state.experimentPath.length);
             elements.pathGuide.textContent = remaining > 0
                 ? `“${state.experimentPath[state.experimentPath.length - 1]}” 다음에 바로 일어날 변화는? · ${remaining}단계 남음`
-                : "인과 연결 완성 · 관찰값을 확인하고 실험하세요";
+                : "인과 연결 완성 · 변화 그림을 확인하고 결과를 보세요";
         }
     }
 
@@ -857,7 +854,7 @@
         setSimulationFeedback(
             "idle",
             remaining > 0 ? simulationCopy.selectedTitle : "원인과 결과를 모두 연결했어요",
-            remaining > 0 ? simulationCopy.selectedText : "이제 관찰 구간을 확인하고 내 예측으로 실험해 보세요."
+            remaining > 0 ? simulationCopy.selectedText : "슬라이더로 몸의 변화를 비교한 뒤 관찰 결과를 확인하세요."
         );
         window.ClassGameSfx?.play("click");
     }
@@ -903,11 +900,11 @@
         elements.stimulusIntensity.value = String(experimentIntensityGoal(stage).start);
         elements.stimulusIntensity.disabled = false;
         elements.undoPathButton.disabled = true;
-        elements.clearPathButton.disabled = true;
+        if (elements.clearPathButton) elements.clearPathButton.disabled = true;
         elements.runSimulationButton.disabled = true;
         elements.runSimulationButton.textContent = simulationCopy.runLabel;
         elements.undoPathButton.textContent = "이전 단계";
-        elements.clearPathButton.textContent = "처음부터";
+        if (elements.clearPathButton) elements.clearPathButton.textContent = "처음부터";
         if (elements.pathTitle) elements.pathTitle.textContent = "원인에서 결과로";
         elements.motionVisual?.classList.remove("hidden", "is-success");
         elements.excretionVisual?.classList.remove("hidden", "is-success");
@@ -927,25 +924,10 @@
         const stage = stages[state.currentIndex];
         if (!isExperimentStage(stage) || state.stageSolved) return;
         const scenario = stage.scenario;
-        const intensity = Number(elements.stimulusIntensity.value);
-        const intensityGoal = experimentIntensityGoal(stage);
-
         if (state.experimentPath.length < scenario.correctPath.length) {
             const emptyCount = scenario.correctPath.length - state.experimentPath.length;
             setSimulationFeedback("correcting", simulationCopy.incompleteTitle, simulationCopy.incompleteText.replace("{count}", String(emptyCount)));
             elements.announcer.textContent = elements.simulationFeedbackText.textContent;
-            return;
-        }
-
-        if (intensity < intensityGoal.min || intensity > intensityGoal.max) {
-            const direction = intensity < intensityGoal.min ? "높여" : "낮춰";
-            const observation = intensity < intensityGoal.min
-                ? scenario.lowMessage
-                : "자극이나 반응이 지나치게 강하면 관찰하려는 과정이 안정적으로 나타나지 않아요.";
-            setSimulationFeedback("observing", "관찰 조건을 다시 맞춰 보세요", `${observation} 값을 ${direction} ${intensityGoal.min}–${intensityGoal.max} 구간에 맞추세요.`);
-            elements.announcer.textContent = `${elements.simulationFeedbackTitle.textContent}. ${elements.simulationFeedbackText.textContent}`;
-            window.ClassGameSfx?.play("click");
-            elements.stimulusIntensity.focus({ preventScroll: true });
             return;
         }
 
@@ -958,7 +940,7 @@
         renderComponentBank(stage);
         elements.stimulusIntensity.disabled = true;
         elements.undoPathButton.disabled = true;
-        elements.clearPathButton.disabled = true;
+        if (elements.clearPathButton) elements.clearPathButton.disabled = true;
         elements.runSimulationButton.disabled = true;
         elements.runSimulationButton.textContent = simulationCopy.completeLabel;
         setSimulationFeedback("success", simulationCopy.successTitle, `${scenario.response} ${stage.explanation}`, true);

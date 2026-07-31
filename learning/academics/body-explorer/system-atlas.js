@@ -368,6 +368,10 @@
             "exhale-out": { type: "pump", title: "날숨 만들기", instruction: "가슴 속 공간이 줄어드는 변화를 이어서 이산화탄소가 든 공기를 밖으로 내보내세요.", action: "날숨 단계 진행", goal: 2, unit: "단계", visual: "exhale" }
         }
     };
+    // Repetitive pumps, "open everything" toggles, and disclosed target ranges
+    // added clicks without adding reasoning. Keep the original stage questions
+    // as the assessed interaction while the atlas remains an explanatory visual.
+    const enabledManipulationStages = {};
 
     const choiceList = document.getElementById("choiceList");
     const questionCard = choiceList?.closest(".question-card");
@@ -701,7 +705,7 @@
 
     function renderManipulationLab() {
         const stage = currentStage();
-        const config = manipulationStages[system]?.[stage?.id];
+        const config = enabledManipulationStages[system]?.[stage?.id];
         if (!stage || !config || !questionCard || choiceList.children.length === 0) return;
         if (stage.id === activeLabStageId && document.querySelector(".organ-manipulation-lab")) return;
 

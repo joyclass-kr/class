@@ -2686,6 +2686,16 @@ footer a {
     }
 }
 
+/* Learning-first cleanup: remove duplicated counts, navigation, and reset controls. */
+.hero-facts,
+.episode-shelf,
+.mode-card > b,
+#clearPathButton,
+.atlas-camera-controls,
+.atlas-3d-hint {
+    display: none !important;
+}
+
 /* Keep the entire question state stable in one viewport on classroom-sized devices. */
 @media (min-width: 740px) {
     body.journey-active {

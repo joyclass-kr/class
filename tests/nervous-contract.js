@@ -134,7 +134,8 @@ assert.ok(app.includes("config.gameId"), "Shared student app must read the episo
 assert.ok(app.includes('action: "SUBMIT"'), "Student results must be submitted to the server.");
 assert.ok(app.includes("state.missed.push"), "Wrong answers must be collected for review.");
 assert.ok(app.includes("function runInteractiveExperiment()"), "The nervous episode must execute learner-built experiments.");
-assert.ok(app.includes("intensity < intensityGoal.min || intensity > intensityGoal.max"), "Experiments must respond differently outside the observation range.");
+assert.doesNotMatch(app, /intensity < intensityGoal\.min \|\| intensity > intensityGoal\.max/, "Exploration must not become a disclosed number-range gate.");
+assert.ok(app.includes("값을 움직여 몸의 변화를 관찰하세요"), "The slider must be framed as observation, not a numeric answer.");
 assert.ok(app.includes("function experimentIntensityGoal(stage)"), "Experiments must derive a stage-specific observation range.");
 assert.ok(app.includes("function prepareExperimentChoices(stage)"), "Experiments must present one causal prediction at a time.");
 assert.ok(app.includes("component !== expected"), "Experiments must check the learner's next-step prediction.");
@@ -154,4 +155,4 @@ assert.ok(server.includes("NERVOUS_ACTION"), "Server is missing nervous actions.
 assert.ok(server.includes("NERVOUS_STATE"), "Server is missing nervous broadcasts.");
 assert.ok(server.includes("nervous: 61"), "Nervous classroom capacity is missing.");
 
-console.log("nervous-contract: five manipulation experiments, five checks, review, ranking and responsive simulation UI ok");
+console.log("nervous-contract: five observation experiments, five checks, review, ranking and responsive simulation UI ok");

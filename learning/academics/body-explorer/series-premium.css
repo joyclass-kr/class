@@ -1197,3 +1197,15 @@ body.series-premium .path-heading span {
     .organ-manipulation-lab.is-pulsing .lab-specimen > span,
     .physiology-direct-console.has-response .physiology-core span { animation: none; }
 }
+
+/* Keep one progress system and one meaningful atlas action. */
+body.series-premium .scene-panel::after,
+body.series-premium .question-card::before,
+body.series-premium .simulation-card::before,
+.atlas-journey-rail,
+.atlas-telemetry span,
+.system-atlas-toolbar [data-system-atlas="zoom-out"],
+.system-atlas-toolbar [data-system-atlas="reset"],
+.system-atlas-toolbar [data-system-atlas="zoom-in"] {
+    display: none !important;
+}

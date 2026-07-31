@@ -130,7 +130,8 @@ for (const file of [files.data, files.app, files.teacherApp, files.server]) {
 const app = fs.readFileSync(files.app, "utf8");
 assert.ok(app.includes('config.experienceType === "immune-simulation"'));
 assert.ok(app.includes("function runInteractiveExperiment()"));
-assert.ok(app.includes("intensity < intensityGoal.min || intensity > intensityGoal.max"));
+assert.doesNotMatch(app, /intensity < intensityGoal\.min \|\| intensity > intensityGoal\.max/);
+assert.ok(app.includes("값을 움직여 몸의 변화를 관찰하세요"));
 assert.ok(app.includes("function experimentIntensityGoal(stage)"));
 assert.ok(app.includes("function prepareExperimentChoices(stage)"));
 assert.ok(app.includes("component !== expected"));
@@ -147,4 +148,4 @@ assert.ok(server.includes("IMMUNE_ACTION"));
 assert.ok(server.includes("IMMUNE_STATE"));
 assert.ok(server.includes("immune: 61"));
 
-console.log("immune-contract: five manipulation experiments, five checks, review, ranking, generated art and responsive UI ok");
+console.log("immune-contract: five observation experiments, five checks, review, ranking, generated art and responsive UI ok");
