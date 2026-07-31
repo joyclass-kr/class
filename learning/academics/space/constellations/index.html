@@ -5,7 +5,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta name="description" content="songhwaplay 별과 별자리 (Stars &amp; Constellations) - 사계절 성도 시뮬레이션, 대표 별자리 지식, 별의 등급, Quiz">
     <title>별과 별자리 | songhwaplay 교과학습</title>
-    <link rel="stylesheet" href="base.css">
+    <link rel="stylesheet" href="base.css?v=space-home-button-20260801">
     <!-- Three.js & OrbitControls for 3D Celestial Sphere -->
     <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/three@0.128.0/examples/js/controls/OrbitControls.js"></script>
@@ -18,6 +18,9 @@
 
     <!-- Header Navigation (Identical single-row top bar layout to Solar System & Earth-Moon) -->
     <header class="top-header" style="flex-wrap: nowrap; overflow-x: auto;">
+        <a href="../" class="home-btn space-home-btn" aria-label="우주 관찰 첫 화면으로 돌아가기">
+            <span aria-hidden="true">🌌</span> 우주 관찰 메인
+        </a>
         <!-- Sub Tabs for Constellations Module -->
         <nav class="nav-tabs" style="flex-shrink: 0;">
             <button class="nav-tab active" data-tab="sim" onclick="switchMainTab('sim')" style="padding: 6px 12px; font-size: 13px;">
