@@ -1,0 +1,68 @@
+<!doctype html>
+<html lang="ko">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="theme-color" content="#1d130d">
+  <title>8·15 퍼즐 | songhwaplay</title>
+  <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+  <main class="page-shell">
+    <header class="topbar">
+      <a class="back-link" href="../../../#puzzle-title" aria-label="개인 퍼즐 목록으로 돌아가기">← 개인 퍼즐</a>
+      <button class="sound-button" id="soundButton" type="button" aria-pressed="true">소리 켬</button>
+    </header>
+
+    <section class="game-panel" aria-labelledby="gameTitle">
+      <p class="eyebrow">숫자 슬라이딩 퍼즐</p>
+      <h1 id="gameTitle">8 퍼즐</h1>
+      <p class="intro" id="intro">숫자 타일을 밀어 1부터 8까지 순서대로 맞춰 보세요.</p>
+
+      <div class="mode-switch" aria-label="퍼즐 크기 선택">
+        <button type="button" data-size="3" aria-pressed="true"><strong>8 퍼즐</strong><span>3 × 3 · 입문</span></button>
+        <button type="button" data-size="4" aria-pressed="false"><strong>15 퍼즐</strong><span>4 × 4 · 도전</span></button>
+      </div>
+
+      <div class="stats" aria-label="게임 기록">
+        <div><span>이동</span><strong id="moveCount">0</strong></div>
+        <div><span>시간</span><strong id="timer">00:00</strong></div>
+        <div><span>최고</span><strong id="bestScore">—</strong></div>
+      </div>
+
+      <div class="board-wrap">
+        <div class="board" id="board" role="grid" aria-label="8 퍼즐 게임판"></div>
+      </div>
+
+      <p class="status" id="status" role="status" aria-live="polite">빈칸 옆의 타일을 눌러 이동하세요.</p>
+
+      <div class="actions">
+        <button class="primary" id="newGameButton" type="button">새 게임</button>
+        <button class="secondary" id="resetButton" type="button">처음 배치</button>
+      </div>
+
+      <details class="rules">
+        <summary>게임 방법</summary>
+        <ol>
+          <li>빈칸과 맞닿은 숫자 타일을 눌러 이동합니다.</li>
+          <li>숫자를 왼쪽 위부터 차례대로 배열합니다.</li>
+          <li>마지막 오른쪽 아래 칸을 비우면 완성입니다.</li>
+        </ol>
+        <p>키보드에서는 방향키로도 타일을 움직일 수 있습니다.</p>
+      </details>
+    </section>
+  </main>
+
+  <div class="celebration" id="celebration" hidden>
+    <div class="result-card" role="dialog" aria-modal="true" aria-labelledby="resultTitle">
+      <span class="result-mark" aria-hidden="true">✓</span>
+      <p class="eyebrow">퍼즐 완성</p>
+      <h2 id="resultTitle">정답입니다!</h2>
+      <p id="resultSummary"></p>
+      <button class="primary" id="playAgainButton" type="button">다시 도전</button>
+    </div>
+  </div>
+
+  <script src="app.js"></script>
+</body>
+</html>
