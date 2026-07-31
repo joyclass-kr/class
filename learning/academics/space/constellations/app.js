@@ -1702,7 +1702,7 @@
                 function animate3D() {
                     requestAnimationFrame(animate3D);
                     const currentEarthStep = baseEarthRotStep * celestialSpeedMult;
-                    const currentSunStep = (baseEarthRotStep / 360) * celestialSpeedMult;
+                    const currentSunStep = (baseEarthRotStep / 365.2422) * celestialSpeedMult;
 
                     if (celestialViewMode === 'space') {
                         // Space Real View: Earth rotates, Celestial Sphere is static
