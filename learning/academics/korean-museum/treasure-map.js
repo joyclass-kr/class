@@ -550,7 +550,7 @@
     const relics = window.KOREAN_MUSEUM_DATA.relicsMaster;
 
     // Reset dropdown
-    relicQuickSelect.innerHTML = `<option value="">⚡ 유물/비석 위치로 바로 순간 이동 (${relics.length}종)</option>`;
+    relicQuickSelect.innerHTML = '<option value="">빠른 이동</option>';
 
     relics.forEach(relic => {
       const opt = document.createElement('option');
