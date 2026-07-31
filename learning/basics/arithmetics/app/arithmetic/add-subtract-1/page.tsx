@@ -415,7 +415,7 @@ export function AdditionSubtractionWorksheet({ variant }: { variant: AdditionSub
     variant === "grade-two-missing-parts"
       ? "덧셈뺄셈③"
       : variant === "two-digit"
-      ? "받아올림·받아내림 없는 두 자리 수 계산"
+      ? "두 자리 수 계산"
       : variant === "within-twenty"
         ? "10을 넘는 덧셈·뺄셈"
         : variant === "missing-parts"
