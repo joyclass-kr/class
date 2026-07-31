@@ -8940,9 +8940,10 @@ main {
 }
 
 .counting-sheet-title {
+  min-width: 0;
   display: flex;
   align-items: baseline;
-  gap: 12px;
+  gap: 10px;
 }
 
 .counting-sheet-title span {
@@ -8952,8 +8953,11 @@ main {
 }
 
 .counting-sheet-title strong {
-  font-size: 27px;
-  letter-spacing: -0.055em;
+  min-width: 0;
+  font-size: 23px;
+  line-height: 1.2;
+  letter-spacing: -0.045em;
+  white-space: nowrap;
 }
 
 .counting-sheet-info {

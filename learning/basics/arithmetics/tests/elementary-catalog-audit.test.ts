@@ -2,6 +2,7 @@ import assert from "node:assert/strict";
 import test from "node:test";
 
 import { arithmeticWorksheetCatalog } from "../lib/arithmetic-worksheets.ts";
+import { readFileSync } from "node:fs";
 
 test("초1 학습지는 실제 유형명과 암산 표시를 구분한다", () => {
   const gradeOne = arithmeticWorksheetCatalog.filter(({ grade }) => grade === "초1");
@@ -22,3 +23,8 @@ test("초1 학습지는 실제 유형명과 암산 표시를 구분한다", () =
   );
 });
 
+test("초등 문제지 제목은 중·고등 문제지와 같은 23px 제목 규격을 쓴다", () => {
+  const css = readFileSync(new URL("../app/globals.css", import.meta.url), "utf8");
+  assert.match(css, /\.counting-sheet-title strong\s*\{[\s\S]*?font-size:\s*23px;/);
+  assert.match(css, /\.counting-sheet-title strong\s*\{[\s\S]*?line-height:\s*1\.2;/);
+});
