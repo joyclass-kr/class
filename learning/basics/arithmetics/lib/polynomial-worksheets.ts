@@ -321,3 +321,25 @@ export function formatPolynomialExpression(operations: PolynomialOperation[]) {
     return `${negative ? " − " : " + "}${term}`;
   }).join("");
 }
+
+function formatOperationLatex(operation: PolynomialOperation) {
+  const magnitude = Math.abs(operation.multiplier);
+  const coefficient = magnitude === 1 ? "" : String(magnitude);
+
+  if (operation.kind === "scaled") {
+    return `${coefficient}\\left(${formatPolynomialLatex(operation.polynomial)}\\right)`;
+  }
+  if (operation.kind === "square") {
+    return `${coefficient}\\left(${formatPolynomialLatex(operation.base)}\\right)^{2}`;
+  }
+  return `${coefficient}\\left(${formatPolynomialLatex(operation.left)}\\right)\\left(${formatPolynomialLatex(operation.right)}\\right)`;
+}
+
+export function formatPolynomialExpressionLatex(operations: PolynomialOperation[]) {
+  return operations.map((operation, index) => {
+    const negative = operation.multiplier < 0;
+    const term = formatOperationLatex(operation);
+    if (index === 0) return `${negative ? "-" : ""}${term}`;
+    return `${negative ? "-" : "+"}${term}`;
+  }).join("");
+}

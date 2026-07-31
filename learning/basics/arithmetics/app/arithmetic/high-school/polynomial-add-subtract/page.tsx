@@ -9,7 +9,7 @@ import {
   createPolynomialProblemSet,
   createPolynomialReviewProblems,
   formatPolynomial,
-  formatPolynomialExpression,
+  formatPolynomialExpressionLatex,
   type PolynomialProblem,
 } from "../../../../lib/polynomial-worksheets";
 
@@ -93,7 +93,7 @@ export default function PolynomialAdditionSubtractionPage() {
         <div className="polynomial-question-body">
           <span className="polynomial-focus-label">{problem.label}</span>
           <WorksheetQuestionPrompt label={problem.label} prompt="계산 결과는?" />
-          <div className="polynomial-expression">{formatPolynomialExpression(problem.operations)}</div>
+          <div className="polynomial-expression"><MathFormula latex={formatPolynomialExpressionLatex(problem.operations)} /></div>
         </div>
         {answerSheet ? (
           <div className="polynomial-static-answer">= {formatPolynomial(problem.answer)}</div>
@@ -153,7 +153,7 @@ export default function PolynomialAdditionSubtractionPage() {
                     <strong>{String(index + 1).padStart(2, "0")}</strong>
                       <span><InlineMathText text={worksheetQuestion(problem.label, "계산 결과는?")} /></span>
                   </div>
-                  <div className="trig-derivative-answer-question"><div className="polynomial-expression">{formatPolynomialExpression(problem.operations)}</div></div>
+                  <div className="trig-derivative-answer-question"><div className="polynomial-expression"><MathFormula latex={formatPolynomialExpressionLatex(problem.operations)} /></div></div>
                   {renderChoices(problem, index + 1)}
                   {graded && <span className={`counting-result ${isCorrect ? "correct" : "wrong"}`} role="status">{isCorrect ? "맞음" : <>정답 <MathFormula latex={createPolynomialChoices(problem).find(({ correct }) => correct)?.latex ?? "0"} /></>}</span>}
                 </section>

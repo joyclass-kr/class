@@ -8,6 +8,7 @@ import {
   createPolynomialReviewProblems,
   formatPolynomial,
   formatPolynomialExpression,
+  formatPolynomialExpressionLatex,
   multiplyPolynomials,
 } from "../lib/polynomial-worksheets.ts";
 
@@ -71,4 +72,9 @@ test("복합 전개식과 정리된 다항식을 자연스럽게 표기한다", 
     { kind: "product", multiplier: -1, left: [0, 0, 1, 2], right: [0, 0, 4, -3] },
     { kind: "scaled", multiplier: -3, polynomial: [0, 1, -2, 5] },
   ]), "2(3x − 1)² − (x + 2)(4x − 3) − 3(x² − 2x + 5)");
+  assert.equal(formatPolynomialExpressionLatex([
+    { kind: "square", multiplier: 2, base: [0, 0, 3, -1] },
+    { kind: "product", multiplier: -1, left: [0, 0, 1, 2], right: [0, 0, 4, -3] },
+    { kind: "scaled", multiplier: -3, polynomial: [0, 1, -2, 5] },
+  ]), "2\\left(3x-1\\right)^{2}-\\left(x+2\\right)\\left(4x-3\\right)-3\\left(x^{2}-2x+5\\right)");
 });
