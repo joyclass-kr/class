@@ -7,7 +7,7 @@
     <title>지구와 달 | Class Astronomy</title>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/three@0.128.0/examples/js/controls/OrbitControls.js"></script>
-    <link rel="stylesheet" href="styles.css?v=single-line-sunpath-controls-20260731">
+    <link rel="stylesheet" href="styles.css?v=moon-layout-camera-fix-20260731">
     <script src="../../../../assets/sound/music-control.js" defer></script>
 </head>
 <body>
@@ -56,17 +56,8 @@
                         </time>
                     </div>
 
-                    <!-- Earth Observer Location Controls -->
-                    <div class="em-observer-panel" aria-label="지구 관측 위치 선택">
-                        <div class="em-observer-title">
-                            <span>📍 지구 관측 위치</span>
-                        </div>
-                        <div class="em-observer-buttons">
-                            <button class="phase-chip em-observer-btn active" type="button" data-observer-location="korea">🇰🇷 한국 (37.5°N)</button>
-                            <button class="phase-chip em-observer-btn" type="button" data-observer-location="equator">🌴 적도 (0°)</button>
-                            <button class="phase-chip em-observer-btn" type="button" data-observer-location="north">🧊 북극 (90°N)</button>
-                            <button class="phase-chip em-observer-btn" type="button" data-observer-location="australia">🇦🇺 호주 (35°S)</button>
-                        </div>
+                    <!-- Lunar Phase Controls -->
+                    <div class="em-observer-panel em-phase-panel" aria-label="달의 위상 선택">
                         <div class="em-phase-selector">
                             <div class="em-phase-selector-title">달의 위상 선택</div>
                             <div class="phase-btn-grid" id="phaseChipsGrid">
@@ -80,7 +71,6 @@
                                 <button class="phase-chip" data-angle="315">🌘 그믐달 (315°)</button>
                             </div>
                         </div>
-                        <div id="emObserverStatus" class="em-observer-status">한국 관측자 · 북위 37.5°</div>
                     </div>
 
                     <!-- Bottom-Right Earth View Phase Box -->
@@ -89,22 +79,19 @@
                         <canvas id="moonPhaseCanvas" width="160" height="160" role="img" aria-label="현재 달의 위상과 실제 달 앞면 무늬" title="NASA LRO 달 앞면 영상 기반"></canvas>
                         <div class="em-moon-facts">
                             <div class="em-moon-fact-row">
-                                <span>현재 위상</span>
                                 <strong id="moonPhaseTitle">삭 (New Moon)</strong>
                             </div>
                             <div class="em-moon-fact-row">
-                                <span>음력 기준</span>
                                 <strong id="emOrbitProgressText">음력 약 1일 · 🌑 삭</strong>
                             </div>
                             <div class="em-moon-fact-row em-moon-observation-row">
-                                <span>관측 안내</span>
-                                <strong id="moonObsInfo">남중: 정오 (12:00) | 관측 불가 (태양과 함께 이동)</strong>
+                                <strong id="moonObsInfo">남중: 정오 (12:00)<br>관측 방향: 관측 불가 (태양과 함께 이동)</strong>
                             </div>
                         </div>
                     </div>
                     </div>
 
-                    <section class="em-moon-my-view" id="emMoonMyView" hidden aria-label="관측자가 보는 태양과 달">
+                    <section class="em-moon-my-view" id="emMoonMyView" aria-label="관측자가 보는 태양과 달">
                         <div class="em-moon-view-caption">
                             <strong>My View</strong>
                             <span id="emMoonSkyCaption">한국에서 남쪽 하늘을 바라본 모습</span>
@@ -118,28 +105,39 @@
                     </section>
                 </div>
 
-                <!-- Floating Simulation Controls -->
-                <div class="sim-controls-panel em-shared-controls em-main-controls">
-                    <div class="em-shared-control-row">
-                        <button class="btn btn-primary" id="emPlayBtn" style="padding: 6px 18px; font-size: 14px; font-weight: 700;">⏸ 일시정지</button>
-                        
-                        <div style="display: flex; align-items: center; gap: 8px;">
-                            <span style="font-size: 13px; color: #cbd5e1;">공전 속도:</span>
-                            <input type="range" id="emSpeedSlider" min="-26" max="34" step="1" value="0" aria-label="공전 속도 0.05배에서 50배까지 조절" style="width: 140px; accent-color: #38bdf8;">
-                            <span id="emSpeedValue" style="min-width: 52px; color: #fbbf24; font-size: 12px; font-weight: 900;">1.00×</span>
+                <div class="em-sunpath-controls em-shared-controls em-moon-controls">
+                    <div class="em-sunpath-chip-row">
+                        <span class="em-control-label">관측 위치</span>
+                        <button type="button" class="phase-chip em-observer-btn em-moon-location-btn active" data-observer-location="korea">🇰🇷 한국 (37.5°N)</button>
+                        <button type="button" class="phase-chip em-observer-btn em-moon-location-btn" data-observer-location="equator">🌴 적도 (0°)</button>
+                        <button type="button" class="phase-chip em-observer-btn em-moon-location-btn" data-observer-location="north">🧊 북극 (90°N)</button>
+                        <button type="button" class="phase-chip em-observer-btn em-moon-location-btn" data-observer-location="australia">🇦🇺 호주 (35°S)</button>
+                    </div>
+
+                    <div class="em-sunpath-slider-row em-moon-slider-row">
+                        <button type="button" class="btn btn-primary em-sunpath-play-btn" id="emPlayBtn">⏸ 일시정지</button>
+                        <label>
+                            <span>날짜</span>
+                            <input type="range" id="emMoonDaySlider" min="1" max="365" step="1" value="1" aria-label="음력 시뮬레이션 날짜 선택">
+                        </label>
+                        <label>
+                            <span>시각</span>
+                            <input type="range" id="emMoonTimeSlider" min="0" max="23" step="1" value="0" aria-label="음력 시뮬레이션 시각 선택">
+                        </label>
+                        <div class="em-sunpath-speed" aria-label="음력 시뮬레이션 재생 속도">
+                            <span class="em-speed-title">속도</span>
+                            <input type="range" id="emSpeedSlider" min="-26" max="34" step="1" value="0" aria-label="공전 속도 0.05배에서 50배까지 조절">
+                            <strong id="emSpeedValue">1.00×</strong>
                         </div>
-
-                        <label style="display: inline-flex; align-items: center; gap: 8px; cursor: pointer;">
-                            <input type="checkbox" id="emOrbitLineToggle" checked style="accent-color: #38bdf8;">
-                            <span style="font-size: 13px; color: #cbd5e1;">Orbit</span>
+                        <label class="em-compact-toggle">
+                            <input type="checkbox" id="emOrbitLineToggle" checked>
+                            <span>공전선 (Orbit)</span>
                         </label>
-
-                        <label style="display: inline-flex; align-items: center; gap: 8px; cursor: pointer;">
-                            <input type="checkbox" id="emSunRayToggle" checked style="accent-color: #fbbf24;">
-                            <span style="font-size: 13px; color: #cbd5e1;">Sun Ray</span>
+                        <label class="em-compact-toggle em-sunray-toggle">
+                            <input type="checkbox" id="emSunRayToggle" checked>
+                            <span>햇빛 (Sun Ray)</span>
                         </label>
-
-                        <button class="btn btn-secondary" id="emViewModeBtn" style="padding: 6px 14px; font-size: 13px;">지구 시선</button>
+                        <button type="button" class="btn btn-secondary em-view-mode-btn" id="emViewModeBtn">지구 시선 (Earth View)</button>
                     </div>
                 </div>
             </div>
@@ -202,6 +200,14 @@
                                 <input type="range" id="emSunPathSpeed" min="-26" max="34" step="1" value="0" aria-label="재생 속도 0.05배에서 50배까지 조절">
                                 <strong id="emSunPathSpeedValue">1.00×</strong>
                             </div>
+                            <label class="em-compact-toggle">
+                                <input type="checkbox" id="emSunPathOrbitToggle" checked>
+                                <span>공전선 (Orbit)</span>
+                            </label>
+                            <label class="em-compact-toggle em-sunray-toggle">
+                                <input type="checkbox" id="emSunPathRayToggle" checked>
+                                <span>햇빛 (Sun Ray)</span>
+                            </label>
                         </div>
                     </div>
                 </div>
@@ -304,6 +310,6 @@
     </main>
 
     <!-- Heliocentric 3D Earth-Moon Physics Simulation Engine -->
-    <script src="app.js?v=lunar-layout-20260731"></script>
+    <script src="app.js?v=opaque-season-icons-20260731-4"></script>
 </body>
 </html>

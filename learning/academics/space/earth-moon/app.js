@@ -73,9 +73,20 @@
             const observerSkyStatus = document.getElementById('emMoonSkyStatus');
             if (!container || !spacePane || !canvas || !observerView || !observerSkyCanvas || typeof THREE === 'undefined') return;
             const seasonRaycaster = new THREE.Raycaster();
+            const seasonOcclusionRaycaster = new THREE.Raycaster();
             const seasonPointer = new THREE.Vector2();
             const seasonLabelWorldPosition = new THREE.Vector3();
             const seasonLabelProjectedPosition = new THREE.Vector3();
+            const seasonOcclusionDirection = new THREE.Vector3();
+            const seasonBodyWorldPosition = new THREE.Vector3();
+            const seasonBodyEdgePosition = new THREE.Vector3();
+            const seasonBodyProjectedPosition = new THREE.Vector3();
+            const seasonBodyEdgeProjectedPosition = new THREE.Vector3();
+            const seasonCameraUp = new THREE.Vector3();
+            const seasonGuideStartWorld = new THREE.Vector3();
+            const seasonGuideEndWorld = new THREE.Vector3();
+            const seasonGuideStartProjected = new THREE.Vector3();
+            const seasonGuideEndProjected = new THREE.Vector3();
             const seasonScreenLabels = [];
             let seasonPointerDown = null;
 
@@ -92,6 +103,9 @@
             const EARTH_ROTATIONS_PER_YEAR = EARTH_DAYS_PER_YEAR + 1;
             const HOURS_PER_YEAR = EARTH_DAYS_PER_YEAR * 24;
             const JANUARY_FIRST_ORBIT_ANGLE = (10 / EARTH_DAYS_PER_YEAR) * Math.PI * 2;
+            const OVERVIEW_FRAMING_Y = -34;
+            const SOLAR_OVERVIEW_CAMERA_POSITION = new THREE.Vector3(0, 190 + OVERVIEW_FRAMING_Y, 300);
+            const SOLAR_OVERVIEW_TARGET = new THREE.Vector3(0, OVERVIEW_FRAMING_Y, 0);
             const EARTH_TRACK_CAMERA_OFFSET = new THREE.Vector3(0, 64, 112);
             // Negative Z rotation makes the north end lean 23.44 degrees to screen-right.
             const EARTH_AXIAL_TILT_RAD = -23.44 * (Math.PI / 180);
@@ -136,7 +150,7 @@
                 camera = new THREE.PerspectiveCamera(40, w / h, 0.1, 1500);
                 // Start far enough back to keep the Sun, Earth and the Moon's
                 // complete orbit visible on the first visit.
-                camera.position.set(0, 190, 300);
+                camera.position.copy(SOLAR_OVERVIEW_CAMERA_POSITION);
 
                 renderer = new THREE.WebGLRenderer({ canvas: canvas, antialias: true, alpha: true });
                 renderer.setSize(w, h);
@@ -147,7 +161,7 @@
                     controls = new THREE.OrbitControls(camera, renderer.domElement);
                     controls.enableDamping = true;
                     controls.dampingFactor = 0.05;
-                    controls.target.set(0, 0, 0);
+                    controls.target.copy(SOLAR_OVERVIEW_TARGET);
                     controls.maxDistance = 450;
                     controls.minDistance = 20;
                 }
@@ -300,6 +314,10 @@
                         new THREE.Vector3(0, 0, 0)
                     ]);
                     const rayLine = new THREE.Line(rayGeo, rayMat);
+                    // These endpoints move every frame. The initial geometry is
+                    // degenerate at the origin, so a cached zero-sized bounding
+                    // sphere can incorrectly cull every ray in Earth view.
+                    rayLine.frustumCulled = false;
                     sunLightLinesGroup.add(rayLine);
                 }
                 scene.add(sunLightLinesGroup);
@@ -367,35 +385,40 @@
 
                     const icon = createSeasonIconSprite(point.icon, point.color);
                     icon.position.set(x, 2.2, z);
+                    icon.renderOrder = 30;
                     icon.userData.seasonJump = point;
                     group.add(icon);
 
+                    const guideMaterial = new THREE.LineDashedMaterial({
+                        color: color,
+                        dashSize: 0.7,
+                        gapSize: 0.4,
+                        transparent: true,
+                        opacity: 0.78,
+                        depthTest: true,
+                        depthWrite: false
+                    });
                     const guide = new THREE.Line(
                         new THREE.BufferGeometry().setFromPoints([
                             new THREE.Vector3(x, 5, z),
                             new THREE.Vector3(x, 8, z)
                         ]),
-                        new THREE.LineDashedMaterial({
-                            color: color,
-                            dashSize: 0.7,
-                            gapSize: 0.4,
-                            transparent: true,
-                            opacity: 0.78
-                        })
+                        guideMaterial
                     );
+                    guide.renderOrder = -100;
                     guide.computeLineDistances();
                     group.add(guide);
 
                     const labelAnchor = new THREE.Object3D();
                     labelAnchor.position.set(x, 11, z);
                     group.add(labelAnchor);
-                    createSeasonScreenLabel(point, labelAnchor);
+                    createSeasonScreenLabel(point, labelAnchor, icon, guide);
                 });
 
                 return group;
             }
 
-            function createSeasonScreenLabel(point, anchor) {
+            function createSeasonScreenLabel(point, anchor, icon, guide) {
                 if (!seasonLabelsOverlay) return;
 
                 const label = document.createElement('button');
@@ -409,7 +432,7 @@
                     jumpToSeasonPoint(point);
                 });
                 seasonLabelsOverlay.appendChild(label);
-                seasonScreenLabels.push({ element: label, anchor });
+                seasonScreenLabels.push({ element: label, anchor, icon, guide });
             }
 
             function createSeasonIconSprite(icon, color) {
@@ -425,18 +448,104 @@
                 ctx.shadowColor = color;
                 ctx.shadowBlur = 22;
                 ctx.fillText(icon, 128, 136);
+                // Reinforce the opaque emoji core after drawing its glow. At
+                // overview scale a single antialiased pass made the spring
+                // equinox blossom look uniquely translucent.
+                ctx.shadowBlur = 0;
+                ctx.globalAlpha = 1;
+                ctx.fillText(icon, 128, 136);
 
                 const texture = new THREE.CanvasTexture(c);
                 texture.needsUpdate = true;
                 const material = new THREE.SpriteMaterial({
                     map: texture,
                     transparent: true,
-                    depthTest: true,
-                    depthWrite: false
+                    opacity: 1,
+                    alphaTest: 0.04,
+                    depthTest: false,
+                    depthWrite: false,
+                    toneMapped: false
                 });
                 const sprite = new THREE.Sprite(material);
                 sprite.scale.set(10, 10, 1);
                 return sprite;
+            }
+
+            function getSeasonOccluderDisks(width, height) {
+                const disks = [];
+                const bodies = [
+                    { mesh: sunMesh, radius: 19 },
+                    { mesh: earthMesh, radius: 11.2 },
+                    { mesh: moonMesh, radius: 3.2 }
+                ];
+
+                seasonCameraUp.set(0, 1, 0).applyQuaternion(camera.quaternion).normalize();
+                bodies.forEach(body => {
+                    if (!body.mesh || body.mesh.visible === false) return;
+                    body.mesh.updateWorldMatrix(true, false);
+                    body.mesh.getWorldPosition(seasonBodyWorldPosition);
+                    seasonBodyProjectedPosition.copy(seasonBodyWorldPosition).project(camera);
+                    if (seasonBodyProjectedPosition.z < -1 || seasonBodyProjectedPosition.z > 1) return;
+
+                    const worldScale = body.mesh.getWorldScale(new THREE.Vector3());
+                    const radius = body.radius * Math.max(worldScale.x, worldScale.y, worldScale.z);
+                    seasonBodyEdgePosition
+                        .copy(seasonBodyWorldPosition)
+                        .addScaledVector(seasonCameraUp, radius);
+                    seasonBodyEdgeProjectedPosition.copy(seasonBodyEdgePosition).project(camera);
+
+                    const centerX = (seasonBodyProjectedPosition.x * 0.5 + 0.5) * width;
+                    const centerY = (-seasonBodyProjectedPosition.y * 0.5 + 0.5) * height;
+                    const edgeX = (seasonBodyEdgeProjectedPosition.x * 0.5 + 0.5) * width;
+                    const edgeY = (-seasonBodyEdgeProjectedPosition.y * 0.5 + 0.5) * height;
+                    const radiusPx = Math.hypot(edgeX - centerX, edgeY - centerY);
+                    if (Number.isFinite(radiusPx) && radiusPx > 0) {
+                        disks.push({ x: centerX, y: centerY, radius: radiusPx });
+                    }
+                });
+                return disks;
+            }
+
+            function pointTouchesOccluder(x, y, padding, disks) {
+                return disks.some(disk => Math.hypot(x - disk.x, y - disk.y) <= disk.radius + padding);
+            }
+
+            function labelTouchesOccluder(x, y, element, disks) {
+                const halfWidth = Math.max(18, element.offsetWidth / 2);
+                const halfHeight = Math.max(9, element.offsetHeight / 2);
+                return disks.some(disk => {
+                    const nearestX = Math.max(x - halfWidth, Math.min(disk.x, x + halfWidth));
+                    const nearestY = Math.max(y - halfHeight, Math.min(disk.y, y + halfHeight));
+                    return Math.hypot(disk.x - nearestX, disk.y - nearestY) <= disk.radius + 3;
+                });
+            }
+
+            function guideTouchesOccluder(guide, width, height, disks) {
+                if (!guide || !guide.geometry || !guide.geometry.attributes.position) return false;
+                const position = guide.geometry.attributes.position;
+                seasonGuideStartWorld.fromBufferAttribute(position, 0).applyMatrix4(guide.matrixWorld);
+                seasonGuideEndWorld.fromBufferAttribute(position, position.count - 1).applyMatrix4(guide.matrixWorld);
+                seasonGuideStartProjected.copy(seasonGuideStartWorld).project(camera);
+                seasonGuideEndProjected.copy(seasonGuideEndWorld).project(camera);
+
+                const startX = (seasonGuideStartProjected.x * 0.5 + 0.5) * width;
+                const startY = (-seasonGuideStartProjected.y * 0.5 + 0.5) * height;
+                const endX = (seasonGuideEndProjected.x * 0.5 + 0.5) * width;
+                const endY = (-seasonGuideEndProjected.y * 0.5 + 0.5) * height;
+                const segmentX = endX - startX;
+                const segmentY = endY - startY;
+                const segmentLengthSquared = segmentX * segmentX + segmentY * segmentY;
+
+                return disks.some(disk => {
+                    const ratio = segmentLengthSquared > 0
+                        ? Math.max(0, Math.min(1,
+                            ((disk.x - startX) * segmentX + (disk.y - startY) * segmentY)
+                            / segmentLengthSquared))
+                        : 0;
+                    const nearestX = startX + segmentX * ratio;
+                    const nearestY = startY + segmentY * ratio;
+                    return Math.hypot(disk.x - nearestX, disk.y - nearestY) <= disk.radius + 2;
+                });
             }
 
             function updateSeasonScreenLabels() {
@@ -445,6 +554,7 @@
                 const width = spacePane.clientWidth;
                 const height = spacePane.clientHeight;
                 const labelsVisible = seasonPointsGroup.visible && width > 0 && height > 0;
+                const occluderDisks = labelsVisible ? getSeasonOccluderDisks(width, height) : [];
                 seasonLabelsOverlay.setAttribute('aria-hidden', String(!labelsVisible));
 
                 seasonScreenLabels.forEach(item => {
@@ -456,12 +566,28 @@
                     item.anchor.getWorldPosition(seasonLabelWorldPosition);
                     seasonLabelProjectedPosition.copy(seasonLabelWorldPosition).project(camera);
 
+                    let hiddenBehindBody = false;
+                    const occluderMeshes = [sunMesh, earthMesh, moonMesh].filter(Boolean);
+                    if (occluderMeshes.length) {
+                        const labelDistance = camera.position.distanceTo(seasonLabelWorldPosition);
+                        seasonOcclusionDirection
+                            .copy(seasonLabelWorldPosition)
+                            .sub(camera.position)
+                            .normalize();
+                        seasonOcclusionRaycaster.set(camera.position, seasonOcclusionDirection);
+                        seasonOcclusionRaycaster.near = 0.1;
+                        seasonOcclusionRaycaster.far = Math.max(0.1, labelDistance - 0.35);
+                        hiddenBehindBody = seasonOcclusionRaycaster.intersectObjects(occluderMeshes, true).length > 0;
+                    }
+
                     const inFront = seasonLabelProjectedPosition.z >= -1
                         && seasonLabelProjectedPosition.z <= 1;
                     const nearViewport = Math.abs(seasonLabelProjectedPosition.x) <= 1.15
                         && Math.abs(seasonLabelProjectedPosition.y) <= 1.15;
-                    if (!inFront || !nearViewport) {
+                    if (!inFront || !nearViewport || hiddenBehindBody) {
                         item.element.hidden = true;
+                        if (item.icon) item.icon.visible = false;
+                        if (item.guide) item.guide.visible = false;
                         return;
                     }
 
@@ -469,6 +595,24 @@
                     const projectedY = (-seasonLabelProjectedPosition.y * 0.5 + 0.5) * height;
                     const x = Math.min(width - 52, Math.max(52, projectedX));
                     const y = Math.min(height - 18, Math.max(18, projectedY));
+
+                    item.anchor.parent.updateWorldMatrix(true, false);
+                    if (item.icon) {
+                        item.icon.getWorldPosition(seasonLabelWorldPosition);
+                        seasonLabelProjectedPosition.copy(seasonLabelWorldPosition).project(camera);
+                        const iconX = (seasonLabelProjectedPosition.x * 0.5 + 0.5) * width;
+                        const iconY = (-seasonLabelProjectedPosition.y * 0.5 + 0.5) * height;
+                        item.icon.visible = !pointTouchesOccluder(iconX, iconY, 18, occluderDisks);
+                    }
+                    if (item.guide) {
+                        item.guide.updateWorldMatrix(true, false);
+                        item.guide.visible = !guideTouchesOccluder(item.guide, width, height, occluderDisks);
+                    }
+
+                    if (labelTouchesOccluder(x, y, item.element, occluderDisks)) {
+                        item.element.hidden = true;
+                        return;
+                    }
 
                     item.element.hidden = false;
                     item.element.style.transform =
@@ -565,10 +709,10 @@
 
                     if (nextVisible) {
                         viewMode = 'solarOverview';
-                        camera.position.set(0, 190, 300);
-                        if (controls) controls.target.set(0, 0, 0);
+                        camera.position.copy(SOLAR_OVERVIEW_CAMERA_POSITION);
+                        if (controls) controls.target.copy(SOLAR_OVERVIEW_TARGET);
                         const viewModeBtn = document.getElementById('emViewModeBtn');
-                        if (viewModeBtn) viewModeBtn.textContent = '지구 시선';
+                        if (viewModeBtn) viewModeBtn.textContent = '지구 시선 (Earth View)';
                     }
                 });
             }
@@ -706,6 +850,7 @@
                 mainText.textContent = `음력 ${lunar.month}월 ${lunar.day}일 ${lunar.hour}시`;
                 periodNote.textContent = hourNote;
                 display.removeAttribute('datetime');
+                syncMoonCalendarControls();
             }
 
             function createObserverMarker() {
@@ -771,22 +916,18 @@
                 const locations = {
                     korea: {
                         latitude: 37.5,
-                        status: '한국 관측자 · 북위 37.5°',
                         moonLabel: '북반구(한국) 관측 시선'
                     },
                     equator: {
                         latitude: 0,
-                        status: '적도 관측자 · 위도 0°',
                         moonLabel: '적도 관측 시선'
                     },
                     north: {
                         latitude: 90,
-                        status: '북극 관측자 · 북위 90°',
                         moonLabel: '북극 관측 시선'
                     },
                     australia: {
                         latitude: -35,
-                        status: '호주 관측자 · 남위 35°',
                         moonLabel: '남반구(호주) 관측 시선'
                     }
                 };
@@ -816,9 +957,7 @@
                     button.classList.toggle('active', button.dataset.observerLocation === currentObserverKey);
                 });
 
-                const status = document.getElementById('emObserverStatus');
                 const moonLabel = document.getElementById('emMoonObserverLabel');
-                if (status) status.textContent = location.status;
                 if (moonLabel) moonLabel.textContent = location.moonLabel;
                 draw2DMoonPhase(moonRelAngle);
                 drawMoonObserverSky();
@@ -876,6 +1015,43 @@
                     hour: Math.floor(elapsedSimulationHours + 0.000001) % 24,
                     phase: phaseNames[Math.round((phaseAngle / (Math.PI * 2)) * 8) % 8]
                 };
+            }
+
+            const moonDaySlider = document.getElementById('emMoonDaySlider');
+            const moonTimeSlider = document.getElementById('emMoonTimeSlider');
+
+            function syncMoonCalendarControls() {
+                const totalHours = ((elapsedSimulationHours % HOURS_PER_YEAR) + HOURS_PER_YEAR) % HOURS_PER_YEAR;
+                if (moonDaySlider && document.activeElement !== moonDaySlider) {
+                    moonDaySlider.value = String(Math.floor(totalHours / 24) + 1);
+                }
+                if (moonTimeSlider && document.activeElement !== moonTimeSlider) {
+                    moonTimeSlider.value = String(Math.floor(totalHours % 24));
+                }
+            }
+
+            function applyMoonCalendarControls() {
+                if (!moonDaySlider || !moonTimeSlider) return;
+
+                const dayIndex = Math.max(0, Math.min(EARTH_DAYS_PER_YEAR - 1, Number(moonDaySlider.value) - 1));
+                const hour = Math.max(0, Math.min(23, Number(moonTimeSlider.value)));
+                elapsedSimulationHours = dayIndex * 24 + hour;
+
+                const yearProgress = elapsedSimulationHours / HOURS_PER_YEAR;
+                earthOrbitAngle = normalizeRadians(JANUARY_FIRST_ORBIT_ANGLE + yearProgress * Math.PI * 2);
+                moonRelAngle = normalizeRadians(yearProgress * Math.PI * 2 * 13.38);
+                earthSpinAngle = normalizeRadians(
+                    Math.PI / 2
+                    + JANUARY_FIRST_ORBIT_ANGLE
+                    + yearProgress * Math.PI * 2 * EARTH_ROTATIONS_PER_YEAR
+                );
+
+                isPlaying = false;
+                const playButton = document.getElementById('emPlayBtn');
+                if (playButton) playButton.textContent = '▶ 재생';
+                updateDynamicSunRays();
+                updatePhasesUI();
+                updateSimulationClock();
             }
 
             function equatorialFromEcliptic(longitude) {
@@ -1005,13 +1181,15 @@
 
                 if (nightStrength > 0.001) {
                     ctx.save();
-                    ctx.globalAlpha = nightStrength;
-                    ctx.fillStyle = '#f8fafc';
-                    for (let index = 0; index < 52; index += 1) {
-                        const x = (index * 89 + 37) % width;
-                        const y = (index * 47 + 23) % Math.max(1, horizon - 50);
+                    // Stars are only a quiet night-sky texture here; the solar
+                    // path and horizon must remain the visual focus.
+                    ctx.globalAlpha = nightStrength * 0.12;
+                    ctx.fillStyle = '#cbd5e1';
+                    for (let index = 0; index < 8; index += 1) {
+                        const x = (index * 137 + 53) % width;
+                        const y = (index * 83 + 31) % Math.max(1, horizon - 50);
                         ctx.beginPath();
-                        ctx.arc(x, y, index % 9 === 0 ? 1.2 : 0.65, 0, Math.PI * 2);
+                        ctx.arc(x, y, 0.32, 0, Math.PI * 2);
                         ctx.fill();
                     }
                     ctx.restore();
@@ -1091,28 +1269,34 @@
                     ctx.restore();
                 }
 
-                ctx.fillStyle = '#f8fafc';
-                ctx.font = '900 13px Pretendard, sans-serif';
-                ctx.textBaseline = 'bottom';
+                function drawMoonDirectionLabel(text, x, y, alignment, color, size) {
+                    ctx.font = `900 ${size}px Pretendard, sans-serif`;
+                    ctx.textAlign = alignment;
+                    ctx.textBaseline = 'middle';
+                    ctx.lineWidth = 5;
+                    ctx.lineJoin = 'round';
+                    ctx.strokeStyle = 'rgba(2, 6, 23, 0.82)';
+                    ctx.strokeText(text, x, y);
+                    ctx.fillStyle = color;
+                    ctx.fillText(text, x, y);
+                }
+
                 if (polarView) {
-                    ctx.textAlign = 'center';
-                    ctx.fillText(
+                    drawMoonDirectionLabel(
                         currentObserverLatitude > 0 ? '360° 지평선 · 모든 방향이 남쪽' : '360° 지평선 · 모든 방향이 북쪽',
                         width / 2,
-                        horizon - 8
+                        horizon - 21,
+                        'center',
+                        '#ffffff',
+                        15
                     );
                 } else {
                     const leftLabel = currentObserverLatitude < 0 ? '서 (West)' : '동 (East)';
                     const centerLabel = currentObserverLatitude < 0 ? '북 (North)' : '남 (South)';
                     const rightLabel = currentObserverLatitude < 0 ? '동 (East)' : '서 (West)';
-                    ctx.textAlign = 'left';
-                    ctx.fillText(leftLabel, 12, horizon - 8);
-                    ctx.textAlign = 'center';
-                    ctx.fillStyle = '#fbbf24';
-                    ctx.fillText(centerLabel, width / 2, 30);
-                    ctx.fillStyle = '#f8fafc';
-                    ctx.textAlign = 'right';
-                    ctx.fillText(rightLabel, width - 12, horizon - 8);
+                    drawMoonDirectionLabel(leftLabel, 16, horizon - 21, 'left', '#ffffff', 15);
+                    drawMoonDirectionLabel(rightLabel, width - 16, horizon - 21, 'right', '#ffffff', 15);
+                    drawMoonDirectionLabel(centerLabel, width / 2, 28, 'center', '#facc15', 16);
                 }
 
                 ctx.fillStyle = '#0ea5e9';
@@ -1170,7 +1354,8 @@
                 const lunarDay = Math.min(30, Math.floor(lunarAgeDays) + 1);
                 const shortPhaseName = pData.name.split(' (')[0];
                 document.getElementById('moonPhaseTitle').textContent = pData.name;
-                document.getElementById('moonObsInfo').textContent = pData.info;
+                document.getElementById('moonObsInfo').innerHTML =
+                    pData.info.replace(' | ', '<br>관측 방향: ');
                 document.getElementById('emOrbitProgressText').textContent =
                     `음력 약 ${lunarDay}일 · ${shortPhaseName}`;
 
@@ -1192,7 +1377,8 @@
                 if (!c) return;
                 const ctx = c.getContext('2d');
                 const center = c.width / 2;
-                const r = c.width * 0.43;
+                // Fill the circular frame while preserving a thin antialiasing edge.
+                const r = c.width * 0.49;
                 ctx.clearRect(0, 0, c.width, c.height);
 
                 ctx.save();
@@ -1341,6 +1527,7 @@
                             new THREE.Vector3(endX, offsetY, endZ)
                         ];
                         rayLine.geometry.setFromPoints(pts);
+                        rayLine.geometry.computeBoundingSphere();
                         rayLine.computeLineDistances();
                     }
                 });
@@ -1409,7 +1596,7 @@
                             targetPos.z + EARTH_TRACK_CAMERA_OFFSET.z
                         );
                     } else {
-                        controls.target.set(0, 0, 0); // Solar System Overview
+                        controls.target.copy(SOLAR_OVERVIEW_TARGET); // Solar System Overview
                     }
                     controls.update();
                 }
@@ -1434,6 +1621,9 @@
                 }
             };
 
+            if (moonDaySlider) moonDaySlider.addEventListener('input', applyMoonCalendarControls);
+            if (moonTimeSlider) moonTimeSlider.addEventListener('input', applyMoonCalendarControls);
+
             document.getElementById('emOrbitLineToggle').onchange = function() {
                 if (earthOrbitLine) earthOrbitLine.visible = this.checked;
                 if (moonOrbitLine) moonOrbitLine.visible = this.checked;
@@ -1446,13 +1636,13 @@
             document.getElementById('emViewModeBtn').onclick = function() {
                 if (viewMode === 'trackEarth') {
                     viewMode = 'solarOverview';
-                    this.textContent = '지구 시선';
+                    this.textContent = '지구 시선 (Earth View)';
                     container.classList.remove('earth-view-mode');
-                    observerView.hidden = true;
-                    camera.position.set(0, 190, 300);
+                    observerView.hidden = false;
+                    camera.position.copy(SOLAR_OVERVIEW_CAMERA_POSITION);
                 } else {
                     viewMode = 'trackEarth';
-                    this.textContent = '태양계 시선';
+                    this.textContent = '태양계 시선 (Solar System View)';
                     container.classList.add('earth-view-mode');
                     observerView.hidden = false;
                     drawMoonObserverSky();
@@ -1500,6 +1690,8 @@
             const playButton = document.getElementById('emSunPathPlayBtn');
             const speedSlider = document.getElementById('emSunPathSpeed');
             const speedValue = document.getElementById('emSunPathSpeedValue');
+            const orbitToggle = document.getElementById('emSunPathOrbitToggle');
+            const rayToggle = document.getElementById('emSunPathRayToggle');
             if (!panel || !orbitCanvas || !skyCanvas || !daySlider || !timeSlider || !playButton || !speedSlider) return;
 
             const dateDisplay = document.getElementById('emSunPathDate');
@@ -1520,7 +1712,9 @@
                 latitude: 37.5,
                 place: '한국',
                 speed: 1,
-                playing: true
+                playing: true,
+                showOrbit: true,
+                showRays: true
             };
             let lastFrame = performance.now();
             let spaceViewRotation = 0;
@@ -1657,14 +1851,16 @@
                 const rx = Math.max(90, width * 0.35);
                 const ry = Math.max(55, Math.min(height * 0.29, rx * 0.52));
 
-                ctx.save();
-                ctx.strokeStyle = 'rgba(148,163,184,0.42)';
-                ctx.lineWidth = 1.2;
-                ctx.setLineDash([7, 6]);
-                ctx.beginPath();
-                ctx.ellipse(cx, cy, rx, ry, 0, 0, Math.PI * 2);
-                ctx.stroke();
-                ctx.restore();
+                if (state.showOrbit) {
+                    ctx.save();
+                    ctx.strokeStyle = 'rgba(148,163,184,0.42)';
+                    ctx.lineWidth = 1.2;
+                    ctx.setLineDash([7, 6]);
+                    ctx.beginPath();
+                    ctx.ellipse(cx, cy, rx, ry, 0, 0, Math.PI * 2);
+                    ctx.stroke();
+                    ctx.restore();
+                }
 
                 // A calendar day identifies noon; add the fractional offset from
                 // noon so Earth's orbit advances continuously between dates.
@@ -1675,7 +1871,7 @@
                     ctx.save();
                     ctx.shadowColor = point.color;
                     ctx.shadowBlur = 12;
-                    ctx.font = '18px "Segoe UI Emoji", "Apple Color Emoji", sans-serif';
+                    ctx.font = '22px "Segoe UI Emoji", "Apple Color Emoji", sans-serif';
                     ctx.textAlign = 'center';
                     ctx.textBaseline = 'middle';
                     ctx.fillText(point.icon, position.x, position.y + 1);
@@ -1690,17 +1886,25 @@
                             position.y - currentOrbitPosition.y
                         ) < 36;
                     const labelX = overlapsEarth
-                        ? position.x - outwardY * 32
-                        : position.x + outwardX * 10;
+                        ? position.x - outwardY * 40
+                        : position.x + outwardX * 14;
                     const labelY = overlapsEarth
-                        ? position.y + outwardX * 32
-                        : position.y + outwardY * 10;
+                        ? position.y + outwardX * 40
+                        : position.y + outwardY * 14;
                     ctx.fillStyle = point.color;
-                    ctx.font = '800 10px Pretendard, sans-serif';
+                    ctx.font = `900 ${Math.max(15, Math.min(18, width * 0.018))}px Pretendard, sans-serif`;
                     ctx.textAlign = overlapsEarth
                         ? (outwardY < 0 ? 'left' : 'right')
                         : (outwardX > 0.35 ? 'left' : outwardX < -0.35 ? 'right' : 'center');
                     ctx.textBaseline = overlapsEarth ? 'middle' : (outwardY > 0 ? 'top' : 'bottom');
+                    ctx.lineWidth = 4;
+                    ctx.lineJoin = 'round';
+                    ctx.strokeStyle = 'rgba(2, 6, 23, 0.9)';
+                    ctx.strokeText(
+                        `${point.label} ${point.date}`,
+                        labelX,
+                        labelY
+                    );
                     ctx.fillText(
                         `${point.label} ${point.date}`,
                         labelX,
@@ -1736,23 +1940,25 @@
                 const py = ux;
                 const earthRadius = clamp(Math.min(width, height) * 0.042, 11, 19);
 
-                ctx.save();
-                ctx.strokeStyle = 'rgba(250,204,21,0.7)';
-                ctx.lineWidth = 1.15;
-                ctx.setLineDash([3, 4]);
-                for (let offset = -7; offset <= 7; offset += 7) {
-                    ctx.beginPath();
-                    ctx.moveTo(
-                        cx + ux * sunRadius * 0.85 + px * offset,
-                        cy + uy * sunRadius * 0.85 + py * offset
-                    );
-                    ctx.lineTo(
-                        earthPosition.x - ux * earthRadius + px * offset * 0.45,
-                        earthPosition.y - uy * earthRadius + py * offset * 0.45
-                    );
-                    ctx.stroke();
+                if (state.showRays) {
+                    ctx.save();
+                    ctx.strokeStyle = 'rgba(250,204,21,0.7)';
+                    ctx.lineWidth = 1.15;
+                    ctx.setLineDash([3, 4]);
+                    for (let offset = -7; offset <= 7; offset += 7) {
+                        ctx.beginPath();
+                        ctx.moveTo(
+                            cx + ux * sunRadius * 0.85 + px * offset,
+                            cy + uy * sunRadius * 0.85 + py * offset
+                        );
+                        ctx.lineTo(
+                            earthPosition.x - ux * earthRadius + px * offset * 0.45,
+                            earthPosition.y - uy * earthRadius + py * offset * 0.45
+                        );
+                        ctx.stroke();
+                    }
+                    ctx.restore();
                 }
-                ctx.restore();
 
                 ctx.save();
                 ctx.shadowColor = '#38bdf8';
@@ -2192,14 +2398,13 @@
 
                 if (nightStrength > 0.001) {
                     ctx.save();
-                    ctx.globalAlpha = nightStrength;
-                    ctx.fillStyle = '#f8fafc';
-                    for (let star = 0; star < 46; star += 1) {
+                    ctx.globalAlpha = nightStrength * 0.12;
+                    ctx.fillStyle = '#cbd5e1';
+                    for (let star = 0; star < 8; star += 1) {
                         const starX = (star * 97 + 31) % Math.max(width, 1);
                         const starY = (star * 53 + 17) % Math.max(horizon * 0.82, 1);
-                        const starRadius = star % 11 === 0 ? 1.2 : 0.65;
                         ctx.beginPath();
-                        ctx.arc(starX, starY, starRadius, 0, Math.PI * 2);
+                        ctx.arc(starX, starY, 0.32, 0, Math.PI * 2);
                         ctx.fill();
                     }
                     ctx.restore();
@@ -2452,6 +2657,20 @@
                     speedValue.textContent = `${state.speed < 1 ? state.speed.toFixed(2) : state.speed.toFixed(1)}×`;
                 }
             });
+
+            if (orbitToggle) {
+                orbitToggle.addEventListener('change', () => {
+                    state.showOrbit = orbitToggle.checked;
+                    render();
+                });
+            }
+
+            if (rayToggle) {
+                rayToggle.addEventListener('change', () => {
+                    state.showRays = rayToggle.checked;
+                    render();
+                });
+            }
 
             daySlider.addEventListener('input', () => {
                 state.day = Number(daySlider.value);
