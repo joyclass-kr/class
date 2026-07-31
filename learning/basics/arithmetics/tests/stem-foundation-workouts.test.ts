@@ -3,9 +3,19 @@ import test from "node:test";
 
 import {
   createStemFoundationProblems,
+  isStemBridgeKind,
   STEM_BRIDGE_KINDS,
   STEM_FOUNDATION_KINDS,
 } from "../lib/stem-foundation-workouts.ts";
+
+test("공개 이공계 기초 주소는 진학 준비 6개 유형만 허용한다", () => {
+  for (const kind of STEM_BRIDGE_KINDS) assert.equal(isStemBridgeKind(kind), true, kind);
+  for (const kind of STEM_FOUNDATION_KINDS) {
+    assert.equal(isStemBridgeKind(kind), STEM_BRIDGE_KINDS.includes(kind as never), kind);
+  }
+  assert.equal(isStemBridgeKind("laplace-transforms"), false);
+  assert.equal(isStemBridgeKind(null), false);
+});
 
 test("기존 주소를 위한 이공계 확장 문제은행 18종은 각각 8문제를 유지한다", () => {
   assert.equal(STEM_FOUNDATION_KINDS.length, 18);

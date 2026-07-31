@@ -240,6 +240,10 @@ export function isStemFoundationKind(value: string | null): value is StemFoundat
   return STEM_FOUNDATION_KINDS.includes(value as StemFoundationKind);
 }
 
+export function isStemBridgeKind(value: string | null): value is (typeof STEM_BRIDGE_KINDS)[number] {
+  return STEM_BRIDGE_KINDS.includes(value as (typeof STEM_BRIDGE_KINDS)[number]);
+}
+
 function make(
   kind: StemFoundationKind,
   index: number,

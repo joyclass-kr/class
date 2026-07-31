@@ -45,6 +45,7 @@ test("공용 이공계 페이지는 주소의 kind가 바뀌면 해당 학습지
   const source = fs.readFileSync(path.join(stemRoot, "foundation", "page.tsx"), "utf8");
   assert.match(source, /useSearchParams/);
   assert.match(source, /searchParams\.get\("kind"\)/);
+  assert.match(source, /isStemBridgeKind\(requested\)/);
   assert.match(source, /key=\{kind\}/);
   assert.match(source, /pageClassName="stem-foundation-page"/);
   assert.doesNotMatch(source, /window\.location\.search/);
@@ -68,11 +69,11 @@ test("겹치던 옛 이공계 주소는 새 통합 학습지로 이동한다", (
     "euler-complex": "complex-polar",
     matrices: "matrix-systems",
     "determinants-inverses": "matrix-systems",
-    "cayley-hamilton-rotation": "eigen-diagonalization",
+    "cayley-hamilton-rotation": "vector-spaces-rank",
     "partial-derivatives": "partial-derivatives",
-    "conic-integral-areas": "applied-integrals",
-    "arc-length-surface-area": "applied-integrals",
-    "integral-applications": "applied-integrals",
+    "conic-integral-areas": "multiple-integrals",
+    "arc-length-surface-area": "multiple-integrals",
+    "integral-applications": "multiple-integrals",
   } as const;
 
   for (const [directory, kind] of Object.entries(redirects)) {

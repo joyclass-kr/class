@@ -5,7 +5,7 @@ import { useSearchParams } from "next/navigation";
 import GeometryChoiceWorksheet from "../../high-school/components/geometry-choice-worksheet";
 import {
   createStemFoundationProblems,
-  isStemFoundationKind,
+  isStemBridgeKind,
   STEM_FOUNDATION_TITLES,
   type StemFoundationKind,
 } from "../../../../lib/stem-foundation-workouts";
@@ -16,7 +16,7 @@ const INITIAL_SEED = 20260910;
 export default function StemFoundationPage() {
   const searchParams = useSearchParams();
   const requested = searchParams.get("kind");
-  const kind = isStemFoundationKind(requested) ? requested : DEFAULT_KIND;
+  const kind = isStemBridgeKind(requested) ? requested : DEFAULT_KIND;
   const createSet = useCallback(
     (seed: number) => createStemFoundationProblems(kind, seed),
     [kind],
