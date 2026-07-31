@@ -5,7 +5,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta name="description" content="songhwaplay 인터랙티브 태양계 관찰 - 3D 태양계 공전 시뮬레이션, 행성 입체 도감, 자전 &amp; 공전주기 비교">
     <title>태양계 관찰 | songhwaplay 교과학습</title>
-    <link rel="stylesheet" href="styles.css?v=modal-balance-question-bank-20260801">
+    <link rel="stylesheet" href="styles.css?v=modal-stats-left-20260801">
     <link rel="stylesheet" href="../../../../assets/network/multiplayer-lobby.css">
     <!-- Three.js & OrbitControls for 3D Space WebGL Renderer -->
     <script src="assets/vendor/three-r128/three.min.js"></script>
@@ -269,6 +269,11 @@
                         <span id="modalPlanetCategory" style="background: rgba(56,189,248,0.2); color: #38bdf8; border: 1px solid rgba(56,189,248,0.4); padding: 4px 12px; border-radius: 20px; font-size: 12px; font-weight: 800; display: inline-block; margin-bottom: 8px;">지구형 행성</span>
                         <div id="modalPlanetDensity" style="font-size: 12px; color: var(--text-muted);">평균 밀도: 5.51 g/cm³</div>
                     </div>
+
+                    <!-- Physics Specs Grid: placed under the image to balance both columns -->
+                    <div class="modal-prop-grid" id="modalPropGrid">
+                        <!-- JS Dyn Props -->
+                    </div>
                 </div>
 
                 <!-- Right Column: CSAT Knowledge & Physics Stats -->
@@ -286,11 +291,6 @@
                         <ul class="sat-exam-list" id="modalSatExamPoints">
                             <!-- JS Dyn Rendered CSAT Points -->
                         </ul>
-                    </div>
-
-                    <!-- Physics Specs Grid -->
-                    <div style="display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 10px;" id="modalPropGrid">
-                        <!-- JS Dyn Props -->
                     </div>
 
                     <!-- General Desc -->
