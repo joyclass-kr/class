@@ -36,7 +36,8 @@ document.addEventListener('DOMContentLoaded', () => {
             pointerY: 0,
             activePointers: new Map(),
             pinchDistance: null
-        }
+        },
+        bohrAnimationId: null
     };
 
     // DOM Elements
@@ -407,6 +408,10 @@ document.addEventListener('DOMContentLoaded', () => {
 
     function closeModal() {
         modalOverlay.classList.remove('active');
+        if (state.bohrAnimationId) {
+            cancelAnimationFrame(state.bohrAnimationId);
+            state.bohrAnimationId = null;
+        }
     }
 
     /**
@@ -414,6 +419,9 @@ document.addEventListener('DOMContentLoaded', () => {
      */
     function drawBohrAtom(el) {
         if (!bohrCanvas || !ctx) return;
+        if (state.bohrAnimationId) {
+            cancelAnimationFrame(state.bohrAnimationId);
+        }
 
         const width = bohrCanvas.width = 240;
         const height = bohrCanvas.height = 240;
@@ -421,10 +429,17 @@ document.addEventListener('DOMContentLoaded', () => {
         const centerY = height / 2;
         const shells = el.shells || [1];
         const shellColors = ['#4bcffa', '#a78bfa', '#fbbf24', '#fb7185', '#34d399', '#60a5fa', '#f472b6'];
+        const rotationPeriodMs = 120000;
+        const reduceMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+        let animationStart = null;
         bohrCanvas.setAttribute('role', 'img');
         bohrCanvas.setAttribute('aria-label', `${el.name} 보어 원자 모형. 전자 배치 ${shells.join('-')}`);
 
-        function drawFrame() {
+        function drawFrame(timestamp = 0) {
+            if (animationStart === null) animationStart = timestamp;
+            const rotationAngle = reduceMotion
+                ? 0
+                : ((timestamp - animationStart) / rotationPeriodMs) * Math.PI * 2;
             ctx.clearRect(0, 0, width, height);
 
             // Draw Nucleus
@@ -459,11 +474,12 @@ document.addEventListener('DOMContentLoaded', () => {
                 ctx.lineWidth = isValenceShell ? 2 : 1;
                 ctx.stroke();
 
-                // Keep exam diagrams still so students can count every electron.
+                // Rotate very slowly so each shell remains easy to count.
                 for (let i = 0; i < electronCount; i++) {
                     const currentAngle = (-Math.PI / 2)
                         + ((Math.PI * 2 / electronCount) * i)
-                        + ((shellIdx % 2) * (Math.PI / Math.max(electronCount, 1)));
+                        + ((shellIdx % 2) * (Math.PI / Math.max(electronCount, 1)))
+                        + rotationAngle;
 
                     const ex = centerX + r * Math.cos(currentAngle);
                     const ey = centerY + r * Math.sin(currentAngle);
@@ -482,9 +498,13 @@ document.addEventListener('DOMContentLoaded', () => {
                     }
                 }
             });
+
+            if (!reduceMotion) {
+                state.bohrAnimationId = requestAnimationFrame(drawFrame);
+            }
         }
 
-        drawFrame();
+        state.bohrAnimationId = requestAnimationFrame(drawFrame);
     }
 
     /**

@@ -96,7 +96,9 @@ assert.match(appSource, /querySelectorAll\('\.nav-tabs \.nav-tab\[data-tab\]'\)/
 assert.doesNotMatch(pageSource, /class="nav-tab active quiz-next-btn"/);
 assert.match(pageSource, /id="shellLegend"/);
 assert.match(appSource, /const shellColors = \['#4bcffa', '#a78bfa', '#fbbf24', '#fb7185'/);
-assert.match(appSource, /Keep exam diagrams still so students can count every electron/);
+assert.match(appSource, /const rotationPeriodMs = 120000/);
+assert.match(appSource, /state\.bohrAnimationId = requestAnimationFrame\(drawFrame\)/);
+assert.match(appSource, /cancelAnimationFrame\(state\.bohrAnimationId\)/);
 assert.doesNotMatch(appSource, /state\.atomAngle \+=/);
 assert.doesNotMatch(appSource, /function renderMoleculeSVG\(/);
 assert.match(pageSource, /id="molecule3dCanvas"/);
