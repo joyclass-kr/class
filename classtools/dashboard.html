@@ -1002,14 +1002,14 @@
         const legacyNotices = ["또렷한 눈빛! 똑바른 자세!", "쉬는 시간 복도에서 뛰지 않기"];
         const legacyHomeworks = ["수학익힘 책 42~45쪽 풀기", "내일 미술 준비물: 색종이, 가위"];
         const isSameList = (first, second) => first.length === second.length && first.every((item, index) => item === second[index]);
-        let notices = JSON.parse(localStorage.getItem("dashboardNotices") || '["-"]');
-        let homeworks = JSON.parse(localStorage.getItem("dashboardHomeworks") || '["-"]');
-        if (isSameList(notices, legacyNotices)) {
-            notices = ["-"];
+        let notices = JSON.parse(localStorage.getItem("dashboardNotices") || '[]');
+        let homeworks = JSON.parse(localStorage.getItem("dashboardHomeworks") || '[]');
+        if (isSameList(notices, legacyNotices) || isSameList(notices, ["-"])) {
+            notices = [];
             localStorage.setItem("dashboardNotices", JSON.stringify(notices));
         }
-        if (isSameList(homeworks, legacyHomeworks)) {
-            homeworks = ["-"];
+        if (isSameList(homeworks, legacyHomeworks) || isSameList(homeworks, ["-"])) {
+            homeworks = [];
             localStorage.setItem("dashboardHomeworks", JSON.stringify(homeworks));
         }
         let missingStudents = new Set(JSON.parse(localStorage.getItem("dashboardMissingStudents") || '[]'));
