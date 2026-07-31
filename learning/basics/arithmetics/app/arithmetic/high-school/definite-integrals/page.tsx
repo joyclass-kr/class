@@ -75,7 +75,6 @@ export default function DefiniteIntegralsPage() {
         <div className="toolbar">
           <button className="button secondary" onClick={() => { setSet(createDefiniteIntegralProblemSet(Date.now() >>> 0)); reset(); }}>새 문제</button>
           <button className="button ghost" onClick={reset}>다시 풀기</button>
-          {reviews.length === 0 && wrong.length > 0 && <button className="button secondary" onClick={() => setReviews(createDefiniteIntegralReviewProblems(wrong.map(({ kind }) => kind), (set.seed ^ 0x9e3779b9) >>> 0))}>틀린 유형 {Math.min(wrong.length, 2)}문제 +</button>}
           <button className="button secondary" onClick={() => setPanelOpen(true)}>답안 입력</button>
           <button className="button ghost" onClick={() => window.print()}>인쇄</button>
           <button className="button primary" onClick={checkAll}>전체 채점</button>

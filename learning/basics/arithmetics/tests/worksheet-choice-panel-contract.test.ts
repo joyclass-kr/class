@@ -72,3 +72,28 @@ test("legacy high-school answer panels use the same modal, question preview, and
     assert.match(source, /is-wrong-answer/, route);
   }
 });
+
+test("worksheet toolbars do not expose layout-breaking review additions", () => {
+  const roots = [
+    path.join(process.cwd(), "app", "arithmetic", "middle-school"),
+    path.join(process.cwd(), "app", "arithmetic", "high-school"),
+  ];
+  const offenders = roots.flatMap(tsxFiles).filter((file) => {
+    const source = fs.readFileSync(file, "utf8");
+    return /오답 보충|틀린 유형/.test(source);
+  });
+  assert.deepEqual(offenders, []);
+});
+
+test("inline algebra prompts render expressions and every Latin variable in full-size math", () => {
+  const component = fs.readFileSync(
+    path.join(process.cwd(), "app", "components", "inline-math-text.tsx"),
+    "utf8",
+  );
+  const css = fs.readFileSync(path.join(process.cwd(), "app", "globals.css"), "utf8");
+  assert.match(component, /text:\s*"a\+b",\s*latex:\s*"a\+b"/);
+  assert.match(component, /\\\(\[A-Za-z0-9\].*A-Za-z0-9/);
+  assert.match(component, /fallbackToken/);
+  assert.match(component, /normalizeMathRun/);
+  assert.match(css, /\.inline-math-text-formula\s*\{[\s\S]*?font-size:\s*1em/);
+});

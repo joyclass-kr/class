@@ -75,7 +75,7 @@ export default function SetsPropositionsPage() {
           <div className="counting-sheet-title"><span>공통수학 2</span><strong>집합과 명제{answerSheet ? " 정답" : ""}</strong></div>
           <div className="counting-sheet-info"><span>이름 <i /></span><span>날짜 <i /></span><small>문제지 {questionSet.seed}</small></div>
         </header>
-        <div className="polynomial-instruction"><b>조건을 분석하여 알맞은 답을 고르세요. 빈 공간에 판단 과정을 쓰세요.</b><span>답안 입력에서 4지선다 채점 · 오답 보충 최대 2문제</span></div>
+        <div className="polynomial-instruction"><b>조건을 분석하여 알맞은 답을 고르세요. 빈 공간에 판단 과정을 쓰세요.</b><span>답안 입력에서 4지선다 채점</span></div>
         <div className="polynomial-problem-grid logic-problem-grid">{problems.map((problem, index) => row(problem, index, answerSheet))}</div>
       </div>
     );
@@ -89,7 +89,6 @@ export default function SetsPropositionsPage() {
         <div className="toolbar">
           <button className="button secondary" onClick={() => { setQuestionSet(createLogicProblemSet(Date.now() >>> 0)); reset(); }}>새 문제</button>
           <button className="button ghost" onClick={reset}>다시 풀기</button>
-          {reviews.length === 0 && wrong.length > 0 && <button className="button secondary" onClick={() => setReviews(createLogicReviewProblems(wrong.map(({ kind }) => kind), questionSet.seed ^ 0x9e3779b9))}>틀린 유형 {Math.min(wrong.length, 2)}문제 더</button>}
           <button className="button secondary" onClick={() => setPanelOpen(true)}>답안 입력</button>
           <button className="button ghost" onClick={() => window.print()}>인쇄</button>
           <button className="button primary" onClick={checkAll}>전체 채점</button>

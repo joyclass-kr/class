@@ -4,6 +4,8 @@ import { Fragment, type ReactNode } from "react";
 import MathFormula from "./math-formula";
 
 const PLAIN_MATH_TOKENS = [
+  { text: "a+b", latex: "a+b" },
+  { text: "a-b", latex: "a-b" },
   { text: "x²+(a+b)x+ab", latex: "x^2+(a+b)x+ab" },
   { text: "30°·45°·60°", latex: "30^\\circ,\\ 45^\\circ,\\ 60^\\circ" },
   { text: "sin·cos·tan", latex: "\\sin,\\ \\cos,\\ \\tan" },
@@ -21,6 +23,10 @@ const PLAIN_MATH_TOKENS = [
   { text: "x", latex: "x" },
   { text: "y", latex: "y" },
   { text: "a", latex: "a" },
+  { text: "b", latex: "b" },
+  { text: "c", latex: "c" },
+  { text: "m", latex: "m" },
+  { text: "n", latex: "n" },
 ] as const;
 
 function findTokenIndex(text: string, token: string, cursor: number) {
@@ -37,14 +43,34 @@ function findTokenIndex(text: string, token: string, cursor: number) {
   return index;
 }
 
+function normalizeMathRun(run: string) {
+  return run
+    .replaceAll("²", "^2")
+    .replaceAll("³", "^3")
+    .replaceAll("×", "\\times ")
+    .replaceAll("÷", "\\div ")
+    .replaceAll("·", "\\cdot ");
+}
+
 function renderPlainText(text: string, keyPrefix: string): ReactNode[] {
   const parts: ReactNode[] = [];
   let cursor = 0;
 
   while (cursor < text.length) {
-    const nextToken = PLAIN_MATH_TOKENS
+    const latinRun = /(?:\([A-Za-z0-9]|[A-Za-z0-9])(?:[A-Za-z0-9^_+\-*/=()²³×÷·])*/.exec(text.slice(cursor));
+    const fallbackToken = latinRun
+      ? {
+          text: latinRun[0],
+          latex: normalizeMathRun(latinRun[0]),
+          index: cursor + (latinRun.index ?? 0),
+        }
+      : null;
+    const nextToken = [
+      ...PLAIN_MATH_TOKENS
       .map((token) => ({ ...token, index: findTokenIndex(text, token.text, cursor) }))
-      .filter(({ index }) => index >= 0)
+      .filter(({ index }) => index >= 0),
+      ...(fallbackToken ? [fallbackToken] : []),
+    ]
       .sort((left, right) => left.index - right.index || right.text.length - left.text.length)[0];
 
     if (!nextToken) {

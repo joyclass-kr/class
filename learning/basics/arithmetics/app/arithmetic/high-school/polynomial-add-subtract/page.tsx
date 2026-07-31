@@ -173,7 +173,7 @@ export default function PolynomialAdditionSubtractionPage() {
           <div className="counting-sheet-title"><span>공통수학 1</span><strong>다항식의 연산{answerSheet ? " 정답" : ""}</strong></div>
           <div className="counting-sheet-info"><span>이름 <i /></span><span>날짜 <i /></span><small>문제지 {questionSet.seed}</small></div>
         </header>
-        <div className="polynomial-instruction"><b>식을 전개하고 빈 공간에 정리 과정을 쓰세요.</b><span>답안 입력에서 4지선다 채점 · 오답 보충 최대 2문제</span></div>
+        <div className="polynomial-instruction"><b>식을 전개하고 빈 공간에 정리 과정을 쓰세요.</b><span>답안 입력에서 4지선다 채점</span></div>
         <div className="polynomial-problem-grid">
           {problems.map((problem, index) => renderProblem(problem, index, answerSheet))}
         </div>
@@ -189,7 +189,6 @@ export default function PolynomialAdditionSubtractionPage() {
         <div className="toolbar">
           <button className="button secondary" type="button" onClick={newSet}>새 문제</button>
           <button className="button ghost" type="button" onClick={resetAnswers}>다시 풀기</button>
-          {canAddReview && <button className="button secondary polynomial-review-button" type="button" onClick={addReviewProblems}>틀린 유형 {reviewCount}문제 더</button>}
           <button className="button secondary" type="button" onClick={() => setAnswerPanelOpen(true)}>답안 입력</button>
           <div className="print-control">
             <button className="button ghost print-button" type="button" aria-expanded={printMenuOpen} aria-haspopup="menu" onClick={() => setPrintMenuOpen((open) => !open)}>인쇄</button>

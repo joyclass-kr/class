@@ -116,7 +116,7 @@ export default function CubicSumDifferenceFactorizationPage() {
         </header>
         <div className="polynomial-instruction">
           <b>세제곱 구조를 찾아 완전히 인수분해하세요.</b>
-          <span>답안 입력에서 4지선다 채점 · 오답 보충 최대 2문제</span>
+          <span>답안 입력에서 4지선다 채점</span>
         </div>
         <div className="polynomial-problem-grid logarithm-grid">
           {problems.map((item, index) => row(item, index, answerSheet))}
@@ -135,18 +135,6 @@ export default function CubicSumDifferenceFactorizationPage() {
         <div className="toolbar">
           <button className="button secondary" type="button" onClick={() => { setProblemSet(createHighCubicFactorizationProblemSet(Date.now() >>> 0)); reset(); }}>새 문제</button>
           <button className="button ghost" type="button" onClick={reset}>다시 풀기</button>
-          {wrong.length > 0 && (
-            <button
-              className="button secondary"
-              type="button"
-              onClick={() => setReviews(createHighCubicFactorizationReviewProblems(
-                wrong.map(({ structure }) => structure),
-                problemSet.seed ^ 0x9e3779b9,
-              ))}
-            >
-              오답 보충
-            </button>
-          )}
           <button className="button secondary" type="button" onClick={() => setPanelOpen(true)}>답안 입력</button>
           <button className="button ghost" type="button" onClick={() => window.print()}>인쇄</button>
           <button className="button primary" type="button" onClick={grade}>전체 채점</button>

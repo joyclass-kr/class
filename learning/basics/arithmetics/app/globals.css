@@ -6002,7 +6002,7 @@ button.prime-number-question:focus-visible {
   .inline-math-text-formula {
     display: inline-flex;
     white-space: nowrap;
-    font-size: 0.96em;
+    font-size: 1em;
     letter-spacing: 0;
     vertical-align: -0.05em;
   }

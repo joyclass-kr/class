@@ -157,7 +157,7 @@ export default function TrigonometricDerivativesPage() {
           <div className="counting-sheet-title"><span>미적분Ⅱ</span><strong>삼각함수의 미분{answerSheet ? " 정답" : ""}</strong></div>
           <div className="counting-sheet-info"><span>이름 <i /></span><span>날짜 <i /></span><small>문제지 {questionSet.seed}</small></div>
         </header>
-        <div className="polynomial-instruction"><b>각 문항의 빈 공간에 도함수를 풀어 쓰세요.</b><span>답안 입력에서 4지선다 채점 · 오답 보충 최대 2문제</span></div>
+        <div className="polynomial-instruction"><b>각 문항의 빈 공간에 도함수를 풀어 쓰세요.</b><span>답안 입력에서 4지선다 채점</span></div>
         <div className="polynomial-problem-grid derivative-problem-grid trig-derivative-problem-grid">{problems.map((problem, index) => renderProblem(problem, index, answerSheet))}</div>
       </div>
     );
@@ -171,7 +171,6 @@ export default function TrigonometricDerivativesPage() {
         <div className="toolbar">
           <button className="button secondary" type="button" onClick={newSet}>새 문제</button>
           <button className="button ghost" type="button" onClick={resetAnswers}>다시 풀기</button>
-          {reviewProblems.length === 0 && wrongOriginal.length > 0 && <button className="button secondary" type="button" onClick={addReviews}>틀린 유형 {Math.min(wrongOriginal.length, 2)}문제 더</button>}
           <button className="button secondary" type="button" onClick={() => setAnswerPanelOpen(true)}>답안 입력</button>
           <button className="button ghost" type="button" onClick={() => window.print()}>인쇄</button>
           <button className="button primary" type="button" onClick={checkAll}>전체 채점</button>

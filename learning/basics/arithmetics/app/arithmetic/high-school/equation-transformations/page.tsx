@@ -137,7 +137,7 @@ export default function EquationTransformationsPage() {
         </header>
         <div className="polynomial-instruction">
           <b>방정식의 해를 구하세요. 빈 공간에 풀이 과정을 쓰세요.</b>
-          <span>답안 입력에서 4지선다 채점 · 오답 보충 최대 2문제</span>
+          <span>답안 입력에서 4지선다 채점</span>
         </div>
         <div className="polynomial-problem-grid equation-problem-grid">{problems.map((problem, index) => renderProblem(problem, index, answerSheet))}</div>
       </div>
@@ -152,7 +152,6 @@ export default function EquationTransformationsPage() {
         <div className="toolbar">
           <button className="button secondary" type="button" onClick={newSet}>새 문제</button>
           <button className="button ghost" type="button" onClick={resetAnswers}>다시 풀기</button>
-          {reviewProblems.length === 0 && wrongOriginal.length > 0 && <button className="button secondary" type="button" onClick={addReviews}>틀린 유형 {Math.min(wrongOriginal.length, 2)}문제 더</button>}
           <button className="button secondary" type="button" onClick={() => setAnswerPanelOpen(true)}>답안 입력</button>
           <div className="print-control">
             <button className="button ghost print-button" type="button" aria-expanded={printMenuOpen} aria-haspopup="menu" onClick={() => setPrintMenuOpen((open) => !open)}>인쇄</button>
