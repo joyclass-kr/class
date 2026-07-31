@@ -358,20 +358,20 @@
         .checklist-grid {
             display: grid;
             grid-template-columns: repeat( auto-fill, minmax(85px, 1fr) );
-            gap: 8px;
+            gap: 6px;
             max-height: none;
             overflow-y: visible;
         }
 
         .num-chip {
-            padding: 10px 6px;
+            padding: 5px 4px;
             display: flex;
             flex-direction: column;
             align-items: center;
             justify-content: center;
             font-size: 0.9rem;
             font-weight: 800;
-            border-radius: 12px;
+            border-radius: 10px;
             background: rgba(117, 214, 159, 0.12);
             color: var(--accent-green);
             border: 1px solid rgba(117, 214, 159, 0.25);
@@ -1399,9 +1399,9 @@
 
                 chip.innerHTML = `
                     ${isBday ? '<span class="bday-tag">🎂</span>' : ''}
-                    <div style="font-size: 1.6rem; margin-bottom: 2px;">${avatar.icon}</div>
-                    <div style="font-size: 0.72rem; color: var(--text-sub);">${num}번</div>
-                    <div style="font-weight: 800; font-size: 0.88rem;">${student.name}</div>
+                    <div style="font-size: 1.25rem;">${avatar.icon}</div>
+                    <div style="font-size: 0.64rem; color: var(--text-sub);">${num}번</div>
+                    <div style="font-weight: 800; font-size: 0.78rem;">${student.name}</div>
                 `;
 
                 chip.addEventListener("click", () => {
