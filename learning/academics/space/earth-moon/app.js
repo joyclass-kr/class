@@ -991,10 +991,6 @@
                     ctx.beginPath();
                     ctx.arc(sunPoint.x, sunPoint.y, 11, 0, Math.PI * 2);
                     ctx.fill();
-                    ctx.fillStyle = '#713f12';
-                    ctx.font = '900 11px Pretendard, sans-serif';
-                    ctx.textAlign = 'center';
-                    ctx.fillText('태양', sunPoint.x, sunPoint.y + 25);
                 }
 
                 const phaseAngle = normalizeRadians(moonRelAngle);
@@ -1017,10 +1013,6 @@
                         ctx.fill();
                     }
                     ctx.restore();
-                    ctx.fillStyle = '#f8fafc';
-                    ctx.font = '900 11px Pretendard, sans-serif';
-                    ctx.textAlign = 'center';
-                    ctx.fillText('달', moonPoint.x, moonPoint.y + 32);
                 }
 
                 ctx.fillStyle = '#f8fafc';
@@ -1129,12 +1121,12 @@
                     ctx.rotate(Math.PI);
                 }
 
-                // Base night side: keep the real surface faintly visible.
+                // Keep the real surface clearly visible even on the night side.
                 ctx.beginPath();
                 ctx.arc(0, 0, r, 0, Math.PI * 2);
                 ctx.save();
                 ctx.clip();
-                drawMoonNearsideSurface(ctx, r, 0.18, '#111827');
+                drawMoonNearsideSurface(ctx, r, 0.48, '#334155');
                 ctx.restore();
 
                 const a = (angleRad % (Math.PI * 2) + Math.PI * 2) % (Math.PI * 2);
@@ -1152,7 +1144,7 @@
                     ctx.arc(0, 0, r, 0, Math.PI * 2);
                     ctx.save();
                     ctx.clip();
-                    drawMoonNearsideSurface(ctx, r, 1.12, '#d9d9d2');
+                    drawMoonNearsideSurface(ctx, r, 1.55, '#f1f0e8');
                     ctx.restore();
                     ctx.restore();
                     return;
@@ -1184,7 +1176,7 @@
 
                 ctx.save();
                 ctx.clip();
-                drawMoonNearsideSurface(ctx, r, 1.12, '#d9d9d2');
+                drawMoonNearsideSurface(ctx, r, 1.55, '#f1f0e8');
                 ctx.restore();
                 ctx.restore();
             }
@@ -1204,7 +1196,7 @@
                 const imageRadius = radius * 1.075;
 
                 ctx.save();
-                ctx.filter = `grayscale(1) brightness(${brightness}) contrast(1.14)`;
+                ctx.filter = `grayscale(1) brightness(${brightness}) contrast(1.06)`;
                 ctx.drawImage(
                     moonNearsideImage,
                     sourceX,
