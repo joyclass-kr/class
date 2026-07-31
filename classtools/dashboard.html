@@ -804,7 +804,7 @@
     <!-- Header / Banner Slogan & Clock -->
     <header class="dashboard-header">
         <div class="slogan-card" id="sloganCard">
-            <div class="slogan-text" id="sloganText" contenteditable="false">또렷한 눈빛! 똑바른 자세!</div>
+            <div class="slogan-text" id="sloganText" contenteditable="false">-</div>
         </div>
         <div class="clock-card">
             <div class="clock-time">
@@ -997,8 +997,19 @@
         let isEditMode = false;
         let sloganAlign = localStorage.getItem("sloganAlign") || "center";
         let sloganFontSize = parseInt(localStorage.getItem("sloganFontSize") || "42", 10);
-        let notices = JSON.parse(localStorage.getItem("dashboardNotices") || '["또렷한 눈빛! 똑바른 자세!", "쉬는 시간 복도에서 뛰지 않기"]');
-        let homeworks = JSON.parse(localStorage.getItem("dashboardHomeworks") || '["수학익힘 책 42~45쪽 풀기", "내일 미술 준비물: 색종이, 가위"]');
+        const legacyNotices = ["또렷한 눈빛! 똑바른 자세!", "쉬는 시간 복도에서 뛰지 않기"];
+        const legacyHomeworks = ["수학익힘 책 42~45쪽 풀기", "내일 미술 준비물: 색종이, 가위"];
+        const isSameList = (first, second) => first.length === second.length && first.every((item, index) => item === second[index]);
+        let notices = JSON.parse(localStorage.getItem("dashboardNotices") || '["-"]');
+        let homeworks = JSON.parse(localStorage.getItem("dashboardHomeworks") || '["-"]');
+        if (isSameList(notices, legacyNotices)) {
+            notices = ["-"];
+            localStorage.setItem("dashboardNotices", JSON.stringify(notices));
+        }
+        if (isSameList(homeworks, legacyHomeworks)) {
+            homeworks = ["-"];
+            localStorage.setItem("dashboardHomeworks", JSON.stringify(homeworks));
+        }
         let missingStudents = new Set(JSON.parse(localStorage.getItem("dashboardMissingStudents") || '[]'));
         let rosterStudents = [];
 
@@ -1234,7 +1245,12 @@
 
         // 3. Slogan & Formatting
         const savedSlogan = localStorage.getItem("dashboardSloganText");
-        if (savedSlogan) sloganText.textContent = savedSlogan;
+        if (savedSlogan === "또렷한 눈빛! 똑바른 자세!") {
+            sloganText.textContent = "-";
+            localStorage.setItem("dashboardSloganText", "-");
+        } else if (savedSlogan) {
+            sloganText.textContent = savedSlogan;
+        }
 
         function applySloganStyle() {
             sloganText.style.textAlign = sloganAlign;
