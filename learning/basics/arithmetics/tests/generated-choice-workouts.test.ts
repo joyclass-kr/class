@@ -13,13 +13,13 @@ import {
   createPlaneVectorProblems,
   createProjectionProblems,
   createSpaceCoordinateProblems,
+  createSpaceGeometryProjectionProblems,
   createVectorGeometryProblems,
 } from "../lib/geometry-generated-workouts.ts";
 
 const factories = [
   createRadianProblems,
   createArcSectorProblems,
-  createProbabilityProblems,
   createDistributionProblems,
   createConicProblems,
   createConicMoveTangentProblems,
@@ -27,9 +27,10 @@ const factories = [
   createProjectionProblems,
   createVectorGeometryProblems,
   createSpaceCoordinateProblems,
+  createSpaceGeometryProjectionProblems,
 ];
 
-const combinedFactories = [createRadianArcSectorProblems];
+const combinedFactories = [createRadianArcSectorProblems, createProbabilityProblems];
 
 test("고정 객관식이 아닌 실제 새 문제 세트를 생성한다", () => {
   for (const createSet of factories) {
@@ -59,12 +60,16 @@ test("통합 호도법·부채꼴 학습지는 여덟 유형을 새로 생성한
 
 test("생성형 객관식은 정답 하나와 서로 다른 네 선택지를 유지한다", () => {
   for (const createSet of [...factories, ...combinedFactories]) {
-    for (let seed = 1; seed <= 40; seed += 1) {
+    for (let seed = 1; seed <= 200; seed += 1) {
       for (const problem of createSet(seed)) {
         assert.equal(problem.choices.length, 4, `${createSet.name}:${seed}:${problem.id}`);
         assert.equal(problem.choices.filter(({ correct }) => correct).length, 1);
         assert.equal(new Set(problem.choices.map(({ latex }) => latex)).size, 4);
         assert.equal(problem.choices.find(({ correct }) => correct)?.latex, problem.correctLatex);
+        for (const choice of problem.choices.filter(({ correct }) => !correct)) {
+          assert.doesNotMatch(choice.latex, new RegExp(`^${problem.correctLatex.replace(/[.*+?^${}()|[\]\\]/g, "\\$&")}\\+[1-9]\\d*$`));
+          assert.doesNotMatch(choice.latex, /\\text\{해 없음 \d+\}/);
+        }
       }
     }
   }

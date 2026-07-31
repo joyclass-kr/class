@@ -2,6 +2,7 @@
 
 import { useEffect, useMemo, useState } from "react";
 import MathFormula from "../../../components/math-formula";
+import WorksheetQuestionPrompt from "../../../components/worksheet-question-prompt";
 import {
   createTrigonometricDerivativeChoices,
   createTrigonometricDerivativeProblemSet,
@@ -104,6 +105,7 @@ export default function TrigonometricDerivativesPage() {
         <div className="polynomial-question-number">{String(index + 1).padStart(2, "0")}</div>
         <div className="polynomial-question-body">
           <span className="polynomial-focus-label">{problem.label}</span>
+          <WorksheetQuestionPrompt label={problem.label} prompt="도함수는?" />
           <div className="derivative-expression trig-derivative-expression">
             <div><MathFormula latex={formatTrigonometricDerivativeProblemLatex(problem)} /></div>
             <div className="derivative-expression-target"><MathFormula latex="f^{\prime}(x)" /></div>
@@ -150,7 +152,7 @@ export default function TrigonometricDerivativesPage() {
     return (
       <div className={`a4-sheet counting-sheet polynomial-sheet derivative-sheet trig-derivative-sheet polynomial-sheet-${problems.length}`} style={{ transform: `scale(${sheetScale})` }}>
         <header className="counting-sheet-header polynomial-sheet-header">
-          <div className="counting-sheet-title"><span>미적분Ⅱ</span><strong>삼각함수 미분 ①{answerSheet ? " 정답" : ""}</strong></div>
+          <div className="counting-sheet-title"><span>미적분Ⅱ</span><strong>삼각함수의 미분{answerSheet ? " 정답" : ""}</strong></div>
           <div className="counting-sheet-info"><span>이름 <i /></span><span>날짜 <i /></span><small>문제지 {questionSet.seed}</small></div>
         </header>
         <div className="polynomial-instruction"><b>각 문항의 빈 공간에 도함수를 풀어 쓰세요.</b><span>답안 입력에서 4지선다 채점 · 오답 보충 최대 2문제</span></div>
@@ -174,8 +176,8 @@ export default function TrigonometricDerivativesPage() {
         </div>
       </div>
       {answerPanelOpen && renderAnswerPanel()}
-      <div className="a4-stage counting-a4-stage worksheet-stage" style={{ width: 794 * sheetScale, height: 1123 * sheetScale }} aria-label="A4 삼각함수 미분 ① 문제지">{renderSheet(false)}</div>
-      <div className="a4-stage counting-a4-stage answer-stage" style={{ width: 794 * sheetScale, height: 1123 * sheetScale }} aria-label="A4 삼각함수 미분 ① 정답지">{renderSheet(true)}</div>
+      <div className="a4-stage counting-a4-stage worksheet-stage" style={{ width: 794 * sheetScale, height: 1123 * sheetScale }} aria-label="A4 삼각함수의 미분 문제지">{renderSheet(false)}</div>
+      <div className="a4-stage counting-a4-stage answer-stage" style={{ width: 794 * sheetScale, height: 1123 * sheetScale }} aria-label="A4 삼각함수의 미분 정답지">{renderSheet(true)}</div>
     </main>
   );
 }

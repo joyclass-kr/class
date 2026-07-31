@@ -2,8 +2,10 @@ export type DerivativeApplicationKind =
   | "tangent-line"
   | "stationary-points"
   | "extrema-values"
+  | "closed-interval-extrema"
   | "tangent-parameter"
-  | "velocity-acceleration";
+  | "velocity-acceleration"
+  | "velocity-zero-time";
 
 export type DerivativeApplicationProblem = {
   id: string;
@@ -16,7 +18,13 @@ export type DerivativeApplicationProblem = {
 };
 
 const KINDS: DerivativeApplicationKind[] = [
-  "tangent-line", "stationary-points", "extrema-values", "tangent-parameter", "velocity-acceleration",
+  "tangent-line",
+  "stationary-points",
+  "extrema-values",
+  "closed-interval-extrema",
+  "tangent-parameter",
+  "velocity-acceleration",
+  "velocity-zero-time",
 ];
 
 function random(seed:number){let value=seed>>>0;return()=>{value+=0x6d2b79f5;let result=value;result=Math.imul(result^(result>>>15),result|1);result^=result+Math.imul(result^(result>>>7),result|61);return((result^(result>>>14))>>>0)/4294967296}}
@@ -40,12 +48,22 @@ function build(kind:DerivativeApplicationKind,next:()=>number,id:string):Derivat
     const a=integer(next,1,3),constant=integer(next,-4,4);
     return{id,kind,label:"극댓값과 극솟값",prompt:"함수의 극댓값과 극솟값을 구하세요.",latex:`f(x)=x^3-${3*a*a}x${signed(constant)}`,answerLabels:["극댓값","극솟값"],answers:[2*a**3+constant,-2*a**3+constant]};
   }
+  if(kind==="closed-interval-extrema"){
+    const a=integer(next,1,3),constant=integer(next,-4,4);
+    return{id,kind,label:"닫힌구간의 최댓값과 최솟값",prompt:"주어진 구간에서 최댓값과 최솟값을 구하세요.",latex:`f(x)=x^3-${3*a*a}x${signed(constant)},\\qquad -${a}\\le x\\le${a}`,answerLabels:["최댓값","최솟값"],answers:[2*a**3+constant,-2*a**3+constant]};
+  }
   if(kind==="tangent-parameter"){
     const x=integer(next,1,3),a=integer(next,-4,4),q=integer(next,-3,3),slope=3*x*x+2*a*x+q;
     return{id,kind,label:"평행 조건을 만족하는 𝑎값",prompt:"주어진 점에서의 접선이 직선과 평행하도록 𝑎를 구하세요.",latex:`f(x)=x^3+ax^2${signed(q)}x,\\qquad x=${x},\\qquad y=${slope}x+1`,answerLabels:["a"],answers:[a]};
   }
-  const a=integer(next,1,3),b=integer(next,-4,4),c=integer(next,-5,5),t=integer(next,1,3);
-  return{id,kind,label:"속도와 가속도",prompt:"주어진 시각의 속도와 가속도를 각각 구하세요.",latex:`s(t)=${leadingTerm(a,"t^3")}${signedTerm(b,"t^2")}${signedTerm(c,"t")},\\qquad t=${t}`,answerLabels:[`v(${t})`,`a(${t})`],answers:[3*a*t*t+2*b*t+c,6*a*t+2*b]};
+  if(kind==="velocity-acceleration"){
+    const a=integer(next,1,3),b=integer(next,-4,4),c=integer(next,-5,5),t=integer(next,1,3);
+    return{id,kind,label:"속도와 가속도",prompt:"주어진 시각의 속도와 가속도를 각각 구하세요.",latex:`s(t)=${leadingTerm(a,"t^3")}${signedTerm(b,"t^2")}${signedTerm(c,"t")},\\qquad t=${t}`,answerLabels:[`v(${t})`,`a(${t})`],answers:[3*a*t*t+2*b*t+c,6*a*t+2*b]};
+  }
+  const pairs=[[1,3],[1,5],[2,4],[2,6]] as const;
+  const [r,s]=pairs[integer(next,0,pairs.length-1)]!;
+  const quadratic=-3*(r+s)/2,linear=3*r*s;
+  return{id,kind,label:"속도가 0인 시각",prompt:"속도가 0이 되는 두 시각을 작은 것부터 구하세요.",latex:`s(t)=t^3${signedTerm(quadratic,"t^2")}${signedTerm(linear,"t")}`,answerLabels:["t_1","t_2"],answers:[r,s]};
 }
 
 export function createDerivativeApplicationSet(seed:number){const next=random(seed);return{seed,problems:KINDS.map((kind,index)=>build(kind,next,`derivative-application-${index}`))}}

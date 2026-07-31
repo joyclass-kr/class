@@ -1,8 +1,10 @@
 "use client";
 
 import { useEffect, useMemo, useState } from "react";
+import { useSearchParams } from "next/navigation";
 import InlineMathText from "../../../components/inline-math-text";
 import MathFormula from "../../../components/math-formula";
+import WorksheetQuestionPrompt from "../../../components/worksheet-question-prompt";
 import WorksheetChoicePanel, {
   type WorksheetChoiceProblem,
 } from "../../high-school/components/worksheet-choice-panel";
@@ -18,11 +20,6 @@ import {
 
 const DEFAULT_KIND: MiddleTrigonometryKind = "ratios";
 const INITIAL_SEED = 20260731;
-const DIFFICULTY_LABELS: Record<MiddleTrigonometryProblem["difficulty"], string> = {
-  basic: "기본",
-  application: "응용",
-  advanced: "고난도",
-};
 const TARGET_LABELS: Record<MiddleTrigonometryMethodKind, string> = {
   "single-ratio": "삼각비의 값은?",
   "three-ratios": "(sin A, cos A, tan A)는?",
@@ -56,6 +53,7 @@ function choiceProblem(problem: MiddleTrigonometryProblem): WorksheetChoiceProbl
 }
 
 export default function MiddleTrigonometryPage() {
+  const searchParams = useSearchParams();
   const [kind, setKind] = useState<MiddleTrigonometryKind>(DEFAULT_KIND);
   const [problemSet, setProblemSet] = useState(() => (
     createMiddleTrigonometryProblemSet(DEFAULT_KIND, INITIAL_SEED)
@@ -68,7 +66,7 @@ export default function MiddleTrigonometryPage() {
 
   useEffect(() => {
     const requestedKind = resolveMiddleTrigonometryKind(
-      new URLSearchParams(window.location.search).get("kind"),
+      searchParams.get("kind"),
     );
     if (!requestedKind || requestedKind === kind) return;
     setKind(requestedKind);
@@ -76,7 +74,7 @@ export default function MiddleTrigonometryPage() {
     setReviews([]);
     setSelected({});
     setResults({});
-  }, [kind]);
+  }, [kind, searchParams]);
 
   useEffect(() => {
     const fit = () => setScale(Math.min((window.innerWidth - 32) / 794, 1));
@@ -115,34 +113,24 @@ export default function MiddleTrigonometryPage() {
   }
 
   function row(problem: MiddleTrigonometryProblem, index: number, answerSheet: boolean) {
-    const beginsDifficultySection = index === 0 || index === 2 || index === 5;
     return (
       <article
-        className={`polynomial-question logarithm-question middle-equation-difficulty-${problem.difficulty}${beginsDifficultySection ? " middle-equation-difficulty-start" : ""}`}
+        className="polynomial-question logarithm-question"
         data-testid="middle-trigonometry-question"
         key={`${answerSheet ? "answer" : "question"}-${problem.id}`}
       >
         <div className="polynomial-question-number">{String(index + 1).padStart(2, "0")}</div>
-        {beginsDifficultySection && (
-          <span className="middle-equation-difficulty-label" data-testid="middle-trigonometry-difficulty-label">
-            {DIFFICULTY_LABELS[problem.difficulty]}
-          </span>
-        )}
         <div className="polynomial-question-body">
           <span className="polynomial-focus-label"><InlineMathText text={problem.label} /></span>
+          <WorksheetQuestionPrompt label={problem.label} />
           <div className="logarithm-expression">
             <MathFormula latex={problem.latex} />
           </div>
           {answerSheet && (
-            <>
-              <div className="middle-equation-static-answer">
-                <strong>정답</strong>
-                <MathFormula latex={problem.answerLatex} />
-              </div>
-              <p className="middle-equation-solution-hint" data-testid="middle-trigonometry-solution-hint">
-                <strong>핵심</strong> {problem.solutionHint}
-              </p>
-            </>
+            <div className="middle-equation-static-answer">
+              <strong>정답</strong>
+              <MathFormula latex={problem.answerLatex} />
+            </div>
           )}
         </div>
       </article>
@@ -153,7 +141,7 @@ export default function MiddleTrigonometryPage() {
     return (
       <div className={`a4-sheet counting-sheet polynomial-sheet logarithm-sheet polynomial-sheet-${problems.length}`} style={{ transform: `scale(${scale})` }}>
         <header className="counting-sheet-header polynomial-sheet-header">
-          <div className="counting-sheet-title"><span>중학교 3학년</span><strong><InlineMathText text={title} />{answerSheet ? " 정답" : ""}</strong></div>
+          <div className="counting-sheet-title"><span>중3</span><strong><InlineMathText text={title} />{answerSheet ? " 정답" : ""}</strong></div>
           <div className="counting-sheet-info"><span>이름 <i /></span><span>날짜 <i /></span><small>문제지 {problemSet.seed}</small></div>
         </header>
         <div className="polynomial-instruction"><b>주어진 수치로 삼각비 또는 변의 길이를 계산하세요.</b><span>답안 입력에서 4지선다 채점 · 오답 보충 최대 2문제</span></div>

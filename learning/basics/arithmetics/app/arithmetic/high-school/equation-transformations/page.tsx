@@ -10,6 +10,7 @@ import {
   type EquationProblem,
 } from "../../../../lib/equation-workouts";
 import MathFormula from "../../../components/math-formula";
+import WorksheetQuestionPrompt from "../../../components/worksheet-question-prompt";
 
 type PrintMode = "worksheet" | "answers" | "both";
 const INITIAL_SEED = 20260724;
@@ -117,6 +118,7 @@ export default function EquationTransformationsPage() {
         <div className="polynomial-question-number">{String(index + 1).padStart(2, "0")}</div>
         <div className="polynomial-question-body">
           <span className="polynomial-focus-label">{problem.label}</span>
+          <WorksheetQuestionPrompt label={problem.label} prompt="해는?" />
           <div className="equation-expression"><MathFormula latex={equationLatex(problem.expression)} display /></div>
           {problem.restrictions && <small className="rational-restrictions">단, <MathFormula latex={`x\\ne ${problem.restrictions.join(",\\ ")}`} /></small>}
           {answerSheet && <div className="equation-static-answer">정답 <MathFormula latex={solutionLatex(problem.answers)} /></div>}
@@ -129,7 +131,7 @@ export default function EquationTransformationsPage() {
     return (
       <div className={`a4-sheet counting-sheet polynomial-sheet equation-sheet polynomial-sheet-${problems.length}`} style={{ transform: `scale(${sheetScale})` }}>
         <header className="counting-sheet-header polynomial-sheet-header">
-          <div className="counting-sheet-title"><span>보충</span><strong>유리·무리·절댓값 방정식{answerSheet ? " 정답" : ""}</strong></div>
+          <div className="counting-sheet-title"><span>공통수학 1</span><strong>유리·무리·절댓값 방정식{answerSheet ? " 정답" : ""}</strong></div>
           <div className="counting-sheet-info"><span>이름 <i /></span><span>날짜 <i /></span><small>문제지 {questionSet.seed}</small></div>
         </header>
         <div className="polynomial-instruction">

@@ -12,7 +12,7 @@ const expectedKinds = [
   "quadratic-mvt",
   "cubic-mvt",
   "rolle-theorem",
-  "reciprocal-mvt",
+  "quartic-mvt",
   "two-mvt-points",
 ];
 

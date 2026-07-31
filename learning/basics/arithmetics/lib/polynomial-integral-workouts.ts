@@ -2,8 +2,10 @@ export type IntegralKind =
   | "antiderivative"
   | "integration-constant"
   | "definite-integral"
+  | "definite-integral-symmetry"
   | "variable-upper-bound"
-  | "area-between-curves";
+  | "area-between-curves"
+  | "absolute-area";
 
 export type IntegralProblem = {
   id: string;
@@ -19,8 +21,10 @@ const KINDS: IntegralKind[] = [
   "antiderivative",
   "integration-constant",
   "definite-integral",
+  "definite-integral-symmetry",
   "variable-upper-bound",
   "area-between-curves",
+  "absolute-area",
 ];
 
 function random(seed: number) {
@@ -75,6 +79,17 @@ function build(kind: IntegralKind, next: () => number, id: string): IntegralProb
       answerLabels: ["값"], answers: [a * n * n + b * n],
     };
   }
+  if (kind === "definite-integral-symmetry") {
+    const n = [3, 6][integer(next, 0, 1)]!;
+    const a = integer(next, 1, 4);
+    const b = integer(next, -5, 5);
+    const c = integer(next, -4, 4);
+    return {
+      id, kind, label: "대칭구간의 정적분", prompt: "정적분의 값을 구하세요.",
+      latex: `\\int_{-${n}}^{${n}}\\left(${a}x^2${signed(b)}x${signed(c)}\\right)dx`,
+      answerLabels: ["값"], answers: [2 * a * n ** 3 / 3 + 2 * c * n],
+    };
+  }
   if (kind === "variable-upper-bound") {
     const c = integer(next, 1, 4);
     const x = integer(next, 2, 4);
@@ -84,12 +99,23 @@ function build(kind: IntegralKind, next: () => number, id: string): IntegralProb
       answerLabels: [`F'(${x})`], answers: [2 * x * (x * x + c)],
     };
   }
-  const n = [3, 6][integer(next, 0, 1)];
+  if (kind === "area-between-curves") {
+    const n = [3, 6][integer(next, 0, 1)]!;
+    const k = n === 3
+      ? [2, 4][integer(next, 0, 1)]!
+      : integer(next, 1, 3);
+    return {
+      id, kind, label: "두 곡선 사이의 넓이", prompt: "두 곡선으로 둘러싸인 부분의 넓이를 구하세요.",
+      latex: `y=${k * n}x,\\qquad y=${k}x^2`,
+      answerLabels: ["넓이"], answers: [k * n ** 3 / 6],
+    };
+  }
+  const a = [3, 6][integer(next, 0, 1)]!;
   const k = integer(next, 1, 3);
   return {
-    id, kind, label: "두 곡선 사이의 넓이", prompt: "두 곡선으로 둘러싸인 부분의 넓이를 구하세요.",
-    latex: `y=${k * n}x-${k}x^2,\\qquad y=0`,
-    answerLabels: ["넓이"], answers: [k * n ** 3 / 6],
+    id, kind, label: "부호가 바뀌는 함수의 넓이", prompt: "그래프와 x축으로 둘러싸인 부분의 넓이를 구하세요.",
+    latex: `y=${k}x^2-${k * a * a},\\qquad -${a}\\le x\\le${a}`,
+    answerLabels: ["넓이"], answers: [4 * k * a ** 3 / 3],
   };
 }
 

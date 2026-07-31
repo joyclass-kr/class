@@ -781,97 +781,7 @@
 .logarithm-expression { display: flex; width: 100%; justify-content: flex-start; margin-top: 10px; font-size: 20px; }
 .polynomial-page.logarithm-page .logarithm-expression .math-formula-display,
 .polynomial-page.logarithm-page .logarithm-expression .katex-display { display: flex; width: 100%; justify-content: flex-start; margin: 0; text-align: left; }
-.numeric-choice-page .factorization-difficulty-start:not(:first-child) {
-  border-top: 2px solid #b9c5da;
-}
-.numeric-choice-page .factorization-difficulty-label {
-  position: absolute;
-  z-index: 2;
-  top: 11px;
-  right: 14px;
-  display: inline-flex;
-  align-items: center;
-  min-width: 38px;
-  justify-content: center;
-  border: 1px solid currentColor;
-  border-radius: 999px;
-  padding: 3px 8px;
-  font-family: var(--high-school-korean-font);
-  font-size: 9px;
-  font-weight: 900;
-  line-height: 1.1;
-  letter-spacing: -0.035em;
-  background: #fff;
-}
-.numeric-choice-page .factorization-difficulty-basic .factorization-difficulty-label {
-  color: #28705f;
-  background: #f1faf7;
-}
-.numeric-choice-page .factorization-difficulty-application .factorization-difficulty-label {
-  color: #395aa1;
-  background: #f2f5fc;
-}
-.numeric-choice-page .factorization-difficulty-advanced .factorization-difficulty-label {
-  color: #9a453c;
-  background: #fff4f1;
-}
-.numeric-choice-page .factorization-solution-hint {
-  display: flex;
-  align-items: baseline;
-  gap: 7px;
-  max-width: 660px;
-  margin: 8px 0 0;
-  color: #536176;
-  font-family: var(--high-school-korean-font);
-  font-size: 10px;
-  font-weight: 650;
-  line-height: 1.35;
-  white-space: nowrap;
-}
-.numeric-choice-page .factorization-solution-hint strong {
-  flex: 0 0 auto;
-  border-radius: 4px;
-  padding: 2px 5px;
-  color: #31466f;
-  background: #edf2fb;
-  font-size: 9px;
-  font-weight: 900;
-}
-.middle-quadratic-page .middle-equation-difficulty-start:not(:first-child) {
-  border-top: 2px solid #b9c5da;
-}
-.middle-quadratic-page .middle-equation-difficulty-label {
-  position: absolute;
-  z-index: 2;
-  top: 11px;
-  right: 14px;
-  display: inline-flex;
-  align-items: center;
-  min-width: 38px;
-  justify-content: center;
-  border: 1px solid currentColor;
-  border-radius: 999px;
-  padding: 3px 8px;
-  font-family: var(--high-school-korean-font);
-  font-size: 9px;
-  font-weight: 900;
-  line-height: 1.1;
-  background: #fff;
-}
-.middle-quadratic-page .middle-equation-difficulty-basic .middle-equation-difficulty-label {
-  color: #28705f;
-  background: #f1faf7;
-}
-.middle-quadratic-page .middle-equation-difficulty-application .middle-equation-difficulty-label {
-  color: #395aa1;
-  background: #f2f5fc;
-}
-.middle-quadratic-page .middle-equation-difficulty-advanced .middle-equation-difficulty-label {
-  color: #9a453c;
-  background: #fff4f1;
-}
-.middle-equation-static-answer,
-.middle-equation-solution-hint {
+.middle-equation-static-answer {
   display: flex;
   align-items: baseline;
   gap: 7px;
@@ -884,8 +794,7 @@
   line-height: 1.3;
   white-space: nowrap;
 }
-.middle-equation-static-answer strong,
-.middle-equation-solution-hint strong {
+.middle-equation-static-answer strong {
   flex: 0 0 auto;
   border-radius: 4px;
   padding: 2px 5px;
@@ -1074,7 +983,7 @@
   display: grid;
   gap: 12px;
   padding: 16px 4px;
-  border-bottom: 1px dashed #d7d0c5;
+  border-bottom: 0;
 }
 
 .trig-derivative-answer-item-heading {
@@ -1297,8 +1206,21 @@
 
 /* Formula-led worksheets need the whole row so long equations never break mid-formula. */
 .polynomial-page.formula-only-page .worksheet-stage .polynomial-question-body,
-.polynomial-page.numeric-choice-page .worksheet-stage .polynomial-question-body {
+.polynomial-page.numeric-choice-page .worksheet-stage .polynomial-question-body,
+.polynomial-page.polynomial-drill-page .worksheet-stage .polynomial-question-body {
   max-width: 100%;
+}
+
+/*
+ * The four mixed-polynomial questions are intentionally long and need the
+ * full printable width. Keep each expression on one line and slightly reduce
+ * only this page's math size so signs and parentheses never wrap by themselves.
+ */
+.polynomial-page.polynomial-drill-page .worksheet-stage .polynomial-expression {
+  flex-wrap: nowrap;
+  white-space: nowrap;
+  font-size: 17px !important;
+  letter-spacing: -0.035em;
 }
 
 .polynomial-page .polynomial-sheet-7 .polynomial-problem-grid {
@@ -1380,6 +1302,39 @@
 
 .polynomial-page.formula-only-page .worksheet-stage .geometry-choice-expression .aligned {
   text-align: left;
+}
+
+.stem-foundation-page .worksheet-stage .polynomial-sheet-8 .polynomial-problem-grid {
+  grid-template-rows: repeat(8, minmax(min-content, 1fr));
+}
+
+.stem-foundation-page .worksheet-stage .geometry-choice-question {
+  padding-top: 7px;
+  padding-bottom: 6px;
+}
+
+.stem-foundation-page .worksheet-stage .polynomial-question-number {
+  top: 9px;
+}
+
+.stem-foundation-page .worksheet-stage .polynomial-focus-label {
+  margin-bottom: 3px;
+  padding: 2px 8px;
+}
+
+.stem-foundation-page .worksheet-stage .geometry-choice-prompt {
+  margin-bottom: 2px;
+  font-size: 13px;
+  line-height: 1.3;
+}
+
+.stem-foundation-page .worksheet-stage .geometry-choice-expression {
+  font-size: 18px !important;
+  line-height: 1.15;
+}
+
+.stem-foundation-page.formula-only-page .worksheet-stage .geometry-choice-expression .katex-display {
+  margin-top: 1px;
 }
 
 /* Word-heavy and diagram-led questions need the full row width. */

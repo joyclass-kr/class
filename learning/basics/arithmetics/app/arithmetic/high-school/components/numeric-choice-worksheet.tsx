@@ -3,6 +3,7 @@
 import { useEffect, useMemo, useState } from "react";
 import { createNumericChoices } from "../../../../lib/worksheet-choice-utils";
 import MathFormula from "../../../components/math-formula";
+import WorksheetQuestionPrompt from "../../../components/worksheet-question-prompt";
 import WorksheetChoicePanel, { type WorksheetChoiceProblem } from "./worksheet-choice-panel";
 
 export type NumericWorksheetProblem = {
@@ -27,7 +28,6 @@ type Props = {
   formatChoice?: (problem: NumericWorksheetProblem, values: number[]) => string;
   makeChoices?: (problem: NumericWorksheetProblem) => Array<{ id: string; values: number[]; correct: boolean }>;
   showLatexOnWorksheet?: boolean;
-  showPromptOnWorksheet?: boolean;
 };
 
 function answerLatex(problem: NumericWorksheetProblem, values: number[]) {
@@ -41,7 +41,7 @@ function answerLatex(problem: NumericWorksheetProblem, values: number[]) {
   }).join(",\\quad ");
 }
 
-export default function NumericChoiceWorksheet({ initialSeed, subject, title, instruction, createSet, createReviews, formatChoice = answerLatex, makeChoices, showLatexOnWorksheet = true, showPromptOnWorksheet = true }: Props) {
+export default function NumericChoiceWorksheet({ initialSeed, subject, title, instruction, createSet, createReviews, formatChoice = answerLatex, makeChoices, showLatexOnWorksheet = true }: Props) {
   const [set, setSet] = useState(() => createSet(initialSeed));
   const [reviews, setReviews] = useState<NumericWorksheetProblem[]>([]);
   const [selected, setSelected] = useState<Record<string, string>>({});
@@ -97,7 +97,7 @@ export default function NumericChoiceWorksheet({ initialSeed, subject, title, in
         <div className="polynomial-question-number">{String(index + 1).padStart(2, "0")}</div>
         <div className="polynomial-question-body">
           <span className="polynomial-focus-label">{problem.label}</span>
-          {showPromptOnWorksheet && <p className="logarithm-prompt">{problem.prompt}</p>}
+          <WorksheetQuestionPrompt label={problem.label} prompt={problem.prompt} />
           {(showLatexOnWorksheet || answerSheet) && <div className="logarithm-expression"><MathFormula latex={problem.latex} display /></div>}
           {answerSheet && <div className="logarithm-response"><MathFormula latex={formatChoice(problem, problem.answers)} /></div>}
         </div>

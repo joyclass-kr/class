@@ -9,12 +9,13 @@ import {
   resolveMiddleQuadraticEquationKind,
 } from "../lib/middle-quadratic-equation-workouts.ts";
 
-test("중3 이차방정식은 다섯 개의 통합 학습지로 각각 8문제를 생성한다", () => {
+test("중3 이차방정식은 여섯 개의 통합 학습지로 각각 8문제를 생성한다", () => {
   assert.deepEqual(MIDDLE_QUADRATIC_EQUATION_KINDS, [
     "roots-and-squares",
     "factorization",
     "quadratic-formula",
     "normalize-and-solve",
+    "applications",
     "comprehensive",
   ]);
   for (const kind of MIDDLE_QUADRATIC_EQUATION_KINDS) {
@@ -90,6 +91,17 @@ test("식 정리 학습지는 전개·이항과 분수·소수 계수를 모두 
   assert.ok(problems.some(({ latex }) => latex.includes("0.5")));
 });
 
+test("이차방정식 활용은 수·넓이·직각삼각형 유형을 한 장에 묶는다", () => {
+  const kinds = createMiddleQuadraticEquationProblemSet("applications", 20260729)
+    .problems.map(({ kind }) => kind);
+  assert.deepEqual(new Set(kinds), new Set([
+    "consecutive-integers",
+    "rectangle-area",
+    "number-product",
+    "right-triangle-area",
+  ]));
+});
+
 test("이차방정식 종합은 연속 세 세트에서 모든 풀이 유형을 순환한다", () => {
   const kinds = [1, 2, 3].flatMap((seed) => (
     createMiddleQuadraticEquationProblemSet("comprehensive", seed).problems.map(({ kind }) => kind)
@@ -104,6 +116,7 @@ test("기존 세부 유형 주소는 대응하는 통합 학습지로 연결된�
   assert.equal(resolveMiddleQuadraticEquationKind("negative-leading"), "factorization");
   assert.equal(resolveMiddleQuadraticEquationKind("quadratic-formula-general"), "quadratic-formula");
   assert.equal(resolveMiddleQuadraticEquationKind("fraction-decimal"), "normalize-and-solve");
+  assert.equal(resolveMiddleQuadraticEquationKind("rectangle-area"), "applications");
   assert.equal(resolveMiddleQuadraticEquationKind("comprehensive"), "comprehensive");
   assert.equal(resolveMiddleQuadraticEquationKind("unknown"), null);
 });

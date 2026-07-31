@@ -1,8 +1,10 @@
 "use client";
 
 import { useEffect, useMemo, useState } from "react";
+import { useSearchParams } from "next/navigation";
 import InlineMathText from "../../../components/inline-math-text";
 import MathFormula from "../../../components/math-formula";
+import WorksheetQuestionPrompt from "../../../components/worksheet-question-prompt";
 import WorksheetChoicePanel, {
   type WorksheetChoiceProblem,
 } from "../../high-school/components/worksheet-choice-panel";
@@ -17,12 +19,6 @@ import {
 
 const DEFAULT_KIND: MiddleQuadraticEquationKind = "roots-and-squares";
 const INITIAL_SEED = 20260729;
-const DIFFICULTY_LABELS: Record<MiddleQuadraticEquationProblem["difficulty"], string> = {
-  basic: "기본",
-  application: "응용",
-  advanced: "고난도",
-};
-
 function choiceProblem(problem: MiddleQuadraticEquationProblem): WorksheetChoiceProblem {
   const choices = [
     { id: `${problem.id}-correct`, latex: problem.answerLatex, correct: true },
@@ -42,6 +38,7 @@ function choiceProblem(problem: MiddleQuadraticEquationProblem): WorksheetChoice
 }
 
 export default function MiddleQuadraticEquationsPage() {
+  const searchParams = useSearchParams();
   const [kind, setKind] = useState<MiddleQuadraticEquationKind>(DEFAULT_KIND);
   const [problemSet, setProblemSet] = useState(() => (
     createMiddleQuadraticEquationProblemSet(DEFAULT_KIND, INITIAL_SEED)
@@ -54,7 +51,7 @@ export default function MiddleQuadraticEquationsPage() {
 
   useEffect(() => {
     const requestedKind = resolveMiddleQuadraticEquationKind(
-      new URLSearchParams(window.location.search).get("kind"),
+      searchParams.get("kind"),
     );
     if (!requestedKind || requestedKind === kind) return;
     setKind(requestedKind);
@@ -62,7 +59,7 @@ export default function MiddleQuadraticEquationsPage() {
     setReviews([]);
     setSelected({});
     setResults({});
-  }, [kind]);
+  }, [kind, searchParams]);
 
   useEffect(() => {
     const fit = () => setScale(Math.min((window.innerWidth - 32) / 794, 1));
@@ -100,41 +97,24 @@ export default function MiddleQuadraticEquationsPage() {
   }
 
   function row(problem: MiddleQuadraticEquationProblem, index: number, answerSheet: boolean) {
-    const previousDifficulty = index > 0 ? problemSet.problems[index - 1]?.difficulty : undefined;
-    const beginsDifficultySection = (
-      index < problemSet.problems.length
-      && problem.difficulty !== previousDifficulty
-    );
-
     return (
       <article
-        className={`polynomial-question logarithm-question middle-equation-difficulty-${problem.difficulty}${beginsDifficultySection ? " middle-equation-difficulty-start" : ""}`}
-        data-difficulty={problem.difficulty}
+        className="polynomial-question logarithm-question"
         data-testid="middle-quadratic-question"
         key={`${problem.id}-${answerSheet}`}
       >
         <div className="polynomial-question-number">{String(index + 1).padStart(2, "0")}</div>
-        {beginsDifficultySection && (
-          <span className="middle-equation-difficulty-label" data-testid="middle-equation-difficulty-label">
-            {DIFFICULTY_LABELS[problem.difficulty]}
-          </span>
-        )}
         <div className="polynomial-question-body">
           <span className="polynomial-focus-label"><InlineMathText text={problem.label} /></span>
+          <WorksheetQuestionPrompt label={problem.label} prompt="해는?" />
           <div className="logarithm-expression">
             <MathFormula latex={problem.latex} display />
           </div>
           {answerSheet && (
-            <>
-              <div className="middle-equation-static-answer">
-                <strong>정답</strong>
-                <MathFormula latex={problem.answerLatex} />
-              </div>
-              <p className="middle-equation-solution-hint" data-testid="middle-equation-solution-hint">
-                <strong>핵심</strong>
-                {problem.solutionHint}
-              </p>
-            </>
+            <div className="middle-equation-static-answer">
+              <strong>정답</strong>
+              <MathFormula latex={problem.answerLatex} />
+            </div>
           )}
         </div>
       </article>
@@ -145,7 +125,7 @@ export default function MiddleQuadraticEquationsPage() {
     return (
       <div className={`a4-sheet counting-sheet polynomial-sheet logarithm-sheet polynomial-sheet-${problems.length}`} style={{ transform: `scale(${scale})` }}>
         <header className="counting-sheet-header polynomial-sheet-header">
-          <div className="counting-sheet-title"><span>중학교 3학년</span><strong><InlineMathText text={title} />{answerSheet ? " 정답" : ""}</strong></div>
+          <div className="counting-sheet-title"><span>중3</span><strong><InlineMathText text={title} />{answerSheet ? " 정답" : ""}</strong></div>
           <div className="counting-sheet-info"><span>이름 <i /></span><span>날짜 <i /></span><small>문제지 {problemSet.seed}</small></div>
         </header>
         <div className="polynomial-instruction"><b>이차방정식의 모든 해를 구하세요. 빈 공간에 계산 과정을 쓰세요.</b><span>답안 입력에서 4지선다 채점 · 오답 보충 최대 2문제</span></div>

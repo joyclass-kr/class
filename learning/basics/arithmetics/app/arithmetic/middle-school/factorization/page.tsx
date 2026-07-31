@@ -1,8 +1,10 @@
 "use client";
 
 import { useEffect, useMemo, useState } from "react";
+import { useSearchParams } from "next/navigation";
 import InlineMathText from "../../../components/inline-math-text";
 import MathFormula from "../../../components/math-formula";
+import WorksheetQuestionPrompt from "../../../components/worksheet-question-prompt";
 import WorksheetChoicePanel, {
   type WorksheetChoiceProblem,
 } from "../../high-school/components/worksheet-choice-panel";
@@ -17,12 +19,6 @@ import {
 
 const DEFAULT_KIND: MiddleFactorizationKind = "common-factor";
 const INITIAL_SEED = 20260727;
-const DIFFICULTY_LABELS: Record<MiddleFactorizationProblem["difficulty"], string> = {
-  basic: "기본",
-  application: "응용",
-  advanced: "고난도",
-};
-
 function choiceProblem(problem: MiddleFactorizationProblem): WorksheetChoiceProblem {
   const choices = [
     { id: `${problem.id}-correct`, latex: problem.answerLatex, correct: true },
@@ -42,6 +38,7 @@ function choiceProblem(problem: MiddleFactorizationProblem): WorksheetChoiceProb
 }
 
 export default function MiddleFactorizationPage() {
+  const searchParams = useSearchParams();
   const [kind, setKind] = useState<MiddleFactorizationKind>(DEFAULT_KIND);
   const [problemSet, setProblemSet] = useState(() => (
     createMiddleFactorizationProblemSet(DEFAULT_KIND, INITIAL_SEED)
@@ -53,11 +50,14 @@ export default function MiddleFactorizationPage() {
   const [scale, setScale] = useState(0.6);
 
   useEffect(() => {
-    const requestedKind = new URLSearchParams(window.location.search).get("kind");
+    const requestedKind = searchParams.get("kind");
     if (!isMiddleFactorizationKind(requestedKind) || requestedKind === kind) return;
     setKind(requestedKind);
     setProblemSet(createMiddleFactorizationProblemSet(requestedKind, INITIAL_SEED));
-  }, [kind]);
+    setReviews([]);
+    setSelected({});
+    setResults({});
+  }, [kind, searchParams]);
 
   useEffect(() => {
     const fit = () => setScale(Math.min((window.innerWidth - 32) / 794, 1));
@@ -95,36 +95,19 @@ export default function MiddleFactorizationPage() {
   }
 
   function row(problem: MiddleFactorizationProblem, index: number, answerSheet: boolean) {
-    const previousDifficulty = index > 0 ? problemSet.problems[index - 1]?.difficulty : undefined;
-    const beginsDifficultySection = (
-      index < problemSet.problems.length
-      && problem.difficulty !== previousDifficulty
-    );
-
     return (
       <article
-        className={`polynomial-question logarithm-question factorization-difficulty-${problem.difficulty}${beginsDifficultySection ? " factorization-difficulty-start" : ""}`}
-        data-difficulty={problem.difficulty}
+        className="polynomial-question logarithm-question"
         data-testid="middle-factorization-question"
         key={`${problem.id}-${answerSheet}`}
       >
         <div className="polynomial-question-number">{String(index + 1).padStart(2, "0")}</div>
-        {beginsDifficultySection && (
-          <span className="factorization-difficulty-label" data-testid="factorization-difficulty-label">
-            {DIFFICULTY_LABELS[problem.difficulty]}
-          </span>
-        )}
         <div className="polynomial-question-body">
           <span className="polynomial-focus-label"><InlineMathText text={problem.label} /></span>
+          <WorksheetQuestionPrompt label={problem.label} prompt="인수분해한 식은?" />
           <div className="logarithm-expression">
             <MathFormula latex={`${problem.latex}${answerSheet ? `=${problem.answerLatex}` : ""}`} display />
           </div>
-          {answerSheet && (
-            <p className="factorization-solution-hint" data-testid="factorization-solution-hint">
-              <strong>핵심</strong>
-              {problem.solutionHint}
-            </p>
-          )}
         </div>
       </article>
     );
@@ -134,7 +117,7 @@ export default function MiddleFactorizationPage() {
     return (
       <div className={`a4-sheet counting-sheet polynomial-sheet logarithm-sheet polynomial-sheet-${problems.length}`} style={{ transform: `scale(${scale})` }}>
         <header className="counting-sheet-header polynomial-sheet-header">
-          <div className="counting-sheet-title"><span>중학교 3학년</span><strong><InlineMathText text={title} />{answerSheet ? " 정답" : ""}</strong></div>
+          <div className="counting-sheet-title"><span>중3</span><strong><InlineMathText text={title} />{answerSheet ? " 정답" : ""}</strong></div>
           <div className="counting-sheet-info"><span>이름 <i /></span><span>날짜 <i /></span><small>문제지 {problemSet.seed}</small></div>
         </header>
         <div className="polynomial-instruction"><b>식을 완전히 인수분해하세요. 빈 공간에 풀이 과정을 쓰세요.</b><span>답안 입력에서 4지선다 채점 · 오답 보충 최대 2문제</span></div>

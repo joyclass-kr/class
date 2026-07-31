@@ -28,7 +28,10 @@ test("중3 통계 계산은 쉬운 세부 유형을 합친 4개 학습지로 구
 test("묶음 학습지는 필요한 세부 계산 유형을 빠짐없이 섞는다", () => {
   assert.deepEqual(
     new Set(createMiddleStatisticsProblemSet("representative-values", 7).problems.map(({ kind }) => kind)),
-    new Set(["mean", "median", "mode", "range", "missing-from-mean", "frequency-mean"]),
+    new Set([
+      "mean", "median", "mode", "frequency-mean",
+      "total-frequency", "relative-frequency", "missing-frequency", "relative-percentage",
+    ]),
   );
   assert.deepEqual(
     new Set(createMiddleStatisticsProblemSet("mean-applications", 7).problems.map(({ kind }) => kind)),
@@ -153,6 +156,7 @@ test("통계 종합은 연속 세 세트에서 모든 계산 유형을 순환한
 
 test("기존 세부 유형 주소는 해당 묶음 학습지로 연결된다", () => {
   assert.equal(resolveMiddleStatisticsKind("median"), "representative-values");
+  assert.equal(resolveMiddleStatisticsKind("relative-frequency"), "representative-values");
   assert.equal(resolveMiddleStatisticsKind("frequency-mean"), "mean-applications");
   assert.equal(resolveMiddleStatisticsKind("variance"), "dispersion");
   assert.equal(resolveMiddleStatisticsKind("comprehensive"), "comprehensive");

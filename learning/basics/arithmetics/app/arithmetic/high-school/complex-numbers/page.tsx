@@ -2,6 +2,7 @@
 
 import { useEffect, useMemo, useState } from "react";
 import MathFormula from "../../../components/math-formula";
+import WorksheetQuestionPrompt from "../../../components/worksheet-question-prompt";
 import {
   createComplexChoices,
   createComplexProblemSet,
@@ -73,6 +74,7 @@ export default function ComplexNumbersPage() {
         <div className="polynomial-question-number">{String(index + 1).padStart(2, "0")}</div>
         <div className="polynomial-question-body">
           <span className="polynomial-focus-label">{problem.label}</span>
+          <WorksheetQuestionPrompt label={problem.label} />
           <div className="complex-expression"><MathFormula latex={problem.latex} display /></div>
         </div>
         {answerSheet ? (

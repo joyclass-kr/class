@@ -1,6 +1,11 @@
 import assert from "node:assert/strict";
 import { readFile } from "node:fs/promises";
 import test from "node:test";
+import {
+  highSchoolWorksheetCatalog,
+  middleSchoolWorksheetCatalog,
+  stemWorksheetCatalog,
+} from "../lib/arithmetic-worksheets.ts";
 
 async function render(pathname = "/") {
   const workerUrl = new URL("../dist/server/index.js", import.meta.url);
@@ -52,8 +57,8 @@ test("renders the learning index and arithmetic catalog in workbook order", asyn
   const indexCss = await readFile(new URL("../app/globals.css", import.meta.url), "utf8");
   assert.equal(indexResponse.status, 200);
   assert.match(indexHtml, /href="\/arithmetic"/);
-  assert.equal((indexHtml.match(/data-testid="worksheet-choice"/g) ?? []).length, 173);
-  assert.equal((indexHtml.match(/class="worksheet-grade"/g) ?? []).length, 173);
+  assert.equal((indexHtml.match(/data-testid="worksheet-choice"/g) ?? []).length, 187);
+  assert.equal((indexHtml.match(/class="worksheet-grade"/g) ?? []).length, 187);
   assert.doesNotMatch(indexHtml, /data-testid="learning-area-card"/);
   assert.match(indexHtml, /href="\/fraction"[^>]*data-testid="worksheet-choice"/);
   assert.match(indexHtml, /href="\/arithmetic\/high-school\/trigonometric-derivatives-2"[^>]*data-testid="worksheet-choice"/);
@@ -70,17 +75,19 @@ test("renders the learning index and arithmetic catalog in workbook order", asyn
   */
   const catalogResponse = await render("/arithmetic");
   const catalogHtml = await catalogResponse.text();
+  const catalogRoutes = [...catalogHtml.matchAll(/href="([^"]+)"[^>]*data-testid="worksheet-choice"/g)]
+    .map((match) => match[1].replaceAll("&amp;", "&"));
   assert.match(catalogHtml, /href="\/arithmetic\/race"/);
-  assert.equal((catalogHtml.match(/data-testid="worksheet-choice"/g) ?? []).length, 173);
+  assert.equal((catalogHtml.match(/data-testid="worksheet-choice"/g) ?? []).length, 187);
   assert.match(catalogHtml, /기초 연산/);
   assert.match(catalogHtml, /초·중·고부터 이공계 기초까지/);
   assert.match(catalogHtml, /data-stage="elementary"/);
   assert.match(catalogHtml, /data-stage="middle"/);
   assert.match(catalogHtml, /data-stage="high"/);
   assert.match(catalogHtml, /이공계 기초/);
-  assert.equal((catalogHtml.match(/class="worksheet-grade"/g) ?? []).length, 173);
-  assert.match(catalogHtml, /href="\/arithmetic\/stem\/partial-derivatives"/);
-  assert.match(catalogHtml, /href="\/arithmetic\/stem\/euler-complex"/);
+  assert.equal((catalogHtml.match(/class="worksheet-grade"/g) ?? []).length, 187);
+  assert.match(catalogHtml, /href="\/arithmetic\/stem\/foundation\?kind=partial-derivatives"/);
+  assert.doesNotMatch(catalogHtml, /href="\/arithmetic\/stem\/foundation\?kind=laplace-transforms"/);
   assert.ok(catalogHtml.indexOf("수 세기") < catalogHtml.indexOf("덧셈·뺄셈 ①"));
   assert.ok(catalogHtml.indexOf("분수 ①") < catalogHtml.indexOf("분수 ②"));
   assert.ok(catalogHtml.indexOf("분수 ②") < catalogHtml.indexOf("무게와 들이"));
@@ -158,33 +165,33 @@ test("renders the learning index and arithmetic catalog in workbook order", asyn
   assert.match(catalogHtml, /href="\/arithmetic\/middle-school\/rational-mixed"[^>]*data-testid="worksheet-choice"/);
   assert.doesNotMatch(catalogHtml, /href="\/arithmetic\/middle-school\/rational-add-subtract"/);
   assert.doesNotMatch(catalogHtml, /href="\/arithmetic\/middle-school\/rational-multiply-divide"/);
-  assert.doesNotMatch(catalogHtml, /href="\/arithmetic\/middle-school\/expression-values"/);
-  assert.ok(catalogHtml.indexOf("소인수분해") < catalogHtml.indexOf("유리수와 순환소수"));
-  assert.ok(catalogHtml.indexOf("유리수와 순환소수") < catalogHtml.indexOf("제곱근과 실수"));
-  assert.ok(catalogHtml.indexOf("제곱근과 실수") < catalogHtml.indexOf("다항식의 곱셈"));
+  assert.match(catalogHtml, /href="\/arithmetic\/middle-school\/expression-values"/);
+  assert.ok(catalogRoutes.findIndex((route) => route.includes("kind=prime-factorization")) < catalogRoutes.findIndex((route) => route.includes("kind=repeating-decimal")));
+  assert.ok(catalogRoutes.findIndex((route) => route.includes("kind=repeating-decimal")) < catalogRoutes.findIndex((route) => route.includes("kind=radical-calculation")));
+  assert.ok(catalogRoutes.findIndex((route) => route.includes("kind=radical-calculation")) < catalogRoutes.findIndex((route) => route.includes("kind=formula-comprehensive")));
   assert.match(catalogHtml, /href="\/arithmetic\/middle-school\/factorization\?kind=cubic-common"/);
   assert.match(catalogHtml, /href="\/arithmetic\/middle-school\/factorization\?kind=cubic-grouping"/);
   assert.match(catalogHtml, /href="\/arithmetic\/middle-school\/factorization\?kind=cubic-sum-difference"/);
-  assert.match(catalogHtml, /href="\/arithmetic\/middle-school\/quadratic-equations\?kind=roots-and-squares"/);
+  assert.doesNotMatch(catalogHtml, /href="\/arithmetic\/middle-school\/quadratic-equations\?kind=roots-and-squares"/);
   assert.match(catalogHtml, /href="\/arithmetic\/middle-school\/quadratic-equations\?kind=factorization"/);
   assert.match(catalogHtml, /href="\/arithmetic\/middle-school\/quadratic-equations\?kind=quadratic-formula"/);
   assert.match(catalogHtml, /href="\/arithmetic\/middle-school\/quadratic-equations\?kind=normalize-and-solve"/);
   assert.match(catalogHtml, /href="\/arithmetic\/middle-school\/quadratic-equations\?kind=comprehensive"/);
   assert.match(catalogHtml, /href="\/arithmetic\/middle-school\/quadratic-functions\?kind=values-and-forms"/);
-  assert.match(catalogHtml, /href="\/arithmetic\/middle-school\/quadratic-functions\?kind=vertex-and-axis"/);
+  assert.doesNotMatch(catalogHtml, /href="\/arithmetic\/middle-school\/quadratic-functions\?kind=vertex-and-axis"/);
   assert.match(catalogHtml, /href="\/arithmetic\/middle-school\/quadratic-functions\?kind=determine-equation"/);
   assert.match(catalogHtml, /href="\/arithmetic\/middle-school\/quadratic-functions\?kind=intercepts-and-intersections"/);
   assert.match(catalogHtml, /href="\/arithmetic\/middle-school\/quadratic-functions\?kind=comprehensive"/);
   assert.match(catalogHtml, /href="\/arithmetic\/middle-school\/trigonometry\?kind=ratios"/);
-  assert.match(catalogHtml, /href="\/arithmetic\/middle-school\/trigonometry\?kind=special-angles"/);
+  assert.doesNotMatch(catalogHtml, /href="\/arithmetic\/middle-school\/trigonometry\?kind=special-angles"/);
   assert.match(catalogHtml, /href="\/arithmetic\/middle-school\/trigonometry\?kind=side-lengths"/);
   assert.match(catalogHtml, /href="\/arithmetic\/middle-school\/trigonometry\?kind=comprehensive"/);
   assert.match(catalogHtml, /href="\/arithmetic\/middle-school\/circle-properties\?kind=inscribed-angles"/);
-  assert.match(catalogHtml, /href="\/arithmetic\/middle-school\/circle-properties\?kind=angle-applications"/);
+  assert.doesNotMatch(catalogHtml, /href="\/arithmetic\/middle-school\/circle-properties\?kind=angle-applications"/);
   assert.match(catalogHtml, /href="\/arithmetic\/middle-school\/circle-properties\?kind=circle-lengths"/);
   assert.match(catalogHtml, /href="\/arithmetic\/middle-school\/circle-properties\?kind=comprehensive"/);
   assert.match(catalogHtml, /href="\/arithmetic\/middle-school\/statistics\?kind=representative-values"/);
-  assert.match(catalogHtml, /href="\/arithmetic\/middle-school\/statistics\?kind=mean-applications"/);
+  assert.doesNotMatch(catalogHtml, /href="\/arithmetic\/middle-school\/statistics\?kind=mean-applications"/);
   assert.match(catalogHtml, /href="\/arithmetic\/middle-school\/statistics\?kind=dispersion"/);
   assert.match(catalogHtml, /href="\/arithmetic\/middle-school\/statistics\?kind=comprehensive"/);
   assert.match(catalogHtml, /세제곱의 합·차 인수분해/);
@@ -201,10 +208,12 @@ test("renders the learning index and arithmetic catalog in workbook order", asyn
   assert.match(catalogHtml, /href="\/arithmetic\/high-school\/vector-projections"[^>]*data-testid="worksheet-choice"/);
   assert.match(catalogHtml, /href="\/arithmetic\/high-school\/vector-geometry"[^>]*data-testid="worksheet-choice"/);
   assert.match(catalogHtml, /href="\/arithmetic\/high-school\/space-coordinates"[^>]*data-testid="worksheet-choice"/);
+  assert.match(catalogHtml, /href="\/arithmetic\/high-school\/space-geometry-projections"[^>]*data-testid="worksheet-choice"/);
   assert.match(catalogHtml, /href="\/arithmetic\/high-school\/radian-measure"[^>]*data-testid="worksheet-choice"/);
   assert.doesNotMatch(catalogHtml, /href="\/arithmetic\/high-school\/arc-sector"[^>]*data-testid="worksheet-choice"/);
   assert.match(catalogHtml, /href="\/arithmetic\/high-school\/probability-rules"[^>]*data-testid="worksheet-choice"/);
   assert.match(catalogHtml, /href="\/arithmetic\/high-school\/probability-distributions"[^>]*data-testid="worksheet-choice"/);
+  assert.match(catalogHtml, /href="\/arithmetic\/high-school\/normal-distributions"[^>]*data-testid="worksheet-choice"/);
   assert.doesNotMatch(catalogHtml, /2시계①|2시계②/);
   assert.doesNotMatch(catalogHtml, /난이도|연산 종류/);
 });
@@ -216,29 +225,20 @@ test("uses four worksheet cards per row on wide catalog screens", async () => {
   assert.match(css, /@media \(max-width: 820px\)[\s\S]*?\.worksheet-catalog\s*\{[^}]*repeat\(2, minmax\(0, 1fr\)\)/);
 });
 
-test("marks the three difficulty sections on middle-school factorization sheets", async () => {
+test("middle-school factorization answer sheets show answers without difficulty badges or hints", async () => {
   const response = await render("/arithmetic/middle-school/factorization");
   assert.equal(response.status, 200);
   const html = await response.text();
   assert.equal((html.match(/data-testid="middle-factorization-question"/g) ?? []).length, 16);
-  assert.equal((html.match(/data-testid="factorization-difficulty-label"/g) ?? []).length, 6);
-  assert.equal((html.match(/data-difficulty="basic"/g) ?? []).length, 4);
-  assert.equal((html.match(/data-difficulty="application"/g) ?? []).length, 6);
-  assert.equal((html.match(/data-difficulty="advanced"/g) ?? []).length, 6);
-  assert.equal((html.match(/>기본<\/span>/g) ?? []).length, 2);
-  assert.equal((html.match(/>응용<\/span>/g) ?? []).length, 2);
-  assert.equal((html.match(/>고난도<\/span>/g) ?? []).length, 2);
-  assert.equal((html.match(/data-testid="factorization-solution-hint"/g) ?? []).length, 8);
-  assert.equal((html.match(/<strong>핵심<\/strong>/g) ?? []).length, 8);
+  assert.doesNotMatch(html, /factorization-difficulty-label|data-difficulty=|factorization-solution-hint|<strong>핵심<\/strong>/);
 });
 
-test("renders the middle-school quadratic-equation worksheet with grading and answer hints", async () => {
+test("renders the middle-school quadratic-equation worksheet without difficulty badges or answer hints", async () => {
   const response = await render("/arithmetic/middle-school/quadratic-equations");
   assert.equal(response.status, 200);
   const html = await response.text();
   assert.equal((html.match(/data-testid="middle-quadratic-question"/g) ?? []).length, 16);
-  assert.equal((html.match(/data-testid="middle-equation-difficulty-label"/g) ?? []).length, 6);
-  assert.equal((html.match(/data-testid="middle-equation-solution-hint"/g) ?? []).length, 8);
+  assert.doesNotMatch(html, /middle-equation-difficulty-label|middle-equation-solution-hint|<strong>핵심<\/strong>/);
   assert.match(html, />답안 입력<\/button>/);
   assert.match(html, />전체 채점<\/button>/);
   assert.match(html, /A4 이차방정식: 제곱근·완전제곱 문제지/);
@@ -250,12 +250,35 @@ test("renders the middle-school quadratic-function calculation worksheet", async
   assert.equal(response.status, 200);
   const html = await response.text();
   assert.equal((html.match(/data-testid="middle-quadratic-function-question"/g) ?? []).length, 16);
-  assert.equal((html.match(/data-testid="middle-function-difficulty-label"/g) ?? []).length, 6);
-  assert.equal((html.match(/data-testid="middle-function-solution-hint"/g) ?? []).length, 8);
+  assert.doesNotMatch(html, /middle-function-difficulty-label|middle-function-solution-hint|<strong>핵심<\/strong>/);
+  assert.equal((html.match(/함숫값은\?/g) ?? []).length, 8);
+  assert.equal((html.match(/전개한 식은\?/g) ?? []).length, 2);
+  assert.equal((html.match(/꼭짓점형은\?/g) ?? []).length, 2);
+  assert.equal((html.match(/꼭짓점과 대칭축은\?/g) ?? []).length, 2);
+  assert.equal((html.match(/최댓값 또는 최솟값은\?/g) ?? []).length, 2);
   assert.match(html, />답안 입력<\/button>/);
   assert.match(html, />전체 채점<\/button>/);
-  assert.match(html, /A4 이차함수: 함숫값과 식의 전개 문제지/);
-  assert.match(html, /A4 이차함수: 함숫값과 식의 전개 정답지/);
+  assert.match(html, /A4 이차함수의 식과 꼭짓점 문제지/);
+  assert.match(html, /A4 이차함수의 식과 꼭짓점 정답지/);
+});
+
+test("every middle, high-school, and STEM worksheet states what each problem asks for", async () => {
+  const worksheets = [
+    ...middleSchoolWorksheetCatalog,
+    ...highSchoolWorksheetCatalog,
+    ...stemWorksheetCatalog,
+  ];
+
+  for (const { route, title } of worksheets) {
+    assert.ok(route, title);
+    const response = await render(route);
+    assert.equal(response.status, 200, title);
+    const html = await response.text();
+    const questionCount = (html.match(/<article class="[^"]*polynomial-question/g) ?? []).length;
+    const promptCount = (html.match(/data-testid="worksheet-question-prompt"/g) ?? []).length;
+    assert.ok(questionCount > 0, `${title}: 문항을 찾을 수 없음`);
+    assert.equal(promptCount, questionCount, `${title}: 질문 문구가 없는 문항이 있음`);
+  }
 });
 
 test("renders the middle-school trigonometry calculation worksheet", async () => {
@@ -263,13 +286,12 @@ test("renders the middle-school trigonometry calculation worksheet", async () =>
   assert.equal(response.status, 200);
   const html = await response.text();
   assert.equal((html.match(/data-testid="middle-trigonometry-question"/g) ?? []).length, 16);
-  assert.equal((html.match(/data-testid="middle-trigonometry-difficulty-label"/g) ?? []).length, 6);
-  assert.equal((html.match(/data-testid="middle-trigonometry-solution-hint"/g) ?? []).length, 8);
-  assert.match(html, /삼각비: 세 변과 삼각비/);
+  assert.doesNotMatch(html, /middle-trigonometry-difficulty-label|middle-trigonometry-solution-hint|<strong>핵심<\/strong>/);
+  assert.match(html, /삼각비의 값과 특수각/);
   assert.match(html, /답안 입력/);
   assert.match(html, /전체 채점/);
-  assert.match(html, /aria-label="A4 삼각비: 세 변과 삼각비 문제지"/);
-  assert.match(html, /aria-label="A4 삼각비: 세 변과 삼각비 정답지"/);
+  assert.match(html, /aria-label="A4 삼각비의 값과 특수각 문제지"/);
+  assert.match(html, /aria-label="A4 삼각비의 값과 특수각 정답지"/);
 });
 
 test("renders the middle-school circle-properties calculation worksheet", async () => {
@@ -277,13 +299,12 @@ test("renders the middle-school circle-properties calculation worksheet", async 
   assert.equal(response.status, 200);
   const html = await response.text();
   assert.equal((html.match(/data-testid="middle-circle-properties-question"/g) ?? []).length, 16);
-  assert.equal((html.match(/data-testid="middle-circle-properties-difficulty-label"/g) ?? []).length, 6);
-  assert.equal((html.match(/data-testid="middle-circle-properties-solution-hint"/g) ?? []).length, 8);
-  assert.match(html, /원의 성질: 중심각·원주각·호/);
+  assert.doesNotMatch(html, /middle-circle-properties-difficulty-label|middle-circle-properties-solution-hint|<strong>핵심<\/strong>/);
+  assert.match(html, /원주각과 각의 응용/);
   assert.match(html, /답안 입력/);
   assert.match(html, /전체 채점/);
-  assert.match(html, /aria-label="A4 원의 성질: 중심각·원주각·호 문제지"/);
-  assert.match(html, /aria-label="A4 원의 성질: 중심각·원주각·호 정답지"/);
+  assert.match(html, /aria-label="A4 원주각과 각의 응용 문제지"/);
+  assert.match(html, /aria-label="A4 원주각과 각의 응용 정답지"/);
 });
 
 test("renders the middle-school statistics calculation worksheet", async () => {
@@ -291,13 +312,29 @@ test("renders the middle-school statistics calculation worksheet", async () => {
   assert.equal(response.status, 200);
   const html = await response.text();
   assert.equal((html.match(/data-testid="middle-statistics-question"/g) ?? []).length, 16);
-  assert.equal((html.match(/data-testid="middle-statistics-difficulty-label"/g) ?? []).length, 6);
-  assert.equal((html.match(/data-testid="middle-statistics-solution-hint"/g) ?? []).length, 8);
-  assert.match(html, /통계: 대푯값 계산/);
+  assert.doesNotMatch(html, /middle-statistics-difficulty-label|middle-statistics-solution-hint|<strong>핵심<\/strong>/);
+  assert.match(html, /대푯값·도수·상대도수/);
+  assert.match(html, /중1/);
+  assert.match(html, /평균은\?/);
+  assert.match(html, /중앙값은\?/);
+  assert.match(html, /최빈값은\?/);
+  assert.equal((html.match(/middle-statistics-prompt/g) ?? []).length, 16);
   assert.match(html, /답안 입력/);
   assert.match(html, /전체 채점/);
-  assert.match(html, /aria-label="A4 통계: 대푯값 계산 문제지"/);
-  assert.match(html, /aria-label="A4 통계: 대푯값 계산 정답지"/);
+  assert.match(html, /aria-label="A4 대푯값·도수·상대도수 문제지"/);
+  assert.match(html, /aria-label="A4 대푯값·도수·상대도수 정답지"/);
+});
+
+test("renders the middle-school curriculum calculation worksheet", async () => {
+  const response = await render("/arithmetic/middle-school/curriculum-calculations");
+  assert.equal(response.status, 200);
+  const html = await response.text();
+  assert.equal((html.match(/data-testid="middle-curriculum-question"/g) ?? []).length, 16);
+  assert.doesNotMatch(html, /middle-curriculum-difficulty-label|middle-curriculum-solution-hint|<strong>핵심<\/strong>/);
+  assert.match(html, /좌표·정비례·반비례 계산/);
+  assert.match(html, /중1/);
+  assert.match(html, /답안 입력/);
+  assert.match(html, /전체 채점/);
 });
 
 test("renders the middle-school core calculation worksheet", async () => {
@@ -305,8 +342,7 @@ test("renders the middle-school core calculation worksheet", async () => {
   assert.equal(response.status, 200);
   const html = await response.text();
   assert.equal((html.match(/data-testid="middle-core-question"/g) ?? []).length, 16);
-  assert.equal((html.match(/data-testid="middle-core-difficulty-label"/g) ?? []).length, 6);
-  assert.equal((html.match(/data-testid="middle-core-solution-hint"/g) ?? []).length, 8);
+  assert.doesNotMatch(html, /middle-core-difficulty-label|middle-core-solution-hint|<strong>핵심<\/strong>/);
   assert.match(html, /소인수분해/);
   assert.match(html, /답안 입력/);
   assert.match(html, /전체 채점/);
@@ -319,8 +355,7 @@ test("renders the high-school cubic sum-and-difference factorization worksheet",
   assert.equal(response.status, 200);
   const html = await response.text();
   assert.equal((html.match(/data-testid="high-cubic-factorization-question"/g) ?? []).length, 16);
-  assert.equal((html.match(/data-testid="high-cubic-factorization-difficulty-label"/g) ?? []).length, 6);
-  assert.equal((html.match(/data-testid="high-cubic-factorization-solution-hint"/g) ?? []).length, 8);
+  assert.doesNotMatch(html, /high-cubic-factorization-difficulty-label|high-cubic-factorization-solution-hint|<strong>핵심<\/strong>/);
   assert.match(html, /세제곱의 합·차 인수분해/);
   assert.match(html, /답안 입력/);
   assert.match(html, /aria-label="A4 세제곱의 합·차 인수분해 문제지"/);
@@ -348,7 +383,7 @@ test("renders the unified arithmetic catalog and high-school worksheets", async 
   const hubResponse = await render("/arithmetic/high-school");
   assert.equal(hubResponse.status, 200);
   const hubHtml = await hubResponse.text();
-  assert.equal((hubHtml.match(/data-testid="worksheet-choice"/g) ?? []).length, 173);
+  assert.equal((hubHtml.match(/data-testid="worksheet-choice"/g) ?? []).length, 187);
   assert.match(hubHtml, /href="\/fraction"[^>]*data-testid="worksheet-choice"/);
   assert.match(hubHtml, /href="\/arithmetic\/high-school\/polynomial-add-subtract"/);
   assert.match(hubHtml, /href="\/arithmetic\/high-school\/factorization-rational"/);
@@ -383,8 +418,12 @@ test("renders the unified arithmetic catalog and high-school worksheets", async 
   assert.match(hubHtml, /href="\/arithmetic\/high-school\/polynomial-integrals"/);
   assert.match(hubHtml, /href="\/arithmetic\/high-school\/trigonometric-derivatives"/);
   assert.match(hubHtml, /href="\/arithmetic\/high-school\/trigonometric-derivatives-2"/);
-  assert.match(hubHtml, /삼각함수 미분 1/);
-  assert.match(hubHtml, /삼각함수 미분 2/);
+  assert.match(hubHtml, /href="\/arithmetic\/high-school\/advanced-differentiation"/);
+  assert.match(hubHtml, /href="\/arithmetic\/high-school\/second-derivative-applications"/);
+  assert.match(hubHtml, /href="\/arithmetic\/high-school\/space-geometry-projections"/);
+  assert.match(hubHtml, /href="\/arithmetic\/high-school\/normal-distributions"/);
+  assert.match(hubHtml, /삼각함수의 미분/);
+  assert.match(hubHtml, /sec·csc·cot 미분/);
   assert.doesNotMatch(hubHtml, /data-testid="learning-area-card"|고등 연산/);
 
   const worksheetResponse = await render("/arithmetic/high-school/polynomial-add-subtract");
@@ -453,13 +492,13 @@ test("renders the unified arithmetic catalog and high-school worksheets", async 
   const derivativeResponse = await render("/arithmetic/high-school/derivative-practice");
   assert.equal(derivativeResponse.status, 200);
   const derivativeHtml = await derivativeResponse.text();
-  assert.match(derivativeHtml, /곱·몫·합성함수의 미분법을 적용하여 도함수를 구하세요/);
-  assert.match(derivativeHtml, /aria-label="A4 미분 문제지"/);
-  assert.match(derivativeHtml, /aria-label="A4 미분 정답지"/);
-  assert.equal((derivativeHtml.match(/data-testid="numeric-choice-question"/g) ?? []).length, 8);
+  assert.match(derivativeHtml, /미분계수의 정의와 다항함수의 미분법을 이용하여 값을 구하세요/);
+  assert.match(derivativeHtml, /aria-label="A4 다항함수의 미분 문제지"/);
+  assert.match(derivativeHtml, /aria-label="A4 다항함수의 미분 정답지"/);
+  assert.equal((derivativeHtml.match(/data-testid="numeric-choice-question"/g) ?? []).length, 14);
   assert.equal((derivativeHtml.match(/<input/g) ?? []).length, 0);
   assert.doesNotMatch(derivativeHtml, /f\(x\+h\)/);
-  assert.equal((derivativeHtml.match(/data-math-latex="[^"]*f\^\{\\prime\}\(x\)=\?"/g) ?? []).length, 8);
+  assert.doesNotMatch(derivativeHtml, /\\ln|\\sin|\\cos/);
 
   const trigDerivativeResponse = await render("/arithmetic/high-school/trigonometric-derivatives");
   assert.equal(trigDerivativeResponse.status, 200);
@@ -467,8 +506,8 @@ test("renders the unified arithmetic catalog and high-school worksheets", async 
   assert.match(trigDerivativeHtml, /각 문항의 빈 공간에 도함수를 풀어 쓰세요/);
   assert.match(trigDerivativeHtml, /답안 입력에서 4지선다 채점 · 오답 보충 최대 2문제/);
   assert.match(trigDerivativeHtml, />답안 입력<\/button>/);
-  assert.match(trigDerivativeHtml, /aria-label="A4 삼각함수 미분 ① 문제지"/);
-  assert.match(trigDerivativeHtml, /aria-label="A4 삼각함수 미분 ① 정답지"/);
+  assert.match(trigDerivativeHtml, /aria-label="A4 삼각함수의 미분 문제지"/);
+  assert.match(trigDerivativeHtml, /aria-label="A4 삼각함수의 미분 정답지"/);
   assert.doesNotMatch(trigDerivativeHtml, /삼각함수 선택/);
   const trigDerivativeLatex = [
     ...trigDerivativeHtml.matchAll(/data-math-latex="([^"]*)"/g),
@@ -504,12 +543,12 @@ test("every high-school worksheet keeps answers outside the A4 sheet", async () 
   const routes = [
     "polynomial-add-subtract", "factorization-rational", "complex-numbers", "exponents-radicals",
     "equation-transformations", "inequality-intervals", "coordinate-lines", "circle-equations",
-    "geometric-transformations", "sets-propositions", "function-transformations",
+    "sets-propositions", "function-transformations",
     "rational-radical-functions", "permutations-combinations", "combinations", "logarithms",
     "exponential-log-functions", "exponential-log-equations", "exponential-log-inequalities", "trigonometric-values",
     "trigonometric-graphs", "trigonometric-equations", "sequences", "sigma-recurrence", "mathematical-induction",
     "limits-continuity", "derivative-practice", "derivative-applications", "polynomial-integrals",
-    "exponential-log-derivatives", "trigonometric-derivatives", "trigonometric-derivatives-2", "transcendental-integrals", "integration-techniques", "definite-integrals", "definite-integral-applications",
+    "exponential-log-derivatives", "trigonometric-derivatives", "trigonometric-derivatives-2", "advanced-differentiation", "second-derivative-applications", "transcendental-integrals", "integration-techniques", "definite-integrals", "definite-integral-applications",
   ];
   for (const route of routes) {
     const response = await render(`/arithmetic/high-school/${route}`);
@@ -540,18 +579,79 @@ test("vector projection worksheet opens its multiple-choice answers in the answe
   assert.match(highSchoolCss, /@media print[\s\S]*?\.trig-derivative-answer-panel-backdrop\s*\{[\s\S]*?display:\s*none\s*!important/);
 });
 
-test("formula-only integral worksheets ask directly in the formula", async () => {
+test("merged high-school worksheet routes redirect to their canonical sheets", async () => {
+  for (const [route, target] of [
+    ["arc-sector", "/arithmetic/high-school/radian-measure"],
+    ["geometric-transformations", "/arithmetic/high-school/coordinate-lines"],
+  ]) {
+    const response = await render(`/arithmetic/high-school/${route}`);
+    assert.ok([307, 308].includes(response.status), route);
+    assert.equal(new URL(response.headers.get("location"), "http://localhost").pathname, target);
+  }
+});
+
+test("renders the reconstructed conic tangents and space geometry worksheets", async () => {
+  const tangentResponse = await render("/arithmetic/high-school/conic-transformations-tangents");
+  assert.equal(tangentResponse.status, 200);
+  const tangentHtml = await tangentResponse.text();
+  assert.match(tangentHtml, /이차곡선의 접선/);
+  assert.equal((tangentHtml.match(/data-testid="geometry-question"/g) ?? []).length, 14);
+  assert.match(tangentHtml, /타원의 일반점에서의 접선/);
+  assert.match(tangentHtml, /포물선의 매개변수 접선/);
+  assert.doesNotMatch(tangentHtml, /꼭짓점에서의 접선|타원의 평행이동|쌍곡선의 평행이동/);
+
+  const spaceResponse = await render("/arithmetic/high-school/space-geometry-projections");
+  assert.equal(spaceResponse.status, 200);
+  const spaceHtml = await spaceResponse.text();
+  assert.match(spaceHtml, /공간도형의 위치 관계와 정사영/);
+  assert.equal((spaceHtml.match(/data-testid="geometry-question"/g) ?? []).length, 14);
+  assert.match(spaceHtml, /직선과 평면의 위치 관계/);
+  assert.match(spaceHtml, /평면에 내린 수선의 발/);
+  assert.match(spaceHtml, /직선 방향으로의 벡터 정사영/);
+  assert.doesNotMatch(spaceHtml, /\uFFFD/);
+});
+
+test("renders the restructured probability and statistics sequence", async () => {
+  const probabilityResponse = await render("/arithmetic/high-school/probability-rules");
+  assert.equal(probabilityResponse.status, 200);
+  const probabilityHtml = await probabilityResponse.text();
+  assert.equal((probabilityHtml.match(/data-testid="geometry-question"/g) ?? []).length, 16);
+  assert.match(probabilityHtml, /베이즈 정리/);
+
+  const distributionResponse = await render("/arithmetic/high-school/probability-distributions");
+  assert.equal(distributionResponse.status, 200);
+  const distributionHtml = await distributionResponse.text();
+  assert.match(distributionHtml, /이산확률분포와 이항분포/);
+  assert.match(distributionHtml, /확률변수의 일차변환/);
+  assert.doesNotMatch(distributionHtml, /표본평균의 평균|표본평균의 표준편차/);
+
+  const normalResponse = await render("/arithmetic/high-school/normal-distributions");
+  assert.equal(normalResponse.status, 200);
+  const normalHtml = await normalResponse.text();
+  assert.match(normalHtml, /정규분포의 계산/);
+  assert.match(normalHtml, /양쪽 꼬리확률/);
+
+  const inferenceResponse = await render("/arithmetic/high-school/statistical-inference");
+  assert.equal(inferenceResponse.status, 200);
+  const inferenceHtml = await inferenceResponse.text();
+  assert.match(inferenceHtml, /통계적 추정/);
+  assert.match(inferenceHtml, /오차한계로 표본 크기 구하기/);
+  assert.match(inferenceHtml, /모비율의 신뢰구간/);
+  assert.doesNotMatch(inferenceHtml, /\uFFFD/);
+});
+
+test("formula-only integral worksheets pair each formula with a direct question", async () => {
   for (const route of ["integration-techniques", "definite-integrals"]) {
     const response = await render(`/arithmetic/high-school/${route}`);
     assert.equal(response.status, 200, route);
     const html = await response.text();
-    assert.doesNotMatch(html, /logarithm-prompt/, route);
+    assert.match(html, /data-testid="worksheet-question-prompt"/, route);
     assert.match(html, /data-math-latex="[^"]*=\?"/, route);
     assert.match(html, /formula-only-page/, route);
   }
 });
 
-test("formula-first high-school worksheets omit redundant instruction sentences", async () => {
+test("formula-first high-school worksheets include a direct question for every item", async () => {
   for (const route of [
     "logarithms",
     "sequences",
@@ -562,7 +662,7 @@ test("formula-first high-school worksheets omit redundant instruction sentences"
   ]) {
     const response = await render(`/arithmetic/high-school/${route}`);
     assert.equal(response.status, 200, route);
-    assert.doesNotMatch(await response.text(), /logarithm-prompt/, route);
+    assert.match(await response.text(), /data-testid="worksheet-question-prompt"/, route);
   }
 });
 

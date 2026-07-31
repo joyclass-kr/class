@@ -48,9 +48,7 @@ function shiftedVariable(shift: number) {
 function choices(id: string, answer: string, distractors: string[]) {
   const values = [answer, ...distractors.filter((value) => value !== answer)];
   const unique = [...new Set(values)].slice(0, 4);
-  for (let offset = 1; unique.length < 4; offset += 1) {
-    unique.push(`\\text{해 없음 ${offset}}`);
-  }
+  if (unique.length < 4) throw new Error(`${id}: 실제 오답 후보가 3개보다 적습니다.`);
   return unique.map((latex, index) => ({
     id: `${id}-${index}`,
     latex,
@@ -206,6 +204,8 @@ export function createExponentialLogFunctionProblems(seed: number) {
         `N(${time})=${initial * ratio * time}`,
         `N(${time})=${initial + ratio ** time}`,
         `N(${time})=${initial * ratio ** (time - 1)}`,
+        `N(${time})=${initial * ratio ** (time + 1)}`,
+        `N(${time})=${initial + ratio * time}`,
       ],
     ));
   }

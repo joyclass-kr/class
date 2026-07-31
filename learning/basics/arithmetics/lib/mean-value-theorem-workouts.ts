@@ -6,7 +6,7 @@ export type MeanValueTheoremKind =
   | "quadratic-mvt"
   | "cubic-mvt"
   | "rolle-theorem"
-  | "reciprocal-mvt"
+  | "quartic-mvt"
   | "two-mvt-points";
 
 export type MeanValueTheoremProblem = GeometryChoiceItem & {
@@ -107,6 +107,18 @@ function shiftedCubic(coefficient: number, center: number, linear: number) {
   if (linear === 0) return cubic;
   const linearTerm = `${Math.abs(linear) === 1 ? "" : Math.abs(linear)}x`;
   return `${cubic}${linear < 0 ? "-" : "+"}${linearTerm}`;
+}
+
+function shiftedQuartic(coefficient: number, center: number, linear: number) {
+  const shifted = center === 0
+    ? "x"
+    : center > 0
+      ? `(x-${center})`
+      : `(x+${Math.abs(center)})`;
+  const quartic = `${coefficient === 1 ? "" : coefficient}${shifted}^4`;
+  if (linear === 0) return quartic;
+  const linearTerm = `${Math.abs(linear) === 1 ? "" : Math.abs(linear)}x`;
+  return `${quartic}${linear < 0 ? "-" : "+"}${linearTerm}`;
 }
 
 function choices(id: string, answer: string, distractors: string[]) {
@@ -292,35 +304,30 @@ export function createMeanValueTheoremProblems(seed: number) {
   }
 
   {
-    const [left, right] = pick(next, [
-      [1, 2],
-      [1, 3],
-      [2, 6],
-      [2, 8],
-      [3, 12],
-      [4, 9],
-      [5, 20],
-    ] as const);
-    const numerator = integer(next, 2, 8);
-    const geometricMean = Math.sqrt(left * right);
+    const coefficient = integer(next, 1, 4);
+    const center = integer(next, -3, 3);
+    const halfWidth = integer(next, 2, 5);
+    const linear = pick(next, [-4, -2, 1, 3, 5]);
+    const left = center - halfWidth;
+    const right = center + halfWidth;
     problems.push(item(
       seed,
       5,
-      "reciprocal-mvt",
-      "유리함수의 평균값정리",
+      "quartic-mvt",
+      "사차함수의 평균값정리",
       "평균값정리를 만족하는 c는?",
-      `f(x)=\\frac{${numerator}}{x},\\quad ${left}\\le x\\le${right}`,
-      `c=${squareRoot(left * right)}`,
+      `f(x)=${shiftedQuartic(coefficient, center, linear)},\\quad ${left}\\le x\\le${right}`,
+      `c=${center}`,
       [
-        `c=${fraction(left + right, 2)}`,
         `c=${left}`,
         `c=${right}`,
+        `c=${center + 1}`,
       ],
       [left, right],
-      [geometricMean],
+      [center],
       {
-        averageRate: -numerator / (left * right),
-        derivativeValues: [-numerator / geometricMean ** 2],
+        averageRate: linear,
+        derivativeValues: [linear],
       },
     ));
   }

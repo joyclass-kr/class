@@ -7,6 +7,7 @@ import {
   type ExponentialLogDerivativeProblem,
 } from "../../../../lib/exponential-log-derivative-workouts";
 import MathFormula from "../../../components/math-formula";
+import WorksheetQuestionPrompt from "../../../components/worksheet-question-prompt";
 import WorksheetChoicePanel, { type WorksheetChoiceProblem } from "../components/worksheet-choice-panel";
 
 export default function ExponentialLogDerivativesPage() {
@@ -51,6 +52,7 @@ export default function ExponentialLogDerivativesPage() {
         <div className="polynomial-question-number">{String(index + 1).padStart(2, "0")}</div>
         <div className="polynomial-question-body">
           <span className="polynomial-focus-label">{problem.label}</span>
+          <WorksheetQuestionPrompt label={problem.label} prompt="도함수는?" />
           <div className="derivative-expression trig-derivative-expression">
             <MathFormula latex={problem.latex} />
             <div className="derivative-expression-target"><MathFormula latex="f^{\prime}(x)" /></div>

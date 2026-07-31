@@ -53,13 +53,11 @@ export const MIDDLE_TRIGONOMETRY_METHOD_KINDS: MiddleTrigonometryMethodKind[] = 
 ];
 
 export const MIDDLE_TRIGONOMETRY_TITLES: Record<MiddleTrigonometryKind, string> = {
-  ratios: "삼각비: 세 변과 삼각비",
+  ratios: "삼각비의 값과 특수각",
   "special-angles": "삼각비: 특수각 계산",
   "side-lengths": "삼각비: 변의 길이 계산",
   comprehensive: "삼각비 계산 종합",
 };
-
-MIDDLE_TRIGONOMETRY_TITLES.ratios = "삼각비의 값과 특수각";
 
 const MIDDLE_TRIGONOMETRY_METHOD_TITLES: Record<MiddleTrigonometryMethodKind, string> = {
   "single-ratio": "세 변에서 한 비 구하기",
@@ -106,10 +104,13 @@ function fraction(numerator: number, denominator: number) {
 }
 
 function uniqueDistractors(answer: string, candidates: string[]) {
-  const unique = [...new Set(candidates.filter((candidate) => candidate !== answer))];
-  for (const fallback of ["0", "1", "\\dfrac{1}{2}", "\\dfrac{\\sqrt{2}}{2}", "\\sqrt{3}", "2"]) {
-    if (unique.length === 3) break;
-    if (fallback !== answer && !unique.includes(fallback)) unique.push(fallback);
+  const numeric = /^-?\d+$/.test(answer) ? Number(answer) : null;
+  const derived = numeric === null ? [] : [`${numeric + 1}`, `${numeric - 1}`, `${numeric + 2}`];
+  const unique = [
+    ...new Set([...candidates, ...derived].filter((candidate) => candidate !== answer)),
+  ];
+  if (unique.length < 3) {
+    throw new Error(`삼각비 문제의 실제 오답이 세 개보다 적습니다: ${answer}`);
   }
   return unique.slice(0, 3);
 }
@@ -193,7 +194,13 @@ function build(
     return make(id, kind, `${triangleLatex(opposite, adjacent, hypotenuse)},\\quad \\${ratioName} A`,
       answer,
       `${ratioName === "sin" ? "높이/빗변" : ratioName === "cos" ? "밑변/빗변" : "높이/밑변"}에 해당하는 두 변을 나누고 약분한다.`,
-      [fraction(adjacent, hypotenuse), fraction(opposite, adjacent), fraction(hypotenuse, opposite)],
+      [
+        fraction(adjacent, hypotenuse),
+        fraction(opposite, adjacent),
+        fraction(hypotenuse, opposite),
+        fraction(adjacent, opposite),
+        fraction(hypotenuse, adjacent),
+      ],
       `single-${ratioName}`);
   }
 
@@ -215,7 +222,13 @@ function build(
       `\\triangle ABC,\\quad \\angle C=90^\\circ,\\quad BC=${opposite},\\ AC=${adjacent},\\quad \\${ratioName} A`,
       answer,
       `AB=\\sqrt{${opposite}^2+${adjacent}^2}=${hypotenuse}를 먼저 구한 뒤 ${ratioName}의 비를 만든다.`,
-      [fraction(adjacent, hypotenuse), fraction(opposite, adjacent), fraction(hypotenuse, adjacent)],
+      [
+        fraction(adjacent, hypotenuse),
+        fraction(opposite, adjacent),
+        fraction(hypotenuse, adjacent),
+        fraction(adjacent, opposite),
+        fraction(hypotenuse, opposite),
+      ],
       `pythagorean-${ratioName}`);
   }
 

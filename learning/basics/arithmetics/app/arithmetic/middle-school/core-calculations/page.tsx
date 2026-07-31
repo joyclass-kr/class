@@ -1,8 +1,10 @@
 "use client";
 
 import { useEffect, useMemo, useState } from "react";
+import { useSearchParams } from "next/navigation";
 import InlineMathText from "../../../components/inline-math-text";
 import MathFormula from "../../../components/math-formula";
+import WorksheetQuestionPrompt from "../../../components/worksheet-question-prompt";
 import WorksheetChoicePanel, {
   type WorksheetChoiceProblem,
 } from "../../high-school/components/worksheet-choice-panel";
@@ -17,11 +19,6 @@ import {
 
 const DEFAULT_KIND: MiddleCoreKind = "prime-factorization";
 const INITIAL_SEED = 20260803;
-const DIFFICULTY_LABELS: Record<MiddleCoreProblem["difficulty"], string> = {
-  basic: "기본",
-  application: "응용",
-  advanced: "고난도",
-};
 const TARGET_LABELS: Record<MiddleCoreKind, string> = {
   "prime-factorization": "소인수분해한 결과는?",
   "gcd-lcm": "구하는 값은?",
@@ -65,6 +62,7 @@ function choiceProblem(problem: MiddleCoreProblem): WorksheetChoiceProblem {
 }
 
 export default function MiddleCoreCalculationsPage() {
+  const searchParams = useSearchParams();
   const [kind, setKind] = useState<MiddleCoreKind>(DEFAULT_KIND);
   const [problemSet, setProblemSet] = useState(() => (
     createMiddleCoreProblemSet(DEFAULT_KIND, INITIAL_SEED)
@@ -76,14 +74,14 @@ export default function MiddleCoreCalculationsPage() {
   const [scale, setScale] = useState(0.6);
 
   useEffect(() => {
-    const requestedKind = new URLSearchParams(window.location.search).get("kind");
+    const requestedKind = searchParams.get("kind");
     if (!isMiddleCoreKind(requestedKind) || requestedKind === kind) return;
     setKind(requestedKind);
     setProblemSet(createMiddleCoreProblemSet(requestedKind, INITIAL_SEED));
     setReviews([]);
     setSelected({});
     setResults({});
-  }, [kind]);
+  }, [kind, searchParams]);
 
   useEffect(() => {
     const fit = () => setScale(Math.min((window.innerWidth - 32) / 794, 1));
@@ -122,34 +120,24 @@ export default function MiddleCoreCalculationsPage() {
   }
 
   function row(problem: MiddleCoreProblem, index: number, answerSheet: boolean) {
-    const beginsDifficultySection = index === 0 || index === 2 || index === 5;
     return (
       <article
-        className={`polynomial-question logarithm-question middle-equation-difficulty-${problem.difficulty}${beginsDifficultySection ? " middle-equation-difficulty-start" : ""}`}
+        className="polynomial-question logarithm-question"
         data-testid="middle-core-question"
         key={`${answerSheet ? "answer" : "question"}-${problem.id}`}
       >
         <div className="polynomial-question-number">{String(index + 1).padStart(2, "0")}</div>
-        {beginsDifficultySection && (
-          <span className="middle-equation-difficulty-label" data-testid="middle-core-difficulty-label">
-            {DIFFICULTY_LABELS[problem.difficulty]}
-          </span>
-        )}
         <div className="polynomial-question-body">
           <span className="polynomial-focus-label"><InlineMathText text={problem.label} /></span>
+          <WorksheetQuestionPrompt label={problem.label} />
           <div className="logarithm-expression">
             <MathFormula latex={problem.latex} />
           </div>
           {answerSheet && (
-            <>
-              <div className="middle-equation-static-answer">
-                <strong>정답</strong>
-                <MathFormula latex={problem.answerLatex} />
-              </div>
-              <p className="middle-equation-solution-hint" data-testid="middle-core-solution-hint">
-                <strong>핵심</strong> {problem.solutionHint}
-              </p>
-            </>
+            <div className="middle-equation-static-answer">
+              <strong>정답</strong>
+              <MathFormula latex={problem.answerLatex} />
+            </div>
           )}
         </div>
       </article>

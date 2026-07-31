@@ -7,8 +7,20 @@ const css = fs.readFileSync(
   path.join(process.cwd(), "app/arithmetic/high-school/high-school.css"),
   "utf8",
 );
+const globalCss = fs.readFileSync(
+  path.join(process.cwd(), "app/globals.css"),
+  "utf8",
+);
 const middleCss = fs.readFileSync(
   path.join(process.cwd(), "app/arithmetic/middle-school/middle-school.css"),
+  "utf8",
+);
+const typographyCss = fs.readFileSync(
+  path.join(process.cwd(), "app/arithmetic/worksheet-typography.css"),
+  "utf8",
+);
+const highLayout = fs.readFileSync(
+  path.join(process.cwd(), "app/arithmetic/high-school/layout.tsx"),
   "utf8",
 );
 const middleLayout = fs.readFileSync(
@@ -17,12 +29,16 @@ const middleLayout = fs.readFileSync(
 );
 
 test("middle-school worksheets use the same split Korean and math typography as high school", () => {
+  assert.match(highLayout, /import "\.\.\/worksheet-typography\.css"/);
   assert.match(middleLayout, /import "\.\/middle-school\.css"/);
+  assert.match(middleLayout, /import "\.\.\/worksheet-typography\.css"/);
   assert.match(middleLayout, /className="middle-school-scope"/);
-  assert.match(middleCss, /--high-school-korean-font:\s*"KoPubWorld Batang"/);
-  assert.match(middleCss, /--high-school-math-font:\s*"Suneung Math"/);
+  assert.match(typographyCss, /--worksheet-korean-font:\s*"KoPubWorld Batang"/);
+  assert.match(typographyCss, /--worksheet-math-font:\s*"Suneung Math"/);
+  assert.match(typographyCss, /--high-school-korean-font:\s*var\(--worksheet-korean-font\)/);
+  assert.match(typographyCss, /--high-school-math-font:\s*var\(--worksheet-math-font\)/);
   assert.match(middleCss, /\.middle-school-scope \.polynomial-page\s*\{[\s\S]*?font-family:\s*var\(--high-school-korean-font\)/);
-  assert.match(middleCss, /input,[\s\S]*?font-family:\s*var\(--high-school-math-font\)/);
+  assert.match(typographyCss, /input,[\s\S]*?font-family:\s*var\(--worksheet-math-font\)/);
 });
 
 test("고등 학습지는 공통 글자 크기 토큰을 사용한다", () => {
@@ -45,9 +61,29 @@ test("긴 제목과 수식 중심 문항은 어색하게 줄바꿈하지 않는�
   assert.match(css, /\.geometry-choice-expression \.katex-display[\s\S]*?text-align:\s*left/);
 });
 
-test("소제목과 문제 문장의 수학 문자는 수학 글꼴을 우선한다", () => {
-  assert.match(css, /\.polynomial-focus-label\s*\{[\s\S]*?font-family:\s*var\(--high-school-math-font\)/);
-  assert.match(css, /\.geometry-choice-prompt\s*\{[\s\S]*?font-family:\s*var\(--high-school-math-font\)/);
+test("한글 소제목과 문제 문장은 교재용 한글 글꼴을 사용하고 수식은 수학 글꼴을 사용한다", () => {
+  assert.match(typographyCss, /\.polynomial-focus-label,[\s\S]*?\.geometry-choice-prompt,[\s\S]*?font-family:\s*var\(--worksheet-korean-font\)/);
+  assert.match(typographyCss, /\.polynomial-question-body,[\s\S]*?\.worksheet-stage \.polynomial-focus-label,[\s\S]*?font-family:\s*var\(--worksheet-korean-font\)/);
+  assert.match(typographyCss, /\.math-formula,[\s\S]*?\.geometry-choice-expression,[\s\S]*?font-family:\s*var\(--worksheet-math-font\)/);
+});
+
+test("KaTeX 수식 안의 한글도 본문과 같은 교재용 한글 글꼴을 사용한다", () => {
+  assert.match(typographyCss, /\.katex \.hangul_fallback,[\s\S]*?font-family:\s*var\(--worksheet-korean-font\)/);
+  assert.match(typographyCss, /\.katex \.mathnormal,[\s\S]*?font-family:\s*"KaTeX_Math"/);
+  assert.match(typographyCss, /\.katex \.mathrm,[\s\S]*?font-family:\s*"KaTeX_Main"/);
+});
+
+test("중등·고등·이공계 기초 문제 칸은 점선 대신 얇은 실선으로 구분한다", () => {
+  assert.match(typographyCss, /\.polynomial-page \.polynomial-question,[\s\S]*?border-bottom:\s*0;[\s\S]*?font-family:\s*var\(--worksheet-korean-font\)/);
+  assert.match(typographyCss, /\.trig-derivative-answer-panel \.trig-derivative-answer-item[\s\S]*?border-bottom:\s*0/);
+  assert.doesNotMatch(typographyCss, /border-bottom:\s*1px dashed/);
+  assert.match(globalCss, /\.polynomial-question\s*\{[\s\S]*?border-bottom:\s*0/);
+  assert.match(css, /\.trig-derivative-answer-item\s*\{[\s\S]*?border-bottom:\s*0/);
+});
+
+test("다항식 복합 연산은 전체 폭을 사용하고 긴 식을 한 줄로 유지한다", () => {
+  assert.match(css, /\.polynomial-page\.polynomial-drill-page \.worksheet-stage \.polynomial-question-body[\s\S]*?max-width:\s*100%/);
+  assert.match(css, /\.polynomial-page\.polynomial-drill-page \.worksheet-stage \.polynomial-expression[\s\S]*?flex-wrap:\s*nowrap;[\s\S]*?white-space:\s*nowrap/);
 });
 
 test("질문 속 인라인 수식은 한글 본문보다 작아 보이지 않는다", () => {

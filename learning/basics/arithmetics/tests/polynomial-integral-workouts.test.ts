@@ -2,12 +2,23 @@ import assert from "node:assert/strict";
 import test from "node:test";
 import { createIntegralReviews, createIntegralSet, sameIntegralAnswers } from "../lib/polynomial-integral-workouts.ts";
 
-test("적분 세트는 계산 원리가 다른 다섯 유형을 만든다", () => {
+test("적분 세트는 계산 원리가 다른 일곱 유형을 만든다", () => {
   const first = createIntegralSet(20260809);
   const second = createIntegralSet(20260809);
   assert.deepEqual(first, second);
-  assert.equal(first.problems.length, 5);
-  assert.equal(new Set(first.problems.map(({ kind }) => kind)).size, 5);
+  assert.equal(first.problems.length, 7);
+  assert.equal(new Set(first.problems.map(({ kind }) => kind)).size, 7);
+});
+
+test("대칭구간과 부호가 바뀌는 넓이는 서로 다른 계산 유형이다", () => {
+  const problems = createIntegralSet(20260809).problems;
+  const symmetry = problems.find(({ kind }) => kind === "definite-integral-symmetry");
+  const absoluteArea = problems.find(({ kind }) => kind === "absolute-area");
+  assert.ok(symmetry);
+  assert.ok(absoluteArea);
+  assert.match(symmetry.latex, /\\int_\{-/);
+  assert.match(absoluteArea.latex, /-\d+\\le x\\le/);
+  assert.ok(absoluteArea.answers[0] > 0);
 });
 
 test("부정적분은 소문자 미정계수와 표준 적분상수 C를 쓴다", () => {

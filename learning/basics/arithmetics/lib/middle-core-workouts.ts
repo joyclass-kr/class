@@ -17,6 +17,7 @@ export type MiddleCoreKind =
   | "square-roots-real"
   | "radical-calculation"
   | "polynomial-multiply"
+  | "polynomial-divide"
   | "formula-square"
   | "formula-sum-difference"
   | "formula-comprehensive";
@@ -54,6 +55,7 @@ export const MIDDLE_CORE_KINDS: MiddleCoreKind[] = [
   "square-roots-real",
   "radical-calculation",
   "polynomial-multiply",
+  "polynomial-divide",
   "formula-square",
   "formula-sum-difference",
   "formula-comprehensive",
@@ -78,6 +80,7 @@ export const MIDDLE_CORE_TITLES: Record<MiddleCoreKind, string> = {
   "square-roots-real": "제곱근과 실수",
   "radical-calculation": "근호를 포함한 식의 계산",
   "polynomial-multiply": "다항식의 곱셈",
+  "polynomial-divide": "다항식을 단항식으로 나누기",
   "formula-square": "곱셈공식: 완전제곱식",
   "formula-sum-difference": "곱셈공식: 합과 차",
   "formula-comprehensive": "다항식의 곱셈과 곱셈공식",
@@ -102,6 +105,7 @@ const LINEAR_SYSTEM_COMPREHENSIVE_PARTS: AtomicMiddleCoreKind[] = [
 ];
 const FORMULA_COMPREHENSIVE_PARTS: AtomicMiddleCoreKind[] = [
   "polynomial-multiply",
+  "polynomial-divide",
   "formula-square",
   "formula-sum-difference",
 ];
@@ -199,10 +203,16 @@ function factor(prime: number, exponent: number) {
 }
 
 function uniqueDistractors(answer: string, candidates: string[]) {
-  const unique = [...new Set(candidates.filter((candidate) => candidate !== answer))];
-  for (const fallback of ["0", "1", "-1", "2", "x", "-x", "x^2", "\\text{해 없음}"]) {
-    if (unique.length === 3) break;
-    if (fallback !== answer && !unique.includes(fallback)) unique.push(fallback);
+  const realisticFallbacks = [
+    `-(${answer})`,
+    `2(${answer})`,
+    `\\dfrac{1}{2}(${answer})`,
+  ];
+  const unique = [
+    ...new Set([...candidates, ...realisticFallbacks].filter((candidate) => candidate !== answer)),
+  ];
+  if (unique.length < 3) {
+    throw new Error(`중등 핵심 연산의 실제 오답이 세 개보다 적습니다: ${answer}`);
   }
   return unique.slice(0, 3);
 }
@@ -243,9 +253,9 @@ function buildPrimeFactorization(id: string, index: number): MiddleCoreProblem {
     ["756", "2^2\\times3^3\\times7", "factor-large", "세 자리 수의 소인수분해", "756을 2로 두 번, 3으로 세 번 나누면 마지막 소인수 7이 남는다.", ["2^2\\times3^2\\times7", "2^3\\times3^3\\times7", "2^2\\times3^3\\times9"]],
     ["1260", "2^2\\times3^2\\times5\\times7", "factor-four-primes", "네 소인수로 분해", "2, 3, 5, 7 순서로 나누어 모든 소인수와 지수를 빠짐없이 적는다.", ["2^2\\times3\\times5\\times7", "2\\times3^2\\times5\\times7", "2^2\\times3^2\\times5^2\\times7"]],
     ["2772", "2^2\\times3^2\\times7\\times11", "factor-four-digit", "네 자리 수의 소인수분해", "2772를 작은 소수부터 나누면 2²×3²×7×11이 된다.", ["2\\times3^2\\times7\\times11", "2^2\\times3\\times7\\times11", "2^2\\times3^2\\times7^2\\times11"]],
-    ["\\begin{gathered}540n\\text{이 어떤 자연수의 제곱일 때,}\\\\\\text{가장 작은 자연수 }n\\text{을 구하여라.}\\end{gathered}", "15", "make-perfect-square-product", "완전제곱수 만들기", "540=2²×3³×5이므로 홀수인 3과 5의 지수를 짝수로 만들기 위해 3×5를 곱한다.", ["3", "5", "30"]],
-    ["\\begin{gathered}\\dfrac{360}{n}\\text{이 어떤 자연수의 제곱일 때,}\\\\\\text{가장 작은 자연수 }n\\text{을 구하여라.}\\end{gathered}", "10", "make-perfect-square-quotient", "완전제곱수 만들기", "360=2³×3²×5에서 지수가 홀수인 2와 5를 나누면 36=6²이 된다.", ["2", "5", "15"]],
-    ["\\begin{gathered}N=2^a\\times3^2\\text{의 약수의 개수가 }15\\text{일 때,}\\\\a\\text{의 값을 구하여라.}\\end{gathered}", "4", "divisor-count-exponent", "약수의 개수와 지수", "약수의 개수는 (a+1)(2+1)=15이므로 a+1=5이다.", ["3", "5", "12"]],
+    ["\\begin{gathered}540n\\text{이 어떤 자연수의 제곱일 때,}\\\\\\text{가장 작은 자연수 }n\\text{은?}\\end{gathered}", "15", "make-perfect-square-product", "완전제곱수 만들기", "540=2²×3³×5이므로 홀수인 3과 5의 지수를 짝수로 만들기 위해 3×5를 곱한다.", ["3", "5", "30"]],
+    ["\\begin{gathered}\\dfrac{360}{n}\\text{이 어떤 자연수의 제곱일 때,}\\\\\\text{가장 작은 자연수 }n\\text{은?}\\end{gathered}", "10", "make-perfect-square-quotient", "완전제곱수 만들기", "360=2³×3²×5에서 지수가 홀수인 2와 5를 나누면 36=6²이 된다.", ["2", "5", "15"]],
+    ["\\begin{gathered}N=2^a\\times3^2\\text{의 약수의 개수가 }15\\text{일 때,}\\\\a\\text{는?}\\end{gathered}", "4", "divisor-count-exponent", "약수의 개수와 지수", "약수의 개수는 (a+1)(2+1)=15이므로 a+1=5이다.", ["3", "5", "12"]],
   ] as const;
   const [latex, answer, structure, label, hint, distractors] = exercises[index];
   return make(id, "prime-factorization", latex, answer, hint, [...distractors], structure, label);
@@ -254,37 +264,37 @@ function buildPrimeFactorization(id: string, index: number): MiddleCoreProblem {
 function buildGcdLcm(id: string, index: number): MiddleCoreProblem {
   const direct = [
     {
-      latex: "\\begin{gathered}2^4\\times3^2,\\quad2^2\\times3^3\\times5\\\\\\text{최대공약수와 최소공배수를 구하여라.}\\end{gathered}",
+      latex: "\\begin{gathered}2^4\\times3^2,\\quad2^2\\times3^3\\times5\\\\\\text{최대공약수와 최소공배수는?}\\end{gathered}",
       answer: "\\text{최대공약수 }36,\\quad\\text{최소공배수 }2160",
       structure: "factored-two-both", label: "두 수의 지수 비교",
     },
     {
-      latex: "\\begin{gathered}2^4\\times3^2,\\quad2^3\\times3^3,\\quad2^2\\times3^2\\times5\\\\\\text{최대공약수를 구하여라.}\\end{gathered}",
+      latex: "\\begin{gathered}2^4\\times3^2,\\quad2^3\\times3^3,\\quad2^2\\times3^2\\times5\\\\\\text{최대공약수는?}\\end{gathered}",
       answer: "36", structure: "factored-three-gcd", label: "세 수의 지수 비교",
     },
     {
-      latex: "\\begin{gathered}120,\\quad168\\\\\\text{최대공약수와 최소공배수를 구하여라.}\\end{gathered}",
+      latex: "\\begin{gathered}120,\\quad168\\\\\\text{최대공약수와 최소공배수는?}\\end{gathered}",
       answer: "\\text{최대공약수 }24,\\quad\\text{최소공배수 }840",
       structure: "two-both", label: "두 수를 직접 소인수분해",
     },
     {
-      latex: "\\begin{gathered}72,\\quad108,\\quad180\\\\\\text{최대공약수를 구하여라.}\\end{gathered}",
+      latex: "\\begin{gathered}72,\\quad108,\\quad180\\\\\\text{최대공약수는?}\\end{gathered}",
       answer: "36", structure: "three-gcd", label: "세 수를 직접 소인수분해",
     },
     {
-      latex: "\\begin{gathered}60,\\quad84,\\quad90\\\\\\text{최소공배수를 구하여라.}\\end{gathered}",
+      latex: "\\begin{gathered}60,\\quad84,\\quad90\\\\\\text{최소공배수는?}\\end{gathered}",
       answer: "1260", structure: "three-lcm", label: "세 수를 직접 소인수분해",
     },
     {
-      latex: "\\begin{gathered}\\text{두 자연수 중 한 수는 }144,\\\\\\text{최대공약수는 }12,\\ \\text{최소공배수는 }720\\text{이다.}\\\\\\text{다른 한 수를 구하여라.}\\end{gathered}",
+      latex: "\\begin{gathered}\\text{두 자연수 중 한 수는 }144,\\\\\\text{최대공약수는 }12,\\ \\text{최소공배수는 }720\\text{이다.}\\\\\\text{다른 한 수는?}\\end{gathered}",
       answer: "60", structure: "product-relation", label: "한 수 역산",
     },
     {
-      latex: "\\begin{gathered}A=2^a\\times3^2,\\quad B=2^3\\times3^b\\\\\\text{최대공약수는 }36,\\ \\text{최소공배수는 }216\\text{이다.}\\\\a+b\\text{를 구하여라.}\\end{gathered}",
+      latex: "\\begin{gathered}A=2^a\\times3^2,\\quad B=2^3\\times3^b\\\\\\text{최대공약수는 }36,\\ \\text{최소공배수는 }216\\text{이다.}\\\\a+b\\text{는?}\\end{gathered}",
       answer: "5", structure: "missing-exponents", label: "지수 역산",
     },
     {
-      latex: "\\begin{gathered}\\text{두 자연수 중 한 수는 }72,\\\\\\text{최대공약수는 }12,\\ \\text{최소공배수는 }360\\text{이다.}\\\\\\text{다른 한 수를 구하여라.}\\end{gathered}",
+      latex: "\\begin{gathered}\\text{두 자연수 중 한 수는 }72,\\\\\\text{최대공약수는 }12,\\ \\text{최소공배수는 }360\\text{이다.}\\\\\\text{다른 한 수는?}\\end{gathered}",
       answer: "60", structure: "gcd-lcm-condition", label: "조건에 맞는 수",
     },
   ] as const;
@@ -443,10 +453,10 @@ function build(
         ? `${least}`
         : `\\text{최대공약수 }${greatest},\\quad\\text{최소공배수 }${least}`;
     const request = exercise.mode === "gcd"
-      ? "\\text{최대공약수를 구하여라.}"
+      ? "\\text{최대공약수는?}"
       : exercise.mode === "lcm"
-        ? "\\text{최소공배수를 구하여라.}"
-        : "\\text{최대공약수와 최소공배수를 모두 구하여라.}";
+        ? "\\text{최소공배수는?}"
+        : "\\text{최대공약수와 최소공배수는?}";
     const displayedValues = "display" in exercise
       ? exercise.display
       : exercise.values.map((value) => `${value}`);
@@ -757,24 +767,48 @@ function build(
   }
 
   if (kind === "radical-calculation") {
-    const mode = index % 4;
+    const mode = index % 8;
     const n = SQUARE_FREE[index % SQUARE_FREE.length];
     const a = 2 + (index % 5);
     const b = 1 + ((index + 2) % 4);
     if (mode === 0) {
+      return make(id, kind, `\\sqrt{${a * a * n}}`, `${a}\\sqrt{${n}}`,
+        `근호 안의 제곱인수 ${a * a}을 근호 밖으로 꺼낸다.`,
+        [`${a * n}`, `\\sqrt{${a * n}}`, `${n}\\sqrt{${a}}`], "simplify-radical");
+    }
+    if (mode === 1) {
+      const left = a * a * n;
+      const right = left + integer(next, 1, a + 2);
+      return make(id, kind, `\\sqrt{${left}}\\ \\square\\ \\sqrt{${right}}`, "<",
+        "두 양의 제곱근은 근호 안의 수의 대소 관계와 같다.",
+        [">", "=", "\\text{비교할 수 없음}"], "compare-radicals");
+    }
+    if (mode === 2) {
       return make(id, kind, `${a}\\sqrt{${n}}+${b}\\sqrt{${n}}`, `${a + b}\\sqrt{${n}}`,
         "근호 안이 같은 항끼리 근호 앞의 계수를 더한다.",
         [`${a * b}\\sqrt{${n}}`, `${a + b}\\sqrt{${n * 2}}`, `${a - b}\\sqrt{${n}}`], "like-radicals-add");
     }
-    if (mode === 1) {
+    if (mode === 3) {
       return make(id, kind, `${a + b}\\sqrt{${n}}-${b}\\sqrt{${n}}`, `${a}\\sqrt{${n}}`,
         "근호 안이 같은 항끼리 근호 앞의 계수를 뺀다.",
         [`${a + 2 * b}\\sqrt{${n}}`, `${a}\\sqrt{${n * 2}}`, `${b}\\sqrt{${n}}`], "like-radicals-subtract");
     }
-    if (mode === 2) {
+    if (mode === 4) {
       return make(id, kind, `\\sqrt{${n}}\\times\\sqrt{${n * 4}}`, `${n * 2}`,
         `근호를 합쳐 \\sqrt{${n * n * 4}}을 계산한다.`,
         [`${n * 4}`, `${n}\\sqrt{2}`, `\\sqrt{${n * 5}}`], "radical-multiply");
+    }
+    if (mode === 5) {
+      const quotient = 2 + (index % 4);
+      return make(id, kind, `\\sqrt{${n * quotient * quotient}}\\div\\sqrt{${n}}`, `${quotient}`,
+        "두 근호를 하나로 합쳐 근호 안에서 나눈 뒤 양의 제곱근을 구한다.",
+        [`${quotient ** 2}`, `${n * quotient}`, `\\sqrt{${quotient}}`], "radical-divide");
+    }
+    if (mode === 6) {
+      const numerator = n + 1;
+      return make(id, kind, `\\dfrac{${numerator}}{\\sqrt{${n}}}`, `\\dfrac{${numerator}\\sqrt{${n}}}{${n}}`,
+        "분자와 분모에 같은 제곱근을 곱해 분모를 유리화한다.",
+        [`\\dfrac{${numerator}}{${n}}`, `${numerator}\\sqrt{${n}}`, `\\dfrac{\\sqrt{${n}}}{${numerator}}`], "rationalize-denominator");
     }
     const constant = n + a;
     return make(id, kind, `(${constant}+\\sqrt{${n}})(${constant}-\\sqrt{${n}})`, `${constant * constant - n}`,
@@ -803,6 +837,28 @@ function build(
         polynomial2(a + c, a * d + b * c, b * d),
       ],
       mode === 1 ? "binomial-binomial" : "signed-binomial");
+  }
+
+  if (kind === "polynomial-divide") {
+    const divisor = nonzero(next, 2, 6);
+    const quotientX = nonzero(next, -6, 6);
+    const quotientConstant = nonzero(next, -7, 7);
+    const numerator = polynomial2(
+      divisor * quotientX,
+      divisor * quotientConstant,
+      0,
+    );
+    const answer = linear(quotientX, quotientConstant);
+    return make(id, kind,
+      `\\dfrac{${numerator}}{${coefficient(divisor, "x")}}`,
+      answer,
+      "다항식의 각 항을 단항식으로 나누어 계수는 나누고 지수는 뺀다.",
+      [
+        linear(divisor * quotientX, quotientConstant),
+        linear(quotientX, divisor * quotientConstant),
+        linear(-quotientX, quotientConstant),
+      ],
+      "polynomial-by-monomial");
   }
 
   if (kind === "formula-square") {
@@ -834,9 +890,6 @@ function build(
 function actualKind(kind: MiddleCoreKind, index: number): AtomicMiddleCoreKind {
   if (kind === "linear-equation" && index >= 5) {
     return "linear-equation-application";
-  }
-  if (kind === "radical-calculation" && index < 2) {
-    return "square-roots-real";
   }
   if (kind === "monomial-comprehensive") {
     return MONOMIAL_COMPREHENSIVE_PARTS[index % MONOMIAL_COMPREHENSIVE_PARTS.length];

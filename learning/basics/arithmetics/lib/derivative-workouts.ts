@@ -1,100 +1,31 @@
 export type DerivativeKind =
-  | "product-chain"
-  | "quotient-simplify"
-  | "exponential-log-chain"
-  | "trigonometric-product";
+  | "power-rule"
+  | "polynomial-derivative"
+  | "derivative-at-point"
+  | "difference-quotient"
+  | "parameter-from-slope"
+  | "second-derivative"
+  | "equal-derivatives";
 
-type ProductChainProblem = {
+export type DerivativeProblem = {
   id: string;
-  kind: "product-chain";
+  kind: DerivativeKind;
   label: string;
-  quadraticConstant: number;
-  linearCoefficient: number;
-  linearConstant: number;
-  power: number;
-  answer: [number, number, number];
-};
-
-type QuotientProblem = {
-  id: string;
-  kind: "quotient-simplify";
-  label: string;
-  quadraticCoefficient: number;
-  quadraticConstant: number;
-  denominatorRoot: number;
-  answer: [number, number, number];
-};
-
-type ExponentialLogProblem = {
-  id: string;
-  kind: "exponential-log-chain";
-  label: string;
-  logCoefficient: number;
-  quadraticConstant: number;
-  exponentialCoefficient: number;
-  exponentialRate: number;
-  answer: [number, number];
-};
-
-type TrigonometricProductProblem = {
-  id: string;
-  kind: "trigonometric-product";
-  label: string;
-  coefficient: number;
-  power: number;
-  rate: number;
-  trig: "sin" | "cos";
-  answer: [number, number];
-};
-
-export type DerivativeProblem =
-  | ProductChainProblem
-  | QuotientProblem
-  | ExponentialLogProblem
-  | TrigonometricProductProblem;
-
-export type DerivativeProblemSet = {
-  seed: number;
-  problems: DerivativeProblem[];
+  prompt: string;
+  latex: string;
+  answers: number[];
+  answerLabels: string[];
 };
 
 const KINDS: DerivativeKind[] = [
-  "product-chain",
-  "quotient-simplify",
-  "exponential-log-chain",
-  "trigonometric-product",
+  "power-rule",
+  "polynomial-derivative",
+  "derivative-at-point",
+  "difference-quotient",
+  "parameter-from-slope",
+  "second-derivative",
+  "equal-derivatives",
 ];
-
-const LABELS: Record<DerivativeKind, string> = {
-  "product-chain": "곱의 미분 · 합성함수",
-  "quotient-simplify": "몫의 미분 · 분자 정리",
-  "exponential-log-chain": "지수·로그 · 합성함수",
-  "trigonometric-product": "삼각함수 · 곱의 미분",
-};
-
-const PRODUCT_VARIANTS = [
-  { quadraticConstant: -1, linearCoefficient: 2, linearConstant: 3, power: 4 },
-  { quadraticConstant: 2, linearCoefficient: 3, linearConstant: -1, power: 3 },
-  { quadraticConstant: -4, linearCoefficient: 1, linearConstant: 2, power: 5 },
-] as const;
-
-const QUOTIENT_VARIANTS = [
-  { quadraticCoefficient: 1, quadraticConstant: 1, denominatorRoot: 1 },
-  { quadraticCoefficient: 2, quadraticConstant: -3, denominatorRoot: -2 },
-  { quadraticCoefficient: 3, quadraticConstant: 2, denominatorRoot: 2 },
-] as const;
-
-const EXPONENTIAL_LOG_VARIANTS = [
-  { logCoefficient: 2, quadraticConstant: 1, exponentialCoefficient: 3, exponentialRate: 2 },
-  { logCoefficient: 3, quadraticConstant: 4, exponentialCoefficient: 2, exponentialRate: 3 },
-  { logCoefficient: 1, quadraticConstant: 2, exponentialCoefficient: 4, exponentialRate: 2 },
-] as const;
-
-const TRIGONOMETRIC_VARIANTS = [
-  { coefficient: 1, power: 2, rate: 3, trig: "sin" as const },
-  { coefficient: 2, power: 3, rate: 2, trig: "cos" as const },
-  { coefficient: 3, power: 2, rate: 4, trig: "sin" as const },
-] as const;
 
 function random(seed: number) {
   let value = seed >>> 0;
@@ -107,213 +38,165 @@ function random(seed: number) {
   };
 }
 
-function pick<T>(next: () => number, values: readonly T[]) {
-  return values[Math.floor(next() * values.length)];
+function integer(next: () => number, minimum: number, maximum: number) {
+  return minimum + Math.floor(next() * (maximum - minimum + 1));
 }
 
-function buildProblem(kind: DerivativeKind, next: () => number, id: string): DerivativeProblem {
-  if (kind === "product-chain") {
-    const variant = pick(next, PRODUCT_VARIANTS);
+function nonzero(next: () => number, minimum: number, maximum: number) {
+  let value = 0;
+  while (value === 0) value = integer(next, minimum, maximum);
+  return value;
+}
+
+function coefficient(value: number, symbol: string) {
+  if (value === 0) return "";
+  const magnitude = Math.abs(value) === 1 ? "" : Math.abs(value);
+  return `${value < 0 ? "-" : ""}${magnitude}${symbol}`;
+}
+
+function signedTerm(value: number, symbol: string) {
+  if (value === 0) return "";
+  const magnitude = Math.abs(value) === 1 && symbol ? "" : Math.abs(value);
+  return `${value < 0 ? "-" : "+"}${magnitude}${symbol}`;
+}
+
+function build(
+  kind: DerivativeKind,
+  next: () => number,
+  id: string,
+): DerivativeProblem {
+  if (kind === "power-rule") {
+    const c = nonzero(next, -6, 6);
+    const n = integer(next, 3, 7);
     return {
       id,
       kind,
-      label: LABELS[kind],
-      ...variant,
-      answer: [
-        variant.linearCoefficient * (variant.power + 2),
-        2 * variant.linearConstant,
-        variant.power * variant.linearCoefficient * variant.quadraticConstant,
-      ],
+      label: "거듭제곱의 미분",
+      prompt: "도함수의 계수와 차수를 구하세요.",
+      latex: `f(x)=${coefficient(c, `x^{${n}}`)},\\qquad f'(x)=Ax^m`,
+      answerLabels: ["A", "m"],
+      answers: [c * n, n - 1],
     };
   }
 
-  if (kind === "quotient-simplify") {
-    const variant = pick(next, QUOTIENT_VARIANTS);
+  if (kind === "polynomial-derivative") {
+    const a = nonzero(next, -4, 4);
+    const b = nonzero(next, -5, 5);
+    const c = nonzero(next, -6, 6);
+    const d = integer(next, -7, 7);
     return {
       id,
       kind,
-      label: LABELS[kind],
-      ...variant,
-      answer: [
-        variant.quadraticCoefficient,
-        -2 * variant.quadraticCoefficient * variant.denominatorRoot,
-        -variant.quadraticConstant,
-      ],
+      label: "다항함수의 도함수",
+      prompt: "도함수의 계수를 구하세요.",
+      latex: `f(x)=${coefficient(a, "x^3")}${signedTerm(b, "x^2")}${signedTerm(c, "x")}${signedTerm(d, "")},\\qquad f'(x)=Ax^2+Bx+C`,
+      answerLabels: ["A", "B", "C"],
+      answers: [3 * a, 2 * b, c],
     };
   }
 
-  if (kind === "exponential-log-chain") {
-    const variant = pick(next, EXPONENTIAL_LOG_VARIANTS);
+  if (kind === "derivative-at-point") {
+    const a = nonzero(next, -3, 3);
+    const b = integer(next, -4, 4);
+    const c = integer(next, -5, 5);
+    const point = integer(next, -2, 3);
     return {
       id,
       kind,
-      label: LABELS[kind],
-      ...variant,
-      answer: [
-        2 * variant.logCoefficient,
-        variant.exponentialCoefficient * variant.exponentialRate,
-      ],
+      label: "한 점에서의 미분계수",
+      prompt: "주어진 점에서의 미분계수를 구하세요.",
+      latex: `f(x)=${coefficient(a, "x^3")}${signedTerm(b, "x^2")}${signedTerm(c, "x")},\\qquad f'(${point})=?`,
+      answerLabels: [`f'(${point})`],
+      answers: [3 * a * point ** 2 + 2 * b * point + c],
     };
   }
 
-  const variant = pick(next, TRIGONOMETRIC_VARIANTS);
+  if (kind === "difference-quotient") {
+    const a = nonzero(next, -4, 4);
+    const b = integer(next, -5, 5);
+    const c = integer(next, -6, 6);
+    const point = integer(next, -3, 3);
+    return {
+      id,
+      kind,
+      label: "미분계수의 정의",
+      prompt: "극한으로 나타낸 미분계수의 값을 구하세요.",
+      latex: `f(x)=${coefficient(a, "x^2")}${signedTerm(b, "x")}${signedTerm(c, "")},\\qquad \\lim_{h\\to0}\\frac{f(${point}+h)-f(${point})}{h}`,
+      answerLabels: ["미분계수"],
+      answers: [2 * a * point + b],
+    };
+  }
+
+  if (kind === "parameter-from-slope") {
+    const parameter = nonzero(next, -5, 5);
+    const b = integer(next, -5, 5);
+    const c = integer(next, -6, 6);
+    const point = nonzero(next, -3, 3);
+    const slope = 2 * parameter * point + b;
+    return {
+      id,
+      kind,
+      label: "미분계수로 계수 결정",
+      prompt: "조건을 만족하는 $k$를 구하세요.",
+      latex: `f(x)=kx^2${signedTerm(b, "x")}${signedTerm(c, "")},\\qquad f'(${point})=${slope}`,
+      answerLabels: ["k"],
+      answers: [parameter],
+    };
+  }
+
+  if (kind === "second-derivative") {
+    const a = nonzero(next, -3, 3);
+    const b = integer(next, -4, 4);
+    const c = integer(next, -5, 5);
+    const point = integer(next, -2, 2);
+    return {
+      id,
+      kind,
+      label: "이계도함수의 값",
+      prompt: "주어진 점에서의 이계도함숫값을 구하세요.",
+      latex: `f(x)=${coefficient(a, "x^4")}${signedTerm(b, "x^3")}${signedTerm(c, "x^2")},\\qquad f''(${point})=?`,
+      answerLabels: [`f''(${point})`],
+      answers: [12 * a * point ** 2 + 6 * b * point + 2 * c],
+    };
+  }
+
+  const a = nonzero(next, -4, 4);
+  let c = nonzero(next, -4, 4);
+  if (c === a) c = c === 4 ? -4 : c + 1;
+  const b = integer(next, -5, 5);
+  const root = integer(next, -3, 3);
+  const d = b + 2 * (a - c) * root;
   return {
     id,
     kind,
-    label: LABELS[kind],
-    ...variant,
-    answer: [variant.coefficient * variant.power, variant.coefficient * variant.rate],
+    label: "두 도함숫값이 같은 점",
+    prompt: "$f'(x)=g'(x)$를 만족하는 $x$를 구하세요.",
+    latex: `f(x)=${coefficient(a, "x^2")}${signedTerm(b, "x")},\\qquad g(x)=${coefficient(c, "x^2")}${signedTerm(d, "x")}`,
+    answerLabels: ["x"],
+    answers: [root],
   };
 }
 
-export function createDerivativeProblemSet(seed: number): DerivativeProblemSet {
+export function createDerivativeProblemSet(seed: number) {
   const next = random(seed);
-  return { seed, problems: KINDS.map((kind, index) => buildProblem(kind, next, `derivative-${index}`)) };
+  return {
+    seed,
+    problems: KINDS.map((kind, index) =>
+      build(kind, next, `derivative-${index}`)),
+  };
 }
 
-export function createDerivativeReviewProblems(kinds: DerivativeKind[], seed: number) {
+export function createDerivativeReviewProblems(
+  kinds: DerivativeKind[],
+  seed: number,
+) {
   const next = random(seed);
-  return [...new Set(kinds)].slice(0, 2).map((kind, index) => buildProblem(kind, next, `derivative-review-${index}-${seed}`));
+  return [...new Set(kinds)].slice(0, 2).map((kind, index) =>
+    build(kind, next, `derivative-review-${index}-${seed}`));
 }
 
-function superscript(value: number) {
-  const characters: Record<string, string> = { "0": "⁰", "1": "¹", "2": "²", "3": "³", "4": "⁴", "5": "⁵", "6": "⁶", "7": "⁷", "8": "⁸", "9": "⁹" };
-  return String(value).split("").map((character) => characters[character]).join("");
-}
-
-function signedConstant(value: number) {
-  if (value === 0) return "";
-  return value > 0 ? ` + ${value}` : ` − ${Math.abs(value)}`;
-}
-
-function coefficient(value: number) {
-  if (value === 1) return "";
-  if (value === -1) return "−";
-  return String(value);
-}
-
-function binomial(linear: number, constant: number) {
-  return `${coefficient(linear)}x${signedConstant(constant)}`;
-}
-
-function quadratic(coefficients: [number, number, number]) {
-  const [a, b, c] = coefficients;
-  const first = `${coefficient(a)}x²`;
-  const second = b === 0 ? "" : b > 0 ? ` + ${coefficient(b)}x` : ` − ${coefficient(Math.abs(b))}x`;
-  return `${first}${second}${signedConstant(c)}`;
-}
-
-export function formatDerivativeProblem(problem: DerivativeProblem) {
-  if (problem.kind === "product-chain") {
-    return `(x²${signedConstant(problem.quadraticConstant)})(${binomial(problem.linearCoefficient, problem.linearConstant)})${superscript(problem.power)}`;
-  }
-  if (problem.kind === "quotient-simplify") {
-    return `(${coefficient(problem.quadraticCoefficient)}x²${signedConstant(problem.quadraticConstant)})/(${binomial(1, -problem.denominatorRoot)})`;
-  }
-  if (problem.kind === "exponential-log-chain") {
-    return `${coefficient(problem.logCoefficient)}ln(x² + ${problem.quadraticConstant}) + ${coefficient(problem.exponentialCoefficient)}e^(${problem.exponentialRate}x)`;
-  }
-  return `${coefficient(problem.coefficient)}x${superscript(problem.power)} ${problem.trig}(${problem.rate}x)`;
-}
-
-export function formatDerivativeTemplate(problem: DerivativeProblem) {
-  if (problem.kind === "product-chain") {
-    return `f′(x) = (${binomial(problem.linearCoefficient, problem.linearConstant)})${superscript(problem.power - 1)}(Ax² + Bx + C)`;
-  }
-  if (problem.kind === "quotient-simplify") {
-    return `f′(x) = (Ax² + Bx + C)/(${binomial(1, -problem.denominatorRoot)})²`;
-  }
-  if (problem.kind === "exponential-log-chain") {
-    return `f′(x) = Ax/(x² + ${problem.quadraticConstant}) + Be^(${problem.exponentialRate}x)`;
-  }
-  const firstTrig = problem.trig;
-  const secondTrig = problem.trig === "sin" ? "cos" : "sin";
-  const operator = problem.trig === "sin" ? "+" : "−";
-  return `f′(x) = Ax${superscript(problem.power - 1)} ${firstTrig}(${problem.rate}x) ${operator} Bx${superscript(problem.power)} ${secondTrig}(${problem.rate}x)`;
-}
-
-export function formatDerivativeAnswer(problem: DerivativeProblem) {
-  if (problem.kind === "product-chain") {
-    return `(${binomial(problem.linearCoefficient, problem.linearConstant)})${superscript(problem.power - 1)}(${quadratic(problem.answer)})`;
-  }
-  if (problem.kind === "quotient-simplify") {
-    return `(${quadratic(problem.answer)})/(${binomial(1, -problem.denominatorRoot)})²`;
-  }
-  if (problem.kind === "exponential-log-chain") {
-    return `${problem.answer[0]}x/(x² + ${problem.quadraticConstant}) + ${problem.answer[1]}e^(${problem.exponentialRate}x)`;
-  }
-  const firstTrig = problem.trig;
-  const secondTrig = problem.trig === "sin" ? "cos" : "sin";
-  const operator = problem.trig === "sin" ? "+" : "−";
-  return `${problem.answer[0]}x${superscript(problem.power - 1)} ${firstTrig}(${problem.rate}x) ${operator} ${problem.answer[1]}x${superscript(problem.power)} ${secondTrig}(${problem.rate}x)`;
-}
-
-function latexCoefficient(value: number) {
-  if (value === 1) return "";
-  if (value === -1) return "-";
-  return String(value);
-}
-
-function latexSignedConstant(value: number) {
-  if (value === 0) return "";
-  return value > 0 ? `+${value}` : `-${Math.abs(value)}`;
-}
-
-function latexBinomial(linear: number, constant: number) {
-  return `${latexCoefficient(linear)}x${latexSignedConstant(constant)}`;
-}
-
-function latexQuadratic([a, b, c]: [number, number, number]) {
-  const first = `${latexCoefficient(a)}x^{2}`;
-  const second = b === 0 ? "" : b > 0 ? `+${latexCoefficient(b)}x` : `-${latexCoefficient(Math.abs(b))}x`;
-  return `${first}${second}${latexSignedConstant(c)}`;
-}
-
-function latexTrig(trig: "sin" | "cos", argument: string) {
-  return `\\${trig}\\left(${argument}\\right)`;
-}
-
-export function formatDerivativeProblemLatex(problem: DerivativeProblem) {
-  if (problem.kind === "product-chain") {
-    return `f(x)=\\left(x^{2}${latexSignedConstant(problem.quadraticConstant)}\\right)\\left(${latexBinomial(problem.linearCoefficient, problem.linearConstant)}\\right)^{${problem.power}}`;
-  }
-  if (problem.kind === "quotient-simplify") {
-    return `f(x)=\\dfrac{${latexCoefficient(problem.quadraticCoefficient)}x^{2}${latexSignedConstant(problem.quadraticConstant)}}{${latexBinomial(1, -problem.denominatorRoot)}}`;
-  }
-  if (problem.kind === "exponential-log-chain") {
-    return `f(x)=${latexCoefficient(problem.logCoefficient)}\\ln\\left(x^{2}+${problem.quadraticConstant}\\right)+${latexCoefficient(problem.exponentialCoefficient)}e^{${problem.exponentialRate}x}`;
-  }
-  return `f(x)=${latexCoefficient(problem.coefficient)}x^{${problem.power}}\\,${latexTrig(problem.trig, `${problem.rate}x`)}`;
-}
-
-export function formatDerivativeTemplateLatex(problem: DerivativeProblem) {
-  if (problem.kind === "product-chain") {
-    return `f^{\\prime}(x)=\\left(${latexBinomial(problem.linearCoefficient, problem.linearConstant)}\\right)^{${problem.power - 1}}\\left(Ax^{2}+Bx+C\\right)`;
-  }
-  if (problem.kind === "quotient-simplify") {
-    return `f^{\\prime}(x)=\\dfrac{Ax^{2}+Bx+C}{\\left(${latexBinomial(1, -problem.denominatorRoot)}\\right)^{2}}`;
-  }
-  if (problem.kind === "exponential-log-chain") {
-    return `f^{\\prime}(x)=\\dfrac{Ax}{x^{2}+${problem.quadraticConstant}}+Be^{${problem.exponentialRate}x}`;
-  }
-  const firstTrig = problem.trig;
-  const secondTrig = problem.trig === "sin" ? "cos" : "sin";
-  const operator = problem.trig === "sin" ? "+" : "-";
-  return `f^{\\prime}(x)=Ax^{${problem.power - 1}}${latexTrig(firstTrig, `${problem.rate}x`)}${operator}Bx^{${problem.power}}${latexTrig(secondTrig, `${problem.rate}x`)}`;
-}
-
-export function formatDerivativeAnswerLatex(problem: DerivativeProblem) {
-  if (problem.kind === "product-chain") {
-    return `f^{\\prime}(x)=\\left(${latexBinomial(problem.linearCoefficient, problem.linearConstant)}\\right)^{${problem.power - 1}}\\left(${latexQuadratic(problem.answer)}\\right)`;
-  }
-  if (problem.kind === "quotient-simplify") {
-    return `f^{\\prime}(x)=\\dfrac{${latexQuadratic(problem.answer)}}{\\left(${latexBinomial(1, -problem.denominatorRoot)}\\right)^{2}}`;
-  }
-  if (problem.kind === "exponential-log-chain") {
-    return `f^{\\prime}(x)=\\dfrac{${problem.answer[0]}x}{x^{2}+${problem.quadraticConstant}}+${problem.answer[1]}e^{${problem.exponentialRate}x}`;
-  }
-  const firstTrig = problem.trig;
-  const secondTrig = problem.trig === "sin" ? "cos" : "sin";
-  const operator = problem.trig === "sin" ? "+" : "-";
-  return `f^{\\prime}(x)=${problem.answer[0]}x^{${problem.power - 1}}${latexTrig(firstTrig, `${problem.rate}x`)}${operator}${problem.answer[1]}x^{${problem.power}}${latexTrig(secondTrig, `${problem.rate}x`)}`;
+export function sameDerivativeAnswers(values: string[], expected: number[]) {
+  return values.length === expected.length
+    && values.every((value, index) =>
+      /^-?\d+$/.test(value) && Number(value) === expected[index]);
 }

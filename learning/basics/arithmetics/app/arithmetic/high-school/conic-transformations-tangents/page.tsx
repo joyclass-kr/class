@@ -5,5 +5,5 @@ import { conicMoveTangentProblems } from "../../../../lib/geometry-workouts";
 import { createConicMoveTangentProblems } from "../../../../lib/geometry-generated-workouts";
 
 export default function ConicTransformationsTangentsPage() {
-  return <GeometryChoiceWorksheet title="이차곡선의 이동과 접선" seed={20260812} problems={conicMoveTangentProblems} createSet={createConicMoveTangentProblems} />;
+  return <GeometryChoiceWorksheet title="이차곡선의 접선" seed={20260812} problems={conicMoveTangentProblems} createSet={createConicMoveTangentProblems} />;
 }

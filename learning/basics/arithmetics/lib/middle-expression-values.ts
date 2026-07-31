@@ -60,6 +60,12 @@ function signed(value: number) {
   return value < 0 ? String(value) : `+${value}`;
 }
 
+function coefficient(value: number, variable: string) {
+  if (value === 1) return variable;
+  if (value === -1) return `-${variable}`;
+  return `${value}${variable}`;
+}
+
 function makeProblem(
   id: string,
   kind: MiddleExpressionValueKind,
@@ -88,41 +94,56 @@ function build(kind: MiddleExpressionValueKind, next: () => number, id: string) 
   const b = nonzero(next, -9, 9);
 
   if (kind === "single-linear") {
-    return makeProblem(id, kind, "한 문자의 값", `x=${x}일 때 식의 값을 구하세요.`, `${a}x`, a * x);
+    return makeProblem(id, kind, "한 문자의 값", `x=${x}일 때 식의 값을 구하세요.`, coefficient(a, "x"), a * x);
   }
   if (kind === "linear-constant") {
-    return makeProblem(id, kind, "일차식의 값", `x=${x}일 때 식의 값을 구하세요.`, `${a}x${signed(b)}`, a * x + b);
+    return makeProblem(id, kind, "일차식의 값", `x=${x}일 때 식의 값을 구하세요.`, `${coefficient(a, "x")}${signed(b)}`, a * x + b);
   }
   if (kind === "negative-substitution") {
     const negativeX = -Math.abs(x);
-    return makeProblem(id, kind, "음수의 대입", `x=${negativeX}일 때 식의 값을 구하세요.`, `${a}x-${b < 0 ? `(${b})` : b}`, a * negativeX - b);
+    return makeProblem(id, kind, "음수의 대입", `x=${negativeX}일 때 식의 값을 구하세요.`, `${coefficient(a, "x")}-${b < 0 ? `(${b})` : b}`, a * negativeX - b);
   }
   if (kind === "single-square") {
     const c = nonzero(next, -5, 5);
-    return makeProblem(id, kind, "거듭제곱이 있는 식", `x=${x}일 때 식의 값을 구하세요.`, `${a}x^2${signed(c)}x${signed(b)}`, a * x * x + c * x + b);
+    return makeProblem(
+      id,
+      kind,
+      "거듭제곱이 있는 식",
+      `x=${x}일 때 식의 값을 구하세요.`,
+      `${coefficient(a, "x^2")}${c < 0 ? "" : "+"}${coefficient(c, "x")}${signed(b)}`,
+      a * x * x + c * x + b,
+    );
   }
   if (kind === "two-variables") {
     const c = nonzero(next, -7, 7);
-    return makeProblem(id, kind, "두 문자의 값", `x=${x},\\ y=${y}일 때 식의 값을 구하세요.`, `${a}x${c < 0 ? "" : "+"}${c}y`, a * x + c * y);
+    return makeProblem(id, kind, "두 문자의 값", `x=${x},\\ y=${y}일 때 식의 값을 구하세요.`, `${coefficient(a, "x")}${c < 0 ? "" : "+"}${coefficient(c, "y")}`, a * x + c * y);
   }
   if (kind === "two-variable-square") {
     const c = nonzero(next, -4, 4);
-    return makeProblem(id, kind, "두 문자와 거듭제곱", `x=${x},\\ y=${y}일 때 식의 값을 구하세요.`, `x^2${c < 0 ? "" : "+"}${c}xy+y^2`, x * x + c * x * y + y * y);
+    return makeProblem(
+      id,
+      kind,
+      "두 문자와 거듭제곱",
+      `x=${x},\\ y=${y}일 때 식의 값을 구하세요.`,
+      `x^2${c < 0 ? "" : "+"}${coefficient(c, "xy")}+y^2`,
+      x * x + c * x * y + y * y,
+    );
   }
   if (kind === "fraction-coefficient") {
     const denominator = integer(next, 2, 7);
-    return makeProblem(id, kind, "분수 계수의 식", `x=${x}일 때 식의 값을 구하세요.`, `\\frac{${a}x${signed(b)}}{${denominator}}`, a * x + b, denominator);
+    return makeProblem(id, kind, "분수 계수의 식", `x=${x}일 때 식의 값을 구하세요.`, `\\frac{${coefficient(a, "x")}${signed(b)}}{${denominator}}`, a * x + b, denominator);
   }
 
+  const adjustedB = a * x + b === 0 ? b + 1 : b;
   let divisor = nonzero(next, -5, 5);
-  while ((a * x + b) % divisor === 0) divisor = nonzero(next, -5, 5);
+  while ((a * x + adjustedB) % divisor === 0) divisor = nonzero(next, -5, 5);
   return makeProblem(
     id,
     kind,
     "나눗셈으로 나타낸 식",
     `x=${x},\\ y=${divisor}일 때 식의 값을 구하세요.`,
-    `\\frac{${a}x${signed(b)}}{y}`,
-    a * x + b,
+    `\\frac{${coefficient(a, "x")}${signed(adjustedB)}}{y}`,
+    a * x + adjustedB,
     divisor,
   );
 }

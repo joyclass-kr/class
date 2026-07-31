@@ -53,13 +53,11 @@ export const MIDDLE_CIRCLE_PROPERTIES_METHOD_KINDS: MiddleCirclePropertiesMethod
 ];
 
 export const MIDDLE_CIRCLE_PROPERTIES_TITLES: Record<MiddleCirclePropertiesKind, string> = {
-  "inscribed-angles": "원의 성질: 중심각·원주각·호",
+  "inscribed-angles": "원주각과 각의 응용",
   "angle-applications": "원의 성질: 사각형과 접선의 각",
   "circle-lengths": "원의 성질: 접선과 현의 길이",
   comprehensive: "원의 성질 계산 종합",
 };
-
-MIDDLE_CIRCLE_PROPERTIES_TITLES["inscribed-angles"] = "원주각과 각의 응용";
 
 const MIDDLE_CIRCLE_PROPERTIES_METHOD_TITLES: Record<MiddleCirclePropertiesMethodKind, string> = {
   "central-to-inscribed": "중심각에서 원주각",
@@ -97,10 +95,26 @@ const integer = (next: () => number, minimum: number, maximum: number) =>
   minimum + Math.floor(next() * (maximum - minimum + 1));
 
 function uniqueDistractors(answer: string, candidates: string[]) {
-  const unique = [...new Set(candidates.filter((candidate) => candidate !== answer))];
-  for (const fallback of ["30^\\circ", "45^\\circ", "60^\\circ", "90^\\circ", "120^\\circ", "180^\\circ", "1", "2"]) {
-    if (unique.length === 3) break;
-    if (fallback !== answer && !unique.includes(fallback)) unique.push(fallback);
+  const degreeMatch = answer.match(/^(-?\d+)\^\\circ$/);
+  const numericMatch = answer.match(/^-?\d+$/);
+  const derived = degreeMatch
+    ? [
+      degree(Number(degreeMatch[1]) + 10),
+      degree(Math.max(1, Number(degreeMatch[1]) - 10)),
+      degree(Number(degreeMatch[1]) * 2),
+    ]
+    : numericMatch
+      ? [
+        `${Number(answer) + 1}`,
+        `${Number(answer) - 1}`,
+        `${Number(answer) + 2}`,
+      ]
+      : [];
+  const unique = [
+    ...new Set([...candidates, ...derived].filter((candidate) => candidate !== answer)),
+  ];
+  if (unique.length < 3) {
+    throw new Error(`원의 성질 문제의 실제 오답이 세 개보다 적습니다: ${answer}`);
   }
   return unique.slice(0, 3);
 }

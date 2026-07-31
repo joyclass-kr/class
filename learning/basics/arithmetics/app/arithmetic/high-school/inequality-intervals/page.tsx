@@ -9,6 +9,7 @@ import {
   type SolutionPiece,
 } from "../../../../lib/inequality-workouts";
 import MathFormula from "../../../components/math-formula";
+import WorksheetQuestionPrompt from "../../../components/worksheet-question-prompt";
 import WorksheetChoicePanel, { type WorksheetChoiceProblem } from "../components/worksheet-choice-panel";
 
 const INITIAL_SEED = 20260725;
@@ -89,6 +90,7 @@ export default function InequalityIntervalsPage() {
         <div className="polynomial-question-number">{String(index + 1).padStart(2, "0")}</div>
         <div className="polynomial-question-body">
           <span className="polynomial-focus-label">{problem.label}</span>
+          <WorksheetQuestionPrompt label={problem.label} prompt="해는?" />
           <div className="inequality-expression"><MathFormula latex={expressionLatex(problem.expression)} display /></div>
           {answerSheet && <div className="inequality-static-answer"><MathFormula latex={solutionLatex(problem.solution)} /></div>}
         </div>
@@ -100,7 +102,7 @@ export default function InequalityIntervalsPage() {
     return (
       <div className={`a4-sheet counting-sheet polynomial-sheet inequality-sheet polynomial-sheet-${problems.length}`} style={{ transform: `scale(${sheetScale})` }}>
         <header className="counting-sheet-header polynomial-sheet-header">
-          <div className="counting-sheet-title"><span>공통수학1</span><strong>연립·절댓값·이차부등식{answerSheet ? " 정답" : ""}</strong></div>
+          <div className="counting-sheet-title"><span>공통수학 1</span><strong>연립·절댓값·이차부등식{answerSheet ? " 정답" : ""}</strong></div>
           <div className="counting-sheet-info"><span>이름 <i /></span><span>날짜 <i /></span><small>문제지 {questionSet.seed}</small></div>
         </header>
         <div className="polynomial-instruction"><b>부등식의 해를 구하세요. 빈 공간에 풀이 과정을 쓰세요.</b><span>답안 입력에서 4지선다 채점 · 오답 보충 최대 2문제</span></div>

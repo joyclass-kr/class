@@ -9,6 +9,7 @@ import {
   type TrigonometricDerivativeTwoProblem,
 } from "../../../../lib/trigonometric-derivative-two-workouts";
 import MathFormula from "../../../components/math-formula";
+import WorksheetQuestionPrompt from "../../../components/worksheet-question-prompt";
 import WorksheetChoicePanel, { type WorksheetChoiceProblem } from "../components/worksheet-choice-panel";
 
 export default function TrigonometricDerivativesTwoPage() {
@@ -67,6 +68,7 @@ export default function TrigonometricDerivativesTwoPage() {
         <div className="polynomial-question-number">{String(index + 1).padStart(2, "0")}</div>
         <div className="polynomial-question-body">
           <span className="polynomial-focus-label">{problem.label}</span>
+          <WorksheetQuestionPrompt label={problem.label} prompt="도함수는?" />
           <div className="derivative-expression trig-derivative-expression"><MathFormula latex={formatTrigonometricDerivativeTwoProblemLatex(problem)} /><div className="derivative-expression-target"><MathFormula latex="f^{\prime}(x)" /></div></div>
           {answerSheet && <div className="derivative-static-answer"><MathFormula latex={problem.answer.latex} /></div>}
         </div>
@@ -78,7 +80,7 @@ export default function TrigonometricDerivativesTwoPage() {
     return (
       <div className={`a4-sheet counting-sheet polynomial-sheet derivative-sheet trig-derivative-sheet polynomial-sheet-${problems.length}`} style={{ transform: `scale(${scale})` }}>
         <header className="counting-sheet-header polynomial-sheet-header">
-          <div className="counting-sheet-title"><span>미적분Ⅱ</span><strong>삼각함수 미분 ②{answerSheet ? " 정답" : ""}</strong></div>
+          <div className="counting-sheet-title"><span>미적분Ⅱ</span><strong>sec·csc·cot 미분{answerSheet ? " 정답" : ""}</strong></div>
           <div className="counting-sheet-info"><span>이름 <i /></span><span>날짜 <i /></span><small>문제지 {questionSet.seed}</small></div>
         </header>
         <div className="polynomial-instruction"><b>sec·csc·cot을 포함한 함수의 도함수를 구하세요. 빈 공간에 풀이 과정을 쓰세요.</b><span>답안 입력에서 4지선다 채점 · 오답 보충 최대 2문제</span></div>
@@ -103,7 +105,7 @@ export default function TrigonometricDerivativesTwoPage() {
       </div>
       <div className="a4-stage counting-a4-stage worksheet-stage" style={{ width: 794 * scale, height: 1123 * scale }}>{sheet(false)}</div>
       <div className="a4-stage counting-a4-stage answer-stage" style={{ width: 794 * scale, height: 1123 * scale }}>{sheet(true)}</div>
-      {panelOpen && <WorksheetChoicePanel title="삼각함수 미분 ②" problems={choiceProblems} selected={selected} results={results} onSelect={choose} onGrade={checkAll} onClose={() => setPanelOpen(false)} />}
+      {panelOpen && <WorksheetChoicePanel title="sec·csc·cot 미분" problems={choiceProblems} selected={selected} results={results} onSelect={choose} onGrade={checkAll} onClose={() => setPanelOpen(false)} />}
     </main>
   );
 }

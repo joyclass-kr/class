@@ -2,6 +2,10 @@ export type MiddleStatisticsMethodKind =
   | "mean"
   | "missing-from-mean"
   | "frequency-mean"
+  | "total-frequency"
+  | "relative-frequency"
+  | "missing-frequency"
+  | "relative-percentage"
   | "median"
   | "mode"
   | "range"
@@ -42,6 +46,10 @@ export const MIDDLE_STATISTICS_METHOD_KINDS: MiddleStatisticsMethodKind[] = [
   "mean",
   "missing-from-mean",
   "frequency-mean",
+  "total-frequency",
+  "relative-frequency",
+  "missing-frequency",
+  "relative-percentage",
   "median",
   "mode",
   "range",
@@ -53,18 +61,20 @@ export const MIDDLE_STATISTICS_METHOD_KINDS: MiddleStatisticsMethodKind[] = [
 ];
 
 export const MIDDLE_STATISTICS_TITLES: Record<MiddleStatisticsKind, string> = {
-  "representative-values": "통계: 대푯값 계산",
+  "representative-values": "대푯값·도수·상대도수",
   "mean-applications": "통계: 평균 활용",
   dispersion: "통계: 산포도 계산",
   comprehensive: "대푯값과 산포도 계산 종합",
 };
 
-MIDDLE_STATISTICS_TITLES["representative-values"] = "대푯값과 평균 활용";
-
 const MIDDLE_STATISTICS_METHOD_TITLES: Record<MiddleStatisticsMethodKind, string> = {
   mean: "평균 계산",
   "missing-from-mean": "평균으로 빠진 값 구하기",
   "frequency-mean": "도수 자료의 평균",
+  "total-frequency": "전체 도수",
+  "relative-frequency": "상대도수",
+  "missing-frequency": "빠진 도수",
+  "relative-percentage": "상대도수의 백분율",
   median: "중앙값 계산",
   mode: "최빈값 찾기",
   range: "범위 계산",
@@ -121,10 +131,22 @@ function tupleLatex(values: readonly number[]) {
 }
 
 function uniqueDistractors(answer: string, candidates: string[]) {
-  const unique = [...new Set(candidates.filter((candidate) => candidate !== answer))];
-  for (const fallback of ["0", "1", "2", "3", "4", "5", "A", "B", "A=B", "\\text{판단 불가}"]) {
-    if (unique.length === 3) break;
-    if (fallback !== answer && !unique.includes(fallback)) unique.push(fallback);
+  const numeric = /^-?\d+(?:\.\d+)?$/.test(answer) ? Number(answer) : null;
+  const fractionMatch = answer.match(/^\\dfrac\{(-?\d+)\}\{(\d+)\}$/);
+  const derived = numeric !== null
+    ? [`${numeric + 1}`, `${numeric - 1}`, `${numeric + 2}`]
+    : fractionMatch
+      ? [
+        fraction(Number(fractionMatch[1]) + 1, Number(fractionMatch[2])),
+        fraction(Number(fractionMatch[1]) - 1, Number(fractionMatch[2])),
+        fraction(Number(fractionMatch[1]), Number(fractionMatch[2]) + 1),
+      ]
+      : [];
+  const unique = [
+    ...new Set([...candidates, ...derived].filter((candidate) => candidate !== answer)),
+  ];
+  if (unique.length < 3) {
+    throw new Error(`통계 문제의 실제 오답이 세 개보다 적습니다: ${answer}`);
   }
   return unique.slice(0, 3);
 }
@@ -221,6 +243,49 @@ function build(
       `각 값에 도수를 곱해 더한 뒤 전체 도수 ${totalFrequency}로 나눈다.`,
       [`${mean + gap}`, `${mean - gap}`, `${totalFrequency}`],
       `frequency-${sideFrequency}-${centerFrequency}`);
+  }
+
+  if (kind === "total-frequency") {
+    const frequencies = [2 + index % 3, 3 + index % 4, 4 + index % 2, 2 + (index + 1) % 4];
+    const total = frequencies.reduce((sum, value) => sum + value, 0);
+    return make(id, kind,
+      `\\begin{array}{c|cccc}\\text{계급}&A&B&C&D\\\\\\hline\\text{도수}&${frequencies.join("&")}\\end{array}`,
+      `${total}`,
+      "전체 도수는 각 계급의 도수를 모두 더한 값이다.",
+      [`${total - frequencies[0]}`, `${total + 1}`, `${frequencies.length}`],
+      `total-frequency-${frequencies.join("-")}`);
+  }
+
+  if (kind === "relative-frequency") {
+    const total = 20 + 5 * (index % 3);
+    const frequency = 4 + 2 * (index % 4);
+    const answer = fraction(frequency, total);
+    return make(id, kind, `\\text{전체 도수}=${total},\\quad \\text{해당 계급의 도수}=${frequency}`, answer,
+      `상대도수=\\dfrac{${frequency}}{${total}}로 계산하고 약분한다.`,
+      [fraction(total, frequency), fraction(frequency, total - frequency), fraction(frequency + 1, total)],
+      `relative-frequency-${frequency}-${total}`);
+  }
+
+  if (kind === "missing-frequency") {
+    const known = [3 + index % 3, 4 + index % 4, 5 + index % 2];
+    const missing = 2 + (index % 5);
+    const total = known.reduce((sum, value) => sum + value, 0) + missing;
+    return make(id, kind,
+      `\\text{전체 도수}=${total},\\quad \\text{도수}=(${known[0]},${known[1]},x,${known[2]})`,
+      `${missing}`,
+      "전체 도수에서 알려진 세 도수의 합을 뺀다.",
+      [`${total}`, `${missing + 1}`, `${known.reduce((sum, value) => sum + value, 0)}`],
+      `missing-frequency-${known.join("-")}`);
+  }
+
+  if (kind === "relative-percentage") {
+    const denominator = [10, 20, 25, 50][index % 4];
+    const numerator = denominator / 5;
+    const answer = (numerator / denominator) * 100;
+    return make(id, kind, `\\text{도수}=${numerator},\\quad \\text{전체 도수}=${denominator}`, `${answer}\\%`,
+      "도수를 전체 도수로 나눈 뒤 100을 곱해 백분율로 나타낸다.",
+      [`${numerator}\\%`, `${100 - answer}\\%`, `${answer + 10}\\%`],
+      `relative-percentage-${numerator}-${denominator}`);
   }
 
   if (kind === "median") {
@@ -323,8 +388,8 @@ function comprehensiveKind(seed: number, index: number) {
 const GROUP_METHOD_PLANS: Record<Exclude<MiddleStatisticsKind, "comprehensive">, MiddleStatisticsMethodKind[]> = {
   "representative-values": [
     "mean", "median",
-    "mode", "range", "missing-from-mean",
-    "frequency-mean", "missing-from-mean", "frequency-mean",
+    "mode", "frequency-mean", "total-frequency",
+    "relative-frequency", "missing-frequency", "relative-percentage",
   ],
   "mean-applications": [
     "mean", "missing-from-mean",
@@ -345,6 +410,10 @@ const LEGACY_KIND_GROUPS: Record<MiddleStatisticsMethodKind, MiddleStatisticsKin
   range: "representative-values",
   "missing-from-mean": "mean-applications",
   "frequency-mean": "mean-applications",
+  "total-frequency": "representative-values",
+  "relative-frequency": "representative-values",
+  "missing-frequency": "representative-values",
+  "relative-percentage": "representative-values",
   deviations: "dispersion",
   variance: "dispersion",
   "standard-deviation": "dispersion",

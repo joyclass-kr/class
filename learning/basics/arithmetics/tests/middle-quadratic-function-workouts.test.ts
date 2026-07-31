@@ -25,7 +25,7 @@ test("묶음 학습지는 필요한 세부 계산 유형을 빠짐없이 섞는�
     new Set(createMiddleQuadraticFunctionProblemSet("values-and-forms", 7).problems.map(({ kind }) => kind)),
     new Set([
       "basic-value", "vertex-value", "expand-vertex-form", "fraction-decimal",
-      "vertex-axis", "complete-square", "normalize-first",
+      "vertex-axis", "extreme-value", "complete-square",
     ]),
   );
   assert.deepEqual(
@@ -81,12 +81,16 @@ test("각 이차함수 학습지는 기본 2, 응용 3, 고난도 3문제로 진
   }
 });
 
-test("함수 연산 범위만 사용하고 그래프 개형·최대·최소 활용은 출제하지 않는다", () => {
+test("그래프 작도 없이 꼭짓점에서 최댓값·최솟값을 계산한다", () => {
+  const problems = createMiddleQuadraticFunctionProblemSet("values-and-forms", 20260730).problems;
+  const extreme = problems.find(({ kind }) => kind === "extreme-value");
+  assert.ok(extreme);
+  assert.match(`${extreme.label}${extreme.solutionHint}`, /최댓값|최솟값/);
   for (const kind of MIDDLE_QUADRATIC_FUNCTION_KINDS) {
     for (const problem of createMiddleQuadraticFunctionProblemSet(kind, 20260730).problems) {
       assert.doesNotMatch(
         `${problem.label}${problem.solutionHint}`,
-        /그래프의 개형|그래프를 그|최댓값|최솟값|넓이|거리/,
+        /그래프의 개형|그래프를 그|넓이|거리/,
       );
     }
   }
@@ -110,6 +114,7 @@ test("이차함수 종합은 연속 세 세트에서 모든 계산 유형을 순
 test("기존 세부 유형 주소는 해당 묶음 학습지로 연결된다", () => {
   assert.equal(resolveMiddleQuadraticFunctionKind("basic-value"), "values-and-forms");
   assert.equal(resolveMiddleQuadraticFunctionKind("complete-square"), "vertex-and-axis");
+  assert.equal(resolveMiddleQuadraticFunctionKind("extreme-value"), "values-and-forms");
   assert.equal(resolveMiddleQuadraticFunctionKind("coefficient-from-point"), "determine-equation");
   assert.equal(resolveMiddleQuadraticFunctionKind("line-intersections"), "intercepts-and-intersections");
   assert.equal(resolveMiddleQuadraticFunctionKind("comprehensive"), "comprehensive");

@@ -3,12 +3,14 @@
 import { useEffect, useMemo, useState } from "react";
 import MathFormula from "../../../components/math-formula";
 import InlineMathText from "../../../components/inline-math-text";
+import WorksheetQuestionPrompt from "../../../components/worksheet-question-prompt";
 import { rotateChoices } from "../../../../lib/worksheet-choice-utils";
 import WorksheetChoicePanel, { type WorksheetChoiceProblem } from "./worksheet-choice-panel";
 
 export type GeometryChoiceItem = WorksheetChoiceProblem & {
   latex: string;
   prompt?: string;
+  difficulty?: "basic" | "application" | "advanced";
 };
 
 type Props = {
@@ -19,9 +21,10 @@ type Props = {
   problemSets?: GeometryChoiceItem[][];
   createProblems?: (seed: number) => GeometryChoiceItem[];
   createSet?: (seed: number) => GeometryChoiceItem[];
+  pageClassName?: string;
 };
 
-export default function GeometryChoiceWorksheet({ subject = "기하", title, seed, problems, problemSets, createProblems, createSet }: Props) {
+export default function GeometryChoiceWorksheet({ subject = "기하", title, seed, problems, problemSets, createProblems, createSet, pageClassName = "" }: Props) {
   const [selected, setSelected] = useState<Record<string, string>>({});
   const [results, setResults] = useState<Record<string, boolean>>({});
   const [panelOpen, setPanelOpen] = useState(false);
@@ -31,7 +34,7 @@ export default function GeometryChoiceWorksheet({ subject = "기하", title, see
   const problemFactory = createProblems ?? createSet;
   const displayedProblems = useMemo(() => {
     const source = problemFactory?.(worksheetSeed) ?? problemSets?.[arrangement % problemSets.length] ?? problems;
-    const ordered = rotateChoices(source, `${worksheetSeed}-problems-${arrangement}`);
+    const ordered = problemFactory ? source : rotateChoices(source, `${worksheetSeed}-problems-${arrangement}`);
     return ordered.map((problem) => ({
       ...problem,
       choices: rotateChoices(problem.choices, `${worksheetSeed}-${problem.id}-${arrangement}`),
@@ -74,18 +77,26 @@ export default function GeometryChoiceWorksheet({ subject = "기하", title, see
 
   function sheet(answerSheet: boolean) {
     return (
-      <div className="a4-sheet counting-sheet polynomial-sheet derivative-sheet trig-derivative-sheet geometry-choice-sheet polynomial-sheet-7" style={{ transform: `scale(${scale})` }}>
+      <div className={`a4-sheet counting-sheet polynomial-sheet derivative-sheet trig-derivative-sheet geometry-choice-sheet polynomial-sheet-${displayedProblems.length}`} style={{ transform: `scale(${scale})` }}>
         <header className="counting-sheet-header polynomial-sheet-header">
           <div className="counting-sheet-title"><span>{subject}</span><strong>{title}{answerSheet ? " 정답" : ""}</strong></div>
           <div className="counting-sheet-info"><span>이름 <i /></span><span>날짜 <i /></span><small>문제지 {worksheetSeed}</small></div>
         </header>
         <div className="polynomial-problem-grid derivative-problem-grid trig-derivative-problem-grid">
           {displayedProblems.map((problem, index) => (
-            <article className="polynomial-question derivative-question trig-derivative-question geometry-choice-question" key={problem.id} data-testid="geometry-question">
+            <article
+              className="polynomial-question derivative-question trig-derivative-question geometry-choice-question"
+              key={problem.id}
+              data-testid="geometry-question"
+            >
               <div className="polynomial-question-number">{String(index + 1).padStart(2, "0")}</div>
               <div className="polynomial-question-body">
                 <span className="polynomial-focus-label"><InlineMathText text={problem.label} /></span>
-                {problem.prompt && <p className="geometry-choice-prompt"><InlineMathText text={problem.prompt} /></p>}
+                <WorksheetQuestionPrompt
+                  className="geometry-choice-prompt"
+                  label={problem.label}
+                  prompt={problem.prompt}
+                />
                 <div className="derivative-expression trig-derivative-expression geometry-choice-expression"><MathFormula latex={problem.latex} displayStyle /></div>
                 {answerSheet && <div className="derivative-static-answer"><MathFormula latex={problem.correctLatex} displayStyle /></div>}
               </div>
@@ -97,7 +108,7 @@ export default function GeometryChoiceWorksheet({ subject = "기하", title, see
   }
 
   return (
-    <main className="counting-page polynomial-page derivative-page trig-derivative-page geometry-choice-page formula-only-page">
+    <main className={`counting-page polynomial-page derivative-page trig-derivative-page geometry-choice-page formula-only-page ${pageClassName}`.trim()}>
       <div className="counting-toolbar">
         <a className="counting-back" href="/arithmetic">← 연산</a>
         <div className="counting-progress"><strong>{Object.values(results).filter(Boolean).length}<small>/{displayedProblems.length} 정답</small></strong></div>

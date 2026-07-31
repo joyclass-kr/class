@@ -1,0 +1,125 @@
+/*
+ * One typography contract for every secondary worksheet.
+ *
+ * Korean prose uses the bundled textbook Batang face, mathematical notation
+ * uses the bundled STIX face, and interface controls use a compact sans face.
+ * Keep the legacy --high-school-* aliases because worksheet components use
+ * them across both middle- and high-school routes.
+ */
+.polynomial-page,
+.trig-derivative-answer-panel {
+  --worksheet-korean-font: "KoPubWorld Batang", "Noto Serif KR", "Batang", serif;
+  --worksheet-math-font: "Suneung Math", "STIX Two Math", "Cambria Math", "Times New Roman", serif;
+  --worksheet-ui-font: Pretendard, "Noto Sans KR", "Apple SD Gothic Neo", "Malgun Gothic", sans-serif;
+  --high-school-korean-font: var(--worksheet-korean-font);
+  --high-school-math-font: var(--worksheet-math-font);
+  --high-school-sans-font: var(--worksheet-ui-font);
+  --high-school-serif-font: var(--worksheet-korean-font);
+  font-family: var(--worksheet-korean-font);
+  font-kerning: normal;
+  text-rendering: optimizeLegibility;
+}
+
+.trig-derivative-answer-panel {
+  font-family: var(--worksheet-korean-font);
+}
+
+/* Korean titles, labels, prompts, explanations, and answer prose. */
+.polynomial-page :where(
+  .counting-sheet-title,
+  .polynomial-question-body,
+  .polynomial-instruction,
+  .polynomial-focus-label,
+  .geometry-choice-prompt,
+  .logarithm-prompt,
+  .logic-prompt,
+  .rr-prompt,
+  .coordinate-prompt,
+  .circle-prompt,
+  .counting-result
+) {
+  font-family: var(--worksheet-korean-font);
+}
+
+/*
+ * These selectors intentionally match the specificity of older worksheet
+ * layout rules that used the math stack for an entire mixed-content row.
+ */
+.polynomial-page .polynomial-question-body,
+.polynomial-page .polynomial-instruction b,
+.polynomial-page .worksheet-stage .polynomial-focus-label,
+.polynomial-page .worksheet-stage .geometry-choice-prompt {
+  font-family: var(--worksheet-korean-font);
+}
+
+/* Numbers entered by students and stand-alone mathematical notation. */
+.polynomial-page :where(
+  .math-formula,
+  .polynomial-question-number,
+  .polynomial-expression,
+  .rational-expression,
+  .complex-expression,
+  .exponent-radical-expression,
+  .equation-expression,
+  .inequality-expression,
+  .function-expression,
+  .coordinate-expression,
+  .circle-expression,
+  .logic-expression,
+  .rr-expression,
+  .logarithm-expression,
+  .derivative-expression,
+  .trig-derivative-expression,
+  .geometry-choice-expression,
+  input,
+  select,
+  textarea
+) {
+  font-family: var(--worksheet-math-font);
+  font-variant-numeric: lining-nums tabular-nums;
+}
+
+/* Toolbar text and compact document metadata are interface typography. */
+.polynomial-page :where(
+  .counting-toolbar,
+  .counting-back,
+  .counting-progress,
+  .polynomial-toolbar,
+  .worksheet-toolbar,
+  .counting-sheet-info,
+  button
+) {
+  font-family: var(--worksheet-ui-font);
+}
+
+/*
+ * Secondary problem and answer rows are separated by whitespace only.
+ * Horizontal divider rules make the worksheet harder to scan.
+ */
+.polynomial-page .polynomial-question,
+.trig-derivative-answer-panel .trig-derivative-answer-item {
+  border-bottom: 0;
+  font-family: var(--worksheet-korean-font);
+}
+
+/*
+ * KaTeX marks Korean glyphs as hangul_fallback. Without an explicit face each
+ * browser chooses a different system serif. Pin only those Korean glyphs to
+ * the worksheet face; Latin letters, numbers, operators, fractions, and roots
+ * keep KaTeX's mathematical fonts.
+ */
+.polynomial-page .math-formula .katex .hangul_fallback,
+.trig-derivative-answer-panel .math-formula .katex .hangul_fallback {
+  font-family: var(--worksheet-korean-font);
+  font-style: normal;
+}
+
+.polynomial-page .math-formula .katex .mathnormal,
+.trig-derivative-answer-panel .math-formula .katex .mathnormal {
+  font-family: "KaTeX_Math", "STIX Two Math", "Cambria Math", serif;
+}
+
+.polynomial-page .math-formula .katex .mathrm,
+.trig-derivative-answer-panel .math-formula .katex .mathrm {
+  font-family: "KaTeX_Main", "STIX Two Math", "Cambria Math", serif;
+}

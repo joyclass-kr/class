@@ -217,6 +217,9 @@ function uniqueDistractors(answer: string, candidates: string[]) {
         .filter((candidate) => candidate !== answer && !isPlaceholder(candidate)),
     ),
   ];
+  if (unique.length < 3) {
+    throw new Error(`인수분해 문제의 실제 오답이 세 개보다 적습니다: ${answer}`);
+  }
   return unique.slice(0, 3);
 }
 

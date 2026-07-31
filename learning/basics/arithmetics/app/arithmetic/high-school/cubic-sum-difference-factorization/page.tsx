@@ -2,6 +2,7 @@
 
 import { useEffect, useMemo, useState } from "react";
 import MathFormula from "../../../components/math-formula";
+import WorksheetQuestionPrompt from "../../../components/worksheet-question-prompt";
 import WorksheetChoicePanel, {
   type WorksheetChoiceProblem,
 } from "../components/worksheet-choice-panel";
@@ -12,11 +13,6 @@ import {
 } from "../../../../lib/high-cubic-factorization-workouts";
 
 const INITIAL_SEED = 20260804;
-const DIFFICULTY_LABELS: Record<HighCubicFactorizationProblem["difficulty"], string> = {
-  basic: "기본",
-  application: "응용",
-  advanced: "고난도",
-};
 
 function choiceProblem(problem: HighCubicFactorizationProblem): WorksheetChoiceProblem {
   const choices = [
@@ -82,32 +78,22 @@ export default function CubicSumDifferenceFactorizationPage() {
   }
 
   function row(problem: HighCubicFactorizationProblem, index: number, answerSheet: boolean) {
-    const beginsDifficultySection = index === 0 || index === 2 || index === 5;
     return (
       <article
-        className={`polynomial-question logarithm-question middle-equation-difficulty-${problem.difficulty}${beginsDifficultySection ? " middle-equation-difficulty-start" : ""}`}
+        className="polynomial-question logarithm-question"
         data-testid="high-cubic-factorization-question"
         key={`${answerSheet ? "answer" : "question"}-${problem.id}`}
       >
         <div className="polynomial-question-number">{String(index + 1).padStart(2, "0")}</div>
-        {beginsDifficultySection && (
-          <span className="middle-equation-difficulty-label" data-testid="high-cubic-factorization-difficulty-label">
-            {DIFFICULTY_LABELS[problem.difficulty]}
-          </span>
-        )}
         <div className="polynomial-question-body">
           <span className="polynomial-focus-label">{problem.label}</span>
+          <WorksheetQuestionPrompt label={problem.label} prompt="인수분해한 식은?" />
           <div className="logarithm-expression"><MathFormula latex={problem.latex} /></div>
           {answerSheet && (
-            <>
-              <div className="middle-equation-static-answer">
-                <strong>정답</strong>
-                <MathFormula latex={problem.answerLatex} />
-              </div>
-              <p className="middle-equation-solution-hint" data-testid="high-cubic-factorization-solution-hint">
-                <strong>핵심</strong> {problem.solutionHint}
-              </p>
-            </>
+            <div className="middle-equation-static-answer">
+              <strong>정답</strong>
+              <MathFormula latex={problem.answerLatex} />
+            </div>
           )}
         </div>
       </article>

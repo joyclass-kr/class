@@ -20,7 +20,10 @@ test("common math combines easy counting, permutations, and combinations on one 
 });
 test("advanced counting moves to probability and statistics", () => {
   const kinds = createProbabilityCountingProblemSet(12).problems.map(({ kind }) => kind);
-  assert.deepEqual(kinds, ["circular-permutation", "repeated-permutation", "identical-permutation", "repeated-combination"]);
+  assert.deepEqual(kinds, [
+    "circular-permutation", "circular-adjacent", "repeated-permutation", "repeated-leading-zero",
+    "identical-permutation", "repeated-combination", "nonnegative-solutions", "positive-solutions",
+  ]);
 });
 test("all generated answers are positive integers", () => {
   for (let seed = 1; seed <= 100; seed += 1) {
@@ -44,7 +47,7 @@ test("review selection and answer comparison work", () => {
 });
 test("permutation and combination worksheets follow common-math order without pre-solve formulas", async () => {
   const page = await readFile(new URL("../app/arithmetic/high-school/combinatorics-worksheet.tsx", import.meta.url), "utf8");
-  assert.match(page, /subject=\{common \? "공통수학1" : "확률과 통계"\}/);
+  assert.match(page, /subject=\{common \? "공통수학 1" : "확률과 통계"\}/);
   assert.match(page, /showLatexOnWorksheet=\{false\}/);
   assert.match(page, /NumericChoiceWorksheet/);
 });

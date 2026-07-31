@@ -7,6 +7,7 @@ import {
   type IntegrationTechniqueProblem,
 } from "../../../../lib/integration-technique-workouts";
 import MathFormula from "../../../components/math-formula";
+import WorksheetQuestionPrompt from "../../../components/worksheet-question-prompt";
 import WorksheetChoicePanel, { type WorksheetChoiceProblem } from "../components/worksheet-choice-panel";
 
 export default function IntegrationTechniquesPage() {
@@ -40,6 +41,7 @@ export default function IntegrationTechniquesPage() {
         <div className="polynomial-question-number">{String(index + 1).padStart(2, "0")}</div>
         <div className="polynomial-question-body">
           <span className="polynomial-focus-label">{problem.label}</span>
+          <WorksheetQuestionPrompt label={problem.label} prompt={problem.prompt} />
           <div className="derivative-expression trig-derivative-expression"><MathFormula latex={`${problem.latex}=?`} /></div>
           {answerSheet && <div className="derivative-static-answer"><MathFormula latex={problem.answerLatex} /></div>}
         </div>

@@ -3,6 +3,7 @@
 import { useEffect, useMemo, useState } from "react";
 import { createLogicProblemSet, createLogicReviewProblems, type LogicProblem } from "../../../../lib/sets-propositions-workouts";
 import MathFormula from "../../../components/math-formula";
+import WorksheetQuestionPrompt from "../../../components/worksheet-question-prompt";
 import WorksheetChoicePanel, { type WorksheetChoiceProblem } from "../components/worksheet-choice-panel";
 
 export default function SetsPropositionsPage() {
@@ -57,7 +58,7 @@ export default function SetsPropositionsPage() {
         <div className="polynomial-question-number">{String(index + 1).padStart(2, "0")}</div>
         <div className="polynomial-question-body">
           <span className="polynomial-focus-label">{problem.label}</span>
-          <p className="logic-prompt">{problem.prompt}</p>
+          <WorksheetQuestionPrompt className="logic-prompt" label={problem.label} prompt={problem.prompt} />
           <div className="logic-expression"><MathFormula latex={problem.latex} display /></div>
           {answerSheet && <div className="logic-choices"><MathFormula latex={choiceProblems.find(({ id }) => id === problem.id)?.correctLatex ?? ""} /></div>}
         </div>

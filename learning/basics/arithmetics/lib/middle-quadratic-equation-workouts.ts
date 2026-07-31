@@ -10,13 +10,18 @@ export type MiddleQuadraticEquationMethodKind =
   | "quadratic-formula-general"
   | "negative-leading"
   | "expand-and-solve"
-  | "fraction-decimal";
+  | "fraction-decimal"
+  | "consecutive-integers"
+  | "rectangle-area"
+  | "number-product"
+  | "right-triangle-area";
 
 export type MiddleQuadraticEquationKind =
   | "roots-and-squares"
   | "factorization"
   | "quadratic-formula"
   | "normalize-and-solve"
+  | "applications"
   | "comprehensive";
 
 export type MiddleQuadraticEquationDifficulty = "basic" | "application" | "advanced";
@@ -40,6 +45,7 @@ export const MIDDLE_QUADRATIC_EQUATION_KINDS: MiddleQuadraticEquationKind[] = [
   "factorization",
   "quadratic-formula",
   "normalize-and-solve",
+  "applications",
   "comprehensive",
 ];
 
@@ -56,6 +62,10 @@ export const MIDDLE_QUADRATIC_EQUATION_METHOD_KINDS: MiddleQuadraticEquationMeth
   "negative-leading",
   "expand-and-solve",
   "fraction-decimal",
+  "consecutive-integers",
+  "rectangle-area",
+  "number-product",
+  "right-triangle-area",
 ];
 
 export const MIDDLE_QUADRATIC_EQUATION_TITLES: Record<MiddleQuadraticEquationKind, string> = {
@@ -63,6 +73,7 @@ export const MIDDLE_QUADRATIC_EQUATION_TITLES: Record<MiddleQuadraticEquationKin
   factorization: "이차방정식: 인수분해로 풀기",
   "quadratic-formula": "이차방정식: 근의 공식",
   "normalize-and-solve": "이차방정식: 식 정리 후 풀기",
+  applications: "이차방정식 활용 계산",
   comprehensive: "이차방정식 종합",
 };
 
@@ -79,6 +90,10 @@ const MIDDLE_QUADRATIC_EQUATION_METHOD_TITLES: Record<MiddleQuadraticEquationMet
   "negative-leading": "음의 최고차항 정리",
   "expand-and-solve": "전개·이항 후 풀이",
   "fraction-decimal": "분수·소수 계수",
+  "consecutive-integers": "연속한 두 자연수",
+  "rectangle-area": "직사각형의 넓이",
+  "number-product": "두 자연수의 곱",
+  "right-triangle-area": "직각삼각형의 넓이",
 };
 
 function random(seed: number) {
@@ -134,11 +149,14 @@ function rootAnswer(roots: Fraction[]) {
 function wrongRootAnswers(roots: Fraction[]) {
   const negated = roots.map(([numerator, denominator]) => normalizedFraction(-numerator, denominator));
   const shifted = roots.map(([numerator, denominator]) => normalizedFraction(numerator + denominator, denominator));
+  const shiftedBack = roots.map(([numerator, denominator]) => normalizedFraction(numerator - denominator, denominator));
   const sum = roots.reduce((total, [numerator, denominator]) => total + numerator / denominator, 0);
   const product = roots.reduce((total, [numerator, denominator]) => total * numerator / denominator, 1);
   return [
     rootAnswer(negated),
     rootAnswer(shifted),
+    rootAnswer(shiftedBack),
+    ...roots.map((root) => rootAnswer([root])),
     rootAnswer([normalizedFraction(Math.round(sum)), normalizedFraction(Math.round(product))]),
   ];
 }
@@ -187,7 +205,11 @@ function radicalRootAnswer(a: number, b: number, discriminant: number) {
 }
 
 function uniqueDistractors(answer: string, candidates: string[]) {
-  return [...new Set([...candidates, "x=0", "x=1", "x=-1"].filter((candidate) => candidate !== answer))].slice(0, 3);
+  const unique = [...new Set(candidates.filter((candidate) => candidate !== answer))];
+  if (unique.length < 3) {
+    throw new Error(`이차방정식 문제의 실제 오답이 세 개보다 적습니다: ${answer}`);
+  }
+  return unique.slice(0, 3);
 }
 
 function make(
@@ -409,6 +431,62 @@ function build(
       variantHint % 2 === 0 ? "fraction-coefficients" : "decimal-coefficients");
   }
 
+  if (kind === "consecutive-integers") {
+    const smaller = integer(next, 3, 12);
+    const product = smaller * (smaller + 1);
+    const coefficients = [1, 1, -product] as const;
+    return make(id, kind,
+      `\\text{연속한 두 자연수의 곱이 }${product}\\text{일 때 작은 수 }x`,
+      `x=${smaller}`,
+      `x(x+1)=${product}를 세워 인수분해하고 자연수인 해를 고른다.`,
+      coefficients,
+      [`x=${smaller + 1}`, `x=${-smaller - 1}`, `x=${smaller - 1}`],
+      "consecutive-natural-numbers");
+  }
+
+  if (kind === "rectangle-area") {
+    const width = integer(next, 3, 10);
+    const gap = integer(next, 2, 6);
+    const area = width * (width + gap);
+    const coefficients = [1, gap, -area] as const;
+    return make(id, kind,
+      `\\text{가로 }x,\\quad \\text{세로 }x+${gap},\\quad \\text{넓이 }${area}`,
+      `x=${width}`,
+      `x(x+${gap})=${area}를 풀고 길이에 맞는 양의 해를 선택한다.`,
+      coefficients,
+      [`x=${width + gap}`, `x=${-width - gap}`, `x=${width - 1}`],
+      "rectangle-dimensions");
+  }
+
+  if (kind === "number-product") {
+    const smaller = integer(next, 4, 11);
+    const gap = integer(next, 2, 7);
+    const product = smaller * (smaller + gap);
+    const coefficients = [1, gap, -product] as const;
+    return make(id, kind,
+      `\\text{차가 }${gap}\\text{인 두 자연수의 곱이 }${product},\\quad \\text{작은 수 }x`,
+      `x=${smaller}`,
+      `x(x+${gap})=${product}를 세워 두 해 중 자연수인 값을 고른다.`,
+      coefficients,
+      [`x=${smaller + gap}`, `x=${-smaller - gap}`, `x=${smaller - gap}`],
+      "natural-number-product");
+  }
+
+  if (kind === "right-triangle-area") {
+    const shortLeg = integer(next, 3, 9);
+    const gap = integer(next, 2, 6);
+    const doubledArea = shortLeg * (shortLeg + gap);
+    const area = doubledArea / 2;
+    const coefficients = [1, gap, -doubledArea] as const;
+    return make(id, kind,
+      `\\text{두 직각변 }x,\\ x+${gap},\\quad \\text{넓이 }${fractionLatex(normalizedFraction(doubledArea, 2))}`,
+      `x=${shortLeg}`,
+      `\\dfrac{x(x+${gap})}{2}=${fractionLatex(normalizedFraction(doubledArea, 2))}를 풀고 양의 해를 고른다.`,
+      coefficients,
+      [`x=${shortLeg + gap}`, `x=${-shortLeg - gap}`, `x=${shortLeg - 1}`],
+      "right-triangle-area");
+  }
+
   throw new Error(`지원하지 않는 이차방정식 풀이 유형: ${kind}`);
 }
 
@@ -459,6 +537,16 @@ const GROUP_METHOD_PLANS: Record<Exclude<MiddleQuadraticEquationKind, "comprehen
     "expand-and-solve",
     "fraction-decimal",
   ],
+  applications: [
+    "consecutive-integers",
+    "rectangle-area",
+    "number-product",
+    "right-triangle-area",
+    "consecutive-integers",
+    "rectangle-area",
+    "number-product",
+    "right-triangle-area",
+  ],
 };
 
 const LEGACY_KIND_GROUPS: Record<MiddleQuadraticEquationMethodKind, MiddleQuadraticEquationKind> = {
@@ -474,6 +562,10 @@ const LEGACY_KIND_GROUPS: Record<MiddleQuadraticEquationMethodKind, MiddleQuadra
   "quadratic-formula-general": "quadratic-formula",
   "expand-and-solve": "normalize-and-solve",
   "fraction-decimal": "normalize-and-solve",
+  "consecutive-integers": "applications",
+  "rectangle-area": "applications",
+  "number-product": "applications",
+  "right-triangle-area": "applications",
 };
 
 function comprehensiveKind(seed: number, index: number) {

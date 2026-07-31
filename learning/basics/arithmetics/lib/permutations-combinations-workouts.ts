@@ -1,7 +1,9 @@
 export type PermutationCombinationKind =
   | "sum-rule" | "product-rule"
-  | "basic-permutation" | "adjacent-arrangement" | "circular-permutation" | "repeated-permutation" | "identical-permutation"
-  | "basic-combination" | "mixed-committee" | "not-together-selection" | "required-selection" | "repeated-combination";
+  | "basic-permutation" | "adjacent-arrangement" | "circular-permutation" | "circular-adjacent"
+  | "repeated-permutation" | "repeated-leading-zero" | "identical-permutation"
+  | "basic-combination" | "mixed-committee" | "not-together-selection" | "required-selection"
+  | "repeated-combination" | "nonnegative-solutions" | "positive-solutions";
 
 export type PermutationCombinationProblem = {
   id: string;
@@ -17,7 +19,8 @@ const COMMON_COUNTING_KINDS: PermutationCombinationKind[] = [
   "basic-combination", "required-selection", "not-together-selection",
 ];
 const PROBABILITY_COUNTING_KINDS: PermutationCombinationKind[] = [
-  "circular-permutation", "repeated-permutation", "identical-permutation", "repeated-combination",
+  "circular-permutation", "circular-adjacent", "repeated-permutation", "repeated-leading-zero",
+  "identical-permutation", "repeated-combination", "nonnegative-solutions", "positive-solutions",
 ];
 
 function random(seed: number) {
@@ -113,6 +116,19 @@ function buildProblem(kind: PermutationCombinationKind, next: () => number, id: 
       latex: `n=${total},\\qquad \\text{회전한 배치는 같음}`, answer: factorial(total - 1),
     };
   }
+  if (kind === "circular-adjacent") {
+    const total = integer(next, 6, 9);
+    return {
+      id, kind, label: "원순열에서 이웃하기",
+      prompt: pick(next, [
+        `${total}명이 원탁에 둘러앉을 때 두 특정 사람이 서로 이웃하는 경우의 수를 구하세요.`,
+        `서로 다른 ${total}개의 장식을 원형으로 놓을 때 지정한 두 장식을 나란히 놓는 방법의 수를 구하세요.`,
+        `${total}명이 둥근 탁자에 앉을 때 두 친구가 옆자리에 앉는 배치의 수를 구하세요.`,
+      ]),
+      latex: `2\\times(${total - 2})!`,
+      answer: 2 * factorial(total - 2),
+    };
+  }
   if (kind === "repeated-permutation") {
     const choices = integer(next, 3, 6);
     const length = integer(next, 3, 5);
@@ -124,6 +140,20 @@ function buildProblem(kind: PermutationCombinationKind, next: () => number, id: 
         `${choices}종류의 기호를 반복해서 사용하여 길이가 ${length}인 문자열을 만드는 경우의 수를 구하세요.`,
       ]),
       latex: `{}_{{${choices}}}\\Pi_{${length}}`, answer: choices ** length,
+    };
+  }
+  if (kind === "repeated-leading-zero") {
+    const choices = integer(next, 4, 7);
+    const length = integer(next, 3, 5);
+    return {
+      id, kind, label: "첫 자리가 0이 아닌 중복순열",
+      prompt: pick(next, [
+        `숫자 0부터 ${choices - 1}까지를 중복 사용하여 ${length}자리 자연수를 만드는 경우의 수를 구하세요.`,
+        `0을 포함한 ${choices}개의 숫자로 ${length}자리 번호를 만들되 첫 자리는 0이 아닐 때 경우의 수를 구하세요.`,
+        `${choices}개의 숫자 중 0도 허용하여 ${length}자리 수를 만들 때 맨 앞에 0이 오지 않는 경우의 수를 구하세요.`,
+      ]),
+      latex: `(${choices}-1)\\times${choices}^{${length - 1}}`,
+      answer: (choices - 1) * choices ** (length - 1),
     };
   }
   if (kind === "identical-permutation") {
@@ -197,16 +227,47 @@ function buildProblem(kind: PermutationCombinationKind, next: () => number, id: 
       latex: `{}_{{${total - required}}}C_{${selected - required}}`, answer: choose(total - required, selected - required),
     };
   }
-  const types = integer(next, 3, 5);
-  const count = integer(next, 4, 7);
+  if (kind === "repeated-combination") {
+    const types = integer(next, 3, 5);
+    const count = integer(next, 4, 7);
+    return {
+      id, kind, label: "중복조합",
+      prompt: pick(next, [
+        `${types}종류의 사탕에서 중복을 허용하여 모두 ${count}개를 고르는 경우의 수를 구하세요.`,
+        `${types}가지 맛의 빵을 합하여 ${count}개 삽니다. 같은 맛을 여러 개 골라도 될 때 경우의 수를 구하세요.`,
+        `서로 다른 ${types}종류의 공을 중복 선택하여 ${count}개를 고르는 방법의 수를 구하세요.`,
+      ]),
+      latex: `{}_{{${types}}}H_{${count}}={}_{{${types + count - 1}}}C_{${count}}`,
+      answer: choose(types + count - 1, count),
+    };
+  }
+  if (kind === "nonnegative-solutions") {
+    const variables = integer(next, 3, 5);
+    const total = integer(next, 6, 10);
+    const names = ["x", "y", "z", "w", "v"].slice(0, variables).join("+");
+    return {
+      id, kind, label: "음이 아닌 정수해",
+      prompt: pick(next, [
+        `${names}=${total}을 만족하는 음이 아닌 정수해의 개수를 구하세요.`,
+        `${total}개의 같은 공을 ${variables}개의 상자에 빈 상자를 허용하여 나누는 방법의 수를 구하세요.`,
+        `${variables}종류를 합하여 ${total}개 고를 때 어떤 종류는 고르지 않아도 되는 선택의 수를 구하세요.`,
+      ]),
+      latex: `{}_{{${variables}}}H_{${total}}={}_{{${total + variables - 1}}}C_{${variables - 1}}`,
+      answer: choose(total + variables - 1, variables - 1),
+    };
+  }
+  const variables = integer(next, 3, 5);
+  const total = integer(next, variables + 3, variables + 7);
+  const names = ["x", "y", "z", "w", "v"].slice(0, variables).join("+");
   return {
-    id, kind, label: "중복조합",
+    id, kind, label: "양의 정수해",
     prompt: pick(next, [
-      `${types}종류의 사탕에서 중복을 허용하여 모두 ${count}개를 고르는 경우의 수를 구하세요.`,
-      `${types}가지 맛의 빵을 합하여 ${count}개 삽니다. 같은 맛을 여러 개 골라도 될 때 경우의 수를 구하세요.`,
-      `서로 다른 ${types}종류의 공을 중복 선택하여 ${count}개를 고르는 방법의 수를 구하세요.`,
+      `${names}=${total}을 만족하는 양의 정수해의 개수를 구하세요.`,
+      `${total}개의 같은 공을 ${variables}개의 상자에 적어도 하나씩 나누는 방법의 수를 구하세요.`,
+      `${variables}종류를 각각 하나 이상 골라 합계 ${total}개를 고르는 방법의 수를 구하세요.`,
     ]),
-    latex: `{}_{{${types}}}H_{${count}}={}_{{${types + count - 1}}}C_{${count}}`, answer: choose(types + count - 1, count),
+    latex: `{}_{{${total - 1}}}C_{${variables - 1}}`,
+    answer: choose(total - 1, variables - 1),
   };
 }
 

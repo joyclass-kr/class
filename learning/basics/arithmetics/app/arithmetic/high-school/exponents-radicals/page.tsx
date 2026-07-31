@@ -10,6 +10,7 @@ import {
   type ExponentRadicalProblem,
 } from "../../../../lib/exponent-radical-worksheets";
 import MathFormula from "../../../components/math-formula";
+import WorksheetQuestionPrompt from "../../../components/worksheet-question-prompt";
 
 type PrintMode = "worksheet" | "answers" | "both";
 const INITIAL_SEED = 20260723;
@@ -125,6 +126,7 @@ export default function ExponentsRadicalsPage() {
         <div className="polynomial-question-number">{String(index + 1).padStart(2, "0")}</div>
         <div className="polynomial-question-body">
           <span className="polynomial-focus-label">{problem.label}</span>
+          <WorksheetQuestionPrompt label={problem.label} />
           <div className="exponent-radical-expression"><MathFormula latex={expressionLatex(problem.expression)} display /></div>
           {answerSheet && <div className="exponent-radical-static-answer">정답 <MathFormula latex={answerLatex(problem.answer)} /></div>}
         </div>

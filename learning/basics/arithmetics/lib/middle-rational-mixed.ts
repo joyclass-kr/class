@@ -1,23 +1,26 @@
 import type { NumericWorksheetProblem } from "../app/arithmetic/high-school/components/numeric-choice-worksheet";
 
 export type MiddleRationalMixedKind =
+  | "integer-absolute"
+  | "integer-comparison"
   | "integer-priority"
   | "integer-parentheses"
   | "integer-power"
   | "integer-nested"
+  | "fraction-comparison"
   | "fraction-priority"
   | "fraction-parentheses"
   | "fraction-power"
   | "fraction-comprehensive";
 
 const KINDS: MiddleRationalMixedKind[] = [
+  "integer-absolute",
+  "integer-comparison",
   "integer-priority",
   "integer-parentheses",
   "integer-power",
-  "integer-nested",
+  "fraction-comparison",
   "fraction-priority",
-  "fraction-parentheses",
-  "fraction-power",
   "fraction-comprehensive",
 ];
 
@@ -86,6 +89,17 @@ function build(kind: MiddleRationalMixedKind, next: () => number, id: string) {
   const b = nonzero(next, -7, 7);
   const c = nonzero(next, -6, 6);
 
+  if (kind === "integer-absolute") {
+    const left = -Math.abs(a);
+    const right = Math.abs(b);
+    return makeProblem(id, kind, "절댓값 계산", `|${left}|+|${right}|`, Math.abs(left) + Math.abs(right));
+  }
+  if (kind === "integer-comparison") {
+    const left = nonzero(next, -12, 12);
+    let right = nonzero(next, -12, 12);
+    while (right === left) right = nonzero(next, -12, 12);
+    return makeProblem(id, kind, "정수의 대소 비교", `${left}\\ \\square\\ ${right}`, Math.sign(left - right));
+  }
   if (kind === "integer-priority") {
     return makeProblem(id, kind, "곱셈이 있는 정수 계산", `${a}+${signedTerm(b)}\\times${signedTerm(c)}`, a + b * c);
   }
@@ -111,6 +125,19 @@ function build(kind: MiddleRationalMixedKind, next: () => number, id: string) {
   const n2 = nonzero(next, -d2 + 1, d2 - 1);
   const n3 = nonzero(next, -d3 + 1, d3 - 1);
 
+  if (kind === "fraction-comparison") {
+    let rightNumerator = n2;
+    while (n1 * d2 === rightNumerator * d1) {
+      rightNumerator = nonzero(next, -d2 + 1, d2 - 1);
+    }
+    return makeProblem(
+      id,
+      kind,
+      "유리수의 대소 비교",
+      `${latex(n1, d1)}\\ \\square\\ ${latex(rightNumerator, d2)}`,
+      Math.sign(n1 * d2 - rightNumerator * d1),
+    );
+  }
   if (kind === "fraction-priority") {
     const numerator = n1 * d2 * d3 + n2 * n3 * d1;
     return makeProblem(id, kind, "유리수의 계산 순서", `${latex(n1, d1)}+${signedTerm(latex(n2, d2))}\\times${signedTerm(latex(n3, d3))}`, numerator, d1 * d2 * d3);
@@ -157,8 +184,11 @@ export function createMiddleRationalMixedReviewProblems(kinds: string[], seed: n
 }
 
 export function formatMiddleRationalMixedChoice(
-  _problem: NumericWorksheetProblem,
+  problem: NumericWorksheetProblem,
   values: number[],
 ) {
+  if (problem.kind === "integer-comparison" || problem.kind === "fraction-comparison") {
+    return values[0] < 0 ? "<" : values[0] > 0 ? ">" : "=";
+  }
   return values.length === 1 ? String(values[0]) : latex(values[0], values[1]);
 }

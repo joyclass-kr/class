@@ -4,6 +4,7 @@ export type MiddleQuadraticFunctionMethodKind =
   | "expand-vertex-form"
   | "complete-square"
   | "vertex-axis"
+  | "extreme-value"
   | "coefficient-from-point"
   | "equation-from-vertex-point"
   | "intercepts"
@@ -46,6 +47,7 @@ export const MIDDLE_QUADRATIC_FUNCTION_METHOD_KINDS: MiddleQuadraticFunctionMeth
   "expand-vertex-form",
   "complete-square",
   "vertex-axis",
+  "extreme-value",
   "coefficient-from-point",
   "equation-from-vertex-point",
   "intercepts",
@@ -55,14 +57,12 @@ export const MIDDLE_QUADRATIC_FUNCTION_METHOD_KINDS: MiddleQuadraticFunctionMeth
 ];
 
 export const MIDDLE_QUADRATIC_FUNCTION_TITLES: Record<MiddleQuadraticFunctionKind, string> = {
-  "values-and-forms": "이차함수: 함숫값과 식의 전개",
+  "values-and-forms": "이차함수의 식과 꼭짓점",
   "vertex-and-axis": "이차함수: 꼭짓점과 대칭축",
   "determine-equation": "이차함수: 조건으로 식 구하기",
   "intercepts-and-intersections": "이차함수: 절편과 교점",
   comprehensive: "이차함수 계산 종합",
 };
-
-MIDDLE_QUADRATIC_FUNCTION_TITLES["values-and-forms"] = "이차함수의 식과 꼭짓점";
 
 const MIDDLE_QUADRATIC_FUNCTION_METHOD_TITLES: Record<MiddleQuadraticFunctionMethodKind, string> = {
   "basic-value": "기본형의 함숫값",
@@ -70,6 +70,7 @@ const MIDDLE_QUADRATIC_FUNCTION_METHOD_TITLES: Record<MiddleQuadraticFunctionMet
   "expand-vertex-form": "꼭짓점형 전개",
   "complete-square": "일반형을 꼭짓점형으로",
   "vertex-axis": "꼭짓점과 대칭축",
+  "extreme-value": "최댓값·최솟값",
   "coefficient-from-point": "한 점으로 계수 구하기",
   "equation-from-vertex-point": "꼭짓점과 한 점으로 식 구하기",
   intercepts: "x절편과 y절편",
@@ -154,8 +155,23 @@ function rootPairAnswer(first: number, second: number) {
     : `x=${roots.map(numberLatex).join(",\\ ")}`;
 }
 
-function uniqueDistractors(answer: string, candidates: string[]) {
-  return [...new Set([...candidates, "y=0", "a=1", "x=0"].filter((candidate) => candidate !== answer))].slice(0, 3);
+function uniqueDistractors(answer: string, candidates: string[], context: string) {
+  const simpleValue = answer.match(/^([ya])=(-?\d+)$/);
+  const derived = simpleValue
+    ? [
+      `${simpleValue[1]}=${Number(simpleValue[2]) + 1}`,
+      `${simpleValue[1]}=${Number(simpleValue[2]) - 1}`,
+      `${simpleValue[1]}=${Number(simpleValue[2]) + 2}`,
+      `${simpleValue[1]}=${-Number(simpleValue[2])}`,
+    ]
+    : [];
+  const unique = [
+    ...new Set([...candidates, ...derived].filter((candidate) => candidate !== answer)),
+  ];
+  if (unique.length < 3) {
+    throw new Error(`${context}: 실제 오답이 세 개보다 적습니다.`);
+  }
+  return unique.slice(0, 3);
 }
 
 function make(
@@ -176,7 +192,7 @@ function make(
     latex,
     answerLatex,
     solutionHint,
-    distractors: uniqueDistractors(answerLatex, distractors),
+    distractors: uniqueDistractors(answerLatex, distractors, `${kind}/${id}`),
   };
 }
 
@@ -236,6 +252,10 @@ function build(
         generalForm(a, 2 * a * p, c),
         generalForm(a, -2 * p, p * p + q),
         generalForm(a, b, q),
+        generalForm(a, b + a, c),
+        generalForm(a, b - a, c),
+        generalForm(a, b, c + 1),
+        generalForm(a, b, c - 1),
       ],
       a === 1 ? "monic-expansion" : "scaled-expansion");
   }
@@ -250,6 +270,10 @@ function build(
         vertexForm(a, -p, q),
         vertexForm(a, p, -q),
         vertexForm(a, p, c),
+        vertexForm(a, p + 1, q),
+        vertexForm(a, p - 1, q),
+        vertexForm(a, p, q + 1),
+        vertexForm(a, p, q - 1),
       ],
       a === 1 ? "monic-completing-square" : "scaled-completing-square");
   }
@@ -264,8 +288,27 @@ function build(
         `\\text{꼭짓점 }(${-p},${q}),\\quad x=${-p}`,
         `\\text{꼭짓점 }(${p},${-q}),\\quad x=${p}`,
         `\\text{꼭짓점 }(${q},${p}),\\quad x=${q}`,
+        `\\text{꼭짓점 }(${p + 1},${q}),\\quad x=${p + 1}`,
+        `\\text{꼭짓점 }(${p - 1},${q}),\\quad x=${p - 1}`,
+        `\\text{꼭짓점 }(${p},${q + 1}),\\quad x=${p}`,
+        `\\text{꼭짓점 }(${p},${q - 1}),\\quad x=${p}`,
       ],
       a === 1 ? "monic-vertex-axis" : "scaled-vertex-axis");
+  }
+
+  if (kind === "extreme-value") {
+    const extremeLabel = a > 0 ? "최솟값" : "최댓값";
+    const oppositeLabel = a > 0 ? "최댓값" : "최솟값";
+    const step = Math.abs(a);
+    const answer = `\\text{${extremeLabel} }${q}`;
+    return make(id, kind, vertexForm(a, p, q), answer,
+      `계수 a의 부호로 아래·위 방향을 판단하고 꼭짓점의 y좌표 ${q}를 ${extremeLabel}으로 읽는다.`,
+      [
+        `\\text{${oppositeLabel} }${q}`,
+        `\\text{${extremeLabel} }${q + step}`,
+        `\\text{${extremeLabel} }${q - step}`,
+      ],
+      a > 0 ? "minimum-from-vertex" : "maximum-from-vertex");
   }
 
   if (kind === "coefficient-from-point") {
@@ -287,7 +330,15 @@ function build(
       `\\text{꼭짓점 }(${p},${q}),\\quad \\text{지나는 점 }(${x},${value})`,
       answer,
       "꼭짓점형에 주어진 점을 대입해 a를 구한 뒤 식을 완성한다.",
-      [vertexForm(-a, p, q), vertexForm(a, -p, q), vertexForm(a, p, -q)],
+      [
+        vertexForm(-a, p, q),
+        vertexForm(a, -p, q),
+        vertexForm(a, p, -q),
+        vertexForm(a, p + 1, q),
+        vertexForm(a, p - 1, q),
+        vertexForm(a, p, q + 1),
+        vertexForm(a, p, q - 1),
+      ],
       a > 0 ? "upward-equation" : "downward-equation");
   }
 
@@ -303,6 +354,9 @@ function build(
         `x:${-first},\\ ${-second},\\quad y:${c}`,
         `x:${first},\\ ${second},\\quad y:${-c}`,
         `x:${first + second},\\ ${first * second},\\quad y:${c}`,
+        `x:${smaller + 1},\\ ${larger + 1},\\quad y:${c}`,
+        `x:${smaller - 1},\\ ${larger - 1},\\quad y:${c}`,
+        `x:${smaller},\\ ${larger},\\quad y:${c + 1}`,
       ],
       c < 0 ? "opposite-sign-intercepts" : "same-sign-intercepts");
   }
@@ -322,6 +376,9 @@ function build(
         rootPairAnswer(-first, -second),
         rootPairAnswer(first + 1, second + 1),
         rootPairAnswer(first + second, first * second),
+        rootPairAnswer(first, first),
+        rootPairAnswer(second, second),
+        rootPairAnswer(first - 1, second - 1),
       ],
       first * second < 0 ? "mixed-intersections" : "same-side-intersections");
   }
@@ -341,6 +398,10 @@ function build(
         `\\text{꼭짓점 }(${-p},${q}),\\quad x=${-p}`,
         `\\text{꼭짓점 }(${p},${-q}),\\quad x=${p}`,
         `\\text{꼭짓점 }(${q},${p}),\\quad x=${q}`,
+        `\\text{꼭짓점 }(${p + 1},${q}),\\quad x=${p + 1}`,
+        `\\text{꼭짓점 }(${p - 1},${q}),\\quad x=${p - 1}`,
+        `\\text{꼭짓점 }(${p},${q + 1}),\\quad x=${p}`,
+        `\\text{꼭짓점 }(${p},${q - 1}),\\quad x=${p}`,
       ],
       variantHint < 4 ? "combine-linear-terms" : "combine-all-like-terms");
   }
@@ -354,7 +415,14 @@ function build(
       `y=${displayedA}(${inside})^2${q === 0 ? "" : signedNumber(q)},\\quad x=${x}`,
       valueAnswer(value),
       "괄호 안을 먼저 계산하고 제곱한 뒤 분수·소수 계수를 곱한다.",
-      [valueAnswer(-value), valueAnswer(fractionalA * (x + p) ** 2 + q), valueAnswer(value - q)],
+      [
+        valueAnswer(-value),
+        valueAnswer(fractionalA * (x + p) ** 2 + q),
+        valueAnswer(value - q),
+        valueAnswer(value + 1),
+        valueAnswer(value - 1),
+        valueAnswer(value + 2),
+      ],
       variantHint % 2 === 0 ? "fraction-value" : "decimal-value");
   }
 
@@ -380,7 +448,7 @@ const GROUP_METHOD_PLANS: Record<Exclude<MiddleQuadraticFunctionKind, "comprehen
   "values-and-forms": [
     "basic-value", "vertex-value",
     "expand-vertex-form", "vertex-axis", "fraction-decimal",
-    "fraction-decimal", "normalize-first", "complete-square",
+    "fraction-decimal", "extreme-value", "complete-square",
   ],
   "vertex-and-axis": [
     "vertex-axis", "complete-square",
@@ -406,6 +474,7 @@ const LEGACY_KIND_GROUPS: Record<MiddleQuadraticFunctionMethodKind, MiddleQuadra
   "fraction-decimal": "values-and-forms",
   "complete-square": "vertex-and-axis",
   "vertex-axis": "vertex-and-axis",
+  "extreme-value": "values-and-forms",
   "normalize-first": "vertex-and-axis",
   "coefficient-from-point": "determine-equation",
   "equation-from-vertex-point": "determine-equation",
