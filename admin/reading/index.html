@@ -4,7 +4,7 @@
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <meta name="theme-color" content="#0d1511">
-  <title>독해 문제은행 관리자</title>
+  <title>독해 문제은행 검수실</title>
   <link rel="stylesheet" href="./style.css">
 </head>
 <body>
@@ -21,11 +21,11 @@
     <header class="topbar">
       <div class="brand-block">
         <p class="eyebrow">READING BANK</p>
-        <h1>독해 문제 제작실</h1>
+        <h1>독해 문제 검수실</h1>
       </div>
       <nav class="view-tabs" aria-label="관리 화면 선택">
-        <button class="view-tab active" type="button" data-view="items">문항</button>
-        <button class="view-tab" type="button" data-view="topics">지식 원본</button>
+        <button class="view-tab active" type="button" data-view="items">검수 대기열</button>
+        <button class="view-tab" type="button" data-view="topics">근거 자료</button>
       </nav>
       <div class="account-block">
         <span id="adminEmail"></span>
@@ -41,6 +41,15 @@
       <div class="stat"><span>검수 대기</span><strong id="statReview">0</strong></div>
       <div class="stat"><span>출처 만료</span><strong id="statExpired">0</strong></div>
       <div class="stat"><span>공개</span><strong id="statPublished">0</strong></div>
+      <div class="stat"><span>운영 문제은행</span><strong id="statOperational">0</strong></div>
+    </section>
+
+    <section class="review-workflow" aria-label="문제은행 운영 방식">
+      <div>
+        <p class="section-kicker">REVIEW FIRST</p>
+        <strong>문항은 일괄 생성하고, 이곳에서는 검수와 예외 수정만 합니다.</strong>
+      </div>
+      <p>자동검사를 통과한 문항을 확인하고 승인하세요. 새 문항을 하나씩 만드는 기능은 예외 관리 도구 안에 보관했습니다.</p>
     </section>
 
     <main class="workbench">
@@ -48,9 +57,8 @@
         <div class="panel-heading">
           <div>
             <p class="section-kicker">FILTER</p>
-            <h2 id="filterTitle">문항 찾기</h2>
+            <h2 id="filterTitle">검수할 문항</h2>
           </div>
-          <button id="newButton" class="icon-button" type="button" aria-label="새로 만들기">＋</button>
         </div>
 
         <label class="field compact">
@@ -87,11 +95,17 @@
               <option value="published">공개</option>
             </select>
           </label>
-          <div class="import-box">
-            <strong>첫 문제 세트</strong>
-            <span>수면과 기억·평균의 함정 32문항</span>
-            <button id="importSampleButton" class="button secondary" type="button">샘플 불러오기</button>
-          </div>
+          <details id="maintenanceTools" class="maintenance-tools">
+            <summary>예외 관리 도구</summary>
+            <div class="maintenance-actions">
+              <button id="newButton" class="button secondary" type="button">개별 문항 만들기</button>
+              <div class="import-box">
+                <strong>초기 검수 문항</strong>
+                <span>수면과 기억·평균의 함정 32문항</span>
+                <button id="importSampleButton" class="button secondary" type="button">샘플 불러오기</button>
+              </div>
+            </div>
+          </details>
         </div>
 
         <label id="domainFilterField" class="field compact" hidden>
@@ -109,8 +123,8 @@
       <section class="editor-panel">
         <div id="emptyState" class="empty-state">
           <div class="empty-mark">Aa</div>
-          <h2>편집할 항목을 선택하세요</h2>
-          <p>왼쪽 목록에서 문항이나 지식 원본을 선택하거나 새 항목을 만드세요.</p>
+          <h2>검수할 문항을 선택하세요</h2>
+          <p>왼쪽 대기열에서 문항을 선택해 자동검사 결과와 정답 근거를 확인하세요.</p>
         </div>
 
         <section id="topicEditor" hidden>

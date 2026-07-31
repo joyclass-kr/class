@@ -159,6 +159,7 @@
     byId("statReview").textContent = summary.reviewPending;
     byId("statExpired").textContent = summary.expiredSources;
     byId("statPublished").textContent = summary.published;
+    byId("statOperational").textContent = summary.operational;
   }
 
   function topicQuery() {
@@ -280,7 +281,7 @@
     document.querySelectorAll(".view-tab").forEach((button) => button.classList.toggle("active", button.dataset.view === view));
     byId("itemFilters").hidden = view !== "items";
     byId("domainFilterField").hidden = view !== "topics";
-    byId("filterTitle").textContent = view === "items" ? "문항 찾기" : "지식 원본 찾기";
+    byId("filterTitle").textContent = view === "items" ? "검수할 문항" : "근거 자료 찾기";
     byId("searchInput").placeholder = view === "items" ? "주제명 또는 문항 키" : "주제명 또는 주제 키";
     renderRecordList();
     if (view === "items" && state.selectedItemId) await openItem(state.selectedItemId);
@@ -983,6 +984,7 @@
     const canEdit = state.access?.canEdit === true;
     const topicsTab = document.querySelector('.view-tab[data-view="topics"]');
     topicsTab.hidden = !canEdit;
+    byId("maintenanceTools").hidden = !canEdit;
     byId("newButton").hidden = !canEdit;
     byId("importSampleButton").closest(".import-box").hidden = !canEdit;
     byId("reviewersButton").hidden = !state.access?.isAdmin;

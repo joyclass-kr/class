@@ -573,12 +573,16 @@ function createReadingBank(options = {}) {
                   WHERE expires_at IS NOT NULL AND expires_at <= NOW()`)
     ]);
     const counts = statusResult.rows[0] || {};
+    const seed = loadSampleSeed();
+    const operational = createSelfStudyItems().length
+      + seed.topics.reduce((sum, topic) => sum + (topic.items || []).length, 0);
     res.json({
       draft: Number(counts.draft_count || 0),
       autoChecked: Number(counts.checked_count || 0),
       reviewPending: Number(counts.review_count || 0),
       published: Number(counts.published_count || 0),
-      expiredSources: Number(expiryResult.rows[0]?.expired_count || 0)
+      expiredSources: Number(expiryResult.rows[0]?.expired_count || 0),
+      operational
     });
   }));
 

@@ -35,6 +35,10 @@ assert.match(html, /id="importSampleButton"/);
 assert.match(html, /id="submitForReviewButton"/);
 assert.match(html, /id="reviewPanel"/);
 assert.match(html, /id="reviewerDialog"/);
+assert.match(html, /독해 문제 검수실/);
+assert.match(html, /id="maintenanceTools"/);
+assert.match(html, /id="statOperational"/);
+assert.match(html, /문항은 일괄 생성하고, 이곳에서는 검수와 예외 수정만 합니다/);
 assert.match(html, /href="\/admin\/"/,
   "The reading admin must return to the existing administrator sign-in page.");
 assert.match(mainAdmin, /href="\/admin\/reading\/"/,
@@ -51,6 +55,7 @@ assert.match(app, /if \(!access\.allowed\)/,
 assert.match(app, /\/api\/reading\/admin\/topics/);
 assert.match(app, /\/api\/reading\/admin\/items/);
 assert.match(app, /\/api\/reading\/admin\/sample-import/);
+assert.match(app, /summary\.operational/);
 assert.match(app, /\/check`/);
 assert.match(app, /\/submit`/);
 assert.match(app, /\/reviews`/);

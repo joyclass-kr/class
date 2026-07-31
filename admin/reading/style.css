@@ -87,7 +87,7 @@ button:focus-visible, a:focus-visible, input:focus-visible, select:focus-visible
 
 .stats {
   display: grid;
-  grid-template-columns: repeat(5, minmax(120px, 1fr));
+  grid-template-columns: repeat(6, minmax(120px, 1fr));
   gap: 1px;
   border-bottom: 1px solid var(--line);
   background: var(--line);
@@ -95,9 +95,20 @@ button:focus-visible, a:focus-visible, input:focus-visible, select:focus-visible
 .stat { min-height: 76px; padding: 16px 24px; display: flex; align-items: end; justify-content: space-between; gap: 12px; background: var(--panel-3); }
 .stat span { color: var(--muted); font-size: 12px; }
 .stat strong { font-size: 1.65rem; letter-spacing: -.05em; }
+.review-workflow {
+  display: grid;
+  grid-template-columns: minmax(300px, .8fr) minmax(360px, 1.2fr);
+  align-items: center;
+  gap: 28px;
+  padding: 18px 28px;
+  border-bottom: 1px solid var(--line);
+  background: linear-gradient(90deg, rgba(114, 211, 155, .08), rgba(18, 29, 23, .76));
+}
+.review-workflow strong { display: block; margin-top: 5px; font-size: 15px; line-height: 1.5; }
+.review-workflow > p { margin: 0; color: var(--muted); font-size: 12px; line-height: 1.65; }
 
 .workbench {
-  min-height: calc(100vh - 165px);
+  min-height: calc(100vh - 240px);
   display: grid;
   grid-template-columns: 250px 320px minmax(620px, 1fr);
 }
@@ -145,6 +156,11 @@ input:disabled, select:disabled, textarea:disabled { opacity: .63; cursor: not-a
 .import-box strong { font-size: 13px; }
 .import-box span { color: var(--muted); font-size: 11px; line-height: 1.45; }
 .import-box .button { margin-top: 5px; width: 100%; }
+.maintenance-tools { margin-top: 22px; border-top: 1px solid var(--line); padding-top: 16px; }
+.maintenance-tools summary { color: var(--muted); cursor: pointer; font-size: 12px; font-weight: 850; }
+.maintenance-actions { display: grid; gap: 10px; margin-top: 12px; }
+.maintenance-actions > .button { width: 100%; }
+.maintenance-actions .import-box { margin-top: 0; }
 
 .record-list { display: grid; }
 .record-card { width: 100%; padding: 18px 20px; border: 0; border-bottom: 1px solid var(--line); color: var(--ink); background: transparent; text-align: left; cursor: pointer; }
@@ -252,7 +268,8 @@ input:disabled, select:disabled, textarea:disabled { opacity: .63; cursor: not-a
 @media (max-width: 680px) {
   .topbar { padding: 14px; gap: 14px; }
   .account-block span { display: none; }
-  .stats { grid-template-columns: repeat(5, 116px); }
+  .stats { grid-template-columns: repeat(6, 116px); }
+  .review-workflow { grid-template-columns: 1fr; gap: 8px; padding: 16px 14px; }
   .stat { padding: 13px; }
   .workbench { display: block; }
   .filter-panel { border-right: 0; }

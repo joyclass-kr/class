@@ -1,6 +1,15 @@
 (() => {
   "use strict";
-  const state = { items: [], track: "ko", set: [], index: 0, score: 0, answered: false };
+  const state = {
+    items: [],
+    track: "ko",
+    set: [],
+    index: 0,
+    score: 0,
+    answered: false,
+    deckHistory: null,
+    deckStorageKey: ""
+  };
   const $ = (id) => document.getElementById(id);
   const node = (tag, className, text) => { const el = document.createElement(tag); if (className) el.className = className; if (text !== undefined) el.textContent = text; return el; };
 
@@ -16,13 +25,42 @@
     for (let level = 1; level <= 8; level += 1) {
       const count = items.filter((item) => item.targetLevel === level).length;
       const card = node("button", "level-card", ""); card.type = "button"; card.disabled = !count;
-      card.append(node("strong", "level-code", `${state.track === "en" ? "E" : "K"}${level}`), node("span", "", count ? "5문제" : "준비 중"));
+      card.append(
+        node("strong", "level-code", `${state.track === "en" ? "E" : "K"}${level}`),
+        node("span", "", count ? `${count}문항 · 5문제 출제` : "준비 중")
+      );
       card.addEventListener("click", () => startSet(level)); list.append(card);
     }
   }
 
+  function deckStorageKey(level) {
+    return `reading-self-study-deck-v1:${state.track}:${level}`;
+  }
+
+  function loadDeckHistory(key) {
+    try {
+      return JSON.parse(window.localStorage.getItem(key) || "null");
+    } catch (_) {
+      return null;
+    }
+  }
+
+  function saveDeckHistory() {
+    if (!state.deckStorageKey || !state.deckHistory) return;
+    try {
+      window.localStorage.setItem(state.deckStorageKey, JSON.stringify(state.deckHistory));
+    } catch (_) {
+      // Practice still works when storage is unavailable.
+    }
+  }
+
   function startSet(level) {
-    state.set = state.items.filter((item) => item.track === state.track && item.targetLevel === level).sort(() => Math.random() - .5).slice(0, 5);
+    const candidates = state.items.filter((item) => item.track === state.track && item.targetLevel === level);
+    state.deckStorageKey = deckStorageKey(level);
+    const drawn = window.ReadingQuestionDeck.draw(candidates, 5, loadDeckHistory(state.deckStorageKey));
+    state.set = drawn.items;
+    state.deckHistory = drawn.history;
+    saveDeckHistory();
     state.index = 0; state.score = 0; renderQuestion(); show("question"); window.scrollTo({ top: 0, behavior: "smooth" });
   }
 
@@ -53,6 +91,8 @@
     if (state.answered) return next();
     state.answered = true; const item = state.set[state.index]; const correct = index === item.correctIndex;
     if (correct) state.score += 1;
+    state.deckHistory = window.ReadingQuestionDeck.recordAnswer(state.deckHistory, item.id, correct);
+    saveDeckHistory();
     [...$("studentChoices").children].forEach((button, choiceIndex) => { button.disabled = true; if (choiceIndex === item.correctIndex) button.classList.add("correct"); else if (choiceIndex === index) button.classList.add("wrong"); });
     const feedback = $("feedback"); feedback.className = `feedback ${correct ? "is-correct" : "is-wrong"}`; feedback.textContent = `${correct ? "정답 · " : "오답 · "}${item.explanation}`; feedback.hidden = false;
     $("nextButton").textContent = state.index === state.set.length - 1 ? "결과 보기" : "다음 문제";

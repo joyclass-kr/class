@@ -41,7 +41,7 @@ async function run() {
   try {
     await waitForServer(child);
     const base = `http://127.0.0.1:${port}`;
-    const [page, script, style, pilotPage, pilotScript, studentPage, studentScript, config] = await Promise.all([
+    const [page, script, style, pilotPage, pilotScript, studentPage, studentScript, studentDeck, selfStudy, config] = await Promise.all([
       fetch(`${base}/admin/reading/`),
       fetch(`${base}/admin/reading/app.js`),
       fetch(`${base}/admin/reading/style.css`),
@@ -49,6 +49,8 @@ async function run() {
       fetch(`${base}/admin/reading/pilots.js`),
       fetch(`${base}/learning/basics/reading/`),
       fetch(`${base}/learning/basics/reading/app.js`),
+      fetch(`${base}/learning/basics/reading/deck.js`),
+      fetch(`${base}/api/reading/self-study`),
       fetch(`${base}/api/auth/config`)
     ]);
     assert.equal(page.status, 200);
@@ -58,14 +60,18 @@ async function run() {
     assert.equal(pilotScript.status, 200);
     assert.equal(studentPage.status, 200);
     assert.equal(studentScript.status, 200);
+    assert.equal(studentDeck.status, 200);
+    assert.equal(selfStudy.status, 200);
     assert.equal(config.status, 200);
-    assert.match(await page.text(), /독해 문제 제작실/);
+    assert.match(await page.text(), /독해 문제 검수실/);
     assert.match(await script.text(), /\/api\/reading\/admin\/items/);
     assert.match(await style.text(), /\.workbench/);
     assert.match(await pilotPage.text(), /실전 응답 수집/);
     assert.match(await pilotScript.text(), /\/api\/reading\/admin\/pilots/);
-    assert.match(await studentPage.text(), /차분히 읽고, 하나씩/);
-    assert.match(await studentScript.text(), /\/api\/reading\/student\/pilots/);
+    assert.match(await studentPage.text(), /아직 풀지 않은 문제를 먼저 출제/);
+    assert.match(await studentScript.text(), /\/api\/reading\/self-study/);
+    assert.match(await studentDeck.text(), /ReadingQuestionDeck/);
+    assert.equal((await selfStudy.json()).items.length, 544);
     const configuration = await config.json();
     assert.equal(configuration.enabled, false);
     console.log("Reading admin route smoke: OK");

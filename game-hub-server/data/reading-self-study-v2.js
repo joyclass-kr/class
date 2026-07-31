@@ -267,30 +267,57 @@ function rotate(values, amount) {
   return values.slice(offset).concat(values.slice(0, offset));
 }
 
-function buildItem(topic, track, level) {
+const VARIANTS_PER_LEVEL = 4;
+
+const QUESTION_TYPE_SETS = {
+  lower: ["content_match", "implication", "content_match", "implication"],
+  middle: ["content_match", "inference", "implication", "inference"],
+  upper: ["content_match", "inference", "implication", "inference"]
+};
+
+function questionTypeFor(level, variant) {
+  const band = level <= 2 ? "lower" : level <= 4 ? "middle" : "upper";
+  return QUESTION_TYPE_SETS[band][variant];
+}
+
+function promptFor(track, questionType) {
+  const prompts = track === "ko"
+    ? {
+        content_match: "윗글의 내용과 일치하는 것을 고르세요.",
+        inference: "윗글을 바탕으로 추론한 내용으로 가장 적절한 것을 고르세요.",
+        implication: "윗글의 원리를 가장 잘 적용한 사례를 고르세요."
+      }
+    : {
+        content_match: "Which statement agrees with the passage?",
+        inference: "Which conclusion can best be inferred from the passage?",
+        implication: "Which example best applies the idea in the passage?"
+      };
+  return prompts[questionType];
+}
+
+function buildItem(topic, track, level, variant = 0) {
   const languageIndex = track === "ko" ? 0 : 1;
-  const factIndex = level - 1;
+  const factIndex = (level - 1 + variant * 2) % topic.facts.length;
   const detailCount = level <= 2 ? 2 : level <= 5 ? 3 : 4;
   const facts = rotate(topic.facts, factIndex).slice(0, detailCount);
   const answer = topic.applications[factIndex][languageIndex];
   const evidence = topic.facts[factIndex][languageIndex];
   const choiceCount = level <= 2 ? 3 : level <= 4 ? 4 : 5;
-  const distractors = rotate(topic.wrong, factIndex).slice(0, choiceCount - 1).map((pair) => pair[languageIndex]);
-  const correctIndex = (level * 2 + topic.key.length) % choiceCount;
+  const distractors = rotate(topic.wrong, factIndex + variant).slice(0, choiceCount - 1).map((pair) => pair[languageIndex]);
+  const correctIndex = (level * 2 + topic.key.length + variant) % choiceCount;
   const choices = distractors.slice();
   choices.splice(correctIndex, 0, answer);
   const isKorean = track === "ko";
+  const questionType = questionTypeFor(level, variant);
 
   return {
-    id: `${topic.key}-${isKorean ? "K" : "E"}${level}-V1`,
+    id: `${topic.key}-${isKorean ? "K" : "E"}${level}-V${variant + 1}`,
     topicTitle: isKorean ? topic.ko : topic.en,
     track,
     targetLevel: level,
-    questionType: level <= 2 ? "explicit" : "content_match",
+    questionType,
     passageText: facts.map((pair) => pair[languageIndex]).join(isKorean ? " " : " "),
-    promptText: isKorean
-      ? "윗글의 내용과 일치하는 것을 고르세요."
-      : "Which statement agrees with the passage?",
+    promptText: promptFor(track, questionType),
     choices,
     correctIndex,
     explanation: isKorean
@@ -301,7 +328,11 @@ function buildItem(topic, track, level) {
 
 function createSelfStudyItems() {
   return TOPICS.flatMap((topic) => ["ko", "en"].flatMap((track) =>
-    Array.from({ length: 8 }, (_, index) => buildItem(topic, track, index + 1))
+    Array.from({ length: 8 }, (_, index) =>
+      Array.from({ length: VARIANTS_PER_LEVEL }, (_, variant) =>
+        buildItem(topic, track, index + 1, variant)
+      )
+    ).flat()
   ));
 }
 
