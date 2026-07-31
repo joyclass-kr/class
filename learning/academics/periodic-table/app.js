@@ -18,8 +18,7 @@ document.addEventListener('DOMContentLoaded', () => {
             score: 0,
             streak: 0,
             currentQuestion: null,
-            answered: false,
-            autoTimer: null
+            answered: false
         },
 
         // Molecule lab state
@@ -492,7 +491,6 @@ document.addEventListener('DOMContentLoaded', () => {
         const nextBtn = document.getElementById('nextQuizBtn');
         if (nextBtn) {
             nextBtn.addEventListener('click', () => {
-                if (state.quiz.autoTimer) clearTimeout(state.quiz.autoTimer);
                 loadNewQuestion();
             });
         }
@@ -500,11 +498,6 @@ document.addEventListener('DOMContentLoaded', () => {
     }
 
     function loadNewQuestion() {
-        if (state.quiz.autoTimer) {
-            clearTimeout(state.quiz.autoTimer);
-            state.quiz.autoTimer = null;
-        }
-
         state.quiz.answered = false;
 
         // Every question stays inside the exam scope: elements 1 through 20.
@@ -521,8 +514,6 @@ document.addEventListener('DOMContentLoaded', () => {
         }
 
         const options = [correctEl, ...wrongOpts].sort(() => Math.random() - 0.5);
-        state.quiz.currentQuestion = { correctEl, options };
-
         // Render short-form periodic table exam questions.
         const qText = document.getElementById('quizQuestionText');
         const qSub = document.getElementById('quizSubText');
@@ -554,6 +545,8 @@ document.addEventListener('DOMContentLoaded', () => {
             optionLabel = opt => `${getShortGroup(opt.group)}족 · ${opt.period}주기`;
         }
 
+        state.quiz.currentQuestion = { correctEl, options, chosenType };
+
         optGrid.innerHTML = '';
         options.forEach(opt => {
             const btn = document.createElement('button');
@@ -565,31 +558,44 @@ document.addEventListener('DOMContentLoaded', () => {
         });
 
         document.getElementById('quizResultMsg').textContent = '';
+        document.getElementById('nextQuizBtn').hidden = true;
+    }
+
+    function getQuizExplanation(element, questionType) {
+        if (questionType === 'symbol_name') {
+            return `${element.symbol}은 ${element.name}의 원소 기호입니다.`;
+        }
+        if (questionType === 'name_symbol') {
+            return `${element.name}의 원소 기호는 ${element.symbol}입니다.`;
+        }
+        if (questionType === 'atomic_number') {
+            return `${element.name}(${element.symbol})의 원자번호는 ${element.number}번이며, 원자핵 속 양성자 수도 ${element.number}개입니다.`;
+        }
+        if (questionType === 'electron_arrangement') {
+            return `${element.name}(${element.symbol})의 전자 배치는 ${element.shells.join(' - ')}입니다.`;
+        }
+        return `${element.name}(${element.symbol})은 단주기표에서 ${getShortGroup(element.group)}족 · ${element.period}주기입니다. 가로줄은 주기, 세로줄은 족입니다.`;
     }
 
     function checkAnswer(selectedOpt, btn) {
         if (state.quiz.answered) return;
         state.quiz.answered = true;
 
-        const { correctEl } = state.quiz.currentQuestion;
+        const { correctEl, chosenType } = state.quiz.currentQuestion;
         const isCorrect = selectedOpt.number === correctEl.number;
         const msg = document.getElementById('quizResultMsg');
+        const explanation = getQuizExplanation(correctEl, chosenType);
 
         if (isCorrect) {
             btn.classList.add('correct');
             state.quiz.score += 10;
             state.quiz.streak += 1;
-            msg.textContent = '🎉 정답입니다! (+10점)  ➔ 잠시 후 다음 문제로 자동 이동합니다.';
+            msg.innerHTML = `<strong>🎉 정답입니다! (+10점)</strong><span>${explanation}</span>`;
             msg.style.color = '#38ef7d';
-
-            // Auto-advance after 1.2s on correct answer
-            state.quiz.autoTimer = setTimeout(() => {
-                loadNewQuestion();
-            }, 1200);
         } else {
             btn.classList.add('wrong');
             state.quiz.streak = 0;
-            msg.textContent = `❌ 아쉽네요! 정답은 ${correctEl.name} (${correctEl.symbol}) 입니다.  ➔ 잠시 후 다음 문제로 자동 이동합니다.`;
+            msg.innerHTML = `<strong>❌ 아쉽네요! 정답은 ${correctEl.name}(${correctEl.symbol})입니다.</strong><span>${explanation}</span>`;
             msg.style.color = '#ff5e57';
 
             // Highlight correct button
@@ -599,12 +605,12 @@ document.addEventListener('DOMContentLoaded', () => {
                 }
             });
 
-            // Auto-advance after 2.0s on wrong answer
-            state.quiz.autoTimer = setTimeout(() => {
-                loadNewQuestion();
-            }, 2000);
         }
 
+        document.querySelectorAll('.quiz-opt-btn').forEach(option => {
+            option.disabled = true;
+        });
+        document.getElementById('nextQuizBtn').hidden = false;
         document.getElementById('quizScore').textContent = state.quiz.score;
         document.getElementById('quizStreak').textContent = state.quiz.streak;
     }

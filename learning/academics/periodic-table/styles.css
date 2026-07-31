@@ -895,6 +895,45 @@ canvas#bohrAtomCanvas {
     color: #fff !important;
 }
 
+.quiz-opt-btn:disabled {
+    cursor: default;
+}
+
+.quiz-opt-btn:disabled:hover {
+    transform: none;
+}
+
+.quiz-result-message {
+    margin-top: 20px;
+    display: flex;
+    flex-direction: column;
+    gap: 7px;
+    font-size: 16px;
+    line-height: 1.5;
+}
+
+.quiz-result-message:empty {
+    margin-top: 0;
+}
+
+.quiz-result-message strong {
+    font-size: 18px;
+}
+
+.quiz-result-message span {
+    color: var(--text-secondary);
+}
+
+.quiz-next-btn {
+    margin: 24px auto 0;
+    padding: 12px 28px;
+    font-size: 16px;
+}
+
+.quiz-next-btn[hidden] {
+    display: none;
+}
+
 /* Molecule Laboratory Section */
 .molecule-lab-container {
     max-width: 1000px;

@@ -88,6 +88,10 @@ const pageSource = fs.readFileSync("learning/academics/periodic-table/index.html
 assert.match(appSource, /function initLab3D\(\)/);
 assert.match(appSource, /function drawMolecule3D\(\)/);
 assert.match(appSource, /activePointers: new Map\(\)/);
+assert.doesNotMatch(appSource, /state\.quiz\.autoTimer/);
+assert.doesNotMatch(appSource, /다음 문제로 자동 이동/);
+assert.match(appSource, /function getQuizExplanation\(/);
+assert.match(appSource, /getElementById\('nextQuizBtn'\)\.hidden = false/);
 assert.doesNotMatch(appSource, /function renderMoleculeSVG\(/);
 assert.match(pageSource, /id="molecule3dCanvas"/);
 assert.doesNotMatch(pageSource, /시험 범위만 한눈에/);
