@@ -19,6 +19,8 @@ assert.match(html, /TODAY’S FINISHERS/);
 assert.match(html, /finisher-board\.js/);
 assert.match(html, /id="bgm"[^>]+assets\/sound\/bgm\.mp3/);
 assert.match(html, /music-control\.js/);
+assert.match(html, /assets\/sound\/bgm\.mp3/);
+assert.match(fs.readFileSync(path.join(root, 'learning/games/sliding-puzzle/styles.css'), 'utf8'), /assets\/images\/background\.webp/);
 assert.match(html, /8 PUZZLE 해결 순서/);
 assert.match(html, /15 PUZZLE 해결 순서/);
 assert.match(html, /마지막 2×2/);
