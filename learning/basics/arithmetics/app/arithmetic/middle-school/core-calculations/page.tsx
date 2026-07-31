@@ -19,50 +19,6 @@ import {
 
 const DEFAULT_KIND: MiddleCoreKind = "prime-factorization";
 const INITIAL_SEED = 20260803;
-const TARGET_LABELS: Record<MiddleCoreKind, string> = {
-  "prime-factorization": "소인수분해한 결과는?",
-  "gcd-lcm": "구하는 값은?",
-  "linear-expression": "정리한 식은?",
-  "linear-equation": "x의 값은?",
-  "linear-equation-application": "x의 값은?",
-  "repeating-decimal": "기약분수는?",
-  "exponent-laws": "계산한 식은?",
-  "monomial-multiply": "계산한 식은?",
-  "monomial-divide": "계산한 식은?",
-  "monomial-comprehensive": "계산한 식은?",
-  "polynomial-add-subtract": "계산한 식은?",
-  "linear-inequality": "부등식의 해는?",
-  "simultaneous-substitution": "(x, y)는?",
-  "simultaneous-elimination": "(x, y)는?",
-  "linear-system-comprehensive": "구하는 해는?",
-  "square-roots-real": "계산한 값은?",
-  "radical-calculation": "계산한 값은?",
-  "polynomial-multiply": "전개한 식은?",
-  "formula-square": "전개한 식은?",
-  "formula-sum-difference": "전개한 식은?",
-  "formula-comprehensive": "전개한 식은?",
-};
-
-function problemQuestion(problem: MiddleCoreProblem) {
-  if (problem.kind !== "radical-calculation") return TARGET_LABELS[problem.kind];
-  if (problem.structure === "simplify-radical") {
-    return "근호 안의 수가 가장 작은 자연수가 되도록 간단히 하면?";
-  }
-  if (problem.structure === "simplify-then-combine") {
-    return "각 근호를 간단히 한 뒤 정리한 식은?";
-  }
-  if (problem.structure === "like-radicals-combined") {
-    return "동류 제곱근을 정리한 식은?";
-  }
-  if (problem.structure === "radical-parentheses") {
-    return "괄호를 풀어 정리한 식은?";
-  }
-  if (problem.structure === "rationalize-denominator") {
-    return "분모를 유리화한 식은?";
-  }
-  return "계산한 값은?";
-}
-
 function choiceProblem(problem: MiddleCoreProblem): WorksheetChoiceProblem {
   const choices = [
     { id: `${problem.id}-correct`, latex: problem.answerLatex, correct: true },
@@ -149,7 +105,7 @@ export default function MiddleCoreCalculationsPage() {
         <div className="polynomial-question-number">{String(index + 1).padStart(2, "0")}</div>
         <div className="polynomial-question-body">
           <span className="polynomial-focus-label"><InlineMathText text={problem.label} /></span>
-          <WorksheetQuestionPrompt label={problem.label} prompt={problemQuestion(problem)} />
+          <WorksheetQuestionPrompt label={problem.label} prompt={problem.question} />
           <div className="logarithm-expression">
             <MathFormula latex={problem.latex} />
           </div>

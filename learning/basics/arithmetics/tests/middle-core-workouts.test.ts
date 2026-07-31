@@ -186,19 +186,29 @@ test("prime factorization advances from exponent notation to middle-school appli
   );
   assert.ok(problems.slice(0, 5).every(({ answerLatex }) => answerLatex.includes("^")));
   assert.ok(problems.slice(5).every(({ latex }) => /n|a/.test(latex)));
-  assert.match(problems[5].latex, /가장 작은 자연수 }n\\text\{은\?\}/);
-  assert.match(problems[6].latex, /가장 작은 자연수 }n\\text\{은\?\}/);
-  assert.match(problems[7].latex, /a\\text\{는\?\}/);
+  assert.equal(problems[5].question, "가장 작은 자연수 n은?");
+  assert.equal(problems[6].question, "가장 작은 자연수 n은?");
+  assert.equal(problems[7].question, "a의 값은?");
+  assert.ok(problems.every(({ latex }) => !latex.includes("?")));
   assert.doesNotMatch(problems.map(({ latex }) => latex).join(" "), /구하여라/);
 });
 
-test("최대공약수와 최소공배수 문제도 구할 대상을 직접 묻는다", () => {
+test("최대공약수와 최소공배수 문제는 식 안의 중복 질문 없이 구할 대상을 한 번만 묻는다", () => {
+  const expectedQuestions = [
+    "최대공약수와 최소공배수는?",
+    "최대공약수는?",
+    "최대공약수와 최소공배수는?",
+    "최대공약수는?",
+    "최소공배수는?",
+    "다른 한 수는?",
+    "a+b의 값은?",
+    "다른 한 수는?",
+  ];
   for (let seed = 1; seed <= 100; seed += 1) {
-    const latex = createMiddleCoreProblemSet("gcd-lcm", seed).problems
-      .map((problem) => problem.latex)
-      .join(" ");
-    assert.doesNotMatch(latex, /구하여라/);
-    assert.match(latex, /는\?/);
+    const problems = createMiddleCoreProblemSet("gcd-lcm", seed).problems;
+    assert.deepEqual(problems.map(({ question }) => question), expectedQuestions);
+    assert.ok(problems.every(({ latex }) => !latex.includes("?")));
+    assert.doesNotMatch(problems.map(({ latex }) => latex).join(" "), /구하여라/);
   }
 });
 

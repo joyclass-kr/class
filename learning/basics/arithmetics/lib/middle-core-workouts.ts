@@ -30,6 +30,7 @@ export type MiddleCoreProblem = {
   difficulty: MiddleCoreDifficulty;
   structure: string;
   label: string;
+  question: string;
   latex: string;
   answerLatex: string;
   solutionHint: string;
@@ -109,7 +110,6 @@ const FORMULA_COMPREHENSIVE_PARTS: AtomicMiddleCoreKind[] = [
   "formula-square",
   "formula-sum-difference",
 ];
-const PRIME_PAIRS = [[2, 3], [2, 5], [3, 5], [2, 7]] as const;
 const SQUARE_FREE = [2, 3, 5, 6, 7] as const;
 
 function random(seed: number) {
@@ -140,14 +140,6 @@ function nonUnit(next: () => number, minimum: number, maximum: number) {
 
 function gcd(left: number, right: number): number {
   return right === 0 ? Math.abs(left) : gcd(right, left % right);
-}
-
-function gcdOf(values: number[]) {
-  return values.reduce((result, value) => gcd(result, value));
-}
-
-function lcmOf(values: number[]) {
-  return values.reduce((result, value) => Math.abs(result * value) / gcd(result, value));
 }
 
 function fraction(numerator: number, denominator: number) {
@@ -198,10 +190,6 @@ function multipliedGroup(value: number, contents: string) {
   return `${value}(${contents})`;
 }
 
-function factor(prime: number, exponent: number) {
-  return exponent === 1 ? `${prime}` : `${prime}^{${exponent}}`;
-}
-
 function uniqueDistractors(answer: string, candidates: string[]) {
   const realisticFallbacks = [
     `-(${answer})`,
@@ -223,6 +211,62 @@ function difficultyForIndex(index: number): MiddleCoreDifficulty {
   return "advanced";
 }
 
+function questionFor(kind: MiddleCoreKind, structure: string) {
+  if (kind === "prime-factorization") {
+    if (structure === "make-perfect-square-product" || structure === "make-perfect-square-quotient") {
+      return "가장 작은 자연수 n은?";
+    }
+    if (structure === "divisor-count-exponent") return "a의 값은?";
+    return "소인수분해한 결과는?";
+  }
+  if (kind === "gcd-lcm") {
+    if (structure === "factored-two-both" || structure === "two-both") {
+      return "최대공약수와 최소공배수는?";
+    }
+    if (structure === "factored-three-gcd" || structure === "three-gcd") {
+      return "최대공약수는?";
+    }
+    if (structure === "three-lcm") return "최소공배수는?";
+    if (structure === "missing-exponents") return "a+b의 값은?";
+    return "다른 한 수는?";
+  }
+  if (kind === "radical-calculation") {
+    if (structure === "simplify-radical") {
+      return "근호 안의 수가 가장 작은 자연수가 되도록 간단히 하면?";
+    }
+    if (structure === "simplify-then-combine") return "각 근호를 간단히 한 뒤 정리한 식은?";
+    if (structure === "like-radicals-combined") return "동류 제곱근을 정리한 식은?";
+    if (structure === "radical-parentheses") return "괄호를 풀어 정리한 식은?";
+    if (structure === "rationalize-denominator") return "분모를 유리화한 식은?";
+    return "계산한 값은?";
+  }
+  const questions: Record<MiddleCoreKind, string> = {
+    "prime-factorization": "소인수분해한 결과는?",
+    "gcd-lcm": "구하는 값은?",
+    "linear-expression": "정리한 식은?",
+    "linear-equation": "x의 값은?",
+    "linear-equation-application": "x의 값은?",
+    "repeating-decimal": "기약분수는?",
+    "exponent-laws": "계산한 식은?",
+    "monomial-multiply": "계산한 식은?",
+    "monomial-divide": "계산한 식은?",
+    "monomial-comprehensive": "계산한 식은?",
+    "polynomial-add-subtract": "계산한 식은?",
+    "linear-inequality": "부등식의 해는?",
+    "simultaneous-substitution": "(x, y)는?",
+    "simultaneous-elimination": "(x, y)는?",
+    "linear-system-comprehensive": "구하는 해는?",
+    "square-roots-real": "계산한 값은?",
+    "radical-calculation": "계산한 값은?",
+    "polynomial-multiply": "전개한 식은?",
+    "polynomial-divide": "계산한 식은?",
+    "formula-square": "전개한 식은?",
+    "formula-sum-difference": "전개한 식은?",
+    "formula-comprehensive": "전개한 식은?",
+  };
+  return questions[kind];
+}
+
 function make(
   id: string,
   kind: MiddleCoreKind,
@@ -239,6 +283,7 @@ function make(
     difficulty: "basic",
     structure,
     label,
+    question: questionFor(kind, structure),
     latex,
     answerLatex,
     solutionHint,
@@ -253,9 +298,9 @@ function buildPrimeFactorization(id: string, index: number): MiddleCoreProblem {
     ["756", "2^2\\times3^3\\times7", "factor-large", "세 자리 수의 소인수분해", "756을 2로 두 번, 3으로 세 번 나누면 마지막 소인수 7이 남는다.", ["2^2\\times3^2\\times7", "2^3\\times3^3\\times7", "2^2\\times3^3\\times9"]],
     ["1260", "2^2\\times3^2\\times5\\times7", "factor-four-primes", "네 소인수로 분해", "2, 3, 5, 7 순서로 나누어 모든 소인수와 지수를 빠짐없이 적는다.", ["2^2\\times3\\times5\\times7", "2\\times3^2\\times5\\times7", "2^2\\times3^2\\times5^2\\times7"]],
     ["2772", "2^2\\times3^2\\times7\\times11", "factor-four-digit", "네 자리 수의 소인수분해", "2772를 작은 소수부터 나누면 2²×3²×7×11이 된다.", ["2\\times3^2\\times7\\times11", "2^2\\times3\\times7\\times11", "2^2\\times3^2\\times7^2\\times11"]],
-    ["\\begin{gathered}540n\\text{이 어떤 자연수의 제곱일 때,}\\\\\\text{가장 작은 자연수 }n\\text{은?}\\end{gathered}", "15", "make-perfect-square-product", "완전제곱수 만들기", "540=2²×3³×5이므로 홀수인 3과 5의 지수를 짝수로 만들기 위해 3×5를 곱한다.", ["3", "5", "30"]],
-    ["\\begin{gathered}\\dfrac{360}{n}\\text{이 어떤 자연수의 제곱일 때,}\\\\\\text{가장 작은 자연수 }n\\text{은?}\\end{gathered}", "10", "make-perfect-square-quotient", "완전제곱수 만들기", "360=2³×3²×5에서 지수가 홀수인 2와 5를 나누면 36=6²이 된다.", ["2", "5", "15"]],
-    ["\\begin{gathered}N=2^a\\times3^2\\text{의 약수의 개수가 }15\\text{일 때,}\\\\a\\text{는?}\\end{gathered}", "4", "divisor-count-exponent", "약수의 개수와 지수", "약수의 개수는 (a+1)(2+1)=15이므로 a+1=5이다.", ["3", "5", "12"]],
+    ["540n\\text{이 어떤 자연수의 제곱일 때}", "15", "make-perfect-square-product", "완전제곱수 만들기", "540=2²×3³×5이므로 홀수인 3과 5의 지수를 짝수로 만들기 위해 3×5를 곱한다.", ["3", "5", "30"]],
+    ["\\dfrac{360}{n}\\text{이 어떤 자연수의 제곱일 때}", "10", "make-perfect-square-quotient", "완전제곱수 만들기", "360=2³×3²×5에서 지수가 홀수인 2와 5를 나누면 36=6²이 된다.", ["2", "5", "15"]],
+    ["N=2^a\\times3^2\\text{의 약수의 개수가 }15\\text{일 때}", "4", "divisor-count-exponent", "약수의 개수와 지수", "약수의 개수는 (a+1)(2+1)=15이므로 a+1=5이다.", ["3", "5", "12"]],
   ] as const;
   const [latex, answer, structure, label, hint, distractors] = exercises[index];
   return make(id, "prime-factorization", latex, answer, hint, [...distractors], structure, label);
@@ -264,37 +309,37 @@ function buildPrimeFactorization(id: string, index: number): MiddleCoreProblem {
 function buildGcdLcm(id: string, index: number): MiddleCoreProblem {
   const direct = [
     {
-      latex: "\\begin{gathered}2^4\\times3^2,\\quad2^2\\times3^3\\times5\\\\\\text{최대공약수와 최소공배수는?}\\end{gathered}",
+      latex: "2^4\\times3^2,\\quad2^2\\times3^3\\times5",
       answer: "\\text{최대공약수 }36,\\quad\\text{최소공배수 }2160",
       structure: "factored-two-both", label: "두 수의 지수 비교",
     },
     {
-      latex: "\\begin{gathered}2^4\\times3^2,\\quad2^3\\times3^3,\\quad2^2\\times3^2\\times5\\\\\\text{최대공약수는?}\\end{gathered}",
+      latex: "2^4\\times3^2,\\quad2^3\\times3^3,\\quad2^2\\times3^2\\times5",
       answer: "36", structure: "factored-three-gcd", label: "세 수의 지수 비교",
     },
     {
-      latex: "\\begin{gathered}120,\\quad168\\\\\\text{최대공약수와 최소공배수는?}\\end{gathered}",
+      latex: "120,\\quad168",
       answer: "\\text{최대공약수 }24,\\quad\\text{최소공배수 }840",
       structure: "two-both", label: "두 수를 직접 소인수분해",
     },
     {
-      latex: "\\begin{gathered}72,\\quad108,\\quad180\\\\\\text{최대공약수는?}\\end{gathered}",
+      latex: "72,\\quad108,\\quad180",
       answer: "36", structure: "three-gcd", label: "세 수를 직접 소인수분해",
     },
     {
-      latex: "\\begin{gathered}60,\\quad84,\\quad90\\\\\\text{최소공배수는?}\\end{gathered}",
+      latex: "60,\\quad84,\\quad90",
       answer: "1260", structure: "three-lcm", label: "세 수를 직접 소인수분해",
     },
     {
-      latex: "\\begin{gathered}\\text{두 자연수 중 한 수는 }144,\\\\\\text{최대공약수는 }12,\\ \\text{최소공배수는 }720\\text{이다.}\\\\\\text{다른 한 수는?}\\end{gathered}",
+      latex: "\\begin{gathered}\\text{두 자연수 중 한 수는 }144,\\\\\\text{최대공약수는 }12,\\ \\text{최소공배수는 }720\\text{이다.}\\end{gathered}",
       answer: "60", structure: "product-relation", label: "한 수 역산",
     },
     {
-      latex: "\\begin{gathered}A=2^a\\times3^2,\\quad B=2^3\\times3^b\\\\\\text{최대공약수는 }36,\\ \\text{최소공배수는 }216\\text{이다.}\\\\a+b\\text{는?}\\end{gathered}",
+      latex: "\\begin{gathered}A=2^a\\times3^2,\\quad B=2^3\\times3^b\\\\\\text{최대공약수는 }36,\\ \\text{최소공배수는 }216\\text{이다.}\\end{gathered}",
       answer: "5", structure: "missing-exponents", label: "지수 역산",
     },
     {
-      latex: "\\begin{gathered}\\text{두 자연수 중 한 수는 }72,\\\\\\text{최대공약수는 }12,\\ \\text{최소공배수는 }360\\text{이다.}\\\\\\text{다른 한 수는?}\\end{gathered}",
+      latex: "\\begin{gathered}\\text{두 자연수 중 한 수는 }72,\\\\\\text{최대공약수는 }12,\\ \\text{최소공배수는 }360\\text{이다.}\\end{gathered}",
       answer: "60", structure: "gcd-lcm-condition", label: "조건에 맞는 수",
     },
   ] as const;
@@ -406,80 +451,6 @@ function build(
   if (kind === "prime-factorization") return buildPrimeFactorization(id, index);
   if (kind === "gcd-lcm") return buildGcdLcm(id, index);
   if (kind === "polynomial-add-subtract") return buildPolynomialAddSubtract(id, index);
-
-  if (kind === "prime-factorization") {
-    const [p, q] = PRIME_PAIRS[index % PRIME_PAIRS.length];
-    const pExponent = 1 + (index % 3);
-    const qExponent = 1 + (Math.floor(index / 2) % 2);
-    const value = p ** pExponent * q ** qExponent;
-    const answer = `${factor(p, pExponent)}\\times${factor(q, qExponent)}`;
-    return make(id, kind, `${value}`, answer,
-      `${value}을 소수로 계속 나누어 ${p}와 ${q}의 거듭제곱 곱으로 나타낸다.`,
-      [
-        `${factor(p, pExponent + 1)}\\times${factor(q, qExponent)}`,
-        `${factor(p, pExponent)}\\times${factor(q, qExponent + 1)}`,
-        `${p * q}^{${Math.max(pExponent, qExponent)}}`,
-      ],
-      `primes-${p}-${q}`);
-  }
-
-  if (kind === "gcd-lcm") {
-    const exercises = [
-      { values: [72, 108], mode: "gcd", structure: "two-gcd", label: "두 수의 최대공약수" },
-      { values: [84, 126], mode: "lcm", structure: "two-lcm", label: "두 수의 최소공배수" },
-      { values: [120, 168], mode: "both", structure: "two-both", label: "두 수의 소인수분해" },
-      { values: [72, 108, 180], mode: "gcd", structure: "three-gcd", label: "세 수의 최대공약수" },
-      { values: [60, 84, 90], mode: "lcm", structure: "three-lcm", label: "세 수의 최소공배수" },
-      {
-        values: [144, 540], mode: "both", structure: "factored-two-both", label: "소인수 지수 비교",
-        display: ["2^4\\times3^2", "2^2\\times3^3\\times5"],
-      },
-      {
-        values: [144, 216, 180], mode: "gcd", structure: "factored-three-gcd", label: "소인수 지수 비교",
-        display: ["2^4\\times3^2", "2^3\\times3^3", "2^2\\times3^2\\times5"],
-      },
-      {
-        values: [72, 540, 450], mode: "lcm", structure: "factored-three-lcm", label: "소인수 지수 비교",
-        display: ["2^3\\times3^2", "2^2\\times3^3\\times5", "2\\times3^2\\times5^2"],
-      },
-    ] as const;
-    const exercise = exercises[index];
-    const values = [...exercise.values];
-    const greatest = gcdOf(values);
-    const least = lcmOf(values);
-    const answer = exercise.mode === "gcd"
-      ? `${greatest}`
-      : exercise.mode === "lcm"
-        ? `${least}`
-        : `\\text{최대공약수 }${greatest},\\quad\\text{최소공배수 }${least}`;
-    const request = exercise.mode === "gcd"
-      ? "\\text{최대공약수는?}"
-      : exercise.mode === "lcm"
-        ? "\\text{최소공배수는?}"
-        : "\\text{최대공약수와 최소공배수는?}";
-    const displayedValues = "display" in exercise
-      ? exercise.display
-      : exercise.values.map((value) => `${value}`);
-    const latex = `\\begin{gathered}${displayedValues.join(",\\quad")}\\\\${request}\\end{gathered}`;
-    return make(
-      id,
-      kind,
-      latex,
-      answer,
-      "각 수를 소인수분해한 뒤 최대공약수는 공통 소인수의 작은 지수, 최소공배수는 모든 소인수의 큰 지수를 택한다.",
-      exercise.mode === "both"
-        ? [
-          `\\text{최대공약수 }${greatest * 2},\\quad\\text{최소공배수 }${least}`,
-          `\\text{최대공약수 }${greatest},\\quad\\text{최소공배수 }${Math.floor(least / 2)}`,
-          `\\text{최대공약수 }${greatest},\\quad\\text{최소공배수 }${values.reduce((product, value) => product * value)}`,
-        ]
-        : exercise.mode === "gcd"
-          ? [`${greatest * 2}`, `${greatest * 3}`, `${least}`]
-          : [`${Math.floor(least / 2)}`, `${least * 2}`, `${greatest}`],
-      exercise.structure,
-      exercise.label,
-    );
-  }
 
   if (kind === "linear-expression") {
     const mode = index % 4;
