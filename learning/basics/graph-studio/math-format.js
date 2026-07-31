@@ -69,7 +69,7 @@
           index = close + 1;
           continue;
         }
-        latex += `\\operatorname{${functionName}}\\left(`;
+        latex += `\\operatorname{${functionName}}(`;
         index = open + 1;
         continue;
       }
@@ -89,11 +89,12 @@
       }
       if (character === "*" || character === "×" || character === "·") latex += "\\cdot ";
       else if (character === "÷") latex += "\\div ";
-      else if (character === "(") latex += "\\left(";
-      else if (character === ")") latex += "\\right)";
+      else if (character === "(" || character === ")") latex += character;
       else if (character === " ") latex += "\\,";
       else if (character === "{") latex += "\\{";
       else if (character === "}") latex += "\\}";
+      else if (character === "\\") latex += "\\backslash ";
+      else if (character === "_" || character === "%" || character === "#" || character === "&" || character === "$") latex += `\\${character}`;
       else latex += character;
       index += 1;
     }

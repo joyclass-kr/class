@@ -5,6 +5,7 @@ const css = fs.readFileSync("learning/basics/graph-studio/styles.css", "utf8");
 const html = fs.readFileSync("learning/basics/graph-studio/index.html", "utf8");
 const script = fs.readFileSync("learning/basics/graph-studio/app.js", "utf8");
 const { expressionToLatex } = require("../learning/basics/graph-studio/math-format.js");
+const katex = require("../learning/basics/graph-studio/vendor/katex.min.js");
 
 assert.match(css, /\.sectionHeading small[^}]*font-size:\s*12px/);
 assert.match(css, /\.functionComposer header small,[\s\S]*?font-size:\s*12px/);
@@ -40,5 +41,10 @@ const nested = expressionToLatex("x()ln(log10(sqrt(exp(xxxxxxx))))a(x-h)^2+k");
 assert.match(nested, /\\ln\\left\(\\log_\{10\}\\left\(\\sqrt\{e\^\{xxxxxxx\}\}\\right\)\\right\)/);
 assert.match(nested, /\^\{2\}\+k$/);
 assert.doesNotMatch(nested, /\^\{2\+k\}/);
+
+const malformed = expressionToLatex("(x^2+1)/(x-1)abs)");
+assert.equal(malformed, "y=(x^{2}+1)/(x-1)abs)");
+assert.doesNotMatch(malformed, /\\left|\\right/);
+assert.doesNotThrow(() => katex.renderToString(malformed, { throwOnError: true, strict: false }));
 
 console.log("graph studio typography contract passed");
