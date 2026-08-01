@@ -61,7 +61,7 @@
         voicingQuizChord: 0,
         voicingQuizInversion: 1,
         voicingQuizAnswered: false,
-        rhythmMode: "performance",
+        rhythmMode: "beatmaker",
         rhythmPattern: "steady",
         rhythmPlaybackToken: 0,
         tempo: 84,
@@ -81,6 +81,10 @@
         dictationAttempts: 0,
         dictationCorrect: 0,
         dictationListens: 0,
+        notationChoiceId: null,
+        notationChoiceOptions: [],
+        notationChoiceNumber: 0,
+        notationChoiceAnswered: false,
         practiceCount: 0,
         basicKey: "C",
         basicTonicMidi: 60
@@ -100,7 +104,8 @@
             "rhythmScore", "scoreTitle", "scoreDetail", "retryButton", "dictationPanel", "performancePanel",
             "dictationQuestionLabel", "dictationListenButton", "dictationGrid", "dictationFeedback",
             "clearDictationButton", "checkDictationButton", "newDictationButton", "dictationBankCount",
-            "dictationAttemptCount", "dictationCorrectCount", "dictationListenCount", "toast"
+            "dictationAttemptCount", "dictationCorrectCount", "dictationListenCount", "notationChoiceQuestionLabel",
+            "notationChoiceListenButton", "notationChoices", "notationChoiceFeedback", "newNotationChoiceButton", "toast"
         ].forEach(function (id) { elements[id] = document.getElementById(id); });
     }
 
@@ -687,41 +692,19 @@
     }
 
     function renderDictationGrid() {
-        const question = getDictationQuestion();
-        if (!question) return;
-        const targetNotation = core.buildRhythmNotation(question);
         elements.dictationGrid.innerHTML = "";
         for (let index = 0; index < 16; index += 1) {
-            const symbol = state.dictationAnswer[index] || "rest";
-            const target = targetNotation[index];
+            const active = state.dictationAnswer[index] === "note";
             const step = document.createElement("button");
             step.type = "button";
-            step.className = "rhythm-step answer-step symbol-" + symbol;
-            if (state.dictationReviewed) {
-                if (symbol === target) step.classList.add("correct");
-                else {
-                    step.classList.add("wrong");
-                    step.dataset.expected = rhythmSymbolGlyph(target);
-                }
-            }
+            step.className = "rhythm-step beat-step" + (active ? " hit" : "");
             step.dataset.step = index;
-            step.setAttribute("aria-label", (Math.floor(index / 4) + 1) + "박 " + ["1", "e", "앤드", "a"][index % 4] + " · " + rhythmSymbolLabel(symbol));
-            const glyph = document.createElement("span");
-            glyph.textContent = rhythmSymbolGlyph(symbol);
-            glyph.setAttribute("aria-hidden", "true");
-            step.appendChild(glyph);
+            step.setAttribute("aria-pressed", String(active));
+            step.setAttribute("aria-label", (Math.floor(index / 4) + 1) + "박 " + ["1", "e", "앤드", "a"][index % 4] + (active ? " · 비트 켜짐" : " · 비트 꺼짐"));
             step.addEventListener("click", function () {
-                if (state.dictationSymbol === "tie" && (index === 0 || !["note", "tie"].includes(state.dictationAnswer[index - 1]))) {
-                    showToast("타이는 음표나 타이 뒤에 놓으세요.");
-                    return;
-                }
-                state.dictationAnswer[index] = state.dictationSymbol;
-                repairDictationTies();
-                if (state.dictationReviewed) {
-                    state.dictationReviewed = false;
-                    elements.dictationFeedback.className = "";
-                    elements.dictationFeedback.textContent = "답을 수정했습니다. 다시 확인하세요.";
-                }
+                state.dictationAnswer[index] = state.dictationAnswer[index] === "note" ? "rest" : "note";
+                const context = ensureAudio();
+                if (context && state.dictationAnswer[index] === "note") playDrum(context.currentTime + .01, index % 4 === 0);
                 renderDictationGrid();
             });
             elements.dictationGrid.appendChild(step);
@@ -748,10 +731,96 @@
 
     function clearDictationAnswer() {
         state.dictationAnswer = Array(16).fill("rest");
-        state.dictationReviewed = false;
         elements.dictationFeedback.className = "";
-        elements.dictationFeedback.textContent = "입력을 지웠습니다.";
+        elements.dictationFeedback.textContent = "모든 비트를 지웠습니다.";
         renderDictationGrid();
+    }
+
+    function playBeatGrid() {
+        const context = ensureAudio();
+        if (!context) return;
+        const token = ++state.rhythmPlaybackToken;
+        const beatSeconds = 60 / state.tempo;
+        const stepSeconds = beatSeconds / 4;
+        const start = context.currentTime + .08;
+        state.dictationAnswer.forEach(function (symbol, index) {
+            if (symbol === "note") playDrum(start + index * stepSeconds, index % 4 === 0);
+        });
+        animateRhythmGrid(80, stepSeconds * 1000, token, elements.dictationGrid);
+        elements.dictationFeedback.textContent = state.dictationAnswer.includes("note") ? "내 비트를 재생합니다." : "먼저 네모칸에 점을 찍으세요.";
+    }
+
+    function notationChoiceQuestion() {
+        return core.RHYTHM_DICTATION_BANK.find(function (pattern) { return pattern.id === state.notationChoiceId; });
+    }
+
+    function notationChoiceGlyph(symbol) {
+        return symbol === "note" ? "♪" : (symbol === "tie" ? "—" : "𝄽");
+    }
+
+    function renderNotationChoices() {
+        elements.notationChoices.innerHTML = "";
+        state.notationChoiceOptions.forEach(function (pattern, optionIndex) {
+            const button = document.createElement("button");
+            button.type = "button";
+            button.className = "notation-choice";
+            button.setAttribute("aria-label", (optionIndex + 1) + "번 악보 선택");
+            const number = document.createElement("b");
+            number.textContent = optionIndex + 1;
+            const staff = document.createElement("span");
+            staff.className = "notation-choice-staff";
+            core.buildRhythmNotation(pattern).forEach(function (symbol) {
+                const note = document.createElement("i");
+                note.className = "notation-symbol " + symbol;
+                note.textContent = notationChoiceGlyph(symbol);
+                staff.appendChild(note);
+            });
+            button.appendChild(number);
+            button.appendChild(staff);
+            button.addEventListener("click", function () {
+                if (state.notationChoiceAnswered) return;
+                if (pattern.id === state.notationChoiceId) {
+                    state.notationChoiceAnswered = true;
+                    button.classList.add("correct");
+                    elements.notationChoiceFeedback.textContent = "정답입니다. 쉼표가 놓인 위치까지 잘 들었어요.";
+                    incrementPractice();
+                } else {
+                    button.classList.add("wrong");
+                    elements.notationChoiceFeedback.textContent = "다시 들어보고 음표와 쉼표의 위치를 비교하세요.";
+                    window.setTimeout(function () { button.classList.remove("wrong"); }, 650);
+                }
+            });
+            elements.notationChoices.appendChild(button);
+        });
+    }
+
+    function newNotationChoiceQuestion() {
+        const pool = getDictationPool();
+        const candidates = pool.filter(function (pattern) { return pattern.id !== state.notationChoiceId; });
+        const target = candidates[Math.floor(Math.random() * candidates.length)] || pool[0];
+        const optionSet = new Map([[target.id, target]]);
+        while (optionSet.size < Math.min(3, pool.length)) {
+            const candidate = pool[Math.floor(Math.random() * pool.length)];
+            optionSet.set(candidate.id, candidate);
+        }
+        state.notationChoiceId = target.id;
+        state.notationChoiceOptions = Array.from(optionSet.values()).sort(function () { return Math.random() - .5; });
+        state.notationChoiceNumber += 1;
+        state.notationChoiceAnswered = false;
+        elements.notationChoiceQuestionLabel.textContent = "문제 " + state.notationChoiceNumber;
+        elements.notationChoiceFeedback.textContent = "듣기 버튼을 누른 뒤 악보를 고르세요.";
+        renderNotationChoices();
+    }
+
+    function listenToNotationChoice() {
+        const context = ensureAudio();
+        const question = notationChoiceQuestion();
+        if (!context || !question) return;
+        const beatSeconds = 60 / state.tempo;
+        const start = context.currentTime + .08;
+        for (let beat = 0; beat < 4; beat += 1) playClick(start + beat * beatSeconds, beat === 0, .9);
+        scheduleNotation(core.buildRhythmNotation(question), start + 4 * beatSeconds, true);
+        elements.notationChoiceFeedback.textContent = "한 마디를 듣는 중입니다.";
     }
 
     function checkDictationAnswer() {
@@ -806,15 +875,14 @@
 
     function switchRhythmMode(mode) {
         if (state.challengeRunning) return;
-        state.rhythmMode = mode === "performance" ? "performance" : "dictation";
+        state.rhythmMode = mode === "notation-choice" ? "notation-choice" : "beatmaker";
         document.querySelectorAll("[data-rhythm-mode]").forEach(function (button) {
             const active = button.dataset.rhythmMode === state.rhythmMode;
             button.classList.toggle("active", active);
             button.setAttribute("aria-selected", String(active));
         });
-        elements.dictationPanel.classList.toggle("hidden", state.rhythmMode !== "dictation");
-        elements.performancePanel.classList.toggle("hidden", state.rhythmMode !== "performance");
-        if (state.rhythmMode !== "performance" && state.metronomeOn) toggleMetronome();
+        elements.dictationPanel.classList.toggle("hidden", state.rhythmMode !== "beatmaker");
+        elements.performancePanel.classList.toggle("hidden", state.rhythmMode !== "notation-choice");
     }
 
     function renderRhythm() {
@@ -1170,46 +1238,16 @@
             elements.tempoOutput.textContent = state.tempo;
             if (state.metronomeOn) { window.clearTimeout(state.metronomeTimer); startMetronome(); }
         });
-        elements.rhythmListenButton.addEventListener("click", listenToRhythm);
-        elements.metronomeButton.addEventListener("click", toggleMetronome);
-        elements.dictationListenButton.addEventListener("click", listenToDictation);
+        elements.dictationListenButton.addEventListener("click", playBeatGrid);
         elements.clearDictationButton.addEventListener("click", clearDictationAnswer);
-        elements.checkDictationButton.addEventListener("click", checkDictationAnswer);
-        elements.newDictationButton.addEventListener("click", newDictationQuestion);
-        document.querySelectorAll("[data-dictation-symbol]").forEach(function (button) {
-            button.addEventListener("click", function () {
-                state.dictationSymbol = button.dataset.dictationSymbol;
-                document.querySelectorAll("[data-dictation-symbol]").forEach(function (item) {
-                    const active = item === button;
-                    item.classList.toggle("active", active);
-                    item.setAttribute("aria-pressed", String(active));
-                });
-            });
-        });
+        elements.notationChoiceListenButton.addEventListener("click", listenToNotationChoice);
+        elements.newNotationChoiceButton.addEventListener("click", newNotationChoiceQuestion);
         document.querySelectorAll("[data-dictation-level]").forEach(function (button) {
             button.addEventListener("click", function () {
                 state.dictationLevel = button.dataset.dictationLevel;
                 document.querySelectorAll("[data-dictation-level]").forEach(function (item) { item.classList.toggle("active", item === button); });
-                newDictationQuestion();
+                newNotationChoiceQuestion();
             });
-        });
-        document.querySelectorAll("[data-pattern]").forEach(function (button) {
-            button.addEventListener("click", function () {
-                if (state.challengeRunning) return;
-                state.rhythmPattern = button.dataset.pattern;
-                document.querySelectorAll("[data-pattern]").forEach(function (item) { item.classList.toggle("active", item === button); });
-                renderRhythm();
-            });
-        });
-        elements.startChallengeButton.addEventListener("click", startChallenge);
-        elements.retryButton.addEventListener("click", startChallenge);
-        elements.tapButton.addEventListener("pointerdown", function (event) { event.preventDefault(); registerTap(); });
-        window.addEventListener("keydown", function (event) {
-            if (event.code !== "Space" || elements.rhythmLab.classList.contains("hidden") || state.rhythmMode !== "performance") return;
-            const tag = document.activeElement && document.activeElement.tagName;
-            if (tag === "INPUT" || tag === "SELECT") return;
-            event.preventDefault();
-            if (!event.repeat) registerTap();
         });
     }
 
@@ -1223,8 +1261,9 @@
         loadPracticeCount();
         renderKeyOptions();
         renderHarmony();
-        newDictationQuestion();
-        renderRhythm();
+        state.dictationAnswer = Array(16).fill("rest");
+        renderDictationGrid();
+        newNotationChoiceQuestion();
         makeQuiz();
         makeVoicingQuiz();
     }

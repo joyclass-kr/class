@@ -17,7 +17,7 @@
     <link rel="preload" href="assets/piano/C6.mp3" as="fetch" type="audio/mpeg" crossorigin>
     <link rel="stylesheet" href="styles.css?v=20260801-sampled-piano">
     <script src="music-core.js?v=20260801-diatonic-ascent" defer></script>
-    <script src="app.js?v=20260801-diatonic-ascent" defer></script>
+    <script src="app.js?v=20260801-rhythm-two-modes" defer></script>
 </head>
 <body>
     <div class="noise" aria-hidden="true"></div>
@@ -47,7 +47,7 @@
                 </button>
                 <button class="lab-tab" type="button" data-tab="rhythm" aria-controls="rhythmLab" aria-selected="false">
                     <span class="tab-number">02</span>
-                    <span><b>리듬 트레이닝</b><small>박자 세기부터 따라치기까지</small></span>
+                    <span><b>리듬 트레이닝</b><small>비트 찍기와 악보 듣기</small></span>
                 </button>
             </nav>
 
@@ -296,7 +296,7 @@
 
                 <div id="rhythmPractice" class="advanced-practice hidden">
                     <header class="practice-heading rhythm-practice-heading">
-                        <div><span>다음 단계</span><h3>리듬 실전 연습</h3><p>기본 박을 익혔다면 듣고 표시하거나 직접 따라 쳐 보세요.</p></div>
+                        <div><span>다음 단계</span><h3>리듬 실전 연습</h3><p>16칸에 비트를 찍어 보고, 들은 한 마디와 같은 악보를 고르세요.</p></div>
                     <div class="tempo-box">
                         <div><span>TEMPO</span><output id="tempoOutput" for="tempoSlider">84</output><b>BPM</b></div>
                         <input id="tempoSlider" type="range" min="50" max="150" value="84" aria-label="템포">
@@ -304,105 +304,46 @@
                     </header>
 
                 <div class="rhythm-mode-switch" role="tablist" aria-label="리듬 훈련 방식">
-                    <button type="button" role="tab" aria-selected="false" data-rhythm-mode="dictation">리듬 청음</button>
-                    <button class="active" type="button" role="tab" aria-selected="true" data-rhythm-mode="performance">쉬운 따라 치기</button>
+                    <button class="active" type="button" role="tab" aria-selected="true" data-rhythm-mode="beatmaker">16칸 비트 찍기</button>
+                    <button type="button" role="tab" aria-selected="false" data-rhythm-mode="notation-choice">듣고 악보 고르기</button>
                 </div>
 
-                <div id="dictationPanel" class="dictation-layout hidden">
-                    <article class="dictation-card">
+                <div id="dictationPanel" class="beatmaker-layout">
+                    <article class="dictation-card beatmaker-card">
                         <div class="dictation-toolbar">
                             <div>
-                                <span id="dictationQuestionLabel" class="mini-label">문제 1</span>
-                                <h3>음표·쉼표·타이로 입력하세요</h3>
+                                <span class="mini-label">STEP SEQUENCER</span>
+                                <h3>칸을 눌러 비트를 찍으세요</h3>
                             </div>
                             <div class="meter-badge"><strong>4</strong><i></i><strong>4</strong></div>
-                            <button id="dictationListenButton" class="dictation-listen-button" type="button"><span aria-hidden="true">▶</span> 문제 듣기</button>
-                        </div>
-
-                        <div class="rhythm-symbol-palette" role="toolbar" aria-label="리듬 기호 선택">
-                            <span>입력 기호</span>
-                            <button class="active" type="button" data-dictation-symbol="note" aria-pressed="true"><b aria-hidden="true">♪</b>음표</button>
-                            <button type="button" data-dictation-symbol="rest" aria-pressed="false"><b aria-hidden="true">𝄿</b>쉼표</button>
-                            <button type="button" data-dictation-symbol="tie" aria-pressed="false"><b aria-hidden="true">⌒</b>타이</button>
-                            <small>쉼표가 기본으로 채워집니다.</small>
+                            <button id="dictationListenButton" class="dictation-listen-button" type="button"><span aria-hidden="true">▶</span> 내 비트 듣기</button>
                         </div>
                         <div class="count-strip" aria-label="박자 카운트"><span>1</span><i>e</i><i>&amp;</i><i>a</i><span>2</span><i>e</i><i>&amp;</i><i>a</i><span>3</span><i>e</i><i>&amp;</i><i>a</i><span>4</span><i>e</i><i>&amp;</i><i>a</i></div>
-                        <div id="dictationGrid" class="rhythm-grid dictation-grid notation-grid" role="group" aria-label="음표 쉼표 타이 리듬 답안 입력"></div>
+                        <div id="dictationGrid" class="rhythm-grid beat-grid" role="group" aria-label="16칸 비트 입력"></div>
                         <div class="beat-numbers" aria-hidden="true"><span>BEAT 1</span><span>BEAT 2</span><span>BEAT 3</span><span>BEAT 4</span></div>
-
                         <div class="dictation-actions">
-                            <p id="dictationFeedback" aria-live="polite">한 마디 예비박 뒤에 문제가 두 번 재생됩니다.</p>
-                            <button id="clearDictationButton" type="button">입력 지우기</button>
-                            <button id="checkDictationButton" type="button">정답 확인</button>
-                            <button id="newDictationButton" type="button">새 문제</button>
+                            <p id="dictationFeedback" aria-live="polite">점을 켜면 그 칸에서 드럼 소리가 납니다.</p>
+                            <button id="clearDictationButton" type="button">모두 지우기</button>
                         </div>
                     </article>
-
-                    <aside class="dictation-bank-card">
-                        <span class="mini-label">문제은행</span>
-                        <h3><strong id="dictationBankCount">48</strong>개 리듬</h3>
-                        <div class="difficulty-list" role="group" aria-label="리듬 청음 난이도">
-                            <button type="button" data-dictation-level="all"><span>전체</span><b>48</b></button>
-                            <button class="active" type="button" data-dictation-level="basic"><span>기초</span><b>12</b></button>
-                            <button type="button" data-dictation-level="offbeat"><span>엇박</span><b>12</b></button>
-                            <button type="button" data-dictation-level="sixteenth"><span>16비트</span><b>12</b></button>
-                            <button type="button" data-dictation-level="mixed"><span>혼합</span><b>12</b></button>
-                        </div>
-                        <dl class="dictation-stats">
-                            <div><dt>시도</dt><dd id="dictationAttemptCount">0</dd></div>
-                            <div><dt>정답</dt><dd id="dictationCorrectCount">0</dd></div>
-                            <div><dt>듣기</dt><dd id="dictationListenCount">0</dd></div>
-                        </dl>
-                    </aside>
                 </div>
 
-                <div id="performancePanel" class="rhythm-layout">
-                    <article class="rhythm-player-card">
-                        <div class="rhythm-toolbar">
+                <div id="performancePanel" class="notation-choice-layout hidden">
+                    <article class="notation-choice-card">
+                        <div class="dictation-toolbar">
                             <div>
-                                <span class="mini-label">리듬 패턴</span>
-                                <h3 id="rhythmName">4분음표 워크</h3>
+                                <span id="notationChoiceQuestionLabel" class="mini-label">문제 1</span>
+                                <h3>들은 한 마디와 같은 악보를 고르세요</h3>
                             </div>
                             <div class="meter-badge"><strong>4</strong><i></i><strong>4</strong></div>
-                            <div class="transport">
-                                <button id="rhythmListenButton" type="button"><span>▶</span> 먼저 듣기</button>
-                                <button id="metronomeButton" type="button" aria-pressed="false"><span>●</span> 메트로놈</button>
-                            </div>
+                            <button id="notationChoiceListenButton" class="dictation-listen-button" type="button"><span aria-hidden="true">▶</span> 한 마디 듣기</button>
                         </div>
-
-                        <div class="count-strip" aria-label="박자 카운트"><span>1</span><i>&amp;</i><i>e</i><i>a</i><span>2</span><i>&amp;</i><i>e</i><i>a</i><span>3</span><i>&amp;</i><i>e</i><i>a</i><span>4</span><i>&amp;</i><i>e</i><i>a</i></div>
-                        <div id="rhythmGrid" class="rhythm-grid" aria-label="16분음표 리듬 그리드"></div>
-                        <div class="beat-numbers" aria-hidden="true"><span>BEAT 1</span><span>BEAT 2</span><span>BEAT 3</span><span>BEAT 4</span></div>
-                        <p id="rhythmSyllables" class="rhythm-syllables">타 · 타 · 타 · 타</p>
-
-                        <div class="challenge-zone">
-                            <div class="challenge-copy">
-                                <span id="challengeStatus">준비</span>
-                                <strong id="challengeTitle">준비되면 시작하세요</strong>
-                                <small id="challengeGuide">한 마디 카운트 후, 들었던 리듬을 따라 두드립니다.</small>
-                            </div>
-                            <button id="tapButton" class="tap-button" type="button"><span>TAP</span><small>화면 터치 · SPACE</small></button>
-                            <button id="startChallengeButton" class="challenge-button" type="button">연습 시작</button>
-                        </div>
-
-                        <div id="scorePanel" class="score-panel hidden" aria-live="polite">
-                            <div class="score-ring"><strong id="rhythmScore">0</strong><span>점</span></div>
-                            <div><h4 id="scoreTitle">좋은 출발이에요!</h4><p id="scoreDetail"></p></div>
-                            <button id="retryButton" type="button">다시 연습</button>
+                        <div id="notationChoices" class="notation-choices" role="group" aria-label="악보 선택지"></div>
+                        <div class="notation-choice-actions">
+                            <p id="notationChoiceFeedback" aria-live="polite">듣기 버튼을 누른 뒤 악보를 고르세요.</p>
+                            <button id="newNotationChoiceButton" type="button">다음 문제</button>
                         </div>
                     </article>
-
-                    <aside class="pattern-list-card">
-                        <span class="mini-label">리듬 선택</span>
-                        <h3>연습할 리듬</h3>
-                        <div class="pattern-list" role="list">
-                            <button class="active" type="button" data-pattern="steady"><span>01</span><b>4분음표 워크<small>기초 · 정박</small></b><i>→</i></button>
-                            <button type="button" data-pattern="eighths"><span>02</span><b>8비트 드라이브<small>기초 · 분할</small></b><i>→</i></button>
-                            <button type="button" data-pattern="offbeat"><span>03</span><b>오프비트 팝<small>중급 · 엇박</small></b><i>→</i></button>
-                            <button type="button" data-pattern="syncopation"><span>04</span><b>싱코페이션<small>도전 · 당김음</small></b><i>→</i></button>
-                        </div>
-                        <div class="tip-card"><span>연습 방법</span><p>발로 1·2·3·4박을 유지하고 손으로 리듬을 두드립니다.</p></div>
-                    </aside>
                 </div>
                 </div>
             </section>

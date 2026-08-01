@@ -17,8 +17,8 @@ assert.deepEqual(ebChords.map((chord) => musicCore.getAscendingDiatonicMidi(chor
 
 [
     "harmonyLab", "rhythmLab", "progressionSlots", "chordBank", "piano",
-    "minorVariantControl", "minorVariantSelect", "rhythmGrid", "tapButton", "startChallengeButton", "scorePanel",
-    "dictationPanel", "performancePanel", "dictationGrid", "dictationListenButton", "checkDictationButton", "newDictationButton",
+    "minorVariantControl", "minorVariantSelect", "dictationPanel", "performancePanel", "dictationGrid", "dictationListenButton",
+    "notationChoiceQuestionLabel", "notationChoiceListenButton", "notationChoices", "notationChoiceFeedback", "newNotationChoiceButton",
     "voicingQuizIdentity", "voicingQuizPrompt", "voicingQuizListenButton", "voicingQuizChoices", "voicingQuizFeedback", "newVoicingQuizButton"
 ].forEach((id) => assert.match(html, new RegExp(`id=["']${id}["']`)));
 
@@ -31,9 +31,10 @@ assert.match(app, /buildRhythmNotation/);
 assert.match(app, /notationToEvents/);
 assert.match(app, /RHYTHM_DICTATION_BANK/);
 assert.match(app, /data-rhythm-mode/);
-assert.match(html, /data-dictation-symbol="note"/);
-assert.match(html, /data-dictation-symbol="rest"/);
-assert.match(html, /data-dictation-symbol="tie"/);
+assert.match(html, /data-rhythm-mode="beatmaker"/);
+assert.match(html, /data-rhythm-mode="notation-choice"/);
+assert.doesNotMatch(html, /data-dictation-symbol=/);
+assert.doesNotMatch(html, /따라 치기|따라치기/);
 assert.match(html, /왕초보 코스/);
 assert.match(html, /data-basic-offset="0"/);
 assert.match(html, /data-basic-chord-offsets="0,4,7"/);
@@ -51,8 +52,8 @@ assert.doesNotMatch(html, /밝은 화음|어두운 화음|밝은 느낌|어두�
 assert.match(html, /id="basicPulseButton"/);
 assert.match(html, /id="harmonyPractice" class="advanced-practice hidden"/);
 assert.match(html, /id="rhythmPractice" class="advanced-practice hidden"/);
-assert.match(html, /class="active"[^>]+data-rhythm-mode="performance"/);
-assert.match(app, /rhythmMode: "performance"/);
+assert.match(html, /class="active"[^>]+data-rhythm-mode="beatmaker"/);
+assert.match(app, /rhythmMode: "beatmaker"/);
 assert.match(app, /dictationLevel: "basic"/);
 assert.match(app, /data-practice-gate/);
 assert.match(css, /foundation-course/);
@@ -84,10 +85,14 @@ assert.match(html, /C3부터 C5까지/);
 assert.match(app, /playNoiseTransient/);
 assert.match(app, /data-mode/);
 assert.match(app, /minorVariant/);
-assert.match(app, /event\.code !== "Space"/);
+assert.match(app, /function playBeatGrid/);
+assert.match(app, /function newNotationChoiceQuestion/);
+assert.match(app, /state\.dictationAnswer\[index\] === "note" \? "rest" : "note"/);
 assert.match(css, /@media \(max-width: 640px\)/);
 assert.match(css, /prefers-reduced-motion/);
 assert.match(css, /dictation-grid/);
+assert.match(css, /beat-grid/);
+assert.match(css, /notation-choice-staff/);
 assert.match(css, /answer-step\.wrong/);
 assert.match(css, /white-key\.active\.common/);
 assert.match(css, /white-key\.active\.moved/);
