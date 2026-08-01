@@ -271,7 +271,7 @@
 .addsub-sheet.two-digit .addsub-equation-row {
   grid-template-columns: 50px 18px 50px 18px 50px;
   gap: 2px;
-  font-size: 22px;
+  font-size: 20px;
 }
 
 .addsub-sheet.two-digit .addsub-input {
@@ -439,8 +439,8 @@
 }
 
 .time-calculation-question.parts-three {
-  --time-calculation-width: 240px;
-  --time-calculation-value-width: 216px;
+  --time-calculation-width: 260px;
+  --time-calculation-value-width: 236px;
 }
 
 .time-calculation-line > b {
@@ -456,11 +456,11 @@
 }
 
 .time-calculation-value.two {
-  grid-template-columns: 58px 30px 58px 30px;
+  grid-template-columns: 54px 38px 54px 30px;
 }
 
 .time-calculation-value.three {
-  grid-template-columns: 44px 28px 44px 24px 44px 22px;
+  grid-template-columns: 44px 36px 44px 30px 44px 28px;
 }
 
 .time-calculation-value strong {
@@ -470,11 +470,12 @@
   text-align: right;
 }
 
-.time-calculation-value span {
+.time-calculation-value > span > span {
   color: #566176;
   font-size: 15px;
   font-weight: 750;
   text-align: left;
+  white-space: nowrap;
 }
 
 .time-calculation-rule {
@@ -8996,7 +8997,7 @@ main {
   .measurement-quantity span,
   .measurement-answer span,
   .measurement-static-answer span,
-  .time-calculation-value span,
+  .time-calculation-value > span > span,
   .time-conversion-unit,
   .length-operation-value span,
   .unit-conversion-value small,
