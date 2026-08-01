@@ -307,6 +307,16 @@
         });
     }
 
+    function getAscendingDiatonicMidi(chord, tonicPitchClass, baseC) {
+        const cMidi = Number.isFinite(Number(baseC)) ? Number(baseC) : 48;
+        const tonicPc = ((Number(tonicPitchClass) % 12) + 12) % 12;
+        const tonicMidi = cMidi + tonicPc;
+        const rootMidi = tonicMidi + (chord.rootPc - tonicPc + 12) % 12;
+        return chord.pitchClasses.map(function (pitchClass) {
+            return rootMidi + (pitchClass - chord.rootPc + 12) % 12;
+        });
+    }
+
     function getChordVoicingCandidates(chord) {
         const rootPosition = getClosedPositionMidi(chord, 48);
         const candidates = [];
@@ -452,6 +462,7 @@
         getClosedPositionMidi: getClosedPositionMidi,
         getChordVoicingCandidates: getChordVoicingCandidates,
         getLeftHandCompingMidi: getLeftHandCompingMidi,
+        getAscendingDiatonicMidi: getAscendingDiatonicMidi,
         findNearestVoicing: findNearestVoicing,
         buildVoiceLedProgression: buildVoiceLedProgression,
         scoreRhythmDictation: scoreRhythmDictation,

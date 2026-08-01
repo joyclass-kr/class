@@ -7,6 +7,13 @@ const html = fs.readFileSync("learning/arts/music-studio/index.html", "utf8");
 const app = fs.readFileSync("learning/arts/music-studio/app.js", "utf8");
 const css = fs.readFileSync("learning/arts/music-studio/styles.css", "utf8");
 const hub = fs.readFileSync("index.html", "utf8");
+const musicCore = require("../learning/arts/music-studio/music-core.js");
+
+const ebChords = musicCore.buildDiatonicChords("Eb", false, "major", "natural");
+assert.deepEqual(ebChords.map((chord) => musicCore.getAscendingDiatonicMidi(chord, ebChords[0].rootPc, 48)), [
+    [51, 55, 58], [53, 56, 60], [55, 58, 62], [56, 60, 63],
+    [58, 62, 65], [60, 63, 67], [62, 65, 68]
+]);
 
 [
     "harmonyLab", "rhythmLab", "progressionSlots", "chordBank", "piano",
@@ -63,6 +70,8 @@ assert.match(app, /decodeAudioData/);
 assert.match(app, /playSamplePianoTone/);
 assert.match(app, /getLeftHandCompingMidi/);
 assert.match(app, /buildVoiceLedProgression/);
+assert.match(app, /getAscendingDiatonicMidi/);
+assert.match(app, /pianoUsesDiatonicAscending/);
 assert.match(html, /기본형 고정/);
 assert.match(app, /buildVoiceLedProgression\(progressionChords, 0\)/);
 assert.doesNotMatch(html, /data-inversion-mode/);

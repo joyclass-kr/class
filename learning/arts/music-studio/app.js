@@ -53,6 +53,7 @@
         progressionDegrees: PROGRESSIONS.pop.degrees.slice(),
         selectedSlot: 0,
         selectedChord: 0,
+        pianoUsesDiatonicAscending: true,
         progressionVoicings: [],
         progressionToken: 0,
         quizTarget: 4,
@@ -467,6 +468,7 @@
             button.addEventListener("click", function () {
                 state.selectedSlot = index;
                 state.selectedChord = degree;
+                state.pianoUsesDiatonicAscending = false;
                 renderHarmony();
                 playChord(chord, undefined, undefined, voicing.notes);
             });
@@ -483,15 +485,20 @@
             button.addEventListener("click", function () {
                 state.selectedChord = index;
                 state.progressionDegrees[state.selectedSlot] = index;
+                state.pianoUsesDiatonicAscending = true;
                 renderHarmony();
-                playChord(chord, undefined, undefined, state.progressionVoicings[state.selectedSlot].notes);
+                playChord(chord, undefined, undefined, core.getAscendingDiatonicMidi(chord, chords[0].rootPc, 48));
                 explainFunction(chord.functionName);
             });
             elements.chordBank.appendChild(button);
         });
-        const selectedVoicing = state.progressionVoicings[state.selectedSlot];
-        const previousNotes = state.selectedSlot > 0 ? state.progressionVoicings[state.selectedSlot - 1].notes : [];
-        renderPiano(chords[state.selectedChord], selectedVoicing, previousNotes);
+        const selectedChord = chords[state.selectedChord];
+        const ascendingNotes = core.getAscendingDiatonicMidi(selectedChord, chords[0].rootPc, 48);
+        const selectedVoicing = state.pianoUsesDiatonicAscending
+            ? { notes: ascendingNotes, inversion: 0, movement: 0, commonTones: [] }
+            : state.progressionVoicings[state.selectedSlot];
+        const previousNotes = !state.pianoUsesDiatonicAscending && state.selectedSlot > 0 ? state.progressionVoicings[state.selectedSlot - 1].notes : [];
+        renderPiano(selectedChord, selectedVoicing, previousNotes);
     }
 
     function renderPiano(chord, voicingEntry, previousNotes) {
