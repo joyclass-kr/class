@@ -62,8 +62,8 @@ document.addEventListener('DOMContentLoaded', () => {
         temperatureOutput.textContent = `${temperatureRange.value}℃`;
         amountOutput.textContent = `${grams(amountRange.value)}g`;
         saltDoseValue.textContent = `${grams(amountRange.value)}g`;
-        const amountRatio = (Number(amountRange.value) - Number(amountRange.min)) / (Number(amountRange.max) - Number(amountRange.min));
-        saltPile.style.setProperty('--salt-level', `${38 + amountRatio * 48}%`);
+        const saltLevel = Number(amountRange.value) * 1.5;
+        saltPile.style.setProperty('--salt-level', `${saltLevel}%`);
         thermometerFill.style.height = `${8 + Number(temperatureRange.value) * .86}%`;
         const warmth = Number(temperatureRange.value) / 100;
         water.style.background = `linear-gradient(180deg, rgba(${Math.round(69 + 90 * warmth)}, ${Math.round(189 - 35 * warmth)}, ${Math.round(231 - 65 * warmth)}, .46), rgba(29,111,165,.68))`;

@@ -69,6 +69,7 @@ assert.match(solubilityPage, /id="saltDoseValue"/);
 assert.doesNotMatch(solubilityPage, /particles|나트륨 이온|염화 이온/);
 assert.doesNotMatch(solubilityApp, /renderIons|createElement\('i'\)|Na⁺|Cl⁻/);
 assert.match(solubilityApp, /saltPile\.style\.setProperty\('--salt-level'/);
+assert.match(solubilityApp, /const saltLevel = Number\(amountRange\.value\) \* 1\.5/);
 assert.match(solubilityApp, /saltDose\.classList\.add\('poured'\)/);
 assert.match(solubilityApp, /눈에 보이는 소금 결정은 없습니다/);
 assert.match(saltVisualStyles, /\.salt-cup/);
