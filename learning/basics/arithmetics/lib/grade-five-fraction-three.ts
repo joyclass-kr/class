@@ -115,20 +115,19 @@ function intuitiveProblem(next: () => number, index: number) {
   return makeProblem(index, "intuitive", pair[0], pair[1]);
 }
 
-function nearTargetFraction(next: () => number, target: 2 | 4) {
-  const denominator = integer(next, 170, 480);
-  const numerator = Math.max(1, Math.min(denominator - 1, Math.floor(denominator / target) + integer(next, -5, 5)));
-  return fraction(numerator, denominator);
+function nearBenchmarkPair(next: () => number, target: 2 | 4) {
+  const lowerDenominator = integer(next, 90, 360);
+  const upperDenominator = integer(next, 90, 360);
+  const lowerOffset = integer(next, 1, 8);
+  const upperOffset = integer(next, 1, 8);
+  const lower = fraction(Math.max(1, Math.floor(lowerDenominator / target) - lowerOffset), lowerDenominator);
+  const upper = fraction(Math.min(upperDenominator - 1, Math.ceil(upperDenominator / target) + upperOffset), upperDenominator);
+  return maybeSwap(next, [lower, upper]);
 }
 
 function hardEstimateProblem(next: () => number, index: number) {
-  const target = chance(next) ? 2 : 4;
-  const left = nearTargetFraction(next, target);
-  let right = nearTargetFraction(next, target);
-  while (compareFractions(left, right) === "=") {
-    right = nearTargetFraction(next, target);
-  }
-  return makeProblem(index, "hard-estimate", left, right);
+  const pair = nearBenchmarkPair(next, chance(next) ? 2 : 4);
+  return makeProblem(index, "hard-estimate", pair[0], pair[1]);
 }
 
 function improperProblem(next: () => number, index: number) {
@@ -149,6 +148,10 @@ function closeComplementValue(next: () => number, improper: boolean) {
 }
 
 function closeComplementProblem(next: () => number, index: number, improper: boolean) {
+  if (!improper) {
+    const pair = nearBenchmarkPair(next, chance(next) ? 2 : 4);
+    return makeProblem(index, "close-complement", pair[0], pair[1]);
+  }
   const left = closeComplementValue(next, improper);
   let right = closeComplementValue(next, improper);
   while (compareFractions(left, right) === "=") {
