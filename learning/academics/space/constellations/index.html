@@ -744,7 +744,11 @@
             <div style="padding:24px; max-width:750px; margin:0 auto; background:rgba(15,23,42,0.9); border:1px solid rgba(168,85,247,0.4); border-radius:16px;">
                 <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:18px; border-bottom:1px solid rgba(255,255,255,0.1); padding-bottom:12px;">
                     <h2 style="color:#c084fc; font-size:20px; margin:0;">⭐ 별과 별자리 단원 실전 퀴즈</h2>
-                    <span id="stQuizProgress" style="background:rgba(168,85,247,0.2); color:#c084fc; padding:4px 12px; border-radius:12px; font-weight:700; font-size:13px;">문제 1 / 5</span>
+                    <div style="display:flex; gap:8px; align-items:center; flex-wrap:wrap; justify-content:flex-end;">
+                        <span id="stQuizProgress" style="background:rgba(168,85,247,0.2); color:#c084fc; padding:4px 12px; border-radius:12px; font-weight:700; font-size:13px;">문제 1 / 47</span>
+                        <span style="background:rgba(16,185,129,0.14); color:#6ee7b7; padding:4px 10px; border-radius:12px; font-weight:700; font-size:13px;">정답 <span id="stQuizCorrectCount">0</span></span>
+                        <span style="background:rgba(239,68,68,0.14); color:#fca5a5; padding:4px 10px; border-radius:12px; font-weight:700; font-size:13px;">오답 <span id="stQuizIncorrectCount">0</span></span>
+                    </div>
                 </div>
                 <div id="stQuizCard">
                     <p id="stQuestionText" style="font-size:17px; color:#fff; font-weight:700; margin-bottom:18px; line-height:1.5;"></p>
@@ -758,7 +762,7 @@
         </section>
     </main>
 
-    <script src="app.js?v=zodiac-single-diurnal-cycle-20260801"></script>
+    <script src="app.js?v=audited-question-bank-20260801"></script>
 
 </body>
 </html>
