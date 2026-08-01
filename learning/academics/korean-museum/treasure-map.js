@@ -17,6 +17,7 @@
   let quizSessionScore = 0;
   let quizSessionAnswered = false;
   let quizSessionScope = 'all';
+  let quizSessionLevel = 'mixed';
 
   const KOREA_MAP_LABELS = [
     // Low-zoom labels: keep only the administrative regions students need.
@@ -108,17 +109,9 @@
   const modalContext = document.getElementById('modal-context');
   const modalExamTip = document.getElementById('modal-exam-tip');
 
-  // Quiz DOM
-  const tabDocentBtn = document.getElementById('tab-docent-btn');
-  const tabQuizBtn = document.getElementById('tab-quiz-btn');
-  const tabDocentContent = document.getElementById('tab-docent-content');
-  const tabQuizContent = document.getElementById('tab-quiz-content');
-  const quizQuestion = document.getElementById('quiz-question');
-  const quizOptions = document.getElementById('quiz-options');
-  const quizResult = document.getElementById('quiz-result');
-
   // Five-question practice DOM
   const quizScopeSelect = document.getElementById('quiz-scope-select');
+  const quizLevelSelect = document.getElementById('quiz-level-select');
   const quizSessionStart = document.getElementById('quiz-session-start');
   const quizSessionModal = document.getElementById('quiz-session-modal');
   const quizSessionClose = document.getElementById('quiz-session-close');
@@ -617,28 +610,10 @@
     modal.addEventListener('click', (e) => {
       if (e.target === modal) closeRelicModal();
     });
-
-    tabDocentBtn.addEventListener('click', () => {
-      tabDocentBtn.classList.add('active');
-      tabQuizBtn.classList.remove('active');
-      tabDocentBtn.setAttribute('aria-selected', 'true');
-      tabQuizBtn.setAttribute('aria-selected', 'false');
-      tabDocentContent.hidden = false;
-      tabQuizContent.hidden = true;
-    });
-
-    tabQuizBtn.addEventListener('click', () => {
-      tabQuizBtn.classList.add('active');
-      tabDocentBtn.classList.remove('active');
-      tabQuizBtn.setAttribute('aria-selected', 'true');
-      tabDocentBtn.setAttribute('aria-selected', 'false');
-      tabDocentContent.hidden = true;
-      tabQuizContent.hidden = false;
-    });
   }
 
   function initQuizSession() {
-    if (!quizSessionStart || !quizSessionModal || !quizScopeSelect) return;
+    if (!quizSessionStart || !quizSessionModal || !quizScopeSelect || !quizLevelSelect) return;
 
     quizSessionStart.addEventListener('click', startQuizSession);
     quizSessionRestart.addEventListener('click', startQuizSession);
@@ -666,16 +641,23 @@
     if (!window.KOREAN_MUSEUM_DATA) return;
 
     quizSessionScope = quizScopeSelect.value;
-    const pool = window.KOREAN_MUSEUM_DATA.relicsMaster.filter(relic => (
+    quizSessionLevel = quizLevelSelect.value;
+    const relicPool = window.KOREAN_MUSEUM_DATA.relicsMaster.filter(relic => (
       relic.quiz && (quizSessionScope === 'all' || relic.eraCategory === quizSessionScope)
     ));
-    quizSessionRelics = shuffledCopy(pool).slice(0, 5);
+    const selectedRelics = shuffledCopy(relicPool).slice(0, 5);
+    const mixedLevels = shuffledCopy(['basic', 'basic', 'inference', 'inference', 'inference']);
+    quizSessionRelics = selectedRelics.map((relic, index) => {
+      const level = quizSessionLevel === 'mixed' ? mixedLevels[index] : quizSessionLevel;
+      return makeQuizSessionItem(relic, level, relicPool);
+    });
     quizSessionIndex = 0;
     quizSessionScore = 0;
     quizSessionAnswered = false;
 
-    const selectedOption = quizScopeSelect.options[quizScopeSelect.selectedIndex];
-    quizSessionTitle.textContent = `${selectedOption.textContent} 5문제`;
+    const scopeOption = quizScopeSelect.options[quizScopeSelect.selectedIndex];
+    const levelOption = quizLevelSelect.options[quizLevelSelect.selectedIndex];
+    quizSessionTitle.textContent = `${scopeOption.textContent} · ${levelOption.textContent} 5문제`;
     renderQuizSessionQuestion();
 
     if (!quizSessionModal.open) {
@@ -685,6 +667,52 @@
         quizSessionModal.setAttribute('open', 'true');
       }
     }
+  }
+
+  function makeQuizSessionItem(relic, level, relicPool) {
+    return {
+      ...relic,
+      quizKind: level === 'inference' ? '추론' : '개념',
+      quiz: level === 'inference' ? buildInferenceQuiz(relic, relicPool) : relic.quiz
+    };
+  }
+
+  function buildInferenceQuiz(relic, relicPool) {
+    const correctMeaning = relic.context || relic.docent;
+    const sameEraDistractors = shuffledCopy(relicPool.filter(candidate => (
+      candidate.id !== relic.id
+      && candidate.eraCategory === relic.eraCategory
+      && (candidate.context || candidate.docent) !== correctMeaning
+    ))).slice(0, 3);
+    const fallbackDistractors = shuffledCopy(window.KOREAN_MUSEUM_DATA.relicsMaster.filter(candidate => (
+      candidate.id !== relic.id
+      && !sameEraDistractors.some(item => item.id === candidate.id)
+      && (candidate.context || candidate.docent) !== correctMeaning
+    )));
+    const distractors = sameEraDistractors.slice();
+    while (distractors.length < 3 && fallbackDistractors.length) {
+      distractors.push(fallbackDistractors.shift());
+    }
+
+    const clueLines = [
+      `시대: ${relic.era}`,
+      `관련 장소: ${relic.location}`,
+      `자료 특징: ${relic.docent}`
+    ];
+    const options = [correctMeaning, ...distractors.map(item => item.context || item.docent)];
+    return {
+      question: `[자료]\n${clueLines.join('\n')}\n\n이 자료에서 추론할 수 있는 역사적 의미로 가장 적절한 것은?`,
+      options,
+      answer: 0,
+      explanation: `${relic.title}: ${correctMeaning} 시험에서는 “${cleanExamTip(relic.examTip)}”를 함께 연결해 구분해야 합니다.`
+    };
+  }
+
+  function cleanExamTip(examTip) {
+    return String(examTip || '')
+      .replace(/^📌\s*\[내신\/수능 핵심\]\s*/, '')
+      .replace(/^📌\s*/, '')
+      .trim();
   }
 
   function renderQuizSessionQuestion() {
@@ -701,7 +729,7 @@
 
     quizSessionAnswered = false;
     quizSessionEra.hidden = false;
-    quizSessionEra.textContent = relic.era;
+    quizSessionEra.textContent = `${relic.era} · ${relic.quizKind}형`;
     quizSessionQuestion.textContent = relic.quiz.question;
     quizSessionProgress.textContent = `${quizSessionIndex + 1} / ${total} · 현재 ${quizSessionScore}점`;
     quizProgressFill.style.width = `${(quizSessionIndex / total) * 100}%`;
@@ -805,13 +833,7 @@
     modalMuseum.textContent = relic.museum;
     modalDocent.textContent = relic.docent;
     modalContext.textContent = relic.context || '';
-    modalExamTip.textContent = relic.examTip.replace(/^📌\s*\[내신\/수능 핵심\]\s*/, '');
-
-    // Reset Tabs
-    tabDocentBtn.click();
-
-    // Render Quiz
-    renderQuiz(relic.quiz);
+    modalExamTip.textContent = cleanExamTip(relic.examTip);
 
     if (modal.showModal) {
       modal.showModal();
@@ -825,52 +847,6 @@
       modal.close();
     } else {
       modal.removeAttribute('open');
-    }
-  }
-
-  function renderQuiz(quiz) {
-    if (!quiz) return;
-    quizQuestion.textContent = quiz.question;
-    quizOptions.innerHTML = '';
-    quizResult.hidden = true;
-    quizResult.className = 'quiz-result-card';
-
-    const randomizedOptions = quiz.options.map((text, index) => ({ text, correct: index === quiz.answer }));
-    for (let index = randomizedOptions.length - 1; index > 0; index -= 1) {
-      const randomIndex = Math.floor(Math.random() * (index + 1));
-      [randomizedOptions[index], randomizedOptions[randomIndex]] = [randomizedOptions[randomIndex], randomizedOptions[index]];
-    }
-    const correctIdx = randomizedOptions.findIndex((option) => option.correct);
-
-    randomizedOptions.forEach((option, idx) => {
-      const btn = document.createElement('button');
-      btn.className = 'quiz-opt-btn';
-      btn.textContent = `${idx + 1}. ${option.text}`;
-      btn.addEventListener('click', () => {
-        checkQuizAnswer(idx, correctIdx, quiz.explanation);
-      });
-      quizOptions.appendChild(btn);
-    });
-  }
-
-  function checkQuizAnswer(selectedIdx, correctIdx, explanation) {
-    const allBtns = quizOptions.querySelectorAll('.quiz-opt-btn');
-    allBtns.forEach((btn, i) => {
-      btn.disabled = true;
-      if (i === correctIdx) {
-        btn.classList.add('correct');
-      } else if (i === selectedIdx) {
-        btn.classList.add('wrong');
-      }
-    });
-
-    quizResult.hidden = false;
-    if (selectedIdx === correctIdx) {
-      quizResult.className = 'quiz-result-card success';
-      quizResult.innerHTML = `🎉 <strong>정답입니다! (+100점)</strong><p>${explanation}</p>`;
-    } else {
-      quizResult.className = 'quiz-result-card fail';
-      quizResult.innerHTML = `❌ <strong>오답입니다!</strong><p>${explanation}</p>`;
     }
   }
 

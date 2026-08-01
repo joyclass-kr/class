@@ -109,6 +109,7 @@ body {
 
 .relic-select,
 .quiz-scope-select {
+  min-width: 0;
   background: rgba(30, 41, 59, 0.9);
   color: #fbbf24;
   border: 1px solid var(--gold-primary);
@@ -119,6 +120,10 @@ body {
   cursor: pointer;
   outline: none;
   transition: all 0.2s ease;
+}
+
+.quiz-level-select {
+  max-width: 118px;
 }
 
 .relic-select:hover,
@@ -680,6 +685,12 @@ body {
 }
 
 .tab-content {
+  display: flex;
+  flex-direction: column;
+  gap: 14px;
+}
+
+.docent-content {
   display: flex;
   flex-direction: column;
   gap: 14px;

@@ -10,7 +10,7 @@
   <link rel="stylesheet" href="vendor/leaflet/leaflet.css" />
   
   <!-- App Styles -->
-  <link rel="stylesheet" href="styles.css?v=20260801-1">
+  <link rel="stylesheet" href="styles.css?v=20260801-2">
   
 </head>
 <body>
@@ -48,6 +48,11 @@
           <option value="goryeo">고려 시대</option>
           <option value="joseon">조선 시대</option>
           <option value="modern">근현대</option>
+        </select>
+        <select id="quiz-level-select" class="quiz-scope-select quiz-level-select" aria-label="퀴즈 유형 선택">
+          <option value="mixed">개념+추론</option>
+          <option value="basic">단순 개념</option>
+          <option value="inference">추론</option>
         </select>
         <button id="quiz-session-start" class="quiz-session-start" type="button">5문제 풀기</button>
       </div>
@@ -113,19 +118,9 @@
             </div>
           </dl>
 
-          <!-- Tab Navigation (Docent vs Quiz) -->
-          <div class="modal-tabs" role="tablist" aria-label="유물 학습 메뉴">
-            <button id="tab-docent-btn" class="tab-btn active" type="button" role="tab"
-              aria-selected="true" aria-controls="tab-docent-content">핵심 정리</button>
-            <button id="tab-quiz-btn" class="tab-btn" type="button" role="tab"
-              aria-selected="false" aria-controls="tab-quiz-content">1문제 확인</button>
-          </div>
-
-          <!-- Tab Content 1: Docent -->
-          <div id="tab-docent-content" class="tab-content docent-content" role="tabpanel"
-            aria-labelledby="tab-docent-btn">
+          <div class="docent-content">
             <section class="learning-block" aria-labelledby="story-heading">
-              <p id="story-heading" class="section-label">유물 해설</p>
+              <p id="story-heading" class="section-label">시험 대비 해설</p>
               <p id="modal-docent" class="docent-text"></p>
               <p id="modal-context" class="context-text"></p>
             </section>
@@ -133,15 +128,6 @@
               <p class="section-label"><span aria-hidden="true">📌</span> 시험 키워드</p>
               <p id="modal-exam-tip" class="exam-tip-text"></p>
             </div>
-          </div>
-
-          <!-- Tab Content 2: Quiz -->
-          <div id="tab-quiz-content" class="tab-content quiz-content" role="tabpanel"
-            aria-labelledby="tab-quiz-btn" hidden>
-            <p class="section-label">사진을 보고 바로 확인해 보세요</p>
-            <p id="quiz-question" class="quiz-question-text"></p>
-            <div id="quiz-options" class="quiz-options-list"></div>
-            <div id="quiz-result" class="quiz-result-card" hidden aria-live="polite"></div>
           </div>
         </section>
       </div>
@@ -154,7 +140,7 @@
       <button id="quiz-session-close" class="modal-close-btn quiz-session-close" type="button"
         aria-label="5문제 퀴즈 닫기">✕</button>
       <header class="quiz-session-header">
-        <p class="quiz-session-eyebrow">한국사 실전 퀴즈</p>
+        <p class="quiz-session-eyebrow">내신·수능·한능검 실전 퀴즈</p>
         <h2 id="quiz-session-title">전 시대 무작위 5문제</h2>
         <p id="quiz-session-progress" class="quiz-session-progress" aria-live="polite"></p>
         <div class="quiz-progress-track" aria-hidden="true">
@@ -177,6 +163,6 @@
   <!-- App Logic Scripts -->
   <script src="vendor/leaflet/leaflet.js"></script>
   <script src="history-data.js?v=20260731-5"></script>
-  <script src="treasure-map.js?v=20260801-3"></script>
+  <script src="treasure-map.js?v=20260801-4"></script>
 </body>
 </html>
