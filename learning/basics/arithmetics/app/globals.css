@@ -4693,7 +4693,7 @@ button.prime-number-question:focus-visible {
 
 .vertical-operation > span strong {
   font: inherit;
-  text-align: left;
+  text-align: right;
 }
 
 .vertical-operation > b {
