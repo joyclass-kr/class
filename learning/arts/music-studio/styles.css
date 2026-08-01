@@ -101,13 +101,12 @@ button:focus-visible, a:focus-visible, select:focus-visible, input:focus-visible
 .streak { justify-self: end; display: flex; align-items: center; gap: 10px; color: var(--muted); font-size: 12px; }
 .streak strong { display: grid; place-items: center; width: 34px; height: 34px; color: var(--bg); background: var(--yellow); border-radius: 50%; font: 800 14px Montserrat, sans-serif; }
 
-.hero { position: relative; min-height: 230px; display: flex; align-items: center; margin: 26px 0; padding: 48px 7%; border: 1px solid rgba(225,231,255,.17); border-radius: 24px; background: linear-gradient(120deg, rgba(255,118,95,.13), rgba(169,141,246,.1) 48%, rgba(108,229,202,.13)); box-shadow: 0 28px 90px rgba(4,7,24,.26); overflow: hidden; }
+.hero { position: relative; min-height: 190px; display: flex; align-items: center; margin: 22px 0; padding: 36px 7%; border: 1px solid rgba(225,231,255,.17); border-radius: 24px; background: linear-gradient(120deg, rgba(255,118,95,.13), rgba(169,141,246,.1) 48%, rgba(108,229,202,.13)); box-shadow: 0 28px 90px rgba(4,7,24,.26); overflow: hidden; }
 .hero::before { content: ""; position: absolute; right: -7%; top: -55%; width: 430px; height: 430px; border: 1px solid rgba(108,229,202,.16); border-radius: 50%; box-shadow: 0 0 0 55px rgba(169,141,246,.05), 0 0 0 110px rgba(255,118,95,.035); pointer-events: none; }
 .hero-copy { position: relative; z-index: 1; }
 .section-kicker, .mini-label { color: var(--mint); font: 800 11px "Segoe UI", sans-serif; letter-spacing: 1px; }
 .hero h1 { margin: 0; font: 800 clamp(36px, 5vw, 58px)/1.15 "Malgun Gothic", sans-serif; letter-spacing: -3px; }
 .hero h1 em { color: var(--mint); font-style: normal; }
-.hero-copy > p:last-child { max-width: 600px; margin: 18px 0 0; color: var(--muted); font-size: 15px; line-height: 1.7; }
 
 .lab-tabs { display: grid; grid-template-columns: 1fr 1fr; gap: 1px; background: var(--line); border: 1px solid var(--line); border-radius: 18px 18px 0 0; overflow: hidden; }
 .lab-tab { min-height: 100px; display: flex; align-items: center; justify-content: center; gap: 22px; padding: 20px; border: 0; background: rgba(27,31,50,.88); cursor: pointer; text-align: left; transition: background .2s, color .2s; }
@@ -396,7 +395,7 @@ footer b { color: var(--ink); font: 800 11px Montserrat, sans-serif; letter-spac
 .toast.show { transform: translate(-50%, 0); opacity: 1; }
 
 @media (max-width: 900px) {
-    .hero { padding-left: 4%; padding-right: 4%; }
+    .hero { min-height: 170px; padding: 30px 5%; }
     .hero h1 { letter-spacing: -3px; }
     .lab-panel { padding: 50px 4%; }
     .section-heading { align-items: start; }
@@ -415,8 +414,8 @@ footer b { color: var(--ink); font: 800 11px Montserrat, sans-serif; letter-spac
 @media (max-width: 640px) {
     .app-shell { width: min(100% - 20px, 1240px); }
     .topbar { min-height: 76px; grid-template-columns: auto 1fr auto; }.brand { justify-self: center; }.brand small, .streak span { display: none; }
-    .hero { min-height: 200px; padding: 35px 4%; }
-    .hero h1 { font-size: 36px; letter-spacing: -2px; }.hero-copy > p:last-child { font-size: 14px; }
+    .hero { min-height: 150px; padding: 28px 5%; }
+    .hero h1 { font-size: 36px; letter-spacing: -2px; }
     .lab-tab { min-height: 85px; gap: 10px; padding: 14px 8px; }.tab-number { display: none; }.lab-tab b { font-size: 15px; }.lab-tab small { font-size: 9px; }
     .lab-panel { padding: 38px 15px; }.section-heading { display: grid; }.section-heading h2 { font-size: 32px; }.harmony-controls { width: 100%; justify-content: flex-start; }.harmony-controls label, .harmony-controls .control-stack { flex: 1 1 130px; }.harmony-controls select { width: 100%; }
     .foundation-intro { padding: 22px 19px; }.course-time { display: none; }.basic-key-picker { grid-template-columns: 1fr; padding: 17px 19px; }.basic-key-picker > button { grid-column: auto; }.foundation-step { padding: 23px 18px; }.foundation-summary { display: grid; gap: 4px; padding: 15px 19px; }.practice-gate { min-height: 72px; padding: 14px 18px; }.practice-heading { display: grid; }.practice-heading h3 { font-size: 24px; }
