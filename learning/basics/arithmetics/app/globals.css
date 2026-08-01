@@ -495,7 +495,9 @@
   font: inherit;
   font-size: 20px;
   font-weight: 850;
-  text-align: center;
+  padding: 0 6px 0 2px;
+  font-variant-numeric: tabular-nums;
+  text-align: right;
 }
 
 .time-calculation-input {
@@ -510,7 +512,7 @@
 .time-calculation-static {
   display: inline-flex;
   align-items: center;
-  justify-content: center;
+  justify-content: flex-end;
 }
 
 .time-calculation-question .counting-result {
@@ -2223,7 +2225,10 @@ html[data-race-mode="true"] body { padding-bottom: 72px; }
   font-family: inherit;
   font-size: 24px;
   font-weight: 900;
-  text-align: center;
+  box-sizing: border-box;
+  padding: 0 8px 0 2px;
+  font-variant-numeric: tabular-nums;
+  text-align: right;
 }
 
 .grade-four-multiply-input {
@@ -2236,7 +2241,7 @@ html[data-race-mode="true"] body { padding-bottom: 72px; }
 .grade-four-multiply-static-answer {
   display: inline-flex;
   align-items: center;
-  justify-content: center;
+  justify-content: flex-end;
 }
 
 .grade-four-multiply-vertical-operation .grade-four-multiply-input,
@@ -4319,7 +4324,9 @@ button.prime-number-question:focus-visible {
   font: inherit;
   font-size: 21px;
   font-weight: 800;
-  text-align: center;
+  padding: 0 6px 0 2px;
+  font-variant-numeric: tabular-nums;
+  text-align: right;
 }
 
 .length-operation-input {
@@ -4340,7 +4347,7 @@ button.prime-number-question:focus-visible {
   width: 48px;
   display: inline-flex;
   align-items: center;
-  justify-content: center;
+  justify-content: flex-end;
 }
 
 .length-operation-static.minor {
@@ -4716,7 +4723,10 @@ button.prime-number-question:focus-visible {
   border-radius: 7px;
   background: white;
   color: #17233c;
-  text-align: center;
+  box-sizing: border-box;
+  padding: 0 8px 0 2px;
+  font-variant-numeric: tabular-nums;
+  text-align: right;
   font: inherit;
 }
 
@@ -4732,7 +4742,7 @@ button.prime-number-question:focus-visible {
 .vertical-static-answer {
   display: inline-flex;
   align-items: center;
-  justify-content: center;
+  justify-content: flex-end;
 }
 
 .vertical-equation .counting-result {

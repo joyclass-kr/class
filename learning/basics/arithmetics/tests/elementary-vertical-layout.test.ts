@@ -11,6 +11,7 @@ test("초등 공통 세로셈은 피연산자, 가로선, 답칸의 오른쪽 �
   assert.match(css, /\.vertical-operation > span strong\s*\{[\s\S]*?text-align:\s*right;/);
   assert.match(css, /\.vertical-operation > b\s*\{[\s\S]*?width:\s*92px;[\s\S]*?justify-self:\s*end;/);
   assert.match(css, /\.vertical-input,[\s\S]*?width:\s*92px;[\s\S]*?justify-self:\s*end;/);
+  assert.match(css, /\.vertical-input,[\s\S]*?text-align:\s*right;/);
 });
 
 test("time and length unit calculations share one fixed alignment axis", () => {
@@ -18,8 +19,10 @@ test("time and length unit calculations share one fixed alignment axis", () => {
   assert.match(css, /\.time-calculation-value\s*\{[\s\S]*?width:\s*var\(--time-calculation-value-width\);/);
   assert.match(css, /\.time-calculation-rule\s*\{[\s\S]*?width:\s*var\(--time-calculation-value-width\);[\s\S]*?margin-left:\s*24px;/);
   assert.match(css, /\.time-calculation-input,[\s\S]*?width:\s*100%;[\s\S]*?box-sizing:\s*border-box;/);
+  assert.match(css, /\.time-calculation-input,[\s\S]*?text-align:\s*right;/);
   assert.match(css, /\.length-operation-line\s*\{[\s\S]*?width:\s*195px;[\s\S]*?grid-template-columns:\s*22px 173px;[\s\S]*?justify-self:\s*center;/);
   assert.match(css, /\.length-operation-rule\s*\{[\s\S]*?width:\s*173px;[\s\S]*?margin-left:\s*22px;/);
+  assert.match(css, /\.length-operation-input,[\s\S]*?text-align:\s*right;/);
 });
 
 test("single-digit blanks stay subordinate to the surrounding numerals", () => {
@@ -32,4 +35,5 @@ test("4학년 세로곱셈도 같은 자릿값 기준선 규칙을 사용한다"
   assert.match(css, /\.grade-four-multiply-vertical-operation > strong\s*\{[\s\S]*?width:\s*134px;[\s\S]*?justify-self:\s*end;/);
   assert.match(css, /\.grade-four-multiply-vertical-operation > span\s*\{[\s\S]*?grid-template-columns:\s*14px 134px;/);
   assert.match(css, /\.grade-four-multiply-vertical-operation > b\s*\{[\s\S]*?width:\s*134px;[\s\S]*?justify-self:\s*end;/);
+  assert.match(css, /\.grade-four-multiply-input,[\s\S]*?text-align:\s*right;/);
 });
