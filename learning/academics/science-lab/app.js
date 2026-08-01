@@ -3,8 +3,10 @@ document.addEventListener('DOMContentLoaded', () => {
     const levelEntries = [...document.querySelectorAll('[data-level]')];
     const topics = [...document.querySelectorAll('[data-topic]')];
     const subjects = [...document.querySelectorAll('[data-subject]')];
+    const catalog = document.querySelector('.catalog');
 
     function showGrade(grade) {
+        catalog.dataset.gradeFilter = grade;
         gradeButtons.forEach(button => {
             button.setAttribute('aria-pressed', String(button.dataset.grade === grade));
         });
