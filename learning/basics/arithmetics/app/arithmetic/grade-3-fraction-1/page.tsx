@@ -3,62 +3,17 @@
 import { useEffect, useMemo, useState } from "react";
 import type { ReactNode } from "react";
 import { moveBetweenFractionAnswerInputs } from "../../components/fraction-answer-navigation";
+import {
+  createGradeThreeFractionOneSet,
+  type GradeThreeFractionRelationProblem as RelationProblem,
+  type GradeThreeFractionValueProblem as ValueProblem,
+} from "../../../lib/grade-three-fraction-one";
 
 type PrintMode = "worksheet" | "answers" | "both";
-type ValueProblem = { id: string; kind: "value"; whole: number; numerator: number; denominator: number; answer: number };
-type RelationProblem = { id: string; kind: "relation"; whole: number; part: number; selected: number; numerator: number; denominator: number };
 type Problem = ValueProblem | RelationProblem;
-type ProblemSet = { seed: number; valueProblems: ValueProblem[]; relationProblems: RelationProblem[] };
 type Answer = { value: string; numerator: string; denominator: string };
 
 const INITIAL_SEED = 20260720;
-
-function random(seed: number) {
-  let value = seed >>> 0;
-  return () => {
-    value += 0x6d2b79f5;
-    let next = value;
-    next = Math.imul(next ^ (next >>> 15), next | 1);
-    next ^= next + Math.imul(next ^ (next >>> 7), next | 61);
-    return ((next ^ (next >>> 14)) >>> 0) / 4294967296;
-  };
-}
-
-function integer(next: () => number, minimum: number, maximum: number) {
-  return minimum + Math.floor(next() * (maximum - minimum + 1));
-}
-
-function createProblemSet(seed: number): ProblemSet {
-  const next = random(seed);
-  const valueProblems = Array.from({ length: 10 }, (_, index): ValueProblem => {
-    const numerator = integer(next, 1, 8);
-    const denominator = integer(next, numerator + 1, 9);
-    const unit = integer(next, 1, 9);
-    return {
-      id: `grade-three-fraction-value-${index}`,
-      kind: "value",
-      whole: unit * denominator,
-      numerator,
-      denominator,
-      answer: unit * numerator,
-    };
-  });
-  const relationProblems = Array.from({ length: 5 }, (_, index): RelationProblem => {
-    const numerator = integer(next, 1, 3);
-    const denominator = integer(next, numerator + 1, 4);
-    const part = integer(next, 2, 12);
-    return {
-      id: `grade-three-fraction-relation-${index}`,
-      kind: "relation",
-      whole: part * denominator,
-      part,
-      selected: part * numerator,
-      numerator,
-      denominator,
-    };
-  });
-  return { seed, valueProblems, relationProblems };
-}
 
 function vowelEnding(number: number) {
   return [2, 4, 5, 9].includes(number % 10);
@@ -85,7 +40,7 @@ function FractionStack({ numerator, denominator, className = "", inputOrder = fa
 }
 
 export default function GradeThreeFractionOnePage() {
-  const [questionSet, setQuestionSet] = useState(() => createProblemSet(INITIAL_SEED));
+  const [questionSet, setQuestionSet] = useState(() => createGradeThreeFractionOneSet(INITIAL_SEED));
   const [answers, setAnswers] = useState<Record<string, Answer>>({});
   const [results, setResults] = useState<Record<string, boolean>>({});
   const [sheetScale, setSheetScale] = useState(0.6);
@@ -114,7 +69,7 @@ export default function GradeThreeFractionOnePage() {
         value: current[id]?.value ?? "",
         numerator: current[id]?.numerator ?? "",
         denominator: current[id]?.denominator ?? "",
-        [field]: value.replace(/[^0-9]/g, "").slice(0, field === "value" ? 2 : 1),
+        [field]: value.replace(/[^0-9]/g, "").slice(0, 2),
       },
     }));
     setResults((current) => {
@@ -142,7 +97,7 @@ export default function GradeThreeFractionOnePage() {
 
   function newSet() {
     if (completed > 0 && !window.confirm("쓴 답이 사라집니다. 새 문제를 만들까요?")) return;
-    setQuestionSet(createProblemSet((Date.now() ^ Math.floor(Math.random() * 0xffffffff)) >>> 0));
+    setQuestionSet(createGradeThreeFractionOneSet((Date.now() ^ Math.floor(Math.random() * 0xffffffff)) >>> 0));
     resetAnswers();
   }
 
@@ -186,8 +141,8 @@ export default function GradeThreeFractionOnePage() {
       : <FractionStack
           className="grade-three-fraction-answer"
           inputOrder
-          numerator={<input className="grade-three-fraction-part-input" type="text" inputMode="numeric" pattern="[0-9]*" maxLength={1} value={answer.numerator} onChange={(event) => updateAnswer(problem.id, "numerator", event.target.value)} data-fraction-answer-input="true" onKeyDown={moveBetweenFractionAnswerInputs} aria-label={`${index + 1}번 분자 답`} />}
-          denominator={<input className="grade-three-fraction-part-input" type="text" inputMode="numeric" pattern="[0-9]*" maxLength={1} value={answer.denominator} onChange={(event) => updateAnswer(problem.id, "denominator", event.target.value)} data-fraction-answer-input="true" onKeyDown={moveBetweenFractionAnswerInputs} aria-label={`${index + 1}번 분모 답`} />}
+          numerator={<input className="grade-three-fraction-part-input" type="text" inputMode="numeric" pattern="[0-9]*" maxLength={2} value={answer.numerator} onChange={(event) => updateAnswer(problem.id, "numerator", event.target.value)} data-fraction-answer-input="true" onKeyDown={moveBetweenFractionAnswerInputs} aria-label={`${index + 1}번 분자 답`} />}
+          denominator={<input className="grade-three-fraction-part-input" type="text" inputMode="numeric" pattern="[0-9]*" maxLength={2} value={answer.denominator} onChange={(event) => updateAnswer(problem.id, "denominator", event.target.value)} data-fraction-answer-input="true" onKeyDown={moveBetweenFractionAnswerInputs} aria-label={`${index + 1}번 분모 답`} />}
         />;
     return (
       <div className={`multiplication-question grade-three-fraction-question relation${resultClass(problem)}`} data-testid="grade-three-fraction-question" key={problem.id}>

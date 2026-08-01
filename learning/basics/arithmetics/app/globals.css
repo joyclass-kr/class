@@ -1557,7 +1557,7 @@ html[data-race-mode="true"] body { padding-bottom: 72px; }
 }
 
 .grade-three-fraction-stack {
-  width: 42px;
+  width: 30px;
   height: 67px;
   display: grid;
   grid-template-rows: 31px 2px 31px;
@@ -1566,6 +1566,14 @@ html[data-race-mode="true"] body { padding-bottom: 72px; }
   flex: 0 0 auto;
   color: #17233c;
   vertical-align: middle;
+}
+
+.grade-three-fraction-stack.grade-three-fraction-answer {
+  width: 42px;
+}
+
+.grade-three-fraction-stack.grade-three-fraction-static {
+  width: 38px;
 }
 
 .grade-three-fraction-number {
@@ -1610,7 +1618,7 @@ html[data-race-mode="true"] body { padding-bottom: 72px; }
 }
 
 .grade-three-fraction-part-input {
-  width: 50px;
+  width: 42px;
   height: 29px;
   border-radius: 4px;
   font-size: 18px;
