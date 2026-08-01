@@ -34,7 +34,7 @@ test("초등 문제지 제목은 중·고등 문제지와 같은 23px 제목 규
   const css = readFileSync(new URL("../app/globals.css", import.meta.url), "utf8");
   assert.match(css, /\.counting-sheet-title strong\s*\{[\s\S]*?font-size:\s*23px;/);
   assert.match(css, /\.counting-sheet-title strong\s*\{[\s\S]*?line-height:\s*1\.2;/);
-  assert.match(css, /\.counting-sheet-title strong\s*\{[\s\S]*?font-family:\s*"KoPubWorld Batang", "Noto Serif KR", "Batang", serif;/);
+  assert.match(css, /\.counting-sheet-title strong\s*\{[\s\S]*?font-family:\s*var\(--elementary-korean-font\);/);
 });
 
 test("목록의 모든 암산 학습지는 실제 문제지 제목에도 암산 딱지를 표시한다", () => {
@@ -49,6 +49,16 @@ test("목록의 모든 암산 학습지는 실제 문제지 제목에도 암산 
   const css = readFileSync(new URL("../app/globals.css", import.meta.url), "utf8");
   assert.match(css, /\.mental-math-sheet \.counting-sheet-title::after\s*\{[\s\S]*?content:\s*"암산";/);
   assert.match(css, /\.mental-math-sheet :where\([\s\S]*?\.multiplication-question,[\s\S]*?\.digit-equation,[\s\S]*?\.complement-row,[\s\S]*?input,[\s\S]*?button[\s\S]*?\)\s*\{[\s\S]*?font-family:\s*"Suneung Math", "STIX Two Math"[\s\S]*?font-synthesis:\s*none;[\s\S]*?font-weight:\s*400;/);
+});
+
+test("초등 목록 버튼과 실제 학습지 제목은 같은 유형명을 쓴다", () => {
+  for (const worksheet of arithmeticWorksheetCatalog) {
+    if (!worksheet.route?.startsWith("/arithmetic/") || worksheet.route.includes("?")) continue;
+    const directory = worksheet.route.replace("/arithmetic/", "");
+    const source = readFileSync(new URL(`../app/arithmetic/${directory}/page.tsx`, import.meta.url), "utf8");
+    const literalTitle = source.match(/<strong>([^<{]+)\{answerSheet \?/u)?.[1];
+    if (literalTitle) assert.equal(literalTitle, worksheet.title, worksheet.route);
+  }
 });
 
 test("가로 계산식은 작은 글씨로 왼쪽 정렬하고 불필요한 안내띠를 표시하지 않는다", () => {

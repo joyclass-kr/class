@@ -171,7 +171,7 @@ export default function GradeTwoAdditionSubtractionOnePage() {
         <header className="counting-sheet-header">
           <div className="counting-sheet-title">
             <span>2학년</span>
-            <strong>덧셈뺄셈①{answerSheet ? " 정답" : ""}</strong>
+            <strong>덧셈·뺄셈 ①{answerSheet ? " 정답" : ""}</strong>
           </div>
           <div className="counting-sheet-info">
             <span>이름 <i /></span>

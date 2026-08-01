@@ -133,7 +133,7 @@ export default function GradeThreeDivisionThreePage() {
     return (
       <div className="a4-sheet counting-sheet mental-math-sheet multiplication-sheet division-three-sheet" style={{ transform: `scale(${sheetScale})` }}>
         <header className="counting-sheet-header">
-          <div className="counting-sheet-title"><span>3학년</span><strong>나눗셈③{answerSheet ? " 정답" : ""}</strong></div>
+          <div className="counting-sheet-title"><span>3학년</span><strong>나눗셈 ③{answerSheet ? " 정답" : ""}</strong></div>
           <div className="counting-sheet-info"><span>이름 <i /></span><span>날짜 <i /></span><small>문제지 {questionSet.seed}</small></div>
         </header>
         <div className="division-three-headings"><strong>2, 4단</strong><strong>3, 5, 6, 7, 8단</strong><strong>순서 섞기</strong></div>

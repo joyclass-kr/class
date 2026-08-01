@@ -174,7 +174,7 @@ export default function GradeFourDivisionPage() {
     return (
       <div className="a4-sheet counting-sheet grade-four-division-sheet" style={{ transform: `scale(${sheetScale})` }}>
         <header className="counting-sheet-header">
-          <div className="counting-sheet-title"><span>4학년</span><strong>몫, 나머지{answerSheet ? " 정답" : ""}</strong></div>
+          <div className="counting-sheet-title"><span>4학년</span><strong>나눗셈{answerSheet ? " 정답" : ""}</strong></div>
           <div className="counting-sheet-info"><span>이름 <i /></span><span>날짜 <i /></span><small>문제지 {questionSet.seed}</small></div>
         </header>
         <div className="grade-four-division-grid">{questionSet.problems.map((problem, index) => renderProblem(problem, index, answerSheet))}</div>

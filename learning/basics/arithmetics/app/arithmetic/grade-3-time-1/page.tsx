@@ -134,7 +134,7 @@ export default function GradeThreeTimeOnePage() {
     return (
       <div className="a4-sheet counting-sheet time-conversion-sheet" style={{ transform: `scale(${sheetScale})` }}>
         <header className="counting-sheet-header">
-          <div className="counting-sheet-title"><span>3학년</span><strong>시간①{answerSheet ? " 정답" : ""}</strong></div>
+          <div className="counting-sheet-title"><span>3학년</span><strong>시간의 계산 ①{answerSheet ? " 정답" : ""}</strong></div>
           <div className="counting-sheet-info"><span>이름 <i /></span><span>날짜 <i /></span><small>문제지 {questionSet.seed}</small></div>
         </header>
         <div className="time-conversion-grid">{questionSet.problems.map((problem, index) => renderProblem(problem, index, answerSheet))}</div>
