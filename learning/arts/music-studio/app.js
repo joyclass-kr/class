@@ -26,6 +26,12 @@
         { midi: 72, file: "C5.mp3" }, { midi: 78, file: "Fs5.mp3" },
         { midi: 84, file: "C6.mp3" }
     ];
+    const PUBLIC_DOMAIN_MELODIES = [
+        { name: "작은별", notes: [60, 60, 67, 67, 69, 69, 67, 65] },
+        { name: "환희의 송가", notes: [64, 64, 65, 67, 67, 65, 64, 62] },
+        { name: "메리는 어린 양을 길렀네", notes: [64, 62, 60, 62, 64, 64, 64, 62] },
+        { name: "프레르 자크", notes: [60, 62, 64, 60, 60, 62, 64, 60] }
+    ];
     const BASIC_MAJOR_KEYS = {
         C: { midi: 60, ko: "다장조", en: "C Major", signature: "조표가 없어요." },
         F: { midi: 53, ko: "바장조", en: "F Major", signature: "시♭이 붙어요." },
@@ -85,6 +91,7 @@
         notationChoiceOptions: [],
         notationChoiceNumber: 0,
         notationChoiceAnswered: false,
+        notationChoiceMelody: PUBLIC_DOMAIN_MELODIES[0],
         practiceCount: 0,
         basicKey: "C",
         basicTonicMidi: 60
@@ -116,7 +123,7 @@
                 showToast("이 브라우저에서는 소리 재생을 지원하지 않아요.");
                 return null;
             }
-            state.audioContext = new AudioContextClass();
+            state.audioContext = new AudioContextClass({ latencyHint: "interactive" });
             const context = state.audioContext;
             state.masterGain = context.createGain();
             state.compressor = context.createDynamicsCompressor();
@@ -240,7 +247,7 @@
         } else {
             connectToMix(output, .12);
         }
-        source.start(start);
+        source.start(start, Math.min(.012, Math.max(0, buffer.duration - .01)));
         source.stop(start + Math.min(buffer.duration / source.playbackRate.value, hold + release + .1));
         return true;
     }
@@ -531,7 +538,7 @@
             key.className = "white-key" + (active ? " active" : "") + relation;
             key.setAttribute("aria-label", noteName + octave + " 음 듣기" + (active ? (previous.includes(midi) ? " · 공통음" : " · 움직인 음") : ""));
             key.innerHTML = "<span>" + (pitchClass === 0 ? noteName + octave : noteName) + "</span>";
-            key.addEventListener("click", function () { playPianoTone(core.midiToFrequency(midi), 0, .65, .07); });
+            key.addEventListener("pointerdown", function (event) { event.preventDefault(); playPianoTone(core.midiToFrequency(midi), 0, .65, .07); });
             elements.piano.appendChild(key);
         });
         blackMidis.forEach(function (midi) {
@@ -544,7 +551,7 @@
             key.className = "black-key" + (active ? " active" : "") + relation;
             key.style.left = (whiteMidis.filter(function (whiteMidi) { return whiteMidi < midi; }).length / whiteMidis.length * 100) + "%";
             key.setAttribute("aria-label", core.getNoteName(pitchClass) + octave + " 음 듣기" + (active ? (previous.includes(midi) ? " · 공통음" : " · 움직인 음") : ""));
-            key.addEventListener("click", function () { playPianoTone(core.midiToFrequency(midi), 0, .65, .07); });
+            key.addEventListener("pointerdown", function (event) { event.preventDefault(); playPianoTone(core.midiToFrequency(midi), 0, .65, .07); });
             elements.piano.appendChild(key);
         });
         const commonLabels = entry.commonTones.map(function (midi) { return midiNoteLabel(chord, midi); });
@@ -793,6 +800,36 @@
         return symbol === "note" ? "♪" : (symbol === "tie" ? "—" : "𝄽");
     }
 
+    function notationDurationGlyph(type, length) {
+        if (type === "rest") return length >= 4 ? "𝄽" : (length >= 2 ? "𝄾" : "𝄿");
+        return length >= 4 ? "♩" : (length >= 2 ? "♪" : "♬");
+    }
+
+    function appendNotationMeasure(staff, pattern) {
+        const notation = core.buildRhythmNotation(pattern);
+        let noteIndex = 0;
+        for (let step = 0; step < 16;) {
+            const type = notation[step] === "note" ? "note" : "rest";
+            let length = 1;
+            if (type === "note") {
+                while (step + length < 16 && notation[step + length] === "tie") length += 1;
+            } else {
+                while (step + length < 16 && notation[step + length] === "rest") length += 1;
+            }
+            const symbol = document.createElement("i");
+            symbol.className = "notation-event " + type;
+            symbol.textContent = notationDurationGlyph(type, length);
+            symbol.style.left = (4 + step / 16 * 91) + "%";
+            if (type === "note") {
+                const midi = state.notationChoiceMelody.notes[noteIndex % state.notationChoiceMelody.notes.length];
+                symbol.style.bottom = (18 + (midi - 60) * 2.1) + "px";
+                noteIndex += 1;
+            }
+            staff.appendChild(symbol);
+            step += length;
+        }
+    }
+
     function renderNotationChoices() {
         elements.notationChoices.innerHTML = "";
         state.notationChoiceOptions.forEach(function (pattern, optionIndex) {
@@ -804,12 +841,7 @@
             number.textContent = optionIndex + 1;
             const staff = document.createElement("span");
             staff.className = "notation-choice-staff";
-            core.buildRhythmNotation(pattern).forEach(function (symbol) {
-                const note = document.createElement("i");
-                note.className = "notation-symbol " + symbol;
-                note.textContent = notationChoiceGlyph(symbol);
-                staff.appendChild(note);
-            });
+            appendNotationMeasure(staff, pattern);
             button.appendChild(number);
             button.appendChild(staff);
             button.addEventListener("click", function () {
@@ -831,15 +863,20 @@
 
     function newNotationChoiceQuestion() {
         const pool = getDictationPool();
-        const candidates = pool.filter(function (pattern) { return pattern.id !== state.notationChoiceId; });
-        const target = candidates[Math.floor(Math.random() * candidates.length)] || pool[0];
+        const viablePool = pool.filter(function (pattern) {
+            return core.RHYTHM_DICTATION_BANK.filter(function (candidate) { return candidate.hits.length === pattern.hits.length; }).length >= 3;
+        });
+        const candidates = viablePool.filter(function (pattern) { return pattern.id !== state.notationChoiceId; });
+        const target = candidates[Math.floor(Math.random() * candidates.length)] || viablePool[0];
+        const equalCountPool = core.RHYTHM_DICTATION_BANK.filter(function (pattern) { return pattern.hits.length === target.hits.length; });
         const optionSet = new Map([[target.id, target]]);
-        while (optionSet.size < Math.min(3, pool.length)) {
-            const candidate = pool[Math.floor(Math.random() * pool.length)];
+        while (optionSet.size < Math.min(3, equalCountPool.length)) {
+            const candidate = equalCountPool[Math.floor(Math.random() * equalCountPool.length)];
             optionSet.set(candidate.id, candidate);
         }
         state.notationChoiceId = target.id;
         state.notationChoiceOptions = Array.from(optionSet.values()).sort(function () { return Math.random() - .5; });
+        state.notationChoiceMelody = PUBLIC_DOMAIN_MELODIES[Math.floor(Math.random() * PUBLIC_DOMAIN_MELODIES.length)];
         state.notationChoiceNumber += 1;
         state.notationChoiceAnswered = false;
         elements.notationChoiceQuestionLabel.textContent = "문제 " + state.notationChoiceNumber;
@@ -854,8 +891,15 @@
         const beatSeconds = 60 / state.tempo;
         const start = context.currentTime + .08;
         for (let beat = 0; beat < 4; beat += 1) playClick(start + beat * beatSeconds, beat === 0, .9);
-        scheduleNotation(core.buildRhythmNotation(question), start + 4 * beatSeconds, true);
-        elements.notationChoiceFeedback.textContent = "한 마디를 듣는 중입니다.";
+        const melodyStart = start + 4 * beatSeconds;
+        const stepSeconds = beatSeconds / 4;
+        question.hits.forEach(function (step, index) {
+            const nextStep = index + 1 < question.hits.length ? question.hits[index + 1] : 16;
+            const duration = Math.max(.14, (nextStep - step) * stepSeconds * .82);
+            const midi = state.notationChoiceMelody.notes[index % state.notationChoiceMelody.notes.length];
+            playPianoTone(core.midiToFrequency(midi), melodyStart + step * stepSeconds, duration, .09, 0);
+        });
+        elements.notationChoiceFeedback.textContent = state.notationChoiceMelody.name + " 선율의 한 마디를 듣는 중입니다.";
     }
 
     function checkDictationAnswer() {
@@ -1302,6 +1346,7 @@
         newNotationChoiceQuestion();
         makeQuiz();
         makeVoicingQuiz();
+        loadPianoSamples().catch(function () {});
     }
 
     document.addEventListener("DOMContentLoaded", init);

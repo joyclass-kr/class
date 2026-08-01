@@ -318,10 +318,10 @@ button:focus-visible, a:focus-visible, select:focus-visible, input:focus-visible
 .notation-choice.wrong { border-color: var(--coral); animation: answer-shake .3s; }
 @keyframes answer-shake { 33% { transform: translateX(-4px); } 66% { transform: translateX(4px); } }
 .notation-choice > b { display: grid; place-items: center; width: 32px; height: 32px; border-radius: 50%; color: #21120f; background: var(--coral); font: 900 12px Montserrat, sans-serif; }
-.notation-choice-staff { position: relative; min-width: 0; display: grid; grid-template-columns: repeat(16, 1fr); align-items: center; min-height: 62px; padding: 5px 8px; background: repeating-linear-gradient(to bottom, transparent 0 10px, rgba(225,231,255,.2) 10px 11px); }
-.notation-symbol { position: relative; z-index: 1; display: grid; place-items: center; min-width: 0; height: 42px; color: var(--ink); background: rgba(18,17,26,.8); font: 800 19px Georgia, serif; font-style: normal; }
-.notation-symbol.rest { color: var(--coral); }
-.notation-symbol.tie { color: var(--mint); font-family: Montserrat, sans-serif; font-size: 12px; }
+.notation-choice-staff { position: relative; min-width: 0; display: block; min-height: 68px; border-left: 2px solid rgba(225,231,255,.72); border-right: 4px double rgba(225,231,255,.72); background: repeating-linear-gradient(to bottom, transparent 0 10px, rgba(225,231,255,.28) 10px 11px); overflow: hidden; }
+.notation-event { position: absolute; z-index: 1; transform: translateX(-50%); color: var(--ink); font: 800 24px Georgia, serif; font-style: normal; line-height: 1; text-shadow: 0 0 8px #12111a, 0 0 8px #12111a; }
+.notation-event.rest { top: 23px; color: var(--coral); font-size: 21px; }
+.notation-event.note { color: var(--ink); }
 .notation-choice-actions { display: flex; align-items: center; gap: 14px; margin-top: 18px; }
 .notation-choice-actions p { flex: 1; margin: 0; color: var(--muted); font-size: 11px; }
 .notation-choice-actions button { height: 40px; padding: 0 15px; border: 1px solid var(--coral); border-radius: 7px; color: #21120f; background: var(--coral); font-size: 10px; font-weight: 900; cursor: pointer; }
