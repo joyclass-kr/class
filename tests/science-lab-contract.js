@@ -53,8 +53,11 @@ assert.match(app, /function showGrade\(grade\)/);
 assert.match(app, /entry\.hidden = grade !== 'all'/);
 assert.match(app, /topic\.hidden = !topic\.querySelector/);
 assert.match(app, /subject\.hidden = !subject\.querySelector/);
-assert.match(styles, /grid-template-columns:repeat\(2,minmax\(0,1fr\)\)/);
+assert.match(styles, /\.topic-list\{display:grid;grid-template-columns:1fr\}/);
+assert.match(styles, /repeat\(auto-fit,minmax\(190px,1fr\)\)/);
+assert.match(styles, /min-height:44px/);
 assert.match(styles, /@media\(max-width:900px\)/);
+assert.match(styles, /@media\(max-width:820px\)/);
 assert.match(styles, /@media\(max-width:680px\)/);
 assert.match(styles, /@media\(prefers-reduced-motion:reduce\)/);
 
