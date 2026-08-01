@@ -92,7 +92,7 @@ const explicitGrades: Record<string, string> = {
 const elementaryTitles: Record<string, string> = {
   "1수세기①": "1부터 9까지 수 세기",
   "1덧셈뺄셈①": "한 자리 수 덧셈·뺄셈",
-  "1덧셈뺄셈②": "두 자리 수 계산",
+  "1덧셈뺄셈②": "두 자리 수 덧셈·뺄셈",
   "1주고받기": "주고받은 뒤의 수 구하기",
   "1보수": "10 모으기·가르기",
   "1덧셈뺄셈③": "10을 넘는 덧셈·뺄셈",
