@@ -3385,7 +3385,7 @@ html[data-race-mode="true"] body { padding-bottom: 72px; }
   grid-template-columns: minmax(0, 1fr) 28px 116px;
   align-items: center;
   gap: 12px;
-  font-size: 25px;
+  font-size: 20px;
   font-weight: 850;
 }
 
@@ -4693,7 +4693,7 @@ button.prime-number-question:focus-visible {
 
 .vertical-operation > span strong {
   font: inherit;
-  text-align: right;
+  text-align: left;
 }
 
 .vertical-operation > b {

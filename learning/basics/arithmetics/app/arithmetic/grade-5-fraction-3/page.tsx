@@ -133,7 +133,6 @@ export default function GradeFiveFractionThreePage() {
           <div className="counting-sheet-title"><span>5학년</span><strong>분수③{answerSheet ? " 정답" : ""}</strong></div>
           <div className="counting-sheet-info"><span>이름 <i /></span><span>날짜 <i /></span><small>문제지 {seed}</small></div>
         </header>
-        <p className="grade-five-fraction-one-guide">두 분수의 크기를 비교해 &lt;, =, &gt; 중 알맞은 기호를 선택하세요.</p>
         <div className="grade-five-fraction-one-columns grade-five-fraction-three-columns">
           {[problems.slice(0, 5), problems.slice(5)].map((column, columnIndex) => (
             <div className="grade-five-fraction-one-column" key={columnIndex}>

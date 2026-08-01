@@ -175,7 +175,6 @@ export default function GradeFiveFractionTwoPage() {
           <div className="counting-sheet-title"><span>5학년</span><strong>분수②{answerSheet ? " 정답" : ""}</strong></div>
           <div className="counting-sheet-info"><span>이름 <i /></span><span>날짜 <i /></span><small>문제지 {seed}</small></div>
         </header>
-        <p className="grade-five-fraction-one-guide">답은 기약분수, 대분수 또는 자연수로 쓰세요. 자연수 부분부터 쓰고, 분모 → 분자 순서로 이동합니다.</p>
         <div className="grade-five-fraction-one-columns">
           {[problems.slice(0, 5), problems.slice(5)].map((column, columnIndex) => (
             <div className="grade-five-fraction-one-column" key={columnIndex}>

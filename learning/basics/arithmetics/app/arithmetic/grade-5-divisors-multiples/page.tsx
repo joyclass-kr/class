@@ -102,7 +102,6 @@ export default function GradeFiveDivisorsMultiplesPage() {
           <div className="counting-sheet-title"><span>5학년</span><strong>약수, 배수{answerSheet ? " 정답" : ""}</strong></div>
           <div className="counting-sheet-info"><span>이름 <i /></span><span>날짜 <i /></span><small>문제지 {seed}</small></div>
         </header>
-        <p className="divisor-multiple-guide">두 수의 최대공약수 또는 최소공배수를 구하세요.</p>
         <div className="divisor-multiple-columns">
           {problemSet.columns.map((column, columnIndex) => (
             <section className="divisor-multiple-column" key={columnIndex}>

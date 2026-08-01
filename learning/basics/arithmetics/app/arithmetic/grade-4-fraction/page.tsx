@@ -263,7 +263,6 @@ export default function GradeFourFractionPage() {
           <div className="counting-sheet-title"><span>4학년</span><strong>분수{answerSheet ? " 정답" : ""}</strong></div>
           <div className="counting-sheet-info"><span>이름 <i /></span><span>날짜 <i /></span><small>문제지 {questionSet.seed}</small></div>
         </header>
-        <p className="grade-four-fraction-guide">답은 대분수 또는 자연수로 쓰세요. 분수 부분이 1이 되면 자연수로 고치고 분수 칸은 비워 두세요.</p>
         <div className="grade-four-fraction-columns">
           {[questionSet.problems.slice(0, 5), questionSet.problems.slice(5)].map((column, columnIndex) => (
             <div className="grade-four-fraction-column" key={columnIndex}>

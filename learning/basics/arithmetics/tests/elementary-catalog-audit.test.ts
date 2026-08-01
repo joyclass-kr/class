@@ -35,3 +35,27 @@ test("초등 문제지 제목은 중·고등 문제지와 같은 23px 제목 규
   assert.match(css, /\.counting-sheet-title strong\s*\{[\s\S]*?font-size:\s*23px;/);
   assert.match(css, /\.counting-sheet-title strong\s*\{[\s\S]*?line-height:\s*1\.2;/);
 });
+
+test("가로 계산식은 작은 글씨로 왼쪽 정렬하고 불필요한 안내띠를 표시하지 않는다", () => {
+  const css = readFileSync(new URL("../app/globals.css", import.meta.url), "utf8");
+  assert.match(css, /\.mixed-calculation-expression\s*\{[\s\S]*?font-size:\s*20px;/);
+  assert.match(css, /\.mixed-calculation-expression strong\s*\{[\s\S]*?text-align:\s*left;/);
+
+  const pages = [
+    "grade-4-angle-estimation", "grade-4-fraction", "grade-5-decimals",
+    "grade-5-divisors-multiples", "grade-5-fraction-1", "grade-5-fraction-2",
+    "grade-5-fraction-3", "grade-5-mixed-calculation", "grade-5-prime-numbers",
+    "grade-6-decimals-1", "grade-6-fraction", "grade-6-mixed-calculation",
+    "grade-6-proportion",
+  ];
+  for (const page of pages) {
+    const source = readFileSync(new URL(`../app/arithmetic/${page}/page.tsx`, import.meta.url), "utf8");
+    assert.doesNotMatch(source, /<p className="[^"]*guide/);
+  }
+
+  const decomposition = readFileSync(new URL("../app/arithmetic/grade-5-natural-number-decomposition/page.tsx", import.meta.url), "utf8");
+  assert.match(decomposition, /곱셈은 \*로 입력하세요\./);
+  assert.match(decomposition, /answerSheet \|\| isExample/);
+  assert.match(decomposition, /problems\.slice\(1\)\.map/);
+  assert.match(decomposition, /<small>\/14 정답<\/small>/);
+});

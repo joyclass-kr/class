@@ -40,7 +40,7 @@ export default function GradeFiveNaturalNumberDecompositionPage() {
   }
 
   function checkAll() {
-    setResults(Object.fromEntries(problems.map((problem) => [
+    setResults(Object.fromEntries(problems.slice(1).map((problem) => [
       problem.id,
       isPrimeFactorizationAnswer(problem.number, answers[problem.id] ?? ""),
     ])));
@@ -66,6 +66,7 @@ export default function GradeFiveNaturalNumberDecompositionPage() {
   }
 
   function renderProblem(problem: NaturalNumberDecompositionProblem, index: number, answerSheet: boolean) {
+    const isExample = index === 0;
     const graded = problem.id in results;
     const isCorrect = results[problem.id] === true;
     return (
@@ -74,9 +75,9 @@ export default function GradeFiveNaturalNumberDecompositionPage() {
         <div className="natural-decomposition-expression">
           <strong>{problem.number}</strong>
           <span>→</span>
-          {answerSheet
+          {answerSheet || isExample
             ? <span className="natural-decomposition-static-answer">{problem.answer}</span>
-            : <input className="natural-decomposition-input" type="text" inputMode="text" maxLength={24} placeholder="2×2×3" value={answers[problem.id] ?? ""} onChange={(event) => updateAnswer(problem.id, event.target.value)} aria-label={`${problem.number}의 소인수분해 답`} />}
+            : <input className="natural-decomposition-input" type="text" inputMode="text" maxLength={24} placeholder="2*2*3" value={answers[problem.id] ?? ""} onChange={(event) => updateAnswer(problem.id, event.target.value)} aria-label={`${problem.number}의 소인수분해 답`} />}
         </div>
         {!answerSheet && graded && <span className={`counting-result ${isCorrect ? "correct" : "wrong"}`} role="status">{isCorrect ? "맞음" : "틀림"}</span>}
       </div>
@@ -90,7 +91,7 @@ export default function GradeFiveNaturalNumberDecompositionPage() {
           <div className="counting-sheet-title"><span>5학년</span><strong>자연수분해{answerSheet ? " 정답" : ""}</strong></div>
           <div className="counting-sheet-info"><span>이름 <i /></span><span>날짜 <i /></span><small>문제지 {seed}</small></div>
         </header>
-        <p className="natural-decomposition-guide">소수는 그대로 쓰고, 합성수는 소인수의 곱으로 나타내세요. <small>× 대신 x 또는 *도 입력할 수 있어요.</small></p>
+        <p className="natural-decomposition-guide">곱셈은 *로 입력하세요.</p>
         <div className="natural-decomposition-grid">
           {problems.map((problem, index) => renderProblem(problem, index, answerSheet))}
           <div className="natural-decomposition-empty" aria-hidden="true" />
@@ -103,7 +104,7 @@ export default function GradeFiveNaturalNumberDecompositionPage() {
     <main className="counting-page multiplication-page">
       <div className="counting-toolbar">
         <a className="counting-back" href="/arithmetic">← 연산</a>
-        <div className="counting-progress"><strong>{correct}<small>/15 정답</small></strong></div>
+        <div className="counting-progress"><strong>{correct}<small>/14 정답</small></strong></div>
         <div className="toolbar">
           <button className="button secondary" type="button" onClick={newSet}>새 문제</button>
           <button className="button ghost" type="button" onClick={resetAnswers}>다시 쓰기</button>

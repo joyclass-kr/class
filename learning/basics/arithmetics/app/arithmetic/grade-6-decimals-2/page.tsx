@@ -123,7 +123,7 @@ export default function GradeSixDecimalTwoPage() {
         <div className="grade-six-decimal-two-sections">
           {SECTIONS.map((section) => (
             <section className={`grade-six-decimal-two-section ${section.id}`} key={section.id}>
-              <header><strong>{section.title}</strong><span>{section.guide}</span></header>
+              <header><strong>{section.title}</strong></header>
               <div className="grade-six-decimal-two-grid">
                 {problems.map((problem, index) => problem.section === section.id ? renderProblem(problem, index, answerSheet) : null)}
               </div>

@@ -113,7 +113,6 @@ export default function GradeSixDecimalOnePage() {
           <div className="counting-sheet-title"><span>6학년</span><strong>소수①{answerSheet ? " 정답" : ""}</strong></div>
           <div className="counting-sheet-info"><span>이름 <i /></span><span>날짜 <i /></span><small>문제지 {seed}</small></div>
         </header>
-        <p className="grade-six-decimal-one-guide">나누어떨어지지 않으면 소수점을 찍고, 나머지가 0이 될 때까지 계산하세요.</p>
         <div className="grade-six-decimal-one-grid">
           {problems.map((problem, index) => renderProblem(problem, index, answerSheet))}
         </div>

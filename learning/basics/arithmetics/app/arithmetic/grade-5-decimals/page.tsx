@@ -102,7 +102,6 @@ export default function GradeFiveDecimalsPage() {
           <div className="counting-sheet-title"><span>5학년</span><strong>소수{answerSheet ? " 정답" : ""}</strong></div>
           <div className="counting-sheet-info"><span>이름 <i /></span><span>날짜 <i /></span><small>문제지 {seed}</small></div>
         </header>
-        <p className="grade-five-decimal-guide">자연수처럼 곱한 뒤, 두 수의 소수 자릿수를 더한 만큼 소수점을 찍으세요.</p>
         <div className="grade-four-decimal-grid grade-five-decimal-grid">
           {problems.map((problem, index) => renderProblem(problem, index, answerSheet))}
         </div>

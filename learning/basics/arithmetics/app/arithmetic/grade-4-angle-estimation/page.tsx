@@ -114,7 +114,6 @@ export default function GradeFourAngleEstimationPage() {
           <div className="counting-sheet-title"><span>4학년</span><strong>각도 어림{answerSheet ? " 정답" : ""}</strong></div>
           <div className="counting-sheet-info"><span>이름 <i /></span><span>날짜 <i /></span><small>문제지 {seed}</small></div>
         </header>
-        <p className="angle-estimation-guide">각도를 어림하여 숫자로 쓰세요. <small>모든 각도는 15°의 배수이며, 180°는 평각입니다.</small></p>
         <div className="angle-estimation-grid">
           {problems.map((problem, index) => renderProblem(problem, index, answerSheet))}
         </div>

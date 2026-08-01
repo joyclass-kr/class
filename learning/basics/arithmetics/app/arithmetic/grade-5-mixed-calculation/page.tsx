@@ -89,7 +89,6 @@ export default function GradeFiveMixedCalculationPage() {
           <div className="counting-sheet-title"><span>5학년</span><strong>혼합계산{answerSheet ? " 정답" : ""}</strong></div>
           <div className="counting-sheet-info"><span>이름 <i /></span><span>날짜 <i /></span><small>문제지 {seed}</small></div>
         </header>
-        <p className="mixed-calculation-guide">괄호 안을 먼저 계산하고, 곱셈·나눗셈을 덧셈·뺄셈보다 먼저 계산하세요.</p>
         <div className="mixed-calculation-grid">{problems.map((problem, index) => renderProblem(problem, index, answerSheet))}</div>
       </div>
     );
