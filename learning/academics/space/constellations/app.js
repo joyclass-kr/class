@@ -137,7 +137,31 @@
             let zScene, zCamera, zRenderer, zControls;
             let zEarth, zSun, zOrbitPath;
             let zMidLine, zSunLine, zMidText, zSunText;
+            let zObserverMarker;
             let reqId = null;
+
+            function createZodiacLabelSprite(text, color, width = 160, height = 20, fontSize = 32) {
+                const cvs = document.createElement('canvas');
+                cvs.width = 1024;
+                cvs.height = 128;
+                const ctx = cvs.getContext('2d');
+                ctx.fillStyle = color;
+                ctx.font = `900 ${fontSize}px 'Noto Sans KR', sans-serif`;
+                ctx.textAlign = 'center';
+                ctx.textBaseline = 'middle';
+                ctx.shadowColor = 'rgba(0,0,0,0.95)';
+                ctx.shadowBlur = 8;
+                ctx.lineWidth = 5;
+                ctx.strokeStyle = 'rgba(2,6,23,0.9)';
+                ctx.strokeText(text, 512, 64);
+                ctx.fillText(text, 512, 64);
+                const tex = new THREE.CanvasTexture(cvs);
+                const mat = new THREE.SpriteMaterial({ map: tex, transparent: true, depthWrite: false, depthTest: false });
+                const sprite = new THREE.Sprite(mat);
+                sprite.scale.set(width, height, 1);
+                sprite.renderOrder = 99999;
+                return sprite;
+            }
 
             function initThreeZodiac() {
                 const container = document.getElementById('zodiac3dContainer');
@@ -209,6 +233,69 @@
                 const earthMat = new THREE.MeshStandardMaterial({ color: 0x38bdf8, emissive: 0x0284c7, emissiveIntensity: 0.6 });
                 zEarth = new THREE.Mesh(earthGeo, earthMat);
                 zScene.add(zEarth);
+
+                // Earth's 23.5° tilted axis. Because it belongs to the Earth group and
+                // the group itself is not rotated during revolution, the axis remains
+                // parallel throughout the year as it should.
+                const tilt = THREE.MathUtils.degToRad(23.5);
+                const axisVector = new THREE.Vector3(Math.sin(tilt), Math.cos(tilt), 0).normalize();
+                const axisGeo = new THREE.BufferGeometry().setFromPoints([
+                    axisVector.clone().multiplyScalar(-15),
+                    axisVector.clone().multiplyScalar(15)
+                ]);
+                const axisMat = new THREE.LineDashedMaterial({ color: 0x38bdf8, dashSize: 1.5, gapSize: 0.8, depthTest: false });
+                const axisLine = new THREE.Line(axisGeo, axisMat);
+                axisLine.computeLineDistances();
+                axisLine.renderOrder = 99998;
+                zEarth.add(axisLine);
+
+                const axisLabel = createZodiacLabelSprite('자전축 23.5°', '#7dd3fc', 42, 7, 30);
+                axisLabel.position.copy(axisVector.clone().multiplyScalar(17));
+                zEarth.add(axisLabel);
+
+                // Cute observer wearing the same yellow hat used in the other space labs.
+                zObserverMarker = new THREE.Group();
+                const observerMat = new THREE.MeshBasicMaterial({ color: 0xef4444, depthTest: false, depthWrite: false });
+                const hatMat = new THREE.MeshBasicMaterial({ color: 0xfbbf24, depthTest: false, depthWrite: false });
+                const skinMat = new THREE.MeshBasicMaterial({ color: 0xfde68a, depthTest: false, depthWrite: false });
+
+                const observerBody = new THREE.Mesh(new THREE.CylinderGeometry(0.55, 0.8, 1.8, 16), observerMat);
+                observerBody.position.y = 1.05;
+                const observerHead = new THREE.Mesh(new THREE.SphereGeometry(0.72, 16, 16), skinMat);
+                observerHead.position.y = 2.45;
+                const observerBrim = new THREE.Mesh(new THREE.CylinderGeometry(1.18, 1.18, 0.14, 20), hatMat);
+                observerBrim.position.y = 2.95;
+                const observerCrown = new THREE.Mesh(new THREE.CylinderGeometry(0.7, 0.8, 0.65, 20), hatMat);
+                observerCrown.position.y = 3.3;
+                [observerBody, observerHead, observerBrim, observerCrown].forEach(part => {
+                    part.renderOrder = 99999;
+                    zObserverMarker.add(part);
+                });
+                zObserverMarker.scale.setScalar(2.15);
+                zEarth.add(zObserverMarker);
+
+                // Four seasonal reference points on Earth's orbit.
+                [
+                    { month: 3, label: '🌸 춘분 3/21', color: '#fb7185' },
+                    { month: 6, label: '☀️ 하지 6/21', color: '#facc15' },
+                    { month: 9, label: '🍁 추분 9/23', color: '#fb923c' },
+                    { month: 12, label: '❄️ 동지 12/22', color: '#60a5fa' }
+                ].forEach(season => {
+                    const angle = -(season.month - 1) * 30 * Math.PI / 180;
+                    const px = 80 * Math.sin(angle);
+                    const pz = -80 * Math.cos(angle);
+                    const point = new THREE.Mesh(
+                        new THREE.SphereGeometry(2.3, 18, 18),
+                        new THREE.MeshBasicMaterial({ color: season.color, depthTest: false })
+                    );
+                    point.position.set(px, 1.5, pz);
+                    point.renderOrder = 99997;
+                    zScene.add(point);
+
+                    const marker = createZodiacLabelSprite(season.label, season.color, 64, 12, 62);
+                    marker.position.set(px, 15, pz);
+                    zScene.add(marker);
+                });
 
                 // Sightlines
                 const matMid = new THREE.LineBasicMaterial({ color: 0x38bdf8, transparent: true, opacity: 0.9 });
@@ -289,25 +376,8 @@
                 });
 
                 // Text Sprites for Lasers
-                function createTextSprite(text, color) {
-                    const cvs = document.createElement('canvas');
-                    cvs.width = 512;
-                    cvs.height = 64;
-                    const ctx = cvs.getContext('2d');
-                    ctx.fillStyle = color;
-                    ctx.font = "bold 32px 'Noto Sans KR', sans-serif";
-                    ctx.textAlign = "center";
-                    ctx.shadowColor = "black";
-                    ctx.shadowBlur = 4;
-                    ctx.fillText(text, 256, 42);
-                    const tex = new THREE.CanvasTexture(cvs);
-                    const mat = new THREE.SpriteMaterial({ map: tex, transparent: true, depthWrite: false });
-                    const sprite = new THREE.Sprite(mat);
-                    sprite.scale.set(160, 20, 1);
-                    return sprite;
-                }
-                zMidText = createTextSprite("한밤중 남쪽 하늘 (관측)", "#38bdf8");
-                zSunText = createTextSprite("이달의 황도 별자리 (안 보임)", "#fbbf24");
+                zMidText = createZodiacLabelSprite("한밤중 남쪽 하늘 (관측)", "#38bdf8");
+                zSunText = createZodiacLabelSprite("이달의 황도 별자리 (안 보임)", "#fbbf24");
                 zScene.add(zMidText);
                 zScene.add(zSunText);
 
@@ -356,66 +426,8 @@
 
                 if (zEarth) zEarth.position.set(ex, 0, ez);
 
-                // Create zObserverMarker lazily with prominent sizing & disabled depthTest (Always on top & visible!)
-                if (!window.zObserverMarker && zEarth && window.groundDiskTextures && window.groundDiskTextures.korea) {
-                    const zObsGroup = new THREE.Group();
-
-                    // Korea Ground Disk (Prominent 5.5 unit radius)
-                    const zDiskMat = new THREE.MeshBasicMaterial({
-                        map: window.groundDiskTextures.korea,
-                        side: THREE.DoubleSide,
-                        transparent: true,
-                        depthTest: false,
-                        depthWrite: false
-                    });
-                    const zDiskMesh = new THREE.Mesh(new THREE.CircleGeometry(5.5, 32), zDiskMat);
-                    zDiskMesh.rotation.x = -Math.PI / 2;
-                    zDiskMesh.position.set(0, 0.1, 0);
-                    zDiskMesh.renderOrder = 99999;
-                    zObsGroup.add(zDiskMesh);
-
-                    // Cute Observer Person (Prominent 4.5 unit height with depthTest: false)
-                    const zObsRedMat = new THREE.MeshBasicMaterial({ color: 0xef4444, depthTest: false, depthWrite: false });
-                    const zObsCapMat = new THREE.MeshBasicMaterial({ color: 0xfbbf24, depthTest: false, depthWrite: false });
-
-                    // Brim
-                    const zBrim = new THREE.Mesh(new THREE.CylinderGeometry(1.2, 1.2, 0.15, 16), zObsCapMat);
-                    zBrim.position.set(0, 2.8, 0);
-                    zBrim.renderOrder = 99999;
-                    zObsGroup.add(zBrim);
-
-                    // Crown
-                    const zCrown = new THREE.Mesh(new THREE.CylinderGeometry(0.7, 0.75, 0.7, 16), zObsCapMat);
-                    zCrown.position.set(0, 3.2, 0);
-                    zCrown.renderOrder = 99999;
-                    zObsGroup.add(zCrown);
-
-                    // Head
-                    const zHead = new THREE.Mesh(new THREE.SphereGeometry(0.75, 16, 16), zObsRedMat);
-                    zHead.position.set(0, 2.1, 0);
-                    zHead.renderOrder = 99999;
-                    zObsGroup.add(zHead);
-
-                    // Body
-                    const zBody = new THREE.Mesh(new THREE.CylinderGeometry(0.5, 0.65, 1.6, 16), zObsRedMat);
-                    zBody.position.set(0, 0.9, 0);
-                    zBody.renderOrder = 99999;
-                    zObsGroup.add(zBody);
-
-                    // Bright Label Sprite above observer head
-                    const zObsLabel = createTextSprite("⭐ 관측자 (북위 37.5° 밤12시)", "#4ade80");
-                    zObsLabel.position.set(0, 4.8, 0);
-                    zObsLabel.scale.set(60, 8, 1);
-                    zObsLabel.material.depthTest = false;
-                    zObsLabel.renderOrder = 99999;
-                    zObsGroup.add(zObsLabel);
-
-                    zEarth.add(zObsGroup);
-                    window.zObserverMarker = zObsGroup;
-                }
-
                 // Position Observer on zEarth at Midnight position (pointing away from Sun at 37.5°N)
-                if (window.zObserverMarker && zEarth) {
+                if (zObserverMarker && zEarth) {
                     const latRad = 37.5 * (Math.PI / 180);
                     const cosLat = Math.cos(latRad);
                     const sinLat = Math.sin(latRad);
@@ -424,8 +436,8 @@
                     const cosA = Math.cos(orbitAngle);
 
                     const nObs = new THREE.Vector3(sinA * cosLat, sinLat, -cosA * cosLat).normalize();
-                    window.zObserverMarker.position.copy(nObs.clone().multiplyScalar(8.2));
-                    window.zObserverMarker.quaternion.setFromUnitVectors(new THREE.Vector3(0, 1, 0), nObs);
+                    zObserverMarker.position.copy(nObs.clone().multiplyScalar(8.2));
+                    zObserverMarker.quaternion.setFromUnitVectors(new THREE.Vector3(0, 1, 0), nObs);
                 }
 
                 if (zMidLine && zSunLine) {
