@@ -696,6 +696,34 @@ body {
   gap: 14px;
 }
 
+.quiz-session-media {
+  width: min(100%, 520px);
+  max-height: 240px;
+  margin: 0 auto 14px;
+  overflow: hidden;
+  border: 1px solid #d9d2c4;
+  border-radius: 14px;
+  background: #111827;
+}
+
+.quiz-session-media img {
+  display: block;
+  width: 100%;
+  height: 240px;
+  object-fit: contain;
+}
+
+@media (max-width: 768px) {
+  .quiz-session-media,
+  .quiz-session-media img {
+    max-height: 180px;
+  }
+
+  .quiz-session-media img {
+    height: 180px;
+  }
+}
+
 .tab-content[hidden],
 .quiz-result-card[hidden] {
   display: none !important;

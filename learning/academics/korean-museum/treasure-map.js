@@ -118,6 +118,8 @@
   const quizSessionTitle = document.getElementById('quiz-session-title');
   const quizSessionProgress = document.getElementById('quiz-session-progress');
   const quizProgressFill = document.getElementById('quiz-progress-fill');
+  const quizSessionMedia = document.getElementById('quiz-session-media');
+  const quizSessionImage = document.getElementById('quiz-session-image');
   const quizSessionEra = document.getElementById('quiz-session-era');
   const quizSessionQuestion = document.getElementById('quiz-session-question');
   const quizSessionOptions = document.getElementById('quiz-session-options');
@@ -673,39 +675,60 @@
     return {
       ...relic,
       quizKind: level === 'inference' ? '추론' : '개념',
-      quiz: level === 'inference' ? buildInferenceQuiz(relic, relicPool) : relic.quiz
+      quiz: level === 'inference'
+        ? buildInferenceQuiz(relic, relicPool)
+        : buildConceptQuiz(relic, relicPool)
+    };
+  }
+
+  function buildConceptQuiz(relic, relicPool) {
+    const correctClaim = getContextSentences(relic)[0];
+    const distractors = selectClaimDistractors(relic, relicPool, 0, correctClaim);
+    return {
+      question: `다음 유물·유적에 대한 설명으로 옳은 것은?\n\n${relic.title}`,
+      options: [correctClaim, ...distractors],
+      answer: 0,
+      explanation: `${relic.title}은(는) ${relic.context || relic.docent} 시험에서는 ${cleanExamTip(relic.examTip)}를 함께 구분해야 합니다.`
     };
   }
 
   function buildInferenceQuiz(relic, relicPool) {
-    const correctMeaning = relic.context || relic.docent;
-    const sameEraDistractors = shuffledCopy(relicPool.filter(candidate => (
-      candidate.id !== relic.id
-      && candidate.eraCategory === relic.eraCategory
-      && (candidate.context || candidate.docent) !== correctMeaning
-    ))).slice(0, 3);
-    const fallbackDistractors = shuffledCopy(window.KOREAN_MUSEUM_DATA.relicsMaster.filter(candidate => (
-      candidate.id !== relic.id
-      && !sameEraDistractors.some(item => item.id === candidate.id)
-      && (candidate.context || candidate.docent) !== correctMeaning
-    )));
-    const distractors = sameEraDistractors.slice();
-    while (distractors.length < 3 && fallbackDistractors.length) {
-      distractors.push(fallbackDistractors.shift());
-    }
-
-    const clueLines = [
-      `시대: ${relic.era}`,
-      `관련 장소: ${relic.location}`,
-      `자료 특징: ${relic.docent}`
-    ];
-    const options = [correctMeaning, ...distractors.map(item => item.context || item.docent)];
+    const sentences = getContextSentences(relic);
+    const source = sentences[0];
+    const correctMeaning = sentences[1] || cleanExamTip(relic.examTip);
+    const distractors = selectClaimDistractors(relic, relicPool, 1, correctMeaning);
     return {
-      question: `[자료]\n${clueLines.join('\n')}\n\n이 자료에서 추론할 수 있는 역사적 의미로 가장 적절한 것은?`,
-      options,
+      question: `[자료]\n${source}\n\n사진과 자료를 바탕으로 추론한 내용으로 가장 적절한 것은?`,
+      options: [correctMeaning, ...distractors],
       answer: 0,
-      explanation: `${relic.title}: ${correctMeaning} 시험에서는 “${cleanExamTip(relic.examTip)}”를 함께 연결해 구분해야 합니다.`
+      explanation: `제시된 자료는 ${relic.title}입니다. ${relic.context || relic.docent} 핵심 연결: ${cleanExamTip(relic.examTip)}`
     };
+  }
+
+  function getContextSentences(relic) {
+    const text = String(relic.context || relic.docent || '').trim();
+    const sentences = text.match(/[^.!?]+[.!?]?/g)
+      ?.map(sentence => sentence.trim())
+      .filter(Boolean) || [];
+    return sentences.length ? sentences : [text];
+  }
+
+  function selectClaimDistractors(relic, relicPool, sentenceIndex, correctClaim) {
+    const sameEra = shuffledCopy(relicPool.filter(candidate => (
+      candidate.id !== relic.id && candidate.eraCategory === relic.eraCategory
+    )));
+    const otherEras = shuffledCopy(window.KOREAN_MUSEUM_DATA.relicsMaster.filter(candidate => (
+      candidate.id !== relic.id && candidate.eraCategory !== relic.eraCategory
+    )));
+    const candidates = [...sameEra, ...otherEras];
+    const claims = [];
+    for (const candidate of candidates) {
+      const sentences = getContextSentences(candidate);
+      const claim = sentences[sentenceIndex] || sentences[0] || cleanExamTip(candidate.examTip);
+      if (claim && claim !== correctClaim && !claims.includes(claim)) claims.push(claim);
+      if (claims.length === 3) break;
+    }
+    return claims;
   }
 
   function cleanExamTip(examTip) {
@@ -729,7 +752,16 @@
 
     quizSessionAnswered = false;
     quizSessionEra.hidden = false;
-    quizSessionEra.textContent = `${relic.era} · ${relic.quizKind}형`;
+    quizSessionEra.textContent = relic.quizKind === '추론'
+      ? '유물·유적 자료 분석 · 추론형'
+      : `${relic.eraCategory === 'modern' ? '근현대사' : '한국사'} · 개념형`;
+    quizSessionMedia.hidden = relic.quizKind !== '추론';
+    if (relic.quizKind === '추론') {
+      quizSessionImage.src = window.KOREAN_MUSEUM_DATA.makeArtifactTextureSVG(relic.id);
+      quizSessionImage.alt = '문제에 제시된 유물·유적 자료';
+    } else {
+      quizSessionImage.removeAttribute('src');
+    }
     quizSessionQuestion.textContent = relic.quiz.question;
     quizSessionProgress.textContent = `${quizSessionIndex + 1} / ${total} · 현재 ${quizSessionScore}점`;
     quizProgressFill.style.width = `${(quizSessionIndex / total) * 100}%`;
@@ -779,6 +811,8 @@
     const total = quizSessionRelics.length;
     const percentage = Math.round((quizSessionScore / total) * 100);
     quizSessionEra.hidden = true;
+    quizSessionMedia.hidden = true;
+    quizSessionImage.removeAttribute('src');
     quizSessionQuestion.textContent = '5문제 풀이 완료';
     quizSessionProgress.textContent = `완료 · ${quizSessionScore} / ${total}`;
     quizProgressFill.style.width = '100%';
