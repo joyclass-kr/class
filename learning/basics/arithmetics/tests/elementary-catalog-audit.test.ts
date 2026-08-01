@@ -48,6 +48,7 @@ test("목록의 모든 암산 학습지는 실제 문제지 제목에도 암산 
   }
   const css = readFileSync(new URL("../app/globals.css", import.meta.url), "utf8");
   assert.match(css, /\.mental-math-sheet \.counting-sheet-title::after\s*\{[\s\S]*?content:\s*"암산";/);
+  assert.match(css, /\.mental-math-sheet :where\([\s\S]*?\.multiplication-question,[\s\S]*?\.digit-equation,[\s\S]*?\.complement-row,[\s\S]*?input,[\s\S]*?button[\s\S]*?\)\s*\{[\s\S]*?font-family:\s*"Suneung Math", "STIX Two Math"[\s\S]*?font-synthesis:\s*none;[\s\S]*?font-weight:\s*400;/);
 });
 
 test("가로 계산식은 작은 글씨로 왼쪽 정렬하고 불필요한 안내띠를 표시하지 않는다", () => {

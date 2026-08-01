@@ -8989,6 +8989,20 @@ main {
   white-space: nowrap;
 }
 
+.mental-math-sheet :where(
+  .multiplication-question,
+  .digit-equation,
+  .digit-operation,
+  .complement-row,
+  input,
+  button
+) {
+  font-family: "Suneung Math", "STIX Two Math", "KoPubWorld Batang", "Cambria Math", "Times New Roman", serif;
+  font-synthesis: none;
+  font-variant-numeric: lining-nums tabular-nums;
+  font-weight: 400;
+}
+
 .counting-sheet-info {
   display: flex;
   align-items: center;
