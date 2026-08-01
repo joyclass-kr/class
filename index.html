@@ -168,6 +168,29 @@
             background: linear-gradient(135deg, #a9651c, #4a2910);
         }
 
+        .worksheet-container a.is-class-locked,
+        .game-card-grid a.is-class-locked {
+            border-color: #858585;
+            background: linear-gradient(135deg, #666, #343434);
+            color: #d5d5d5;
+            filter: grayscale(1);
+        }
+
+        .worksheet-container a.is-class-locked .worksheet-arrow,
+        .game-card-grid a.is-class-locked .worksheet-arrow {
+            color: #bdbdbd;
+        }
+
+        .content-access-button {
+            width: 100%;
+            margin-top: 10px;
+        }
+
+        .content-access-button[aria-pressed="true"] {
+            border-color: #fff0c7;
+            background: linear-gradient(#fff0c7, #d6a75a);
+        }
+
         .worksheet-arrow {
             color: var(--gold-bright);
             font-size: 20px;
@@ -408,6 +431,7 @@
                 </div>
                 <button id="signOutButton" class="auth-button secondary" type="button">SIGN OUT</button>
             </div>
+            <button id="contentAccessButton" class="auth-button content-access-button" type="button" aria-pressed="false" hidden>🔓 공개 설정 모드</button>
         </div>
         <p id="authStatus" class="auth-status"></p>
     </div>
@@ -570,6 +594,7 @@
             const signedInName = document.getElementById('signedInName');
             const classMembership = document.getElementById('classMembership');
             const signOutButton = document.getElementById('signOutButton');
+            const contentAccessButton = document.getElementById('contentAccessButton');
             const classToolsLink = document.getElementById('classToolsLink');
             const hubContent = document.getElementById('hubContent');
             const hubLinks = Array.from(hubContent.querySelectorAll('a[href]'));
@@ -578,6 +603,37 @@
             let restrictedPreview = false;
             let currentPlayerName = '';
             let isTeacherSignedIn = false;
+            let contentAccessEditing = false;
+            let classLockedPaths = new Set();
+
+            function contentPathForLink(link) {
+                const href = link.dataset.baseHref || link.dataset.lockedHref || link.getAttribute('href');
+                if (!href) return '';
+                const url = new URL(href, window.location.href);
+                return url.pathname.length > 1 ? url.pathname.replace(/\/+$/, '') : url.pathname;
+            }
+
+            function renderClassLocks() {
+                hubLinks.forEach((link) => {
+                    const locked = classLockedPaths.has(contentPathForLink(link));
+                    link.classList.toggle('is-class-locked', locked);
+                    link.dataset.classLocked = String(locked);
+                    if (locked) {
+                        link.setAttribute('aria-disabled', contentAccessEditing ? 'false' : 'true');
+                        link.setAttribute('aria-label', `${link.textContent.trim()} · 담임교사가 잠금`);
+                    } else {
+                        if (!link.dataset.lockedHref) link.removeAttribute('aria-disabled');
+                        link.removeAttribute('aria-label');
+                    }
+                });
+            }
+
+            async function loadClassContentAccess() {
+                const result = await api('/api/home-content-access');
+                classLockedPaths = new Set(result.lockedPaths || []);
+                contentAccessButton.hidden = !result.canManage;
+                renderClassLocks();
+            }
 
             classToolsLink?.addEventListener('click', (event) => {
                 if (!isTeacherSignedIn) {
@@ -667,7 +723,7 @@
                 hubContent.hidden = false;
             }
 
-            function showStudentHome(state) {
+            async function showStudentHome(state) {
                 const membership = state.membership;
                 const playerName = normalizePlayerName(membership?.name || state.user?.name);
                 if (!isValidPlayerName(playerName)) {
@@ -687,6 +743,7 @@
                 currentPlayerName = playerName;
                 localStorage.setItem('classPlayerName', playerName);
                 updatePlayerLearningLinks(playerName, membership);
+                await loadClassContentAccess();
                 setStatus('');
             }
 
@@ -776,6 +833,7 @@
                 classMembership.textContent = `${schoolName}${classStr} · 교사 계정`;
 
                 hubContent.hidden = false;
+                await loadClassContentAccess();
 
                 const playerName = normalizePlayerName(teacherName);
                 if (isValidPlayerName(playerName)) {
@@ -792,10 +850,10 @@
                     return;
                 }
                 if (state.user?.role === 'teacher') {
-                    showTeacherHome(state).catch(() => {});
+                    showTeacherHome(state).catch((error) => setStatus(error.message, true));
                     return;
                 }
-                if (state.membership) showStudentHome(state);
+                if (state.membership) showStudentHome(state).catch((error) => setStatus(error.message, true));
                 else showJoin(state).catch((error) => setStatus(error.message, true));
             }
 
@@ -862,7 +920,34 @@
                     setStatus(error.message, true);
                 }
             });
-            hubContent.addEventListener('click', (event) => {
+            hubContent.addEventListener('click', async (event) => {
+                const selectedLink = event.target.closest('a');
+                if (contentAccessEditing && selectedLink && hubContent.contains(selectedLink)) {
+                    event.preventDefault();
+                    const path = contentPathForLink(selectedLink);
+                    if (!path) return;
+                    const nextLocked = !classLockedPaths.has(path);
+                    selectedLink.classList.toggle('is-class-locked', nextLocked);
+                    try {
+                        await api('/api/teacher/home-content-access', {
+                            method: 'PUT',
+                            body: JSON.stringify({ path, locked: nextLocked }),
+                        });
+                        if (nextLocked) classLockedPaths.add(path);
+                        else classLockedPaths.delete(path);
+                        renderClassLocks();
+                        setStatus(nextLocked ? '이 버튼을 우리 반 학생에게 잠갔습니다.' : '이 버튼을 우리 반 학생에게 공개했습니다.');
+                    } catch (error) {
+                        renderClassLocks();
+                        setStatus(error.message, true);
+                    }
+                    return;
+                }
+                if (selectedLink?.dataset.classLocked === 'true' && !isTeacherSignedIn) {
+                    event.preventDefault();
+                    setStatus('선생님이 열어 주시면 이용할 수 있습니다.');
+                    return;
+                }
                 if (restrictedPreview) {
                     const link = event.target.closest('a');
                     if (link && hubContent.contains(link)) {
@@ -880,6 +965,15 @@
                     guestNameInput.focus();
                 }
             }, true);
+            contentAccessButton.addEventListener('click', () => {
+                contentAccessEditing = !contentAccessEditing;
+                contentAccessButton.setAttribute('aria-pressed', String(contentAccessEditing));
+                contentAccessButton.textContent = contentAccessEditing ? '✅ 공개 설정 완료' : '🔓 공개 설정 모드';
+                renderClassLocks();
+                setStatus(contentAccessEditing
+                    ? '각 버튼을 눌러 우리 반 학생의 접근을 잠그거나 공개하세요.'
+                    : '우리 반 공개 설정을 저장했습니다.');
+            });
             studentNumberInput.addEventListener('input', () => {
                 studentNumberInput.value = studentNumberInput.value.replace(/\D/g, '').slice(0, 3);
             });

@@ -354,6 +354,13 @@ function createClassroomPlatform(options = {}) {
       `INSERT INTO classroom_settings (setting_key, setting_value)
         VALUES ('site_access_mode', 'open')
         ON CONFLICT (setting_key) DO NOTHING`,
+      `CREATE TABLE IF NOT EXISTS classroom_content_locks (
+        class_id BIGINT NOT NULL REFERENCES classroom_classes(id) ON DELETE CASCADE,
+        content_path TEXT NOT NULL,
+        updated_by BIGINT REFERENCES classroom_users(id) ON DELETE SET NULL,
+        updated_at TIMESTAMPTZ NOT NULL DEFAULT NOW(),
+        PRIMARY KEY (class_id, content_path)
+      )`,
       `WITH first_login_upgrade AS (
         INSERT INTO classroom_settings (setting_key, setting_value)
         VALUES ('school_login_v2_enabled', 'true')
@@ -519,6 +526,35 @@ function createClassroomPlatform(options = {}) {
     };
   }
 
+  async function userClassId(user) {
+    if (!user) return null;
+    if (user.role === "student") {
+      const result = await pool.query(
+        "SELECT class_id FROM classroom_students WHERE user_id = $1 LIMIT 1",
+        [user.id]
+      );
+      return result.rows[0]?.class_id || null;
+    }
+    if (user.role === "teacher") {
+      const result = await pool.query(
+        `SELECT c.id
+         FROM classroom_classes c
+         JOIN classroom_teachers t ON t.user_id = c.teacher_user_id
+         WHERE t.user_id = $1 AND t.teacher_type = 'homeroom'
+         ORDER BY c.updated_at DESC LIMIT 1`,
+        [user.id]
+      );
+      return result.rows[0]?.id || null;
+    }
+    return null;
+  }
+
+  function normalizeContentPath(value) {
+    const clean = String(value || "").split(/[?#]/, 1)[0].trim();
+    if (!clean.startsWith("/") || clean.includes("..") || clean.length > 300) return "";
+    return clean.length > 1 ? clean.replace(/\/+$/, "") : clean;
+  }
+
   async function hasSiteAccess(req) {
     const mode = await getSiteAccessMode();
     // Open mode is intended for development and demonstrations.  A display
@@ -532,7 +568,25 @@ function createClassroomPlatform(options = {}) {
   }
 
   const requireSiteAccess = asyncRoute(async (req, res, next) => {
-    if (await hasSiteAccess(req)) return next();
+    if (await hasSiteAccess(req)) {
+      const mode = await getSiteAccessMode();
+      const user = mode === "restricted" ? await sessionUser(req) : null;
+      if (user?.role === "student" && (req.get("sec-fetch-dest") === "document" || req.accepts("html"))) {
+        const classId = await userClassId(user);
+        const requestPath = normalizeContentPath(req.path);
+        if (classId && requestPath) {
+          const locked = await pool.query(
+            `SELECT 1 FROM classroom_content_locks
+             WHERE class_id = $1
+               AND ($2 = content_path OR $2 LIKE content_path || '/%')
+             LIMIT 1`,
+            [classId, requestPath]
+          );
+          if (locked.rows[0]) return res.redirect(302, "/?content=locked");
+        }
+      }
+      return next();
+    }
     if (req.method === "GET") return res.redirect(302, "/?access=required");
     throw new HttpError(403, "SITE_ACCESS_REQUIRED", "Complete site sign-in before opening this page.");
   });
@@ -619,6 +673,55 @@ function createClassroomPlatform(options = {}) {
   router.get("/site/access", asyncRoute(async (req, res) => {
     const mode = await getSiteAccessMode();
     res.json({ mode });
+  }));
+
+  router.get("/home-content-access", asyncRoute(async (req, res) => {
+    const mode = await getSiteAccessMode();
+    const user = await sessionUser(req);
+    if (mode !== "restricted" || !user || user.role === "admin") {
+      return res.json({ mode, lockedPaths: [], canManage: false });
+    }
+    const classId = await userClassId(user);
+    if (!classId) return res.json({ mode, lockedPaths: [], canManage: false });
+    const locks = await pool.query(
+      "SELECT content_path FROM classroom_content_locks WHERE class_id = $1 ORDER BY content_path",
+      [classId]
+    );
+    res.json({
+      mode,
+      lockedPaths: locks.rows.map((row) => row.content_path),
+      canManage: user.role === "teacher"
+    });
+  }));
+
+  router.put("/teacher/home-content-access", asyncRoute(async (req, res) => {
+    const teacher = await requireTeacher(req);
+    if (await getSiteAccessMode() !== "restricted") {
+      throw new HttpError(409, "RESTRICTED_MODE_REQUIRED", "관리자가 restricted 모드로 설정했을 때만 공개 설정을 변경할 수 있습니다.");
+    }
+    const classId = await userClassId(teacher);
+    if (!classId) {
+      throw new HttpError(403, "HOMEROOM_TEACHER_REQUIRED", "담임교사만 자기 반의 공개 설정을 변경할 수 있습니다.");
+    }
+    const contentPath = normalizeContentPath(req.body?.path);
+    const locked = req.body?.locked === true;
+    if (!contentPath || contentPath === "/") {
+      throw new HttpError(400, "INVALID_CONTENT_PATH", "올바른 홈 버튼을 선택해 주세요.");
+    }
+    if (locked) {
+      await pool.query(
+        `INSERT INTO classroom_content_locks (class_id, content_path, updated_by, updated_at)
+         VALUES ($1, $2, $3, NOW())
+         ON CONFLICT (class_id, content_path) DO UPDATE SET updated_by = EXCLUDED.updated_by, updated_at = NOW()`,
+        [classId, contentPath, teacher.id]
+      );
+    } else {
+      await pool.query(
+        "DELETE FROM classroom_content_locks WHERE class_id = $1 AND content_path = $2",
+        [classId, contentPath]
+      );
+    }
+    res.json({ ok: true, path: contentPath, locked });
   }));
 
   router.get("/schools", asyncRoute(async (req, res) => {
