@@ -361,11 +361,9 @@
     finaleOptions.replaceChildren(...item.options.map((label,index)=>{
       const button=document.createElement('button');button.type='button';button.className='finale-option';button.dataset.letter=String.fromCharCode(65+index);button.textContent=label;
       button.addEventListener('click',()=>{
+        if(index!==item.answer){button.classList.add('wrong');button.disabled=true;finaleFeedback.textContent='다시 생각하고 다른 답을 골라보세요.';return;}
         [...finaleOptions.children].forEach(option=>option.disabled=true);
-        const correctButton=finaleOptions.children[item.answer];
-        correctButton.classList.add('correct');
-        if(index===item.answer){finaleQuizCorrect++;finaleFeedback.textContent=item.explain;finaleFeedback.classList.add('correct');window.ClassGameSfx?.play('card');}
-        else{button.classList.add('wrong');finaleFeedback.textContent=`아쉬워요. 정답은 ‘${item.options[item.answer]}’예요. ${item.explain}`;}
+        button.classList.add('correct');finaleQuizCorrect++;finaleFeedback.textContent=item.explain;finaleFeedback.classList.add('correct');window.ClassGameSfx?.play('card');
         finaleNext.hidden=false;
       });return button;
     }));

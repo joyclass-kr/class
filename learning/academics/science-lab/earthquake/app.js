@@ -477,7 +477,12 @@ document.addEventListener('DOMContentLoaded', () => {
             const correct = selected.value === card.dataset.answer;
             card.dataset.state = correct ? 'correct' : 'incorrect';
             answerResult.textContent = correct ? '맞았습니다.' : '다시 생각해 보세요.';
-            explanation.hidden = false;
+            explanation.hidden = !correct;
+            if (!correct) {
+                selected.checked = false;
+                selected.disabled = true;
+                answerResult.textContent = '다시 생각하고 다른 답을 골라보세요.';
+            }
         });
     });
 

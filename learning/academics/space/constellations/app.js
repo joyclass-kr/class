@@ -1329,8 +1329,8 @@
                     btn.textContent = `${idx + 1}. ${option.text}`;
                     btn.dataset.correct = String(option.correct);
                     btn.onclick = () => {
-                        Array.from(optsBox.children).forEach(b => b.disabled = true);
                         if (option.correct) {
+                            Array.from(optsBox.children).forEach(b => b.disabled = true);
                             correctCount += 1;
                             btn.style.background = 'rgba(16, 185, 129, 0.3)';
                             btn.style.borderColor = '#10b981';
@@ -1338,12 +1338,12 @@
                             incorrectCount += 1;
                             btn.style.background = 'rgba(239, 68, 68, 0.3)';
                             btn.style.borderColor = '#ef4444';
-                            optsBox.querySelector('[data-correct="true"]').style.background = 'rgba(16, 185, 129, 0.3)';
+                            btn.disabled = true;
                         }
                         updateQuizCounts();
-                        expBox.textContent = `${option.correct ? '정답입니다.' : '오답입니다.'} ${item.exp}`;
+                        expBox.textContent = option.correct ? `정답입니다. ${item.exp}` : '다시 생각하고 다른 답을 골라보세요.';
                         expBox.style.display = 'block';
-                        nextBtn.style.display = 'inline-block';
+                        nextBtn.style.display = option.correct ? 'inline-block' : 'none';
                     };
                     optsBox.appendChild(btn);
                 });

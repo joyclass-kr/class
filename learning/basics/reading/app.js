@@ -7,18 +7,9 @@
     index: 0,
     score: 0,
     answered: false,
+    hadWrong: false,
     deckHistory: null,
     deckStorageKey: ""
-  };
-  const LEVEL_INFO = {
-    1: "초3~4",
-    2: "초4~5",
-    3: "초5~6",
-    4: "중1",
-    5: "중2",
-    6: "중3",
-    7: "고1",
-    8: "고2~3"
   };
   const $ = (id) => document.getElementById(id);
   const node = (tag, className, text) => { const el = document.createElement(tag); if (className) el.className = className; if (text !== undefined) el.textContent = text; return el; };
@@ -44,8 +35,7 @@
       const count = items.filter((item) => item.targetLevel === level).length;
       const card = node("button", "level-card", ""); card.type = "button"; card.disabled = !count;
       card.append(
-        node("strong", "level-code", `${state.track === "en" ? "E" : "K"}${level}`),
-        node("span", "level-band", LEVEL_INFO[level])
+        node("strong", "level-code", `${state.track === "en" ? "E" : "K"}${level}`)
       );
       card.addEventListener("click", () => startSet(level)); list.append(card);
     }
@@ -83,8 +73,8 @@
   }
 
   function renderQuestion() {
-    const item = state.set[state.index]; state.answered = false;
-    $("questionLevel").textContent = `${item.track === "en" ? "E" : "K"}${item.targetLevel} · ${LEVEL_INFO[item.targetLevel]}`;
+    const item = state.set[state.index]; state.answered = false; state.hadWrong = false;
+    $("questionLevel").textContent = `${item.track === "en" ? "E" : "K"}${item.targetLevel}`;
     $("questionProgress").textContent = `${state.index + 1} / ${state.set.length}`;
     $("questionTopic").textContent = item.topicTitle;
     $("progressFill").style.width = `${((state.index + 1) / state.set.length) * 100}%`;
@@ -108,12 +98,21 @@
 
   function check(index) {
     if (state.answered) return next();
-    state.answered = true; const item = state.set[state.index]; const correct = index === item.correctIndex;
-    if (correct) state.score += 1;
-    state.deckHistory = window.ReadingQuestionDeck.recordAnswer(state.deckHistory, item.id, correct);
+    const item = state.set[state.index]; const correct = index === item.correctIndex;
+    if (!correct) {
+      state.hadWrong = true;
+      const selected = [...$("studentChoices").children].find((button) => Number(button.dataset.choiceIndex) === index);
+      if (selected) { selected.classList.add("wrong"); selected.disabled = true; }
+      $("answerStatus").textContent = "다시 생각하고 다른 답을 골라보세요.";
+      $("nextButton").disabled = true;
+      return;
+    }
+    state.answered = true;
+    if (!state.hadWrong) state.score += 1;
+    state.deckHistory = window.ReadingQuestionDeck.recordAnswer(state.deckHistory, item.id, !state.hadWrong);
     saveDeckHistory();
     [...$("studentChoices").children].forEach((button) => { const choiceIndex = Number(button.dataset.choiceIndex); button.disabled = true; if (choiceIndex === item.correctIndex) button.classList.add("correct"); else if (choiceIndex === index) button.classList.add("wrong"); });
-    const feedback = $("feedback"); feedback.className = `feedback ${correct ? "is-correct" : "is-wrong"}`; feedback.textContent = `${correct ? "정답 · " : "오답 · "}${item.explanation}`; feedback.hidden = false;
+    const feedback = $("feedback"); feedback.className = "feedback is-correct"; feedback.textContent = `정답 · ${item.explanation}`; feedback.hidden = false;
     $("nextButton").textContent = state.index === state.set.length - 1 ? "결과 보기" : "다음 문제";
   }
 

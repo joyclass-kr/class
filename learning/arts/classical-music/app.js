@@ -203,13 +203,17 @@ $('#retry-wrong').addEventListener('click',()=>{
 });
 $('#check-answer').addEventListener('click',()=>{
   let score=0,answered=0;
+  let needsRetry=false;
   current.forEach((q,i)=>{
     const field=$(`fieldset[data-id="${q.id}"]`),checked=field.querySelector(`input[name="q${i}"]:checked`);
-    field.querySelectorAll('label').forEach((label,j)=>{label.classList.toggle('answer-correct',j===q.correct);label.classList.toggle('answer-wrong',checked&&+checked.value===j&&j!==q.correct)});
-    const ok=checked&&+checked.value===q.correct;if(checked)answered++;if(ok)score++;
-    field.querySelector('.feedback').textContent=checked?(ok?`정답! ${q.explain}`:`정답은 ‘${q.answer}’입니다. ${q.explain}`):`답을 고르지 않았어요. 정답은 ‘${q.answer}’입니다.`;
+    const ok=checked&&+checked.value===q.correct;
+    if(checked&&!ok){const label=checked.closest('label');label?.classList.add('answer-wrong');checked.disabled=true;checked.checked=false;field.querySelector('.feedback').textContent='다시 생각하고 다른 답을 골라보세요.';needsRetry=true;return}
+    field.querySelectorAll('label').forEach((label,j)=>{label.classList.toggle('answer-correct',Boolean(ok)&&j===q.correct)});
+    if(checked)answered++;if(ok)score++;else needsRetry=true;
+    field.querySelector('.feedback').textContent=ok?`정답! ${q.explain}`:'답을 고른 뒤 다시 확인해 주세요.';
     if(checked){progress.solved++;if(ok){progress.correct++;progress.wrong=progress.wrong.filter(id=>id!==q.id)}else if(!progress.wrong.includes(q.id))progress.wrong.push(q.id)}
   });
+  if(needsRetry){$('#result').innerHTML='<div class="result-card"><span>아직 정답을 찾지 못한 문제가 있어요. 다시 골라보세요.</span></div>';return}
   save();
   $('#result').innerHTML=`<div class="result-card"><b>${score} / ${current.length}</b><span>${answered<current.length?`${current.length-answered}문제는 답하지 않았어요. `:''}${score===current.length?'완벽해요! 이번에는 다른 시대에 도전해 보세요.':'틀린 문제는 오답 다시 풀기에 저장했어요.'}</span></div>`;
   $('#result').scrollIntoView({behavior:'smooth',block:'center'});

@@ -138,6 +138,15 @@ function setMode(nextMode) {
 function answer(choiceIndex, selectedButton) {
   const item = decks[language][quizOrder[quizPosition]];
   const buttons = [...$("choices").querySelectorAll("button")];
+  if (choiceIndex !== currentChoices.answer) {
+    selectedButton.classList.add("wrong");
+    selectedButton.disabled = true;
+    window.ClassGameSfx?.play("error");
+    $("feedback").textContent = language === "en"
+      ? "Try again and choose a different answer."
+      : "다시 생각하고 다른 답을 골라보세요.";
+    return;
+  }
   buttons.forEach((button, buttonIndex) => {
     button.disabled = true;
     if (buttonIndex === currentChoices.answer) button.classList.add("correct");
@@ -149,13 +158,6 @@ function answer(choiceIndex, selectedButton) {
     $("feedback").textContent = language === "en"
       ? "Correct! You matched the proverb to the situation."
       : "정답! 뜻과 상황을 잘 연결했어요.";
-  } else {
-    selectedButton.classList.add("wrong");
-    window.ClassGameSfx?.play("error");
-    $("feedback").textContent = language === "en"
-      ? `The correct answer is “${item.proverb}”.`
-      : `정답은 “${item.proverb}”입니다.`;
-    $("reviewAnswer").hidden = false;
   }
   $("nextQuestion").disabled = false;
   const last = quizPosition === BATCH_SIZE - 1;

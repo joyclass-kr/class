@@ -64,6 +64,7 @@
         gameBestStreak: 0,
         gameTimeLeft: GAME_TIME_LIMIT,
         gameAnswered: false,
+        gameHadWrong: false,
         gameTimerId: null,
         spellingIds: new Set(),
         spellingLevel: 0,
@@ -351,17 +352,28 @@
 
     function answerGame(selectedId, timedOut = false) {
         if (state.gameAnswered || !state.gameTarget) return;
-        state.gameAnswered = true;
-        clearGameTimer();
         const targetId = String(state.gameTarget.id);
         const isCorrect = String(selectedId) === targetId;
+        if (!isCorrect) {
+            state.gameHadWrong = true;
+            if (!state.gameWrongWords.some((word) => String(word.id) === targetId)) state.gameWrongWords.push(state.gameTarget);
+            if (!timedOut) {
+                const selected = elements.gameChoices.querySelector(`[data-word-id="${selectedId}"]`);
+                if (selected) { selected.classList.add("incorrect"); selected.disabled = true; }
+            }
+            elements.gameFeedback.textContent = timedOut
+                ? "시간이 지났어요. 다시 살펴보고 정답을 골라보세요."
+                : "다시 생각하고 다른 그림을 골라보세요.";
+            elements.gameFeedback.className = "game-feedback incorrect";
+            if (timedOut) startGameTimer();
+            return;
+        }
+        state.gameAnswered = true;
+        clearGameTimer();
         if (isCorrect) {
-            state.gameScore += 1;
+            if (!state.gameHadWrong) state.gameScore += 1;
             state.gameStreak += 1;
             state.gameBestStreak = Math.max(state.gameBestStreak, state.gameStreak);
-        } else {
-            state.gameStreak = 0;
-            state.gameWrongWords.push(state.gameTarget);
         }
         elements.gameChoices.querySelectorAll(".game-choice").forEach((button) => {
             const choiceId = button.dataset.wordId;
@@ -370,15 +382,9 @@
             else if (String(selectedId) === choiceId) button.classList.add("incorrect");
         });
         const meaning = state.gameTarget.meanings[0] || "";
-        if (timedOut) {
-            elements.gameFeedback.textContent = `시간 끝 · 정답은 ${state.gameTarget.word} — ${meaning}`;
-            elements.gameFeedback.className = "game-feedback incorrect";
-        } else if (isCorrect) {
+        if (isCorrect) {
             elements.gameFeedback.textContent = `정답 · ${state.gameTarget.word} — ${meaning}`;
             elements.gameFeedback.className = "game-feedback correct";
-        } else {
-            elements.gameFeedback.textContent = `오답 · 정답은 ${state.gameTarget.word} — ${meaning}`;
-            elements.gameFeedback.className = "game-feedback incorrect";
         }
         elements.gameNextButton.disabled = false;
         elements.gameNextButton.textContent = state.gameQuestionNumber >= state.gameRoundLength
@@ -446,6 +452,7 @@
         state.gameChoices = question.choices;
         state.gameQuestionNumber += 1;
         state.gameAnswered = false;
+        state.gameHadWrong = false;
         renderGameQuestion();
     }
 

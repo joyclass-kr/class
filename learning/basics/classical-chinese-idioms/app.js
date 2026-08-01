@@ -396,20 +396,28 @@
 
     function chooseAnswer(answerId) {
         if (quizAnswered) return;
-        quizAnswered = true;
         const question = quiz[quizIndex];
         const correct = answerId === question.answerId;
         const answerIdiom = data.find((item) => item.id === question.answerId);
 
+        if (!correct) {
+            const selected = elements.answerOptions.querySelector(`[data-answer-id="${answerId}"]`);
+            if (selected) {
+                selected.disabled = true;
+                selected.classList.add("wrong");
+            }
+            elements.feedbackTitle.textContent = "다시 생각해 보세요.";
+            elements.feedbackCopy.textContent = "다른 답을 골라보세요.";
+            elements.feedbackStory.open = false;
+            elements.answerFeedback.classList.add("wrong");
+            elements.answerFeedback.hidden = false;
+            return;
+        }
+        quizAnswered = true;
+
         if (correct) {
             quizScore += 1;
             quizStreak += 1;
-        } else {
-            quizStreak = 0;
-            quizMistakes.push(question.answerId);
-            progress[question.answerId] = { status: "review", updatedAt: new Date().toISOString() };
-            saveProgress();
-            renderSummary();
         }
 
         elements.quizScore.textContent = quizScore;
@@ -419,7 +427,7 @@
             if (button.dataset.answerId === question.answerId) button.classList.add("correct");
             else if (button.dataset.answerId === answerId) button.classList.add("wrong");
         });
-        elements.feedbackTitle.textContent = correct ? "정답" : `오답 · 정답: ${question.answerLabel}`;
+        elements.feedbackTitle.textContent = "정답";
         elements.feedbackCopy.textContent = `${answerIdiom.meaning} · ${question.source}`;
         elements.feedbackStoryCopy.textContent = answerIdiom.story;
         elements.feedbackStory.open = !correct;

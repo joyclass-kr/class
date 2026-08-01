@@ -939,6 +939,14 @@
 
   function answerQuizSession(selectedButton, isCorrect, relic) {
     if (quizSessionAnswered) return;
+    if (!isCorrect) {
+      selectedButton.classList.add('wrong');
+      selectedButton.disabled = true;
+      quizSessionFeedback.textContent = '다시 생각하고 다른 답을 골라보세요.';
+      quizSessionFeedback.className = 'quiz-result-card fail';
+      quizSessionFeedback.hidden = false;
+      return;
+    }
     quizSessionAnswered = true;
     if (isCorrect) quizSessionScore += 1;
 
@@ -946,11 +954,9 @@
       button.disabled = true;
       if (button.dataset.correct === 'true') button.classList.add('correct');
     });
-    if (!isCorrect) selectedButton.classList.add('wrong');
-
     quizSessionFeedback.innerHTML = '';
     const resultTitle = document.createElement('strong');
-    resultTitle.textContent = isCorrect ? '정답입니다!' : `정답: ${relic.quiz.options[relic.quiz.answer]}`;
+    resultTitle.textContent = '정답입니다!';
     const explanation = document.createElement('p');
     explanation.textContent = `${relic.title} · ${relic.quiz.explanation}`;
     quizSessionFeedback.append(resultTitle, explanation);

@@ -3394,11 +3394,6 @@
 
         function checkQuizAnswer(selectedOpt, btn, correctAns, expText) {
             if (state.quiz.answered) return;
-            state.quiz.answered = true;
-
-            // Disable all option buttons after answer
-            var allBtns = document.querySelectorAll('.quiz-opt-btn');
-            allBtns.forEach(function(b) { b.disabled = true; b.style.cursor = 'default'; });
 
             var isCorrect = selectedOpt === correctAns;
             var msg = document.getElementById('quizResultMsg');
@@ -3406,6 +3401,9 @@
             var expContent = document.getElementById('quizExpText');
 
             if (isCorrect) {
+                state.quiz.answered = true;
+                var allBtns = document.querySelectorAll('.quiz-opt-btn');
+                allBtns.forEach(function(b) { b.disabled = true; b.style.cursor = 'default'; });
                 btn.style.background = '#10b981';
                 btn.style.color = '#000';
                 state.quiz.correctCount += 1;
@@ -3416,19 +3414,20 @@
             } else {
                 btn.style.background = '#ef4444';
                 state.quiz.incorrectCount += 1;
+                btn.disabled = true;
                 if (msg) {
-                    msg.textContent = '오답입니다. 정답은 『 ' + correctAns + ' 』 입니다.';
+                    msg.textContent = '다시 생각하고 다른 답을 골라보세요.';
                     msg.style.color = '#fca5a5';
                 }
             }
 
-            if (expBox && expContent) {
+            if (isCorrect && expBox && expContent) {
                 expContent.textContent = expText;
                 expBox.style.display = 'block';
             }
 
             var nextBtn = document.getElementById('nextQuizBtn');
-            if (nextBtn) nextBtn.style.display = 'inline-block';
+            if (nextBtn) nextBtn.style.display = isCorrect ? 'inline-block' : 'none';
 
             var correctEl = document.getElementById('quizCorrectCount');
             if (correctEl) correctEl.textContent = state.quiz.correctCount;

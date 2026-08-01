@@ -308,27 +308,35 @@
 
     function selectAnswer(selectedChoice, selectedButton) {
         if (state.answered) return;
-
-        state.answered = true;
         const question = state.questions[state.currentIndex];
         const isCorrect = selectedChoice === question.answer;
         const buttons = [...elements.choiceList.querySelectorAll("button")];
+
+        if (!isCorrect) {
+            selectedButton.classList.add("is-wrong");
+            selectedButton.disabled = true;
+            elements.feedbackTitle.textContent = "다시 생각해 보세요.";
+            elements.explanation.textContent = "다른 답을 골라보세요.";
+            elements.correctAnswer.textContent = "";
+            elements.feedback.classList.add("is-wrong");
+            elements.feedback.classList.remove("hidden");
+            elements.announcer.textContent = "다시 생각하고 다른 답을 골라보세요.";
+            return;
+        }
+
+        state.answered = true;
 
         buttons.forEach((button) => {
             button.disabled = true;
             if (button.dataset.choice === question.answer) button.classList.add("is-correct");
         });
 
-        if (!isCorrect) {
-            selectedButton.classList.add("is-wrong");
-        } else {
-            state.score += 1;
-            elements.currentScore.textContent = String(state.score);
-        }
+        state.score += 1;
+        elements.currentScore.textContent = String(state.score);
 
         state.answers.push({ question, selectedChoice, isCorrect });
-        elements.feedbackTitle.textContent = isCorrect ? "정답이에요!" : "아쉬워요!";
-        elements.feedback.classList.toggle("is-wrong", !isCorrect);
+        elements.feedbackTitle.textContent = "정답이에요!";
+        elements.feedback.classList.remove("is-wrong");
         elements.correctAnswer.textContent = `정답: ${question.answer}`;
         elements.explanation.textContent = question.explanation;
         elements.feedback.classList.remove("hidden");

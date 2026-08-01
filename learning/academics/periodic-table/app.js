@@ -605,12 +605,22 @@ document.addEventListener('DOMContentLoaded', () => {
 
     function checkAnswer(selectedOpt, btn) {
         if (state.quiz.answered) return;
-        state.quiz.answered = true;
 
         const { correctEl, chosenType } = state.quiz.currentQuestion;
         const isCorrect = selectedOpt.number === correctEl.number;
         const msg = document.getElementById('quizResultMsg');
         const explanation = getQuizExplanation(correctEl, chosenType);
+
+        if (!isCorrect) {
+            btn.classList.add('wrong');
+            btn.disabled = true;
+            state.quiz.streak = 0;
+            msg.innerHTML = '<strong>다시 생각하고 다른 답을 골라보세요.</strong>';
+            msg.style.color = '#ffb86b';
+            document.getElementById('quizStreak').textContent = state.quiz.streak;
+            return;
+        }
+        state.quiz.answered = true;
 
         if (isCorrect) {
             btn.classList.add('correct');
@@ -618,19 +628,6 @@ document.addEventListener('DOMContentLoaded', () => {
             state.quiz.streak += 1;
             msg.innerHTML = `<strong>🎉 정답입니다! (+10점)</strong><span>${explanation}</span>`;
             msg.style.color = '#38ef7d';
-        } else {
-            btn.classList.add('wrong');
-            state.quiz.streak = 0;
-            msg.innerHTML = `<strong>❌ 아쉽네요! 정답은 ${correctEl.name}(${correctEl.symbol})입니다.</strong><span>${explanation}</span>`;
-            msg.style.color = '#ff5e57';
-
-            // Highlight correct button
-            document.querySelectorAll('.quiz-opt-btn').forEach(b => {
-                if (Number(b.dataset.number) === correctEl.number) {
-                    b.classList.add('correct');
-                }
-            });
-
         }
 
         document.querySelectorAll('.quiz-opt-btn').forEach(option => {
