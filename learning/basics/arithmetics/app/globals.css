@@ -1428,7 +1428,6 @@ html[data-race-mode="true"] body { padding-bottom: 72px; }
 
 .division-three-headings strong {
   padding: 4px 2px 6px;
-  border-bottom: 1px solid #d9d0c4;
 }
 
 .division-three-headings strong:nth-child(3) {
@@ -1438,25 +1437,31 @@ html[data-race-mode="true"] body { padding-bottom: 72px; }
 .division-three-columns {
   grid-template-columns: repeat(4, minmax(0, 1fr));
   margin-top: 0;
+  border: 0;
+  border-radius: 0;
+  background: transparent;
 }
 
 .division-three-column {
   grid-template-rows: repeat(29, minmax(0, 1fr));
+  border-right: 0;
 }
 
 .division-three-question {
-  grid-template-columns: 28px 10px 12px 10px 32px;
-  gap: 1px;
-  padding: 1px 3px 7px;
-  font-size: 13px;
+  grid-template-columns: 32px 12px 16px 12px 37px;
+  gap: 2px;
+  border-right: 0;
+  border-bottom: 0;
+  padding: 1px 3px 4px;
+  font-size: 16px;
 }
 
 .division-three-input,
 .division-three-static-answer {
-  width: 31px;
-  height: 21px;
+  width: 37px;
+  height: 27px;
   border-radius: 4px;
-  font-size: 13px;
+  font-size: 16px;
 }
 
 .division-three-question .counting-result {
@@ -8958,8 +8963,22 @@ main {
 }
 
 .counting-sheet {
+  --elementary-korean-font: "KoPubWorld Batang", "Noto Serif KR", "Batang", serif;
+  --elementary-math-font: "Suneung Math", "STIX Two Math", "KoPubWorld Batang", "Cambria Math", "Times New Roman", serif;
   color: #17233c;
-  font-family: "Malgun Gothic", "Apple SD Gothic Neo", sans-serif;
+  font-family: var(--elementary-korean-font);
+}
+
+.counting-sheet > :not(.counting-sheet-header) {
+  font-family: var(--elementary-math-font);
+  font-synthesis: none;
+  font-variant-numeric: lining-nums tabular-nums;
+}
+
+.counting-sheet > :not(.counting-sheet-header) :where(input, button, select, textarea) {
+  font-family: inherit;
+  font-synthesis: none;
+  font-variant-numeric: inherit;
 }
 
 .counting-sheet-header {
@@ -8988,7 +9007,7 @@ main {
 
 .counting-sheet-title strong {
   min-width: 0;
-  font-family: "KoPubWorld Batang", "Noto Serif KR", "Batang", serif;
+  font-family: var(--elementary-korean-font);
   font-size: 23px;
   font-weight: 700;
   line-height: 1.2;
