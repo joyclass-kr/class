@@ -14,8 +14,9 @@ test("초등 공통 세로셈은 피연산자, 가로선, 답칸의 오른쪽 �
 });
 
 test("time and length unit calculations share one fixed alignment axis", () => {
-  assert.match(css, /\.time-calculation-line\s*\{[\s\S]*?width:\s*var\(--time-calculation-width\);[\s\S]*?grid-template-columns:\s*24px auto;[\s\S]*?justify-self:\s*center;/);
-  assert.match(css, /\.time-calculation-rule\s*\{[\s\S]*?width:\s*calc\(var\(--time-calculation-width\) - 24px\);[\s\S]*?margin-left:\s*24px;/);
+  assert.match(css, /\.time-calculation-line\s*\{[\s\S]*?width:\s*var\(--time-calculation-width\);[\s\S]*?grid-template-columns:\s*24px var\(--time-calculation-value-width\);[\s\S]*?justify-self:\s*center;/);
+  assert.match(css, /\.time-calculation-value\s*\{[\s\S]*?width:\s*var\(--time-calculation-value-width\);/);
+  assert.match(css, /\.time-calculation-rule\s*\{[\s\S]*?width:\s*var\(--time-calculation-value-width\);[\s\S]*?margin-left:\s*24px;/);
   assert.match(css, /\.time-calculation-input,[\s\S]*?width:\s*100%;[\s\S]*?box-sizing:\s*border-box;/);
   assert.match(css, /\.length-operation-line\s*\{[\s\S]*?width:\s*195px;[\s\S]*?grid-template-columns:\s*22px 173px;[\s\S]*?justify-self:\s*center;/);
   assert.match(css, /\.length-operation-rule\s*\{[\s\S]*?width:\s*173px;[\s\S]*?margin-left:\s*22px;/);

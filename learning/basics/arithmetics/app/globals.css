@@ -428,17 +428,19 @@
 .time-calculation-line {
   width: var(--time-calculation-width);
   display: grid;
-  grid-template-columns: 24px auto;
+  grid-template-columns: 24px var(--time-calculation-value-width);
   align-items: center;
   justify-self: center;
 }
 
 .time-calculation-question.parts-two {
   --time-calculation-width: 206px;
+  --time-calculation-value-width: 182px;
 }
 
 .time-calculation-question.parts-three {
   --time-calculation-width: 240px;
+  --time-calculation-value-width: 216px;
 }
 
 .time-calculation-line > b {
@@ -447,6 +449,7 @@
 }
 
 .time-calculation-value {
+  width: var(--time-calculation-value-width);
   display: grid;
   align-items: center;
   gap: 2px;
@@ -473,7 +476,7 @@
 }
 
 .time-calculation-rule {
-  width: calc(var(--time-calculation-width) - 24px);
+  width: var(--time-calculation-value-width);
   height: 2px;
   justify-self: center;
   margin-left: 24px;
