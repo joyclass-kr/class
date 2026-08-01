@@ -738,18 +738,51 @@
 
     function playBeatGrid() {
         const context = ensureAudio();
-        if (!context) return;
+        const question = getDictationQuestion();
+        if (!context || !question) return;
         const token = ++state.rhythmPlaybackToken;
         const beatSeconds = 60 / state.tempo;
         const stepSeconds = beatSeconds / 4;
         const countStart = context.currentTime + .08;
         for (let beat = 0; beat < 4; beat += 1) playClick(countStart + beat * beatSeconds, beat === 0, .95);
         const start = countStart + 4 * beatSeconds;
-        state.dictationAnswer.forEach(function (symbol, index) {
-            if (symbol === "note") playDrum(start + index * stepSeconds, index % 4 === 0);
+        question.hits.forEach(function (index) {
+            playDrum(start + index * stepSeconds, index % 4 === 0);
         });
         animateRhythmGrid(80 + 4 * beatSeconds * 1000, stepSeconds * 1000, token, elements.dictationGrid);
-        elements.dictationFeedback.textContent = state.dictationAnswer.includes("note") ? "메트로놈 예비박 4박 뒤에 내 비트를 재생합니다." : "먼저 네모칸에 점을 찍으세요.";
+        elements.dictationFeedback.textContent = "메트로놈 예비박 4박 뒤에 예제 비트가 재생됩니다.";
+    }
+
+    function newBeatQuestion() {
+        const pool = getDictationPool();
+        const candidates = pool.filter(function (pattern) { return pattern.id !== state.dictationQuestionId; });
+        const next = candidates[Math.floor(Math.random() * candidates.length)] || pool[0];
+        state.dictationQuestionId = next.id;
+        state.dictationQuestionNumber += 1;
+        state.dictationAnswer = Array(16).fill("rest");
+        state.dictationSolved = false;
+        elements.dictationQuestionLabel.textContent = "문제 " + state.dictationQuestionNumber;
+        elements.dictationFeedback.className = "";
+        elements.dictationFeedback.textContent = "예비박 4박 뒤에 나오는 한 마디를 듣고 점을 찍으세요.";
+        renderDictationGrid();
+    }
+
+    function checkBeatAnswer() {
+        const question = getDictationQuestion();
+        if (!question) return;
+        const target = new Set(question.hits);
+        const answer = new Set(state.dictationAnswer.map(function (symbol, index) { return symbol === "note" ? index : -1; }).filter(function (index) { return index >= 0; }));
+        let correct = 0;
+        for (let index = 0; index < 16; index += 1) if (target.has(index) === answer.has(index)) correct += 1;
+        if (correct === 16) {
+            if (!state.dictationSolved) incrementPractice();
+            state.dictationSolved = true;
+            elements.dictationFeedback.className = "correct";
+            elements.dictationFeedback.textContent = "정답입니다. 들은 타격 위치를 모두 맞혔어요.";
+        } else {
+            elements.dictationFeedback.className = "incorrect";
+            elements.dictationFeedback.textContent = "16칸 중 " + correct + "칸이 맞습니다. 다시 들어보세요.";
+        }
     }
 
     function notationChoiceQuestion() {
@@ -1242,6 +1275,8 @@
         });
         elements.dictationListenButton.addEventListener("click", playBeatGrid);
         elements.clearDictationButton.addEventListener("click", clearDictationAnswer);
+        elements.checkDictationButton.addEventListener("click", checkBeatAnswer);
+        elements.newDictationButton.addEventListener("click", newBeatQuestion);
         elements.notationChoiceListenButton.addEventListener("click", listenToNotationChoice);
         elements.newNotationChoiceButton.addEventListener("click", newNotationChoiceQuestion);
         document.querySelectorAll("[data-dictation-level]").forEach(function (button) {
@@ -1263,8 +1298,7 @@
         loadPracticeCount();
         renderKeyOptions();
         renderHarmony();
-        state.dictationAnswer = Array(16).fill("rest");
-        renderDictationGrid();
+        newBeatQuestion();
         newNotationChoiceQuestion();
         makeQuiz();
         makeVoicingQuiz();

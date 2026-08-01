@@ -17,7 +17,7 @@
     <link rel="preload" href="assets/piano/C6.mp3" as="fetch" type="audio/mpeg" crossorigin>
     <link rel="stylesheet" href="styles.css?v=20260801-sampled-piano">
     <script src="music-core.js?v=20260801-diatonic-ascent" defer></script>
-    <script src="app.js?v=20260801-beat-count-in" defer></script>
+    <script src="app.js?v=20260801-beat-dictation" defer></script>
 </head>
 <body>
     <div class="noise" aria-hidden="true"></div>
@@ -312,18 +312,20 @@
                     <article class="dictation-card beatmaker-card">
                         <div class="dictation-toolbar">
                             <div>
-                                <span class="mini-label">STEP SEQUENCER</span>
-                                <h3>칸을 눌러 비트를 찍으세요</h3>
+                                <span id="dictationQuestionLabel" class="mini-label">문제 1</span>
+                                <h3>들은 예제 비트를 점으로 찍으세요</h3>
                             </div>
                             <div class="meter-badge"><strong>4</strong><i></i><strong>4</strong></div>
-                            <button id="dictationListenButton" class="dictation-listen-button" type="button"><span aria-hidden="true">▶</span> 내 비트 듣기</button>
+                            <button id="dictationListenButton" class="dictation-listen-button" type="button"><span aria-hidden="true">▶</span> 예제 비트 듣기</button>
                         </div>
                         <div class="count-strip" aria-label="박자 카운트"><span>1</span><i>e</i><i>&amp;</i><i>a</i><span>2</span><i>e</i><i>&amp;</i><i>a</i><span>3</span><i>e</i><i>&amp;</i><i>a</i><span>4</span><i>e</i><i>&amp;</i><i>a</i></div>
                         <div id="dictationGrid" class="rhythm-grid beat-grid" role="group" aria-label="16칸 비트 입력"></div>
                         <div class="beat-numbers" aria-hidden="true"><span>BEAT 1</span><span>BEAT 2</span><span>BEAT 3</span><span>BEAT 4</span></div>
                         <div class="dictation-actions">
-                            <p id="dictationFeedback" aria-live="polite">점을 켜면 그 칸에서 드럼 소리가 납니다.</p>
+                            <p id="dictationFeedback" aria-live="polite">예비박 4박 뒤에 나오는 한 마디를 듣고 점을 찍으세요.</p>
                             <button id="clearDictationButton" type="button">모두 지우기</button>
+                            <button id="checkDictationButton" type="button">정답 확인</button>
+                            <button id="newDictationButton" type="button">다음 문제</button>
                         </div>
                     </article>
                 </div>

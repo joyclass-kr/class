@@ -17,7 +17,7 @@ assert.deepEqual(ebChords.map((chord) => musicCore.getAscendingDiatonicMidi(chor
 
 [
     "harmonyLab", "rhythmLab", "progressionSlots", "chordBank", "piano",
-    "minorVariantControl", "minorVariantSelect", "dictationPanel", "performancePanel", "dictationGrid", "dictationListenButton",
+    "minorVariantControl", "minorVariantSelect", "dictationPanel", "performancePanel", "dictationQuestionLabel", "dictationGrid", "dictationListenButton", "checkDictationButton", "newDictationButton",
     "notationChoiceQuestionLabel", "notationChoiceListenButton", "notationChoices", "notationChoiceFeedback", "newNotationChoiceButton",
     "voicingQuizIdentity", "voicingQuizPrompt", "voicingQuizListenButton", "voicingQuizChoices", "voicingQuizFeedback", "newVoicingQuizButton"
 ].forEach((id) => assert.match(html, new RegExp(`id=["']${id}["']`)));
@@ -86,9 +86,12 @@ assert.match(app, /playNoiseTransient/);
 assert.match(app, /data-mode/);
 assert.match(app, /minorVariant/);
 assert.match(app, /function playBeatGrid/);
+assert.match(app, /function newBeatQuestion/);
+assert.match(app, /function checkBeatAnswer/);
+assert.match(app, /question\.hits\.forEach/);
 assert.match(app, /const countStart = context\.currentTime \+ \.08/);
 assert.match(app, /countStart \+ 4 \* beatSeconds/);
-assert.match(app, /메트로놈 예비박 4박 뒤/);
+assert.match(app, /메트로놈 예비박 4박 뒤에 예제 비트/);
 assert.match(app, /function newNotationChoiceQuestion/);
 assert.match(app, /state\.dictationAnswer\[index\] === "note" \? "rest" : "note"/);
 assert.match(css, /@media \(max-width: 640px\)/);
