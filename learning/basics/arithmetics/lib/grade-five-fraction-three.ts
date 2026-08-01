@@ -115,7 +115,11 @@ function intuitiveProblem(next: () => number, index: number) {
   return makeProblem(index, "intuitive", pair[0], pair[1]);
 }
 
-function nearBenchmarkPair(next: () => number, target: 2 | 4) {
+function easyBenchmark(next: () => number): 2 | 3 | 4 {
+  return [2, 3, 4][integer(next, 0, 2)] as 2 | 3 | 4;
+}
+
+function nearBenchmarkPair(next: () => number, target: 2 | 3 | 4) {
   const lowerDenominator = integer(next, 90, 360);
   const upperDenominator = integer(next, 90, 360);
   const lowerOffset = integer(next, 1, 8);
@@ -126,7 +130,7 @@ function nearBenchmarkPair(next: () => number, target: 2 | 4) {
 }
 
 function hardEstimateProblem(next: () => number, index: number) {
-  const pair = nearBenchmarkPair(next, chance(next) ? 2 : 4);
+  const pair = nearBenchmarkPair(next, easyBenchmark(next));
   return makeProblem(index, "hard-estimate", pair[0], pair[1]);
 }
 
@@ -149,7 +153,7 @@ function closeComplementValue(next: () => number, improper: boolean) {
 
 function closeComplementProblem(next: () => number, index: number, improper: boolean) {
   if (!improper) {
-    const pair = nearBenchmarkPair(next, chance(next) ? 2 : 4);
+    const pair = nearBenchmarkPair(next, easyBenchmark(next));
     return makeProblem(index, "close-complement", pair[0], pair[1]);
   }
   const left = closeComplementValue(next, improper);

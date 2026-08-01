@@ -79,11 +79,11 @@ test("대분수·보수·단위분수·분모 통분 문제도 원본 특징을 
   }
 });
 
-test("어림 비교 문제는 1/2 또는 1/4의 서로 다른 쪽에 가깝게 놓인다", () => {
+test("어림 비교 문제는 1/2, 1/3 또는 1/4의 서로 다른 쪽에 가깝게 놓인다", () => {
   for (let seed = 1; seed <= 300; seed += 1) {
     const problems = createGradeFiveFractionThreeSet(seed).problems;
     for (const problem of [problems[2], problems[5], problems[6]]) {
-      const hasEasyBenchmark = ([2, 4] as const).some((target) => {
+      const hasEasyBenchmark = ([2, 3, 4] as const).some((target) => {
         const leftSide = problem.left.numerator * target - problem.left.denominator;
         const rightSide = problem.right.numerator * target - problem.right.denominator;
         return leftSide * rightSide < 0
