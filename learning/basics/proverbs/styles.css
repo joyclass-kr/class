@@ -15,13 +15,10 @@ output { margin-left: auto; font-weight: 700; color: #70401f; }
 @media (min-width: 761px) {
   .class-music-ready header { padding-right: 380px; }
 }
-main { width: min(760px, calc(100% - 32px)); margin: 48px auto 80px; }
-.hero { padding: 22px 26px; border: 1px solid #fff9ed8f; border-radius: 18px; background: #fff9edc7; box-shadow: 0 8px 28px #4a29122b; backdrop-filter: blur(5px); }
-.hero p:first-child, .label { color: #8b4e25; font-weight: 750; letter-spacing: .04em; font-size: .82rem; }
-h1 { font-size: clamp(2rem, 7vw, 3.6rem); line-height: 1.15; margin: 8px 0; }
-h1 em { color: #df5b34; font-style: normal; }
+main { width: min(760px, calc(100% - 32px)); margin: 28px auto 80px; }
+.label { color: #8b4e25; font-weight: 750; letter-spacing: .04em; font-size: .82rem; }
 button { cursor: pointer; font: inherit; border: 1px solid #c7d4e6; border-radius: 10px; background: white; padding: 11px 15px; color: #243248; }
-.mode-tabs { display: grid; grid-template-columns: 1fr 1fr; gap: 8px; margin-top: 24px; padding: 6px; border-radius: 14px; background: #ead7bfee; }
+.mode-tabs { display: grid; grid-template-columns: 1fr 1fr; gap: 8px; padding: 6px; border-radius: 14px; background: #ead7bfee; }
 .mode-tab { border: 0; background: transparent; font-weight: 750; }
 .mode-tab.active { background: #fffaf0; color: #8b4e25; box-shadow: 0 2px 9px #4a291225; }
 .language-tabs { display: flex; gap: 10px; margin: 16px 0; }
@@ -45,6 +42,6 @@ button:disabled { cursor: not-allowed; opacity: .55; }
 @media (max-width: 520px) {
   header { gap: 10px; }
   header small { display: none; }
-  main { margin-top: 30px; }
+  main { margin-top: 20px; }
   .actions { flex-wrap: wrap; }
 }
