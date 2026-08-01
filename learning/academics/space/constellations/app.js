@@ -135,10 +135,15 @@
             ];
 
             let zScene, zCamera, zRenderer, zControls;
-            let zEarth, zSun, zOrbitPath;
+            let zEarth, zEarthTiltReference, zEarthSpinGroup, zEarthGlobe, zSun, zOrbitPath;
             let zMidLine, zSunLine, zMidText, zSunText;
             let zObserverMarker;
-            let reqId = null;
+            let zSeasonPickTargets = [];
+            const zodiacMotionState = {
+                playing: false,
+                speed: 1,
+                lastFrame: performance.now()
+            };
 
             function createZodiacLabelSprite(text, color, width = 160, height = 20, fontSize = 32) {
                 const cvs = document.createElement('canvas');
@@ -195,6 +200,93 @@
                 return sprite;
             }
 
+            function createZodiacEarthTexture() {
+                const canvas = document.createElement('canvas');
+                canvas.width = 512;
+                canvas.height = 256;
+                const ctx = canvas.getContext('2d');
+                const ocean = ctx.createLinearGradient(0, 0, 0, 256);
+                ocean.addColorStop(0, '#0b4f85');
+                ocean.addColorStop(0.5, '#0876b8');
+                ocean.addColorStop(1, '#063963');
+                ctx.fillStyle = ocean;
+                ctx.fillRect(0, 0, 512, 256);
+
+                // A stable teaching texture: recognizable land masses make rotation visible.
+                ctx.fillStyle = '#43a85b';
+                const lands = [
+                    [82, 78, 54, 27, -0.25], [126, 118, 31, 52, 0.18],
+                    [245, 74, 62, 28, 0.08], [275, 123, 36, 58, -0.12],
+                    [342, 92, 70, 31, 0.18], [397, 137, 34, 20, -0.15],
+                    [465, 174, 31, 17, 0.12]
+                ];
+                lands.forEach(([x, y, rx, ry, rotation]) => {
+                    ctx.beginPath();
+                    ctx.ellipse(x, y, rx, ry, rotation, 0, Math.PI * 2);
+                    ctx.fill();
+                });
+                ctx.fillStyle = 'rgba(126, 211, 120, 0.72)';
+                [[55, 110, 22], [204, 103, 19], [322, 65, 22], [430, 93, 16]].forEach(([x, y, r]) => {
+                    ctx.beginPath();
+                    ctx.arc(x, y, r, 0, Math.PI * 2);
+                    ctx.fill();
+                });
+                ctx.fillStyle = 'rgba(241,245,249,.92)';
+                ctx.fillRect(0, 0, 512, 12);
+                ctx.fillRect(0, 244, 512, 12);
+                const texture = new THREE.CanvasTexture(canvas);
+                if (THREE.sRGBEncoding !== undefined) texture.encoding = THREE.sRGBEncoding;
+                return texture;
+            }
+
+            function createZodiacAxisGuideSprite() {
+                const canvas = document.createElement('canvas');
+                canvas.width = 512;
+                canvas.height = 512;
+                const ctx = canvas.getContext('2d');
+                const tilt = THREE.MathUtils.degToRad(23.5);
+                const halfLength = 188;
+                const dx = Math.sin(tilt) * halfLength;
+                const dy = Math.cos(tilt) * halfLength;
+
+                ctx.clearRect(0, 0, 512, 512);
+                ctx.save();
+                ctx.strokeStyle = '#38bdf8';
+                ctx.lineWidth = 6;
+                ctx.setLineDash([18, 10]);
+                ctx.shadowColor = 'rgba(56,189,248,.85)';
+                ctx.shadowBlur = 8;
+                ctx.beginPath();
+                ctx.moveTo(256 - dx, 256 + dy);
+                ctx.lineTo(256 + dx, 256 - dy);
+                ctx.stroke();
+                ctx.restore();
+
+                ctx.font = '900 34px "Noto Sans KR", sans-serif';
+                ctx.textAlign = 'center';
+                ctx.textBaseline = 'middle';
+                ctx.lineWidth = 8;
+                ctx.strokeStyle = 'rgba(2,6,23,.95)';
+                ctx.fillStyle = '#7dd3fc';
+                const labelX = 256 + dx + 18;
+                const labelY = 256 - dy - 8;
+                ctx.strokeText('23.5°', labelX, labelY);
+                ctx.fillText('23.5°', labelX, labelY);
+
+                const texture = new THREE.CanvasTexture(canvas);
+                const material = new THREE.SpriteMaterial({
+                    map: texture,
+                    transparent: true,
+                    depthTest: false,
+                    depthWrite: false,
+                    toneMapped: false
+                });
+                const sprite = new THREE.Sprite(material);
+                sprite.scale.set(34, 34, 1);
+                sprite.renderOrder = 100000;
+                return sprite;
+            }
+
             function initThreeZodiac() {
                 const container = document.getElementById('zodiac3dContainer');
                 const canvas = document.getElementById('zodiac3dCanvas');
@@ -210,6 +302,7 @@
 
                 zScene = new THREE.Scene();
                 zScene.background = new THREE.Color(0x020617);
+                zSeasonPickTargets = [];
 
                 zCamera = new THREE.PerspectiveCamera(45, width / height, 0.1, 2000);
                 zCamera.position.set(0, 300, 450);
@@ -260,36 +353,52 @@
                 floorLine.rotation.x = -Math.PI / 2;
                 zScene.add(floorLine);
 
-                // Earth
-                const earthGeo = new THREE.SphereGeometry(8, 32, 32);
-                const earthMat = new THREE.MeshStandardMaterial({ color: 0x38bdf8, emissive: 0x0284c7, emissiveIntensity: 0.6 });
-                zEarth = new THREE.Mesh(earthGeo, earthMat);
+                // Earth system: revolution → fixed 23.5° tilt → daily spin.
+                // This mirrors the solar-calendar Earth & Moon simulator hierarchy.
+                zEarth = new THREE.Group();
                 zScene.add(zEarth);
 
-                // Earth's 23.5° tilted axis. Because it belongs to the Earth group and
-                // the group itself is not rotated during revolution, the axis remains
-                // parallel throughout the year as it should.
                 const tilt = THREE.MathUtils.degToRad(23.5);
-                const axisVector = new THREE.Vector3(Math.sin(tilt), Math.cos(tilt), 0).normalize();
-                const axisGeo = new THREE.BufferGeometry().setFromPoints([
-                    axisVector.clone().multiplyScalar(-15),
-                    axisVector.clone().multiplyScalar(15)
-                ]);
-                const axisMat = new THREE.LineDashedMaterial({ color: 0x38bdf8, dashSize: 1.5, gapSize: 0.8, depthTest: false });
-                const axisLine = new THREE.Line(axisGeo, axisMat);
-                axisLine.computeLineDistances();
-                axisLine.renderOrder = 99998;
-                zEarth.add(axisLine);
+                zEarthTiltReference = new THREE.Group();
+                zEarthTiltReference.rotation.z = -tilt;
+                zEarth.add(zEarthTiltReference);
 
-                const axisLabel = createZodiacLabelSprite('자전축 23.5°', '#7dd3fc', 42, 7, 30);
-                axisLabel.position.copy(axisVector.clone().multiplyScalar(17));
-                zEarth.add(axisLabel);
+                zEarthSpinGroup = new THREE.Group();
+                zEarthTiltReference.add(zEarthSpinGroup);
+
+                const earthGeo = new THREE.SphereGeometry(8, 32, 32);
+                const earthMat = new THREE.MeshStandardMaterial({
+                    map: createZodiacEarthTexture(),
+                    roughness: 0.62,
+                    emissive: 0x021c2d,
+                    emissiveIntensity: 0.25
+                });
+                zEarthGlobe = new THREE.Mesh(earthGeo, earthMat);
+                zEarthSpinGroup.add(zEarthGlobe);
+
+                const atmosphere = new THREE.Mesh(
+                    new THREE.SphereGeometry(8.55, 32, 32),
+                    new THREE.MeshBasicMaterial({ color: 0x38bdf8, transparent: true, opacity: 0.16, side: THREE.BackSide })
+                );
+                zEarthGlobe.add(atmosphere);
+
+                const equatorLine = new THREE.Mesh(
+                    new THREE.TorusGeometry(8.12, 0.055, 8, 96),
+                    new THREE.MeshBasicMaterial({ color: 0xff3b30, transparent: true, opacity: 0.9 })
+                );
+                equatorLine.rotation.x = Math.PI / 2;
+                zEarthGlobe.add(equatorLine);
+
+                // Keep the physical tilt in 3D, but draw its teaching guide as a
+                // camera-facing sprite. Perspective can no longer make 23.5° look
+                // vertical when Earth reaches the left or right side of its orbit.
+                zEarth.add(createZodiacAxisGuideSprite());
 
                 // Cute observer wearing the same yellow hat used in the other space labs.
                 zObserverMarker = new THREE.Group();
-                const observerMat = new THREE.MeshBasicMaterial({ color: 0xef4444, depthTest: false, depthWrite: false });
-                const hatMat = new THREE.MeshBasicMaterial({ color: 0xfbbf24, depthTest: false, depthWrite: false });
-                const skinMat = new THREE.MeshBasicMaterial({ color: 0xfde68a, depthTest: false, depthWrite: false });
+                const observerMat = new THREE.MeshBasicMaterial({ color: 0xef4444, depthTest: true, depthWrite: true });
+                const hatMat = new THREE.MeshBasicMaterial({ color: 0xfbbf24, depthTest: true, depthWrite: true });
+                const skinMat = new THREE.MeshBasicMaterial({ color: 0xfde68a, depthTest: true, depthWrite: true });
 
                 const observerBody = new THREE.Mesh(new THREE.CylinderGeometry(0.55, 0.8, 1.8, 16), observerMat);
                 observerBody.position.y = 1.05;
@@ -300,11 +409,15 @@
                 const observerCrown = new THREE.Mesh(new THREE.CylinderGeometry(0.7, 0.8, 0.65, 20), hatMat);
                 observerCrown.position.y = 3.3;
                 [observerBody, observerHead, observerBrim, observerCrown].forEach(part => {
-                    part.renderOrder = 99999;
                     zObserverMarker.add(part);
                 });
                 zObserverMarker.scale.setScalar(2.15);
-                zEarth.add(zObserverMarker);
+                zEarthGlobe.add(zObserverMarker);
+
+                const latRad = THREE.MathUtils.degToRad(37.5);
+                const observerNormal = new THREE.Vector3(0, Math.sin(latRad), -Math.cos(latRad)).normalize();
+                zObserverMarker.position.copy(observerNormal.clone().multiplyScalar(8.2));
+                zObserverMarker.quaternion.setFromUnitVectors(new THREE.Vector3(0, 1, 0), observerNormal);
 
                 // Four seasonal reference points on Earth's orbit.
                 [
@@ -319,6 +432,9 @@
 
                     const icon = createZodiacSeasonIconSprite(season.icon, season.color);
                     icon.position.set(px, 2.2, pz);
+                    icon.userData.seasonJump = season;
+                    icon.userData.baseScale = 10;
+                    zSeasonPickTargets.push(icon);
                     zScene.add(icon);
 
                     const marker = createZodiacLabelSprite(season.label, season.color, 64, 12, 62);
@@ -326,6 +442,60 @@
                     marker.material.depthTest = true;
                     marker.renderOrder = -100;
                     zScene.add(marker);
+                });
+
+                // Click an equinox/solstice icon to move Earth to that orbital point.
+                const seasonRaycaster = new THREE.Raycaster();
+                const seasonPointer = new THREE.Vector2();
+                let seasonPointerDown = null;
+
+                function pickZodiacSeason(event) {
+                    const rect = canvas.getBoundingClientRect();
+                    seasonPointer.x = ((event.clientX - rect.left) / Math.max(rect.width, 1)) * 2 - 1;
+                    seasonPointer.y = -((event.clientY - rect.top) / Math.max(rect.height, 1)) * 2 + 1;
+                    seasonRaycaster.setFromCamera(seasonPointer, zCamera);
+                    const hits = seasonRaycaster.intersectObjects(zSeasonPickTargets, false);
+                    return hits.length ? hits[0].object : null;
+                }
+
+                function pauseZodiacForSeasonJump() {
+                    zodiacMotionState.playing = false;
+                    window.zodiacPlaying = false;
+                    const playButton = document.getElementById('zodiacPlayBtn');
+                    if (playButton) {
+                        playButton.textContent = '▶ 재생';
+                        playButton.style.background = 'rgba(251,191,36,.18)';
+                        playButton.style.color = '#fbbf24';
+                    }
+                }
+
+                function jumpToZodiacSeason(season) {
+                    const monthSlider = document.getElementById('zodiacMonthSlider');
+                    if (!season || !monthSlider) return;
+                    pauseZodiacForSeasonJump();
+                    window.currentZodiacMonth = season.month;
+                    monthSlider.value = String(season.month);
+                    window.updateZodiacUI();
+                }
+
+                canvas.addEventListener('pointerdown', event => {
+                    seasonPointerDown = { x: event.clientX, y: event.clientY };
+                });
+                canvas.addEventListener('pointermove', event => {
+                    if (seasonPointerDown) return;
+                    canvas.style.cursor = pickZodiacSeason(event) ? 'pointer' : 'grab';
+                });
+                canvas.addEventListener('pointerup', event => {
+                    const start = seasonPointerDown;
+                    seasonPointerDown = null;
+                    canvas.style.cursor = 'grab';
+                    if (!start || Math.hypot(event.clientX - start.x, event.clientY - start.y) > 6) return;
+                    const icon = pickZodiacSeason(event);
+                    if (icon && icon.userData.seasonJump) jumpToZodiacSeason(icon.userData.seasonJump);
+                });
+                canvas.addEventListener('pointerleave', () => {
+                    seasonPointerDown = null;
+                    canvas.style.cursor = 'grab';
                 });
 
                 // Sightlines
@@ -407,7 +577,7 @@
                 });
 
                 // Text Sprites for Lasers
-                zMidText = createZodiacLabelSprite("한밤중 남쪽 하늘 (관측)", "#38bdf8");
+                zMidText = createZodiacLabelSprite("선택 별자리 방향 (관측)", "#38bdf8");
                 zSunText = createZodiacLabelSprite("이달의 황도 별자리 (안 보임)", "#fbbf24");
                 zScene.add(zMidText);
                 zScene.add(zSunText);
@@ -425,6 +595,8 @@
             }
 
             window.currentZodiacMonth = 1.0;
+            window.currentZodiacTime = 24;
+            window.zodiacPlaying = false;
 
             window.updateZodiacUI = function updateZodiacUI() {
                 const monthSlider = document.getElementById('zodiacMonthSlider');
@@ -437,6 +609,10 @@
                 const storyTitle = document.getElementById('zodiacStoryTitle');
                 const storyDesc = document.getElementById('zodiacStoryDesc');
                 const skyGroup = document.getElementById('zodiacSkyConstellation');
+                const timeSlider = document.getElementById('zodiacTimeSlider');
+                const timeBadge = document.getElementById('zodiacTimeBadge');
+                const skyMotionState = document.getElementById('zodiacSkyMotionState');
+                const observationState = document.getElementById('zodiacObservationState');
 
                 if (!monthSlider) return;
                 const monthVal = parseFloat(monthSlider.value) || window.currentZodiacMonth || 1.0;
@@ -450,6 +626,30 @@
                 const engMonths = ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec'];
                 if (bigMonthDisplay) bigMonthDisplay.textContent = `${monthBase}월 (${engMonths[monthBase-1]})`;
 
+                // A separate time control demonstrates diurnal motion in the observer's sky.
+                // 18:00 rises in the east, 24:00 culminates in the south, 06:00 sets in the west.
+                const timeVal = timeSlider ? parseFloat(timeSlider.value) : window.currentZodiacTime;
+                window.currentZodiacTime = Number.isFinite(timeVal) ? timeVal : 24;
+                const totalMinutes = Math.round(window.currentZodiacTime * 60);
+                const displayHour = Math.floor(totalMinutes / 60) % 24;
+                const displayMinute = totalMinutes % 60;
+                const timeText = `${String(displayHour).padStart(2, '0')}:${String(displayMinute).padStart(2, '0')}`;
+                const nightProgress = Math.max(0, Math.min(1, (window.currentZodiacTime - 18) / 12));
+                const skyX = 45 + 410 * nightProgress;
+                const skyY = 265 - 125 * Math.sin(Math.PI * nightProgress);
+                const edgeScale = 0.82 + 0.38 * Math.sin(Math.PI * nightProgress);
+                let motionText = '남중';
+                if (window.currentZodiacTime < 22.5) motionText = '동쪽에서 떠오르는 중';
+                else if (window.currentZodiacTime > 25.5) motionText = '서쪽으로 지는 중';
+                if (timeBadge) timeBadge.textContent = timeText;
+                if (skyMotionState) {
+                    skyMotionState.textContent = `${timeText} · ${motionText}`;
+                    skyMotionState.setAttribute('x', String(skyX));
+                    skyMotionState.setAttribute('y', String(Math.max(55, skyY - 58)));
+                }
+                if (observationState) observationState.textContent = `${timeText} ${motionText}`;
+                if (skyGroup) skyGroup.setAttribute('transform', `translate(${skyX.toFixed(1)}, ${skyY.toFixed(1)}) scale(${edgeScale.toFixed(3)})`);
+
                 // Update Earth & Lasers
                 const orbitAngle = -(monthVal - 1) * 30 * Math.PI / 180;
                 const ex = 80 * Math.sin(orbitAngle);
@@ -457,24 +657,25 @@
 
                 if (zEarth) zEarth.position.set(ex, 0, ez);
 
-                // Position Observer on zEarth at Midnight position (pointing away from Sun at 37.5°N)
-                if (zObserverMarker && zEarth) {
-                    const latRad = 37.5 * (Math.PI / 180);
-                    const cosLat = Math.cos(latRad);
-                    const sinLat = Math.sin(latRad);
-
-                    const sinA = Math.sin(orbitAngle);
-                    const cosA = Math.cos(orbitAngle);
-
-                    const nObs = new THREE.Vector3(sinA * cosLat, sinLat, -cosA * cosLat).normalize();
-                    zObserverMarker.position.copy(nObs.clone().multiplyScalar(8.2));
-                    zObserverMarker.quaternion.setFromUnitVectors(new THREE.Vector3(0, 1, 0), nObs);
+                // The same time value drives Earth's eastward rotation and the right-hand sky.
+                // At 24:00 the Korean observer faces away from the Sun; six hours later
+                // Earth has rotated 90° and the selected constellation approaches the west.
+                if (zEarthSpinGroup) {
+                    const elapsedFromMidnight = window.currentZodiacTime - 24;
+                    // Earth rotates west-to-east. Match the positive spin convention used
+                    // by the solar-calendar Earth & Moon simulator.
+                    zEarthSpinGroup.rotation.y = -orbitAngle + THREE.MathUtils.degToRad(elapsedFromMidnight * 15);
                 }
 
                 if (zMidLine && zSunLine) {
                     const mx = 260 * Math.sin(orbitAngle);
                     const mz = -260 * Math.cos(orbitAngle);
-                    zMidLine.geometry.setFromPoints([new THREE.Vector3(ex, 0, ez), new THREE.Vector3(mx, 0, mz)]);
+                    let observationStart = new THREE.Vector3(ex, 0, ez);
+                    if (zObserverMarker && zEarth) {
+                        zEarth.updateMatrixWorld(true);
+                        observationStart = zObserverMarker.getWorldPosition(new THREE.Vector3());
+                    }
+                    zMidLine.geometry.setFromPoints([observationStart, new THREE.Vector3(mx, 0, mz)]);
 
                     const sx = 260 * Math.sin(orbitAngle + Math.PI);
                     const sz = -260 * Math.cos(orbitAngle + Math.PI);
@@ -525,10 +726,19 @@
             const speedSlider = document.getElementById('zodiacSpeedSlider');
             const speedBadge = document.getElementById('zodiacSpeedBadge');
             const monthSlider = document.getElementById('zodiacMonthSlider');
+            const timeSlider = document.getElementById('zodiacTimeSlider');
+            const playBtn = document.getElementById('zodiacPlayBtn');
 
             if (monthSlider) {
                 monthSlider.addEventListener('input', function() {
                     window.currentZodiacMonth = parseFloat(this.value);
+                    zodiacMotionState.playing = false;
+                    window.zodiacPlaying = false;
+                    if (playBtn) {
+                        playBtn.textContent = '▶ 재생';
+                        playBtn.style.background = 'rgba(251,191,36,.18)';
+                        playBtn.style.color = '#fbbf24';
+                    }
                     updateZodiacUI();
                 });
             }
@@ -536,26 +746,66 @@
             if (speedSlider) {
                 speedSlider.addEventListener('input', function() {
                     const spd = parseFloat(this.value);
-                    if (speedBadge) {
-                        speedBadge.textContent = (spd === 0) ? '0.0x (정지)' : spd.toFixed(1) + 'x';
-                    }
+                    zodiacMotionState.speed = spd;
+                    if (speedBadge) speedBadge.textContent = spd.toFixed(1) + 'x';
                 });
             }
 
-            function animateZodiacOrbit() {
-                if (reqId) cancelAnimationFrame(reqId);
-                const spd = speedSlider ? parseFloat(speedSlider.value) || 0 : 0;
-                if (spd > 0) {
-                    window.currentZodiacMonth += 0.015 * spd;
-                    if (window.currentZodiacMonth > 12.99) window.currentZodiacMonth = 1.0;
-                    if (monthSlider) monthSlider.value = window.currentZodiacMonth;
+            if (timeSlider) {
+                timeSlider.addEventListener('input', function() {
+                    window.currentZodiacTime = parseFloat(this.value);
+                    zodiacMotionState.playing = false;
+                    window.zodiacPlaying = false;
+                    if (playBtn) {
+                        playBtn.textContent = '▶ 재생';
+                        playBtn.style.background = 'rgba(251,191,36,.18)';
+                        playBtn.style.color = '#fbbf24';
+                    }
+                    updateZodiacUI();
+                });
+            }
+
+            if (playBtn) {
+                playBtn.addEventListener('click', function() {
+                    if (!zodiacMotionState.playing && window.currentZodiacTime >= 29.99 && timeSlider) {
+                        window.currentZodiacTime = 18;
+                        timeSlider.value = '18';
+                        updateZodiacUI();
+                    }
+                    zodiacMotionState.playing = !zodiacMotionState.playing;
+                    zodiacMotionState.lastFrame = performance.now();
+                    window.zodiacPlaying = zodiacMotionState.playing;
+                    this.textContent = zodiacMotionState.playing ? '⏸ 일시정지' : '▶ 재생';
+                    this.style.background = zodiacMotionState.playing ? '#0ea5e9' : 'rgba(251,191,36,.18)';
+                    this.style.color = zodiacMotionState.playing ? '#fff' : '#fbbf24';
+                });
+            }
+
+            function animateZodiacOrbit(now) {
+                const deltaSeconds = Math.min(0.1, Math.max(0, (now - zodiacMotionState.lastFrame) / 1000));
+                zodiacMotionState.lastFrame = now;
+                if (zodiacMotionState.playing && timeSlider) {
+                    // Same elapsed-time animation pattern as Earth & Moon.
+                    // At 1x, six simulated hours pass per real second.
+                    window.currentZodiacTime += deltaSeconds * 6 * zodiacMotionState.speed;
+                    if (window.currentZodiacTime >= 30) {
+                        window.currentZodiacTime = 30;
+                        zodiacMotionState.playing = false;
+                        window.zodiacPlaying = false;
+                        if (playBtn) {
+                            playBtn.textContent = '▶ 다시 재생';
+                            playBtn.style.background = 'rgba(251,191,36,.18)';
+                            playBtn.style.color = '#fbbf24';
+                        }
+                    }
+                    timeSlider.value = window.currentZodiacTime;
                     updateZodiacUI();
                 }
                 if (zControls) zControls.update();
                 if (zRenderer && zScene && zCamera) {
                     zRenderer.render(zScene, zCamera);
                 }
-                reqId = requestAnimationFrame(animateZodiacOrbit);
+                requestAnimationFrame(animateZodiacOrbit);
             }
 
             // Allow tab switching to re-ini
@@ -564,7 +814,8 @@
                     if(!zRenderer) {
                         initThreeZodiac();
                         updateZodiacUI();
-                        animateZodiacOrbit();
+                        zodiacMotionState.lastFrame = performance.now();
+                        requestAnimationFrame(animateZodiacOrbit);
                     } else {
                         // resize
                         const container = document.getElementById('zodiac3dContainer');
@@ -578,9 +829,28 @@
             });
 
             // Initial ini
+            window.resetZodiacOrbit = function resetZodiacOrbit() {
+                window.currentZodiacMonth = 5;
+                window.currentZodiacTime = 24;
+                window.zodiacPlaying = false;
+                zodiacMotionState.playing = false;
+                zodiacMotionState.speed = 1;
+                zodiacMotionState.lastFrame = performance.now();
+                if (monthSlider) monthSlider.value = '5';
+                if (timeSlider) timeSlider.value = '24';
+                if (speedSlider) speedSlider.value = '1';
+                if (speedBadge) speedBadge.textContent = '1.0x';
+                if (playBtn) {
+                    playBtn.textContent = '▶ 재생';
+                    playBtn.style.background = 'rgba(251,191,36,.18)';
+                    playBtn.style.color = '#fbbf24';
+                }
+                updateZodiacUI();
+            };
             initThreeZodiac();
             updateZodiacUI();
-            animateZodiacOrbit();
+            zodiacMotionState.lastFrame = performance.now();
+            requestAnimationFrame(animateZodiacOrbit);
         })();
 
 // Northern-sky diurnal rotation around Polaris
