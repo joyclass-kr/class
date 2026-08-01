@@ -464,6 +464,8 @@
 }
 
 .time-calculation-value strong {
+  box-sizing: border-box;
+  padding-right: 6px;
   font: inherit;
   text-align: right;
 }
@@ -2188,6 +2190,8 @@ html[data-race-mode="true"] body { padding-bottom: 72px; }
   min-height: 35px;
   justify-self: end;
   font: inherit;
+  box-sizing: border-box;
+  padding-right: 8px;
 }
 
 .grade-four-multiply-vertical-operation > span {
@@ -2205,6 +2209,8 @@ html[data-race-mode="true"] body { padding-bottom: 72px; }
 
 .grade-four-multiply-vertical-operation > span strong {
   font: inherit;
+  box-sizing: border-box;
+  padding-right: 8px;
   text-align: right;
 }
 
@@ -4293,6 +4299,8 @@ button.prime-number-question:focus-visible {
 }
 
 .length-operation-value strong {
+  box-sizing: border-box;
+  padding-right: 6px;
   font: inherit;
   text-align: right;
 }
@@ -4686,6 +4694,8 @@ button.prime-number-question:focus-visible {
   min-height: 35px;
   justify-self: end;
   font: inherit;
+  box-sizing: border-box;
+  padding-right: 8px;
 }
 
 .vertical-operation > span {
@@ -4703,6 +4713,8 @@ button.prime-number-question:focus-visible {
 
 .vertical-operation > span strong {
   font: inherit;
+  box-sizing: border-box;
+  padding-right: 8px;
   text-align: right;
 }
 
