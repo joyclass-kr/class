@@ -19,6 +19,13 @@
     };
     const MINOR_VARIANT_LABEL = { natural: "자연단조", harmonic: "화성단조", melodic: "가락단조" };
     const INVERSION_LABELS = ["기본형", "1전위", "2전위", "3전위"];
+    const PIANO_SAMPLE_NOTES = [
+        { midi: 36, file: "C2.mp3" }, { midi: 42, file: "Fs2.mp3" },
+        { midi: 48, file: "C3.mp3" }, { midi: 54, file: "Fs3.mp3" },
+        { midi: 60, file: "C4.mp3" }, { midi: 66, file: "Fs4.mp3" },
+        { midi: 72, file: "C5.mp3" }, { midi: 78, file: "Fs5.mp3" },
+        { midi: 84, file: "C6.mp3" }
+    ];
     const BASIC_MAJOR_KEYS = {
         C: { midi: 60, ko: "다장조", en: "C Major", signature: "조표가 없어요." },
         F: { midi: 53, ko: "바장조", en: "F Major", signature: "시♭이 붙어요." },
@@ -36,6 +43,8 @@
         reverb: null,
         reverbGain: null,
         noiseBuffer: null,
+        pianoSamples: new Map(),
+        pianoSamplesLoading: null,
         key: "C",
         mode: "major",
         minorVariant: "natural",
@@ -172,7 +181,77 @@
         }
     }
 
+    function loadPianoSamples() {
+        const context = ensureAudio();
+        if (!context) return Promise.reject(new Error("AudioContext unavailable"));
+        if (state.pianoSamples.size === PIANO_SAMPLE_NOTES.length) return Promise.resolve(state.pianoSamples);
+        if (state.pianoSamplesLoading) return state.pianoSamplesLoading;
+        state.pianoSamplesLoading = Promise.all(PIANO_SAMPLE_NOTES.map(function (sample) {
+            return fetch("assets/piano/" + sample.file)
+                .then(function (response) {
+                    if (!response.ok) throw new Error("Piano sample load failed: " + sample.file);
+                    return response.arrayBuffer();
+                })
+                .then(function (data) { return context.decodeAudioData(data); })
+                .then(function (buffer) { state.pianoSamples.set(sample.midi, buffer); });
+        })).then(function () { return state.pianoSamples; }).catch(function (error) {
+            state.pianoSamplesLoading = null;
+            throw error;
+        });
+        return state.pianoSamplesLoading;
+    }
+
+    function nearestPianoSample(midi) {
+        return PIANO_SAMPLE_NOTES.reduce(function (nearest, sample) {
+            return Math.abs(sample.midi - midi) < Math.abs(nearest.midi - midi) ? sample : nearest;
+        }, PIANO_SAMPLE_NOTES[0]);
+    }
+
+    function playSamplePianoTone(midi, when, duration, volume, panAmount) {
+        const context = ensureAudio();
+        const sample = nearestPianoSample(midi);
+        const buffer = state.pianoSamples.get(sample.midi);
+        if (!context || !buffer) return false;
+        const start = Math.max(context.currentTime, when || context.currentTime);
+        const hold = Math.max(1.35, (duration || .8) + .7);
+        const release = .85;
+        const output = context.createGain();
+        const panner = typeof context.createStereoPanner === "function" ? context.createStereoPanner() : null;
+        const source = context.createBufferSource();
+        const peak = Math.min(.62, Math.max(.16, (volume || .09) * 5.6));
+        source.buffer = buffer;
+        source.playbackRate.value = Math.pow(2, (midi - sample.midi) / 12);
+        output.gain.setValueAtTime(.0001, start);
+        output.gain.exponentialRampToValueAtTime(peak, start + .004);
+        output.gain.exponentialRampToValueAtTime(peak * .82, start + .18);
+        output.gain.setValueAtTime(peak * .82, start + hold);
+        output.gain.exponentialRampToValueAtTime(.0001, start + hold + release);
+        source.connect(output);
+        if (panner) {
+            panner.pan.value = Math.max(-.35, Math.min(.35, panAmount || 0));
+            output.connect(panner);
+            connectToMix(panner, .12);
+        } else {
+            connectToMix(output, .12);
+        }
+        source.start(start);
+        source.stop(start + Math.min(buffer.duration / source.playbackRate.value, hold + release + .1));
+        return true;
+    }
+
     function playPianoTone(frequency, when, duration, volume, panAmount) {
+        const context = ensureAudio();
+        if (!context) return;
+        const midi = Math.round(69 + 12 * Math.log2(frequency / 440));
+        if (playSamplePianoTone(midi, when, duration, volume, panAmount)) return;
+        loadPianoSamples().then(function () {
+            playSamplePianoTone(midi, Math.max(context.currentTime + .01, when || 0), duration, volume, panAmount);
+        }).catch(function () {
+            playSyntheticPianoTone(frequency, when, duration, volume, panAmount);
+        });
+    }
+
+    function playSyntheticPianoTone(frequency, when, duration, volume, panAmount) {
         const context = ensureAudio();
         if (!context) return;
         const start = Math.max(context.currentTime, when || context.currentTime);
