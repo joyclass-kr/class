@@ -80,7 +80,7 @@
             "practiceCount", "harmonyLab", "rhythmLab", "keySelect", "minorVariantControl", "minorVariantSelect", "progressionName",
             "progressionSlots", "progressionHint", "playProgressionButton", "functionExplanation",
             "chordBankTitle", "chordBank", "piano", "chordReadout", "quizPrompt", "quizListenButton",
-            "quizChoices", "quizFeedback", "newQuizButton", "voicingQuizPrompt", "voicingQuizListenButton",
+            "quizChoices", "quizFeedback", "newQuizButton", "voicingQuizIdentity", "voicingQuizPrompt", "voicingQuizListenButton",
             "voicingQuizChoices", "voicingQuizFeedback", "newVoicingQuizButton", "tempoOutput", "tempoSlider", "rhythmName",
             "rhythmListenButton", "metronomeButton", "rhythmGrid", "rhythmSyllables", "challengeStatus",
             "challengeTitle", "challengeGuide", "tapButton", "startChallengeButton", "scorePanel",
@@ -501,7 +501,10 @@
         state.voicingQuizChord = Math.floor(Math.random() * chords.length);
         state.voicingQuizInversion = Math.floor(Math.random() * (state.useSevenths ? 4 : 3));
         state.voicingQuizAnswered = false;
-        elements.voicingQuizPrompt.textContent = "보이싱을 듣고 전위형을 고르세요.";
+        const chord = chords[state.voicingQuizChord];
+        const keyLabel = displayKey(state.key) + (state.mode === "major" ? " 장조" : " " + MINOR_VARIANT_LABEL[state.minorVariant]);
+        elements.voicingQuizIdentity.innerHTML = "<span>" + keyLabel + "</span><strong>" + chord.roman + "</strong><b>" + chord.name + "</b>";
+        elements.voicingQuizPrompt.textContent = chord.name + " 코드의 가장 낮은 음을 듣고 전위형을 고르세요.";
         elements.voicingQuizFeedback.textContent = "";
         elements.voicingQuizChoices.innerHTML = "";
         const optionCount = state.useSevenths ? 4 : 3;

@@ -276,6 +276,11 @@ button:focus-visible, a:focus-visible, select:focus-visible, input:focus-visible
 .voicing-quiz-card { border-left-color: var(--purple); }
 .quiz-copy h3 { margin: 6px 0 5px; font-size: 17px; }
 .quiz-copy p { margin: 0; color: var(--muted); font-size: 11px; }
+.voicing-quiz-identity { display: flex; align-items: center; flex-wrap: wrap; gap: 7px; margin: 10px 0 8px; }
+.voicing-quiz-identity span, .voicing-quiz-identity strong, .voicing-quiz-identity b { display: inline-flex; align-items: center; min-height: 28px; padding: 5px 9px; border-radius: 6px; line-height: 1; }
+.voicing-quiz-identity span { border: 1px solid var(--line); color: var(--muted); font-size: 10px; }
+.voicing-quiz-identity strong { color: #171325; background: var(--purple); font: 900 13px Montserrat, sans-serif; }
+.voicing-quiz-identity b { border: 1px solid rgba(169,141,246,.55); color: var(--ink); background: rgba(169,141,246,.1); font-size: 12px; }
 .listen-button { height: 46px; padding: 0 17px; border: 0; border-radius: 7px; color: #19160f; background: var(--yellow); font-size: 12px; font-weight: 800; cursor: pointer; }
 .listen-button span { margin-right: 7px; font-size: 17px; }
 .voicing-listen-button { color: #191522; background: var(--purple); }

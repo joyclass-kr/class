@@ -12,7 +12,7 @@ const hub = fs.readFileSync("index.html", "utf8");
     "harmonyLab", "rhythmLab", "progressionSlots", "chordBank", "piano",
     "minorVariantControl", "minorVariantSelect", "rhythmGrid", "tapButton", "startChallengeButton", "scorePanel",
     "dictationPanel", "performancePanel", "dictationGrid", "dictationListenButton", "checkDictationButton", "newDictationButton",
-    "voicingQuizPrompt", "voicingQuizListenButton", "voicingQuizChoices", "voicingQuizFeedback", "newVoicingQuizButton"
+    "voicingQuizIdentity", "voicingQuizPrompt", "voicingQuizListenButton", "voicingQuizChoices", "voicingQuizFeedback", "newVoicingQuizButton"
 ].forEach((id) => assert.match(html, new RegExp(`id=["']${id}["']`)));
 
 assert.match(html, /music-core\.js/);
@@ -60,6 +60,8 @@ assert.match(app, /buildVoiceLedProgression\(progressionChords, 0\)/);
 assert.doesNotMatch(html, /data-inversion-mode/);
 assert.doesNotMatch(app, /inversionMode: "auto"/);
 assert.match(app, /makeVoicingQuiz/);
+assert.match(app, /voicingQuizIdentity\.innerHTML/);
+assert.match(app, /chord\.roman/);
 assert.match(app, /midi <= 72/);
 assert.match(html, /C3부터 C5까지/);
 assert.match(app, /playNoiseTransient/);
