@@ -2,19 +2,19 @@
 
 import { useEffect, useMemo, useState } from "react";
 
-type Person = "지혜" | "슬기" | "용기";
-type Counts = Record<Person, number>;
+type Friend = "토끼" | "거북이" | "호랑이";
+type Counts = Record<Friend, number>;
 type PrintMode = "worksheet" | "answers" | "both";
 type ProblemSet = {
   seed: number;
   initial: Counts;
-  first: { toSeulgi: number; toCourage: number; after: Counts };
-  second: { toCourage: number; fromWisdom: number; after: Counts };
-  third: { fromWisdom: number; toSeulgi: number; after: Counts; asked: Person };
+  first: { toTurtle: number; toTiger: number; after: Counts };
+  second: { toTiger: number; fromRabbit: number; after: Counts };
+  third: { fromRabbit: number; toTurtle: number; after: Counts; asked: Friend };
 };
 
 const INITIAL_SEED = 20260720;
-const PEOPLE: Person[] = ["지혜", "슬기", "용기"];
+const FRIENDS: Friend[] = ["토끼", "거북이", "호랑이"];
 
 function random(seed: number) {
   let value = seed >>> 0;
@@ -33,59 +33,59 @@ function integer(next: () => number, minimum: number, maximum: number) {
 
 function createProblemSet(seed: number): ProblemSet {
   const next = random(seed);
-  const wisdom = integer(next, 7, 9);
+  const rabbitCards = integer(next, 7, 9);
   const initial: Counts = {
-    지혜: wisdom,
-    슬기: wisdom - integer(next, 3, 5),
-    용기: integer(next, 1, 3),
+    토끼: rabbitCards,
+    거북이: rabbitCards - integer(next, 3, 5),
+    호랑이: integer(next, 1, 3),
   };
 
   const firstToSeulgi = integer(next, 1, 2);
   const firstToCourage = 1;
   const firstAfter: Counts = {
-    지혜: initial.지혜 - firstToSeulgi - firstToCourage,
-    슬기: initial.슬기 + firstToSeulgi,
-    용기: initial.용기 + firstToCourage,
+    토끼: initial.토끼 - firstToSeulgi - firstToCourage,
+    거북이: initial.거북이 + firstToSeulgi,
+    호랑이: initial.호랑이 + firstToCourage,
   };
 
   const secondToCourage = integer(next, 1, 2);
   const secondFromWisdom = integer(next, 1, 2);
   const secondAfter: Counts = {
-    지혜: firstAfter.지혜 - secondFromWisdom,
-    슬기: firstAfter.슬기 - secondToCourage + secondFromWisdom,
-    용기: firstAfter.용기 + secondToCourage,
+    토끼: firstAfter.토끼 - secondFromWisdom,
+    거북이: firstAfter.거북이 - secondToCourage + secondFromWisdom,
+    호랑이: firstAfter.호랑이 + secondToCourage,
   };
 
   const thirdFromWisdom = integer(next, 1, 2);
   const thirdToSeulgi = integer(next, 1, 3);
   const thirdAfter: Counts = {
-    지혜: secondAfter.지혜 - thirdFromWisdom,
-    슬기: secondAfter.슬기 + thirdToSeulgi,
-    용기: secondAfter.용기 + thirdFromWisdom - thirdToSeulgi,
+    토끼: secondAfter.토끼 - thirdFromWisdom,
+    거북이: secondAfter.거북이 + thirdToSeulgi,
+    호랑이: secondAfter.호랑이 + thirdFromWisdom - thirdToSeulgi,
   };
 
   return {
     seed,
     initial,
-    first: { toSeulgi: firstToSeulgi, toCourage: firstToCourage, after: firstAfter },
-    second: { toCourage: secondToCourage, fromWisdom: secondFromWisdom, after: secondAfter },
+    first: { toTurtle: firstToSeulgi, toTiger: firstToCourage, after: firstAfter },
+    second: { toTiger: secondToCourage, fromRabbit: secondFromWisdom, after: secondAfter },
     third: {
-      fromWisdom: thirdFromWisdom,
-      toSeulgi: thirdToSeulgi,
+      fromRabbit: thirdFromWisdom,
+      toTurtle: thirdToSeulgi,
       after: thirdAfter,
-      asked: PEOPLE[integer(next, 0, 2)],
+      asked: FRIENDS[integer(next, 0, 2)],
     },
   };
 }
 
-function fieldId(question: number, person?: Person) {
-  return person ? `q${question}-${person}` : `q${question}`;
+function fieldId(question: number, friend?: Friend) {
+  return friend ? `q${question}-${friend}` : `q${question}`;
 }
 
 function emptyAnswers() {
   return Object.fromEntries([
-    ...PEOPLE.map((person) => fieldId(1, person)),
-    ...PEOPLE.map((person) => fieldId(2, person)),
+    ...FRIENDS.map((friend) => fieldId(1, friend)),
+    ...FRIENDS.map((friend) => fieldId(2, friend)),
     fieldId(3),
   ].map((id) => [id, ""]));
 }
@@ -126,8 +126,8 @@ export default function GiveAndTakeOnePage() {
 
   function checkAll() {
     setResults({
-      1: PEOPLE.every((person) => Number(answers[fieldId(1, person)]) === questionSet.first.after[person]),
-      2: PEOPLE.every((person) => Number(answers[fieldId(2, person)]) === questionSet.second.after[person]),
+      1: FRIENDS.every((friend) => Number(answers[fieldId(1, friend)]) === questionSet.first.after[friend]),
+      2: FRIENDS.every((friend) => Number(answers[fieldId(2, friend)]) === questionSet.second.after[friend]),
       3: Number(answers[fieldId(3)]) === questionSet.third.after[questionSet.third.asked],
     });
   }
@@ -151,8 +151,8 @@ export default function GiveAndTakeOnePage() {
     window.requestAnimationFrame(() => window.print());
   }
 
-  function answerBox(question: number, person: Person | undefined, answer: number, answerSheet: boolean) {
-    const id = fieldId(question, person);
+  function answerBox(question: number, friend: Friend | undefined, answer: number, answerSheet: boolean) {
+    const id = fieldId(question, friend);
     return answerSheet ? (
       <strong className="give-static-answer">{answer}</strong>
     ) : (
@@ -163,7 +163,7 @@ export default function GiveAndTakeOnePage() {
         maxLength={2}
         value={answers[id]}
         onChange={(event) => updateAnswer(question, id, event.target.value)}
-        aria-label={`${question}번${person ? ` ${person}` : ""} 답`}
+        aria-label={`${question}번${friend ? ` ${friend}` : ""} 답`}
       />
     );
   }
@@ -171,10 +171,10 @@ export default function GiveAndTakeOnePage() {
   function peopleAnswers(question: number, counts: Counts, answerSheet: boolean) {
     return (
       <div className="give-people-answers">
-        {PEOPLE.map((person) => (
-          <label key={person}>
-            <span>{person}</span>
-            {answerBox(question, person, counts[person], answerSheet)}
+        {FRIENDS.map((friend) => (
+          <label key={friend}>
+            <span>{friend}</span>
+            {answerBox(question, friend, counts[friend], answerSheet)}
             <small>장</small>
           </label>
         ))}
@@ -201,30 +201,30 @@ export default function GiveAndTakeOnePage() {
           <section className="give-intro">
             <h2>글을 읽고 물음에 답하시오. [1~3번]</h2>
             <p>
-              지혜, 슬기, 용기는 카드 놀이를 하려고 합니다. 카드를 지혜는 <strong>{questionSet.initial.지혜}장</strong>,
-              슬기는 <strong>{questionSet.initial.슬기}장</strong>, 용기는 <strong>{questionSet.initial.용기}장</strong> 가지고 있습니다.
+              토끼, 거북이, 호랑이는 카드 놀이를 하려고 합니다. 토끼는 카드를 <strong>{questionSet.initial.토끼}장</strong>,
+              거북이는 <strong>{questionSet.initial.거북이}장</strong>, 호랑이는 <strong>{questionSet.initial.호랑이}장</strong> 가지고 있습니다.
             </p>
           </section>
 
           <section className={`give-question${results[1] === true ? " is-correct" : results[1] === false ? " is-wrong" : ""}`} data-testid="give-question">
             <span className="give-question-number">1</span>
-            <p>첫 번째 놀이에서 지혜는 슬기에게 카드 <strong>{questionSet.first.toSeulgi}장</strong>을 주고, 용기에게 카드 <strong>{questionSet.first.toCourage}장</strong>을 주었습니다.</p>
-            <h3>세 사람이 가지고 있는 카드는 각각 몇 장입니까?</h3>
+            <p>첫 번째 놀이에서 토끼는 거북이에게 카드 <strong>{questionSet.first.toTurtle}장</strong>을 주고, 호랑이에게 카드 <strong>{questionSet.first.toTiger}장</strong>을 주었습니다.</p>
+            <h3>세 친구가 가지고 있는 카드는 각각 몇 장입니까?</h3>
             {peopleAnswers(1, questionSet.first.after, answerSheet)}
             {!answerSheet && <ResultMark value={results[1]} />}
           </section>
 
           <section className={`give-question${results[2] === true ? " is-correct" : results[2] === false ? " is-wrong" : ""}`} data-testid="give-question">
             <span className="give-question-number">2</span>
-            <p>두 번째 놀이에서 슬기는 용기에게 카드 <strong>{questionSet.second.toCourage}장</strong>을 주고, 지혜에게 카드 <strong>{questionSet.second.fromWisdom}장</strong>을 받았습니다.</p>
-            <h3>세 사람이 가지고 있는 카드는 각각 몇 장입니까?</h3>
+            <p>두 번째 놀이에서 거북이는 호랑이에게 카드 <strong>{questionSet.second.toTiger}장</strong>을 주고, 토끼에게 카드 <strong>{questionSet.second.fromRabbit}장</strong>을 받았습니다.</p>
+            <h3>세 친구가 가지고 있는 카드는 각각 몇 장입니까?</h3>
             {peopleAnswers(2, questionSet.second.after, answerSheet)}
             {!answerSheet && <ResultMark value={results[2]} />}
           </section>
 
           <section className={`give-question${results[3] === true ? " is-correct" : results[3] === false ? " is-wrong" : ""}`} data-testid="give-question">
             <span className="give-question-number">3</span>
-            <p>세 번째 놀이에서 용기는 지혜에게 카드 <strong>{questionSet.third.fromWisdom}장</strong>을 받고, 슬기에게 카드 <strong>{questionSet.third.toSeulgi}장</strong>을 주었습니다.</p>
+            <p>세 번째 놀이에서 호랑이는 토끼에게 카드 <strong>{questionSet.third.fromRabbit}장</strong>을 받고, 거북이에게 카드 <strong>{questionSet.third.toTurtle}장</strong>을 주었습니다.</p>
             <h3>{questionSet.third.asked}가 가지고 있는 카드는 몇 장입니까?</h3>
             <div className="give-single-answer">
               {answerBox(3, undefined, questionSet.third.after[questionSet.third.asked], answerSheet)}

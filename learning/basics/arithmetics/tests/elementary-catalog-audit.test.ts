@@ -84,3 +84,10 @@ test("가로 계산식은 작은 글씨로 왼쪽 정렬하고 불필요한 안�
   assert.match(decomposition, /problems\.slice\(1\)\.map/);
   assert.match(decomposition, /<small>\/14 정답<\/small>/);
 });
+
+test("주고받기 문제는 동물 친구 이름과 어린이 눈높이 표현을 쓴다", () => {
+  const source = readFileSync(new URL("../app/arithmetic/give-and-take-1/page.tsx", import.meta.url), "utf8");
+  assert.match(source, /const FRIENDS: Friend\[\] = \["토끼", "거북이", "호랑이"\]/);
+  assert.match(source, /세 친구가 가지고 있는 카드는 각각 몇 장입니까\?/);
+  assert.doesNotMatch(source, /지혜|슬기|용기|세 사람이/);
+});
