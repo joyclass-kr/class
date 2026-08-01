@@ -4,11 +4,11 @@
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
   <meta name="theme-color" content="#f7f5ef">
-  <title>人 | 韓字</title>
+  <title>生 | 韓字</title>
   <style>
     @font-face {
       font-family: "KleeHanja";
-      src: url("../../../assets/fonts/klee-one/KleeOne-SemiBold.ttf") format("truetype");
+      src: url("../../../../assets/fonts/klee-one/KleeOne-SemiBold.ttf") format("truetype");
       font-display: swap;
     }
 
@@ -254,23 +254,6 @@
 
     .quiz-actions button { margin: 0; }
 
-    .next-lesson {
-      display: block;
-      width: min(360px, 100%);
-      min-height: 48px;
-      margin: 14px auto 0;
-      padding: 13px 20px;
-      border: 1px solid var(--blue);
-      border-radius: 4px;
-      background: var(--blue);
-      color: white;
-      font: 800 17px/1.2 system-ui, sans-serif;
-      text-align: center;
-      text-decoration: none;
-    }
-
-    .next-lesson[hidden] { display: none; }
-
     .back-button {
       min-height: 58px;
       padding: 0 26px;
@@ -299,38 +282,38 @@
 <body>
   <main class="page">
     <div class="topline">
-      <a class="home-link" href="../../../">처음으로</a>
+      <a class="home-link" href="../../../../">처음으로</a>
     </div>
 
     <header class="hanja-head">
-      <div class="hanja" aria-label="사람 인">人</div>
+      <div class="hanja" aria-label="날 생">生</div>
       <div>
-        <p class="reading">인</p>
-        <p class="core-meaning">사람 · 어떤 사람 · 사람의 수</p>
+        <p class="reading">생</p>
+        <p class="core-meaning">나다 · 태어나다 · 살다 · 생겨나다</p>
       </div>
     </header>
 
     <section id="lessonView" class="view" aria-label="뜻과 예시">
       <dl class="meaning-list">
         <div class="meaning-row">
-          <dt>사람</dt>
-          <dd><p class="word-family">인간 · 개인 · 인물</p><p class="example">인간은 사람을, 개인은 한 사람을 나타냅니다.</p></dd>
+          <dt>태어나다</dt>
+          <dd><p class="word-family">생일 · 출생 · 탄생</p><p class="example">생일은 내가 태어난 날입니다.</p></dd>
         </div>
         <div class="meaning-row">
-          <dt>사람의 수</dt>
-          <dd><p class="word-family">인구 · 인원</p><p class="example">인구는 어떤 곳에 사는 사람의 수이고, 인원은 모인 사람의 수입니다.</p></dd>
+          <dt>살아 있다<br>살아가다</dt>
+          <dd><p class="word-family">생명 · 생물 · 생활</p><p class="example">생물은 살아 있는 것이고, 생활은 살아가는 일입니다.</p></dd>
+        </div>
+        <div class="meaning-row">
+          <dt>생기다<br>만들어 내다</dt>
+          <dd><p class="word-family">발생 · 생산 · 재생</p><p class="example">생산은 물건을 만들어 내고, 재생은 다시 살아나게 합니다.</p></dd>
+        </div>
+        <div class="meaning-row">
+          <dt>그대로<br>바로</dt>
+          <dd><p class="word-family">생선 · 생크림 · 생방송</p><p class="example">생방송은 녹화하지 않고 지금 바로 하는 방송입니다.</p></dd>
         </div>
         <div class="meaning-row">
           <dt>어떤 사람</dt>
-          <dd><p class="word-family">한국인 · 외국인 · 우주인</p><p class="example">한국인은 한국 사람이고, 우주인은 우주에 가는 사람입니다.</p></dd>
-        </div>
-        <div class="meaning-row">
-          <dt>사람 모양<br>사람이 만든 것</dt>
-          <dd><p class="word-family">인형 · 인공</p><p class="example">인형은 사람 모양이고, 인공은 사람이 만든 것을 나타냅니다.</p></dd>
-        </div>
-        <div class="meaning-row">
-          <dt>사람이<br>살아가는 삶</dt>
-          <dd><p class="word-family">인생</p><p class="example">인생은 사람이 태어나서 살아가는 삶입니다.</p></dd>
+          <dd><p class="word-family">학생 · 신입생 · 졸업생</p><p class="example">학생의 ‘생’은 배우는 사람을 나타냅니다.</p></dd>
         </div>
       </dl>
       <button id="startQuiz" class="next-button" type="button">문제 풀기</button>
@@ -338,46 +321,46 @@
 
     <section id="quizView" class="view" aria-label="확인 문제" hidden>
       <div class="quiz-grid">
-        <article class="question" data-answer="3" data-note="‘까닭’은 원인(原因)의 인(因)이 가진 뜻입니다.">
-          <h2><span class="q-number">1</span>人(인)의 뜻이 아닌 것은?</h2>
+        <article class="question" data-answer="3" data-note="‘줄여서 빼다’는 생략의 ‘략(略)’이 가진 뜻입니다.">
+          <h2><span class="q-number">1</span>生(생)의 뜻이 아닌 것은?</h2>
           <div class="choices">
-            <button class="choice" type="button">① 사람</button>
-            <button class="choice" type="button">② 어떤 사람</button>
-            <button class="choice" type="button">③ 사람의 수</button>
-            <button class="choice" type="button">④ 까닭</button>
+            <button class="choice" type="button">① 태어나다</button>
+            <button class="choice" type="button">② 살아 있다</button>
+            <button class="choice" type="button">③ 생겨나다</button>
+            <button class="choice" type="button">④ 줄여서 빼다</button>
           </div>
           <p class="feedback" aria-live="polite"></p>
         </article>
 
-        <article class="question" data-answer="2" data-note="‘원인’의 인은 人(인)이 아니라 因(인)입니다.">
-          <h2><span class="q-number">2</span>人(인)의 뜻이 아닌 것은?</h2>
+        <article class="question" data-answer="1" data-note="‘생각’의 ‘생’은 生(생)이 아닙니다.">
+          <h2><span class="q-number">2</span>生(생)의 뜻이 아닌 것은?</h2>
           <div class="choices">
-            <button class="choice" type="button">① 체험할 수 있는 <u>인원</u>은 열 명입니다.</button>
-            <button class="choice" type="button">② 이야기 속 <u>우주인</u>이 지구에 왔습니다.</button>
-            <button class="choice" type="button">③ 사고가 난 <u>원인</u>을 조사했습니다.</button>
-            <button class="choice" type="button">④ 우리 고장의 <u>인구</u>를 알아보았습니다.</button>
+            <button class="choice" type="button">① 오늘은 내 <u>생일</u>이라 가족이 축하해 주었습니다.</button>
+            <button class="choice" type="button">② 좋은 <u>생각</u>이 떠올랐습니다.</button>
+            <button class="choice" type="button">③ 연못에서 작은 <u>생물</u>을 관찰했습니다.</button>
+            <button class="choice" type="button">④ 새 <u>학생</u>이 우리 반에 왔습니다.</button>
           </div>
           <p class="feedback" aria-live="polite"></p>
         </article>
 
-        <article class="question" data-answer="1" data-note="‘할인’의 인은 人(인)이 아니라 引(인)입니다.">
-          <h2><span class="q-number">3</span>人(인)의 뜻이 아닌 것은?</h2>
+        <article class="question" data-answer="2" data-note="‘생략’의 ‘생’은 生(생)이 아닙니다.">
+          <h2><span class="q-number">3</span>生(생)의 뜻이 아닌 것은?</h2>
           <div class="choices">
-            <button class="choice" type="button">① 나는 대한민국의 <u>한국인</u>입니다.</button>
-            <button class="choice" type="button">② 공책을 <u>할인</u>받아 샀습니다.</button>
-            <button class="choice" type="button">③ 역사 속 <u>인물</u>을 조사했습니다.</button>
-            <button class="choice" type="button">④ 동생이 곰 <u>인형</u>을 안고 잡니다.</button>
+            <button class="choice" type="button">① 규칙적인 <u>생활</u>을 위해 일찍 잡니다.</button>
+            <button class="choice" type="button">② 동영상을 다시 <u>재생</u>했습니다.</button>
+            <button class="choice" type="button">③ 긴 설명은 <u>생략</u>했습니다.</button>
+            <button class="choice" type="button">④ 축구 경기를 <u>생방송</u>으로 보았습니다.</button>
           </div>
           <p class="feedback" aria-live="polite"></p>
         </article>
 
-        <article class="question" data-answer="0" data-note="‘확인’의 인은 人(인)이 아니라 認(인)입니다.">
-          <h2><span class="q-number">4</span>人(인)의 뜻이 아닌 것은?</h2>
+        <article class="question" data-answer="0" data-note="‘희생’의 ‘생’은 生(생)이 아닙니다.">
+          <h2><span class="q-number">4</span>生(생)의 뜻이 아닌 것은?</h2>
           <div class="choices">
-            <button class="choice" type="button">① 준비물을 다시 <u>확인</u>했습니다.</button>
-            <button class="choice" type="button">② <u>인간</u>은 도구를 만들어 사용합니다.</button>
-            <button class="choice" type="button">③ 책에는 한 사람의 <u>인생</u>이 담겨 있습니다.</button>
-            <button class="choice" type="button">④ 공원에 <u>인공</u> 연못을 만들었습니다.</button>
+            <button class="choice" type="button">① 친구를 위해 자신을 <u>희생</u>했습니다.</button>
+            <button class="choice" type="button">② 모든 <u>생명</u>은 소중합니다.</button>
+            <button class="choice" type="button">③ 공장에서 장난감을 <u>생산</u>합니다.</button>
+            <button class="choice" type="button">④ 케이크에 <u>생크림</u>을 올렸습니다.</button>
           </div>
           <p class="feedback" aria-live="polite"></p>
         </article>
@@ -388,7 +371,6 @@
         <button id="backToLesson" class="back-button" type="button">설명 다시 보기</button>
         <button id="resetQuiz" class="reset-button" type="button">다시 풀기</button>
       </div>
-      <a id="nextLesson" class="next-lesson" href="saeng/" hidden>다음 글자 生</a>
     </section>
   </main>
 
@@ -397,7 +379,6 @@
       const lessonView = document.getElementById('lessonView');
       const quizView = document.getElementById('quizView');
       const result = document.getElementById('result');
-      const nextLesson = document.getElementById('nextLesson');
       const questions = Array.from(document.querySelectorAll('.question'));
 
       function show(view) {
@@ -414,7 +395,6 @@
         const score = answered.filter((question) => question.dataset.correct === 'true').length;
         result.textContent = `${questions.length}문제 중 ${score}문제를 맞혔습니다.`;
         result.hidden = false;
-        nextLesson.hidden = false;
       }
 
       questions.forEach((question) => {
@@ -452,7 +432,6 @@
         });
         result.hidden = true;
         result.textContent = '';
-        nextLesson.hidden = true;
         window.scrollTo({ top: 0, behavior: 'smooth' });
       }
 
