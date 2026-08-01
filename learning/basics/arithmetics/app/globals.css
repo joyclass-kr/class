@@ -1756,8 +1756,10 @@ html[data-race-mode="true"] body { padding-bottom: 72px; }
 .measurement-answer span,
 .measurement-static-answer span {
   color: #566176;
-  font-size: 13px;
-  font-weight: 750;
+  font-family: var(--elementary-math-font);
+  font-size: 15px;
+  font-synthesis: none;
+  font-weight: 400;
 }
 
 .measurement-rule {
@@ -8987,6 +8989,27 @@ main {
   font-family: inherit;
   font-synthesis: none;
   font-variant-numeric: inherit;
+}
+
+/* Latin measurement symbols belong to the mathematical expression, not body copy. */
+.counting-sheet :where(
+  .measurement-quantity span,
+  .measurement-answer span,
+  .measurement-static-answer span,
+  .time-calculation-value span,
+  .time-conversion-unit,
+  .length-operation-value span,
+  .unit-conversion-value small,
+  .unit-conversion-static-answer small,
+  .unit-conversion-answer small,
+  .large-unit-name,
+  .large-unit-result-unit
+) {
+  font-family: var(--elementary-math-font);
+  font-synthesis: none;
+  font-style: normal;
+  font-weight: 400;
+  letter-spacing: 0;
 }
 
 .counting-sheet-header {

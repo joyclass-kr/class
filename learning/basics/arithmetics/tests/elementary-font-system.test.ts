@@ -11,6 +11,11 @@ test("elementary worksheets use the shared Korean and math font stacks", () => {
   assert.match(css, /\.counting-sheet-title strong\s*\{[\s\S]*?font-family:\s*var\(--elementary-korean-font\);/);
 });
 
+test("Latin measurement units use the math font without synthetic bolding", () => {
+  assert.match(css, /\.counting-sheet :where\([\s\S]*?\.measurement-quantity span,[\s\S]*?\.time-conversion-unit,[\s\S]*?\.unit-conversion-value small,[\s\S]*?font-family:\s*var\(--elementary-math-font\);[\s\S]*?font-synthesis:\s*none;[\s\S]*?font-weight:\s*400;/);
+  assert.match(css, /\.measurement-quantity span,[\s\S]*?font-size:\s*15px;[\s\S]*?font-weight:\s*400;/);
+});
+
 test("dense 100-item worksheets retain their compact type sizes", () => {
   assert.match(css, /\.multiplication-five-question\s*\{[\s\S]*?font-size:\s*17px;/);
   assert.match(css, /\.multiplication-five-input,[\s\S]*?font-size:\s*17px;/);
