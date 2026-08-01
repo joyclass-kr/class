@@ -2238,7 +2238,7 @@ html[data-race-mode="true"] body { padding-bottom: 72px; }
 
 .grade-four-multiply-input,
 .grade-four-multiply-static-answer {
-  height: 42px;
+  height: 44px;
   border-radius: 7px;
   background: white;
   color: #17233c;

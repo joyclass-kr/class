@@ -40,6 +40,6 @@ test("4학년 세로곱셈도 같은 자릿값 기준선 규칙을 사용한다"
   assert.match(css, /\.grade-four-multiply-vertical-operation > span\s*\{[\s\S]*?grid-template-columns:\s*12px 108px;/);
   assert.match(css, /\.grade-four-multiply-vertical-operation > span strong\s*\{[\s\S]*?padding-right:\s*8px;/);
   assert.match(css, /\.grade-four-multiply-vertical-operation > b\s*\{[\s\S]*?width:\s*108px;[\s\S]*?justify-self:\s*end;/);
-  assert.match(css, /\.grade-four-multiply-input,[\s\S]*?\.grade-four-multiply-static-answer\s*\{[\s\S]*?height:\s*44px;[\s\S]*?font-size:\s*21px;/);
+  assert.match(css, /\.grade-four-multiply-input,\s*\.grade-four-multiply-static-answer\s*\{[^}]*height:\s*44px;[^}]*font-size:\s*21px;/);
   assert.match(css, /\.grade-four-multiply-input,[\s\S]*?text-align:\s*right;/);
 });
