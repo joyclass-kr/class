@@ -2141,8 +2141,7 @@ html[data-race-mode="true"] body { padding-bottom: 72px; }
 
 .grade-four-multiply-question.horizontal {
   display: grid;
-  grid-template-columns: 28px minmax(0, 1fr);
-  align-items: center;
+  place-items: center;
   border-right: 1px dashed #d8d2ca;
   padding: 18px 18px 22px;
 }
@@ -2177,12 +2176,11 @@ html[data-race-mode="true"] body { padding-bottom: 72px; }
 }
 
 .grade-four-multiply-horizontal-expression {
-  min-width: 0;
   display: grid;
-  grid-template-columns: minmax(0, 1fr) 24px minmax(0, 1fr) 24px 126px;
+  grid-template-columns: max-content 18px max-content 18px 100px;
   align-items: center;
-  gap: 5px;
-  font-size: 25px;
+  gap: 6px;
+  font-size: 22px;
   font-weight: 850;
   text-align: center;
 }
@@ -2192,18 +2190,18 @@ html[data-race-mode="true"] body { padding-bottom: 72px; }
 }
 
 .grade-four-multiply-vertical-operation {
-  width: 148px;
+  width: 120px;
   display: grid;
   justify-items: stretch;
-  font-size: 29px;
+  font-size: 24px;
   font-weight: 900;
   line-height: 1;
   text-align: right;
 }
 
 .grade-four-multiply-vertical-operation > strong {
-  width: 134px;
-  min-height: 35px;
+  width: 108px;
+  min-height: 30px;
   justify-self: end;
   font: inherit;
   box-sizing: border-box;
@@ -2211,9 +2209,9 @@ html[data-race-mode="true"] body { padding-bottom: 72px; }
 }
 
 .grade-four-multiply-vertical-operation > span {
-  min-height: 38px;
+  min-height: 32px;
   display: grid;
-  grid-template-columns: 14px 134px;
+  grid-template-columns: 12px 108px;
   align-items: center;
 }
 
@@ -2231,7 +2229,7 @@ html[data-race-mode="true"] body { padding-bottom: 72px; }
 }
 
 .grade-four-multiply-vertical-operation > b {
-  width: 134px;
+  width: 108px;
   height: 0;
   justify-self: end;
   margin-bottom: 9px;
@@ -2240,12 +2238,12 @@ html[data-race-mode="true"] body { padding-bottom: 72px; }
 
 .grade-four-multiply-input,
 .grade-four-multiply-static-answer {
-  height: 50px;
+  height: 42px;
   border-radius: 7px;
   background: white;
   color: #17233c;
   font-family: inherit;
-  font-size: 24px;
+  font-size: 21px;
   font-weight: 900;
   box-sizing: border-box;
   padding: 0 8px 0 2px;
@@ -2268,7 +2266,7 @@ html[data-race-mode="true"] body { padding-bottom: 72px; }
 
 .grade-four-multiply-vertical-operation .grade-four-multiply-input,
 .grade-four-multiply-vertical-operation .grade-four-multiply-static-answer {
-  width: 134px;
+  width: 108px;
   justify-self: end;
 }
 
