@@ -46,7 +46,9 @@ button { -webkit-tap-highlight-color: transparent; }
   justify-content: center;
   align-items: center;
 }
-.start-title { margin: 0; color: #d3ad68; font-family: Georgia, serif; font-size: clamp(2rem, 7vw, 3.5rem); letter-spacing: .03em; text-shadow: 2px 2px 4px #000; }
+.start-title { margin: 0; color: #d3ad68; font-family: Georgia, serif; font-size: clamp(2rem, 7vw, 3.5rem); line-height: 1.08; letter-spacing: .03em; text-shadow: 2px 2px 4px #000; }
+.start-title span { display: block; white-space: nowrap; }
+.start-title span + span { margin-top: .08em; }
 .start-subtitle { margin: 8px 0 24px; color: #8f6b48; font-family: Georgia, serif; font-weight: 700; letter-spacing: .16em; }
 .difficulty-container { width: min(100%, 460px); }
 .setting-label { margin: 0 0 10px; color: #d9c5a5; font-weight: 800; letter-spacing: .08em; }
