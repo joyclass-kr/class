@@ -8,7 +8,8 @@ const styles = fs.readFileSync('learning/academics/science-lab/earthquake/styles
 
 assert.doesNotMatch(page, /항상/);
 
-assert.match(scienceLab, /href="earthquake\/">지진파와 진앙<\/a><small>고등학교<\/small>/);
+assert.match(scienceLab, /href="earthquake\/"/);
+assert.match(scienceLab, /<b>고등학교<\/b><span>지진파와 진앙<\/span>/);
 assert.match(page, /<h1 id="page-title">지진파와 진앙<\/h1>/);
 assert.match(page, /<a class="back-link" href="\.\.\/">← 과학 실험실<\/a>/);
 assert.match(page, /<span>고등학교<\/span><span>지구과학<\/span>/);

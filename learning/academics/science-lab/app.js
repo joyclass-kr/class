@@ -1,14 +1,21 @@
 document.addEventListener('DOMContentLoaded', () => {
-    const gradeButtons = [...document.querySelectorAll('[data-grade]')];
-    const experiments = [...document.querySelectorAll('[data-grades]')];
+    const gradeButtons = [...document.querySelectorAll('.grade-filter button[data-grade]')];
+    const levelEntries = [...document.querySelectorAll('[data-level]')];
+    const topics = [...document.querySelectorAll('[data-topic]')];
+    const subjects = [...document.querySelectorAll('[data-subject]')];
 
     function showGrade(grade) {
         gradeButtons.forEach(button => {
             button.setAttribute('aria-pressed', String(button.dataset.grade === grade));
         });
-        experiments.forEach(experiment => {
-            const grades = experiment.dataset.grades.split(' ');
-            experiment.hidden = grade !== 'all' && !grades.includes(grade);
+        levelEntries.forEach(entry => {
+            entry.hidden = grade !== 'all' && entry.dataset.level !== grade;
+        });
+        topics.forEach(topic => {
+            topic.hidden = !topic.querySelector('[data-level]:not([hidden])');
+        });
+        subjects.forEach(subject => {
+            subject.hidden = !subject.querySelector('[data-topic]:not([hidden])');
         });
     }
 
