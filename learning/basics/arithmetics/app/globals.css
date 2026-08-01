@@ -2614,8 +2614,8 @@ html[data-race-mode="true"] body { padding-bottom: 72px; }
 }
 
 .grade-four-fraction-whole-input {
-  width: 42px;
-  height: 49px;
+  width: 38px;
+  height: 40px;
   font-size: 21px;
 }
 
@@ -4000,8 +4000,8 @@ button.prime-number-question:focus-visible {
 }
 
 .grade-five-fraction-one-whole-input {
-  width: 38px;
-  height: 47px;
+  width: 36px;
+  height: 40px;
   font-size: 20px;
 }
 
@@ -4568,9 +4568,9 @@ button.prime-number-question:focus-visible {
 
 .digit-input,
 .digit-static-answer {
-  width: 42px;
-  height: 50px;
-  border: 1.5px solid #928979;
+  width: 38px;
+  height: 40px;
+  border: 1.25px solid #928979;
   border-radius: 6px;
   background: white;
   color: #17233c;

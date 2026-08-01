@@ -20,6 +20,12 @@ test("time and length unit calculations share one fixed alignment axis", () => {
   assert.match(css, /\.length-operation-rule\s*\{[\s\S]*?width:\s*173px;[\s\S]*?margin-left:\s*22px;/);
 });
 
+test("single-digit blanks stay subordinate to the surrounding numerals", () => {
+  assert.match(css, /\.digit-input,[\s\S]*?width:\s*38px;[\s\S]*?height:\s*40px;/);
+  assert.match(css, /\.grade-four-fraction-whole-input\s*\{[\s\S]*?width:\s*38px;[\s\S]*?height:\s*40px;/);
+  assert.match(css, /\.grade-five-fraction-one-whole-input\s*\{[\s\S]*?width:\s*36px;[\s\S]*?height:\s*40px;/);
+});
+
 test("4학년 세로곱셈도 같은 자릿값 기준선 규칙을 사용한다", () => {
   assert.match(css, /\.grade-four-multiply-vertical-operation > strong\s*\{[\s\S]*?width:\s*134px;[\s\S]*?justify-self:\s*end;/);
   assert.match(css, /\.grade-four-multiply-vertical-operation > span\s*\{[\s\S]*?grid-template-columns:\s*14px 134px;/);
