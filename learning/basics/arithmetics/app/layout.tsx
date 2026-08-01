@@ -3,6 +3,7 @@ import { headers } from "next/headers";
 import "katex/dist/katex.min.css";
 import "./globals.css";
 import ArithmeticRaceController from "./components/arithmetic-race-controller";
+import ElementaryFocusScroll from "./components/elementary-focus-scroll";
 
 export async function generateMetadata(): Promise<Metadata> {
   const requestHeaders = await headers();
@@ -35,7 +36,7 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="ko">
-      <body>{children}<ArithmeticRaceController /></body>
+      <body>{children}<ElementaryFocusScroll /><ArithmeticRaceController /></body>
     </html>
   );
 }
