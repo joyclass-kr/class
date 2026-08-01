@@ -1,0 +1,450 @@
+<!doctype html>
+<html lang="ko">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+  <meta name="theme-color" content="#f7f5ef">
+  <title>한글 속 뜻조각</title>
+  <style>
+    @font-face {
+      font-family: "KleeHanja";
+      src: url("/assets/fonts/klee-one/KleeOne-SemiBold.ttf") format("truetype");
+      font-display: swap;
+    }
+
+    :root {
+      --paper: #f7f5ef;
+      --ink: #202630;
+      --muted: #65707c;
+      --line: #d9d6ce;
+      --blue: #2d638c;
+      --blue-soft: #eaf2f7;
+      --correct: #226847;
+      --correct-soft: #eaf5ee;
+      --wrong: #a43d36;
+      --wrong-soft: #fbefed;
+    }
+
+    * { box-sizing: border-box; }
+
+    html { background: var(--paper); }
+
+    body {
+      margin: 0;
+      min-width: 320px;
+      color: var(--ink);
+      background: var(--paper);
+      font-family: "Noto Serif KR", "KoPub Batang", "Batang", serif;
+      -webkit-font-smoothing: antialiased;
+    }
+
+    button, a { -webkit-tap-highlight-color: transparent; }
+
+    .page {
+      width: min(1180px, 100%);
+      min-height: 100svh;
+      margin: 0 auto;
+      padding: clamp(22px, 4vw, 52px) clamp(20px, 5vw, 72px) 36px;
+    }
+
+    .topline {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 16px;
+      padding-bottom: 16px;
+      border-bottom: 1px solid var(--line);
+    }
+
+    .series {
+      margin: 0;
+      color: var(--muted);
+      font-size: clamp(14px, 1.8vw, 19px);
+      font-weight: 700;
+      letter-spacing: .05em;
+    }
+
+    .home-link {
+      min-height: 44px;
+      padding: 10px 2px 8px 14px;
+      color: var(--muted);
+      font-family: system-ui, sans-serif;
+      font-size: 15px;
+      font-weight: 700;
+      text-decoration: none;
+    }
+
+    .hanja-head {
+      display: grid;
+      grid-template-columns: auto 1fr;
+      align-items: center;
+      gap: clamp(22px, 4vw, 48px);
+      padding: clamp(24px, 4vw, 46px) 0 clamp(22px, 3vw, 34px);
+      border-bottom: 1px solid var(--line);
+    }
+
+    .hanja {
+      min-width: 1.2em;
+      font-family: "KleeHanja", serif;
+      font-size: clamp(88px, 13vw, 158px);
+      font-weight: 600;
+      line-height: .9;
+      text-align: center;
+    }
+
+    .reading {
+      margin: 0 0 10px;
+      font-size: clamp(24px, 3.2vw, 38px);
+      font-weight: 800;
+    }
+
+    .core-meaning {
+      margin: 0;
+      color: var(--muted);
+      font-size: clamp(19px, 2.5vw, 29px);
+      line-height: 1.6;
+      word-break: keep-all;
+    }
+
+    .view { padding-top: clamp(22px, 3.5vw, 40px); }
+    .view[hidden] { display: none; }
+
+    .meaning-list { margin: 0; }
+
+    .meaning-row {
+      display: grid;
+      grid-template-columns: minmax(170px, .7fr) minmax(0, 2fr);
+      gap: 16px 34px;
+      padding: clamp(17px, 2.5vw, 26px) 0;
+      border-bottom: 1px solid var(--line);
+    }
+
+    .meaning-row dt {
+      color: var(--blue);
+      font-size: clamp(19px, 2.1vw, 25px);
+      font-weight: 800;
+      line-height: 1.45;
+    }
+
+    .meaning-row dd { margin: 0; }
+
+    .word-family {
+      margin: 0 0 7px;
+      font-size: clamp(20px, 2.3vw, 28px);
+      font-weight: 800;
+      line-height: 1.45;
+      word-spacing: .18em;
+    }
+
+    .example {
+      margin: 0;
+      color: var(--muted);
+      font-size: clamp(16px, 1.7vw, 20px);
+      line-height: 1.6;
+      word-break: keep-all;
+    }
+
+    .next-button, .reset-button {
+      display: block;
+      width: min(360px, 100%);
+      min-height: 58px;
+      margin: 30px auto 0;
+      border: 1px solid var(--blue);
+      border-radius: 4px;
+      background: var(--blue);
+      color: white;
+      font: 800 19px/1.2 system-ui, sans-serif;
+      cursor: pointer;
+    }
+
+    .quiz-grid {
+      display: grid;
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+      gap: clamp(28px, 4vw, 52px) clamp(34px, 5vw, 70px);
+    }
+
+    .question {
+      min-width: 0;
+      padding-bottom: 12px;
+      border-bottom: 1px solid var(--line);
+    }
+
+    .question h2 {
+      margin: 0 0 15px;
+      font-size: clamp(20px, 2vw, 25px);
+      line-height: 1.5;
+      word-break: keep-all;
+    }
+
+    .q-number {
+      display: inline-grid;
+      width: 32px;
+      height: 32px;
+      margin-right: 8px;
+      place-items: center;
+      border: 1px solid var(--ink);
+      border-radius: 50%;
+      font: 700 16px/1 system-ui, sans-serif;
+      vertical-align: 2px;
+    }
+
+    .choices {
+      display: grid;
+      gap: 8px;
+    }
+
+    .choice {
+      min-height: 50px;
+      padding: 10px 12px;
+      border: 1px solid transparent;
+      border-radius: 4px;
+      background: transparent;
+      color: var(--ink);
+      font: inherit;
+      font-size: clamp(16px, 1.55vw, 19px);
+      line-height: 1.45;
+      text-align: left;
+      cursor: pointer;
+    }
+
+    .choice:hover, .choice:focus-visible {
+      border-color: #a9bcc9;
+      background: var(--blue-soft);
+      outline: none;
+    }
+
+    .choice.correct {
+      border-color: #83b49a;
+      background: var(--correct-soft);
+      color: var(--correct);
+      font-weight: 800;
+    }
+
+    .choice.wrong {
+      border-color: #d9a19c;
+      background: var(--wrong-soft);
+      color: var(--wrong);
+    }
+
+    .choice:disabled { cursor: default; opacity: 1; }
+    u { text-decoration-thickness: 2px; text-underline-offset: 4px; }
+
+    .feedback {
+      min-height: 25px;
+      margin: 9px 0 0;
+      color: var(--muted);
+      font-size: 15px;
+      font-weight: 700;
+      line-height: 1.45;
+    }
+
+    .feedback.is-correct { color: var(--correct); }
+    .feedback.is-wrong { color: var(--wrong); }
+
+    .result {
+      margin: 28px 0 0;
+      padding: 18px;
+      border-top: 2px solid var(--ink);
+      border-bottom: 1px solid var(--line);
+      font-size: clamp(18px, 2vw, 24px);
+      font-weight: 800;
+      text-align: center;
+    }
+
+    .quiz-actions {
+      display: flex;
+      justify-content: center;
+      gap: 12px;
+      margin-top: 28px;
+    }
+
+    .quiz-actions button { margin: 0; }
+
+    .back-button {
+      min-height: 58px;
+      padding: 0 26px;
+      border: 1px solid #aeb4b8;
+      border-radius: 4px;
+      background: transparent;
+      color: var(--ink);
+      font: 800 18px/1.2 system-ui, sans-serif;
+      cursor: pointer;
+    }
+
+    @media (max-width: 760px) {
+      .page { padding-inline: 18px; }
+      .hanja-head { gap: 20px; }
+      .meaning-row { grid-template-columns: 1fr; gap: 6px; }
+      .quiz-grid { grid-template-columns: 1fr; }
+    }
+
+    @media (prefers-reduced-motion: no-preference) {
+      .view { animation: appear .18s ease-out; }
+      @keyframes appear { from { opacity: .2; transform: translateY(4px); } }
+    }
+  </style>
+</head>
+<body>
+  <main class="page">
+    <div class="topline">
+      <p class="series">한글 속 뜻조각 01</p>
+      <a class="home-link" href="/">처음으로</a>
+    </div>
+
+    <header class="hanja-head">
+      <div class="hanja" aria-label="날 생">生</div>
+      <div>
+        <p class="reading">생</p>
+        <p class="core-meaning">나다 · 태어나다 · 살다 · 생겨나다</p>
+      </div>
+    </header>
+
+    <section id="lessonView" class="view" aria-label="뜻과 예시">
+      <dl class="meaning-list">
+        <div class="meaning-row">
+          <dt>태어나다</dt>
+          <dd><p class="word-family">생일 · 출생 · 탄생</p><p class="example">생일은 내가 태어난 날입니다.</p></dd>
+        </div>
+        <div class="meaning-row">
+          <dt>살아 있다<br>살아가다</dt>
+          <dd><p class="word-family">생명 · 생물 · 생활</p><p class="example">생물은 살아 있는 것이고, 생활은 살아가는 일입니다.</p></dd>
+        </div>
+        <div class="meaning-row">
+          <dt>생기다<br>만들어 내다</dt>
+          <dd><p class="word-family">발생 · 생산 · 재생</p><p class="example">생산은 물건을 만들어 내고, 재생은 다시 살아나게 합니다.</p></dd>
+        </div>
+        <div class="meaning-row">
+          <dt>그대로<br>바로</dt>
+          <dd><p class="word-family">생선 · 생크림 · 생방송</p><p class="example">생방송은 녹화하지 않고 지금 바로 하는 방송입니다.</p></dd>
+        </div>
+        <div class="meaning-row">
+          <dt>어떤 사람</dt>
+          <dd><p class="word-family">학생 · 신입생 · 졸업생</p><p class="example">학생의 ‘생’은 배우는 사람을 나타냅니다.</p></dd>
+        </div>
+      </dl>
+      <button id="startQuiz" class="next-button" type="button">문제 풀기</button>
+    </section>
+
+    <section id="quizView" class="view" aria-label="확인 문제" hidden>
+      <div class="quiz-grid">
+        <article class="question" data-answer="3" data-note="‘줄여서 빼다’는 생략의 ‘략(略)’이 가진 뜻입니다.">
+          <h2><span class="q-number">1</span>生(생)의 뜻이 아닌 것은?</h2>
+          <div class="choices">
+            <button class="choice" type="button">① 태어나다</button>
+            <button class="choice" type="button">② 살아 있다</button>
+            <button class="choice" type="button">③ 생겨나다</button>
+            <button class="choice" type="button">④ 줄여서 빼다</button>
+          </div>
+          <p class="feedback" aria-live="polite"></p>
+        </article>
+
+        <article class="question" data-answer="1" data-note="‘생각’의 ‘생’은 生(생)이 아닙니다.">
+          <h2><span class="q-number">2</span>生(생)의 뜻이 아닌 것은?</h2>
+          <div class="choices">
+            <button class="choice" type="button">① 오늘은 내 <u>생일</u>이라 가족이 축하해 주었습니다.</button>
+            <button class="choice" type="button">② 좋은 <u>생각</u>이 떠올랐습니다.</button>
+            <button class="choice" type="button">③ 연못에서 작은 <u>생물</u>을 관찰했습니다.</button>
+            <button class="choice" type="button">④ 새 <u>학생</u>이 우리 반에 왔습니다.</button>
+          </div>
+          <p class="feedback" aria-live="polite"></p>
+        </article>
+
+        <article class="question" data-answer="2" data-note="‘생략’의 ‘생’은 生(생)이 아닙니다.">
+          <h2><span class="q-number">3</span>生(생)의 뜻이 아닌 것은?</h2>
+          <div class="choices">
+            <button class="choice" type="button">① 규칙적인 <u>생활</u>을 위해 일찍 잡니다.</button>
+            <button class="choice" type="button">② 동영상을 다시 <u>재생</u>했습니다.</button>
+            <button class="choice" type="button">③ 긴 설명은 <u>생략</u>했습니다.</button>
+            <button class="choice" type="button">④ 축구 경기를 <u>생방송</u>으로 보았습니다.</button>
+          </div>
+          <p class="feedback" aria-live="polite"></p>
+        </article>
+
+        <article class="question" data-answer="0" data-note="‘희생’의 ‘생’은 生(생)이 아닙니다.">
+          <h2><span class="q-number">4</span>生(생)의 뜻이 아닌 것은?</h2>
+          <div class="choices">
+            <button class="choice" type="button">① 친구를 위해 자신을 <u>희생</u>했습니다.</button>
+            <button class="choice" type="button">② 모든 <u>생명</u>은 소중합니다.</button>
+            <button class="choice" type="button">③ 공장에서 장난감을 <u>생산</u>합니다.</button>
+            <button class="choice" type="button">④ 케이크에 <u>생크림</u>을 올렸습니다.</button>
+          </div>
+          <p class="feedback" aria-live="polite"></p>
+        </article>
+      </div>
+
+      <p id="result" class="result" aria-live="polite" hidden></p>
+      <div class="quiz-actions">
+        <button id="backToLesson" class="back-button" type="button">설명 다시 보기</button>
+        <button id="resetQuiz" class="reset-button" type="button">다시 풀기</button>
+      </div>
+    </section>
+  </main>
+
+  <script>
+    (() => {
+      const lessonView = document.getElementById('lessonView');
+      const quizView = document.getElementById('quizView');
+      const result = document.getElementById('result');
+      const questions = Array.from(document.querySelectorAll('.question'));
+
+      function show(view) {
+        const quiz = view === 'quiz';
+        lessonView.hidden = quiz;
+        quizView.hidden = !quiz;
+        window.scrollTo({ top: 0, behavior: 'smooth' });
+        (quiz ? quizView : lessonView).focus({ preventScroll: true });
+      }
+
+      function updateResult() {
+        const answered = questions.filter((question) => question.dataset.done === 'true');
+        if (answered.length !== questions.length) return;
+        const score = answered.filter((question) => question.dataset.correct === 'true').length;
+        result.textContent = `${questions.length}문제 중 ${score}문제를 맞혔습니다.`;
+        result.hidden = false;
+      }
+
+      questions.forEach((question) => {
+        const choices = Array.from(question.querySelectorAll('.choice'));
+        const answer = Number(question.dataset.answer);
+        const feedback = question.querySelector('.feedback');
+
+        choices.forEach((choice, index) => {
+          choice.addEventListener('click', () => {
+            if (question.dataset.done === 'true') return;
+            const correct = index === answer;
+            question.dataset.done = 'true';
+            question.dataset.correct = String(correct);
+            choice.classList.add(correct ? 'correct' : 'wrong');
+            if (!correct) choices[answer].classList.add('correct');
+            choices.forEach((button) => { button.disabled = true; });
+            feedback.textContent = correct ? `맞았습니다. ${question.dataset.note}` : `정답을 확인하세요. ${question.dataset.note}`;
+            feedback.className = `feedback ${correct ? 'is-correct' : 'is-wrong'}`;
+            updateResult();
+          });
+        });
+      });
+
+      function reset() {
+        questions.forEach((question) => {
+          delete question.dataset.done;
+          delete question.dataset.correct;
+          question.querySelectorAll('.choice').forEach((choice) => {
+            choice.disabled = false;
+            choice.classList.remove('correct', 'wrong');
+          });
+          const feedback = question.querySelector('.feedback');
+          feedback.textContent = '';
+          feedback.className = 'feedback';
+        });
+        result.hidden = true;
+        result.textContent = '';
+        window.scrollTo({ top: 0, behavior: 'smooth' });
+      }
+
+      document.getElementById('startQuiz').addEventListener('click', () => show('quiz'));
+      document.getElementById('backToLesson').addEventListener('click', () => show('lesson'));
+      document.getElementById('resetQuiz').addEventListener('click', reset);
+    })();
+  </script>
+</body>
+</html>
