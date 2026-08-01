@@ -4,7 +4,7 @@
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
   <meta name="theme-color" content="#f7f5ef">
-  <title>한글 속 뜻조각</title>
+  <title>韓字</title>
   <style>
     @font-face {
       font-family: "KleeHanja";
@@ -41,32 +41,26 @@
     button, a { -webkit-tap-highlight-color: transparent; }
 
     .page {
+      position: relative;
       width: min(1180px, 100%);
       min-height: 100svh;
       margin: 0 auto;
-      padding: clamp(22px, 4vw, 52px) clamp(20px, 5vw, 72px) 36px;
+      padding: clamp(12px, 2vw, 22px) clamp(20px, 4vw, 54px) 18px;
     }
 
     .topline {
+      position: absolute;
+      top: 10px;
+      right: clamp(20px, 4vw, 54px);
       display: flex;
       align-items: center;
-      justify-content: space-between;
+      justify-content: flex-end;
       gap: 16px;
-      padding-bottom: 16px;
-      border-bottom: 1px solid var(--line);
-    }
-
-    .series {
-      margin: 0;
-      color: var(--muted);
-      font-size: clamp(14px, 1.8vw, 19px);
-      font-weight: 700;
-      letter-spacing: .05em;
     }
 
     .home-link {
       min-height: 44px;
-      padding: 10px 2px 8px 14px;
+      padding: 6px 2px 6px 14px;
       color: var(--muted);
       font-family: system-ui, sans-serif;
       font-size: 15px;
@@ -78,50 +72,50 @@
       display: grid;
       grid-template-columns: auto 1fr;
       align-items: center;
-      gap: clamp(22px, 4vw, 48px);
-      padding: clamp(24px, 4vw, 46px) 0 clamp(22px, 3vw, 34px);
+      gap: clamp(20px, 3vw, 34px);
+      padding: 6px 0 13px;
       border-bottom: 1px solid var(--line);
     }
 
     .hanja {
       min-width: 1.2em;
       font-family: "KleeHanja", serif;
-      font-size: clamp(88px, 13vw, 158px);
+      font-size: clamp(78px, 10vw, 112px);
       font-weight: 600;
       line-height: .9;
       text-align: center;
     }
 
     .reading {
-      margin: 0 0 10px;
-      font-size: clamp(24px, 3.2vw, 38px);
+      margin: 0 0 5px;
+      font-size: clamp(22px, 2.7vw, 32px);
       font-weight: 800;
     }
 
     .core-meaning {
       margin: 0;
       color: var(--muted);
-      font-size: clamp(19px, 2.5vw, 29px);
-      line-height: 1.6;
+      font-size: clamp(18px, 2.1vw, 25px);
+      line-height: 1.45;
       word-break: keep-all;
     }
 
-    .view { padding-top: clamp(22px, 3.5vw, 40px); }
+    .view { padding-top: 8px; }
     .view[hidden] { display: none; }
 
     .meaning-list { margin: 0; }
 
     .meaning-row {
       display: grid;
-      grid-template-columns: minmax(170px, .7fr) minmax(0, 2fr);
-      gap: 16px 34px;
-      padding: clamp(17px, 2.5vw, 26px) 0;
+      grid-template-columns: minmax(150px, .62fr) minmax(0, 2fr);
+      gap: 8px 28px;
+      padding: clamp(8px, 1.1vw, 12px) 0;
       border-bottom: 1px solid var(--line);
     }
 
     .meaning-row dt {
       color: var(--blue);
-      font-size: clamp(19px, 2.1vw, 25px);
+      font-size: clamp(17px, 1.8vw, 21px);
       font-weight: 800;
       line-height: 1.45;
     }
@@ -129,8 +123,8 @@
     .meaning-row dd { margin: 0; }
 
     .word-family {
-      margin: 0 0 7px;
-      font-size: clamp(20px, 2.3vw, 28px);
+      margin: 0 0 2px;
+      font-size: clamp(18px, 2vw, 23px);
       font-weight: 800;
       line-height: 1.45;
       word-spacing: .18em;
@@ -139,38 +133,38 @@
     .example {
       margin: 0;
       color: var(--muted);
-      font-size: clamp(16px, 1.7vw, 20px);
-      line-height: 1.6;
+      font-size: clamp(14px, 1.5vw, 17px);
+      line-height: 1.45;
       word-break: keep-all;
     }
 
     .next-button, .reset-button {
       display: block;
       width: min(360px, 100%);
-      min-height: 58px;
-      margin: 30px auto 0;
+      min-height: 48px;
+      margin: 14px auto 0;
       border: 1px solid var(--blue);
       border-radius: 4px;
       background: var(--blue);
       color: white;
-      font: 800 19px/1.2 system-ui, sans-serif;
+      font: 800 17px/1.2 system-ui, sans-serif;
       cursor: pointer;
     }
 
     .quiz-grid {
       display: grid;
       grid-template-columns: repeat(2, minmax(0, 1fr));
-      gap: clamp(28px, 4vw, 52px) clamp(34px, 5vw, 70px);
+      gap: clamp(18px, 2.5vw, 30px) clamp(28px, 4vw, 52px);
     }
 
     .question {
       min-width: 0;
-      padding-bottom: 12px;
+      padding-bottom: 7px;
       border-bottom: 1px solid var(--line);
     }
 
     .question h2 {
-      margin: 0 0 15px;
+      margin: 0 0 7px;
       font-size: clamp(20px, 2vw, 25px);
       line-height: 1.5;
       word-break: keep-all;
@@ -194,8 +188,8 @@
     }
 
     .choice {
-      min-height: 50px;
-      padding: 10px 12px;
+      min-height: 43px;
+      padding: 7px 10px;
       border: 1px solid transparent;
       border-radius: 4px;
       background: transparent;
@@ -231,7 +225,7 @@
 
     .feedback {
       min-height: 25px;
-      margin: 9px 0 0;
+      margin: 5px 0 0;
       color: var(--muted);
       font-size: 15px;
       font-weight: 700;
@@ -273,6 +267,7 @@
 
     @media (max-width: 760px) {
       .page { padding-inline: 18px; }
+      .topline { position: static; min-height: 32px; }
       .hanja-head { gap: 20px; }
       .meaning-row { grid-template-columns: 1fr; gap: 6px; }
       .quiz-grid { grid-template-columns: 1fr; }
@@ -287,7 +282,6 @@
 <body>
   <main class="page">
     <div class="topline">
-      <p class="series">한글 속 뜻조각 01</p>
       <a class="home-link" href="/">처음으로</a>
     </div>
 
