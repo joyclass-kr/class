@@ -742,12 +742,14 @@
         const token = ++state.rhythmPlaybackToken;
         const beatSeconds = 60 / state.tempo;
         const stepSeconds = beatSeconds / 4;
-        const start = context.currentTime + .08;
+        const countStart = context.currentTime + .08;
+        for (let beat = 0; beat < 4; beat += 1) playClick(countStart + beat * beatSeconds, beat === 0, .95);
+        const start = countStart + 4 * beatSeconds;
         state.dictationAnswer.forEach(function (symbol, index) {
             if (symbol === "note") playDrum(start + index * stepSeconds, index % 4 === 0);
         });
-        animateRhythmGrid(80, stepSeconds * 1000, token, elements.dictationGrid);
-        elements.dictationFeedback.textContent = state.dictationAnswer.includes("note") ? "내 비트를 재생합니다." : "먼저 네모칸에 점을 찍으세요.";
+        animateRhythmGrid(80 + 4 * beatSeconds * 1000, stepSeconds * 1000, token, elements.dictationGrid);
+        elements.dictationFeedback.textContent = state.dictationAnswer.includes("note") ? "메트로놈 예비박 4박 뒤에 내 비트를 재생합니다." : "먼저 네모칸에 점을 찍으세요.";
     }
 
     function notationChoiceQuestion() {
