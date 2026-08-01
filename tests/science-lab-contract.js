@@ -54,6 +54,7 @@ assert.match(solubilityPage, /초등 5~6/);
 assert.match(solubilityPage, /물 100g/);
 assert.match(solubilityPage, /소금이 사라지는 것이 아니라 작은 입자로 물속에 고르게 퍼집니다/);
 assert.match(solubilityPage, /녹아서 눈에 안 보인다/);
+assert.match(solubilityPage, /소금이 모두 녹으면 어떻게 되는가/);
 assert.match(solubilityPage, /바닥에 녹지 않고 남는 소금은 몇 g인가/);
 assert.doesNotMatch(solubilityPage, /항상/);
 assert.match(solubilityPage, /소금은 물의 온도가 높아져도 녹는 양이 조금만 증가합니다/);
