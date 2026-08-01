@@ -163,6 +163,38 @@
                 return sprite;
             }
 
+            function createZodiacSeasonIconSprite(icon, glowColor) {
+                const cvs = document.createElement('canvas');
+                cvs.width = 256;
+                cvs.height = 256;
+                const ctx = cvs.getContext('2d');
+                ctx.clearRect(0, 0, 256, 256);
+                ctx.textAlign = 'center';
+                ctx.textBaseline = 'middle';
+                ctx.font = '164px "Segoe UI Emoji", "Apple Color Emoji", sans-serif';
+                ctx.shadowColor = glowColor;
+                ctx.shadowBlur = 22;
+                ctx.fillText(icon, 128, 136);
+                ctx.shadowBlur = 0;
+                ctx.globalAlpha = 1;
+                ctx.fillText(icon, 128, 136);
+
+                const texture = new THREE.CanvasTexture(cvs);
+                const material = new THREE.SpriteMaterial({
+                    map: texture,
+                    transparent: true,
+                    opacity: 1,
+                    alphaTest: 0.04,
+                    depthTest: true,
+                    depthWrite: false,
+                    toneMapped: false
+                });
+                const sprite = new THREE.Sprite(material);
+                sprite.scale.set(10, 10, 1);
+                sprite.renderOrder = -100;
+                return sprite;
+            }
+
             function initThreeZodiac() {
                 const container = document.getElementById('zodiac3dContainer');
                 const canvas = document.getElementById('zodiac3dCanvas');
@@ -276,24 +308,23 @@
 
                 // Four seasonal reference points on Earth's orbit.
                 [
-                    { month: 3, label: '🌸 춘분 3/21', color: '#fb7185' },
-                    { month: 6, label: '☀️ 하지 6/21', color: '#facc15' },
-                    { month: 9, label: '🍁 추분 9/23', color: '#fb923c' },
-                    { month: 12, label: '❄️ 동지 12/22', color: '#60a5fa' }
+                    { month: 3, icon: '🌸', label: '춘분 3/21', color: '#fb7185' },
+                    { month: 6, icon: '☀️', label: '하지 6/21', color: '#facc15' },
+                    { month: 9, icon: '🍁', label: '추분 9/23', color: '#fb923c' },
+                    { month: 12, icon: '❄️', label: '동지 12/22', color: '#60a5fa' }
                 ].forEach(season => {
                     const angle = -(season.month - 1) * 30 * Math.PI / 180;
                     const px = 80 * Math.sin(angle);
                     const pz = -80 * Math.cos(angle);
-                    const point = new THREE.Mesh(
-                        new THREE.SphereGeometry(2.3, 18, 18),
-                        new THREE.MeshBasicMaterial({ color: season.color, depthTest: false })
-                    );
-                    point.position.set(px, 1.5, pz);
-                    point.renderOrder = 99997;
-                    zScene.add(point);
+
+                    const icon = createZodiacSeasonIconSprite(season.icon, season.color);
+                    icon.position.set(px, 2.2, pz);
+                    zScene.add(icon);
 
                     const marker = createZodiacLabelSprite(season.label, season.color, 64, 12, 62);
                     marker.position.set(px, 15, pz);
+                    marker.material.depthTest = true;
+                    marker.renderOrder = -100;
                     zScene.add(marker);
                 });
 
