@@ -172,7 +172,7 @@ export default function GradeSixDecimalThreePage() {
 
   function renderSheet(answerSheet: boolean) {
     return (
-      <div className="a4-sheet counting-sheet grade-six-decimal-two-sheet grade-six-decimal-three-sheet" style={{ transform: `scale(${sheetScale})` }}>
+      <div className="a4-sheet counting-sheet mental-math-sheet grade-six-decimal-two-sheet grade-six-decimal-three-sheet" style={{ transform: `scale(${sheetScale})` }}>
         <header className="counting-sheet-header">
           <div className="counting-sheet-title"><span>6학년</span><strong>소수③{answerSheet ? " 정답" : ""}</strong></div>
           <div className="counting-sheet-info"><span>이름 <i /></span><span>날짜 <i /></span><small>문제지 {seed}</small></div>

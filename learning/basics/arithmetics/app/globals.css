@@ -8963,9 +8963,29 @@ main {
 
 .counting-sheet-title strong {
   min-width: 0;
+  font-family: "KoPubWorld Batang", "Noto Serif KR", "Batang", serif;
   font-size: 23px;
+  font-weight: 700;
   line-height: 1.2;
   letter-spacing: -0.045em;
+  white-space: nowrap;
+}
+
+.mental-math-sheet .counting-sheet-title::after {
+  display: inline-flex;
+  align-items: center;
+  min-height: 20px;
+  border: 1px solid #258f86;
+  border-radius: 999px;
+  padding: 1px 7px 0;
+  color: #18786f;
+  background: #edf8f6;
+  content: "암산";
+  font-family: "Malgun Gothic", "Apple SD Gothic Neo", sans-serif;
+  font-size: 10px;
+  font-weight: 900;
+  line-height: 1;
+  letter-spacing: 0;
   white-space: nowrap;
 }
 
