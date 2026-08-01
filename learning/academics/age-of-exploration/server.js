@@ -1942,6 +1942,19 @@ io.on('connection', (socket) => {
     if (progress.finalQuizStatus !== 'answering') return ack({ ok: false, error: '목적지에 도착한 뒤 문제를 제출하세요.' });
     try {
       const graded = FinalQuiz.grade(mission.finalQuiz, payload?.answers);
+      const incorrectIndexes = graded.correct
+        .map((correct, index) => correct ? -1 : index)
+        .filter(index => index >= 0);
+      if (incorrectIndexes.length) {
+        progress.finalQuizAnswers = graded.answers.map((answer, index) => incorrectIndexes.includes(index) ? null : answer);
+        store.scheduleSave();
+        return ack({
+          ok: false,
+          retry: true,
+          incorrectIndexes,
+          error: '다시 생각하고 표시된 문제의 다른 답을 골라보세요.'
+        });
+      }
       progress.finalQuizAnswers = graded.answers;
       progress.finalCorrectCount = graded.correctCount;
       progress.finalSubmittedAt = Date.now();

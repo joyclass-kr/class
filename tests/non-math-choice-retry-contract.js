@@ -6,6 +6,7 @@ const root = path.resolve(__dirname, '..');
 const read = (relativePath) => fs.readFileSync(path.join(root, relativePath), 'utf8');
 
 const retryBanks = [
+  ['대항해시대', 'learning/academics/age-of-exploration/server.js', /incorrectIndexes/],
   ['독해', 'learning/basics/reading/app.js', /다시 생각하고 다른 답을 골라보세요/],
   ['맞춤법', 'learning/basics/spelling/app.js', /다시 생각하고 다른 답을 골라보세요/],
   ['속담', 'learning/basics/proverbs/app.js', /다시 생각하고 다른 답을 골라보세요/],
