@@ -30,6 +30,9 @@
         audioContext: null,
         masterGain: null,
         compressor: null,
+        masterLowShelf: null,
+        masterPresence: null,
+        limiter: null,
         reverb: null,
         reverbGain: null,
         noiseBuffer: null,
@@ -102,16 +105,31 @@
             const context = state.audioContext;
             state.masterGain = context.createGain();
             state.compressor = context.createDynamicsCompressor();
+            state.masterLowShelf = context.createBiquadFilter();
+            state.masterPresence = context.createBiquadFilter();
+            state.limiter = context.createDynamicsCompressor();
             state.reverb = context.createConvolver();
             state.reverbGain = context.createGain();
 
-            state.masterGain.gain.value = .82;
-            state.compressor.threshold.value = -20;
-            state.compressor.knee.value = 18;
-            state.compressor.ratio.value = 3;
-            state.compressor.attack.value = .004;
-            state.compressor.release.value = .24;
-            state.reverbGain.gain.value = .18;
+            state.masterGain.gain.value = 1.08;
+            state.compressor.threshold.value = -18;
+            state.compressor.knee.value = 14;
+            state.compressor.ratio.value = 3.5;
+            state.compressor.attack.value = .012;
+            state.compressor.release.value = .22;
+            state.masterLowShelf.type = "lowshelf";
+            state.masterLowShelf.frequency.value = 190;
+            state.masterLowShelf.gain.value = 3.5;
+            state.masterPresence.type = "peaking";
+            state.masterPresence.frequency.value = 2700;
+            state.masterPresence.Q.value = .75;
+            state.masterPresence.gain.value = 1.8;
+            state.limiter.threshold.value = -3;
+            state.limiter.knee.value = 1;
+            state.limiter.ratio.value = 20;
+            state.limiter.attack.value = .002;
+            state.limiter.release.value = .1;
+            state.reverbGain.gain.value = .1;
 
             const impulseLength = Math.floor(context.sampleRate * 1.7);
             const impulse = context.createBuffer(2, impulseLength, context.sampleRate);
@@ -130,7 +148,12 @@
             for (let index = 0; index < noiseLength; index += 1) noise[index] = Math.random() * 2 - 1;
 
             state.reverb.connect(state.reverbGain).connect(state.compressor);
-            state.compressor.connect(state.masterGain).connect(context.destination);
+            state.compressor
+                .connect(state.masterLowShelf)
+                .connect(state.masterPresence)
+                .connect(state.limiter)
+                .connect(state.masterGain)
+                .connect(context.destination);
         }
         if (state.audioContext.state === "suspended") state.audioContext.resume();
         return state.audioContext;
@@ -140,7 +163,7 @@
         const context = ensureAudio();
         if (!context || !source) return;
         const dry = context.createGain();
-        dry.gain.value = .9;
+        dry.gain.value = 1;
         source.connect(dry).connect(state.compressor);
         if (reverbAmount) {
             const send = context.createGain();
@@ -149,51 +172,54 @@
         }
     }
 
-    function playPianoTone(frequency, when, duration, volume) {
+    function playPianoTone(frequency, when, duration, volume, panAmount) {
         const context = ensureAudio();
         if (!context) return;
         const start = Math.max(context.currentTime, when || context.currentTime);
         const length = Math.max(.25, duration || .8);
         const envelope = context.createGain();
         const filter = context.createBiquadFilter();
+        const panner = typeof context.createStereoPanner === "function" ? context.createStereoPanner() : null;
+        const peak = volume || .09;
         filter.type = "lowpass";
-        filter.Q.value = .7;
-        filter.frequency.setValueAtTime(6200, start);
-        filter.frequency.exponentialRampToValueAtTime(1700, start + Math.min(.9, length));
+        filter.Q.value = .55;
+        filter.frequency.setValueAtTime(Math.min(7200, Math.max(3800, frequency * 18)), start);
+        filter.frequency.exponentialRampToValueAtTime(Math.min(3100, Math.max(1500, frequency * 7)), start + Math.min(.75, length));
         envelope.gain.setValueAtTime(.0001, start);
-        envelope.gain.exponentialRampToValueAtTime(volume || .075, start + .008);
-        envelope.gain.exponentialRampToValueAtTime((volume || .075) * .48, start + .16);
-        envelope.gain.exponentialRampToValueAtTime(.0001, start + length + .38);
+        envelope.gain.exponentialRampToValueAtTime(peak, start + .006);
+        envelope.gain.exponentialRampToValueAtTime(peak * .42, start + .12);
+        envelope.gain.exponentialRampToValueAtTime(peak * .16, start + Math.min(.7, length));
+        envelope.gain.exponentialRampToValueAtTime(.0001, start + length + .48);
         filter.connect(envelope);
-        connectToMix(envelope, .34);
+        if (panner) {
+            panner.pan.value = Math.max(-.35, Math.min(.35, panAmount || 0));
+            envelope.connect(panner);
+            connectToMix(panner, .16);
+        } else {
+            connectToMix(envelope, .16);
+        }
 
         [
-            { ratio: 1, gain: 1, type: "triangle", detune: -2 },
-            { ratio: 1, gain: .45, type: "sine", detune: 3 },
-            { ratio: 2, gain: .22, type: "sine", detune: 0 },
-            { ratio: 3, gain: .08, type: "sine", detune: 0 }
+            { ratio: 1, gain: 1, detune: -1.5 },
+            { ratio: 2, gain: .38, detune: 1.2 },
+            { ratio: 3, gain: .2, detune: 2.4 },
+            { ratio: 4, gain: .11, detune: 3.8 },
+            { ratio: 5, gain: .055, detune: 5.5 },
+            { ratio: 6, gain: .025, detune: 7.5 }
         ].forEach(function (partial) {
             const oscillator = context.createOscillator();
             const partialGain = context.createGain();
-            oscillator.type = partial.type;
+            oscillator.type = "sine";
             oscillator.frequency.setValueAtTime(frequency * partial.ratio, start);
             oscillator.detune.value = partial.detune;
-            partialGain.gain.value = partial.gain;
+            partialGain.gain.setValueAtTime(partial.gain, start);
+            partialGain.gain.exponentialRampToValueAtTime(.0001, start + length + .32 / Math.sqrt(partial.ratio));
             oscillator.connect(partialGain).connect(filter);
             oscillator.start(start);
-            oscillator.stop(start + length + .42);
+            oscillator.stop(start + length + .5);
         });
 
-        const hammer = context.createOscillator();
-        const hammerGain = context.createGain();
-        hammer.type = "sine";
-        hammer.frequency.setValueAtTime(frequency * 5.7, start);
-        hammerGain.gain.setValueAtTime((volume || .075) * .16, start);
-        hammerGain.gain.exponentialRampToValueAtTime(.0001, start + .045);
-        hammer.connect(hammerGain);
-        connectToMix(hammerGain, .08);
-        hammer.start(start);
-        hammer.stop(start + .06);
+        playNoiseTransient(start, Math.min(4200, Math.max(1800, frequency * 9)), .035, peak * .22);
     }
 
     function playClick(when, accent, volumeScale) {
@@ -313,9 +339,12 @@
         if (!context || !chord) return;
         const start = when || context.currentTime + .02;
         const length = duration || .85;
-        const notes = Array.isArray(voicingNotes) ? voicingNotes : core.getLeftHandCompingMidi(chord);
-        notes.forEach(function (midi) {
-            playPianoTone(core.midiToFrequency(midi), start, length, .052);
+        const notes = (Array.isArray(voicingNotes) ? voicingNotes : core.getLeftHandCompingMidi(chord)).slice().sort(function (a, b) { return a - b; });
+        const baseVolume = notes.length > 3 ? .066 : .072;
+        notes.forEach(function (midi, index) {
+            const voiceScale = index === 0 ? 1.32 : (index === notes.length - 1 ? .94 : 1);
+            const pan = notes.length === 1 ? 0 : -.16 + index * (.32 / (notes.length - 1));
+            playPianoTone(core.midiToFrequency(midi), start + index * .003, length, baseVolume * voiceScale, pan);
         });
     }
 
