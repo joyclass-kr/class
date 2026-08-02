@@ -10,20 +10,4 @@ const works = [
   ['creative', '창작 국악', '아리랑 환상곡', '최성환', '1976년', '아리랑 선율을 관현악적으로 변주한 창작 음악입니다.', '익숙한 아리랑 선율이 악기와 리듬에 따라 어떻게 바뀌는지 들어 보세요.', '최성환의 〈아리랑 환상곡〉은 친숙한 아리랑 선율을 바탕으로 관현악의 색채와 극적인 전개를 더한 작품입니다. 민요 선율을 단순히 반복하지 않고, 여러 악기와 화성·리듬을 통해 장면을 넓혀 가는 창작 음악의 한 예입니다.', '곡은 조용한 분위기에서 선율의 윤곽을 드러낸 뒤, 악기군과 음량을 확장하며 고조되는 방식으로 전개됩니다. 현악기·관악기·타악기의 음색이 교대하거나 겹치면서, 같은 아리랑도 서정적이거나 웅장하게 들립니다.', ['처음 아리랑 선율이 어느 악기에서 처음 또렷해지는지 찾아 보세요.', '선율은 같아도 빠르기·화성·반주가 바뀔 때 감정이 어떻게 달라지는지 메모해 보세요.', '후반으로 갈수록 참여하는 악기 수와 소리의 크기가 어떻게 커지는지 들어 보세요.']],
   ['creative', '창작 국악', '한국 환상곡', '안익태', '1938년', '한국적 선율과 서양 관현악·합창을 결합한 창작 음악입니다.', '관현악과 합창이 만드는 규모감, 한국적 선율의 등장을 들어 보세요.', '안익태의 〈한국 환상곡〉은 한국의 선율 소재와 서양식 관현악·합창 편성을 결합한 대규모 작품입니다. 일제강점기에 작곡되어 해외에서 한국을 음악으로 알리려는 뜻이 담겼으며, 여러 전통 선율을 교향적 흐름 속에 배치합니다.', '곡에는 관현악의 강한 대비와 합창이 더해져 극적인 규모감을 만듭니다. 익숙한 선율이 독립된 민요처럼만 들리기보다, 다른 선율과 연결되고 화성으로 확장되면서 하나의 긴 흐름을 이룹니다.', ['관현악만 들리는 부분과 합창이 더해지는 부분의 공간감 차이를 비교해 보세요.', '한국적 선율이 등장한 뒤 화성과 악기 편성이 어떻게 바뀌는지 들어 보세요.', '조용한 대목과 힘차게 고조되는 대목이 어떤 순서로 배치되는지 큰 흐름을 따라가 보세요.']]
 ].map(([group, category, title, form, year, about, point, background, structure, listening]) => ({ group, category, title, form, year, about, point, background, structure, listening, url: `https://www.youtube.com/results?search_query=${encodeURIComponent(title + ' 국악')}` }));
-
-const info = { all: ['전체', '한국 전통 음악과 창작 국악 10개'], court: ['궁중·정악', '궁중에서 연주된 정악과 제례 음악'], folk: ['민속악', '민간에서 전해진 기악·성악·놀이 음악'], song: ['민요·놀이', '지역의 생활과 공동체 놀이에서 이어진 노래'], creative: ['창작 국악', '전통 선율과 현대적 편성으로 만든 음악'] };
-const playlist = document.querySelector('#playlist'), groupInfo = document.querySelector('#group-info'), dialog = document.querySelector('#detail-dialog'), content = document.querySelector('#detail-content');
-function render(group = 'all') {
-  const data = works.filter(w => group === 'all' || w.group === group), [name, text] = info[group];
-  groupInfo.innerHTML = `<b>${name}</b><span>${text} · ${data.length}곡</span>`;
-  playlist.innerHTML = data.map(w => `<article><p class="category">${w.category}</p><h3>${w.title}</h3><p class="form">${w.form} · ${w.year}</p><div class="actions"><a href="${w.url}" target="_blank" rel="noopener">▶ 감상곡 찾아 듣기</a><button type="button" data-detail="${works.indexOf(w)}">자세한 해설</button></div><dl><dt>설명</dt><dd>${w.about}</dd><dt>감상 포인트</dt><dd>${w.point}</dd></dl></article>`).join('');
-}
-render();
-document.querySelectorAll('.filters button').forEach(button => button.addEventListener('click', () => { document.querySelector('.filters .active').classList.remove('active'); button.classList.add('active'); render(button.dataset.group); }));
-playlist.addEventListener('click', event => {
-  const button = event.target.closest('[data-detail]'); if (!button) return;
-  const w = works[button.dataset.detail];
-  content.innerHTML = `<p class="detail-kind">${w.category} · ${w.form}</p><h2>${w.title}</h2><p class="detail-year">작품 연도·시대: ${w.year}</p><section><h3>한눈에 보기</h3><p>${w.about}</p></section><section><h3>시대와 배경</h3><p>${w.background}</p></section><section><h3>음악의 구성과 특징</h3><p>${w.structure}</p></section><section><h3>감상 포인트</h3><p>${w.point}</p></section><section><h3>이 순서로 들어 보세요</h3><ol>${w.listening.map(item => `<li>${item}</li>`).join('')}</ol></section><a class="detail-listen" href="${w.url}" target="_blank" rel="noopener">▶ 감상곡 찾아 듣기</a>`;
-  dialog.showModal();
-});
-dialog.addEventListener('click', event => { if (event.target === dialog || event.target.closest('.dialog-close')) dialog.close(); });
+window.KOREAN_DATA={works};
