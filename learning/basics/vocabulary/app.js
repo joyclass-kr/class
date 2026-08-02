@@ -10,11 +10,11 @@
     const SPELLING_WRONG_KEY = "englishVocabularySpellingWrongV1";
     const GAME_TIME_LIMIT = 15;
     const STAGES = [
-        { code: "elementary", name: "Beginner", range: "Good for elementary school", description: "800 words · LEVEL 01-04", levels: [1, 2, 3, 4] },
-        { code: "middle_common", name: "Intermediate", range: "Good for middle and high school", description: "1,200 words · LEVEL 05-10", levels: [5, 6, 7, 8, 9, 10] },
-        { code: "advanced", name: "Advanced", range: "Extra challenge", description: "1,000 words · LEVEL 11-15", levels: [11, 12, 13, 14, 15] },
+        { code: "elementary", name: "Elementary School", range: "Official school band", description: "800 words · LEVEL 01-04", cardLabel: "Elementary School Word", levels: [1, 2, 3, 4] },
+        { code: "middle_common", name: "Middle & High Common", range: "Official school band", description: "1,200 words · LEVEL 05-10", cardLabel: "Middle & High Common Word", levels: [5, 6, 7, 8, 9, 10] },
+        { code: "advanced", name: "High School Electives", range: "Official school band", description: "1,000 words · LEVEL 11-15", cardLabel: "High School Elective Word", levels: [11, 12, 13, 14, 15] },
     ];
-    const STAGE_NAMES = Object.fromEntries(STAGES.map((stage) => [stage.code, stage.name]));
+    const STAGE_CARD_LABELS = Object.fromEntries(STAGES.map((stage) => [stage.code, stage.cardLabel]));
     const POS_NAMES = {
         "명사": "noun", "동사": "verb", "형용사": "adjective", "부사": "adverb",
         "대명사": "pronoun", "전치사": "preposition", "접속사": "conjunction",
@@ -251,7 +251,7 @@
         const summary = core.summarizeWords(baseWords, state.progress);
         const completion = Math.round(((state.currentIndex + 1) / state.currentWords.length) * 100);
 
-        elements.studyStage.textContent = STAGE_NAMES[word.stageCode] || word.stage;
+        elements.studyStage.textContent = `${STAGE_CARD_LABELS[word.stageCode] || word.stage} · Official 2022 List`;
         elements.studyTitle.textContent = state.unknownOnly ? `${levelName(word.globalLevel)} · Review` : levelName(word.globalLevel);
         elements.cardPosition.textContent = `${state.currentIndex + 1} / ${state.currentWords.length}`;
         elements.levelStatus.textContent = `Know ${summary.known} · Review ${summary.unknown}`;
