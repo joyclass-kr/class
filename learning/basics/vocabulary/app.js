@@ -17,7 +17,7 @@
 
     const core = window.VocabularyCore;
     const elements = Object.fromEntries([
-        "levelScreen", "studyScreen", "stageGroups", "loadingState", "toast", "playerGreeting",
+        "levelScreen", "studyScreen", "stageGroups", "loadingState", "toast",
         "totalKnown", "overallPercent", "overallBar", "totalStudied", "totalUnknown", "backToLevels",
         "shuffleButton", "imageToggleButton", "studyStage", "studyTitle", "cardPosition", "levelStatus", "sessionBar",
         "flashcard", "cardBadge", "wordText", "posText", "meaningText", "exampleBlock", "exampleLabel", "exampleText",
@@ -31,7 +31,7 @@
         "gameResultBestStreak", "gameWrongList", "gameRetryWrongButton", "gamePlayAgainButton",
         "spellingGameStartButton", "spellingWordCount", "spellingScreen", "backFromSpelling",
         "spellingResetButton", "spellingLevelButtons", "spellingQuestionNumber", "spellingScore",
-        "spellingStreak", "spellingQuestionPanel", "spellingImage", "spellingHint", "spellingInput",
+        "spellingStreak", "spellingQuestionPanel", "spellingImage", "spellingHint", "spellingInput", "spellingBuiltWord", "spellingTileRack",
         "spellingHintButton", "spellingSpeakButton", "spellingCheckButton", "spellingFeedback",
         "spellingNextButton", "spellingResultPanel", "spellingResultScore", "spellingResultAccuracy",
         "spellingResultBestStreak", "spellingWrongList", "spellingRetryWrongButton", "spellingPlayAgainButton",
@@ -584,7 +584,34 @@
         elements.spellingNextButton.disabled = true;
         elements.spellingNextButton.textContent = "다음 문제";
         updateSpellingStats();
-        requestAnimationFrame(() => elements.spellingInput.focus());
+        renderSpellingTiles();
+    }
+
+    function renderSpellingTiles() {
+        const letters = core.shuffleWords([...state.spellingTarget.word.toLowerCase()].map((letter, index) => ({ letter, index })));
+        elements.spellingBuiltWord.textContent = "";
+        elements.spellingTileRack.replaceChildren(...letters.map(({ letter, index }) => {
+            const button = document.createElement("button");
+            button.type = "button";
+            button.className = "letter-tile";
+            button.textContent = letter;
+            button.dataset.tileIndex = String(index);
+            button.addEventListener("click", () => {
+                if (state.spellingAnswered || button.disabled) return;
+                button.disabled = true;
+                elements.spellingInput.value += letter;
+                elements.spellingBuiltWord.textContent = elements.spellingInput.value;
+            });
+            return button;
+        }));
+        elements.spellingBuiltWord.onclick = () => {
+            if (state.spellingAnswered || !elements.spellingInput.value) return;
+            const removed = elements.spellingInput.value.at(-1);
+            elements.spellingInput.value = elements.spellingInput.value.slice(0, -1);
+            elements.spellingBuiltWord.textContent = elements.spellingInput.value;
+            const candidates = [...elements.spellingTileRack.querySelectorAll(".letter-tile[disabled]")];
+            candidates.reverse().find((tile) => tile.textContent === removed)?.removeAttribute("disabled");
+        };
     }
 
     function nextSpellingQuestion() {
@@ -609,7 +636,7 @@
         if (!answer) {
             elements.spellingFeedback.textContent = "철자를 먼저 입력하세요.";
             elements.spellingFeedback.className = "game-feedback incorrect";
-            elements.spellingInput.focus();
+            elements.spellingBuiltWord.animate([{ transform: "translateX(-5px)" }, { transform: "translateX(5px)" }, { transform: "none" }], { duration: 180 });
             return;
         }
         state.spellingAnswered = true;
@@ -650,7 +677,10 @@
     function showSpellingHint() {
         if (!state.spellingTarget || state.spellingAnswered) return;
         elements.spellingHint.textContent = core.spellingHint(state.spellingTarget.word);
-        elements.spellingInput.focus();
+        const firstLetter = state.spellingTarget.word[0].toLowerCase();
+        if (!elements.spellingInput.value) {
+            [...elements.spellingTileRack.querySelectorAll(".letter-tile:not([disabled])")].find((tile) => tile.textContent === firstLetter)?.click();
+        }
     }
 
     function showSpellingResult() {
@@ -910,8 +940,6 @@
             });
             renderStoredSpellingWrong();
             updateImagePreference();
-            const playerName = localStorage.getItem("classPlayerName");
-            if (playerName) elements.playerGreeting.textContent = `${playerName} 님의 15레벨 단어 학습`;
             renderOverallProgress();
             renderLevelGroups();
             bindEvents();
