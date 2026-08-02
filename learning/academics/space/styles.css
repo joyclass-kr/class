@@ -25,7 +25,11 @@
 }
 
 body {
-    background: radial-gradient(circle at 50% 30%, #0b1120 0%, #030712 100%);
+    background-color: #030712;
+    background-image: url('./assets/images/space-hub-background.jpg');
+    background-position: center center;
+    background-repeat: no-repeat;
+    background-size: cover;
     background-attachment: fixed;
     color: var(--text-primary);
     font-family: Pretendard, -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
@@ -68,6 +72,7 @@ body {
     text-decoration: none;
     font-weight: 700;
     font-size: 14px;
+    min-height: 44px;
     transition: all 0.2s ease;
 }
 
@@ -776,17 +781,6 @@ input:checked + .slider-knob:before {
             background: #0284c7;
             color: #ffffff;
             border-color: #38bdf8;
-        }
-
-        /* Canvas for Animated Starfield Background */
-        #bgCanvas {
-            position: fixed;
-            top: 0;
-            left: 0;
-            width: 100vw;
-            height: 100vh;
-            pointer-events: none;
-            z-index: 0;
         }
 
         .hero-subject-badge {
