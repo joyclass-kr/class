@@ -2855,10 +2855,12 @@
                 return order;
             }
 
-            let questionOrder = makeQuestionOrder(quizData.length);
+            const QUIZ_ROUND_SIZE = 5;
+            let questionOrder = [];
             let curr = 0;
             let correctCount = 0;
             let incorrectCount = 0;
+            let questionHadWrong = false;
 
             function updateQuizCounts() {
                 const correctEl = document.getElementById('emQuizCorrectCount');
@@ -2867,8 +2869,9 @@
                 if (incorrectEl) incorrectEl.textContent = String(incorrectCount);
             }
             function loadQuestion() {
+                questionHadWrong = false;
                 const item = quizData[questionOrder[curr]];
-                document.getElementById('emQuizProgress').textContent = `문제 ${curr + 1} / ${quizData.length}`;
+                document.getElementById('emQuizProgress').textContent = `문제 ${curr + 1} / ${questionOrder.length}`;
                 document.getElementById('emQuestionText').textContent = `[${item.cat}] ${item.q}`;
                 const optsBox = document.getElementById('emOptionsBox');
                 optsBox.innerHTML = '';
@@ -2876,6 +2879,7 @@
                 expBox.style.display = 'none';
                 const nextBtn = document.getElementById('emNextBtn');
                 nextBtn.style.display = 'none';
+                nextBtn.textContent = '다음 문제 ➔';
 
                 const randomizedOptions = item.opts.map((text, index) => ({ text, correct: index === item.ans }));
                 for (let index = randomizedOptions.length - 1; index > 0; index -= 1) {
@@ -2884,17 +2888,18 @@
                 }
                 randomizedOptions.forEach((option, idx) => {
                     const btn = document.createElement('button');
-                    btn.style.cssText = 'text-align:left; padding:10px 14px; background:rgba(255,255,255,0.06); border:1px solid rgba(255,255,255,0.15); color:#fff; border-radius:8px; font-size:14px; cursor:pointer; transition:all 0.2s;';
+                    btn.style.cssText = 'text-align:left; min-height:44px; padding:10px 14px; background:rgba(255,255,255,0.06); border:1px solid rgba(255,255,255,0.15); color:#fff; border-radius:8px; font-size:14px; cursor:pointer; transition:all 0.2s;';
                     btn.textContent = `${idx + 1}. ${option.text}`;
                     btn.dataset.correct = String(option.correct);
                     btn.onclick = () => {
                         if (option.correct) {
                             Array.from(optsBox.children).forEach(b => b.disabled = true);
-                            correctCount += 1;
+                            if (!questionHadWrong) correctCount += 1;
                             btn.style.background = 'rgba(16, 185, 129, 0.3)';
                             btn.style.borderColor = '#10b981';
                         } else {
-                            incorrectCount += 1;
+                            if (!questionHadWrong) incorrectCount += 1;
+                            questionHadWrong = true;
                             btn.style.background = 'rgba(239, 68, 68, 0.3)';
                             btn.style.borderColor = '#ef4444';
                             btn.disabled = true;
@@ -2903,24 +2908,31 @@
                         expBox.textContent = option.correct ? `정답입니다. ${item.exp}` : '다시 생각하고 다른 답을 골라보세요.';
                         expBox.style.display = 'block';
                         nextBtn.style.display = option.correct ? 'inline-block' : 'none';
+                        if (option.correct && curr === questionOrder.length - 1) nextBtn.textContent = '새로운 5문제';
                     };
                     optsBox.appendChild(btn);
                 });
             }
 
+            function startNewRound(previousQuestion = -1) {
+                questionOrder = makeQuestionOrder(quizData.length, previousQuestion)
+                    .slice(0, Math.min(QUIZ_ROUND_SIZE, quizData.length));
+                curr = 0;
+                correctCount = 0;
+                incorrectCount = 0;
+                updateQuizCounts();
+                loadQuestion();
+            }
+
             document.getElementById('emNextBtn').onclick = () => {
                 const previousQuestion = questionOrder[curr];
-                curr += 1;
-                if (curr >= questionOrder.length) {
-                    questionOrder = makeQuestionOrder(quizData.length, previousQuestion);
-                    curr = 0;
-                    correctCount = 0;
-                    incorrectCount = 0;
-                    updateQuizCounts();
+                if (curr === questionOrder.length - 1) {
+                    startNewRound(previousQuestion);
+                    return;
                 }
+                curr += 1;
                 loadQuestion();
             };
 
-            updateQuizCounts();
-            loadQuestion();
+            startNewRound();
         })();

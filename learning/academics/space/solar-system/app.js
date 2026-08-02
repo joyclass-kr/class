@@ -54,7 +54,7 @@
                 angle: Math.PI / 2
             },
 
-            quiz: { correctCount: 0, incorrectCount: 0, currentQuestion: null, answered: false, autoTimer: null }
+            quiz: { correctCount: 0, incorrectCount: 0, currentQuestion: null, answered: false, hadWrong: false, autoTimer: null }
         };
 
         var canvasContainer = document.getElementById('solarCanvasContainer');
@@ -3277,9 +3277,12 @@
             return order;
         }
 
+        var SPACE_QUIZ_ROUND_SIZE = 5;
+
         function loadNewQuizQuestion() {
             if (state.quiz.autoTimer) { clearTimeout(state.quiz.autoTimer); state.quiz.autoTimer = null; }
             state.quiz.answered = false;
+            state.quiz.hadWrong = false;
 
             var quizPool = [
                 { cat: "태양계의 중심", q: "태양계 전체 질량의 대부분을 차지하며 행성의 공전을 지배하는 천체는?", ans: "태양", opts: ["태양", "목성", "지구", "토성"], exp: "태양은 태양계 전체 질량의 약 99.8%를 차지하며 강한 중력으로 행성과 작은 천체들을 붙잡고 있습니다." },
@@ -3329,12 +3332,13 @@
                 { cat: "자연위성", q: "자연위성에 대한 설명으로 옳은 것은?", ans: "행성이나 왜소행성의 중력에 묶여 그 주위를 공전한다.", opts: ["행성이나 왜소행성의 중력에 묶여 그 주위를 공전한다.", "반드시 스스로 빛을 낸다.", "모두 지구의 달과 크기가 같다.", "태양 주위를 직접 공전하지 않는다."], exp: "자연위성은 행성 또는 왜소행성 주위를 공전하며, 그 천체와 함께 태양 주위를 이동합니다." }
             ];
 
-            if (!Array.isArray(state.quiz.questionOrder) || state.quiz.questionOrder.length !== quizPool.length) {
+            var roundLength = Math.min(SPACE_QUIZ_ROUND_SIZE, quizPool.length);
+            if (!Array.isArray(state.quiz.questionOrder) || state.quiz.questionOrder.length !== roundLength) {
                 if (typeof state.quiz.previousQuestion === 'number') {
                     state.quiz.correctCount = 0;
                     state.quiz.incorrectCount = 0;
                 }
-                state.quiz.questionOrder = makeSpaceQuizOrder(quizPool.length, state.quiz.previousQuestion);
+                state.quiz.questionOrder = makeSpaceQuizOrder(quizPool.length, state.quiz.previousQuestion).slice(0, roundLength);
                 state.quiz.questionPosition = 0;
             }
 
@@ -3349,7 +3353,8 @@
             state.quiz.currentQuestion = qObj;
             state.quiz.previousQuestion = qIndexInPool;
             state.quiz.questionPosition += 1;
-            if (state.quiz.questionPosition >= quizPool.length) {
+            state.quiz.roundComplete = state.quiz.questionPosition >= roundLength;
+            if (state.quiz.roundComplete) {
                 state.quiz.questionOrder = null;
                 state.quiz.questionPosition = 0;
             }
@@ -3358,7 +3363,7 @@
             if (catBadge) catBadge.textContent = '[' + qObj.cat + ']';
 
             var progressText = document.getElementById('quizProgressText');
-            if (progressText) progressText.textContent = '문제 ' + (displayPosition + 1) + ' / ' + quizPool.length;
+            if (progressText) progressText.textContent = '문제 ' + (displayPosition + 1) + ' / ' + roundLength;
 
             var qTextEl = document.getElementById('quizQuestionText');
             if (qTextEl) qTextEl.textContent = '🪐 ' + qObj.q;
@@ -3366,7 +3371,10 @@
             var expBox = document.getElementById('quizExpBox');
             if (expBox) expBox.style.display = 'none';
             var nextBtn = document.getElementById('nextQuizBtn');
-            if (nextBtn) nextBtn.style.display = 'none';
+            if (nextBtn) {
+                nextBtn.style.display = 'none';
+                nextBtn.textContent = '다음 문제 풀기 ➔';
+            }
 
             var optGrid = document.getElementById('quizOptionsGrid');
             if (optGrid) {
@@ -3381,7 +3389,7 @@
                 shuffled.forEach(function (optText) {
                     var btn = document.createElement('button');
                     btn.className = 'quiz-opt-btn';
-                    btn.style.cssText = 'background:rgba(255,255,255,0.05);border:1px solid var(--border-color);padding:16px;border-radius:10px;color:#fff;font-size:15px;font-weight:700;cursor:pointer;transition:all 0.2s;text-align:left;line-height:1.4;';
+                    btn.style.cssText = 'background:rgba(255,255,255,0.05);border:1px solid var(--border-color);min-height:44px;padding:16px;border-radius:10px;color:#fff;font-size:15px;font-weight:700;cursor:pointer;transition:all 0.2s;text-align:left;line-height:1.4;';
                     btn.textContent = optText;
                     btn.addEventListener('click', function () { checkQuizAnswer(optText, btn, qObj.ans, qObj.exp); });
                     optGrid.appendChild(btn);
@@ -3406,14 +3414,15 @@
                 allBtns.forEach(function(b) { b.disabled = true; b.style.cursor = 'default'; });
                 btn.style.background = '#10b981';
                 btn.style.color = '#000';
-                state.quiz.correctCount += 1;
+                if (!state.quiz.hadWrong) state.quiz.correctCount += 1;
                 if (msg) {
                     msg.textContent = '정답입니다.';
                     msg.style.color = '#6ee7b7';
                 }
             } else {
                 btn.style.background = '#ef4444';
-                state.quiz.incorrectCount += 1;
+                if (!state.quiz.hadWrong) state.quiz.incorrectCount += 1;
+                state.quiz.hadWrong = true;
                 btn.disabled = true;
                 if (msg) {
                     msg.textContent = '다시 생각하고 다른 답을 골라보세요.';
@@ -3427,7 +3436,10 @@
             }
 
             var nextBtn = document.getElementById('nextQuizBtn');
-            if (nextBtn) nextBtn.style.display = isCorrect ? 'inline-block' : 'none';
+            if (nextBtn) {
+                nextBtn.style.display = isCorrect ? 'inline-block' : 'none';
+                if (isCorrect && state.quiz.roundComplete) nextBtn.textContent = '새로운 5문제';
+            }
 
             var correctEl = document.getElementById('quizCorrectCount');
             if (correctEl) correctEl.textContent = state.quiz.correctCount;
