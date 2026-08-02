@@ -633,29 +633,29 @@
 
                 <div class="field">
                     <div class="field-head">
-                        <label for="birthdates">생일 (MMDD)</label>
+                        <label for="birthdates">공개 생일</label>
                         <span class="line-count" id="birthdate-count">0행</span>
                     </div>
-                    <textarea id="birthdates" inputmode="numeric" autocomplete="off" autocapitalize="off" spellcheck="false" placeholder="0524&#10;0812&#10;1103" aria-describedby="input-status birthday-help"></textarea>
-                    <p class="field-help" id="birthday-help">출생연도 없이 월·일만 선택 입력합니다.</p>
+                    <textarea id="birthdates" disabled aria-describedby="birthday-help"></textarea>
+                    <p class="field-help" id="birthday-help">학생이 공개한 생일만 표시됩니다. 교사는 수정할 수 없습니다.</p>
                 </div>
 
                 <div class="field">
                     <div class="field-head">
-                        <label for="birthday-visible">생일 공개 (Y/N)</label>
+                        <label for="birthday-visible">생일 공개 상태</label>
                         <span class="line-count" id="birthday-visible-count">0행</span>
                     </div>
-                    <textarea id="birthday-visible" autocomplete="off" autocapitalize="characters" spellcheck="false" placeholder="N&#10;Y&#10;N" aria-describedby="input-status birthday-visible-help"></textarea>
-                    <p class="field-help" id="birthday-visible-help">학생·보호자가 공개에 동의한 경우에만 Y로 입력하세요. 기본값은 N입니다.</p>
+                    <textarea id="birthday-visible" disabled aria-describedby="birthday-visible-help"></textarea>
+                    <p class="field-help" id="birthday-visible-help">학생이 ‘내 정보 설정’에서 직접 선택합니다.</p>
                 </div>
 
                 <div class="field">
                     <div class="field-head">
-                        <label for="passwords">비밀번호</label>
+                        <label for="passwords">계정·비밀번호 상태</label>
                         <span class="line-count" id="password-count">0행</span>
                     </div>
-                    <textarea id="passwords" inputmode="numeric" autocomplete="new-password" autocapitalize="off" spellcheck="false" placeholder="새 비밀번호만 6자리 숫자로 입력" aria-describedby="input-status password-help"></textarea>
-                    <p class="field-help" id="password-help">수정할 학생의 행에만 새 비밀번호를 입력하세요. 빈칸은 기존 비밀번호를 유지합니다.</p>
+                    <textarea id="passwords" disabled aria-describedby="password-help"></textarea>
+                    <p class="field-help" id="password-help">미연결 학생은 초기 123456이 자동 발급됩니다. 연결 후에는 학생만 변경할 수 있습니다.</p>
                 </div>
             </div>
 
@@ -739,29 +739,14 @@
                 const numbers = splitLines(numbersInput.value);
                 const names = splitLines(namesInput.value);
                 const rawGenders = splitLines(gendersInput.value);
-                const rawBirthdates = birthdatesInput ? splitLines(birthdatesInput.value) : [];
-                const rawBirthdayVisibility = birthdayVisibleInput ? splitLines(birthdayVisibleInput.value) : [];
-                const rawPasswords = splitLines(passwordsInput.value);
                 const genders = rawGenders;
-                const passwords = rawPasswords;
 
                 const hasBlank = numbers.some((value) => !value) || names.some((value) => !value);
                 const duplicateNumbers = numbers.filter((value, index) => value && numbers.indexOf(value) !== index);
                 const invalidNumbers = numbers.filter((value) => value && !/^\d{1,3}$/.test(value));
                 const invalidNames = names.filter((value) => value && !/^[가-힣]{2,6}$/.test(value));
                 const invalidGenders = rawGenders.filter((gender) => !["남", "여"].includes(gender));
-                const invalidPasswords = passwords.filter((password) => password && !STUDENT_PASSWORD_PATTERN.test(password));
-                const invalidBirthdays = rawBirthdates.filter((birthday) => {
-                    if (!birthday) return false;
-                    if (!/^\d{4}$/.test(birthday)) return true;
-                    const month = Number(birthday.slice(0, 2));
-                    const day = Number(birthday.slice(2));
-                    const date = new Date(Date.UTC(2024, month - 1, day));
-                    return date.getUTCMonth() !== month - 1 || date.getUTCDate() !== day;
-                });
-                const invalidBirthdayVisibility = rawBirthdayVisibility.filter((value) => value && !["Y", "N"].includes(value.toUpperCase()));
                 const hasMismatchedGenders = rawGenders.length !== numbers.length;
-                const hasMismatchedPasswords = rawPasswords.length > 0 && rawPasswords.length !== numbers.length;
                 const isComplete = numbers.length > 0 &&
                     numbers.length === names.length &&
                     !hasBlank &&
@@ -769,23 +754,16 @@
                     invalidNumbers.length === 0 &&
                     invalidNames.length === 0 &&
                     invalidGenders.length === 0 &&
-                    invalidBirthdays.length === 0 &&
-                    invalidBirthdayVisibility.length === 0 &&
-                    !hasMismatchedGenders &&
-                    !hasMismatchedPasswords &&
-                    invalidPasswords.length === 0;
+                    !hasMismatchedGenders;
 
-                return { numbers, names, genders, rawBirthdates, rawBirthdayVisibility, passwords, hasBlank, duplicateNumbers, invalidNumbers, invalidNames, invalidGenders, invalidBirthdays, invalidBirthdayVisibility, invalidPasswords, hasMismatchedGenders, hasMismatchedPasswords, isComplete };
+                return { numbers, names, genders, hasBlank, duplicateNumbers, invalidNumbers, invalidNames, invalidGenders, hasMismatchedGenders, hasMismatchedPasswords: false, invalidBirthdays: [], invalidBirthdayVisibility: [], invalidPasswords: [], isComplete };
             }
 
-            function createRoster(numbers, names, genders, passwords, rawBirthdates = [], rawBirthdayVisibility = []) {
+            function createRoster(numbers, names, genders) {
                 return numbers.map((number, index) => ({
                     number,
                     name: names[index],
                     gender: genders[index] || "남",
-                    birthdayMmdd: rawBirthdates[index] ? rawBirthdates[index].replace(/\D/g, "").slice(0, 4) : "",
-                    birthdayVisible: Boolean(rawBirthdates[index]) && String(rawBirthdayVisibility[index] || "N").toUpperCase() === "Y",
-                    password: passwords[index] === displayedPasswordRows.get(number) ? "" : (passwords[index] || ""),
                 }));
             }
 
@@ -844,11 +822,14 @@
                 numbersInput.value = classroom.students.map((student) => student.number).join("\n");
                 namesInput.value = classroom.students.map((student) => student.name).join("\n");
                 gendersInput.value = classroom.students.map((student) => student.gender || "남").join("\n");
-                if (birthdatesInput) birthdatesInput.value = classroom.students.map((student) => student.birthdayMmdd || "").join("\n");
-                if (birthdayVisibleInput) birthdayVisibleInput.value = classroom.students.map((student) => student.birthdayVisible ? "Y" : "N").join("\n");
-                passwordsInput.value = classroom.students.map(() => DISPLAY_DEFAULT_STUDENT_PASSWORD).join("\n");
+                if (birthdatesInput) birthdatesInput.value = classroom.students.map((student) => student.birthdayVisible ? (student.birthdayMmdd || "공개 중") : "—").join("\n");
+                if (birthdayVisibleInput) birthdayVisibleInput.value = classroom.students.map((student) => student.birthdayVisible ? "공개 중" : "비공개").join("\n");
+                passwordsInput.value = classroom.students.map((student) => student.linked ? "학생 설정 완료" : "초기 123456").join("\n");
                 displayedPasswordRows.clear();
                 classroom.students.forEach((student) => displayedPasswordRows.set(student.number, DISPLAY_DEFAULT_STUDENT_PASSWORD));
+                if (birthdatesInput) birthdatesInput.disabled = true;
+                if (birthdayVisibleInput) birthdayVisibleInput.disabled = true;
+                passwordsInput.disabled = true;
                 if (classroom.isReadOnly || classroom.teacherType === 'subject') {
                     numbersInput.disabled = true;
                     namesInput.disabled = true;
@@ -870,19 +851,17 @@
                 numberCount.textContent = `${state.numbers.length}행`;
                 nameCount.textContent = `${state.names.length}행`;
                 if (genderCount) genderCount.textContent = `${state.genders.length}행`;
-                if (birthdateCount) birthdateCount.textContent = `${state.rawBirthdates.length}행`;
-                if (birthdayVisibleCount) birthdayVisibleCount.textContent = `${state.rawBirthdayVisibility.length}행`;
-                if (passwordCount) passwordCount.textContent = `${state.passwords.length}행`;
+                if (birthdateCount) birthdateCount.textContent = `${state.numbers.length}행`;
+                if (birthdayVisibleCount) birthdayVisibleCount.textContent = `${state.numbers.length}행`;
+                if (passwordCount) passwordCount.textContent = `${state.numbers.length}행`;
 
                 const hasAnyInput = state.numbers.length > 0 || state.names.length > 0;
-                const hasMismatchedCounts = hasAnyInput && (state.numbers.length !== state.names.length || state.hasMismatchedGenders || state.hasMismatchedPasswords);
+                const hasMismatchedCounts = hasAnyInput && (state.numbers.length !== state.names.length || state.hasMismatchedGenders);
 
                 numbersInput.setAttribute("aria-invalid", String(hasMismatchedCounts || state.hasBlank || state.duplicateNumbers.length > 0 || state.invalidNumbers.length > 0));
                 namesInput.setAttribute("aria-invalid", String(hasMismatchedCounts || state.hasBlank || state.invalidNames.length > 0));
                 gendersInput.setAttribute("aria-invalid", String(state.hasMismatchedGenders || state.invalidGenders.length > 0));
                 birthdatesInput.setAttribute("aria-invalid", String(state.invalidBirthdays.length > 0));
-                birthdayVisibleInput.setAttribute("aria-invalid", String(state.invalidBirthdayVisibility.length > 0));
-                passwordsInput.setAttribute("aria-invalid", String(state.hasMismatchedPasswords || state.invalidPasswords.length > 0));
                 saveButton.disabled = saving || !authorized || !state.isComplete || !isProfileComplete();
 
                 if (!hasAnyInput) {
@@ -951,7 +930,7 @@
                 const profile = getProfile();
                 if (!authorized || !state.isComplete || !isProfileComplete(profile) || saving) return;
 
-                const roster = createRoster(state.numbers, state.names, state.genders, state.passwords, state.rawBirthdates, state.rawBirthdayVisibility);
+                const roster = createRoster(state.numbers, state.names, state.genders);
                 saving = true;
                 saveButton.textContent = "SAVING…";
                 update();

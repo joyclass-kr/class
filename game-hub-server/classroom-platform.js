@@ -1776,7 +1776,7 @@ function createClassroomPlatform(options = {}) {
           number: student.student_number,
           name: student.roster_name,
           gender: student.gender === '여' ? '여' : '남',
-          birthdayMmdd: student.birthday_mmdd || "",
+          birthdayMmdd: student.birthday_visible === true ? (student.birthday_mmdd || "") : "",
           birthdayVisible: student.birthday_visible === true,
           linked: student.linked,
           passwordConfigured: student.password_configured
@@ -1831,14 +1831,10 @@ function createClassroomPlatform(options = {}) {
 
     const cleanStudents = students.map((student) => {
       const gender = String(student?.gender || "").normalize("NFC").trim();
-      const birthdayMmdd = String(student?.birthdayMmdd || student?.birthday_mmdd || "").replace(/\D/g, "").slice(0, 4);
       return {
         number: String(student?.number || "").trim(),
         name: String(student?.name || "").normalize("NFC").trim(),
-        gender,
-        birthdayMmdd,
-        birthdayVisible: (student?.birthdayVisible === true || student?.birthday_visible === true) && Boolean(birthdayMmdd),
-        password: String(student?.password || "").trim()
+        gender
       };
     });
     if (cleanStudents.some((student) => !/^\d{1,3}$/.test(student.number))) {
@@ -1852,18 +1848,6 @@ function createClassroomPlatform(options = {}) {
     }
     if (new Set(cleanStudents.map((student) => student.number)).size !== cleanStudents.length) {
       throw new HttpError(400, "DUPLICATE_STUDENT_NUMBER", "Student numbers must be unique.");
-    }
-    if (cleanStudents.some((student) => student.password && !STUDENT_PASSWORD_PATTERN.test(student.password))) {
-      throw new HttpError(400, "INVALID_STUDENT_PASSWORD", "Student passwords must contain exactly 6 digits.");
-    }
-    if (cleanStudents.some((student) => {
-      if (!student.birthdayMmdd) return false;
-      const month = Number(student.birthdayMmdd.slice(0, 2));
-      const day = Number(student.birthdayMmdd.slice(2));
-      const date = new Date(Date.UTC(2024, month - 1, day));
-      return !/^\d{4}$/.test(student.birthdayMmdd) || date.getUTCMonth() !== month - 1 || date.getUTCDate() !== day;
-    })) {
-      throw new HttpError(400, "INVALID_STUDENT_BIRTHDAY", "Birthdays must use a valid MMDD value.");
     }
 
     const client = await pool.connect();
@@ -1934,7 +1918,7 @@ function createClassroomPlatform(options = {}) {
         [classroom.id, numbers]
       );
       const existingPasswordsResult = await client.query(
-        `SELECT student_number, password_hash, user_id
+        `SELECT student_number, password_hash, user_id, birthday_mmdd, birthday_visible
          FROM classroom_students
          WHERE class_id = $1 AND student_number = ANY($2::TEXT[])`,
         [classroom.id, numbers]
@@ -1942,16 +1926,14 @@ function createClassroomPlatform(options = {}) {
       const existingPasswords = new Map(
         existingPasswordsResult.rows.map((student) => [student.student_number, {
           passwordHash: student.password_hash,
-          claimed: Boolean(student.user_id)
+          claimed: Boolean(student.user_id),
+          birthdayMmdd: student.birthday_mmdd,
+          birthdayVisible: student.birthday_visible === true
         }])
       );
       for (const student of cleanStudents) {
         const existingPassword = existingPasswords.get(student.number);
-        const passwordHash = existingPassword?.claimed
-          ? existingPassword.passwordHash
-          : student.password
-          ? hashStudentPassword(student.password)
-          : existingPassword?.passwordHash || hashStudentPassword(DEFAULT_STUDENT_PASSWORD);
+        const passwordHash = existingPassword?.passwordHash || hashStudentPassword(DEFAULT_STUDENT_PASSWORD);
         await client.query(
           `INSERT INTO classroom_students
             (class_id, student_number, roster_name, gender, birthday_mmdd, birthday_visible, birth_date, password_hash)
@@ -1965,7 +1947,7 @@ function createClassroomPlatform(options = {}) {
              password_hash = EXCLUDED.password_hash,
              updated_at = NOW()`,
           [classroom.id, student.number, student.name, student.gender,
-           student.birthdayMmdd || null, student.birthdayVisible, passwordHash]
+           existingPassword?.birthdayMmdd || null, existingPassword?.birthdayVisible || false, passwordHash]
         );
       }
       await client.query("COMMIT");
