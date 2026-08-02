@@ -325,6 +325,14 @@ function createClassroomPlatform(options = {}) {
         ADD COLUMN IF NOT EXISTS gender TEXT NOT NULL DEFAULT '남'`,
       `ALTER TABLE classroom_students
         ADD COLUMN IF NOT EXISTS birth_date TEXT`,
+      `ALTER TABLE classroom_students
+        ADD COLUMN IF NOT EXISTS birthday_mmdd TEXT`,
+      `ALTER TABLE classroom_students
+        ADD COLUMN IF NOT EXISTS birthday_visible BOOLEAN NOT NULL DEFAULT FALSE`,
+      `UPDATE classroom_students
+       SET birthday_mmdd = RIGHT(birth_date, 4)
+       WHERE birthday_mmdd IS NULL AND birth_date ~ '^\\d{6}$'`,
+      `UPDATE classroom_students SET birth_date = NULL WHERE birth_date IS NOT NULL`,
       `CREATE INDEX IF NOT EXISTS classroom_students_class_idx
         ON classroom_students (class_id)`,
       `CREATE TABLE IF NOT EXISTS game_finisher_records (
@@ -589,6 +597,29 @@ function createClassroomPlatform(options = {}) {
       [teacher.id, Number.isInteger(requested) && requested > 0 ? requested : null]
     );
     return result.rows[0]?.id || null;
+  }
+
+  function birthdayScheduleRows(students, today = new Date()) {
+    const start = new Date(Date.UTC(today.getUTCFullYear(), today.getUTCMonth(), today.getUTCDate() - 31));
+    const end = new Date(Date.UTC(today.getUTCFullYear(), today.getUTCMonth(), today.getUTCDate() + 370));
+    const rows = [];
+    for (const student of students) {
+      const mmdd = String(student.birthday_mmdd || "");
+      if (!/^\d{4}$/.test(mmdd)) continue;
+      const month = Number(mmdd.slice(0, 2));
+      const day = Number(mmdd.slice(2));
+      for (const year of [today.getUTCFullYear() - 1, today.getUTCFullYear(), today.getUTCFullYear() + 1]) {
+        const date = new Date(Date.UTC(year, month - 1, day));
+        if (date.getUTCMonth() !== month - 1 || date.getUTCDate() !== day || date < start || date >= end) continue;
+        rows.push({
+          id: `birthday-${student.id}-${year}`,
+          date: date.toISOString().slice(0, 10),
+          title: `${student.roster_name} 생일 🎂`,
+          type: "birthday"
+        });
+      }
+    }
+    return rows;
   }
 
   function normalizeContentPath(value) {
@@ -1297,10 +1328,21 @@ function createClassroomPlatform(options = {}) {
        ORDER BY event_date, id`,
       [classId]
     );
+    const birthdaysResult = await pool.query(
+      `SELECT id, roster_name, birthday_mmdd
+       FROM classroom_students
+       WHERE class_id = $1 AND birthday_visible = TRUE AND birthday_mmdd IS NOT NULL`,
+      [classId]
+    );
+    const savedSchedules = result.rows.map((row) => ({
+      id: String(row.id), date: row.event_date, title: row.title, type: "schedule"
+    }));
+    const schedules = [...savedSchedules, ...birthdayScheduleRows(birthdaysResult.rows)]
+      .sort((a, b) => a.date.localeCompare(b.date) || a.title.localeCompare(b.title));
     res.json({
       classId,
       canEdit: user.role === "teacher" && String(await writableScheduleClassId(user, classId)) === String(classId),
-      schedules: result.rows.map((row) => ({ id: String(row.id), date: row.event_date, title: row.title }))
+      schedules
     });
   }));
 
@@ -1496,7 +1538,8 @@ function createClassroomPlatform(options = {}) {
     if (!classroom) return res.json({ classroom: null, isReadOnly: isSubjectTeacher });
 
     const studentsResult = await pool.query(
-      `SELECT student_number, roster_name, COALESCE(gender, '남') AS gender, birth_date,
+      `SELECT student_number, roster_name, COALESCE(gender, '남') AS gender,
+              birthday_mmdd, birthday_visible,
               user_id IS NOT NULL AS linked,
               password_hash IS NOT NULL AS password_configured
        FROM classroom_students
@@ -1523,7 +1566,8 @@ function createClassroomPlatform(options = {}) {
           number: student.student_number,
           name: student.roster_name,
           gender: student.gender === '여' ? '여' : '남',
-          birthDate: student.birth_date || "",
+          birthdayMmdd: student.birthday_mmdd || "",
+          birthdayVisible: student.birthday_visible === true,
           linked: student.linked,
           passwordConfigured: student.password_configured
         }))
@@ -1577,12 +1621,13 @@ function createClassroomPlatform(options = {}) {
 
     const cleanStudents = students.map((student) => {
       const gender = String(student?.gender || "").normalize("NFC").trim();
-      const birthDate = String(student?.birthDate || student?.birth_date || "").replace(/\D/g, "").slice(0, 6);
+      const birthdayMmdd = String(student?.birthdayMmdd || student?.birthday_mmdd || "").replace(/\D/g, "").slice(0, 4);
       return {
         number: String(student?.number || "").trim(),
         name: String(student?.name || "").normalize("NFC").trim(),
         gender,
-        birthDate,
+        birthdayMmdd,
+        birthdayVisible: (student?.birthdayVisible === true || student?.birthday_visible === true) && Boolean(birthdayMmdd),
         password: String(student?.password || "").trim()
       };
     });
@@ -1600,6 +1645,15 @@ function createClassroomPlatform(options = {}) {
     }
     if (cleanStudents.some((student) => student.password && !STUDENT_PASSWORD_PATTERN.test(student.password))) {
       throw new HttpError(400, "INVALID_STUDENT_PASSWORD", "Student passwords must contain exactly 6 digits.");
+    }
+    if (cleanStudents.some((student) => {
+      if (!student.birthdayMmdd) return false;
+      const month = Number(student.birthdayMmdd.slice(0, 2));
+      const day = Number(student.birthdayMmdd.slice(2));
+      const date = new Date(Date.UTC(2024, month - 1, day));
+      return !/^\d{4}$/.test(student.birthdayMmdd) || date.getUTCMonth() !== month - 1 || date.getUTCDate() !== day;
+    })) {
+      throw new HttpError(400, "INVALID_STUDENT_BIRTHDAY", "Birthdays must use a valid MMDD value.");
     }
 
     const client = await pool.connect();
@@ -1682,17 +1736,20 @@ function createClassroomPlatform(options = {}) {
         const passwordHash = student.password
           ? hashStudentPassword(student.password)
           : existingPasswords.get(student.number) || hashStudentPassword(DEFAULT_STUDENT_PASSWORD);
-        const birthDate = String(student.birthDate || student.birth_date || "").replace(/\D/g, "").slice(0, 6);
         await client.query(
-          `INSERT INTO classroom_students (class_id, student_number, roster_name, gender, birth_date, password_hash)
-           VALUES ($1, $2, $3, $4, $5, $6)
+          `INSERT INTO classroom_students
+            (class_id, student_number, roster_name, gender, birthday_mmdd, birthday_visible, birth_date, password_hash)
+           VALUES ($1, $2, $3, $4, $5, $6, NULL, $7)
            ON CONFLICT (class_id, student_number) DO UPDATE SET
              roster_name = EXCLUDED.roster_name,
              gender = EXCLUDED.gender,
-             birth_date = EXCLUDED.birth_date,
+             birthday_mmdd = EXCLUDED.birthday_mmdd,
+             birthday_visible = EXCLUDED.birthday_visible,
+             birth_date = NULL,
              password_hash = EXCLUDED.password_hash,
              updated_at = NOW()`,
-          [classroom.id, student.number, student.name, student.gender, birthDate, passwordHash]
+          [classroom.id, student.number, student.name, student.gender,
+           student.birthdayMmdd || null, student.birthdayVisible, passwordHash]
         );
       }
       await client.query("COMMIT");

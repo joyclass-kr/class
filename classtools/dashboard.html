@@ -1422,12 +1422,13 @@
             });
         }
 
-        function isTodayBirthday(birthDateStr) {
-            if (!birthDateStr || birthDateStr.length !== 6) return false;
+        function isTodayBirthday(student) {
+            const birthdayMmdd = student?.birthdayMmdd || "";
+            if (!student?.birthdayVisible || birthdayMmdd.length !== 4) return false;
             const now = new Date();
             const mm = String(now.getMonth() + 1).padStart(2, '0');
             const dd = String(now.getDate()).padStart(2, '0');
-            return birthDateStr.slice(2) === (mm + dd);
+            return birthdayMmdd === (mm + dd);
         }
 
         function renderChecklist() {
@@ -1438,7 +1439,7 @@
                 chip.className = "num-chip";
                 if (missingStudents.has(num)) chip.classList.add("missing");
 
-                const isBday = isTodayBirthday(student.birthDate);
+                const isBday = isTodayBirthday(student);
                 const avatar = getAvatarForStudent(num);
 
                 chip.innerHTML = `
@@ -1553,7 +1554,7 @@
                 titleSpan.style.flex = "1";
                 titleSpan.textContent = item.title;
                 div.append(dateSpan, titleSpan);
-                if (canEditSchedules) {
+                if (canEditSchedules && item.type !== "birthday") {
                     const del = document.createElement("button");
                     del.className = "board-item-del";
                     del.innerHTML = "&times;";
