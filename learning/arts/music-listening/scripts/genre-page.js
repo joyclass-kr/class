@@ -45,6 +45,7 @@ if(data.integrated){
 
 function cardInEra(card){
   if(data.integrated!=='era')return true;
+  if(eraIndex==='all')return true;
   const year=Number.parseInt(card.years);
   if(eraIndex===data.eras.length-1)return year>=2000;
   const start=1950+eraIndex*10;
@@ -84,15 +85,18 @@ function renderEra(lineage=currentLineage,subgroup=currentSubgroup){
     normalizeEraFilters();
     lineage=currentLineage;
     subgroup=currentSubgroup;
-    const era=data.eras[eraIndex];
     const guide=guideFor(lineage,subgroup);
     const description=data.descriptions?.[subgroup==='all'?lineage:`${lineage}:${subgroup}`];
     const count=data.cards.filter(card=>cardInEra(card)&&(lineage==='all'||card.lineage===lineage)&&(subgroup==='all'||card.subgroup===subgroup)).length;
-    const genreName=(subgroup!=='all'?(guide?.title||'세부 장르'):lineage!=='all'?(guide?.title||'장르'):'').replace(/\d+곡/,`${count}곡`);
+    const allYears=eraIndex==='all';
+    const matchedYears=data.cards.filter(card=>(lineage==='all'||card.lineage===lineage)&&(subgroup==='all'||card.subgroup===subgroup)).map(card=>Number.parseInt(card.years)).sort((a,b)=>a-b);
+    const allYearsName=lineage==='all'?'팝 음악 전체':(guide?.title||'장르 전체').replace(/\s*\d+곡/,'').replace(' 비교 듣기','');
+    const era=allYears?{years:`${matchedYears[0]}–${matchedYears.at(-1)}`,name:allYearsName,english:'All Eras',story:description||'연도 제한 없이 이 장르의 시작부터 최근 흐름까지 대표곡을 한 번에 비교합니다.',turn:guide?.traits||'리듬 · 음색 · 보컬 · 제작 방식'}:data.eras[eraIndex];
+    const genreName=allYears?'':(subgroup!=='all'?(guide?.title||'세부 장르'):lineage!=='all'?(guide?.title||'장르'):'').replace(/\d+곡/,`${count}곡`);
     const question=(guide?.question||'이 시대의 악기, 리듬과 제작 방식이 이전 시대와 어떻게 달라졌는지 비교해 보세요.').replace(/(?:다섯|여섯|일곱|여덟|아홉|열|\d+) 곡에서/g,'선택된 곡들에서');
-    eraPanel.innerHTML=`<div class="years">${era.years}</div><div><h3>${era.name}<small>${era.english}</small></h3><p>${era.story}</p>${genreName?`<h4 class="context-title">${genreName}</h4>`:''}${description?`<p>${description}</p>`:''}<p class="turn"><strong>음악적으로 듣기:</strong> ${guide?.traits||era.turn}</p><p class="integrated-question"><strong>들으며 생각하기:</strong> ${question}</p><b class="integrated-count">대표곡 ${count}개</b></div>`;
-    eraTabs.innerHTML=data.eras.map((item,index)=>`<button class="${index===eraIndex?'active':''}" data-era-index="${index}">${item.years}</button>`).join('');
-    eraTabs.querySelectorAll('button').forEach(button=>button.addEventListener('click',()=>{eraIndex=Number(button.dataset.eraIndex);renderEra();renderCards(currentLineage,currentSubgroup)}));
+    eraPanel.innerHTML=`<div class="years">${era.years}</div><div><h3>${era.name}<small>${era.english}</small></h3><p>${era.story}</p>${genreName?`<h4 class="context-title">${genreName}</h4>`:''}${description&&!allYears?`<p>${description}</p>`:''}<p class="turn"><strong>음악적으로 듣기:</strong> ${guide?.traits||era.turn}</p><p class="integrated-question"><strong>들으며 생각하기:</strong> ${question}</p><b class="integrated-count">대표곡 ${count}개</b></div>`;
+    eraTabs.innerHTML=[{years:'전체 시대'},...data.eras].map((item,index)=>{const value=index===0?'all':index-1;return `<button class="${value===eraIndex?'active':''}" data-era-index="${value}">${item.years}</button>`}).join('');
+    eraTabs.querySelectorAll('button').forEach(button=>button.addEventListener('click',()=>{eraIndex=button.dataset.eraIndex==='all'?'all':Number(button.dataset.eraIndex);if(eraIndex!=='all'){currentLineage='all';currentSubgroup=renderSubgroups('all')}renderEra();renderCards(currentLineage,currentSubgroup)}));
     return;
   }
   const era=data.eras[eraIndex];
@@ -161,7 +165,7 @@ const filterItems=eraMode?[['all','전체 장르 (All)'],...data.lineages]:[...d
 const defaultLineage=filterItems[0][0];
 currentLineage=defaultLineage;
 filters.innerHTML=filterItems.map(([key,label],index)=>`<button class="${index===0?'active':''}" data-lineage="${key}">${label}</button>`).join('');
-filters.querySelectorAll('button').forEach(button=>button.addEventListener('click',()=>{filters.querySelector('.active').classList.remove('active');button.classList.add('active');currentLineage=button.dataset.lineage;currentSubgroup=renderSubgroups(currentLineage);if(data.integrated)renderEra(currentLineage,currentSubgroup);renderCards(currentLineage,currentSubgroup)}));
+filters.querySelectorAll('button').forEach(button=>button.addEventListener('click',()=>{filters.querySelector('.active').classList.remove('active');button.classList.add('active');currentLineage=button.dataset.lineage;if(eraMode)eraIndex='all';currentSubgroup=renderSubgroups(currentLineage);if(data.integrated)renderEra(currentLineage,currentSubgroup);renderCards(currentLineage,currentSubgroup)}));
 dialog.addEventListener('click',event=>{if(event.target===dialog||event.target.closest('.dialog-close'))dialog.close()});
 currentSubgroup=renderSubgroups(defaultLineage);
 renderEra(data.integrated?defaultLineage:undefined,currentSubgroup);renderCards(defaultLineage,currentSubgroup);
