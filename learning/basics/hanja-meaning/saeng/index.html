@@ -103,6 +103,16 @@
     .view { padding-top: 8px; }
     .view[hidden] { display: none; }
 
+    .lesson-guide {
+      margin: 0;
+      padding: 8px 0 11px;
+      border-bottom: 1px solid var(--line);
+      color: var(--blue);
+      font-size: clamp(17px, 1.8vw, 21px);
+      font-weight: 800;
+      line-height: 1.45;
+    }
+
     .meaning-list { margin: 0; }
 
     .meaning-row {
@@ -132,8 +142,9 @@
 
     .example {
       margin: 0;
-      color: var(--muted);
+      color: #505a64;
       font-size: clamp(14px, 1.5vw, 17px);
+      font-weight: 600;
       line-height: 1.45;
       word-break: keep-all;
     }
@@ -289,11 +300,12 @@
       <div class="hanja" aria-label="날 생">生</div>
       <div>
         <p class="reading">생</p>
-        <p class="core-meaning">나다 · 태어나다 · 살다 · 생겨나다</p>
+        <p class="core-meaning">태어나다 · 살다 · 생기다 · 그대로 · 사람</p>
       </div>
     </header>
 
     <section id="lessonView" class="view" aria-label="뜻과 예시">
+      <p class="lesson-guide">生은 말에 따라 뜻이 실제로 달라지므로 뜻을 나누어 봅니다.</p>
       <dl class="meaning-list">
         <div class="meaning-row">
           <dt>태어나다</dt>
@@ -301,19 +313,19 @@
         </div>
         <div class="meaning-row">
           <dt>살아 있다<br>살아가다</dt>
-          <dd><p class="word-family">생명 · 생물 · 생활</p><p class="example">생물은 살아 있는 것이고, 생활은 살아가는 일입니다.</p></dd>
+          <dd><p class="word-family">생명 · 생물 · 생활 · 인생</p><p class="example">생물은 살아 있는 것이고, 생활과 인생은 사람이 살아가는 일입니다.</p></dd>
         </div>
         <div class="meaning-row">
           <dt>생기다<br>만들어 내다</dt>
           <dd><p class="word-family">발생 · 생산 · 재생</p><p class="example">생산은 물건을 만들어 내고, 재생은 다시 살아나게 합니다.</p></dd>
         </div>
         <div class="meaning-row">
-          <dt>그대로<br>바로</dt>
-          <dd><p class="word-family">생선 · 생크림 · 생방송</p><p class="example">생방송은 녹화하지 않고 지금 바로 하는 방송입니다.</p></dd>
+          <dt>신선하거나<br>지금 그대로</dt>
+          <dd><p class="word-family">생선 · 생크림 · 생방송</p><p class="example">생선과 생크림은 신선한 것, 생방송은 녹화 없이 지금 하는 방송입니다.</p></dd>
         </div>
         <div class="meaning-row">
           <dt>어떤 사람</dt>
-          <dd><p class="word-family">학생 · 신입생 · 졸업생</p><p class="example">학생의 ‘생’은 배우는 사람을 나타냅니다.</p></dd>
+          <dd><p class="word-family">학생 · 신입생 · 졸업생</p><p class="example">이 말들에서 ‘생’은 배우거나 학교에 다니는 사람을 나타냅니다.</p></dd>
         </div>
       </dl>
       <button id="startQuiz" class="next-button" type="button">문제 풀기</button>
