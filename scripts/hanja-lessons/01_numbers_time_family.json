@@ -1,0 +1,233 @@
+[
+  {
+    "slug": "su-il-i-sam-sa-o",
+    "ariaLabel": "한 일, 두 이, 석 삼, 넉 사, 다섯 오",
+    "reading": "일 · 이 · 삼 · 사 · 오",
+    "meaning": "하나 · 둘 · 셋 · 넷 · 다섯",
+    "guide": "一부터 五까지는 수와 차례를 나타내며 날짜, 도형, 등수에서 자주 만납니다.",
+    "characters": [
+      {"character":"一","reading":"일","words":["일등","일차","통일"],"explanation":"첫째 등수는 일등, 첫 번째 단계는 일차, 하나로 합치는 것은 통일입니다."},
+      {"character":"二","reading":"이","words":["이등","이중","이차"],"explanation":"둘째 등수는 이등, 두 겹은 이중, 두 번째 차례는 이차입니다."},
+      {"character":"三","reading":"삼","words":["삼각형","삼월","삼촌"],"explanation":"세 각을 가진 도형은 삼각형이고, 한 해의 셋째 달은 삼월입니다."},
+      {"character":"四","reading":"사","words":["사각형","사월","사방"],"explanation":"네 각을 가진 도형은 사각형이고, 동서남북 네 방향은 사방입니다."},
+      {"character":"五","reading":"오","words":["오각형","오월","오감"],"explanation":"다섯 각을 가진 도형은 오각형이고, 다섯 가지 감각은 오감입니다."}
+    ],
+    "questions": [
+      {"contextBefore":"달리기에서 ","focus":"첫 번째 등수","contextAfter":"로 들어왔습니다.","answer":0,"note":"첫 번째 등수를 일등(一等)이라고 합니다.","options":[
+        {"term":"일등","hanja":"一等","sentence":"달리기에서 {{일등}}을 했습니다."},
+        {"term":"이등","hanja":"二等","sentence":"수영 경기에서 {{이등}}을 했습니다."},
+        {"term":"삼등","hanja":"三等","sentence":"글쓰기 대회에서 {{삼등}}을 했습니다."},
+        {"term":"사등","hanja":"四等","sentence":"모둠 경기에서 {{사등}}을 했습니다."}
+      ]},
+      {"contextBefore":"세 개의 각과 세 개의 변이 있는 ","focus":"도형","contextAfter":"을 그렸습니다.","answer":0,"note":"세 각을 가진 도형은 삼각형(三角形)입니다.","options":[
+        {"term":"삼각형","hanja":"三角形","sentence":"자와 연필로 {{삼각형}}을 그렸습니다."},
+        {"term":"사각형","hanja":"四角形","sentence":"네 각을 가진 {{사각형}}을 찾았습니다."},
+        {"term":"오각형","hanja":"五角形","sentence":"표지에서 {{오각형}} 무늬를 보았습니다."},
+        {"term":"육각형","hanja":"六角形","sentence":"벌집의 {{육각형}} 모양을 관찰했습니다."}
+      ]},
+      {"contextBefore":"산 정상에서 동서남북 ","focus":"네 방향","contextAfter":"을 둘러보았습니다.","answer":1,"note":"네 방향을 사방(四方)이라고 합니다.","options":[
+        {"term":"전방","hanja":"前方","sentence":"버스의 {{전방}}을 바라보았습니다."},
+        {"term":"사방","hanja":"四方","sentence":"산 정상에서 {{사방}}을 둘러보았습니다."},
+        {"term":"후방","hanja":"後方","sentence":"운동장 {{후방}}에 창고가 있습니다."},
+        {"term":"지방","hanja":"地方","sentence":"여러 {{지방}}의 축제를 조사했습니다."}
+      ]}
+    ]
+  },
+  {
+    "slug": "su-yuk-chil-pal-gu-sip",
+    "ariaLabel": "여섯 육, 일곱 칠, 여덟 팔, 아홉 구, 열 십",
+    "reading": "육 · 칠 · 팔 · 구 · 십",
+    "meaning": "여섯 · 일곱 · 여덟 · 아홉 · 열",
+    "guide": "六부터 十까지는 큰 수를 세고 달과 도형의 이름을 읽는 바탕이 됩니다.",
+    "characters": [
+      {"character":"六","reading":"육·유","words":["육각형","육십","유월"],"explanation":"여섯 각은 육각형, 여섯 번째 달은 소리가 바뀌어 유월이라고 합니다."},
+      {"character":"七","reading":"칠","words":["칠월","칠십","칠각형"],"explanation":"일곱 번째 달은 칠월, 일곱의 열 배는 칠십입니다."},
+      {"character":"八","reading":"팔","words":["팔월","팔각형","팔방"],"explanation":"여덟 번째 달은 팔월, 여덟 방향은 팔방입니다."},
+      {"character":"九","reading":"구","words":["구월","구십","구구단"],"explanation":"아홉 번째 달은 구월이고, 곱셈표는 구구단이라고 합니다."},
+      {"character":"十","reading":"십","words":["십월","십자","십대"],"explanation":"열 번째 달은 십월, 열을 나타내는 글자 모양은 십자입니다."}
+    ],
+    "questions": [
+      {"contextBefore":"여섯 개의 각을 가진 ","focus":"도형","contextAfter":"을 그렸습니다.","answer":0,"note":"여섯 각을 가진 도형은 육각형(六角形)입니다.","options":[
+        {"term":"육각형","hanja":"六角形","sentence":"벌집에서 {{육각형}}을 찾았습니다."},
+        {"term":"칠각형","hanja":"七角形","sentence":"일곱 각을 가진 {{칠각형}}을 그렸습니다."},
+        {"term":"팔각형","hanja":"八角形","sentence":"정지 표지의 {{팔각형}} 모양을 보았습니다."},
+        {"term":"오각형","hanja":"五角形","sentence":"다섯 각을 가진 {{오각형}}을 만들었습니다."}
+      ]},
+      {"contextBefore":"사방과 그 사이를 합친 ","focus":"여덟 방향","contextAfter":"을 살폈습니다.","answer":2,"note":"여덟 방향을 팔방(八方)이라고 합니다.","options":[
+        {"term":"전방","hanja":"前方","sentence":"차량의 {{전방}}을 확인했습니다."},
+        {"term":"사방","hanja":"四方","sentence":"방 안의 {{사방}}을 둘러보았습니다."},
+        {"term":"팔방","hanja":"八方","sentence":"전망대에서 {{팔방}}을 살폈습니다."},
+        {"term":"후방","hanja":"後方","sentence":"건물 {{후방}}에 주차장이 있습니다."}
+      ]},
+      {"contextBefore":"한 해의 ","focus":"열 번째 달","contextAfter":"에 운동회를 열었습니다.","answer":3,"note":"열 번째 달은 십월(十月)입니다.","options":[
+        {"term":"유월","hanja":"六月","sentence":"{{유월}}에 여름이 시작됩니다."},
+        {"term":"칠월","hanja":"七月","sentence":"{{칠월}}에 여름 방학을 합니다."},
+        {"term":"구월","hanja":"九月","sentence":"{{구월}}에 새 학기가 시작됩니다."},
+        {"term":"십월","hanja":"十月","sentence":"{{십월}}에 가을 운동회를 엽니다."}
+      ]}
+    ]
+  },
+  {
+    "slug": "baek-cheon-man",
+    "ariaLabel": "일백 백, 일천 천, 일만 만",
+    "reading": "백 · 천 · 만",
+    "meaning": "100 · 1,000 · 10,000",
+    "guide": "百·千·萬은 돈, 기간, 사람 수처럼 큰 수를 나타내는 말에서 자주 만납니다.",
+    "characters": [
+      {"character":"百","reading":"백","words":["백점","백일","백년"],"explanation":"백 개의 점은 백점, 백 날은 백일, 백 해는 백년입니다."},
+      {"character":"千","reading":"천","words":["천원","천년","수천"],"explanation":"천 원과 천 년처럼 1,000을 나타내며, 수천은 몇 천이나 되는 수입니다."},
+      {"character":"萬","reading":"만","words":["만원","만세","수만"],"explanation":"만 원은 10,000원이고, 수만은 몇 만이나 되는 큰 수입니다."}
+    ],
+    "questions": [
+      {"contextBefore":"이 나무는 ","focus":"백 해","contextAfter":"가 넘도록 자랐습니다.","answer":0,"note":"백 해를 백년(百年)이라고 합니다.","options":[
+        {"term":"백년","hanja":"百年","sentence":"이 나무는 {{백년}} 넘게 자랐습니다."},
+        {"term":"천년","hanja":"千年","sentence":"이 탑은 {{천년}}의 역사를 지녔습니다."},
+        {"term":"만년","hanja":"萬年","sentence":"아주 오랜 기간을 {{만년}}이라고도 합니다."},
+        {"term":"금년","hanja":"今年","sentence":"{{금년}}의 학교 행사를 정리했습니다."}
+      ]},
+      {"contextBefore":"문구점에서 ","focus":"천 원","contextAfter":"짜리 공책을 샀습니다.","answer":1,"note":"1,000원을 천원(千圓)이라고 합니다.","options":[
+        {"term":"백원","hanja":"百圓","sentence":"저금통에 {{백원}} 동전을 넣었습니다."},
+        {"term":"천원","hanja":"千圓","sentence":"문구점에서 {{천원}}짜리 공책을 샀습니다."},
+        {"term":"만원","hanja":"萬圓","sentence":"용돈으로 {{만원}}을 받았습니다."},
+        {"term":"오백원","hanja":"五百圓","sentence":"자판기에 {{오백원}}을 넣었습니다."}
+      ]},
+      {"contextBefore":"나라의 평안이 오래 이어지기를 바라며 ","focus":"길게 외치는 말","contextAfter":"을 외쳤습니다.","answer":2,"note":"오래 이어지기를 바라는 외침은 만세(萬歲)입니다.","options":[
+        {"term":"만국","hanja":"萬國","sentence":"{{만국}}의 여러 문화를 소개했습니다."},
+        {"term":"만인","hanja":"萬人","sentence":"{{만인}}에게 열린 공원을 만들었습니다."},
+        {"term":"만세","hanja":"萬歲","sentence":"사람들이 힘차게 {{만세}}를 외쳤습니다."},
+        {"term":"만물","hanja":"萬物","sentence":"자연의 {{만물}}이 봄에 깨어납니다."}
+      ]}
+    ]
+  },
+  {
+    "slug": "si-bun-o-geum",
+    "ariaLabel": "때 시, 나눌 분, 낮 오, 이제 금",
+    "reading": "시 · 분 · 오 · 금",
+    "meaning": "때 · 나누다 · 낮 · 지금",
+    "guide": "時·分·午·今은 시각과 기간, 지금의 때를 나타내는 말에서 만납니다.",
+    "characters": [
+      {"character":"時","reading":"시","words":["시간","시각","시계","당시"],"explanation":"때의 길이는 시간, 정확한 때는 시각, 때를 재는 기구는 시계입니다."},
+      {"character":"分","reading":"분","words":["구분","분량","분수","충분"],"explanation":"나누어 가르는 것은 구분, 나눈 양은 분량, 수를 나누어 나타낸 것은 분수입니다."},
+      {"character":"午","reading":"오","words":["오전","오후","정오"],"explanation":"낮 열두 시 전은 오전, 뒤는 오후, 낮 열두 시는 정오입니다."},
+      {"character":"今","reading":"금","words":["지금","금년","금일"],"explanation":"지금은 바로 이때, 금년은 올해, 금일은 오늘을 뜻합니다."}
+    ],
+    "questions": [
+      {"contextBefore":"수업이 시작되어 끝날 때까지의 ","focus":"때의 길이","contextAfter":"를 재었습니다.","answer":1,"note":"때의 길이를 시간(時間)이라고 합니다.","options":[
+        {"term":"시각","hanja":"時刻","sentence":"출발 {{시각}}을 확인했습니다."},
+        {"term":"시간","hanja":"時間","sentence":"수업 {{시간}}을 재었습니다."},
+        {"term":"시계","hanja":"時計","sentence":"벽의 {{시계}}를 보았습니다."},
+        {"term":"당시","hanja":"當時","sentence":"사건 {{당시}}의 모습을 조사했습니다."}
+      ]},
+      {"contextBefore":"두 무리를 기준에 따라 ","focus":"나누어 가르는 것","contextAfter":"이 필요합니다.","answer":0,"note":"기준에 따라 나누어 가르는 것을 구분(區分)이라고 합니다.","options":[
+        {"term":"구분","hanja":"區分","sentence":"종류에 따라 자료를 {{구분}}했습니다."},
+        {"term":"충분","hanja":"充分","sentence":"준비할 {{충분}}한 시간이 있습니다."},
+        {"term":"분수","hanja":"分數","sentence":"수학 시간에 {{분수}}를 배웠습니다."},
+        {"term":"분량","hanja":"分量","sentence":"읽을 책의 {{분량}}을 확인했습니다."}
+      ]},
+      {"contextBefore":"시계가 가리킨 ","focus":"낮 열두 시","contextAfter":"에 점심을 먹었습니다.","answer":2,"note":"낮 열두 시를 정오(正午)라고 합니다.","options":[
+        {"term":"오전","hanja":"午前","sentence":"{{오전}}에 국어 수업을 합니다."},
+        {"term":"오후","hanja":"午後","sentence":"{{오후}}에 체육 활동을 합니다."},
+        {"term":"정오","hanja":"正午","sentence":"{{정오}}에 점심을 먹었습니다."},
+        {"term":"야간","hanja":"夜間","sentence":"{{야간}}에는 별을 관찰했습니다."}
+      ]}
+    ]
+  },
+  {
+    "slug": "chun-ha-chu-dong",
+    "ariaLabel": "봄 춘, 여름 하, 가을 추, 겨울 동",
+    "reading": "춘 · 하 · 추 · 동",
+    "meaning": "봄 · 여름 · 가을 · 겨울",
+    "guide": "春·夏·秋·冬은 계절과 절기, 계절 활동을 나타내는 말의 뜻조각입니다.",
+    "characters": [
+      {"character":"春","reading":"춘","words":["입춘","춘분","청춘"],"explanation":"봄이 시작되는 절기는 입춘, 낮과 밤의 길이가 비슷한 봄날은 춘분입니다."},
+      {"character":"夏","reading":"하","words":["하계","하지","하복"],"explanation":"여름철은 하계, 낮이 가장 긴 무렵의 절기는 하지, 여름 교복은 하복입니다."},
+      {"character":"秋","reading":"추","words":["추석","추분","추계"],"explanation":"가을 명절은 추석, 가을철은 추계, 낮과 밤 길이가 비슷한 가을날은 추분입니다."},
+      {"character":"冬","reading":"동","words":["동계","동면","월동"],"explanation":"겨울철은 동계, 겨울잠은 동면, 겨울을 나는 것은 월동입니다."}
+    ],
+    "questions": [
+      {"contextBefore":"달력에서 ","focus":"봄이 시작되는 절기","contextAfter":"를 찾았습니다.","answer":0,"note":"봄이 시작되는 절기는 입춘(立春)입니다.","options":[
+        {"term":"입춘","hanja":"立春","sentence":"{{입춘}}이 지나며 날씨가 풀렸습니다."},
+        {"term":"춘분","hanja":"春分","sentence":"{{춘분}}에는 낮과 밤의 길이가 비슷합니다."},
+        {"term":"추분","hanja":"秋分","sentence":"{{추분}}이 되자 가을이 깊어졌습니다."},
+        {"term":"동지","hanja":"冬至","sentence":"{{동지}}에는 밤의 길이가 깁니다."}
+      ]},
+      {"contextBefore":"학교는 ","focus":"여름철","contextAfter":" 훈련 일정을 알렸습니다.","answer":1,"note":"여름철을 하계(夏季)라고 합니다.","options":[
+        {"term":"춘계","hanja":"春季","sentence":"{{춘계}} 운동회를 열었습니다."},
+        {"term":"하계","hanja":"夏季","sentence":"{{하계}} 훈련 일정을 확인했습니다."},
+        {"term":"추계","hanja":"秋季","sentence":"{{추계}} 대회에 참가했습니다."},
+        {"term":"동계","hanja":"冬季","sentence":"{{동계}} 올림픽을 시청했습니다."}
+      ]},
+      {"contextBefore":"곰이 겨울 동안 잠을 자는 ","focus":"겨울잠","contextAfter":"을 관찰했습니다.","answer":3,"note":"겨울잠을 동면(冬眠)이라고 합니다.","options":[
+        {"term":"수면","hanja":"睡眠","sentence":"충분한 {{수면}}을 취했습니다."},
+        {"term":"최면","hanja":"催眠","sentence":"책에서 {{최면}} 현상을 읽었습니다."},
+        {"term":"숙면","hanja":"熟眠","sentence":"밤에 깊은 {{숙면}}을 했습니다."},
+        {"term":"동면","hanja":"冬眠","sentence":"곰은 겨울에 {{동면}}을 합니다."}
+      ]}
+    ]
+  },
+  {
+    "slug": "bu-mo-ja-u",
+    "ariaLabel": "아버지 부, 어머니 모, 아들 자, 벗 우",
+    "reading": "부 · 모 · 자 · 우",
+    "meaning": "아버지 · 어머니 · 자식 · 벗",
+    "guide": "父·母·子·友는 가족 관계와 친구 사이를 나타내는 익숙한 말에 들어갑니다.",
+    "characters": [
+      {"character":"父","reading":"부","words":["부친","조부","부자"],"explanation":"아버지는 부친, 아버지의 아버지는 조부, 아버지와 아들은 부자입니다."},
+      {"character":"母","reading":"모","words":["모친","조모","부모"],"explanation":"어머니는 모친, 어머니나 아버지의 어머니는 조모, 아버지와 어머니는 부모입니다."},
+      {"character":"子","reading":"자","words":["자녀","자식","왕자"],"explanation":"아들과 딸은 자녀, 부모가 낳은 아이는 자식, 왕의 아들은 왕자입니다."},
+      {"character":"友","reading":"우","words":["우정","우애","교우"],"explanation":"친구 사이의 정은 우정, 서로 아끼는 마음은 우애, 함께 사귀는 벗은 교우입니다."}
+    ],
+    "questions": [
+      {"contextBefore":"가족사진에서 ","focus":"아버지의 아버지","contextAfter":"를 찾았습니다.","answer":0,"note":"아버지의 아버지를 조부(祖父)라고 합니다.","options":[
+        {"term":"조부","hanja":"祖父","sentence":"{{조부}}와 함께 가족사진을 찍었습니다."},
+        {"term":"조모","hanja":"祖母","sentence":"{{조모}}께서 옛이야기를 들려주셨습니다."},
+        {"term":"부친","hanja":"父親","sentence":"친구의 {{부친}}께 인사드렸습니다."},
+        {"term":"모친","hanja":"母親","sentence":"친구의 {{모친}}께 인사드렸습니다."}
+      ]},
+      {"contextBefore":"학교 행사에 ","focus":"아버지와 어머니","contextAfter":"가 함께 오셨습니다.","answer":2,"note":"아버지와 어머니를 부모(父母)라고 합니다.","options":[
+        {"term":"부자","hanja":"父子","sentence":"{{부자}}가 함께 산책했습니다."},
+        {"term":"모자","hanja":"母子","sentence":"{{모자}}가 손을 잡고 걸었습니다."},
+        {"term":"부모","hanja":"父母","sentence":"{{부모}}가 학교 행사에 오셨습니다."},
+        {"term":"자녀","hanja":"子女","sentence":"{{자녀}}가 부모께 편지를 썼습니다."}
+      ]},
+      {"contextBefore":"친구와 오래 쌓아 온 ","focus":"친구 사이의 정","contextAfter":"을 소중히 여깁니다.","answer":1,"note":"친구 사이의 정을 우정(友情)이라고 합니다.","options":[
+        {"term":"우승","hanja":"優勝","sentence":"우리 팀이 대회에서 {{우승}}했습니다."},
+        {"term":"우정","hanja":"友情","sentence":"친구와의 {{우정}}을 소중히 여깁니다."},
+        {"term":"우주","hanja":"宇宙","sentence":"과학 시간에 {{우주}}를 배웠습니다."},
+        {"term":"우측","hanja":"右側","sentence":"복도의 {{우측}}으로 걸었습니다."}
+      ]}
+    ]
+  },
+  {
+    "slug": "hak-gyo-seon",
+    "ariaLabel": "배울 학, 학교 교, 먼저 선",
+    "reading": "학 · 교 · 선",
+    "meaning": "배우다 · 학교 · 먼저",
+    "guide": "學·校·先은 학교생활에서 날마다 만나는 학생, 교실, 선생 같은 말의 바탕입니다.",
+    "characters": [
+      {"character":"學","reading":"학","words":["학생","학습","학년","학과"],"explanation":"배우는 사람은 학생, 배우고 익히는 것은 학습, 공부하는 해의 차례는 학년입니다."},
+      {"character":"校","reading":"교","words":["학교","교내","교장","교문"],"explanation":"배우는 곳은 학교, 학교 안은 교내, 학교의 책임자는 교장, 학교의 문은 교문입니다."},
+      {"character":"先","reading":"선","words":["선생","우선","선후"],"explanation":"먼저 난 사람을 높여 선생이라 하고, 먼저와 나중의 차례는 선후라고 합니다."}
+    ],
+    "questions": [
+      {"contextBefore":"새 내용을 ","focus":"배우고 익히는 것","contextAfter":"에 힘썼습니다.","answer":1,"note":"배우고 익히는 것을 학습(學習)이라고 합니다.","options":[
+        {"term":"학년","hanja":"學年","sentence":"새 {{학년}}이 시작되었습니다."},
+        {"term":"학습","hanja":"學習","sentence":"매일 꾸준히 {{학습}}했습니다."},
+        {"term":"학생","hanja":"學生","sentence":"새 {{학생}}이 우리 반에 왔습니다."},
+        {"term":"학과","hanja":"學科","sentence":"대학의 여러 {{학과}}를 알아보았습니다."}
+      ]},
+      {"contextBefore":"학교 ","focus":"안","contextAfter":"에서는 안전 규칙을 지킵니다.","answer":0,"note":"학교 안을 교내(校內)라고 합니다.","options":[
+        {"term":"교내","hanja":"校內","sentence":"{{교내}}에서는 안전 규칙을 지킵니다."},
+        {"term":"국내","hanja":"國內","sentence":"{{국내}} 여러 지역을 조사했습니다."},
+        {"term":"실내","hanja":"室內","sentence":"비가 와서 {{실내}}에서 운동했습니다."},
+        {"term":"시내","hanja":"市內","sentence":"버스를 타고 {{시내}}로 갔습니다."}
+      ]},
+      {"contextBefore":"일의 ","focus":"먼저와 나중","contextAfter":"을 정했습니다.","answer":2,"note":"먼저와 나중을 선후(先後)라고 합니다.","options":[
+        {"term":"전후","hanja":"前後","sentence":"사건의 {{전후}}를 조사했습니다."},
+        {"term":"좌우","hanja":"左右","sentence":"길을 건너기 전에 {{좌우}}를 살폈습니다."},
+        {"term":"선후","hanja":"先後","sentence":"할 일의 {{선후}}를 정했습니다."},
+        {"term":"상하","hanja":"上下","sentence":"사진의 {{상하}}를 바르게 맞췄습니다."}
+      ]}
+    ]
+  }
+]

@@ -4,7 +4,7 @@
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
   <meta name="theme-color" content="#f7f5ef">
-  <title>日·月·年 | 韓字</title>
+  <title>長·短·高·低 | 韓字</title>
   <style>
     @font-face {
       font-family: "KleeHanja";
@@ -115,7 +115,7 @@
     .stroke-set[hidden] { display: none; }
     .stroke-path { fill: none; stroke: var(--ink); stroke-width: 7; stroke-linecap: round; stroke-linejoin: round; vector-effect: non-scaling-stroke; }
     .stroke-controls { display: grid; gap: 6px; }
-    .stroke-character-switch { display: grid; grid-template-columns: repeat(3, 1fr); gap: 4px; }
+    .stroke-character-switch { display: grid; grid-template-columns: repeat(var(--stroke-columns), 1fr); gap: 4px; }
 
     .stroke-character,
     .stroke-button {
@@ -392,6 +392,7 @@
       .view { animation: appear .18s ease-out; }
       @keyframes appear { from { opacity: .2; transform: translateY(4px); } }
     }
+    .hanja-generated { display:flex; gap:clamp(4px, .8vw, 9px); min-width:calc(var(--hanja-size) * 3); font-size:clamp(42px, 6vw, var(--hanja-size)); }
   </style>
 </head>
 <body>
@@ -401,42 +402,68 @@
     </div>
 
     <header class="hanja-head">
-      <div class="hanja hanja-three" aria-label="날 일, 달 월, 해 년"><span>日</span><span>月</span><span>年</span></div>
+      <div class="hanja hanja-generated" style="--hanja-size:62px" aria-label="길 장, 짧을 단, 높을 고, 낮을 저"><span>長</span><span>短</span><span>高</span><span>低</span></div>
       <div>
-        <p class="reading">일 · 월 · 년(연)</p>
-        <p class="core-meaning">날 · 달 · 해</p>
+        <p class="reading">장 · 단 · 고 · 저</p>
+        <p class="core-meaning">길다 · 짧다 · 높다 · 낮다</p>
       </div>
-      <section class="stroke-demo" aria-label="日·月·年 획순">
+      <section class="stroke-demo" aria-label="長·短·高·低 획순">
         <svg class="stroke-stage" viewBox="0 0 160 160" role="img" aria-label="선택한 한자의 획순">
           <path class="stroke-guide" d="M80 0V160M0 80H160M0 0L160 160M160 0L0 160" />
-          <g class="stroke-set" data-character="日" transform="translate(10 8) scale(1.3)">
-            <path class="stroke-path" d="M31.5,24.5c1.12,1.12,1.74,2.75,1.74,4.75c0,1.6-0.16,38.11-0.09,53.5c0.02,3.82,0.05,6.35,0.09,6.75" />
-            <path class="stroke-path" d="M33.48,26c0.8-0.05,37.67-3.01,40.77-3.25c3.19-0.25,5,1.75,5,4.25c0,4-0.22,40.84-0.23,56c0,3.48,0,5.72,0,6" />
-            <path class="stroke-path" d="M34.22,55.25c7.78-0.5,35.9-2.5,44.06-2.75" />
-            <path class="stroke-path" d="M34.23,86.5c10.52-0.75,34.15-2.12,43.81-2.25" />
+          <g class="stroke-set" data-character="長" transform="translate(10 8) scale(1.3)">
+            <path class="stroke-path" d="M34,14.75C35.25,16,36,18,36,19.5s0,33.5,0,35.75" />
+            <path class="stroke-path" d="M37.75,16c9.6-0.15,21.73-3.26,26.63-4.2c1.97-0.38,3.9-0.41,5.87,0.06" />
+            <path class="stroke-path" d="M37.25,29.5C48.12,28.25,57,27,64,25.72c1.96-0.36,3.76-0.25,5.25,0.06" />
+            <path class="stroke-path" d="M37.5,42.5c8.88-0.86,21.62-2.62,26.75-3.53c1.97-0.35,3.88-0.32,5.75,0" />
+            <path class="stroke-path" d="M10.88,58.23c3.14,0.86,6.44,0.68,9.62,0.29c19.73-2.35,44.86-6.1,65-7.61c2.97-0.22,5.7-0.08,8.63,0.4" />
+            <path class="stroke-path" d="M31.25,60.25c0.94,0.94,1.39,2.38,1.39,4c0,11.82-0.7,28.19-0.7,30.19s1.65,3.14,3.74,1.64c2.09-1.5,17.25-11.09,20.03-12.59" />
+            <path class="stroke-path" d="M76.52,55.25c0.23,1.25-0.33,2.45-1.05,3.41C73.5,61.25,69.62,65,64.62,68.75" />
+            <path class="stroke-path" d="M46.5,62.25c8.21,0,34.52,25.9,44.28,29.5C93.12,92.61,94.51,93,97,93.5" />
           </g>
-          <g class="stroke-set" data-character="月" transform="translate(10 8) scale(1.3)" hidden>
-            <path class="stroke-path" d="M34.25,16.25c1,1,1.48,2.38,1.5,4c0.38,33.62,2.38,59.38-11,73.25" />
-            <path class="stroke-path" d="M36.25,19c4.12-0.62,31.49-4.78,33.25-5c4-0.5,5.5,1.12,5.5,4.75c0,2.76-0.5,49.25-0.5,69.5c0,13-6.25,4-8.75,1.75" />
-            <path class="stroke-path" d="M37.25,38c10.25-1.5,27.25-3.75,36.25-4.5" />
-            <path class="stroke-path" d="M37,58.25c8.75-1.12,27-3.5,36.25-4" />
+          <g class="stroke-set" data-character="短" transform="translate(10 8) scale(1.3)" hidden>
+            <path class="stroke-path" d="M25.84,17c0.29,0.75,0.32,1.95,0.18,2.9c-0.79,5.58-6.77,19.35-12.25,26.4" />
+            <path class="stroke-path" d="M22.07,35.68c0.93,0.32,2.05,0.23,2.79,0.16c3.18-0.32,8.07-0.97,13.69-2.11c1.09-0.22,3.08-0.48,4.17-0.25" />
+            <path class="stroke-path" d="M10.32,55.34c2.43,0.41,4.64,0.24,6.44-0.01c6.54-0.88,16.6-2.41,23.88-3.19c2.44-0.26,4.49-0.27,6.69,0.33" />
+            <path class="stroke-path" d="M29.94,37.28c0.95,0.95,1.49,2.47,1.48,4.19c-0.17,27.28-7.55,43.41-19.67,51.17" />
+            <path class="stroke-path" d="M32.25,67.25c3.74,2.49,8.5,7.25,11,12.25" />
+            <path class="stroke-path" d="M52.24,25.14c2.01,0.36,3.83,0.38,5.52,0.23c8.62-0.75,18.07-2.45,26.49-3.06c1.89-0.14,3.68-0.24,5.54,0.19" />
+            <path class="stroke-path" d="M52.79,39.53c1.08,0.72,1.89,1.96,2.17,3.14c0.99,4.18,1.87,9.68,2.83,15.68c0.18,1.11,0.35,2.21,0.51,3.31" />
+            <path class="stroke-path" d="M55.37,40.88c6.67-0.66,22.19-2.89,28.39-3.32c3.41-0.23,4.81,0.88,3.94,4.32c-0.66,2.6-1.27,4.16-3.25,13.66" />
+            <path class="stroke-path" d="M58.95,59.1c6.39-0.62,16.13-1.6,23.68-2.17c1.38-0.1,2.69-0.19,3.89-0.26" />
+            <path class="stroke-path" d="M56.38,67.75c2.2,2.46,5.69,10.1,6.25,13.93" />
+            <path class="stroke-path" d="M82.95,64.34c0.18,0.78,0.12,1.86-0.05,2.59C81.75,71.88,78.88,79,74.88,85.2" />
+            <path class="stroke-path" d="M45.73,88.76c2.06,0.69,5.84,0.82,7.9,0.69c16.54-1.08,26.21-2.2,39.17-2.31c3.44-0.03,5.5,0.33,7.22,0.67" />
           </g>
-          <g class="stroke-set" data-character="年" transform="translate(10 8) scale(1.3)" hidden>
-            <path class="stroke-path" d="M40.01,11.89c0.24,1.61-0.01,2.86-0.84,4.46c-2.53,4.84-6.91,11.4-15.86,19.62" />
-            <path class="stroke-path" d="M39.13,23.62c2.25,0.38,4.4,0.18,5.79,0.03c11.7-1.27,21.33-2.9,33.22-4.07c2.3-0.23,4.2,0,5.35,0.26" />
-            <path class="stroke-path" d="M30.13,43.59c1.36,0.33,3.87,0.46,5.21,0.33c10.91-1.05,28.53-3.42,40.78-4.26c2.26-0.15,3.63,0.16,4.76,0.32" />
-            <path class="stroke-path" d="M33.75,44.5c1,1.25,1,1.97,1.01,3.5C34.8,52.33,35,65.29,35,66.25" />
-            <path class="stroke-path" d="M13.88,67.74c1.97,0.47,5.61,0.66,7.57,0.47c20.21-2.03,36.35-4.62,66.65-5.31c3.29-0.08,5.26,0.22,6.91,0.46" />
-            <path class="stroke-path" d="M56.56,25.46c1.12,1.12,1.79,3.54,1.79,4.94c0,0.89-0.05,44.26-0.13,61.6c-0.01,3.12-0.03,5.39-0.05,6.38" />
+          <g class="stroke-set" data-character="高" transform="translate(10 8) scale(1.3)" hidden>
+            <path class="stroke-path" d="M52.47,11.75c1.08,1.08,1.48,2.25,1.48,4.22c0,1.53-0.12,4.28-0.12,5.45" />
+            <path class="stroke-path" d="M22.9,25.7c2.68,0.3,4.96,0.26,7.47-0.04c14.76-1.78,35.83-4.16,49.3-5.17c2.89-0.22,4.99-0.12,6.81,0.33" />
+            <path class="stroke-path" d="M36.25,34.75c1,0.63,1.5,1.5,1.78,2.89c0.72,3.59,1.36,7.37,2.05,11.85c0.2,1.3,0.17,1.82,0.44,3.01" />
+            <path class="stroke-path" d="M39.05,36.33c9.95-1.71,23.99-3.65,29.61-4.1c2.96-0.23,3.83,1.02,3.14,3.31c-0.88,2.93-2.17,7.01-3.32,10.2" />
+            <path class="stroke-path" d="M41.28,49.94c6.57-0.42,16.36-1.87,25.72-2.71c1.3-0.12,2.59-0.22,3.85-0.31" />
+            <path class="stroke-path" d="M21,60.25c1.31,1.31,1.9,2.76,2.21,5c0.79,5.62,2.21,18.19,3.16,26.99c0.15,1.39,0.28,2.67,0.38,3.76" />
+            <path class="stroke-path" d="M24.06,64c16.08-1.51,58.63-6.55,60.19-6.75c3.75-0.5,6,1.5,5.25,6.25c-1.49,9.45-2.62,19.62-5.25,28.25c-2.05,6.75-5.38,2.5-7.8,0" />
+            <path class="stroke-path" d="M41.5,71.68c0.66,0.66,1.16,1.63,1.31,2.47c0.89,2.82,1.58,7.24,2.39,11.81c0.21,1.16,0.4,1.78,0.56,2.79" />
+            <path class="stroke-path" d="M44.02,73.08c6.79-1.36,17.1-2.86,20.92-3.35c1.81-0.23,3.31,1.02,3.13,2.5c-0.35,2.92-1.96,8.31-3.12,11.75" />
+            <path class="stroke-path" d="M46.44,87.05c4.61-0.4,11.01-1.31,17.32-1.94c0.88-0.09,1.77-0.17,2.65-0.26" />
+          </g>
+          <g class="stroke-set" data-character="低" transform="translate(10 8) scale(1.3)" hidden>
+            <path class="stroke-path" d="M31.76,18.25c0.24,1.38,0.24,2.62-0.31,3.98C27.15,32.75,20.41,42.48,9.5,55.04" />
+            <path class="stroke-path" d="M24.03,40.25c1.05,1.05,1.5,2.44,1.5,4.12c0,11.05-0.02,31.15-0.03,42.88c0,3.28,0,5.91,0,7.5" />
+            <path class="stroke-path" d="M71.24,13.11c0.07,0.41,0.15,1.05-0.14,1.64C69.41,18.2,61.5,25,48.35,30.8" />
+            <path class="stroke-path" d="M46.16,29.7c1.13,1.13,1.57,2.55,1.57,4.04c0,1.97-0.17,38.69-0.17,41.76c0,3.07,0.78,3.54,3.15,1.5c3.04-2.62,10.67-8.62,13.68-10.48" />
+            <path class="stroke-path" d="M49.03,50.82c0.64,0.21,1.83-0.17,2.47-0.29c9-1.78,25-5.53,33.03-7.88c1.84-0.54,3.73-0.78,5.63-0.41" />
+            <path class="stroke-path" d="M63.15,26.32c1.22,0.93,1.9,2.31,2.09,3.93C67.88,52.5,75.62,73.88,93.15,87.1c6.04,4.55,4.36-3.07,4.36-5.7" />
+            <path class="stroke-path" d="M45.25,94.14c1.75,0.36,3.89,0.42,5.74,0.15c7.88-1.16,20.12-2.32,26.26-2.87c1.91-0.17,4.12-0.17,5.75,0.09" />
           </g>
         </svg>
         <div class="stroke-controls">
-          <div class="stroke-character-switch" aria-label="획순을 볼 글자">
-            <button class="stroke-character" type="button" data-character="日" aria-pressed="true">日</button>
-            <button class="stroke-character" type="button" data-character="月" aria-pressed="false">月</button>
-            <button class="stroke-character" type="button" data-character="年" aria-pressed="false">年</button>
+          <div class="stroke-character-switch" style="--stroke-columns:4" aria-label="획순을 볼 글자">
+            <button class="stroke-character" type="button" data-character="長" aria-pressed="true">長</button>
+            <button class="stroke-character" type="button" data-character="短" aria-pressed="false">短</button>
+            <button class="stroke-character" type="button" data-character="高" aria-pressed="false">高</button>
+            <button class="stroke-character" type="button" data-character="低" aria-pressed="false">低</button>
           </div>
-          <p id="strokeStatus" class="stroke-status" aria-live="polite">日 · 준비</p>
+          <p id="strokeStatus" class="stroke-status" aria-live="polite">長 · 준비</p>
           <button id="playStrokes" class="stroke-button" type="button">▶ 획순 보기</button>
           <button id="stepStroke" class="stroke-button" type="button">한 획씩</button>
         </div>
@@ -444,23 +471,23 @@
     </header>
 
     <section id="lessonView" class="view" aria-label="뜻과 예시">
-      <p class="lesson-guide">日·月·年은 달력과 시간에서 자주 만나는 글자입니다. 年은 낱말에 따라 ‘년’ 또는 ‘연’으로 읽습니다.</p>
+      <p class="lesson-guide">長·短·高·低는 길이와 높낮이, 좋은 점과 부족한 점을 비교하는 말에 들어갑니다.</p>
       <div class="word-list">
         <div class="word-row">
-          <p class="word-family">日(일) — 일출 · 일몰 · 일광 · 매일 · 생일</p>
-          <p class="example">해가 뜨는 것은 일출, 해가 지는 것은 일몰, 햇빛은 일광이라고 합니다.</p>
+          <p class="word-family">長(장) — 장기 · 장점 · 성장</p>
+          <p class="example">긴 기간은 장기, 좋은 점은 장점, 자라서 커지는 것은 성장입니다.</p>
         </div>
         <div class="word-row">
-          <p class="word-family">月(월) — 월광 · 매월 · 월간 · 월초 · 월말</p>
-          <p class="example">달빛은 월광, 달마다는 매월, 한 달 동안은 월간이라고 합니다.</p>
+          <p class="word-family">短(단) — 단기 · 단점 · 단축</p>
+          <p class="example">짧은 기간은 단기, 부족한 점은 단점, 길이나 시간을 줄이는 것은 단축입니다.</p>
         </div>
         <div class="word-row">
-          <p class="word-family">年(년) — 학년 · 작년 · 내년</p>
-          <p class="example">학교에서 공부하는 해의 차례는 학년, 지난 해는 작년, 다음 해는 내년입니다.</p>
+          <p class="word-family">高(고) — 고속 · 고층 · 최고</p>
+          <p class="example">높은 속도는 고속, 높은 층은 고층, 가장 높은 것은 최고입니다.</p>
         </div>
         <div class="word-row">
-          <p class="word-family">年(연) — 연도 · 연말 · 연간</p>
-          <p class="example">해를 세는 이름은 연도, 한 해의 끝은 연말, 한 해 동안은 연간입니다.</p>
+          <p class="word-family">低(저) — 저속 · 저온 · 최저</p>
+          <p class="example">낮은 속도는 저속, 낮은 온도는 저온, 가장 낮은 것은 최저입니다.</p>
         </div>
       </div>
       <button id="startQuiz" class="next-button" type="button">문제 풀기</button>
@@ -468,48 +495,59 @@
 
     <section id="quizView" class="view" aria-label="확인 문제" hidden>
       <div class="quiz-grid">
-        <article class="question" data-answer="0" data-note="해가 뜨는 것을 일출(日出)이라고 합니다.">
-          <p class="question-context">“아침 바다에서 <u>해가 뜨는 모습</u>을 보았습니다.”</p>
+        <article class="question" data-answer="0" data-note="좋은 점을 장점(長點)이라고 합니다.">
+          <p class="question-context">“발표에서 잘한 <u>좋은 점</u>을 먼저 말했습니다.”</p>
           <h2><span class="q-number">1</span>밑줄 친 뜻을 가진 한자어는?</h2>
           <div class="choices">
-            <button class="choice" type="button">① 아침 바다에서 <u>일출</u>을 보았습니다.</button>
-            <button class="choice" type="button">② 가족과 공원으로 <u>외출</u>했습니다.</button>
-            <button class="choice" type="button">③ 과제를 선생님께 <u>제출</u>했습니다.</button>
-            <button class="choice" type="button">④ 기차가 역에서 <u>출발</u>했습니다.</button>
+            <button class="choice" type="button" data-hanja="長點">① 친구 발표의 <u>장점</u>을 말했습니다.</button>
+            <button class="choice" type="button" data-hanja="短點">② 계획의 <u>단점</u>을 고쳤습니다.</button>
+            <button class="choice" type="button" data-hanja="重點">③ 안전에 <u>중점</u>을 두었습니다.</button>
+            <button class="choice" type="button" data-hanja="要點">④ 글의 <u>요점</u>을 정리했습니다.</button>
           </div>
           <p class="feedback" aria-live="polite"></p>
         </article>
 
-        <article class="question" data-answer="1" data-note="달빛을 월광(月光)이라고 합니다.">
-          <p class="question-context">“밤이 되자 창문으로 <u>달빛</u>이 들어왔습니다.”</p>
+        <article class="question" data-answer="0" data-note="짧은 기간을 단기(短期)라고 합니다.">
+          <p class="question-context">“며칠 안에 끝나는 <u>짧은 기간</u>의 계획을 세웠습니다.”</p>
           <h2><span class="q-number">2</span>밑줄 친 뜻을 가진 한자어는?</h2>
           <div class="choices">
-            <button class="choice" type="button">① 식물은 <u>일광</u>을 받아 자랍니다.</button>
-            <button class="choice" type="button">② 잔잔한 호수에 <u>월광</u>이 비쳤습니다.</button>
-            <button class="choice" type="button">③ 경기장 <u>전광판</u>에 점수가 나왔습니다.</button>
-            <button class="choice" type="button">④ 가족과 경주를 <u>관광</u>했습니다.</button>
+            <button class="choice" type="button" data-hanja="短期">① <u>단기</u> 계획을 세웠습니다.</button>
+            <button class="choice" type="button" data-hanja="長期">② 일 년의 <u>장기</u> 계획을 세웠습니다.</button>
+            <button class="choice" type="button" data-hanja="學期">③ 새 <u>학기</u>가 시작되었습니다.</button>
+            <button class="choice" type="button" data-hanja="時期">④ 씨앗을 심을 <u>시기</u>를 정했습니다.</button>
           </div>
           <p class="feedback" aria-live="polite"></p>
         </article>
 
-        <article class="question" data-answer="0" data-note="한 해의 끝을 연말(年末)이라고 합니다.">
-          <p class="question-context">“<u>한 해의 끝</u>에 지난 일을 돌아보았습니다.”</p>
+        <article class="question" data-answer="0" data-note="높은 속도를 고속(高速)이라고 합니다.">
+          <p class="question-context">“매우 <u>높은 속도</u>로 달리는 열차를 탔습니다.”</p>
           <h2><span class="q-number">3</span>밑줄 친 뜻을 가진 한자어는?</h2>
           <div class="choices">
-            <button class="choice" type="button">① <u>연말</u>에 한 해의 기록을 정리했습니다.</button>
-            <button class="choice" type="button">② <u>월말</u>에 이번 달 기록을 정리했습니다.</button>
-            <button class="choice" type="button">③ <u>주말</u>에 가족과 박물관에 갔습니다.</button>
-            <button class="choice" type="button">④ <u>기말</u>에 학습 내용을 정리했습니다.</button>
+            <button class="choice" type="button" data-hanja="高速">① <u>고속</u> 열차를 탔습니다.</button>
+            <button class="choice" type="button" data-hanja="低速">② 안전 구간에서 <u>저속</u>으로 달렸습니다.</button>
+            <button class="choice" type="button" data-hanja="時速">③ 자동차의 <u>시속</u>을 확인했습니다.</button>
+            <button class="choice" type="button" data-hanja="風速">④ 태풍의 <u>풍속</u>을 측정했습니다.</button>
+          </div>
+          <p class="feedback" aria-live="polite"></p>
+        </article>
+
+        <article class="question" data-answer="0" data-note="낮은 온도를 저온(低溫)이라고 합니다.">
+          <p class="question-context">“냉동실은 매우 <u>낮은 온도</u>를 유지합니다.”</p>
+          <h2><span class="q-number">4</span>밑줄 친 뜻을 가진 한자어는?</h2>
+          <div class="choices">
+            <button class="choice" type="button" data-hanja="低溫">① 식품을 <u>저온</u>에 보관했습니다.</button>
+            <button class="choice" type="button" data-hanja="高溫">② <u>고온</u>에서는 물이 빨리 증발합니다.</button>
+            <button class="choice" type="button" data-hanja="常溫">③ 약을 <u>상온</u>에 보관했습니다.</button>
+            <button class="choice" type="button" data-hanja="氣溫">④ 오늘의 <u>기온</u>을 확인했습니다.</button>
           </div>
           <p class="feedback" aria-live="polite"></p>
         </article>
       </div>
-
       <p id="result" class="result" aria-live="polite" hidden></p>
       <div class="quiz-actions">
         <button id="backToLesson" class="back-button" type="button">설명 다시 보기</button>
         <button id="resetQuiz" class="reset-button" type="button">다시 풀기</button>
-        <a id="nextLesson" class="next-lesson" href="../su-il-i-sam-sa-o/" hidden>다음 글자 一·二·三·四·五</a>
+        <a id="nextLesson" class="next-lesson" href="../sin-go-jeong-ban-dong-byeol/" hidden>다음 글자 新·古·正·反·同·別</a>
       </div>
     </section>
   </main>
@@ -527,7 +565,7 @@
       const playStrokes = document.getElementById('playStrokes');
       const stepStroke = document.getElementById('stepStroke');
       const reducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
-      let currentCharacter = '日';
+      let currentCharacter = '長';
       let currentPaths = [];
       let visibleStrokes = 0;
       let strokePlaying = false;
@@ -612,7 +650,7 @@
           : `${currentCharacter} · ${visibleStrokes}/${currentPaths.length}획`;
       });
 
-      selectCharacter('日');
+      selectCharacter('長');
 
       function show(view) {
         const quiz = view === 'quiz';

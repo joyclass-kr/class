@@ -1,0 +1,192 @@
+[
+  {
+    "slug":"mun-ja-eo-hwa","ariaLabel":"글월 문, 글자 자, 말씀 어, 말씀 화","reading":"문 · 자 · 어 · 화","meaning":"글 · 글자 · 말 · 이야기","guide":"文·字·語·話는 글과 말, 국어와 외국어를 이해하는 데 필요한 뜻조각입니다.",
+    "characters":[
+      {"character":"文","reading":"문","words":["문장","문서","문학"],"explanation":"뜻을 갖춘 말의 묶음은 문장, 내용을 적은 글은 문서, 글로 생각을 나타내는 예술은 문학입니다."},
+      {"character":"字","reading":"자","words":["문자","숫자","한자"],"explanation":"말을 적는 기호는 문자, 수를 나타내는 글자는 숫자, 한자로 적은 글자는 한자입니다."},
+      {"character":"語","reading":"어","words":["국어","영어","언어"],"explanation":"나라의 말은 국어, 영국에서 시작된 말은 영어, 생각을 나타내는 말의 체계는 언어입니다."},
+      {"character":"話","reading":"화","words":["대화","전화","동화"],"explanation":"서로 주고받는 말은 대화, 멀리 전하는 말은 전화, 어린이를 위한 이야기는 동화입니다."}
+    ],
+    "questions":[
+      {"contextBefore":"낱말을 알맞게 이어 뜻을 갖춘 ","focus":"말의 묶음","contextAfter":"을 만들었습니다.","answer":0,"note":"뜻을 갖춘 말의 묶음을 문장(文章)이라고 합니다.","options":[
+        {"term":"문장","hanja":"文章","sentence":"낱말을 이어 {{문장}}을 만들었습니다."},{"term":"문서","hanja":"文書","sentence":"행사 안내 {{문서}}를 읽었습니다."},{"term":"문학","hanja":"文學","sentence":"수업에서 아동 {{문학}}을 배웠습니다."},{"term":"문자","hanja":"文字","sentence":"휴대 전화로 {{문자}}를 보냈습니다."}
+      ]},
+      {"contextBefore":"수를 나타내는 ","focus":"글자","contextAfter":"를 순서대로 썼습니다.","answer":1,"note":"수를 나타내는 글자를 숫자(數字)라고 합니다.","options":[
+        {"term":"한자","hanja":"漢字","sentence":"뜻을 가진 {{한자}}를 배웠습니다."},{"term":"숫자","hanja":"數字","sentence":"수를 나타내는 {{숫자}}를 썼습니다."},{"term":"자막","hanja":"字幕","sentence":"영상의 {{자막}}을 읽었습니다."},{"term":"서체","hanja":"書體","sentence":"단정한 {{서체}}로 제목을 썼습니다."}
+      ]},
+      {"contextBefore":"우리나라의 말과 글을 배우는 ","focus":"과목","contextAfter":"을 공부했습니다.","answer":0,"note":"우리나라의 말과 글을 배우는 과목은 국어(國語)입니다.","options":[
+        {"term":"국어","hanja":"國語","sentence":"{{국어}} 시간에 글을 읽었습니다."},{"term":"영어","hanja":"英語","sentence":"{{영어}} 시간에 인사말을 배웠습니다."},{"term":"한문","hanja":"漢文","sentence":"{{한문}} 시간에 옛글을 읽었습니다."},{"term":"수학","hanja":"數學","sentence":"{{수학}} 시간에 분수를 배웠습니다."}
+      ]},
+      {"contextBefore":"친구와 말을 ","focus":"서로 주고받았습니다","contextAfter":".","answer":0,"note":"말을 서로 주고받는 것을 대화(對話)라고 합니다.","options":[
+        {"term":"대화","hanja":"對話","sentence":"친구와 차분히 {{대화}}했습니다."},{"term":"전화","hanja":"電話","sentence":"할머니께 {{전화}}를 드렸습니다."},{"term":"동화","hanja":"童話","sentence":"책에서 재미있는 {{동화}}를 읽었습니다."},{"term":"화제","hanja":"話題","sentence":"새로운 {{화제}}로 이야기를 나눴습니다."}
+      ]}
+    ]
+  },
+  {
+    "slug":"dok-seo-mun-dap","ariaLabel":"읽을 독, 글 서, 물을 문, 대답 답","reading":"독 · 서 · 문 · 답","meaning":"읽다 · 글 · 묻다 · 대답하다","guide":"讀·書·問·答은 읽고 묻고 답하는 학습 활동의 핵심 뜻조각입니다.",
+    "characters":[
+      {"character":"讀","reading":"독","words":["독서","독해","낭독"],"explanation":"책을 읽는 것은 독서, 읽고 뜻을 푸는 것은 독해, 소리 내어 읽는 것은 낭독입니다."},
+      {"character":"書","reading":"서","words":["도서","서점","문서"],"explanation":"책은 도서, 책을 파는 곳은 서점, 내용을 적은 글은 문서입니다."},
+      {"character":"問","reading":"문","words":["질문","문제","의문"],"explanation":"모르는 것을 묻는 것은 질문, 풀어야 할 물음은 문제, 마음에 생긴 물음은 의문입니다."},
+      {"character":"答","reading":"답","words":["정답","대답","응답"],"explanation":"바른 답은 정답, 물음에 답하는 것은 대답, 부름이나 요청에 답하는 것은 응답입니다."}
+    ],
+    "questions":[
+      {"contextBefore":"도서관에서 책을 ","focus":"읽는 활동","contextAfter":"을 했습니다.","answer":0,"note":"책을 읽는 활동을 독서(讀書)라고 합니다.","options":[
+        {"term":"독서","hanja":"讀書","sentence":"도서관에서 {{독서}}를 했습니다."},{"term":"도서","hanja":"圖書","sentence":"도서관에서 새 {{도서}}를 빌렸습니다."},{"term":"문서","hanja":"文書","sentence":"안내 {{문서}}를 확인했습니다."},{"term":"서점","hanja":"書店","sentence":"{{서점}}에서 책을 샀습니다."}
+      ]},
+      {"contextBefore":"시를 또렷한 목소리로 ","focus":"소리 내어 읽었습니다","contextAfter":".","answer":1,"note":"글을 소리 내어 읽는 것을 낭독(朗讀)이라고 합니다.","options":[
+        {"term":"독해","hanja":"讀解","sentence":"글을 읽고 {{독해}} 문제를 풀었습니다."},{"term":"낭독","hanja":"朗讀","sentence":"시를 또렷하게 {{낭독}}했습니다."},{"term":"해독","hanja":"解讀","sentence":"어려운 기호를 {{해독}}했습니다."},{"term":"구독","hanja":"購讀","sentence":"어린이 신문을 {{구독}}했습니다."}
+      ]},
+      {"contextBefore":"모르는 내용을 선생님께 ","focus":"물었습니다","contextAfter":".","answer":0,"note":"모르는 것을 묻는 일을 질문(質問)이라고 합니다.","options":[
+        {"term":"질문","hanja":"質問","sentence":"선생님께 {{질문}}했습니다."},{"term":"의문","hanja":"疑問","sentence":"설명에서 {{의문}}이 생겼습니다."},{"term":"문제","hanja":"問題","sentence":"수학 {{문제}}를 풀었습니다."},{"term":"문답","hanja":"問答","sentence":"서로 묻고 답하는 {{문답}}을 했습니다."}
+      ]},
+      {"contextBefore":"문제를 풀고 ","focus":"바른 답","contextAfter":"을 확인했습니다.","answer":0,"note":"바른 답을 정답(正答)이라고 합니다.","options":[
+        {"term":"정답","hanja":"正答","sentence":"문제의 {{정답}}을 확인했습니다."},{"term":"응답","hanja":"應答","sentence":"설문에 {{응답}}했습니다."},{"term":"해답","hanja":"解答","sentence":"어려운 문제의 {{해답}}을 찾았습니다."},{"term":"오답","hanja":"誤答","sentence":"틀린 {{오답}}을 고쳤습니다."}
+      ]}
+    ]
+  },
+  {
+    "slug":"guk-min-ga-sil","ariaLabel":"나라 국, 백성 민, 집 가, 집 실","reading":"국 · 민 · 가 · 실","meaning":"나라 · 사람 · 집 · 방","guide":"國·民·家·室은 나라와 그 안의 사람, 가족과 생활 공간을 나타냅니다.",
+    "characters":[
+      {"character":"國","reading":"국","words":["국가","외국","전국"],"explanation":"나라는 국가, 다른 나라는 외국, 나라 전체는 전국입니다."},
+      {"character":"民","reading":"민","words":["국민","주민","시민"],"explanation":"나라의 사람은 국민, 한곳에 사는 사람은 주민, 도시에 사는 사람은 시민입니다."},
+      {"character":"家","reading":"가","words":["가족","작가","화가"],"explanation":"한집안 사람은 가족이며, 글을 전문으로 쓰는 사람은 작가, 그림을 그리는 전문가는 화가입니다."},
+      {"character":"室","reading":"실","words":["교실","침실","실내"],"explanation":"공부하는 방은 교실, 잠자는 방은 침실, 방이나 건물의 안은 실내입니다."}
+    ],
+    "questions":[
+      {"contextBefore":"우리나라 ","focus":"전체","contextAfter":"의 날씨를 살펴보았습니다.","answer":0,"note":"나라 전체를 전국(全國)이라고 합니다.","options":[
+        {"term":"전국","hanja":"全國","sentence":"{{전국}}의 날씨를 살펴보았습니다."},{"term":"외국","hanja":"外國","sentence":"다른 {{외국}}의 문화를 배웠습니다."},{"term":"국가","hanja":"國家","sentence":"여러 {{국가}}의 국기를 찾았습니다."},{"term":"국토","hanja":"國土","sentence":"우리 {{국토}}의 지형을 조사했습니다."}
+      ]},
+      {"contextBefore":"도시에 사는 ","focus":"사람","contextAfter":"이 공원 조성에 참여했습니다.","answer":1,"note":"도시에 사는 사람을 시민(市民)이라고 합니다.","options":[
+        {"term":"주민","hanja":"住民","sentence":"마을 {{주민}}이 회의에 모였습니다."},{"term":"시민","hanja":"市民","sentence":"{{시민}}이 공원 조성에 참여했습니다."},{"term":"국민","hanja":"國民","sentence":"모든 {{국민}}은 법을 지킵니다."},{"term":"농민","hanja":"農民","sentence":"{{농민}}이 들에서 벼를 기릅니다."}
+      ]},
+      {"contextBefore":"글을 전문으로 쓰는 ","focus":"사람","contextAfter":"을 만났습니다.","answer":0,"note":"글을 전문으로 쓰는 사람을 작가(作家)라고 합니다.","options":[
+        {"term":"작가","hanja":"作家","sentence":"동화 {{작가}}를 만났습니다."},{"term":"화가","hanja":"畫家","sentence":"{{화가}}가 풍경을 그렸습니다."},{"term":"음악가","hanja":"音樂家","sentence":"{{음악가}}가 곡을 만들었습니다."},{"term":"과학자","hanja":"科學者","sentence":"{{과학자}}가 실험했습니다."}
+      ]},
+      {"contextBefore":"밤에 잠을 자는 ","focus":"방","contextAfter":"을 정리했습니다.","answer":0,"note":"잠을 자는 방을 침실(寢室)이라고 합니다.","options":[
+        {"term":"침실","hanja":"寢室","sentence":"아침에 {{침실}}을 정리했습니다."},{"term":"교실","hanja":"敎室","sentence":"우리 {{교실}}을 청소했습니다."},{"term":"병실","hanja":"病室","sentence":"환자가 {{병실}}에서 쉬었습니다."},{"term":"객실","hanja":"客室","sentence":"여행지의 {{객실}}에 짐을 풀었습니다."}
+      ]}
+    ]
+  },
+  {
+    "slug":"jang-do-si-chon","ariaLabel":"마당 장, 길 도, 저자 시, 마을 촌","reading":"장 · 도 · 시 · 촌","meaning":"곳 · 길 · 도시 · 마을","guide":"場·道·市·村은 활동하는 곳과 길, 도시와 마을을 나타내는 사회 낱말에 들어갑니다.",
+    "characters":[
+      {"character":"場","reading":"장","words":["장소","운동장","시장"],"explanation":"어떤 일이 이루어지는 곳은 장소, 운동하는 넓은 곳은 운동장, 물건을 사고파는 곳은 시장입니다."},
+      {"character":"道","reading":"도","words":["도로","철도","수도"],"explanation":"차가 다니는 길은 도로, 철로 된 길은 철도, 물이 다니는 길은 수도입니다."},
+      {"character":"市","reading":"시","words":["도시","시장","시민"],"explanation":"사람과 건물이 많이 모인 곳은 도시, 사고파는 곳은 시장, 도시에 사는 사람은 시민입니다."},
+      {"character":"村","reading":"촌","words":["농촌","어촌","산촌"],"explanation":"농사짓는 마을은 농촌, 물고기를 잡는 마을은 어촌, 산에 자리한 마을은 산촌입니다."}
+    ],
+    "questions":[
+      {"contextBefore":"학생들이 운동하는 ","focus":"넓은 곳","contextAfter":"에 모였습니다.","answer":0,"note":"운동하는 넓은 곳을 운동장(運動場)이라고 합니다.","options":[
+        {"term":"운동장","hanja":"運動場","sentence":"학생들이 {{운동장}}에 모였습니다."},{"term":"주차장","hanja":"駐車場","sentence":"자동차를 {{주차장}}에 세웠습니다."},{"term":"시장","hanja":"市場","sentence":"{{시장}}에서 과일을 샀습니다."},{"term":"공장","hanja":"工場","sentence":"{{공장}}에서 물건을 생산합니다."}
+      ]},
+      {"contextBefore":"자동차가 다니는 ","focus":"길","contextAfter":"을 안전하게 건넜습니다.","answer":0,"note":"자동차가 다니는 길을 도로(道路)라고 합니다.","options":[
+        {"term":"도로","hanja":"道路","sentence":"횡단보도로 {{도로}}를 건넜습니다."},{"term":"철도","hanja":"鐵道","sentence":"기차가 {{철도}} 위를 달립니다."},{"term":"수도","hanja":"水道","sentence":"{{수도}}에서 깨끗한 물이 나옵니다."},{"term":"인도","hanja":"人道","sentence":"보행자는 {{인도}}로 다닙니다."}
+      ]},
+      {"contextBefore":"사람과 건물이 많이 모인 ","focus":"큰 고장","contextAfter":"을 견학했습니다.","answer":0,"note":"사람과 건물이 많이 모인 큰 고장을 도시(都市)라고 합니다.","options":[
+        {"term":"도시","hanja":"都市","sentence":"큰 {{도시}}를 견학했습니다."},{"term":"농촌","hanja":"農村","sentence":"{{농촌}}에서 벼를 기릅니다."},{"term":"어촌","hanja":"漁村","sentence":"{{어촌}}에서 물고기를 잡습니다."},{"term":"산촌","hanja":"山村","sentence":"{{산촌}}은 산 사이에 자리합니다."}
+      ]}
+    ]
+  },
+  {
+    "slug":"jang-dan-go-jeo","ariaLabel":"길 장, 짧을 단, 높을 고, 낮을 저","reading":"장 · 단 · 고 · 저","meaning":"길다 · 짧다 · 높다 · 낮다","guide":"長·短·高·低는 길이와 높낮이, 좋은 점과 부족한 점을 비교하는 말에 들어갑니다.",
+    "characters":[
+      {"character":"長","reading":"장","words":["장기","장점","성장"],"explanation":"긴 기간은 장기, 좋은 점은 장점, 자라서 커지는 것은 성장입니다."},
+      {"character":"短","reading":"단","words":["단기","단점","단축"],"explanation":"짧은 기간은 단기, 부족한 점은 단점, 길이나 시간을 줄이는 것은 단축입니다."},
+      {"character":"高","reading":"고","words":["고속","고층","최고"],"explanation":"높은 속도는 고속, 높은 층은 고층, 가장 높은 것은 최고입니다."},
+      {"character":"低","reading":"저","words":["저속","저온","최저"],"explanation":"낮은 속도는 저속, 낮은 온도는 저온, 가장 낮은 것은 최저입니다."}
+    ],
+    "questions":[
+      {"contextBefore":"발표에서 잘한 ","focus":"좋은 점","contextAfter":"을 먼저 말했습니다.","answer":0,"note":"좋은 점을 장점(長點)이라고 합니다.","options":[
+        {"term":"장점","hanja":"長點","sentence":"친구 발표의 {{장점}}을 말했습니다."},{"term":"단점","hanja":"短點","sentence":"계획의 {{단점}}을 고쳤습니다."},{"term":"중점","hanja":"重點","sentence":"안전에 {{중점}}을 두었습니다."},{"term":"요점","hanja":"要點","sentence":"글의 {{요점}}을 정리했습니다."}
+      ]},
+      {"contextBefore":"며칠 안에 끝나는 ","focus":"짧은 기간","contextAfter":"의 계획을 세웠습니다.","answer":0,"note":"짧은 기간을 단기(短期)라고 합니다.","options":[
+        {"term":"단기","hanja":"短期","sentence":"{{단기}} 계획을 세웠습니다."},{"term":"장기","hanja":"長期","sentence":"일 년의 {{장기}} 계획을 세웠습니다."},{"term":"학기","hanja":"學期","sentence":"새 {{학기}}가 시작되었습니다."},{"term":"시기","hanja":"時期","sentence":"씨앗을 심을 {{시기}}를 정했습니다."}
+      ]},
+      {"contextBefore":"매우 ","focus":"높은 속도","contextAfter":"로 달리는 열차를 탔습니다.","answer":0,"note":"높은 속도를 고속(高速)이라고 합니다.","options":[
+        {"term":"고속","hanja":"高速","sentence":"{{고속}} 열차를 탔습니다."},{"term":"저속","hanja":"低速","sentence":"안전 구간에서 {{저속}}으로 달렸습니다."},{"term":"시속","hanja":"時速","sentence":"자동차의 {{시속}}을 확인했습니다."},{"term":"풍속","hanja":"風速","sentence":"태풍의 {{풍속}}을 측정했습니다."}
+      ]},
+      {"contextBefore":"냉동실은 매우 ","focus":"낮은 온도","contextAfter":"를 유지합니다.","answer":0,"note":"낮은 온도를 저온(低溫)이라고 합니다.","options":[
+        {"term":"저온","hanja":"低溫","sentence":"식품을 {{저온}}에 보관했습니다."},{"term":"고온","hanja":"高溫","sentence":"{{고온}}에서는 물이 빨리 증발합니다."},{"term":"상온","hanja":"常溫","sentence":"약을 {{상온}}에 보관했습니다."},{"term":"기온","hanja":"氣溫","sentence":"오늘의 {{기온}}을 확인했습니다."}
+      ]}
+    ]
+  },
+  {
+    "slug":"sin-go-jeong-ban-dong-byeol","ariaLabel":"새 신, 옛 고, 바를 정, 돌이킬 반, 같을 동, 다를 별","reading":"신 · 고 · 정 · 반 · 동 · 별","meaning":"새롭다 · 오래되다 · 바르다 · 거꾸로 · 같다 · 다르다","guide":"新·古·正·反·同·別은 새것과 옛것, 맞고 틀림, 같고 다름을 판단하는 말에 들어갑니다.",
+    "characters":[
+      {"character":"新","reading":"신","words":["신문","신년","최신"],"explanation":"새 소식을 담은 글은 신문, 새해는 신년, 가장 새로운 것은 최신입니다."},
+      {"character":"古","reading":"고","words":["고대","고전","중고"],"explanation":"아주 옛 시대는 고대, 오래 이어진 작품은 고전, 새것이 아닌 물건은 중고입니다."},
+      {"character":"正","reading":"정","words":["정답","정문","수정"],"explanation":"바른 답은 정답, 바른 앞문은 정문, 잘못을 바로잡는 것은 수정입니다."},
+      {"character":"反","reading":"반","words":["반대","반응","반사"],"explanation":"거꾸로 맞서는 것은 반대, 자극에 되돌아오는 변화는 반응, 빛이 되돌아가는 것은 반사입니다."},
+      {"character":"同","reading":"동","words":["동일","동시","공동"],"explanation":"서로 같은 것은 동일, 같은 때는 동시, 여럿이 함께하는 것은 공동입니다."},
+      {"character":"別","reading":"별","words":["특별","차별","이별"],"explanation":"보통과 다르게 뛰어난 것은 특별, 다르게 대하는 것은 차별, 서로 헤어지는 것은 이별입니다."}
+    ],
+    "questions":[
+      {"contextBefore":"매일 새로운 소식을 담아 내는 ","focus":"종이 매체","contextAfter":"를 읽었습니다.","answer":0,"note":"새 소식을 담아 내는 종이 매체는 신문(新聞)입니다.","options":[
+        {"term":"신문","hanja":"新聞","sentence":"아침에 어린이 {{신문}}을 읽었습니다."},{"term":"문서","hanja":"文書","sentence":"행사 안내 {{문서}}를 확인했습니다."},{"term":"문장","hanja":"文章","sentence":"낱말을 이어 {{문장}}을 만들었습니다."},{"term":"잡지","hanja":"雜誌","sentence":"과학 {{잡지}}에서 기사를 읽었습니다."}
+      ]},
+      {"contextBefore":"아주 ","focus":"오래된 시대","contextAfter":"의 유물을 살펴보았습니다.","answer":0,"note":"아주 오래된 시대를 고대(古代)라고 합니다.","options":[
+        {"term":"고대","hanja":"古代","sentence":"{{고대}}의 유물을 살펴보았습니다."},{"term":"현대","hanja":"現代","sentence":"{{현대}}의 생활 모습을 조사했습니다."},{"term":"근대","hanja":"近代","sentence":"{{근대}}의 교통 발달을 배웠습니다."},{"term":"시대","hanja":"時代","sentence":"각 {{시대}}의 특징을 비교했습니다."}
+      ]},
+      {"contextBefore":"문제를 풀고 ","focus":"바른 답","contextAfter":"을 표시했습니다.","answer":0,"note":"바른 답을 정답(正答)이라고 합니다.","options":[
+        {"term":"정답","hanja":"正答","sentence":"문제의 {{정답}}을 표시했습니다."},{"term":"오답","hanja":"誤答","sentence":"틀린 {{오답}}을 다시 풀었습니다."},{"term":"해답","hanja":"解答","sentence":"어려운 문제의 {{해답}}을 찾았습니다."},{"term":"응답","hanja":"應答","sentence":"설문에 성실히 {{응답}}했습니다."}
+      ]},
+      {"contextBefore":"두 의견이 서로 ","focus":"맞서는 것","contextAfter":"을 확인했습니다.","answer":0,"note":"서로 맞서는 것을 반대(反對)라고 합니다.","options":[
+        {"term":"반대","hanja":"反對","sentence":"두 의견이 서로 {{반대}}였습니다."},{"term":"상대","hanja":"相對","sentence":"경기 {{상대}}를 존중했습니다."},{"term":"대립","hanja":"對立","sentence":"두 생각이 {{대립}}했습니다."},{"term":"반응","hanja":"反應","sentence":"식물이 빛에 {{반응}}했습니다."}
+      ]},
+      {"contextBefore":"두 물건의 모양과 크기가 ","focus":"서로 같았습니다","contextAfter":".","answer":0,"note":"서로 같은 것을 동일(同一)하다고 합니다.","options":[
+        {"term":"동일","hanja":"同一","sentence":"두 물건의 크기가 {{동일}}했습니다."},{"term":"통일","hanja":"統一","sentence":"모둠의 의견을 하나로 {{통일}}했습니다."},{"term":"일치","hanja":"一致","sentence":"두 답이 서로 {{일치}}했습니다."},{"term":"동등","hanja":"同等","sentence":"모든 사람을 {{동등}}하게 대했습니다."}
+      ]}
+    ]
+  },
+  {
+    "slug":"dong-mul-sik","ariaLabel":"움직일 동, 물건 물, 심을 식","reading":"동 · 물 · 식","meaning":"움직이다 · 물건 · 심다","guide":"動·物·植은 운동, 동물, 식물처럼 과학 시간에 가장 자주 만나는 뜻조각입니다.",
+    "characters":[
+      {"character":"動","reading":"동","words":["운동","동물","행동"],"explanation":"몸을 움직이는 것은 운동, 스스로 움직이는 생물은 동물, 몸으로 나타낸 움직임은 행동입니다."},
+      {"character":"物","reading":"물","words":["물체","사물","생물"],"explanation":"모양과 자리를 가진 것은 물체, 세상의 여러 것은 사물, 살아 있는 것은 생물입니다."},
+      {"character":"植","reading":"식","words":["식물","식목","이식"],"explanation":"심어 기르는 생물은 식물, 나무를 심는 것은 식목, 옮겨 심는 것은 이식입니다."}
+    ],
+    "questions":[
+      {"contextBefore":"건강을 위해 몸을 ","focus":"움직이는 활동","contextAfter":"을 했습니다.","answer":0,"note":"몸을 움직이는 활동을 운동(運動)이라고 합니다.","options":[
+        {"term":"운동","hanja":"運動","sentence":"건강을 위해 {{운동}}했습니다."},{"term":"행동","hanja":"行動","sentence":"바른 {{행동}}을 실천했습니다."},{"term":"동작","hanja":"動作","sentence":"체조의 {{동작}}을 따라 했습니다."},{"term":"활동","hanja":"活動","sentence":"모둠 {{활동}}에 참여했습니다."}
+      ]},
+      {"contextBefore":"스스로 움직이며 먹이를 먹는 ","focus":"생물","contextAfter":"을 관찰했습니다.","answer":0,"note":"스스로 움직이며 먹이를 먹는 생물을 동물(動物)이라고 합니다.","options":[
+        {"term":"동물","hanja":"動物","sentence":"숲에 사는 {{동물}}을 관찰했습니다."},{"term":"식물","hanja":"植物","sentence":"화단의 {{식물}}을 길렀습니다."},{"term":"광물","hanja":"鑛物","sentence":"암석 속 {{광물}}을 살펴보았습니다."},{"term":"미생물","hanja":"微生物","sentence":"현미경으로 {{미생물}}을 보았습니다."}
+      ]},
+      {"contextBefore":"나무를 심고 가꾸는 뜻을 담은 ","focus":"기념일","contextAfter":"에 묘목을 심었습니다.","answer":0,"note":"나무를 심는 날은 식목일(植木日)입니다.","options":[
+        {"term":"식목일","hanja":"植木日","sentence":"{{식목일}}에 나무를 심었습니다."},{"term":"현충일","hanja":"顯忠日","sentence":"{{현충일}}에 나라를 위해 희생한 분을 기렸습니다."},{"term":"광복절","hanja":"光復節","sentence":"{{광복절}}의 의미를 배웠습니다."},{"term":"개천절","hanja":"開天節","sentence":"{{개천절}}에 나라의 시작을 배웠습니다."}
+      ]}
+    ]
+  },
+  {
+    "slug":"jeon-gwang-eum-seong-gong-cha","ariaLabel":"번개 전, 빛 광, 소리 음, 소리 성, 빌 공, 수레 차","reading":"전 · 광 · 음 · 성 · 공 · 차","meaning":"전기 · 빛 · 소리 · 목소리 · 비다 · 수레","guide":"電·光·音·聲·空·車는 전기와 빛, 소리, 하늘과 교통을 설명하는 과학 낱말에 들어갑니다.",
+    "characters":[
+      {"character":"電","reading":"전","words":["전기","전화","전자"],"explanation":"번개처럼 흐르는 힘은 전기, 전기로 말을 전하는 기계는 전화, 아주 작은 전기 알갱이는 전자입니다."},
+      {"character":"光","reading":"광","words":["광선","일광","전광"],"explanation":"빛의 줄기는 광선, 햇빛은 일광, 전기로 내는 빛은 전광입니다."},
+      {"character":"音","reading":"음","words":["음악","발음","소음"],"explanation":"소리를 짜임새 있게 만든 것은 음악, 말소리를 내는 것은 발음, 시끄러운 소리는 소음입니다."},
+      {"character":"聲","reading":"성","words":["음성","성우","함성"],"explanation":"사람의 목소리는 음성, 목소리로 연기하는 사람은 성우, 여러 사람이 지르는 소리는 함성입니다."},
+      {"character":"空","reading":"공","words":["공기","공중","항공"],"explanation":"빈 곳을 채운 기체는 공기, 땅 위의 빈 공간은 공중, 하늘길을 다니는 일은 항공입니다."},
+      {"character":"車","reading":"차","words":["자동차","주차","전차"],"explanation":"스스로 움직이는 차는 자동차, 차를 세우는 것은 주차, 전기로 움직이는 차는 전차입니다."}
+    ],
+    "questions":[
+      {"contextBefore":"물질을 이루는 아주 작은 ","focus":"전기를 띤 알갱이","contextAfter":"를 배웠습니다.","answer":0,"note":"전기를 띤 아주 작은 알갱이를 전자(電子)라고 합니다.","options":[
+        {"term":"전자","hanja":"電子","sentence":"과학 시간에 {{전자}}를 배웠습니다."},{"term":"전기","hanja":"電氣","sentence":"{{전기}}로 전등을 켰습니다."},{"term":"전화","hanja":"電話","sentence":"가족에게 {{전화}}를 걸었습니다."},{"term":"전선","hanja":"電線","sentence":"안전을 위해 {{전선}}을 만지지 않습니다."}
+      ]},
+      {"contextBefore":"창문으로 들어온 가느다란 ","focus":"빛의 줄기","contextAfter":"를 관찰했습니다.","answer":0,"note":"빛의 줄기를 광선(光線)이라고 합니다.","options":[
+        {"term":"광선","hanja":"光線","sentence":"창문으로 {{광선}}이 들어왔습니다."},{"term":"일광","hanja":"日光","sentence":"식물이 {{일광}}을 받았습니다."},{"term":"전광","hanja":"電光","sentence":"경기장의 {{전광}} 장치를 켰습니다."},{"term":"관광","hanja":"觀光","sentence":"가족과 문화유산을 {{관광}}했습니다."}
+      ]},
+      {"contextBefore":"공사장에서 들리는 ","focus":"시끄러운 소리","contextAfter":"를 줄였습니다.","answer":0,"note":"시끄럽고 불편한 소리를 소음(騷音)이라고 합니다.","options":[
+        {"term":"소음","hanja":"騷音","sentence":"공사장의 {{소음}}을 줄였습니다."},{"term":"음악","hanja":"音樂","sentence":"잔잔한 {{음악}}을 들었습니다."},{"term":"발음","hanja":"發音","sentence":"낱말의 {{발음}}을 연습했습니다."},{"term":"음향","hanja":"音響","sentence":"공연장의 {{음향}}을 조절했습니다."}
+      ]},
+      {"contextBefore":"녹음기에서 친구의 ","focus":"목소리","contextAfter":"를 들었습니다.","answer":0,"note":"사람의 목소리를 음성(音聲)이라고 합니다.","options":[
+        {"term":"음성","hanja":"音聲","sentence":"녹음된 {{음성}}을 들었습니다."},{"term":"성우","hanja":"聲優","sentence":"애니메이션 {{성우}}가 연기했습니다."},{"term":"함성","hanja":"喊聲","sentence":"응원단의 {{함성}}이 울렸습니다."},{"term":"고성","hanja":"高聲","sentence":"복도에서 {{고성}}을 내지 않습니다."}
+      ]},
+      {"contextBefore":"비행기로 하늘길을 다니는 ","focus":"교통","contextAfter":"을 조사했습니다.","answer":0,"note":"비행기로 하늘길을 다니는 교통을 항공(航空)이라고 합니다.","options":[
+        {"term":"항공","hanja":"航空","sentence":"{{항공}} 교통을 조사했습니다."},{"term":"공중","hanja":"空中","sentence":"새가 {{공중}}을 날았습니다."},{"term":"공기","hanja":"空氣","sentence":"맑은 {{공기}}를 마셨습니다."},{"term":"공간","hanja":"空間","sentence":"교실의 빈 {{공간}}을 활용했습니다."}
+      ]},
+      {"contextBefore":"스스로 움직이는 ","focus":"차","contextAfter":"를 타고 이동했습니다.","answer":0,"note":"스스로 움직이는 차를 자동차(自動車)라고 합니다.","options":[
+        {"term":"자동차","hanja":"自動車","sentence":"{{자동차}}를 타고 이동했습니다."},{"term":"전차","hanja":"電車","sentence":"도시의 {{전차}}가 선로를 달렸습니다."},{"term":"열차","hanja":"列車","sentence":"고속 {{열차}}를 탔습니다."},{"term":"화차","hanja":"貨車","sentence":"{{화차}}가 짐을 실어 날랐습니다."}
+      ]}
+    ]
+  }
+]
