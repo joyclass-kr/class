@@ -910,7 +910,7 @@
                 <span class="widget-badge" id="scheduleCountBadge">예정 0개</span>
             </div>
             <div class="card-item-list" id="scheduleList"></div>
-            <div class="schedule-editor">
+            <div class="schedule-editor" id="scheduleEditor" hidden>
                 <input class="board-input schedule-date-input" id="scheduleDateInput" type="date" aria-label="일정 날짜">
                 <input class="board-input" id="scheduleTitleInput" maxlength="60" placeholder="선택한 날짜의 일정 입력..." aria-label="일정 내용">
                 <button class="add-btn" id="addScheduleBtn" aria-label="주요일정 추가">+</button>
@@ -1051,7 +1051,9 @@
         let isEditMode = false;
         let sloganAlign = localStorage.getItem("sloganAlign") || "center";
         let sloganFontSize = parseInt(localStorage.getItem("sloganFontSize") || "42", 10);
-        let schedules = JSON.parse(localStorage.getItem("dashboardSchedules") || '[]');
+        let schedules = [];
+        let activeScheduleClassId = null;
+        let canEditSchedules = false;
         let missingStudents = new Set(JSON.parse(localStorage.getItem("dashboardMissingStudents") || '[]'));
         let rosterStudents = [];
 
@@ -1089,6 +1091,7 @@
         const scheduleTitleInput = document.getElementById("scheduleTitleInput");
         const addScheduleBtn = document.getElementById("addScheduleBtn");
         const scheduleCountBadge = document.getElementById("scheduleCountBadge");
+        const scheduleEditor = document.getElementById("scheduleEditor");
 
         const mealList = document.getElementById("mealList");
         const schoolNameTag = document.getElementById("schoolNameTag");
@@ -1396,6 +1399,8 @@
                 const data = await res.json();
                 if (data?.classroom?.students && data.classroom.students.length > 0) {
                     rosterStudents = data.classroom.students;
+                    activeScheduleClassId = data.classroom.id;
+                    canEditSchedules = !data.classroom.isReadOnly;
                     if (data.classroom.id && classSwitcherSelect) {
                         classSwitcherSelect.value = data.classroom.id;
                     }
@@ -1406,6 +1411,7 @@
                 rosterStudents = Array.from({length: 30}, (_, i) => ({ number: String(i+1), name: `${i+1}번` }));
             }
             renderChecklist();
+            await loadSchedules(activeScheduleClassId);
         }
 
         const classSwitcherSelectEl = document.getElementById("classSwitcherSelect");
@@ -1464,8 +1470,59 @@
 
         scheduleDateInput.value = localDateKey();
 
-        function saveSchedules() {
-            localStorage.setItem("dashboardSchedules", JSON.stringify(schedules));
+        async function scheduleApi(path, options = {}) {
+            const response = await fetch(path, {
+                ...options,
+                headers: { "Content-Type": "application/json", ...(options.headers || {}) }
+            });
+            const payload = await response.json().catch(() => ({}));
+            if (!response.ok) throw new Error(payload.message || "일정을 불러오지 못했습니다.");
+            return payload;
+        }
+
+        async function loadSchedules(classId = null) {
+            const query = classId ? `?classId=${encodeURIComponent(classId)}` : "";
+            try {
+                const data = await scheduleApi(`/api/class/schedules${query}`);
+                activeScheduleClassId = data.classId;
+                canEditSchedules = Boolean(data.canEdit);
+                schedules = Array.isArray(data.schedules) ? data.schedules : [];
+                scheduleEditor.hidden = !canEditSchedules;
+                try {
+                    await migrateLocalSchedules();
+                } catch (migrationError) {
+                    console.warn("기기 저장 일정을 아직 이전하지 못했습니다.", migrationError);
+                }
+            } catch (error) {
+                schedules = [];
+                canEditSchedules = false;
+                scheduleEditor.hidden = true;
+            }
+            renderSchedules();
+            renderCalendar();
+        }
+
+        async function migrateLocalSchedules() {
+            if (!canEditSchedules || !activeScheduleClassId) return;
+            const migrationKey = `dashboardSchedulesMigrated_${activeScheduleClassId}`;
+            if (localStorage.getItem(migrationKey) === "1") return;
+            let localSchedules = [];
+            try {
+                const saved = JSON.parse(localStorage.getItem("dashboardSchedules") || "[]");
+                localSchedules = Array.isArray(saved) ? saved : [];
+            } catch (_) {
+                localSchedules = [];
+            }
+            for (const item of localSchedules) {
+                if (!item?.date || !item?.title) continue;
+                const data = await scheduleApi("/api/teacher/schedules", {
+                    method: "POST",
+                    body: JSON.stringify({ classId: activeScheduleClassId, date: item.date, title: item.title })
+                });
+                schedules.push(data.schedule);
+            }
+            localStorage.removeItem("dashboardSchedules");
+            localStorage.setItem(migrationKey, "1");
         }
 
         function renderSchedules() {
@@ -1495,31 +1552,48 @@
                 const titleSpan = document.createElement("span");
                 titleSpan.style.flex = "1";
                 titleSpan.textContent = item.title;
-                const del = document.createElement("button");
-                del.className = "board-item-del";
-                del.innerHTML = "&times;";
-                del.setAttribute("aria-label", `${item.title} 일정 삭제`);
-                del.addEventListener("click", () => {
-                    schedules = schedules.filter((schedule) => schedule.id !== item.id);
-                    saveSchedules();
-                    renderSchedules();
-                    renderCalendar();
-                });
-                div.append(dateSpan, titleSpan, del);
+                div.append(dateSpan, titleSpan);
+                if (canEditSchedules) {
+                    const del = document.createElement("button");
+                    del.className = "board-item-del";
+                    del.innerHTML = "&times;";
+                    del.setAttribute("aria-label", `${item.title} 일정 삭제`);
+                    del.addEventListener("click", async () => {
+                        try {
+                            await scheduleApi(`/api/teacher/schedules/${encodeURIComponent(item.id)}`, { method: "DELETE" });
+                            schedules = schedules.filter((schedule) => schedule.id !== item.id);
+                            renderSchedules();
+                            renderCalendar();
+                        } catch (error) {
+                            alert(error.message);
+                        }
+                    });
+                    div.append(del);
+                }
                 scheduleList.append(div);
             });
         }
 
-        function addSchedule() {
+        async function addSchedule() {
             const date = scheduleDateInput.value;
             const title = scheduleTitleInput.value.trim();
-            if (!date || !title) return;
-            schedules.push({ id: crypto.randomUUID ? crypto.randomUUID() : `${Date.now()}-${Math.random()}`, date, title });
-            scheduleTitleInput.value = "";
-            saveSchedules();
-            renderSchedules();
-            renderCalendar();
-            scheduleTitleInput.focus();
+            if (!canEditSchedules || !activeScheduleClassId || !date || !title) return;
+            addScheduleBtn.disabled = true;
+            try {
+                const data = await scheduleApi("/api/teacher/schedules", {
+                    method: "POST",
+                    body: JSON.stringify({ classId: activeScheduleClassId, date, title })
+                });
+                schedules.push(data.schedule);
+                scheduleTitleInput.value = "";
+                renderSchedules();
+                renderCalendar();
+                scheduleTitleInput.focus();
+            } catch (error) {
+                alert(error.message);
+            } finally {
+                addScheduleBtn.disabled = false;
+            }
         }
 
         addScheduleBtn.addEventListener("click", addSchedule);

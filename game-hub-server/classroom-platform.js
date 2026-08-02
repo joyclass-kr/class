@@ -361,6 +361,19 @@ function createClassroomPlatform(options = {}) {
         updated_at TIMESTAMPTZ NOT NULL DEFAULT NOW(),
         PRIMARY KEY (class_id, content_path)
       )`,
+      `CREATE TABLE IF NOT EXISTS classroom_schedules (
+        id BIGSERIAL PRIMARY KEY,
+        class_id BIGINT NOT NULL REFERENCES classroom_classes(id) ON DELETE CASCADE,
+        event_date DATE NOT NULL,
+        title TEXT NOT NULL CHECK (char_length(title) BETWEEN 1 AND 60),
+        created_by BIGINT REFERENCES classroom_users(id) ON DELETE SET NULL,
+        created_at TIMESTAMPTZ NOT NULL DEFAULT NOW(),
+        updated_at TIMESTAMPTZ NOT NULL DEFAULT NOW()
+      )`,
+      `CREATE INDEX IF NOT EXISTS classroom_schedules_class_date_idx
+        ON classroom_schedules (class_id, event_date, id)`,
+      `CREATE UNIQUE INDEX IF NOT EXISTS classroom_schedules_unique_event_idx
+        ON classroom_schedules (class_id, event_date, title)`,
       `WITH first_login_upgrade AS (
         INSERT INTO classroom_settings (setting_key, setting_value)
         VALUES ('school_login_v2_enabled', 'true')
@@ -547,6 +560,35 @@ function createClassroomPlatform(options = {}) {
       return result.rows[0]?.id || null;
     }
     return null;
+  }
+
+  async function readableScheduleClassId(user, requestedClassId) {
+    if (user.role === "student") return userClassId(user);
+    if (user.role !== "teacher") return null;
+    const requested = Number(requestedClassId);
+    const result = await pool.query(
+      `SELECT c.id
+       FROM classroom_classes c
+       JOIN classroom_teachers t ON t.school_id = c.school_id
+       WHERE t.user_id = $1 AND t.active = TRUE
+         AND ($2::BIGINT IS NULL OR c.id = $2)
+       ORDER BY CASE WHEN c.teacher_user_id = $1 THEN 0 ELSE 1 END, c.updated_at DESC
+       LIMIT 1`,
+      [user.id, Number.isInteger(requested) && requested > 0 ? requested : null]
+    );
+    return result.rows[0]?.id || null;
+  }
+
+  async function writableScheduleClassId(teacher, requestedClassId) {
+    const requested = Number(requestedClassId);
+    const result = await pool.query(
+      `SELECT id FROM classroom_classes
+       WHERE teacher_user_id = $1
+         AND ($2::BIGINT IS NULL OR id = $2)
+       ORDER BY updated_at DESC LIMIT 1`,
+      [teacher.id, Number.isInteger(requested) && requested > 0 ? requested : null]
+    );
+    return result.rows[0]?.id || null;
   }
 
   function normalizeContentPath(value) {
@@ -1240,6 +1282,71 @@ function createClassroomPlatform(options = {}) {
         active: profile.active
       } : null
     });
+  }));
+
+  router.get("/class/schedules", asyncRoute(async (req, res) => {
+    const user = await requireUser(req);
+    const classId = await readableScheduleClassId(user, req.query.classId);
+    if (!classId) throw new HttpError(403, "CLASS_ACCESS_REQUIRED", "No classroom schedule is available for this account.");
+    const result = await pool.query(
+      `SELECT id, event_date::TEXT AS event_date, title
+       FROM classroom_schedules
+       WHERE class_id = $1
+         AND event_date >= CURRENT_DATE - 31
+         AND event_date < CURRENT_DATE + 370
+       ORDER BY event_date, id`,
+      [classId]
+    );
+    res.json({
+      classId,
+      canEdit: user.role === "teacher" && String(await writableScheduleClassId(user, classId)) === String(classId),
+      schedules: result.rows.map((row) => ({ id: String(row.id), date: row.event_date, title: row.title }))
+    });
+  }));
+
+  router.post("/teacher/schedules", asyncRoute(async (req, res) => {
+    const teacher = await requireTeacher(req);
+    const classId = await writableScheduleClassId(teacher, req.body?.classId);
+    if (!classId) throw new HttpError(403, "CLASS_WRITE_REQUIRED", "Only the homeroom teacher can add this class schedule.");
+    const date = String(req.body?.date || "").trim();
+    const title = String(req.body?.title || "").normalize("NFC").trim();
+    const parsedDate = /^\d{4}-\d{2}-\d{2}$/.test(date) ? new Date(`${date}T00:00:00Z`) : null;
+    if (
+      !parsedDate || Number.isNaN(parsedDate.getTime()) ||
+      parsedDate.toISOString().slice(0, 10) !== date
+    ) {
+      throw new HttpError(400, "INVALID_SCHEDULE_DATE", "Choose a valid schedule date.");
+    }
+    if (!title || title.length > 60) {
+      throw new HttpError(400, "INVALID_SCHEDULE_TITLE", "Schedule titles must contain 1 to 60 characters.");
+    }
+    const result = await pool.query(
+      `INSERT INTO classroom_schedules (class_id, event_date, title, created_by)
+       VALUES ($1, $2::DATE, $3, $4)
+       ON CONFLICT (class_id, event_date, title) DO UPDATE
+       SET updated_at = NOW()
+       RETURNING id, event_date::TEXT AS event_date, title`,
+      [classId, date, title, teacher.id]
+    );
+    const row = result.rows[0];
+    res.status(201).json({ schedule: { id: String(row.id), date: row.event_date, title: row.title } });
+  }));
+
+  router.delete("/teacher/schedules/:scheduleId", asyncRoute(async (req, res) => {
+    const teacher = await requireTeacher(req);
+    const scheduleId = Number(req.params.scheduleId);
+    if (!Number.isInteger(scheduleId) || scheduleId < 1) {
+      throw new HttpError(400, "INVALID_SCHEDULE", "Schedule not found.");
+    }
+    const result = await pool.query(
+      `DELETE FROM classroom_schedules s
+       USING classroom_classes c
+       WHERE s.id = $1 AND c.id = s.class_id AND c.teacher_user_id = $2
+       RETURNING s.id`,
+      [scheduleId, teacher.id]
+    );
+    if (!result.rows[0]) throw new HttpError(404, "SCHEDULE_NOT_FOUND", "Schedule not found.");
+    res.json({ ok: true });
   }));
 
   router.post("/teacher/claim", asyncRoute(async (req, res) => {
