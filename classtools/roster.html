@@ -191,7 +191,7 @@
 
         .paste-grid {
             display: grid;
-            grid-template-columns: minmax(55px, 0.5fr) minmax(100px, 1.15fr) minmax(60px, 0.6fr) minmax(85px, 0.8fr) minmax(75px, 0.7fr) minmax(105px, 1fr);
+            grid-template-columns: minmax(56px, 0.5fr) minmax(150px, 1.35fr) minmax(92px, 0.75fr) minmax(112px, 0.9fr) minmax(112px, 0.9fr) minmax(132px, 1.1fr);
             gap: 10px;
         }
 
@@ -201,10 +201,11 @@
 
         .field-head {
             display: flex;
-            align-items: baseline;
+            align-items: flex-start;
             justify-content: space-between;
             gap: 8px;
             margin: 0 2px 6px;
+            min-height: 48px;
         }
 
         .field-help {
@@ -222,6 +223,8 @@
             color: var(--muted);
             font-size: 0.8rem;
             font-variant-numeric: tabular-nums;
+            flex: 0 0 auto;
+            white-space: nowrap;
         }
 
         textarea {
