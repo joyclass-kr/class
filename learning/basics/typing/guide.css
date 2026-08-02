@@ -1,1 +1,171 @@
-.finger-guide{background:#fff;border:1px solid #e7dece;border-radius:24px;padding:22px 26px;box-shadow:0 14px 38px #65523516}.guide-head{display:flex;justify-content:space-between;align-items:center;gap:16px}.guide-head p{margin:0 0 3px;color:#f05d3d;font-weight:850;font-size:14px}.guide-head h2{margin:0;font-size:25px}.guide-language button{min-width:90px}.finger-stage{display:grid;grid-template-columns:1fr 210px;align-items:center;gap:18px;margin:12px 0}.hands{display:flex;justify-content:center;gap:36px;min-height:190px;align-items:end}.hand{position:relative;display:flex;align-items:end;gap:5px;height:175px;padding-bottom:48px}.palm{position:absolute;bottom:0;width:174px;height:66px;border-radius:28px 28px 18px 18px;background:#f3c8a8;color:#80583f;display:grid;place-items:center;font-size:13px;font-weight:850}.left-hand .palm{right:0}.right-hand .palm{left:0}.finger{position:relative;z-index:1;display:flex;flex-direction:column;align-items:center}.finger i{display:block;width:30px;height:var(--h,82px);border-radius:20px 20px 11px 11px;background:#f3c8a8;border:2px solid #ddb08f;transition:.18s}.finger b{position:absolute;top:22px;writing-mode:vertical-rl;font-size:10px;color:#865e47}.finger.pinky{--h:62px}.finger.ring{--h:82px}.finger.middle{--h:96px}.finger.index{--h:88px}.finger.thumb{--h:55px;transform:rotate(32deg);margin:0 7px -13px}.right-hand .thumb{transform:rotate(-32deg)}.finger.active i{background:#ffd34e;border-color:#e6a817;box-shadow:0 0 0 6px #ffd34e38}.finger.active b{color:#5c4200}.finger-instruction{text-align:center;background:#fff5dc;border-radius:20px;padding:15px}.finger-instruction span{font-size:13px;color:#8b6931;font-weight:800}.finger-instruction strong{display:block;font-size:50px;color:#293346;line-height:1.1;margin:5px}.finger-instruction p{margin:0;color:#596579;font-size:13px;line-height:1.5}.keyboard{width:min(100%,760px);margin:8px auto;display:flex;flex-direction:column;gap:6px}.key-row{display:flex;justify-content:center;gap:6px}.key{width:48px;height:44px;border:1px solid #d7dce2;border-bottom-width:3px;border-radius:9px;background:#f7f8fa;color:#465064;font-weight:800;display:grid;place-items:center}.key.home-key{box-shadow:inset 0 -4px #8fd7bf}.key.active{background:#ffd34e;border-color:#dfaa18;transform:translateY(2px);box-shadow:0 0 0 4px #ffd34e38}.key[data-finger="lp"],.key[data-finger="rp"]{border-top-color:#e87575}.key[data-finger="lr"],.key[data-finger="rr"]{border-top-color:#e7a65d}.key[data-finger="lm"],.key[data-finger="rm"]{border-top-color:#6eb1dc}.key[data-finger="li"],.key[data-finger="ri"]{border-top-color:#65bd91}.guide-progress{display:flex;align-items:center;justify-content:center;gap:10px;color:#707b8b;font-size:13px;font-weight:800}.guide-progress div{width:200px;height:7px;background:#eee9e1;border-radius:10px;overflow:hidden}.guide-progress i{display:block;width:0;height:100%;background:#21ad7d;transition:.2s}@media(max-width:700px){.finger-guide{padding:16px 12px}.guide-head{align-items:flex-start}.guide-head h2{font-size:20px}.guide-language button{min-width:64px;padding:0 8px}.finger-stage{grid-template-columns:1fr}.hands{gap:10px;transform:scale(.82);margin:-8px -45px -18px}.finger-instruction{display:flex;align-items:center;justify-content:center;gap:8px;padding:9px}.finger-instruction strong{font-size:38px}.finger-instruction p{max-width:190px}.keyboard{overflow:hidden}.key{width:9.2vw;max-width:48px;height:42px}.key-row{gap:3px}}
+.finger-guide {
+  padding: 22px 26px;
+  border: 1px solid #e7dece;
+  border-radius: 24px;
+  background: #fff;
+  box-shadow: 0 14px 38px #65523516;
+}
+
+.guide-head { display: flex; align-items: center; justify-content: space-between; gap: 16px; }
+.guide-head p { margin: 0 0 3px; color: #f05d3d; font-size: 14px; font-weight: 850; }
+.guide-head h2 { margin: 0; font-size: 25px; }
+.guide-language button { min-width: 90px; }
+.finger-stage { display: grid; grid-template-columns: 1fr 210px; align-items: center; gap: 18px; margin: 12px 0; }
+
+.hands {
+  display: flex;
+  align-items: end;
+  justify-content: center;
+  gap: 44px;
+  min-height: 218px;
+  padding-top: 8px;
+}
+
+.hand {
+  position: relative;
+  display: flex;
+  align-items: end;
+  gap: 3px;
+  width: 218px;
+  height: 204px;
+  padding-bottom: 74px;
+}
+
+.palm {
+  position: absolute;
+  bottom: 18px;
+  display: grid;
+  place-items: end center;
+  width: 174px;
+  height: 84px;
+  padding-bottom: 16px;
+  border: 2px solid #d89f77;
+  border-radius: 34px 34px 25px 25px;
+  background: linear-gradient(145deg, #f9d5b9, #efb78d);
+  box-shadow: inset 0 -10px 18px #c9805026, 0 8px 15px #7544271c;
+  color: #70452e;
+  font-size: 13px;
+  font-weight: 900;
+}
+
+.palm::after {
+  content: "";
+  position: absolute;
+  bottom: -21px;
+  width: 92px;
+  height: 28px;
+  border: 2px solid #d89f77;
+  border-top: 0;
+  border-radius: 0 0 20px 20px;
+  background: linear-gradient(90deg, #efb78d, #f7cbaa, #efb78d);
+}
+
+.left-hand .palm { right: 0; }
+.right-hand .palm { left: 0; }
+
+.finger {
+  position: relative;
+  z-index: 2;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.finger i {
+  position: relative;
+  display: block;
+  width: 34px;
+  height: var(--h, 94px);
+  border: 2px solid #d89f77;
+  border-bottom: 0;
+  border-radius: 18px 18px 7px 7px;
+  background: linear-gradient(90deg, #edaf84, #f9d4b7 48%, #edaf84);
+  box-shadow: inset 0 -14px 17px #c77d4b1c;
+  transition: .18s;
+}
+
+.finger i::before {
+  content: "";
+  position: absolute;
+  top: 7px;
+  left: 8px;
+  width: 14px;
+  height: 19px;
+  border: 1px solid #d9a382;
+  border-radius: 8px 8px 6px 6px;
+  background: #ffe4d1;
+}
+
+.finger i::after {
+  content: "";
+  position: absolute;
+  top: 48%;
+  right: 5px;
+  left: 5px;
+  height: 1px;
+  background: #c681552c;
+  box-shadow: 0 15px #c681552c;
+}
+
+.finger b {
+  position: absolute;
+  z-index: 1;
+  top: 35px;
+  color: #70452e;
+  font-size: 9px;
+  line-height: 1;
+  letter-spacing: -.05em;
+  writing-mode: vertical-rl;
+}
+
+.finger.pinky { --h: 70px; }
+.finger.ring { --h: 92px; }
+.finger.middle { --h: 109px; }
+.finger.index { --h: 99px; }
+.finger.thumb { --h: 66px; margin: 0 9px -19px; }
+.finger.thumb i { width: 37px; }
+.finger.thumb b { top: 27px; }
+.left-hand .thumb { transform: rotate(43deg); transform-origin: 50% 100%; }
+.right-hand .thumb { transform: rotate(-43deg); transform-origin: 50% 100%; }
+
+.finger.active i {
+  border-color: #dfa00b;
+  background: linear-gradient(90deg, #ffc531, #ffe276 50%, #ffc531);
+  box-shadow: 0 0 0 6px #ffd34e3d, 0 0 22px #ffc92870;
+  transform: translateY(-4px);
+}
+
+.finger.active i::before { border-color: #dfa00b; background: #fff1af; }
+.finger.active b { color: #513600; }
+.finger-instruction { padding: 15px; border-radius: 20px; background: #fff5dc; text-align: center; }
+.finger-instruction span { color: #8b6931; font-size: 13px; font-weight: 800; }
+.finger-instruction strong { display: block; margin: 5px; color: #293346; font-size: 50px; line-height: 1.1; }
+.finger-instruction p { margin: 0; color: #596579; font-size: 13px; line-height: 1.5; }
+
+.keyboard { display: flex; flex-direction: column; gap: 6px; width: min(100%, 760px); margin: 8px auto; }
+.key-row { display: flex; justify-content: center; gap: 6px; }
+.key { display: grid; place-items: center; width: 48px; height: 44px; border: 1px solid #d7dce2; border-bottom-width: 3px; border-radius: 9px; background: #f7f8fa; color: #465064; font-weight: 800; }
+.key.home-key { box-shadow: inset 0 -4px #8fd7bf; }
+.key.active { border-color: #dfaa18; background: #ffd34e; box-shadow: 0 0 0 4px #ffd34e38; transform: translateY(2px); }
+.key[data-finger="lp"], .key[data-finger="rp"] { border-top-color: #e87575; }
+.key[data-finger="lr"], .key[data-finger="rr"] { border-top-color: #e7a65d; }
+.key[data-finger="lm"], .key[data-finger="rm"] { border-top-color: #6eb1dc; }
+.key[data-finger="li"], .key[data-finger="ri"] { border-top-color: #65bd91; }
+.guide-progress { display: flex; align-items: center; justify-content: center; gap: 10px; color: #707b8b; font-size: 13px; font-weight: 800; }
+.guide-progress div { overflow: hidden; width: 200px; height: 7px; border-radius: 10px; background: #eee9e1; }
+.guide-progress i { display: block; width: 0; height: 100%; background: #21ad7d; transition: .2s; }
+
+@media (max-width: 700px) {
+  .finger-guide { padding: 16px 12px; }
+  .guide-head { align-items: flex-start; }
+  .guide-head h2 { font-size: 20px; }
+  .guide-language button { min-width: 64px; padding: 0 8px; }
+  .finger-stage { grid-template-columns: 1fr; }
+  .hands { gap: 10px; margin: -8px -45px -18px; transform: scale(.78); }
+  .finger-instruction { display: flex; align-items: center; justify-content: center; gap: 8px; padding: 9px; }
+  .finger-instruction strong { font-size: 38px; }
+  .finger-instruction p { max-width: 190px; }
+  .keyboard { overflow: hidden; }
+  .key { width: 9.2vw; max-width: 48px; height: 42px; }
+  .key-row { gap: 3px; }
+}
