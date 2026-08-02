@@ -1455,6 +1455,34 @@ function createClassroomPlatform(options = {}) {
     res.status(201).json({ schedule: { id: String(row.id), date: row.event_date, title: row.title } });
   }));
 
+  router.patch("/teacher/schedules/:scheduleId", asyncRoute(async (req, res) => {
+    const teacher = await requireTeacher(req);
+    const scheduleId = Number(req.params.scheduleId);
+    const date = String(req.body?.date || "").trim();
+    const title = String(req.body?.title || "").normalize("NFC").trim();
+    const parsedDate = /^\d{4}-\d{2}-\d{2}$/.test(date) ? new Date(`${date}T00:00:00Z`) : null;
+    if (!Number.isInteger(scheduleId) || scheduleId < 1) {
+      throw new HttpError(400, "INVALID_SCHEDULE", "Schedule not found.");
+    }
+    if (!parsedDate || Number.isNaN(parsedDate.getTime()) || parsedDate.toISOString().slice(0, 10) !== date) {
+      throw new HttpError(400, "INVALID_SCHEDULE_DATE", "Choose a valid schedule date.");
+    }
+    if (!title || title.length > 60) {
+      throw new HttpError(400, "INVALID_SCHEDULE_TITLE", "Schedule titles must contain 1 to 60 characters.");
+    }
+    const result = await pool.query(
+      `UPDATE classroom_schedules s
+       SET event_date = $2::DATE, title = $3, updated_at = NOW()
+       FROM classroom_classes c
+       WHERE s.id = $1 AND c.id = s.class_id AND c.teacher_user_id = $4
+       RETURNING s.id, s.event_date::TEXT AS event_date, s.title`,
+      [scheduleId, date, title, teacher.id]
+    );
+    if (!result.rows[0]) throw new HttpError(404, "SCHEDULE_NOT_FOUND", "Schedule not found.");
+    const row = result.rows[0];
+    res.json({ schedule: { id: String(row.id), date: row.event_date, title: row.title, type: "schedule" } });
+  }));
+
   router.delete("/teacher/schedules/:scheduleId", asyncRoute(async (req, res) => {
     const teacher = await requireTeacher(req);
     const scheduleId = Number(req.params.scheduleId);

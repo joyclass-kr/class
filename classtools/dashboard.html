@@ -421,6 +421,15 @@
             line-height: 1.4;
         }
 
+        .board-item.schedule-today {
+            border-color: var(--accent-green);
+            background: rgba(76, 201, 140, 0.13);
+        }
+
+        .board-item.schedule-this-week:not(.schedule-today) {
+            border-color: rgba(255, 193, 92, 0.45);
+        }
+
         .schedule-empty {
             color: var(--text-muted);
             text-align: center;
@@ -434,6 +443,8 @@
             font-size: 0.8rem;
             font-weight: 900;
         }
+
+        .schedule-date.this-week { color: var(--accent-amber); }
 
         .calendar-nav {
             display: flex;
@@ -466,7 +477,7 @@
 
         .schedule-editor {
             display: grid;
-            grid-template-columns: 110px minmax(0, 1fr) 52px;
+            grid-template-columns: 110px minmax(0, 1fr) 52px 52px;
             gap: 8px;
             margin-top: 10px;
         }
@@ -481,13 +492,18 @@
             color: var(--text-sub);
             cursor: pointer;
             font-size: 1.1rem;
-            padding: 0 4px;
+            min-width: 44px;
+            min-height: 44px;
+            padding: 0 8px;
             transition: color 0.15s;
         }
 
         .board-item-del:hover {
             color: var(--accent-danger);
         }
+
+        .board-item-edit:hover { color: var(--accent-green); }
+        .schedule-actions { display: flex; align-items: center; gap: 2px; }
 
         .board-add-box {
             display: flex;
@@ -914,6 +930,7 @@
                 <input class="board-input schedule-date-input" id="scheduleDateInput" type="date" aria-label="일정 날짜">
                 <input class="board-input" id="scheduleTitleInput" maxlength="60" placeholder="선택한 날짜의 일정 입력..." aria-label="일정 내용">
                 <button class="add-btn" id="addScheduleBtn" aria-label="주요일정 추가">+</button>
+                <button class="add-btn" id="cancelScheduleEditBtn" aria-label="일정 수정 취소" hidden>×</button>
             </div>
         </section>
 
@@ -1092,6 +1109,8 @@
         const addScheduleBtn = document.getElementById("addScheduleBtn");
         const scheduleCountBadge = document.getElementById("scheduleCountBadge");
         const scheduleEditor = document.getElementById("scheduleEditor");
+        const cancelScheduleEditBtn = document.getElementById("cancelScheduleEditBtn");
+        let editingScheduleId = null;
 
         const mealList = document.getElementById("mealList");
         const schoolNameTag = document.getElementById("schoolNameTag");
@@ -1529,6 +1548,10 @@
         function renderSchedules() {
             scheduleList.replaceChildren();
             const today = localDateKey();
+            const now = new Date(`${today}T00:00:00`);
+            const weekEnd = new Date(now);
+            weekEnd.setDate(now.getDate() + (7 - now.getDay()) % 7);
+            const weekEndKey = localDateKey(weekEnd);
             const upcoming = schedules
                 .filter((item) => item.date >= today)
                 .sort((a, b) => a.date.localeCompare(b.date) || a.title.localeCompare(b.title));
@@ -1545,16 +1568,38 @@
             upcoming.slice(0, 8).forEach((item) => {
                 const div = document.createElement("div");
                 div.className = "board-item";
+                if (item.date === today) div.classList.add("schedule-today");
+                else if (item.date <= weekEndKey) div.classList.add("schedule-this-week");
                 const date = new Date(`${item.date}T00:00:00`);
-                const label = item.date === today ? "오늘" : `${date.getMonth() + 1}/${date.getDate()}`;
+                const isThisWeek = item.date > today && item.date <= weekEndKey;
+                const weekday = ["일", "월", "화", "수", "목", "금", "토"][date.getDay()];
+                const label = item.date === today ? "오늘" : isThisWeek ? `${weekday}요일` : `${date.getMonth() + 1}/${date.getDate()}`;
                 const dateSpan = document.createElement("span");
                 dateSpan.className = "schedule-date";
+                if (isThisWeek) dateSpan.classList.add("this-week");
                 dateSpan.textContent = label;
                 const titleSpan = document.createElement("span");
                 titleSpan.style.flex = "1";
                 titleSpan.textContent = item.title;
                 div.append(dateSpan, titleSpan);
                 if (canEditSchedules && item.type !== "birthday") {
+                    const actions = document.createElement("span");
+                    actions.className = "schedule-actions";
+                    const edit = document.createElement("button");
+                    edit.className = "board-item-del board-item-edit";
+                    edit.textContent = "✎";
+                    edit.setAttribute("aria-label", `${item.title} 일정 수정`);
+                    edit.addEventListener("click", () => {
+                        editingScheduleId = item.id;
+                        scheduleDateInput.value = item.date;
+                        scheduleTitleInput.value = item.title;
+                        addScheduleBtn.textContent = "✓";
+                        addScheduleBtn.setAttribute("aria-label", "주요일정 수정 저장");
+                        cancelScheduleEditBtn.hidden = false;
+                        renderCalendar();
+                        scheduleTitleInput.focus();
+                        scheduleTitleInput.select();
+                    });
                     const del = document.createElement("button");
                     del.className = "board-item-del";
                     del.innerHTML = "&times;";
@@ -1563,13 +1608,15 @@
                         try {
                             await scheduleApi(`/api/teacher/schedules/${encodeURIComponent(item.id)}`, { method: "DELETE" });
                             schedules = schedules.filter((schedule) => schedule.id !== item.id);
+                            if (editingScheduleId === item.id) resetScheduleEditor();
                             renderSchedules();
                             renderCalendar();
                         } catch (error) {
                             alert(error.message);
                         }
                     });
-                    div.append(del);
+                    actions.append(edit, del);
+                    div.append(actions);
                 }
                 scheduleList.append(div);
             });
@@ -1581,12 +1628,18 @@
             if (!canEditSchedules || !activeScheduleClassId || !date || !title) return;
             addScheduleBtn.disabled = true;
             try {
-                const data = await scheduleApi("/api/teacher/schedules", {
-                    method: "POST",
+                const data = await scheduleApi(editingScheduleId
+                    ? `/api/teacher/schedules/${encodeURIComponent(editingScheduleId)}`
+                    : "/api/teacher/schedules", {
+                    method: editingScheduleId ? "PATCH" : "POST",
                     body: JSON.stringify({ classId: activeScheduleClassId, date, title })
                 });
-                schedules.push(data.schedule);
-                scheduleTitleInput.value = "";
+                if (editingScheduleId) {
+                    schedules = schedules.map((item) => item.id === editingScheduleId ? data.schedule : item);
+                } else {
+                    schedules.push(data.schedule);
+                }
+                resetScheduleEditor();
                 renderSchedules();
                 renderCalendar();
                 scheduleTitleInput.focus();
@@ -1597,9 +1650,25 @@
             }
         }
 
+        function resetScheduleEditor() {
+            editingScheduleId = null;
+            scheduleTitleInput.value = "";
+            addScheduleBtn.textContent = "+";
+            addScheduleBtn.setAttribute("aria-label", "주요일정 추가");
+            cancelScheduleEditBtn.hidden = true;
+        }
+
         addScheduleBtn.addEventListener("click", addSchedule);
+        cancelScheduleEditBtn.addEventListener("click", () => {
+            resetScheduleEditor();
+            renderCalendar();
+        });
         scheduleTitleInput.addEventListener("keydown", (event) => {
             if (event.key === "Enter") addSchedule();
+            if (event.key === "Escape" && editingScheduleId) {
+                resetScheduleEditor();
+                renderCalendar();
+            }
         });
 
         renderSchedules();
