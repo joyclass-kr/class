@@ -2153,6 +2153,7 @@ html[data-race-mode="true"] body { padding-bottom: 72px; }
 
 .grade-four-multiply-question.vertical {
   display: grid;
+  grid-template-columns: minmax(0, 1fr);
   place-items: center;
   border-right: 1px dashed #d8d2ca;
   border-bottom: 1px dashed #d8d2ca;
