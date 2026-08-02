@@ -11,6 +11,9 @@ const JOIN_CODE_ALPHABET = "ABCDEFGHJKLMNPQRSTUVWXYZ23456789";
 const DEFAULT_STUDENT_PASSWORD = "123456";
 const STUDENT_PASSWORD_PATTERN = /^\d{6}$/;
 const DEFAULT_TEACHER_PASSWORD = "123456";
+const AUTH_FAILURE_LIMIT = 30;
+const AUTH_FAILURE_WINDOW_MS = 15 * 60 * 1000;
+const AUTH_FAILURE_MAX_ENTRIES = 5000;
 
 class HttpError extends Error {
   constructor(status, code, message) {
@@ -18,6 +21,80 @@ class HttpError extends Error {
     this.status = status;
     this.code = code;
   }
+}
+
+function createAuthenticationFailureLimiter(options = {}) {
+  const limit = Number(options.limit) || AUTH_FAILURE_LIMIT;
+  const windowMs = Number(options.windowMs) || AUTH_FAILURE_WINDOW_MS;
+  const maxEntries = Number(options.maxEntries) || AUTH_FAILURE_MAX_ENTRIES;
+  const now = typeof options.now === "function" ? options.now : Date.now;
+  const failures = new Map();
+
+  function digest(value) {
+    return crypto.createHash("sha256").update(String(value || "unknown")).digest("hex");
+  }
+
+  function clientAddress(req) {
+    return String(req?.ip || req?.socket?.remoteAddress || "unknown").trim().slice(0, 128) || "unknown";
+  }
+
+  function keys(req, scope, identity) {
+    const result = [`${scope}:ip:${digest(clientAddress(req))}`];
+    if (identity) result.push(`${scope}:identity:${digest(identity)}`);
+    return result;
+  }
+
+  function prune(timestamp) {
+    for (const [key, entry] of failures) {
+      if (timestamp - entry.startedAt >= windowMs) failures.delete(key);
+    }
+    while (failures.size > maxEntries) {
+      const oldestKey = failures.keys().next().value;
+      if (!oldestKey) break;
+      failures.delete(oldestKey);
+    }
+  }
+
+  function enforce(req, scope, identity = "") {
+    const timestamp = now();
+    prune(timestamp);
+    let retryAfterSeconds = 0;
+    for (const key of keys(req, scope, identity)) {
+      const entry = failures.get(key);
+      if (!entry || entry.count < limit) continue;
+      retryAfterSeconds = Math.max(
+        retryAfterSeconds,
+        Math.max(1, Math.ceil((entry.startedAt + windowMs - timestamp) / 1000))
+      );
+    }
+    if (retryAfterSeconds > 0) {
+      const error = new HttpError(
+        429,
+        "TOO_MANY_AUTH_FAILURES",
+        "로그인에 여러 번 실패했습니다. 15분 후 다시 시도해 주세요."
+      );
+      error.retryAfterSeconds = retryAfterSeconds;
+      throw error;
+    }
+  }
+
+  function recordFailure(req, scope, identity = "") {
+    const timestamp = now();
+    prune(timestamp);
+    for (const key of keys(req, scope, identity)) {
+      const entry = failures.get(key);
+      if (!entry) failures.set(key, { count: 1, startedAt: timestamp });
+      else entry.count += 1;
+    }
+    prune(timestamp);
+  }
+
+  function recordSuccess(req, scope, identity = "") {
+    if (!identity) return;
+    failures.delete(`${scope}:identity:${digest(identity)}`);
+  }
+
+  return { enforce, recordFailure, recordSuccess };
 }
 
 function asyncRoute(handler) {
@@ -122,6 +199,7 @@ function createClassroomPlatform(options = {}) {
   const museumPresenceSecret = crypto.randomBytes(32);
   const guestAccessSecret = crypto.randomBytes(32);
   const router = express.Router();
+  const authFailureLimiter = createAuthenticationFailureLimiter();
   let databaseReady = false;
   let initializationError = null;
 
@@ -813,6 +891,8 @@ function createClassroomPlatform(options = {}) {
     if (user.role !== "student") {
       throw new HttpError(403, "STUDENT_REQUIRED", "This page is for student accounts only.");
     }
+    const failureIdentity = String(user.id);
+    authFailureLimiter.enforce(req, "student-password", failureIdentity);
     const currentPassword = String(req.body?.currentPassword || "").trim();
     const newPassword = String(req.body?.newPassword || "").trim();
     if (!STUDENT_PASSWORD_PATTERN.test(currentPassword) || !STUDENT_PASSWORD_PATTERN.test(newPassword)) {
@@ -831,6 +911,7 @@ function createClassroomPlatform(options = {}) {
     const student = result.rows[0];
     if (!student) throw new HttpError(404, "STUDENT_MEMBERSHIP_REQUIRED", "Join your class before changing the password.");
     if (!student.password_hash || !verifyStudentPassword(currentPassword, student.password_hash)) {
+      authFailureLimiter.recordFailure(req, "student-password", failureIdentity);
       throw new HttpError(403, "CURRENT_PASSWORD_INCORRECT", "The current password is incorrect.");
     }
     await pool.query(
@@ -839,6 +920,7 @@ function createClassroomPlatform(options = {}) {
        WHERE id = $1`,
       [student.id, hashStudentPassword(newPassword)]
     );
+    authFailureLimiter.recordSuccess(req, "student-password", failureIdentity);
     res.json({ ok: true });
   }));
 
@@ -1085,8 +1167,10 @@ function createClassroomPlatform(options = {}) {
 
   router.post("/auth/google", asyncRoute(async (req, res) => {
     requireConfigured();
+    authFailureLimiter.enforce(req, "google-sign-in");
     const credential = String(req.body?.credential || "");
     if (!credential || credential.length > 10000) {
+      authFailureLimiter.recordFailure(req, "google-sign-in");
       throw new HttpError(400, "INVALID_GOOGLE_CREDENTIAL", "Google did not return a valid sign-in credential.");
     }
 
@@ -1095,6 +1179,7 @@ function createClassroomPlatform(options = {}) {
       const ticket = await googleClient.verifyIdToken({ idToken: credential, audience: googleClientId });
       payload = ticket.getPayload();
     } catch (_) {
+      authFailureLimiter.recordFailure(req, "google-sign-in");
       throw new HttpError(401, "INVALID_GOOGLE_CREDENTIAL", "Google sign-in could not be verified.");
     }
 
@@ -1710,7 +1795,10 @@ function createClassroomPlatform(options = {}) {
     const schoolId = Number(req.body?.schoolId);
     const teacherName = String(req.body?.name || "").normalize("NFC").trim();
     const password = String(req.body?.password || "").trim();
+    const failureIdentity = `${schoolId}:${normalizePersonName(teacherName)}`;
+    authFailureLimiter.enforce(req, "teacher-claim", failureIdentity);
     if (!Number.isInteger(schoolId) || schoolId < 1 || !teacherName || !STUDENT_PASSWORD_PATTERN.test(password)) {
+      authFailureLimiter.recordFailure(req, "teacher-claim", failureIdentity);
       throw new HttpError(400, "INVALID_TEACHER_DETAILS", "Check the school, teacher name, and 6-digit password.");
     }
     const client = await pool.connect();
@@ -1730,8 +1818,10 @@ function createClassroomPlatform(options = {}) {
         !teacher.academic_year || !teacher.grade || !teacher.class_number ||
         !verifyStudentPassword(password, teacher.password_hash)
       ) {
+        authFailureLimiter.recordFailure(req, "teacher-claim", failureIdentity);
         throw new HttpError(403, "INVALID_TEACHER_DETAILS", "Check the school, teacher name, and 6-digit password.");
       }
+      authFailureLimiter.recordSuccess(req, "teacher-claim", failureIdentity);
       if (teacher.user_id && String(teacher.user_id) !== String(user.id)) {
         throw new HttpError(409, "TEACHER_ALREADY_LINKED", "This teacher profile is already linked to another Google account.");
       }
@@ -2134,6 +2224,8 @@ function createClassroomPlatform(options = {}) {
     const studentName = String(req.body?.name || "").normalize("NFC").trim();
     const password = String(req.body?.password || "").trim();
     const currentYear = new Date().getFullYear();
+    const failureIdentity = `${schoolId}:${grade}:${classNumber}:${studentNumber}`;
+    authFailureLimiter.enforce(req, "student-join", failureIdentity);
     if (
       !Number.isInteger(schoolId) || schoolId < 1 ||
       !Number.isInteger(grade) || grade < 1 || grade > 12 ||
@@ -2142,6 +2234,7 @@ function createClassroomPlatform(options = {}) {
       !/^[가-힣]{2,6}$/.test(studentName) ||
       !STUDENT_PASSWORD_PATTERN.test(password)
     ) {
+      authFailureLimiter.recordFailure(req, "student-join", failureIdentity);
       throw new HttpError(400, "INVALID_JOIN_DETAILS", "Check the school, grade, class, number, name, and password.");
     }
 
@@ -2160,16 +2253,23 @@ function createClassroomPlatform(options = {}) {
       [schoolId, currentYear, grade, classNumber, studentNumber]
     );
     const slot = slotResult.rows[0];
-    if (!slot) throw new HttpError(404, "STUDENT_NOT_FOUND", "No matching student was found in that class.");
+    if (!slot) {
+      authFailureLimiter.recordFailure(req, "student-join", failureIdentity);
+      throw new HttpError(403, "INVALID_STUDENT_DETAILS", "Check the school, grade, class, number, name, and password.");
+    }
     if (!slot.password_hash || !verifyStudentPassword(password, slot.password_hash)) {
-      throw new HttpError(403, "INVALID_STUDENT_PASSWORD", "Check the school, grade, class, number, name, and password.");
+      authFailureLimiter.recordFailure(req, "student-join", failureIdentity);
+      throw new HttpError(403, "INVALID_STUDENT_DETAILS", "Check the school, grade, class, number, name, and password.");
     }
     if (slot.google_domain !== user.google_domain) {
-      throw new HttpError(403, "SCHOOL_ACCOUNT_MISMATCH", "Use the Google account issued by this school.");
+      authFailureLimiter.recordFailure(req, "student-join", failureIdentity);
+      throw new HttpError(403, "INVALID_STUDENT_DETAILS", "Check the school, grade, class, number, name, and password.");
     }
     if (normalizePersonName(slot.roster_name) !== normalizePersonName(studentName)) {
-      throw new HttpError(403, "NAME_MISMATCH", "Check the school, grade, class, number, name, and password.");
+      authFailureLimiter.recordFailure(req, "student-join", failureIdentity);
+      throw new HttpError(403, "INVALID_STUDENT_DETAILS", "Check the school, grade, class, number, name, and password.");
     }
+    authFailureLimiter.recordSuccess(req, "student-join", failureIdentity);
     if (slot.user_id && String(slot.user_id) !== String(user.id)) {
       throw new HttpError(409, "STUDENT_ALREADY_LINKED", "This student number is already linked to another account.");
     }
@@ -2215,6 +2315,7 @@ function createClassroomPlatform(options = {}) {
   router.use((error, req, res, next) => {
     if (res.headersSent) return next(error);
     if (error instanceof HttpError) {
+      if (error.retryAfterSeconds) res.setHeader("Retry-After", String(error.retryAfterSeconds));
       return res.status(error.status).json({
         error: error.code,
         message: error.message,
@@ -2238,6 +2339,7 @@ function createClassroomPlatform(options = {}) {
 
 module.exports = {
   createClassroomPlatform,
+  createAuthenticationFailureLimiter,
   hashStudentPassword,
   normalizePersonName,
   parseTeacherEmails,

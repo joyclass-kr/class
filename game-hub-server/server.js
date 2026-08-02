@@ -13,6 +13,8 @@ const DrawRelay = require("./drawrelay");
 const { createClassroomPlatform } = require("./classroom-platform");
 
 const app = express();
+app.disable("x-powered-by");
+app.set("trust proxy", 1);
 const server = http.createServer(app);
 const wss = new WebSocketServer({ server });
 const classroomPlatform = createClassroomPlatform({
@@ -29,6 +31,51 @@ const HANGUKSA_PORT = Number(process.env.HANGUKSA_PORT) || 10002;
 const WORLD_VOYAGE_PORT = Number(process.env.WORLD_VOYAGE_PORT) || 10003;
 const SITE_ROOT = path.resolve(__dirname, "..");
 const WORLD_VOYAGE_PREFIX = "/learn/world-voyage";
+const MUTATING_METHODS = new Set(["POST", "PUT", "PATCH", "DELETE"]);
+
+function isSameRequestOrigin(req, origin) {
+  if (!origin) return true;
+  try {
+    return new URL(origin).origin === `${req.protocol}://${req.get("host")}`;
+  } catch (_) {
+    return false;
+  }
+}
+
+app.use((req, res, next) => {
+  res.setHeader("Content-Security-Policy", "base-uri 'self'; object-src 'none'; frame-ancestors 'self'");
+  res.setHeader("X-Content-Type-Options", "nosniff");
+  res.setHeader("X-Frame-Options", "SAMEORIGIN");
+  res.setHeader("Referrer-Policy", "strict-origin-when-cross-origin");
+  res.setHeader("Permissions-Policy", "camera=(), microphone=(), geolocation=()");
+  res.setHeader("X-Permitted-Cross-Domain-Policies", "none");
+  if (process.env.NODE_ENV === "production") {
+    res.setHeader("Strict-Transport-Security", "max-age=31536000; includeSubDomains");
+  }
+
+  const origin = String(req.get("origin") || "").trim();
+  const sameOrigin = isSameRequestOrigin(req, origin);
+  const isApiRequest = req.path === "/api" || req.path.startsWith("/api/");
+  const fetchSite = String(req.get("sec-fetch-site") || "").toLowerCase();
+
+  if (isApiRequest && origin && !sameOrigin) {
+    return res.status(403).json({ error: "CROSS_ORIGIN_REQUEST_BLOCKED", message: "허용되지 않은 요청 출처입니다." });
+  }
+  if (isApiRequest && MUTATING_METHODS.has(req.method) && fetchSite === "cross-site") {
+    return res.status(403).json({ error: "CROSS_SITE_REQUEST_BLOCKED", message: "허용되지 않은 요청 출처입니다." });
+  }
+  if (origin && sameOrigin) {
+    res.setHeader("Access-Control-Allow-Origin", origin);
+    res.vary("Origin");
+  }
+  if (req.method === "OPTIONS") {
+    if (origin && !sameOrigin) return res.sendStatus(403);
+    res.setHeader("Access-Control-Allow-Methods", "GET,POST,PUT,PATCH,DELETE,OPTIONS");
+    res.setHeader("Access-Control-Allow-Headers", "Content-Type");
+    return res.sendStatus(204);
+  }
+  next();
+});
 
 function startLearningApp(relativeDirectory, port, label) {
   const appDirectory = path.join(SITE_ROOT, relativeDirectory);
@@ -220,15 +267,10 @@ for (const [legacyPath, currentPath] of LEGACY_LEARNING_PATHS) {
 }
 
 app.use(express.json({ limit: "32kb" }));
-app.use((req, res, next) => {
-  res.setHeader("Access-Control-Allow-Origin", "*");
-  res.setHeader("Access-Control-Allow-Methods", "GET,POST,PUT,PATCH,DELETE,OPTIONS");
-  res.setHeader("Access-Control-Allow-Headers", "Content-Type");
-  if (req.method === "OPTIONS") return res.sendStatus(204);
+app.use("/api", (_req, res, next) => {
+  res.setHeader("Cache-Control", "no-store");
   next();
-});
-
-app.use("/api", classroomPlatform.router);
+}, classroomPlatform.router);
 
 for (const [route, file] of [
   ["/privacy", "privacy.html"],
