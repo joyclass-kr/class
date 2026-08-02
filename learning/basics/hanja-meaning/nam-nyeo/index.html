@@ -579,7 +579,9 @@
 
       function selectCharacter(character) {
         currentCharacter = character;
-        strokeSets.forEach((set) => { set.hidden = set.dataset.character !== character; });
+        strokeSets.forEach((set) => {
+          set.toggleAttribute('hidden', set.dataset.character !== character);
+        });
         characterButtons.forEach((button) => {
           button.setAttribute('aria-pressed', String(button.dataset.character === character));
         });
