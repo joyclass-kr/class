@@ -43,6 +43,22 @@
       </nav>
       <div class="lesson-progress"><i id="lessonProgressBar"></i></div>
 
+      <section id="soundGame" class="sound-game" hidden>
+        <div class="sound-game-head">
+          <div><span>소리 잡기</span><b id="soundRound">1 / 8</b></div>
+          <div><span>맞힌 문제</span><b id="soundScore">0</b></div>
+        </div>
+        <div class="sound-game-progress"><i id="soundGameProgress"></i></div>
+        <div class="sound-prompt">
+          <button id="soundReplay" type="button" aria-label="정답 단어 다시 듣기"><span>🔊</span>단어 듣기</button>
+          <p>들은 단어를 고르세요.</p>
+        </div>
+        <div id="soundChoices" class="sound-choices" aria-label="그림 선택지"></div>
+        <p id="soundFeedback" class="sound-feedback" aria-live="polite"></p>
+        <button id="soundNext" class="primary-button sound-next" type="button" disabled>다음 문제</button>
+      </section>
+
+      <div id="legacyActivities" hidden>
       <section class="lesson-hero">
         <p id="lessonEyebrow" class="eyebrow"></p>
         <h1 id="focusTitle"></h1>
@@ -75,6 +91,7 @@
         <p class="eyebrow">CHECK · 3 QUESTIONS</p><h2>차시 평가</h2><p>세 문항에 응답하면 차시를 완료 처리할 수 있습니다.</p><div id="quizArea" class="quiz-area"></div><p id="quizSummary" class="quiz-summary" aria-live="polite"></p><button id="complete" class="primary-button complete-button" type="button" disabled>3문제를 먼저 풀어 주세요</button>
       </section>
       <div class="lesson-footer"><button id="previousLesson" class="text-button" type="button">← 이전 차시</button><button id="nextLesson" class="text-button" type="button">다음 차시 →</button></div>
+      </div>
     </section>
   </main>
 

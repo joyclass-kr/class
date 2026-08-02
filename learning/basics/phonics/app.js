@@ -7,8 +7,77 @@
   let dictationIndex = 0;
   let quizState = [];
   let activePhonemeAudio = null;
+  let activePhonemeTimer = null;
+  let soundGameState = null;
+  const cleanSpriteCache = new Map();
 
-  const emptyState = () => ({ done: [], scores: {}, stars: 0, streak: 0, lastStudyDate: "", lastLesson: "" });
+  const soundPictures = {
+    sun: { korean: "해", sound: "s", sprite: 0 }, sock: { korean: "양말", sound: "s", sprite: 1 }, seal: { korean: "물개", sound: "s", sprite: 2 }, soup: { korean: "수프", sound: "s", sprite: 3 },
+    star: { korean: "별", sound: "s", sprite: 4 }, sand: { korean: "모래", sound: "s", sprite: 5 }, ant: { korean: "개미", sound: "a", sprite: 6 }, apple: { korean: "사과", sound: "a", sprite: 7 },
+    axe: { korean: "도끼", sound: "a", sprite: 8 }, astronaut: { korean: "우주비행사", sound: "a", sprite: 9 }, dog: { korean: "개", sound: "d", sprite: 10 }, cat: { korean: "고양이", sound: "c", sprite: 11 },
+    moon: { korean: "달", sound: "m", sprite: 12 }, fish: { korean: "물고기", sound: "f", sprite: 13 }, pig: { korean: "돼지", sound: "p", sprite: 14 }, bus: { korean: "버스", sound: "b", sprite: 15 }
+  };
+  const firstSoundGameRounds = [
+    { sound: "s", answer: "sun", choices: ["sun", "apple", "dog", "fish"] },
+    { sound: "a", answer: "ant", choices: ["ant", "sock", "cat", "moon"] },
+    { sound: "s", answer: "sock", choices: ["sock", "axe", "pig", "bus"] },
+    { sound: "a", answer: "apple", choices: ["apple", "seal", "dog", "star"] },
+    { sound: "s", answer: "seal", choices: ["seal", "astronaut", "cat", "pig"] },
+    { sound: "a", answer: "axe", choices: ["axe", "soup", "moon", "bus"] },
+    { sound: "s", answer: "star", choices: ["star", "ant", "dog", "fish"] },
+    { sound: "a", answer: "astronaut", choices: ["astronaut", "sand", "pig", "moon"] }
+  ];
+  let activeSoundGameRounds = firstSoundGameRounds;
+
+  const soundPattern = (sound) => sound.replaceAll("_", "").replace(/^-/, "");
+  const focusFitsWord = (word, focus) => {
+    const parts = focus.replace(/^-/, "").split("_").filter(Boolean);
+    let cursor = 0;
+    return parts.length > 0 && parts.every((part) => {
+      const index = word.indexOf(part, cursor);
+      if (index < 0) return false;
+      cursor = index + part.length;
+      return true;
+    });
+  };
+  const revealFocus = (element, word, focus) => {
+    const parts = focus.replace(/^-/, "").split("_").filter(Boolean);
+    const matches = [];
+    let cursor = 0;
+    for (const part of parts) {
+      const index = word.indexOf(part, cursor);
+      if (index < 0) return element.replaceChildren(word);
+      matches.push({ index, part });
+      cursor = index + part.length;
+    }
+    const nodes = [];
+    cursor = 0;
+    matches.forEach(({ index, part }) => {
+      if (index > cursor) nodes.push(word.slice(cursor, index));
+      const mark = document.createElement("mark");
+      mark.textContent = part;
+      nodes.push(mark);
+      cursor = index + part.length;
+    });
+    if (cursor < word.length) nodes.push(word.slice(cursor));
+    element.replaceChildren(...nodes);
+  };
+  function buildLessonSoundRounds(lesson) {
+    if (lesson.id === "s1-l1") return firstSoundGameRounds;
+    const lessonPosition = data.lessons.findIndex((item) => item.id === lesson.id);
+    const picturedWords = [...new Set(data.lessons.slice(0, lessonPosition + 1).flatMap((item) => item.words))]
+      .filter((word) => data.wordBank[word]?.picture);
+    const lessonWords = lesson.words.filter((word) => data.wordBank[word]?.picture);
+    if (!lessonWords.length) return [];
+    const targets = Array.from({ length: 8 }, (_, index) => lessonWords[index % lessonWords.length]);
+    return targets.map((answer, index) => {
+      const sound = lesson.focus.find((focus) => focusFitsWord(answer, focus)) || lesson.focus[index % lesson.focus.length];
+      const distractors = shuffle(picturedWords.filter((word) => word !== answer && !lesson.words.includes(word))).slice(0, 3);
+      return { sound, answer, choices: [answer, ...distractors] };
+    });
+  }
+
+  const emptyState = () => ({ done: [], scores: {}, soundScores: {}, stars: 0, streak: 0, lastStudyDate: "", lastLesson: "" });
   const loadState = () => {
     try { return { ...emptyState(), ...(JSON.parse(localStorage.getItem(storeKey)) || {}) }; }
     catch { return emptyState(); }
@@ -20,6 +89,96 @@
   const stageFor = (lesson) => data.stages.find((stage) => stage.id === lesson.stageId);
   const lessonIndex = () => data.lessons.findIndex((lesson) => lesson.id === current?.id);
   const currentTarget = () => current.dictation[dictationIndex % current.dictation.length];
+  const spriteGeometry = (picture, zoom = 1) => {
+    const column = picture.index % picture.columns;
+    const row = Math.floor(picture.index / picture.columns);
+    const x = (0.5 - zoom * (column + 0.5)) / (1 - picture.columns * zoom) * 100;
+    const y = (0.5 - zoom * (row + 0.5)) / (1 - picture.rows * zoom) * 100;
+    return {
+      size: `${picture.columns * zoom * 100}% ${picture.rows * zoom * 100}%`,
+      position: `${x}% ${y}%`
+    };
+  };
+  const cleanSpriteUrl = (picture) => {
+    const key = `${picture.file}:${picture.index}:${picture.columns}:${picture.rows}`;
+    if (cleanSpriteCache.has(key)) return cleanSpriteCache.get(key);
+    const pending = new Promise((resolve, reject) => {
+      const image = new Image();
+      image.onload = () => {
+        const size = 256;
+        const canvas = document.createElement("canvas");
+        canvas.width = size;
+        canvas.height = size;
+        const context = canvas.getContext("2d", { willReadFrequently: true });
+        const column = picture.index % picture.columns;
+        const row = Math.floor(picture.index / picture.columns);
+        context.drawImage(image, column * image.width / picture.columns, row * image.height / picture.rows, image.width / picture.columns, image.height / picture.rows, 0, 0, size, size);
+        const frame = context.getImageData(0, 0, size, size);
+        const pixels = frame.data;
+        const visited = new Uint8Array(size * size);
+        const queue = new Int32Array(size * size);
+        const foreground = (point) => {
+          const offset = point * 4;
+          const red = pixels[offset];
+          const green = pixels[offset + 1];
+          const blue = pixels[offset + 2];
+          return Math.min(red, green, blue) < 238 || Math.max(red, green, blue) - Math.min(red, green, blue) > 14;
+        };
+        for (let start = 0; start < size * size; start += 1) {
+          if (visited[start] || !foreground(start)) continue;
+          let head = 0;
+          let tail = 1;
+          let touchesEdge = false;
+          queue[0] = start;
+          visited[start] = 1;
+          while (head < tail) {
+            const point = queue[head++];
+            const x = point % size;
+            const y = Math.floor(point / size);
+            if (x < 3 || y < 3 || x >= size - 3 || y >= size - 3) touchesEdge = true;
+            for (const next of [point - 1, point + 1, point - size, point + size]) {
+              if (next < 0 || next >= size * size || visited[next]) continue;
+              const nextX = next % size;
+              if (Math.abs(nextX - x) > 1 || !foreground(next)) continue;
+              visited[next] = 1;
+              queue[tail++] = next;
+            }
+          }
+          if (touchesEdge && tail < size * size * 0.12) {
+            for (let index = 0; index < tail; index += 1) {
+              const offset = queue[index] * 4;
+              pixels[offset] = 255;
+              pixels[offset + 1] = 255;
+              pixels[offset + 2] = 255;
+              pixels[offset + 3] = 255;
+            }
+          }
+        }
+        context.putImageData(frame, 0, 0);
+        resolve(canvas.toDataURL("image/webp", 0.9));
+      };
+      image.onerror = reject;
+      image.src = picture.file;
+    });
+    cleanSpriteCache.set(key, pending);
+    return pending;
+  };
+  const applyCleanSprite = (element, picture) => {
+    const geometry = spriteGeometry(picture);
+    element.style.backgroundImage = `url('${picture.file}')`;
+    element.style.backgroundSize = geometry.size;
+    element.style.backgroundPosition = geometry.position;
+    cleanSpriteUrl(picture).then((url) => {
+      element.style.backgroundImage = `url('${url}')`;
+      element.style.backgroundSize = "contain";
+      element.style.backgroundPosition = "center";
+    }).catch(() => {});
+  };
+  const pictureMarkup = (item, className = "word-scene") => {
+    if (!item.picture) return `<span class="${className} picture-pending" aria-hidden="true">${item.scene || ""}</span>`;
+    const geometry = spriteGeometry(item.picture);
+    return `<span class="${className} picture-sprite" aria-hidden="true" style="background-image:url('${item.picture.file}');background-size:${geometry.size};background-position:${geometry.position}"></span>`;
+  };
 
   function speak(text, rate = 0.72) {
     if (!("speechSynthesis" in window)) return showToast("이 브라우저에서는 소리 듣기를 지원하지 않아요.");
@@ -34,23 +193,83 @@
   }
 
   function phonemeFile(sound) {
-    const fileName = sound.replaceAll("_", "-").replace(/^-/, "end-");
+    const aliases = {
+      ff: "f", ll: "l", ss: "s", zz: "z", ph: "f", qu: "k",
+      an: "a", am: "a", ce: "s", ge: "j", tch: "ch", dge: "j",
+      kn: "n", wr: "r", mb: "m", gn: "n", gh: "g"
+    };
+    const normalized = aliases[sound] || sound;
+    const fileName = normalized.replaceAll("_", "-").replace(/^-/, "end-");
     return `assets/sounds/phonemes/${fileName}.wav`;
+  }
+
+  function phonemePlan(sound) {
+    const sequences = {
+      bl: ["b", "l"], br: ["b", "r"], cl: ["k", "l"], cr: ["k", "r"],
+      dr: ["d", "r"], fl: ["f", "l"], fr: ["f", "r"], gl: ["g", "l"],
+      gr: ["g", "r"], pl: ["p", "l"], sk: ["s", "k"], sl: ["s", "l"],
+      sm: ["s", "m"], sn: ["s", "n"], sp: ["s", "p"], st: ["s", "t"],
+      sw: ["s", "w"], tr: ["t", "r"], "-ft": ["f", "t"], "-mp": ["m", "p"],
+      "-nd": ["n", "d"], "-st": ["s", "t"]
+    };
+    const parts = sequences[sound] || [sound];
+    const stopSounds = new Set(["b", "c", "d", "g", "j", "k", "p", "t", "ch", "ck"]);
+    if (parts.length === 1 && stopSounds.has(parts[0])) return [parts[0], parts[0], parts[0]];
+    return parts;
+  }
+
+  function stopPhonemePlayback() {
+    if (activePhonemeTimer) clearTimeout(activePhonemeTimer);
+    activePhonemeTimer = null;
+    if (!activePhonemeAudio) return;
+    activePhonemeAudio.pause();
+    activePhonemeAudio.currentTime = 0;
+    activePhonemeAudio = null;
   }
 
   function playPhoneme(sound, onEnded) {
     window.speechSynthesis?.cancel?.();
-    if (activePhonemeAudio) {
-      activePhonemeAudio.pause();
-      activePhonemeAudio.currentTime = 0;
+    stopPhonemePlayback();
+    const plan = phonemePlan(sound);
+    let index = 0;
+    const playNext = () => {
+      if (!plan[index]) {
+        activePhonemeAudio = null;
+        onEnded?.();
+        return;
+      }
+      const audio = new Audio(phonemeFile(plan[index]));
+      activePhonemeAudio = audio;
+      audio.volume = 1;
+      audio.addEventListener("ended", () => {
+        if (activePhonemeAudio !== audio) return;
+        index += 1;
+        activePhonemeTimer = setTimeout(playNext, 115);
+      }, { once: true });
+      audio.play().catch(() => showToast("음가 파일을 재생하지 못했습니다."));
+    };
+    playNext();
+  }
+
+  function playSoundCue(sound) {
+    const anchors = {
+      a: "apple", b: "ball", c: "cat", d: "dog", e: "egg", f: "fish", g: "goat",
+      h: "hat", i: "itch", j: "jam", k: "kite", l: "leaf", m: "moon", n: "nose",
+      o: "octopus", p: "pig", qu: "queen", r: "rain", s: "sun", t: "top", u: "up",
+      v: "van", w: "water", x: "fox", y: "yes", z: "zoo", sh: "ship", ch: "chin",
+      th: "thumb", wh: "wheel", ph: "phone", ck: "duck", ng: "ring", ai: "rain",
+      ay: "play", ee: "feet", ea: "team", oa: "boat", oi: "coin", oy: "boy",
+      ou: "cloud", ow: "cow", ar: "star", or: "fork", ir: "bird", ur: "turn"
+    };
+    const unavailable = new Set(["f", "ff", "ph", "w", "x", "y", "z", "zz"]);
+    const anchor = anchors[sound] || anchors[phonemePlan(sound)[0]];
+    if (unavailable.has(sound)) {
+      speak(anchor || sound, 0.68);
+      return;
     }
-    const audio = new Audio(phonemeFile(sound));
-    activePhonemeAudio = audio;
-    audio.addEventListener("ended", () => {
-      if (activePhonemeAudio === audio) activePhonemeAudio = null;
-      onEnded?.();
-    }, { once: true });
-    audio.play().catch(() => showToast("음가 파일을 재생하지 못했습니다."));
+    playPhoneme(sound, () => {
+      if (anchor) activePhonemeTimer = setTimeout(() => speak(anchor, 0.68), 160);
+    });
   }
 
   function playPhonemeSequence(sounds, index = 0) {
@@ -64,6 +283,107 @@
     toast.classList.add("show");
     clearTimeout(showToast.timer);
     showToast.timer = setTimeout(() => toast.classList.remove("show"), 2600);
+  }
+
+  function shuffle(items) {
+    const result = [...items];
+    for (let index = result.length - 1; index > 0; index -= 1) {
+      const target = Math.floor(Math.random() * (index + 1));
+      [result[index], result[target]] = [result[target], result[index]];
+    }
+    return result;
+  }
+
+  function renderSoundGameRound() {
+    const round = activeSoundGameRounds[soundGameState.index];
+    $("soundRound").textContent = `${soundGameState.index + 1} / ${activeSoundGameRounds.length}`;
+    $("soundScore").textContent = String(soundGameState.score);
+    $("soundGameProgress").style.width = `${soundGameState.index / activeSoundGameRounds.length * 100}%`;
+    $("soundFeedback").textContent = "";
+    $("soundFeedback").className = "sound-feedback";
+    $("soundNext").disabled = true;
+    $("soundNext").textContent = soundGameState.index === activeSoundGameRounds.length - 1 ? "결과 보기" : "다음 문제";
+    const choices = $("soundChoices");
+    choices.replaceChildren();
+
+    shuffle(round.choices).forEach((word) => {
+      const item = soundPictures[word] || data.wordBank[word];
+      const button = document.createElement("button");
+      const picture = document.createElement("span");
+      const label = document.createElement("span");
+      const english = document.createElement("b");
+      const korean = document.createElement("small");
+      button.type = "button";
+      button.className = "sound-choice";
+      button.dataset.word = word;
+      button.setAttribute("aria-label", `${item.korean} 그림`);
+      picture.className = "sound-choice-picture";
+      if (item.sprite !== undefined) {
+        const column = item.sprite % 4;
+        const row = Math.floor(item.sprite / 4);
+        picture.style.setProperty("--sprite-x", `${column * 100 / 3}%`);
+        picture.style.setProperty("--sprite-y", `${row * 100 / 3}%`);
+      } else {
+        applyCleanSprite(picture, item.picture);
+      }
+      label.className = "sound-choice-label";
+      english.textContent = word;
+      korean.textContent = item.korean;
+      label.append(english, korean);
+      button.append(picture, label);
+      button.addEventListener("click", () => selectSoundChoice(button, word));
+      choices.append(button);
+    });
+  }
+
+  function selectSoundChoice(button, word) {
+    if (soundGameState.locked || button.disabled) return;
+    const round = activeSoundGameRounds[soundGameState.index];
+    speak(word, 0.78);
+    if (word === round.answer) {
+      const firstTry = soundGameState.firstTry;
+      soundGameState.locked = true;
+      if (firstTry) soundGameState.score += 1;
+      button.classList.add("correct");
+      const english = button.querySelector(".sound-choice-label b");
+      if (english) revealFocus(english, word, round.sound);
+      $("soundScore").textContent = String(soundGameState.score);
+      $("soundFeedback").textContent = firstTry ? `${word} · 정답` : `${word} · 정답 확인`;
+      $("soundFeedback").className = "sound-feedback good";
+      $("soundNext").disabled = false;
+      $("soundGameProgress").style.width = `${(soundGameState.index + 1) / activeSoundGameRounds.length * 100}%`;
+      $("soundChoices").querySelectorAll("button").forEach((choice) => { choice.disabled = true; });
+    } else {
+      soundGameState.firstTry = false;
+      button.classList.add("wrong");
+      button.disabled = true;
+      $("soundFeedback").textContent = "다시 들어보고 다른 그림을 고르세요.";
+      $("soundFeedback").className = "sound-feedback bad";
+    }
+  }
+
+  function startSoundGame() {
+    activeSoundGameRounds = buildLessonSoundRounds(current);
+    if (!activeSoundGameRounds.length) return;
+    soundGameState = { index: 0, score: 0, locked: false, firstTry: true };
+    renderSoundGameRound();
+    speak(activeSoundGameRounds[0].answer, 0.68);
+  }
+
+  function finishSoundGame() {
+    const saved = loadState();
+    const isNew = !saved.done.includes(current.id);
+    if (isNew) saved.done.push(current.id);
+    saved.soundScores[current.id] = Math.max(saved.soundScores[current.id] || 0, soundGameState.score);
+    if (isNew) saved.stars += soundGameState.score;
+    saved.lastLesson = data.lessons[1]?.id || current.id;
+    saveState(saved);
+    $("soundChoices").replaceChildren();
+    $("soundFeedback").textContent = `${activeSoundGameRounds.length}문제 중 ${soundGameState.score}문제 정답`;
+    $("soundFeedback").className = "sound-feedback result";
+    $("soundNext").textContent = "차시 목록으로";
+    $("soundNext").disabled = false;
+    soundGameState.finished = true;
   }
 
   function renderDashboard() {
@@ -85,9 +405,9 @@
       const doneCount = lessons.filter((lesson) => saved.done.includes(lesson.id)).length;
       const stagePercent = Math.round(doneCount / lessons.length * 100);
       return `<article class="stage-card ${stage.color}">
-        <div class="stage-summary"><span class="stage-number">${String(stage.order).padStart(2, "0")}</span><div><p>STAGE ${stage.order}</p><h3>${escapeHtml(stage.title)}</h3><span>${escapeHtml(stage.subtitle)}</span></div><div class="stage-score"><b>${doneCount}/${lessons.length}</b><span>완료</span></div></div>
+        <div class="stage-summary"><span class="stage-number">${String(stage.order).padStart(2, "0")}</span><div><p>STAGE ${stage.order}${stage.order >= 10 ? " · 심화" : ""}</p><h3>${escapeHtml(stage.title)}</h3><span>${escapeHtml(stage.subtitle)}</span></div><div class="stage-score"><b>${doneCount}/${lessons.length}</b><span>완료</span></div></div>
         <div class="mini-progress"><i style="width:${stagePercent}%"></i></div>
-        <div class="lesson-list">${lessons.map((lesson) => `<button type="button" data-lesson="${lesson.id}" class="${saved.done.includes(lesson.id) ? "done" : ""}"><span>${saved.done.includes(lesson.id) ? "✓" : lesson.stageOrder}</span><div><small>${lesson.focus.length ? "새 소리" : "복습"}</small><b>${escapeHtml(lesson.title)}</b></div><em>${saved.scores[lesson.id] ? `${saved.scores[lesson.id]}/3` : "열기 →"}</em></button>`).join("")}</div>
+        <div class="lesson-list">${lessons.map((lesson) => `<button type="button" data-lesson="${lesson.id}" class="${saved.done.includes(lesson.id) ? "done" : ""}"><span>${saved.done.includes(lesson.id) ? "✓" : lesson.stageOrder}</span><div><b>${escapeHtml(lesson.title)}</b></div><em>${Object.hasOwn(saved.soundScores, lesson.id) ? `${saved.soundScores[lesson.id]}/8` : "시작 →"}</em></button>`).join("")}</div>
       </article>`;
     }).join("");
     $("stageList").querySelectorAll("[data-lesson]").forEach((button) => button.addEventListener("click", () => openLesson(button.dataset.lesson)));
@@ -96,8 +416,12 @@
   function renderWordCards() {
     $("wordCards").innerHTML = current.words.map((word) => {
       const item = data.wordBank[word];
-      return `<button type="button" class="word-card" data-word="${word}" aria-label="${word} 소리 듣기"><span class="word-scene">${item.scene}</span><span class="word-copy"><b>${word}</b><strong>${item.korean}</strong><small>${item.hint}</small></span><span class="card-speaker">🔊</span></button>`;
+      return `<button type="button" class="word-card" data-word="${word}" aria-label="${word} 소리 듣기">${pictureMarkup(item)}<span class="word-copy"><b>${word}</b><strong>${item.korean}</strong><small>${item.hint}</small></span><span class="card-speaker">🔊</span></button>`;
     }).join("");
+    $("wordCards").querySelectorAll(".picture-sprite").forEach((picture, index) => {
+      const item = data.wordBank[current.words[index]];
+      if (item?.picture) applyCleanSprite(picture, item.picture);
+    });
     $("wordCards").querySelectorAll("button").forEach((button) => button.addEventListener("click", () => speak(button.dataset.word)));
   }
 
@@ -231,6 +555,10 @@
     const stageLessons = data.lessons.filter((lesson) => lesson.stageId === current.stageId);
     $("dashboard").hidden = true;
     $("study").hidden = false;
+    activeSoundGameRounds = buildLessonSoundRounds(current);
+    const isSoundGame = activeSoundGameRounds.length > 0;
+    $("soundGame").hidden = !isSoundGame;
+    $("legacyActivities").hidden = true;
     $("lessonStage").textContent = `STAGE ${stage.order} · ${stage.title}`;
     $("lessonLabel").textContent = `${current.stageOrder}차시 · ${current.title}`;
     $("lessonEyebrow").textContent = current.focus.length ? "TODAY'S SOUND" : "REVIEW DAY";
@@ -251,6 +579,7 @@
     const saved = loadState();
     saved.lastLesson = current.id;
     saveState(saved);
+    if (isSoundGame) startSoundGame();
     window.scrollTo({ top: 0, behavior: "smooth" });
   }
 
@@ -301,6 +630,16 @@
   });
   $("answer").addEventListener("keydown", (event) => { if (event.key === "Enter") $("check").click(); });
   $("complete").addEventListener("click", completeLesson);
+  $("soundReplay").addEventListener("click", () => speak(activeSoundGameRounds[soundGameState.index].answer, 0.68));
+  $("soundNext").addEventListener("click", () => {
+    if (soundGameState.finished) return closeStudy();
+    if (soundGameState.index === activeSoundGameRounds.length - 1) return finishSoundGame();
+    soundGameState.index += 1;
+    soundGameState.locked = false;
+    soundGameState.firstTry = true;
+    renderSoundGameRound();
+    speak(activeSoundGameRounds[soundGameState.index].answer, 0.68);
+  });
   $("back").addEventListener("click", closeStudy);
   $("closeLesson").addEventListener("click", closeStudy);
   $("previousLesson").addEventListener("click", () => openLesson(data.lessons[lessonIndex() - 1]?.id));
