@@ -1,12 +1,21 @@
 window.MUSIC_GENRE={
-  lineages:[['early','초기·스윙 (Early & Swing)'],['bop','비밥·하드 밥 (Bop & Hard Bop)'],['modern','모달·프리 (Modal & Free)'],['fusion','퓨전·현대 (Fusion & Contemporary)']],
+  lineages:[['early','초기·스윙 (Early & Swing)'],['bop','비밥·하드 밥 (Bop & Hard Bop)'],['modern','모달·프리·현대 (Modal, Free & Modern)'],['fusion','재즈 퓨전 (Jazz Fusion)'],['contemporary','컨템퍼러리·스무스 (Contemporary & Smooth)']],
+  guides:{
+    fusion:{title:'1970년대 재즈 퓨전 5곡 비교 듣기',question:'전기악기와 록·펑크 리듬 위에서 재즈 즉흥연주가 어떻게 펼쳐지는지 비교하세요.',traits:'전기 피아노·신시사이저 · 강한 베이스 리프 · 록·펑크 리듬 · 긴 즉흥연주'},
+    contemporary:{title:'1980년대 이후 컨템퍼러리·스무스 재즈 5곡 비교 듣기',question:'정돈된 스튜디오 음색, R&B 그루브와 선명한 리드 악기의 공통점을 찾으세요.',traits:'선명한 리드 악기 · 슬랩 베이스 · R&B 그루브 · 매끄러운 스튜디오 제작'}
+  },
+  descriptions:{
+    fusion:'1960년대 말부터 재즈 연주자들이 록의 큰 음량과 전기 기타·전기 피아노·신시사이저, 펑크의 반복 리듬을 받아들이며 발전했습니다. 짧고 강한 베이스 리프 위에서 화성과 박자를 확장하고 긴 솔로를 이어가는 것이 핵심입니다. Herbie Hancock의 「Chameleon」은 미니무그로 만든 베이스 리프와 클라비넷 음색, 펑크 드럼을 재즈 즉흥연주와 결합한 대표적인 재즈 펑크·퓨전 곡입니다.',
+    contemporary:'1980년대 이후의 컨템퍼러리·스무스 재즈는 퓨전에서 나온 전기악기와 R&B·펑크의 그루브를 더 짧고 선명한 곡 구조, 매끄러운 스튜디오 음색과 결합했습니다. 색소폰이나 기타가 기억하기 쉬운 주선율을 맡고, 키보드 패드·드럼 머신·정교한 베이스가 안정적인 배경을 만듭니다. Marcus Miller의 슬랩 베이스와 Dave Koz의 또렷한 색소폰 음색이 서로 다른 중심 악기의 역할을 잘 보여 줍니다.'
+  },
   eras:[
     {years:'1900s–20s',name:'뉴올리언스와 초기 재즈',english:'New Orleans and Early Jazz',story:'블루스, 래그타임, 행진 음악과 아프리카계 미국인의 음악 전통이 뉴올리언스에서 만났습니다. 여러 악기가 동시에 선율을 꾸미는 집단 즉흥연주가 특징입니다.',turn:'블루 노트, 집단 즉흥연주, 싱코페이션'},
     {years:'1930s',name:'스윙과 빅밴드',english:'Swing and Big Bands',story:'큰 댄스홀에서 빅밴드가 연주하는 스윙이 대중음악의 중심이 되었습니다. 섹션별로 주고받는 편곡과 춤추기 좋은 리듬이 인기를 끌었습니다.',turn:'스윙 리듬, 리프 편곡, 솔로와 합주의 교대'},
     {years:'1940s',name:'비밥의 혁신',english:'The Bebop Revolution',story:'소규모 연주자들이 빠른 템포, 복잡한 화음과 긴 즉흥연주를 탐구했습니다. 춤을 위한 음악에서 집중해 듣는 음악으로 무게중심이 이동했습니다.',turn:'복잡한 화성, 빠른 즉흥연주, 소규모 콤보'},
     {years:'1950s',name:'쿨 재즈와 하드 밥',english:'Cool Jazz and Hard Bop',story:'절제된 음색의 쿨 재즈와 블루스·가스펠의 힘을 되살린 하드 밥이 서로 다른 방향으로 발전했습니다.',turn:'여백과 절제, 블루스·가스펠 그루브'},
     {years:'1960s',name:'모달과 프리 재즈',english:'Modal and Free Jazz',story:'정해진 화음 진행에서 벗어나 선법을 활용하거나 형식 자체를 자유롭게 만드는 실험이 이어졌습니다. 연주자 사이의 즉각적인 대화가 더욱 중요해졌습니다.',turn:'선법, 열린 형식, 집단 상호작용'},
-    {years:'1970s–Now',name:'퓨전과 오늘의 재즈',english:'Fusion and Jazz Today',story:'록의 전기 악기와 강한 비트가 재즈 즉흥연주와 결합했습니다. 오늘날 재즈는 힙합, 전자음악과 세계 여러 전통을 계속 받아들입니다.',turn:'전자 악기, 펑크 리듬, 장르 간 협업'}
+    {years:'1970s',name:'전기 재즈와 퓨전',english:'Electric Jazz and Fusion',story:'록의 큰 음량과 전기 기타·신시사이저, 펑크의 반복 그루브가 재즈 즉흥연주와 결합했습니다. 긴 솔로와 복잡한 합주가 강한 리듬 섹션 위에서 전개됩니다.',turn:'전기악기, 반복 베이스 리프, 록·펑크 리듬'},
+    {years:'1980s–Now',name:'컨템퍼러리·스무스와 오늘의 재즈',english:'Contemporary, Smooth and Jazz Today',story:'1980년대 이후에는 R&B와 팝의 정교한 스튜디오 제작을 받아들인 컨템퍼러리·스무스 재즈가 성장했습니다. 동시에 오늘의 재즈는 힙합, 전자음악과 세계 여러 전통을 계속 받아들입니다.',turn:'선명한 리드 악기, 매끄러운 제작, R&B 그루브, 장르 간 협업'}
   ],
   cards:[
     {years:'1928',lineage:'early',style:'초기 재즈',styleEn:'Early Jazz',title:'웨스트 엔드 블루스',original:'West End Blues',artist:'Louis Armstrong',history:'독주자의 개성과 즉흥연주가 재즈의 중심이 되는 변화를 보여 준 녹음입니다.',sound:'트럼펫 카덴차, 스캣 보컬과 콤보의 주고받음이 돋보입니다.',point:'도입 트럼펫이 박자와 선율을 자유롭게 다루는 방식을 들어 보세요.'},
@@ -19,7 +28,16 @@ window.MUSIC_GENRE={
     {years:'1959',lineage:'bop',style:'포스트 밥',styleEn:'Post-Bop',title:'자이언트 스텝스',original:'Giant Steps',artist:'John Coltrane',history:'빠르게 바뀌는 독특한 화음 진행으로 재즈 즉흥연주의 새로운 과제를 제시했습니다.',sound:'멀리 떨어진 조성을 빠르게 오가는 화음과 촘촘한 색소폰 선율이 특징입니다.',point:'피아노 화음이 바뀔 때 색소폰 선율의 방향도 즉시 달라지는지 들어 보세요.'},
     {years:'1961',lineage:'modern',style:'프리 재즈',styleEn:'Free Jazz',title:'프리 재즈',original:'Free Jazz',artist:'Ornette Coleman Double Quartet',history:'미리 정한 화음과 형식의 제약을 줄이고 집단 즉흥연주를 전면에 내세운 작품입니다.',sound:'두 콰르텟이 좌우 채널에서 동시에 반응하며 밀도 높은 대화를 만듭니다.',point:'정해진 반주를 찾기보다 한 악기의 소리에 다른 악기가 어떻게 반응하는지 들어 보세요.'},
     {years:'1965',lineage:'modern',style:'영적 재즈',styleEn:'Spiritual Jazz',title:'어 러브 수프림: 어크놀리지먼트',original:'A Love Supreme: Acknowledgement',artist:'John Coltrane',history:'모달 재즈와 영적 메시지를 긴 모음곡 구조 안에 결합한 중요한 작품입니다.',sound:'네 음의 베이스 동기와 점차 강렬해지는 색소폰 즉흥연주가 곡을 묶습니다.',point:'반복되는 네 음이 다른 높이로 옮겨지며 전체 연주를 연결하는지 찾아보세요.'},
-    {years:'1973',lineage:'fusion',style:'재즈 펑크',styleEn:'Jazz-Funk',title:'카멜레온',original:'Chameleon',artist:'Herbie Hancock',history:'신시사이저와 펑크 리듬을 재즈 즉흥연주에 결합한 퓨전 시대의 대표곡입니다.',sound:'전자 베이스 리프, 클라비넷과 긴 즉흥연주가 반복 그루브 위에 쌓입니다.',point:'짧은 전자 리프가 반복되는 동안 솔로와 음색이 어떻게 변화하는지 들어 보세요.'},
-    {years:'2015',lineage:'fusion',style:'컨템퍼러리 재즈',styleEn:'Contemporary Jazz',title:'체인지 오브 더 가드',original:'Change of the Guard',artist:'Kamasi Washington',history:'빅밴드, 영적 재즈, 힙합 세대의 감각을 함께 담은 오늘의 재즈 사례입니다.',sound:'두꺼운 관악 합주와 합창, 긴 색소폰 솔로가 영화적인 규모를 만듭니다.',point:'전통적인 재즈 솔로와 현대적인 대규모 편곡이 어떻게 공존하는지 들어 보세요.'}
+    {years:'1970',lineage:'fusion',style:'전기 재즈·퓨전',styleEn:'Electric Jazz / Fusion',original:'Bitches Brew',artist:'Miles Davis',history:'록의 전기악기와 스튜디오 편집을 재즈의 집단 즉흥연주에 끌어들인 초기 퓨전의 전환점입니다.',sound:'여러 전기 피아노와 타악기, 전기 기타가 반복 동기 위에서 서로 겹치며 거대한 음향을 만듭니다.',point:'고정된 주제보다 짧은 리듬 동기가 연주자들의 반응을 어떻게 이끄는지 들어 보세요.'},
+    {years:'1971',lineage:'fusion',style:'재즈 록 퓨전',styleEn:'Jazz-Rock Fusion',original:'Meeting of the Spirits',artist:'Mahavishnu Orchestra',history:'재즈의 즉흥연주와 록의 음량, 복잡한 박자를 결합한 재즈 록 퓨전의 대표곡입니다.',sound:'왜곡된 기타와 바이올린, 빠른 드럼이 불규칙한 악센트와 촘촘한 합주를 만듭니다.',point:'같은 리프가 반복될 때 악센트 위치가 어떻게 박자를 낯설게 만드는지 찾아보세요.'},
+    {years:'1972',lineage:'fusion',style:'라틴 재즈 퓨전',styleEn:'Latin Jazz Fusion',original:'Spain',artist:'Return to Forever',history:'라틴 리듬과 전기 피아노, 긴 재즈 솔로를 결합해 퓨전의 서정성과 기교를 보여 준 곡입니다.',sound:'빠른 유니즌 선율, 전기 피아노와 베이스 솔로, 라틴 타악기의 추진력이 교대합니다.',point:'합주가 같은 빠른 선율을 연주한 뒤 각 악기의 솔로로 풀어지는 구조를 따라가 보세요.'},
+    {years:'1973',lineage:'fusion',style:'재즈 펑크',styleEn:'Jazz-Funk / Fusion',title:'카멜레온',original:'Chameleon',artist:'Herbie Hancock',history:'신시사이저와 펑크 리듬을 재즈 즉흥연주에 결합한 퓨전 시대의 대표곡입니다.',sound:'미니무그 베이스 리프, 클라비넷과 긴 즉흥연주가 반복 그루브 위에 쌓입니다.',point:'짧은 전자 베이스 리프가 반복되는 동안 솔로와 신시사이저 음색이 어떻게 변화하는지 들어 보세요.'},
+    {years:'1977',lineage:'fusion',style:'재즈 퓨전',styleEn:'Jazz Fusion',original:'Birdland',artist:'Weather Report',history:'복잡한 퓨전 합주를 기억하기 쉬운 선율과 강한 전기 베이스 그루브로 연결한 대표곡입니다.',sound:'신시사이저 선율과 무프렛 베이스, 색소폰 합주가 여러 짧은 주제를 차례로 제시합니다.',point:'베이스가 선율과 리듬 반주의 역할을 오가며 곡의 장면을 바꾸는 순간을 찾아보세요.'},
+    {years:'1980',lineage:'contemporary',style:'스무스 재즈',styleEn:'Smooth Jazz',original:'Winelight',artist:'Grover Washington Jr.',history:'재즈 즉흥연주를 부드러운 R&B 그루브와 간결한 곡 구조에 담은 초기 스무스 재즈 대표곡입니다.',sound:'따뜻한 색소폰 선율, 일렉트릭 피아노와 절제된 리듬 섹션이 넓은 공간을 만듭니다.',point:'색소폰이 짧은 주선율을 변형하면서도 편안한 그루브를 유지하는 방식을 들어 보세요.'},
+    {years:'1986',lineage:'contemporary',style:'컨템퍼러리 재즈',styleEn:'Contemporary Jazz',original:'Maputo',artist:'Bob James & David Sanborn',history:'키보드 중심의 정교한 제작과 강렬한 색소폰을 결합한 1980년대 컨템퍼러리 재즈의 대표곡입니다.',sound:'신시사이저 층과 단단한 드럼 위로 알토 색소폰이 선명하고 블루지한 주선율을 연주합니다.',point:'매끄러운 반주와 거칠게 밀어 올리는 색소폰 음색이 만드는 대비를 들어 보세요.'},
+    {years:'1991',lineage:'contemporary',style:'컨템퍼러리 재즈',styleEn:'Contemporary Jazz',original:'101 Eastbound',artist:'Fourplay',history:'재즈 연주자들의 합주를 세련된 R&B 리듬과 스튜디오 제작으로 다듬은 그룹 사운드의 사례입니다.',sound:'싱코페이션 기타, 전기 피아노와 탄력 있는 베이스가 짧은 솔로를 주고받습니다.',point:'각 악기가 전면에 나왔다가 다시 리듬 반주로 돌아가는 순서를 따라가 보세요.'},
+    {years:'1993',lineage:'contemporary',style:'스무스 재즈',styleEn:'Smooth Jazz',original:'You Make Me Smile',artist:'Dave Koz',history:'기억하기 쉬운 색소폰 선율과 팝·R&B 제작을 결합한 Dave Koz의 초기 대표곡입니다.',sound:'밝고 또렷한 색소폰 리드, 신시사이저 패드와 일정한 드럼 그루브가 중심입니다.',point:'색소폰이 사람의 노래처럼 짧은 숨과 강약으로 주선율을 말하는 방식을 들어 보세요.'},
+    {years:'2001',lineage:'contemporary',style:'컨템퍼러리 재즈 펑크',styleEn:'Contemporary Jazz-Funk',original:'Power',artist:'Marcus Miller',history:'재즈 즉흥연주와 현대적인 펑크 제작을 독창적인 전기 베이스 연주로 이끄는 컨템퍼러리 재즈 사례입니다.',sound:'엄지 타격과 팝핑을 섞은 슬랩 베이스가 주선율과 리듬을 동시에 맡고, 관악기와 드럼이 악센트를 맞춥니다.',point:'베이스가 낮은 반주에 머물지 않고 멜로디·리듬·솔로를 동시에 담당하는지 들어 보세요.'},
+    {years:'2015',lineage:'modern',style:'현대 영적 재즈',styleEn:'Modern Spiritual Jazz',title:'체인지 오브 더 가드',original:'Change of the Guard',artist:'Kamasi Washington',history:'빅밴드, 영적 재즈, 힙합 세대의 감각을 함께 담은 오늘의 재즈 사례입니다.',sound:'두꺼운 관악 합주와 합창, 긴 색소폰 솔로가 영화적인 규모를 만듭니다.',point:'전통적인 재즈 솔로와 현대적인 대규모 편곡이 어떻게 공존하는지 들어 보세요.'}
   ]
 };
