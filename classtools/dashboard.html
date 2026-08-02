@@ -1552,15 +1552,18 @@
             const weekEnd = new Date(now);
             weekEnd.setDate(now.getDate() + (7 - now.getDay()) % 7);
             const weekEndKey = localDateKey(weekEnd);
+            const scheduleWindowEnd = new Date(now);
+            scheduleWindowEnd.setDate(now.getDate() + 30);
+            const scheduleWindowEndKey = localDateKey(scheduleWindowEnd);
             const upcoming = schedules
-                .filter((item) => item.date >= today)
+                .filter((item) => item.date >= today && item.date <= scheduleWindowEndKey)
                 .sort((a, b) => a.date.localeCompare(b.date) || a.title.localeCompare(b.title));
             scheduleCountBadge.textContent = `예정 ${upcoming.length}개`;
 
             if (!upcoming.length) {
                 const empty = document.createElement("div");
                 empty.className = "schedule-empty";
-                empty.textContent = "달력에서 날짜를 선택해 주요일정을 등록하세요.";
+                empty.textContent = "오늘부터 30일 이내에 예정된 주요일정이 없습니다.";
                 scheduleList.append(empty);
                 return;
             }
