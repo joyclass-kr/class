@@ -7,8 +7,16 @@ const dashboardSource = await readFile(new URL("../classtools/dashboard.html", i
 
 test("teachers can update only schedules belonging to their own class", () => {
   assert.match(serverSource, /router\.patch\("\/teacher\/schedules\/:scheduleId"/);
-  assert.match(serverSource, /c\.teacher_user_id = \$4/);
-  assert.match(serverSource, /SET event_date = \$2::DATE, title = \$3, updated_at = NOW\(\)/);
+  assert.match(serverSource, /c\.teacher_user_id = \$5/);
+  assert.match(serverSource, /SET event_date = \$2::DATE, title = \$3, details = \$4, updated_at = NOW\(\)/);
+});
+
+test("schedules keep optional preparation and additional guidance", () => {
+  assert.match(serverSource, /ADD COLUMN IF NOT EXISTS details TEXT NOT NULL DEFAULT ''/);
+  assert.match(serverSource, /details\.length > 160/);
+  assert.match(dashboardSource, /id="scheduleDetailsInput"/);
+  assert.match(dashboardSource, /className = "schedule-detail"/);
+  assert.match(dashboardSource, /JSON\.stringify\(\{ classId: activeScheduleClassId, date, title, details \}\)/);
 });
 
 test("dashboard exposes schedule edit and clear visual date groups", () => {

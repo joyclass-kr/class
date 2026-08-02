@@ -378,6 +378,8 @@ function createClassroomPlatform(options = {}) {
         created_at TIMESTAMPTZ NOT NULL DEFAULT NOW(),
         updated_at TIMESTAMPTZ NOT NULL DEFAULT NOW()
       )`,
+      `ALTER TABLE classroom_schedules
+        ADD COLUMN IF NOT EXISTS details TEXT NOT NULL DEFAULT ''`,
       `CREATE INDEX IF NOT EXISTS classroom_schedules_class_date_idx
         ON classroom_schedules (class_id, event_date, id)`,
       `CREATE UNIQUE INDEX IF NOT EXISTS classroom_schedules_unique_event_idx
@@ -1593,7 +1595,7 @@ function createClassroomPlatform(options = {}) {
     const classId = await readableScheduleClassId(user, req.query.classId);
     if (!classId) throw new HttpError(403, "CLASS_ACCESS_REQUIRED", "No classroom schedule is available for this account.");
     const result = await pool.query(
-      `SELECT id, event_date::TEXT AS event_date, title
+      `SELECT id, event_date::TEXT AS event_date, title, details
        FROM classroom_schedules
        WHERE class_id = $1
          AND event_date >= CURRENT_DATE - 31
@@ -1608,7 +1610,7 @@ function createClassroomPlatform(options = {}) {
       [classId]
     );
     const savedSchedules = result.rows.map((row) => ({
-      id: String(row.id), date: row.event_date, title: row.title, type: "schedule"
+      id: String(row.id), date: row.event_date, title: row.title, details: row.details || "", type: "schedule"
     }));
     const schedules = [...savedSchedules, ...birthdayScheduleRows(birthdaysResult.rows)]
       .sort((a, b) => a.date.localeCompare(b.date) || a.title.localeCompare(b.title));
@@ -1625,6 +1627,7 @@ function createClassroomPlatform(options = {}) {
     if (!classId) throw new HttpError(403, "CLASS_WRITE_REQUIRED", "Only the homeroom teacher can add this class schedule.");
     const date = String(req.body?.date || "").trim();
     const title = String(req.body?.title || "").normalize("NFC").trim();
+    const details = String(req.body?.details || "").normalize("NFC").trim();
     const parsedDate = /^\d{4}-\d{2}-\d{2}$/.test(date) ? new Date(`${date}T00:00:00Z`) : null;
     if (
       !parsedDate || Number.isNaN(parsedDate.getTime()) ||
@@ -1635,16 +1638,19 @@ function createClassroomPlatform(options = {}) {
     if (!title || title.length > 60) {
       throw new HttpError(400, "INVALID_SCHEDULE_TITLE", "Schedule titles must contain 1 to 60 characters.");
     }
+    if (details.length > 160) {
+      throw new HttpError(400, "INVALID_SCHEDULE_DETAILS", "Schedule details must contain 160 characters or fewer.");
+    }
     const result = await pool.query(
-      `INSERT INTO classroom_schedules (class_id, event_date, title, created_by)
-       VALUES ($1, $2::DATE, $3, $4)
+      `INSERT INTO classroom_schedules (class_id, event_date, title, details, created_by)
+       VALUES ($1, $2::DATE, $3, $4, $5)
        ON CONFLICT (class_id, event_date, title) DO UPDATE
-       SET updated_at = NOW()
-       RETURNING id, event_date::TEXT AS event_date, title`,
-      [classId, date, title, teacher.id]
+       SET details = EXCLUDED.details, updated_at = NOW()
+       RETURNING id, event_date::TEXT AS event_date, title, details`,
+      [classId, date, title, details, teacher.id]
     );
     const row = result.rows[0];
-    res.status(201).json({ schedule: { id: String(row.id), date: row.event_date, title: row.title } });
+    res.status(201).json({ schedule: { id: String(row.id), date: row.event_date, title: row.title, details: row.details || "" } });
   }));
 
   router.patch("/teacher/schedules/:scheduleId", asyncRoute(async (req, res) => {
@@ -1652,6 +1658,7 @@ function createClassroomPlatform(options = {}) {
     const scheduleId = Number(req.params.scheduleId);
     const date = String(req.body?.date || "").trim();
     const title = String(req.body?.title || "").normalize("NFC").trim();
+    const details = String(req.body?.details || "").normalize("NFC").trim();
     const parsedDate = /^\d{4}-\d{2}-\d{2}$/.test(date) ? new Date(`${date}T00:00:00Z`) : null;
     if (!Number.isInteger(scheduleId) || scheduleId < 1) {
       throw new HttpError(400, "INVALID_SCHEDULE", "Schedule not found.");
@@ -1662,17 +1669,20 @@ function createClassroomPlatform(options = {}) {
     if (!title || title.length > 60) {
       throw new HttpError(400, "INVALID_SCHEDULE_TITLE", "Schedule titles must contain 1 to 60 characters.");
     }
+    if (details.length > 160) {
+      throw new HttpError(400, "INVALID_SCHEDULE_DETAILS", "Schedule details must contain 160 characters or fewer.");
+    }
     const result = await pool.query(
       `UPDATE classroom_schedules s
-       SET event_date = $2::DATE, title = $3, updated_at = NOW()
+       SET event_date = $2::DATE, title = $3, details = $4, updated_at = NOW()
        FROM classroom_classes c
-       WHERE s.id = $1 AND c.id = s.class_id AND c.teacher_user_id = $4
-       RETURNING s.id, s.event_date::TEXT AS event_date, s.title`,
-      [scheduleId, date, title, teacher.id]
+       WHERE s.id = $1 AND c.id = s.class_id AND c.teacher_user_id = $5
+       RETURNING s.id, s.event_date::TEXT AS event_date, s.title, s.details`,
+      [scheduleId, date, title, details, teacher.id]
     );
     if (!result.rows[0]) throw new HttpError(404, "SCHEDULE_NOT_FOUND", "Schedule not found.");
     const row = result.rows[0];
-    res.json({ schedule: { id: String(row.id), date: row.event_date, title: row.title, type: "schedule" } });
+    res.json({ schedule: { id: String(row.id), date: row.event_date, title: row.title, details: row.details || "", type: "schedule" } });
   }));
 
   router.delete("/teacher/schedules/:scheduleId", asyncRoute(async (req, res) => {
@@ -2003,6 +2013,28 @@ function createClassroomPlatform(options = {}) {
       }
 
       const numbers = cleanStudents.map((student) => student.number);
+      const removedStudentsResult = await client.query(
+        `SELECT id, user_id
+         FROM classroom_students
+         WHERE class_id = $1 AND NOT (student_number = ANY($2::TEXT[]))
+         FOR UPDATE`,
+        [classroom.id, numbers]
+      );
+      const removedUserIds = removedStudentsResult.rows
+        .map((student) => student.user_id)
+        .filter(Boolean);
+      if (removedUserIds.length > 0) {
+        await client.query(
+          "DELETE FROM classroom_sessions WHERE user_id = ANY($1::BIGINT[])",
+          [removedUserIds]
+        );
+        await client.query(
+          `UPDATE classroom_users
+           SET role = NULL, updated_at = NOW()
+           WHERE id = ANY($1::BIGINT[]) AND role = 'student'`,
+          [removedUserIds]
+        );
+      }
       await client.query(
         `DELETE FROM classroom_students
          WHERE class_id = $1 AND NOT (student_number = ANY($2::TEXT[]))`,
@@ -2043,6 +2075,45 @@ function createClassroomPlatform(options = {}) {
       }
       await client.query("COMMIT");
       return res.json({ ok: true, schoolCode, studentCount: cleanStudents.length });
+    } catch (error) {
+      await client.query("ROLLBACK");
+      throw error;
+    } finally {
+      client.release();
+    }
+  }));
+
+  router.delete("/teacher/class/students/:studentNumber", asyncRoute(async (req, res) => {
+    const teacher = await requireTeacher(req);
+    const studentNumber = String(req.params.studentNumber || "").trim();
+    if (!/^\d{1,3}$/.test(studentNumber)) {
+      throw new HttpError(400, "INVALID_STUDENT_NUMBER", "Student numbers must contain digits only.");
+    }
+    const client = await pool.connect();
+    try {
+      await client.query("BEGIN");
+      const result = await client.query(
+        `SELECT s.id, s.user_id
+         FROM classroom_students s
+         JOIN classroom_classes c ON c.id = s.class_id
+         WHERE c.teacher_user_id = $1 AND s.student_number = $2
+         FOR UPDATE OF s`,
+        [teacher.id, studentNumber]
+      );
+      const student = result.rows[0];
+      if (!student) throw new HttpError(404, "STUDENT_NOT_FOUND", "The student was not found in this class.");
+      if (student.user_id) {
+        await client.query("DELETE FROM classroom_sessions WHERE user_id = $1", [student.user_id]);
+        await client.query(
+          `UPDATE classroom_users
+           SET role = NULL, updated_at = NOW()
+           WHERE id = $1 AND role = 'student'`,
+          [student.user_id]
+        );
+      }
+      await client.query("DELETE FROM classroom_students WHERE id = $1", [student.id]);
+      await client.query("COMMIT");
+      res.json({ ok: true, studentNumber });
     } catch (error) {
       await client.query("ROLLBACK");
       throw error;

@@ -12,7 +12,7 @@ assert.ok(script, "Dashboard script is missing.");
 new vm.Script(script, { filename: "dashboard.html" });
 
 for (const id of [
-  "scheduleList", "scheduleEditor", "scheduleDateInput", "scheduleTitleInput",
+  "scheduleList", "scheduleEditor", "scheduleDateInput", "scheduleTitleInput", "scheduleDetailsInput",
   "addScheduleBtn", "prevMonthBtn", "todayMonthBtn", "nextMonthBtn"
 ]) {
   assert.match(html, new RegExp(`id=["']${id}["']`), `${id} is missing.`);

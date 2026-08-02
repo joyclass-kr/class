@@ -34,3 +34,14 @@ test("teacher roster cannot overwrite student-managed birthday or password", asy
   assert.match(serverSource, /existingPassword\?\.passwordHash \|\| hashStudentPassword\(DEFAULT_STUDENT_PASSWORD\)/);
   assert.doesNotMatch(serverSource, /student\.birthdayMmdd \|\| null, student\.birthdayVisible/);
 });
+
+test("teacher student deletion removes the full roster record and revokes linked access", async () => {
+  const rosterSource = await readFile(new URL("../classtools/roster.html", import.meta.url), "utf8");
+  assert.match(serverSource, /router\.delete\("\/teacher\/class\/students\/:studentNumber"/);
+  assert.match(serverSource, /DELETE FROM classroom_sessions WHERE user_id = \$1/);
+  assert.match(serverSource, /UPDATE classroom_users\s+SET role = NULL/);
+  assert.match(serverSource, /DELETE FROM classroom_students WHERE id = \$1/);
+  assert.match(serverSource, /removedStudentsResult/);
+  assert.match(rosterSource, /id="student-delete-select"/);
+  assert.match(rosterSource, /계정 연결, 생일, 공개 설정, 비밀번호가 함께 삭제/);
+});

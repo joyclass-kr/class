@@ -494,6 +494,25 @@
             color-scheme: dark;
         }
 
+        .schedule-details-input {
+            grid-column: 1 / -1;
+        }
+
+        .schedule-copy {
+            flex: 1;
+            min-width: 0;
+            display: flex;
+            flex-direction: column;
+            gap: 2px;
+        }
+
+        .schedule-detail {
+            color: var(--text-muted);
+            font-size: 0.8rem;
+            line-height: 1.35;
+            overflow-wrap: anywhere;
+        }
+
         .board-item-del {
             background: none;
             border: none;
@@ -947,6 +966,7 @@
                 <input class="board-input" id="scheduleTitleInput" maxlength="60" placeholder="선택한 날짜의 일정 입력..." aria-label="일정 내용">
                 <button class="add-btn" id="addScheduleBtn" aria-label="주요일정 추가">+</button>
                 <button class="add-btn" id="cancelScheduleEditBtn" aria-label="일정 수정 취소" hidden>×</button>
+                <input class="board-input schedule-details-input" id="scheduleDetailsInput" maxlength="160" placeholder="준비물·추가 안내 (선택)" aria-label="준비물 및 추가 안내">
             </div>
         </section>
 
@@ -1122,6 +1142,7 @@
         const scheduleList = document.getElementById("scheduleList");
         const scheduleDateInput = document.getElementById("scheduleDateInput");
         const scheduleTitleInput = document.getElementById("scheduleTitleInput");
+        const scheduleDetailsInput = document.getElementById("scheduleDetailsInput");
         const addScheduleBtn = document.getElementById("addScheduleBtn");
         const scheduleCountBadge = document.getElementById("scheduleCountBadge");
         const scheduleEditor = document.getElementById("scheduleEditor");
@@ -1553,7 +1574,7 @@
                 if (!item?.date || !item?.title) continue;
                 const data = await scheduleApi("/api/teacher/schedules", {
                     method: "POST",
-                    body: JSON.stringify({ classId: activeScheduleClassId, date: item.date, title: item.title })
+                    body: JSON.stringify({ classId: activeScheduleClassId, date: item.date, title: item.title, details: item.details || "" })
                 });
                 schedules.push(data.schedule);
             }
@@ -1597,10 +1618,18 @@
                 dateSpan.className = "schedule-date";
                 if (isThisWeek) dateSpan.classList.add("this-week");
                 dateSpan.textContent = label;
+                const copy = document.createElement("span");
+                copy.className = "schedule-copy";
                 const titleSpan = document.createElement("span");
-                titleSpan.style.flex = "1";
                 titleSpan.textContent = item.title;
-                div.append(dateSpan, titleSpan);
+                copy.append(titleSpan);
+                if (item.details) {
+                    const detailSpan = document.createElement("span");
+                    detailSpan.className = "schedule-detail";
+                    detailSpan.textContent = item.details;
+                    copy.append(detailSpan);
+                }
+                div.append(dateSpan, copy);
                 if (canEditSchedules && item.type !== "birthday") {
                     const actions = document.createElement("span");
                     actions.className = "schedule-actions";
@@ -1612,6 +1641,7 @@
                         editingScheduleId = item.id;
                         scheduleDateInput.value = item.date;
                         scheduleTitleInput.value = item.title;
+                        scheduleDetailsInput.value = item.details || "";
                         addScheduleBtn.textContent = "✓";
                         addScheduleBtn.setAttribute("aria-label", "주요일정 수정 저장");
                         cancelScheduleEditBtn.hidden = false;
@@ -1644,6 +1674,7 @@
         async function addSchedule() {
             const date = scheduleDateInput.value;
             const title = scheduleTitleInput.value.trim();
+            const details = scheduleDetailsInput.value.trim();
             if (!canEditSchedules || !activeScheduleClassId || !date || !title) return;
             addScheduleBtn.disabled = true;
             try {
@@ -1651,7 +1682,7 @@
                     ? `/api/teacher/schedules/${encodeURIComponent(editingScheduleId)}`
                     : "/api/teacher/schedules", {
                     method: editingScheduleId ? "PATCH" : "POST",
-                    body: JSON.stringify({ classId: activeScheduleClassId, date, title })
+                    body: JSON.stringify({ classId: activeScheduleClassId, date, title, details })
                 });
                 if (editingScheduleId) {
                     schedules = schedules.map((item) => item.id === editingScheduleId ? data.schedule : item);
@@ -1672,6 +1703,7 @@
         function resetScheduleEditor() {
             editingScheduleId = null;
             scheduleTitleInput.value = "";
+            scheduleDetailsInput.value = "";
             addScheduleBtn.textContent = "+";
             addScheduleBtn.setAttribute("aria-label", "주요일정 추가");
             cancelScheduleEditBtn.hidden = true;
@@ -1684,6 +1716,12 @@
         });
         scheduleTitleInput.addEventListener("keydown", (event) => {
             if (event.key === "Enter") addSchedule();
+            if (event.key === "Escape" && editingScheduleId) {
+                resetScheduleEditor();
+                renderCalendar();
+            }
+        });
+        scheduleDetailsInput.addEventListener("keydown", (event) => {
             if (event.key === "Escape" && editingScheduleId) {
                 resetScheduleEditor();
                 renderCalendar();

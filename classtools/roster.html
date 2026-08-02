@@ -279,6 +279,45 @@
             margin-top: 20px;
         }
 
+        .student-delete-box {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            margin-top: 20px;
+            padding: 14px;
+            border: 1px solid #e7c7c3;
+            border-radius: 14px;
+            background: var(--danger-soft);
+        }
+
+        .student-delete-select {
+            flex: 1;
+            min-width: 0;
+            min-height: 48px;
+            border: 1.5px solid var(--line);
+            border-radius: 12px;
+            padding: 0 12px;
+            color: var(--ink);
+            background: #fff;
+        }
+
+        .student-delete-button {
+            min-height: 48px;
+            border: 0;
+            border-radius: 12px;
+            padding: 0 18px;
+            color: #fff;
+            background: var(--danger);
+            font-weight: 800;
+            cursor: pointer;
+        }
+
+        .student-delete-button:disabled {
+            cursor: not-allowed;
+            color: #898b87;
+            background: #deded8;
+        }
+
         .status {
             min-height: 1.5em;
             margin: 0;
@@ -659,6 +698,13 @@
                 </div>
             </div>
 
+            <div class="student-delete-box" id="student-delete-box">
+                <select class="student-delete-select" id="student-delete-select" aria-label="삭제할 학생">
+                    <option value="">삭제할 학생 선택</option>
+                </select>
+                <button class="student-delete-button" id="student-delete-button" type="button" disabled>학생 삭제</button>
+            </div>
+
             <div class="actions">
                 <p class="status" id="input-status" role="status" aria-live="polite">엑셀에서 학번, 성명, 성별, 비밀번호 열을 복사하여 붙여넣으세요.</p>
                 <button class="save-button" id="save-button" type="button" disabled>SAVE ROSTER</button>
@@ -705,9 +751,12 @@
             const passwordCount = document.querySelector("#password-count");
             const status = document.querySelector("#input-status");
             const saveButton = document.querySelector("#save-button");
+            const studentDeleteSelect = document.querySelector("#student-delete-select");
+            const studentDeleteButton = document.querySelector("#student-delete-button");
             const displayedPasswordRows = new Map();
             let authorized = false;
             let saving = false;
+            let loadedRosterStudents = [];
 
             async function api(path, options = {}) {
                 const response = await fetch(path, {
@@ -813,6 +862,7 @@
             }
 
             function loadClassroom(classroom) {
+                loadedRosterStudents = Array.isArray(classroom.students) ? classroom.students : [];
                 schoolInput.value = classroom.schoolName;
                 schoolCodeInput.value = classroom.schoolCode || "";
                 schoolYearInput.value = String(classroom.academicYear);
@@ -830,6 +880,12 @@
                 if (birthdatesInput) birthdatesInput.disabled = true;
                 if (birthdayVisibleInput) birthdayVisibleInput.disabled = true;
                 passwordsInput.disabled = true;
+                studentDeleteSelect.replaceChildren(new Option("삭제할 학생 선택", ""));
+                loadedRosterStudents.forEach((student) => {
+                    studentDeleteSelect.add(new Option(`${student.number}번 ${student.name}`, student.number));
+                });
+                studentDeleteSelect.disabled = Boolean(classroom.isReadOnly || classroom.teacherType === 'subject');
+                studentDeleteButton.disabled = true;
                 if (classroom.isReadOnly || classroom.teacherType === 'subject') {
                     numbersInput.disabled = true;
                     namesInput.disabled = true;
@@ -957,6 +1013,28 @@
                     update();
                 }
             }
+
+            studentDeleteSelect.addEventListener("change", () => {
+                studentDeleteButton.disabled = !authorized || !studentDeleteSelect.value || studentDeleteSelect.disabled;
+            });
+
+            studentDeleteButton.addEventListener("click", async () => {
+                const studentNumber = studentDeleteSelect.value;
+                const student = loadedRosterStudents.find((item) => item.number === studentNumber);
+                if (!student) return;
+                const message = `${student.number}번 ${student.name} 학생을 삭제할까요?\n\n학생의 계정 연결, 생일, 공개 설정, 비밀번호가 함께 삭제되고 로그인 중인 기기에서도 로그아웃됩니다.`;
+                if (!confirm(message)) return;
+                studentDeleteButton.disabled = true;
+                try {
+                    await api(`/api/teacher/class/students/${encodeURIComponent(student.number)}`, { method: "DELETE" });
+                    const result = await api("/api/teacher/class");
+                    if (result.classroom) loadClassroom(result.classroom);
+                    setStatus(`${student.number}번 ${student.name} 학생과 계정 정보를 삭제했습니다.`, "success");
+                } catch (error) {
+                    setStatus(error.message, "error");
+                    studentDeleteButton.disabled = false;
+                }
+            });
 
             async function start() {
                 try {
