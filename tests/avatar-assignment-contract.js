@@ -1,4 +1,4 @@
-﻿const assert = require('node:assert/strict');
+const assert = require('node:assert/strict');
 const fs = require('node:fs');
 const path = require('node:path');
 const vm = require('node:vm');
@@ -33,7 +33,7 @@ assert.notDeepEqual(Array.from(avatars.getOrder('class-a')), Array.from(avatars.
   'Different classes should receive different shuffled assignments.');
 
 for (const [name, html] of [['dashboard', dashboard], ['seating', seating]]) {
-  assert.match(html, /<script src="\/classtools\/avatar-assignment\.js"><\/script>/,
+  assert.match(html, /<script src="\.\/avatar-assignment\.js"><\/script>/,
     `${name} must load the shared avatar assignment.`);
   const inline = html.match(/<script>\s*([\s\S]*?)<\/script>/)?.[1];
   assert.ok(inline, `${name} inline script is missing.`);
