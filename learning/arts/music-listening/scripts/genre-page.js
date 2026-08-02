@@ -1,4 +1,6 @@
 const data=window.MUSIC_GENRE;
+const history=document.querySelector('#history');
+const library=document.querySelector('#library');
 const eraTabs=document.querySelector('#era-tabs');
 const eraPanel=document.querySelector('#era-panel');
 const filters=document.querySelector('#lineage-filters');
@@ -21,8 +23,22 @@ if(subfilters){
   subfilters.setAttribute('aria-label','R&B·소울 하위 갈래');
   filters.after(subfilters);
 }
+if(data.integrated){
+  document.body.classList.add('integrated-genre');
+  eraTabs.hidden=true;
+  filters.setAttribute('aria-label','재즈 시대와 양식 선택');
+  history.append(filters,eraPanel,playlist);
+  library.hidden=true;
+  if(studyGuide)studyGuide.hidden=true;
+}
 
-function renderEra(){
+function renderEra(lineage){
+  if(data.integrated){
+    const era=data.lineageStories[lineage]||data.lineageStories.all;
+    const count=data.cards.filter(card=>lineage==='all'||card.lineage===lineage).length;
+    eraPanel.innerHTML=`<div class="years">${era.years}</div><div><h3>${era.name}<small>${era.english}</small></h3><p>${era.story}</p><p class="turn"><strong>음악적으로 듣기:</strong> ${era.sound}</p><p class="integrated-question"><strong>들으며 생각하기:</strong> ${era.question}</p><b class="integrated-count">대표곡 ${count}개</b></div>`;
+    return;
+  }
   const era=data.eras[eraIndex];
   eraTabs.innerHTML=data.eras.map((item,index)=>`<button class="${index===eraIndex?'active':''}" data-era-index="${index}">${item.years}</button>`).join('');
   eraPanel.innerHTML=`<div class="years">${era.years}</div><div><h3>${era.name}<small>${era.english}</small></h3><p>${era.story}</p><p class="turn"><strong>시대를 바꾼 소리:</strong> ${era.turn}</p></div>`;
@@ -47,7 +63,7 @@ function cardPoint(card){
 
 function renderCards(lineage='all',subgroup='all'){
   const cards=data.cards.filter(card=>(lineage==='all'||card.lineage===lineage)&&(subgroup==='all'||card.subgroup===subgroup)).sort((a,b)=>Number.parseInt(a.years)-Number.parseInt(b.years));
-  if(studyGuide){
+  if(studyGuide&&!data.integrated){
     const guide=guideFor(lineage,subgroup);
     const description=data.descriptions?.[subgroup==='all'?lineage:`${lineage}:${subgroup}`];
     studyGuide.hidden=!guide;
@@ -84,6 +100,6 @@ function openDetail(index){
 
 const defaultLineage=data.lineages[0][0];
 filters.innerHTML=[...data.lineages,['all',`전체 ${data.cards.length}곡 (All)`]].map(([key,label],index)=>`<button class="${index===0?'active':''}" data-lineage="${key}">${label}</button>`).join('');
-filters.querySelectorAll('button').forEach(button=>button.addEventListener('click',()=>{filters.querySelector('.active').classList.remove('active');button.classList.add('active');const subgroup=renderSubgroups(button.dataset.lineage);renderCards(button.dataset.lineage,subgroup)}));
+filters.querySelectorAll('button').forEach(button=>button.addEventListener('click',()=>{filters.querySelector('.active').classList.remove('active');button.classList.add('active');const lineage=button.dataset.lineage;const subgroup=renderSubgroups(lineage);if(data.integrated)renderEra(lineage);renderCards(lineage,subgroup)}));
 dialog.addEventListener('click',event=>{if(event.target===dialog||event.target.closest('.dialog-close'))dialog.close()});
-renderEra();renderCards(defaultLineage,renderSubgroups(defaultLineage));
+renderEra(data.integrated?defaultLineage:undefined);renderCards(defaultLineage,renderSubgroups(defaultLineage));
