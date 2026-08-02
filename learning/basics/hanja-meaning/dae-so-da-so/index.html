@@ -51,7 +51,7 @@
     .topline {
       position: absolute;
       top: 10px;
-      right: clamp(20px, 4vw, 54px);
+      right: calc(clamp(20px, 4vw, 54px) + 330px);
       display: flex;
       align-items: center;
       justify-content: flex-end;
@@ -70,7 +70,7 @@
 
     .hanja-head {
       display: grid;
-      grid-template-columns: auto 1fr;
+      grid-template-columns: auto 1fr auto;
       align-items: center;
       gap: clamp(20px, 3vw, 34px);
       padding: 6px 0 13px;
@@ -100,6 +100,92 @@
     }
 
     .hanja-four .pair-gap { margin-left: clamp(7px, 1.3vw, 15px); }
+
+    .stroke-demo {
+      display: grid;
+      grid-template-columns: 104px 188px;
+      align-items: center;
+      gap: 10px;
+      padding: 6px;
+      border: 1px solid var(--line);
+      border-radius: 8px;
+      background: #fffdf8;
+    }
+
+    .stroke-stage {
+      display: block;
+      width: 104px;
+      height: 104px;
+      border: 1px solid #ddd8ce;
+      background: #fff;
+    }
+
+    .stroke-guide {
+      fill: none;
+      stroke: #dedbd3;
+      stroke-width: 1;
+      stroke-dasharray: 4 4;
+    }
+
+    .stroke-set[hidden] { display: none; }
+
+    .stroke-path {
+      fill: none;
+      stroke: var(--ink);
+      stroke-width: 10;
+      stroke-linecap: round;
+      stroke-linejoin: round;
+    }
+
+    .stroke-controls { display: grid; gap: 6px; }
+
+    .stroke-character-switch {
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      gap: 4px;
+    }
+
+    .stroke-character,
+    .stroke-button {
+      min-height: 44px;
+      border: 1px solid #9aa5ad;
+      border-radius: 5px;
+      background: #fff;
+      color: var(--ink);
+      font: 800 14px/1.15 system-ui, sans-serif;
+      cursor: pointer;
+    }
+
+    .stroke-character {
+      min-width: 44px;
+      padding: 4px;
+      font-family: "KleeHanja", serif;
+      font-size: 22px;
+    }
+
+    .stroke-character[aria-pressed="true"] {
+      border-color: var(--blue);
+      background: var(--blue-soft);
+      color: var(--blue);
+    }
+
+    .stroke-status {
+      margin: 0;
+      color: var(--blue);
+      font: 800 13px/1.2 system-ui, sans-serif;
+      text-align: center;
+    }
+
+    .stroke-button { padding: 7px 8px; }
+
+    .stroke-character:focus-visible,
+    .stroke-button:focus-visible {
+      outline: 3px solid rgba(45, 99, 140, .28);
+      outline-offset: 2px;
+    }
+
+    .stroke-character:disabled,
+    .stroke-button:disabled { opacity: .55; cursor: default; }
 
     .reading {
       margin: 0 0 5px;
@@ -347,7 +433,8 @@
     @media (max-width: 800px) {
       .page { padding-inline: 18px; }
       .topline { position: static; min-height: 32px; }
-      .hanja-head { gap: 20px; }
+      .hanja-head { grid-template-columns: auto 1fr; gap: 8px 20px; }
+      .stroke-demo { grid-column: 2; }
       .word-row { grid-template-columns: 1fr; gap: 3px; }
       .meaning-row { grid-template-columns: 1fr; gap: 6px; }
       .quiz-grid { grid-template-columns: 1fr; }
@@ -371,6 +458,46 @@
         <p class="reading">대 · 소 / 다 · 소</p>
         <p class="core-meaning">크다 · 작다 / 많다 · 적다</p>
       </div>
+      <section class="stroke-demo" aria-label="大·小·多·少 획순">
+        <svg class="stroke-stage" viewBox="0 0 160 160" role="img" aria-label="선택한 한자의 획순">
+          <path class="stroke-guide" d="M80 0V160M0 80H160M0 0L160 160M160 0L0 160" />
+          <g class="stroke-set" data-character="大">
+            <path class="stroke-path" d="M27 72 C58 69 99 64 132 65" />
+            <path class="stroke-path" d="M79 26 C80 67 66 108 31 136" />
+            <path class="stroke-path" d="M80 69 C96 91 114 119 137 135" />
+          </g>
+          <g class="stroke-set" data-character="小" hidden>
+            <path class="stroke-path" d="M81 25 C82 55 81 95 81 126 C81 137 73 132 67 127" />
+            <path class="stroke-path" d="M52 70 C47 86 37 101 25 112" />
+            <path class="stroke-path" d="M109 69 C121 79 132 96 136 109" />
+          </g>
+          <g class="stroke-set" data-character="多" hidden>
+            <path class="stroke-path" d="M70 20 C62 31 51 41 38 48" />
+            <path class="stroke-path" d="M71 27 C87 25 99 22 111 21 C101 42 78 62 45 72" />
+            <path class="stroke-path" d="M57 44 C65 49 71 57 74 63" />
+            <path class="stroke-path" d="M86 65 C78 78 65 90 47 101" />
+            <path class="stroke-path" d="M87 73 C102 71 113 68 125 67 C112 96 83 125 39 140" />
+            <path class="stroke-path" d="M68 94 C77 100 85 110 89 118" />
+          </g>
+          <g class="stroke-set" data-character="少" hidden>
+            <path class="stroke-path" d="M81 22 C82 43 82 68 82 83 C82 93 75 88 69 84" />
+            <path class="stroke-path" d="M57 45 C52 58 41 70 28 79" />
+            <path class="stroke-path" d="M108 46 C120 51 131 61 137 70" />
+            <path class="stroke-path" d="M108 62 C99 86 76 118 36 139" />
+          </g>
+        </svg>
+        <div class="stroke-controls">
+          <div class="stroke-character-switch" aria-label="획순을 볼 글자">
+            <button class="stroke-character" type="button" data-character="大" aria-pressed="true">大</button>
+            <button class="stroke-character" type="button" data-character="小" aria-pressed="false">小</button>
+            <button class="stroke-character" type="button" data-character="多" aria-pressed="false">多</button>
+            <button class="stroke-character" type="button" data-character="少" aria-pressed="false">少</button>
+          </div>
+          <p id="strokeStatus" class="stroke-status" aria-live="polite">大 · 준비</p>
+          <button id="playStrokes" class="stroke-button" type="button">▶ 획순 보기</button>
+          <button id="stepStroke" class="stroke-button" type="button">한 획씩</button>
+        </div>
+      </section>
     </header>
 
     <section id="lessonView" class="view" aria-label="뜻과 예시">
@@ -463,6 +590,98 @@
       const result = document.getElementById('result');
       const nextLesson = document.getElementById('nextLesson');
       const questions = Array.from(document.querySelectorAll('.question'));
+      const strokeSets = Array.from(document.querySelectorAll('.stroke-set'));
+      const characterButtons = Array.from(document.querySelectorAll('.stroke-character'));
+      const strokeStatus = document.getElementById('strokeStatus');
+      const playStrokes = document.getElementById('playStrokes');
+      const stepStroke = document.getElementById('stepStroke');
+      const reducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+      let currentCharacter = '大';
+      let currentPaths = [];
+      let visibleStrokes = 0;
+      let strokePlaying = false;
+
+      strokeSets.forEach((set) => {
+        set.querySelectorAll('.stroke-path').forEach((path) => {
+          const length = path.getTotalLength();
+          path.style.strokeDasharray = length;
+          path.style.strokeDashoffset = length;
+        });
+      });
+
+      function resetStrokes() {
+        currentPaths.forEach((path) => {
+          path.getAnimations().forEach((animation) => animation.cancel());
+          path.style.strokeDashoffset = path.getTotalLength();
+        });
+        visibleStrokes = 0;
+        strokeStatus.textContent = `${currentCharacter} · 준비`;
+      }
+
+      function selectCharacter(character) {
+        currentCharacter = character;
+        strokeSets.forEach((set) => {
+          set.toggleAttribute('hidden', set.dataset.character !== character);
+        });
+        characterButtons.forEach((button) => {
+          button.setAttribute('aria-pressed', String(button.dataset.character === character));
+        });
+        const currentSet = strokeSets.find((set) => set.dataset.character === character);
+        currentPaths = Array.from(currentSet.querySelectorAll('.stroke-path'));
+        resetStrokes();
+      }
+
+      async function revealStroke(path) {
+        const length = path.getTotalLength();
+        if (reducedMotion) {
+          path.style.strokeDashoffset = 0;
+          return;
+        }
+        const animation = path.animate(
+          [{ strokeDashoffset: length }, { strokeDashoffset: 0 }],
+          { duration: 900, easing: 'ease-in-out', fill: 'forwards' }
+        );
+        await animation.finished;
+        path.style.strokeDashoffset = 0;
+        animation.cancel();
+      }
+
+      characterButtons.forEach((button) => {
+        button.addEventListener('click', () => {
+          if (!strokePlaying) selectCharacter(button.dataset.character);
+        });
+      });
+
+      playStrokes.addEventListener('click', async () => {
+        if (strokePlaying) return;
+        strokePlaying = true;
+        playStrokes.disabled = true;
+        stepStroke.disabled = true;
+        characterButtons.forEach((button) => { button.disabled = true; });
+        resetStrokes();
+        for (let index = 0; index < currentPaths.length; index += 1) {
+          strokeStatus.textContent = `${currentCharacter} · ${index + 1}/${currentPaths.length}획`;
+          await revealStroke(currentPaths[index]);
+        }
+        visibleStrokes = currentPaths.length;
+        strokeStatus.textContent = `${currentCharacter} · 완성`;
+        playStrokes.disabled = false;
+        stepStroke.disabled = false;
+        characterButtons.forEach((button) => { button.disabled = false; });
+        strokePlaying = false;
+      });
+
+      stepStroke.addEventListener('click', () => {
+        if (strokePlaying) return;
+        if (visibleStrokes >= currentPaths.length) resetStrokes();
+        currentPaths[visibleStrokes].style.strokeDashoffset = 0;
+        visibleStrokes += 1;
+        strokeStatus.textContent = visibleStrokes === currentPaths.length
+          ? `${currentCharacter} · 완성`
+          : `${currentCharacter} · ${visibleStrokes}/${currentPaths.length}획`;
+      });
+
+      selectCharacter('大');
 
       function show(view) {
         const quiz = view === 'quiz';
