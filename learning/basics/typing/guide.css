@@ -64,10 +64,10 @@
   left: 50%;
   width: 34px;
   height: 82px;
-  border: 3px solid #f0ad00;
+  border: 3px solid #0758d9;
   border-radius: 18px 18px 15px 15px;
-  background: #ffd34e82;
-  box-shadow: 0 0 18px #ffbd2680;
+  background: #1687ff9c;
+  box-shadow: 0 0 0 4px #35d8ff70, 0 0 22px #087cff9c;
   transform: translateX(-50%);
   transform-origin: 50% 0;
 }
@@ -113,13 +113,13 @@
   width: 25px;
   height: 25px;
   border-width: 3px;
-  border-color: #fff7c5;
-  background: #ffbf19;
-  box-shadow: 0 0 0 7px #ffd34e70, 0 0 24px #ffab00;
+  border-color: #fff;
+  background: #075ee8;
+  box-shadow: 0 0 0 7px #28d7ff8a, 0 0 25px #006dff;
   transform: scale(1.18);
 }
 
-.finger.active b { background: #ffd34e; color: #3e2a00; opacity: 1; }
+.finger.active b { background: #075ee8; color: #fff; opacity: 1; }
 .finger-instruction { padding: 15px; border-radius: 20px; background: #fff5dc; text-align: center; }
 .finger-instruction span { color: #8b6931; font-size: 13px; font-weight: 800; }
 .finger-instruction strong { display: block; margin: 5px; color: #293346; font-size: 50px; line-height: 1.1; }
@@ -128,10 +128,12 @@
 .keyboard { display: flex; flex-direction: column; gap: 6px; width: min(100%, 760px); margin: 8px auto; }
 .key-row { display: flex; justify-content: center; gap: 6px; }
 .key { display: grid; place-items: center; width: 48px; height: 44px; border: 1px solid #d7dce2; border-bottom-width: 3px; border-radius: 9px; background: #f7f8fa; color: #465064; font-weight: 800; }
+.key.shift-key { width: 82px; font-size: 12px; }
 .key.home-key { box-shadow: inset 0 -4px #8fd7bf; }
-.key.active { border-color: #dfaa18; background: #ffd34e; box-shadow: 0 0 0 4px #ffd34e38; transform: translateY(2px); }
+.key.active { border-color: #0758d9; background: #1687ff; color: #fff; box-shadow: 0 0 0 4px #28d7ff70; transform: translateY(2px); }
 .key[data-finger="lp"], .key[data-finger="rp"] { border-top-color: #e87575; }
 .key[data-finger="lr"], .key[data-finger="rr"] { border-top-color: #e7a65d; }
+.key[data-finger="rr-rp"] { border-top-color: #d98c66; }
 .key[data-finger="lm"], .key[data-finger="rm"] { border-top-color: #6eb1dc; }
 .key[data-finger="li"], .key[data-finger="ri"] { border-top-color: #65bd91; }
 .guide-progress { display: flex; align-items: center; justify-content: center; gap: 10px; color: #707b8b; font-size: 13px; font-weight: 800; }
@@ -150,5 +152,6 @@
   .finger-instruction p { max-width: 190px; }
   .keyboard { overflow: hidden; }
   .key { width: 9.2vw; max-width: 48px; height: 42px; }
+  .key.shift-key { width: 13vw; max-width: 72px; }
   .key-row { gap: 3px; }
 }
