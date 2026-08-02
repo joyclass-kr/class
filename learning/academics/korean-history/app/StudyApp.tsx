@@ -73,6 +73,7 @@ export function StudyApp() {
   const [quizTitle, setQuizTitle] = useState("전체 범위");
   const [questionIndex, setQuestionIndex] = useState(0);
   const [selectedAnswer, setSelectedAnswer] = useState<number | null>(null);
+  const [incorrectAnswers, setIncorrectAnswers] = useState<number[]>([]);
   const [results, setResults] = useState<QuizResult[]>([]);
   const [questionCount, setQuestionCount] = useState(5);
   const [wrongIds, setWrongIds] = useState<string[]>([]);
@@ -151,6 +152,7 @@ export function StudyApp() {
     setQuizTitle(title);
     setQuestionIndex(0);
     setSelectedAnswer(null);
+    setIncorrectAnswers([]);
     setImageExpanded(false);
     setResults([]);
     setView("quiz");
@@ -162,12 +164,18 @@ export function StudyApp() {
   }
 
   function chooseAnswer(answer: number) {
-    if (!currentQuestion || selectedAnswer !== null) return;
-    const correct = answer === currentQuestion.answer;
-    setSelectedAnswer(answer);
-    setResults((previous) => [...previous, { id: currentQuestion.id, correct, chosen: answer }]);
+    if (!currentQuestion || selectedAnswer !== null || incorrectAnswers.includes(answer)) return;
 
-    const nextWrong = correct
+    if (answer !== currentQuestion.answer) {
+      setIncorrectAnswers((previous) => [...previous, answer]);
+      return;
+    }
+
+    const firstTryCorrect = incorrectAnswers.length === 0;
+    setSelectedAnswer(answer);
+    setResults((previous) => [...previous, { id: currentQuestion.id, correct: firstTryCorrect, chosen: answer }]);
+
+    const nextWrong = firstTryCorrect
       ? wrongIds.filter((id) => id !== currentQuestion.id)
       : Array.from(new Set([...wrongIds, currentQuestion.id]));
     saveWrong(nextWrong);
@@ -177,7 +185,7 @@ export function StudyApp() {
       ...stats,
       [currentQuestion.unitId]: {
         tried: currentUnitStats.tried + 1,
-        correct: currentUnitStats.correct + (correct ? 1 : 0),
+        correct: currentUnitStats.correct + (firstTryCorrect ? 1 : 0),
       },
     };
     setStats(nextStats);
@@ -190,6 +198,7 @@ export function StudyApp() {
     } else {
       setQuestionIndex((index) => index + 1);
       setSelectedAnswer(null);
+      setIncorrectAnswers([]);
       setImageExpanded(false);
     }
     window.scrollTo({ top: 0, behavior: "smooth" });
@@ -198,12 +207,12 @@ export function StudyApp() {
   function goHome() {
     setView("home");
     setSelectedAnswer(null);
+    setIncorrectAnswers([]);
     setImageExpanded(false);
     window.scrollTo({ top: 0, behavior: "smooth" });
   }
 
   if (view === "quiz" && currentQuestion) {
-    const isCorrect = selectedAnswer === currentQuestion.answer;
     return (
       <main className={`site-shell quiz-shell quiz-shell-solving ${selectedAnswer !== null ? "quiz-shell-answered" : ""}`}>
         <header className="quiz-header">
@@ -223,6 +232,9 @@ export function StudyApp() {
           <div className="question-meta">
             <span className="unit-pill">{currentQuestion.unit}</span>
             <div className="question-meta-actions">
+              {incorrectAnswers.length > 0 && selectedAnswer === null && (
+                <span className="retry-notice" role="status">다시 생각하고 다른 답을 골라보세요.</span>
+              )}
               <span>{currentQuestion.topic} · {currentQuestion.points}점</span>
               <button
                 className="image-expand-button"
@@ -246,7 +258,7 @@ export function StudyApp() {
           <div className="answer-grid" aria-label="정답 선택">
             {[1, 2, 3, 4].map((answer) => {
               const state = selectedAnswer === null
-                ? ""
+                ? incorrectAnswers.includes(answer) ? "wrong" : ""
                 : answer === currentQuestion.answer
                   ? "correct"
                   : answer === selectedAnswer
@@ -257,7 +269,7 @@ export function StudyApp() {
                   key={answer}
                   className={`answer-button ${state}`}
                   onClick={() => chooseAnswer(answer)}
-                  disabled={selectedAnswer !== null}
+                  disabled={selectedAnswer !== null || incorrectAnswers.includes(answer)}
                   aria-label={`${answer}번 선택`}
                 >
                   {answerSymbols[answer]}
@@ -268,12 +280,11 @@ export function StudyApp() {
 
         </section>
         {selectedAnswer !== null && (
-          <div className="answer-result-overlay" role="dialog" aria-modal="true" aria-label="채점 결과">
+          <aside className="answer-result-overlay" aria-label="정답 해설">
             <div className="answer-result-panel">
-              <div className={`feedback ${isCorrect ? "feedback-correct" : "feedback-wrong"}`} aria-live="polite">
-                <div>
-                  <strong>{isCorrect ? "정답입니다." : "오답입니다."}</strong>
-                  {!isCorrect && <span>정답은 {answerSymbols[currentQuestion.answer]}번입니다.</span>}
+              <div className="feedback feedback-correct" aria-live="polite">
+                <div className="feedback-message">
+                  <strong>{incorrectAnswers.length > 0 ? "정답을 찾았습니다." : "정답입니다."}</strong>
                 </div>
                 <button className="primary-button compact" onClick={nextQuestion}>
                   {questionIndex + 1 === quiz.length ? "결과 보기" : "다음 문제 →"}
@@ -297,7 +308,7 @@ export function StudyApp() {
               )}
               <p className="source-note">출처: {currentQuestion.source}</p>
             </div>
-          </div>
+          </aside>
         )}
         {imageExpanded && (
           <div
