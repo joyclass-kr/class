@@ -1,0 +1,79 @@
+<!doctype html>
+<html lang="ko">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width,initial-scale=1">
+    <meta name="theme-color" content="#10261d">
+    <title>내 정보 설정 | 송화플레이</title>
+    <style>
+        :root { color-scheme: dark; --bg:#0d1813; --panel:#14271e; --line:#315442; --ink:#f7f4ea; --muted:#aec0b6; --green:#70d99d; --soft:#1b3a2a; --amber:#ffd27a; }
+        * { box-sizing: border-box; }
+        body { margin:0; min-width:320px; min-height:100vh; padding:28px 20px; color:var(--ink); background:radial-gradient(circle at 20% 0,rgba(112,217,157,.11),transparent 30rem),var(--bg); font-family:Pretendard,"Noto Sans KR","Malgun Gothic",sans-serif; }
+        main { width:min(720px,100%); margin:auto; }
+        .top { display:flex; align-items:center; justify-content:space-between; gap:12px; margin-bottom:24px; }
+        .back { min-height:44px; display:inline-flex; align-items:center; padding:8px 12px; border-radius:10px; color:var(--green); font-weight:900; text-decoration:none; }
+        h1 { margin:0; font-size:clamp(2rem,7vw,3.3rem); letter-spacing:-.05em; }
+        .intro { margin:12px 0 24px; color:var(--muted); line-height:1.65; }
+        .card { margin-bottom:14px; padding:22px; border:1px solid var(--line); border-radius:18px; background:rgba(20,39,30,.95); }
+        .identity { display:grid; grid-template-columns:repeat(2,minmax(0,1fr)); gap:12px; }
+        .identity div { padding:14px; border-radius:12px; background:#0f1d17; }
+        .identity span,.identity strong { display:block; }
+        .identity span { color:var(--muted); font-size:.8rem; }
+        label { display:block; margin:0 0 8px; font-weight:900; }
+        input { width:100%; min-height:52px; padding:12px 14px; border:1px solid var(--line); border-radius:11px; color:var(--ink); background:#0f1d17; font:inherit; font-size:1.1rem; }
+        .hint { color:var(--muted); font-size:.9rem; line-height:1.6; }
+        .choice { display:flex; align-items:flex-start; gap:12px; min-height:58px; padding:12px; border:1px solid var(--line); border-radius:12px; cursor:pointer; }
+        .choice input { width:24px; min-height:24px; margin:2px 0 0; accent-color:var(--green); }
+        .choice strong,.choice small { display:block; }
+        .choice small { margin-top:4px; color:var(--muted); line-height:1.45; }
+        .preview { padding:14px; border-radius:12px; background:var(--soft); color:var(--green); font-weight:900; }
+        .warning { color:var(--amber); }
+        .actions { display:flex; align-items:center; justify-content:space-between; gap:12px; margin-top:18px; }
+        button { min-height:48px; padding:10px 18px; border:1px solid var(--green); border-radius:11px; color:#082216; background:var(--green); font:inherit; font-weight:900; cursor:pointer; }
+        button:disabled { opacity:.55; cursor:wait; }
+        #status { min-height:26px; color:var(--muted); font-weight:800; }
+        #passwordStatus { min-height:26px; color:var(--muted); font-weight:800; }
+        .password-grid { display:grid; grid-template-columns:repeat(2,minmax(0,1fr)); gap:12px; }
+        .privacy-link { min-height:44px; display:inline-flex; align-items:center; color:var(--green); }
+        @media(max-width:600px){body{padding:18px 14px}.identity,.password-grid{grid-template-columns:1fr}.actions{align-items:stretch;flex-direction:column}button{width:100%}}
+    </style>
+</head>
+<body><main>
+    <div class="top"><a class="back" href="/">← 첫 화면</a><a class="privacy-link" href="/student-privacy">개인정보 안내</a></div>
+    <h1>내 정보 설정</h1>
+    <p class="intro">생일 공개는 내가 선택합니다. 공개하지 않아도 학습과 학급 활동에는 아무런 불이익이 없습니다.</p>
+    <section class="card" aria-labelledby="identityTitle"><h2 id="identityTitle">내 학급</h2><div class="identity"><div><span>학생</span><strong id="studentName">확인 중…</strong></div><div><span>학급</span><strong id="className">확인 중…</strong></div></div></section>
+    <form id="profileForm" class="card" hidden>
+        <h2>생일과 공개 여부</h2>
+        <label for="birthdayMmdd">생일 월일 4자리</label>
+        <input id="birthdayMmdd" type="text" inputmode="numeric" autocomplete="bday" maxlength="4" placeholder="예: 0808" aria-describedby="birthdayHint">
+        <p id="birthdayHint" class="hint">태어난 해는 받지 않아요. 월과 일만 MMDD 형식으로 저장합니다.</p>
+        <label class="choice" for="birthdayVisible"><input id="birthdayVisible" type="checkbox"><span><strong>학급 주요일정에 내 생일 공개</strong><small>켜면 학급 구성원에게 ‘○○ 생일’ 일정이 보여요. 언제든 다시 끌 수 있어요.</small></span></label>
+        <p id="preview" class="preview">현재 생일은 공개되지 않습니다.</p>
+        <p class="hint warning">친구의 생일이나 다른 개인정보는 입력하지 마세요.</p>
+        <div class="actions"><span id="status" role="status" aria-live="polite"></span><button id="saveButton" type="submit">설정 저장</button></div>
+    </form>
+    <form id="passwordForm" class="card" hidden>
+        <h2>6자리 비밀번호 변경</h2>
+        <p class="hint">학급에 다시 연결할 때 사용하는 숫자 비밀번호입니다. 친구에게 알려 주지 마세요.</p>
+        <label for="currentPassword">현재 비밀번호</label>
+        <input id="currentPassword" type="password" inputmode="numeric" autocomplete="current-password" maxlength="6" placeholder="현재 6자리">
+        <div class="password-grid">
+            <div><label for="newPassword">새 비밀번호</label><input id="newPassword" type="password" inputmode="numeric" autocomplete="new-password" maxlength="6" placeholder="새 6자리"></div>
+            <div><label for="confirmPassword">새 비밀번호 확인</label><input id="confirmPassword" type="password" inputmode="numeric" autocomplete="new-password" maxlength="6" placeholder="한 번 더 입력"></div>
+        </div>
+        <div class="actions"><span id="passwordStatus" role="status" aria-live="polite"></span><button id="passwordButton" type="submit">비밀번호 변경</button></div>
+    </form>
+</main>
+<script>
+const form=document.querySelector('#profileForm'),birthday=document.querySelector('#birthdayMmdd'),visible=document.querySelector('#birthdayVisible'),preview=document.querySelector('#preview'),statusEl=document.querySelector('#status'),saveButton=document.querySelector('#saveButton');
+const passwordForm=document.querySelector('#passwordForm'),currentPassword=document.querySelector('#currentPassword'),newPassword=document.querySelector('#newPassword'),confirmPassword=document.querySelector('#confirmPassword'),passwordStatus=document.querySelector('#passwordStatus'),passwordButton=document.querySelector('#passwordButton');
+async function api(path,options={}){const response=await fetch(path,{...options,headers:{'Content-Type':'application/json',...(options.headers||{})}});const data=await response.json().catch(()=>({}));if(!response.ok)throw new Error(data.message||'요청을 처리하지 못했습니다.');return data}
+function validMmdd(value){if(!/^\d{4}$/.test(value))return false;const month=Number(value.slice(0,2)),day=Number(value.slice(2));return month>=1&&month<=12&&day>=1&&day<=new Date(2000,month,0).getDate()}
+function renderPreview(){const value=birthday.value;if(visible.checked&&validMmdd(value)){preview.textContent=`${Number(value.slice(0,2))}월 ${Number(value.slice(2))}일에 ‘내 생일’ 일정이 학급에 공개됩니다.`;preview.classList.remove('warning')}else{preview.textContent='현재 생일은 공개되지 않습니다.';preview.classList.toggle('warning',visible.checked)}}
+birthday.addEventListener('input',()=>{birthday.value=birthday.value.replace(/\D/g,'').slice(0,4);renderPreview()});visible.addEventListener('change',renderPreview);
+form.addEventListener('submit',async event=>{event.preventDefault();if(birthday.value&&!validMmdd(birthday.value)){statusEl.textContent='올바른 월일 4자리를 입력해 주세요.';birthday.focus();return}if(visible.checked&&!birthday.value){statusEl.textContent='생일을 먼저 입력해 주세요.';birthday.focus();return}saveButton.disabled=true;statusEl.textContent='저장 중…';try{const data=await api('/api/student/profile',{method:'PATCH',body:JSON.stringify({birthdayMmdd:birthday.value,birthdayVisible:visible.checked})});birthday.value=data.profile.birthdayMmdd;visible.checked=data.profile.birthdayVisible;renderPreview();statusEl.textContent='내 선택을 저장했습니다.'}catch(error){statusEl.textContent=error.message}finally{saveButton.disabled=false}});
+for(const input of [currentPassword,newPassword,confirmPassword])input.addEventListener('input',()=>{input.value=input.value.replace(/\D/g,'').slice(0,6)});
+passwordForm.addEventListener('submit',async event=>{event.preventDefault();passwordStatus.textContent='';if(!/^\d{6}$/.test(currentPassword.value)||!/^\d{6}$/.test(newPassword.value)){passwordStatus.textContent='비밀번호는 숫자 6자리여야 합니다.';return}if(newPassword.value!==confirmPassword.value){passwordStatus.textContent='새 비밀번호가 서로 다릅니다.';confirmPassword.focus();return}passwordButton.disabled=true;passwordStatus.textContent='변경 중…';try{await api('/api/student/password',{method:'PATCH',body:JSON.stringify({currentPassword:currentPassword.value,newPassword:newPassword.value})});passwordForm.reset();passwordStatus.textContent='새 비밀번호로 변경했습니다.'}catch(error){passwordStatus.textContent=error.message}finally{passwordButton.disabled=false}});
+async function start(){const me=await api('/api/auth/me');if(!me.signedIn||me.user?.role!=='student'){location.replace('/');return}const data=await api('/api/student/profile');const profile=data.profile;document.querySelector('#studentName').textContent=`${profile.studentNumber}번 ${profile.name}`;document.querySelector('#className').textContent=`${profile.schoolName} ${profile.grade}학년 ${profile.classNumber}반`;birthday.value=profile.birthdayMmdd;visible.checked=profile.birthdayVisible;renderPreview();form.hidden=false;passwordForm.hidden=false}start().catch(error=>{document.querySelector('#studentName').textContent='불러오지 못했습니다';document.querySelector('#className').textContent=error.message});
+</script></body></html>

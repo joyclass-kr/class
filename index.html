@@ -444,6 +444,7 @@
                     <strong id="signedInName"></strong>
                     <span id="classMembership" class="class-membership"></span>
                 </div>
+                <a id="studentProfileLink" class="auth-button secondary" href="/classtools/profile" hidden>내 정보 설정</a>
                 <button id="signOutButton" class="auth-button secondary" type="button">SIGN OUT</button>
             </div>
             <button id="contentAccessButton" class="auth-button content-access-button" type="button" aria-pressed="false" hidden>🔓 공개 설정 모드</button>
@@ -613,6 +614,7 @@
             const signedInName = document.getElementById('signedInName');
             const classMembership = document.getElementById('classMembership');
             const signOutButton = document.getElementById('signOutButton');
+            const studentProfileLink = document.getElementById('studentProfileLink');
             const contentAccessButton = document.getElementById('contentAccessButton');
             const classToolsLink = document.getElementById('classToolsLink');
             const hubContent = document.getElementById('hubContent');
@@ -756,6 +758,7 @@
                 guestForm.hidden = true;
                 joinForm.hidden = true;
                 signedInArea.hidden = false;
+                studentProfileLink.hidden = false;
                 signedInName.textContent = playerName;
                 classMembership.textContent = `${membership.schoolName} · G${membership.grade}-${membership.classNumber} · No. ${membership.studentNumber}`;
                 hubContent.hidden = false;

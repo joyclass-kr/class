@@ -727,6 +727,107 @@ function createClassroomPlatform(options = {}) {
     res.json({ requests: result.rows });
   }));
 
+  router.get("/student/profile", asyncRoute(async (req, res) => {
+    const user = await requireUser(req);
+    if (user.role !== "student") {
+      throw new HttpError(403, "STUDENT_REQUIRED", "This page is for student accounts only.");
+    }
+    const result = await pool.query(
+      `SELECT s.roster_name, s.student_number, s.birthday_mmdd, s.birthday_visible,
+              c.academic_year, c.grade, c.class_number, sc.name AS school_name
+       FROM classroom_students s
+       JOIN classroom_classes c ON c.id = s.class_id
+       JOIN classroom_schools sc ON sc.id = c.school_id
+       WHERE s.user_id = $1
+       ORDER BY c.updated_at DESC
+       LIMIT 1`,
+      [user.id]
+    );
+    const row = result.rows[0];
+    if (!row) throw new HttpError(404, "STUDENT_MEMBERSHIP_REQUIRED", "Join your class before changing this setting.");
+    res.json({
+      profile: {
+        name: row.roster_name,
+        studentNumber: row.student_number,
+        schoolName: row.school_name,
+        academicYear: row.academic_year,
+        grade: row.grade,
+        classNumber: row.class_number,
+        birthdayMmdd: row.birthday_mmdd || "",
+        birthdayVisible: row.birthday_visible === true
+      }
+    });
+  }));
+
+  router.patch("/student/profile", asyncRoute(async (req, res) => {
+    const user = await requireUser(req);
+    if (user.role !== "student") {
+      throw new HttpError(403, "STUDENT_REQUIRED", "This page is for student accounts only.");
+    }
+    const birthdayMmdd = String(req.body?.birthdayMmdd || "").replace(/\D/g, "").slice(0, 4);
+    const birthdayVisible = req.body?.birthdayVisible === true;
+    if (birthdayMmdd) {
+      const month = Number(birthdayMmdd.slice(0, 2));
+      const day = Number(birthdayMmdd.slice(2));
+      const validDate = birthdayMmdd.length === 4 && month >= 1 && month <= 12 && day >= 1 && day <= new Date(2000, month, 0).getDate();
+      if (!validDate) throw new HttpError(400, "INVALID_BIRTHDAY", "Enter your birthday as four digits, MMDD.");
+    }
+    if (birthdayVisible && !birthdayMmdd) {
+      throw new HttpError(400, "BIRTHDAY_REQUIRED", "Enter your birthday before turning on birthday sharing.");
+    }
+    const result = await pool.query(
+      `UPDATE classroom_students
+       SET birthday_mmdd = $2, birthday_visible = $3, birth_date = NULL, updated_at = NOW()
+       WHERE user_id = $1
+       RETURNING roster_name, student_number, birthday_mmdd, birthday_visible`,
+      [user.id, birthdayMmdd || null, Boolean(birthdayMmdd && birthdayVisible)]
+    );
+    const row = result.rows[0];
+    if (!row) throw new HttpError(404, "STUDENT_MEMBERSHIP_REQUIRED", "Join your class before changing this setting.");
+    res.json({
+      profile: {
+        name: row.roster_name,
+        studentNumber: row.student_number,
+        birthdayMmdd: row.birthday_mmdd || "",
+        birthdayVisible: row.birthday_visible === true
+      }
+    });
+  }));
+
+  router.patch("/student/password", asyncRoute(async (req, res) => {
+    const user = await requireUser(req);
+    if (user.role !== "student") {
+      throw new HttpError(403, "STUDENT_REQUIRED", "This page is for student accounts only.");
+    }
+    const currentPassword = String(req.body?.currentPassword || "").trim();
+    const newPassword = String(req.body?.newPassword || "").trim();
+    if (!STUDENT_PASSWORD_PATTERN.test(currentPassword) || !STUDENT_PASSWORD_PATTERN.test(newPassword)) {
+      throw new HttpError(400, "INVALID_STUDENT_PASSWORD", "Passwords must contain exactly 6 digits.");
+    }
+    if (currentPassword === newPassword) {
+      throw new HttpError(400, "PASSWORD_UNCHANGED", "Choose a different new password.");
+    }
+    const result = await pool.query(
+      `SELECT id, password_hash
+       FROM classroom_students
+       WHERE user_id = $1
+       LIMIT 1`,
+      [user.id]
+    );
+    const student = result.rows[0];
+    if (!student) throw new HttpError(404, "STUDENT_MEMBERSHIP_REQUIRED", "Join your class before changing the password.");
+    if (!student.password_hash || !verifyStudentPassword(currentPassword, student.password_hash)) {
+      throw new HttpError(403, "CURRENT_PASSWORD_INCORRECT", "The current password is incorrect.");
+    }
+    await pool.query(
+      `UPDATE classroom_students
+       SET password_hash = $2, updated_at = NOW()
+       WHERE id = $1`,
+      [student.id, hashStudentPassword(newPassword)]
+    );
+    res.json({ ok: true });
+  }));
+
   router.post("/privacy/requests", asyncRoute(async (req, res) => {
     const user = await requireUser(req);
     const category = String(req.body?.category || "").trim();
@@ -1833,18 +1934,24 @@ function createClassroomPlatform(options = {}) {
         [classroom.id, numbers]
       );
       const existingPasswordsResult = await client.query(
-        `SELECT student_number, password_hash
+        `SELECT student_number, password_hash, user_id
          FROM classroom_students
          WHERE class_id = $1 AND student_number = ANY($2::TEXT[])`,
         [classroom.id, numbers]
       );
       const existingPasswords = new Map(
-        existingPasswordsResult.rows.map((student) => [student.student_number, student.password_hash])
+        existingPasswordsResult.rows.map((student) => [student.student_number, {
+          passwordHash: student.password_hash,
+          claimed: Boolean(student.user_id)
+        }])
       );
       for (const student of cleanStudents) {
-        const passwordHash = student.password
+        const existingPassword = existingPasswords.get(student.number);
+        const passwordHash = existingPassword?.claimed
+          ? existingPassword.passwordHash
+          : student.password
           ? hashStudentPassword(student.password)
-          : existingPasswords.get(student.number) || hashStudentPassword(DEFAULT_STUDENT_PASSWORD);
+          : existingPassword?.passwordHash || hashStudentPassword(DEFAULT_STUDENT_PASSWORD);
         await client.query(
           `INSERT INTO classroom_students
             (class_id, student_number, roster_name, gender, birthday_mmdd, birthday_visible, birth_date, password_hash)
