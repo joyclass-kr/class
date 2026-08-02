@@ -24,6 +24,10 @@ assert.doesNotMatch(html, /localStorage\.setItem\("dashboardSchedules"/,
   "Browser storage must not remain the schedule source of truth.");
 assert.match(html, /\.schedule-editor\[hidden\]\s*\{\s*display:\s*none;/,
   "The schedule editor must stay hidden until an editable classroom is available.");
+assert.match(html, /grid-template-columns:\s*132px minmax\(200px, 1fr\) 52px max-content/,
+  "The schedule date and title fields must remain wide enough to read.");
+assert.doesNotMatch(html, /grid-template-columns:\s*110px minmax\(0, 1fr\) 52px 52px/,
+  "A hidden cancel button must not reserve a full empty column.");
 assert.match(platform, /CREATE TABLE IF NOT EXISTS classroom_schedules/,
   "Class schedules must be persisted in PostgreSQL.");
 assert.match(platform, /router\.get\("\/class\/schedules"/,
