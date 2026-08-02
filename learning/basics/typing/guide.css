@@ -198,6 +198,7 @@
 .practice-menu button:hover, .practice-menu button:focus-visible { border-color: #f26747; box-shadow: 0 0 0 4px #f267471a; outline: 0; }
 .practice-menu span { position: absolute; top: 25px; left: 22px; display: grid; place-items: center; width: 40px; height: 40px; border-radius: 13px; background: #ffe4d8; color: #cf4d31; font-weight: 900; }
 .practice-menu strong { display: block; font-size: 22px; }
+.practice-menu em { position: absolute; top: 34px; right: 20px; padding: 5px 9px; border-radius: 999px; background: #e3f5ee; color: #13845f; font-size: 12px; font-style: normal; font-weight: 850; }
 .practice-heading { display: flex; align-items: center; gap: 16px; margin-bottom: 12px; }
 .practice-heading h2 { margin: 0; font-size: 24px; }
 .back-to-menu { min-height: 44px; padding: 0 14px; border: 1px solid #ded4c6; border-radius: 12px; background: #fff; color: #596274; font-weight: 800; }
