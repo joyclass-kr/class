@@ -321,8 +321,8 @@
     ]
   },
   "telephone": {
-    "en": "The telephone rang during dinner.",
-    "ko": "저녁 식사 중에 전화기가 울렸다.",
+    "en": "I talked to Grandma on the telephone.",
+    "ko": "나는 할머니와 전화로 이야기했다.",
     "relatedWords": [
       { "word": "phone", "type": "유의어" },
       { "word": "call", "type": "관련어" }

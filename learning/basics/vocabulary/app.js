@@ -596,22 +596,46 @@
             button.className = "letter-tile";
             button.textContent = letter;
             button.dataset.tileIndex = String(index);
-            button.addEventListener("click", () => {
-                if (state.spellingAnswered || button.disabled) return;
-                button.disabled = true;
-                elements.spellingInput.value += letter;
-                elements.spellingBuiltWord.textContent = elements.spellingInput.value;
-            });
+            button.setAttribute("aria-label", `${letter} 글자`);
+            button.addEventListener("click", () => selectSpellingTile(button));
             return button;
         }));
-        elements.spellingBuiltWord.onclick = () => {
-            if (state.spellingAnswered || !elements.spellingInput.value) return;
-            const removed = elements.spellingInput.value.at(-1);
-            elements.spellingInput.value = elements.spellingInput.value.slice(0, -1);
-            elements.spellingBuiltWord.textContent = elements.spellingInput.value;
-            const candidates = [...elements.spellingTileRack.querySelectorAll(".letter-tile[disabled]")];
-            candidates.reverse().find((tile) => tile.textContent === removed)?.removeAttribute("disabled");
-        };
+        elements.spellingBuiltWord.onclick = removeLastSpellingLetter;
+    }
+
+    function selectSpellingTile(button) {
+        if (state.spellingAnswered || button.disabled) return;
+        button.disabled = true;
+        elements.spellingInput.value += button.textContent;
+        elements.spellingBuiltWord.textContent = elements.spellingInput.value;
+        maybeAutoCheckSpelling();
+    }
+
+    function removeLastSpellingLetter() {
+        if (state.spellingAnswered || !elements.spellingInput.value) return;
+        const removed = elements.spellingInput.value.at(-1);
+        elements.spellingInput.value = elements.spellingInput.value.slice(0, -1);
+        elements.spellingBuiltWord.textContent = elements.spellingInput.value;
+        const candidates = [...elements.spellingTileRack.querySelectorAll(".letter-tile[disabled]")];
+        candidates.reverse().find((tile) => tile.textContent === removed)?.removeAttribute("disabled");
+        elements.spellingFeedback.textContent = "철자를 계속 입력하세요.";
+        elements.spellingFeedback.className = "game-feedback";
+    }
+
+    function maybeAutoCheckSpelling() {
+        const answer = core.normalizeSpellingAnswer(elements.spellingInput.value);
+        const correctAnswer = core.normalizeSpellingAnswer(state.spellingTarget?.word || "");
+        if (!correctAnswer || answer.length < correctAnswer.length) return;
+        if (answer === correctAnswer) {
+            checkSpellingAnswer();
+            return;
+        }
+        elements.spellingFeedback.textContent = "철자가 달라요. Backspace로 고쳐 보세요.";
+        elements.spellingFeedback.className = "game-feedback incorrect";
+        elements.spellingBuiltWord.animate(
+            [{ transform: "translateX(-5px)" }, { transform: "translateX(5px)" }, { transform: "none" }],
+            { duration: 180 },
+        );
     }
 
     function nextSpellingQuestion() {
@@ -850,7 +874,19 @@
         window.addEventListener("keydown", (event) => {
             if (event.altKey || event.ctrlKey || event.metaKey) return;
             if (!elements.spellingScreen.hidden) {
-                if (event.key === "Enter" && !elements.spellingQuestionPanel.hidden) {
+                if (elements.spellingQuestionPanel.hidden) return;
+                if (/^[a-z]$/i.test(event.key) && !state.spellingAnswered) {
+                    const key = event.key.toLowerCase();
+                    const tile = [...elements.spellingTileRack.querySelectorAll(".letter-tile:not([disabled])")]
+                        .find((candidate) => candidate.textContent === key);
+                    if (tile) {
+                        event.preventDefault();
+                        selectSpellingTile(tile);
+                    }
+                } else if (event.key === "Backspace" && !state.spellingAnswered) {
+                    event.preventDefault();
+                    removeLastSpellingLetter();
+                } else if (event.key === "Enter") {
                     event.preventDefault();
                     if (state.spellingAnswered) continueSpelling();
                     else checkSpellingAnswer();
