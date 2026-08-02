@@ -22,13 +22,14 @@
             --text-muted: #9aa8a0;
             --text-sub: #6c7d73;
             --glass-shadow: 0 12px 32px rgba(0, 0, 0, 0.45);
+            --weekday-panel-image: none;
         }
 
         * { box-sizing: border-box; margin: 0; padding: 0; }
 
         body {
             font-family: 'Inter', -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
-            background: radial-gradient(circle at 50% 0%, #15291d 0%, var(--bg-dark) 70%);
+            background: #000;
             color: var(--text-main);
             min-height: 100vh;
             padding: 20px;
@@ -137,6 +138,18 @@
             gap: 16px;
             position: relative;
             transition: border-color 0.2s ease, transform 0.2s ease;
+        }
+
+        .slogan-card,
+        .clock-card,
+        .widget-card {
+            background-color: #101010;
+            background-image:
+                linear-gradient(rgba(0, 0, 0, 0.18), rgba(0, 0, 0, 0.34)),
+                var(--weekday-panel-image);
+            background-size: cover;
+            background-position: center;
+            background-repeat: no-repeat;
         }
 
         .widget-card.dragging {
@@ -1156,9 +1169,29 @@
         // 1. Clock & Timetable
         let lastRenderedMin = -1;
         let lastRenderedDay = "";
+        let lastPanelThemeDay = -1;
+
+        const weekdayPanelImages = {
+            1: "url('./assets/dashboard-panels/monday.webp')",
+            2: "url('./assets/dashboard-panels/tuesday.webp')",
+            3: "url('./assets/dashboard-panels/wednesday.webp')",
+            4: "url('./assets/dashboard-panels/thursday.webp')",
+            5: "url('./assets/dashboard-panels/friday.webp')"
+        };
+
+        function applyWeekdayPanelTheme(date) {
+            const day = date.getDay();
+            if (day === lastPanelThemeDay) return;
+            lastPanelThemeDay = day;
+            document.documentElement.style.setProperty(
+                "--weekday-panel-image",
+                weekdayPanelImages[day] || "none"
+            );
+        }
 
         function updateClock() {
             const now = new Date();
+            applyWeekdayPanelTheme(now);
             const hours = String(now.getHours()).padStart(2, '0');
             const mins = String(now.getMinutes()).padStart(2, '0');
             const secs = String(now.getSeconds()).padStart(2, '0');
