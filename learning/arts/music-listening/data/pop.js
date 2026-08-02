@@ -1,4 +1,5 @@
 window.MUSIC_GENRE={
+  integrated:'era',
   lineages:[['rock','록 (Rock)'],['rnb','R&B·소울 (R&B & Soul)'],['hiphop','힙합 (Hip-Hop)'],['dance','댄스·전자 (Dance & Electronic)']],
   subgroups:{
     rock:[['all','록 전체'],['rockroll','로큰롤 (Rock & Roll)'],['classic','클래식·사이키델릭 록'],['punk','펑크 록 (Punk Rock)'],['alternative','얼터너티브·그런지']],
