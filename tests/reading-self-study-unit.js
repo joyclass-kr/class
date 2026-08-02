@@ -8,18 +8,38 @@ const {
 } = require("../game-hub-server/data/reading-self-study-v2");
 
 const items = createSelfStudyItems();
-assert.equal(items.length, 512);
+assert.equal(items.length, 896);
 assert.equal(new Set(items.map((item) => item.id)).size, items.length);
 
 for (const track of ["ko", "en"]) {
   for (let level = 1; level <= 8; level += 1) {
     const set = items.filter((item) => item.track === track && item.targetLevel === level);
     const profile = LEVEL_PROFILES[level];
-    assert.equal(set.length, 32, `${track}${level} should have 32 generated items`);
+    const normalize = (value) => String(value).normalize("NFC").trim().toLowerCase().replace(/\s+/g, " ");
+    assert.equal(set.length, 56, `${track}${level} should have 56 generated items`);
     assert(new Set(set.map((item) => item.questionType)).size >= 2,
       `${track}${level} should not use a single question type`);
     assert(set.every((item) => item.schoolBand === profile.schoolBand));
     assert(set.every((item) => item.skillFocus === profile.focus));
+    assert.equal(new Set(set.map((item) => item.familyId)).size, 14,
+      `${track}${level} should draw from 14 topic families`);
+    assert.equal(
+      set.filter((item) => item.id.startsWith(track === "ko" ? "KO-" : "EN-")).length,
+      24,
+      `${track}${level} should include 24 language-native items`
+    );
+    assert.equal(new Set(set.map((item) => normalize(item.passageText))).size, set.length,
+      `${track}${level} should not repeat a passage`);
+    assert.equal(
+      new Set(set.map((item) => item.choices.map(normalize).sort().join("|"))).size,
+      set.length,
+      `${track}${level} should not repeat a choice set`
+    );
+    const answerPositions = Array.from({ length: profile.choiceCount }, (_, index) =>
+      set.filter((item) => item.correctIndex === index).length
+    );
+    assert(Math.max(...answerPositions) - Math.min(...answerPositions) <= 3,
+      `${track}${level} should keep answer positions balanced`);
     set.forEach((item) => {
       const sentenceCount = item.passageText.split(/[.!?](?:\s+|$)/u).filter(Boolean).length;
       assert.equal(sentenceCount, profile.detailCount, `${item.id} should match its level detail count`);
@@ -87,15 +107,18 @@ assert.doesNotMatch(
 const seed = require("../game-hub-server/data/reading-bank-seed-v1.json");
 const reviewedItems = seed.topics.flatMap((topic) => topic.items);
 const completeBank = items.concat(reviewedItems);
-assert.equal(completeBank.length, 544);
+assert.equal(completeBank.length, 928);
 for (const track of ["ko", "en"]) {
   for (let level = 1; level <= 8; level += 1) {
     assert.equal(
       completeBank.filter((item) => item.track === track && item.targetLevel === level).length,
-      34,
-      `${track}${level} should expose at least 30 operational items`
+      58,
+      `${track}${level} should expose 58 operational items`
     );
   }
 }
+
+assert(items.filter((item) => item.id.startsWith("KO-")).every((item) => item.track === "ko"));
+assert(items.filter((item) => item.id.startsWith("EN-")).every((item) => item.track === "en"));
 
 console.log("Reading self-study unit: OK");

@@ -24,6 +24,19 @@ for (const { item } of items) {
   assert.equal(item.choices.length, readingBank.expectedChoiceCount(item.targetLevel));
   assert.equal(item.distractorReasons.length, item.choices.length);
   assert.ok(item.correctIndex >= 0 && item.correctIndex < item.choices.length);
+  const normalizeForCopyCheck = (value) => String(value)
+    .normalize("NFC")
+    .toLowerCase()
+    .replace(/[^\p{L}\p{N}\s]/gu, " ")
+    .replace(/\s+/g, " ")
+    .trim();
+  const normalizedAnswer = normalizeForCopyCheck(item.choices[item.correctIndex]);
+  const normalizedPassage = normalizeForCopyCheck(item.passageText);
+  assert.equal(
+    normalizedPassage.includes(normalizedAnswer),
+    false,
+    `${item.itemKey}: the correct choice must not be copied verbatim from the passage`
+  );
 
   const obviousCuePattern =
     /(없다|않다|아니다|관계없다|항상|반드시|오직|전혀|모두|완전히|무조건|절대로|만으로|만을|만이|\bnot\b|\bno\b|\bnever\b|\bonly\b|\balways\b|\bcannot\b|\bwithout\b|\bregardless\b|\bevery\b|\ball\b|\bentirely\b|\bcompletely\b|\bimpossible\b|\buseless\b|\bguarantee\b|\bmust\b)/i;

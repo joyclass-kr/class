@@ -1,5 +1,9 @@
 "use strict";
 
+const INDEPENDENT_TOPICS = require("./reading-independent-topics-v3");
+const MORE_INDEPENDENT_TOPICS = require("./reading-independent-topics-v4");
+const FINAL_INDEPENDENT_TOPICS = require("./reading-independent-topics-v5");
+
 // The classroom pilot bank stays deliberately small and reviewed.  This
 // catalogue supplies broader, low-stakes self-study practice without changing
 // the teacher review workflow.
@@ -304,7 +308,7 @@ function contentOverlapScore(left, right, track) {
 function buildDistractors(topic, track, passageText, choiceCount, factIndex, variant) {
   const languageIndex = track === "ko" ? 0 : 1;
   return rotate(topic.wrong, factIndex + variant)
-    .map((pair, order) => ({ text: pair[languageIndex], order }))
+    .map((pair, order) => ({ text: localizedText(pair, languageIndex), order }))
     .sort((left, right) =>
       contentOverlapScore(right.text, passageText, track)
         - contentOverlapScore(left.text, passageText, track)
@@ -426,7 +430,11 @@ function buildReferenceDistractors(topic, track, factIndexes, choiceCount, varia
   const languageIndex = track === "ko" ? 0 : 1;
   return rotate(factIndexes.slice(1), variant)
     .slice(0, choiceCount - 1)
-    .map((index) => topic.applications[index][languageIndex]);
+    .map((index) => localizedText(topic.applications[index], languageIndex));
+}
+
+function localizedText(value, languageIndex) {
+  return Array.isArray(value) ? value[languageIndex] : value;
 }
 
 function buildItem(topic, track, level, variant = 0) {
@@ -438,9 +446,9 @@ function buildItem(topic, track, level, variant = 0) {
     factIndex
   ).slice(0, profile.detailCount);
   const facts = factIndexes.map((index) => topic.facts[index]);
-  const answer = topic.applications[factIndex][languageIndex];
-  const evidence = topic.facts[factIndex][languageIndex];
-  const passageText = facts.map((pair) => pair[languageIndex]).join(" ");
+  const answer = localizedText(topic.applications[factIndex], languageIndex);
+  const evidence = localizedText(topic.facts[factIndex], languageIndex);
+  const passageText = facts.map((pair) => localizedText(pair, languageIndex)).join(" ");
   const distractors = profile.distractorMode === "reference"
     ? buildReferenceDistractors(topic, track, factIndexes, profile.choiceCount, variant)
     : buildDistractors(topic, track, passageText, profile.choiceCount, factIndex, variant);
@@ -452,6 +460,7 @@ function buildItem(topic, track, level, variant = 0) {
 
   return {
     id: `${topic.key}-${isKorean ? "K" : "E"}${level}-V${variant + 1}`,
+    familyId: topic.key,
     topicTitle: isKorean ? topic.ko : topic.en,
     track,
     targetLevel: level,
@@ -475,7 +484,8 @@ function buildItem(topic, track, level, variant = 0) {
 }
 
 function createSelfStudyItems() {
-  return TOPICS.flatMap((topic) => ["ko", "en"].flatMap((track) =>
+  return TOPICS.concat(INDEPENDENT_TOPICS, MORE_INDEPENDENT_TOPICS, FINAL_INDEPENDENT_TOPICS).flatMap((topic) =>
+    (topic.tracks || ["ko", "en"]).flatMap((track) =>
     Array.from({ length: 8 }, (_, index) =>
       Array.from({ length: VARIANTS_PER_LEVEL }, (_, variant) =>
         buildItem(topic, track, index + 1, variant)

@@ -62,21 +62,21 @@
           "itemKey": "SCI-SLEEP-MEMORY-001-K1-V1",
           "track": "ko",
           "targetLevel": 1,
-          "questionType": "explicit",
-          "passageText": "서준이는 낮에 새 낱말을 배웠습니다. 밤이 되어 잠을 잤습니다. 서준이가 자는 동안 뇌는 낮에 배운 것을 정리했습니다.",
-          "promptText": "자는 동안 서준이의 뇌가 한 일은 무엇입니까?",
+          "questionType": "inference",
+          "passageText": "서준이는 낮에 새 낱말을 배웠습니다. 밤에 푹 자고 나니 다음 날 낱말이 전보다 잘 떠올랐습니다. 잠든 동안 뇌는 새로 배운 내용을 정리합니다.",
+          "promptText": "다음 날 서준이가 낱말을 더 잘 떠올린 까닭으로 알맞은 것은 무엇입니까?",
           "choices": [
-            "낮에 배운 것을 정리했습니다.",
-            "다음 날 배울 낱말을 정리했습니다.",
-            "밖에 나가서 놀았습니다."
+            "잠이 기억을 도왔기 때문입니다.",
+            "잠을 자며 새 낱말을 더 배웠기 때문입니다.",
+            "밤사이에 낱말의 글자가 바뀌었기 때문입니다."
           ],
           "correctIndex": 0,
-          "answerEvidence": "마지막 문장에 정답이 직접 제시되어 있다.",
-          "explanation": "마지막 문장에 정답이 직접 제시되어 있다. 2는 내용과 반대이고, 3은 뇌가 한 일이 아니다.",
+          "answerEvidence": "잠든 동안 뇌가 배운 내용을 정리한 뒤 다음 날 낱말을 더 잘 떠올렸다는 흐름이 근거다.",
+          "explanation": "배운 내용을 잠든 동안 정리한 결과 다음 날 더 잘 떠올렸으므로 잠이 기억을 도왔다고 판단할 수 있습니다.",
           "distractorReasons": [
             "",
-            "2는 내용과 반대이고, 3은 뇌가 한 일이 아니다.",
-            "2는 내용과 반대이고, 3은 뇌가 한 일이 아니다."
+            "자는 동안 새 낱말을 추가로 배웠다는 내용은 없습니다.",
+            "낱말의 글자가 바뀌었다는 내용은 없습니다."
           ],
           "difficultyMeta": {
             "estimatedLevel": "K1",
@@ -290,21 +290,21 @@
           "itemKey": "SCI-SLEEP-MEMORY-001-E1-V1",
           "track": "en",
           "targetLevel": 1,
-          "questionType": "explicit",
-          "passageText": "Tom learns three new words. He sleeps at night. Sleep helps his brain keep the words.",
-          "promptText": "What helps Tom keep the new words?",
+          "questionType": "inference",
+          "passageText": "Tom studies three new words before bed. By morning, the words are easier to recall. During the night, his brain organizes recent learning.",
+          "promptText": "What best explains the change by morning?",
           "choices": [
-            "Sleep",
-            "A ball",
-            "A window"
+            "His brain works with what he studied during the night.",
+            "His brain learns tomorrow's new words during the night.",
+            "His brain changes the words into shorter ones during the night."
           ],
           "correctIndex": 0,
-          "answerEvidence": "마지막 문장에 sleep이 새 단어를 기억하도록 돕는다고 직접 제시되어 있다.",
-          "explanation": "마지막 문장에 sleep이 새 단어를 기억하도록 돕는다고 직접 제시되어 있다. 2와 3은 지문에 없는 사물이다.",
+          "answerEvidence": "밤사이 뇌가 최근 학습을 정리한 뒤 아침에 단어를 더 쉽게 떠올렸다는 흐름이 근거다.",
+          "explanation": "Tom recalls the words more easily after his brain organizes recent learning during the night.",
           "distractorReasons": [
             "",
-            "2와 3은 지문에 없는 사물이다.",
-            "2와 3은 지문에 없는 사물이다."
+            "The passage says that Tom studied the words before bed, not that sleep added new words.",
+            "The words become easier to recall; their length does not change."
           ],
           "difficultyMeta": {
             "estimatedLevel": "E1",
@@ -318,19 +318,19 @@
           "targetLevel": 2,
           "questionType": "explicit",
           "passageText": "Mina studies five English words. Then she goes to bed. Her brain does not simply turn off during sleep. It helps organize what she learned. The next day, Mina reviews the words again.",
-          "promptText": "What does Mina's brain do during sleep?",
+          "promptText": "Which choice best describes the role of sleep in Mina's study?",
           "choices": [
-            "It organizes what she learned.",
-            "It rearranges the spelling of each English word.",
-            "It prepares tomorrow's new words for her."
+            "It helps process words that she studied earlier.",
+            "It teaches her words that she plans to study tomorrow.",
+            "It changes the spelling of the words she already studied."
           ],
           "correctIndex": 0,
-          "answerEvidence": "넷째 문장이 정답 근거다.",
-          "explanation": "넷째 문장이 정답 근거다. 2는 내용과 반대이며, 3은 수면이 사전 학습을 대신한다고 왜곡한다.",
+          "answerEvidence": "Mina가 먼저 단어를 공부하고 잠자는 동안 뇌가 배운 것을 정리한다는 내용이 근거다.",
+          "explanation": "Sleep works with the words Mina studied earlier; it does not add tomorrow's words or change their spelling.",
           "distractorReasons": [
             "",
-            "2는 내용과 반대이며, 3은 수면이 사전 학습을 대신한다고 왜곡한다.",
-            "2는 내용과 반대이며, 3은 수면이 사전 학습을 대신한다고 왜곡한다."
+            "Mina studies before sleep, so sleep is not presented as teaching future words.",
+            "The passage discusses organizing learning, not changing spelling."
           ],
           "difficultyMeta": {
             "estimatedLevel": "E2",
@@ -574,8 +574,8 @@
           "itemKey": "MATH-CENTER-001-K1-V1",
           "track": "ko",
           "targetLevel": 1,
-          "questionType": "explicit",
-          "passageText": "세 친구에게 사탕이 1개, 2개, 3개 있습니다. 사탕을 모두 모아 똑같이 나누면 한 사람에게 2개씩 돌아갑니다. 이때 2를 세 친구가 가진 사탕 수의 평균이라고 합니다.",
+          "questionType": "inference",
+          "passageText": "세 친구가 사탕 여섯 개를 한곳에 모았습니다. 세 사람은 사탕을 남김없이 똑같이 나누려고 합니다. 이렇게 똑같이 나눈 수를 평균이라고 합니다.",
           "promptText": "사탕을 똑같이 나누면 한 사람에게 몇 개씩 돌아갑니까?",
           "choices": [
             "1개",
@@ -583,12 +583,12 @@
             "3개"
           ],
           "correctIndex": 1,
-          "answerEvidence": "둘째 문장에 한 사람에게 2개씩 돌아간다고 직접 제시되어 있다.",
-          "explanation": "둘째 문장에 한 사람에게 2개씩 돌아간다고 직접 제시되어 있다. 1과 3은 처음에 각 친구가 가진 값의 일부일 뿐, 똑같이 나눈 값이 아니다.",
+          "answerEvidence": "사탕 여섯 개를 세 사람에게 똑같이 나누어야 한다.",
+          "explanation": "여섯 개를 세 사람에게 똑같이 나누면 한 사람에게 두 개씩 돌아갑니다.",
           "distractorReasons": [
-            "1과 3은 처음에 각 친구가 가진 값의 일부일 뿐, 똑같이 나눈 값이 아니다.",
+            "한 개씩 나누면 사탕이 세 개 남습니다.",
             "",
-            "1과 3은 처음에 각 친구가 가진 값의 일부일 뿐, 똑같이 나눈 값이 아니다."
+            "세 개씩 나누려면 사탕이 아홉 개 필요합니다."
           ],
           "difficultyMeta": {
             "estimatedLevel": "K1",
@@ -802,8 +802,8 @@
           "itemKey": "MATH-CENTER-001-E1-V1",
           "track": "en",
           "targetLevel": 1,
-          "questionType": "explicit",
-          "passageText": "Three children have six apples. They share the apples equally. Each child gets two apples.",
+          "questionType": "inference",
+          "passageText": "Three children put six apples together. They share the whole group equally, with none left over. This equal share is the mean.",
           "promptText": "How many apples does each child get?",
           "choices": [
             "One",
@@ -811,12 +811,12 @@
             "Six"
           ],
           "correctIndex": 1,
-          "answerEvidence": "마지막 문장에 각 어린이가 사과 두 개를 받는다고 직접 제시되어 있다.",
-          "explanation": "마지막 문장에 각 어린이가 사과 두 개를 받는다고 직접 제시되어 있다. 1은 지문에 없고, 3은 전체 사과 수다.",
+          "answerEvidence": "사과 여섯 개를 세 어린이가 똑같이 나누어야 한다.",
+          "explanation": "Six apples shared equally among three children gives two apples to each child.",
           "distractorReasons": [
-            "1은 지문에 없고, 3은 전체 사과 수다.",
+            "One apple each would leave three apples unshared.",
             "",
-            "1은 지문에 없고, 3은 전체 사과 수다."
+            "Six is the total number of apples, not one child's share."
           ],
           "difficultyMeta": {
             "estimatedLevel": "E1",
