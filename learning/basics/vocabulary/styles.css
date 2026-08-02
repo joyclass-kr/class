@@ -178,7 +178,9 @@ main { width: min(1180px, calc(100% - 32px)); margin: 0 auto; padding: 16px 0 48
 .word-sheet tbody th { position: sticky; left: 0; z-index: 1; background: #f0f2ef; color: #68766f; font-weight: 700; }
 .word-sheet tbody tr:nth-child(even) td { background: rgba(241,246,242,.62); }
 .sheet-level { color: var(--green); font-weight: 850; white-space: nowrap; }
-.sheet-word { color: var(--navy); font: 700 17px/1.35 "Klee One Learning", "Klee One", cursive; }
+.sheet-word { display: flex; align-items: center; justify-content: space-between; gap: 8px; color: var(--navy); font: 700 17px/1.35 "Klee One Learning", "Klee One", cursive; }
+.sheet-speak-button { flex: 0 0 44px; width: 44px; height: 44px; padding: 0; border: 1px solid #b8c9d1; border-radius: 10px; background: #edf5f7; color: var(--blue); font-size: 19px; line-height: 1; cursor: pointer; }
+.sheet-speak-button:hover, .sheet-speak-button:focus-visible { border-color: var(--blue); background: #dfeef2; outline: 2px solid rgba(56,105,135,.2); outline-offset: 1px; }
 .study-screen { width: min(840px, 100%); margin: 0 auto; }
 .study-toolbar { display: grid; grid-template-columns: 1fr auto 1fr; align-items: center; gap: 12px; margin-bottom: 10px; text-align: center; }
 .study-toolbar h1 { margin: 0; font-size: 27px; line-height: 1.1; font-weight: 900; }

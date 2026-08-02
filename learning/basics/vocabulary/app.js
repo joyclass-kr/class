@@ -216,7 +216,15 @@
             const english = document.createElement("td");
             english.className = "sheet-word";
             english.lang = "en";
-            english.textContent = word.word;
+            const wordLabel = document.createElement("span");
+            wordLabel.textContent = word.word;
+            const pronunciationButton = document.createElement("button");
+            pronunciationButton.type = "button";
+            pronunciationButton.className = "sheet-speak-button";
+            pronunciationButton.textContent = "🔊";
+            pronunciationButton.setAttribute("aria-label", `Hear ${word.word}`);
+            pronunciationButton.addEventListener("click", () => speakText(word.word));
+            english.append(wordLabel, pronunciationButton);
             const meaning = document.createElement("td");
             meaning.textContent = word.meanings.join("; ");
             row.append(rowNumber, level, english, meaning);
