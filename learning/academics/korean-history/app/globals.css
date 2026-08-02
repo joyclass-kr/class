@@ -61,6 +61,22 @@ a:focus-visible {
   justify-content: space-between;
 }
 
+.brand-group {
+  display: flex;
+  align-items: center;
+  gap: 16px;
+}
+
+.portal-link,
+.quiz-nav .text-button {
+  min-height: 44px;
+  display: inline-flex;
+  align-items: center;
+  color: var(--navy);
+  font-weight: 900;
+  text-decoration: none;
+}
+
 .brand {
   display: inline-flex;
   align-items: center;
@@ -107,6 +123,28 @@ a:focus-visible {
 
 .progress-copy {
   color: var(--muted);
+}
+
+.progress-copy strong {
+  color: var(--navy);
+  font-size: 18px;
+}
+
+.reset-progress-button {
+  min-height: 44px;
+  padding: 8px 12px;
+  border: 1px solid rgba(162, 59, 46, 0.28);
+  border-radius: 10px;
+  background: white;
+  color: #a23b2e;
+  cursor: pointer;
+  font-size: 13px;
+  font-weight: 900;
+}
+
+.reset-progress-button:disabled {
+  opacity: 0.42;
+  cursor: default;
 }
 
 .eyebrow {
@@ -330,6 +368,19 @@ a:focus-visible {
   cursor: pointer;
   font-size: 14px;
   font-weight: 800;
+}
+
+.quiz-nav {
+  display: flex;
+  align-items: center;
+  gap: 16px;
+}
+
+.button-link {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  text-decoration: none;
 }
 
 .quiz-heading {
@@ -886,6 +937,31 @@ a:focus-visible {
   }
 }
 
+@media (max-width: 900px) {
+  .brand-group {
+    gap: 8px;
+  }
+
+  .brand-group .brand > span:last-child,
+  .basic-badge,
+  .player-name {
+    display: none;
+  }
+
+  .portal-link {
+    font-size: 13px;
+  }
+
+  .topbar-actions {
+    gap: 8px;
+  }
+
+  .reset-progress-button {
+    padding-inline: 9px;
+    font-size: 12px;
+  }
+}
+
 @media (max-width: 640px) {
   .topbar,
   .study-section,
@@ -895,10 +971,6 @@ a:focus-visible {
 
   .topbar {
     height: 72px;
-  }
-
-  .topbar-actions .progress-copy {
-    display: none;
   }
 
   .topbar-actions {

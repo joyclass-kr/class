@@ -35,6 +35,7 @@ const answerSymbols = ["", "①", "②", "③", "④"];
 const playerNameKey = "classPlayerName";
 const legacyWrongKey = "hanguksa-wrong";
 const legacyStatsKey = "hanguksa-stats";
+const solvedKey = "hanguksa-solved";
 
 function normalizePlayerName(value: string | null) {
   const normalized = String(value || "").replace(/[^가-힣]/g, "").slice(0, 6);
@@ -77,6 +78,7 @@ export function StudyApp() {
   const [results, setResults] = useState<QuizResult[]>([]);
   const [questionCount, setQuestionCount] = useState(5);
   const [wrongIds, setWrongIds] = useState<string[]>([]);
+  const [solvedIds, setSolvedIds] = useState<string[]>([]);
   const [stats, setStats] = useState<StudyStats>({});
   const [playerName, setPlayerName] = useState("");
   const [imageExpanded, setImageExpanded] = useState(false);
@@ -100,11 +102,14 @@ export function StudyApp() {
 
       const wrongKey = migratePlayerStorage(legacyWrongKey, activePlayerName);
       const statsKey = migratePlayerStorage(legacyStatsKey, activePlayerName);
+      const activeSolvedKey = migratePlayerStorage(solvedKey, activePlayerName);
       setWrongIds(JSON.parse(localStorage.getItem(wrongKey) || "[]"));
       setStats(JSON.parse(localStorage.getItem(statsKey) || "{}"));
+      setSolvedIds(JSON.parse(localStorage.getItem(activeSolvedKey) || "[]"));
     } catch {
       setWrongIds([]);
       setStats({});
+      setSolvedIds([]);
     }
   }, []);
 
@@ -192,6 +197,20 @@ export function StudyApp() {
     };
     setStats(nextStats);
     localStorage.setItem(playerStorageKey(legacyStatsKey, playerName), JSON.stringify(nextStats));
+
+    const nextSolvedIds = Array.from(new Set([...solvedIds, currentQuestion.id]));
+    setSolvedIds(nextSolvedIds);
+    localStorage.setItem(playerStorageKey(solvedKey, playerName), JSON.stringify(nextSolvedIds));
+  }
+
+  function resetProgress() {
+    if (!window.confirm("지금까지의 풀이 기록과 오답 노트를 모두 초기화할까요?")) return;
+    localStorage.removeItem(playerStorageKey(legacyWrongKey, playerName));
+    localStorage.removeItem(playerStorageKey(legacyStatsKey, playerName));
+    localStorage.removeItem(playerStorageKey(solvedKey, playerName));
+    setWrongIds([]);
+    setStats({});
+    setSolvedIds([]);
   }
 
   function nextQuestion() {
@@ -220,9 +239,10 @@ export function StudyApp() {
     return (
       <main className={`site-shell quiz-shell quiz-shell-solving ${selectedAnswer !== null ? "quiz-shell-answered" : ""}`}>
         <header className="quiz-header">
-          <button className="text-button" onClick={goHome} aria-label="단원 선택으로 돌아가기">
-            ← 단원 선택
-          </button>
+          <nav className="quiz-nav" aria-label="바로가기">
+            <a className="text-button" href="/">← 포털 메인</a>
+            <button className="text-button" onClick={goHome} aria-label="단원 선택으로 돌아가기">← 단원 선택</button>
+          </nav>
           <div className="quiz-heading">
             <span>{quizTitle}</span>
             <strong>{questionIndex + 1} / {quiz.length}</strong>
@@ -363,6 +383,7 @@ export function StudyApp() {
               </button>
             )}
             <button className="secondary-button" onClick={goHome}>다른 단원 고르기</button>
+            <a className="secondary-button button-link" href="/">포털 메인</a>
           </div>
         </section>
       </main>
@@ -372,14 +393,18 @@ export function StudyApp() {
   return (
     <main className="site-shell home-shell">
       <header className="topbar">
-        <a className="brand" href="#top" aria-label="한능검 기본 단원별 기출문제 홈">
-          <span className="brand-mark">기</span>
-          <span>한능검 기본 단원별 기출문제</span>
-        </a>
+        <div className="brand-group">
+          <a className="portal-link" href="/">← 포털 메인</a>
+          <a className="brand" href="#top" aria-label="한능검 기본 단원별 기출문제 홈">
+            <span className="brand-mark">기</span>
+            <span>한능검 기본 단원별 기출문제</span>
+          </a>
+        </div>
         <div className="topbar-actions">
           {playerName && <span className="player-name">{playerName} 님</span>}
           <span className="basic-badge">기본 문제만</span>
-          <span className="progress-copy">지금까지 {totalTried}문제</span>
+          <span className="progress-copy"><strong>{solvedIds.length}</strong> / {questions.length}문제</span>
+          <button className="reset-progress-button" type="button" onClick={resetProgress} disabled={totalTried === 0 && solvedIds.length === 0 && wrongIds.length === 0}>기록 초기화</button>
         </div>
       </header>
 

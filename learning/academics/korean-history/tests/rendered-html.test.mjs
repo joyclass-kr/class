@@ -48,6 +48,9 @@ test("keeps the app integrated under the portal's hanguksa route", async () => {
   assert.match(studyApp, /className="site-shell home-shell"/);
   assert.match(studyApp, /questionsData/);
   assert.match(studyApp, /classPlayerName/);
+  assert.match(studyApp, /포털 메인/);
+  assert.match(studyApp, /기록 초기화/);
+  assert.match(studyApp, /solvedIds\.length/);
   assert.match(layout, /<html lang="ko">/);
   assert.match(layout, /generateMetadata/);
   assert.match(nextConfig, /basePath:\s*"\/hanguksa"/);
