@@ -14,47 +14,34 @@
     z-index: 100000;
     display: flex;
     align-items: center;
-    gap: 5px;
+    gap: 4px;
     width: max-content;
     max-width: calc(100vw - 16px);
-    min-height: 58px;
-    padding: 4px 7px;
+    min-height: 52px;
+    padding: 3px 6px;
     border: 1px solid #755022;
     border-radius: 999px;
     background: rgba(20, 13, 7, .9);
     box-shadow: 0 3px 12px rgba(0, 0, 0, .48), inset 0 1px rgba(255, 224, 156, .1);
     color: #ead49f;
-    font: 800 9px/1 "Malgun Gothic", sans-serif;
-    letter-spacing: 0;
     backdrop-filter: blur(5px);
 }
 
 .unified-audio-group {
     display: flex;
-    flex-direction: column;
     align-items: center;
-    gap: 0;
+    gap: 2px;
 }
 
 .unified-audio-divider {
     width: 1px;
-    height: 34px;
+    height: 28px;
+    margin: 0 2px;
     background: #67451f;
-    margin: 9px 0 0;
 }
 
-.unified-music-label {
-    min-height: 10px;
-    color: #d7c08d;
-    font-size: 8px;
-    font-weight: 900;
-    line-height: 10px;
-    white-space: nowrap;
-}
-
-.unified-music-control .unified-audio-knob {
+.unified-music-control .unified-audio-toggle {
     appearance: none;
-    position: relative;
     display: grid;
     width: 44px;
     min-width: 44px;
@@ -65,56 +52,74 @@
     place-items: center;
     border: 0;
     border-radius: 50%;
-    background: transparent;
+    background: radial-gradient(circle, #a77836 0 42%, #513418 45% 58%, transparent 60%);
     box-shadow: none;
+    color: #ffe1a0;
+    font: 900 20px/1 Georgia, "Times New Roman", serif;
     cursor: pointer;
     touch-action: manipulation;
 }
 
-.unified-knob-dial {
-    position: relative;
-    display: block;
-    width: 30px;
-    height: 30px;
-    border: 1px solid #9b6e31;
-    border-radius: 50%;
-    background: radial-gradient(circle at 36% 30%, #c4944d 0 10%, #7b5425 38%, #2c1c0d 72%, #140d07 100%);
-    box-shadow: 0 2px 5px rgba(0, 0, 0, .65), inset 0 1px rgba(255, 232, 174, .26);
-    transform: rotate(var(--knob-angle, 0deg));
-    transition: transform .16s ease, filter .16s ease, opacity .16s ease;
+.unified-music-control .unified-audio-toggle.is-muted {
+    color: #df7b68;
+    filter: grayscale(.55) brightness(.72);
 }
 
-.unified-knob-dial::after {
-    content: "";
-    position: absolute;
-    top: 3px;
-    left: 50%;
-    width: 3px;
-    height: 8px;
-    border-radius: 3px;
-    background: #ffe2a4;
-    box-shadow: 0 0 3px rgba(255, 211, 123, .7);
-    transform: translateX(-50%);
-}
-
-.unified-audio-knob.is-muted .unified-knob-dial {
-    filter: grayscale(.8) brightness(.58);
-    opacity: .82;
-}
-
-.unified-audio-knob.is-muted .unified-knob-dial::after {
-    background: #dc7663;
-    box-shadow: 0 0 3px rgba(220, 118, 99, .7);
-}
-
-.unified-music-control .unified-audio-knob:hover .unified-knob-dial,
-.unified-music-control .unified-audio-knob:active .unified-knob-dial {
-    filter: brightness(1.16);
-}
-
-.unified-music-control .unified-audio-knob:focus-visible {
+.unified-music-control .unified-audio-toggle:focus-visible,
+.unified-music-control .unified-audio-slider:focus-visible {
     outline: 2px solid #fff0b7;
     outline-offset: 0;
+}
+
+.unified-music-control .unified-audio-slider {
+    appearance: none;
+    -webkit-appearance: none;
+    width: 76px;
+    height: 44px;
+    min-height: 44px;
+    margin: 0;
+    padding: 0;
+    border: 0;
+    background: transparent;
+    cursor: pointer;
+    touch-action: pan-x;
+}
+
+.unified-music-control .unified-audio-slider::-webkit-slider-runnable-track {
+    height: 4px;
+    border: 1px solid #765022;
+    border-radius: 999px;
+    background: linear-gradient(90deg, #b97b2f, #e7a547);
+    box-shadow: inset 0 1px 2px rgba(0, 0, 0, .65);
+}
+
+.unified-music-control .unified-audio-slider::-webkit-slider-thumb {
+    appearance: none;
+    -webkit-appearance: none;
+    width: 18px;
+    height: 18px;
+    margin-top: -8px;
+    border: 1px solid #c69751;
+    border-radius: 50%;
+    background: radial-gradient(circle at 36% 30%, #e0b56d 0 10%, #8c602a 42%, #2b1b0d 100%);
+    box-shadow: 0 2px 5px rgba(0, 0, 0, .65);
+}
+
+.unified-music-control .unified-audio-slider::-moz-range-track {
+    height: 4px;
+    border: 1px solid #765022;
+    border-radius: 999px;
+    background: linear-gradient(90deg, #b97b2f, #e7a547);
+    box-shadow: inset 0 1px 2px rgba(0, 0, 0, .65);
+}
+
+.unified-music-control .unified-audio-slider::-moz-range-thumb {
+    width: 18px;
+    height: 18px;
+    border: 1px solid #c69751;
+    border-radius: 50%;
+    background: radial-gradient(circle at 36% 30%, #e0b56d 0 10%, #8c602a 42%, #2b1b0d 100%);
+    box-shadow: 0 2px 5px rgba(0, 0, 0, .65);
 }
 
 @media (max-width: 760px), (hover: none) and (pointer: coarse), (max-height: 520px) and (orientation: landscape) {
@@ -122,6 +127,10 @@
         top: 6px;
         right: 6px;
         max-width: calc(100vw - 12px);
-        padding: 3px 5px;
+        padding: 2px 4px;
+    }
+
+    .unified-music-control .unified-audio-slider {
+        width: 62px;
     }
 }

@@ -28,17 +28,19 @@ const musicControlSource = fs.readFileSync(musicControlPath, "utf8");
 new vm.Script(musicControlSource, { filename: musicControlPath });
 assert.ok(musicControlSource.includes('new URL("game-sfx.js", currentScript.src)'), "Music-enabled games should load the shared effect module.");
 assert.ok(musicControlSource.includes("classmusicchange"), "Music controls should publish the shared mute and volume state.");
-assert.ok(musicControlSource.includes('id="musicKnob"'), "Shared music volume should use the compact knob control.");
-assert.ok(musicControlSource.includes('id="sfxKnob"'), "Shared effect volume should use the compact knob control.");
+assert.ok(musicControlSource.includes('id="musicVolumeSlider"'), "Shared music volume should use the compact linear slider.");
+assert.ok(musicControlSource.includes('id="sfxVolumeSlider"'), "Shared effect volume should use the compact linear slider.");
+assert.ok(musicControlSource.includes('step="0.01"'), "Shared audio sliders should adjust continuously.");
 assert.ok(!musicControlSource.includes("unified-music-segment"), "The oversized segmented volume bar should not return.");
 
 const musicControlCss = fs.readFileSync(musicControlCssPath, "utf8");
-assert.ok(musicControlCss.includes(".unified-audio-knob"), "Shared audio controls need the compact knob styling.");
-assert.ok(!/@media[\s\S]*?\.unified-music-control\s*\{[^}]*display:\s*none/.test(musicControlCss), "Compact knobs should remain available on touch devices.");
+assert.ok(musicControlCss.includes(".unified-audio-slider"), "Shared audio controls need the compact linear slider styling.");
+assert.ok(musicControlCss.includes("::-webkit-slider-thumb"), "Shared audio sliders need a draggable knob.");
+assert.ok(!/@media[\s\S]*?\.unified-music-control\s*\{[^}]*display:\s*none/.test(musicControlCss), "Compact sliders should remain available on touch devices.");
 
 const voyage = fs.readFileSync(voyagePath, "utf8");
-assert.ok(voyage.includes('id="bgmKnob"'), "World Voyage should use the same compact music knob.");
-assert.ok(!voyage.includes('id="bgmVolume"'), "World Voyage should not keep its old volume slider.");
+assert.ok(voyage.includes('id="bgmVolumeSlider"'), "World Voyage should use the same compact continuous slider.");
+assert.ok(!voyage.includes('id="bgmVolume"'), "World Voyage should not keep its old oversized volume slider.");
 
 const hub = fs.readFileSync(hubPath, "utf8");
 const gameLinks = [...hub.matchAll(/href="(learning\/games\/[^"]+)"/g)].map((match) => {

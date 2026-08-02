@@ -2,8 +2,10 @@
     "use strict";
 
     const MUSIC_LEVEL_KEY = "classMusicVolumeLevel";
+    const MUSIC_VOLUME_KEY = "classMusicVolumeValue";
     const MUSIC_MUTED_KEY = "classMusicMuted";
     const SFX_LEVEL_KEY = "classSfxVolumeLevel";
+    const SFX_VOLUME_KEY = "classSfxVolumeValue";
     const SFX_MUTED_KEY = "classSfxMuted";
     // Playback state is shared between tabs so opening the home page in a new
     // tab can continue the current track from its last saved position.
@@ -41,6 +43,10 @@
     let musicLevel = Number.isInteger(savedMusicLevel) && savedMusicLevel >= 1 && savedMusicLevel <= 5
         ? savedMusicLevel
         : DEFAULT_LEVEL;
+    const savedMusicVolume = Number(localStorage.getItem(MUSIC_VOLUME_KEY));
+    let musicVolume = Number.isFinite(savedMusicVolume) && savedMusicVolume > 0 && savedMusicVolume <= 1
+        ? savedMusicVolume
+        : musicLevel / 5;
     // Older games stored booleans as "true" while newer menus use "1".
     // Treat both as the same shared setting during the migration.
     let musicMuted = ["1", "true"].includes(localStorage.getItem(MUSIC_MUTED_KEY));
@@ -50,6 +56,10 @@
     let sfxLevel = Number.isInteger(savedSfxLevel) && savedSfxLevel >= 1 && savedSfxLevel <= 5
         ? savedSfxLevel
         : musicLevel;
+    const savedSfxVolume = Number(localStorage.getItem(SFX_VOLUME_KEY));
+    let sfxVolume = Number.isFinite(savedSfxVolume) && savedSfxVolume > 0 && savedSfxVolume <= 1
+        ? savedSfxVolume
+        : sfxLevel / 5;
     let sfxMuted = ["1", "true"].includes(localStorage.getItem(SFX_MUTED_KEY));
 
     let applyingAudioState = false;
@@ -103,64 +113,88 @@
     const control = document.createElement("div");
     control.className = "unified-music-control";
     control.setAttribute("role", "group");
-    control.setAttribute("aria-label", "Audio volume controls");
+    control.setAttribute("aria-label", "소리 조절");
     control.innerHTML = `
         <div class="unified-audio-group">
-            <span class="unified-music-label">음악</span>
-            <button class="unified-audio-knob" id="musicKnob" type="button"><span class="unified-knob-dial" aria-hidden="true"></span></button>
+            <button class="unified-audio-toggle" id="musicMuteBtn" type="button" aria-label="음악 음소거">♪</button>
+            <input class="unified-audio-slider" id="musicVolumeSlider" type="range" min="0" max="1" step="0.01" aria-label="음악 음량">
         </div>
         <div class="unified-audio-divider"></div>
         <div class="unified-audio-group">
-            <span class="unified-music-label">효과</span>
-            <button class="unified-audio-knob" id="sfxKnob" type="button"><span class="unified-knob-dial" aria-hidden="true"></span></button>
+            <button class="unified-audio-toggle" id="sfxMuteBtn" type="button" aria-label="효과음 음소거">✦</button>
+            <input class="unified-audio-slider" id="sfxVolumeSlider" type="range" min="0" max="1" step="0.01" aria-label="효과음 음량">
         </div>`;
 
     document.body.appendChild(control);
     document.body.classList.add("class-music-ready");
 
-    const musicKnob = control.querySelector("#musicKnob");
-    const sfxKnob = control.querySelector("#sfxKnob");
+    const musicMuteBtn = control.querySelector("#musicMuteBtn");
+    const musicVolumeSlider = control.querySelector("#musicVolumeSlider");
+    const sfxMuteBtn = control.querySelector("#sfxMuteBtn");
+    const sfxVolumeSlider = control.querySelector("#sfxVolumeSlider");
 
     function storeState() {
         localStorage.setItem(MUSIC_LEVEL_KEY, String(musicLevel));
+        localStorage.setItem(MUSIC_VOLUME_KEY, String(musicVolume));
         // Older game pages read this value as the literal strings "true" and
         // "false". Keep that canonical format so the shared state survives
         // transitions between the index and every game.
         localStorage.setItem(MUSIC_MUTED_KEY, musicMuted ? "true" : "false");
         localStorage.setItem(SFX_LEVEL_KEY, String(sfxLevel));
+        localStorage.setItem(SFX_VOLUME_KEY, String(sfxVolume));
         localStorage.setItem(SFX_MUTED_KEY, sfxMuted ? "1" : "0");
     }
 
     function reloadSharedMusicState() {
         const storedLevel = Number(localStorage.getItem(MUSIC_LEVEL_KEY));
+        const storedVolume = Number(localStorage.getItem(MUSIC_VOLUME_KEY));
         if (Number.isInteger(storedLevel) && storedLevel >= 1 && storedLevel <= 5) {
             musicLevel = storedLevel;
         }
+        if (Number.isFinite(storedVolume) && storedVolume > 0 && storedVolume <= 1) {
+            musicVolume = storedVolume;
+            musicLevel = Math.max(1, Math.round(musicVolume * 5));
+        } else {
+            musicVolume = musicLevel / 5;
+        }
         musicMuted = ["1", "true"].includes(localStorage.getItem(MUSIC_MUTED_KEY));
+        const storedSfxLevel = Number(localStorage.getItem(SFX_LEVEL_KEY));
+        const storedSfxVolume = Number(localStorage.getItem(SFX_VOLUME_KEY));
+        if (Number.isInteger(storedSfxLevel) && storedSfxLevel >= 1 && storedSfxLevel <= 5) {
+            sfxLevel = storedSfxLevel;
+        }
+        if (Number.isFinite(storedSfxVolume) && storedSfxVolume > 0 && storedSfxVolume <= 1) {
+            sfxVolume = storedSfxVolume;
+            sfxLevel = Math.max(1, Math.round(sfxVolume * 5));
+        } else {
+            sfxVolume = sfxLevel / 5;
+        }
+        sfxMuted = ["1", "true"].includes(localStorage.getItem(SFX_MUTED_KEY));
         render();
         applyAudioState();
         announceState();
     }
 
-    function renderKnob(knob, label, level, muted) {
-        const angle = muted ? -135 : -135 + ((level - 1) / 4) * 270;
-        const stateLabel = muted ? "음소거" : `음량 ${level}/5`;
-        knob.style.setProperty("--knob-angle", `${angle}deg`);
-        knob.classList.toggle("is-muted", muted);
-        knob.setAttribute("aria-label", `${label} ${stateLabel}. 누르면 다음 단계로 조절됩니다.`);
-        knob.setAttribute("aria-pressed", muted ? "true" : "false");
-        knob.title = `${label} ${stateLabel}`;
+    function renderSlider(toggle, slider, label, icon, volume, muted) {
+        const percentage = Math.round(volume * 100);
+        toggle.textContent = muted ? "×" : icon;
+        toggle.classList.toggle("is-muted", muted);
+        toggle.setAttribute("aria-label", muted ? `${label} 켜기` : `${label} 음소거`);
+        toggle.setAttribute("aria-pressed", muted ? "true" : "false");
+        slider.value = muted ? "0" : String(volume);
+        slider.title = `${label} ${muted ? "음소거" : `${percentage}%`}`;
+        slider.setAttribute("aria-valuetext", muted ? "음소거" : `${percentage}%`);
     }
 
     function render() {
-        renderKnob(musicKnob, "음악", musicLevel, musicMuted);
-        renderKnob(sfxKnob, "효과음", sfxLevel, sfxMuted);
+        renderSlider(musicMuteBtn, musicVolumeSlider, "음악", "♪", musicVolume, musicMuted);
+        renderSlider(sfxMuteBtn, sfxVolumeSlider, "효과음", "✦", sfxVolume, sfxMuted);
     }
 
     function applyAudioState() {
         if (applyingAudioState) return;
         applyingAudioState = true;
-        const targetVolume = musicLevel / 5;
+        const targetVolume = musicVolume;
         if (Math.abs(audio.volume - targetVolume) > 0.001) audio.volume = targetVolume;
         if (audio.muted !== musicMuted) audio.muted = musicMuted;
         audio.preload = "auto";
@@ -169,14 +203,14 @@
 
     function announceState() {
         window.dispatchEvent(new CustomEvent("classmusicchange", {
-            detail: { level: musicLevel, muted: musicMuted, volume: musicLevel / 5 }
+            detail: { level: musicLevel, muted: musicMuted, volume: musicVolume }
         }));
         window.dispatchEvent(new CustomEvent("classsfxchange", {
-            detail: { level: sfxLevel, muted: sfxMuted, volume: sfxLevel / 5 }
+            detail: { level: sfxLevel, muted: sfxMuted, volume: sfxVolume }
         }));
         if (window.ClassGameSfx) {
             window.ClassGameSfx.setMuted(sfxMuted);
-            window.ClassGameSfx.setVolume(sfxLevel / 5);
+            window.ClassGameSfx.setVolume(sfxVolume);
         }
     }
 
@@ -216,15 +250,21 @@
         }
     }
 
-    musicKnob.addEventListener("click", () => {
+    musicMuteBtn.addEventListener("click", () => {
         multiplayerMuteRestore = null;
-        if (musicMuted) {
-            musicLevel = 1;
-            musicMuted = false;
-        } else if (musicLevel >= 5) {
+        setMusicMuted(!musicMuted);
+        startPlayback();
+    });
+
+    musicVolumeSlider.addEventListener("input", () => {
+        const nextVolume = Math.max(0, Math.min(1, Number(musicVolumeSlider.value)));
+        multiplayerMuteRestore = null;
+        if (nextVolume <= 0) {
             musicMuted = true;
         } else {
-            musicLevel += 1;
+            musicVolume = nextVolume;
+            musicLevel = Math.max(1, Math.round(musicVolume * 5));
+            musicMuted = false;
         }
         storeState();
         render();
@@ -233,14 +273,21 @@
         startPlayback();
     });
 
-    sfxKnob.addEventListener("click", () => {
-        if (sfxMuted) {
-            sfxLevel = 1;
-            sfxMuted = false;
-        } else if (sfxLevel >= 5) {
+    sfxMuteBtn.addEventListener("click", () => {
+        sfxMuted = !sfxMuted;
+        storeState();
+        render();
+        announceState();
+    });
+
+    sfxVolumeSlider.addEventListener("input", () => {
+        const nextVolume = Math.max(0, Math.min(1, Number(sfxVolumeSlider.value)));
+        if (nextVolume <= 0) {
             sfxMuted = true;
         } else {
-            sfxLevel += 1;
+            sfxVolume = nextVolume;
+            sfxLevel = Math.max(1, Math.round(sfxVolume * 5));
+            sfxMuted = false;
         }
         storeState();
         render();
@@ -289,7 +336,7 @@
     // music setting selected on the index page.
     window.addEventListener("load", reloadSharedMusicState);
     window.addEventListener("storage", event => {
-        if (event.key === MUSIC_LEVEL_KEY || event.key === MUSIC_MUTED_KEY) {
+        if ([MUSIC_LEVEL_KEY, MUSIC_VOLUME_KEY, MUSIC_MUTED_KEY, SFX_LEVEL_KEY, SFX_VOLUME_KEY, SFX_MUTED_KEY].includes(event.key)) {
             reloadSharedMusicState();
         }
     });
