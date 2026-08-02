@@ -465,7 +465,7 @@ function createClassroomPlatform(options = {}) {
       `CREATE TABLE IF NOT EXISTS privacy_requests (
         id BIGSERIAL PRIMARY KEY,
         user_id BIGINT NOT NULL REFERENCES classroom_users(id) ON DELETE CASCADE,
-        category TEXT NOT NULL CHECK (category IN ('view', 'correct', 'delete', 'stop', 'birthday', 'technical', 'other')),
+        category TEXT NOT NULL CHECK (category IN ('view', 'correct', 'delete', 'stop', 'birthday', 'guardian', 'technical', 'other')),
         details TEXT NOT NULL CHECK (char_length(details) BETWEEN 10 AND 1000),
         status TEXT NOT NULL DEFAULT 'received' CHECK (status IN ('received', 'reviewing', 'completed', 'rejected')),
         created_at TIMESTAMPTZ NOT NULL DEFAULT NOW(),
@@ -474,6 +474,11 @@ function createClassroomPlatform(options = {}) {
       )`,
       `CREATE INDEX IF NOT EXISTS privacy_requests_user_created_idx
         ON privacy_requests (user_id, created_at DESC)`,
+      `ALTER TABLE privacy_requests
+        DROP CONSTRAINT IF EXISTS privacy_requests_category_check`,
+      `ALTER TABLE privacy_requests
+        ADD CONSTRAINT privacy_requests_category_check
+        CHECK (category IN ('view', 'correct', 'delete', 'stop', 'birthday', 'guardian', 'technical', 'other'))`,
       `CREATE TABLE IF NOT EXISTS classroom_student_access_resets (
         id BIGSERIAL PRIMARY KEY,
         student_id BIGINT NOT NULL,
@@ -928,7 +933,7 @@ function createClassroomPlatform(options = {}) {
     const user = await requireUser(req);
     const category = String(req.body?.category || "").trim();
     const details = String(req.body?.details || "").trim();
-    const allowed = new Set(["view", "correct", "delete", "stop", "birthday", "technical", "other"]);
+    const allowed = new Set(["view", "correct", "delete", "stop", "birthday", "guardian", "technical", "other"]);
     if (!allowed.has(category)) {
       throw new HttpError(400, "PRIVACY_CATEGORY_REQUIRED", "Choose a request type.");
     }
