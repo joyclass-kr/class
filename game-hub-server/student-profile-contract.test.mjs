@@ -19,9 +19,10 @@ test("student password changes verify the current password and store a hash", ()
   assert.match(serverSource, /existingPassword\?\.passwordHash \|\| hashStudentPassword\(DEFAULT_STUDENT_PASSWORD\)/);
 });
 
-test("student profile screen confirms the new password and explains birthday choice", () => {
+test("student profile screen confirms the new password and keeps birthday choice concise", () => {
   assert.match(pageSource, /id="confirmPassword"/);
-  assert.match(pageSource, /공개하지 않아도 학습과 학급 활동에는 아무런 불이익이 없습니다/);
+  assert.match(pageSource, /id="birthdayVisible"/);
+  assert.doesNotMatch(pageSource, /불이익/);
   assert.match(pageSource, /newPassword\.value!==confirmPassword\.value/);
 });
 
