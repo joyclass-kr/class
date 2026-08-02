@@ -1,0 +1,221 @@
+const pieces = [
+  ['01','baroque','바로크','사계 〈봄〉 1악장','비발디','협주곡','바이올린','4박자','빠르게','밝고 생기 있게','새소리와 천둥을 묘사하는 독주 바이올린','표제 음악','봄 풍경을 소리로 그린 음악'],
+  ['02','baroque','바로크','G선상의 아리아','바흐','관현악 모음곡','현악 합주','4박자','느리게','평온하고 장중하게','길게 이어지는 선율과 고른 저음','선율','숨을 길게 이어 가는 듯한 노래'],
+  ['03','baroque','바로크','브란덴부르크 협주곡 5번 1악장','바흐','합주 협주곡','하프시코드','2박자','빠르게','화려하고 활기차게','독주 악기군과 합주가 주고받는 대화','합주 협주곡','하프시코드의 긴 독주 부분'],
+  ['04','baroque','바로크','수상 음악 〈알라 혼파이프〉','헨델','관현악 모음곡','금관악기','3박자','보통 빠르게','당당하고 축제처럼','힘찬 금관과 뚜렷한 3박자','모음곡','왕의 뱃놀이를 위해 만든 야외 음악'],
+  ['05','baroque','바로크','캐논 라장조','파헬벨','캐논','현악 합주','4박자','보통 빠르게','차분하고 따뜻하게','같은 선율이 차례로 뒤따라 들어옴','돌림노래 원리','반복되는 저음 위에 선율이 겹침'],
+  ['06','classical','고전','교향곡 5번 〈운명〉 1악장','베토벤','교향곡','관현악','2박자','빠르게','긴장되고 힘차게','따따따-따 네 음 동기의 반복과 변형','동기','짧은 음악 재료가 곡 전체를 이끔'],
+  ['07','classical','고전','교향곡 9번 〈합창〉 4악장','베토벤','교향곡','합창과 관현악','4박자','빠르게','장엄하고 환희에 차게','환희의 주제가 합창과 함께 커짐','주제','교향곡에 성악을 본격적으로 결합'],
+  ['08','classical','고전','아이네 클라이네 나흐트무지크 1악장','모차르트','세레나데','현악 합주','4박자','빠르게','밝고 우아하게','힘찬 첫 주제와 부드러운 둘째 주제','소나타 형식','두 성격의 주제가 대비됨'],
+  ['09','classical','고전','작은 별 변주곡','모차르트','변주곡','피아노','2박자','보통 빠르게','재치 있고 다채롭게','익숙한 주제가 리듬과 빠르기를 바꿈','변주','하나의 주제가 여러 모습으로 변화'],
+  ['10','classical','고전','놀람 교향곡 2악장','하이든','교향곡','관현악','2박자','조금 느리게','평온하다가 익살스럽게','여린 선율 뒤 갑자기 나오는 큰 소리','셈여림','갑작스러운 강한 소리로 놀라게 함'],
+  ['11','classical','고전','트럼펫 협주곡 3악장','하이든','협주곡','트럼펫','2박자','빠르게','명랑하고 경쾌하게','독주 트럼펫과 관현악의 주고받음','협주','독주 악기와 관현악이 대비하고 협력'],
+  ['12','romantic','낭만','윌리엄 텔 서곡 〈피날레〉','로시니','서곡','관현악','2박자','빠르게','용감하고 질주하듯','말발굽을 닮은 빠른 리듬','서곡','오페라가 시작되기 전 연주하는 음악'],
+  ['13','romantic','낭만','피아노 5중주 〈송어〉 4악장','슈베르트','변주곡','피아노와 현악기','2박자','조금 느리게','맑고 경쾌하게','주제가 악기를 바꾸며 다섯 번 변주됨','실내악','소수 연주자가 긴밀하게 호흡'],
+  ['14','romantic','낭만','마왕','슈베르트','예술가곡','성악과 피아노','4박자','매우 빠르게','불안하고 긴박하게','말발굽 같은 피아노 반주와 역할별 목소리','예술가곡','시와 음악이 결합한 독창곡'],
+  ['15','romantic','낭만','녹턴 작품 9-2','쇼팽','녹턴','피아노','12/8박자','조금 느리게','고요하고 서정적으로','꾸밈음이 더해진 노래하는 오른손 선율','루바토','박자를 유연하게 밀고 당기는 표현'],
+  ['16','romantic','낭만','헝가리 무곡 5번','브람스','무곡','피아노 네 손 원곡·관현악 편곡','2박자','빠르기의 변화가 큼','정열적이고 익살스럽게','갑작스러운 빠르기와 셈여림 변화','아고기크','피아노 네 손 원곡과 관현악 편곡으로 널리 연주'],
+  ['17','romantic','낭만','호두까기 인형 〈꽃의 왈츠〉','차이콥스키','발레 음악','관현악과 하프','3박자','보통 빠르게','화려하고 우아하게','하프 도입과 빙글도는 왈츠 리듬','왈츠','강-약-약으로 흐르는 3박자 춤'],
+  ['18','romantic','낭만','백조의 호수 〈정경〉','차이콥스키','발레 음악','오보에와 관현악','4박자','보통 빠르게','신비롭고 애잔하게','오보에가 연주하는 슬픈 백조 주제','발레 음악','춤과 극의 장면을 이끄는 관현악'],
+  ['19','romantic','낭만','동물의 사육제 〈백조〉','생상스','모음곡','첼로와 두 대의 피아노','6/4박자','조금 느리게','우아하고 평화롭게','첼로 선율과 잔물결 같은 피아노 반주','음색','첼로가 물 위의 백조를 표현'],
+  ['20','romantic','낭만','전람회의 그림 〈키예프의 대문〉','무소륵스키','모음곡','피아노 원곡·관현악 편곡','4박자','장엄하게','웅장하고 찬란하게','큰 종소리 같은 화음과 힘찬 주제','표제 음악','피아노 원곡과 라벨의 관현악 편곡으로 널리 감상'],
+  ['21','romantic','낭만','신세계 교향곡 2악장','드보르자크','교향곡','잉글리시 호른','4박자','매우 느리게','그립고 평화롭게','잉글리시 호른의 고향을 그리는 선율','민족주의 음악','민속적 선율과 리듬을 예술 음악에 활용'],
+  ['22','modern','20세기','볼레로','라벨','관현악곡','스네어드럼과 관현악','3박자','보통 빠르게','집요하고 점차 고조되게','같은 리듬 위 음색과 셈여림이 변화','크레셴도','긴 시간에 걸쳐 점점 크게 연주'],
+  ['23','modern','20세기','목신의 오후에의 전주곡','드뷔시','교향시','플루트','9/8박자','보통 빠르게','몽환적이고 신비롭게','경계가 흐릿한 화음과 유연한 플루트 선율','인상주의','빛과 분위기처럼 순간의 인상을 표현'],
+  ['24','modern','20세기','행성 〈목성〉','홀스트','관현악 모음곡','관현악','2박자','빠르게','웅장하고 즐겁게','힘찬 춤 리듬과 넓게 노래하는 중간 선율','관현악법','다양한 악기 음색을 풍부하게 배치'],
+  ['25','modern','20세기','피터와 늑대','프로코피예프','음악 동화','관현악과 해설','박자 변화','빠르기 변화','재치 있고 이야기하듯','등장인물마다 다른 악기와 주제를 사용','라이트모티프','인물이나 생각을 나타내는 반복 주제'],
+  ['26','modern','20세기','청소년을 위한 관현악 입문','브리튼','변주곡과 푸가','관현악','박자 변화','빠르기 변화','선명하고 교육적으로','악기군별 변주 뒤 모든 악기가 푸가로 합류','푸가','주제가 여러 성부에서 차례로 모방'],
+  ['27','baroque','바로크','메시아 〈할렐루야〉','헨델','오라토리오','합창과 관현악','4박자','빠르게','장엄하고 환희에 차게','합창이 반복하는 “할렐루야”와 힘찬 화음','합창','성경 이야기를 바탕으로 한 대규모 성악곡'],
+  ['28','classical','고전','피아노 소나타 11번 〈터키 행진곡〉','모차르트','피아노 소나타','피아노','2박자','조금 빠르게','경쾌하고 또렷하게','행진을 닮은 리듬과 빠른 오른손 선율','론도','반복되는 주제가 여러 부분 사이에 돌아옴'],
+  ['29','romantic','낭만','나의 조국 〈몰다우〉','스메타나','교향시','관현악','6/8박자','보통 빠르게','넓고 흐르듯','두 샘물이 만나 큰 강이 되는 선율','표제 음악','강의 흐름과 주변 풍경을 음악으로 표현'],
+  ['30','modern','20세기','사브르 댄스','하차투리안','발레 음악','관현악','2박자','매우 빠르게','격렬하고 긴장되게','빠른 리듬과 강한 악센트가 반복됨','발레 음악','발레 〈가야네〉의 한 장면을 위한 음악']
+].map(([no,era,period,title,composer,form,lead,meter,tempo,mood,feature,concept,note])=>({no,era,period,title,composer,form,lead,meter,tempo,mood,feature,concept,note,url:`https://www.youtube.com/results?search_query=${encodeURIComponent(`${composer} ${title}`)}`}));
+
+const originalTitles=[
+  'Le quattro stagioni: “La primavera”, I','Air from Orchestral Suite No. 3 in D major','Brandenburg Concerto No. 5 in D major, I','Water Music: “Alla Hornpipe”','Canon in D major',
+  'Symphony No. 5 in C minor, I','Symphony No. 9 in D minor, IV','Eine kleine Nachtmusik, I','12 Variations on “Ah vous dirai-je, Maman”','Symphony No. 94 “Surprise”, II',
+  'Trumpet Concerto in E-flat major, III','Guillaume Tell Overture: Finale','Piano Quintet in A major “Trout”, IV','Erlkönig, D 328','Nocturne in E-flat major, Op. 9 No. 2',
+  'Hungarian Dance No. 5','The Nutcracker: “Waltz of the Flowers”','Swan Lake: “Scene”','Le Carnaval des animaux: “Le Cygne”','Pictures at an Exhibition: “The Great Gate of Kyiv”',
+  'Symphony No. 9 “From the New World”, II','Boléro','Prélude à l’après-midi d’un faune','The Planets: “Jupiter, the Bringer of Jollity”','Peter and the Wolf, Op. 67',
+  'The Young Person’s Guide to the Orchestra','Messiah: “Hallelujah”','Piano Sonata No. 11: “Rondo alla Turca”','Má vlast: “Vltava (The Moldau)”','Gayane: “Sabre Dance”'
+];
+const composerOriginal={
+  '비발디':'Antonio Vivaldi','바흐':'Johann Sebastian Bach','헨델':'George Frideric Handel','파헬벨':'Johann Pachelbel','베토벤':'Ludwig van Beethoven','모차르트':'Wolfgang Amadeus Mozart',
+  '하이든':'Joseph Haydn','로시니':'Gioachino Rossini','슈베르트':'Franz Schubert','쇼팽':'Frédéric Chopin','브람스':'Johannes Brahms','차이콥스키':'Pyotr Ilyich Tchaikovsky',
+  '생상스':'Camille Saint-Saëns','무소륵스키':'Modest Mussorgsky','드보르자크':'Antonín Dvořák','라벨':'Maurice Ravel','드뷔시':'Claude Debussy','홀스트':'Gustav Holst',
+  '프로코피예프':'Sergei Prokofiev','브리튼':'Benjamin Britten','스메타나':'Bedřich Smetana','하차투리안':'Aram Khachaturian'
+};
+const workYears={'01':'1723년','02':'1730년경','03':'1721년','04':'1717년','05':'1680년경','06':'1808년','07':'1824년','08':'1787년','09':'1781~1782년','10':'1791년','11':'1796년','12':'1829년','13':'1819년','14':'1815년','15':'1832년','16':'1869년','17':'1892년','18':'1876년','19':'1886년','20':'1874년','21':'1893년','22':'1928년','23':'1894년','24':'1916년','25':'1936년','26':'1945년','27':'1741년','28':'1783년','29':'1874년','30':'1942년'};
+const stories={
+  '01':'비발디는 《사계》의 각 협주곡에 어울리는 짧은 소네트를 악보와 함께 출판했습니다. 그래서 새소리, 개 짖는 소리, 천둥처럼 들리는 부분을 “무엇을 표현한 대목일까?” 하며 찾아 들을 수 있습니다.',
+  '02':'이 곡이 ‘G선상의 아리아’로 불리게 된 것은 바흐의 원래 제목이 아니라, 19세기 바이올리니스트 아우구스트 빌헬미가 선율을 G선 하나로 연주할 수 있게 편곡하면서부터입니다.',
+  '03':'브란덴부르크 협주곡은 바흐가 브란덴부르크 변경백에게 헌정한 여섯 곡입니다. 특히 5번의 하프시코드 독주는 당시에는 드물 만큼 길고 화려해서, 반주 악기가 잠시 주인공이 되는 장면처럼 들립니다.',
+  '04':'《수상 음악》은 1717년 템스강의 왕실 뱃놀이에서 연주된 것으로 알려져 있습니다. 강 위 야외에서도 잘 들리도록 호른·트럼펫 같은 금관악기를 힘차게 쓴 이유를 상상하며 들어 보세요.',
+  '05':'파헬벨의 캐논은 낮은 음의 진행이 끝까지 거의 반복되는 동안 세 바이올린이 같은 선율을 차례로 시작합니다. 단순한 규칙에서 점점 복잡하고 풍성한 소리가 만들어지는 것이 이 곡의 재미입니다.',
+  '06':'‘운명이 문을 두드린다’는 유명한 해석은 베토벤의 말을 전한 사람의 기록이라 확실하지 않습니다. 하지만 네 음으로 시작하는 동기가 작품 전체를 끌고 가기 때문에, 학생들이 직접 자기만의 이야기를 붙여 보기 좋은 곡입니다.',
+  '07':'1824년 초연 때 베토벤은 청력을 거의 잃은 상태였습니다. 연주가 끝난 뒤에도 객석의 박수를 듣지 못해, 한 연주자가 그를 관객 쪽으로 돌려 세웠다는 일화가 전해집니다.',
+  '08':'《아이네 클라이네 나흐트무지크》는 너무 유명하지만 어떤 자리에서 처음 연주되었는지는 정확히 알 수 없습니다. 제목은 ‘작은 밤 음악’ 정도의 뜻으로, 밤의 배경보다 밝고 또렷한 실내악의 대화에 귀가 갑니다.',
+  '09':'모차르트는 프랑스 노래 〈Ah vous dirai-je, Maman〉 선율로 열두 변주를 만들었습니다. 오늘날 ‘반짝반짝 작은 별’로 친숙한 선율이어서, 변주마다 무엇이 바뀌고 무엇이 남는지 놀이처럼 찾아볼 수 있습니다.',
+  '10':'하이든의 ‘놀람’이라는 별명은 조용한 주제 뒤에 갑자기 강한 화음이 터지는 데서 왔습니다. 졸던 관객을 깨우려고 썼다는 이야기는 유쾌한 전설에 가깝지만, 실제로 듣는 사람을 깜짝 놀라게 하는 효과는 분명합니다.',
+  '11':'하이든의 트럼펫 협주곡은 새로 개발된 ‘키드 트럼펫’을 잘 아는 연주자 안톤 바이딩거를 위해 쓴 곡입니다. 이전 트럼펫보다 음을 더 부드럽게 이어 낼 수 있었기에, 독주 악기가 노래하듯 움직이는 장면이 돋보입니다.',
+  '12':'로시니의 오페라 《윌리엄 텔》 마지막 부분은 영웅이 자유를 향해 달려가는 장면을 떠올리게 합니다. 이후 영화와 방송에서 추격 장면 음악으로 자주 쓰여, 원래 오페라보다 ‘질주 음악’으로 먼저 기억하는 사람도 많습니다.',
+  '13':'‘송어 5중주’라는 별명은 마지막 악장이 슈베르트의 가곡 〈송어〉 선율을 변주하기 때문에 붙었습니다. 피아노와 현악기가 같은 멜로디를 차례로 받아 가며, 물속 송어가 이리저리 움직이는 듯한 색을 바꿉니다.',
+  '14':'〈마왕〉은 괴테의 시를 바탕으로 한 노래입니다. 한 성악가가 아버지·아이·마왕·해설자까지 여러 인물을 바꾸어 표현해야 해서, 짧은 곡 안에 작은 연극을 보는 듯한 긴장감이 생깁니다.',
+  '15':'쇼팽의 녹턴은 살롱에서 연주되는 음악의 섬세함과 즉흥적인 느낌을 함께 품고 있습니다. 오른손 선율을 노래하듯 자유롭게 흔들어도 왼손 반주는 비교적 고르게 흐르는데, 이 차이가 루바토의 매력입니다.',
+  '16':'브람스는 헝가리 민속 음악을 직접 채집한 작품이라기보다, 당시 접한 집시풍·헝가리풍 춤곡의 에너지를 자기 방식으로 다듬었습니다. 5번의 갑작스러운 멈춤과 재출발은 춤추는 사람의 표정 변화처럼 들립니다.',
+  '17':'《호두까기 인형》은 E. T. A. 호프만의 이야기를 바탕으로 한 발레입니다. 초연 당시에는 반응이 엇갈렸지만, 오늘날에는 크리스마스 시즌을 대표하는 작품이 되었고 〈꽃의 왈츠〉는 무대 밖에서도 사랑받습니다.',
+  '18':'《백조의 호수》 초연은 큰 성공을 거두지 못했지만, 차이콥스키가 세상을 떠난 뒤 안무와 구성이 다듬어지며 대표 발레가 되었습니다. 오보에의 백조 주제가 나올 때, 춤의 장면 없이도 호수의 쓸쓸한 분위기를 떠올릴 수 있습니다.',
+  '19':'생상스는 《동물의 사육제》를 친구들을 위한 사적인 연주회에서 먼저 들려주었고, 작품이 진지한 작곡가로서의 평판을 해칠까 걱정해 생전에는 대부분 공개하지 않았습니다. 예외가 바로 〈백조〉였고, 지금은 첼리스트의 대표 레퍼토리가 되었습니다.',
+  '20':'무소륵스키는 화가 친구 빅토르 하르트만의 추모 전시회를 보고 이 모음곡을 썼습니다. 피아노 원곡 사이사이의 ‘프롬나드’는 전시장 그림 사이를 걸어 다니는 관람객처럼 들리며, 라벨의 관현악 편곡이 특히 널리 알려졌습니다.',
+  '21':'드보르자크는 미국 뉴욕에 머물며 이 교향곡을 썼습니다. 2악장의 잉글리시 호른 선율은 훗날 ‘Goin’ Home’이라는 노래로도 사랑받았지만, 원래 곡에 있던 노래가 아니라 후대에 이 선율에 새 가사를 붙인 것입니다.',
+  '22':'라벨의 《볼레로》는 무용가 이다 루빈슈타인의 발레를 위해 만들어졌습니다. 거의 같은 리듬과 선율을 반복하면서도 매번 다른 악기가 등장하고, 마지막까지 점점 커지기 때문에 ‘변화가 거의 없는데 지루하지 않은 이유’를 찾기 좋은 곡입니다.',
+  '23':'드뷔시는 시인 말라르메의 시에서 영감을 얻어 이 곡을 썼습니다. 시작의 플루트 선율은 규칙적인 박자를 또렷하게 보여 주기보다, 꿈에서 막 깨어난 듯 자유롭게 떠다니며 인상주의 음악의 색채를 들려줍니다.',
+  '24':'홀스트는 점성술에서 받은 인상을 바탕으로 《행성》을 만들었고, 이 곡의 제목도 ‘즐거움을 가져오는 자 목성’입니다. 중간의 넓은 선율은 후에 영국의 애국가 〈I Vow to Thee, My Country〉에 쓰여 더 익숙하게 들릴 수 있습니다.',
+  '25':'프로코피예프는 어린이에게 관현악기를 친근하게 소개하려고 《피터와 늑대》를 만들었습니다. 피터는 현악기, 새는 플루트, 늑대는 호른처럼 인물마다 악기를 정해 두어, 이야기와 소리를 함께 기억하게 합니다.',
+  '26':'브리튼은 영국 교육부의 의뢰로 이 작품을 썼습니다. 퍼셀의 주제를 악기군별로 변주해 들려준 뒤 마지막에 모두가 푸가로 합류하므로, 오케스트라를 ‘한 악기씩 만나고 마지막에 함께 듣는’ 책처럼 따라갈 수 있습니다.',
+  '27':'《메시아》는 오페라가 아니라 성경 이야기를 콘서트 형식으로 들려주는 오라토리오입니다. 1742년 아일랜드 더블린에서 처음 연주되었고, 〈할렐루야〉는 뒤이어 관객이 함께 일어서는 관습으로도 유명해졌습니다.',
+  '28':'‘터키 행진곡’은 오스만 제국의 예니체리 군악대가 유럽에서 유행하던 시기의 상상력을 담았습니다. 피아노 한 대로 북과 심벌즈가 섞인 행진의 느낌을 어떻게 만드는지, 왼손 반주와 강한 악센트를 들어 보세요.',
+  '29':'스메타나는 체코의 역사와 풍경을 음악으로 그린 연작 《나의 조국》 가운데 하나로 〈몰다우〉를 썼습니다. 두 샘물이 만나는 작은 물길에서 출발해 큰 강으로 흐르는 장면을 제목 없이도 상상하게 만드는 표제 음악입니다.',
+  '30':'〈사브르 댄스〉는 발레 《가야네》의 한 장면을 위한 음악입니다. 1942년 초연 뒤 빠른 리듬과 강한 악센트가 큰 인기를 얻어, 서커스·방송·대중문화에서 ‘숨 가쁘게 바쁜 장면’의 음악처럼 자주 쓰이게 되었습니다.'
+};
+const paired=(ko,foreign)=>`${ko} (${foreign})`;
+const termMaps={
+  period:{'바로크':paired('바로크','Baroque'),'고전':paired('고전','Classical'),'낭만':paired('낭만','Romantic'),'20세기':paired('20세기','20th Century')},
+  form:{'협주곡':paired('협주곡','concerto'),'관현악 모음곡':paired('관현악 모음곡','orchestral suite'),'합주 협주곡':paired('합주 협주곡','concerto grosso'),'캐논':paired('캐논','canon'),'교향곡':paired('교향곡','symphony'),'세레나데':paired('세레나데','serenade'),'변주곡':paired('변주곡','variations'),'서곡':paired('서곡','overture'),'예술가곡':paired('예술가곡','Lied / art song'),'녹턴':paired('녹턴','nocturne'),'무곡':paired('무곡','dance'),'발레 음악':paired('발레 음악','ballet music'),'모음곡':paired('모음곡','suite'),'교향시':paired('교향시','symphonic poem'),'음악 동화':paired('음악 동화','musical tale'),'변주곡과 푸가':paired('변주곡과 푸가','variations and fugue'),'랩소디':paired('랩소디','rhapsody'),'관현악 환상곡':paired('관현악 환상곡','orchestral fantasia'),'교향적 환상곡':paired('교향적 환상곡','symphonic fantasia'),'영화 음악':paired('영화 음악','film music')},
+  tempo:{'매우 빠르게':paired('매우 빠르게','Presto'),'빠르게':paired('빠르게','Allegro'),'조금 빠르게':paired('조금 빠르게','Allegretto'),'보통 빠르게':paired('보통 빠르기로','Moderato'),'조금 느리게':paired('조금 느리게','Andante / Andantino'),'느리게':paired('느리게','Adagio'),'매우 느리게':paired('매우 느리게','Largo'),'장엄하게':paired('장엄하게','Maestoso'),'느리게 시작해 빨라짐':'느리게에서 빠르게 (Lento → Allegro)','빠르기의 변화가 큼':paired('빠르기를 유연하게','tempo rubato'),'빠르기 변화':paired('부분마다 빠르기 변화','changing tempo')},
+  meter:{'4박자':paired('4박자','quadruple meter'),'3박자':paired('3박자','triple meter'),'2박자':paired('2박자','duple meter'),'6/4박자':paired('6/4박자','compound duple meter'),'6/8박자':paired('6/8박자','compound duple meter'),'9/8박자':paired('9/8박자','compound triple meter'),'12/8박자':paired('12/8박자','compound quadruple meter'),'자유로운 박자':paired('자유로운 박자','free meter'),'박자 변화':paired('부분마다 박자 변화','changing meter')},
+  concept:{'표제 음악':paired('표제 음악','program music'),'선율':paired('선율','melody'),'합주 협주곡':paired('합주 협주곡','concerto grosso'),'모음곡':paired('모음곡','suite'),'돌림노래 원리':paired('돌림노래 원리','canon'),'동기':paired('동기','motif'),'주제':paired('주제','theme'),'소나타 형식':paired('소나타 형식','sonata form'),'변주':paired('변주','variation'),'셈여림':paired('셈여림','dynamics'),'협주':paired('협주','concerto'),'서곡':paired('서곡','overture'),'실내악':paired('실내악','chamber music'),'예술가곡':paired('예술가곡','Lied / art song'),'루바토':paired('루바토','rubato'),'아고기크':paired('아고기크','agogics'),'왈츠':paired('왈츠','waltz'),'발레 음악':paired('발레 음악','ballet music'),'음색':paired('음색','timbre'),'민족주의 음악':paired('민족주의 음악','musical nationalism'),'크레셴도':paired('크레셴도','crescendo'),'인상주의':paired('인상주의','Impressionism'),'관현악법':paired('관현악법','orchestration'),'라이트모티프':paired('라이트모티프','Leitmotiv'),'푸가':paired('푸가','fugue'),'글리산도':paired('글리산도','glissando'),'환상곡':paired('환상곡','fantasia'),'오스티나토':paired('오스티나토','ostinato')}
+};
+const instrumentOriginal={'바이올린':'violin','현악 합주':'string ensemble','하프시코드':'harpsichord','금관악기':'brass instruments','관현악':'orchestra','합창과 관현악':'chorus & orchestra','피아노':'piano','트럼펫':'trumpet','피아노와 현악기':'piano & strings','성악과 피아노':'voice & piano','관현악과 하프':'orchestra & harp','오보에와 관현악':'oboe & orchestra','첼로와 두 대의 피아노':'cello & two pianos','피아노 네 손 원곡·관현악 편곡':'piano four hands original / orchestral arrangement','피아노 원곡·관현악 편곡':'piano original / orchestral arrangement','잉글리시 호른':'English horn','스네어드럼과 관현악':'snare drum & orchestra','플루트':'flute','관현악과 해설':'orchestra & narrator'};
+pieces.forEach((p,i)=>{
+  p.originalTitle=originalTitles[i];
+  p.year=workYears[p.no];
+  p.story=stories[p.no];
+  p.titleAnswer=paired(p.title,p.originalTitle);
+  p.composer=paired(p.composer,composerOriginal[p.composer]);
+  ['period','form','tempo','meter','concept'].forEach(key=>{p[key]=termMaps[key][p[key]]||p[key]});
+  p.lead=instrumentOriginal[p.lead]?paired(p.lead,instrumentOriginal[p.lead]):p.lead;
+});
+
+const levels=['입문','입문','입문','기본','기본','기본','기본','도전','도전','도전'];
+const templates=[
+  ['제시곡의 제목은 무엇일까요?','titleAnswer'],
+  ['제시곡의 작곡가는 누구일까요?','composer'],
+  ['제시곡이 속하는 시대는 언제일까요?','period'],
+  ['제시곡의 종류 또는 형식은 무엇일까요?','form'],
+  ['가장 두드러지게 들리는 악기 편성은 무엇일까요?','lead'],
+  ['박자를 느끼며 들었을 때 가장 알맞은 것은 무엇일까요?','meter'],
+  ['빠르기를 가장 알맞게 표현한 것은 무엇일까요?','tempo'],
+  ['소리로 느껴지는 전체 분위기와 가장 가까운 것은 무엇일까요?','mood'],
+  ['실제로 들리는 음악적 특징과 가장 가까운 것은 무엇일까요?','feature'],
+  ['감상한 소리와 연결되는 핵심 음악 개념은 무엇일까요?','concept']
+];
+const pickWrong=(piece,key,seed)=>{
+  const ranked=pieces.filter(other=>other!==piece&&other[key]!==piece[key]).sort((a,b)=>{
+    const score=item=>(item.era===piece.era?4:0)+(item.form===piece.form?2:0)+(item.lead===piece.lead?1:0);
+    return score(b)-score(a);
+  });
+  const pool=[...new Set(ranked.map(item=>item[key]))],start=seed%pool.length;
+  return [...pool.slice(start),...pool.slice(0,start)].slice(0,2);
+};
+const shuffle=(arr)=>arr.map(v=>({v,r:Math.random()})).sort((a,b)=>a.r-b.r).map(x=>x.v);
+const allQuestions=pieces.flatMap((p,pi)=>templates.map(([stem,key],ti)=>{
+  const answer=p[key], choices=shuffle([answer,...pickWrong(p,key,pi*11+ti)]);
+  return {id:`${p.no}-${ti+1}`,piece:p,level:levels[ti],stem,choices,correct:choices.indexOf(answer),answer,explain:`제시곡은 ${p.title} (${p.originalTitle}, ${p.year})입니다. ${answer}. ${p.note}`};
+}));
+
+const $=s=>document.querySelector(s);
+const playlist=$('#playlist');
+const eraInfo={
+  all:{title:'전체',period:'바로크~20세기',text:'시대별 감상곡 30개',names:'바흐 · 모차르트 · 베토벤 · 쇼팽 · 라벨'},
+  baroque:{title:'바로크',period:'약 1600–1750',text:'규칙적인 리듬, 장식적인 선율, 하프시코드와 대위법이 특징입니다.',names:'바흐 · 헨델 · 비발디'},
+  classical:{title:'고전',period:'약 1750–1820',text:'균형 잡힌 형식과 분명한 주제, 교향곡·협주곡이 발달했습니다.',names:'하이든 · 모차르트 · 베토벤'},
+  romantic:{title:'낭만',period:'약 1820–1900',text:'개인의 감정, 문학적 이야기, 풍부한 음색과 큰 셈여림 변화를 사용합니다.',names:'슈베르트 · 쇼팽 · 차이콥스키'},
+  modern:{title:'20세기',period:'1890년대~1945년',text:'전통적인 조성과 형식을 새롭게 바꾸며 인상주의, 강렬한 리듬, 다채로운 관현악법 등 여러 양식이 등장합니다.',names:'드뷔시 · 라벨 · 프로코피예프'}
+};
+function renderEraInfo(era){const info=eraInfo[era];$('#era-info').innerHTML=`<strong>${info.title}</strong><span>${info.period}</span><p>${info.text}</p><small>${info.names}</small>`}
+function renderPieces(filter='all'){
+  playlist.innerHTML=pieces.filter(p=>filter==='all'||p.era===filter).map(p=>`<article class="piece" data-no="${p.no}">
+    <div class="piece-top"><span class="era">${p.period}</span><span>${p.form}</span></div>
+    <h3>${p.title}</h3><p class="composer original-title">${p.originalTitle}</p><p class="composer">${p.composer} · ${p.year}</p>
+    <div class="piece-actions"><a class="listen" href="${p.url}" target="_blank" rel="noopener">▶ 감상곡 찾아 듣기</a><button class="detail-button" type="button" data-detail="${p.no}">＋ 자세한 해설</button></div>
+    <dl><div><dt>주요 악기</dt><dd>${p.lead}</dd></div><div><dt>빠르기·박자</dt><dd>${p.tempo} · ${p.meter}</dd></div></dl>
+    <p class="listen-point"><b>귀 기울일 곳</b>${p.feature}</p><p class="note"><b>${p.concept}</b> · ${p.note}</p>
+  </article>`).join('');
+}
+renderPieces();
+renderEraInfo('all');
+document.querySelectorAll('.filters button').forEach(b=>b.addEventListener('click',()=>{
+  $('.filters .active').classList.remove('active');b.classList.add('active');renderPieces(b.dataset.era);renderEraInfo(b.dataset.era);
+}));
+
+const eraGuide={
+  baroque:'바로크 시대에는 규칙적인 박자, 화려한 꾸밈, 여러 선율이 겹치는 짜임이 발달했습니다.',
+  classical:'고전 시대에는 균형 잡힌 형식과 분명한 주제, 대비가 중요한 표현 원리가 되었습니다.',
+  romantic:'낭만 시대에는 개인의 감정과 문학적 이야기, 풍부한 음색과 큰 셈여림 변화가 강조되었습니다.',
+  modern:'20세기 전반의 음악에서는 전통적인 조성과 형식을 새롭게 바꾸며 음색, 화성, 리듬, 관현악법을 다양하게 탐구했습니다.'
+};
+const detailDialog=$('#detail-dialog'),detailContent=$('#detail-content');
+function openDetail(piece){
+  detailContent.innerHTML=`<p class="dialog-era">${piece.period} · ${piece.form}</p>
+    <h2 id="detail-title">${piece.title}</h2><p class="dialog-original">${piece.originalTitle}</p><p class="dialog-composer">${piece.composer} · 작품 연도 ${piece.year}</p>
+    <section><h3>곡을 만나기 전에</h3><p>${eraGuide[piece.era]} 이 곡은 ${piece.note}라는 점에 주목하면 성격을 쉽게 이해할 수 있습니다.</p></section>
+    <section><h3>음악 속 핵심 장면</h3><p>${piece.feature}. ${piece.lead}의 음색이 이 장면을 어떻게 표현하는지 귀 기울여 보세요. 전체적인 분위기는 ‘${piece.mood}’에 가깝습니다.</p></section>
+    <section class="work-story"><h3>작품에 얽힌 이야기</h3><p>${piece.story}</p></section>
+    <section><h3>이렇게 세 번 들어 보세요</h3><ol><li>첫 번째에는 제목만 보고 자유롭게 장면과 느낌을 떠올립니다.</li><li>두 번째에는 ${piece.lead}와 ${piece.meter}를 중심으로 듣습니다.</li><li>세 번째에는 ${piece.concept}이 음악에서 어떻게 나타나는지 찾아 말로 설명합니다.</li></ol></section>
+    <section class="detail-summary"><h3>한 줄 정리</h3><p><b>${piece.title}</b>은(는) ${piece.feature}을(를) 중심으로, ${piece.mood} 들려주는 ${piece.form}입니다.</p></section>
+    <div class="dialog-actions"><a href="${piece.url}" target="_blank" rel="noopener">▶ 해설을 떠올리며 감상하기</a><button type="button" data-close-detail>닫기</button></div>`;
+  detailDialog.showModal();
+}
+playlist.addEventListener('click',event=>{
+  const button=event.target.closest('[data-detail]');if(!button)return;
+  openDetail(pieces.find(piece=>piece.no===button.dataset.detail));
+});
+detailDialog.addEventListener('click',event=>{
+  if(event.target===detailDialog||event.target.closest('.dialog-close')||event.target.closest('[data-close-detail]'))detailDialog.close();
+});
+
+const storeKey='classics-bank-progress-v1';
+let progress=JSON.parse(localStorage.getItem(storeKey)||'{"solved":0,"correct":0,"wrong":[]}');
+let current=[];
+let currentWrongIds=new Set();
+function save(){localStorage.setItem(storeKey,JSON.stringify(progress));renderStats()}
+function renderStats(){
+  $('#solved-count').textContent=progress.solved;
+  $('#accuracy').textContent=progress.solved?`${Math.round(progress.correct/progress.solved*100)}%`:'—';
+  $('#wrong-count').textContent=progress.wrong.length;
+}
+renderStats();
+function makeQuiz(source){
+  current=source;currentWrongIds=new Set();$('#quiz-empty').hidden=true;$('.quiz-actions').hidden=false;$('#result').innerHTML='';
+  $('#quiz-box').innerHTML=current.map((q,i)=>`<fieldset class="question" data-id="${q.id}"><legend><span>${q.level}</span>${i+1}. ${q.stem}</legend><a class="quiz-listen" href="${q.piece.url}" target="_blank" rel="noopener">▶ 제시곡 먼저 듣기 <small>제목을 보지 말고 귀로 도전!</small></a>${q.choices.map((a,j)=>`<label><input type="radio" name="q${i}" value="${j}"><i>${j+1}</i>${a}</label>`).join('')}<p class="feedback"></p></fieldset>`).join('');
+}
+function startRandom(){
+  const era=$('#quiz-era').value,level=$('#quiz-level').value,count=+$('#quiz-count').value;
+  const pool=allQuestions.filter(q=>(era==='all'||q.piece.era===era)&&(level==='all'||q.level===level));
+  makeQuiz(shuffle(pool).slice(0,Math.min(count,pool.length)));
+}
+$('#new-quiz').addEventListener('click',startRandom);
+$('#next-quiz').addEventListener('click',startRandom);
+$('#retry-wrong').addEventListener('click',()=>{
+  const pool=allQuestions.filter(q=>progress.wrong.includes(q.id));
+  if(!pool.length){$('#result').innerHTML='<p class="result-card">아직 복습할 오답이 없어요. 먼저 새 문제를 풀어 보세요.</p>';return}
+  makeQuiz(shuffle(pool).slice(0,20));
+});
+$('#check-answer').addEventListener('click',()=>{
+  let score=0,answered=0;
+  let needsRetry=false;
+  current.forEach((q,i)=>{
+    const field=$(`fieldset[data-id="${q.id}"]`),checked=field.querySelector(`input[name="q${i}"]:checked`);
+    const ok=checked&&+checked.value===q.correct;
+    if(checked&&!ok){currentWrongIds.add(q.id);const label=checked.closest('label');label?.classList.add('answer-wrong');checked.disabled=true;checked.checked=false;field.querySelector('.feedback').textContent='다시 생각하고 다른 답을 골라보세요.';needsRetry=true;return}
+    field.querySelectorAll('label').forEach((label,j)=>{label.classList.toggle('answer-correct',Boolean(ok)&&j===q.correct)});
+    if(checked)answered++;if(ok&&!currentWrongIds.has(q.id))score++;else if(!ok)needsRetry=true;
+    field.querySelector('.feedback').textContent=ok?`정답! ${q.explain}`:'답을 고른 뒤 다시 확인해 주세요.';
+    if(checked){progress.solved++;if(ok&&!currentWrongIds.has(q.id)){progress.correct++;progress.wrong=progress.wrong.filter(id=>id!==q.id)}else if(!progress.wrong.includes(q.id))progress.wrong.push(q.id)}
+  });
+  if(needsRetry){$('#result').innerHTML='<div class="result-card"><span>아직 정답을 찾지 못한 문제가 있어요. 다시 골라보세요.</span></div>';return}
+  save();
+  $('#result').innerHTML=`<div class="result-card"><b>${score} / ${current.length}</b><span>${answered<current.length?`${current.length-answered}문제는 답하지 않았어요. `:''}${score===current.length?'완벽해요! 이번에는 다른 시대에 도전해 보세요.':'틀린 문제는 오답 다시 풀기에 저장했어요.'}</span></div>`;
+  $('#result').scrollIntoView({behavior:'smooth',block:'center'});
+});

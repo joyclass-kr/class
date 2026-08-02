@@ -1,0 +1,79 @@
+body {
+  background:
+    linear-gradient(#26170f80, #2a170dcc),
+    url("assets/images/background.webp") center top / cover fixed no-repeat,
+    var(--ground);
+}
+
+header {
+  background: linear-gradient(90deg, #1b1915dc 0%, #2c2115a3 52%, #2f1c1059 100%);
+  padding-top: 16px;
+  padding-bottom: 22px;
+}
+
+header h1 {
+  margin-top: 20px;
+  font-size: clamp(2.35rem, 4.4vw, 3.5rem);
+}
+
+main {
+  background: #f3efe5ed;
+  box-shadow: 0 0 45px #1d100a70;
+  padding-top: 24px;
+}
+
+.filters {
+  margin-top: 0;
+}
+
+@media (max-height: 900px) and (min-width: 651px) {
+  header {
+    padding-top: 14px;
+    padding-bottom: 20px;
+  }
+
+  header h1 {
+    margin-top: 16px;
+    font-size: clamp(2.35rem, 4.2vw, 3.35rem);
+  }
+
+  main {
+    padding-top: 20px;
+  }
+
+  .filters {
+    margin-top: 0;
+  }
+}
+
+@media (max-width: 850px) {
+  nav a,
+  button {
+    min-height: 44px;
+  }
+
+  nav a {
+    display: inline-flex;
+    align-items: center;
+  }
+}
+
+@media (max-width: 650px) {
+  body {
+    background-attachment: scroll;
+  }
+
+  header {
+    padding-top: 12px;
+    padding-bottom: 18px;
+  }
+
+  header h1 {
+    margin-top: 12px;
+    font-size: 2.35rem;
+  }
+
+  main {
+    padding-top: 18px;
+  }
+}
