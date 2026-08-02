@@ -51,7 +51,7 @@
     .topline {
       position: absolute;
       top: 10px;
-      right: clamp(20px, 4vw, 54px);
+      right: calc(clamp(20px, 4vw, 54px) + 330px);
       display: flex;
       align-items: center;
       justify-content: flex-end;
@@ -70,7 +70,7 @@
 
     .hanja-head {
       display: grid;
-      grid-template-columns: auto 1fr;
+      grid-template-columns: auto 1fr auto;
       align-items: center;
       gap: clamp(20px, 3vw, 34px);
       padding: 6px 0 13px;
@@ -100,6 +100,92 @@
     }
 
     .hanja-four .pair-gap { margin-left: clamp(7px, 1.3vw, 15px); }
+
+    .stroke-demo {
+      display: grid;
+      grid-template-columns: 104px 188px;
+      align-items: center;
+      gap: 10px;
+      padding: 6px;
+      border: 1px solid var(--line);
+      border-radius: 8px;
+      background: #fffdf8;
+    }
+
+    .stroke-stage {
+      display: block;
+      width: 104px;
+      height: 104px;
+      border: 1px solid #ddd8ce;
+      background: #fff;
+    }
+
+    .stroke-guide {
+      fill: none;
+      stroke: #dedbd3;
+      stroke-width: 1;
+      stroke-dasharray: 4 4;
+    }
+
+    .stroke-set[hidden] { display: none; }
+
+    .stroke-path {
+      fill: none;
+      stroke: var(--ink);
+      stroke-width: 10;
+      stroke-linecap: round;
+      stroke-linejoin: round;
+    }
+
+    .stroke-controls { display: grid; gap: 6px; }
+
+    .stroke-character-switch {
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      gap: 4px;
+    }
+
+    .stroke-character,
+    .stroke-button {
+      min-height: 44px;
+      border: 1px solid #9aa5ad;
+      border-radius: 5px;
+      background: #fff;
+      color: var(--ink);
+      font: 800 14px/1.15 system-ui, sans-serif;
+      cursor: pointer;
+    }
+
+    .stroke-character {
+      min-width: 44px;
+      padding: 4px;
+      font-family: "KleeHanja", serif;
+      font-size: 22px;
+    }
+
+    .stroke-character[aria-pressed="true"] {
+      border-color: var(--blue);
+      background: var(--blue-soft);
+      color: var(--blue);
+    }
+
+    .stroke-status {
+      margin: 0;
+      color: var(--blue);
+      font: 800 13px/1.2 system-ui, sans-serif;
+      text-align: center;
+    }
+
+    .stroke-button { padding: 7px 8px; }
+
+    .stroke-character:focus-visible,
+    .stroke-button:focus-visible {
+      outline: 3px solid rgba(45, 99, 140, .28);
+      outline-offset: 2px;
+    }
+
+    .stroke-character:disabled,
+    .stroke-button:disabled { opacity: .55; cursor: default; }
 
     .reading {
       margin: 0 0 5px;
@@ -347,7 +433,8 @@
     @media (max-width: 800px) {
       .page { padding-inline: 18px; }
       .topline { position: static; min-height: 32px; }
-      .hanja-head { gap: 20px; }
+      .hanja-head { grid-template-columns: auto 1fr; gap: 8px 20px; }
+      .stroke-demo { grid-column: 2; }
       .word-row { grid-template-columns: 1fr; gap: 3px; }
       .meaning-row { grid-template-columns: 1fr; gap: 6px; }
       .quiz-grid { grid-template-columns: 1fr; }
@@ -371,6 +458,46 @@
         <p class="reading">상 · 하 / 좌 · 우</p>
         <p class="core-meaning">위 · 아래 / 왼쪽 · 오른쪽</p>
       </div>
+      <section class="stroke-demo" aria-label="上·下·左·右 획순">
+        <svg class="stroke-stage" viewBox="0 0 160 160" role="img" aria-label="선택한 한자의 획순">
+          <path class="stroke-guide" d="M80 0V160M0 80H160M0 0L160 160M160 0L0 160" />
+          <g class="stroke-set" data-character="上">
+            <path class="stroke-path" d="M80 24 C80 54 80 91 80 127" />
+            <path class="stroke-path" d="M87 66 C100 65 112 63 123 64" />
+            <path class="stroke-path" d="M23 132 C57 130 103 128 138 130" />
+          </g>
+          <g class="stroke-set" data-character="下" hidden>
+            <path class="stroke-path" d="M24 34 C58 32 102 28 137 30" />
+            <path class="stroke-path" d="M80 35 C81 65 81 101 81 135" />
+            <path class="stroke-path" d="M99 55 C110 61 121 73 127 82" />
+          </g>
+          <g class="stroke-set" data-character="左" hidden>
+            <path class="stroke-path" d="M27 60 C57 56 94 50 128 51" />
+            <path class="stroke-path" d="M85 23 C80 49 67 84 39 116 C32 124 25 131 18 136" />
+            <path class="stroke-path" d="M65 92 C81 90 101 87 118 87" />
+            <path class="stroke-path" d="M84 94 C84 107 84 119 84 130" />
+            <path class="stroke-path" d="M48 134 C74 132 104 129 133 130" />
+          </g>
+          <g class="stroke-set" data-character="右" hidden>
+            <path class="stroke-path" d="M83 28 C77 50 65 75 45 96" />
+            <path class="stroke-path" d="M23 62 C58 59 102 53 136 54" />
+            <path class="stroke-path" d="M60 96 C61 108 63 123 64 136" />
+            <path class="stroke-path" d="M62 97 C82 94 103 91 120 91 C119 104 116 119 113 132" />
+            <path class="stroke-path" d="M65 135 C81 134 99 132 115 132" />
+          </g>
+        </svg>
+        <div class="stroke-controls">
+          <div class="stroke-character-switch" aria-label="획순을 볼 글자">
+            <button class="stroke-character" type="button" data-character="上" aria-pressed="true">上</button>
+            <button class="stroke-character" type="button" data-character="下" aria-pressed="false">下</button>
+            <button class="stroke-character" type="button" data-character="左" aria-pressed="false">左</button>
+            <button class="stroke-character" type="button" data-character="右" aria-pressed="false">右</button>
+          </div>
+          <p id="strokeStatus" class="stroke-status" aria-live="polite">上 · 준비</p>
+          <button id="playStrokes" class="stroke-button" type="button">▶ 획순 보기</button>
+          <button id="stepStroke" class="stroke-button" type="button">한 획씩</button>
+        </div>
+      </section>
     </header>
 
     <section id="lessonView" class="view" aria-label="뜻과 예시">
@@ -463,6 +590,98 @@
       const result = document.getElementById('result');
       const nextLesson = document.getElementById('nextLesson');
       const questions = Array.from(document.querySelectorAll('.question'));
+      const strokeSets = Array.from(document.querySelectorAll('.stroke-set'));
+      const characterButtons = Array.from(document.querySelectorAll('.stroke-character'));
+      const strokeStatus = document.getElementById('strokeStatus');
+      const playStrokes = document.getElementById('playStrokes');
+      const stepStroke = document.getElementById('stepStroke');
+      const reducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+      let currentCharacter = '上';
+      let currentPaths = [];
+      let visibleStrokes = 0;
+      let strokePlaying = false;
+
+      strokeSets.forEach((set) => {
+        set.querySelectorAll('.stroke-path').forEach((path) => {
+          const length = path.getTotalLength();
+          path.style.strokeDasharray = length;
+          path.style.strokeDashoffset = length;
+        });
+      });
+
+      function resetStrokes() {
+        currentPaths.forEach((path) => {
+          path.getAnimations().forEach((animation) => animation.cancel());
+          path.style.strokeDashoffset = path.getTotalLength();
+        });
+        visibleStrokes = 0;
+        strokeStatus.textContent = `${currentCharacter} · 준비`;
+      }
+
+      function selectCharacter(character) {
+        currentCharacter = character;
+        strokeSets.forEach((set) => {
+          set.toggleAttribute('hidden', set.dataset.character !== character);
+        });
+        characterButtons.forEach((button) => {
+          button.setAttribute('aria-pressed', String(button.dataset.character === character));
+        });
+        const currentSet = strokeSets.find((set) => set.dataset.character === character);
+        currentPaths = Array.from(currentSet.querySelectorAll('.stroke-path'));
+        resetStrokes();
+      }
+
+      async function revealStroke(path) {
+        const length = path.getTotalLength();
+        if (reducedMotion) {
+          path.style.strokeDashoffset = 0;
+          return;
+        }
+        const animation = path.animate(
+          [{ strokeDashoffset: length }, { strokeDashoffset: 0 }],
+          { duration: 900, easing: 'ease-in-out', fill: 'forwards' }
+        );
+        await animation.finished;
+        path.style.strokeDashoffset = 0;
+        animation.cancel();
+      }
+
+      characterButtons.forEach((button) => {
+        button.addEventListener('click', () => {
+          if (!strokePlaying) selectCharacter(button.dataset.character);
+        });
+      });
+
+      playStrokes.addEventListener('click', async () => {
+        if (strokePlaying) return;
+        strokePlaying = true;
+        playStrokes.disabled = true;
+        stepStroke.disabled = true;
+        characterButtons.forEach((button) => { button.disabled = true; });
+        resetStrokes();
+        for (let index = 0; index < currentPaths.length; index += 1) {
+          strokeStatus.textContent = `${currentCharacter} · ${index + 1}/${currentPaths.length}획`;
+          await revealStroke(currentPaths[index]);
+        }
+        visibleStrokes = currentPaths.length;
+        strokeStatus.textContent = `${currentCharacter} · 완성`;
+        playStrokes.disabled = false;
+        stepStroke.disabled = false;
+        characterButtons.forEach((button) => { button.disabled = false; });
+        strokePlaying = false;
+      });
+
+      stepStroke.addEventListener('click', () => {
+        if (strokePlaying) return;
+        if (visibleStrokes >= currentPaths.length) resetStrokes();
+        currentPaths[visibleStrokes].style.strokeDashoffset = 0;
+        visibleStrokes += 1;
+        strokeStatus.textContent = visibleStrokes === currentPaths.length
+          ? `${currentCharacter} · 완성`
+          : `${currentCharacter} · ${visibleStrokes}/${currentPaths.length}획`;
+      });
+
+      selectCharacter('上');
 
       function show(view) {
         const quiz = view === 'quiz';
