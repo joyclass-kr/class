@@ -144,14 +144,6 @@ pieces.forEach((p,i)=>{
 });
 
 const levels=['입문','입문','입문','기본','기본','기본','기본','도전','도전','도전'];
-const conceptSets=[
-  {stem:'이 성악곡에서 가장 두드러지는 발성·아티큘레이션 기법은 무엇일까요?',values:['콜로라투라','레가토','스타카토']},
-  {stem:'이 곡의 소리에서 가장 두드러지는 음악 요소는 무엇일까요?',values:['선율','동기','주제','셈여림','음색','관현악법','합창']},
-  {stem:'이 곡과 연결되는 형식·장르 개념은 무엇일까요?',values:['합주 협주곡','모음곡','소나타 형식','협주','서곡','실내악','예술가곡','왈츠','무곡','발레 음악','푸가','론도']},
-  {stem:'이 곡에서 가장 두드러지는 작곡·연주 기법은 무엇일까요?',values:['돌림노래 원리','변주','루바토','아고기크','크레셴도','라이트모티프','글리산도','오스티나토']},
-  {stem:'이 곡의 표현 방식과 가장 가까운 음악사적 관점은 무엇일까요?',values:['표제 음악','민족주의 음악','인상주의']}
-].map(group=>({...group,values:group.values.map(value=>termMaps.concept[value]||value)}));
-const conceptSetFor=answer=>conceptSets.find(group=>group.values.includes(answer));
 const templates=[
   ['제시곡의 제목은 무엇일까요?','titleAnswer'],
   ['제시곡의 작곡가는 누구일까요?','composer'],
@@ -162,13 +154,9 @@ const templates=[
   ['빠르기를 가장 알맞게 표현한 것은 무엇일까요?','tempo'],
   ['소리로 느껴지는 전체 분위기와 가장 가까운 것은 무엇일까요?','mood'],
   ['실제로 들리는 음악적 특징과 가장 가까운 것은 무엇일까요?','feature'],
-  ['감상한 소리와 연결되는 핵심 음악 개념은 무엇일까요?','concept']
+  ['이 곡의 감상 포인트로 가장 알맞은 설명은 무엇일까요?','note']
 ];
 const pickWrong=(piece,key,seed)=>{
-  if(key==='concept'){
-    const pool=conceptSetFor(piece.concept).values.filter(value=>value!==piece.concept),start=seed%pool.length;
-    return [...pool.slice(start),...pool.slice(0,start)].slice(0,2);
-  }
   const ranked=pieces.filter(other=>other!==piece&&other[key]!==piece[key]).sort((a,b)=>{
     const score=item=>(item.era===piece.era?4:0)+(item.form===piece.form?2:0)+(item.lead===piece.lead?1:0);
     return score(b)-score(a);
@@ -177,8 +165,9 @@ const pickWrong=(piece,key,seed)=>{
   return [...pool.slice(start),...pool.slice(0,start)].slice(0,2);
 };
 const shuffle=(arr)=>arr.map(v=>({v,r:Math.random()})).sort((a,b)=>a.r-b.r).map(x=>x.v);
+const teachingNotes={'36-10':'매우 높은 음을 빠르게 오르내리는 이런 성악 기법을 전문 용어로 콜로라투라(coloratura)라고 합니다.'};
 const allQuestions=pieces.flatMap((p,pi)=>templates.map(([stem,key],ti)=>{
-  const answer=p[key], choices=shuffle([answer,...pickWrong(p,key,pi*11+ti)]),questionStem=key==='concept'?conceptSetFor(answer).stem:stem;
-  return {id:`${p.no}-${ti+1}`,piece:p,level:levels[ti],stem:questionStem,choices,correct:choices.indexOf(answer),answer,explain:`제시곡은 ${p.title} (${p.originalTitle}, ${p.year})입니다. ${answer}. ${p.note}`};
+  const id=`${p.no}-${ti+1}`,answer=p[key],choices=shuffle([answer,...pickWrong(p,key,pi*11+ti)]),extra=teachingNotes[id]||(key==='note'?'':p.note);
+  return {id,piece:p,level:levels[ti],stem,choices,correct:choices.indexOf(answer),answer,explain:`제시곡은 ${p.title} (${p.originalTitle}, ${p.year})입니다. ${answer}.${extra?` ${extra}`:''}`};
 }));
 window.CLASSICAL_DATA={pieces,allQuestions};
