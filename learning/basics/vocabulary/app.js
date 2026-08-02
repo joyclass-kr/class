@@ -10,10 +10,24 @@
     const SPELLING_WRONG_KEY = "englishVocabularySpellingWrongV1";
     const GAME_TIME_LIMIT = 15;
     const STAGES = [
-        { code: "elementary", name: "초급", range: "초등학교 권장", description: "800개 · LEVEL 01-04", levels: [1, 2, 3, 4] },
-        { code: "middle_common", name: "중급", range: "중학교·고등학교 공통과목 권장", description: "1,200개 · LEVEL 05-10", levels: [5, 6, 7, 8, 9, 10] },
-        { code: "advanced", name: "고급", range: "그 외 과목 권장", description: "1,000개 · LEVEL 11-15", levels: [11, 12, 13, 14, 15] },
+        { code: "elementary", name: "Beginner", range: "Good for elementary school", description: "800 words · LEVEL 01-04", levels: [1, 2, 3, 4] },
+        { code: "middle_common", name: "Intermediate", range: "Good for middle and high school", description: "1,200 words · LEVEL 05-10", levels: [5, 6, 7, 8, 9, 10] },
+        { code: "advanced", name: "Advanced", range: "Extra challenge", description: "1,000 words · LEVEL 11-15", levels: [11, 12, 13, 14, 15] },
     ];
+    const STAGE_NAMES = Object.fromEntries(STAGES.map((stage) => [stage.code, stage.name]));
+    const POS_NAMES = {
+        "명사": "noun", "동사": "verb", "형용사": "adjective", "부사": "adverb",
+        "대명사": "pronoun", "전치사": "preposition", "접속사": "conjunction",
+        "감탄사": "exclamation", "관사": "article", "한정사": "determiner", "수사": "number",
+    };
+    const RELATED_TYPE_NAMES = {
+        "유의어": "similar", "반의어": "opposite", "관련어": "related", "파생어": "word family",
+        "다른 표기": "other spelling", "변화형": "word form",
+    };
+
+    function levelName(level) {
+        return `Level ${level}`;
+    }
 
     const core = window.VocabularyCore;
     const elements = Object.fromEntries([
@@ -143,12 +157,12 @@
         const button = document.createElement("button");
         button.type = "button";
         button.className = `level-button ${core.stageClass(words[0].stageCode)}`;
-        button.setAttribute("aria-label", `${words[0].levelLabel}, ${summary.known}개 외움`);
+        button.setAttribute("aria-label", `${levelName(level)}, ${summary.known} words learned`);
         button.innerHTML = `
             <span class="level-number">LEVEL ${String(level).padStart(2, "0")}</span>
-            <strong class="level-name">${words[0].levelLabel}</strong>
+            <strong class="level-name">${levelName(level)}</strong>
             <span class="level-progress" aria-hidden="true"><span style="width:${percent}%"></span></span>
-            <span class="level-count">외움 ${summary.known} · 모름 ${summary.unknown}</span>
+            <span class="level-count">Know ${summary.known} · Review ${summary.unknown}</span>
         `;
         button.addEventListener("click", () => openLevel(level));
         return button;
@@ -179,7 +193,7 @@
         const unknownOnly = Boolean(options.unknownOnly);
         const unknownWords = baseWords.filter((word) => state.progress[String(word.id)]?.status === "unknown");
         if (unknownOnly && !unknownWords.length) {
-            showToast("이 레벨에는 모르는 단어가 아직 없어요.");
+            showToast("No words are marked ‘Not yet’ in this level.");
             return;
         }
         state.currentLevel = level;
@@ -204,7 +218,7 @@
         elements.flashcard.setAttribute("aria-pressed", String(state.revealed));
         elements.flashcard.setAttribute(
             "aria-label",
-            state.revealed ? `${word.word}, 뜻과 예문이 표시됨` : `${word.word}, 눌러서 뜻과 예문 보기`,
+            state.revealed ? `${word.word}, meaning and example shown` : `${word.word}, tap to see the meaning and example`,
         );
         elements.meaningText.setAttribute("aria-hidden", String(!state.revealed));
         elements.exampleBlock.setAttribute("aria-hidden", String(!state.revealed));
@@ -214,7 +228,7 @@
     }
 
     function updateImagePreference() {
-        elements.imageToggleButton.textContent = state.showImages ? "그림 켜짐" : "그림 꺼짐";
+        elements.imageToggleButton.textContent = state.showImages ? "Pictures on" : "Pictures off";
         elements.imageToggleButton.setAttribute("aria-pressed", String(state.showImages));
     }
 
@@ -237,13 +251,13 @@
         const summary = core.summarizeWords(baseWords, state.progress);
         const completion = Math.round(((state.currentIndex + 1) / state.currentWords.length) * 100);
 
-        elements.studyStage.textContent = word.stage;
-        elements.studyTitle.textContent = state.unknownOnly ? `${word.levelLabel} · 모르는 단어` : word.levelLabel;
+        elements.studyStage.textContent = STAGE_NAMES[word.stageCode] || word.stage;
+        elements.studyTitle.textContent = state.unknownOnly ? `${levelName(word.globalLevel)} · Review` : levelName(word.globalLevel);
         elements.cardPosition.textContent = `${state.currentIndex + 1} / ${state.currentWords.length}`;
-        elements.levelStatus.textContent = `외움 ${summary.known} · 모름 ${summary.unknown}`;
+        elements.levelStatus.textContent = `Know ${summary.known} · Review ${summary.unknown}`;
         elements.sessionBar.style.width = `${completion}%`;
         elements.wordText.textContent = word.word;
-        elements.posText.textContent = word.pos.join(" · ");
+        elements.posText.textContent = word.pos.map((pos) => POS_NAMES[pos] || pos).join(" · ");
         elements.meaningText.textContent = word.meanings.join(" · ");
         renderWordImage(word);
         elements.exampleBlock.hidden = !word.example;
@@ -251,8 +265,8 @@
         elements.exampleText.textContent = word.example?.en || "";
         elements.exampleKo.textContent = word.example?.ko || "";
         const related = word.relatedWords || [
-            ...word.alternate.map((relatedWord) => ({ word: relatedWord, type: "다른 표기" })),
-            ...word.relatedForms.map((relatedWord) => ({ word: relatedWord, type: "변화형" })),
+            ...word.alternate.map((relatedWord) => ({ word: relatedWord, type: "other spelling" })),
+            ...word.relatedForms.map((relatedWord) => ({ word: relatedWord, type: "word form" })),
         ];
         elements.relatedWords.replaceChildren(...related.map((relatedWord) => {
             const chip = document.createElement("span");
@@ -260,17 +274,17 @@
             const label = document.createElement("span");
             label.textContent = relatedWord.word;
             const type = document.createElement("small");
-            type.textContent = relatedWord.type;
+            type.textContent = RELATED_TYPE_NAMES[relatedWord.type] || relatedWord.type;
             chip.append(label, type);
             return chip;
         }));
         elements.relatedBlock.hidden = related.length === 0;
-        elements.cardBadge.textContent = status === "known" ? "외운 단어" : status === "unknown" ? "다시 보기" : "새 단어";
+        elements.cardBadge.textContent = status === "known" ? "Learned" : status === "unknown" ? "Review" : "New";
         elements.cardBadge.className = `card-badge ${status === "unseen" ? "" : status}`.trim();
         updateRevealState();
         elements.previousButton.disabled = state.currentIndex === 0;
         elements.nextButton.disabled = state.currentIndex === state.currentWords.length - 1;
-        elements.studyMessage.textContent = state.unknownOnly ? "모른다고 표시한 단어만 복습 중입니다." : "카드를 누르거나 Space 키로 뜻·예문·연관 단어를 확인하세요.";
+        elements.studyMessage.textContent = state.unknownOnly ? "Reviewing words marked ‘Not yet’." : "Tap the card or press Space to see more.";
     }
 
     function toggleMeaning() {
@@ -296,13 +310,13 @@
             moveCard(1);
         } else {
             renderStudyCard();
-            showToast(status === "known" ? "마지막 단어까지 외웠어요!" : "마지막 단어까지 확인했어요.");
+            showToast(status === "known" ? "You learned the last word!" : "You checked the last word.");
         }
     }
 
     function speakText(text, rate = 0.85) {
         if (!text || !("speechSynthesis" in window)) {
-            showToast("이 브라우저에서는 발음 듣기를 지원하지 않아요.");
+            showToast("Sound is not available in this browser.");
             return;
         }
         window.speechSynthesis.cancel();
@@ -325,7 +339,7 @@
         state.currentIndex = 0;
         state.revealed = false;
         renderStudyCard();
-        showToast("단어 순서를 섞었어요.");
+        showToast("Words shuffled!");
     }
 
     function backToLevels() {
@@ -362,8 +376,8 @@
                 if (selected) { selected.classList.add("incorrect"); selected.disabled = true; }
             }
             elements.gameFeedback.textContent = timedOut
-                ? "시간이 지났어요. 다시 살펴보고 정답을 골라보세요."
-                : "다시 생각하고 다른 그림을 골라보세요.";
+                ? "Time is up. Look again and pick the right picture."
+                : "Try again. Pick a different picture.";
             elements.gameFeedback.className = "game-feedback incorrect";
             if (timedOut) startGameTimer();
             return;
@@ -383,13 +397,13 @@
         });
         const meaning = state.gameTarget.meanings[0] || "";
         if (isCorrect) {
-            elements.gameFeedback.textContent = `정답 · ${state.gameTarget.word} — ${meaning}`;
+            elements.gameFeedback.textContent = `Correct! ${state.gameTarget.word} — ${meaning}`;
             elements.gameFeedback.className = "game-feedback correct";
         }
         elements.gameNextButton.disabled = false;
         elements.gameNextButton.textContent = state.gameQuestionNumber >= state.gameRoundLength
-            ? "결과 보기"
-            : "다음 문제";
+            ? "See results"
+            : "Next";
         updateGameStats();
     }
 
@@ -406,16 +420,16 @@
 
     function renderGameQuestion() {
         elements.gameWord.textContent = state.gameTarget.word;
-        elements.gameFeedback.textContent = "1~4번 그림을 선택하세요.";
+        elements.gameFeedback.textContent = "Choose picture 1, 2, 3, or 4.";
         elements.gameFeedback.className = "game-feedback";
         elements.gameNextButton.disabled = true;
-        elements.gameNextButton.textContent = "다음 문제";
+        elements.gameNextButton.textContent = "Next";
         elements.gameChoices.replaceChildren(...state.gameChoices.map((word, index) => {
             const button = document.createElement("button");
             button.type = "button";
             button.className = "game-choice";
             button.dataset.wordId = String(word.id);
-            button.setAttribute("aria-label", `${index + 1}번 그림`);
+            button.setAttribute("aria-label", `Picture ${index + 1}`);
             const image = document.createElement("img");
             image.src = `${IMAGE_BASE_URL}${state.imageMap.get(String(word.id)).file}`;
             image.alt = "";
@@ -475,7 +489,7 @@
             }));
         } else {
             const message = document.createElement("span");
-            message.textContent = "틀린 단어가 없습니다.";
+            message.textContent = "Great job! No missed words.";
             elements.gameWrongList.replaceChildren(message);
         }
         elements.gameRetryWrongButton.hidden = state.gameWrongWords.length === 0;
@@ -555,8 +569,8 @@
 
     function setSpellingReviewMode(isReview) {
         state.spellingReviewMode = isReview;
-        elements.spellingModeLabel.textContent = isReview ? "저장된 철자 오답" : "초급 철자 게임";
-        elements.spellingTitle.textContent = isReview ? "누적 오답 다시 풀기" : "그림 보고 철자 쓰기";
+        elements.spellingModeLabel.textContent = isReview ? "Saved words to try again" : "Beginner spelling";
+        elements.spellingTitle.textContent = isReview ? "Try Missed Words" : "Look and Spell";
         if (isReview) {
             elements.spellingLevelButtons.querySelectorAll("[data-level]").forEach((button) => {
                 button.setAttribute("aria-pressed", "false");
@@ -577,12 +591,12 @@
         elements.spellingInput.disabled = false;
         elements.spellingInput.className = "spelling-input";
         elements.spellingHint.textContent = core.spellingHint(state.spellingTarget.word, false);
-        elements.spellingFeedback.textContent = "철자를 입력하세요.";
+        elements.spellingFeedback.textContent = "Type the word.";
         elements.spellingFeedback.className = "game-feedback";
         elements.spellingHintButton.disabled = false;
         elements.spellingCheckButton.disabled = false;
         elements.spellingNextButton.disabled = true;
-        elements.spellingNextButton.textContent = "다음 문제";
+        elements.spellingNextButton.textContent = "Next";
         updateSpellingStats();
         renderSpellingTiles();
     }
@@ -596,7 +610,7 @@
             button.className = "letter-tile";
             button.textContent = letter;
             button.dataset.tileIndex = String(index);
-            button.setAttribute("aria-label", `${letter} 글자`);
+            button.setAttribute("aria-label", `Letter ${letter}`);
             button.addEventListener("click", () => selectSpellingTile(button));
             return button;
         }));
@@ -618,7 +632,7 @@
         elements.spellingBuiltWord.textContent = elements.spellingInput.value;
         const candidates = [...elements.spellingTileRack.querySelectorAll(".letter-tile[disabled]")];
         candidates.reverse().find((tile) => tile.textContent === removed)?.removeAttribute("disabled");
-        elements.spellingFeedback.textContent = "철자를 계속 입력하세요.";
+        elements.spellingFeedback.textContent = "Keep going.";
         elements.spellingFeedback.className = "game-feedback";
     }
 
@@ -630,7 +644,7 @@
             checkSpellingAnswer();
             return;
         }
-        elements.spellingFeedback.textContent = "철자가 달라요. Backspace로 고쳐 보세요.";
+        elements.spellingFeedback.textContent = "Not quite. Press Backspace and try again.";
         elements.spellingFeedback.className = "game-feedback incorrect";
         elements.spellingBuiltWord.animate(
             [{ transform: "translateX(-5px)" }, { transform: "translateX(5px)" }, { transform: "none" }],
@@ -658,7 +672,7 @@
         if (state.spellingAnswered || !state.spellingTarget) return;
         const answer = core.normalizeSpellingAnswer(elements.spellingInput.value);
         if (!answer) {
-            elements.spellingFeedback.textContent = "철자를 먼저 입력하세요.";
+            elements.spellingFeedback.textContent = "Type some letters first.";
             elements.spellingFeedback.className = "game-feedback incorrect";
             elements.spellingBuiltWord.animate([{ transform: "translateX(-5px)" }, { transform: "translateX(5px)" }, { transform: "none" }], { duration: 180 });
             return;
@@ -688,13 +702,13 @@
         elements.spellingHintButton.disabled = true;
         elements.spellingCheckButton.disabled = true;
         elements.spellingFeedback.textContent = isCorrect
-            ? `정답 · ${state.spellingTarget.word}`
-            : `오답 · 정답은 ${state.spellingTarget.word}`;
+            ? `Correct! ${state.spellingTarget.word}`
+            : `Not quite. The word is ${state.spellingTarget.word}.`;
         elements.spellingFeedback.className = `game-feedback ${isCorrect ? "correct" : "incorrect"}`;
         elements.spellingNextButton.disabled = false;
         elements.spellingNextButton.textContent = state.spellingQuestionNumber >= state.spellingRoundLength
-            ? "결과 보기"
-            : "다음 문제";
+            ? "See results"
+            : "Next";
         updateSpellingStats();
     }
 
@@ -720,19 +734,19 @@
             elements.spellingWrongList.replaceChildren(...state.spellingWrongEntries.map((entry) => {
                 const chip = document.createElement("span");
                 chip.className = "game-wrong-word";
-                chip.textContent = `${entry.word.word} · 입력: ${entry.answer}`;
+                chip.textContent = `${entry.word.word} · You typed: ${entry.answer}`;
                 return chip;
             }));
         } else {
             const message = document.createElement("span");
-            message.textContent = "틀린 단어가 없습니다.";
+            message.textContent = "Great job! No missed words.";
             elements.spellingWrongList.replaceChildren(message);
         }
         elements.spellingRetryWrongButton.hidden = state.spellingWrongEntries.length === 0;
         const remainingStored = storedSpellingWrongWords().length;
         elements.spellingPlayAgainButton.textContent = state.spellingReviewMode && remainingStored
-            ? `남은 오답 ${remainingStored}개`
-            : "새 10문제";
+            ? `${remainingStored} missed words left`
+            : "10 new questions";
     }
 
     function startSpellingRound(targetPool = state.spellingPool) {
@@ -797,7 +811,7 @@
         const storedWords = storedSpellingWrongWords();
         if (!storedWords.length) {
             renderStoredSpellingWrong();
-            showToast("저장된 철자 오답이 없습니다.");
+            showToast("No saved words to try again.");
             return;
         }
         clearGameTimer();
@@ -982,7 +996,7 @@
             elements.loadingState.hidden = true;
         } catch (error) {
             console.error(error);
-            elements.loadingState.querySelector("p").textContent = "단어 자료를 불러오지 못했어요. 잠시 후 다시 시도해 주세요.";
+            elements.loadingState.querySelector("p").textContent = "We could not load the words. Please try again soon.";
         }
     }
 
