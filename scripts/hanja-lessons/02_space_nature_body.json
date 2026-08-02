@@ -1,0 +1,144 @@
+[
+  {
+    "slug":"jeon-hu-jung-nae-oe","ariaLabel":"앞 전, 뒤 후, 가운데 중, 안 내, 바깥 외","reading":"전 · 후 · 중 · 내 · 외","meaning":"앞 · 뒤 · 가운데 · 안 · 밖","guide":"前·後·中·內·外는 위치와 차례, 범위를 나타내는 말의 뜻조각입니다.",
+    "characters":[
+      {"character":"前","reading":"전","words":["전방","이전","전반"],"explanation":"앞쪽은 전방, 어떤 때보다 앞은 이전, 앞부분은 전반입니다."},
+      {"character":"後","reading":"후","words":["후방","이후","후반"],"explanation":"뒤쪽은 후방, 어떤 때보다 뒤는 이후, 뒷부분은 후반입니다."},
+      {"character":"中","reading":"중","words":["중간","중심","집중"],"explanation":"가운데는 중간, 한가운데 중요한 곳은 중심, 한곳에 모으는 것은 집중입니다."},
+      {"character":"內","reading":"내","words":["실내","내부","국내"],"explanation":"방 안은 실내, 안쪽 부분은 내부, 나라 안은 국내입니다."},
+      {"character":"外","reading":"외","words":["야외","외부","외출"],"explanation":"들 밖은 야외, 바깥 부분은 외부, 밖으로 나가는 것은 외출입니다."}
+    ],
+    "questions":[
+      {"contextBefore":"비가 와서 건물의 ","focus":"안쪽","contextAfter":"에서 체육 활동을 했습니다.","answer":0,"note":"건물이나 방의 안을 실내(室內)라고 합니다.","options":[
+        {"term":"실내","hanja":"室內","sentence":"비가 와서 {{실내}}에서 운동했습니다."},{"term":"야외","hanja":"野外","sentence":"맑은 날 {{야외}}에서 관찰했습니다."},{"term":"국내","hanja":"國內","sentence":"{{국내}} 여러 도시를 여행했습니다."},{"term":"시내","hanja":"市內","sentence":"버스를 타고 {{시내}}로 갔습니다."}
+      ]},
+      {"contextBefore":"주말에 가족과 집 ","focus":"밖으로 나갔습니다","contextAfter":".","answer":1,"note":"밖으로 나가는 것을 외출(外出)이라고 합니다.","options":[
+        {"term":"입장","hanja":"入場","sentence":"표를 내고 공연장에 {{입장}}했습니다."},{"term":"외출","hanja":"外出","sentence":"가족과 공원으로 {{외출}}했습니다."},{"term":"퇴장","hanja":"退場","sentence":"공연이 끝나 차례로 {{퇴장}}했습니다."},{"term":"출발","hanja":"出發","sentence":"기차가 정시에 {{출발}}했습니다."}
+      ]},
+      {"contextBefore":"사건이 일어나기 ","focus":"앞과 뒤","contextAfter":"의 기록을 살폈습니다.","answer":2,"note":"앞과 뒤를 전후(前後)라고 합니다.","options":[
+        {"term":"좌우","hanja":"左右","sentence":"길을 건너기 전에 {{좌우}}를 살폈습니다."},{"term":"상하","hanja":"上下","sentence":"사진의 {{상하}}를 바르게 맞췄습니다."},{"term":"전후","hanja":"前後","sentence":"사건의 {{전후}}를 조사했습니다."},{"term":"내외","hanja":"內外","sentence":"학교 {{내외}}를 정리했습니다."}
+      ]}
+    ]
+  },
+  {
+    "slug":"ip-chul-mun","ariaLabel":"들 입, 날 출, 문 문","reading":"입 · 출 · 문","meaning":"들어가다 · 나가다 · 문","guide":"入·出·門은 학교, 건물, 교통에서 들어가고 나가는 일을 나타냅니다.",
+    "characters":[
+      {"character":"入","reading":"입","words":["입구","입학","수입"],"explanation":"들어가는 곳은 입구, 학교에 들어가는 것은 입학, 밖에서 안으로 들이는 것은 수입입니다."},
+      {"character":"出","reading":"출","words":["출구","출발","제출"],"explanation":"나가는 곳은 출구, 떠나는 것은 출발, 내어놓는 것은 제출입니다."},
+      {"character":"門","reading":"문","words":["정문","교문","전문"],"explanation":"건물의 바른 앞문은 정문, 학교 문은 교문, 한 분야의 문에 깊이 든 것은 전문입니다."}
+    ],
+    "questions":[
+      {"contextBefore":"건물로 ","focus":"들어가는 곳","contextAfter":"에서 친구를 만났습니다.","answer":0,"note":"들어가는 곳을 입구(入口)라고 합니다.","options":[
+        {"term":"입구","hanja":"入口","sentence":"건물 {{입구}}에서 만났습니다."},{"term":"출구","hanja":"出口","sentence":"공연장 {{출구}}로 나왔습니다."},{"term":"정문","hanja":"正門","sentence":"학교 {{정문}}이 열렸습니다."},{"term":"통로","hanja":"通路","sentence":"비상 {{통로}}를 확인했습니다."}
+      ]},
+      {"contextBefore":"새 학교에 ","focus":"들어가 공부를 시작하는 것","contextAfter":"을 축하했습니다.","answer":1,"note":"학교에 들어가 공부를 시작하는 것을 입학(入學)이라고 합니다.","options":[
+        {"term":"졸업","hanja":"卒業","sentence":"초등학교 {{졸업}}을 축하했습니다."},{"term":"입학","hanja":"入學","sentence":"새 학교 {{입학}}을 축하했습니다."},{"term":"진학","hanja":"進學","sentence":"상급 학교로 {{진학}}했습니다."},{"term":"휴학","hanja":"休學","sentence":"학업을 잠시 쉬는 {{휴학}}을 신청했습니다."}
+      ]},
+      {"contextBefore":"아침마다 ","focus":"학교의 문","contextAfter":"을 지나 교실로 갑니다.","answer":2,"note":"학교의 문을 교문(校門)이라고 합니다.","options":[
+        {"term":"창문","hanja":"窓門","sentence":"교실 {{창문}}을 열었습니다."},{"term":"방문","hanja":"房門","sentence":"침실 {{방문}}을 닫았습니다."},{"term":"교문","hanja":"校門","sentence":"아침에 {{교문}}으로 들어갔습니다."},{"term":"전문","hanja":"專門","sentence":"그 분야의 {{전문}} 지식을 배웠습니다."}
+      ]}
+    ]
+  },
+  {
+    "slug":"cheon-ji-san-cheon","ariaLabel":"하늘 천, 땅 지, 메 산, 내 천","reading":"천 · 지 · 산 · 천","meaning":"하늘 · 땅 · 산 · 내","guide":"天·地·山·川은 하늘과 땅, 산과 물길을 나타내는 사회·과학 낱말에 들어갑니다.",
+    "characters":[
+      {"character":"天","reading":"천","words":["천체","천문","천국"],"explanation":"하늘의 물체는 천체, 하늘의 현상을 살피는 일은 천문입니다."},
+      {"character":"地","reading":"지","words":["지역","지도","지하"],"explanation":"일정한 땅의 범위는 지역, 땅의 모습을 그린 것은 지도, 땅 아래는 지하입니다."},
+      {"character":"山","reading":"산","words":["등산","화산","산맥"],"explanation":"산에 오르는 것은 등산, 불과 재를 뿜는 산은 화산, 이어진 산줄기는 산맥입니다."},
+      {"character":"川","reading":"천","words":["하천","산천","천변"],"explanation":"땅 위를 흐르는 물길은 하천, 산과 내는 산천, 내 주변은 천변입니다."}
+    ],
+    "questions":[
+      {"contextBefore":"밤하늘에서 별과 행성 같은 ","focus":"하늘의 물체","contextAfter":"를 관찰했습니다.","answer":0,"note":"하늘의 물체를 천체(天體)라고 합니다.","options":[
+        {"term":"천체","hanja":"天體","sentence":"망원경으로 {{천체}}를 관찰했습니다."},{"term":"물체","hanja":"物體","sentence":"움직이는 {{물체}}의 속력을 재었습니다."},{"term":"입체","hanja":"立體","sentence":"종이로 {{입체}} 모형을 만들었습니다."},{"term":"고체","hanja":"固體","sentence":"얼음은 단단한 {{고체}}입니다."}
+      ]},
+      {"contextBefore":"우리 고장의 ","focus":"땅 모습을 그린 그림","contextAfter":"을 살펴보았습니다.","answer":1,"note":"땅의 모습을 그린 그림은 지도(地圖)입니다.","options":[
+        {"term":"약도","hanja":"略圖","sentence":"학교까지 오는 {{약도}}를 그렸습니다."},{"term":"지도","hanja":"地圖","sentence":"{{지도}}에서 우리 고장을 찾았습니다."},{"term":"온도","hanja":"溫度","sentence":"오늘의 {{온도}}를 재었습니다."},{"term":"속도","hanja":"速度","sentence":"자동차의 {{속도}}를 확인했습니다."}
+      ]},
+      {"contextBefore":"땅속의 뜨거운 물질과 재를 뿜는 ","focus":"산","contextAfter":"을 조사했습니다.","answer":2,"note":"불과 재를 뿜는 산은 화산(火山)입니다.","options":[
+        {"term":"등산","hanja":"登山","sentence":"가족과 안전하게 {{등산}}했습니다."},{"term":"산맥","hanja":"山脈","sentence":"지도에서 긴 {{산맥}}을 찾았습니다."},{"term":"화산","hanja":"火山","sentence":"과학 시간에 {{화산}}을 조사했습니다."},{"term":"산림","hanja":"山林","sentence":"울창한 {{산림}}을 보호합니다."}
+      ]}
+    ]
+  },
+  {
+    "slug":"su-hwa-mok-to-geum","ariaLabel":"물 수, 불 화, 나무 목, 흙 토, 쇠 금","reading":"수 · 화 · 목 · 토 · 금","meaning":"물 · 불 · 나무 · 흙 · 쇠","guide":"水·火·木·土·金은 물질과 자연, 요일을 나타내는 기초 뜻조각입니다.",
+    "characters":[
+      {"character":"水","reading":"수","words":["생수","수영","수중"],"explanation":"마시는 물은 생수, 물에서 헤엄치는 것은 수영, 물속은 수중입니다."},
+      {"character":"火","reading":"화","words":["화재","소화","화력"],"explanation":"불이 난 재난은 화재, 불을 끄는 것은 소화, 불의 힘은 화력입니다."},
+      {"character":"木","reading":"목","words":["목재","수목","목공"],"explanation":"나무로 만든 재료는 목재, 여러 나무는 수목, 나무를 다루는 일은 목공입니다."},
+      {"character":"土","reading":"토","words":["토지","국토","황토"],"explanation":"땅은 토지, 나라의 땅은 국토, 누런 흙은 황토입니다."},
+      {"character":"金","reading":"금","words":["금속","현금","금액"],"explanation":"쇠 성질의 물질은 금속, 바로 쓰는 돈은 현금, 돈의 액수는 금액입니다."}
+    ],
+    "questions":[
+      {"contextBefore":"운동 뒤에 병에 든 ","focus":"마시는 물","contextAfter":"을 마셨습니다.","answer":0,"note":"마시는 물을 생수(生水)라고 합니다.","options":[
+        {"term":"생수","hanja":"生水","sentence":"운동 뒤에 {{생수}}를 마셨습니다."},{"term":"해수","hanja":"海水","sentence":"바다의 {{해수}}를 조사했습니다."},{"term":"우수","hanja":"雨水","sentence":"저장한 {{우수}}를 화단에 주었습니다."},{"term":"폐수","hanja":"廢水","sentence":"공장의 {{폐수}}를 깨끗이 처리했습니다."}
+      ]},
+      {"contextBefore":"산에서 불이 난 ","focus":"재난","contextAfter":"을 막기 위해 훈련했습니다.","answer":0,"note":"불이 난 재난을 화재(火災)라고 합니다.","options":[
+        {"term":"화재","hanja":"火災","sentence":"{{화재}} 대피 훈련을 했습니다."},{"term":"수재","hanja":"水災","sentence":"큰물로 생긴 {{수재}}를 복구했습니다."},{"term":"천재","hanja":"天災","sentence":"태풍 같은 {{천재}}에 대비했습니다."},{"term":"인재","hanja":"人災","sentence":"사람의 잘못으로 생긴 {{인재}}를 막습니다."}
+      ]},
+      {"contextBefore":"책상을 만들려고 ","focus":"나무로 된 재료","contextAfter":"를 준비했습니다.","answer":0,"note":"나무로 된 재료를 목재(木材)라고 합니다.","options":[
+        {"term":"목재","hanja":"木材","sentence":"책상을 만들 {{목재}}를 준비했습니다."},{"term":"석재","hanja":"石材","sentence":"계단에 단단한 {{석재}}를 사용했습니다."},{"term":"철재","hanja":"鐵材","sentence":"건물에 튼튼한 {{철재}}를 사용했습니다."},{"term":"자재","hanja":"資材","sentence":"공사에 필요한 {{자재}}를 옮겼습니다."}
+      ]},
+      {"contextBefore":"지도에서 우리 ","focus":"나라의 땅","contextAfter":"을 살펴보았습니다.","answer":0,"note":"나라의 땅을 국토(國土)라고 합니다.","options":[
+        {"term":"국토","hanja":"國土","sentence":"우리 {{국토}}의 모습을 살펴보았습니다."},{"term":"영토","hanja":"領土","sentence":"나라의 {{영토}} 경계를 표시했습니다."},{"term":"토지","hanja":"土地","sentence":"농사를 지을 {{토지}}를 조사했습니다."},{"term":"대지","hanja":"大地","sentence":"넓은 {{대지}}에 풀이 자랍니다."}
+      ]}
+    ]
+  },
+  {
+    "slug":"u-seol-pung","ariaLabel":"비 우, 눈 설, 바람 풍","reading":"우 · 설 · 풍","meaning":"비 · 눈 · 바람","guide":"雨·雪·風은 일기 예보와 과학 시간에 만나는 비, 눈, 바람의 뜻조각입니다.",
+    "characters":[
+      {"character":"雨","reading":"우","words":["우산","우천","폭우"],"explanation":"비를 막는 것은 우산, 비 오는 날씨는 우천, 매우 많이 오는 비는 폭우입니다."},
+      {"character":"雪","reading":"설","words":["폭설","제설","설경"],"explanation":"많이 오는 눈은 폭설, 눈을 치우는 것은 제설, 눈 덮인 경치는 설경입니다."},
+      {"character":"風","reading":"풍","words":["태풍","풍속","풍력"],"explanation":"큰 바람을 동반한 폭풍은 태풍, 바람의 빠르기는 풍속, 바람의 힘은 풍력입니다."}
+    ],
+    "questions":[
+      {"contextBefore":"비가 오는 날 ","focus":"비를 막는 물건","contextAfter":"을 준비했습니다.","answer":0,"note":"비를 막는 물건은 우산(雨傘)입니다.","options":[
+        {"term":"우산","hanja":"雨傘","sentence":"비가 와서 {{우산}}을 썼습니다."},{"term":"양산","hanja":"陽傘","sentence":"햇빛을 막으려고 {{양산}}을 썼습니다."},{"term":"등산","hanja":"登山","sentence":"가족과 안전하게 {{등산}}했습니다."},{"term":"재산","hanja":"財産","sentence":"공공 {{재산}}을 소중히 사용합니다."}
+      ]},
+      {"contextBefore":"밤새 ","focus":"매우 많은 눈","contextAfter":"이 내려 길이 막혔습니다.","answer":0,"note":"매우 많이 내리는 눈을 폭설(暴雪)이라고 합니다.","options":[
+        {"term":"폭설","hanja":"暴雪","sentence":"밤새 {{폭설}}이 내렸습니다."},{"term":"폭우","hanja":"暴雨","sentence":"여름에 강한 {{폭우}}가 내렸습니다."},{"term":"강설","hanja":"降雪","sentence":"산간 지역의 {{강설}}을 관측했습니다."},{"term":"제설","hanja":"除雪","sentence":"도로의 눈을 치우는 {{제설}} 작업을 했습니다."}
+      ]},
+      {"contextBefore":"일기 예보에서 ","focus":"바람의 빠르기","contextAfter":"를 확인했습니다.","answer":0,"note":"바람의 빠르기를 풍속(風速)이라고 합니다.","options":[
+        {"term":"풍속","hanja":"風速","sentence":"예보에서 {{풍속}}을 확인했습니다."},{"term":"시속","hanja":"時速","sentence":"자동차가 {{시속}} 오십 킬로미터로 달렸습니다."},{"term":"속력","hanja":"速力","sentence":"달리기 {{속력}}을 재었습니다."},{"term":"가속","hanja":"加速","sentence":"자전거가 내리막에서 {{가속}}했습니다."}
+      ]}
+    ]
+  },
+  {
+    "slug":"gu-mok-su-jok","ariaLabel":"입 구, 눈 목, 손 수, 발 족","reading":"구 · 목 · 수 · 족","meaning":"입 · 눈 · 손 · 발","guide":"口·目·手·足은 몸의 부분에서 시작해 사람 수, 살피기, 능력, 모자람을 나타내는 말로 넓어집니다.",
+    "characters":[
+      {"character":"口","reading":"구","words":["인구","입구","구강"],"explanation":"사람의 입을 세어 나타낸 사람 수는 인구, 들어가는 입은 입구, 입안은 구강입니다."},
+      {"character":"目","reading":"목","words":["주목","목적","과목"],"explanation":"눈길을 모으는 것은 주목, 눈앞에 둔 목표는 목적, 배울 항목은 과목입니다."},
+      {"character":"手","reading":"수","words":["악수","선수","수술"],"explanation":"손을 잡는 인사는 악수, 재주를 쓰는 사람은 선수, 손으로 치료하는 일은 수술입니다."},
+      {"character":"足","reading":"족","words":["부족","만족","족구"],"explanation":"모자라는 것은 부족, 가득 차 흐뭇한 것은 만족, 발로 하는 공놀이는 족구입니다."}
+    ],
+    "questions":[
+      {"contextBefore":"이 도시에 사는 ","focus":"사람 수","contextAfter":"를 조사했습니다.","answer":0,"note":"어떤 곳에 사는 사람 수를 인구(人口)라고 합니다.","options":[
+        {"term":"인구","hanja":"人口","sentence":"우리 도시의 {{인구}}를 조사했습니다."},{"term":"인원","hanja":"人員","sentence":"체험할 {{인원}}은 열 명입니다."},{"term":"인물","hanja":"人物","sentence":"역사 속 {{인물}}을 조사했습니다."},{"term":"인간","hanja":"人間","sentence":"{{인간}}은 도구를 사용합니다."}
+      ]},
+      {"contextBefore":"중요한 변화에 ","focus":"눈길을 모으는 것","contextAfter":"이 필요합니다.","answer":0,"note":"눈길을 모으는 것을 주목(注目)이라고 합니다.","options":[
+        {"term":"주목","hanja":"注目","sentence":"새로운 변화에 {{주목}}했습니다."},{"term":"목적","hanja":"目的","sentence":"행사의 {{목적}}을 설명했습니다."},{"term":"과목","hanja":"科目","sentence":"좋아하는 {{과목}}을 골랐습니다."},{"term":"항목","hanja":"項目","sentence":"조사할 {{항목}}을 정했습니다."}
+      ]},
+      {"contextBefore":"처음 만난 사람과 ","focus":"손을 잡아 인사하는 것","contextAfter":"을 했습니다.","answer":0,"note":"손을 잡아 나누는 인사를 악수(握手)라고 합니다.","options":[
+        {"term":"악수","hanja":"握手","sentence":"처음 만나 {{악수}}했습니다."},{"term":"선수","hanja":"選手","sentence":"축구 {{선수}}가 경기장에 나왔습니다."},{"term":"수술","hanja":"手術","sentence":"의사가 환자를 {{수술}}했습니다."},{"term":"수단","hanja":"手段","sentence":"문제를 해결할 {{수단}}을 찾았습니다."}
+      ]}
+    ]
+  },
+  {
+    "slug":"sim-sin-ryeok","ariaLabel":"마음 심, 몸 신, 힘 력","reading":"심 · 신 · 력","meaning":"마음 · 몸 · 힘","guide":"心·身·力은 마음과 몸, 힘과 능력을 나타내는 생활·체육 낱말의 바탕입니다.",
+    "characters":[
+      {"character":"心","reading":"심","words":["안심","관심","중심"],"explanation":"마음을 놓는 것은 안심, 마음을 두는 것은 관심, 가운데 중요한 곳은 중심입니다."},
+      {"character":"身","reading":"신","words":["신체","출신","신분"],"explanation":"몸 전체는 신체, 어느 곳에서 나온 사람인지는 출신, 사회에서의 자리는 신분입니다."},
+      {"character":"力","reading":"력","words":["노력","실력","체력"],"explanation":"힘을 들여 애쓰는 것은 노력, 실제 능력은 실력, 몸의 힘은 체력입니다."}
+    ],
+    "questions":[
+      {"contextBefore":"길을 찾은 뒤 마음을 놓고 ","focus":"걱정을 덜었습니다","contextAfter":".","answer":0,"note":"마음을 놓고 걱정을 덜어내는 것을 안심(安心)이라고 합니다.","options":[
+        {"term":"안심","hanja":"安心","sentence":"무사하다는 소식에 {{안심}}했습니다."},{"term":"관심","hanja":"關心","sentence":"친구의 발표에 {{관심}}을 가졌습니다."},{"term":"의심","hanja":"疑心","sentence":"이상한 점에 {{의심}}을 품었습니다."},{"term":"결심","hanja":"決心","sentence":"매일 운동하기로 {{결심}}했습니다."}
+      ]},
+      {"contextBefore":"체육 시간에 ","focus":"몸 전체","contextAfter":"를 고르게 움직였습니다.","answer":0,"note":"몸 전체를 신체(身體)라고 합니다.","options":[
+        {"term":"신체","hanja":"身體","sentence":"운동으로 {{신체}}를 단련했습니다."},{"term":"신분","hanja":"身分","sentence":"출입할 때 {{신분}}을 확인했습니다."},{"term":"출신","hanja":"出身","sentence":"그 선수의 학교 {{출신}}을 알아보았습니다."},{"term":"자신","hanja":"自身","sentence":"{{자신}}의 장점을 말했습니다."}
+      ]},
+      {"contextBefore":"목표를 이루려고 힘을 들여 ","focus":"애썼습니다","contextAfter":".","answer":0,"note":"힘을 들여 애쓰는 것을 노력(努力)이라고 합니다.","options":[
+        {"term":"노력","hanja":"努力","sentence":"목표를 향해 {{노력}}했습니다."},{"term":"실력","hanja":"實力","sentence":"연습으로 {{실력}}을 키웠습니다."},{"term":"체력","hanja":"體力","sentence":"운동으로 {{체력}}을 길렀습니다."},{"term":"인력","hanja":"人力","sentence":"작업에 필요한 {{인력}}을 모았습니다."}
+      ]}
+    ]
+  }
+]

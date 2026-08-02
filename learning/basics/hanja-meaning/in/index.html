@@ -4,7 +4,7 @@
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
   <meta name="theme-color" content="#f7f5ef">
-  <title>日·月·年 | 韓字</title>
+  <title>人 | 韓字</title>
   <style>
     @font-face {
       font-family: "KleeHanja";
@@ -51,7 +51,7 @@
     .topline {
       position: absolute;
       top: 10px;
-      right: calc(clamp(20px, 4vw, 54px) + 330px);
+      right: calc(clamp(20px, 4vw, 54px) + 256px);
       display: flex;
       align-items: center;
       justify-content: flex-end;
@@ -86,22 +86,9 @@
       text-align: center;
     }
 
-    .hanja-pair {
-      display: flex;
-      gap: clamp(6px, 1.5vw, 16px);
-      min-width: 2.25em;
-    }
-
-    .hanja-three {
-      display: flex;
-      gap: clamp(5px, 1vw, 11px);
-      min-width: 3.25em;
-      font-size: clamp(68px, 8vw, 94px);
-    }
-
     .stroke-demo {
       display: grid;
-      grid-template-columns: 104px 188px;
+      grid-template-columns: 104px 112px;
       align-items: center;
       gap: 10px;
       padding: 6px;
@@ -110,16 +97,44 @@
       background: #fffdf8;
     }
 
-    .stroke-stage { display: block; width: 104px; height: 104px; border: 1px solid #ddd8ce; background: #fff; }
-    .stroke-guide { fill: none; stroke: #dedbd3; stroke-width: 1; stroke-dasharray: 4 4; }
-    .stroke-set[hidden] { display: none; }
-    .stroke-path { fill: none; stroke: var(--ink); stroke-width: 7; stroke-linecap: round; stroke-linejoin: round; vector-effect: non-scaling-stroke; }
-    .stroke-controls { display: grid; gap: 6px; }
-    .stroke-character-switch { display: grid; grid-template-columns: repeat(3, 1fr); gap: 4px; }
+    .stroke-stage {
+      display: block;
+      width: 104px;
+      height: 104px;
+      border: 1px solid #ddd8ce;
+      background: #fff;
+    }
 
-    .stroke-character,
+    .stroke-guide {
+      fill: none;
+      stroke: #dedbd3;
+      stroke-width: 1;
+      stroke-dasharray: 4 4;
+    }
+
+    .stroke-path {
+      fill: none;
+      stroke: var(--ink);
+      stroke-width: 12;
+      stroke-linecap: round;
+      stroke-linejoin: round;
+    }
+
+    .stroke-controls {
+      display: grid;
+      gap: 6px;
+    }
+
+    .stroke-status {
+      margin: 0;
+      color: var(--blue);
+      font: 800 14px/1.2 system-ui, sans-serif;
+      text-align: center;
+    }
+
     .stroke-button {
       min-height: 44px;
+      padding: 7px 8px;
       border: 1px solid #9aa5ad;
       border-radius: 5px;
       background: #fff;
@@ -128,12 +143,12 @@
       cursor: pointer;
     }
 
-    .stroke-character { min-width: 44px; padding: 4px; font-family: "KleeHanja", serif; font-size: 22px; }
-    .stroke-character[aria-pressed="true"] { border-color: var(--blue); background: var(--blue-soft); color: var(--blue); }
-    .stroke-status { margin: 0; color: var(--blue); font: 800 13px/1.2 system-ui, sans-serif; text-align: center; }
-    .stroke-button { padding: 7px 8px; }
-    .stroke-character:focus-visible, .stroke-button:focus-visible { outline: 3px solid rgba(45, 99, 140, .28); outline-offset: 2px; }
-    .stroke-character:disabled, .stroke-button:disabled { opacity: .55; cursor: default; }
+    .stroke-button:focus-visible {
+      outline: 3px solid rgba(45, 99, 140, .28);
+      outline-offset: 2px;
+    }
+
+    .stroke-button:disabled { opacity: .55; cursor: default; }
 
     .reading {
       margin: 0 0 5px;
@@ -166,7 +181,7 @@
 
     .word-row {
       display: grid;
-      grid-template-columns: max-content minmax(0, 1fr);
+      grid-template-columns: minmax(230px, .85fr) minmax(0, 2fr);
       align-items: center;
       gap: 12px 30px;
       padding: clamp(11px, 1.35vw, 15px) 0;
@@ -200,7 +215,6 @@
       font-size: clamp(18px, 2vw, 23px);
       font-weight: 800;
       line-height: 1.45;
-      white-space: nowrap;
       word-spacing: .18em;
     }
 
@@ -245,15 +259,6 @@
       word-break: keep-all;
     }
 
-    .question-context {
-      margin: 0 0 3px;
-      color: var(--muted);
-      font-size: clamp(15px, 1.45vw, 17px);
-      font-weight: 700;
-      line-height: 1.45;
-      word-break: keep-all;
-    }
-
     .q-number {
       display: inline-grid;
       width: 32px;
@@ -272,7 +277,7 @@
     }
 
     .choice {
-      min-height: 44px;
+      min-height: 43px;
       padding: 7px 10px;
       border: 1px solid transparent;
       border-radius: 4px;
@@ -316,11 +321,6 @@
       line-height: 1.45;
     }
 
-    .feedback:empty {
-      min-height: 0;
-      margin-top: 0;
-    }
-
     .feedback.is-correct { color: var(--correct); }
     .feedback.is-wrong { color: var(--wrong); }
 
@@ -342,13 +342,6 @@
     }
 
     .quiz-actions button { margin: 0; }
-
-    body.quiz-active .hanja-head { padding: 0 0 8px; }
-    body.quiz-active .hanja { font-size: clamp(64px, 7.5vw, 82px); }
-    body.quiz-active .reading { font-size: clamp(21px, 2.2vw, 27px); }
-    body.quiz-active .core-meaning { font-size: clamp(17px, 1.8vw, 21px); }
-    body.quiz-active .quiz-grid { gap: 10px clamp(28px, 4vw, 52px); }
-    body.quiz-active .quiz-actions { margin-top: 14px; }
 
     .next-lesson {
       display: block;
@@ -378,12 +371,12 @@
       cursor: pointer;
     }
 
-    @media (max-width: 800px) {
+    @media (max-width: 760px) {
       .page { padding-inline: 18px; }
       .topline { position: static; min-height: 32px; }
       .hanja-head { grid-template-columns: auto 1fr; gap: 8px 20px; }
       .stroke-demo { grid-column: 2; }
-      .word-row { grid-template-columns: 1fr; gap: 3px; }
+      .word-row { grid-template-columns: minmax(180px, .7fr) minmax(0, 1.5fr); gap: 10px 20px; }
       .meaning-row { grid-template-columns: 1fr; gap: 6px; }
       .quiz-grid { grid-template-columns: 1fr; }
     }
@@ -397,46 +390,23 @@
 <body>
   <main class="page">
     <div class="topline">
-      <a class="home-link" href="../../../../">처음으로</a>
+      <a class="home-link" href="../">차시 목록</a>
     </div>
 
     <header class="hanja-head">
-      <div class="hanja hanja-three" aria-label="날 일, 달 월, 해 년"><span>日</span><span>月</span><span>年</span></div>
+      <div class="hanja" aria-label="사람 인">人</div>
       <div>
-        <p class="reading">일 · 월 · 년(연)</p>
-        <p class="core-meaning">날 · 달 · 해</p>
+        <p class="reading">인</p>
+        <p class="core-meaning">사람</p>
       </div>
-      <section class="stroke-demo" aria-label="日·月·年 획순">
-        <svg class="stroke-stage" viewBox="0 0 160 160" role="img" aria-label="선택한 한자의 획순">
+      <section class="stroke-demo" aria-label="人 획순 실험">
+        <svg class="stroke-stage" viewBox="0 0 160 160" role="img" aria-label="人 두 획을 쓰는 순서">
           <path class="stroke-guide" d="M80 0V160M0 80H160M0 0L160 160M160 0L0 160" />
-          <g class="stroke-set" data-character="日" transform="translate(10 8) scale(1.3)">
-            <path class="stroke-path" d="M31.5,24.5c1.12,1.12,1.74,2.75,1.74,4.75c0,1.6-0.16,38.11-0.09,53.5c0.02,3.82,0.05,6.35,0.09,6.75" />
-            <path class="stroke-path" d="M33.48,26c0.8-0.05,37.67-3.01,40.77-3.25c3.19-0.25,5,1.75,5,4.25c0,4-0.22,40.84-0.23,56c0,3.48,0,5.72,0,6" />
-            <path class="stroke-path" d="M34.22,55.25c7.78-0.5,35.9-2.5,44.06-2.75" />
-            <path class="stroke-path" d="M34.23,86.5c10.52-0.75,34.15-2.12,43.81-2.25" />
-          </g>
-          <g class="stroke-set" data-character="月" transform="translate(10 8) scale(1.3)" hidden>
-            <path class="stroke-path" d="M34.25,16.25c1,1,1.48,2.38,1.5,4c0.38,33.62,2.38,59.38-11,73.25" />
-            <path class="stroke-path" d="M36.25,19c4.12-0.62,31.49-4.78,33.25-5c4-0.5,5.5,1.12,5.5,4.75c0,2.76-0.5,49.25-0.5,69.5c0,13-6.25,4-8.75,1.75" />
-            <path class="stroke-path" d="M37.25,38c10.25-1.5,27.25-3.75,36.25-4.5" />
-            <path class="stroke-path" d="M37,58.25c8.75-1.12,27-3.5,36.25-4" />
-          </g>
-          <g class="stroke-set" data-character="年" transform="translate(10 8) scale(1.3)" hidden>
-            <path class="stroke-path" d="M40.01,11.89c0.24,1.61-0.01,2.86-0.84,4.46c-2.53,4.84-6.91,11.4-15.86,19.62" />
-            <path class="stroke-path" d="M39.13,23.62c2.25,0.38,4.4,0.18,5.79,0.03c11.7-1.27,21.33-2.9,33.22-4.07c2.3-0.23,4.2,0,5.35,0.26" />
-            <path class="stroke-path" d="M30.13,43.59c1.36,0.33,3.87,0.46,5.21,0.33c10.91-1.05,28.53-3.42,40.78-4.26c2.26-0.15,3.63,0.16,4.76,0.32" />
-            <path class="stroke-path" d="M33.75,44.5c1,1.25,1,1.97,1.01,3.5C34.8,52.33,35,65.29,35,66.25" />
-            <path class="stroke-path" d="M13.88,67.74c1.97,0.47,5.61,0.66,7.57,0.47c20.21-2.03,36.35-4.62,66.65-5.31c3.29-0.08,5.26,0.22,6.91,0.46" />
-            <path class="stroke-path" d="M56.56,25.46c1.12,1.12,1.79,3.54,1.79,4.94c0,0.89-0.05,44.26-0.13,61.6c-0.01,3.12-0.03,5.39-0.05,6.38" />
-          </g>
+          <path class="stroke-path" data-stroke="1" d="M91 25 C84 58 66 98 32 135" />
+          <path class="stroke-path" data-stroke="2" d="M83 57 C98 85 116 111 139 135" />
         </svg>
         <div class="stroke-controls">
-          <div class="stroke-character-switch" aria-label="획순을 볼 글자">
-            <button class="stroke-character" type="button" data-character="日" aria-pressed="true">日</button>
-            <button class="stroke-character" type="button" data-character="月" aria-pressed="false">月</button>
-            <button class="stroke-character" type="button" data-character="年" aria-pressed="false">年</button>
-          </div>
-          <p id="strokeStatus" class="stroke-status" aria-live="polite">日 · 준비</p>
+          <p id="strokeStatus" class="stroke-status" aria-live="polite">준비</p>
           <button id="playStrokes" class="stroke-button" type="button">▶ 획순 보기</button>
           <button id="stepStroke" class="stroke-button" type="button">한 획씩</button>
         </div>
@@ -444,23 +414,23 @@
     </header>
 
     <section id="lessonView" class="view" aria-label="뜻과 예시">
-      <p class="lesson-guide">日·月·年은 달력과 시간에서 자주 만나는 글자입니다. 年은 낱말에 따라 ‘년’ 또는 ‘연’으로 읽습니다.</p>
+      <p class="lesson-guide">말 속의 ‘인’을 ‘사람’으로 바꾸어 보면 뜻이 보입니다.</p>
       <div class="word-list">
         <div class="word-row">
-          <p class="word-family">日(일) — 일출 · 일몰 · 일광 · 매일 · 생일</p>
-          <p class="example">해가 뜨는 것은 일출, 해가 지는 것은 일몰, 햇빛은 일광이라고 합니다.</p>
+          <p class="word-family">인간 · 개인 · 인물</p>
+          <p class="example">인간은 사람, 개인은 한 사람, 인물은 어떤 사람입니다.</p>
         </div>
         <div class="word-row">
-          <p class="word-family">月(월) — 월광 · 매월 · 월간 · 월초 · 월말</p>
-          <p class="example">달빛은 월광, 달마다는 매월, 한 달 동안은 월간이라고 합니다.</p>
+          <p class="word-family">인구 · 인원</p>
+          <p class="example">인구는 어떤 곳에 사는 사람의 수이고, 인원은 모인 사람의 수입니다.</p>
         </div>
         <div class="word-row">
-          <p class="word-family">年(년) — 학년 · 작년 · 내년</p>
-          <p class="example">학교에서 공부하는 해의 차례는 학년, 지난 해는 작년, 다음 해는 내년입니다.</p>
+          <p class="word-family">한국인 · 외국인 · 우주인</p>
+          <p class="example">한국인은 한국 사람, 외국인은 외국 사람, 우주인은 우주에 가는 사람입니다.</p>
         </div>
         <div class="word-row">
-          <p class="word-family">年(연) — 연도 · 연말 · 연간</p>
-          <p class="example">해를 세는 이름은 연도, 한 해의 끝은 연말, 한 해 동안은 연간입니다.</p>
+          <p class="word-family">인형 · 인공 · 인생</p>
+          <p class="example">인형은 사람 모양, 인공은 사람이 만든 것, 인생은 사람이 살아가는 삶입니다.</p>
         </div>
       </div>
       <button id="startQuiz" class="next-button" type="button">문제 풀기</button>
@@ -468,38 +438,46 @@
 
     <section id="quizView" class="view" aria-label="확인 문제" hidden>
       <div class="quiz-grid">
-        <article class="question" data-answer="0" data-note="해가 뜨는 것을 일출(日出)이라고 합니다.">
-          <p class="question-context">“아침 바다에서 <u>해가 뜨는 모습</u>을 보았습니다.”</p>
-          <h2><span class="q-number">1</span>밑줄 친 뜻을 가진 한자어는?</h2>
+        <article class="question" data-answer="3" data-note="‘개인’의 인은 사람을 뜻하는 人(인)입니다.">
+          <h2><span class="q-number">1</span>人(인)이 들어간 말은?</h2>
           <div class="choices">
-            <button class="choice" type="button">① 아침 바다에서 <u>일출</u>을 보았습니다.</button>
-            <button class="choice" type="button">② 가족과 공원으로 <u>외출</u>했습니다.</button>
-            <button class="choice" type="button">③ 과제를 선생님께 <u>제출</u>했습니다.</button>
-            <button class="choice" type="button">④ 기차가 역에서 <u>출발</u>했습니다.</button>
+            <button class="choice" type="button">① 안내문을 <u>인쇄</u>해서 나누어 주었습니다.</button>
+            <button class="choice" type="button">② 친구의 실력을 <u>인정</u>했습니다.</button>
+            <button class="choice" type="button">③ 두 사람은 깊은 <u>인연</u>을 맺었습니다.</button>
+            <button class="choice" type="button">④ 인터넷에서는 <u>개인</u> 정보를 지켜야 합니다.</button>
           </div>
           <p class="feedback" aria-live="polite"></p>
         </article>
 
-        <article class="question" data-answer="1" data-note="달빛을 월광(月光)이라고 합니다.">
-          <p class="question-context">“밤이 되자 창문으로 <u>달빛</u>이 들어왔습니다.”</p>
-          <h2><span class="q-number">2</span>밑줄 친 뜻을 가진 한자어는?</h2>
+        <article class="question" data-answer="2" data-note="‘원인’의 인은 人(인)이 아니라 因(인)입니다.">
+          <h2><span class="q-number">2</span>人(인)의 뜻이 아닌 것은?</h2>
           <div class="choices">
-            <button class="choice" type="button">① 식물은 <u>일광</u>을 받아 자랍니다.</button>
-            <button class="choice" type="button">② 잔잔한 호수에 <u>월광</u>이 비쳤습니다.</button>
-            <button class="choice" type="button">③ 경기장 <u>전광판</u>에 점수가 나왔습니다.</button>
-            <button class="choice" type="button">④ 가족과 경주를 <u>관광</u>했습니다.</button>
+            <button class="choice" type="button">① 체험할 수 있는 <u>인원</u>은 열 명입니다.</button>
+            <button class="choice" type="button">② 이야기 속 <u>우주인</u>이 지구에 왔습니다.</button>
+            <button class="choice" type="button">③ 사고가 난 <u>원인</u>을 조사했습니다.</button>
+            <button class="choice" type="button">④ 우리 고장의 <u>인구</u>를 알아보았습니다.</button>
           </div>
           <p class="feedback" aria-live="polite"></p>
         </article>
 
-        <article class="question" data-answer="0" data-note="한 해의 끝을 연말(年末)이라고 합니다.">
-          <p class="question-context">“<u>한 해의 끝</u>에 지난 일을 돌아보았습니다.”</p>
-          <h2><span class="q-number">3</span>밑줄 친 뜻을 가진 한자어는?</h2>
+        <article class="question" data-answer="1" data-note="‘할인’의 인은 人(인)이 아니라 引(인)입니다.">
+          <h2><span class="q-number">3</span>人(인)의 뜻이 아닌 것은?</h2>
           <div class="choices">
-            <button class="choice" type="button">① <u>연말</u>에 한 해의 기록을 정리했습니다.</button>
-            <button class="choice" type="button">② <u>월말</u>에 이번 달 기록을 정리했습니다.</button>
-            <button class="choice" type="button">③ <u>주말</u>에 가족과 박물관에 갔습니다.</button>
-            <button class="choice" type="button">④ <u>기말</u>에 학습 내용을 정리했습니다.</button>
+            <button class="choice" type="button">① 나는 대한민국의 <u>한국인</u>입니다.</button>
+            <button class="choice" type="button">② 공책을 <u>할인</u>받아 샀습니다.</button>
+            <button class="choice" type="button">③ 역사 속 <u>인물</u>을 조사했습니다.</button>
+            <button class="choice" type="button">④ 동생이 곰 <u>인형</u>을 안고 잡니다.</button>
+          </div>
+          <p class="feedback" aria-live="polite"></p>
+        </article>
+
+        <article class="question" data-answer="3" data-note="‘확인’의 인은 人(인)이 아니라 認(인)입니다.">
+          <h2><span class="q-number">4</span>人(인)의 뜻이 아닌 것은?</h2>
+          <div class="choices">
+            <button class="choice" type="button">① <u>인간</u>은 도구를 만들어 사용합니다.</button>
+            <button class="choice" type="button">② 책에는 한 사람의 <u>인생</u>이 담겨 있습니다.</button>
+            <button class="choice" type="button">③ 공원에 <u>인공</u> 연못을 만들었습니다.</button>
+            <button class="choice" type="button">④ 준비물을 다시 <u>확인</u>했습니다.</button>
           </div>
           <p class="feedback" aria-live="polite"></p>
         </article>
@@ -509,8 +487,8 @@
       <div class="quiz-actions">
         <button id="backToLesson" class="back-button" type="button">설명 다시 보기</button>
         <button id="resetQuiz" class="reset-button" type="button">다시 풀기</button>
-        <a id="nextLesson" class="next-lesson" href="../su-il-i-sam-sa-o/" hidden>다음 글자 一·二·三·四·五</a>
       </div>
+      <a id="nextLesson" class="next-lesson" href="../saeng/" hidden>다음 글자 生</a>
     </section>
   </main>
 
@@ -521,45 +499,27 @@
       const result = document.getElementById('result');
       const nextLesson = document.getElementById('nextLesson');
       const questions = Array.from(document.querySelectorAll('.question'));
-      const strokeSets = Array.from(document.querySelectorAll('.stroke-set'));
-      const characterButtons = Array.from(document.querySelectorAll('.stroke-character'));
+      const strokePaths = Array.from(document.querySelectorAll('.stroke-path'));
       const strokeStatus = document.getElementById('strokeStatus');
       const playStrokes = document.getElementById('playStrokes');
       const stepStroke = document.getElementById('stepStroke');
       const reducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
-      let currentCharacter = '日';
-      let currentPaths = [];
       let visibleStrokes = 0;
       let strokePlaying = false;
 
-      strokeSets.forEach((set) => {
-        set.querySelectorAll('.stroke-path').forEach((path) => {
-          const length = path.getTotalLength();
-          path.style.strokeDasharray = length;
-          path.style.strokeDashoffset = length;
-        });
+      strokePaths.forEach((path) => {
+        const length = path.getTotalLength();
+        path.style.strokeDasharray = length;
+        path.style.strokeDashoffset = length;
       });
 
       function resetStrokes() {
-        currentPaths.forEach((path) => {
+        strokePaths.forEach((path) => {
           path.getAnimations().forEach((animation) => animation.cancel());
           path.style.strokeDashoffset = path.getTotalLength();
         });
         visibleStrokes = 0;
-        strokeStatus.textContent = `${currentCharacter} · 준비`;
-      }
-
-      function selectCharacter(character) {
-        currentCharacter = character;
-        strokeSets.forEach((set) => {
-          set.toggleAttribute('hidden', set.dataset.character !== character);
-        });
-        characterButtons.forEach((button) => {
-          button.setAttribute('aria-pressed', String(button.dataset.character === character));
-        });
-        const currentSet = strokeSets.find((set) => set.dataset.character === character);
-        currentPaths = Array.from(currentSet.querySelectorAll('.stroke-path'));
-        resetStrokes();
+        strokeStatus.textContent = '준비';
       }
 
       async function revealStroke(path) {
@@ -577,46 +537,35 @@
         animation.cancel();
       }
 
-      characterButtons.forEach((button) => {
-        button.addEventListener('click', () => {
-          if (!strokePlaying) selectCharacter(button.dataset.character);
-        });
-      });
-
       playStrokes.addEventListener('click', async () => {
         if (strokePlaying) return;
         strokePlaying = true;
         playStrokes.disabled = true;
         stepStroke.disabled = true;
-        characterButtons.forEach((button) => { button.disabled = true; });
         resetStrokes();
-        for (let index = 0; index < currentPaths.length; index += 1) {
-          strokeStatus.textContent = `${currentCharacter} · ${index + 1}/${currentPaths.length}획`;
-          await revealStroke(currentPaths[index]);
+        for (let index = 0; index < strokePaths.length; index += 1) {
+          strokeStatus.textContent = `${index + 1}획 / ${strokePaths.length}획`;
+          await revealStroke(strokePaths[index]);
         }
-        visibleStrokes = currentPaths.length;
-        strokeStatus.textContent = `${currentCharacter} · 완성`;
+        visibleStrokes = strokePaths.length;
+        strokeStatus.textContent = '완성';
         playStrokes.disabled = false;
         stepStroke.disabled = false;
-        characterButtons.forEach((button) => { button.disabled = false; });
         strokePlaying = false;
       });
 
       stepStroke.addEventListener('click', () => {
         if (strokePlaying) return;
-        if (visibleStrokes >= currentPaths.length) resetStrokes();
-        currentPaths[visibleStrokes].style.strokeDashoffset = 0;
+        if (visibleStrokes >= strokePaths.length) resetStrokes();
+        strokePaths[visibleStrokes].style.strokeDashoffset = 0;
         visibleStrokes += 1;
-        strokeStatus.textContent = visibleStrokes === currentPaths.length
-          ? `${currentCharacter} · 완성`
-          : `${currentCharacter} · ${visibleStrokes}/${currentPaths.length}획`;
+        strokeStatus.textContent = visibleStrokes === strokePaths.length
+          ? '완성'
+          : `${visibleStrokes}획 / ${strokePaths.length}획`;
       });
-
-      selectCharacter('日');
 
       function show(view) {
         const quiz = view === 'quiz';
-        document.body.classList.toggle('quiz-active', quiz);
         lessonView.hidden = quiz;
         quizView.hidden = !quiz;
         window.scrollTo({ top: 0, behavior: 'smooth' });

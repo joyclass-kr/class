@@ -143,18 +143,12 @@ pieces.forEach((p,i)=>{
   p.lead=instrumentOriginal[p.lead]?paired(p.lead,instrumentOriginal[p.lead]):p.lead;
 });
 
-const levels=['입문','입문','입문','기본','기본','기본','기본','도전','도전','도전'];
+const levels=['핵심','핵심','핵심','핵심'];
 const templates=[
-  ['제시곡의 제목은 무엇일까요?','titleAnswer'],
-  ['제시곡의 작곡가는 누구일까요?','composer'],
-  ['제시곡이 속하는 시대는 언제일까요?','period'],
-  ['제시곡의 종류 또는 형식은 무엇일까요?','form'],
-  ['가장 두드러지게 들리는 악기 편성은 무엇일까요?','lead'],
   ['박자를 느끼며 들었을 때 가장 알맞은 것은 무엇일까요?','meter'],
   ['빠르기를 가장 알맞게 표현한 것은 무엇일까요?','tempo'],
   ['소리로 느껴지는 전체 분위기와 가장 가까운 것은 무엇일까요?','mood'],
-  ['실제로 들리는 음악적 특징과 가장 가까운 것은 무엇일까요?','feature'],
-  ['이 곡의 감상 포인트로 가장 알맞은 설명은 무엇일까요?','note']
+  ['실제로 들리는 음악적 특징과 가장 가까운 것은 무엇일까요?','feature']
 ];
 const pickWrong=(piece,key,seed)=>{
   const ranked=pieces.filter(other=>other!==piece&&other[key]!==piece[key]).sort((a,b)=>{
@@ -165,9 +159,8 @@ const pickWrong=(piece,key,seed)=>{
   return [...pool.slice(start),...pool.slice(0,start)].slice(0,2);
 };
 const shuffle=(arr)=>arr.map(v=>({v,r:Math.random()})).sort((a,b)=>a.r-b.r).map(x=>x.v);
-const teachingNotes={'36-10':'매우 높은 음을 빠르게 오르내리는 이런 성악 기법을 전문 용어로 콜로라투라(coloratura)라고 합니다.'};
 const allQuestions=pieces.flatMap((p,pi)=>templates.map(([stem,key],ti)=>{
-  const id=`${p.no}-${ti+1}`,answer=p[key],choices=shuffle([answer,...pickWrong(p,key,pi*11+ti)]),extra=teachingNotes[id]||(key==='note'?'':p.note);
-  return {id,piece:p,level:levels[ti],stem,choices,correct:choices.indexOf(answer),answer,explain:`제시곡은 ${p.title} (${p.originalTitle}, ${p.year})입니다. ${answer}.${extra?` ${extra}`:''}`};
+  const id=`${p.no}-${ti+1}`,answer=p[key],choices=shuffle([answer,...pickWrong(p,key,pi*11+ti)]);
+  return {id,key,piece:p,level:levels[ti],stem,choices,correct:choices.indexOf(answer),answer,explain:`제시곡은 ${p.title} (${p.originalTitle}, ${p.year})입니다. ${answer}. ${p.note}`};
 }));
 window.CLASSICAL_DATA={pieces,allQuestions};

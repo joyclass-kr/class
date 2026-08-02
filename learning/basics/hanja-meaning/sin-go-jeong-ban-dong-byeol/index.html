@@ -4,7 +4,7 @@
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
   <meta name="theme-color" content="#f7f5ef">
-  <title>日·月·年 | 韓字</title>
+  <title>新·古·正·反·同·別 | 韓字</title>
   <style>
     @font-face {
       font-family: "KleeHanja";
@@ -115,7 +115,7 @@
     .stroke-set[hidden] { display: none; }
     .stroke-path { fill: none; stroke: var(--ink); stroke-width: 7; stroke-linecap: round; stroke-linejoin: round; vector-effect: non-scaling-stroke; }
     .stroke-controls { display: grid; gap: 6px; }
-    .stroke-character-switch { display: grid; grid-template-columns: repeat(3, 1fr); gap: 4px; }
+    .stroke-character-switch { display: grid; grid-template-columns: repeat(var(--stroke-columns), 1fr); gap: 4px; }
 
     .stroke-character,
     .stroke-button {
@@ -392,6 +392,7 @@
       .view { animation: appear .18s ease-out; }
       @keyframes appear { from { opacity: .2; transform: translateY(4px); } }
     }
+    .hanja-generated { display:flex; gap:clamp(4px, .8vw, 9px); min-width:calc(var(--hanja-size) * 3); font-size:clamp(42px, 6vw, var(--hanja-size)); }
   </style>
 </head>
 <body>
@@ -401,42 +402,77 @@
     </div>
 
     <header class="hanja-head">
-      <div class="hanja hanja-three" aria-label="날 일, 달 월, 해 년"><span>日</span><span>月</span><span>年</span></div>
+      <div class="hanja hanja-generated" style="--hanja-size:46px" aria-label="새 신, 옛 고, 바를 정, 돌이킬 반, 같을 동, 다를 별"><span>新</span><span>古</span><span>正</span><span>反</span><span>同</span><span>別</span></div>
       <div>
-        <p class="reading">일 · 월 · 년(연)</p>
-        <p class="core-meaning">날 · 달 · 해</p>
+        <p class="reading">신 · 고 · 정 · 반 · 동 · 별</p>
+        <p class="core-meaning">새롭다 · 오래되다 · 바르다 · 거꾸로 · 같다 · 다르다</p>
       </div>
-      <section class="stroke-demo" aria-label="日·月·年 획순">
+      <section class="stroke-demo" aria-label="新·古·正·反·同·別 획순">
         <svg class="stroke-stage" viewBox="0 0 160 160" role="img" aria-label="선택한 한자의 획순">
           <path class="stroke-guide" d="M80 0V160M0 80H160M0 0L160 160M160 0L0 160" />
-          <g class="stroke-set" data-character="日" transform="translate(10 8) scale(1.3)">
-            <path class="stroke-path" d="M31.5,24.5c1.12,1.12,1.74,2.75,1.74,4.75c0,1.6-0.16,38.11-0.09,53.5c0.02,3.82,0.05,6.35,0.09,6.75" />
-            <path class="stroke-path" d="M33.48,26c0.8-0.05,37.67-3.01,40.77-3.25c3.19-0.25,5,1.75,5,4.25c0,4-0.22,40.84-0.23,56c0,3.48,0,5.72,0,6" />
-            <path class="stroke-path" d="M34.22,55.25c7.78-0.5,35.9-2.5,44.06-2.75" />
-            <path class="stroke-path" d="M34.23,86.5c10.52-0.75,34.15-2.12,43.81-2.25" />
+          <g class="stroke-set" data-character="新" transform="translate(10 8) scale(1.3)">
+            <path class="stroke-path" d="M33.72,12.76c0.88,0.88,1.53,2.49,1.53,4.35c0,2.63,0.01,1.9,0.02,9.04" />
+            <path class="stroke-path" d="M18.32,28.69c1.19,0.11,2.61,0.17,3.79,0.03c7.4-0.84,18.02-2.59,25.62-3.22c1.98-0.16,3.19-0.03,4.18,0.02" />
+            <path class="stroke-path" d="M23.62,34.38c3.39,4.82,4.03,8.08,4.34,11.36" />
+            <path class="stroke-path" d="M45.59,29.5c0.62,1.09,0.38,2.59-0.08,3.75c-1.65,4.12-4.74,10.59-5.88,12.61" />
+            <path class="stroke-path" d="M14.17,50.95c1.78,0.27,3.57,0.27,5.34,0.05c7.96-1.02,21.06-2.74,29.12-3.36c1.96-0.15,3.91-0.03,5.87,0.11" />
+            <path class="stroke-path" d="M16.76,63.42c0.83,0.22,3.05,0.44,5.23,0.18c8.88-1.09,17.01-2.34,26.08-3.01c2.2-0.16,2.76-0.23,4.13,0" />
+            <path class="stroke-path" d="M34.38,51c1.12,1.12,1.5,2.75,1.5,4.22c0,1.31-0.15,24.25-0.25,34.78c-0.02,2.8-0.05,4.69-0.06,5" />
+            <path class="stroke-path" d="M34.25,62.84c0,1.41-0.35,2.47-0.87,3.37c-4.25,7.45-12.94,17.12-19.63,21.04" />
+            <path class="stroke-path" d="M39.25,68.5c4.71,2.98,7.9,5.97,9.49,8.43" />
+            <path class="stroke-path" d="M82.74,17.44c-0.12,0.93-0.46,2.3-1.27,3.21C76.25,26.5,70.5,30.62,61.69,35.7" />
+            <path class="stroke-path" d="M59.2,35.14c0.83,0.83,1.53,2.28,1.53,3.96c0,29.15-2.36,38.52-8.98,48.4" />
+            <path class="stroke-path" d="M62.89,47.36c1.98-0.11,3.36-0.31,4.54-0.48c7.82-1.13,18.82-2.38,26.29-3.3c1.18-0.15,3.25-0.17,3.99,0" />
+            <path class="stroke-path" d="M80.32,48.54c0.95,0.95,1.59,2.21,1.59,3.8c0,0.93,0.24,27.72,0.16,40.16c-0.02,2.33-0.04,4.17-0.06,5.25" />
           </g>
-          <g class="stroke-set" data-character="月" transform="translate(10 8) scale(1.3)" hidden>
-            <path class="stroke-path" d="M34.25,16.25c1,1,1.48,2.38,1.5,4c0.38,33.62,2.38,59.38-11,73.25" />
-            <path class="stroke-path" d="M36.25,19c4.12-0.62,31.49-4.78,33.25-5c4-0.5,5.5,1.12,5.5,4.75c0,2.76-0.5,49.25-0.5,69.5c0,13-6.25,4-8.75,1.75" />
-            <path class="stroke-path" d="M37.25,38c10.25-1.5,27.25-3.75,36.25-4.5" />
-            <path class="stroke-path" d="M37,58.25c8.75-1.12,27-3.5,36.25-4" />
+          <g class="stroke-set" data-character="古" transform="translate(10 8) scale(1.3)" hidden>
+            <path class="stroke-path" d="M11.25,43.25c2.75,0.62,5.54,0.83,9.53,0.5c23.85-2,49.47-4.12,67.35-4.75c4.02-0.14,6.87,0,9.12,0.5" />
+            <path class="stroke-path" d="M52.41,12.5c1.42,1.42,2.13,3.25,2.13,5.06c0,17.05-0.14,39.31-0.14,48.94" />
+            <path class="stroke-path" d="M31,67.77c1.12,1.12,2,2.73,2.24,4.48c0.61,4.43,1.87,12.12,3.22,20.93c0.2,1.31,0.39,2.59,0.57,3.83" />
+            <path class="stroke-path" d="M33.77,69.3c11.97-1.17,36.4-3.39,42.99-3.81c3.74-0.24,5.11,1.39,4.26,4.71c-1.18,4.63-3.81,13.6-5.23,20.06" />
+            <path class="stroke-path" d="M37.88,94.42c7.81-0.36,23.99-1.88,35.14-2.65c1.87-0.13,3.61-0.24,5.18-0.32" />
           </g>
-          <g class="stroke-set" data-character="年" transform="translate(10 8) scale(1.3)" hidden>
-            <path class="stroke-path" d="M40.01,11.89c0.24,1.61-0.01,2.86-0.84,4.46c-2.53,4.84-6.91,11.4-15.86,19.62" />
-            <path class="stroke-path" d="M39.13,23.62c2.25,0.38,4.4,0.18,5.79,0.03c11.7-1.27,21.33-2.9,33.22-4.07c2.3-0.23,4.2,0,5.35,0.26" />
-            <path class="stroke-path" d="M30.13,43.59c1.36,0.33,3.87,0.46,5.21,0.33c10.91-1.05,28.53-3.42,40.78-4.26c2.26-0.15,3.63,0.16,4.76,0.32" />
-            <path class="stroke-path" d="M33.75,44.5c1,1.25,1,1.97,1.01,3.5C34.8,52.33,35,65.29,35,66.25" />
-            <path class="stroke-path" d="M13.88,67.74c1.97,0.47,5.61,0.66,7.57,0.47c20.21-2.03,36.35-4.62,66.65-5.31c3.29-0.08,5.26,0.22,6.91,0.46" />
-            <path class="stroke-path" d="M56.56,25.46c1.12,1.12,1.79,3.54,1.79,4.94c0,0.89-0.05,44.26-0.13,61.6c-0.01,3.12-0.03,5.39-0.05,6.38" />
+          <g class="stroke-set" data-character="正" transform="translate(10 8) scale(1.3)" hidden>
+            <path class="stroke-path" d="M26.75,23.79c3.12,0.63,6.35,0.5,9.5,0.22c11.81-1.03,25.77-2.56,39.75-3.29c2.84-0.15,5.56-0.03,8.38,0.31" />
+            <path class="stroke-path" d="M52.96,25.62c1.4,1.4,2.01,2.88,2.01,5.54c0,11.55-0.01,56.3-0.01,57.34" />
+            <path class="stroke-path" d="M56.36,53.48c7.14-0.48,15.52-1.36,21.92-1.84c1.59-0.12,2.47-0.02,3.6,0.16" />
+            <path class="stroke-path" d="M27.54,56.37c1.17,1.17,2.05,2.62,2.15,5.21c0.43,10.8,0.43,20.3,0.62,27.92" />
+            <path class="stroke-path" d="M14.25,90.04C18,91,21.38,91.23,25,91c14-0.88,39.23-2.07,58.63-2.39c3.36-0.06,6.77,0.32,10,1.37" />
+          </g>
+          <g class="stroke-set" data-character="反" transform="translate(10 8) scale(1.3)" hidden>
+            <path class="stroke-path" d="M28.13,22.29c1.84,0.48,5.22,0.64,7.06,0.48C50,21.5,64.62,19.12,79.06,18.04c3.06-0.23,4.91-0.02,6.44,0.22" />
+            <path class="stroke-path" d="M31.24,23c1.13,1.13,1.49,2.69,1.4,4.89C31.75,50,29.62,73.25,15.81,89.47" />
+            <path class="stroke-path" d="M35.09,43.98c1.81,0.37,2.76,0.74,6.4,0.37C49.88,43.5,66.25,40,70.83,38.7c3.42-0.97,5.17,1.43,3.89,4.31C64.06,66.95,51.88,83.25,26,93.51" />
+            <path class="stroke-path" d="M37.5,52.82c5.09,0.96,28.95,25.78,46.67,36.36c2.76,1.65,4.77,2.74,7.33,3.29" />
+          </g>
+          <g class="stroke-set" data-character="同" transform="translate(10 8) scale(1.3)" hidden>
+            <path class="stroke-path" d="M21.67,16.73c1.08,1.27,1.69,3.02,1.69,5.32c0,4.15-0.19,49.87-0.25,67.2c-0.01,3.37-0.02,5.63-0.02,6.25" />
+            <path class="stroke-path" d="M24.04,19.17c15.63-1.45,57.69-4.83,59.24-5c3.88-0.42,5.19,1.58,5.19,4.37c0,2.54-0.26,65.26-0.26,71.1c0,12.6-5.08,4.85-7.96,2.05" />
+            <path class="stroke-path" d="M37.38,33.92c1.35,0.38,3.82,0.54,5.16,0.38c6.96-0.8,18.96-2.05,25.62-2.63c2.23-0.2,3.59,0.18,4.71,0.37" />
+            <path class="stroke-path" d="M38.83,48.39c0.82,0.55,1.53,1.56,1.76,2.49c1.15,4.62,2.13,10.46,3.01,16.32c0.27,1.8,0.52,2.78,0.76,4.3" />
+            <path class="stroke-path" d="M41.44,49.72c9.31-1.22,20.85-2.46,26.25-3.06c2.2-0.24,3.53,1.44,3.21,2.87c-1.09,4.92-2.33,9.95-3.83,16.33" />
+            <path class="stroke-path" d="M45.09,69.33c5.52-0.48,12.6-1.51,20.15-2.26c1.19-0.12,2.51-0.07,3.84-0.1" />
+          </g>
+          <g class="stroke-set" data-character="別" transform="translate(10 8) scale(1.3)" hidden>
+            <path class="stroke-path" d="M20,19.64c0.81,0.81,1.3,1.98,1.58,3.13c1.09,4.48,2.31,10.62,3.2,16.11c0.17,1.07,0.33,2.12,0.48,3.13" />
+            <path class="stroke-path" d="M22.13,21.53c8.81-1.37,22.1-3.5,28.37-4.31c3.81-0.49,5.13,0.6,4.29,4.29c-0.95,4.18-2.29,9.26-3.63,14.54" />
+            <path class="stroke-path" d="M26.2,39.58c4.97-0.5,15.78-1.67,23.94-2.4c1.36-0.12,2.65-0.23,3.83-0.32" />
+            <path class="stroke-path" d="M36.45,49.54c4.3,1.46,11.3,3.08,15.05,3.56c1.62,0.21,2.63,1.65,2.13,3.84c-0.89,3.97-8.9,25.29-15.66,33.27c-3.1,3.66-5.47,0.91-7-1.61" />
+            <path class="stroke-path" d="M36.5,41.5c0.06,0.9,0.21,1.85-0.13,3.13c-2.25,8.62-10.25,24.62-22.13,35.25" />
+            <path class="stroke-path" d="M69.02,25.83c0.98,0.92,1.76,2.42,1.76,5.02c0,10.9-0.01,21.65-0.02,28.65c0,2.41,0,4.37,0,5.75" />
+            <path class="stroke-path" d="M90.77,13.83c0.98,0.92,1.76,2.67,1.76,5.02c0,15.02-0.01,63.77-0.01,69.62c0,10.53-7.21,1.5-8.71,0.25" />
           </g>
         </svg>
         <div class="stroke-controls">
-          <div class="stroke-character-switch" aria-label="획순을 볼 글자">
-            <button class="stroke-character" type="button" data-character="日" aria-pressed="true">日</button>
-            <button class="stroke-character" type="button" data-character="月" aria-pressed="false">月</button>
-            <button class="stroke-character" type="button" data-character="年" aria-pressed="false">年</button>
+          <div class="stroke-character-switch" style="--stroke-columns:4" aria-label="획순을 볼 글자">
+            <button class="stroke-character" type="button" data-character="新" aria-pressed="true">新</button>
+            <button class="stroke-character" type="button" data-character="古" aria-pressed="false">古</button>
+            <button class="stroke-character" type="button" data-character="正" aria-pressed="false">正</button>
+            <button class="stroke-character" type="button" data-character="反" aria-pressed="false">反</button>
+            <button class="stroke-character" type="button" data-character="同" aria-pressed="false">同</button>
+            <button class="stroke-character" type="button" data-character="別" aria-pressed="false">別</button>
           </div>
-          <p id="strokeStatus" class="stroke-status" aria-live="polite">日 · 준비</p>
+          <p id="strokeStatus" class="stroke-status" aria-live="polite">新 · 준비</p>
           <button id="playStrokes" class="stroke-button" type="button">▶ 획순 보기</button>
           <button id="stepStroke" class="stroke-button" type="button">한 획씩</button>
         </div>
@@ -444,23 +480,31 @@
     </header>
 
     <section id="lessonView" class="view" aria-label="뜻과 예시">
-      <p class="lesson-guide">日·月·年은 달력과 시간에서 자주 만나는 글자입니다. 年은 낱말에 따라 ‘년’ 또는 ‘연’으로 읽습니다.</p>
+      <p class="lesson-guide">新·古·正·反·同·別은 새것과 옛것, 맞고 틀림, 같고 다름을 판단하는 말에 들어갑니다.</p>
       <div class="word-list">
         <div class="word-row">
-          <p class="word-family">日(일) — 일출 · 일몰 · 일광 · 매일 · 생일</p>
-          <p class="example">해가 뜨는 것은 일출, 해가 지는 것은 일몰, 햇빛은 일광이라고 합니다.</p>
+          <p class="word-family">新(신) — 신문 · 신년 · 최신</p>
+          <p class="example">새 소식을 담은 글은 신문, 새해는 신년, 가장 새로운 것은 최신입니다.</p>
         </div>
         <div class="word-row">
-          <p class="word-family">月(월) — 월광 · 매월 · 월간 · 월초 · 월말</p>
-          <p class="example">달빛은 월광, 달마다는 매월, 한 달 동안은 월간이라고 합니다.</p>
+          <p class="word-family">古(고) — 고대 · 고전 · 중고</p>
+          <p class="example">아주 옛 시대는 고대, 오래 이어진 작품은 고전, 새것이 아닌 물건은 중고입니다.</p>
         </div>
         <div class="word-row">
-          <p class="word-family">年(년) — 학년 · 작년 · 내년</p>
-          <p class="example">학교에서 공부하는 해의 차례는 학년, 지난 해는 작년, 다음 해는 내년입니다.</p>
+          <p class="word-family">正(정) — 정답 · 정문 · 수정</p>
+          <p class="example">바른 답은 정답, 바른 앞문은 정문, 잘못을 바로잡는 것은 수정입니다.</p>
         </div>
         <div class="word-row">
-          <p class="word-family">年(연) — 연도 · 연말 · 연간</p>
-          <p class="example">해를 세는 이름은 연도, 한 해의 끝은 연말, 한 해 동안은 연간입니다.</p>
+          <p class="word-family">反(반) — 반대 · 반응 · 반사</p>
+          <p class="example">거꾸로 맞서는 것은 반대, 자극에 되돌아오는 변화는 반응, 빛이 되돌아가는 것은 반사입니다.</p>
+        </div>
+        <div class="word-row">
+          <p class="word-family">同(동) — 동일 · 동시 · 공동</p>
+          <p class="example">서로 같은 것은 동일, 같은 때는 동시, 여럿이 함께하는 것은 공동입니다.</p>
+        </div>
+        <div class="word-row">
+          <p class="word-family">別(별) — 특별 · 차별 · 이별</p>
+          <p class="example">보통과 다르게 뛰어난 것은 특별, 다르게 대하는 것은 차별, 서로 헤어지는 것은 이별입니다.</p>
         </div>
       </div>
       <button id="startQuiz" class="next-button" type="button">문제 풀기</button>
@@ -468,48 +512,71 @@
 
     <section id="quizView" class="view" aria-label="확인 문제" hidden>
       <div class="quiz-grid">
-        <article class="question" data-answer="0" data-note="해가 뜨는 것을 일출(日出)이라고 합니다.">
-          <p class="question-context">“아침 바다에서 <u>해가 뜨는 모습</u>을 보았습니다.”</p>
+        <article class="question" data-answer="0" data-note="새 소식을 담아 내는 종이 매체는 신문(新聞)입니다.">
+          <p class="question-context">“매일 새로운 소식을 담아 내는 <u>종이 매체</u>를 읽었습니다.”</p>
           <h2><span class="q-number">1</span>밑줄 친 뜻을 가진 한자어는?</h2>
           <div class="choices">
-            <button class="choice" type="button">① 아침 바다에서 <u>일출</u>을 보았습니다.</button>
-            <button class="choice" type="button">② 가족과 공원으로 <u>외출</u>했습니다.</button>
-            <button class="choice" type="button">③ 과제를 선생님께 <u>제출</u>했습니다.</button>
-            <button class="choice" type="button">④ 기차가 역에서 <u>출발</u>했습니다.</button>
+            <button class="choice" type="button" data-hanja="新聞">① 아침에 어린이 <u>신문</u>을 읽었습니다.</button>
+            <button class="choice" type="button" data-hanja="文書">② 행사 안내 <u>문서</u>를 확인했습니다.</button>
+            <button class="choice" type="button" data-hanja="文章">③ 낱말을 이어 <u>문장</u>을 만들었습니다.</button>
+            <button class="choice" type="button" data-hanja="雜誌">④ 과학 <u>잡지</u>에서 기사를 읽었습니다.</button>
           </div>
           <p class="feedback" aria-live="polite"></p>
         </article>
 
-        <article class="question" data-answer="1" data-note="달빛을 월광(月光)이라고 합니다.">
-          <p class="question-context">“밤이 되자 창문으로 <u>달빛</u>이 들어왔습니다.”</p>
+        <article class="question" data-answer="0" data-note="아주 오래된 시대를 고대(古代)라고 합니다.">
+          <p class="question-context">“아주 <u>오래된 시대</u>의 유물을 살펴보았습니다.”</p>
           <h2><span class="q-number">2</span>밑줄 친 뜻을 가진 한자어는?</h2>
           <div class="choices">
-            <button class="choice" type="button">① 식물은 <u>일광</u>을 받아 자랍니다.</button>
-            <button class="choice" type="button">② 잔잔한 호수에 <u>월광</u>이 비쳤습니다.</button>
-            <button class="choice" type="button">③ 경기장 <u>전광판</u>에 점수가 나왔습니다.</button>
-            <button class="choice" type="button">④ 가족과 경주를 <u>관광</u>했습니다.</button>
+            <button class="choice" type="button" data-hanja="古代">① <u>고대</u>의 유물을 살펴보았습니다.</button>
+            <button class="choice" type="button" data-hanja="現代">② <u>현대</u>의 생활 모습을 조사했습니다.</button>
+            <button class="choice" type="button" data-hanja="近代">③ <u>근대</u>의 교통 발달을 배웠습니다.</button>
+            <button class="choice" type="button" data-hanja="時代">④ 각 <u>시대</u>의 특징을 비교했습니다.</button>
           </div>
           <p class="feedback" aria-live="polite"></p>
         </article>
 
-        <article class="question" data-answer="0" data-note="한 해의 끝을 연말(年末)이라고 합니다.">
-          <p class="question-context">“<u>한 해의 끝</u>에 지난 일을 돌아보았습니다.”</p>
+        <article class="question" data-answer="0" data-note="바른 답을 정답(正答)이라고 합니다.">
+          <p class="question-context">“문제를 풀고 <u>바른 답</u>을 표시했습니다.”</p>
           <h2><span class="q-number">3</span>밑줄 친 뜻을 가진 한자어는?</h2>
           <div class="choices">
-            <button class="choice" type="button">① <u>연말</u>에 한 해의 기록을 정리했습니다.</button>
-            <button class="choice" type="button">② <u>월말</u>에 이번 달 기록을 정리했습니다.</button>
-            <button class="choice" type="button">③ <u>주말</u>에 가족과 박물관에 갔습니다.</button>
-            <button class="choice" type="button">④ <u>기말</u>에 학습 내용을 정리했습니다.</button>
+            <button class="choice" type="button" data-hanja="正答">① 문제의 <u>정답</u>을 표시했습니다.</button>
+            <button class="choice" type="button" data-hanja="誤答">② 틀린 <u>오답</u>을 다시 풀었습니다.</button>
+            <button class="choice" type="button" data-hanja="解答">③ 어려운 문제의 <u>해답</u>을 찾았습니다.</button>
+            <button class="choice" type="button" data-hanja="應答">④ 설문에 성실히 <u>응답</u>했습니다.</button>
+          </div>
+          <p class="feedback" aria-live="polite"></p>
+        </article>
+
+        <article class="question" data-answer="0" data-note="서로 맞서는 것을 반대(反對)라고 합니다.">
+          <p class="question-context">“두 의견이 서로 <u>맞서는 것</u>을 확인했습니다.”</p>
+          <h2><span class="q-number">4</span>밑줄 친 뜻을 가진 한자어는?</h2>
+          <div class="choices">
+            <button class="choice" type="button" data-hanja="反對">① 두 의견이 서로 <u>반대</u>였습니다.</button>
+            <button class="choice" type="button" data-hanja="相對">② 경기 <u>상대</u>를 존중했습니다.</button>
+            <button class="choice" type="button" data-hanja="對立">③ 두 생각이 <u>대립</u>했습니다.</button>
+            <button class="choice" type="button" data-hanja="反應">④ 식물이 빛에 <u>반응</u>했습니다.</button>
+          </div>
+          <p class="feedback" aria-live="polite"></p>
+        </article>
+
+        <article class="question" data-answer="0" data-note="서로 같은 것을 동일(同一)하다고 합니다.">
+          <p class="question-context">“두 물건의 모양과 크기가 <u>서로 같았습니다</u>.”</p>
+          <h2><span class="q-number">5</span>밑줄 친 뜻을 가진 한자어는?</h2>
+          <div class="choices">
+            <button class="choice" type="button" data-hanja="同一">① 두 물건의 크기가 <u>동일</u>했습니다.</button>
+            <button class="choice" type="button" data-hanja="統一">② 모둠의 의견을 하나로 <u>통일</u>했습니다.</button>
+            <button class="choice" type="button" data-hanja="一致">③ 두 답이 서로 <u>일치</u>했습니다.</button>
+            <button class="choice" type="button" data-hanja="同等">④ 모든 사람을 <u>동등</u>하게 대했습니다.</button>
           </div>
           <p class="feedback" aria-live="polite"></p>
         </article>
       </div>
-
       <p id="result" class="result" aria-live="polite" hidden></p>
       <div class="quiz-actions">
         <button id="backToLesson" class="back-button" type="button">설명 다시 보기</button>
         <button id="resetQuiz" class="reset-button" type="button">다시 풀기</button>
-        <a id="nextLesson" class="next-lesson" href="../su-il-i-sam-sa-o/" hidden>다음 글자 一·二·三·四·五</a>
+        <a id="nextLesson" class="next-lesson" href="../dong-mul-sik/" hidden>다음 글자 動·物·植</a>
       </div>
     </section>
   </main>
@@ -527,7 +594,7 @@
       const playStrokes = document.getElementById('playStrokes');
       const stepStroke = document.getElementById('stepStroke');
       const reducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
-      let currentCharacter = '日';
+      let currentCharacter = '新';
       let currentPaths = [];
       let visibleStrokes = 0;
       let strokePlaying = false;
@@ -612,7 +679,7 @@
           : `${currentCharacter} · ${visibleStrokes}/${currentPaths.length}획`;
       });
 
-      selectCharacter('日');
+      selectCharacter('新');
 
       function show(view) {
         const quiz = view === 'quiz';

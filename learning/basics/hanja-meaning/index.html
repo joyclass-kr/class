@@ -4,7 +4,7 @@
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
   <meta name="theme-color" content="#f7f5ef">
-  <title>人 | 韓字</title>
+  <title>韓字 | 기초학력</title>
   <style>
     @font-face {
       font-family: "KleeHanja";
@@ -14,15 +14,12 @@
 
     :root {
       --paper: #f7f5ef;
+      --card: #fffdf8;
       --ink: #202630;
-      --muted: #65707c;
-      --line: #d9d6ce;
-      --blue: #2d638c;
+      --muted: #68717a;
+      --line: #d8d4ca;
+      --blue: #245f8d;
       --blue-soft: #eaf2f7;
-      --correct: #226847;
-      --correct-soft: #eaf5ee;
-      --wrong: #a43d36;
-      --wrong-soft: #fbefed;
     }
 
     * { box-sizing: border-box; }
@@ -38,29 +35,36 @@
       -webkit-font-smoothing: antialiased;
     }
 
-    button, a { -webkit-tap-highlight-color: transparent; }
+    a, summary { -webkit-tap-highlight-color: transparent; }
 
     .page {
-      position: relative;
-      width: min(1180px, 100%);
+      width: min(1060px, 100%);
       min-height: 100svh;
       margin: 0 auto;
-      padding: clamp(12px, 2vw, 22px) clamp(20px, 4vw, 54px) 18px;
+      padding: clamp(14px, 2.2vw, 24px) clamp(18px, 4vw, 44px) 34px;
     }
 
-    .topline {
-      position: absolute;
-      top: 10px;
-      right: calc(clamp(20px, 4vw, 54px) + 256px);
+    .topbar {
+      min-height: 44px;
       display: flex;
       align-items: center;
-      justify-content: flex-end;
+      justify-content: space-between;
       gap: 16px;
+      border-bottom: 1px solid var(--line);
+    }
+
+    h1 {
+      margin: 0;
+      font-family: "KleeHanja", serif;
+      font-size: clamp(31px, 4vw, 43px);
+      font-weight: 600;
+      line-height: 1;
     }
 
     .home-link {
       min-height: 44px;
-      padding: 6px 2px 6px 14px;
+      display: inline-flex;
+      align-items: center;
       color: var(--muted);
       font-family: system-ui, sans-serif;
       font-size: 15px;
@@ -68,562 +72,314 @@
       text-decoration: none;
     }
 
-    .hanja-head {
+    .start-card {
       display: grid;
-      grid-template-columns: auto 1fr auto;
+      grid-template-columns: auto minmax(0, 1fr) auto;
       align-items: center;
-      gap: clamp(20px, 3vw, 34px);
-      padding: 6px 0 13px;
-      border-bottom: 1px solid var(--line);
+      gap: clamp(16px, 3vw, 28px);
+      margin: 18px 0 16px;
+      padding: clamp(16px, 2.4vw, 24px);
+      border: 1px solid #b7cbd9;
+      border-radius: 10px;
+      color: var(--ink);
+      background: var(--card);
+      text-decoration: none;
     }
 
-    .hanja {
-      min-width: 1.2em;
+    .start-hanja {
+      min-width: 1em;
+      color: var(--blue);
       font-family: "KleeHanja", serif;
-      font-size: clamp(78px, 10vw, 112px);
+      font-size: clamp(56px, 8vw, 76px);
       font-weight: 600;
       line-height: .9;
       text-align: center;
     }
 
-    .stroke-demo {
+    .start-copy { min-width: 0; }
+
+    .start-label {
+      display: block;
+      margin-bottom: 6px;
+      color: var(--blue);
+      font-family: system-ui, sans-serif;
+      font-size: 14px;
+      font-weight: 800;
+    }
+
+    .start-title {
+      display: block;
+      font-size: clamp(20px, 2.6vw, 27px);
+      font-weight: 800;
+      line-height: 1.25;
+    }
+
+    .start-note {
+      display: block;
+      margin-top: 5px;
+      color: var(--muted);
+      font-size: 16px;
+      line-height: 1.45;
+    }
+
+    .start-arrow {
+      font-family: system-ui, sans-serif;
+      font-size: 25px;
+      font-weight: 800;
+    }
+
+    .section-head {
+      display: flex;
+      align-items: baseline;
+      justify-content: space-between;
+      gap: 16px;
+      margin: 20px 0 9px;
+    }
+
+    h2 {
+      margin: 0;
+      font-size: 21px;
+      line-height: 1.3;
+    }
+
+    .total {
+      margin: 0;
+      color: var(--muted);
+      font-family: system-ui, sans-serif;
+      font-size: 14px;
+      font-weight: 700;
+      white-space: nowrap;
+    }
+
+    .groups {
       display: grid;
-      grid-template-columns: 104px 112px;
-      align-items: center;
-      gap: 10px;
-      padding: 6px;
+      gap: 9px;
+    }
+
+    details {
+      overflow: hidden;
       border: 1px solid var(--line);
       border-radius: 8px;
-      background: #fffdf8;
+      background: var(--card);
     }
 
-    .stroke-stage {
-      display: block;
-      width: 104px;
-      height: 104px;
-      border: 1px solid #ddd8ce;
-      background: #fff;
-    }
-
-    .stroke-guide {
-      fill: none;
-      stroke: #dedbd3;
-      stroke-width: 1;
-      stroke-dasharray: 4 4;
-    }
-
-    .stroke-path {
-      fill: none;
-      stroke: var(--ink);
-      stroke-width: 12;
-      stroke-linecap: round;
-      stroke-linejoin: round;
-    }
-
-    .stroke-controls {
+    summary {
+      min-height: 54px;
       display: grid;
-      gap: 6px;
-    }
-
-    .stroke-status {
-      margin: 0;
-      color: var(--blue);
-      font: 800 14px/1.2 system-ui, sans-serif;
-      text-align: center;
-    }
-
-    .stroke-button {
-      min-height: 44px;
-      padding: 7px 8px;
-      border: 1px solid #9aa5ad;
-      border-radius: 5px;
-      background: #fff;
-      color: var(--ink);
-      font: 800 14px/1.15 system-ui, sans-serif;
+      grid-template-columns: 74px minmax(150px, .8fr) minmax(0, 1fr) auto;
+      align-items: center;
+      gap: 12px;
+      padding: 7px 14px;
       cursor: pointer;
+      list-style: none;
     }
 
-    .stroke-button:focus-visible {
-      outline: 3px solid rgba(45, 99, 140, .28);
+    summary::-webkit-details-marker { display: none; }
+
+    .range {
+      color: var(--blue);
+      font-family: system-ui, sans-serif;
+      font-size: 14px;
+      font-weight: 800;
+    }
+
+    .group-title {
+      min-width: 0;
+      font-size: 18px;
+      font-weight: 800;
+    }
+
+    .group-chars {
+      overflow: hidden;
+      color: var(--muted);
+      font-family: "KleeHanja", serif;
+      font-size: 20px;
+      font-weight: 600;
+      text-overflow: ellipsis;
+      white-space: nowrap;
+    }
+
+    .chevron {
+      width: 30px;
+      color: var(--blue);
+      font-family: system-ui, sans-serif;
+      font-size: 18px;
+      text-align: center;
+      transition: transform .15s ease;
+    }
+
+    details[open] .chevron { transform: rotate(180deg); }
+
+    .lesson-list {
+      display: grid;
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+      margin: 0;
+      padding: 0 12px 12px;
+      list-style: none;
+      border-top: 1px solid var(--line);
+    }
+
+    .lesson-list li:nth-child(odd) { border-right: 1px solid var(--line); }
+
+    .lesson-link {
+      min-height: 52px;
+      display: grid;
+      grid-template-columns: 34px minmax(66px, auto) 1fr;
+      align-items: center;
+      gap: 8px;
+      padding: 6px 12px;
+      color: var(--ink);
+      text-decoration: none;
+      border-bottom: 1px solid #e4e0d7;
+    }
+
+    .lesson-no {
+      color: var(--muted);
+      font-family: system-ui, sans-serif;
+      font-size: 13px;
+      font-weight: 800;
+    }
+
+    .lesson-hanja {
+      color: var(--blue);
+      font-family: "KleeHanja", serif;
+      font-size: 24px;
+      font-weight: 600;
+      white-space: nowrap;
+    }
+
+    .lesson-theme {
+      overflow: hidden;
+      color: #4e5863;
+      font-size: 15px;
+      text-overflow: ellipsis;
+      white-space: nowrap;
+    }
+
+    a:focus-visible, summary:focus-visible {
+      outline: 3px solid #77a9cb;
       outline-offset: 2px;
     }
 
-    .stroke-button:disabled { opacity: .55; cursor: default; }
-
-    .reading {
-      margin: 0 0 5px;
-      font-size: clamp(22px, 2.7vw, 32px);
-      font-weight: 800;
+    @media (hover: hover) {
+      .start-card:hover, .lesson-link:hover { background: var(--blue-soft); }
+      summary:hover { background: #fbfaf6; }
     }
 
-    .core-meaning {
-      margin: 0;
-      color: var(--muted);
-      font-size: clamp(18px, 2.1vw, 25px);
-      line-height: 1.45;
-      word-break: keep-all;
+    @media (max-width: 720px) {
+      .page { padding-inline: 16px; }
+      .start-card { grid-template-columns: auto minmax(0, 1fr); }
+      .start-arrow { display: none; }
+      summary { grid-template-columns: 68px minmax(0, 1fr) auto; }
+      .group-chars { display: none; }
+      .lesson-list { grid-template-columns: 1fr; }
+      .lesson-list li:nth-child(odd) { border-right: 0; }
     }
 
-    .view { padding-top: 8px; }
-    .view[hidden] { display: none; }
-
-    .lesson-guide {
-      margin: 0;
-      padding: 8px 0 11px;
-      border-bottom: 1px solid var(--line);
-      color: var(--blue);
-      font-size: clamp(17px, 1.8vw, 21px);
-      font-weight: 800;
-      line-height: 1.45;
-    }
-
-    .word-list { margin: 0; }
-
-    .word-row {
-      display: grid;
-      grid-template-columns: minmax(230px, .85fr) minmax(0, 2fr);
-      align-items: center;
-      gap: 12px 30px;
-      padding: clamp(11px, 1.35vw, 15px) 0;
-      border-bottom: 1px solid var(--line);
-    }
-
-    .word-row .word-family,
-    .word-row .example { margin: 0; }
-
-    .meaning-list { margin: 0; }
-
-    .meaning-row {
-      display: grid;
-      grid-template-columns: minmax(150px, .62fr) minmax(0, 2fr);
-      gap: 8px 28px;
-      padding: clamp(8px, 1.1vw, 12px) 0;
-      border-bottom: 1px solid var(--line);
-    }
-
-    .meaning-row dt {
-      color: var(--blue);
-      font-size: clamp(17px, 1.8vw, 21px);
-      font-weight: 800;
-      line-height: 1.45;
-    }
-
-    .meaning-row dd { margin: 0; }
-
-    .word-family {
-      margin: 0 0 2px;
-      font-size: clamp(18px, 2vw, 23px);
-      font-weight: 800;
-      line-height: 1.45;
-      word-spacing: .18em;
-    }
-
-    .example {
-      margin: 0;
-      color: #505a64;
-      font-size: clamp(14px, 1.5vw, 17px);
-      font-weight: 600;
-      line-height: 1.45;
-      word-break: keep-all;
-    }
-
-    .next-button, .reset-button {
-      display: block;
-      width: min(360px, 100%);
-      min-height: 48px;
-      margin: 14px auto 0;
-      border: 1px solid var(--blue);
-      border-radius: 4px;
-      background: var(--blue);
-      color: white;
-      font: 800 17px/1.2 system-ui, sans-serif;
-      cursor: pointer;
-    }
-
-    .quiz-grid {
-      display: grid;
-      grid-template-columns: repeat(2, minmax(0, 1fr));
-      gap: clamp(18px, 2.5vw, 30px) clamp(28px, 4vw, 52px);
-    }
-
-    .question {
-      min-width: 0;
-      padding-bottom: 7px;
-      border-bottom: 1px solid var(--line);
-    }
-
-    .question h2 {
-      margin: 0 0 7px;
-      font-size: clamp(20px, 2vw, 25px);
-      line-height: 1.5;
-      word-break: keep-all;
-    }
-
-    .q-number {
-      display: inline-grid;
-      width: 32px;
-      height: 32px;
-      margin-right: 8px;
-      place-items: center;
-      border: 1px solid var(--ink);
-      border-radius: 50%;
-      font: 700 16px/1 system-ui, sans-serif;
-      vertical-align: 2px;
-    }
-
-    .choices {
-      display: grid;
-      gap: 8px;
-    }
-
-    .choice {
-      min-height: 43px;
-      padding: 7px 10px;
-      border: 1px solid transparent;
-      border-radius: 4px;
-      background: transparent;
-      color: var(--ink);
-      font: inherit;
-      font-size: clamp(16px, 1.55vw, 19px);
-      line-height: 1.45;
-      text-align: left;
-      cursor: pointer;
-    }
-
-    .choice:hover, .choice:focus-visible {
-      border-color: #a9bcc9;
-      background: var(--blue-soft);
-      outline: none;
-    }
-
-    .choice.correct {
-      border-color: #83b49a;
-      background: var(--correct-soft);
-      color: var(--correct);
-      font-weight: 800;
-    }
-
-    .choice.wrong {
-      border-color: #d9a19c;
-      background: var(--wrong-soft);
-      color: var(--wrong);
-    }
-
-    .choice:disabled { cursor: default; opacity: 1; }
-    u { text-decoration-thickness: 2px; text-underline-offset: 4px; }
-
-    .feedback {
-      min-height: 25px;
-      margin: 5px 0 0;
-      color: var(--muted);
-      font-size: 15px;
-      font-weight: 700;
-      line-height: 1.45;
-    }
-
-    .feedback.is-correct { color: var(--correct); }
-    .feedback.is-wrong { color: var(--wrong); }
-
-    .result {
-      margin: 28px 0 0;
-      padding: 18px;
-      border-top: 2px solid var(--ink);
-      border-bottom: 1px solid var(--line);
-      font-size: clamp(18px, 2vw, 24px);
-      font-weight: 800;
-      text-align: center;
-    }
-
-    .quiz-actions {
-      display: flex;
-      justify-content: center;
-      gap: 12px;
-      margin-top: 28px;
-    }
-
-    .quiz-actions button { margin: 0; }
-
-    .next-lesson {
-      display: block;
-      width: min(360px, 100%);
-      min-height: 48px;
-      margin: 14px auto 0;
-      padding: 13px 20px;
-      border: 1px solid var(--blue);
-      border-radius: 4px;
-      background: var(--blue);
-      color: white;
-      font: 800 17px/1.2 system-ui, sans-serif;
-      text-align: center;
-      text-decoration: none;
-    }
-
-    .next-lesson[hidden] { display: none; }
-
-    .back-button {
-      min-height: 58px;
-      padding: 0 26px;
-      border: 1px solid #aeb4b8;
-      border-radius: 4px;
-      background: transparent;
-      color: var(--ink);
-      font: 800 18px/1.2 system-ui, sans-serif;
-      cursor: pointer;
-    }
-
-    @media (max-width: 760px) {
-      .page { padding-inline: 18px; }
-      .topline { position: static; min-height: 32px; }
-      .hanja-head { grid-template-columns: auto 1fr; gap: 8px 20px; }
-      .stroke-demo { grid-column: 2; }
-      .word-row { grid-template-columns: minmax(180px, .7fr) minmax(0, 1.5fr); gap: 10px 20px; }
-      .meaning-row { grid-template-columns: 1fr; gap: 6px; }
-      .quiz-grid { grid-template-columns: 1fr; }
-    }
-
-    @media (prefers-reduced-motion: no-preference) {
-      .view { animation: appear .18s ease-out; }
-      @keyframes appear { from { opacity: .2; transform: translateY(4px); } }
+    @media (max-width: 430px) {
+      .start-hanja { font-size: 52px; }
+      .start-note { font-size: 14px; }
+      .lesson-link { grid-template-columns: 32px minmax(60px, auto) 1fr; padding-inline: 8px; }
+      .lesson-hanja { font-size: 21px; }
     }
   </style>
 </head>
 <body>
   <main class="page">
-    <div class="topline">
-      <a class="home-link" href="../../../">처음으로</a>
-    </div>
-
-    <header class="hanja-head">
-      <div class="hanja" aria-label="사람 인">人</div>
-      <div>
-        <p class="reading">인</p>
-        <p class="core-meaning">사람</p>
-      </div>
-      <section class="stroke-demo" aria-label="人 획순 실험">
-        <svg class="stroke-stage" viewBox="0 0 160 160" role="img" aria-label="人 두 획을 쓰는 순서">
-          <path class="stroke-guide" d="M80 0V160M0 80H160M0 0L160 160M160 0L0 160" />
-          <path class="stroke-path" data-stroke="1" d="M91 25 C84 58 66 98 32 135" />
-          <path class="stroke-path" data-stroke="2" d="M83 57 C98 85 116 111 139 135" />
-        </svg>
-        <div class="stroke-controls">
-          <p id="strokeStatus" class="stroke-status" aria-live="polite">준비</p>
-          <button id="playStrokes" class="stroke-button" type="button">▶ 획순 보기</button>
-          <button id="stepStroke" class="stroke-button" type="button">한 획씩</button>
-        </div>
-      </section>
+    <header class="topbar">
+      <h1>韓字</h1>
+      <a class="home-link" href="../../../">기초학력으로</a>
     </header>
 
-    <section id="lessonView" class="view" aria-label="뜻과 예시">
-      <p class="lesson-guide">말 속의 ‘인’을 ‘사람’으로 바꾸어 보면 뜻이 보입니다.</p>
-      <div class="word-list">
-        <div class="word-row">
-          <p class="word-family">인간 · 개인 · 인물</p>
-          <p class="example">인간은 사람, 개인은 한 사람, 인물은 어떤 사람입니다.</p>
-        </div>
-        <div class="word-row">
-          <p class="word-family">인구 · 인원</p>
-          <p class="example">인구는 어떤 곳에 사는 사람의 수이고, 인원은 모인 사람의 수입니다.</p>
-        </div>
-        <div class="word-row">
-          <p class="word-family">한국인 · 외국인 · 우주인</p>
-          <p class="example">한국인은 한국 사람, 외국인은 외국 사람, 우주인은 우주에 가는 사람입니다.</p>
-        </div>
-        <div class="word-row">
-          <p class="word-family">인형 · 인공 · 인생</p>
-          <p class="example">인형은 사람 모양, 인공은 사람이 만든 것, 인생은 사람이 살아가는 삶입니다.</p>
-        </div>
-      </div>
-      <button id="startQuiz" class="next-button" type="button">문제 풀기</button>
-    </section>
+    <a class="start-card" href="in/" aria-label="1차시 사람 인부터 시작">
+      <span class="start-hanja" aria-hidden="true">人</span>
+      <span class="start-copy">
+        <span class="start-label">처음부터 시작</span>
+        <span class="start-title">1차시 · 사람 인</span>
+        <span class="start-note">인생·인구·개인처럼 말 속의 뜻을 알아봅니다.</span>
+      </span>
+      <span class="start-arrow" aria-hidden="true">→</span>
+    </a>
 
-    <section id="quizView" class="view" aria-label="확인 문제" hidden>
-      <div class="quiz-grid">
-        <article class="question" data-answer="3" data-note="‘개인’의 인은 사람을 뜻하는 人(인)입니다.">
-          <h2><span class="q-number">1</span>人(인)이 들어간 말은?</h2>
-          <div class="choices">
-            <button class="choice" type="button">① 안내문을 <u>인쇄</u>해서 나누어 주었습니다.</button>
-            <button class="choice" type="button">② 친구의 실력을 <u>인정</u>했습니다.</button>
-            <button class="choice" type="button">③ 두 사람은 깊은 <u>인연</u>을 맺었습니다.</button>
-            <button class="choice" type="button">④ 인터넷에서는 <u>개인</u> 정보를 지켜야 합니다.</button>
-          </div>
-          <p class="feedback" aria-live="polite"></p>
-        </article>
+    <div class="section-head">
+      <h2>전체 차시</h2>
+      <p class="total">29차시 · 109자</p>
+    </div>
 
-        <article class="question" data-answer="2" data-note="‘원인’의 인은 人(인)이 아니라 因(인)입니다.">
-          <h2><span class="q-number">2</span>人(인)의 뜻이 아닌 것은?</h2>
-          <div class="choices">
-            <button class="choice" type="button">① 체험할 수 있는 <u>인원</u>은 열 명입니다.</button>
-            <button class="choice" type="button">② 이야기 속 <u>우주인</u>이 지구에 왔습니다.</button>
-            <button class="choice" type="button">③ 사고가 난 <u>원인</u>을 조사했습니다.</button>
-            <button class="choice" type="button">④ 우리 고장의 <u>인구</u>를 알아보았습니다.</button>
-          </div>
-          <p class="feedback" aria-live="polite"></p>
-        </article>
+    <div class="groups">
+      <details open>
+        <summary>
+          <span class="range">1–7차시</span>
+          <span class="group-title">사람과 기본 뜻</span>
+          <span class="group-chars">人 生 男 女 大 小 多 少 上 下 左 右 東 西 南 北 日 月 年</span>
+          <span class="chevron" aria-hidden="true">⌄</span>
+        </summary>
+        <ol class="lesson-list">
+          <li><a class="lesson-link" href="in/"><span class="lesson-no">01</span><span class="lesson-hanja">人</span><span class="lesson-theme">사람</span></a></li>
+          <li><a class="lesson-link" href="saeng/"><span class="lesson-no">02</span><span class="lesson-hanja">生</span><span class="lesson-theme">나다·살다</span></a></li>
+          <li><a class="lesson-link" href="nam-nyeo/"><span class="lesson-no">03</span><span class="lesson-hanja">男女</span><span class="lesson-theme">남자·여자</span></a></li>
+          <li><a class="lesson-link" href="dae-so-da-so/"><span class="lesson-no">04</span><span class="lesson-hanja">大小多少</span><span class="lesson-theme">크기와 양</span></a></li>
+          <li><a class="lesson-link" href="sang-ha-jwa-u/"><span class="lesson-no">05</span><span class="lesson-hanja">上下左右</span><span class="lesson-theme">위치와 방향</span></a></li>
+          <li><a class="lesson-link" href="dong-seo-nam-buk/"><span class="lesson-no">06</span><span class="lesson-hanja">東西南北</span><span class="lesson-theme">네 방위</span></a></li>
+          <li><a class="lesson-link" href="il-wol-nyeon/"><span class="lesson-no">07</span><span class="lesson-hanja">日月年</span><span class="lesson-theme">날·달·해</span></a></li>
+        </ol>
+      </details>
 
-        <article class="question" data-answer="1" data-note="‘할인’의 인은 人(인)이 아니라 引(인)입니다.">
-          <h2><span class="q-number">3</span>人(인)의 뜻이 아닌 것은?</h2>
-          <div class="choices">
-            <button class="choice" type="button">① 나는 대한민국의 <u>한국인</u>입니다.</button>
-            <button class="choice" type="button">② 공책을 <u>할인</u>받아 샀습니다.</button>
-            <button class="choice" type="button">③ 역사 속 <u>인물</u>을 조사했습니다.</button>
-            <button class="choice" type="button">④ 동생이 곰 <u>인형</u>을 안고 잡니다.</button>
-          </div>
-          <p class="feedback" aria-live="polite"></p>
-        </article>
+      <details>
+        <summary>
+          <span class="range">8–14차시</span>
+          <span class="group-title">수와 시간·생활</span>
+          <span class="group-chars">一 二 三 四 五 六 七 八 九 十 百 千 萬 時 分 午 今 春 夏 秋 冬 父 母 子 友 學 校 先</span>
+          <span class="chevron" aria-hidden="true">⌄</span>
+        </summary>
+        <ol class="lesson-list" start="8">
+          <li><a class="lesson-link" href="su-il-i-sam-sa-o/"><span class="lesson-no">08</span><span class="lesson-hanja">一二三四五</span><span class="lesson-theme">하나부터 다섯</span></a></li>
+          <li><a class="lesson-link" href="su-yuk-chil-pal-gu-sip/"><span class="lesson-no">09</span><span class="lesson-hanja">六七八九十</span><span class="lesson-theme">여섯부터 열</span></a></li>
+          <li><a class="lesson-link" href="baek-cheon-man/"><span class="lesson-no">10</span><span class="lesson-hanja">百千萬</span><span class="lesson-theme">큰 수</span></a></li>
+          <li><a class="lesson-link" href="si-bun-o-geum/"><span class="lesson-no">11</span><span class="lesson-hanja">時分午今</span><span class="lesson-theme">시각과 때</span></a></li>
+          <li><a class="lesson-link" href="chun-ha-chu-dong/"><span class="lesson-no">12</span><span class="lesson-hanja">春夏秋冬</span><span class="lesson-theme">네 계절</span></a></li>
+          <li><a class="lesson-link" href="bu-mo-ja-u/"><span class="lesson-no">13</span><span class="lesson-hanja">父母子友</span><span class="lesson-theme">가족과 친구</span></a></li>
+          <li><a class="lesson-link" href="hak-gyo-seon/"><span class="lesson-no">14</span><span class="lesson-hanja">學校先</span><span class="lesson-theme">학교생활</span></a></li>
+        </ol>
+      </details>
 
-        <article class="question" data-answer="3" data-note="‘확인’의 인은 人(인)이 아니라 認(인)입니다.">
-          <h2><span class="q-number">4</span>人(인)의 뜻이 아닌 것은?</h2>
-          <div class="choices">
-            <button class="choice" type="button">① <u>인간</u>은 도구를 만들어 사용합니다.</button>
-            <button class="choice" type="button">② 책에는 한 사람의 <u>인생</u>이 담겨 있습니다.</button>
-            <button class="choice" type="button">③ 공원에 <u>인공</u> 연못을 만들었습니다.</button>
-            <button class="choice" type="button">④ 준비물을 다시 <u>확인</u>했습니다.</button>
-          </div>
-          <p class="feedback" aria-live="polite"></p>
-        </article>
-      </div>
+      <details>
+        <summary>
+          <span class="range">15–21차시</span>
+          <span class="group-title">자리와 자연·몸</span>
+          <span class="group-chars">前 後 中 內 外 入 出 門 天 地 山 川 水 火 木 土 金 雨 雪 風 口 目 手 足 心 身 力</span>
+          <span class="chevron" aria-hidden="true">⌄</span>
+        </summary>
+        <ol class="lesson-list" start="15">
+          <li><a class="lesson-link" href="jeon-hu-jung-nae-oe/"><span class="lesson-no">15</span><span class="lesson-hanja">前後中內外</span><span class="lesson-theme">자리와 안팎</span></a></li>
+          <li><a class="lesson-link" href="ip-chul-mun/"><span class="lesson-no">16</span><span class="lesson-hanja">入出門</span><span class="lesson-theme">들고 나감</span></a></li>
+          <li><a class="lesson-link" href="cheon-ji-san-cheon/"><span class="lesson-no">17</span><span class="lesson-hanja">天地山川</span><span class="lesson-theme">하늘과 땅</span></a></li>
+          <li><a class="lesson-link" href="su-hwa-mok-to-geum/"><span class="lesson-no">18</span><span class="lesson-hanja">水火木土金</span><span class="lesson-theme">자연의 재료</span></a></li>
+          <li><a class="lesson-link" href="u-seol-pung/"><span class="lesson-no">19</span><span class="lesson-hanja">雨雪風</span><span class="lesson-theme">날씨</span></a></li>
+          <li><a class="lesson-link" href="gu-mok-su-jok/"><span class="lesson-no">20</span><span class="lesson-hanja">口目手足</span><span class="lesson-theme">몸의 부분</span></a></li>
+          <li><a class="lesson-link" href="sim-sin-ryeok/"><span class="lesson-no">21</span><span class="lesson-hanja">心身力</span><span class="lesson-theme">마음·몸·힘</span></a></li>
+        </ol>
+      </details>
 
-      <p id="result" class="result" aria-live="polite" hidden></p>
-      <div class="quiz-actions">
-        <button id="backToLesson" class="back-button" type="button">설명 다시 보기</button>
-        <button id="resetQuiz" class="reset-button" type="button">다시 풀기</button>
-      </div>
-      <a id="nextLesson" class="next-lesson" href="saeng/" hidden>다음 글자 生</a>
-    </section>
+      <details>
+        <summary>
+          <span class="range">22–29차시</span>
+          <span class="group-title">말과 사회·과학</span>
+          <span class="group-chars">文 字 語 話 讀 書 問 答 國 民 家 室 場 道 市 村 長 短 高 低 新 古 正 反 同 別 動 物 植 電 光 音 聲 空 車</span>
+          <span class="chevron" aria-hidden="true">⌄</span>
+        </summary>
+        <ol class="lesson-list" start="22">
+          <li><a class="lesson-link" href="mun-ja-eo-hwa/"><span class="lesson-no">22</span><span class="lesson-hanja">文字語話</span><span class="lesson-theme">글과 말</span></a></li>
+          <li><a class="lesson-link" href="dok-seo-mun-dap/"><span class="lesson-no">23</span><span class="lesson-hanja">讀書問答</span><span class="lesson-theme">읽고 묻고 답하기</span></a></li>
+          <li><a class="lesson-link" href="guk-min-ga-sil/"><span class="lesson-no">24</span><span class="lesson-hanja">國民家室</span><span class="lesson-theme">나라와 집</span></a></li>
+          <li><a class="lesson-link" href="jang-do-si-chon/"><span class="lesson-no">25</span><span class="lesson-hanja">場道市村</span><span class="lesson-theme">장소와 마을</span></a></li>
+          <li><a class="lesson-link" href="jang-dan-go-jeo/"><span class="lesson-no">26</span><span class="lesson-hanja">長短高低</span><span class="lesson-theme">길이와 높이</span></a></li>
+          <li><a class="lesson-link" href="sin-go-jeong-ban-dong-byeol/"><span class="lesson-no">27</span><span class="lesson-hanja">新古正反同別</span><span class="lesson-theme">서로 다른 뜻</span></a></li>
+          <li><a class="lesson-link" href="dong-mul-sik/"><span class="lesson-no">28</span><span class="lesson-hanja">動物植</span><span class="lesson-theme">동물과 식물</span></a></li>
+          <li><a class="lesson-link" href="jeon-gwang-eum-seong-gong-cha/"><span class="lesson-no">29</span><span class="lesson-hanja">電光音聲空車</span><span class="lesson-theme">과학과 생활</span></a></li>
+        </ol>
+      </details>
+    </div>
   </main>
-
-  <script>
-    (() => {
-      const lessonView = document.getElementById('lessonView');
-      const quizView = document.getElementById('quizView');
-      const result = document.getElementById('result');
-      const nextLesson = document.getElementById('nextLesson');
-      const questions = Array.from(document.querySelectorAll('.question'));
-      const strokePaths = Array.from(document.querySelectorAll('.stroke-path'));
-      const strokeStatus = document.getElementById('strokeStatus');
-      const playStrokes = document.getElementById('playStrokes');
-      const stepStroke = document.getElementById('stepStroke');
-      const reducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
-      let visibleStrokes = 0;
-      let strokePlaying = false;
-
-      strokePaths.forEach((path) => {
-        const length = path.getTotalLength();
-        path.style.strokeDasharray = length;
-        path.style.strokeDashoffset = length;
-      });
-
-      function resetStrokes() {
-        strokePaths.forEach((path) => {
-          path.getAnimations().forEach((animation) => animation.cancel());
-          path.style.strokeDashoffset = path.getTotalLength();
-        });
-        visibleStrokes = 0;
-        strokeStatus.textContent = '준비';
-      }
-
-      async function revealStroke(path) {
-        const length = path.getTotalLength();
-        if (reducedMotion) {
-          path.style.strokeDashoffset = 0;
-          return;
-        }
-        const animation = path.animate(
-          [{ strokeDashoffset: length }, { strokeDashoffset: 0 }],
-          { duration: 900, easing: 'ease-in-out', fill: 'forwards' }
-        );
-        await animation.finished;
-        path.style.strokeDashoffset = 0;
-        animation.cancel();
-      }
-
-      playStrokes.addEventListener('click', async () => {
-        if (strokePlaying) return;
-        strokePlaying = true;
-        playStrokes.disabled = true;
-        stepStroke.disabled = true;
-        resetStrokes();
-        for (let index = 0; index < strokePaths.length; index += 1) {
-          strokeStatus.textContent = `${index + 1}획 / ${strokePaths.length}획`;
-          await revealStroke(strokePaths[index]);
-        }
-        visibleStrokes = strokePaths.length;
-        strokeStatus.textContent = '완성';
-        playStrokes.disabled = false;
-        stepStroke.disabled = false;
-        strokePlaying = false;
-      });
-
-      stepStroke.addEventListener('click', () => {
-        if (strokePlaying) return;
-        if (visibleStrokes >= strokePaths.length) resetStrokes();
-        strokePaths[visibleStrokes].style.strokeDashoffset = 0;
-        visibleStrokes += 1;
-        strokeStatus.textContent = visibleStrokes === strokePaths.length
-          ? '완성'
-          : `${visibleStrokes}획 / ${strokePaths.length}획`;
-      });
-
-      function show(view) {
-        const quiz = view === 'quiz';
-        lessonView.hidden = quiz;
-        quizView.hidden = !quiz;
-        window.scrollTo({ top: 0, behavior: 'smooth' });
-        (quiz ? quizView : lessonView).focus({ preventScroll: true });
-      }
-
-      function updateResult() {
-        const answered = questions.filter((question) => question.dataset.done === 'true');
-        if (answered.length !== questions.length) return;
-        const score = answered.filter((question) => question.dataset.correct === 'true').length;
-        result.textContent = `${questions.length}문제 중 ${score}문제를 맞혔습니다.`;
-        result.hidden = false;
-        nextLesson.hidden = false;
-      }
-
-      questions.forEach((question) => {
-        const choices = Array.from(question.querySelectorAll('.choice'));
-        const answer = Number(question.dataset.answer);
-        const feedback = question.querySelector('.feedback');
-
-        choices.forEach((choice, index) => {
-          choice.addEventListener('click', () => {
-            if (question.dataset.done === 'true') return;
-            const correct = index === answer;
-            question.dataset.done = 'true';
-            question.dataset.correct = String(correct);
-            choice.classList.add(correct ? 'correct' : 'wrong');
-            if (!correct) choices[answer].classList.add('correct');
-            choices.forEach((button) => { button.disabled = true; });
-            feedback.textContent = correct ? `맞았습니다. ${question.dataset.note}` : `정답을 확인하세요. ${question.dataset.note}`;
-            feedback.className = `feedback ${correct ? 'is-correct' : 'is-wrong'}`;
-            updateResult();
-          });
-        });
-      });
-
-      function reset() {
-        questions.forEach((question) => {
-          delete question.dataset.done;
-          delete question.dataset.correct;
-          question.querySelectorAll('.choice').forEach((choice) => {
-            choice.disabled = false;
-            choice.classList.remove('correct', 'wrong');
-          });
-          const feedback = question.querySelector('.feedback');
-          feedback.textContent = '';
-          feedback.className = 'feedback';
-        });
-        result.hidden = true;
-        result.textContent = '';
-        nextLesson.hidden = true;
-        window.scrollTo({ top: 0, behavior: 'smooth' });
-      }
-
-      document.getElementById('startQuiz').addEventListener('click', () => show('quiz'));
-      document.getElementById('backToLesson').addEventListener('click', () => show('lesson'));
-      document.getElementById('resetQuiz').addEventListener('click', reset);
-    })();
-  </script>
 </body>
 </html>
