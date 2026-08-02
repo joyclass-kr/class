@@ -106,28 +106,20 @@
     control.setAttribute("aria-label", "Audio volume controls");
     control.innerHTML = `
         <div class="unified-audio-group">
-            <span class="unified-music-label">MUSIC:</span>
-            <button class="unified-music-mute" id="musicMuteBtn" type="button">MUTE</button>
-            <div class="unified-music-levels" role="group" aria-label="Music volume level">
-                ${[1, 2, 3, 4, 5].map(v => `<button class="unified-music-segment" type="button" data-class-music-level="${v}" aria-label="Music ${v}"></button>`).join("")}
-            </div>
+            <span class="unified-music-label">음악</span>
+            <button class="unified-audio-knob" id="musicKnob" type="button"><span class="unified-knob-dial" aria-hidden="true"></span></button>
         </div>
         <div class="unified-audio-divider"></div>
         <div class="unified-audio-group">
-            <span class="unified-music-label">SFX:</span>
-            <button class="unified-music-mute" id="sfxMuteBtn" type="button">MUTE</button>
-            <div class="unified-music-levels" role="group" aria-label="SFX volume level">
-                ${[1, 2, 3, 4, 5].map(v => `<button class="unified-music-segment" type="button" data-class-sfx-level="${v}" aria-label="SFX ${v}"></button>`).join("")}
-            </div>
+            <span class="unified-music-label">효과</span>
+            <button class="unified-audio-knob" id="sfxKnob" type="button"><span class="unified-knob-dial" aria-hidden="true"></span></button>
         </div>`;
 
     document.body.appendChild(control);
     document.body.classList.add("class-music-ready");
 
-    const musicMuteBtn = control.querySelector("#musicMuteBtn");
-    const musicLevelBtns = [...control.querySelectorAll("[data-class-music-level]")];
-    const sfxMuteBtn = control.querySelector("#sfxMuteBtn");
-    const sfxLevelBtns = [...control.querySelectorAll("[data-class-sfx-level]")];
+    const musicKnob = control.querySelector("#musicKnob");
+    const sfxKnob = control.querySelector("#sfxKnob");
 
     function storeState() {
         localStorage.setItem(MUSIC_LEVEL_KEY, String(musicLevel));
@@ -150,22 +142,19 @@
         announceState();
     }
 
-    function render() {
-        // Music UI
-        musicMuteBtn.textContent = musicMuted ? "UNMUTE" : "MUTE";
-        musicMuteBtn.classList.toggle("is-muted", musicMuted);
-        musicLevelBtns.forEach(btn => {
-            const val = Number(btn.dataset.classMusicLevel);
-            btn.classList.toggle("is-on", val <= musicLevel);
-        });
+    function renderKnob(knob, label, level, muted) {
+        const angle = muted ? -135 : -135 + ((level - 1) / 4) * 270;
+        const stateLabel = muted ? "음소거" : `음량 ${level}/5`;
+        knob.style.setProperty("--knob-angle", `${angle}deg`);
+        knob.classList.toggle("is-muted", muted);
+        knob.setAttribute("aria-label", `${label} ${stateLabel}. 누르면 다음 단계로 조절됩니다.`);
+        knob.setAttribute("aria-pressed", muted ? "true" : "false");
+        knob.title = `${label} ${stateLabel}`;
+    }
 
-        // SFX UI
-        sfxMuteBtn.textContent = sfxMuted ? "UNMUTE" : "MUTE";
-        sfxMuteBtn.classList.toggle("is-muted", sfxMuted);
-        sfxLevelBtns.forEach(btn => {
-            const val = Number(btn.dataset.classSfxLevel);
-            btn.classList.toggle("is-on", val <= sfxLevel);
-        });
+    function render() {
+        renderKnob(musicKnob, "음악", musicLevel, musicMuted);
+        renderKnob(sfxKnob, "효과음", sfxLevel, sfxMuted);
     }
 
     function applyAudioState() {
@@ -227,40 +216,35 @@
         }
     }
 
-    musicMuteBtn.addEventListener("click", () => {
+    musicKnob.addEventListener("click", () => {
         multiplayerMuteRestore = null;
-        setMusicMuted(!musicMuted);
+        if (musicMuted) {
+            musicLevel = 1;
+            musicMuted = false;
+        } else if (musicLevel >= 5) {
+            musicMuted = true;
+        } else {
+            musicLevel += 1;
+        }
+        storeState();
+        render();
+        applyAudioState();
+        announceState();
         startPlayback();
     });
 
-    musicLevelBtns.forEach(btn => {
-        btn.addEventListener("click", () => {
-            multiplayerMuteRestore = null;
-            musicLevel = Number(btn.dataset.classMusicLevel);
-            musicMuted = false;
-            storeState();
-            render();
-            applyAudioState();
-            announceState();
-            startPlayback();
-        });
-    });
-
-    sfxMuteBtn.addEventListener("click", () => {
-        sfxMuted = !sfxMuted;
+    sfxKnob.addEventListener("click", () => {
+        if (sfxMuted) {
+            sfxLevel = 1;
+            sfxMuted = false;
+        } else if (sfxLevel >= 5) {
+            sfxMuted = true;
+        } else {
+            sfxLevel += 1;
+        }
         storeState();
         render();
         announceState();
-    });
-
-    sfxLevelBtns.forEach(btn => {
-        btn.addEventListener("click", () => {
-            sfxLevel = Number(btn.dataset.classSfxLevel);
-            sfxMuted = false;
-            storeState();
-            render();
-            announceState();
-        });
     });
 
     audio.addEventListener("volumechange", () => {

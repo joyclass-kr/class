@@ -9,113 +9,119 @@
 
 .unified-music-control {
     position: fixed;
-    top: 10px;
-    right: 10px;
+    top: 8px;
+    right: 8px;
     z-index: 100000;
     display: flex;
     align-items: center;
-    gap: 10px;
+    gap: 5px;
     width: max-content;
-    max-width: calc(100vw - 20px);
+    max-width: calc(100vw - 16px);
     min-height: 58px;
-    padding: 5px 10px;
-    border: 2px solid #5f3f18;
-    border-radius: 4px;
-    background: linear-gradient(180deg, #21160b 0%, #120c06 100%);
-    box-shadow: 0 4px 14px rgba(0, 0, 0, .58), inset 0 1px rgba(255, 224, 156, .09);
-    color: #d7c08d;
-    font: 800 12px/1 Georgia, "Times New Roman", serif;
-    letter-spacing: .4px;
+    padding: 4px 7px;
+    border: 1px solid #755022;
+    border-radius: 999px;
+    background: rgba(20, 13, 7, .9);
+    box-shadow: 0 3px 12px rgba(0, 0, 0, .48), inset 0 1px rgba(255, 224, 156, .1);
+    color: #ead49f;
+    font: 800 9px/1 "Malgun Gothic", sans-serif;
+    letter-spacing: 0;
+    backdrop-filter: blur(5px);
 }
 
 .unified-audio-group {
     display: flex;
+    flex-direction: column;
     align-items: center;
-    gap: 6px;
+    gap: 0;
 }
 
 .unified-audio-divider {
     width: 1px;
-    height: 22px;
-    background: #5f3f18;
-    margin: 0 2px;
+    height: 34px;
+    background: #67451f;
+    margin: 9px 0 0;
 }
 
 .unified-music-label {
-    white-space: nowrap;
+    min-height: 10px;
     color: #d7c08d;
+    font-size: 8px;
     font-weight: 900;
+    line-height: 10px;
+    white-space: nowrap;
 }
 
-.unified-music-control .unified-music-mute {
+.unified-music-control .unified-audio-knob {
     appearance: none;
-    width: auto;
-    min-width: 48px;
-    min-height: 44px;
-    height: 44px;
-    margin: 0;
-    padding: 0 6px;
-    border: 1px solid #704b1d;
-    border-radius: 0;
-    background: linear-gradient(180deg, #b18542 0%, #7c5523 100%);
-    box-shadow: inset 0 1px rgba(255, 231, 173, .24);
-    color: #1c1309;
-    font: 900 11px/20px Georgia, "Times New Roman", serif;
-    text-align: center;
-    cursor: pointer;
-}
-
-.unified-music-control .unified-music-mute.is-muted {
-    background: linear-gradient(180deg, #4a321a 0%, #27180c 100%);
-    color: #f0cf8d;
-}
-
-.unified-music-levels {
-    display: flex;
-    align-items: center;
-    gap: 2px;
-    min-height: 48px;
-    height: 48px;
-    margin: 0;
-    padding: 2px 4px;
-    border: 1px solid #624119;
-    background: #130d07;
-    box-shadow: inset 0 2px 5px rgba(0, 0, 0, .82);
-}
-
-.unified-music-control .unified-music-segment {
-    appearance: none;
-    display: block;
+    position: relative;
+    display: grid;
     width: 44px;
     min-width: 44px;
     height: 44px;
     min-height: 44px;
     margin: 0;
     padding: 0;
-    border: 1px solid #79501d;
-    border-radius: 0;
-    background: #2b1d10;
+    place-items: center;
+    border: 0;
+    border-radius: 50%;
+    background: transparent;
     box-shadow: none;
     cursor: pointer;
+    touch-action: manipulation;
 }
 
-.unified-music-control .unified-music-segment.is-on:nth-child(1) { background: #805321; }
-.unified-music-control .unified-music-segment.is-on:nth-child(2) { background: #a46b28; }
-.unified-music-control .unified-music-segment.is-on:nth-child(3) { background: #cb8734; }
-.unified-music-control .unified-music-segment.is-on:nth-child(4) { background: #e6a247; }
-.unified-music-control .unified-music-segment.is-on:nth-child(5) {
-    background: #ffc063;
-    border-color: #ffe1a0;
-    box-shadow: 0 0 7px rgba(255, 186, 77, .72);
+.unified-knob-dial {
+    position: relative;
+    display: block;
+    width: 30px;
+    height: 30px;
+    border: 1px solid #9b6e31;
+    border-radius: 50%;
+    background: radial-gradient(circle at 36% 30%, #c4944d 0 10%, #7b5425 38%, #2c1c0d 72%, #140d07 100%);
+    box-shadow: 0 2px 5px rgba(0, 0, 0, .65), inset 0 1px rgba(255, 232, 174, .26);
+    transform: rotate(var(--knob-angle, 0deg));
+    transition: transform .16s ease, filter .16s ease, opacity .16s ease;
 }
 
-.unified-music-control button:focus-visible {
+.unified-knob-dial::after {
+    content: "";
+    position: absolute;
+    top: 3px;
+    left: 50%;
+    width: 3px;
+    height: 8px;
+    border-radius: 3px;
+    background: #ffe2a4;
+    box-shadow: 0 0 3px rgba(255, 211, 123, .7);
+    transform: translateX(-50%);
+}
+
+.unified-audio-knob.is-muted .unified-knob-dial {
+    filter: grayscale(.8) brightness(.58);
+    opacity: .82;
+}
+
+.unified-audio-knob.is-muted .unified-knob-dial::after {
+    background: #dc7663;
+    box-shadow: 0 0 3px rgba(220, 118, 99, .7);
+}
+
+.unified-music-control .unified-audio-knob:hover .unified-knob-dial,
+.unified-music-control .unified-audio-knob:active .unified-knob-dial {
+    filter: brightness(1.16);
+}
+
+.unified-music-control .unified-audio-knob:focus-visible {
     outline: 2px solid #fff0b7;
-    outline-offset: 2px;
+    outline-offset: 0;
 }
 
 @media (max-width: 760px), (hover: none) and (pointer: coarse), (max-height: 520px) and (orientation: landscape) {
     .unified-music-control {
-        display: none !important;
+        top: 6px;
+        right: 6px;
+        max-width: calc(100vw - 12px);
+        padding: 3px 5px;
     }
 }

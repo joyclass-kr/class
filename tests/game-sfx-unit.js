@@ -6,10 +6,12 @@ const vm = require("vm");
 const root = path.resolve(__dirname, "..");
 const sfxPath = path.join(root, "assets", "sound", "game-sfx.js");
 const musicControlPath = path.join(root, "assets", "sound", "music-control.js");
+const musicControlCssPath = path.join(root, "assets", "sound", "music-control.css");
 const hubPath = path.join(root, "index.html");
 const fruitBellPath = path.join(root, "learning", "games", "fruitbell", "fruitbell.html");
+const voyagePath = path.join(root, "learning", "academics", "age-of-exploration", "public", "index.html");
 
-for (const filePath of [sfxPath, musicControlPath, hubPath, fruitBellPath]) {
+for (const filePath of [sfxPath, musicControlPath, musicControlCssPath, hubPath, fruitBellPath, voyagePath]) {
     assert.ok(fs.existsSync(filePath), `Missing sound effect file: ${filePath}`);
 }
 
@@ -26,9 +28,23 @@ const musicControlSource = fs.readFileSync(musicControlPath, "utf8");
 new vm.Script(musicControlSource, { filename: musicControlPath });
 assert.ok(musicControlSource.includes('new URL("game-sfx.js", currentScript.src)'), "Music-enabled games should load the shared effect module.");
 assert.ok(musicControlSource.includes("classmusicchange"), "Music controls should publish the shared mute and volume state.");
+assert.ok(musicControlSource.includes('id="musicKnob"'), "Shared music volume should use the compact knob control.");
+assert.ok(musicControlSource.includes('id="sfxKnob"'), "Shared effect volume should use the compact knob control.");
+assert.ok(!musicControlSource.includes("unified-music-segment"), "The oversized segmented volume bar should not return.");
+
+const musicControlCss = fs.readFileSync(musicControlCssPath, "utf8");
+assert.ok(musicControlCss.includes(".unified-audio-knob"), "Shared audio controls need the compact knob styling.");
+assert.ok(!/@media[\s\S]*?\.unified-music-control\s*\{[^}]*display:\s*none/.test(musicControlCss), "Compact knobs should remain available on touch devices.");
+
+const voyage = fs.readFileSync(voyagePath, "utf8");
+assert.ok(voyage.includes('id="bgmKnob"'), "World Voyage should use the same compact music knob.");
+assert.ok(!voyage.includes('id="bgmVolume"'), "World Voyage should not keep its old volume slider.");
 
 const hub = fs.readFileSync(hubPath, "utf8");
-const gameLinks = [...hub.matchAll(/href="(learning\/games\/[^"]+\.html)"/g)].map((match) => match[1]);
+const gameLinks = [...hub.matchAll(/href="(learning\/games\/[^"]+)"/g)].map((match) => {
+    const href = match[1].split(/[?#]/, 1)[0];
+    return href.endsWith("/") ? `${href}index.html` : `${href}.html`;
+});
 assert.ok(gameLinks.length >= 15, "Expected the local game catalog in the hub.");
 for (const relativePath of gameLinks) {
     const gameHtml = fs.readFileSync(path.join(root, ...relativePath.split("/")), "utf8");
