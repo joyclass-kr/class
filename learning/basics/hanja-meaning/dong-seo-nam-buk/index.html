@@ -4,7 +4,7 @@
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
   <meta name="theme-color" content="#f7f5ef">
-  <title>上·下·左·右 | 韓字</title>
+  <title>東·西·南·北 | 韓字</title>
   <style>
     @font-face {
       font-family: "KleeHanja";
@@ -366,31 +366,35 @@
     </div>
 
     <header class="hanja-head">
-      <div class="hanja hanja-four" aria-label="위 상, 아래 하, 왼 좌, 오른 우"><span>上</span><span>下</span><span class="pair-gap">左</span><span>右</span></div>
+      <div class="hanja hanja-four" aria-label="동녘 동, 서녘 서, 남녘 남, 북녘 북"><span>東</span><span>西</span><span class="pair-gap">南</span><span>北</span></div>
       <div>
-        <p class="reading">상 · 하 / 좌 · 우</p>
-        <p class="core-meaning">위 · 아래 / 왼쪽 · 오른쪽</p>
+        <p class="reading">동 · 서 · 남 · 북(배)</p>
+        <p class="core-meaning">동쪽 · 서쪽 · 남쪽 · 북쪽 / 지다</p>
       </div>
     </header>
 
     <section id="lessonView" class="view" aria-label="뜻과 예시">
-      <p class="lesson-guide">上과 下는 위아래를, 左와 右는 왼쪽과 오른쪽을 나타냅니다.</p>
+      <p class="lesson-guide">東·西·南·北은 네 방향입니다. 北은 보통 ‘북’으로 읽지만, 패배에서는 ‘배’로 읽고 진다는 뜻을 나타냅니다.</p>
       <div class="word-list">
         <div class="word-row">
-          <p class="word-family">上(상) — 상단 · 옥상</p>
-          <p class="example">상단은 위쪽 부분, 옥상은 건물의 맨 위에 있는 공간입니다.</p>
+          <p class="word-family">東(동) — 동부 · 동해 · 동양</p>
+          <p class="example">동부는 동쪽 지역, 동해는 우리나라 동쪽의 바다입니다.</p>
         </div>
         <div class="word-row">
-          <p class="word-family">下(하) — 하단 · 지하 · 하강</p>
-          <p class="example">하단은 아래쪽 부분, 지하는 땅 아래, 하강은 아래로 내려가는 것입니다.</p>
+          <p class="word-family">西(서) — 서해 · 서부 · 서양</p>
+          <p class="example">서해는 우리나라 서쪽의 바다이고, 서부는 서쪽 지역입니다.</p>
         </div>
         <div class="word-row">
-          <p class="word-family">左(좌) — 좌측 · 좌회전 · 좌우</p>
-          <p class="example">좌측과 좌회전의 ‘좌’는 왼쪽을 나타냅니다.</p>
+          <p class="word-family">南(남) — 남극 · 남부 · 남쪽</p>
+          <p class="example">남극은 지구의 남쪽 끝, 남부는 남쪽 지역입니다.</p>
         </div>
         <div class="word-row">
-          <p class="word-family">右(우) — 우측 · 우회전 · 좌우</p>
-          <p class="example">우측과 우회전의 ‘우’는 오른쪽을 나타냅니다.</p>
+          <p class="word-family">北(북) — 북부 · 북한 · 북쪽</p>
+          <p class="example">북부와 북한의 ‘북’은 북쪽을 나타냅니다.</p>
+        </div>
+        <div class="word-row">
+          <p class="word-family">北(배) — 패배</p>
+          <p class="example">패배는 경기나 싸움에서 진 것을 뜻합니다.</p>
         </div>
       </div>
       <button id="startQuiz" class="next-button" type="button">문제 풀기</button>
@@ -398,50 +402,50 @@
 
     <section id="quizView" class="view" aria-label="확인 문제" hidden>
       <div class="quiz-grid">
-        <article class="question" data-answer="2" data-note="‘옥상’의 上(상)은 위쪽을 나타냅니다.">
-          <p class="question-context">“비가 그쳐 <u>옥상</u>에 올라갔습니다.”</p>
-          <h2><span class="q-number">1</span>上(상)의 뜻은?</h2>
+        <article class="question" data-answer="3" data-note="‘동부’의 東(동)은 동쪽을 나타냅니다.">
+          <p class="question-context">“도시 <u>동부</u>에 큰 공원이 있습니다.”</p>
+          <h2><span class="q-number">1</span>東(동)의 뜻은?</h2>
           <div class="choices">
-            <button class="choice" type="button">① 왼쪽</button>
-            <button class="choice" type="button">② 아래</button>
-            <button class="choice" type="button">③ 위</button>
-            <button class="choice" type="button">④ 오른쪽</button>
+            <button class="choice" type="button">① 남쪽</button>
+            <button class="choice" type="button">② 서쪽</button>
+            <button class="choice" type="button">③ 북쪽</button>
+            <button class="choice" type="button">④ 동쪽</button>
           </div>
           <p class="feedback" aria-live="polite"></p>
         </article>
 
-        <article class="question" data-answer="0" data-note="‘지하’의 下(하)는 아래쪽을 나타냅니다.">
-          <p class="question-context">“차를 타고 <u>지하</u> 주차장으로 내려갔습니다.”</p>
-          <h2><span class="q-number">2</span>下(하)의 뜻은?</h2>
+        <article class="question" data-answer="1" data-note="‘서해’의 西(서)는 서쪽을 나타냅니다.">
+          <p class="question-context">“<u>서해</u>의 갯벌에서 게를 관찰했습니다.”</p>
+          <h2><span class="q-number">2</span>西(서)의 뜻은?</h2>
           <div class="choices">
-            <button class="choice" type="button">① 아래</button>
-            <button class="choice" type="button">② 오른쪽</button>
-            <button class="choice" type="button">③ 위</button>
-            <button class="choice" type="button">④ 왼쪽</button>
+            <button class="choice" type="button">① 북쪽</button>
+            <button class="choice" type="button">② 서쪽</button>
+            <button class="choice" type="button">③ 동쪽</button>
+            <button class="choice" type="button">④ 남쪽</button>
           </div>
           <p class="feedback" aria-live="polite"></p>
         </article>
 
-        <article class="question" data-answer="3" data-note="‘좌회전’의 좌는 左(좌)이며, 왼쪽으로 도는 것입니다.">
-          <p class="question-context">네 말은 모두 ‘좌’로 시작하지만 한자가 다릅니다.</p>
-          <h2><span class="q-number">3</span>左(좌)인 것은?</h2>
+        <article class="question" data-answer="0" data-note="‘남극’의 南(남)은 남쪽을 나타냅니다.">
+          <p class="question-context">“연구원들이 <u>남극</u>에서 날씨를 조사합니다.”</p>
+          <h2><span class="q-number">3</span>南(남)의 뜻은?</h2>
           <div class="choices">
-            <button class="choice" type="button">① 빈 <u>좌석</u>에 앉았습니다.</button>
-            <button class="choice" type="button">② 수학 시간에 <u>좌표</u>를 표시했습니다.</button>
-            <button class="choice" type="button">③ 실패해도 <u>좌절</u>하지 않습니다.</button>
-            <button class="choice" type="button">④ 다음 길에서 <u>좌회전</u>합니다.</button>
+            <button class="choice" type="button">① 남쪽</button>
+            <button class="choice" type="button">② 북쪽</button>
+            <button class="choice" type="button">③ 서쪽</button>
+            <button class="choice" type="button">④ 동쪽</button>
           </div>
           <p class="feedback" aria-live="polite"></p>
         </article>
 
-        <article class="question" data-answer="1" data-note="‘우측’의 우는 右(우)이며, 오른쪽을 나타냅니다.">
-          <p class="question-context">네 말은 모두 ‘우’로 시작하지만 한자가 다릅니다.</p>
-          <h2><span class="q-number">4</span>右(우)인 것은?</h2>
+        <article class="question" data-answer="2" data-note="北은 북부에서는 ‘북’으로 읽어 북쪽을, 패배에서는 ‘배’로 읽어 진 것을 나타냅니다.">
+          <p class="question-context">“<u>북부</u>는 북쪽 지역이고, <u>패배</u>는 경기에서 진 것입니다.”</p>
+          <h2><span class="q-number">4</span>北의 읽기와 뜻을 바르게 짝지은 것은?</h2>
           <div class="choices">
-            <button class="choice" type="button">① 로켓이 <u>우주</u>로 날아갑니다.</button>
-            <button class="choice" type="button">② 계단은 복도 <u>우측</u>에 있습니다.</button>
-            <button class="choice" type="button">③ 아침에 <u>우유</u>를 마셨습니다.</button>
-            <button class="choice" type="button">④ 비가 와서 <u>우산</u>을 썼습니다.</button>
+            <button class="choice" type="button">① 북 — 동쪽 / 배 — 이기다</button>
+            <button class="choice" type="button">② 북 — 남쪽 / 배 — 배를 타다</button>
+            <button class="choice" type="button">③ 북 — 북쪽 / 배 — 지다</button>
+            <button class="choice" type="button">④ 북 — 서쪽 / 배 — 비기다</button>
           </div>
           <p class="feedback" aria-live="polite"></p>
         </article>
@@ -451,7 +455,6 @@
       <div class="quiz-actions">
         <button id="backToLesson" class="back-button" type="button">설명 다시 보기</button>
         <button id="resetQuiz" class="reset-button" type="button">다시 풀기</button>
-        <a id="nextLesson" class="next-lesson" href="../dong-seo-nam-buk/" hidden>다음 글자 東·西·南·北</a>
       </div>
     </section>
   </main>
@@ -461,7 +464,6 @@
       const lessonView = document.getElementById('lessonView');
       const quizView = document.getElementById('quizView');
       const result = document.getElementById('result');
-      const nextLesson = document.getElementById('nextLesson');
       const questions = Array.from(document.querySelectorAll('.question'));
 
       function show(view) {
@@ -479,7 +481,6 @@
         const score = answered.filter((question) => question.dataset.correct === 'true').length;
         result.textContent = `${questions.length}문제 중 ${score}문제를 맞혔습니다.`;
         result.hidden = false;
-        nextLesson.hidden = false;
       }
 
       questions.forEach((question) => {
@@ -517,7 +518,6 @@
         });
         result.hidden = true;
         result.textContent = '';
-        nextLesson.hidden = true;
         window.scrollTo({ top: 0, behavior: 'smooth' });
       }
 
