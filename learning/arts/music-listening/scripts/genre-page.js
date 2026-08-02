@@ -29,14 +29,31 @@ function renderEra(){
   eraTabs.querySelectorAll('button').forEach(button=>button.addEventListener('click',()=>{eraIndex=Number(button.dataset.eraIndex);renderEra()}));
 }
 
+function guideFor(lineage,subgroup='all'){
+  return data.guides?.[subgroup==='all'?lineage:`${lineage}:${subgroup}`]||data.guides?.[lineage];
+}
+
+function cardStyle(card){
+  if(card.style&&!card.style.includes('?'))return card.style;
+  return guideFor(card.lineage,card.subgroup)?.title
+    .replace(/\s+\d+곡.*$/,'')
+    .replace(' 비교 듣기','')||card.styleEn;
+}
+
+function cardPoint(card){
+  if(card.point&&!card.point.includes('?'))return card.point;
+  return guideFor(card.lineage,card.subgroup)?.question||'같은 세부 장르의 다른 곡과 리듬·음색·보컬을 비교해보세요.';
+}
+
 function renderCards(lineage='all',subgroup='all'){
   const cards=data.cards.filter(card=>(lineage==='all'||card.lineage===lineage)&&(subgroup==='all'||card.subgroup===subgroup)).sort((a,b)=>Number.parseInt(a.years)-Number.parseInt(b.years));
   if(studyGuide){
-    const guide=data.guides[subgroup==='all'?lineage:`${lineage}:${subgroup}`];
+    const guide=guideFor(lineage,subgroup);
+    const description=data.descriptions?.[subgroup==='all'?lineage:`${lineage}:${subgroup}`];
     studyGuide.hidden=!guide;
-    if(guide)studyGuide.innerHTML=`<div><span>COMPARE &amp; DISCOVER</span><h3>${guide.title}</h3><p>${guide.question}</p></div><p class="traits"><strong>공통점 후보</strong>${guide.traits}</p><b>${cards.length}곡</b>`;
+    if(guide)studyGuide.innerHTML=`<div><span>GENRE GUIDE · COMPARE &amp; DISCOVER</span><h3>${guide.title}</h3>${description?`<p class="genre-description">${description}</p>`:''}<p class="question"><strong>들으며 생각하기</strong>${guide.question}</p></div><p class="traits"><strong>공통점 후보</strong>${guide.traits}</p><b>${cards.length}곡</b>`;
   }
-  playlist.innerHTML=cards.map((card,index)=>`<article class="piece"><p class="meta">${card.years} · ${card.style} (${card.styleEn})</p><h3 lang="en">${card.original}</h3><p class="artist">${card.artist}</p><p class="point">${card.point}</p><div class="actions"><a href="https://www.youtube.com/results?search_query=${encodeURIComponent(card.artist+' '+card.original)}" target="_blank" rel="noopener">찾아 듣기</a><button data-card="${data.cards.indexOf(card)}">자세한 해설</button></div></article>`).join('');
+  playlist.innerHTML=cards.map(card=>`<article class="piece"><p class="meta">${card.years} · ${cardStyle(card)} (${card.styleEn})</p><h3 lang="en">${card.original}</h3><p class="artist">${card.artist}</p><p class="point">${cardPoint(card)}</p><div class="actions"><a href="https://www.youtube.com/results?search_query=${encodeURIComponent(card.artist+' '+card.original)}" target="_blank" rel="noopener">찾아 듣기</a><button data-card="${data.cards.indexOf(card)}">자세한 해설</button></div></article>`).join('');
   playlist.querySelectorAll('[data-card]').forEach(button=>button.addEventListener('click',()=>openDetail(Number(button.dataset.card))));
 }
 
@@ -44,23 +61,29 @@ function renderSubgroups(lineage){
   if(!subfilters)return;
   const groups=data.subgroups[lineage];
   subfilters.hidden=!groups;
-  if(!groups){subfilters.innerHTML='';return;}
-  subfilters.innerHTML=groups.map(([key,label],index)=>`<button class="${index===0?'active':''}" data-subgroup="${key}">${label}</button>`).join('');
+  if(!groups){subfilters.innerHTML='';return 'all';}
+  const selected=groups[1]?.[0]||groups[0][0];
+  const lineageLabel=data.lineages.find(([key])=>key===lineage)?.[1]||lineage;
+  subfilters.setAttribute('aria-label',`${lineageLabel} 하위 갈래`);
+  subfilters.innerHTML=groups.map(([key,label])=>`<button class="${key===selected?'active':''}" data-subgroup="${key}">${label}</button>`).join('');
   subfilters.querySelectorAll('button').forEach(button=>button.addEventListener('click',()=>{
     subfilters.querySelector('.active')?.classList.remove('active');
     button.classList.add('active');
     renderCards(lineage,button.dataset.subgroup);
   }));
+  return selected;
 }
 
 function openDetail(index){
   const card=data.cards[index];
-  detail.innerHTML=`<p class="kind">${card.years} · ${card.style} (${card.styleEn})</p><h2 lang="en">${card.original}</h2><p class="original">${card.artist}</p><section><h3>음악사 속 위치</h3><p>${card.history}</p></section><section><h3>음악적 특징</h3><p>${card.sound}</p></section><section><h3>감상 포인트</h3><p>${card.point}</p></section>`;
+  const guide=guideFor(card.lineage,card.subgroup);
+  const description=data.descriptions?.[`${card.lineage}:${card.subgroup}`];
+  detail.innerHTML=`<p class="kind">${card.years} · ${cardStyle(card)} (${card.styleEn})</p><h2 lang="en">${card.original}</h2><p class="original">${card.artist}</p><section><h3>음악사 속 위치</h3><p>${card.history||`${guide?.title||cardStyle(card)}의 대표적인 비교 감상곡입니다.`}</p></section><section><h3>음악적 특징</h3><p>${card.sound||description||guide?.traits||cardStyle(card)}</p></section><section><h3>감상 포인트</h3><p>${cardPoint(card)}</p></section>`;
   dialog.showModal();
 }
 
 const defaultLineage=data.lineages[0][0];
 filters.innerHTML=[...data.lineages,['all',`전체 ${data.cards.length}곡 (All)`]].map(([key,label],index)=>`<button class="${index===0?'active':''}" data-lineage="${key}">${label}</button>`).join('');
-filters.querySelectorAll('button').forEach(button=>button.addEventListener('click',()=>{filters.querySelector('.active').classList.remove('active');button.classList.add('active');renderSubgroups(button.dataset.lineage);renderCards(button.dataset.lineage)}));
+filters.querySelectorAll('button').forEach(button=>button.addEventListener('click',()=>{filters.querySelector('.active').classList.remove('active');button.classList.add('active');const subgroup=renderSubgroups(button.dataset.lineage);renderCards(button.dataset.lineage,subgroup)}));
 dialog.addEventListener('click',event=>{if(event.target===dialog||event.target.closest('.dialog-close'))dialog.close()});
-renderEra();renderSubgroups(defaultLineage);renderCards(defaultLineage);
+renderEra();renderCards(defaultLineage,renderSubgroups(defaultLineage));
