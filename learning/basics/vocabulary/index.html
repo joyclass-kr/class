@@ -5,9 +5,9 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta name="description" content="Learn all 3,000 words from Korea's official 2022 English curriculum">
     <title>English Words 3,000 · 15 Levels</title>
-    <link rel="stylesheet" href="styles.css?v=20260802j">
+    <link rel="stylesheet" href="styles.css?v=20260802k">
     <script src="vocabulary-core.js?v=20260802c" defer></script>
-    <script src="app.js?v=20260802g" defer></script>
+    <script src="app.js?v=20260802h" defer></script>
 </head>
 <body>
     <main>
@@ -64,8 +64,9 @@
                     <h1 id="studyTitle">Level 1</h1>
                 </div>
                 <div class="toolbar-actions">
-                    <button id="imageToggleButton" class="text-button" type="button" aria-pressed="true">Pictures on</button>
-                    <button id="shuffleButton" class="text-button" type="button">Shuffle</button>
+                    <button id="shuffleButton" class="shuffle-toggle" type="button" role="switch" aria-checked="false">
+                        <span>Shuffle</span><span class="toggle-track" aria-hidden="true"><i></i></span>
+                    </button>
                 </div>
             </div>
 
