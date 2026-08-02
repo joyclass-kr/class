@@ -14,8 +14,10 @@ const indexScript = [...indexHtml.matchAll(/<script(?:\s[^>]*)?>([\s\S]*?)<\/scr
 
 assert.ok(indexScript, "The index authentication script is missing.");
 new vm.Script(indexScript, { filename: path.join(root, "index.html") });
-assert.doesNotMatch(indexScript, /setHubLocked\(/,
-  "First-time setup must not call the removed setHubLocked helper.");
+assert.match(indexScript, /function setHubLocked\(locked\)/,
+  "Open guest access must lock learning links until a valid player name is set.");
+assert.match(indexScript, /if \(!openAccess \|\| isValidPlayerName\(currentPlayerName\)\) return/,
+  "Open guest access must stop unnamed players from opening learning links.");
 
 assert.match(indexHtml, /accounts\.google\.com\/gsi\/client/,
   "Google Identity Services must be loaded.");
@@ -50,14 +52,19 @@ assert.match(indexScript, /user\?\.role === 'teacher'/,
   "Teacher and student routes must be selected from the server role.");
 assert.match(indexScript, /localStorage\.setItem\('classPlayerName'/,
   "Open development access should preserve only the device-local player name.");
-assert.match(indexScript, /guestNameInput\.addEventListener\('input', \(event\) => \{\s*if \(event\.isComposing\) return;/,
-  "Korean IME composition must not be cleared while a syllable is being typed.");
-assert.match(indexScript, /guestNameInput\.addEventListener\('compositionend'/,
-  "The completed Korean syllable should still be normalized after composition.");
+assert.doesNotMatch(indexScript, /guestNameInput\.addEventListener\(['"]input['"]/,
+  "Korean IME composition must not be rewritten while a syllable is being typed.");
+assert.match(indexScript, /const playerName = guestNameInput\.value\.trim\(\);/,
+  "The completed player name must be read when the form is submitted.");
+assert.match(indexScript, /if \(!isValidPlayerName\(playerName\)\)/,
+  "The completed player name must still be validated before submission.");
 assert.doesNotMatch(indexScript, /localStorage\.setItem\([^)]*(auth|token|session)/i,
   "Authentication state must not be stored in browser storage.");
 
-assert.match(serverSource, /app\.use\("\/api", classroomPlatform\.router\)/);
+assert.match(serverSource, /app\.use\("\/api", \(_req, res, next\) =>/,
+  "API responses must pass through the no-store security middleware.");
+assert.match(serverSource, /}, classroomPlatform\.router\)/,
+  "The classroom API router must remain mounted after the security middleware.");
 assert.match(serverSource, /res\.sendFile\(path\.join\(SITE_ROOT, "index\.html"\)\)/,
   "Render must serve the web UI from the same origin as its session cookie.");
 assert.ok(packageJson.dependencies["google-auth-library"]);
