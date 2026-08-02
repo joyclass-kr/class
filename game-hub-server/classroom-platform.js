@@ -394,6 +394,18 @@ function createClassroomPlatform(options = {}) {
       )`,
       `CREATE INDEX IF NOT EXISTS privacy_requests_user_created_idx
         ON privacy_requests (user_id, created_at DESC)`,
+      `CREATE TABLE IF NOT EXISTS classroom_student_access_resets (
+        id BIGSERIAL PRIMARY KEY,
+        student_id BIGINT NOT NULL,
+        class_id BIGINT NOT NULL,
+        student_number TEXT NOT NULL,
+        roster_name TEXT NOT NULL,
+        previous_user_id BIGINT,
+        reset_by BIGINT REFERENCES classroom_users(id) ON DELETE SET NULL,
+        reset_at TIMESTAMPTZ NOT NULL DEFAULT NOW()
+      )`,
+      `CREATE INDEX IF NOT EXISTS classroom_student_access_resets_time_idx
+        ON classroom_student_access_resets (reset_at DESC)`,
       `WITH first_login_upgrade AS (
         INSERT INTO classroom_settings (setting_key, setting_value)
         VALUES ('school_login_v2_enabled', 'true')
@@ -881,6 +893,85 @@ function createClassroomPlatform(options = {}) {
     );
     if (!result.rows[0]) throw new HttpError(404, "PRIVACY_REQUEST_NOT_FOUND", "The request was not found.");
     res.json({ request: result.rows[0] });
+  }));
+
+  router.get("/admin/student-accounts", asyncRoute(async (req, res) => {
+    await requireAdmin(req);
+    const result = await pool.query(
+      `SELECT s.id, s.student_number, s.roster_name, s.user_id IS NOT NULL AS linked,
+              u.email, c.academic_year, c.grade, c.class_number,
+              sc.name AS school_name
+       FROM classroom_students s
+       JOIN classroom_classes c ON c.id = s.class_id
+       JOIN classroom_schools sc ON sc.id = c.school_id
+       LEFT JOIN classroom_users u ON u.id = s.user_id
+       ORDER BY sc.name, c.academic_year DESC, c.grade, c.class_number,
+                CASE WHEN s.student_number ~ '^[0-9]+$' THEN s.student_number::INTEGER END,
+                s.student_number
+       LIMIT 500`
+    );
+    res.json({ students: result.rows.map((row) => ({
+      id: String(row.id),
+      number: row.student_number,
+      name: row.roster_name,
+      linked: row.linked === true,
+      email: row.email || null,
+      schoolName: row.school_name,
+      academicYear: row.academic_year,
+      grade: row.grade,
+      classNumber: row.class_number
+    })) });
+  }));
+
+  router.post("/admin/students/:studentId/reset-access", asyncRoute(async (req, res) => {
+    const admin = await requireAdmin(req);
+    const studentId = Number(req.params.studentId);
+    if (!Number.isSafeInteger(studentId) || studentId < 1) {
+      throw new HttpError(400, "VALID_STUDENT_ID_REQUIRED", "The student ID is invalid.");
+    }
+    const client = await pool.connect();
+    try {
+      await client.query("BEGIN");
+      const studentResult = await client.query(
+        `SELECT id, class_id, student_number, roster_name, user_id
+         FROM classroom_students
+         WHERE id = $1
+         FOR UPDATE`,
+        [studentId]
+      );
+      const student = studentResult.rows[0];
+      if (!student) throw new HttpError(404, "STUDENT_NOT_FOUND", "The student was not found.");
+      if (student.user_id) {
+        await client.query("DELETE FROM classroom_sessions WHERE user_id = $1", [student.user_id]);
+        await client.query(
+          `UPDATE classroom_users
+           SET role = NULL, updated_at = NOW()
+           WHERE id = $1 AND role = 'student'`,
+          [student.user_id]
+        );
+      }
+      await client.query(
+        `UPDATE classroom_students
+         SET user_id = NULL, claimed_at = NULL,
+             birthday_mmdd = NULL, birthday_visible = FALSE,
+             birth_date = NULL, password_hash = $2, updated_at = NOW()
+         WHERE id = $1`,
+        [student.id, hashStudentPassword(DEFAULT_STUDENT_PASSWORD)]
+      );
+      await client.query(
+        `INSERT INTO classroom_student_access_resets
+           (student_id, class_id, student_number, roster_name, previous_user_id, reset_by)
+         VALUES ($1, $2, $3, $4, $5, $6)`,
+        [student.id, student.class_id, student.student_number, student.roster_name, student.user_id, admin.id]
+      );
+      await client.query("COMMIT");
+      res.json({ ok: true, studentId: String(student.id), initialPassword: DEFAULT_STUDENT_PASSWORD });
+    } catch (error) {
+      await client.query("ROLLBACK");
+      throw error;
+    } finally {
+      client.release();
+    }
   }));
 
   router.post("/auth/guest", asyncRoute(async (req, res) => {
