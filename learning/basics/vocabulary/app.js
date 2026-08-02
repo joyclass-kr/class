@@ -10,9 +10,9 @@
     const SPELLING_WRONG_KEY = "englishVocabularySpellingWrongV1";
     const GAME_TIME_LIMIT = 15;
     const STAGES = [
-        { code: "elementary", name: "Elementary School", range: "Official school band", description: "800 words · LEVEL 01-04", cardLabel: "Elementary School Word", levels: [1, 2, 3, 4] },
-        { code: "middle_common", name: "Middle & High Common", range: "Official school band", description: "1,200 words · LEVEL 05-10", cardLabel: "Middle & High Common Word", levels: [5, 6, 7, 8, 9, 10] },
-        { code: "advanced", name: "High School Electives", range: "Official school band", description: "1,000 words · LEVEL 11-15", cardLabel: "High School Elective Word", levels: [11, 12, 13, 14, 15] },
+        { code: "elementary", name: "Elementary School", description: "800 words · LEVEL 01-04", cardLabel: "Elementary School Word", levels: [1, 2, 3, 4] },
+        { code: "middle_common", name: "Middle & High Common", description: "1,200 words · LEVEL 05-10", cardLabel: "Middle & High Common Word", levels: [5, 6, 7, 8, 9, 10] },
+        { code: "advanced", name: "High School Electives", description: "1,000 words · LEVEL 11-15", cardLabel: "High School Elective Word", levels: [11, 12, 13, 14, 15] },
     ];
     const STAGE_CARD_LABELS = Object.fromEntries(STAGES.map((stage) => [stage.code, stage.cardLabel]));
     const POS_NAMES = {
@@ -20,6 +20,13 @@
         "대명사": "pronoun", "전치사": "preposition", "접속사": "conjunction",
         "감탄사": "exclamation", "관사": "article", "한정사": "determiner", "수사": "number",
     };
+    const RELATED_MEANING_OVERRIDES = new Map(Object.entries({
+        "roofer": "지붕을 이는 사람",
+        "roofing": "지붕 재료; 지붕 공사",
+        "lifter": "들어 올리는 사람이나 장치",
+        "lift up": "들어 올리다",
+    }));
+
     const RELATED_TYPE_NAMES = {
         "유의어": "similar", "반의어": "opposite", "관련어": "related", "파생어": "word family",
         "다른 표기": "other spelling", "변화형": "word form",
@@ -31,7 +38,7 @@
 
     const core = window.VocabularyCore;
     const elements = Object.fromEntries([
-        "levelScreen", "studyScreen", "stageGroups", "loadingState", "toast",
+        "levelScreen", "studyScreen", "bandListScreen", "stageGroups", "loadingState", "toast",
         "totalKnown", "overallPercent", "overallBar", "totalUnknown", "backToLevels",
         "shuffleButton", "studyStage", "studyTitle", "cardPosition", "levelStatus", "sessionBar",
         "flashcard", "cardBadge", "wordText", "posText", "meaningText", "exampleBlock", "exampleLabel", "exampleText",
@@ -44,12 +51,13 @@
         "gameQuestionPanel", "gameResultPanel", "gameResultScore", "gameResultAccuracy",
         "gameResultBestStreak", "gameWrongList", "gameRetryWrongButton", "gamePlayAgainButton",
         "spellingGameStartButton", "spellingWordCount", "spellingScreen", "backFromSpelling",
-        "spellingResetButton", "spellingLevelButtons", "spellingQuestionNumber", "spellingScore",
-        "spellingStreak", "spellingQuestionPanel", "spellingImage", "spellingHint", "spellingInput", "spellingBuiltWord", "spellingTileRack",
+        "spellingResetButton", "spellingLevelSelect", "spellingQuestionNumber", "spellingScore",
+        "spellingStreak", "spellingQuestionPanel", "spellingClueCard", "spellingImage", "spellingMeaning", "spellingHint", "spellingInput", "spellingBuiltWord", "spellingTileRack",
         "spellingHintButton", "spellingSpeakButton", "spellingCheckButton", "spellingFeedback",
         "spellingNextButton", "spellingResultPanel", "spellingResultScore", "spellingResultAccuracy",
         "spellingResultBestStreak", "spellingWrongList", "spellingRetryWrongButton", "spellingPlayAgainButton",
         "spellingReviewButton", "spellingStoredWrongCount", "spellingModeLabel", "spellingTitle",
+        "viewAllWordsButton", "backFromBandList", "bandListTitle", "bandSearchInput", "bandListCount", "bandListBody",
     ].map((id) => [id, document.getElementById(id)]));
 
     const state = {
@@ -95,6 +103,8 @@
         spellingAnswered: false,
         spellingWrongProgress: loadSpellingWrongProgress(),
         spellingReviewMode: false,
+        wordMeaningMap: new Map(),
+        currentBandWords: [],
     };
 
     function loadProgress() {
@@ -173,7 +183,6 @@
             section.className = "stage-group";
             section.innerHTML = `
                 <div class="stage-heading">
-                    <span>${stage.range}</span>
                     <h2>${stage.name}</h2>
                     <p>${stage.description}</p>
                 </div>
@@ -186,6 +195,56 @@
         });
     }
 
+    function renderBandList(filter = "") {
+        const query = String(filter || "").trim().toLowerCase();
+        const visibleWords = query
+            ? state.currentBandWords.filter((word) => (
+                word.word.toLowerCase().includes(query)
+                || word.meanings.some((meaning) => meaning.toLowerCase().includes(query))
+            ))
+            : state.currentBandWords;
+        const originalPositions = new Map(state.currentBandWords.map((word, index) => [String(word.id), index + 1]));
+        const fragment = document.createDocumentFragment();
+        visibleWords.forEach((word) => {
+            const row = document.createElement("tr");
+            const rowNumber = document.createElement("th");
+            rowNumber.scope = "row";
+            rowNumber.textContent = String(originalPositions.get(String(word.id)));
+            const level = document.createElement("td");
+            level.className = "sheet-level";
+            level.textContent = `Level ${word.globalLevel}`;
+            const english = document.createElement("td");
+            english.className = "sheet-word";
+            english.lang = "en";
+            english.textContent = word.word;
+            const meaning = document.createElement("td");
+            meaning.textContent = word.meanings.join("; ");
+            row.append(rowNumber, level, english, meaning);
+            fragment.appendChild(row);
+        });
+        elements.bandListBody.replaceChildren(fragment);
+        elements.bandListCount.textContent = query
+            ? `${visibleWords.length.toLocaleString("en-US")} of ${state.currentBandWords.length.toLocaleString("en-US")} words`
+            : `${state.currentBandWords.length.toLocaleString("en-US")} words`;
+    }
+
+    function openBandList() {
+        state.currentBandWords = [...state.data.words];
+        elements.bandListTitle.textContent = "All 3,000 Words";
+        elements.bandSearchInput.value = "";
+        elements.levelScreen.hidden = true;
+        elements.bandListScreen.hidden = false;
+        renderBandList();
+        window.scrollTo({ top: 0, behavior: "smooth" });
+    }
+
+    function backFromBandList() {
+        elements.bandListScreen.hidden = true;
+        elements.levelScreen.hidden = false;
+        state.currentBandWords = [];
+        renderLevelGroups();
+        window.scrollTo({ top: 0, behavior: "smooth" });
+    }
     function openLevel(level, options = {}) {
         const baseWords = state.levels.get(level) || [];
         const unknownOnly = Boolean(options.unknownOnly);
@@ -263,18 +322,29 @@
         elements.exampleLabel.textContent = "Example";
         elements.exampleText.textContent = word.example?.en || "";
         elements.exampleKo.textContent = word.example?.ko || "";
-        const related = word.relatedWords || [
+        const sourceRelated = word.relatedWords || [
             ...word.alternate.map((relatedWord) => ({ word: relatedWord, type: "other spelling" })),
             ...word.relatedForms.map((relatedWord) => ({ word: relatedWord, type: "word form" })),
         ];
+        const seenRelated = new Set();
+        const related = sourceRelated.map((relatedWord) => {
+            const key = String(relatedWord.word || "").trim().toLowerCase();
+            const meaning = RELATED_MEANING_OVERRIDES.get(key) || state.wordMeaningMap.get(key);
+            if (!key || !meaning || key === word.word.toLowerCase() || seenRelated.has(key)) return null;
+            seenRelated.add(key);
+            return { ...relatedWord, meaning };
+        }).filter(Boolean);
         elements.relatedWords.replaceChildren(...related.map((relatedWord) => {
             const chip = document.createElement("span");
             chip.className = "related-word";
-            const label = document.createElement("span");
+            const label = document.createElement("strong");
             label.textContent = relatedWord.word;
+            const meaning = document.createElement("span");
+            meaning.className = "related-meaning";
+            meaning.textContent = relatedWord.meaning;
             const type = document.createElement("small");
             type.textContent = RELATED_TYPE_NAMES[relatedWord.type] || relatedWord.type;
-            chip.append(label, type);
+            chip.append(label, meaning, type);
             return chip;
         }));
         elements.relatedBlock.hidden = related.length === 0;
@@ -575,12 +645,10 @@
 
     function setSpellingReviewMode(isReview) {
         state.spellingReviewMode = isReview;
-        elements.spellingModeLabel.textContent = isReview ? "Saved words to try again" : "Beginner spelling";
-        elements.spellingTitle.textContent = isReview ? "Try Missed Words" : "Look and Spell";
+        elements.spellingModeLabel.textContent = isReview ? "Saved words to try again" : "Read the meaning and build the word.";
+        elements.spellingTitle.textContent = isReview ? "Try Missed Words" : "Spell the Meaning";
         if (isReview) {
-            elements.spellingLevelButtons.querySelectorAll("[data-level]").forEach((button) => {
-                button.setAttribute("aria-pressed", "false");
-            });
+            elements.spellingLevelSelect.disabled = true;
         }
     }
 
@@ -592,7 +660,16 @@
 
     function renderSpellingQuestion() {
         const image = state.imageMap.get(String(state.spellingTarget.id));
-        elements.spellingImage.src = `${IMAGE_BASE_URL}${image.file}`;
+        const meaning = (state.spellingTarget.meanings || []).find((item) => String(item || "").trim()) || "No meaning available.";
+        elements.spellingMeaning.textContent = meaning;
+        elements.spellingClueCard.classList.toggle("no-image", !image);
+        if (image) {
+            elements.spellingImage.src = `${IMAGE_BASE_URL}${image.file}`;
+            elements.spellingImage.alt = `Picture clue for ${state.spellingTarget.word}`;
+        } else {
+            elements.spellingImage.removeAttribute("src");
+            elements.spellingImage.alt = "";
+        }
         elements.spellingInput.value = "";
         elements.spellingInput.disabled = false;
         elements.spellingInput.className = "spelling-input";
@@ -797,9 +874,8 @@
             state.spellingIds,
             state.spellingLevel,
         );
-        elements.spellingLevelButtons.querySelectorAll("[data-level]").forEach((button) => {
-            button.setAttribute("aria-pressed", String(Number(button.dataset.level) === state.spellingLevel));
-        });
+        elements.spellingLevelSelect.disabled = false;
+        elements.spellingLevelSelect.value = String(state.spellingLevel);
         startSpellingRound(state.spellingPool);
     }
 
@@ -840,6 +916,9 @@
     }
 
     function bindEvents() {
+        elements.viewAllWordsButton.addEventListener("click", openBandList);
+        elements.backFromBandList.addEventListener("click", backFromBandList);
+        elements.bandSearchInput.addEventListener("input", () => renderBandList(elements.bandSearchInput.value));
         elements.flashcard.addEventListener("click", toggleMeaning);
         elements.previousButton.addEventListener("click", () => moveCard(-1));
         elements.nextButton.addEventListener("click", () => moveCard(1));
@@ -881,10 +960,7 @@
             const retryWords = state.spellingWrongEntries.map((entry) => entry.word);
             startSpellingRound(retryWords);
         });
-        elements.spellingLevelButtons.addEventListener("click", (event) => {
-            const button = event.target.closest("[data-level]");
-            if (button && !button.disabled) selectSpellingLevel(button.dataset.level);
-        });
+        elements.spellingLevelSelect.addEventListener("change", () => selectSpellingLevel(elements.spellingLevelSelect.value));
         window.addEventListener("keydown", (event) => {
             if (event.altKey || event.ctrlKey || event.metaKey) return;
             if (!elements.spellingScreen.hidden) {
@@ -956,15 +1032,16 @@
             ))) {
                 throw new Error("Vocabulary learning data is incomplete");
             }
+            state.wordMeaningMap = new Map(state.data.words.map((word) => [
+                word.word.toLowerCase(),
+                (word.meanings || []).find((meaning) => String(meaning || "").trim()) || "",
+            ]));
             state.levels = core.groupByLevel(state.data.words);
             if (state.levels.size !== 15) throw new Error("Invalid vocabulary levels");
-            if (spellingResponse?.ok) {
-                const spellingManifest = await spellingResponse.json();
-                const vocabularyIds = new Set(state.data.words.map((word) => String(word.id)));
-                state.spellingIds = new Set((spellingManifest.wordIds || [])
-                    .map(String)
-                    .filter((id) => vocabularyIds.has(id) && state.imageMap.has(id)));
-            }
+            if (spellingResponse?.ok) await spellingResponse.json();
+            state.spellingIds = new Set(state.data.words
+                .filter((word) => /^[a-z -]+$/i.test(word.word || "") && word.meanings?.some((meaning) => String(meaning || "").trim()))
+                .map((word) => String(word.id)));
             const gamePool = core.pictureGamePool(state.data.words, new Set(state.imageMap.keys()));
             elements.gameWordCount.textContent = gamePool.length.toLocaleString("ko-KR");
             elements.gameStartButton.hidden = gamePool.length < 4;
@@ -979,14 +1056,7 @@
             const spellingPool = core.pictureGamePool(state.data.words, state.spellingIds);
             elements.spellingWordCount.textContent = spellingPool.length.toLocaleString("ko-KR");
             elements.spellingGameStartButton.hidden = spellingPool.length === 0;
-            elements.spellingLevelButtons.querySelectorAll("[data-level]").forEach((button) => {
-                const levelPool = core.pictureGamePool(
-                    state.data.words,
-                    state.spellingIds,
-                    button.dataset.level,
-                );
-                button.disabled = levelPool.length === 0;
-            });
+            elements.spellingLevelSelect.disabled = spellingPool.length === 0;
             renderStoredSpellingWrong();
             updateShuffleToggle();
             renderOverallProgress();

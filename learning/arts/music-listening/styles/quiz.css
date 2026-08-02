@@ -2,3 +2,6 @@
 .history-line button{width:100%;min-height:68px;padding:10px 5px;border:0;background:transparent;color:inherit;font:inherit;cursor:pointer}.history-line button.active{background:var(--deep);color:#fff}.history-line button.active small{color:#e8ded0}.history-line button:focus-visible{outline:3px solid var(--gold);outline-offset:2px}
 .quiz-piece{display:flex;align-items:center;justify-content:space-between;gap:10px;flex-wrap:wrap}.quiz-listen{min-height:44px;padding:0 14px;display:inline-flex;align-items:center;border:1px solid var(--accent);background:var(--accent);color:#fff;text-decoration:none;font-weight:800}
 .quiz-listen{gap:7px;background:#fff!important;color:var(--accent)!important}.quiz-listen::before{content:'▶';flex:0 0 auto;width:24px;height:17px;display:grid;place-items:center;border-radius:4px;background:#f03;color:#fff;font-size:.62rem;line-height:1}
+
+/* The work is identified before listening so familiar pieces can be answered directly. */
+.quiz-work{display:grid;gap:3px;min-width:0}.quiz-work strong{color:var(--ink);font-size:.95rem}.quiz-work small{color:#74695d;font-size:.8rem;line-height:1.4}

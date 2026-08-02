@@ -70,6 +70,7 @@
         var scene, camera, renderer, controls, clock;
         var celestialBodies = {};
         var orbitLines = [];
+        var planetAxisArrows = [];
         var raycaster, mouse;
         var is3DReady = false;
         var mapLabels = []; // 2D DOM labels
@@ -919,6 +920,14 @@
 
                 line.visible = state.showOrbits && orbitFade > 0.012;
             });
+
+            planetAxisArrows.forEach(function (axis) {
+                if (!axis || !axis.arrow) return;
+                axis.arrow.visible = state.simMode === '3d' && state.showOrbits && orbitFade > 0.012;
+                [axis.arrow.line.material, axis.arrow.cone.material].forEach(function (material) {
+                    material.opacity = axis.baseOpacity * orbitFade;
+                });
+            });
         }
 
         function updateGalaxyBackdrop() {
@@ -1178,6 +1187,7 @@
             });
             orbitLines.forEach(function (l) { scene.remove(l); });
             orbitLines = [];
+            planetAxisArrows = [];
             celestialBodies = {};
 
             // Clear old 2D Labels
@@ -1399,6 +1409,33 @@
                 bodyTiltGroup.add(planetMesh);
                 planetMesh.position.set(0, 0, 0);
 
+                // Display the eight major planets' directed rotation axes with their orbits.
+                // Arrowheads distinguish retrograde Venus and the strongly tilted Uranus.
+                var axisArrow = null;
+                var majorPlanetKeys = ['mercury', 'venus', 'earth', 'mars', 'jupiter', 'saturn', 'uranus', 'neptune'];
+                if (state.simMode === '3d' && majorPlanetKeys.indexOf(key) !== -1) {
+                    var axisHalfLength = bodyR * 1.75;
+                    axisArrow = new THREE.ArrowHelper(
+                        new THREE.Vector3(0, 1, 0),
+                        new THREE.Vector3(0, -axisHalfLength, 0),
+                        axisHalfLength * 2,
+                        0x67e8f9,
+                        Math.max(bodyR * 0.5, 1.1),
+                        Math.max(bodyR * 0.24, 0.55)
+                    );
+                    axisArrow.visible = state.showOrbits;
+                    [axisArrow.line.material, axisArrow.cone.material].forEach(function (material) {
+                        material.transparent = true;
+                        material.opacity = 0.72;
+                        material.depthTest = false;
+                        material.depthWrite = false;
+                    });
+                    axisArrow.line.renderOrder = 8;
+                    axisArrow.cone.renderOrder = 8;
+                    bodyTiltGroup.add(axisArrow);
+                    planetAxisArrows.push({ key: key, arrow: axisArrow, baseOpacity: 0.72 });
+                }
+
                 if (state.simMode === '2d') {
                     planetMesh.visible = false;
                     var pl = createPlanetLabel(key, data);
@@ -1511,6 +1548,7 @@
                     bodyTiltGroup: bodyTiltGroup,
                     pivot: pivot,
                     ringMesh: saturnRingMesh,
+                    axisArrow: axisArrow,
                     satList: satList,
                     orbitRadius: orbitR,
                     semiMajor: semiMajor,
@@ -2841,6 +2879,9 @@
                 showOrbitsToggle.addEventListener('change', function (e) {
                     state.showOrbits = e.target.checked;
                     orbitLines.forEach(function (l) { l.visible = state.showOrbits; });
+                    planetAxisArrows.forEach(function (axis) {
+                        if (axis && axis.arrow) axis.arrow.visible = state.simMode === '3d' && state.showOrbits;
+                    });
                 });
             }
         }

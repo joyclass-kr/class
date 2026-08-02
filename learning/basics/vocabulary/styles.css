@@ -158,6 +158,27 @@ main { width: min(1180px, calc(100% - 32px)); margin: 0 auto; padding: 16px 0 48
 }
 .spelling-review-button:hover { border-color: var(--red); background: #fbefeb; }
 
+.sr-only { position: absolute; width: 1px; height: 1px; padding: 0; margin: -1px; overflow: hidden; clip: rect(0, 0, 0, 0); white-space: nowrap; border: 0; }
+.all-words-button { grid-column: 1 / -1; display: flex; align-items: center; justify-content: space-between; gap: 14px; min-height: 48px; padding: 10px 16px; border: 1px solid #9fb7aa; border-radius: 12px; background: rgba(244,250,245,.92); color: var(--green); font-size: 15px; font-weight: 900; cursor: pointer; }
+.all-words-button:hover, .all-words-button:focus-visible { border-color: var(--green); background: #edf6ef; }
+.all-words-button small { color: var(--muted); font-size: 12px; font-weight: 800; }
+.band-list-screen { width: min(1180px, 100%); margin: 0 auto; }
+.band-list-toolbar { display: grid; grid-template-columns: 1fr auto 1fr; align-items: center; gap: 16px; margin-bottom: 8px; }
+.band-list-toolbar h1 { margin: 0; font-size: 28px; text-align: center; }
+.band-search { justify-self: end; }
+.band-search input { width: min(300px, 32vw); min-height: 44px; padding: 9px 12px; border: 1px solid var(--line); border-radius: 10px; background: #fffdf7; color: var(--ink); font-size: 14px; }
+.band-list-count { margin: 0 0 8px; color: var(--muted); text-align: right; font-size: 13px; font-weight: 800; }
+.sheet-wrap { max-height: calc(100dvh - 126px); overflow: auto; border: 1px solid #aeb8b2; border-radius: 10px; background: rgba(255,255,255,.9); box-shadow: 0 12px 32px rgba(37,48,42,.12); }
+.word-sheet { width: 100%; border-collapse: separate; border-spacing: 0; table-layout: fixed; color: var(--ink); font-size: 14px; }
+.word-sheet th, .word-sheet td { padding: 8px 10px; border-right: 1px solid #cbd3ce; border-bottom: 1px solid #cbd3ce; text-align: left; vertical-align: top; line-height: 1.4; }
+.word-sheet thead th { position: sticky; top: 0; z-index: 2; background: #e6eee8; color: #263e34; font-weight: 900; }
+.word-sheet thead th:nth-child(1), .word-sheet tbody th { width: 58px; text-align: center; }
+.word-sheet thead th:nth-child(2) { width: 100px; }
+.word-sheet thead th:nth-child(3) { width: 190px; }
+.word-sheet tbody th { position: sticky; left: 0; z-index: 1; background: #f0f2ef; color: #68766f; font-weight: 700; }
+.word-sheet tbody tr:nth-child(even) td { background: rgba(241,246,242,.62); }
+.sheet-level { color: var(--green); font-weight: 850; white-space: nowrap; }
+.sheet-word { color: var(--navy); font: 700 17px/1.35 "Klee One Learning", "Klee One", cursive; }
 .study-screen { width: min(840px, 100%); margin: 0 auto; }
 .study-toolbar { display: grid; grid-template-columns: 1fr auto 1fr; align-items: center; gap: 12px; margin-bottom: 10px; text-align: center; }
 .study-toolbar h1 { margin: 0; font-size: 27px; line-height: 1.1; font-weight: 900; }
@@ -230,7 +251,10 @@ main { width: min(1180px, calc(100% - 32px)); margin: 0 auto; padding: 16px 0 48
 .example-ko { display: block; margin-top: 4px; color: #44524c; font-size: 15px; font-weight: 700; line-height: 1.45; }
 .related-block { display: block; min-height: 42px; margin-top: 8px; text-align: left; }
 .related-words { display: flex; flex-wrap: wrap; gap: 8px; }
-.related-word { display: inline-flex; align-items: center; gap: 6px; padding: 6px 12px; border: 1px solid var(--line); border-radius: 999px; background: rgba(255,253,247,.9); color: var(--ink); font-size: 14px; font-weight: 800; }
+.related-word { display: inline-flex; align-items: center; flex-wrap: wrap; gap: 5px 7px; padding: 8px 12px; border: 1px solid var(--line); border-radius: 14px; background: rgba(255,253,247,.9); color: var(--ink); font-size: 14px; }
+.related-word strong { font-weight: 900; }
+.related-meaning { color: var(--blue); font-weight: 800; }
+.related-meaning::before { content: "· "; color: var(--muted); }
 .related-word small { color: var(--muted); font-size: 11px; font-weight: 700; }
 .flashcard.revealed .example-block, .flashcard.revealed .related-block { opacity: 1; visibility: visible; transform: none; }
 .reveal-hint { position: absolute; bottom: 8px; color: #8c8069; font-size: 12px; font-weight: 800; }
@@ -398,6 +422,8 @@ main { width: min(1180px, calc(100% - 32px)); margin: 0 auto; padding: 16px 0 48
 .game-result-actions button:last-child { background: var(--green); color: white; }
 
 .spelling-stats { grid-template-columns: repeat(3, 1fr); }
+.spelling-level-picker { display: flex; align-items: center; justify-content: center; gap: 10px; margin: 10px auto 14px; color: var(--navy); font-size: 14px; font-weight: 850; }
+.spelling-level-picker select { min-height: 44px; padding: 8px 36px 8px 12px; border: 1px solid var(--line); border-radius: 12px; background: #fffdf7; color: var(--navy); font: inherit; cursor: pointer; }
 .spelling-panel { padding: 26px; }
 .spelling-question-layout { display: grid; grid-template-columns: minmax(220px, 300px) minmax(0, 1fr); align-items: center; gap: 28px; }
 .spelling-image-frame {
@@ -409,6 +435,10 @@ main { width: min(1180px, calc(100% - 32px)); margin: 0 auto; padding: 16px 0 48
     background: #f7f0e2;
 }
 .spelling-image-frame img { display: block; width: 100%; height: 100%; border-radius: 12px; object-fit: cover; }
+.spelling-clue-card { display: flex; flex-direction: column; justify-content: center; gap: 12px; aspect-ratio: auto; min-height: 280px; text-align: center; }
+.spelling-clue-card img { height: 170px; flex: 0 0 170px; }
+.spelling-clue-card.no-image img { display: none; }
+.spelling-meaning { margin: 0; padding: 12px 14px; color: var(--navy); font-size: 21px; font-weight: 850; line-height: 1.45; overflow-wrap: anywhere; }
 .spelling-answer-area { min-width: 0; text-align: center; }
 .spelling-hint { min-height: 32px; margin: 14px 0 10px; color: var(--blue); font: 600 26px/1.5 "Klee One Learning", "Klee One", cursive; letter-spacing: 3px; }
 .spelling-input {
@@ -424,7 +454,7 @@ main { width: min(1180px, calc(100% - 32px)); margin: 0 auto; padding: 16px 0 48
 }
 .tile-input { position: absolute; width: 1px; height: 1px; opacity: 0; pointer-events: none; }
 .spelling-built-word { display: flex; justify-content: center; align-items: center; min-height: 64px; margin: 10px 0; padding: 8px 14px; border: 2px dashed #b9cbd5; border-radius: 14px; background: #fff; color: var(--navy); font: 600 34px/1 "Klee One Learning", "Klee One", cursive; letter-spacing: 5px; }
-.spelling-built-word:empty::before { content: "타일을 골라 보세요"; color: #83939b; font-size: 15px; letter-spacing: 0; }
+.spelling-built-word:empty::before { content: "Choose the letter tiles."; color: #52666f; font-size: 15px; letter-spacing: 0; }
 .spelling-tile-rack { display: flex; flex-wrap: wrap; justify-content: center; gap: 9px; min-height: 62px; margin-bottom: 12px; }
 .letter-tile { min-width: 50px; min-height: 50px; padding: 8px 14px; border: 0; border-radius: 12px; background: var(--blue); color: white; font: 600 24px/1 "Klee One Learning", "Klee One", cursive; box-shadow: 0 4px 0 #2e5269; cursor: pointer; touch-action: manipulation; }
 .letter-tile:active { transform: translateY(3px); box-shadow: 0 1px 0 #2e5269; }
