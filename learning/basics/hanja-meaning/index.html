@@ -51,7 +51,7 @@
     .topline {
       position: absolute;
       top: 10px;
-      right: clamp(20px, 4vw, 54px);
+      right: calc(clamp(20px, 4vw, 54px) + 256px);
       display: flex;
       align-items: center;
       justify-content: flex-end;
@@ -70,17 +70,11 @@
 
     .hanja-head {
       display: grid;
-      grid-template-columns: auto 1fr;
+      grid-template-columns: auto 1fr auto;
       align-items: center;
       gap: clamp(20px, 3vw, 34px);
       padding: 6px 0 13px;
       border-bottom: 1px solid var(--line);
-    }
-
-    .character-workbench {
-      display: flex;
-      align-items: center;
-      gap: clamp(14px, 2vw, 24px);
     }
 
     .hanja {
@@ -380,8 +374,8 @@
     @media (max-width: 760px) {
       .page { padding-inline: 18px; }
       .topline { position: static; min-height: 32px; }
-      .hanja-head { grid-template-columns: 1fr; gap: 8px; }
-      .character-workbench { justify-content: flex-start; }
+      .hanja-head { grid-template-columns: auto 1fr; gap: 8px 20px; }
+      .stroke-demo { grid-column: 2; }
       .word-row { grid-template-columns: minmax(180px, .7fr) minmax(0, 1.5fr); gap: 10px 20px; }
       .meaning-row { grid-template-columns: 1fr; gap: 6px; }
       .quiz-grid { grid-template-columns: 1fr; }
@@ -400,25 +394,23 @@
     </div>
 
     <header class="hanja-head">
-      <div class="character-workbench">
-        <div class="hanja" aria-label="사람 인">人</div>
-        <section class="stroke-demo" aria-label="人 획순 실험">
-          <svg class="stroke-stage" viewBox="0 0 160 160" role="img" aria-label="人 두 획을 쓰는 순서">
-            <path class="stroke-guide" d="M80 0V160M0 80H160M0 0L160 160M160 0L0 160" />
-            <path class="stroke-path" data-stroke="1" d="M91 25 C84 58 66 98 32 135" />
-            <path class="stroke-path" data-stroke="2" d="M83 57 C98 85 116 111 139 135" />
-          </svg>
-          <div class="stroke-controls">
-            <p id="strokeStatus" class="stroke-status" aria-live="polite">준비</p>
-            <button id="playStrokes" class="stroke-button" type="button">▶ 획순 보기</button>
-            <button id="stepStroke" class="stroke-button" type="button">한 획씩</button>
-          </div>
-        </section>
-      </div>
+      <div class="hanja" aria-label="사람 인">人</div>
       <div>
         <p class="reading">인</p>
         <p class="core-meaning">사람</p>
       </div>
+      <section class="stroke-demo" aria-label="人 획순 실험">
+        <svg class="stroke-stage" viewBox="0 0 160 160" role="img" aria-label="人 두 획을 쓰는 순서">
+          <path class="stroke-guide" d="M80 0V160M0 80H160M0 0L160 160M160 0L0 160" />
+          <path class="stroke-path" data-stroke="1" d="M91 25 C84 58 66 98 32 135" />
+          <path class="stroke-path" data-stroke="2" d="M83 57 C98 85 116 111 139 135" />
+        </svg>
+        <div class="stroke-controls">
+          <p id="strokeStatus" class="stroke-status" aria-live="polite">준비</p>
+          <button id="playStrokes" class="stroke-button" type="button">▶ 획순 보기</button>
+          <button id="stepStroke" class="stroke-button" type="button">한 획씩</button>
+        </div>
+      </section>
     </header>
 
     <section id="lessonView" class="view" aria-label="뜻과 예시">
