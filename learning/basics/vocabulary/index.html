@@ -5,22 +5,15 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta name="description" content="Learn all 3,000 words from Korea's official 2022 English curriculum">
     <title>English Words 3,000 · 15 Levels</title>
-    <link rel="stylesheet" href="styles.css?v=20260802e">
+    <link rel="stylesheet" href="styles.css?v=20260802f">
     <script src="vocabulary-core.js?v=20260802c" defer></script>
-    <script src="app.js?v=20260802f" defer></script>
+    <script src="app.js?v=20260802g" defer></script>
 </head>
 <body>
-    <header class="site-header">
-        <a class="back-link" href="../../../" aria-label="Go back to the home page">← Home</a>
-        <div class="header-progress" aria-live="polite">
-            <span>Words learned</span>
-            <strong id="totalKnown">0</strong><span>/ 3,000</span>
-        </div>
-    </header>
-
     <main>
         <section id="levelScreen" class="level-screen" aria-labelledby="pageTitle">
             <div class="dashboard-heading">
+                <a class="back-link" href="../../../" aria-label="Go back to the home page">← Home</a>
                 <div>
                     <h1 id="pageTitle">Learn Words</h1>
                     <p>Choose a level or an activity.</p>
@@ -34,7 +27,7 @@
                     <strong id="overallPercent">0%</strong>
                 </div>
                 <div class="overall-track" aria-hidden="true"><span id="overallBar"></span></div>
-                <p><b id="totalStudied">0</b> learned · <b id="totalUnknown">0</b> to review</p>
+                <p><b id="totalKnown">0</b> learned / 3,000 · <b id="totalUnknown">0</b> to review</p>
             </div>
 
             <div class="game-launch-grid">

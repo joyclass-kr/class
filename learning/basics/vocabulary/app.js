@@ -32,7 +32,7 @@
     const core = window.VocabularyCore;
     const elements = Object.fromEntries([
         "levelScreen", "studyScreen", "stageGroups", "loadingState", "toast",
-        "totalKnown", "overallPercent", "overallBar", "totalStudied", "totalUnknown", "backToLevels",
+        "totalKnown", "overallPercent", "overallBar", "totalUnknown", "backToLevels",
         "shuffleButton", "imageToggleButton", "studyStage", "studyTitle", "cardPosition", "levelStatus", "sessionBar",
         "flashcard", "cardBadge", "wordText", "posText", "meaningText", "exampleBlock", "exampleLabel", "exampleText",
         "exampleKo", "relatedBlock", "relatedWords", "answerLayout", "wordImageBlock", "wordImage",
@@ -142,10 +142,8 @@
     function renderOverallProgress() {
         if (!state.data) return;
         const summary = core.summarizeWords(state.data.words, state.progress);
-        const studied = summary.known + summary.unknown;
         const percent = Math.round((summary.known / state.data.totalWords) * 100);
         elements.totalKnown.textContent = summary.known.toLocaleString("ko-KR");
-        elements.totalStudied.textContent = studied.toLocaleString("ko-KR");
         elements.totalUnknown.textContent = summary.unknown.toLocaleString("ko-KR");
         elements.overallPercent.textContent = `${percent}%`;
         elements.overallBar.style.width = `${percent}%`;
