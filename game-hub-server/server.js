@@ -208,8 +208,10 @@ const LEGACY_LEARNING_PATHS = new Map([
   ["/learning/simulations/body-explorer", "/learning/academics/body-explorer"],
   ["/learning/training/music-studio", "/learning/arts/music-studio"],
   ["/learning/art", "/learning/arts/art-appreciation/museum/"],
-  ["/learning/music/classics", "/learning/arts/classical-music"],
-  ["/learning/music/korean", "/learning/arts/korean-music"],
+  ["/learning/music/classics", "/learning/arts/music-listening/genres/classical"],
+  ["/learning/music/korean", "/learning/arts/music-listening/genres/korean"],
+  ["/learning/arts/classical-music", "/learning/arts/music-listening/genres/classical"],
+  ["/learning/arts/korean-music", "/learning/arts/music-listening/genres/korean"],
 ]);
 for (const [legacyPath, currentPath] of LEGACY_LEARNING_PATHS) {
   app.use(legacyPath, (req, res) => {
