@@ -4,7 +4,7 @@ const playlist=document.querySelector('#playlist');
 const filters=document.querySelector('#classical-filters');
 const dialog=document.querySelector('#detail-dialog');
 const detail=document.querySelector('#detail-content');
-const eras=[['all','전체 30'],['baroque','바로크 (Baroque)'],['classical','고전주의 (Classical)'],['romantic','낭만주의 (Romantic)'],['modern','20세기 (20th Century)']];
+const eras=[['baroque','바로크 (Baroque)'],['classical','고전주의 (Classical)'],['romantic','낭만주의 (Romantic)'],['modern','20세기 (20th Century)'],['all',`전체 ${pieces.length}`]];
 
 function renderCards(era='all'){
   const cards=pieces.filter(piece=>era==='all'||piece.era===era);
@@ -21,5 +21,5 @@ const quizBox=document.querySelector('#quiz-box');
 function shuffle(items){return [...items].map(value=>({value,order:Math.random()})).sort((a,b)=>a.order-b.order).map(item=>item.value)}
 document.querySelector('#new-quiz').addEventListener('click',()=>{const era=document.querySelector('#quiz-era').value;const count=Number(document.querySelector('#quiz-count').value);const pool=allQuestions.filter(question=>era==='all'||question.piece.era===era);current=shuffle(pool).slice(0,count);quizBox.innerHTML=current.map((question,index)=>`<fieldset><legend><span>${index+1}</span>${question.stem}</legend><p class="quiz-piece">${question.piece.title} · ${question.piece.composer}</p>${question.choices.map((choice,choiceIndex)=>`<label><input type="radio" name="q${index}" value="${choiceIndex}"><span>${choice}</span></label>`).join('')}<p class="feedback" hidden></p></fieldset>`).join('');document.querySelector('.quiz-actions').hidden=false;document.querySelector('#quiz-result').textContent=''});
 document.querySelector('#check-answer').addEventListener('click',()=>{let correct=0;current.forEach((question,index)=>{const field=quizBox.querySelectorAll('fieldset')[index];const selected=field.querySelector('input:checked');const ok=selected&&Number(selected.value)===question.correct;if(ok)correct++;const feedback=field.querySelector('.feedback');feedback.hidden=false;feedback.textContent=ok?'정답입니다.':`정답: ${question.answer}`;field.classList.toggle('correct',!!ok);field.classList.toggle('wrong',!ok)});document.querySelector('#quiz-result').textContent=`${current.length}문제 중 ${correct}문제를 맞혔습니다.`});
-renderCards();
+renderCards(eras[0][0]);
 })();

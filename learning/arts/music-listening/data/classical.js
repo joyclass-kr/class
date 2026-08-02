@@ -28,7 +28,27 @@ const pieces = [
   ['27','baroque','바로크','메시아 〈할렐루야〉','헨델','오라토리오','합창과 관현악','4박자','빠르게','장엄하고 환희에 차게','합창이 반복하는 “할렐루야”와 힘찬 화음','합창','성경 이야기를 바탕으로 한 대규모 성악곡'],
   ['28','classical','고전','피아노 소나타 11번 〈터키 행진곡〉','모차르트','피아노 소나타','피아노','2박자','조금 빠르게','경쾌하고 또렷하게','행진을 닮은 리듬과 빠른 오른손 선율','론도','반복되는 주제가 여러 부분 사이에 돌아옴'],
   ['29','romantic','낭만','나의 조국 〈몰다우〉','스메타나','교향시','관현악','6/8박자','보통 빠르게','넓고 흐르듯','두 샘물이 만나 큰 강이 되는 선율','표제 음악','강의 흐름과 주변 풍경을 음악으로 표현'],
-  ['30','modern','20세기','사브르 댄스','하차투리안','발레 음악','관현악','2박자','매우 빠르게','격렬하고 긴장되게','빠른 리듬과 강한 악센트가 반복됨','발레 음악','발레 〈가야네〉의 한 장면을 위한 음악']
+  ['30','modern','20세기','사브르 댄스','하차투리안','발레 음악','관현악','2박자','매우 빠르게','격렬하고 긴장되게','빠른 리듬과 강한 악센트가 반복됨','발레 음악','발레 〈가야네〉의 한 장면을 위한 음악'],
+  ['31','baroque','바로크','토카타와 푸가 라단조','바흐','오르간곡','오르간','4박자','빠르기 변화','어둡고 극적으로','강렬한 첫 동기와 거대한 오르간 음향','푸가','공포·긴장 장면에서 자주 들리는 유명한 도입'],
+  ['32','baroque','바로크','사계 〈겨울〉 1악장','비발디','협주곡','바이올린','4박자','빠르게','차갑고 긴박하게','떨리는 현악기와 매섭게 몰아치는 독주 바이올린','표제 음악','추위에 떠는 몸과 얼음바람을 소리로 묘사'],
+  ['33','classical','고전','엘리제를 위하여','베토벤','피아노 소품','피아노','3박자','조금 빠르게','쓸쓸하고 부드럽게','미-레# 두 음을 오가는 익숙한 첫 동기','론도','첫 주제가 다른 부분 사이에 계속 돌아옴'],
+  ['34','classical','고전','월광 소나타 1악장','베토벤','피아노 소나타','피아노','4박자','느리게','고요하고 어둡게','셋잇단음표 아르페지오 위에 떠오르는 낮은 선율','선율','반복 반주 위에서 긴 선율이 천천히 이동'],
+  ['35','classical','고전','교향곡 40번 1악장','모차르트','교향곡','관현악','2박자','빠르게','불안하고 격정적으로','쉼 없이 이어지는 여덟 음의 첫 주제','소나타 형식','불안한 주제가 조성과 악기를 바꾸며 전개'],
+  ['36','classical','고전','마술피리 〈밤의 여왕의 아리아〉','모차르트','오페라 아리아','소프라노와 관현악','4박자','매우 빠르게','분노에 차고 화려하게','매우 높은 음과 빠른 콜로라투라','선율','사람의 목소리가 악기처럼 빠르게 움직임'],
+  ['37','romantic','낭만','카르멘 〈전주곡〉','비제','오페라 전주곡','관현악','2박자','매우 빠르게','화려하고 긴박하게','심벌즈와 금관이 이끄는 투우사 주제','서곡','오페라의 주요 선율을 시작 전에 들려줌'],
+  ['38','romantic','낭만','천국과 지옥 〈캉캉〉','오펜바흐','오페레타','관현악','2박자','매우 빠르게','익살스럽고 들뜨게','빠른 갤럽 리듬과 반복되는 계단식 선율','무곡','빠르게 발을 차올리는 캉캉 춤과 연결'],
+  ['39','romantic','낭만','아름답고 푸른 도나우','요한 슈트라우스 2세','왈츠','관현악','3박자','보통 빠르게','우아하고 찬란하게','도입 뒤 펼쳐지는 강-약-약의 왈츠 주제','왈츠','빈의 무도회와 새해 음악회의 상징'],
+  ['40','romantic','낭만','발퀴레의 기행','바그너','오페라 음악','관현악','3박자','빠르게','용맹하고 압도적으로','금관악기의 상승 동기와 질주하는 리듬','라이트모티프','발퀴레 전사들을 나타내는 반복 주제'],
+  ['41','romantic','낭만','페르 귄트 〈아침 기분〉','그리그','모음곡','플루트와 오보에','6/8박자','조금 느리게','맑고 평화롭게','플루트와 오보에가 주고받는 떠오르는 선율','표제 음악','해가 떠오르는 풍경을 음색과 셈여림으로 표현'],
+  ['42','romantic','낭만','페르 귄트 〈산왕의 궁전에서〉','그리그','모음곡','관현악','4박자','빠르게','은밀하다가 광적으로','짧은 주제가 반복되며 점점 빠르고 크게 변함','크레셴도','같은 선율의 속도·음량·악기가 계속 증가'],
+  ['43','romantic','낭만','한여름 밤의 꿈 〈결혼행진곡〉','멘델스존','극음악','관현악','4박자','빠르게','당당하고 축제처럼','트럼펫 팡파르와 힘찬 행진 리듬','주제','결혼식 퇴장 음악으로 널리 사용되는 선율'],
+  ['44','romantic','낭만','1812년 서곡 〈피날레〉','차이콥스키','축전 서곡','관현악과 종·대포','4박자','장엄하게','승리에 차고 웅장하게','종소리·금관 합주와 대포 효과가 겹침','관현악법','매우 큰 음향으로 역사적 승리의 장면을 표현'],
+  ['45','romantic','낭만','술탄 황제의 이야기 〈왕벌의 비행〉','림스키코르사코프','오페라 음악','관현악','4박자','매우 빠르게','쉴 새 없이 날렵하게','반음계가 벌의 날갯짓처럼 빠르게 오르내림','선율','빠른 반음계 선율로 날아다니는 벌을 묘사'],
+  ['46','romantic','낭만','헝가리 광시곡 2번','리스트','랩소디','피아노','2박자','느리게 시작해 빨라짐','장중하다가 익살스럽게','느린 부분 뒤 빠른 춤과 옥타브가 폭발함','루바토','애니메이션의 피아노 대결 장면으로도 익숙한 곡'],
+  ['47','modern','20세기','베르가마스크 모음곡 〈달빛〉','드뷔시','피아노 소품','피아노','9/8박자','조금 느리게','고요하고 몽환적으로','부드러운 화음과 물결처럼 번지는 아르페지오','인상주의','선명한 줄거리보다 빛과 공기의 분위기를 표현'],
+  ['48','modern','20세기','로미오와 줄리엣 〈기사들의 춤〉','프로코피예프','발레 음악','관현악','4박자','보통 빠르게','무겁고 위압적으로','낮은 금관과 현악기의 강한 오스티나토','오스티나토','짧고 무거운 리듬이 반복되어 위압감을 만듦'],
+  ['49','modern','20세기','카르미나 부라나 〈오 운명의 여신이여〉','오르프','칸타타','합창과 관현악','3박자','보통 빠르게','운명적이고 폭발적으로','속삭임에서 포효로 커지는 합창과 반복 리듬','크레셴도','영화 예고편 같은 극적 합창으로 널리 알려짐'],
+  ['50','modern','20세기','랩소디 인 블루','거슈윈','랩소디','피아노와 관현악','4박자','보통 빠르게','세련되고 활기차게','클라리넷 글리산도와 재즈풍 당김음','글리산도','재즈 어법과 클래식 협주곡의 규모를 결합']
 ].map(([no,era,period,title,composer,form,lead,meter,tempo,mood,feature,concept,note])=>({no,era,period,title,composer,form,lead,meter,tempo,mood,feature,concept,note,url:`https://www.youtube.com/results?search_query=${encodeURIComponent(`${composer} ${title}`)}`}));
 
 const originalTitles=[
@@ -37,15 +57,21 @@ const originalTitles=[
   'Trumpet Concerto in E-flat major, III','Guillaume Tell Overture: Finale','Piano Quintet in A major “Trout”, IV','Erlkönig, D 328','Nocturne in E-flat major, Op. 9 No. 2',
   'Hungarian Dance No. 5','The Nutcracker: “Waltz of the Flowers”','Swan Lake: “Scene”','Le Carnaval des animaux: “Le Cygne”','Pictures at an Exhibition: “The Great Gate of Kyiv”',
   'Symphony No. 9 “From the New World”, II','Boléro','Prélude à l’après-midi d’un faune','The Planets: “Jupiter, the Bringer of Jollity”','Peter and the Wolf, Op. 67',
-  'The Young Person’s Guide to the Orchestra','Messiah: “Hallelujah”','Piano Sonata No. 11: “Rondo alla Turca”','Má vlast: “Vltava (The Moldau)”','Gayane: “Sabre Dance”'
+  'The Young Person’s Guide to the Orchestra','Messiah: “Hallelujah”','Piano Sonata No. 11: “Rondo alla Turca”','Má vlast: “Vltava (The Moldau)”','Gayane: “Sabre Dance”',
+  'Toccata and Fugue in D minor, BWV 565','Le quattro stagioni: “L’inverno”, I','Für Elise, WoO 59','Piano Sonata No. 14 “Moonlight”, I','Symphony No. 40 in G minor, I',
+  'Die Zauberflöte: “Der Hölle Rache”','Carmen: Prélude','Orphée aux enfers: “Galop infernal”','An der schönen blauen Donau','Die Walküre: “Ride of the Valkyries”',
+  'Peer Gynt: “Morning Mood”','Peer Gynt: “In the Hall of the Mountain King”','A Midsummer Night’s Dream: “Wedding March”','1812 Overture: Finale','The Tale of Tsar Saltan: “Flight of the Bumblebee”',
+  'Hungarian Rhapsody No. 2','Suite bergamasque: “Clair de lune”','Romeo and Juliet: “Dance of the Knights”','Carmina Burana: “O Fortuna”','Rhapsody in Blue'
 ];
 const composerOriginal={
   '비발디':'Antonio Vivaldi','바흐':'Johann Sebastian Bach','헨델':'George Frideric Handel','파헬벨':'Johann Pachelbel','베토벤':'Ludwig van Beethoven','모차르트':'Wolfgang Amadeus Mozart',
   '하이든':'Joseph Haydn','로시니':'Gioachino Rossini','슈베르트':'Franz Schubert','쇼팽':'Frédéric Chopin','브람스':'Johannes Brahms','차이콥스키':'Pyotr Ilyich Tchaikovsky',
   '생상스':'Camille Saint-Saëns','무소륵스키':'Modest Mussorgsky','드보르자크':'Antonín Dvořák','라벨':'Maurice Ravel','드뷔시':'Claude Debussy','홀스트':'Gustav Holst',
-  '프로코피예프':'Sergei Prokofiev','브리튼':'Benjamin Britten','스메타나':'Bedřich Smetana','하차투리안':'Aram Khachaturian'
+  '프로코피예프':'Sergei Prokofiev','브리튼':'Benjamin Britten','스메타나':'Bedřich Smetana','하차투리안':'Aram Khachaturian','비제':'Georges Bizet','오펜바흐':'Jacques Offenbach',
+  '요한 슈트라우스 2세':'Johann Strauss II','바그너':'Richard Wagner','그리그':'Edvard Grieg','멘델스존':'Felix Mendelssohn','림스키코르사코프':'Nikolai Rimsky-Korsakov',
+  '리스트':'Franz Liszt','오르프':'Carl Orff','거슈윈':'George Gershwin'
 };
-const workYears={'01':'1723년','02':'1730년경','03':'1721년','04':'1717년','05':'1680년경','06':'1808년','07':'1824년','08':'1787년','09':'1781~1782년','10':'1791년','11':'1796년','12':'1829년','13':'1819년','14':'1815년','15':'1832년','16':'1869년','17':'1892년','18':'1876년','19':'1886년','20':'1874년','21':'1893년','22':'1928년','23':'1894년','24':'1916년','25':'1936년','26':'1945년','27':'1741년','28':'1783년','29':'1874년','30':'1942년'};
+const workYears={'01':'1723년','02':'1730년경','03':'1721년','04':'1717년','05':'1680년경','06':'1808년','07':'1824년','08':'1787년','09':'1781~1782년','10':'1791년','11':'1796년','12':'1829년','13':'1819년','14':'1815년','15':'1832년','16':'1869년','17':'1892년','18':'1876년','19':'1886년','20':'1874년','21':'1893년','22':'1928년','23':'1894년','24':'1916년','25':'1936년','26':'1945년','27':'1741년','28':'1783년','29':'1874년','30':'1942년','31':'1700년경','32':'1723년','33':'1810년경','34':'1801년','35':'1788년','36':'1791년','37':'1875년','38':'1858년','39':'1867년','40':'1856년','41':'1875년','42':'1875년','43':'1842년','44':'1880년','45':'1900년','46':'1847년','47':'1905년','48':'1935년','49':'1936년','50':'1924년'};
 const stories={
   '01':'비발디는 《사계》의 각 협주곡에 어울리는 짧은 소네트를 악보와 함께 출판했습니다. 그래서 새소리, 개 짖는 소리, 천둥처럼 들리는 부분을 “무엇을 표현한 대목일까?” 하며 찾아 들을 수 있습니다.',
   '02':'이 곡이 ‘G선상의 아리아’로 불리게 된 것은 바흐의 원래 제목이 아니라, 19세기 바이올리니스트 아우구스트 빌헬미가 선율을 G선 하나로 연주할 수 있게 편곡하면서부터입니다.',
@@ -76,17 +102,37 @@ const stories={
   '27':'《메시아》는 오페라가 아니라 성경 이야기를 콘서트 형식으로 들려주는 오라토리오입니다. 1742년 아일랜드 더블린에서 처음 연주되었고, 〈할렐루야〉는 뒤이어 관객이 함께 일어서는 관습으로도 유명해졌습니다.',
   '28':'‘터키 행진곡’은 오스만 제국의 예니체리 군악대가 유럽에서 유행하던 시기의 상상력을 담았습니다. 피아노 한 대로 북과 심벌즈가 섞인 행진의 느낌을 어떻게 만드는지, 왼손 반주와 강한 악센트를 들어 보세요.',
   '29':'스메타나는 체코의 역사와 풍경을 음악으로 그린 연작 《나의 조국》 가운데 하나로 〈몰다우〉를 썼습니다. 두 샘물이 만나는 작은 물길에서 출발해 큰 강으로 흐르는 장면을 제목 없이도 상상하게 만드는 표제 음악입니다.',
-  '30':'〈사브르 댄스〉는 발레 《가야네》의 한 장면을 위한 음악입니다. 1942년 초연 뒤 빠른 리듬과 강한 악센트가 큰 인기를 얻어, 서커스·방송·대중문화에서 ‘숨 가쁘게 바쁜 장면’의 음악처럼 자주 쓰이게 되었습니다.'
+  '30':'〈사브르 댄스〉는 발레 《가야네》의 한 장면을 위한 음악입니다. 1942년 초연 뒤 빠른 리듬과 강한 악센트가 큰 인기를 얻어, 서커스·방송·대중문화에서 ‘숨 가쁘게 바쁜 장면’의 음악처럼 자주 쓰이게 되었습니다.',
+  '31':'첫 화음과 빠르게 떨어지는 선율은 공포 영화와 게임에서 오르간을 상징하는 소리처럼 쓰여 왔습니다. 곡의 바흐 작곡 여부를 둘러싼 논의도 있지만, 토카타의 자유로운 몸짓과 푸가의 질서가 대비되는 대표적인 오르간 레퍼토리입니다.',
+  '32':'비발디는 추위에 떨고 발을 구르며 얼음바람을 견디는 모습을 음악으로 그렸습니다. 짧게 떨리는 합주와 날카로운 독주 바이올린을 번갈아 들으면 겨울 장면이 더 또렷해집니다.',
+  '33':'누구를 가리키는지 확실하지 않은 ‘엘리제’에게 바친 짧은 피아노곡입니다. 미와 레#을 오가는 첫 동기가 너무 유명해 피아노를 처음 배우는 학생들도 자주 만나지만, 중간 부분에서는 분위기와 연주 기법이 크게 달라집니다.',
+  '34':'‘월광’은 베토벤이 붙인 제목이 아니라 후대 평론가가 달빛 비친 호수에 비유하며 생긴 별명입니다. 고른 셋잇단음표 반주 위로 낮고 긴 선율이 움직여, 조용하지만 계속 긴장된 느낌을 만듭니다.',
+  '35':'모차르트가 남긴 두 개의 단조 교향곡 가운데 하나입니다. 첫 주제는 작은 음량으로 급히 시작하지만 같은 리듬이 끊임없이 이어져, 노래하기 쉬운 선율 안에 불안과 추진력이 함께 느껴집니다.',
+  '36':'오페라 《마술피리》에서 밤의 여왕이 분노를 터뜨리는 아리아입니다. 소프라노가 매우 높은 음역에서 빠르고 정교한 음표를 연속해서 노래하는 콜로라투라 기교 때문에 성악의 한계를 보여 주는 장면으로 유명합니다.',
+  '37':'《카르멘》 전주곡은 투우장의 화려한 행진과 비극을 암시하는 음악을 짧게 압축합니다. 빠른 현악기와 심벌즈, 금관의 선명한 주제가 오페라 막이 오르기 전부터 강한 에너지를 만듭니다.',
+  '38':'오늘날 ‘캉캉’으로 알려진 선율의 원래 제목은 오페레타 《천국과 지옥》의 〈지옥의 갤럽〉입니다. 빠른 2박자와 반복 선율 때문에 익살스럽고 정신없이 움직이는 장면에 자주 사용됩니다.',
+  '39':'빈의 합창 협회를 위해 만든 곡이지만 오늘날에는 관현악 왈츠로 더 널리 알려졌습니다. 안개처럼 시작하는 도입 뒤에 유명한 도나우 주제가 나타나며, 여러 왈츠가 이어져 하나의 큰 춤 장면을 만듭니다.',
+  '40':'바그너의 오페라 연작 《니벨룽의 반지》 중 발퀴레들이 전사들을 데리고 질주하는 장면의 음악입니다. 호른과 금관의 상승 동기가 반복되면서 거대한 무리가 다가오는 듯한 힘을 만듭니다.',
+  '41':'그리그가 입센의 극 《페르 귄트》를 위해 만든 음악입니다. 플루트와 오보에가 같은 선율을 주고받고 관현악이 점차 밝아지면서, 해가 떠오르고 풍경이 깨어나는 모습을 소리로 그립니다.',
+  '42':'트롤들에게 쫓기는 장면에서 한 가지 짧은 선율이 끈질기게 반복됩니다. 처음에는 낮고 조용하지만 악기 수·음량·속도가 계속 늘어나므로, 크레셴도와 가속을 한꺼번에 알아차리기 좋은 곡입니다.',
+  '43':'셰익스피어의 극을 위한 부수음악 가운데 한 곡으로, 오늘날 서양식 결혼식의 퇴장 음악으로 널리 쓰입니다. 트럼펫 팡파르와 규칙적인 행진 리듬이 의식의 당당한 분위기를 만듭니다.',
+  '44':'차이콥스키는 1812년 러시아가 나폴레옹의 침공을 물리친 사건을 기념해 이 서곡을 썼습니다. 피날레에는 교회 종과 대포 효과까지 표시되어 있어, 관현악이 만들 수 있는 가장 거대한 축제 음향을 들려줍니다.',
+  '45':'오페라에서 왕자가 벌로 변해 날아가는 장면을 묘사한 곡입니다. 반음씩 빠르게 오르내리는 선율이 여러 악기로 옮겨 다니면서 벌의 윙윙거림과 민첩한 움직임을 표현합니다.',
+  '46':'느리고 장중한 라산과 빠르고 격렬한 프리스카가 이어지는 헝가리풍 광시곡입니다. 피아노의 화려한 옥타브와 급격한 속도 변화가 만화의 연주 대결 장면에 자주 쓰이면서 더욱 익숙해졌습니다.',
+  '47':'드뷔시의 《베르가마스크 모음곡》 가운데 가장 유명한 곡으로 제목은 프랑스 시에서 가져왔습니다. 기능화성의 방향을 또렷하게 밀기보다 부드러운 화음과 아르페지오의 잔향으로 달빛 같은 분위기를 만듭니다.',
+  '48':'프로코피예프의 발레 《로미오와 줄리엣》에서 두 가문의 위압적인 모습을 나타내는 음악입니다. 낮은 현악기와 금관, 무거운 점음표 리듬이 반복되며 인물들의 권력과 긴장을 들려줍니다.',
+  '49':'중세 라틴어 시를 바탕으로 만든 무대 칸타타 《카르미나 부라나》의 처음과 마지막 곡입니다. 짧은 리듬과 화음이 집요하게 반복되고 합창이 갑자기 커져, 운명 앞의 두려움과 폭발력을 직접적으로 전달합니다.',
+  '50':'거슈윈은 미국 재즈의 리듬과 블루스 음정, 클래식 협주곡의 규모를 한 작품에 결합했습니다. 시작의 클라리넷 글리산도는 원래 리허설에서 연주자가 장난스럽게 과장한 소리를 작곡가가 마음에 들어 해 살린 것으로 전해집니다.'
 };
 const paired=(ko,foreign)=>`${ko} (${foreign})`;
 const termMaps={
   period:{'바로크':paired('바로크','Baroque'),'고전':paired('고전','Classical'),'낭만':paired('낭만','Romantic'),'20세기':paired('20세기','20th Century')},
-  form:{'협주곡':paired('협주곡','concerto'),'관현악 모음곡':paired('관현악 모음곡','orchestral suite'),'합주 협주곡':paired('합주 협주곡','concerto grosso'),'캐논':paired('캐논','canon'),'교향곡':paired('교향곡','symphony'),'세레나데':paired('세레나데','serenade'),'변주곡':paired('변주곡','variations'),'서곡':paired('서곡','overture'),'예술가곡':paired('예술가곡','Lied / art song'),'녹턴':paired('녹턴','nocturne'),'무곡':paired('무곡','dance'),'발레 음악':paired('발레 음악','ballet music'),'모음곡':paired('모음곡','suite'),'교향시':paired('교향시','symphonic poem'),'음악 동화':paired('음악 동화','musical tale'),'변주곡과 푸가':paired('변주곡과 푸가','variations and fugue'),'랩소디':paired('랩소디','rhapsody'),'관현악 환상곡':paired('관현악 환상곡','orchestral fantasia'),'교향적 환상곡':paired('교향적 환상곡','symphonic fantasia'),'영화 음악':paired('영화 음악','film music')},
+  form:{'협주곡':paired('협주곡','concerto'),'관현악 모음곡':paired('관현악 모음곡','orchestral suite'),'합주 협주곡':paired('합주 협주곡','concerto grosso'),'캐논':paired('캐논','canon'),'교향곡':paired('교향곡','symphony'),'세레나데':paired('세레나데','serenade'),'변주곡':paired('변주곡','variations'),'서곡':paired('서곡','overture'),'예술가곡':paired('예술가곡','Lied / art song'),'녹턴':paired('녹턴','nocturne'),'무곡':paired('무곡','dance'),'발레 음악':paired('발레 음악','ballet music'),'모음곡':paired('모음곡','suite'),'교향시':paired('교향시','symphonic poem'),'음악 동화':paired('음악 동화','musical tale'),'변주곡과 푸가':paired('변주곡과 푸가','variations and fugue'),'랩소디':paired('랩소디','rhapsody'),'관현악 환상곡':paired('관현악 환상곡','orchestral fantasia'),'교향적 환상곡':paired('교향적 환상곡','symphonic fantasia'),'영화 음악':paired('영화 음악','film music'),'오르간곡':paired('오르간곡','organ work'),'피아노 소품':paired('피아노 소품','piano piece'),'피아노 소나타':paired('피아노 소나타','piano sonata'),'오페라 아리아':paired('오페라 아리아','opera aria'),'오페라 전주곡':paired('오페라 전주곡','opera prelude'),'오페레타':paired('오페레타','operetta'),'왈츠':paired('왈츠','waltz'),'오페라 음악':paired('오페라 음악','opera music'),'극음악':paired('극음악','incidental music'),'축전 서곡':paired('축전 서곡','festival overture'),'칸타타':paired('칸타타','cantata')},
   tempo:{'매우 빠르게':paired('매우 빠르게','Presto'),'빠르게':paired('빠르게','Allegro'),'조금 빠르게':paired('조금 빠르게','Allegretto'),'보통 빠르게':paired('보통 빠르기로','Moderato'),'조금 느리게':paired('조금 느리게','Andante / Andantino'),'느리게':paired('느리게','Adagio'),'매우 느리게':paired('매우 느리게','Largo'),'장엄하게':paired('장엄하게','Maestoso'),'느리게 시작해 빨라짐':'느리게에서 빠르게 (Lento → Allegro)','빠르기의 변화가 큼':paired('빠르기를 유연하게','tempo rubato'),'빠르기 변화':paired('부분마다 빠르기 변화','changing tempo')},
   meter:{'4박자':paired('4박자','quadruple meter'),'3박자':paired('3박자','triple meter'),'2박자':paired('2박자','duple meter'),'6/4박자':paired('6/4박자','compound duple meter'),'6/8박자':paired('6/8박자','compound duple meter'),'9/8박자':paired('9/8박자','compound triple meter'),'12/8박자':paired('12/8박자','compound quadruple meter'),'자유로운 박자':paired('자유로운 박자','free meter'),'박자 변화':paired('부분마다 박자 변화','changing meter')},
-  concept:{'표제 음악':paired('표제 음악','program music'),'선율':paired('선율','melody'),'합주 협주곡':paired('합주 협주곡','concerto grosso'),'모음곡':paired('모음곡','suite'),'돌림노래 원리':paired('돌림노래 원리','canon'),'동기':paired('동기','motif'),'주제':paired('주제','theme'),'소나타 형식':paired('소나타 형식','sonata form'),'변주':paired('변주','variation'),'셈여림':paired('셈여림','dynamics'),'협주':paired('협주','concerto'),'서곡':paired('서곡','overture'),'실내악':paired('실내악','chamber music'),'예술가곡':paired('예술가곡','Lied / art song'),'루바토':paired('루바토','rubato'),'아고기크':paired('아고기크','agogics'),'왈츠':paired('왈츠','waltz'),'발레 음악':paired('발레 음악','ballet music'),'음색':paired('음색','timbre'),'민족주의 음악':paired('민족주의 음악','musical nationalism'),'크레셴도':paired('크레셴도','crescendo'),'인상주의':paired('인상주의','Impressionism'),'관현악법':paired('관현악법','orchestration'),'라이트모티프':paired('라이트모티프','Leitmotiv'),'푸가':paired('푸가','fugue'),'글리산도':paired('글리산도','glissando'),'환상곡':paired('환상곡','fantasia'),'오스티나토':paired('오스티나토','ostinato')}
+  concept:{'표제 음악':paired('표제 음악','program music'),'선율':paired('선율','melody'),'합주 협주곡':paired('합주 협주곡','concerto grosso'),'모음곡':paired('모음곡','suite'),'돌림노래 원리':paired('돌림노래 원리','canon'),'동기':paired('동기','motif'),'주제':paired('주제','theme'),'소나타 형식':paired('소나타 형식','sonata form'),'변주':paired('변주','variation'),'셈여림':paired('셈여림','dynamics'),'협주':paired('협주','concerto'),'서곡':paired('서곡','overture'),'실내악':paired('실내악','chamber music'),'예술가곡':paired('예술가곡','Lied / art song'),'루바토':paired('루바토','rubato'),'아고기크':paired('아고기크','agogics'),'왈츠':paired('왈츠','waltz'),'무곡':paired('무곡','dance'),'발레 음악':paired('발레 음악','ballet music'),'음색':paired('음색','timbre'),'민족주의 음악':paired('민족주의 음악','musical nationalism'),'크레셴도':paired('크레셴도','crescendo'),'인상주의':paired('인상주의','Impressionism'),'관현악법':paired('관현악법','orchestration'),'라이트모티프':paired('라이트모티프','Leitmotiv'),'푸가':paired('푸가','fugue'),'글리산도':paired('글리산도','glissando'),'환상곡':paired('환상곡','fantasia'),'오스티나토':paired('오스티나토','ostinato')}
 };
-const instrumentOriginal={'바이올린':'violin','현악 합주':'string ensemble','하프시코드':'harpsichord','금관악기':'brass instruments','관현악':'orchestra','합창과 관현악':'chorus & orchestra','피아노':'piano','트럼펫':'trumpet','피아노와 현악기':'piano & strings','성악과 피아노':'voice & piano','관현악과 하프':'orchestra & harp','오보에와 관현악':'oboe & orchestra','첼로와 두 대의 피아노':'cello & two pianos','피아노 네 손 원곡·관현악 편곡':'piano four hands original / orchestral arrangement','피아노 원곡·관현악 편곡':'piano original / orchestral arrangement','잉글리시 호른':'English horn','스네어드럼과 관현악':'snare drum & orchestra','플루트':'flute','관현악과 해설':'orchestra & narrator'};
+const instrumentOriginal={'바이올린':'violin','현악 합주':'string ensemble','하프시코드':'harpsichord','금관악기':'brass instruments','관현악':'orchestra','합창과 관현악':'chorus & orchestra','피아노':'piano','트럼펫':'trumpet','피아노와 현악기':'piano & strings','피아노와 관현악':'piano & orchestra','성악과 피아노':'voice & piano','관현악과 하프':'orchestra & harp','오보에와 관현악':'oboe & orchestra','첼로와 두 대의 피아노':'cello & two pianos','피아노 네 손 원곡·관현악 편곡':'piano four hands original / orchestral arrangement','피아노 원곡·관현악 편곡':'piano original / orchestral arrangement','잉글리시 호른':'English horn','스네어드럼과 관현악':'snare drum & orchestra','플루트':'flute','관현악과 해설':'orchestra & narrator','오르간':'organ','소프라노와 관현악':'soprano & orchestra','플루트와 오보에':'flute & oboe','관현악과 종·대포':'orchestra, bells & cannon'};
 pieces.forEach((p,i)=>{
   p.originalTitle=originalTitles[i];
   p.year=workYears[p.no];
