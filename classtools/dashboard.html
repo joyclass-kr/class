@@ -399,7 +399,7 @@
             font-size: 0.95rem;
         }
 
-        /* 3. Board Cards (Notices & Homework) */
+        /* 3. Important schedule */
         .card-item-list {
             display: flex;
             flex-direction: column;
@@ -419,6 +419,60 @@
             padding: 8px 12px;
             font-size: 0.95rem;
             line-height: 1.4;
+        }
+
+        .schedule-empty {
+            color: var(--text-muted);
+            text-align: center;
+            padding: 28px 12px;
+            line-height: 1.6;
+        }
+
+        .schedule-date {
+            min-width: 54px;
+            color: var(--accent-green);
+            font-size: 0.8rem;
+            font-weight: 900;
+        }
+
+        .calendar-nav {
+            display: flex;
+            align-items: center;
+            gap: 6px;
+        }
+
+        .cal-day {
+            min-height: 34px;
+            cursor: pointer;
+            position: relative;
+        }
+
+        .cal-day.has-event::after {
+            content: "";
+            position: absolute;
+            left: 50%;
+            bottom: 2px;
+            width: 5px;
+            height: 5px;
+            border-radius: 50%;
+            background: var(--accent-amber);
+            transform: translateX(-50%);
+        }
+
+        .cal-day.selected {
+            outline: 2px solid var(--accent-green);
+            outline-offset: -2px;
+        }
+
+        .schedule-editor {
+            display: grid;
+            grid-template-columns: 110px minmax(0, 1fr) 52px;
+            gap: 8px;
+            margin-top: 10px;
+        }
+
+        .schedule-date-input {
+            color-scheme: dark;
         }
 
         .board-item-del {
@@ -849,24 +903,17 @@
             </div>
         </section>
 
-        <!-- Widget 3: Board Cards (Notices & Homework) -->
+        <!-- Widget 3: Important schedule -->
         <section class="widget-card" id="widget-boards" draggable="true">
             <div class="widget-header">
-                <h2 class="widget-title"><span class="widget-icon">📢</span> 알림사항</h2>
+                <h2 class="widget-title"><span class="widget-icon">📌</span> 주요일정</h2>
+                <span class="widget-badge" id="scheduleCountBadge">예정 0개</span>
             </div>
-            <div class="card-item-list" id="noticeList"></div>
-            <div class="board-add-box">
-                <input class="board-input" id="noticeInput" placeholder="새 알림 입력...">
-                <button class="add-btn" id="addNoticeBtn">+</button>
-            </div>
-
-            <div class="widget-header" style="margin-top: 10px;">
-                <h2 class="widget-title"><span class="widget-icon">🎒</span> 숙제 / 준비물</h2>
-            </div>
-            <div class="card-item-list" id="homeworkList"></div>
-            <div class="board-add-box">
-                <input class="board-input" id="homeworkInput" placeholder="숙제/준비물 입력...">
-                <button class="add-btn" id="addHomeworkBtn">+</button>
+            <div class="card-item-list" id="scheduleList"></div>
+            <div class="schedule-editor">
+                <input class="board-input schedule-date-input" id="scheduleDateInput" type="date" aria-label="일정 날짜">
+                <input class="board-input" id="scheduleTitleInput" maxlength="60" placeholder="선택한 날짜의 일정 입력..." aria-label="일정 내용">
+                <button class="add-btn" id="addScheduleBtn" aria-label="주요일정 추가">+</button>
             </div>
         </section>
 
@@ -890,6 +937,11 @@
 
             <div class="widget-header" style="margin-top: 4px;">
                 <h2 class="widget-title" style="font-size: 1.05rem;"><span class="widget-icon">🗓</span> <span id="calMonthTitle">2026년 5월</span></h2>
+                <div class="calendar-nav">
+                    <button class="icon-btn" id="prevMonthBtn" type="button" aria-label="이전 달">‹</button>
+                    <button class="icon-btn" id="todayMonthBtn" type="button">오늘</button>
+                    <button class="icon-btn" id="nextMonthBtn" type="button" aria-label="다음 달">›</button>
+                </div>
             </div>
             <div class="calendar-mini" id="calendarMini"></div>
 
@@ -999,19 +1051,7 @@
         let isEditMode = false;
         let sloganAlign = localStorage.getItem("sloganAlign") || "center";
         let sloganFontSize = parseInt(localStorage.getItem("sloganFontSize") || "42", 10);
-        const legacyNotices = ["또렷한 눈빛! 똑바른 자세!", "쉬는 시간 복도에서 뛰지 않기"];
-        const legacyHomeworks = ["수학익힘 책 42~45쪽 풀기", "내일 미술 준비물: 색종이, 가위"];
-        const isSameList = (first, second) => first.length === second.length && first.every((item, index) => item === second[index]);
-        let notices = JSON.parse(localStorage.getItem("dashboardNotices") || '[]');
-        let homeworks = JSON.parse(localStorage.getItem("dashboardHomeworks") || '[]');
-        if (isSameList(notices, legacyNotices) || isSameList(notices, ["-"])) {
-            notices = [];
-            localStorage.setItem("dashboardNotices", JSON.stringify(notices));
-        }
-        if (isSameList(homeworks, legacyHomeworks) || isSameList(homeworks, ["-"])) {
-            homeworks = [];
-            localStorage.setItem("dashboardHomeworks", JSON.stringify(homeworks));
-        }
+        let schedules = JSON.parse(localStorage.getItem("dashboardSchedules") || '[]');
         let missingStudents = new Set(JSON.parse(localStorage.getItem("dashboardMissingStudents") || '[]'));
         let rosterStudents = [];
 
@@ -1044,13 +1084,11 @@
         const checklistGrid = document.getElementById("checklistGrid");
         const missingBadge = document.getElementById("missingBadge");
 
-        const noticeList = document.getElementById("noticeList");
-        const noticeInput = document.getElementById("noticeInput");
-        const addNoticeBtn = document.getElementById("addNoticeBtn");
-
-        const homeworkList = document.getElementById("homeworkList");
-        const homeworkInput = document.getElementById("homeworkInput");
-        const addHomeworkBtn = document.getElementById("addHomeworkBtn");
+        const scheduleList = document.getElementById("scheduleList");
+        const scheduleDateInput = document.getElementById("scheduleDateInput");
+        const scheduleTitleInput = document.getElementById("scheduleTitleInput");
+        const addScheduleBtn = document.getElementById("addScheduleBtn");
+        const scheduleCountBadge = document.getElementById("scheduleCountBadge");
 
         const mealList = document.getElementById("mealList");
         const schoolNameTag = document.getElementById("schoolNameTag");
@@ -1416,75 +1454,91 @@
         }
         fetchRosterAndRenderChecklist();
 
-        // 5. Board Items (Notice & Homework)
-        function renderNotices() {
-            noticeList.replaceChildren();
-            notices.forEach((item, idx) => {
+        // 5. Important schedules
+        function localDateKey(date = new Date()) {
+            const year = date.getFullYear();
+            const month = String(date.getMonth() + 1).padStart(2, "0");
+            const day = String(date.getDate()).padStart(2, "0");
+            return `${year}-${month}-${day}`;
+        }
+
+        scheduleDateInput.value = localDateKey();
+
+        function saveSchedules() {
+            localStorage.setItem("dashboardSchedules", JSON.stringify(schedules));
+        }
+
+        function renderSchedules() {
+            scheduleList.replaceChildren();
+            const today = localDateKey();
+            const upcoming = schedules
+                .filter((item) => item.date >= today)
+                .sort((a, b) => a.date.localeCompare(b.date) || a.title.localeCompare(b.title));
+            scheduleCountBadge.textContent = `예정 ${upcoming.length}개`;
+
+            if (!upcoming.length) {
+                const empty = document.createElement("div");
+                empty.className = "schedule-empty";
+                empty.textContent = "달력에서 날짜를 선택해 주요일정을 등록하세요.";
+                scheduleList.append(empty);
+                return;
+            }
+
+            upcoming.slice(0, 8).forEach((item) => {
                 const div = document.createElement("div");
                 div.className = "board-item";
-                div.innerHTML = `<span>• ${item}</span>`;
+                const date = new Date(`${item.date}T00:00:00`);
+                const label = item.date === today ? "오늘" : `${date.getMonth() + 1}/${date.getDate()}`;
+                const dateSpan = document.createElement("span");
+                dateSpan.className = "schedule-date";
+                dateSpan.textContent = label;
+                const titleSpan = document.createElement("span");
+                titleSpan.style.flex = "1";
+                titleSpan.textContent = item.title;
                 const del = document.createElement("button");
                 del.className = "board-item-del";
                 del.innerHTML = "&times;";
+                del.setAttribute("aria-label", `${item.title} 일정 삭제`);
                 del.addEventListener("click", () => {
-                    notices.splice(idx, 1);
-                    localStorage.setItem("dashboardNotices", JSON.stringify(notices));
-                    renderNotices();
+                    schedules = schedules.filter((schedule) => schedule.id !== item.id);
+                    saveSchedules();
+                    renderSchedules();
+                    renderCalendar();
                 });
-                div.append(del);
-                noticeList.append(div);
+                div.append(dateSpan, titleSpan, del);
+                scheduleList.append(div);
             });
         }
 
-        function renderHomeworks() {
-            homeworkList.replaceChildren();
-            homeworks.forEach((item, idx) => {
-                const div = document.createElement("div");
-                div.className = "board-item";
-                div.innerHTML = `<span>• ${item}</span>`;
-                const del = document.createElement("button");
-                del.className = "board-item-del";
-                del.innerHTML = "&times;";
-                del.addEventListener("click", () => {
-                    homeworks.splice(idx, 1);
-                    localStorage.setItem("dashboardHomeworks", JSON.stringify(homeworks));
-                    renderHomeworks();
-                });
-                div.append(del);
-                homeworkList.append(div);
-            });
+        function addSchedule() {
+            const date = scheduleDateInput.value;
+            const title = scheduleTitleInput.value.trim();
+            if (!date || !title) return;
+            schedules.push({ id: crypto.randomUUID ? crypto.randomUUID() : `${Date.now()}-${Math.random()}`, date, title });
+            scheduleTitleInput.value = "";
+            saveSchedules();
+            renderSchedules();
+            renderCalendar();
+            scheduleTitleInput.focus();
         }
 
-        addNoticeBtn.addEventListener("click", () => {
-            const val = noticeInput.value.trim();
-            if (val) {
-                notices.push(val);
-                noticeInput.value = "";
-                localStorage.setItem("dashboardNotices", JSON.stringify(notices));
-                renderNotices();
-            }
+        addScheduleBtn.addEventListener("click", addSchedule);
+        scheduleTitleInput.addEventListener("keydown", (event) => {
+            if (event.key === "Enter") addSchedule();
         });
 
-        addHomeworkBtn.addEventListener("click", () => {
-            const val = homeworkInput.value.trim();
-            if (val) {
-                homeworks.push(val);
-                homeworkInput.value = "";
-                localStorage.setItem("dashboardHomeworks", JSON.stringify(homeworks));
-                renderHomeworks();
-            }
-        });
-
-        renderNotices();
-        renderHomeworks();
+        renderSchedules();
 
         // 6. Mini Calendar
+        let calendarCursor = new Date();
+        calendarCursor.setDate(1);
+
         function renderCalendar() {
             const calendarMini = document.getElementById("calendarMini");
             const calMonthTitle = document.getElementById("calMonthTitle");
             const now = new Date();
-            const year = now.getFullYear();
-            const month = now.getMonth();
+            const year = calendarCursor.getFullYear();
+            const month = calendarCursor.getMonth();
 
             calMonthTitle.textContent = `${year}년 ${month + 1}월`;
 
@@ -1512,11 +1566,43 @@
                 const dayOfWeek = (firstDay + date - 1) % 7;
                 if (dayOfWeek === 0) dayEl.classList.add("sun");
                 if (dayOfWeek === 6) dayEl.classList.add("sat");
-                if (date === now.getDate()) dayEl.classList.add("today");
+                const dateKey = localDateKey(new Date(year, month, date));
+                if (dateKey === localDateKey(now)) dayEl.classList.add("today");
+                if (dateKey === scheduleDateInput.value) dayEl.classList.add("selected");
+                if (schedules.some((item) => item.date === dateKey)) dayEl.classList.add("has-event");
                 dayEl.textContent = date;
+                dayEl.tabIndex = 0;
+                dayEl.setAttribute("role", "button");
+                dayEl.setAttribute("aria-label", `${year}년 ${month + 1}월 ${date}일 일정 선택`);
+                const selectDate = () => {
+                    scheduleDateInput.value = dateKey;
+                    renderCalendar();
+                    scheduleTitleInput.focus();
+                };
+                dayEl.addEventListener("click", selectDate);
+                dayEl.addEventListener("keydown", (event) => {
+                    if (event.key === "Enter" || event.key === " ") {
+                        event.preventDefault();
+                        selectDate();
+                    }
+                });
                 calendarMini.append(dayEl);
             }
         }
+        document.getElementById("prevMonthBtn").addEventListener("click", () => {
+            calendarCursor.setMonth(calendarCursor.getMonth() - 1);
+            renderCalendar();
+        });
+        document.getElementById("nextMonthBtn").addEventListener("click", () => {
+            calendarCursor.setMonth(calendarCursor.getMonth() + 1);
+            renderCalendar();
+        });
+        document.getElementById("todayMonthBtn").addEventListener("click", () => {
+            calendarCursor = new Date();
+            calendarCursor.setDate(1);
+            scheduleDateInput.value = localDateKey();
+            renderCalendar();
+        });
         renderCalendar();
 
         // 7. NEIS Meals
