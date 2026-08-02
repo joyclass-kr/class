@@ -16,7 +16,21 @@
   </header>
 
   <main>
-    <section id="fingerGuide" class="finger-guide" aria-labelledby="guideTitle">
+    <section id="typingHome" class="typing-home" aria-labelledby="typingHomeTitle">
+      <div class="typing-home-head">
+        <p>차례대로 연습해도 되고, 원하는 곳부터 시작해도 돼요.</p>
+        <h2 id="typingHomeTitle">무엇을 연습할까요?</h2>
+      </div>
+      <div class="practice-menu">
+        <button type="button" data-practice-mode="position"><span>1</span><strong>자리 익히기</strong><small>글쇠와 손가락 자리</small></button>
+        <button type="button" data-practice-mode="words"><span>2</span><strong>단어 연습</strong><small>한글 · 영어 · 숫자·기호</small></button>
+        <button type="button" data-practice-mode="sentences"><span>3</span><strong>문장 연습</strong><small>짧은 문장을 정확하게</small></button>
+        <button type="button" data-practice-mode="paragraphs"><span>4</span><strong>문단 연습</strong><small>긴 글을 차분하게</small></button>
+      </div>
+    </section>
+
+    <section id="fingerGuide" class="finger-guide" aria-labelledby="guideTitle" hidden>
+      <button class="back-to-menu" type="button" data-back-to-menu>← 연습 선택</button>
       <div class="guide-head"><h2 id="guideTitle">손가락 자리</h2><div class="segmented guide-language" aria-label="운지법 종류"><button class="active" type="button" data-guide-language="ko" aria-pressed="true">가 한글</button><button type="button" data-guide-language="en" aria-pressed="false">a 영어</button><button type="button" data-guide-language="symbols" aria-pressed="false">123 숫자·기호</button></div></div>
       <div class="finger-stage">
         <div class="hands" aria-label="양손 손가락 안내 그림">
@@ -31,10 +45,12 @@
       <div class="actions"><button id="startWordsButton" class="secondary" type="button">낱말 연습으로 건너뛰기</button></div>
     </section>
     <section class="practice" aria-labelledby="practiceTitle" hidden>
+      <div class="practice-heading"><button class="back-to-menu" type="button" data-back-to-menu>← 연습 선택</button><h2 id="practiceTitle">단어 연습</h2></div>
       <div class="mode-row">
         <div class="segmented" aria-label="연습 언어">
           <button class="active" type="button" data-language="ko" aria-pressed="true">가 한글</button>
           <button type="button" data-language="en" aria-pressed="false">A 영어</button>
+          <button type="button" data-language="symbols" aria-pressed="false">123 숫자·기호</button>
         </div>
         <button id="levelButton" class="level-button" type="button" aria-expanded="false" aria-controls="levelPanel">
           <span>1단계</span><strong>낱말</strong><span aria-hidden="true">⌄</span>
@@ -75,6 +91,7 @@
       <h2 id="resultTitle">참 잘했어요!</h2>
       <div class="result-stats"><span>평균 타수 <b id="resultSpeed">0</b></span><span>정확도 <b id="resultAccuracy">100%</b></span></div>
       <button id="againButton" class="primary" type="button">한 번 더 연습하기</button>
+      <button class="secondary" type="button" data-back-to-menu>연습 선택으로</button>
     </section>
   </main>
   <script src="app.js"></script>
