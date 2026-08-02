@@ -228,6 +228,14 @@ app.use((req, res, next) => {
 
 app.use("/api", classroomPlatform.router);
 
+for (const [route, file] of [
+  ["/privacy", "privacy.html"],
+  ["/student-privacy", "student-privacy.html"],
+  ["/support", "support.html"],
+]) {
+  app.get(route, (_req, res) => res.sendFile(path.join(SITE_ROOT, file)));
+}
+
 const CLEAN_HTML_ROOTS = ["/admin", "/classtools", "/learning"];
 app.use((req, res, next) => {
   if (req.method !== "GET" && req.method !== "HEAD") return next();

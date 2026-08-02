@@ -382,6 +382,18 @@ function createClassroomPlatform(options = {}) {
         ON classroom_schedules (class_id, event_date, id)`,
       `CREATE UNIQUE INDEX IF NOT EXISTS classroom_schedules_unique_event_idx
         ON classroom_schedules (class_id, event_date, title)`,
+      `CREATE TABLE IF NOT EXISTS privacy_requests (
+        id BIGSERIAL PRIMARY KEY,
+        user_id BIGINT NOT NULL REFERENCES classroom_users(id) ON DELETE CASCADE,
+        category TEXT NOT NULL CHECK (category IN ('view', 'correct', 'delete', 'stop', 'birthday', 'technical', 'other')),
+        details TEXT NOT NULL CHECK (char_length(details) BETWEEN 10 AND 1000),
+        status TEXT NOT NULL DEFAULT 'received' CHECK (status IN ('received', 'reviewing', 'completed', 'rejected')),
+        created_at TIMESTAMPTZ NOT NULL DEFAULT NOW(),
+        updated_at TIMESTAMPTZ NOT NULL DEFAULT NOW(),
+        resolved_at TIMESTAMPTZ
+      )`,
+      `CREATE INDEX IF NOT EXISTS privacy_requests_user_created_idx
+        ON privacy_requests (user_id, created_at DESC)`,
       `WITH first_login_upgrade AS (
         INSERT INTO classroom_settings (setting_key, setting_value)
         VALUES ('school_login_v2_enabled', 'true')
@@ -397,6 +409,7 @@ function createClassroomPlatform(options = {}) {
     try {
       for (const statement of statements) await pool.query(statement);
       await pool.query("DELETE FROM classroom_sessions WHERE expires_at <= NOW()");
+      await pool.query("DELETE FROM privacy_requests WHERE created_at < NOW() - INTERVAL '1 year'");
       await readingBank.initialize();
       databaseReady = true;
       initializationError = null;
@@ -699,6 +712,74 @@ function createClassroomPlatform(options = {}) {
       user: publicUser(user),
       membership
     });
+  }));
+
+  router.get("/privacy/requests", asyncRoute(async (req, res) => {
+    const user = await requireUser(req);
+    const result = await pool.query(
+      `SELECT id, category, details, status, created_at, updated_at, resolved_at
+       FROM privacy_requests
+       WHERE user_id = $1
+       ORDER BY created_at DESC
+       LIMIT 20`,
+      [user.id]
+    );
+    res.json({ requests: result.rows });
+  }));
+
+  router.post("/privacy/requests", asyncRoute(async (req, res) => {
+    const user = await requireUser(req);
+    const category = String(req.body?.category || "").trim();
+    const details = String(req.body?.details || "").trim();
+    const allowed = new Set(["view", "correct", "delete", "stop", "birthday", "technical", "other"]);
+    if (!allowed.has(category)) {
+      throw new HttpError(400, "PRIVACY_CATEGORY_REQUIRED", "Choose a request type.");
+    }
+    if (details.length < 10 || details.length > 1000) {
+      throw new HttpError(400, "PRIVACY_DETAILS_REQUIRED", "Write between 10 and 1,000 characters.");
+    }
+    const result = await pool.query(
+      `INSERT INTO privacy_requests (user_id, category, details)
+       VALUES ($1, $2, $3)
+       RETURNING id, category, details, status, created_at, updated_at, resolved_at`,
+      [user.id, category, details]
+    );
+    res.status(201).json({ request: result.rows[0] });
+  }));
+
+  router.get("/admin/privacy-requests", asyncRoute(async (req, res) => {
+    await requireAdmin(req);
+    const result = await pool.query(
+      `SELECT r.id, r.category, r.details, r.status, r.created_at, r.updated_at, r.resolved_at,
+              u.display_name, u.email, u.role
+       FROM privacy_requests r
+       JOIN classroom_users u ON u.id = r.user_id
+       ORDER BY CASE r.status WHEN 'received' THEN 0 WHEN 'reviewing' THEN 1 ELSE 2 END, r.created_at ASC
+       LIMIT 200`
+    );
+    res.json({ requests: result.rows });
+  }));
+
+  router.patch("/admin/privacy-requests/:requestId", asyncRoute(async (req, res) => {
+    await requireAdmin(req);
+    const requestId = Number(req.params.requestId);
+    const status = String(req.body?.status || "").trim();
+    if (!Number.isSafeInteger(requestId) || requestId < 1) {
+      throw new HttpError(400, "VALID_REQUEST_ID_REQUIRED", "The request ID is invalid.");
+    }
+    if (!["received", "reviewing", "completed", "rejected"].includes(status)) {
+      throw new HttpError(400, "VALID_REQUEST_STATUS_REQUIRED", "The request status is invalid.");
+    }
+    const result = await pool.query(
+      `UPDATE privacy_requests
+       SET status = $2, updated_at = NOW(),
+           resolved_at = CASE WHEN $2 IN ('completed', 'rejected') THEN NOW() ELSE NULL END
+       WHERE id = $1
+       RETURNING id, status, updated_at, resolved_at`,
+      [requestId, status]
+    );
+    if (!result.rows[0]) throw new HttpError(404, "PRIVACY_REQUEST_NOT_FOUND", "The request was not found.");
+    res.json({ request: result.rows[0] });
   }));
 
   router.post("/auth/guest", asyncRoute(async (req, res) => {
