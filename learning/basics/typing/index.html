@@ -1,0 +1,81 @@
+<!doctype html>
+<html lang="ko">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+  <meta name="theme-color" content="#fff7e8">
+  <title>타자연습</title>
+  <link rel="stylesheet" href="style.css">
+  <link rel="stylesheet" href="guide.css">
+</head>
+<body>
+  <header class="topbar">
+    <a class="home" href="../../../" aria-label="기초학력 목록으로 돌아가기">‹ 기초학력</a>
+    <h1>타자연습</h1>
+    <button id="soundButton" class="icon-button" type="button" aria-pressed="true">소리 켬</button>
+  </header>
+
+  <main>
+    <section id="fingerGuide" class="finger-guide" aria-labelledby="guideTitle">
+      <div class="guide-head"><div><p>가장 먼저 배워요</p><h2 id="guideTitle">손가락 자리를 익혀요</h2></div><div class="segmented guide-language" aria-label="운지법 언어"><button class="active" type="button" data-guide-language="ko" aria-pressed="true">가 한글</button><button type="button" data-guide-language="en" aria-pressed="false">A 영어</button></div></div>
+      <div class="finger-stage">
+        <div class="hands" aria-label="양손 손가락 안내 그림">
+          <div class="hand left-hand"><span class="finger pinky" data-finger="lp"><i></i><b>새끼</b></span><span class="finger ring" data-finger="lr"><i></i><b>약지</b></span><span class="finger middle" data-finger="lm"><i></i><b>가운데</b></span><span class="finger index" data-finger="li"><i></i><b>검지</b></span><span class="finger thumb" data-finger="lt"><i></i><b>엄지</b></span><div class="palm">왼손</div></div>
+          <div class="hand right-hand"><span class="finger thumb" data-finger="rt"><i></i><b>엄지</b></span><span class="finger index" data-finger="ri"><i></i><b>검지</b></span><span class="finger middle" data-finger="rm"><i></i><b>가운데</b></span><span class="finger ring" data-finger="rr"><i></i><b>약지</b></span><span class="finger pinky" data-finger="rp"><i></i><b>새끼</b></span><div class="palm">오른손</div></div>
+        </div>
+        <div class="finger-instruction"><span id="fingerBadge">왼손 검지</span><strong id="guideKey">ㄹ</strong><p id="guideMessage">빛나는 손가락으로 <b>ㄹ</b> 키를 눌러 보세요.</p></div>
+      </div>
+      <div id="keyboard" class="keyboard" aria-label="키보드 운지법"></div>
+      <div class="guide-progress"><span id="guideCount">0 / 12</span><div><i id="guideBar"></i></div></div>
+      <div class="actions"><button id="startWordsButton" class="secondary" type="button">낱말 연습으로 건너뛰기</button></div>
+    </section>
+    <section class="practice" aria-labelledby="practiceTitle" hidden>
+      <div class="mode-row">
+        <div class="segmented" aria-label="연습 언어">
+          <button class="active" type="button" data-language="ko" aria-pressed="true">가 한글</button>
+          <button type="button" data-language="en" aria-pressed="false">A 영어</button>
+        </div>
+        <button id="levelButton" class="level-button" type="button" aria-expanded="false" aria-controls="levelPanel">
+          <span>1단계</span><strong>낱말</strong><span aria-hidden="true">⌄</span>
+        </button>
+      </div>
+
+      <div id="levelPanel" class="level-panel" hidden>
+        <button class="active" type="button" data-level="0"><b>1</b><span><strong>낱말</strong><small>짧고 쉬운 말</small></span></button>
+        <button type="button" data-level="1"><b>2</b><span><strong>짧은 문장</strong><small>띄어쓰기 익히기</small></span></button>
+        <button type="button" data-level="2"><b>3</b><span><strong>긴 문장</strong><small>차분하게 완성하기</small></span></button>
+      </div>
+
+      <div class="stats" aria-label="현재 연습 기록">
+        <div><span>타수</span><strong id="speed">0</strong><small>타/분</small></div>
+        <div><span>정확도</span><strong id="accuracy">100</strong><small>%</small></div>
+        <div><span>연속 성공</span><strong id="streak">0</strong><small>개</small></div>
+      </div>
+
+      <div class="prompt-card">
+        <p class="eyebrow"><span id="stepLabel">1 / 10</span><span id="bestLabel">최고 0타/분</span></p>
+        <div id="prompt" class="prompt" aria-label="따라 쓸 글자"></div>
+        <label for="typingInput">위의 글자를 그대로 입력하세요</label>
+        <input id="typingInput" type="text" autocomplete="off" autocapitalize="off" spellcheck="false" enterkeyhint="done" aria-describedby="feedback">
+        <p id="feedback" class="feedback" aria-live="polite">준비되면 바로 입력해 보세요!</p>
+        <div class="progress"><span id="progressBar"></span></div>
+      </div>
+
+      <div class="actions">
+        <button id="restartButton" class="secondary" type="button">운지법 다시 보기</button>
+        <button id="skipButton" class="primary" type="button">다음 문제</button>
+      </div>
+      <p class="keyboard-tip">키보드에서 <kbd>Enter</kbd>를 눌러도 다음 문제로 넘어가요.</p>
+    </section>
+
+    <section id="resultCard" class="result-card" hidden aria-live="polite">
+      <div class="medal" aria-hidden="true">★</div>
+      <p>연습 완료!</p>
+      <h2 id="resultTitle">참 잘했어요!</h2>
+      <div class="result-stats"><span>평균 타수 <b id="resultSpeed">0</b></span><span>정확도 <b id="resultAccuracy">100%</b></span></div>
+      <button id="againButton" class="primary" type="button">한 번 더 연습하기</button>
+    </section>
+  </main>
+  <script src="app.js"></script>
+</body>
+</html>
