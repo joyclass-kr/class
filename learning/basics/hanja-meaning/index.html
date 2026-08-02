@@ -77,6 +77,12 @@
       border-bottom: 1px solid var(--line);
     }
 
+    .character-workbench {
+      display: flex;
+      align-items: center;
+      gap: clamp(14px, 2vw, 24px);
+    }
+
     .hanja {
       min-width: 1.2em;
       font-family: "KleeHanja", serif;
@@ -85,6 +91,70 @@
       line-height: .9;
       text-align: center;
     }
+
+    .stroke-demo {
+      display: grid;
+      grid-template-columns: 104px 112px;
+      align-items: center;
+      gap: 10px;
+      padding: 6px;
+      border: 1px solid var(--line);
+      border-radius: 8px;
+      background: #fffdf8;
+    }
+
+    .stroke-stage {
+      display: block;
+      width: 104px;
+      height: 104px;
+      border: 1px solid #ddd8ce;
+      background: #fff;
+    }
+
+    .stroke-guide {
+      fill: none;
+      stroke: #dedbd3;
+      stroke-width: 1;
+      stroke-dasharray: 4 4;
+    }
+
+    .stroke-path {
+      fill: none;
+      stroke: var(--ink);
+      stroke-width: 12;
+      stroke-linecap: round;
+      stroke-linejoin: round;
+    }
+
+    .stroke-controls {
+      display: grid;
+      gap: 6px;
+    }
+
+    .stroke-status {
+      margin: 0;
+      color: var(--blue);
+      font: 800 14px/1.2 system-ui, sans-serif;
+      text-align: center;
+    }
+
+    .stroke-button {
+      min-height: 44px;
+      padding: 7px 8px;
+      border: 1px solid #9aa5ad;
+      border-radius: 5px;
+      background: #fff;
+      color: var(--ink);
+      font: 800 14px/1.15 system-ui, sans-serif;
+      cursor: pointer;
+    }
+
+    .stroke-button:focus-visible {
+      outline: 3px solid rgba(45, 99, 140, .28);
+      outline-offset: 2px;
+    }
+
+    .stroke-button:disabled { opacity: .55; cursor: default; }
 
     .reading {
       margin: 0 0 5px;
@@ -310,7 +380,8 @@
     @media (max-width: 760px) {
       .page { padding-inline: 18px; }
       .topline { position: static; min-height: 32px; }
-      .hanja-head { gap: 20px; }
+      .hanja-head { grid-template-columns: 1fr; gap: 8px; }
+      .character-workbench { justify-content: flex-start; }
       .word-row { grid-template-columns: minmax(180px, .7fr) minmax(0, 1.5fr); gap: 10px 20px; }
       .meaning-row { grid-template-columns: 1fr; gap: 6px; }
       .quiz-grid { grid-template-columns: 1fr; }
@@ -329,7 +400,21 @@
     </div>
 
     <header class="hanja-head">
-      <div class="hanja" aria-label="사람 인">人</div>
+      <div class="character-workbench">
+        <div class="hanja" aria-label="사람 인">人</div>
+        <section class="stroke-demo" aria-label="人 획순 실험">
+          <svg class="stroke-stage" viewBox="0 0 160 160" role="img" aria-label="人 두 획을 쓰는 순서">
+            <path class="stroke-guide" d="M80 0V160M0 80H160M0 0L160 160M160 0L0 160" />
+            <path class="stroke-path" data-stroke="1" d="M91 25 C84 58 66 98 32 135" />
+            <path class="stroke-path" data-stroke="2" d="M83 57 C98 85 116 111 139 135" />
+          </svg>
+          <div class="stroke-controls">
+            <p id="strokeStatus" class="stroke-status" aria-live="polite">준비</p>
+            <button id="playStrokes" class="stroke-button" type="button">▶ 획순 보기</button>
+            <button id="stepStroke" class="stroke-button" type="button">한 획씩</button>
+          </div>
+        </section>
+      </div>
       <div>
         <p class="reading">인</p>
         <p class="core-meaning">사람</p>
@@ -422,6 +507,70 @@
       const result = document.getElementById('result');
       const nextLesson = document.getElementById('nextLesson');
       const questions = Array.from(document.querySelectorAll('.question'));
+      const strokePaths = Array.from(document.querySelectorAll('.stroke-path'));
+      const strokeStatus = document.getElementById('strokeStatus');
+      const playStrokes = document.getElementById('playStrokes');
+      const stepStroke = document.getElementById('stepStroke');
+      const reducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+      let visibleStrokes = 0;
+      let strokePlaying = false;
+
+      strokePaths.forEach((path) => {
+        const length = path.getTotalLength();
+        path.style.strokeDasharray = length;
+        path.style.strokeDashoffset = length;
+      });
+
+      function resetStrokes() {
+        strokePaths.forEach((path) => {
+          path.getAnimations().forEach((animation) => animation.cancel());
+          path.style.strokeDashoffset = path.getTotalLength();
+        });
+        visibleStrokes = 0;
+        strokeStatus.textContent = '준비';
+      }
+
+      async function revealStroke(path) {
+        const length = path.getTotalLength();
+        if (reducedMotion) {
+          path.style.strokeDashoffset = 0;
+          return;
+        }
+        const animation = path.animate(
+          [{ strokeDashoffset: length }, { strokeDashoffset: 0 }],
+          { duration: 620, easing: 'ease-in-out', fill: 'forwards' }
+        );
+        await animation.finished;
+        path.style.strokeDashoffset = 0;
+        animation.cancel();
+      }
+
+      playStrokes.addEventListener('click', async () => {
+        if (strokePlaying) return;
+        strokePlaying = true;
+        playStrokes.disabled = true;
+        stepStroke.disabled = true;
+        resetStrokes();
+        for (let index = 0; index < strokePaths.length; index += 1) {
+          strokeStatus.textContent = `${index + 1}획 / ${strokePaths.length}획`;
+          await revealStroke(strokePaths[index]);
+        }
+        visibleStrokes = strokePaths.length;
+        strokeStatus.textContent = '완성';
+        playStrokes.disabled = false;
+        stepStroke.disabled = false;
+        strokePlaying = false;
+      });
+
+      stepStroke.addEventListener('click', () => {
+        if (strokePlaying) return;
+        if (visibleStrokes >= strokePaths.length) resetStrokes();
+        strokePaths[visibleStrokes].style.strokeDashoffset = 0;
+        visibleStrokes += 1;
+        strokeStatus.textContent = visibleStrokes === strokePaths.length
+          ? '완성'
+          : `${visibleStrokes}획 / ${strokePaths.length}획`;
+      });
 
       function show(view) {
         const quiz = view === 'quiz';
