@@ -108,6 +108,51 @@ const seed = require("../game-hub-server/data/reading-bank-seed-v1.json");
 const reviewedItems = seed.topics.flatMap((topic) => topic.items);
 const completeBank = items.concat(reviewedItems);
 assert.equal(completeBank.length, 928);
+
+const cueStopWords = new Set((
+  "a an the this that these those it its he his she her they them their we our you your i me my "
+  + "is are was were be been being do does did have has had can could may might will would shall "
+  + "should to of in on at by for from with as and or but if when while after before during into "
+  + "than then so what which who why how each one ones some any more most less very not no"
+).split(" "));
+
+function visualCueUnits(value, track) {
+  if (track === "en") {
+    return [...new Set((String(value).toLowerCase().match(/[a-z]+(?:['’][a-z]+)?/g) || [])
+      .filter((word) => word.length >= 3 && !cueStopWords.has(word)))];
+  }
+  const source = String(value).replace(/[^가-힣]/g, "");
+  return [...new Set(Array.from({ length: Math.max(0, source.length - 1) }, (_, index) =>
+    source.slice(index, index + 2)
+  ))];
+}
+
+function visualCueOverlap(choice, passage, track) {
+  const choiceUnits = visualCueUnits(choice, track);
+  const passageUnits = new Set(visualCueUnits(passage, track));
+  if (!choiceUnits.length) return 0;
+  return choiceUnits.filter((unit) => passageUnits.has(unit)).length / choiceUnits.length;
+}
+
+const visualCueRisks = [];
+for (const item of completeBank) {
+  const answer = String(item.choices[item.correctIndex]).toLowerCase()
+    .replace(/[^a-z가-힣0-9]+/g, " ").trim();
+  const passage = String(item.passageText).toLowerCase()
+    .replace(/[^a-z가-힣0-9]+/g, " ").trim();
+  assert(!answer || !passage.includes(answer),
+    `${item.id || item.itemKey}: answer is visibly copied from the passage`);
+
+  const overlaps = item.choices.map((choice) => visualCueOverlap(choice, item.passageText, item.track));
+  const correctOverlap = overlaps[item.correctIndex];
+  const strongestDistractor = Math.max(0, ...overlaps.filter((_, index) => index !== item.correctIndex));
+  if (correctOverlap >= 0.4 && correctOverlap - strongestDistractor >= 0.2) {
+    visualCueRisks.push(`${item.id || item.itemKey} (${overlaps.map((score) => score.toFixed(2)).join(",")})`);
+  }
+}
+assert.deepEqual(visualCueRisks, [],
+  `answers can be found by visual word matching:\n${visualCueRisks.join("\n")}`);
+
 for (const track of ["ko", "en"]) {
   for (let level = 1; level <= 8; level += 1) {
     assert.equal(

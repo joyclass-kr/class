@@ -98,7 +98,7 @@ const TOPICS = [
       ["한 도시의 계절적 특징을 알려면 여러 해의 기록을 살펴봐야 한다.", "To identify a city's seasonal pattern, records from many years should be examined."],
       ["수십 년의 변화 방향은 한파가 있었던 하루보다 장기간의 관측 자료로 판단해야 한다.", "A decades-long direction should be judged from long-term observations rather than one extremely cold day."],
       ["기온이 같아도 비와 바람이 다르면 두 날의 날씨는 다르게 설명된다.", "Two days with equal temperatures can have different weather if rain and wind differ."],
-      ["10년 자료보다 30년 자료가 지역 기후를 판단하는 데 일반적으로 더 적합하다.", "Thirty years of data generally describes regional climate better than ten years."],
+      ["지역의 평소 경향을 설명하려면 짧은 기록보다 여러 세대에 걸친 관측을 살핀다.", "A researcher studies records across several decades before describing a region's usual pattern."],
       ["산의 양쪽 지역은 공기의 상승과 강수 차이 때문에 서로 다른 기후가 나타날 수 있다.", "Opposite sides of a mountain can have different climates because of rising air and rainfall."],
       ["새 관측 자료가 들어오면 예보 결과가 수정될 수 있다.", "A forecast may be revised when new observations become available."],
       ["평균 기온만 같은 두 지역이라도 폭염 위험은 다를 수 있다.", "Two regions with the same mean temperature can still have different heat-wave risks."]
@@ -128,7 +128,7 @@ const TOPICS = [
     applications: [
       ["전구가 켜질 때 빛뿐 아니라 열도 생길 수 있다.", "A lamp can produce heat as well as light when switched on."],
       ["같은 물체가 더 빠르게 움직이면 운동과 관련된 에너지도 커진다.", "When the same object moves faster, its energy of motion increases."],
-      ["책을 더 높은 선반으로 옮기면 위치와 관련된 에너지가 커질 수 있다.", "Moving a book to a higher shelf can increase its energy of position."],
+      ["책을 위쪽 선반에 두면 바닥에 있을 때보다 떨어지며 일을 할 가능성이 커진다.", "A raised book can do more work while falling than it could from the floor."],
       ["손전등은 배터리에 저장된 에너지를 이용해 전구에 전기를 공급한다.", "A flashlight uses stored battery energy to supply electricity to its lamp."],
       ["선풍기가 작동할 때 전기 에너지는 날개의 운동과 열 등으로 전환된다.", "When a fan runs, electrical energy changes into blade motion, heat, and other forms."],
       ["브레이크를 잡은 자전거 바퀴가 따뜻해지는 것은 에너지 전환의 결과다.", "A bicycle wheel warming under braking is evidence of an energy transformation."],
@@ -196,7 +196,7 @@ const TOPICS = [
       ["사람이 아니라 그 사람이 제시한 주장과 근거를 비판하는 것이 토론 목적에 맞다.", "Discussion should criticize claims and evidence rather than the person presenting them."],
       ["선정 기준과 회의 기록을 공개하면 결정한 사람에게 이유를 물을 수 있다.", "Publishing criteria and meeting records makes decision-makers answerable for their reasons."],
       ["통학로 변경은 보행 학생과 차량 이용자에게 서로 다른 영향을 줄 수 있다.", "A school-route change can affect walkers and drivers differently."],
-      ["선호가 다른 사람들이 함께 받아들일 수 있는 안을 찾는 것이 합의가 될 수 있다.", "Consensus can be an option that people with different preferences can accept together."],
+      ["의견이 맞서는 사람들도 감당할 수 있는 해결책을 함께 찾아본다.", "A group searches for a proposal that competing sides can live with."],
       ["새 규칙의 부작용이 확인되면 시행 결과를 근거로 수정할 수 있다.", "If a new rule has harmful effects, its results can justify revision."]
     ]
   },
@@ -225,7 +225,7 @@ const TOPICS = [
       ["빨간 공 2개와 파란 공 5개를 비교하면 빨강 대 파랑의 비는 2 대 5다.", "With 2 red balls and 5 blue balls, the ratio of red to blue is 2 to 5."],
       ["2 대 3의 두 항에 같은 수 2를 곱하면 4 대 6이 된다.", "Multiplying both terms of 2 to 3 by 2 gives 4 to 6."],
       ["180킬로미터를 3시간에 갔다면 한 시간당 거리는 60킬로미터다.", "Traveling 180 kilometers in 3 hours gives a unit rate of 60 kilometers per hour."],
-      ["5명 중 2명과 10명 중 2명은 사람 수가 같아도 차지하는 비율은 다르다.", "Two out of five and two out of ten use the same count but represent different fractions."],
+      ["해당하는 수가 같아도 전체 규모가 달라지면 차지하는 몫은 달라진다.", "Equal counts can still describe unequal portions when their totals differ."],
       ["각 재료의 양을 3배로 늘리면 비례하는 조리법의 맛의 비율은 유지된다.", "Multiplying each ingredient by three preserves the ratios in a proportional recipe."],
       ["거리와 시간이 비례하고 시작 거리가 0이라면 그래프는 원점을 지난다.", "If distance is proportional to time and starts at zero, its graph passes through the origin."],
       ["학생 200명의 25%는 전체를 네 등분한 한 부분인 50명이다.", "Twenty-five percent of 200 students is one quarter, or 50 students."],
@@ -258,7 +258,7 @@ const TOPICS = [
       ["두꺼운 직선과 거친 질감에 주목하면 작품의 긴장감을 설명할 근거를 찾을 수 있다.", "Thick straight lines and rough texture can support an interpretation of tension."],
       ["관람 경험이 다른 두 사람이 같은 그림에서 서로 다른 의미를 찾을 수 있다.", "Two viewers with different experiences can find different meanings in the same painting."],
       ["‘불안해 보인다’고 해석했다면 불규칙한 선 같은 시각적 근거를 함께 제시할 수 있다.", "An interpretation of anxiety can be supported by visual evidence such as irregular lines."],
-      ["전쟁 시기에 제작됐다는 정보는 작품 속 상징을 이해하는 단서가 될 수 있다.", "Knowing a work was made during wartime can help explain its symbols."],
+      ["갈등이 이어지던 시대적 배경을 이용해 그림에 반복되는 표시의 뜻을 해석한다.", "A viewer uses the period of conflict around a painting to interpret its repeated signs."],
       ["작가의 설명을 알아도 작품에서 다른 근거를 찾은 관람자는 추가 해석을 제시할 수 있다.", "Even with the artist's statement, a viewer may offer another evidence-based interpretation."],
       ["같은 형상도 돌로 만들 때와 천으로 만들 때 무게감이 다르게 느껴질 수 있다.", "The same form can feel heavier in stone than in fabric."],
       ["‘화면 중앙에 인물이 있다’와 ‘외로워 보인다’는 서로 다른 종류의 진술이다.", "‘A figure is centered’ and ‘the figure seems lonely’ are different kinds of statements."]
@@ -382,7 +382,7 @@ const LEVEL_PROFILES = Object.freeze({
     choiceCount: 5,
     factIndexes: [6, 7, 5, 4],
     questionTypes: ["evidence_application", "claim_evaluation", "evidence_application", "claim_evaluation"],
-    distractorMode: "reference"
+    distractorMode: "misconception"
   },
   8: {
     schoolBand: "고2~3",
@@ -408,9 +408,9 @@ function promptFor(track, questionType) {
         causal_reasoning: "윗글에 제시된 원인과 결과의 관계를 가장 정확히 적용한 것을 고르세요.",
         synthesis: "윗글의 여러 정보를 함께 고려할 때 가장 타당한 판단을 고르세요.",
         condition_analysis: "윗글에서 설명한 조건을 바꾸었을 때 예상되는 결과로 가장 타당한 것을 고르세요.",
-        evidence_application: "첫 문장에서 설명한 원리에 정확히 대응하는 사례를 고르세요.",
-        claim_evaluation: "첫 문장을 근거로 다음 판단을 평가할 때 가장 타당한 것을 고르세요.",
-        boundary_reasoning: "첫 문장의 조건과 적용 범위를 가장 정확하게 반영한 판단을 고르세요."
+        evidence_application: "윗글의 근거를 새로운 상황에 가장 타당하게 적용한 것을 고르세요.",
+        claim_evaluation: "윗글 전체의 근거로 평가할 때 가장 타당한 판단을 고르세요.",
+        boundary_reasoning: "윗글의 조건과 적용 범위를 가장 정확하게 반영한 판단을 고르세요."
       }
     : {
         content_match: "Which statement is best supported by the passage?",
@@ -419,9 +419,9 @@ function promptFor(track, questionType) {
         causal_reasoning: "Which choice most accurately applies the cause-and-effect relationship in the passage?",
         synthesis: "Which judgment is strongest when the information in the passage is considered together?",
         condition_analysis: "Which result is most reasonable if a condition described in the passage changes?",
-        evidence_application: "Which example corresponds precisely to the principle in the first sentence?",
-        claim_evaluation: "Which judgment is best supported when the first sentence is used as evidence?",
-        boundary_reasoning: "Which judgment most accurately preserves the conditions and scope of the first sentence?"
+        evidence_application: "Which new situation is best supported by the passage?",
+        claim_evaluation: "Which judgment is best supported by the passage as a whole?",
+        boundary_reasoning: "Which judgment best preserves the conditions and scope of the passage?"
       };
   return prompts[questionType];
 }
@@ -475,8 +475,8 @@ function buildItem(topic, track, level, variant = 0) {
     correctIndex,
     explanation: level >= 7
       ? (isKorean
-          ? `첫 문장의 “${evidence}”가 제시한 조건과 관계를 그대로 적용해야 합니다.`
-          : `Apply the conditions and relationship stated in the first sentence: “${evidence}”`)
+          ? `윗글의 “${evidence}”가 제시한 조건과 관계를 새로운 상황에 적용해야 합니다.`
+          : `Apply the relevant condition and relationship from the passage: “${evidence}”`)
       : (isKorean
           ? `“${evidence}”라는 내용을 적용하면 판단할 수 있습니다.`
           : `This follows by applying the statement: “${evidence}”`)
