@@ -1,0 +1,39 @@
+<!doctype html>
+<html lang="ko">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1">
+  <meta name="description" content="클래식, 국악, 팝, 재즈를 시대와 함께 탐색하는 음악 감상실">
+  <title>음악 감상실</title>
+  <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+  <header class="topbar">
+    <a class="back" href="../../../">← 수업 도구</a>
+    <div><span class="eyebrow">MUSIC LISTENING ROOM</span><h1>음악 감상실</h1></div>
+  </header>
+
+  <main>
+    <nav class="genre-nav" aria-label="음악 장르">
+      <button class="active" data-genre="classical"><span>클래식</span><small>중세부터 동시대까지</small><b>음악사 보기 ↓</b></button>
+      <a href="../korean-music/"><span>국악</span><small>궁중·민속·창작 국악</small><b>감상하기 →</b></a>
+      <button data-genre="pop"><span>팝</span><small>1950년대부터 오늘까지</small><b>음악사 보기 ↓</b></button>
+      <button data-genre="jazz"><span>재즈</span><small>뉴올리언스에서 퓨전까지</small><b>역사 보기 ↓</b></button>
+    </nav>
+
+    <section class="history" aria-labelledby="history-title">
+      <div class="section-head">
+        <div><span class="eyebrow" id="history-kicker">POP HISTORY</span><h2 id="history-title">팝의 역사를 귀로 따라가요</h2></div>
+        <p id="history-intro"></p>
+      </div>
+      <p class="period-note">※ 연도는 음악사의 흐름을 이해하기 위한 대표적 구분이며, 지역과 연구 관점에 따라 경계가 달라질 수 있습니다.</p>
+      <div class="era-tabs" id="era-tabs" role="tablist" aria-label="시대 선택"></div>
+      <article class="era-panel" id="era-panel" aria-live="polite"></article>
+      <div class="timeline" id="timeline"></div>
+    </section>
+  </main>
+
+  <footer>음악 감상실 · 소리를 듣고 시대를 만나는 곳</footer>
+  <script src="app.js"></script>
+</body>
+</html>

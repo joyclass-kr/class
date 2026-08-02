@@ -1,0 +1,54 @@
+:root { --ink:#211b17; --paper:#f5efe3; --card:#fffaf0; --line:#c9b99d; --accent:#9c3d25; --gold:#c18a2f; --deep:#173d3b; }
+* { box-sizing:border-box; }
+body { margin:0; color:var(--ink); background:var(--paper); font-family:system-ui,-apple-system,"Noto Sans KR",sans-serif; }
+.topbar { min-height:84px; padding:14px clamp(18px,4vw,52px); display:flex; align-items:center; gap:28px; color:#fff; background:#182d2c; }
+.topbar h1 { margin:2px 0 0; font:700 clamp(1.55rem,3vw,2.15rem) Georgia,"Noto Serif KR",serif; }
+.back { display:grid; place-items:center; min-height:44px; padding:0 14px; border:1px solid #ffffff55; color:#fff; text-decoration:none; }
+.eyebrow { font-size:.72rem; letter-spacing:.16em; font-weight:800; color:#d6aa5c; }
+main { width:min(1120px,calc(100% - 32px)); margin:18px auto 48px; }
+.genre-nav { display:grid; grid-template-columns:repeat(4,1fr); gap:12px; }
+.genre-nav a,.genre-nav button { min-height:112px; padding:15px 18px; text-align:left; border:1px solid var(--line); background:var(--card); color:inherit; text-decoration:none; font:inherit; cursor:pointer; display:flex; flex-direction:column; }
+.genre-nav span { font:700 1.25rem Georgia,"Noto Serif KR",serif; }
+.genre-nav small { margin:6px 0 9px; color:#6c6256; line-height:1.4; }
+.genre-nav b { margin-top:auto; color:var(--accent); font-size:.84rem; }
+.genre-nav .active { color:#fff; background:var(--accent); border-color:var(--accent); }
+.genre-nav .active small,.genre-nav .active b { color:#fff; }
+.history { margin-top:16px; padding:clamp(18px,2.5vw,28px); border:1px solid var(--line); background:#fffdf8; }
+.section-head { display:flex; justify-content:space-between; align-items:end; gap:24px; }
+.section-head h2 { margin:5px 0 0; font:700 clamp(1.4rem,3vw,2rem) Georgia,"Noto Serif KR",serif; }
+.section-head p { max-width:410px; margin:0; color:#675e54; line-height:1.55; }
+.period-note { margin:12px 0 0; padding:8px 11px; background:#f4eee3; color:#6d6256; font-size:.8rem; line-height:1.45; }
+.era-tabs { display:flex; gap:8px; margin:12px 0; overflow-x:auto; padding-bottom:3px; }
+.era-tabs button { flex:0 0 auto; min-height:44px; padding:0 15px; border:1px solid var(--line); background:#fff; color:inherit; font-weight:700; cursor:pointer; }
+.era-tabs button[aria-selected="true"] { background:var(--deep); border-color:var(--deep); color:#fff; }
+.era-panel { display:grid; grid-template-columns:165px 1fr 230px; gap:20px; padding:20px; background:#eee4d2; border-left:5px solid var(--gold); }
+.era-year { font:800 1.6rem Georgia,serif; color:var(--accent); }
+.era-panel h3 { margin:0 0 7px; font-size:1.22rem; }
+.era-panel p { margin:0; line-height:1.55; }
+.era-panel p+p { margin-top:7px; }
+.listen-actions { align-self:center; display:grid; gap:8px; }
+.listen,.more { min-height:46px; padding:10px 14px; display:grid; place-items:center; background:var(--accent); color:#fff; text-decoration:none; text-align:center; font-weight:800; }
+.listen small { display:block; margin-top:2px; font-weight:400; }
+.more { background:transparent; border:1px solid var(--accent); color:var(--accent); }
+.timeline { display:grid; grid-template-columns:repeat(6,1fr); margin-top:18px; border-top:2px solid var(--line); }
+.timeline button { position:relative; min-height:76px; padding:20px 8px 6px; border:0; background:transparent; color:#5b5147; cursor:pointer; }
+.timeline button:before { content:""; position:absolute; top:-7px; left:50%; width:12px; height:12px; border-radius:50%; background:var(--line); transform:translateX(-50%); }
+.timeline button.active { color:var(--accent); font-weight:800; }
+.timeline button.active:before { background:var(--accent); box-shadow:0 0 0 5px #9c3d2522; }
+footer { padding:24px; text-align:center; color:#756b5f; border-top:1px solid var(--line); }
+@media (max-width:800px) {
+  .genre-nav { grid-template-columns:repeat(2,1fr); }
+  .era-panel { grid-template-columns:1fr; gap:12px; }
+  .section-head { display:block; }
+  .section-head p { margin-top:8px; }
+  .timeline { grid-template-columns:repeat(3,1fr); border-top:0; }
+  .timeline button { border-top:2px solid var(--line); }
+}
+@media (max-width:520px) {
+  main { width:min(100% - 20px,1120px); margin-top:12px; }
+  .topbar { gap:12px; padding:12px; }
+  .genre-nav { grid-template-columns:1fr 1fr; }
+  .genre-nav a,.genre-nav button { min-height:112px; padding:14px; }
+  .history { padding:16px; }
+  .timeline { grid-template-columns:repeat(2,1fr); }
+}
