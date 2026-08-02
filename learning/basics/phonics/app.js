@@ -62,14 +62,23 @@
     if (cursor < word.length) nodes.push(word.slice(cursor));
     element.replaceChildren(...nodes);
   };
+  const shuffledTargets = (words, count = 8) => {
+    const targets = [];
+    while (targets.length < count) {
+      const batch = shuffle([...words]);
+      if (targets.length && batch.length > 1 && batch[0] === targets.at(-1)) [batch[0], batch[1]] = [batch[1], batch[0]];
+      targets.push(...batch.slice(0, count - targets.length));
+    }
+    return targets;
+  };
   function buildLessonSoundRounds(lesson) {
-    if (lesson.id === "s1-l1") return firstSoundGameRounds;
+    if (lesson.id === "s1-l1") return shuffle(firstSoundGameRounds.map((round) => ({ ...round, choices: [...round.choices] })));
     const lessonPosition = data.lessons.findIndex((item) => item.id === lesson.id);
     const picturedWords = [...new Set(data.lessons.slice(0, lessonPosition + 1).flatMap((item) => item.words))]
       .filter((word) => data.wordBank[word]?.picture);
     const lessonWords = lesson.words.filter((word) => data.wordBank[word]?.picture);
     if (!lessonWords.length) return [];
-    const targets = Array.from({ length: 8 }, (_, index) => lessonWords[index % lessonWords.length]);
+    const targets = shuffledTargets(lessonWords);
     return targets.map((answer, index) => {
       const sound = lesson.focus.find((focus) => focusFitsWord(answer, focus)) || lesson.focus[index % lesson.focus.length];
       const distractors = shuffle(picturedWords.filter((word) => word !== answer && !lesson.words.includes(word))).slice(0, 3);
