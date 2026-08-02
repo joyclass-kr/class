@@ -1757,17 +1757,17 @@ html[data-race-mode="true"] body { padding-bottom: 72px; }
 .measurement-answer span,
 .measurement-static-answer span {
   color: #566176;
-  font-family: var(--elementary-math-font);
-  font-size: 15px;
+  font-family: "STIX Two Math", "Cambria Math", "Times New Roman", serif;
+  font-size: 16px;
   font-synthesis: none;
-  font-weight: 400;
+  font-weight: 500;
 }
 
 .measurement-rule {
   width: 158px;
-  height: 2px;
+  height: 0;
   margin-left: 22px;
-  background: #17233c;
+  border-top: 2px solid #17233c;
 }
 
 .measurement-answer,
@@ -9014,10 +9014,10 @@ main {
   .large-unit-name,
   .large-unit-result-unit
 ) {
-  font-family: var(--elementary-math-font);
+  font-family: "STIX Two Math", "Cambria Math", "Times New Roman", serif;
   font-synthesis: none;
   font-style: normal;
-  font-weight: 400;
+  font-weight: 500;
   letter-spacing: 0;
 }
 
