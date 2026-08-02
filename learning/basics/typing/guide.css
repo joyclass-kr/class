@@ -1,3 +1,10 @@
+@font-face {
+  font-family: "Typing Handwriting";
+  src: url("../../../assets/fonts/klee-one/KleeOne-SemiBold.ttf") format("truetype");
+  font-display: swap;
+  font-weight: 600;
+}
+
 .finger-guide {
   padding: 22px 26px;
   border: 1px solid #e7dece;
@@ -122,7 +129,16 @@
 .finger.active b { background: #075ee8; color: #fff; opacity: 1; }
 .finger-instruction { padding: 15px; border-radius: 20px; background: #fff5dc; text-align: center; }
 .finger-instruction span { color: #8b6931; font-size: 13px; font-weight: 800; }
-.finger-instruction strong { display: block; margin: 5px; color: #293346; font-size: 50px; line-height: 1.1; }
+.finger-instruction strong {
+  display: block;
+  margin: 5px;
+  color: #293346;
+  font-family: "Typing Handwriting", "Klee One", cursive;
+  font-size: 54px;
+  font-weight: 600;
+  line-height: 1.1;
+  letter-spacing: .02em;
+}
 .finger-instruction p { margin: 0; color: #596579; font-size: 13px; line-height: 1.5; }
 
 .keyboard { display: flex; flex-direction: column; gap: 6px; width: min(100%, 760px); margin: 8px auto; }
