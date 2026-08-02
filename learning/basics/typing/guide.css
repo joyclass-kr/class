@@ -13,130 +13,113 @@
 .finger-stage { display: grid; grid-template-columns: 1fr 210px; align-items: center; gap: 18px; margin: 12px 0; }
 
 .hands {
-  display: flex;
-  align-items: end;
-  justify-content: center;
-  gap: 44px;
-  min-height: 218px;
-  padding-top: 8px;
-}
-
-.hand {
   position: relative;
-  display: flex;
-  align-items: end;
-  gap: 3px;
-  width: 218px;
-  height: 204px;
-  padding-bottom: 74px;
+  width: min(100%, 540px);
+  aspect-ratio: 2.35 / 1;
+  margin: 0 auto;
+  overflow: hidden;
+  border-radius: 24px;
+  background: #fffdf8;
 }
 
-.palm {
+.hand-illustration {
   position: absolute;
-  bottom: 18px;
-  display: grid;
-  place-items: end center;
-  width: 174px;
-  height: 84px;
-  padding-bottom: 16px;
-  border: 2px solid #d89f77;
-  border-radius: 34px 34px 25px 25px;
-  background: linear-gradient(145deg, #f9d5b9, #efb78d);
-  box-shadow: inset 0 -10px 18px #c9805026, 0 8px 15px #7544271c;
-  color: #70452e;
-  font-size: 13px;
-  font-weight: 900;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  object-position: center top;
 }
 
-.palm::after {
-  content: "";
-  position: absolute;
-  bottom: -21px;
-  width: 92px;
-  height: 28px;
-  border: 2px solid #d89f77;
-  border-top: 0;
-  border-radius: 0 0 20px 20px;
-  background: linear-gradient(90deg, #efb78d, #f7cbaa, #efb78d);
-}
-
-.left-hand .palm { right: 0; }
-.right-hand .palm { left: 0; }
+.hand { display: contents; }
+.palm { display: none; }
 
 .finger {
-  position: relative;
-  z-index: 2;
+  position: absolute;
+  z-index: 3;
   display: flex;
   flex-direction: column;
   align-items: center;
+  transform: translate(-50%, -50%);
 }
 
 .finger i {
   position: relative;
+  z-index: 1;
   display: block;
-  width: 34px;
-  height: var(--h, 94px);
-  border: 2px solid #d89f77;
-  border-bottom: 0;
-  border-radius: 18px 18px 7px 7px;
-  background: linear-gradient(90deg, #edaf84, #f9d4b7 48%, #edaf84);
-  box-shadow: inset 0 -14px 17px #c77d4b1c;
+  width: 16px;
+  height: 16px;
+  border: 2px solid #fff;
+  border-radius: 50%;
+  background: #293346c9;
+  box-shadow: 0 2px 8px #26344a70;
   transition: .18s;
 }
 
-.finger i::before {
+.finger.active i::after {
   content: "";
   position: absolute;
-  top: 7px;
-  left: 8px;
-  width: 14px;
-  height: 19px;
-  border: 1px solid #d9a382;
-  border-radius: 8px 8px 6px 6px;
-  background: #ffe4d1;
+  z-index: -1;
+  top: 8px;
+  left: 50%;
+  width: 34px;
+  height: 82px;
+  border: 3px solid #f0ad00;
+  border-radius: 18px 18px 15px 15px;
+  background: #ffd34e82;
+  box-shadow: 0 0 18px #ffbd2680;
+  transform: translateX(-50%);
+  transform-origin: 50% 0;
 }
 
-.finger i::after {
-  content: "";
-  position: absolute;
-  top: 48%;
-  right: 5px;
-  left: 5px;
-  height: 1px;
-  background: #c681552c;
-  box-shadow: 0 15px #c681552c;
-}
+.finger[data-finger="lp"].active i::after { height: 68px; }
+.finger[data-finger="lr"].active i::after,
+.finger[data-finger="rr"].active i::after { height: 78px; }
+.finger[data-finger="lm"].active i::after,
+.finger[data-finger="rm"].active i::after { height: 94px; }
+.finger[data-finger="li"].active i::after,
+.finger[data-finger="ri"].active i::after { height: 86px; }
+.finger[data-finger="rp"].active i::after { height: 68px; }
+.finger[data-finger="lt"].active i::after { height: 74px; transform: translateX(-50%) rotate(45deg); }
+.finger[data-finger="rt"].active i::after { height: 74px; transform: translateX(-50%) rotate(-45deg); }
 
 .finger b {
   position: absolute;
-  z-index: 1;
-  top: 35px;
-  color: #70452e;
-  font-size: 9px;
-  line-height: 1;
-  letter-spacing: -.05em;
-  writing-mode: vertical-rl;
+  top: 28px;
+  padding: 2px 6px;
+  border-radius: 999px;
+  background: #fffdf8e8;
+  box-shadow: 0 1px 4px #6b52352e;
+  color: #5d4939;
+  font-size: 10px;
+  line-height: 1.2;
+  opacity: 0;
+  white-space: nowrap;
+  transition: opacity .18s;
 }
 
-.finger.pinky { --h: 70px; }
-.finger.ring { --h: 92px; }
-.finger.middle { --h: 109px; }
-.finger.index { --h: 99px; }
-.finger.thumb { --h: 66px; margin: 0 9px -19px; }
-.finger.thumb i { width: 37px; }
-.finger.thumb b { top: 27px; }
-.left-hand .thumb { transform: rotate(43deg); transform-origin: 50% 100%; }
-.right-hand .thumb { transform: rotate(-43deg); transform-origin: 50% 100%; }
+.finger[data-finger="lp"] { left: 10.5%; top: 29%; }
+.finger[data-finger="lr"] { left: 18.4%; top: 18%; }
+.finger[data-finger="lm"] { left: 27%; top: 10%; }
+.finger[data-finger="li"] { left: 35.7%; top: 18%; }
+.finger[data-finger="lt"] { left: 46.5%; top: 47%; }
+.finger[data-finger="rt"] { left: 55.5%; top: 47%; }
+.finger[data-finger="ri"] { left: 64.7%; top: 18%; }
+.finger[data-finger="rm"] { left: 73.5%; top: 10%; }
+.finger[data-finger="rr"] { left: 82.2%; top: 18%; }
+.finger[data-finger="rp"] { left: 91%; top: 29%; }
 
 .finger.active i {
-  border-color: #dfa00b;
-  background: linear-gradient(90deg, #ffc531, #ffe276 50%, #ffc531);
-  box-shadow: 0 0 0 6px #ffd34e3d, 0 0 22px #ffc92870;
-  transform: translateY(-4px);
+  width: 25px;
+  height: 25px;
+  border-width: 3px;
+  border-color: #fff7c5;
+  background: #ffbf19;
+  box-shadow: 0 0 0 7px #ffd34e70, 0 0 24px #ffab00;
+  transform: scale(1.18);
 }
 
-.finger.active i::before { border-color: #dfa00b; background: #fff1af; }
-.finger.active b { color: #513600; }
+.finger.active b { background: #ffd34e; color: #3e2a00; opacity: 1; }
 .finger-instruction { padding: 15px; border-radius: 20px; background: #fff5dc; text-align: center; }
 .finger-instruction span { color: #8b6931; font-size: 13px; font-weight: 800; }
 .finger-instruction strong { display: block; margin: 5px; color: #293346; font-size: 50px; line-height: 1.1; }
