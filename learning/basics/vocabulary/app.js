@@ -10,9 +10,9 @@
     const SPELLING_WRONG_KEY = "englishVocabularySpellingWrongV1";
     const GAME_TIME_LIMIT = 15;
     const STAGES = [
-        { code: "elementary", name: "Elementary School", range: "Official school band", description: "800 words · LEVEL 01-04", cardLabel: "Elementary School Word", levels: [1, 2, 3, 4] },
-        { code: "middle_common", name: "Middle & High Common", range: "Official school band", description: "1,200 words · LEVEL 05-10", cardLabel: "Middle & High Common Word", levels: [5, 6, 7, 8, 9, 10] },
-        { code: "advanced", name: "High School Electives", range: "Official school band", description: "1,000 words · LEVEL 11-15", cardLabel: "High School Elective Word", levels: [11, 12, 13, 14, 15] },
+        { code: "elementary", name: "Elementary School", description: "800 words · LEVEL 01-04", cardLabel: "Elementary School Word", levels: [1, 2, 3, 4] },
+        { code: "middle_common", name: "Middle & High Common", description: "1,200 words · LEVEL 05-10", cardLabel: "Middle & High Common Word", levels: [5, 6, 7, 8, 9, 10] },
+        { code: "advanced", name: "High School Electives", description: "1,000 words · LEVEL 11-15", cardLabel: "High School Elective Word", levels: [11, 12, 13, 14, 15] },
     ];
     const STAGE_CARD_LABELS = Object.fromEntries(STAGES.map((stage) => [stage.code, stage.cardLabel]));
     const POS_NAMES = {
@@ -38,7 +38,7 @@
 
     const core = window.VocabularyCore;
     const elements = Object.fromEntries([
-        "levelScreen", "studyScreen", "stageGroups", "loadingState", "toast",
+        "levelScreen", "studyScreen", "bandListScreen", "stageGroups", "loadingState", "toast",
         "totalKnown", "overallPercent", "overallBar", "totalUnknown", "backToLevels",
         "shuffleButton", "studyStage", "studyTitle", "cardPosition", "levelStatus", "sessionBar",
         "flashcard", "cardBadge", "wordText", "posText", "meaningText", "exampleBlock", "exampleLabel", "exampleText",
@@ -57,6 +57,7 @@
         "spellingNextButton", "spellingResultPanel", "spellingResultScore", "spellingResultAccuracy",
         "spellingResultBestStreak", "spellingWrongList", "spellingRetryWrongButton", "spellingPlayAgainButton",
         "spellingReviewButton", "spellingStoredWrongCount", "spellingModeLabel", "spellingTitle",
+        "viewAllWordsButton", "backFromBandList", "bandListTitle", "bandSearchInput", "bandListCount", "bandListBody",
     ].map((id) => [id, document.getElementById(id)]));
 
     const state = {
@@ -103,6 +104,7 @@
         spellingWrongProgress: loadSpellingWrongProgress(),
         spellingReviewMode: false,
         wordMeaningMap: new Map(),
+        currentBandWords: [],
     };
 
     function loadProgress() {
@@ -181,7 +183,6 @@
             section.className = "stage-group";
             section.innerHTML = `
                 <div class="stage-heading">
-                    <span>${stage.range}</span>
                     <h2>${stage.name}</h2>
                     <p>${stage.description}</p>
                 </div>
@@ -194,6 +195,56 @@
         });
     }
 
+    function renderBandList(filter = "") {
+        const query = String(filter || "").trim().toLowerCase();
+        const visibleWords = query
+            ? state.currentBandWords.filter((word) => (
+                word.word.toLowerCase().includes(query)
+                || word.meanings.some((meaning) => meaning.toLowerCase().includes(query))
+            ))
+            : state.currentBandWords;
+        const originalPositions = new Map(state.currentBandWords.map((word, index) => [String(word.id), index + 1]));
+        const fragment = document.createDocumentFragment();
+        visibleWords.forEach((word) => {
+            const row = document.createElement("tr");
+            const rowNumber = document.createElement("th");
+            rowNumber.scope = "row";
+            rowNumber.textContent = String(originalPositions.get(String(word.id)));
+            const level = document.createElement("td");
+            level.className = "sheet-level";
+            level.textContent = `Level ${word.globalLevel}`;
+            const english = document.createElement("td");
+            english.className = "sheet-word";
+            english.lang = "en";
+            english.textContent = word.word;
+            const meaning = document.createElement("td");
+            meaning.textContent = word.meanings.join("; ");
+            row.append(rowNumber, level, english, meaning);
+            fragment.appendChild(row);
+        });
+        elements.bandListBody.replaceChildren(fragment);
+        elements.bandListCount.textContent = query
+            ? `${visibleWords.length.toLocaleString("en-US")} of ${state.currentBandWords.length.toLocaleString("en-US")} words`
+            : `${state.currentBandWords.length.toLocaleString("en-US")} words`;
+    }
+
+    function openBandList() {
+        state.currentBandWords = [...state.data.words];
+        elements.bandListTitle.textContent = "All 3,000 Words";
+        elements.bandSearchInput.value = "";
+        elements.levelScreen.hidden = true;
+        elements.bandListScreen.hidden = false;
+        renderBandList();
+        window.scrollTo({ top: 0, behavior: "smooth" });
+    }
+
+    function backFromBandList() {
+        elements.bandListScreen.hidden = true;
+        elements.levelScreen.hidden = false;
+        state.currentBandWords = [];
+        renderLevelGroups();
+        window.scrollTo({ top: 0, behavior: "smooth" });
+    }
     function openLevel(level, options = {}) {
         const baseWords = state.levels.get(level) || [];
         const unknownOnly = Boolean(options.unknownOnly);
@@ -865,6 +916,9 @@
     }
 
     function bindEvents() {
+        elements.viewAllWordsButton.addEventListener("click", openBandList);
+        elements.backFromBandList.addEventListener("click", backFromBandList);
+        elements.bandSearchInput.addEventListener("input", () => renderBandList(elements.bandSearchInput.value));
         elements.flashcard.addEventListener("click", toggleMeaning);
         elements.previousButton.addEventListener("click", () => moveCard(-1));
         elements.nextButton.addEventListener("click", () => moveCard(1));
