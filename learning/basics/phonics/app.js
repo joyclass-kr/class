@@ -2,7 +2,7 @@
   "use strict";
   const data = window.PHONICS_CURRICULUM;
   const $ = (id) => document.getElementById(id);
-  const storeKey = "phonicsSeedProgressV3";
+  const storeKey = "phonicsSeedProgressV4";
   let current = null;
   let dictationIndex = 0;
   let quizState = [];
@@ -17,17 +17,7 @@
     axe: { korean: "도끼", sound: "a", sprite: 8 }, astronaut: { korean: "우주비행사", sound: "a", sprite: 9 }, dog: { korean: "개", sound: "d", sprite: 10 }, cat: { korean: "고양이", sound: "c", sprite: 11 },
     moon: { korean: "달", sound: "m", sprite: 12 }, fish: { korean: "물고기", sound: "f", sprite: 13 }, pig: { korean: "돼지", sound: "p", sprite: 14 }, bus: { korean: "버스", sound: "b", sprite: 15 }
   };
-  const firstSoundGameRounds = [
-    { sound: "s", answer: "sun", choices: ["sun", "apple", "dog", "fish"] },
-    { sound: "a", answer: "ant", choices: ["ant", "sock", "cat", "moon"] },
-    { sound: "s", answer: "sock", choices: ["sock", "axe", "pig", "bus"] },
-    { sound: "a", answer: "apple", choices: ["apple", "seal", "dog", "star"] },
-    { sound: "s", answer: "seal", choices: ["seal", "astronaut", "cat", "pig"] },
-    { sound: "a", answer: "axe", choices: ["axe", "soup", "moon", "bus"] },
-    { sound: "s", answer: "star", choices: ["star", "ant", "dog", "fish"] },
-    { sound: "a", answer: "astronaut", choices: ["astronaut", "sand", "pig", "moon"] }
-  ];
-  let activeSoundGameRounds = firstSoundGameRounds;
+  let activeSoundGameRounds = [];
 
   const soundPattern = (sound) => sound.replaceAll("_", "").replace(/^-/, "");
   const focusFitsWord = (word, focus) => {
@@ -39,6 +29,17 @@
       cursor = index + part.length;
       return true;
     });
+  };
+  const focusForAnswer = (lesson, answer, index) => {
+    const literal = lesson.focus.find((focus) => focusFitsWord(answer, focus));
+    if (literal) return literal;
+    if (lesson.focus.includes("drop-e")) return answer.endsWith("ing") ? "ing" : answer.endsWith("ed") ? "ed" : "e";
+    if (lesson.focus.includes("y-to-i")) return answer.includes("i") ? "i" : "y";
+    if (lesson.focus.includes("prefix") || lesson.focus.includes("suffix")) {
+      const parts = ["un", "pre", "re", "dis", "bi", "tri", "uni", "less", "ness", "able", "ible", "ment", "tion", "sion", "ture", "ish", "ful", "ly", "er", "est"];
+      return parts.find((part) => answer.startsWith(part) || answer.endsWith(part)) || "";
+    }
+    return lesson.focus[index % lesson.focus.length] || "";
   };
   const revealFocus = (element, word, focus) => {
     const parts = focus.replace(/^-/, "").split("_").filter(Boolean);
@@ -72,16 +73,17 @@
     return targets;
   };
   function buildLessonSoundRounds(lesson) {
-    if (lesson.id === "s1-l1") return shuffle(firstSoundGameRounds.map((round) => ({ ...round, choices: [...round.choices] })));
     const lessonPosition = data.lessons.findIndex((item) => item.id === lesson.id);
     const picturedWords = [...new Set(data.lessons.slice(0, lessonPosition + 1).flatMap((item) => item.words))]
       .filter((word) => data.wordBank[word]?.picture);
     const lessonWords = lesson.words.filter((word) => data.wordBank[word]?.picture);
     if (!lessonWords.length) return [];
-    const targets = shuffledTargets(lessonWords);
+    const targets = shuffledTargets(lessonWords, lesson.questionCount || Math.min(8, lessonWords.length));
     return targets.map((answer, index) => {
-      const sound = lesson.focus.find((focus) => focusFitsWord(answer, focus)) || lesson.focus[index % lesson.focus.length];
-      const distractors = shuffle(picturedWords.filter((word) => word !== answer && !lesson.words.includes(word))).slice(0, 3);
+      const sound = focusForAnswer(lesson, answer, index);
+      const earlierDistractors = picturedWords.filter((word) => word !== answer && !lesson.words.includes(word));
+      const allPictureWords = Object.keys(data.wordBank).filter((word) => data.wordBank[word]?.picture && word !== answer && !lesson.words.includes(word));
+      const distractors = shuffle([...new Set([...earlierDistractors, ...allPictureWords])]).slice(0, 3);
       return { sound, answer, choices: [answer, ...distractors] };
     });
   }
@@ -356,7 +358,8 @@
       if (firstTry) soundGameState.score += 1;
       button.classList.add("correct");
       const english = button.querySelector(".sound-choice-label b");
-      if (english) revealFocus(english, word, round.sound);
+      if (english && current.activityType === "blend") english.textContent = [...word].join(" · ");
+      else if (english) revealFocus(english, word, round.sound);
       $("soundScore").textContent = String(soundGameState.score);
       $("soundFeedback").textContent = firstTry ? `${word} · 정답` : `${word} · 정답 확인`;
       $("soundFeedback").className = "sound-feedback good";
@@ -417,7 +420,7 @@
       return `<article class="stage-card ${stage.color}">
         <div class="stage-summary"><span class="stage-number">${String(stage.order).padStart(2, "0")}</span><div><p>${courseAreaFor(stage)} · STAGE ${stage.order}</p><h3>${escapeHtml(stage.title)}</h3><span>${escapeHtml(stage.subtitle)}</span></div><div class="stage-score"><b>${doneCount}/${lessons.length}</b><span>완료</span></div></div>
         <div class="mini-progress"><i style="width:${stagePercent}%"></i></div>
-        <div class="lesson-list">${lessons.map((lesson) => `<button type="button" data-lesson="${lesson.id}" class="${saved.done.includes(lesson.id) ? "done" : ""}"><span>${saved.done.includes(lesson.id) ? "✓" : lesson.stageOrder}</span><div><b>${escapeHtml(lesson.title)}</b></div><em>${Object.hasOwn(saved.soundScores, lesson.id) ? `${saved.soundScores[lesson.id]}/8` : "시작 →"}</em></button>`).join("")}</div>
+        <div class="lesson-list">${lessons.map((lesson) => `<button type="button" data-lesson="${lesson.id}" class="${saved.done.includes(lesson.id) ? "done" : ""}"><span>${saved.done.includes(lesson.id) ? "✓" : lesson.stageOrder}</span><div><small>${escapeHtml(lesson.activityLabel)}</small><b>${escapeHtml(lesson.title)}</b></div><em>${Object.hasOwn(saved.soundScores, lesson.id) ? `${saved.soundScores[lesson.id]}/${lesson.questionCount}` : "시작 →"}</em></button>`).join("")}</div>
       </article>`;
     }).join("");
     $("stageList").querySelectorAll("[data-lesson]").forEach((button) => button.addEventListener("click", () => openLesson(button.dataset.lesson)));
@@ -433,6 +436,40 @@
       if (item?.picture) applyCleanSprite(picture, item.picture);
     });
     $("wordCards").querySelectorAll("button").forEach((button) => button.addEventListener("click", () => speak(button.dataset.word)));
+  }
+
+  function renderLessonBrief() {
+    $("activityBadge").textContent = current.activityLabel;
+    $("childLessonTitle").textContent = current.title;
+    $("lessonInstruction").textContent = current.instruction;
+    $("activityName").textContent = current.activityLabel;
+    $("soundInstruction").textContent = current.instruction;
+    $("soundReplay").innerHTML = `<span>🔊</span>${current.activityType === "blend" ? "이어진 단어 듣기" : "단어 듣기"}`;
+    const chips = $("lessonFocusChips");
+    chips.replaceChildren();
+    const technicalFocus = new Set(["vce", "syllable", "compound", "closed", "open", "drop-e", "y-to-i", "suffix", "prefix"]);
+    const playableFocus = current.focus.filter((value) => !technicalFocus.has(value));
+    const showSoundChips = ["sound", "blend", "review", "pattern"].includes(current.activityType) && playableFocus.length;
+    const values = showSoundChips ? playableFocus : current.words.slice(0, 3);
+    values.forEach((value) => {
+      const button = document.createElement("button");
+      button.type = "button";
+      button.textContent = value.replaceAll("_", "–");
+      button.setAttribute("aria-label", `${value} 소리 듣기`);
+      button.addEventListener("click", () => showSoundChips ? playPhoneme(value) : speak(value));
+      chips.append(button);
+    });
+    if (showSoundChips && current.activityType !== "sound") {
+      current.words.slice(0, 3).forEach((word) => {
+        const button = document.createElement("button");
+        button.type = "button";
+        button.className = "word-example";
+        button.textContent = word;
+        button.setAttribute("aria-label", `${word} 단어 듣기`);
+        button.addEventListener("click", () => speak(word));
+        chips.append(button);
+      });
+    }
   }
 
   function renderBlend() {
@@ -574,6 +611,7 @@
     $("lessonEyebrow").textContent = current.focus.length ? "TODAY'S SOUND" : "REVIEW DAY";
     $("focusTitle").textContent = current.focus.length ? `${current.focus.join(" · ")} 소리` : "단계 복습";
     $("lessonNote").textContent = current.note;
+    renderLessonBrief();
     const letters = current.focus.length ? current.focus : current.review;
     $("soundLetters").innerHTML = letters.map((letter) => `<button type="button" data-letter="${escapeHtml(letter)}">${escapeHtml(letter)}</button>`).join("");
     $("soundLetters").querySelectorAll("button").forEach((button) => button.addEventListener("click", () => playPhoneme(button.dataset.letter)));

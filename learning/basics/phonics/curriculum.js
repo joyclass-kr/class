@@ -1,11 +1,11 @@
 (() => {
   const unitSpecs = [
     ["alphabet", "1. 알파벳과 짧은 모음", "1–34 · 글자와 소리, CVC 읽기", "violet", `
-a /ă/|a|ant,apple,ax
+a /ă/|a|ant,apple,ax,map,mat,man,cat,cap
 m /m/|m|map,mat,man,ham,ram,mop,mom,jam
 s /s/|s|sun,sit,sock,sat,cats,maps,cups,kiss
 t /t/|t|tap,ten,top,ant,mat,sit,hat,cat
-VC/CVC 합성|a,m,s,t|at,sat,mat
+VC/CVC 합성|a,m,s,t|am,at,mat,sat
 p /p/|p|pan,pig,pop,pin,nap,cup,cap,rip
 f /f/|f|fan,fin,fun,fox,fish,frog,leaf,roof
 i /ĭ/|i|in,pin,sit,pig,fin,did,fish,milk
@@ -20,8 +20,8 @@ g /g/|g|gum,gap,dog,pig,rug,leg,log,frog
 b /b/|b|bat,bed,bus,web,box,black,ball,bug
 e /ĕ/|e|ten,bed,hen,red,leg,web,jet,vet
 짧은 모음 전체 복습|a,e,i,o,u|cat,hen,pig,dog,sun,bed,fox,cup
--s /s/|s|cats,maps,cups
-s /z/|s|dogs,pigs,beds
+-s /s/|s|cats,maps,cups,hats,rocks,books,roofs,clocks
+s /z/|s|dogs,pigs,beds,webs,bells,hands,rams,moms
 k /k/|k|kid,kit,kiss,milk,rock,lock,luck,skin
 h /h/|h|hat,hen,hot,ham,hand,hill,house,horse
 r /r/ 1|r|rat,red,run,ram,rip,rock,rug,roof
@@ -240,9 +240,18 @@ bi-·tri-·uni-|bi,tri,uni|bicycle,triangle,unicorn,binoculars,tricycle,uniform,
   ].map(([file, words, columns, rows]) => ({ file, words: words.split(","), columns, rows }));
 
   const pictureFor = (word) => {
+    const pictureAliases = { am: "man" };
+    const lookupWord = pictureAliases[word] || word;
     for (const atlas of atlases) {
-      const index = atlas.words.indexOf(word);
+      const index = atlas.words.indexOf(lookupWord);
       if (index >= 0) return { file: atlas.file, index, columns: atlas.columns, rows: atlas.rows };
+    }
+    if (word.endsWith("s") && word.length > 2) {
+      const singular = word.slice(0, -1);
+      for (const atlas of atlases) {
+        const index = atlas.words.indexOf(singular);
+        if (index >= 0) return { file: atlas.file, index, columns: atlas.columns, rows: atlas.rows };
+      }
     }
     return null;
   };
@@ -370,6 +379,104 @@ bi-·tri-·uni-|bi,tri,uni|bicycle,triangle,unicorn,binoculars,tricycle,uniform,
     bicycle: "자전거", triangle: "삼각형", unicorn: "유니콘", binoculars: "쌍안경", tricycle: "세발자전거", uniform: "제복", bilingual: "두 언어를 쓰는", tripod: "삼각대"
   });
 
+  Object.assign(koreanGlosses, {
+    am: "~이다",
+    hats: "모자들", rocks: "바위들", books: "책들", roofs: "지붕들", clocks: "시계들",
+    webs: "거미줄들", bells: "종들", hands: "손들", rams: "숫양들", moms: "엄마들"
+  });
+
+  const childTitleFor = (title, order) => {
+    if (order === 57) return "a–e·i–e·o–e 복습";
+    if (order === 59) return "끝 e 긴 모음 전체 복습";
+    const exact = {
+      "VC/CVC 합성": "소리를 이어 짧은 단어 읽기",
+      "CVC 연습: a, i": "a·i가 들어간 짧은 단어 읽기",
+      "비음화 a: an, am": "an·am 단어 읽기",
+      "FLSZ 끝 글자 겹치기": "짧은 모음 뒤 끝 글자 겹치기",
+      "-all, -oll, -ull, -ill": "all·oll·ull·ill로 끝나는 단어",
+      "-s /s/": "끝 s가 또렷하게 나는 단어",
+      "s /z/": "끝 s가 부드럽게 나는 단어",
+      "VCe 전체 복습": "끝 e가 있는 긴 모음 복습",
+      "VCe 예외와 복습": "끝 e 규칙과 예외 복습",
+      "긴 모음 VCC": "자음 두 개 앞의 긴 모음",
+      "ce /s/": "e·i·y 앞의 c 소리",
+      "g /j/: e, i, y 앞": "e·i·y 앞의 g 소리",
+      "y /ī/": "한 음절 끝의 y 소리",
+      "y /ē/": "두 음절 끝의 y 소리",
+      "/er/ 철자 선택": "같은 소리의 er·ir·ur 고르기",
+      "oo /ū/: n 누적 복습": "길게 나는 oo 소리",
+      "묵음 kn·wr·mb": "첫 글자가 소리 나지 않는 kn·wr·mb",
+      "음절 나누기": "긴 단어를 음절로 나누어 읽기",
+      "합성어와 닫힌 두 음절": "두 짧은 단어를 이어 읽기",
+      "열린 음절과 닫힌 음절": "모음으로 끝나는 음절과 자음으로 끝나는 음절",
+      "-es": "끝에 es가 붙은 단어",
+      "-ed": "지난 일을 나타내는 ed",
+      "-ing": "하고 있는 일을 나타내는 ing",
+      "접미사 -s·-es": "하나보다 많을 때 붙이는 s·es",
+      "-er·-est": "비교할 때 붙이는 er·est",
+      "-ly": "방법을 나타내는 ly",
+      "-less·-ful": "없음과 가득함을 나타내는 less·ful",
+      "접두사 un-": "반대 뜻을 만드는 un",
+      "접두사 pre-·re-": "미리·다시를 뜻하는 pre·re",
+      "접두사 dis-": "반대·떨어짐을 뜻하는 dis",
+      "-sion·-tion": "명사를 만드는 sion·tion",
+      "-ture": "명사를 만드는 ture",
+      "-er·-or·-ist": "사람을 나타내는 er·or·ist",
+      "-ish": "비슷함을 나타내는 ish",
+      "-y": "성질을 나타내는 y",
+      "-ness": "상태를 나타내는 ness",
+      "-ment": "결과·상태를 나타내는 ment",
+      "-able·-ible": "할 수 있음을 나타내는 able·ible",
+      "bi-·tri-·uni-": "숫자를 나타내는 bi·tri·uni",
+      "신호 모음: c /s/ · g /j/": "e·i·y 앞에서 달라지는 c와 g",
+      "ch의 다른 소리·묵음 gn·gh·t": "달라지는 ch와 소리 나지 않는 글자"
+    };
+    if (exact[title]) return exact[title];
+    return title
+      .replace(/([a-z]+)_e/gi, "$1–e")
+      .replace(/\s*\/[^/]+\//g, " 소리")
+      .replace(/\bVCe\b/g, "끝 e 규칙")
+      .replace(/\bVCC\b/g, "모음·자음·자음")
+      .replace(/\bCVC\b/g, "짧은 단어")
+      .replace(/\s+/g, " ")
+      .trim();
+  };
+
+  const activityTypeFor = (order, title) => {
+    if (title === "VC/CVC 합성") return "blend";
+    if (title === "-s /s/" || title === "s /z/") return "pattern";
+    if (/음절|합성어|긴 단어/.test(title)) return "syllable";
+    if (/접두사|접미사|접사|자음 겹치기|끝 e 빼기|y를 i로/.test(title) || order >= 119) return "word-parts";
+    if (/복습|섞어 읽기|철자 선택/.test(title)) return "review";
+    if (order <= 34) return "sound";
+    return "pattern";
+  };
+
+  const activityCopy = {
+    sound: { label: "새 소리", instruction: "단어를 듣고 같은 그림과 글자를 고르세요." },
+    blend: { label: "소리 잇기", instruction: "낱소리를 차례로 이은 뒤 완성된 단어를 고르세요." },
+    review: { label: "누적 복습", instruction: "지금까지 배운 소리를 떠올리며 들은 단어를 고르세요." },
+    pattern: { label: "읽기 규칙", instruction: "오늘의 글자 규칙을 확인하고 들은 단어를 고르세요." },
+    syllable: { label: "긴 단어 읽기", instruction: "단어를 작은 소리 덩어리로 나누어 읽고 고르세요." },
+    "word-parts": { label: "단어 조각", instruction: "낱말의 앞뒤 조각과 철자 변화를 살펴보고 고르세요." }
+  };
+
+  const segmentWord = (word, focus) => {
+    const patterns = focus.flatMap((item) => item.replace(/^-/, "").split("_")).filter(Boolean).sort((a, b) => b.length - a.length);
+    const parts = [];
+    for (let index = 0; index < word.length;) {
+      const pattern = patterns.find((item) => item.length > 1 && word.startsWith(item, index));
+      if (pattern) {
+        parts.push(pattern);
+        index += pattern.length;
+      } else {
+        parts.push(word[index]);
+        index += 1;
+      }
+    }
+    return parts;
+  };
+
   const wordBank = {};
   const lessons = [];
   let lessonNumber = 0;
@@ -380,25 +487,33 @@ bi-·tri-·uni-|bi,tri,uni|bicycle,triangle,unicorn,binoculars,tricycle,uniform,
       row.words.forEach((word) => {
         if (!wordBank[word]) wordBank[word] = { scene: "", korean: koreanGlosses[word] || "", hint: `${row.title} 예시 단어`, picture: pictureFor(word) };
       });
+      const activityType = activityTypeFor(lessonNumber, row.title);
+      const displayTitle = childTitleFor(row.title, lessonNumber);
+      const uniquePictureWords = [...new Set(row.words.filter((word) => wordBank[word]?.picture))];
       lessons.push({
         stageId,
         id: lessonNumber === 1 ? "s1-l1" : `ufli-${String(lessonNumber).padStart(3, "0")}`,
         order: lessonNumber,
         stageOrder: stageIndex + 1,
-        title: row.title,
+        title: displayTitle,
+        sourceTitle: row.title,
+        activityType,
+        activityLabel: activityCopy[activityType].label,
+        instruction: activityCopy[activityType].instruction,
+        questionCount: Math.min(8, uniquePictureWords.length),
         focus: row.focus,
         review: [],
         words: row.words,
         sentence: `${row.words[0]} · ${row.words[1]} · ${row.words[2]}`,
-        note: `${row.title}의 글자와 소리 관계를 듣고 읽고 써 봅니다.`,
-        blend: row.words.slice(0, 3).map((word) => ({ parts: [word], answer: word })),
+        note: activityCopy[activityType].instruction,
+        blend: row.words.slice(0, 3).map((word) => ({ parts: segmentWord(word, row.focus), answer: word })),
         dictation: row.words.slice(0, 3)
       });
     });
   });
 
   window.PHONICS_CURRICULUM = {
-    version: 4,
+    version: 5,
     framework: "UFLI Foundations 공개 scope and sequence 기반",
     stages,
     lessons,
