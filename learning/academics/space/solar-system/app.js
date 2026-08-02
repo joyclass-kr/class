@@ -2314,6 +2314,22 @@
         function focusCameraOnBody(key) {
             var bodyObj = celestialBodies[key];
             if (!bodyObj || !bodyObj.mesh) return;
+
+            // UFO mode owns the camera every animation frame. Starting the normal
+            // focus animation here makes both systems fight over the camera and
+            // causes a visible shake. The pilot is already close enough to inspect,
+            // so stop flight input and open the card without moving the camera.
+            if (ufoState.active) {
+                Object.keys(ufoState.keys).forEach(function (direction) {
+                    ufoState.keys[direction] = false;
+                });
+                if (cameraAnimTimer) {
+                    clearInterval(cameraAnimTimer);
+                    cameraAnimTimer = null;
+                }
+                openPlanetModal(key);
+                return;
+            }
             var worldPos = new THREE.Vector3();
             bodyObj.mesh.getWorldPosition(worldPos);
             var r = getBodyScaleRadius(key);
@@ -3074,7 +3090,7 @@
                             '</div>' +
                             '<div style="background:rgba(255,255,255,0.04); padding:7px 10px; border-radius:8px; border:1px solid rgba(255,255,255,0.05);">' +
                                 '<div style="color:#64748b; font-size:10.5px;">🔄 자전 주기</div>' +
-                                '<div style="color:#f8fafc; font-weight:700; margin-top:1px;">' + rotStr + '</div>' +
+                                '<div style="color:#f8fafc; font-weight:700; margin-top:1px;">' + (body.rotationDays || '-') + '</div>' +
                             '</div>' +
                             '<div style="background:rgba(255,255,255,0.04); padding:7px 10px; border-radius:8px; border:1px solid rgba(255,255,255,0.05);">' +
                                 '<div style="color:#64748b; font-size:10.5px;">🌀 공전 정보</div>' +
@@ -3259,6 +3275,18 @@
                 else if (key === 'neptune') ringStr = '🪐 5개 어두운 미세 고리';
 
                 var moonDetailStr = (body.moons !== undefined) ? (body.moons + '개' + (body.satellites && body.satellites.length > 0 ? ' (' + body.satellites.map(function(s){ return s.name; }).join(', ') + ')' : '')) : '-';
+                var orbitPeriodStr = '-';
+                if (typeof body.orbitDays === 'number') {
+                    if (body.orbitDays >= 365) {
+                        var orbitYears = body.orbitDays / 365.25;
+                        var yearsLabel = orbitYears >= 10 ? orbitYears.toFixed(1) : orbitYears.toFixed(2);
+                        orbitPeriodStr = body.orbitDays.toLocaleString('ko-KR') + '일 (약 ' + yearsLabel.replace(/\.00$/, '') + '년)';
+                    } else {
+                        orbitPeriodStr = body.orbitDays.toLocaleString('ko-KR') + '일';
+                    }
+                } else if (key === 'sun') {
+                    orbitPeriodStr = '해당 없음';
+                }
 
                 propGrid.style.cssText = 'display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:10px;margin-bottom:12px;width:100%;min-width:0;';
                 propGrid.innerHTML =
@@ -3279,8 +3307,8 @@
                         '<div style="font-size:13.5px;font-weight:800;color:#c084fc;margin-top:2px;">' + ringStr + '</div>' +
                     '</div>' +
                     '<div style="background:rgba(255,255,255,0.06);padding:10px 14px;border-radius:10px;border:1px solid rgba(255,255,255,0.12);">' +
-                        '<div style="font-size:11.5px;color:#cbd5e1;font-weight:700;">🔄 자전 주기</div>' +
-                        '<div style="font-size:13.5px;font-weight:800;color:#38bdf8;margin-top:2px;">' + (body.rotationDays || '-') + '</div>' +
+                        '<div style="font-size:11.5px;color:#cbd5e1;font-weight:700;">🔄 자전·공전 주기</div>' +
+                        '<div style="font-size:13px;font-weight:800;color:#38bdf8;margin-top:3px;line-height:1.45;">자전 ' + (body.rotationDays || '-') + '<br><span style="color:#fbbf24;">공전 ' + orbitPeriodStr + '</span></div>' +
                     '</div>' +
                     '<div style="background:rgba(255,255,255,0.06);padding:10px 14px;border-radius:10px;border:1px solid rgba(255,255,255,0.12);">' +
                         '<div style="font-size:11.5px;color:#cbd5e1;font-weight:700;">🌙 위성 시스템 및 주요 위성</div>' +

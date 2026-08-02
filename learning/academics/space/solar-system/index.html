@@ -5,7 +5,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta name="description" content="인터랙티브 태양계 관찰 - 3D 태양계 공전 시뮬레이션, 행성 입체 도감, 자전 &amp; 공전주기 비교">
     <title>태양계 관찰</title>
-    <link rel="stylesheet" href="styles.css?v=modal-stats-left-20260801">
+    <link rel="stylesheet" href="styles.css?v=compact-ufo-modal-card-layout-20260803">
     <link rel="stylesheet" href="../../../../assets/network/multiplayer-lobby.css">
     <!-- Three.js & OrbitControls for 3D Space WebGL Renderer -->
     <script src="assets/vendor/three-r128/three.min.js"></script>
@@ -269,10 +269,10 @@
                         <span id="modalPlanetCategory" style="background: rgba(56,189,248,0.2); color: #38bdf8; border: 1px solid rgba(56,189,248,0.4); padding: 4px 12px; border-radius: 20px; font-size: 12px; font-weight: 800; display: inline-block; margin-bottom: 8px;">지구형 행성</span>
                         <div id="modalPlanetDensity" style="font-size: 12px; color: var(--text-muted);">평균 밀도: 5.51 g/cm³</div>
                     </div>
-
-                    <!-- Physics Specs Grid: placed under the image to balance both columns -->
-                    <div class="modal-prop-grid" id="modalPropGrid">
-                        <!-- JS Dyn Props -->
+                    <!-- General Description: wide visual companion beneath the planet image -->
+                    <div class="modal-feature-box">
+                        <h4>💡 행성 주요 특징</h4>
+                        <p id="modalDesc"></p>
                     </div>
                 </div>
 
@@ -292,11 +292,9 @@
                             <!-- JS Dyn Rendered CSAT Points -->
                         </ul>
                     </div>
-
-                    <!-- General Desc -->
-                    <div style="background: rgba(255, 255, 255, 0.03); padding: 14px 18px; border-radius: 10px; border-left: 3px solid #38bdf8;">
-                        <h4 style="color: #38bdf8; margin-bottom: 4px; font-size: 14px;">💡 행성 주요 특징</h4>
-                        <p id="modalDesc" style="font-size: 13.5px; color: #cbd5e1; line-height: 1.6; margin: 0;"></p>
+                    <!-- Physics Specs Grid -->
+                    <div class="modal-prop-grid" id="modalPropGrid">
+                        <!-- JS Dyn Props -->
                     </div>
                 </div>
             </div>
@@ -307,9 +305,7 @@
     <section class="ufo-room-overlay hidden" id="ufoRoomOverlay" role="dialog" aria-modal="true" aria-labelledby="ufoRoomTitle">
         <div class="ufo-room-dialog">
             <button class="ufo-room-close" id="ufoRoomCloseBtn" type="button" aria-label="닫기">×</button>
-            <div class="ufo-room-kicker">CLASSROOM FLIGHT</div>
             <h2 id="ufoRoomTitle">🛸 UFO Flight</h2>
-            <p class="ufo-room-intro">학생은 교사가 알려준 방번호로 참가합니다. 태양계 시간과 공전 속도는 교사가 조작합니다.</p>
 
             <section class="hidden ufo-missing-name" id="ufoMissingName">
                 <strong>로그인 이름이 없습니다.</strong>
@@ -350,6 +346,6 @@
     </section>
 
     <script src="solar-data.js?v=venus-clouds-pluto-axis-20260803"></script>
-    <script src="app.js?v=venus-clouds-pluto-axis-20260803"></script>
+    <script src="app.js?v=compact-ufo-modal-card-layout-20260803"></script>
 </body>
 </html>

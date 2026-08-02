@@ -1223,3 +1223,110 @@ body {
         grid-column: auto;
     }
 }
+
+/* Compact UFO room and rebalanced planet modal */
+.modal-feature-box {
+    width: 100%;
+    padding: 14px 16px;
+    border-radius: 10px;
+    border-left: 3px solid #38bdf8;
+    background: rgba(255, 255, 255, 0.03);
+    text-align: left;
+}
+
+.modal-feature-box h4 {
+    margin: 0 0 5px;
+    color: #38bdf8;
+    font-size: 14px;
+}
+
+.modal-feature-box p {
+    margin: 0;
+    color: #cbd5e1;
+    font-size: 13.5px;
+    line-height: 1.6;
+}
+
+.modal-right-col > #modalPropGrid {
+    margin: 0 !important;
+}
+
+.ufo-room-dialog {
+    width: min(500px, 100%);
+    padding: 20px;
+}
+
+.ufo-room-dialog h2 {
+    margin: 0 0 12px;
+    padding-right: 44px;
+    font-size: 24px;
+}
+
+.ufo-room-close {
+    width: 44px;
+    height: 44px;
+    top: 8px;
+    right: 8px;
+}
+
+.ufo-saved-name {
+    margin-bottom: 10px;
+}
+
+.ufo-room-tabs {
+    margin-bottom: 8px;
+}
+
+.ufo-room-tab,
+.ufo-room-primary,
+.ufo-room-secondary {
+    min-height: 44px;
+}
+
+.ufo-room-dialog .mp-lobby-card {
+    padding: 10px;
+}
+
+.ufo-room-dialog .mp-lobby-row {
+    display: grid;
+    grid-template-columns: minmax(0, 1fr) 112px;
+    gap: 8px;
+    align-items: stretch;
+}
+
+.ufo-room-dialog .mp-lobby-code-input {
+    width: 100%;
+    min-width: 0;
+    min-height: 44px;
+    padding: 9px 12px;
+    border-radius: 9px;
+    font-size: 16px;
+}
+
+.ufo-room-dialog .mp-lobby-row .ufo-room-primary {
+    width: auto;
+}
+
+.ufo-room-dialog .mp-lobby-status {
+    margin-top: 7px;
+    font-size: 12px;
+}
+
+.ufo-room-roster {
+    margin: 9px 0;
+    padding: 10px;
+}
+
+.ufo-room-roster .mp-lobby-guide {
+    display: none;
+}
+
+@media (max-width: 600px) {
+    .ufo-room-dialog {
+        padding: 16px;
+    }
+
+    .ufo-room-tabs {
+        grid-template-columns: 1fr 1fr;
+    }
+}
