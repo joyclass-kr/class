@@ -78,6 +78,7 @@ test("renders the learning index and arithmetic catalog in workbook order", asyn
   const catalogRoutes = [...catalogHtml.matchAll(/href="([^"]+)"[^>]*data-testid="worksheet-choice"/g)]
     .map((match) => match[1].replaceAll("&amp;", "&"));
   assert.match(catalogHtml, /href="\/arithmetic\/race"/);
+  assert.match(catalogHtml, /<a(?=[^>]*class="catalog-back")(?=[^>]*href="\/")[^>]*>← 메인<\/a>/);
   assert.equal((catalogHtml.match(/data-testid="worksheet-choice"/g) ?? []).length, 186);
   assert.match(catalogHtml, /기초 연산/);
   assert.match(catalogHtml, /초·중·고부터 이공계 기초까지/);

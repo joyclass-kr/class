@@ -31,7 +31,7 @@ export default function ArithmeticCatalog() {
     <main className="portal-page catalog-page">
       <div className="catalog-shell">
         <header className="catalog-header">
-          <a className="catalog-back" href="/arithmetic" aria-label="연산 모드 선택으로 돌아가기">← 연산</a>
+          <a className="catalog-back" href="/" aria-label="메인페이지로 돌아가기">← 메인</a>
           <div className="catalog-header-copy">
             <a className="catalog-race-link" href="/arithmetic/race">순위 모드 <span aria-hidden="true">→</span></a>
             <div className="catalog-title-row">
