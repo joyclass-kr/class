@@ -12,7 +12,7 @@
   <header class="topbar">
     <a class="home" href="../../../" aria-label="기초학력 목록으로 돌아가기">‹ 기초학력</a>
     <h1>타자연습</h1>
-    <button id="soundButton" class="icon-button" type="button" aria-pressed="true">소리 켬</button>
+    <div class="top-actions"><button id="recordsButton" class="icon-button" type="button">내 기록</button><button id="soundButton" class="icon-button" type="button" aria-pressed="true">소리 켬</button></div>
   </header>
 
   <main>
@@ -23,6 +23,12 @@
         <button type="button" data-practice-mode="sentences"><span>3</span><strong>문장 연습</strong></button>
         <button type="button" data-practice-mode="paragraphs"><span>4</span><strong>문단 연습</strong></button>
       </div>
+    </section>
+
+    <section id="recordsCard" class="records-card" aria-labelledby="recordsTitle" hidden>
+      <div class="practice-heading"><button class="back-to-menu" type="button" data-back-to-menu>← 연습 선택</button><h2 id="recordsTitle">내 기록</h2></div>
+      <div id="recordsList" class="records-list"></div>
+      <button id="resetRecordsButton" class="secondary reset-records" type="button">기록 초기화</button>
     </section>
 
     <section id="fingerGuide" class="finger-guide" aria-labelledby="guideTitle" hidden>

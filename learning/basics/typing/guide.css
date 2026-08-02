@@ -199,6 +199,7 @@
 .practice-menu span { position: absolute; top: 25px; left: 22px; display: grid; place-items: center; width: 40px; height: 40px; border-radius: 13px; background: #ffe4d8; color: #cf4d31; font-weight: 900; }
 .practice-menu strong { display: block; font-size: 22px; }
 .practice-menu em { position: absolute; top: 34px; right: 20px; padding: 5px 9px; border-radius: 999px; background: #e3f5ee; color: #13845f; font-size: 12px; font-style: normal; font-weight: 850; }
+.practice-menu em.completed { background: #eef0f4; color: #657083; }
 .practice-heading { display: flex; align-items: center; gap: 16px; margin-bottom: 12px; }
 .practice-heading h2 { margin: 0; font-size: 24px; }
 .back-to-menu { min-height: 44px; padding: 0 14px; border: 1px solid #ded4c6; border-radius: 12px; background: #fff; color: #596274; font-weight: 800; }
@@ -211,9 +212,20 @@
 .prompt-card textarea.error { border-color: #e45a5a; }
 .paragraph-mode .prompt { min-height: 170px; font-size: clamp(20px, 2.5vw, 28px); line-height: 1.55; text-align: left; word-break: normal; }
 .paragraph-mode .prompt-card textarea { height: 118px; text-align: left; }
+.top-actions { justify-self: end; display: flex; gap: 8px; }
+.top-actions .icon-button { justify-self: auto; }
+.records-card { padding: 24px; border: 1px solid #e7dece; border-radius: 24px; background: #fff; box-shadow: 0 14px 38px #65523516; }
+.records-list { display: grid; gap: 10px; }
+.record-row { display: grid; grid-template-columns: minmax(130px, 1fr) repeat(4, auto); align-items: center; gap: 18px; min-height: 64px; padding: 12px 16px; border: 1px solid #ebe2d5; border-radius: 15px; }
+.record-row strong { color: #293346; }
+.record-row span { color: #697587; font-size: 13px; white-space: nowrap; }
+.records-empty { margin: 30px 0; color: #748091; text-align: center; }
+.reset-records { display: block; margin: 18px 0 0 auto; }
 
 @media (max-width: 700px) {
   .typing-home { padding: 18px; }
+  .record-row { grid-template-columns: 1fr 1fr; gap: 7px 12px; }
+  .record-row strong { grid-column: 1 / -1; }
   .practice-menu { grid-template-columns: 1fr; }
   .practice-menu button { min-height: 86px; padding-top: 18px; padding-bottom: 18px; }
 }
