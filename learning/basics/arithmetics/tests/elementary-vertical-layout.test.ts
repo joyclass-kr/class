@@ -35,6 +35,7 @@ test("single-digit blanks stay subordinate to the surrounding numerals", () => {
 });
 
 test("4학년 세로곱셈도 같은 자릿값 기준선 규칙을 사용한다", () => {
+  assert.match(css, /\.grade-four-multiply-question\.horizontal\s*\{[^}]*grid-template-columns:\s*minmax\(0, 1fr\);[^}]*place-items:\s*center;/);
   assert.match(css, /\.grade-four-multiply-horizontal-expression\s*\{[\s\S]*?grid-template-columns:\s*max-content 18px max-content 18px 100px;[\s\S]*?font-size:\s*22px;/);
   assert.match(css, /\.grade-four-multiply-vertical-operation > strong\s*\{[\s\S]*?width:\s*108px;[\s\S]*?justify-self:\s*end;/);
   assert.match(css, /\.grade-four-multiply-vertical-operation > span\s*\{[\s\S]*?grid-template-columns:\s*12px 108px;/);
