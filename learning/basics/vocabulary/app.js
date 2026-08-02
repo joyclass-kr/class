@@ -6,7 +6,7 @@
     const SPELLING_GAME_URL = "assets/data/vocabulary-spelling-game-v1.json";
     const IMAGE_BASE_URL = "assets/images/";
     const PROGRESS_KEY = "englishVocabulary3000ProgressV1";
-    const IMAGE_PREFERENCE_KEY = "englishVocabularyImagesVisibleV1";
+    const SHUFFLE_PREFERENCE_KEY = "englishVocabularyShuffleEnabledV1";
     const SPELLING_WRONG_KEY = "englishVocabularySpellingWrongV1";
     const GAME_TIME_LIMIT = 15;
     const STAGES = [
@@ -33,7 +33,7 @@
     const elements = Object.fromEntries([
         "levelScreen", "studyScreen", "stageGroups", "loadingState", "toast",
         "totalKnown", "overallPercent", "overallBar", "totalUnknown", "backToLevels",
-        "shuffleButton", "imageToggleButton", "studyStage", "studyTitle", "cardPosition", "levelStatus", "sessionBar",
+        "shuffleButton", "studyStage", "studyTitle", "cardPosition", "levelStatus", "sessionBar",
         "flashcard", "cardBadge", "wordText", "posText", "meaningText", "exampleBlock", "exampleLabel", "exampleText",
         "exampleKo", "relatedBlock", "relatedWords", "answerLayout", "wordImageBlock", "wordImage",
         "previousButton", "speakButton", "exampleSpeakButton",
@@ -62,7 +62,7 @@
         currentIndex: 0,
         revealed: false,
         unknownOnly: false,
-        showImages: localStorage.getItem(IMAGE_PREFERENCE_KEY) !== "false",
+        shuffleEnabled: localStorage.getItem(SHUFFLE_PREFERENCE_KEY) === "true",
         gameLevel: 0,
         gamePool: [],
         gameTargetPool: [],
@@ -196,7 +196,8 @@
         }
         state.currentLevel = level;
         state.unknownOnly = unknownOnly;
-        state.currentWords = unknownOnly ? unknownWords : [...baseWords];
+        const levelWords = unknownOnly ? unknownWords : [...baseWords];
+        state.currentWords = state.shuffleEnabled ? core.shuffleWords(levelWords) : levelWords;
         state.currentIndex = 0;
         state.revealed = false;
         elements.levelScreen.hidden = true;
@@ -225,13 +226,13 @@
         elements.exampleSpeakButton.disabled = !state.revealed || !word.example?.en;
     }
 
-    function updateImagePreference() {
-        elements.imageToggleButton.textContent = state.showImages ? "Pictures on" : "Pictures off";
-        elements.imageToggleButton.setAttribute("aria-pressed", String(state.showImages));
+    function updateShuffleToggle() {
+        elements.shuffleButton.setAttribute("aria-checked", String(state.shuffleEnabled));
+        elements.shuffleButton.setAttribute("aria-label", `Shuffle ${state.shuffleEnabled ? "on" : "off"}`);
     }
 
     function renderWordImage(word) {
-        const image = state.showImages ? state.imageMap.get(String(word.id)) : null;
+        const image = state.imageMap.get(String(word.id));
         elements.wordImageBlock.hidden = !image;
         elements.answerLayout.classList.toggle("has-image", Boolean(image));
         if (!image) {
@@ -332,12 +333,19 @@
         speakText(currentWord()?.example?.en, 0.78);
     }
 
-    function shuffleCurrentLevel() {
-        state.currentWords = core.shuffleWords(state.currentWords);
+    function toggleShuffle() {
+        state.shuffleEnabled = !state.shuffleEnabled;
+        localStorage.setItem(SHUFFLE_PREFERENCE_KEY, String(state.shuffleEnabled));
+        const baseWords = state.levels.get(state.currentLevel) || [];
+        const levelWords = state.unknownOnly
+            ? baseWords.filter((word) => state.progress[String(word.id)]?.status === "unknown")
+            : [...baseWords];
+        state.currentWords = state.shuffleEnabled ? core.shuffleWords(levelWords) : levelWords;
         state.currentIndex = 0;
         state.revealed = false;
+        updateShuffleToggle();
         renderStudyCard();
-        showToast("Words shuffled!");
+        showToast(state.shuffleEnabled ? "Shuffle on" : "Shuffle off");
     }
 
     function backToLevels() {
@@ -839,13 +847,7 @@
         elements.knownButton.addEventListener("click", () => markWord("known"));
         elements.speakButton.addEventListener("click", speakCurrentWord);
         elements.exampleSpeakButton.addEventListener("click", speakCurrentExample);
-        elements.shuffleButton.addEventListener("click", shuffleCurrentLevel);
-        elements.imageToggleButton.addEventListener("click", () => {
-            state.showImages = !state.showImages;
-            localStorage.setItem(IMAGE_PREFERENCE_KEY, String(state.showImages));
-            updateImagePreference();
-            renderStudyCard();
-        });
+        elements.shuffleButton.addEventListener("click", toggleShuffle);
         elements.wordImage.addEventListener("error", () => {
             elements.wordImageBlock.hidden = true;
             elements.answerLayout.classList.remove("has-image");
@@ -963,7 +965,6 @@
                     .map(String)
                     .filter((id) => vocabularyIds.has(id) && state.imageMap.has(id)));
             }
-            elements.imageToggleButton.hidden = state.imageMap.size === 0;
             const gamePool = core.pictureGamePool(state.data.words, new Set(state.imageMap.keys()));
             elements.gameWordCount.textContent = gamePool.length.toLocaleString("ko-KR");
             elements.gameStartButton.hidden = gamePool.length < 4;
@@ -987,7 +988,7 @@
                 button.disabled = levelPool.length === 0;
             });
             renderStoredSpellingWrong();
-            updateImagePreference();
+            updateShuffleToggle();
             renderOverallProgress();
             renderLevelGroups();
             bindEvents();
