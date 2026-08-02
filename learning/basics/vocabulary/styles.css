@@ -171,10 +171,10 @@ main { width: min(1180px, calc(100% - 32px)); margin: 0 auto; padding: 16px 0 48
 .sheet-wrap { max-height: calc(100dvh - 126px); overflow: auto; border: 1px solid #aeb8b2; border-radius: 10px; background: rgba(255,255,255,.9); box-shadow: 0 12px 32px rgba(37,48,42,.12); }
 .word-sheet { width: 100%; border-collapse: separate; border-spacing: 0; table-layout: fixed; color: var(--ink); font-size: 14px; }
 .word-sheet th, .word-sheet td { padding: 8px 10px; border-right: 1px solid #cbd3ce; border-bottom: 1px solid #cbd3ce; text-align: left; vertical-align: top; line-height: 1.4; }
-.word-sheet thead th { position: sticky; top: 0; z-index: 2; background: #e6eee8; color: #263e34; font-weight: 900; }
-.word-sheet thead th:nth-child(1), .word-sheet tbody th { width: 58px; text-align: center; }
-.word-sheet thead th:nth-child(2) { width: 100px; }
-.word-sheet thead th:nth-child(3) { width: 190px; }
+.sheet-row-col { width: 58px; }
+.sheet-level-col { width: 100px; }
+.sheet-word-col { width: 190px; }
+.word-sheet tbody th { text-align: center; }
 .word-sheet tbody th { position: sticky; left: 0; z-index: 1; background: #f0f2ef; color: #68766f; font-weight: 700; }
 .word-sheet tbody tr:nth-child(even) td { background: rgba(241,246,242,.62); }
 .sheet-level { color: var(--green); font-weight: 850; white-space: nowrap; }
