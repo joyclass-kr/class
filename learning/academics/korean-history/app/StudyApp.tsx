@@ -80,6 +80,7 @@ export function StudyApp() {
   const [stats, setStats] = useState<StudyStats>({});
   const [playerName, setPlayerName] = useState("");
   const [imageExpanded, setImageExpanded] = useState(false);
+  const [explanationOpen, setExplanationOpen] = useState(false);
 
   useEffect(() => {
     try {
@@ -154,6 +155,7 @@ export function StudyApp() {
     setSelectedAnswer(null);
     setIncorrectAnswers([]);
     setImageExpanded(false);
+    setExplanationOpen(false);
     setResults([]);
     setView("quiz");
     window.scrollTo({ top: 0, behavior: "smooth" });
@@ -200,6 +202,7 @@ export function StudyApp() {
       setSelectedAnswer(null);
       setIncorrectAnswers([]);
       setImageExpanded(false);
+      setExplanationOpen(false);
     }
     window.scrollTo({ top: 0, behavior: "smooth" });
   }
@@ -209,6 +212,7 @@ export function StudyApp() {
     setSelectedAnswer(null);
     setIncorrectAnswers([]);
     setImageExpanded(false);
+    setExplanationOpen(false);
     window.scrollTo({ top: 0, behavior: "smooth" });
   }
 
@@ -232,17 +236,31 @@ export function StudyApp() {
           <div className="question-meta">
             <span className="unit-pill">{currentQuestion.unit}</span>
             <div className="question-meta-actions">
-              {incorrectAnswers.length > 0 && selectedAnswer === null && (
-                <span className="retry-notice" role="status">다시 생각하고 다른 답을 골라보세요.</span>
+              {selectedAnswer !== null ? (
+                <div className="answer-complete-inline" role="status">
+                  <strong>{incorrectAnswers.length > 0 ? "정답을 찾았습니다." : "정답입니다."}</strong>
+                  {currentExplanation && (
+                    <button type="button" onClick={() => setExplanationOpen(true)}>해설 보기</button>
+                  )}
+                  <button className="inline-next-button" type="button" onClick={nextQuestion}>
+                    {questionIndex + 1 === quiz.length ? "결과 보기" : "다음 문제 →"}
+                  </button>
+                </div>
+              ) : (
+                <>
+                  {incorrectAnswers.length > 0 && (
+                    <span className="retry-notice" role="status">다시 생각하고 다른 답을 골라보세요.</span>
+                  )}
+                  <span>{currentQuestion.topic} · {currentQuestion.points}점</span>
+                  <button
+                    className="image-expand-button"
+                    type="button"
+                    onClick={() => setImageExpanded(true)}
+                  >
+                    크게 보기
+                  </button>
+                </>
               )}
-              <span>{currentQuestion.topic} · {currentQuestion.points}점</span>
-              <button
-                className="image-expand-button"
-                type="button"
-                onClick={() => setImageExpanded(true)}
-              >
-                크게 보기
-              </button>
             </div>
           </div>
           <h1 id="question-label" className="sr-only">제{currentQuestion.exam}회 기본 {currentQuestion.number}번 문제</h1>
@@ -279,36 +297,21 @@ export function StudyApp() {
           </div>
 
         </section>
-        {selectedAnswer !== null && (
-          <aside className="answer-result-overlay" aria-label="정답 해설">
-            <div className="answer-result-panel">
-              <div className="feedback feedback-correct" aria-live="polite">
-                <div className="feedback-message">
-                  <strong>{incorrectAnswers.length > 0 ? "정답을 찾았습니다." : "정답입니다."}</strong>
+        {explanationOpen && currentExplanation && (
+          <div className="explanation-modal" role="dialog" aria-modal="true" aria-labelledby="explanation-title">
+            <aside className="explanation-modal-panel">
+              <button className="explanation-modal-close" type="button" onClick={() => setExplanationOpen(false)}>닫기</button>
+              <div className="explanation-card">
+                <h2 id="explanation-title">정답 해설</h2>
+                <p className="answer-reason">{currentExplanation.answerReason}</p>
+                <div className="explanation-grid">
+                  <section><h3>핵심 개념</h3><p>{currentExplanation.keyPoint}</p></section>
+                  <section><h3>오답 정리</h3><p>{currentExplanation.wrongReason}</p></section>
                 </div>
-                <button className="primary-button compact" onClick={nextQuestion}>
-                  {questionIndex + 1 === quiz.length ? "결과 보기" : "다음 문제 →"}
-                </button>
               </div>
-              {currentExplanation && (
-                <aside className="explanation-card" aria-labelledby="explanation-title">
-                  <h2 id="explanation-title">정답 해설</h2>
-                  <p className="answer-reason">{currentExplanation.answerReason}</p>
-                  <div className="explanation-grid">
-                    <section>
-                      <h3>핵심 개념</h3>
-                      <p>{currentExplanation.keyPoint}</p>
-                    </section>
-                    <section>
-                      <h3>오답 정리</h3>
-                      <p>{currentExplanation.wrongReason}</p>
-                    </section>
-                  </div>
-                </aside>
-              )}
               <p className="source-note">출처: {currentQuestion.source}</p>
-            </div>
-          </aside>
+            </aside>
+          </div>
         )}
         {imageExpanded && (
           <div
