@@ -18,10 +18,11 @@ let guideLang='ko',guideIndex=0,virtualShift='',englishShiftGuide=[];
 const koInitial=['r','R','s','e','E','f','a','q','Q','t','T','d','w','W','c','z','x','v','g'];
 const koMedial=['k','o','i','O','j','p','u','P','h','hk','ho','hl','y','n','nj','np','nl','b','m','ml','l'];
 const koFinal=['','r','R','rt','s','sw','sg','e','f','fr','fa','fq','ft','fx','fv','fg','a','q','qt','t','T','d','w','c','z','x','v','g'];
+const koJamoKeys={'ㅠ':'b','ㅋ':'z'};
 const codeChars={Space:' ',Backquote:'`',Period:'.',Comma:',',Slash:'/',Semicolon:';',Quote:"'",Minus:'-',Equal:'=',BracketLeft:'[',BracketRight:']'};
 let forcedKeyProgress=0;
 const input=$('#typingInput'),prompt=$('#prompt'),feedback=$('#feedback');
-function keySequenceForChar(char){const code=char.charCodeAt(0);if(code>=0xAC00&&code<=0xD7A3){const offset=code-0xAC00,initial=Math.floor(offset/588),medial=Math.floor((offset%588)/28),final=offset%28;return koInitial[initial]+koMedial[medial]+koFinal[final]}return char}
+function keySequenceForChar(char){if(koJamoKeys[char])return koJamoKeys[char];const code=char.charCodeAt(0);if(code>=0xAC00&&code<=0xD7A3){const offset=code-0xAC00,initial=Math.floor(offset/588),medial=Math.floor((offset%588)/28),final=offset%28;return koInitial[initial]+koMedial[medial]+koFinal[final]}return char}
 function targetKeySequence(){return [...target()].map(keySequenceForChar).join('')}
 function completedTargetPrefix(progress){let used=0,result='';for(const char of [...target()]){const length=keySequenceForChar(char).length;if(used+length>progress)break;used+=length;result+=char}return result}
 function physicalCharacter(event){if(/^Key[A-Z]$/.test(event.code)){const letter=event.code.slice(3).toLowerCase();return event.shiftKey?letter.toUpperCase():letter}if(/^Digit[0-9]$/.test(event.code)){const digit=event.code.slice(5);return event.shiftKey?shiftedSymbols[digit]:digit}if(event.code==='Space')return ' ';const plain=codeChars[event.code];if(!plain)return '';if(!event.shiftKey)return plain;return {...shiftedSymbols,'.':'>',',':'<','/':'?',';':':',"'":'"','[':'{',']':'}'}[plain]||plain}
