@@ -10,6 +10,7 @@
   let activePhonemeTimer = null;
   let soundGameState = null;
   const cleanSpriteCache = new Map();
+  const pictureFileCache = new Map();
 
   const soundPictures = {
     sun: { korean: "해", sound: "s", sprite: 0 }, sock: { korean: "양말", sound: "s", sprite: 1 }, seal: { korean: "물개", sound: "s", sprite: 2 }, soup: { korean: "수프", sound: "s", sprite: 3 },
@@ -175,6 +176,35 @@
     cleanSpriteCache.set(key, pending);
     return pending;
   };
+  const preloadPictureFile = (file) => {
+    if (!file) return Promise.resolve();
+    if (pictureFileCache.has(file)) return pictureFileCache.get(file);
+    const pending = new Promise((resolve) => {
+      const image = new Image();
+      image.decoding = "async";
+      image.onload = resolve;
+      image.onerror = resolve;
+      image.src = file;
+      if (image.decode) image.decode().then(resolve).catch(() => {});
+    });
+    pictureFileCache.set(file, pending);
+    return pending;
+  };
+  const preloadRoundPictures = (round) => {
+    if (!round) return;
+    const files = new Set(round.choices.map((word) => {
+      const item = soundPictures[word] || data.wordBank[word];
+      return item?.sprite === undefined ? item?.picture?.file : "assets/images/sound-catcher-s-a.webp";
+    }).filter(Boolean));
+    files.forEach(preloadPictureFile);
+  };
+  const preloadNextRoundPictures = () => {
+    const nextRound = activeSoundGameRounds[soundGameState.index + 1];
+    if (!nextRound) return;
+    const warm = () => preloadRoundPictures(nextRound);
+    if ("requestIdleCallback" in window) window.requestIdleCallback(warm, { timeout: 800 });
+    else setTimeout(warm, 120);
+  };
   const applyCleanSprite = (element, picture) => {
     const geometry = spriteGeometry(picture);
     element.style.backgroundImage = `url('${picture.file}')`;
@@ -308,6 +338,7 @@
 
   function renderSoundGameRound() {
     const round = activeSoundGameRounds[soundGameState.index];
+    preloadRoundPictures(round);
     $("soundRound").textContent = `${soundGameState.index + 1} / ${activeSoundGameRounds.length}`;
     $("soundScore").textContent = String(soundGameState.score);
     $("soundGameProgress").style.width = `${soundGameState.index / activeSoundGameRounds.length * 100}%`;
@@ -346,6 +377,7 @@
       button.addEventListener("click", () => selectSoundChoice(button, word));
       choices.append(button);
     });
+    preloadNextRoundPictures();
   }
 
   function selectSoundChoice(button, word) {
@@ -615,10 +647,8 @@
     const letters = current.focus.length ? current.focus : current.review;
     $("soundLetters").innerHTML = letters.map((letter) => `<button type="button" data-letter="${escapeHtml(letter)}">${escapeHtml(letter)}</button>`).join("");
     $("soundLetters").querySelectorAll("button").forEach((button) => button.addEventListener("click", () => playPhoneme(button.dataset.letter)));
-    renderWordCards();
-    renderBlend();
-    renderDictation();
-    $("sentence").textContent = current.sentence;
+    // The legacy activities are hidden in the current sound-catcher flow.
+    // Do not build and crop their pictures behind the visible four-card game.
     $("lessonProgressBar").style.width = "12%";
     buildQuiz();
     const index = lessonIndex();
