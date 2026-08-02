@@ -1409,10 +1409,10 @@
                 bodyTiltGroup.add(planetMesh);
                 planetMesh.position.set(0, 0, 0);
 
-                // Display the eight major planets' directed rotation axes with their orbits.
+                // Display each planet's directed rotation axis with its orbit, including Pluto.
                 // Arrowheads distinguish retrograde Venus and the strongly tilted Uranus.
                 var axisArrow = null;
-                var majorPlanetKeys = ['mercury', 'venus', 'earth', 'mars', 'jupiter', 'saturn', 'uranus', 'neptune'];
+                var majorPlanetKeys = ['mercury', 'venus', 'earth', 'mars', 'jupiter', 'saturn', 'uranus', 'neptune', 'pluto'];
                 if (state.simMode === '3d' && majorPlanetKeys.indexOf(key) !== -1) {
                     var axisHalfLength = bodyR * 1.75;
                     axisArrow = new THREE.ArrowHelper(
@@ -1427,7 +1427,7 @@
                     [axisArrow.line.material, axisArrow.cone.material].forEach(function (material) {
                         material.transparent = true;
                         material.opacity = 0.72;
-                        material.depthTest = false;
+                        material.depthTest = true;
                         material.depthWrite = false;
                     });
                     axisArrow.line.renderOrder = 8;

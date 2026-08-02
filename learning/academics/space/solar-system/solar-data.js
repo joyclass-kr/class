@@ -523,16 +523,45 @@ window.createPlanetTexture = function (planetKey) {
         ctx.fillRect(0, 0, w, h * 0.08);
         ctx.fillRect(0, h * 0.92, w, h * 0.08);
     } else if (planetKey === 'venus') {
-        const grad = ctx.createLinearGradient(0, 0, w, h);
-        grad.addColorStop(0, '#eab308');
-        grad.addColorStop(0.5, '#fef08a');
-        grad.addColorStop(1, '#ca8a04');
+        // Venus is hidden beneath a dense sulfuric-acid cloud deck. Subtle,
+        // asymmetric bands reveal its slow retrograde rotation without implying continents.
+        const grad = ctx.createLinearGradient(0, 0, 0, h);
+        grad.addColorStop(0, '#d6a83c');
+        grad.addColorStop(0.22, '#f1d071');
+        grad.addColorStop(0.5, '#f7e4a0');
+        grad.addColorStop(0.78, '#ddb653');
+        grad.addColorStop(1, '#b9872f');
         ctx.fillStyle = grad;
         ctx.fillRect(0, 0, w, h);
 
-        ctx.fillStyle = 'rgba(255, 255, 255, 0.25)';
-        for (let i = 0; i < 60; i++) {
-            ctx.fillRect(Math.random() * w, Math.random() * h, Math.random() * 100 + 30, Math.random() * 8 + 2);
+        ctx.lineCap = 'round';
+        for (let band = 0; band < 17; band++) {
+            const baseY = 24 + band * 29;
+            ctx.beginPath();
+            for (let x = -32; x <= w + 32; x += 16) {
+                const y = baseY
+                    + Math.sin(x * 0.018 + band * 0.83) * (7 + (band % 3) * 2)
+                    + Math.sin(x * 0.006 - band * 0.51) * 5;
+                if (x === -32) ctx.moveTo(x, y);
+                else ctx.lineTo(x, y);
+            }
+            ctx.strokeStyle = band % 3 === 0
+                ? 'rgba(151, 99, 28, 0.18)'
+                : 'rgba(255, 249, 214, 0.28)';
+            ctx.lineWidth = 10 + (band % 4) * 3;
+            ctx.stroke();
+        }
+
+        // Longitudinally uneven cloud cells provide visible rotation cues.
+        for (let i = 0; i < 12; i++) {
+            const cx = (74 + i * 173) % w;
+            const cy = 58 + ((i * 97) % 390);
+            ctx.beginPath();
+            ctx.ellipse(cx, cy, 50 + (i % 4) * 14, 10 + (i % 3) * 4, (i % 5 - 2) * 0.09, 0, Math.PI * 2);
+            ctx.fillStyle = i % 3 === 0
+                ? 'rgba(137, 87, 24, 0.16)'
+                : 'rgba(255, 255, 235, 0.24)';
+            ctx.fill();
         }
     } else if (planetKey === 'uranus') {
         const grad = ctx.createLinearGradient(0, 0, 0, h);
