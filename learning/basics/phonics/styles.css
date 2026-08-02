@@ -5,7 +5,7 @@
 *{box-sizing:border-box}
 html{scroll-behavior:smooth;background:#080d28}
 body{margin:0;min-height:100vh;background:transparent;color:var(--ink);font-family:"Nunito","Gowun Dodum","Malgun Gothic",sans-serif;-webkit-font-smoothing:antialiased;isolation:isolate}
-body::before{content:"";position:fixed;inset:0;z-index:-1;background:linear-gradient(rgba(7,11,38,.36),rgba(7,11,38,.58)),url("assets/images/phonics-space-bg.webp") center/cover no-repeat}
+body::before{content:"";position:fixed;inset:0;z-index:-1;background:linear-gradient(rgba(7,11,38,.08),rgba(7,11,38,.18)),url("assets/images/phonics-space-bg.webp") center/cover no-repeat}
 button,input{font:inherit}
 button{cursor:pointer}
 button:focus-visible,a:focus-visible,input:focus-visible{outline:3px solid #ffbd4a;outline-offset:3px}
