@@ -26,11 +26,11 @@
             min-width: 320px;
             min-height: 100vh;
             color: var(--ink);
-            background: 
-                radial-gradient(ellipse at 50% 0%, rgba(255, 255, 255, 0.45) 0%, rgba(0, 0, 0, 0.25) 100%),
-                repeating-linear-gradient(90deg, #dfd0b7 0px, #dfd0b7 220px, #d5c4a8 221px, #d5c4a8 440px),
-                linear-gradient(180deg, #e4d7bf 0%, #c1a27b 100%);
-            background-attachment: fixed;
+            background-color: #d6a36e;
+            background-image: url("./assets/seating/classroom-floor.webp");
+            background-size: cover;
+            background-position: center top;
+            background-repeat: no-repeat;
             font-family: Pretendard, "Malgun Gothic", system-ui, sans-serif;
         }
 
@@ -68,7 +68,7 @@
             border: 1px solid var(--line);
             border-radius: 20px;
             padding: 24px;
-            background: var(--paper);
+            background: rgba(255, 253, 247, 0.12);
             box-shadow: var(--shadow);
             margin-bottom: 24px;
         }
@@ -99,13 +99,6 @@
             flex-direction: column;
             gap: 16px;
             box-shadow: 0 4px 12px rgba(0,0,0,0.03);
-        }
-
-        .sidebar-title {
-            font-size: 1.1rem;
-            font-weight: 900;
-            color: var(--brand);
-            margin-bottom: 4px;
         }
 
         .sidebar-label {
@@ -414,8 +407,6 @@
 
                 <!-- 우측 사이드바 제어 패널 -->
                 <aside class="seating-sidebar-panel">
-                    <h3 class="sidebar-title">⚙️ 배치 제어 패널</h3>
-                    
                     <button class="btn btn-primary btn-xl" id="shuffle-btn" type="button" style="width: 100%; font-size: 1.1rem; font-weight: 900; padding: 14px; margin-bottom: 6px; border-radius: 14px; box-shadow: 0 4px 12px rgba(23,63,69,0.3);">🎲 자리 무작위 섞기</button>
                     
                     <div class="sidebar-group">
