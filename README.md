@@ -1,4 +1,4 @@
-# Songhwa Play classroom portal
+# 학급 학습 포털
 
 이 저장소는 하나의 수업 포털입니다. 루트의 `index.html`이 메인 화면이고,
 Node 서버가 정적 수업 자료와 두 개의 학습 앱을 한 주소에서 제공합니다.

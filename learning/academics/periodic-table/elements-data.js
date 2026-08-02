@@ -1,6 +1,6 @@
 /**
  * 118개 원소 주기율표 데이터베이스
- * Periodic Table Elements Database for Songhwa Play Class
+ * Periodic Table Elements Database for the class portal
  */
 
 window.PERIODIC_CATEGORIES = {

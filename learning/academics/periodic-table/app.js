@@ -302,8 +302,8 @@ document.addEventListener('DOMContentLoaded', () => {
         const isExam = state.tableMode === 'exam';
         document.body.dataset.tableMode = state.tableMode;
         document.title = isExam
-            ? '단주기 주기율표 | songhwaplay 교과학습'
-            : '실제 주기율표 | songhwaplay 교과학습';
+            ? '단주기 주기율표'
+            : '실제 주기율표';
 
         document.getElementById('appTitleText').textContent = isExam ? '단주기 주기율표' : '실제 주기율표';
         document.getElementById('appTitleBadge').textContent = isExam ? '시험 대비 · 1~20' : '전체 원소 · 1~118';

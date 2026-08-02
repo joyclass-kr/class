@@ -178,7 +178,7 @@
     const puzzleName = size === 3 ? '8 PUZZLE' : '15 PUZZLE';
     titleElement.textContent = puzzleName;
     modeLabel.textContent = `${size} × ${size}`;
-    document.title = `${puzzleName} | songhwaplay`;
+    document.title = puzzleName;
     history.replaceState(null, '', `?size=${size}`);
     document.querySelectorAll('[data-size]').forEach(button => {
       button.setAttribute('aria-pressed', String(Number(button.dataset.size) === size));
