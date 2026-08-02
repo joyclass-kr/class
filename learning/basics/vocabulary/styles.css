@@ -29,8 +29,8 @@ body {
     min-height: 100vh;
     color: var(--ink);
     background:
-        radial-gradient(circle at 8% 0%, rgba(199, 154, 82, .14), transparent 28rem),
-        linear-gradient(180deg, #f8f3e8 0%, #eee5d3 100%);
+        linear-gradient(rgba(248, 243, 232, .66), rgba(238, 229, 211, .72)),
+        url("assets/images/classroom-background.jpg") center / cover fixed no-repeat;
     font-family: "Malgun Gothic", "Apple SD Gothic Neo", sans-serif;
 }
 
