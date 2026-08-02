@@ -4,7 +4,7 @@
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
   <meta name="theme-color" content="#f7f5ef">
-  <title>男·女 | 韓字</title>
+  <title>大·小·多·少 | 韓字</title>
   <style>
     @font-face {
       font-family: "KleeHanja";
@@ -91,6 +91,15 @@
       gap: clamp(6px, 1.5vw, 16px);
       min-width: 2.25em;
     }
+
+    .hanja-four {
+      display: flex;
+      gap: clamp(5px, 1vw, 11px);
+      min-width: 4.35em;
+      font-size: clamp(62px, 7.5vw, 88px);
+    }
+
+    .hanja-four .pair-gap { margin-left: clamp(7px, 1.3vw, 15px); }
 
     .reading {
       margin: 0 0 5px;
@@ -201,6 +210,15 @@
       word-break: keep-all;
     }
 
+    .question-context {
+      margin: 0 0 3px;
+      color: var(--muted);
+      font-size: clamp(15px, 1.45vw, 17px);
+      font-weight: 700;
+      line-height: 1.45;
+      word-break: keep-all;
+    }
+
     .q-number {
       display: inline-grid;
       width: 32px;
@@ -261,6 +279,11 @@
       font-size: 15px;
       font-weight: 700;
       line-height: 1.45;
+    }
+
+    .feedback:empty {
+      min-height: 0;
+      margin-top: 0;
     }
 
     .feedback.is-correct { color: var(--correct); }
@@ -342,31 +365,31 @@
     </div>
 
     <header class="hanja-head">
-      <div class="hanja hanja-pair" aria-label="사내 남, 여자 여"><span>男</span><span>女</span></div>
+      <div class="hanja hanja-four" aria-label="큰 대, 작을 소, 많을 다, 적을 소"><span>大</span><span>小</span><span class="pair-gap">多</span><span>少</span></div>
       <div>
-        <p class="reading">남 · 여(녀)</p>
-        <p class="core-meaning">남자 · 여자</p>
+        <p class="reading">대 · 소 / 다 · 소</p>
+        <p class="core-meaning">크다 · 작다 / 많다 · 적다</p>
       </div>
     </header>
 
     <section id="lessonView" class="view" aria-label="뜻과 예시">
-      <p class="lesson-guide">男은 남자, 女는 여자입니다. 女는 말의 첫머리에서는 ‘여’, 뒤에서는 ‘녀’로 읽습니다.</p>
+      <p class="lesson-guide">大와 小는 크기를, 多와 少는 양을 나타냅니다. 같은 ‘소’라도 小는 작다, 少는 적다는 뜻입니다.</p>
       <div class="word-list">
         <div class="word-row">
-          <p class="word-family">男(남) — 남자 · 남성 · 남학생</p>
-          <p class="example">말 속의 ‘남’을 ‘남자’로 바꾸어 보면 뜻이 보입니다.</p>
+          <p class="word-family">大(대) — 대형 · 대도시</p>
+          <p class="example">대형은 크기가 큰 것, 대도시는 규모가 큰 도시입니다.</p>
         </div>
         <div class="word-row">
-          <p class="word-family">女(여) — 여자 · 여성 · 여학생</p>
-          <p class="example">말의 첫머리에 오면 女를 ‘여’로 읽습니다.</p>
+          <p class="word-family">小(소) — 소형 · 소규모</p>
+          <p class="example">소형은 크기가 작은 것, 소규모는 규모가 작은 것입니다.</p>
         </div>
         <div class="word-row">
-          <p class="word-family">女(녀) — 소녀 · 자녀</p>
-          <p class="example">다른 글자 뒤에 오면 女를 ‘녀’로 읽습니다.</p>
+          <p class="word-family">多(다) — 다수 · 다량</p>
+          <p class="example">다수는 수가 많은 것, 다량은 양이 많은 것입니다.</p>
         </div>
         <div class="word-row">
-          <p class="word-family">男女(남녀)</p>
-          <p class="example">남녀는 남자와 여자를 함께 이르는 말입니다.</p>
+          <p class="word-family">少(소) — 소수 · 소량</p>
+          <p class="example">소수는 수가 적은 것, 소량은 양이 적은 것입니다.</p>
         </div>
       </div>
       <button id="startQuiz" class="next-button" type="button">문제 풀기</button>
@@ -374,46 +397,50 @@
 
     <section id="quizView" class="view" aria-label="확인 문제" hidden>
       <div class="quiz-grid">
-        <article class="question" data-answer="1" data-note="男(남)의 뜻은 ‘남자’입니다.">
-          <h2><span class="q-number">1</span>男(남)의 뜻은?</h2>
+        <article class="question" data-answer="1" data-note="‘대형’은 크기가 큰 것을 나타냅니다.">
+          <p class="question-context">“운동장에 <u>대형</u> 버스가 도착했습니다.”</p>
+          <h2><span class="q-number">1</span>大(대)의 뜻은?</h2>
           <div class="choices">
-            <button class="choice" type="button">① 여자</button>
-            <button class="choice" type="button">② 남자</button>
-            <button class="choice" type="button">③ 남쪽</button>
-            <button class="choice" type="button">④ 남아 있는 것</button>
+            <button class="choice" type="button">① 적다</button>
+            <button class="choice" type="button">② 크다</button>
+            <button class="choice" type="button">③ 작다</button>
+            <button class="choice" type="button">④ 많다</button>
           </div>
           <p class="feedback" aria-live="polite"></p>
         </article>
 
-        <article class="question" data-answer="2" data-note="女(여·녀)의 뜻은 ‘여자’입니다.">
-          <h2><span class="q-number">2</span>女(여·녀)의 뜻은?</h2>
+        <article class="question" data-answer="2" data-note="‘소형’의 小(소)는 크기가 작다는 뜻입니다.">
+          <p class="question-context">“책상 위에 <u>소형</u> 선풍기를 놓았습니다.”</p>
+          <h2><span class="q-number">2</span>小(소)의 뜻은?</h2>
           <div class="choices">
-            <button class="choice" type="button">① 아이</button>
-            <button class="choice" type="button">② 남자</button>
-            <button class="choice" type="button">③ 여자</button>
-            <button class="choice" type="button">④ 어른</button>
+            <button class="choice" type="button">① 많다</button>
+            <button class="choice" type="button">② 적다</button>
+            <button class="choice" type="button">③ 작다</button>
+            <button class="choice" type="button">④ 크다</button>
           </div>
           <p class="feedback" aria-live="polite"></p>
         </article>
 
-        <article class="question" data-answer="3" data-note="‘남학생’의 남은 男(남)이며, 남자 학생이라는 뜻입니다.">
-          <h2><span class="q-number">3</span>男(남)인 것은?</h2>
+        <article class="question" data-answer="3" data-note="‘다수’의 多(다)는 수가 많다는 뜻입니다.">
+          <p class="question-context">“<u>다수</u>의 학생이 대회에 참가했습니다.”</p>
+          <h2><span class="q-number">3</span>多(다)의 뜻은?</h2>
           <div class="choices">
-            <button class="choice" type="button">① 펭귄은 <u>남극</u>에 삽니다.</button>
-            <button class="choice" type="button">② 해가 잘 드는 <u>남쪽</u> 창문을 열었습니다.</button>
-            <button class="choice" type="button">③ <u>남색</u> 크레파스로 바다를 칠했습니다.</button>
-            <button class="choice" type="button">④ 형은 우리 학교 <u>남학생</u>입니다.</button>
+            <button class="choice" type="button">① 작다</button>
+            <button class="choice" type="button">② 크다</button>
+            <button class="choice" type="button">③ 적다</button>
+            <button class="choice" type="button">④ 많다</button>
           </div>
           <p class="feedback" aria-live="polite"></p>
         </article>
 
-        <article class="question" data-answer="0" data-note="‘여름’은 한자어가 아니라 본래부터 쓰던 우리말입니다.">
-          <h2><span class="q-number">4</span>女(여·녀)가 아닌 것은?</h2>
+        <article class="question" data-answer="0" data-note="‘소량’의 少(소)는 양이 적다는 뜻입니다.">
+          <p class="question-context">“병에 <u>소량</u>의 물만 남았습니다.”</p>
+          <h2><span class="q-number">4</span>少(소)의 뜻은?</h2>
           <div class="choices">
-            <button class="choice" type="button">① <u>여름</u> 방학에 바다로 갑니다.</button>
-            <button class="choice" type="button">② 누나는 우리 학교 <u>여학생</u>입니다.</button>
-            <button class="choice" type="button">③ 책 속 <u>소녀</u>가 모험을 떠났습니다.</button>
-            <button class="choice" type="button">④ 부모와 <u>자녀</u>가 함께 왔습니다.</button>
+            <button class="choice" type="button">① 적다</button>
+            <button class="choice" type="button">② 작다</button>
+            <button class="choice" type="button">③ 많다</button>
+            <button class="choice" type="button">④ 크다</button>
           </div>
           <p class="feedback" aria-live="polite"></p>
         </article>
@@ -423,7 +450,6 @@
       <div class="quiz-actions">
         <button id="backToLesson" class="back-button" type="button">설명 다시 보기</button>
         <button id="resetQuiz" class="reset-button" type="button">다시 풀기</button>
-        <a id="nextLesson" class="next-lesson" href="../dae-so-da-so/" hidden>다음 글자 大·小·多·少</a>
       </div>
     </section>
   </main>
@@ -433,7 +459,6 @@
       const lessonView = document.getElementById('lessonView');
       const quizView = document.getElementById('quizView');
       const result = document.getElementById('result');
-      const nextLesson = document.getElementById('nextLesson');
       const questions = Array.from(document.querySelectorAll('.question'));
 
       function show(view) {
@@ -451,7 +476,6 @@
         const score = answered.filter((question) => question.dataset.correct === 'true').length;
         result.textContent = `${questions.length}문제 중 ${score}문제를 맞혔습니다.`;
         result.hidden = false;
-        nextLesson.hidden = false;
       }
 
       questions.forEach((question) => {
@@ -489,7 +513,6 @@
         });
         result.hidden = true;
         result.textContent = '';
-        nextLesson.hidden = true;
         window.scrollTo({ top: 0, behavior: 'smooth' });
       }
 
