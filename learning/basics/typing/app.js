@@ -16,24 +16,36 @@ const shiftedKorean={q:'ㅃ',w:'ㅉ',e:'ㄸ',r:'ㄲ',t:'ㅆ',o:'ㅒ',p:'ㅖ'};
 const leftHandLetters=[...'qwertasdfgzxcvb'],rightHandLetters=[...'yuiophjklnm'];
 const guideStages={
   ko:[
-    {label:'기본 자리',items:['f','j','d','k','s','l','a','g','h','word:나','word:아이','word:어머니']},
-    {label:'윗글쇠',items:['q','w','e','r','t','y','u','i','o','p','word:가지','word:바다','word:여자']},
-    {label:'아랫글쇠',items:['z','x','c','v','b','n','m','word:우유','word:치마','word:나무']},
-    {label:'받침',items:['word:산','word:달','word:강','word:학교','word:친구']},
-    {label:'Shift',items:[...koreanShiftGuide,'word:아빠','word:토끼','word:있다','word:예쁘다']}
+    {label:'기본 자리',items:['f','j','d','k','s','l','a','g','h']},
+    {label:'윗글쇠',items:['q','w','e','r','t','y','u','i','o','p']},
+    {label:'아랫글쇠',items:['z','x','c','v','b','n','m']},
+    {label:'받침',items:[]},
+    {label:'Shift',items:[...koreanShiftGuide]}
   ],
   en:[
-    {label:'기본 자리',items:['f','j','d','k','s','l','a','g','h','word:dad','word:fall','word:glass']},
-    {label:'윗글쇠',items:['q','w','e','r','t','y','u','i','o','p','word:write','word:quiet','word:type']},
-    {label:'아랫글쇠',items:['z','x','c','v','b','n','m','word:mix','word:zinc','word:van']},
+    {label:'기본 자리',items:['f','j','d','k','s','l','a','g','h']},
+    {label:'윗글쇠',items:['q','w','e','r','t','y','u','i','o','p']},
+    {label:'아랫글쇠',items:['z','x','c','v','b','n','m']},
     {label:'대문자',items:[]}
   ],
   symbols:[
-    {label:'숫자',items:[...baseSymbolGuide,'word:26453','word:2026']},
-    {label:'특수문자',items:[...shiftedSymbolGuide,'word:100%','word:^_^','word:!!','word:?!']}
+    {label:'숫자',items:[...baseSymbolGuide]},
+    {label:'특수문자',items:[...shiftedSymbolGuide]}
   ]
 };
-let guideLang='ko',guideStage=0,guideIndex=0,guideWordKeyIndex=0,virtualShift='',englishShiftGuide=[];
+const guideWordBanks={
+  'ko-0':['나','너','나이','아이','오이','이마','나라','하나','하마','머리','미리','아마','엄마','어머니','할머니','오리','미나리','아리아','이모','이리','오라','나아','모아','알아','일어나'],
+  'ko-1':['가지','바다','사자','여자','가게','기러기','개미','도서','보리','세모','소리','고리','가요','자요','모자','바지','다리','아버지','나비','고양이','사과','기차역','여우','지도','이야기','해바라기','교실','도리','가위','제비'],
+  'ko-2':['우유','치마','나무','코끼리','토마토','포도','기차','구두','주머니','부추','치즈','크기','흐리다','파도','쿠키','타조','바구니','비누','고무','유리','튜브','피아노','나비','무지개','두부','카메라','기지개','마루','메추리','호두'],
+  'ko-3':['산','달','강','학교','친구','공원','마음','구름','바람','연필','책상','창문','운동장','선생님','학생','동물','식물','햇살','봄날','가을','겨울','숲길','별빛','약속','생각','웃음','도서관','놀이터','고양이','강아지'],
+  'ko-4':['아빠','오빠','토끼','어깨','꼬리','까치','쓰기','씨앗','짜다','찌개','예쁘다','똑똑','빨리','쏘다','떡','꿈','깨끗이','꼭대기','쑥쑥','짝꿍','뛰다','따뜻하다','씩씩하다','반짝이다','깜짝'],
+  'en-0':['sad','dad','fall','glass','flag','ask','hall','half','salad','flash','glad','dash','hash','shall','flask','salsa','saga','jag','lag','gas','ash','fad','lash','gall','add'],
+  'en-1':['write','quiet','type','read','tree','water','paper','yellow','school','teacher','light','right','little','story','house','earth','idea','radio','star','flower','fruit','horse','turtle','people','please','share','repeat','square','weather','today'],
+  'en-2':['mix','zinc','van','book','music','green','friend','family','smile','morning','pencil','class','number','window','garden','planet','animal','bright','cloud','river','market','picnic','jungle','basket','computer','village','blanket','orange','silver','winter'],
+  'symbols-0':['26453','2026','1004','365','12345','98765','1010','777','8282','10000','3.14','1,000','24','60','12','31415','5050','8080','119','112','20260802','13579','24680','100','99'],
+  'symbols-1':['100%','^_^','!!','!@#','10+20=30','7*8=56','5-2=3','1+1=2','50%','3^2=9','(1+2)','(5-3)','1_2','$5','$10','#1','#2','@1','~1~','99%','2*3=6','4+5=9','6-1=5','100+200','1+2+3','(10)','5%','7&8']
+};
+let guideLang='ko',guideStage=0,guideIndex=0,guideWordKeyIndex=0,currentGuideOrder=null,virtualShift='',englishShiftGuide=[];
 const koInitial=['r','R','s','e','E','f','a','q','Q','t','T','d','w','W','c','z','x','v','g'];
 const koMedial=['k','o','i','O','j','p','u','P','h','hk','ho','hl','y','n','nj','np','nl','b','m','ml','l'];
 const koFinal=['','r','R','rt','s','sw','sg','e','f','fr','fa','fq','ft','fx','fv','fg','a','q','qt','t','T','d','w','c','z','x','v','g'];
@@ -48,9 +60,9 @@ function physicalCharacter(event){if(/^Key[A-Z]$/.test(event.code)){const letter
 function resetForcedInput(){forcedKeyProgress=0}
 function pickRandom(items,count){return [...items].sort(()=>Math.random()-.5).slice(0,count)}
 function refreshEnglishShiftGuide(){englishShiftGuide=[...pickRandom(rightHandLetters,2).map(letter=>`shift-left+${letter}`),...pickRandom(leftHandLetters,2).map(letter=>`shift-right+${letter}`)].sort(()=>Math.random()-.5)}
-function renderGuideStages(){const stages=guideStages[guideLang];$('#guideStages').innerHTML=stages.map((stage,index)=>`<button type="button" class="${index===guideStage?'active':''}" data-guide-stage="${index}" aria-pressed="${index===guideStage}">${index+1}. ${stage.label}</button>`).join('');$$('[data-guide-stage]').forEach(button=>button.addEventListener('click',()=>{guideStage=Number(button.dataset.guideStage);guideIndex=0;guideWordKeyIndex=0;if(guideLang==='en'&&guideStage===3)refreshEnglishShiftGuide();renderGuideStages();showGuide()}))}
+function renderGuideStages(){const stages=guideStages[guideLang];$('#guideStages').innerHTML=stages.map((stage,index)=>`<button type="button" class="${index===guideStage?'active':''}" data-guide-stage="${index}" aria-pressed="${index===guideStage}">${index+1}. ${stage.label}</button>`).join('');$$('[data-guide-stage]').forEach(button=>button.addEventListener('click',()=>{guideStage=Number(button.dataset.guideStage);guideIndex=0;guideWordKeyIndex=0;currentGuideOrder=null;if(guideLang==='en'&&guideStage===3)refreshEnglishShiftGuide();renderGuideStages();showGuide()}))}
 function buildKeyboard(){const box=$('#keyboard'),rows=guideLang==='symbols'?[keyboardRows[0],keyboardRows[3].filter(([en])=>en==='Shift')]:keyboardRows.slice(1);box.innerHTML=rows.map((row,index)=>`<div class="key-row ${guideLang==='symbols'&&index===1?'shift-only-row':''}">${row.map(([en,ko,f,code,shifted])=>`<button type="button" class="key ${(en==='F'||en==='J')?'home-key':''} ${en==='Shift'?'shift-key':''} ${shifted?'number-key':''}" data-code="${code||en.toLowerCase()}" data-ko="${ko}" data-shifted="${shifted||''}" data-finger="${f}">${en==='Shift'?'⇧ Shift':shifted?en:guideLang==='ko'?ko:en.toLowerCase()}</button>`).join('')}</div>`).join('');box.querySelectorAll('.key').forEach(k=>k.addEventListener('click',()=>{const code=k.dataset.code;if(code.startsWith('shift-')){virtualShift=code.slice(6);return}checkGuide(code,virtualShift);virtualShift=''}));renderGuideStages();showGuide()}
-function guideOrder(){if(guideLang==='en'&&guideStage===3)return englishShiftGuide;return guideStages[guideLang][guideStage].items}
+function guideOrder(){if(currentGuideOrder)return currentGuideOrder;const keys=guideLang==='en'&&guideStage===3?englishShiftGuide:guideStages[guideLang][guideStage].items,bank=guideWordBanks[`${guideLang}-${guideStage}`]||[];currentGuideOrder=[...keys,...pickRandom(bank,Math.min(10,bank.length)).map(word=>`word:${word}`)];return currentGuideOrder}
 function guideTarget(){const order=guideOrder();return order[guideIndex%order.length]}
 function guideWord(){const target=guideTarget();return target.startsWith('word:')?target.slice(5):''}
 function guideWordSequence(){return [...guideWord()].map(keySequenceForChar).join('')}
@@ -105,7 +117,7 @@ function checkGuide(code,shiftSide=''){
 function showHome(){$('#typingHome').hidden=false;$('#fingerGuide').hidden=true;$('.practice').hidden=true;$('#resultCard').hidden=true}
 function selectLanguage(lang){state.lang=lang;$$('[data-language]').forEach(button=>{const active=button.dataset.language===lang;button.classList.toggle('active',active);button.setAttribute('aria-pressed',active)})}
 function openPractice(mode='words'){state.mode=mode;state.level={words:0,sentences:1,paragraphs:2}[mode]??0;$('#typingHome').hidden=true;$('#fingerGuide').hidden=true;$('.practice').hidden=false;$('#practiceTitle').textContent={words:'단어 연습',sentences:'문장 연습',paragraphs:'문단 연습'}[mode];const symbolButton=$('[data-language="symbols"]');symbolButton.hidden=mode!=='words';if(mode!=='words'&&state.lang==='symbols')selectLanguage('ko');$('#levelButton').hidden=true;$('#levelPanel').hidden=true;setup()}
-function openGuide(){guideIndex=0;guideWordKeyIndex=0;if(guideLang==='en'&&guideStage===3)refreshEnglishShiftGuide();$('#typingHome').hidden=true;$('.practice').hidden=true;$('#resultCard').hidden=true;$('#fingerGuide').hidden=false;buildKeyboard()}
+function openGuide(){guideIndex=0;guideWordKeyIndex=0;currentGuideOrder=null;if(guideLang==='en'&&guideStage===3)refreshEnglishShiftGuide();$('#typingHome').hidden=true;$('.practice').hidden=true;$('#resultCard').hidden=true;$('#fingerGuide').hidden=false;buildKeyboard()}
 function key(){return `typing-best-${state.lang}-${state.level}`}
 function target(){return lessons[state.lang][state.level][state.index]}
 function chars(s){return [...s]}
@@ -123,7 +135,7 @@ $$('[data-language]').forEach(b=>b.addEventListener('click',()=>{selectLanguage(
 $('#levelButton').addEventListener('click',()=>{const p=$('#levelPanel'),open=p.hidden;p.hidden=!open;$('#levelButton').setAttribute('aria-expanded',open)});
 $$('[data-level]').forEach(b=>b.addEventListener('click',()=>{state.level=Number(b.dataset.level);$$('[data-level]').forEach(x=>x.classList.toggle('active',x===b));$('#levelButton').innerHTML=`<span>${state.level+1}단계</span><strong>${['낱말','짧은 문장','긴 문장'][state.level]}</strong><span aria-hidden="true">⌄</span>`;$('#levelPanel').hidden=true;$('#levelButton').setAttribute('aria-expanded','false');setup()}));
 $('#soundButton').addEventListener('click',e=>{state.sound=!state.sound;e.currentTarget.textContent=state.sound?'소리 켬':'소리 끔';e.currentTarget.setAttribute('aria-pressed',state.sound)});
-$$('[data-guide-language]').forEach(b=>b.addEventListener('click',()=>{guideLang=b.dataset.guideLanguage;guideStage=0;guideIndex=0;guideWordKeyIndex=0;$$('[data-guide-language]').forEach(x=>{x.classList.toggle('active',x===b);x.setAttribute('aria-pressed',x===b)});buildKeyboard()}));
+$$('[data-guide-language]').forEach(b=>b.addEventListener('click',()=>{guideLang=b.dataset.guideLanguage;guideStage=0;guideIndex=0;guideWordKeyIndex=0;currentGuideOrder=null;$$('[data-guide-language]').forEach(x=>{x.classList.toggle('active',x===b);x.setAttribute('aria-pressed',x===b)});buildKeyboard()}));
 const heldShift={left:false,right:false};
 function guideEventCode(event){if(/^Key[A-Z]$/.test(event.code))return event.code.slice(3).toLowerCase();if(/^Digit[0-9]$/.test(event.code))return event.code.slice(5);return{Backquote:'`',Minus:'-',Equal:'='}[event.code]||event.key.toLowerCase()}
 document.addEventListener('keydown',e=>{if($('#fingerGuide').hidden||e.ctrlKey||e.altKey||e.metaKey)return;if(e.code==='ShiftLeft'){heldShift.left=true;return}if(e.code==='ShiftRight'){heldShift.right=true;return}checkGuide(guideEventCode(e),heldShift.left?'left':heldShift.right?'right':'')});
