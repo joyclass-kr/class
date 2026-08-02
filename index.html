@@ -7,6 +7,7 @@
     <style>
         :root {
             --bg: #2b1d1d;
+            --index-background-image: url('assets/images/indexbg.jpg');
             --panel: #3a210f;
             --panel-dark: #261204;
             --gold: #d7b47a;
@@ -38,7 +39,7 @@
             position: fixed;
             inset: 0;
             z-index: -1;
-            background: #24344b url('assets/images/indexbg.jpg') center / cover no-repeat;
+            background: #24344b var(--index-background-image) center / cover no-repeat;
             pointer-events: none;
         }
 
@@ -414,6 +415,12 @@
     </style>
 </head>
 <body>
+    <script>
+        document.documentElement.style.setProperty(
+            '--index-background-image',
+            `url('assets/images/monthly/${new Date().getMonth() + 1}.jpg')`
+        );
+    </script>
     <div class="top-nav-bar" aria-label="교사 및 관리자 메뉴">
         <a id="classToolsLink" class="class-tools-link" href="classtools/">🏫 교사 페이지 (학급 관리)</a>
         <a id="adminToolsLink" class="class-tools-link" href="admin/">⚙️ 관리자 페이지</a>
