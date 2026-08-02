@@ -20,6 +20,13 @@
         "대명사": "pronoun", "전치사": "preposition", "접속사": "conjunction",
         "감탄사": "exclamation", "관사": "article", "한정사": "determiner", "수사": "number",
     };
+    const RELATED_MEANING_OVERRIDES = new Map(Object.entries({
+        "roofer": "지붕을 이는 사람",
+        "roofing": "지붕 재료; 지붕 공사",
+        "lifter": "들어 올리는 사람이나 장치",
+        "lift up": "들어 올리다",
+    }));
+
     const RELATED_TYPE_NAMES = {
         "유의어": "similar", "반의어": "opposite", "관련어": "related", "파생어": "word family",
         "다른 표기": "other spelling", "변화형": "word form",
@@ -95,6 +102,7 @@
         spellingAnswered: false,
         spellingWrongProgress: loadSpellingWrongProgress(),
         spellingReviewMode: false,
+        wordMeaningMap: new Map(),
     };
 
     function loadProgress() {
@@ -263,18 +271,29 @@
         elements.exampleLabel.textContent = "Example";
         elements.exampleText.textContent = word.example?.en || "";
         elements.exampleKo.textContent = word.example?.ko || "";
-        const related = word.relatedWords || [
+        const sourceRelated = word.relatedWords || [
             ...word.alternate.map((relatedWord) => ({ word: relatedWord, type: "other spelling" })),
             ...word.relatedForms.map((relatedWord) => ({ word: relatedWord, type: "word form" })),
         ];
+        const seenRelated = new Set();
+        const related = sourceRelated.map((relatedWord) => {
+            const key = String(relatedWord.word || "").trim().toLowerCase();
+            const meaning = RELATED_MEANING_OVERRIDES.get(key) || state.wordMeaningMap.get(key);
+            if (!key || !meaning || key === word.word.toLowerCase() || seenRelated.has(key)) return null;
+            seenRelated.add(key);
+            return { ...relatedWord, meaning };
+        }).filter(Boolean);
         elements.relatedWords.replaceChildren(...related.map((relatedWord) => {
             const chip = document.createElement("span");
             chip.className = "related-word";
-            const label = document.createElement("span");
+            const label = document.createElement("strong");
             label.textContent = relatedWord.word;
+            const meaning = document.createElement("span");
+            meaning.className = "related-meaning";
+            meaning.textContent = relatedWord.meaning;
             const type = document.createElement("small");
             type.textContent = RELATED_TYPE_NAMES[relatedWord.type] || relatedWord.type;
-            chip.append(label, type);
+            chip.append(label, meaning, type);
             return chip;
         }));
         elements.relatedBlock.hidden = related.length === 0;
@@ -959,6 +978,10 @@
             ))) {
                 throw new Error("Vocabulary learning data is incomplete");
             }
+            state.wordMeaningMap = new Map(state.data.words.map((word) => [
+                word.word.toLowerCase(),
+                (word.meanings || []).find((meaning) => String(meaning || "").trim()) || "",
+            ]));
             state.levels = core.groupByLevel(state.data.words);
             if (state.levels.size !== 15) throw new Error("Invalid vocabulary levels");
             if (spellingResponse?.ok) await spellingResponse.json();

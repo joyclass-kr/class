@@ -230,7 +230,10 @@ main { width: min(1180px, calc(100% - 32px)); margin: 0 auto; padding: 16px 0 48
 .example-ko { display: block; margin-top: 4px; color: #44524c; font-size: 15px; font-weight: 700; line-height: 1.45; }
 .related-block { display: block; min-height: 42px; margin-top: 8px; text-align: left; }
 .related-words { display: flex; flex-wrap: wrap; gap: 8px; }
-.related-word { display: inline-flex; align-items: center; gap: 6px; padding: 6px 12px; border: 1px solid var(--line); border-radius: 999px; background: rgba(255,253,247,.9); color: var(--ink); font-size: 14px; font-weight: 800; }
+.related-word { display: inline-flex; align-items: center; flex-wrap: wrap; gap: 5px 7px; padding: 8px 12px; border: 1px solid var(--line); border-radius: 14px; background: rgba(255,253,247,.9); color: var(--ink); font-size: 14px; }
+.related-word strong { font-weight: 900; }
+.related-meaning { color: var(--blue); font-weight: 800; }
+.related-meaning::before { content: "· "; color: var(--muted); }
 .related-word small { color: var(--muted); font-size: 11px; font-weight: 700; }
 .flashcard.revealed .example-block, .flashcard.revealed .related-block { opacity: 1; visibility: visible; transform: none; }
 .reveal-hint { position: absolute; bottom: 8px; color: #8c8069; font-size: 12px; font-weight: 800; }
