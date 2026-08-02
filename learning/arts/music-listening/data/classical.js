@@ -34,7 +34,7 @@ const pieces = [
   ['33','classical','고전','엘리제를 위하여','베토벤','피아노 소품','피아노','3박자','조금 빠르게','쓸쓸하고 부드럽게','미-레# 두 음을 오가는 익숙한 첫 동기','론도','첫 주제가 다른 부분 사이에 계속 돌아옴'],
   ['34','classical','고전','월광 소나타 1악장','베토벤','피아노 소나타','피아노','4박자','느리게','고요하고 어둡게','셋잇단음표 아르페지오 위에 떠오르는 낮은 선율','선율','반복 반주 위에서 긴 선율이 천천히 이동'],
   ['35','classical','고전','교향곡 40번 1악장','모차르트','교향곡','관현악','2박자','빠르게','불안하고 격정적으로','쉼 없이 이어지는 여덟 음의 첫 주제','소나타 형식','불안한 주제가 조성과 악기를 바꾸며 전개'],
-  ['36','classical','고전','마술피리 〈밤의 여왕의 아리아〉','모차르트','오페라 아리아','소프라노와 관현악','4박자','매우 빠르게','분노에 차고 화려하게','매우 높은 음과 빠른 콜로라투라','선율','사람의 목소리가 악기처럼 빠르게 움직임'],
+  ['36','classical','고전','마술피리 〈밤의 여왕의 아리아〉','모차르트','오페라 아리아','소프라노와 관현악','4박자','매우 빠르게','분노에 차고 화려하게','매우 높은 음과 빠른 콜로라투라','콜로라투라','사람의 목소리가 악기처럼 빠르게 움직임'],
   ['37','romantic','낭만','카르멘 〈전주곡〉','비제','오페라 전주곡','관현악','2박자','매우 빠르게','화려하고 긴박하게','심벌즈와 금관이 이끄는 투우사 주제','서곡','오페라의 주요 선율을 시작 전에 들려줌'],
   ['38','romantic','낭만','천국과 지옥 〈캉캉〉','오펜바흐','오페레타','관현악','2박자','매우 빠르게','익살스럽고 들뜨게','빠른 갤럽 리듬과 반복되는 계단식 선율','무곡','빠르게 발을 차올리는 캉캉 춤과 연결'],
   ['39','romantic','낭만','아름답고 푸른 도나우','요한 슈트라우스 2세','왈츠','관현악','3박자','보통 빠르게','우아하고 찬란하게','도입 뒤 펼쳐지는 강-약-약의 왈츠 주제','왈츠','빈의 무도회와 새해 음악회의 상징'],
@@ -130,7 +130,7 @@ const termMaps={
   form:{'협주곡':paired('협주곡','concerto'),'관현악 모음곡':paired('관현악 모음곡','orchestral suite'),'합주 협주곡':paired('합주 협주곡','concerto grosso'),'캐논':paired('캐논','canon'),'교향곡':paired('교향곡','symphony'),'세레나데':paired('세레나데','serenade'),'변주곡':paired('변주곡','variations'),'서곡':paired('서곡','overture'),'예술가곡':paired('예술가곡','Lied / art song'),'녹턴':paired('녹턴','nocturne'),'무곡':paired('무곡','dance'),'발레 음악':paired('발레 음악','ballet music'),'모음곡':paired('모음곡','suite'),'교향시':paired('교향시','symphonic poem'),'음악 동화':paired('음악 동화','musical tale'),'변주곡과 푸가':paired('변주곡과 푸가','variations and fugue'),'랩소디':paired('랩소디','rhapsody'),'관현악 환상곡':paired('관현악 환상곡','orchestral fantasia'),'교향적 환상곡':paired('교향적 환상곡','symphonic fantasia'),'영화 음악':paired('영화 음악','film music'),'오르간곡':paired('오르간곡','organ work'),'피아노 소품':paired('피아노 소품','piano piece'),'피아노 소나타':paired('피아노 소나타','piano sonata'),'오페라 아리아':paired('오페라 아리아','opera aria'),'오페라 전주곡':paired('오페라 전주곡','opera prelude'),'오페레타':paired('오페레타','operetta'),'왈츠':paired('왈츠','waltz'),'오페라 음악':paired('오페라 음악','opera music'),'극음악':paired('극음악','incidental music'),'축전 서곡':paired('축전 서곡','festival overture'),'칸타타':paired('칸타타','cantata')},
   tempo:{'매우 빠르게':paired('매우 빠르게','Presto'),'빠르게':paired('빠르게','Allegro'),'조금 빠르게':paired('조금 빠르게','Allegretto'),'보통 빠르게':paired('보통 빠르기로','Moderato'),'조금 느리게':paired('조금 느리게','Andante / Andantino'),'느리게':paired('느리게','Adagio'),'매우 느리게':paired('매우 느리게','Largo'),'장엄하게':paired('장엄하게','Maestoso'),'느리게 시작해 빨라짐':'느리게에서 빠르게 (Lento → Allegro)','빠르기의 변화가 큼':paired('빠르기를 유연하게','tempo rubato'),'빠르기 변화':paired('부분마다 빠르기 변화','changing tempo')},
   meter:{'4박자':paired('4박자','quadruple meter'),'3박자':paired('3박자','triple meter'),'2박자':paired('2박자','duple meter'),'6/4박자':paired('6/4박자','compound duple meter'),'6/8박자':paired('6/8박자','compound duple meter'),'9/8박자':paired('9/8박자','compound triple meter'),'12/8박자':paired('12/8박자','compound quadruple meter'),'자유로운 박자':paired('자유로운 박자','free meter'),'박자 변화':paired('부분마다 박자 변화','changing meter')},
-  concept:{'표제 음악':paired('표제 음악','program music'),'선율':paired('선율','melody'),'합주 협주곡':paired('합주 협주곡','concerto grosso'),'모음곡':paired('모음곡','suite'),'돌림노래 원리':paired('돌림노래 원리','canon'),'동기':paired('동기','motif'),'주제':paired('주제','theme'),'소나타 형식':paired('소나타 형식','sonata form'),'변주':paired('변주','variation'),'셈여림':paired('셈여림','dynamics'),'협주':paired('협주','concerto'),'서곡':paired('서곡','overture'),'실내악':paired('실내악','chamber music'),'예술가곡':paired('예술가곡','Lied / art song'),'루바토':paired('루바토','rubato'),'아고기크':paired('아고기크','agogics'),'왈츠':paired('왈츠','waltz'),'무곡':paired('무곡','dance'),'발레 음악':paired('발레 음악','ballet music'),'음색':paired('음색','timbre'),'민족주의 음악':paired('민족주의 음악','musical nationalism'),'크레셴도':paired('크레셴도','crescendo'),'인상주의':paired('인상주의','Impressionism'),'관현악법':paired('관현악법','orchestration'),'라이트모티프':paired('라이트모티프','Leitmotiv'),'푸가':paired('푸가','fugue'),'글리산도':paired('글리산도','glissando'),'환상곡':paired('환상곡','fantasia'),'오스티나토':paired('오스티나토','ostinato')}
+  concept:{'표제 음악':paired('표제 음악','program music'),'선율':paired('선율','melody'),'합주 협주곡':paired('합주 협주곡','concerto grosso'),'모음곡':paired('모음곡','suite'),'돌림노래 원리':paired('돌림노래 원리','canon'),'동기':paired('동기','motif'),'주제':paired('주제','theme'),'소나타 형식':paired('소나타 형식','sonata form'),'변주':paired('변주','variation'),'셈여림':paired('셈여림','dynamics'),'협주':paired('협주','concerto'),'서곡':paired('서곡','overture'),'실내악':paired('실내악','chamber music'),'예술가곡':paired('예술가곡','Lied / art song'),'루바토':paired('루바토','rubato'),'아고기크':paired('아고기크','agogics'),'왈츠':paired('왈츠','waltz'),'무곡':paired('무곡','dance'),'발레 음악':paired('발레 음악','ballet music'),'음색':paired('음색','timbre'),'민족주의 음악':paired('민족주의 음악','musical nationalism'),'크레셴도':paired('크레셴도','crescendo'),'인상주의':paired('인상주의','Impressionism'),'관현악법':paired('관현악법','orchestration'),'라이트모티프':paired('라이트모티프','Leitmotiv'),'푸가':paired('푸가','fugue'),'글리산도':paired('글리산도','glissando'),'환상곡':paired('환상곡','fantasia'),'오스티나토':paired('오스티나토','ostinato'),'콜로라투라':paired('콜로라투라','coloratura'),'레가토':paired('레가토','legato'),'스타카토':paired('스타카토','staccato'),'합창':paired('합창','chorus'),'론도':paired('론도','rondo')}
 };
 const instrumentOriginal={'바이올린':'violin','현악 합주':'string ensemble','하프시코드':'harpsichord','금관악기':'brass instruments','관현악':'orchestra','합창과 관현악':'chorus & orchestra','피아노':'piano','트럼펫':'trumpet','피아노와 현악기':'piano & strings','피아노와 관현악':'piano & orchestra','성악과 피아노':'voice & piano','관현악과 하프':'orchestra & harp','오보에와 관현악':'oboe & orchestra','첼로와 두 대의 피아노':'cello & two pianos','피아노 네 손 원곡·관현악 편곡':'piano four hands original / orchestral arrangement','피아노 원곡·관현악 편곡':'piano original / orchestral arrangement','잉글리시 호른':'English horn','스네어드럼과 관현악':'snare drum & orchestra','플루트':'flute','관현악과 해설':'orchestra & narrator','오르간':'organ','소프라노와 관현악':'soprano & orchestra','플루트와 오보에':'flute & oboe','관현악과 종·대포':'orchestra, bells & cannon'};
 pieces.forEach((p,i)=>{
@@ -144,6 +144,14 @@ pieces.forEach((p,i)=>{
 });
 
 const levels=['입문','입문','입문','기본','기본','기본','기본','도전','도전','도전'];
+const conceptSets=[
+  {stem:'이 성악곡에서 가장 두드러지는 발성·아티큘레이션 기법은 무엇일까요?',values:['콜로라투라','레가토','스타카토']},
+  {stem:'이 곡의 소리에서 가장 두드러지는 음악 요소는 무엇일까요?',values:['선율','동기','주제','셈여림','음색','관현악법','합창']},
+  {stem:'이 곡과 연결되는 형식·장르 개념은 무엇일까요?',values:['합주 협주곡','모음곡','소나타 형식','협주','서곡','실내악','예술가곡','왈츠','무곡','발레 음악','푸가','론도']},
+  {stem:'이 곡에서 가장 두드러지는 작곡·연주 기법은 무엇일까요?',values:['돌림노래 원리','변주','루바토','아고기크','크레셴도','라이트모티프','글리산도','오스티나토']},
+  {stem:'이 곡의 표현 방식과 가장 가까운 음악사적 관점은 무엇일까요?',values:['표제 음악','민족주의 음악','인상주의']}
+].map(group=>({...group,values:group.values.map(value=>termMaps.concept[value]||value)}));
+const conceptSetFor=answer=>conceptSets.find(group=>group.values.includes(answer));
 const templates=[
   ['제시곡의 제목은 무엇일까요?','titleAnswer'],
   ['제시곡의 작곡가는 누구일까요?','composer'],
@@ -157,6 +165,10 @@ const templates=[
   ['감상한 소리와 연결되는 핵심 음악 개념은 무엇일까요?','concept']
 ];
 const pickWrong=(piece,key,seed)=>{
+  if(key==='concept'){
+    const pool=conceptSetFor(piece.concept).values.filter(value=>value!==piece.concept),start=seed%pool.length;
+    return [...pool.slice(start),...pool.slice(0,start)].slice(0,2);
+  }
   const ranked=pieces.filter(other=>other!==piece&&other[key]!==piece[key]).sort((a,b)=>{
     const score=item=>(item.era===piece.era?4:0)+(item.form===piece.form?2:0)+(item.lead===piece.lead?1:0);
     return score(b)-score(a);
@@ -166,7 +178,7 @@ const pickWrong=(piece,key,seed)=>{
 };
 const shuffle=(arr)=>arr.map(v=>({v,r:Math.random()})).sort((a,b)=>a.r-b.r).map(x=>x.v);
 const allQuestions=pieces.flatMap((p,pi)=>templates.map(([stem,key],ti)=>{
-  const answer=p[key], choices=shuffle([answer,...pickWrong(p,key,pi*11+ti)]);
-  return {id:`${p.no}-${ti+1}`,piece:p,level:levels[ti],stem,choices,correct:choices.indexOf(answer),answer,explain:`제시곡은 ${p.title} (${p.originalTitle}, ${p.year})입니다. ${answer}. ${p.note}`};
+  const answer=p[key], choices=shuffle([answer,...pickWrong(p,key,pi*11+ti)]),questionStem=key==='concept'?conceptSetFor(answer).stem:stem;
+  return {id:`${p.no}-${ti+1}`,piece:p,level:levels[ti],stem:questionStem,choices,correct:choices.indexOf(answer),answer,explain:`제시곡은 ${p.title} (${p.originalTitle}, ${p.year})입니다. ${answer}. ${p.note}`};
 }));
 window.CLASSICAL_DATA={pieces,allQuestions};
