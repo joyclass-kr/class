@@ -44,8 +44,8 @@
         "gameQuestionPanel", "gameResultPanel", "gameResultScore", "gameResultAccuracy",
         "gameResultBestStreak", "gameWrongList", "gameRetryWrongButton", "gamePlayAgainButton",
         "spellingGameStartButton", "spellingWordCount", "spellingScreen", "backFromSpelling",
-        "spellingResetButton", "spellingLevelButtons", "spellingQuestionNumber", "spellingScore",
-        "spellingStreak", "spellingQuestionPanel", "spellingImage", "spellingHint", "spellingInput", "spellingBuiltWord", "spellingTileRack",
+        "spellingResetButton", "spellingLevelSelect", "spellingQuestionNumber", "spellingScore",
+        "spellingStreak", "spellingQuestionPanel", "spellingClueCard", "spellingImage", "spellingMeaning", "spellingHint", "spellingInput", "spellingBuiltWord", "spellingTileRack",
         "spellingHintButton", "spellingSpeakButton", "spellingCheckButton", "spellingFeedback",
         "spellingNextButton", "spellingResultPanel", "spellingResultScore", "spellingResultAccuracy",
         "spellingResultBestStreak", "spellingWrongList", "spellingRetryWrongButton", "spellingPlayAgainButton",
@@ -575,12 +575,10 @@
 
     function setSpellingReviewMode(isReview) {
         state.spellingReviewMode = isReview;
-        elements.spellingModeLabel.textContent = isReview ? "Saved words to try again" : "Beginner spelling";
-        elements.spellingTitle.textContent = isReview ? "Try Missed Words" : "Look and Spell";
+        elements.spellingModeLabel.textContent = isReview ? "Saved words to try again" : "Read the meaning and build the word.";
+        elements.spellingTitle.textContent = isReview ? "Try Missed Words" : "Spell the Meaning";
         if (isReview) {
-            elements.spellingLevelButtons.querySelectorAll("[data-level]").forEach((button) => {
-                button.setAttribute("aria-pressed", "false");
-            });
+            elements.spellingLevelSelect.disabled = true;
         }
     }
 
@@ -592,7 +590,16 @@
 
     function renderSpellingQuestion() {
         const image = state.imageMap.get(String(state.spellingTarget.id));
-        elements.spellingImage.src = `${IMAGE_BASE_URL}${image.file}`;
+        const meaning = (state.spellingTarget.meanings || []).find((item) => String(item || "").trim()) || "No meaning available.";
+        elements.spellingMeaning.textContent = meaning;
+        elements.spellingClueCard.classList.toggle("no-image", !image);
+        if (image) {
+            elements.spellingImage.src = `${IMAGE_BASE_URL}${image.file}`;
+            elements.spellingImage.alt = `Picture clue for ${state.spellingTarget.word}`;
+        } else {
+            elements.spellingImage.removeAttribute("src");
+            elements.spellingImage.alt = "";
+        }
         elements.spellingInput.value = "";
         elements.spellingInput.disabled = false;
         elements.spellingInput.className = "spelling-input";
@@ -797,9 +804,8 @@
             state.spellingIds,
             state.spellingLevel,
         );
-        elements.spellingLevelButtons.querySelectorAll("[data-level]").forEach((button) => {
-            button.setAttribute("aria-pressed", String(Number(button.dataset.level) === state.spellingLevel));
-        });
+        elements.spellingLevelSelect.disabled = false;
+        elements.spellingLevelSelect.value = String(state.spellingLevel);
         startSpellingRound(state.spellingPool);
     }
 
@@ -881,10 +887,7 @@
             const retryWords = state.spellingWrongEntries.map((entry) => entry.word);
             startSpellingRound(retryWords);
         });
-        elements.spellingLevelButtons.addEventListener("click", (event) => {
-            const button = event.target.closest("[data-level]");
-            if (button && !button.disabled) selectSpellingLevel(button.dataset.level);
-        });
+        elements.spellingLevelSelect.addEventListener("change", () => selectSpellingLevel(elements.spellingLevelSelect.value));
         window.addEventListener("keydown", (event) => {
             if (event.altKey || event.ctrlKey || event.metaKey) return;
             if (!elements.spellingScreen.hidden) {
@@ -958,13 +961,10 @@
             }
             state.levels = core.groupByLevel(state.data.words);
             if (state.levels.size !== 15) throw new Error("Invalid vocabulary levels");
-            if (spellingResponse?.ok) {
-                const spellingManifest = await spellingResponse.json();
-                const vocabularyIds = new Set(state.data.words.map((word) => String(word.id)));
-                state.spellingIds = new Set((spellingManifest.wordIds || [])
-                    .map(String)
-                    .filter((id) => vocabularyIds.has(id) && state.imageMap.has(id)));
-            }
+            if (spellingResponse?.ok) await spellingResponse.json();
+            state.spellingIds = new Set(state.data.words
+                .filter((word) => /^[a-z -]+$/i.test(word.word || "") && word.meanings?.some((meaning) => String(meaning || "").trim()))
+                .map((word) => String(word.id)));
             const gamePool = core.pictureGamePool(state.data.words, new Set(state.imageMap.keys()));
             elements.gameWordCount.textContent = gamePool.length.toLocaleString("ko-KR");
             elements.gameStartButton.hidden = gamePool.length < 4;
@@ -979,14 +979,7 @@
             const spellingPool = core.pictureGamePool(state.data.words, state.spellingIds);
             elements.spellingWordCount.textContent = spellingPool.length.toLocaleString("ko-KR");
             elements.spellingGameStartButton.hidden = spellingPool.length === 0;
-            elements.spellingLevelButtons.querySelectorAll("[data-level]").forEach((button) => {
-                const levelPool = core.pictureGamePool(
-                    state.data.words,
-                    state.spellingIds,
-                    button.dataset.level,
-                );
-                button.disabled = levelPool.length === 0;
-            });
+            elements.spellingLevelSelect.disabled = spellingPool.length === 0;
             renderStoredSpellingWrong();
             updateShuffleToggle();
             renderOverallProgress();
