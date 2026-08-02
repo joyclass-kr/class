@@ -96,6 +96,7 @@
   const today = () => new Date().toISOString().slice(0, 10);
   const dayGap = (a, b) => Math.round((new Date(b) - new Date(a)) / 86400000);
   const stageFor = (lesson) => data.stages.find((stage) => stage.id === lesson.stageId);
+  const courseAreaFor = (stage) => stage.order <= 9 ? "파닉스" : stage.order <= 11 ? "철자 규칙과 단어 만들기" : stage.order === 12 ? "고급 파닉스" : "접사와 어휘";
   const lessonIndex = () => data.lessons.findIndex((lesson) => lesson.id === current?.id);
   const currentTarget = () => current.dictation[dictationIndex % current.dictation.length];
   const spriteGeometry = (picture, zoom = 1) => {
@@ -414,7 +415,7 @@
       const doneCount = lessons.filter((lesson) => saved.done.includes(lesson.id)).length;
       const stagePercent = Math.round(doneCount / lessons.length * 100);
       return `<article class="stage-card ${stage.color}">
-        <div class="stage-summary"><span class="stage-number">${String(stage.order).padStart(2, "0")}</span><div><p>STAGE ${stage.order}${stage.order >= 10 ? " · 심화" : ""}</p><h3>${escapeHtml(stage.title)}</h3><span>${escapeHtml(stage.subtitle)}</span></div><div class="stage-score"><b>${doneCount}/${lessons.length}</b><span>완료</span></div></div>
+        <div class="stage-summary"><span class="stage-number">${String(stage.order).padStart(2, "0")}</span><div><p>${courseAreaFor(stage)} · STAGE ${stage.order}</p><h3>${escapeHtml(stage.title)}</h3><span>${escapeHtml(stage.subtitle)}</span></div><div class="stage-score"><b>${doneCount}/${lessons.length}</b><span>완료</span></div></div>
         <div class="mini-progress"><i style="width:${stagePercent}%"></i></div>
         <div class="lesson-list">${lessons.map((lesson) => `<button type="button" data-lesson="${lesson.id}" class="${saved.done.includes(lesson.id) ? "done" : ""}"><span>${saved.done.includes(lesson.id) ? "✓" : lesson.stageOrder}</span><div><b>${escapeHtml(lesson.title)}</b></div><em>${Object.hasOwn(saved.soundScores, lesson.id) ? `${saved.soundScores[lesson.id]}/8` : "시작 →"}</em></button>`).join("")}</div>
       </article>`;
@@ -568,7 +569,7 @@
     const isSoundGame = activeSoundGameRounds.length > 0;
     $("soundGame").hidden = !isSoundGame;
     $("legacyActivities").hidden = true;
-    $("lessonStage").textContent = `STAGE ${stage.order} · ${stage.title}`;
+    $("lessonStage").textContent = `${courseAreaFor(stage)} · STAGE ${stage.order} · ${stage.title}`;
     $("lessonLabel").textContent = `${current.stageOrder}차시 · ${current.title}`;
     $("lessonEyebrow").textContent = current.focus.length ? "TODAY'S SOUND" : "REVIEW DAY";
     $("focusTitle").textContent = current.focus.length ? `${current.focus.join(" · ")} 소리` : "단계 복습";
