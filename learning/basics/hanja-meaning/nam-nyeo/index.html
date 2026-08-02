@@ -4,7 +4,7 @@
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
   <meta name="theme-color" content="#f7f5ef">
-  <title>生 | 韓字</title>
+  <title>男·女 | 韓字</title>
   <style>
     @font-face {
       font-family: "KleeHanja";
@@ -86,6 +86,12 @@
       text-align: center;
     }
 
+    .hanja-pair {
+      display: flex;
+      gap: clamp(6px, 1.5vw, 16px);
+      min-width: 2.25em;
+    }
+
     .reading {
       margin: 0 0 5px;
       font-size: clamp(22px, 2.7vw, 32px);
@@ -112,6 +118,20 @@
       font-weight: 800;
       line-height: 1.45;
     }
+
+    .word-list { margin: 0; }
+
+    .word-row {
+      display: grid;
+      grid-template-columns: minmax(310px, .95fr) minmax(0, 2fr);
+      align-items: center;
+      gap: 12px 30px;
+      padding: clamp(11px, 1.35vw, 15px) 0;
+      border-bottom: 1px solid var(--line);
+    }
+
+    .word-row .word-family,
+    .word-row .example { margin: 0; }
 
     .meaning-list { margin: 0; }
 
@@ -199,7 +219,7 @@
     }
 
     .choice {
-      min-height: 43px;
+      min-height: 44px;
       padding: 7px 10px;
       border: 1px solid transparent;
       border-radius: 4px;
@@ -265,17 +285,25 @@
 
     .quiz-actions button { margin: 0; }
 
+    body.quiz-active .hanja-head { padding: 0 0 8px; }
+    body.quiz-active .hanja { font-size: clamp(64px, 7.5vw, 82px); }
+    body.quiz-active .reading { font-size: clamp(21px, 2.2vw, 27px); }
+    body.quiz-active .core-meaning { font-size: clamp(17px, 1.8vw, 21px); }
+    body.quiz-active .quiz-grid { gap: 10px clamp(28px, 4vw, 52px); }
+    body.quiz-active .quiz-actions { margin-top: 14px; }
+
     .next-lesson {
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      min-height: 58px;
-      padding: 0 26px;
-      border: 1px solid var(--accent);
+      display: block;
+      width: min(360px, 100%);
+      min-height: 48px;
+      margin: 14px auto 0;
+      padding: 13px 20px;
+      border: 1px solid var(--blue);
       border-radius: 4px;
-      background: var(--accent);
-      color: #fff;
-      font: 800 18px/1.2 system-ui, sans-serif;
+      background: var(--blue);
+      color: white;
+      font: 800 17px/1.2 system-ui, sans-serif;
+      text-align: center;
       text-decoration: none;
     }
 
@@ -292,10 +320,11 @@
       cursor: pointer;
     }
 
-    @media (max-width: 760px) {
+    @media (max-width: 800px) {
       .page { padding-inline: 18px; }
       .topline { position: static; min-height: 32px; }
       .hanja-head { gap: 20px; }
+      .word-row { grid-template-columns: 1fr; gap: 3px; }
       .meaning-row { grid-template-columns: 1fr; gap: 6px; }
       .quiz-grid { grid-template-columns: 1fr; }
     }
@@ -313,82 +342,78 @@
     </div>
 
     <header class="hanja-head">
-      <div class="hanja" aria-label="날 생">生</div>
+      <div class="hanja hanja-pair" aria-label="사내 남, 여자 여"><span>男</span><span>女</span></div>
       <div>
-        <p class="reading">생</p>
-        <p class="core-meaning">태어나다 · 살다 · 생기다 · 그대로 · 사람</p>
+        <p class="reading">남 · 여(녀)</p>
+        <p class="core-meaning">남자 · 여자</p>
       </div>
     </header>
 
     <section id="lessonView" class="view" aria-label="뜻과 예시">
-      <p class="lesson-guide">生은 말에 따라 뜻이 실제로 달라지므로 뜻을 나누어 봅니다.</p>
-      <dl class="meaning-list">
-        <div class="meaning-row">
-          <dt>태어나다</dt>
-          <dd><p class="word-family">생일 · 출생 · 탄생</p><p class="example">생일은 내가 태어난 날입니다.</p></dd>
+      <p class="lesson-guide">男은 남자, 女는 여자입니다. 女는 말의 첫머리에서는 ‘여’, 뒤에서는 ‘녀’로 읽습니다.</p>
+      <div class="word-list">
+        <div class="word-row">
+          <p class="word-family">男(남) — 남자 · 남성 · 남학생</p>
+          <p class="example">말 속의 ‘남’을 ‘남자’로 바꾸어 보면 뜻이 보입니다.</p>
         </div>
-        <div class="meaning-row">
-          <dt>살아 있다<br>살아가다</dt>
-          <dd><p class="word-family">생명 · 생물 · 생활 · 인생</p><p class="example">생물은 살아 있는 것이고, 생활과 인생은 사람이 살아가는 일입니다.</p></dd>
+        <div class="word-row">
+          <p class="word-family">女(여) — 여자 · 여성 · 여학생</p>
+          <p class="example">말의 첫머리에 오면 女를 ‘여’로 읽습니다.</p>
         </div>
-        <div class="meaning-row">
-          <dt>생기다<br>만들어 내다</dt>
-          <dd><p class="word-family">발생 · 생산 · 재생</p><p class="example">생산은 물건을 만들어 내고, 재생은 다시 살아나게 합니다.</p></dd>
+        <div class="word-row">
+          <p class="word-family">女(녀) — 소녀 · 자녀</p>
+          <p class="example">다른 글자 뒤에 오면 女를 ‘녀’로 읽습니다.</p>
         </div>
-        <div class="meaning-row">
-          <dt>신선하거나<br>지금 그대로</dt>
-          <dd><p class="word-family">생선 · 생크림 · 생방송</p><p class="example">생선과 생크림은 신선한 것, 생방송은 녹화 없이 지금 하는 방송입니다.</p></dd>
+        <div class="word-row">
+          <p class="word-family">男女(남녀)</p>
+          <p class="example">남녀는 남자와 여자를 함께 이르는 말입니다.</p>
         </div>
-        <div class="meaning-row">
-          <dt>어떤 사람</dt>
-          <dd><p class="word-family">학생 · 신입생 · 졸업생</p><p class="example">이 말들에서 ‘생’은 배우거나 학교에 다니는 사람을 나타냅니다.</p></dd>
-        </div>
-      </dl>
+      </div>
       <button id="startQuiz" class="next-button" type="button">문제 풀기</button>
     </section>
 
     <section id="quizView" class="view" aria-label="확인 문제" hidden>
       <div class="quiz-grid">
-        <article class="question" data-answer="3" data-note="‘줄여서 빼다’는 생략의 ‘략(略)’이 가진 뜻입니다.">
-          <h2><span class="q-number">1</span>生(생)의 뜻이 아닌 것은?</h2>
+        <article class="question" data-answer="1" data-note="男(남)의 뜻은 ‘남자’입니다.">
+          <h2><span class="q-number">1</span>男(남)의 뜻은?</h2>
           <div class="choices">
-            <button class="choice" type="button">① 태어나다</button>
-            <button class="choice" type="button">② 살아 있다</button>
-            <button class="choice" type="button">③ 생겨나다</button>
-            <button class="choice" type="button">④ 줄여서 빼다</button>
+            <button class="choice" type="button">① 여자</button>
+            <button class="choice" type="button">② 남자</button>
+            <button class="choice" type="button">③ 남쪽</button>
+            <button class="choice" type="button">④ 남아 있는 것</button>
           </div>
           <p class="feedback" aria-live="polite"></p>
         </article>
 
-        <article class="question" data-answer="1" data-note="‘생각’의 ‘생’은 生(생)이 아닙니다.">
-          <h2><span class="q-number">2</span>生(생)의 뜻이 아닌 것은?</h2>
+        <article class="question" data-answer="2" data-note="女(여·녀)의 뜻은 ‘여자’입니다.">
+          <h2><span class="q-number">2</span>女(여·녀)의 뜻은?</h2>
           <div class="choices">
-            <button class="choice" type="button">① 오늘은 내 <u>생일</u>이라 가족이 축하해 주었습니다.</button>
-            <button class="choice" type="button">② 좋은 <u>생각</u>이 떠올랐습니다.</button>
-            <button class="choice" type="button">③ 연못에서 작은 <u>생물</u>을 관찰했습니다.</button>
-            <button class="choice" type="button">④ 새 <u>학생</u>이 우리 반에 왔습니다.</button>
+            <button class="choice" type="button">① 아이</button>
+            <button class="choice" type="button">② 남자</button>
+            <button class="choice" type="button">③ 여자</button>
+            <button class="choice" type="button">④ 어른</button>
           </div>
           <p class="feedback" aria-live="polite"></p>
         </article>
 
-        <article class="question" data-answer="2" data-note="‘생략’의 ‘생’은 生(생)이 아닙니다.">
-          <h2><span class="q-number">3</span>生(생)의 뜻이 아닌 것은?</h2>
+        <article class="question" data-answer="3" data-note="‘남쪽’의 남은 男(남)이 아니라 南(남)입니다.">
+          <h2><span class="q-number">3</span>男(남)이 아닌 것은?</h2>
           <div class="choices">
-            <button class="choice" type="button">① 규칙적인 <u>생활</u>을 위해 일찍 잡니다.</button>
-            <button class="choice" type="button">② 동영상을 다시 <u>재생</u>했습니다.</button>
-            <button class="choice" type="button">③ 긴 설명은 <u>생략</u>했습니다.</button>
-            <button class="choice" type="button">④ 축구 경기를 <u>생방송</u>으로 보았습니다.</button>
+            <button class="choice" type="button">① 형은 우리 학교 <u>남학생</u>입니다.</button>
+            <button class="choice" type="button">② 대회에는 <u>남녀</u> 모두 참가했습니다.</button>
+            <button class="choice" type="button">③ 이야기의 주인공은 <u>남성</u>입니다.</button>
+            <button class="choice" type="button">④ 해가 잘 드는 <u>남쪽</u> 창문을 열었습니다.</button>
           </div>
           <p class="feedback" aria-live="polite"></p>
         </article>
 
-        <article class="question" data-answer="0" data-note="‘희생’의 ‘생’은 生(생)이 아닙니다.">
-          <h2><span class="q-number">4</span>生(생)의 뜻이 아닌 것은?</h2>
+        <article class="question" data-answer="0" data-note="‘여름’은 한자어가 아니라 본래부터 쓰던 우리말입니다.">
+          <h2><span class="q-number">4</span>女(여·녀)가 아닌 것은?</h2>
           <div class="choices">
-            <button class="choice" type="button">① 친구를 위해 자신을 <u>희생</u>했습니다.</button>
-            <button class="choice" type="button">② 모든 <u>생명</u>은 소중합니다.</button>
-            <button class="choice" type="button">③ 공장에서 장난감을 <u>생산</u>합니다.</button>
-            <button class="choice" type="button">④ 케이크에 <u>생크림</u>을 올렸습니다.</button>
+            <button class="choice" type="button">① <u>여름</u> 방학에 바다로 갑니다.</button>
+            <button class="choice" type="button">② 누나는 우리 학교 <u>여학생</u>입니다.</button>
+            <button class="choice" type="button">③ 책 속 <u>소녀</u>가 모험을 떠났습니다.</button>
+            <button class="choice" type="button">④ 부모와 <u>자녀</u>가 함께 왔습니다.</button>
           </div>
           <p class="feedback" aria-live="polite"></p>
         </article>
@@ -398,7 +423,6 @@
       <div class="quiz-actions">
         <button id="backToLesson" class="back-button" type="button">설명 다시 보기</button>
         <button id="resetQuiz" class="reset-button" type="button">다시 풀기</button>
-        <a id="nextLesson" class="next-lesson" href="../nam-nyeo/" hidden>다음 글자 男·女</a>
       </div>
     </section>
   </main>
@@ -408,11 +432,11 @@
       const lessonView = document.getElementById('lessonView');
       const quizView = document.getElementById('quizView');
       const result = document.getElementById('result');
-      const nextLesson = document.getElementById('nextLesson');
       const questions = Array.from(document.querySelectorAll('.question'));
 
       function show(view) {
         const quiz = view === 'quiz';
+        document.body.classList.toggle('quiz-active', quiz);
         lessonView.hidden = quiz;
         quizView.hidden = !quiz;
         window.scrollTo({ top: 0, behavior: 'smooth' });
@@ -425,7 +449,6 @@
         const score = answered.filter((question) => question.dataset.correct === 'true').length;
         result.textContent = `${questions.length}문제 중 ${score}문제를 맞혔습니다.`;
         result.hidden = false;
-        nextLesson.hidden = false;
       }
 
       questions.forEach((question) => {
@@ -463,7 +486,6 @@
         });
         result.hidden = true;
         result.textContent = '';
-        nextLesson.hidden = true;
         window.scrollTo({ top: 0, behavior: 'smooth' });
       }
 
