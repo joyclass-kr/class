@@ -35,7 +35,7 @@ button { -webkit-tap-highlight-color: transparent; }
 .paper-panel { border: 1px solid rgba(23,32,51,.16); border-radius: 22px; background: rgba(255,253,247,.96); box-shadow: var(--shadow); }
 .eyebrow { color: #557078; font-size: 10px; font-weight: 950; letter-spacing: .18em; text-transform: uppercase; }
 .eyebrow.light { color: #8de5dd; }
-.primary, .secondary, .quiet { min-height: 43px; padding: 9px 15px; border-radius: 11px; font-weight: 900; cursor: pointer; transition: transform .16s ease, filter .16s ease, box-shadow .16s ease; }
+.primary, .secondary, .quiet { min-height: 44px; padding: 9px 15px; border-radius: 11px; font-weight: 900; cursor: pointer; transition: transform .16s ease, filter .16s ease, box-shadow .16s ease; }
 .primary { border: 1px solid #0c2c31; background: var(--deep-teal); color: white; box-shadow: 0 4px 0 #0c282d; }
 .secondary { border: 1px solid #9ca6a0; background: #fffdf7; color: var(--ink); box-shadow: 0 3px 0 #cbc4b3; }
 .quiet { border: 1px solid transparent; background: #ece7da; color: #43505d; }
@@ -43,8 +43,14 @@ button { -webkit-tap-highlight-color: transparent; }
 .primary:hover:not(:disabled), .secondary:hover:not(:disabled), .quiet:hover:not(:disabled) { transform: translateY(-2px); filter: brightness(1.03); }
 button:disabled { cursor: not-allowed; opacity: .38; box-shadow: none; transform: none; }
 
-/* Lobby */
-.lobby-layout { display: grid; grid-template-columns: minmax(0, 1.08fr) minmax(410px, .92fr); gap: 18px; min-height: calc(100vh - 36px); }
+/* Lobby: keep the same compact, task-first rhythm as the other classroom games. */
+.lobby-layout {
+  display: block;
+  width: min(760px, 100%);
+  min-height: 0;
+  margin: 0 auto;
+}
+.lobby-layout .hero-panel { display: none; }
 .hero-panel { position: relative; min-height: 680px; overflow: hidden; padding: clamp(30px, 5vw, 66px); border-radius: 24px; background: var(--deep-teal); color: white; box-shadow: var(--shadow); }
 .hero-panel::before { content: ""; position: absolute; inset: 0; background: linear-gradient(118deg, transparent 0 64%, rgba(255,255,255,.035) 64% 66%, transparent 66%), radial-gradient(circle at 82% 15%, rgba(255,209,102,.14), transparent 20%); }
 .hero-panel::after { content: ""; position: absolute; right: -80px; bottom: -95px; width: 330px; height: 330px; border: 50px solid rgba(46,196,182,.09); border-radius: 50%; }
@@ -69,29 +75,30 @@ button:disabled { cursor: not-allowed; opacity: .38; box-shadow: none; transform
 .steam.one { right: 58px; bottom: 70px; transform: rotate(10deg); }
 .steam.two { right: 34px; bottom: 66px; transform: rotate(-8deg); }
 .hero-note { position: relative; z-index: 2; margin-top: 29px; color: #9cd5cf; font-size: 11px; font-weight: 900; letter-spacing: .16em; }
-.lobby-panel { display: flex; flex-direction: column; min-height: 680px; padding: clamp(25px, 4vw, 43px); }
+.lobby-panel { display: flex; flex-direction: column; min-height: 0; padding: 24px 26px; }
 .lobby-topline { display: flex; align-items: flex-start; justify-content: space-between; gap: 18px; }
-.lobby-topline h2 { margin: 7px 0 0; font-size: clamp(30px, 4vw, 45px); letter-spacing: -.05em; }
-.lobby-sub { margin: 10px 0 22px; color: var(--muted); line-height: 1.6; }
+.lobby-topline h2 { margin: 5px 0 0; font-size: clamp(32px, 5vw, 44px); letter-spacing: -.05em; }
+.lobby-sub { margin: 8px 0 16px; color: var(--muted); line-height: 1.5; }
 .player-badge { display: inline-flex; align-items: center; gap: 7px; padding: 7px 10px; border: 1px solid var(--line); border-radius: 999px; background: #fff; font-size: 12px; font-weight: 850; }
 .player-badge i { width: 8px; height: 8px; border-radius: 50%; background: var(--teal); box-shadow: 0 0 0 3px rgba(46,196,182,.14); }
 .room-row { display: flex; align-items: flex-end; justify-content: space-between; gap: 15px; }
-.mp-lobby-tabs { margin-bottom: 13px; }
-.mp-lobby-pane { padding: 17px; border: 1px solid var(--line); border-radius: 14px; background: #faf6eb; }
+.mp-lobby-tabs { justify-content: flex-start; margin-bottom: 10px; }
+.mp-lobby-tab { min-width: 124px; min-height: 44px; }
+.mp-lobby-pane { padding: 14px 16px; border: 1px solid var(--line); border-radius: 14px; background: #faf6eb; }
 .mp-lobby-code { color: var(--deep-teal); }
 .mp-lobby-status { margin-top: 9px; }
-.pack-section { margin-top: 15px; padding: 14px 16px; border: 1px dashed #9caa9d; border-radius: 14px; background: #f3f7ee; }
+.pack-section { margin-top: 10px; padding: 12px 14px; border: 1px dashed #9caa9d; border-radius: 14px; background: #f3f7ee; }
 .pack-head { display: flex; align-items: center; justify-content: space-between; gap: 12px; margin-bottom: 10px; }
 .pack-head strong { display: block; margin-top: 3px; }
 .pack-head span { color: var(--muted); font-size: 11px; }
-.pack-section select, .reveal-picker select { width: 100%; min-height: 42px; padding: 8px 11px; border: 1px solid #a8b0a6; border-radius: 9px; background: #fffdf7; color: var(--ink); font-weight: 850; }
-.lobby-roster { margin-top: 17px; padding-top: 16px; border-top: 1px solid var(--line); }
+.pack-section select, .reveal-picker select { width: 100%; min-height: 44px; padding: 8px 11px; border: 1px solid #a8b0a6; border-radius: 9px; background: #fffdf7; color: var(--ink); font-weight: 850; }
+.lobby-roster { margin-top: 12px; padding-top: 12px; border-top: 1px solid var(--line); }
 .roster-head { display: flex; align-items: center; justify-content: space-between; gap: 10px; }
 .roster-head span { color: var(--muted); font-size: 11px; }
-.mp-lobby-players { min-height: 42px; margin: 11px 0; }
+.mp-lobby-players { min-height: 42px; margin: 8px 0; justify-content: flex-start; }
 .mp-lobby-player { background: #fff; }
-.lobby-actions { display: grid; grid-template-columns: 1fr auto; gap: 9px; margin-top: auto; padding-top: 18px; }
-.lobby-actions .quiet { grid-column: 1 / -1; }
+.lobby-actions { display: grid; grid-template-columns: 1fr auto auto; gap: 9px; margin-top: 0; padding-top: 12px; }
+.lobby-actions .quiet { grid-column: auto; }
 .missing-panel { width: min(620px, 100%); margin: 10vh auto; padding: 44px; text-align: center; }
 
 /* Game */
@@ -193,9 +200,6 @@ button:disabled { cursor: not-allowed; opacity: .38; box-shadow: none; transform
 @keyframes pageIn { from { opacity: 0; transform: translateY(16px) rotate(-.5deg); } to { opacity: 1; transform: none; } }
 
 @media (max-width: 1040px) {
-  .lobby-layout { grid-template-columns: 1fr; }
-  .hero-panel { min-height: 610px; }
-  .lobby-panel { min-height: auto; }
   .play-layout { grid-template-columns: 1fr; }
   .prompt-panel { display: grid; grid-template-columns: minmax(170px,.42fr) 1fr; gap: 14px; align-items: center; }
   .prompt-panel .eyebrow, .prompt-panel h2, .prompt-panel > p { grid-column: 1; }
@@ -206,14 +210,9 @@ button:disabled { cursor: not-allowed; opacity: .38; box-shadow: none; transform
 @media (max-width: 760px) {
   body { padding: 7px; }
   .paper-panel, .hero-panel { border-radius: 16px; }
-  .hero-panel { min-height: 580px; padding: 30px 23px; }
-  .hero-copy h1 { font-size: 77px; }
-  .relay-preview { grid-template-columns: 1fr auto 1fr; }
-  .preview-card { min-height: 145px; padding: 14px; }
-  .preview-card:nth-of-type(3), .preview-arrow:nth-of-type(2) { display: none; }
-  .lobby-panel { padding: 24px 18px; }
-  .lobby-actions { grid-template-columns: 1fr; }
-  .lobby-actions .quiet { grid-column: auto; }
+  .lobby-panel { padding: 20px 18px; }
+  .lobby-actions { grid-template-columns: 1fr 1fr; }
+  .lobby-actions .primary { grid-column: 1 / -1; }
   .game-header { grid-template-columns: 1fr auto; }
   .session-meta { grid-column: 1 / -1; grid-row: 2; }
   .progress-panel { grid-template-columns: 1fr auto; }
@@ -241,11 +240,6 @@ button:disabled { cursor: not-allowed; opacity: .38; box-shadow: none; transform
 }
 
 @media (max-width: 430px) {
-  .hero-copy h1 { font-size: 66px; }
-  .hero-copy p { font-size: 15px; }
-  .preview-card { min-height: 130px; }
-  .moon { width: 48px; height: 48px; }
-  .bowl { width: 64px; }
   .lobby-topline { display: block; }
   .player-badge { margin-top: 12px; }
   .roster-head { align-items: flex-start; flex-direction: column; }
