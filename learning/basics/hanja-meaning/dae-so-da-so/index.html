@@ -132,7 +132,7 @@
 
     .word-row {
       display: grid;
-      grid-template-columns: minmax(310px, .95fr) minmax(0, 2fr);
+      grid-template-columns: max-content minmax(0, 1fr);
       align-items: center;
       gap: 12px 30px;
       padding: clamp(11px, 1.35vw, 15px) 0;
@@ -166,6 +166,7 @@
       font-size: clamp(18px, 2vw, 23px);
       font-weight: 800;
       line-height: 1.45;
+      white-space: nowrap;
       word-spacing: .18em;
     }
 
@@ -380,16 +381,16 @@
           <p class="example">대형은 크기가 큰 것, 대도시는 규모가 큰 도시입니다.</p>
         </div>
         <div class="word-row">
-          <p class="word-family">小(소) — 소형 · 소규모</p>
-          <p class="example">소형은 크기가 작은 것, 소규모는 규모가 작은 것입니다.</p>
+          <p class="word-family">小(소) — 소형 · 소규모 · 소수(小數)</p>
+          <p class="example">수학책의 0.1, 0.5 같은 소수는 小(작을 소)를 씁니다.</p>
         </div>
         <div class="word-row">
           <p class="word-family">多(다) — 다수 · 다량</p>
           <p class="example">다수는 수가 많은 것, 다량은 양이 많은 것입니다.</p>
         </div>
         <div class="word-row">
-          <p class="word-family">少(소) — 소수 · 소량</p>
-          <p class="example">소수는 수가 적은 것, 소량은 양이 적은 것입니다.</p>
+          <p class="word-family">少(소) — 소수(少數) · 소량</p>
+          <p class="example">소수의 학생은 학생 수가 적고, 소량의 물은 물의 양이 적다는 뜻입니다.</p>
         </div>
       </div>
       <button id="startQuiz" class="next-button" type="button">문제 풀기</button>
@@ -409,8 +410,8 @@
           <p class="feedback" aria-live="polite"></p>
         </article>
 
-        <article class="question" data-answer="2" data-note="‘소형’의 小(소)는 크기가 작다는 뜻입니다.">
-          <p class="question-context">“책상 위에 <u>소형</u> 선풍기를 놓았습니다.”</p>
+        <article class="question" data-answer="2" data-note="수학에서 쓰는 소수(小數)의 小(소)는 ‘작다’라는 뜻입니다.">
+          <p class="question-context">“수학 시간에 0.5 같은 <u>소수(小數)</u>를 배웠습니다.”</p>
           <h2><span class="q-number">2</span>小(소)의 뜻은?</h2>
           <div class="choices">
             <button class="choice" type="button">① 많다</button>
@@ -433,8 +434,8 @@
           <p class="feedback" aria-live="polite"></p>
         </article>
 
-        <article class="question" data-answer="0" data-note="‘소량’의 少(소)는 양이 적다는 뜻입니다.">
-          <p class="question-context">“병에 <u>소량</u>의 물만 남았습니다.”</p>
+        <article class="question" data-answer="0" data-note="소수(少數)의 少(소)는 수가 적다는 뜻입니다.">
+          <p class="question-context">“<u>소수(少數)</u>의 학생만 운동장에 남았습니다.”</p>
           <h2><span class="q-number">4</span>少(소)의 뜻은?</h2>
           <div class="choices">
             <button class="choice" type="button">① 적다</button>
