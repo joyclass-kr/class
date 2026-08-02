@@ -14,7 +14,26 @@ const shiftedSymbolGuide=[...['`','1','2','3','4','5'].map(key=>`shift-right+${k
 const shiftedSymbols={'`':'~','1':'!','2':'@','3':'#','4':'$','5':'%','6':'^','7':'&','8':'*','9':'(','0':')','-':'_','=':'+'};
 const shiftedKorean={q:'ㅃ',w:'ㅉ',e:'ㄸ',r:'ㄲ',t:'ㅆ',o:'ㅒ',p:'ㅖ'};
 const leftHandLetters=[...'qwertasdfgzxcvb'],rightHandLetters=[...'yuiophjklnm'];
-let guideLang='ko',guideIndex=0,virtualShift='',englishShiftGuide=[];
+const guideStages={
+  ko:[
+    {label:'기본 자리',items:['f','j','d','k','s','l','a','g','h','word:나','word:아이','word:어머니']},
+    {label:'윗글쇠',items:['q','w','e','r','t','y','u','i','o','p','word:가지','word:바다','word:여자']},
+    {label:'아랫글쇠',items:['z','x','c','v','b','n','m','word:우유','word:치마','word:나무']},
+    {label:'받침',items:['word:산','word:달','word:강','word:학교','word:친구']},
+    {label:'Shift',items:[...koreanShiftGuide,'word:아빠','word:토끼','word:있다','word:예쁘다']}
+  ],
+  en:[
+    {label:'기본 자리',items:['f','j','d','k','s','l','a','g','h','word:dad','word:fall','word:glass']},
+    {label:'윗글쇠',items:['q','w','e','r','t','y','u','i','o','p','word:write','word:quiet','word:type']},
+    {label:'아랫글쇠',items:['z','x','c','v','b','n','m','word:mix','word:zinc','word:van']},
+    {label:'대문자',items:[]}
+  ],
+  symbols:[
+    {label:'숫자',items:[...baseSymbolGuide,'word:26453','word:2026']},
+    {label:'특수문자',items:[...shiftedSymbolGuide,'word:100%','word:^_^','word:!!','word:?!']}
+  ]
+};
+let guideLang='ko',guideStage=0,guideIndex=0,guideWordKeyIndex=0,virtualShift='',englishShiftGuide=[];
 const koInitial=['r','R','s','e','E','f','a','q','Q','t','T','d','w','W','c','z','x','v','g'];
 const koMedial=['k','o','i','O','j','p','u','P','h','hk','ho','hl','y','n','nj','np','nl','b','m','ml','l'];
 const koFinal=['','r','R','rt','s','sw','sg','e','f','fr','fa','fq','ft','fx','fv','fg','a','q','qt','t','T','d','w','c','z','x','v','g'];
@@ -29,20 +48,64 @@ function physicalCharacter(event){if(/^Key[A-Z]$/.test(event.code)){const letter
 function resetForcedInput(){forcedKeyProgress=0}
 function pickRandom(items,count){return [...items].sort(()=>Math.random()-.5).slice(0,count)}
 function refreshEnglishShiftGuide(){englishShiftGuide=[...pickRandom(rightHandLetters,2).map(letter=>`shift-left+${letter}`),...pickRandom(leftHandLetters,2).map(letter=>`shift-right+${letter}`)].sort(()=>Math.random()-.5)}
-function buildKeyboard(){const box=$('#keyboard'),rows=guideLang==='symbols'?[keyboardRows[0],keyboardRows[3].filter(([en])=>en==='Shift')]:keyboardRows.slice(1);box.innerHTML=rows.map((row,index)=>`<div class="key-row ${guideLang==='symbols'&&index===1?'shift-only-row':''}">${row.map(([en,ko,f,code,shifted])=>`<button type="button" class="key ${(en==='F'||en==='J')?'home-key':''} ${en==='Shift'?'shift-key':''} ${shifted?'number-key':''}" data-code="${code||en.toLowerCase()}" data-ko="${ko}" data-shifted="${shifted||''}" data-finger="${f}">${en==='Shift'?'⇧ Shift':shifted?en:guideLang==='ko'?ko:en.toLowerCase()}</button>`).join('')}</div>`).join('');box.querySelectorAll('.key').forEach(k=>k.addEventListener('click',()=>{const code=k.dataset.code;if(code.startsWith('shift-')){virtualShift=code.slice(6);return}checkGuide(code,virtualShift);virtualShift=''}));showGuide()}
-function guideOrder(){if(guideLang==='symbols')return baseSymbolGuide.concat(shiftedSymbolGuide);return baseGuideOrder.concat(guideLang==='ko'?koreanShiftGuide:englishShiftGuide)}
+function renderGuideStages(){const stages=guideStages[guideLang];$('#guideStages').innerHTML=stages.map((stage,index)=>`<button type="button" class="${index===guideStage?'active':''}" data-guide-stage="${index}" aria-pressed="${index===guideStage}">${index+1}. ${stage.label}</button>`).join('');$$('[data-guide-stage]').forEach(button=>button.addEventListener('click',()=>{guideStage=Number(button.dataset.guideStage);guideIndex=0;guideWordKeyIndex=0;if(guideLang==='en'&&guideStage===3)refreshEnglishShiftGuide();renderGuideStages();showGuide()}))}
+function buildKeyboard(){const box=$('#keyboard'),rows=guideLang==='symbols'?[keyboardRows[0],keyboardRows[3].filter(([en])=>en==='Shift')]:keyboardRows.slice(1);box.innerHTML=rows.map((row,index)=>`<div class="key-row ${guideLang==='symbols'&&index===1?'shift-only-row':''}">${row.map(([en,ko,f,code,shifted])=>`<button type="button" class="key ${(en==='F'||en==='J')?'home-key':''} ${en==='Shift'?'shift-key':''} ${shifted?'number-key':''}" data-code="${code||en.toLowerCase()}" data-ko="${ko}" data-shifted="${shifted||''}" data-finger="${f}">${en==='Shift'?'⇧ Shift':shifted?en:guideLang==='ko'?ko:en.toLowerCase()}</button>`).join('')}</div>`).join('');box.querySelectorAll('.key').forEach(k=>k.addEventListener('click',()=>{const code=k.dataset.code;if(code.startsWith('shift-')){virtualShift=code.slice(6);return}checkGuide(code,virtualShift);virtualShift=''}));renderGuideStages();showGuide()}
+function guideOrder(){if(guideLang==='en'&&guideStage===3)return englishShiftGuide;return guideStages[guideLang][guideStage].items}
 function guideTarget(){const order=guideOrder();return order[guideIndex%order.length]}
-function guideCombo(){const target=guideTarget();if(!target.includes('+'))return null;const [shiftCode,letter]=target.split('+');return{side:shiftCode.slice(6),shiftCode,letter}}
+function guideWord(){const target=guideTarget();return target.startsWith('word:')?target.slice(5):''}
+function guideWordSequence(){return [...guideWord()].map(keySequenceForChar).join('')}
+function shiftSideForCode(code){return leftHandLetters.includes(code)||'`12345'.includes(code)?'right':'left'}
+function wordExpectedPress(){const token=guideWordSequence()[guideWordKeyIndex];if(/[A-Z]/.test(token))return{code:token.toLowerCase(),side:shiftSideForCode(token.toLowerCase())};const shiftedEntry=Object.entries(shiftedSymbols).find(([,value])=>value===token);return shiftedEntry?{code:shiftedEntry[0],side:shiftSideForCode(shiftedEntry[0])}:{code:token,side:''}}
+function guideCombo(){const target=guideTarget();if(target.startsWith('word:')||!target.includes('+'))return null;const [shiftCode,letter]=target.split('+');return{side:shiftCode.slice(6),shiftCode,letter}}
 function activateFinger(finger){finger.split('-').forEach(code=>$(`.finger[data-finger="${code}"]`)?.classList.add('active'))}
 function setEnglishKeyboardCase(upper){if(guideLang!=='en')return;$$('.key:not(.shift-key)').forEach(key=>{key.textContent=upper?key.dataset.code.toUpperCase():key.dataset.code})}
 function setNumberKeyboardShift(shifted){$$('.number-key').forEach(key=>{key.textContent=shifted?key.dataset.shifted:key.dataset.code})}
 function setKoreanShiftLabel(combo){if(guideLang!=='ko')return;$$('.key:not(.shift-key):not(.number-key)').forEach(key=>{key.textContent=key.dataset.ko});if(combo&&shiftedKorean[combo.letter])$(`.key[data-code="${combo.letter}"]`).textContent=shiftedKorean[combo.letter]}
-function showGuide(){virtualShift='';$$('.key,.finger').forEach(x=>x.classList.remove('active'));const combo=guideCombo(),symbolCombo=Boolean(combo&&shiftedSymbols[combo.letter]);setEnglishKeyboardCase(Boolean(combo&&!symbolCombo));setNumberKeyboardShift(symbolCombo);setKoreanShiftLabel(combo);if(combo){const shiftEl=$(`.key[data-code="${combo.shiftCode}"]`),letterEl=$(`.key[data-code="${combo.letter}"]`);shiftEl.classList.add('active');letterEl.classList.add('active');activateFinger(shiftEl.dataset.finger);activateFinger(letterEl.dataset.finger);const output=shiftedSymbols[combo.letter]||(guideLang==='ko'?shiftedKorean[combo.letter]:combo.letter.toUpperCase());$('#fingerBadge').textContent=`${combo.side==='left'?'왼쪽':'오른쪽'} Shift + ${letterEl.textContent}`;$('#guideKey').textContent=output;$('#guideMessage').innerHTML=`${combo.side==='left'?'왼쪽':'오른쪽'} <b>Shift</b>를 누른 채 <b>${letterEl.textContent}</b> 키를 눌러 <b>${output}</b>을 입력하세요.`}else{const keyEl=$(`.key[data-code="${guideTarget()}"]`);if(!keyEl)return;keyEl.classList.add('active');const finger=keyEl.dataset.finger;activateFinger(finger);$('#fingerBadge').textContent=fingerNames[finger];$('#guideKey').textContent=keyEl.textContent;$('#guideMessage').innerHTML=finger==='rr-rp'?`약지나 새끼손가락 중 편한 손가락으로 <b>${keyEl.textContent}</b> 키를 눌러 보세요.`:`파란색으로 표시된 손가락으로 <b>${keyEl.textContent}</b> 키를 눌러 보세요.`}const order=guideOrder();$('#guideCount').textContent=`${guideIndex} / ${order.length}`;$('#guideBar').style.width=`${guideIndex/order.length*100}%`}
-function checkGuide(code,shiftSide=''){const combo=guideCombo(),correct=combo?code===combo.letter&&shiftSide===combo.side:code===guideTarget();if(!correct)return ping(false);ping(true);guideIndex++;if(guideIndex>=guideOrder().length){$('#guideCount').textContent='완료!';$('#guideBar').style.width='100%';$('#guideMessage').innerHTML=guideLang==='ko'?'<b>한글 자리를 모두 익혔어요!</b> 이제 낱말을 연습해요.':guideLang==='en'?'<b>영어 소문자와 대문자 4개를 익혔어요!</b> 이제 낱말을 연습해요.':'<b>숫자와 특수문자 26개를 모두 익혔어요!</b>';if(guideLang!=='symbols')setTimeout(openPractice,650)}else showGuide()}
+function showGuide(){
+  virtualShift='';
+  $$('.key,.finger').forEach(x=>x.classList.remove('active'));
+  const word=guideWord();
+  if(word){
+    const expected=wordExpectedPress(),keyEl=$(`.key[data-code="${expected.code}"]`),shiftEl=expected.side?$(`.key[data-code="shift-${expected.side}"]`):null;
+    setEnglishKeyboardCase(Boolean(expected.side&&guideLang==='en'));
+    setNumberKeyboardShift(Boolean(expected.side&&guideLang==='symbols'));
+    setKoreanShiftLabel(expected.side?{letter:expected.code}:null);
+    if(keyEl){keyEl.classList.add('active');activateFinger(keyEl.dataset.finger)}
+    if(shiftEl){shiftEl.classList.add('active');activateFinger(shiftEl.dataset.finger)}
+    $('#fingerBadge').textContent=guideStages[guideLang][guideStage].label;
+    $('#guideKey').textContent=word;
+    $('#guideMessage').innerHTML=`<b>${word}</b> 입력 중 · ${guideWordKeyIndex+1}/${guideWordSequence().length}`;
+  }else{
+    const combo=guideCombo(),symbolCombo=Boolean(combo&&shiftedSymbols[combo.letter]);
+    setEnglishKeyboardCase(Boolean(combo&&!symbolCombo));setNumberKeyboardShift(symbolCombo);setKoreanShiftLabel(combo);
+    if(combo){
+      const shiftEl=$(`.key[data-code="${combo.shiftCode}"]`),letterEl=$(`.key[data-code="${combo.letter}"]`);
+      shiftEl.classList.add('active');letterEl.classList.add('active');activateFinger(shiftEl.dataset.finger);activateFinger(letterEl.dataset.finger);
+      const output=shiftedSymbols[combo.letter]||(guideLang==='ko'?shiftedKorean[combo.letter]:combo.letter.toUpperCase());
+      $('#fingerBadge').textContent=`${combo.side==='left'?'왼쪽':'오른쪽'} Shift + ${letterEl.textContent}`;$('#guideKey').textContent=output;$('#guideMessage').innerHTML=`${combo.side==='left'?'왼쪽':'오른쪽'} <b>Shift</b>를 누른 채 <b>${letterEl.textContent}</b> 키를 눌러 <b>${output}</b>을 입력하세요.`;
+    }else{
+      const keyEl=$(`.key[data-code="${guideTarget()}"]`);if(!keyEl)return;keyEl.classList.add('active');const finger=keyEl.dataset.finger;activateFinger(finger);$('#fingerBadge').textContent=fingerNames[finger];$('#guideKey').textContent=keyEl.textContent;$('#guideMessage').innerHTML=finger==='rr-rp'?`약지나 새끼손가락 중 편한 손가락으로 <b>${keyEl.textContent}</b> 키를 눌러 보세요.`:`파란색으로 표시된 손가락으로 <b>${keyEl.textContent}</b> 키를 눌러 보세요.`;
+    }
+  }
+  const order=guideOrder();$('#guideCount').textContent=`${guideIndex} / ${order.length}`;$('#guideBar').style.width=`${guideIndex/order.length*100}%`;
+}
+function finishGuideStage(){
+  $('#guideCount').textContent='완료!';$('#guideBar').style.width='100%';$('#guideMessage').innerHTML=`<b>${guideStages[guideLang][guideStage].label} 완료</b>`;
+}
+function checkGuide(code,shiftSide=''){
+  const word=guideWord();
+  if(word){
+    const expected=wordExpectedPress();if(code!==expected.code||shiftSide!==expected.side)return ping(false);ping(true);guideWordKeyIndex++;
+    if(guideWordKeyIndex<guideWordSequence().length)return showGuide();guideWordKeyIndex=0;guideIndex++;
+  }else{
+    const combo=guideCombo(),correct=combo?code===combo.letter&&shiftSide===combo.side:code===guideTarget();if(!correct)return ping(false);ping(true);guideIndex++;
+  }
+  if(guideIndex>=guideOrder().length)finishGuideStage();else showGuide();
+}
 function showHome(){$('#typingHome').hidden=false;$('#fingerGuide').hidden=true;$('.practice').hidden=true;$('#resultCard').hidden=true}
 function selectLanguage(lang){state.lang=lang;$$('[data-language]').forEach(button=>{const active=button.dataset.language===lang;button.classList.toggle('active',active);button.setAttribute('aria-pressed',active)})}
 function openPractice(mode='words'){state.mode=mode;state.level={words:0,sentences:1,paragraphs:2}[mode]??0;$('#typingHome').hidden=true;$('#fingerGuide').hidden=true;$('.practice').hidden=false;$('#practiceTitle').textContent={words:'단어 연습',sentences:'문장 연습',paragraphs:'문단 연습'}[mode];const symbolButton=$('[data-language="symbols"]');symbolButton.hidden=mode!=='words';if(mode!=='words'&&state.lang==='symbols')selectLanguage('ko');$('#levelButton').hidden=true;$('#levelPanel').hidden=true;setup()}
-function openGuide(){guideIndex=0;if(guideLang==='en')refreshEnglishShiftGuide();$('#typingHome').hidden=true;$('.practice').hidden=true;$('#resultCard').hidden=true;$('#fingerGuide').hidden=false;buildKeyboard()}
+function openGuide(){guideIndex=0;guideWordKeyIndex=0;if(guideLang==='en'&&guideStage===3)refreshEnglishShiftGuide();$('#typingHome').hidden=true;$('.practice').hidden=true;$('#resultCard').hidden=true;$('#fingerGuide').hidden=false;buildKeyboard()}
 function key(){return `typing-best-${state.lang}-${state.level}`}
 function target(){return lessons[state.lang][state.level][state.index]}
 function chars(s){return [...s]}
@@ -60,7 +123,7 @@ $$('[data-language]').forEach(b=>b.addEventListener('click',()=>{selectLanguage(
 $('#levelButton').addEventListener('click',()=>{const p=$('#levelPanel'),open=p.hidden;p.hidden=!open;$('#levelButton').setAttribute('aria-expanded',open)});
 $$('[data-level]').forEach(b=>b.addEventListener('click',()=>{state.level=Number(b.dataset.level);$$('[data-level]').forEach(x=>x.classList.toggle('active',x===b));$('#levelButton').innerHTML=`<span>${state.level+1}단계</span><strong>${['낱말','짧은 문장','긴 문장'][state.level]}</strong><span aria-hidden="true">⌄</span>`;$('#levelPanel').hidden=true;$('#levelButton').setAttribute('aria-expanded','false');setup()}));
 $('#soundButton').addEventListener('click',e=>{state.sound=!state.sound;e.currentTarget.textContent=state.sound?'소리 켬':'소리 끔';e.currentTarget.setAttribute('aria-pressed',state.sound)});
-$$('[data-guide-language]').forEach(b=>b.addEventListener('click',()=>{guideLang=b.dataset.guideLanguage;guideIndex=0;if(guideLang==='en')refreshEnglishShiftGuide();$$('[data-guide-language]').forEach(x=>{x.classList.toggle('active',x===b);x.setAttribute('aria-pressed',x===b)});buildKeyboard()}));
+$$('[data-guide-language]').forEach(b=>b.addEventListener('click',()=>{guideLang=b.dataset.guideLanguage;guideStage=0;guideIndex=0;guideWordKeyIndex=0;$$('[data-guide-language]').forEach(x=>{x.classList.toggle('active',x===b);x.setAttribute('aria-pressed',x===b)});buildKeyboard()}));
 const heldShift={left:false,right:false};
 function guideEventCode(event){if(/^Key[A-Z]$/.test(event.code))return event.code.slice(3).toLowerCase();if(/^Digit[0-9]$/.test(event.code))return event.code.slice(5);return{Backquote:'`',Minus:'-',Equal:'='}[event.code]||event.key.toLowerCase()}
 document.addEventListener('keydown',e=>{if($('#fingerGuide').hidden||e.ctrlKey||e.altKey||e.metaKey)return;if(e.code==='ShiftLeft'){heldShift.left=true;return}if(e.code==='ShiftRight'){heldShift.right=true;return}checkGuide(guideEventCode(e),heldShift.left?'left':heldShift.right?'right':'')});
