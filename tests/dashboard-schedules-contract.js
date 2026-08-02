@@ -22,6 +22,8 @@ assert.match(html, /\/api\/class\/schedules/, "Schedules must load from the clas
 assert.match(html, /\/api\/teacher\/schedules/, "Teacher schedule writes must use the API.");
 assert.doesNotMatch(html, /localStorage\.setItem\("dashboardSchedules"/,
   "Browser storage must not remain the schedule source of truth.");
+assert.match(html, /\.schedule-editor\[hidden\]\s*\{\s*display:\s*none;/,
+  "The schedule editor must stay hidden until an editable classroom is available.");
 assert.match(platform, /CREATE TABLE IF NOT EXISTS classroom_schedules/,
   "Class schedules must be persisted in PostgreSQL.");
 assert.match(platform, /router\.get\("\/class\/schedules"/,
