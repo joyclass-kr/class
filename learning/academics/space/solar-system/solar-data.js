@@ -564,23 +564,143 @@ window.createPlanetTexture = function (planetKey) {
             ctx.fill();
         }
     } else if (planetKey === 'uranus') {
+        // Uranus is genuinely subdued in visible light. Keep the contrast low so
+        // the sideways axis remains its dominant visual characteristic.
         const grad = ctx.createLinearGradient(0, 0, 0, h);
-        grad.addColorStop(0, '#06b6d4');
-        grad.addColorStop(0.5, '#67e8f9');
-        grad.addColorStop(1, '#0891b2');
-        ctx.fillStyle = grad;
-        ctx.fillRect(0, 0, w, h);
-    } else if (planetKey === 'neptune') {
-        const grad = ctx.createLinearGradient(0, 0, 0, h);
-        grad.addColorStop(0, '#1d4ed8');
-        grad.addColorStop(0.5, '#2563eb');
-        grad.addColorStop(1, '#1e40af');
+        grad.addColorStop(0, '#58cfda');
+        grad.addColorStop(0.22, '#72dce4');
+        grad.addColorStop(0.5, '#83e3e8');
+        grad.addColorStop(0.78, '#63d3dc');
+        grad.addColorStop(1, '#46becb');
         ctx.fillStyle = grad;
         ctx.fillRect(0, 0, w, h);
 
-        ctx.fillStyle = '#0f172a';
+        ctx.lineCap = 'round';
+        for (let band = 0; band < 5; band++) {
+            const baseY = 92 + band * 76;
+            ctx.beginPath();
+            for (let x = -20; x <= w + 20; x += 20) {
+                const y = baseY + Math.sin(x * 0.009 + band * 0.7) * 3;
+                if (x === -20) ctx.moveTo(x, y);
+                else ctx.lineTo(x, y);
+            }
+            ctx.strokeStyle = band % 2 === 0
+                ? 'rgba(235, 255, 255, 0.085)'
+                : 'rgba(18, 123, 139, 0.055)';
+            ctx.lineWidth = 7 + band;
+            ctx.stroke();
+        }
+        ctx.fillStyle = 'rgba(244, 255, 255, 0.11)';
         ctx.beginPath();
-        ctx.ellipse(w * 0.4, h * 0.5, 40, 25, 0.2, 0, Math.PI * 2);
+        ctx.ellipse(w * 0.69, h * 0.34, 58, 8, -0.05, 0, Math.PI * 2);
+        ctx.fill();
+    } else if (planetKey === 'neptune') {
+        // Soft latitude bands, a feathered Great Dark Spot and bright methane-ice
+        // companion clouds make rotation readable without a sticker-like black dot.
+        const grad = ctx.createLinearGradient(0, 0, 0, h);
+        grad.addColorStop(0, '#2447ad');
+        grad.addColorStop(0.22, '#2859c7');
+        grad.addColorStop(0.5, '#3477dc');
+        grad.addColorStop(0.78, '#2457c4');
+        grad.addColorStop(1, '#183a92');
+        ctx.fillStyle = grad;
+        ctx.fillRect(0, 0, w, h);
+
+        ctx.lineCap = 'round';
+        for (let band = 0; band < 11; band++) {
+            const baseY = 34 + band * 45;
+            ctx.beginPath();
+            for (let x = -24; x <= w + 24; x += 16) {
+                const y = baseY + Math.sin(x * 0.012 + band * 0.64) * (3 + band % 3);
+                if (x === -24) ctx.moveTo(x, y);
+                else ctx.lineTo(x, y);
+            }
+            ctx.strokeStyle = band % 3 === 0
+                ? 'rgba(190, 225, 255, 0.15)'
+                : 'rgba(9, 33, 112, 0.10)';
+            ctx.lineWidth = 8 + (band % 4) * 3;
+            ctx.stroke();
+        }
+
+        const spotX = w * 0.39;
+        const spotY = h * 0.55;
+        const spotLayers = [
+            [92, 38, 'rgba(7, 20, 73, 0.16)'],
+            [78, 32, 'rgba(6, 18, 67, 0.24)'],
+            [61, 25, 'rgba(8, 24, 79, 0.34)']
+        ];
+        spotLayers.forEach((layer, index) => {
+            ctx.fillStyle = layer[2];
+            ctx.beginPath();
+            ctx.ellipse(spotX + index * 2, spotY, layer[0], layer[1], -0.12, 0, Math.PI * 2);
+            ctx.fill();
+        });
+
+        ctx.fillStyle = 'rgba(230, 249, 255, 0.68)';
+        ctx.beginPath();
+        ctx.ellipse(spotX + 22, spotY - 48, 74, 8, -0.08, 0, Math.PI * 2);
+        ctx.fill();
+        ctx.fillStyle = 'rgba(206, 240, 255, 0.42)';
+        ctx.beginPath();
+        ctx.ellipse(w * 0.72, h * 0.31, 55, 7, 0.05, 0, Math.PI * 2);
+        ctx.fill();
+        ctx.beginPath();
+        ctx.ellipse(w * 0.19, h * 0.73, 48, 6, -0.06, 0, Math.PI * 2);
+        ctx.fill();
+    } else if (planetKey === 'pluto') {
+        // Pluto's asymmetric Tombaugh Regio and reddish equatorial terrain are
+        // strong, scientifically recognizable rotation markers.
+        const grad = ctx.createLinearGradient(0, 0, 0, h);
+        grad.addColorStop(0, '#b9aa96');
+        grad.addColorStop(0.24, '#d9cbb7');
+        grad.addColorStop(0.52, '#c7b59f');
+        grad.addColorStop(0.78, '#9f8976');
+        grad.addColorStop(1, '#786255');
+        ctx.fillStyle = grad;
+        ctx.fillRect(0, 0, w, h);
+
+        // Deterministic icy mottling.
+        for (let i = 0; i < 34; i++) {
+            const cx = (43 + i * 137) % w;
+            const cy = 28 + ((i * 83) % 450);
+            ctx.fillStyle = i % 4 === 0
+                ? 'rgba(91, 58, 48, 0.18)'
+                : 'rgba(241, 232, 211, 0.19)';
+            ctx.beginPath();
+            ctx.ellipse(cx, cy, 20 + (i % 5) * 8, 11 + (i % 4) * 5, (i % 7) * 0.17, 0, Math.PI * 2);
+            ctx.fill();
+        }
+
+        // Cthulhu Macula: broad, irregular reddish terrain near the equator.
+        ctx.beginPath();
+        ctx.moveTo(-20, h * 0.52);
+        for (let x = -20; x <= w + 20; x += 24) {
+            ctx.lineTo(x, h * 0.52 + Math.sin(x * 0.026) * 15 + Math.sin(x * 0.009) * 9);
+        }
+        for (let x = w + 20; x >= -20; x -= 24) {
+            ctx.lineTo(x, h * 0.66 + Math.sin(x * 0.021 + 1.6) * 17);
+        }
+        ctx.closePath();
+        ctx.fillStyle = 'rgba(91, 46, 38, 0.42)';
+        ctx.fill();
+
+        // Tombaugh Regio: a softly colored, intentionally asymmetric heart.
+        const heartX = w * 0.66;
+        const heartY = h * 0.43;
+        ctx.beginPath();
+        ctx.moveTo(heartX, heartY + 105);
+        ctx.bezierCurveTo(heartX - 38, heartY + 67, heartX - 116, heartY + 22, heartX - 108, heartY - 38);
+        ctx.bezierCurveTo(heartX - 102, heartY - 91, heartX - 37, heartY - 91, heartX - 4, heartY - 45);
+        ctx.bezierCurveTo(heartX + 28, heartY - 82, heartX + 91, heartY - 72, heartX + 96, heartY - 20);
+        ctx.bezierCurveTo(heartX + 100, heartY + 28, heartX + 43, heartY + 70, heartX, heartY + 105);
+        ctx.closePath();
+        ctx.fillStyle = 'rgba(245, 241, 219, 0.87)';
+        ctx.fill();
+
+        // Sputnik Planitia, the brighter western lobe of the heart.
+        ctx.fillStyle = 'rgba(255, 252, 232, 0.38)';
+        ctx.beginPath();
+        ctx.ellipse(heartX - 37, heartY - 4, 48, 66, -0.18, 0, Math.PI * 2);
         ctx.fill();
     } else if (planetKey === 'mercury') {
         ctx.fillStyle = '#78716c';
