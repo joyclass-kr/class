@@ -170,6 +170,12 @@ process.once("SIGTERM", stopLearningApps);
 process.once("SIGINT", stopLearningApps);
 
 app.use("/assets", express.static(path.join(SITE_ROOT, "assets"), { dotfiles: "ignore" }));
+app.get("/favicon.ico", (_req, res) => {
+  res.sendFile(path.join(SITE_ROOT, "favicon.ico"));
+});
+app.get("/favicon.png", (_req, res) => {
+  res.sendFile(path.join(SITE_ROOT, "favicon.png"));
+});
 app.use(
   "/assets",
   express.static(path.join(SITE_ROOT, "learning", "basics", "arithmetics", "dist", "client", "assets")),
