@@ -4,7 +4,7 @@
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
   <meta name="theme-color" content="#f7f5ef">
-  <title>한자</title>
+  <title>前·後·中 | 韓字</title>
   <style>
     @font-face {
       font-family: "KleeHanja";
@@ -402,12 +402,12 @@
     </div>
 
     <header class="hanja-head">
-      <div class="hanja hanja-generated" style="--hanja-size:52px" aria-label="앞 전, 뒤 후, 가운데 중, 안 내, 바깥 외"><span>前</span><span>後</span><span>中</span><span>內</span><span>外</span></div>
+      <div class="hanja hanja-generated" style="--hanja-size:62px" aria-label="앞 전, 뒤 후, 가운데 중"><span>前</span><span>後</span><span>中</span></div>
       <div>
-        <p class="reading">전 · 후 · 중 · 내 · 외</p>
-        <p class="core-meaning">앞 · 뒤 · 가운데 · 안 · 밖</p>
+        <p class="reading">전 · 후 · 중</p>
+        <p class="core-meaning">앞 · 뒤 · 가운데</p>
       </div>
-      <section class="stroke-demo" aria-label="前·後·中·內·外 획순">
+      <section class="stroke-demo" aria-label="前·後·中 획순">
         <svg class="stroke-stage" viewBox="0 0 160 160" role="img" aria-label="선택한 한자의 획순">
           <path class="stroke-guide" d="M80 0V160M0 80H160M0 0L160 160M160 0L0 160" />
           <g class="stroke-set" data-character="前" transform="translate(10 8) scale(1.3)">
@@ -438,27 +438,14 @@
             <path class="stroke-path" d="M27.74,64.84C40.12,63.62,61.86,62.2,79,60.77c2.36-0.2,5.75-0.27,7.25-0.27" />
             <path class="stroke-path" d="M52.5,11.5c1.44,1.44,2.25,3.5,2.25,5.06c0,0.9,0.06,56.6-0.15,76.69c-0.03,3.3-0.07,5.6-0.1,6.5" />
           </g>
-          <g class="stroke-set" data-character="內" transform="translate(10 8) scale(1.3)" hidden>
-            <path class="stroke-path" d="M22.54,33.27c0.96,1.3,1.27,2.79,1.27,5.15c0,4.81-0.05,33.43,0.03,47.33c0.02,3.68,0.04,6.29,0.04,7.11" />
-            <path class="stroke-path" d="M24.5,35.25c15.76-1.46,57.65-5.15,59.14-5.15c3.11,0,5.42,1.9,5.42,6.05c0,1.91-0.93,42.61-1.51,54.43c-0.51,10.41-6.79,2.92-9.19,0.54" />
-            <path class="stroke-path" d="M53.71,11.88c0.77,0.76,1.65,2.41,1.64,4.49C55.25,36.5,50.5,59.5,29.64,72.9" />
-            <path class="stroke-path" d="M55.5,45.5c7.7,3.74,19.88,15.39,21.81,21.22" />
-          </g>
-          <g class="stroke-set" data-character="外" transform="translate(10 8) scale(1.3)" hidden>
-            <path class="stroke-path" d="M35.44,15.75c0.53,1.77,0.62,3.56,0.13,5.33C33.25,29.5,26.75,44.75,16.5,55" />
-            <path class="stroke-path" d="M36.72,28.81c1.47,0.25,3.12,0.16,4.56-0.14c3.52-0.72,5.83-1.04,9.45-2.2c3.61-1.17,4.39,1.7,3.77,3.54c-5.46,16.06-22.18,50.32-39.75,58.5" />
-            <path class="stroke-path" d="M27.5,47c3.71,1.68,9.57,6.89,10.5,9.5" />
-            <path class="stroke-path" d="M65.56,12.13c1.09,1.09,1.76,2.87,1.76,5.25c0,0.78-0.07,54.62-0.19,73.62c-0.02,3.16-0.04,5.33-0.06,6.13" />
-            <path class="stroke-path" d="M71.5,42.5c7.85,3.75,20.29,15.42,22.25,21.25" />
-          </g>
+
+
         </svg>
         <div class="stroke-controls">
-          <div class="stroke-character-switch" style="--stroke-columns:4" aria-label="획순을 볼 글자">
+          <div class="stroke-character-switch" style="--stroke-columns:3" aria-label="획순을 볼 글자">
             <button class="stroke-character" type="button" data-character="前" aria-pressed="true">前</button>
             <button class="stroke-character" type="button" data-character="後" aria-pressed="false">後</button>
             <button class="stroke-character" type="button" data-character="中" aria-pressed="false">中</button>
-            <button class="stroke-character" type="button" data-character="內" aria-pressed="false">內</button>
-            <button class="stroke-character" type="button" data-character="外" aria-pressed="false">外</button>
           </div>
           <p id="strokeStatus" class="stroke-status" aria-live="polite">前 · 준비</p>
           <button id="playStrokes" class="stroke-button" type="button">▶ 획순 보기</button>
@@ -468,75 +455,38 @@
     </header>
 
     <section id="lessonView" class="view" aria-label="뜻과 예시">
-      <p class="lesson-guide">前·後·中·內·外는 위치와 차례, 범위를 나타내는 말의 뜻조각입니다.</p>
+      <p class="lesson-guide">前·後·中은 앞과 뒤, 가운데와 차례를 나타내는 말에 들어갑니다.</p>
       <div class="word-list">
-        <div class="word-row">
-          <p class="word-family">前(전) — 전방 · 이전 · 전반</p>
-          <p class="example">앞쪽은 전방, 어떤 때보다 앞은 이전, 앞부분은 전반입니다.</p>
-        </div>
-        <div class="word-row">
-          <p class="word-family">後(후) — 후방 · 이후 · 후반</p>
-          <p class="example">뒤쪽은 후방, 어떤 때보다 뒤는 이후, 뒷부분은 후반입니다.</p>
-        </div>
-        <div class="word-row">
-          <p class="word-family">中(중) — 중간 · 중심 · 집중</p>
-          <p class="example">가운데는 중간, 한가운데 중요한 곳은 중심, 한곳에 모으는 것은 집중입니다.</p>
-        </div>
-        <div class="word-row">
-          <p class="word-family">內(내) — 실내 · 내부 · 국내</p>
-          <p class="example">방 안은 실내, 안쪽 부분은 내부, 나라 안은 국내입니다.</p>
-        </div>
-        <div class="word-row">
-          <p class="word-family">外(외) — 야외 · 외부 · 외출</p>
-          <p class="example">들 밖은 야외, 바깥 부분은 외부, 밖으로 나가는 것은 외출입니다.</p>
-        </div>
+<div class="word-row"><p class="word-family">前(전) — 전방 · 이전 · 전반</p><p class="example">앞쪽은 전방, 어떤 때보다 앞은 이전, 앞부분은 전반입니다.</p></div>
+        <div class="word-row"><p class="word-family">後(후) — 후방 · 이후 · 후반</p><p class="example">뒤쪽은 후방, 어떤 때보다 뒤는 이후, 뒷부분은 후반입니다.</p></div>
+        <div class="word-row"><p class="word-family">中(중) — 중간 · 중심 · 집중</p><p class="example">가운데는 중간, 한가운데 중요한 곳은 중심, 한곳에 모으는 것은 집중입니다.</p></div>
       </div>
       <button id="startQuiz" class="next-button" type="button">문제 풀기</button>
     </section>
 
     <section id="quizView" class="view" aria-label="확인 문제" hidden>
       <div class="quiz-grid">
-        <article class="question" data-answer="0" data-note="건물이나 방의 안을 실내(室內)라고 합니다.">
-          <p class="question-context">“비가 와서 건물의 <u>안쪽</u>에서 체육 활동을 했습니다.”</p>
-          <h2><span class="q-number">1</span>밑줄 친 설명에 가장 정확히 맞는 말은?</h2>
-          <div class="choices">
-            <button class="choice" type="button" data-hanja="室內">① 체육관 같은 <u>실내</u> 공간을 이용했습니다.</button>
-            <button class="choice" type="button" data-hanja="野外">② 맑은 날 <u>야외</u>에서 관찰했습니다.</button>
-            <button class="choice" type="button" data-hanja="國內">③ <u>국내</u> 여러 도시를 여행했습니다.</button>
-            <button class="choice" type="button" data-hanja="市內">④ 버스를 타고 <u>시내</u>로 갔습니다.</button>
-          </div>
-          <p class="feedback" aria-live="polite"></p>
-        </article>
-
-        <article class="question" data-answer="1" data-note="밖으로 나가는 것을 외출(外出)이라고 합니다.">
-          <p class="question-context">“주말에 가족과 집 <u>밖으로 나갔습니다</u>.”</p>
-          <h2><span class="q-number">2</span>밑줄 친 설명에 가장 정확히 맞는 말은?</h2>
-          <div class="choices">
-            <button class="choice" type="button" data-hanja="入場">① 표를 내고 공연장에 <u>입장</u>했습니다.</button>
-            <button class="choice" type="button" data-hanja="外出">② 쉬는 날 공원으로 <u>외출</u>했습니다.</button>
-            <button class="choice" type="button" data-hanja="退場">③ 공연이 끝나 차례로 <u>퇴장</u>했습니다.</button>
-            <button class="choice" type="button" data-hanja="出發">④ 기차가 정시에 <u>출발</u>했습니다.</button>
-          </div>
-          <p class="feedback" aria-live="polite"></p>
-        </article>
-
-        <article class="question" data-answer="2" data-note="앞과 뒤를 전후(前後)라고 합니다.">
-          <p class="question-context">“사건이 일어나기 <u>앞과 뒤</u>의 기록을 살폈습니다.”</p>
-          <h2><span class="q-number">3</span>밑줄 친 설명에 가장 정확히 맞는 말은?</h2>
-          <div class="choices">
-            <button class="choice" type="button" data-hanja="左右">① 길을 건너기 전에 <u>좌우</u>를 살폈습니다.</button>
-            <button class="choice" type="button" data-hanja="上下">② 사진의 <u>상하</u>를 바르게 맞췄습니다.</button>
-            <button class="choice" type="button" data-hanja="前後">③ 글의 <u>전후</u> 관계를 살펴 뜻을 파악했습니다.</button>
-            <button class="choice" type="button" data-hanja="內外">④ 학교 <u>내외</u>를 정리했습니다.</button>
-          </div>
-          <p class="feedback" aria-live="polite"></p>
-        </article>
+<article class="question" data-answer="3" data-note="전기(電氣)의 전은 電(전)입니다. 나머지 세 말에는 앞을 뜻하는 前(전)이 들어갑니다."><h2><span class="q-number">1</span>前(전)이 들어가지 않은 말은?</h2><div class="choices">
+            <button class="choice" type="button" data-hanja="前半">① 경기 <u>전반</u>에는 점수가 같았습니다.</button>
+            <button class="choice" type="button" data-hanja="前方">② 버스 <u>전방</u>의 신호를 확인했습니다.</button>
+            <button class="choice" type="button" data-hanja="以前">③ 이곳에는 <u>이전</u>부터 나무가 많았습니다.</button>
+            <button class="choice" type="button" data-hanja="電氣">④ 과학 시간에 <u>전기</u>의 흐름을 배웠습니다.</button></div><p class="feedback" aria-live="polite"></p></article>
+        <article class="question" data-answer="3" data-note="후보(候補)의 후는 候(후)입니다. 나머지 세 말에는 뒤를 뜻하는 後(후)가 들어갑니다."><h2><span class="q-number">2</span>後(후)가 들어가지 않은 말은?</h2><div class="choices">
+            <button class="choice" type="button" data-hanja="以後">① 수업 <u>이후</u>에 도서관에 갔습니다.</button>
+            <button class="choice" type="button" data-hanja="後半">② 경기 <u>후반</u>에 한 골을 넣었습니다.</button>
+            <button class="choice" type="button" data-hanja="後方">③ 건물 <u>후방</u>에 작은 정원이 있습니다.</button>
+            <button class="choice" type="button" data-hanja="候補">④ 반장 <u>후보</u>가 공약을 발표했습니다.</button></div><p class="feedback" aria-live="polite"></p></article>
+        <article class="question" data-answer="3" data-note="중요(重要)의 중은 重(중)입니다. 나머지 세 말에는 가운데를 뜻하는 中(중)이 들어갑니다."><h2><span class="q-number">3</span>中(중)이 들어가지 않은 말은?</h2><div class="choices">
+            <button class="choice" type="button" data-hanja="中心">① 원의 <u>중심</u>에 점을 찍었습니다.</button>
+            <button class="choice" type="button" data-hanja="中間">② 두 사람 <u>중간</u>에 앉았습니다.</button>
+            <button class="choice" type="button" data-hanja="集中">③ 설명을 들으며 수업에 <u>집중</u>했습니다.</button>
+            <button class="choice" type="button" data-hanja="重要">④ 발표에서 <u>중요</u>한 내용을 표시했습니다.</button></div><p class="feedback" aria-live="polite"></p></article>
       </div>
       <p id="result" class="result" aria-live="polite" hidden></p>
       <div class="quiz-actions">
         <button id="backToLesson" class="back-button" type="button">설명 다시 보기</button>
         <button id="resetQuiz" class="reset-button" type="button">다시 풀기</button>
-        <a id="nextLesson" class="next-lesson" href="../ip-chul-mun/" hidden>다음 글자 入·出·門</a>
+        <a id="nextLesson" class="next-lesson" href="../nae-oe/" hidden>다음 글자 內·外</a>
       </div>
     </section>
   </main>

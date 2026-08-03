@@ -4,7 +4,7 @@
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
   <meta name="theme-color" content="#f7f5ef">
-  <title>한자</title>
+  <title>口·目 | 韓字</title>
   <style>
     @font-face {
       font-family: "KleeHanja";
@@ -392,7 +392,7 @@
       .view { animation: appear .18s ease-out; }
       @keyframes appear { from { opacity: .2; transform: translateY(4px); } }
     }
-    .hanja-generated { display:flex; gap:clamp(4px, .8vw, 9px); min-width:calc(var(--hanja-size) * 3); font-size:clamp(42px, 6vw, var(--hanja-size)); }
+    .hanja-generated { display:flex; gap:clamp(4px, .8vw, 9px); min-width:calc(var(--hanja-size) * 2); font-size:clamp(42px, 6vw, var(--hanja-size)); }
   </style>
 </head>
 <body>
@@ -402,12 +402,12 @@
     </div>
 
     <header class="hanja-head">
-      <div class="hanja hanja-generated" style="--hanja-size:62px" aria-label="입 구, 눈 목, 손 수, 발 족"><span>口</span><span>目</span><span>手</span><span>足</span></div>
+      <div class="hanja hanja-generated" style="--hanja-size:72px" aria-label="입 구, 눈 목"><span>口</span><span>目</span></div>
       <div>
-        <p class="reading">구 · 목 · 수 · 족</p>
-        <p class="core-meaning">입 · 눈 · 손 · 발</p>
+        <p class="reading">구 · 목</p>
+        <p class="core-meaning">입 · 눈</p>
       </div>
-      <section class="stroke-demo" aria-label="口·目·手·足 획순">
+      <section class="stroke-demo" aria-label="口·目 획순">
         <svg class="stroke-stage" viewBox="0 0 160 160" role="img" aria-label="선택한 한자의 획순">
           <path class="stroke-guide" d="M80 0V160M0 80H160M0 0L160 160M160 0L0 160" />
           <g class="stroke-set" data-character="口" transform="translate(10 8) scale(1.3)">
@@ -422,28 +422,13 @@
             <path class="stroke-path" d="M32.9,65.95C44.25,65,66,62.88,77.72,62.56" />
             <path class="stroke-path" d="M33,90.5c9.75-0.5,33.25-2.5,44.79-2.53" />
           </g>
-          <g class="stroke-set" data-character="手" transform="translate(10 8) scale(1.3)" hidden>
-            <path class="stroke-path" d="M61.48,11.5c0.02,1-0.61,1.88-1.67,2.9c-3.27,3.15-13.69,8.23-28.57,11.85" />
-            <path class="stroke-path" d="M26.38,42.92c1.8,0.46,3.61,0.67,5.68,0.38C46,41.38,58.4,39,71.37,37.75c1.92-0.19,4.62-0.38,7.25,0.04" />
-            <path class="stroke-path" d="M13.27,62.87c2.71,0.63,4.86,0.6,7.22,0.38c22.63-2.12,46.13-5.62,67.7-7c2.01-0.13,4.83,0,7.46,0.37" />
-            <path class="stroke-path" d="M48.88,23.55C60.38,31,62.73,63.66,57.83,89.87c-2.08,11.13-8.64,2.34-9.89,1.17" />
-          </g>
-          <g class="stroke-set" data-character="足" transform="translate(10 8) scale(1.3)" hidden>
-            <path class="stroke-path" d="M29.75,18.99c0.82,0.82,1.43,1.68,1.66,2.33c1.15,3.39,3.44,13.48,4.61,18.68c0.34,1.51,0.59,2.61,0.68,3" />
-            <path class="stroke-path" d="M31.56,19.63c12.09-1.87,34.1-5.01,40.27-5.14c2.89-0.06,3.98,2.41,3.7,3.88c-0.73,3.84-3.94,15.23-4.51,17.27" />
-            <path class="stroke-path" d="M37.25,40.74c7.07-0.43,20.75-2.48,31.53-3.73c1.71-0.2,3.34-0.14,4.86-0.32" />
-            <path class="stroke-path" d="M52.75,41c0.81,0.81,1.4,1.75,1.4,3.62c0,5.11,0.37,32.49,0.35,33.88" />
-            <path class="stroke-path" d="M55.75,59.25C56.94,59.25,66.25,57.75,73.54,56.53C75.08,56.27,76.53,56.25,77.75,56.25" />
-            <path class="stroke-path" d="M36.49,55c0.13,1.5,0.14,3.05-0.2,4.35c-2.04,7.78-10.16,24.15-17.79,30.9" />
-            <path class="stroke-path" d="M33.25,70.75C41.75,72.12,67,87.38,82,92.5c2.94,1,6.85,1.68,9.75,2" />
-          </g>
+
+
         </svg>
         <div class="stroke-controls">
-          <div class="stroke-character-switch" style="--stroke-columns:4" aria-label="획순을 볼 글자">
+          <div class="stroke-character-switch" style="--stroke-columns:2" aria-label="획순을 볼 글자">
             <button class="stroke-character" type="button" data-character="口" aria-pressed="true">口</button>
             <button class="stroke-character" type="button" data-character="目" aria-pressed="false">目</button>
-            <button class="stroke-character" type="button" data-character="手" aria-pressed="false">手</button>
-            <button class="stroke-character" type="button" data-character="足" aria-pressed="false">足</button>
           </div>
           <p id="strokeStatus" class="stroke-status" aria-live="polite">口 · 준비</p>
           <button id="playStrokes" class="stroke-button" type="button">▶ 획순 보기</button>
@@ -453,69 +438,32 @@
     </header>
 
     <section id="lessonView" class="view" aria-label="뜻과 예시">
-      <p class="lesson-guide">口·目·手·足은 몸의 부분에서 시작해 사람 수, 살피기, 능력, 모자람을 나타내는 말로 넓어집니다.</p>
+      <p class="lesson-guide">口와 目은 입과 눈에서 시작해 사람 수와 살펴보는 일을 나타내는 말로 넓어집니다.</p>
       <div class="word-list">
-        <div class="word-row">
-          <p class="word-family">口(구) — 인구 · 입구 · 구강</p>
-          <p class="example">사람의 입을 세어 나타낸 사람 수는 인구, 들어가는 입은 입구, 입안은 구강입니다.</p>
-        </div>
-        <div class="word-row">
-          <p class="word-family">目(목) — 주목 · 목적 · 과목</p>
-          <p class="example">눈길을 모으는 것은 주목, 눈앞에 둔 목표는 목적, 배울 항목은 과목입니다.</p>
-        </div>
-        <div class="word-row">
-          <p class="word-family">手(수) — 악수 · 선수 · 수술</p>
-          <p class="example">손을 잡는 인사는 악수, 재주를 쓰는 사람은 선수, 손으로 치료하는 일은 수술입니다.</p>
-        </div>
-        <div class="word-row">
-          <p class="word-family">足(족) — 부족 · 만족 · 족구</p>
-          <p class="example">모자라는 것은 부족, 가득 차 흐뭇한 것은 만족, 발로 하는 공놀이는 족구입니다.</p>
-        </div>
+<div class="word-row"><p class="word-family">口(구) — 인구 · 입구 · 구강</p><p class="example">사람의 입을 세어 나타낸 사람 수는 인구, 들어가는 곳은 입구, 입안은 구강입니다.</p></div>
+        <div class="word-row"><p class="word-family">目(목) — 주목 · 목적 · 과목</p><p class="example">눈길을 모으는 것은 주목, 눈앞에 둔 목표는 목적, 배울 항목은 과목입니다.</p></div>
       </div>
       <button id="startQuiz" class="next-button" type="button">문제 풀기</button>
     </section>
 
     <section id="quizView" class="view" aria-label="확인 문제" hidden>
       <div class="quiz-grid">
-        <article class="question" data-answer="3" data-note="어떤 곳에 사는 사람 수를 인구(人口)라고 합니다.">
-          <p class="question-context">“이 도시에 사는 <u>사람 수</u>를 조사했습니다.”</p>
-          <h2><span class="q-number">1</span>밑줄 친 설명에 가장 정확히 맞는 말은?</h2>
-          <div class="choices">
-            <button class="choice" type="button" data-hanja="人員">① 체험할 <u>인원</u>은 열 명입니다.</button>
-            <button class="choice" type="button" data-hanja="人物">② 역사 속 <u>인물</u>을 조사했습니다.</button>
-            <button class="choice" type="button" data-hanja="人間">③ <u>인간</u>은 도구를 사용합니다.</button>
-            <button class="choice" type="button" data-hanja="人口">④ 그래프에서 지역별 <u>인구</u>를 비교했습니다.</button>
-          </div>
-          <p class="feedback" aria-live="polite"></p>
-        </article>
-
-                                        <article class="question" data-answer="1" data-note="목재(木材)에는 目이 들어가지 않습니다.">
-          <h2><span class="q-number">2</span>目(목)이 들어가지 않은 말은?</h2>
-          <div class="choices">
-            <button class="choice" type="button">① 여행의 <u>목적</u>을 먼저 정했습니다.</button>
-            <button class="choice" type="button">② 책상은 단단한 <u>목재</u>로 만들었습니다.</button>
-            <button class="choice" type="button">③ 발표를 시작하자 모두가 화면에 <u>주목</u>했습니다.</button>
-            <button class="choice" type="button">④ 가장 좋아하는 <u>과목</u>은 과학입니다.</button>
-          </div>
-          <p class="feedback" aria-live="polite"></p>
-        </article>
-
-                                        <article class="question" data-answer="2" data-note="수학(數學)에는 手이 들어가지 않습니다.">
-          <h2><span class="q-number">3</span>手(수)가 들어가지 않은 말은?</h2>
-          <div class="choices">
-            <button class="choice" type="button">① 경기가 끝난 뒤 상대 선수와 <u>악수</u>했습니다.</button>
-            <button class="choice" type="button">② 의사 선생님이 환자의 <u>수술</u>을 맡았습니다.</button>
-            <button class="choice" type="button">③ 오늘 <u>수학</u> 시간에 분수를 배웠습니다.</button>
-            <button class="choice" type="button">④ 친구의 발표가 끝나자 모두 <u>박수</u>를 쳤습니다.</button>
-          </div>
-          <p class="feedback" aria-live="polite"></p>
-        </article>
+<article class="question" data-answer="3" data-note="연구(硏究)의 구는 究(구)입니다. 나머지 세 말에는 입을 뜻하는 口(구)가 들어갑니다."><h2><span class="q-number">1</span>口(구)가 들어가지 않은 말은?</h2><div class="choices">
+            <button class="choice" type="button" data-hanja="人口">① 그래프에서 지역별 <u>인구</u>를 비교했습니다.</button>
+            <button class="choice" type="button" data-hanja="入口">② 표를 확인하고 공연장 <u>입구</u>로 갔습니다.</button>
+            <button class="choice" type="button" data-hanja="口腔">③ 치과에서 입안인 <u>구강</u>을 검사했습니다.</button>
+            <button class="choice" type="button" data-hanja="硏究">④ 과학자가 새로운 재료를 <u>연구</u>했습니다.</button></div><p class="feedback" aria-live="polite"></p></article>
+        <article class="question" data-answer="1" data-note="목재(木材)의 목은 木(목)입니다. 나머지 세 말에는 눈을 뜻하는 目(목)이 들어갑니다."><h2><span class="q-number">2</span>目(목)이 들어가지 않은 말은?</h2><div class="choices">
+            <button class="choice" type="button" data-hanja="目的">① 여행의 <u>목적</u>을 먼저 정했습니다.</button>
+            <button class="choice" type="button" data-hanja="木材">② 책상은 단단한 <u>목재</u>로 만들었습니다.</button>
+            <button class="choice" type="button" data-hanja="注目">③ 발표가 시작되자 화면에 <u>주목</u>했습니다.</button>
+            <button class="choice" type="button" data-hanja="科目">④ 가장 좋아하는 <u>과목</u>은 과학입니다.</button></div><p class="feedback" aria-live="polite"></p></article>
       </div>
       <p id="result" class="result" aria-live="polite" hidden></p>
       <div class="quiz-actions">
         <button id="backToLesson" class="back-button" type="button">설명 다시 보기</button>
         <button id="resetQuiz" class="reset-button" type="button">다시 풀기</button>
-        <a id="nextLesson" class="next-lesson" href="../sim-sin-ryeok/" hidden>다음 글자 心·身·力</a>
+        <a id="nextLesson" class="next-lesson" href="../su-jok/" hidden>다음 글자 手·足</a>
       </div>
     </section>
   </main>
