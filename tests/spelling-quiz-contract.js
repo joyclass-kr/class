@@ -125,7 +125,7 @@ assert.ok(serverSource.includes("SPELLING_STATE"), "Server is missing spelling r
 assert.ok(serverSource.includes("elapsedMs: Math.max(0, Date.now() - game.startedAt)"), "Completion time must be server-authoritative.");
 
 const hub = fs.readFileSync(hubPath, "utf8");
-assert.ok(hub.includes('href="learning/basics/spelling/index.html"'), "Hub is missing the spelling quiz link.");
+assert.ok(/href="learning\/basics\/spelling\/(?:index\.html)?"/.test(hub), "Hub is missing the spelling quiz link.");
 assert.ok(hub.includes("한글 맞춤법"), "Hub is missing the Korean orthography title.");
 assert.ok(hub.includes("(Korean Spelling)"), "Hub is missing the English subtitle.");
 

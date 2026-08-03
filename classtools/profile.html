@@ -35,6 +35,19 @@
         #passwordStatus { min-height:26px; color:var(--muted); font-weight:800; }
         .password-grid { display:grid; grid-template-columns:repeat(2,minmax(0,1fr)); gap:12px; }
         .privacy-link { min-height:44px; display:inline-flex; align-items:center; color:var(--green); }
+        .avatar-current { display:flex; align-items:center; gap:18px; padding:16px; border-radius:14px; background:#0f1d17; }
+        .avatar-current img { width:112px; height:112px; object-fit:contain; flex:none; }
+        .avatar-current strong,.avatar-current span { display:block; }
+        .avatar-current span { margin-top:6px; color:var(--muted); line-height:1.5; }
+        .avatar-picker { margin-top:16px; }
+        .avatar-grid { display:grid; grid-template-columns:repeat(auto-fill,minmax(78px,1fr)); gap:10px; margin-top:12px; }
+        .avatar-option { min-height:88px; padding:6px; border:2px solid transparent; border-radius:13px; background:#0f1d17; }
+        .avatar-option img { width:68px; height:68px; max-width:100%; object-fit:contain; pointer-events:none; }
+        .avatar-option[aria-pressed="true"] { border-color:var(--amber); background:#254733; }
+        .secondary-button { color:var(--green); background:transparent; }
+        .picker-actions { display:flex; align-items:center; justify-content:space-between; gap:10px; margin-top:14px; }
+        #avatarStatus { min-height:26px; color:var(--muted); font-weight:800; }
+        @media(max-width:600px){.avatar-current{align-items:flex-start}.avatar-current img{width:92px;height:92px}.picker-actions{align-items:stretch;flex-direction:column}}
         @media(max-width:600px){body{padding:18px 14px}.identity,.password-grid{grid-template-columns:1fr}.actions{align-items:stretch;flex-direction:column}button{width:100%}}
     </style>
 </head>
@@ -42,6 +55,22 @@
     <div class="top"><a class="back" href="/">← 첫 화면</a><a class="privacy-link" href="/student-privacy">개인정보 안내</a></div>
     <h1>내 정보 설정</h1>
     <section class="card" aria-labelledby="identityTitle"><h2 id="identityTitle">내 학급</h2><div class="identity"><div><span>학생</span><strong id="studentName">확인 중…</strong></div><div><span>학급</span><strong id="className">확인 중…</strong></div></div></section>
+    <section id="avatarCard" class="card" hidden aria-labelledby="avatarTitle">
+        <h2 id="avatarTitle">&#45236; &#50500;&#48148;&#53440;</h2>
+        <div class="avatar-current">
+            <img id="currentAvatarImage" alt="&#54788;&#51116; &#50500;&#48148;&#53440;">
+            <div><strong id="currentAvatarName">&#50500;&#48148;&#53440; &#54869;&#51064; &#51473;&#8230;</strong><span id="avatarPolicy"></span></div>
+        </div>
+        <div class="actions"><span></span><button id="openAvatarPicker" class="secondary-button" type="button">&#50500;&#48148;&#53440; &#48148;&#44984;&#44592;</button></div>
+        <div id="avatarPicker" class="avatar-picker" hidden>
+            <p class="hint warning">&#49352; &#50500;&#48148;&#53440;&#47484; &#54869;&#51221;&#54616;&#47732; &#51060;&#48264; &#44592;&#44036;&#51032; &#48320;&#44221; &#44592;&#54924; 1&#54924;&#47484; &#49324;&#50857;&#54633;&#45768;&#45796;.</p>
+            <h3>&#52628;&#52380; &#50500;&#48148;&#53440;</h3>
+            <div id="recommendedAvatars" class="avatar-grid"></div>
+            <button id="toggleAllAvatars" class="secondary-button" type="button">&#51204;&#52404; &#50500;&#48148;&#53440; &#48372;&#44592;</button>
+            <div id="allAvatars" class="avatar-grid" hidden></div>
+            <div class="picker-actions"><span id="avatarStatus" role="status" aria-live="polite"></span><button id="saveAvatar" type="button" disabled>&#51060; &#50500;&#48148;&#53440;&#47196; &#54869;&#51221;</button></div>
+        </div>
+    </section>
     <form id="profileForm" class="card" hidden>
         <h2>생일과 공개 여부</h2>
         <label for="birthdayMmdd">생일 월일 4자리</label>
@@ -68,6 +97,41 @@
 const form=document.querySelector('#profileForm'),birthday=document.querySelector('#birthdayMmdd'),visible=document.querySelector('#birthdayVisible'),preview=document.querySelector('#preview'),statusEl=document.querySelector('#status'),saveButton=document.querySelector('#saveButton');
 const passwordForm=document.querySelector('#passwordForm'),currentPassword=document.querySelector('#currentPassword'),newPassword=document.querySelector('#newPassword'),confirmPassword=document.querySelector('#confirmPassword'),passwordStatus=document.querySelector('#passwordStatus'),passwordButton=document.querySelector('#passwordButton');
 async function api(path,options={}){const response=await fetch(path,{...options,headers:{'Content-Type':'application/json',...(options.headers||{})}});const data=await response.json().catch(()=>({}));if(!response.ok)throw new Error(data.message||'요청을 처리하지 못했습니다.');return data}
+const avatarCard=document.querySelector('#avatarCard'),currentAvatarImage=document.querySelector('#currentAvatarImage'),currentAvatarName=document.querySelector('#currentAvatarName'),avatarPolicy=document.querySelector('#avatarPolicy'),openAvatarPicker=document.querySelector('#openAvatarPicker'),avatarPicker=document.querySelector('#avatarPicker'),recommendedAvatars=document.querySelector('#recommendedAvatars'),toggleAllAvatars=document.querySelector('#toggleAllAvatars'),allAvatars=document.querySelector('#allAvatars'),avatarStatus=document.querySelector('#avatarStatus'),saveAvatar=document.querySelector('#saveAvatar');
+let currentAvatarProfile=null,selectedAvatarKey='';
+function avatarDisplayName(key){return String(key||'').replace(/\.(?:png|webp)$/i,'').replace(/^(animal|food|fruit|vegetable|object|vehicle|theme|sport|award|drink|game)-/,'').replace(/-/g,' ')}
+function shuffled(items){const result=[...items];for(let index=result.length-1;index>0;index-=1){const swap=Math.floor(Math.random()*(index+1));[result[index],result[swap]]=[result[swap],result[index]]}return result}
+function updateAvatarSelection(){
+    document.querySelectorAll('[data-avatar-key]').forEach(button=>button.setAttribute('aria-pressed',String(button.dataset.avatarKey===selectedAvatarKey)));
+    saveAvatar.disabled=!selectedAvatarKey||selectedAvatarKey===currentAvatarProfile?.key;
+}
+function createAvatarButton(option){
+    const button=document.createElement('button');button.type='button';button.className='avatar-option';button.dataset.avatarKey=option.key;button.setAttribute('aria-label',`${avatarDisplayName(option.key)} \uc544\ubc14\ud0c0 \uc120\ud0dd`);button.setAttribute('aria-pressed','false');
+    const image=document.createElement('img');image.src=option.url;image.alt='';image.loading='lazy';button.append(image);
+    button.addEventListener('click',()=>{selectedAvatarKey=option.key;avatarStatus.textContent='\uc120\ud0dd\ud55c \uc544\ubc14\ud0c0\ub97c \ud655\uc778\ud55c \ub4a4 \ud655\uc815\ud574 \uc8fc\uc138\uc694.';updateAvatarSelection()});
+    return button;
+}
+function renderAvatarGrid(container,options){container.replaceChildren(...options.map(createAvatarButton));updateAvatarSelection()}
+function renderAvatar(avatar){
+    currentAvatarProfile=avatar||{key:'',url:'',options:[],canChange:false};selectedAvatarKey='';avatarPicker.hidden=true;allAvatars.hidden=true;toggleAllAvatars.textContent='\uc804\uccb4 \uc544\ubc14\ud0c0 \ubcf4\uae30';avatarStatus.textContent='';
+    if(currentAvatarProfile.url){currentAvatarImage.src=currentAvatarProfile.url;currentAvatarImage.hidden=false;currentAvatarName.textContent=avatarDisplayName(currentAvatarProfile.key)}else{currentAvatarImage.removeAttribute('src');currentAvatarImage.hidden=true;currentAvatarName.textContent='\uc544\uc9c1 \ubc30\uc815\ub418\uc9c0 \uc54a\uc74c'}
+    if(!currentAvatarProfile.key)avatarPolicy.textContent='\ub2f4\uc784 \uc120\uc0dd\ub2d8\uc774 \uba85\ub2e8\uc744 \uc800\uc7a5\ud558\uba74 \uc544\ubc14\ud0c0\uac00 \uc790\ub3d9\uc73c\ub85c \ubc30\uc815\ub429\ub2c8\ub2e4.';
+    else if(currentAvatarProfile.canChange)avatarPolicy.textContent=`${currentAvatarProfile.changePeriodLabel} \ubcc0\uacbd \uae30\ud68c\uac00 1\ud68c \ub0a8\uc544 \uc788\uc2b5\ub2c8\ub2e4.`;
+    else if(currentAvatarProfile.changeUsed)avatarPolicy.textContent=`${currentAvatarProfile.changePeriodLabel} \ubcc0\uacbd \uae30\ud68c\ub97c \uc774\ubbf8 \uc0ac\uc6a9\ud588\uc2b5\ub2c8\ub2e4.`;
+    else avatarPolicy.textContent='1~2\uc6d4\uc5d0\ub294 \uc544\ubc14\ud0c0\ub97c \ubcc0\uacbd\ud560 \uc218 \uc5c6\uc2b5\ub2c8\ub2e4.';
+    openAvatarPicker.disabled=!currentAvatarProfile.canChange;
+    const available=(currentAvatarProfile.options||[]).filter(option=>option.available&&option.key!==currentAvatarProfile.key);
+    renderAvatarGrid(recommendedAvatars,shuffled(available).slice(0,12));renderAvatarGrid(allAvatars,available);
+}
+openAvatarPicker.addEventListener('click',()=>{avatarPicker.hidden=!avatarPicker.hidden;if(!avatarPicker.hidden)recommendedAvatars.querySelector('button')?.focus()});
+toggleAllAvatars.addEventListener('click',()=>{allAvatars.hidden=!allAvatars.hidden;toggleAllAvatars.textContent=allAvatars.hidden?'\uc804\uccb4 \uc544\ubc14\ud0c0 \ubcf4\uae30':'\uc804\uccb4 \uc544\ubc14\ud0c0 \uc811\uae30'});
+saveAvatar.addEventListener('click',async()=>{
+    if(!selectedAvatarKey||selectedAvatarKey===currentAvatarProfile?.key)return;
+    if(!confirm('\uc774 \uc544\ubc14\ud0c0\ub85c \ud655\uc815\ud560\uae4c\uc694? \ud655\uc815\ud558\uba74 \uc774\ubc88 \uae30\uac04\uc758 \ubcc0\uacbd \uae30\ud68c 1\ud68c\ub97c \uc0ac\uc6a9\ud569\ub2c8\ub2e4.'))return;
+    saveAvatar.disabled=true;avatarStatus.textContent='\uc544\ubc14\ud0c0 \ubcc0\uacbd \uc911\u2026';
+    try{await api('/api/student/avatar',{method:'PATCH',body:JSON.stringify({avatarKey:selectedAvatarKey})});const refreshed=await api('/api/student/profile');renderAvatar(refreshed.profile.avatar);avatarStatus.textContent='\uc544\ubc14\ud0c0\ub97c \ubcc0\uacbd\ud588\uc2b5\ub2c8\ub2e4.'}
+    catch(error){avatarStatus.textContent=error.message;saveAvatar.disabled=false}
+});
 function validMmdd(value){if(!/^\d{4}$/.test(value))return false;const month=Number(value.slice(0,2)),day=Number(value.slice(2));return month>=1&&month<=12&&day>=1&&day<=new Date(2000,month,0).getDate()}
 function renderPreview(){const value=birthday.value;if(visible.checked&&validMmdd(value)){preview.textContent=`${Number(value.slice(0,2))}월 ${Number(value.slice(2))}일에 ‘내 생일’ 일정이 학급에 공개됩니다.`;preview.classList.remove('warning')}else{preview.textContent='현재 생일은 공개되지 않습니다.';preview.classList.toggle('warning',visible.checked)}}
 birthday.addEventListener('input',()=>{birthday.value=birthday.value.replace(/\D/g,'').slice(0,4);renderPreview()});visible.addEventListener('change',renderPreview);
@@ -75,4 +139,6 @@ form.addEventListener('submit',async event=>{event.preventDefault();if(birthday.
 for(const input of [currentPassword,newPassword,confirmPassword])input.addEventListener('input',()=>{input.value=input.value.replace(/\D/g,'').slice(0,6)});
 passwordForm.addEventListener('submit',async event=>{event.preventDefault();passwordStatus.textContent='';if(!/^\d{6}$/.test(currentPassword.value)||!/^\d{6}$/.test(newPassword.value)){passwordStatus.textContent='비밀번호는 숫자 6자리여야 합니다.';return}if(newPassword.value!==confirmPassword.value){passwordStatus.textContent='새 비밀번호가 서로 다릅니다.';confirmPassword.focus();return}passwordButton.disabled=true;passwordStatus.textContent='변경 중…';try{await api('/api/student/password',{method:'PATCH',body:JSON.stringify({currentPassword:currentPassword.value,newPassword:newPassword.value})});passwordForm.reset();passwordStatus.textContent='새 비밀번호로 변경했습니다.'}catch(error){passwordStatus.textContent=error.message}finally{passwordButton.disabled=false}});
 async function start(){const me=await api('/api/auth/me');if(!me.signedIn||me.user?.role!=='student'){location.replace('/');return}const data=await api('/api/student/profile');const profile=data.profile;document.querySelector('#studentName').textContent=`${profile.studentNumber}번 ${profile.name}`;document.querySelector('#className').textContent=`${profile.schoolName} ${profile.grade}학년 ${profile.classNumber}반`;birthday.value=profile.birthdayMmdd;visible.checked=profile.birthdayVisible;renderPreview();form.hidden=false;passwordForm.hidden=false}start().catch(error=>{document.querySelector('#studentName').textContent='불러오지 못했습니다';document.querySelector('#className').textContent=error.message});
+async function startAvatar(){const data=await api('/api/student/profile');renderAvatar(data.profile.avatar);avatarCard.hidden=false}
+startAvatar().catch(error=>{avatarCard.hidden=false;currentAvatarName.textContent='\uc544\ubc14\ud0c0\ub97c \ubd88\ub7ec\uc624\uc9c0 \ubabb\ud588\uc2b5\ub2c8\ub2e4';avatarPolicy.textContent=error.message;openAvatarPicker.disabled=true});
 </script></body></html>

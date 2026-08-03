@@ -1,5 +1,7 @@
 const crypto = require("crypto");
 const express = require("express");
+const fs = require("fs");
+const path = require("path");
 const { OAuth2Client } = require("google-auth-library");
 const { Pool } = require("pg");
 const { createReadingBank } = require("./reading-bank");
@@ -14,6 +16,58 @@ const DEFAULT_TEACHER_PASSWORD = "123456";
 const AUTH_FAILURE_LIMIT = 30;
 const AUTH_FAILURE_WINDOW_MS = 15 * 60 * 1000;
 const AUTH_FAILURE_MAX_ENTRIES = 5000;
+const AVATAR_DIRECTORY = path.join(__dirname, "..", "classtools", "assets", "avatars");
+const AVATAR_KEYS = Object.freeze(
+  fs.readdirSync(AVATAR_DIRECTORY)
+    .filter((name) => name.toLowerCase().endsWith(".webp"))
+    .sort((left, right) => left.localeCompare(right, "en"))
+);
+const AVATAR_KEY_SET = new Set(AVATAR_KEYS);
+
+function normalizeAvatarKey(avatarKey) {
+  return String(avatarKey || "").trim().replace(/\.png$/i, ".webp");
+}
+
+function avatarUrl(avatarKey) {
+  const normalizedKey = normalizeAvatarKey(avatarKey);
+  return normalizedKey && AVATAR_KEY_SET.has(normalizedKey)
+    ? `/assets/avatars/${encodeURIComponent(normalizedKey)}`
+    : "";
+}
+
+function avatarCapacity(studentCount) {
+  return Math.max(1, Math.ceil(Number(studentCount || 0) / AVATAR_KEYS.length));
+}
+
+function koreanCalendarParts(now = new Date()) {
+  const parts = new Intl.DateTimeFormat("en-CA", {
+    timeZone: "Asia/Seoul",
+    year: "numeric",
+    month: "numeric",
+    day: "numeric"
+  }).formatToParts(now);
+  const values = Object.fromEntries(parts.map((part) => [part.type, part.value]));
+  return { year: Number(values.year), month: Number(values.month), day: Number(values.day) };
+}
+
+function avatarChangeWindow(now = new Date()) {
+  const { year, month } = koreanCalendarParts(now);
+  if (month >= 3 && month <= 7) {
+    return { year, period: "first", label: "1\ud559\uae30(3\uc6d4 1\uc77c~7\uc6d4 31\uc77c)" };
+  }
+  if (month >= 8 && month <= 12) {
+    return { year, period: "second", label: "2\ud559\uae30(8\uc6d4 1\uc77c~12\uc6d4 31\uc77c)" };
+  }
+  return { year, period: null, label: "\ubcc0\uacbd \uae30\uac04 \uc544\ub2d8(1~2\uc6d4)" };
+}
+
+function pickRandomAvailableAvatar(usageCounts, capacity) {
+  const available = AVATAR_KEYS.filter((key) => Number(usageCounts.get(key) || 0) < capacity);
+  if (available.length === 0) {
+    throw new HttpError(409, "AVATAR_CAPACITY_EXHAUSTED", "This grade has no available avatars.");
+  }
+  return available[crypto.randomInt(available.length)];
+}
 
 class HttpError extends Error {
   constructor(status, code, message) {
@@ -407,6 +461,17 @@ function createClassroomPlatform(options = {}) {
         ADD COLUMN IF NOT EXISTS birthday_mmdd TEXT`,
       `ALTER TABLE classroom_students
         ADD COLUMN IF NOT EXISTS birthday_visible BOOLEAN NOT NULL DEFAULT FALSE`,
+      `ALTER TABLE classroom_students
+        ADD COLUMN IF NOT EXISTS avatar_key TEXT`,
+      `ALTER TABLE classroom_students
+        ADD COLUMN IF NOT EXISTS avatar_first_changed_year INTEGER`,
+      `ALTER TABLE classroom_students
+        ADD COLUMN IF NOT EXISTS avatar_second_changed_year INTEGER`,
+      `UPDATE classroom_students
+       SET avatar_key = regexp_replace(avatar_key, '\\.png$', '.webp', 'i')
+       WHERE avatar_key ~* '\\.png$'`,
+      `CREATE INDEX IF NOT EXISTS classroom_students_avatar_idx
+        ON classroom_students (avatar_key)`,
       `UPDATE classroom_students
        SET birthday_mmdd = RIGHT(birth_date, 4)
        WHERE birthday_mmdd IS NULL AND birth_date ~ '^\\d{6}$'`,
@@ -830,8 +895,9 @@ function createClassroomPlatform(options = {}) {
       throw new HttpError(403, "STUDENT_REQUIRED", "This page is for student accounts only.");
     }
     const result = await pool.query(
-      `SELECT s.roster_name, s.student_number, s.birthday_mmdd, s.birthday_visible,
-              c.academic_year, c.grade, c.class_number, sc.name AS school_name
+      `SELECT s.id AS student_id, s.roster_name, s.student_number, s.birthday_mmdd, s.birthday_visible,
+              s.avatar_key, s.avatar_first_changed_year, s.avatar_second_changed_year,
+              c.school_id, c.academic_year, c.grade, c.class_number, sc.name AS school_name
        FROM classroom_students s
        JOIN classroom_classes c ON c.id = s.class_id
        JOIN classroom_schools sc ON sc.id = c.school_id
@@ -842,6 +908,32 @@ function createClassroomPlatform(options = {}) {
     );
     const row = result.rows[0];
     if (!row) throw new HttpError(404, "STUDENT_MEMBERSHIP_REQUIRED", "Join your class before changing this setting.");
+    const avatarUsageResult = await pool.query(
+      `SELECT s.avatar_key, COUNT(*)::INTEGER AS usage_count,
+              SUM(COUNT(*)) OVER()::INTEGER AS student_count
+       FROM classroom_students s
+       JOIN classroom_classes c ON c.id = s.class_id
+       WHERE c.school_id = $1 AND c.academic_year = $2 AND c.grade = $3
+       GROUP BY s.avatar_key`,
+      [row.school_id, row.academic_year, row.grade]
+    );
+    const cohortStudentCount = Number(avatarUsageResult.rows[0]?.student_count || 0);
+    const maximumAvatarUses = avatarCapacity(cohortStudentCount);
+    const avatarUsageCounts = new Map(
+      avatarUsageResult.rows
+        .filter((item) => item.avatar_key)
+        .map((item) => [item.avatar_key, Number(item.usage_count || 0)])
+    );
+    const changeWindow = avatarChangeWindow();
+    const usedChange = changeWindow.period === "first"
+      ? Number(row.avatar_first_changed_year) === changeWindow.year
+      : changeWindow.period === "second" && Number(row.avatar_second_changed_year) === changeWindow.year;
+    const avatarOptions = AVATAR_KEYS.map((key) => ({
+      key,
+      url: avatarUrl(key),
+      available: key === row.avatar_key || Number(avatarUsageCounts.get(key) || 0) < maximumAvatarUses
+    }));
+
     res.json({
       profile: {
         name: row.roster_name,
@@ -851,7 +943,17 @@ function createClassroomPlatform(options = {}) {
         grade: row.grade,
         classNumber: row.class_number,
         birthdayMmdd: row.birthday_mmdd || "",
-        birthdayVisible: row.birthday_visible === true
+        birthdayVisible: row.birthday_visible === true,
+        avatar: {
+          key: normalizeAvatarKey(row.avatar_key),
+          url: avatarUrl(row.avatar_key),
+          canChange: Boolean(row.avatar_key && changeWindow.period && !usedChange),
+          changePeriod: changeWindow.period,
+          changePeriodLabel: changeWindow.label,
+          changeUsed: usedChange,
+          maximumUsesPerAvatar: maximumAvatarUses,
+          options: avatarOptions
+        }
       }
     });
   }));
@@ -890,6 +992,97 @@ function createClassroomPlatform(options = {}) {
       }
     });
   }));
+  router.patch("/student/avatar", asyncRoute(async (req, res) => {
+    const user = await requireUser(req);
+    if (user.role !== "student") {
+      throw new HttpError(403, "STUDENT_REQUIRED", "This page is for student accounts only.");
+    }
+    const requestedAvatarKey = normalizeAvatarKey(req.body?.avatarKey);
+    if (!AVATAR_KEY_SET.has(requestedAvatarKey)) {
+      throw new HttpError(400, "INVALID_AVATAR", "Choose an avatar from the available list.");
+    }
+    const changeWindow = avatarChangeWindow();
+    if (!changeWindow.period) {
+      throw new HttpError(403, "AVATAR_CHANGE_CLOSED", "\uc544\ubc14\ud0c0\ub294 3\uc6d4 1\uc77c~7\uc6d4 31\uc77c\uacfc 8\uc6d4 1\uc77c~12\uc6d4 31\uc77c\uc5d0 \uac01\uac01 \ud55c \ubc88 \ubc14\uafc0 \uc218 \uc788\uc2b5\ub2c8\ub2e4.");
+    }
+
+    const client = await pool.connect();
+    try {
+      await client.query("BEGIN");
+      const studentResult = await client.query(
+        `SELECT s.id, s.avatar_key, s.avatar_first_changed_year, s.avatar_second_changed_year,
+                c.school_id, c.academic_year, c.grade
+         FROM classroom_students s
+         JOIN classroom_classes c ON c.id = s.class_id
+         WHERE s.user_id = $1
+         ORDER BY c.updated_at DESC
+         LIMIT 1
+         FOR UPDATE OF s`,
+        [user.id]
+      );
+      const student = studentResult.rows[0];
+      if (!student) throw new HttpError(404, "STUDENT_MEMBERSHIP_REQUIRED", "Join your class before changing the avatar.");
+      if (!student.avatar_key) throw new HttpError(409, "AVATAR_NOT_ASSIGNED", "Ask your teacher to save the roster first.");
+
+      await client.query(
+        "SELECT pg_advisory_xact_lock(hashtextextended($1, 0))",
+        [`avatar:${student.school_id}:${student.academic_year}:${student.grade}`]
+      );
+      const currentAvatarKey = normalizeAvatarKey(student.avatar_key);
+      if (currentAvatarKey === requestedAvatarKey) {
+        await client.query("COMMIT");
+        return res.json({ changed: false, avatar: { key: currentAvatarKey, url: avatarUrl(currentAvatarKey) } });
+      }
+      const changeAlreadyUsed = changeWindow.period === "first"
+        ? Number(student.avatar_first_changed_year) === changeWindow.year
+        : Number(student.avatar_second_changed_year) === changeWindow.year;
+      if (changeAlreadyUsed) {
+        throw new HttpError(409, "AVATAR_CHANGE_ALREADY_USED", `${changeWindow.label} \ubcc0\uacbd \uae30\ud68c\ub97c \uc774\ubbf8 \uc0ac\uc6a9\ud588\uc2b5\ub2c8\ub2e4.`);
+      }
+
+      const capacityResult = await client.query(
+        `SELECT COUNT(*)::INTEGER AS student_count,
+                COUNT(*) FILTER (WHERE s.avatar_key = $4 AND s.id <> $5)::INTEGER AS selected_count
+         FROM classroom_students s
+         JOIN classroom_classes c ON c.id = s.class_id
+         WHERE c.school_id = $1 AND c.academic_year = $2 AND c.grade = $3`,
+        [student.school_id, student.academic_year, student.grade, requestedAvatarKey, student.id]
+      );
+      const usage = capacityResult.rows[0];
+      const maximumAvatarUses = avatarCapacity(Number(usage.student_count || 0));
+      if (Number(usage.selected_count || 0) >= maximumAvatarUses) {
+        throw new HttpError(409, "AVATAR_UNAVAILABLE", "\uac19\uc740 \ud559\ub144\uc758 \ub2e4\ub978 \ud559\uc0dd\uc774 \uc774\ubbf8 \uc0ac\uc6a9 \uc911\uc778 \uc544\ubc14\ud0c0\uc785\ub2c8\ub2e4.");
+      }
+
+      if (changeWindow.period === "first") {
+        await client.query(
+          `UPDATE classroom_students
+           SET avatar_key = $2, avatar_first_changed_year = $3, updated_at = NOW()
+           WHERE id = $1`,
+          [student.id, requestedAvatarKey, changeWindow.year]
+        );
+      } else {
+        await client.query(
+          `UPDATE classroom_students
+           SET avatar_key = $2, avatar_second_changed_year = $3, updated_at = NOW()
+           WHERE id = $1`,
+          [student.id, requestedAvatarKey, changeWindow.year]
+        );
+      }
+      await client.query("COMMIT");
+      return res.json({
+        changed: true,
+        avatar: { key: requestedAvatarKey, url: avatarUrl(requestedAvatarKey) },
+        changePeriodLabel: changeWindow.label
+      });
+    } catch (error) {
+      await client.query("ROLLBACK");
+      throw error;
+    } finally {
+      client.release();
+    }
+  }));
+
 
   router.patch("/student/password", asyncRoute(async (req, res) => {
     const user = await requireUser(req);
@@ -1946,6 +2139,7 @@ function createClassroomPlatform(options = {}) {
     const studentsResult = await pool.query(
       `SELECT student_number, roster_name, COALESCE(gender, '남') AS gender,
               birthday_mmdd, birthday_visible,
+              avatar_key,
               user_id IS NOT NULL AS linked,
               password_hash IS NOT NULL AS password_configured
        FROM classroom_students
@@ -1974,6 +2168,8 @@ function createClassroomPlatform(options = {}) {
           gender: student.gender === '여' ? '여' : '남',
           birthdayMmdd: student.birthday_visible === true ? (student.birthday_mmdd || "") : "",
           birthdayVisible: student.birthday_visible === true,
+          avatarKey: normalizeAvatarKey(student.avatar_key),
+          avatarUrl: avatarUrl(student.avatar_key),
           linked: student.linked,
           passwordConfigured: student.password_configured
         }))
@@ -2106,6 +2302,11 @@ function createClassroomPlatform(options = {}) {
         );
         classroom = result.rows[0];
       }
+      await client.query(
+        "SELECT pg_advisory_xact_lock(hashtextextended($1, 0))",
+        [`avatar:${schoolId}:${academicYear}:${grade}`]
+      );
+
 
       const numbers = cleanStudents.map((student) => student.number);
       const removedStudentsResult = await client.query(
@@ -2136,7 +2337,7 @@ function createClassroomPlatform(options = {}) {
         [classroom.id, numbers]
       );
       const existingPasswordsResult = await client.query(
-        `SELECT student_number, password_hash, user_id, birthday_mmdd, birthday_visible
+        `SELECT student_number, password_hash, user_id, birthday_mmdd, birthday_visible, avatar_key
          FROM classroom_students
          WHERE class_id = $1 AND student_number = ANY($2::TEXT[])`,
         [classroom.id, numbers]
@@ -2146,26 +2347,51 @@ function createClassroomPlatform(options = {}) {
           passwordHash: student.password_hash,
           claimed: Boolean(student.user_id),
           birthdayMmdd: student.birthday_mmdd,
-          birthdayVisible: student.birthday_visible === true
+          birthdayVisible: student.birthday_visible === true,
+          avatarKey: student.avatar_key || ""
         }])
       );
+      const cohortAvatarResult = await client.query(
+        `SELECT s.avatar_key, COUNT(*)::INTEGER AS usage_count,
+                SUM(COUNT(*)) OVER()::INTEGER AS student_count
+         FROM classroom_students s
+         JOIN classroom_classes c ON c.id = s.class_id
+         WHERE c.school_id = $1 AND c.academic_year = $2 AND c.grade = $3
+         GROUP BY s.avatar_key`,
+        [schoolId, academicYear, grade]
+      );
+      const cohortStudentCount = Number(cohortAvatarResult.rows[0]?.student_count || 0);
+      const newStudentCount = cleanStudents.length - existingPasswordsResult.rowCount;
+      const maximumAvatarUses = avatarCapacity(cohortStudentCount + newStudentCount);
+      const avatarUsageCounts = new Map(
+        cohortAvatarResult.rows
+          .filter((row) => row.avatar_key)
+          .map((row) => [row.avatar_key, Number(row.usage_count || 0)])
+      );
+
       for (const student of cleanStudents) {
         const existingPassword = existingPasswords.get(student.number);
         const passwordHash = existingPassword?.passwordHash || hashStudentPassword(DEFAULT_STUDENT_PASSWORD);
+        const avatarKey = existingPassword?.avatarKey || pickRandomAvailableAvatar(avatarUsageCounts, maximumAvatarUses);
+        if (!existingPassword?.avatarKey) {
+          avatarUsageCounts.set(avatarKey, Number(avatarUsageCounts.get(avatarKey) || 0) + 1);
+        }
+
         await client.query(
           `INSERT INTO classroom_students
-            (class_id, student_number, roster_name, gender, birthday_mmdd, birthday_visible, birth_date, password_hash)
-           VALUES ($1, $2, $3, $4, $5, $6, NULL, $7)
+            (class_id, student_number, roster_name, gender, birthday_mmdd, birthday_visible, birth_date, avatar_key, password_hash)
+           VALUES ($1, $2, $3, $4, $5, $6, NULL, $7, $8)
            ON CONFLICT (class_id, student_number) DO UPDATE SET
              roster_name = EXCLUDED.roster_name,
              gender = EXCLUDED.gender,
              birthday_mmdd = EXCLUDED.birthday_mmdd,
              birthday_visible = EXCLUDED.birthday_visible,
              birth_date = NULL,
+             avatar_key = COALESCE(classroom_students.avatar_key, EXCLUDED.avatar_key),
              password_hash = EXCLUDED.password_hash,
              updated_at = NOW()`,
           [classroom.id, student.number, student.name, student.gender,
-           existingPassword?.birthdayMmdd || null, existingPassword?.birthdayVisible || false, passwordHash]
+           existingPassword?.birthdayMmdd || null, existingPassword?.birthdayVisible || false, avatarKey, passwordHash]
         );
       }
       await client.query("COMMIT");
@@ -2344,6 +2570,10 @@ function createClassroomPlatform(options = {}) {
 
 module.exports = {
   createClassroomPlatform,
+  AVATAR_KEYS,
+  avatarCapacity,
+  avatarChangeWindow,
+  normalizeAvatarKey,
   createAuthenticationFailureLimiter,
   hashStudentPassword,
   normalizePersonName,

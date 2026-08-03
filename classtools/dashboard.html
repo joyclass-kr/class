@@ -1429,7 +1429,8 @@
         });
 
         function getAvatarForStudent(num) {
-            return ClassroomAvatars.getAvatarForStudent(num, activeScheduleClassId || 'dashboard-demo');
+            const student = rosterStudents.find((item) => String(item.number) === String(num));
+            return ClassroomAvatars.getAvatarForStudentRecord(student || { number: num }, activeScheduleClassId || 'dashboard-demo');
         }
 
         // 4. Student Roster Checklist & Birthday Check & Class Switcher
