@@ -36,6 +36,10 @@ const pictureWords = [
 ];
 const picturePool = core.pictureGamePool(pictureWords, new Set(["10", "11", "12", "13", "14", "15"]), 1);
 assert.deepStrictEqual(picturePool.map((word) => word.id), [10, 11, 12, 13]);
+const spellingPool = core.spellingGamePool(pictureWords, new Set(["10", "11", "12", "13", "14", "15"]), 1);
+assert.deepStrictEqual(spellingPool.map((word) => word.id), [10, 11, 12, 13, 15]);
+const middleSpellingPool = core.spellingGamePool(pictureWords, new Set(["10", "11", "12", "13", "14", "15"]), 1);
+assert.ok(middleSpellingPool.some((word) => word.stageCode === "middle_common"));
 const pictureQuestion = core.createPictureQuestion(picturePool, 10, () => 0);
 assert.strictEqual(pictureQuestion.target.id, 11);
 assert.strictEqual(pictureQuestion.choices.length, 4);

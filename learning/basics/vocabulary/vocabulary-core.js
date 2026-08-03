@@ -72,6 +72,16 @@
         ));
     }
 
+    function spellingGamePool(words, wordIds, level = 0) {
+        const validIds = wordIds instanceof Set
+            ? wordIds
+            : new Set(Array.isArray(wordIds) ? wordIds.map(String) : []);
+        const selectedLevel = Number(level);
+        return (Array.isArray(words) ? words : []).filter((word) => (
+            validIds.has(String(word.id))
+            && (selectedLevel === 0 || Number(word.globalLevel) === selectedLevel)
+        ));
+    }
     function createPictureQuestion(pool, previousId = null, random = Math.random, targetPool = pool) {
         const safePool = Array.isArray(pool) ? pool : [];
         if (safePool.length < 4) return null;
@@ -112,6 +122,7 @@
         shuffleWords,
         stageClass,
         pictureGamePool,
+        spellingGamePool,
         createPictureQuestion,
         normalizeSpellingAnswer,
         spellingHint,

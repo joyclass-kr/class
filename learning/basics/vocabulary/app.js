@@ -877,7 +877,7 @@
     function selectSpellingLevel(level) {
         setSpellingReviewMode(false);
         state.spellingLevel = Number(level);
-        state.spellingPool = core.pictureGamePool(
+        state.spellingPool = core.spellingGamePool(
             state.data.words,
             state.spellingIds,
             state.spellingLevel,
@@ -1061,7 +1061,7 @@
                 );
                 button.disabled = levelPool.length < 4;
             });
-            const spellingPool = core.pictureGamePool(state.data.words, state.spellingIds);
+            const spellingPool = core.spellingGamePool(state.data.words, state.spellingIds);
             elements.spellingWordCount.textContent = spellingPool.length.toLocaleString("ko-KR");
             elements.spellingGameStartButton.hidden = spellingPool.length === 0;
             elements.spellingLevelSelect.disabled = spellingPool.length === 0;
