@@ -46,6 +46,9 @@ test("the final avatar catalog contains 152 unique WebP files", () => {
 test("legacy PNG avatar keys normalize to WebP", () => {
   assert.equal(platform.normalizeAvatarKey("animal-tiger.png"), "animal-tiger.webp");
   assert.equal(platform.normalizeAvatarKey("animal-tiger.webp"), "animal-tiger.webp");
+  assert.equal(platform.normalizeAvatarKey("animal-hippopotamus-02.webp"), "animal-hippopotamus.webp");
+  assert.equal(platform.normalizeAvatarKey("animal-crocodile-02.webp"), "animal-crocodile.webp");
+  assert.equal(platform.normalizeAvatarKey("food-sushi-roll.webp"), "food-gimbap.webp");
 });
 test("avatar capacity increases at 153 and 305 students", () => {
   assert.equal(platform.avatarCapacity(1), 1);

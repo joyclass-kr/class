@@ -23,9 +23,15 @@ const AVATAR_KEYS = Object.freeze(
     .sort((left, right) => left.localeCompare(right, "en"))
 );
 const AVATAR_KEY_SET = new Set(AVATAR_KEYS);
+const LEGACY_AVATAR_KEY_ALIASES = Object.freeze({
+  "animal-hippopotamus-02.webp": "animal-hippopotamus.webp",
+  "animal-crocodile-02.webp": "animal-crocodile.webp",
+  "food-sushi-roll.webp": "food-gimbap.webp"
+});
 
 function normalizeAvatarKey(avatarKey) {
-  return String(avatarKey || "").trim().replace(/\.png$/i, ".webp");
+  const webpKey = String(avatarKey || "").trim().replace(/\.png$/i, ".webp");
+  return LEGACY_AVATAR_KEY_ALIASES[webpKey] || webpKey;
 }
 
 function avatarUrl(avatarKey) {
@@ -470,6 +476,14 @@ function createClassroomPlatform(options = {}) {
       `UPDATE classroom_students
        SET avatar_key = regexp_replace(avatar_key, '\\.png$', '.webp', 'i')
        WHERE avatar_key ~* '\\.png$'`,
+      `UPDATE classroom_students
+       SET avatar_key = CASE avatar_key
+         WHEN 'animal-hippopotamus-02.webp' THEN 'animal-hippopotamus.webp'
+         WHEN 'animal-crocodile-02.webp' THEN 'animal-crocodile.webp'
+         WHEN 'food-sushi-roll.webp' THEN 'food-gimbap.webp'
+         ELSE avatar_key
+       END
+       WHERE avatar_key IN ('animal-hippopotamus-02.webp', 'animal-crocodile-02.webp', 'food-sushi-roll.webp')`,
       `CREATE INDEX IF NOT EXISTS classroom_students_avatar_idx
         ON classroom_students (avatar_key)`,
       `UPDATE classroom_students
