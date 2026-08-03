@@ -224,11 +224,22 @@
         }
 
         .signed-in-actions {
-            display: flex;
-            align-items: center;
-            justify-content: flex-end;
-            flex-wrap: wrap;
+            display: grid;
+            grid-template-columns: repeat(3, minmax(0, 1fr));
             gap: 6px;
+            width: 100%;
+            margin-top: 14px;
+        }
+
+        .signed-in-actions .auth-button {
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            min-height: 44px;
+            padding: 7px 6px;
+            text-align: center;
+            line-height: 1.2;
+            white-space: nowrap;
         }
 
         .content-access-button {
@@ -390,10 +401,6 @@
         }
 
         .signed-in-row {
-            display: flex;
-            align-items: center;
-            justify-content: space-between;
-            gap: 8px;
             margin-top: 8px;
             color: #fff0c7;
         }
