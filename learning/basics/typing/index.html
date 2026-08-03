@@ -7,12 +7,15 @@
   <title>타자</title>
   <link rel="stylesheet" href="style.css">
   <link rel="stylesheet" href="guide.css">
+  <script src="typing-bgm.js" defer></script>
+  <script src="../../../assets/sound/music-control.js" defer></script>
 </head>
 <body>
+  <audio id="bgm" preload="auto"></audio>
   <header class="topbar">
     <a class="home" href="../../../" aria-label="기초학력 목록으로 돌아가기">‹ 기초학력</a>
     <h1>타자연습</h1>
-    <div class="top-actions"><button id="recordsButton" class="icon-button" type="button">내 기록</button><button id="soundButton" class="icon-button" type="button" aria-pressed="true">소리 켬</button></div>
+    <div class="top-actions"><button id="recordsButton" class="icon-button" type="button">내 기록</button></div>
   </header>
 
   <main>
