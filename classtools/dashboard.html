@@ -207,7 +207,20 @@
             cursor: pointer;
             transition: all 0.2s;
             min-width: 44px;
-            min-height: 44px;
+            min-height: 58px;
+        }
+
+        .roster-avatar {
+            flex: 0 0 auto;
+            font-size: 2rem;
+            line-height: 1;
+        }
+
+        .roster-student-label {
+            min-width: 0;
+            font-size: 0.84rem;
+            font-weight: 800;
+            white-space: nowrap;
         }
 
         .icon-btn:hover {
@@ -380,11 +393,12 @@
         }
 
         .num-chip {
-            padding: 5px 4px;
+            padding: 7px 8px;
             display: flex;
-            flex-direction: column;
+            flex-direction: row;
             align-items: center;
             justify-content: center;
+            gap: 6px;
             font-size: 0.9rem;
             font-weight: 800;
             border-radius: 10px;
@@ -1506,9 +1520,8 @@
 
                 chip.innerHTML = `
                     ${isBday ? '<span class="bday-tag">🎂</span>' : ''}
-                    <div style="font-size: 1.25rem;">${avatar.icon}</div>
-                    <div style="font-size: 0.64rem; color: var(--text-sub);">${num}번</div>
-                    <div style="font-weight: 800; font-size: 0.78rem;">${student.name}</div>
+                    <div class="roster-avatar">${avatar.icon}</div>
+                    <div class="roster-student-label">${num}번 ${student.name}</div>
                 `;
 
                 chip.addEventListener("click", () => {
