@@ -211,15 +211,34 @@
         }
 
         .roster-avatar {
-            flex: 0 0 auto;
-            font-size: 2rem;
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            flex: 0 0 54px;
+            font-size: 2.25rem;
             line-height: 1;
         }
 
-        .roster-student-label {
+        .roster-student-copy {
+            display: flex;
+            flex-direction: column;
+            align-items: flex-start;
+            justify-content: center;
             min-width: 0;
-            font-size: 0.84rem;
+            gap: 2px;
+        }
+
+        .roster-student-number {
+            color: var(--text-sub);
+            font-size: 0.64rem;
+            font-weight: 700;
+            line-height: 1;
+        }
+
+        .roster-student-name {
+            font-size: 0.86rem;
             font-weight: 800;
+            line-height: 1.1;
             white-space: nowrap;
         }
 
@@ -288,8 +307,8 @@
         .period-col-center {
             display: flex;
             align-items: center;
-            justify-content: center;
-            gap: 6px;
+            justify-content: flex-start;
+            gap: 8px;
             text-align: center;
             white-space: nowrap;
             min-width: 0;
@@ -386,7 +405,7 @@
         /* 2. Student Checklist Widget */
         .checklist-grid {
             display: grid;
-            grid-template-columns: repeat( auto-fill, minmax(85px, 1fr) );
+            grid-template-columns: repeat(auto-fill, minmax(112px, 1fr));
             gap: 6px;
             max-height: none;
             overflow-y: visible;
@@ -409,8 +428,8 @@
             user-select: none;
             transition: all 0.15s ease;
             position: relative;
-            text-align: center;
-            min-height: 44px;
+            text-align: left;
+            min-height: 66px;
         }
 
         .num-chip.missing {
@@ -1521,7 +1540,10 @@
                 chip.innerHTML = `
                     ${isBday ? '<span class="bday-tag">🎂</span>' : ''}
                     <div class="roster-avatar">${avatar.icon}</div>
-                    <div class="roster-student-label">${num}번 ${student.name}</div>
+                    <div class="roster-student-copy">
+                        <span class="roster-student-number">${num}번</span>
+                        <span class="roster-student-name">${student.name}</span>
+                    </div>
                 `;
 
                 chip.addEventListener("click", () => {
