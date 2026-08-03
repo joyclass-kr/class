@@ -8,6 +8,7 @@ import { createRequire } from "node:module";
 
 const here = path.dirname(fileURLToPath(import.meta.url));
 const serverSource = fs.readFileSync(path.join(here, "classroom-platform.js"), "utf8");
+const hubServerSource = fs.readFileSync(path.join(here, "server.js"), "utf8");
 const profileSource = fs.readFileSync(path.join(here, "..", "classtools", "profile.html"), "utf8");
 const avatarDirectory = path.join(here, "..", "classtools", "assets", "avatars");
 const avatarFiles = fs.readdirSync(avatarDirectory).filter((name) => name.endsWith(".webp")).sort();
@@ -39,6 +40,7 @@ test("the final avatar catalog contains 152 unique WebP files", () => {
   assert.equal(avatarFiles.length, 152);
   assert.equal(new Set(avatarFiles).size, 152);
   assert.deepEqual([...platform.AVATAR_KEYS].sort(), avatarFiles);
+  assert.match(hubServerSource, /app\.use\("\/assets\/avatars"/);
 });
 
 test("legacy PNG avatar keys normalize to WebP", () => {

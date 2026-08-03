@@ -169,6 +169,7 @@ const stopLearningApps = () => {
 process.once("SIGTERM", stopLearningApps);
 process.once("SIGINT", stopLearningApps);
 
+app.use("/assets/avatars", express.static(path.join(SITE_ROOT, "classtools", "assets", "avatars"), { dotfiles: "ignore" }));
 app.use("/assets", express.static(path.join(SITE_ROOT, "assets"), { dotfiles: "ignore" }));
 app.get("/favicon.ico", (_req, res) => {
   res.sendFile(path.join(SITE_ROOT, "favicon.ico"));
