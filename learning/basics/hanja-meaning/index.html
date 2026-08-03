@@ -24,21 +24,32 @@
 
     * { box-sizing: border-box; }
 
-    html { background: var(--paper); }
+    html { background: #ded8ca; }
 
     body {
       margin: 0;
       min-width: 320px;
       color: var(--ink);
-      background: var(--paper);
+      background: #ded8ca url("assets/hanja-background.webp") center center / cover fixed no-repeat;
       font-family: "Noto Serif KR", "KoPub Batang", "Batang", serif;
       -webkit-font-smoothing: antialiased;
+    }
+
+    body::before {
+      content: "";
+      position: fixed;
+      inset: 0;
+      z-index: 0;
+      pointer-events: none;
+      background: rgba(247, 245, 239, .72);
     }
 
     a, summary { -webkit-tap-highlight-color: transparent; }
 
     .page {
-      width: min(1060px, 100%);
+            position: relative;
+      z-index: 1;
+width: min(1060px, 100%);
       min-height: 100svh;
       margin: 0 auto;
       padding: clamp(14px, 2.2vw, 24px) clamp(18px, 4vw, 44px) 34px;
@@ -122,7 +133,7 @@
       overflow: hidden;
       border: 1px solid var(--line);
       border-radius: 8px;
-      background: var(--card);
+      background: rgba(255, 253, 248, .94);
     }
 
     summary {
@@ -229,7 +240,9 @@
     }
 
     @media (max-width: 720px) {
-      .page { padding-inline: 16px; }
+      .page {       position: relative;
+      z-index: 1;
+padding-inline: 16px; }
       .topbar { grid-template-columns: 1fr auto; }
       .study-guide {
         grid-column: 1 / -1;
@@ -248,6 +261,20 @@
       .lesson-link { grid-template-columns: 32px minmax(60px, auto) 1fr; padding-inline: 8px; }
       .lesson-hanja { font-size: 21px; }
     }
+
+    body { background: #ded8ca; }
+    body::before {
+      background: url("assets/hanja-background.webp") center center / cover no-repeat;
+    }
+    body::after {
+      content: "";
+      position: fixed;
+      inset: 0;
+      z-index: 1;
+      pointer-events: none;
+      background: rgba(247, 245, 239, .72);
+    }
+    .page { position: relative; z-index: 2; }
   </style>
 </head>
 <body>
@@ -264,7 +291,7 @@
 
     <div class="section-head">
       <h2>전체 차시</h2>
-      <p class="total">36차시 · 109자</p>
+      <p class="total">41차시 · 109자</p>
     </div>
 
     <div class="groups">

@@ -419,6 +419,26 @@
       .view { animation: appear .18s ease-out; }
       @keyframes appear { from { opacity: .2; transform: translateY(4px); } }
     }
+
+    html { background: #ded8ca; }
+    body { background: #ded8ca; }
+    body::before {
+      content: "";
+      position: fixed;
+      inset: 0;
+      z-index: 0;
+      pointer-events: none;
+      background: url("../assets/hanja-background.webp") center center / cover no-repeat;
+    }
+    body::after {
+      content: "";
+      position: fixed;
+      inset: 0;
+      z-index: 1;
+      pointer-events: none;
+      background: rgba(247, 245, 239, .78);
+    }
+    .page { position: relative; z-index: 2; }
   </style>
 </head>
 <body>
