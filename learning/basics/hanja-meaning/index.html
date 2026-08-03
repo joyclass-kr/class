@@ -4,7 +4,7 @@
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
   <meta name="theme-color" content="#f7f5ef">
-  <title>한자</title>
+  <title>韓字 | 기초학력</title>
   <style>
     @font-face {
       font-family: "KleeHanja";
@@ -89,61 +89,6 @@
       font-weight: 800;
     }
 
-    .start-card {
-      display: grid;
-      grid-template-columns: auto minmax(0, 1fr) auto;
-      align-items: center;
-      gap: clamp(16px, 3vw, 28px);
-      margin: 18px 0 16px;
-      padding: clamp(16px, 2.4vw, 24px);
-      border: 1px solid #b7cbd9;
-      border-radius: 10px;
-      color: var(--ink);
-      background: var(--card);
-      text-decoration: none;
-    }
-
-    .start-hanja {
-      min-width: 1em;
-      color: var(--blue);
-      font-family: "KleeHanja", serif;
-      font-size: clamp(56px, 8vw, 76px);
-      font-weight: 600;
-      line-height: .9;
-      text-align: center;
-    }
-
-    .start-copy { min-width: 0; }
-
-    .start-label {
-      display: block;
-      margin-bottom: 6px;
-      color: var(--blue);
-      font-family: system-ui, sans-serif;
-      font-size: 14px;
-      font-weight: 800;
-    }
-
-    .start-title {
-      display: block;
-      font-size: clamp(20px, 2.6vw, 27px);
-      font-weight: 800;
-      line-height: 1.25;
-    }
-
-    .start-note {
-      display: block;
-      margin-top: 5px;
-      color: var(--muted);
-      font-size: 16px;
-      line-height: 1.45;
-    }
-
-    .start-arrow {
-      font-family: system-ui, sans-serif;
-      font-size: 25px;
-      font-weight: 800;
-    }
 
     .section-head {
       display: flex;
@@ -279,7 +224,7 @@
     }
 
     @media (hover: hover) {
-      .start-card:hover, .lesson-link:hover { background: var(--blue-soft); }
+      .lesson-link:hover { background: var(--blue-soft); }
       summary:hover { background: #fbfaf6; }
     }
 
@@ -293,8 +238,6 @@
         margin-top: -4px;
         text-align: left;
       }
-      .start-card { grid-template-columns: auto minmax(0, 1fr); }
-      .start-arrow { display: none; }
       summary { grid-template-columns: 68px minmax(0, 1fr) auto; }
       .group-chars { display: none; }
       .lesson-list { grid-template-columns: 1fr; }
@@ -302,8 +245,6 @@
     }
 
     @media (max-width: 430px) {
-      .start-hanja { font-size: 52px; }
-      .start-note { font-size: 14px; }
       .lesson-link { grid-template-columns: 32px minmax(60px, auto) 1fr; padding-inline: 8px; }
       .lesson-hanja { font-size: 21px; }
     }
@@ -320,15 +261,6 @@
       <a class="home-link" href="../../../">기초학력으로</a>
     </header>
 
-    <a class="start-card" href="in/" aria-label="1차시 사람 인부터 시작">
-      <span class="start-hanja" aria-hidden="true">人</span>
-      <span class="start-copy">
-        <span class="start-label">처음부터 시작</span>
-        <span class="start-title">1차시 · 사람 인</span>
-        <span class="start-note">인생·인구·개인처럼 말 속의 뜻을 알아봅니다.</span>
-      </span>
-      <span class="start-arrow" aria-hidden="true">→</span>
-    </a>
 
     <div class="section-head">
       <h2>전체 차시</h2>
