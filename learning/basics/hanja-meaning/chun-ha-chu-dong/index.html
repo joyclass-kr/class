@@ -4,7 +4,7 @@
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
   <meta name="theme-color" content="#f7f5ef">
-  <title>한자</title>
+  <title>春·夏·秋·冬 | 韓字</title>
   <style>
     @font-face {
       font-family: "KleeHanja";
@@ -663,13 +663,22 @@
           choice.addEventListener('click', () => {
             if (question.dataset.done === 'true') return;
             const correct = index === answer;
+
+            choices.forEach((button) => { button.classList.remove('wrong'); });
+
+            if (!correct) {
+              choice.classList.add('wrong');
+              feedback.textContent = '다시 생각하고 다른 답을 골라보세요.';
+              feedback.className = 'feedback is-wrong';
+              return;
+            }
+
             question.dataset.done = 'true';
-            question.dataset.correct = String(correct);
-            choice.classList.add(correct ? 'correct' : 'wrong');
-            if (!correct) choices[answer].classList.add('correct');
+            question.dataset.correct = 'true';
+            choice.classList.add('correct');
             choices.forEach((button) => { button.disabled = true; });
-            feedback.textContent = correct ? `맞았습니다. ${question.dataset.note}` : `정답을 확인하세요. ${question.dataset.note}`;
-            feedback.className = `feedback ${correct ? 'is-correct' : 'is-wrong'}`;
+            feedback.textContent = `맞았습니다. ${question.dataset.note}`;
+            feedback.className = 'feedback is-correct';
             updateResult();
           });
         });
