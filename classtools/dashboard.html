@@ -883,9 +883,9 @@
         /* Multi-Student Bubble Touch Picker (Class123 Style) */
         .bubble-picker-grid {
             display: grid;
-            grid-template-columns: repeat(auto-fill, minmax(110px, 1fr));
-            gap: 16px;
-            padding: 20px 10px;
+            grid-template-columns: repeat(auto-fill, minmax(142px, 1fr));
+            gap: 20px;
+            padding: 24px 14px;
             overflow-y: auto;
             max-height: 60vh;
             justify-items: center;
@@ -894,8 +894,8 @@
 
         .bubble-card {
             position: relative;
-            width: 96px;
-            height: 96px;
+            width: 126px;
+            height: 126px;
             border-radius: 50%;
             background: radial-gradient(circle at 35% 35%, #4a5863 0%, #22292f 70%, #151a1e 100%);
             border: 3px solid #5a6a77;
@@ -916,9 +916,9 @@
         }
 
         .bubble-card.revealed {
-            border-radius: 20px;
-            width: 102px;
-            height: 108px;
+            border-radius: 22px;
+            width: 134px;
+            height: 142px;
             background: linear-gradient(135deg, #1e3c72 0%, #2a5298 100%);
             border: 3px solid #ffe600;
             box-shadow: 0 12px 30px rgba(255, 230, 0, 0.45);
@@ -933,12 +933,12 @@
         }
 
         .bubble-avatar {
-            font-size: 2.5rem;
+            font-size: 3.55rem;
             line-height: 1;
         }
 
         .bubble-name {
-            font-size: 1.05rem;
+            font-size: 1.18rem;
             font-weight: 900;
             color: #ffffff;
             margin-top: 3px;
@@ -2060,7 +2060,7 @@
                     card.classList.add("revealed");
                     card.innerHTML = `
                         <div class="bubble-avatar">${avatar.icon}</div>
-                        <div class="bubble-name">${student.number}번 ${student.name}</div>
+                        <div class="bubble-name">${student.name}</div>
                     `;
                 });
 
