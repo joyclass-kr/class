@@ -80,7 +80,7 @@
             align-items: start;
         }
 
-        @media (max-width: 1260px) {
+        @media (max-width: 1080px) {
             .seating-container {
                 grid-template-columns: 1fr;
             }
@@ -132,7 +132,7 @@
 
         .seating-grid {
             display: grid;
-            grid-template-columns: repeat(6, minmax(0, 1fr));
+            grid-template-columns: repeat(6, 1fr);
             gap: 12px;
             margin-bottom: 16px;
         }
@@ -143,9 +143,9 @@
             flex-direction: column;
             justify-content: space-between;
             width: 100%;
-            min-height: 82px;
-            padding: 8px 12px;
-            border: 1.5px solid rgba(12, 16, 15, 0.78);
+            min-height: 94px;
+            padding: 10px 12px;
+            border: 2px solid var(--line);
             border-radius: 14px;
             background: #fff;
             box-shadow: 0 4px 10px rgba(0, 0, 0, 0.04);
@@ -161,14 +161,12 @@
         }
 
         .desk-header-row {
-            position: absolute;
-            top: 8px;
-            left: 10px;
-            right: 10px;
+            position: relative;
             display: flex;
             align-items: center;
             justify-content: flex-start;
-            min-height: 0;
+            width: 100%;
+            min-height: 20px;
             padding-right: 38px;
         }
 
@@ -190,16 +188,16 @@
             display: inline-flex;
             align-items: center;
             justify-content: center;
-            flex: 0 0 64px;
-            width: 64px;
-            height: 64px;
+            flex: 0 0 44px;
+            width: 44px;
+            height: 44px;
             pointer-events: none;
         }
 
         .desk-avatar-image {
             display: block;
-            width: 64px;
-            height: 64px;
+            width: 44px;
+            height: 44px;
             object-fit: contain;
         }
 
@@ -207,7 +205,7 @@
             display: flex;
             align-items: center;
             justify-content: flex-start;
-            gap: 14px;
+            gap: 7px;
             width: 100%;
             flex: 1;
             min-width: 0;
@@ -259,11 +257,6 @@
 
         .desk.is-gender-male { border-color: #d4a62d; background: #fff8d8; }
         .desk.is-gender-female { border-color: #6b9fd1; background: #edf6ff; }
-
-        .desk.is-occupied {
-            background: #e7f7f1;
-            border-color: rgba(12, 16, 15, 0.82);
-        }
         .desk-lock {
             position: absolute;
             top: 8px;

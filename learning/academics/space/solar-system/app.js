@@ -119,82 +119,19 @@
             canvasContainer.appendChild(panel);
         }
 
-        // 36 Unique ClassTool Animal Avatars (1~36)
-        var CLASSTOOL_ANIMALS = [
-            { num: 1,  name: "판다", icon: "🐼", bg: "#f8fafc", ear: "#334155" },
-            { num: 2,  name: "토끼", icon: "🐰", bg: "#ffedd5", ear: "#f472b6" },
-            { num: 3,  name: "여우", icon: "🦊", bg: "#ffedd5", ear: "#ea580c" },
-            { num: 4,  name: "곰",   icon: "🐻", bg: "#fef3c7", ear: "#d97706" },
-            { num: 5,  name: "사자", icon: "🦁", bg: "#fef08a", ear: "#b45309" },
-            { num: 6,  name: "호랑이", icon: "🐯", bg: "#ffedd5", ear: "#d97706" },
-            { num: 7,  name: "고양이", icon: "🐱", bg: "#fef3c7", ear: "#7c3aed" },
-            { num: 8,  name: "강아지", icon: "🐶", bg: "#ffedd5", ear: "#b45309" },
-            { num: 9,  name: "개구리", icon: "🐸", bg: "#dcfce7", ear: "#16a34a" },
-            { num: 10, name: "아기새", icon: "🐥", bg: "#fef08a", ear: "#ca8a04" },
-            { num: 11, name: "유니콘", icon: "🦄", bg: "#fce7f3", ear: "#a855f7" },
-            { num: 12, name: "공룡", icon: "🦖", bg: "#dcfce7", ear: "#15803d" },
-            { num: 13, name: "꿀벌", icon: "🐝", bg: "#fef08a", ear: "#ca8a04" },
-            { num: 14, name: "아기쥐", icon: "🐭", bg: "#f1f5f9", ear: "#94a3b8" },
-            { num: 15, name: "코끼리", icon: "🐘", bg: "#e2e8f0", ear: "#64748b" },
-            { num: 16, name: "아기말", icon: "🐴", bg: "#ffedd5", ear: "#b45309" },
-            { num: 17, name: "아기양", icon: "🐑", bg: "#f8fafc", ear: "#cbd5e1" },
-            { num: 18, name: "펭귄", icon: "🐧", bg: "#e0f2fe", ear: "#0284c7" },
-            { num: 19, name: "부엉이", icon: "🦉", bg: "#ffedd5", ear: "#9a3412" },
-            { num: 20, name: "다람쥐", icon: "🐿️", bg: "#ffedd5", ear: "#c2410c" },
-            { num: 21, name: "너구리", icon: "🦝", bg: "#f1f5f9", ear: "#475569" },
-            { num: 22, name: "수달", icon: "🦦", bg: "#ffedd5", ear: "#9a3412" },
-            { num: 23, name: "사슴", icon: "🦌", bg: "#ffedd5", ear: "#b45309" },
-            { num: 24, name: "돌고래", icon: "🐬", bg: "#e0f2fe", ear: "#0284c7" },
-            { num: 25, name: "늑대", icon: "🐺", bg: "#e2e8f0", ear: "#475569" },
-            { num: 26, name: "원숭이", icon: "🐒", bg: "#ffedd5", ear: "#b45309" },
-            { num: 27, name: "코알라", icon: "🐨", bg: "#e2e8f0", ear: "#64748b" },
-            { num: 28, name: "캥거루", icon: "🦘", bg: "#ffedd5", ear: "#b45309" },
-            { num: 29, name: "바다표범", icon: "🦭", bg: "#e2e8f0", ear: "#0284c7" },
-            { num: 30, name: "고슴도치", icon: "🦔", bg: "#ffedd5", ear: "#b45309" },
-            { num: 31, name: "나무늘보", icon: "🦥", bg: "#ffedd5", ear: "#9a3412" },
-            { num: 32, name: "악어", icon: "🐊", bg: "#dcfce7", ear: "#15803d" },
-            { num: 33, name: "햄스터", icon: "🐹", bg: "#ffedd5", ear: "#d97706" },
-            { num: 34, name: "아기거북이", icon: "🐢", bg: "#dcfce7", ear: "#16a34a" },
-            { num: 35, name: "병아리", icon: "🐣", bg: "#fef08a", ear: "#ca8a04" },
-            { num: 36, name: "아기드래곤", icon: "🐲", bg: "#dcfce7", ear: "#15803d" }
-        ];
-
         // 🛸 UFO Flight Exploration Mode State & Objects
         var ufoMesh = null;
-        var savedAvatarId = parseInt(localStorage.getItem('userAvatarNum') || localStorage.getItem('studentNum') || '0', 10);
-        var chosenAnimal = CLASSTOOL_ANIMALS[(savedAvatarId > 0 ? (savedAvatarId - 1) % 36 : Math.floor(Math.random() * 36))];
 
         var ufoState = {
             active: false,
             pos: new THREE.Vector3(0, 25.0, 450), // Optimal hover altitude above planets (Y=25.0)
             heading: 0.0,
             keys: { forward: false, backward: false, left: false, right: false },
-            pilotName: (localStorage.getItem('classPlayerName') || '').trim(),
-            animal: chosenAnimal
+            pilotName: (localStorage.getItem('classPlayerName') || '').trim()
         };
         var ufoLobby = null;
         var ufoRoomRole = null;
         var ufoTimeSyncTimer = null;
-
-        // ClassTool Authentic Face Texture Generator (Draws Character Icon & Face)
-        function createClassToolFaceTexture(animal) {
-            var canvas = document.createElement('canvas');
-            canvas.width = 256;
-            canvas.height = 256;
-            var ctx = canvas.getContext('2d');
-
-            // Head Background Color
-            ctx.fillStyle = animal.bg;
-            ctx.fillRect(0, 0, 256, 256);
-
-            // Draw Official ClassTool Emoji Face Icon
-            ctx.font = 'bold 140px "Segoe UI Emoji", "Apple Color Emoji", sans-serif';
-            ctx.textAlign = 'center';
-            ctx.textBaseline = 'middle';
-            ctx.fillText(animal.icon, 128, 128);
-
-            return new THREE.CanvasTexture(canvas);
-        }
 
         function buildUFOMesh() {
             if (ufoMesh && scene) scene.remove(ufoMesh);
