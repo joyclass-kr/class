@@ -1297,8 +1297,8 @@ function createClassroomPlatform(options = {}) {
     res.json({ request: result.rows[0] });
   }));
 
-  router.get("/admin/student-accounts", asyncRoute(async (req, res) => {
-    await requireAdmin(req);
+  router.get("/teacher/student-accounts", asyncRoute(async (req, res) => {
+    await requireTeacher(req);
     const result = await pool.query(
       `SELECT s.id, s.student_number, s.roster_name, s.user_id IS NOT NULL AS linked,
               u.email, c.academic_year, c.grade, c.class_number,
@@ -1307,10 +1307,11 @@ function createClassroomPlatform(options = {}) {
        JOIN classroom_classes c ON c.id = s.class_id
        JOIN classroom_schools sc ON sc.id = c.school_id
        LEFT JOIN classroom_users u ON u.id = s.user_id
-       ORDER BY sc.name, c.academic_year DESC, c.grade, c.class_number,
-                CASE WHEN s.student_number ~ '^[0-9]+$' THEN s.student_number::INTEGER END,
+       WHERE c.teacher_user_id = $1
+       ORDER BY CASE WHEN s.student_number ~ '^[0-9]+$' THEN s.student_number::INTEGER END,
                 s.student_number
-       LIMIT 500`
+       LIMIT 500`,
+       [req.user.id]
     );
     res.json({ students: result.rows.map((row) => ({
       id: String(row.id),
@@ -1325,8 +1326,8 @@ function createClassroomPlatform(options = {}) {
     })) });
   }));
 
-  router.post("/admin/students/:studentId/reset-access", asyncRoute(async (req, res) => {
-    const admin = await requireAdmin(req);
+  router.post("/teacher/students/:studentId/reset-access", asyncRoute(async (req, res) => {
+    await requireTeacher(req);
     const studentId = Number(req.params.studentId);
     if (!Number.isSafeInteger(studentId) || studentId < 1) {
       throw new HttpError(400, "VALID_STUDENT_ID_REQUIRED", "The student ID is invalid.");
@@ -1335,11 +1336,12 @@ function createClassroomPlatform(options = {}) {
     try {
       await client.query("BEGIN");
       const studentResult = await client.query(
-        `SELECT id, class_id, student_number, roster_name, user_id
-         FROM classroom_students
-         WHERE id = $1
+        `SELECT s.id, s.class_id, s.student_number, s.roster_name, s.user_id
+         FROM classroom_students s
+         JOIN classroom_classes c ON c.id = s.class_id
+         WHERE s.id = $1 AND c.teacher_user_id = $2
          FOR UPDATE`,
-        [studentId]
+        [studentId, req.user.id]
       );
       const student = studentResult.rows[0];
       if (!student) throw new HttpError(404, "STUDENT_NOT_FOUND", "The student was not found.");
@@ -1364,7 +1366,7 @@ function createClassroomPlatform(options = {}) {
         `INSERT INTO classroom_student_access_resets
            (student_id, class_id, student_number, roster_name, previous_user_id, reset_by)
          VALUES ($1, $2, $3, $4, $5, $6)`,
-        [student.id, student.class_id, student.student_number, student.roster_name, student.user_id, admin.id]
+        [student.id, student.class_id, student.student_number, student.roster_name, student.user_id, req.user.id]
       );
       await client.query("COMMIT");
       res.json({ ok: true, studentId: String(student.id), initialPassword: DEFAULT_STUDENT_PASSWORD });

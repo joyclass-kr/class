@@ -295,14 +295,6 @@
                         </div>
                     </div>
                 </section>
-
-                <a class="tool-link" href="/admin/students">
-                    <div>
-                        <strong>Student account recovery</strong>
-                        <span>Unlink a mistaken account and issue a fresh initial password.</span>
-                    </div>
-                    <b aria-hidden="true">→</b>
-                </a>
             </div>
             <p id="status" class="status" role="status" aria-live="polite"></p>
         </section>
@@ -547,6 +539,39 @@
                 if (!newSchoolName.contains(e.target) && !schoolSearchResults.contains(e.target)) {
                     schoolSearchResults.hidden = true;
                 }
+            });
+
+            addSchoolButton.addEventListener("click", async () => {
+                const name = newSchoolName.value.trim();
+                if (!name) return setStatus("Enter a school name.", true);
+                try {
+                    const payload = {
+                        name: selectedNeisSchool ? selectedNeisSchool.name : name,
+                        officeCode: selectedNeisSchool ? selectedNeisSchool.officeCode : "",
+                        schoolCode: selectedNeisSchool ? selectedNeisSchool.schoolCode : "",
+                        locationName: selectedNeisSchool ? selectedNeisSchool.locationName : ""
+                    };
+                    const result = await api("/api/admin/schools", { method: "POST", body: JSON.stringify(payload) });
+                    newSchoolName.value = "";
+                    selectedNeisSchool = null;
+                    schoolSearchResults.hidden = true;
+                    await loadSchools(result.school.id);
+                    setStatus(`School added: ${result.school.name}`);
+                } catch (error) { setStatus(error.message, true); }
+            });
+
+            saveSchoolButton.addEventListener("click", async () => {
+                const school = selectedSchool();
+                if (!school) return;
+                try {
+                    await api(`/api/admin/schools/${school.id}`, { method: "PATCH", body: JSON.stringify({ name: school.name, enabled: schoolEnabled.checked }) });
+                    await loadSchools(school.id);
+                    setStatus("School access saved.");
+                } catch (error) { setStatus(error.message, true); }
+            });
+
+            deleteSchoolButton.addEventListener("click", async () => {
+                await deleteSchool(selectedSchool());
             });
 
             saveRosterButton.addEventListener("click", async () => {
