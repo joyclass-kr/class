@@ -1349,6 +1349,8 @@
                             method: 'POST',
                             body: JSON.stringify({
                                 schoolId: schoolInput.value,
+                                grade: Number(studentGradeInput.value),
+                                classNumber: Number(studentClassInput.value),
                                 name: studentNameInput.value.trim(),
                                 password: studentPasswordInput.value,
                             }),

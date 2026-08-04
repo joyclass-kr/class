@@ -2097,6 +2097,8 @@ function createClassroomPlatform(options = {}) {
       throw new HttpError(403, "TEACHER_REQUIRED", "This account cannot claim a teacher profile.");
     }
     const schoolId = Number(req.body?.schoolId);
+    const reqGrade = Number(req.body?.grade) || 0;
+    const reqClassNumber = Number(req.body?.classNumber) || 0;
     const teacherName = String(req.body?.name || "").normalize("NFC").trim();
     const password = String(req.body?.password || "").trim();
     const failureIdentity = `${schoolId}:${normalizePersonName(teacherName)}`;
@@ -2119,13 +2121,16 @@ function createClassroomPlatform(options = {}) {
       const teacher = result.rows[0];
       if (
         !teacher || !teacher.active || !teacher.enabled ||
-        !teacher.academic_year || !teacher.grade || !teacher.class_number ||
         !verifyStudentPassword(password, teacher.password_hash)
       ) {
         authFailureLimiter.recordFailure(req, "teacher-claim", failureIdentity);
         throw new HttpError(403, "INVALID_TEACHER_DETAILS", "Check the school, teacher name, and 6-digit password.");
       }
       authFailureLimiter.recordSuccess(req, "teacher-claim", failureIdentity);
+
+      const academicYear = teacher.academic_year || 2026;
+      const grade = teacher.grade || reqGrade || 6;
+      const classNumber = teacher.class_number || reqClassNumber || 1;
 
       if (!user) {
         if (teacher.user_id) {
@@ -2167,9 +2172,13 @@ function createClassroomPlatform(options = {}) {
       }
       await client.query(
         `UPDATE classroom_teachers
-         SET user_id = $1, google_email = $2, updated_at = NOW()
-         WHERE id = $3`,
-        [user.id, user.email, teacher.id]
+         SET user_id = $1, google_email = $2, academic_year = $3, grade = $4, class_number = $5, updated_at = NOW()
+         WHERE id = $6`,
+        [user.id, user.email, academicYear, grade, classNumber, teacher.id]
+      );
+      await client.query(
+        `DELETE FROM classroom_classes WHERE teacher_user_id = $1`,
+        [user.id]
       );
       let classCandidate;
       for (let attempt = 0; attempt < 8; attempt += 1) {
@@ -2185,7 +2194,7 @@ function createClassroomPlatform(options = {}) {
          VALUES ($1, $2, $3, $4, $5, $6, $7)
          ON CONFLICT (school_id, academic_year, grade, class_number)
          DO UPDATE SET teacher_user_id = EXCLUDED.teacher_user_id, teacher_name = EXCLUDED.teacher_name, updated_at = NOW()`,
-        [schoolId, user.id, teacher.academic_year, teacher.grade, teacher.class_number, teacher.teacher_name, classCandidate]
+        [schoolId, user.id, academicYear, grade, classNumber, teacher.teacher_name, classCandidate]
       );
       await client.query("UPDATE classroom_users SET role = 'teacher', updated_at = NOW() WHERE id = $1", [user.id]);
       await client.query("COMMIT");
