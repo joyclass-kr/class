@@ -2902,8 +2902,8 @@ function createClassroomPlatform(options = {}) {
     let userRes = await pool.query("SELECT id FROM classroom_users WHERE google_sub = $1", [simSub]);
     if (userRes.rowCount === 0) {
       userRes = await pool.query(
-        `INSERT INTO classroom_users (google_sub, email, display_name, role)
-         VALUES ($1, $2, $3, 'student')
+        `INSERT INTO classroom_users (google_sub, email, display_name, google_domain, role)
+         VALUES ($1, $2, $3, 'simulate.local', 'student')
          RETURNING id`,
         [simSub, `teacher-${teacher.id}@simulate.local`, simName]
       );
@@ -2967,8 +2967,8 @@ function createClassroomPlatform(options = {}) {
     let userRes = await pool.query("SELECT id FROM classroom_users WHERE google_sub = $1", [simSub]);
     if (userRes.rowCount === 0) {
       userRes = await pool.query(
-        `INSERT INTO classroom_users (google_sub, email, display_name, role)
-         VALUES ($1, $2, $3, NULL)
+        `INSERT INTO classroom_users (google_sub, email, display_name, google_domain, role)
+         VALUES ($1, $2, $3, 'simulate.local', NULL)
          RETURNING id`,
         [simSub, parentEmail, "학부모(체험)"]
       );
