@@ -117,9 +117,9 @@
 
     function playClick(ctx) {
         const now = ctx.currentTime;
-        tone(ctx, { start: now, from: 920, to: 520, duration: 0.05, gain: 0.28, type: "triangle" });
-        tone(ctx, { start: now + 0.003, from: 1600, to: 980, duration: 0.03, gain: 0.18, type: "sine" });
-        noise(ctx, { start: now, duration: 0.02, frequency: 3200, q: 0.8, gain: 0.12 });
+        tone(ctx, { start: now, from: 980, to: 540, duration: 0.05, gain: 0.38, type: "triangle" });
+        tone(ctx, { start: now + 0.003, from: 1700, to: 1020, duration: 0.03, gain: 0.24, type: "sine" });
+        noise(ctx, { start: now, duration: 0.02, frequency: 3400, q: 0.8, gain: 0.18 });
     }
 
     function playBell(ctx) {
@@ -129,7 +129,7 @@
         highpass.type = "highpass";
         highpass.frequency.setValueAtTime(820, now);
         bellGain.gain.setValueAtTime(0.0001, now);
-        bellGain.gain.exponentialRampToValueAtTime(0.31, now + 0.003);
+        bellGain.gain.exponentialRampToValueAtTime(0.42, now + 0.003);
         bellGain.gain.exponentialRampToValueAtTime(0.0001, now + 0.62);
         highpass.connect(bellGain);
         bellGain.connect(output);
@@ -163,7 +163,7 @@
         strikeFilter.type = "bandpass";
         strikeFilter.frequency.setValueAtTime(5400, now);
         strikeFilter.Q.setValueAtTime(1.8, now);
-        strikeGain.gain.setValueAtTime(0.12, now);
+        strikeGain.gain.setValueAtTime(0.18, now);
         strikeGain.gain.exponentialRampToValueAtTime(0.0001, now + 0.038);
         strike.connect(strikeFilter);
         strikeFilter.connect(strikeGain);
@@ -174,14 +174,14 @@
 
     function playCard(ctx) {
         const now = ctx.currentTime;
-        noise(ctx, { start: now, duration: 0.065, frequency: 2850, q: 0.65, gain: 0.08 });
-        tone(ctx, { start: now + 0.008, from: 410, to: 290, duration: 0.055, gain: 0.04, type: "triangle" });
+        noise(ctx, { start: now, duration: 0.065, frequency: 2850, q: 0.65, gain: 0.22 });
+        tone(ctx, { start: now + 0.008, from: 410, to: 290, duration: 0.055, gain: 0.12, type: "triangle" });
     }
 
     function playStone(ctx) {
         const now = ctx.currentTime;
-        tone(ctx, { start: now, from: 245, to: 155, duration: 0.055, gain: 0.1, type: "sine" });
-        noise(ctx, { start: now, duration: 0.025, frequency: 1250, q: 1.1, gain: 0.07 });
+        tone(ctx, { start: now, from: 245, to: 155, duration: 0.055, gain: 0.26, type: "sine" });
+        noise(ctx, { start: now, duration: 0.025, frequency: 1250, q: 1.1, gain: 0.18 });
     }
 
     function playSuccess(ctx) {
@@ -192,7 +192,7 @@
                 from: frequency,
                 to: frequency * 1.01,
                 duration: 0.18,
-                gain: 0.07,
+                gain: 0.22,
                 type: "sine"
             });
         });
@@ -200,13 +200,13 @@
 
     function playError(ctx) {
         const now = ctx.currentTime;
-        tone(ctx, { start: now, from: 210, to: 155, duration: 0.14, gain: 0.1, type: "square" });
-        tone(ctx, { start: now + 0.08, from: 165, to: 125, duration: 0.15, gain: 0.075, type: "square" });
+        tone(ctx, { start: now, from: 210, to: 155, duration: 0.14, gain: 0.24, type: "square" });
+        tone(ctx, { start: now + 0.08, from: 165, to: 125, duration: 0.15, gain: 0.18, type: "square" });
     }
 
     function playTick(ctx) {
         const now = ctx.currentTime;
-        tone(ctx, { start: now, from: 1180, to: 930, duration: 0.025, gain: 0.045, type: "square" });
+        tone(ctx, { start: now, from: 1180, to: 930, duration: 0.025, gain: 0.16, type: "square" });
     }
 
     const players = {
