@@ -888,6 +888,7 @@
                 authTitle.textContent = 'STUDENT';
                 authMessage.hidden = true;
                 googleSignInButton.hidden = true;
+                toggleGuestMode.hidden = true;
                 guestForm.hidden = true;
                 joinForm.hidden = true;
                 signedInArea.hidden = false;
@@ -906,17 +907,19 @@
             async function showOpenAccess() {
                 openAccess = true;
                 restrictedPreview = false;
-                authTitle.textContent = 'STUDENT ACCESS · OPEN';
-                authMessage.hidden = false;
-                authMessage.textContent = 'Google sign-in is not required while the site is in OPEN mode.';
-                googleSignInButton.hidden = true;
-                guestForm.hidden = true;
 
                 const state = await api('/api/auth/me').catch(() => ({ signedIn: false }));
                 if (state.signedIn) {
                     routeSignedIn(state);
                     return;
                 }
+
+                authTitle.textContent = 'STUDENT ACCESS · OPEN';
+                authMessage.hidden = false;
+                authMessage.textContent = 'Google sign-in is not required while the site is in OPEN mode.';
+                googleSignInButton.hidden = true;
+                guestForm.hidden = true;
+                toggleGuestMode.hidden = false;
 
                 signedInArea.hidden = true;
                 hubContent.hidden = false;
@@ -942,6 +945,7 @@
                 authMessage.hidden = false;
                 authMessage.textContent = `${state.user.name}, students enter number 1 or higher. Teachers enter 0.`;
                 googleSignInButton.hidden = true;
+                toggleGuestMode.hidden = true;
                 signedInArea.hidden = false;
                 classToolsLink.hidden = true;
                 signedInName.textContent = state.user.name;
@@ -1171,6 +1175,7 @@
                 }
             });
             toggleGuestMode.addEventListener('click', () => {
+                if (!signedInArea.hidden) return;
                 isGuestModeView = !isGuestModeView;
                 if (isGuestModeView) {
                     joinForm.hidden = true;
@@ -1209,8 +1214,16 @@
                     setHubLocked(false);
                     setStatus(`PLAYER · ${guest.name}`);
                     authTitle.textContent = 'GUEST PLAYER';
-                    authMessage.textContent = `Welcome, ${guest.name}! Playing as Guest.`;
+                    authMessage.hidden = true;
+                    toggleGuestMode.hidden = true;
                     guestForm.hidden = true;
+                    joinForm.hidden = true;
+                    googleSignInButton.hidden = true;
+                    signedInArea.hidden = false;
+                    signedInName.textContent = guest.name;
+                    classMembership.textContent = '게스트 플레이어 세션';
+                    studentProfileLink.hidden = true;
+                    classToolsLink.hidden = true;
                 } catch (error) {
                     setStatus(error.message, true);
                 }
