@@ -588,9 +588,24 @@
             e.target.reset();
         }
 
+        async function checkAuthSession() {
+            try {
+                const res = await fetch('/api/auth/me');
+                if (res.ok) {
+                    const data = await res.json();
+                    if (data.signedIn && data.membership) {
+                        const m = data.membership;
+                        document.getElementById('studentChip').textContent = `${m.schoolName} ${m.grade}학년 ${m.classNumber}반 ${m.studentNumber}번 ${m.name} 학부모님`;
+                        document.getElementById('studentChip').style.background = '#1f4730';
+                    }
+                }
+            } catch(e) {}
+        }
+
         function loadNotices() {
             console.log('Loading notices...');
         }
+        checkAuthSession();
     </script>
 </body>
 </html>
