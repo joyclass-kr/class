@@ -199,8 +199,8 @@
 
         .paste-grid {
             display: grid;
-            grid-template-columns: minmax(56px, 0.5fr) minmax(150px, 1.5fr) minmax(92px, 0.8fr) minmax(120px, 1.1fr) minmax(140px, 1.2fr);
-            gap: 10px;
+            grid-template-columns: minmax(44px, 0.35fr) minmax(90px, 0.9fr) minmax(48px, 0.35fr) minmax(52px, 0.4fr) minmax(150px, 1.4fr) minmax(150px, 1.4fr) minmax(150px, 1.4fr) minmax(130px, 1.2fr);
+            gap: 8px;
         }
 
         .field {
@@ -656,7 +656,7 @@
 
                 <div class="field">
                     <div class="field-head">
-                        <label for="names">성명 (이름)</label>
+                        <label for="names">성명</label>
                         <span class="line-count" id="name-count">0행</span>
                     </div>
                     <textarea id="names" autocomplete="off" autocapitalize="off" spellcheck="false" placeholder="" aria-describedby="input-status"></textarea>
@@ -664,7 +664,7 @@
 
                 <div class="field">
                     <div class="field-head">
-                        <label for="genders">성별 (남/여)</label>
+                        <label for="genders">남/여</label>
                         <span class="line-count" id="gender-count">0행</span>
                     </div>
                     <textarea id="genders" autocomplete="off" autocapitalize="off" spellcheck="false" placeholder="" aria-describedby="input-status"></textarea>
@@ -676,16 +676,42 @@
                         <span class="line-count" id="birthdate-count">0행</span>
                     </div>
                     <textarea id="birthdates" disabled aria-describedby="birthday-help"></textarea>
-                    <p class="field-help" id="birthday-help">학생이 설정한 생일이 표시되며, 비공개 선택 시 ‘비공개’로 표시됩니다.</p>
+                    <p class="field-help" id="birthday-help">학생 설정값</p>
                 </div>
 
                 <div class="field">
                     <div class="field-head">
-                        <label for="passwords">계정·비밀번호 상태</label>
+                        <label for="student-emails">학생 구글계정</label>
+                        <span class="line-count" id="student-email-count">0행</span>
+                    </div>
+                    <textarea id="student-emails" autocomplete="off" autocapitalize="off" spellcheck="false" placeholder="" aria-describedby="input-status"></textarea>
+                    <p class="field-help">학교 구글계정 (@school.kr)</p>
+                </div>
+
+                <div class="field">
+                    <div class="field-head">
+                        <label for="guardian1-emails">보호자1 계정</label>
+                        <span class="line-count" id="guardian1-email-count">0행</span>
+                    </div>
+                    <textarea id="guardian1-emails" autocomplete="off" autocapitalize="off" spellcheck="false" placeholder="" aria-describedby="input-status"></textarea>
+                    <p class="field-help">개인 구글계정, 비워도 됨</p>
+                </div>
+
+                <div class="field">
+                    <div class="field-head">
+                        <label for="guardian2-emails">보호자2 계정</label>
+                        <span class="line-count" id="guardian2-email-count">0행</span>
+                    </div>
+                    <textarea id="guardian2-emails" autocomplete="off" autocapitalize="off" spellcheck="false" placeholder="" aria-describedby="input-status"></textarea>
+                    <p class="field-help">개인 구글계정, 비워도 됨</p>
+                </div>
+
+                <div class="field">
+                    <div class="field-head">
+                        <label for="passwords">계정 상태</label>
                         <span class="line-count" id="password-count">0행</span>
                     </div>
                     <textarea id="passwords" disabled aria-describedby="password-help"></textarea>
-                    <p class="field-help" id="password-help">미연결 학생은 초기 123456이 자동 발급됩니다. 연결 후에는 학생만 변경할 수 있습니다.</p>
                 </div>
             </div>
 
@@ -732,11 +758,17 @@
             const namesInput = document.querySelector("#names");
             const gendersInput = document.querySelector("#genders");
             const birthdatesInput = document.querySelector("#birthdates");
+            const studentEmailsInput = document.querySelector("#student-emails");
+            const guardian1EmailsInput = document.querySelector("#guardian1-emails");
+            const guardian2EmailsInput = document.querySelector("#guardian2-emails");
             const passwordsInput = document.querySelector("#passwords");
             const numberCount = document.querySelector("#number-count");
             const nameCount = document.querySelector("#name-count");
             const genderCount = document.querySelector("#gender-count");
             const birthdateCount = document.querySelector("#birthdate-count");
+            const studentEmailCount = document.querySelector("#student-email-count");
+            const guardian1EmailCount = document.querySelector("#guardian1-email-count");
+            const guardian2EmailCount = document.querySelector("#guardian2-email-count");
             const passwordCount = document.querySelector("#password-count");
             const status = document.querySelector("#input-status");
             const saveButton = document.querySelector("#save-button");
@@ -778,6 +810,9 @@
                 const names = splitLines(namesInput.value);
                 const rawGenders = splitLines(gendersInput.value);
                 const genders = rawGenders;
+                const studentEmails = splitLines(studentEmailsInput.value);
+                const guardian1Emails = splitLines(guardian1EmailsInput.value);
+                const guardian2Emails = splitLines(guardian2EmailsInput.value);
 
                 const hasBlank = numbers.some((value) => !value) || names.some((value) => !value);
                 const duplicateNumbers = numbers.filter((value, index) => value && numbers.indexOf(value) !== index);
@@ -794,14 +829,17 @@
                     invalidGenders.length === 0 &&
                     !hasMismatchedGenders;
 
-                return { numbers, names, genders, hasBlank, duplicateNumbers, invalidNumbers, invalidNames, invalidGenders, hasMismatchedGenders, hasMismatchedPasswords: false, invalidBirthdays: [], invalidBirthdayVisibility: [], invalidPasswords: [], isComplete };
+                return { numbers, names, genders, studentEmails, guardian1Emails, guardian2Emails, hasBlank, duplicateNumbers, invalidNumbers, invalidNames, invalidGenders, hasMismatchedGenders, hasMismatchedPasswords: false, invalidBirthdays: [], invalidBirthdayVisibility: [], invalidPasswords: [], isComplete };
             }
 
-            function createRoster(numbers, names, genders) {
+            function createRoster(numbers, names, genders, studentEmails, guardian1Emails, guardian2Emails) {
                 return numbers.map((number, index) => ({
                     number,
                     name: names[index],
                     gender: genders[index] || "남",
+                    studentEmail: studentEmails[index] || "",
+                    guardian1Email: guardian1Emails[index] || "",
+                    guardian2Email: guardian2Emails[index] || "",
                 }));
             }
 
@@ -862,7 +900,10 @@
                 namesInput.value = classroom.students.map((student) => student.name).join("\n");
                 gendersInput.value = classroom.students.map((student) => student.gender || "남").join("\n");
                 if (birthdatesInput) birthdatesInput.value = classroom.students.map((student) => student.birthdayVisible ? (student.birthdayMmdd || "공개 중") : "비공개").join("\n");
-                passwordsInput.value = classroom.students.map((student) => student.linked ? "학생 설정 완료" : "초기 123456").join("\n");
+                studentEmailsInput.value = classroom.students.map((student) => student.studentEmail || "").join("\n");
+                guardian1EmailsInput.value = classroom.students.map((student) => student.guardian1Email || "").join("\n");
+                guardian2EmailsInput.value = classroom.students.map((student) => student.guardian2Email || "").join("\n");
+                passwordsInput.value = classroom.students.map((student) => student.linked ? "구글계정 연결됨" : "미연결").join("\n");
                 displayedPasswordRows.clear();
                 classroom.students.forEach((student) => displayedPasswordRows.set(student.number, DISPLAY_DEFAULT_STUDENT_PASSWORD));
                 if (birthdatesInput) birthdatesInput.disabled = true;
@@ -878,7 +919,9 @@
                     namesInput.disabled = true;
                     gendersInput.disabled = true;
                     if (birthdatesInput) birthdatesInput.disabled = true;
-                    if (birthdayVisibleInput) birthdayVisibleInput.disabled = true;
+                    studentEmailsInput.disabled = true;
+                    guardian1EmailsInput.disabled = true;
+                    guardian2EmailsInput.disabled = true;
                     passwordsInput.disabled = true;
                     saveButton.disabled = true;
                     setStatus("🔒 전담 교사 모드: 학생 명단 수정은 담임 교사만 가능합니다. 담임 교사가 등록한 명단이 연동됩니다.");
@@ -895,6 +938,9 @@
                 nameCount.textContent = `${state.names.length}행`;
                 if (genderCount) genderCount.textContent = `${state.genders.length}행`;
                 if (birthdateCount) birthdateCount.textContent = `${state.numbers.length}행`;
+                if (studentEmailCount) studentEmailCount.textContent = `${state.studentEmails.length}행`;
+                if (guardian1EmailCount) guardian1EmailCount.textContent = `${state.guardian1Emails.length}행`;
+                if (guardian2EmailCount) guardian2EmailCount.textContent = `${state.guardian2Emails.length}행`;
                 if (passwordCount) passwordCount.textContent = `${state.numbers.length}행`;
 
                 const hasAnyInput = state.numbers.length > 0 || state.names.length > 0;
@@ -972,7 +1018,7 @@
                 const profile = getProfile();
                 if (!authorized || !state.isComplete || !isProfileComplete(profile) || saving) return;
 
-                const roster = createRoster(state.numbers, state.names, state.genders);
+                const roster = createRoster(state.numbers, state.names, state.genders, state.studentEmails, state.guardian1Emails, state.guardian2Emails);
                 saving = true;
                 saveButton.textContent = "SAVING…";
                 update();
@@ -1113,13 +1159,16 @@
                 passwordsInput.value = cleanLines.join("\n");
                 update();
             });
+            studentEmailsInput.addEventListener("input", update);
+            guardian1EmailsInput.addEventListener("input", update);
+            guardian2EmailsInput.addEventListener("input", update);
             saveButton.addEventListener("click", saveRoster);
             signOutButton.addEventListener("click", async () => {
                 await api("/api/auth/logout", { method: "POST", body: "{}" }).catch(() => {});
                 location.replace("/");
             });
 
-            const allTextareas = [numbersInput, namesInput, gendersInput, birthdatesInput, passwordsInput].filter(Boolean);
+            const allTextareas = [numbersInput, namesInput, gendersInput, birthdatesInput, studentEmailsInput, guardian1EmailsInput, guardian2EmailsInput, passwordsInput].filter(Boolean);
             let isSyncingScroll = false;
             allTextareas.forEach((ta) => {
                 ta.addEventListener("scroll", (e) => {

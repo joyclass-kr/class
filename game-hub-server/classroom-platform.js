@@ -492,6 +492,12 @@ function createClassroomPlatform(options = {}) {
       `UPDATE classroom_students SET birth_date = NULL WHERE birth_date IS NOT NULL`,
       `CREATE INDEX IF NOT EXISTS classroom_students_class_idx
         ON classroom_students (class_id)`,
+      `ALTER TABLE classroom_students
+        ADD COLUMN IF NOT EXISTS student_email TEXT`,
+      `ALTER TABLE classroom_students
+        ADD COLUMN IF NOT EXISTS guardian1_email TEXT`,
+      `ALTER TABLE classroom_students
+        ADD COLUMN IF NOT EXISTS guardian2_email TEXT`,
       `CREATE TABLE IF NOT EXISTS game_finisher_records (
         record_date DATE NOT NULL,
         game_id TEXT NOT NULL,
@@ -2299,6 +2305,7 @@ function createClassroomPlatform(options = {}) {
       `SELECT student_number, roster_name, COALESCE(gender, '남') AS gender,
               birthday_mmdd, birthday_visible,
               avatar_key,
+              student_email, guardian1_email, guardian2_email,
               user_id IS NOT NULL AS linked,
               password_hash IS NOT NULL AS password_configured
        FROM classroom_students
@@ -2329,6 +2336,9 @@ function createClassroomPlatform(options = {}) {
           birthdayVisible: student.birthday_visible === true,
           avatarKey: normalizeAvatarKey(student.avatar_key),
           avatarUrl: avatarUrl(student.avatar_key),
+          studentEmail: student.student_email || "",
+          guardian1Email: student.guardian1_email || "",
+          guardian2Email: student.guardian2_email || "",
           linked: student.linked,
           passwordConfigured: student.password_configured
         }))
@@ -2538,8 +2548,8 @@ function createClassroomPlatform(options = {}) {
 
         await client.query(
           `INSERT INTO classroom_students
-            (class_id, student_number, roster_name, gender, birthday_mmdd, birthday_visible, birth_date, avatar_key, password_hash)
-           VALUES ($1, $2, $3, $4, $5, $6, NULL, $7, $8)
+            (class_id, student_number, roster_name, gender, birthday_mmdd, birthday_visible, birth_date, avatar_key, password_hash, student_email, guardian1_email, guardian2_email)
+           VALUES ($1, $2, $3, $4, $5, $6, NULL, $7, $8, $9, $10, $11)
            ON CONFLICT (class_id, student_number) DO UPDATE SET
              roster_name = EXCLUDED.roster_name,
              gender = EXCLUDED.gender,
@@ -2548,9 +2558,13 @@ function createClassroomPlatform(options = {}) {
              birth_date = NULL,
              avatar_key = COALESCE(classroom_students.avatar_key, EXCLUDED.avatar_key),
              password_hash = EXCLUDED.password_hash,
+             student_email = EXCLUDED.student_email,
+             guardian1_email = EXCLUDED.guardian1_email,
+             guardian2_email = EXCLUDED.guardian2_email,
              updated_at = NOW()`,
           [classroom.id, student.number, student.name, student.gender,
-           existingPassword?.birthdayMmdd || null, existingPassword?.birthdayVisible || false, avatarKey, passwordHash]
+           existingPassword?.birthdayMmdd || null, existingPassword?.birthdayVisible || false, avatarKey, passwordHash,
+           student.studentEmail || null, student.guardian1Email || null, student.guardian2Email || null]
         );
       }
       await client.query("COMMIT");
