@@ -2001,8 +2001,12 @@ function createClassroomPlatform(options = {}) {
   }));
 
   router.post("/teacher/claim", asyncRoute(async (req, res) => {
-    const user = await requireUser(req);
-    if (user.role === "admin" || user.role === "student") {
+    const accessMode = await getSiteAccessMode();
+    let user = await sessionUser(req);
+    if (accessMode === "restricted" && !user) {
+      throw new HttpError(401, "AUTH_REQUIRED", "Please sign in with Google.");
+    }
+    if (user && (user.role === "admin" || user.role === "student")) {
       throw new HttpError(403, "TEACHER_REQUIRED", "This account cannot claim a teacher profile.");
     }
     const schoolId = Number(req.body?.schoolId);
@@ -2035,18 +2039,45 @@ function createClassroomPlatform(options = {}) {
         throw new HttpError(403, "INVALID_TEACHER_DETAILS", "Check the school, teacher name, and 6-digit password.");
       }
       authFailureLimiter.recordSuccess(req, "teacher-claim", failureIdentity);
-      if (teacher.user_id && String(teacher.user_id) !== String(user.id)) {
-        throw new HttpError(409, "TEACHER_ALREADY_LINKED", "This teacher profile is already linked to another Google account.");
+
+      if (!user) {
+        if (teacher.user_id) {
+          const uRes = await client.query("SELECT * FROM classroom_users WHERE id = $1", [teacher.user_id]);
+          user = uRes.rows[0];
+        }
+        if (!user) {
+          const userRes = await client.query(
+            `INSERT INTO classroom_users (google_sub, email, display_name, google_domain, role)
+             VALUES ($1, $2, $3, $4, 'teacher')
+             RETURNING *`,
+            [
+              `open-teacher-${teacher.id}-${Date.now()}`,
+              `teacher-${teacher.id}@${teacher.google_domain || 'class.local'}`,
+              teacher.teacher_name,
+              teacher.google_domain || 'class.local'
+            ]
+          );
+          user = userRes.rows[0];
+        }
       }
-      if (teacher.google_domain && teacher.google_domain !== user.google_domain) {
+
+      if (teacher.user_id && String(teacher.user_id) !== String(user.id)) {
+        if (accessMode === "restricted") {
+          throw new HttpError(409, "TEACHER_ALREADY_LINKED", "This teacher profile is already linked to another Google account.");
+        }
+      }
+      if (accessMode === "restricted" && teacher.google_domain && teacher.google_domain !== user.google_domain) {
         throw new HttpError(403, "SCHOOL_ACCOUNT_MISMATCH", "Use the Google account issued by this school.");
       }
-      await client.query(
-        `UPDATE classroom_schools
-         SET google_domain = CASE WHEN google_domain = '' THEN $1 ELSE google_domain END
-         WHERE id = $2`,
-        [user.google_domain, schoolId]
-      );
+
+      if (user.google_domain && user.google_domain !== 'class.local') {
+        await client.query(
+          `UPDATE classroom_schools
+           SET google_domain = CASE WHEN google_domain = '' THEN $1 ELSE google_domain END
+           WHERE id = $2`,
+          [user.google_domain, schoolId]
+        );
+      }
       await client.query(
         `UPDATE classroom_teachers
          SET user_id = $1, google_email = $2, updated_at = NOW()
@@ -2055,6 +2086,7 @@ function createClassroomPlatform(options = {}) {
       );
       await client.query("UPDATE classroom_users SET role = 'teacher', updated_at = NOW() WHERE id = $1", [user.id]);
       await client.query("COMMIT");
+      setSessionCookie(res, user.id);
       res.json({ ok: true });
     } catch (error) {
       await client.query("ROLLBACK");
