@@ -655,9 +655,13 @@ function createClassroomPlatform(options = {}) {
   }
 
   async function requireUser(req) {
-    requireConfigured();
     const user = await sessionUser(req);
-    if (!user) throw new HttpError(401, "AUTH_REQUIRED", "Please sign in with Google.");
+    if (!user) {
+      if (await getSiteAccessMode() === "restricted") {
+        requireConfigured();
+      }
+      throw new HttpError(401, "AUTH_REQUIRED", "Please sign in with Google.");
+    }
     return user;
   }
 
@@ -876,15 +880,17 @@ function createClassroomPlatform(options = {}) {
 
   router.get("/auth/me", asyncRoute(async (req, res) => {
     const current = configuration();
-    if (!current.enabled) {
-      return res.json({ signedIn: false, configured: false, missing: current.missing });
-    }
     const user = await sessionUser(req);
-    if (!user) return res.json({ signedIn: false, configured: true });
+    if (!user) {
+      if (!current.enabled) {
+        return res.json({ signedIn: false, configured: false, missing: current.missing });
+      }
+      return res.json({ signedIn: false, configured: true });
+    }
     const membership = user.role === "student" ? await studentMembership(user.id) : null;
     return res.json({
       signedIn: true,
-      configured: true,
+      configured: current.enabled,
       user: publicUser(user),
       membership
     });

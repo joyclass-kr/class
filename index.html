@@ -1107,15 +1107,18 @@
             }
 
             async function showJoin(state) {
+                const userName = state?.user?.name || '선생님/학생';
                 authTitle.textContent = 'FIRST-TIME SETUP';
                 authMessage.hidden = false;
-                authMessage.textContent = `${state.user.name}, students enter number 1 or higher. Teachers enter 0.`;
+                authMessage.textContent = `${userName}, students enter number 1 or higher. Teachers enter 0.`;
                 googleSignInButton.hidden = true;
                 toggleGuestMode.hidden = true;
-                signedInArea.hidden = false;
+                signedInArea.hidden = !state?.user;
                 classToolsLink.hidden = true;
-                signedInName.textContent = state.user.name;
-                classMembership.textContent = state.user.email;
+                if (state?.user) {
+                    signedInName.textContent = state.user.name;
+                    classMembership.textContent = state.user.email || '';
+                }
                 hubContent.hidden = true;
                 await loadSchools();
                 joinForm.hidden = false;
