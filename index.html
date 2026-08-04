@@ -545,8 +545,8 @@
         <div id="googleSignInButton" class="google-sign-in" hidden></div>
 
         <form id="guestForm" class="join-form guest-form" hidden>
-            <input id="guestName" class="auth-input guest-name" type="text" maxlength="6" autocomplete="off" placeholder="가명 (2~6자)" aria-label="Player name">
-            <input id="guestPasscode" class="auth-input guest-passcode" type="password" maxlength="4" inputmode="numeric" autocomplete="off" placeholder="비밀번호 (2004)" aria-label="Passcode">
+            <input id="guestName" class="auth-input guest-name" type="text" maxlength="6" autocomplete="off" placeholder="한글 가명 (2~6자)" aria-label="Player name">
+            <input id="guestPasscode" class="auth-input guest-passcode" type="password" maxlength="4" inputmode="numeric" autocomplete="off" placeholder="비밀번호 4자리" aria-label="Passcode">
             <button class="auth-button join-wide" type="submit">ENTER GUEST</button>
         </form>
 
@@ -1119,6 +1119,9 @@
                     ? '각 버튼을 눌러 우리 반 학생의 접근을 잠그거나 공개하세요.'
                     : '우리 반 공개 설정을 저장했습니다.');
             });
+            guestPasscodeInput.addEventListener('input', () => {
+                guestPasscodeInput.value = guestPasscodeInput.value.replace(/\D/g, '').slice(0, 4);
+            });
             studentNumberInput.addEventListener('input', () => {
                 studentNumberInput.value = studentNumberInput.value.replace(/\D/g, '').slice(0, 3);
             });
@@ -1176,7 +1179,7 @@
                     toggleGuestMode.textContent = '로그인';
                     authTitle.textContent = 'GUEST ACCESS';
                     authMessage.hidden = false;
-                    authMessage.textContent = '가명(2~6자)과 비밀번호 4자리(2004)를 입력하세요.';
+                    authMessage.textContent = '가명(한글 2~6자)과 비밀번호 4자리를 입력하세요.';
                     guestNameInput.focus();
                 } else {
                     guestForm.hidden = true;
