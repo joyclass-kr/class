@@ -1271,10 +1271,11 @@ function createClassroomPlatform(options = {}) {
   }));
 
   router.post("/auth/guest", asyncRoute(async (req, res) => {
-    if (await getSiteAccessMode() !== "open") {
-      throw new HttpError(403, "GUEST_ACCESS_DISABLED", "Guest access is available only while the site is open.");
-    }
     const name = normalizePersonName(req.body?.name);
+    const passcode = String(req.body?.passcode || "").trim();
+    if (passcode !== "2004") {
+      throw new HttpError(400, "INVALID_PASSCODE", "비밀번호 4자리(2004)를 올바르게 입력하세요.");
+    }
     if (name.length < 2 || name.length > 6) {
       throw new HttpError(400, "VALID_NAME_REQUIRED", "Enter a Korean name with 2 to 6 characters.");
     }
@@ -2458,10 +2459,20 @@ function createClassroomPlatform(options = {}) {
   }));
 
   router.post("/student/join", asyncRoute(async (req, res) => {
-    const user = await requireUser(req);
-    if (user.role === "teacher") {
+    const accessMode = await getSiteAccessMode();
+    let user = await sessionUser(req);
+
+    if (accessMode === "restricted") {
+      if (!user) {
+        throw new HttpError(401, "AUTH_REQUIRED", "Please sign in with your school Google Workspace account.");
+      }
+      if (user.role === "teacher") {
+        throw new HttpError(403, "STUDENT_REQUIRED", "Teacher accounts cannot join a student roster.");
+      }
+    } else if (user && user.role === "teacher") {
       throw new HttpError(403, "STUDENT_REQUIRED", "Teacher accounts cannot join a student roster.");
     }
+
     const schoolId = Number(req.body?.schoolId);
     const grade = Number(req.body?.grade);
     const classNumber = Number(req.body?.classNumber);
@@ -2506,17 +2517,45 @@ function createClassroomPlatform(options = {}) {
       authFailureLimiter.recordFailure(req, "student-join", failureIdentity);
       throw new HttpError(403, "INVALID_STUDENT_DETAILS", "Check the school, grade, class, number, name, and password.");
     }
-    if (slot.google_domain !== user.google_domain) {
-      authFailureLimiter.recordFailure(req, "student-join", failureIdentity);
-      throw new HttpError(403, "INVALID_STUDENT_DETAILS", "Check the school, grade, class, number, name, and password.");
+
+    if (accessMode === "restricted" && user) {
+      if (slot.google_domain !== user.google_domain) {
+        authFailureLimiter.recordFailure(req, "student-join", failureIdentity);
+        throw new HttpError(403, "INVALID_STUDENT_DETAILS", "Check the school, grade, class, number, name, and password.");
+      }
     }
+
     if (normalizePersonName(slot.roster_name) !== normalizePersonName(studentName)) {
       authFailureLimiter.recordFailure(req, "student-join", failureIdentity);
       throw new HttpError(403, "INVALID_STUDENT_DETAILS", "Check the school, grade, class, number, name, and password.");
     }
     authFailureLimiter.recordSuccess(req, "student-join", failureIdentity);
+
+    if (!user) {
+      if (slot.user_id) {
+        const uRes = await pool.query("SELECT * FROM classroom_users WHERE id = $1", [slot.user_id]);
+        user = uRes.rows[0];
+      }
+      if (!user) {
+        const userRes = await pool.query(
+          `INSERT INTO classroom_users (google_sub, email, display_name, google_domain, role)
+           VALUES ($1, $2, $3, $4, 'student')
+           RETURNING *`,
+          [
+            `open-student-${slot.id}-${Date.now()}`,
+            `student-${slot.id}@${slot.google_domain || 'class.local'}`,
+            slot.roster_name,
+            slot.google_domain || 'class.local'
+          ]
+        );
+        user = userRes.rows[0];
+      }
+    }
+
     if (slot.user_id && String(slot.user_id) !== String(user.id)) {
-      throw new HttpError(409, "STUDENT_ALREADY_LINKED", "This student number is already linked to another account.");
+      if (accessMode === "restricted") {
+        throw new HttpError(409, "STUDENT_ALREADY_LINKED", "This student number is already linked to another account.");
+      }
     }
 
     const client = await pool.connect();
@@ -2541,6 +2580,14 @@ function createClassroomPlatform(options = {}) {
     } finally {
       client.release();
     }
+
+    const sessionToken = crypto.randomBytes(32).toString("base64url");
+    await pool.query(
+      `INSERT INTO classroom_sessions (token_hash, user_id, expires_at)
+       VALUES ($1, $2, NOW() + ($3 * INTERVAL '1 second'))`,
+      [hashSessionToken(sessionToken), user.id, SESSION_MAX_AGE_SECONDS]
+    );
+    setSessionCookie(res, sessionToken);
 
     return res.json({
       ok: true,

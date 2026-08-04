@@ -293,7 +293,50 @@
         }
 
 
+
+        .worksheet-arrow {
+            color: var(--gold-bright);
+            font-size: 20px;
+        }
+
+        .boardgame-section,
+        .training-section,
+        .puzzle-section {
+            width: min(1180px, 100%);
+        }
+
+        .worksheet-copy,
+        .game-card-copy {
+            display: grid;
+            min-width: 0;
+            gap: 4px;
+        }
+
+        .worksheet-copy strong,
+        .game-card-copy strong {
+            font-size: 18px;
+            line-height: 1.25;
+        }
+
+        .worksheet-copy small,
+        .game-card-copy small {
+            color: #d7c19c;
+            font-size: 12px;
+            font-weight: 600;
+            line-height: 1.25;
+        }
+
+        .music-status {
+            min-height: 18px;
+            margin: -18px 0 18px;
+            color: #c9ad87;
+            font-family: sans-serif;
+            font-size: 12px;
+        }
+
+
         .auth-panel {
+            position: relative;
             width: min(390px, 100%);
             margin: 0 auto 24px;
             padding: 18px;
@@ -302,6 +345,32 @@
             background: rgba(38, 18, 4, 0.88);
             box-shadow: inset 0 0 16px rgba(0,0,0,.35);
             font-family: Arial, sans-serif;
+        }
+
+        .guest-card-button {
+            position: absolute;
+            top: 12px;
+            right: 12px;
+            min-width: 44px;
+            height: 28px;
+            padding: 0 10px;
+            border: 1px solid rgba(255, 209, 138, 0.45);
+            border-radius: 6px;
+            background: rgba(27, 13, 3, 0.85);
+            color: #fff0c7;
+            font-family: inherit;
+            font-size: 12px;
+            font-weight: 700;
+            cursor: pointer;
+            z-index: 10;
+            transition: all 0.15s ease;
+        }
+
+        .guest-card-button:hover,
+        .guest-card-button:focus-visible {
+            border-color: #ffb54a;
+            background: #5d360f;
+            color: #ffffff;
         }
 
         .auth-title {
@@ -336,9 +405,10 @@
         }
 
         .guest-form {
-            grid-template-columns: 1fr auto;
+            grid-template-columns: repeat(2, minmax(0, 1fr));
         }
 
+        .guest-form .join-wide,
         .student-join-form .join-wide,
         .student-join-form .auth-button {
             grid-column: 1 / -1;
@@ -468,17 +538,16 @@
     </script>
     <audio id="bgm" src="assets/sound/index.mp3" autoplay loop preload="auto"></audio>
     <script src="assets/sound/music-control.js"></script>
-
-
-
     <div class="auth-panel" aria-live="polite">
+        <button id="toggleGuestMode" class="guest-card-button" type="button" aria-label="게스트 로그인">게스트</button>
         <div id="authTitle" class="auth-title">SCHOOL ACCOUNT</div>
         <p id="authMessage" class="auth-message">Checking sign-in…</p>
         <div id="googleSignInButton" class="google-sign-in" hidden></div>
 
         <form id="guestForm" class="join-form guest-form" hidden>
-            <input id="guestName" class="auth-input guest-name" type="text" maxlength="6" autocomplete="off" placeholder="한글 이름 2~6자" aria-label="Player name">
-            <button class="auth-button" type="submit">ENTER</button>
+            <input id="guestName" class="auth-input guest-name" type="text" maxlength="6" autocomplete="off" placeholder="가명 (2~6자)" aria-label="Player name">
+            <input id="guestPasscode" class="auth-input guest-passcode" type="password" maxlength="4" inputmode="numeric" autocomplete="off" placeholder="비밀번호 (2004)" aria-label="Passcode">
+            <button class="auth-button join-wide" type="submit">ENTER GUEST</button>
         </form>
 
         <form id="joinForm" class="join-form student-join-form" hidden>
@@ -647,7 +716,6 @@
             </a>
         </div>
     </section>
-
     </div>
 
     <script src="https://accounts.google.com/gsi/client" async defer></script>
@@ -663,8 +731,10 @@
             const authMessage = document.getElementById('authMessage');
             const authStatus = document.getElementById('authStatus');
             const googleSignInButton = document.getElementById('googleSignInButton');
+            const toggleGuestMode = document.getElementById('toggleGuestMode');
             const guestForm = document.getElementById('guestForm');
             const guestNameInput = document.getElementById('guestName');
+            const guestPasscodeInput = document.getElementById('guestPasscode');
             const joinForm = document.getElementById('joinForm');
             const schoolInput = document.getElementById('schoolId');
             const studentGradeInput = document.getElementById('studentGrade');
@@ -672,6 +742,7 @@
             const studentNumberInput = document.getElementById('studentNumber');
             const studentNameInput = document.getElementById('studentName');
             const studentPasswordInput = document.getElementById('studentPassword');
+            let isGuestModeView = false;
             const signedInArea = document.getElementById('signedInArea');
             const signedInName = document.getElementById('signedInName');
             const classMembership = document.getElementById('classMembership');
@@ -832,40 +903,25 @@
                 setStatus('');
             }
 
-            function showOpenAccess() {
+            async function showOpenAccess() {
                 openAccess = true;
                 restrictedPreview = false;
-                authTitle.textContent = 'DEVELOPMENT ACCESS · OPEN';
+                authTitle.textContent = 'STUDENT ACCESS · OPEN';
                 authMessage.hidden = false;
-                authMessage.textContent = 'Google sign-in is not required while the site is being developed.';
+                authMessage.textContent = 'Google sign-in is not required while the site is in OPEN mode.';
                 googleSignInButton.hidden = true;
-                joinForm.hidden = true;
-                signedInArea.hidden = true;
-                guestForm.hidden = false;
-                hubContent.hidden = false;
+                guestForm.hidden = true;
 
-                const savedName = normalizePlayerName(localStorage.getItem('classPlayerName') || '');
-                guestNameInput.value = savedName;
-                if (isValidPlayerName(savedName)) {
-                    setHubLocked(true);
-                    api('/api/auth/guest', {
-                        method: 'POST',
-                        body: JSON.stringify({ name: savedName }),
-                    }).then((guest) => {
-                        currentPlayerName = guest.name;
-                        updatePlayerLearningLinks(guest.name);
-                        setHubLocked(false);
-                        setStatus(`PLAYER · ${guest.name}`);
-                    }).catch((error) => {
-                        currentPlayerName = '';
-                        setStatus(error.message, true);
-                    });
-                } else {
-                    currentPlayerName = '';
-                    updatePlayerLearningLinks('');
-                    setHubLocked(true);
-                    setStatus('Enter a Korean player name before opening a game.');
+                const state = await api('/api/auth/me').catch(() => ({ signedIn: false }));
+                if (state.signedIn) {
+                    routeSignedIn(state);
+                    return;
                 }
+
+                signedInArea.hidden = true;
+                hubContent.hidden = false;
+                await loadSchools().catch((e) => setStatus(e.message, true));
+                joinForm.hidden = false;
             }
 
             async function loadSchools() {
@@ -1053,6 +1109,7 @@
                     guestNameInput.focus();
                 }
             }, true);
+
             contentAccessButton.addEventListener('click', () => {
                 contentAccessEditing = !contentAccessEditing;
                 contentAccessButton.setAttribute('aria-pressed', String(contentAccessEditing));
@@ -1106,6 +1163,51 @@
                     });
                     const state = await api('/api/auth/me');
                     routeSignedIn(state);
+                } catch (error) {
+                    setStatus(error.message, true);
+                }
+            });
+            toggleGuestMode.addEventListener('click', () => {
+                isGuestModeView = !isGuestModeView;
+                if (isGuestModeView) {
+                    joinForm.hidden = true;
+                    googleSignInButton.hidden = true;
+                    guestForm.hidden = false;
+                    toggleGuestMode.textContent = '로그인';
+                    authTitle.textContent = 'GUEST ACCESS';
+                    authMessage.hidden = false;
+                    authMessage.textContent = '가명(2~6자)과 비밀번호 4자리(2004)를 입력하세요.';
+                    guestNameInput.focus();
+                } else {
+                    guestForm.hidden = true;
+                    toggleGuestMode.textContent = '게스트';
+                    authTitle.textContent = openAccess ? 'STUDENT ACCESS · OPEN' : 'SCHOOL ACCOUNT';
+                    authMessage.textContent = openAccess ? 'Google sign-in is not required while the site is in OPEN mode.' : 'Sign in with the Google Workspace account issued by your school.';
+                    if (openAccess) {
+                        joinForm.hidden = false;
+                    } else {
+                        googleSignInButton.hidden = false;
+                    }
+                }
+            });
+            guestForm.addEventListener('submit', async (event) => {
+                event.preventDefault();
+                const name = guestNameInput.value.trim();
+                const passcode = guestPasscodeInput.value.trim();
+                setStatus('Connecting guest access…');
+                try {
+                    const guest = await api('/api/auth/guest', {
+                        method: 'POST',
+                        body: JSON.stringify({ name, passcode }),
+                    });
+                    currentPlayerName = guest.name;
+                    localStorage.setItem('classPlayerName', guest.name);
+                    updatePlayerLearningLinks(guest.name);
+                    setHubLocked(false);
+                    setStatus(`PLAYER · ${guest.name}`);
+                    authTitle.textContent = 'GUEST PLAYER';
+                    authMessage.textContent = `Welcome, ${guest.name}! Playing as Guest.`;
+                    guestForm.hidden = true;
                 } catch (error) {
                     setStatus(error.message, true);
                 }
