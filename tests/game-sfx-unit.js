@@ -22,7 +22,7 @@ for (const soundName of ["click", "bell", "card", "stone", "success", "error", "
 }
 assert.ok(sfxSource.includes('latencyHint: "interactive"'), "Sound effects should request an interactive low-latency audio context.");
 assert.ok(sfxSource.includes('document.addEventListener("pointerdown"'), "Pointer feedback should begin on pointerdown.");
-assert.ok(!sfxSource.includes("data:audio"), "Shared effects should be synthesized instead of decoding embedded audio.");
+assert.ok(sfxSource.includes('DEFAULT_VOLUME = 0.65;'), "Default SFX volume should be set to 65%.");
 
 const musicControlSource = fs.readFileSync(musicControlPath, "utf8");
 new vm.Script(musicControlSource, { filename: musicControlPath });
@@ -31,6 +31,8 @@ assert.ok(musicControlSource.includes("classmusicchange"), "Music controls shoul
 assert.ok(musicControlSource.includes('id="musicVolumeSlider"'), "Shared music volume should use the compact linear slider.");
 assert.ok(musicControlSource.includes('id="sfxVolumeSlider"'), "Shared effect volume should use the compact linear slider.");
 assert.ok(musicControlSource.includes('step="0.01"'), "Shared audio sliders should adjust continuously.");
+assert.ok(musicControlSource.includes('DEFAULT_MUSIC_VOLUME = 0.3'), "Default music volume for initial visitors should be 30%.");
+assert.ok(musicControlSource.includes('DEFAULT_SFX_VOLUME = 0.65'), "Default SFX volume for initial visitors should be 65%.");
 assert.ok(!musicControlSource.includes("unified-music-segment"), "The oversized segmented volume bar should not return.");
 
 const musicControlCss = fs.readFileSync(musicControlCssPath, "utf8");

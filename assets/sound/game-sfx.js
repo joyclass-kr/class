@@ -5,8 +5,9 @@
 
     const AudioContextClass = window.AudioContext || window.webkitAudioContext;
     const SFX_LEVEL_KEY = "classSfxVolumeLevel";
+    const SFX_VOLUME_KEY = "classSfxVolumeValue";
     const SFX_MUTED_KEY = "classSfxMuted";
-    const DEFAULT_VOLUME = 0.85;
+    const DEFAULT_VOLUME = 0.65;
     const SOUND_NAMES = new Set(["click", "bell", "card", "stone", "success", "error", "tick"]);
 
     let context = null;
@@ -24,9 +25,12 @@
     }
 
     function readInitialVolume() {
+        const storedSfxVal = Number(readStored(SFX_VOLUME_KEY));
+        if (Number.isFinite(storedSfxVal) && storedSfxVal > 0 && storedSfxVal <= 1) {
+            return storedSfxVal;
+        }
         const storedSfx = readStored(SFX_LEVEL_KEY);
-        const storedMusic = readStored("classMusicVolumeLevel");
-        const level = Number(storedSfx || storedMusic);
+        const level = Number(storedSfx);
         return Number.isInteger(level) && level >= 1 && level <= 5
             ? level / 5
             : DEFAULT_VOLUME;

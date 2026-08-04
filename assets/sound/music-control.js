@@ -13,7 +13,10 @@
     const PLAYBACK_SOURCE_KEY = "classMusicPlaybackSource";
     const PLAYBACK_TIME_KEY = "classMusicPlaybackTime";
     const PLAYBACK_POSITIONS_KEY = "classMusicPlaybackPositions";
-    const DEFAULT_LEVEL = 3;
+    const DEFAULT_MUSIC_VOLUME = 0.3;
+    const DEFAULT_SFX_VOLUME = 0.65;
+    const DEFAULT_MUSIC_LEVEL = Math.max(1, Math.round(DEFAULT_MUSIC_VOLUME * 5));
+    const DEFAULT_SFX_LEVEL = Math.max(1, Math.round(DEFAULT_SFX_VOLUME * 5));
 
     const currentScript = document.currentScript;
     if (!window.ClassGameSfx && !document.querySelector("script[data-class-game-sfx]")) {
@@ -40,26 +43,30 @@
 
     // Load Music State
     const savedMusicLevel = Number(localStorage.getItem(MUSIC_LEVEL_KEY));
-    let musicLevel = Number.isInteger(savedMusicLevel) && savedMusicLevel >= 1 && savedMusicLevel <= 5
-        ? savedMusicLevel
-        : DEFAULT_LEVEL;
     const savedMusicVolume = Number(localStorage.getItem(MUSIC_VOLUME_KEY));
     let musicVolume = Number.isFinite(savedMusicVolume) && savedMusicVolume > 0 && savedMusicVolume <= 1
         ? savedMusicVolume
-        : musicLevel / 5;
+        : (Number.isInteger(savedMusicLevel) && savedMusicLevel >= 1 && savedMusicLevel <= 5
+            ? savedMusicLevel / 5
+            : DEFAULT_MUSIC_VOLUME);
+    let musicLevel = Number.isInteger(savedMusicLevel) && savedMusicLevel >= 1 && savedMusicLevel <= 5
+        ? savedMusicLevel
+        : Math.max(1, Math.round(musicVolume * 5));
     // Older games stored booleans as "true" while newer menus use "1".
     // Treat both as the same shared setting during the migration.
     let musicMuted = ["1", "true"].includes(localStorage.getItem(MUSIC_MUTED_KEY));
 
     // Load SFX State
     const savedSfxLevel = Number(localStorage.getItem(SFX_LEVEL_KEY));
-    let sfxLevel = Number.isInteger(savedSfxLevel) && savedSfxLevel >= 1 && savedSfxLevel <= 5
-        ? savedSfxLevel
-        : musicLevel;
     const savedSfxVolume = Number(localStorage.getItem(SFX_VOLUME_KEY));
     let sfxVolume = Number.isFinite(savedSfxVolume) && savedSfxVolume > 0 && savedSfxVolume <= 1
         ? savedSfxVolume
-        : sfxLevel / 5;
+        : (Number.isInteger(savedSfxLevel) && savedSfxLevel >= 1 && savedSfxLevel <= 5
+            ? savedSfxLevel / 5
+            : DEFAULT_SFX_VOLUME);
+    let sfxLevel = Number.isInteger(savedSfxLevel) && savedSfxLevel >= 1 && savedSfxLevel <= 5
+        ? savedSfxLevel
+        : Math.max(1, Math.round(sfxVolume * 5));
     let sfxMuted = ["1", "true"].includes(localStorage.getItem(SFX_MUTED_KEY));
 
     let applyingAudioState = false;
@@ -148,26 +155,29 @@
     function reloadSharedMusicState() {
         const storedLevel = Number(localStorage.getItem(MUSIC_LEVEL_KEY));
         const storedVolume = Number(localStorage.getItem(MUSIC_VOLUME_KEY));
-        if (Number.isInteger(storedLevel) && storedLevel >= 1 && storedLevel <= 5) {
-            musicLevel = storedLevel;
-        }
         if (Number.isFinite(storedVolume) && storedVolume > 0 && storedVolume <= 1) {
             musicVolume = storedVolume;
             musicLevel = Math.max(1, Math.round(musicVolume * 5));
-        } else {
+        } else if (Number.isInteger(storedLevel) && storedLevel >= 1 && storedLevel <= 5) {
+            musicLevel = storedLevel;
             musicVolume = musicLevel / 5;
+        } else {
+            musicVolume = DEFAULT_MUSIC_VOLUME;
+            musicLevel = DEFAULT_MUSIC_LEVEL;
         }
         musicMuted = ["1", "true"].includes(localStorage.getItem(MUSIC_MUTED_KEY));
+
         const storedSfxLevel = Number(localStorage.getItem(SFX_LEVEL_KEY));
         const storedSfxVolume = Number(localStorage.getItem(SFX_VOLUME_KEY));
-        if (Number.isInteger(storedSfxLevel) && storedSfxLevel >= 1 && storedSfxLevel <= 5) {
-            sfxLevel = storedSfxLevel;
-        }
         if (Number.isFinite(storedSfxVolume) && storedSfxVolume > 0 && storedSfxVolume <= 1) {
             sfxVolume = storedSfxVolume;
             sfxLevel = Math.max(1, Math.round(sfxVolume * 5));
+        } else if (Number.isInteger(storedSfxLevel) && storedSfxLevel >= 1 && storedSfxLevel <= 5) {
+            sfxLevel = storedSfxLevel;
+            sfxVolume = storedSfxLevel / 5;
         } else {
-            sfxVolume = sfxLevel / 5;
+            sfxVolume = DEFAULT_SFX_VOLUME;
+            sfxLevel = DEFAULT_SFX_LEVEL;
         }
         sfxMuted = ["1", "true"].includes(localStorage.getItem(SFX_MUTED_KEY));
         render();
