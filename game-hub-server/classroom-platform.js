@@ -1543,8 +1543,17 @@ function createClassroomPlatform(options = {}) {
       }
     }
 
-    if (!payload.hd && !isAdmin) {
-      throw new HttpError(403, "SCHOOL_ACCOUNT_REQUIRED", "Use the Google Workspace account issued by your school.");
+    let isGuardian = false;
+    const dbGuardianCheck = await pool.query(
+      "SELECT id FROM classroom_students WHERE LOWER(guardian1_email) = $1 OR LOWER(guardian2_email) = $1 LIMIT 1",
+      [email]
+    );
+    if (dbGuardianCheck.rowCount > 0) {
+      isGuardian = true;
+    }
+
+    if (!payload.hd && !isAdmin && !isGuardian) {
+      throw new HttpError(403, "SCHOOL_ACCOUNT_REQUIRED", "Use the Google Workspace account issued by your school, or the email registered by the teacher.");
     }
     const userResult = await pool.query(
       `INSERT INTO classroom_users
