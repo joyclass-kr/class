@@ -593,19 +593,19 @@
         <form id="guestForm" class="join-form guest-form" hidden>
             <input id="guestName" class="auth-input guest-name" type="text" maxlength="6" autocomplete="off" placeholder="한글 가명 (2~6자)" aria-label="Player name">
             <input id="guestPasscode" class="auth-input guest-passcode" type="password" maxlength="4" inputmode="numeric" autocomplete="off" placeholder="비밀번호 4자리" aria-label="Passcode">
-            <button class="auth-button join-wide" type="submit">ENTER GUEST</button>
+            <button class="auth-button join-wide" type="submit">게스트 로그인</button>
         </form>
 
         <form id="joinForm" class="join-form student-join-form" hidden>
             <select id="schoolId" class="auth-input join-wide" aria-label="School">
-                <option value="">SCHOOL</option>
+                <option value="">학교 선택</option>
             </select>
             <input id="studentGrade" class="auth-input" type="text" maxlength="2" inputmode="numeric" autocomplete="off" placeholder="GRADE" aria-label="Grade">
             <input id="studentClass" class="auth-input" type="text" maxlength="2" inputmode="numeric" autocomplete="off" placeholder="CLASS" aria-label="Class">
             <input id="studentNumber" class="auth-input" type="text" maxlength="3" inputmode="numeric" autocomplete="off" placeholder="NUMBER" aria-label="Student number">
             <input id="studentName" class="auth-input student-name" type="text" maxlength="6" autocomplete="name" placeholder="NAME" aria-label="Student name">
             <input id="studentPassword" class="auth-input join-wide" type="password" maxlength="6" inputmode="numeric" autocomplete="current-password" placeholder="PASSWORD" aria-label="Student password">
-            <button class="auth-button" type="submit">JOIN</button>
+            <button class="auth-button" type="submit">로그인</button>
         </form>
 
         <div id="signedInArea" hidden>
@@ -1112,23 +1112,28 @@
             }
 
             async function loadSchools() {
+                const currentVal = schoolInput.value;
                 schoolInput.disabled = true;
-                schoolInput.replaceChildren(new Option('LOADING SCHOOLS...', ''));
+                schoolInput.replaceChildren(new Option('학교 선택', ''));
                 const result = await api('/api/schools');
-                schoolInput.replaceChildren(new Option('SCHOOL', ''));
+                schoolInput.replaceChildren(new Option('학교 선택', ''));
                 result.schools.forEach((school) => schoolInput.add(new Option(school.name, school.id)));
+                if (currentVal && result.schools.some((s) => String(s.id) === String(currentVal))) {
+                    schoolInput.value = currentVal;
+                } else if (result.schools.length === 1) {
+                    schoolInput.value = String(result.schools[0].id);
+                }
                 schoolInput.disabled = result.schools.length === 0;
                 if (result.schools.length === 0) {
-                    schoolInput.options[0].textContent = 'NO SCHOOLS AVAILABLE';
+                    schoolInput.options[0].textContent = '등록된 학교가 없습니다';
                     throw new Error('No enabled schools are available. Ask the administrator to enable a school.');
                 }
             }
 
             async function showJoin(state) {
-                const userName = state?.user?.name || '선생님/학생';
-                authTitle.textContent = 'FIRST-TIME SETUP';
+                authTitle.textContent = '학생 / 교사 로그인';
                 authMessage.hidden = false;
-                authMessage.textContent = `${userName}, students enter number 1 or higher. Teachers enter 0.`;
+                authMessage.textContent = '학생은 본인 번호(1번 이상), 교사는 0번을 입력하세요.';
                 googleSignInButton.hidden = true;
                 toggleGuestMode.hidden = true;
                 signedInArea.hidden = !state?.user;
