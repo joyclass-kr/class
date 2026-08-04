@@ -796,8 +796,128 @@
                 }
             });
 
+            function convertQwertyToHangul(text) {
+                const map = {
+                    'q':'ㅂ','w':'ㅈ','e':'ㄷ','r':'ㄱ','t':'ㅅ','y':'ㅛ','u':'ㅕ','i':'ㅑ','o':'ㅐ','p':'ㅔ',
+                    'a':'ㅁ','s':'ㄴ','d':'ㅇ','f':'ㄹ','g':'ㅎ','h':'ㅗ','j':'ㅓ','k':'ㅏ','l':'ㅣ',
+                    'z':'ㅋ','x':'ㅌ','c':'ㅊ','v':'ㅍ','b':'ㅠ','n':'ㅜ','m':'ㅡ',
+                    'Q':'ㅃ','W':'ㅉ','E':'ㄸ','R':'ㄲ','T':'ㅆ','O':'ㅖ','P':'ㅖ'
+                };
+                const CHO = ["ㄱ","ㄲ","ㄴ","ㄷ","ㄸ","ㄹ","ㅁ","ㅂ","ㅃ","ㅅ","ㅆ","ㅇ","ㅈ","ㅉ","ㅊ","ㅋ","ㅌ","ㅍ","ㅎ"];
+                const JOUNG = ["ㅏ","ㅐ","ㅑ","ㅒ","ㅓ","ㅔ","ㅕ","ㅖ","ㅗ","ㅘ","ㅙ","ㅚ","ㅛ","ㅜ","ㅝ","ㅞ","ㅟ","ㅠ","ㅡ","ㅢ"];
+                const JONG = ["","ㄱ","ㄲ","ㄳ","ㄴ","ㄵ","ㄶ","ㄷ","ㄹ","ㄻ","ㄼ","ㄽ","ㄾ","ㄿ","ㅀ","ㅁ","ㅂ","ㅄ","ㅅ","ㅆ","ㅇ","ㅈ","ㅊ","ㅋ","ㅌ","ㅍ","ㅎ"];
+                const COMPOUND_JOUNG = {
+                    'ㅗㅏ':'ㅘ', 'ㅗㅐ':'ㅙ', 'ㅗㅣ':'ㅚ',
+                    'ㅜㅓ':'ㅝ', 'ㅜㅔ':'ㅞ', 'ㅜㅣ':'ㅟ',
+                    'ㅡㅣ':'ㅢ'
+                };
+                const COMPOUND_JONG = {
+                    'ㄱㅅ':'ㄳ', 'ㄴㅈ':'ㄵ', 'ㄴㅎ':'ㄶ',
+                    'ㄹㄱ':'ㄺ', 'ㄹㅁ':'ㄻ', 'ㄹㅂ':'ㄼ', 'ㄹㅅ':'ㄽ', 'ㄹㅌ':'ㄾ', 'ㄹㅍ':'ㄿ', 'ㄹㅎ':'ㅀ',
+                    'ㅂㅅ':'ㅄ'
+                };
+
+                let jamoStr = '';
+                for (let i = 0; i < text.length; i++) {
+                    const ch = text[i];
+                    if (map[ch]) {
+                        jamoStr += map[ch];
+                    } else if (/[가-힣ㄱ-ㅎㅏ-ㅣ]/.test(ch)) {
+                        jamoStr += ch;
+                    }
+                }
+
+                let result = '';
+                let state = 0;
+                let c = -1, j = -1, jg = -1;
+                let rawJong = '';
+
+                for (let i = 0; i < jamoStr.length; i++) {
+                    const char = jamoStr[i];
+                    const choIdx = CHO.indexOf(char);
+                    const joungIdx = JOUNG.indexOf(char);
+                    const jongIdx = JONG.indexOf(char);
+
+                    if (state === 0) {
+                        if (choIdx !== -1) {
+                            c = choIdx;
+                            state = 1;
+                        } else if (joungIdx !== -1) {
+                            result += char;
+                        } else {
+                            result += char;
+                        }
+                    } else if (state === 1) {
+                        if (joungIdx !== -1) {
+                            j = joungIdx;
+                            state = 2;
+                        } else if (choIdx !== -1) {
+                            result += CHO[c];
+                            c = choIdx;
+                        } else {
+                            result += CHO[c] + char;
+                            state = 0;
+                        }
+                    } else if (state === 2) {
+                        const combinedVowel = COMPOUND_JOUNG[JOUNG[j] + char];
+                        if (combinedVowel) {
+                            j = JOUNG.indexOf(combinedVowel);
+                        } else if (jongIdx > 0) {
+                            jg = jongIdx;
+                            rawJong = char;
+                            state = 3;
+                        } else if (choIdx !== -1) {
+                            result += String.fromCharCode(0xAC00 + (c * 21 + j) * 28);
+                            c = choIdx;
+                            state = 1;
+                        } else {
+                            result += String.fromCharCode(0xAC00 + (c * 21 + j) * 28) + char;
+                            state = 0;
+                        }
+                    } else if (state === 3) {
+                        if (joungIdx !== -1) {
+                            if (rawJong.length === 2) {
+                                const firstJongChar = rawJong[0];
+                                const secondJongChar = rawJong[1];
+                                const firstJongIdx = JONG.indexOf(firstJongChar);
+                                result += String.fromCharCode(0xAC00 + (c * 21 + j) * 28 + firstJongIdx);
+                                c = CHO.indexOf(secondJongChar);
+                            } else {
+                                result += String.fromCharCode(0xAC00 + (c * 21 + j) * 28);
+                                c = CHO.indexOf(rawJong);
+                            }
+                            j = joungIdx;
+                            jg = -1;
+                            rawJong = '';
+                            state = 2;
+                        } else {
+                            const compoundJongChar = COMPOUND_JONG[rawJong + char];
+                            if (compoundJongChar) {
+                                jg = JONG.indexOf(compoundJongChar);
+                                rawJong += char;
+                            } else if (choIdx !== -1) {
+                                result += String.fromCharCode(0xAC00 + (c * 21 + j) * 28 + jg);
+                                c = choIdx;
+                                jg = -1;
+                                rawJong = '';
+                                state = 1;
+                            } else {
+                                result += String.fromCharCode(0xAC00 + (c * 21 + j) * 28 + jg) + char;
+                                state = 0;
+                            }
+                        }
+                    }
+                }
+
+                if (state === 1) result += CHO[c];
+                else if (state === 2) result += String.fromCharCode(0xAC00 + (c * 21 + j) * 28);
+                else if (state === 3) result += String.fromCharCode(0xAC00 + (c * 21 + j) * 28 + jg);
+
+                return result.slice(0, 6);
+            }
+
             function normalizePlayerName(value) {
-                return String(value || '').replace(/[^가-힣]/g, '').slice(0, 6);
+                return convertQwertyToHangul(String(value || '')).replace(/[^가-힣]/g, '').slice(0, 6);
             }
 
             function isValidPlayerName(value) {
@@ -1125,7 +1245,10 @@
                     : '우리 반 공개 설정을 저장했습니다.');
             });
             guestNameInput.oninput = () => {
-                guestNameInput.value = guestNameInput.value.replace(/[^가-힣ㄱ-ㅎㅏ-ㅣ]/g, '').slice(0, 6);
+                guestNameInput.value = convertQwertyToHangul(guestNameInput.value);
+            };
+            studentNameInput.oninput = () => {
+                studentNameInput.value = convertQwertyToHangul(studentNameInput.value);
             };
             guestPasscodeInput.addEventListener('input', () => {
                 guestPasscodeInput.value = guestPasscodeInput.value.replace(/\D/g, '').slice(0, 4);
