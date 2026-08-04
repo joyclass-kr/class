@@ -241,23 +241,6 @@
                     <span id="adminEmail"></span>
                     <button id="signOutButton" class="text-button" type="button">SIGN OUT</button>
                 </div>
-                <div class="mode-head">
-                    <div>
-                        <div class="mode-label">FIRST PAGE ACCESS</div>
-                        <div id="modeValue" class="mode-value">—</div>
-                    </div>
-                </div>
-                <p id="modeDescription" class="mode-description"></p>
-                <div class="choice-grid">
-                    <button class="mode-button" data-mode="open" type="button">
-                        <strong>OPEN</strong>
-                        <span>No Google sign-in. Best while developing and testing.</span>
-                    </button>
-                    <button class="mode-button" data-mode="restricted" type="button">
-                        <strong>RESTRICTED</strong>
-                        <span>Require a school Google Workspace account.</span>
-                    </button>
-                </div>
                 <section class="management" aria-labelledby="school-management-title">
                     <h2 id="school-management-title">School management</h2>
                     <p class="management-copy">Assign each homeroom teacher a school year, grade, and class. Teachers can manage only the student roster for the class assigned here.</p>
@@ -384,14 +367,18 @@
             }
 
             function renderMode(mode) {
-                modeValue.textContent = mode.toUpperCase();
-                modeDescription.textContent = mode === "open"
-                    ? "Anyone can open the first page. A player name is enough to use the games."
-                    : "The first page requires a verified school Google Workspace account.";
-                modeButtons.forEach((button) => {
-                    button.classList.toggle("active", button.dataset.mode === mode);
-                    button.disabled = saving;
-                });
+                if (typeof modeValue !== 'undefined' && modeValue) modeValue.textContent = (mode || '').toUpperCase();
+                if (typeof modeDescription !== 'undefined' && modeDescription) {
+                    modeDescription.textContent = mode === "open"
+                        ? "Anyone can open the first page. A player name is enough to use the games."
+                        : "The first page requires a verified school Google Workspace account.";
+                }
+                if (typeof modeButtons !== 'undefined' && modeButtons) {
+                    modeButtons.forEach((button) => {
+                        button.classList.toggle("active", button.dataset.mode === mode);
+                        button.disabled = saving;
+                    });
+                }
             }
 
             function selectedSchool() {
