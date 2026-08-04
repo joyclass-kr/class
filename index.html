@@ -1124,6 +1124,9 @@
                     ? '각 버튼을 눌러 우리 반 학생의 접근을 잠그거나 공개하세요.'
                     : '우리 반 공개 설정을 저장했습니다.');
             });
+            guestNameInput.oninput = () => {
+                guestNameInput.value = guestNameInput.value.replace(/[^가-힣ㄱ-ㅎㅏ-ㅣ]/g, '').slice(0, 6);
+            };
             guestPasscodeInput.addEventListener('input', () => {
                 guestPasscodeInput.value = guestPasscodeInput.value.replace(/\D/g, '').slice(0, 4);
             });
@@ -1201,8 +1204,17 @@
             });
             guestForm.addEventListener('submit', async (event) => {
                 event.preventDefault();
-                const name = guestNameInput.value.trim();
+                const name = guestNameInput.value.trim().replace(/[^가-힣]/g, '');
+                guestNameInput.value = name;
                 const passcode = guestPasscodeInput.value.trim();
+                if (!isValidPlayerName(name)) {
+                    setStatus('가명은 한글 2~6자로 입력하세요.', true);
+                    return;
+                }
+                if (passcode.length !== 4) {
+                    setStatus('비밀번호 4자리를 올바르게 입력하세요.', true);
+                    return;
+                }
                 setStatus('Connecting guest access…');
                 try {
                     const guest = await api('/api/auth/guest', {
