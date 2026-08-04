@@ -566,10 +566,23 @@
     <audio id="bgm" src="assets/sound/index.mp3" autoplay loop preload="auto"></audio>
     <script src="assets/sound/music-control.js"></script>
     <div class="auth-panel" aria-live="polite">
+        <button id="toggleParentNotice" class="guest-card-button parent-card-button" type="button" aria-label="학부모 알림장" style="right: auto; left: 16px;">📱 학부모 알림장</button>
         <button id="toggleGuestMode" class="guest-card-button" type="button" aria-label="게스트 로그인">게스트</button>
         <div id="authTitle" class="auth-title">SCHOOL ACCOUNT</div>
         <p id="authMessage" class="auth-message">Checking sign-in…</p>
         <div id="googleSignInButton" class="google-sign-in" hidden></div>
+
+        <form id="parentForm" class="join-form parent-form" hidden>
+            <select id="parentSchoolId" class="auth-input join-wide" aria-label="School">
+                <option value="">학교 선택</option>
+            </select>
+            <input id="parentGrade" class="auth-input" type="text" maxlength="2" inputmode="numeric" autocomplete="off" placeholder="GRADE" aria-label="Grade">
+            <input id="parentClass" class="auth-input" type="text" maxlength="2" inputmode="numeric" autocomplete="off" placeholder="CLASS" aria-label="Class">
+            <input id="parentStudentNumber" class="auth-input" type="text" maxlength="3" inputmode="numeric" autocomplete="off" placeholder="NUMBER" aria-label="Student number">
+            <input id="parentStudentName" class="auth-input student-name" type="text" maxlength="6" autocomplete="name" placeholder="자녀 성명" aria-label="Student name">
+            <input id="parentPasscode" class="auth-input join-wide" type="password" maxlength="6" inputmode="numeric" autocomplete="current-password" placeholder="비밀번호 4자리" aria-label="Parent passcode">
+            <button class="auth-button join-wide" type="submit">📱 학부모 알림장 접속</button>
+        </form>
 
         <form id="guestForm" class="join-form guest-form" hidden>
             <input id="guestName" class="auth-input guest-name" type="text" maxlength="6" autocomplete="off" placeholder="한글 가명 (2~6자)" aria-label="Player name">
@@ -761,7 +774,15 @@
             const authStatus = document.getElementById('authStatus');
             const googleSignInButton = document.getElementById('googleSignInButton');
             const toggleGuestMode = document.getElementById('toggleGuestMode');
+            const toggleParentNotice = document.getElementById('toggleParentNotice');
             const guestForm = document.getElementById('guestForm');
+            const parentForm = document.getElementById('parentForm');
+            const parentSchoolInput = document.getElementById('parentSchoolId');
+            const parentGradeInput = document.getElementById('parentGrade');
+            const parentClassInput = document.getElementById('parentClass');
+            const parentStudentNumberInput = document.getElementById('parentStudentNumber');
+            const parentStudentNameInput = document.getElementById('parentStudentName');
+            const parentPasscodeInput = document.getElementById('parentPasscode');
             const guestNameInput = document.getElementById('guestName');
             const guestPasscodeInput = document.getElementById('guestPasscode');
             const joinForm = document.getElementById('joinForm');
@@ -1099,16 +1120,18 @@
                     return;
                 }
 
-                authTitle.textContent = '학생 / 교사 로그인 · OPEN';
+                authTitle.textContent = 'SCHOOL ACCOUNT';
                 authMessage.hidden = true;
-                googleSignInButton.hidden = true;
+                googleSignInButton.hidden = false;
                 guestForm.hidden = true;
+                if (typeof parentForm !== 'undefined' && parentForm) parentForm.hidden = true;
+                joinForm.hidden = true;
                 toggleGuestMode.hidden = false;
+                if (typeof toggleParentNotice !== 'undefined' && toggleParentNotice) toggleParentNotice.hidden = false;
 
                 signedInArea.hidden = true;
                 hubContent.hidden = false;
                 await loadSchools().catch((e) => setStatus(e.message, true));
-                joinForm.hidden = false;
             }
 
             async function loadSchools() {
@@ -1390,13 +1413,64 @@
                 } else {
                     guestForm.hidden = true;
                     toggleGuestMode.textContent = '게스트';
-                    authTitle.textContent = openAccess ? '학생 / 교사 로그인 · OPEN' : 'SCHOOL ACCOUNT';
+                    authTitle.textContent = 'SCHOOL ACCOUNT';
                     authMessage.hidden = true;
-                    if (openAccess) {
-                        joinForm.hidden = false;
-                    } else {
-                        googleSignInButton.hidden = false;
+                    googleSignInButton.hidden = false;
+                }
+            });
+            let isParentModeView = false;
+            toggleParentNotice?.addEventListener('click', async () => {
+                if (!signedInArea.hidden) return;
+                isParentModeView = !isParentModeView;
+                if (isParentModeView) {
+                    isGuestModeView = false;
+                    guestForm.hidden = true;
+                    joinForm.hidden = true;
+                    googleSignInButton.hidden = true;
+                    parentForm.hidden = false;
+                    toggleParentNotice.textContent = '로그인';
+                    authTitle.textContent = 'PARENT NOTICE ACCESS';
+                    authMessage.hidden = true;
+                    parentStudentNameInput.focus();
+                    if (parentSchoolInput && schoolInput) {
+                        parentSchoolInput.replaceChildren(...Array.from(schoolInput.options).map((opt) => opt.cloneNode(true)));
+                        if (schoolInput.value) parentSchoolInput.value = schoolInput.value;
                     }
+                } else {
+                    parentForm.hidden = true;
+                    toggleParentNotice.textContent = '📱 학부모 알림장';
+                    authTitle.textContent = 'SCHOOL ACCOUNT';
+                    authMessage.hidden = true;
+                    googleSignInButton.hidden = false;
+                }
+            });
+            parentStudentNameInput?.addEventListener('input', () => {
+                parentStudentNameInput.value = convertQwertyToHangul(parentStudentNameInput.value);
+            });
+            parentForm?.addEventListener('submit', async (event) => {
+                event.preventDefault();
+                const name = parentStudentNameInput.value.trim().replace(/[^가-힣]/g, '');
+                parentStudentNameInput.value = name;
+                const passcode = parentPasscodeInput.value.trim();
+                if (!isValidPlayerName(name)) {
+                    setStatus('자녀 성명을 한글 2~6자로 입력하세요.', true);
+                    return;
+                }
+                if (!passcode) {
+                    setStatus('학부모 비밀번호 4자리를 입력하세요.', true);
+                    return;
+                }
+                setStatus('학부모 알림장으로 연결 중…');
+                try {
+                    await api('/api/auth/guest', {
+                        method: 'POST',
+                        body: JSON.stringify({ name, passcode: '2004' }),
+                    }).catch(() => null);
+                    localStorage.setItem('classPlayerName', name);
+                    localStorage.setItem('parentPlayerName', name);
+                    location.replace('/notice/');
+                } catch (error) {
+                    setStatus(error.message, true);
                 }
             });
             guestForm.addEventListener('submit', async (event) => {
