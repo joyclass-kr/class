@@ -2831,6 +2831,61 @@ function createClassroomPlatform(options = {}) {
     }
   }));
 
+  router.post("/teacher/simulate-student", asyncRoute(async (req, res) => {
+    const teacher = await requireTeacher(req);
+    const classRes = await pool.query("SELECT id FROM classroom_classes WHERE teacher_user_id = $1", [teacher.id]);
+    const classInfo = classRes.rows[0];
+    if (!classInfo) {
+      throw new HttpError(400, "NO_CLASS", "학급이 배정되지 않아 체험할 수 없습니다. 관리자에게 문의하세요.");
+    }
+
+    const simName = "선생님(체험)";
+    const simNumber = "99";
+    const simSub = `simulate-${teacher.id}`;
+
+    // Ensure the student slot exists
+    let slotRes = await pool.query(
+      "SELECT id FROM classroom_students WHERE class_id = $1 AND student_number = $2",
+      [classInfo.id, simNumber]
+    );
+    if (slotRes.rowCount === 0) {
+      slotRes = await pool.query(
+        `INSERT INTO classroom_students (class_id, student_number, roster_name, gender)
+         VALUES ($1, $2, $3, 'unknown')
+         RETURNING id`,
+        [classInfo.id, simNumber, simName]
+      );
+    }
+    const slotId = slotRes.rows[0].id;
+
+    // Ensure the fake user exists
+    let userRes = await pool.query("SELECT id FROM classroom_users WHERE google_sub = $1", [simSub]);
+    if (userRes.rowCount === 0) {
+      userRes = await pool.query(
+        `INSERT INTO classroom_users (google_sub, email, display_name, role)
+         VALUES ($1, $2, $3, 'student')
+         RETURNING id`,
+        [simSub, `teacher-${teacher.id}@simulate.local`, simName]
+      );
+    }
+    const userId = userRes.rows[0].id;
+
+    // Link them
+    await pool.query("UPDATE classroom_students SET user_id = $1 WHERE id = $2", [userId, slotId]);
+
+    // Create a new session
+    const sessionToken = crypto.randomBytes(32).toString("base64url");
+    await pool.query(
+      `INSERT INTO classroom_sessions (token_hash, user_id, expires_at)
+       VALUES ($1, $2, NOW() + (24 * 3600 * INTERVAL '1 second'))`,
+      [hashSessionToken(sessionToken), userId]
+    );
+    setSessionCookie(res, sessionToken);
+
+    res.json({ ok: true });
+  }));
+
+
   router.post("/student/join", asyncRoute(async (req, res) => {
     const accessMode = await getSiteAccessMode();
     let user = await sessionUser(req);
@@ -2990,6 +3045,379 @@ function createClassroomPlatform(options = {}) {
     console.error("Classroom API error:", error);
     return res.status(500).json({ error: "INTERNAL_ERROR", message: "The server could not complete the request." });
   });
+
+  // ----------------------------------------------------
+  // Notice & Attendance Platform API Routes
+  // ----------------------------------------------------
+
+  // 1. Send Notice (Teacher)
+  router.post("/teacher/notices", asyncRoute(async (req, res) => {
+    const teacher = await requireTeacher(req);
+    const title = String(req.body?.title || "").trim();
+    const contentType = String(req.body?.contentType || "text").trim();
+    const contentBody = String(req.body?.contentBody || "").trim();
+    const targetType = String(req.body?.targetType || "all").trim();
+    const targetGrade = req.body?.targetGrade ? Number(req.body.targetGrade) : null;
+    const targetClassNumber = req.body?.targetClassNumber ? Number(req.body.targetClassNumber) : null;
+    const targetStudentNumbers = req.body?.targetStudentNumbers ? String(req.body.targetStudentNumbers).trim() : null;
+    const requiresSignature = Boolean(req.body?.requiresSignature);
+
+    if (!title || !contentBody) {
+      throw new HttpError(400, "TITLE_AND_CONTENT_REQUIRED", "제목과 내용을 입력하세요.");
+    }
+
+    const teacherProfileRes = await pool.query(
+      `SELECT t.school_id, t.teacher_name, c.grade, c.class_number
+       FROM classroom_teachers t
+       LEFT JOIN classroom_classes c ON c.teacher_user_id = t.user_id
+       WHERE t.user_id = $1`,
+      [teacher.id]
+    );
+    const teacherInfo = teacherProfileRes.rows[0];
+    const schoolId = teacherInfo?.school_id || null;
+    const senderName = teacherInfo?.teacher_name || teacher.displayName || "담임선생님";
+
+    const insertRes = await pool.query(
+      `INSERT INTO classroom_notices
+         (school_id, sender_teacher_name, title, content_type, content_body, target_type, target_grade, target_class_number, target_student_numbers, requires_signature)
+       VALUES ($1, $2, $3, $4, $5, $6, $7, $8, $9, $10)
+       RETURNING id, created_at`,
+      [schoolId, senderName, title, contentType, contentBody, targetType, targetGrade, targetClassNumber, targetStudentNumbers, requiresSignature]
+    );
+
+    res.status(201).json({ ok: true, noticeId: String(insertRes.rows[0].id) });
+  }));
+
+  // 2. Fetch Notice List (Parent / Student / Teacher)
+  router.get("/notice/list", asyncRoute(async (req, res) => {
+    let user = await sessionUser(req);
+    let schoolId = null;
+    let grade = null;
+    let classNumber = null;
+    let studentNumber = null;
+
+    if (user && user.membership) {
+      schoolId = user.membership.schoolId;
+      grade = user.membership.grade;
+      classNumber = user.membership.classNumber;
+      studentNumber = String(user.membership.studentNumber || "");
+    }
+
+    const noticesRes = await pool.query(
+      `SELECT id, school_id, sender_teacher_name, title, content_type, content_body,
+              target_type, target_grade, target_class_number, target_student_numbers, requires_signature, created_at
+       FROM classroom_notices
+       ORDER BY created_at DESC
+       LIMIT 50`
+    );
+
+    const filtered = noticesRes.rows.filter(n => {
+      if (!n.school_id || !schoolId || String(n.school_id) === String(schoolId)) {
+        if (n.target_type === 'all') return true;
+        if (n.target_type === 'grade' && Number(n.target_grade) === Number(grade)) return true;
+        if (n.target_type === 'class' && Number(n.target_grade) === Number(grade) && Number(n.target_class_number) === Number(classNumber)) return true;
+        if (n.target_type === 'students' && Number(n.target_grade) === Number(grade) && Number(n.target_class_number) === Number(classNumber)) {
+          if (!n.target_student_numbers || !studentNumber) return true;
+          const nums = String(n.target_student_numbers).split(',').map(s => s.trim());
+          return nums.includes(String(studentNumber));
+        }
+      }
+      return true;
+    });
+
+    res.json({
+      notices: filtered.map(n => ({
+        id: String(n.id),
+        senderName: n.sender_teacher_name,
+        title: n.title,
+        contentType: n.content_type,
+        contentBody: n.content_body,
+        targetType: n.target_type,
+        requiresSignature: n.requires_signature,
+        createdAt: n.created_at
+      }))
+    });
+  }));
+
+  // 3. Quick Attendance Alert (Parent -> Teacher)
+  router.post("/notice/quick-absence", asyncRoute(async (req, res) => {
+    let user = await sessionUser(req);
+    const noticeType = String(req.body?.noticeType || "결석").trim();
+    const expectedDate = String(req.body?.expectedDate || "").trim();
+    const reason = String(req.body?.reason || "").trim();
+
+    if (!expectedDate || !reason) {
+      throw new HttpError(400, "DATE_AND_REASON_REQUIRED", "날짜와 사유를 입력하세요.");
+    }
+
+    const schoolId = user?.membership?.schoolId || Number(req.body?.schoolId || 1);
+    const grade = user?.membership?.grade || Number(req.body?.grade || 1);
+    const classNumber = user?.membership?.classNumber || Number(req.body?.classNumber || 1);
+    const studentNumber = String(user?.membership?.studentNumber || req.body?.studentNumber || "1");
+    const studentName = String(user?.membership?.name || req.body?.studentName || "학생").trim();
+
+    const insertRes = await pool.query(
+      `INSERT INTO classroom_absence_notices
+         (school_id, grade, class_number, student_number, student_name, notice_type, expected_date, reason)
+       VALUES ($1, $2, $3, $4, $5, $6, $7, $8)
+       RETURNING id, created_at`,
+      [schoolId, grade, classNumber, studentNumber, studentName, noticeType, expectedDate, reason]
+    );
+
+    res.status(201).json({ ok: true, id: String(insertRes.rows[0].id) });
+  }));
+
+  // 4. Quick Attendance Inbox (Teacher)
+  router.get("/teacher/quick-absences", asyncRoute(async (req, res) => {
+    const teacher = await requireTeacher(req);
+    const result = await pool.query(
+      `SELECT n.id, n.grade, n.class_number, n.student_number, n.student_name, n.notice_type, n.expected_date, n.reason, n.created_at
+       FROM classroom_absence_notices n
+       JOIN classroom_teachers t ON t.school_id = n.school_id
+       WHERE t.user_id = $1
+       ORDER BY n.created_at DESC
+       LIMIT 100`,
+      [teacher.id]
+    );
+
+    res.json({
+      alerts: result.rows.map(r => ({
+        id: String(r.id),
+        grade: r.grade,
+        classNumber: r.class_number,
+        studentNumber: r.student_number,
+        studentName: r.student_name,
+        noticeType: r.notice_type,
+        expectedDate: r.expected_date,
+        reason: r.reason,
+        createdAt: r.created_at
+      }))
+    });
+  }));
+
+  // 5. Absence Notes Submit (Parent -> Teacher)
+  router.post("/notice/absence-notes", asyncRoute(async (req, res) => {
+    let user = await sessionUser(req);
+    const startDate = String(req.body?.startDate || "").trim();
+    const endDate = String(req.body?.endDate || "").trim();
+    const totalDays = Number(req.body?.totalDays || 1);
+    const reasonType = String(req.body?.reasonType || "질병결석").trim();
+    const reasonDetail = String(req.body?.reasonDetail || "").trim();
+    const evidenceUrl = String(req.body?.evidenceUrl || "").trim();
+    const parentName = String(req.body?.parentName || "").trim();
+    const parentSignature = String(req.body?.parentSignature || "").trim();
+
+    if (!startDate || !endDate || !reasonDetail || !parentName || !parentSignature) {
+      throw new HttpError(400, "MISSING_REQUIRED_FIELDS", "필수 입력 항목(기간, 사유, 보호자 성명 및 전자서명)을 작성해 주세요.");
+    }
+
+    const schoolId = user?.membership?.schoolId || Number(req.body?.schoolId || 1);
+    const grade = user?.membership?.grade || Number(req.body?.grade || 1);
+    const classNumber = user?.membership?.classNumber || Number(req.body?.classNumber || 1);
+    const studentNumber = String(user?.membership?.studentNumber || req.body?.studentNumber || "1");
+    const studentName = String(user?.membership?.name || req.body?.studentName || "학생").trim();
+
+    const insertRes = await pool.query(
+      `INSERT INTO classroom_absence_notes
+         (school_id, grade, class_number, student_number, student_name, start_date, end_date, total_days, reason_type, reason_detail, evidence_url, parent_name, parent_signature, status)
+       VALUES ($1, $2, $3, $4, $5, $6, $7, $8, $9, $10, $11, $12, $13, 'pending')
+       RETURNING id, created_at`,
+      [schoolId, grade, classNumber, studentNumber, studentName, startDate, endDate, totalDays, reasonType, reasonDetail, evidenceUrl, parentName, parentSignature]
+    );
+
+    res.status(201).json({ ok: true, id: String(insertRes.rows[0].id) });
+  }));
+
+  // 6. Absence Notes Inbox & Approve (Teacher)
+  router.get("/teacher/absence-notes", asyncRoute(async (req, res) => {
+    const teacher = await requireTeacher(req);
+    const result = await pool.query(
+      `SELECT a.id, a.grade, a.class_number, a.student_number, a.student_name, a.start_date, a.end_date, a.total_days, a.reason_type, a.reason_detail, a.evidence_url, a.parent_name, a.parent_signature, a.status, a.created_at
+       FROM classroom_absence_notes a
+       JOIN classroom_teachers t ON t.school_id = a.school_id
+       WHERE t.user_id = $1
+       ORDER BY a.created_at DESC
+       LIMIT 100`,
+      [teacher.id]
+    );
+
+    res.json({
+      notes: result.rows.map(r => ({
+        id: String(r.id),
+        grade: r.grade,
+        classNumber: r.class_number,
+        studentNumber: r.student_number,
+        studentName: r.student_name,
+        startDate: r.start_date,
+        endDate: r.end_date,
+        totalDays: r.total_days,
+        reasonType: r.reason_type,
+        reasonDetail: r.reason_detail,
+        evidenceUrl: r.evidence_url,
+        parentName: r.parent_name,
+        parentSignature: r.parent_signature,
+        status: r.status,
+        createdAt: r.created_at
+      }))
+    });
+  }));
+
+  router.patch("/teacher/absence-notes/:id/approve", asyncRoute(async (req, res) => {
+    await requireTeacher(req);
+    const id = Number(req.params.id);
+    const status = String(req.body?.status || "approved").trim();
+
+    const updateRes = await pool.query(
+      `UPDATE classroom_absence_notes
+       SET status = $1, teacher_check = 'approved'
+       WHERE id = $2
+       RETURNING id, status`,
+      [status, id]
+    );
+
+    if (!updateRes.rows[0]) throw new HttpError(404, "NOT_FOUND", "결석계를 찾을 수 없습니다.");
+    res.json({ ok: true, id: String(updateRes.rows[0].id), status: updateRes.rows[0].status });
+  }));
+
+  // 7. Experiential Learning Application & Report API
+  router.post("/notice/experiential-apps", asyncRoute(async (req, res) => {
+    let user = await sessionUser(req);
+    const startDate = String(req.body?.startDate || "").trim();
+    const endDate = String(req.body?.endDate || "").trim();
+    const totalDays = Number(req.body?.totalDays || 1);
+    const destination = String(req.body?.location || req.body?.destination || "").trim();
+    const planDetail = String(req.body?.planDetail || "").trim();
+    const parentPhone = String(req.body?.parentPhone || "").trim();
+    const parentName = String(req.body?.parentName || "").trim();
+    const parentSignature = String(req.body?.parentSignature || "").trim();
+
+    if (!startDate || !endDate || !destination || !planDetail || !parentName || !parentSignature) {
+      throw new HttpError(400, "MISSING_REQUIRED_FIELDS", "필수 입력 항목(기간, 목적지, 학습계획, 보호자 성명 및 서명)을 입력하세요.");
+    }
+
+    const schoolId = user?.membership?.schoolId || Number(req.body?.schoolId || 1);
+    const grade = user?.membership?.grade || Number(req.body?.grade || 1);
+    const classNumber = user?.membership?.classNumber || Number(req.body?.classNumber || 1);
+    const studentNumber = String(user?.membership?.studentNumber || req.body?.studentNumber || "1");
+    const studentName = String(user?.membership?.name || req.body?.studentName || "학생").trim();
+
+    const insertRes = await pool.query(
+      `INSERT INTO classroom_experiential_apps
+         (school_id, grade, class_number, student_number, student_name, parent_phone, start_date, end_date, total_days, location, plan_detail, parent_name, parent_signature, status)
+       VALUES ($1, $2, $3, $4, $5, $6, $7, $8, $9, $10, $11, $12, $13, 'pending')
+       RETURNING id, created_at`,
+      [schoolId, grade, classNumber, studentNumber, studentName, parentPhone, startDate, endDate, totalDays, destination, planDetail, parentName, parentSignature]
+    );
+
+    res.status(201).json({ ok: true, id: String(insertRes.rows[0].id) });
+  }));
+
+  router.post("/notice/experiential-reports", asyncRoute(async (req, res) => {
+    let user = await sessionUser(req);
+    const startDate = String(req.body?.startDate || "").trim();
+    const endDate = String(req.body?.endDate || "").trim();
+    const totalDays = Number(req.body?.totalDays || 1);
+    const destination = String(req.body?.location || req.body?.destination || "").trim();
+    const reportDetail = String(req.body?.reportDetail || "").trim();
+    const photoUrl = String(req.body?.photoUrl || "").trim();
+    const parentName = String(req.body?.parentName || "").trim();
+    const parentSignature = String(req.body?.parentSignature || "").trim();
+
+    if (!startDate || !endDate || !destination || !reportDetail || !parentName || !parentSignature) {
+      throw new HttpError(400, "MISSING_REQUIRED_FIELDS", "필수 입력 항목(기간, 목적지, 보고서 내용, 보호자 서명)을 입력하세요.");
+    }
+
+    const schoolId = user?.membership?.schoolId || Number(req.body?.schoolId || 1);
+    const grade = user?.membership?.grade || Number(req.body?.grade || 1);
+    const classNumber = user?.membership?.classNumber || Number(req.body?.classNumber || 1);
+    const studentNumber = String(user?.membership?.studentNumber || req.body?.studentNumber || "1");
+    const studentName = String(user?.membership?.name || req.body?.studentName || "학생").trim();
+
+    const insertRes = await pool.query(
+      `INSERT INTO classroom_experiential_reports
+         (school_id, grade, class_number, student_number, student_name, start_date, end_date, total_days, location, report_detail, photo_url, parent_name, parent_signature, status)
+       VALUES ($1, $2, $3, $4, $5, $6, $7, $8, $9, $10, $11, $12, $13, 'pending')
+       RETURNING id, created_at`,
+      [schoolId, grade, classNumber, studentNumber, studentName, startDate, endDate, totalDays, destination, reportDetail, photoUrl, parentName, parentSignature]
+    );
+
+    res.status(201).json({ ok: true, id: String(insertRes.rows[0].id) });
+  }));
+
+  router.get("/teacher/experiential-apps", asyncRoute(async (req, res) => {
+    const teacher = await requireTeacher(req);
+    const appsRes = await pool.query(
+      `SELECT e.id, e.grade, e.class_number, e.student_number, e.student_name, e.parent_phone, e.start_date, e.end_date, e.total_days, e.location, e.plan_detail, e.parent_name, e.parent_signature, e.status, e.created_at
+       FROM classroom_experiential_apps e
+       JOIN classroom_teachers t ON t.school_id = e.school_id
+       WHERE t.user_id = $1
+       ORDER BY e.created_at DESC
+       LIMIT 100`,
+      [teacher.id]
+    );
+
+    const reportsRes = await pool.query(
+      `SELECT r.id, r.grade, r.class_number, r.student_number, r.student_name, r.start_date, r.end_date, r.total_days, r.location, r.report_detail, r.photo_url, r.parent_name, r.parent_signature, r.status, r.created_at
+       FROM classroom_experiential_reports r
+       JOIN classroom_teachers t ON t.school_id = r.school_id
+       WHERE t.user_id = $1
+       ORDER BY r.created_at DESC
+       LIMIT 100`,
+      [teacher.id]
+    );
+
+    res.json({
+      applications: appsRes.rows.map(a => ({
+        id: String(a.id),
+        grade: a.grade,
+        classNumber: a.class_number,
+        studentNumber: a.student_number,
+        studentName: a.student_name,
+        parentPhone: a.parent_phone,
+        startDate: a.start_date,
+        endDate: a.end_date,
+        totalDays: a.total_days,
+        location: a.location,
+        planDetail: a.plan_detail,
+        parentName: a.parent_name,
+        parentSignature: a.parent_signature,
+        status: a.status,
+        createdAt: a.created_at
+      })),
+      reports: reportsRes.rows.map(r => ({
+        id: String(r.id),
+        grade: r.grade,
+        classNumber: r.class_number,
+        studentNumber: r.student_number,
+        studentName: r.student_name,
+        startDate: r.start_date,
+        endDate: r.end_date,
+        totalDays: r.total_days,
+        location: r.location,
+        reportDetail: r.report_detail,
+        photoUrl: r.photo_url,
+        parentName: r.parent_name,
+        parentSignature: r.parent_signature,
+        status: r.status,
+        createdAt: r.created_at
+      }))
+    });
+  }));
+
+  router.patch("/teacher/experiential-apps/:id/approve", asyncRoute(async (req, res) => {
+    await requireTeacher(req);
+    const id = Number(req.params.id);
+    const type = String(req.query.type || "app");
+    const status = String(req.body?.status || "approved").trim();
+
+    if (type === "report") {
+      await pool.query(`UPDATE classroom_experiential_reports SET status = $1 WHERE id = $2`, [status, id]);
+    } else {
+      await pool.query(`UPDATE classroom_experiential_apps SET status = $1 WHERE id = $2`, [status, id]);
+    }
+
+    res.json({ ok: true, id: String(id), status });
+  }));
 
   return {
     router,

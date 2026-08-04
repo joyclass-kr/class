@@ -603,30 +603,194 @@
             }
         }
 
-        // Dummy Submissions for now
-        function submitQuickAbsence(e) {
-            e.preventDefault();
-            alert('담임선생님께 당일 출결 예고 알림을 전송했습니다.');
-            e.target.reset();
+        // Client Image Compressor (150~300KB max 1000px)
+        async function compressImageFile(file, maxDimension = 1000, quality = 0.7) {
+            if (!file || !file.type.startsWith('image/')) return '';
+            return new Promise((resolve) => {
+                const reader = new FileReader();
+                reader.onload = (e) => {
+                    const img = new Image();
+                    img.onload = () => {
+                        let w = img.width;
+                        let h = img.height;
+                        if (w > maxDimension || h > maxDimension) {
+                            if (w > h) {
+                                h = Math.round((h * maxDimension) / w);
+                                w = maxDimension;
+                            } else {
+                                w = Math.round((w * maxDimension) / h);
+                                h = maxDimension;
+                            }
+                        }
+                        const cvs = document.createElement('canvas');
+                        cvs.width = w;
+                        cvs.height = h;
+                        const c = cvs.getContext('2d');
+                        c.drawImage(img, 0, 0, w, h);
+                        resolve(cvs.toDataURL('image/jpeg', quality));
+                    };
+                    img.onerror = () => resolve('');
+                    img.src = e.target.result;
+                };
+                reader.onerror = () => resolve('');
+                reader.readAsDataURL(file);
+            });
         }
 
-        function submitAbsenceNote(e) {
+        // Real API Submissions
+        async function submitQuickAbsence(e) {
             e.preventDefault();
-            alert('결석계가 전자서명과 함께 담임선생님께 정상 제출되었습니다.');
-            clearCanvas();
-            e.target.reset();
+            const noticeType = document.getElementById('qaType').value;
+            const expectedDate = document.getElementById('qaDate').value;
+            const reason = document.getElementById('qaReason').value.trim();
+
+            try {
+                const res = await fetch('/api/notice/quick-absence', {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify({ noticeType, expectedDate, reason })
+                });
+                const data = await res.json();
+                if (!res.ok) throw new Error(data.message || '전송 실패');
+                alert('담임선생님께 당일 출결 예고 알림을 정상 전송했습니다.');
+                e.target.reset();
+            } catch (err) {
+                alert(err.message || '당일 출결 예고 전송 중 오류가 발생했습니다.');
+            }
         }
 
-        function submitExpApp(e) {
+        async function submitAbsenceNote(e) {
             e.preventDefault();
-            alert('교외체험학습 신청서가 제출되었습니다.');
-            e.target.reset();
+            const startDate = document.getElementById('abStart').value;
+            const endDate = document.getElementById('abEnd').value;
+            const totalDays = Number(document.getElementById('abDays').value || 1);
+            const reasonType = document.getElementById('abReasonType').value;
+            const reasonDetail = document.getElementById('abDetail').value.trim();
+            const parentName = document.getElementById('abParentName').value.trim();
+            const fileInput = document.getElementById('abFile');
+            
+            let evidenceUrl = '';
+            if (fileInput && fileInput.files && fileInput.files[0]) {
+                evidenceUrl = await compressImageFile(fileInput.files[0], 1000, 0.7);
+            }
+
+            const parentSignature = canvas ? canvas.toDataURL() : '';
+            if (!parentSignature || parentSignature.length < 100) {
+                alert('보호자 서명란에 캔버스 전자서명을 작성해 주세요.');
+                return;
+            }
+
+            try {
+                const res = await fetch('/api/notice/absence-notes', {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify({
+                        startDate, endDate, totalDays, reasonType, reasonDetail,
+                        evidenceUrl, parentName, parentSignature
+                    })
+                });
+                const data = await res.json();
+                if (!res.ok) throw new Error(data.message || '제출 실패');
+                alert('결석계가 전자서명과 함께 담임선생님께 성공적으로 제출되었습니다.');
+                clearCanvas();
+                e.target.reset();
+            } catch (err) {
+                alert(err.message || '결석계 제출 중 오류가 발생했습니다.');
+            }
         }
 
-        function submitExpReport(e) {
+        async function submitExpApp(e) {
             e.preventDefault();
-            alert('교외체험학습 결과 보고서가 제출되었습니다.');
-            e.target.reset();
+            const startDate = document.getElementById('eaStart').value;
+            const endDate = document.getElementById('eaEnd').value;
+            const totalDays = Number(document.getElementById('eaDays').value || 1);
+            const location = document.getElementById('eaLocation').value.trim();
+            const planDetail = document.getElementById('eaPlan').value.trim();
+            const parentPhone = document.getElementById('eaPhone').value.trim();
+            const parentName = document.getElementById('eaParentName').value.trim();
+
+            const parentSignature = canvas ? canvas.toDataURL() : '전자서명';
+
+            try {
+                const res = await fetch('/api/notice/experiential-apps', {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify({
+                        startDate, endDate, totalDays, location, planDetail,
+                        parentPhone, parentName, parentSignature
+                    })
+                });
+                const data = await res.json();
+                if (!res.ok) throw new Error(data.message || '제출 실패');
+                alert('교외체험학습 신청서가 제출되었습니다.');
+                e.target.reset();
+            } catch (err) {
+                alert(err.message || '체험학습 신청서 제출 실패');
+            }
+        }
+
+        async function submitExpReport(e) {
+            e.preventDefault();
+            const startDate = document.getElementById('erStart').value;
+            const endDate = document.getElementById('erEnd').value;
+            const totalDays = Number(document.getElementById('erDays').value || 1);
+            const location = document.getElementById('erLocation').value.trim();
+            const reportDetail = document.getElementById('erContent').value.trim();
+            const parentName = document.getElementById('erParentName').value.trim();
+            const fileInput = document.getElementById('erPhoto');
+
+            let photoUrl = '';
+            if (fileInput && fileInput.files && fileInput.files[0]) {
+                photoUrl = await compressImageFile(fileInput.files[0], 1000, 0.7);
+            }
+
+            const parentSignature = canvas ? canvas.toDataURL() : '전자서명';
+
+            try {
+                const res = await fetch('/api/notice/experiential-reports', {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify({
+                        startDate, endDate, totalDays, location, reportDetail,
+                        photoUrl, parentName, parentSignature
+                    })
+                });
+                const data = await res.json();
+                if (!res.ok) throw new Error(data.message || '제출 실패');
+                alert('교외체험학습 결과 보고서가 제출되었습니다.');
+                e.target.reset();
+            } catch (err) {
+                alert(err.message || '체험학습 보고서 제출 실패');
+            }
+        }
+
+        async function loadNotices() {
+            const listEl = document.getElementById('noticesList');
+            if (!listEl) return;
+            try {
+                const res = await fetch('/api/notice/list');
+                if (!res.ok) return;
+                const data = await res.json();
+                const notices = data.notices || [];
+
+                if (notices.length === 0) {
+                    listEl.innerHTML = '<div class="card" style="text-align:center; color:var(--muted);">등록된 가정통신문이 없습니다.</div>';
+                    return;
+                }
+
+                listEl.innerHTML = notices.map(n => `
+                    <div class="card">
+                        <div class="card-title">
+                            <span>${n.title}</span>
+                            <span class="tag">${n.contentType.toUpperCase()}</span>
+                        </div>
+                        <p style="color:var(--muted); font-size:13px;">발송: ${new Date(n.createdAt).toLocaleDateString()} | ${n.senderName}</p>
+                        <div style="margin-top:10px; font-size:14px; line-height:1.5; white-space:pre-wrap; background:rgba(0,0,0,0.2); padding:10px; border-radius:6px;">${n.contentBody}</div>
+                    </div>
+                `).join('');
+            } catch (err) {
+                console.error('Failed to load notices:', err);
+            }
         }
 
         async function loadNoticeSchools() {

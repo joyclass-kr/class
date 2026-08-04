@@ -300,6 +300,11 @@
             <a class="tool-card" href="students.html">
                 <h3 class="tool-name">학생 계정 복구</h3>
             </a>
+
+            <!-- 6. 학생 화면 체험하기 -->
+            <button class="tool-card" id="simulate-student-btn" type="button" style="border-color: #fcd34d; background: linear-gradient(135deg, rgba(146, 64, 14, 0.4), rgba(69, 26, 3, 0.6)); text-align: left; width: 100%;">
+                <h3 class="tool-name" style="color: #fcd34d;">🕹️ 학생 화면 체험하기</h3>
+            </button>
         </div>
 
         <h2 class="section-title">수업 도구</h2>
@@ -406,6 +411,24 @@
                 await api('/api/auth/logout', { method: 'POST', body: '{}' }).catch(() => {});
                 location.replace('../index.html');
             });
+
+            const simulateBtn = document.querySelector('#simulate-student-btn');
+            if (simulateBtn) {
+                simulateBtn.addEventListener('click', async () => {
+                    if (!confirm('학생 화면으로 전환하시겠습니까?\n\n이 기능은 가상의 99번 체험 학생 계정으로 로그인합니다.\n테스트 완료 후 우측 상단의 로그아웃을 누르시면 원래 교사 계정으로 돌아올 수 있습니다.')) return;
+                    
+                    try {
+                        simulateBtn.disabled = true;
+                        simulateBtn.style.opacity = '0.5';
+                        await api('/api/teacher/simulate-student', { method: 'POST', body: '{}' });
+                        location.href = '/app/';
+                    } catch (err) {
+                        alert(err.message || '체험 계정 생성 중 오류가 발생했습니다.');
+                        simulateBtn.disabled = false;
+                        simulateBtn.style.opacity = '1';
+                    }
+                });
+            }
 
             init();
         })();

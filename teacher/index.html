@@ -271,6 +271,8 @@
             document.getElementById('sec-' + secId).classList.remove('hidden');
             document.querySelectorAll('.tab-btn').forEach(b => b.classList.remove('active'));
             btn.classList.add('active');
+            if (secId === 'quick') loadQuickAbsences();
+            if (secId === 'approval') loadApprovals();
         }
 
         function toggleStudentTargetInput() {
@@ -288,18 +290,202 @@
             window.open(`/notice/print-templates.html?type=${type}&id=${docId}`, '_blank', 'width=900,height=1000');
         }
 
-        function handleNoticeSend(e) {
+        async function handleNoticeSend(e) {
             e.preventDefault();
-            alert('학부모 모바일 앱으로 가정통신문이 발송되었습니다.');
-            e.target.reset();
+            const title = document.getElementById('nTitle').value.trim();
+            const targetType = document.getElementById('nTargetType').value;
+            const contentType = document.getElementById('nContentType').value;
+            const targetStudentNumbers = document.getElementById('nTargetStudents').value.trim();
+            const textBody = document.getElementById('nTextBody').value.trim();
+            
+            let contentBody = textBody;
+            if (contentType === 'pdf') {
+                const pdfInput = document.getElementById('nPdfFile');
+                if (pdfInput.files && pdfInput.files[0]) {
+                    contentBody = `[PDF 첨부파일: ${pdfInput.files[0].name}]\n` + textBody;
+                } else {
+                    contentBody = `[PDF 가정통신문]\n` + textBody;
+                }
+            }
+
+            try {
+                const res = await fetch('/api/teacher/notices', {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify({
+                        title, contentType, contentBody, targetType, targetStudentNumbers
+                    })
+                });
+                const data = await res.json();
+                if (!res.ok) throw new Error(data.message || '가정통신문 발송 실패');
+                alert('학부모 모바일 앱으로 가정통신문이 정상 발송되었습니다.');
+                e.target.reset();
+            } catch (err) {
+                alert(err.message || '가정통신문 발송 오류');
+            }
         }
 
-        function approveDoc(btn) {
-            btn.textContent = '승인 완료';
-            btn.disabled = true;
-            btn.style.background = '#284733';
-            btn.style.color = '#75d69f';
+        async function loadQuickAbsences() {
+            const listEl = document.getElementById('quickList');
+            if (!listEl) return;
+            try {
+                const res = await fetch('/api/teacher/quick-absences');
+                if (!res.ok) return;
+                const data = await res.json();
+                const alerts = data.alerts || [];
+
+                if (alerts.length === 0) {
+                    listEl.innerHTML = '<div class="item-row" style="justify-content:center; color:var(--muted);">접수된 당일 출결 예고 알림이 없습니다.</div>';
+                    return;
+                }
+
+                listEl.innerHTML = alerts.map(a => `
+                    <div class="item-row">
+                        <div>
+                            <strong>${a.grade}학년 ${a.classNumber}반 ${a.studentNumber}번 ${a.studentName}</strong>
+                            <span class="badge pending" style="margin-left:6px;">${a.noticeType} 예고 (${a.expectedDate})</span>
+                            <p style="margin:6px 0 0; color:var(--muted); font-size:14px;">"${a.reason}"</p>
+                        </div>
+                        <span style="font-size:12px; color:var(--muted);">${new Date(a.createdAt).toLocaleTimeString([], {hour:'2-digit', minute:'2-digit'})} 접수</span>
+                    </div>
+                `).join('');
+            } catch (err) {
+                console.error('Failed to load quick absences:', err);
+            }
         }
+
+        async function loadApprovals() {
+            const listEl = document.getElementById('approvalList');
+            if (!listEl) return;
+            try {
+                const [notesRes, expRes] = await Promise.all([
+                    fetch('/api/teacher/absence-notes'),
+                    fetch('/api/teacher/experiential-apps')
+                ]);
+                const notesData = notesRes.ok ? await notesRes.json() : { notes: [] };
+                const expData = expRes.ok ? await expRes.json() : { applications: [], reports: [] };
+
+                const notes = notesData.notes || [];
+                const apps = expData.applications || [];
+                const reports = expData.reports || [];
+
+                if (notes.length === 0 && apps.length === 0 && reports.length === 0) {
+                    listEl.innerHTML = '<div class="item-row" style="justify-content:center; color:var(--muted);">대기 중인 전자 결재 문서가 없습니다.</div>';
+                    return;
+                }
+
+                let html = '';
+
+                // Render Absence Notes
+                notes.forEach(n => {
+                    const isApproved = n.status === 'approved';
+                    html += `
+                        <div class="item-row">
+                            <div>
+                                <span class="badge ${isApproved ? 'approved' : 'pending'}">${isApproved ? '결재 완료' : '결재 대기'}</span>
+                                <strong style="margin-left:8px; font-size:16px;">${n.grade}학년 ${n.classNumber}반 ${n.studentNumber}번 ${n.studentName}</strong> (결석계 - ${n.reasonType})
+                                <p style="margin:6px 0 0; color:var(--muted); font-size:13px;">
+                                    결석 기간: ${n.startDate} ~ ${n.endDate} (${n.totalDays}일간) | 사유: ${n.reasonDetail} | 보호자: ${n.parentName} (전자서명 완료) ${n.evidenceUrl ? ' | 📷 증빙자료 첨부됨' : ''}
+                                </p>
+                            </div>
+                            <div style="display:flex; gap:8px;">
+                                <button class="btn-secondary" onclick="openPrintForm('absence', '${n.id}')">🖨️ 서울계상초 A4 서식 인쇄</button>
+                                <button class="btn-action" style="padding:8px 16px; font-size:14px; ${isApproved ? 'background:#233328; color:var(--green);' : ''}" ${isApproved ? 'disabled' : ''} onclick="approveAbsenceNote('${n.id}', this)">
+                                    ${isApproved ? '승인 완료' : '승인'}
+                                </button>
+                            </div>
+                        </div>
+                    `;
+                });
+
+                // Render Experiential Apps
+                apps.forEach(a => {
+                    const isApproved = a.status === 'approved';
+                    html += `
+                        <div class="item-row">
+                            <div>
+                                <span class="badge ${isApproved ? 'approved' : 'pending'}">${isApproved ? '승인 완료' : '결재 대기'}</span>
+                                <strong style="margin-left:8px; font-size:16px;">${a.grade}학년 ${a.classNumber}반 ${a.studentNumber}번 ${a.studentName}</strong> (교외체험학습 신청서)
+                                <p style="margin:6px 0 0; color:var(--muted); font-size:13px;">
+                                    기간: ${a.startDate} ~ ${a.endDate} | 장소: ${a.location} | 목적/계획: ${a.planDetail} | 보호자: ${a.parentName} (${a.parentPhone})
+                                </p>
+                            </div>
+                            <div style="display:flex; gap:8px;">
+                                <button class="btn-secondary" onclick="openPrintForm('exp-app', '${a.id}')">🖨️ 서울계상초 A4 서식 인쇄</button>
+                                <button class="btn-action" style="padding:8px 16px; font-size:14px; ${isApproved ? 'background:#233328; color:var(--green);' : ''}" ${isApproved ? 'disabled' : ''} onclick="approveExpDoc('${a.id}', 'app', this)">
+                                    ${isApproved ? '승인 완료' : '승인'}
+                                </button>
+                            </div>
+                        </div>
+                    `;
+                });
+
+                // Render Experiential Reports
+                reports.forEach(r => {
+                    const isApproved = r.status === 'approved';
+                    html += `
+                        <div class="item-row">
+                            <div>
+                                <span class="badge ${isApproved ? 'approved' : 'pending'}">${isApproved ? '승인 완료' : '결재 대기'}</span>
+                                <strong style="margin-left:8px; font-size:16px;">${r.grade}학년 ${r.classNumber}반 ${r.studentNumber}번 ${r.studentName}</strong> (교외체험학습 보고서)
+                                <p style="margin:6px 0 0; color:var(--muted); font-size:13px;">
+                                    기간: ${r.startDate} ~ ${r.endDate} | 장소: ${r.location} | 보고 내용: ${r.reportDetail} | 보호자: ${r.parentName}
+                                </p>
+                            </div>
+                            <div style="display:flex; gap:8px;">
+                                <button class="btn-secondary" onclick="openPrintForm('exp-report', '${r.id}')">🖨️ 서울계상초 A4 서식 인쇄</button>
+                                <button class="btn-action" style="padding:8px 16px; font-size:14px; ${isApproved ? 'background:#233328; color:var(--green);' : ''}" ${isApproved ? 'disabled' : ''} onclick="approveExpDoc('${r.id}', 'report', this)">
+                                    ${isApproved ? '승인 완료' : '승인'}
+                                </button>
+                            </div>
+                        </div>
+                    `;
+                });
+
+                listEl.innerHTML = html;
+            } catch (err) {
+                console.error('Failed to load approvals:', err);
+            }
+        }
+
+        async function approveAbsenceNote(id, btn) {
+            try {
+                const res = await fetch(`/api/teacher/absence-notes/${id}/approve`, {
+                    method: 'PATCH',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify({ status: 'approved' })
+                });
+                if (!res.ok) throw new Error('승인 처리 실패');
+                btn.textContent = '승인 완료';
+                btn.disabled = true;
+                btn.style.background = '#233328';
+                btn.style.color = '#75d69f';
+                loadApprovals();
+            } catch (err) {
+                alert(err.message || '승인 처리 실패');
+            }
+        }
+
+        async function approveExpDoc(id, type, btn) {
+            try {
+                const res = await fetch(`/api/teacher/experiential-apps/${id}/approve?type=${type}`, {
+                    method: 'PATCH',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify({ status: 'approved' })
+                });
+                if (!res.ok) throw new Error('승인 처리 실패');
+                btn.textContent = '승인 완료';
+                btn.disabled = true;
+                btn.style.background = '#233328';
+                btn.style.color = '#75d69f';
+                loadApprovals();
+            } catch (err) {
+                alert(err.message || '승인 처리 실패');
+            }
+        }
+
+        loadQuickAbsences();
+        loadApprovals();
     </script>
 </body>
 </html>
