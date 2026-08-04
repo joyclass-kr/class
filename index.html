@@ -597,6 +597,7 @@
                 </div>
                 <div class="signed-in-actions">
                     <a id="classToolsLink" class="auth-button secondary" href="classtools/" hidden>교사 페이지</a>
+                    <a id="teacherNoticeLink" class="auth-button secondary" href="/teacher/" hidden style="border-color: #75d69f; color: #75d69f;">📬 가정통신문·결재</a>
                     <a id="studentProfileLink" class="auth-button secondary" href="/classtools/profile" hidden>내 정보 설정</a>
                     <button id="contentAccessButton" class="auth-button secondary content-access-button" type="button" aria-pressed="false" hidden>🔓 공개 설정 모드</button>
                     <button id="signOutButton" class="auth-button secondary" type="button">SIGN OUT</button>
@@ -777,6 +778,7 @@
             const studentProfileLink = document.getElementById('studentProfileLink');
             const contentAccessButton = document.getElementById('contentAccessButton');
             const classToolsLink = document.getElementById('classToolsLink');
+            const teacherNoticeLink = document.getElementById('teacherNoticeLink');
             const hubContent = document.getElementById('hubContent');
             const hubLinks = Array.from(hubContent.querySelectorAll('a[href]'));
             const playerLearningLinks = Array.from(document.querySelectorAll('[data-requires-player="true"]'));
@@ -1153,6 +1155,7 @@
                 joinForm.hidden = true;
                 signedInArea.hidden = false;
                 classToolsLink.hidden = false;
+                if (teacherNoticeLink) teacherNoticeLink.hidden = false;
                 studentProfileLink.hidden = true;
 
                 const teacherProfile = await api('/api/teacher/profile').catch(() => null);
