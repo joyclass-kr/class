@@ -1,0 +1,395 @@
+<!doctype html>
+<html lang="ko">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>AI 생기부 조수</title>
+    <style>
+        :root {
+            --ink: #18211d;
+            --muted: #647069;
+            --paper: #fffdf8;
+            --canvas: #f3efe7;
+            --line: #d8d2c6;
+            --brand: #246b55;
+            --brand-dark: #18503f;
+            --shadow: 0 18px 50px rgba(41, 50, 45, 0.10);
+            --danger: #b43c36;
+        }
+
+        * { box-sizing: border-box; }
+
+        body {
+            margin: 0;
+            min-height: 100vh;
+            color: var(--ink);
+            background: var(--canvas);
+            font-family: Pretendard, "Noto Sans KR", sans-serif;
+        }
+
+        button, input, select, textarea { font: inherit; }
+
+        .account-bar {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            padding: 20px 24px;
+            color: var(--muted);
+            font-size: 0.9rem;
+        }
+        
+        .account-actions a {
+            color: var(--brand-dark);
+            font-weight: 700;
+            text-decoration: none;
+        }
+
+        main {
+            width: min(100% - 48px, 900px);
+            margin: 0 auto;
+            padding: 20px 0 80px;
+        }
+
+        h1 {
+            margin: 0 0 8px;
+            font-size: 2.5rem;
+            letter-spacing: -0.03em;
+        }
+
+        .intro {
+            color: var(--muted);
+            font-size: 1.1rem;
+            margin-bottom: 30px;
+        }
+
+        .card {
+            background: var(--paper);
+            border: 1px solid var(--line);
+            border-radius: 20px;
+            padding: 30px;
+            margin-bottom: 24px;
+            box-shadow: var(--shadow);
+        }
+
+        .card h2 {
+            margin: 0 0 16px;
+            font-size: 1.25rem;
+        }
+
+        .form-group {
+            margin-bottom: 20px;
+        }
+
+        .form-group label {
+            display: block;
+            margin-bottom: 8px;
+            font-weight: 600;
+        }
+
+        .form-control {
+            width: 100%;
+            padding: 12px 16px;
+            border: 1px solid var(--line);
+            border-radius: 12px;
+            background: #fff;
+            transition: border-color 0.2s;
+        }
+
+        .form-control:focus {
+            outline: none;
+            border-color: var(--brand);
+        }
+
+        .btn {
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            padding: 12px 24px;
+            background: var(--brand);
+            color: #fff;
+            border: none;
+            border-radius: 12px;
+            font-weight: 700;
+            cursor: pointer;
+            transition: background 0.2s;
+        }
+
+        .btn:hover { background: var(--brand-dark); }
+        .btn:disabled { background: var(--muted); cursor: not-allowed; }
+        
+        .btn-outline {
+            background: transparent;
+            color: var(--brand);
+            border: 1px solid var(--brand);
+        }
+        .btn-outline:hover {
+            background: rgba(36, 107, 85, 0.05);
+        }
+
+        .keyword-chips {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 10px;
+            margin-bottom: 16px;
+        }
+
+        .chip-btn {
+            padding: 6px 14px;
+            border: 1px solid var(--line);
+            border-radius: 20px;
+            background: #fff;
+            color: var(--ink);
+            font-size: 0.95rem;
+            cursor: pointer;
+            transition: all 0.2s;
+        }
+
+        .chip-btn:hover {
+            border-color: var(--brand);
+            background: var(--canvas);
+        }
+
+        #result-area {
+            min-height: 200px;
+            line-height: 1.6;
+            resize: vertical;
+        }
+
+        .status {
+            margin-top: 10px;
+            font-size: 0.9rem;
+            color: var(--muted);
+        }
+        
+        .error { color: var(--danger); }
+    </style>
+</head>
+<body>
+    <div class="account-bar">
+        <span>🤖 AI 생기부 조수</span>
+        <div class="account-actions">
+            <a href="/classtools/">← 교사 도구 홈으로</a>
+        </div>
+    </div>
+
+    <main>
+        <h1>행동특성 및 종합의견 조수</h1>
+        <p class="intro">구글 Gemini API를 활용하여 생활기록부 표준 지침에 맞는 단정하고 객관적인 문장을 생성합니다.</p>
+
+        <!-- API Key 설정 -->
+        <section class="card">
+            <h2>🔑 구글 API 키 설정 (최초 1회)</h2>
+            <p style="font-size: 0.95rem; color: var(--muted); margin-bottom: 16px;">
+                이 기능은 선생님 개인의 무료 API 키를 사용합니다. 키는 선생님의 브라우저에만 저장됩니다. 
+                <a href="https://aistudio.google.com/app/apikey" target="_blank" style="color: var(--brand);">여기서 무료 키 발급받기</a>
+            </p>
+            <div style="display: flex; gap: 12px;">
+                <input type="password" id="api-key-input" class="form-control" placeholder="AIzaSy...">
+                <button type="button" id="save-key-btn" class="btn btn-outline" style="white-space: nowrap;">저장</button>
+            </div>
+            <div id="key-status" class="status"></div>
+        </section>
+
+        <!-- 생성 양식 -->
+        <section class="card">
+            <h2>📝 학생 정보 및 키워드 입력</h2>
+            
+            <div class="form-group">
+                <label for="student-select">학생 선택 (선택 사항)</label>
+                <select id="student-select" class="form-control">
+                    <option value="">-- 명단에서 학생 선택 (이름을 직접 입력해도 됩니다) --</option>
+                </select>
+                <input type="text" id="student-name-manual" class="form-control" placeholder="학생 이름" style="margin-top: 10px;">
+            </div>
+
+            <div class="form-group">
+                <label>추천 키워드 (클릭하여 추가)</label>
+                <div class="keyword-chips">
+                    <button type="button" class="chip-btn">학업에 성실함</button>
+                    <button type="button" class="chip-btn">수업 태도가 바름</button>
+                    <button type="button" class="chip-btn">친구들을 잘 배려함</button>
+                    <button type="button" class="chip-btn">리더십이 뛰어남</button>
+                    <button type="button" class="chip-btn">발표를 자신감 있게 함</button>
+                    <button type="button" class="chip-btn">규칙을 잘 지킴</button>
+                    <button type="button" class="chip-btn">책임감이 강함</button>
+                    <button type="button" class="chip-btn">매사에 긍정적임</button>
+                    <button type="button" class="chip-btn">인사성이 밝음</button>
+                </div>
+            </div>
+
+            <div class="form-group">
+                <label for="keywords-input">주요 특성 및 활동 내역</label>
+                <textarea id="keywords-input" class="form-control" rows="4" placeholder="학생의 긍정적인 특성이나 구체적인 활동 내역을 적어주세요. (예: 1학기 학급 임원으로 활동하며 책임감 있게 임무를 수행함)"></textarea>
+            </div>
+
+            <button type="button" id="generate-btn" class="btn" style="width: 100%;">✨ 생기부 초안 생성하기</button>
+            <div id="gen-status" class="status" style="text-align: center; margin-top: 12px;"></div>
+        </section>
+
+        <!-- 결과 -->
+        <section class="card" id="result-section" style="display: none;">
+            <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 16px;">
+                <h2 style="margin: 0;">결과 (초안)</h2>
+                <button type="button" id="copy-btn" class="btn btn-outline" style="padding: 6px 16px; font-size: 0.9rem;">복사하기</button>
+            </div>
+            <textarea id="result-area" class="form-control"></textarea>
+        </section>
+    </main>
+
+    <script>
+        (() => {
+            'use strict';
+
+            const apiKeyInput = document.getElementById('api-key-input');
+            const saveKeyBtn = document.getElementById('save-key-btn');
+            const keyStatus = document.getElementById('key-status');
+            
+            const studentSelect = document.getElementById('student-select');
+            const studentNameManual = document.getElementById('student-name-manual');
+            const keywordsInput = document.getElementById('keywords-input');
+            const chipBtns = document.querySelectorAll('.chip-btn');
+            
+            const generateBtn = document.getElementById('generate-btn');
+            const genStatus = document.getElementById('gen-status');
+            const resultSection = document.getElementById('result-section');
+            const resultArea = document.getElementById('result-area');
+            const copyBtn = document.getElementById('copy-btn');
+
+            // Load API Key
+            const savedKey = localStorage.getItem('gemini_api_key');
+            if (savedKey) {
+                apiKeyInput.value = savedKey;
+                keyStatus.textContent = 'API 키가 브라우저에 저장되어 있습니다.';
+            }
+
+            saveKeyBtn.addEventListener('click', () => {
+                const val = apiKeyInput.value.trim();
+                if (val) {
+                    localStorage.setItem('gemini_api_key', val);
+                    keyStatus.textContent = '저장되었습니다!';
+                    keyStatus.style.color = 'var(--brand)';
+                } else {
+                    localStorage.removeItem('gemini_api_key');
+                    keyStatus.textContent = '키가 삭제되었습니다.';
+                }
+            });
+
+            // Load Roster
+            async function loadRoster() {
+                try {
+                    const res = await fetch('/api/teacher/class');
+                    if (res.ok) {
+                        const data = await res.json();
+                        if (data.students) {
+                            data.students.forEach(s => {
+                                const opt = document.createElement('option');
+                                opt.value = s.name;
+                                opt.textContent = `${s.number || ''}번 ${s.name}`;
+                                studentSelect.appendChild(opt);
+                            });
+                        }
+                    }
+                } catch (e) {
+                    console.error('Failed to load roster', e);
+                }
+            }
+            loadRoster();
+
+            studentSelect.addEventListener('change', () => {
+                if (studentSelect.value) {
+                    studentNameManual.value = studentSelect.value;
+                }
+            });
+
+            // Keywords Chips
+            chipBtns.forEach(btn => {
+                btn.addEventListener('click', () => {
+                    const txt = btn.textContent;
+                    let current = keywordsInput.value.trim();
+                    if (current) {
+                        keywordsInput.value = current + ', ' + txt;
+                    } else {
+                        keywordsInput.value = txt;
+                    }
+                });
+            });
+
+            // Generate
+            generateBtn.addEventListener('click', async () => {
+                const apiKey = apiKeyInput.value.trim();
+                if (!apiKey) {
+                    alert('먼저 구글 API 키를 입력하고 저장해주세요.');
+                    apiKeyInput.focus();
+                    return;
+                }
+
+                const name = studentNameManual.value.trim();
+                const keywords = keywordsInput.value.trim();
+
+                if (!keywords) {
+                    alert('키워드를 입력해주세요.');
+                    keywordsInput.focus();
+                    return;
+                }
+
+                generateBtn.disabled = true;
+                genStatus.textContent = 'AI가 문장을 작성하고 있습니다. 잠시만 기다려주세요...';
+                genStatus.className = 'status';
+
+                const prompt = `당신은 초등학교 교사의 생활기록부 '행동특성 및 종합의견' 작성을 돕는 AI입니다.
+다음 학생의 특징과 활동 내역을 바탕으로 생활기록부 표준 지침에 맞게 단정하고 객관적인 문장으로 작성해 주세요.
+절대로 학생의 단점이나 보완점을 언급해서는 안 되며, 오직 긍정적이고 객관적인 사실 위주로 서술해야 합니다. 
+문장의 끝은 명사형 종결어미(~함, ~임)를 사용하세요.
+
+[학생 이름]: ${name || '학생'}
+[특징 및 활동 내역]: ${keywords}
+
+작성 결과:`;
+
+                try {
+                    const res = await fetch(`https://generativelanguage.googleapis.com/v1beta/models/gemini-1.5-flash:generateContent?key=${apiKey}`, {
+                        method: 'POST',
+                        headers: { 'Content-Type': 'application/json' },
+                        body: JSON.stringify({
+                            contents: [{ parts: [{ text: prompt }] }],
+                            generationConfig: {
+                                temperature: 0.3,
+                                maxOutputTokens: 800
+                            }
+                        })
+                    });
+
+                    if (!res.ok) {
+                        throw new Error(`API 오류: ${res.status}`);
+                    }
+
+                    const data = await res.json();
+                    const text = data.candidates[0].content.parts[0].text;
+                    
+                    resultArea.value = text.trim();
+                    resultSection.style.display = 'block';
+                    genStatus.textContent = '작성이 완료되었습니다.';
+                    
+                } catch (e) {
+                    console.error(e);
+                    genStatus.textContent = '오류가 발생했습니다: ' + e.message;
+                    genStatus.className = 'status error';
+                } finally {
+                    generateBtn.disabled = false;
+                }
+            });
+
+            copyBtn.addEventListener('click', async () => {
+                try {
+                    await navigator.clipboard.writeText(resultArea.value);
+                    const orig = copyBtn.textContent;
+                    copyBtn.textContent = '복사됨!';
+                    setTimeout(() => copyBtn.textContent = orig, 2000);
+                } catch (err) {
+                    alert('복사에 실패했습니다.');
+                }
+            });
+        })();
+    </script>
+</body>
+</html>
