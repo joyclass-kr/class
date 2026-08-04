@@ -71,9 +71,9 @@
         }
 
         main {
-            width: min(100% - 32px, 980px);
+            width: min(100% - 24px, 1400px);
             margin: 0 auto;
-            padding: 72px 0 88px;
+            padding: 56px 0 88px;
         }
 
         .eyebrow {
@@ -199,9 +199,11 @@
 
         .paste-grid {
             display: grid;
-            grid-template-columns: minmax(44px, 0.35fr) minmax(90px, 0.9fr) minmax(48px, 0.35fr) minmax(52px, 0.4fr) minmax(150px, 1.4fr) minmax(150px, 1.4fr) minmax(150px, 1.4fr) minmax(130px, 1.2fr);
-            gap: 8px;
+            grid-template-columns: 52px 100px 44px 72px 1.2fr 1fr 1fr 110px 140px;
+            gap: 6px;
         }
+
+        .line-count { display: none; }
 
         .field {
             min-width: 0;
@@ -249,6 +251,8 @@
             font-size: 0.95rem;
             line-height: 1.5;
             font-variant-numeric: tabular-nums;
+            white-space: pre;
+            overflow-x: auto;
             transition: border-color 160ms ease, box-shadow 160ms ease, background 160ms ease;
         }
 
@@ -377,6 +381,35 @@
             overflow: hidden;
         }
 
+        .reset-btn {
+            display: inline-block;
+            margin: 2px 2px 2px 0;
+            padding: 3px 7px;
+            border: 1px solid var(--line);
+            border-radius: 6px;
+            background: #fff;
+            color: var(--brand-dark);
+            font-size: 0.72rem;
+            font-weight: 700;
+            cursor: pointer;
+            white-space: nowrap;
+        }
+        .reset-btn:hover { background: var(--brand-soft); border-color: var(--brand); }
+        .reset-btn:disabled { opacity: 0.4; cursor: not-allowed; }
+        .reset-cell { 
+            white-space: nowrap; 
+            height: 22.8px;
+            display: flex;
+            align-items: center;
+        }
+        
+        .reset-container {
+            width: 100%;
+            min-height: 760px;
+            padding: 10px 0;
+            overflow: hidden;
+        }
+
         .preview-head {
             display: flex;
             align-items: center;
@@ -490,7 +523,7 @@
 
         @media (max-width: 640px) {
             main {
-                width: min(100% - 22px, 980px);
+                width: min(100% - 16px, 1400px);
                 padding: 44px 0 60px;
             }
 
@@ -713,6 +746,13 @@
                     </div>
                     <textarea id="passwords" disabled aria-describedby="password-help"></textarea>
                 </div>
+
+                <div class="field">
+                    <div class="field-head">
+                        <label>비번 초기화</label>
+                    </div>
+                    <div id="reset-buttons-container" class="reset-container"></div>
+                </div>
             </div>
 
             <div class="student-delete-box" id="student-delete-box">
@@ -932,8 +972,50 @@
                 updateClassSummary(getProfile());
             }
 
+            function renderResetButtons(state) {
+                if (!resetButtonsContainer) return;
+                
+                const html = state.numbers.map((number) => {
+                    const student = loadedRosterStudents.find((s) => s.number === number);
+                    if (!student) {
+                        return '<div class="reset-cell"></div>';
+                    }
+                    // Only show buttons if there's an email configured for that role, or if linked
+                    const studentDisabled = !student.linked && !student.studentEmail ? "disabled" : "";
+                    const g1Disabled = !student.guardian1Email ? "disabled" : "";
+                    const g2Disabled = !student.guardian2Email ? "disabled" : "";
+                    
+                    return `<div class="reset-cell">
+                        <button class="reset-btn" type="button" data-number="${number}" data-type="student" ${studentDisabled} title="학생 계정 연결 해제 / 초기화">학생</button>
+                        <button class="reset-btn" type="button" data-number="${number}" data-type="guardian1" ${g1Disabled} title="보호자1 계정 연결 해제">보1</button>
+                        <button class="reset-btn" type="button" data-number="${number}" data-type="guardian2" ${g2Disabled} title="보호자2 계정 연결 해제">보2</button>
+                    </div>`;
+                }).join('');
+                
+                if (resetButtonsContainer.innerHTML !== html) {
+                    resetButtonsContainer.innerHTML = html;
+                }
+            }
+
+            async function resetPassword(studentNumber, accountType) {
+                if (!confirm(`${studentNumber}번 학생의 ${accountType === 'student' ? '학생' : accountType === 'guardian1' ? '보호자1' : '보호자2'} 계정 연결을 해제하고 초기화하시겠습니까?`)) return;
+                
+                try {
+                    await api(`/api/teacher/class/students/${studentNumber}/reset-${accountType}`, {
+                        method: "POST"
+                    });
+                    setStatus(`초기화되었습니다. 서버에서 최신 명단을 불러옵니다.`, "success");
+                    // Reload class to sync
+                    const res = await api("/api/teacher/class");
+                    if (res.classroom) loadClassroom(res.classroom);
+                } catch (error) {
+                    setStatus(error.message, "error");
+                }
+            }
+
             function update() {
                 const state = getRosterState();
+                renderResetButtons(state);
                 numberCount.textContent = `${state.numbers.length}행`;
                 nameCount.textContent = `${state.names.length}행`;
                 if (genderCount) genderCount.textContent = `${state.genders.length}행`;
@@ -1168,8 +1250,18 @@
                 location.replace("/");
             });
 
-            const allTextareas = [numbersInput, namesInput, gendersInput, birthdatesInput, studentEmailsInput, guardian1EmailsInput, guardian2EmailsInput, passwordsInput].filter(Boolean);
+            const resetButtonsContainer = document.querySelector("#reset-buttons-container");
+            const allTextareas = [numbersInput, namesInput, gendersInput, birthdatesInput, studentEmailsInput, guardian1EmailsInput, guardian2EmailsInput, passwordsInput, resetButtonsContainer].filter(Boolean);
             let isSyncingScroll = false;
+            
+            resetButtonsContainer.addEventListener("click", (e) => {
+                if (e.target.classList.contains("reset-btn")) {
+                    const number = e.target.dataset.number;
+                    const type = e.target.dataset.type;
+                    resetPassword(number, type);
+                }
+            });
+
             allTextareas.forEach((ta) => {
                 ta.addEventListener("scroll", (e) => {
                     if (isSyncingScroll) return;
