@@ -978,11 +978,36 @@ function createClassroomPlatform(options = {}) {
       return res.json({ signedIn: false, configured: true });
     }
     const membership = user.role === "student" ? await studentMembership(user.id) : null;
+    let guardianChildren = [];
+    if (user && user.email) {
+      const gRes = await pool.query(
+        `SELECT s.id AS student_id, s.student_number, s.roster_name AS student_name,
+                c.id AS class_id, c.academic_year, c.grade, c.class_number,
+                sc.id AS school_id, sc.name AS school_name
+         FROM classroom_students s
+         JOIN classroom_classes c ON c.id = s.class_id
+         JOIN classroom_schools sc ON sc.id = c.school_id
+         WHERE LOWER(s.guardian1_email) = LOWER($1) OR LOWER(s.guardian2_email) = LOWER($1)
+         ORDER BY c.grade DESC, c.class_number ASC, CASE WHEN s.student_number ~ '^[0-9]+$' THEN s.student_number::INTEGER END ASC`,
+        [user.email]
+      );
+      guardianChildren = gRes.rows.map(r => ({
+        studentId: String(r.student_id),
+        schoolId: String(r.school_id),
+        schoolName: r.school_name,
+        grade: r.grade,
+        classNumber: r.class_number,
+        studentNumber: r.student_number,
+        studentName: r.student_name
+      }));
+    }
+
     return res.json({
       signedIn: true,
       configured: current.enabled,
       user: publicUser(user),
-      membership
+      membership,
+      guardianChildren
     });
   }));
 

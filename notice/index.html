@@ -261,11 +261,12 @@
 </head>
 <body>
 
-    <header>
+    <header style="flex-wrap: wrap;">
         <div class="brand-title">
             <span>🏫</span> 서울계상초 알림장
         </div>
-        <div id="studentChip" class="student-chip">학생 등록 필요</div>
+        <div id="studentChip" class="student-chip">보호자 계정 확인 중…</div>
+        <div id="childSelectorBar" style="display:none; gap:6px; flex-wrap:wrap; margin-top:8px; width:100%;"></div>
     </header>
 
     <main>
@@ -433,44 +434,22 @@
         </button>
     </nav>
 
-    <!-- 학부모 인증 모달 -->
+    <!-- 학부모 구글 로그인 모달 -->
     <div id="parentAuthModal" class="modal-overlay">
-        <div class="modal-content" style="max-width: 440px; border: 1px solid var(--panel-border); background: var(--panel);">
-            <div class="modal-header" style="justify-content: center; border-bottom: 1px solid var(--panel-border); padding-bottom: 12px;">
+        <div class="modal-content" style="max-width: 440px; border: 1px solid var(--panel-border); background: var(--panel); text-align: center; padding: 24px; border-radius: 16px;">
+            <div class="modal-header" style="justify-content: center; border-bottom: 1px solid var(--panel-border); padding-bottom: 12px; margin-bottom: 16px;">
                 <h3 style="margin: 0; color: var(--green); text-align: center;">📱 학부모 알림장 접속</h3>
             </div>
-            <form id="noticeParentForm" onsubmit="handleNoticeParentAuth(event)" style="display: flex; flex-direction: column; gap: 12px; margin-top: 16px;">
-                <div class="form-group" style="margin: 0;">
-                    <label style="font-size: 13px; color: var(--muted); margin-bottom: 4px; display: block;">학교 선택</label>
-                    <select id="noticeSchoolId" required style="width: 100%; height: 44px; background: #0f1411; border: 1px solid var(--panel-border); color: var(--text); border-radius: 8px; padding: 0 12px; font-size: 14px;">
-                        <option value="">학교 선택</option>
-                    </select>
-                </div>
-                <div style="display: flex; gap: 8px;">
-                    <div class="form-group" style="flex: 1; margin: 0;">
-                        <label style="font-size: 13px; color: var(--muted); margin-bottom: 4px; display: block;">학년</label>
-                        <input id="noticeGrade" type="number" min="1" max="6" placeholder="학년" required style="width: 100%; height: 44px; background: #0f1411; border: 1px solid var(--panel-border); color: var(--text); border-radius: 8px; padding: 0 12px; font-size: 14px;">
-                    </div>
-                    <div class="form-group" style="flex: 1; margin: 0;">
-                        <label style="font-size: 13px; color: var(--muted); margin-bottom: 4px; display: block;">반</label>
-                        <input id="noticeClass" type="number" min="1" max="30" placeholder="반" required style="width: 100%; height: 44px; background: #0f1411; border: 1px solid var(--panel-border); color: var(--text); border-radius: 8px; padding: 0 12px; font-size: 14px;">
-                    </div>
-                    <div class="form-group" style="flex: 1; margin: 0;">
-                        <label style="font-size: 13px; color: var(--muted); margin-bottom: 4px; display: block;">학생 번호</label>
-                        <input id="noticeNumber" type="number" min="1" max="60" placeholder="번호" required style="width: 100%; height: 44px; background: #0f1411; border: 1px solid var(--panel-border); color: var(--text); border-radius: 8px; padding: 0 12px; font-size: 14px;">
-                    </div>
-                </div>
-                <div class="form-group" style="margin: 0;">
-                    <label style="font-size: 13px; color: var(--muted); margin-bottom: 4px; display: block;">자녀 성명</label>
-                    <input id="noticeStudentName" type="text" placeholder="자녀 성명 (한글 2~6자)" required style="width: 100%; height: 44px; background: #0f1411; border: 1px solid var(--panel-border); color: var(--text); border-radius: 8px; padding: 0 12px; font-size: 14px;">
-                </div>
-                <div class="form-group" style="margin: 0;">
-                    <label style="font-size: 13px; color: var(--muted); margin-bottom: 4px; display: block;">비밀번호 (초기: 123456)</label>
-                    <input id="noticePassword" type="password" maxlength="6" placeholder="비밀번호 6자리" required style="width: 100%; height: 44px; background: #0f1411; border: 1px solid var(--panel-border); color: var(--text); border-radius: 8px; padding: 0 12px; font-size: 14px;">
-                </div>
-                <p id="noticeAuthStatus" style="font-size: 13px; color: var(--danger); margin: 0; min-height: 20px; font-weight: 700;"></p>
-                <button type="submit" class="btn-primary" style="height: 48px; font-size: 15px; font-weight: 800;">📱 알림장 로그인</button>
-            </form>
+            <p style="font-size: 14px; color: var(--muted); line-height: 1.6; margin-bottom: 20px;">
+                담임선생님이 학생 명단에 등록하신<br>
+                <strong style="color:#fff;">보호자 구글 계정 이메일</strong>로 로그인하세요.
+            </p>
+            <div style="display: flex; flex-direction: column; gap: 10px; align-items: center;">
+                <a href="/index.html" class="btn-primary" style="display: inline-flex; align-items: center; justify-content: center; width: 100%; height: 48px; font-size: 15px; font-weight: 800; text-decoration: none;">
+                    🔑 메인 구글 로그인하기
+                </a>
+            </div>
+            <p id="noticeAuthStatus" style="font-size: 13px; color: var(--danger); margin-top: 14px; min-height: 20px; font-weight: 700; line-height: 1.4;"></p>
         </div>
     </div>
 
@@ -644,11 +623,20 @@
             const expectedDate = document.getElementById('qaDate').value;
             const reason = document.getElementById('qaReason').value.trim();
 
+            const payload = {
+                noticeType, expectedDate, reason,
+                schoolId: activeChild?.schoolId,
+                grade: activeChild?.grade,
+                classNumber: activeChild?.classNumber,
+                studentNumber: activeChild?.studentNumber,
+                studentName: activeChild?.studentName
+            };
+
             try {
                 const res = await fetch('/api/notice/quick-absence', {
                     method: 'POST',
                     headers: { 'Content-Type': 'application/json' },
-                    body: JSON.stringify({ noticeType, expectedDate, reason })
+                    body: JSON.stringify(payload)
                 });
                 const data = await res.json();
                 if (!res.ok) throw new Error(data.message || '전송 실패');
@@ -680,14 +668,21 @@
                 return;
             }
 
+            const payload = {
+                startDate, endDate, totalDays, reasonType, reasonDetail,
+                evidenceUrl, parentName, parentSignature,
+                schoolId: activeChild?.schoolId,
+                grade: activeChild?.grade,
+                classNumber: activeChild?.classNumber,
+                studentNumber: activeChild?.studentNumber,
+                studentName: activeChild?.studentName
+            };
+
             try {
                 const res = await fetch('/api/notice/absence-notes', {
                     method: 'POST',
                     headers: { 'Content-Type': 'application/json' },
-                    body: JSON.stringify({
-                        startDate, endDate, totalDays, reasonType, reasonDetail,
-                        evidenceUrl, parentName, parentSignature
-                    })
+                    body: JSON.stringify(payload)
                 });
                 const data = await res.json();
                 if (!res.ok) throw new Error(data.message || '제출 실패');
@@ -711,14 +706,21 @@
 
             const parentSignature = canvas ? canvas.toDataURL() : '전자서명';
 
+            const payload = {
+                startDate, endDate, totalDays, location, planDetail,
+                parentPhone, parentName, parentSignature,
+                schoolId: activeChild?.schoolId,
+                grade: activeChild?.grade,
+                classNumber: activeChild?.classNumber,
+                studentNumber: activeChild?.studentNumber,
+                studentName: activeChild?.studentName
+            };
+
             try {
                 const res = await fetch('/api/notice/experiential-apps', {
                     method: 'POST',
                     headers: { 'Content-Type': 'application/json' },
-                    body: JSON.stringify({
-                        startDate, endDate, totalDays, location, planDetail,
-                        parentPhone, parentName, parentSignature
-                    })
+                    body: JSON.stringify(payload)
                 });
                 const data = await res.json();
                 if (!res.ok) throw new Error(data.message || '제출 실패');
@@ -746,14 +748,21 @@
 
             const parentSignature = canvas ? canvas.toDataURL() : '전자서명';
 
+            const payload = {
+                startDate, endDate, totalDays, location, reportDetail,
+                photoUrl, parentName, parentSignature,
+                schoolId: activeChild?.schoolId,
+                grade: activeChild?.grade,
+                classNumber: activeChild?.classNumber,
+                studentNumber: activeChild?.studentNumber,
+                studentName: activeChild?.studentName
+            };
+
             try {
                 const res = await fetch('/api/notice/experiential-reports', {
                     method: 'POST',
                     headers: { 'Content-Type': 'application/json' },
-                    body: JSON.stringify({
-                        startDate, endDate, totalDays, location, reportDetail,
-                        photoUrl, parentName, parentSignature
-                    })
+                    body: JSON.stringify(payload)
                 });
                 const data = await res.json();
                 if (!res.ok) throw new Error(data.message || '제출 실패');
@@ -852,40 +861,76 @@
             }
         }
 
+        let activeChild = null;
+        let childrenList = [];
+
+        function selectChild(index) {
+            if (!childrenList || !childrenList[index]) return;
+            activeChild = childrenList[index];
+            
+            const c = activeChild;
+            const chip = document.getElementById('studentChip');
+            if (chip) {
+                chip.textContent = `${c.schoolName} ${c.grade}학년 ${c.classNumber}반 ${c.studentNumber}번 ${c.studentName} 학부모님`;
+                chip.style.background = '#1f4730';
+            }
+
+            const bar = document.getElementById('childSelectorBar');
+            if (bar) {
+                if (childrenList.length > 1) {
+                    bar.style.display = 'flex';
+                    bar.innerHTML = childrenList.map((ch, idx) => `
+                        <button type="button" class="btn-secondary" style="padding:6px 12px; font-size:12px; ${idx === index ? 'background:var(--green); color:#000; font-weight:800;' : ''}" onclick="selectChild(${idx})">
+                            👧 ${ch.grade}학년 ${ch.classNumber}반 ${ch.studentName}
+                        </button>
+                    `).join('');
+                } else {
+                    bar.style.display = 'none';
+                }
+            }
+
+            loadNotices();
+        }
+
         async function checkAuthSession() {
+            const statusEl = document.getElementById('noticeAuthStatus');
             try {
                 const res = await fetch('/api/auth/me');
                 if (res.ok) {
                     const data = await res.json();
-                    if (data.signedIn && data.membership) {
-                        const m = data.membership;
-                        document.getElementById('studentChip').textContent = `${m.schoolName} ${m.grade}학년 ${m.classNumber}반 ${m.studentNumber}번 ${m.name} 학부모님`;
-                        document.getElementById('studentChip').style.background = '#1f4730';
-                        document.getElementById('parentAuthModal').classList.remove('active');
-                        return;
+                    if (data.signedIn) {
+                        if (data.guardianChildren && data.guardianChildren.length > 0) {
+                            childrenList = data.guardianChildren;
+                            selectChild(0);
+                            document.getElementById('parentAuthModal').classList.remove('active');
+                            return;
+                        }
+                        if (data.membership) {
+                            const m = data.membership;
+                            childrenList = [{
+                                schoolId: m.schoolId,
+                                schoolName: m.schoolName,
+                                grade: m.grade,
+                                classNumber: m.classNumber,
+                                studentNumber: m.studentNumber,
+                                studentName: m.name
+                            }];
+                            selectChild(0);
+                            document.getElementById('parentAuthModal').classList.remove('active');
+                            return;
+                        }
+                        if (statusEl) {
+                            statusEl.textContent = `로그인된 구글 계정(${data.user?.email || ''})이 명단에 등록된 보호자 계정(보호자1/보호자2)이 아닙니다. 담임선생님이 명단에 등록하신 보호자 구글 계정으로 로그인해 주세요.`;
+                        }
                     }
                 }
-                const parentName = localStorage.getItem('parentVerifiedName');
-                if (parentName) {
-                    document.getElementById('studentChip').textContent = `${parentName} 학부모님`;
-                    document.getElementById('studentChip').style.background = '#1f4730';
-                    document.getElementById('parentAuthModal').classList.remove('active');
-                    return;
-                }
                 document.getElementById('parentAuthModal').classList.add('active');
-                loadNoticeSchools();
             } catch(e) {
                 document.getElementById('parentAuthModal').classList.add('active');
-                loadNoticeSchools();
             }
         }
 
-        function loadNotices() {
-            console.log('Loading notices...');
-        }
-        loadNoticeSchools();
         checkAuthSession();
-        window.addEventListener('DOMContentLoaded', loadNoticeSchools);
     </script>
 </body>
 </html>
