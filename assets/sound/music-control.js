@@ -123,13 +123,13 @@
     control.setAttribute("aria-label", "소리 조절");
     control.innerHTML = `
         <div class="unified-audio-group">
-            <button class="unified-audio-toggle" id="musicMuteBtn" type="button" aria-label="음악 음소거">♪</button>
-            <input class="unified-audio-slider" id="musicVolumeSlider" type="range" min="0" max="1" step="0.01" aria-label="음악 음량">
+            <button class="unified-audio-toggle" id="musicMuteBtn" type="button" aria-label="음악 음소거" data-sfx="none">♪</button>
+            <input class="unified-audio-slider" id="musicVolumeSlider" type="range" min="0" max="1" step="0.01" aria-label="음악 음량" data-sfx="none">
         </div>
         <div class="unified-audio-divider"></div>
         <div class="unified-audio-group">
-            <button class="unified-audio-toggle" id="sfxMuteBtn" type="button" aria-label="효과음 음소거">✦</button>
-            <input class="unified-audio-slider" id="sfxVolumeSlider" type="range" min="0" max="1" step="0.01" aria-label="효과음 음량">
+            <button class="unified-audio-toggle" id="sfxMuteBtn" type="button" aria-label="효과음 음소거" data-sfx="none">✦</button>
+            <input class="unified-audio-slider" id="sfxVolumeSlider" type="range" min="0" max="1" step="0.01" aria-label="효과음 음량" data-sfx="none">
         </div>`;
 
     document.body.appendChild(control);
@@ -139,6 +139,18 @@
     const musicVolumeSlider = control.querySelector("#musicVolumeSlider");
     const sfxMuteBtn = control.querySelector("#sfxMuteBtn");
     const sfxVolumeSlider = control.querySelector("#sfxVolumeSlider");
+
+    let sfxPreviewLastPlayed = 0;
+    function playSfxPreview({ force = false } = {}) {
+        if (sfxMuted || !window.ClassGameSfx) return;
+        const now = Date.now();
+        if (force || now - sfxPreviewLastPlayed >= 90) {
+            sfxPreviewLastPlayed = now;
+            try {
+                window.ClassGameSfx.play("click");
+            } catch (_) {}
+        }
+    }
 
     function storeState() {
         localStorage.setItem(MUSIC_LEVEL_KEY, String(musicLevel));
@@ -288,6 +300,7 @@
         storeState();
         render();
         announceState();
+        if (!sfxMuted) playSfxPreview({ force: true });
     });
 
     sfxVolumeSlider.addEventListener("input", () => {
@@ -302,6 +315,11 @@
         storeState();
         render();
         announceState();
+        playSfxPreview();
+    });
+
+    sfxVolumeSlider.addEventListener("change", () => {
+        playSfxPreview({ force: true });
     });
 
     audio.addEventListener("volumechange", () => {
