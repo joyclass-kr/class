@@ -474,6 +474,7 @@
             margin-top: 8px;
             color: #fff0c7;
         }
+        }
 
         .signed-in-copy strong {
             font-size: 14px;
@@ -481,6 +482,46 @@
 
         [hidden] {
             display: none !important;
+        }
+
+        body.content-access-editing::before {
+            content: '';
+            position: fixed;
+            inset: 0;
+            background: rgba(0, 0, 0, 0.82);
+            backdrop-filter: blur(5px);
+            -webkit-backdrop-filter: blur(5px);
+            z-index: 10;
+            pointer-events: none;
+            transition: opacity 0.3s ease;
+        }
+
+        body.content-access-editing .top-nav-bar,
+        body.content-access-editing .auth-panel,
+        body.content-access-editing .hub-content,
+        body.content-access-editing .policy-footer {
+            position: relative;
+            z-index: 20;
+        }
+
+        body.content-access-editing #contentAccessButton {
+            background: linear-gradient(#2e7d32, #1b5e20);
+            color: #ffffff;
+            border-color: #a5d6a7;
+            box-shadow: 0 0 12px rgba(76, 175, 80, 0.6);
+            font-weight: 800;
+        }
+
+        body.content-access-editing .worksheet-container a,
+        body.content-access-editing .game-card-grid a {
+            box-shadow: 0 0 0 2px rgba(255, 215, 0, 0.4);
+            transition: transform 0.2s ease, box-shadow 0.2s ease;
+        }
+
+        body.content-access-editing .worksheet-container a:hover,
+        body.content-access-editing .game-card-grid a:hover {
+            box-shadow: 0 0 0 3px #ffd700, 0 4px 16px rgba(255, 215, 0, 0.5);
+            transform: scale(1.02);
         }
 
 
@@ -1239,6 +1280,7 @@
                 contentAccessEditing = !contentAccessEditing;
                 contentAccessButton.setAttribute('aria-pressed', String(contentAccessEditing));
                 contentAccessButton.textContent = contentAccessEditing ? '✅ 공개 설정 완료' : '🔓 공개 설정 모드';
+                document.body.classList.toggle('content-access-editing', contentAccessEditing);
                 renderClassLocks();
                 setStatus(contentAccessEditing
                     ? '각 버튼을 눌러 우리 반 학생의 접근을 잠그거나 공개하세요.'
