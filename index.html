@@ -580,7 +580,7 @@
             <input id="parentClass" class="auth-input" type="text" maxlength="2" inputmode="numeric" autocomplete="off" placeholder="CLASS" aria-label="Class">
             <input id="parentStudentNumber" class="auth-input" type="text" maxlength="3" inputmode="numeric" autocomplete="off" placeholder="NUMBER" aria-label="Student number">
             <input id="parentStudentName" class="auth-input student-name" type="text" maxlength="6" autocomplete="name" placeholder="자녀 성명" aria-label="Student name">
-            <input id="parentPasscode" class="auth-input join-wide" type="password" maxlength="6" inputmode="numeric" autocomplete="current-password" placeholder="비밀번호 4자리" aria-label="Parent passcode">
+            <input id="parentPasscode" class="auth-input join-wide" type="password" maxlength="6" inputmode="numeric" autocomplete="current-password" placeholder="비밀번호 6자리 (초기 123456)" aria-label="Parent passcode">
             <button class="auth-button join-wide" type="submit">📱 학부모 알림장 접속</button>
         </form>
 
@@ -1456,8 +1456,8 @@
                     setStatus('자녀 성명을 한글 2~6자로 입력하세요.', true);
                     return;
                 }
-                if (!passcode) {
-                    setStatus('학부모 비밀번호 4자리를 입력하세요.', true);
+                if (passcode.length < 4) {
+                    setStatus('비밀번호 6자리를 입력하세요.', true);
                     return;
                 }
                 setStatus('학부모 알림장으로 연결 중…');
