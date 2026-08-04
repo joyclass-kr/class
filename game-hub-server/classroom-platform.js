@@ -749,8 +749,8 @@ function createClassroomPlatform(options = {}) {
       const result = await pool.query(
         `SELECT c.id
          FROM classroom_classes c
-         JOIN classroom_teachers t ON t.user_id = c.teacher_user_id
-         WHERE t.user_id = $1 AND t.teacher_type = 'homeroom'
+         JOIN classroom_teachers t ON t.school_id = c.school_id AND t.academic_year = c.academic_year AND t.grade = c.grade AND t.class_number = c.class_number
+         WHERE (t.user_id = $1 OR c.teacher_user_id = $1) AND t.teacher_type = 'homeroom'
          ORDER BY c.updated_at DESC LIMIT 1`,
         [user.id]
       );
@@ -1321,7 +1321,7 @@ function createClassroomPlatform(options = {}) {
   router.get("/home-content-access", asyncRoute(async (req, res) => {
     const mode = await getSiteAccessMode();
     const user = await sessionUser(req);
-    if (mode !== "restricted" || !user || user.role === "admin") {
+    if (!user || user.role === "admin") {
       return res.json({ mode, lockedPaths: [], canManage: false });
     }
     const classId = await userClassId(user);
@@ -1339,9 +1339,6 @@ function createClassroomPlatform(options = {}) {
 
   router.put("/teacher/home-content-access", asyncRoute(async (req, res) => {
     const teacher = await requireTeacher(req);
-    if (await getSiteAccessMode() !== "restricted") {
-      throw new HttpError(409, "RESTRICTED_MODE_REQUIRED", "관리자가 restricted 모드로 설정했을 때만 공개 설정을 변경할 수 있습니다.");
-    }
     const classId = await userClassId(teacher);
     if (!classId) {
       throw new HttpError(403, "HOMEROOM_TEACHER_REQUIRED", "담임교사만 자기 반의 공개 설정을 변경할 수 있습니다.");
@@ -2083,6 +2080,13 @@ function createClassroomPlatform(options = {}) {
          SET user_id = $1, google_email = $2, updated_at = NOW()
          WHERE id = $3`,
         [user.id, user.email, teacher.id]
+      );
+      await client.query(
+        `INSERT INTO classroom_classes (school_id, academic_year, grade, class_number, teacher_user_id)
+         VALUES ($1, $2, $3, $4, $5)
+         ON CONFLICT (school_id, academic_year, grade, class_number)
+         DO UPDATE SET teacher_user_id = EXCLUDED.teacher_user_id, updated_at = NOW()`,
+        [schoolId, teacher.academic_year, teacher.grade, teacher.class_number, user.id]
       );
       await client.query("UPDATE classroom_users SET role = 'teacher', updated_at = NOW() WHERE id = $1", [user.id]);
       await client.query("COMMIT");
