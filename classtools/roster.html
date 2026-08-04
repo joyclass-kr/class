@@ -1103,16 +1103,7 @@
                 limitEachLine(birthdatesInput, /[^\d\r\n]/g, 4);
                 update();
             });
-            birthdayVisibleInput.addEventListener("input", () => {
-                birthdayVisibleInput.value = birthdayVisibleInput.value
-                    .toUpperCase()
-                    .replace(/[^YN\r\n]/g, "")
-                    .replace(/\r\n?/g, "\n")
-                    .split("\n")
-                    .map((line) => line.slice(0, 1))
-                    .join("\n");
-                update();
-            });
+
             passwordsInput.addEventListener("input", () => {
                 const cleanLines = passwordsInput.value
                     .replace(/[^\d\r\n]/g, "")
@@ -1128,7 +1119,7 @@
                 location.replace("/");
             });
 
-            const allTextareas = [numbersInput, namesInput, gendersInput, birthdatesInput, birthdayVisibleInput, passwordsInput].filter(Boolean);
+            const allTextareas = [numbersInput, namesInput, gendersInput, birthdatesInput, passwordsInput].filter(Boolean);
             let isSyncingScroll = false;
             allTextareas.forEach((ta) => {
                 ta.addEventListener("scroll", (e) => {
