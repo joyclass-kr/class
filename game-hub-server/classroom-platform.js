@@ -1867,12 +1867,31 @@ function createClassroomPlatform(options = {}) {
       }
 
       if (emails.length > 0) {
+        // Find users being removed to delete their classes
+        const removedTeachers = await client.query(
+          `SELECT user_id FROM classroom_teachers 
+           WHERE school_id = $1 AND user_id IS NOT NULL 
+           AND (google_email IS NULL OR NOT (LOWER(google_email) = ANY($2::TEXT[])))`,
+          [schoolId, emails]
+        );
+        const removedUserIds = removedTeachers.rows.map(r => r.user_id);
+        
+        if (removedUserIds.length > 0) {
+          await client.query(`DELETE FROM classroom_classes WHERE school_id = $1 AND teacher_user_id = ANY($2::BIGINT[])`, [schoolId, removedUserIds]);
+        }
+
         await client.query(
           `DELETE FROM classroom_teachers 
            WHERE school_id = $1 AND (google_email IS NULL OR NOT (LOWER(google_email) = ANY($2::TEXT[])))`,
           [schoolId, emails]
         );
       } else {
+        const removedTeachers = await client.query(`SELECT user_id FROM classroom_teachers WHERE school_id = $1 AND user_id IS NOT NULL`, [schoolId]);
+        const removedUserIds = removedTeachers.rows.map(r => r.user_id);
+        if (removedUserIds.length > 0) {
+          await client.query(`DELETE FROM classroom_classes WHERE school_id = $1 AND teacher_user_id = ANY($2::BIGINT[])`, [schoolId, removedUserIds]);
+        }
+
         await client.query("DELETE FROM classroom_teachers WHERE school_id = $1", [schoolId]);
       }
       await client.query("COMMIT");
@@ -2069,18 +2088,28 @@ function createClassroomPlatform(options = {}) {
     if (!Number.isInteger(schoolId) || schoolId < 1) {
       throw new HttpError(400, "INVALID_SCHOOL", "School not found.");
     }
-    const usage = await pool.query(
-      `SELECT
-         (SELECT COUNT(*) FROM classroom_teachers WHERE school_id = $1)::INTEGER AS teacher_count,
-         (SELECT COUNT(*) FROM classroom_classes WHERE school_id = $1)::INTEGER AS class_count`,
-      [schoolId]
-    );
-    if (usage.rows[0].teacher_count > 0 || usage.rows[0].class_count > 0) {
-      throw new HttpError(409, "SCHOOL_IN_USE", "Delete this school's teachers and classes first.");
+    const client = await pool.connect();
+    try {
+      await client.query("BEGIN");
+      
+      // Delete students manually first if cascade isn't guaranteed
+      await client.query(`DELETE FROM classroom_students WHERE class_id IN (SELECT id FROM classroom_classes WHERE school_id = $1)`, [schoolId]);
+      // Delete classes
+      await client.query(`DELETE FROM classroom_classes WHERE school_id = $1`, [schoolId]);
+      // Delete teachers
+      await client.query(`DELETE FROM classroom_teachers WHERE school_id = $1`, [schoolId]);
+      
+      const result = await client.query("DELETE FROM classroom_schools WHERE id = $1 RETURNING id", [schoolId]);
+      if (!result.rows[0]) throw new HttpError(404, "SCHOOL_NOT_FOUND", "School not found.");
+      
+      await client.query("COMMIT");
+      res.json({ ok: true });
+    } catch (error) {
+      await client.query("ROLLBACK");
+      throw error;
+    } finally {
+      client.release();
     }
-    const result = await pool.query("DELETE FROM classroom_schools WHERE id = $1 RETURNING id", [schoolId]);
-    if (!result.rows[0]) throw new HttpError(404, "SCHOOL_NOT_FOUND", "School not found.");
-    res.json({ ok: true });
   }));
 
   router.get("/teacher/profile", asyncRoute(async (req, res) => {
