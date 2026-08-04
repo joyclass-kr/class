@@ -1135,20 +1135,35 @@
             }
 
             async function loadSchools() {
-                const currentVal = schoolInput.value;
-                schoolInput.disabled = true;
-                schoolInput.replaceChildren(new Option('학교 선택', ''));
-                const result = await api('/api/schools');
-                schoolInput.replaceChildren(new Option('학교 선택', ''));
-                result.schools.forEach((school) => schoolInput.add(new Option(school.name, school.id)));
-                if (currentVal && result.schools.some((s) => String(s.id) === String(currentVal))) {
-                    schoolInput.value = currentVal;
-                } else if (result.schools.length === 1) {
-                    schoolInput.value = String(result.schools[0].id);
+                const currentVal = (schoolInput && schoolInput.value) || (parentSchoolInput && parentSchoolInput.value);
+                if (schoolInput) {
+                    schoolInput.disabled = true;
+                    schoolInput.replaceChildren(new Option('학교 선택', ''));
                 }
-                schoolInput.disabled = result.schools.length === 0;
+                if (parentSchoolInput) {
+                    parentSchoolInput.disabled = true;
+                    parentSchoolInput.replaceChildren(new Option('학교 선택', ''));
+                }
+                const result = await api('/api/schools');
+                if (schoolInput) schoolInput.replaceChildren(new Option('학교 선택', ''));
+                if (parentSchoolInput) parentSchoolInput.replaceChildren(new Option('학교 선택', ''));
+                result.schools.forEach((school) => {
+                    if (schoolInput) schoolInput.add(new Option(school.name, school.id));
+                    if (parentSchoolInput) parentSchoolInput.add(new Option(school.name, school.id));
+                });
+                if (result.schools.length === 1) {
+                    const singleId = String(result.schools[0].id);
+                    if (schoolInput) schoolInput.value = singleId;
+                    if (parentSchoolInput) parentSchoolInput.value = singleId;
+                } else if (currentVal) {
+                    if (schoolInput && result.schools.some((s) => String(s.id) === String(currentVal))) schoolInput.value = currentVal;
+                    if (parentSchoolInput && result.schools.some((s) => String(s.id) === String(currentVal))) parentSchoolInput.value = currentVal;
+                }
+                if (schoolInput) schoolInput.disabled = result.schools.length === 0;
+                if (parentSchoolInput) parentSchoolInput.disabled = result.schools.length === 0;
                 if (result.schools.length === 0) {
-                    schoolInput.options[0].textContent = '등록된 학교가 없습니다';
+                    if (schoolInput) schoolInput.options[0].textContent = '등록된 학교가 없습니다';
+                    if (parentSchoolInput) parentSchoolInput.options[0].textContent = '등록된 학교가 없습니다';
                     throw new Error('No enabled schools are available. Ask the administrator to enable a school.');
                 }
             }
@@ -1431,11 +1446,8 @@
                     toggleParentNotice.textContent = '로그인';
                     authTitle.textContent = 'PARENT NOTICE ACCESS';
                     authMessage.hidden = true;
+                    await loadSchools().catch(() => {});
                     parentStudentNameInput.focus();
-                    if (parentSchoolInput && schoolInput) {
-                        parentSchoolInput.replaceChildren(...Array.from(schoolInput.options).map((opt) => opt.cloneNode(true)));
-                        if (schoolInput.value) parentSchoolInput.value = schoolInput.value;
-                    }
                 } else {
                     parentForm.hidden = true;
                     toggleParentNotice.textContent = '📱 학부모 알림장';
