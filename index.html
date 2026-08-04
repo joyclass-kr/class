@@ -863,12 +863,30 @@
                     'ㅂㅅ':'ㅄ'
                 };
 
+                const DECOMPOSE_JONG = {
+                    'ㄳ': 'ㄱㅅ', 'ㄵ': 'ㄴㅈ', 'ㄶ': 'ㄴㅎ',
+                    'ㄺ': 'ㄹㄱ', 'ㄻ': 'ㄹㅁ', 'ㄼ': 'ㄹㅂ', 'ㄽ': 'ㄹㅅ', 'ㄾ': 'ㄹㄾ', 'ㄿ': 'ㄹㅍ', 'ㅀ': 'ㄹㅎ',
+                    'ㅄ': 'ㅂㅅ'
+                };
+
                 let jamoStr = '';
                 for (let i = 0; i < text.length; i++) {
                     const ch = text[i];
+                    const code = ch.charCodeAt(0);
                     if (map[ch]) {
                         jamoStr += map[ch];
-                    } else if (/[가-힣ㄱ-ㅎㅏ-ㅣ]/.test(ch)) {
+                    } else if (code >= 0xAC00 && code <= 0xD7A3) {
+                        const delta = code - 0xAC00;
+                        const cIdx = Math.floor(delta / (21 * 28));
+                        const jIdx = Math.floor((delta % (21 * 28)) / 28);
+                        const jgIdx = delta % 28;
+                        jamoStr += CHO[cIdx];
+                        jamoStr += JOUNG[jIdx];
+                        if (jgIdx > 0) {
+                            const jongChar = JONG[jgIdx];
+                            jamoStr += DECOMPOSE_JONG[jongChar] || jongChar;
+                        }
+                    } else if (/[ㄱ-ㅎㅏ-ㅣ]/.test(ch)) {
                         jamoStr += ch;
                     }
                 }
