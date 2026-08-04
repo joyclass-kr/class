@@ -598,7 +598,6 @@
                 </div>
                 <div class="signed-in-actions">
                     <a id="classToolsLink" class="auth-button secondary" href="classtools/" hidden>교사 페이지</a>
-                    <a id="teacherNoticeLink" class="auth-button secondary" href="/teacher/" hidden style="border-color: #75d69f; color: #75d69f;">📬 가정통신문·결재</a>
                     <a id="parentNoticeLink" class="auth-button secondary" href="/notice/" hidden style="border-color: #75d69f; color: #75d69f;">📱 학부모 알림장</a>
                     <a id="studentProfileLink" class="auth-button secondary" href="/classtools/profile" hidden>내 정보 설정</a>
                     <button id="contentAccessButton" class="auth-button secondary content-access-button" type="button" aria-pressed="false" hidden>🔓 공개 설정 모드</button>
@@ -790,7 +789,6 @@
             const adminPanelLink = document.getElementById('adminPanelLink');
             const contentAccessButton = document.getElementById('contentAccessButton');
             const classToolsLink = document.getElementById('classToolsLink');
-            const teacherNoticeLink = document.getElementById('teacherNoticeLink');
             const parentNoticeLink = document.getElementById('parentNoticeLink');
             const hubContent = document.getElementById('hubContent');
             const hubLinks = Array.from(hubContent.querySelectorAll('a[href]'));
@@ -1192,7 +1190,6 @@
                 signedInArea.hidden = false;
                 
                 classToolsLink.hidden = true;
-                if (teacherNoticeLink) teacherNoticeLink.hidden = true;
                 if (parentNoticeLink) parentNoticeLink.hidden = true;
                 if (studentProfileLink) studentProfileLink.hidden = true;
                 if (contentAccessButton) contentAccessButton.hidden = true;
@@ -1218,7 +1215,6 @@
                 joinForm.hidden = true;
                 signedInArea.hidden = false;
                 classToolsLink.hidden = false;
-                if (teacherNoticeLink) teacherNoticeLink.hidden = false;
                 studentProfileLink.hidden = true;
 
                 const teacherProfile = await api('/api/teacher/profile').catch(() => null);
