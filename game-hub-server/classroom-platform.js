@@ -1274,7 +1274,7 @@ function createClassroomPlatform(options = {}) {
     const name = normalizePersonName(req.body?.name);
     const passcode = String(req.body?.passcode || "").trim();
     if (passcode !== "2004") {
-      throw new HttpError(400, "INVALID_PASSCODE", "비밀번호 4자리(2004)를 올바르게 입력하세요.");
+      throw new HttpError(400, "INVALID_PASSCODE", "비밀번호 4자리를 올바르게 입력하세요.");
     }
     if (name.length < 2 || name.length > 6) {
       throw new HttpError(400, "VALID_NAME_REQUIRED", "Enter a Korean name with 2 to 6 characters.");
