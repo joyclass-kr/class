@@ -223,9 +223,28 @@
             color: #bdbdbd;
         }
 
-        .content-access-button {
+        .signed-in-actions {
+            display: grid;
+            grid-template-columns: repeat(3, minmax(0, 1fr));
+            gap: 6px;
             width: 100%;
-            margin-top: 10px;
+            margin-top: 14px;
+        }
+
+        .signed-in-actions .auth-button {
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            min-height: 44px;
+            padding: 7px 6px;
+            text-align: center;
+            line-height: 1.2;
+            white-space: nowrap;
+        }
+
+        .content-access-button {
+            width: auto;
+            margin: 0;
         }
 
         .content-access-button[aria-pressed="true"] {
@@ -382,10 +401,6 @@
         }
 
         .signed-in-row {
-            display: flex;
-            align-items: center;
-            justify-content: space-between;
-            gap: 8px;
             margin-top: 8px;
             color: #fff0c7;
         }
@@ -409,23 +424,6 @@
         }
 
         @media (max-width: 600px) {
-            body { padding-top: 14px; }
-            .top-nav-bar {
-                position: relative;
-                top: 0;
-                left: 0;
-                justify-content: center;
-                margin: 0 auto 16px;
-                max-width: 100%;
-            }
-            .class-tools-link {
-                padding: 8px 12px;
-                font-size: 12px;
-            }
-            .music-control { gap: 7px; transform: scale(0.93); }
-            .music-label { font-size: 14px; }
-            .volume-step { width: 20px; }
-            .worksheet-container,
             body { padding-top: 14px; }
             .top-nav-bar {
                 position: relative;
@@ -468,10 +466,6 @@
             `url('assets/images/monthly/${new Date().getMonth() + 1}.jpg')`
         );
     </script>
-    <div class="top-nav-bar" aria-label="교사 및 관리자 메뉴">
-        <a id="classToolsLink" class="class-tools-link" href="classtools/">🏫 교사 페이지 (학급 관리)</a>
-        <a id="adminToolsLink" class="class-tools-link" href="admin/">⚙️ 관리자 페이지</a>
-    </div>
     <audio id="bgm" src="assets/sound/index.mp3" autoplay loop preload="auto"></audio>
     <script src="assets/sound/music-control.js"></script>
 
@@ -505,10 +499,13 @@
                     <strong id="signedInName"></strong>
                     <span id="classMembership" class="class-membership"></span>
                 </div>
-                <a id="studentProfileLink" class="auth-button secondary" href="/classtools/profile" hidden>내 정보 설정</a>
-                <button id="signOutButton" class="auth-button secondary" type="button">SIGN OUT</button>
+                <div class="signed-in-actions">
+                    <a id="classToolsLink" class="auth-button secondary" href="classtools/" hidden>교사 페이지</a>
+                    <a id="studentProfileLink" class="auth-button secondary" href="/classtools/profile" hidden>내 정보 설정</a>
+                    <button id="contentAccessButton" class="auth-button secondary content-access-button" type="button" aria-pressed="false" hidden>🔓 공개 설정 모드</button>
+                    <button id="signOutButton" class="auth-button secondary" type="button">SIGN OUT</button>
+                </div>
             </div>
-            <button id="contentAccessButton" class="auth-button content-access-button" type="button" aria-pressed="false" hidden>🔓 공개 설정 모드</button>
         </div>
         <p id="authStatus" class="auth-status"></p>
     </div>
@@ -823,6 +820,7 @@
                 guestForm.hidden = true;
                 joinForm.hidden = true;
                 signedInArea.hidden = false;
+                classToolsLink.hidden = true;
                 studentProfileLink.hidden = false;
                 signedInName.textContent = playerName;
                 classMembership.textContent = `${membership.schoolName} · G${membership.grade}-${membership.classNumber} · No. ${membership.studentNumber}`;
@@ -889,6 +887,7 @@
                 authMessage.textContent = `${state.user.name}, students enter number 1 or higher. Teachers enter 0.`;
                 googleSignInButton.hidden = true;
                 signedInArea.hidden = false;
+                classToolsLink.hidden = true;
                 signedInName.textContent = state.user.name;
                 classMembership.textContent = state.user.email;
                 hubContent.hidden = true;
@@ -906,6 +905,8 @@
                 guestForm.hidden = true;
                 joinForm.hidden = true;
                 signedInArea.hidden = false;
+                classToolsLink.hidden = false;
+                studentProfileLink.hidden = true;
 
                 const teacherProfile = await api('/api/teacher/profile').catch(() => null);
                 const profile = teacherProfile?.profile;
