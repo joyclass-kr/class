@@ -2081,12 +2081,21 @@ function createClassroomPlatform(options = {}) {
          WHERE id = $3`,
         [user.id, user.email, teacher.id]
       );
+      let classCandidate;
+      for (let attempt = 0; attempt < 8; attempt += 1) {
+        classCandidate = makeJoinCode();
+        const collision = await client.query(
+          "SELECT 1 FROM classroom_classes WHERE join_code = $1",
+          [classCandidate]
+        );
+        if (collision.rowCount === 0) break;
+      }
       await client.query(
-        `INSERT INTO classroom_classes (school_id, academic_year, grade, class_number, teacher_user_id)
-         VALUES ($1, $2, $3, $4, $5)
+        `INSERT INTO classroom_classes (school_id, teacher_user_id, academic_year, grade, class_number, teacher_name, join_code)
+         VALUES ($1, $2, $3, $4, $5, $6, $7)
          ON CONFLICT (school_id, academic_year, grade, class_number)
-         DO UPDATE SET teacher_user_id = EXCLUDED.teacher_user_id, updated_at = NOW()`,
-        [schoolId, teacher.academic_year, teacher.grade, teacher.class_number, user.id]
+         DO UPDATE SET teacher_user_id = EXCLUDED.teacher_user_id, teacher_name = EXCLUDED.teacher_name, updated_at = NOW()`,
+        [schoolId, user.id, teacher.academic_year, teacher.grade, teacher.class_number, teacher.teacher_name, classCandidate]
       );
       await client.query("UPDATE classroom_users SET role = 'teacher', updated_at = NOW() WHERE id = $1", [user.id]);
       await client.query("COMMIT");
