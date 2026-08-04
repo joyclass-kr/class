@@ -199,7 +199,7 @@
 
         .paste-grid {
             display: grid;
-            grid-template-columns: minmax(56px, 0.5fr) minmax(150px, 1.35fr) minmax(92px, 0.75fr) minmax(112px, 0.9fr) minmax(112px, 0.9fr) minmax(132px, 1.1fr);
+            grid-template-columns: minmax(56px, 0.5fr) minmax(150px, 1.5fr) minmax(92px, 0.8fr) minmax(120px, 1.1fr) minmax(140px, 1.2fr);
             gap: 10px;
         }
 
@@ -659,7 +659,7 @@
                         <label for="names">성명 (이름)</label>
                         <span class="line-count" id="name-count">0행</span>
                     </div>
-                    <textarea id="names" autocomplete="off" autocapitalize="off" spellcheck="false" placeholder="김민준&#10;이서연&#10;박지우&#10;최하늘" aria-describedby="input-status"></textarea>
+                    <textarea id="names" autocomplete="off" autocapitalize="off" spellcheck="false" placeholder="" aria-describedby="input-status"></textarea>
                 </div>
 
                 <div class="field">
@@ -667,25 +667,16 @@
                         <label for="genders">성별 (남/여)</label>
                         <span class="line-count" id="gender-count">0행</span>
                     </div>
-                    <textarea id="genders" autocomplete="off" autocapitalize="off" spellcheck="false" placeholder="남&#10;여&#10;남&#10;여" aria-describedby="input-status"></textarea>
+                    <textarea id="genders" autocomplete="off" autocapitalize="off" spellcheck="false" placeholder="" aria-describedby="input-status"></textarea>
                 </div>
 
                 <div class="field">
                     <div class="field-head">
-                        <label for="birthdates">공개 생일</label>
+                        <label for="birthdates">생일</label>
                         <span class="line-count" id="birthdate-count">0행</span>
                     </div>
                     <textarea id="birthdates" disabled aria-describedby="birthday-help"></textarea>
-                    <p class="field-help" id="birthday-help">학생이 공개한 생일만 표시됩니다. 교사는 수정할 수 없습니다.</p>
-                </div>
-
-                <div class="field">
-                    <div class="field-head">
-                        <label for="birthday-visible">생일 공개 상태</label>
-                        <span class="line-count" id="birthday-visible-count">0행</span>
-                    </div>
-                    <textarea id="birthday-visible" disabled aria-describedby="birthday-visible-help"></textarea>
-                    <p class="field-help" id="birthday-visible-help">학생이 ‘내 정보 설정’에서 직접 선택합니다.</p>
+                    <p class="field-help" id="birthday-help">학생이 설정한 생일이 표시되며, 비공개 선택 시 ‘비공개’로 표시됩니다.</p>
                 </div>
 
                 <div class="field">
@@ -741,13 +732,11 @@
             const namesInput = document.querySelector("#names");
             const gendersInput = document.querySelector("#genders");
             const birthdatesInput = document.querySelector("#birthdates");
-            const birthdayVisibleInput = document.querySelector("#birthday-visible");
             const passwordsInput = document.querySelector("#passwords");
             const numberCount = document.querySelector("#number-count");
             const nameCount = document.querySelector("#name-count");
             const genderCount = document.querySelector("#gender-count");
             const birthdateCount = document.querySelector("#birthdate-count");
-            const birthdayVisibleCount = document.querySelector("#birthday-visible-count");
             const passwordCount = document.querySelector("#password-count");
             const status = document.querySelector("#input-status");
             const saveButton = document.querySelector("#save-button");
@@ -872,13 +861,11 @@
                 numbersInput.value = classroom.students.map((student) => student.number).join("\n");
                 namesInput.value = classroom.students.map((student) => student.name).join("\n");
                 gendersInput.value = classroom.students.map((student) => student.gender || "남").join("\n");
-                if (birthdatesInput) birthdatesInput.value = classroom.students.map((student) => student.birthdayVisible ? (student.birthdayMmdd || "공개 중") : "—").join("\n");
-                if (birthdayVisibleInput) birthdayVisibleInput.value = classroom.students.map((student) => student.birthdayVisible ? "공개 중" : "비공개").join("\n");
+                if (birthdatesInput) birthdatesInput.value = classroom.students.map((student) => student.birthdayVisible ? (student.birthdayMmdd || "공개 중") : "비공개").join("\n");
                 passwordsInput.value = classroom.students.map((student) => student.linked ? "학생 설정 완료" : "초기 123456").join("\n");
                 displayedPasswordRows.clear();
                 classroom.students.forEach((student) => displayedPasswordRows.set(student.number, DISPLAY_DEFAULT_STUDENT_PASSWORD));
                 if (birthdatesInput) birthdatesInput.disabled = true;
-                if (birthdayVisibleInput) birthdayVisibleInput.disabled = true;
                 passwordsInput.disabled = true;
                 studentDeleteSelect.replaceChildren(new Option("삭제할 학생 선택", ""));
                 loadedRosterStudents.forEach((student) => {
@@ -908,7 +895,6 @@
                 nameCount.textContent = `${state.names.length}행`;
                 if (genderCount) genderCount.textContent = `${state.genders.length}행`;
                 if (birthdateCount) birthdateCount.textContent = `${state.numbers.length}행`;
-                if (birthdayVisibleCount) birthdayVisibleCount.textContent = `${state.numbers.length}행`;
                 if (passwordCount) passwordCount.textContent = `${state.numbers.length}행`;
 
                 const hasAnyInput = state.numbers.length > 0 || state.names.length > 0;
