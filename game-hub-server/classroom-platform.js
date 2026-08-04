@@ -2867,7 +2867,13 @@ function createClassroomPlatform(options = {}) {
 
   router.post("/teacher/simulate-student", asyncRoute(async (req, res) => {
     const teacher = await requireTeacher(req);
-    const classRes = await pool.query("SELECT id FROM classroom_classes WHERE teacher_user_id = $1", [teacher.id]);
+    const teacherInfoRes = await pool.query("SELECT school_id, teacher_type FROM classroom_teachers WHERE user_id = $1", [teacher.id]);
+    const teacherInfo = teacherInfoRes.rows[0];
+    
+    let classRes = await pool.query("SELECT id FROM classroom_classes WHERE teacher_user_id = $1 ORDER BY updated_at DESC LIMIT 1", [teacher.id]);
+    if (classRes.rowCount === 0 && teacherInfo?.teacher_type === 'subject') {
+      classRes = await pool.query("SELECT id FROM classroom_classes WHERE school_id = $1 ORDER BY grade ASC, class_number ASC LIMIT 1", [teacherInfo.school_id]);
+    }
     const classInfo = classRes.rows[0];
     if (!classInfo) {
       throw new HttpError(400, "NO_CLASS", "학급이 배정되지 않아 체험할 수 없습니다. 관리자에게 문의하세요.");
@@ -2921,7 +2927,13 @@ function createClassroomPlatform(options = {}) {
 
   router.post("/teacher/simulate-parent", asyncRoute(async (req, res) => {
     const teacher = await requireTeacher(req);
-    const classRes = await pool.query("SELECT id FROM classroom_classes WHERE teacher_user_id = $1", [teacher.id]);
+    const teacherInfoRes = await pool.query("SELECT school_id, teacher_type FROM classroom_teachers WHERE user_id = $1", [teacher.id]);
+    const teacherInfo = teacherInfoRes.rows[0];
+    
+    let classRes = await pool.query("SELECT id FROM classroom_classes WHERE teacher_user_id = $1 ORDER BY updated_at DESC LIMIT 1", [teacher.id]);
+    if (classRes.rowCount === 0 && teacherInfo?.teacher_type === 'subject') {
+      classRes = await pool.query("SELECT id FROM classroom_classes WHERE school_id = $1 ORDER BY grade ASC, class_number ASC LIMIT 1", [teacherInfo.school_id]);
+    }
     const classInfo = classRes.rows[0];
     if (!classInfo) {
       throw new HttpError(400, "NO_CLASS", "학급이 배정되지 않아 체험할 수 없습니다. 관리자에게 문의하세요.");
