@@ -1312,12 +1312,12 @@
                     setStatus('선생님이 열어 주시면 이용할 수 있습니다.');
                     return;
                 }
-                if (restrictedPreview) {
+                if (restrictedPreview && signedInArea.hidden && !currentPlayerName) {
                     const link = event.target.closest('a');
                     if (link && hubContent.contains(link)) {
                         event.preventDefault();
                         setStatus('접근이 제한되어 있습니다. 이 메뉴를 열려면 학교 Google Workspace 계정으로 로그인하세요.', true);
-                        googleSignInButton.focus();
+                        if (googleSignInButton && !googleSignInButton.hidden) googleSignInButton.focus();
                     }
                     return;
                 }
@@ -1496,6 +1496,7 @@
                     localStorage.setItem('classPlayerName', guest.name);
                     updatePlayerLearningLinks(guest.name);
                     setHubLocked(false);
+                    restrictedPreview = false;
                     setStatus(`PLAYER · ${guest.name}`);
                     authTitle.textContent = 'GUEST PLAYER';
                     authMessage.hidden = true;
