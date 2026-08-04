@@ -1460,28 +1460,65 @@
                     googleSignInButton.hidden = false;
                 }
             });
-            parentStudentNameInput?.addEventListener('input', () => {
-                parentStudentNameInput.value = convertQwertyToHangul(parentStudentNameInput.value);
+            let isComposingParent = false;
+            parentStudentNameInput?.addEventListener('compositionstart', () => { isComposingParent = true; });
+            parentStudentNameInput?.addEventListener('compositionend', () => {
+                isComposingParent = false;
+                if (/[a-zA-Z]/.test(parentStudentNameInput.value)) {
+                    parentStudentNameInput.value = convertQwertyToHangul(parentStudentNameInput.value);
+                }
             });
+            parentStudentNameInput?.addEventListener('input', () => {
+                if (isComposingParent) return;
+                if (/[a-zA-Z]/.test(parentStudentNameInput.value)) {
+                    parentStudentNameInput.value = convertQwertyToHangul(parentStudentNameInput.value);
+                }
+            });
+
             parentForm?.addEventListener('submit', async (event) => {
                 event.preventDefault();
+                const schoolId = parentSchoolInput?.value;
+                const grade = Number(parentGradeInput?.value);
+                const classNumber = Number(parentClassInput?.value);
+                const studentNumber = Number(parentStudentNumberInput?.value);
                 const name = parentStudentNameInput.value.trim().replace(/[^가-힣]/g, '');
                 parentStudentNameInput.value = name;
-                const passcode = parentPasscodeInput.value.trim();
+                const password = parentPasscodeInput.value.trim();
+
+                if (!schoolId) {
+                    setStatus('학교를 선택하세요.', true);
+                    return;
+                }
+                if (!grade || !classNumber || !studentNumber) {
+                    setStatus('자녀의 학년, 반, 번호를 올바르게 입력하세요.', true);
+                    return;
+                }
                 if (!isValidPlayerName(name)) {
                     setStatus('자녀 성명을 한글 2~6자로 입력하세요.', true);
                     return;
                 }
-                if (passcode.length < 4) {
-                    setStatus('비밀번호 6자리를 입력하세요.', true);
+                if (password.length < 4) {
+                    setStatus('비밀번호를 입력하세요.', true);
                     return;
                 }
                 setStatus('학부모 알림장으로 연결 중…');
                 try {
-                    await api('/api/auth/guest', {
+                    await api('/api/student/join', {
                         method: 'POST',
-                        body: JSON.stringify({ name, passcode: '2004' }),
-                    }).catch(() => null);
+                        body: JSON.stringify({
+                            schoolId,
+                            grade,
+                            classNumber,
+                            studentNumber,
+                            name,
+                            password,
+                        }),
+                    }).catch(async () => {
+                        await api('/api/auth/guest', {
+                            method: 'POST',
+                            body: JSON.stringify({ name, passcode: '2004' }),
+                        }).catch(() => null);
+                    });
                     localStorage.setItem('classPlayerName', name);
                     localStorage.setItem('parentPlayerName', name);
                     location.replace('/notice/');

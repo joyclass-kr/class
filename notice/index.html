@@ -597,7 +597,13 @@
                         const m = data.membership;
                         document.getElementById('studentChip').textContent = `${m.schoolName} ${m.grade}학년 ${m.classNumber}반 ${m.studentNumber}번 ${m.name} 학부모님`;
                         document.getElementById('studentChip').style.background = '#1f4730';
+                        return;
                     }
+                }
+                const parentName = localStorage.getItem('parentPlayerName') || localStorage.getItem('classPlayerName');
+                if (parentName) {
+                    document.getElementById('studentChip').textContent = `${parentName} 학부모님`;
+                    document.getElementById('studentChip').style.background = '#1f4730';
                 }
             } catch(e) {}
         }
