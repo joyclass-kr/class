@@ -313,6 +313,14 @@ app.use((req, res, next) => {
     return res.redirect(308, `${cleanPath}${query}`);
   }
 
+  if (!path.extname(pathname) && !pathname.endsWith("/")) {
+    const dirCandidate = path.resolve(SITE_ROOT, `.${pathname}`);
+    if (dirCandidate.startsWith(`${SITE_ROOT}${path.sep}`) && fs.existsSync(dirCandidate) && fs.statSync(dirCandidate).isDirectory()) {
+      const query = req.originalUrl.includes("?") ? req.originalUrl.slice(req.originalUrl.indexOf("?")) : "";
+      return res.redirect(308, `${pathname}/${query}`);
+    }
+  }
+
   if (path.extname(pathname) || pathname.endsWith("/")) return next();
   const candidate = path.resolve(SITE_ROOT, `.${pathname}.html`);
   if (!candidate.startsWith(`${SITE_ROOT}${path.sep}`)) return res.sendStatus(400);
