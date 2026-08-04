@@ -849,6 +849,10 @@
             });
 
             function convertQwertyToHangul(text) {
+                if (!text) return '';
+                if (!/[a-zA-Z]/.test(text)) {
+                    return text;
+                }
                 if (/^[A-Z]+$/.test(text)) {
                     text = text.toLowerCase();
                 }
