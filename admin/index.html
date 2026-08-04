@@ -174,7 +174,7 @@
         .management h2 { margin: 0 0 8px; font-size: 1.35rem; }
         .management-copy { margin: 0 0 16px; color: var(--muted); font-size: 13px; line-height: 1.55; }
         .form-row { display: grid; grid-template-columns: 1fr auto; gap: 10px; margin: 12px 0; }
-        .teacher-form { grid-template-columns: 110px 90px 90px 1fr 130px auto; }
+        .teacher-form { display: none; }
         .control { width: 100%; min-height: 44px; border: 1px solid var(--line); border-radius: 10px; padding: 10px 12px; color: var(--ink); background: #101512; }
         .action-button { min-height: 44px; border: 1px solid var(--green); border-radius: 10px; padding: 0 16px; color: var(--ink); background: var(--green-dark); font-weight: 800; cursor: pointer; }
         .school-tools { display: grid; grid-template-columns: 1fr auto auto auto; gap: 10px; align-items: center; margin-top: 18px; }
@@ -184,9 +184,14 @@
         .school-directory-name { min-width: 0; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; font-weight: 800; }
         .school-directory-state { margin-left: 8px; color: var(--muted); font-size: 12px; font-weight: 500; }
         .check-label { display: flex; align-items: center; gap: 7px; color: var(--muted); font-size: 13px; }
-        .teacher-list { display: grid; gap: 10px; margin-top: 14px; }
-        .teacher-row { display: grid; grid-template-columns: 110px 90px 90px minmax(130px, 1fr) 120px auto auto auto; gap: 8px; align-items: center; border: 1px solid var(--line); border-radius: 12px; padding: 10px; }
-        .teacher-class { grid-column: 1 / -1; color: var(--muted); font-size: 12px; }
+        
+        .paste-grid { display: grid; grid-template-columns: 80px 80px 70px 70px 120px 1fr; gap: 6px; margin-top: 14px; }
+        .field { min-width: 0; }
+        .field-head { display: flex; align-items: flex-start; justify-content: space-between; gap: 8px; margin: 0 2px 6px; min-height: 24px; }
+        .field label { font-size: 13px; font-weight: 800; }
+        textarea.roster-input { display: block; width: 100%; min-height: 300px; resize: vertical; border: 1px solid var(--line); border-radius: 8px; outline: none; padding: 10px; color: var(--ink); background: #101512; font-size: 13px; line-height: 1.5; font-variant-numeric: tabular-nums; white-space: pre; overflow-x: auto; }
+        textarea.roster-input:focus { border-color: var(--green); }
+        .actions { display: flex; justify-content: flex-end; margin-top: 14px; }
         .danger-button { border-color: #9c4943; color: #ffd6d2; background: #3c1d1a; }
         [hidden] { display: none !important; }
 
@@ -259,35 +264,38 @@
                         <button class="action-button danger-button" id="deleteSchoolButton" type="button">DELETE SCHOOL</button>
                     </div>
                     <div id="teacherManagement" hidden>
-                        <div class="form-row teacher-form" style="grid-template-columns: 110px 100px 90px 75px 120px 110px auto;">
-                            <select class="control" id="newTeacherType" aria-label="Teacher type">
-                                <option value="homeroom">🏫 담임</option>
-                                <option value="subject">🎨 전담</option>
-                            </select>
-                            <select class="control" id="newTeacherYear" aria-label="School year"></select>
-                            <select class="control" id="newTeacherGrade" aria-label="Grade"></select>
-                            <input class="control" id="newTeacherClass" type="number" min="1" max="30" value="1" aria-label="Class">
-                            <input class="control" id="newTeacherName" maxlength="30" placeholder="교사 성명">
-                            <input class="control" id="newTeacherPassword" type="password" inputmode="numeric" maxlength="6" value="123456" aria-label="Initial teacher password">
-                            <button class="action-button" id="addTeacherButton" type="button">ADD TEACHER</button>
+                        <div class="paste-grid">
+                            <div class="field">
+                                <div class="field-head"><label>구분</label></div>
+                                <textarea id="rosterType" class="roster-input" placeholder="담임/전담" wrap="off" spellcheck="false"></textarea>
+                            </div>
+                            <div class="field">
+                                <div class="field-head"><label>학년도</label></div>
+                                <textarea id="rosterYear" class="roster-input" placeholder="2026" wrap="off" spellcheck="false"></textarea>
+                            </div>
+                            <div class="field">
+                                <div class="field-head"><label>학년</label></div>
+                                <textarea id="rosterGrade" class="roster-input" placeholder="5" wrap="off" spellcheck="false"></textarea>
+                            </div>
+                            <div class="field">
+                                <div class="field-head"><label>반</label></div>
+                                <textarea id="rosterClass" class="roster-input" placeholder="1" wrap="off" spellcheck="false"></textarea>
+                            </div>
+                            <div class="field">
+                                <div class="field-head"><label>성명</label></div>
+                                <textarea id="rosterName" class="roster-input" placeholder="홍길동" wrap="off" spellcheck="false"></textarea>
+                            </div>
+                            <div class="field">
+                                <div class="field-head"><label>구글 계정</label></div>
+                                <textarea id="rosterEmail" class="roster-input" placeholder="teacher@gmail.com" wrap="off" spellcheck="false"></textarea>
+                            </div>
                         </div>
-                        <div class="teacher-list" id="teacherList"></div>
+                        <div class="actions">
+                            <button class="action-button" id="saveRosterButton" type="button">SAVE ROSTER</button>
+                        </div>
                     </div>
                 </section>
-                <a class="tool-link" href="/admin/reading/">
-                    <div>
-                        <strong>Reading question bank</strong>
-                        <span>Create knowledge cards, passages, choices, and run automatic checks.</span>
-                    </div>
-                    <b aria-hidden="true">→</b>
-                </a>
-                <a class="tool-link" href="/admin/privacy">
-                    <div>
-                        <strong>Privacy requests</strong>
-                        <span>Review access, correction, deletion, and processing-stop requests.</span>
-                    </div>
-                    <b aria-hidden="true">→</b>
-                </a>
+
                 <a class="tool-link" href="/admin/students">
                     <div>
                         <strong>Student account recovery</strong>
@@ -326,13 +334,14 @@
             const saveSchoolButton = document.querySelector("#saveSchoolButton");
             const deleteSchoolButton = document.querySelector("#deleteSchoolButton");
             const teacherManagement = document.querySelector("#teacherManagement");
-            const newTeacherYear = document.querySelector("#newTeacherYear");
-            const newTeacherGrade = document.querySelector("#newTeacherGrade");
-            const newTeacherClass = document.querySelector("#newTeacherClass");
-            const newTeacherName = document.querySelector("#newTeacherName");
-            const newTeacherPassword = document.querySelector("#newTeacherPassword");
-            const addTeacherButton = document.querySelector("#addTeacherButton");
-            const teacherList = document.querySelector("#teacherList");
+            const rosterType = document.querySelector("#rosterType");
+            const rosterYear = document.querySelector("#rosterYear");
+            const rosterGrade = document.querySelector("#rosterGrade");
+            const rosterClass = document.querySelector("#rosterClass");
+            const rosterName = document.querySelector("#rosterName");
+            const rosterEmail = document.querySelector("#rosterEmail");
+            const saveRosterButton = document.querySelector("#saveRosterButton");
+            const textareas = [rosterType, rosterYear, rosterGrade, rosterClass, rosterName, rosterEmail];
             let saving = false;
             let schools = [];
             let selectedNeisSchool = null;
@@ -444,110 +453,27 @@
             function renderTeachers() {
                 const school = selectedSchool();
                 teacherManagement.hidden = !school;
-                teacherList.replaceChildren();
                 schoolEnabled.disabled = !school;
                 saveSchoolButton.disabled = !school;
                 deleteSchoolButton.disabled = !school;
                 if (!school) return;
                 schoolEnabled.checked = school.enabled;
+                
+                let types = [], years = [], grades = [], classes = [], names = [], emails = [];
                 school.teachers.forEach((teacher) => {
-                    const row = document.createElement("div");
-                    row.className = "teacher-row";
-                    const year = document.createElement("select");
-                    year.className = "control";
-                    year.setAttribute("aria-label", `School year for ${teacher.name}`);
-                    fillYearSelect(year, teacher.classroom?.academicYear);
-                    const grade = document.createElement("select");
-                    grade.className = "control";
-                    grade.setAttribute("aria-label", `Grade for ${teacher.name}`);
-                    fillGradeSelect(grade, teacher.classroom?.grade);
-                    const classNumber = document.createElement("input");
-                    classNumber.className = "control";
-                    classNumber.type = "number";
-                    classNumber.min = "1";
-                    classNumber.max = "30";
-                    classNumber.value = String(teacher.classroom?.classNumber || 1);
-                    classNumber.setAttribute("aria-label", `Class for ${teacher.name}`);
-                    const name = document.createElement("input");
-                    name.className = "control";
-                    name.value = teacher.name;
-                    name.maxLength = 30;
-                    const password = document.createElement("input");
-                    password.className = "control";
-                    password.type = "password";
-                    password.inputMode = "numeric";
-                    password.maxLength = 6;
-                    password.placeholder = "UNCHANGED";
-                    password.addEventListener("input", () => { password.value = password.value.replace(/\D/g, "").slice(0, 6); });
-                    const activeLabel = document.createElement("label");
-                    activeLabel.className = "check-label";
-                    const active = document.createElement("input");
-                    active.type = "checkbox";
-                    active.checked = teacher.active;
-                    activeLabel.append(active, " Active");
-                    const save = document.createElement("button");
-                    save.className = "action-button";
-                    save.type = "button";
-                    save.textContent = "SAVE";
-                    save.addEventListener("click", async () => {
-                        if (password.value && !/^\d{6}$/.test(password.value)) return setStatus("Teacher passwords must contain exactly 6 digits.", true);
-                        try {
-                            await api(`/api/admin/teachers/${teacher.id}`, {
-                                method: "PATCH",
-                                body: JSON.stringify({
-                                    academicYear: Number(year.value),
-                                    grade: Number(grade.value),
-                                    classNumber: Number(classNumber.value),
-                                    name: name.value.trim(),
-                                    password: password.value,
-                                    active: active.checked,
-                                }),
-                            });
-                            await loadSchools(school.id);
-                            setStatus("Teacher information saved.");
-                        } catch (error) { setStatus(error.message, true); }
-                    });
-                    const remove = document.createElement("button");
-                    remove.className = "action-button danger-button";
-                    remove.type = "button";
-                    remove.textContent = "DELETE";
-                    remove.addEventListener("click", async () => {
-                        if (!confirm(`Delete ${teacher.name}'s teacher account, class, and student roster? This cannot be undone.`)) return;
-                        try {
-                            await api(`/api/admin/teachers/${teacher.id}`, { method: "DELETE" });
-                            await loadSchools(school.id);
-                            setStatus("Teacher and class deleted.");
-                        } catch (error) { setStatus(error.message, true); }
-                    });
-
-                    const classInfo = document.createElement("div");
-                    classInfo.className = "teacher-class";
-                    const emailTag = teacher.email ? ` · Google linked (${teacher.email})` : (teacher.linked ? " · Google linked" : "");
-                    classInfo.textContent = teacher.classroom
-                        ? `${teacher.classroom.academicYear} · Grade ${teacher.classroom.grade} Class ${teacher.classroom.classNumber} · ${teacher.classroom.studentCount} students${emailTag}`
-                        : `No class saved${emailTag}`;
-
-                    if (teacher.linked || teacher.email) {
-                        const unlink = document.createElement("button");
-                        unlink.className = "action-button secondary";
-                        unlink.type = "button";
-                        unlink.style.marginLeft = "8px";
-                        unlink.textContent = "UNLINK GOOGLE";
-                        unlink.title = "Disconnect linked Google account";
-                        unlink.addEventListener("click", async () => {
-                            if (!confirm(`Unlink Google account (${teacher.email || 'linked account'}) from ${teacher.name}?`)) return;
-                            try {
-                                await api(`/api/admin/teachers/${teacher.id}/unlink`, { method: "POST" });
-                                await loadSchools(school.id);
-                                setStatus("Google account unlinked.");
-                            } catch (error) { setStatus(error.message, true); }
-                        });
-                        row.append(year, grade, classNumber, name, password, activeLabel, save, unlink, remove, classInfo);
-                    } else {
-                        row.append(year, grade, classNumber, name, password, activeLabel, save, remove, classInfo);
-                    }
-                    teacherList.append(row);
+                    types.push(teacher.type === "subject" ? "전담" : "담임");
+                    years.push(teacher.classroom?.academicYear || "");
+                    grades.push(teacher.classroom?.grade || "");
+                    classes.push(teacher.classroom?.classNumber || "");
+                    names.push(teacher.name || "");
+                    emails.push(teacher.email || "");
                 });
+                rosterType.value = types.join("\n");
+                rosterYear.value = years.join("\n");
+                rosterGrade.value = grades.join("\n");
+                rosterClass.value = classes.join("\n");
+                rosterName.value = names.join("\n");
+                rosterEmail.value = emails.join("\n");
             }
 
             async function loadSchools(preferredId = schoolSelect.value) {
@@ -623,64 +549,48 @@
                 }
             });
 
-            newTeacherPassword.addEventListener("input", () => {
-                newTeacherPassword.value = newTeacherPassword.value.replace(/\D/g, "").slice(0, 6);
-            });
-            schoolSelect.addEventListener("change", () => {
-                renderTeachers();
-                renderSchoolDirectory();
-            });
-            addSchoolButton.addEventListener("click", async () => {
-                const name = newSchoolName.value.trim();
-                if (!name) return setStatus("Enter a school name.", true);
-                try {
-                    const payload = {
-                        name: selectedNeisSchool ? selectedNeisSchool.name : name,
-                        officeCode: selectedNeisSchool ? selectedNeisSchool.officeCode : "",
-                        schoolCode: selectedNeisSchool ? selectedNeisSchool.schoolCode : "",
-                        locationName: selectedNeisSchool ? selectedNeisSchool.locationName : ""
-                    };
-                    const result = await api("/api/admin/schools", { method: "POST", body: JSON.stringify(payload) });
-                    newSchoolName.value = "";
-                    selectedNeisSchool = null;
-                    schoolSearchResults.hidden = true;
-                    await loadSchools(result.school.id);
-                    setStatus(`School added: ${result.school.name}`);
-                } catch (error) { setStatus(error.message, true); }
-            });
-            saveSchoolButton.addEventListener("click", async () => {
+            saveRosterButton.addEventListener("click", async () => {
                 const school = selectedSchool();
                 if (!school) return;
-                try {
-                    await api(`/api/admin/schools/${school.id}`, { method: "PATCH", body: JSON.stringify({ name: school.name, enabled: schoolEnabled.checked }) });
-                    await loadSchools(school.id);
-                    setStatus("School access saved.");
-                } catch (error) { setStatus(error.message, true); }
-            });
-            deleteSchoolButton.addEventListener("click", async () => {
-                await deleteSchool(selectedSchool());
-            });
-            addTeacherButton.addEventListener("click", async () => {
-                const school = selectedSchool();
-                if (!school) return;
-                if (!/^\d{6}$/.test(newTeacherPassword.value)) return setStatus("Teacher passwords must contain exactly 6 digits.", true);
-                try {
-                    await api(`/api/admin/schools/${school.id}/teachers`, {
-                        method: "POST",
-                        body: JSON.stringify({
-                            teacherType: document.querySelector("#newTeacherType") ? document.querySelector("#newTeacherType").value : "homeroom",
-                            academicYear: Number(newTeacherYear.value),
-                            grade: Number(newTeacherGrade.value),
-                            classNumber: Number(newTeacherClass.value),
-                            name: newTeacherName.value.trim(),
-                            password: newTeacherPassword.value,
-                        }),
+                
+                const getLines = (ta) => ta.value.split("\n").map(l => l.trim());
+                const types = getLines(rosterType);
+                const years = getLines(rosterYear);
+                const grades = getLines(rosterGrade);
+                const classes = getLines(rosterClass);
+                const names = getLines(rosterName);
+                const emails = getLines(rosterEmail);
+                
+                const rowCount = Math.max(types.length, years.length, grades.length, classes.length, names.length, emails.length);
+                const teachers = [];
+                
+                for (let i = 0; i < rowCount; i++) {
+                    if (!names[i] && !emails[i]) continue;
+                    teachers.push({
+                        type: (types[i] === "전담") ? "subject" : "homeroom",
+                        academicYear: years[i],
+                        grade: grades[i],
+                        classNumber: classes[i],
+                        name: names[i],
+                        email: emails[i]
                     });
-                    newTeacherName.value = "";
-                    newTeacherPassword.value = "123456";
+                }
+
+                try {
+                    saveRosterButton.disabled = true;
+                    saveRosterButton.textContent = "SAVING...";
+                    await api(`/api/admin/schools/${school.id}/teachers/roster`, {
+                        method: "PUT",
+                        body: JSON.stringify({ teachers })
+                    });
                     await loadSchools(school.id);
-                    setStatus("Teacher added.");
-                } catch (error) { setStatus(error.message, true); }
+                    setStatus("Teacher roster saved.");
+                } catch (error) {
+                    setStatus(error.message, true);
+                } finally {
+                    saveRosterButton.disabled = false;
+                    saveRosterButton.textContent = "SAVE ROSTER";
+                }
             });
 
             async function waitForGoogle() {
@@ -783,9 +693,18 @@
                 }
             }
 
-            fillYearSelect(newTeacherYear);
-            fillGradeSelect(newTeacherGrade);
             start();
+            
+            textareas.forEach((textarea) => {
+                textarea.addEventListener("scroll", (e) => {
+                    textareas.forEach((t) => { if (t !== e.target) t.scrollTop = e.target.scrollTop; });
+                }, { passive: true });
+            });
+            
+            schoolSelect.addEventListener("change", () => {
+                renderTeachers();
+                renderSchoolDirectory();
+            });
         })();
     </script>
 </body>

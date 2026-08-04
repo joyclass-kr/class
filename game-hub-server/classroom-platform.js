@@ -1252,21 +1252,25 @@ function createClassroomPlatform(options = {}) {
     res.status(201).json({ request: result.rows[0] });
   }));
 
-  router.get("/admin/privacy-requests", asyncRoute(async (req, res) => {
-    await requireAdmin(req);
+  router.get("/teacher/privacy-requests", asyncRoute(async (req, res) => {
+    await requireTeacher(req);
     const result = await pool.query(
       `SELECT r.id, r.category, r.details, r.status, r.created_at, r.updated_at, r.resolved_at,
               u.display_name, u.email, u.role
        FROM privacy_requests r
        JOIN classroom_users u ON u.id = r.user_id
+       JOIN classroom_students s ON s.user_id = u.id
+       JOIN classroom_classes c ON c.id = s.class_id
+       WHERE c.teacher_user_id = $1
        ORDER BY CASE r.status WHEN 'received' THEN 0 WHEN 'reviewing' THEN 1 ELSE 2 END, r.created_at ASC
-       LIMIT 200`
+       LIMIT 200`,
+       [req.user.id]
     );
     res.json({ requests: result.rows });
   }));
 
-  router.patch("/admin/privacy-requests/:requestId", asyncRoute(async (req, res) => {
-    await requireAdmin(req);
+  router.patch("/teacher/privacy-requests/:requestId", asyncRoute(async (req, res) => {
+    await requireTeacher(req);
     const requestId = Number(req.params.requestId);
     const status = String(req.body?.status || "").trim();
     if (!Number.isSafeInteger(requestId) || requestId < 1) {
@@ -1279,11 +1283,17 @@ function createClassroomPlatform(options = {}) {
       `UPDATE privacy_requests
        SET status = $2, updated_at = NOW(),
            resolved_at = CASE WHEN $2 IN ('completed', 'rejected') THEN NOW() ELSE NULL END
-       WHERE id = $1
+       WHERE id = $1 AND user_id IN (
+           SELECT u.id
+           FROM classroom_users u
+           JOIN classroom_students s ON s.user_id = u.id
+           JOIN classroom_classes c ON c.id = s.class_id
+           WHERE c.teacher_user_id = $3
+       )
        RETURNING id, status, updated_at, resolved_at`,
-      [requestId, status]
+      [requestId, status, req.user.id]
     );
-    if (!result.rows[0]) throw new HttpError(404, "PRIVACY_REQUEST_NOT_FOUND", "The request was not found.");
+    if (!result.rows[0]) throw new HttpError(404, "PRIVACY_REQUEST_NOT_FOUND", "The request was not found or not in your class.");
     res.json({ request: result.rows[0] });
   }));
 
@@ -1494,7 +1504,18 @@ function createClassroomPlatform(options = {}) {
     }
     const email = normalizeEmail(payload.email);
     const isAdmin = adminEmails.has(email);
-    const isTeacher = teacherEmails.has(email);
+    let isTeacher = teacherEmails.has(email);
+
+    if (!isTeacher) {
+      const dbTeacherCheck = await pool.query(
+        "SELECT id FROM classroom_teachers WHERE LOWER(google_email) = $1",
+        [email]
+      );
+      if (dbTeacherCheck.rowCount > 0) {
+        isTeacher = true;
+      }
+    }
+
     if (!payload.hd && !isAdmin) {
       throw new HttpError(403, "SCHOOL_ACCOUNT_REQUIRED", "Use the Google Workspace account issued by your school.");
     }
@@ -1527,6 +1548,13 @@ function createClassroomPlatform(options = {}) {
       ]
     );
     const user = userResult.rows[0];
+
+    if (isTeacher) {
+      await pool.query(
+        "UPDATE classroom_teachers SET user_id = $1, updated_at = NOW() WHERE LOWER(google_email) = $2",
+        [user.id, email]
+      );
+    }
 
     const sessionToken = crypto.randomBytes(32).toString("base64url");
     await pool.query(
@@ -1638,7 +1666,7 @@ function createClassroomPlatform(options = {}) {
        ORDER BY name, id`
     );
     const teachersResult = await pool.query(
-      `SELECT t.id, t.school_id, t.teacher_name, t.google_email, t.active,
+      `SELECT t.id, t.school_id, t.teacher_name, t.google_email, t.active, t.teacher_type,
               t.user_id IS NOT NULL AS linked,
               t.academic_year AS assigned_academic_year,
               t.grade AS assigned_grade,
@@ -1659,6 +1687,7 @@ function createClassroomPlatform(options = {}) {
         id: String(teacher.id),
         name: teacher.teacher_name,
         email: teacher.google_email || "",
+        type: teacher.teacher_type || "homeroom",
         active: teacher.active,
         linked: teacher.linked,
         classroom: teacher.assigned_academic_year ? {
@@ -1750,6 +1779,107 @@ function createClassroomPlatform(options = {}) {
       [name, enabled, officeCode, schoolCode, locationName, schoolId]
     );
     if (!result.rows[0]) throw new HttpError(404, "SCHOOL_NOT_FOUND", "School not found.");
+    res.json({ ok: true });
+  }));
+
+  router.put("/admin/schools/:schoolId/teachers/roster", asyncRoute(async (req, res) => {
+    await requireAdmin(req);
+    const schoolId = Number(req.params.schoolId);
+    const teachers = Array.isArray(req.body?.teachers) ? req.body.teachers : [];
+
+    if (!Number.isInteger(schoolId) || schoolId < 1) {
+      throw new HttpError(400, "INVALID_SCHOOL", "Check the school ID.");
+    }
+    if (teachers.length > 200) {
+      throw new HttpError(400, "ROSTER_TOO_LARGE", "The roster must not exceed 200 teachers.");
+    }
+
+    const currentYear = new Date().getFullYear();
+    const cleanTeachers = teachers.map((teacher) => {
+      const type = String(teacher?.type || "homeroom").trim();
+      return {
+        type,
+        academicYear: type === "homeroom" ? Number(teacher?.academicYear) : null,
+        grade: type === "homeroom" ? Number(teacher?.grade) : null,
+        classNumber: type === "homeroom" ? Number(teacher?.classNumber) : null,
+        name: String(teacher?.name || "").normalize("NFC").trim(),
+        email: normalizeEmail(teacher?.email)
+      };
+    }).filter(t => t.name || t.email);
+
+    for (const t of cleanTeachers) {
+      if (t.type !== "homeroom" && t.type !== "subject") {
+        throw new HttpError(400, "INVALID_TEACHER_TYPE", "Teacher type must be homeroom or subject.");
+      }
+      if (t.type === "homeroom") {
+        if (![currentYear - 1, currentYear, currentYear + 1].includes(t.academicYear)) {
+          throw new HttpError(400, "INVALID_ACADEMIC_YEAR", "Check the school year.");
+        }
+        if (!Number.isInteger(t.grade) || t.grade < 1 || t.grade > 12) {
+          throw new HttpError(400, "INVALID_GRADE", "Grade must be between 1 and 12.");
+        }
+        if (!Number.isInteger(t.classNumber) || t.classNumber < 1 || t.classNumber > 30) {
+          throw new HttpError(400, "INVALID_CLASS_NUMBER", "Class number must be between 1 and 30.");
+        }
+      }
+      if (!t.name || t.name.length > 30) {
+        throw new HttpError(400, "INVALID_TEACHER_NAME", "Check teacher names.");
+      }
+      if (!t.email || !t.email.includes("@")) {
+        throw new HttpError(400, "INVALID_TEACHER_EMAIL", `Check teacher email for ${t.name}.`);
+      }
+    }
+
+    const emails = cleanTeachers.map(t => t.email);
+    if (new Set(emails).size !== emails.length) {
+      throw new HttpError(400, "DUPLICATE_EMAIL", "Teacher emails must be unique within the roster.");
+    }
+
+    const client = await pool.connect();
+    try {
+      await client.query("BEGIN");
+      const schoolCheck = await client.query("SELECT 1 FROM classroom_schools WHERE id = $1", [schoolId]);
+      if (schoolCheck.rowCount === 0) {
+        throw new HttpError(404, "SCHOOL_NOT_FOUND", "School not found.");
+      }
+
+      for (const t of cleanTeachers) {
+        await client.query(
+          `INSERT INTO classroom_teachers
+             (school_id, teacher_name, password_hash, academic_year, grade, class_number, teacher_type, google_email)
+           VALUES ($1, $2, $3, $4, $5, $6, $7, $8)
+           ON CONFLICT (lower(google_email)) WHERE google_email IS NOT NULL
+           DO UPDATE SET
+             school_id = EXCLUDED.school_id,
+             teacher_name = EXCLUDED.teacher_name,
+             academic_year = EXCLUDED.academic_year,
+             grade = EXCLUDED.grade,
+             class_number = EXCLUDED.class_number,
+             teacher_type = EXCLUDED.teacher_type,
+             updated_at = NOW()`,
+          [
+            schoolId, t.name, hashStudentPassword("123456"),
+            t.academicYear, t.grade, t.classNumber, t.type, t.email
+          ]
+        );
+      }
+
+      if (emails.length > 0) {
+        await client.query(
+          `DELETE FROM classroom_teachers 
+           WHERE school_id = $1 AND (google_email IS NULL OR NOT (LOWER(google_email) = ANY($2::TEXT[])))`,
+          [schoolId, emails]
+        );
+      } else {
+        await client.query("DELETE FROM classroom_teachers WHERE school_id = $1", [schoolId]);
+      }
+      await client.query("COMMIT");
+    } catch (error) {
+      await client.query("ROLLBACK");
+      throw error;
+    } finally {
+      client.release();
+    }
     res.json({ ok: true });
   }));
 
