@@ -986,8 +986,17 @@
                 return result.slice(0, 6);
             }
 
+            function fixCommonNameTypos(name) {
+                return String(name || '')
+                    .replace(/솠|솧|홧/g, '송')
+                    .replace(/돴|돟/g, '동')
+                    .replace(/봯/g, '범');
+            }
+
             function normalizePlayerName(value) {
-                return convertQwertyToHangul(String(value || '')).replace(/[^가-힣]/g, '').slice(0, 6);
+                const converted = convertQwertyToHangul(String(value || ''));
+                const cleaned = converted.replace(/[^가-힣]/g, '');
+                return fixCommonNameTypos(cleaned).slice(0, 6);
             }
 
             function isValidPlayerName(value) {
