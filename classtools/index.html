@@ -305,6 +305,11 @@
             <button class="tool-card" id="simulate-student-btn" type="button" style="border-color: #fcd34d; background: linear-gradient(135deg, rgba(146, 64, 14, 0.4), rgba(69, 26, 3, 0.6)); text-align: left; width: 100%;">
                 <h3 class="tool-name" style="color: #fcd34d;">🕹️ 학생 화면 체험하기</h3>
             </button>
+
+            <!-- 7. 학부모 화면 체험하기 -->
+            <button class="tool-card" id="simulate-parent-btn" type="button" style="border-color: #d8b4fe; background: linear-gradient(135deg, rgba(88, 28, 135, 0.4), rgba(59, 7, 100, 0.6)); text-align: left; width: 100%;">
+                <h3 class="tool-name" style="color: #d8b4fe;">👨‍👩‍👦 학부모 화면 체험하기</h3>
+            </button>
         </div>
 
         <h2 class="section-title">수업 도구</h2>
@@ -426,6 +431,24 @@
                         alert(err.message || '체험 계정 생성 중 오류가 발생했습니다.');
                         simulateBtn.disabled = false;
                         simulateBtn.style.opacity = '1';
+                    }
+                });
+            }
+
+            const simulateParentBtn = document.querySelector('#simulate-parent-btn');
+            if (simulateParentBtn) {
+                simulateParentBtn.addEventListener('click', async () => {
+                    if (!confirm('학부모 화면으로 전환하시겠습니까?\n\n이 기능은 가상의 99번 체험 학생의 학부모 계정으로 로그인합니다.\n테스트 완료 후 알림장 화면 우측 상단의 로그아웃을 누르시면 원래 교사 계정으로 돌아올 수 있습니다.')) return;
+                    
+                    try {
+                        simulateParentBtn.disabled = true;
+                        simulateParentBtn.style.opacity = '0.5';
+                        await api('/api/teacher/simulate-parent', { method: 'POST', body: '{}' });
+                        location.href = '/notice/';
+                    } catch (err) {
+                        alert(err.message || '체험 계정 생성 중 오류가 발생했습니다.');
+                        simulateParentBtn.disabled = false;
+                        simulateParentBtn.style.opacity = '1';
                     }
                 });
             }

@@ -2919,6 +2919,62 @@ function createClassroomPlatform(options = {}) {
     res.json({ ok: true });
   }));
 
+  router.post("/teacher/simulate-parent", asyncRoute(async (req, res) => {
+    const teacher = await requireTeacher(req);
+    const classRes = await pool.query("SELECT id FROM classroom_classes WHERE teacher_user_id = $1", [teacher.id]);
+    const classInfo = classRes.rows[0];
+    if (!classInfo) {
+      throw new HttpError(400, "NO_CLASS", "학급이 배정되지 않아 체험할 수 없습니다. 관리자에게 문의하세요.");
+    }
+
+    const simName = "선생님(체험)";
+    const simNumber = "99";
+    const parentEmail = `parent-${teacher.id}@simulate.local`;
+    const simSub = `simulate-parent-${teacher.id}`;
+
+    // Ensure the student slot exists
+    let slotRes = await pool.query(
+      "SELECT id FROM classroom_students WHERE class_id = $1 AND student_number = $2",
+      [classInfo.id, simNumber]
+    );
+    if (slotRes.rowCount === 0) {
+      slotRes = await pool.query(
+        `INSERT INTO classroom_students (class_id, student_number, roster_name, gender, guardian1_email)
+         VALUES ($1, $2, $3, 'unknown', $4)
+         RETURNING id`,
+        [classInfo.id, simNumber, simName, parentEmail]
+      );
+    } else {
+      await pool.query(
+        "UPDATE classroom_students SET guardian1_email = $1 WHERE id = $2",
+        [parentEmail, slotRes.rows[0].id]
+      );
+    }
+
+    // Ensure the fake parent user exists
+    let userRes = await pool.query("SELECT id FROM classroom_users WHERE google_sub = $1", [simSub]);
+    if (userRes.rowCount === 0) {
+      userRes = await pool.query(
+        `INSERT INTO classroom_users (google_sub, email, display_name, role)
+         VALUES ($1, $2, $3, NULL)
+         RETURNING id`,
+        [simSub, parentEmail, "학부모(체험)"]
+      );
+    }
+    const userId = userRes.rows[0].id;
+
+    // Create a new session
+    const sessionToken = crypto.randomBytes(32).toString("base64url");
+    await pool.query(
+      `INSERT INTO classroom_sessions (token_hash, user_id, expires_at)
+       VALUES ($1, $2, NOW() + (24 * 3600 * INTERVAL '1 second'))`,
+      [hashSessionToken(sessionToken), userId]
+    );
+    setSessionCookie(res, sessionToken);
+
+    res.json({ ok: true });
+  }));
+
 
   router.post("/student/join", asyncRoute(async (req, res) => {
     const accessMode = await getSiteAccessMode();
