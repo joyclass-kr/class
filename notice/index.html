@@ -663,14 +663,17 @@
             statusEl.textContent = '학부모 인증 확인 중…';
 
             try {
-                await fetch('/api/student/join', {
+                const res = await fetch('/api/student/join', {
                     method: 'POST',
                     headers: { 'Content-Type': 'application/json' },
                     body: JSON.stringify({ schoolId, grade, classNumber, studentNumber, name, password })
-                }).catch(() => null);
+                });
+                const data = await res.json();
+                if (!res.ok) {
+                    throw new Error(data.message || '자녀 정보를 찾을 수 없거나 비밀번호가 올바르지 않습니다.');
+                }
 
-                localStorage.setItem('parentPlayerName', name);
-                localStorage.setItem('classPlayerName', name);
+                localStorage.setItem('parentVerifiedName', name);
                 document.getElementById('parentAuthModal').classList.remove('active');
                 checkAuthSession();
             } catch(err) {
@@ -692,7 +695,7 @@
                         return;
                     }
                 }
-                const parentName = localStorage.getItem('parentPlayerName') || localStorage.getItem('classPlayerName');
+                const parentName = localStorage.getItem('parentVerifiedName');
                 if (parentName) {
                     document.getElementById('studentChip').textContent = `${parentName} 학부모님`;
                     document.getElementById('studentChip').style.background = '#1f4730';
@@ -701,7 +704,10 @@
                 }
                 document.getElementById('parentAuthModal').classList.add('active');
                 loadNoticeSchools();
-            } catch(e) {}
+            } catch(e) {
+                document.getElementById('parentAuthModal').classList.add('active');
+                loadNoticeSchools();
+            }
         }
 
         function loadNotices() {
