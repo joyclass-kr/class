@@ -630,18 +630,24 @@
         }
 
         async function loadNoticeSchools() {
+            const sel = document.getElementById('noticeSchoolId');
+            if (!sel) return;
             try {
                 const res = await fetch('/api/schools');
                 if (!res.ok) return;
                 const data = await res.json();
-                const sel = document.getElementById('noticeSchoolId');
-                if (!sel) return;
-                sel.replaceChildren(new Option('학교 선택', ''));
-                (data.schools || []).forEach(s => sel.add(new Option(s.name, s.id)));
-                if (data.schools?.length === 1) {
-                    sel.value = String(data.schools[0].id);
+                const schools = data.schools || [];
+                const options = [new Option('학교 선택', '')];
+                schools.forEach(s => options.push(new Option(s.name, String(s.id))));
+                sel.replaceChildren(...options);
+                if (schools.length === 1) {
+                    sel.value = String(schools[0].id);
+                } else if (schools.length === 0) {
+                    sel.options[0].textContent = '등록된 학교가 없습니다';
                 }
-            } catch(e) {}
+            } catch(e) {
+                console.error('Failed to load schools:', e);
+            }
         }
 
         async function handleNoticeParentAuth(e) {
@@ -713,7 +719,9 @@
         function loadNotices() {
             console.log('Loading notices...');
         }
+        loadNoticeSchools();
         checkAuthSession();
+        window.addEventListener('DOMContentLoaded', loadNoticeSchools);
     </script>
 </body>
 </html>
