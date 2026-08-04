@@ -433,6 +433,47 @@
         </button>
     </nav>
 
+    <!-- 학부모 인증 모달 -->
+    <div id="parentAuthModal" class="modal-overlay">
+        <div class="modal-content" style="max-width: 440px; border: 1px solid var(--panel-border); background: var(--panel);">
+            <div class="modal-header" style="justify-content: center; border-bottom: 1px solid var(--panel-border); padding-bottom: 12px;">
+                <h3 style="margin: 0; color: var(--green); text-align: center;">📱 학부모 알림장 접속</h3>
+            </div>
+            <form id="noticeParentForm" onsubmit="handleNoticeParentAuth(event)" style="display: flex; flex-direction: column; gap: 12px; margin-top: 16px;">
+                <div class="form-group" style="margin: 0;">
+                    <label style="font-size: 13px; color: var(--muted); margin-bottom: 4px; display: block;">학교 선택</label>
+                    <select id="noticeSchoolId" required style="width: 100%; height: 44px; background: #0f1411; border: 1px solid var(--panel-border); color: var(--text); border-radius: 8px; padding: 0 12px; font-size: 14px;">
+                        <option value="">학교 선택</option>
+                    </select>
+                </div>
+                <div style="display: flex; gap: 8px;">
+                    <div class="form-group" style="flex: 1; margin: 0;">
+                        <label style="font-size: 13px; color: var(--muted); margin-bottom: 4px; display: block;">학년</label>
+                        <input id="noticeGrade" type="number" min="1" max="6" placeholder="학년" required style="width: 100%; height: 44px; background: #0f1411; border: 1px solid var(--panel-border); color: var(--text); border-radius: 8px; padding: 0 12px; font-size: 14px;">
+                    </div>
+                    <div class="form-group" style="flex: 1; margin: 0;">
+                        <label style="font-size: 13px; color: var(--muted); margin-bottom: 4px; display: block;">반</label>
+                        <input id="noticeClass" type="number" min="1" max="30" placeholder="반" required style="width: 100%; height: 44px; background: #0f1411; border: 1px solid var(--panel-border); color: var(--text); border-radius: 8px; padding: 0 12px; font-size: 14px;">
+                    </div>
+                    <div class="form-group" style="flex: 1; margin: 0;">
+                        <label style="font-size: 13px; color: var(--muted); margin-bottom: 4px; display: block;">학생 번호</label>
+                        <input id="noticeNumber" type="number" min="1" max="60" placeholder="번호" required style="width: 100%; height: 44px; background: #0f1411; border: 1px solid var(--panel-border); color: var(--text); border-radius: 8px; padding: 0 12px; font-size: 14px;">
+                    </div>
+                </div>
+                <div class="form-group" style="margin: 0;">
+                    <label style="font-size: 13px; color: var(--muted); margin-bottom: 4px; display: block;">자녀 성명</label>
+                    <input id="noticeStudentName" type="text" placeholder="자녀 성명 (한글 2~6자)" required style="width: 100%; height: 44px; background: #0f1411; border: 1px solid var(--panel-border); color: var(--text); border-radius: 8px; padding: 0 12px; font-size: 14px;">
+                </div>
+                <div class="form-group" style="margin: 0;">
+                    <label style="font-size: 13px; color: var(--muted); margin-bottom: 4px; display: block;">비밀번호 (초기: 123456)</label>
+                    <input id="noticePassword" type="password" maxlength="6" placeholder="비밀번호 6자리" required style="width: 100%; height: 44px; background: #0f1411; border: 1px solid var(--panel-border); color: var(--text); border-radius: 8px; padding: 0 12px; font-size: 14px;">
+                </div>
+                <p id="noticeAuthStatus" style="font-size: 13px; color: var(--danger); margin: 0; min-height: 20px; font-weight: 700;"></p>
+                <button type="submit" class="btn-primary" style="height: 48px; font-size: 15px; font-weight: 800;">📱 알림장 로그인</button>
+            </form>
+        </div>
+    </div>
+
     <!-- 출석인정결석 안내 모달 -->
     <div id="guideModal" class="modal-overlay">
         <div class="modal-content">
@@ -588,6 +629,56 @@
             e.target.reset();
         }
 
+        async function loadNoticeSchools() {
+            try {
+                const res = await fetch('/api/schools');
+                if (!res.ok) return;
+                const data = await res.json();
+                const sel = document.getElementById('noticeSchoolId');
+                if (!sel) return;
+                sel.replaceChildren(new Option('학교 선택', ''));
+                (data.schools || []).forEach(s => sel.add(new Option(s.name, s.id)));
+                if (data.schools?.length === 1) {
+                    sel.value = String(data.schools[0].id);
+                }
+            } catch(e) {}
+        }
+
+        async function handleNoticeParentAuth(e) {
+            e.preventDefault();
+            const schoolId = document.getElementById('noticeSchoolId').value;
+            const grade = Number(document.getElementById('noticeGrade').value);
+            const classNumber = Number(document.getElementById('noticeClass').value);
+            const studentNumber = Number(document.getElementById('noticeNumber').value);
+            const name = document.getElementById('noticeStudentName').value.trim();
+            const password = document.getElementById('noticePassword').value.trim();
+            const statusEl = document.getElementById('noticeAuthStatus');
+
+            if (!schoolId) { statusEl.style.color = 'var(--danger)'; statusEl.textContent = '학교를 선택하세요.'; return; }
+            if (!grade || !classNumber || !studentNumber) { statusEl.style.color = 'var(--danger)'; statusEl.textContent = '자녀 학년/반/번호를 올바르게 입력하세요.'; return; }
+            if (name.length < 2 || name.length > 6) { statusEl.style.color = 'var(--danger)'; statusEl.textContent = '자녀 성명을 올바르게 입력하세요.'; return; }
+            if (!password) { statusEl.style.color = 'var(--danger)'; statusEl.textContent = '비밀번호를 입력하세요.'; return; }
+
+            statusEl.style.color = 'var(--green)';
+            statusEl.textContent = '학부모 인증 확인 중…';
+
+            try {
+                await fetch('/api/student/join', {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify({ schoolId, grade, classNumber, studentNumber, name, password })
+                }).catch(() => null);
+
+                localStorage.setItem('parentPlayerName', name);
+                localStorage.setItem('classPlayerName', name);
+                document.getElementById('parentAuthModal').classList.remove('active');
+                checkAuthSession();
+            } catch(err) {
+                statusEl.style.color = 'var(--danger)';
+                statusEl.textContent = err.message || '인증에 실패했습니다.';
+            }
+        }
+
         async function checkAuthSession() {
             try {
                 const res = await fetch('/api/auth/me');
@@ -597,6 +688,7 @@
                         const m = data.membership;
                         document.getElementById('studentChip').textContent = `${m.schoolName} ${m.grade}학년 ${m.classNumber}반 ${m.studentNumber}번 ${m.name} 학부모님`;
                         document.getElementById('studentChip').style.background = '#1f4730';
+                        document.getElementById('parentAuthModal').classList.remove('active');
                         return;
                     }
                 }
@@ -604,7 +696,11 @@
                 if (parentName) {
                     document.getElementById('studentChip').textContent = `${parentName} 학부모님`;
                     document.getElementById('studentChip').style.background = '#1f4730';
+                    document.getElementById('parentAuthModal').classList.remove('active');
+                    return;
                 }
+                document.getElementById('parentAuthModal').classList.add('active');
+                loadNoticeSchools();
             } catch(e) {}
         }
 

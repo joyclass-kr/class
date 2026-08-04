@@ -566,23 +566,11 @@
     <audio id="bgm" src="assets/sound/index.mp3" autoplay loop preload="auto"></audio>
     <script src="assets/sound/music-control.js"></script>
     <div class="auth-panel" aria-live="polite">
-        <button id="toggleParentNotice" class="guest-card-button parent-card-button" type="button" aria-label="학부모 알림장" style="right: auto; left: 16px;">📱 학부모 알림장</button>
+        <a id="toggleParentNotice" class="guest-card-button parent-card-button" href="/notice/" aria-label="학부모 알림장" style="right: auto; left: 16px; text-decoration: none; display: inline-flex; align-items: center; justify-content: center;">📱 학부모 알림장</a>
         <button id="toggleGuestMode" class="guest-card-button" type="button" aria-label="게스트 로그인">게스트</button>
         <div id="authTitle" class="auth-title">SCHOOL ACCOUNT</div>
         <p id="authMessage" class="auth-message">Checking sign-in…</p>
         <div id="googleSignInButton" class="google-sign-in" hidden></div>
-
-        <form id="parentForm" class="join-form parent-form" hidden>
-            <select id="parentSchoolId" class="auth-input join-wide" aria-label="School">
-                <option value="">학교 선택</option>
-            </select>
-            <input id="parentGrade" class="auth-input" type="text" maxlength="2" inputmode="numeric" autocomplete="off" placeholder="GRADE" aria-label="Grade">
-            <input id="parentClass" class="auth-input" type="text" maxlength="2" inputmode="numeric" autocomplete="off" placeholder="CLASS" aria-label="Class">
-            <input id="parentStudentNumber" class="auth-input" type="text" maxlength="3" inputmode="numeric" autocomplete="off" placeholder="NUMBER" aria-label="Student number">
-            <input id="parentStudentName" class="auth-input student-name" type="text" maxlength="6" autocomplete="name" placeholder="자녀 성명" aria-label="Student name">
-            <input id="parentPasscode" class="auth-input join-wide" type="password" maxlength="6" inputmode="numeric" autocomplete="current-password" placeholder="비밀번호 6자리 (초기 123456)" aria-label="Parent passcode">
-            <button class="auth-button join-wide" type="submit">📱 학부모 알림장 접속</button>
-        </form>
 
         <form id="guestForm" class="join-form guest-form" hidden>
             <input id="guestName" class="auth-input guest-name" type="text" maxlength="6" autocomplete="off" placeholder="한글 가명 (2~6자)" aria-label="Player name">
@@ -1435,95 +1423,6 @@
                     authTitle.textContent = 'SCHOOL ACCOUNT';
                     authMessage.hidden = true;
                     googleSignInButton.hidden = false;
-                }
-            });
-            let isParentModeView = false;
-            toggleParentNotice?.addEventListener('click', async () => {
-                if (!signedInArea.hidden) return;
-                isParentModeView = !isParentModeView;
-                if (isParentModeView) {
-                    isGuestModeView = false;
-                    guestForm.hidden = true;
-                    joinForm.hidden = true;
-                    googleSignInButton.hidden = true;
-                    parentForm.hidden = false;
-                    toggleParentNotice.textContent = '로그인';
-                    authTitle.textContent = 'PARENT NOTICE ACCESS';
-                    authMessage.hidden = true;
-                    await loadSchools().catch(() => {});
-                    parentStudentNameInput.focus();
-                } else {
-                    parentForm.hidden = true;
-                    toggleParentNotice.textContent = '📱 학부모 알림장';
-                    authTitle.textContent = 'SCHOOL ACCOUNT';
-                    authMessage.hidden = true;
-                    googleSignInButton.hidden = false;
-                }
-            });
-            let isComposingParent = false;
-            parentStudentNameInput?.addEventListener('compositionstart', () => { isComposingParent = true; });
-            parentStudentNameInput?.addEventListener('compositionend', () => {
-                isComposingParent = false;
-                if (/[a-zA-Z]/.test(parentStudentNameInput.value)) {
-                    parentStudentNameInput.value = convertQwertyToHangul(parentStudentNameInput.value);
-                }
-            });
-            parentStudentNameInput?.addEventListener('input', () => {
-                if (isComposingParent) return;
-                if (/[a-zA-Z]/.test(parentStudentNameInput.value)) {
-                    parentStudentNameInput.value = convertQwertyToHangul(parentStudentNameInput.value);
-                }
-            });
-
-            parentForm?.addEventListener('submit', async (event) => {
-                event.preventDefault();
-                const schoolId = parentSchoolInput?.value;
-                const grade = Number(parentGradeInput?.value);
-                const classNumber = Number(parentClassInput?.value);
-                const studentNumber = Number(parentStudentNumberInput?.value);
-                const name = parentStudentNameInput.value.trim().replace(/[^가-힣]/g, '');
-                parentStudentNameInput.value = name;
-                const password = parentPasscodeInput.value.trim();
-
-                if (!schoolId) {
-                    setStatus('학교를 선택하세요.', true);
-                    return;
-                }
-                if (!grade || !classNumber || !studentNumber) {
-                    setStatus('자녀의 학년, 반, 번호를 올바르게 입력하세요.', true);
-                    return;
-                }
-                if (!isValidPlayerName(name)) {
-                    setStatus('자녀 성명을 한글 2~6자로 입력하세요.', true);
-                    return;
-                }
-                if (password.length < 4) {
-                    setStatus('비밀번호를 입력하세요.', true);
-                    return;
-                }
-                setStatus('학부모 알림장으로 연결 중…');
-                try {
-                    await api('/api/student/join', {
-                        method: 'POST',
-                        body: JSON.stringify({
-                            schoolId,
-                            grade,
-                            classNumber,
-                            studentNumber,
-                            name,
-                            password,
-                        }),
-                    }).catch(async () => {
-                        await api('/api/auth/guest', {
-                            method: 'POST',
-                            body: JSON.stringify({ name, passcode: '2004' }),
-                        }).catch(() => null);
-                    });
-                    localStorage.setItem('classPlayerName', name);
-                    localStorage.setItem('parentPlayerName', name);
-                    location.replace('/notice/');
-                } catch (error) {
-                    setStatus(error.message, true);
                 }
             });
             guestForm.addEventListener('submit', async (event) => {
