@@ -1,0 +1,305 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>교사 전용 업무 공간 - 가정통신문 및 출결 결재</title>
+    <style>
+        :root {
+            color-scheme: dark;
+            --bg: #0f1411;
+            --panel: #17221b;
+            --line: #29382e;
+            --ink: #f0f4f1;
+            --muted: #9ba89f;
+            --green: #75d69f;
+            --amber: #f0bd64;
+            --danger: #ff7b72;
+        }
+
+        * { box-sizing: border-box; }
+
+        body {
+            margin: 0;
+            padding: 30px 20px;
+            background: var(--bg);
+            color: var(--ink);
+            font-family: Inter, -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+        }
+
+        main {
+            max-width: 1050px;
+            margin: 0 auto;
+        }
+
+        .header-bar {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            margin-bottom: 24px;
+            border-bottom: 1px solid var(--line);
+            padding-bottom: 16px;
+        }
+
+        .header-title {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+        }
+
+        h1 { margin: 0; font-size: 22px; color: var(--green); }
+        .role-tag { font-size: 12px; padding: 3px 10px; background: #1f4730; color: var(--green); border-radius: 99px; border: 1px solid var(--green); }
+
+        .teacher-info {
+            font-size: 14px;
+            color: var(--muted);
+        }
+
+        .nav-tabs {
+            display: flex;
+            gap: 10px;
+            margin-bottom: 20px;
+        }
+
+        .tab-btn {
+            padding: 12px 20px;
+            background: var(--panel);
+            border: 1px solid var(--line);
+            color: var(--muted);
+            border-radius: 10px;
+            font-weight: 600;
+            font-size: 14px;
+            cursor: pointer;
+        }
+
+        .tab-btn.active {
+            background: var(--green);
+            color: #0c140e;
+            border-color: var(--green);
+        }
+
+        .panel-card {
+            background: var(--panel);
+            border: 1px solid var(--line);
+            border-radius: 16px;
+            padding: 24px;
+            margin-bottom: 20px;
+        }
+
+        .form-group {
+            margin-bottom: 16px;
+        }
+
+        label {
+            display: block;
+            font-size: 13px;
+            color: var(--muted);
+            margin-bottom: 6px;
+            font-weight: bold;
+        }
+
+        input[type="text"], select, textarea {
+            width: 100%;
+            padding: 12px 14px;
+            background: #0a0e0b;
+            border: 1px solid var(--line);
+            border-radius: 10px;
+            color: #fff;
+            font-family: inherit;
+            font-size: 14px;
+        }
+
+        textarea { min-height: 110px; resize: vertical; }
+
+        .btn-action {
+            padding: 12px 24px;
+            background: var(--green);
+            color: #0c140e;
+            border: none;
+            border-radius: 10px;
+            font-weight: 800;
+            font-size: 15px;
+            cursor: pointer;
+        }
+
+        .btn-secondary {
+            padding: 8px 14px;
+            background: #233328;
+            color: var(--green);
+            border: 1px solid var(--line);
+            border-radius: 8px;
+            cursor: pointer;
+            font-size: 13px;
+            font-weight: 600;
+        }
+
+        .item-row {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            padding: 16px;
+            border: 1px solid var(--line);
+            border-radius: 12px;
+            margin-bottom: 12px;
+            background: rgba(0,0,0,0.25);
+        }
+
+        .badge {
+            font-size: 11px;
+            padding: 4px 9px;
+            border-radius: 6px;
+            font-weight: 700;
+        }
+
+        .badge.pending { background: var(--amber); color: #000; }
+        .badge.approved { background: var(--green); color: #000; }
+
+        .hidden { display: none !important; }
+    </style>
+</head>
+<body>
+    <main>
+        <div class="header-bar">
+            <div class="header-title">
+                <h1>👩‍🏫 선생님 전용 업무 공간</h1>
+                <span class="role-tag">교사 전용</span>
+            </div>
+            <div class="teacher-info">
+                서울계상초등학교 | 가정통신문 및 출결 결재 관리
+            </div>
+        </div>
+
+        <div class="nav-tabs">
+            <button class="tab-btn active" onclick="switchSection('send', this)">📢 가정통신문 작성/발송</button>
+            <button class="tab-btn" onclick="switchSection('quick', this)">🤒 실시간 출결 예고 접수함</button>
+            <button class="tab-btn" onclick="switchSection('approval', this)">📝 결석계 & 체험학습 전자 결재함</button>
+        </div>
+
+        <!-- 1. 가정통신문 작성/발송 -->
+        <section id="sec-send">
+            <div class="panel-card">
+                <h2 style="font-size:18px; margin:0 0 16px; color:var(--green);">📢 가정통신문 신규 작성 및 학부모 알림 발송</h2>
+                <form id="noticeSendForm" onsubmit="handleNoticeSend(event)">
+                    <div class="form-group">
+                        <label>가정통신문 제목</label>
+                        <input type="text" id="nTitle" placeholder="예: 2026학년도 2학기 현장체험학습 안내" required>
+                    </div>
+
+                    <div style="display:flex; gap:16px;">
+                        <div class="form-group" style="flex:1;">
+                            <label>수신 대상 범위</label>
+                            <select id="nTargetType" onchange="toggleStudentTargetInput()">
+                                <option value="all">🌐 전교생 학부모 전체</option>
+                                <option value="grade">🏫 특정 학년 전체 (예: 3학년 전체)</option>
+                                <option value="class">🏫 내 담임 학급 전체</option>
+                                <option value="students">🎯 전교생 중 특정 학생(들) 자유 지정 (기초학력/방과후 등)</option>
+                            </select>
+                        </div>
+                        <div class="form-group" style="flex:1;">
+                            <label>작성 형태</label>
+                            <select id="nContentType" onchange="toggleContentMode()">
+                                <option value="pdf">📄 이미 작성된 PDF 파일 업로드</option>
+                                <option value="text">✍️ 직접 텍스트 작성</option>
+                            </select>
+                        </div>
+                    </div>
+
+                    <div id="targetStudentBox" class="form-group hidden">
+                        <label>지정 학생 (학년-반-번호, 쉼표로 구분)</label>
+                        <input type="text" id="nTargetStudents" placeholder="예: 3-2-5, 3-2-12, 4-1-8">
+                    </div>
+
+                    <div id="pdfBox" class="form-group">
+                        <label>PDF 파일 선택 (HWP/Word에서 저장한 PDF 파일)</label>
+                        <input type="file" id="nPdfFile" accept="application/pdf">
+                    </div>
+
+                    <div id="textBox" class="form-group hidden">
+                        <label>가정통신문 본문 내용</label>
+                        <textarea id="nTextBody" placeholder="학부모님께 전달할 가정통신문 안내 내용을 작성하세요."></textarea>
+                    </div>
+
+                    <button type="submit" class="btn-action">🚀 학부모 모바일 앱으로 가정통신문 발송 및 알림 전송</button>
+                </form>
+            </div>
+        </section>
+
+        <!-- 2. 출결 사전 예고 -->
+        <section id="sec-quick" class="hidden">
+            <div class="panel-card">
+                <h2 style="font-size:18px; margin:0 0 16px; color:var(--green);">🤒 학부모 당일 출결 예고 접수 목록</h2>
+                <div id="quickList">
+                    <div class="item-row">
+                        <div>
+                            <strong>3학년 2반 5번 김철수</strong> <span class="badge pending">지각 예고</span>
+                            <p style="margin:6px 0 0; color:var(--muted); font-size:14px;">
+                                "아이가 감기 기운으로 병원 들렀다가 2교시(10:00)에 등교시킵니다."
+                            </p>
+                        </div>
+                        <span style="font-size:12px; color:var(--muted);">오늘 08:20 접수</span>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- 3. 결석계 & 체험학습 결재함 -->
+        <section id="sec-approval" class="hidden">
+            <div class="panel-card">
+                <h2 style="font-size:18px; margin:0 0 16px; color:var(--green);">📝 결석계 및 교외체험학습 전자 결재함</h2>
+                <div id="approvalList">
+                    <div class="item-row">
+                        <div>
+                            <span class="badge pending">결재 대기</span>
+                            <strong style="margin-left:8px; font-size:16px;">3학년 2반 12번 이영희</strong> (결석계 - 질병)
+                            <p style="margin:6px 0 0; color:var(--muted); font-size:13px;">
+                                결석 기간: 2026-08-05 ~ 2026-08-06 (2일간) | 학부모 서명 완료 | 진단서 사진 첨부됨
+                            </p>
+                        </div>
+                        <div style="display:flex; gap:8px;">
+                            <button class="btn-secondary" onclick="openPrintForm('absence', '1')">🖨️ 서울계상초 A4 서식 인쇄</button>
+                            <button class="btn-action" style="padding:8px 16px; font-size:14px;" onclick="approveDoc(this)">승인</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+    </main>
+
+    <script>
+        function switchSection(secId, btn) {
+            document.querySelectorAll('main > section').forEach(s => s.classList.add('hidden'));
+            document.getElementById('sec-' + secId).classList.remove('hidden');
+            document.querySelectorAll('.tab-btn').forEach(b => b.classList.remove('active'));
+            btn.classList.add('active');
+        }
+
+        function toggleStudentTargetInput() {
+            const val = document.getElementById('nTargetType').value;
+            document.getElementById('targetStudentBox').classList.toggle('hidden', val !== 'students');
+        }
+
+        function toggleContentMode() {
+            const val = document.getElementById('nContentType').value;
+            document.getElementById('pdfBox').classList.toggle('hidden', val !== 'pdf');
+            document.getElementById('textBox').classList.toggle('hidden', val !== 'text');
+        }
+
+        function openPrintForm(type, docId) {
+            window.open(`/notice/print-templates.html?type=${type}&id=${docId}`, '_blank', 'width=900,height=1000');
+        }
+
+        function handleNoticeSend(e) {
+            e.preventDefault();
+            alert('학부모 모바일 앱으로 가정통신문이 발송되었습니다.');
+            e.target.reset();
+        }
+
+        function approveDoc(btn) {
+            btn.textContent = '승인 완료';
+            btn.disabled = true;
+            btn.style.background = '#284733';
+            btn.style.color = '#75d69f';
+        }
+    </script>
+</body>
+</html>

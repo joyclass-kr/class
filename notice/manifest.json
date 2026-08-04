@@ -1,0 +1,17 @@
+{
+  "name": "계상초 가정통신문 및 모바일 알림장",
+  "short_name": "계상초 알림장",
+  "description": "서울계상초등학교 가정통신문, 출결예고, 결석계 및 교외체험학습 모바일 서비스",
+  "start_url": "/notice/index.html",
+  "display": "standalone",
+  "background_color": "#171f1a",
+  "theme_color": "#101512",
+  "icons": [
+    {
+      "src": "/favicon.png",
+      "sizes": "192x192 512x512",
+      "type": "image/png",
+      "purpose": "any maskable"
+    }
+  ]
+}
