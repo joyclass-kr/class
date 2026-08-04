@@ -41,6 +41,12 @@
             z-index: -1;
             background: #24344b var(--index-background-image) center / cover no-repeat;
             pointer-events: none;
+            transition: filter 0.3s ease, -webkit-filter 0.3s ease;
+        }
+
+        body.content-access-editing::before {
+            filter: brightness(0.2) blur(8px);
+            -webkit-filter: brightness(0.2) blur(8px);
         }
 
         .music-control {
@@ -484,30 +490,6 @@
             display: none !important;
         }
 
-        .mode-overlay {
-            position: fixed;
-            inset: 0;
-            background: rgba(0, 0, 0, 0.88);
-            backdrop-filter: blur(6px);
-            -webkit-backdrop-filter: blur(6px);
-            z-index: 10;
-            opacity: 0;
-            pointer-events: none;
-            transition: opacity 0.3s ease;
-        }
-
-        body.content-access-editing .mode-overlay {
-            opacity: 1;
-        }
-
-        body.content-access-editing .top-nav-bar,
-        body.content-access-editing .auth-panel,
-        body.content-access-editing .hub-content,
-        body.content-access-editing .policy-footer {
-            position: relative;
-            z-index: 20;
-        }
-
         body.content-access-editing #contentAccessButton {
             background: linear-gradient(#2e7d32, #1b5e20);
             color: #ffffff;
@@ -583,7 +565,6 @@
     </script>
     <audio id="bgm" src="assets/sound/index.mp3" autoplay loop preload="auto"></audio>
     <script src="assets/sound/music-control.js"></script>
-    <div id="modeOverlay" class="mode-overlay"></div>
     <div class="auth-panel" aria-live="polite">
         <button id="toggleGuestMode" class="guest-card-button" type="button" aria-label="게스트 로그인">게스트</button>
         <div id="authTitle" class="auth-title">SCHOOL ACCOUNT</div>
