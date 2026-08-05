@@ -902,7 +902,7 @@ function createClassroomPlatform(options = {}) {
       [user.id]
     );
     const profile = result.rows[0];
-    if (!profile || (profile.teacher_type !== "교장" && profile.teacher_type !== "교감")) {
+    if (!profile || !["관리자", "교장", "교감"].includes(profile.teacher_type)) {
       throw new HttpError(403, "SCHOOL_ADMIN_REQUIRED", "This page is for school administrators only.");
     }
     return { user, profile };
@@ -1956,8 +1956,8 @@ function createClassroomPlatform(options = {}) {
     }).filter(t => t.name || t.email);
 
     for (const t of cleanTeachers) {
-      if (t.type !== "교장" && t.type !== "교감" && t.type !== "교직원") {
-        throw new HttpError(400, "INVALID_TEACHER_TYPE", `구분은 교장, 교감, 교직원 중 하나여야 합니다. (입력값: ${t.type})`);
+      if (!["관리자", "교직원", "교장", "교감"].includes(t.type)) {
+        throw new HttpError(400, "INVALID_TEACHER_TYPE", `구분은 '관리자' 또는 '교직원'이어야 합니다. (입력값: ${t.type})`);
       }
       if (!t.name || t.name.length > 30) {
         throw new HttpError(400, "INVALID_TEACHER_NAME", "성명을 확인해 주세요.");
@@ -3462,11 +3462,14 @@ function createClassroomPlatform(options = {}) {
   router.put("/school/students", asyncRoute(async (req, res) => {
     const teacher = await requireTeacher(req);
     const teacherProfile = await pool.query(
-      `SELECT school_id FROM classroom_teachers WHERE user_id = $1 AND active = TRUE`,
+      `SELECT school_id, teacher_type FROM classroom_teachers WHERE user_id = $1 AND active = TRUE`,
       [teacher.id]
     );
     if (!teacherProfile.rows[0]) throw new HttpError(403, "TEACHER_REQUIRED", "교사 계정이 필요합니다.");
-    const schoolId = teacherProfile.rows[0].school_id;
+    const { school_id: schoolId, teacher_type: teacherType } = teacherProfile.rows[0];
+    if (!["관리자", "교장", "교감"].includes(teacherType)) {
+      throw new HttpError(403, "ADMIN_ONLY", "전교생 명단 편집 권한은 학교 관리자만 갖고 있습니다.");
+    }
 
     const { students, year } = req.body;
     const academicYear = Number(year) || new Date().getFullYear();
@@ -3538,12 +3541,13 @@ function createClassroomPlatform(options = {}) {
   router.get("/school/settings", asyncRoute(async (req, res) => {
     const teacher = await requireTeacher(req);
     const tp = await pool.query(
-      `SELECT school_id FROM classroom_teachers WHERE user_id = $1 AND active = TRUE`,
+      `SELECT school_id, teacher_type FROM classroom_teachers WHERE user_id = $1 AND active = TRUE`,
       [teacher.id]
     );
     if (!tp.rows[0]) throw new HttpError(403, "TEACHER_REQUIRED", "교사 계정이 필요합니다.");
     const schoolId = tp.rows[0].school_id;
     const year = Number(req.query.year) || new Date().getFullYear();
+    const isAdmin = ["관리자", "교장", "교감"].includes(tp.rows[0].teacher_type);
 
     const [clubs, afterschool, shuttle] = await Promise.all([
       pool.query(`SELECT id, club_name, sort_order FROM school_clubs WHERE school_id = $1 AND academic_year = $2 ORDER BY sort_order, id`, [schoolId, year]),
@@ -3555,6 +3559,7 @@ function createClassroomPlatform(options = {}) {
       clubs: clubs.rows,
       afterschool: afterschool.rows,
       shuttleSlots: shuttle.rows,
+      isAdmin,
       year
     });
   }));
@@ -3567,8 +3572,8 @@ function createClassroomPlatform(options = {}) {
       [teacher.id]
     );
     if (!tp.rows[0]) throw new HttpError(403, "TEACHER_REQUIRED", "교사 계정이 필요합니다.");
-    if (!["교장", "교감"].includes(tp.rows[0].teacher_type))
-      throw new HttpError(403, "ADMIN_ONLY", "학교 설정은 교장·교감만 변경할 수 있습니다.");
+    if (!["관리자", "교장", "교감"].includes(tp.rows[0].teacher_type))
+      throw new HttpError(403, "ADMIN_ONLY", "학교 설정은 학교 관리자만 변경할 수 있습니다.");
     const schoolId = tp.rows[0].school_id;
     const year = Number(req.body.year) || new Date().getFullYear();
 

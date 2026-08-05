@@ -428,10 +428,10 @@
             <div style="display:flex;align-items:flex-start;justify-content:space-between;gap:12px;flex-wrap:wrap;">
                 <div>
                     <div class="card-title">전교생 명단</div>
-                    <div class="card-desc">같은 학교 교직원 모두가 조회·편집할 수 있습니다.</div>
+                    <div class="card-desc" id="rosterDesc">전교생 통합 명단입니다. (명단 수정은 학교 관리자만 가능합니다)</div>
                 </div>
-                <div style="display:flex;gap:8px;flex-wrap:wrap;">
-                    <button class="btn btn-secondary btn-sm" onclick="togglePasteSection()">📥 붙여넣기로 입력</button>
+                <div style="display:flex;gap:8px;flex-wrap:wrap;" id="rosterAdminActions">
+                    <button class="btn btn-secondary btn-sm" id="pasteSectionBtn" onclick="togglePasteSection()">📥 붙여넣기로 입력</button>
                     <button class="btn btn-primary btn-sm" id="saveRosterBtn" onclick="saveRoster()" style="display:none;">💾 저장</button>
                 </div>
             </div>
@@ -487,8 +487,8 @@
     <div class="panel" id="panel-settings">
         <div class="card">
             <div class="card-title">학교 설정</div>
-            <div class="card-desc">교장·교감만 설정을 변경할 수 있습니다. 변경 후 저장 버튼을 눌러주세요.</div>
-            <div style="display:flex;justify-content:flex-end;margin-bottom:16px;">
+            <div class="card-desc" id="settingsDesc">동아리, 방과후, 셔틀 슬롯 설정입니다. (변경 권한은 학교 관리자 전용)</div>
+            <div style="display:flex;justify-content:flex-end;margin-bottom:16px;" id="settingsAdminActions">
                 <button class="btn btn-primary btn-sm" id="saveSettingsBtn" onclick="saveSettings()">💾 설정 저장</button>
             </div>
             <p class="status-msg" id="settingsStatus"></p>
@@ -587,6 +587,7 @@
     let schoolSettings = { clubs: [], afterschool: [], shuttleSlots: [] };
     let allStudents = [];
     let parsedStudents = null; // 붙여넣기 파싱 결과
+    let isSchoolAdmin = false;
 
     // ─── API ───────────────────────────────────────────────────
     async function api(path, opts = {}) {
@@ -843,7 +844,17 @@
         setStatus("settingsStatus", "");
         try {
             const data = await api(`/api/school/settings?year=${currentYear}`);
+            isSchoolAdmin = Boolean(data.isAdmin);
             schoolSettings = { clubs: data.clubs || [], afterschool: data.afterschool || [], shuttleSlots: data.shuttleSlots || [] };
+            
+            // Apply admin vs staff UI controls
+            document.getElementById("pasteSectionBtn").style.display = isSchoolAdmin ? "inline-flex" : "none";
+            document.getElementById("settingsAdminActions").style.display = isSchoolAdmin ? "flex" : "none";
+            document.querySelectorAll(".add-item-row").forEach(el => el.style.display = isSchoolAdmin ? "flex" : "none");
+            if (!isSchoolAdmin) {
+                setStatus("settingsStatus", "🔒 학교 설정 변경 권한은 학교 관리자에게만 부여되어 있습니다.");
+            }
+
             renderSettingsList("clubList", schoolSettings.clubs, "clubs", "club_name");
             renderSettingsList("afterschoolList", schoolSettings.afterschool, "afterschool", "program_name");
             renderSettingsList("shuttleList", schoolSettings.shuttleSlots, "shuttleSlots", "slot_name");
@@ -859,9 +870,9 @@
             ? `<li style="color:var(--muted);font-size:12px;justify-content:center;border:none;background:none;">목록이 비어 있습니다.</li>`
             : items.map((item, i) => `
                 <li>
-                    <span class="drag-handle">⠿</span>
+                    ${isSchoolAdmin ? '<span class="drag-handle">⠿</span>' : ''}
                     <span class="item-name">${item[nameKey] || item.name || item}</span>
-                    <button class="delete-item-btn" onclick="deleteSettingItem('${key}','${nameKey}',${i})" title="삭제">×</button>
+                    ${isSchoolAdmin ? `<button class="delete-item-btn" onclick="deleteSettingItem('${key}','${nameKey}',${i})" title="삭제">×</button>` : ''}
                 </li>`).join("");
     }
 

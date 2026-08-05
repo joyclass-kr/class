@@ -264,11 +264,11 @@
                         <button class="action-button danger-button" id="deleteSchoolButton" type="button">DELETE SCHOOL</button>
                     </div>
                     <div id="teacherManagement" hidden>
-                        <p style="margin:0 0 10px;color:var(--muted);font-size:12px;">구분: 교장 / 교감 / 교직원 중 하나를 입력하세요.</p>
+                        <p style="margin:0 0 10px;color:var(--muted);font-size:12px;">구분: 관리자 / 교직원 중 하나를 입력하세요.</p>
                         <div class="paste-grid">
                             <div class="field">
                                 <div class="field-head"><label>구분</label></div>
-                                <textarea id="rosterType" class="roster-input" placeholder="교장&#10;교감&#10;교직원" wrap="off" spellcheck="false"></textarea>
+                                <textarea id="rosterType" class="roster-input" placeholder="관리자&#10;교직원" wrap="off" spellcheck="false"></textarea>
                             </div>
                             <div class="field">
                                 <div class="field-head"><label>성명</label></div>
@@ -439,8 +439,7 @@
                 
                 let types = [], names = [], emails = [];
                 school.teachers.forEach((teacher) => {
-                    if (teacher.type === "교장") types.push("교장");
-                    else if (teacher.type === "교감") types.push("교감");
+                    if (["관리자", "교장", "교감"].includes(teacher.type)) types.push("관리자");
                     else types.push("교직원");
                     names.push(teacher.name || "");
                     emails.push(teacher.email || "");
@@ -572,11 +571,10 @@
                     if (!names[i] && !emails[i]) continue;
                     const rawType = (types[i] || "").trim();
                     let parsedType = "교직원";
-                    if (rawType === "교장") parsedType = "교장";
-                    else if (rawType === "교감") parsedType = "교감";
+                    if (["관리자", "교장", "교감"].includes(rawType)) parsedType = "관리자";
                     else if (rawType === "교직원") parsedType = "교직원";
                     else if (rawType) {
-                        setStatus(`구분 오류: "${rawType}"은 교장/교감/교직원 중 하나여야 합니다.`, true);
+                        setStatus(`구분 오류: "${rawType}"은 '관리자' 또는 '교직원'이어야 합니다.`, true);
                         return;
                     }
 
