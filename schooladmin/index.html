@@ -227,6 +227,30 @@
                             <label><input type="checkbox" name="targetGrade" value="6"> 6학년</label>
                         </div>
                     </div>
+                    <div class="form-row" id="eventPeriodsRow">
+                        <label>
+                            <span>기본 행사 인정 시수</span>
+                            <select id="annualDefaultPeriodsSelect" class="form-select">
+                                <option value="6">6교시 (기본 전일제)</option>
+                                <option value="5">5교시 (단축 수업)</option>
+                                <option value="4">4교시 (반일제/오전 수업)</option>
+                                <option value="3">3교시</option>
+                                <option value="2">2교시 (의식 행사)</option>
+                                <option value="1">1교시</option>
+                            </select>
+                        </label>
+                    </div>
+                    <div class="form-row" id="gradePeriodsOverrideRow" style="flex-direction:column; align-items:flex-start; gap:8px; margin-top:8px;">
+                        <span class="form-label-text" style="font-weight:800; font-size:0.9rem;">⏱️ 학년별 행사 인정 교시(시수) 개별 지정:</span>
+                        <div class="grade-periods-inputs" style="display:flex; flex-wrap:wrap; gap:12px; align-items:center;">
+                            <label style="display:flex; align-items:center; gap:4px; font-size:0.88rem; font-weight:700;">1학년: <input type="number" id="gradePeriod1" value="4" min="0" max="8" style="width:50px; padding:4px; border-radius:6px; border:1px solid rgba(255,255,255,0.2); background:rgba(0,0,0,0.3); color:#fff; text-align:center;">교시</label>
+                            <label style="display:flex; align-items:center; gap:4px; font-size:0.88rem; font-weight:700;">2학년: <input type="number" id="gradePeriod2" value="4" min="0" max="8" style="width:50px; padding:4px; border-radius:6px; border:1px solid rgba(255,255,255,0.2); background:rgba(0,0,0,0.3); color:#fff; text-align:center;">교시</label>
+                            <label style="display:flex; align-items:center; gap:4px; font-size:0.88rem; font-weight:700;">3학년: <input type="number" id="gradePeriod3" value="5" min="0" max="8" style="width:50px; padding:4px; border-radius:6px; border:1px solid rgba(255,255,255,0.2); background:rgba(0,0,0,0.3); color:#fff; text-align:center;">교시</label>
+                            <label style="display:flex; align-items:center; gap:4px; font-size:0.88rem; font-weight:700;">4학년: <input type="number" id="gradePeriod4" value="5" min="0" max="8" style="width:50px; padding:4px; border-radius:6px; border:1px solid rgba(255,255,255,0.2); background:rgba(0,0,0,0.3); color:#fff; text-align:center;">교시</label>
+                            <label style="display:flex; align-items:center; gap:4px; font-size:0.88rem; font-weight:700;">5학년: <input type="number" id="gradePeriod5" value="6" min="0" max="8" style="width:50px; padding:4px; border-radius:6px; border:1px solid rgba(255,255,255,0.2); background:rgba(0,0,0,0.3); color:#fff; text-align:center;">교시</label>
+                            <label style="display:flex; align-items:center; gap:4px; font-size:0.88rem; font-weight:700;">6학년: <input type="number" id="gradePeriod6" value="6" min="0" max="8" style="width:50px; padding:4px; border-radius:6px; border:1px solid rgba(255,255,255,0.2); background:rgba(0,0,0,0.3); color:#fff; text-align:center;">교시</label>
+                        </div>
+                    </div>
                     <div class="form-row align-end">
                         <label class="flex-grow">
                             <span>상세 설명 (선택)</span>

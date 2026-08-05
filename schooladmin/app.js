@@ -170,6 +170,17 @@ document.addEventListener('DOMContentLoaded', () => {
             if (gradeSelectionRow) gradeSelectionRow.hidden = false;
         }
 
+        const eventPeriodsRow = document.getElementById('eventPeriodsRow');
+        const gradePeriodsOverrideRow = document.getElementById('gradePeriodsOverrideRow');
+
+        if (annualCategorySelect) {
+            annualCategorySelect.addEventListener('change', (e) => {
+                const isDiscretionary = e.target.value === 'DISCRETIONARY';
+                if (eventPeriodsRow) eventPeriodsRow.style.display = isDiscretionary ? 'none' : 'flex';
+                if (gradePeriodsOverrideRow) gradePeriodsOverrideRow.style.display = isDiscretionary ? 'none' : 'flex';
+            });
+        }
+
         if (annualTargetScopeSelect) {
             annualTargetScopeSelect.addEventListener('change', (e) => {
                 updateGradeCheckboxesByScope(e.target.value);
@@ -701,11 +712,21 @@ document.addEventListener('DOMContentLoaded', () => {
                 targetText = `🏫 ${grades}학년`;
             }
 
+            let periodText = '';
+            if (item.category === 'DISCRETIONARY') {
+                periodText = ' <span style="font-size:0.82rem; color:var(--text-muted);">(0교시)</span>';
+            } else if (item.grade_periods && Object.keys(item.grade_periods).length > 0) {
+                const gp = item.grade_periods;
+                periodText = ` <span style="font-size:0.82rem; color:var(--primary); font-weight:700;">(${gp['1'] || 6}/${gp['2'] || 6}/${gp['3'] || 6}/${gp['4'] || 6}/${gp['5'] || 6}/${gp['6'] || 6}교시)</span>`;
+            } else if (item.event_periods) {
+                periodText = ` <span style="font-size:0.82rem; color:var(--primary); font-weight:700;">(${item.event_periods}교시)</span>`;
+            }
+
             tr.innerHTML = `
                 <td style="font-weight:600;">${item.event_date}</td>
                 <td><span class="badge category-${item.category.toLowerCase()}">${categoryLabels[item.category] || item.category}</span></td>
                 <td><span class="badge scope-${item.target_scope.toLowerCase()}">${targetText}</span></td>
-                <td style="font-weight:600;">${escapeHtml(item.title)}</td>
+                <td style="font-weight:600;">${escapeHtml(item.title)}${periodText}</td>
                 <td>${escapeHtml(item.details || '-')}</td>
                 <td>
                     <button class="delete-schedule-btn text-button danger" data-id="${item.id}">삭제</button>
@@ -743,13 +764,23 @@ document.addEventListener('DOMContentLoaded', () => {
             }
         }
 
+        const eventPeriods = category === 'DISCRETIONARY' ? 0 : Number(document.getElementById('annualDefaultPeriodsSelect')?.value || 6);
+        const gradePeriods = {
+            1: Number(document.getElementById('gradePeriod1')?.value || eventPeriods),
+            2: Number(document.getElementById('gradePeriod2')?.value || eventPeriods),
+            3: Number(document.getElementById('gradePeriod3')?.value || eventPeriods),
+            4: Number(document.getElementById('gradePeriod4')?.value || eventPeriods),
+            5: Number(document.getElementById('gradePeriod5')?.value || eventPeriods),
+            6: Number(document.getElementById('gradePeriod6')?.value || eventPeriods)
+        };
+
         try {
             await api('/api/school-admin/annual-schedules', {
                 method: 'POST',
                 headers: { 'Content-Type': 'application/json' },
                 body: JSON.stringify({
                     academicYear: selectedAcademicYear,
-                    date, title, category, targetScope, targetGrades, details
+                    date, title, category, targetScope, targetGrades, eventPeriods, gradePeriods, details
                 })
             });
 

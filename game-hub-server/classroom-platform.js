@@ -806,6 +806,8 @@ function createClassroomPlatform(options = {}) {
       )`,
       `ALTER TABLE school_annual_schedules DROP CONSTRAINT IF EXISTS school_annual_schedules_category_check`,
       `ALTER TABLE school_annual_schedules ADD CONSTRAINT school_annual_schedules_category_check CHECK (category IN ('EVENT', 'HOLIDAY', 'DISCRETIONARY', 'EXAM', 'TRIP', 'OTHER'))`,
+      `ALTER TABLE school_annual_schedules ADD COLUMN IF NOT EXISTS event_periods INTEGER NOT NULL DEFAULT 6`,
+      `ALTER TABLE school_annual_schedules ADD COLUMN IF NOT EXISTS grade_periods JSONB NOT NULL DEFAULT '{}'::jsonb`,
       `CREATE INDEX IF NOT EXISTS school_annual_schedules_lookup_idx
         ON school_annual_schedules (school_id, academic_year, event_date)`,
       `CREATE TABLE IF NOT EXISTS school_vacation_settings (
@@ -3521,7 +3523,10 @@ function createClassroomPlatform(options = {}) {
     const { profile } = await requireSchoolAdmin(req);
     const year = Number(req.query.academicYear || new Date().getFullYear());
     const result = await pool.query(
-      `SELECT id, academic_year, event_date::TEXT AS event_date, title, category, target_scope, target_grades, event_type, details, created_at
+      `SELECT id, academic_year, event_date::TEXT AS event_date, title, category, target_scope, target_grades, event_type,
+              COALESCE(event_periods, 6) AS event_periods,
+              COALESCE(grade_periods, '{}'::jsonb) AS grade_periods,
+              details, created_at
        FROM school_annual_schedules
        WHERE school_id = $1 AND academic_year = $2
        ORDER BY event_date, id`,
@@ -3543,6 +3548,8 @@ function createClassroomPlatform(options = {}) {
     const targetScope = String(req.body?.targetScope || "ALL").toUpperCase();
     const targetGrades = Array.isArray(req.body?.targetGrades) ? req.body.targetGrades.map(Number).filter(n => n >= 1 && n <= 12) : [];
     const eventType = String(req.body?.eventType || "FULL").toUpperCase();
+    const eventPeriods = Math.min(8, Math.max(0, Number(req.body?.eventPeriods || (category === 'DISCRETIONARY' ? 0 : 6))));
+    const gradePeriods = typeof req.body?.gradePeriods === 'object' && req.body?.gradePeriods !== null ? req.body.gradePeriods : {};
     const details = String(req.body?.details || "").normalize("NFC").trim();
 
     if (!/^\d{4}-\d{2}-\d{2}$/.test(date)) {
@@ -3554,10 +3561,10 @@ function createClassroomPlatform(options = {}) {
 
     const result = await pool.query(
       `INSERT INTO school_annual_schedules
-       (school_id, academic_year, event_date, title, category, target_scope, target_grades, event_type, details, created_by)
-       VALUES ($1, $2, $3::DATE, $4, $5, $6, $7, $8, $9, $10)
-       RETURNING id, academic_year, event_date::TEXT AS event_date, title, category, target_scope, target_grades, event_type, details`,
-      [profile.school_id, academicYear, date, title, category, targetScope, targetGrades, eventType, details, user.id]
+       (school_id, academic_year, event_date, title, category, target_scope, target_grades, event_type, event_periods, grade_periods, details, created_by)
+       VALUES ($1, $2, $3::DATE, $4, $5, $6, $7, $8, $9, $10::jsonb, $11, $12)
+       RETURNING id, academic_year, event_date::TEXT AS event_date, title, category, target_scope, target_grades, event_type, event_periods, grade_periods, details`,
+      [profile.school_id, academicYear, date, title, category, targetScope, targetGrades, eventType, eventPeriods, JSON.stringify(gradePeriods), details, user.id]
     );
 
     res.status(201).json({ schedule: result.rows[0] });
