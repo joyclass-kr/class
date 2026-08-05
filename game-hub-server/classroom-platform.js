@@ -986,13 +986,19 @@ function createClassroomPlatform(options = {}) {
   async function studentMembership(userId) {
     const result = await pool.query(
       `SELECT s.student_number, s.roster_name,
+              s.academic_year, s.grade, s.class_number,
+              sc.name AS school_name
+       FROM school_students s
+       JOIN classroom_schools sc ON sc.id = s.school_id
+       WHERE s.user_id = $1 OR (s.student_email IS NOT NULL AND LOWER(s.student_email) = (SELECT LOWER(email) FROM classroom_users WHERE id = $1))
+       UNION ALL
+       SELECT s.student_number, s.roster_name,
               c.academic_year, c.grade, c.class_number,
               sc.name AS school_name
        FROM classroom_students s
        JOIN classroom_classes c ON c.id = s.class_id
        JOIN classroom_schools sc ON sc.id = c.school_id
        WHERE s.user_id = $1
-       ORDER BY c.updated_at DESC
        LIMIT 1`,
       [userId]
     );
@@ -1000,6 +1006,7 @@ function createClassroomPlatform(options = {}) {
     if (!row) return null;
     return {
       studentNumber: row.student_number,
+      studentName: row.roster_name,
       name: row.roster_name,
       schoolName: row.school_name,
       academicYear: row.academic_year,
@@ -1160,13 +1167,20 @@ function createClassroomPlatform(options = {}) {
     if (user && user.email) {
       const gRes = await pool.query(
         `SELECT s.id AS student_id, s.student_number, s.roster_name AS student_name,
-                c.id AS class_id, c.academic_year, c.grade, c.class_number,
+                s.academic_year, s.grade, s.class_number,
+                sc.id AS school_id, sc.name AS school_name
+         FROM school_students s
+         JOIN classroom_schools sc ON sc.id = s.school_id
+         WHERE LOWER(s.guardian1_email) = LOWER($1) OR LOWER(s.guardian2_email) = LOWER($1)
+         UNION ALL
+         SELECT s.id AS student_id, s.student_number, s.roster_name AS student_name,
+                c.academic_year, c.grade, c.class_number,
                 sc.id AS school_id, sc.name AS school_name
          FROM classroom_students s
          JOIN classroom_classes c ON c.id = s.class_id
          JOIN classroom_schools sc ON sc.id = c.school_id
          WHERE LOWER(s.guardian1_email) = LOWER($1) OR LOWER(s.guardian2_email) = LOWER($1)
-         ORDER BY c.grade DESC, c.class_number ASC, CASE WHEN s.student_number ~ '^[0-9]+$' THEN s.student_number::INTEGER END ASC`,
+         ORDER BY grade DESC, class_number ASC, CASE WHEN student_number ~ '^[0-9]+$' THEN student_number::INTEGER END ASC`,
         [user.email]
       );
       guardianChildren = gRes.rows.map(r => ({
@@ -1686,19 +1700,23 @@ function createClassroomPlatform(options = {}) {
     let isGuardian = false;
     let isStudent = false;
     
-    // Check Guardian
+    // Check Guardian (school_students OR classroom_students)
     const dbGuardianCheck = await pool.query(
-      "SELECT id FROM classroom_students WHERE LOWER(guardian1_email) = $1 OR LOWER(guardian2_email) = $1",
+      `SELECT id FROM classroom_students WHERE LOWER(guardian1_email) = $1 OR LOWER(guardian2_email) = $1
+       UNION
+       SELECT id FROM school_students WHERE LOWER(guardian1_email) = $1 OR LOWER(guardian2_email) = $1`,
       [email]
     );
     if (dbGuardianCheck.rowCount > 0) {
       isGuardian = true;
     }
 
-    // Check Student
+    // Check Student (school_students OR classroom_students)
     let studentIds = [];
     const dbStudentCheck = await pool.query(
-      "SELECT id FROM classroom_students WHERE LOWER(student_email) = $1",
+      `SELECT id FROM classroom_students WHERE LOWER(student_email) = $1
+       UNION
+       SELECT id FROM school_students WHERE LOWER(student_email) = $1`,
       [email]
     );
     if (dbStudentCheck.rowCount > 0) {
