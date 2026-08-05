@@ -1051,13 +1051,25 @@
             }
 
             async function api(path, options = {}) {
-                const response = await fetch(path, {
-                    ...options,
-                    headers: { 'Content-Type': 'application/json', ...(options.headers || {}) },
-                });
-                const payload = await response.json().catch(() => ({}));
-                if (!response.ok) throw new Error(payload.message || 'The server could not complete the request.');
-                return payload;
+                const controller = new AbortController();
+                const timer = setTimeout(() => controller.abort(), 8000);
+                try {
+                    const response = await fetch(path, {
+                        ...options,
+                        signal: options.signal || controller.signal,
+                        headers: { 'Content-Type': 'application/json', ...(options.headers || {}) },
+                    });
+                    const payload = await response.json().catch(() => ({}));
+                    if (!response.ok) throw new Error(payload.message || 'The server could not complete the request.');
+                    return payload;
+                } catch (err) {
+                    if (err.name === 'AbortError') {
+                        throw new Error('서버 응답 시간이 초과되었습니다. 페이지를 새로고침(F5)해 주세요.');
+                    }
+                    throw err;
+                } finally {
+                    clearTimeout(timer);
+                }
             }
 
             function setStatus(message, error = false) {
