@@ -1464,9 +1464,12 @@
                         customTimetable = s.timetable;
                         localStorage.setItem("dashboardTimetable", JSON.stringify(customTimetable));
                     }
-                    if (s.sloganText !== undefined && s.sloganText !== null) {
+                    if (s.sloganText !== undefined && s.sloganText !== null && s.sloganText.trim() !== "" && s.sloganText !== "-") {
                         sloganText.textContent = s.sloganText;
                         localStorage.setItem("dashboardSloganText", s.sloganText);
+                    } else {
+                        sloganText.textContent = "-";
+                        localStorage.removeItem("dashboardSloganText");
                     }
                     if (s.sloganAlign) {
                         sloganAlign = s.sloganAlign;
@@ -1481,6 +1484,15 @@
                     }
                     applySloganStyle();
                     renderTimetable(selectedDayTab);
+                } else if (data.settings === null) {
+                    // New user or reset account: wipe old browser cache so previous user's slogan/timetable never bleeds over!
+                    localStorage.removeItem("dashboardSloganText");
+                    localStorage.removeItem("dashboardTimetable");
+                    localStorage.removeItem("dashboardCardOrder");
+                    sloganText.textContent = "-";
+                    sloganAlign = "center";
+                    sloganFontSize = 42;
+                    applySloganStyle();
                 }
             } catch (e) {}
         }

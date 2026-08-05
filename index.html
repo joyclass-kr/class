@@ -1550,6 +1550,10 @@
             });
             signOutButton.addEventListener('click', async () => {
                 await api('/api/auth/logout', { method: 'POST', body: '{}' }).catch(() => {});
+                try {
+                    localStorage.clear();
+                    sessionStorage.clear();
+                } catch (e) {}
                 location.reload();
             });
 
