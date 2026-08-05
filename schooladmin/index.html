@@ -103,12 +103,49 @@
                     <span class="audit-status status-ok" id="schoolDaysStatusBadge">✅ 기준 충족</span>
                 </div>
                 <div class="audit-card">
-                    <span class="audit-label">휴업일 / 공휴일</span>
+                    <span class="audit-label">휴업일 / 공휴일 / 방학</span>
                     <span class="audit-value" id="totalHolidaysVal">115일</span>
                 </div>
                 <div class="audit-card">
                     <span class="audit-label">전교 & 학년 행사일</span>
                     <span class="audit-value" id="totalEventsVal">18일</span>
+                </div>
+            </div>
+
+            <!-- Vacation & Discretionary Holidays Setting Card -->
+            <div class="schedule-editor-panel" style="margin-bottom:20px; background:rgba(255,255,255,0.02);">
+                <h3 style="display:flex; align-items:center; justify-content:space-between; flex-wrap:wrap; gap:8px;">
+                    <span>🏖️ [1단계] 방학 기간 및 재량휴업일 설정</span>
+                    <span style="font-size:0.85rem; color:var(--text-muted); font-weight:normal;">방학 및 휴업일 지정 시 연간 달력과 법정 수업일수가 자동 재정산됩니다.</span>
+                </h3>
+                <div class="form-row" style="margin-top:12px; gap:16px;">
+                    <label>
+                        <span>여름방학 기간</span>
+                        <div style="display:flex; align-items:center; gap:6px;">
+                            <input type="date" id="summerVacationStart" class="form-input" style="padding:6px 8px;">
+                            <span>~</span>
+                            <input type="date" id="summerVacationEnd" class="form-input" style="padding:6px 8px;">
+                        </div>
+                    </label>
+                    <label>
+                        <span>겨울방학 기간</span>
+                        <div style="display:flex; align-items:center; gap:6px;">
+                            <input type="date" id="winterVacationStart" class="form-input" style="padding:6px 8px;">
+                            <span>~</span>
+                            <input type="date" id="winterVacationEnd" class="form-input" style="padding:6px 8px;">
+                        </div>
+                    </label>
+                    <label>
+                        <span>학년말방학 기간</span>
+                        <div style="display:flex; align-items:center; gap:6px;">
+                            <input type="date" id="springVacationStart" class="form-input" style="padding:6px 8px;">
+                            <span>~</span>
+                            <input type="date" id="springVacationEnd" class="form-input" style="padding:6px 8px;">
+                        </div>
+                    </label>
+                    <button type="button" id="saveVacationDatesBtn" class="primary-button" style="height:44px; align-self:flex-end; white-space:nowrap;">
+                        <span class="material-symbols-outlined">save</span> 방학 설정 반영
+                    </button>
                 </div>
             </div>
 

@@ -416,8 +416,58 @@ document.addEventListener('DOMContentLoaded', () => {
         "2027-03-01": "삼일절"
     };
 
+    const summerVacationStart = document.getElementById('summerVacationStart');
+    const summerVacationEnd = document.getElementById('summerVacationEnd');
+    const winterVacationStart = document.getElementById('winterVacationStart');
+    const winterVacationEnd = document.getElementById('winterVacationEnd');
+    const springVacationStart = document.getElementById('springVacationStart');
+    const springVacationEnd = document.getElementById('springVacationEnd');
+    const saveVacationDatesBtn = document.getElementById('saveVacationDatesBtn');
+
+    function loadVacationDates() {
+        const stored = JSON.parse(localStorage.getItem(`vacation_dates_${selectedAcademicYear}`) || '{}');
+        if (summerVacationStart) summerVacationStart.value = stored.summerStart || `${selectedAcademicYear}-07-20`;
+        if (summerVacationEnd) summerVacationEnd.value = stored.summerEnd || `${selectedAcademicYear}-08-20`;
+        if (winterVacationStart) winterVacationStart.value = stored.winterStart || `${selectedAcademicYear}-12-30`;
+        if (winterVacationEnd) winterVacationEnd.value = stored.winterEnd || `${selectedAcademicYear + 1}-01-30`;
+        if (springVacationStart) springVacationStart.value = stored.springStart || `${selectedAcademicYear + 1}-02-15`;
+        if (springVacationEnd) springVacationEnd.value = stored.springEnd || `${selectedAcademicYear + 1}-02-28`;
+    }
+
+    if (saveVacationDatesBtn) {
+        saveVacationDatesBtn.addEventListener('click', () => {
+            const data = {
+                summerStart: summerVacationStart?.value,
+                summerEnd: summerVacationEnd?.value,
+                winterStart: winterVacationStart?.value,
+                winterEnd: winterVacationEnd?.value,
+                springStart: springVacationStart?.value,
+                springEnd: springVacationEnd?.value
+            };
+            localStorage.setItem(`vacation_dates_${selectedAcademicYear}`, JSON.stringify(data));
+            alert('방학 기간 및 휴업일 설정이 연간 학사일정에 즉시 반영되었습니다!');
+            renderCalendarGrid();
+            calculateSchoolDaysAudit();
+        });
+    }
+
+    function getVacationType(dateStr) {
+        const sStart = summerVacationStart?.value;
+        const sEnd = summerVacationEnd?.value;
+        const wStart = winterVacationStart?.value;
+        const wEnd = winterVacationEnd?.value;
+        const spStart = springVacationStart?.value;
+        const spEnd = springVacationEnd?.value;
+
+        if (sStart && sEnd && dateStr >= sStart && dateStr <= sEnd) return '여름방학';
+        if (wStart && wEnd && dateStr >= wStart && dateStr <= wEnd) return '겨울방학';
+        if (spStart && spEnd && dateStr >= spStart && dateStr <= spEnd) return '학년말방학';
+        return null;
+    }
+
     function renderCalendarGrid() {
         if (!annualCalendarGrid) return;
+        loadVacationDates();
 
         const isSecondSemester = currentCalMonth >= 8 || currentCalMonth <= 2;
         const semesterLabel = currentCalMonth >= 3 && currentCalMonth <= 7 ? '1학기' : '2학기';
@@ -453,6 +503,7 @@ document.addEventListener('DOMContentLoaded', () => {
             const dateObj = new Date(currentCalYear, currentCalMonth - 1, d);
             const dayOfWeek = dateObj.getDay();
             const natHoliday = dynamicPublicHolidays[dateKey] || KOREAN_NATIONAL_HOLIDAYS[dateKey];
+            const vacType = getVacationType(dateKey);
 
             const cell = document.createElement('div');
             cell.className = 'cal-day-cell';
@@ -460,13 +511,20 @@ document.addEventListener('DOMContentLoaded', () => {
             if (dayOfWeek === 6) cell.classList.add('sat');
 
             const eventItem = eventMap.get(dateKey);
-            if (natHoliday || (eventItem && eventItem.category === 'HOLIDAY')) {
+            if (natHoliday || vacType || (eventItem && eventItem.category === 'HOLIDAY')) {
                 cell.classList.add('holiday');
+            }
+            if (vacType) {
+                cell.classList.add('vacation');
             }
 
             let eventsHtml = '';
             if (natHoliday) {
                 eventsHtml += `<div class="cal-event-pill holiday">🔴 ${natHoliday}</div>`;
+            }
+            if (vacType) {
+                const vacIcon = vacType === '여름방학' ? '🏖️' : vacType === '겨울방학' ? '❄️' : '🌸';
+                eventsHtml += `<div class="cal-event-pill vacation">${vacIcon} ${vacType}</div>`;
             }
             if (eventItem) {
                 const catClass = eventItem.category.toLowerCase();
@@ -498,30 +556,37 @@ document.addEventListener('DOMContentLoaded', () => {
 
     function calculateSchoolDaysAudit() {
         const targetDays = Number(targetSchoolDaysInput ? targetSchoolDaysInput.value : 190);
-        let totalSchoolDays = 192;
-        let totalHolidays = 115;
+        let totalSchoolDays = 0;
+        let totalHolidays = 0;
         let totalEvents = annualSchedulesData.length;
 
-        // Count statutory national holidays that land on weekdays
         const activeHolidays = Object.keys(dynamicPublicHolidays).length > 0 ? dynamicPublicHolidays : KOREAN_NATIONAL_HOLIDAYS;
-        Object.keys(activeHolidays).forEach(dateStr => {
-            const d = new Date(dateStr);
-            const year = d.getFullYear();
-            // Check if falls within active academic year
-            if ((selectedAcademicYear === year && d.getMonth() >= 2) || (selectedAcademicYear + 1 === year && d.getMonth() < 2)) {
-                if (d.getDay() !== 0 && d.getDay() !== 6) { // Weekdays only
-                    totalSchoolDays -= 1;
-                    totalHolidays += 1;
-                }
-            }
-        });
 
-        annualSchedulesData.forEach(item => {
-            if (item.category === 'HOLIDAY') {
-                totalSchoolDays -= 1;
-                totalHolidays += 1;
+        // Loop through all dates in the academic year (March 1 of selectedAcademicYear ~ Feb 28/29 of next year)
+        const startDate = new Date(selectedAcademicYear, 2, 1); // March 1
+        const endDate = new Date(selectedAcademicYear + 1, 1, 28); // Feb 28
+
+        for (let d = new Date(startDate); d <= endDate; d.setDate(d.getDate() + 1)) {
+            const year = d.getFullYear();
+            const m = d.getMonth() + 1;
+            const day = d.getDate();
+            const dateStr = `${year}-${m < 10 ? '0' + m : m}-${day < 10 ? '0' + day : day}`;
+            const dayOfWeek = d.getDay();
+
+            const isWeekend = dayOfWeek === 0 || dayOfWeek === 6;
+            const isPublicHoliday = Boolean(activeHolidays[dateStr]);
+            const vacType = getVacationType(dateStr);
+            const customEvent = annualSchedulesData.find(item => item.event_date === dateStr);
+            const isCustomHoliday = customEvent && customEvent.category === 'HOLIDAY';
+
+            if (isWeekend) {
+                // Weekend - not counted as school day or school holiday
+            } else if (isPublicHoliday || vacType || isCustomHoliday) {
+                totalHolidays++;
+            } else {
+                totalSchoolDays++;
             }
-        });
+        }
 
         if (calculatedSchoolDaysVal) calculatedSchoolDaysVal.textContent = `${totalSchoolDays}일`;
         if (totalHolidaysVal) totalHolidaysVal.textContent = `${totalHolidays}일`;
