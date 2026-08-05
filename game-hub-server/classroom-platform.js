@@ -2590,7 +2590,10 @@ function createClassroomPlatform(options = {}) {
       return {
         number: String(student?.number || "").trim(),
         name: String(student?.name || "").normalize("NFC").trim(),
-        gender
+        gender,
+        studentEmail: String(student?.studentEmail || "").trim().toLowerCase() || null,
+        guardian1Email: String(student?.guardian1Email || "").trim().toLowerCase() || null,
+        guardian2Email: String(student?.guardian2Email || "").trim().toLowerCase() || null
       };
     });
     if (cleanStudents.some((student) => !/^\d{1,3}$/.test(student.number))) {
