@@ -963,12 +963,21 @@ document.addEventListener('DOMContentLoaded', () => {
         });
     }
 
+    const timetableClassSelect = document.getElementById('timetableClassSelect');
+    const timetableHoursAuditBar = document.getElementById('timetableHoursAuditBar');
+    const timetableAuditStatusBadge = document.getElementById('timetableAuditStatusBadge');
+
+    if (timetableClassSelect) {
+        timetableClassSelect.addEventListener('change', loadMasterTimetable);
+    }
+
     async function loadMasterTimetable() {
         if (!timetableMatrixBody) return;
         const grade = timetableGradeSelect.value;
+        const classNum = timetableClassSelect ? timetableClassSelect.value : 1;
 
         try {
-            const res = await api(`/api/school-admin/master-timetable?academicYear=${selectedAcademicYear}&grade=${grade}&classNumber=0`);
+            const res = await api(`/api/school-admin/master-timetable?academicYear=${selectedAcademicYear}&grade=${grade}&classNumber=${classNum}`);
             timetableMatrixData = {};
             (res.timetable || []).forEach(cell => {
                 timetableMatrixData[`${cell.day_of_week}_${cell.period}`] = cell.subject_name;
@@ -977,6 +986,47 @@ document.addEventListener('DOMContentLoaded', () => {
         } catch (error) {
             timetableMatrixData = {};
             renderTimetableMatrix();
+        }
+    }
+
+    function auditTimetableGradeHours() {
+        if (!timetableHoursAuditBar) return;
+
+        const grade = Number(timetableGradeSelect ? timetableGradeSelect.value : 5);
+        const gradeDefaults = GRADE_SUBJECT_BASE_HOURS[grade] || GRADE_SUBJECT_BASE_HOURS[5];
+
+        // Count placed hours per subject in matrix
+        const placedMap = new Map();
+        Object.values(timetableMatrixData).forEach(sub => {
+            if (sub && sub !== '-' && sub !== '수업없음') {
+                placedMap.set(sub, (placedMap.get(sub) || 0) + 1);
+            }
+        });
+
+        let allMatched = true;
+        let auditChipsHtml = '';
+
+        gradeDefaults.forEach(def => {
+            const placed = placedMap.get(def.name) || 0;
+            const target = def.weekly;
+            const isOk = placed === target;
+            if (!isOk) allMatched = false;
+
+            const chipColor = isOk ? 'var(--success)' : 'var(--danger)';
+            const statusIcon = isOk ? '✅' : '⚠️';
+            auditChipsHtml += `<span style="background:rgba(255,255,255,0.06); padding:4px 10px; border-radius:6px; border:1px solid rgba(255,255,255,0.1); color:${chipColor}; font-weight:700;">${def.name}: ${placed}/${target}시간 ${statusIcon}</span>`;
+        });
+
+        timetableHoursAuditBar.innerHTML = auditChipsHtml;
+
+        if (timetableAuditStatusBadge) {
+            if (allMatched) {
+                timetableAuditStatusBadge.textContent = '✅ 학년 공통 주당 기준시수 100% 일치';
+                timetableAuditStatusBadge.className = 'audit-status status-ok';
+            } else {
+                timetableAuditStatusBadge.textContent = '⚠️ 과목별 주당 목표시수 불일치 확인 필요';
+                timetableAuditStatusBadge.className = 'audit-status status-warn';
+            }
         }
     }
 
@@ -1000,6 +1050,8 @@ document.addEventListener('DOMContentLoaded', () => {
             timetableMatrixBody.appendChild(tr);
         }
 
+        auditTimetableGradeHours();
+
         // Cell click handler
         timetableMatrixBody.querySelectorAll('.timetable-cell').forEach(cell => {
             cell.addEventListener('click', () => {
@@ -1013,9 +1065,10 @@ document.addEventListener('DOMContentLoaded', () => {
 
     async function saveMasterTimetable() {
         const grade = timetableGradeSelect.value;
+        const classNum = timetableClassSelect ? timetableClassSelect.value : 1;
         const cells = [];
         for (let day = 1; day <= 5; day++) {
-            for (let period = 1; period <= 6; period++) {
+            for (let period = 1; period <= 8; period++) {
                 const sub = timetableMatrixData[`${day}_${period}`] || '';
                 cells.push({ dayOfWeek: day, period, subjectName: sub });
             }
@@ -1028,11 +1081,11 @@ document.addEventListener('DOMContentLoaded', () => {
                 body: JSON.stringify({
                     academicYear: selectedAcademicYear,
                     grade,
-                    classNumber: 0,
+                    classNumber: classNum,
                     cells
                 })
             });
-            alert(`${grade}학년 주간 기본 시간표 그리드가 저장되었습니다!`);
+            alert(`${grade}학년 ${classNum}반 기초시간표 매트릭스가 성공적으로 저장되었습니다!`);
         } catch (error) {
             alert(error.message || '시간표를 저장하지 못했습니다.');
         }

@@ -319,10 +319,10 @@
         <section id="timetableTab" class="tab-content" hidden>
             <div class="section-header-bar">
                 <div>
-                    <h2>🗓️ 주간 기본 시간표 그리드 매트릭스</h2>
-                    <p class="section-desc">월~금 1~6교시 표준 기본 시간표를 클릭하여 교과목을 배치합니다.</p>
+                    <h2>🗓️ [4단계] 학급별 기초시간표 매트릭스 (1~8교시)</h2>
+                    <p class="section-desc">학년 공통 시수(2단계)는 100% 동일하며, 반별(1반, 2반...) 요일/교시 배치 및 전담/이동 수업을 독립 편성합니다.</p>
                 </div>
-                <div class="grade-selector-wrap">
+                <div class="grade-selector-wrap" style="display:flex; gap:12px; align-items:center;">
                     <label>학년:
                         <select id="timetableGradeSelect" class="form-select">
                             <option value="1">1학년</option>
@@ -333,11 +333,31 @@
                             <option value="6">6학년</option>
                         </select>
                     </label>
+                    <label>학급:
+                        <select id="timetableClassSelect" class="form-select">
+                            <option value="1">1반</option>
+                            <option value="2">2반</option>
+                            <option value="3">3반</option>
+                            <option value="4">4반</option>
+                            <option value="5">5반</option>
+                        </select>
+                    </label>
+                </div>
+            </div>
+
+            <!-- Grade Hours Audit Live Bar for Class -->
+            <div class="schedule-editor-panel margin-top" style="background:rgba(255,255,255,0.02); padding:16px;">
+                <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:8px;">
+                    <strong style="color:var(--primary); font-size:0.95rem;">⚖️ 학년 주당 목표시수 일치 검증:</strong>
+                    <span id="timetableAuditStatusBadge" class="audit-status status-ok">✅ 학년 기준시수 100% 일치</span>
+                </div>
+                <div id="timetableHoursAuditBar" style="display:flex; gap:10px; flex-wrap:wrap; font-size:0.88rem;">
+                    <!-- Injected via JS -->
                 </div>
             </div>
 
             <div class="palette-container margin-top">
-                <span class="palette-title">과목 팔레트 (셀 클릭 후 선택):</span>
+                <span class="palette-title">과목 팔레트 (셀 클릭 후 배치):</span>
                 <div class="subject-tags-palette" id="subjectPalette">
                     <!-- Palette items -->
                 </div>
