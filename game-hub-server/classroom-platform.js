@@ -4161,18 +4161,23 @@ function createClassroomPlatform(options = {}) {
   router.put("/school/settings", asyncRoute(async (req, res) => {
     const teacher = await requireTeacher(req);
     const tp = await pool.query(
-      `SELECT t.school_id, t.teacher_type FROM classroom_teachers WHERE user_id = $1 AND active = TRUE`,
+      `SELECT t.school_id, t.teacher_type FROM classroom_teachers t WHERE t.user_id = $1 AND t.active = TRUE`,
       [teacher.id]
     );
     if (!tp.rows[0]) throw new HttpError(403, "TEACHER_REQUIRED", "교사 계정이 필요합니다.");
-    if (!["관리자", "교장", "교감"].includes(tp.rows[0].teacher_type))
-      throw new HttpError(403, "ADMIN_ONLY", "학교 설정은 학교 관리자만 변경할 수 있습니다.");
     const schoolId = tp.rows[0].school_id;
     const year = Number(req.body.year) || new Date().getFullYear();
 
-    const clubs = (req.body.clubs || []).map((name, i) => ({ name: String(name).trim(), order: i })).filter(c => c.name);
-    const afterschool = (req.body.afterschool || []).map((name, i) => ({ name: String(name).trim(), order: i })).filter(a => a.name);
-    const shuttleSlots = (req.body.shuttleSlots || []).map((name, i) => ({ name: String(name).trim(), order: i })).filter(s => s.name);
+    const extractName = (item) => {
+      if (!item) return "";
+      if (typeof item === "string") return item.trim();
+      if (typeof item === "object") return String(item.club_name || item.program_name || item.slot_name || item.name || "").trim();
+      return String(item).trim();
+    };
+
+    const clubs = (req.body.clubs || []).map((item, i) => ({ name: extractName(item), order: i })).filter(c => c.name && c.name !== "[object Object]");
+    const afterschool = (req.body.afterschool || []).map((item, i) => ({ name: extractName(item), order: i })).filter(a => a.name && a.name !== "[object Object]");
+    const shuttleSlots = (req.body.shuttleSlots || []).map((item, i) => ({ name: extractName(item), order: i })).filter(s => s.name && s.name !== "[object Object]");
 
     const client = await pool.connect();
     try {
