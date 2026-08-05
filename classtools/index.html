@@ -275,8 +275,14 @@
             </div>
         </section>
 
+        <!-- 내 학급 · 동아리 · 전담 그룹 관리 섹션 (개별 대시보드 바로가기) -->
+        <h2 class="section-title">🏫 내 학급 · 그룹 (개별 대시보드 바로가기)</h2>
+        <div class="groups-grid" id="main-groups-grid" style="display: grid; grid-template-columns: repeat(auto-fill, minmax(260px, 1fr)); gap: 16px; margin-bottom: 36px;">
+            <!-- Dynamically rendered group cards -->
+        </div>
+
         <!-- 교사 핵심 기능 버튼 영역 -->
-        <h2 class="section-title">학급 관리</h2>
+        <h2 class="section-title">행정 및 기타 관리</h2>
         <div class="tools-grid">
             <!-- 1. 학급 대시보드 (Dashboard) -->
             <a class="tool-card dashboard" href="dashboard" style="border-color: var(--brand-light);">
@@ -371,6 +377,7 @@
             const btnCreateGroup = document.getElementById('btn-create-group');
 
             async function loadTeacherGroups() {
+                const mainGrid = document.getElementById('main-groups-grid');
                 try {
                     const res = await api('/api/teacher/groups').catch(() => ({ groups: [] }));
                     const groups = res.groups || [];
@@ -382,6 +389,15 @@
                         subject: '🧪',
                         activity: '🎨',
                         other: '📌'
+                    };
+
+                    const typeLabels = {
+                        homeroom: '담임반',
+                        subject: '전담 과목반',
+                        club: '동아리',
+                        afterschool: '방과후',
+                        activity: '활동그룹',
+                        other: '기타'
                     };
 
                     if (activeGroupSelect) {
@@ -400,8 +416,60 @@
                             activeGroupSelect.value = savedActiveId;
                         }
                     }
+
+                    if (mainGrid) {
+                        mainGrid.innerHTML = groups.map(g => {
+                            const icon = groupTypeIcons[g.group_type] || '📌';
+                            const label = typeLabels[g.group_type] || g.group_type;
+                            return `
+                                <div class="tool-card" onclick="openGroupDashboard(${g.id})" style="cursor:pointer; border:1px solid rgba(117,214,159,0.3); background:linear-gradient(135deg, rgba(21,28,24,0.9), rgba(11,15,12,0.95)); padding:20px; border-radius:18px; display:flex; flex-direction:column; justify-content:space-between; min-height:120px; transition:transform 0.15s ease;">
+                                    <div style="display:flex; align-items:center; justify-content:space-between; margin-bottom:8px;">
+                                        <span class="chip" style="font-size:0.75rem; padding:2px 8px; background:rgba(117,214,159,0.15); color:#75d69f;">${icon} ${label}</span>
+                                    </div>
+                                    <h3 class="tool-name" style="margin:0 0 6px; font-size:1.15rem; color:var(--text-main);">${g.group_name}</h3>
+                                    <div style="font-size:0.85rem; color:var(--text-muted); font-weight:700;">
+                                        ${g.grade ? `${g.grade}학년 ${g.class_number}반 · ` : ''}학생 ${g.student_count || 0}명
+                                    </div>
+                                </div>
+                            `;
+                        }).join('') + `
+                            <div class="tool-card" onclick="handleCreateGroupClick()" style="cursor:pointer; border:2px dashed rgba(117,214,159,0.4); background:rgba(117,214,159,0.05); padding:20px; border-radius:18px; display:flex; align-items:center; justify-content:center; gap:8px; color:#75d69f; font-weight:800; font-size:1.05rem; min-height:120px;">
+                                <span style="font-size:24px;">+</span> 새 학급·그룹 개설하기
+                            </div>
+                        `;
+                    }
                 } catch (_) {}
             }
+
+            window.openGroupDashboard = function(groupId) {
+                sessionStorage.setItem('active_group_id', groupId);
+                location.href = `/classtools/dashboard?groupId=${groupId}`;
+            };
+
+            window.handleCreateGroupClick = async function() {
+                const name = prompt('새로 개설할 동아리/방과후/전담 그룹 이름을 입력하세요:\n(예: 로봇코딩부, 오케스트라, 5학년 과학전담)');
+                if (!name || !name.trim()) return;
+
+                const typeStr = prompt('그룹 유형을 선택하세요:\n1: 🤖 동아리 (club)\n2: ⚽ 방과후 (afterschool)\n3: 🧪 전담교과 (subject)\n\n번호 입력 (1, 2, 3):', '1');
+                let groupType = 'club';
+                if (typeStr === '2') groupType = 'afterschool';
+                else if (typeStr === '3') groupType = 'subject';
+
+                try {
+                    const res = await api('/api/teacher/groups', {
+                        method: 'POST',
+                        body: JSON.stringify({
+                            groupName: name.trim(),
+                            groupType
+                        })
+                    });
+                    alert(`'${name.trim()}' 그룹이 새로 개설되었습니다!`);
+                    sessionStorage.setItem('active_group_id', res.groupId);
+                    await loadTeacherGroups();
+                } catch (err) {
+                    alert(err.message || '그룹 개설에 실패했습니다.');
+                }
+            };
 
             if (activeGroupSelect) {
                 activeGroupSelect.addEventListener('change', (e) => {
@@ -410,30 +478,7 @@
             }
 
             if (btnCreateGroup) {
-                btnCreateGroup.addEventListener('click', async () => {
-                    const name = prompt('새로 개설할 동아리/방과후/전담 그룹 이름을 입력하세요:\n(예: 로봇코딩부, 오케스트라, 5학년 과학전담)');
-                    if (!name || !name.trim()) return;
-
-                    const typeStr = prompt('그룹 유형을 선택하세요:\n1: 🤖 동아리 (club)\n2: ⚽ 방과후 (afterschool)\n3: 🧪 전담교과 (subject)\n\n번호 입력 (1, 2, 3):', '1');
-                    let groupType = 'club';
-                    if (typeStr === '2') groupType = 'afterschool';
-                    else if (typeStr === '3') groupType = 'subject';
-
-                    try {
-                        const res = await api('/api/teacher/groups', {
-                            method: 'POST',
-                            body: JSON.stringify({
-                                groupName: name.trim(),
-                                groupType
-                            })
-                        });
-                        alert(`'${name.trim()}' 그룹이 새로 개설되었습니다!`);
-                        sessionStorage.setItem('active_group_id', res.groupId);
-                        await loadTeacherGroups();
-                    } catch (err) {
-                        alert(err.message || '그룹 개설에 실패했습니다.');
-                    }
-                });
+                btnCreateGroup.addEventListener('click', handleCreateGroupClick);
             }
 
             async function init() {

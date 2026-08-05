@@ -4038,13 +4038,17 @@ function createClassroomPlatform(options = {}) {
     res.json({ ok: true });
   }));
 
-  // GET: 교사가 개설한 그룹 목록
   router.get("/teacher/groups", asyncRoute(async (req, res) => {
     const teacher = await requireTeacher(req);
     const year = Number(req.query.year) || new Date().getFullYear();
     const result = await pool.query(
       `SELECT g.id, g.group_name, g.group_type, g.grade, g.class_number, g.sort_order,
-              COUNT(gs.student_id) as student_count
+              CASE WHEN g.group_type = 'homeroom' AND g.grade IS NOT NULL AND g.class_number IS NOT NULL THEN
+                (
+                  SELECT COUNT(*) FROM school_students ss
+                  WHERE ss.school_id = g.school_id AND ss.academic_year = g.academic_year AND ss.grade = g.grade AND ss.class_number = g.class_number
+                )
+              ELSE COUNT(gs.student_id) END as student_count
        FROM teacher_groups g
        LEFT JOIN teacher_group_students gs ON gs.group_id = g.id
        WHERE g.teacher_user_id = $1 AND g.academic_year = $2
