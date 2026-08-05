@@ -93,7 +93,7 @@
         .tab-btn:hover:not(.active) { color: var(--ink); }
 
         /* ── 메인 ── */
-        .main { padding: 20px; max-width: 1400px; margin: 0 auto; }
+        .main { padding: 16px 24px; max-width: 100%; margin: 0 auto; }
         .panel { display: none; }
         .panel.active { display: block; }
 
@@ -174,9 +174,11 @@
         }
 
         .roster-table-wrap {
-            overflow-x: auto;
+            overflow: auto;
+            max-height: calc(100vh - 240px);
             border: 1px solid var(--line);
             border-radius: 12px;
+            background: var(--paper);
         }
         .roster-table {
             width: 100%;
