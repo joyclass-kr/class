@@ -434,11 +434,11 @@
 
             window.openGroupDashboard = function(groupId) {
                 sessionStorage.setItem('active_group_id', groupId);
-                location.href = `/classtools/dashboard?groupId=${groupId}`;
+                location.href = `/classtools/dashboard.html?groupId=${groupId}`;
             };
 
             window.handleCreateGroupClick = async function() {
-                const name = prompt('새로 개설할 동아리/방과후/전담 그룹 이름을 입력하세요:\n(예: 로봇코딩부, 오케스트라, 5학년 과학전담)');
+                const name = prompt('새로 개설할 동아리/방과후/전담 그룹 이름을 입력하세요:\n(예: 오케스트라, 로봇코딩부, 축구부, 5학년 과학전담)');
                 if (!name || !name.trim()) return;
 
                 const typeStr = prompt('그룹 유형을 선택하세요:\n1: 🤖 동아리 (club)\n2: ⚽ 방과후 (afterschool)\n3: 🧪 전담교과 (subject)\n\n번호 입력 (1, 2, 3):', '1');
@@ -454,9 +454,9 @@
                             groupType
                         })
                     });
-                    alert(`'${name.trim()}' 그룹이 새로 개설되었습니다!`);
+                    alert(`'${name.trim()}' 그룹이 새로 개설되었습니다!\n전교생 명단 속성에서 '${name.trim()}' 그룹으로 지정된 학생이 자동 연결됩니다.`);
                     sessionStorage.setItem('active_group_id', res.groupId);
-                    await loadTeacherGroups();
+                    location.href = `/classtools/dashboard.html?groupId=${res.groupId}`;
                 } catch (err) {
                     alert(err.message || '그룹 개설에 실패했습니다.');
                 }

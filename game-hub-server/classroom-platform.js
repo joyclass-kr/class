@@ -4048,21 +4048,60 @@ function createClassroomPlatform(options = {}) {
   router.get("/teacher/groups", asyncRoute(async (req, res) => {
     const teacher = await requireTeacher(req);
     const year = Number(req.query.year) || new Date().getFullYear();
+
+    // Auto-provision default homeroom group if teacher has a class assigned
+    const teacherClass = await pool.query(
+      `SELECT t.school_id, c.grade, c.class_number
+       FROM classroom_teachers t
+       JOIN classroom_classes c ON c.teacher_user_id = t.user_id AND c.academic_year = $2
+       WHERE t.user_id = $1 AND t.active = TRUE AND c.grade IS NOT NULL AND c.class_number IS NOT NULL
+       LIMIT 1`,
+      [teacher.id, year]
+    );
+
+    if (teacherClass.rows[0]) {
+      const tc = teacherClass.rows[0];
+      const gName = `${tc.grade}-${tc.class_number}`;
+      await pool.query(
+        `INSERT INTO teacher_groups (school_id, teacher_user_id, academic_year, group_name, group_type, grade, class_number)
+         VALUES ($1, $2, $3, $4, 'homeroom', $5, $6)
+         ON CONFLICT (teacher_user_id, academic_year, group_name) DO NOTHING`,
+        [tc.school_id, teacher.id, year, gName, tc.grade, tc.class_number]
+      ).catch(() => {});
+    }
+
     const result = await pool.query(
       `SELECT g.id, g.group_name, g.group_type, g.grade, g.class_number, g.sort_order,
-              CASE WHEN g.group_type = 'homeroom' AND g.grade IS NOT NULL AND g.class_number IS NOT NULL THEN
-                (
-                  SELECT COUNT(*) FROM school_students ss
-                  WHERE ss.school_id = g.school_id AND ss.academic_year = g.academic_year AND ss.grade = g.grade AND ss.class_number = g.class_number
-                )
-              ELSE COUNT(gs.student_id) END as student_count
+              (
+                SELECT COUNT(*)
+                FROM (
+                  -- Homeroom class matching
+                  SELECT ss.id FROM school_students ss
+                  WHERE g.group_type = 'homeroom' AND g.grade IS NOT NULL AND g.class_number IS NOT NULL
+                    AND ss.school_id = g.school_id AND ss.academic_year = g.academic_year AND ss.grade = g.grade AND ss.class_number = g.class_number
+                  UNION
+                  -- Custom attribute matching (e.g. club = '오케스트라')
+                  SELECT ss.id FROM school_students ss
+                  WHERE g.group_type != 'homeroom'
+                    AND ss.school_id = g.school_id AND ss.academic_year = g.academic_year
+                    AND (
+                      ss.custom_fields->>'club' = g.group_name OR
+                      ss.custom_fields->>'afterschool' = g.group_name OR
+                      ss.custom_fields->>'subject' = g.group_name OR
+                      ss.custom_fields->>'group' = g.group_name OR
+                      ss.custom_fields::text ILIKE '%' || g.group_name || '%'
+                    )
+                  UNION
+                  -- Explicit membership
+                  SELECT gs.student_id FROM teacher_group_students gs WHERE gs.group_id = g.id
+                ) AS st_union
+              ) AS student_count
        FROM teacher_groups g
-       LEFT JOIN teacher_group_students gs ON gs.group_id = g.id
        WHERE g.teacher_user_id = $1 AND g.academic_year = $2
-       GROUP BY g.id
        ORDER BY g.sort_order, g.id`,
       [teacher.id, year]
     );
+
     res.json({ groups: result.rows, year });
   }));
 
