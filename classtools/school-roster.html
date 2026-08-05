@@ -432,6 +432,7 @@
                 </div>
                 <div style="display:flex;gap:8px;flex-wrap:wrap;" id="rosterAdminActions">
                     <button class="btn btn-secondary btn-sm" id="pasteSectionBtn" onclick="togglePasteSection()">📥 붙여넣기로 입력</button>
+                    <button class="btn btn-secondary btn-sm" id="addStudentBtn" onclick="addSingleStudent()" style="display:none;">+ 학생 추가</button>
                     <button class="btn btn-primary btn-sm" id="saveRosterBtn" onclick="saveRoster()" style="display:none;">💾 저장</button>
                 </div>
             </div>
@@ -675,33 +676,48 @@
         const allAfter = schoolSettings.afterschool.map(a => a.program_name || a.name || a);
         const allShuttle = schoolSettings.shuttleSlots.map(s => s.slot_name || s.name || s);
 
-        // Thead
-        const fixedCols = ["학년","반","번호","성명","성별","학생 구글계정","보호자1","보호자2"];
+        // Thead: 학년, 반, 번호, 성명, 성별 -> 동아리/방과후/셔틀 -> 구글계정 3종 -> [관리(삭제)]
+        const fixedLeft = ["학년","반","번호","성명","성별"];
+        const fixedRight = ["학생 구글계정","보호자1 계정","보호자2 계정"];
+        const dynCols = [...allClubs.map(c=>`동아리·${c}`), ...allAfter.map(a=>`방과후·${a}`), ...allShuttle.map(s=>s)];
+        const allHeaders = [...fixedLeft, ...dynCols, ...fixedRight, ...(isSchoolAdmin ? ["관리"] : [])];
+
         const thead = document.getElementById("rosterHead");
-        thead.innerHTML = `<tr>${[...fixedCols, ...allClubs.map(c=>`동아리·${c}`), ...allAfter.map(a=>`방과후·${a}`), ...allShuttle.map(s=>s)].map(h=>`<th>${h}</th>`).join("")}</tr>`;
+        thead.innerHTML = `<tr>${allHeaders.map(h=>`<th>${h}</th>`).join("")}</tr>`;
 
         // Tbody
         const tbody = document.getElementById("rosterBody");
         if (filtered.length === 0) {
-            tbody.innerHTML = `<tr><td colspan="${fixedCols.length + allClubs.length + allAfter.length + allShuttle.length}" class="no-data">${allStudents.length === 0 ? "등록된 학생이 없습니다. 붙여넣기로 입력해 보세요." : "해당 조건의 학생이 없습니다."}</td></tr>`;
+            tbody.innerHTML = `<tr><td colspan="${allHeaders.length}" class="no-data">${allStudents.length === 0 ? "등록된 학생이 없습니다. 붙여넣기로 입력해 보세요." : "해당 조건의 학생이 없습니다."}</td></tr>`;
             return;
         }
 
-        tbody.innerHTML = filtered.map(s => {
+        tbody.innerHTML = filtered.map((s, filteredIdx) => {
+            const originalIndex = allStudents.indexOf(s);
             const cf = s.custom_fields || s.customFields || {};
             const linkedBadge = s.user_id ? `<span class="linked-badge">✓ 연동</span>` : "";
+
+            const cellInput = (field, value, width="100%", isCustom=false, key="") => {
+                if (!isSchoolAdmin) return esc(value || "");
+                const onInputCode = isCustom
+                    ? `updateStudentCustomField(${originalIndex}, '${esc(key)}', this.value)`
+                    : `updateStudentField(${originalIndex}, '${field}', this.value)`;
+                return `<input class="roster-cell-input" style="width:${width};border:1px solid #d1d5db;border-radius:4px;padding:3px 6px;font:inherit;font-size:12px;background:white;" value="${esc(value || "")}" onchange="${onInputCode}">`;
+            };
+
             const cells = [
-                `<td>${s.grade}</td>`,
-                `<td>${s.class_number}</td>`,
-                `<td>${s.student_number}</td>`,
-                `<td>${s.roster_name}</td>`,
-                `<td>${s.gender}</td>`,
-                `<td style="font-size:11px;">${s.student_email || ""} ${linkedBadge}</td>`,
-                `<td style="font-size:11px;">${s.guardian1_email || ""}</td>`,
-                `<td style="font-size:11px;">${s.guardian2_email || ""}</td>`,
-                ...allClubs.map(c => `<td style="font-size:11px;font-weight:600;color:var(--brand);">${cf[c] || (Array.isArray(s.clubs) && s.clubs.includes(c) ? c : "")}</td>`),
-                ...allAfter.map(a => `<td style="font-size:11px;font-weight:600;color:#0369a1;">${cf[a] || (Array.isArray(s.afterschool) && s.afterschool.includes(a) ? a : "")}</td>`),
-                ...allShuttle.map(sl => `<td style="font-size:11px;font-weight:600;color:#b45309;">${cf[sl] || (s.shuttle || {})[sl] || ""}</td>`)
+                `<td>${cellInput("grade", s.grade, "40px")}</td>`,
+                `<td>${cellInput("class_number", s.class_number, "40px")}</td>`,
+                `<td>${cellInput("student_number", s.student_number, "45px")}</td>`,
+                `<td>${cellInput("roster_name", s.roster_name, "70px")}</td>`,
+                `<td>${cellInput("gender", s.gender, "40px")}</td>`,
+                ...allClubs.map(c => `<td>${cellInput("", cf[c] || (Array.isArray(s.clubs) && s.clubs.includes(c) ? c : ""), "80px", true, c)}</td>`),
+                ...allAfter.map(a => `<td>${cellInput("", cf[a] || (Array.isArray(s.afterschool) && s.afterschool.includes(a) ? a : ""), "80px", true, a)}</td>`),
+                ...allShuttle.map(sl => `<td>${cellInput("", cf[sl] || (s.shuttle || {})[sl] || "", "65px", true, sl)}</td>`),
+                `<td style="font-size:11px;">${cellInput("student_email", s.student_email, "140px")} ${linkedBadge}</td>`,
+                `<td style="font-size:11px;">${cellInput("guardian1_email", s.guardian1_email, "140px")}</td>`,
+                `<td style="font-size:11px;">${cellInput("guardian2_email", s.guardian2_email, "140px")}</td>`,
+                ...(isSchoolAdmin ? [`<td><button class="delete-item-btn" onclick="deleteStudentRow(${originalIndex})" title="삭제">🗑️</button></td>`] : [])
             ];
             return `<tr>${cells.join("")}</tr>`;
         }).join("");
@@ -722,20 +738,22 @@
 
     function updatePasteColsHint() {
         const hint = document.getElementById("pasteColsHint");
-        const fixedChips = [
+        const fixedLeftChips = [
             `<span class="col-chip required">학년</span>`,
             `<span class="col-chip required">반</span>`,
             `<span class="col-chip required">번호</span>`,
             `<span class="col-chip required">성명</span>`,
             `<span class="col-chip required">성별</span>`,
-            `<span class="col-chip">학생구글계정</span>`,
-            `<span class="col-chip">보호자1계정</span>`,
-            `<span class="col-chip">보호자2계정</span>`,
         ];
         const clubChips = schoolSettings.clubs.map(c => `<span class="col-chip dynamic">${c.club_name || c.name || c}</span>`);
         const afterChips = schoolSettings.afterschool.map(a => `<span class="col-chip dynamic">${a.program_name || a.name || a}</span>`);
         const shuttleChips = schoolSettings.shuttleSlots.map(s => `<span class="col-chip dynamic">${s.slot_name || s.name || s}</span>`);
-        hint.innerHTML = [...fixedChips, ...clubChips, ...afterChips, ...shuttleChips].join("");
+        const fixedRightChips = [
+            `<span class="col-chip">학생구글계정</span>`,
+            `<span class="col-chip">보호자1계정</span>`,
+            `<span class="col-chip">보호자2계정</span>`,
+        ];
+        hint.innerHTML = [...fixedLeftChips, ...clubChips, ...afterChips, ...shuttleChips, ...fixedRightChips].join("");
     }
 
     window.parsePaste = function() {
@@ -831,15 +849,66 @@
         setStatus("pasteStatus", `✅ ${students.length}명 파싱 완료. 미리보기를 확인 후 저장 버튼을 눌러주세요.`, "ok");
     };
 
+    window.updateStudentField = function(idx, field, val) {
+        if (!allStudents[idx]) return;
+        allStudents[idx][field] = val.trim();
+        document.getElementById("saveRosterBtn").style.display = "inline-flex";
+        setStatus("rosterStatus", "명단이 수정되었습니다. 변경사항을 저장하려면 '💾 저장' 버튼을 누르세요.");
+    };
+
+    window.updateStudentCustomField = function(idx, key, val) {
+        if (!allStudents[idx]) return;
+        if (!allStudents[idx].custom_fields) allStudents[idx].custom_fields = {};
+        allStudents[idx].custom_fields[key] = val.trim();
+        document.getElementById("saveRosterBtn").style.display = "inline-flex";
+        setStatus("rosterStatus", "명단이 수정되었습니다. 변경사항을 저장하려면 '💾 저장' 버튼을 누르세요.");
+    };
+
+    window.deleteStudentRow = function(idx) {
+        const target = allStudents[idx];
+        if (!target) return;
+        if (!confirm(`${target.roster_name || target.rosterName || "이"} 학생을 명단에서 삭제하시겠습니까?`)) return;
+        allStudents.splice(idx, 1);
+        updateClassFilter();
+        renderRosterTable();
+        document.getElementById("saveRosterBtn").style.display = "inline-flex";
+        setStatus("rosterStatus", "학생이 지워졌습니다. 저장하려면 '💾 저장' 버튼을 누르세요.");
+    };
+
+    window.addSingleStudent = function() {
+        const newSt = {
+            grade: 1, class_number: 1, student_number: String(allStudents.length + 1),
+            roster_name: "새학생", gender: "남", student_email: null,
+            guardian1_email: null, guardian2_email: null, custom_fields: {}
+        };
+        allStudents.push(newSt);
+        updateClassFilter();
+        renderRosterTable();
+        document.getElementById("saveRosterBtn").style.display = "inline-flex";
+        setStatus("rosterStatus", "새 학생이 맨 아래에 추가되었습니다. 수정 후 '💾 저장' 버튼을 누르세요.");
+    };
+
     window.saveRoster = async function() {
-        if (!parsedStudents) return;
+        if (allStudents.length === 0 && !confirm("모든 학생 명단을 삭제하시겠습니까?")) return;
         const btn = document.getElementById("saveRosterBtn");
         btn.disabled = true;
         setStatus("rosterStatus", "저장 중…");
         try {
+            const studentsToSave = allStudents.map(s => ({
+                grade: Number(s.grade),
+                classNumber: Number(s.class_number || s.classNumber),
+                studentNumber: String(s.student_number || s.studentNumber || "").trim(),
+                rosterName: String(s.roster_name || s.rosterName || "").trim(),
+                gender: s.gender || "남",
+                studentEmail: s.student_email || s.studentEmail || null,
+                guardian1Email: s.guardian1_email || s.guardian1Email || null,
+                guardian2Email: s.guardian2_email || s.guardian2Email || null,
+                customFields: s.custom_fields || s.customFields || {}
+            }));
+
             const result = await api("/api/school/students", {
                 method: "PUT",
-                body: JSON.stringify({ students: parsedStudents, year: currentYear })
+                body: JSON.stringify({ students: studentsToSave, year: currentYear })
             });
             setStatus("rosterStatus", `✅ ${result.saved}명 저장 완료`, "ok");
             btn.style.display = "none";
@@ -863,6 +932,7 @@
             
             // Apply admin vs staff UI controls
             document.getElementById("pasteSectionBtn").style.display = isSchoolAdmin ? "inline-flex" : "none";
+            document.getElementById("addStudentBtn").style.display = isSchoolAdmin ? "inline-flex" : "none";
             document.getElementById("settingsAdminActions").style.display = isSchoolAdmin ? "flex" : "none";
             document.querySelectorAll(".add-item-row").forEach(el => el.style.display = isSchoolAdmin ? "flex" : "none");
             if (!isSchoolAdmin) {
