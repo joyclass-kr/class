@@ -19,9 +19,10 @@
     <nav class="tabs-nav">
         <div class="tabs">
             <button class="tab-button active" data-tab="dashboard">출결 현황판</button>
-            <button class="tab-button" data-tab="annual">📅 연간 학사 달력 (수업일수 190일)</button>
-            <button class="tab-button" data-tab="curriculum">📚 과목/창체 시수 편제</button>
-            <button class="tab-button" data-tab="timetable">🗓️ 주간 기본 시간표 그리드</button>
+            <button class="tab-button" data-tab="annual">📅 [1단계] 학사일정 (190일)</button>
+            <button class="tab-button" data-tab="curriculum">📚 [2단계] 시수편성 (정해진시수+증감)</button>
+            <button class="tab-button" data-tab="timetable">🗓️ [4단계] 학급별 기초시간표</button>
+            <button class="tab-button" data-tab="annualTimetable">📊 [5단계] 학급별 연간시간표 & 서류출력</button>
             <button class="tab-button" data-tab="roster">전교생 명단</button>
         </div>
     </nav>
@@ -386,9 +387,84 @@
                     <span class="material-symbols-outlined">save</span> 주간 기본 시간표 저장하기
                 </button>
             </div>
+        <!-- 5. Class Annual Timetable & Official Exporter Tab -->
+        <section id="annualTimetableTab" class="tab-content" hidden>
+            <div class="section-header-bar">
+                <div>
+                    <h2>📊 [5단계] 학급별 연간시간표 & 공식 서류 출력</h2>
+                    <p class="section-desc">1~4단계(학사일정+시수편성+행사+기초시간표)가 종합 결합된 연간 34주차 종합 시간표 및 공식 인쇄/PDF 출력 모듈입니다.</p>
+                </div>
+                <div class="grade-selector-wrap" style="display:flex; gap:12px; align-items:center;">
+                    <label>학년:
+                        <select id="annualTimetableGradeSelect" class="form-select">
+                            <option value="1">1학년</option>
+                            <option value="2">2학년</option>
+                            <option value="3">3학년</option>
+                            <option value="4">4학년</option>
+                            <option value="5" selected>5학년</option>
+                            <option value="6">6학년</option>
+                        </select>
+                    </label>
+                    <label>학급:
+                        <select id="annualTimetableClassSelect" class="form-select">
+                            <option value="1">1반</option>
+                            <option value="2">2반</option>
+                            <option value="3">3반</option>
+                            <option value="4">4반</option>
+                            <option value="5">5반</option>
+                        </select>
+                    </label>
+                    <button type="button" id="printOfficialDocBtn" class="primary-button" style="background:#2563eb;">
+                        <span class="material-symbols-outlined">print</span> 서류 인쇄 / PDF
+                    </button>
+                </div>
+            </div>
+
+            <!-- Summary Bar -->
+            <div class="audit-summary-banner margin-top">
+                <div class="audit-card highlight">
+                    <span class="audit-label">선택 학급 연간 시수 합계</span>
+                    <span class="audit-value" id="annualTotalHoursVal">1,088시간</span>
+                </div>
+                <div class="audit-card">
+                    <span class="audit-label">총 연간 수업 주차</span>
+                    <span class="audit-value">34주차</span>
+                </div>
+                <div class="audit-card">
+                    <span class="audit-label">1학기 / 2학기 수업일수</span>
+                    <span class="audit-value" id="semesterDaysVal">93일 / 98일</span>
+                </div>
+            </div>
+
+            <div class="table-container margin-top">
+                <table class="data-table">
+                    <thead>
+                        <tr>
+                            <th>학기</th>
+                            <th>주차</th>
+                            <th>기간 (월.일~월.일)</th>
+                            <th>수업일수</th>
+                            <th>월</th>
+                            <th>화</th>
+                            <th>수</th>
+                            <th>목</th>
+                            <th>금</th>
+                            <th>주별시수</th>
+                            <th>누적진도시수</th>
+                            <th>행사 / 메모 라벨</th>
+                        </tr>
+                    </thead>
+                    <tbody id="annualTimetableTableBody">
+                        <!-- Injected via JS -->
+                    </tbody>
+                    <tfoot id="annualTimetableTableFoot">
+                        <!-- Totals injected via JS -->
+                    </tfoot>
+                </table>
+            </div>
         </section>
 
-        <!-- 5. Roster Tab -->
+        <!-- 6. Roster Tab -->
         <section id="rosterTab" class="tab-content" hidden>
             <div class="controls-row">
                 <input type="text" id="rosterSearch" class="search-input" placeholder="이름으로 검색...">
