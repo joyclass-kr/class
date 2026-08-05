@@ -400,6 +400,8 @@ function createClassroomPlatform(options = {}) {
         ADD COLUMN IF NOT EXISTS subject_name TEXT`,
       `ALTER TABLE classroom_teachers
         ADD COLUMN IF NOT EXISTS room_name TEXT`,
+      `ALTER TABLE classroom_teachers
+        ALTER COLUMN password_hash DROP NOT NULL`,
       `CREATE UNIQUE INDEX IF NOT EXISTS classroom_teachers_email_idx
         ON classroom_teachers (LOWER(google_email))
         WHERE google_email IS NOT NULL`,
@@ -1981,8 +1983,8 @@ function createClassroomPlatform(options = {}) {
       for (const t of cleanTeachers) {
         await client.query(
           `INSERT INTO classroom_teachers
-             (school_id, teacher_name, academic_year, grade, class_number, teacher_type, google_email)
-           VALUES ($1, $2, NULL, NULL, NULL, $3, $4)
+             (school_id, teacher_name, password_hash, academic_year, grade, class_number, teacher_type, google_email)
+           VALUES ($1, $2, 'OAUTH_ONLY', NULL, NULL, NULL, $3, $4)
            ON CONFLICT (lower(google_email)) WHERE google_email IS NOT NULL
            DO UPDATE SET
              school_id = EXCLUDED.school_id,
