@@ -433,6 +433,7 @@
                     <div class="card-desc" id="rosterDesc">전교생 통합 명단입니다. (명단 수정은 학교 관리자만 가능합니다)</div>
                 </div>
                 <div style="display:flex;gap:8px;flex-wrap:wrap;" id="rosterAdminActions">
+                    <button class="btn btn-secondary btn-sm" id="downloadTemplateBtn" onclick="downloadExcelTemplate()">📊 엑셀 양식 다운로드</button>
                     <button class="btn btn-secondary btn-sm" id="pasteSectionBtn" onclick="togglePasteSection()">📥 붙여넣기로 입력</button>
                     <button class="btn btn-secondary btn-sm" id="addStudentBtn" onclick="addSingleStudent()" style="display:none;">+ 학생 추가</button>
                     <button class="btn btn-primary btn-sm" id="saveRosterBtn" onclick="saveRoster()" style="display:none;">💾 저장</button>
@@ -810,32 +811,33 @@
             const afterArr = [];
             const shuttleObj = {};
 
-            clubHeaders.forEach(c => {
-                const val = get(c.idx);
-                if (val && val !== "-") { customFields[c.name] = val; clubsArr.push(val); }
-            });
-            afterHeaders.forEach(a => {
-                const val = get(a.idx);
-                if (val && val !== "-") { customFields[a.name] = val; afterArr.push(val); }
-            });
-            shuttleHeaders.forEach(s => {
-                const val = get(s.idx);
-                if (val && val !== "-") { customFields[s.name] = val; shuttleObj[s.name] = val; }
-            });
+        clubHeaders.forEach(c => {
+            const val = get(c.idx).replace(/\s+/g, "");
+            if (val && val !== "-") { customFields[c.name] = val; clubsArr.push(val); }
+        });
+        afterHeaders.forEach(a => {
+            const val = get(a.idx).replace(/\s+/g, "");
+            if (val && val !== "-") { customFields[a.name] = val; afterArr.push(val); }
+        });
+        shuttleHeaders.forEach(s => {
+            const val = get(s.idx).replace(/\s+/g, "");
+            if (val && val !== "-") { customFields[s.name] = val; shuttleObj[s.name] = val; }
+        });
 
-            const student = {
-                grade: gradeNum, classNumber: classNum,
-                studentNumber: num, rosterName: name,
-                gender: get(genderI) === "여" ? "여" : "남",
-                studentEmail: get(seI).toLowerCase() || null,
-                guardian1Email: get(g1I).toLowerCase() || null,
-                guardian2Email: get(g2I).toLowerCase() || null,
-                customFields,
-                clubs: clubsArr,
-                afterschool: afterArr,
-                shuttle: shuttleObj
-            };
-            students.push(student);
+        const student = {
+            grade: gradeNum, classNumber: classNum,
+            studentNumber: String(num).replace(/\s+/g, ""),
+            rosterName: name.replace(/\s+/g, ""),
+            gender: get(genderI) === "여" ? "여" : "남",
+            studentEmail: get(seI).toLowerCase().replace(/\s+/g, "") || null,
+            guardian1Email: get(g1I).toLowerCase().replace(/\s+/g, "") || null,
+            guardian2Email: get(g2I).toLowerCase().replace(/\s+/g, "") || null,
+            customFields,
+            clubs: clubsArr,
+            afterschool: afterArr,
+            shuttle: shuttleObj
+        };
+        students.push(student);
         }
 
         if (students.length === 0) return setStatus("pasteStatus", "유효한 학생 데이터가 없습니다.", "error");
@@ -857,7 +859,11 @@
 
     window.updateStudentField = function(idx, field, val) {
         if (!allStudents[idx]) return;
-        allStudents[idx][field] = val.trim();
+        // 이름, 번호 등 공백 금지
+        const cleanVal = ["roster_name", "student_number", "gender"].includes(field)
+            ? val.replace(/\s+/g, "")
+            : val.trim();
+        allStudents[idx][field] = cleanVal;
         document.getElementById("saveRosterBtn").style.display = "inline-flex";
         setStatus("rosterStatus", "명단이 수정되었습니다. 변경사항을 저장하려면 '💾 저장' 버튼을 누르세요.");
     };
@@ -865,9 +871,46 @@
     window.updateStudentCustomField = function(idx, key, val) {
         if (!allStudents[idx]) return;
         if (!allStudents[idx].custom_fields) allStudents[idx].custom_fields = {};
-        allStudents[idx].custom_fields[key] = val.trim();
+        // 동아리/방과후/셔틀 항목 명칭 띄어쓰기 자동 제거
+        allStudents[idx].custom_fields[key] = val.replace(/\s+/g, "");
         document.getElementById("saveRosterBtn").style.display = "inline-flex";
         setStatus("rosterStatus", "명단이 수정되었습니다. 변경사항을 저장하려면 '💾 저장' 버튼을 누르세요.");
+    };
+
+    window.downloadExcelTemplate = function() {
+        const allClubs = schoolSettings.clubs.map(c => (c.club_name || c.name || c).replace(/\s+/g, ""));
+        const allAfter = schoolSettings.afterschool.map(a => (a.program_name || a.name || a).replace(/\s+/g, ""));
+        const allShuttle = schoolSettings.shuttleSlots.map(s => (s.slot_name || s.name || s).replace(/\s+/g, ""));
+
+        const fixedLeft = ["학년", "반", "번호", "성명", "성별"];
+        const fixedRight = ["학생구글계정", "보호자1계정", "보호자2계정"];
+        const headers = [...fixedLeft, ...allClubs, ...allAfter, ...allShuttle, ...fixedRight];
+
+        const sampleRow1 = [
+            "1", "1", "1", "홍길동", "남",
+            ...allClubs.map(c => "창의로봇부"),
+            ...allAfter.map(a => "바이올린"),
+            ...allShuttle.map(s => "1호차"),
+            "hong@school.es.kr", "parent1@naver.com", ""
+        ];
+        const sampleRow2 = [
+            "1", "1", "2", "김철수", "남",
+            ...allClubs.map(c => "축구부"),
+            ...allAfter.map(a => "바둑반"),
+            ...allShuttle.map(s => "2호차"),
+            "kim@school.es.kr", "parent2@gmail.com", ""
+        ];
+
+        const csvRows = [headers.join(","), sampleRow1.join(","), sampleRow2.join(",")];
+        const csvContent = "\uFEFF" + csvRows.join("\n");
+
+        const blob = new Blob([csvContent], { type: "text/csv;charset=utf-8;" });
+        const link = document.createElement("a");
+        link.href = URL.createObjectURL(blob);
+        link.download = `전교생명단_기본양식_${currentYear}.csv`;
+        document.body.appendChild(link);
+        link.click();
+        document.body.removeChild(link);
     };
 
     window.deleteStudentRow = function(idx) {
@@ -974,7 +1017,7 @@
 
     window.addClub = function() {
         const input = document.getElementById("newClubInput");
-        const name = input.value.trim();
+        const name = input.value.replace(/\s+/g, ""); // 띄어쓰기 제거
         if (!name) return;
         schoolSettings.clubs.push({ club_name: name });
         renderSettingsList("clubList", schoolSettings.clubs, "clubs", "club_name");
@@ -983,7 +1026,7 @@
     };
     window.addAfterSchool = function() {
         const input = document.getElementById("newAfterInput");
-        const name = input.value.trim();
+        const name = input.value.replace(/\s+/g, ""); // 띄어쓰기 제거
         if (!name) return;
         schoolSettings.afterschool.push({ program_name: name });
         renderSettingsList("afterschoolList", schoolSettings.afterschool, "afterschool", "program_name");
@@ -992,7 +1035,7 @@
     };
     window.addShuttle = function() {
         const input = document.getElementById("newShuttleInput");
-        const name = input.value.trim();
+        const name = input.value.replace(/\s+/g, ""); // 띄어쓰기 제거
         if (!name) return;
         schoolSettings.shuttleSlots.push({ slot_name: name });
         renderSettingsList("shuttleList", schoolSettings.shuttleSlots, "shuttleSlots", "slot_name");
