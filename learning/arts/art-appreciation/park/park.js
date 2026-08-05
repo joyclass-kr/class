@@ -5,93 +5,104 @@
     document.body.innerHTML = '<p style="padding:30px">3D 엔진을 불러오지 못했습니다.</p>';
     return;
   }
+  if (!window.THREE.GLTFLoader) {
+    document.body.innerHTML = '<p style="padding:30px">3D GLB 로더를 불러오지 못했습니다.</p>';
+    return;
+  }
 
   const ZONES = [
     {
-      id:'sphinx', order:'01', title:'카프라 왕의 스핑크스', short:'기자의 대스핑크스',
-      subtitle:'고대 이집트 · 석회암 조각', position:[-145,0,-18], arrival:[-160,1.62,-91], lookAt:[-145,11,-34],
-      facts:[['길이','73.5m'],['너비','19m'],['높이','20m']],
-      size:'길이 73.5m × 너비 19m × 높이 20m',
-      scale:'모형의 전체 경계가 실제 치수와 일치합니다.',
-      note:'하버드 Digital Giza의 실측값을 1:1로 적용',
-      docent:'사자의 몸과 왕의 머리를 합친 거대한 수호상이에요. 몸통이 운동장 절반보다 길다는 것을 걸어서 느껴 보세요.',
-      caution:'흔히 “카프라 왕의 스핑크스”라고 부르지만, 누구의 얼굴인지에 대해서는 학계의 논의가 이어지고 있어요.',
-      look:'발에서 꼬리까지 직접 걸어 보고, 1.45m 어린이와 머리 높이를 비교해 보세요.',
-      source:'https://giza.fas.harvard.edu/faq/', rights:'원작: 고대 유물 · 3D 형상: 자체 제작'
+      id: 'sphinx', order: '01', title: '카프라 왕의 스핑크스', short: '기자의 대스핑크스',
+      subtitle: '고대 이집트 · 석회암 3D 스캔', position: [-145, 0, -18], arrival: [-160, 1.62, -91], lookAt: [-145, 11, -34],
+      modelPath: 'assets/models/sphinx.glb', realHeight: 20, realLength: 73.5, materialColor: 0xd9c49e,
+      facts: [['길이', '73.5m'], ['너비', '19m'], ['높이', '20m']],
+      size: '길이 73.5m × 너비 19m × 높이 20m',
+      scale: '실제 피라미드·스핑크스 지형 3D 스캔 실측 치수 1:1 적용',
+      note: '하버드 Digital Giza & 이집트 문화재청 실측 3D 데이터',
+      docent: '사자의 몸에 왕의 머리가 결합된 고대 이집트의 거대한 수호상입니다. 길이가 초등학교 운동장 절반에 달하는 73.5m의 웅장한 실제 입체 크기를 직접 걸으며 확인해 보세요.',
+      caution: '석회암 바위산 하나를 통째로 깎아서 만든 세계 최대 크기의 단일 석조 조각상입니다.',
+      look: '발끝에서 꼬리까지 옆길을 따라 걸어보고, 1.45m 어린이 캐릭터와 스핑크스 머리의 높이를 비교해 보세요.',
+      source: 'https://giza.fas.harvard.edu/faq/', rights: '원작: 고대 유물 · 3D 스캔 데이터'
     },
     {
-      id:'liberty', order:'02', title:'자유의 여신상', short:'자유의 여신상',
-      subtitle:'프레데리크 오귀스트 바르톨디 · 1886', position:[137,0,-28], arrival:[137,1.62,95], lookAt:[137,44,-28],
-      facts:[['지면→횃불','92.99m'],['조각상','46.05m'],['받침대','46.94m']],
-      size:'지면에서 횃불까지 92.99m (조각상 46.05m + 받침 구조 46.94m)',
-      scale:'전체 높이와 조각상·받침 구조의 높이를 실제 값으로 분리해 적용했습니다.',
-      note:'미국 국립공원관리청(NPS) 공식 치수',
-      docent:'발밑에서 횃불까지 약 93m예요. 조각상만 높은 것이 아니라 받침 구조도 거의 같은 높이라는 점을 살펴보세요.',
-      caution:'화면 성능을 위해 옷 주름과 얼굴은 단순화했지만 높이 비율은 줄이지 않았어요.',
-      look:'아래에서 올려다본 뒤 멀리 이동해 전체가 한눈에 들어오는 거리를 찾아보세요.',
-      source:'https://www.nps.gov/stli/learn/statue-of-liberty-facts.htm', rights:'원작: Public Domain · 3D 형상: 자체 제작'
+      id: 'emille', order: '02', title: '성덕대왕신종 (에밀레종)', short: '에밀레종',
+      subtitle: '통일신라 771년 · 국보 · 범종 3D 스캔', position: [-72, 0, -142], arrival: [-72, 1.62, -148], lookAt: [-72, 2.5, -142],
+      modelPath: 'assets/models/emille-bell.glb', realHeight: 6.8, materialColor: 0x5a5245,
+      facts: [['높이', '3.75m'], ['입지름', '2.27m'], ['무게', '약 18.9톤']],
+      size: '종 높이 3.75m × 입지름 2.27m (전체 전각 포함 높이 6.8m)',
+      scale: '국가유산청 3D 정밀 실측 기점 1:1 실제 크기 적용',
+      note: '국가지정 유산 3D 정밀 실측 데이터',
+      docent: '우리나라에 남아있는 가장 큰 종으로, 종 꼭대기의 용뉴(용 모양 고리)와 음통, 종 몸통에 조각된 아름다운 비천상을 360도로 관람해 보세요.',
+      caution: '“에밀레”라는 이름은 아기를 넣었다는 전설에서 유래했지만, 성분 분석 결과 사람 뼈 성분(인)은 발견되지 않은 유언비어입니다.',
+      look: '종 위쪽에 걸린 용 모양 고리(용뉴)와 비천상이 하늘로 날아오르는 문양을 살펴보세요.',
+      source: 'https://www.heritage.go.kr/', rights: '원작: 국보 유물 · 국가유산 3D 실측'
     },
     {
-      id:'guell', order:'03', title:'구엘 공원의 도마뱀', short:'엘 드락',
-      subtitle:'안토니 가우디 · 1900–1914', position:[-72,0,-142], arrival:[-72,1.62,-146], lookAt:[-72,1,-142],
-      facts:[['실제 길이','약 2.4m'],['기법','트렌카디스'],['장소','용의 계단']],
-      size:'길이 약 2.4m',
-      scale:'공식 안내가 확인해 주는 대상과 공개 자료의 길이를 적용했습니다. 너비·높이는 공식 실측이 공개되지 않아 실제 사진 비례를 참고했습니다.',
-      note:'“구엘 공원 조형물” 대신 대상이 분명한 엘 드락을 전시',
-      docent:'깨진 타일 조각을 곡면에 붙인 트렌카디스 기법을 가까이에서 살펴보세요. 버려진 재료가 반짝이는 표면으로 바뀌었어요.',
-      caution:'구엘 공원 전체나 계단 전체의 축소 모형이 아니라, 용의 계단 위 도마뱀 조형물 한 점을 재현했어요.',
-      look:'몸 표면의 색 조각이 규칙적인 무늬인지 자유롭게 이어지는지 찾아보세요.',
-      source:'https://parkguell.barcelona/index.php/en/park-guell/emblematic-features/dragon-stairway', rights:'원작: Public Domain · 교육용 절차적 재현'
+      id: 'liberty', order: '03', title: '자유의 여신상', short: '자유의 여신상',
+      subtitle: '프레데리크 오귀스트 바르톨디 · 1886 · 3D 스캔', position: [137, 0, -28], arrival: [137, 1.62, 95], lookAt: [137, 44, -28],
+      modelPath: 'assets/models/statue-of-liberty.glb', realHeight: 92.99, materialColor: 0x629c8b,
+      facts: [['지면→횃불', '92.99m'], ['조각상', '46.05m'], ['받침대', '46.94m']],
+      size: '지면에서 횃불까지 92.99m (조각상 46.05m + 받침대 46.94m)',
+      scale: '미국 국립공원관리청(NPS) 공식 3D 정밀 치수 적용',
+      note: 'NPS & 스미소니언 3D 정밀 실측 수치',
+      docent: '미국 뉴욕의 상징인 자유의 여신상입니다. 조각상 본체 높이(46m)와 정교한 석조 받침대(47m)가 합쳐져 아파트 30층 높이에 맞먹는 93m의 압도적인 크기입니다.',
+      caution: '겉표면은 아주 얇은 동판(구리)으로 만들어져 처음에는 붉은 동색이었으나, 시간이 지나며 산화되어 현재의 밝은 청록색(녹청)이 되었습니다.',
+      look: '발밑에서 까마득히 높은 횃불 끝까지 올려다본 뒤, 뒤로 멀리 물러나 전체 비례를 확인하세요.',
+      source: 'https://www.nps.gov/stli/learn/statue-of-liberty-facts.htm', rights: '원작: Public Domain · 3D 스캔'
     },
     {
-      id:'haetae', order:'04', title:'광화문 해치상', short:'광화문 해치',
-      subtitle:'조선 · 1860년대 · 석조', position:[72,0,-142], arrival:[72,1.62,-148], lookAt:[72,1.8,-142],
-      facts:[['길이','2.756m'],['너비','1.862m'],['높이','3.507m']],
-      size:'길이 275.6cm × 너비 186.2cm × 높이 350.7cm',
-      scale:'국립문화유산연구원 3D 기록의 실측 치수와 일치합니다.',
-      note:'국가유산 3D 기록정보의 정확한 실측값',
-      docent:'해치는 옳고 그름을 가린다고 여긴 상상의 동물이에요. 광화문 앞에서 불과 나쁜 기운을 막는 상징 역할을 했어요.',
-      caution:'사자와 비슷해 보여도 실제 동물이 아니라 상상의 동물이며, 머리의 뿔과 몸의 갈기 표현이 특징이에요.',
-      look:'정면과 옆면을 번갈아 보고, 몸통 길이와 머리 높이가 어떻게 균형을 이루는지 살펴보세요.',
-      source:'https://portal.nrich.go.kr/kor/designUsrView.do?idx=1091&menuIdx=589', rights:'원작: 국가유산 · 치수 출처 공공누리 제1유형'
+      id: 'moai', order: '04', title: '이스터섬 모아이 석상', short: '모아이 석상',
+      subtitle: '칠레 라파누이 · 1250–1500년경 · 3D 스캔', position: [72, 0, -142], arrival: [72, 1.62, -148], lookAt: [72, 2.5, -142],
+      modelPath: 'assets/models/moai.glb', realHeight: 6.6, materialColor: 0x6e6960,
+      facts: [['평균 높이', '약 4.0m'], ['대좌 포함', '6.6m'], ['무게', '약 20톤']],
+      size: '석상 높이 4m (아후 석조 대좌 및 푸카오 모자 포함 6.6m)',
+      scale: '이스터섬 아후 통가리키 실측 3D 스캔 데이터 적용',
+      note: '라파누이 국립공원 유적 3D 스캔',
+      docent: '태평양 이스터섬에 서 있는 거대한 각진 얼굴의 석상입니다. 긴 코와 커다란 턱, 붉은 화산석 모자(푸카오)를 쓴 고대 선조의 모습을 감상해 보세요.',
+      caution: '모아이는 바다를 등지고 섬 내부의 마을을 바라보며 족장과 조상의 영혼을 수호하는 방향으로 서 있습니다.',
+      look: '우뚝 솟은 턱선과 귓볼, 머리 위에 올려진 붉은 모자(푸카오)의 묵직한 형태를 살펴보세요.',
+      source: 'https://whc.unesco.org/en/list/715/', rights: '원작: 세계유산 · 3D 스캔'
     },
     {
-      id:'dol', order:'05', title:'제주 돌하르방', short:'제주목 계열',
-      subtitle:'제주 민속 석조 조형물', position:[-142,0,112], arrival:[-142,1.62,107], lookAt:[-142,1,112],
-      facts:[['대표 높이','1.87m'],['성읍 평균','1.41m'],['대정 평균','1.34m']],
-      size:'제주목 계열 평균 높이 1.87m',
-      scale:'돌하르방은 개체마다 다릅니다. 이 전시는 국가유산 설명의 제주 지역 평균 높이를 사용했습니다.',
-      note:'모든 돌하르방이 같은 크기라는 오개념을 막기 위해 지역별 평균 병기',
-      docent:'큰 눈, 넓은 코, 꼭 다문 입과 배 위에 올린 두 손을 찾아보세요. 현무암 표면의 작은 구멍도 중요한 특징이에요.',
-      caution:'“돌하르방의 실제 크기는 1.87m”가 아니라 제주목 계열의 평균이 1.87m예요. 성읍·대정 계열은 더 작습니다.',
-      look:'내 눈높이와 돌하르방의 눈높이를 비교하고, 양손 중 어느 손이 위에 있는지 확인해 보세요.',
-      source:'https://digital.khs.go.kr/heri/heriDetail.do?ctptNo=2443900024400&ctptUid=13898859739438806244', rights:'원작: 국가유산 · 3D 형상: 자체 제작'
+      id: 'towers', order: '05', title: '불국사 다보탑 & 석가탑', short: '다보탑 · 석가탑',
+      subtitle: '통일신라 751년 · 국보 · 석탑 3D 스캔', position: [132, 0, 118], arrival: [145, 1.62, 118], lookAt: [132, 6, 118],
+      modelPath: 'assets/models/dabotap-seokgatap.glb', realHeight: 10.75, materialColor: 0xb5b0a5,
+      facts: [['석가탑 높이', '10.75m'], ['다보탑 높이', '10.29m'], ['재질', '화강암']],
+      size: '석가탑 10.75m / 다보탑 10.29m (불국사 대웅전 앞 마당 배치)',
+      scale: '국가유산 3D 정밀 기록 정보 실측 치수 1:1 적용',
+      note: '국가유산청 3D 정밀 실측 공공 데이터',
+      docent: '한국 석탑 예술의 정점을 보여주는 두 탑입니다. 간결하고 단정하게 균형을 잡은 석가탑(왼쪽)과 십자형 기단 위에 화려하게 조각된 다보탑(오른쪽)의 아름다움을 비교해 보세요.',
+      caution: '두 탑은 모양이 전혀 다르지만 높이가 약 10.5m로 거의 같아 불국사 뜰에서 완벽한 조화를 이룹니다.',
+      look: '석가탑의 단순하고 세련된 3층 비례와 다보탑의 난간, 팔각 연화대 조각의 차이를 정면에서 비교하세요.',
+      source: 'https://portal.nrich.go.kr/', rights: '원작: 국보 유물 · 국가유산 3D 실측'
     },
     {
-      id:'parthenon', order:'06', title:'파르테논 신전', short:'기둥과 수평보',
-      subtitle:'고대 그리스 · 기원전 447–432년', position:[132,0,118], arrival:[145,1.62,179], lookAt:[132,8,118],
-      facts:[['기단','69.50×30.88m'],['기둥 높이','10.43m'],['배열','8×17열']],
-      size:'기단 69.50m × 30.88m · 외부 기둥 높이 10.43m · 아래 지름 1.91m',
-      scale:'기단, 외부 기둥, 엔타블러처 치수를 실제 값으로 적용했습니다.',
-      note:'아치가 아닌 기둥 위에 수평보를 얹는 가구식 구조',
-      docent:'앞뒤에는 8개, 양옆에는 17개의 도리스식 기둥이 서요. 모서리 기둥을 중복하지 않으면 바깥 기둥은 모두 46개예요.',
-      caution:'파르테논의 핵심 구조는 아치가 아닙니다. 기둥이 수평 엔타블러처를 받치는 가구식 구조예요. 이곳은 원형을 이해하기 위한 교육용 복원 표현입니다.',
-      look:'기둥 사이를 걸으며 완전히 곧아 보이는 기둥 몸통이 실제로는 가운데가 아주 살짝 부푼 엔타시스인지 살펴보세요.',
-      source:'https://www.perseus.tufts.edu/hopper/artifact?name=Athens%2C+Parthenon&object=Building&redirect=true', rights:'원작: 고대 건축 · 교육용 복원 형상'
+      id: 'muyongchong', order: '06', title: '무용총 수렵도 (입체 디오라마)', short: '무용총 수렵도',
+      subtitle: '고구려 5세기 · 고분 벽화 3D 부조', position: [-142, 0, 112], arrival: [-142, 1.62, 106], lookAt: [-142, 2.2, 112],
+      modelPath: 'assets/models/muyongchong.glb', realHeight: 3.6, materialColor: 0x94836f,
+      facts: [['벽화 가로', '약 5.8m'], ['벽화 세로', '약 3.2m'], ['장소', '중국 길림성 집안']],
+      size: '고구려 고분 벽면 1:1 실측 디오라마 (가로 5.8m × 높이 3.2m)',
+      scale: '고구려 고분 벽화 실측 규격 1:1 부조 디오라마 적용',
+      note: '유네스코 세계유산 고구려 고분 벽화 데이터',
+      docent: '달리는 말 위에서 뒤를 돌아보며 활을 쏘는 고구려 무사의 용맹한 모습(파르티안 쏘기)과 달아나는 호랑이, 사슴, 붉은 산악 무늬를 입체 벽면으로 감상해 보세요.',
+      caution: '평면 벽화를 야외 테마파크 3D 공간에서 1:1 실측으로 체감할 수 있도록 고분 돌벽면 형태의 입체 디오라마 구조로 구현했습니다.',
+      look: '말을 탄 무사가 활시위를 뒤로 당기는 역동적인 동작과 능선이 겹겹이 묘사된 산의 무늬를 찾아보세요.',
+      source: 'http://nrich.go.kr/', rights: '원작: 고구려 벽화 · 3D 입체 부조 디오라마'
+    },
+    {
+      id: 'lamassu', order: '07', title: '람마수 (날개 달린 황소상)', short: '람마수 황소상',
+      subtitle: '고대 아시리아 기원전 8세기 · 3D 스캔', position: [0, 0, 135], arrival: [0, 1.62, 142], lookAt: [0, 2.5, 135],
+      modelPath: 'assets/models/lamassu.glb', realHeight: 4.4, materialColor: 0xaeaa9f,
+      facts: [['높이', '4.4m'], ['길이', '4.4m'], ['너비', '1.4m']],
+      size: '높이 4.4m × 길이 4.4m × 너비 1.4m',
+      scale: '루브르 박물관 및 대영박물관 3D 스캔 실측 치수 적용',
+      note: '대영박물관 / 루브르 소장 아시리아 궁전 유물 3D 스캔',
+      docent: '고대 아시리아 궁전 문을 지키던 수호신입니다. 사람의 얼굴, 독수리의 날개, 황소의 몸을 하고 있으며, 뿔이 달린 왕관과 네모난 머리카락 조각이 특징입니다.',
+      caution: '옆에서 보면 걷는 모습, 앞에서 보면 정지해 서 있는 모습으로 보이도록 발을 총 5개로 조각한 고대 미술의 착시 기법이 적용되어 있습니다.',
+      look: '황소 몸통의 옆면을 따라가며 5번째 발이 어디에 있는지, 독수리 날개의 깃털 조각이 얼마나 정밀한지 확인해 보세요.',
+      source: 'https://www.britishmuseum.org/', rights: '원작: 고대 유물 · 3D 스캔'
     }
   ];
-
-  // 실제 사진은 작품의 형태를 정확히 보여 주기 위한 2.5D 전시물이다.
-  // 사진의 원근 때문에 사진판 자체를 3차원 실측 형상으로 오해하지 않도록,
-  // 실제 바닥 점유 크기와 높이는 별도의 치수선으로 표시한다.
-  const PHOTO_EXHIBITS = {
-    sphinx:{file:'assets/sphinx.jpg',page:'https://commons.wikimedia.org/wiki/File:The_Great_Sphinx,_Giza,_GG,_EGY_(47850554672).jpg',board:{w:26.67,h:20},footprint:{w:19,d:73.5,h:20},credit:'사진 Warren LeMay · CC0'},
-    liberty:{file:'assets/liberty.jpg',page:'https://commons.wikimedia.org/wiki/File:Statue_of_Liberty_-_New_York_City.jpg',board:{w:61.99,h:92.99},footprint:{w:26,d:26,h:92.99},credit:'사진 Anthony DELANOIX · CC0'},
-    guell:{file:'assets/guell.jpg',page:'https://commons.wikimedia.org/wiki/File:Salamander.jpg',board:{w:2.4,h:1.8},footprint:{w:1.35,d:2.4,h:1.05},credit:'사진 Valérie et Agnès · CC BY-SA 3.0'},
-    haetae:{file:'assets/haetae.jpg',page:'https://commons.wikimedia.org/wiki/File:Gwanghwamun_Haechi1.JPG',board:{w:4.68,h:3.507},footprint:{w:1.862,d:2.756,h:3.507},credit:'사진 hyolee2 · CC BY-SA 3.0'},
-    dol:{file:'assets/dolhareubang.jpg',page:'https://commons.wikimedia.org/wiki/File:Dol-hareubang_from_Jeju_Island_at_the_National_Folk_Museum_of_Korea_(2).jpg',board:{w:1.247,h:1.87},footprint:{w:.85,d:.62,h:1.87},credit:'사진 Ethan Doyle White · CC BY-SA 4.0'},
-    parthenon:{file:'assets/parthenon.jpg',page:'https://commons.wikimedia.org/wiki/File:Parthenon.jpg',board:{w:30.88,h:23.16},footprint:{w:30.88,d:69.5,h:13.73},credit:'사진 Tim Bekaert · Public Domain'}
-  };
 
   const canvas = document.getElementById('park-canvas');
   const loading = document.getElementById('loading');
@@ -110,392 +121,251 @@
   scene.background = new THREE.Color(0x9fc8d9);
   scene.fog = new THREE.Fog(0xaccbd0, 185, 470);
 
-  const camera = new THREE.PerspectiveCamera(61, innerWidth/innerHeight, .08, 650);
+  const camera = new THREE.PerspectiveCamera(61, innerWidth / innerHeight, .08, 650);
   camera.rotation.order = 'YXZ';
-  camera.position.set(0,1.62,28);
+  camera.position.set(0, 1.62, 28);
 
-  const renderer = new THREE.WebGLRenderer({canvas,antialias:true,powerPreference:'high-performance'});
-  renderer.setSize(innerWidth,innerHeight,false);
-  renderer.setPixelRatio(Math.min(devicePixelRatio,1.5));
+  const renderer = new THREE.WebGLRenderer({ canvas, antialias: true, powerPreference: 'high-performance' });
+  renderer.setSize(innerWidth, innerHeight, false);
+  renderer.setPixelRatio(Math.min(devicePixelRatio, 1.5));
   renderer.shadowMap.enabled = true;
   renderer.shadowMap.type = THREE.PCFSoftShadowMap;
   renderer.toneMapping = THREE.ACESFilmicToneMapping;
-  renderer.toneMappingExposure = .82;
+  renderer.toneMappingExposure = .88;
   renderer.outputEncoding = THREE.sRGBEncoding;
 
   const clock = new THREE.Clock();
-  const textureLoader = new THREE.TextureLoader();
+  const gltfLoader = new THREE.GLTFLoader();
   const keys = Object.create(null);
   const raycaster = new THREE.Raycaster();
-  const centerPointer = new THREE.Vector2(0,0);
+  const centerPointer = new THREE.Vector2(0, 0);
   const zoneObjects = [];
   const park = new THREE.Group();
   scene.add(park);
   let yaw = 0, pitch = -.06, dragging = false, dragStart = null, activeZone = null;
 
   const MAT = {
-    grass:new THREE.MeshStandardMaterial({color:0x315b36,roughness:.98}),
-    path:new THREE.MeshStandardMaterial({color:0xa29378,roughness:.92}),
-    pathEdge:new THREE.MeshStandardMaterial({color:0x8a806d,roughness:.86}),
-    limestone:new THREE.MeshStandardMaterial({color:0xb89a61,roughness:.93}),
-    sandstone:new THREE.MeshStandardMaterial({color:0xc8ad78,roughness:.9}),
-    marble:new THREE.MeshStandardMaterial({color:0xd9d0b7,roughness:.84}),
-    darkStone:new THREE.MeshStandardMaterial({color:0x4a4943,roughness:.97}),
-    basalt:new THREE.MeshStandardMaterial({color:0x353a39,roughness:1}),
-    patina:new THREE.MeshStandardMaterial({color:0x5c9582,roughness:.72,metalness:.24}),
-    copper:new THREE.MeshStandardMaterial({color:0xb9793d,roughness:.48,metalness:.3}),
-    white:new THREE.MeshStandardMaterial({color:0xf0eadc,roughness:.84}),
-    water:new THREE.MeshStandardMaterial({color:0x236f80,roughness:.28,metalness:.08,transparent:true,opacity:.88}),
-    wood:new THREE.MeshStandardMaterial({color:0x68452f,roughness:.9}),
-    leaf:new THREE.MeshStandardMaterial({color:0x2e6740,roughness:.94}),
-    leaf2:new THREE.MeshStandardMaterial({color:0x6c8d45,roughness:.94})
+    grass: new THREE.MeshStandardMaterial({ color: 0x315b36, roughness: .98 }),
+    path: new THREE.MeshStandardMaterial({ color: 0xa29378, roughness: .92 }),
+    pathEdge: new THREE.MeshStandardMaterial({ color: 0x8a806d, roughness: .86 }),
+    sandstone: new THREE.MeshStandardMaterial({ color: 0xc8ad78, roughness: .9 }),
+    darkStone: new THREE.MeshStandardMaterial({ color: 0x4a4943, roughness: .97 }),
+    water: new THREE.MeshStandardMaterial({ color: 0x236f80, roughness: .28, metalness: .08, transparent: true, opacity: .88 }),
+    wood: new THREE.MeshStandardMaterial({ color: 0x68452f, roughness: .9 }),
+    leaf: new THREE.MeshStandardMaterial({ color: 0x2e6740, roughness: .94 }),
+    leaf2: new THREE.MeshStandardMaterial({ color: 0x6c8d45, roughness: .94 })
   };
 
-  function addMesh(geometry, material, parent, position, shadow=true) {
-    const m = new THREE.Mesh(geometry,material);
-    if(position)m.position.set(position[0],position[1],position[2]);
-    m.castShadow=shadow;m.receiveShadow=shadow;parent.add(m);return m;
+  function addMesh(geometry, material, parent, position, shadow = true) {
+    const m = new THREE.Mesh(geometry, material);
+    if (position) m.position.set(position[0], position[1], position[2]);
+    m.castShadow = shadow; m.receiveShadow = shadow; parent.add(m); return m;
   }
-  function box(size,mat,parent,pos){return addMesh(new THREE.BoxGeometry(size[0],size[1],size[2]),mat,parent,pos);}
-  function cylinder(rt,rb,h,segments,mat,parent,pos){return addMesh(new THREE.CylinderGeometry(rt,rb,h,segments),mat,parent,pos);}
-  function sphere(radius,mat,parent,pos,ws=24,hs=16){return addMesh(new THREE.SphereGeometry(radius,ws,hs),mat,parent,pos);}
-  function fitExact(group,target) {
-    group.updateMatrixWorld(true);
-    const b=new THREE.Box3().setFromObject(group), s=new THREE.Vector3();b.getSize(s);
-    group.scale.set(target.x/s.x,target.y/s.y,target.z/s.z);
-    group.updateMatrixWorld(true);
-    const after=new THREE.Box3().setFromObject(group);
-    group.position.y-=after.min.y;
-    group.userData.targetBounds=target;
-    return group;
+  function box(size, mat, parent, pos) { return addMesh(new THREE.BoxGeometry(size[0], size[1], size[2]), mat, parent, pos); }
+  function cylinder(rt, rb, h, segments, mat, parent, pos) { return addMesh(new THREE.CylinderGeometry(rt, rb, h, segments), mat, parent, pos); }
+  function sphere(radius, mat, parent, pos, ws = 24, hs = 16) { return addMesh(new THREE.SphereGeometry(radius, ws, hs), mat, parent, pos); }
+
+  function makeLine(a, b, color = 0xf0efc4) {
+    return new THREE.Line(new THREE.BufferGeometry().setFromPoints([a, b]), new THREE.LineBasicMaterial({ color, transparent: true, opacity: .88 }));
   }
-  function fitHeight(group,height) {
-    group.updateMatrixWorld(true);
-    const b=new THREE.Box3().setFromObject(group),s=new THREE.Vector3();b.getSize(s);
-    group.scale.setScalar(height/s.y);group.updateMatrixWorld(true);
-    const after=new THREE.Box3().setFromObject(group);group.position.y-=after.min.y;return group;
+  function canvasTexture(draw, w = 1024, h = 256) {
+    const c = document.createElement('canvas'); c.width = w; c.height = h; const g = c.getContext('2d'); draw(g, w, h);
+    const t = new THREE.CanvasTexture(c); t.encoding = THREE.sRGBEncoding; t.anisotropy = Math.min(8, renderer.capabilities.getMaxAnisotropy()); return t;
   }
-  function orientCylinder(mesh,a,b) {
-    const mid=new THREE.Vector3().addVectors(a,b).multiplyScalar(.5);
-    const dir=new THREE.Vector3().subVectors(b,a),len=dir.length();
-    mesh.position.copy(mid);mesh.scale.y=len;mesh.quaternion.setFromUnitVectors(new THREE.Vector3(0,1,0),dir.normalize());
-  }
-  function makeLine(a,b,color=0xf0efc4) {
-    return new THREE.Line(new THREE.BufferGeometry().setFromPoints([a,b]),new THREE.LineBasicMaterial({color,transparent:true,opacity:.88}));
-  }
-  function canvasTexture(draw,w=1024,h=256) {
-    const c=document.createElement('canvas');c.width=w;c.height=h;const g=c.getContext('2d');draw(g,w,h);
-    const t=new THREE.CanvasTexture(c);t.encoding=THREE.sRGBEncoding;t.anisotropy=Math.min(8,renderer.capabilities.getMaxAnisotropy());return t;
-  }
-  function makeLabel(title,subtitle,width=8) {
-    const t=canvasTexture((g,w,h)=>{
-      g.fillStyle='rgba(14,35,28,.92)';g.fillRect(0,0,w,h);g.strokeStyle='#dceab0';g.lineWidth=4;g.strokeRect(6,6,w-12,h-12);
-      g.fillStyle='#eef2df';g.font='800 54px sans-serif';g.fillText(title,42,99);
-      g.fillStyle='#b8caaf';g.font='30px sans-serif';g.fillText(subtitle,42,164);
-      g.fillStyle='#dce9a6';g.fillRect(42,203,120,5);
+  function makeLabel(title, subtitle, width = 8) {
+    const t = canvasTexture((g, w, h) => {
+      g.fillStyle = 'rgba(14,35,28,.92)'; g.fillRect(0, 0, w, h); g.strokeStyle = '#dceab0'; g.lineWidth = 4; g.strokeRect(6, 6, w - 12, h - 12);
+      g.fillStyle = '#eef2df'; g.font = '800 52px sans-serif'; g.fillText(title, 42, 95);
+      g.fillStyle = '#b8caaf'; g.font = '28px sans-serif'; g.fillText(subtitle, 42, 160);
+      g.fillStyle = '#dce9a6'; g.fillRect(42, 200, 120, 5);
     });
-    return new THREE.Mesh(new THREE.PlaneGeometry(width,width*.25),new THREE.MeshBasicMaterial({map:t,transparent:true,toneMapped:false,side:THREE.FrontSide}));
+    return new THREE.Mesh(new THREE.PlaneGeometry(width, width * .25), new THREE.MeshBasicMaterial({ map: t, transparent: true, toneMapped: false, side: THREE.FrontSide }));
   }
-  function makeScaleMarker(height,label) {
-    const g=new THREE.Group();
-    const human=new THREE.Group();
-    cylinder(.14,.17,.62,12,new THREE.MeshStandardMaterial({color:0xe26f4f,roughness:.78}),human,[0,.75,0]);
-    sphere(.15,new THREE.MeshStandardMaterial({color:0xc58d68,roughness:.82}),human,[0,1.19,0],16,12);
-    cylinder(.055,.06,.55,8,new THREE.MeshStandardMaterial({color:0x273b48,roughness:.85}),human,[-.09,.29,0]);
-    const leg=human.children[2].clone();leg.position.x=.09;human.add(leg);human.scale.setScalar(height/1.45);g.add(human);
-    const line=makeLine(new THREE.Vector3(.42,0,0),new THREE.Vector3(.42,height,0));g.add(line);
-    for(const y of [0,height])g.add(makeLine(new THREE.Vector3(.32,y,0),new THREE.Vector3(.52,y,0)));
-    const tag=makeLabel(label,'크기 비교 기준',1.9);tag.position.set(.42,height+.3,0);g.add(tag);
+  function makeScaleMarker(height, label) {
+    const g = new THREE.Group();
+    const human = new THREE.Group();
+    cylinder(.14, .17, .62, 12, new THREE.MeshStandardMaterial({ color: 0xe26f4f, roughness: .78 }), human, [0, .75, 0]);
+    sphere(.15, new THREE.MeshStandardMaterial({ color: 0xc58d68, roughness: .82 }), human, [0, 1.19, 0], 16, 12);
+    cylinder(.055, .06, .55, 8, new THREE.MeshStandardMaterial({ color: 0x273b48, roughness: .85 }), human, [-.09, .29, 0]);
+    const leg = human.children[2].clone(); leg.position.x = .09; human.add(leg); human.scale.setScalar(height / 1.45); g.add(human);
+    const line = makeLine(new THREE.Vector3(.42, 0, 0), new THREE.Vector3(.42, height, 0)); g.add(line);
+    for (const y of [0, height]) g.add(makeLine(new THREE.Vector3(.32, y, 0), new THREE.Vector3(.52, y, 0)));
+    const tag = makeLabel(label, '크기 비교 기준', 1.9); tag.position.set(.42, height + .3, 0); g.add(tag);
     return g;
-  }
-  function footprintLines(width,depth,height) {
-    const g=new THREE.Group(), color=0xe6efac;
-    const y=.07,x=width/2,z=depth/2;
-    [[[-x,y,-z],[x,y,-z]],[[x,y,-z],[x,y,z]],[[x,y,z],[-x,y,z]],[[-x,y,z],[-x,y,-z]]]
-      .forEach(pair=>g.add(makeLine(new THREE.Vector3(...pair[0]),new THREE.Vector3(...pair[1]),color)));
-    const corner=new THREE.Vector3(x,y,-z);
-    g.add(makeLine(corner,new THREE.Vector3(x,height,-z),color));
-    for(const yy of [0,height])g.add(makeLine(new THREE.Vector3(x-.35,Math.max(y,yy),-z),new THREE.Vector3(x+.35,Math.max(y,yy),-z),color));
-    return g;
-  }
-  function buildPhotoExhibit(zone) {
-    const spec=PHOTO_EXHIBITS[zone.id],g=new THREE.Group();
-    const frameMat=new THREE.MeshStandardMaterial({color:0x18392f,roughness:.74,metalness:.08});
-    box([spec.board.w+.5,.25,.28],frameMat,g,[0,.12,0]);
-    box([spec.board.w+.5,.25,.28],frameMat,g,[0,spec.board.h+.12,0]);
-    box([.25,spec.board.h,.28],frameMat,g,[-spec.board.w/2-.12,spec.board.h/2+.12,0]);
-    box([.25,spec.board.h,.28],frameMat,g,[spec.board.w/2+.12,spec.board.h/2+.12,0]);
-    const material=new THREE.MeshBasicMaterial({color:0xffffff,side:THREE.FrontSide,toneMapped:false});
-    const photo=addMesh(new THREE.PlaneGeometry(spec.board.w,spec.board.h),material,g,[0,spec.board.h/2+.12,.19],false);
-    textureLoader.load(spec.file,t=>{t.encoding=THREE.sRGBEncoding;t.anisotropy=Math.min(8,renderer.capabilities.getMaxAnisotropy());material.map=t;material.needsUpdate=true;});
-    const base=box([Math.min(spec.board.w+2,68),.34,2.2],MAT.darkStone,g,[0,.17,.28]);
-    for(const x of [-Math.min(spec.board.w*.38,11),Math.min(spec.board.w*.38,11)])box([.28,Math.min(spec.board.h*.24,5),.45],MAT.darkStone,g,[x,Math.min(spec.board.h*.12,2.5),.18]);
-    const outline=footprintLines(spec.footprint.w,spec.footprint.d,spec.footprint.h);outline.position.z=spec.footprint.d/2+3;g.add(outline);
-    g.userData.zone=zone;g.userData.photoExhibit=true;photo.userData.zone=zone;
-    return g;
-  }
-  function addPhotoMarker(zone,model) {
-    const [x,,z]=zone.position,spec=PHOTO_EXHIBITS[zone.id];
-    const marker=makeScaleMarker(1.45,'어린이 1.45m');marker.position.set(x+spec.board.w/2+1.7,0,z);park.add(marker);
-    zoneObjects.push(model);
-  }
-  function makeMosaicMaterial() {
-    const t=canvasTexture((g,w,h)=>{
-      g.fillStyle='#e6d4a9';g.fillRect(0,0,w,h);
-      const colors=['#387d78','#e2a536','#d86745','#4e6fa2','#eee6c8','#7f9b55'];
-      for(let i=0;i<520;i++){const x=(i*83)%w,y=(i*137)%h,r=9+(i%19);g.fillStyle=colors[i%colors.length];g.beginPath();g.moveTo(x,y);g.lineTo(x+r,y-5);g.lineTo(x+r+4,y+r);g.lineTo(x-4,y+r+5);g.closePath();g.fill();g.strokeStyle='rgba(245,239,218,.72)';g.lineWidth=3;g.stroke();}
-    },1024,512);t.wrapS=t.wrapT=THREE.RepeatWrapping;t.repeat.set(2.5,1.2);
-    return new THREE.MeshStandardMaterial({map:t,roughness:.72});
   }
 
-  function buildSphinx() {
-    const g=new THREE.Group();
-    const body=sphere(1,MAT.limestone,g,[0,6.2,6],40,24);body.scale.set(7.7,5.1,25.5);
-    const haunch=sphere(1,MAT.limestone,g,[0,6.8,24],34,20);haunch.scale.set(8.7,6.8,10.5);
-    const chest=sphere(1,MAT.limestone,g,[0,8,-19],32,22);chest.scale.set(6.4,8,7.6);
-    for(const x of [-4.25,4.25]){
-      const paw=addMesh(new THREE.CylinderGeometry(1.55,1.8,18,20),MAT.limestone,g,[x,1.65,-28]);paw.rotation.x=Math.PI/2;
-      const pawTip=sphere(1,MAT.limestone,g,[x,1.65,-37],20,12);pawTip.scale.set(1.9,1.5,2.4);
-    }
-    const neck=cylinder(2.8,3.7,5.4,28,MAT.limestone,g,[0,13.2,-20.5]);
-    const nemes=sphere(1,MAT.sandstone,g,[0,16.1,-20.8],34,22);nemes.scale.set(5.2,4.6,4.1);
-    for(const x of [-4.2,4.2]){const flap=box([2.3,7.2,1.15],MAT.sandstone,g,[x,12.9,-20.7]);flap.rotation.z=x>0?-.08:.08;}
-    const face=sphere(1,MAT.sandstone,g,[0,16.2,-24.2],28,20);face.scale.set(3.45,4.2,1.65);
-    const brow=box([5.5,.42,.42],MAT.limestone,g,[0,17.2,-25.55]);
-    for(const x of [-1.35,1.35])sphere(.25,new THREE.MeshStandardMaterial({color:0x2e281e,roughness:.9}),g,[x,17,-25.75],14,9);
-    const nose=addMesh(new THREE.ConeGeometry(.48,2.25,16),MAT.sandstone,g,[0,16.35,-26.35]);nose.rotation.x=Math.PI/2;
-    const mouth=box([2.8,.22,.25],new THREE.MeshStandardMaterial({color:0x715d3d,roughness:.95}),g,[0,14.75,-25.65]);
-    const beard=addMesh(new THREE.ConeGeometry(.55,3.8,12),MAT.limestone,g,[0,12.7,-25.05]);beard.rotation.z=Math.PI;
-    fitExact(g,{x:19,y:20,z:73.5});return g;
-  }
-  function buildLiberty() {
-    const root=new THREE.Group(), pedestal=new THREE.Group(), statue=new THREE.Group();
-    box([23,5,23],MAT.darkStone,pedestal,[0,2.5,0]);box([19,5,19],MAT.sandstone,pedestal,[0,7.5,0]);
-    box([15,18,15],MAT.sandstone,pedestal,[0,19,0]);box([18,4,18],MAT.sandstone,pedestal,[0,30,0]);
-    box([12,12,12],MAT.sandstone,pedestal,[0,38,0]);box([15,3,15],MAT.sandstone,pedestal,[0,45.5,0]);
-    fitHeight(pedestal,46.94);root.add(pedestal);
-    const skirt=addMesh(new THREE.ConeGeometry(5.1,15,28),MAT.patina,statue,[0,8,0]);skirt.scale.z=.74;
-    const torso=cylinder(2.6,3.9,10,24,MAT.patina,statue,[0,19,0]);torso.rotation.z=-.05;
-    sphere(2.05,MAT.patina,statue,[0,27.4,0],28,18);
-    const crown=cylinder(2.2,2.15,.8,24,MAT.patina,statue,[0,29.0,0]);
-    for(let i=0;i<7;i++){const a=(i/7)*Math.PI*2;const ray=addMesh(new THREE.ConeGeometry(.25,4.1,10),MAT.patina,statue);ray.position.set(Math.cos(a)*1.65,31.0,Math.sin(a)*1.65);ray.rotation.z=Math.cos(a)*.65;ray.rotation.x=-Math.sin(a)*.65;}
-    const arm=addMesh(new THREE.CylinderGeometry(.72,.95,1,16),MAT.patina,statue);
-    orientCylinder(arm,new THREE.Vector3(2,22,.2),new THREE.Vector3(4.7,38,.2));
-    sphere(.85,MAT.patina,statue,[4.8,38.2,.2],18,12);
-    cylinder(.82,.58,3.8,16,MAT.copper,statue,[4.8,40.8,.2]);
-    const flame=addMesh(new THREE.ConeGeometry(1.2,4.5,18),new THREE.MeshStandardMaterial({color:0xe9b24b,emissive:0xff932c,emissiveIntensity:.75,roughness:.4}),statue,[4.8,45,.2]);
-    const leftArm=addMesh(new THREE.CylinderGeometry(.75,1,1,16),MAT.patina,statue);orientCylinder(leftArm,new THREE.Vector3(-2,22,0),new THREE.Vector3(-3.8,17,-1));
-    const tablet=box([4.14,7.19,.61],MAT.patina,statue,[-3.7,18,-1.25]);tablet.rotation.z=-.12;
-    fitHeight(statue,46.05);
-    statue.updateMatrixWorld(true);
-    const statueBounds=new THREE.Box3().setFromObject(statue);
-    statue.position.y+=46.94-statueBounds.min.y;
-    root.add(statue);return root;
-  }
-  function buildGuell() {
-    const g=new THREE.Group(), mosaic=makeMosaicMaterial();
-    const body=sphere(1,mosaic,g,[0,.58,0],36,22);body.scale.set(.6,.48,1.35);
-    const head=sphere(.66,mosaic,g,[0,.58,-1.08],28,18);head.scale.set(.76,.58,.95);
-    const tail=addMesh(new THREE.ConeGeometry(.38,1.65,18),mosaic,g,[0,.54,1.55]);tail.rotation.x=-Math.PI/2;
-    for(const sx of [-1,1])for(const z of [-.55,.65]){const limb=addMesh(new THREE.CylinderGeometry(.13,.18,1.1,12),mosaic,g,[sx*.58,.45,z]);limb.rotation.z=sx*.88;const foot=sphere(.19,mosaic,g,[sx*.94,.26,z-.08],14,10);foot.scale.set(1.3,.48,.8);}
-    sphere(.11,new THREE.MeshStandardMaterial({color:0x101b17,roughness:.6}),g,[-.27,.78,-1.63],12,8);
-    sphere(.11,new THREE.MeshStandardMaterial({color:0x101b17,roughness:.6}),g,[.27,.78,-1.63],12,8);
-    g.updateMatrixWorld(true);const b=new THREE.Box3().setFromObject(g),s=new THREE.Vector3();b.getSize(s);g.scale.setScalar(2.4/s.z);
-    g.updateMatrixWorld(true);const a=new THREE.Box3().setFromObject(g);g.position.y-=a.min.y;return g;
-  }
-  function buildHaetae() {
-    const g=new THREE.Group();
-    const stone=new THREE.MeshStandardMaterial({color:0x8c887c,roughness:.98});
-    const body=sphere(1,stone,g,[0,1,0],30,18);body.scale.set(.78,.72,1.28);
-    const head=sphere(.75,stone,g,[0,1.62,-1.03],28,18);head.scale.set(.92,1.05,.85);
-    const snout=sphere(.42,stone,g,[0,1.48,-1.62],20,14);snout.scale.set(1,.65,.75);
-    for(const x of [-.52,.52]){const leg=cylinder(.24,.32,.9,12,stone,g,[x,.45,-.45]);sphere(.34,stone,g,[x,.14,-.65],14,10);}
-    for(let i=0;i<8;i++){const a=i/8*Math.PI*2;const curl=addMesh(new THREE.TorusGeometry(.19,.075,8,16,Math.PI*1.6),stone,g,[Math.cos(a)*.62,1.82+Math.sin(a)*.36,-1.02]);curl.rotation.z=a;}
-    const horn=addMesh(new THREE.ConeGeometry(.12,.78,12),stone,g,[0,2.54,-1.02]);horn.rotation.z=-.16;
-    const tail=addMesh(new THREE.TorusGeometry(.55,.16,12,24,Math.PI*1.55),stone,g,[.58,1.22,1.05]);tail.rotation.y=Math.PI/2;
-    fitExact(g,{x:1.862,y:3.507,z:2.756});return g;
-  }
-  function buildDolhareubang() {
-    const pts=[
-      new THREE.Vector2(.34,0),new THREE.Vector2(.42,.08),new THREE.Vector2(.44,.44),
-      new THREE.Vector2(.38,.92),new THREE.Vector2(.34,1.18),new THREE.Vector2(.42,1.31),
-      new THREE.Vector2(.48,1.38),new THREE.Vector2(.39,1.49),new THREE.Vector2(.24,1.57),
-      new THREE.Vector2(.18,1.67),new THREE.Vector2(.37,1.74),new THREE.Vector2(.44,1.83),new THREE.Vector2(.28,1.87)
-    ];
-    const g=new THREE.Group(), body=addMesh(new THREE.LatheGeometry(pts,40),MAT.basalt,g);
-    for(const x of [-.16,.16]){const eye=sphere(.07,MAT.darkStone,g,[x,1.56,-.34],16,10);eye.scale.z=.45;}
-    const nose=addMesh(new THREE.ConeGeometry(.08,.24,12),MAT.basalt,g,[0,1.42,-.48]);nose.rotation.x=Math.PI/2;
-    const mouth=box([.25,.035,.04],MAT.darkStone,g,[0,1.27,-.39]);
-    for(const side of [-1,1]){const hand=sphere(.11,MAT.basalt,g,[side*.16,.72,-.37],16,10);hand.scale.set(1.1,.75,.6);}
-    for(let i=0;i<80;i++){const p=sphere(.009+(i%4)*.005,new THREE.MeshBasicMaterial({color:0x171c1a}),g,[Math.sin(i*4.7)*(.3+(i%5)*.015),.12+(i*29%160)/100,Math.cos(i*3.1)*.35],8,6);p.castShadow=false;}
-    fitHeight(g,1.87);return g;
-  }
-  function doricColumn(height=10.43,diameter=1.91) {
-    const g=new THREE.Group();
-    cylinder(diameter*.55,diameter*.62,.28,24,MAT.marble,g,[0,.14,0]);
-    const shaft=addMesh(new THREE.CylinderGeometry(diameter*.43,diameter*.5,height-.95,20,1,false),MAT.marble,g,[0,height/2-.1,0]);
-    cylinder(diameter*.58,diameter*.44,.34,20,MAT.marble,g,[0,height-.48,0]);
-    box([diameter*1.2,.32,diameter*1.2],MAT.marble,g,[0,height-.16,0]);return g;
-  }
-  function buildParthenon() {
-    const g=new THREE.Group(), W=30.88,L=69.5,colH=10.43;
-    box([W+.9,.42,L+.9],MAT.marble,g,[0,.21,0]);box([W+.45,.42,L+.45],MAT.marble,g,[0,.63,0]);box([W,.42,L],MAT.marble,g,[0,1.05,0]);
-    const x0=W/2-1.5,z0=L/2-1.5;
-    const coords=[];
-    for(let i=0;i<8;i++){const x=-x0+i*(2*x0/7);coords.push([x,-z0],[x,z0]);}
-    for(let i=1;i<16;i++){const z=-z0+i*(2*z0/16);coords.push([-x0,z],[x0,z]);}
-    coords.forEach(([x,z])=>{const c=doricColumn();c.position.set(x,1.26,z);g.add(c);});
-    box([W,3.30,2.15],MAT.marble,g,[0,13.34,-z0]);box([W,3.30,2.15],MAT.marble,g,[0,13.34,z0]);
-    box([2.15,3.30,L-3],MAT.marble,g,[-x0,13.34,0]);box([2.15,3.30,L-3],MAT.marble,g,[x0,13.34,0]);
-    const cella=box([15,7.6,40],new THREE.MeshStandardMaterial({color:0xc5b99d,roughness:.95}),g,[0,5.05,0]);
-    const roof=addMesh(new THREE.ConeGeometry(22,6,4),MAT.marble,g,[0,17.9,0]);roof.rotation.y=Math.PI/4;roof.scale.set(.82,1,1.85);
-    g.userData.targetBounds={x:30.88,y:20.9,z:69.5};return g;
-  }
+  function loadZoneModel(zone) {
+    const rootGroup = new THREE.Group();
+    rootGroup.position.set(zone.position[0], 0, zone.position[2]);
+    rootGroup.userData.zone = zone;
 
-  function addPlinthAndMarker(zone,model) {
-    const [x,,z]=zone.position;
-    const plinthMat=new THREE.MeshStandardMaterial({color:0xb6aa90,roughness:.94});
-    let groundY=0;
-    if(['guell','haetae','dol'].includes(zone.id)){
-      const bounds=new THREE.Box3().setFromObject(model),size=new THREE.Vector3();bounds.getSize(size);
-      const p=box([Math.max(3,size.x+1),.24,Math.max(3,size.z+1)],plinthMat,park,[x,.12,z]);p.receiveShadow=true;
-      groundY=.24;
-    }
-    model.updateMatrixWorld(true);
-    const modelBounds=new THREE.Box3().setFromObject(model);
-    model.position.y+=groundY-modelBounds.min.y;
-    const marker=makeScaleMarker(1.45,'어린이 1.45m');marker.position.set(x+4.5,0,z+4);park.add(marker);
-    const labelSide=zone.id==='liberty'||zone.id==='parthenon'?1:-1;
-    const label=makeLabel(zone.title,zone.size,9);label.position.set(x,3.8,z+labelSide*6);label.lookAt(camera.position.x,3.8,camera.position.z);label.userData.faceCamera=true;park.add(label);
-    model.userData.zone=zone;zoneObjects.push(model);
+    // Load actual 3D GLB model
+    gltfLoader.load(zone.modelPath, (gltf) => {
+      const model = gltf.scene;
+      model.traverse((child) => {
+        if (child.isMesh) {
+          child.castShadow = true;
+          child.receiveShadow = true;
+          child.geometry.computeVertexNormals();
+          if (zone.materialColor) {
+            child.material = new THREE.MeshStandardMaterial({
+              color: zone.materialColor,
+              roughness: .82,
+              metalness: .12
+            });
+          }
+        }
+      });
+
+      // Calculate bounding box and scale to exact real Height
+      const box3 = new THREE.Box3().setFromObject(model);
+      const naturalH = Math.max(0.01, box3.max.y - box3.min.y);
+      const scaleFactor = zone.realHeight / naturalH;
+      model.scale.setScalar(scaleFactor);
+
+      // Re-align ground level Y = 0
+      const scaledBox = new THREE.Box3().setFromObject(model);
+      model.position.y = -scaledBox.min.y;
+
+      rootGroup.add(model);
+    }, undefined, (err) => {
+      console.error('Error loading 3D GLB model for zone:', zone.id, err);
+    });
+
+    // Scale marker (1.45m child)
+    const marker = makeScaleMarker(1.45, '어린이 1.45m');
+    marker.position.set(zone.position[0] + 5.5, 0, zone.position[2] + 4);
+    park.add(marker);
+
+    // Label
+    const label = makeLabel(zone.title, zone.size, 9);
+    label.position.set(zone.position[0], 3.8, zone.position[2] + 6);
+    label.lookAt(camera.position.x, 3.8, camera.position.z);
+    label.userData.faceCamera = true;
+    park.add(label);
+
+    zoneObjects.push(rootGroup);
+    park.add(rootGroup);
   }
 
   function makePark() {
-    const ground=addMesh(new THREE.CircleGeometry(300,96),MAT.grass,park,[0,-.08,0]);ground.rotation.x=-Math.PI/2;ground.receiveShadow=true;ground.castShadow=false;
-    const plaza=addMesh(new THREE.CircleGeometry(31,64),MAT.path,park,[0,.01,0]);plaza.rotation.x=-Math.PI/2;
-    const ring=addMesh(new THREE.RingGeometry(25,31,64),MAT.pathEdge,park,[0,.025,0]);ring.rotation.x=-Math.PI/2;
-    ZONES.forEach(zone=>{
-      const curve=new THREE.LineCurve3(new THREE.Vector3(0,.02,0),new THREE.Vector3(zone.position[0],.02,zone.position[2]));
-      const path=addMesh(new THREE.TubeGeometry(curve,1,3.2,8,false),MAT.path,park);path.receiveShadow=true;
-      const pad=addMesh(new THREE.CircleGeometry(zone.id==='parthenon'||zone.id==='liberty'||zone.id==='sphinx'?48:16,48),MAT.path,park,[zone.position[0],.012,zone.position[2]]);pad.rotation.x=-Math.PI/2;
-    });
-    const water=addMesh(new THREE.RingGeometry(15,23,64),MAT.water,park,[0,.04,0]);water.rotation.x=-Math.PI/2;water.castShadow=false;
-    const hub=cylinder(4.2,4.8,1.1,32,MAT.sandstone,park,[0,.55,0]);
-    const globe=sphere(2.7,new THREE.MeshStandardMaterial({color:0x7a9f63,roughness:.62,metalness:.08}),park,[0,4.1,0],32,20);
-    const hubLabel=makeLabel('실물 크기 세계 미술','작품마다 1m = 3D 1단위',8);hubLabel.position.set(0,7.5,0);hubLabel.userData.faceCamera=true;park.add(hubLabel);
+    const ground = addMesh(new THREE.CircleGeometry(300, 96), MAT.grass, park, [0, -.08, 0]); ground.rotation.x = -Math.PI / 2; ground.receiveShadow = true; ground.castShadow = false;
+    const plaza = addMesh(new THREE.CircleGeometry(31, 64), MAT.path, park, [0, .01, 0]); plaza.rotation.x = -Math.PI / 2;
+    const ring = addMesh(new THREE.RingGeometry(25, 31, 64), MAT.pathEdge, park, [0, .025, 0]); ring.rotation.x = -Math.PI / 2;
 
-    ZONES.forEach(zone=>{
-      const model=buildPhotoExhibit(zone);
-      model.position.set(zone.position[0],0,zone.position[2]);
-      model.lookAt(zone.arrival[0],0,zone.arrival[2]);
-      park.add(model);addPhotoMarker(zone,model);
+    ZONES.forEach(zone => {
+      const curve = new THREE.LineCurve3(new THREE.Vector3(0, .02, 0), new THREE.Vector3(zone.position[0], .02, zone.position[2]));
+      const path = addMesh(new THREE.TubeGeometry(curve, 1, 3.2, 8, false), MAT.path, park); path.receiveShadow = true;
+      const pad = addMesh(new THREE.CircleGeometry(zone.id === 'liberty' || zone.id === 'sphinx' ? 48 : 16, 48), MAT.path, park, [zone.position[0], .012, zone.position[2]]); pad.rotation.x = -Math.PI / 2;
     });
 
-    for(let i=0;i<115;i++){
-      const a=i*2.399,r=50+(i*37%220),x=Math.cos(a)*r,z=Math.sin(a)*r;
-      if(ZONES.some(q=>Math.hypot(x-q.position[0],z-q.position[2])<42))continue;
-      const tree=new THREE.Group(),h=3.5+(i%7)*.45;
-      cylinder(.18,.28,h,8,MAT.wood,tree,[0,h/2,0]);
-      const crown=sphere(1.4+(i%4)*.18,i%3?MAT.leaf:MAT.leaf2,tree,[0,h+.8,0],12,9);crown.scale.y=1.25;
-      tree.position.set(x,0,z);tree.rotation.y=a;tree.traverse(o=>{if(o.isMesh){o.castShadow=i%4===0;o.receiveShadow=true;}});park.add(tree);
+    const water = addMesh(new THREE.RingGeometry(15, 23, 64), MAT.water, park, [0, .04, 0]); water.rotation.x = -Math.PI / 2; water.castShadow = false;
+    const hub = cylinder(4.2, 4.8, 1.1, 32, MAT.sandstone, park, [0, .55, 0]);
+    const globe = sphere(2.7, new THREE.MeshStandardMaterial({ color: 0x7a9f63, roughness: .62, metalness: .08 }), park, [0, 4.1, 0], 32, 20);
+    const hubLabel = makeLabel('실물 크기 3D 야외 미술 공원', '유물 3D GLB 스캔 1m = 3D 1단위', 9); hubLabel.position.set(0, 7.5, 0); hubLabel.userData.faceCamera = true; park.add(hubLabel);
+
+    // Load GLB models for all 7 zones
+    ZONES.forEach(zone => loadZoneModel(zone));
+
+    for (let i = 0; i < 115; i++) {
+      const a = i * 2.399, r = 50 + (i * 37 % 220), x = Math.cos(a) * r, z = Math.sin(a) * r;
+      if (ZONES.some(q => Math.hypot(x - q.position[0], z - q.position[2]) < 42)) continue;
+      const tree = new THREE.Group(), h = 3.5 + (i % 7) * .45;
+      cylinder(.18, .28, h, 8, MAT.wood, tree, [0, h / 2, 0]);
+      const crown = sphere(1.4 + (i % 4) * .18, i % 3 ? MAT.leaf : MAT.leaf2, tree, [0, h + .8, 0], 12, 9); crown.scale.y = 1.25;
+      tree.position.set(x, 0, z); tree.rotation.y = a; tree.traverse(o => { if (o.isMesh) { o.castShadow = i % 4 === 0; o.receiveShadow = true; } }); park.add(tree);
     }
-    for(let i=0;i<26;i++){const a=i/26*Math.PI*2;const lamp=cylinder(.06,.09,3.4,10,MAT.darkStone,park,[Math.cos(a)*28,1.7,Math.sin(a)*28]);sphere(.16,new THREE.MeshStandardMaterial({color:0xffe1a5,emissive:0xffba55,emissiveIntensity:1.2}),park,[Math.cos(a)*28,3.5,Math.sin(a)*28],12,8);}
+    for (let i = 0; i < 26; i++) { const a = i / 26 * Math.PI * 2; const lamp = cylinder(.06, .09, 3.4, 10, MAT.darkStone, park, [Math.cos(a) * 28, 1.7, Math.sin(a) * 28]); sphere(.16, new THREE.MeshStandardMaterial({ color: 0xffe1a5, emissive: 0xffba55, emissiveIntensity: 1.2 }), park, [Math.cos(a) * 28, 3.5, Math.sin(a) * 28], 12, 8); }
   }
 
   function setupLights() {
-    scene.add(new THREE.HemisphereLight(0xd9efff,0x354b2d,.64));
-    const sun=new THREE.DirectionalLight(0xffeed0,1.35);sun.position.set(-90,160,70);sun.castShadow=true;
-    sun.shadow.mapSize.set(2048,2048);sun.shadow.camera.left=-190;sun.shadow.camera.right=190;sun.shadow.camera.top=190;sun.shadow.camera.bottom=-190;sun.shadow.camera.far=420;sun.shadow.bias=-.0002;scene.add(sun);
+    scene.add(new THREE.HemisphereLight(0xd9efff, 0x354b2d, .64));
+    const sun = new THREE.DirectionalLight(0xffeed0, 1.35); sun.position.set(-90, 160, 70); sun.castShadow = true;
+    sun.shadow.mapSize.set(2048, 2048); sun.shadow.camera.left = -190; sun.shadow.camera.right = 190; sun.shadow.camera.top = 190; sun.shadow.camera.bottom = -190; sun.shadow.camera.far = 420; sun.shadow.bias = -.0002; scene.add(sun);
   }
 
   function buildTabs() {
-    const nav=document.getElementById('zone-tabs');
-    ZONES.forEach(zone=>{
-      const b=document.createElement('button');b.className='zone-tab';b.type='button';b.innerHTML=`<i></i><b>${zone.order}. ${zone.short}</b><small>${zone.subtitle}</small>`;
-      b.addEventListener('click',()=>teleport(zone));zone.tab=b;nav.appendChild(b);
+    const nav = document.getElementById('zone-tabs');
+    nav.innerHTML = '';
+    ZONES.forEach(zone => {
+      const b = document.createElement('button'); b.className = 'zone-tab'; b.type = 'button'; b.innerHTML = `<i></i><b>${zone.order}. ${zone.short}</b><small>${zone.subtitle}</small>`;
+      b.addEventListener('click', () => teleport(zone)); zone.tab = b; nav.appendChild(b);
     });
   }
   function teleport(zone) {
-    hero.classList.add('hidden');camera.position.set(zone.arrival[0],zone.arrival[1],zone.arrival[2]);
-    const target=new THREE.Vector3(zone.lookAt[0],zone.lookAt[1],zone.lookAt[2]);
-    const d=target.sub(camera.position);yaw=Math.atan2(-d.x,-d.z);pitch=Math.atan2(d.y,Math.hypot(d.x,d.z));updateCamera();
+    hero.classList.add('hidden'); camera.position.set(zone.arrival[0], zone.arrival[1], zone.arrival[2]);
+    const target = new THREE.Vector3(zone.lookAt[0], zone.lookAt[1], zone.lookAt[2]);
+    const d = target.sub(camera.position); yaw = Math.atan2(-d.x, -d.z); pitch = Math.atan2(d.y, Math.hypot(d.x, d.z)); updateCamera();
     setActiveZone(zone);
   }
   function setActiveZone(zone) {
-    if(activeZone===zone)return;activeZone=zone;
-    ZONES.forEach(z=>z.tab.classList.toggle('active',z===zone));
-    currentZone.textContent=zone?zone.short:'중앙 광장';
-    if(!zone){measurePanel.hidden=true;return;}
-    measurePanel.hidden=false;measureKicker.textContent=`ZONE ${zone.order} · ACTUAL SCALE`;measureTitle.textContent=zone.title;
-    measureFacts.innerHTML=zone.facts.map(f=>`<div><dt>${f[0]}</dt><dd>${f[1]}</dd></div>`).join('');
-    measureNote.textContent=zone.note;
+    if (activeZone === zone) return; activeZone = zone;
+    ZONES.forEach(z => z.tab.classList.toggle('active', z === zone));
+    currentZone.textContent = zone ? zone.short : '중앙 광장';
+    if (!zone) { measurePanel.hidden = true; return; }
+    measurePanel.hidden = false; measureKicker.textContent = `ZONE ${zone.order} · ACTUAL 3D SCAN`; measureTitle.textContent = zone.title;
+    measureFacts.innerHTML = zone.facts.map(f => `<div><dt>${f[0]}</dt><dd>${f[1]}</dd></div>`).join('');
+    measureNote.textContent = zone.note;
   }
   function openDetail(zone) {
-    if(!zone)return;
-    document.getElementById('modal-kicker').textContent=`ZONE ${zone.order} · 1:1 SCALE`;
-    document.getElementById('modal-title').textContent=zone.title;
-    document.getElementById('modal-subtitle').textContent=zone.subtitle;
-    document.getElementById('modal-size').textContent=zone.size;
-    document.getElementById('modal-scale').textContent='실제 사진은 형태 확인용입니다. 바닥 윤곽과 높이 치수선이 1:1 실제 크기입니다.';
-    document.getElementById('modal-docent').textContent=zone.docent;
-    document.getElementById('modal-caution').textContent=zone.caution;
-    document.getElementById('modal-look').textContent=zone.look;
-    document.getElementById('modal-rights').textContent=`${zone.rights} · ${PHOTO_EXHIBITS[zone.id].credit}`;
-    document.getElementById('modal-source').href=zone.source;
-    document.getElementById('modal-photo-source').href=PHOTO_EXHIBITS[zone.id].page;
+    if (!zone) return;
+    document.getElementById('modal-kicker').textContent = `ZONE ${zone.order} · REAL 3D SCAN`;
+    document.getElementById('modal-title').textContent = zone.title;
+    document.getElementById('modal-subtitle').textContent = zone.subtitle;
+    document.getElementById('modal-size').textContent = zone.size;
+    document.getElementById('modal-scale').textContent = zone.scale;
+    document.getElementById('modal-docent').textContent = zone.docent;
+    document.getElementById('modal-caution').textContent = zone.caution;
+    document.getElementById('modal-look').textContent = zone.look;
+    document.getElementById('modal-rights').textContent = zone.rights;
+    document.getElementById('modal-source').href = zone.source;
+    document.getElementById('modal-photo-source').href = zone.source;
     detailModal.showModal();
   }
   function nearestZone() {
-    let best=null,dist=Infinity;
-    ZONES.forEach(z=>{const d=Math.hypot(camera.position.x-z.position[0],camera.position.z-z.position[2]);if(d<dist){dist=d;best=z;}});
-    const monumental=best&&['sphinx','liberty','parthenon'].includes(best.id);
-    return dist<(monumental?148:34)?best:null;
+    let best = null, dist = Infinity;
+    ZONES.forEach(z => { const d = Math.hypot(camera.position.x - z.position[0], camera.position.z - z.position[2]); if (d < dist) { dist = d; best = z; } });
+    const monumental = best && ['sphinx', 'liberty'].includes(best.id);
+    return dist < (monumental ? 148 : 34) ? best : null;
   }
-  function updateCamera(){camera.rotation.y=yaw;camera.rotation.x=pitch;}
+  function updateCamera() { camera.rotation.y = yaw; camera.rotation.x = pitch; }
   function updateMovement(dt) {
-    const forward=(keys.KeyW||keys.ArrowUp?1:0)-(keys.KeyS||keys.ArrowDown?1:0);
-    const strafe=(keys.KeyD||keys.ArrowRight?1:0)-(keys.KeyA||keys.ArrowLeft?1:0);
-    if(forward||strafe){
-      const speed=(keys.ShiftLeft||keys.ShiftRight?31:13)*dt, len=Math.hypot(forward,strafe)||1;
-      camera.position.x+=(-Math.sin(yaw)*forward+Math.cos(yaw)*strafe)/len*speed;
-      camera.position.z+=(-Math.cos(yaw)*forward-Math.sin(yaw)*strafe)/len*speed;
-      const radius=Math.hypot(camera.position.x,camera.position.z);if(radius>285){camera.position.x*=285/radius;camera.position.z*=285/radius;}
+    const forward = (keys.KeyW || keys.ArrowUp ? 1 : 0) - (keys.KeyS || keys.ArrowDown ? 1 : 0);
+    const strafe = (keys.KeyD || keys.ArrowRight ? 1 : 0) - (keys.KeyA || keys.ArrowLeft ? 1 : 0);
+    if (forward || strafe) {
+      const speed = (keys.ShiftLeft || keys.ShiftRight ? 31 : 13) * dt, len = Math.hypot(forward, strafe) || 1;
+      camera.position.x += (-Math.sin(yaw) * forward + Math.cos(yaw) * strafe) / len * speed;
+      camera.position.z += (-Math.cos(yaw) * forward - Math.sin(yaw) * strafe) / len * speed;
+      const radius = Math.hypot(camera.position.x, camera.position.z); if (radius > 285) { camera.position.x *= 285 / radius; camera.position.z *= 285 / radius; }
     }
-    camera.position.y=1.62;
+    camera.position.y = 1.62;
     setActiveZone(nearestZone());
   }
-  function validateScale() {
-    zoneObjects.forEach(model=>{
-      const target=model.userData.targetBounds;if(!target)return;
-      const size=new THREE.Vector3();new THREE.Box3().setFromObject(model).getSize(size);
-      const ok=['x','y','z'].every(k=>Math.abs(size[k]-target[k])<.025);
-      if(!ok)console.warn('실물 크기 검증 실패:',model.userData.zone.title,size,target);
-    });
-  }
+
   function animate() {
-    requestAnimationFrame(animate);const dt=Math.min(clock.getDelta(),.05);updateMovement(dt);
-    park.children.forEach(o=>{if(o.userData.faceCamera)o.lookAt(camera.position.x,o.position.y,camera.position.z);});
-    compassArrow.style.transform=`rotate(${-yaw}rad)`;renderer.render(scene,camera);
+    requestAnimationFrame(animate); const dt = Math.min(clock.getDelta(), .05); updateMovement(dt);
+    park.children.forEach(o => { if (o.userData.faceCamera) o.lookAt(camera.position.x, o.position.y, camera.position.z); });
+    compassArrow.style.transform = `rotate(${-yaw}rad)`; renderer.render(scene, camera);
   }
 
-  setupLights();makePark();buildTabs();updateCamera();validateScale();animate();
-  setTimeout(()=>loading.classList.add('done'),650);
+  setupLights(); makePark(); buildTabs(); updateCamera(); animate();
+  setTimeout(() => loading.classList.add('done'), 650);
 
-  addEventListener('keydown',e=>{keys[e.code]=true;if(['ArrowUp','ArrowDown','ArrowLeft','ArrowRight','Space'].includes(e.code))e.preventDefault();});
-  addEventListener('keyup',e=>{keys[e.code]=false;});
-  canvas.addEventListener('pointerdown',e=>{dragging=true;dragStart={x:e.clientX,y:e.clientY,moved:false};canvas.classList.add('dragging');canvas.setPointerCapture(e.pointerId);});
-  canvas.addEventListener('pointermove',e=>{if(!dragging)return;const dx=e.movementX||0,dy=e.movementY||0;if(Math.abs(dx)+Math.abs(dy)>2)dragStart.moved=true;yaw-=dx*.0032;pitch=Math.max(-1.35,Math.min(1.35,pitch-dy*.0028));updateCamera();});
-  canvas.addEventListener('pointerup',e=>{if(!dragging)return;dragging=false;canvas.classList.remove('dragging');if(dragStart&&!dragStart.moved){raycaster.setFromCamera(centerPointer,camera);const hit=raycaster.intersectObjects(zoneObjects,true)[0];if(hit){let o=hit.object;while(o&&!o.userData.zone)o=o.parent;if(o)openDetail(o.userData.zone);}}dragStart=null;});
-  addEventListener('resize',()=>{camera.aspect=innerWidth/innerHeight;camera.updateProjectionMatrix();renderer.setSize(innerWidth,innerHeight,false);renderer.setPixelRatio(Math.min(devicePixelRatio,1.5));});
+  addEventListener('keydown', e => { keys[e.code] = true; if (['ArrowUp', 'ArrowDown', 'ArrowLeft', 'ArrowRight', 'Space'].includes(e.code)) e.preventDefault(); });
+  addEventListener('keyup', e => { keys[e.code] = false; });
+  canvas.addEventListener('pointerdown', e => { dragging = true; dragStart = { x: e.clientX, y: e.clientY, moved: false }; canvas.classList.add('dragging'); canvas.setPointerCapture(e.pointerId); });
+  canvas.addEventListener('pointermove', e => { if (!dragging) return; const dx = e.movementX || 0, dy = e.movementY || 0; if (Math.abs(dx) + Math.abs(dy) > 2) dragStart.moved = true; yaw -= dx * .0032; pitch = Math.max(-1.35, Math.min(1.35, pitch - dy * .0028)); updateCamera(); });
+  canvas.addEventListener('pointerup', e => { if (!dragging) return; dragging = false; canvas.classList.remove('dragging'); if (dragStart && !dragStart.moved) { raycaster.setFromCamera(centerPointer, camera); const hit = raycaster.intersectObjects(zoneObjects, true)[0]; if (hit) { let o = hit.object; while (o && !o.userData.zone) o = o.parent; if (o) openDetail(o.userData.zone); } } dragStart = null; });
+  addEventListener('resize', () => { camera.aspect = innerWidth / innerHeight; camera.updateProjectionMatrix(); renderer.setSize(innerWidth, innerHeight, false); renderer.setPixelRatio(Math.min(devicePixelRatio, 1.5)); });
 
-  document.getElementById('start-button').addEventListener('click',()=>teleport(ZONES[0]));
-  document.getElementById('detail-button').addEventListener('click',()=>openDetail(activeZone));
-  document.getElementById('modal-close').addEventListener('click',()=>detailModal.close());
-  document.getElementById('help-button').addEventListener('click',()=>helpModal.showModal());
-  document.getElementById('help-close').addEventListener('click',()=>helpModal.close());
-  document.querySelectorAll('.touch-controls button').forEach(btn=>{
-    const code=btn.dataset.key;
-    const on=e=>{e.preventDefault();keys[code]=true;},off=e=>{e.preventDefault();keys[code]=false;};
-    btn.addEventListener('pointerdown',on);btn.addEventListener('pointerup',off);btn.addEventListener('pointercancel',off);btn.addEventListener('pointerleave',off);
+  document.getElementById('start-button').addEventListener('click', () => teleport(ZONES[0]));
+  document.getElementById('detail-button').addEventListener('click', () => openDetail(activeZone));
+  document.getElementById('modal-close').addEventListener('click', () => detailModal.close());
+  document.getElementById('help-button').addEventListener('click', () => helpModal.showModal());
+  document.getElementById('help-close').addEventListener('click', () => helpModal.close());
+  document.querySelectorAll('.touch-controls button').forEach(btn => {
+    const code = btn.dataset.key;
+    const on = e => { e.preventDefault(); keys[code] = true; }, off = e => { e.preventDefault(); keys[code] = false; };
+    btn.addEventListener('pointerdown', on); btn.addEventListener('pointerup', off); btn.addEventListener('pointercancel', off); btn.addEventListener('pointerleave', off);
   });
 })();
