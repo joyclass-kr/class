@@ -703,20 +703,20 @@
             const cf = s.custom_fields || s.customFields || {};
             const linkedBadge = s.user_id ? `<span class="linked-badge">✓ 연동</span>` : "";
 
-            const cellInput = (field, value, width="100%", isCustom=false, key="") => {
-                if (!isSchoolAdmin) return esc(value || "");
+            const cellInput = (field, value, width="100%", isCustom=false, key="", placeholder="") => {
+                if (!isSchoolAdmin) return esc(value ?? "");
                 const onInputCode = isCustom
                     ? `updateStudentCustomField(${originalIndex}, '${esc(key)}', this.value)`
                     : `updateStudentField(${originalIndex}, '${field}', this.value)`;
-                return `<input class="roster-cell-input" style="width:${width};border:1px solid #d1d5db;border-radius:4px;padding:3px 6px;font:inherit;font-size:12px;background:white;" value="${esc(value || "")}" onchange="${onInputCode}">`;
+                return `<input class="roster-cell-input" style="width:${width};border:1px solid #d1d5db;border-radius:4px;padding:3px 6px;font:inherit;font-size:12px;background:white;" value="${esc(value ?? "")}" placeholder="${esc(placeholder)}" onchange="${onInputCode}">`;
             };
 
             const cells = [
-                `<td>${cellInput("grade", s.grade, "40px")}</td>`,
-                `<td>${cellInput("class_number", s.class_number, "40px")}</td>`,
-                `<td>${cellInput("student_number", s.student_number, "45px")}</td>`,
-                `<td>${cellInput("roster_name", s.roster_name, "70px")}</td>`,
-                `<td>${cellInput("gender", s.gender, "40px")}</td>`,
+                `<td>${cellInput("grade", s.grade, "40px", false, "", "학년")}</td>`,
+                `<td>${cellInput("class_number", s.class_number, "40px", false, "", "반")}</td>`,
+                `<td>${cellInput("student_number", s.student_number, "45px", false, "", "번호")}</td>`,
+                `<td>${cellInput("roster_name", s.roster_name, "70px", false, "", "이름")}</td>`,
+                `<td>${cellInput("gender", s.gender, "40px", false, "", "남/여")}</td>`,
                 ...allClubs.map(c => `<td>${cellInput("", cf[c] || (Array.isArray(s.clubs) && s.clubs.includes(c) ? c : ""), "80px", true, c)}</td>`),
                 ...allAfter.map(a => `<td>${cellInput("", cf[a] || (Array.isArray(s.afterschool) && s.afterschool.includes(a) ? a : ""), "80px", true, a)}</td>`),
                 ...allShuttle.map(sl => `<td>${cellInput("", cf[sl] || (s.shuttle || {})[sl] || "", "65px", true, sl)}</td>`),
@@ -924,16 +924,25 @@
     };
 
     window.addSingleStudent = function() {
+        const filterGradeVal = (document.getElementById("filterGrade")?.value || "").replace(/[^0-9]/g, "");
+        const filterClassVal = (document.getElementById("filterClass")?.value || "").replace(/[^0-9]/g, "");
+
         const newSt = {
-            grade: 1, class_number: 1, student_number: String(allStudents.length + 1),
-            roster_name: "새학생", gender: "남", student_email: null,
-            guardian1_email: null, guardian2_email: null, custom_fields: {}
+            grade: filterGradeVal ? Number(filterGradeVal) : "",
+            class_number: filterClassVal ? Number(filterClassVal) : "",
+            student_number: "",
+            roster_name: "",
+            gender: "",
+            student_email: "",
+            guardian1_email: "",
+            guardian2_email: "",
+            custom_fields: {}
         };
         allStudents.push(newSt);
         updateClassFilter();
         renderRosterTable();
         document.getElementById("saveRosterBtn").style.display = "inline-flex";
-        setStatus("rosterStatus", "새 학생이 맨 아래에 추가되었습니다. 수정 후 '💾 저장' 버튼을 누르세요.");
+        setStatus("rosterStatus", "새 학생 행이 추가되었습니다. 내용을 입력한 후 '💾 저장' 버튼을 누르세요.");
     };
 
     window.saveRoster = async function() {
