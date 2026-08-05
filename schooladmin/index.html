@@ -23,7 +23,6 @@
             <button class="tab-button" data-tab="curriculum">📚 [2단계] 시수편성 (정해진시수+증감)</button>
             <button class="tab-button" data-tab="timetable">🗓️ [4단계] 학급별 기초시간표</button>
             <button class="tab-button" data-tab="annualTimetable">📊 [5단계] 학급별 연간시간표 & 서류출력</button>
-            <button class="tab-button" data-tab="roster">전교생 명단</button>
         </div>
     </nav>
 
@@ -460,32 +459,6 @@
                     <tfoot id="annualTimetableTableFoot">
                         <!-- Totals injected via JS -->
                     </tfoot>
-                </table>
-            </div>
-        </section>
-
-        <!-- 6. Roster Tab -->
-        <section id="rosterTab" class="tab-content" hidden>
-            <div class="controls-row">
-                <input type="text" id="rosterSearch" class="search-input" placeholder="이름으로 검색...">
-            </div>
-            
-            <div id="rosterLoading" class="loading-state">명단을 불러오는 중입니다...</div>
-            <div id="rosterError" class="error-state" hidden></div>
-
-            <div id="rosterContent" class="table-container" hidden>
-                <table class="data-table">
-                    <thead>
-                        <tr>
-                            <th>학년</th>
-                            <th>반</th>
-                            <th>번호</th>
-                            <th>이름</th>
-                        </tr>
-                    </thead>
-                    <tbody id="rosterTableBody">
-                        <!-- Rows will be injected here -->
-                    </tbody>
                 </table>
             </div>
         </section>
