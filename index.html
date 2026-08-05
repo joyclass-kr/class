@@ -1239,11 +1239,11 @@
                 // 2. School Admin (Principal / Vice Principal) or Teacher
                 if (state.user?.role === 'teacher' && teacherProfileData) {
                     const btn = document.createElement('a');
-                    const isSchoolAdmin = ['교장', '교감'].includes(teacherProfileData.teacherType);
+                    const isSchoolAdmin = ['관리자', '교장', '교감'].includes(teacherProfileData.teacherType);
                     btn.className = isSchoolAdmin ? 'profile-btn school-admin' : 'profile-btn teacher';
-                    btn.href = isSchoolAdmin ? '/schooladmin/' : '/classtools/';
+                    btn.href = '/classtools/';
                     
-                    const roleLabel = isSchoolAdmin ? '학교 관리자' : '교사 계정';
+                    const roleLabel = isSchoolAdmin ? '학교 관리자 계정' : '교직원 계정';
                     const icon = isSchoolAdmin ? '🏫' : '👨‍🏫';
                     btn.innerHTML = `<span class="profile-title">${icon} ${teacherProfileData.schoolName} ${teacherProfileData.name} 선생님</span><span class="profile-desc">${roleLabel}</span>`;
                     profileList.appendChild(btn);
