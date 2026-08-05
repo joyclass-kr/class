@@ -10,62 +10,127 @@
     return;
   }
 
-  // 05번 전시실(입체·공간)과 동일한 THREE.GLTFLoader 기반 3D 입체 스캔 로딩 시스템
+  // 05번 전시실(입체·공간)과 100% 동일한 THREE.GLTFLoader 기반 3D 스캔 GLB 로딩 시스템
   const ZONES = [
     {
-      id: 'sphinx', order: '01', title: '카프라 왕의 스핑크스', short: '기자의 대스핑크스',
+      id: 'haetae', order: '01', title: '광화문 해치상', short: '광화문 해치',
+      subtitle: '조선 · 국립문화유산연구원 3D 스캔 GLB', position: [72, 0, -142], arrival: [72, 1.62, -148], lookAt: [72, 1.8, -142],
+      modelPath: '../museum/assets/models/gwanghwamun-haetae.glb', realHeight: 3.507, materialTint: 0x817d75, preserveMaterials: true,
+      facts: [['길이', '2.756m'], ['너비', '1.862m'], ['높이', '3.507m']],
+      size: '길이 275.6cm × 너비 186.2cm × 높이 350.7cm',
+      scale: '05번 전시실과 동일한 국가유산청 3D 포토그래메트리 스캔 GLB 1:1 적용',
+      note: '국가유산 3D 기록정보 정밀 실측 포토그래메트리 스캔',
+      docent: '05번 전시실에 있는 광화문 해치상 실제 3D 스캔 모델입니다. 옳고 그름을 가리고 불을 막아주는 해치의 둥근 코, 갈기, 소용돌이무늬 조각을 야외 3D 공간에서 둘러보세요.',
+      caution: '사자와 비슷하지만 상상의 동물이며 머리의 뿔과 몸의 갈기 표현이 특징입니다.',
+      look: '정면과 옆면을 오가며 머리 뿔과 소용돌이무늬 조각의 3D 스캔 입체를 확인해보세요.',
+      source: 'https://portal.nrich.go.kr/', rights: '원작: 국가유산 · 국가유산청 3D 포토그래메트리 스캔 GLB'
+    },
+    {
+      id: 'thinker', order: '02', title: '생각하는 사람', short: '생각하는 사람',
+      subtitle: '오귀스트 로댕 · Scan the World 3D 스캔 GLB', position: [-72, 0, -142], arrival: [-72, 1.62, -148], lookAt: [-72, 2.5, -142],
+      modelPath: '../museum/assets/models/thinker.glb', realHeight: 1.89, materialColor: 0x38271d, metalness: 0.78, roughness: 0.3,
+      facts: [['높이', '1.89m'], ['재질', '청동 주조본'], ['제작', '1903년']],
+      size: '높이 189cm (대형 청동 주조본 기준)',
+      scale: '05번 전시실과 동일한 Scan the World 3D 정밀 스캔 GLB 적용',
+      note: '로댕 미술관 소장 원작 Scan the World 3D 스캔',
+      docent: '05번 전시실의 생각하는 사람 실제 3D 스캔 모델입니다. 온몸의 근육에 힘을 준 채 깊이 고뇌하는 인체의 입체 구조를 야외 3D 공원에서 360도로 관람해 보세요.',
+      caution: '단테의 신곡에 나오는 지옥의 문 위에서 인간을 관조하는 시인의 모습을 청동으로 표현했습니다.',
+      look: '팔, 등, 다리 근육이 얽혀 만드는 3D 덩어리의 균형감을 살펴보세요.',
+      source: 'https://www.musee-rodin.fr/', rights: '원작: Public Domain · Scan the World 3D 스캔 GLB'
+    },
+    {
+      id: 'david', order: '03', title: '다비드상', short: '다비드상',
+      subtitle: '미켈란젤로 · Scan the World 3D 스캔 GLB', position: [137, 0, -28], arrival: [137, 1.62, 95], lookAt: [137, 44, -28],
+      modelPath: '../museum/assets/models/david.glb', realHeight: 5.17, materialColor: 0xded8cc, roughness: 0.55,
+      facts: [['높이', '5.17m'], ['재질', '대리석'], ['제작', '1501-1504년']],
+      size: '높이 5.17m (좌대 제외 실측)',
+      scale: '05번 전시실과 동일한 Scan the World 3D 정밀 스캔 GLB 적용',
+      note: '피렌체 아카데미아 미술관 원작 Scan the World 3D 스캔',
+      docent: '05번 전시실의 미켈란젤로 다비드상 실제 3D 스캔 모델입니다. 골리앗과의 싸움을 앞두고 긴장한 젊은 다윗의 거대한 대리석 조각 3D 형태를 확인하세요.',
+      caution: '아래에서 올려다볼 때 비율이 자연스럽게 보이도록 머리와 오른손을 약간 더 크게 조각했습니다.',
+      look: '손전등 빛 아래 선명하게 드러나는 손핏줄과 얼굴 표정의 3D 스캔 입체를 확인하세요.',
+      source: 'https://www.galleriaaccademiafirenze.it/', rights: '원작: Public Domain · Scan the World 3D 스캔 GLB'
+    },
+    {
+      id: 'venus', order: '04', title: '밀로의 비너스', short: '밀로의 비너스',
+      subtitle: '알렉산드로스 추정 · Scan the World 3D 스캔 GLB', position: [-142, 0, 112], arrival: [-142, 1.62, 106], lookAt: [-142, 2.2, 112],
+      modelPath: '../museum/assets/models/venus-de-milo.glb', realHeight: 2.04, materialColor: 0xd9d2c5, roughness: 0.58,
+      facts: [['높이', '2.04m'], ['재질', '대리석'], ['제작', '기원전 150-125년경']],
+      size: '높이 204cm',
+      scale: '05번 전시실과 동일한 루브르 박물관 Scan the World 3D 스캔 GLB 적용',
+      note: '루브르 박물관 소장 원작 Scan the World 3D 스캔',
+      docent: '05번 전시실의 밀로의 비너스 실제 3D 스캔 모델입니다. 상체를 미세하게 틀어 부드러운 S자 콘트라포스토 균형을 만드는 대리석 조각을 관람하세요.',
+      caution: '두 팔은 발견 당시부터 없었지만, 그 비어있는 공간 덕분에 더욱 완벽한 클래식 미의 상징이 되었습니다.',
+      look: '어깨와 골반이 서로 기울어지며 만드는 부드러운 곡선의 3D 입체감을 살펴보세요.',
+      source: 'https://collections.louvre.fr/', rights: '원작: Public Domain · Scan the World 3D 스캔 GLB'
+    },
+    {
+      id: 'pieta', order: '05', title: '피에타상', short: '피에타상',
+      subtitle: '미켈란젤로 · Scan the World 3D 스캔 GLB', position: [0, 0, 135], arrival: [0, 1.62, 142], lookAt: [0, 2.5, 135],
+      modelPath: '../museum/assets/models/pieta.glb', realHeight: 1.75, materialColor: 0xdbd5c8, roughness: 0.56,
+      facts: [['높이', '1.75m'], ['너비', '1.95m'], ['재질', '대리석']],
+      size: '높이 1.75m × 너비 1.95m',
+      scale: '05번 전시실과 동일한 바티칸 성 베드로 대성당 Scan the World 3D 스캔 GLB 적용',
+      note: '바티칸 성 베드로 대성당 소장 원작 Scan the World 3D 스캔',
+      docent: '05번 전시실의 미켈란젤로 피에타상 실제 3D 스캔 모델입니다. 마리아가 십자가에서 내려진 예수를 품에 안은 슬픈 순간이 부드러운 대리석 3D 입체로 표현되어 있습니다.',
+      caution: '미켈란젤로가 자신의 이름을 마리아 옷띠에 직접 조각한 유일한 작품입니다.',
+      look: '마리아의 풍성한 옷자락 드레이프와 안겨있는 예수 몸의 정밀한 3D 스캔 구도를 확인하세요.',
+      source: 'https://www.museivaticani.va/', rights: '원작: Public Domain · Scan the World 3D 스캔 GLB'
+    },
+    {
+      id: 'sphinx', order: '06', title: '카프라 왕의 스핑크스', short: '기자의 대스핑크스',
       subtitle: '고대 이집트 · 3D GLB 모델 스캔', position: [-145, 0, -18], arrival: [-160, 1.62, -91], lookAt: [-145, 11, -34],
       modelPath: 'assets/models/sphinx.glb', realHeight: 20.0, materialColor: 0xd6c29b,
       facts: [['길이', '73.5m'], ['너비', '19m'], ['높이', '20m']],
       size: '길이 73.5m × 너비 19m × 높이 20m',
-      scale: '05번 전시실과 동일한 THREE.GLTFLoader 3D 입체 모델 스캔 적용',
-      note: '하버드 Digital Giza & 3D 실측 데이터를 기반으로 한 1:1 실측 3D 스캔',
-      docent: '사자의 몸과 왕의 머리가 결합된 고대 이집트의 거대한 수호상입니다. 05번 전시실의 조각상처럼 360도로 돌려보며 73.5m의 거대한 3D 입체 실측 크기를 체험해 보세요.',
+      scale: '05번 전시실과 동일한 THREE.GLTFLoader 3D 입체 스캔 GLB 적용',
+      note: '하버드 Digital Giza & 3D 실측 데이터 1:1 스캔',
+      docent: '사자의 몸과 왕의 머리가 결합된 고대 이집트의 거대한 수호상입니다. 05번 전시실 조각상과 동일하게 3D GLB 입체로 73.5m의 실측 크기를 체험해 보세요.',
       caution: '석회암 바위산 하나를 통째로 깎아서 만든 세계 최대 크기의 단일 석조 조각상입니다.',
       look: '발끝에서 꼬리까지 옆길을 따라 걸어보고, 1.45m 어린이 캐릭터와 스핑크스 머리의 높이를 직접 비교해 보세요.',
       source: 'https://giza.fas.harvard.edu/faq/', rights: '원작: 고대 유물 · 3D 입체 스캔 모델'
     },
     {
-      id: 'emille', order: '02', title: '성덕대왕신종 (에밀레종)', short: '에밀레종',
+      id: 'emille', order: '07', title: '성덕대왕신종 (에밀레종)', short: '에밀레종',
       subtitle: '통일신라 771년 · 국보 · 3D GLB 모델 스캔', position: [-72, 0, -142], arrival: [-72, 1.62, -148], lookAt: [-72, 2.5, -142],
-      modelPath: 'assets/models/emille-bell.glb', realHeight: 6.8, materialColor: 0x5a5245,
+      modelPath: 'assets/models/emille-bell.glb', realHeight: 6.8, materialColor: 0x5a5245, metalness: 0.45, roughness: 0.52,
       facts: [['높이', '3.75m'], ['입지름', '2.27m'], ['무게', '약 18.9톤']],
       size: '종 높이 3.75m × 입지름 2.27m (전각 포함 전체 높이 6.8m)',
       scale: '국가유산청 3D 정밀 실측 1:1 입체 스캔 적용',
       note: '국가지정 유산 3D 정밀 실측 데이터',
-      docent: '우리나라에 남아있는 가장 큰 국보 종입니다. 종 꼭대기의 용뉴(용 모양 고리)와 음통, 종 몸통에 새겨진 비천상 조각을 3D 공간에서 오가며 감상해 보세요.',
-      caution: '“에밀레”라는 이름은 아기를 넣었다는 전설에서 유래했지만, 성분 분석 결과 거짓으로 밝혀진 유언비어입니다.',
+      docent: '우리나라에 남아있는 가장 큰 국보 종입니다. 종 꼭대기의 용뉴(용 모양 고리)와 음통, 종 몸통의 비천상을 3D 입체 공간에서 둘러보세요.',
+      caution: '“에밀레”라는 이름은 전설에서 유래했으나 과학적 분석 결과 아기를 넣었다는 것은 거짓입니다.',
       look: '종 위쪽에 걸린 용 모양 고리(용뉴)와 비천상이 하늘로 날아오르는 문양을 입체로 살펴보세요.',
       source: 'https://www.heritage.go.kr/', rights: '원작: 국보 유물 · 3D 입체 스캔 모델'
     },
     {
-      id: 'liberty', order: '03', title: '자유의 여신상', short: '자유의 여신상',
+      id: 'liberty', order: '08', title: '자유의 여신상', short: '자유의 여신상',
       subtitle: '프레데리크 오귀스트 바르톨디 · 1886 · 3D GLB 모델 스캔', position: [137, 0, -28], arrival: [137, 1.62, 95], lookAt: [137, 44, -28],
-      modelPath: 'assets/models/statue-of-liberty.glb', realHeight: 92.99, materialColor: 0x629c8b,
+      modelPath: 'assets/models/statue-of-liberty.glb', realHeight: 92.99, materialColor: 0x629c8b, metalness: 0.15, roughness: 0.65,
       facts: [['지면→횃불', '92.99m'], ['조각상', '46.05m'], ['받침대', '46.94m']],
       size: '지면에서 횃불까지 92.99m (조각상 46.05m + 받침대 46.94m)',
       scale: '미국 국립공원관리청(NPS) 공식 3D 정밀 치수 적용',
       note: 'NPS & 스미소니언 3D 정밀 실측 수치',
-      docent: '미국 뉴욕의 상징인 자유의 여신상입니다. 조각상 본체 높이(46m)와 정교한 석조 받침대(47m)가 합쳐진 93m의 압도적인 3D 입체 스케일을 확인해 보세요.',
-      caution: '겉표면은 아주 얇은 동판(구리)으로 만들어져 처음에는 붉은 동색이었으나, 시간이 지나며 산화되어 현재의 청록색이 되었습니다.',
+      docent: '미국 뉴욕의 상징인 자유의 여신상입니다. 받침대(47m)와 조각상(46m)이 결합된 93m의 웅장한 3D 입체 스케일을 확인해 보세요.',
+      caution: '겉표면 동판이 산화되어 처음의 붉은 동색에서 청록색으로 변했습니다.',
       look: '발밑에서 까마득히 높은 횃불 끝까지 올려다본 뒤, 뒤로 멀리 물러나 전체 3D 비례를 확인하세요.',
       source: 'https://www.nps.gov/stli/learn/statue-of-liberty-facts.htm', rights: '원작: Public Domain · 3D 입체 스캔 모델'
     },
     {
-      id: 'moai', order: '04', title: '이스터섬 모아이 석상', short: '모아이 석상',
+      id: 'moai', order: '09', title: '이스터섬 모아이 석상', short: '모아이 석상',
       subtitle: '칠레 라파누이 · 1250–1500년경 · 3D GLB 모델 스캔', position: [72, 0, -142], arrival: [72, 1.62, -148], lookAt: [72, 2.5, -142],
-      modelPath: 'assets/models/moai.glb', realHeight: 6.6, materialColor: 0x6e6960,
+      modelPath: 'assets/models/moai.glb', realHeight: 6.6, materialColor: 0x6e6960, roughness: 0.98,
       facts: [['평균 높이', '약 4.0m'], ['대좌 포함', '6.6m'], ['무게', '약 20톤']],
       size: '석상 높이 4m (아후 석조 대좌 및 푸카오 포함 6.6m)',
       scale: '이스터섬 아후 통가리키 실측 3D 스캔 데이터 적용',
       note: '라파누이 국립공원 유적 3D 스캔',
-      docent: '태평양 이스터섬에 우뚝 선 모아이 석상입니다. 돌출된 긴 코와 커다란 턱, 머리 위의 붉은 화산석 모자(푸카오)의 3D 입체 구조를 오가며 감상해 보세요.',
+      docent: '태평양 이스터섬에 우뚝 선 모아이 석상입니다. 돌출된 긴 코와 커다란 턱, 머리 위의 붉은 모자(푸카오)의 3D 입체 구조를 오가며 감상해 보세요.',
       caution: '모아이는 바다를 등지고 섬 내부의 마을을 바라보며 족장과 조상의 영혼을 수호하는 방향으로 서 있습니다.',
       look: '우뚝 솟은 턱선과 귓볼, 머리 위에 올려진 붉은 모자(푸카오)의 묵직한 3D 형태를 살펴보세요.',
       source: 'https://whc.unesco.org/en/list/715/', rights: '원작: 세계유산 · 3D 입체 스캔 모델'
     },
     {
-      id: 'towers', order: '05', title: '불국사 다보탑 & 석가탑', short: '다보탑 · 석가탑',
+      id: 'towers', order: '10', title: '불국사 다보탑 & 석가탑', short: '다보탑 · 석가탑',
       subtitle: '통일신라 751년 · 국보 · 3D GLB 모델 스캔', position: [132, 0, 118], arrival: [145, 1.62, 118], lookAt: [132, 6, 118],
       modelPath: 'assets/models/dabotap-seokgatap.glb', realHeight: 10.75, materialColor: 0xb5b0a5,
       facts: [['석가탑 높이', '10.75m'], ['다보탑 높이', '10.29m'], ['재질', '화강암']],
@@ -78,7 +143,7 @@
       source: 'https://portal.nrich.go.kr/', rights: '원작: 국보 유물 · 3D 입체 스캔 모델'
     },
     {
-      id: 'muyongchong', order: '06', title: '무용총 수렵도 (3D 부조 디오라마)', short: '무용총 수렵도',
+      id: 'muyongchong', order: '11', title: '무용총 수렵도 (3D 부조 디오라마)', short: '무용총 수렵도',
       subtitle: '고구려 5세기 · 고분 벽화 3D 부조', position: [-142, 0, 112], arrival: [-142, 1.62, 106], lookAt: [-142, 2.2, 112],
       modelPath: 'assets/models/muyongchong.glb', realHeight: 3.6, materialColor: 0x94836f,
       facts: [['벽화 가로', '약 5.8m'], ['벽화 세로', '약 3.2m'], ['장소', '중국 길림성 집안']],
@@ -91,7 +156,7 @@
       source: 'http://nrich.go.kr/', rights: '원작: 고구려 벽화 · 3D 입체 부조 디오라마'
     },
     {
-      id: 'lamassu', order: '07', title: '람마수 (날개 달린 황소상)', short: '람마수 황소상',
+      id: 'lamassu', order: '12', title: '람마수 (날개 달린 황소상)', short: '람마수 황소상',
       subtitle: '고대 아시리아 기원전 8세기 · 3D GLB 모델 스캔', position: [0, 0, 135], arrival: [0, 1.62, 142], lookAt: [0, 2.5, 135],
       modelPath: 'assets/models/lamassu.glb', realHeight: 4.4, materialColor: 0xaeaa9f,
       facts: [['높이', '4.4m'], ['길이', '4.4m'], ['너비', '1.4m']],
@@ -213,31 +278,39 @@
     return g;
   }
 
-  // 05번 전시실과 동일한 3D 모델 설치 및 석조 좌대 시스템
+  // 05번 전시실(Codex 설치 방식)과 100% 동일한 3D 모델 및 석조 받침대 로딩 파이프라인
   function loadZoneModel(zone) {
     const rootGroup = new THREE.Group();
     rootGroup.position.set(zone.position[0], 0, zone.position[2]);
     rootGroup.userData.zone = zone;
 
-    // Stone Pedestal (05번 전시실과 동일한 석조 받침대)
     const baseW = Math.max(3.5, zone.realHeight * 0.4);
     const plinth = box([baseW, 0.4, baseW], MAT.darkStone, rootGroup, [0, 0.2, 0]);
     plinth.receiveShadow = true;
 
     gltfLoader.load(zone.modelPath, (gltf) => {
       const model = gltf.scene;
+      model.matrixAutoUpdate = true;
+
       model.traverse((child) => {
         if (child.isMesh) {
           child.castShadow = true;
           child.receiveShadow = true;
           child.geometry.computeVertexNormals();
-          
-          let matProps = { color: zone.materialColor || 0x888888, roughness: 0.88, metalness: 0.08 };
-          if (zone.id === 'emille') { matProps.metalness = 0.45; matProps.roughness = 0.52; }
-          else if (zone.id === 'liberty') { matProps.metalness = 0.15; matProps.roughness = 0.65; }
-          else if (zone.id === 'moai') { matProps.roughness = 0.98; }
 
-          child.material = new THREE.MeshStandardMaterial(matProps);
+          if (!zone.preserveMaterials) {
+            let matProps = {
+              color: zone.materialColor || 0x888888,
+              roughness: zone.roughness !== undefined ? zone.roughness : 0.88,
+              metalness: zone.metalness !== undefined ? zone.metalness : 0.08
+            };
+            child.material = new THREE.MeshStandardMaterial(matProps);
+          } else if (zone.materialTint && child.material) {
+            child.material = child.material.clone();
+            child.material.color.multiply(new THREE.Color(zone.materialTint));
+            child.material.roughness = Math.max(.7, child.material.roughness || 0);
+            child.material.metalness = 0;
+          }
         }
       });
 
@@ -246,20 +319,20 @@
       const scaleFactor = zone.realHeight / naturalH;
       model.scale.setScalar(scaleFactor);
 
-      const scaledBox = new THREE.Box3().setFromObject(model);
-      model.position.y = 0.4 - scaledBox.min.y;
+      const center = box3.getCenter(new THREE.Vector3());
+      model.position.x = -center.x * scaleFactor;
+      model.position.z = -center.z * scaleFactor;
+      model.position.y = 0.4 - box3.min.y * scaleFactor;
 
       rootGroup.add(model);
     }, undefined, (err) => {
       console.error('Error loading 3D GLB model for zone:', zone.id, err);
     });
 
-    // 1.45m 어린이 크기 비교 마커
     const marker = makeScaleMarker(1.45, '어린이 1.45m');
     marker.position.set(zone.position[0] + baseW / 2 + 1.8, 0, zone.position[2] + 2);
     park.add(marker);
 
-    // 3D 정보 라벨
     const label = makeLabel(zone.title, zone.size, 9);
     label.position.set(zone.position[0], 3.8, zone.position[2] + 6);
     label.lookAt(camera.position.x, 3.8, camera.position.z);
@@ -284,9 +357,8 @@
     const water = addMesh(new THREE.RingGeometry(15, 23, 64), MAT.water, park, [0, .04, 0]); water.rotation.x = -Math.PI / 2; water.castShadow = false;
     const hub = cylinder(4.2, 4.8, 1.1, 32, MAT.sandstone, park, [0, .55, 0]);
     const globe = sphere(2.7, new THREE.MeshStandardMaterial({ color: 0x7a9f63, roughness: .62, metalness: .08 }), park, [0, 4.1, 0], 32, 20);
-    const hubLabel = makeLabel('실물 크기 3D 야외 미술 공원', '05번 전시실과 동일한 3D GLB 로딩 1m = 3D 1단위', 9); hubLabel.position.set(0, 7.5, 0); hubLabel.userData.faceCamera = true; park.add(hubLabel);
+    const hubLabel = makeLabel('실물 크기 3D 야외 미술 공원', '05번 전시실과 100% 동일한 3D GLB 스캔 1m = 3D 1단위', 9); hubLabel.position.set(0, 7.5, 0); hubLabel.userData.faceCamera = true; park.add(hubLabel);
 
-    // 05번 전시실과 동일한 3D GLB 로딩 적용
     ZONES.forEach(zone => loadZoneModel(zone));
 
     for (let i = 0; i < 115; i++) {
