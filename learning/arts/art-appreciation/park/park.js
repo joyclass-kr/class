@@ -193,12 +193,13 @@
 
   const renderer = new THREE.WebGLRenderer({ canvas, antialias: true, powerPreference: 'high-performance' });
   renderer.setSize(innerWidth, innerHeight, false);
-  renderer.setPixelRatio(Math.min(devicePixelRatio, 1.5));
+  renderer.setPixelRatio(Math.min(devicePixelRatio, 1.75));
   renderer.shadowMap.enabled = true;
   renderer.shadowMap.type = THREE.PCFSoftShadowMap;
   renderer.toneMapping = THREE.ACESFilmicToneMapping;
-  renderer.toneMappingExposure = .88;
+  renderer.toneMappingExposure = 1.05;
   renderer.outputEncoding = THREE.sRGBEncoding;
+  renderer.physicallyCorrectLights = true;
 
   const clock = new THREE.Clock();
   const gltfLoader = new THREE.GLTFLoader();
@@ -318,15 +319,16 @@
         }
       });
 
-      const box3 = new THREE.Box3().setFromObject(model);
-      const naturalH = Math.max(0.01, box3.max.y - box3.min.y);
+      const bounds = new THREE.Box3().setFromObject(model);
+      const naturalH = Math.max(0.01, bounds.max.y - bounds.min.y);
       const scaleFactor = zone.realHeight / naturalH;
       model.scale.setScalar(scaleFactor);
 
-      const center = box3.getCenter(new THREE.Vector3());
-      model.position.x = -center.x * scaleFactor;
-      model.position.z = -center.z * scaleFactor;
-      model.position.y = 0.4 - box3.min.y * scaleFactor;
+      const scaledBounds = new THREE.Box3().setFromObject(model);
+      const center = scaledBounds.getCenter(new THREE.Vector3());
+      model.position.x = -center.x;
+      model.position.z = -center.z;
+      model.position.y = 0.4 - scaledBounds.min.y;
 
       rootGroup.add(model);
     }, undefined, (err) => {
