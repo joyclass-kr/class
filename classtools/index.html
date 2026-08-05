@@ -319,6 +319,38 @@
         </div>
     </main>
 
+    <!-- 새 학급·그룹 개설 드롭다운 모달 -->
+    <div id="create-group-modal" class="modal-overlay" style="display:none; position:fixed; top:0; left:0; width:100%; height:100%; background:rgba(0,0,0,0.75); z-index:9999; align-items:center; justify-content:center; backdrop-filter:blur(6px);">
+        <div style="background:var(--paper, #1a221e); border:1px solid rgba(117,214,159,0.4); border-radius:24px; width:min(92%, 480px); padding:32px; box-shadow:0 20px 50px rgba(0,0,0,0.6); color:#fff;">
+            <h3 style="margin:0 0 8px; font-size:1.4rem; font-weight:900; color:#75d69f;">➕ 새 학급 · 그룹 개설</h3>
+            <p style="margin:0 0 24px; font-size:0.9rem; color:var(--text-muted, #a0aec0);">개설할 학급 또는 동아리를 드롭다운 목록에서 선택하세요.</p>
+            
+            <div style="margin-bottom:18px;">
+                <label style="display:block; font-size:0.88rem; font-weight:800; margin-bottom:6px; color:#75d69f;">1. 그룹 유형 선택</label>
+                <select id="modal-group-type" style="width:100%; padding:12px 14px; border-radius:12px; border:1px solid rgba(255,255,255,0.2); background:#111512; color:#fff; font-size:1rem; font-weight:700; outline:none;">
+                    <option value="homeroom">🏫 담임 학급 (1-1, 1-2, 2-1 등)</option>
+                    <option value="club" selected>🤖 동아리 (오케스트라, 로봇코딩부 등)</option>
+                    <option value="afterschool">⚽ 방과후 (축구부, 농구부 등)</option>
+                    <option value="shuttle">🚌 통학버스 (1호차, 2호차, 3호차 등)</option>
+                    <option value="subject">🧪 전담 교과반 (과학, 체육 등)</option>
+                </select>
+            </div>
+
+            <div style="margin-bottom:24px;">
+                <label style="display:block; font-size:0.88rem; font-weight:800; margin-bottom:6px; color:#75d69f;">2. 개설할 그룹 드롭다운 선택</label>
+                <select id="modal-group-name-select" style="width:100%; padding:12px 14px; border-radius:12px; border:1px solid rgba(255,255,255,0.2); background:#111512; color:#fff; font-size:1rem; font-weight:700; outline:none;">
+                    <!-- Populated dynamically via JS -->
+                </select>
+                <input type="text" id="modal-group-custom-input" placeholder="그룹 이름 직접 입력..." style="display:none; width:100%; margin-top:10px; padding:12px 14px; border-radius:12px; border:1px solid #75d69f; background:#111512; color:#fff; font-size:0.95rem;">
+            </div>
+
+            <div style="display:flex; justify-content:flex-end; gap:12px;">
+                <button type="button" onclick="closeCreateGroupModal()" style="padding:10px 20px; border-radius:12px; border:1px solid rgba(255,255,255,0.2); background:transparent; color:#ccc; font-weight:700; cursor:pointer;">취소</button>
+                <button type="button" id="btn-modal-submit-group" style="padding:10px 24px; border-radius:12px; border:none; background:#75d69f; color:#0b0f0c; font-weight:900; cursor:pointer;">개설하기</button>
+            </div>
+        </div>
+    </div>
+
     <script>
         (() => {
             'use strict';
@@ -437,30 +469,120 @@
                 location.href = `/classtools/dashboard.html?groupId=${groupId}`;
             };
 
-            window.handleCreateGroupClick = async function() {
-                const name = prompt('새로 개설할 동아리/방과후/전담 그룹 이름을 입력하세요:\n(예: 오케스트라, 로봇코딩부, 축구부, 5학년 과학전담)');
-                if (!name || !name.trim()) return;
+            let availableData = { homerooms: [], clubs: [], afterschools: [] };
 
-                const typeStr = prompt('그룹 유형을 선택하세요:\n1: 🤖 동아리 (club)\n2: ⚽ 방과후 (afterschool)\n3: 🧪 전담교과 (subject)\n\n번호 입력 (1, 2, 3):', '1');
-                let groupType = 'club';
-                if (typeStr === '2') groupType = 'afterschool';
-                else if (typeStr === '3') groupType = 'subject';
+            window.handleCreateGroupClick = async function() {
+                try {
+                    const res = await api('/api/teacher/available-groups').catch(() => null);
+                    if (res) {
+                        availableData = res;
+                    }
+                    populateModalDropdown();
+                    const modal = document.getElementById('create-group-modal');
+                    if (modal) modal.style.display = 'flex';
+                } catch (err) {
+                    alert('그룹 목록을 불러오는 중 오류가 발생했습니다.');
+                }
+            };
+
+            window.closeCreateGroupModal = function() {
+                const modal = document.getElementById('create-group-modal');
+                if (modal) modal.style.display = 'none';
+            };
+
+            function populateModalDropdown() {
+                const typeSelect = document.getElementById('modal-group-type');
+                const nameSelect = document.getElementById('modal-group-name-select');
+                const customInput = document.getElementById('modal-group-custom-input');
+                if (!typeSelect || !nameSelect) return;
+
+                const type = typeSelect.value;
+                nameSelect.innerHTML = '';
+                if (customInput) customInput.style.display = 'none';
+
+                if (type === 'homeroom') {
+                    (availableData.homerooms || []).forEach(h => {
+                        const opt = document.createElement('option');
+                        opt.value = h.name;
+                        opt.textContent = h.label;
+                        nameSelect.appendChild(opt);
+                    });
+                } else if (type === 'club') {
+                    (availableData.clubs || []).forEach(c => {
+                        const opt = document.createElement('option');
+                        opt.value = c;
+                        opt.textContent = `🤖 ${c}`;
+                        nameSelect.appendChild(opt);
+                    });
+                } else if (type === 'afterschool') {
+                    (availableData.afterschools || []).forEach(a => {
+                        const opt = document.createElement('option');
+                        opt.value = a;
+                        opt.textContent = `⚽ ${a}`;
+                        nameSelect.appendChild(opt);
+                    });
+                } else if (type === 'shuttle') {
+                    (availableData.shuttles || []).forEach(s => {
+                        const opt = document.createElement('option');
+                        opt.value = s;
+                        opt.textContent = `🚌 ${s}`;
+                        nameSelect.appendChild(opt);
+                    });
+                } else if (type === 'subject') {
+                    const subjects = ['5학년 과학전담', '6학년 체육전담', '4학년 영어전담', '3학년 음악전담', '미술전담', '실과전담'];
+                    subjects.forEach(s => {
+                        const opt = document.createElement('option');
+                        opt.value = s;
+                        opt.textContent = `🧪 ${s}`;
+                        nameSelect.appendChild(opt);
+                    });
+                }
+
+                const customOpt = document.createElement('option');
+                customOpt.value = '__CUSTOM__';
+                customOpt.textContent = '✍️ 목록에 없음 (직접 입력)';
+                nameSelect.appendChild(customOpt);
+            }
+
+            document.getElementById('modal-group-type')?.addEventListener('change', populateModalDropdown);
+            document.getElementById('modal-group-name-select')?.addEventListener('change', (e) => {
+                const customInput = document.getElementById('modal-group-custom-input');
+                if (customInput) customInput.style.display = e.target.value === '__CUSTOM__' ? 'block' : 'none';
+            });
+
+            document.getElementById('btn-modal-submit-group')?.addEventListener('click', async () => {
+                const typeSelect = document.getElementById('modal-group-type');
+                const nameSelect = document.getElementById('modal-group-name-select');
+                const customInput = document.getElementById('modal-group-custom-input');
+
+                let groupName = nameSelect ? nameSelect.value : '';
+                if (groupName === '__CUSTOM__') {
+                    groupName = customInput ? customInput.value.trim() : '';
+                }
+
+                if (!groupName) {
+                    alert('개설할 그룹 이름을 선택하거나 입력해 주세요.');
+                    return;
+                }
+
+                const groupType = typeSelect ? typeSelect.value : 'club';
 
                 try {
                     const res = await api('/api/teacher/groups', {
                         method: 'POST',
                         body: JSON.stringify({
-                            groupName: name.trim(),
+                            groupName,
                             groupType
                         })
                     });
-                    alert(`'${name.trim()}' 그룹이 새로 개설되었습니다!\n전교생 명단 속성에서 '${name.trim()}' 그룹으로 지정된 학생이 자동 연결됩니다.`);
+                    alert(`'${groupName}' 그룹이 성공적으로 개설되었습니다!\n전교생 명단에서 '${groupName}' 속성을 가진 학생들이 자동 연결됩니다.`);
+                    closeCreateGroupModal();
                     sessionStorage.setItem('active_group_id', res.groupId);
                     location.href = `/classtools/dashboard.html?groupId=${res.groupId}`;
                 } catch (err) {
                     alert(err.message || '그룹 개설에 실패했습니다.');
                 }
-            };
+            });
 
             if (activeGroupSelect) {
                 activeGroupSelect.addEventListener('change', (e) => {

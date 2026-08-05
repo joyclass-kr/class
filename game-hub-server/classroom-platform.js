@@ -4045,6 +4045,78 @@ function createClassroomPlatform(options = {}) {
     res.json({ ok: true });
   }));
 
+  router.get("/teacher/available-groups", asyncRoute(async (req, res) => {
+    const teacher = await requireTeacher(req);
+    const tp = await pool.query(
+      `SELECT school_id FROM classroom_teachers WHERE user_id = $1 AND active = TRUE`,
+      [teacher.id]
+    );
+    if (!tp.rows[0]) throw new HttpError(403, "TEACHER_REQUIRED", "교사 계정이 필요합니다.");
+    const schoolId = tp.rows[0].school_id;
+    const year = Number(req.query.year) || new Date().getFullYear();
+
+    // 1. Homeroom classes in school_students
+    const classesRes = await pool.query(
+      `SELECT DISTINCT grade, class_number
+       FROM school_students
+       WHERE school_id = $1 AND academic_year = $2
+       ORDER BY grade, class_number`,
+      [schoolId, year]
+    );
+
+    // 2. Clubs in school_students custom_fields & school_clubs
+    const clubsRes = await pool.query(
+      `SELECT DISTINCT name FROM (
+         SELECT custom_fields->>'club' AS name FROM school_students WHERE school_id = $1 AND academic_year = $2 AND custom_fields->>'club' IS NOT NULL
+         UNION
+         SELECT name FROM school_clubs WHERE school_id = $1 AND academic_year = $2
+       ) t WHERE name IS NOT NULL AND name != '' ORDER BY name`,
+      [schoolId, year]
+    );
+
+    // 3. Afterschool in school_students custom_fields
+    const afterschoolRes = await pool.query(
+      `SELECT DISTINCT custom_fields->>'afterschool' AS name
+       FROM school_students
+       WHERE school_id = $1 AND academic_year = $2 AND custom_fields->>'afterschool' IS NOT NULL AND custom_fields->>'afterschool' != ''
+       ORDER BY name`,
+      [schoolId, year]
+    );
+
+    // 4. Shuttle bus in school_students custom_fields (1호차, 2호차 등)
+    const shuttleRes = await pool.query(
+      `SELECT DISTINCT name FROM (
+         SELECT custom_fields->>'shuttle' AS name FROM school_students WHERE school_id = $1 AND academic_year = $2 AND custom_fields->>'shuttle' IS NOT NULL
+         UNION
+         SELECT custom_fields->>'bus' AS name FROM school_students WHERE school_id = $1 AND academic_year = $2 AND custom_fields->>'bus' IS NOT NULL
+       ) t WHERE name IS NOT NULL AND name != '' ORDER BY name`,
+      [schoolId, year]
+    );
+
+    // Fallback default choices if database doesn't have custom_fields populated yet
+    const homerooms = classesRes.rows.length > 0 ? classesRes.rows.map(r => ({ name: `${r.grade}-${r.class_number}`, label: `${r.grade}학년 ${r.class_number}반 (${r.grade}-${r.class_number})`, grade: r.grade, class_number: r.class_number })) : [
+      { name: '1-1', label: '1학년 1반 (1-1)', grade: 1, class_number: 1 },
+      { name: '1-2', label: '1학년 2반 (1-2)', grade: 1, class_number: 2 },
+      { name: '2-1', label: '2학년 1반 (2-1)', grade: 2, class_number: 1 },
+      { name: '3-1', label: '3학년 1반 (3-1)', grade: 3, class_number: 1 },
+      { name: '4-1', label: '4학년 1반 (4-1)', grade: 4, class_number: 1 },
+      { name: '5-1', label: '5학년 1반 (5-1)', grade: 5, class_number: 1 },
+      { name: '6-1', label: '6학년 1반 (6-1)', grade: 6, class_number: 1 },
+      { name: '6-2', label: '6학년 2반 (6-2)', grade: 6, class_number: 2 }
+    ];
+
+    const defaultClubs = ['오케스트라', '로봇코딩부', '방송부', '수학탐구부', '연극부', '미술부', '합창단', '도서부'];
+    const clubs = Array.from(new Set([...clubsRes.rows.map(r => r.name), ...defaultClubs]));
+
+    const defaultAfterschool = ['축구부', '농구부', '바둑교실', '컴퓨터교실', '영어회화부', '우쿨렐레교실'];
+    const afterschools = Array.from(new Set([...afterschoolRes.rows.map(r => r.name).filter(Boolean), ...defaultAfterschool]));
+
+    const defaultShuttles = ['1호차', '2호차', '3호차', '4호차', '5호차'];
+    const shuttles = Array.from(new Set([...shuttleRes.rows.map(r => r.name).filter(Boolean), ...defaultShuttles]));
+
+    res.json({ homerooms, clubs, afterschools, shuttles });
+  }));
+
   router.get("/teacher/groups", asyncRoute(async (req, res) => {
     const teacher = await requireTeacher(req);
     const year = Number(req.query.year) || new Date().getFullYear();
@@ -4080,13 +4152,15 @@ function createClassroomPlatform(options = {}) {
                   WHERE g.group_type = 'homeroom' AND g.grade IS NOT NULL AND g.class_number IS NOT NULL
                     AND ss.school_id = g.school_id AND ss.academic_year = g.academic_year AND ss.grade = g.grade AND ss.class_number = g.class_number
                   UNION
-                  -- Custom attribute matching (e.g. club = '오케스트라')
+                  -- Custom attribute matching (e.g. club = '오케스트라', shuttle = '1호차')
                   SELECT ss.id FROM school_students ss
                   WHERE g.group_type != 'homeroom'
                     AND ss.school_id = g.school_id AND ss.academic_year = g.academic_year
                     AND (
                       ss.custom_fields->>'club' = g.group_name OR
                       ss.custom_fields->>'afterschool' = g.group_name OR
+                      ss.custom_fields->>'shuttle' = g.group_name OR
+                      ss.custom_fields->>'bus' = g.group_name OR
                       ss.custom_fields->>'subject' = g.group_name OR
                       ss.custom_fields->>'group' = g.group_name OR
                       ss.custom_fields::text ILIKE '%' || g.group_name || '%'
