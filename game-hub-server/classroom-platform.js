@@ -3789,6 +3789,29 @@ function createClassroomPlatform(options = {}) {
           }
         }
       }
+
+      if (clean.length > 0) {
+        const gradeList = clean.map(s => s.grade);
+        const classList = clean.map(s => s.classNumber);
+        const numberList = clean.map(s => s.studentNumber);
+        await client.query(
+          `DELETE FROM school_students
+           WHERE school_id = $1 AND academic_year = $2
+             AND NOT EXISTS (
+               SELECT 1 FROM unnest($3::int[], $4::int[], $5::text[]) AS k(g, c, n)
+               WHERE school_students.grade = k.g
+                 AND school_students.class_number = k.c
+                 AND school_students.student_number = k.n
+             )`,
+          [schoolId, academicYear, gradeList, classList, numberList]
+        );
+      } else {
+        await client.query(
+          `DELETE FROM school_students WHERE school_id = $1 AND academic_year = $2`,
+          [schoolId, academicYear]
+        );
+      }
+
       await client.query("COMMIT");
     } catch (err) {
       await client.query("ROLLBACK");
