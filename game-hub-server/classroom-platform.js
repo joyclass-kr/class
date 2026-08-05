@@ -795,7 +795,7 @@ function createClassroomPlatform(options = {}) {
         academic_year INTEGER NOT NULL,
         event_date DATE NOT NULL,
         title TEXT NOT NULL CHECK (char_length(title) BETWEEN 1 AND 60),
-        category TEXT NOT NULL DEFAULT 'EVENT' CHECK (category IN ('EVENT', 'HOLIDAY', 'EXAM', 'TRIP', 'OTHER')),
+        category TEXT NOT NULL DEFAULT 'EVENT',
         target_scope TEXT NOT NULL DEFAULT 'ALL' CHECK (target_scope IN ('ALL', 'GRADE', 'CLASS')),
         target_grades INTEGER[] NOT NULL DEFAULT '{}',
         event_type TEXT NOT NULL DEFAULT 'FULL' CHECK (event_type IN ('FULL', 'HALF', 'NONE')),
@@ -804,8 +804,25 @@ function createClassroomPlatform(options = {}) {
         created_at TIMESTAMPTZ NOT NULL DEFAULT NOW(),
         updated_at TIMESTAMPTZ NOT NULL DEFAULT NOW()
       )`,
+      `ALTER TABLE school_annual_schedules DROP CONSTRAINT IF EXISTS school_annual_schedules_category_check`,
+      `ALTER TABLE school_annual_schedules ADD CONSTRAINT school_annual_schedules_category_check CHECK (category IN ('EVENT', 'HOLIDAY', 'DISCRETIONARY', 'EXAM', 'TRIP', 'OTHER'))`,
       `CREATE INDEX IF NOT EXISTS school_annual_schedules_lookup_idx
         ON school_annual_schedules (school_id, academic_year, event_date)`,
+      `CREATE TABLE IF NOT EXISTS school_vacation_settings (
+        id BIGSERIAL PRIMARY KEY,
+        school_id BIGINT NOT NULL REFERENCES classroom_schools(id) ON DELETE CASCADE,
+        academic_year INTEGER NOT NULL,
+        is_integrated BOOLEAN NOT NULL DEFAULT TRUE,
+        summer_start DATE,
+        summer_end DATE,
+        winter_start DATE,
+        winter_end DATE,
+        spring_start DATE,
+        spring_end DATE,
+        created_at TIMESTAMPTZ NOT NULL DEFAULT NOW(),
+        updated_at TIMESTAMPTZ NOT NULL DEFAULT NOW(),
+        UNIQUE (school_id, academic_year)
+      )`,
       `CREATE TABLE IF NOT EXISTS school_curriculum_hours (
         id BIGSERIAL PRIMARY KEY,
         school_id BIGINT NOT NULL REFERENCES classroom_schools(id) ON DELETE CASCADE,
@@ -3646,6 +3663,93 @@ function createClassroomPlatform(options = {}) {
       }
     }
     res.json({ ok: true });
+  }));
+
+  // ── Vacation Settings APIs (DB Persistence) ──
+  router.get("/school-admin/vacation-settings", asyncRoute(async (req, res) => {
+    const { profile } = await requireSchoolAdmin(req);
+    const year = Number(req.query.academicYear || new Date().getFullYear());
+    const result = await pool.query(
+      `SELECT is_integrated, summer_start::TEXT AS summer_start, summer_end::TEXT AS summer_end,
+              winter_start::TEXT AS winter_start, winter_end::TEXT AS winter_end,
+              spring_start::TEXT AS spring_start, spring_end::TEXT AS spring_end
+       FROM school_vacation_settings
+       WHERE school_id = $1 AND academic_year = $2`,
+      [profile.school_id, year]
+    );
+    res.json({ settings: result.rows[0] || null });
+  }));
+
+  router.post("/school-admin/vacation-settings", asyncRoute(async (req, res) => {
+    const { profile } = await requireSchoolAdmin(req);
+    const year = Number(req.body?.academicYear || new Date().getFullYear());
+    const isIntegrated = Boolean(req.body?.isIntegrated);
+    const summerStart = req.body?.summerStart || null;
+    const summerEnd = req.body?.summerEnd || null;
+    const winterStart = req.body?.winterStart || null;
+    const winterEnd = req.body?.winterEnd || null;
+    const springStart = req.body?.springStart || null;
+    const springEnd = req.body?.springEnd || null;
+
+    await pool.query(
+      `INSERT INTO school_vacation_settings
+       (school_id, academic_year, is_integrated, summer_start, summer_end, winter_start, winter_end, spring_start, spring_end)
+       VALUES ($1, $2, $3, $4, $5, $6, $7, $8, $9)
+       ON CONFLICT (school_id, academic_year) DO UPDATE
+       SET is_integrated = EXCLUDED.is_integrated,
+           summer_start = EXCLUDED.summer_start,
+           summer_end = EXCLUDED.summer_end,
+           winter_start = EXCLUDED.winter_start,
+           winter_end = EXCLUDED.winter_end,
+           spring_start = EXCLUDED.spring_start,
+           spring_end = EXCLUDED.spring_end,
+           updated_at = NOW()`,
+      [profile.school_id, year, isIntegrated, summerStart, summerEnd, winterStart, winterEnd, springStart, springEnd]
+    );
+    res.json({ ok: true });
+  }));
+
+  // ── Step 5: Annual 34-Week Timetable Synthesis API ──
+  router.get("/school-admin/annual-timetable-34weeks", asyncRoute(async (req, res) => {
+    const { profile } = await requireSchoolAdmin(req);
+    const year = Number(req.query.academicYear || new Date().getFullYear());
+    const grade = Number(req.query.grade || 5);
+    const classNum = Number(req.query.classNumber || 1);
+
+    // Fetch DB Data
+    const [vacRes, schedRes, ttRes] = await Promise.all([
+      pool.query(`SELECT * FROM school_vacation_settings WHERE school_id = $1 AND academic_year = $2`, [profile.school_id, year]),
+      pool.query(`SELECT event_date::TEXT AS event_date, title, category FROM school_annual_schedules WHERE school_id = $1 AND academic_year = $2`, [profile.school_id, year]),
+      pool.query(`SELECT day_of_week, period, subject_name FROM school_master_timetable WHERE school_id = $1 AND academic_year = $2 AND grade = $3 AND class_number = $4`, [profile.school_id, year, grade, classNum])
+    ]);
+
+    const vacSettings = vacRes.rows[0] || {};
+    const schedList = schedRes.rows || [];
+    const ttList = ttRes.rows || [];
+
+    // Calculate daily period count per day_of_week (1..5) from actual class master timetable
+    const dailyPeriodsMap = { 1: 0, 2: 0, 3: 0, 4: 0, 5: 0 };
+    ttList.forEach(cell => {
+      if (cell.subject_name && cell.subject_name !== '-' && cell.subject_name !== '수업없음') {
+        dailyPeriodsMap[cell.day_of_week] = Math.max(dailyPeriodsMap[cell.day_of_week], cell.period);
+      }
+    });
+
+    // Fallback default periods per day if no timetable configured yet
+    if (Object.values(dailyPeriodsMap).every(v => v === 0)) {
+      if (grade <= 2) { dailyPeriodsMap[1] = 4; dailyPeriodsMap[2] = 5; dailyPeriodsMap[3] = 5; dailyPeriodsMap[4] = 5; dailyPeriodsMap[5] = 4; }
+      else if (grade <= 4) { dailyPeriodsMap[1] = 5; dailyPeriodsMap[2] = 5; dailyPeriodsMap[3] = 5; dailyPeriodsMap[4] = 6; dailyPeriodsMap[5] = 5; }
+      else { dailyPeriodsMap[1] = 6; dailyPeriodsMap[2] = 6; dailyPeriodsMap[3] = 5; dailyPeriodsMap[4] = 6; dailyPeriodsMap[5] = 6; }
+    }
+
+    res.json({
+      academicYear: year,
+      grade,
+      classNumber: classNum,
+      vacationSettings: vacSettings,
+      schedules: schedList,
+      dailyPeriodsMap
+    });
   }));
 
 

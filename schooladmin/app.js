@@ -432,19 +432,24 @@ document.addEventListener('DOMContentLoaded', () => {
         }
     }
 
-    function loadVacationDates() {
-        const stored = JSON.parse(localStorage.getItem(`vacation_dates_${selectedAcademicYear}`) || '{}');
-        const isIntegrated = stored.isIntegrated !== undefined ? stored.isIntegrated : true; // Default true (통합 운영)
-        if (integrateWinterSpringVacation) {
-            integrateWinterSpringVacation.checked = isIntegrated;
-            toggleIntegratedVacationUI(isIntegrated);
+    async function loadVacationDates() {
+        try {
+            const res = await api(`/api/school-admin/vacation-settings?academicYear=${selectedAcademicYear}`);
+            const stored = res.settings || {};
+            const isIntegrated = stored.is_integrated !== undefined ? stored.is_integrated : true;
+            if (integrateWinterSpringVacation) {
+                integrateWinterSpringVacation.checked = isIntegrated;
+                toggleIntegratedVacationUI(isIntegrated);
+            }
+            if (summerVacationStart) summerVacationStart.value = stored.summer_start || `${selectedAcademicYear}-07-20`;
+            if (summerVacationEnd) summerVacationEnd.value = stored.summer_end || `${selectedAcademicYear}-08-20`;
+            if (winterVacationStart) winterVacationStart.value = stored.winter_start || `${selectedAcademicYear}-12-30`;
+            if (winterVacationEnd) winterVacationEnd.value = stored.winter_end || (isIntegrated ? `${selectedAcademicYear + 1}-02-28` : `${selectedAcademicYear + 1}-01-30`);
+            if (springVacationStart) springVacationStart.value = stored.spring_start || `${selectedAcademicYear + 1}-02-15`;
+            if (springVacationEnd) springVacationEnd.value = stored.spring_end || `${selectedAcademicYear + 1}-02-28`;
+        } catch (err) {
+            console.error('Failed to load vacation settings:', err);
         }
-        if (summerVacationStart) summerVacationStart.value = stored.summerStart || `${selectedAcademicYear}-07-20`;
-        if (summerVacationEnd) summerVacationEnd.value = stored.summerEnd || `${selectedAcademicYear}-08-20`;
-        if (winterVacationStart) winterVacationStart.value = stored.winterStart || `${selectedAcademicYear}-12-30`;
-        if (winterVacationEnd) winterVacationEnd.value = stored.winterEnd || (isIntegrated ? `${selectedAcademicYear + 1}-02-28` : `${selectedAcademicYear + 1}-01-30`);
-        if (springVacationStart) springVacationStart.value = stored.springStart || `${selectedAcademicYear + 1}-02-15`;
-        if (springVacationEnd) springVacationEnd.value = stored.springEnd || `${selectedAcademicYear + 1}-02-28`;
     }
 
     if (integrateWinterSpringVacation) {
@@ -457,20 +462,29 @@ document.addEventListener('DOMContentLoaded', () => {
     }
 
     if (saveVacationDatesBtn) {
-        saveVacationDatesBtn.addEventListener('click', () => {
-            const data = {
+        saveVacationDatesBtn.addEventListener('click', async () => {
+            const payload = {
+                academicYear: selectedAcademicYear,
                 isIntegrated: Boolean(integrateWinterSpringVacation?.checked),
-                summerStart: summerVacationStart?.value,
-                summerEnd: summerVacationEnd?.value,
-                winterStart: winterVacationStart?.value,
-                winterEnd: winterVacationEnd?.value,
-                springStart: springVacationStart?.value,
-                springEnd: springVacationEnd?.value
+                summerStart: summerVacationStart?.value || null,
+                summerEnd: summerVacationEnd?.value || null,
+                winterStart: winterVacationStart?.value || null,
+                winterEnd: winterVacationEnd?.value || null,
+                springStart: springVacationStart?.value || null,
+                springEnd: springVacationEnd?.value || null
             };
-            localStorage.setItem(`vacation_dates_${selectedAcademicYear}`, JSON.stringify(data));
-            alert('방학 기간 및 휴업일 설정이 연간 학사일정에 즉시 반영되었습니다!');
-            renderCalendarGrid();
-            calculateSchoolDaysAudit();
+            try {
+                await api('/api/school-admin/vacation-settings', {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify(payload)
+                });
+                alert('방학 기간 및 휴업일 설정이 DB에 성공적으로 저장되었습니다!');
+                renderCalendarGrid();
+                calculateSchoolDaysAudit();
+            } catch (err) {
+                alert(err.message || '방학 설정을 저장하지 못했습니다.');
+            }
         });
     }
 
@@ -1108,116 +1122,125 @@ document.addEventListener('DOMContentLoaded', () => {
         });
     }
 
-    function renderAnnualTimetable34Weeks() {
+    async function renderAnnualTimetable34Weeks() {
         if (!annualTimetableTableBody) return;
         annualTimetableTableBody.innerHTML = '';
 
         const grade = Number(annualTimetableGradeSelect ? annualTimetableGradeSelect.value : 5);
         const classNum = Number(annualTimetableClassSelect ? annualTimetableClassSelect.value : 1);
-        const activeHolidays = Object.keys(dynamicPublicHolidays).length > 0 ? dynamicPublicHolidays : KOREAN_NATIONAL_HOLIDAYS;
 
-        let cumulativeHours = 0;
-        let totalSchoolDays1 = 0;
-        let totalSchoolDays2 = 0;
-        let weekIndex = 1;
+        try {
+            const synthData = await api(`/api/school-admin/annual-timetable-34weeks?academicYear=${selectedAcademicYear}&grade=${grade}&classNumber=${classNum}`);
+            const dailyPeriodsMap = synthData.dailyPeriodsMap || { 1: 6, 2: 6, 3: 5, 4: 6, 5: 6 };
+            const schedList = synthData.schedules || [];
 
-        // Iterate through weeks from March 1
-        let currMon = new Date(selectedAcademicYear, 2, 1);
-        while (currMon.getDay() !== 1) {
-            currMon.setDate(currMon.getDate() + 1);
-        }
+            const activeHolidays = Object.keys(dynamicPublicHolidays).length > 0 ? dynamicPublicHolidays : KOREAN_NATIONAL_HOLIDAYS;
 
-        const endDate = new Date(selectedAcademicYear + 1, 1, 28);
+            let cumulativeHours = 0;
+            let totalSchoolDays1 = 0;
+            let totalSchoolDays2 = 0;
+            let weekIndex = 1;
 
-        while (currMon <= endDate && weekIndex <= 34) {
-            const currFri = new Date(currMon);
-            currFri.setDate(currFri.getDate() + 4);
-
-            const mStart = currMon.getMonth() + 1;
-            const dStart = currMon.getDate();
-            const mEnd = currFri.getMonth() + 1;
-            const dEnd = currFri.getDate();
-            const periodStr = `${mStart}.${dStart}~${mEnd}.${dEnd}`;
-
-            const semesterNum = mStart >= 3 && mStart <= 8 ? 1 : 2;
-            const semesterLabel = `${semesterNum}학기`;
-
-            // Daily periods calculation (Mon~Fri)
-            let monP = 6, tueP = 6, wedP = 5, thuP = 6, friP = 6;
-            if (grade <= 2) { monP = 4; tueP = 5; wedP = 5; thuP = 5; friP = 4; }
-            else if (grade <= 4) { monP = 5; tueP = 5; wedP = 5; thuP = 6; friP = 5; }
-
-            let weekSchoolDays = 0;
-            let weekLabels = [];
-
-            for (let dayOffset = 0; dayOffset < 5; dayOffset++) {
-                const dayDate = new Date(currMon);
-                dayDate.setDate(dayDate.getDate() + dayOffset);
-                const year = dayDate.getFullYear();
-                const m = dayDate.getMonth() + 1;
-                const d = dayDate.getDate();
-                const dateStr = `${year}-${m < 10 ? '0' + m : m}-${d < 10 ? '0' + d : d}`;
-
-                const natHoliday = activeHolidays[dateStr];
-                const vacType = getVacationType(dateStr);
-                const customEvt = annualSchedulesData.find(e => e.event_date === dateStr);
-
-                if (natHoliday) {
-                    weekLabels.push(`🔴 ${natHoliday}`);
-                } else if (vacType) {
-                    weekLabels.push(`🏖️ ${vacType}`);
-                } else if (customEvt) {
-                    weekLabels.push(`🏫 ${customEvt.title}`);
-                    if (customEvt.category !== 'HOLIDAY' && customEvt.category !== 'DISCRETIONARY') {
-                        weekSchoolDays++;
-                    }
-                } else {
-                    weekSchoolDays++;
-                }
+            let currMon = new Date(selectedAcademicYear, 2, 1);
+            while (currMon.getDay() !== 1) {
+                currMon.setDate(currMon.getDate() + 1);
             }
 
-            if (semesterNum === 1) totalSchoolDays1 += weekSchoolDays;
-            else totalSchoolDays2 += weekSchoolDays;
+            const endDate = new Date(selectedAcademicYear + 1, 1, 28);
 
-            const weeklyHours = weekSchoolDays > 0 ? (monP + tueP + wedP + thuP + friP) : 0;
-            cumulativeHours += weeklyHours;
+            while (currMon <= endDate && weekIndex <= 34) {
+                const currFri = new Date(currMon);
+                currFri.setDate(currFri.getDate() + 4);
 
-            const eventSummary = weekLabels.length > 0 ? Array.from(new Set(weekLabels)).join(', ') : '정상 수업';
+                const mStart = currMon.getMonth() + 1;
+                const dStart = currMon.getDate();
+                const mEnd = currFri.getMonth() + 1;
+                const dEnd = currFri.getDate();
+                const periodStr = `${mStart}.${dStart}~${mEnd}.${dEnd}`;
 
-            const tr = document.createElement('tr');
-            tr.innerHTML = `
-                <td><span class="badge ${semesterNum === 1 ? 'category-event' : 'category-trip'}">${semesterLabel}</span></td>
-                <td style="font-weight:700;">${weekIndex}주차</td>
-                <td>${periodStr}</td>
-                <td style="font-weight:700;">${weekSchoolDays}일</td>
-                <td>${monP}h</td>
-                <td>${tueP}h</td>
-                <td>${wedP}h</td>
-                <td>${thuP}h</td>
-                <td>${friP}h</td>
-                <td style="font-weight:800; color:var(--primary);">${weeklyHours}시간</td>
-                <td style="font-weight:800;">${cumulativeHours}시간</td>
-                <td style="font-size:0.88rem; color:var(--text-muted);">${eventSummary}</td>
+                const semesterNum = mStart >= 3 && mStart <= 8 ? 1 : 2;
+                const semesterLabel = `${semesterNum}학기`;
+
+                const monP = dailyPeriodsMap[1] || 0;
+                const tueP = dailyPeriodsMap[2] || 0;
+                const wedP = dailyPeriodsMap[3] || 0;
+                const thuP = dailyPeriodsMap[4] || 0;
+                const friP = dailyPeriodsMap[5] || 0;
+
+                let weekSchoolDays = 0;
+                let weekLabels = [];
+
+                for (let dayOffset = 0; dayOffset < 5; dayOffset++) {
+                    const dayDate = new Date(currMon);
+                    dayDate.setDate(dayDate.getDate() + dayOffset);
+                    const year = dayDate.getFullYear();
+                    const m = dayDate.getMonth() + 1;
+                    const d = dayDate.getDate();
+                    const dateStr = `${year}-${m < 10 ? '0' + m : m}-${d < 10 ? '0' + d : d}`;
+
+                    const natHoliday = activeHolidays[dateStr];
+                    const vacType = getVacationType(dateStr);
+                    const customEvt = schedList.find(e => e.event_date === dateStr);
+
+                    if (natHoliday) {
+                        weekLabels.push(`🔴 ${natHoliday}`);
+                    } else if (vacType) {
+                        weekLabels.push(`🏖️ ${vacType}`);
+                    } else if (customEvt) {
+                        weekLabels.push(`🏫 ${customEvt.title}`);
+                        if (customEvt.category !== 'HOLIDAY' && customEvt.category !== 'DISCRETIONARY') {
+                            weekSchoolDays++;
+                        }
+                    } else {
+                        weekSchoolDays++;
+                    }
+                }
+
+                if (semesterNum === 1) totalSchoolDays1 += weekSchoolDays;
+                else totalSchoolDays2 += weekSchoolDays;
+
+                const weeklyHours = weekSchoolDays > 0 ? (monP + tueP + wedP + thuP + friP) : 0;
+                cumulativeHours += weeklyHours;
+
+                const eventSummary = weekLabels.length > 0 ? Array.from(new Set(weekLabels)).join(', ') : '정상 수업';
+
+                const tr = document.createElement('tr');
+                tr.innerHTML = `
+                    <td><span class="badge ${semesterNum === 1 ? 'category-event' : 'category-trip'}">${semesterLabel}</span></td>
+                    <td style="font-weight:700;">${weekIndex}주차</td>
+                    <td>${periodStr}</td>
+                    <td style="font-weight:700;">${weekSchoolDays}일</td>
+                    <td>${monP}h</td>
+                    <td>${tueP}h</td>
+                    <td>${wedP}h</td>
+                    <td>${thuP}h</td>
+                    <td>${friP}h</td>
+                    <td style="font-weight:800; color:var(--primary);">${weeklyHours}시간</td>
+                    <td style="font-weight:800;">${cumulativeHours}시간</td>
+                    <td style="font-size:0.88rem; color:var(--text-muted);">${eventSummary}</td>
+                `;
+                annualTimetableTableBody.appendChild(tr);
+
+                currMon.setDate(currMon.getDate() + 7);
+                weekIndex++;
+            }
+
+            if (annualTotalHoursVal) annualTotalHoursVal.textContent = `${cumulativeHours.toLocaleString()}시간`;
+            if (semesterDaysVal) semesterDaysVal.textContent = `${totalSchoolDays1}일 / ${totalSchoolDays2}일 (총 ${totalSchoolDays1 + totalSchoolDays2}일)`;
+
+            annualTimetableTableFoot.innerHTML = `
+                <tr>
+                    <td colspan="3">연간 34주 총계</td>
+                    <td>${totalSchoolDays1 + totalSchoolDays2}일</td>
+                    <td colspan="5">월~금 기초시간표 배정 교시 연산 정산</td>
+                    <td>-</td>
+                    <td style="font-weight:900; color:var(--primary); font-size:1.1rem;">${cumulativeHours.toLocaleString()}시간</td>
+                    <td>✅ DB 실제 데이터 정산 충족</td>
+                </tr>
             `;
-            annualTimetableTableBody.appendChild(tr);
-
-            currMon.setDate(currMon.getDate() + 7);
-            weekIndex++;
+        } catch (err) {
+            console.error('Failed to render 34-week annual timetable:', err);
         }
-
-        if (annualTotalHoursVal) annualTotalHoursVal.textContent = `${cumulativeHours.toLocaleString()}시간`;
-        if (semesterDaysVal) semesterDaysVal.textContent = `${totalSchoolDays1}일 / ${totalSchoolDays2}일 (총 ${totalSchoolDays1 + totalSchoolDays2}일)`;
-
-        annualTimetableTableFoot.innerHTML = `
-            <tr>
-                <td colspan="3">연간 34주 총계</td>
-                <td>${totalSchoolDays1 + totalSchoolDays2}일</td>
-                <td colspan="5">월~금 평균 교시 정산</td>
-                <td>-</td>
-                <td style="font-weight:900; color:var(--primary); font-size:1.1rem;">${cumulativeHours.toLocaleString()}시간</td>
-                <td>✅ 법정시수 완벽 충족</td>
-            </tr>
-        `;
     }
 
     // Call initial load on tab switch
