@@ -71,3 +71,112 @@ body { background-color: var(--bg-color); color: var(--text-main); line-height: 
     .date-picker-wrap { justify-content: space-between; }
     .summary-cards { grid-template-columns: 1fr 1fr; }
 }
+
+/* Schedule Editor Panel */
+.schedule-editor-panel {
+    background: var(--card-bg);
+    border: 1px solid var(--border-color);
+    border-radius: 12px;
+    padding: 20px;
+    margin-bottom: 24px;
+}
+.schedule-editor-panel h3 {
+    font-size: 1.1rem;
+    color: var(--primary);
+    margin-bottom: 16px;
+}
+.schedule-form {
+    display: flex;
+    flex-direction: column;
+    gap: 14px;
+}
+.form-row {
+    display: flex;
+    gap: 16px;
+    flex-wrap: wrap;
+    align-items: center;
+}
+.form-row.align-end {
+    align-items: flex-end;
+}
+.form-row label {
+    display: flex;
+    flex-direction: column;
+    gap: 6px;
+    font-size: 0.9rem;
+    color: var(--text-muted);
+}
+.flex-grow {
+    flex: 1;
+    min-width: 240px;
+}
+.form-input, .form-select {
+    min-height: 44px;
+    background: rgba(255,255,255,0.05);
+    border: 1px solid var(--border-color);
+    color: var(--text-main);
+    padding: 10px 14px;
+    border-radius: 8px;
+    font-size: 1rem;
+    color-scheme: dark;
+}
+.form-input:focus, .form-select:focus {
+    outline: none;
+    border-color: var(--primary);
+}
+.form-label-text {
+    font-size: 0.9rem;
+    color: var(--text-muted);
+    font-weight: 600;
+}
+.grade-checkboxes {
+    display: flex;
+    gap: 12px;
+    flex-wrap: wrap;
+}
+.grade-checkboxes label {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    gap: 6px;
+    font-size: 0.95rem;
+    color: var(--text-main);
+    background: rgba(255,255,255,0.05);
+    padding: 8px 12px;
+    border-radius: 6px;
+    min-height: 44px;
+    cursor: pointer;
+}
+.grade-checkboxes input[type="checkbox"] {
+    width: 18px;
+    height: 18px;
+    accent-color: var(--primary);
+}
+.add-schedule-btn {
+    min-height: 44px;
+    padding: 0 20px;
+}
+.schedule-filter-row {
+    margin-bottom: 16px;
+}
+.year-selector {
+    min-width: 140px;
+}
+
+/* Badges */
+.badge {
+    display: inline-block;
+    padding: 4px 10px;
+    border-radius: 6px;
+    font-size: 0.85rem;
+    font-weight: 600;
+}
+.badge.category-event { background: rgba(139, 92, 246, 0.2); color: #c4b5fd; }
+.badge.category-holiday { background: rgba(255, 82, 82, 0.2); color: #fca5a5; }
+.badge.category-trip { background: rgba(77, 166, 255, 0.2); color: #93c5fd; }
+.badge.category-exam { background: rgba(244, 180, 0, 0.2); color: #fde047; }
+.badge.scope-all { background: rgba(117, 214, 159, 0.2); color: #86efac; }
+.badge.scope-grade { background: rgba(244, 114, 182, 0.2); color: #fbcfe8; }
+.text-button.danger { color: var(--danger); }
+.text-button.danger:hover { text-decoration: underline; }
+

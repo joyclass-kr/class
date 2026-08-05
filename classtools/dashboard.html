@@ -496,6 +496,18 @@
 
         .schedule-date.this-week { color: var(--accent-amber); }
 
+        .schedule-badge {
+            display: inline-block;
+            font-size: 0.72rem;
+            font-weight: 800;
+            padding: 2px 6px;
+            border-radius: 4px;
+            margin-right: 6px;
+            vertical-align: middle;
+        }
+        .schedule-badge.scope-all { background: rgba(16, 185, 129, 0.2); color: #34d399; }
+        .schedule-badge.scope-grade { background: rgba(245, 158, 11, 0.2); color: #fbbf24; }
+
         .calendar-nav {
             display: flex;
             align-items: center;
@@ -1661,6 +1673,17 @@
                 dateSpan.textContent = label;
                 const copy = document.createElement("span");
                 copy.className = "schedule-copy";
+                if (item.scope === "ALL") {
+                    const badge = document.createElement("span");
+                    badge.className = "schedule-badge scope-all";
+                    badge.textContent = "전교";
+                    copy.append(badge);
+                } else if (item.scope === "GRADE") {
+                    const badge = document.createElement("span");
+                    badge.className = "schedule-badge scope-grade";
+                    badge.textContent = "학년";
+                    copy.append(badge);
+                }
                 const titleSpan = document.createElement("span");
                 titleSpan.textContent = item.title;
                 copy.append(titleSpan);
@@ -1671,7 +1694,7 @@
                     copy.append(detailSpan);
                 }
                 div.append(dateSpan, copy);
-                if (canEditSchedules && item.type !== "birthday") {
+                if (canEditSchedules && item.type !== "birthday" && item.canDelete !== false) {
                     const actions = document.createElement("span");
                     actions.className = "schedule-actions";
                     const edit = document.createElement("button");

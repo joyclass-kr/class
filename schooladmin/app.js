@@ -30,13 +30,30 @@ document.addEventListener('DOMContentLoaded', () => {
     const rosterContent = document.getElementById('rosterContent');
     const rosterTableBody = document.getElementById('rosterTableBody');
 
+    // Annual Schedules Tab
+    const addAnnualScheduleForm = document.getElementById('addAnnualScheduleForm');
+    const annualDateInput = document.getElementById('annualDateInput');
+    const annualTitleInput = document.getElementById('annualTitleInput');
+    const annualCategorySelect = document.getElementById('annualCategorySelect');
+    const annualTargetScopeSelect = document.getElementById('annualTargetScopeSelect');
+    const gradeSelectionRow = document.getElementById('gradeSelectionRow');
+    const annualDetailsInput = document.getElementById('annualDetailsInput');
+    const annualSearchInput = document.getElementById('annualSearchInput');
+    const annualYearSelect = document.getElementById('annualYearSelect');
+    const annualLoading = document.getElementById('annualLoading');
+    const annualError = document.getElementById('annualError');
+    const annualContent = document.getElementById('annualContent');
+    const annualTableBody = document.getElementById('annualTableBody');
+
     // State
     let currentDate = new Date();
     let rosterData = [];
+    let annualSchedulesData = [];
 
     // --- Initialization ---
     function init() {
         dashboardDate.value = formatDate(currentDate);
+        if (annualDateInput) annualDateInput.value = formatDate(currentDate);
         
         // Event Listeners
         signOutButton.addEventListener('click', () => {
@@ -62,6 +79,22 @@ document.addEventListener('DOMContentLoaded', () => {
 
         rosterSearch.addEventListener('input', renderRosterTable);
 
+        // Annual Schedule Listeners
+        if (annualTargetScopeSelect) {
+            annualTargetScopeSelect.addEventListener('change', (e) => {
+                gradeSelectionRow.hidden = e.target.value !== 'GRADE';
+            });
+        }
+        if (addAnnualScheduleForm) {
+            addAnnualScheduleForm.addEventListener('submit', handleAddAnnualSchedule);
+        }
+        if (annualSearchInput) {
+            annualSearchInput.addEventListener('input', renderAnnualSchedulesTable);
+        }
+        if (annualYearSelect) {
+            annualYearSelect.addEventListener('change', loadAnnualSchedules);
+        }
+
         // Initial Load
         loadDashboard();
     }
@@ -75,7 +108,143 @@ document.addEventListener('DOMContentLoaded', () => {
 
         if (tabId === 'roster' && rosterData.length === 0) {
             loadRoster();
+        } else if (tabId === 'annual' && annualSchedulesData.length === 0) {
+            loadAnnualSchedules();
         }
+    }
+
+    // --- Annual Schedule Logic ---
+    async function loadAnnualSchedules() {
+        if (!annualLoading) return;
+        annualLoading.hidden = false;
+        annualError.hidden = true;
+        annualContent.hidden = true;
+
+        try {
+            const year = annualYearSelect ? annualYearSelect.value : new Date().getFullYear();
+            const res = await api(`/api/school-admin/annual-schedules?academicYear=${year}`);
+            annualSchedulesData = res.schedules || [];
+            renderAnnualSchedulesTable();
+            annualLoading.hidden = true;
+            annualContent.hidden = false;
+        } catch (error) {
+            annualLoading.hidden = true;
+            annualError.textContent = error.message || '학사일정을 불러오지 못했습니다.';
+            annualError.hidden = false;
+        }
+    }
+
+    function renderAnnualSchedulesTable() {
+        if (!annualTableBody) return;
+        const query = (annualSearchInput ? annualSearchInput.value : '').trim().toLowerCase();
+
+        const filtered = annualSchedulesData.filter(item => {
+            if (!query) return true;
+            return item.title.toLowerCase().includes(query) ||
+                   item.event_date.includes(query) ||
+                   (item.details && item.details.toLowerCase().includes(query));
+        });
+
+        annualTableBody.innerHTML = '';
+
+        const categoryLabels = {
+            EVENT: '🏫 일반 행사',
+            HOLIDAY: '🔴 휴업/공휴일',
+            TRIP: '🚌 체험/수련',
+            EXAM: '📝 평가/시험'
+        };
+
+        filtered.forEach(item => {
+            const tr = document.createElement('tr');
+            let targetText = '🏢 전교 공통';
+            if (item.target_scope === 'GRADE') {
+                const grades = Array.isArray(item.target_grades) ? item.target_grades.sort().join(', ') : '';
+                targetText = `🏫 ${grades}학년`;
+            }
+
+            tr.innerHTML = `
+                <td style="font-weight:600;">${item.event_date}</td>
+                <td><span class="badge category-${item.category.toLowerCase()}">${categoryLabels[item.category] || item.category}</span></td>
+                <td><span class="badge scope-${item.target_scope.toLowerCase()}">${targetText}</span></td>
+                <td style="font-weight:600;">${escapeHtml(item.title)}</td>
+                <td>${escapeHtml(item.details || '-')}</td>
+                <td>
+                    <button class="delete-schedule-btn text-button danger" data-id="${item.id}">삭제</button>
+                </td>
+            `;
+            annualTableBody.appendChild(tr);
+        });
+
+        if (filtered.length === 0) {
+            const tr = document.createElement('tr');
+            tr.innerHTML = `<td colspan="6">등록된 학사일정이 없습니다.</td>`;
+            annualTableBody.appendChild(tr);
+        }
+
+        // Attach delete listeners
+        annualTableBody.querySelectorAll('.delete-schedule-btn').forEach(btn => {
+            btn.addEventListener('click', () => deleteAnnualSchedule(btn.dataset.id));
+        });
+    }
+
+    async function handleAddAnnualSchedule(e) {
+        e.preventDefault();
+        const date = annualDateInput.value;
+        const title = annualTitleInput.value.trim();
+        const category = annualCategorySelect.value;
+        const targetScope = annualTargetScopeSelect.value;
+        const details = annualDetailsInput.value.trim();
+        const academicYear = Number(annualYearSelect ? annualYearSelect.value : new Date().getFullYear());
+
+        let targetGrades = [];
+        if (targetScope === 'GRADE') {
+            const checkboxes = addAnnualScheduleForm.querySelectorAll('input[name="targetGrade"]:checked');
+            targetGrades = Array.from(checkboxes).map(cb => Number(cb.value));
+            if (targetGrades.length === 0) {
+                alert('적용 대상 학년을 최소 1개 이상 선택해 주세요.');
+                return;
+            }
+        }
+
+        try {
+            await api('/api/school-admin/annual-schedules', {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify({
+                    academicYear,
+                    date,
+                    title,
+                    category,
+                    targetScope,
+                    targetGrades,
+                    details
+                })
+            });
+
+            annualTitleInput.value = '';
+            annualDetailsInput.value = '';
+            await loadAnnualSchedules();
+        } catch (error) {
+            alert(error.message || '일정을 등록하지 못했습니다.');
+        }
+    }
+
+    async function deleteAnnualSchedule(scheduleId) {
+        if (!confirm('정말 이 학사일정을 삭제하시겠습니까?')) return;
+        try {
+            await api(`/api/school-admin/annual-schedules/${scheduleId}`, { method: 'DELETE' });
+            await loadAnnualSchedules();
+        } catch (error) {
+            alert(error.message || '일정을 삭제하지 못했습니다.');
+        }
+    }
+
+    function escapeHtml(str) {
+        return String(str || '')
+            .replace(/&/g, '&amp;')
+            .replace(/</g, '&lt;')
+            .replace(/>/g, '&gt;')
+            .replace(/"/g, '&quot;');
     }
 
     // --- Date Helpers ---

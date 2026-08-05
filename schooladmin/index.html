@@ -18,6 +18,7 @@
 
     <div class="tabs">
         <button class="tab-button active" data-tab="dashboard">출결 현황판</button>
+        <button class="tab-button" data-tab="annual">연간 학사일정 관리</button>
         <button class="tab-button" data-tab="roster">전교생 명단</button>
     </div>
 
@@ -78,6 +79,94 @@
                         </tfoot>
                     </table>
                 </div>
+            </div>
+        </section>
+
+        <!-- Annual Schedules Tab -->
+        <section id="annualTab" class="tab-content" hidden>
+            <div class="schedule-editor-panel">
+                <h3>📅 연간 학사일정 / 행사 등록</h3>
+                <form id="addAnnualScheduleForm" class="schedule-form">
+                    <div class="form-row">
+                        <label>
+                            <span>일정 날짜</span>
+                            <input type="date" id="annualDateInput" required class="form-input">
+                        </label>
+                        <label class="flex-grow">
+                            <span>일정명</span>
+                            <input type="text" id="annualTitleInput" placeholder="예: 현장체험학습, 체육대회, 개학식" required maxlength="60" class="form-input">
+                        </label>
+                    </div>
+                    <div class="form-row">
+                        <label>
+                            <span>구분</span>
+                            <select id="annualCategorySelect" class="form-select">
+                                <option value="EVENT">🏫 일반 행사</option>
+                                <option value="HOLIDAY">🔴 휴업일 / 공휴일</option>
+                                <option value="TRIP">🚌 현장체험 / 수련</option>
+                                <option value="EXAM">📝 평가 / 시험</option>
+                            </select>
+                        </label>
+                        <label>
+                            <span>적용 대상</span>
+                            <select id="annualTargetScopeSelect" class="form-select">
+                                <option value="ALL">🏢 전교 공통</option>
+                                <option value="GRADE">🏫 특정 학년 지정</option>
+                            </select>
+                        </label>
+                    </div>
+                    <div class="form-row" id="gradeSelectionRow" hidden>
+                        <span class="form-label-text">대상 학년:</span>
+                        <div class="grade-checkboxes">
+                            <label><input type="checkbox" name="targetGrade" value="1"> 1학년</label>
+                            <label><input type="checkbox" name="targetGrade" value="2"> 2학년</label>
+                            <label><input type="checkbox" name="targetGrade" value="3"> 3학년</label>
+                            <label><input type="checkbox" name="targetGrade" value="4"> 4학년</label>
+                            <label><input type="checkbox" name="targetGrade" value="5"> 5학년</label>
+                            <label><input type="checkbox" name="targetGrade" value="6"> 6학년</label>
+                        </div>
+                    </div>
+                    <div class="form-row align-end">
+                        <label class="flex-grow">
+                            <span>상세 설명 (선택)</span>
+                            <input type="text" id="annualDetailsInput" placeholder="비고 및 안내 사항" maxlength="160" class="form-input">
+                        </label>
+                        <button type="submit" class="primary-button add-schedule-btn">
+                            <span class="material-symbols-outlined">add</span> 일정 추가
+                        </button>
+                    </div>
+                </form>
+            </div>
+
+            <div class="controls-row schedule-filter-row">
+                <input type="text" id="annualSearchInput" class="search-input" placeholder="일정 검색...">
+                <div class="year-selector">
+                    <select id="annualYearSelect" class="form-select">
+                        <option value="2026">2026학년도</option>
+                        <option value="2025">2025학년도</option>
+                    </select>
+                </div>
+            </div>
+
+            <div id="annualLoading" class="loading-state" hidden>일정을 불러오는 중입니다...</div>
+            <div id="annualError" class="error-state" hidden></div>
+
+            <div id="annualContent" class="table-container">
+                <table class="data-table">
+                    <thead>
+                        <tr>
+                            <th>날짜</th>
+                            <th>구분</th>
+                            <th>적용 대상</th>
+                            <th>일정명</th>
+                            <th>상세 내용</th>
+                            <th>관리</th>
+                        </tr>
+                    </thead>
+                    <tbody id="annualTableBody">
+                        <!-- Rows will be injected here -->
+                    </tbody>
+                </table>
             </div>
         </section>
 

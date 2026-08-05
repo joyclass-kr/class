@@ -788,7 +788,24 @@ function createClassroomPlatform(options = {}) {
         student_id BIGINT NOT NULL REFERENCES school_students(id) ON DELETE CASCADE,
         sort_order INTEGER NOT NULL DEFAULT 0,
         PRIMARY KEY (group_id, student_id)
-      )`
+      )`,
+      `CREATE TABLE IF NOT EXISTS school_annual_schedules (
+        id BIGSERIAL PRIMARY KEY,
+        school_id BIGINT NOT NULL REFERENCES classroom_schools(id) ON DELETE CASCADE,
+        academic_year INTEGER NOT NULL,
+        event_date DATE NOT NULL,
+        title TEXT NOT NULL CHECK (char_length(title) BETWEEN 1 AND 60),
+        category TEXT NOT NULL DEFAULT 'EVENT' CHECK (category IN ('EVENT', 'HOLIDAY', 'EXAM', 'TRIP', 'OTHER')),
+        target_scope TEXT NOT NULL DEFAULT 'ALL' CHECK (target_scope IN ('ALL', 'GRADE', 'CLASS')),
+        target_grades INTEGER[] NOT NULL DEFAULT '{}',
+        event_type TEXT NOT NULL DEFAULT 'FULL' CHECK (event_type IN ('FULL', 'HALF', 'NONE')),
+        details TEXT NOT NULL DEFAULT '',
+        created_by BIGINT REFERENCES classroom_users(id) ON DELETE SET NULL,
+        created_at TIMESTAMPTZ NOT NULL DEFAULT NOW(),
+        updated_at TIMESTAMPTZ NOT NULL DEFAULT NOW()
+      )`,
+      `CREATE INDEX IF NOT EXISTS school_annual_schedules_lookup_idx
+        ON school_annual_schedules (school_id, academic_year, event_date)`
     ];
 
     try {
@@ -2297,10 +2314,40 @@ function createClassroomPlatform(options = {}) {
        WHERE class_id = $1 AND birthday_visible = TRUE AND birthday_mmdd IS NOT NULL`,
       [classId]
     );
+    const classMetaRes = await pool.query(
+      `SELECT school_id, grade FROM classroom_classes WHERE id = $1`,
+      [classId]
+    );
+    const classMeta = classMetaRes.rows[0];
+    let annualSchedules = [];
+    if (classMeta) {
+      const annualRes = await pool.query(
+        `SELECT id, event_date::TEXT AS event_date, title, details, category, target_scope, target_grades, event_type
+         FROM school_annual_schedules
+         WHERE school_id = $1
+           AND event_date >= CURRENT_DATE - 31
+           AND event_date < CURRENT_DATE + 370
+           AND (target_scope = 'ALL' OR (target_scope = 'GRADE' AND $2 = ANY(target_grades)))
+         ORDER BY event_date, id`,
+        [classMeta.school_id, classMeta.grade]
+      );
+      annualSchedules = annualRes.rows.map((row) => ({
+        id: `annual_${row.id}`,
+        date: row.event_date,
+        title: row.title,
+        details: row.details || "",
+        category: row.category,
+        scope: row.target_scope,
+        eventType: row.event_type,
+        type: "annual_schedule",
+        canDelete: false
+      }));
+    }
+
     const savedSchedules = result.rows.map((row) => ({
-      id: String(row.id), date: row.event_date, title: row.title, details: row.details || "", type: "schedule"
+      id: String(row.id), date: row.event_date, title: row.title, details: row.details || "", type: "schedule", scope: "CLASS", canDelete: true
     }));
-    const schedules = [...savedSchedules, ...birthdayScheduleRows(birthdaysResult.rows)]
+    const schedules = [...annualSchedules, ...savedSchedules, ...birthdayScheduleRows(birthdaysResult.rows)]
       .sort((a, b) => a.date.localeCompare(b.date) || a.title.localeCompare(b.title));
     res.json({
       classId,
@@ -3382,6 +3429,66 @@ function createClassroomPlatform(options = {}) {
       schoolName: profile.school_name,
       students: result.rows
     });
+  }));
+
+  router.get("/school-admin/annual-schedules", asyncRoute(async (req, res) => {
+    const { profile } = await requireSchoolAdmin(req);
+    const year = Number(req.query.academicYear || new Date().getFullYear());
+    const result = await pool.query(
+      `SELECT id, academic_year, event_date::TEXT AS event_date, title, category, target_scope, target_grades, event_type, details, created_at
+       FROM school_annual_schedules
+       WHERE school_id = $1 AND academic_year = $2
+       ORDER BY event_date, id`,
+      [profile.school_id, year]
+    );
+    res.json({
+      schoolName: profile.school_name,
+      academicYear: year,
+      schedules: result.rows
+    });
+  }));
+
+  router.post("/school-admin/annual-schedules", asyncRoute(async (req, res) => {
+    const { user, profile } = await requireSchoolAdmin(req);
+    const academicYear = Number(req.body?.academicYear || new Date().getFullYear());
+    const date = String(req.body?.date || "").trim();
+    const title = String(req.body?.title || "").normalize("NFC").trim();
+    const category = String(req.body?.category || "EVENT").toUpperCase();
+    const targetScope = String(req.body?.targetScope || "ALL").toUpperCase();
+    const targetGrades = Array.isArray(req.body?.targetGrades) ? req.body.targetGrades.map(Number).filter(n => n >= 1 && n <= 12) : [];
+    const eventType = String(req.body?.eventType || "FULL").toUpperCase();
+    const details = String(req.body?.details || "").normalize("NFC").trim();
+
+    if (!/^\d{4}-\d{2}-\d{2}$/.test(date)) {
+      throw new HttpError(400, "INVALID_DATE", "유효한 날짜를 입력하세요.");
+    }
+    if (!title || title.length > 60) {
+      throw new HttpError(400, "INVALID_TITLE", "일정 제목은 1~60자로 입력하세요.");
+    }
+
+    const result = await pool.query(
+      `INSERT INTO school_annual_schedules
+       (school_id, academic_year, event_date, title, category, target_scope, target_grades, event_type, details, created_by)
+       VALUES ($1, $2, $3::DATE, $4, $5, $6, $7, $8, $9, $10)
+       RETURNING id, academic_year, event_date::TEXT AS event_date, title, category, target_scope, target_grades, event_type, details`,
+      [profile.school_id, academicYear, date, title, category, targetScope, targetGrades, eventType, details, user.id]
+    );
+
+    res.status(201).json({ schedule: result.rows[0] });
+  }));
+
+  router.delete("/school-admin/annual-schedules/:scheduleId", asyncRoute(async (req, res) => {
+    const { profile } = await requireSchoolAdmin(req);
+    const scheduleId = Number(req.params.scheduleId);
+    if (!Number.isInteger(scheduleId) || scheduleId < 1) {
+      throw new HttpError(400, "INVALID_SCHEDULE", "일정을 찾을 수 없습니다.");
+    }
+    const result = await pool.query(
+      `DELETE FROM school_annual_schedules WHERE id = $1 AND school_id = $2 RETURNING id`,
+      [scheduleId, profile.school_id]
+    );
+    if (!result.rows[0]) throw new HttpError(404, "SCHEDULE_NOT_FOUND", "일정을 찾을 수 없거나 삭제 권한이 없습니다.");
+    res.json({ ok: true });
   }));
 
 
