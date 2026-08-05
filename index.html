@@ -1504,7 +1504,7 @@
                     updatePlayerLearningLinks(guest.name);
                     setHubLocked(false);
                     restrictedPreview = false;
-                    setStatus(`PLAYER · ${guest.name}`);
+                    setStatus('');
                     authTitle.textContent = 'GUEST PLAYER';
                     authMessage.hidden = true;
                     toggleGuestMode.hidden = true;
@@ -1512,10 +1512,20 @@
                     joinForm.hidden = true;
                     googleSignInButton.hidden = true;
                     signedInArea.hidden = false;
-                    signedInName.textContent = guest.name;
-                    classMembership.textContent = '게스트 플레이어 세션';
-                    studentProfileLink.hidden = true;
-                    classToolsLink.hidden = true;
+
+                    const profileList = document.getElementById('profileList');
+                    if (profileList) {
+                        profileList.innerHTML = `
+                            <div class="profile-btn player" style="cursor:default; background: rgba(255,255,255,0.06); border: 1px solid rgba(255,255,255,0.15); border-radius: 12px; padding: 16px; margin-bottom: 12px;">
+                                <span class="profile-title" style="display:block; font-weight:700; font-size:16px; color:#fff;">🎮 ${guest.name} 님 (게스트 플레이어)</span>
+                                <span class="profile-desc" style="display:block; font-size:13px; color:rgba(255,255,255,0.7); margin-top:4px;">게스트 플레이어 모드가 활성화되었습니다</span>
+                            </div>
+                        `;
+                    }
+                    if (signedInName) signedInName.textContent = guest.name;
+                    if (classMembership) classMembership.textContent = '게스트 플레이어 세션';
+                    if (studentProfileLink) studentProfileLink.hidden = true;
+                    if (classToolsLink) classToolsLink.hidden = true;
                 } catch (error) {
                     setStatus(error.message, true);
                 }
