@@ -11,165 +11,125 @@
   }
 
   // 05번 전시실(입체·공간)과 100% 동일한 THREE.GLTFLoader 기반 3D 스캔 GLB 로딩 시스템
-  const ZONES = [
+    const ZONES = [
     {
       id: 'haetae', order: '01', title: '광화문 해치상', short: '광화문 해치',
       subtitle: '조선 · 국립문화유산연구원 3D 스캔 GLB', position: [72, 0, -142], arrival: [72, 1.62, -148], lookAt: [72, 1.8, -142],
       modelPath: '../museum/assets/models/gwanghwamun-haetae.glb', realHeight: 3.507, materialTint: 0x817d75, preserveMaterials: true,
       facts: [['길이', '2.756m'], ['너비', '1.862m'], ['높이', '3.507m']],
-      size: '길이 275.6cm × 너비 186.2cm × 높이 350.7cm',
-      scale: '05번 전시실과 동일한 국가유산청 3D 포토그래메트리 스캔 GLB 1:1 적용',
+      size: '길이 275.6cm x 너비 186.2cm x 높이 350.7cm',
+      scale: '국가유산청 3D 포토그래메트리 스캔 GLB 1:1',
       note: '국가유산 3D 기록정보 정밀 실측 포토그래메트리 스캔',
-      docent: '05번 전시실에 있는 광화문 해치상 실제 3D 스캔 모델입니다. 옳고 그름을 가리고 불을 막아주는 해치의 둥근 코, 갈기, 소용돌이무늬 조각을 야외 3D 공간에서 둘러보세요.',
+      docent: '광화문을 지키는 해치상입니다. 옳고 그름을 가리고 불을 막아주는 해치의 둥근 코, 갈기, 소용돌이무늬 조각을 야외 3D 공간에서 둘러보세요.',
       caution: '사자와 비슷하지만 상상의 동물이며 머리의 뿔과 몸의 갈기 표현이 특징입니다.',
       look: '정면과 옆면을 오가며 머리 뿔과 소용돌이무늬 조각의 3D 스캔 입체를 확인해보세요.',
-      source: 'https://portal.nrich.go.kr/', rights: '원작: 국가유산 · 국가유산청 3D 포토그래메트리 스캔 GLB'
+      source: 'https://portal.nrich.go.kr/', rights: '국가유산청 3D 포토그래메트리 스캔 GLB'
     },
     {
       id: 'thinker', order: '02', title: '생각하는 사람', short: '생각하는 사람',
-      subtitle: '오귀스트 로댕 · Scan the World 3D 스캔 GLB', position: [-72, 0, -142], arrival: [-72, 1.62, -148], lookAt: [-72, 2.5, -142],
+      subtitle: '오귀스트 로댕 · Scan the World 3D 스캔 GLB', position: [-60, 0, -155], arrival: [-60, 1.62, -162], lookAt: [-60, 2.5, -155],
       modelPath: '../museum/assets/models/thinker.glb', realHeight: 1.89, materialColor: 0x38271d, metalness: 0.78, roughness: 0.3,
       facts: [['높이', '1.89m'], ['재질', '청동 주조본'], ['제작', '1903년']],
       size: '높이 189cm (대형 청동 주조본 기준)',
-      scale: '05번 전시실과 동일한 Scan the World 3D 정밀 스캔 GLB 적용',
+      scale: 'Scan the World 3D 정밀 스캔 GLB 실물 크기',
       note: '로댕 미술관 소장 원작 Scan the World 3D 스캔',
-      docent: '05번 전시실의 생각하는 사람 실제 3D 스캔 모델입니다. 온몸의 근육에 힘을 준 채 깊이 고뇌하는 인체의 입체 구조를 야외 3D 공원에서 360도로 관람해 보세요.',
+      docent: '온몸의 근육에 힘을 준 채 깊이 고뇌하는 인체의 입체 구조를 야외 3D 공원에서 360도로 관람해 보세요.',
       caution: '단테의 신곡에 나오는 지옥의 문 위에서 인간을 관조하는 시인의 모습을 청동으로 표현했습니다.',
       look: '팔, 등, 다리 근육이 얽혀 만드는 3D 덩어리의 균형감을 살펴보세요.',
-      source: 'https://www.musee-rodin.fr/', rights: '원작: Public Domain · Scan the World 3D 스캔 GLB'
+      source: 'https://www.musee-rodin.fr/', rights: 'Public Domain · Scan the World 3D 스캔 GLB'
     },
     {
       id: 'david', order: '03', title: '다비드상', short: '다비드상',
-      subtitle: '미켈란젤로 · Scan the World 3D 스캔 GLB', position: [137, 0, -28], arrival: [137, 1.62, 95], lookAt: [137, 44, -28],
+      subtitle: '미켈란젤로 · Scan the World 3D 스캔 GLB', position: [155, 0, -55], arrival: [155, 1.62, -72], lookAt: [155, 5, -55],
       modelPath: '../museum/assets/models/david.glb', realHeight: 5.17, materialColor: 0xded8cc, roughness: 0.55,
       facts: [['높이', '5.17m'], ['재질', '대리석'], ['제작', '1501-1504년']],
       size: '높이 5.17m (좌대 제외 실측)',
-      scale: '05번 전시실과 동일한 Scan the World 3D 정밀 스캔 GLB 적용',
+      scale: 'Scan the World 3D 정밀 스캔 GLB 실물 크기',
       note: '피렌체 아카데미아 미술관 원작 Scan the World 3D 스캔',
-      docent: '05번 전시실의 미켈란젤로 다비드상 실제 3D 스캔 모델입니다. 골리앗과의 싸움을 앞두고 긴장한 젊은 다윗의 거대한 대리석 조각 3D 형태를 확인하세요.',
+      docent: '골리앗과의 싸움을 앞두고 긴장한 젊은 다윗의 거대한 대리석 조각 3D 형태를 확인하세요.',
       caution: '아래에서 올려다볼 때 비율이 자연스럽게 보이도록 머리와 오른손을 약간 더 크게 조각했습니다.',
       look: '손전등 빛 아래 선명하게 드러나는 손핏줄과 얼굴 표정의 3D 스캔 입체를 확인하세요.',
-      source: 'https://www.galleriaaccademiafirenze.it/', rights: '원작: Public Domain · Scan the World 3D 스캔 GLB'
+      source: 'https://www.galleriaaccademiafirenze.it/', rights: 'Public Domain · Scan the World 3D 스캔 GLB'
     },
     {
       id: 'venus', order: '04', title: '밀로의 비너스', short: '밀로의 비너스',
-      subtitle: '알렉산드로스 추정 · Scan the World 3D 스캔 GLB', position: [-142, 0, 112], arrival: [-142, 1.62, 106], lookAt: [-142, 2.2, 112],
+      subtitle: '알렉산드로스 추정 · Scan the World 3D 스캔 GLB', position: [-155, 0, -55], arrival: [-155, 1.62, -72], lookAt: [-155, 2.2, -55],
       modelPath: '../museum/assets/models/venus-de-milo.glb', realHeight: 2.04, materialColor: 0xd9d2c5, roughness: 0.58,
       facts: [['높이', '2.04m'], ['재질', '대리석'], ['제작', '기원전 150-125년경']],
       size: '높이 204cm',
-      scale: '05번 전시실과 동일한 루브르 박물관 Scan the World 3D 스캔 GLB 적용',
+      scale: 'Scan the World 루브르 3D 스캔 GLB 실물 크기',
       note: '루브르 박물관 소장 원작 Scan the World 3D 스캔',
-      docent: '05번 전시실의 밀로의 비너스 실제 3D 스캔 모델입니다. 상체를 미세하게 틀어 부드러운 S자 콘트라포스토 균형을 만드는 대리석 조각을 관람하세요.',
+      docent: '상체를 미세하게 틀어 부드러운 S자 콘트라포스토 균형을 만드는 대리석 조각을 관람하세요.',
       caution: '두 팔은 발견 당시부터 없었지만, 그 비어있는 공간 덕분에 더욱 완벽한 클래식 미의 상징이 되었습니다.',
       look: '어깨와 골반이 서로 기울어지며 만드는 부드러운 곡선의 3D 입체감을 살펴보세요.',
-      source: 'https://collections.louvre.fr/', rights: '원작: Public Domain · Scan the World 3D 스캔 GLB'
+      source: 'https://collections.louvre.fr/', rights: 'Public Domain · Scan the World 3D 스캔 GLB'
     },
     {
       id: 'pieta', order: '05', title: '피에타상', short: '피에타상',
-      subtitle: '미켈란젤로 · Scan the World 3D 스캔 GLB', position: [0, 0, 135], arrival: [0, 1.62, 142], lookAt: [0, 2.5, 135],
+      subtitle: '미켈란젤로 · Scan the World 3D 스캔 GLB', position: [0, 0, -170], arrival: [0, 1.62, -178], lookAt: [0, 2.5, -170],
       modelPath: '../museum/assets/models/pieta.glb', realHeight: 1.75, materialColor: 0xdbd5c8, roughness: 0.56,
       facts: [['높이', '1.75m'], ['너비', '1.95m'], ['재질', '대리석']],
-      size: '높이 1.75m × 너비 1.95m',
-      scale: '05번 전시실과 동일한 바티칸 성 베드로 대성당 Scan the World 3D 스캔 GLB 적용',
+      size: '높이 1.75m x 너비 1.95m',
+      scale: 'Scan the World 3D 스캔 GLB 실물 크기',
       note: '바티칸 성 베드로 대성당 소장 원작 Scan the World 3D 스캔',
-      docent: '05번 전시실의 미켈란젤로 피에타상 실제 3D 스캔 모델입니다. 마리아가 십자가에서 내려진 예수를 품에 안은 슬픈 순간이 부드러운 대리석 3D 입체로 표현되어 있습니다.',
+      docent: '마리아가 십자가에서 내려진 예수를 품에 안은 슬픈 순간이 부드러운 대리석 3D 입체로 표현되어 있습니다.',
       caution: '미켈란젤로가 자신의 이름을 마리아 옷띠에 직접 조각한 유일한 작품입니다.',
       look: '마리아의 풍성한 옷자락 드레이프와 안겨있는 예수 몸의 정밀한 3D 스캔 구도를 확인하세요.',
-      source: 'https://www.museivaticani.va/', rights: '원작: Public Domain · Scan the World 3D 스캔 GLB'
+      source: 'https://www.museivaticani.va/', rights: 'Public Domain · Scan the World 3D 스캔 GLB'
     },
     {
-      id: 'sphinx', order: '06', title: '카프라 왕의 스핑크스', short: '기자의 대스핑크스',
-      subtitle: '고대 이집트 · 3D GLB 모델 스캔', position: [-145, 0, -18], arrival: [-160, 1.62, -91], lookAt: [-145, 11, -34],
-      modelPath: 'assets/models/sphinx.glb', realHeight: 20.0, materialColor: 0xd6c29b,
-      facts: [['길이', '73.5m'], ['너비', '19m'], ['높이', '20m']],
-      size: '길이 73.5m × 너비 19m × 높이 20m',
-      scale: '05번 전시실과 동일한 THREE.GLTFLoader 3D 입체 스캔 GLB 적용',
-      note: '하버드 Digital Giza & 3D 실측 데이터 1:1 스캔',
-      docent: '사자의 몸과 왕의 머리가 결합된 고대 이집트의 거대한 수호상입니다. 05번 전시실 조각상과 동일하게 3D GLB 입체로 73.5m의 실측 크기를 체험해 보세요.',
-      caution: '석회암 바위산 하나를 통째로 깎아서 만든 세계 최대 크기의 단일 석조 조각상입니다.',
-      look: '발끝에서 꼬리까지 옆길을 따라 걸어보고, 1.45m 어린이 캐릭터와 스핑크스 머리의 높이를 직접 비교해 보세요.',
-      source: 'https://giza.fas.harvard.edu/faq/', rights: '원작: 고대 유물 · 3D 입체 스캔 모델'
+      id: 'sphinx', order: '06', title: '기자의 대스핑크스', short: '대스핑크스',
+      subtitle: '고대 이집트 기원전 2500년경 · 3D 포토그래메트리 스캔', position: [-130, 0, 80], arrival: [-90, 1.62, 80], lookAt: [-130, 10, 80],
+      modelPath: 'assets/models/sphinx.glb', realHeight: 20.22, preserveMaterials: true,
+      facts: [['길이', '73.5m'], ['너비', '19m'], ['높이', '20.22m']],
+      size: '길이 73.5m x 너비 19m x 높이 20.22m',
+      scale: '실측 1:1 포토그래메트리 스캔 GLB',
+      note: '고대 이집트 기자 고원 실측 3D 스캔 데이터',
+      docent: '사자의 몸과 왕의 머리가 결합된 고대 이집트의 거대한 수호상입니다. 석회암 바위산 하나를 통째로 깎아 만든 실제 크기 20m를 체험해 보세요.',
+      caution: '세계 최대 크기의 단일 석조 조각상입니다.',
+      look: '발끝에서 꼬리까지 옆길을 따라 걸어보세요.',
+      source: 'https://giza.fas.harvard.edu/', rights: '3D 포토그래메트리 스캔 · CC Attribution'
     },
     {
-      id: 'emille', order: '07', title: '성덕대왕신종 (에밀레종)', short: '에밀레종',
-      subtitle: '통일신라 771년 · 국보 · 3D GLB 모델 스캔', position: [-72, 0, -142], arrival: [-72, 1.62, -148], lookAt: [-72, 2.5, -142],
-      modelPath: 'assets/models/emille-bell.glb', realHeight: 6.8, materialColor: 0x5a5245, metalness: 0.45, roughness: 0.52,
-      facts: [['높이', '3.75m'], ['입지름', '2.27m'], ['무게', '약 18.9톤']],
-      size: '종 높이 3.75m × 입지름 2.27m (전각 포함 전체 높이 6.8m)',
-      scale: '국가유산청 3D 정밀 실측 1:1 입체 스캔 적용',
-      note: '국가지정 유산 3D 정밀 실측 데이터',
-      docent: '우리나라에 남아있는 가장 큰 국보 종입니다. 종 꼭대기의 용뉴(용 모양 고리)와 음통, 종 몸통의 비천상을 3D 입체 공간에서 둘러보세요.',
-      caution: '“에밀레”라는 이름은 전설에서 유래했으나 과학적 분석 결과 아기를 넣었다는 것은 거짓입니다.',
-      look: '종 위쪽에 걸린 용 모양 고리(용뉴)와 비천상이 하늘로 날아오르는 문양을 입체로 살펴보세요.',
-      source: 'https://www.heritage.go.kr/', rights: '원작: 국보 유물 · 3D 입체 스캔 모델'
+      id: 'liberty', order: '07', title: '자유의 여신상', short: '자유의 여신상',
+      subtitle: '프레데리크 바르톨디 1886 · 3D 포토그래메트리 스캔', position: [130, 0, 80], arrival: [130, 1.62, 22], lookAt: [130, 46, 80],
+      modelPath: 'assets/models/statue-of-liberty.glb', realHeight: 46.05, preserveMaterials: true,
+      facts: [['조각상 높이', '46.05m'], ['받침대', '46.94m'], ['총 높이', '92.99m']],
+      size: '조각상 46.05m (받침대 제외)',
+      scale: '실측 1:1 포토그래메트리 스캔 GLB',
+      note: '미국 국립공원관리청(NPS) 공식 실측 수치',
+      docent: '미국 뉴욕의 상징인 자유의 여신상입니다. 조각상 본체만 46m의 실제 크기를 3D 공간에서 올려다보세요.',
+      caution: '겉표면 동판이 산화되어 청록색으로 변했습니다.',
+      look: '발밑에서 횃불 끝까지 올려다본 뒤 뒤로 멀리 물러나 전체 비례를 확인하세요.',
+      source: 'https://www.nps.gov/stli/', rights: '3D 포토그래메트리 스캔 · CC Attribution'
     },
     {
-      id: 'liberty', order: '08', title: '자유의 여신상', short: '자유의 여신상',
-      subtitle: '프레데리크 오귀스트 바르톨디 · 1886 · 3D GLB 모델 스캔', position: [137, 0, -28], arrival: [137, 1.62, 95], lookAt: [137, 44, -28],
-      modelPath: 'assets/models/statue-of-liberty.glb', realHeight: 92.99, materialColor: 0x629c8b, metalness: 0.15, roughness: 0.65,
-      facts: [['지면→횃불', '92.99m'], ['조각상', '46.05m'], ['받침대', '46.94m']],
-      size: '지면에서 횃불까지 92.99m (조각상 46.05m + 받침대 46.94m)',
-      scale: '미국 국립공원관리청(NPS) 공식 3D 정밀 치수 적용',
-      note: 'NPS & 스미소니언 3D 정밀 실측 수치',
-      docent: '미국 뉴욕의 상징인 자유의 여신상입니다. 받침대(47m)와 조각상(46m)이 결합된 93m의 웅장한 3D 입체 스케일을 확인해 보세요.',
-      caution: '겉표면 동판이 산화되어 처음의 붉은 동색에서 청록색으로 변했습니다.',
-      look: '발밑에서 까마득히 높은 횃불 끝까지 올려다본 뒤, 뒤로 멀리 물러나 전체 3D 비례를 확인하세요.',
-      source: 'https://www.nps.gov/stli/learn/statue-of-liberty-facts.htm', rights: '원작: Public Domain · 3D 입체 스캔 모델'
-    },
-    {
-      id: 'moai', order: '09', title: '이스터섬 모아이 석상', short: '모아이 석상',
-      subtitle: '칠레 라파누이 · 1250–1500년경 · 3D GLB 모델 스캔', position: [72, 0, -142], arrival: [72, 1.62, -148], lookAt: [72, 2.5, -142],
-      modelPath: 'assets/models/moai.glb', realHeight: 6.6, materialColor: 0x6e6960, roughness: 0.98,
-      facts: [['평균 높이', '약 4.0m'], ['대좌 포함', '6.6m'], ['무게', '약 20톤']],
-      size: '석상 높이 4m (아후 석조 대좌 및 푸카오 포함 6.6m)',
-      scale: '이스터섬 아후 통가리키 실측 3D 스캔 데이터 적용',
+      id: 'moai', order: '08', title: '이스터섬 모아이 석상', short: '모아이 석상',
+      subtitle: '칠레 라파누이 1250-1500년경 · 3D 포토그래메트리 스캔', position: [0, 0, 170], arrival: [0, 1.62, 162], lookAt: [0, 3, 170],
+      modelPath: 'assets/models/moai.glb', realHeight: 4.0, preserveMaterials: true,
+      facts: [['평균 높이', '약 4.0m'], ['무게', '약 14톤'], ['재질', '현무암']],
+      size: '높이 약 4.0m (평균 크기 기준)',
+      scale: '실측 1:1 포토그래메트리 스캔 GLB',
       note: '라파누이 국립공원 유적 3D 스캔',
-      docent: '태평양 이스터섬에 우뚝 선 모아이 석상입니다. 돌출된 긴 코와 커다란 턱, 머리 위의 붉은 모자(푸카오)의 3D 입체 구조를 오가며 감상해 보세요.',
-      caution: '모아이는 바다를 등지고 섬 내부의 마을을 바라보며 족장과 조상의 영혼을 수호하는 방향으로 서 있습니다.',
-      look: '우뚝 솟은 턱선과 귓볼, 머리 위에 올려진 붉은 모자(푸카오)의 묵직한 3D 형태를 살펴보세요.',
-      source: 'https://whc.unesco.org/en/list/715/', rights: '원작: 세계유산 · 3D 입체 스캔 모델'
+      docent: '태평양 이스터섬에 우뚝 선 모아이 석상입니다. 돌출된 긴 코와 커다란 턱의 3D 입체 구조를 오가며 감상해 보세요.',
+      caution: '모아이는 바다를 등지고 섬 내부의 마을을 바라보고 있습니다.',
+      look: '우뚝 솟은 턱선과 귓볼의 묵직한 3D 형태를 살펴보세요.',
+      source: 'https://whc.unesco.org/en/list/715/', rights: '3D 포토그래메트리 스캔 · CC Attribution'
     },
     {
-      id: 'towers', order: '10', title: '불국사 다보탑 & 석가탑', short: '다보탑 · 석가탑',
-      subtitle: '통일신라 751년 · 국보 · 3D GLB 모델 스캔', position: [132, 0, 118], arrival: [145, 1.62, 118], lookAt: [132, 6, 118],
-      modelPath: 'assets/models/dabotap-seokgatap.glb', realHeight: 10.75, materialColor: 0xb5b0a5,
-      facts: [['석가탑 높이', '10.75m'], ['다보탑 높이', '10.29m'], ['재질', '화강암']],
-      size: '석가탑 10.75m / 다보탑 10.29m (불국사 대웅전 앞 마당 배치)',
-      scale: '국가유산 3D 정밀 기록 정보 실측 치수 1:1 적용',
-      note: '국가유산청 3D 정밀 실측 공공 데이터',
-      docent: '한국 석탑 예술의 정점을 보여주는 두 탑입니다. 간결한 석가탑과 화려한 다보탑의 3D 입체 조형미를 불국사 마당에서 관람해 보세요.',
-      caution: '두 탑은 모양이 전혀 다르지만 높이가 약 10.5m로 거의 같아 불국사 뜰에서 완벽한 조화를 이룹니다.',
-      look: '석가탑의 단순하고 세련된 3층 비례와 다보탑의 난간 조각 차이를 3D로 비교하세요.',
-      source: 'https://portal.nrich.go.kr/', rights: '원작: 국보 유물 · 3D 입체 스캔 모델'
-    },
-    {
-      id: 'muyongchong', order: '11', title: '무용총 수렵도 (3D 부조 디오라마)', short: '무용총 수렵도',
-      subtitle: '고구려 5세기 · 고분 벽화 3D 부조', position: [-142, 0, 112], arrival: [-142, 1.62, 106], lookAt: [-142, 2.2, 112],
-      modelPath: 'assets/models/muyongchong.glb', realHeight: 3.6, materialColor: 0x94836f,
-      facts: [['벽화 가로', '약 5.8m'], ['벽화 세로', '약 3.2m'], ['장소', '중국 길림성 집안']],
-      size: '고구려 고분 벽면 1:1 실측 디오라마 (가로 5.8m × 높이 3.2m)',
-      scale: '고구려 고분 벽화 실측 규격 1:1 부조 디오라마 적용',
-      note: '유네스코 세계유산 고구려 고분 벽화 데이터',
-      docent: '달리는 말 위에서 뒤를 돌아보며 활을 쏘는 고구려 무사의 모습을 고구려 고분 돌벽면 형태의 3D 입체 부조 디오라마로 체감할 수 있습니다.',
-      caution: '평면 벽화를 야외 테마파크 3D 공간에서 1:1 실측으로 체감할 수 있도록 고분 돌벽면 형태의 입체 부조 디오라마 구조로 구현했습니다.',
-      look: '말을 탄 무사가 활시위를 뒤로 당기는 역동적인 동작과 능선이 겹겹이 묘사된 산의 무늬를 찾아보세요.',
-      source: 'http://nrich.go.kr/', rights: '원작: 고구려 벽화 · 3D 입체 부조 디오라마'
-    },
-    {
-      id: 'lamassu', order: '12', title: '람마수 (날개 달린 황소상)', short: '람마수 황소상',
-      subtitle: '고대 아시리아 기원전 8세기 · 3D GLB 모델 스캔', position: [0, 0, 135], arrival: [0, 1.62, 142], lookAt: [0, 2.5, 135],
-      modelPath: 'assets/models/lamassu.glb', realHeight: 4.4, materialColor: 0xaeaa9f,
-      facts: [['높이', '4.4m'], ['길이', '4.4m'], ['너비', '1.4m']],
-      size: '높이 4.4m × 길이 4.4m × 너비 1.4m',
-      scale: '루브르/대영박물관 소장 유물 3D 스캔 실측 적용',
-      note: '대영박물관 / 루브르 소장 유물 3D 스캔',
+      id: 'lamassu', order: '09', title: '람마수 (날개 달린 황소상)', short: '람마수 황소상',
+      subtitle: '고대 아시리아 기원전 8세기 · 3D 포토그래메트리 스캔', position: [0, 0, -110], arrival: [0, 1.62, -96], lookAt: [0, 2.5, -110],
+      modelPath: 'assets/models/lamassu.glb', realHeight: 4.4, preserveMaterials: true,
+      facts: [['높이', '4.4m'], ['길이', '4.4m'], ['재질', '석회암']],
+      size: '높이 4.4m x 길이 4.4m',
+      scale: '실측 1:1 포토그래메트리 스캔 GLB',
+      note: '대영박물관 소장 유물 3D 스캔',
       docent: '고대 아시리아 궁전 문을 지키던 수호신입니다. 사람의 얼굴, 독수리의 날개, 황소의 몸을 하고 있는 정교한 3D 입체 조각을 둘러보세요.',
       caution: '앞에서 볼 때는 서 있고 옆에서 볼 때는 걷는 것처럼 보이도록 발을 5개로 조각했습니다.',
-      look: '황소 몸통의 옆면을 따라가며 5번째 발이 어디에 있는지, 독수리 날개 조각을 확인해 보세요.',
-      source: 'https://www.britishmuseum.org/', rights: '원작: 고대 유물 · 3D 입체 스캔 모델'
+      look: '황소 몸통의 옆면을 따라가며 5번째 발과 독수리 날개 조각을 확인해 보세요.',
+      source: 'https://www.britishmuseum.org/', rights: '3D 포토그래메트리 스캔 · CC Attribution'
     }
   ];
-
   const canvas = document.getElementById('park-canvas');
   const loading = document.getElementById('loading');
   const hero = document.getElementById('hero-panel');
@@ -295,6 +255,7 @@
     const baseW = Math.max(3.5, zone.realHeight * 0.4);
     const plinth = box([baseW, 0.4, baseW], MAT.darkStone, rootGroup, [0, 0.2, 0]);
     plinth.receiveShadow = true;
+    plinth.frustumCulled = false;  // 받침대가 카메라 경계에서 갑자기 사라지는 현상 방지
 
     gltfLoader.load(zone.modelPath, (gltf) => {
       const model = gltf.scene;
@@ -447,7 +408,7 @@
     const forward = (keys.KeyW || keys.ArrowUp ? 1 : 0) - (keys.KeyS || keys.ArrowDown ? 1 : 0);
     const strafe = (keys.KeyD || keys.ArrowRight ? 1 : 0) - (keys.KeyA || keys.ArrowLeft ? 1 : 0);
     if (forward || strafe) {
-      const speed = (keys.ShiftLeft || keys.ShiftRight ? 31 : 13) * dt, len = Math.hypot(forward, strafe) || 1;
+      const speed = (keys.ShiftLeft || keys.ShiftRight ? 55 : 22) * dt, len = Math.hypot(forward, strafe) || 1;
       camera.position.x += (-Math.sin(yaw) * forward + Math.cos(yaw) * strafe) / len * speed;
       camera.position.z += (-Math.cos(yaw) * forward - Math.sin(yaw) * strafe) / len * speed;
       const radius = Math.hypot(camera.position.x, camera.position.z); if (radius > 285) { camera.position.x *= 285 / radius; camera.position.z *= 285 / radius; }

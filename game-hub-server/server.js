@@ -169,23 +169,40 @@ const stopLearningApps = () => {
 process.once("SIGTERM", stopLearningApps);
 process.once("SIGINT", stopLearningApps);
 
-app.use("/assets/avatars", express.static(path.join(SITE_ROOT, "classtools", "assets", "avatars"), { dotfiles: "ignore" }));
-app.use("/assets", express.static(path.join(SITE_ROOT, "assets"), { dotfiles: "ignore" }));
+const staticAssetOptions = {
+  dotfiles: "ignore",
+  setHeaders(res, filepath) {
+    const ext = path.extname(filepath).toLowerCase();
+    if ([".mp3", ".ogg", ".webm", ".m4a", ".wav", ".png", ".jpg", ".jpeg", ".webp", ".gif", ".svg", ".ico", ".woff", ".woff2", ".ttf"].includes(ext)) {
+      res.setHeader("Cache-Control", "public, max-age=31536000, immutable");
+    } else if ([".css", ".js"].includes(ext)) {
+      res.setHeader("Cache-Control", "public, max-age=86400");
+    } else if (ext === ".html") {
+      res.setHeader("Cache-Control", "no-cache");
+    }
+  }
+};
+
+app.use("/assets/avatars", express.static(path.join(SITE_ROOT, "classtools", "assets", "avatars"), staticAssetOptions));
+app.use("/assets", express.static(path.join(SITE_ROOT, "assets"), staticAssetOptions));
 app.get("/favicon.ico", (_req, res) => {
+  res.setHeader("Cache-Control", "public, max-age=31536000, immutable");
   res.sendFile(path.join(SITE_ROOT, "favicon.ico"));
 });
 app.get("/favicon.png", (_req, res) => {
+  res.setHeader("Cache-Control", "public, max-age=31536000, immutable");
   res.sendFile(path.join(SITE_ROOT, "favicon.png"));
 });
 app.use(
   "/assets",
-  express.static(path.join(SITE_ROOT, "learning", "basics", "arithmetics", "dist", "client", "assets")),
+  express.static(path.join(SITE_ROOT, "learning", "basics", "arithmetics", "dist", "client", "assets"), staticAssetOptions),
 );
 app.use(
   "/fonts",
-  express.static(path.join(SITE_ROOT, "learning", "basics", "arithmetics", "dist", "client", "fonts")),
+  express.static(path.join(SITE_ROOT, "learning", "basics", "arithmetics", "dist", "client", "fonts"), staticAssetOptions),
 );
 app.get("/math-learning-banner.webp", (_req, res) => {
+  res.setHeader("Cache-Control", "public, max-age=31536000, immutable");
   res.sendFile(
     path.join(
       SITE_ROOT,
@@ -200,11 +217,11 @@ app.get("/math-learning-banner.webp", (_req, res) => {
 });
 app.use(
   "/hanguksa/assets",
-  express.static(path.join(SITE_ROOT, "learning", "academics", "korean-history", "dist", "client", "assets")),
+  express.static(path.join(SITE_ROOT, "learning", "academics", "korean-history", "dist", "client", "assets"), staticAssetOptions),
 );
 app.use(
   "/questions",
-  express.static(path.join(SITE_ROOT, "learning", "academics", "korean-history", "dist", "client", "questions")),
+  express.static(path.join(SITE_ROOT, "learning", "academics", "korean-history", "dist", "client", "questions"), staticAssetOptions),
 );
 const MAX_ROOM_PLAYERS = {
   setgame: 4,
@@ -331,7 +348,7 @@ app.use((req, res, next) => {
 });
 
 for (const directory of ["admin", "classtools", "css", "js", "learning", "notice", "schooladmin", "teacher"]) {
-  app.use(`/${directory}`, express.static(path.join(SITE_ROOT, directory), { dotfiles: "ignore" }));
+  app.use(`/${directory}`, express.static(path.join(SITE_ROOT, directory), staticAssetOptions));
 }
 
 const rooms = new Map();
