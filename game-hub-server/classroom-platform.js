@@ -690,6 +690,8 @@ function createClassroomPlatform(options = {}) {
         updated_at TIMESTAMPTZ NOT NULL DEFAULT NOW(),
         UNIQUE (school_id, academic_year, grade, class_number, student_number)
       )`,
+      `ALTER TABLE school_students
+        ADD COLUMN IF NOT EXISTS custom_fields JSONB NOT NULL DEFAULT '{}'::jsonb`,
       `CREATE INDEX IF NOT EXISTS school_students_school_year_idx
         ON school_students (school_id, academic_year, grade, class_number)`,
       `CREATE INDEX IF NOT EXISTS school_students_email_idx
@@ -767,14 +769,18 @@ function createClassroomPlatform(options = {}) {
         teacher_user_id BIGINT NOT NULL REFERENCES classroom_users(id) ON DELETE CASCADE,
         academic_year INTEGER NOT NULL,
         group_name TEXT NOT NULL CHECK (char_length(group_name) BETWEEN 1 AND 60),
-        group_type TEXT NOT NULL DEFAULT 'homeroom'
-          CHECK (group_type IN ('homeroom', 'subject', 'club', 'afterschool', 'other')),
+        group_type TEXT NOT NULL DEFAULT 'homeroom',
         grade INTEGER CHECK (grade BETWEEN 1 AND 12),
         class_number INTEGER CHECK (class_number BETWEEN 1 AND 30),
         sort_order INTEGER NOT NULL DEFAULT 0,
         created_at TIMESTAMPTZ NOT NULL DEFAULT NOW(),
         updated_at TIMESTAMPTZ NOT NULL DEFAULT NOW()
       )`,
+      `ALTER TABLE teacher_groups
+        DROP CONSTRAINT IF EXISTS teacher_groups_group_type_check`,
+      `ALTER TABLE teacher_groups
+        ADD CONSTRAINT teacher_groups_group_type_check
+        CHECK (group_type IN ('homeroom', 'subject', 'club', 'afterschool', 'shuttle', 'other'))`,
       `CREATE INDEX IF NOT EXISTS teacher_groups_teacher_idx
         ON teacher_groups (teacher_user_id, academic_year)`,
       `CREATE TABLE IF NOT EXISTS teacher_group_students (
@@ -3397,7 +3403,7 @@ function createClassroomPlatform(options = {}) {
     const students = await pool.query(
       `SELECT s.id, s.grade, s.class_number, s.student_number, s.roster_name,
               s.gender, s.student_email, s.guardian1_email, s.guardian2_email,
-              s.user_id, s.created_at
+              s.custom_fields, s.user_id, s.created_at
        FROM school_students s
        WHERE s.school_id = $1 AND s.academic_year = $2
        ORDER BY s.grade, s.class_number,
@@ -3484,7 +3490,8 @@ function createClassroomPlatform(options = {}) {
       gender: ["남", "여"].includes(s.gender) ? s.gender : "남",
       studentEmail: String(s.studentEmail || "").trim().toLowerCase() || null,
       guardian1Email: String(s.guardian1Email || "").trim().toLowerCase() || null,
-      guardian2Email: String(s.guardian2Email || "").trim().toLowerCase() || null
+      guardian2Email: String(s.guardian2Email || "").trim().toLowerCase() || null,
+      customFields: (typeof s.customFields === 'object' && s.customFields !== null) ? s.customFields : {}
     })).filter(s => s.studentNumber && s.rosterName);
 
     for (const s of clean) {
@@ -3500,16 +3507,17 @@ function createClassroomPlatform(options = {}) {
       for (const s of clean) {
         await client.query(
           `INSERT INTO school_students
-             (school_id, academic_year, grade, class_number, student_number, roster_name, gender, student_email, guardian1_email, guardian2_email)
-           VALUES ($1, $2, $3, $4, $5, $6, $7, $8, $9, $10)
+             (school_id, academic_year, grade, class_number, student_number, roster_name, gender, student_email, guardian1_email, guardian2_email, custom_fields)
+           VALUES ($1, $2, $3, $4, $5, $6, $7, $8, $9, $10, $11)
            ON CONFLICT (school_id, academic_year, grade, class_number, student_number) DO UPDATE SET
              roster_name = EXCLUDED.roster_name,
              gender = EXCLUDED.gender,
              student_email = EXCLUDED.student_email,
              guardian1_email = EXCLUDED.guardian1_email,
              guardian2_email = EXCLUDED.guardian2_email,
+             custom_fields = EXCLUDED.custom_fields,
              updated_at = NOW()`,
-          [schoolId, academicYear, s.grade, s.classNumber, s.studentNumber, s.rosterName, s.gender, s.studentEmail, s.guardian1Email, s.guardian2Email]
+          [schoolId, academicYear, s.grade, s.classNumber, s.studentNumber, s.rosterName, s.gender, s.studentEmail, s.guardian1Email, s.guardian2Email, JSON.stringify(s.customFields)]
         );
         // Auto-link student Google account
         if (s.studentEmail) {
@@ -3652,7 +3660,7 @@ function createClassroomPlatform(options = {}) {
     const classNumber = req.body.classNumber ? Number(req.body.classNumber) : null;
 
     if (!groupName || groupName.length > 60) throw new HttpError(400, "INVALID_GROUP_NAME", "그룹 이름을 확인해 주세요 (1~60자).");
-    if (!["homeroom", "subject", "club", "afterschool", "other"].includes(groupType))
+    if (!["homeroom", "subject", "club", "afterschool", "shuttle", "other"].includes(groupType))
       throw new HttpError(400, "INVALID_GROUP_TYPE", "그룹 유형이 올바르지 않습니다.");
 
     const result = await pool.query(

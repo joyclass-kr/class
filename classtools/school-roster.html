@@ -552,6 +552,7 @@
                 <option value="subject">📖 전담 과목</option>
                 <option value="club">🎯 동아리</option>
                 <option value="afterschool">📚 방과후</option>
+                <option value="shuttle">🚌 셔틀 승차명단반</option>
                 <option value="other">기타</option>
             </select>
         </div>
@@ -690,6 +691,7 @@
         }
 
         tbody.innerHTML = filtered.map(s => {
+            const cf = s.custom_fields || s.customFields || {};
             const linkedBadge = s.user_id ? `<span class="linked-badge">✓ 연동</span>` : "";
             const cells = [
                 `<td>${s.grade}</td>`,
@@ -700,9 +702,9 @@
                 `<td style="font-size:11px;">${s.student_email || ""} ${linkedBadge}</td>`,
                 `<td style="font-size:11px;">${s.guardian1_email || ""}</td>`,
                 `<td style="font-size:11px;">${s.guardian2_email || ""}</td>`,
-                ...allClubs.map(c => `<td style="font-size:11px;">${(s.clubs || []).includes(c) ? "✓" : ""}</td>`),
-                ...allAfter.map(a => `<td style="font-size:11px;">${(s.afterschool || []).includes(a) ? "✓" : ""}</td>`),
-                ...allShuttle.map(sl => `<td style="font-size:11px;">${(s.shuttle || {})[sl] || ""}</td>`)
+                ...allClubs.map(c => `<td style="font-size:11px;font-weight:600;color:var(--brand);">${cf[c] || (Array.isArray(s.clubs) && s.clubs.includes(c) ? c : "")}</td>`),
+                ...allAfter.map(a => `<td style="font-size:11px;font-weight:600;color:#0369a1;">${cf[a] || (Array.isArray(s.afterschool) && s.afterschool.includes(a) ? a : "")}</td>`),
+                ...allShuttle.map(sl => `<td style="font-size:11px;font-weight:600;color:#b45309;">${cf[sl] || (s.shuttle || {})[sl] || ""}</td>`)
             ];
             return `<tr>${cells.join("")}</tr>`;
         }).join("");
@@ -782,6 +784,24 @@
             const name = get(nameI).normalize("NFC");
             if (!name || !num) continue;
 
+            const customFields = {};
+            const clubsArr = [];
+            const afterArr = [];
+            const shuttleObj = {};
+
+            clubHeaders.forEach(c => {
+                const val = get(c.idx);
+                if (val && val !== "-") { customFields[c.name] = val; clubsArr.push(val); }
+            });
+            afterHeaders.forEach(a => {
+                const val = get(a.idx);
+                if (val && val !== "-") { customFields[a.name] = val; afterArr.push(val); }
+            });
+            shuttleHeaders.forEach(s => {
+                const val = get(s.idx);
+                if (val && val !== "-") { customFields[s.name] = val; shuttleObj[s.name] = val; }
+            });
+
             const student = {
                 grade: gradeNum, classNumber: classNum,
                 studentNumber: num, rosterName: name,
@@ -789,14 +809,11 @@
                 studentEmail: get(seI).toLowerCase() || null,
                 guardian1Email: get(g1I).toLowerCase() || null,
                 guardian2Email: get(g2I).toLowerCase() || null,
-                clubs: clubHeaders.filter(c => get(c.idx) && get(c.idx) !== "-").map(c => c.name),
-                afterschool: afterHeaders.filter(a => get(a.idx) && get(a.idx) !== "-").map(a => a.name),
-                shuttle: {}
+                customFields,
+                clubs: clubsArr,
+                afterschool: afterArr,
+                shuttle: shuttleObj
             };
-            shuttleHeaders.forEach(s => {
-                const v = get(s.idx);
-                if (v && v !== "-") student.shuttle[s.name] = v;
-            });
             students.push(student);
         }
 
