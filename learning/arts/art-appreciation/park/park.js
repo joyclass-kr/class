@@ -5,102 +5,98 @@
     document.body.innerHTML = '<p style="padding:30px">3D 엔진을 불러오지 못했습니다.</p>';
     return;
   }
-  if (!window.THREE.GLTFLoader) {
-    document.body.innerHTML = '<p style="padding:30px">3D GLB 로더를 불러오지 못했습니다.</p>';
-    return;
-  }
 
   const ZONES = [
     {
       id: 'sphinx', order: '01', title: '카프라 왕의 스핑크스', short: '기자의 대스핑크스',
-      subtitle: '고대 이집트 · 석회암 3D 스캔', position: [-145, 0, -18], arrival: [-160, 1.62, -91], lookAt: [-145, 11, -34],
-      modelPath: 'assets/models/sphinx.glb', realHeight: 20, realLength: 73.5, materialColor: 0xd9c49e,
+      subtitle: '고대 이집트 · 실제 작품 사진 전시', position: [-145, 0, -18], arrival: [-160, 1.62, -91], lookAt: [-145, 11, -34],
+      photoFile: 'assets/sphinx.jpg', boardW: 26.67, boardH: 20.0, footW: 19.0, footD: 73.5, footH: 20.0,
       facts: [['길이', '73.5m'], ['너비', '19m'], ['높이', '20m']],
       size: '길이 73.5m × 너비 19m × 높이 20m',
-      scale: '실제 피라미드·스핑크스 지형 3D 스캔 실측 치수 1:1 적용',
-      note: '하버드 Digital Giza & 이집트 문화재청 실측 3D 데이터',
-      docent: '사자의 몸에 왕의 머리가 결합된 고대 이집트의 거대한 수호상입니다. 길이가 초등학교 운동장 절반에 달하는 73.5m의 웅장한 실제 입체 크기를 직접 걸으며 확인해 보세요.',
-      caution: '석회암 바위산 하나를 통째로 깎아서 만든 세계 최대 크기의 단일 석조 조각상입니다.',
-      look: '발끝에서 꼬리까지 옆길을 따라 걸어보고, 1.45m 어린이 캐릭터와 스핑크스 머리의 높이를 비교해 보세요.',
-      source: 'https://giza.fas.harvard.edu/faq/', rights: '원작: 고대 유물 · 3D 스캔 데이터'
+      scale: '실제 유물 사진 및 하버드 Digital Giza 1:1 실측 바닥 경계선',
+      note: '하버드 Digital Giza 실측값을 1:1로 적용한 고화질 사진 전시',
+      docent: '사자의 몸과 왕의 머리를 합친 거대한 고대 이집트 수호상입니다. 실제 사진과 1.45m 어린이 캐릭터를 비교하며 73.5m의 거대한 크기를 느껴보세요.',
+      caution: '흔히 “카프라 왕의 스핑크스”라고 부르지만, 누구의 얼굴인지에 대해서는 학계의 논의가 계속되고 있습니다.',
+      look: '발에서 꼬리까지 옆길을 걸어보며, 1.45m 어린이 캐릭터와 스핑크스 머리의 높이를 직접 비교해 보세요.',
+      source: 'https://giza.fas.harvard.edu/faq/', rights: '원작: 고대 유물 · 고화질 실물 사진 전시'
     },
     {
       id: 'emille', order: '02', title: '성덕대왕신종 (에밀레종)', short: '에밀레종',
-      subtitle: '통일신라 771년 · 국보 · 범종 3D 스캔', position: [-72, 0, -142], arrival: [-72, 1.62, -148], lookAt: [-72, 2.5, -142],
-      modelPath: 'assets/models/emille-bell.glb', realHeight: 6.8, materialColor: 0x5a5245,
+      subtitle: '통일신라 771년 · 국보 · 실제 작품 사진 전시', position: [-72, 0, -142], arrival: [-72, 1.62, -148], lookAt: [-72, 2.5, -142],
+      photoFile: 'assets/emille.jpg', boardW: 4.5, boardH: 6.8, footW: 2.27, footD: 2.27, footH: 6.8,
       facts: [['높이', '3.75m'], ['입지름', '2.27m'], ['무게', '약 18.9톤']],
-      size: '종 높이 3.75m × 입지름 2.27m (전체 전각 포함 높이 6.8m)',
-      scale: '국가유산청 3D 정밀 실측 기점 1:1 실제 크기 적용',
-      note: '국가지정 유산 3D 정밀 실측 데이터',
-      docent: '우리나라에 남아있는 가장 큰 종으로, 종 꼭대기의 용뉴(용 모양 고리)와 음통, 종 몸통에 조각된 아름다운 비천상을 360도로 관람해 보세요.',
-      caution: '“에밀레”라는 이름은 아기를 넣었다는 전설에서 유래했지만, 성분 분석 결과 사람 뼈 성분(인)은 발견되지 않은 유언비어입니다.',
-      look: '종 위쪽에 걸린 용 모양 고리(용뉴)와 비천상이 하늘로 날아오르는 문양을 살펴보세요.',
-      source: 'https://www.heritage.go.kr/', rights: '원작: 국보 유물 · 국가유산 3D 실측'
+      size: '종 높이 3.75m × 입지름 2.27m (전각 포함 전체 높이 6.8m)',
+      scale: '국가유산청 국보 실측 치수 1:1 실제 사진 전시',
+      note: '국가유산청 정밀 실측 기반 고화질 사진 전시',
+      docent: '우리나라에 남아있는 가장 아름답고 커다란 국보 종입니다. 종 꼭대기의 용뉴(용 모양 고리)와 연화문, 비천상의 고화질 실제 모습을 감상해 보세요.',
+      caution: '아기를 넣었다는 에밀레 전설은 성분 분석 결과 거짓으로 밝혀진 유언비어입니다.',
+      look: '종 꼭대기의 용뉴 조각과 몸통에 새겨진 비천상의 선명한 실물 사진을 살펴보세요.',
+      source: 'https://www.heritage.go.kr/', rights: '원작: 국보 유물 · 고화질 실물 사진 전시'
     },
     {
       id: 'liberty', order: '03', title: '자유의 여신상', short: '자유의 여신상',
-      subtitle: '프레데리크 오귀스트 바르톨디 · 1886 · 3D 스캔', position: [137, 0, -28], arrival: [137, 1.62, 95], lookAt: [137, 44, -28],
-      modelPath: 'assets/models/statue-of-liberty.glb', realHeight: 92.99, materialColor: 0x629c8b,
+      subtitle: '프레데리크 오귀스트 바르톨디 · 1886 · 실제 작품 사진 전시', position: [137, 0, -28], arrival: [137, 1.62, 95], lookAt: [137, 44, -28],
+      photoFile: 'assets/liberty.jpg', boardW: 61.99, boardH: 92.99, footW: 26.0, footD: 26.0, footH: 92.99,
       facts: [['지면→횃불', '92.99m'], ['조각상', '46.05m'], ['받침대', '46.94m']],
       size: '지면에서 횃불까지 92.99m (조각상 46.05m + 받침대 46.94m)',
-      scale: '미국 국립공원관리청(NPS) 공식 3D 정밀 치수 적용',
-      note: 'NPS & 스미소니언 3D 정밀 실측 수치',
-      docent: '미국 뉴욕의 상징인 자유의 여신상입니다. 조각상 본체 높이(46m)와 정교한 석조 받침대(47m)가 합쳐져 아파트 30층 높이에 맞먹는 93m의 압도적인 크기입니다.',
-      caution: '겉표면은 아주 얇은 동판(구리)으로 만들어져 처음에는 붉은 동색이었으나, 시간이 지나며 산화되어 현재의 밝은 청록색(녹청)이 되었습니다.',
-      look: '발밑에서 까마득히 높은 횃불 끝까지 올려다본 뒤, 뒤로 멀리 물러나 전체 비례를 확인하세요.',
-      source: 'https://www.nps.gov/stli/learn/statue-of-liberty-facts.htm', rights: '원작: Public Domain · 3D 스캔'
+      scale: '미국 국립공원관리청(NPS) 공식 실측 1:1 실제 사진 전시',
+      note: '미국 국립공원관리청(NPS) 공식 치수 및 사진',
+      docent: '미국 뉴욕의 상징인 자유의 여신상입니다. 받침 구조와 조각상이 합쳐져 93m에 달하는 웅장한 실물 사진과 높이를 비교해 보세요.',
+      caution: '동판(구리)이 시간이 지나 산화되면서 붉은 동색에서 현재의 청록색(녹청)으로 변했습니다.',
+      look: '발밑에서 까마득한 횃불 높이까지 올려다보며 실제 크기를 체감해 보세요.',
+      source: 'https://www.nps.gov/stli/learn/statue-of-liberty-facts.htm', rights: '원작: Public Domain · 고화질 실물 사진 전시'
     },
     {
       id: 'moai', order: '04', title: '이스터섬 모아이 석상', short: '모아이 석상',
-      subtitle: '칠레 라파누이 · 1250–1500년경 · 3D 스캔', position: [72, 0, -142], arrival: [72, 1.62, -148], lookAt: [72, 2.5, -142],
-      modelPath: 'assets/models/moai.glb', realHeight: 6.6, materialColor: 0x6e6960,
-      facts: [['평균 높이', '약 4.0m'], ['대좌 포함', '6.6m'], ['무게', '약 20톤']],
-      size: '석상 높이 4m (아후 석조 대좌 및 푸카오 모자 포함 6.6m)',
-      scale: '이스터섬 아후 통가리키 실측 3D 스캔 데이터 적용',
-      note: '라파누이 국립공원 유적 3D 스캔',
-      docent: '태평양 이스터섬에 서 있는 거대한 각진 얼굴의 석상입니다. 긴 코와 커다란 턱, 붉은 화산석 모자(푸카오)를 쓴 고대 선조의 모습을 감상해 보세요.',
-      caution: '모아이는 바다를 등지고 섬 내부의 마을을 바라보며 족장과 조상의 영혼을 수호하는 방향으로 서 있습니다.',
-      look: '우뚝 솟은 턱선과 귓볼, 머리 위에 올려진 붉은 모자(푸카오)의 묵직한 형태를 살펴보세요.',
-      source: 'https://whc.unesco.org/en/list/715/', rights: '원작: 세계유산 · 3D 스캔'
+      subtitle: '칠레 라파누이 · 1250–1500년경 · 실제 작품 사진 전시', position: [72, 0, -142], arrival: [72, 1.62, -148], lookAt: [72, 2.5, -142],
+      photoFile: 'assets/moai.jpg', boardW: 4.8, boardH: 6.6, footW: 4.0, footD: 2.5, footH: 6.6,
+      facts: [['석상 높이', '약 4.0m'], ['대좌 포함', '6.6m'], ['무게', '약 20톤']],
+      size: '석상 높이 4m (아후 석조 대좌 및 푸카오 포함 6.6m)',
+      scale: '라파누이 유적 아후 통가리키 실측 1:1 실제 사진 전시',
+      note: '이스터섬 유적 고화질 사진 전시',
+      docent: '칠레 이스터섬의 거대한 모아이 석상입니다. 우뚝 솟은 턱선과 길쭉한 얼굴, 머리 위의 붉은 화산석 모자(푸카오)의 실물 사진을 감상해 보세요.',
+      caution: '모아이는 바다를 등지고 마을을 바라보며 주민들을 지키는 수호신의 역할을 했습니다.',
+      look: '1.45m 어린이 캐릭터와 모아이 석상의 눈높이를 직접 비교해 보세요.',
+      source: 'https://whc.unesco.org/en/list/715/', rights: '원작: 세계유산 · 고화질 실물 사진 전시'
     },
     {
       id: 'towers', order: '05', title: '불국사 다보탑 & 석가탑', short: '다보탑 · 석가탑',
-      subtitle: '통일신라 751년 · 국보 · 석탑 3D 스캔', position: [132, 0, 118], arrival: [145, 1.62, 118], lookAt: [132, 6, 118],
-      modelPath: 'assets/models/dabotap-seokgatap.glb', realHeight: 10.75, materialColor: 0xb5b0a5,
+      subtitle: '통일신라 751년 · 국보 · 실제 작품 사진 전시', position: [132, 0, 118], arrival: [145, 1.62, 118], lookAt: [132, 6, 118],
+      photoFile: 'assets/towers.jpg', boardW: 14.0, boardH: 10.75, footW: 12.0, footD: 6.0, footH: 10.75,
       facts: [['석가탑 높이', '10.75m'], ['다보탑 높이', '10.29m'], ['재질', '화강암']],
-      size: '석가탑 10.75m / 다보탑 10.29m (불국사 대웅전 앞 마당 배치)',
-      scale: '국가유산 3D 정밀 기록 정보 실측 치수 1:1 적용',
-      note: '국가유산청 3D 정밀 실측 공공 데이터',
-      docent: '한국 석탑 예술의 정점을 보여주는 두 탑입니다. 간결하고 단정하게 균형을 잡은 석가탑(왼쪽)과 십자형 기단 위에 화려하게 조각된 다보탑(오른쪽)의 아름다움을 비교해 보세요.',
-      caution: '두 탑은 모양이 전혀 다르지만 높이가 약 10.5m로 거의 같아 불국사 뜰에서 완벽한 조화를 이룹니다.',
-      look: '석가탑의 단순하고 세련된 3층 비례와 다보탑의 난간, 팔각 연화대 조각의 차이를 정면에서 비교하세요.',
-      source: 'https://portal.nrich.go.kr/', rights: '원작: 국보 유물 · 국가유산 3D 실측'
+      size: '석가탑 10.75m / 다보탑 10.29m',
+      scale: '국가유산청 정밀 실측 1:1 실제 사진 전시',
+      note: '국가유산청 공식 실측 및 고화질 사진',
+      docent: '신라 석탑의 정수를 보여주는 다보탑과 석가탑입니다. 석가탑의 기하학적 균형미와 다보탑의 화려한 조각 예술을 실물 사진으로 살펴보세요.',
+      caution: '두 탑은 형태가 완전히 다르지만 높이가 약 10.5m로 비슷하여 완벽한 조화를 이룹니다.',
+      look: '화강암을 정교하게 깎아 만든 실물 탑의 비례와 문양을 비교해 보세요.',
+      source: 'https://portal.nrich.go.kr/', rights: '원작: 국보 유물 · 고화질 실물 사진 전시'
     },
     {
-      id: 'muyongchong', order: '06', title: '무용총 수렵도 (입체 디오라마)', short: '무용총 수렵도',
-      subtitle: '고구려 5세기 · 고분 벽화 3D 부조', position: [-142, 0, 112], arrival: [-142, 1.62, 106], lookAt: [-142, 2.2, 112],
-      modelPath: 'assets/models/muyongchong.glb', realHeight: 3.6, materialColor: 0x94836f,
+      id: 'muyongchong', order: '06', title: '무용총 수렵도', short: '무용총 수렵도',
+      subtitle: '고구려 5세기 · 고분 벽화 · 실제 작품 사진 전시', position: [-142, 0, 112], arrival: [-142, 1.62, 106], lookAt: [-142, 2.2, 112],
+      photoFile: 'assets/muyongchong.jpg', boardW: 6.4, boardH: 3.6, footW: 5.8, footD: 1.0, footH: 3.2,
       facts: [['벽화 가로', '약 5.8m'], ['벽화 세로', '약 3.2m'], ['장소', '중국 길림성 집안']],
-      size: '고구려 고분 벽면 1:1 실측 디오라마 (가로 5.8m × 높이 3.2m)',
-      scale: '고구려 고분 벽화 실측 규격 1:1 부조 디오라마 적용',
-      note: '유네스코 세계유산 고구려 고분 벽화 데이터',
-      docent: '달리는 말 위에서 뒤를 돌아보며 활을 쏘는 고구려 무사의 용맹한 모습(파르티안 쏘기)과 달아나는 호랑이, 사슴, 붉은 산악 무늬를 입체 벽면으로 감상해 보세요.',
-      caution: '평면 벽화를 야외 테마파크 3D 공간에서 1:1 실측으로 체감할 수 있도록 고분 돌벽면 형태의 입체 디오라마 구조로 구현했습니다.',
-      look: '말을 탄 무사가 활시위를 뒤로 당기는 역동적인 동작과 능선이 겹겹이 묘사된 산의 무늬를 찾아보세요.',
-      source: 'http://nrich.go.kr/', rights: '원작: 고구려 벽화 · 3D 입체 부조 디오라마'
+      size: '고분 벽면 1:1 실측 크기 (가로 5.8m × 높이 3.2m)',
+      scale: '고구려 고분 벽화 1:1 실측 규격 실제 사진 전시',
+      note: '고구려 벽화 1:1 실측 고화질 사진 전시',
+      docent: '말 위에서 활을 쏘는 고구려 무사의 역동적인 모습과 달아나는 호랑이, 사슴의 원본 실물 벽화 사진입니다.',
+      caution: '중국 길림성 집안에 위치한 무용총 고분의 현실 동쪽 벽면 벽화입니다.',
+      look: '말을 탄 무사가 뒤를 돌아보며 활시위를 당기는 파르티안 쏘기 동작을 선명한 사진으로 찾아보세요.',
+      source: 'http://nrich.go.kr/', rights: '원작: 고구려 벽화 · 고화질 실물 사진 전시'
     },
     {
       id: 'lamassu', order: '07', title: '람마수 (날개 달린 황소상)', short: '람마수 황소상',
-      subtitle: '고대 아시리아 기원전 8세기 · 3D 스캔', position: [0, 0, 135], arrival: [0, 1.62, 142], lookAt: [0, 2.5, 135],
-      modelPath: 'assets/models/lamassu.glb', realHeight: 4.4, materialColor: 0xaeaa9f,
+      subtitle: '고대 아시리아 기원전 8세기 · 실제 작품 사진 전시', position: [0, 0, 135], arrival: [0, 1.62, 142], lookAt: [0, 2.5, 135],
+      photoFile: 'assets/lamassu.jpg', boardW: 5.2, boardH: 4.4, footW: 1.4, footD: 4.4, footH: 4.4,
       facts: [['높이', '4.4m'], ['길이', '4.4m'], ['너비', '1.4m']],
       size: '높이 4.4m × 길이 4.4m × 너비 1.4m',
-      scale: '루브르 박물관 및 대영박물관 3D 스캔 실측 치수 적용',
-      note: '대영박물관 / 루브르 소장 아시리아 궁전 유물 3D 스캔',
-      docent: '고대 아시리아 궁전 문을 지키던 수호신입니다. 사람의 얼굴, 독수리의 날개, 황소의 몸을 하고 있으며, 뿔이 달린 왕관과 네모난 머리카락 조각이 특징입니다.',
-      caution: '옆에서 보면 걷는 모습, 앞에서 보면 정지해 서 있는 모습으로 보이도록 발을 총 5개로 조각한 고대 미술의 착시 기법이 적용되어 있습니다.',
-      look: '황소 몸통의 옆면을 따라가며 5번째 발이 어디에 있는지, 독수리 날개의 깃털 조각이 얼마나 정밀한지 확인해 보세요.',
-      source: 'https://www.britishmuseum.org/', rights: '원작: 고대 유물 · 3D 스캔'
+      scale: '루브르/대영박물관 소장 유물 1:1 실측 실제 사진 전시',
+      note: '대영박물관 / 루브르 소장 유물 고화질 사진 전시',
+      docent: '고대 아시리아 궁전을 지키던 수호신 람마수의 실제 유물 사진입니다. 사람의 얼굴, 황소의 몸, 독수리의 날개를 한 정교한 조각 형태를 관람해 보세요.',
+      caution: '앞에서 볼 때는 서 있고 옆에서 볼 때는 걷는 것처럼 보이도록 발을 5개로 조각했습니다.',
+      look: '네모난 수염과 뿔 달린 왕관, 독수리 깃털 조각의 선명한 실물 사진을 감상해 보세요.',
+      source: 'https://www.britishmuseum.org/', rights: '원작: 고대 유물 · 고화질 실물 사진 전시'
     }
   ];
 
@@ -135,7 +131,7 @@
   renderer.outputEncoding = THREE.sRGBEncoding;
 
   const clock = new THREE.Clock();
-  const gltfLoader = new THREE.GLTFLoader();
+  const textureLoader = new THREE.TextureLoader();
   const keys = Object.create(null);
   const raycaster = new THREE.Raycaster();
   const centerPointer = new THREE.Vector2(0, 0);
@@ -149,7 +145,7 @@
     path: new THREE.MeshStandardMaterial({ color: 0xa29378, roughness: .92 }),
     pathEdge: new THREE.MeshStandardMaterial({ color: 0x8a806d, roughness: .86 }),
     sandstone: new THREE.MeshStandardMaterial({ color: 0xc8ad78, roughness: .9 }),
-    darkStone: new THREE.MeshStandardMaterial({ color: 0x4a4943, roughness: .97 }),
+    darkStone: new THREE.MeshStandardMaterial({ color: 0x242726, roughness: .92 }),
     water: new THREE.MeshStandardMaterial({ color: 0x236f80, roughness: .28, metalness: .08, transparent: true, opacity: .88 }),
     wood: new THREE.MeshStandardMaterial({ color: 0x68452f, roughness: .9 }),
     leaf: new THREE.MeshStandardMaterial({ color: 0x2e6740, roughness: .94 }),
@@ -179,7 +175,7 @@
       g.fillStyle = '#b8caaf'; g.font = '28px sans-serif'; g.fillText(subtitle, 42, 160);
       g.fillStyle = '#dce9a6'; g.fillRect(42, 200, 120, 5);
     });
-    return new THREE.Mesh(new THREE.PlaneGeometry(width, width * .25), new THREE.MeshBasicMaterial({ map: t, transparent: true, toneMapped: false, side: THREE.FrontSide }));
+    return new THREE.Mesh(new THREE.PlaneGeometry(width, width * .25), new THREE.MeshBasicMaterial({ map: t, transparent: true, toneMapped: false, side: THREE.DoubleSide }));
   }
   function makeScaleMarker(height, label) {
     const g = new THREE.Group();
@@ -194,55 +190,63 @@
     return g;
   }
 
-  function loadZoneModel(zone) {
-    const rootGroup = new THREE.Group();
-    rootGroup.position.set(zone.position[0], 0, zone.position[2]);
-    rootGroup.userData.zone = zone;
+  function footprintLines(width, depth, height) {
+    const g = new THREE.Group(), color = 0xe6efac;
+    const y = .07, x = width / 2, z = depth / 2;
+    [[[-x, y, -z], [x, y, -z]], [[x, y, -z], [x, y, z]], [[x, y, z], [-x, y, z]], [[-x, y, z], [-x, y, -z]]]
+      .forEach(pair => g.add(makeLine(new THREE.Vector3(...pair[0]), new THREE.Vector3(...pair[1]), color)));
+    const corner = new THREE.Vector3(x, y, -z);
+    g.add(makeLine(corner, new THREE.Vector3(x, height, -z), color));
+    for (const yy of [0, height]) g.add(makeLine(new THREE.Vector3(x - .35, Math.max(y, yy), -z), new THREE.Vector3(x + .35, Math.max(y, yy), -z), color));
+    return g;
+  }
 
-    gltfLoader.load(zone.modelPath, (gltf) => {
-      const model = gltf.scene;
-      model.traverse((child) => {
-        if (child.isMesh) {
-          child.castShadow = true;
-          child.receiveShadow = true;
-          child.geometry.computeVertexNormals();
-          
-          let matProps = { color: zone.materialColor || 0x888888, roughness: 0.9, metalness: 0.05 };
-          if (zone.id === 'emille') { matProps.metalness = 0.45; matProps.roughness = 0.55; }
-          else if (zone.id === 'liberty') { matProps.metalness = 0.15; matProps.roughness = 0.65; }
-          else if (zone.id === 'moai') { matProps.roughness = 0.98; }
-
-          child.material = new THREE.MeshStandardMaterial(matProps);
-        }
-      });
-
-      const box3 = new THREE.Box3().setFromObject(model);
-      const naturalH = Math.max(0.01, box3.max.y - box3.min.y);
-      const scaleFactor = zone.realHeight / naturalH;
-      model.scale.setScalar(scaleFactor);
-
-      const scaledBox = new THREE.Box3().setFromObject(model);
-      model.position.y = -scaledBox.min.y;
-
-      rootGroup.add(model);
-    }, undefined, (err) => {
-      console.error('Error loading 3D GLB model for zone:', zone.id, err);
+  function buildPhotoExhibit(zone) {
+    const g = new THREE.Group();
+    const frameMat = new THREE.MeshStandardMaterial({ color: 0x18392f, roughness: .74, metalness: .08 });
+    
+    box([zone.boardW + .5, .25, .28], frameMat, g, [0, .12, 0]);
+    box([zone.boardW + .5, .25, .28], frameMat, g, [0, zone.boardH + .12, 0]);
+    box([.25, zone.boardH, .28], frameMat, g, [-zone.boardW / 2 - .12, zone.boardH / 2 + .12, 0]);
+    box([.25, zone.boardH, .28], frameMat, g, [zone.boardW / 2 + .12, zone.boardH / 2 + .12, 0]);
+    
+    const material = new THREE.MeshBasicMaterial({ color: 0xffffff, side: THREE.DoubleSide, toneMapped: false });
+    const photo = addMesh(new THREE.PlaneGeometry(zone.boardW, zone.boardH), material, g, [0, zone.boardH / 2 + .12, .19], false);
+    
+    textureLoader.load(zone.photoFile, t => {
+      t.encoding = THREE.sRGBEncoding;
+      t.anisotropy = Math.min(8, renderer.capabilities.getMaxAnisotropy());
+      material.map = t;
+      material.needsUpdate = true;
     });
 
-    // Scale marker (1.45m child)
+    box([Math.min(zone.boardW + 2, 68), .34, 2.2], MAT.darkStone, g, [0, .17, .28]);
+    for (const x of [-Math.min(zone.boardW * .38, 11), Math.min(zone.boardW * .38, 11)]) {
+      box([.28, Math.min(zone.boardH * .24, 5), .45], MAT.darkStone, g, [x, Math.min(zone.boardH * .12, 2.5), .18]);
+    }
+
+    const outline = footprintLines(zone.footW, zone.footD, zone.footH);
+    outline.position.z = zone.footD / 2 + 3;
+    g.add(outline);
+
+    g.userData.zone = zone;
+    photo.userData.zone = zone;
+    return g;
+  }
+
+  function addPhotoMarker(zone, model) {
+    const [x, , z] = zone.position;
     const marker = makeScaleMarker(1.45, '어린이 1.45m');
-    marker.position.set(zone.position[0] + 5.5, 0, zone.position[2] + 4);
+    marker.position.set(x + zone.boardW / 2 + 2.2, 0, z);
     park.add(marker);
 
-    // Label
     const label = makeLabel(zone.title, zone.size, 9);
-    label.position.set(zone.position[0], 3.8, zone.position[2] + 6);
+    label.position.set(x, 3.8, z + 6);
     label.lookAt(camera.position.x, 3.8, camera.position.z);
     label.userData.faceCamera = true;
     park.add(label);
 
-    zoneObjects.push(rootGroup);
-    park.add(rootGroup);
+    zoneObjects.push(model);
   }
 
   function makePark() {
@@ -259,10 +263,15 @@
     const water = addMesh(new THREE.RingGeometry(15, 23, 64), MAT.water, park, [0, .04, 0]); water.rotation.x = -Math.PI / 2; water.castShadow = false;
     const hub = cylinder(4.2, 4.8, 1.1, 32, MAT.sandstone, park, [0, .55, 0]);
     const globe = sphere(2.7, new THREE.MeshStandardMaterial({ color: 0x7a9f63, roughness: .62, metalness: .08 }), park, [0, 4.1, 0], 32, 20);
-    const hubLabel = makeLabel('실물 크기 3D 야외 미술 공원', '유물 3D GLB 스캔 1m = 3D 1단위', 9); hubLabel.position.set(0, 7.5, 0); hubLabel.userData.faceCamera = true; park.add(hubLabel);
+    const hubLabel = makeLabel('실물 사진 야외 미술 공원', '1:1 실측 치수선 & 실제 작품 사진 전시', 9); hubLabel.position.set(0, 7.5, 0); hubLabel.userData.faceCamera = true; park.add(hubLabel);
 
-    // Load GLB models for all 7 zones
-    ZONES.forEach(zone => loadZoneModel(zone));
+    ZONES.forEach(zone => {
+      const model = buildPhotoExhibit(zone);
+      model.position.set(zone.position[0], 0, zone.position[2]);
+      model.lookAt(zone.arrival[0], 0, zone.arrival[2]);
+      park.add(model);
+      addPhotoMarker(zone, model);
+    });
 
     for (let i = 0; i < 115; i++) {
       const a = i * 2.399, r = 50 + (i * 37 % 220), x = Math.cos(a) * r, z = Math.sin(a) * r;
@@ -300,13 +309,13 @@
     ZONES.forEach(z => z.tab.classList.toggle('active', z === zone));
     currentZone.textContent = zone ? zone.short : '중앙 광장';
     if (!zone) { measurePanel.hidden = true; return; }
-    measurePanel.hidden = false; measureKicker.textContent = `ZONE ${zone.order} · ACTUAL 3D SCAN`; measureTitle.textContent = zone.title;
+    measurePanel.hidden = false; measureKicker.textContent = `ZONE ${zone.order} · ACTUAL PHOTO`; measureTitle.textContent = zone.title;
     measureFacts.innerHTML = zone.facts.map(f => `<div><dt>${f[0]}</dt><dd>${f[1]}</dd></div>`).join('');
     measureNote.textContent = zone.note;
   }
   function openDetail(zone) {
     if (!zone) return;
-    document.getElementById('modal-kicker').textContent = `ZONE ${zone.order} · REAL 3D SCAN`;
+    document.getElementById('modal-kicker').textContent = `ZONE ${zone.order} · REAL PHOTO`;
     document.getElementById('modal-title').textContent = zone.title;
     document.getElementById('modal-subtitle').textContent = zone.subtitle;
     document.getElementById('modal-size').textContent = zone.size;
