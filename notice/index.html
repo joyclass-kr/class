@@ -326,43 +326,44 @@
                     <div style="display:flex; gap:10px;">
                         <div class="form-group" style="flex:1;">
                             <label>시작일</label>
-                            <input type="date" id="abStart" required onchange="calcAbsenceDays()">
+                            <input type="date" id="abStart" required onchange="calcAbsenceDays()" style="width: 100%; height: 44px; background: #0f1411; border: 1px solid var(--panel-border); color: var(--text); border-radius: 8px; padding: 0 12px; font-size: 15px; font-weight: 700; cursor: pointer;">
                         </div>
                         <div class="form-group" style="flex:1;">
                             <label>종료일</label>
-                            <input type="date" id="abEnd" required onchange="calcAbsenceDays()">
+                            <input type="date" id="abEnd" required onchange="calcAbsenceDays()" style="width: 100%; height: 44px; background: #0f1411; border: 1px solid var(--panel-border); color: var(--text); border-radius: 8px; padding: 0 12px; font-size: 15px; font-weight: 700; cursor: pointer;">
                         </div>
                     </div>
                     <div class="form-group">
                         <label>총 결석 일수</label>
-                        <input type="number" id="abDays" value="1" min="1" readonly>
+                        <input type="number" id="abDays" value="1" min="1" readonly style="width: 100%; height: 44px; background: #0f1411; border: 1px solid var(--panel-border); color: var(--text); border-radius: 8px; padding: 0 12px; font-size: 15px; font-weight: 700;">
                     </div>
                     <div class="form-group">
-                        <label>결석 구 분 (증빙서류 기준)</label>
-                        <select id="abReasonType">
-                            <option value="sick_2d">질병결석 (2일 이내 - 본 결석계로 갈음)</option>
-                            <option value="sick_3d">질병결석 (3일 이상 - 소견서/진료확인서 사진 필수)</option>
-                            <option value="dust">미세먼지 민감군 학생 결석</option>
-                            <option value="approved">출석인정 결석 (경조사/감염병/입양 등)</option>
-                            <option value="other">기타 결석</option>
+                        <label>결석 구분 (증빙서류 기준)</label>
+                        <select id="abReasonType" style="width: 100%; height: 44px; background: #0f1411; border: 1px solid var(--panel-border); color: var(--text); border-radius: 8px; padding: 0 12px; font-size: 15px; font-weight: 700;">
+                            <option value="질병결석">질병결석 (처방전/진단서/약봉지 사진 첨부)</option>
+                            <option value="출석인정결석">출석인정결석 (경조사/감염병 등)</option>
+                            <option value="미세먼지결석">미세먼지 민감군 학생 결석</option>
+                            <option value="기타결석">기타 결석</option>
                         </select>
                     </div>
                     <div class="form-group">
                         <label>결석 상세 사유 (학부모 의견)</label>
-                        <textarea id="abDetail" placeholder="상세 결석 사유를 입력하세요." required></textarea>
+                        <textarea id="abDetail" placeholder="예: 독감 진단으로 인한 병가 / 외할머니 상가 방문 등" required></textarea>
                     </div>
                     <div class="form-group">
                         <label>증빙서류 사진 첨부 (처방전/진단서/청첩장 등)</label>
-                        <input type="file" id="abFile" accept="image/*">
+                        <input type="file" id="abFile" accept="image/*" style="width: 100%; background: #0f1411; border: 1px solid var(--panel-border); color: var(--text); border-radius: 8px; padding: 8px 12px;">
                     </div>
                     <div class="form-group">
                         <label>보호자 성명</label>
-                        <input type="text" id="abParentName" placeholder="학부모 성명" required>
+                        <input type="text" id="abParentName" placeholder="학부모 성명" required style="width: 100%; height: 44px; background: #0f1411; border: 1px solid var(--panel-border); color: var(--text); border-radius: 8px; padding: 0 12px; font-size: 15px; font-weight: 700;">
                     </div>
                     <div class="form-group">
-                        <label>학부모 전자 서명 ✍️ (마우스/손가락 서명)</label>
+                        <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:6px;">
+                            <label style="margin:0;">학부모 전자 서명 ✍️ (마우스/손가락 서명)</label>
+                            <button type="button" class="btn-secondary" style="padding:4px 10px; font-size:12px;" onclick="clearCanvas()">🧹 서명 지우기</button>
+                        </div>
                         <canvas id="sigCanvas" class="sig-canvas"></canvas>
-                        <button type="button" class="btn-secondary" style="margin-top:6px;" onclick="clearCanvas()">서명 지우기</button>
                     </div>
                     <button type="submit" class="btn-primary">📤 결석계 서명 및 제출하기</button>
                 </form>

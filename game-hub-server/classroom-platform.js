@@ -3444,13 +3444,12 @@ function createClassroomPlatform(options = {}) {
     
     // Total students per class
     const rosterRes = await pool.query(
-      `SELECT t.grade, t.class_number, COUNT(s.id) as total_students
-       FROM classroom_teachers t
-       JOIN classroom_classes c ON c.teacher_user_id = t.user_id
+      `SELECT c.grade, c.class_number, COUNT(s.id) as total_students
+       FROM classroom_classes c
        LEFT JOIN classroom_students s ON s.class_id = c.id
-       WHERE t.school_id = $1 AND t.active = TRUE AND t.grade IS NOT NULL
-       GROUP BY t.grade, t.class_number
-       ORDER BY t.grade, t.class_number`,
+       WHERE c.school_id = $1 AND c.grade IS NOT NULL AND c.class_number IS NOT NULL
+       GROUP BY c.grade, c.class_number
+       ORDER BY c.grade, c.class_number`,
       [profile.school_id]
     );
 

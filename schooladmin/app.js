@@ -275,7 +275,14 @@ document.addEventListener('DOMContentLoaded', () => {
 
         notices.forEach(n => {
             const key = `${n.grade}-${n.class_number}`;
-            if (!classMap.has(key)) return;
+            if (!classMap.has(key)) {
+                classMap.set(key, {
+                    grade: n.grade,
+                    classNum: n.class_number,
+                    total: 0,
+                    absence: 0, tardy: 0, early: 0
+                });
+            }
             const c = classMap.get(key);
             if (n.notice_type === '결석') c.absence += parseInt(n.count, 10);
             else if (n.notice_type === '지각') c.tardy += parseInt(n.count, 10);
@@ -284,7 +291,14 @@ document.addEventListener('DOMContentLoaded', () => {
 
         formalNotes.forEach(fn => {
             const key = `${fn.grade}-${fn.class_number}`;
-            if (!classMap.has(key)) return;
+            if (!classMap.has(key)) {
+                classMap.set(key, {
+                    grade: fn.grade,
+                    classNum: fn.class_number,
+                    total: 0,
+                    absence: 0, tardy: 0, early: 0
+                });
+            }
             const c = classMap.get(key);
             c.absence += parseInt(fn.count, 10);
         });
