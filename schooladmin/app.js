@@ -162,10 +162,19 @@ document.addEventListener('DOMContentLoaded', () => {
                 await renderAnnualTimetable34Weeks();
             });
         }
+        function updateGradeCheckboxesByScope(scope) {
+            const checkboxes = addAnnualScheduleForm ? addAnnualScheduleForm.querySelectorAll('input[name="targetGrade"]') : [];
+            if (scope === 'ALL') {
+                checkboxes.forEach(cb => cb.checked = true);
+            }
+            if (gradeSelectionRow) gradeSelectionRow.hidden = false;
+        }
+
         if (annualTargetScopeSelect) {
             annualTargetScopeSelect.addEventListener('change', (e) => {
-                gradeSelectionRow.hidden = e.target.value !== 'GRADE';
+                updateGradeCheckboxesByScope(e.target.value);
             });
+            updateGradeCheckboxesByScope(annualTargetScopeSelect.value || 'ALL');
         }
         if (addAnnualScheduleForm) {
             addAnnualScheduleForm.addEventListener('submit', handleAddAnnualSchedule);
@@ -677,11 +686,11 @@ document.addEventListener('DOMContentLoaded', () => {
 
         annualTableBody.innerHTML = '';
         const categoryLabels = {
-            EVENT: '🏫 일반 행사',
-            HOLIDAY: '🔴 휴업/공휴일',
-            DISCRETIONARY: '🟡 재량/자율휴업일',
-            TRIP: '🚌 체험/수련',
-            EXAM: '📝 평가/시험'
+            EVENT: '🏫 행사',
+            DISCRETIONARY: '🟡 재량휴업일',
+            HOLIDAY: '🔴 법정공휴일',
+            TRIP: '🏫 행사',
+            EXAM: '🏫 행사'
         };
 
         annualSchedulesData.forEach(item => {
@@ -724,7 +733,7 @@ document.addEventListener('DOMContentLoaded', () => {
         const targetScope = annualTargetScopeSelect.value;
         const details = annualDetailsInput.value.trim();
 
-        let targetGrades = [];
+        let targetGrades = [1, 2, 3, 4, 5, 6];
         if (targetScope === 'GRADE') {
             const checkboxes = addAnnualScheduleForm.querySelectorAll('input[name="targetGrade"]:checked');
             targetGrades = Array.from(checkboxes).map(cb => Number(cb.value));
