@@ -3517,6 +3517,26 @@ function createClassroomPlatform(options = {}) {
     res.json({ ok: true });
   }));
 
+  // Live Public Holidays Fetcher (Public Data API / Nager.Date API)
+  router.get("/school-admin/public-holidays", asyncRoute(async (req, res) => {
+    const year = Number(req.query.year || new Date().getFullYear());
+    try {
+      const resp = await fetch(`https://date.nager.at/api/v3/PublicHolidays/${year}/KR`);
+      if (resp.ok) {
+        const data = await resp.json();
+        const holidays = data.map(h => ({
+          date: h.date,
+          localName: h.localName,
+          name: h.name
+        }));
+        return res.json({ year, holidays });
+      }
+    } catch (err) {
+      console.error("Failed to fetch live public holidays:", err.message);
+    }
+    res.json({ year, holidays: [] });
+  }));
+
   // ── Curriculum Hours APIs ──
   router.get("/school-admin/curriculum-hours", asyncRoute(async (req, res) => {
     const { profile } = await requireSchoolAdmin(req);

@@ -329,6 +329,24 @@ document.addEventListener('DOMContentLoaded', () => {
         renderCalendarGrid();
     }
 
+    let dynamicPublicHolidays = {};
+
+    async function fetchLivePublicHolidays() {
+        try {
+            const h1 = await api(`/api/school-admin/public-holidays?year=${selectedAcademicYear}`).catch(() => ({ holidays: [] }));
+            const h2 = await api(`/api/school-admin/public-holidays?year=${selectedAcademicYear + 1}`).catch(() => ({ holidays: [] }));
+            
+            dynamicPublicHolidays = { ...KOREAN_NATIONAL_HOLIDAYS };
+            (h1.holidays || []).concat(h2.holidays || []).forEach(item => {
+                if (item.date && item.localName) {
+                    dynamicPublicHolidays[item.date] = item.localName;
+                }
+            });
+        } catch (_) {
+            dynamicPublicHolidays = { ...KOREAN_NATIONAL_HOLIDAYS };
+        }
+    }
+
     async function loadAnnualSchedules() {
         if (!annualLoading) return;
         annualLoading.hidden = false;
@@ -336,6 +354,7 @@ document.addEventListener('DOMContentLoaded', () => {
         annualContent.hidden = true;
 
         try {
+            await fetchLivePublicHolidays();
             const res = await api(`/api/school-admin/annual-schedules?academicYear=${selectedAcademicYear}`);
             annualSchedulesData = res.schedules || [];
             
@@ -433,7 +452,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
             const dateObj = new Date(currentCalYear, currentCalMonth - 1, d);
             const dayOfWeek = dateObj.getDay();
-            const natHoliday = KOREAN_NATIONAL_HOLIDAYS[dateKey];
+            const natHoliday = dynamicPublicHolidays[dateKey] || KOREAN_NATIONAL_HOLIDAYS[dateKey];
 
             const cell = document.createElement('div');
             cell.className = 'cal-day-cell';
@@ -484,7 +503,8 @@ document.addEventListener('DOMContentLoaded', () => {
         let totalEvents = annualSchedulesData.length;
 
         // Count statutory national holidays that land on weekdays
-        Object.keys(KOREAN_NATIONAL_HOLIDAYS).forEach(dateStr => {
+        const activeHolidays = Object.keys(dynamicPublicHolidays).length > 0 ? dynamicPublicHolidays : KOREAN_NATIONAL_HOLIDAYS;
+        Object.keys(activeHolidays).forEach(dateStr => {
             const d = new Date(dateStr);
             const year = d.getFullYear();
             // Check if falls within active academic year
