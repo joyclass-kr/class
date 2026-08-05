@@ -405,9 +405,14 @@ document.addEventListener('DOMContentLoaded', () => {
         }
     }
 
+    const targetSchoolDaysInput = document.getElementById('targetSchoolDaysInput');
+    if (targetSchoolDaysInput) {
+        targetSchoolDaysInput.addEventListener('input', calculateSchoolDaysAudit);
+    }
+
     function calculateSchoolDaysAudit() {
-        // Calculate total weekdays in academic year (March 1 ~ Feb 28/29)
-        let totalSchoolDays = 192; // Default baseline calculation
+        const targetDays = Number(targetSchoolDaysInput ? targetSchoolDaysInput.value : 190);
+        let totalSchoolDays = 192;
         let totalHolidays = 115;
         let totalEvents = annualSchedulesData.length;
 
@@ -423,11 +428,11 @@ document.addEventListener('DOMContentLoaded', () => {
         if (totalEventsVal) totalEventsVal.textContent = `${totalEvents}일`;
 
         if (schoolDaysStatusBadge) {
-            if (totalSchoolDays >= 190) {
-                schoolDaysStatusBadge.textContent = '✅ 기준 충족';
+            if (totalSchoolDays >= targetDays) {
+                schoolDaysStatusBadge.textContent = `✅ 목표 (${targetDays}일) 충족`;
                 schoolDaysStatusBadge.className = 'audit-status status-ok';
             } else {
-                schoolDaysStatusBadge.textContent = `⚠️ ${190 - totalSchoolDays}일 부족!`;
+                schoolDaysStatusBadge.textContent = `⚠️ 목표 대비 ${targetDays - totalSchoolDays}일 부족!`;
                 schoolDaysStatusBadge.className = 'audit-status status-warn';
             }
         }

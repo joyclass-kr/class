@@ -91,8 +91,11 @@
             <!-- 190-Day Audit Summary Banner -->
             <div class="audit-summary-banner">
                 <div class="audit-card highlight">
-                    <span class="audit-label">법정 필수 수업일수</span>
-                    <span class="audit-value">190일</span>
+                    <span class="audit-label">학교 목표 수업일수 (최저 190일)</span>
+                    <div style="display:flex; align-items:center; gap:4px; margin-top:4px;">
+                        <input type="number" id="targetSchoolDaysInput" value="190" min="171" max="220" class="form-input" style="width:95px; font-size:1.5rem; font-weight:800; text-align:center;">
+                        <span style="font-size:1.3rem; font-weight:800;">일</span>
+                    </div>
                 </div>
                 <div class="audit-card" id="calculatedSchoolDaysCard">
                     <span class="audit-label">현재 책정 수업일수</span>
