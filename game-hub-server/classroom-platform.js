@@ -1122,13 +1122,17 @@ function createClassroomPlatform(options = {}) {
 
   async function hasSiteAccess(req) {
     const mode = await getSiteAccessMode();
-    // Open mode is intended for development and demonstrations.  A display
+    // Open mode is intended for development and demonstrations. A display
     // name is still useful for game hand-off, but it must not gate routes
     // served by separate learning apps (for example /arithmetic and
     // /hanguksa), because those requests can otherwise lose the guest cookie.
     if (mode === "open") return true;
     const user = await sessionUser(req);
-    if (!user) return false;
+    if (!user) {
+      const guest = guestAccess(req);
+      if (guest) return true;
+      return false;
+    }
     return user.role === "admin" || user.role === "teacher" || Boolean(await studentMembership(user.id));
   }
 
@@ -1181,6 +1185,22 @@ function createClassroomPlatform(options = {}) {
     const current = configuration();
     const user = await sessionUser(req);
     if (!user) {
+      const guest = guestAccess(req);
+      if (guest) {
+        return res.json({
+          signedIn: true,
+          configured: current.enabled,
+          user: {
+            id: `guest-${guest.name}`,
+            email: "",
+            name: guest.name,
+            displayName: guest.name,
+            role: "guest"
+          },
+          guestName: guest.name,
+          guest: true
+        });
+      }
       if (!current.enabled) {
         return res.json({ signedIn: false, configured: false, missing: current.missing });
       }
@@ -1819,6 +1839,7 @@ function createClassroomPlatform(options = {}) {
       await pool.query("DELETE FROM classroom_sessions WHERE token_hash = $1", [hashSessionToken(token)]);
     }
     clearSessionCookie(res);
+    clearGuestAccessCookie(res);
     res.json({ ok: true });
   }));
 
@@ -2955,38 +2976,58 @@ function createClassroomPlatform(options = {}) {
       [teacher.id]
     );
     const schoolId = tp.rows[0]?.school_id || 1;
+    const year = Number(req.query.year) || new Date().getFullYear();
 
-    // 1. Homeroom Classes
+    // 1. Homeroom Classes from school_students
     const classesRes = await pool.query(
-      `SELECT c.grade, c.class_number, COUNT(s.id)::INTEGER AS student_count
-       FROM classroom_classes c
-       LEFT JOIN classroom_students s ON s.class_id = c.id
-       WHERE c.school_id = $1
-       GROUP BY c.grade, c.class_number
-       ORDER BY c.grade, c.class_number`,
-      [schoolId]
+      `SELECT grade, class_number, COUNT(*)::INTEGER AS student_count
+       FROM school_students
+       WHERE school_id = $1 AND academic_year = $2
+       GROUP BY grade, class_number
+       ORDER BY grade, class_number`,
+      [schoolId, year]
     );
 
-    // 2. Additional Groups (Clubs, Afterschool, Shuttle, etc.)
+    // 2. Additional Groups with integrated student counts (homeroom, club, afterschool, shuttle)
     const groupsRes = await pool.query(
-      `SELECT g.id, g.group_name, g.group_type, COUNT(gs.student_id)::INTEGER AS student_count
+      `SELECT g.id, g.group_name, g.group_type,
+              (
+                SELECT COUNT(*)::INTEGER
+                FROM (
+                  SELECT ss.id FROM school_students ss
+                  WHERE g.group_type = 'homeroom' AND g.grade IS NOT NULL AND g.class_number IS NOT NULL
+                    AND ss.school_id = g.school_id AND ss.academic_year = g.academic_year AND ss.grade = g.grade AND ss.class_number = g.class_number
+                  UNION
+                  SELECT ss.id FROM school_students ss
+                  WHERE g.group_type != 'homeroom'
+                    AND ss.school_id = g.school_id AND ss.academic_year = g.academic_year
+                    AND (
+                      ss.custom_fields->>'club' = g.group_name OR
+                      ss.custom_fields->>'afterschool' = g.group_name OR
+                      ss.custom_fields->>'shuttle' = g.group_name OR
+                      ss.custom_fields->>'bus' = g.group_name OR
+                      ss.custom_fields->>'subject' = g.group_name OR
+                      ss.custom_fields->>'group' = g.group_name OR
+                      ss.custom_fields::text ILIKE '%' || g.group_name || '%'
+                    )
+                  UNION
+                  SELECT gs.student_id FROM teacher_group_students gs WHERE gs.group_id = g.id
+                ) AS st_union
+              ) AS student_count
        FROM teacher_groups g
-       LEFT JOIN teacher_group_students gs ON gs.group_id = g.id
-       WHERE g.school_id = $1
-       GROUP BY g.id, g.group_name, g.group_type
+       WHERE g.school_id = $1 AND g.academic_year = $2
        ORDER BY g.group_type, g.group_name`,
-      [schoolId]
+      [schoolId, year]
     );
 
-    // 3. All Students & Guardians
+    // 3. All Students & Guardians from school_students
     const studentsRes = await pool.query(
-      `SELECT s.id::TEXT AS student_id, c.grade, c.class_number, s.student_number, s.roster_name AS name,
-              s.guardian1_email, s.guardian2_email
-       FROM classroom_students s
-       JOIN classroom_classes c ON c.id = s.class_id
-       WHERE c.school_id = $1
-       ORDER BY c.grade, c.class_number, CASE WHEN s.student_number ~ '^[0-9]+$' THEN s.student_number::INTEGER END`,
-      [schoolId]
+      `SELECT s.id::TEXT AS student_id, s.grade, s.class_number, s.student_number, s.roster_name AS name,
+              s.guardian1_email, s.guardian2_email, s.custom_fields
+       FROM school_students s
+       WHERE s.school_id = $1 AND s.academic_year = $2
+       ORDER BY s.grade, s.class_number, NULLIF(regexp_replace(s.student_number, '\\D', '', 'g'), '')::INT`,
+      [schoolId, year]
     );
 
     res.json({
