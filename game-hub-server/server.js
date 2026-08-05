@@ -232,7 +232,7 @@ const MAX_ROOM_PLAYERS = {
 
 const FINISHER_GAMES = new Set(["coinweighing", "hanoitower", "sphinx", "slidingpuzzle"]);
 
-app.use(["/admin", "/arithmetic", "/fraction", "/api/arithmetic-race", "/hanguksa", "/classtools", "/learning", "/learn", "/notice", "/teacher"], classroomPlatform.requireSiteAccess);
+app.use(["/admin", "/schooladmin", "/arithmetic", "/fraction", "/api/arithmetic-race", "/hanguksa", "/classtools", "/learning", "/learn", "/notice", "/teacher"], classroomPlatform.requireSiteAccess);
 app.use("/arithmetic", proxyToLearningApp(ARITHMETIC_PORT));
 app.use("/fraction", proxyToLearningApp(ARITHMETIC_PORT));
 app.use("/api/arithmetic-race", proxyToLearningApp(ARITHMETIC_PORT));
@@ -287,7 +287,7 @@ for (const [route, file] of [
   app.get(route, (_req, res) => res.sendFile(path.join(SITE_ROOT, file)));
 }
 
-const CLEAN_HTML_ROOTS = ["/admin", "/classtools", "/learning", "/notice", "/teacher"];
+const CLEAN_HTML_ROOTS = ["/admin", "/schooladmin", "/classtools", "/learning", "/notice", "/teacher"];
 app.use((req, res, next) => {
   if (req.method !== "GET" && req.method !== "HEAD") return next();
 
@@ -330,7 +330,7 @@ app.use((req, res, next) => {
   });
 });
 
-for (const directory of ["admin", "classtools", "css", "js", "learning", "notice", "teacher"]) {
+for (const directory of ["admin", "classtools", "css", "js", "learning", "notice", "schooladmin", "teacher"]) {
   app.use(`/${directory}`, express.static(path.join(SITE_ROOT, directory), { dotfiles: "ignore" }));
 }
 
