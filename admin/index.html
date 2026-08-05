@@ -263,24 +263,15 @@
                         <button class="action-button" id="saveSchoolButton" type="button">SAVE SCHOOL</button>
                         <button class="action-button danger-button" id="deleteSchoolButton" type="button">DELETE SCHOOL</button>
                     </div>
-                    <div id="teacherManagement" hidden>
-                        <p style="margin:0 0 10px;color:var(--muted);font-size:12px;">구분: 관리자 / 교직원 중 하나를 입력하세요.</p>
-                        <div class="paste-grid">
-                            <div class="field">
-                                <div class="field-head"><label>구분</label></div>
-                                <textarea id="rosterType" class="roster-input" placeholder="관리자&#10;교직원" wrap="off" spellcheck="false"></textarea>
-                            </div>
-                            <div class="field">
-                                <div class="field-head"><label>성명</label></div>
-                                <textarea id="rosterName" class="roster-input" placeholder="홍길동" wrap="off" spellcheck="false"></textarea>
-                            </div>
-                            <div class="field">
-                                <div class="field-head"><label>구글 계정</label></div>
-                                <textarea id="rosterEmail" class="roster-input" placeholder="teacher@school.ac.kr" wrap="off" spellcheck="false"></textarea>
-                            </div>
-                        </div>
-                        <div class="actions">
-                            <button class="action-button" id="saveRosterButton" type="button">SAVE ROSTER</button>
+                    <div id="teacherManagement" hidden style="margin-top:24px; padding-top:20px; border-top:1px solid var(--line);">
+                        <p style="margin:0 0 6px; font-size:14px; font-weight:800; color:var(--green);">🏫 학교 마스터 관리자 계정 지정</p>
+                        <p style="margin:0 0 16px; color:var(--muted); font-size:13px; line-height:1.5;">
+                            이 학교의 전교생 명단, 학사일정, 교직원 명단 및 그룹 배정을 관리할 <b>학교 마스터 관리자 구글 계정</b>을 지정하세요.<br>
+                            (예: master@kyesang.sen.es.kr 또는 정보부장/교감선생님 계정)
+                        </p>
+                        <div style="display:flex; gap:12px; align-items:center;">
+                            <input id="masterEmailInput" class="control" type="email" placeholder="master@school.es.kr" style="flex:1;">
+                            <button class="action-button" id="saveMasterEmailButton" type="button">마스터 계정 저장</button>
                         </div>
                     </div>
                 </section>
@@ -437,17 +428,39 @@
                 if (!school) return;
                 schoolEnabled.checked = school.enabled;
                 
-                let types = [], names = [], emails = [];
-                school.teachers.forEach((teacher) => {
-                    if (["관리자", "교장", "교감"].includes(teacher.type)) types.push("관리자");
-                    else types.push("교직원");
-                    names.push(teacher.name || "");
-                    emails.push(teacher.email || "");
-                });
-                rosterType.value = types.join("\n");
-                rosterName.value = names.join("\n");
-                rosterEmail.value = emails.join("\n");
+                const masterTeacher = (school.teachers || []).find(t => ["관리자", "교장", "교감"].includes(t.type)) || school.teachers?.[0];
+                masterEmailInput.value = masterTeacher?.email || "";
             }
+
+            saveMasterEmailButton.addEventListener("click", async () => {
+                const school = selectedSchool();
+                if (!school) return;
+                const email = masterEmailInput.value.trim().toLowerCase();
+                if (!email || !email.includes("@")) {
+                    setStatus("올바른 구글 이메일 주소를 입력하세요.", true);
+                    return;
+                }
+                const teachers = [{
+                    type: "관리자",
+                    name: "학교 관리자",
+                    email
+                }];
+                try {
+                    saveMasterEmailButton.disabled = true;
+                    saveMasterEmailButton.textContent = "저장 중...";
+                    await api(`/api/admin/schools/${school.id}/teachers/roster`, {
+                        method: "PUT",
+                        body: JSON.stringify({ teachers })
+                    });
+                    await loadSchools(school.id);
+                    setStatus(`'${school.name}'의 학교 마스터 관리자가 설정되었습니다: ${email}`);
+                } catch (error) {
+                    setStatus(error.message, true);
+                } finally {
+                    saveMasterEmailButton.disabled = false;
+                    saveMasterEmailButton.textContent = "마스터 계정 저장";
+                }
+            });
 
             async function loadSchools(preferredId = schoolSelect.value) {
                 const result = await api("/api/admin/schools");
@@ -553,55 +566,6 @@
 
             deleteSchoolButton.addEventListener("click", async () => {
                 await deleteSchool(selectedSchool());
-            });
-
-            saveRosterButton.addEventListener("click", async () => {
-                const school = selectedSchool();
-                if (!school) return;
-                
-                const getLines = (ta) => ta.value.split("\n").map(l => l.trim());
-                const types = getLines(rosterType);
-                const names = getLines(rosterName);
-                const emails = getLines(rosterEmail);
-                
-                const rowCount = Math.max(types.length, names.length, emails.length);
-                const teachers = [];
-                
-                for (let i = 0; i < rowCount; i++) {
-                    if (!names[i] && !emails[i]) continue;
-                    const rawType = (types[i] || "").trim();
-                    let parsedType = "교직원";
-                    if (["관리자", "교장", "교감"].includes(rawType)) parsedType = "관리자";
-                    else if (rawType === "교직원") parsedType = "교직원";
-                    else if (rawType) {
-                        setStatus(`구분 오류: "${rawType}"은 '관리자' 또는 '교직원'이어야 합니다.`, true);
-                        return;
-                    }
-
-                    teachers.push({
-                        type: parsedType,
-                        name: names[i],
-                        email: emails[i]
-                    });
-                }
-
-                if (!confirm(`[확인] 총 ${teachers.length}명의 교사 명단을 저장합니다.\n\n명단에서 지워진 교사가 있다면 그 교사의 학급과 소속 학생들의 데이터도 함께 영구 삭제됩니다. 진행하시겠습니까?`)) return;
-
-                try {
-                    saveRosterButton.disabled = true;
-                    saveRosterButton.textContent = "SAVING...";
-                    await api(`/api/admin/schools/${school.id}/teachers/roster`, {
-                        method: "PUT",
-                        body: JSON.stringify({ teachers })
-                    });
-                    await loadSchools(school.id);
-                    setStatus("Teacher roster saved.");
-                } catch (error) {
-                    setStatus(error.message, true);
-                } finally {
-                    saveRosterButton.disabled = false;
-                    saveRosterButton.textContent = "SAVE ROSTER";
-                }
             });
 
             async function waitForGoogle() {
