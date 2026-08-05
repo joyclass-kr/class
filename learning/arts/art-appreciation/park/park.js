@@ -145,12 +145,30 @@
   scene.add(park);
   let yaw = 0, pitch = -.06, dragging = false, dragStart = null, activeZone = null;
 
+  const textureLoader = new THREE.TextureLoader();
+
+  function surfaceTexture(path, repeatX, repeatY, color = true) {
+    const texture = textureLoader.load(path);
+    texture.wrapS = texture.wrapT = THREE.RepeatWrapping;
+    texture.repeat.set(repeatX, repeatY);
+    texture.anisotropy = Math.min(12, renderer.capabilities.getMaxAnisotropy());
+    if (color) texture.encoding = THREE.sRGBEncoding;
+    return texture;
+  }
+
+  const grassAlbedo = surfaceTexture('assets/textures/grass-albedo.jpg', 48, 48);
+  const grassBump = surfaceTexture('assets/textures/grass-bump.jpg', 48, 48, false);
+  const pathAlbedo = surfaceTexture('assets/textures/stone-path-albedo.jpg', 16, 16);
+  const pathBump = surfaceTexture('assets/textures/stone-path-bump.jpg', 16, 16, false);
+  const graniteAlbedo = surfaceTexture('assets/textures/granite-pedestal-albedo.jpg', 4, 4);
+  const graniteBump = surfaceTexture('assets/textures/granite-pedestal-bump.jpg', 4, 4, false);
+
   const MAT = {
-    grass: new THREE.MeshStandardMaterial({ color: 0x315b36, roughness: .98 }),
-    path: new THREE.MeshStandardMaterial({ color: 0xa29378, roughness: .92 }),
-    pathEdge: new THREE.MeshStandardMaterial({ color: 0x8a806d, roughness: .86 }),
+    grass: new THREE.MeshStandardMaterial({ map: grassAlbedo, bumpMap: grassBump, bumpScale: 0.12, roughness: .94 }),
+    path: new THREE.MeshStandardMaterial({ map: pathAlbedo, bumpMap: pathBump, bumpScale: 0.08, roughness: .88 }),
+    pathEdge: new THREE.MeshStandardMaterial({ map: pathAlbedo, bumpMap: pathBump, bumpScale: 0.15, roughness: .82 }),
     sandstone: new THREE.MeshStandardMaterial({ color: 0xc8ad78, roughness: .9 }),
-    darkStone: new THREE.MeshStandardMaterial({ color: 0x4a4943, roughness: .97 }),
+    darkStone: new THREE.MeshStandardMaterial({ map: graniteAlbedo, bumpMap: graniteBump, bumpScale: 0.06, roughness: .92 }),
     water: new THREE.MeshStandardMaterial({ color: 0x236f80, roughness: .28, metalness: .08, transparent: true, opacity: .88 }),
     wood: new THREE.MeshStandardMaterial({ color: 0x68452f, roughness: .9 }),
     leaf: new THREE.MeshStandardMaterial({ color: 0x2e6740, roughness: .94 }),
