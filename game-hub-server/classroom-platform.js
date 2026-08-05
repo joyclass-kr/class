@@ -2609,7 +2609,7 @@ function createClassroomPlatform(options = {}) {
 
     if (requestedClassId) {
       const classResult = await pool.query(
-        `SELECT c.*, sc.name AS school_name, sc.school_code
+        `SELECT c.*, sc.name AS school_name, sc.school_code, sc.location_name
          FROM classroom_classes c
          JOIN classroom_schools sc ON sc.id = c.school_id
          WHERE c.id = $1 AND c.school_id = $2`,
@@ -2620,7 +2620,7 @@ function createClassroomPlatform(options = {}) {
 
     if (!classroom) {
       const classResult = await pool.query(
-        `SELECT c.*, sc.name AS school_name, sc.school_code
+        `SELECT c.*, sc.name AS school_name, sc.school_code, sc.location_name
          FROM classroom_classes c
          JOIN classroom_schools sc ON sc.id = c.school_id
          WHERE c.teacher_user_id = $1
@@ -2634,7 +2634,7 @@ function createClassroomPlatform(options = {}) {
     if (!classroom && isSubjectTeacher) {
       // Fallback for subject teacher: grab first class in school
       const firstClassResult = await pool.query(
-        `SELECT c.*, sc.name AS school_name, sc.school_code
+        `SELECT c.*, sc.name AS school_name, sc.school_code, sc.location_name
          FROM classroom_classes c
          JOIN classroom_schools sc ON sc.id = c.school_id
          WHERE c.school_id = $1
@@ -2679,6 +2679,7 @@ function createClassroomPlatform(options = {}) {
         id: classroom.id,
         schoolName: classroom.school_name,
         schoolCode: classroom.school_code,
+        locationName: classroom.location_name || "",
         academicYear: classroom.academic_year,
         grade: classroom.grade,
         classNumber: classroom.class_number,

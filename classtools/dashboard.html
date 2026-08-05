@@ -1571,12 +1571,19 @@
                 const fetchUrl = classId ? `/api/teacher/class?classId=${classId}` : "/api/teacher/class";
                 const res = await fetch(fetchUrl);
                 const data = await res.json();
-                if (data?.classroom?.students && data.classroom.students.length > 0) {
-                    rosterStudents = data.classroom.students;
-                    activeScheduleClassId = data.classroom.id;
-                    canEditSchedules = !data.classroom.isReadOnly;
-                    if (data.classroom.id && classSwitcherSelect) {
-                        classSwitcherSelect.value = data.classroom.id;
+                if (data?.classroom) {
+                    if (data.classroom.schoolName || data.classroom.locationName) {
+                        fetchRealtimeWeatherAndAirQuality(data.classroom.schoolName, data.classroom.locationName);
+                    }
+                    if (data.classroom.students && data.classroom.students.length > 0) {
+                        rosterStudents = data.classroom.students;
+                        activeScheduleClassId = data.classroom.id;
+                        canEditSchedules = !data.classroom.isReadOnly;
+                        if (data.classroom.id && classSwitcherSelect) {
+                            classSwitcherSelect.value = data.classroom.id;
+                        }
+                    } else {
+                        rosterStudents = Array.from({length: 30}, (_, i) => ({ number: String(i+1), name: `${i+1}번` }));
                     }
                 } else {
                     rosterStudents = Array.from({length: 30}, (_, i) => ({ number: String(i+1), name: `${i+1}번` }));
@@ -2003,14 +2010,47 @@
         }
         loadMeals();
 
-        // 7-2. Realtime Weather, Humidity & Air Quality (PM10) API Integration
-        async function fetchRealtimeWeatherAndAirQuality() {
+        // 7-2. Realtime Weather, Humidity & Air Quality (PM10) Dynamic Geocoding Integration
+        async function fetchRealtimeWeatherAndAirQuality(schoolName = "", locationName = "") {
             try {
-                // 노원구 상계동/계상초등학교 좌표 (37.65, 127.06)
-                const weatherRes = await fetch("https://api.open-meteo.com/v1/forecast?latitude=37.65&longitude=127.06&current_weather=true&hourly=relativehumidity_2m");
+                let lat = 37.65;
+                let lon = 127.06;
+                let geoFound = false;
+
+                const searchLocation = (locationName || schoolName || "").replace(/(초등|중|고등)?학교/g, "").trim();
+                if (searchLocation && searchLocation.length >= 2) {
+                    try {
+                        const geoRes = await fetch(`https://geocoding-api.open-meteo.com/v1/search?name=${encodeURIComponent(searchLocation)}&count=1&language=ko&format=json`);
+                        const geoData = await geoRes.json();
+                        if (geoData?.results?.[0]?.latitude && geoData?.results?.[0]?.longitude) {
+                            lat = geoData.results[0].latitude;
+                            lon = geoData.results[0].longitude;
+                            geoFound = true;
+                        }
+                    } catch (_) {}
+                }
+
+                if (!geoFound && navigator.geolocation) {
+                    navigator.geolocation.getCurrentPosition(
+                        (pos) => fetchWeatherWithCoords(pos.coords.latitude, pos.coords.longitude),
+                        () => fetchWeatherWithCoords(lat, lon),
+                        { timeout: 3000 }
+                    );
+                    return;
+                }
+
+                fetchWeatherWithCoords(lat, lon);
+            } catch (err) {
+                console.error("날씨/미세먼지 API 호출 오류:", err);
+            }
+        }
+
+        async function fetchWeatherWithCoords(lat, lon) {
+            try {
+                const weatherRes = await fetch(`https://api.open-meteo.com/v1/forecast?latitude=${lat}&longitude=${lon}&current_weather=true&hourly=relativehumidity_2m`);
                 const weatherData = await weatherRes.json();
                 
-                const airRes = await fetch("https://air-quality-api.open-meteo.com/v1/air-quality?latitude=37.65&longitude=127.06&current=pm10");
+                const airRes = await fetch(`https://air-quality-api.open-meteo.com/v1/air-quality?latitude=${lat}&longitude=${lon}&current=pm10`);
                 const airData = await airRes.json();
 
                 if (weatherData && weatherData.current_weather) {
@@ -2035,11 +2075,11 @@
                     const dustBadge = document.getElementById("dustBadge");
                     if (dustBadge) {
                         let label = "좋음";
-                        let bg = "#3a86ff"; // 파랑 (좋음 0~30)
+                        let bg = "#3a86ff";
                         let color = "#ffffff";
 
                         if (pm10 > 150) {
-                            label = "매우나쁨"; bg = "#e63946"; color = "#ffffff"; // 빨강
+                            label = "매우나쁨"; bg = "#e63946"; color = "#ffffff";
                         } else if (pm10 > 80) {
                             label = "나쁨"; bg = "#ffb703"; color = "#000000"; // 주황/노랑
                         } else if (pm10 > 30) {
