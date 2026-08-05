@@ -1537,14 +1537,23 @@
                         return;
                     }
                     showRestrictedPreview();
-                    const config = await api('/api/auth/config');
+                    let config;
+                    try {
+                        config = await api('/api/auth/config');
+                    } catch (_) {
+                        await new Promise(r => setTimeout(r, 2000));
+                        config = await api('/api/auth/config');
+                    }
                     if (!config.enabled) {
                         authTitle.textContent = 'LOGIN SETUP REQUIRED';
                         authMessage.textContent = 'The server is waiting for its Google sign-in settings.';
                         setStatus(`Missing: ${config.missing.join(', ')}`, true);
                         return;
                     }
-                    const state = await api('/api/auth/me');
+                    const state = await api('/api/auth/me').catch(async () => {
+                        await new Promise(r => setTimeout(r, 2000));
+                        return await api('/api/auth/me');
+                    });
                     if (state.signedIn) {
                         routeSignedIn(state);
                         return;
