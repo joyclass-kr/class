@@ -1428,13 +1428,12 @@
             });
 
             customTimetable[modalActiveDay] = newPeriods;
-            localStorage.setItem("dashboardTimetable", JSON.stringify(customTimetable));
             timetableModal.hidden = true;
             renderTimetable(selectedDayTab);
             syncDashboardSettingsToDB();
         });
 
-        // ── DB Synchronization Helpers ──
+        // ── DB Synchronization Helpers (Server-Side 100% Single Source of Truth) ──
         async function syncDashboardSettingsToDB() {
             try {
                 const grid = document.getElementById("dashboardGrid");
@@ -1462,33 +1461,31 @@
                     const s = data.settings;
                     if (s.timetable && Object.keys(s.timetable).length > 0) {
                         customTimetable = s.timetable;
-                        localStorage.setItem("dashboardTimetable", JSON.stringify(customTimetable));
                     }
                     if (s.sloganText !== undefined && s.sloganText !== null && s.sloganText.trim() !== "" && s.sloganText !== "-") {
                         sloganText.textContent = s.sloganText;
-                        localStorage.setItem("dashboardSloganText", s.sloganText);
                     } else {
                         sloganText.textContent = "-";
-                        localStorage.removeItem("dashboardSloganText");
                     }
                     if (s.sloganAlign) {
                         sloganAlign = s.sloganAlign;
-                        localStorage.setItem("sloganAlign", sloganAlign);
                     }
                     if (s.sloganFontSize) {
                         sloganFontSize = s.sloganFontSize;
-                        localStorage.setItem("sloganFontSize", sloganFontSize);
                     }
                     if (Array.isArray(s.cardOrder) && s.cardOrder.length > 0) {
-                        localStorage.setItem("dashboardCardOrder", JSON.stringify(s.cardOrder));
+                        const grid = document.getElementById("dashboardGrid");
+                        if (grid) {
+                            s.cardOrder.forEach(id => {
+                                const el = document.getElementById(id);
+                                if (el) grid.appendChild(el);
+                            });
+                        }
                     }
                     applySloganStyle();
                     renderTimetable(selectedDayTab);
                 } else if (data.settings === null) {
-                    // New user or reset account: wipe old browser cache so previous user's slogan/timetable never bleeds over!
-                    localStorage.removeItem("dashboardSloganText");
-                    localStorage.removeItem("dashboardTimetable");
-                    localStorage.removeItem("dashboardCardOrder");
+                    // New user or reset account: default clean state directly from DB
                     sloganText.textContent = "-";
                     sloganAlign = "center";
                     sloganFontSize = 42;
@@ -1499,14 +1496,6 @@
         loadDashboardSettingsFromDB();
 
         // 3. Slogan & Formatting
-        const savedSlogan = localStorage.getItem("dashboardSloganText");
-        if (savedSlogan === "또렷한 눈빛! 똑바른 자세!") {
-            sloganText.textContent = "-";
-            localStorage.setItem("dashboardSloganText", "-");
-        } else if (savedSlogan) {
-            sloganText.textContent = savedSlogan;
-        }
-
         function applySloganStyle() {
             sloganText.style.textAlign = sloganAlign;
             sloganText.style.fontSize = sloganFontSize + "px";
@@ -1521,20 +1510,18 @@
         });
 
         sloganText.addEventListener("blur", () => {
-            localStorage.setItem("dashboardSloganText", sloganText.textContent);
             syncDashboardSettingsToDB();
         });
 
-        alignLeftBtn.addEventListener("click", () => { sloganAlign = "left"; localStorage.setItem("sloganAlign", "left"); applySloganStyle(); syncDashboardSettingsToDB(); });
-        alignCenterBtn.addEventListener("click", () => { sloganAlign = "center"; localStorage.setItem("sloganAlign", "center"); applySloganStyle(); syncDashboardSettingsToDB(); });
-        alignRightBtn.addEventListener("click", () => { sloganAlign = "right"; localStorage.setItem("sloganAlign", "right"); applySloganStyle(); syncDashboardSettingsToDB(); });
+        alignLeftBtn.addEventListener("click", () => { sloganAlign = "left"; applySloganStyle(); syncDashboardSettingsToDB(); });
+        alignCenterBtn.addEventListener("click", () => { sloganAlign = "center"; applySloganStyle(); syncDashboardSettingsToDB(); });
+        alignRightBtn.addEventListener("click", () => { sloganAlign = "right"; applySloganStyle(); syncDashboardSettingsToDB(); });
 
-        fontSizePlusBtn.addEventListener("click", () => { sloganFontSize = Math.min(64, sloganFontSize + 4); localStorage.setItem("sloganFontSize", sloganFontSize); applySloganStyle(); syncDashboardSettingsToDB(); });
-        fontSizeMinusBtn.addEventListener("click", () => { sloganFontSize = Math.max(20, sloganFontSize - 4); localStorage.setItem("sloganFontSize", sloganFontSize); applySloganStyle(); syncDashboardSettingsToDB(); });
+        fontSizePlusBtn.addEventListener("click", () => { sloganFontSize = Math.min(64, sloganFontSize + 4); applySloganStyle(); syncDashboardSettingsToDB(); });
+        fontSizeMinusBtn.addEventListener("click", () => { sloganFontSize = Math.max(20, sloganFontSize - 4); applySloganStyle(); syncDashboardSettingsToDB(); });
 
         resetBtn.addEventListener("click", async () => {
             if (confirm("대시보드 설정을 초기화하시겠습니까?")) {
-                localStorage.clear();
                 try {
                     await fetch("/api/teacher/dashboard-settings", {
                         method: "PUT",
