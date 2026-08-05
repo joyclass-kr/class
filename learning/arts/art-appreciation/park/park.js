@@ -278,7 +278,14 @@
     return g;
   }
 
-  // 05번 전시실(Codex 설치 방식)과 100% 동일한 3D 모델 및 석조 받침대 로딩 파이프라인
+  function sculptureMaterial(zone) {
+    if (zone.id === 'thinker') return new THREE.MeshStandardMaterial({ color: 0x38271d, roughness: .3, metalness: .78 });
+    if (zone.id === 'emille') return new THREE.MeshStandardMaterial({ color: 0x4a4338, roughness: .45, metalness: .55 });
+    if (zone.id === 'liberty') return new THREE.MeshStandardMaterial({ color: 0x5c9582, roughness: .65, metalness: .15 });
+    if (zone.id === 'moai') return new THREE.MeshStandardMaterial({ color: 0x5e5b54, roughness: .98, metalness: .02 });
+    return new THREE.MeshStandardMaterial({ color: 0xbab2a5, roughness: .58, metalness: .02 });
+  }
+
   function loadZoneModel(zone) {
     const rootGroup = new THREE.Group();
     rootGroup.position.set(zone.position[0], 0, zone.position[2]);
@@ -292,19 +299,16 @@
       const model = gltf.scene;
       model.matrixAutoUpdate = true;
 
+      const mat = zone.preserveMaterials ? null : sculptureMaterial(zone);
+
       model.traverse((child) => {
         if (child.isMesh) {
           child.castShadow = true;
           child.receiveShadow = true;
           child.geometry.computeVertexNormals();
 
-          if (!zone.preserveMaterials) {
-            let matProps = {
-              color: zone.materialColor || 0x888888,
-              roughness: zone.roughness !== undefined ? zone.roughness : 0.88,
-              metalness: zone.metalness !== undefined ? zone.metalness : 0.08
-            };
-            child.material = new THREE.MeshStandardMaterial(matProps);
+          if (mat) {
+            child.material = mat;
           } else if (zone.materialTint && child.material) {
             child.material = child.material.clone();
             child.material.color.multiply(new THREE.Color(zone.materialTint));
@@ -329,10 +333,24 @@
       console.error('Error loading 3D GLB model for zone:', zone.id, err);
     });
 
+    // Room 05-style Sculpture Spotlight & Rim Light
+    const spot = new THREE.SpotLight(0xffc77a, 140, Math.max(25, zone.realHeight * 2), Math.PI * 0.25, 0.6, 1.4);
+    spot.position.set(zone.position[0] - 3, Math.max(6, zone.realHeight * 0.75 + 3), zone.position[2] + 5);
+    spot.target.position.set(zone.position[0], Math.max(2, zone.realHeight * 0.4), zone.position[2]);
+    spot.castShadow = true;
+    spot.shadow.mapSize.set(512, 512);
+    park.add(spot, spot.target);
+
+    const rim = new THREE.PointLight(0xffd6a0, 25, Math.max(15, zone.realHeight * 1.5), 2);
+    rim.position.set(zone.position[0] + 3, Math.max(4, zone.realHeight * 0.6), zone.position[2] - 4);
+    park.add(rim);
+
+    // 1.45m 어린이 크기 비교 마커
     const marker = makeScaleMarker(1.45, '어린이 1.45m');
     marker.position.set(zone.position[0] + baseW / 2 + 1.8, 0, zone.position[2] + 2);
     park.add(marker);
 
+    // 3D 정보 라벨
     const label = makeLabel(zone.title, zone.size, 9);
     label.position.set(zone.position[0], 3.8, zone.position[2] + 6);
     label.lookAt(camera.position.x, 3.8, camera.position.z);
