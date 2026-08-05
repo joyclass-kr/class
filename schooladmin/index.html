@@ -268,18 +268,18 @@
         <section id="curriculumTab" class="tab-content" hidden>
             <div class="section-header-bar">
                 <div>
-                    <h2>📚 학년별 교과 & 창체 시수 편제표</h2>
-                    <p class="section-desc">연간 법정 기준 시수 및 주당 배정 시수를 설정하여 과목별 시수 차이(±)를 자동 집계합니다.</p>
+                    <h2>📚 [2단계] 학년별 교과 & 창체 시수 편제표</h2>
+                    <p class="section-desc">2022 개정 교육과정 학년별 정해진 법정 기준 시수를 자동 제시하고, 20% 범위 내 시수 증감(증가/감축)을 자유롭게 조절합니다.</p>
                 </div>
                 <div class="grade-selector-wrap">
                     <label>학년 선택:
                         <select id="curriculumGradeSelect" class="form-select">
-                            <option value="1">1학년</option>
-                            <option value="2">2학년</option>
-                            <option value="3">3학년</option>
-                            <option value="4">4학년</option>
-                            <option value="5" selected>5학년</option>
-                            <option value="6">6학년</option>
+                            <option value="1">1학년 (890시간)</option>
+                            <option value="2">2학년 (890시간)</option>
+                            <option value="3">3학년 (986시간)</option>
+                            <option value="4">4학년 (986시간)</option>
+                            <option value="5" selected>5학년 (1088시간)</option>
+                            <option value="6">6학년 (1088시간)</option>
                         </select>
                     </label>
                 </div>
@@ -291,10 +291,12 @@
                         <tr>
                             <th>구분</th>
                             <th>과목/영역명</th>
-                            <th>주당 배정 시수 (시간/주)</th>
-                            <th>연간 법정 필수 시수 (시간/년)</th>
-                            <th>시간표 자동 연산 (예상)</th>
-                            <th>시수 과부족 (차이)</th>
+                            <th>주당 시수 (시간/주)</th>
+                            <th>2022 개정 정해진 기준시수</th>
+                            <th>시수 증감 (증가+/감축-)</th>
+                            <th>학교 최종 편성 시수</th>
+                            <th>시간표 연간 연산시수</th>
+                            <th>시수 과부족 차이 (±)</th>
                         </tr>
                     </thead>
                     <tbody id="curriculumTableBody">

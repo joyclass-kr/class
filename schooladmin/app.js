@@ -719,44 +719,139 @@ document.addEventListener('DOMContentLoaded', () => {
         }
     }
 
-    // --- Curriculum Hours Allocation Logic ---
+    // --- 2단계: 시수편성 (Curriculum Hours Allocation & Adjustment) ---
+    const GRADE_SUBJECT_BASE_HOURS = {
+        1: [
+            { name: '국어', base: 210, weekly: 6, category: 'SUBJECT' },
+            { name: '수학', base: 130, weekly: 4, category: 'SUBJECT' },
+            { name: '바른 생활', base: 40, weekly: 1, category: 'SUBJECT' },
+            { name: '슬기로운 생활', base: 90, weekly: 3, category: 'SUBJECT' },
+            { name: '즐거운 생활', base: 190, weekly: 6, category: 'SUBJECT' },
+            { name: '창체(자율)', base: 70, weekly: 2, category: 'CHANGTAE' },
+            { name: '창체(동아리)', base: 60, weekly: 2, category: 'CHANGTAE' },
+            { name: '창체(봉사)', base: 40, weekly: 1, category: 'CHANGTAE' },
+            { name: '창체(진로)', base: 60, weekly: 2, category: 'CHANGTAE' }
+        ],
+        2: [
+            { name: '국어', base: 210, weekly: 6, category: 'SUBJECT' },
+            { name: '수학', base: 130, weekly: 4, category: 'SUBJECT' },
+            { name: '바른 생활', base: 40, weekly: 1, category: 'SUBJECT' },
+            { name: '슬기로운 생활', base: 90, weekly: 3, category: 'SUBJECT' },
+            { name: '즐거운 생활', base: 190, weekly: 6, category: 'SUBJECT' },
+            { name: '창체(자율)', base: 70, weekly: 2, category: 'CHANGTAE' },
+            { name: '창체(동아리)', base: 60, weekly: 2, category: 'CHANGTAE' },
+            { name: '창체(봉사)', base: 40, weekly: 1, category: 'CHANGTAE' },
+            { name: '창체(진로)', base: 60, weekly: 2, category: 'CHANGTAE' }
+        ],
+        3: [
+            { name: '국어', base: 204, weekly: 6, category: 'SUBJECT' },
+            { name: '수학', base: 136, weekly: 4, category: 'SUBJECT' },
+            { name: '사회', base: 102, weekly: 3, category: 'SUBJECT' },
+            { name: '도덕', base: 34, weekly: 1, category: 'SUBJECT' },
+            { name: '과학', base: 102, weekly: 3, category: 'SUBJECT' },
+            { name: '체육', base: 102, weekly: 3, category: 'SUBJECT' },
+            { name: '음악', base: 68, weekly: 2, category: 'SUBJECT' },
+            { name: '미술', base: 68, weekly: 2, category: 'SUBJECT' },
+            { name: '영어', base: 68, weekly: 2, category: 'SUBJECT' },
+            { name: '창체(자율)', base: 34, weekly: 1, category: 'CHANGTAE' },
+            { name: '창체(동아리)', base: 34, weekly: 1, category: 'CHANGTAE' },
+            { name: '창체(봉사)', base: 10, weekly: 0.5, category: 'CHANGTAE' },
+            { name: '창체(진로)', base: 24, weekly: 0.5, category: 'CHANGTAE' }
+        ],
+        4: [
+            { name: '국어', base: 204, weekly: 6, category: 'SUBJECT' },
+            { name: '수학', base: 136, weekly: 4, category: 'SUBJECT' },
+            { name: '사회', base: 102, weekly: 3, category: 'SUBJECT' },
+            { name: '도덕', base: 34, weekly: 1, category: 'SUBJECT' },
+            { name: '과학', base: 102, weekly: 3, category: 'SUBJECT' },
+            { name: '체육', base: 102, weekly: 3, category: 'SUBJECT' },
+            { name: '음악', base: 68, weekly: 2, category: 'SUBJECT' },
+            { name: '미술', base: 68, weekly: 2, category: 'SUBJECT' },
+            { name: '영어', base: 68, weekly: 2, category: 'SUBJECT' },
+            { name: '창체(자율)', base: 34, weekly: 1, category: 'CHANGTAE' },
+            { name: '창체(동아리)', base: 34, weekly: 1, category: 'CHANGTAE' },
+            { name: '창체(봉사)', base: 10, weekly: 0.5, category: 'CHANGTAE' },
+            { name: '창체(진로)', base: 24, weekly: 0.5, category: 'CHANGTAE' }
+        ],
+        5: [
+            { name: '국어', base: 204, weekly: 6, category: 'SUBJECT' },
+            { name: '수학', base: 136, weekly: 4, category: 'SUBJECT' },
+            { name: '사회', base: 102, weekly: 3, category: 'SUBJECT' },
+            { name: '도덕', base: 34, weekly: 1, category: 'SUBJECT' },
+            { name: '과학', base: 102, weekly: 3, category: 'SUBJECT' },
+            { name: '실과', base: 68, weekly: 2, category: 'SUBJECT' },
+            { name: '체육', base: 102, weekly: 3, category: 'SUBJECT' },
+            { name: '음악', base: 68, weekly: 2, category: 'SUBJECT' },
+            { name: '미술', base: 68, weekly: 2, category: 'SUBJECT' },
+            { name: '영어', base: 68, weekly: 2, category: 'SUBJECT' },
+            { name: '창체(자율)', base: 34, weekly: 1, category: 'CHANGTAE' },
+            { name: '창체(동아리)', base: 34, weekly: 1, category: 'CHANGTAE' },
+            { name: '창체(봉사)', base: 10, weekly: 0.5, category: 'CHANGTAE' },
+            { name: '창체(진로)', base: 24, weekly: 0.5, category: 'CHANGTAE' }
+        ],
+        6: [
+            { name: '국어', base: 204, weekly: 6, category: 'SUBJECT' },
+            { name: '수학', base: 136, weekly: 4, category: 'SUBJECT' },
+            { name: '사회', base: 102, weekly: 3, category: 'SUBJECT' },
+            { name: '도덕', base: 34, weekly: 1, category: 'SUBJECT' },
+            { name: '과학', base: 102, weekly: 3, category: 'SUBJECT' },
+            { name: '실과', base: 68, weekly: 2, category: 'SUBJECT' },
+            { name: '체육', base: 102, weekly: 3, category: 'SUBJECT' },
+            { name: '음악', base: 68, weekly: 2, category: 'SUBJECT' },
+            { name: '미술', base: 68, weekly: 2, category: 'SUBJECT' },
+            { name: '영어', base: 68, weekly: 2, category: 'SUBJECT' },
+            { name: '창체(자율)', base: 34, weekly: 1, category: 'CHANGTAE' },
+            { name: '창체(동아리)', base: 34, weekly: 1, category: 'CHANGTAE' },
+            { name: '창체(봉사)', base: 10, weekly: 0.5, category: 'CHANGTAE' },
+            { name: '창체(진로)', base: 24, weekly: 0.5, category: 'CHANGTAE' }
+        ]
+    };
+
     async function loadCurriculumHours() {
         if (!curriculumTableBody) return;
-        const grade = curriculumGradeSelect.value;
+        const grade = Number(curriculumGradeSelect.value || 5);
+        const gradeDefaults = GRADE_SUBJECT_BASE_HOURS[grade] || GRADE_SUBJECT_BASE_HOURS[5];
 
         try {
             const res = await api(`/api/school-admin/curriculum-hours?academicYear=${selectedAcademicYear}&grade=${grade}`);
             const savedHours = res.hours || [];
             
-            // Merge with defaults
             const hourMap = new Map(savedHours.map(h => [h.subject_name, h]));
-            const rowsData = DEFAULT_SUBJECTS.map(def => {
+            const rowsData = gradeDefaults.map(def => {
                 const saved = hourMap.get(def.name);
                 return {
                     name: def.name,
                     weekly: saved ? saved.weekly_hours : def.weekly,
-                    annual: saved ? saved.annual_required_hours : def.annual,
+                    base: def.base,
+                    adj: saved && saved.annual_required_hours ? (saved.annual_required_hours - def.base) : 0,
                     category: def.category
                 };
             });
 
             renderCurriculumTable(rowsData);
         } catch (error) {
-            renderCurriculumTable(DEFAULT_SUBJECTS);
+            const rowsData = gradeDefaults.map(def => ({ ...def, adj: 0 }));
+            renderCurriculumTable(rowsData);
         }
     }
 
     function renderCurriculumTable(rowsData) {
         curriculumTableBody.innerHTML = '';
         let totalWeekly = 0;
-        let totalAnnual = 0;
+        let totalBase = 0;
+        let totalAdj = 0;
+        let totalFinal = 0;
         let totalCalculated = 0;
 
         rowsData.forEach(row => {
-            const calcAnnual = row.weekly * 34; // 34 weeks per academic year
-            const diff = calcAnnual - row.annual;
+            const finalAnnual = row.base + (row.adj || 0);
+            const calcAnnual = row.weekly * 34; // 34 weeks
+            const diff = calcAnnual - finalAnnual;
+
             totalWeekly += row.weekly;
-            totalAnnual += row.annual;
+            totalBase += row.base;
+            totalAdj += (row.adj || 0);
+            totalFinal += finalAnnual;
             totalCalculated += calcAnnual;
 
             let diffClass = 'diff-zero';
@@ -775,37 +870,42 @@ document.addEventListener('DOMContentLoaded', () => {
             tr.innerHTML = `
                 <td>${categoryText}</td>
                 <td style="font-weight:700;">${row.name}</td>
-                <td><input type="number" class="weekly-input" data-subject="${row.name}" data-category="${row.category}" value="${row.weekly}" min="0" max="20"></td>
-                <td><input type="number" class="annual-input" data-subject="${row.name}" data-category="${row.category}" value="${row.annual}" min="0" max="500"></td>
+                <td><input type="number" class="weekly-input" data-subject="${row.name}" data-category="${row.category}" data-base="${row.base}" value="${row.weekly}" min="0" max="20"></td>
+                <td style="font-weight:700; color:var(--primary);">${row.base}시간</td>
+                <td><input type="number" class="adj-input" data-subject="${row.name}" value="${row.adj || 0}" min="-50" max="50"></td>
+                <td style="font-weight:800;">${finalAnnual}시간</td>
                 <td style="font-weight:700;">${calcAnnual}시간</td>
                 <td class="${diffClass}">${diffStr}</td>
             `;
             curriculumTableBody.appendChild(tr);
         });
 
-        const totalDiff = totalCalculated - totalAnnual;
+        const totalDiff = totalCalculated - totalFinal;
         let totalDiffStr = totalDiff >= 0 ? `+${totalDiff}시간` : `${totalDiff}시간`;
 
         curriculumTableFoot.innerHTML = `
             <tr>
                 <td colspan="2">합계</td>
                 <td>${totalWeekly}시간/주</td>
-                <td>${totalAnnual}시간/년</td>
-                <td>${totalCalculated}시간/년</td>
+                <td>${totalBase}시간</td>
+                <td>${totalAdj >= 0 ? '+' + totalAdj : totalAdj}시간</td>
+                <td>${totalFinal}시간</td>
+                <td>${totalCalculated}시간</td>
                 <td class="${totalDiff >= 0 ? 'diff-positive' : 'diff-negative'}">${totalDiffStr}</td>
             </tr>
         `;
 
-        // Attach live input change handler
+        // Live input listeners
         curriculumTableBody.querySelectorAll('input').forEach(input => {
             input.addEventListener('input', () => {
                 const currentData = Array.from(curriculumTableBody.querySelectorAll('tr')).map(tr => {
                     const wInput = tr.querySelector('.weekly-input');
-                    const aInput = tr.querySelector('.annual-input');
+                    const aInput = tr.querySelector('.adj-input');
                     return {
                         name: wInput.dataset.subject,
                         weekly: Number(wInput.value || 0),
-                        annual: Number(aInput.value || 0),
+                        base: Number(wInput.dataset.base || 0),
+                        adj: Number(aInput.value || 0),
                         category: wInput.dataset.category
                     };
                 });
@@ -818,11 +918,13 @@ document.addEventListener('DOMContentLoaded', () => {
         const grade = curriculumGradeSelect.value;
         const rows = Array.from(curriculumTableBody.querySelectorAll('tr')).map(tr => {
             const wInput = tr.querySelector('.weekly-input');
-            const aInput = tr.querySelector('.annual-input');
+            const aInput = tr.querySelector('.adj-input');
+            const base = Number(wInput.dataset.base || 0);
+            const adj = Number(aInput.value || 0);
             return {
                 subjectName: wInput.dataset.subject,
                 weeklyHours: Number(wInput.value || 0),
-                annualRequiredHours: Number(aInput.value || 0),
+                annualRequiredHours: base + adj,
                 category: wInput.dataset.category
             };
         });
@@ -837,13 +939,13 @@ document.addEventListener('DOMContentLoaded', () => {
                     hours: rows
                 })
             });
-            alert(`${grade}학년 교과/창체 시수 편제표가 성공적으로 저장되었습니다!`);
+            alert(`${grade}학년 교과/창체 시수 편제표가 저장되었습니다!`);
         } catch (error) {
             alert(error.message || '시수 편제표를 저장하지 못했습니다.');
         }
     }
 
-    // --- Master Timetable Grid Logic ---
+    // --- Master Timetable Grid Logic (1~8 Periods Support) ---
     function renderSubjectPalette() {
         if (!subjectPalette) return;
         subjectPalette.innerHTML = '';
@@ -882,8 +984,8 @@ document.addEventListener('DOMContentLoaded', () => {
         if (!timetableMatrixBody) return;
         timetableMatrixBody.innerHTML = '';
 
-        // 1 to 6 Periods
-        for (let period = 1; period <= 6; period++) {
+        // 1 to 8 Periods (하루 최대 8교시)
+        for (let period = 1; period <= 8; period++) {
             const tr = document.createElement('tr');
             let cellsHtml = `<td style="font-weight:800; background:rgba(255,255,255,0.03);">${period}교시</td>`;
 
