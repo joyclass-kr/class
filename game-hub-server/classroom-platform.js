@@ -850,6 +850,16 @@ function createClassroomPlatform(options = {}) {
         created_at TIMESTAMPTZ NOT NULL DEFAULT NOW(),
         updated_at TIMESTAMPTZ NOT NULL DEFAULT NOW(),
         UNIQUE (school_id, academic_year, grade, class_number, day_of_week, period)
+      )`,
+      `CREATE TABLE IF NOT EXISTS classroom_teacher_dashboard_settings (
+        id BIGSERIAL PRIMARY KEY,
+        user_id BIGINT NOT NULL UNIQUE REFERENCES classroom_users(id) ON DELETE CASCADE,
+        timetable JSONB NOT NULL DEFAULT '{}'::jsonb,
+        slogan_text TEXT DEFAULT '',
+        slogan_align TEXT DEFAULT 'center',
+        slogan_font_size INTEGER DEFAULT 42,
+        card_order JSONB DEFAULT '[]'::jsonb,
+        updated_at TIMESTAMPTZ NOT NULL DEFAULT NOW()
       )`
     ];
 
@@ -3752,6 +3762,54 @@ function createClassroomPlatform(options = {}) {
         [profile.school_id, year, grade, subjectName, weeklyHours, annualRequiredHours, category]
       );
     }
+    res.json({ ok: true });
+  }));
+
+  // ── Teacher Dashboard Multi-Device Sync Settings APIs ──
+  router.get("/teacher/dashboard-settings", asyncRoute(async (req, res) => {
+    const user = await requireUser(req);
+    const result = await pool.query(
+      `SELECT timetable, slogan_text, slogan_align, slogan_font_size, card_order
+       FROM classroom_teacher_dashboard_settings
+       WHERE user_id = $1`,
+      [user.id]
+    );
+    if (result.rows.length === 0) {
+      return res.json({ settings: null });
+    }
+    const row = result.rows[0];
+    res.json({
+      settings: {
+        timetable: row.timetable,
+        sloganText: row.slogan_text,
+        sloganAlign: row.slogan_align,
+        sloganFontSize: row.slogan_font_size,
+        cardOrder: row.card_order
+      }
+    });
+  }));
+
+  router.put("/teacher/dashboard-settings", asyncRoute(async (req, res) => {
+    const user = await requireUser(req);
+    const timetable = req.body?.timetable || {};
+    const sloganText = String(req.body?.sloganText || "");
+    const sloganAlign = String(req.body?.sloganAlign || "center");
+    const sloganFontSize = Number(req.body?.sloganFontSize || 42);
+    const cardOrder = Array.isArray(req.body?.cardOrder) ? req.body.cardOrder : [];
+
+    await pool.query(
+      `INSERT INTO classroom_teacher_dashboard_settings
+         (user_id, timetable, slogan_text, slogan_align, slogan_font_size, card_order, updated_at)
+       VALUES ($1, $2, $3, $4, $5, $6, NOW())
+       ON CONFLICT (user_id) DO UPDATE SET
+         timetable = EXCLUDED.timetable,
+         slogan_text = EXCLUDED.slogan_text,
+         slogan_align = EXCLUDED.slogan_align,
+         slogan_font_size = EXCLUDED.slogan_font_size,
+         card_order = EXCLUDED.card_order,
+         updated_at = NOW()`,
+      [user.id, JSON.stringify(timetable), sloganText, sloganAlign, sloganFontSize, JSON.stringify(cardOrder)]
+    );
     res.json({ ok: true });
   }));
 

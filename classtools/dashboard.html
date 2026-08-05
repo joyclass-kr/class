@@ -1431,7 +1431,60 @@
             localStorage.setItem("dashboardTimetable", JSON.stringify(customTimetable));
             timetableModal.hidden = true;
             renderTimetable(selectedDayTab);
+            syncDashboardSettingsToDB();
         });
+
+        // ── DB Synchronization Helpers ──
+        async function syncDashboardSettingsToDB() {
+            try {
+                const grid = document.getElementById("dashboardGrid");
+                const cardOrder = grid ? Array.from(grid.querySelectorAll(".widget-card")).map(c => c.id) : [];
+                await fetch("/api/teacher/dashboard-settings", {
+                    method: "PUT",
+                    headers: { "Content-Type": "application/json" },
+                    body: JSON.stringify({
+                        timetable: customTimetable,
+                        sloganText: sloganText.textContent,
+                        sloganAlign: sloganAlign,
+                        sloganFontSize: sloganFontSize,
+                        cardOrder: cardOrder
+                    }),
+                    credentials: "include"
+                });
+            } catch (e) {}
+        }
+
+        async function loadDashboardSettingsFromDB() {
+            try {
+                const res = await fetch("/api/teacher/dashboard-settings", { credentials: "include" });
+                const data = await res.json().catch(() => ({}));
+                if (data.settings) {
+                    const s = data.settings;
+                    if (s.timetable && Object.keys(s.timetable).length > 0) {
+                        customTimetable = s.timetable;
+                        localStorage.setItem("dashboardTimetable", JSON.stringify(customTimetable));
+                    }
+                    if (s.sloganText !== undefined && s.sloganText !== null) {
+                        sloganText.textContent = s.sloganText;
+                        localStorage.setItem("dashboardSloganText", s.sloganText);
+                    }
+                    if (s.sloganAlign) {
+                        sloganAlign = s.sloganAlign;
+                        localStorage.setItem("sloganAlign", sloganAlign);
+                    }
+                    if (s.sloganFontSize) {
+                        sloganFontSize = s.sloganFontSize;
+                        localStorage.setItem("sloganFontSize", sloganFontSize);
+                    }
+                    if (Array.isArray(s.cardOrder) && s.cardOrder.length > 0) {
+                        localStorage.setItem("dashboardCardOrder", JSON.stringify(s.cardOrder));
+                    }
+                    applySloganStyle();
+                    renderTimetable(selectedDayTab);
+                }
+            } catch (e) {}
+        }
+        loadDashboardSettingsFromDB();
 
         // 3. Slogan & Formatting
         const savedSlogan = localStorage.getItem("dashboardSloganText");
@@ -1457,18 +1510,33 @@
 
         sloganText.addEventListener("blur", () => {
             localStorage.setItem("dashboardSloganText", sloganText.textContent);
+            syncDashboardSettingsToDB();
         });
 
-        alignLeftBtn.addEventListener("click", () => { sloganAlign = "left"; localStorage.setItem("sloganAlign", "left"); applySloganStyle(); });
-        alignCenterBtn.addEventListener("click", () => { sloganAlign = "center"; localStorage.setItem("sloganAlign", "center"); applySloganStyle(); });
-        alignRightBtn.addEventListener("click", () => { sloganAlign = "right"; localStorage.setItem("sloganAlign", "right"); applySloganStyle(); });
+        alignLeftBtn.addEventListener("click", () => { sloganAlign = "left"; localStorage.setItem("sloganAlign", "left"); applySloganStyle(); syncDashboardSettingsToDB(); });
+        alignCenterBtn.addEventListener("click", () => { sloganAlign = "center"; localStorage.setItem("sloganAlign", "center"); applySloganStyle(); syncDashboardSettingsToDB(); });
+        alignRightBtn.addEventListener("click", () => { sloganAlign = "right"; localStorage.setItem("sloganAlign", "right"); applySloganStyle(); syncDashboardSettingsToDB(); });
 
-        fontSizePlusBtn.addEventListener("click", () => { sloganFontSize = Math.min(64, sloganFontSize + 4); localStorage.setItem("sloganFontSize", sloganFontSize); applySloganStyle(); });
-        fontSizeMinusBtn.addEventListener("click", () => { sloganFontSize = Math.max(20, sloganFontSize - 4); localStorage.setItem("sloganFontSize", sloganFontSize); applySloganStyle(); });
+        fontSizePlusBtn.addEventListener("click", () => { sloganFontSize = Math.min(64, sloganFontSize + 4); localStorage.setItem("sloganFontSize", sloganFontSize); applySloganStyle(); syncDashboardSettingsToDB(); });
+        fontSizeMinusBtn.addEventListener("click", () => { sloganFontSize = Math.max(20, sloganFontSize - 4); localStorage.setItem("sloganFontSize", sloganFontSize); applySloganStyle(); syncDashboardSettingsToDB(); });
 
-        resetBtn.addEventListener("click", () => {
+        resetBtn.addEventListener("click", async () => {
             if (confirm("대시보드 설정을 초기화하시겠습니까?")) {
                 localStorage.clear();
+                try {
+                    await fetch("/api/teacher/dashboard-settings", {
+                        method: "PUT",
+                        headers: { "Content-Type": "application/json" },
+                        body: JSON.stringify({
+                            timetable: {},
+                            sloganText: "-",
+                            sloganAlign: "center",
+                            sloganFontSize: 42,
+                            cardOrder: []
+                        }),
+                        credentials: "include"
+                    });
+                } catch (e) {}
                 location.reload();
             }
         });
