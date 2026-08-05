@@ -1207,18 +1207,6 @@
                 schoolInput.focus();
             }
 
-            async function showAdminHome(state) {
-                isTeacherSignedIn = false;
-                restrictedPreview = false;
-                authTitle.textContent = 'ADMIN';
-                authMessage.hidden = true;
-                googleSignInButton.hidden = true;
-                toggleGuestMode.hidden = true;
-                guestForm.hidden = true;
-                if (typeof parentForm !== 'undefined' && parentForm) parentForm.hidden = true;
-                joinForm.hidden = true;
-                signedInArea.hidden = false;
-                
             async function routeSignedIn(state) {
                 authTitle.textContent = 'PROFILES';
                 authMessage.hidden = true;
