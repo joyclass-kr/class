@@ -474,37 +474,7 @@
             width: 38%;
         }
 
-        .student-password {
-            width: 100%;
-            min-width: 128px;
-            border: 1px solid var(--line);
-            border-radius: 9px;
-            padding: 9px 11px;
-            color: var(--ink);
-            background: #fffdf9;
-            font: inherit;
-            font-variant-numeric: tabular-nums;
-            letter-spacing: 0.14em;
-        }
-
-        .student-password:focus {
-            border-color: var(--brand);
-            outline: 3px solid var(--brand-soft);
-        }
-
-        .student-password[aria-invalid="true"] {
-            border-color: var(--danger);
-        }
-
-        .password-note {
-            margin: 0;
-            padding: 14px 26px;
-            border-top: 1px solid #ebe6dc;
-            color: var(--muted);
-            background: #faf7f0;
-            font-size: 0.82rem;
-            line-height: 1.5;
-        }
+        
 
         tbody tr:last-child td {
             border-bottom: 0;
@@ -618,10 +588,7 @@
                     <label for="claim-name">Teacher</label>
                     <input class="profile-control" id="claim-name" maxlength="30" autocomplete="name" placeholder="Teacher name">
                 </div>
-                <div class="profile-field">
-                    <label for="claim-password">Password</label>
-                    <input class="profile-control" id="claim-password" type="password" maxlength="6" inputmode="numeric" autocomplete="current-password" placeholder="6 digits">
-                </div>
+                
             </div>
             <div class="actions">
                 <p class="status" id="claim-status" role="status" aria-live="polite">Use the information registered by the administrator.</p>
@@ -739,20 +706,7 @@
                     <p class="field-help">개인 구글계정, 비워도 됨</p>
                 </div>
 
-                <div class="field">
-                    <div class="field-head">
-                        <label for="passwords">최초 접속 상태</label>
-                        <span class="line-count" id="password-count">0행</span>
-                    </div>
-                    <textarea id="passwords" disabled aria-describedby="password-help"></textarea>
-                </div>
-
-                <div class="field">
-                    <div class="field-head">
-                        <label>비번 초기화</label>
-                    </div>
-                    <div id="reset-buttons-container" class="reset-container"></div>
-                </div>
+                
             </div>
 
             <div class="student-delete-box" id="student-delete-box">
@@ -763,7 +717,7 @@
             </div>
 
             <div class="actions">
-                <p class="status" id="input-status" role="status" aria-live="polite">엑셀에서 학번, 성명, 성별, 비밀번호 열을 복사하여 붙여넣으세요.</p>
+                <p class="status" id="input-status" role="status" aria-live="polite">엑셀에서 학번, 성명, 성별 열을 복사하여 붙여넣으세요.</p>
                 <button class="save-button" id="save-button" type="button" disabled>SAVE ROSTER</button>
             </div>
         </section>
@@ -774,8 +728,7 @@
         (() => {
             "use strict";
 
-            const STUDENT_PASSWORD_PATTERN = /^\d{6}$/;
-            const DISPLAY_DEFAULT_STUDENT_PASSWORD = "123456";
+            
             const currentYear = new Date().getFullYear();
             const allowedYears = [currentYear - 1, currentYear, currentYear + 1];
             const teacherAccount = document.querySelector("#teacher-account");
@@ -783,7 +736,7 @@
             const claimCard = document.querySelector("#teacher-claim-card");
             const claimSchoolInput = document.querySelector("#claim-school");
             const claimNameInput = document.querySelector("#claim-name");
-            const claimPasswordInput = document.querySelector("#claim-password");
+            
             const claimStatus = document.querySelector("#claim-status");
             const claimButton = document.querySelector("#claim-button");
             const rosterCard = document.querySelector("#roster-card");
@@ -801,7 +754,7 @@
             const studentEmailsInput = document.querySelector("#student-emails");
             const guardian1EmailsInput = document.querySelector("#guardian1-emails");
             const guardian2EmailsInput = document.querySelector("#guardian2-emails");
-            const passwordsInput = document.querySelector("#passwords");
+            
             const numberCount = document.querySelector("#number-count");
             const nameCount = document.querySelector("#name-count");
             const genderCount = document.querySelector("#gender-count");
@@ -809,12 +762,12 @@
             const studentEmailCount = document.querySelector("#student-email-count");
             const guardian1EmailCount = document.querySelector("#guardian1-email-count");
             const guardian2EmailCount = document.querySelector("#guardian2-email-count");
-            const passwordCount = document.querySelector("#password-count");
+            
             const status = document.querySelector("#input-status");
             const saveButton = document.querySelector("#save-button");
             const studentDeleteSelect = document.querySelector("#student-delete-select");
             const studentDeleteButton = document.querySelector("#student-delete-button");
-            const displayedPasswordRows = new Map();
+            
             let authorized = false;
             let saving = false;
             let loadedRosterStudents = [];
@@ -869,7 +822,7 @@
                     invalidGenders.length === 0 &&
                     !hasMismatchedGenders;
 
-                return { numbers, names, genders, studentEmails, guardian1Emails, guardian2Emails, hasBlank, duplicateNumbers, invalidNumbers, invalidNames, invalidGenders, hasMismatchedGenders, hasMismatchedPasswords: false, invalidBirthdays: [], invalidBirthdayVisibility: [], invalidPasswords: [], isComplete };
+                return { numbers, names, genders, studentEmails, guardian1Emails, guardian2Emails, hasBlank, duplicateNumbers, invalidNumbers, invalidNames, invalidGenders, hasMismatchedGenders,  invalidBirthdays: [], invalidBirthdayVisibility: [],  isComplete };
             }
 
             function createRoster(numbers, names, genders, studentEmails, guardian1Emails, guardian2Emails) {
@@ -953,7 +906,7 @@
                 displayedPasswordRows.clear();
                 classroom.students.forEach((student) => displayedPasswordRows.set(student.number, DISPLAY_DEFAULT_STUDENT_PASSWORD));
                 if (birthdatesInput) birthdatesInput.disabled = true;
-                passwordsInput.disabled = true;
+                
                 studentDeleteSelect.replaceChildren(new Option("삭제할 학생 선택", ""));
                 loadedRosterStudents.forEach((student) => {
                     studentDeleteSelect.add(new Option(`${student.number}번 ${student.name}`, student.number));
@@ -968,7 +921,7 @@
                     studentEmailsInput.disabled = true;
                     guardian1EmailsInput.disabled = true;
                     guardian2EmailsInput.disabled = true;
-                    passwordsInput.disabled = true;
+                    
                     saveButton.disabled = true;
                     setStatus("🔒 전담 교사 모드: 학생 명단 수정은 담임 교사만 가능합니다. 담임 교사가 등록한 명단이 연동됩니다.");
                     profileStatus.textContent = "🔒 전담 교사 모드 (Read-Only)";
@@ -1029,7 +982,7 @@
                 if (studentEmailCount) studentEmailCount.textContent = `${state.studentEmails.length}행`;
                 if (guardian1EmailCount) guardian1EmailCount.textContent = `${state.guardian1Emails.length}행`;
                 if (guardian2EmailCount) guardian2EmailCount.textContent = `${state.guardian2Emails.length}행`;
-                if (passwordCount) passwordCount.textContent = `${state.numbers.length}행`;
+                
 
                 const hasAnyInput = state.numbers.length > 0 || state.names.length > 0;
                 const hasMismatchedCounts = hasAnyInput && (state.numbers.length !== state.names.length || state.hasMismatchedGenders);
@@ -1088,10 +1041,7 @@
                     return;
                 }
 
-                if (state.invalidPasswords.length > 0 || state.hasMismatchedPasswords) {
-                    setStatus("비밀번호는 6자리 숫자여야 합니다.", "error");
-                    return;
-                }
+                
 
                 if (!isProfileComplete()) {
                     setStatus("모든 학급 정보를 입력해 주세요.", "error");
@@ -1142,7 +1092,7 @@
                 const studentNumber = studentDeleteSelect.value;
                 const student = loadedRosterStudents.find((item) => item.number === studentNumber);
                 if (!student) return;
-                const message = `${student.number}번 ${student.name} 학생을 삭제할까요?\n\n학생의 계정 연결, 생일, 공개 설정, 비밀번호가 함께 삭제되고 로그인 중인 기기에서도 로그아웃됩니다.`;
+                const message = `${student.number}번 ${student.name} 학생을 삭제할까요?\n\n학생의 계정 연결, 생일, 공개 설정가 함께 삭제되고 로그인 중인 기기에서도 로그아웃됩니다.`;
                 if (!confirm(message)) return;
                 studentDeleteButton.disabled = true;
                 try {
@@ -1196,9 +1146,7 @@
             }
 
             [schoolInput, classNumberInput, teacherInput].forEach((input) => input.addEventListener("input", markUnsaved));
-            claimPasswordInput.addEventListener("input", () => {
-                claimPasswordInput.value = claimPasswordInput.value.replace(/\D/g, "").slice(0, 6);
-            });
+            
             claimButton.addEventListener("click", async () => {
                 claimButton.disabled = true;
                 claimStatus.textContent = "Checking teacher registration…";
@@ -1208,7 +1156,7 @@
                         body: JSON.stringify({
                             schoolId: claimSchoolInput.value,
                             name: claimNameInput.value.trim(),
-                            password: claimPasswordInput.value,
+                            
                         }),
                     });
                     location.replace("index.html");
@@ -1238,15 +1186,7 @@
                 update();
             });
 
-            passwordsInput.addEventListener("input", () => {
-                const cleanLines = passwordsInput.value
-                    .replace(/[^\d\r\n]/g, "")
-                    .replace(/\r\n?/g, "\n")
-                    .split("\n")
-                    .map((line) => line.slice(0, 6));
-                passwordsInput.value = cleanLines.join("\n");
-                update();
-            });
+            
             studentEmailsInput.addEventListener("input", update);
             guardian1EmailsInput.addEventListener("input", update);
             guardian2EmailsInput.addEventListener("input", update);
@@ -1257,7 +1197,7 @@
             });
 
             const resetButtonsContainer = document.querySelector("#reset-buttons-container");
-            const allTextareas = [numbersInput, namesInput, gendersInput, birthdatesInput, studentEmailsInput, guardian1EmailsInput, guardian2EmailsInput, passwordsInput, resetButtonsContainer].filter(Boolean);
+            const allTextareas = [numbersInput, namesInput, gendersInput, birthdatesInput, studentEmailsInput, guardian1EmailsInput, guardian2EmailsInput].filter(Boolean);
             let isSyncingScroll = false;
             
             resetButtonsContainer.addEventListener("click", (e) => {

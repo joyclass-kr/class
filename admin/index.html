@@ -185,7 +185,7 @@
         .school-directory-state { margin-left: 8px; color: var(--muted); font-size: 12px; font-weight: 500; }
         .check-label { display: flex; align-items: center; gap: 7px; color: var(--muted); font-size: 13px; }
         
-        .paste-grid { display: grid; grid-template-columns: 80px 80px 70px 70px 120px 1fr; gap: 6px; margin-top: 14px; }
+        .paste-grid { display: grid; grid-template-columns: 90px 1fr 1fr; gap: 6px; margin-top: 14px; }
         .field { min-width: 0; }
         .field-head { display: flex; align-items: flex-start; justify-content: space-between; gap: 8px; margin: 0 2px 6px; min-height: 24px; }
         .field label { font-size: 13px; font-weight: 800; }
@@ -264,22 +264,11 @@
                         <button class="action-button danger-button" id="deleteSchoolButton" type="button">DELETE SCHOOL</button>
                     </div>
                     <div id="teacherManagement" hidden>
+                        <p style="margin:0 0 10px;color:var(--muted);font-size:12px;">구분: 교장 / 교감 / 교직원 중 하나를 입력하세요.</p>
                         <div class="paste-grid">
                             <div class="field">
                                 <div class="field-head"><label>구분</label></div>
-                                <textarea id="rosterType" class="roster-input" placeholder="담임/전담" wrap="off" spellcheck="false"></textarea>
-                            </div>
-                            <div class="field">
-                                <div class="field-head"><label>학년도</label></div>
-                                <textarea id="rosterYear" class="roster-input" placeholder="2026" wrap="off" spellcheck="false"></textarea>
-                            </div>
-                            <div class="field">
-                                <div class="field-head"><label>학년</label></div>
-                                <textarea id="rosterGrade" class="roster-input" placeholder="5" wrap="off" spellcheck="false"></textarea>
-                            </div>
-                            <div class="field">
-                                <div class="field-head"><label>반</label></div>
-                                <textarea id="rosterClass" class="roster-input" placeholder="1" wrap="off" spellcheck="false"></textarea>
+                                <textarea id="rosterType" class="roster-input" placeholder="교장&#10;교감&#10;교직원" wrap="off" spellcheck="false"></textarea>
                             </div>
                             <div class="field">
                                 <div class="field-head"><label>성명</label></div>
@@ -287,7 +276,7 @@
                             </div>
                             <div class="field">
                                 <div class="field-head"><label>구글 계정</label></div>
-                                <textarea id="rosterEmail" class="roster-input" placeholder="teacher@gmail.com" wrap="off" spellcheck="false"></textarea>
+                                <textarea id="rosterEmail" class="roster-input" placeholder="teacher@school.ac.kr" wrap="off" spellcheck="false"></textarea>
                             </div>
                         </div>
                         <div class="actions">
@@ -327,13 +316,10 @@
             const deleteSchoolButton = document.querySelector("#deleteSchoolButton");
             const teacherManagement = document.querySelector("#teacherManagement");
             const rosterType = document.querySelector("#rosterType");
-            const rosterYear = document.querySelector("#rosterYear");
-            const rosterGrade = document.querySelector("#rosterGrade");
-            const rosterClass = document.querySelector("#rosterClass");
             const rosterName = document.querySelector("#rosterName");
             const rosterEmail = document.querySelector("#rosterEmail");
             const saveRosterButton = document.querySelector("#saveRosterButton");
-            const textareas = [rosterType, rosterYear, rosterGrade, rosterClass, rosterName, rosterEmail];
+            const textareas = [rosterType, rosterName, rosterEmail];
             let saving = false;
             let schools = [];
             let selectedNeisSchool = null;
@@ -451,19 +437,15 @@
                 if (!school) return;
                 schoolEnabled.checked = school.enabled;
                 
-                let types = [], years = [], grades = [], classes = [], names = [], emails = [];
+                let types = [], names = [], emails = [];
                 school.teachers.forEach((teacher) => {
-                    types.push(teacher.type === "subject" ? "전담" : "담임");
-                    years.push(teacher.classroom?.academicYear || "");
-                    grades.push(teacher.classroom?.grade || "");
-                    classes.push(teacher.classroom?.classNumber || "");
+                    if (teacher.type === "교장") types.push("교장");
+                    else if (teacher.type === "교감") types.push("교감");
+                    else types.push("교직원");
                     names.push(teacher.name || "");
                     emails.push(teacher.email || "");
                 });
                 rosterType.value = types.join("\n");
-                rosterYear.value = years.join("\n");
-                rosterGrade.value = grades.join("\n");
-                rosterClass.value = classes.join("\n");
                 rosterName.value = names.join("\n");
                 rosterEmail.value = emails.join("\n");
             }
@@ -580,22 +562,26 @@
                 
                 const getLines = (ta) => ta.value.split("\n").map(l => l.trim());
                 const types = getLines(rosterType);
-                const years = getLines(rosterYear);
-                const grades = getLines(rosterGrade);
-                const classes = getLines(rosterClass);
                 const names = getLines(rosterName);
                 const emails = getLines(rosterEmail);
                 
-                const rowCount = Math.max(types.length, years.length, grades.length, classes.length, names.length, emails.length);
+                const rowCount = Math.max(types.length, names.length, emails.length);
                 const teachers = [];
                 
                 for (let i = 0; i < rowCount; i++) {
                     if (!names[i] && !emails[i]) continue;
+                    const rawType = (types[i] || "").trim();
+                    let parsedType = "교직원";
+                    if (rawType === "교장") parsedType = "교장";
+                    else if (rawType === "교감") parsedType = "교감";
+                    else if (rawType === "교직원") parsedType = "교직원";
+                    else if (rawType) {
+                        setStatus(`구분 오류: "${rawType}"은 교장/교감/교직원 중 하나여야 합니다.`, true);
+                        return;
+                    }
+
                     teachers.push({
-                        type: (types[i] === "전담") ? "subject" : "homeroom",
-                        academicYear: years[i],
-                        grade: grades[i],
-                        classNumber: classes[i],
+                        type: parsedType,
                         name: names[i],
                         email: emails[i]
                     });

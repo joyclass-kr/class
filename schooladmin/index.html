@@ -1,0 +1,114 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <title>학교 관리자 현황판</title>
+    <link rel="stylesheet" href="style.css">
+    <link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@20..48,100..700,0..1,-50..200" rel="stylesheet">
+</head>
+<body>
+    <header class="app-header">
+        <a href="/" class="back-button"><span class="material-symbols-outlined">arrow_back</span></a>
+        <h1 id="schoolNameTitle">학교 관리자</h1>
+        <div class="header-actions">
+            <button id="signOutButton" class="text-button">로그아웃</button>
+        </div>
+    </header>
+
+    <div class="tabs">
+        <button class="tab-button active" data-tab="dashboard">출결 현황판</button>
+        <button class="tab-button" data-tab="roster">전교생 명단</button>
+    </div>
+
+    <main class="app-main">
+        <!-- Dashboard Tab -->
+        <section id="dashboardTab" class="tab-content active">
+            <div class="controls-row">
+                <div class="date-picker-wrap">
+                    <button id="prevDateBtn" class="icon-button"><span class="material-symbols-outlined">chevron_left</span></button>
+                    <input type="date" id="dashboardDate" class="date-input">
+                    <button id="nextDateBtn" class="icon-button"><span class="material-symbols-outlined">chevron_right</span></button>
+                </div>
+                <button id="refreshDashboardBtn" class="primary-button">
+                    <span class="material-symbols-outlined">refresh</span> 새로고침
+                </button>
+            </div>
+
+            <div id="dashboardLoading" class="loading-state">데이터를 불러오는 중입니다...</div>
+            <div id="dashboardError" class="error-state" hidden></div>
+
+            <div id="dashboardContent" hidden>
+                <div class="summary-cards">
+                    <div class="summary-card">
+                        <div class="card-title">총 현원</div>
+                        <div class="card-value" id="totalStudentsCount">0</div>
+                    </div>
+                    <div class="summary-card warning">
+                        <div class="card-title">결석</div>
+                        <div class="card-value" id="totalAbsenceCount">0</div>
+                    </div>
+                    <div class="summary-card info">
+                        <div class="card-title">지각</div>
+                        <div class="card-value" id="totalTardyCount">0</div>
+                    </div>
+                    <div class="summary-card info">
+                        <div class="card-title">조퇴</div>
+                        <div class="card-value" id="totalEarlyCount">0</div>
+                    </div>
+                </div>
+
+                <div class="table-container">
+                    <table class="data-table">
+                        <thead>
+                            <tr>
+                                <th>학년-반</th>
+                                <th>재적</th>
+                                <th>출석</th>
+                                <th>결석</th>
+                                <th>지각</th>
+                                <th>조퇴</th>
+                            </tr>
+                        </thead>
+                        <tbody id="dashboardTableBody">
+                            <!-- Rows will be injected here -->
+                        </tbody>
+                        <tfoot id="dashboardTableFoot">
+                            <!-- Totals will be injected here -->
+                        </tfoot>
+                    </table>
+                </div>
+            </div>
+        </section>
+
+        <!-- Roster Tab -->
+        <section id="rosterTab" class="tab-content" hidden>
+            <div class="controls-row">
+                <input type="text" id="rosterSearch" class="search-input" placeholder="이름으로 검색...">
+            </div>
+            
+            <div id="rosterLoading" class="loading-state">명단을 불러오는 중입니다...</div>
+            <div id="rosterError" class="error-state" hidden></div>
+
+            <div id="rosterContent" class="table-container" hidden>
+                <table class="data-table">
+                    <thead>
+                        <tr>
+                            <th>학년</th>
+                            <th>반</th>
+                            <th>번호</th>
+                            <th>이름</th>
+                        </tr>
+                    </thead>
+                    <tbody id="rosterTableBody">
+                        <!-- Rows will be injected here -->
+                    </tbody>
+                </table>
+            </div>
+        </section>
+    </main>
+
+    <script src="/shared/auth.js"></script>
+    <script src="app.js"></script>
+</body>
+</html>

@@ -305,6 +305,16 @@
             font-size: 20px;
         }
 
+        .profile-list { display: flex; flex-direction: column; gap: 10px; margin: 15px 0; text-align: left; }
+        .profile-btn { display: flex; flex-direction: column; align-items: flex-start; justify-content: center; background: rgba(255, 255, 255, 0.05); border: 1px solid rgba(255, 255, 255, 0.15); padding: 12px 16px; border-radius: 8px; color: #fff; cursor: pointer; text-decoration: none; transition: background 0.2s; font-family: inherit; width: 100%; box-sizing: border-box; }
+        .profile-btn:hover { background: rgba(255, 255, 255, 0.12); }
+        .profile-title { font-size: 1rem; font-weight: 700; margin-bottom: 4px; }
+        .profile-desc { font-size: 0.85rem; color: #aaa; }
+        .profile-btn.teacher .profile-title { color: #f4b400; }
+        .profile-btn.school-admin .profile-title { color: #8b5cf6; }
+        .profile-btn.guardian .profile-title { color: #75d69f; }
+        .profile-btn.admin .profile-title { color: #ff5252; }
+
         .boardgame-section,
         .training-section,
         .puzzle-section {
@@ -566,7 +576,6 @@
     <audio id="bgm" src="assets/sound/index.mp3" autoplay loop preload="auto"></audio>
     <script src="assets/sound/music-control.js"></script>
     <div class="auth-panel" aria-live="polite">
-        <a id="toggleParentNotice" class="guest-card-button parent-card-button" href="/notice/" aria-label="학부모 알림장" style="right: auto; left: 16px; text-decoration: none; display: inline-flex; align-items: center; justify-content: center;">📱 학부모 알림장</a>
         <button id="toggleGuestMode" class="guest-card-button" type="button" aria-label="게스트 로그인">게스트</button>
         <div id="authTitle" class="auth-title">SCHOOL ACCOUNT</div>
         <p id="authMessage" class="auth-message">Checking sign-in…</p>
@@ -591,19 +600,10 @@
         </form>
 
         <div id="signedInArea" hidden>
-            <div class="signed-in-row">
-                <div class="signed-in-copy">
-                    <strong id="signedInName"></strong>
-                    <span id="classMembership" class="class-membership"></span>
-                </div>
-                <div class="signed-in-actions">
-                    <a id="classToolsLink" class="auth-button secondary" href="classtools/" hidden>교사 페이지</a>
-                    <a id="parentNoticeLink" class="auth-button secondary" href="/notice/" hidden style="border-color: #75d69f; color: #75d69f;">📱 학부모 알림장</a>
-                    <a id="studentProfileLink" class="auth-button secondary" href="/classtools/profile" hidden>내 정보 설정</a>
-                    <button id="contentAccessButton" class="auth-button secondary content-access-button" type="button" aria-pressed="false" hidden>🔓 공개 설정 모드</button>
-                    <a id="adminPanelLink" class="auth-button secondary" href="/admin/" hidden style="border-color: #8b5cf6; color: #8b5cf6;">🛠️ 사이트 관리자</a>
-                    <button id="signOutButton" class="auth-button secondary" type="button">SIGN OUT</button>
-                </div>
+            <div id="profileList" class="profile-list"></div>
+            <div class="signed-in-actions" style="margin-top: 15px; display: flex; justify-content: center;">
+                <button id="contentAccessButton" class="auth-button secondary content-access-button" type="button" aria-pressed="false" hidden>🔓 공개 설정 모드</button>
+                <button id="signOutButton" class="auth-button secondary" type="button">SIGN OUT</button>
             </div>
         </div>
         <p id="authStatus" class="auth-status"></p>
@@ -762,12 +762,7 @@
             const authStatus = document.getElementById('authStatus');
             const googleSignInButton = document.getElementById('googleSignInButton');
             const toggleGuestMode = document.getElementById('toggleGuestMode');
-            const toggleParentNotice = document.getElementById('toggleParentNotice');
             const guestForm = document.getElementById('guestForm');
-            const parentForm = document.getElementById('parentForm');
-            const parentSchoolInput = document.getElementById('parentSchoolId');
-            const parentGradeInput = document.getElementById('parentGrade');
-            const parentClassInput = document.getElementById('parentClass');
             const parentStudentNumberInput = document.getElementById('parentStudentNumber');
             const parentStudentNameInput = document.getElementById('parentStudentName');
             const parentPasscodeInput = document.getElementById('parentPasscode');
@@ -790,6 +785,7 @@
             const contentAccessButton = document.getElementById('contentAccessButton');
             const classToolsLink = document.getElementById('classToolsLink');
             const parentNoticeLink = document.getElementById('parentNoticeLink');
+            const classboardLink = document.getElementById('classboardLink');
             const hubContent = document.getElementById('hubContent');
             const hubLinks = Array.from(hubContent.querySelectorAll('a[href]'));
             const playerLearningLinks = Array.from(document.querySelectorAll('[data-requires-player="true"]'));
@@ -1090,7 +1086,8 @@
                 joinForm.hidden = true;
                 signedInArea.hidden = false;
                 classToolsLink.hidden = true;
-                if (parentNoticeLink) parentNoticeLink.hidden = false;
+                if (parentNoticeLink) parentNoticeLink.hidden = true;
+                if (classboardLink) classboardLink.hidden = false;
                 studentProfileLink.hidden = false;
                 signedInName.textContent = playerName;
                 classMembership.textContent = `${membership.schoolName} · G${membership.grade}-${membership.classNumber} · No. ${membership.studentNumber}`;
@@ -1099,6 +1096,28 @@
                 localStorage.setItem('classPlayerName', playerName);
                 updatePlayerLearningLinks(playerName, membership);
                 await loadClassContentAccess();
+                setStatus('');
+            }
+
+            async function showGuardianHome(state) {
+                restrictedPreview = false;
+                authTitle.textContent = 'GUARDIAN';
+                authMessage.hidden = true;
+                googleSignInButton.hidden = true;
+                toggleGuestMode.hidden = true;
+                guestForm.hidden = true;
+                joinForm.hidden = true;
+                signedInArea.hidden = false;
+                classToolsLink.hidden = true;
+                if (parentNoticeLink) parentNoticeLink.hidden = false;
+                if (classboardLink) classboardLink.hidden = true;
+                studentProfileLink.hidden = true;
+                
+                signedInName.textContent = state.user?.name || '학부모님';
+                const childInfo = state.guardianChildren[0];
+                classMembership.textContent = `${childInfo.schoolName} · G${childInfo.grade}-${childInfo.classNumber} · No. ${childInfo.studentNumber} 학부모 계정`;
+                
+                hubContent.hidden = true;
                 setStatus('');
             }
 
@@ -1119,7 +1138,6 @@
                 if (typeof parentForm !== 'undefined' && parentForm) parentForm.hidden = true;
                 joinForm.hidden = true;
                 toggleGuestMode.hidden = false;
-                if (typeof toggleParentNotice !== 'undefined' && toggleParentNotice) toggleParentNotice.hidden = false;
 
                 signedInArea.hidden = true;
                 hubContent.hidden = false;
@@ -1189,69 +1207,80 @@
                 joinForm.hidden = true;
                 signedInArea.hidden = false;
                 
-                classToolsLink.hidden = true;
-                if (parentNoticeLink) parentNoticeLink.hidden = true;
-                if (studentProfileLink) studentProfileLink.hidden = true;
-                if (contentAccessButton) contentAccessButton.hidden = true;
-                if (adminPanelLink) adminPanelLink.hidden = false;
-
-                signedInName.textContent = state.user?.name || '관리자';
-                classMembership.textContent = '사이트 전체 관리 권한';
-
-                hubContent.hidden = false;
-                await loadClassContentAccess();
-
-                setStatus('');
-            }
-
-            async function showTeacherHome(state) {
-                isTeacherSignedIn = true;
-                restrictedPreview = false;
-                authTitle.textContent = 'TEACHER';
+            async function routeSignedIn(state) {
+                authTitle.textContent = 'PROFILES';
                 authMessage.hidden = true;
                 googleSignInButton.hidden = true;
                 toggleGuestMode.hidden = true;
                 guestForm.hidden = true;
                 joinForm.hidden = true;
                 signedInArea.hidden = false;
-                classToolsLink.hidden = false;
-                studentProfileLink.hidden = true;
-
-                const teacherProfile = await api('/api/teacher/profile').catch(() => null);
-                const profile = teacherProfile?.profile;
-
-                const teacherName = profile?.name || state.user?.name || '선생님';
-                const schoolName = profile?.schoolName || '학교';
-                const grade = profile?.grade;
-                const classNum = profile?.classNumber;
-                const classStr = (grade && classNum) ? ` · ${grade}학년 ${classNum}반` : '';
-
-                signedInName.textContent = `${teacherName} 선생님`;
-                classMembership.textContent = `${schoolName}${classStr} · 교사 계정`;
-
                 hubContent.hidden = false;
-                await loadClassContentAccess();
 
-                const playerName = normalizePlayerName(teacherName);
-                if (isValidPlayerName(playerName)) {
-                    currentPlayerName = playerName;
-                    localStorage.setItem('classPlayerName', playerName);
-                    updatePlayerLearningLinks(playerName);
-                }
-                setStatus('');
-            }
-
-            function routeSignedIn(state) {
-                if (state.user?.role === 'admin') {
-                    showAdminHome(state).catch((error) => setStatus(error.message, true));
-                    return;
-                }
+                const profileList = document.getElementById('profileList');
+                profileList.innerHTML = '';
+                
+                // Fetch teacher profile to get teacherType and schoolName
+                let teacherProfileData = null;
                 if (state.user?.role === 'teacher') {
-                    showTeacherHome(state).catch((error) => setStatus(error.message, true));
-                    return;
+                    const res = await api('/api/teacher/profile').catch(() => null);
+                    teacherProfileData = res?.profile;
                 }
-                if (state.membership) showStudentHome(state).catch((error) => setStatus(error.message, true));
-                else showJoin(state).catch((error) => setStatus(error.message, true));
+
+                // 1. Admin
+                if (state.user?.role === 'admin') {
+                    const btn = document.createElement('a');
+                    btn.className = 'profile-btn admin';
+                    btn.href = '/admin/';
+                    btn.innerHTML = `<span class="profile-title">🛠️ ${state.user.name} 관리자</span><span class="profile-desc">사이트 전체 관리 - 관리자 계정</span>`;
+                    profileList.appendChild(btn);
+                }
+
+                // 2. School Admin (Principal / Vice Principal) or Teacher
+                if (state.user?.role === 'teacher' && teacherProfileData) {
+                    const btn = document.createElement('a');
+                    const isSchoolAdmin = ['교장', '교감'].includes(teacherProfileData.teacherType);
+                    btn.className = isSchoolAdmin ? 'profile-btn school-admin' : 'profile-btn teacher';
+                    btn.href = isSchoolAdmin ? '/schooladmin/' : '/classtools/';
+                    
+                    const roleLabel = isSchoolAdmin ? '학교 관리자' : '교사 계정';
+                    const icon = isSchoolAdmin ? '🏫' : '👨‍🏫';
+                    btn.innerHTML = `<span class="profile-title">${icon} ${teacherProfileData.schoolName} ${teacherProfileData.name} 선생님</span><span class="profile-desc">${roleLabel}</span>`;
+                    profileList.appendChild(btn);
+                    
+                    // Also set up logic that showTeacherHome used to do
+                    isTeacherSignedIn = true;
+                    restrictedPreview = false;
+                    await loadClassContentAccess();
+                    const playerName = normalizePlayerName(teacherProfileData.name);
+                    if (isValidPlayerName(playerName)) {
+                        currentPlayerName = playerName;
+                        localStorage.setItem('classPlayerName', playerName);
+                        updatePlayerLearningLinks(playerName);
+                    }
+                }
+
+                // 3. Student
+                if (state.membership) {
+                    const btn = document.createElement('a');
+                    btn.className = 'profile-btn';
+                    btn.href = '/classboard/';
+                    btn.innerHTML = `<span class="profile-title">👦 ${state.membership.schoolName} ${state.membership.studentName} 학생</span><span class="profile-desc">학생 계정 (학급 알리미 열기)</span>`;
+                    profileList.appendChild(btn);
+                }
+
+                // 4. Guardian (Parents)
+                if (state.guardianChildren && state.guardianChildren.length > 0) {
+                    state.guardianChildren.forEach(child => {
+                        const btn = document.createElement('a');
+                        btn.className = 'profile-btn guardian';
+                        btn.href = '/notice/';
+                        btn.innerHTML = `<span class="profile-title">📱 ${child.schoolName} ${child.studentName} 보호자</span><span class="profile-desc">학부모 계정</span>`;
+                        profileList.appendChild(btn);
+                    });
+                }
+                
+                setStatus('');
             }
 
             async function waitForGoogle() {
