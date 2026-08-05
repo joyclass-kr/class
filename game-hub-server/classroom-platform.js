@@ -2097,18 +2097,38 @@ function createClassroomPlatform(options = {}) {
       }
 
       for (const t of cleanTeachers) {
-        await client.query(
-          `INSERT INTO classroom_teachers
-             (school_id, teacher_name, password_hash, academic_year, grade, class_number, teacher_type, google_email)
-           VALUES ($1, $2, 'OAUTH_ONLY', NULL, NULL, NULL, $3, $4)
-           ON CONFLICT (lower(google_email)) WHERE google_email IS NOT NULL
-           DO UPDATE SET
-             school_id = EXCLUDED.school_id,
-             teacher_name = EXCLUDED.teacher_name,
-             teacher_type = EXCLUDED.teacher_type,
-             updated_at = NOW()`,
-          [schoolId, t.name, t.type, t.email]
+        const existingByEmail = await client.query(
+          `SELECT id FROM classroom_teachers WHERE LOWER(google_email) = LOWER($1)`,
+          [t.email]
         );
+        if (existingByEmail.rows.length > 0) {
+          await client.query(
+            `UPDATE classroom_teachers
+             SET school_id = $1, teacher_name = $2, teacher_type = $3, updated_at = NOW()
+             WHERE id = $4`,
+            [schoolId, t.name, t.type, existingByEmail.rows[0].id]
+          );
+        } else {
+          const existingByName = await client.query(
+            `SELECT id FROM classroom_teachers WHERE school_id = $1 AND teacher_name = $2`,
+            [schoolId, t.name]
+          );
+          if (existingByName.rows.length > 0) {
+            await client.query(
+              `UPDATE classroom_teachers
+               SET teacher_type = $1, google_email = $2, updated_at = NOW()
+               WHERE id = $3`,
+              [t.type, t.email, existingByName.rows[0].id]
+            );
+          } else {
+            await client.query(
+              `INSERT INTO classroom_teachers
+                 (school_id, teacher_name, password_hash, academic_year, grade, class_number, teacher_type, google_email)
+               VALUES ($1, $2, 'OAUTH_ONLY', NULL, NULL, NULL, $3, $4)`,
+              [schoolId, t.name, t.type, t.email]
+            );
+          }
+        }
       }
 
       if (emails.length > 0) {
