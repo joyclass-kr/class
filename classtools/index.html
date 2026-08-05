@@ -263,8 +263,15 @@
             <div class="meta-chips">
                 <div class="chip chip-highlight">🏫 <span id="chip-school">학교명 불러오는 중...</span></div>
                 <div class="chip">📅 <span id="chip-year">2026학년도</span></div>
-                <div class="chip">🎒 <span id="chip-class">학급 정보</span></div>
-                <div class="chip">👨‍🏫 <span id="chip-teacher">담당 교사</span></div>
+                <div class="chip chip-highlight" style="padding: 4px 12px;">
+                    <span style="font-weight:800;">🎒 그룹 선택:</span>
+                    <select id="active-group-select" style="background:transparent; border:none; color:#ffe8b3; font-weight:800; font-size:0.92rem; outline:none; cursor:pointer;">
+                        <option value="homeroom" style="color:#000;">🏫 담임 학급 (5학년 2반)</option>
+                    </select>
+                </div>
+                <button type="button" id="btn-create-group" class="chip" style="cursor:pointer; background:rgba(255,255,255,0.18); border-color:rgba(255,255,255,0.4);">
+                    ➕ 동아리/방과후/전담 개설
+                </button>
             </div>
         </section>
 
@@ -371,6 +378,75 @@
                 chipTeacher.textContent = `${teacher} 선생님`;
             }
 
+            const activeGroupSelect = document.getElementById('active-group-select');
+            const btnCreateGroup = document.getElementById('btn-create-group');
+
+            async function loadTeacherGroups() {
+                try {
+                    const res = await api('/api/teacher/groups').catch(() => ({ groups: [] }));
+                    const groups = res.groups || [];
+                    
+                    const groupTypeIcons = {
+                        homeroom: '🏫',
+                        club: '🤖',
+                        afterschool: '⚽',
+                        subject: '🧪',
+                        activity: '🎨',
+                        other: '📌'
+                    };
+
+                    if (activeGroupSelect) {
+                        activeGroupSelect.innerHTML = `<option value="homeroom" style="color:#000;">🏫 담임 학급</option>`;
+                        groups.forEach(g => {
+                            const icon = groupTypeIcons[g.group_type] || '📌';
+                            const opt = document.createElement('option');
+                            opt.value = g.id;
+                            opt.style.color = '#000';
+                            opt.textContent = `${icon} ${g.group_name} (${g.student_count || 0}명)`;
+                            activeGroupSelect.appendChild(opt);
+                        });
+
+                        const savedActiveId = sessionStorage.getItem('active_group_id');
+                        if (savedActiveId && Array.from(activeGroupSelect.options).some(o => o.value === savedActiveId)) {
+                            activeGroupSelect.value = savedActiveId;
+                        }
+                    }
+                } catch (_) {}
+            }
+
+            if (activeGroupSelect) {
+                activeGroupSelect.addEventListener('change', (e) => {
+                    sessionStorage.setItem('active_group_id', e.target.value);
+                });
+            }
+
+            if (btnCreateGroup) {
+                btnCreateGroup.addEventListener('click', async () => {
+                    const name = prompt('새로 개설할 동아리/방과후/전담 그룹 이름을 입력하세요:\n(예: 로봇코딩부, 오케스트라, 5학년 과학전담)');
+                    if (!name || !name.trim()) return;
+
+                    const typeStr = prompt('그룹 유형을 선택하세요:\n1: 🤖 동아리 (club)\n2: ⚽ 방과후 (afterschool)\n3: 🧪 전담교과 (subject)\n\n번호 입력 (1, 2, 3):', '1');
+                    let groupType = 'club';
+                    if (typeStr === '2') groupType = 'afterschool';
+                    else if (typeStr === '3') groupType = 'subject';
+
+                    try {
+                        const res = await api('/api/teacher/groups', {
+                            method: 'POST',
+                            body: JSON.stringify({
+                                groupName: name.trim(),
+                                groupType
+                            })
+                        });
+                        alert(`'${name.trim()}' 그룹이 새로 개설되었습니다!`);
+                        sessionStorage.setItem('active_group_id', res.groupId);
+                        await loadTeacherGroups();
+                    } catch (err) {
+                        alert(err.message || '그룹 개설에 실패했습니다.');
+                    }
+                });
+            }
+
             async function init() {
                 try {
                     const session = await api('/api/auth/me').catch(() => ({ signedIn: false }));
@@ -402,6 +478,9 @@
                             });
                         }
                     }
+
+                    // 동아리/방과후/전담 그룹 불러오기
+                    await loadTeacherGroups();
 
                     // 학급 학생 수 추가 업데이트
                     const classRes = await api('/api/teacher/class').catch(() => null);
