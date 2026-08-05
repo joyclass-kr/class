@@ -603,7 +603,7 @@ document.addEventListener('DOMContentLoaded', () => {
             const isPublicHoliday = Boolean(activeHolidays[dateStr]);
             const vacType = getVacationType(dateStr);
             const customEvent = annualSchedulesData.find(item => item.event_date === dateStr);
-            const isCustomHoliday = customEvent && customEvent.category === 'HOLIDAY';
+            const isCustomHoliday = customEvent && (customEvent.category === 'HOLIDAY' || customEvent.category === 'DISCRETIONARY');
 
             if (isWeekend) {
                 // Weekend - not counted as school day or school holiday
@@ -636,6 +636,7 @@ document.addEventListener('DOMContentLoaded', () => {
         const categoryLabels = {
             EVENT: '🏫 일반 행사',
             HOLIDAY: '🔴 휴업/공휴일',
+            DISCRETIONARY: '🟡 재량/자율휴업일',
             TRIP: '🚌 체험/수련',
             EXAM: '📝 평가/시험'
         };

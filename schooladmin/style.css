@@ -174,6 +174,7 @@ body { background-color: var(--bg-color); color: var(--text-main); line-height: 
 }
 .badge.category-event { background: rgba(139, 92, 246, 0.2); color: #c4b5fd; }
 .badge.category-holiday { background: rgba(255, 82, 82, 0.2); color: #fca5a5; }
+.badge.category-discretionary { background: rgba(244, 180, 0, 0.25); color: #fef08a; }
 .badge.category-trip { background: rgba(77, 166, 255, 0.2); color: #93c5fd; }
 .badge.category-exam { background: rgba(244, 180, 0, 0.2); color: #fde047; }
 .badge.scope-all { background: rgba(117, 214, 159, 0.2); color: #86efac; }
