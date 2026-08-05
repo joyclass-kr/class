@@ -75,7 +75,7 @@ const authGoogleNew = `    let isGuardian = false;
 
     // Strict access control: If not registered at all, reject.
     if (!isAdmin && !isTeacher && !isStudent && !isGuardian) {
-      throw new HttpError(403, "UNREGISTERED_ACCOUNT", "등록되지 않은 구글 계정입니다. 담임 선생님께 문의하세요.");
+      throw new HttpError(403, "UNREGISTERED_ACCOUNT", "등록되지 않은 구글 계정입니다. 학교에 문의하세요.");
     }
 
     const roleToAssign = isAdmin ? 'admin' : (isTeacher ? 'teacher' : (isStudent ? 'student' : (isGuardian ? 'guardian' : null)));
