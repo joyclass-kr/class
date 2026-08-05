@@ -434,6 +434,7 @@
                 <div style="display:flex;gap:8px;flex-wrap:wrap;" id="rosterAdminActions">
                     <button class="btn btn-secondary btn-sm" id="downloadTemplateBtn" onclick="downloadExcelTemplate()">📊 엑셀 양식 다운로드</button>
                     <button class="btn btn-secondary btn-sm" id="pasteSectionBtn" onclick="togglePasteSection()">📥 붙여넣기로 입력</button>
+                    <button class="btn btn-secondary btn-sm" id="addColumnBtn" onclick="promptAddColumn()" style="display:none;">➕ 열 추가</button>
                     <button class="btn btn-secondary btn-sm" id="addStudentBtn" onclick="addSingleStudent()" style="display:none;">+ 학생 추가</button>
                     <button class="btn btn-primary btn-sm" id="saveRosterBtn" onclick="saveRoster()" style="display:none;">💾 저장</button>
                 </div>
@@ -678,23 +679,33 @@
         );
 
         // Build dynamic columns
-        const allClubs = schoolSettings.clubs.map(c => c.club_name || c.name || c);
-        const allAfter = schoolSettings.afterschool.map(a => a.program_name || a.name || a);
-        const allShuttle = schoolSettings.shuttleSlots.map(s => s.slot_name || s.name || s);
+        const allClubs = (schoolSettings.clubs || []).map(c => c.club_name || c.name || c);
+        const allAfter = (schoolSettings.afterschool || []).map(a => a.program_name || a.name || a);
+        const allShuttle = (schoolSettings.shuttleSlots || []).map(s => s.slot_name || s.name || s);
 
-        // Thead: 학년, 반, 번호, 성명, 성별 -> 동아리/방과후/셔틀 -> 구글계정 3종 -> [관리(삭제)]
         const fixedLeft = ["학년","반","번호","성명","성별"];
         const fixedRight = ["학생 구글계정","보호자1 계정","보호자2 계정"];
-        const dynCols = [...allClubs.map(c=>`동아리·${c}`), ...allAfter.map(a=>`방과후·${a}`), ...allShuttle.map(s=>s)];
-        const allHeaders = [...fixedLeft, ...dynCols, ...fixedRight, ...(isSchoolAdmin ? ["관리"] : [])];
+
+        const dynamicCols = [
+            ...allClubs.map(c => ({ name: c, key: c, category: "clubs" })),
+            ...allAfter.map(a => ({ name: a, key: a, category: "afterschool" })),
+            ...allShuttle.map(s => ({ name: s, key: s, category: "shuttleSlots" }))
+        ];
+
+        const headerHtmls = [
+            ...fixedLeft.map(h => `<th>${h}</th>`),
+            ...dynamicCols.map(c => `<th style="white-space:nowrap;padding:6px 8px;">${esc(c.name)} ${isSchoolAdmin ? `<button class="col-del-btn" style="background:none;border:none;color:#ef4444;cursor:pointer;font-weight:bold;margin-left:4px;padding:0 2px;" onclick="deleteColumnDirectly('${esc(c.category)}', '${esc(c.name)}')" title="열 삭제">×</button>` : ''}</th>`),
+            ...fixedRight.map(h => `<th>${h}</th>`),
+            ...(isSchoolAdmin ? [`<th>관리</th>`] : [])
+        ];
 
         const thead = document.getElementById("rosterHead");
-        thead.innerHTML = `<tr>${allHeaders.map(h=>`<th>${h}</th>`).join("")}</tr>`;
+        thead.innerHTML = `<tr>${headerHtmls.join("")}</tr>`;
 
         // Tbody
         const tbody = document.getElementById("rosterBody");
         if (filtered.length === 0) {
-            tbody.innerHTML = `<tr><td colspan="${allHeaders.length}" class="no-data">${allStudents.length === 0 ? "등록된 학생이 없습니다. 붙여넣기로 입력해 보세요." : "해당 조건의 학생이 없습니다."}</td></tr>`;
+            tbody.innerHTML = `<tr><td colspan="${headerHtmls.length}" class="no-data">${allStudents.length === 0 ? "등록된 학생이 없습니다. 붙여넣기 또는 '+ 학생 추가'로 입력해 보세요." : "해당 조건의 학생이 없습니다."}</td></tr>`;
             return;
         }
 
@@ -1026,13 +1037,72 @@
                 </li>`).join("");
     }
 
-    window.deleteSettingItem = function(key, nameKey, idx) {
+    async function saveSettingsSilent() {
+        try {
+            await api("/api/school/settings", {
+                method: "PUT",
+                body: JSON.stringify({
+                    year: currentYear,
+                    clubs: (schoolSettings.clubs || []).map(c => c.club_name || c.name || c),
+                    afterschool: (schoolSettings.afterschool || []).map(a => a.program_name || a.name || a),
+                    shuttleSlots: (schoolSettings.shuttleSlots || []).map(s => s.slot_name || s.name || s)
+                })
+            });
+        } catch (e) {}
+    }
+
+    window.promptAddColumn = async function() {
+        const input = prompt("추가할 열(컬럼) 이름을 입력하세요.\n(예: 자율동아리, 학급동아리, 방과후1부, 방과후2부, 1호차 등 / 띄어쓰기 금지):", "자율동아리");
+        if (!input) return;
+        const name = input.trim().replace(/\s+/g, "");
+        if (!name) return;
+
+        if (name.includes("방과후")) {
+            schoolSettings.afterschool.push({ program_name: name });
+        } else if (name.includes("셔틀") || name.includes("차") || name.includes("승차")) {
+            schoolSettings.shuttleSlots.push({ slot_name: name });
+        } else {
+            schoolSettings.clubs.push({ club_name: name });
+        }
+
+        await saveSettingsSilent();
+        renderRosterTable();
+        renderSettingsList("clubList", schoolSettings.clubs, "clubs", "club_name");
+        renderSettingsList("afterschoolList", schoolSettings.afterschool, "afterschool", "program_name");
+        renderSettingsList("shuttleList", schoolSettings.shuttleSlots, "shuttleSlots", "slot_name");
+        updatePasteColsHint();
+        setStatus("rosterStatus", `'${name}' 열이 성공적으로 추가되었습니다.`, "ok");
+    };
+
+    window.deleteColumnDirectly = async function(category, colName) {
+        if (!confirm(`'${colName}' 열을 명단에서 삭제하시겠습니까?`)) return;
+        
+        if (category === "clubs") {
+            schoolSettings.clubs = schoolSettings.clubs.filter(c => (c.club_name || c.name || c) !== colName);
+        } else if (category === "afterschool") {
+            schoolSettings.afterschool = schoolSettings.afterschool.filter(a => (a.program_name || a.name || a) !== colName);
+        } else if (category === "shuttleSlots") {
+            schoolSettings.shuttleSlots = schoolSettings.shuttleSlots.filter(s => (s.slot_name || s.name || s) !== colName);
+        }
+
+        await saveSettingsSilent();
+        renderRosterTable();
+        renderSettingsList("clubList", schoolSettings.clubs, "clubs", "club_name");
+        renderSettingsList("afterschoolList", schoolSettings.afterschool, "afterschool", "program_name");
+        renderSettingsList("shuttleList", schoolSettings.shuttleSlots, "shuttleSlots", "slot_name");
+        updatePasteColsHint();
+        setStatus("rosterStatus", `'${colName}' 열이 삭제되었습니다.`, "ok");
+    };
+
+    window.deleteSettingItem = async function(key, nameKey, idx) {
         schoolSettings[key].splice(idx, 1);
         renderSettingsList(key === "clubs" ? "clubList" : key === "afterschool" ? "afterschoolList" : "shuttleList", schoolSettings[key], key, nameKey);
         updatePasteColsHint();
+        await saveSettingsSilent();
+        renderRosterTable();
     };
 
-    window.addClub = function() {
+    window.addClub = async function() {
         const input = document.getElementById("newClubInput");
         const name = input.value.replace(/\s+/g, ""); // 띄어쓰기 제거
         if (!name) return;
@@ -1040,8 +1110,10 @@
         renderSettingsList("clubList", schoolSettings.clubs, "clubs", "club_name");
         input.value = "";
         updatePasteColsHint();
+        await saveSettingsSilent();
+        renderRosterTable();
     };
-    window.addAfterSchool = function() {
+    window.addAfterSchool = async function() {
         const input = document.getElementById("newAfterInput");
         const name = input.value.replace(/\s+/g, ""); // 띄어쓰기 제거
         if (!name) return;
@@ -1049,8 +1121,10 @@
         renderSettingsList("afterschoolList", schoolSettings.afterschool, "afterschool", "program_name");
         input.value = "";
         updatePasteColsHint();
+        await saveSettingsSilent();
+        renderRosterTable();
     };
-    window.addShuttle = function() {
+    window.addShuttle = async function() {
         const input = document.getElementById("newShuttleInput");
         const name = input.value.replace(/\s+/g, ""); // 띄어쓰기 제거
         if (!name) return;
@@ -1058,6 +1132,8 @@
         renderSettingsList("shuttleList", schoolSettings.shuttleSlots, "shuttleSlots", "slot_name");
         input.value = "";
         updatePasteColsHint();
+        await saveSettingsSilent();
+        renderRosterTable();
     };
 
     window.saveSettings = async function() {
@@ -1076,6 +1152,7 @@
             });
             setStatus("settingsStatus", "✅ 설정이 저장되었습니다.", "ok");
             await loadSettings();
+            renderRosterTable();
         } catch (e) {
             setStatus("settingsStatus", e.message, "error");
         } finally {
