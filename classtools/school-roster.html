@@ -548,12 +548,9 @@
         <div class="form-field">
             <label>그룹 유형</label>
             <select class="form-control" id="newGroupType">
-                <option value="homeroom">🏫 담임반</option>
-                <option value="subject">📖 전담 과목</option>
-                <option value="club">🎯 동아리</option>
-                <option value="afterschool">📚 방과후</option>
-                <option value="shuttle">🚌 셔틀 승차명단반</option>
-                <option value="other">기타</option>
+                <option value="homeroom">🏫 담임반 (학급 전체)</option>
+                <option value="subject">📖 전담 과목반 (학급 묶음)</option>
+                <option value="activity">🎯 동아리·방과후·셔틀 그룹 (다학급/무학년 조합)</option>
             </select>
         </div>
         <div class="form-field">
@@ -957,8 +954,8 @@
         try {
             const data = await api(`/api/teacher/groups?year=${currentYear}`);
             const groups = data.groups || [];
-            const badgeMap = { homeroom: "badge-homeroom", subject: "badge-subject", club: "badge-club", afterschool: "badge-afterschool", other: "badge-other" };
-            const typeLabel = { homeroom: "담임반", subject: "전담", club: "동아리", afterschool: "방과후", other: "기타" };
+            const badgeMap = { homeroom: "badge-homeroom", subject: "badge-subject", activity: "badge-club", club: "badge-club", afterschool: "badge-afterschool", shuttle: "badge-shuttle", other: "badge-other" };
+            const typeLabel = { homeroom: "담임반", subject: "전담 과목반", activity: "동아리·방과후·셔틀", club: "동아리", afterschool: "방과후", shuttle: "셔틀", other: "기타" };
 
             grid.innerHTML = groups.map(g => `
                 <div class="group-card">

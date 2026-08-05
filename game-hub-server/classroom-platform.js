@@ -3660,7 +3660,7 @@ function createClassroomPlatform(options = {}) {
     const classNumber = req.body.classNumber ? Number(req.body.classNumber) : null;
 
     if (!groupName || groupName.length > 60) throw new HttpError(400, "INVALID_GROUP_NAME", "그룹 이름을 확인해 주세요 (1~60자).");
-    if (!["homeroom", "subject", "club", "afterschool", "shuttle", "other"].includes(groupType))
+    if (!["homeroom", "subject", "activity", "club", "afterschool", "shuttle", "other"].includes(groupType))
       throw new HttpError(400, "INVALID_GROUP_TYPE", "그룹 유형이 올바르지 않습니다.");
 
     const result = await pool.query(
