@@ -199,7 +199,6 @@
     rootGroup.position.set(zone.position[0], 0, zone.position[2]);
     rootGroup.userData.zone = zone;
 
-    // Load actual 3D GLB model
     gltfLoader.load(zone.modelPath, (gltf) => {
       const model = gltf.scene;
       model.traverse((child) => {
@@ -207,23 +206,21 @@
           child.castShadow = true;
           child.receiveShadow = true;
           child.geometry.computeVertexNormals();
-          if (zone.materialColor) {
-            child.material = new THREE.MeshStandardMaterial({
-              color: zone.materialColor,
-              roughness: .82,
-              metalness: .12
-            });
-          }
+          
+          let matProps = { color: zone.materialColor || 0x888888, roughness: 0.9, metalness: 0.05 };
+          if (zone.id === 'emille') { matProps.metalness = 0.45; matProps.roughness = 0.55; }
+          else if (zone.id === 'liberty') { matProps.metalness = 0.15; matProps.roughness = 0.65; }
+          else if (zone.id === 'moai') { matProps.roughness = 0.98; }
+
+          child.material = new THREE.MeshStandardMaterial(matProps);
         }
       });
 
-      // Calculate bounding box and scale to exact real Height
       const box3 = new THREE.Box3().setFromObject(model);
       const naturalH = Math.max(0.01, box3.max.y - box3.min.y);
       const scaleFactor = zone.realHeight / naturalH;
       model.scale.setScalar(scaleFactor);
 
-      // Re-align ground level Y = 0
       const scaledBox = new THREE.Box3().setFromObject(model);
       model.position.y = -scaledBox.min.y;
 
