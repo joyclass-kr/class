@@ -118,6 +118,12 @@
                     <span>🏖️ [1단계] 방학 기간 및 재량휴업일 설정</span>
                     <span style="font-size:0.85rem; color:var(--text-muted); font-weight:normal;">방학 및 휴업일 지정 시 연간 달력과 법정 수업일수가 자동 재정산됩니다.</span>
                 </h3>
+                <div style="margin-top:10px;">
+                    <label style="display:inline-flex; align-items:center; gap:8px; font-size:0.92rem; font-weight:700; color:#c4b5fd; cursor:pointer; background:rgba(139, 92, 246, 0.15); padding:6px 12px; border-radius:6px; border:1px solid rgba(139, 92, 246, 0.3);">
+                        <input type="checkbox" id="integrateWinterSpringVacation" style="width:18px; height:18px; accent-color:var(--primary);">
+                        <span>❄️ 겨울·학년말방학 통합 운영 (1월 초 졸업식 후 2월 말까지 쭉 방학)</span>
+                    </label>
+                </div>
                 <div class="form-row" style="margin-top:12px; gap:16px;">
                     <label>
                         <span>여름방학 기간</span>
@@ -128,15 +134,15 @@
                         </div>
                     </label>
                     <label>
-                        <span>겨울방학 기간</span>
+                        <span id="winterVacationLabel">겨울방학 기간</span>
                         <div style="display:flex; align-items:center; gap:6px;">
                             <input type="date" id="winterVacationStart" class="form-input" style="padding:6px 8px;">
                             <span>~</span>
                             <input type="date" id="winterVacationEnd" class="form-input" style="padding:6px 8px;">
                         </div>
                     </label>
-                    <label>
-                        <span>학년말방학 기간</span>
+                    <label id="springVacationLabelWrap">
+                        <span>학년말방학 기간 (분리 운영시)</span>
                         <div style="display:flex; align-items:center; gap:6px;">
                             <input type="date" id="springVacationStart" class="form-input" style="padding:6px 8px;">
                             <span>~</span>

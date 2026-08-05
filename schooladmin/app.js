@@ -423,20 +423,43 @@ document.addEventListener('DOMContentLoaded', () => {
     const springVacationStart = document.getElementById('springVacationStart');
     const springVacationEnd = document.getElementById('springVacationEnd');
     const saveVacationDatesBtn = document.getElementById('saveVacationDatesBtn');
+    const integrateWinterSpringVacation = document.getElementById('integrateWinterSpringVacation');
+    const springVacationLabelWrap = document.getElementById('springVacationLabelWrap');
+
+    function toggleIntegratedVacationUI(isIntegrated) {
+        if (springVacationLabelWrap) {
+            springVacationLabelWrap.style.display = isIntegrated ? 'none' : 'flex';
+        }
+    }
 
     function loadVacationDates() {
         const stored = JSON.parse(localStorage.getItem(`vacation_dates_${selectedAcademicYear}`) || '{}');
+        const isIntegrated = stored.isIntegrated !== undefined ? stored.isIntegrated : true; // Default true (통합 운영)
+        if (integrateWinterSpringVacation) {
+            integrateWinterSpringVacation.checked = isIntegrated;
+            toggleIntegratedVacationUI(isIntegrated);
+        }
         if (summerVacationStart) summerVacationStart.value = stored.summerStart || `${selectedAcademicYear}-07-20`;
         if (summerVacationEnd) summerVacationEnd.value = stored.summerEnd || `${selectedAcademicYear}-08-20`;
         if (winterVacationStart) winterVacationStart.value = stored.winterStart || `${selectedAcademicYear}-12-30`;
-        if (winterVacationEnd) winterVacationEnd.value = stored.winterEnd || `${selectedAcademicYear + 1}-01-30`;
+        if (winterVacationEnd) winterVacationEnd.value = stored.winterEnd || (isIntegrated ? `${selectedAcademicYear + 1}-02-28` : `${selectedAcademicYear + 1}-01-30`);
         if (springVacationStart) springVacationStart.value = stored.springStart || `${selectedAcademicYear + 1}-02-15`;
         if (springVacationEnd) springVacationEnd.value = stored.springEnd || `${selectedAcademicYear + 1}-02-28`;
+    }
+
+    if (integrateWinterSpringVacation) {
+        integrateWinterSpringVacation.addEventListener('change', (e) => {
+            toggleIntegratedVacationUI(e.target.checked);
+            if (e.target.checked && winterVacationEnd) {
+                winterVacationEnd.value = `${selectedAcademicYear + 1}-02-28`;
+            }
+        });
     }
 
     if (saveVacationDatesBtn) {
         saveVacationDatesBtn.addEventListener('click', () => {
             const data = {
+                isIntegrated: Boolean(integrateWinterSpringVacation?.checked),
                 summerStart: summerVacationStart?.value,
                 summerEnd: summerVacationEnd?.value,
                 winterStart: winterVacationStart?.value,
@@ -458,10 +481,13 @@ document.addEventListener('DOMContentLoaded', () => {
         const wEnd = winterVacationEnd?.value;
         const spStart = springVacationStart?.value;
         const spEnd = springVacationEnd?.value;
+        const isIntegrated = integrateWinterSpringVacation?.checked;
 
         if (sStart && sEnd && dateStr >= sStart && dateStr <= sEnd) return '여름방학';
-        if (wStart && wEnd && dateStr >= wStart && dateStr <= wEnd) return '겨울방학';
-        if (spStart && spEnd && dateStr >= spStart && dateStr <= spEnd) return '학년말방학';
+        if (wStart && wEnd && dateStr >= wStart && dateStr <= wEnd) {
+            return isIntegrated ? '겨울/통합방학' : '겨울방학';
+        }
+        if (!isIntegrated && spStart && spEnd && dateStr >= spStart && dateStr <= spEnd) return '학년말방학';
         return null;
     }
 
