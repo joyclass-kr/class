@@ -984,35 +984,40 @@ function createClassroomPlatform(options = {}) {
   }
 
   async function studentMembership(userId) {
-    const result = await pool.query(
-      `SELECT s.student_number, s.roster_name,
-              s.academic_year, s.grade, s.class_number,
-              sc.name AS school_name
-       FROM school_students s
-       JOIN classroom_schools sc ON sc.id = s.school_id
-       WHERE s.user_id = $1 OR (s.student_email IS NOT NULL AND LOWER(s.student_email) = (SELECT LOWER(email) FROM classroom_users WHERE id = $1))
-       UNION ALL
-       SELECT s.student_number, s.roster_name,
-              c.academic_year, c.grade, c.class_number,
-              sc.name AS school_name
-       FROM classroom_students s
-       JOIN classroom_classes c ON c.id = s.class_id
-       JOIN classroom_schools sc ON sc.id = c.school_id
-       WHERE s.user_id = $1
-       LIMIT 1`,
-      [userId]
-    );
-    const row = result.rows[0];
-    if (!row) return null;
-    return {
-      studentNumber: row.student_number,
-      studentName: row.roster_name,
-      name: row.roster_name,
-      schoolName: row.school_name,
-      academicYear: row.academic_year,
-      grade: row.grade,
-      classNumber: row.class_number
-    };
+    try {
+      const result = await pool.query(
+        `SELECT s.student_number::TEXT AS student_number, s.roster_name,
+                s.academic_year, s.grade, s.class_number,
+                sc.name AS school_name
+         FROM school_students s
+         JOIN classroom_schools sc ON sc.id = s.school_id
+         WHERE s.user_id = $1 OR (s.student_email IS NOT NULL AND LOWER(s.student_email) = (SELECT LOWER(email) FROM classroom_users WHERE id = $1))
+         UNION ALL
+         SELECT s.student_number::TEXT AS student_number, s.roster_name,
+                c.academic_year, c.grade, c.class_number,
+                sc.name AS school_name
+         FROM classroom_students s
+         JOIN classroom_classes c ON c.id = s.class_id
+         JOIN classroom_schools sc ON sc.id = c.school_id
+         WHERE s.user_id = $1
+         LIMIT 1`,
+        [userId]
+      );
+      const row = result.rows[0];
+      if (!row) return null;
+      return {
+        studentNumber: row.student_number,
+        studentName: row.roster_name,
+        name: row.roster_name,
+        schoolName: row.school_name,
+        academicYear: row.academic_year,
+        grade: row.grade,
+        classNumber: row.class_number
+      };
+    } catch (err) {
+      console.error("studentMembership error:", err.message);
+      return null;
+    }
   }
 
   async function userClassId(user) {
@@ -1165,33 +1170,37 @@ function createClassroomPlatform(options = {}) {
     const membership = user.role === "student" ? await studentMembership(user.id) : null;
     let guardianChildren = [];
     if (user && user.email) {
-      const gRes = await pool.query(
-        `SELECT s.id AS student_id, s.student_number, s.roster_name AS student_name,
-                s.academic_year, s.grade, s.class_number,
-                sc.id AS school_id, sc.name AS school_name
-         FROM school_students s
-         JOIN classroom_schools sc ON sc.id = s.school_id
-         WHERE LOWER(s.guardian1_email) = LOWER($1) OR LOWER(s.guardian2_email) = LOWER($1)
-         UNION ALL
-         SELECT s.id AS student_id, s.student_number, s.roster_name AS student_name,
-                c.academic_year, c.grade, c.class_number,
-                sc.id AS school_id, sc.name AS school_name
-         FROM classroom_students s
-         JOIN classroom_classes c ON c.id = s.class_id
-         JOIN classroom_schools sc ON sc.id = c.school_id
-         WHERE LOWER(s.guardian1_email) = LOWER($1) OR LOWER(s.guardian2_email) = LOWER($1)
-         ORDER BY grade DESC, class_number ASC, CASE WHEN student_number ~ '^[0-9]+$' THEN student_number::INTEGER END ASC`,
-        [user.email]
-      );
-      guardianChildren = gRes.rows.map(r => ({
-        studentId: String(r.student_id),
-        schoolId: String(r.school_id),
-        schoolName: r.school_name,
-        grade: r.grade,
-        classNumber: r.class_number,
-        studentNumber: r.student_number,
-        studentName: r.student_name
-      }));
+      try {
+        const gRes = await pool.query(
+          `SELECT s.id AS student_id, s.student_number::TEXT AS student_number, s.roster_name AS student_name,
+                  s.academic_year, s.grade, s.class_number,
+                  sc.id AS school_id, sc.name AS school_name
+           FROM school_students s
+           JOIN classroom_schools sc ON sc.id = s.school_id
+           WHERE LOWER(s.guardian1_email) = LOWER($1) OR LOWER(s.guardian2_email) = LOWER($1)
+           UNION ALL
+           SELECT s.id AS student_id, s.student_number::TEXT AS student_number, s.roster_name AS student_name,
+                  c.academic_year, c.grade, c.class_number,
+                  sc.id AS school_id, sc.name AS school_name
+           FROM classroom_students s
+           JOIN classroom_classes c ON c.id = s.class_id
+           JOIN classroom_schools sc ON sc.id = c.school_id
+           WHERE LOWER(s.guardian1_email) = LOWER($1) OR LOWER(s.guardian2_email) = LOWER($1)
+           ORDER BY grade DESC, class_number ASC, student_number ASC`,
+          [user.email]
+        );
+        guardianChildren = gRes.rows.map(r => ({
+          studentId: String(r.student_id),
+          schoolId: String(r.school_id),
+          schoolName: r.school_name,
+          grade: r.grade,
+          classNumber: r.class_number,
+          studentNumber: r.student_number,
+          studentName: r.student_name
+        }));
+      } catch (err) {
+        console.error("guardianChildren error:", err.message);
+      }
     }
 
     return res.json({
