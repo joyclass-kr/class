@@ -805,7 +805,33 @@ function createClassroomPlatform(options = {}) {
         updated_at TIMESTAMPTZ NOT NULL DEFAULT NOW()
       )`,
       `CREATE INDEX IF NOT EXISTS school_annual_schedules_lookup_idx
-        ON school_annual_schedules (school_id, academic_year, event_date)`
+        ON school_annual_schedules (school_id, academic_year, event_date)`,
+      `CREATE TABLE IF NOT EXISTS school_curriculum_hours (
+        id BIGSERIAL PRIMARY KEY,
+        school_id BIGINT NOT NULL REFERENCES classroom_schools(id) ON DELETE CASCADE,
+        academic_year INTEGER NOT NULL,
+        grade INTEGER NOT NULL CHECK (grade BETWEEN 1 AND 12),
+        subject_name TEXT NOT NULL,
+        weekly_hours INTEGER NOT NULL DEFAULT 0,
+        annual_required_hours INTEGER NOT NULL DEFAULT 0,
+        category TEXT NOT NULL DEFAULT 'SUBJECT',
+        created_at TIMESTAMPTZ NOT NULL DEFAULT NOW(),
+        updated_at TIMESTAMPTZ NOT NULL DEFAULT NOW(),
+        UNIQUE (school_id, academic_year, grade, subject_name)
+      )`,
+      `CREATE TABLE IF NOT EXISTS school_master_timetable (
+        id BIGSERIAL PRIMARY KEY,
+        school_id BIGINT NOT NULL REFERENCES classroom_schools(id) ON DELETE CASCADE,
+        academic_year INTEGER NOT NULL,
+        grade INTEGER NOT NULL CHECK (grade BETWEEN 1 AND 12),
+        class_number INTEGER NOT NULL DEFAULT 0,
+        day_of_week INTEGER NOT NULL CHECK (day_of_week BETWEEN 1 AND 5),
+        period INTEGER NOT NULL CHECK (period BETWEEN 1 AND 8),
+        subject_name TEXT NOT NULL DEFAULT '',
+        created_at TIMESTAMPTZ NOT NULL DEFAULT NOW(),
+        updated_at TIMESTAMPTZ NOT NULL DEFAULT NOW(),
+        UNIQUE (school_id, academic_year, grade, class_number, day_of_week, period)
+      )`
     ];
 
     try {
@@ -3488,6 +3514,90 @@ function createClassroomPlatform(options = {}) {
       [scheduleId, profile.school_id]
     );
     if (!result.rows[0]) throw new HttpError(404, "SCHEDULE_NOT_FOUND", "일정을 찾을 수 없거나 삭제 권한이 없습니다.");
+    res.json({ ok: true });
+  }));
+
+  // ── Curriculum Hours APIs ──
+  router.get("/school-admin/curriculum-hours", asyncRoute(async (req, res) => {
+    const { profile } = await requireSchoolAdmin(req);
+    const year = Number(req.query.academicYear || new Date().getFullYear());
+    const grade = Number(req.query.grade || 1);
+    const result = await pool.query(
+      `SELECT subject_name, weekly_hours, annual_required_hours, category
+       FROM school_curriculum_hours
+       WHERE school_id = $1 AND academic_year = $2 AND grade = $3
+       ORDER BY category, id`,
+      [profile.school_id, year, grade]
+    );
+    res.json({ hours: result.rows });
+  }));
+
+  router.post("/school-admin/curriculum-hours", asyncRoute(async (req, res) => {
+    const { profile } = await requireSchoolAdmin(req);
+    const year = Number(req.body?.academicYear || new Date().getFullYear());
+    const grade = Number(req.body?.grade || 1);
+    const hoursList = Array.isArray(req.body?.hours) ? req.body.hours : [];
+
+    for (const item of hoursList) {
+      const subjectName = String(item.subjectName || "").trim();
+      const weeklyHours = Math.max(0, Number(item.weeklyHours || 0));
+      const annualRequiredHours = Math.max(0, Number(item.annualRequiredHours || 0));
+      const category = String(item.category || "SUBJECT").toUpperCase();
+
+      if (!subjectName) continue;
+
+      await pool.query(
+        `INSERT INTO school_curriculum_hours (school_id, academic_year, grade, subject_name, weekly_hours, annual_required_hours, category)
+         VALUES ($1, $2, $3, $4, $5, $6, $7)
+         ON CONFLICT (school_id, academic_year, grade, subject_name) DO UPDATE
+         SET weekly_hours = EXCLUDED.weekly_hours,
+             annual_required_hours = EXCLUDED.annual_required_hours,
+             category = EXCLUDED.category,
+             updated_at = NOW()`,
+        [profile.school_id, year, grade, subjectName, weeklyHours, annualRequiredHours, category]
+      );
+    }
+    res.json({ ok: true });
+  }));
+
+  // ── Master Timetable Grid APIs ──
+  router.get("/school-admin/master-timetable", asyncRoute(async (req, res) => {
+    const { profile } = await requireSchoolAdmin(req);
+    const year = Number(req.query.academicYear || new Date().getFullYear());
+    const grade = Number(req.query.grade || 1);
+    const classNum = Number(req.query.classNumber || 0);
+
+    const result = await pool.query(
+      `SELECT day_of_week, period, subject_name
+       FROM school_master_timetable
+       WHERE school_id = $1 AND academic_year = $2 AND grade = $3 AND class_number = $4`,
+      [profile.school_id, year, grade, classNum]
+    );
+    res.json({ timetable: result.rows });
+  }));
+
+  router.post("/school-admin/master-timetable", asyncRoute(async (req, res) => {
+    const { profile } = await requireSchoolAdmin(req);
+    const year = Number(req.body?.academicYear || new Date().getFullYear());
+    const grade = Number(req.body?.grade || 1);
+    const classNum = Number(req.body?.classNumber || 0);
+    const cells = Array.isArray(req.body?.cells) ? req.body.cells : [];
+
+    for (const cell of cells) {
+      const dayOfWeek = Number(cell.dayOfWeek);
+      const period = Number(cell.period);
+      const subjectName = String(cell.subjectName || "").trim();
+
+      if (dayOfWeek >= 1 && dayOfWeek <= 5 && period >= 1 && period <= 8) {
+        await pool.query(
+          `INSERT INTO school_master_timetable (school_id, academic_year, grade, class_number, day_of_week, period, subject_name)
+           VALUES ($1, $2, $3, $4, $5, $6, $7)
+           ON CONFLICT (school_id, academic_year, grade, class_number, day_of_week, period) DO UPDATE
+           SET subject_name = EXCLUDED.subject_name, updated_at = NOW()`,
+          [profile.school_id, year, grade, classNum, dayOfWeek, period, subjectName]
+        );
+      }
+    }
     res.json({ ok: true });
   }));
 
