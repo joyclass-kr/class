@@ -4212,6 +4212,146 @@ function createClassroomPlatform(options = {}) {
     res.json({ ok: true });
   }));
 
+  // GET: 학교 교사 명단 조회
+  router.get("/school/teachers", asyncRoute(async (req, res) => {
+    const teacher = await requireTeacher(req);
+    const tp = await pool.query(
+      `SELECT t.school_id, t.teacher_type FROM classroom_teachers t WHERE t.user_id = $1 AND t.active = TRUE`,
+      [teacher.id]
+    );
+    if (!tp.rows[0]) throw new HttpError(403, "TEACHER_REQUIRED", "교사 계정이 필요합니다.");
+    const schoolId = tp.rows[0].school_id;
+    const isAdmin = ["관리자", "교장", "교감"].includes(tp.rows[0].teacher_type);
+
+    const teachersResult = await pool.query(
+      `SELECT id, teacher_name, teacher_type, google_email, grade, class_number, active, user_id IS NOT NULL AS linked
+       FROM classroom_teachers
+       WHERE school_id = $1
+       ORDER BY CASE WHEN teacher_type = '관리자' THEN 1 WHEN teacher_type = '담임' THEN 2 ELSE 3 END, grade, class_number, id`,
+      [schoolId]
+    );
+
+    res.json({
+      teachers: teachersResult.rows.map(r => ({
+        id: r.id,
+        name: r.teacher_name,
+        type: r.teacher_type,
+        email: r.google_email,
+        grade: r.grade,
+        classNumber: r.class_number,
+        linked: r.linked
+      })),
+      isAdmin
+    });
+  }));
+
+  // PUT: 학교 교사 명단 저장/수정
+  router.put("/school/teachers", asyncRoute(async (req, res) => {
+    const teacher = await requireTeacher(req);
+    const tp = await pool.query(
+      `SELECT t.school_id, t.teacher_type FROM classroom_teachers t WHERE t.user_id = $1 AND t.active = TRUE`,
+      [teacher.id]
+    );
+    if (!tp.rows[0]) throw new HttpError(403, "TEACHER_REQUIRED", "교사 계정이 필요합니다.");
+    if (!["관리자", "교장", "교감"].includes(tp.rows[0].teacher_type)) {
+      throw new HttpError(403, "ADMIN_ONLY", "교사 명단 관리는 학교 관리자만 수행할 수 있습니다.");
+    }
+    const schoolId = tp.rows[0].school_id;
+    const teachers = Array.isArray(req.body?.teachers) ? req.body.teachers : [];
+
+    const cleanTeachers = teachers.map((t) => ({
+      type: String(t?.type || "담임").trim(),
+      name: String(t?.name || "").normalize("NFC").trim(),
+      email: normalizeEmail(t?.email),
+      grade: t?.grade ? Number(t.grade) : null,
+      classNumber: t?.classNumber ? Number(t.classNumber) : null
+    })).filter(t => t.name || t.email);
+
+    for (const t of cleanTeachers) {
+      if (!t.name || t.name.length > 30) throw new HttpError(400, "INVALID_TEACHER_NAME", "성명을 확인해 주세요.");
+      if (!t.email || !t.email.includes("@")) throw new HttpError(400, "INVALID_TEACHER_EMAIL", `${t.name}의 이메일 주소를 확인해 주세요.`);
+    }
+
+    const emails = cleanTeachers.map(t => t.email);
+    if (new Set(emails).size !== emails.length) {
+      throw new HttpError(400, "DUPLICATE_EMAIL", "중복된 이메일 주소가 있습니다.");
+    }
+
+    const client = await pool.connect();
+    try {
+      await client.query("BEGIN");
+
+      for (const t of cleanTeachers) {
+        const existingByEmail = await client.query(
+          `SELECT id FROM classroom_teachers WHERE LOWER(google_email) = LOWER($1)`,
+          [t.email]
+        );
+        if (existingByEmail.rows.length > 0) {
+          await client.query(
+            `UPDATE classroom_teachers
+             SET school_id = $1, teacher_name = $2, teacher_type = $3, grade = $4, class_number = $5, updated_at = NOW()
+             WHERE id = $6`,
+            [schoolId, t.name, t.type, t.grade, t.classNumber, existingByEmail.rows[0].id]
+          );
+        } else {
+          const existingByName = await client.query(
+            `SELECT id FROM classroom_teachers WHERE school_id = $1 AND teacher_name = $2`,
+            [schoolId, t.name]
+          );
+          if (existingByName.rows.length > 0) {
+            await client.query(
+              `UPDATE classroom_teachers
+               SET teacher_type = $1, google_email = $2, grade = $3, class_number = $4, updated_at = NOW()
+               WHERE id = $5`,
+              [t.type, t.email, t.grade, t.classNumber, existingByName.rows[0].id]
+            );
+          } else {
+            await client.query(
+              `INSERT INTO classroom_teachers
+                 (school_id, teacher_name, password_hash, grade, class_number, teacher_type, google_email)
+               VALUES ($1, $2, 'OAUTH_ONLY', $3, $4, $5, $6)`,
+              [schoolId, t.name, t.grade, t.classNumber, t.type, t.email]
+            );
+          }
+        }
+      }
+
+      if (emails.length > 0) {
+        const removedTeachers = await client.query(
+          `SELECT user_id FROM classroom_teachers 
+           WHERE school_id = $1 AND user_id IS NOT NULL 
+           AND (google_email IS NULL OR NOT (LOWER(google_email) = ANY($2::TEXT[])))`,
+          [schoolId, emails]
+        );
+        const removedUserIds = removedTeachers.rows.map(r => r.user_id);
+        if (removedUserIds.length > 0) {
+          await client.query(`DELETE FROM classroom_classes WHERE school_id = $1 AND teacher_user_id = ANY($2::BIGINT[])`, [schoolId, removedUserIds]);
+        }
+        await client.query(
+          `DELETE FROM classroom_teachers 
+           WHERE school_id = $1 AND (google_email IS NULL OR NOT (LOWER(google_email) = ANY($2::TEXT[])))`,
+          [schoolId, emails]
+        );
+      } else {
+        const removedTeachers = await client.query(`SELECT user_id FROM classroom_teachers WHERE school_id = $1 AND user_id IS NOT NULL`, [schoolId]);
+        const removedUserIds = removedTeachers.rows.map(r => r.user_id);
+        if (removedUserIds.length > 0) {
+          await client.query(`DELETE FROM classroom_classes WHERE school_id = $1 AND teacher_user_id = ANY($2::BIGINT[])`, [schoolId, removedUserIds]);
+        }
+        await client.query("DELETE FROM classroom_teachers WHERE school_id = $1", [schoolId]);
+      }
+
+      await client.query("COMMIT");
+    } catch (err) {
+      await client.query("ROLLBACK");
+      throw err;
+    } finally {
+      client.release();
+    }
+
+    res.json({ ok: true, saved: cleanTeachers.length });
+  }));
+
   router.get("/teacher/available-groups", asyncRoute(async (req, res) => {
     const teacher = await requireTeacher(req);
     const tp = await pool.query(

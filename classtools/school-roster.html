@@ -417,6 +417,7 @@
 <!-- 탭 -->
 <div class="tabs">
     <button class="tab-btn active" id="tab-roster" onclick="switchTab('roster')">📋 전교생 명단</button>
+    <button class="tab-btn" id="tab-teachers" onclick="switchTab('teachers')">👩‍🏫 교사 명단</button>
     <button class="tab-btn" id="tab-settings" onclick="switchTab('settings')">⚙️ 학교 설정</button>
 </div>
 
@@ -487,7 +488,57 @@
         </div>
     </div>
 
-    <!-- 탭 2: 학교 설정 -->
+    <!-- 탭 2: 교사 명단 -->
+    <div class="panel" id="panel-teachers">
+        <div class="card">
+            <div style="display:flex;align-items:flex-start;justify-content:space-between;gap:12px;flex-wrap:wrap;">
+                <div>
+                    <div class="card-title">교사 명단</div>
+                    <div class="card-desc">학교 전체 교직원 통합 명단입니다. (담임, 전담, 관리자 구분 및 구글 계정을 관리합니다)</div>
+                </div>
+                <div style="display:flex;gap:8px;flex-wrap:wrap;" id="teacherAdminActions">
+                    <button class="btn btn-secondary btn-sm" id="toggleTeacherPasteBtn" onclick="toggleTeacherPasteSection()">📥 붙여넣기로 입력</button>
+                    <button class="btn btn-secondary btn-sm" id="addTeacherBtn" onclick="addTeacherRow()">+ 교사 추가</button>
+                    <button class="btn btn-primary btn-sm" id="saveTeacherRosterBtn" onclick="saveTeacherRoster()">💾 저장</button>
+                </div>
+            </div>
+
+            <!-- 붙여넣기 섹션 -->
+            <div class="paste-section" id="teacherPasteSection" style="display:none;margin-top:16px;">
+                <div class="card-desc" style="margin-bottom:8px;font-weight:bold;">
+                    엑셀에서 아래 순서대로 탭(Tab) 구분된 데이터를 복사하여 붙여넣으세요:
+                    <br><span style="color:var(--primary); font-size:12px;">구분 | 성명 | 구글 계정 | 학년 | 반</span>
+                </div>
+                <textarea class="paste-input" id="teacherPasteInput" placeholder="예시:&#10;담임	홍길동	hong@school.es.kr	1	1&#10;전담	김철수	kim@school.es.kr		&#10;관리자	이영희	master@school.es.kr" rows="8"></textarea>
+                <div style="display:flex;gap:8px;margin-top:10px;align-items:center;flex-wrap:wrap;">
+                    <button class="btn btn-primary" onclick="parseTeacherPaste()">✅ 파싱 및 반영</button>
+                    <button class="btn btn-secondary" onclick="toggleTeacherPasteSection()">취소</button>
+                    <span class="status-msg" id="teacherPasteStatus"></span>
+                </div>
+            </div>
+
+            <p class="status-msg" id="teacherRosterStatus" style="margin-top:12px;"></p>
+
+            <div class="table-container" style="margin-top:12px;">
+                <table class="roster-table">
+                    <thead>
+                        <tr>
+                            <th style="width:100px;">구분</th>
+                            <th style="width:120px;">성명</th>
+                            <th>구글 계정</th>
+                            <th style="width:70px;">담당 학년</th>
+                            <th style="width:70px;">담당 반</th>
+                            <th style="width:90px;">연동 상태</th>
+                            <th style="width:60px;">관리</th>
+                        </tr>
+                    </thead>
+                    <tbody id="teacherRosterBody"></tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+
+    <!-- 탭 3: 학교 설정 -->
     <div class="panel" id="panel-settings">
         <div class="card">
             <div class="card-title">학교 설정</div>
@@ -620,8 +671,154 @@
         document.querySelectorAll(".tab-btn").forEach(b => b.classList.remove("active"));
         document.getElementById("panel-" + tab).classList.add("active");
         document.getElementById("tab-" + tab).classList.add("active");
+        if (tab === "roster") renderRosterTable();
+        if (tab === "teachers") loadTeachers();
         if (tab === "settings") loadSettings();
         if (tab === "groups") loadGroups();
+    };
+
+    // ─── 교사 명단 ───────────────────────────────────────────
+    let allTeachers = [];
+
+    async function loadTeachers() {
+        setStatus("teacherRosterStatus", "교사 명단 불러오는 중…");
+        try {
+            const data = await api("/api/school/teachers");
+            allTeachers = data.teachers || [];
+            if (data.isAdmin !== undefined) isSchoolAdmin = Boolean(data.isAdmin);
+            
+            const actionsEl = document.getElementById("teacherAdminActions");
+            if (actionsEl) actionsEl.style.display = isSchoolAdmin ? "flex" : "none";
+            renderTeacherRosterTable();
+            setStatus("teacherRosterStatus", `총 ${allTeachers.length}명`);
+        } catch (e) {
+            setStatus("teacherRosterStatus", e.message, "error");
+        }
+    }
+
+    function renderTeacherRosterTable() {
+        const tbody = document.getElementById("teacherRosterBody");
+        if (!tbody) return;
+
+        if (allTeachers.length === 0) {
+            tbody.innerHTML = `<tr><td colspan="7" class="no-data">등록된 교사 명단이 없습니다. '📥 붙여넣기로 입력' 또는 '+ 교사 추가'로 등록하세요.</td></tr>`;
+            return;
+        }
+
+        tbody.innerHTML = allTeachers.map((t, idx) => {
+            const linkedBadge = t.linked ? `<span class="linked-badge">✓ 연동</span>` : `<span style="color:#9ca3af;font-size:11px;">미연동</span>`;
+            return `
+                <tr>
+                    <td>
+                        <select class="roster-cell-input" style="width:100%;border:1px solid #d1d5db;border-radius:4px;padding:3px;" onchange="updateTeacherField(${idx}, 'type', this.value)">
+                            <option value="담임" ${t.type === '담임' ? 'selected' : ''}>담임</option>
+                            <option value="전담" ${t.type === '전담' ? 'selected' : ''}>전담</option>
+                            <option value="관리자" ${t.type === '관리자' || t.type === '교장' || t.type === '교감' ? 'selected' : ''}>관리자</option>
+                        </select>
+                    </td>
+                    <td>
+                        <input class="roster-cell-input" style="width:100%;border:1px solid #d1d5db;border-radius:4px;padding:3px 6px;" value="${esc(t.name || '')}" placeholder="성명" onchange="updateTeacherField(${idx}, 'name', this.value)">
+                    </td>
+                    <td>
+                        <input class="roster-cell-input" style="width:100%;border:1px solid #d1d5db;border-radius:4px;padding:3px 6px;" value="${esc(t.email || '')}" placeholder="구글 계정 이메일" onchange="updateTeacherField(${idx}, 'email', this.value)">
+                    </td>
+                    <td>
+                        <input class="roster-cell-input" style="width:100%;border:1px solid #d1d5db;border-radius:4px;padding:3px 6px;" value="${esc(t.grade ?? '')}" placeholder="학년" onchange="updateTeacherField(${idx}, 'grade', this.value)">
+                    </td>
+                    <td>
+                        <input class="roster-cell-input" style="width:100%;border:1px solid #d1d5db;border-radius:4px;padding:3px 6px;" value="${esc(t.classNumber ?? '')}" placeholder="반" onchange="updateTeacherField(${idx}, 'classNumber', this.value)">
+                    </td>
+                    <td style="text-align:center;">${linkedBadge}</td>
+                    <td style="text-align:center;">
+                        ${isSchoolAdmin ? `<button class="delete-item-btn" onclick="deleteTeacherRow(${idx})" title="삭제">🗑️</button>` : ''}
+                    </td>
+                </tr>
+            `;
+        }).join("");
+    }
+
+    window.updateTeacherField = function(idx, field, val) {
+        if (!allTeachers[idx]) return;
+        allTeachers[idx][field] = val;
+    };
+
+    window.addTeacherRow = function() {
+        allTeachers.push({ type: "담임", name: "", email: "", grade: "", classNumber: "", linked: false });
+        renderTeacherRosterTable();
+        setStatus("teacherRosterStatus", "새 교사 행이 추가되었습니다. 내용을 작성 후 '💾 저장' 버튼을 누르세요.");
+    };
+
+    window.deleteTeacherRow = function(idx) {
+        if (!confirm(`'${allTeachers[idx]?.name || '선택한'}' 교사를 삭제하시겠습니까?`)) return;
+        allTeachers.splice(idx, 1);
+        renderTeacherRosterTable();
+        setStatus("teacherRosterStatus", "삭제되었습니다. 저장하려면 '💾 저장' 버튼을 누르세요.");
+    };
+
+    window.saveTeacherRoster = async function() {
+        const btn = document.getElementById("saveTeacherRosterBtn");
+        if (btn) btn.disabled = true;
+        setStatus("teacherRosterStatus", "교사 명단 저장 중…");
+        try {
+            const clean = allTeachers.map(t => ({
+                type: t.type || "담임",
+                name: String(t.name || "").trim(),
+                email: String(t.email || "").trim(),
+                grade: t.grade ? Number(t.grade) : null,
+                classNumber: t.classNumber ? Number(t.classNumber) : null
+            })).filter(t => t.name && t.email);
+
+            const result = await api("/api/school/teachers", {
+                method: "PUT",
+                body: JSON.stringify({ teachers: clean })
+            });
+            setStatus("teacherRosterStatus", `✅ 교사 명단 ${result.saved}명 저장 완료`, "ok");
+            await loadTeachers();
+        } catch (e) {
+            setStatus("teacherRosterStatus", e.message, "error");
+        } finally {
+            if (btn) btn.disabled = false;
+        }
+    };
+
+    window.toggleTeacherPasteSection = function() {
+        const sec = document.getElementById("teacherPasteSection");
+        if (!sec) return;
+        sec.style.display = sec.style.display === "none" ? "block" : "none";
+    };
+
+    window.parseTeacherPaste = function() {
+        const text = document.getElementById("teacherPasteInput").value.trim();
+        if (!text) {
+            setStatus("teacherPasteStatus", "붙여넣은 텍스트가 없습니다.", "error");
+            return;
+        }
+        const lines = text.split("\n").map(l => l.trim()).filter(Boolean);
+        const parsed = lines.map(line => {
+            const parts = line.split("\t").map(p => p.trim());
+            if (parts.length < 2) return null;
+            let type = "담임";
+            if (parts[0].includes("관리") || parts[0].includes("교장") || parts[0].includes("교감")) type = "관리자";
+            else if (parts[0].includes("전담")) type = "전담";
+
+            return {
+                type,
+                name: parts[1] || parts[0],
+                email: parts[2] || parts[1],
+                grade: parts[3] ? Number(parts[3]) : null,
+                classNumber: parts[4] ? Number(parts[4]) : null,
+                linked: false
+            };
+        }).filter(Boolean);
+
+        if (parsed.length > 0) {
+            allTeachers = parsed;
+            renderTeacherRosterTable();
+            document.getElementById("teacherPasteSection").style.display = "none";
+            setStatus("teacherRosterStatus", `✅ ${parsed.length}명의 교사 정보가 반영되었습니다. '💾 저장' 버튼을 누르세요.`, "ok");
+        } else {
+            setStatus("teacherPasteStatus", "올바른 탭 구분 형식이 아닙니다.", "error");
+        }
     };
 
     // ─── 연도 선택 ─────────────────────────────────────────────
