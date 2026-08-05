@@ -150,11 +150,16 @@ document.addEventListener('DOMContentLoaded', () => {
         if (prevMonthBtn) prevMonthBtn.addEventListener('click', () => changeMonth(-1));
         if (nextMonthBtn) nextMonthBtn.addEventListener('click', () => changeMonth(1));
         if (annualYearSelect) {
-            annualYearSelect.addEventListener('change', (e) => {
+            annualYearSelect.addEventListener('change', async (e) => {
                 selectedAcademicYear = Number(e.target.value);
                 currentCalYear = selectedAcademicYear;
                 currentCalMonth = 3;
-                loadAnnualSchedules();
+                await loadVacationDates();
+                await loadAnnualSchedules();
+                await loadCurriculumHours();
+                renderSubjectPalette();
+                await loadMasterTimetable();
+                await renderAnnualTimetable34Weeks();
             });
         }
         if (annualTargetScopeSelect) {
@@ -171,7 +176,12 @@ document.addEventListener('DOMContentLoaded', () => {
         if (saveCurriculumBtn) saveCurriculumBtn.addEventListener('click', saveCurriculumHours);
 
         // Timetable Grid Listeners
-        if (timetableGradeSelect) timetableGradeSelect.addEventListener('change', loadMasterTimetable);
+        if (timetableGradeSelect) {
+            timetableGradeSelect.addEventListener('change', () => {
+                renderSubjectPalette();
+                loadMasterTimetable();
+            });
+        }
         if (saveTimetableBtn) saveTimetableBtn.addEventListener('click', saveMasterTimetable);
 
         renderSubjectPalette();
@@ -181,20 +191,25 @@ document.addEventListener('DOMContentLoaded', () => {
     }
 
     // --- Tab Logic ---
-    function switchTab(tabId) {
+    async function switchTab(tabId) {
         tabButtons.forEach(btn => btn.classList.toggle('active', btn.dataset.tab === tabId));
         tabContents.forEach(content => {
             content.hidden = content.id !== `${tabId}Tab`;
         });
 
         if (tabId === 'roster' && rosterData.length === 0) {
-            loadRoster();
+            await loadRoster();
         } else if (tabId === 'annual') {
-            loadAnnualSchedules();
+            await loadVacationDates();
+            await loadAnnualSchedules();
         } else if (tabId === 'curriculum') {
-            loadCurriculumHours();
+            await loadCurriculumHours();
         } else if (tabId === 'timetable') {
-            loadMasterTimetable();
+            renderSubjectPalette();
+            await loadMasterTimetable();
+        } else if (tabId === 'annualTimetable') {
+            await loadVacationDates();
+            await renderAnnualTimetable34Weeks();
         }
     }
 
@@ -604,7 +619,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
         // Loop through all dates in the academic year (March 1 of selectedAcademicYear ~ Feb 28/29 of next year)
         const startDate = new Date(selectedAcademicYear, 2, 1); // March 1
-        const endDate = new Date(selectedAcademicYear + 1, 1, 28); // Feb 28
+        const endDate = new Date(selectedAcademicYear + 1, 2, 0); // Last day of February (28 or 29 in leap year)
 
         for (let d = new Date(startDate); d <= endDate; d.setDate(d.getDate() + 1)) {
             const year = d.getFullYear();
@@ -964,7 +979,11 @@ document.addEventListener('DOMContentLoaded', () => {
         if (!subjectPalette) return;
         subjectPalette.innerHTML = '';
 
-        PALETTE_SUBJECTS.forEach(sub => {
+        const grade = Number(timetableGradeSelect ? timetableGradeSelect.value : 5);
+        const gradeSubjects = GRADE_SUBJECT_BASE_HOURS[grade] || GRADE_SUBJECT_BASE_HOURS[5];
+        const dynamicSubjects = Array.from(new Set(gradeSubjects.map(s => s.name).concat(['수업없음'])));
+
+        dynamicSubjects.forEach(sub => {
             const chip = document.createElement('div');
             chip.className = 'palette-chip';
             if (sub === activePaletteSubject) chip.classList.add('selected');
@@ -1146,7 +1165,7 @@ document.addEventListener('DOMContentLoaded', () => {
                 currMon.setDate(currMon.getDate() + 1);
             }
 
-            const endDate = new Date(selectedAcademicYear + 1, 1, 28);
+            const endDate = new Date(selectedAcademicYear + 1, 2, 0); // Last day of February (28 or 29)
 
             while (currMon <= endDate && weekIndex <= 34) {
                 const currFri = new Date(currMon);

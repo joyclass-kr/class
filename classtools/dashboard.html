@@ -1538,25 +1538,48 @@
             return birthdayMmdd === (mm + dd);
         }
 
+        let todayQuickAlerts = new Map();
+
+        async function fetchQuickAlertsForDashboard() {
+            try {
+                const res = await fetch("/api/teacher/quick-absences");
+                if (!res.ok) return;
+                const data = await res.json();
+                const alerts = data.alerts || [];
+                const todayStr = new Date().toISOString().split("T")[0];
+                todayQuickAlerts.clear();
+                alerts.forEach(a => {
+                    if (a.expectedDate === todayStr || String(a.expectedDate).startsWith(todayStr)) {
+                        todayQuickAlerts.set(String(a.studentNumber), a);
+                    }
+                });
+            } catch(e) {}
+        }
+
         function renderChecklist() {
             checklistGrid.replaceChildren();
             rosterStudents.forEach((student) => {
-                const num = student.number;
+                const num = String(student.number);
                 const chip = document.createElement("div");
                 chip.className = "num-chip";
                 if (missingStudents.has(num)) chip.classList.add("missing");
 
                 const isBday = isTodayBirthday(student);
                 const avatar = getAvatarForStudent(num);
+                const alertInfo = todayQuickAlerts.get(num);
 
                 chip.innerHTML = `
                     ${isBday ? '<span class="bday-tag">🎂</span>' : ''}
+                    ${alertInfo ? `<span class="bday-tag" style="background:#ff7b72; color:#fff; font-size:10px; padding:2px 5px; border-radius:4px; font-weight:800;" title="${alertInfo.noticeType}: ${alertInfo.reason}">${alertInfo.noticeType}</span>` : ''}
                     <div class="roster-avatar">${avatar.icon}</div>
                     <div class="roster-student-copy">
                         <span class="roster-student-number">${num}번</span>
                         <span class="roster-student-name">${student.name}</span>
                     </div>
                 `;
+                if (alertInfo) {
+                    chip.title = `[학부모 ${alertInfo.noticeType} 알림] ${alertInfo.reason}`;
+                }
 
                 chip.addEventListener("click", () => {
                     if (missingStudents.has(num)) missingStudents.delete(num);
@@ -1568,7 +1591,11 @@
             });
             missingBadge.textContent = `미완료: ${missingStudents.size}명`;
         }
-        fetchRosterAndRenderChecklist();
+        
+        (async () => {
+            await fetchQuickAlertsForDashboard();
+            await fetchRosterAndRenderChecklist();
+        })();
 
         // 5. Important schedules
         function localDateKey(date = new Date()) {

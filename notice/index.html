@@ -295,19 +295,19 @@
                 <form id="quickAbsenceForm" onsubmit="submitQuickAbsence(event)">
                     <div class="form-group">
                         <label>구분 선택</label>
-                        <select id="qaType">
-                            <option value="지각">지각 (병원/사정 후 등교)</option>
-                            <option value="결석">당일 결석 (감기/질병 등)</option>
-                            <option value="조퇴">조퇴 예정</option>
+                        <select id="qaType" style="width: 100%; height: 44px; background: #0f1411; border: 1px solid var(--panel-border); color: var(--text); border-radius: 8px; padding: 0 12px; font-size: 15px; font-weight: 700;">
+                            <option value="지각">지각</option>
+                            <option value="결석">결석</option>
+                            <option value="조퇴">조퇴</option>
                         </select>
                     </div>
                     <div class="form-group">
-                        <label>예상 날짜</label>
-                        <input type="date" id="qaDate" required>
+                        <label>날짜 선택 (달력)</label>
+                        <input type="date" id="qaDate" required style="width: 100%; height: 44px; background: #0f1411; border: 1px solid var(--panel-border); color: var(--text); border-radius: 8px; padding: 0 12px; font-size: 15px; font-weight: 700; cursor: pointer;">
                     </div>
                     <div class="form-group">
                         <label>사유 전달 (담임선생님 전달용)</label>
-                        <textarea id="qaReason" placeholder="예: 아이가 감기 기운이 있어 소아과 들렀다가 2교시(10시)에 등교시킵니다." required></textarea>
+                        <textarea id="qaReason" placeholder="예: 감기로 병원 들렸다 등교 / 방과후수업 중 15시에 조퇴 등" required></textarea>
                     </div>
                     <button type="submit" class="btn-primary">📲 담임선생님께 출결 알림 전송</button>
                 </form>
@@ -863,6 +863,11 @@
 
         let activeChild = null;
         let childrenList = [];
+
+        const qaDateEl = document.getElementById('qaDate');
+        if (qaDateEl && !qaDateEl.value) {
+            qaDateEl.value = new Date().toISOString().split('T')[0];
+        }
 
         function selectChild(index) {
             if (!childrenList || !childrenList[index]) return;
