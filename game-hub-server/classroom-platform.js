@@ -3786,7 +3786,10 @@ function createClassroomPlatform(options = {}) {
   router.get("/school/settings", asyncRoute(async (req, res) => {
     const teacher = await requireTeacher(req);
     const tp = await pool.query(
-      `SELECT school_id, teacher_type FROM classroom_teachers WHERE user_id = $1 AND active = TRUE`,
+      `SELECT t.school_id, t.teacher_type, s.name as school_name
+       FROM classroom_teachers t
+       LEFT JOIN classroom_schools s ON s.id = t.school_id
+       WHERE t.user_id = $1 AND t.active = TRUE`,
       [teacher.id]
     );
     if (!tp.rows[0]) throw new HttpError(403, "TEACHER_REQUIRED", "교사 계정이 필요합니다.");
@@ -3801,6 +3804,7 @@ function createClassroomPlatform(options = {}) {
     ]);
 
     res.json({
+      schoolName: tp.rows[0].school_name,
       clubs: clubs.rows,
       afterschool: afterschool.rows,
       shuttleSlots: shuttle.rows,

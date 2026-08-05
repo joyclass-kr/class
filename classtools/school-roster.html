@@ -979,6 +979,15 @@
             isSchoolAdmin = Boolean(data.isAdmin);
             schoolSettings = { clubs: data.clubs || [], afterschool: data.afterschool || [], shuttleSlots: data.shuttleSlots || [] };
             
+            if (data.schoolName) {
+                document.getElementById("schoolName").textContent = data.schoolName;
+            } else {
+                try {
+                    const classData = await api("/api/teacher/class");
+                    if (classData.schoolName) document.getElementById("schoolName").textContent = classData.schoolName;
+                } catch (_) {}
+            }
+
             // Apply admin vs staff UI controls
             document.getElementById("pasteSectionBtn").style.display = isSchoolAdmin ? "inline-flex" : "none";
             document.getElementById("addStudentBtn").style.display = isSchoolAdmin ? "inline-flex" : "none";
@@ -1136,18 +1145,8 @@
             document.getElementById("userInfo").textContent = me.user.name || me.user.email;
         } catch (_) { location.replace("/"); return; }
 
-        try {
-            const tp = await api("/api/school/settings?year=" + currentYear);
-            schoolSettings = { clubs: tp.clubs || [], afterschool: tp.afterschool || [], shuttleSlots: tp.shuttleSlots || [] };
-        } catch (_) {}
-
-        // 학교 이름 가져오기
-        try {
-            const classData = await api("/api/teacher/class");
-            if (classData.schoolName) document.getElementById("schoolName").textContent = classData.schoolName;
-        } catch (_) {}
-
         initYearSelect();
+        await loadSettings();
         await loadRoster();
     }
 
