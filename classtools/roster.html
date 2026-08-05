@@ -741,7 +741,7 @@
 
                 <div class="field">
                     <div class="field-head">
-                        <label for="passwords">계정 상태</label>
+                        <label for="passwords">최초 접속 상태</label>
                         <span class="line-count" id="password-count">0행</span>
                     </div>
                     <textarea id="passwords" disabled aria-describedby="password-help"></textarea>
@@ -943,7 +943,13 @@
                 studentEmailsInput.value = classroom.students.map((student) => student.studentEmail || "").join("\n");
                 guardian1EmailsInput.value = classroom.students.map((student) => student.guardian1Email || "").join("\n");
                 guardian2EmailsInput.value = classroom.students.map((student) => student.guardian2Email || "").join("\n");
-                passwordsInput.value = classroom.students.map((student) => student.linked ? "구글계정 연결됨" : "미연결").join("\n");
+                passwordsInput.value = classroom.students.map((student) => {
+                    const parts = [];
+                    parts.push(`학생:${student.studentLinked ? '✅' : '미접속'}`);
+                    if (student.guardian1Email) parts.push(`보1:${student.guardian1Linked ? '✅' : '미접속'}`);
+                    if (student.guardian2Email) parts.push(`보2:${student.guardian2Linked ? '✅' : '미접속'}`);
+                    return parts.join(" ");
+                }).join("\n");
                 displayedPasswordRows.clear();
                 classroom.students.forEach((student) => displayedPasswordRows.set(student.number, DISPLAY_DEFAULT_STUDENT_PASSWORD));
                 if (birthdatesInput) birthdatesInput.disabled = true;

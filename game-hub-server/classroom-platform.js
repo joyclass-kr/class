@@ -2497,16 +2497,18 @@ function createClassroomPlatform(options = {}) {
     if (!classroom) return res.json({ classroom: null, isReadOnly: isSubjectTeacher });
 
     const studentsResult = await pool.query(
-      `SELECT student_number, roster_name, COALESCE(gender, '남') AS gender,
-              birthday_mmdd, birthday_visible,
-              avatar_key,
-              student_email, guardian1_email, guardian2_email,
-              user_id IS NOT NULL AS linked,
-              password_hash IS NOT NULL AS password_configured
-       FROM classroom_students
-       WHERE class_id = $1
-       ORDER BY CASE WHEN student_number ~ '^[0-9]+$' THEN student_number::INTEGER END,
-                student_number`,
+      `SELECT s.student_number, s.roster_name, COALESCE(s.gender, '남') AS gender,
+              s.birthday_mmdd, s.birthday_visible,
+              s.avatar_key,
+              s.student_email, s.guardian1_email, s.guardian2_email,
+              s.user_id IS NOT NULL AS student_linked,
+              EXISTS(SELECT 1 FROM classroom_users u WHERE LOWER(u.email) = LOWER(s.guardian1_email)) AS guardian1_linked,
+              EXISTS(SELECT 1 FROM classroom_users u WHERE LOWER(u.email) = LOWER(s.guardian2_email)) AS guardian2_linked,
+              s.password_hash IS NOT NULL AS password_configured
+       FROM classroom_students s
+       WHERE s.class_id = $1
+       ORDER BY CASE WHEN s.student_number ~ '^[0-9]+$' THEN s.student_number::INTEGER END,
+                s.student_number`,
       [classroom.id]
     );
 
@@ -2534,7 +2536,9 @@ function createClassroomPlatform(options = {}) {
           studentEmail: student.student_email || "",
           guardian1Email: student.guardian1_email || "",
           guardian2Email: student.guardian2_email || "",
-          linked: student.linked,
+          studentLinked: student.student_linked,
+          guardian1Linked: student.guardian1_linked,
+          guardian2Linked: student.guardian2_linked,
           passwordConfigured: student.password_configured
         }))
       }
