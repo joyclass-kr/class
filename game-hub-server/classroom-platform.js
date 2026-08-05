@@ -2947,7 +2947,54 @@ function createClassroomPlatform(options = {}) {
 
   // ----------------------------------------------------
   // Notice & Attendance Platform API Routes
-  // ----------------------------------------------------
+  // 0. Address Book Tree Data API (Teacher)
+  router.get("/teacher/addressbook", asyncRoute(async (req, res) => {
+    const teacher = await requireTeacher(req);
+    const tp = await pool.query(
+      `SELECT school_id FROM classroom_teachers WHERE user_id = $1 AND active = TRUE`,
+      [teacher.id]
+    );
+    const schoolId = tp.rows[0]?.school_id || 1;
+
+    // 1. Homeroom Classes
+    const classesRes = await pool.query(
+      `SELECT c.grade, c.class_number, COUNT(s.id)::INTEGER AS student_count
+       FROM classroom_classes c
+       LEFT JOIN classroom_students s ON s.class_id = c.id
+       WHERE c.school_id = $1
+       GROUP BY c.grade, c.class_number
+       ORDER BY c.grade, c.class_number`,
+      [schoolId]
+    );
+
+    // 2. Additional Groups (Clubs, Afterschool, Shuttle, etc.)
+    const groupsRes = await pool.query(
+      `SELECT g.id, g.group_name, g.group_type, COUNT(gs.student_id)::INTEGER AS student_count
+       FROM teacher_groups g
+       LEFT JOIN teacher_group_students gs ON gs.group_id = g.id
+       WHERE g.school_id = $1
+       GROUP BY g.id, g.group_name, g.group_type
+       ORDER BY g.group_type, g.group_name`,
+      [schoolId]
+    );
+
+    // 3. All Students & Guardians
+    const studentsRes = await pool.query(
+      `SELECT s.id::TEXT AS student_id, c.grade, c.class_number, s.student_number, s.roster_name AS name,
+              s.guardian1_email, s.guardian2_email
+       FROM classroom_students s
+       JOIN classroom_classes c ON c.id = s.class_id
+       WHERE c.school_id = $1
+       ORDER BY c.grade, c.class_number, CASE WHEN s.student_number ~ '^[0-9]+$' THEN s.student_number::INTEGER END`,
+      [schoolId]
+    );
+
+    res.json({
+      classes: classesRes.rows,
+      groups: groupsRes.rows,
+      students: studentsRes.rows
+    });
+  }));
 
   // 1. Send Notice (Teacher)
   router.post("/teacher/notices", asyncRoute(async (req, res) => {

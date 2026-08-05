@@ -178,25 +178,45 @@
         <!-- 1. 가정통신문 작성/발송 -->
         <section id="sec-send">
             <div class="panel-card">
-                <h2 style="font-size:18px; margin:0 0 16px; color:var(--green);">📢 가정통신문 신규 작성 및 학부모 알림 발송</h2>
+                <!-- e-알리미 작성 탭 -->
+                <div style="display: flex; gap: 8px; border-bottom: 2px solid var(--line); margin-bottom: 20px; padding-bottom: 10px;">
+                    <button type="button" class="tab-type active" onclick="switchNoticeCategory('general', this)" style="padding: 10px 20px; border-radius: 8px; border: 1px solid var(--line); background: #1f4730; color: #fff; font-weight: 800; font-size: 15px; cursor: pointer;">
+                        📣 일반·공지
+                    </button>
+                    <button type="button" class="tab-type" onclick="switchNoticeCategory('survey', this)" style="padding: 10px 20px; border-radius: 8px; border: 1px solid var(--line); background: #141b16; color: var(--muted); font-weight: 800; font-size: 15px; cursor: pointer;">
+                        📝 설문·신청·투표
+                    </button>
+                    <button type="button" class="tab-type" onclick="switchNoticeCategory('signature', this)" style="padding: 10px 20px; border-radius: 8px; border: 1px solid var(--line); background: #141b16; color: var(--muted); font-weight: 800; font-size: 15px; cursor: pointer;">
+                        ✍️ 서명 서류
+                    </button>
+                </div>
+
+                <h2 style="font-size:18px; margin:0 0 16px; color:var(--green);">📢 알리미 신규 작성 및 학부모 발송</h2>
                 <form id="noticeSendForm" onsubmit="handleNoticeSend(event)">
                     <div class="form-group">
-                        <label>가정통신문 제목</label>
-                        <input type="text" id="nTitle" placeholder="예: 2026학년도 2학기 현장체험학습 안내" required>
+                        <label>발송 제목</label>
+                        <input type="text" id="nTitle" placeholder="예: 2026학년도 2학기 현장체험학습 안내 및 동의서" required>
                     </div>
 
-                    <div style="display:flex; gap:16px;">
-                        <div class="form-group" style="flex:1;">
-                            <label>수신 대상 범위</label>
-                            <select id="nTargetType" onchange="toggleStudentTargetInput()">
-                                <option value="all">🌐 전교생 학부모 전체</option>
-                                <option value="grade">🏫 특정 학년 전체 (예: 3학년 전체)</option>
-                                <option value="class">🏫 내 담임 학급 전체</option>
-                                <option value="students">🎯 전교생 중 특정 학생(들) 자유 지정 (기초학력/방과후 등)</option>
-                            </select>
+                    <div style="display:flex; gap:16px; flex-wrap:wrap; margin-bottom: 16px;">
+                        <div style="flex:2; min-width: 280px;">
+                            <label>수신 대상 선택</label>
+                            <div style="display:flex; gap:10px; align-items:center;">
+                                <button type="button" class="btn-secondary" style="height:44px; font-weight:800; font-size:14px; background:#1b3d2b; border-color:#75d69f;" onclick="openAddressBookModal()">
+                                    📖 주소록에서 대상 선택...
+                                </button>
+                                <label style="display:inline-flex; align-items:center; gap:6px; margin:0; cursor:pointer; font-size:13px; color:#fff; font-weight:700;">
+                                    <input type="checkbox" id="nDeduplicateGuardians" checked style="width:18px; height:18px;">
+                                    다계정(다자녀) 1건만 보내기
+                                </label>
+                            </div>
+                            <div id="selectedTargetChips" style="display:flex; flex-wrap:wrap; gap:6px; margin-top:10px;">
+                                <span class="badge pending" style="background:#1f4730; color:#fff; padding:6px 12px; font-size:13px;">🌐 전교생 학부모 전체 (기본)</span>
+                            </div>
                         </div>
-                        <div class="form-group" style="flex:1;">
-                            <label>작성 형태</label>
+
+                        <div style="flex:1; min-width: 200px;">
+                            <label>본문 작성 방식</label>
                             <select id="nContentType" onchange="toggleContentMode()">
                                 <option value="pdf">📄 이미 작성된 PDF 파일 업로드</option>
                                 <option value="text">✍️ 직접 텍스트 작성</option>
@@ -204,25 +224,74 @@
                         </div>
                     </div>
 
-                    <div id="targetStudentBox" class="form-group hidden">
-                        <label>지정 학생 (학년-반-번호, 쉼표로 구분)</label>
-                        <input type="text" id="nTargetStudents" placeholder="예: 3-2-5, 3-2-12, 4-1-8">
-                    </div>
-
                     <div id="pdfBox" class="form-group">
-                        <label>PDF 파일 선택 (HWP/Word에서 저장한 PDF 파일)</label>
+                        <label>PDF 문서 첨부 (HWP/Word에서 PDF로 저장한 문서)</label>
                         <input type="file" id="nPdfFile" accept="application/pdf">
                     </div>
 
                     <div id="textBox" class="form-group hidden">
                         <label>가정통신문 본문 내용</label>
-                        <textarea id="nTextBody" placeholder="학부모님께 전달할 가정통신문 안내 내용을 작성하세요."></textarea>
+                        <textarea id="nTextBody" placeholder="학부모님께 전달할 알림 내용을 상세히 입력하세요."></textarea>
                     </div>
 
-                    <button type="submit" class="btn-action">🚀 학부모 모바일 앱으로 가정통신문 발송 및 알림 전송</button>
+                    <button type="submit" class="btn-action">🚀 학부모 모바일 알림장으로 가정통신문 전송</button>
                 </form>
             </div>
         </section>
+
+        <!-- e-알리미 3단 주소록 모달 -->
+        <div id="addressBookModal" class="modal-overlay" style="display:none; position:fixed; top:0; left:0; width:100%; height:100%; background:rgba(0,0,0,0.8); z-index:9999; align-items:center; justify-content:center; backdrop-filter:blur(5px);">
+            <div style="background:#141b16; border:1px solid var(--line); border-radius:18px; width:min(94%, 900px); max-height:90vh; display:flex; flex-direction:column; box-shadow:0 20px 50px rgba(0,0,0,0.8); color:#fff; overflow:hidden;">
+                <!-- Modal Header -->
+                <div style="padding:16px 24px; border-bottom:1px solid var(--line); display:flex; justify-content:space-between; align-items:center; background:#0e1410;">
+                    <h3 style="margin:0; font-size:18px; color:var(--green); display:flex; align-items:center; gap:8px;">
+                        📖 주소록 <span style="font-size:13px; color:var(--muted); font-weight:normal;">(전체 회원: <strong id="abTotalCount" style="color:#fff;">0</strong>명)</span>
+                    </h3>
+                    <button type="button" onclick="closeAddressBookModal()" style="background:none; border:none; color:#fff; font-size:24px; cursor:pointer;">✕</button>
+                </div>
+
+                <!-- Modal 3-Pane Body -->
+                <div style="display:grid; grid-template-columns: 220px 1fr 240px; gap:1px; background:var(--line); height:540px; overflow:hidden;">
+                    <!-- Pane 1: 회원그룹 트리 -->
+                    <div style="background:#111713; padding:14px; overflow-y:auto;">
+                        <h4 style="margin:0 0 10px; font-size:13px; color:var(--green);">📁 회원 그룹</h4>
+                        <div id="abGroupTreeList" style="display:flex; flex-direction:column; gap:6px; font-size:13px;">
+                            <!-- Tree loaded by JS -->
+                        </div>
+                    </div>
+
+                    <!-- Pane 2: 회원 목록 & 검색 -->
+                    <div style="background:#141b16; padding:14px; display:flex; flex-direction:column; overflow:hidden;">
+                        <div style="display:flex; gap:8px; margin-bottom:10px;">
+                            <input type="text" id="abSearchInput" placeholder="이름 / 학부모 검색..." style="height:38px; font-size:13px; flex:1;" oninput="filterAddressBookStudents()">
+                            <button type="button" class="btn-secondary" style="height:38px; padding:0 12px;" onclick="selectAllCurrentList()">전체선택</button>
+                        </div>
+                        <div id="abStudentList" style="flex:1; overflow-y:auto; display:flex; flex-direction:column; gap:6px; padding-right:4px;">
+                            <!-- Students loaded by JS -->
+                        </div>
+                    </div>
+
+                    <!-- Pane 3: 선택된 수신 대상 바구니 -->
+                    <div style="background:#0e1410; padding:14px; display:flex; flex-direction:column; overflow:hidden;">
+                        <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:10px; border-bottom:1px solid var(--line); padding-bottom:8px;">
+                            <span style="font-size:13px; font-weight:bold; color:var(--green);">
+                                👤 총 <strong id="abSelectedCount" style="color:#fff;">0</strong>건 선택
+                            </span>
+                            <button type="button" style="background:none; border:none; color:var(--muted); font-size:12px; cursor:pointer; text-decoration:underline;" onclick="clearAllSelectedTargets()">전체취소</button>
+                        </div>
+                        <div id="abSelectedBasket" style="flex:1; overflow-y:auto; display:flex; flex-direction:column; gap:6px;">
+                            <!-- Selected items loaded by JS -->
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Modal Footer -->
+                <div style="padding:14px 24px; border-top:1px solid var(--line); display:flex; justify-content:flex-end; gap:12px; background:#0e1410;">
+                    <button type="button" class="btn-secondary" onclick="closeAddressBookModal()">취소</button>
+                    <button type="button" class="btn-action" style="padding:10px 24px;" onclick="confirmAddressBookSelection()">확인 (선택 완료)</button>
+                </div>
+            </div>
+        </div>
 
         <!-- 2. 출결 사전 예고 -->
         <section id="sec-quick" class="hidden">
@@ -290,36 +359,258 @@
             window.open(`/notice/print-templates.html?type=${type}&id=${docId}`, '_blank', 'width=900,height=1000');
         }
 
+        let noticeCategory = 'general';
+        let rawAddressBook = { classes: [], groups: [], students: [] };
+        let selectedTargets = [];
+
+        function switchNoticeCategory(cat, btn) {
+            noticeCategory = cat;
+            document.querySelectorAll('.tab-type').forEach(b => {
+                b.style.background = '#141b16';
+                b.style.color = 'var(--muted)';
+            });
+            btn.style.background = '#1f4730';
+            btn.style.color = '#fff';
+        }
+
+        async function openAddressBookModal() {
+            document.getElementById('addressBookModal').style.display = 'flex';
+            if (rawAddressBook.students.length === 0) {
+                try {
+                    const res = await fetch('/api/teacher/addressbook');
+                    if (res.ok) {
+                        rawAddressBook = await res.json();
+                    }
+                } catch(e) { console.error('Addressbook fetch failed:', e); }
+            }
+            renderAddressBookTree();
+            filterAddressBookStudents();
+            renderSelectedBasket();
+        }
+
+        function closeAddressBookModal() {
+            document.getElementById('addressBookModal').style.display = 'none';
+        }
+
+        function renderAddressBookTree() {
+            const treeEl = document.getElementById('abGroupTreeList');
+            if (!treeEl) return;
+            let totalCount = rawAddressBook.students.length || 0;
+            document.getElementById('abTotalCount').textContent = totalCount;
+
+            let html = `
+                <div class="tree-item" onclick="selectGroupFilter('ALL')" style="padding:6px 10px; border-radius:6px; cursor:pointer; font-weight:bold; background:#1b3d2b; color:#fff; margin-bottom:6px;">
+                    🌐 전교생 (전체 ${totalCount}명)
+                </div>
+                <div style="font-weight:bold; color:var(--green); margin:8px 0 4px; font-size:12px;">🏫 학년 / 반</div>
+            `;
+
+            const gradeMap = {};
+            (rawAddressBook.classes || []).forEach(c => {
+                if (!gradeMap[c.grade]) gradeMap[c.grade] = [];
+                gradeMap[c.grade].push(c);
+            });
+
+            Object.keys(gradeMap).sort().forEach(g => {
+                const classes = gradeMap[g];
+                const gradeCount = classes.reduce((sum, cl) => sum + (cl.student_count || 0), 0);
+                html += `
+                    <div style="margin-left:4px; margin-bottom:4px;">
+                        <div onclick="selectGroupFilter('GRADE_${g}')" style="cursor:pointer; color:#7ce4ff; font-weight:bold; padding:3px 6px;">
+                            📁 ${g}학년 (${gradeCount}명)
+                        </div>
+                `;
+                classes.forEach(cl => {
+                    html += `
+                        <div onclick="selectGroupFilter('CLASS_${cl.grade}_${cl.class_number}')" style="cursor:pointer; padding:3px 6px 3px 18px; color:#ccc;">
+                            └ ${cl.class_number}반 (${cl.student_count}명)
+                        </div>
+                    `;
+                });
+                html += `</div>`;
+            });
+
+            if (rawAddressBook.groups && rawAddressBook.groups.length > 0) {
+                html += `<div style="font-weight:bold; color:var(--green); margin:10px 0 4px; font-size:12px;">🤖 추가 그룹</div>`;
+                rawAddressBook.groups.forEach(gr => {
+                    html += `
+                        <div onclick="selectGroupFilter('GROUP_${gr.id}')" style="cursor:pointer; padding:4px 8px; color:#ffe8b3;">
+                            📌 ${gr.group_name} (${gr.student_count || 0}명)
+                        </div>
+                    `;
+                });
+            }
+
+            treeEl.innerHTML = html;
+        }
+
+        let activeFilterType = 'ALL';
+
+        function selectGroupFilter(filterKey) {
+            activeFilterType = filterKey;
+            filterAddressBookStudents();
+        }
+
+        function filterAddressBookStudents() {
+            const listEl = document.getElementById('abStudentList');
+            const search = document.getElementById('abSearchInput').value.trim().toLowerCase();
+            if (!listEl) return;
+
+            let filtered = rawAddressBook.students || [];
+
+            if (activeFilterType.startsWith('GRADE_')) {
+                const g = Number(activeFilterType.split('_')[1]);
+                filtered = filtered.filter(s => s.grade === g);
+            } else if (activeFilterType.startsWith('CLASS_')) {
+                const parts = activeFilterType.split('_');
+                const g = Number(parts[1]);
+                const c = Number(parts[2]);
+                filtered = filtered.filter(s => s.grade === g && s.class_number === c);
+            }
+
+            if (search) {
+                filtered = filtered.filter(s => 
+                    s.name.toLowerCase().includes(search) || 
+                    String(s.student_number).includes(search) ||
+                    (s.guardian1_email && s.guardian1_email.toLowerCase().includes(search))
+                );
+            }
+
+            if (filtered.length === 0) {
+                listEl.innerHTML = '<div style="padding:20px; text-align:center; color:var(--muted);">해당 조건의 학생/보호자가 없습니다.</div>';
+                return;
+            }
+
+            listEl.innerHTML = filtered.map(s => {
+                const isSelected = selectedTargets.some(t => t.type === 'student' && t.id === s.student_id);
+                return `
+                    <label style="display:flex; align-items:center; justify-content:space-between; padding:8px 10px; background:#0e1410; border:1px solid var(--line); border-radius:8px; cursor:pointer; margin:0;">
+                        <div style="display:flex; align-items:center; gap:8px;">
+                            <input type="checkbox" ${isSelected ? 'checked' : ''} onchange="toggleStudentTarget('${s.student_id}', '${s.grade}학년 ${s.class_number}반 ${s.student_number}번 ${s.name}', this.checked)" style="width:16px; height:16px;">
+                            <div>
+                                <strong style="font-size:13px; color:#fff;">${s.grade}-${s.class_number}-${s.student_number} ${s.name}</strong>
+                                <div style="font-size:11px; color:var(--muted);">보호자: ${s.guardian1_email || '미등록'}</div>
+                            </div>
+                        </div>
+                        <span class="badge pending" style="font-size:11px; padding:2px 6px;">학부모</span>
+                    </label>
+                `;
+            }).join('');
+        }
+
+        function toggleStudentTarget(studentId, label, isChecked) {
+            if (isChecked) {
+                if (!selectedTargets.some(t => t.id === studentId)) {
+                    selectedTargets.push({ type: 'student', id: studentId, label });
+                }
+            } else {
+                selectedTargets = selectedTargets.filter(t => t.id !== studentId);
+            }
+            renderSelectedBasket();
+            filterAddressBookStudents();
+        }
+
+        function selectAllCurrentList() {
+            const search = document.getElementById('abSearchInput').value.trim().toLowerCase();
+            let filtered = rawAddressBook.students || [];
+            if (search) {
+                filtered = filtered.filter(s => s.name.toLowerCase().includes(search) || String(s.student_number).includes(search));
+            }
+            filtered.forEach(s => {
+                const label = `${s.grade}학년 ${s.class_number}반 ${s.student_number}번 ${s.name}`;
+                if (!selectedTargets.some(t => t.id === s.student_id)) {
+                    selectedTargets.push({ type: 'student', id: s.student_id, label });
+                }
+            });
+            renderSelectedBasket();
+            filterAddressBookStudents();
+        }
+
+        function clearAllSelectedTargets() {
+            selectedTargets = [];
+            renderSelectedBasket();
+            filterAddressBookStudents();
+        }
+
+        function renderSelectedBasket() {
+            const basketEl = document.getElementById('abSelectedBasket');
+            const countEl = document.getElementById('abSelectedCount');
+            if (countEl) countEl.textContent = selectedTargets.length;
+            if (!basketEl) return;
+
+            if (selectedTargets.length === 0) {
+                basketEl.innerHTML = '<div style="padding:20px; text-align:center; color:var(--muted); font-size:12px;">선택된 수신 대상이 없습니다.</div>';
+                return;
+            }
+
+            basketEl.innerHTML = selectedTargets.map((t, idx) => `
+                <div style="display:flex; justify-content:space-between; align-items:center; padding:6px 10px; background:#18241c; border-radius:6px; font-size:12px;">
+                    <span style="color:#77ffb3; font-weight:bold;">${t.label}</span>
+                    <button type="button" onclick="removeSelectedTarget(${idx})" style="background:none; border:none; color:#ff7b72; font-weight:bold; cursor:pointer;">✕</button>
+                </div>
+            `).join('');
+        }
+
+        function removeSelectedTarget(index) {
+            selectedTargets.splice(index, 1);
+            renderSelectedBasket();
+            filterAddressBookStudents();
+        }
+
+        function confirmAddressBookSelection() {
+            closeAddressBookModal();
+            const chipsEl = document.getElementById('selectedTargetChips');
+            if (!chipsEl) return;
+
+            if (selectedTargets.length === 0) {
+                chipsEl.innerHTML = '<span class="badge pending" style="background:#1f4730; color:#fff; padding:6px 12px; font-size:13px;">🌐 전교생 학부모 전체 (기본)</span>';
+                return;
+            }
+
+            chipsEl.innerHTML = selectedTargets.map(t => `
+                <span class="badge pending" style="background:#1f4730; color:#fff; padding:6px 12px; font-size:13px; display:inline-flex; align-items:center; gap:6px;">
+                    ${t.label}
+                </span>
+            `).join('');
+        }
+
         async function handleNoticeSend(e) {
             e.preventDefault();
             const title = document.getElementById('nTitle').value.trim();
-            const targetType = document.getElementById('nTargetType').value;
             const contentType = document.getElementById('nContentType').value;
-            const targetStudentNumbers = document.getElementById('nTargetStudents').value.trim();
+            const deduplicateGuardians = document.getElementById('nDeduplicateGuardians')?.checked || false;
             const textBody = document.getElementById('nTextBody').value.trim();
             
             let contentBody = textBody;
             if (contentType === 'pdf') {
                 const pdfInput = document.getElementById('nPdfFile');
-                if (pdfInput.files && pdfInput.files[0]) {
+                if (pdfInput && pdfInput.files && pdfInput.files[0]) {
                     contentBody = `[PDF 첨부파일: ${pdfInput.files[0].name}]\n` + textBody;
                 } else {
                     contentBody = `[PDF 가정통신문]\n` + textBody;
                 }
             }
 
+            const targetStudentNumbers = selectedTargets.map(t => t.id).join(',');
+
             try {
                 const res = await fetch('/api/teacher/notices', {
                     method: 'POST',
                     headers: { 'Content-Type': 'application/json' },
                     body: JSON.stringify({
-                        title, contentType, contentBody, targetType, targetStudentNumbers
+                        title, contentType, contentBody,
+                        targetType: selectedTargets.length > 0 ? 'students' : 'all',
+                        targetStudentNumbers,
+                        deduplicateGuardians,
+                        noticeCategory
                     })
                 });
                 const data = await res.json();
                 if (!res.ok) throw new Error(data.message || '가정통신문 발송 실패');
-                alert('학부모 모바일 앱으로 가정통신문이 정상 발송되었습니다.');
+                alert('학부모 모바일 앱으로 알리미가 정상 발송되었습니다.');
                 e.target.reset();
+                selectedTargets = [];
+                confirmAddressBookSelection();
             } catch (err) {
                 alert(err.message || '가정통신문 발송 오류');
             }
