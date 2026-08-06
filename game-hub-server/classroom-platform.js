@@ -4314,25 +4314,32 @@ function createClassroomPlatform(options = {}) {
         let existing = null;
         if (t.email) {
           const exEmail = await client.query(
-            `SELECT id FROM classroom_teachers WHERE school_id = $1 AND LOWER(google_email) = LOWER($2)`,
+            `SELECT id, teacher_type, teacher_name, google_email FROM classroom_teachers WHERE school_id = $1 AND LOWER(google_email) = LOWER($2)`,
             [schoolId, t.email]
           );
           existing = exEmail.rows[0];
         }
         if (!existing) {
           const exName = await client.query(
-            `SELECT id FROM classroom_teachers WHERE school_id = $1 AND teacher_name = $2`,
+            `SELECT id, teacher_type, teacher_name, google_email FROM classroom_teachers WHERE school_id = $1 AND teacher_name = $2`,
             [schoolId, t.name]
           );
           existing = exName.rows[0];
         }
 
         if (existing) {
+          const isAdminRow = ["관리자", "교장", "교감"].includes(existing.teacher_type) || existing.teacher_name === "학교관리자" || existing.teacher_name === "관리자";
+          const finalName = isAdminRow ? existing.teacher_name : t.name;
+          const finalEmail = isAdminRow ? existing.google_email : t.email;
+          const finalType = isAdminRow ? "관리자" : t.type;
+          const finalGrade = isAdminRow ? null : t.grade;
+          const finalClass = isAdminRow ? null : t.classNumber;
+
           const updated = await client.query(
             `UPDATE classroom_teachers
              SET teacher_name = $1, teacher_type = $2, google_email = $3, grade = $4, class_number = $5, updated_at = NOW()
              WHERE id = $6 RETURNING id`,
-            [schoolId, t.name, t.type, t.email, t.grade, t.classNumber, existing.id]
+            [finalName, finalType, finalEmail, finalGrade, finalClass, existing.id]
           );
           savedIds.push(updated.rows[0].id);
         } else {
@@ -4346,14 +4353,18 @@ function createClassroomPlatform(options = {}) {
         }
       }
 
-      // Delete any teacher records in this school that are no longer in savedIds
+      // Delete any teacher records in this school that are no longer in savedIds (NEVER delete admin rows!)
       if (savedIds.length > 0) {
         await client.query(
-          `DELETE FROM classroom_teachers WHERE school_id = $1 AND NOT (id = ANY($2::BIGINT[]))`,
+          `DELETE FROM classroom_teachers
+           WHERE school_id = $1 AND NOT (id = ANY($2::BIGINT[])) AND teacher_type NOT IN ('관리자', '교장', '교감') AND teacher_name NOT IN ('학교관리자', '관리자')`,
           [schoolId, savedIds]
         );
       } else {
-        await client.query("DELETE FROM classroom_teachers WHERE school_id = $1", [schoolId]);
+        await client.query(
+          "DELETE FROM classroom_teachers WHERE school_id = $1 AND teacher_type NOT IN ('관리자', '교장', '교감') AND teacher_name NOT IN ('학교관리자', '관리자')",
+          [schoolId]
+        );
       }
 
       await client.query("COMMIT");
