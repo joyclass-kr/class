@@ -1828,10 +1828,14 @@ function createClassroomPlatform(options = {}) {
       );
     }
     
-    if (isStudent && studentIds.length > 0) {
+    if (isStudent) {
       await pool.query(
-        "UPDATE classroom_students SET user_id = $1, updated_at = NOW() WHERE id = ANY($2)",
-        [user.id, studentIds]
+        "UPDATE school_students SET user_id = $1, updated_at = NOW() WHERE LOWER(student_email) = $2",
+        [user.id, email]
+      );
+      await pool.query(
+        "UPDATE classroom_students SET user_id = $1, updated_at = NOW() WHERE LOWER(student_email) = $2",
+        [user.id, email]
       );
     }
 
@@ -1842,7 +1846,7 @@ function createClassroomPlatform(options = {}) {
       [hashSessionToken(sessionToken), user.id, SESSION_MAX_AGE_SECONDS]
     );
     setSessionCookie(res, sessionToken);
-    const membership = user.role === "student" ? await studentMembership(user.id) : null;
+    const membership = (user.role === "student" || user.role === "user" || isStudent) ? await studentMembership(user.id) : null;
     return res.json({ ok: true, user: publicUser(user), membership });
   }));
 

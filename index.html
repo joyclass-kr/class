@@ -1311,6 +1311,17 @@
                     updatePlayerLearningLinks(guestName);
                     setHubLocked(false);
                 }
+
+                // Fail-safe: If signed in with user account, but profileList is still empty, always show Student profile button!
+                if (profileList.children.length === 0 && state.user) {
+                    const btn = document.createElement('a');
+                    btn.className = 'profile-btn student';
+                    btn.href = '/classboard/';
+                    const uName = state.user.name || state.user.displayName || '학생';
+                    btn.innerHTML = `<span class="profile-title">🎓 ${uName} 학생</span><span class="profile-desc">학생 계정 (구글 클래스룸 학급 알림장 열기)</span>`;
+                    profileList.appendChild(btn);
+                    setHubLocked(false);
+                }
                 
                 setStatus('');
             }
