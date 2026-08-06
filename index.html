@@ -312,6 +312,7 @@
         .profile-desc { font-size: 0.85rem; color: #aaa; }
         .profile-btn.teacher .profile-title { color: #f4b400; }
         .profile-btn.school-admin .profile-title { color: #8b5cf6; }
+        .profile-btn.student .profile-title { color: #38bdf8; }
         .profile-btn.guardian .profile-title { color: #75d69f; }
         .profile-btn.admin .profile-title { color: #ff5252; }
 
@@ -1261,12 +1262,25 @@
                 }
 
                 // 3. Student
-                if (state.membership) {
+                if (state.membership || state.user?.role === 'student') {
+                    const m = state.membership;
                     const btn = document.createElement('a');
-                    btn.className = 'profile-btn';
+                    btn.className = 'profile-btn student';
                     btn.href = '/classboard/';
-                    btn.innerHTML = `<span class="profile-title">👦 ${state.membership.schoolName} ${state.membership.studentName} 학생</span><span class="profile-desc">학생 계정 (학급 알리미 열기)</span>`;
+                    const schoolLabel = m?.schoolName || state.user?.schoolName || '학급';
+                    const gradeClassLabel = (m?.grade && m?.classNumber) ? `${m.grade}학년 ${m.classNumber}반 ${m.studentNumber}번 ` : '';
+                    const studentName = m?.studentName || state.user?.displayName || state.user?.name || '학생';
+                    
+                    btn.innerHTML = `<span class="profile-title">🎓 ${schoolLabel} ${gradeClassLabel}${studentName} 학생</span><span class="profile-desc">학생 계정 (구글 클래스룸 학급 알림장 열기)</span>`;
                     profileList.appendChild(btn);
+
+                    const studentPlayerName = studentName;
+                    if (isValidPlayerName(studentPlayerName)) {
+                        currentPlayerName = studentPlayerName;
+                        localStorage.setItem('classPlayerName', studentPlayerName);
+                        updatePlayerLearningLinks(studentPlayerName);
+                    }
+                    setHubLocked(false);
                 }
 
                 // 4. Guardian (Parents)
