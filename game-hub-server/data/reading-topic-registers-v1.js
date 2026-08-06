@@ -84,7 +84,7 @@ module.exports = {
         ],
         [
           "잎이 많은 숲의 공기는 수증기를 더 많이 받는다.",
-          "Air in a leafy forest takes in more water vapor daily."
+          "Air in a leafy forest takes in more water vapor."
         ],
         [
           "물의 순환을 말할 때는 이동과 모습 변화를 함께 본다.",
@@ -822,7 +822,7 @@ module.exports = {
         ],
         [
           "지역의 평소 모습은 여러 해 기록으로 살핀다.",
-          "A student reads many years of records for a region's usual pattern."
+          "A region's usual pattern shows up in records from many years."
         ],
         [
           "산의 양쪽은 공기와 비가 달라 기후도 다르다.",
@@ -856,7 +856,7 @@ module.exports = {
         ],
         [
           "두 도시 기후는 지난주 기록으로 결론을 낸다.",
-          "A student uses last week's records to compare two cities' climates."
+          "Two cities' climates are judged from just last week's records."
         ],
         [
           "산의 양쪽은 같은 산이니 비도 같다고 본다.",
@@ -2148,7 +2148,7 @@ module.exports = {
   "MATH-RATIO": {
     "easy": {
       "intro": [
-        "두 양을 비교하는 방법을 아래에 하나씩 모았다.",
+        "두 양을 비교하는 방법을 알아보자.",
         "Below are some ways to compare two amounts."
       ],
       "facts": [
@@ -2465,7 +2465,7 @@ module.exports = {
       ],
       "wrong": [
         [
-          "비의 앞항과 뒷항을 바꾸어 적더라도 비교의 기준이 달라지는 것이므로, 두 양 사이의 관계는 그대로 유지된다.",
+          "비의 앞항과 뒷항을 바꾸어 적으면 비교의 기준은 달라지지만, 두 양 사이의 관계는 그대로 유지된다.",
           "Swapping the two terms of a ratio moves the reference point, though the relationship that the ratio records is preserved."
         ],
         [
@@ -2502,7 +2502,7 @@ module.exports = {
   "ART-LOOKING": {
     "easy": {
       "intro": [
-        "그림을 볼 때 무엇을 살필지 아래에 모았다.",
+        "그림을 볼 때 무엇을 살필지 알아보자.",
         "Below are things to look at in an artwork."
       ],
       "facts": [
@@ -2855,7 +2855,7 @@ module.exports = {
   },
   "KO-MEDIA-EVIDENCE": {
     "easy": {
-      "intro": "정보를 믿기 전에 무엇을 볼지 아래에 정리했다.",
+      "intro": "정보를 믿기 전에 무엇을 볼지 알아보자.",
       "facts": [
         "정보를 볼 때는 만든 사람과 근거를 같이 본다.",
         "같은 일도 고른 자료에 따라 다르게 보인다.",
@@ -2963,7 +2963,7 @@ module.exports = {
   },
   "KO-RULES-EXCEPTIONS": {
     "easy": {
-      "intro": "규칙을 지킬 때와 고칠 때 볼 점을 아래에 모았다.",
+      "intro": "규칙을 지킬 때와 고칠 때 볼 점을 알아보자.",
       "facts": [
         "규칙은 같은 상황에서 서로 무엇을 할지 알려 준다.",
         "목적을 아는 사람은 어려운 상황도 잘 판단한다.",
@@ -3124,7 +3124,7 @@ module.exports = {
       ]
     },
     "hard": {
-      "intro": "This section examines the ways in which notifications and sustained attention interact while people carry out everyday work that depends on digital tools.",
+      "intro": "Notifications rarely arrive at a convenient moment, and the passage below traces what that does to attention during work that depends on digital tools.",
       "facts": [
         "Because attention is a finite resource, the many signals that reach a person at one time cannot each be granted the same depth of processing.",
         "A notification, though it takes no more than a few seconds to read, can still interrupt a task that a person has entered deeply.",
@@ -3232,7 +3232,7 @@ module.exports = {
       ]
     },
     "hard": {
-      "intro": "This passage examines the ways in which trees relate to the heat that builds up in city neighborhoods during long stretches of summer weather.",
+      "intro": "City summers build up heat unevenly from block to block, and what follows traces the part trees play in where that heat gathers and where it does not.",
       "facts": [
         "Dark surfaces in a city absorb the sunlight that reaches them and become warmer than ground that lies in shade during the same hours.",
         "A tree canopy intercepts sunlight before it reaches the pavement, walls, and people below, which prevents heat rather than removing it after a surface warms.",
@@ -3287,7 +3287,7 @@ module.exports = {
   },
   "KO-COMPARISON-STANDARDS": {
     "easy": {
-      "intro": "두 가지를 견줄 때 무엇을 먼저 정할지 아래에 적었다.",
+      "intro": "두 가지를 견줄 때 무엇을 먼저 정할지 알아보자.",
       "facts": [
         "둘을 견줄 때 기준을 무엇으로 삼았는지 밝힌다.",
         "크기가 다른 무리는 비율로 견주는 편이 낫다.",
@@ -3340,7 +3340,7 @@ module.exports = {
       ]
     },
     "hard": {
-      "intro": "두 대상을 견주려면 무엇을 먼저 정해야 하고 어떤 점을 놓치기 쉬운지 아래에 정리해 두었다.",
+      "intro": "두 대상을 견줄 때는 기준부터 정해야 하는데, 그 과정에서 흔히 놓치는 점들을 함께 살펴보자.",
       "facts": [
         "둘을 견주어 어느 쪽이 낫다고 말하려면, 무엇을 기준으로 삼았는지부터 분명히 밝혀야 한다.",
         "전체 크기가 다른 두 집단은 발생한 수를 그대로 맞대기보다, 전체에 대한 비율로 바꾸어 견주는 편이 적절하다.",
@@ -3395,7 +3395,7 @@ module.exports = {
   },
   "KO-CAUSE-ALTERNATIVES": {
     "easy": {
-      "intro": "어떤 일의 원인을 찾을 때 무엇을 살필지 적었다.",
+      "intro": "어떤 일의 원인을 찾을 때 무엇을 살필지 알아보자.",
       "facts": [
         "둘이 같이 변해도 바로 원인을 정하지는 못한다.",
         "세 번째 원인이 둘에 함께 영향을 줄 수 있다.",
@@ -3433,7 +3433,7 @@ module.exports = {
         "화분 수가 많으니 빛과 물이 달라도 그냥 견준다.",
         "집중이 달라진 까닭으로 잠만 남기고 소음과 밥은 뺀다.",
         "같은 비가 왔으니 흙과 기울기가 달라도 잠김은 같다.",
-        "두 값이 나란히 오르내리니 한쪽을 원인으로 본다.",
+        "약을 먹어도 늦게 나은 사례는 드문 일로 보고 넘긴다.",
         "반 하나에서 같은 결과가 나왔으니 다른 설명은 넘긴다."
       ],
       "wrong": [
@@ -3448,7 +3448,7 @@ module.exports = {
       ]
     },
     "hard": {
-      "intro": "어떤 일의 원인을 짚으려면 무엇을 함께 따져야 하고 어떤 가능성을 남겨야 하는지 아래에 정리해 두었다.",
+      "intro": "어떤 일의 원인을 섣불리 단정하기 전에 함께 따져야 할 점과 열어 두어야 할 가능성을 살펴보자.",
       "facts": [
         "두 현상이 같은 시기에 나란히 변했다고 하더라도, 그것만으로 한쪽이 다른 쪽의 원인이라고 말할 수는 없다.",
         "겉으로는 두 현상이 맞물려 움직이는 듯 보이더라도, 그 둘에 함께 작용한 세 번째 요인이 숨어 있을 수 있다.",
@@ -3556,7 +3556,7 @@ module.exports = {
       ]
     },
     "hard": {
-      "intro": "This passage examines how the methods a learner chooses, rather than the hours they take, shape what can be recalled when the notes are closed.",
+      "intro": "Two learners can log the same hours of study and still remember very differently, and the paragraphs below trace why the method chosen matters more than the time spent.",
       "facts": [
         "Rereading makes a passage feel familiar, and that familiarity, though easily mistaken for durable knowledge, says little about what could be recalled unaided.",
         "Retrieval practice asks that learners produce the material from memory first, so that the answer is consulted after the attempt rather than before it.",
@@ -3657,14 +3657,14 @@ module.exports = {
         "Animals mix signal forms after the first form has arrived.",
         "A signal grows more useful as it gets harder to notice.",
         "Loud calls keep a caller safe because distance hides it.",
-        "A hard signal is honest because weak animals show it often.",
+        "A hard signal is honest simply because it shows up often.",
         "A signal keeps one meaning even as the setting changes.",
         "Receivers gain more by answering all signals in the same way.",
         "Communication changes through senders alone, and receivers stay fixed."
       ]
     },
     "hard": {
-      "intro": "This passage examines how animals produce signals and how the responses of receivers, which are shaped over generations, decide what those signals come to mean.",
+      "intro": "An animal signal means little by itself; what follows traces how it is produced and how receivers, shaped by generations of response, decide what it comes to mean.",
       "facts": [
         "When one animal signals, the behavior of the animal that receives it can change, and that change is what signaling is for.",
         "Signals may travel as sound, movement, color, or scent, and a display that combines two of these forms is common rather than unusual.",
@@ -3710,7 +3710,7 @@ module.exports = {
         "Animals combine sound with movement mainly when the first form has already reached the receiver, so the second channel is added afterward.",
         "A signal becomes more useful as it grows harder to detect, because a display that the environment hides forces the receiver to attend closely.",
         "A loud call protects the animal that produces it, because the distance the sound travels hides the caller from any predator that hears it.",
-        "A demanding display is reliable because weak animals produce it more often than strong ones, and that frequency is what receivers read as honesty.",
+        "A demanding display is reliable simply because it appears often within the population, and that frequency alone is what receivers read as honesty.",
         "A signal holds one fixed meaning even when the animal's situation changes, because the form the sender produces settles the message by itself.",
         "Receivers gain more by answering every signal in the same way, because a uniform response saves the effort that judging reliability would take.",
         "Communication evolves through changes on the signaler's side, because receiver behavior stays fixed while the displays that animals produce are reshaped over generations."
@@ -3880,7 +3880,7 @@ module.exports = {
       ]
     },
     "hard": {
-      "intro": "긴 글을 요약할 때 어떤 내용을 남기고 어떤 내용을 줄여야 하는지 판단하는 방법을 아래와 같이 정리해 볼 수 있다.",
+      "intro": "긴 글을 요약할 때는 무엇을 남기고 무엇을 줄일지 판단해야 하는데, 그 기준을 살펴보자.",
       "facts": [
         "글의 핵심은 문장을 많이 옮겨 적더라도 드러나지 않으며 여러 문장을 하나로 묶는 중심 생각 속에서 찾을 수 있다.",
         "아무리 흥미로운 사례라 하더라도 그것이 중심 생각을 뒷받침하고 있어야 비로소 핵심 정보가 된다.",
@@ -3988,7 +3988,7 @@ module.exports = {
       ]
     },
     "hard": {
-      "intro": "This passage examines what a model represents and how the predictions that follow from it are checked against observations, which may support or undermine the model.",
+      "intro": "Every model leaves something out on purpose, and what follows traces what it keeps, what it drops, and how its predictions hold up against what is actually observed.",
       "facts": [
         "A model represents the features that its makers judged relevant, which means copying every detail of the system was not the aim.",
         "Models that prove useful strip away detail, because a reduced picture, though less complete, lets an important relationship stand out.",
@@ -4096,7 +4096,7 @@ module.exports = {
       ]
     },
     "hard": {
-      "intro": "This passage examines how the output that a system produces returns to shape what happens next, and why the loop hides when a single step is watched.",
+      "intro": "A system's own output can quietly steer what it does next, and the paragraphs below trace how that loop works and why it disappears from view when only one step is watched.",
       "facts": [
         "Feedback is present whenever the output of a system travels back into it and shapes the behavior that follows, rather than leaving the loop.",
         "Balancing feedback works against whatever change is under way, so that a system that drifts from its target range is pulled back toward it.",

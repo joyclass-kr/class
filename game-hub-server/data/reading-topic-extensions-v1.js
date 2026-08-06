@@ -18,7 +18,7 @@
 module.exports = {
   "SCI-WATER-CYCLE": {
     "intro": [
-      "물이 어떤 길을 따라 이동하고 형태를 바꾸는지 정리하면 다음과 같다.",
+      "물이 어떤 길을 따라 이동하며 형태를 바꾸는지 자세히 살펴보자.",
       "Here is how water moves from place to place and changes its form."
     ],
     "inferences": [
@@ -32,7 +32,7 @@ module.exports = {
       ],
       [
         "같은 구름이라도 물방울이 작게 유지되는 동안에는 비가 내리기까지 시간이 더 걸린다.",
-        "A cloud produces no rain for as long as the droplets inside it remain small ones."
+        "Even in the same cloud, rain takes longer to fall for as long as the droplets inside stay small."
       ],
       [
         "비가 그친 뒤 지표에 남은 물만 재면 실제로 내린 비의 양보다 적게 계산된다.",
@@ -106,7 +106,7 @@ module.exports = {
   },
   "SCI-ECOSYSTEM": {
     "intro": [
-      "생물들이 서로 어떻게 이어져 살아가는지 살펴보면 다음과 같다.",
+      "한 지역에 사는 생물들이 서로 어떻게 이어져 살아가는지 알아보자.",
       "The following describes how living things in one place are connected to each other."
     ],
     "inferences": [
@@ -194,7 +194,7 @@ module.exports = {
   },
   "SCI-WEATHER-CLIMATE": {
     "intro": [
-      "날씨와 기후를 어떻게 구분해 살펴야 하는지 정리하면 다음과 같다.",
+      "날씨와 기후는 언뜻 비슷해 보이지만, 어떻게 구분해서 읽어야 하는지 짚어 보자.",
       "The following explains how to tell weather and climate apart when reading records."
     ],
     "inferences": [
@@ -282,7 +282,7 @@ module.exports = {
   },
   "SCI-ENERGY": {
     "intro": [
-      "에너지가 어떤 형태로 바뀌며 옮겨 가는지 정리하면 다음과 같다.",
+      "에너지가 어떤 형태로 바뀌고 어디로 옮겨 가는지 하나씩 짚어 보자.",
       "The following sets out how energy changes form and moves from one place to another."
     ],
     "inferences": [
@@ -370,7 +370,7 @@ module.exports = {
   },
   "TECH-DIGITAL-SAFETY": {
     "intro": [
-      "온라인에서 계정과 정보를 지키려면 무엇을 살펴야 하는지 정리하면 다음과 같다.",
+      "온라인에서 계정과 정보를 지키려면 무엇을 먼저 확인해야 하는지 짚어 보자.",
       "The points below outline what to check in order to protect accounts and information online."
     ],
     "inferences": [
@@ -458,7 +458,7 @@ module.exports = {
   },
   "SOC-DEMOCRATIC-DECISION": {
     "intro": [
-      "여럿이 함께 결정을 내릴 때 무엇을 살펴야 하는지 정리하면 다음과 같다.",
+      "여럿이 함께 결정을 내릴 때는 무엇을 놓치기 쉬운지 짚어 보자.",
       "The points below set out what to consider when a group makes a decision together."
     ],
     "inferences": [
@@ -546,7 +546,7 @@ module.exports = {
   },
   "MATH-RATIO": {
     "intro": [
-      "두 양을 비교하는 방법과 그때 살펴야 할 점을 정리하면 다음과 같다.",
+      "두 양을 비교할 때 쓸 수 있는 방법과 그때 놓치기 쉬운 점을 살펴보자.",
       "The points below describe ways of comparing two quantities and what to watch for."
     ],
     "inferences": [
@@ -634,7 +634,7 @@ module.exports = {
   },
   "ART-LOOKING": {
     "intro": [
-      "미술 작품을 앞에 두고 무엇을 어떻게 살펴볼 수 있는지 정리하면 다음과 같다.",
+      "미술 작품을 앞에 두었을 때 무엇을 어떻게 살펴보면 좋을지 알아보자.",
       "The points below describe what a viewer can look at, and how, when facing an artwork."
     ],
     "inferences": [
@@ -721,7 +721,7 @@ module.exports = {
     ]
   },
   "KO-MEDIA-EVIDENCE": {
-    "intro": "정보를 믿을지 정하기 전에 무엇을 확인해야 하는지 아래에 정리해 두었다.",
+    "intro": "정보를 믿을지 정하기 전에 무엇을 확인해야 하는지 살펴보자.",
     "inferences": [
       "내용이 그럴듯해도 누가 어떤 근거로 썼는지 모르면 판단을 미루는 편이 낫다.",
       "같은 사건을 다룬 두 글의 인상이 다르다면 고른 자료가 서로 달랐을 가능성이 있다.",
@@ -745,7 +745,7 @@ module.exports = {
     "wrongExtra": []
   },
   "KO-RULES-EXCEPTIONS": {
-    "intro": "규칙을 지키고 고칠 때 무엇을 살펴야 하는지 아래에서 차례로 정리한다.",
+    "intro": "규칙을 지키고 고칠 때 무엇을 살펴야 하는지 하나씩 짚어 보자.",
     "inferences": [
       "규칙이 무엇을 말하는지 알려지지 않은 곳에서는 서로의 행동을 예상하기 어려워진다.",
       "규칙의 문장만 외운 사람은 처음 겪는 상황에서 무엇을 지켜야 할지를 놓칠 수 있다.",
@@ -769,7 +769,7 @@ module.exports = {
     "wrongExtra": []
   },
   "EN-ATTENTION-NOTIFICATIONS": {
-    "intro": "This section examines how notifications and attention interact during everyday work with digital tools.",
+    "intro": "A phone that buzzes every few minutes is doing something to your focus, and this passage looks at what that is.",
     "inferences": [
       "Adding a second demand to a focused task lowers the depth given to each.",
       "The cost of an alert is not well described by the seconds spent reading it.",
@@ -793,7 +793,7 @@ module.exports = {
     "wrongExtra": []
   },
   "EN-URBAN-TREES": {
-    "intro": "This passage looks at how trees relate to heat in city neighborhoods.",
+    "intro": "City blocks do not all heat up the same way, and trees are a big part of why.",
     "inferences": [
       "A surface's color helps explain why one part of a street feels warmer.",
       "Shade lowers heat by acting before sunlight is absorbed rather than after.",
@@ -817,7 +817,7 @@ module.exports = {
     "wrongExtra": []
   },
   "KO-COMPARISON-STANDARDS": {
-    "intro": "두 가지를 견주어 볼 때 무엇을 먼저 정해야 하는지 아래에 정리해 두었다.",
+    "intro": "두 가지를 견주어 볼 때 무엇을 먼저 정해야 하는지 짚어 보자.",
     "inferences": [
       "기준을 밝히지 않은 비교는 읽는 사람마다 다른 결론으로 이어질 수 있다.",
       "인원이 많은 학교에서 사례 수가 크게 나온 것은 특별한 결과가 아니다.",
@@ -841,7 +841,7 @@ module.exports = {
     "wrongExtra": []
   },
   "KO-CAUSE-ALTERNATIVES": {
-    "intro": "어떤 일의 원인을 찾을 때 무엇을 함께 따져야 하는지 아래에 정리해 두었다.",
+    "intro": "어떤 일의 원인을 찾을 때 무엇을 함께 따져야 하는지 살펴보자.",
     "inferences": [
       "두 값이 나란히 오르내린 자료는 아직 원인을 정하기 전 단계에 있다.",
       "두 현상이 함께 움직였다면 둘에 같이 작용한 다른 요인이 있는지 찾아보아야 한다.",
@@ -865,7 +865,7 @@ module.exports = {
     "wrongExtra": []
   },
   "EN-RETRIEVAL-PRACTICE": {
-    "intro": "This passage explains how different ways of studying affect what a learner later remembers.",
+    "intro": "Not all study methods leave the same trace in memory, and this passage looks at why.",
     "inferences": [
       "A smooth feeling while rereading is weak evidence about what is remembered.",
       "Keeping the answer in view during review removes the work retrieval requires.",
@@ -889,7 +889,7 @@ module.exports = {
     "wrongExtra": []
   },
   "EN-ANIMAL-SIGNALS": {
-    "intro": "This passage looks at how animals send signals and how receivers respond to them.",
+    "intro": "An animal's signal only matters once another animal responds to it, and that exchange is what this passage traces.",
     "inferences": [
       "Part of a signal's effect appears in what the receiver does next.",
       "An observer who records sound alone may miss a visible part of a message.",
@@ -937,7 +937,7 @@ module.exports = {
     "wrongExtra": []
   },
   "KO-MAIN-RELEVANCE": {
-    "intro": "긴 글에서 무엇을 남기고 무엇을 줄일지 판단하는 방법을 정리하면 다음과 같다.",
+    "intro": "긴 글에서 무엇을 남기고 무엇을 줄일지, 그 판단 방법을 살펴보자.",
     "inferences": [
       "한 문장을 따로 옮겨 적으면 글 전체를 아우르는 중심 생각은 빠지게 된다.",
       "기억에 남는 이야기라도 글의 중심과 멀면 요약에서 빠질 수 있다.",
@@ -961,7 +961,7 @@ module.exports = {
     "wrongExtra": []
   },
   "EN-MODELS-PREDICTIONS": {
-    "intro": "This passage describes what models do and how their predictions are checked.",
+    "intro": "A model always leaves details out on purpose. This passage looks at what stays in, what gets dropped, and how the predictions get checked.",
     "inferences": [
       "Leaving some detail out of a model can be a deliberate choice, not a flaw.",
       "Some loss of detail is the price of seeing a broad relationship clearly.",
@@ -985,7 +985,7 @@ module.exports = {
     "wrongExtra": []
   },
   "EN-FEEDBACK-SYSTEMS": {
-    "intro": "This passage explains how a system's own output can shape what happens next.",
+    "intro": "Sometimes a system's own output shapes what happens next without anyone noticing, and that hidden loop is what this passage traces.",
     "inferences": [
       "A process whose result does not return to the system is not feedback.",
       "Balancing feedback tends to keep a system within a range rather than drifting.",
