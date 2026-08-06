@@ -507,9 +507,9 @@
             <div class="paste-section" id="teacherPasteSection" style="display:none;margin-top:16px;">
                 <div class="card-desc" style="margin-bottom:8px;font-weight:bold;">
                     엑셀에서 아래 순서대로 탭(Tab) 구분된 데이터를 복사하여 붙여넣으세요:
-                    <br><span style="color:var(--primary); font-size:12px;">구분 | 성명 | 구글 계정 | 학년 | 반</span>
+                    <br><span style="color:var(--primary); font-size:12px;">성명 | 구글 계정 | 담당 학년 | 담당 반</span>
                 </div>
-                <textarea class="paste-input" id="teacherPasteInput" placeholder="예시:&#10;담임	홍길동	hong@school.es.kr	1	1&#10;전담	김철수	kim@school.es.kr		&#10;관리자	이영희	master@school.es.kr" rows="8"></textarea>
+                <textarea class="paste-input" id="teacherPasteInput" placeholder="예시:&#10;홍길동	hong@school.es.kr	1	1&#10;김철수	kim@school.es.kr&#10;이영희	lee@school.es.kr	6	2" rows="8"></textarea>
                 <div style="display:flex;gap:8px;margin-top:10px;align-items:center;flex-wrap:wrap;">
                     <button class="btn btn-primary" onclick="parseTeacherPaste()">✅ 파싱 및 반영</button>
                     <button class="btn btn-secondary" onclick="toggleTeacherPasteSection()">취소</button>
@@ -523,11 +523,11 @@
                 <table class="roster-table">
                     <thead>
                         <tr>
-                            <th style="width:100px;">구분</th>
-                            <th style="width:120px;">성명</th>
+                            <th style="width:130px;">성명</th>
                             <th>구글 계정</th>
-                            <th style="width:70px;">담당 학년</th>
-                            <th style="width:70px;">담당 반</th>
+                            <th style="width:80px;">담당 학년</th>
+                            <th style="width:80px;">담당 반</th>
+                            <th style="width:110px;">직책 (자동)</th>
                             <th style="width:90px;">연동 상태</th>
                             <th style="width:60px;">관리</th>
                         </tr>
@@ -706,16 +706,15 @@
         }
 
         tbody.innerHTML = allTeachers.map((t, idx) => {
+            const hasClass = Boolean(t.grade && t.classNumber);
+            const roleBadge = hasClass
+                ? `<span style="background:#e0f2fe;color:#0284c7;padding:3px 8px;border-radius:12px;font-size:11px;font-weight:bold;">담임 (${t.grade}-${t.classNumber})</span>`
+                : `<span style="background:#f3f4f6;color:#4b5563;padding:3px 8px;border-radius:12px;font-size:11px;">전담/교직원</span>`;
+            
             const linkedBadge = t.linked ? `<span class="linked-badge">✓ 연동</span>` : `<span style="color:#9ca3af;font-size:11px;">미연동</span>`;
+            
             return `
                 <tr>
-                    <td>
-                        <select class="roster-cell-input" style="width:100%;border:1px solid #d1d5db;border-radius:4px;padding:3px;" onchange="updateTeacherField(${idx}, 'type', this.value)">
-                            <option value="담임" ${t.type === '담임' ? 'selected' : ''}>담임</option>
-                            <option value="전담" ${t.type === '전담' ? 'selected' : ''}>전담</option>
-                            <option value="관리자" ${t.type === '관리자' || t.type === '교장' || t.type === '교감' ? 'selected' : ''}>관리자</option>
-                        </select>
-                    </td>
                     <td>
                         <input class="roster-cell-input" style="width:100%;border:1px solid #d1d5db;border-radius:4px;padding:3px 6px;" value="${esc(t.name || '')}" placeholder="성명" onchange="updateTeacherField(${idx}, 'name', this.value)">
                     </td>
@@ -728,6 +727,7 @@
                     <td>
                         <input class="roster-cell-input" style="width:100%;border:1px solid #d1d5db;border-radius:4px;padding:3px 6px;" value="${esc(t.classNumber ?? '')}" placeholder="반" onchange="updateTeacherField(${idx}, 'classNumber', this.value)">
                     </td>
+                    <td style="text-align:center;">${roleBadge}</td>
                     <td style="text-align:center;">${linkedBadge}</td>
                     <td style="text-align:center;">
                         ${isSchoolAdmin ? `<button class="delete-item-btn" onclick="deleteTeacherRow(${idx})" title="삭제">🗑️</button>` : ''}
@@ -740,10 +740,11 @@
     window.updateTeacherField = function(idx, field, val) {
         if (!allTeachers[idx]) return;
         allTeachers[idx][field] = val;
+        renderTeacherRosterTable();
     };
 
     window.addTeacherRow = function() {
-        allTeachers.push({ type: "담임", name: "", email: "", grade: "", classNumber: "", linked: false });
+        allTeachers.push({ name: "", email: "", grade: "", classNumber: "", linked: false });
         renderTeacherRosterTable();
         setStatus("teacherRosterStatus", "새 교사 행이 추가되었습니다. 내용을 작성 후 '💾 저장' 버튼을 누르세요.");
     };
@@ -760,13 +761,19 @@
         if (btn) btn.disabled = true;
         setStatus("teacherRosterStatus", "교사 명단 저장 중…");
         try {
-            const clean = allTeachers.map(t => ({
-                type: t.type || "담임",
-                name: String(t.name || "").trim(),
-                email: String(t.email || "").trim(),
-                grade: t.grade ? Number(t.grade) : null,
-                classNumber: t.classNumber ? Number(t.classNumber) : null
-            })).filter(t => t.name && t.email);
+            const clean = allTeachers.map(t => {
+                const g = t.grade ? Number(t.grade) : null;
+                const c = t.classNumber ? Number(t.classNumber) : null;
+                const calculatedType = (g && c) ? "담임" : "전담";
+
+                return {
+                    type: calculatedType,
+                    name: String(t.name || "").trim(),
+                    email: String(t.email || "").trim(),
+                    grade: g,
+                    classNumber: c
+                };
+            }).filter(t => t.name && t.email);
 
             const result = await api("/api/school/teachers", {
                 method: "PUT",
@@ -797,16 +804,18 @@
         const parsed = lines.map(line => {
             const parts = line.split("\t").map(p => p.trim());
             if (parts.length < 2) return null;
-            let type = "담임";
-            if (parts[0].includes("관리") || parts[0].includes("교장") || parts[0].includes("교감")) type = "관리자";
-            else if (parts[0].includes("전담")) type = "전담";
+            
+            const name = parts[0];
+            const email = parts[1];
+            const grade = parts[2] ? Number(parts[2]) : null;
+            const classNumber = parts[3] ? Number(parts[3]) : null;
 
             return {
-                type,
-                name: parts[1] || parts[0],
-                email: parts[2] || parts[1],
-                grade: parts[3] ? Number(parts[3]) : null,
-                classNumber: parts[4] ? Number(parts[4]) : null,
+                type: (grade && classNumber) ? "담임" : "전담",
+                name,
+                email,
+                grade,
+                classNumber,
                 linked: false
             };
         }).filter(Boolean);
