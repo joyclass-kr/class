@@ -739,7 +739,8 @@
 
     window.updateTeacherField = function(idx, field, val) {
         if (!allTeachers[idx]) return;
-        allTeachers[idx][field] = val;
+        const cleanVal = field === 'name' ? val.replace(/\s+/g, "") : val.trim();
+        allTeachers[idx][field] = cleanVal;
         renderTeacherRosterTable();
     };
 
@@ -765,15 +766,17 @@
                 const g = t.grade ? Number(t.grade) : null;
                 const c = t.classNumber ? Number(t.classNumber) : null;
                 const calculatedType = (g && c) ? "담임" : "전담";
+                const cleanName = String(t.name || "").replace(/\s+/g, "");
+                const cleanEmail = t.email ? String(t.email).trim() : null;
 
                 return {
                     type: calculatedType,
-                    name: String(t.name || "").trim(),
-                    email: String(t.email || "").trim(),
+                    name: cleanName,
+                    email: cleanEmail,
                     grade: g,
                     classNumber: c
                 };
-            }).filter(t => t.name && t.email);
+            }).filter(t => t.name);
 
             const result = await api("/api/school/teachers", {
                 method: "PUT",
@@ -803,12 +806,13 @@
         const lines = text.split("\n").map(l => l.trim()).filter(Boolean);
         const parsed = lines.map(line => {
             const parts = line.split("\t").map(p => p.trim());
-            if (parts.length < 2) return null;
+            if (parts.length < 1) return null;
             
-            const name = parts[0];
-            const email = parts[1];
-            const grade = parts[2] ? Number(parts[2]) : null;
-            const classNumber = parts[3] ? Number(parts[3]) : null;
+            const name = parts[0].replace(/\s+/g, "");
+            if (!name) return null;
+            const email = (parts[1] && parts[1].includes("@")) ? parts[1].trim() : "";
+            const grade = parts[2] ? Number(parts[2]) : (parts[1] && !parts[1].includes("@") ? Number(parts[1]) : null);
+            const classNumber = parts[3] ? Number(parts[3]) : (parts[2] && !parts[1]?.includes("@") ? Number(parts[2]) : null);
 
             return {
                 type: (grade && classNumber) ? "담임" : "전담",

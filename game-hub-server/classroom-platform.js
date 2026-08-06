@@ -4289,91 +4289,70 @@ function createClassroomPlatform(options = {}) {
       [teacher.id]
     );
     if (!tp.rows[0]) throw new HttpError(403, "TEACHER_REQUIRED", "교사 계정이 필요합니다.");
-    if (!["관리자", "교장", "교감"].includes(tp.rows[0].teacher_type)) {
-      throw new HttpError(403, "ADMIN_ONLY", "교사 명단 관리는 학교 관리자만 수행할 수 있습니다.");
-    }
     const schoolId = tp.rows[0].school_id;
     const teachers = Array.isArray(req.body?.teachers) ? req.body.teachers : [];
 
     const cleanTeachers = teachers.map((t) => ({
       type: String(t?.type || "담임").trim(),
-      name: String(t?.name || "").normalize("NFC").trim(),
-      email: normalizeEmail(t?.email),
+      name: String(t?.name || "").normalize("NFC").replace(/\s+/g, ""),
+      email: (t?.email && String(t.email).includes("@")) ? normalizeEmail(t.email) : null,
       grade: t?.grade ? Number(t.grade) : null,
       classNumber: t?.classNumber ? Number(t.classNumber) : null
-    })).filter(t => t.name || t.email);
+    })).filter(t => t.name);
 
     for (const t of cleanTeachers) {
       if (!t.name || t.name.length > 30) throw new HttpError(400, "INVALID_TEACHER_NAME", "성명을 확인해 주세요.");
-      if (!t.email || !t.email.includes("@")) throw new HttpError(400, "INVALID_TEACHER_EMAIL", `${t.name}의 이메일 주소를 확인해 주세요.`);
-    }
-
-    const emails = cleanTeachers.map(t => t.email);
-    if (new Set(emails).size !== emails.length) {
-      throw new HttpError(400, "DUPLICATE_EMAIL", "중복된 이메일 주소가 있습니다.");
+      if (t.email && !t.email.includes("@")) throw new HttpError(400, "INVALID_TEACHER_EMAIL", `${t.name}의 이메일 주소를 확인해 주세요.`);
     }
 
     const client = await pool.connect();
     try {
       await client.query("BEGIN");
 
+      const savedIds = [];
       for (const t of cleanTeachers) {
-        const existingByEmail = await client.query(
-          `SELECT id FROM classroom_teachers WHERE LOWER(google_email) = LOWER($1)`,
-          [t.email]
-        );
-        if (existingByEmail.rows.length > 0) {
-          await client.query(
-            `UPDATE classroom_teachers
-             SET school_id = $1, teacher_name = $2, teacher_type = $3, grade = $4, class_number = $5, updated_at = NOW()
-             WHERE id = $6`,
-            [schoolId, t.name, t.type, t.grade, t.classNumber, existingByEmail.rows[0].id]
+        let existing = null;
+        if (t.email) {
+          const exEmail = await client.query(
+            `SELECT id FROM classroom_teachers WHERE school_id = $1 AND LOWER(google_email) = LOWER($2)`,
+            [schoolId, t.email]
           );
-        } else {
-          const existingByName = await client.query(
+          existing = exEmail.rows[0];
+        }
+        if (!existing) {
+          const exName = await client.query(
             `SELECT id FROM classroom_teachers WHERE school_id = $1 AND teacher_name = $2`,
             [schoolId, t.name]
           );
-          if (existingByName.rows.length > 0) {
-            await client.query(
-              `UPDATE classroom_teachers
-               SET teacher_type = $1, google_email = $2, grade = $3, class_number = $4, updated_at = NOW()
-               WHERE id = $5`,
-              [t.type, t.email, t.grade, t.classNumber, existingByName.rows[0].id]
-            );
-          } else {
-            await client.query(
-              `INSERT INTO classroom_teachers
-                 (school_id, teacher_name, password_hash, grade, class_number, teacher_type, google_email)
-               VALUES ($1, $2, 'OAUTH_ONLY', $3, $4, $5, $6)`,
-              [schoolId, t.name, t.grade, t.classNumber, t.type, t.email]
-            );
-          }
+          existing = exName.rows[0];
+        }
+
+        if (existing) {
+          const updated = await client.query(
+            `UPDATE classroom_teachers
+             SET teacher_name = $1, teacher_type = $2, google_email = $3, grade = $4, class_number = $5, updated_at = NOW()
+             WHERE id = $6 RETURNING id`,
+            [schoolId, t.name, t.type, t.email, t.grade, t.classNumber, existing.id]
+          );
+          savedIds.push(updated.rows[0].id);
+        } else {
+          const inserted = await client.query(
+            `INSERT INTO classroom_teachers
+               (school_id, teacher_name, password_hash, grade, class_number, teacher_type, google_email)
+             VALUES ($1, $2, 'OAUTH_ONLY', $3, $4, $5, $6) RETURNING id`,
+            [schoolId, t.name, t.grade, t.classNumber, t.type, t.email]
+          );
+          savedIds.push(inserted.rows[0].id);
         }
       }
 
-      if (emails.length > 0) {
-        const removedTeachers = await client.query(
-          `SELECT user_id FROM classroom_teachers 
-           WHERE school_id = $1 AND user_id IS NOT NULL 
-           AND (google_email IS NULL OR NOT (LOWER(google_email) = ANY($2::TEXT[])))`,
-          [schoolId, emails]
-        );
-        const removedUserIds = removedTeachers.rows.map(r => r.user_id);
-        if (removedUserIds.length > 0) {
-          await client.query(`DELETE FROM classroom_classes WHERE school_id = $1 AND teacher_user_id = ANY($2::BIGINT[])`, [schoolId, removedUserIds]);
-        }
+      // Delete any teacher records in this school that are no longer in savedIds
+      if (savedIds.length > 0) {
         await client.query(
-          `DELETE FROM classroom_teachers 
-           WHERE school_id = $1 AND (google_email IS NULL OR NOT (LOWER(google_email) = ANY($2::TEXT[])))`,
-          [schoolId, emails]
+          `DELETE FROM classroom_teachers WHERE school_id = $1 AND NOT (id = ANY($2::BIGINT[]))`,
+          [schoolId, savedIds]
         );
       } else {
-        const removedTeachers = await client.query(`SELECT user_id FROM classroom_teachers WHERE school_id = $1 AND user_id IS NOT NULL`, [schoolId]);
-        const removedUserIds = removedTeachers.rows.map(r => r.user_id);
-        if (removedUserIds.length > 0) {
-          await client.query(`DELETE FROM classroom_classes WHERE school_id = $1 AND teacher_user_id = ANY($2::BIGINT[])`, [schoolId, removedUserIds]);
-        }
         await client.query("DELETE FROM classroom_teachers WHERE school_id = $1", [schoolId]);
       }
 
