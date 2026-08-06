@@ -1686,11 +1686,14 @@ function createClassroomPlatform(options = {}) {
   router.get("/home-content-access", asyncRoute(async (req, res) => {
     const mode = await getSiteAccessMode();
     const user = await sessionUser(req);
-    if (!user || user.role === "admin") {
+    if (!user) {
       return res.json({ mode, lockedPaths: [], canManage: false });
     }
+    const isTeacherOrAdmin = user.role === "teacher" || user.role === "admin";
     const classId = await userClassId(user);
-    if (!classId) return res.json({ mode, lockedPaths: [], canManage: false });
+    if (!classId) {
+      return res.json({ mode, lockedPaths: [], canManage: isTeacherOrAdmin });
+    }
     const locks = await pool.query(
       "SELECT content_path FROM classroom_content_locks WHERE class_id = $1 ORDER BY content_path",
       [classId]
@@ -1698,7 +1701,7 @@ function createClassroomPlatform(options = {}) {
     res.json({
       mode,
       lockedPaths: locks.rows.map((row) => row.content_path),
-      canManage: user.role === "teacher"
+      canManage: isTeacherOrAdmin
     });
   }));
 
@@ -1706,7 +1709,7 @@ function createClassroomPlatform(options = {}) {
     const teacher = await requireTeacher(req);
     const classId = await userClassId(teacher);
     if (!classId) {
-      throw new HttpError(403, "HOMEROOM_TEACHER_REQUIRED", "담임교사만 자기 반의 공개 설정을 변경할 수 있습니다.");
+      throw new HttpError(403, "HOMEROOM_TEACHER_REQUIRED", "담임교사만 자기 반의 학급 메뉴/게임 잠금을 설정할 수 있습니다. 교사 명단에서 담당 학년과 반을 지정해 주세요.");
     }
     const contentPath = normalizeContentPath(req.body?.path);
     const locked = req.body?.locked === true;
