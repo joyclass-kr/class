@@ -1286,6 +1286,7 @@
                         updatePlayerLearningLinks(studentPlayerName);
                     }
                     setHubLocked(false);
+                    await loadClassContentAccess().catch((error) => console.error('loadClassContentAccess failed', error));
                 }
 
                 // 4. Guardian (Parents)
