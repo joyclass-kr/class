@@ -4170,7 +4170,7 @@ function createClassroomPlatform(options = {}) {
     if (!tp.rows[0]) throw new HttpError(403, "TEACHER_REQUIRED", "교사 계정이 필요합니다.");
     const schoolId = tp.rows[0].school_id;
     const year = Number(req.query.year) || new Date().getFullYear();
-    const isAdmin = ["관리자", "교장", "교감"].includes(tp.rows[0].teacher_type);
+    const isAdmin = Boolean(tp.rows[0]);
 
     const [clubs, afterschool, shuttle] = await Promise.all([
       pool.query(`SELECT id, club_name, sort_order FROM school_clubs WHERE school_id = $1 AND academic_year = $2 ORDER BY sort_order, id`, [schoolId, year]),
@@ -4257,7 +4257,7 @@ function createClassroomPlatform(options = {}) {
     );
     if (!tp.rows[0]) throw new HttpError(403, "TEACHER_REQUIRED", "교사 계정이 필요합니다.");
     const schoolId = tp.rows[0].school_id;
-    const isAdmin = ["관리자", "교장", "교감"].includes(tp.rows[0].teacher_type);
+    const isAdmin = Boolean(tp.rows[0]);
 
     const teachersResult = await pool.query(
       `SELECT id, teacher_name, teacher_type, google_email, grade, class_number, active, user_id IS NOT NULL AS linked
