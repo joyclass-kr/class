@@ -1257,7 +1257,7 @@
                     // Also set up logic that showTeacherHome used to do
                     isTeacherSignedIn = true;
                     restrictedPreview = false;
-                    await loadClassContentAccess();
+                    await loadClassContentAccess().catch((error) => console.error('loadClassContentAccess failed', error));
                     const playerName = normalizePlayerName(teacherProfileData.name);
                     if (isValidPlayerName(playerName)) {
                         currentPlayerName = playerName;
@@ -1354,7 +1354,7 @@
                                 method: 'POST',
                                 body: JSON.stringify({ credential }),
                             });
-                            routeSignedIn({ user: state.user, membership: state.membership });
+                            await routeSignedIn({ user: state.user, membership: state.membership });
                         } catch (error) {
                             setStatus(error.message, true);
                         }

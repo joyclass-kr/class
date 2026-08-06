@@ -1096,11 +1096,11 @@ function createClassroomPlatform(options = {}) {
 
       const year = t.academic_year || new Date().getFullYear();
       const clsRes = await pool.query(
-        `INSERT INTO classroom_classes (school_id, academic_year, grade, class_number, teacher_user_id, name)
-         VALUES ($1, $2, $3, $4, $5, $6)
+        `INSERT INTO classroom_classes (school_id, academic_year, grade, class_number, teacher_user_id, teacher_name, join_code)
+         VALUES ($1, $2, $3, $4, $5, $6, $7)
          ON CONFLICT (school_id, academic_year, grade, class_number) DO UPDATE SET teacher_user_id = EXCLUDED.teacher_user_id, updated_at = NOW()
          RETURNING id`,
-        [t.school_id, year, t.grade, t.class_number, user.id, `${t.grade}학년 ${t.class_number}반`]
+        [t.school_id, year, t.grade, t.class_number, user.id, `${t.grade}학년 ${t.class_number}반`, makeJoinCode()]
       );
       return clsRes.rows[0]?.id || null;
     }
