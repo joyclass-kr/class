@@ -1707,10 +1707,9 @@ function createClassroomPlatform(options = {}) {
     if (!user) {
       return res.json({ mode, lockedPaths: [], canManage: false });
     }
-    const isTeacherOrAdmin = user.role === "teacher" || user.role === "admin";
     const classId = await userClassId(user);
     if (!classId) {
-      return res.json({ mode, lockedPaths: [], canManage: isTeacherOrAdmin });
+      return res.json({ mode, lockedPaths: [], canManage: false });
     }
     const locks = await pool.query(
       "SELECT content_path FROM classroom_content_locks WHERE class_id = $1 ORDER BY content_path",
@@ -1719,7 +1718,7 @@ function createClassroomPlatform(options = {}) {
     res.json({
       mode,
       lockedPaths: locks.rows.map((row) => row.content_path),
-      canManage: isTeacherOrAdmin
+      canManage: user.role === "teacher"
     });
   }));
 
