@@ -218,15 +218,16 @@
 
         .worksheet-container a.is-class-locked,
         .game-card-grid a.is-class-locked {
-            border-color: #858585;
-            background: linear-gradient(135deg, #666, #343434);
-            color: #d5d5d5;
-            filter: grayscale(1);
+            border-color: #555555 !important;
+            background: linear-gradient(135deg, #444444, #222222) !important;
+            color: #888888 !important;
+            filter: grayscale(100%) opacity(0.55) !important;
+            box-shadow: none !important;
         }
 
-        .worksheet-container a.is-class-locked .worksheet-arrow,
-        .game-card-grid a.is-class-locked .worksheet-arrow {
-            color: #bdbdbd;
+        .worksheet-container a.is-class-locked *,
+        .game-card-grid a.is-class-locked * {
+            color: #888888 !important;
         }
 
         .signed-in-actions {
@@ -1438,13 +1439,13 @@
             contentAccessButton.addEventListener('click', () => {
                 contentAccessEditing = !contentAccessEditing;
                 contentAccessButton.setAttribute('aria-pressed', String(contentAccessEditing));
-                contentAccessButton.textContent = contentAccessEditing ? '✅ 잠금 설정 완료' : '🔒 우리 반 학급 메뉴/게임 잠금 설정';
+                contentAccessButton.textContent = contentAccessEditing ? '✅ 공개 설정 완료' : '🔓 공개 설정 모드';
                 contentAccessButton.style.background = contentAccessEditing ? 'linear-gradient(135deg, #059669, #10b981)' : 'linear-gradient(135deg, #0284c7, #2563eb)';
                 document.body.classList.toggle('content-access-editing', contentAccessEditing);
                 renderClassLocks();
                 setStatus(contentAccessEditing
-                    ? '🔒 각 학습 및 게임 카드를 눌러 우리 반 학생의 접근을 잠그거나(🔒) 공개(🔓)하세요.'
-                    : '✅ 우리 반 학급 메뉴/게임 잠금 설정을 저장했습니다.');
+                    ? '각 버튼을 눌러 우리 반 학생의 접근을 잠그거나 공개하세요.'
+                    : '우리 반 공개 설정을 저장했습니다.');
             });
             guestNameInput.oninput = () => {
                 guestNameInput.value = convertQwertyToHangul(guestNameInput.value);
