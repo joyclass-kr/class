@@ -4052,11 +4052,18 @@ function createClassroomPlatform(options = {}) {
       customFields: (typeof s.customFields === 'object' && s.customFields !== null) ? s.customFields : {}
     })).filter(s => s.studentNumber && s.rosterName);
 
+    const seenKeys = new Set();
     for (const s of clean) {
       if (!Number.isInteger(s.grade) || s.grade < 1 || s.grade > 12)
         throw new HttpError(400, "INVALID_GRADE", `학년이 올바르지 않습니다: ${s.rosterName}`);
       if (!Number.isInteger(s.classNumber) || s.classNumber < 1 || s.classNumber > 30)
         throw new HttpError(400, "INVALID_CLASS_NUMBER", `반이 올바르지 않습니다: ${s.rosterName}`);
+
+      const key = `${s.grade}-${s.classNumber}-${s.studentNumber}`;
+      if (seenKeys.has(key)) {
+        throw new HttpError(400, "DUPLICATE_STUDENT_NUMBER", `중복된 학생 번호가 있습니다: ${s.grade}학년 ${s.classNumber}반 ${s.studentNumber}번 (${s.rosterName}). 번호를 다르게 지정해 주세요.`);
+      }
+      seenKeys.add(key);
     }
 
     const client = await pool.connect();

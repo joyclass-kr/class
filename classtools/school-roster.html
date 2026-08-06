@@ -1135,12 +1135,23 @@
         const filterGradeVal = (document.getElementById("filterGrade")?.value || "").replace(/[^0-9]/g, "");
         const filterClassVal = (document.getElementById("filterClass")?.value || "").replace(/[^0-9]/g, "");
 
+        const targetGrade = filterGradeVal ? Number(filterGradeVal) : 1;
+        const targetClass = filterClassVal ? Number(filterClassVal) : 1;
+
+        // 학년/반 내에서 번호가 덮어써지지 않도록 다음 번호 자동 계산
+        const existingInClass = allStudents.filter(s => Number(s.grade) === targetGrade && Number(s.class_number || s.classNumber) === targetClass);
+        const maxNum = existingInClass.reduce((max, s) => {
+            const num = Number(s.student_number || s.studentNumber || 0);
+            return isNaN(num) ? max : Math.max(max, num);
+        }, 0);
+        const nextNumber = String(maxNum + 1);
+
         const newSt = {
-            grade: filterGradeVal ? Number(filterGradeVal) : "",
-            class_number: filterClassVal ? Number(filterClassVal) : "",
-            student_number: "",
+            grade: targetGrade,
+            class_number: targetClass,
+            student_number: nextNumber,
             roster_name: "",
-            gender: "",
+            gender: "여",
             student_email: "",
             guardian1_email: "",
             guardian2_email: "",
@@ -1150,7 +1161,7 @@
         updateClassFilter();
         renderRosterTable();
         document.getElementById("saveRosterBtn").style.display = "inline-flex";
-        setStatus("rosterStatus", "새 학생 행이 추가되었습니다. 내용을 입력한 후 '💾 저장' 버튼을 누르세요.");
+        setStatus("rosterStatus", `새 학생(${targetGrade}학년 ${targetClass}반 ${nextNumber}번) 행이 추가되었습니다. 성명을 입력 후 '💾 저장' 버튼을 누르세요.`);
     };
 
     window.saveRoster = async function() {
@@ -1169,7 +1180,17 @@
                 guardian1Email: s.guardian1_email || s.guardian1Email || null,
                 guardian2Email: s.guardian2_email || s.guardian2Email || null,
                 customFields: s.custom_fields || s.customFields || {}
-            }));
+            })).filter(s => s.grade && s.classNumber && s.studentNumber && s.rosterName);
+
+            // 중복 번호 검사 (같은 학년/반 내 동일 번호 방지)
+            const keys = new Set();
+            for (const s of studentsToSave) {
+                const k = `${s.grade}-${s.classNumber}-${s.studentNumber}`;
+                if (keys.has(k)) {
+                    throw new Error(`❌ ${s.grade}학년 ${s.classNumber}반 ${s.studentNumber}번이 중복되었습니다. 번호를 서로 다르게 수정해 주세요.`);
+                }
+                keys.add(k);
+            }
 
             const result = await api("/api/school/students", {
                 method: "PUT",
