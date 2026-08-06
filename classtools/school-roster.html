@@ -1132,26 +1132,12 @@
     };
 
     window.addSingleStudent = function() {
-        const filterGradeVal = (document.getElementById("filterGrade")?.value || "").replace(/[^0-9]/g, "");
-        const filterClassVal = (document.getElementById("filterClass")?.value || "").replace(/[^0-9]/g, "");
-
-        const targetGrade = filterGradeVal ? Number(filterGradeVal) : 1;
-        const targetClass = filterClassVal ? Number(filterClassVal) : 1;
-
-        // 학년/반 내에서 번호가 덮어써지지 않도록 다음 번호 자동 계산
-        const existingInClass = allStudents.filter(s => Number(s.grade) === targetGrade && Number(s.class_number || s.classNumber) === targetClass);
-        const maxNum = existingInClass.reduce((max, s) => {
-            const num = Number(s.student_number || s.studentNumber || 0);
-            return isNaN(num) ? max : Math.max(max, num);
-        }, 0);
-        const nextNumber = String(maxNum + 1);
-
         const newSt = {
-            grade: targetGrade,
-            class_number: targetClass,
-            student_number: nextNumber,
+            grade: "",
+            class_number: "",
+            student_number: "",
             roster_name: "",
-            gender: "여",
+            gender: "",
             student_email: "",
             guardian1_email: "",
             guardian2_email: "",
@@ -1161,7 +1147,7 @@
         updateClassFilter();
         renderRosterTable();
         document.getElementById("saveRosterBtn").style.display = "inline-flex";
-        setStatus("rosterStatus", `새 학생(${targetGrade}학년 ${targetClass}반 ${nextNumber}번) 행이 추가되었습니다. 성명을 입력 후 '💾 저장' 버튼을 누르세요.`);
+        setStatus("rosterStatus", "새 학생 행이 추가되었습니다. 학년, 반, 번호, 성명을 입력 후 '💾 저장' 버튼을 누르세요.");
     };
 
     window.saveRoster = async function() {
