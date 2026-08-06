@@ -390,12 +390,17 @@
                         </select>
                     </div>
                     <div style="display:flex; gap:10px;">
-                        <div class="form-group" style="flex:1;"><label>시작일</label><input type="date" id="expStart" required></div>
-                        <div class="form-group" style="flex:1;"><label>종료일</label><input type="date" id="expEnd" required></div>
+                        <div class="form-group" style="flex:1;"><label>시작일</label><input type="date" id="eaStart" required onchange="calcExpDays('ea')"></div>
+                        <div class="form-group" style="flex:1;"><label>종료일</label><input type="date" id="eaEnd" required onchange="calcExpDays('ea')"></div>
                     </div>
-                    <div class="form-group"><label>장소</label><input type="text" id="expLoc" placeholder="예: 제주도 일원" required></div>
-                    <div class="form-group"><label>활동 계획</label><textarea id="expPlan" placeholder="상세 활동 계획 작성" required></textarea></div>
-                    <div class="form-group"><label>보호자 성명 & 연락처</label><input type="text" id="expParent" placeholder="보호자 성명 / 010-0000-0000" required></div>
+                    <div class="form-group">
+                        <label>총 일수</label>
+                        <input type="number" id="eaDays" value="1" min="1" readonly>
+                    </div>
+                    <div class="form-group"><label>장소</label><input type="text" id="eaLocation" placeholder="예: 제주도 일원" required></div>
+                    <div class="form-group"><label>활동 계획</label><textarea id="eaPlan" placeholder="상세 활동 계획 작성" required></textarea></div>
+                    <div class="form-group"><label>보호자 성명</label><input type="text" id="eaParentName" placeholder="보호자 성명" required></div>
+                    <div class="form-group"><label>보호자 연락처</label><input type="text" id="eaPhone" placeholder="010-0000-0000" required></div>
                     <button type="submit" class="btn-primary">📤 신청서 제출</button>
                 </form>
 
@@ -403,12 +408,17 @@
                 <form id="expReportForm" class="hidden" onsubmit="submitExpReport(event)">
                     <h4 style="margin:0 0 10px; color:var(--green);">교외체험학습 결과 보고서</h4>
                     <div style="display:flex; gap:10px;">
-                        <div class="form-group" style="flex:1;"><label>시작일</label><input type="date" id="reprtStart" required></div>
-                        <div class="form-group" style="flex:1;"><label>종료일</label><input type="date" id="reprtEnd" required></div>
+                        <div class="form-group" style="flex:1;"><label>시작일</label><input type="date" id="erStart" required onchange="calcExpDays('er')"></div>
+                        <div class="form-group" style="flex:1;"><label>종료일</label><input type="date" id="erEnd" required onchange="calcExpDays('er')"></div>
                     </div>
-                    <div class="form-group"><label>장소</label><input type="text" id="reprtLoc" placeholder="장소" required></div>
-                    <div class="form-group"><label>현장학습 실천 내용 및 효과</label><textarea id="reprtDetail" placeholder="실제 학습 내용 및 소감" required></textarea></div>
-                    <div class="form-group"><label>현장 사진 첨부</label><input type="file" id="reprtPhoto" accept="image/*"></div>
+                    <div class="form-group">
+                        <label>총 일수</label>
+                        <input type="number" id="erDays" value="1" min="1" readonly>
+                    </div>
+                    <div class="form-group"><label>장소</label><input type="text" id="erLocation" placeholder="장소" required></div>
+                    <div class="form-group"><label>현장학습 실천 내용 및 효과</label><textarea id="erContent" placeholder="실제 학습 내용 및 소감" required></textarea></div>
+                    <div class="form-group"><label>보호자 성명</label><input type="text" id="erParentName" placeholder="보호자 성명" required></div>
+                    <div class="form-group"><label>현장 사진 첨부</label><input type="file" id="erPhoto" accept="image/*"></div>
                     <button type="submit" class="btn-primary">📤 결과 보고서 제출</button>
                 </form>
             </div>
@@ -580,6 +590,18 @@
                 const diffTime = Math.max(0, d2 - d1);
                 const diffDays = Math.ceil(diffTime / (1000 * 60 * 60 * 24)) + 1;
                 document.getElementById('abDays').value = diffDays;
+            }
+        }
+
+        function calcExpDays(prefix) {
+            const start = document.getElementById(prefix + 'Start').value;
+            const end = document.getElementById(prefix + 'End').value;
+            if (start && end) {
+                const d1 = new Date(start);
+                const d2 = new Date(end);
+                const diffTime = Math.max(0, d2 - d1);
+                const diffDays = Math.ceil(diffTime / (1000 * 60 * 60 * 24)) + 1;
+                document.getElementById(prefix + 'Days').value = diffDays;
             }
         }
 
@@ -800,65 +822,6 @@
                 `).join('');
             } catch (err) {
                 console.error('Failed to load notices:', err);
-            }
-        }
-
-        async function loadNoticeSchools() {
-            const sel = document.getElementById('noticeSchoolId');
-            if (!sel) return;
-            try {
-                const res = await fetch('/api/schools');
-                if (!res.ok) return;
-                const data = await res.json();
-                const schools = data.schools || [];
-                const options = [new Option('학교 선택', '')];
-                schools.forEach(s => options.push(new Option(s.name, String(s.id))));
-                sel.replaceChildren(...options);
-                if (schools.length === 1) {
-                    sel.value = String(schools[0].id);
-                } else if (schools.length === 0) {
-                    sel.options[0].textContent = '등록된 학교가 없습니다';
-                }
-            } catch(e) {
-                console.error('Failed to load schools:', e);
-            }
-        }
-
-        async function handleNoticeParentAuth(e) {
-            e.preventDefault();
-            const schoolId = document.getElementById('noticeSchoolId').value;
-            const grade = Number(document.getElementById('noticeGrade').value);
-            const classNumber = Number(document.getElementById('noticeClass').value);
-            const studentNumber = Number(document.getElementById('noticeNumber').value);
-            const name = document.getElementById('noticeStudentName').value.trim();
-            const password = document.getElementById('noticePassword').value.trim();
-            const statusEl = document.getElementById('noticeAuthStatus');
-
-            if (!schoolId) { statusEl.style.color = 'var(--danger)'; statusEl.textContent = '학교를 선택하세요.'; return; }
-            if (!grade || !classNumber || !studentNumber) { statusEl.style.color = 'var(--danger)'; statusEl.textContent = '자녀 학년/반/번호를 올바르게 입력하세요.'; return; }
-            if (name.length < 2 || name.length > 6) { statusEl.style.color = 'var(--danger)'; statusEl.textContent = '자녀 성명을 올바르게 입력하세요.'; return; }
-            if (!password) { statusEl.style.color = 'var(--danger)'; statusEl.textContent = '비밀번호를 입력하세요.'; return; }
-
-            statusEl.style.color = 'var(--green)';
-            statusEl.textContent = '학부모 인증 확인 중…';
-
-            try {
-                const res = await fetch('/api/student/join', {
-                    method: 'POST',
-                    headers: { 'Content-Type': 'application/json' },
-                    body: JSON.stringify({ schoolId, grade, classNumber, studentNumber, name, password })
-                });
-                const data = await res.json();
-                if (!res.ok) {
-                    throw new Error(data.message || '자녀 정보를 찾을 수 없거나 비밀번호가 올바르지 않습니다.');
-                }
-
-                localStorage.setItem('parentVerifiedName', name);
-                document.getElementById('parentAuthModal').classList.remove('active');
-                checkAuthSession();
-            } catch(err) {
-                statusEl.style.color = 'var(--danger)';
-                statusEl.textContent = err.message || '인증에 실패했습니다.';
             }
         }
 

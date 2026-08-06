@@ -5,6 +5,7 @@ const path = require("path");
 const { OAuth2Client } = require("google-auth-library");
 const { Pool } = require("pg");
 const { createReadingBank } = require("./reading-bank");
+const { createMetacognition } = require("./metacognition");
 
 const SESSION_COOKIE = "class_session";
 const GUEST_ACCESS_COOKIE = "class_guest_access";
@@ -831,13 +832,20 @@ function createClassroomPlatform(options = {}) {
         academic_year INTEGER NOT NULL,
         grade INTEGER NOT NULL CHECK (grade BETWEEN 1 AND 12),
         subject_name TEXT NOT NULL,
-        weekly_hours INTEGER NOT NULL DEFAULT 0,
+        weekly_hours NUMERIC(4,1) NOT NULL DEFAULT 0,
         annual_required_hours INTEGER NOT NULL DEFAULT 0,
         category TEXT NOT NULL DEFAULT 'SUBJECT',
         created_at TIMESTAMPTZ NOT NULL DEFAULT NOW(),
         updated_at TIMESTAMPTZ NOT NULL DEFAULT NOW(),
         UNIQUE (school_id, academic_year, grade, subject_name)
       )`,
+      `ALTER TABLE school_curriculum_hours
+        ALTER COLUMN weekly_hours TYPE NUMERIC(4,1) USING weekly_hours::NUMERIC(4,1)`,
+      `ALTER TABLE school_curriculum_hours
+        DROP CONSTRAINT IF EXISTS school_curriculum_hours_category_check`,
+      `ALTER TABLE school_curriculum_hours
+        ADD CONSTRAINT school_curriculum_hours_category_check
+        CHECK (category IN ('SUBJECT', 'CHANGTAE'))`,
       `CREATE TABLE IF NOT EXISTS school_master_timetable (
         id BIGSERIAL PRIMARY KEY,
         school_id BIGINT NOT NULL REFERENCES classroom_schools(id) ON DELETE CASCADE,
@@ -868,6 +876,7 @@ function createClassroomPlatform(options = {}) {
       await pool.query("DELETE FROM classroom_sessions WHERE expires_at <= NOW()");
       await pool.query("DELETE FROM privacy_requests WHERE created_at < NOW() - INTERVAL '1 year'");
       await readingBank.initialize();
+      await metacognition.initialize();
       databaseReady = true;
       initializationError = null;
       console.log("Classroom database is ready.");
@@ -998,6 +1007,15 @@ function createClassroomPlatform(options = {}) {
     pool,
     requireUser,
     requireAdmin,
+    requireDatabase,
+    HttpError,
+    asyncRoute
+  });
+
+  const metacognition = createMetacognition({
+    pool,
+    requireUser,
+    requireTeacher,
     requireDatabase,
     HttpError,
     asyncRoute
@@ -3011,6 +3029,7 @@ function createClassroomPlatform(options = {}) {
   }));
 
   router.use("/reading", readingBank.router);
+  router.use("/metacognition", metacognition.router);
 
   router.use((error, req, res, next) => {
     if (res.headersSent) return next(error);
@@ -3186,6 +3205,43 @@ function createClassroomPlatform(options = {}) {
     });
   }));
 
+  // Resolve which student a notice submission is for. Logged-in parents are trusted via
+  // their session membership; anonymous submissions must match a real roster entry so
+  // arbitrary school/grade/class/student combinations can't be injected.
+  async function resolveNoticeStudent(user, body) {
+    if (user?.membership) {
+      return {
+        schoolId: user.membership.schoolId,
+        grade: user.membership.grade,
+        classNumber: user.membership.classNumber,
+        studentNumber: String(user.membership.studentNumber || ""),
+        studentName: String(user.membership.name || "학생").trim()
+      };
+    }
+
+    const schoolId = Number(body?.schoolId);
+    const grade = Number(body?.grade);
+    const classNumber = Number(body?.classNumber);
+    const studentNumber = String(body?.studentNumber || "").trim();
+
+    if (!schoolId || !grade || !classNumber || !studentNumber) {
+      throw new HttpError(400, "STUDENT_IDENTIFICATION_REQUIRED", "학교/학년/반/번호를 입력하세요.");
+    }
+
+    const rosterRes = await pool.query(
+      `SELECT roster_name FROM school_students
+       WHERE school_id = $1 AND grade = $2 AND class_number = $3 AND student_number = $4
+       ORDER BY academic_year DESC
+       LIMIT 1`,
+      [schoolId, grade, classNumber, studentNumber]
+    );
+    if (!rosterRes.rows[0]) {
+      throw new HttpError(400, "STUDENT_NOT_FOUND", "입력하신 학년/반/번호와 일치하는 학생을 찾을 수 없습니다.");
+    }
+
+    return { schoolId, grade, classNumber, studentNumber, studentName: rosterRes.rows[0].roster_name };
+  }
+
   // 3. Quick Attendance Alert (Parent -> Teacher)
   router.post("/notice/quick-absence", asyncRoute(async (req, res) => {
     let user = await sessionUser(req);
@@ -3197,11 +3253,7 @@ function createClassroomPlatform(options = {}) {
       throw new HttpError(400, "DATE_AND_REASON_REQUIRED", "날짜와 사유를 입력하세요.");
     }
 
-    const schoolId = user?.membership?.schoolId || Number(req.body?.schoolId || 1);
-    const grade = user?.membership?.grade || Number(req.body?.grade || 1);
-    const classNumber = user?.membership?.classNumber || Number(req.body?.classNumber || 1);
-    const studentNumber = String(user?.membership?.studentNumber || req.body?.studentNumber || "1");
-    const studentName = String(user?.membership?.name || req.body?.studentName || "학생").trim();
+    const { schoolId, grade, classNumber, studentNumber, studentName } = await resolveNoticeStudent(user, req.body);
 
     const insertRes = await pool.query(
       `INSERT INTO classroom_absence_notices
@@ -3220,8 +3272,8 @@ function createClassroomPlatform(options = {}) {
     const result = await pool.query(
       `SELECT n.id, n.grade, n.class_number, n.student_number, n.student_name, n.notice_type, n.expected_date, n.reason, n.created_at
        FROM classroom_absence_notices n
-       JOIN classroom_teachers t ON t.school_id = n.school_id
-       WHERE t.user_id = $1
+       JOIN classroom_classes c ON c.teacher_user_id = $1 AND c.grade = n.grade AND c.class_number = n.class_number
+       WHERE n.school_id = c.school_id
        ORDER BY n.created_at DESC
        LIMIT 100`,
       [teacher.id]
@@ -3258,11 +3310,7 @@ function createClassroomPlatform(options = {}) {
       throw new HttpError(400, "MISSING_REQUIRED_FIELDS", "필수 입력 항목(기간, 사유, 보호자 성명 및 전자서명)을 작성해 주세요.");
     }
 
-    const schoolId = user?.membership?.schoolId || Number(req.body?.schoolId || 1);
-    const grade = user?.membership?.grade || Number(req.body?.grade || 1);
-    const classNumber = user?.membership?.classNumber || Number(req.body?.classNumber || 1);
-    const studentNumber = String(user?.membership?.studentNumber || req.body?.studentNumber || "1");
-    const studentName = String(user?.membership?.name || req.body?.studentName || "학생").trim();
+    const { schoolId, grade, classNumber, studentNumber, studentName } = await resolveNoticeStudent(user, req.body);
 
     const insertRes = await pool.query(
       `INSERT INTO classroom_absence_notes
@@ -3281,8 +3329,8 @@ function createClassroomPlatform(options = {}) {
     const result = await pool.query(
       `SELECT a.id, a.grade, a.class_number, a.student_number, a.student_name, a.start_date, a.end_date, a.total_days, a.reason_type, a.reason_detail, a.evidence_url, a.parent_name, a.parent_signature, a.status, a.created_at
        FROM classroom_absence_notes a
-       JOIN classroom_teachers t ON t.school_id = a.school_id
-       WHERE t.user_id = $1
+       JOIN classroom_classes c ON c.teacher_user_id = $1 AND c.grade = a.grade AND c.class_number = a.class_number
+       WHERE a.school_id = c.school_id
        ORDER BY a.created_at DESC
        LIMIT 100`,
       [teacher.id]
@@ -3310,16 +3358,20 @@ function createClassroomPlatform(options = {}) {
   }));
 
   router.patch("/teacher/absence-notes/:id/approve", asyncRoute(async (req, res) => {
-    await requireTeacher(req);
+    const teacher = await requireTeacher(req);
     const id = Number(req.params.id);
     const status = String(req.body?.status || "approved").trim();
 
     const updateRes = await pool.query(
-      `UPDATE classroom_absence_notes
+      `UPDATE classroom_absence_notes a
        SET status = $1, teacher_check = 'approved'
-       WHERE id = $2
-       RETURNING id, status`,
-      [status, id]
+       WHERE a.id = $2
+         AND EXISTS (
+           SELECT 1 FROM classroom_classes c
+           WHERE c.teacher_user_id = $3 AND c.grade = a.grade AND c.class_number = a.class_number
+         )
+       RETURNING a.id, a.status`,
+      [status, id, teacher.id]
     );
 
     if (!updateRes.rows[0]) throw new HttpError(404, "NOT_FOUND", "결석계를 찾을 수 없습니다.");
@@ -3342,11 +3394,7 @@ function createClassroomPlatform(options = {}) {
       throw new HttpError(400, "MISSING_REQUIRED_FIELDS", "필수 입력 항목(기간, 목적지, 학습계획, 보호자 성명 및 서명)을 입력하세요.");
     }
 
-    const schoolId = user?.membership?.schoolId || Number(req.body?.schoolId || 1);
-    const grade = user?.membership?.grade || Number(req.body?.grade || 1);
-    const classNumber = user?.membership?.classNumber || Number(req.body?.classNumber || 1);
-    const studentNumber = String(user?.membership?.studentNumber || req.body?.studentNumber || "1");
-    const studentName = String(user?.membership?.name || req.body?.studentName || "학생").trim();
+    const { schoolId, grade, classNumber, studentNumber, studentName } = await resolveNoticeStudent(user, req.body);
 
     const insertRes = await pool.query(
       `INSERT INTO classroom_experiential_apps
@@ -3374,11 +3422,7 @@ function createClassroomPlatform(options = {}) {
       throw new HttpError(400, "MISSING_REQUIRED_FIELDS", "필수 입력 항목(기간, 목적지, 보고서 내용, 보호자 서명)을 입력하세요.");
     }
 
-    const schoolId = user?.membership?.schoolId || Number(req.body?.schoolId || 1);
-    const grade = user?.membership?.grade || Number(req.body?.grade || 1);
-    const classNumber = user?.membership?.classNumber || Number(req.body?.classNumber || 1);
-    const studentNumber = String(user?.membership?.studentNumber || req.body?.studentNumber || "1");
-    const studentName = String(user?.membership?.name || req.body?.studentName || "학생").trim();
+    const { schoolId, grade, classNumber, studentNumber, studentName } = await resolveNoticeStudent(user, req.body);
 
     const insertRes = await pool.query(
       `INSERT INTO classroom_experiential_reports
@@ -3396,8 +3440,8 @@ function createClassroomPlatform(options = {}) {
     const appsRes = await pool.query(
       `SELECT e.id, e.grade, e.class_number, e.student_number, e.student_name, e.parent_phone, e.start_date, e.end_date, e.total_days, e.location, e.plan_detail, e.parent_name, e.parent_signature, e.status, e.created_at
        FROM classroom_experiential_apps e
-       JOIN classroom_teachers t ON t.school_id = e.school_id
-       WHERE t.user_id = $1
+       JOIN classroom_classes c ON c.teacher_user_id = $1 AND c.grade = e.grade AND c.class_number = e.class_number
+       WHERE e.school_id = c.school_id
        ORDER BY e.created_at DESC
        LIMIT 100`,
       [teacher.id]
@@ -3406,8 +3450,8 @@ function createClassroomPlatform(options = {}) {
     const reportsRes = await pool.query(
       `SELECT r.id, r.grade, r.class_number, r.student_number, r.student_name, r.start_date, r.end_date, r.total_days, r.location, r.report_detail, r.photo_url, r.parent_name, r.parent_signature, r.status, r.created_at
        FROM classroom_experiential_reports r
-       JOIN classroom_teachers t ON t.school_id = r.school_id
-       WHERE t.user_id = $1
+       JOIN classroom_classes c ON c.teacher_user_id = $1 AND c.grade = r.grade AND c.class_number = r.class_number
+       WHERE r.school_id = c.school_id
        ORDER BY r.created_at DESC
        LIMIT 100`,
       [teacher.id]
@@ -3452,18 +3496,97 @@ function createClassroomPlatform(options = {}) {
   }));
 
   router.patch("/teacher/experiential-apps/:id/approve", asyncRoute(async (req, res) => {
-    await requireTeacher(req);
+    const teacher = await requireTeacher(req);
     const id = Number(req.params.id);
     const type = String(req.query.type || "app");
     const status = String(req.body?.status || "approved").trim();
 
-    if (type === "report") {
-      await pool.query(`UPDATE classroom_experiential_reports SET status = $1 WHERE id = $2`, [status, id]);
-    } else {
-      await pool.query(`UPDATE classroom_experiential_apps SET status = $1 WHERE id = $2`, [status, id]);
-    }
+    const table = type === "report" ? "classroom_experiential_reports" : "classroom_experiential_apps";
+    const updateRes = await pool.query(
+      `UPDATE ${table} e
+       SET status = $1
+       WHERE e.id = $2
+         AND EXISTS (
+           SELECT 1 FROM classroom_classes c
+           WHERE c.teacher_user_id = $3 AND c.grade = e.grade AND c.class_number = e.class_number
+         )
+       RETURNING e.id`,
+      [status, id, teacher.id]
+    );
+    if (!updateRes.rows[0]) throw new HttpError(404, "NOT_FOUND", "신청서를 찾을 수 없습니다.");
 
     res.json({ ok: true, id: String(id), status });
+  }));
+
+  // 8. Official Form Print Data (Teacher / School Admin)
+  const NOTICE_DOC_TABLES = {
+    absence: "classroom_absence_notes",
+    exp_app: "classroom_experiential_apps",
+    exp_report: "classroom_experiential_reports"
+  };
+
+  function formatNoticeDocResponse(formType, row) {
+    const created = new Date(row.created_at);
+    const base = {
+      year: created.getFullYear(),
+      month: created.getMonth() + 1,
+      day: created.getDate(),
+      grade: row.grade,
+      classNumber: row.class_number,
+      studentNumber: row.student_number,
+      studentName: row.student_name,
+      gender: row.gender,
+      startDate: row.start_date,
+      endDate: row.end_date,
+      totalDays: row.total_days,
+      parentName: row.parent_name,
+      parentSignature: row.parent_signature
+    };
+    if (formType === "absence") {
+      return {
+        ...base,
+        reasonType: row.reason_type,
+        reasonDetail: row.reason_detail,
+        evidenceUrl: row.evidence_url,
+        teacherCheck: row.teacher_check
+      };
+    }
+    if (formType === "exp_app") {
+      return { ...base, parentPhone: row.parent_phone, location: row.location, planDetail: row.plan_detail };
+    }
+    return { ...base, location: row.location, reportDetail: row.report_detail, photoUrl: row.photo_url };
+  }
+
+  router.get("/notice/docs/:formType/:docId", asyncRoute(async (req, res) => {
+    const teacher = await requireTeacher(req);
+    const formType = String(req.params.formType || "");
+    const docId = Number(req.params.docId);
+    const table = NOTICE_DOC_TABLES[formType];
+    if (!table || !Number.isInteger(docId)) {
+      throw new HttpError(400, "INVALID_DOC_REQUEST", "잘못된 서식 요청입니다.");
+    }
+
+    const teacherRow = await pool.query(
+      `SELECT school_id, teacher_type FROM classroom_teachers WHERE user_id = $1 AND active = TRUE`,
+      [teacher.id]
+    );
+    const teacherInfo = teacherRow.rows[0];
+    if (!teacherInfo) throw new HttpError(403, "TEACHER_REGISTRATION_REQUIRED", "교사 등록 정보가 없습니다.");
+    const isAdmin = ["관리자", "교장", "교감"].includes(teacherInfo.teacher_type);
+
+    const scopeClause = isAdmin
+      ? "d.school_id = $2"
+      : `d.school_id = $2 AND EXISTS (
+           SELECT 1 FROM classroom_classes c
+           WHERE c.teacher_user_id = $3 AND c.grade = d.grade AND c.class_number = d.class_number
+         )`;
+    const params = isAdmin ? [docId, teacherInfo.school_id] : [docId, teacherInfo.school_id, teacher.id];
+
+    const result = await pool.query(`SELECT d.* FROM ${table} d WHERE d.id = $1 AND ${scopeClause}`, params);
+    const row = result.rows[0];
+    if (!row) throw new HttpError(404, "NOT_FOUND", "문서를 찾을 수 없습니다.");
+
+    res.json(formatNoticeDocResponse(formType, row));
   }));
 
   // --- Classboard (학급 알리미) API ---
@@ -3753,10 +3876,20 @@ function createClassroomPlatform(options = {}) {
   }));
 
   // ── Curriculum Hours APIs ──
+  const CURRICULUM_CATEGORIES = new Set(["SUBJECT", "CHANGTAE"]);
+
+  function parseCurriculumGrade(value) {
+    const grade = Number(value);
+    if (!Number.isInteger(grade) || grade < 1 || grade > 12) {
+      throw new HttpError(400, "INVALID_GRADE", "학년은 1~12 사이의 정수여야 합니다.");
+    }
+    return grade;
+  }
+
   router.get("/school-admin/curriculum-hours", asyncRoute(async (req, res) => {
     const { profile } = await requireSchoolAdmin(req);
     const year = Number(req.query.academicYear || new Date().getFullYear());
-    const grade = Number(req.query.grade || 1);
+    const grade = parseCurriculumGrade(req.query.grade || 1);
     const result = await pool.query(
       `SELECT subject_name, weekly_hours, annual_required_hours, category
        FROM school_curriculum_hours
@@ -3770,16 +3903,19 @@ function createClassroomPlatform(options = {}) {
   router.post("/school-admin/curriculum-hours", asyncRoute(async (req, res) => {
     const { profile } = await requireSchoolAdmin(req);
     const year = Number(req.body?.academicYear || new Date().getFullYear());
-    const grade = Number(req.body?.grade || 1);
+    const grade = parseCurriculumGrade(req.body?.grade || 1);
     const hoursList = Array.isArray(req.body?.hours) ? req.body.hours : [];
 
     for (const item of hoursList) {
-      const subjectName = String(item.subjectName || "").trim();
-      const weeklyHours = Math.max(0, Number(item.weeklyHours || 0));
-      const annualRequiredHours = Math.max(0, Number(item.annualRequiredHours || 0));
+      const subjectName = String(item.subjectName || "").trim().slice(0, 100);
+      const weeklyHours = Math.min(40, Math.max(0, Math.round(Number(item.weeklyHours || 0) * 10) / 10));
+      const annualRequiredHours = Math.min(2000, Math.max(0, Math.round(Number(item.annualRequiredHours || 0))));
       const category = String(item.category || "SUBJECT").toUpperCase();
 
       if (!subjectName) continue;
+      if (!CURRICULUM_CATEGORIES.has(category)) {
+        throw new HttpError(400, "INVALID_CATEGORY", `알 수 없는 교과 구분입니다: ${category}`);
+      }
 
       await pool.query(
         `INSERT INTO school_curriculum_hours (school_id, academic_year, grade, subject_name, weekly_hours, annual_required_hours, category)

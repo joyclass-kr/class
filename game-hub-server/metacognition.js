@@ -1,0 +1,383 @@
+/*
+ * 메타인지 진단 결과 저장·조회
+ *
+ * 설계 원칙 하나: 클라이언트가 보낸 요약 수치는 저장하지 않는다.
+ * 서버가 응답 원자료(responses)로부터 지표를 다시 계산해 넣는다.
+ * 학생 화면의 코드가 바뀌거나 값이 조작돼도 저장된 지표는 문항 세트와 산출식에만 의존한다.
+ * 연구 자료로 쓰려면 이 조건이 먼저 만족돼야 한다.
+ */
+
+const express = require("express");
+const fs = require("fs");
+const path = require("path");
+
+const MIGRATION_NAMES = ["004-metacognition"];
+const PAGE_DIR = path.join(__dirname, "..", "learning", "basics", "metacognition");
+
+/*
+ * 문항 세트와 산출식은 학생 화면 폴더에 있는 것을 그대로 가져다 쓴다.
+ * 화면과 서버가 같은 파일을 보게 해서 채점 기준이 갈라지지 않게 하려는 것이다.
+ *
+ * 다만 이 require가 서버 부팅 경로에 있다는 점이 위험하다. 배포에서 저 폴더가
+ * 빠지거나 파일이 깨지면 메타인지 기능만 죽는 게 아니라 포털 전체가 안 뜬다.
+ * 그래서 여기서 잡아 두고, 실패하면 이 기능만 끈 채로 나머지는 정상 기동시킨다.
+ */
+let METACOG_ITEMS = null;
+let MetacogMetrics = null;
+let loadError = null;
+try {
+  METACOG_ITEMS = require(path.join(PAGE_DIR, "items.js")).METACOG_ITEMS;
+  MetacogMetrics = require(path.join(PAGE_DIR, "metrics.js"));
+  if (!Array.isArray(METACOG_ITEMS) || !METACOG_ITEMS.length) {
+    throw new Error("문항 세트가 비어 있습니다.");
+  }
+  if (typeof MetacogMetrics.analyze !== "function") {
+    throw new Error("지표 산출 함수를 찾을 수 없습니다.");
+  }
+} catch (error) {
+  loadError = error;
+  console.error(
+    "[metacognition] 문항 세트를 읽지 못해 이 기능을 끕니다. 나머지 기능은 정상 동작합니다.",
+    error.message
+  );
+}
+
+const MAX_RESPONSES = 200;
+const MAX_ITEM_MS = 1000 * 60 * 30; // 문항 하나에 30분을 넘겨 기록하지 않는다
+
+function createMetacognition(options = {}) {
+  const pool = options.pool;
+  const requireUser = options.requireUser;
+  const requireTeacher = options.requireTeacher;
+  const requireDatabase = options.requireDatabase;
+  const HttpError = options.HttpError;
+  const asyncRoute = options.asyncRoute;
+  const router = express.Router();
+
+  // 문항 세트를 못 읽었으면 이 기능만 잠근다. 서버는 정상 기동한다.
+  if (loadError) {
+    router.use((req, res) => {
+      res.status(503).json({
+        error: "METACOGNITION_UNAVAILABLE",
+        message: "메타인지 진단이 잠시 준비 중입니다."
+      });
+    });
+    return {
+      router,
+      initialize: async () => {},
+      normalizeResponses: () => {
+        throw new HttpError(503, "METACOGNITION_UNAVAILABLE", "메타인지 진단이 잠시 준비 중입니다.");
+      },
+      available: false,
+      loadError,
+      MIGRATION_NAMES
+    };
+  }
+
+  async function initialize() {
+    if (!pool) return;
+    await pool.query(`CREATE TABLE IF NOT EXISTS classroom_migrations (
+      migration_name TEXT PRIMARY KEY,
+      applied_at TIMESTAMPTZ NOT NULL DEFAULT NOW()
+    )`);
+    const client = await pool.connect();
+    try {
+      for (const migrationName of MIGRATION_NAMES) {
+        await client.query("BEGIN");
+        await client.query("SELECT pg_advisory_xact_lock(hashtext($1))", [migrationName]);
+        const applied = await client.query(
+          "SELECT 1 FROM classroom_migrations WHERE migration_name = $1",
+          [migrationName]
+        );
+        if (applied.rowCount === 0) {
+          const migrationPath = path.join(__dirname, "migrations", `${migrationName}.sql`);
+          await client.query(fs.readFileSync(migrationPath, "utf8"));
+          await client.query("INSERT INTO classroom_migrations (migration_name) VALUES ($1)", [
+            migrationName
+          ]);
+        }
+        await client.query("COMMIT");
+      }
+    } catch (error) {
+      await client.query("ROLLBACK");
+      throw error;
+    } finally {
+      client.release();
+    }
+  }
+
+  /** 제출 본문 검증. 통과한 응답만 지표 계산에 들어간다. */
+  function normalizeResponses(raw) {
+    if (!Array.isArray(raw)) {
+      throw new HttpError(400, "INVALID_RESPONSES", "응답 자료의 형식이 올바르지 않습니다.");
+    }
+    if (raw.length > MAX_RESPONSES) {
+      throw new HttpError(400, "TOO_MANY_RESPONSES", "응답 수가 너무 많습니다.");
+    }
+    const validIds = new Set(METACOG_ITEMS.map((item) => item.id));
+    const seen = new Set();
+    const normalized = [];
+    raw.forEach((entry) => {
+      const id = String(entry && entry.id ? entry.id : "").slice(0, 32);
+      if (!validIds.has(id) || seen.has(id)) return;
+      const choice = Number(entry.choice);
+      const confidence = Number(entry.confidence);
+      if (!Number.isInteger(choice) || choice < 0 || choice > 9) return;
+      if (!MetacogMetrics.CONFIDENCE_BINS.includes(confidence)) return;
+      const ms = Number(entry.ms);
+      seen.add(id);
+      normalized.push({
+        id,
+        choice,
+        confidence,
+        ms: Number.isFinite(ms) && ms >= 0 ? Math.min(Math.round(ms), MAX_ITEM_MS) : null
+      });
+    });
+    if (normalized.length < Math.ceil(METACOG_ITEMS.length * 0.5)) {
+      throw new HttpError(
+        400,
+        "INCOMPLETE_ATTEMPT",
+        "문항의 절반 이상을 풀어야 결과를 저장할 수 있습니다."
+      );
+    }
+    return normalized;
+  }
+
+  /** 학생 본인의 학적 정보. 반이 없으면 개인 기록으로만 남긴다. */
+  async function studentContext(userId) {
+    const result = await pool.query(
+      `SELECT s.id AS student_id, s.class_id
+       FROM classroom_students s
+       JOIN classroom_classes c ON c.id = s.class_id
+       WHERE s.user_id = $1
+       ORDER BY c.updated_at DESC
+       LIMIT 1`,
+      [userId]
+    );
+    const row = result.rows[0];
+    return { studentId: row ? row.student_id : null, classId: row ? row.class_id : null };
+  }
+
+  async function teacherClassId(teacherUserId, requestedClassId) {
+    const teacherInfo = await pool.query(
+      "SELECT school_id FROM classroom_teachers WHERE user_id = $1",
+      [teacherUserId]
+    );
+    const schoolId = teacherInfo.rows[0] ? teacherInfo.rows[0].school_id : null;
+    if (requestedClassId) {
+      const owned = await pool.query(
+        "SELECT id FROM classroom_classes WHERE id = $1 AND school_id = $2",
+        [requestedClassId, schoolId]
+      );
+      if (owned.rows[0]) return owned.rows[0].id;
+      throw new HttpError(403, "CLASS_NOT_ALLOWED", "이 학급의 기록을 볼 권한이 없습니다.");
+    }
+    const own = await pool.query(
+      `SELECT id FROM classroom_classes
+       WHERE teacher_user_id = $1
+       ORDER BY updated_at DESC
+       LIMIT 1`,
+      [teacherUserId]
+    );
+    if (!own.rows[0]) throw new HttpError(404, "CLASS_NOT_FOUND", "담당 학급을 찾을 수 없습니다.");
+    return own.rows[0].id;
+  }
+
+  // ── 학생: 결과 제출 ────────────────────────────────────────
+  router.post(
+    "/attempts",
+    asyncRoute(async (req, res) => {
+      requireDatabase();
+      const user = await requireUser(req);
+      if (user.role !== "student") {
+        throw new HttpError(403, "STUDENT_REQUIRED", "학생 계정으로만 결과를 저장할 수 있습니다.");
+      }
+
+      const responses = normalizeResponses(req.body && req.body.responses);
+      const analysis = MetacogMetrics.analyze(responses, METACOG_ITEMS);
+      if (!analysis) {
+        throw new HttpError(400, "INVALID_RESPONSES", "지표를 계산할 수 없는 응답입니다.");
+      }
+      const summary = analysis.summary;
+      const itemSetVersion = String((req.body && req.body.itemSetVersion) || "unknown").slice(0, 40);
+      const { studentId, classId } = await studentContext(user.id);
+
+      const inserted = await pool.query(
+        `INSERT INTO metacognition_attempts (
+           user_id, student_id, class_id, item_set_version, item_count,
+           accuracy, mean_confidence, bias, discrimination, calibration_error, brier,
+           high_conf_error_count, certain_error_count, low_conf_hit_count,
+           trap_penalty, profile_key, responses, client_summary
+         ) VALUES ($1,$2,$3,$4,$5,$6,$7,$8,$9,$10,$11,$12,$13,$14,$15,$16,$17::JSONB,$18::JSONB)
+         RETURNING id, created_at`,
+        [
+          user.id,
+          studentId,
+          classId,
+          itemSetVersion,
+          summary.n,
+          summary.accuracy,
+          summary.confidence,
+          summary.bias,
+          summary.discrimination,
+          summary.calibrationError,
+          summary.brier,
+          summary.highConfErrorCount,
+          summary.certainErrorCount,
+          summary.lowConfHitCount,
+          summary.trapPenalty,
+          summary.profileKey,
+          JSON.stringify(responses),
+          JSON.stringify((req.body && req.body.summary) || {})
+        ]
+      );
+
+      res.status(201).json({
+        attemptId: inserted.rows[0].id,
+        createdAt: inserted.rows[0].created_at,
+        // 서버가 다시 계산한 값을 돌려준다. 화면 값과 다르면 서버 값이 맞다.
+        summary
+      });
+    })
+  );
+
+  // ── 학생: 내 기록 ──────────────────────────────────────────
+  router.get(
+    "/attempts/mine",
+    asyncRoute(async (req, res) => {
+      requireDatabase();
+      const user = await requireUser(req);
+      const result = await pool.query(
+        `SELECT id, created_at, item_set_version, item_count, accuracy, mean_confidence,
+                bias, discrimination, calibration_error, brier, profile_key
+         FROM metacognition_attempts
+         WHERE user_id = $1
+         ORDER BY created_at DESC
+         LIMIT 20`,
+        [user.id]
+      );
+      res.json({ attempts: result.rows });
+    })
+  );
+
+  // ── 교사: 학급 요약 ────────────────────────────────────────
+  router.get(
+    "/teacher/class-summary",
+    asyncRoute(async (req, res) => {
+      requireDatabase();
+      const teacher = await requireTeacher(req);
+      const classId = await teacherClassId(teacher.id, req.query.classId);
+
+      // 학생마다 가장 최근 시도 하나만 본다
+      const result = await pool.query(
+        `SELECT DISTINCT ON (a.user_id)
+                a.user_id, a.created_at, a.accuracy, a.mean_confidence, a.bias,
+                a.discrimination, a.calibration_error, a.high_conf_error_count,
+                a.certain_error_count, a.low_conf_hit_count, a.profile_key,
+                s.roster_name, s.student_number
+         FROM metacognition_attempts a
+         LEFT JOIN classroom_students s ON s.id = a.student_id
+         WHERE a.class_id = $1
+         ORDER BY a.user_id, a.created_at DESC`,
+        [classId]
+      );
+
+      const rows = result.rows;
+      const average = (pick) => {
+        const values = rows.map(pick).filter((value) => value !== null && value !== undefined);
+        return values.length ? values.reduce((sum, value) => sum + Number(value), 0) / values.length : null;
+      };
+      const profileCounts = rows.reduce((counts, row) => {
+        counts[row.profile_key] = (counts[row.profile_key] || 0) + 1;
+        return counts;
+      }, {});
+
+      res.json({
+        classId,
+        studentCount: rows.length,
+        averages: {
+          accuracy: average((row) => row.accuracy),
+          confidence: average((row) => row.mean_confidence),
+          bias: average((row) => row.bias),
+          discrimination: average((row) => row.discrimination)
+        },
+        profileCounts,
+        // 과신이 큰 순서 — 상담이 가장 급한 학생이 위로 온다
+        students: rows
+          .slice()
+          .sort((a, b) => Number(b.bias) - Number(a.bias))
+          .map((row) => ({
+            studentNumber: row.student_number,
+            name: row.roster_name,
+            completedAt: row.created_at,
+            accuracy: row.accuracy,
+            confidence: row.mean_confidence,
+            bias: row.bias,
+            discrimination: row.discrimination,
+            certainErrorCount: row.certain_error_count,
+            lowConfHitCount: row.low_conf_hit_count,
+            profileKey: row.profile_key
+          }))
+      });
+    })
+  );
+
+  // ── 교사: 연구용 내보내기 ──────────────────────────────────
+  router.get(
+    "/teacher/export.csv",
+    asyncRoute(async (req, res) => {
+      requireDatabase();
+      const teacher = await requireTeacher(req);
+      const classId = await teacherClassId(teacher.id, req.query.classId);
+      const result = await pool.query(
+        `SELECT a.id, a.created_at, a.item_set_version, a.item_count, a.accuracy,
+                a.mean_confidence, a.bias, a.discrimination, a.calibration_error,
+                a.brier, a.high_conf_error_count, a.certain_error_count,
+                a.low_conf_hit_count, a.trap_penalty, a.profile_key, a.responses
+         FROM metacognition_attempts a
+         WHERE a.class_id = $1
+         ORDER BY a.created_at ASC`,
+        [classId]
+      );
+
+      // 이름·학번은 넣지 않는다. 학생 식별은 attempt id로만 한다.
+      const header = [
+        "attempt_id", "created_at", "item_set_version", "item_count", "accuracy",
+        "mean_confidence", "bias", "discrimination", "calibration_error", "brier",
+        "high_conf_errors", "certain_errors", "low_conf_hits", "trap_penalty",
+        "profile_key", "item_id", "confidence", "correct", "response_ms"
+      ];
+      const lines = [header.join(",")];
+      const answerById = new Map(METACOG_ITEMS.map((item) => [item.id, item.answer]));
+      result.rows.forEach((row) => {
+        const base = [
+          row.id, row.created_at.toISOString(), row.item_set_version, row.item_count,
+          row.accuracy, row.mean_confidence, row.bias, row.discrimination,
+          row.calibration_error, row.brier, row.high_conf_error_count,
+          row.certain_error_count, row.low_conf_hit_count, row.trap_penalty, row.profile_key
+        ];
+        (row.responses || []).forEach((response) => {
+          lines.push(
+            base
+              .concat([
+                response.id,
+                response.confidence,
+                response.choice === answerById.get(response.id) ? 1 : 0,
+                response.ms === null ? "" : response.ms
+              ])
+              .map((cell) => (cell === null || cell === undefined ? "" : String(cell)))
+              .join(",")
+          );
+        });
+      });
+
+      res.setHeader("Content-Type", "text/csv; charset=utf-8");
+      res.setHeader("Content-Disposition", 'attachment; filename="metacognition-attempts.csv"');
+      res.send("﻿" + lines.join("\n"));
+    })
+  );
+
+  return { router, initialize, normalizeResponses, available: true, loadError: null, MIGRATION_NAMES };
+}
+
+module.exports = { createMetacognition, MIGRATION_NAMES, MAX_RESPONSES };

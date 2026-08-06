@@ -953,7 +953,7 @@ document.addEventListener('DOMContentLoaded', () => {
             tr.innerHTML = `
                 <td>${categoryText}</td>
                 <td style="font-weight:700;">${row.name}</td>
-                <td><input type="number" class="weekly-input" data-subject="${row.name}" data-category="${row.category}" data-base="${row.base}" value="${row.weekly}" min="0" max="20"></td>
+                <td><input type="number" class="weekly-input" data-subject="${row.name}" data-category="${row.category}" data-base="${row.base}" value="${row.weekly}" min="0" max="40" step="0.5"></td>
                 <td style="font-weight:700; color:var(--primary);">${row.base}시간</td>
                 <td><input type="number" class="adj-input" data-subject="${row.name}" value="${row.adj || 0}" min="-50" max="50"></td>
                 <td style="font-weight:800;">${finalAnnual}시간</td>

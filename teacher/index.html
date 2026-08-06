@@ -702,7 +702,7 @@
                                 </p>
                             </div>
                             <div style="display:flex; gap:8px;">
-                                <button class="btn-secondary" onclick="openPrintForm('exp-app', '${a.id}')">🖨️ 서울계상초 A4 서식 인쇄</button>
+                                <button class="btn-secondary" onclick="openPrintForm('exp_app', '${a.id}')">🖨️ 서울계상초 A4 서식 인쇄</button>
                                 <button class="btn-action" style="padding:8px 16px; font-size:14px; ${isApproved ? 'background:#233328; color:var(--green);' : ''}" ${isApproved ? 'disabled' : ''} onclick="approveExpDoc('${a.id}', 'app', this)">
                                     ${isApproved ? '승인 완료' : '승인'}
                                 </button>
@@ -724,7 +724,7 @@
                                 </p>
                             </div>
                             <div style="display:flex; gap:8px;">
-                                <button class="btn-secondary" onclick="openPrintForm('exp-report', '${r.id}')">🖨️ 서울계상초 A4 서식 인쇄</button>
+                                <button class="btn-secondary" onclick="openPrintForm('exp_report', '${r.id}')">🖨️ 서울계상초 A4 서식 인쇄</button>
                                 <button class="btn-action" style="padding:8px 16px; font-size:14px; ${isApproved ? 'background:#233328; color:var(--green);' : ''}" ${isApproved ? 'disabled' : ''} onclick="approveExpDoc('${r.id}', 'report', this)">
                                     ${isApproved ? '승인 완료' : '승인'}
                                 </button>
