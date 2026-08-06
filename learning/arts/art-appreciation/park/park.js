@@ -14,7 +14,7 @@
     const ZONES = [
     {
       id: 'haetae', order: '01', title: '광화문 해치상', short: '광화문 해치',
-      subtitle: '조선 · 국립문화유산연구원 3D 스캔 GLB', position: [72, 0, -142], arrival: [72, 1.62, -148], lookAt: [72, 1.8, -142],
+      subtitle: '조선 · 국립문화유산연구원 3D 스캔 GLB', position: [36, 0, -71], arrival: [36, 1.62, -77], lookAt: [36, 1.8, -71],
       modelPath: '../museum/assets/models/gwanghwamun-haetae.glb', realHeight: 3.507, materialTint: 0x817d75, preserveMaterials: true,
       facts: [['길이', '2.756m'], ['너비', '1.862m'], ['높이', '3.507m']],
       size: '길이 275.6cm x 너비 186.2cm x 높이 350.7cm',
@@ -27,7 +27,7 @@
     },
     {
       id: 'thinker', order: '02', title: '생각하는 사람', short: '생각하는 사람',
-      subtitle: '오귀스트 로댕 · Scan the World 3D 스캔 GLB', position: [-60, 0, -155], arrival: [-60, 1.62, -162], lookAt: [-60, 2.5, -155],
+      subtitle: '오귀스트 로댕 · Scan the World 3D 스캔 GLB', position: [-30, 0, -78], arrival: [-30, 1.62, -85], lookAt: [-30, 2.5, -78],
       modelPath: '../museum/assets/models/thinker.glb', realHeight: 1.89, materialColor: 0x38271d, metalness: 0.78, roughness: 0.3,
       facts: [['높이', '1.89m'], ['재질', '청동 주조본'], ['제작', '1903년']],
       size: '높이 189cm (대형 청동 주조본 기준)',
@@ -40,7 +40,7 @@
     },
     {
       id: 'david', order: '03', title: '다비드상', short: '다비드상',
-      subtitle: '미켈란젤로 · Scan the World 3D 스캔 GLB', position: [155, 0, -55], arrival: [155, 1.62, -72], lookAt: [155, 5, -55],
+      subtitle: '미켈란젤로 · Scan the World 3D 스캔 GLB', position: [77.5, 0, -27.5], arrival: [77.5, 1.62, -44.5], lookAt: [77.5, 5, -27.5],
       modelPath: '../museum/assets/models/david.glb', realHeight: 5.17, materialColor: 0xded8cc, roughness: 0.55,
       facts: [['높이', '5.17m'], ['재질', '대리석'], ['제작', '1501-1504년']],
       size: '높이 5.17m (좌대 제외 실측)',
@@ -53,7 +53,7 @@
     },
     {
       id: 'venus', order: '04', title: '밀로의 비너스', short: '밀로의 비너스',
-      subtitle: '알렉산드로스 추정 · Scan the World 3D 스캔 GLB', position: [-155, 0, -55], arrival: [-155, 1.62, -72], lookAt: [-155, 2.2, -55],
+      subtitle: '알렉산드로스 추정 · Scan the World 3D 스캔 GLB', position: [-77.5, 0, -27.5], arrival: [-77.5, 1.62, -44.5], lookAt: [-77.5, 2.2, -27.5],
       modelPath: '../museum/assets/models/venus-de-milo.glb', realHeight: 2.04, materialColor: 0xd9d2c5, roughness: 0.58,
       facts: [['높이', '2.04m'], ['재질', '대리석'], ['제작', '기원전 150-125년경']],
       size: '높이 204cm',
@@ -66,7 +66,7 @@
     },
     {
       id: 'pieta', order: '05', title: '피에타상', short: '피에타상',
-      subtitle: '미켈란젤로 · Scan the World 3D 스캔 GLB', position: [0, 0, -170], arrival: [0, 1.62, -178], lookAt: [0, 2.5, -170],
+      subtitle: '미켈란젤로 · Scan the World 3D 스캔 GLB', position: [0, 0, -85], arrival: [0, 1.62, -93], lookAt: [0, 2.5, -85],
       modelPath: '../museum/assets/models/pieta.glb', realHeight: 1.75, materialColor: 0xdbd5c8, roughness: 0.56,
       facts: [['높이', '1.75m'], ['너비', '1.95m'], ['재질', '대리석']],
       size: '높이 1.75m x 너비 1.95m',
@@ -79,7 +79,7 @@
     },
     {
       id: 'sphinx', order: '06', title: '기자의 대스핑크스', short: '대스핑크스',
-      subtitle: '고대 이집트 기원전 2500년경 · 3D 포토그래메트리 스캔', position: [-130, 0, 80], arrival: [-90, 1.62, 80], lookAt: [-130, 10, 80],
+      subtitle: '고대 이집트 기원전 2500년경 · 3D 포토그래메트리 스캔', position: [-65, 0, 40], arrival: [-25, 1.62, 40], lookAt: [-65, 10, 40],
       modelPath: 'assets/models/sphinx.glb', realHeight: 20.22, preserveMaterials: true,
       facts: [['길이', '73.5m'], ['너비', '19m'], ['높이', '20.22m']],
       size: '길이 73.5m x 너비 19m x 높이 20.22m',
@@ -92,7 +92,7 @@
     },
     {
       id: 'liberty', order: '07', title: '자유의 여신상', short: '자유의 여신상',
-      subtitle: '프레데리크 바르톨디 1886 · 3D 포토그래메트리 스캔', position: [130, 0, 80], arrival: [130, 1.62, 22], lookAt: [130, 46, 80],
+      subtitle: '프레데리크 바르톨디 1886 · 3D 포토그래메트리 스캔', position: [65, 0, 40], arrival: [65, 1.62, -18], lookAt: [65, 46, 40],
       modelPath: 'assets/models/statue-of-liberty.glb', realHeight: 46.05, preserveMaterials: true,
       facts: [['조각상 높이', '46.05m'], ['받침대', '46.94m'], ['총 높이', '92.99m']],
       size: '조각상 46.05m (받침대 제외)',
@@ -105,7 +105,7 @@
     },
     {
       id: 'moai', order: '08', title: '이스터섬 모아이 석상', short: '모아이 석상',
-      subtitle: '칠레 라파누이 1250-1500년경 · 3D 포토그래메트리 스캔', position: [0, 0, 170], arrival: [0, 1.62, 162], lookAt: [0, 3, 170],
+      subtitle: '칠레 라파누이 1250-1500년경 · 3D 포토그래메트리 스캔', position: [0, 0, 85], arrival: [0, 1.62, 77], lookAt: [0, 3, 85],
       modelPath: 'assets/models/moai.glb', realHeight: 4.0, preserveMaterials: true,
       facts: [['평균 높이', '약 4.0m'], ['무게', '약 14톤'], ['재질', '현무암']],
       size: '높이 약 4.0m (평균 크기 기준)',
@@ -118,7 +118,7 @@
     },
     {
       id: 'lamassu', order: '09', title: '람마수 (날개 달린 황소상)', short: '람마수 황소상',
-      subtitle: '고대 아시리아 기원전 8세기 · 3D 포토그래메트리 스캔', position: [0, 0, -110], arrival: [0, 1.62, -96], lookAt: [0, 2.5, -110],
+      subtitle: '고대 아시리아 기원전 8세기 · 3D 포토그래메트리 스캔', position: [0, 0, -55], arrival: [0, 1.62, -41], lookAt: [0, 2.5, -55],
       modelPath: 'assets/models/lamassu.glb', realHeight: 4.4, preserveMaterials: true,
       facts: [['높이', '4.4m'], ['길이', '4.4m'], ['재질', '석회암']],
       size: '높이 4.4m x 길이 4.4m',
@@ -132,7 +132,6 @@
   ];
   const canvas = document.getElementById('park-canvas');
   const loading = document.getElementById('loading');
-  const hero = document.getElementById('hero-panel');
   const measurePanel = document.getElementById('measure-panel');
   const measureKicker = document.getElementById('measure-kicker');
   const measureTitle = document.getElementById('measure-title');
@@ -145,7 +144,7 @@
 
   const scene = new THREE.Scene();
   scene.background = new THREE.Color(0x9fc8d9);
-  scene.fog = new THREE.Fog(0xaccbd0, 185, 470);
+  scene.fog = new THREE.Fog(0xaccbd0, 100, 260);
 
   const camera = new THREE.PerspectiveCamera(61, innerWidth / innerHeight, .08, 650);
   camera.rotation.order = 'YXZ';
@@ -167,9 +166,50 @@
   const raycaster = new THREE.Raycaster();
   const centerPointer = new THREE.Vector2(0, 0);
   const zoneObjects = [];
+  const zoneObstacles = [];
   const park = new THREE.Group();
   scene.add(park);
   let yaw = 0, pitch = -.06, dragging = false, dragStart = null, activeZone = null;
+  const velocity = new THREE.Vector3();
+  const tmpDirection = new THREE.Vector3();
+  const tmpRight = new THREE.Vector3();
+
+  const presenceEl = document.getElementById('class-presence');
+  const remotePeople = new Map();
+  const remoteLayer = new THREE.Group(); scene.add(remoteLayer);
+  let presenceSocket = null, presenceTimer = 0, localPresenceId = null, presenceScope = 'class';
+  const avatarColors = [0x547da6, 0x9d5b4c, 0x5a896a, 0x886ca5];
+  function avatarColor(value) { const text = String(value || ''); let hash = 0; for (let i = 0; i < text.length; i++) hash = (hash * 31 + text.charCodeAt(i)) >>> 0; return avatarColors[hash % avatarColors.length]; }
+  function personLabel(name) { const c = document.createElement('canvas'); c.width = 300; c.height = 64; const g = c.getContext('2d'); g.fillStyle = 'rgba(9,7,5,.82)'; g.fillRect(0, 4, 300, 52); g.strokeStyle = '#d6b66b'; g.strokeRect(1, 5, 298, 50); g.fillStyle = '#fff0ca'; g.textAlign = 'center'; g.font = 'bold 25px sans-serif'; g.fillText(name, 150, 39); const t = new THREE.CanvasTexture(c); t.encoding = THREE.sRGBEncoding; return new THREE.Sprite(new THREE.SpriteMaterial({ map: t, transparent: true, depthTest: false })); }
+  function makeSelfAvatar() {
+    const group = new THREE.Group();
+    const cloth = new THREE.MeshStandardMaterial({ color: 0x547da6, roughness: .72 });
+    const skin = new THREE.MeshStandardMaterial({ color: 0xe2ad88, roughness: .82 });
+    const hair = new THREE.MeshStandardMaterial({ color: 0x241a15, roughness: .92 });
+    const torso = new THREE.Mesh(new THREE.CylinderGeometry(.2, .27, .58, 14), cloth); torso.position.y = .94;
+    const shoulders = new THREE.Mesh(new THREE.BoxGeometry(.58, .16, .22), cloth); shoulders.position.set(0, 1.17, 0);
+    const neck = new THREE.Mesh(new THREE.CylinderGeometry(.075, .085, .13, 12), skin); neck.position.y = 1.3;
+    const head = new THREE.Mesh(new THREE.SphereGeometry(.19, 18, 14), skin); head.position.y = 1.47;
+    const hairCap = new THREE.Mesh(new THREE.SphereGeometry(.198, 18, 10, 0, Math.PI * 2, 0, Math.PI * .58), hair); hairCap.position.set(0, 1.5, .005);
+    const leftArm = new THREE.Mesh(new THREE.CylinderGeometry(.065, .075, .48, 10), cloth); leftArm.position.set(-.28, .92, 0); leftArm.rotation.z = -.08;
+    const rightArm = leftArm.clone(); rightArm.position.x = .28; rightArm.rotation.z = .08;
+    group.add(torso, shoulders, neck, head, hairCap, leftArm, rightArm);
+    group.userData.cloth = cloth;
+    group.scale.setScalar(.72);
+    group.traverse(part => { if (part.isMesh) { part.castShadow = false; part.receiveShadow = false; part.renderOrder = 3; } });
+    return group;
+  }
+  const selfAvatar = makeSelfAvatar(); scene.add(selfAvatar);
+  function makePerson(visitor) { const g = new THREE.Group(), cloth = new THREE.MeshStandardMaterial({ color: avatarColor(visitor.userId), roughness: .7, transparent: true, opacity: .86 }); const skin = new THREE.MeshStandardMaterial({ color: 0xe4b18d, roughness: .8, transparent: true, opacity: .86 }); const head = new THREE.Mesh(new THREE.SphereGeometry(.17, 16, 12), skin); head.position.y = 1.38; const body = new THREE.Mesh(new THREE.CylinderGeometry(.18, .24, .54, 12), cloth); body.position.y = .93; const leg = new THREE.Mesh(new THREE.CylinderGeometry(.07, .08, .42, 10), new THREE.MeshStandardMaterial({ color: 0x23252c, transparent: true, opacity: .86 })); leg.position.set(-.09, .42, 0); const leg2 = leg.clone(); leg2.position.x = .09; g.add(head, body, leg, leg2); const label = personLabel(visitor.name); label.position.y = 1.78; label.scale.set(.9, .19, 1); g.add(label); remoteLayer.add(g); return g; }
+  function updatePeople(visitors) { const visible = visitors.filter(v => v.userId !== localPresenceId); const ids = new Set(visible.map(v => v.userId)); for (const [id, entry] of remotePeople) { if (!ids.has(id)) { remoteLayer.remove(entry.group); remotePeople.delete(id); } } for (const v of visible) { let entry = remotePeople.get(v.userId); if (!entry) { entry = { group: makePerson(v) }; remotePeople.set(v.userId, entry); } entry.x = v.x; entry.z = v.z; entry.yaw = v.yaw; entry.group.position.set(v.x, 0, v.z); entry.group.rotation.y = v.yaw; } }
+  async function connectClassPresence() { try { const name = String(localStorage.getItem('classPlayerName') || '').trim(); let clientId = localStorage.getItem('museumPresenceClientId'); if (!clientId) { clientId = crypto.randomUUID ? crypto.randomUUID() : `${Date.now()}-${Math.random().toString(36).slice(2)}`; localStorage.setItem('museumPresenceClientId', clientId); } const query = new URLSearchParams({ name, clientId }); const response = await fetch(`/api/museum/presence-ticket?${query}`); if (!response.ok) return; const payload = await response.json(); presenceScope = payload.scope || 'class'; const proto = location.protocol === 'https:' ? 'wss' : 'ws'; presenceSocket = new WebSocket(`${proto}://${location.host}`); presenceSocket.addEventListener('open', () => presenceSocket.send(JSON.stringify({ type: 'PARK_JOIN', ticket: payload.ticket }))); presenceSocket.addEventListener('message', event => { const msg = JSON.parse(event.data); if (msg.type === 'PARK_JOINED') { localPresenceId = msg.userId; selfAvatar.userData.cloth.color.setHex(avatarColor(msg.userId)); } if (msg.type === 'PARK_STATE') { updatePeople(msg.visitors); const here = msg.visitors.length; presenceEl.textContent = presenceScope === 'open' ? `함께 탐험 중 ${here}명` : `우리 반 함께 탐험 중 ${here}명`; presenceEl.hidden = false; } }); } catch (_) {} }
+  function sendPresence() { if (!presenceSocket || presenceSocket.readyState !== WebSocket.OPEN) return; const now = performance.now(); if (now - presenceTimer < 100) return; presenceTimer = now; presenceSocket.send(JSON.stringify({ type: 'PARK_MOVE', x: camera.position.x, z: camera.position.z, yaw })); }
+  function updateSelfAvatar() {
+    const forwardX = -Math.sin(yaw), forwardZ = -Math.cos(yaw);
+    selfAvatar.position.set(camera.position.x + forwardX * 1.05, -.12, camera.position.z + forwardZ * 1.05);
+    selfAvatar.rotation.y = yaw;
+    selfAvatar.visible = !detailModal.open && !helpModal.open;
+  }
 
   const textureLoader = new THREE.TextureLoader();
 
@@ -325,7 +365,7 @@
   }
 
   function makePark() {
-    const ground = addMesh(new THREE.CircleGeometry(300, 96), MAT.grass, park, [0, -.08, 0]); ground.rotation.x = -Math.PI / 2; ground.receiveShadow = true; ground.castShadow = false;
+    const ground = addMesh(new THREE.CircleGeometry(165, 96), MAT.grass, park, [0, -.08, 0]); ground.rotation.x = -Math.PI / 2; ground.receiveShadow = true; ground.castShadow = false;
     const plaza = addMesh(new THREE.CircleGeometry(31, 64), MAT.path, park, [0, .01, 0]); plaza.rotation.x = -Math.PI / 2;
     const ring = addMesh(new THREE.RingGeometry(25, 31, 64), MAT.pathEdge, park, [0, .025, 0]); ring.rotation.x = -Math.PI / 2;
 
@@ -340,11 +380,15 @@
     const globe = sphere(2.7, new THREE.MeshStandardMaterial({ color: 0x7a9f63, roughness: .62, metalness: .08 }), park, [0, 4.1, 0], 32, 20);
     const hubLabel = makeLabel('실물 크기 3D 야외 미술 공원', '05번 전시실과 100% 동일한 3D GLB 스캔 1m = 3D 1단위', 9); hubLabel.position.set(0, 7.5, 0); hubLabel.userData.faceCamera = true; park.add(hubLabel);
 
-    ZONES.forEach(zone => loadZoneModel(zone));
+    ZONES.forEach(zone => {
+      loadZoneModel(zone);
+      const baseW = Math.max(3.5, zone.realHeight * 0.4);
+      zoneObstacles.push({ x: zone.position[0], z: zone.position[2], r: baseW * .72 + .42 });
+    });
 
     for (let i = 0; i < 115; i++) {
-      const a = i * 2.399, r = 50 + (i * 37 % 220), x = Math.cos(a) * r, z = Math.sin(a) * r;
-      if (ZONES.some(q => Math.hypot(x - q.position[0], z - q.position[2]) < 42)) continue;
+      const a = i * 2.399, r = 35 + (i * 37 % 125), x = Math.cos(a) * r, z = Math.sin(a) * r;
+      if (ZONES.some(q => Math.hypot(x - q.position[0], z - q.position[2]) < 24)) continue;
       const tree = new THREE.Group(), h = 3.5 + (i % 7) * .45;
       cylinder(.18, .28, h, 8, MAT.wood, tree, [0, h / 2, 0]);
       const crown = sphere(1.4 + (i % 4) * .18, i % 3 ? MAT.leaf : MAT.leaf2, tree, [0, h + .8, 0], 12, 9); crown.scale.y = 1.25;
@@ -356,7 +400,7 @@
   function setupLights() {
     scene.add(new THREE.HemisphereLight(0xd9efff, 0x354b2d, .64));
     const sun = new THREE.DirectionalLight(0xffeed0, 1.35); sun.position.set(-90, 160, 70); sun.castShadow = true;
-    sun.shadow.mapSize.set(2048, 2048); sun.shadow.camera.left = -190; sun.shadow.camera.right = 190; sun.shadow.camera.top = 190; sun.shadow.camera.bottom = -190; sun.shadow.camera.far = 420; sun.shadow.bias = -.0002; scene.add(sun);
+    sun.shadow.mapSize.set(2048, 2048); sun.shadow.camera.left = -110; sun.shadow.camera.right = 110; sun.shadow.camera.top = 110; sun.shadow.camera.bottom = -110; sun.shadow.camera.far = 240; sun.shadow.bias = -.0002; scene.add(sun);
   }
 
   function buildTabs() {
@@ -368,7 +412,7 @@
     });
   }
   function teleport(zone) {
-    hero.classList.add('hidden'); camera.position.set(zone.arrival[0], zone.arrival[1], zone.arrival[2]);
+    camera.position.set(zone.arrival[0], zone.arrival[1], zone.arrival[2]);
     const target = new THREE.Vector3(zone.lookAt[0], zone.lookAt[1], zone.lookAt[2]);
     const d = target.sub(camera.position); yaw = Math.atan2(-d.x, -d.z); pitch = Math.atan2(d.y, Math.hypot(d.x, d.z)); updateCamera();
     setActiveZone(zone);
@@ -401,29 +445,38 @@
     let best = null, dist = Infinity;
     ZONES.forEach(z => { const d = Math.hypot(camera.position.x - z.position[0], camera.position.z - z.position[2]); if (d < dist) { dist = d; best = z; } });
     const monumental = best && ['sphinx', 'liberty'].includes(best.id);
-    return dist < (monumental ? 148 : 34) ? best : null;
+    return dist < (monumental ? 60 : 17) ? best : null;
   }
   function updateCamera() { camera.rotation.y = yaw; camera.rotation.x = pitch; }
   function updateMovement(dt) {
+    if (detailModal.open || helpModal.open) return;
     const forward = (keys.KeyW || keys.ArrowUp ? 1 : 0) - (keys.KeyS || keys.ArrowDown ? 1 : 0);
     const strafe = (keys.KeyD || keys.ArrowRight ? 1 : 0) - (keys.KeyA || keys.ArrowLeft ? 1 : 0);
-    if (forward || strafe) {
-      const speed = (keys.ShiftLeft || keys.ShiftRight ? 55 : 22) * dt, len = Math.hypot(forward, strafe) || 1;
-      camera.position.x += (-Math.sin(yaw) * forward + Math.cos(yaw) * strafe) / len * speed;
-      camera.position.z += (-Math.cos(yaw) * forward - Math.sin(yaw) * strafe) / len * speed;
-      const radius = Math.hypot(camera.position.x, camera.position.z); if (radius > 285) { camera.position.x *= 285 / radius; camera.position.z *= 285 / radius; }
+    tmpDirection.set(-Math.sin(yaw), 0, -Math.cos(yaw)); tmpRight.set(Math.cos(yaw), 0, -Math.sin(yaw));
+    const wish = new THREE.Vector3().addScaledVector(tmpDirection, forward).addScaledVector(tmpRight, strafe);
+    if (wish.lengthSq() > 0) wish.normalize();
+    const accel = 28, maxSpeed = (keys.ShiftLeft || keys.ShiftRight) ? 7.5 : 4.8;
+    velocity.addScaledVector(wish, accel * dt); velocity.multiplyScalar(Math.pow(.03, dt));
+    if (velocity.length() > maxSpeed) velocity.setLength(maxSpeed);
+    const oldX = camera.position.x, oldZ = camera.position.z;
+    camera.position.addScaledVector(velocity, dt);
+    const radius = Math.hypot(camera.position.x, camera.position.z);
+    if (radius > 150) { camera.position.x *= 150 / radius; camera.position.z *= 150 / radius; }
+    for (const o of zoneObstacles) {
+      const dx = camera.position.x - o.x, dz = camera.position.z - o.z, dist = Math.hypot(dx, dz);
+      if (dist < o.r) { if (dist < .001) { camera.position.x = oldX; camera.position.z = oldZ; } else { camera.position.x = o.x + dx / dist * o.r; camera.position.z = o.z + dz / dist * o.r; } }
     }
-    camera.position.y = 1.62;
+    camera.position.y = 1.62 + Math.sin(performance.now() * .009) * Math.min(velocity.length() * .012, .025);
     setActiveZone(nearestZone());
   }
 
   function animate() {
     requestAnimationFrame(animate); const dt = Math.min(clock.getDelta(), .05); updateMovement(dt);
     park.children.forEach(o => { if (o.userData.faceCamera) o.lookAt(camera.position.x, o.position.y, camera.position.z); });
-    compassArrow.style.transform = `rotate(${-yaw}rad)`; renderer.render(scene, camera);
+    compassArrow.style.transform = `rotate(${-yaw}rad)`; updateSelfAvatar(); sendPresence(); renderer.render(scene, camera);
   }
 
-  setupLights(); makePark(); buildTabs(); updateCamera(); animate();
+  setupLights(); makePark(); buildTabs(); updateCamera(); connectClassPresence(); animate();
   setTimeout(() => loading.classList.add('done'), 650);
 
   addEventListener('keydown', e => { keys[e.code] = true; if (['ArrowUp', 'ArrowDown', 'ArrowLeft', 'ArrowRight', 'Space'].includes(e.code)) e.preventDefault(); });
@@ -433,7 +486,6 @@
   canvas.addEventListener('pointerup', e => { if (!dragging) return; dragging = false; canvas.classList.remove('dragging'); if (dragStart && !dragStart.moved) { raycaster.setFromCamera(centerPointer, camera); const hit = raycaster.intersectObjects(zoneObjects, true)[0]; if (hit) { let o = hit.object; while (o && !o.userData.zone) o = o.parent; if (o) openDetail(o.userData.zone); } } dragStart = null; });
   addEventListener('resize', () => { camera.aspect = innerWidth / innerHeight; camera.updateProjectionMatrix(); renderer.setSize(innerWidth, innerHeight, false); renderer.setPixelRatio(Math.min(devicePixelRatio, 1.5)); });
 
-  document.getElementById('start-button').addEventListener('click', () => teleport(ZONES[0]));
   document.getElementById('detail-button').addEventListener('click', () => openDetail(activeZone));
   document.getElementById('modal-close').addEventListener('click', () => detailModal.close());
   document.getElementById('help-button').addEventListener('click', () => helpModal.showModal());

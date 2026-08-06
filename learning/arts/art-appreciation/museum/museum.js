@@ -781,7 +781,8 @@
     if(instant)loading.classList.add('done');
   }
 
-  function buildTabs(){rooms.forEach((room,i)=>{const b=document.createElement('button');b.type='button';b.className='room-tab';b.dataset.sfx='click';b.innerHTML=`<b>${room.number}. ${room.title}</b><small>${room.subtitle}</small>`;b.addEventListener('click',()=>{if(i!==activeRoom)setRoom(i);});roomTabs.appendChild(b);});}
+  function buildTabs(){rooms.forEach((room,i)=>{const b=document.createElement('button');b.type='button';b.className='room-tab';b.dataset.sfx='click';b.innerHTML=`<b>${room.number}. ${room.title}</b><small>${room.subtitle}</small>`;b.addEventListener('click',()=>{if(i!==activeRoom)setRoom(i);});roomTabs.appendChild(b);});
+    const parkTab=document.createElement('button');parkTab.type='button';parkTab.className='room-tab room-tab-park';parkTab.dataset.sfx='click';parkTab.innerHTML='<b>06. 입체·공간</b><small>실물 크기 야외 테마파크</small>';parkTab.addEventListener('click',()=>{location.href='../park/';});roomTabs.appendChild(parkTab);}
 
   function formatSize(work){if(work.size.label)return work.size.label;const parts=[];if(work.size.h)parts.push(`높이 ${work.size.h}cm`);if(work.size.w)parts.push(`너비 ${work.size.w}cm`);if(work.size.d)parts.push(`깊이 ${work.size.d}cm`);return parts.join(' × ');}
   const movementGuide={

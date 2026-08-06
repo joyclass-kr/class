@@ -353,6 +353,7 @@ for (const directory of ["admin", "classtools", "css", "js", "learning", "notice
 
 const rooms = new Map();
 const museumClasses = new Map();
+const parkClasses = new Map();
 
 function safeSend(socket, payload) {
   if (socket && socket.readyState === WebSocket.OPEN) {
@@ -397,6 +398,41 @@ function safeMuseumPosition(room, x, z) {
     }
   }
   return { x:nextX, z:nextZ };
+}
+
+function parkBroadcast(classKey) {
+  const parkClass = parkClasses.get(classKey);
+  if (!parkClass) return;
+  const visitors = [...parkClass.clients.values()].map(socket => socket.meta.parkVisitor).filter(Boolean);
+  for (const socket of parkClass.clients.values()) safeSend(socket, { type: "PARK_STATE", visitors });
+}
+
+function leavePark(socket) {
+  const visitor = socket.meta.parkVisitor;
+  if (!visitor) return;
+  const parkClass = parkClasses.get(visitor.classKey);
+  if (parkClass) {
+    parkClass.clients.delete(visitor.userId);
+    if (parkClass.clients.size) parkBroadcast(visitor.classKey);
+    else parkClasses.delete(visitor.classKey);
+  }
+  socket.meta.parkVisitor = null;
+}
+
+const PARK_ZONE_OBSTACLES = [
+  {x:36,z:-71,r:2.94},{x:-30,z:-78,r:2.94},{x:77.5,z:-27.5,r:2.94},{x:-77.5,z:-27.5,r:2.94},
+  {x:0,z:-85,r:2.94},{x:-65,z:40,r:6.243},{x:65,z:40,r:13.68},{x:0,z:85,r:2.94},{x:0,z:-55,r:2.94}
+];
+
+function safeParkPosition(x, z) {
+  let nextX = Number(x) || 0, nextZ = Number(z) || 0;
+  const radius = Math.hypot(nextX, nextZ);
+  if (radius > 150) { const scale = 150 / radius; nextX *= scale; nextZ *= scale; }
+  for (const obstacle of PARK_ZONE_OBSTACLES) {
+    const dx = nextX - obstacle.x, dz = nextZ - obstacle.z, d = Math.hypot(dx, dz);
+    if (d < obstacle.r) { const scale = obstacle.r / (d || 1); nextX = obstacle.x + (dx || .01) * scale; nextZ = obstacle.z + (dz || .01) * scale; }
+  }
+  return { x: nextX, z: nextZ };
 }
 
 function loveLetterBroadcast(room) {
@@ -1173,6 +1209,25 @@ wss.on("connection", socket => {
       const position = safeMuseumPosition(room, message.x, message.z);
       visitor.room=room; visitor.x=position.x; visitor.z=position.z; visitor.yaw=Number.isFinite(message.yaw) ? Math.max(-6.4,Math.min(6.4,message.yaw)) : visitor.yaw;
       museumBroadcast(visitor.classKey); return;
+    }
+
+    if (type === "PARK_JOIN") {
+      const identity = classroomPlatform.verifyMuseumPresenceTicket(cleanToken(message.ticket, 2048));
+      if (!identity) { safeSend(socket, { type: "MUSEUM_AUTH_REQUIRED" }); return; }
+      leavePark(socket);
+      const parkClass = parkClasses.get(identity.classKey) || { clients: new Map() };
+      parkClasses.set(identity.classKey, parkClass);
+      socket.meta.parkVisitor = { userId:identity.userId, name:cleanToken(identity.name,12), classKey:identity.classKey, x:0, z:28, yaw:0 };
+      const oldSocket = parkClass.clients.get(identity.userId);
+      if (oldSocket && oldSocket !== socket) { oldSocket.meta.parkVisitor = null; try { oldSocket.close(4003, "REPLACED"); } catch (_) {} }
+      parkClass.clients.set(identity.userId, socket); safeSend(socket, { type: "PARK_JOINED", userId: identity.userId }); parkBroadcast(identity.classKey); return;
+    }
+    if (type === "PARK_MOVE") {
+      const visitor = socket.meta.parkVisitor;
+      if (!visitor) return;
+      const position = safeParkPosition(message.x, message.z);
+      visitor.x=position.x; visitor.z=position.z; visitor.yaw=Number.isFinite(message.yaw) ? Math.max(-6.4,Math.min(6.4,message.yaw)) : visitor.yaw;
+      parkBroadcast(visitor.classKey); return;
     }
 
     if (type === "CREATE_ROOM") {
@@ -2716,6 +2771,7 @@ wss.on("connection", socket => {
 
   socket.on("close", code => {
     leaveMuseum(socket);
+    leavePark(socket);
     const key = socket.meta.roomKey;
     if (!key) return;
 
