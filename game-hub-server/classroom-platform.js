@@ -1067,6 +1067,42 @@ function createClassroomPlatform(options = {}) {
     }
   }
 
+  async function getGuardianChildren(user) {
+    if (!user || !user.email) return [];
+    try {
+      const gRes = await pool.query(
+        `SELECT s.id AS student_id, s.student_number::TEXT AS student_number, s.roster_name AS student_name,
+                s.academic_year, s.grade, s.class_number,
+                sc.id AS school_id, sc.name AS school_name
+         FROM school_students s
+         JOIN classroom_schools sc ON sc.id = s.school_id
+         WHERE LOWER(s.guardian1_email) = LOWER($1) OR LOWER(s.guardian2_email) = LOWER($1)
+         UNION ALL
+         SELECT s.id AS student_id, s.student_number::TEXT AS student_number, s.roster_name AS student_name,
+                c.academic_year, c.grade, c.class_number,
+                sc.id AS school_id, sc.name AS school_name
+         FROM classroom_students s
+         JOIN classroom_classes c ON c.id = s.class_id
+         JOIN classroom_schools sc ON sc.id = c.school_id
+         WHERE LOWER(s.guardian1_email) = LOWER($1) OR LOWER(s.guardian2_email) = LOWER($1)
+         ORDER BY grade DESC, class_number ASC, student_number ASC`,
+        [user.email]
+      );
+      return gRes.rows.map(r => ({
+        studentId: String(r.student_id),
+        schoolId: String(r.school_id),
+        schoolName: r.school_name,
+        grade: r.grade,
+        classNumber: r.class_number,
+        studentNumber: r.student_number,
+        studentName: r.student_name
+      }));
+    } catch (err) {
+      console.error("guardianChildren error:", err.message);
+      return [];
+    }
+  }
+
   async function userClassId(user) {
     if (!user) return null;
     if (user.role === "student" || user.role === "user") {
@@ -1255,40 +1291,7 @@ function createClassroomPlatform(options = {}) {
     if (membership && user.role === "user") {
       user.role = "student";
     }
-    let guardianChildren = [];
-    if (user && user.email) {
-      try {
-        const gRes = await pool.query(
-          `SELECT s.id AS student_id, s.student_number::TEXT AS student_number, s.roster_name AS student_name,
-                  s.academic_year, s.grade, s.class_number,
-                  sc.id AS school_id, sc.name AS school_name
-           FROM school_students s
-           JOIN classroom_schools sc ON sc.id = s.school_id
-           WHERE LOWER(s.guardian1_email) = LOWER($1) OR LOWER(s.guardian2_email) = LOWER($1)
-           UNION ALL
-           SELECT s.id AS student_id, s.student_number::TEXT AS student_number, s.roster_name AS student_name,
-                  c.academic_year, c.grade, c.class_number,
-                  sc.id AS school_id, sc.name AS school_name
-           FROM classroom_students s
-           JOIN classroom_classes c ON c.id = s.class_id
-           JOIN classroom_schools sc ON sc.id = c.school_id
-           WHERE LOWER(s.guardian1_email) = LOWER($1) OR LOWER(s.guardian2_email) = LOWER($1)
-           ORDER BY grade DESC, class_number ASC, student_number ASC`,
-          [user.email]
-        );
-        guardianChildren = gRes.rows.map(r => ({
-          studentId: String(r.student_id),
-          schoolId: String(r.school_id),
-          schoolName: r.school_name,
-          grade: r.grade,
-          classNumber: r.class_number,
-          studentNumber: r.student_number,
-          studentName: r.student_name
-        }));
-      } catch (err) {
-        console.error("guardianChildren error:", err.message);
-      }
-    }
+    const guardianChildren = await getGuardianChildren(user);
 
     return res.json({
       signedIn: true,
@@ -1884,7 +1887,8 @@ function createClassroomPlatform(options = {}) {
     );
     setSessionCookie(res, sessionToken);
     const membership = (user.role === "student" || user.role === "user" || isStudent) ? await studentMembership(user.id) : null;
-    return res.json({ ok: true, user: publicUser(user), membership });
+    const guardianChildren = await getGuardianChildren(user);
+    return res.json({ ok: true, user: publicUser(user), membership, guardianChildren });
   }));
 
   router.post("/auth/logout", asyncRoute(async (req, res) => {

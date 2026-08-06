@@ -1354,7 +1354,7 @@
                                 method: 'POST',
                                 body: JSON.stringify({ credential }),
                             });
-                            await routeSignedIn({ user: state.user, membership: state.membership });
+                            await routeSignedIn({ user: state.user, membership: state.membership, guardianChildren: state.guardianChildren });
                         } catch (error) {
                             setStatus(error.message, true);
                         }
