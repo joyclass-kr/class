@@ -1262,7 +1262,7 @@
                 }
 
                 // 3. Student
-                if (state.membership || state.user?.role === 'student') {
+                if (state.membership || state.user?.role === 'student' || (state.user && state.user.role !== 'teacher' && state.user.role !== 'admin' && !state.guest)) {
                     const m = state.membership;
                     const btn = document.createElement('a');
                     btn.className = 'profile-btn student';

@@ -1216,7 +1216,10 @@ function createClassroomPlatform(options = {}) {
       }
       return res.json({ signedIn: false, configured: true });
     }
-    const membership = user.role === "student" ? await studentMembership(user.id) : null;
+    const membership = (user.role === "student" || user.role === "user") ? await studentMembership(user.id) : null;
+    if (membership && user.role === "user") {
+      user.role = "student";
+    }
     let guardianChildren = [];
     if (user && user.email) {
       try {
