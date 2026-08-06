@@ -1,10 +1,19 @@
 "use client";
 
-import { useCallback, useEffect, useMemo, useRef, useState, type PointerEvent } from "react";
+import { useEffect, useState } from "react";
 
 type PrintMode = "worksheet" | "answers" | "both";
 type DivisionKind = "quotative" | "partitive";
-type StoryProblem = { id: string; index: number; divisor: number; quotient: number; kind: DivisionKind; unit: string };
+type GroupOption = { groupSize: number; groupCount: number };
+type StoryProblem = {
+  id: string;
+  index: number;
+  divisor: number;
+  kind: DivisionKind;
+  unit: string;
+  options: [GroupOption, GroupOption];
+  correctOption: 0 | 1;
+};
 type ProblemSet = { seed: number; problems: StoryProblem[] };
 
 const INITIAL_SEED = 20260720;
@@ -42,66 +51,16 @@ function createProblemSet(seed: number): ProblemSet {
     seed,
     problems: STORY_TYPES.map(({ kind, unit }, index) => {
       const divisor = integer(next, 2, 3);
-      return { id: `division-story-${index}`, index, divisor, quotient: 6 / divisor, kind, unit };
+      const groupSize = kind === "quotative" ? divisor : 6 / divisor;
+      const groupCount = 6 / groupSize;
+      const correct: GroupOption = { groupSize, groupCount };
+      const swapped: GroupOption = { groupSize: groupCount, groupCount: groupSize };
+      const swap = next() < 0.5;
+      const options: [GroupOption, GroupOption] = swap ? [swapped, correct] : [correct, swapped];
+      const correctOption: 0 | 1 = swap ? 1 : 0;
+      return { id: `division-story-${index}`, index, divisor, kind, unit, options, correctOption };
     }),
   };
-}
-
-function DrawingPad({ id, register }: { id: string; register: (id: string, canvas: HTMLCanvasElement | null) => void }) {
-  const canvasRef = useRef<HTMLCanvasElement>(null);
-  const drawing = useRef(false);
-
-  useEffect(() => {
-    const canvas = canvasRef.current;
-    register(id, canvas);
-    return () => register(id, null);
-  }, [id, register]);
-
-  function point(event: PointerEvent<HTMLCanvasElement>) {
-    const canvas = event.currentTarget;
-    const rect = canvas.getBoundingClientRect();
-    return { x: (event.clientX - rect.left) * canvas.width / rect.width, y: (event.clientY - rect.top) * canvas.height / rect.height };
-  }
-
-  function start(event: PointerEvent<HTMLCanvasElement>) {
-    const canvas = event.currentTarget;
-    const context = canvas.getContext("2d");
-    if (!context) return;
-    const position = point(event);
-    drawing.current = true;
-    canvas.setPointerCapture(event.pointerId);
-    context.beginPath();
-    context.moveTo(position.x, position.y);
-    context.lineWidth = 5;
-    context.lineCap = "round";
-    context.lineJoin = "round";
-    context.strokeStyle = "#17233c";
-  }
-
-  function move(event: PointerEvent<HTMLCanvasElement>) {
-    if (!drawing.current) return;
-    const context = event.currentTarget.getContext("2d");
-    if (!context) return;
-    const position = point(event);
-    context.lineTo(position.x, position.y);
-    context.stroke();
-  }
-
-  function finish() {
-    drawing.current = false;
-  }
-
-  function clear() {
-    const canvas = canvasRef.current;
-    canvas?.getContext("2d")?.clearRect(0, 0, canvas.width, canvas.height);
-  }
-
-  return (
-    <div className="division-drawing-pad">
-      <canvas ref={canvasRef} width={520} height={116} onPointerDown={start} onPointerMove={move} onPointerUp={finish} onPointerCancel={finish} aria-label={`${id} 그림 그리기`} />
-      <button type="button" onClick={clear}>지우기</button>
-    </div>
-  );
 }
 
 function story(problem: StoryProblem) {
@@ -120,14 +79,12 @@ function story(problem: StoryProblem) {
   }
 }
 
-function GroupDiagram({ problem }: { problem: StoryProblem }) {
-  const groupCount = problem.kind === "quotative" ? problem.quotient : problem.divisor;
-  const groupSize = 6 / groupCount;
+function GroupDiagram({ option, className }: { option: GroupOption; className?: string }) {
   return (
-    <div className="division-group-diagram" aria-label={`${groupCount}묶음 그림`}>
-      {Array.from({ length: groupCount }, (_, group) => (
+    <div className={`division-group-diagram${className ? ` ${className}` : ""}`} aria-label={`${option.groupSize}개씩 ${option.groupCount}묶음 그림`}>
+      {Array.from({ length: option.groupCount }, (_, group) => (
         <span className="division-dot-group" key={group}>
-          {Array.from({ length: groupSize }, (_, dot) => <i key={dot} />)}
+          {Array.from({ length: option.groupSize }, (_, dot) => <i key={dot} />)}
         </span>
       ))}
     </div>
@@ -136,11 +93,10 @@ function GroupDiagram({ problem }: { problem: StoryProblem }) {
 
 export default function GradeThreeDivisionOnePage() {
   const [questionSet, setQuestionSet] = useState(() => createProblemSet(INITIAL_SEED));
-  const [answers, setAnswers] = useState<Record<string, string>>({});
+  const [answers, setAnswers] = useState<Record<string, 0 | 1>>({});
   const [results, setResults] = useState<Record<string, boolean>>({});
   const [sheetScale, setSheetScale] = useState(0.6);
   const [printMenuOpen, setPrintMenuOpen] = useState(false);
-  const canvases = useRef<Record<string, HTMLCanvasElement>>({});
 
   useEffect(() => {
     function fitA4Sheet() {
@@ -151,21 +107,11 @@ export default function GradeThreeDivisionOnePage() {
     return () => window.removeEventListener("resize", fitA4Sheet);
   }, []);
 
-  const registerCanvas = useCallback((id: string, canvas: HTMLCanvasElement | null) => {
-    if (canvas) canvases.current[id] = canvas;
-    else delete canvases.current[id];
-  }, []);
-  const expected = useMemo(() => questionSet.problems.flatMap((problem) => [
-    [`${problem.id}-equation`, String(problem.quotient)] as const,
-    [`${problem.id}-answer`, String(problem.quotient)] as const,
-  ]), [questionSet]);
-  const completed = Object.values(answers).filter(Boolean).length;
-  const correctProblems = questionSet.problems.filter((problem) => (
-    results[`${problem.id}-equation`] === true && results[`${problem.id}-answer`] === true
-  )).length;
+  const completed = Object.keys(answers).length;
+  const correctProblems = questionSet.problems.filter((problem) => results[problem.id] === true).length;
 
-  function updateAnswer(id: string, value: string) {
-    setAnswers((current) => ({ ...current, [id]: value.replace(/[^0-9]/g, "").slice(0, 1) }));
+  function selectOption(id: string, optionIndex: 0 | 1) {
+    setAnswers((current) => ({ ...current, [id]: optionIndex }));
     setResults((current) => {
       if (!(id in current)) return current;
       const next = { ...current };
@@ -175,22 +121,16 @@ export default function GradeThreeDivisionOnePage() {
   }
 
   function checkAll() {
-    setResults(Object.fromEntries(expected.map(([id, answer]) => [id, answers[id] === answer])));
-  }
-
-  function clearDrawings() {
-    Object.values(canvases.current).forEach((canvas) => canvas.getContext("2d")?.clearRect(0, 0, canvas.width, canvas.height));
+    setResults(Object.fromEntries(questionSet.problems.map((problem) => [problem.id, answers[problem.id] === problem.correctOption])));
   }
 
   function resetAnswers() {
     setAnswers({});
     setResults({});
-    clearDrawings();
   }
 
   function newSet() {
-    if (completed > 0 && !window.confirm("쓴 답이 사라집니다. 새 문제를 만들까요?")) return;
-    clearDrawings();
+    if (completed > 0 && !window.confirm("고른 답이 사라집니다. 새 문제를 만들까요?")) return;
     setQuestionSet(createProblemSet((Date.now() ^ Math.floor(Math.random() * 0xffffffff)) >>> 0));
     setAnswers({});
     setResults({});
@@ -204,25 +144,39 @@ export default function GradeThreeDivisionOnePage() {
     window.requestAnimationFrame(() => window.print());
   }
 
-  function response(problem: StoryProblem, field: "equation" | "answer", answerSheet: boolean) {
-    if (answerSheet) return <strong className={`division-static-answer ${field}`}>{problem.quotient}</strong>;
-    const id = `${problem.id}-${field}`;
-    return <input className={`division-answer-input ${field}`} type="text" inputMode="numeric" pattern="[0-9]*" maxLength={1} value={answers[id] ?? ""} onChange={(event) => updateAnswer(id, event.target.value)} aria-label={`${id} 답`} />;
-  }
-
   function renderProblem(problem: StoryProblem, answerSheet: boolean) {
-    const ids = [`${problem.id}-equation`, `${problem.id}-answer`];
-    const graded = ids.some((id) => id in results);
-    const isCorrect = graded && ids.every((id) => results[id]);
+    const graded = problem.id in results;
+    const isCorrect = graded && results[problem.id];
+    const selected = answers[problem.id];
     return (
       <article className={`division-story-problem${graded ? isCorrect ? " is-correct" : " is-wrong" : ""}`} data-testid="division-story-problem" key={problem.id}>
         <p><b>{problem.index + 1}</b>{story(problem)}</p>
-        <div className="division-story-work">
-          <div className="division-story-drawing"><span>그림</span>{answerSheet ? <GroupDiagram problem={problem} /> : <DrawingPad id={problem.id} register={registerCanvas} />}</div>
-          <div className="division-story-response">
-            <span>식</span><strong>6 ÷ {problem.divisor} =</strong>{response(problem, "equation", answerSheet)}
-            <span>답</span>{response(problem, "answer", answerSheet)}<em>{problem.unit}</em>
-          </div>
+        <div className="division-story-options">
+          {problem.options.map((option, optionIndex) => {
+            const isCorrectOption = optionIndex === problem.correctOption;
+            const isSelected = selected === optionIndex;
+            const stateClass = answerSheet ? (isCorrectOption ? "is-answer" : "") : (isSelected ? "is-selected" : "");
+            const markClass = ["division-option-mark", stateClass].filter(Boolean).join(" ");
+            const diagram = <GroupDiagram option={option} className={stateClass} />;
+            return answerSheet ? (
+              <div className="division-option" key={optionIndex}>
+                {diagram}
+                <span className={markClass} aria-hidden="true" />
+              </div>
+            ) : (
+              <button
+                type="button"
+                className="division-option"
+                onClick={() => selectOption(problem.id, optionIndex as 0 | 1)}
+                aria-pressed={isSelected}
+                aria-label={`${problem.index + 1}번 ${optionIndex === 0 ? "왼쪽" : "오른쪽"} 그림 선택`}
+                key={optionIndex}
+              >
+                {diagram}
+                <span className={markClass} aria-hidden="true" />
+              </button>
+            );
+          })}
         </div>
         {!answerSheet && graded && <span className={`counting-result ${isCorrect ? "correct" : "wrong"}`} role="status">{isCorrect ? "맞음" : "틀림"}</span>}
       </article>
@@ -248,7 +202,7 @@ export default function GradeThreeDivisionOnePage() {
         <div className="counting-progress"><strong>{correctProblems}<small>/10 정답</small></strong></div>
         <div className="toolbar">
           <button className="button secondary" type="button" onClick={newSet}>새 문제</button>
-          <button className="button ghost" type="button" onClick={resetAnswers}>다시 쓰기</button>
+          <button className="button ghost" type="button" onClick={resetAnswers}>다시 고르기</button>
           <div className="print-control">
             <button className="button ghost print-button" type="button" aria-expanded={printMenuOpen} aria-haspopup="menu" onClick={() => setPrintMenuOpen((open) => !open)}>인쇄</button>
             {printMenuOpen && <div className="print-menu" role="menu" aria-label="인쇄 자료 선택">
