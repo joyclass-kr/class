@@ -1051,23 +1051,40 @@ function createClassroomPlatform(options = {}) {
 
   async function userClassId(user) {
     if (!user) return null;
-    if (user.role === "student") {
-      const result = await pool.query(
-        "SELECT class_id FROM classroom_students WHERE user_id = $1 LIMIT 1",
+    if (user.role === "student" || user.role === "user") {
+      const res = await pool.query(
+        `SELECT c.id
+         FROM school_students s
+         JOIN classroom_classes c ON c.school_id = s.school_id AND c.grade = s.grade AND c.class_number = s.class_number
+         WHERE s.user_id = $1 OR (s.student_email IS NOT NULL AND LOWER(s.student_email) = (SELECT LOWER(email) FROM classroom_users WHERE id = $1))
+         UNION ALL
+         SELECT class_id FROM classroom_students WHERE user_id = $1
+         LIMIT 1`,
         [user.id]
       );
-      return result.rows[0]?.class_id || null;
+      return res.rows[0]?.id || null;
     }
     if (user.role === "teacher") {
-      const result = await pool.query(
-        `SELECT c.id
-         FROM classroom_classes c
-         JOIN classroom_teachers t ON t.school_id = c.school_id AND t.academic_year = c.academic_year AND t.grade = c.grade AND t.class_number = c.class_number
-         WHERE (t.user_id = $1 OR c.teacher_user_id = $1) AND t.teacher_type = 'homeroom'
-         ORDER BY c.updated_at DESC LIMIT 1`,
+      const tp = await pool.query(
+        `SELECT school_id, academic_year, grade, class_number
+         FROM classroom_teachers
+         WHERE (user_id = $1 OR (google_email IS NOT NULL AND LOWER(google_email) = (SELECT LOWER(email) FROM classroom_users WHERE id = $1)))
+           AND (grade IS NOT NULL AND class_number IS NOT NULL)
+         LIMIT 1`,
         [user.id]
       );
-      return result.rows[0]?.id || null;
+      const t = tp.rows[0];
+      if (!t) return null;
+
+      const year = t.academic_year || new Date().getFullYear();
+      const clsRes = await pool.query(
+        `INSERT INTO classroom_classes (school_id, academic_year, grade, class_number, teacher_user_id, name)
+         VALUES ($1, $2, $3, $4, $5, $6)
+         ON CONFLICT (school_id, academic_year, grade, class_number) DO UPDATE SET teacher_user_id = EXCLUDED.teacher_user_id, updated_at = NOW()
+         RETURNING id`,
+        [t.school_id, year, t.grade, t.class_number, user.id, `${t.grade}학년 ${t.class_number}반`]
+      );
+      return clsRes.rows[0]?.id || null;
     }
     return null;
   }
