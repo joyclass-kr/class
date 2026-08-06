@@ -478,22 +478,34 @@ function createReadingBank(options = {}) {
   // This route deliberately does not depend on the classroom database or a
   // teacher-created pilot.  It is the always-available practice shelf used by
   // the student reading page.
+  //
+  // The underlying topic data is static (bundled at deploy time), so the
+  // ~900-item bank is built once per server process instead of on every
+  // request. Rebuilding it per request cost ~300ms of CPU plus a fresh
+  // ~1.5MB JSON serialization each time, which is what made the reading
+  // screen feel slow to load.
+  let cachedSelfStudyBody = null;
+  function buildSelfStudyBody() {
+    const seed = JSON.parse(fs.readFileSync(SAMPLE_SEED_PATH, "utf8"));
+    const items = (seed.topics || []).flatMap((topic) => (topic.items || []).map((item) => ({
+      id: item.itemKey,
+      topicTitle: topic.title,
+      track: item.track,
+      targetLevel: foldSeedLevel(item.targetLevel),
+      questionType: item.questionType,
+      passageText: item.passageText,
+      promptText: item.promptText,
+      choices: item.choices,
+      correctIndex: item.correctIndex,
+      explanation: item.explanation
+    })));
+    return JSON.stringify({ items: items.concat(createSelfStudyItems()) });
+  }
+
   router.get("/self-study", (req, res, next) => {
     try {
-      const seed = JSON.parse(fs.readFileSync(SAMPLE_SEED_PATH, "utf8"));
-      const items = (seed.topics || []).flatMap((topic) => (topic.items || []).map((item) => ({
-        id: item.itemKey,
-        topicTitle: topic.title,
-        track: item.track,
-        targetLevel: foldSeedLevel(item.targetLevel),
-        questionType: item.questionType,
-        passageText: item.passageText,
-        promptText: item.promptText,
-        choices: item.choices,
-        correctIndex: item.correctIndex,
-        explanation: item.explanation
-      })));
-      res.json({ items: items.concat(createSelfStudyItems()) });
+      if (!cachedSelfStudyBody) cachedSelfStudyBody = buildSelfStudyBody();
+      res.type("application/json").send(cachedSelfStudyBody);
     } catch (error) {
       next(error);
     }

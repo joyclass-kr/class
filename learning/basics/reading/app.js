@@ -40,10 +40,9 @@
     }
     levels.forEach((level) => {
       const group = items.filter((item) => item.targetLevel === level);
-      const labelled = group.find((item) => item.schoolBand) || {};
+      const labelled = group.find((item) => item.skillFocus) || {};
       const card = node("button", "level-card", ""); card.type = "button";
       card.append(node("strong", "level-code", `${state.track === "en" ? "E" : "K"}${level}`));
-      if (labelled.schoolBand) card.append(node("span", "level-band", labelled.schoolBand));
       if (labelled.skillFocus) card.append(node("span", "level-focus", labelled.skillFocus));
       card.append(node("span", "level-count", `${group.length}문항`));
       card.addEventListener("click", () => startSet(level)); list.append(card);
@@ -85,7 +84,7 @@
   function renderQuestion() {
     const item = state.set[state.index]; state.answered = false; state.hadWrong = false;
     const levelCode = `${item.track === "en" ? "E" : "K"}${item.targetLevel}`;
-    $("questionLevel").textContent = item.schoolBand ? `${levelCode} · ${item.schoolBand}` : levelCode;
+    $("questionLevel").textContent = levelCode;
     $("questionProgress").textContent = `${state.index + 1} / ${state.set.length}`;
     $("questionTopic").textContent = item.topicTitle;
     $("progressFill").style.width = `${((state.index + 1) / state.set.length) * 100}%`;
