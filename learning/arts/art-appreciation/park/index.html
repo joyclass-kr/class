@@ -5,9 +5,11 @@
   <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
   <meta name="theme-color" content="#153026">
   <title>세계 미술 테마파크 · 실물 크기 3D 탐험</title>
-  <link rel="stylesheet" href="styles.css?v=20260723-3">
+  <link rel="stylesheet" href="styles.css?v=20260807-2">
+  <script src="../../../../assets/sound/music-control.js?v=20260724-2" defer></script>
 </head>
 <body>
+  <audio id="bgm" src="assets/sound/park-theme.mp3" loop preload="auto"></audio>
   <main id="app" aria-label="실물 크기 세계 미술 테마파크">
     <canvas id="park-canvas" aria-label="마우스와 키보드로 탐험하는 3D 야외 미술 공원"></canvas>
 
@@ -17,7 +19,10 @@
         <span><b>ARTSCAPE</b><small>세계 미술 테마파크</small></span>
       </a>
       <div class="scale-badge"><i></i><b>실제 사진 전시</b><span>실측 치수선 1m = 3D 1단위</span></div>
-      <button id="help-button" class="circle-button" type="button" aria-label="탐험 방법">?</button>
+      <div class="topbar-actions">
+        <button id="quiz-button" class="circle-button" type="button" aria-label="큐레이터 도전">★</button>
+        <button id="help-button" class="circle-button" type="button" aria-label="탐험 방법">?</button>
+      </div>
     </header>
 
     <nav class="zone-tabs" id="zone-tabs" aria-label="전시 구역 바로 이동"></nav>
@@ -56,29 +61,29 @@
 
     <dialog class="detail-modal" id="detail-modal">
       <button class="modal-close" id="modal-close" type="button" aria-label="닫기">×</button>
-      <p class="eyebrow" id="modal-kicker"></p>
-      <h2 id="modal-title"></h2>
-      <p class="modal-subtitle" id="modal-subtitle"></p>
-      <div class="modal-grid">
-        <section>
-          <span>실제 크기</span>
-          <strong id="modal-size"></strong>
-          <p id="modal-scale"></p>
-        </section>
-        <section>
+      <div class="modal-image-wrap">
+        <img id="modal-image" alt="">
+        <span id="modal-type">3D SCAN</span>
+      </div>
+      <article>
+        <p class="eyebrow" id="modal-kicker"></p>
+        <h2 id="modal-title"></h2>
+        <p class="modal-subtitle" id="modal-subtitle"></p>
+        <dl class="facts" id="modal-facts"></dl>
+        <section class="docent-card">
           <span>어린이 도슨트</span>
           <p id="modal-docent"></p>
+          <div class="docent-details">
+            <section><h3>꼭 알아둘 점</h3><p id="modal-caution"></p></section>
+            <section><h3>관람 포인트</h3><p id="modal-look"></p></section>
+          </div>
         </section>
-        <section>
-          <span>꼭 알아둘 점</span>
-          <p id="modal-caution"></p>
-        </section>
-        <section>
-          <span>관람 포인트</span>
-          <p id="modal-look"></p>
-        </section>
-      </div>
-      <footer><span id="modal-rights"></span><span><a id="modal-source" target="_blank" rel="noopener">치수 근거 ↗</a><a id="modal-photo-source" target="_blank" rel="noopener">사진·라이선스 ↗</a></span></footer>
+        <details class="modal-legal" id="modal-legal">
+          <summary>ⓘ 작품 정보</summary>
+          <p id="modal-rights"></p>
+          <a id="modal-source" target="_blank" rel="noopener">출처 보기 ↗</a>
+        </details>
+      </article>
     </dialog>
 
     <dialog class="help-modal" id="help-modal">
@@ -88,14 +93,38 @@
       <div class="help-grid">
         <div><b>01</b><strong>걷기</strong><p>WASD·방향키로 이동하고 Shift를 누르면 더 빠르게 달려요.</p></div>
         <div><b>02</b><strong>둘러보기</strong><p>화면을 누른 채 드래그하면 시선을 360도로 돌릴 수 있어요.</p></div>
-        <div><b>03</b><strong>비교하기</strong><p>작품 옆 1.45m 어린이와 치수선을 보고 실제 크기를 비교해요.</p></div>
+        <div><b>03</b><strong>감상하기</strong><p>작품을 클릭하면 실제 크기와 이야기가 담긴 작품판이 열려요.</p></div>
       </div>
+    </dialog>
+
+    <dialog class="finale-modal" id="finale-modal" aria-labelledby="finale-title">
+      <button class="modal-close" id="finale-close" type="button" aria-label="닫기">×</button>
+      <div class="finale-ornament" aria-hidden="true"><span>A</span></div>
+      <p class="eyebrow">CURATOR'S CHALLENGE</p>
+      <h2 id="finale-title">테마파크 큐레이터 도전</h2>
+      <p class="finale-intro" id="finale-intro">9개 조각상에 대한 관찰 문제가 무작위 순서로 출제됩니다.</p>
+      <div class="finale-status">
+        <span id="finale-step">QUESTION 01 / 05</span>
+        <i><b id="finale-progress"></b></i>
+        <span id="finale-total">0 / 5</span>
+      </div>
+      <section class="finale-question" id="finale-question-wrap">
+        <p id="finale-question"></p>
+        <div class="finale-options" id="finale-options"></div>
+        <p class="finale-feedback" id="finale-feedback" aria-live="polite"></p>
+        <button class="finale-next" id="finale-next" type="button" hidden>다음 관찰로</button>
+      </section>
+      <section class="finale-complete" id="finale-complete" hidden>
+        <div class="curator-stamp" aria-hidden="true"><span>CURATOR</span><b id="finale-stamp-number">01</b><small>OBSERVED</small></div>
+        <p><strong id="finale-complete-title">관찰의 눈을 얻었어요</strong><span id="finale-complete-copy"></span></p>
+        <button class="finale-next" id="finale-again" type="button">다시 풀어보기</button>
+      </section>
     </dialog>
     <div class="vignette" aria-hidden="true"></div>
   </main>
 
   <script src="../museum/vendor/three.min.js"></script>
   <script src="../museum/vendor/GLTFLoader.js"></script>
-  <script src="park.js?v=20260806-9zones-v2"></script>
+  <script src="park.js?v=20260807-4"></script>
 </body>
 </html>

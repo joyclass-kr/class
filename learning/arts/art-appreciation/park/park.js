@@ -14,73 +14,84 @@
     const ZONES = [
     {
       id: 'haetae', order: '01', title: '광화문 해치상', short: '광화문 해치',
-      subtitle: '조선 · 국립문화유산연구원 3D 스캔 GLB', position: [36, 0, -71], arrival: [36, 1.62, -77], lookAt: [36, 1.8, -71],
+      subtitle: '조선 · 국립문화유산연구원 3D 스캔 GLB', position: [9, 0, -17.75], arrival: [9, 1.62, -23.75], lookAt: [9, 1.8, -17.75],
       modelPath: '../museum/assets/models/gwanghwamun-haetae.glb', realHeight: 3.507, materialTint: 0x817d75, preserveMaterials: true,
+      image: 'assets/haetae.jpg',
       facts: [['길이', '2.756m'], ['너비', '1.862m'], ['높이', '3.507m']],
       size: '길이 275.6cm x 너비 186.2cm x 높이 350.7cm',
       scale: '국가유산청 3D 포토그래메트리 스캔 GLB 1:1',
       note: '국가유산 3D 기록정보 정밀 실측 포토그래메트리 스캔',
-      docent: '광화문을 지키는 해치상입니다. 옳고 그름을 가리고 불을 막아주는 해치의 둥근 코, 갈기, 소용돌이무늬 조각을 야외 3D 공간에서 둘러보세요.',
+      docent: '광화문 앞 좌우에는 해치상이 한 쌍으로 서 있어요. 해치는 옳고 그름을 가리고 불과 나쁜 기운을 막는다고 여긴 상상의 수호 동물이에요.',
       caution: '사자와 비슷하지만 상상의 동물이며 머리의 뿔과 몸의 갈기 표현이 특징입니다.',
-      look: '정면과 옆면을 오가며 머리 뿔과 소용돌이무늬 조각의 3D 스캔 입체를 확인해보세요.',
-      source: 'https://portal.nrich.go.kr/', rights: '국가유산청 3D 포토그래메트리 스캔 GLB'
+      look: '옆으로 돌아가며 둥근 눈과 코, 갈기와 몸을 덮은 소용돌이무늬가 어떻게 이어지는지 살펴보세요.',
+      source: 'https://portal.nrich.go.kr/', rights: '국가유산청 3D 포토그래메트리 스캔 GLB',
+      quiz: { q: '광화문 앞 해치 조각은 전통적으로 어떤 역할을 맡은 상상 동물일까요?', options: ['옳고 그름을 가리고 나쁜 기운을 막는 수호자', '비를 부르는 바다의 왕', '곡식을 나르는 농사 동물'], answer: 0, explain: '해치는 시비와 선악을 가리고 화재와 나쁜 기운을 막는 수호 동물로 여겨졌어요.' }
     },
     {
       id: 'thinker', order: '02', title: '생각하는 사람', short: '생각하는 사람',
-      subtitle: '오귀스트 로댕 · Scan the World 3D 스캔 GLB', position: [-30, 0, -78], arrival: [-30, 1.62, -85], lookAt: [-30, 2.5, -78],
+      subtitle: '오귀스트 로댕 · Scan the World 3D 스캔 GLB', position: [-7.5, 0, -19.5], arrival: [-7.5, 1.62, -26.5], lookAt: [-7.5, 2.5, -19.5],
       modelPath: '../museum/assets/models/thinker.glb', realHeight: 1.89, materialColor: 0x38271d, metalness: 0.78, roughness: 0.3,
+      image: '../museum/assets/artworks/d01.png',
       facts: [['높이', '1.89m'], ['재질', '청동 주조본'], ['제작', '1903년']],
       size: '높이 189cm (대형 청동 주조본 기준)',
       scale: 'Scan the World 3D 정밀 스캔 GLB 실물 크기',
       note: '로댕 미술관 소장 원작 Scan the World 3D 스캔',
-      docent: '온몸의 근육에 힘을 준 채 깊이 고뇌하는 인체의 입체 구조를 야외 3D 공원에서 360도로 관람해 보세요.',
+      docent: '온몸의 근육에 힘을 준 채 깊이 생각하는 사람을 입체로 표현했어요.',
       caution: '단테의 신곡에 나오는 지옥의 문 위에서 인간을 관조하는 시인의 모습을 청동으로 표현했습니다.',
-      look: '팔, 등, 다리 근육이 얽혀 만드는 3D 덩어리의 균형감을 살펴보세요.',
-      source: 'https://www.musee-rodin.fr/', rights: 'Public Domain · Scan the World 3D 스캔 GLB'
+      look: '정면과 옆면을 오가며 팔·등·다리가 만드는 큰 덩어리를 비교해 보세요.',
+      source: 'https://www.musee-rodin.fr/', rights: 'Public Domain · Scan the World 3D 스캔 GLB',
+      quiz: { q: '로댕의 〈생각하는 사람〉 원작 대형 주조본의 재료는 무엇일까요?', options: ['청동', '종이', '유리'], answer: 0, explain: '거친 표면과 묵직한 근육을 청동으로 주조해 강한 에너지를 만들었어요.' }
     },
     {
       id: 'david', order: '03', title: '다비드상', short: '다비드상',
-      subtitle: '미켈란젤로 · Scan the World 3D 스캔 GLB', position: [77.5, 0, -27.5], arrival: [77.5, 1.62, -44.5], lookAt: [77.5, 5, -27.5],
+      subtitle: '미켈란젤로 · Scan the World 3D 스캔 GLB', position: [19.375, 0, -6.875], arrival: [19.375, 1.62, -23.875], lookAt: [19.375, 5, -6.875],
       modelPath: '../museum/assets/models/david.glb', realHeight: 5.17, materialColor: 0xded8cc, roughness: 0.55,
+      image: '../museum/assets/artworks/d02.jpg',
       facts: [['높이', '5.17m'], ['재질', '대리석'], ['제작', '1501-1504년']],
       size: '높이 5.17m (좌대 제외 실측)',
       scale: 'Scan the World 3D 정밀 스캔 GLB 실물 크기',
       note: '피렌체 아카데미아 미술관 원작 Scan the World 3D 스캔',
-      docent: '골리앗과의 싸움을 앞두고 긴장한 젊은 다윗의 거대한 대리석 조각 3D 형태를 확인하세요.',
+      docent: '싸움을 시작하기 전 집중한 다윗을 사람보다 세 배 가까이 크게 조각했어요.',
       caution: '아래에서 올려다볼 때 비율이 자연스럽게 보이도록 머리와 오른손을 약간 더 크게 조각했습니다.',
-      look: '손전등 빛 아래 선명하게 드러나는 손핏줄과 얼굴 표정의 3D 스캔 입체를 확인하세요.',
-      source: 'https://www.galleriaaccademiafirenze.it/', rights: 'Public Domain · Scan the World 3D 스캔 GLB'
+      look: '커다란 머리와 손이 아래에서 올려다볼 때 자연스럽게 보이는지 살펴보세요.',
+      source: 'https://www.galleriaaccademiafirenze.it/', rights: 'Public Domain · Scan the World 3D 스캔 GLB',
+      quiz: { q: '미켈란젤로의 〈다비드〉는 이야기의 어느 순간을 표현했을까요?', options: ['싸움을 앞두고 긴장한 순간', '승리 뒤 잠든 순간', '왕관을 쓰는 순간'], answer: 0, explain: '집중한 눈과 팽팽한 몸, 커다란 손이 골리앗과 맞서기 직전의 긴장을 보여 줘요.' }
     },
     {
       id: 'venus', order: '04', title: '밀로의 비너스', short: '밀로의 비너스',
-      subtitle: '알렉산드로스 추정 · Scan the World 3D 스캔 GLB', position: [-77.5, 0, -27.5], arrival: [-77.5, 1.62, -44.5], lookAt: [-77.5, 2.2, -27.5],
+      subtitle: '알렉산드로스 추정 · Scan the World 3D 스캔 GLB', position: [-19.375, 0, -6.875], arrival: [-19.375, 1.62, -23.875], lookAt: [-19.375, 2.2, -6.875],
       modelPath: '../museum/assets/models/venus-de-milo.glb', realHeight: 2.04, materialColor: 0xd9d2c5, roughness: 0.58,
+      image: '../museum/assets/artworks/d05.jpg',
       facts: [['높이', '2.04m'], ['재질', '대리석'], ['제작', '기원전 150-125년경']],
       size: '높이 204cm',
       scale: 'Scan the World 루브르 3D 스캔 GLB 실물 크기',
       note: '루브르 박물관 소장 원작 Scan the World 3D 스캔',
-      docent: '상체를 미세하게 틀어 부드러운 S자 콘트라포스토 균형을 만드는 대리석 조각을 관람하세요.',
+      docent: '몸의 무게를 한쪽 다리에 싣고 상체를 반대로 틀어 부드러운 S자 균형을 만들었어요.',
       caution: '두 팔은 발견 당시부터 없었지만, 그 비어있는 공간 덕분에 더욱 완벽한 클래식 미의 상징이 되었습니다.',
-      look: '어깨와 골반이 서로 기울어지며 만드는 부드러운 곡선의 3D 입체감을 살펴보세요.',
-      source: 'https://collections.louvre.fr/', rights: 'Public Domain · Scan the World 3D 스캔 GLB'
+      look: '어깨와 골반이 서로 어느 방향으로 기울었는지 비교해 보세요.',
+      source: 'https://collections.louvre.fr/', rights: 'Public Domain · Scan the World 3D 스캔 GLB',
+      quiz: { q: '〈밀로의 비너스〉가 부드럽게 움직이는 것처럼 보이는 까닭은?', options: ['몸 전체가 완전한 직선이라서', '어깨와 골반이 반대로 기울어서', '좌우가 완벽히 대칭이라서'], answer: 1, explain: '한쪽 다리에 무게를 싣고 어깨와 골반을 반대로 기울인 자세가 S자 흐름을 만들어요.' }
     },
     {
       id: 'pieta', order: '05', title: '피에타상', short: '피에타상',
-      subtitle: '미켈란젤로 · Scan the World 3D 스캔 GLB', position: [0, 0, -85], arrival: [0, 1.62, -93], lookAt: [0, 2.5, -85],
+      subtitle: '미켈란젤로 · Scan the World 3D 스캔 GLB', position: [0, 0, -21.25], arrival: [0, 1.62, -29.25], lookAt: [0, 2.5, -21.25],
       modelPath: '../museum/assets/models/pieta.glb', realHeight: 1.75, materialColor: 0xdbd5c8, roughness: 0.56,
+      image: '../museum/assets/artworks/d06.jpg',
       facts: [['높이', '1.75m'], ['너비', '1.95m'], ['재질', '대리석']],
       size: '높이 1.75m x 너비 1.95m',
       scale: 'Scan the World 3D 스캔 GLB 실물 크기',
       note: '바티칸 성 베드로 대성당 소장 원작 Scan the World 3D 스캔',
-      docent: '마리아가 십자가에서 내려진 예수를 품에 안은 슬픈 순간이 부드러운 대리석 3D 입체로 표현되어 있습니다.',
+      docent: '마리아가 죽은 예수를 안고 있는 슬픈 순간을 하나의 안정된 삼각형으로 묶었어요.',
       caution: '미켈란젤로가 자신의 이름을 마리아 옷띠에 직접 조각한 유일한 작품입니다.',
-      look: '마리아의 풍성한 옷자락 드레이프와 안겨있는 예수 몸의 정밀한 3D 스캔 구도를 확인하세요.',
-      source: 'https://www.museivaticani.va/', rights: 'Public Domain · Scan the World 3D 스캔 GLB'
+      look: '머리에서 넓은 옷자락까지 이어지는 삼각형 구도를 찾아보세요.',
+      source: 'https://www.museivaticani.va/', rights: 'Public Domain · Scan the World 3D 스캔 GLB',
+      quiz: { q: '미켈란젤로의 〈피에타〉에서 두 인물을 안정적으로 묶는 큰 구도는?', options: ['삼각형', '가느다란 수직선', '완전한 원'], answer: 0, explain: '마리아의 머리에서 넓게 퍼진 옷자락까지 이어지는 삼각형이 예수의 몸을 품으며 안정감을 만들어요.' }
     },
     {
       id: 'sphinx', order: '06', title: '기자의 대스핑크스', short: '대스핑크스',
-      subtitle: '고대 이집트 기원전 2500년경 · 3D 포토그래메트리 스캔', position: [-65, 0, 40], arrival: [-25, 1.62, 40], lookAt: [-65, 10, 40],
+      subtitle: '고대 이집트 기원전 2500년경 · 3D 포토그래메트리 스캔', position: [-24.375, 0, 15], arrival: [15.625, 1.62, 15], lookAt: [-24.375, 10, 15],
       modelPath: 'assets/models/sphinx.glb', realHeight: 20.22, preserveMaterials: true,
+      image: 'assets/sphinx.jpg',
       facts: [['길이', '73.5m'], ['너비', '19m'], ['높이', '20.22m']],
       size: '길이 73.5m x 너비 19m x 높이 20.22m',
       scale: '실측 1:1 포토그래메트리 스캔 GLB',
@@ -88,12 +99,14 @@
       docent: '사자의 몸과 왕의 머리가 결합된 고대 이집트의 거대한 수호상입니다. 석회암 바위산 하나를 통째로 깎아 만든 실제 크기 20m를 체험해 보세요.',
       caution: '세계 최대 크기의 단일 석조 조각상입니다.',
       look: '발끝에서 꼬리까지 옆길을 따라 걸어보세요.',
-      source: 'https://giza.fas.harvard.edu/', rights: '3D 포토그래메트리 스캔 · CC Attribution'
+      source: 'https://giza.fas.harvard.edu/', rights: '3D 포토그래메트리 스캔 · CC Attribution',
+      quiz: { q: '기자의 대스핑크스는 어떤 두 가지가 결합된 모습일까요?', options: ['사자의 몸과 사람의 머리', '새의 날개와 물고기의 꼬리', '말의 다리와 독수리의 머리'], answer: 0, explain: '사자의 강한 몸에 파라오의 얼굴을 결합해 절대적인 힘과 권위를 상징했어요.' }
     },
     {
       id: 'liberty', order: '07', title: '자유의 여신상', short: '자유의 여신상',
-      subtitle: '프레데리크 바르톨디 1886 · 3D 포토그래메트리 스캔', position: [65, 0, 40], arrival: [65, 1.62, -18], lookAt: [65, 46, 40],
+      subtitle: '프레데리크 바르톨디 1886 · 3D 포토그래메트리 스캔', position: [24.375, 0, 15], arrival: [24.375, 1.62, -43], lookAt: [24.375, 46, 15],
       modelPath: 'assets/models/statue-of-liberty.glb', realHeight: 46.05, preserveMaterials: true,
+      image: 'assets/liberty.jpg',
       facts: [['조각상 높이', '46.05m'], ['받침대', '46.94m'], ['총 높이', '92.99m']],
       size: '조각상 46.05m (받침대 제외)',
       scale: '실측 1:1 포토그래메트리 스캔 GLB',
@@ -101,12 +114,14 @@
       docent: '미국 뉴욕의 상징인 자유의 여신상입니다. 조각상 본체만 46m의 실제 크기를 3D 공간에서 올려다보세요.',
       caution: '겉표면 동판이 산화되어 청록색으로 변했습니다.',
       look: '발밑에서 횃불 끝까지 올려다본 뒤 뒤로 멀리 물러나 전체 비례를 확인하세요.',
-      source: 'https://www.nps.gov/stli/', rights: '3D 포토그래메트리 스캔 · CC Attribution'
+      source: 'https://www.nps.gov/stli/', rights: '3D 포토그래메트리 스캔 · CC Attribution',
+      quiz: { q: '자유의 여신상 표면이 원래 구릿빛에서 지금의 청록색으로 변한 까닭은?', options: ['동판이 공기와 만나 산화되어서', '원래부터 청록색 동판을 사용해서', '바닷물에 오랫동안 잠겨 있어서'], answer: 0, explain: '구리로 만든 겉면이 오랜 세월 공기 중 산소와 만나 청록색 녹으로 덮였어요.' }
     },
     {
       id: 'moai', order: '08', title: '이스터섬 모아이 석상', short: '모아이 석상',
-      subtitle: '칠레 라파누이 1250-1500년경 · 3D 포토그래메트리 스캔', position: [0, 0, 85], arrival: [0, 1.62, 77], lookAt: [0, 3, 85],
-      modelPath: 'assets/models/moai.glb', realHeight: 4.0, preserveMaterials: true,
+      subtitle: '칠레 라파누이 1250-1500년경 · 3D 포토그래메트리 스캔', position: [0, 0, 21.25], arrival: [0, 1.62, 13.25], lookAt: [0, 3, 21.25],
+      modelPath: 'assets/models/moai.glb', realHeight: 4.0, preserveMaterials: true, modelRotation: [0.2198, -0.0040, -0.0370], groundSink: 0.45,
+      image: 'assets/moai.jpg',
       facts: [['평균 높이', '약 4.0m'], ['무게', '약 14톤'], ['재질', '현무암']],
       size: '높이 약 4.0m (평균 크기 기준)',
       scale: '실측 1:1 포토그래메트리 스캔 GLB',
@@ -114,12 +129,14 @@
       docent: '태평양 이스터섬에 우뚝 선 모아이 석상입니다. 돌출된 긴 코와 커다란 턱의 3D 입체 구조를 오가며 감상해 보세요.',
       caution: '모아이는 바다를 등지고 섬 내부의 마을을 바라보고 있습니다.',
       look: '우뚝 솟은 턱선과 귓볼의 묵직한 3D 형태를 살펴보세요.',
-      source: 'https://whc.unesco.org/en/list/715/', rights: '3D 포토그래메트리 스캔 · CC Attribution'
+      source: 'https://whc.unesco.org/en/list/715/', rights: '3D 포토그래메트리 스캔 · CC Attribution',
+      quiz: { q: '이스터섬 모아이 석상은 어느 방향을 바라보고 서 있을까요?', options: ['바다를 등지고 마을 쪽', '마을을 등지고 바다 쪽', '하늘을 향해 위쪽'], answer: 0, explain: '모아이는 바다를 등지고 서서 섬 안의 마을과 사람들을 지켜보듯 서 있어요.' }
     },
     {
       id: 'lamassu', order: '09', title: '람마수 (날개 달린 황소상)', short: '람마수 황소상',
-      subtitle: '고대 아시리아 기원전 8세기 · 3D 포토그래메트리 스캔', position: [0, 0, -55], arrival: [0, 1.62, -41], lookAt: [0, 2.5, -55],
+      subtitle: '고대 아시리아 기원전 8세기 · 3D 포토그래메트리 스캔', position: [0, 0, -13.75], arrival: [0, 1.62, 0.25], lookAt: [0, 2.5, -13.75],
       modelPath: 'assets/models/lamassu.glb', realHeight: 4.4, preserveMaterials: true,
+      image: 'assets/lamassu.jpg',
       facts: [['높이', '4.4m'], ['길이', '4.4m'], ['재질', '석회암']],
       size: '높이 4.4m x 길이 4.4m',
       scale: '실측 1:1 포토그래메트리 스캔 GLB',
@@ -127,7 +144,8 @@
       docent: '고대 아시리아 궁전 문을 지키던 수호신입니다. 사람의 얼굴, 독수리의 날개, 황소의 몸을 하고 있는 정교한 3D 입체 조각을 둘러보세요.',
       caution: '앞에서 볼 때는 서 있고 옆에서 볼 때는 걷는 것처럼 보이도록 발을 5개로 조각했습니다.',
       look: '황소 몸통의 옆면을 따라가며 5번째 발과 독수리 날개 조각을 확인해 보세요.',
-      source: 'https://www.britishmuseum.org/', rights: '3D 포토그래메트리 스캔 · CC Attribution'
+      source: 'https://www.britishmuseum.org/', rights: '3D 포토그래메트리 스캔 · CC Attribution',
+      quiz: { q: '람마수 조각상은 왜 다리를 5개로 조각했을까요?', options: ['앞에서도 옆에서도 자연스러워 보이도록', '실수로 하나를 더 조각해서', '다섯 신을 상징하기 위해서'], answer: 0, explain: '앞에서 보면 서 있는 모습, 옆에서 보면 걷는 모습이 되도록 다리를 하나 더 넣어 5개로 조각했어요.' }
     }
   ];
   const canvas = document.getElementById('park-canvas');
@@ -141,10 +159,17 @@
   const compassArrow = document.getElementById('compass-arrow');
   const detailModal = document.getElementById('detail-modal');
   const helpModal = document.getElementById('help-modal');
+  const finaleModal = document.getElementById('finale-modal');
+  const finaleOptions = document.getElementById('finale-options');
+  const finaleNext = document.getElementById('finale-next');
+  const finaleFeedback = document.getElementById('finale-feedback');
+  let quizQuestions = [];
+  let quizIndex = 0;
+  let quizCorrect = 0;
 
   const scene = new THREE.Scene();
   scene.background = new THREE.Color(0x9fc8d9);
-  scene.fog = new THREE.Fog(0xaccbd0, 100, 260);
+  scene.fog = new THREE.Fog(0xaccbd0, 35, 95);
 
   const camera = new THREE.PerspectiveCamera(61, innerWidth / innerHeight, .08, 650);
   camera.rotation.order = 'YXZ';
@@ -250,9 +275,6 @@
   function cylinder(rt, rb, h, segments, mat, parent, pos) { return addMesh(new THREE.CylinderGeometry(rt, rb, h, segments), mat, parent, pos); }
   function sphere(radius, mat, parent, pos, ws = 24, hs = 16) { return addMesh(new THREE.SphereGeometry(radius, ws, hs), mat, parent, pos); }
 
-  function makeLine(a, b, color = 0xf0efc4) {
-    return new THREE.Line(new THREE.BufferGeometry().setFromPoints([a, b]), new THREE.LineBasicMaterial({ color, transparent: true, opacity: .88 }));
-  }
   function canvasTexture(draw, w = 1024, h = 256) {
     const c = document.createElement('canvas'); c.width = w; c.height = h; const g = c.getContext('2d'); draw(g, w, h);
     const t = new THREE.CanvasTexture(c); t.encoding = THREE.sRGBEncoding; t.anisotropy = Math.min(8, renderer.capabilities.getMaxAnisotropy()); return t;
@@ -266,19 +288,6 @@
     });
     return new THREE.Mesh(new THREE.PlaneGeometry(width, width * .25), new THREE.MeshBasicMaterial({ map: t, transparent: true, toneMapped: false, side: THREE.DoubleSide }));
   }
-  function makeScaleMarker(height, label) {
-    const g = new THREE.Group();
-    const human = new THREE.Group();
-    cylinder(.14, .17, .62, 12, new THREE.MeshStandardMaterial({ color: 0xe26f4f, roughness: .78 }), human, [0, .75, 0]);
-    sphere(.15, new THREE.MeshStandardMaterial({ color: 0xc58d68, roughness: .82 }), human, [0, 1.19, 0], 16, 12);
-    cylinder(.055, .06, .55, 8, new THREE.MeshStandardMaterial({ color: 0x273b48, roughness: .85 }), human, [-.09, .29, 0]);
-    const leg = human.children[2].clone(); leg.position.x = .09; human.add(leg); human.scale.setScalar(height / 1.45); g.add(human);
-    const line = makeLine(new THREE.Vector3(.42, 0, 0), new THREE.Vector3(.42, height, 0)); g.add(line);
-    for (const y of [0, height]) g.add(makeLine(new THREE.Vector3(.32, y, 0), new THREE.Vector3(.52, y, 0)));
-    const tag = makeLabel(label, '크기 비교 기준', 1.9); tag.position.set(.42, height + .3, 0); g.add(tag);
-    return g;
-  }
-
   function sculptureMaterial(zone) {
     if (zone.id === 'thinker') return new THREE.MeshStandardMaterial({ color: 0x38271d, roughness: .3, metalness: .78 });
     if (zone.id === 'emille') return new THREE.MeshStandardMaterial({ color: 0x4a4338, roughness: .45, metalness: .55 });
@@ -300,6 +309,7 @@
     gltfLoader.load(zone.modelPath, (gltf) => {
       const model = gltf.scene;
       model.matrixAutoUpdate = true;
+      if (zone.modelRotation) model.rotation.set(zone.modelRotation[0], zone.modelRotation[1], zone.modelRotation[2]);
 
       const mat = zone.preserveMaterials ? null : sculptureMaterial(zone);
 
@@ -329,7 +339,7 @@
       const center = scaledBounds.getCenter(new THREE.Vector3());
       model.position.x = -center.x;
       model.position.z = -center.z;
-      model.position.y = 0.4 - scaledBounds.min.y;
+      model.position.y = 0.4 - scaledBounds.min.y - (zone.groundSink || 0);
 
       rootGroup.add(model);
     }, undefined, (err) => {
@@ -348,11 +358,6 @@
     rim.position.set(zone.position[0] + 3, Math.max(4, zone.realHeight * 0.6), zone.position[2] - 4);
     park.add(rim);
 
-    // 1.45m 어린이 크기 비교 마커
-    const marker = makeScaleMarker(1.45, '어린이 1.45m');
-    marker.position.set(zone.position[0] + baseW / 2 + 1.8, 0, zone.position[2] + 2);
-    park.add(marker);
-
     // 3D 정보 라벨
     const label = makeLabel(zone.title, zone.size, 9);
     label.position.set(zone.position[0], 3.8, zone.position[2] + 6);
@@ -365,30 +370,31 @@
   }
 
   function makePark() {
-    const ground = addMesh(new THREE.CircleGeometry(165, 96), MAT.grass, park, [0, -.08, 0]); ground.rotation.x = -Math.PI / 2; ground.receiveShadow = true; ground.castShadow = false;
-    const plaza = addMesh(new THREE.CircleGeometry(31, 64), MAT.path, park, [0, .01, 0]); plaza.rotation.x = -Math.PI / 2;
-    const ring = addMesh(new THREE.RingGeometry(25, 31, 64), MAT.pathEdge, park, [0, .025, 0]); ring.rotation.x = -Math.PI / 2;
+    const ground = addMesh(new THREE.CircleGeometry(55, 96), MAT.grass, park, [0, -.08, 0]); ground.rotation.x = -Math.PI / 2; ground.receiveShadow = true; ground.castShadow = false;
+    const plaza = addMesh(new THREE.CircleGeometry(6, 64), MAT.path, park, [0, .01, 0]); plaza.rotation.x = -Math.PI / 2;
+    const ring = addMesh(new THREE.RingGeometry(5, 6, 64), MAT.pathEdge, park, [0, .025, 0]); ring.rotation.x = -Math.PI / 2;
 
     ZONES.forEach(zone => {
-      const curve = new THREE.LineCurve3(new THREE.Vector3(0, .02, 0), new THREE.Vector3(zone.position[0], .02, zone.position[2]));
-      const path = addMesh(new THREE.TubeGeometry(curve, 1, 3.2, 8, false), MAT.path, park); path.receiveShadow = true;
-      const pad = addMesh(new THREE.CircleGeometry(zone.id === 'liberty' || zone.id === 'sphinx' ? 48 : 16, 48), MAT.path, park, [zone.position[0], .012, zone.position[2]]); pad.rotation.x = -Math.PI / 2;
+      const dist = Math.hypot(zone.position[0], zone.position[2]);
+      const pathMesh = box([6.4, 0.05, dist], MAT.path, park, [zone.position[0] / 2, 0.02, zone.position[2] / 2]);
+      pathMesh.rotation.y = Math.atan2(zone.position[0], zone.position[2]);
     });
 
-    const water = addMesh(new THREE.RingGeometry(15, 23, 64), MAT.water, park, [0, .04, 0]); water.rotation.x = -Math.PI / 2; water.castShadow = false;
-    const hub = cylinder(4.2, 4.8, 1.1, 32, MAT.sandstone, park, [0, .55, 0]);
-    const globe = sphere(2.7, new THREE.MeshStandardMaterial({ color: 0x7a9f63, roughness: .62, metalness: .08 }), park, [0, 4.1, 0], 32, 20);
+    const water = addMesh(new THREE.RingGeometry(3, 4.5, 64), MAT.water, park, [0, .04, 0]); water.rotation.x = -Math.PI / 2; water.castShadow = false;
+    const hub = cylinder(1.1, 1.3, 1.1, 32, MAT.sandstone, park, [0, .55, 0]);
+    const globe = sphere(.8, new THREE.MeshStandardMaterial({ color: 0x7a9f63, roughness: .62, metalness: .08 }), park, [0, 4.1, 0], 32, 20);
     const hubLabel = makeLabel('실물 크기 3D 야외 미술 공원', '05번 전시실과 100% 동일한 3D GLB 스캔 1m = 3D 1단위', 9); hubLabel.position.set(0, 7.5, 0); hubLabel.userData.faceCamera = true; park.add(hubLabel);
 
     ZONES.forEach(zone => {
       loadZoneModel(zone);
       const baseW = Math.max(3.5, zone.realHeight * 0.4);
-      zoneObstacles.push({ x: zone.position[0], z: zone.position[2], r: baseW * .72 + .42 });
+      const obstacleR = zone.id === 'sphinx' ? 10 : baseW * .72 + .42;
+      zoneObstacles.push({ x: zone.position[0], z: zone.position[2], r: obstacleR });
     });
 
-    for (let i = 0; i < 115; i++) {
-      const a = i * 2.399, r = 35 + (i * 37 % 125), x = Math.cos(a) * r, z = Math.sin(a) * r;
-      if (ZONES.some(q => Math.hypot(x - q.position[0], z - q.position[2]) < 24)) continue;
+    for (let i = 0; i < 30; i++) {
+      const a = i * 2.399, r = 24 + (i * 37 % 26), x = Math.cos(a) * r, z = Math.sin(a) * r;
+      if (ZONES.some(q => Math.hypot(x - q.position[0], z - q.position[2]) < 8)) continue;
       const tree = new THREE.Group(), h = 3.5 + (i % 7) * .45;
       cylinder(.18, .28, h, 8, MAT.wood, tree, [0, h / 2, 0]);
       const crown = sphere(1.4 + (i % 4) * .18, i % 3 ? MAT.leaf : MAT.leaf2, tree, [0, h + .8, 0], 12, 9); crown.scale.y = 1.25;
@@ -400,7 +406,7 @@
   function setupLights() {
     scene.add(new THREE.HemisphereLight(0xd9efff, 0x354b2d, .64));
     const sun = new THREE.DirectionalLight(0xffeed0, 1.35); sun.position.set(-90, 160, 70); sun.castShadow = true;
-    sun.shadow.mapSize.set(2048, 2048); sun.shadow.camera.left = -110; sun.shadow.camera.right = 110; sun.shadow.camera.top = 110; sun.shadow.camera.bottom = -110; sun.shadow.camera.far = 240; sun.shadow.bias = -.0002; scene.add(sun);
+    sun.shadow.mapSize.set(2048, 2048); sun.shadow.camera.left = -40; sun.shadow.camera.right = 40; sun.shadow.camera.top = 40; sun.shadow.camera.bottom = -40; sun.shadow.camera.far = 90; sun.shadow.bias = -.0002; scene.add(sun);
   }
 
   function buildTabs() {
@@ -428,28 +434,69 @@
   }
   function openDetail(zone) {
     if (!zone) return;
+    document.getElementById('modal-image').src = zone.image || '';
     document.getElementById('modal-kicker').textContent = `ZONE ${zone.order} · REAL 3D SCAN`;
     document.getElementById('modal-title').textContent = zone.title;
     document.getElementById('modal-subtitle').textContent = zone.subtitle;
-    document.getElementById('modal-size').textContent = zone.size;
-    document.getElementById('modal-scale').textContent = zone.scale;
+    document.getElementById('modal-facts').innerHTML = zone.facts.map(f => `<div><dt>${f[0]}</dt><dd>${f[1]}</dd></div>`).join('');
     document.getElementById('modal-docent').textContent = zone.docent;
     document.getElementById('modal-caution').textContent = zone.caution;
     document.getElementById('modal-look').textContent = zone.look;
     document.getElementById('modal-rights').textContent = zone.rights;
     document.getElementById('modal-source').href = zone.source;
-    document.getElementById('modal-photo-source').href = zone.source;
     detailModal.showModal();
+  }
+  function shuffledCopy(items) {
+    const result = [...items];
+    for (let i = result.length - 1; i > 0; i--) { const j = Math.floor(Math.random() * (i + 1));[result[i], result[j]] = [result[j], result[i]]; }
+    return result;
+  }
+  function startQuiz() {
+    quizQuestions = shuffledCopy(ZONES.filter(z => z.quiz).map(z => ({ ...z.quiz, zoneTitle: z.title })));
+    quizIndex = 0; quizCorrect = 0;
+    document.getElementById('finale-complete').hidden = true;
+    document.getElementById('finale-question-wrap').hidden = false;
+    renderQuizQuestion();
+    finaleModal.showModal();
+  }
+  function renderQuizQuestion() {
+    const item = quizQuestions[quizIndex];
+    const total = quizQuestions.length;
+    document.getElementById('finale-step').textContent = `QUESTION ${String(quizIndex + 1).padStart(2, '0')} / ${String(total).padStart(2, '0')}`;
+    document.getElementById('finale-progress').style.width = `${quizIndex / total * 100}%`;
+    document.getElementById('finale-total').textContent = `${quizCorrect} / ${total}`;
+    document.getElementById('finale-question').textContent = `${item.zoneTitle} · ${item.q}`;
+    finaleFeedback.textContent = ''; finaleFeedback.classList.remove('correct');
+    finaleNext.hidden = true;
+    finaleOptions.replaceChildren(...item.options.map((label, index) => {
+      const button = document.createElement('button'); button.type = 'button'; button.className = 'finale-option'; button.dataset.letter = String.fromCharCode(65 + index); button.textContent = label;
+      button.addEventListener('click', () => {
+        if (index !== item.answer) { button.classList.add('wrong'); button.disabled = true; finaleFeedback.textContent = '다시 생각하고 다른 답을 골라보세요.'; return; }
+        [...finaleOptions.children].forEach(option => option.disabled = true);
+        button.classList.add('correct'); quizCorrect++; finaleFeedback.textContent = item.explain; finaleFeedback.classList.add('correct');
+        document.getElementById('finale-total').textContent = `${quizCorrect} / ${total}`;
+        finaleNext.hidden = false;
+      });
+      return button;
+    }));
+  }
+  function showQuizCompletion() {
+    document.getElementById('finale-question-wrap').hidden = true;
+    document.getElementById('finale-complete').hidden = false;
+    const total = quizQuestions.length;
+    document.getElementById('finale-stamp-number').textContent = String(quizCorrect).padStart(2, '0');
+    document.getElementById('finale-complete-title').textContent = quizCorrect === total ? '관찰의 눈을 얻었어요' : '조금만 더 살펴볼까요?';
+    document.getElementById('finale-complete-copy').textContent = `${total}문제 중 ${quizCorrect}문제를 맞혔어요.`;
   }
   function nearestZone() {
     let best = null, dist = Infinity;
     ZONES.forEach(z => { const d = Math.hypot(camera.position.x - z.position[0], camera.position.z - z.position[2]); if (d < dist) { dist = d; best = z; } });
     const monumental = best && ['sphinx', 'liberty'].includes(best.id);
-    return dist < (monumental ? 60 : 17) ? best : null;
+    return dist < (monumental ? 20 : 4) ? best : null;
   }
   function updateCamera() { camera.rotation.y = yaw; camera.rotation.x = pitch; }
   function updateMovement(dt) {
-    if (detailModal.open || helpModal.open) return;
+    if (detailModal.open || helpModal.open || finaleModal.open) return;
     const forward = (keys.KeyW || keys.ArrowUp ? 1 : 0) - (keys.KeyS || keys.ArrowDown ? 1 : 0);
     const strafe = (keys.KeyD || keys.ArrowRight ? 1 : 0) - (keys.KeyA || keys.ArrowLeft ? 1 : 0);
     tmpDirection.set(-Math.sin(yaw), 0, -Math.cos(yaw)); tmpRight.set(Math.cos(yaw), 0, -Math.sin(yaw));
@@ -461,7 +508,7 @@
     const oldX = camera.position.x, oldZ = camera.position.z;
     camera.position.addScaledVector(velocity, dt);
     const radius = Math.hypot(camera.position.x, camera.position.z);
-    if (radius > 150) { camera.position.x *= 150 / radius; camera.position.z *= 150 / radius; }
+    if (radius > 52) { camera.position.x *= 52 / radius; camera.position.z *= 52 / radius; }
     for (const o of zoneObstacles) {
       const dx = camera.position.x - o.x, dz = camera.position.z - o.z, dist = Math.hypot(dx, dz);
       if (dist < o.r) { if (dist < .001) { camera.position.x = oldX; camera.position.z = oldZ; } else { camera.position.x = o.x + dx / dist * o.r; camera.position.z = o.z + dz / dist * o.r; } }
@@ -490,6 +537,10 @@
   document.getElementById('modal-close').addEventListener('click', () => detailModal.close());
   document.getElementById('help-button').addEventListener('click', () => helpModal.showModal());
   document.getElementById('help-close').addEventListener('click', () => helpModal.close());
+  document.getElementById('quiz-button').addEventListener('click', () => startQuiz());
+  document.getElementById('finale-close').addEventListener('click', () => finaleModal.close());
+  finaleNext.addEventListener('click', () => { quizIndex++; if (quizIndex >= quizQuestions.length) showQuizCompletion(); else renderQuizQuestion(); });
+  document.getElementById('finale-again').addEventListener('click', () => startQuiz());
   document.querySelectorAll('.touch-controls button').forEach(btn => {
     const code = btn.dataset.key;
     const on = e => { e.preventDefault(); keys[code] = true; }, off = e => { e.preventDefault(); keys[code] = false; };

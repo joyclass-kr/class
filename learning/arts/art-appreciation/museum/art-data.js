@@ -51,11 +51,6 @@
     c04:{englishTitle:'The Persistence of Memory',tags:['초현실주의','꿈의 이미지','변형'],styleNote:'초현실주의는 꿈과 무의식에서 떠오른 낯선 이미지를 사실적인 기법으로 그려 현실의 익숙한 질서를 흔들었어요.'},
     c05:{englishTitle:'Golconda',tags:['초현실주의','반복','낯설게 하기'],styleNote:'마그리트는 평범한 사물과 사람을 예상 밖의 크기·장소·배열로 옮겨 익숙한 현실을 수수께끼처럼 바꾸었어요.'},
     c09:{englishTitle:'The Treachery of Images',tags:['초현실주의','이미지와 언어','낯설게 하기'],styleNote:'사실적으로 그린 이미지와 이를 부정하는 문장을 충돌시켜 그림·말·실제 사물이 같은 것인지 질문해요.'},
-    d13:{englishTitle:'Gwanghwamun Haechi',tags:['조선 후기','석조 조각','수호 상징'],styleNote:'궁궐 앞 석조 조각은 건축과 주변 공간을 함께 이루며, 상상의 동물에 정의와 벽사의 의미를 담아 세웠어요.'},
-    d01:{englishTitle:'The Thinker',tags:['근대 조각','청동 조각','인체 표현'],styleNote:'근대 조각가 로댕은 매끈한 이상미보다 거친 표면과 긴장된 근육을 통해 인물의 내면과 에너지를 드러냈어요.'},
-    d02:{englishTitle:'David',tags:['성기 르네상스','대리석 조각','콘트라포스토'],styleNote:'성기 르네상스 조각은 고대 조각을 연구해 이상적인 인체 비례와 자연스러운 자세, 정신적 긴장을 결합했어요.'},
-    d05:{englishTitle:'Venus de Milo',tags:['헬레니즘','대리석 조각','콘트라포스토'],styleNote:'헬레니즘 조각은 몸의 무게 이동과 비틀림, 옷주름의 대비로 정지한 인체 안에 부드러운 움직임을 만들었어요.'},
-    d06:{englishTitle:'Pietà',tags:['성기 르네상스','대리석 조각','삼각형 구도'],styleNote:'미켈란젤로는 두 인물을 하나의 안정된 삼각형으로 묶고 단단한 대리석을 살과 천처럼 섬세하게 다듬었어요.'},
     d14:{englishTitle:'The Wedding Feast at Cana',tags:['매너리즘','역사화','건축적 원근'],styleNote:'베로네세는 실제 건축을 연장하듯 거대한 화면에 수많은 인물과 고전식 구조물을 배치해 웅장한 무대 공간을 만들었어요.'},
     d07:{englishTitle:'The Night Watch',tags:['바로크','단체 초상화','명암 대비'],styleNote:'바로크 회화는 강한 빛과 어둠, 대각선 움직임과 극적인 순간을 이용해 정적인 단체 초상에도 사건과 깊이를 만들었어요.'},
     d08:{englishTitle:'Las Meninas',tags:['바로크','궁정 회화','시선과 원근'],styleNote:'벨라스케스는 거울과 열린 문, 여러 방향의 시선을 겹쳐 그림 안과 밖의 공간이 서로 이어지는 듯한 장면을 만들었어요.'},
@@ -142,14 +137,9 @@
       ]
     },
     {
-      id:'space', number:'05', title:'입체·공간', subtitle:'조각과 거대한 장면의 방', accent:0xb7a493,
-      intro:'조각의 앞과 옆을 걷고, 거대한 그림 속 깊이를 따라가며 부피와 공간을 느껴보세요.',
+      id:'space', number:'05', title:'공간·깊이', subtitle:'그림 속 깊은 공간을 걷는 방', accent:0xb7a493,
+      intro:'커다란 그림 속 원근과 겹겹의 공간을 따라가며 화면이 만드는 깊이를 느껴보세요.',
       works:[
-        art('d13','광화문 해치','작자 미상','조선 후기','화강암',{w:275.6,h:350.7,d:186.2,label:'길이 275.6cm × 너비 186.2cm × 높이 350.7cm'},'d13.jpg?v=2','광화문 앞 좌우에는 해치상이 한 쌍으로 서 있어요. 해치는 옳고 그름을 가리고 불과 나쁜 기운을 막는다고 여긴 상상의 수호 동물이에요.','옆으로 돌아가며 둥근 눈과 코, 갈기와 몸을 덮은 소용돌이무늬가 어떻게 이어지는지 살펴보세요.',{type:'sculpture',actualScale:true,hasBuiltInBase:true,centerModel:true,preserveMaterials:true,materialTint:0x817d75,modelRotationY:0,rights:'3D 모델: 국가유산청, CC BY 4.0 · 사진: hyolee2, CC BY-SA 3.0',source:'https://sketchfab.com/3d-models/gwanghwamun-gate-haetaea-e11f9ee66df74288be83f9fede578bd4'}),
-        art('d01','생각하는 사람','오귀스트 로댕','1903년 대형상','청동',{w:98,h:189,d:140,label:'높이 189cm (대형 청동 주조본 기준)'},'d01.png','온몸의 근육에 힘을 준 채 깊이 생각하는 사람을 입체로 표현했어요.','정면과 옆면을 오가며 팔·등·다리가 만드는 큰 덩어리를 비교해 보세요.',{type:'sculpture',rights:'원작 Public Domain · 3D Scan: Scan the World, CC BY-SA 4.0',source:'https://www.musee-rodin.fr/en/musee/collections/oeuvres/thinker'}),
-        art('d02','다비드','미켈란젤로','1501–1504년','대리석',{w:199,h:517,d:110,label:'높이 517cm (좌대 제외)'},'d02.jpg','싸움을 시작하기 전 집중한 다윗을 사람보다 세 배 가까이 크게 조각했어요.','커다란 머리와 손이 아래에서 올려다볼 때 자연스럽게 보이는지 살펴보세요.',{type:'sculpture',actualScale:true,rights:'원작 Public Domain · 3D Scan: Scan the World, CC BY-SA 4.0',source:'https://www.galleriaaccademiafirenze.it/en/artworks/david-michelangelo/'}),
-        art('d05','밀로의 비너스','알렉산드로스 추정','기원전 150–125년경','대리석',{w:80,h:204,d:65,label:'높이 204cm'},'d05.jpg','몸의 무게를 한쪽 다리에 싣고 상체를 반대로 틀어 부드러운 S자 균형을 만들었어요.','어깨와 골반이 서로 어느 방향으로 기울었는지 비교해 보세요.',{type:'sculpture',centerModel:true,rights:'원작 Public Domain · 3D Scan: Scan the World, CC BY-SA 4.0',source:'https://collections.louvre.fr/en/ark:/53355/cl010277627'}),
-        art('d06','피에타','미켈란젤로','1498–1499년','대리석',{w:195,h:175,d:69},'d06.jpg','마리아가 죽은 예수를 안고 있는 슬픈 순간을 하나의 안정된 삼각형으로 묶었어요.','머리에서 넓은 옷자락까지 이어지는 삼각형 구도를 찾아보세요.',{type:'sculpture',rights:'원작 Public Domain · 3D Scan: Scan the World, CC BY-SA 4.0',source:'https://www.museivaticani.va/'}),
         art('d14','가나의 혼인잔치','파올로 베로네세','1562–1563년','캔버스에 유채',{w:994,h:677},'d14.jpg','높은 기둥과 넓은 계단, 수많은 하객을 실제 벽처럼 거대한 화면에 겹겹이 배치해 잔치 공간을 만들었어요.','앞쪽 음악가부터 가운데 식탁, 위쪽 테라스와 하늘까지 시선을 옮기며 화면의 깊이를 느껴보세요.',{source:'https://collections.louvre.fr/ark:/53355/cl010064382'}),
         art('d07','야경','렘브란트 판 레인','1642년','캔버스에 유채',{w:453.5,h:379.5},'d07.jpg','단체 초상화를 출발 직전의 연극 같은 장면으로 바꾸고 빛으로 주인공을 골라냈어요.','가장 밝은 세 곳을 찾아 어떤 인물과 물건인지 확인해 보세요.'),
         art('d08','시녀들','디에고 벨라스케스','1656년','캔버스에 유채',{w:279.1,h:320.3},'d08.jpg','화가, 공주, 시녀, 거울 속 왕과 왕비가 같은 방에서 서로 다른 곳을 바라봐요.','그림 밖의 우리는 누구의 자리에 서 있는지 상상해 보세요.'),

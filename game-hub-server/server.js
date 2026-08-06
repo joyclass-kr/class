@@ -247,7 +247,7 @@ const MAX_ROOM_PLAYERS = {
   temperature: 61
 };
 
-const FINISHER_GAMES = new Set(["coinweighing", "hanoitower", "sphinx", "slidingpuzzle"]);
+const FINISHER_GAMES = new Set(["coinweighing", "hanoitower", "sphinx", "slidingpuzzle", "nonogram"]);
 
 app.use(["/admin", "/schooladmin", "/arithmetic", "/fraction", "/api/arithmetic-race", "/hanguksa", "/classtools", "/learning", "/learn", "/notice", "/teacher"], classroomPlatform.requireSiteAccess);
 app.use("/arithmetic", proxyToLearningApp(ARITHMETIC_PORT));
@@ -347,7 +347,7 @@ app.use((req, res, next) => {
   });
 });
 
-for (const directory of ["admin", "classtools", "css", "js", "learning", "notice", "schooladmin", "teacher"]) {
+for (const directory of ["admin", "classboard", "classtools", "css", "js", "learning", "notice", "schooladmin", "teacher"]) {
   app.use(`/${directory}`, express.static(path.join(SITE_ROOT, directory), staticAssetOptions));
 }
 
@@ -420,14 +420,14 @@ function leavePark(socket) {
 }
 
 const PARK_ZONE_OBSTACLES = [
-  {x:36,z:-71,r:2.94},{x:-30,z:-78,r:2.94},{x:77.5,z:-27.5,r:2.94},{x:-77.5,z:-27.5,r:2.94},
-  {x:0,z:-85,r:2.94},{x:-65,z:40,r:6.243},{x:65,z:40,r:13.68},{x:0,z:85,r:2.94},{x:0,z:-55,r:2.94}
+  {x:9,z:-17.75,r:2.94},{x:-7.5,z:-19.5,r:2.94},{x:19.375,z:-6.875,r:2.94},{x:-19.375,z:-6.875,r:2.94},
+  {x:0,z:-21.25,r:2.94},{x:-24.375,z:15,r:10},{x:24.375,z:15,r:13.68},{x:0,z:21.25,r:2.94},{x:0,z:-13.75,r:2.94}
 ];
 
 function safeParkPosition(x, z) {
   let nextX = Number(x) || 0, nextZ = Number(z) || 0;
   const radius = Math.hypot(nextX, nextZ);
-  if (radius > 150) { const scale = 150 / radius; nextX *= scale; nextZ *= scale; }
+  if (radius > 52) { const scale = 52 / radius; nextX *= scale; nextZ *= scale; }
   for (const obstacle of PARK_ZONE_OBSTACLES) {
     const dx = nextX - obstacle.x, dz = nextZ - obstacle.z, d = Math.hypot(dx, dz);
     if (d < obstacle.r) { const scale = obstacle.r / (d || 1); nextX = obstacle.x + (dx || .01) * scale; nextZ = obstacle.z + (dz || .01) * scale; }
