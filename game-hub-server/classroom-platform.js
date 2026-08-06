@@ -4305,6 +4305,9 @@ function createClassroomPlatform(options = {}) {
     for (const t of cleanTeachers) {
       if (!t.name || t.name.length > 30) throw new HttpError(400, "INVALID_TEACHER_NAME", "성명을 확인해 주세요.");
       if (t.email && !t.email.includes("@")) throw new HttpError(400, "INVALID_TEACHER_EMAIL", `${t.name}의 이메일 주소를 확인해 주세요.`);
+      if ((t.grade && !t.classNumber) || (!t.grade && t.classNumber)) {
+        throw new HttpError(400, "INVALID_GRADE_CLASS", `'${t.name}' 교사의 학년과 반을 모두 입력하거나, 전담인 경우 둘 다 비워두세요.`);
+      }
     }
 
     const client = await pool.connect();
