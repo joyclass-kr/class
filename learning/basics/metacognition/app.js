@@ -7,9 +7,12 @@
 (function () {
   "use strict";
 
-  const ITEM_SET_VERSION = "metacog-v2";
-  const PROGRESS_KEY = "metacog-progress-v1";
-  const RESULT_KEY = "metacog-results-v1";
+  // 학년별 페이지는 app.js를 불러오기 전에 window.METACOG_ITEM_SET_VERSION /
+  // window.METACOG_LEVEL_KEY를 지정해 둔다. 지정이 없으면(기존 index.html) 원래 값 그대로다.
+  const ITEM_SET_VERSION = (typeof window !== "undefined" && window.METACOG_ITEM_SET_VERSION) || "metacog-v2";
+  const LEVEL_SUFFIX = typeof window !== "undefined" && window.METACOG_LEVEL_KEY ? "-" + window.METACOG_LEVEL_KEY : "";
+  const PROGRESS_KEY = "metacog-progress-v1" + LEVEL_SUFFIX;
+  const RESULT_KEY = "metacog-results-v1" + LEVEL_SUFFIX;
 
   const items = METACOG_ITEMS;
 

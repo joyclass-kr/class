@@ -10,16 +10,47 @@
 
 | 파일 | 하는 일 |
 |---|---|
-| `items.js` | 진단 문항 24개 + 확신도 척도. `kind` 태그(plain/trap/looksHard)가 진단의 핵심이다. |
+| `items.js` | 기본(학년 무관) 진단 문항 24개 + 확신도 척도. `kind` 태그(plain/trap/looksHard)가 진단의 핵심이다. |
+| `items-grade3.js` ~ `items-grade9.js` | 학년별 문항 세트(초3~중3, 각 16문항). 아래 "학년별 세트" 참고. |
 | `metrics.js` | 지표 산출·유형 분류·상담 카드 생성. 브라우저와 Node 양쪽에서 동작한다. |
-| `app.js` | 화면 흐름, SVG 차트, 서버 저장. |
-| `index.html`, `styles.css` | 화면. 포털 디자인 토큰을 그대로 쓴다. |
-| `test-metrics.js` | 지표 엔진 + 문항 세트 검증. `node test-metrics.js` |
+| `app.js` | 화면 흐름, SVG 차트, 서버 저장. 어떤 문항 세트를 쓰든 그대로 재사용된다. |
+| `index.html` | 기본 진단 화면 + 학년 고르기 링크. `styles.css`는 포털 디자인 토큰을 그대로 쓴다. |
+| `grade3.html` ~ `grade9.html` | 학년별 진단 화면. `index.html`과 구조는 같고 불러오는 문항 세트만 다르다. |
+| `test-metrics.js` | 지표 엔진 + 기본 문항 세트 검증. `node test-metrics.js` |
+| `test-grade3-items.js` ~ `test-grade9-items.js` | 학년별 문항 세트 검증(같은 규칙을 세트별로 적용). `node test-gradeN-items.js` |
 | `verify-shuffle.js` | 선택지 섞기 실주행 검증(Playwright). `node verify-shuffle.js` |
 | `verify-export.js` | 내려받는 결과 파일 검증(Playwright). `node verify-export.js` |
 
 서버 쪽은 `game-hub-server/metacognition.js`,
 `game-hub-server/migrations/004-metacognition.sql`에 있다.
+
+## 학년별 세트
+
+`items.js`(24문항, 초5~중1 대상 고정 세트)와 별개로, 초3~중3 각 학년에 맞춘
+16문항 세트가 학년마다 따로 있다. 설계 원칙:
+
+- **레벨 이름은 "그 학년이 끝났다"는 보장이 아니라 "그 이전 학년까지는 확실히
+  끝났다"는 보장이다.** 예를 들어 "초5 레벨"은 초5 3월에 봐도 초5 12월에 봐도
+  똑같이 풀 수 있어야 하므로, 초5 내용이 아니라 **초4까지** 배운 내용만 쓴다.
+  실제 매핑은 `items-gradeN.js` 파일 상단 주석에 학년별로 적어 두었다.
+- 과학은 초1~2에 정식 교과서 실험 단원이 없어서, 초3 레벨의 과학 문항은
+  교과 지식이 아니라 학교에서 안 배워도 알 수 있는 일상 관찰 사실로 채웠다.
+- 함정(trap) 문항 중 직관적 오류(도박사의 오류, 조건문 역전 오류, 상관·인과
+  혼동 등)에 기대는 것은 지식이 아니라 사고 습관을 재는 것이라 학년을 걸쳐
+  재사용해도 된다. 다만 답이 분수·퍼센트 같은 표기를 쓰면 그 표기를 배운
+  학년 이후로만 재사용해야 한다(같은 함정이라도 표현 방식이 학년을 탄다).
+- 문항 배치 원칙(정답 위치 분포, 선택지 길이로 못 찍게 막기)은 기본 세트와
+  동일하고, `test-gradeN-items.js`가 세트별로 검사한다. 새 학년을 추가하거나
+  문항을 고치면 해당 검사를 반드시 다시 돌릴 것.
+- `grade{N}.html`은 `items.js` 대신 `items-gradeN.js`만 불러오고, `app.js`를
+  불러오기 전에 `window.METACOG_ITEM_SET_VERSION`과 `window.METACOG_LEVEL_KEY`를
+  지정해 둔다. `app.js`는 이 값이 있으면 그 값을, 없으면(`index.html`) 기존
+  기본값을 그대로 쓴다 — 진행 상황 저장 키(`localStorage`)도 학년별로 따로
+  갈라지므로 서로 다른 학년 페이지를 오가도 진행 중인 답이 섞이지 않는다.
+- 서버(`metacognition.js`)는 `ITEM_SET_REGISTRY`에 `itemSetVersion` 문자열로
+  각 세트를 등록해 두고, 제출된 `itemSetVersion`으로 세트를 찾아 그 세트
+  기준으로 채점·저장한다. 등록되지 않은 버전 문자열은 `UNKNOWN_ITEM_SET`으로
+  거부한다 — 클라이언트가 임의의 문항·정답 세트를 서버에 강요할 수 없다.
 
 ## 지표
 

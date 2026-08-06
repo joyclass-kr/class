@@ -90,6 +90,24 @@ body[data-mode="quiz"] .back-link { margin-bottom: 4px; padding: 8px 12px; min-h
 .intro-meta { display: flex; gap: 8px; flex-wrap: wrap; font-size: 13px; color: var(--text-dim); margin-bottom: 16px; }
 .restore-note { margin-top: 10px; font-size: 13px; color: var(--text-muted); }
 
+.grade-picker { margin-top: 18px; padding-top: 16px; border-top: 1px solid var(--panel-border); }
+.grade-picker-label { font-size: 13px; color: var(--text-dim); margin: 0 0 10px; }
+.grade-picker-links { display: flex; flex-wrap: wrap; gap: 8px; }
+.grade-picker-links a {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  min-width: 48px;
+  padding: 8px 14px;
+  border-radius: 10px;
+  border: 1px solid var(--panel-border);
+  color: var(--text-main);
+  font-size: 13px;
+  font-weight: 600;
+  text-decoration: none;
+}
+.grade-picker-links a:hover { border-color: var(--accent-blue); color: var(--accent-blue); }
+
 /* ── Buttons ────────────────────────────────────────────── */
 .primary-btn {
   min-height: 48px;

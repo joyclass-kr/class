@@ -18,7 +18,8 @@ test("metacognition router is mounted and initialized by the classroom platform"
 
 test("attempt metrics are recomputed on the server, never taken from the client", () => {
   // 저장되는 지표는 analysis.summary(서버 계산)에서만 나와야 한다.
-  assert.match(moduleSource, /const analysis = MetacogMetrics\.analyze\(responses, METACOG_ITEMS\)/);
+  // items는 제출된 itemSetVersion으로 ITEM_SET_REGISTRY에서 고른 세트다(기본/학년 공통 경로).
+  assert.match(moduleSource, /const analysis = MetacogMetrics\.analyze\(responses, items\)/);
   assert.match(moduleSource, /const summary = analysis\.summary;/);
   // 클라이언트 요약은 별도 칸에 원문 그대로만 남긴다.
   assert.match(moduleSource, /client_summary/);
@@ -28,7 +29,12 @@ test("attempt metrics are recomputed on the server, never taken from the client"
 test("submission is restricted to student accounts and complete-enough attempts", () => {
   assert.match(moduleSource, /STUDENT_REQUIRED/);
   assert.match(moduleSource, /INCOMPLETE_ATTEMPT/);
-  assert.match(moduleSource, /Math\.ceil\(METACOG_ITEMS\.length \* 0\.5\)/);
+  assert.match(moduleSource, /Math\.ceil\(items\.length \* 0\.5\)/);
+});
+
+test("only a known, server-registered item set can be scored — the client can't inject its own", () => {
+  assert.match(moduleSource, /const items = ITEM_SET_REGISTRY\[itemSetVersion\]/);
+  assert.match(moduleSource, /UNKNOWN_ITEM_SET/);
 });
 
 test("teacher views are scoped to a class the teacher may see", () => {

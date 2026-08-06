@@ -3,52 +3,37 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>메타인지 진단</title>
+  <title>메타인지 진단 (중3)</title>
   <link rel="stylesheet" href="styles.css">
 </head>
 <body>
   <div class="mc-container">
     <header class="page-header">
-      <a href="../../../" class="back-link">← 메인 페이지로 돌아가기</a>
-      <h1 class="page-title">메타인지 진단</h1>
+      <a href="index.html" class="back-link">← 학년 다시 고르기</a>
+      <h1 class="page-title">메타인지 진단 (중3)</h1>
       <p class="page-sub">내가 아는 것과 안다고 느끼는 것의 차이를 재어 봅니다.</p>
     </header>
 
-    <!-- ── 1단계: 안내 ─────────────────────────────────────── -->
     <section class="panel" id="introView">
       <h2 class="panel-title">시작하기 전에</h2>
       <ol class="intro-steps">
-        <li><strong>24문항</strong>을 풉니다. 한 문항마다 답을 고르고, <strong>얼마나 확신하는지</strong>를 함께 고릅니다.</li>
+        <li><strong>16문항</strong>을 풉니다. 한 문항마다 답을 고르고, <strong>얼마나 확신하는지</strong>를 함께 고릅니다.</li>
         <li>정답은 <strong>다 풀고 나서</strong> 한꺼번에 알려 줍니다. 중간에 알려 주면 확신도가 흐트러져 진단이 되지 않습니다.</li>
         <li>확신도는 솔직할수록 정확합니다. 모르면 <strong>‘그냥 찍었어요’</strong>를 고르는 것이 훨씬 좋은 답변입니다.</li>
         <li>맞은 개수보다 <strong>확신과 실제가 얼마나 어긋났는지</strong>를 봅니다. 점수를 잘 받는 시험이 아닙니다.</li>
       </ol>
       <div class="intro-meta">
-        <span>예상 소요 시간 15~20분</span>
+        <span>예상 소요 시간 10분 안팎</span>
         <span aria-hidden="true">·</span>
         <span>중간에 나가도 같은 기기에서는 이어서 할 수 있습니다</span>
       </div>
       <button class="primary-btn" id="startBtn" type="button">진단 시작하기</button>
       <p class="restore-note" id="restoreNote" hidden></p>
-
-      <div class="grade-picker">
-        <p class="grade-picker-label">학년에 맞춘 진단이 필요하면 학년을 골라 주세요. 학년마다 교육과정에 맞는 문항으로 바뀝니다.</p>
-        <div class="grade-picker-links">
-          <a href="grade3.html">초3</a>
-          <a href="grade4.html">초4</a>
-          <a href="grade5.html">초5</a>
-          <a href="grade6.html">초6</a>
-          <a href="grade7.html">중1</a>
-          <a href="grade8.html">중2</a>
-          <a href="grade9.html">중3</a>
-        </div>
-      </div>
     </section>
 
-    <!-- ── 2단계: 진단 ─────────────────────────────────────── -->
     <section class="panel quiz-panel" id="quizView" hidden>
       <div class="quiz-top">
-        <div class="quiz-count"><strong id="qIndex">1</strong> / <span id="qTotal">24</span></div>
+        <div class="quiz-count"><strong id="qIndex">1</strong> / <span id="qTotal">16</span></div>
         <div class="progress-track" role="progressbar" aria-label="진행률" aria-valuemin="0" aria-valuemax="100" aria-valuenow="0" id="progressBar">
           <div class="progress-fill" id="progressFill"></div>
         </div>
@@ -70,7 +55,6 @@
       </div>
     </section>
 
-    <!-- ── 3단계: 리포트 ───────────────────────────────────── -->
     <section id="reportView" hidden>
       <div class="panel profile-card" id="profileCard">
         <div class="profile-tag" id="profileTag">진단 결과</div>
@@ -122,7 +106,13 @@
     </section>
   </div>
 
-  <script src="items.js"></script>
+  <script src="items-grade9.js"></script>
+  <script>
+    const METACOG_ITEMS = METACOG_ITEMS_G9;
+    const CONFIDENCE_LEVELS = CONFIDENCE_LEVELS_G9;
+    window.METACOG_LEVEL_KEY = "g9";
+    window.METACOG_ITEM_SET_VERSION = "metacog-g9-v1";
+  </script>
   <script src="metrics.js"></script>
   <script src="app.js"></script>
 </body>

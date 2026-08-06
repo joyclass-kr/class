@@ -42,6 +42,42 @@ try {
   );
 }
 
+/*
+ * 학년별 문항 세트(초3~중3). item_set_version 문자열로 어떤 세트를 썼는지 구분한다.
+ * 기본 세트(loadError)와 달리, 학년 세트 하나가 깨져도 이 기능 전체를 끄지 않고
+ * 그 학년만 목록에서 빠진다 — 화면 쪽 grade{n}.html이 없는 세트를 고를 일이 없기 때문에
+ * 실제로는 "그 학년 결과 저장이 막힌다" 정도의 영향으로 그친다.
+ * 문항 id는 학년 세트마다 "G{n}-" 접두어를 쓰므로 기본 세트(L1, N1 …)와 절대 겹치지 않는다.
+ */
+const GRADE_ITEM_FILES = [
+  ["metacog-g3-v1", "items-grade3.js", "METACOG_ITEMS_G3"],
+  ["metacog-g4-v1", "items-grade4.js", "METACOG_ITEMS_G4"],
+  ["metacog-g5-v1", "items-grade5.js", "METACOG_ITEMS_G5"],
+  ["metacog-g6-v1", "items-grade6.js", "METACOG_ITEMS_G6"],
+  ["metacog-g7-v1", "items-grade7.js", "METACOG_ITEMS_G7"],
+  ["metacog-g8-v1", "items-grade8.js", "METACOG_ITEMS_G8"],
+  ["metacog-g9-v1", "items-grade9.js", "METACOG_ITEMS_G9"]
+];
+
+const ITEM_SET_REGISTRY = {};
+const ALL_ITEMS_BY_ID = new Map();
+if (!loadError) {
+  ITEM_SET_REGISTRY["metacog-v2"] = METACOG_ITEMS;
+  GRADE_ITEM_FILES.forEach(([version, file, exportName]) => {
+    try {
+      const items = require(path.join(PAGE_DIR, file))[exportName];
+      if (Array.isArray(items) && items.length) {
+        ITEM_SET_REGISTRY[version] = items;
+      }
+    } catch (error) {
+      console.error(`[metacognition] ${file}을 읽지 못해 ${version} 세트를 건너뜁니다.`, error.message);
+    }
+  });
+  Object.values(ITEM_SET_REGISTRY).forEach((items) => {
+    items.forEach((item) => ALL_ITEMS_BY_ID.set(item.id, item.answer));
+  });
+}
+
 const MAX_RESPONSES = 200;
 const MAX_ITEM_MS = 1000 * 60 * 30; // 문항 하나에 30분을 넘겨 기록하지 않는다
 
@@ -106,15 +142,15 @@ function createMetacognition(options = {}) {
     }
   }
 
-  /** 제출 본문 검증. 통과한 응답만 지표 계산에 들어간다. */
-  function normalizeResponses(raw) {
+  /** 제출 본문 검증. 통과한 응답만 지표 계산에 들어간다. items는 제출된 itemSetVersion에 맞는 세트다. */
+  function normalizeResponses(items, raw) {
     if (!Array.isArray(raw)) {
       throw new HttpError(400, "INVALID_RESPONSES", "응답 자료의 형식이 올바르지 않습니다.");
     }
     if (raw.length > MAX_RESPONSES) {
       throw new HttpError(400, "TOO_MANY_RESPONSES", "응답 수가 너무 많습니다.");
     }
-    const validIds = new Set(METACOG_ITEMS.map((item) => item.id));
+    const validIds = new Set(items.map((item) => item.id));
     const seen = new Set();
     const normalized = [];
     raw.forEach((entry) => {
@@ -133,7 +169,7 @@ function createMetacognition(options = {}) {
         ms: Number.isFinite(ms) && ms >= 0 ? Math.min(Math.round(ms), MAX_ITEM_MS) : null
       });
     });
-    if (normalized.length < Math.ceil(METACOG_ITEMS.length * 0.5)) {
+    if (normalized.length < Math.ceil(items.length * 0.5)) {
       throw new HttpError(
         400,
         "INCOMPLETE_ATTEMPT",
@@ -193,13 +229,18 @@ function createMetacognition(options = {}) {
         throw new HttpError(403, "STUDENT_REQUIRED", "학생 계정으로만 결과를 저장할 수 있습니다.");
       }
 
-      const responses = normalizeResponses(req.body && req.body.responses);
-      const analysis = MetacogMetrics.analyze(responses, METACOG_ITEMS);
+      const itemSetVersion = String((req.body && req.body.itemSetVersion) || "").slice(0, 40);
+      const items = ITEM_SET_REGISTRY[itemSetVersion];
+      if (!items) {
+        throw new HttpError(400, "UNKNOWN_ITEM_SET", "알 수 없는 문항 세트입니다.");
+      }
+
+      const responses = normalizeResponses(items, req.body && req.body.responses);
+      const analysis = MetacogMetrics.analyze(responses, items);
       if (!analysis) {
         throw new HttpError(400, "INVALID_RESPONSES", "지표를 계산할 수 없는 응답입니다.");
       }
       const summary = analysis.summary;
-      const itemSetVersion = String((req.body && req.body.itemSetVersion) || "unknown").slice(0, 40);
       const { studentId, classId } = await studentContext(user.id);
 
       const inserted = await pool.query(
@@ -348,7 +389,9 @@ function createMetacognition(options = {}) {
         "profile_key", "item_id", "confidence", "correct", "response_ms"
       ];
       const lines = [header.join(",")];
-      const answerById = new Map(METACOG_ITEMS.map((item) => [item.id, item.answer]));
+      // 학급이 여러 학년 세트를 섞어 썼을 수 있어, 등록된 모든 세트를 합친 맵에서 찾는다.
+      // 문항 id는 학년마다 접두어가 달라 겹치지 않는다.
+      const answerById = ALL_ITEMS_BY_ID;
       result.rows.forEach((row) => {
         const base = [
           row.id, row.created_at.toISOString(), row.item_set_version, row.item_count,
