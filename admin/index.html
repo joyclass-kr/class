@@ -428,8 +428,8 @@
                 if (!school) return;
                 schoolEnabled.checked = school.enabled;
                 
-                const masterTeacher = (school.teachers || []).find(t => ["관리자", "교장", "교감"].includes(t.type)) || school.teachers?.[0];
-                masterEmailInput.value = masterTeacher?.email || "";
+                const masterTeacher = (school.teachers || []).find(t => ["관리자", "교장", "교감", "admin", "master"].includes(t.type) || t.name?.includes("관리자")) || school.teachers?.[0];
+                masterEmailInput.value = school.masterEmail || masterTeacher?.email || "";
             }
 
             saveMasterEmailButton.addEventListener("click", async () => {

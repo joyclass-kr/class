@@ -1962,9 +1962,10 @@ function createClassroomPlatform(options = {}) {
   router.get("/admin/schools", asyncRoute(async (req, res) => {
     await requireAdmin(req);
     const schoolsResult = await pool.query(
-      `SELECT id, name, google_domain, office_code, school_code, location_name, enabled
-       FROM classroom_schools
-       ORDER BY name, id`
+      `SELECT s.id, s.name, s.google_domain, s.office_code, s.school_code, s.location_name, s.enabled,
+              (SELECT google_email FROM classroom_teachers WHERE school_id = s.id AND (teacher_type IN ('관리자', '교장', '교감') OR teacher_name IN ('학교관리자', '학교 관리자', '관리자')) LIMIT 1) AS master_email
+       FROM classroom_schools s
+       ORDER BY s.name, s.id`
     );
     const teachersResult = await pool.query(
       `SELECT t.id, t.school_id, t.teacher_name, t.google_email, t.active, t.teacher_type,
@@ -2009,6 +2010,7 @@ function createClassroomPlatform(options = {}) {
         schoolCode: school.school_code || "",
         locationName: school.location_name || "",
         enabled: school.enabled,
+        masterEmail: school.master_email || "",
         teachers: teachersBySchool.get(String(school.id)) || []
       }))
     });
