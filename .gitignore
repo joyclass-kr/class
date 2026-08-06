@@ -1,3 +1,6 @@
+# Local-only Claude Code permission state (differs per machine/session)
+.claude/settings.local.json
+
 # Dependency and package-manager caches
 node_modules/
 .pnpm-store/
