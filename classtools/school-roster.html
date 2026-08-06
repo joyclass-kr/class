@@ -1291,15 +1291,18 @@
         setStatus("rosterStatus", `'${colName}' 열이 삭제되었습니다.`, "ok");
     };
 
-    window.deleteSettingItem = async function(key, nameKey, idx) {
+    window.deleteSettingItem = function(key, nameKey, idx) {
+        const item = schoolSettings[key][idx];
+        const itemName = item ? (item[nameKey] || item.name || item) : "이";
+        if (!confirm(`'${itemName}' 항목을 목록에서 삭제하시겠습니까?`)) return;
+
         schoolSettings[key].splice(idx, 1);
         renderSettingsList(key === "clubs" ? "clubList" : key === "afterschool" ? "afterschoolList" : "shuttleList", schoolSettings[key], key, nameKey);
         updatePasteColsHint();
-        await saveSettingsSilent();
-        renderRosterTable();
+        setStatus("settingsStatus", "⚠️ 변경사항이 있습니다. 적용하려면 오른쪽 상단의 '💾 설정 저장' 버튼을 누르세요.");
     };
 
-    window.addClub = async function() {
+    window.addClub = function() {
         const input = document.getElementById("newClubInput");
         const name = input.value.replace(/\s+/g, ""); // 띄어쓰기 제거
         if (!name) return;
@@ -1307,10 +1310,9 @@
         renderSettingsList("clubList", schoolSettings.clubs, "clubs", "club_name");
         input.value = "";
         updatePasteColsHint();
-        await saveSettingsSilent();
-        renderRosterTable();
+        setStatus("settingsStatus", "⚠️ 변경사항이 있습니다. 적용하려면 오른쪽 상단의 '💾 설정 저장' 버튼을 누르세요.");
     };
-    window.addAfterSchool = async function() {
+    window.addAfterSchool = function() {
         const input = document.getElementById("newAfterInput");
         const name = input.value.replace(/\s+/g, ""); // 띄어쓰기 제거
         if (!name) return;
@@ -1318,10 +1320,9 @@
         renderSettingsList("afterschoolList", schoolSettings.afterschool, "afterschool", "program_name");
         input.value = "";
         updatePasteColsHint();
-        await saveSettingsSilent();
-        renderRosterTable();
+        setStatus("settingsStatus", "⚠️ 변경사항이 있습니다. 적용하려면 오른쪽 상단의 '💾 설정 저장' 버튼을 누르세요.");
     };
-    window.addShuttle = async function() {
+    window.addShuttle = function() {
         const input = document.getElementById("newShuttleInput");
         const name = input.value.replace(/\s+/g, ""); // 띄어쓰기 제거
         if (!name) return;
@@ -1329,8 +1330,7 @@
         renderSettingsList("shuttleList", schoolSettings.shuttleSlots, "shuttleSlots", "slot_name");
         input.value = "";
         updatePasteColsHint();
-        await saveSettingsSilent();
-        renderRosterTable();
+        setStatus("settingsStatus", "⚠️ 변경사항이 있습니다. 적용하려면 오른쪽 상단의 '💾 설정 저장' 버튼을 누르세요.");
     };
 
     window.saveSettings = async function() {
