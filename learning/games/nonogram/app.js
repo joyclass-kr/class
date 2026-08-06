@@ -1,0 +1,400 @@
+(() => {
+  'use strict';
+
+  const PUZZLES = {
+    5: [
+      { name: '하트', rows: ['01010', '11111', '11111', '01110', '00100'] },
+      { name: '다이아몬드', rows: ['00100', '01110', '11111', '01110', '00100'] },
+      { name: '나무', rows: ['00100', '01110', '11111', '00100', '00100'] },
+      { name: '집', rows: ['00100', '01110', '11111', '10101', '11111'] }
+    ],
+    10: [
+      {
+        name: '고양이',
+        rows: [
+          '1000000001',
+          '1100000011',
+          '0111111110',
+          '0111111110',
+          '0110110110',
+          '0111111110',
+          '0111111110',
+          '0011111100',
+          '0001111000',
+          '0001111000'
+        ]
+      },
+      {
+        name: '나무',
+        rows: [
+          '0000110000',
+          '0001111000',
+          '0011111100',
+          '0011111100',
+          '0111111110',
+          '0111111110',
+          '1111111111',
+          '0000110000',
+          '0000110000',
+          '0000110000'
+        ]
+      },
+      {
+        name: '사과',
+        rows: [
+          '0000100000',
+          '0001110000',
+          '0011111000',
+          '0111111100',
+          '1111111110',
+          '1111111110',
+          '1111111110',
+          '0111111100',
+          '0011111000',
+          '0001110000'
+        ]
+      }
+    ]
+  };
+
+  const boardElement = document.getElementById('board');
+  const titleElement = document.getElementById('gameTitle');
+  const mistakeElement = document.getElementById('mistakeCount');
+  const timerElement = document.getElementById('timer');
+  const bestElement = document.getElementById('bestScore');
+  const statusElement = document.getElementById('status');
+  const celebration = document.getElementById('celebration');
+  const resultSummary = document.getElementById('resultSummary');
+  const startScreen = document.getElementById('startScreen');
+  const gameScreen = document.getElementById('gameScreen');
+  const modeLabel = document.getElementById('modeLabel');
+  const playerLine = document.getElementById('playerLine');
+  const startButton = document.getElementById('startButton');
+  const guideButton = document.getElementById('guideButton');
+  const guidePanel = document.getElementById('guidePanel');
+  const guideBackdrop = document.getElementById('guideBackdrop');
+  const modeFillButton = document.getElementById('modeFillButton');
+  const modeMarkButton = document.getElementById('modeMarkButton');
+
+  let n = 5;
+  let solution = [];
+  let filled = [];
+  let marked = [];
+  let clues = { rows: [], cols: [] };
+  let tool = 'fill';
+  let mistakes = 0;
+  let elapsed = 0;
+  let timerId = null;
+  let started = false;
+  let playerName = '';
+  let currentPuzzle = null;
+  const lastIndex = {};
+
+  const KOREAN_NAME_PATTERN = /^[가-힣]{2,6}$/;
+  const normalizePlayerName = value => String(value || '').replace(/[^가-힣]/g, '').slice(0, 6);
+  const isValidPlayerName = value => KOREAN_NAME_PATTERN.test(String(value || ''));
+  const finisherBoard = window.ClassroomFinisherBoard.create({
+    gameId: 'nonogram',
+    getPlayerName: () => playerName,
+    isValidPlayerName
+  });
+
+  const formatTime = seconds => `${String(Math.floor(seconds / 60)).padStart(2, '0')}:${String(seconds % 60).padStart(2, '0')}`;
+  const bestKey = () => `songhwaplay-nonogram-${n}-best`;
+  const playSfx = name => window.ClassGameSfx?.play(name);
+
+  function parseGrid(rows) {
+    return rows.map(row => row.split('').map(ch => ch === '1'));
+  }
+
+  function pickPuzzle(size) {
+    const bank = PUZZLES[size];
+    let idx = Math.floor(Math.random() * bank.length);
+    if (bank.length > 1) {
+      while (idx === lastIndex[size]) idx = Math.floor(Math.random() * bank.length);
+    }
+    lastIndex[size] = idx;
+    return bank[idx];
+  }
+
+  function lineClues(line) {
+    const runs = [];
+    let count = 0;
+    for (const value of line) {
+      if (value) { count += 1; continue; }
+      if (count) { runs.push(count); count = 0; }
+    }
+    if (count) runs.push(count);
+    return runs.length ? runs : [0];
+  }
+
+  function buildClues() {
+    clues.rows = solution.map(lineClues);
+    clues.cols = [];
+    for (let c = 0; c < n; c += 1) {
+      clues.cols.push(lineClues(solution.map(row => row[c])));
+    }
+  }
+
+  function rowSatisfied(r) {
+    return filled[r].every((value, c) => value === solution[r][c]);
+  }
+
+  function colSatisfied(c) {
+    for (let r = 0; r < n; r += 1) {
+      if (filled[r][c] !== solution[r][c]) return false;
+    }
+    return true;
+  }
+
+  function render() {
+    boardElement.className = `nono-board size-${n}`;
+    boardElement.style.gridTemplateColumns = `var(--clue) repeat(${n}, var(--cell))`;
+    boardElement.style.gridTemplateRows = `var(--clue) repeat(${n}, var(--cell))`;
+    boardElement.replaceChildren();
+
+    const corner = document.createElement('div');
+    corner.className = 'nb-corner';
+    boardElement.append(corner);
+
+    for (let c = 0; c < n; c += 1) {
+      const cell = document.createElement('div');
+      cell.className = `nb-col-clue${colSatisfied(c) ? ' done' : ''}`;
+      clues.cols[c].forEach(num => {
+        const span = document.createElement('span');
+        span.textContent = num;
+        cell.append(span);
+      });
+      boardElement.append(cell);
+    }
+
+    for (let r = 0; r < n; r += 1) {
+      const rowClue = document.createElement('div');
+      rowClue.className = `nb-row-clue${rowSatisfied(r) ? ' done' : ''}`;
+      rowClue.textContent = clues.rows[r].join(' ');
+      boardElement.append(rowClue);
+
+      for (let c = 0; c < n; c += 1) {
+        const cell = document.createElement('button');
+        cell.type = 'button';
+        cell.className = 'nb-cell';
+        if (filled[r][c]) cell.classList.add('filled');
+        if (marked[r][c]) cell.classList.add('marked');
+        cell.dataset.r = String(r);
+        cell.dataset.c = String(c);
+        cell.dataset.sfx = 'none';
+        cell.setAttribute('aria-label', `${r + 1}행 ${c + 1}열`);
+        if (marked[r][c] && !filled[r][c]) cell.textContent = '✕';
+        cell.addEventListener('click', () => handleCellTap(r, c));
+        cell.addEventListener('contextmenu', event => {
+          event.preventDefault();
+          toggleMark(r, c);
+        });
+        boardElement.append(cell);
+      }
+    }
+  }
+
+  function cellElement(r, c) {
+    return boardElement.querySelector(`.nb-cell[data-r="${r}"][data-c="${c}"]`);
+  }
+
+  function flashWrong(r, c) {
+    const el = cellElement(r, c);
+    if (!el) return;
+    el.classList.remove('wrong');
+    void el.offsetWidth;
+    el.classList.add('wrong');
+    setTimeout(() => el.classList.remove('wrong'), 320);
+  }
+
+  function startTimer() {
+    if (started) return;
+    started = true;
+    timerId = window.setInterval(() => {
+      elapsed += 1;
+      timerElement.textContent = formatTime(elapsed);
+    }, 1000);
+  }
+
+  function stopTimer() {
+    window.clearInterval(timerId);
+    timerId = null;
+  }
+
+  function toggleMark(r, c) {
+    if (filled[r][c]) return;
+    marked[r][c] = !marked[r][c];
+    playSfx('click');
+    render();
+  }
+
+  function isComplete() {
+    for (let r = 0; r < n; r += 1) {
+      for (let c = 0; c < n; c += 1) {
+        if (filled[r][c] !== solution[r][c]) return false;
+      }
+    }
+    return true;
+  }
+
+  function updateBest() {
+    const best = JSON.parse(localStorage.getItem(bestKey()) || 'null');
+    bestElement.textContent = best ? `${best.mistakes}회` : '—';
+    bestElement.title = best ? `실수 ${best.mistakes}회, ${formatTime(best.time)}` : '';
+  }
+
+  function completePuzzle() {
+    stopTimer();
+    statusElement.textContent = 'PUZZLE COMPLETE!';
+    statusElement.classList.add('success');
+    const previous = JSON.parse(localStorage.getItem(bestKey()) || 'null');
+    if (!previous || mistakes < previous.mistakes || (mistakes === previous.mistakes && elapsed < previous.time)) {
+      localStorage.setItem(bestKey(), JSON.stringify({ mistakes, time: elapsed }));
+    }
+    updateBest();
+    resultSummary.textContent = `${currentPuzzle.name} · ${formatTime(elapsed)} · 실수 ${mistakes}회`;
+    finisherBoard.register({
+      difficulty: `${n}×${n} · ${currentPuzzle.name} · 실수 ${mistakes}회`,
+      rank: n,
+      targetId: 'result-finishers-list'
+    });
+    window.setTimeout(() => {
+      celebration.hidden = false;
+      document.getElementById('playAgainButton').focus();
+      playSfx('success');
+    }, 220);
+  }
+
+  function fillCell(r, c) {
+    if (filled[r][c]) {
+      filled[r][c] = false;
+      playSfx('click');
+      render();
+      return;
+    }
+    if (!solution[r][c]) {
+      startTimer();
+      mistakes += 1;
+      mistakeElement.textContent = mistakes;
+      playSfx('error');
+      flashWrong(r, c);
+      return;
+    }
+    if (marked[r][c]) marked[r][c] = false;
+    startTimer();
+    filled[r][c] = true;
+    playSfx('stone');
+    render();
+    if (isComplete()) completePuzzle();
+  }
+
+  function handleCellTap(r, c) {
+    if (tool === 'mark') {
+      toggleMark(r, c);
+      return;
+    }
+    fillCell(r, c);
+  }
+
+  function resetRound() {
+    stopTimer();
+    filled = Array.from({ length: n }, () => Array(n).fill(false));
+    marked = Array.from({ length: n }, () => Array(n).fill(false));
+    mistakes = 0;
+    elapsed = 0;
+    started = false;
+    mistakeElement.textContent = '0';
+    timerElement.textContent = '00:00';
+    statusElement.textContent = 'READY';
+    statusElement.classList.remove('success');
+    celebration.hidden = true;
+    render();
+  }
+
+  function newPuzzle() {
+    currentPuzzle = pickPuzzle(n);
+    solution = parseGrid(currentPuzzle.rows);
+    buildClues();
+    resetRound();
+  }
+
+  function setTool(next) {
+    tool = next;
+    modeFillButton.setAttribute('aria-pressed', String(tool === 'fill'));
+    modeMarkButton.setAttribute('aria-pressed', String(tool === 'mark'));
+  }
+
+  function selectDifficulty(nextN) {
+    n = nextN;
+    modeLabel.textContent = `${n} × ${n}`;
+    titleElement.textContent = 'NONOGRAM';
+    document.querySelectorAll('[data-n]').forEach(button => {
+      button.setAttribute('aria-pressed', String(Number(button.dataset.n) === n));
+    });
+    updateBest();
+  }
+
+  function showSettings() {
+    stopTimer();
+    closeGuide();
+    gameScreen.hidden = true;
+    startScreen.hidden = false;
+    document.getElementById('startButton').focus();
+  }
+
+  function startGame() {
+    if (!isValidPlayerName(playerName)) {
+      location.href = '../../../';
+      return;
+    }
+    startScreen.hidden = true;
+    gameScreen.hidden = false;
+    newPuzzle();
+    window.scrollTo({ top: 0, behavior: 'instant' });
+  }
+
+  function openGuide() {
+    guidePanel.hidden = false;
+    guideBackdrop.hidden = false;
+    gameScreen.classList.add('guide-open');
+    guideButton.setAttribute('aria-expanded', 'true');
+    document.getElementById('guideCloseButton').focus({ preventScroll: true });
+  }
+
+  function closeGuide() {
+    if (guidePanel.hidden) return;
+    guidePanel.hidden = true;
+    guideBackdrop.hidden = true;
+    gameScreen.classList.remove('guide-open');
+    guideButton.setAttribute('aria-expanded', 'false');
+    guideButton.focus({ preventScroll: true });
+  }
+
+  document.querySelectorAll('[data-n]').forEach(button => {
+    button.addEventListener('click', () => selectDifficulty(Number(button.dataset.n)));
+  });
+  modeFillButton.addEventListener('click', () => setTool('fill'));
+  modeMarkButton.addEventListener('click', () => setTool('mark'));
+  document.getElementById('newGameButton').addEventListener('click', newPuzzle);
+  document.getElementById('resetButton').addEventListener('click', resetRound);
+  document.getElementById('playAgainButton').addEventListener('click', newPuzzle);
+  startButton.addEventListener('click', startGame);
+  document.getElementById('settingsButton').addEventListener('click', showSettings);
+  guideButton.addEventListener('click', openGuide);
+  document.getElementById('guideCloseButton').addEventListener('click', closeGuide);
+  guideBackdrop.addEventListener('click', closeGuide);
+  document.addEventListener('keydown', event => {
+    if (event.key === 'Escape' && !guidePanel.hidden) closeGuide();
+  });
+
+  playerName = normalizePlayerName(localStorage.getItem('classPlayerName'));
+  const hasPlayer = isValidPlayerName(playerName);
+  playerLine.textContent = hasPlayer ? `PLAYER · ${playerName}` : 'SAVE YOUR NAME ON THE MAIN PAGE';
+  startButton.disabled = !hasPlayer;
+  startButton.textContent = hasPlayer ? 'START GAME' : 'GO TO MAIN PAGE';
+  finisherBoard.load('today-finishers-list');
+  setTool('fill');
+  selectDifficulty(n);
+  showSettings();
+})();
