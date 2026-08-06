@@ -72,6 +72,7 @@
             padding: 16px;
             border: 2px solid rgba(138, 90, 54, 0.78);
             box-shadow: 0 12px 30px rgba(0,0,0,.45);
+            box-sizing: border-box;
         }
 
         /* 상단 제어판 */
@@ -589,19 +590,24 @@ textarea,
         width: 100%;
         max-width: none;
         height: 100vh;
+        height: 100dvh;
         justify-content: flex-start;
         overflow: hidden;
     }
 
     .controls {
         width: 100%;
+        flex: 0 0 auto;
         margin-bottom: 4px;
         padding: 5px 8px;
+        padding-right: 216px; /* keep clear of the fixed music/SFX widget (top-right) */
         border-width: 2px;
-        display: grid;
-        grid-template-columns: 1.5fr 1fr 1.4fr auto auto;
+        display: flex;
+        flex-wrap: wrap;
+        row-gap: 4px;
         align-items: center;
-        gap: 5px;
+        gap: 10px;
+        box-sizing: border-box;
     }
 
     .option-group {
@@ -623,6 +629,10 @@ textarea,
         font-size: 11px;
     }
 
+    .controls > button {
+        margin: 0 !important;
+    }
+
     .volume-bar-container {
         padding: 2px 3px;
         gap: 2px;
@@ -635,13 +645,14 @@ textarea,
 
     .board-wrapper {
         width: min(100%, 820px);
-        height: calc(100vh - 94px);
-        min-height: 250px;
+        flex: 1 1 auto;
+        min-height: 0;
         margin-top: 0;
         padding: 6px 12px 4px;
         gap: 6px;
         align-items: flex-end;
         overflow: hidden;
+        box-sizing: border-box;
     }
 
     .pole {
