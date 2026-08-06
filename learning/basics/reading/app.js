@@ -28,21 +28,31 @@
     $("resultView").hidden = view !== "result";
   }
 
+  // 급 목록은 서버가 실제로 보낸 문항에서 뽑는다. 급 수를 바꿔도 여기를
+  // 고칠 필요가 없고, 문항이 없는 급이 빈 칸으로 남지도 않는다.
   function renderLevels() {
     const list = $("levelList"); list.replaceChildren();
     const items = state.items.filter((item) => item.track === state.track);
-    for (let level = 1; level <= 8; level += 1) {
-      const count = items.filter((item) => item.targetLevel === level).length;
-      const card = node("button", "level-card", ""); card.type = "button"; card.disabled = !count;
-      card.append(
-        node("strong", "level-code", `${state.track === "en" ? "E" : "K"}${level}`)
-      );
-      card.addEventListener("click", () => startSet(level)); list.append(card);
+    const levels = [...new Set(items.map((item) => item.targetLevel))].sort((left, right) => left - right);
+    if (!levels.length) {
+      list.replaceChildren(node("p", "empty-pilots", "문제를 불러오지 못했습니다."));
+      return;
     }
+    levels.forEach((level) => {
+      const group = items.filter((item) => item.targetLevel === level);
+      const labelled = group.find((item) => item.schoolBand) || {};
+      const card = node("button", "level-card", ""); card.type = "button";
+      card.append(node("strong", "level-code", `${state.track === "en" ? "E" : "K"}${level}`));
+      if (labelled.schoolBand) card.append(node("span", "level-band", labelled.schoolBand));
+      if (labelled.skillFocus) card.append(node("span", "level-focus", labelled.skillFocus));
+      card.append(node("span", "level-count", `${group.length}문항`));
+      card.addEventListener("click", () => startSet(level)); list.append(card);
+    });
   }
 
+  // v3: 급 체계가 8단계에서 4단계로 바뀌어 예전 진행 기록은 맞지 않는다.
   function deckStorageKey(level) {
-    return `reading-self-study-deck-v2:${state.track}:${level}`;
+    return `reading-self-study-deck-v3:${state.track}:${level}`;
   }
 
   function loadDeckHistory(key) {
@@ -74,7 +84,8 @@
 
   function renderQuestion() {
     const item = state.set[state.index]; state.answered = false; state.hadWrong = false;
-    $("questionLevel").textContent = `${item.track === "en" ? "E" : "K"}${item.targetLevel}`;
+    const levelCode = `${item.track === "en" ? "E" : "K"}${item.targetLevel}`;
+    $("questionLevel").textContent = item.schoolBand ? `${levelCode} · ${item.schoolBand}` : levelCode;
     $("questionProgress").textContent = `${state.index + 1} / ${state.set.length}`;
     $("questionTopic").textContent = item.topicTitle;
     $("progressFill").style.width = `${((state.index + 1) / state.set.length) * 100}%`;

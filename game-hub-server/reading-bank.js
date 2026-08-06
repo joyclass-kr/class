@@ -463,6 +463,18 @@ function createReadingBank(options = {}) {
     );
   }
 
+  // 자습 문항의 급 체계는 2026-08-06에 8단계에서 4단계로 바뀌었다.
+  // 옛 급의 학년 밴드를 새 급의 학년 밴드에 맞춰 접는다.
+  //   옛 1(초3~4)·2(초4~5)          → 새 1급 초3~4
+  //   옛 3(초5~6)                   → 새 2급 초5~6
+  //   옛 4(중1)·5(중2)              → 새 3급 중1~2
+  //   옛 6(중3)·7(고1)·8(고2~3)     → 새 4급 중3~고1
+  // 시드 문항은 검토를 거친 자료라 원본 급을 그대로 두고, 학생 화면으로 나갈
+  // 때만 접어 준다. 관리자 화면과 자동 점검은 지금도 1~8 척도를 쓰므로 이
+  // 변환은 이 라우트 안에만 둔다.
+  const SELF_STUDY_LEVEL_MAP = { 1: 1, 2: 1, 3: 2, 4: 3, 5: 3, 6: 4, 7: 4, 8: 4 };
+  const foldSeedLevel = (level) => SELF_STUDY_LEVEL_MAP[level] || level;
+
   // This route deliberately does not depend on the classroom database or a
   // teacher-created pilot.  It is the always-available practice shelf used by
   // the student reading page.
@@ -473,7 +485,7 @@ function createReadingBank(options = {}) {
         id: item.itemKey,
         topicTitle: topic.title,
         track: item.track,
-        targetLevel: item.targetLevel,
+        targetLevel: foldSeedLevel(item.targetLevel),
         questionType: item.questionType,
         passageText: item.passageText,
         promptText: item.promptText,

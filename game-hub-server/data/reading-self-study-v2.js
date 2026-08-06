@@ -3,6 +3,8 @@
 const INDEPENDENT_TOPICS = require("./reading-independent-topics-v3");
 const MORE_INDEPENDENT_TOPICS = require("./reading-independent-topics-v4");
 const FINAL_INDEPENDENT_TOPICS = require("./reading-independent-topics-v5");
+const TOPIC_EXTENSIONS = require("./reading-topic-extensions-v1");
+const TOPIC_REGISTERS = require("./reading-topic-registers-v1");
 
 // The classroom pilot bank stays deliberately small and reviewed.  This
 // catalogue supplies broader, low-stakes self-study practice without changing
@@ -91,7 +93,7 @@ const TOPICS = [
       ["평년보다 추운 날이 이어지면 장기 기후 추세는 그 기간의 방향으로 이동한다.", "A run of colder-than-average days shifts the long-term climate trend in the same direction."],
       ["평균 기온이 같은 지역은 비슷한 대기 순환을 겪어 강수와 바람도 비슷해진다.", "Regions with the same mean temperature develop similar rainfall and wind through similar air circulation."],
       ["해안과 내륙의 기온 변화 차이는 주로 두 지역의 위도 차이에서 생긴다.", "Differences between coastal and inland temperatures mainly result from differences in latitude."],
-      ["관측 지점이 많아질수록 예보 모형이 계산해야 할 날씨 변화의 범위는 줄어든다.", "As observation sites increase, the range of weather changes a forecast model needs to calculate becomes smaller."]
+      ["관측 지점이 많아질수록 예보 모형이 없어도 날씨 변화는 정확히 예측된다.", "As observation sites increase, a forecast model is no longer needed to calculate weather changes."]
     ],
     applications: [
       ["내일 우산이 필요한지 판단하려면 장기 평균보다 단기 예보가 더 직접적이다.", "A short-term forecast is more useful than a long-term average for deciding whether to carry an umbrella tomorrow."],
@@ -186,7 +188,7 @@ const TOPICS = [
       ["참여자가 많을수록 대표 의견을 먼저 정리한 뒤 소수 의견을 추가로 듣는 방식이 효율적이다.", "With many participants, it is efficient to settle the representative view first and hear minority views afterward."],
       ["근거의 신뢰도보다 각 의견에 같은 시간을 배정하는 것이 공정한 비교에 더 중요하다.", "Giving each view equal time matters more to a fair comparison than differences in evidence quality."],
       ["과반수 결정을 먼저 확정한 뒤 소수 권리 문제를 시행 과정에서 조정하면 갈등을 줄일 수 있다.", "Confirming the majority decision first and adjusting minority-rights issues during implementation can reduce conflict."],
-      ["토론에서는 주장 내용과 함께 말한 사람의 책임과 동기를 평가해야 쟁점을 정확히 판단할 수 있다.", "A discussion judges an issue accurately by evaluating the speaker's responsibility and motives along with the claim."],
+      ["토론에서는 주장 내용보다 말한 사람의 책임과 동기를 먼저 평가해야 쟁점을 정확히 판단할 수 있다.", "A discussion judges an issue accurately by weighing the speaker's responsibility and motives ahead of the claim."],
       ["절차가 투명하면 결정 이후의 평가는 참여자의 만족도를 중심으로 진행하는 것이 적절하다.", "When a process is transparent, later evaluation should focus mainly on participant satisfaction."]
     ],
     applications: [
@@ -219,7 +221,7 @@ const TOPICS = [
       ["동치비는 두 항의 차이가 같도록 같은 수를 더해 만들 수 있다.", "Equivalent ratios can be formed by adding the same number to keep the difference between terms equal."],
       ["전체가 커져도 부분의 수가 같으면 부분이 차지하는 비율도 같은 수준으로 유지된다.", "When the total grows but the part stays fixed, the part keeps about the same share."],
       ["두 양이 같은 양만큼 꾸준히 늘면 변화가 일정해 비례 관계로 볼 수 있다.", "When two quantities rise by equal amounts, their steady change represents a proportional relationship."],
-      ["50%는 전체를 100으로 바꾸었을 때 기준 수량 50과 비교한 결과를 뜻한다.", "Fifty percent compares a quantity with the reference value 50 after the whole is converted to 100."]
+      ["50%는 전체가 얼마이든 언제나 기준 수량 50에 해당하는 양만을 뜻한다.", "Fifty percent names the quantity 50 itself, whatever the size of the whole may be."]
     ],
     applications: [
       ["빨간 공 2개와 파란 공 5개를 비교하면 빨강 대 파랑의 비는 2 대 5다.", "With 2 red balls and 5 blue balls, the ratio of red to blue is 2 to 5."],
@@ -251,7 +253,7 @@ const TOPICS = [
       ["색과 선을 정확히 기록하면 관람자의 경험 차이가 줄어 비슷한 해석에 도달하게 된다.", "Accurately recording colors and lines reduces differences in viewer experience and leads to similar interpretations."],
       ["작가의 의도를 알게 되면 시대 배경보다 제작 과정의 설명이 작품 해석의 중심이 된다.", "Once the artist's intention is known, explanations of the making process become more central than historical context."],
       ["같은 형태를 사용한 작품에서는 재료보다 화면의 구성 방식이 느낌을 결정한다.", "In works using the same forms, composition determines the effect more strongly than material."],
-      ["강한 감정 반응을 먼저 공유하면 작품의 세부 요소도 그 감정에 맞추어 해석된다.", "Sharing a strong emotional response first guides the interpretation of details toward that emotion."]
+      ["강한 감정 반응을 먼저 공유하면 작품의 세부 요소도 더 정확하게 해석된다.", "Sharing a strong emotional response first makes the interpretation of details more accurate."]
     ],
     applications: [
       ["그림에 파란색 곡선이 반복된다는 말은 해석보다 관찰에 가깝다.", "Saying that blue curves repeat in a painting is closer to observation than interpretation."],
@@ -305,95 +307,70 @@ function contentOverlapScore(left, right, track) {
   return score;
 }
 
-function buildDistractors(topic, track, passageText, choiceCount, factIndex, variant) {
-  const languageIndex = track === "ko" ? 0 : 1;
-  return rotate(topic.wrong, factIndex + variant)
-    .map((pair, order) => ({ text: localizedText(pair, languageIndex), order }))
-    .sort((left, right) =>
-      contentOverlapScore(right.text, passageText, track)
-        - contentOverlapScore(left.text, passageText, track)
-        || left.order - right.order
-    )
-    .slice(0, choiceCount - 1)
-    .map((entry) => entry.text);
+function localizedText(value, languageIndex) {
+  return Array.isArray(value) ? value[languageIndex] : value;
 }
 
-const VARIANTS_PER_LEVEL = 4;
+// ---------------------------------------------------------------------------
+// 문항 조립 (2026-08-06 개편)
+//
+// 개편 전 문제:
+//   1) 정답은 항상 applications(구체 사례), 오답은 항상 wrong(일반 진술)에서
+//      뽑혀 문체와 길이가 갈렸다. 지문을 읽지 않고 "가장 짧은 선지"만 골라도
+//      한국어 68%, 영어 58%가 정답이었다(무작위 24.6%).
+//   2) 지문은 facts 배열을 회전시켜 이어붙인 것이라 중간부터 시작했고
+//      접속어가 없었다.
+//   3) 8개 급을 두었지만 주제당 사실이 8개뿐이라 지문 길이 말고는 구분이
+//      없었고, 7급과 8급 지문은 완전히 같았다. 문두는 판단을 묻는데 정답은
+//      행동 문장인 경우가 81%였다.
+//   4) 급이 초3~고3을 표방했지만 문장 난도는 전 급이 같았다. 초3이 읽는
+//      문장과 고3이 읽는 문장의 길이·구조가 다르지 않았다.
+//   5) buildReferenceDistractors는 호출되지 않는 죽은 코드였다.
+//
+// 개편 후:
+//   - 문두를 "사례형"과 "진술형"으로 나누고, 각 계열 안에서 정답과 오답을
+//     같은 문장 계열에서 뽑는다.
+//       사례형: 정답 applications[i] / 오답 wrongApplications
+//       진술형: 정답 inferences[i]   / 오답 wrong
+//   - 지문은 회전 없이 facts의 연속 구간을 순서대로 사용하고 도입문과
+//     접속 표현을 붙인다.
+//   - 급은 4단계이고, 급마다 문장 등급·지문 길이·도입문 유무·선지 수·
+//     요구 사고·오답 근접도가 모두 달라진다.
+//   - 문장 등급(easy/base/hard)은 같은 내용을 세 가지 언어 난도로 쓴 것이다.
+//     easy와 hard는 reading-topic-registers-v1.js 에, base는 이 파일의 TOPICS와
+//     reading-topic-extensions-v1.js 에 있다.
+//   - 급마다 변형 8개를 두어 주제의 사실 8개가 모두 한 번씩 근거로 쓰인다.
+// ---------------------------------------------------------------------------
 
-const LEVEL_PROFILES = Object.freeze({
-  1: {
-    schoolBand: "초3~4",
-    focus: "핵심 사실 찾기",
-    detailCount: 2,
-    choiceCount: 3,
-    factIndexes: [0, 2, 1, 3],
-    questionTypes: ["content_match", "content_match", "implication", "content_match"],
-    distractorMode: "misconception"
-  },
-  2: {
-    schoolBand: "초4~5",
-    focus: "직접 적용",
-    detailCount: 3,
-    choiceCount: 3,
-    factIndexes: [1, 2, 3, 4],
-    questionTypes: ["content_match", "implication", "content_match", "implication"],
-    distractorMode: "misconception"
-  },
-  3: {
-    schoolBand: "초5~6",
-    focus: "내용 관계 파악",
-    detailCount: 4,
-    choiceCount: 4,
-    factIndexes: [2, 3, 4, 5],
-    questionTypes: ["content_match", "inference", "implication", "inference"],
-    distractorMode: "misconception"
-  },
-  4: {
-    schoolBand: "중1",
-    focus: "원인과 결과",
-    detailCount: 5,
-    choiceCount: 4,
-    factIndexes: [3, 4, 5, 6],
-    questionTypes: ["causal_reasoning", "inference", "causal_reasoning", "implication"],
-    distractorMode: "misconception"
-  },
-  5: {
-    schoolBand: "중2",
-    focus: "정보 종합",
-    detailCount: 6,
-    choiceCount: 5,
-    factIndexes: [4, 5, 6, 7],
-    questionTypes: ["synthesis", "inference", "synthesis", "implication"],
-    distractorMode: "misconception"
-  },
-  6: {
-    schoolBand: "중3",
-    focus: "조건 판단",
-    detailCount: 7,
-    choiceCount: 5,
-    factIndexes: [5, 6, 7, 4],
-    questionTypes: ["condition_analysis", "synthesis", "condition_analysis", "inference"],
-    distractorMode: "misconception"
-  },
-  7: {
-    schoolBand: "고1",
-    focus: "근거 대응",
-    detailCount: 8,
-    choiceCount: 5,
-    factIndexes: [6, 7, 5, 4],
-    questionTypes: ["evidence_application", "claim_evaluation", "evidence_application", "claim_evaluation"],
-    distractorMode: "misconception"
-  },
-  8: {
-    schoolBand: "고2~3",
-    focus: "조건·범위 평가",
-    detailCount: 8,
-    choiceCount: 5,
-    factIndexes: [7, 6, 5, 4],
-    questionTypes: ["boundary_reasoning", "claim_evaluation", "boundary_reasoning", "claim_evaluation"],
-    distractorMode: "misconception"
+const APPLICATION_QUESTION_TYPES = new Set([
+  "implication",
+  "evidence_application",
+  "causal_reasoning"
+]);
+
+const CONNECTIVES = {
+  ko: { second: "또한 ", late: "이와 함께 " },
+  en: { second: "Also, ", late: "At the same time, " }
+};
+
+function lowerFirst(sentence) {
+  return sentence.charAt(0).toLowerCase() + sentence.slice(1);
+}
+
+function joinPassage(intro, sentences, track, useIntro) {
+  const parts = sentences.slice();
+  const marks = CONNECTIVES[track === "en" ? "en" : "ko"];
+  if (parts.length >= 3) {
+    parts[1] = track === "en" ? marks.second + lowerFirst(parts[1]) : marks.second + parts[1];
   }
-});
+  if (parts.length >= 5) {
+    const lateIndex = parts.length - 2;
+    parts[lateIndex] = track === "en"
+      ? marks.late + lowerFirst(parts[lateIndex])
+      : marks.late + parts[lateIndex];
+  }
+  return (useIntro ? [intro].concat(parts) : parts).join(" ");
+}
 
 function questionTypeFor(level, variant) {
   return LEVEL_PROFILES[level].questionTypes[variant];
@@ -405,10 +382,10 @@ function promptFor(track, questionType) {
         content_match: "윗글을 바탕으로 판단한 내용으로 가장 적절한 것을 고르세요.",
         inference: "윗글을 바탕으로 추론한 내용으로 가장 적절한 것을 고르세요.",
         implication: "윗글의 원리를 가장 잘 적용한 사례를 고르세요.",
-        causal_reasoning: "윗글에 제시된 원인과 결과의 관계를 가장 정확히 적용한 것을 고르세요.",
+        causal_reasoning: "윗글에 제시된 원인과 결과의 관계를 가장 정확히 적용한 사례를 고르세요.",
         synthesis: "윗글의 여러 정보를 함께 고려할 때 가장 타당한 판단을 고르세요.",
         condition_analysis: "윗글에서 설명한 조건을 바꾸었을 때 예상되는 결과로 가장 타당한 것을 고르세요.",
-        evidence_application: "윗글의 근거를 새로운 상황에 가장 타당하게 적용한 것을 고르세요.",
+        evidence_application: "윗글의 근거를 새로운 상황에 가장 타당하게 적용한 사례를 고르세요.",
         claim_evaluation: "윗글 전체의 근거로 평가할 때 가장 타당한 판단을 고르세요.",
         boundary_reasoning: "윗글의 조건과 적용 범위를 가장 정확하게 반영한 판단을 고르세요."
       }
@@ -416,47 +393,251 @@ function promptFor(track, questionType) {
         content_match: "Which statement is best supported by the passage?",
         inference: "Which conclusion can best be inferred from the passage?",
         implication: "Which example best applies the idea in the passage?",
-        causal_reasoning: "Which choice most accurately applies the cause-and-effect relationship in the passage?",
+        causal_reasoning: "Which example most accurately applies the cause-and-effect relationship in the passage?",
         synthesis: "Which judgment is strongest when the information in the passage is considered together?",
         condition_analysis: "Which result is most reasonable if a condition described in the passage changes?",
-        evidence_application: "Which new situation is best supported by the passage?",
+        evidence_application: "Which example applies the passage's reasoning most soundly to a new situation?",
         claim_evaluation: "Which judgment is best supported by the passage as a whole?",
         boundary_reasoning: "Which judgment best preserves the conditions and scope of the passage?"
       };
   return prompts[questionType];
 }
 
-function buildReferenceDistractors(topic, track, factIndexes, choiceCount, variant) {
-  const languageIndex = track === "ko" ? 0 : 1;
-  return rotate(factIndexes.slice(1), variant)
-    .slice(0, choiceCount - 1)
-    .map((index) => localizedText(topic.applications[index], languageIndex));
+// 오답을 고르는 기준은 세 가지다.
+//
+//  1. 지문 관련성 - 지문에 나온 내용을 다루는 오답이어야 "윗글을 바탕으로"
+//     판단할 수 있다. 사례형은 지문에 실린 사실과 짝이 맞는 오답에 가산점.
+//  2. 정답 근접도(closeness) - 급이 올라갈수록 정답과 같은 소재를 다루는
+//     오답을 뽑아 변별을 높인다. 낮은 급에서는 음수라 결이 다른 오답이 뽑힌다.
+//  3. 길이 보정 - 정답과 길이가 비슷한 오답을 우선한다. 이것이 없으면 오답
+//     풀의 길이 분포가 정답 풀보다 좁을 때 "가장 짧은 선지가 정답"이라는
+//     지름길이 생긴다. 문장 등급마다 절대 길이가 크게 다르므로(easy 27자,
+//     hard 60자) 글자 수가 아니라 정답 대비 비율로 벌점을 준다.
+//     길이가 정답보다 약 8% 차이 나면 어휘 겹침 1점만큼 손해를 본다.
+const LENGTH_PENALTY_WEIGHT = 12;
+
+function pickDistractors(pool, options) {
+  const {
+    passageText, answerText, track, count,
+    closeness = 0, preferredIndexes = null, forceIndex = -1, banIndex = -1
+  } = options;
+  const preferred = new Set(preferredIndexes || []);
+  const answerLength = Math.max(1, answerText.length);
+  const score = (entry) =>
+    (preferred.has(entry.index) ? 4 : 0)
+    + contentOverlapScore(entry.text, passageText, track)
+    + closeness * contentOverlapScore(entry.text, answerText, track)
+    - LENGTH_PENALTY_WEIGHT * Math.abs(entry.text.length - answerLength) / answerLength;
+
+  const candidates = pool
+    .map((text, index) => ({ text, index }))
+    .filter((entry) => entry.text !== answerText && entry.index !== banIndex);
+
+  const forced = forceIndex >= 0
+    ? candidates.filter((entry) => entry.index === forceIndex)
+    : [];
+  const rest = candidates
+    .filter((entry) => entry.index !== forceIndex)
+    .sort((left, right) => score(right) - score(left) || left.index - right.index);
+
+  const chosen = [];
+  forced.concat(rest).forEach((entry) => {
+    if (chosen.length < count && !chosen.includes(entry.text)) chosen.push(entry.text);
+  });
+  return chosen;
 }
 
-function localizedText(value, languageIndex) {
-  return Array.isArray(value) ? value[languageIndex] : value;
+// 정답 위치를 고르게 흩뿌리기 위한 결정적 해시.
+function spreadHash(seed) {
+  let hash = 2166136261;
+  for (let index = 0; index < seed.length; index += 1) {
+    hash ^= seed.charCodeAt(index);
+    hash = Math.imul(hash, 16777619) >>> 0;
+  }
+  return hash;
+}
+
+// 변형 수 = 주제의 fact 수. 변형 v는 facts[v]를 근거로 하는 문항이므로,
+// 한 급에서 8개 사실이 모두 한 번씩 출제된다.
+const VARIANTS_PER_LEVEL = 8;
+
+// 급마다 아래 여섯 가지가 함께 달라진다.
+//
+//   register      문장 등급. easy(초3~4) / base(초5~중2) / hard(중3~고1)
+//   detailCount   지문에 담는 문장 수 (3 → 5 → 7 → 8)
+//   useIntro      도입문 유무. 가장 높은 급은 안내 문장 없이 바로 시작한다.
+//   choiceCount   선지 수 (3 → 4 → 5 → 5)
+//   questionTypes 요구하는 사고 (사실 확인 → 추론·인과 → 종합·조건 → 근거 적용·범위 평가)
+//   closeness     오답이 정답에 얼마나 가까운지. 낮으면 결이 다른 오답이,
+//                 높으면 정답과 같은 소재를 다루는 오답이 뽑힌다.
+//   sameFactCase  사례형에서 "정답과 같은 사실을 잘못 적용한 사례"를 넣을지.
+//                 가장 헷갈리는 오답이라 상위 급에서만 넣는다.
+//
+// answerOffsets[v] 는 지문 안에서 근거 문장이 놓이는 자리다. 지문 창은
+// facts 배열을 회전하지 않고 잘라 쓰므로 사실의 순서가 흐트러지지 않는다.
+// 문두 유형은 급마다 진술형 4개 · 사례형 4개이고, 급마다 두 계열이 걸리는
+// 변형 자리를 다르게 두었다. 그 결과 주제의 사실 8개가 진술형 정답
+// (inferences)으로도, 사례형 정답(applications)으로도 모두 한 번씩 쓰인다.
+const LEVEL_PROFILES = Object.freeze({
+  1: {
+    schoolBand: "초3~4",
+    focus: "사실 확인과 직접 적용",
+    register: "easy",
+    detailCount: 3,
+    choiceCount: 3,
+    useIntro: true,
+    closeness: -0.8,
+    sameFactCase: false,
+    answerOffsets: [0, 1, 2, 1, 0, 2, 1, 2],
+    questionTypes: [
+      "content_match", "implication", "content_match", "implication",
+      "content_match", "implication", "content_match", "implication"
+    ]
+  },
+  2: {
+    schoolBand: "초5~6",
+    focus: "추론과 인과 관계",
+    register: "base",
+    detailCount: 5,
+    choiceCount: 4,
+    useIntro: true,
+    closeness: 0,
+    sameFactCase: false,
+    answerOffsets: [0, 1, 2, 3, 3, 3, 3, 4],
+    questionTypes: [
+      "causal_reasoning", "inference", "causal_reasoning", "inference",
+      "causal_reasoning", "inference", "causal_reasoning", "inference"
+    ]
+  },
+  3: {
+    schoolBand: "중1~2",
+    focus: "정보 종합과 조건 판단",
+    register: "base",
+    detailCount: 7,
+    choiceCount: 5,
+    useIntro: true,
+    closeness: 0.8,
+    sameFactCase: true,
+    answerOffsets: [0, 1, 2, 3, 4, 5, 6, 6],
+    questionTypes: [
+      "synthesis", "condition_analysis", "evidence_application", "implication",
+      "synthesis", "condition_analysis", "evidence_application", "implication"
+    ]
+  },
+  4: {
+    schoolBand: "중3~고1",
+    focus: "근거 적용과 범위 평가",
+    register: "hard",
+    detailCount: 8,
+    choiceCount: 5,
+    useIntro: false,
+    closeness: 1.6,
+    sameFactCase: true,
+    answerOffsets: [0, 1, 2, 3, 4, 5, 6, 7],
+    questionTypes: [
+      "evidence_application", "causal_reasoning", "claim_evaluation", "boundary_reasoning",
+      "evidence_application", "causal_reasoning", "claim_evaluation", "boundary_reasoning"
+    ]
+  }
+});
+
+const LEVEL_COUNT = Object.keys(LEVEL_PROFILES).length;
+
+// 급이 요구하는 문장 등급에 맞춰 그 주제의 6개 배열을 꺼낸다.
+// base는 기존 TOPICS + reading-topic-extensions-v1.js 조합이고,
+// easy·hard는 reading-topic-registers-v1.js 에 통째로 들어 있다.
+function contentFor(topic, register) {
+  const extension = TOPIC_EXTENSIONS[topic.key];
+  if (!extension) {
+    throw new Error(`reading-topic-extensions-v1.js 에 ${topic.key} 항목이 없습니다.`);
+  }
+  if (register === "base") {
+    return {
+      intro: extension.intro,
+      facts: topic.facts,
+      inferences: extension.inferences,
+      applications: topic.applications,
+      wrongApplications: extension.wrongApplications,
+      wrong: topic.wrong.concat(extension.wrongExtra || [])
+    };
+  }
+  const graded = (TOPIC_REGISTERS[topic.key] || {})[register];
+  if (!graded) {
+    throw new Error(`reading-topic-registers-v1.js 에 ${topic.key}/${register} 항목이 없습니다.`);
+  }
+  return graded;
+}
+
+function explanationFor(track, questionType, evidence) {
+  const isApplication = APPLICATION_QUESTION_TYPES.has(questionType);
+  const quoted = String(evidence).replace(/[.\s]+$/, "");
+  if (track === "ko") {
+    return isApplication
+      ? `윗글의 “${quoted}”가 말하는 원리를 그대로 지킨 사례를 골라야 합니다. 나머지는 같은 상황을 다루지만 원리를 어긋나게 적용했습니다.`
+      : `윗글의 “${quoted}”에서 한 걸음 나아가 판단할 수 있는 내용입니다. 나머지는 윗글과 어긋나는 진술입니다.`;
+  }
+  return isApplication
+    ? `Choose the case that follows the principle in “${quoted}.” The other options describe similar situations but apply it incorrectly.`
+    : `This follows one step beyond “${quoted}.” The other options conflict with the passage.`;
 }
 
 function buildItem(topic, track, level, variant = 0) {
   const profile = LEVEL_PROFILES[level];
   const languageIndex = track === "ko" ? 0 : 1;
-  const factIndex = profile.factIndexes[variant];
-  const factIndexes = rotate(
-    Array.from({ length: topic.facts.length }, (_, index) => index),
-    factIndex
-  ).slice(0, profile.detailCount);
-  const facts = factIndexes.map((index) => topic.facts[index]);
-  const answer = localizedText(topic.applications[factIndex], languageIndex);
-  const evidence = localizedText(topic.facts[factIndex], languageIndex);
-  const passageText = facts.map((pair) => localizedText(pair, languageIndex)).join(" ");
-  const distractors = profile.distractorMode === "reference"
-    ? buildReferenceDistractors(topic, track, factIndexes, profile.choiceCount, variant)
-    : buildDistractors(topic, track, passageText, profile.choiceCount, factIndex, variant);
-  const correctIndex = (level * 2 + topic.key.length + variant) % profile.choiceCount;
+  const content = contentFor(topic, profile.register);
+
+  // 변형 v = facts[v]를 근거로 하는 문항. 근거 문장이 지문 안에서 놓일 자리를
+  // answerOffsets로 정하고, 거기서 역산해 지문 창의 시작 위치를 구한다.
+  const factIndex = Math.min(variant, content.facts.length - 1);
+  const maxStart = Math.max(0, content.facts.length - profile.detailCount);
+  const windowStart = Math.min(
+    Math.max(0, factIndex - profile.answerOffsets[variant]),
+    maxStart
+  );
+
+  const windowIndexes = Array.from(
+    { length: profile.detailCount },
+    (unused, offset) => windowStart + offset
+  ).filter((index) => index < content.facts.length);
+
+  const sentences = windowIndexes.map((index) => localizedText(content.facts[index], languageIndex));
+  const passageText = joinPassage(
+    localizedText(content.intro, languageIndex),
+    sentences,
+    track,
+    profile.useIntro
+  );
+
+  const questionType = questionTypeFor(level, variant);
+  const isApplication = APPLICATION_QUESTION_TYPES.has(questionType);
+
+  const answer = isApplication
+    ? localizedText(content.applications[factIndex], languageIndex)
+    : localizedText(content.inferences[factIndex], languageIndex);
+
+  const pool = (isApplication ? content.wrongApplications : content.wrong)
+    .map((entry) => localizedText(entry, languageIndex));
+
+  // wrongApplications[factIndex]는 정답과 같은 사실을 잘못 적용한 사례라
+  // 가장 헷갈리는 오답이다. 상위 급에서는 반드시 넣고, 낮은 급에서는 뺀다.
+  const distractors = pickDistractors(pool, {
+    passageText,
+    answerText: answer,
+    track,
+    count: profile.choiceCount - 1,
+    closeness: profile.closeness,
+    preferredIndexes: isApplication ? windowIndexes : null,
+    forceIndex: isApplication && profile.sameFactCase ? factIndex : -1,
+    banIndex: isApplication && !profile.sameFactCase ? factIndex : -1
+  });
+
+  const correctIndex = spreadHash(`${topic.key}|${track}|${level}|${variant}|${answer}`)
+    % (distractors.length + 1);
   const choices = distractors.slice();
   choices.splice(correctIndex, 0, answer);
+
+  const evidence = localizedText(content.facts[factIndex], languageIndex);
   const isKorean = track === "ko";
-  const questionType = questionTypeFor(level, variant);
 
   return {
     id: `${topic.key}-${isKorean ? "K" : "E"}${level}-V${variant + 1}`,
@@ -466,29 +647,25 @@ function buildItem(topic, track, level, variant = 0) {
     targetLevel: level,
     schoolBand: profile.schoolBand,
     skillFocus: profile.focus,
+    sentenceRegister: profile.register,
     reasoningDemand: questionType,
-    distractorMode: profile.distractorMode,
+    distractorMode: isApplication ? "misapplied_case" : "misconception",
     questionType,
     passageText,
     promptText: promptFor(track, questionType),
     choices,
     correctIndex,
-    explanation: level >= 7
-      ? (isKorean
-          ? `윗글의 “${evidence}”가 제시한 조건과 관계를 새로운 상황에 적용해야 합니다.`
-          : `Apply the relevant condition and relationship from the passage: “${evidence}”`)
-      : (isKorean
-          ? `“${evidence}”라는 내용을 적용하면 판단할 수 있습니다.`
-          : `This follows by applying the statement: “${evidence}”`)
+    explanation: explanationFor(track, questionType, evidence)
   };
 }
 
 function createSelfStudyItems() {
   return TOPICS.concat(INDEPENDENT_TOPICS, MORE_INDEPENDENT_TOPICS, FINAL_INDEPENDENT_TOPICS).flatMap((topic) =>
     (topic.tracks || ["ko", "en"]).flatMap((track) =>
-    Array.from({ length: 8 }, (_, index) =>
-      Array.from({ length: VARIANTS_PER_LEVEL }, (_, variant) =>
-        buildItem(topic, track, index + 1, variant)
+    Array.from({ length: LEVEL_COUNT }, (unused, index) =>
+      Array.from(
+        { length: VARIANTS_PER_LEVEL },
+        (unusedVariant, variant) => buildItem(topic, track, index + 1, variant)
       )
     ).flat()
   ));

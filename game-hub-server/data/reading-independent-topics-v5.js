@@ -136,7 +136,7 @@ module.exports = [
       "More ice melt exposes dark water, which absorbs heat and encourages further melt.",
       "A heater continues warming because its sensor receives an older temperature reading.",
       "Rapid sharing helps an emergency message but also spreads a false rumor.",
-      "A price increase reduces supply later, and the reduced supply raises price again.",
+      "A price decrease reduces supply later, and the reduced supply raises price again.",
       "Removing one predator changes plants through effects on several prey species.",
       "A student traces how increased demand changes price and then changes demand again."
     ]
