@@ -125,7 +125,7 @@ module.exports = [
       "Animals combine signal forms mainly when one form has already reached the receiver.",
       "A signal becomes more useful as it grows harder to detect in the environment.",
       "Loud calls protect a caller because distance hides the caller from predators.",
-      "A difficult signal is reliable because weak animals produce it more often.",
+      "A difficult signal is reliable simply because it appears often, regardless of which animal produces it.",
       "A signal keeps the same meaning when the animal's situation changes.",
       "Receivers gain more by responding similarly to signals of different reliability.",
       "Communication evolves through changes in signalers while receivers remain stable."
