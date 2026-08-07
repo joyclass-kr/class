@@ -280,6 +280,13 @@
     const c = document.createElement('canvas'); c.width = w; c.height = h; const g = c.getContext('2d'); draw(g, w, h);
     const t = new THREE.CanvasTexture(c); t.encoding = THREE.sRGBEncoding; t.anisotropy = Math.min(8, renderer.capabilities.getMaxAnisotropy()); return t;
   }
+  function makeBadge(text, width = 3.2) {
+    const t = canvasTexture((g, w, h) => {
+      g.fillStyle = 'rgba(14,35,28,.88)'; g.fillRect(0, 0, w, h); g.strokeStyle = '#dceab0'; g.lineWidth = 5; g.strokeRect(8, 8, w - 16, h - 16);
+      g.fillStyle = '#eef2df'; g.font = '800 96px sans-serif'; g.textAlign = 'center'; g.textBaseline = 'middle'; g.fillText(text, w / 2, h / 2 + 6);
+    }, 512, 160);
+    return new THREE.Mesh(new THREE.PlaneGeometry(width, width * (160 / 512)), new THREE.MeshBasicMaterial({ map: t, transparent: true, toneMapped: false, side: THREE.DoubleSide }));
+  }
   function makeLabel(title, subtitle, width = 8) {
     const t = canvasTexture((g, w, h) => {
       g.fillStyle = 'rgba(14,35,28,.92)'; g.fillRect(0, 0, w, h); g.strokeStyle = '#dceab0'; g.lineWidth = 4; g.strokeRect(6, 6, w - 12, h - 12);
@@ -385,6 +392,7 @@
     const hub = cylinder(1.1, 1.3, 1.1, 32, MAT.sandstone, park, [0, .55, 0]);
     const globe = sphere(.8, new THREE.MeshStandardMaterial({ color: 0x7a9f63, roughness: .62, metalness: .08 }), park, [0, 4.1, 0], 32, 20);
     globe.userData.isQuizTrigger = true; quizObjects.push(globe);
+    const quizBadge = makeBadge('❓ 큐레이터 퀴즈', 3.4); quizBadge.position.set(0, 5.6, 0); quizBadge.userData.faceCamera = true; park.add(quizBadge);
 
     ZONES.forEach(zone => {
       loadZoneModel(zone);
