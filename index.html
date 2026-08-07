@@ -163,7 +163,7 @@
             border-radius: 6px;
             background: rgba(25, 18, 20, 0.85);
             box-shadow: 0 3px 10px rgba(0, 0, 0, 0.4);
-            color: #ffffff;
+            color: #fbf1de;
             font-size: 19px;
             font-weight: 700;
             letter-spacing: 0.04em;
@@ -564,7 +564,8 @@
 <body>
     <script>
         // 배경 사진의 실제 색상(매트 톤)에서 뽑아낸 월별 팔레트.
-        // 1/2/3/5/10/11/12월은 남색·보라 가죽, 4/9월은 짙은 청록, 6/7/8월은 원래의 갈색을 그대로 사용.
+        // 1/2/3/11/12월은 남색·보라 가죽, 4/9/7월은 청록·초록 계열, 5월은 이끼빛 초록,
+        // 6/8월은 원래의 갈색, 10월은 밝은 호박색 가죽.
         const MONTH_THEMES = {
             1:  { 'gold-mid': '#1b3bbc', 'gold-dark': '#132980', panel: '#0e173b', 'panel-dark': '#030a27', 'panel-darker': '#03081d', 'panel-dark-rgb': '3, 10, 39', 'panel-darker-rgb': '3, 8, 29' },
             2:  { 'gold-mid': '#2328b4', 'gold-dark': '#191c7a', panel: '#101139', 'panel-dark': '#050625', 'panel-darker': '#05051b', 'panel-dark-rgb': '5, 6, 37', 'panel-darker-rgb': '5, 5, 27' },
@@ -572,10 +573,10 @@
             4:  { 'gold-mid': '#14c3ac', 'gold-dark': '#0e8575', panel: '#0c3d37', 'panel-dark': '#012923', 'panel-darker': '#021e1a', 'panel-dark-rgb': '1, 41, 35', 'panel-darker-rgb': '2, 30, 26' },
             5:  { 'gold-mid': '#8ead2a', 'gold-dark': '#61751e', panel: '#2e3712', 'panel-dark': '#1d2307', 'panel-darker': '#151a06', 'panel-dark-rgb': '29, 35, 7', 'panel-darker-rgb': '21, 26, 6' },
             6:  { 'gold-mid': '#b8721f', 'gold-dark': '#7d4a16', panel: '#3a210f', 'panel-dark': '#261204', 'panel-darker': '#1c0d04', 'panel-dark-rgb': '38, 18, 4', 'panel-darker-rgb': '28, 13, 4' },
-            7:  { 'gold-mid': '#b8721f', 'gold-dark': '#7d4a16', panel: '#3a210f', 'panel-dark': '#261204', 'panel-darker': '#1c0d04', 'panel-dark-rgb': '38, 18, 4', 'panel-darker-rgb': '28, 13, 4' },
+            7:  { 'gold-mid': '#14c360', 'gold-dark': '#0e8542', panel: '#0c3d21', 'panel-dark': '#012912', 'panel-darker': '#021e0e', 'panel-dark-rgb': '1, 41, 18', 'panel-darker-rgb': '2, 30, 14' },
             8:  { 'gold-mid': '#b8721f', 'gold-dark': '#7d4a16', panel: '#3a210f', 'panel-dark': '#261204', 'panel-darker': '#1c0d04', 'panel-dark-rgb': '38, 18, 4', 'panel-darker-rgb': '28, 13, 4' },
             9:  { 'gold-mid': '#14c3b8', 'gold-dark': '#0e857d', panel: '#0c3d3a', 'panel-dark': '#012926', 'panel-darker': '#021e1c', 'panel-dark-rgb': '1, 41, 38', 'panel-darker-rgb': '2, 30, 28' },
-            10: { 'gold-mid': '#1798c0', 'gold-dark': '#116882', panel: '#0d313c', 'panel-dark': '#021f28', 'panel-darker': '#03171d', 'panel-dark-rgb': '2, 31, 40', 'panel-darker-rgb': '3, 23, 29' },
+            10: { 'gold-mid': '#b85a1f', 'gold-dark': '#7d3d16', panel: '#3a1f0f', 'panel-dark': '#261104', 'panel-darker': '#1c0d04', 'panel-dark-rgb': '38, 17, 4', 'panel-darker-rgb': '28, 13, 4' },
             11: { 'gold-mid': '#1f5ab8', 'gold-dark': '#163d7d', panel: '#0f1f3a', 'panel-dark': '#041126', 'panel-darker': '#040d1c', 'panel-dark-rgb': '4, 17, 38', 'panel-darker-rgb': '4, 13, 28' },
             12: { 'gold-mid': '#4e3a9d', 'gold-dark': '#35286b', panel: '#1c1732', 'panel-dark': '#0e0a20', 'panel-darker': '#0b0818', 'panel-dark-rgb': '14, 10, 32', 'panel-darker-rgb': '11, 8, 24' },
         };
