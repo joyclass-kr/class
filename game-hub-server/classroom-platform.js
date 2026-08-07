@@ -1033,13 +1033,32 @@ function createClassroomPlatform(options = {}) {
     asyncRoute
   });
 
+  // Every request under /learning, /admin, /classtools, etc. passes through
+  // requireSiteAccess, which used to call getSiteAccessMode() fresh each
+  // time -- a DB round trip per static asset (HTML, JS, CSS, images) on
+  // every page load. Site-wide access mode changes rarely (an admin flips
+  // it manually), so a short TTL cache removes that DB hit almost entirely
+  // without meaningfully delaying propagation. invalidateSiteAccessModeCache
+  // is also called right after the admin toggles it, for immediate effect.
+  const SITE_ACCESS_MODE_TTL_MS = 5000;
+  let siteAccessModeCache = null;
+
+  function invalidateSiteAccessModeCache() {
+    siteAccessModeCache = null;
+  }
+
   async function getSiteAccessMode() {
     if (!pool && !isProduction) return "open";
+    if (siteAccessModeCache && siteAccessModeCache.expiresAt > Date.now()) {
+      return siteAccessModeCache.mode;
+    }
     requireDatabase();
     const result = await pool.query(
       "SELECT setting_value FROM classroom_settings WHERE setting_key = 'site_access_mode'"
     );
-    return result.rows[0]?.setting_value === "restricted" ? "restricted" : "open";
+    const mode = result.rows[0]?.setting_value === "restricted" ? "restricted" : "open";
+    siteAccessModeCache = { mode, expiresAt: Date.now() + SITE_ACCESS_MODE_TTL_MS };
+    return mode;
   }
 
   async function studentMembership(userId) {
@@ -1213,26 +1232,25 @@ function createClassroomPlatform(options = {}) {
     return clean.length > 1 ? clean.replace(/\/+$/, "") : clean;
   }
 
-  async function hasSiteAccess(req) {
+  const requireSiteAccess = asyncRoute(async (req, res, next) => {
+    // mode and user are each resolved once per request and reused below --
+    // this used to call getSiteAccessMode() and sessionUser() twice per
+    // request (once to check access, again to render the student
+    // content-lock check), doubling the DB round trips on every static
+    // asset request under the gated paths.
     const mode = await getSiteAccessMode();
     // Open mode is intended for development and demonstrations. A display
     // name is still useful for game hand-off, but it must not gate routes
     // served by separate learning apps (for example /arithmetic and
     // /hanguksa), because those requests can otherwise lose the guest cookie.
-    if (mode === "open") return true;
-    const user = await sessionUser(req);
-    if (!user) {
-      const guest = guestAccess(req);
-      if (guest) return true;
-      return false;
-    }
-    return user.role === "admin" || user.role === "teacher" || Boolean(await studentMembership(user.id));
-  }
+    const user = mode === "restricted" ? await sessionUser(req) : null;
+    const allowed = mode === "open"
+      ? true
+      : user
+        ? (user.role === "admin" || user.role === "teacher" || Boolean(await studentMembership(user.id)))
+        : Boolean(guestAccess(req));
 
-  const requireSiteAccess = asyncRoute(async (req, res, next) => {
-    if (await hasSiteAccess(req)) {
-      const mode = await getSiteAccessMode();
-      const user = mode === "restricted" ? await sessionUser(req) : null;
+    if (allowed) {
       if (user?.role === "student" && (req.get("sec-fetch-dest") === "document" || req.accepts("html"))) {
         const classId = await userClassId(user);
         // req.path is relative to whatever prefix in the app.use([...], requireSiteAccess)
@@ -1951,6 +1969,7 @@ function createClassroomPlatform(options = {}) {
          updated_at = NOW()`,
       [mode, admin.id]
     );
+    invalidateSiteAccessModeCache();
     res.json({ ok: true, mode });
   }));
 
