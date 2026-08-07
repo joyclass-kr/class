@@ -184,7 +184,7 @@ export default function GradeFourNumberReadingPage() {
 
   function renderSheet(answerSheet: boolean) {
     return (
-      <div className="a4-sheet counting-sheet large-number-sheet" style={{ transform: `scale(${sheetScale})` }}>
+      <div className="a4-sheet counting-sheet mental-math-sheet large-number-sheet" style={{ transform: `scale(${sheetScale})` }}>
         <header className="counting-sheet-header">
           <div className="counting-sheet-title"><span>4학년</span><strong>큰 수 읽기{answerSheet ? " 정답" : ""}</strong></div>
           <div className="counting-sheet-info"><span>이름 <i /></span><span>날짜 <i /></span><small>문제지 {questionSet.seed}</small></div>

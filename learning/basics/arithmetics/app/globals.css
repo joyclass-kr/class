@@ -3724,6 +3724,13 @@ button.prime-number-question:focus-visible {
   font-weight: 800;
 }
 
+.prime-number-guide {
+  margin: 4px 0 0;
+  color: #69758a;
+  font-size: 11px;
+  font-weight: 650;
+}
+
 .prime-number-selection-count {
   margin: 12px 0 0;
   color: #69758a;

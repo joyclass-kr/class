@@ -1762,7 +1762,7 @@ test("renders the fifth grade prime-number hundred chart from the workbook", asy
   const source = await readFile(new URL("../app/arithmetic/grade-5-prime-numbers/page.tsx", import.meta.url), "utf8");
   const css = await readFile(new URL("../app/globals.css", import.meta.url), "utf8");
   assert.match(html, /5학년/);
-  assert.match(html, /소수\(素數\) 찾기/);
+  assert.match(html, /소수\(素數, prime number\) 찾기/);
   assert.match(html, /aria-label="A4 5학년 프라임넘버 문제지"/);
   assert.match(html, /aria-label="A4 5학년 프라임넘버 전체 답지"/);
   assert.equal((html.match(/data-testid="prime-number-question"/g) ?? []).length, 200);

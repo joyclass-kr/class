@@ -26,7 +26,10 @@ test("암산 표시는 3학년 이상 가로셈 학습지에만 붙인다", () =
   assert.equal(elementary.filter(({ badge }) => badge === "암산").every(({ grade }) => Number(grade.slice(1)) >= 3), true);
   assert.deepEqual(
     elementary.filter(({ grade, badge }) => grade === "초3" && badge === "암산").map(({ name }) => name),
-    ["3덧셈뺄셈빈칸", "3보수뺄셈100", "3보수뺄셈1000", "3덧셈뺄셈②", "3곱셈②", "3곱셈③", "19단", "제곱수", "3나눗셈②", "3나눗셈③"],
+    [
+      "3보수뺄셈100", "3보수뺄셈1000", "3덧셈뺄셈②", "3나눗셈①", "3곱셈②", "3시간①", "3곱셈③",
+      "19단", "제곱수", "3나눗셈②", "3나눗셈③", "3분수①", "3분수③",
+    ],
   );
 });
 
@@ -42,8 +45,10 @@ test("목록의 모든 암산 학습지는 실제 문제지 제목에도 암산 
   assert.ok(mentalWorksheets.length > 0);
   for (const worksheet of mentalWorksheets) {
     assert.ok(worksheet.route);
-    const directory = worksheet.route!.replace("/arithmetic/", "");
-    const source = readFileSync(new URL(`../app/arithmetic/${directory}/page.tsx`, import.meta.url), "utf8");
+    const pagePath = worksheet.route!.startsWith("/arithmetic/")
+      ? `../app/arithmetic/${worksheet.route!.replace("/arithmetic/", "")}/page.tsx`
+      : `../app${worksheet.route}/page.tsx`;
+    const source = readFileSync(new URL(pagePath, import.meta.url), "utf8");
     assert.match(source, /className="a4-sheet counting-sheet mental-math-sheet /, worksheet.route!);
   }
   const css = readFileSync(new URL("../app/globals.css", import.meta.url), "utf8");
@@ -69,7 +74,7 @@ test("가로 계산식은 작은 글씨로 왼쪽 정렬하고 불필요한 안�
   const pages = [
     "grade-4-angle-estimation", "grade-4-fraction", "grade-5-decimals",
     "grade-5-divisors-multiples", "grade-5-fraction-1", "grade-5-fraction-2",
-    "grade-5-fraction-3", "grade-5-mixed-calculation", "grade-5-prime-numbers",
+    "grade-5-fraction-3", "grade-5-mixed-calculation",
     "grade-6-decimals-1", "grade-6-fraction", "grade-6-mixed-calculation",
     "grade-6-proportion",
   ];
@@ -77,6 +82,10 @@ test("가로 계산식은 작은 글씨로 왼쪽 정렬하고 불필요한 안�
     const source = readFileSync(new URL(`../app/arithmetic/${page}/page.tsx`, import.meta.url), "utf8");
     assert.doesNotMatch(source, /<p className="[^"]*guide/);
   }
+
+  const primeNumbers = readFileSync(new URL("../app/arithmetic/grade-5-prime-numbers/page.tsx", import.meta.url), "utf8");
+  assert.match(primeNumbers, /소수\(素數, prime number\) 찾기/);
+  assert.match(primeNumbers, /<p className="prime-number-guide">약수가 2개\(1과 자기 자신\)인 수<\/p>/);
 
   const decomposition = readFileSync(new URL("../app/arithmetic/grade-5-natural-number-decomposition/page.tsx", import.meta.url), "utf8");
   assert.match(decomposition, /곱셈은 \*로 입력하세요\./);
