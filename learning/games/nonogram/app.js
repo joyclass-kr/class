@@ -185,11 +185,6 @@
         cell.dataset.sfx = 'none';
         cell.setAttribute('aria-label', `${r + 1}행 ${c + 1}열`);
         if (marked[r][c] && !filled[r][c]) cell.textContent = '✕';
-        cell.addEventListener('click', () => handleCellTap(r, c));
-        cell.addEventListener('contextmenu', event => {
-          event.preventDefault();
-          toggleMark(r, c);
-        });
         boardElement.append(cell);
       }
     }
@@ -227,6 +222,104 @@
     marked[r][c] = !marked[r][c];
     playSfx('click');
     render();
+  }
+
+  function cellFromPoint(clientX, clientY) {
+    const el = document.elementFromPoint(clientX, clientY);
+    const cellEl = el && el.closest ? el.closest('.nb-cell') : null;
+    if (!cellEl || !boardElement.contains(cellEl)) return null;
+    return { r: Number(cellEl.dataset.r), c: Number(cellEl.dataset.c) };
+  }
+
+  let dragState = null;
+
+  function applyFillIntent(r, c, intent, visited) {
+    const key = `${r},${c}`;
+    if (visited.has(key)) return;
+    visited.add(key);
+    if (intent === 'fill') {
+      if (filled[r][c] || !celebration.hidden) return;
+      if (!solution[r][c]) {
+        startTimer();
+        mistakes += 1;
+        mistakeElement.textContent = mistakes;
+        playSfx('error');
+        flashWrong(r, c);
+        return;
+      }
+      if (marked[r][c]) marked[r][c] = false;
+      startTimer();
+      filled[r][c] = true;
+      playSfx('stone');
+      render();
+      if (isComplete()) completePuzzle();
+    } else {
+      if (!filled[r][c]) return;
+      filled[r][c] = false;
+      playSfx('click');
+      render();
+    }
+  }
+
+  function applyMarkIntent(r, c, intent, visited) {
+    const key = `${r},${c}`;
+    if (visited.has(key)) return;
+    visited.add(key);
+    if (filled[r][c]) return;
+    if (intent === 'mark') {
+      if (marked[r][c]) return;
+      marked[r][c] = true;
+    } else {
+      if (!marked[r][c]) return;
+      marked[r][c] = false;
+    }
+    playSfx('click');
+    render();
+  }
+
+  function applyDragIntent(r, c) {
+    if (!dragState) return;
+    if (dragState.tool === 'mark') applyMarkIntent(r, c, dragState.intent, dragState.visited);
+    else applyFillIntent(r, c, dragState.intent, dragState.visited);
+  }
+
+  function handleDragMove(event) {
+    if (!dragState) return;
+    const point = cellFromPoint(event.clientX, event.clientY);
+    if (!point) return;
+    const { r, c } = point;
+    if (dragState.axis === null) {
+      if (r === dragState.startR && c === dragState.startC) return;
+      if (r === dragState.startR) dragState.axis = 'row';
+      else if (c === dragState.startC) dragState.axis = 'col';
+      else return;
+    }
+    if (dragState.axis === 'row' && r !== dragState.startR) return;
+    if (dragState.axis === 'col' && c !== dragState.startC) return;
+    applyDragIntent(r, c);
+  }
+
+  function endDrag() {
+    dragState = null;
+    window.removeEventListener('pointermove', handleDragMove);
+    window.removeEventListener('pointerup', endDrag);
+    window.removeEventListener('pointercancel', endDrag);
+  }
+
+  function startDrag(r, c) {
+    if (!celebration.hidden) return;
+    let intent;
+    if (tool === 'mark') {
+      if (filled[r][c]) return;
+      intent = marked[r][c] ? 'unmark' : 'mark';
+    } else {
+      intent = filled[r][c] ? 'unfill' : 'fill';
+    }
+    dragState = { tool, intent, axis: null, startR: r, startC: c, visited: new Set() };
+    applyDragIntent(r, c);
+    window.addEventListener('pointermove', handleDragMove);
+    window.addEventListener('pointerup', endDrag);
+    window.addEventListener('pointercancel', endDrag);
   }
 
   function isComplete() {
@@ -298,6 +391,7 @@
   }
 
   function resetRound() {
+    endDrag();
     stopTimer();
     filled = Array.from({ length: n }, () => Array(n).fill(false));
     marked = Array.from({ length: n }, () => Array(n).fill(false));
@@ -336,6 +430,7 @@
   }
 
   function showSettings() {
+    endDrag();
     stopTimer();
     closeGuide();
     gameScreen.hidden = true;
@@ -370,6 +465,34 @@
     guideButton.setAttribute('aria-expanded', 'false');
     guideButton.focus({ preventScroll: true });
   }
+
+  let suppressNextClick = false;
+
+  boardElement.addEventListener('pointerdown', event => {
+    if (event.pointerType === 'mouse' && event.button !== 0) return;
+    const target = event.target.closest('.nb-cell');
+    if (!target) return;
+    event.preventDefault();
+    suppressNextClick = true;
+    startDrag(Number(target.dataset.r), Number(target.dataset.c));
+  });
+
+  boardElement.addEventListener('click', event => {
+    if (suppressNextClick) {
+      suppressNextClick = false;
+      return;
+    }
+    const target = event.target.closest('.nb-cell');
+    if (!target) return;
+    handleCellTap(Number(target.dataset.r), Number(target.dataset.c));
+  });
+
+  boardElement.addEventListener('contextmenu', event => {
+    const target = event.target.closest('.nb-cell');
+    if (!target) return;
+    event.preventDefault();
+    toggleMark(Number(target.dataset.r), Number(target.dataset.c));
+  });
 
   document.querySelectorAll('[data-n]').forEach(button => {
     button.addEventListener('click', () => selectDifficulty(Number(button.dataset.n)));
