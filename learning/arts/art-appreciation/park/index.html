@@ -5,7 +5,7 @@
   <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
   <meta name="theme-color" content="#153026">
   <title>세계 미술 테마파크 · 실물 크기 3D 탐험</title>
-  <link rel="stylesheet" href="styles.css?v=20260807-3">
+  <link rel="stylesheet" href="styles.css?v=20260807-4">
   <script src="../../../../assets/sound/music-control.js?v=20260724-2" defer></script>
 </head>
 <body>
@@ -103,20 +103,24 @@
       <div class="finale-ornament" aria-hidden="true"><span>A</span></div>
       <p class="eyebrow">CURATOR'S CHALLENGE</p>
       <h2 id="finale-title">테마파크 큐레이터 도전</h2>
-      <p class="finale-intro" id="finale-intro">9개 조각상에 대한 관찰 문제가 무작위 순서로 출제됩니다.</p>
+      <p class="finale-intro" id="finale-intro">사진 맞히기 2문제와 관찰 문제 3문제, 총 5문제가 무작위로 출제됩니다. 다섯 문제를 모두 맞혀야 큐레이터 도장을 받아요.</p>
       <div class="finale-status">
         <span id="finale-step">QUESTION 01 / 05</span>
         <i><b id="finale-progress"></b></i>
         <span id="finale-total">0 / 5</span>
       </div>
       <section class="finale-question" id="finale-question-wrap">
+        <figure class="finale-artwork" id="finale-artwork" hidden>
+          <img id="finale-artwork-image" alt="문제 작품">
+          <figcaption>작품을 자세히 보고 답을 골라보세요</figcaption>
+        </figure>
         <p id="finale-question"></p>
         <div class="finale-options" id="finale-options"></div>
         <p class="finale-feedback" id="finale-feedback" aria-live="polite"></p>
         <button class="finale-next" id="finale-next" type="button" hidden>다음 관찰로</button>
       </section>
       <section class="finale-complete" id="finale-complete" hidden>
-        <div class="curator-stamp" aria-hidden="true"><span>CURATOR</span><b id="finale-stamp-number">01</b><small>OBSERVED</small></div>
+        <div class="curator-stamp" id="curator-stamp" aria-hidden="true"><span>CURATOR</span><b id="finale-stamp-number">01</b><small>OBSERVED</small></div>
         <p><strong id="finale-complete-title">관찰의 눈을 얻었어요</strong><span id="finale-complete-copy"></span></p>
         <button class="finale-next" id="finale-again" type="button">다시 풀어보기</button>
       </section>
@@ -126,6 +130,6 @@
 
   <script src="../museum/vendor/three.min.js"></script>
   <script src="../museum/vendor/GLTFLoader.js"></script>
-  <script src="park.js?v=20260807-17"></script>
+  <script src="park.js?v=20260807-18"></script>
 </body>
 </html>

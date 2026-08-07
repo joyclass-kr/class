@@ -25,7 +25,11 @@
       caution: '사자와 비슷하지만 상상의 동물이며 머리의 뿔과 몸의 갈기 표현이 특징입니다.',
       look: '옆으로 돌아가며 둥근 눈과 코, 갈기와 몸을 덮은 소용돌이무늬가 어떻게 이어지는지 살펴보세요.',
       source: 'https://portal.nrich.go.kr/', rights: '국가유산청 3D 포토그래메트리 스캔 GLB',
-      quiz: { q: '해치상을 옆으로 돌아가며 살펴보면, 몸 전체를 덮고 있는 무늬는 어떤 모양일까요?', options: ['둥글게 말린 소용돌이무늬', '가로로 곧게 뻗은 줄무늬', '작은 물방울무늬'], answer: 0, explain: '둥근 눈과 코, 갈기와 몸을 덮은 소용돌이무늬가 이어져 있어요.' }
+      quizBank: [
+        { q: '해치상을 옆으로 돌아가며 살펴보면, 몸 전체를 덮고 있는 무늬는 어떤 모양일까요?', options: ['둥글게 말린 소용돌이무늬', '가로로 곧게 뻗은 줄무늬', '작은 물방울무늬'], answer: 0, explain: '둥근 눈과 코, 갈기와 몸을 덮은 소용돌이무늬가 이어져 있어요.' },
+        { q: '광화문 앞에는 해치상이 몇 마리가 짝을 이루어 서 있을까요?', options: ['두 마리(한 쌍)', '한 마리', '네 마리'], answer: 0, explain: '광화문 앞 좌우에는 해치상이 한 쌍으로 서 있어요.' },
+        { q: '작품판의 실제 크기 표를 보면, 해치상은 길이·너비·높이 중 어느 수치가 가장 클까요?', options: ['높이(3.507m)', '길이(2.756m)', '너비(1.862m)'], answer: 0, explain: '높이 350.7cm로 길이·너비보다 커요.' }
+      ]
     },
     {
       id: 'thinker', order: '02', title: '생각하는 사람', short: '생각하는 사람',
@@ -40,7 +44,11 @@
       caution: '단테의 신곡에 나오는 지옥의 문 위에서 인간을 관조하는 시인의 모습을 청동으로 표현했습니다.',
       look: '정면과 옆면을 오가며 팔·등·다리가 만드는 큰 덩어리를 비교해 보세요.',
       source: 'https://www.musee-rodin.fr/', rights: 'Public Domain · Scan the World 3D 스캔 GLB',
-      quiz: { q: '〈생각하는 사람〉은 어떤 재질로 만들어졌을까요? 표면의 색과 광택을 살펴보세요.', options: ['청동', '흰 대리석', '나무'], answer: 0, explain: '단테의 신곡 속 시인의 모습을 청동으로 표현한 작품이에요.' }
+      quizBank: [
+        { q: '〈생각하는 사람〉은 어떤 재질로 만들어졌을까요? 표면의 색과 광택을 살펴보세요.', options: ['청동', '흰 대리석', '나무'], answer: 0, explain: '단테의 신곡 속 시인의 모습을 청동으로 표현한 작품이에요.' },
+        { q: '〈생각하는 사람〉은 원래 어떤 작품 위에 놓일 조각으로 구상되었을까요?', options: ['단테의 신곡 속 지옥의 문 위', '교회 제단 장식', '왕궁 정원의 분수'], answer: 0, explain: '단테의 신곡에 나오는 지옥의 문 위에서 인간을 관조하는 시인의 모습을 표현했어요.' },
+        { q: '작품판의 정보를 보면, 이 대형 주조본은 몇 년에 만들어졌을까요?', options: ['1903년', '1850년', '1950년'], answer: 0, explain: '1903년 대형 주조본이에요.' }
+      ]
     },
     {
       id: 'david', order: '03', title: '다비드상', short: '다비드상',
@@ -55,7 +63,11 @@
       caution: '아래에서 올려다볼 때 비율이 자연스럽게 보이도록 머리와 오른손을 약간 더 크게 조각했습니다.',
       look: '커다란 머리와 손이 아래에서 올려다볼 때 자연스럽게 보이는지 살펴보세요.',
       source: 'https://www.galleriaaccademiafirenze.it/', rights: 'Public Domain · Scan the World 3D 스캔 GLB',
-      quiz: { q: '다비드상을 아래에서 올려다보면, 몸 전체 비율에 비해 어느 부분이 유독 크게 조각되어 있나요?', options: ['머리와 오른손', '발과 무릎', '귀와 코'], answer: 0, explain: '아래에서 올려다볼 때 비율이 자연스럽게 보이도록 머리와 오른손을 약간 더 크게 조각했어요.' }
+      quizBank: [
+        { q: '다비드상을 아래에서 올려다보면, 몸 전체 비율에 비해 어느 부분이 유독 크게 조각되어 있나요?', options: ['머리와 오른손', '발과 무릎', '귀와 코'], answer: 0, explain: '아래에서 올려다볼 때 비율이 자연스럽게 보이도록 머리와 오른손을 약간 더 크게 조각했어요.' },
+        { q: '다비드상은 어떤 재료로 조각되었을까요? 표면의 질감을 살펴보세요.', options: ['대리석', '청동', '화강암'], answer: 0, explain: '대리석으로 조각된 작품이에요.' },
+        { q: '작품판의 정보를 보면, 다비드상은 대략 언제 제작되었을까요?', options: ['1501~1504년', '1800년대', '고대 그리스 시대'], answer: 0, explain: '1501~1504년에 제작되었어요.' }
+      ]
     },
     {
       id: 'venus', order: '04', title: '밀로의 비너스', short: '밀로의 비너스',
@@ -70,7 +82,11 @@
       caution: '두 팔은 발견 당시부터 없었지만, 그 비어있는 공간 덕분에 더욱 완벽한 클래식 미의 상징이 되었습니다.',
       look: '어깨와 골반이 서로 어느 방향으로 기울었는지 비교해 보세요.',
       source: 'https://collections.louvre.fr/', rights: 'Public Domain · Scan the World 3D 스캔 GLB',
-      quiz: { q: '밀로의 비너스를 자세히 둘러보면, 발견 당시부터 없었던 부분은 어디일까요?', options: ['양팔', '머리', '두 다리'], answer: 0, explain: '두 팔은 발견 당시부터 없었지만, 그 비어있는 공간 덕분에 더욱 완벽한 클래식 미의 상징이 되었어요.' }
+      quizBank: [
+        { q: '밀로의 비너스를 자세히 둘러보면, 발견 당시부터 없었던 부분은 어디일까요?', options: ['양팔', '머리', '두 다리'], answer: 0, explain: '두 팔은 발견 당시부터 없었지만, 그 비어있는 공간 덕분에 더욱 완벽한 클래식 미의 상징이 되었어요.' },
+        { q: '밀로의 비너스는 대략 언제 만들어졌을까요?', options: ['기원전 150~125년경', '서기 1500년경', '20세기 초'], answer: 0, explain: '기원전 150~125년경에 만들어졌어요.' },
+        { q: '밀로의 비너스는 어떤 재질로 조각되었을까요?', options: ['대리석', '청동', '나무'], answer: 0, explain: '대리석으로 조각된 작품이에요.' }
+      ]
     },
     {
       id: 'pieta', order: '05', title: '피에타상', short: '피에타상',
@@ -85,7 +101,11 @@
       caution: '미켈란젤로가 자신의 이름을 마리아 옷띠에 직접 조각한 유일한 작품입니다.',
       look: '머리에서 넓은 옷자락까지 이어지는 삼각형 구도를 찾아보세요.',
       source: 'https://www.museivaticani.va/', rights: 'Public Domain · Scan the World 3D 스캔 GLB',
-      quiz: { q: '미켈란젤로가 이 작품에 자신의 서명을 유일하게 직접 새겨 넣은 곳은 어디일까요?', options: ['마리아의 옷띠', '예수의 발바닥', '받침대 뒷면'], answer: 0, explain: '미켈란젤로가 자신의 이름을 마리아 옷띠에 직접 조각한 유일한 작품이에요.' }
+      quizBank: [
+        { q: '미켈란젤로가 이 작품에 자신의 서명을 유일하게 직접 새겨 넣은 곳은 어디일까요?', options: ['마리아의 옷띠', '예수의 발바닥', '받침대 뒷면'], answer: 0, explain: '미켈란젤로가 자신의 이름을 마리아 옷띠에 직접 조각한 유일한 작품이에요.' },
+        { q: '피에타상은 누가 누구를 안고 있는 모습을 표현했을까요?', options: ['마리아가 죽은 예수를 안고 있는 모습', '예수가 아기를 안고 있는 모습', '두 천사가 서로 안고 있는 모습'], answer: 0, explain: '마리아가 죽은 예수를 안고 있는 슬픈 순간을 표현했어요.' },
+        { q: '머리에서 넓은 옷자락까지 이어지는 선을 따라가 보면, 피에타상은 어떤 구도로 안정감을 만들까요?', options: ['삼각형', '가느다란 수직선', '완전한 원'], answer: 0, explain: '머리에서 넓게 퍼진 옷자락까지 이어지는 삼각형이 예수의 몸을 품으며 안정감을 만들어요.' }
+      ]
     },
     {
       id: 'sphinx', order: '06', title: '기자의 대스핑크스', short: '대스핑크스',
@@ -100,7 +120,11 @@
       caution: '세계 최대 크기의 단일 석조 조각상입니다.',
       look: '발끝에서 꼬리까지 옆길을 따라 걸어보세요.',
       source: 'https://giza.fas.harvard.edu/', rights: '3D 포토그래메트리 스캔 · CC Attribution',
-      quiz: { q: '발끝부터 꼬리까지 옆길을 따라 걸으며 살펴보면, 스핑크스의 몸 전체는 무엇으로 만들어졌을까요?', options: ['석회암 바위산 하나를 통째로 깎아서', '작은 돌을 여러 개 쌓아서', '청동을 녹여 부어서'], answer: 0, explain: '석회암 바위산 하나를 통째로 깎아 만든 세계 최대 크기의 단일 석조 조각상이에요.' }
+      quizBank: [
+        { q: '발끝부터 꼬리까지 옆길을 따라 걸으며 살펴보면, 스핑크스의 몸 전체는 무엇으로 만들어졌을까요?', options: ['석회암 바위산 하나를 통째로 깎아서', '작은 돌을 여러 개 쌓아서', '청동을 녹여 부어서'], answer: 0, explain: '석회암 바위산 하나를 통째로 깎아 만든 세계 최대 크기의 단일 석조 조각상이에요.' },
+        { q: '스핑크스는 어떤 두 존재가 결합된 모습일까요?', options: ['사자의 몸과 왕(파라오)의 머리', '독수리의 날개와 사람의 다리', '물고기의 꼬리와 말의 머리'], answer: 0, explain: '사자의 몸과 왕의 머리가 결합된 고대 이집트의 거대한 수호상이에요.' },
+        { q: '작품판의 실제 크기 표를 보면, 스핑크스는 길이·너비·높이 중 어느 수치가 가장 클까요?', options: ['길이(73.5m)', '너비(19m)', '높이(20.22m)'], answer: 0, explain: '길이 73.5m로 너비·높이보다 훨씬 커요.' }
+      ]
     },
     {
       id: 'liberty', order: '07', title: '자유의 여신상', short: '자유의 여신상',
@@ -115,7 +139,11 @@
       caution: '겉표면 동판이 산화되어 청록색으로 변했습니다.',
       look: '발밑에서 횃불 끝까지 올려다본 뒤 뒤로 멀리 물러나 전체 비례를 확인하세요.',
       source: 'https://www.nps.gov/stli/', rights: '3D 포토그래메트리 스캔 · CC Attribution',
-      quiz: { q: '가까이 다가가 표면을 살펴보면, 자유의 여신상은 지금 무슨 색일까요?', options: ['청록색', '황금색', '새하얀색'], answer: 0, explain: '구리로 만든 겉면이 오랜 세월 공기 중 산소와 만나 청록색 녹으로 덮였어요.' }
+      quizBank: [
+        { q: '가까이 다가가 표면을 살펴보면, 자유의 여신상은 지금 무슨 색일까요?', options: ['청록색', '황금색', '새하얀색'], answer: 0, explain: '구리로 만든 겉면이 오랜 세월 공기 중 산소와 만나 청록색 녹으로 덮였어요.' },
+        { q: '작품판의 정보표를 보면, 조각상 높이와 받침대를 합친 총 높이는 몇 m일까요?', options: ['92.99m', '46.05m', '150m'], answer: 0, explain: '조각상 46.05m와 받침대 46.94m를 합친 총 높이가 92.99m예요.' },
+        { q: '발밑에서 시선을 위로 옮겨 보면, 여신상은 무엇을 손에 들고 있을까요?', options: ['횃불', '책', '검'], answer: 0, explain: '발밑에서 횃불 끝까지 올려다본 뒤 뒤로 물러나 전체 비례를 확인해 보세요.' }
+      ]
     },
     {
       id: 'moai', order: '08', title: '이스터섬 모아이 석상', short: '모아이 석상',
@@ -130,7 +158,11 @@
       caution: '모아이는 바다를 등지고 섬 내부의 마을을 바라보고 있습니다.',
       look: '우뚝 솟은 턱선과 귓볼의 묵직한 3D 형태를 살펴보세요.',
       source: 'https://whc.unesco.org/en/list/715/', rights: '3D 포토그래메트리 스캔 · CC Attribution',
-      quiz: { q: '모아이 주위를 한 바퀴 돌아보면, 이 석상은 어느 쪽을 등지고 서 있을까요?', options: ['바다', '산', '마을'], answer: 0, explain: '모아이는 바다를 등지고 서서 섬 안의 마을과 사람들을 지켜보듯 서 있어요.' }
+      quizBank: [
+        { q: '모아이 주위를 한 바퀴 돌아보면, 이 석상은 어느 쪽을 등지고 서 있을까요?', options: ['바다', '산', '마을'], answer: 0, explain: '모아이는 바다를 등지고 서서 섬 안의 마을과 사람들을 지켜보듯 서 있어요.' },
+        { q: '작품판의 정보를 보면, 모아이 석상은 대략 무게가 얼마나 나갈까요?', options: ['약 14톤', '약 1톤', '약 100톤'], answer: 0, explain: '평균 무게가 약 14톤이에요.' },
+        { q: '모아이 석상은 어떤 돌로 만들어졌을까요?', options: ['현무암', '대리석', '화강암'], answer: 0, explain: '현무암으로 만들어진 석상이에요.' }
+      ]
     },
     {
       id: 'lamassu', order: '09', title: '람마수 (날개 달린 황소상)', short: '람마수 황소상',
@@ -145,7 +177,11 @@
       caution: '앞에서 볼 때는 서 있고 옆에서 볼 때는 걷는 것처럼 보이도록 발을 5개로 조각했습니다.',
       look: '황소 몸통의 옆면을 따라가며 5번째 발과 독수리 날개 조각을 확인해 보세요.',
       source: 'https://www.britishmuseum.org/', rights: '3D 포토그래메트리 스캔 · CC Attribution',
-      quiz: { q: '황소 몸통 옆면을 따라가며 다리를 세어 보면, 람마수는 다리가 모두 몇 개일까요?', options: ['5개', '4개', '6개'], answer: 0, explain: '앞에서 보면 서 있는 모습, 옆에서 보면 걷는 모습이 되도록 다리를 하나 더 넣어 5개로 조각했어요.' }
+      quizBank: [
+        { q: '황소 몸통 옆면을 따라가며 다리를 세어 보면, 람마수는 다리가 모두 몇 개일까요?', options: ['5개', '4개', '6개'], answer: 0, explain: '앞에서 보면 서 있는 모습, 옆에서 보면 걷는 모습이 되도록 다리를 하나 더 넣어 5개로 조각했어요.' },
+        { q: '람마수는 어떤 세 존재의 특징이 합쳐진 모습일까요?', options: ['사람 얼굴 · 독수리 날개 · 황소 몸', '사자 얼굴 · 매의 발톱 · 말의 몸', '뱀의 몸 · 새의 머리 · 사람의 팔'], answer: 0, explain: '사람의 얼굴, 독수리의 날개, 황소의 몸을 하고 있는 정교한 조각이에요.' },
+        { q: '람마수는 어떤 재질로 조각되었을까요?', options: ['석회암', '청동', '나무'], answer: 0, explain: '석회암으로 조각된 유물이에요.' }
+      ]
     }
   ];
   const canvas = document.getElementById('park-canvas');
@@ -470,8 +506,25 @@
     for (let i = result.length - 1; i > 0; i--) { const j = Math.floor(Math.random() * (i + 1));[result[i], result[j]] = [result[j], result[i]]; }
     return result;
   }
+  const PARK_STAMP_KEY = 'parkFinaleStampV1';
+  function readParkStamp() { try { return localStorage.getItem(PARK_STAMP_KEY) === '1'; } catch (_) { return false; } }
+  function writeParkStamp() { try { localStorage.setItem(PARK_STAMP_KEY, '1'); } catch (_) {} }
+  function buildImageQuestion(zone) {
+    const distractors = shuffledCopy(ZONES.filter(z => z.id !== zone.id).map(z => z.title)).slice(0, 2);
+    const options = shuffledCopy([zone.title, ...distractors]);
+    return { kind: 'image', image: zone.image, q: '이 사진은 어떤 작품일까요?', options, answer: options.indexOf(zone.title), explain: zone.docent, zoneTitle: zone.title };
+  }
   function startQuiz() {
-    quizQuestions = shuffledCopy(ZONES.filter(z => z.quiz).map(z => ({ ...z.quiz, zoneTitle: z.title })));
+    const imageZones = shuffledCopy(ZONES).slice(0, 2);
+    const imageZoneIds = new Set(imageZones.map(z => z.id));
+    const observationZones = shuffledCopy(ZONES.filter(z => !imageZoneIds.has(z.id))).slice(0, 3);
+    const imageQuestions = imageZones.map(z => buildImageQuestion(z));
+    const observationQuestions = observationZones.map(z => ({ ...shuffledCopy(z.quizBank)[0], zoneTitle: z.title }));
+    quizQuestions = shuffledCopy([...imageQuestions, ...observationQuestions].map(item => {
+      const choices = item.options.map((label, index) => ({ label, correct: index === item.answer }));
+      const randomized = shuffledCopy(choices);
+      return { ...item, options: randomized.map(c => c.label), answer: randomized.findIndex(c => c.correct) };
+    }));
     quizIndex = 0; quizCorrect = 0;
     document.getElementById('finale-complete').hidden = true;
     document.getElementById('finale-question-wrap').hidden = false;
@@ -485,9 +538,13 @@
     document.getElementById('finale-step').textContent = `QUESTION ${String(quizIndex + 1).padStart(2, '0')} / ${String(total).padStart(2, '0')}`;
     document.getElementById('finale-progress').style.width = `${quizIndex / total * 100}%`;
     document.getElementById('finale-total').textContent = `${quizCorrect} / ${total}`;
-    document.getElementById('finale-question').textContent = `${item.zoneTitle} · ${item.q}`;
+    document.getElementById('finale-question').textContent = item.kind === 'image' ? item.q : `${item.zoneTitle} · ${item.q}`;
+    const artwork = document.getElementById('finale-artwork');
+    artwork.hidden = !item.image;
+    if (item.image) document.getElementById('finale-artwork-image').src = item.image;
     finaleFeedback.textContent = ''; finaleFeedback.classList.remove('correct');
     finaleNext.hidden = true;
+    finaleNext.textContent = quizIndex === total - 1 ? '결과 보기' : '다음 관찰로';
     finaleOptions.replaceChildren(...item.options.map((label, index) => {
       const button = document.createElement('button'); button.type = 'button'; button.className = 'finale-option'; button.dataset.letter = String.fromCharCode(65 + index); button.textContent = label;
       button.addEventListener('click', () => {
@@ -502,12 +559,26 @@
     }));
   }
   function showQuizCompletion() {
+    const alreadyHad = readParkStamp();
+    writeParkStamp();
     document.getElementById('finale-question-wrap').hidden = true;
     document.getElementById('finale-complete').hidden = false;
+    document.querySelector('.curator-stamp').hidden = false;
+    document.getElementById('finale-step').textContent = 'CHALLENGE COMPLETE';
+    document.getElementById('finale-progress').style.width = '100%';
+    document.getElementById('finale-stamp-number').textContent = '★';
+    document.getElementById('finale-complete-title').textContent = alreadyHad ? '이미 획득한 큐레이터 도장이에요' : '관찰의 눈을 얻었어요';
+    document.getElementById('finale-complete-copy').textContent = '다섯 문제를 모두 맞혔어요. 이제 이 테마파크의 어린이 큐레이터입니다.';
+  }
+  function showQuizRetry() {
     const total = quizQuestions.length;
-    document.getElementById('finale-stamp-number').textContent = String(quizCorrect).padStart(2, '0');
-    document.getElementById('finale-complete-title').textContent = quizCorrect === total ? '관찰의 눈을 얻었어요' : '조금만 더 살펴볼까요?';
-    document.getElementById('finale-complete-copy').textContent = `${total}문제 중 ${quizCorrect}문제를 맞혔어요.`;
+    document.getElementById('finale-question-wrap').hidden = true;
+    document.getElementById('finale-complete').hidden = false;
+    document.querySelector('.curator-stamp').hidden = true;
+    document.getElementById('finale-step').textContent = 'TRY AGAIN';
+    document.getElementById('finale-progress').style.width = '100%';
+    document.getElementById('finale-complete-title').textContent = `${quizCorrect} / ${total}개를 맞혔어요`;
+    document.getElementById('finale-complete-copy').textContent = '큐레이터 도장은 다섯 문제를 모두 맞혀야 받을 수 있어요. 조각상을 다시 살펴보고 재도전해 보세요.';
   }
   function nearestZone() {
     let best = null, dist = Infinity;
@@ -569,7 +640,7 @@
   document.getElementById('help-close').addEventListener('click', () => helpModal.close());
   document.getElementById('quiz-button').addEventListener('click', () => startQuiz());
   document.getElementById('finale-close').addEventListener('click', () => finaleModal.close());
-  finaleNext.addEventListener('click', () => { quizIndex++; if (quizIndex >= quizQuestions.length) showQuizCompletion(); else renderQuizQuestion(); });
+  finaleNext.addEventListener('click', () => { quizIndex++; if (quizIndex >= quizQuestions.length) { if (quizCorrect === quizQuestions.length) showQuizCompletion(); else showQuizRetry(); } else renderQuizQuestion(); });
   document.getElementById('finale-again').addEventListener('click', () => startQuiz());
   document.querySelectorAll('.touch-controls button').forEach(btn => {
     const code = btn.dataset.key;
