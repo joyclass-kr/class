@@ -14,7 +14,7 @@ const indexVisibleText = index
   .replace(/<[^>]+>/g, " ");
 
 const indexLabels = [
-  ["과일 종 대결", "Fruit Bell"],
+  ["과일 종", "Fruit Bell"],
   ["육목", "Connect Six"],
   ["궁정 추리", "Court Deduction"],
   ["숫자 타일", "Number Tiles"],
@@ -38,7 +38,7 @@ assert.doesNotMatch(
 );
 
 const pageContracts = [
-  ["learning/games/fruitbell/fruitbell.html", /FRUIT BELL/, /과일 종 대결/],
+  ["learning/games/fruitbell/fruitbell.html", /FRUIT BELL/, /과일 종/],
   ["learning/games/connect6/connect6.html", /CONNECT SIX/, /<title>육목 · 온라인 대전<\/title>/],
   ["learning/games/loveletter/loveletter.html", /궁정 추리/, /Court Deduction/],
   ["learning/games/rummikub/rummikub.html", /숫자 타일/, /NUMBER TILES/],

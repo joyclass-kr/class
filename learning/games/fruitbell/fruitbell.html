@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width,initial-scale=1.0,viewport-fit=cover">
-<title>과일 종 대결</title>
+<title>과일 종</title>
 <link rel="stylesheet" href="../../../assets/network/multiplayer-lobby.css">
 <style>
 *{box-sizing:border-box}html,body{margin:0;width:100%;min-height:100%;font-family:"Malgun Gothic",sans-serif;color:#fff}
@@ -132,7 +132,7 @@ input{width:100%;min-height:44px;border:1px solid #987d42;border-radius:8px;back
 <section id="missingScreen" class="screen hidden"><div class="panel name-missing"><h2>이름이 없습니다</h2><p>메인 화면에서 이름을 먼저 입력한 뒤 다시 들어오세요.</p><button class="primary" type="button" onclick="location.href='../../../'">메인 화면으로</button></div></section>
 <section id="lobby" class="screen hidden mp-lobby-compact" data-multiplayer-lobby>
   <div class="panel">
-    <h1>FRUIT BELL</h1><div class="sub">과일 종 대결 · 2~4인 · 카드 56장</div>
+    <h1>FRUIT BELL</h1><div class="sub">과일 종 · 2~4인 · 카드 56장</div>
     <div class="mp-lobby-tabs"><button id="hostTab" class="tab active" type="button">CREATE ROOM</button><button id="joinTab" class="tab" type="button">JOIN ROOM</button></div>
     <div class="mp-lobby-card">
       <div id="hostPane">
@@ -248,7 +248,7 @@ function applySavedPlayerName(){
  const saved=getSavedPlayerName();
  if(saved){
    const subtitle=document.querySelector(".sub");
-   if(subtitle)subtitle.textContent=`PLAYER · ${saved} · 과일 종 대결 · 2~4인`;
+   if(subtitle)subtitle.textContent=`PLAYER · ${saved} · 과일 종 · 2~4인`;
  }
 }
 function normalizeName(v){return String(v||"").replace(/[^가-힣]/g,"").slice(0,6)}
