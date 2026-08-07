@@ -89,7 +89,7 @@
     },
     {
       id: 'sphinx', order: '06', title: '기자의 대스핑크스', short: '대스핑크스',
-      subtitle: '고대 이집트 기원전 2500년경 · 3D 포토그래메트리 스캔', position: [0, 0, 56], arrival: [40, 1.62, 56], lookAt: [0, 10, 56],
+      subtitle: '고대 이집트 기원전 2500년경 · 3D 포토그래메트리 스캔', position: [0, 0, 50], arrival: [40, 1.62, 50], lookAt: [0, 10, 50], modelRotation: [0, Math.PI, 0],
       modelPath: 'assets/models/sphinx.glb', realHeight: 20.22, preserveMaterials: true,
       image: 'assets/sphinx.jpg',
       facts: [['길이', '73.5m'], ['너비', '19m'], ['높이', '20.22m']],
@@ -104,7 +104,7 @@
     },
     {
       id: 'liberty', order: '07', title: '자유의 여신상', short: '자유의 여신상',
-      subtitle: '프레데리크 바르톨디 1886 · 3D 포토그래메트리 스캔', position: [52, 0, 0], arrival: [52, 1.62, -58], lookAt: [52, 46, 0],
+      subtitle: '프레데리크 바르톨디 1886 · 3D 포토그래메트리 스캔', position: [52, 0, 0], arrival: [52, 1.62, -58], lookAt: [52, 46, 0], modelRotation: [0, Math.PI, 0],
       modelPath: 'assets/models/statue-of-liberty.glb', realHeight: 46.05, preserveMaterials: true,
       image: 'assets/liberty.jpg',
       facts: [['조각상 높이', '46.05m'], ['받침대', '46.94m'], ['총 높이', '92.99m']],
@@ -119,7 +119,7 @@
     },
     {
       id: 'moai', order: '08', title: '이스터섬 모아이 석상', short: '모아이 석상',
-      subtitle: '칠레 라파누이 1250-1500년경 · 3D 포토그래메트리 스캔', position: [0, 0, 21.25], arrival: [0, 1.62, 13.25], lookAt: [0, 3, 21.25],
+      subtitle: '칠레 라파누이 1250-1500년경 · 3D 포토그래메트리 스캔', position: [0, 0, 14], arrival: [0, 1.62, 6], lookAt: [0, 3, 14],
       modelPath: 'assets/models/moai.glb', realHeight: 4.0, preserveMaterials: true, modelRotation: [0.2198, -0.0040, -0.0370], groundSink: 0.45,
       image: 'assets/moai.jpg',
       facts: [['평균 높이', '약 4.0m'], ['무게', '약 14톤'], ['재질', '현무암']],
@@ -173,7 +173,7 @@
 
   const camera = new THREE.PerspectiveCamera(61, innerWidth / innerHeight, .08, 650);
   camera.rotation.order = 'YXZ';
-  camera.position.set(0, 1.62, 28);
+  camera.position.set(0, 1.62, 0);
 
   const renderer = new THREE.WebGLRenderer({ canvas, antialias: true, powerPreference: 'high-performance' });
   renderer.setSize(innerWidth, innerHeight, false);
@@ -191,6 +191,7 @@
   const raycaster = new THREE.Raycaster();
   const centerPointer = new THREE.Vector2(0, 0);
   const zoneObjects = [];
+  const quizObjects = [];
   const zoneObstacles = [];
   const park = new THREE.Group();
   scene.add(park);
@@ -383,12 +384,13 @@
     const water = addMesh(new THREE.RingGeometry(3, 4.5, 64), MAT.water, park, [0, .04, 0]); water.rotation.x = -Math.PI / 2; water.castShadow = false;
     const hub = cylinder(1.1, 1.3, 1.1, 32, MAT.sandstone, park, [0, .55, 0]);
     const globe = sphere(.8, new THREE.MeshStandardMaterial({ color: 0x7a9f63, roughness: .62, metalness: .08 }), park, [0, 4.1, 0], 32, 20);
+    globe.userData.isQuizTrigger = true; quizObjects.push(globe);
 
     ZONES.forEach(zone => {
       loadZoneModel(zone);
       if (zone.id === 'sphinx') {
         // 실측 비율(길이 73.5m x 너비 19m)과 다르게 원본 스캔은 세로(Z)로 긴 형태라 원형 충돌로는 몸통 안까지 걸어 들어갈 수 있어 실측 발자국에 맞춘 사각 충돌을 사용
-        zoneObstacles.push({ x: zone.position[0], z: zone.position[2], hx: 16, hz: 27 });
+        zoneObstacles.push({ x: zone.position[0], z: zone.position[2], hx: 20, hz: 30 });
         return;
       }
       const baseW = Math.max(3.5, zone.realHeight * 0.4);
@@ -542,7 +544,7 @@
   addEventListener('keyup', e => { keys[e.code] = false; });
   canvas.addEventListener('pointerdown', e => { dragging = true; dragStart = { x: e.clientX, y: e.clientY, moved: false }; canvas.classList.add('dragging'); canvas.setPointerCapture(e.pointerId); });
   canvas.addEventListener('pointermove', e => { if (!dragging) return; const dx = e.movementX || 0, dy = e.movementY || 0; if (Math.abs(dx) + Math.abs(dy) > 2) dragStart.moved = true; yaw -= dx * .0032; pitch = Math.max(-1.35, Math.min(1.35, pitch - dy * .0028)); updateCamera(); });
-  canvas.addEventListener('pointerup', e => { if (!dragging) return; dragging = false; canvas.classList.remove('dragging'); if (dragStart && !dragStart.moved) { raycaster.setFromCamera(centerPointer, camera); const hit = raycaster.intersectObjects(zoneObjects, true)[0]; if (hit) { let o = hit.object; while (o && !o.userData.zone) o = o.parent; if (o) openDetail(o.userData.zone); } } dragStart = null; });
+  canvas.addEventListener('pointerup', e => { if (!dragging) return; dragging = false; canvas.classList.remove('dragging'); if (dragStart && !dragStart.moved) { raycaster.setFromCamera(centerPointer, camera); const quizHit = raycaster.intersectObjects(quizObjects, true)[0]; if (quizHit) { startQuiz(); } else { const hit = raycaster.intersectObjects(zoneObjects, true)[0]; if (hit) { let o = hit.object; while (o && !o.userData.zone) o = o.parent; if (o) openDetail(o.userData.zone); } } } dragStart = null; });
   addEventListener('resize', () => { camera.aspect = innerWidth / innerHeight; camera.updateProjectionMatrix(); renderer.setSize(innerWidth, innerHeight, false); renderer.setPixelRatio(Math.min(devicePixelRatio, 1.5)); });
 
   document.getElementById('detail-button').addEventListener('click', () => openDetail(activeZone));
