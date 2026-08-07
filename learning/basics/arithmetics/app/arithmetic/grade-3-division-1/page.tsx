@@ -64,7 +64,7 @@ function createProblemSet(seed: number): ProblemSet {
 }
 
 function story(problem: StoryProblem) {
-  const value = <strong>{problem.divisor}</strong>;
+  const value = problem.divisor;
   switch (problem.index) {
     case 0: return <>선물 6개를 한 명당 {value}개씩 주면 몇 명이 받을까요?</>;
     case 1: return <>선물 6개를 {value}명이 똑같이 나누면 한 명당 몇 개일까요?</>;

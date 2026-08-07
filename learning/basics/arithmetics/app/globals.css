@@ -5231,11 +5231,6 @@ button.prime-number-question:focus-visible {
   font-size: 11px;
 }
 
-.division-story-problem > p > strong {
-  color: #df614f;
-  font-size: 17px;
-}
-
 .division-story-options {
   min-height: 0;
   flex: 1 1 auto;
