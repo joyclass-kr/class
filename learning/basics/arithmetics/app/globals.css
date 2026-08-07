@@ -5253,7 +5253,7 @@ button.prime-number-question:focus-visible {
   align-items: center;
   gap: 4px;
   border: 0;
-  padding: 0;
+  padding: 0 10%;
   background: transparent;
   font: inherit;
   cursor: pointer;
