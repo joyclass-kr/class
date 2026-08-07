@@ -89,7 +89,7 @@
     },
     {
       id: 'sphinx', order: '06', title: '기자의 대스핑크스', short: '대스핑크스',
-      subtitle: '고대 이집트 기원전 2500년경 · 3D 포토그래메트리 스캔', position: [-65, 0, 60], arrival: [-25, 1.62, 60], lookAt: [-65, 10, 60],
+      subtitle: '고대 이집트 기원전 2500년경 · 3D 포토그래메트리 스캔', position: [0, 0, 52], arrival: [40, 1.62, 52], lookAt: [0, 10, 52],
       modelPath: 'assets/models/sphinx.glb', realHeight: 20.22, preserveMaterials: true,
       image: 'assets/sphinx.jpg',
       facts: [['길이', '73.5m'], ['너비', '19m'], ['높이', '20.22m']],
@@ -104,7 +104,7 @@
     },
     {
       id: 'liberty', order: '07', title: '자유의 여신상', short: '자유의 여신상',
-      subtitle: '프레데리크 바르톨디 1886 · 3D 포토그래메트리 스캔', position: [65, 0, 60], arrival: [65, 1.62, 2], lookAt: [65, 46, 60],
+      subtitle: '프레데리크 바르톨디 1886 · 3D 포토그래메트리 스캔', position: [52, 0, 0], arrival: [52, 1.62, -58], lookAt: [52, 46, 0],
       modelPath: 'assets/models/statue-of-liberty.glb', realHeight: 46.05, preserveMaterials: true,
       image: 'assets/liberty.jpg',
       facts: [['조각상 높이', '46.05m'], ['받침대', '46.94m'], ['총 높이', '92.99m']],
@@ -169,7 +169,7 @@
 
   const scene = new THREE.Scene();
   scene.background = new THREE.Color(0x9fc8d9);
-  scene.fog = new THREE.Fog(0xaccbd0, 65, 175);
+  scene.fog = new THREE.Fog(0xaccbd0, 55, 150);
 
   const camera = new THREE.PerspectiveCamera(61, innerWidth / innerHeight, .08, 650);
   camera.rotation.order = 'YXZ';
@@ -358,10 +358,10 @@
     rim.position.set(zone.position[0] + 3, Math.max(4, zone.realHeight * 0.6), zone.position[2] - 4);
     park.add(rim);
 
-    // 3D 정보 라벨
-    const label = makeLabel(zone.title, zone.size, 9);
-    label.position.set(zone.position[0], 3.8, zone.position[2] + 6);
-    label.lookAt(camera.position.x, 3.8, camera.position.z);
+    // 3D 정보 라벨 (전시실 바닥 명패처럼 받침대 옆에 낮고 작게 배치해 관람 시야를 가리지 않도록)
+    const label = makeLabel(zone.title, zone.size, 2.2);
+    label.position.set(zone.position[0], 0.55, zone.position[2] + baseW / 2 + .6);
+    label.lookAt(camera.position.x, 0.55, camera.position.z);
     label.userData.faceCamera = true;
     park.add(label);
 
@@ -370,7 +370,7 @@
   }
 
   function makePark() {
-    const ground = addMesh(new THREE.CircleGeometry(105, 96), MAT.grass, park, [0, -.08, 0]); ground.rotation.x = -Math.PI / 2; ground.receiveShadow = true; ground.castShadow = false;
+    const ground = addMesh(new THREE.CircleGeometry(90, 96), MAT.grass, park, [0, -.08, 0]); ground.rotation.x = -Math.PI / 2; ground.receiveShadow = true; ground.castShadow = false;
     const plaza = addMesh(new THREE.CircleGeometry(6, 64), MAT.path, park, [0, .01, 0]); plaza.rotation.x = -Math.PI / 2;
     const ring = addMesh(new THREE.RingGeometry(5, 6, 64), MAT.pathEdge, park, [0, .025, 0]); ring.rotation.x = -Math.PI / 2;
 
@@ -383,18 +383,21 @@
     const water = addMesh(new THREE.RingGeometry(3, 4.5, 64), MAT.water, park, [0, .04, 0]); water.rotation.x = -Math.PI / 2; water.castShadow = false;
     const hub = cylinder(1.1, 1.3, 1.1, 32, MAT.sandstone, park, [0, .55, 0]);
     const globe = sphere(.8, new THREE.MeshStandardMaterial({ color: 0x7a9f63, roughness: .62, metalness: .08 }), park, [0, 4.1, 0], 32, 20);
-    const hubLabel = makeLabel('실물 크기 3D 야외 미술 공원', '05번 전시실과 100% 동일한 3D GLB 스캔 1m = 3D 1단위', 9); hubLabel.position.set(0, 7.5, 0); hubLabel.userData.faceCamera = true; park.add(hubLabel);
 
     ZONES.forEach(zone => {
       loadZoneModel(zone);
+      if (zone.id === 'sphinx') {
+        // 실측 비율(길이 73.5m x 너비 19m)과 다르게 원본 스캔은 세로(Z)로 긴 형태라 원형 충돌로는 몸통 안까지 걸어 들어갈 수 있어 실측 발자국에 맞춘 사각 충돌을 사용
+        zoneObstacles.push({ x: zone.position[0], z: zone.position[2], hx: 13, hz: 24 });
+        return;
+      }
       const baseW = Math.max(3.5, zone.realHeight * 0.4);
-      const obstacleR = zone.id === 'sphinx' ? 10 : baseW * .72 + .42;
-      zoneObstacles.push({ x: zone.position[0], z: zone.position[2], r: obstacleR });
+      zoneObstacles.push({ x: zone.position[0], z: zone.position[2], r: baseW * .72 + .42 });
     });
 
     for (let i = 0; i < 45; i++) {
       const a = i * 2.399, r = 24 + (i * 37 % 78), x = Math.cos(a) * r, z = Math.sin(a) * r;
-      if (ZONES.some(q => Math.hypot(x - q.position[0], z - q.position[2]) < (['sphinx', 'liberty'].includes(q.id) ? 45 : 8))) continue;
+      if (ZONES.some(q => Math.hypot(x - q.position[0], z - q.position[2]) < (['sphinx', 'liberty'].includes(q.id) ? 30 : 8))) continue;
       const tree = new THREE.Group(), h = 3.5 + (i % 7) * .45;
       cylinder(.18, .28, h, 8, MAT.wood, tree, [0, h / 2, 0]);
       const crown = sphere(1.4 + (i % 4) * .18, i % 3 ? MAT.leaf : MAT.leaf2, tree, [0, h + .8, 0], 12, 9); crown.scale.y = 1.25;
@@ -406,7 +409,7 @@
   function setupLights() {
     scene.add(new THREE.HemisphereLight(0xd9efff, 0x354b2d, .64));
     const sun = new THREE.DirectionalLight(0xffeed0, 1.35); sun.position.set(-90, 160, 70); sun.castShadow = true;
-    sun.shadow.mapSize.set(2048, 2048); sun.shadow.camera.left = -75; sun.shadow.camera.right = 75; sun.shadow.camera.top = 75; sun.shadow.camera.bottom = -75; sun.shadow.camera.far = 170; sun.shadow.bias = -.0002; scene.add(sun);
+    sun.shadow.mapSize.set(2048, 2048); sun.shadow.camera.left = -68; sun.shadow.camera.right = 68; sun.shadow.camera.top = 68; sun.shadow.camera.bottom = -68; sun.shadow.camera.far = 150; sun.shadow.bias = -.0002; scene.add(sun);
   }
 
   function buildTabs() {
@@ -508,9 +511,18 @@
     const oldX = camera.position.x, oldZ = camera.position.z;
     camera.position.addScaledVector(velocity, dt);
     const radius = Math.hypot(camera.position.x, camera.position.z);
-    if (radius > 100) { camera.position.x *= 100 / radius; camera.position.z *= 100 / radius; }
+    if (radius > 85) { camera.position.x *= 85 / radius; camera.position.z *= 85 / radius; }
     for (const o of zoneObstacles) {
-      const dx = camera.position.x - o.x, dz = camera.position.z - o.z, dist = Math.hypot(dx, dz);
+      const dx = camera.position.x - o.x, dz = camera.position.z - o.z;
+      if (o.hx != null) {
+        if (Math.abs(dx) < o.hx && Math.abs(dz) < o.hz) {
+          const pushX = o.hx - Math.abs(dx), pushZ = o.hz - Math.abs(dz);
+          if (pushX < pushZ) camera.position.x = o.x + Math.sign(dx || 1) * o.hx;
+          else camera.position.z = o.z + Math.sign(dz || 1) * o.hz;
+        }
+        continue;
+      }
+      const dist = Math.hypot(dx, dz);
       if (dist < o.r) { if (dist < .001) { camera.position.x = oldX; camera.position.z = oldZ; } else { camera.position.x = o.x + dx / dist * o.r; camera.position.z = o.z + dz / dist * o.r; } }
     }
     camera.position.y = 1.62 + Math.sin(performance.now() * .009) * Math.min(velocity.length() * .012, .025);

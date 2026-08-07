@@ -391,12 +391,6 @@ function leaveMuseum(socket) {
 function safeMuseumPosition(room, x, z) {
   let nextX = Math.max(-1.9, Math.min(1.9, Number(x) || 0));
   let nextZ = Math.max(-28.2, Math.min(6.1, Number(z) || 5.8));
-  if (room === "space") {
-    for (const obstacle of [{x:-.75,z:1},{x:.75,z:-3.85},{x:-.75,z:-8.7},{x:.75,z:-13.55}]) {
-      const dx=nextX-obstacle.x,dz=nextZ-obstacle.z,d=Math.hypot(dx,dz);
-      if (d < 1.5) { const scale=1.5/(d || 1); nextX=obstacle.x+(dx || .01)*scale; nextZ=obstacle.z+(dz || .01)*scale; }
-    }
-  }
   return { x:nextX, z:nextZ };
 }
 
@@ -421,15 +415,24 @@ function leavePark(socket) {
 
 const PARK_ZONE_OBSTACLES = [
   {x:9,z:-17.75,r:2.94},{x:-7.5,z:-19.5,r:2.94},{x:19.375,z:-6.875,r:2.94},{x:-19.375,z:-6.875,r:2.94},
-  {x:0,z:-21.25,r:2.94},{x:-65,z:60,r:10},{x:65,z:60,r:13.68},{x:0,z:21.25,r:2.94},{x:0,z:-13.75,r:2.94}
+  {x:0,z:-21.25,r:2.94},{x:0,z:52,hx:13,hz:24},{x:52,z:0,r:13.68},{x:0,z:21.25,r:2.94},{x:0,z:-13.75,r:2.94}
 ];
 
 function safeParkPosition(x, z) {
   let nextX = Number(x) || 0, nextZ = Number(z) || 0;
   const radius = Math.hypot(nextX, nextZ);
-  if (radius > 100) { const scale = 100 / radius; nextX *= scale; nextZ *= scale; }
+  if (radius > 85) { const scale = 85 / radius; nextX *= scale; nextZ *= scale; }
   for (const obstacle of PARK_ZONE_OBSTACLES) {
-    const dx = nextX - obstacle.x, dz = nextZ - obstacle.z, d = Math.hypot(dx, dz);
+    const dx = nextX - obstacle.x, dz = nextZ - obstacle.z;
+    if (obstacle.hx != null) {
+      if (Math.abs(dx) < obstacle.hx && Math.abs(dz) < obstacle.hz) {
+        const pushX = obstacle.hx - Math.abs(dx), pushZ = obstacle.hz - Math.abs(dz);
+        if (pushX < pushZ) nextX = obstacle.x + (Math.sign(dx) || 1) * obstacle.hx;
+        else nextZ = obstacle.z + (Math.sign(dz) || 1) * obstacle.hz;
+      }
+      continue;
+    }
+    const d = Math.hypot(dx, dz);
     if (d < obstacle.r) { const scale = obstacle.r / (d || 1); nextX = obstacle.x + (dx || .01) * scale; nextZ = obstacle.z + (dz || .01) * scale; }
   }
   return { x: nextX, z: nextZ };

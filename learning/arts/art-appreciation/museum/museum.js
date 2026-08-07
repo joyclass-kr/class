@@ -290,7 +290,7 @@
   function addFinaleWall(room,shell) {
     // Match the other galleries' substantial final-board proportions, scaled
     // up to fill the spatial gallery's larger end wall. Venus may overlap it.
-    const grand=room.id==='space',panelW=grand?10.9:5.8,panelH=grand?6.85:3.65,panelY=grand?4.4:3.25,z=GALLERY_END+.38;
+    const panelW=5.8,panelH=3.65,panelY=3.25,z=GALLERY_END+.38;
     const group=new THREE.Group();gallery.add(group);
     mesh([panelW+.62,panelH+.62,.18],materials.black,[0,panelY,z-.08],group);
     mesh([panelW+.76,.11,.24],materials.brass,[0,panelY+(panelH+.7)/2,z],group);
@@ -302,9 +302,9 @@
     for(const side of [-1,1]){
       const lamp=mesh([.18,.28,.18],materials.darkBrass,[side*(panelW/2+.72),panelY+.45,z+.2],group);
       lamp.rotation.z=side*.12;
-      const glow=new THREE.PointLight(0xffc56f,grand?26:18,4.2,2);glow.position.set(side*(panelW/2+.58),panelY+.15,z+1);gallery.add(glow);
+      const glow=new THREE.PointLight(0xffc56f,18,4.2,2);glow.position.set(side*(panelW/2+.58),panelY+.15,z+1);gallery.add(glow);
     }
-    const wash=new THREE.SpotLight(0xffce84,grand?62:42,8,Math.PI*.25,.75,1.5);wash.position.set(0,Math.min(shell.height-.35,panelY+2.1),z+2.5);wash.target.position.set(0,panelY,z);gallery.add(wash,wash.target);
+    const wash=new THREE.SpotLight(0xffce84,42,8,Math.PI*.25,.75,1.5);wash.position.set(0,Math.min(shell.height-.35,panelY+2.1),z+2.5);wash.target.position.set(0,panelY,z);gallery.add(wash,wash.target);
   }
 
   function refreshFinaleWall() {
@@ -481,8 +481,7 @@
   }
 
   function buildShell(room) {
-    const isGrand=room.id==='space';
-    const width=isGrand?17.2:11.6,length=GALLERY_START-GALLERY_END,height=isGrand?8.4:6.4,centerZ=(GALLERY_START+GALLERY_END)/2;
+    const width=11.6,length=GALLERY_START-GALLERY_END,height=6.4,centerZ=(GALLERY_START+GALLERY_END)/2;
     const wallCenterY=height/2-.1,wallSurfaceY=height/2+.05;
     mesh([width,.18,length],materials.walnut,[0,-.09,centerZ]);
     mesh([width,.18,length],materials.ceiling,[0,height+.1,centerZ]);
@@ -506,18 +505,18 @@
       }
     }
 
-    const coveDepth=isGrand?2.25:1.15;
+    const coveDepth=1.15;
     const centerCeiling=mesh([width-coveDepth*2,.18,length],materials.ceiling,[0,height-.17,centerZ]);centerCeiling.castShadow=false;
     for(const side of [-1,1]){
-      const soffitX=side*(width/2-(isGrand?.78:.52));
-      const soffit=mesh([isGrand?1.55:1.04,.34,length],materials.ceiling,[soffitX,height-.49,centerZ]);soffit.castShadow=false;
-      const bevelWidth=isGrand?2.05:.82;
-      const bevel=mesh([bevelWidth,.16,length],materials.ceiling,[side*(width/2-(isGrand?1.72:1.27)),height-.32,centerZ]);bevel.rotation.z=side*(isGrand?.27:.38);bevel.castShadow=false;
-      const coveX=side*(width/2-(isGrand?2.55:1.48));
-      const coveY=height-(isGrand?.55:.46);
+      const soffitX=side*(width/2-.52);
+      const soffit=mesh([1.04,.34,length],materials.ceiling,[soffitX,height-.49,centerZ]);soffit.castShadow=false;
+      const bevelWidth=.82;
+      const bevel=mesh([bevelWidth,.16,length],materials.ceiling,[side*(width/2-1.27),height-.32,centerZ]);bevel.rotation.z=side*.38;bevel.castShadow=false;
+      const coveX=side*(width/2-1.48);
+      const coveY=height-.46;
       const cove=mesh([.075,.055,length],new THREE.MeshBasicMaterial({color:0xffd49b,toneMapped:false}),[coveX,coveY,centerZ]);cove.castShadow=false;
       for(let z=5;z>GALLERY_END;z-=4.8){
-        const wash=new THREE.SpotLight(0xffd4a0,isGrand?25:18,isGrand?7:5.2,Math.PI*.34,.8,1.55);
+        const wash=new THREE.SpotLight(0xffd4a0,18,5.2,Math.PI*.34,.8,1.55);
         wash.position.set(coveX,coveY-.16,z);
         wash.target.position.set(side*(width/2-.16),height-.95,z);
         gallery.add(wash,wash.target);
@@ -527,18 +526,18 @@
     const downlightMat=new THREE.MeshStandardMaterial({color:0x24211e,roughness:.62,metalness:.3});
     const lampMat=new THREE.MeshBasicMaterial({color:0xfff1d7,toneMapped:false});
     for(let z=3.8;z>GALLERY_END;z-=4.5){
-      for(const x of isGrand?[-2.2,2.2]:[-1.45,1.45]){
+      for(const x of [-1.45,1.45]){
         const ring=new THREE.Mesh(new THREE.CylinderGeometry(.115,.115,.035,24),downlightMat);ring.position.set(x,height-.295,z);gallery.add(ring);
         const lens=new THREE.Mesh(new THREE.CircleGeometry(.072,20),lampMat);lens.position.set(x,height-.316,z);lens.rotation.x=Math.PI/2;gallery.add(lens);
-        const light=new THREE.SpotLight(0xffe4bf,isGrand?27:21,isGrand?10:8,Math.PI*.23,.8,1.65);
+        const light=new THREE.SpotLight(0xffe4bf,21,8,Math.PI*.23,.8,1.65);
         light.position.set(x,height-.45,z);light.target.position.set(x,0,z);gallery.add(light,light.target);
       }
     }
-    const ambient=new THREE.HemisphereLight(0xe9dece,0x3a2a20,isGrand?.72:.82);gallery.add(ambient);
+    const ambient=new THREE.HemisphereLight(0xe9dece,0x3a2a20,.82);gallery.add(ambient);
     const entrance=new THREE.Group();gallery.add(entrance);
-    const entryHeight=isGrand?6.55:5;
+    const entryHeight=5;
     mesh([2.2,entryHeight,.5],materials.wallInset,[-(width/2-1.1),entryHeight/2,5.7],entrance);mesh([2.2,entryHeight,.5],materials.wallInset,[(width/2-1.1),entryHeight/2,5.7],entrance);mesh([width-4.4,1.15,.5],materials.wallInset,[0,entryHeight+.42,5.7],entrance);
-    const sign=makeLabel(room.subtitle,`${room.works.length}점의 작품 · 원작 비율 전시`,4.2);sign.position.set(0,isGrand?6.05:4.55,5.4);gallery.add(sign);
+    const sign=makeLabel(room.subtitle,`${room.works.length}점의 작품 · 원작 비율 전시`,4.2);sign.position.set(0,4.55,5.4);gallery.add(sign);
     return {width,length,height};
   }
 
@@ -573,176 +572,6 @@
     const target=new THREE.Object3D();target.position.set(x,3.05,z);addSpotlight(x,3.12+display.h/2,z,side,index,target);
   }
 
-  function sculptureMesh(parent,geometry,material,position,scale=[1,1,1],rotation=[0,0,0]) {
-    const part=new THREE.Mesh(geometry,material);part.position.set(...position);part.scale.set(...scale);part.rotation.set(...rotation);part.castShadow=true;part.receiveShadow=true;parent.add(part);return part;
-  }
-
-  function ellipsoid(parent,material,position,scale,rotation=[0,0,0]) {
-    return sculptureMesh(parent,new THREE.SphereGeometry(1,24,18),material,position,scale,rotation);
-  }
-
-  function limb(parent,material,from,to,radius) {
-    const a=new THREE.Vector3(...from),b=new THREE.Vector3(...to),delta=b.clone().sub(a),length=delta.length();
-    const part=sculptureMesh(parent,new THREE.CylinderGeometry(radius*.82,radius,length,16),material,a.clone().add(b).multiplyScalar(.5).toArray());
-    part.quaternion.setFromUnitVectors(new THREE.Vector3(0,1,0),delta.normalize());return part;
-  }
-
-  function buildSculptureModel(work) {
-    const model=new THREE.Group();
-    const mat=sculptureMaterial(work);
-
-    if(work.id==='d04'){
-      const outline=[
-        {y:.03,x:.31},{y:.1,x:.34},{y:.24,x:.35},{y:.5,x:.4},
-        {y:.9,x:.5},{y:1.3,x:.59},{y:1.55,x:.58},{y:1.72,x:.48},
-        {y:1.84,x:.28},{y:1.92,x:.18},{y:2.04,x:.18},{y:2.08,x:.25},
-        {y:2.13,x:.25},{y:2.16,x:.18}
-      ];
-      const delta=outline.slice(0,-1).map((p,i)=>(outline[i+1].x-p.x)/(outline[i+1].y-p.y));
-      const slope=outline.map((p,i)=>{
-        if(i===0)return delta[0];if(i===outline.length-1)return delta[delta.length-1];
-        const before=delta[i-1],after=delta[i];if(before*after<=0)return 0;
-        const h0=p.y-outline[i-1].y,h1=outline[i+1].y-p.y;return (h0+h1)/(h0/before+h1/after);
-      });
-      const profile=[new THREE.Vector2(0,0),new THREE.Vector2(.31,0)];
-      for(let i=0;i<outline.length-1;i++){
-        const a=outline[i],b=outline[i+1],h=b.y-a.y;
-        for(let step=0;step<12;step++){
-          const t=step/12,t2=t*t,t3=t2*t;
-          const x=(2*t3-3*t2+1)*a.x+(t3-2*t2+t)*h*slope[i]+(-2*t3+3*t2)*b.x+(t3-t2)*h*slope[i+1];
-          profile.push(new THREE.Vector2(x,THREE.MathUtils.lerp(a.y,b.y,t)));
-        }
-      }
-      const last=outline[outline.length-1];profile.push(new THREE.Vector2(last.x,last.y));
-      const vase=sculptureMesh(model,new THREE.LatheGeometry(profile,160),mat,[0,0,0]);vase.geometry.computeVertexNormals();
-    }else if(work.id==='d01'){
-      ellipsoid(model,mat,[0,1.34,0],[.42,.56,.32],[.18,0,-.08]);ellipsoid(model,mat,[0,1.98,.22],[.2,.24,.2],[.2,0,0]);
-      ellipsoid(model,mat,[0,.72,-.03],[.43,.27,.34]);
-      limb(model,mat,[-.28,.83,.04],[-.51,.28,.22],.135);limb(model,mat,[.28,.83,.04],[.52,.28,.21],.135);
-      limb(model,mat,[-.51,.28,.22],[-.46,.02,-.23],.11);limb(model,mat,[.52,.28,.21],[.44,.02,-.25],.11);
-      limb(model,mat,[-.31,1.58,.04],[-.5,1.03,.25],.105);limb(model,mat,[-.5,1.03,.25],[-.1,.74,.32],.09);
-      limb(model,mat,[.31,1.58,.05],[.5,1.15,.29],.105);limb(model,mat,[.5,1.15,.29],[.1,1.81,.37],.082);
-    }else if(work.id==='d03'){
-      ellipsoid(model,mat,[0,1.28,0],[.38,.7,.27]);ellipsoid(model,mat,[0,2.05,0],[.24,.3,.23]);
-      sculptureMesh(model,new THREE.TorusGeometry(.28,.055,10,32),mat,[0,2.3,0],[1,1,1],[Math.PI/2,0,0]);
-      limb(model,mat,[-.25,1.55,0],[-.48,.92,.18],.105);limb(model,mat,[-.48,.92,.18],[-.06,.72,.32],.095);
-      limb(model,mat,[.25,1.58,0],[.43,1.55,.25],.1);limb(model,mat,[.43,1.55,.25],[.18,2.02,.25],.085);
-      limb(model,mat,[-.22,.8,0],[-.5,.38,.16],.16);limb(model,mat,[.24,.82,0],[.58,.78,.22],.15);limb(model,mat,[.58,.78,.22],[.08,.46,.34],.13);
-      ellipsoid(model,mat,[0,.28,0],[.66,.24,.48]);
-    }else if(work.id==='d06'){
-      ellipsoid(model,mat,[-.2,1.28,-.05],[.58,.78,.42],[-.12,0,.08]);ellipsoid(model,mat,[-.24,2.02,0],[.23,.29,.22]);
-      sculptureMesh(model,new THREE.ConeGeometry(.95,1.35,32),mat,[0,.68,0],[1,1,.72]);
-      ellipsoid(model,mat,[.18,1.25,.25],[.95,.22,.22],[0,0,-.18]);ellipsoid(model,mat,[.92,1.08,.27],[.24,.25,.22]);
-      limb(model,mat,[-.42,1.45,.18],[.38,1.28,.35],.12);limb(model,mat,[.35,1.2,.27],[.82,.78,.22],.13);
-      limb(model,mat,[.62,1.18,.22],[1.15,.72,.1],.14);limb(model,mat,[-.45,1.17,.2],[-1.02,.72,.08],.14);
-    }else{
-      const venus=work.id==='d05';
-      limb(model,mat,[-.2,0,0],[-.17,.92,0],.17);limb(model,mat,[.2,0,0],[.18,.92,.02],.17);
-      if(venus)sculptureMesh(model,new THREE.ConeGeometry(.52,1.15,28),mat,[0,.7,0],[1,1,.7]);
-      ellipsoid(model,mat,[0,1.48,0],[.36,.59,.24],venus?[0,0,.08]:[0,0,-.04]);ellipsoid(model,mat,[0,2.14,0],[.18,.22,.18]);
-      if(!venus){limb(model,mat,[-.3,1.72,0],[-.5,1.08,.04],.12);limb(model,mat,[.3,1.74,0],[.53,1.25,.12],.12);limb(model,mat,[.53,1.25,.12],[.34,.88,.22],.1);}
-    }
-    model.rotation.y=(parseInt(work.id.slice(1),10)%2?-.28:.3);return model;
-  }
-
-  function sculptureMaterial(work) {
-    if(work.id==='d01')return new THREE.MeshStandardMaterial({color:0x38271d,roughness:.3,metalness:.78});
-    if(work.id==='d03')return new THREE.MeshStandardMaterial({color:0xa77a2e,roughness:.34,metalness:.72});
-    if(work.id==='d04')return new THREE.MeshStandardMaterial({color:0x416f63,roughness:.3,metalness:.03});
-    return new THREE.MeshStandardMaterial({color:0xbab2a5,roughness:.58,metalness:.02});
-  }
-
-  const sculptureScans={
-    d01:'assets/models/thinker.glb',
-    d02:'assets/models/david.glb',
-    d05:'assets/models/venus-de-milo.glb',
-    d06:'assets/models/pieta.glb',
-    d13:'assets/models/gwanghwamun-haetae.glb'
-  };
-
-  function disposeDetachedModel(model) {
-    model.traverse(part=>{
-      if(part.geometry)part.geometry.dispose();
-      const modelMaterials=Array.isArray(part.material)?part.material:[part.material];
-      modelMaterials.filter(Boolean).forEach(material=>{
-        Object.values(material).forEach(value=>{if(value&&value.isTexture)value.dispose();});
-        material.dispose();
-      });
-    });
-  }
-
-  function installSculptureModel(model,group,work,artH,pedestalTop,isScan=false) {
-    if(isScan){
-      model.matrixAutoUpdate=true;
-      model.rotation.y=Number.isFinite(work.modelRotationY)?work.modelRotationY:work.id==='d01'?.16:work.id==='d02'?-1.48:work.id==='d05'?Math.PI:.08;
-      const material=work.preserveMaterials?null:sculptureMaterial(work);
-      model.traverse(part=>{
-        if(!part.isMesh)return;
-        part.geometry.computeVertexNormals();
-        if(material)part.material=material;
-        else if(work.materialTint&&part.material){
-          part.material=part.material.clone();
-          part.material.color.multiply(new THREE.Color(work.materialTint));
-          part.material.roughness=Math.max(.7,part.material.roughness||0);
-          part.material.metalness=0;
-        }
-      });
-    }
-    // Measure while the model is still detached. Once parented, Box3 uses
-    // world coordinates and the gallery placement would be subtracted again.
-    const bounds=new THREE.Box3().setFromObject(model),naturalH=Math.max(.01,bounds.max.y-bounds.min.y),modelScale=artH/naturalH;
-    model.scale.setScalar(modelScale);
-    if(work.centerModel){
-      const center=bounds.getCenter(new THREE.Vector3());
-      model.position.x=-center.x*modelScale;
-      model.position.z=-center.z*modelScale;
-    }
-    model.position.y=pedestalTop-bounds.min.y*modelScale;
-    if(work.hasBuiltInBase&&group.userData.label){
-      // Anchor the label to the scanned base itself instead of estimating its
-      // depth from the artwork dimensions. This keeps the Haechi label attached.
-      group.userData.label.position.set(0,.55,model.position.z+bounds.max.z*modelScale+.045);
-    }
-    group.add(model);
-    model.updateMatrix();
-    model.traverse(part=>{if(part.isMesh){part.userData.work=work;part.userData.room=rooms[activeRoom];part.castShadow=true;part.receiveShadow=true;clickable.push(part);}});
-  }
-
-  function addSculpture(work,index,z,version,roomGallery,xOverride=null) {
-    const isGrand=rooms[activeRoom].id==='space';
-    const placementZ=z, placementX=Number.isFinite(xOverride)?xOverride:index%2===0?-.75:.75;
-    const group=new THREE.Group();group.position.set(placementX,0,z);group.userData.placementZ=placementZ;gallery.add(group);
-    const dims=getDisplaySize(work),minH=work.id==='d04'?1.25:1.55,maxH=work.id==='d02'?3.15:work.id==='d04'?1.8:2.75;
-    const artH=work.actualScale?work.size.h/100:clamp(dims.h*1.05,minH,maxH),artW=artH*(work.size.w/work.size.h);
-    const baseW=work.actualScale?clamp(artW*1.05,1.4,3.1):clamp(artW*.82,.92,1.55),baseH=work.hasBuiltInBase ? .1 : .68+(index%2)*.12;
-    if(!work.hasBuiltInBase){
-      mesh([baseW+.24,.16,baseW+.24],materials.stone,[0,.08,0],group);
-      mesh([baseW,baseH,baseW],new THREE.MeshStandardMaterial({color:index%2?0x4d453c:0x71675b,roughness:.58}),[0,.16+baseH/2,0],group);
-    }
-    const pedestalTop=work.hasBuiltInBase?0:.16+baseH,scanPath=sculptureScans[work.id];
-    const labelWidth=clamp(baseW*.9,1.45,2.25);
-    const labelFront=baseW/2+.16;
-    const label=makeLabel(work.title,work.artist,labelWidth);
-    label.position.set(0,work.hasBuiltInBase ? .55 : baseH*.55,labelFront);
-    label.rotation.x=-Math.PI*.04;
-    group.userData.label=label;group.add(label);
-    if(scanPath){
-      gltfLoader.load(scanPath,gltf=>{
-        if(!isCurrentRoomLoad(version,roomGallery)){disposeDetachedModel(gltf.scene);return;}
-        installSculptureModel(gltf.scene,group,work,artH,pedestalTop,true);markLoaded(version,roomGallery);
-      },undefined,()=>{
-        if(!isCurrentRoomLoad(version,roomGallery))return;
-        installSculptureModel(buildSculptureModel(work),group,work,artH,pedestalTop);markLoaded(version,roomGallery);
-      });
-    }else{
-      installSculptureModel(buildSculptureModel(work),group,work,artH,pedestalTop);markLoaded(version,roomGallery);
-    }
-    const sculptureLightY=isGrand?7.65:5.7;
-    const spot=new THREE.SpotLight(0xffc77a,work.actualScale?105:175,isGrand?13:10,Math.PI*.2,.62,1.4);spot.position.set(-placementX*.35,sculptureLightY,placementZ+1.35);spot.target.position.set(placementX,pedestalTop+artH*.52,placementZ);spot.castShadow=index%2===0;spot.shadow.mapSize.set(512,512);gallery.add(spot,spot.target);
-    const rim=new THREE.PointLight(0xffd6a0,work.actualScale?18:38,5.5,2);rim.position.set(-placementX*.45,pedestalTop+artH*.58,placementZ-1.15);gallery.add(rim);
-    sculptureObstacles.push({x:placementX,z:placementZ,r:baseW*.72+.42});
-  }
-
   function setRoom(index,instant=false) {
     const version=++roomLoadVersion;
     setRoomMusic(index);
@@ -752,21 +581,7 @@
     if(gallery){scene.remove(gallery);gallery.traverse(o=>{if(o.geometry)o.geometry.dispose();if(o.material&&!Array.isArray(o.material)){if(o.material.map?.userData?.finaleTexture)o.material.map.dispose();o.material.dispose();}});}
     gallery=new THREE.Group();scene.add(gallery);const roomGallery=gallery,shell=buildShell(rooms[index]);
     addFinaleWall(rooms[index],shell);
-    if(rooms[index].id==='space'){
-      const sculptures=rooms[index].works.filter(w=>w.type==='sculpture'), wallWorks=rooms[index].works.filter(w=>w.type!=='sculpture');
-      const sculptureOrder=['d05','d01','d02','d13','d06'];
-      sculptures.sort((a,b)=>sculptureOrder.indexOf(a.id)-sculptureOrder.indexOf(b.id));
-      // Venus occupies the previously empty spot where the detached Haechi
-      // label was seen. Haechi stays opposite it with its label on its base.
-      const sculptureLayout={d05:{x:-3.8,z:-10.7},d13:{x:3.8,z:-15.5}};
-      sculptures.forEach((w,i)=>{
-        const placement=sculptureLayout[w.id];
-        addSculpture(w,i,placement?.z??1-i*4.85,version,roomGallery,placement?.x??null);
-      });
-      wallWorks.forEach((w,i)=>addFramedWork(w,i+sculptures.length,i%2===0?-1:1,-2-Math.floor(i/2)*7.1,shell.width,version,roomGallery));
-    }else{
-      rooms[index].works.forEach((w,i)=>addFramedWork(w,i,i%2===0?-1:1,1-Math.floor(i/2)*5.15,shell.width,version,roomGallery));
-    }
+    rooms[index].works.forEach((w,i)=>addFramedWork(w,i,i%2===0?-1:1,1-Math.floor(i/2)*5.15,shell.width,version,roomGallery));
     camera.position.set(0,1.68,6.35);yaw=0;pitch=-.015;velocity.set(0,0,0);camera.rotation.set(pitch,yaw,0);
     document.getElementById('room-kicker').textContent='GALLERY '+rooms[index].number;
     document.getElementById('room-title').textContent=rooms[index].title;
@@ -845,7 +660,7 @@
     tmpDirection.set(-Math.sin(yaw),0,-Math.cos(yaw));tmpRight.set(Math.cos(yaw),0,-Math.sin(yaw));
     const wish=new THREE.Vector3().addScaledVector(tmpDirection,f).addScaledVector(tmpRight,s);if(wish.lengthSq()>0)wish.normalize();
     const accel=28,maxSpeed=(keys.ShiftLeft||keys.ShiftRight)?7.5:4.8;velocity.addScaledVector(wish,accel*dt);velocity.multiplyScalar(Math.pow(.03,dt));if(velocity.length()>maxSpeed)velocity.setLength(maxSpeed);
-    const oldX=camera.position.x,oldZ=camera.position.z;camera.position.addScaledVector(velocity,dt);const half=rooms[activeRoom].id==='space'?7.55:4.85;
+    const oldX=camera.position.x,oldZ=camera.position.z;camera.position.addScaledVector(velocity,dt);const half=4.85;
     camera.position.x=clamp(camera.position.x,-half,half);camera.position.z=clamp(camera.position.z,GALLERY_END+1.4,6.5);
     for(const o of sculptureObstacles){const dx=camera.position.x-o.x,dz=camera.position.z-o.z,dist=Math.hypot(dx,dz);if(dist<o.r){if(dist<.001){camera.position.x=oldX;camera.position.z=oldZ;}else{camera.position.x=o.x+dx/dist*o.r;camera.position.z=o.z+dz/dist*o.r;}}}
     camera.position.y=1.68+Math.sin(performance.now()*.009)*Math.min(velocity.length()*.012,.025);camera.rotation.set(pitch,yaw,0);
