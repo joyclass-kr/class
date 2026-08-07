@@ -155,17 +155,16 @@
         .section-title {
             display: inline-block;
             margin: 0 0 16px;
-            padding: 7px 22px;
-            border: 1px solid rgba(255, 215, 120, 0.55);
+            padding: 6px 18px 7px;
+            border: 1px solid rgba(215, 180, 122, 0.42);
             border-radius: 6px;
-            background: rgba(25, 18, 20, 0.85);
-            box-shadow: 0 3px 12px rgba(0, 0, 0, 0.4), inset 0 0 12px rgba(255, 200, 100, 0.12);
-            color: #ffe58f;
-            font-size: 20px;
-            font-weight: 700;
-            letter-spacing: 0.05em;
+            background: rgba(25, 18, 20, 0.78);
+            box-shadow: 0 3px 10px rgba(0, 0, 0, 0.35);
+            color: var(--gold);
+            font-size: 19px;
+            font-weight: 500;
+            letter-spacing: 0.04em;
             line-height: 1.3;
-            text-shadow: 0 1px 4px rgba(0, 0, 0, 0.9), 0 0 12px rgba(255, 220, 120, 0.35);
         }
 
         .worksheet-container,
@@ -263,26 +262,8 @@
         }
 
         .worksheet-arrow {
-            display: inline-flex;
-            align-items: center;
-            justify-content: center;
-            width: 28px;
-            height: 28px;
-            color: #ffda79;
-            flex-shrink: 0;
-            transition: transform 0.2s ease, color 0.2s ease;
-        }
-
-        .worksheet-arrow svg {
-            width: 22px;
-            height: 22px;
-            fill: currentColor;
-        }
-
-        .worksheet-container a:hover .worksheet-arrow,
-        .game-card-grid a:hover .worksheet-arrow {
-            transform: scale(1.18);
-            color: #ffffff;
+            color: var(--gold-bright);
+            font-size: 20px;
         }
 
         .boardgame-section,
@@ -318,6 +299,13 @@
             color: #c9ad87;
             font-family: sans-serif;
             font-size: 12px;
+        }
+
+
+
+        .worksheet-arrow {
+            color: var(--gold-bright);
+            font-size: 20px;
         }
 
         .profile-list { display: flex; flex-direction: column; gap: 10px; margin: 15px 0; text-align: left; }
@@ -631,47 +619,47 @@
         <div class="worksheet-container">
             <a href="learning/basics/reading/">
                 <span class="worksheet-copy"><strong>독해</strong><small>(Reading)</small></span>
-                <span class="worksheet-arrow" aria-hidden="true"><svg viewBox="0 0 24 24"><path d="M21 5c-1.11-.35-2.33-.5-3.5-.5-1.95 0-4.05.4-5.5 1.5-1.45-1.1-3.55-1.5-5.5-1.5S2.45 4.9 1 6v14.65c0 .25.25.5.5.5.1 0 .15-.05.25-.05C3.2 20.4 5.2 20 7 20c1.95 0 4.05.4 5.5 1.5 1.35-.85 3.8-1.5 5.5-1.5 1.65 0 3.35.3 4.75 1.05.1.05.15.05.25.05.25 0 .5-.25.5-.5V6c-.6-.45-1.35-.75-2.5-1zm0 13.5c-1.1-.35-2.3-.5-3.5-.5-1.7 0-4.15.65-5.5 1.5V8c1.35-.85 3.8-1.5 5.5-1.5 1.2 0 2.4.15 3.5.5v11.5z"/></svg></span>
+                <span class="worksheet-arrow" aria-hidden="true">→</span>
             </a>
             <a href="learning/basics/proverbs/" data-requires-player="true">
                 <span class="worksheet-copy"><strong>속담</strong><small>(Proverbs)</small></span>
-                <span class="worksheet-arrow" aria-hidden="true"><svg viewBox="0 0 24 24"><path d="M20 2H4c-1.1 0-2 .9-2 2v18l4-4h14c1.1 0 2-.9 2-2V4c0-1.1-.9-2-2-2zm0 14H5.17L4 17.17V4h16v12zm-9-4h2v2h-2zm0-6h2v4h-2z"/></svg></span>
+                <span class="worksheet-arrow" aria-hidden="true">→</span>
             </a>
             <a href="learning/basics/classical-chinese-idioms/" data-requires-player="true">
                 <span class="worksheet-copy"><strong>고사성어</strong><small>(Classical Chinese Idioms)</small></span>
-                <span class="worksheet-arrow" aria-hidden="true"><svg viewBox="0 0 24 24"><path d="M19 3H5c-1.1 0-2 .9-2 2v14c0 1.1.9 2 2 2h14c1.1 0 2-.9 2-2V5c0-1.1-.9-2-2-2zm-2 10h-4v2h4v2h-4v2H8V6h8v6z"/></svg></span>
+                <span class="worksheet-arrow" aria-hidden="true">→</span>
             </a>
             <a href="learning/basics/hanja-meaning/">
                 <span class="worksheet-copy"><strong>한자</strong><small>(Hanja)</small></span>
-                <span class="worksheet-arrow" aria-hidden="true"><svg viewBox="0 0 24 24"><path d="M13 3h-2v4H4v2h7v3.17L6.41 16.7 7.83 18.1 13 12.93V21h2v-8.07l5.17 5.17 1.42-1.41L16.41 12H20V9h-7V3z"/></svg></span>
+                <span class="worksheet-arrow" aria-hidden="true">→</span>
             </a>
             <a href="learning/basics/spelling/" data-requires-player="true">
                 <span class="worksheet-copy"><strong>한글 맞춤법</strong><small>(Korean Spelling)</small></span>
-                <span class="worksheet-arrow" aria-hidden="true"><svg viewBox="0 0 24 24"><path d="M3 17.25V21h3.75L17.81 9.94l-3.75-3.75L3 17.25zM20.71 7.04a.996.996 0 0 0 0-1.41l-2.34-2.34a.996.996 0 0 0-1.41 0l-1.83 1.83 3.75 3.75 1.83-1.83z"/></svg></span>
+                <span class="worksheet-arrow" aria-hidden="true">→</span>
             </a>
             <a href="learning/basics/phonics/">
                 <span class="worksheet-copy"><strong>영단어 기초</strong><small>(Phonics · Spelling · Word Study)</small></span>
-                <span class="worksheet-arrow" aria-hidden="true"><svg viewBox="0 0 24 24"><path d="M9.62 12L7.86 7.11 6.1 12h3.52zM4.43 17l1.07-3h4.66l1.08 3h2.39L9.16 5H6.57L2.1 17h2.33zm11.23-7.55c.78-.44 1.34-1.15 1.34-2.12 0-1.72-1.36-2.33-3.23-2.33H10.5v12h3.9c2.09 0 3.6-.82 3.6-2.73 0-1.28-.75-2.28-2.34-2.82zM12.9 6.8h1.1c.75 0 1.25.32 1.25 1.05 0 .82-.57 1.15-1.35 1.15H12.9V6.8zm.2 8.4h-1.2v-2.5h1.3c.9 0 1.45.38 1.45 1.2 0 .88-.6 1.3-1.55 1.3z"/></svg></span>
+                <span class="worksheet-arrow" aria-hidden="true">→</span>
             </a>
             <a href="learning/basics/vocabulary/">
                 <span class="worksheet-copy"><strong>영단어 3,000</strong><small>(English Vocabulary 3,000)</small></span>
-                <span class="worksheet-arrow" aria-hidden="true"><svg viewBox="0 0 24 24"><path d="M4 6H2v14c0 1.1.9 2 2 2h14v-2H4V6zm16-4H8c-1.1 0-2 .9-2 2v12c0 1.1.9 2 2 2h12c1.1 0 2-.9 2-2V4c0-1.1-.9-2-2-2zm0 14H8V4h12v12z"/></svg></span>
+                <span class="worksheet-arrow" aria-hidden="true">→</span>
             </a>
             <a href="learning/basics/math-ox/">
                 <span class="worksheet-copy"><strong>수학 OX</strong><small>(Math OX)</small></span>
-                <span class="worksheet-arrow" aria-hidden="true"><svg viewBox="0 0 24 24"><path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm0 18c-4.41 0-8-3.59-8-8s3.59-8 8-8 8 3.59 8 8-3.59 8-8 8zm4.59-12.41L12 12.17 7.41 7.59 6 9l4.59 4.59L6 18.18l1.41 1.41L12 15l4.59 4.59 1.41-1.41-4.59-4.59 4.59-4.59z"/></svg></span>
+                <span class="worksheet-arrow" aria-hidden="true">→</span>
             </a>
             <a href="/arithmetic">
                 <span class="worksheet-copy"><strong>연산</strong><small>(Arithmetic)</small></span>
-                <span class="worksheet-arrow" aria-hidden="true"><svg viewBox="0 0 24 24"><path d="M19 3H5c-1.1 0-2 .9-2 2v14c0 1.1.9 2 2 2h14c1.1 0 2-.9 2-2V5c0-1.1-.9-2-2-2zm-6 3h5v2h-5V6zm0 4h5v2h-5v-2zm-7-4h2v2H6V6zm0 4h2v2H6v-2zm0 4h2v2H6v-2zm7 0h5v2h-5v-2zm-7 4h2v2H6v-2zm7 0h5v2h-5v-2z"/></svg></span>
+                <span class="worksheet-arrow" aria-hidden="true">→</span>
             </a>
             <a href="learning/basics/typing/">
                 <span class="worksheet-copy"><strong>타자</strong><small>(Typing)</small></span>
-                <span class="worksheet-arrow" aria-hidden="true"><svg viewBox="0 0 24 24"><path d="M20 5H4c-1.1 0-1.99.9-1.99 2L2 17c0 1.1.9 2 2 2h16c1.1 0 2-.9 2-2V7c0-1.1-.9-2-2-2zm-9 3h2v2h-2V8zm0 3h2v2h-2v-2zM8 8h2v2H8V8zm0 3h2v2H8v-2zM5 8h2v2H5V8zm0 3h2v2H5v-2zm14 6H5v-2h14v2zm0-3h-2v-2h2v2zm0-3h-2V8h2v2z"/></svg></span>
+                <span class="worksheet-arrow" aria-hidden="true">→</span>
             </a>
             <a href="learning/basics/metacognition/">
                 <span class="worksheet-copy"><strong>메타인지 진단</strong><small>(Metacognition Check)</small></span>
-                <span class="worksheet-arrow" aria-hidden="true"><svg viewBox="0 0 24 24"><path d="M9 21c0 .55.45 1 1 1h4c.55 0 1-.45 1-1v-1H9v1zm3-19C8.14 2 5 5.14 5 9c0 2.38 1.19 4.47 3 5.74V17c0 .55.45 1 1 1h6c.55 0 1-.45 1-1v-2.26c1.81-1.27 3-3.36 3-5.74 0-3.86-3.14-7-7-7zm2.85 11.1l-.85.6V16h-4v-2.3l-.85-.6C8.8 12.16 8 10.63 8 9c0-2.21 1.79-4 4-4s4 1.79 4 4c0 1.63-.8 3.16-2.15 4.1z"/></svg></span>
+                <span class="worksheet-arrow" aria-hidden="true">→</span>
             </a>
         </div>
     </section>
@@ -682,38 +670,38 @@
             <a id="hanguksaLearningLink"
                href="/hanguksa">
                 <span class="worksheet-copy"><strong>한능검(기본) 기출</strong><small>(Korean History Basics)</small></span>
-                <span class="worksheet-arrow" aria-hidden="true"><svg viewBox="0 0 24 24"><path d="M12 3L2 9v2h20V9L12 3zm-7 10h2v7H5v-7zm4 0h2v7H9v-7zm4 0h2v7h-2v-7zm4 0h2v7h-2v-7zM2 21h20v2H2v-2z"/></svg></span>
+                <span class="worksheet-arrow" aria-hidden="true">→</span>
             </a>
             <a href="learning/academics/korean-museum/" data-requires-player="true">
                 <span class="worksheet-copy"><strong>한국사 유물·유적</strong><small>(Korean Artifacts &amp; Sites)</small></span>
-                <span class="worksheet-arrow" aria-hidden="true"><svg viewBox="0 0 24 24"><path d="M5 16L3 5l5.5 5L12 4l3.5 6L21 5l-2 11H5zm14 3c0 .55-.45 1-1 1H6c-.55 0-1-.45-1-1v-1h14v1z"/></svg></span>
+                <span class="worksheet-arrow" aria-hidden="true">→</span>
             </a>
             <a href="learning/academics/east-asia-history-lab/" data-requires-player="true">
                 <span class="worksheet-copy"><strong>한국사 지도</strong><small>(Korean History Maps)</small></span>
-                <span class="worksheet-arrow" aria-hidden="true"><svg viewBox="0 0 24 24"><path d="M20.5 3l-.16.03L15 5.1 9 3 3.36 4.9c-.21.07-.36.25-.36.48V20.5c0 .28.22.5.5.5l.16-.03L9 18.9l6 2.1 5.64-1.9c.21-.07.36-.25.36-.48V3.5c0-.28-.22-.5-.5-.5zM15 19l-6-2.11V5l6 2.11V19z"/></svg></span>
+                <span class="worksheet-arrow" aria-hidden="true">→</span>
             </a>
             <a id="cds95GameLink"
                href="/learn/world-voyage/"
                data-requires-player="true"
                data-player-handoff="query">
                 <span class="worksheet-copy"><strong>대항해 시대</strong><small>(Age of Exploration)</small></span>
-                <span class="worksheet-arrow" aria-hidden="true"><svg viewBox="0 0 24 24"><path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm0 18c-4.41 0-8-3.59-8-8s3.59-8 8-8 8 3.59 8 8-3.59 8-8 8zm-1-13h2v3h-2zm0 8h2v3h-2zm-5-3h3v2H6zm8 0h3v2h-3z"/></svg></span>
+                <span class="worksheet-arrow" aria-hidden="true">→</span>
             </a>
             <a href="learning/academics/body-explorer/" data-requires-player="true">
                 <span class="worksheet-copy"><strong>인체의 구조와 기능</strong><small>(Human Body Systems)</small></span>
-                <span class="worksheet-arrow" aria-hidden="true"><svg viewBox="0 0 24 24"><path d="M12 21.35l-1.45-1.32C5.4 15.36 2 12.28 2 8.5 2 5.42 4.42 3 7.5 3c1.74 0 3.41.81 4.5 2.09C13.09 3.81 14.76 3 16.5 3 19.58 3 22 5.42 22 8.5c0 3.78-3.4 6.86-8.55 11.54L12 21.35z"/></svg></span>
+                <span class="worksheet-arrow" aria-hidden="true">→</span>
             </a>
             <a href="learning/academics/periodic-table/" data-requires-player="true">
                 <span class="worksheet-copy"><strong>주기율표</strong><small>(Periodic Table)</small></span>
-                <span class="worksheet-arrow" aria-hidden="true"><svg viewBox="0 0 24 24"><path d="M3 3h18v18H3V3zm4 4v3h3V7H7zm5 0v3h3V7h-3zm-5 5v3h3v-3H7zm5 0v3h3v-3h-3zm5-5v3h3V7h-3zm0 5v3h3v-3h-3z"/></svg></span>
+                <span class="worksheet-arrow" aria-hidden="true">→</span>
             </a>
             <a href="learning/academics/science-lab/" data-requires-player="true">
                 <span class="worksheet-copy"><strong>과학 실험실</strong><small>(Science Lab)</small></span>
-                <span class="worksheet-arrow" aria-hidden="true"><svg viewBox="0 0 24 24"><path d="M19 19L14 11V5h1V3H9v2h1v6l-5 8c-.63.93.04 2.2 1.17 2.2h11.66c1.13 0 1.8-1.27 1.17-2.2zM8.21 17l2.79-4.46V5h2v7.54L15.79 17H8.21z"/></svg></span>
+                <span class="worksheet-arrow" aria-hidden="true">→</span>
             </a>
             <a href="learning/academics/space/" data-requires-player="true">
                 <span class="worksheet-copy"><strong>우주 관찰</strong><small>(Space Observation)</small></span>
-                <span class="worksheet-arrow" aria-hidden="true"><svg viewBox="0 0 24 24"><path d="M12 2a10 10 0 100 20 10 10 0 000-20zm0 18a8 8 0 110-16 8 8 0 010 16zm-4-9a2 2 0 100-4 2 2 0 000 4zm8 0a2 2 0 100-4 2 2 0 000 4z"/></svg></span>
+                <span class="worksheet-arrow" aria-hidden="true">→</span>
             </a>
         </div>
     </section>
@@ -721,32 +709,32 @@
     <section class="hub-section boardgame-section" aria-labelledby="boardgame-title">
         <h2 id="boardgame-title" class="section-title">Board Game</h2>
         <div class="game-card-grid">
-            <a href="learning/games/fruitbell/fruitbell"><span class="game-card-copy"><strong>과일 종 대결</strong><small>(Fruit Bell)</small></span><span class="worksheet-arrow" aria-hidden="true"><svg viewBox="0 0 24 24"><path d="M12 22c1.1 0 2-.9 2-2h-4c0 1.1.9 2 2 2zm6-6v-5c0-3.07-1.63-5.64-4.5-6.32V4c0-.83-.67-1.5-1.5-1.5s-1.5.67-1.5 1.5v.68C7.64 5.36 6 7.92 6 11v5l-2 2v1h16v-1l-2-2z"/></svg></span></a>
-            <a href="learning/games/nimgame/nimgame"><span class="game-card-copy"><strong>님</strong><small>(Nim)</small></span><span class="worksheet-arrow" aria-hidden="true"><svg viewBox="0 0 24 24"><path d="M4 4h3v16H4V4zm6 0h3v16h-3V4zm6 0h3v16h-3V4z"/></svg></span></a>
-            <a href="learning/games/omok/omok"><span class="game-card-copy"><strong>오목</strong><small>(Five in a Row)</small></span><span class="worksheet-arrow" aria-hidden="true"><svg viewBox="0 0 24 24"><path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm0 18c-4.41 0-8-3.59-8-8s3.59-8 8-8 8 3.59 8 8-3.59 8-8 8z"/></svg></span></a>
-            <a href="learning/games/connect6/connect6"><span class="game-card-copy"><strong>육목</strong><small>(Connect Six)</small></span><span class="worksheet-arrow" aria-hidden="true"><svg viewBox="0 0 24 24"><path d="M12 2L4 7v10l8 5 8-5V7l-8-5zm6 14.23l-6 3.75-6-3.75V7.77l6-3.75 6 3.75v8.46z"/></svg></span></a>
-            <a href="learning/games/janggi/janggi"><span class="game-card-copy"><strong>장기</strong><small>(Korean Chess)</small></span><span class="worksheet-arrow" aria-hidden="true"><svg viewBox="0 0 24 24"><path d="M19 22H5v-2h14v2zm-2-4H7l1.5-9h7L17 18zm-2-11H9V5l3-3 3 3v2z"/></svg></span></a>
-            <a href="learning/games/diamondgame/diamondgame"><span class="game-card-copy"><strong>다이아몬드 게임</strong><small>(Diamond Game)</small></span><span class="worksheet-arrow" aria-hidden="true"><svg viewBox="0 0 24 24"><path d="M12 2L2 9l10 13 10-13L12 2zm0 3.84L18.42 9 12 17.35 5.58 9 12 5.84z"/></svg></span></a>
-            <a href="learning/games/loveletter/loveletter"><span class="game-card-copy"><strong>궁정 추리</strong><small>(Court Deduction)</small></span><span class="worksheet-arrow" aria-hidden="true"><svg viewBox="0 0 24 24"><path d="M5 16L3 5l5.5 5L12 4l3.5 6L21 5l-2 11H5zm14 3c0 .55-.45 1-1 1H6c-.55 0-1-.45-1-1v-1h14v1z"/></svg></span></a>
-            <a href="learning/games/lastcard/lastcard"><span class="game-card-copy"><strong>라스트 카드</strong><small>(Last Card)</small></span><span class="worksheet-arrow" aria-hidden="true"><svg viewBox="0 0 24 24"><path d="M19 3H5c-1.1 0-2 .9-2 2v14c0 1.1.9 2 2 2h14c1.1 0 2-.9 2-2V5c0-1.1-.9-2-2-2zm-7 13.5L8.5 12 12 8.5l3.5 3.5-3.5 4.5z"/></svg></span></a>
-            <a href="learning/games/rummikub/rummikub"><span class="game-card-copy"><strong>숫자 타일</strong><small>(Number Tiles)</small></span><span class="worksheet-arrow" aria-hidden="true"><svg viewBox="0 0 24 24"><path d="M4 3h16c1.1 0 2 .9 2 2v14c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V5c0-1.1.9-2 2-2zm5 4H7v2h2v8h2V7H9zm8 8h-4v-2h4v-2h-2V9h2V7h-4v2h2v2h-2v6h6v-2z"/></svg></span></a>
-            <a href="learning/games/blokus/blokus"><span class="game-card-copy"><strong>코너 블록</strong><small>(Corner Blocks)</small></span><span class="worksheet-arrow" aria-hidden="true"><svg viewBox="0 0 24 24"><path d="M3 3h8v8H3V3zm10 0h8v8h-8V3zM3 13h8v8H3v-8zm10 0h8v8h-8v-8z"/></svg></span></a>
-            <a href="learning/games/drawrelay/drawrelay"><span class="game-card-copy"><strong>그림 릴레이</strong><small>(Draw Relay)</small></span><span class="worksheet-arrow" aria-hidden="true"><svg viewBox="0 0 24 24"><path d="M12 3c-4.97 0-9 4.03-9 9 0 2.12.74 4.07 1.97 5.61.43.53 1.03.89 1.73.89h1.8c.83 0 1.5-.67 1.5-1.5 0-.38-.15-.73-.39-1-.24-.26-.39-.61-.39-1 0-.83.67-1.5 1.5-1.5H16c2.76 0 5-2.24 5-5 0-4.42-4.03-8-9-8zm-5.5 9c-.83 0-1.5-.67-1.5-1.5S5.67 9 6.5 9 8 9.67 8 10.5 7.33 12 6.5 12z"/></svg></span></a>
-            <a href="learning/games/setgame/setgame"><span class="game-card-copy"><strong>패턴 3장</strong><small>(Pattern Trio)</small></span><span class="worksheet-arrow" aria-hidden="true"><svg viewBox="0 0 24 24"><path d="M12 2L2 19h20L12 2zm0 5l6.5 10h-13L12 7z"/></svg></span></a>
-            <a href="learning/games/davincicode/davincicode"><span class="game-card-copy"><strong>숫자 암호</strong><small>(Number Code)</small></span><span class="worksheet-arrow" aria-hidden="true"><svg viewBox="0 0 24 24"><path d="M18 8h-1V6c0-2.76-2.24-5-5-5S7 3.24 7 6v2H6c-1.1 0-2 .9-2 2v10c0 1.1.9 2 2 2h12c1.1 0 2-.9 2-2V10c0-1.1-.9-2-2-2zm-6 9c-1.1 0-2-.9-2-2s.9-2 2-2 2 .9 2 2-.9 2-2 2zm3.1-9H8.9V6c0-1.71 1.39-3.1 3.1-3.1 1.71 0 3.1 1.39 3.1 3.1v2z"/></svg></span></a>
-            <a href="learning/games/traverse/traverse"><span class="game-card-copy"><strong>도형 건너기</strong><small>(Shape Crossing)</small></span><span class="worksheet-arrow" aria-hidden="true"><svg viewBox="0 0 24 24"><path d="M19 12h-2v3h-3v2h3v3h2v-3h3v-2h-3v-3zM7 9c1.66 0 3-1.34 3-3s-1.34-3-3-3-3 1.34-3 3 1.34 3 3 3zm0 7c-2.33 0-7 1.17-7 3.5V18h14v-2.5c0-2.33-4.67-3.5-7-3.5z"/></svg></span></a>
-            <a href="learning/games/avalon/avalon"><span class="game-card-copy"><strong>원정대 추리</strong><small>(Quest Deduction)</small></span><span class="worksheet-arrow" aria-hidden="true"><svg viewBox="0 0 24 24"><path d="M12 1L3 5v6c0 5.55 3.84 10.74 9 12 5.16-1.26 9-6.45 9-12V5l-9-4zm0 10.99h7c-.53 4.12-3.28 7.79-7 8.94V12H5V6.3l7-3.11v8.8z"/></svg></span></a>
+            <a href="learning/games/fruitbell/fruitbell"><span class="game-card-copy"><strong>과일 종 대결</strong><small>(Fruit Bell)</small></span><span class="worksheet-arrow" aria-hidden="true">→</span></a>
+            <a href="learning/games/nimgame/nimgame"><span class="game-card-copy"><strong>님</strong><small>(Nim)</small></span><span class="worksheet-arrow" aria-hidden="true">→</span></a>
+            <a href="learning/games/omok/omok"><span class="game-card-copy"><strong>오목</strong><small>(Five in a Row)</small></span><span class="worksheet-arrow" aria-hidden="true">→</span></a>
+            <a href="learning/games/connect6/connect6"><span class="game-card-copy"><strong>육목</strong><small>(Connect Six)</small></span><span class="worksheet-arrow" aria-hidden="true">→</span></a>
+            <a href="learning/games/janggi/janggi"><span class="game-card-copy"><strong>장기</strong><small>(Korean Chess)</small></span><span class="worksheet-arrow" aria-hidden="true">→</span></a>
+            <a href="learning/games/diamondgame/diamondgame"><span class="game-card-copy"><strong>다이아몬드 게임</strong><small>(Diamond Game)</small></span><span class="worksheet-arrow" aria-hidden="true">→</span></a>
+            <a href="learning/games/loveletter/loveletter"><span class="game-card-copy"><strong>궁정 추리</strong><small>(Court Deduction)</small></span><span class="worksheet-arrow" aria-hidden="true">→</span></a>
+            <a href="learning/games/lastcard/lastcard"><span class="game-card-copy"><strong>라스트 카드</strong><small>(Last Card)</small></span><span class="worksheet-arrow" aria-hidden="true">→</span></a>
+            <a href="learning/games/rummikub/rummikub"><span class="game-card-copy"><strong>숫자 타일</strong><small>(Number Tiles)</small></span><span class="worksheet-arrow" aria-hidden="true">→</span></a>
+            <a href="learning/games/blokus/blokus"><span class="game-card-copy"><strong>코너 블록</strong><small>(Corner Blocks)</small></span><span class="worksheet-arrow" aria-hidden="true">→</span></a>
+            <a href="learning/games/drawrelay/drawrelay"><span class="game-card-copy"><strong>그림 릴레이</strong><small>(Draw Relay)</small></span><span class="worksheet-arrow" aria-hidden="true">→</span></a>
+            <a href="learning/games/setgame/setgame"><span class="game-card-copy"><strong>패턴 3장</strong><small>(Pattern Trio)</small></span><span class="worksheet-arrow" aria-hidden="true">→</span></a>
+            <a href="learning/games/davincicode/davincicode"><span class="game-card-copy"><strong>숫자 암호</strong><small>(Number Code)</small></span><span class="worksheet-arrow" aria-hidden="true">→</span></a>
+            <a href="learning/games/traverse/traverse"><span class="game-card-copy"><strong>도형 건너기</strong><small>(Shape Crossing)</small></span><span class="worksheet-arrow" aria-hidden="true">→</span></a>
+            <a href="learning/games/avalon/avalon"><span class="game-card-copy"><strong>원정대 추리</strong><small>(Quest Deduction)</small></span><span class="worksheet-arrow" aria-hidden="true">→</span></a>
         </div>
     </section>
 
     <section class="hub-section puzzle-section" aria-labelledby="puzzle-title">
         <h2 id="puzzle-title" class="section-title">Solo Puzzle</h2>
         <div class="game-card-grid">
-            <a href="learning/games/coinweighing/coinweighing"><span class="game-card-copy"><strong>동전 저울</strong><small>(Coin Weighing)</small></span><span class="worksheet-arrow" aria-hidden="true"><svg viewBox="0 0 24 24"><path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm0 18c-4.41 0-8-3.59-8-8s3.59-8 8-8 8 3.59 8 8-3.59 8-8 8zm-1-13h2v7h-2zm0 9h2v2h-2z"/></svg></span></a>
-            <a href="learning/games/sphinx/sphinx"><span class="game-card-copy"><strong>스핑크스 수수께끼</strong><small>(Sphinx Riddles)</small></span><span class="worksheet-arrow" aria-hidden="true"><svg viewBox="0 0 24 24"><path d="M12 2L1 21h22L12 2zm0 5.5l6.5 11.5H5.5L12 7.5z"/></svg></span></a>
-            <a href="learning/games/hanoitower/hanoitower"><span class="game-card-copy"><strong>하노이의 탑</strong><small>(Tower of Hanoi)</small></span><span class="worksheet-arrow" aria-hidden="true"><svg viewBox="0 0 24 24"><path d="M2 20h20v2H2v-2zm9-18h2v16h-2V2zm-5 8h12v2H6v-2zm-2 4h16v2H4v-2zm4-8h8v2H8V6z"/></svg></span></a>
-            <a href="learning/games/sliding-puzzle/" data-requires-player="true"><span class="game-card-copy"><strong>8 퍼즐·15 퍼즐</strong><small>(8 &amp; 15 Puzzle)</small></span><span class="worksheet-arrow" aria-hidden="true"><svg viewBox="0 0 24 24"><path d="M3 3h18v18H3V3zm4 4v3h3V7H7zm5 0v3h3V7h-3zm-5 5v3h3v-3H7zm5 0v3h3v-3h-3zm5-5v3h3V7h-3z"/></svg></span></a>
-            <a href="learning/games/nonogram/" data-requires-player="true"><span class="game-card-copy"><strong>노노그램</strong><small>(Nonogram)</small></span><span class="worksheet-arrow" aria-hidden="true"><svg viewBox="0 0 24 24"><path d="M19 3H5c-1.1 0-2 .9-2 2v14c0 1.1.9 2 2 2h14c1.1 0 2-.9 2-2V5c0-1.1-.9-2-2-2zm-8 14H7v-4h4v4zm0-6H7V7h4v4zm6 6h-4v-4h4v4zm0-6h-4V7h4v4z"/></svg></span></a>
+            <a href="learning/games/coinweighing/coinweighing"><span class="game-card-copy"><strong>동전 저울</strong><small>(Coin Weighing)</small></span><span class="worksheet-arrow" aria-hidden="true">→</span></a>
+            <a href="learning/games/sphinx/sphinx"><span class="game-card-copy"><strong>스핑크스 수수께끼</strong><small>(Sphinx Riddles)</small></span><span class="worksheet-arrow" aria-hidden="true">→</span></a>
+            <a href="learning/games/hanoitower/hanoitower"><span class="game-card-copy"><strong>하노이의 탑</strong><small>(Tower of Hanoi)</small></span><span class="worksheet-arrow" aria-hidden="true">→</span></a>
+            <a href="learning/games/sliding-puzzle/" data-requires-player="true"><span class="game-card-copy"><strong>8 퍼즐·15 퍼즐</strong><small>(8 &amp; 15 Puzzle)</small></span><span class="worksheet-arrow" aria-hidden="true">→</span></a>
+            <a href="learning/games/nonogram/" data-requires-player="true"><span class="game-card-copy"><strong>노노그램</strong><small>(Nonogram)</small></span><span class="worksheet-arrow" aria-hidden="true">→</span></a>
         </div>
     </section>
 
@@ -755,15 +743,15 @@
         <div class="worksheet-container">
             <a href="learning/arts/art-appreciation/museum/">
                 <span class="worksheet-copy"><strong>미술 감상</strong><small>(Art Appreciation)</small></span>
-                <span class="worksheet-arrow" aria-hidden="true"><svg viewBox="0 0 24 24"><path d="M21 19V5c0-1.1-.9-2-2-2H5c-1.1 0-2 .9-2 2v14c0 1.1.9 2 2 2h14c1.1 0 2-.9 2-2zM8.5 13.5l2.5 3.01L14.5 12l4.5 6H5l3.5-4.5z"/></svg></span>
+                <span class="worksheet-arrow" aria-hidden="true">→</span>
             </a>
             <a href="learning/arts/music-listening/">
                 <span class="worksheet-copy"><strong>음악 감상</strong><small>(Music Appreciation)</small></span>
-                <span class="worksheet-arrow" aria-hidden="true"><svg viewBox="0 0 24 24"><path d="M12 3v10.55c-.59-.34-1.27-.55-2-.55-2.21 0-4 1.79-4 4s1.79 4 4 4 4-1.79 4-4V7h4V3h-6z"/></svg></span>
+                <span class="worksheet-arrow" aria-hidden="true">→</span>
             </a>
             <a href="learning/arts/music-studio/">
                 <span class="worksheet-copy"><strong>화성학·리듬</strong><small>(Harmony &amp; Rhythm)</small></span>
-                <span class="worksheet-arrow" aria-hidden="true"><svg viewBox="0 0 24 24"><path d="M12 3v9.28c-.47-.17-.97-.28-1.5-.28-2.48 0-4.5 2.02-4.5 4.5S8.02 21 10.5 21s4.5-2.02 4.5-4.5V7h4V3h-7z"/></svg></span>
+                <span class="worksheet-arrow" aria-hidden="true">→</span>
             </a>
         </div>
     </section>
