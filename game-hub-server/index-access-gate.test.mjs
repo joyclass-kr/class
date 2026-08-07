@@ -54,6 +54,7 @@ class FakeLink {
         this.attributes = new Map([['href', href]]);
         this.dataset = { playerHandoff: 'query' };
         this.id = 'cds95GameLink';
+        this.classList = { toggle() {} };
     }
 
     hasAttribute(name) {

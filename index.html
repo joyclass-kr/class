@@ -801,7 +801,7 @@
             let currentPlayerName = '';
             let isTeacherSignedIn = false;
             let contentAccessEditing = false;
-            let classLockedPaths = new Set();
+            let classEnabledPaths = new Set();
 
             function contentPathForLink(link) {
                 const href = link.dataset.baseHref || link.dataset.lockedHref || link.getAttribute('href');
@@ -812,7 +812,7 @@
 
             function renderClassLocks() {
                 hubLinks.forEach((link) => {
-                    const locked = classLockedPaths.has(contentPathForLink(link));
+                    const locked = !classEnabledPaths.has(contentPathForLink(link));
                     link.classList.toggle('is-class-locked', locked);
                     link.dataset.classLocked = String(locked);
                     if (locked) {
@@ -827,7 +827,7 @@
 
             async function loadClassContentAccess() {
                 const result = await api('/api/home-content-access');
-                classLockedPaths = new Set(result.lockedPaths || []);
+                classEnabledPaths = new Set(result.enabledPaths || []);
                 contentAccessButton.hidden = !result.canManage;
                 renderClassLocks();
             }
@@ -1006,6 +1006,7 @@
 
             function setHubLocked(locked) {
                 hubLinks.forEach((link) => {
+                    link.classList.toggle('is-class-locked', locked);
                     if (locked) {
                         if (!link.hasAttribute('href')) return;
                         link.dataset.lockedHref = link.getAttribute('href');
@@ -1087,6 +1088,7 @@
             function showRestrictedPreview() {
                 restrictedPreview = true;
                 hubContent.hidden = false;
+                setHubLocked(true);
             }
 
             async function showStudentHome(state) {
@@ -1402,17 +1404,17 @@
                     event.preventDefault();
                     const path = contentPathForLink(selectedLink);
                     if (!path) return;
-                    const nextLocked = !classLockedPaths.has(path);
-                    selectedLink.classList.toggle('is-class-locked', nextLocked);
+                    const nextEnabled = !classEnabledPaths.has(path);
+                    selectedLink.classList.toggle('is-class-locked', !nextEnabled);
                     try {
                         await api('/api/teacher/home-content-access', {
                             method: 'PUT',
-                            body: JSON.stringify({ path, locked: nextLocked }),
+                            body: JSON.stringify({ path, enabled: nextEnabled }),
                         });
-                        if (nextLocked) classLockedPaths.add(path);
-                        else classLockedPaths.delete(path);
+                        if (nextEnabled) classEnabledPaths.add(path);
+                        else classEnabledPaths.delete(path);
                         renderClassLocks();
-                        setStatus(nextLocked ? '이 버튼을 우리 반 학생에게 잠갔습니다.' : '이 버튼을 우리 반 학생에게 공개했습니다.');
+                        setStatus(nextEnabled ? '이 버튼을 우리 반 학생에게 공개했습니다.' : '이 버튼을 우리 반 학생에게 잠갔습니다.');
                     } catch (error) {
                         renderClassLocks();
                         setStatus(error.message, true);

@@ -507,7 +507,18 @@ function createClassroomPlatform(options = {}) {
       `INSERT INTO classroom_settings (setting_key, setting_value)
         VALUES ('site_access_mode', 'open')
         ON CONFLICT (setting_key) DO NOTHING`,
-      `CREATE TABLE IF NOT EXISTS classroom_content_locks (
+      // classroom_content_locks used to store the OPT-OUT set (menu items a
+      // teacher hid). The menu default flipped to opt-in, so on first boot
+      // after the flip we rename the table and drop its rows -- old "hidden"
+      // rows would otherwise be misread as the new "visible" set.
+      `DO $$
+       BEGIN
+         IF EXISTS (SELECT 1 FROM information_schema.tables WHERE table_name = 'classroom_content_locks') THEN
+           ALTER TABLE classroom_content_locks RENAME TO classroom_content_enabled;
+           DELETE FROM classroom_content_enabled;
+         END IF;
+       END $$`,
+      `CREATE TABLE IF NOT EXISTS classroom_content_enabled (
         class_id BIGINT NOT NULL REFERENCES classroom_classes(id) ON DELETE CASCADE,
         content_path TEXT NOT NULL,
         updated_by BIGINT REFERENCES classroom_users(id) ON DELETE SET NULL,
@@ -1225,14 +1236,14 @@ function createClassroomPlatform(options = {}) {
         const classId = await userClassId(user);
         const requestPath = normalizeContentPath(req.path);
         if (classId && requestPath) {
-          const locked = await pool.query(
-            `SELECT 1 FROM classroom_content_locks
+          const enabled = await pool.query(
+            `SELECT 1 FROM classroom_content_enabled
              WHERE class_id = $1
                AND ($2 = content_path OR $2 LIKE content_path || '/%')
              LIMIT 1`,
             [classId, requestPath]
           );
-          if (locked.rows[0]) return res.redirect(302, "/?content=locked");
+          if (!enabled.rows[0]) return res.redirect(302, "/?content=locked");
         }
       }
       return next();
@@ -1708,19 +1719,19 @@ function createClassroomPlatform(options = {}) {
     const mode = await getSiteAccessMode();
     const user = await sessionUser(req);
     if (!user) {
-      return res.json({ mode, lockedPaths: [], canManage: false });
+      return res.json({ mode, enabledPaths: [], canManage: false });
     }
     const classId = await userClassId(user);
     if (!classId) {
-      return res.json({ mode, lockedPaths: [], canManage: false });
+      return res.json({ mode, enabledPaths: [], canManage: false });
     }
-    const locks = await pool.query(
-      "SELECT content_path FROM classroom_content_locks WHERE class_id = $1 ORDER BY content_path",
+    const enabled = await pool.query(
+      "SELECT content_path FROM classroom_content_enabled WHERE class_id = $1 ORDER BY content_path",
       [classId]
     );
     res.json({
       mode,
-      lockedPaths: locks.rows.map((row) => row.content_path),
+      enabledPaths: enabled.rows.map((row) => row.content_path),
       canManage: user.role === "teacher"
     });
   }));
@@ -1732,24 +1743,24 @@ function createClassroomPlatform(options = {}) {
       throw new HttpError(403, "HOMEROOM_TEACHER_REQUIRED", "담임교사만 자기 반의 학급 메뉴/게임 잠금을 설정할 수 있습니다. 교사 명단에서 담당 학년과 반을 지정해 주세요.");
     }
     const contentPath = normalizeContentPath(req.body?.path);
-    const locked = req.body?.locked === true;
+    const enabled = req.body?.enabled === true;
     if (!contentPath || contentPath === "/") {
       throw new HttpError(400, "INVALID_CONTENT_PATH", "올바른 홈 버튼을 선택해 주세요.");
     }
-    if (locked) {
+    if (enabled) {
       await pool.query(
-        `INSERT INTO classroom_content_locks (class_id, content_path, updated_by, updated_at)
+        `INSERT INTO classroom_content_enabled (class_id, content_path, updated_by, updated_at)
          VALUES ($1, $2, $3, NOW())
          ON CONFLICT (class_id, content_path) DO UPDATE SET updated_by = EXCLUDED.updated_by, updated_at = NOW()`,
         [classId, contentPath, teacher.id]
       );
     } else {
       await pool.query(
-        "DELETE FROM classroom_content_locks WHERE class_id = $1 AND content_path = $2",
+        "DELETE FROM classroom_content_enabled WHERE class_id = $1 AND content_path = $2",
         [classId, contentPath]
       );
     }
-    res.json({ ok: true, path: contentPath, locked });
+    res.json({ ok: true, path: contentPath, enabled });
   }));
 
   router.get("/schools", asyncRoute(async (req, res) => {
