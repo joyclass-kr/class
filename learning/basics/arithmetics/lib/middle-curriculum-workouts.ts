@@ -139,7 +139,7 @@ const METHOD_PLANS: Record<MiddleCurriculumKind, string[]> = {
     "missing-leg",
     "rectangle-diagonal",
     "square-diagonal",
-    "coordinate-distance",
+    "solid-diagonal",
     "right-triangle-check",
     "isosceles-height",
     "composite-distance",
@@ -227,7 +227,7 @@ const METHOD_TITLES: Record<string, string> = {
   "missing-leg": "직각변의 길이",
   "rectangle-diagonal": "직사각형의 대각선",
   "square-diagonal": "정사각형의 대각선",
-  "coordinate-distance": "좌표평면의 두 점 사이 거리",
+  "solid-diagonal": "직육면체의 대각선",
   "right-triangle-check": "직각삼각형 판별",
   "isosceles-height": "이등변삼각형의 높이",
   "composite-distance": "피타고라스 정리의 활용",
@@ -863,6 +863,13 @@ const RIGHT_TRIPLES = [
   [7, 24, 25],
 ] as const;
 
+const BOX_QUADRUPLES = [
+  [1, 2, 2, 3],
+  [2, 3, 6, 7],
+  [3, 4, 12, 13],
+  [4, 4, 7, 9],
+] as const;
+
 function buildPythagorean(method: string, next: () => number, id: string, index: number) {
   const triple = RIGHT_TRIPLES[(index + integer(next, 0, RIGHT_TRIPLES.length - 1)) % RIGHT_TRIPLES.length];
   const scale = integer(next, 1, 3);
@@ -888,12 +895,11 @@ function buildPythagorean(method: string, next: () => number, id: string, index:
       "대각선²=한 변²+한 변²이므로 대각선은 한 변×√2이다.",
       [`${side * 2}`, `${side}\\sqrt{3}`, `${side ** 2}`, "\\sqrt{2}", `${side ** 2}\\sqrt{2}`]);
   }
-  if (method === "coordinate-distance") {
-    const x1 = integer(next, -5, 1);
-    const y1 = integer(next, -5, 1);
-    return make(id, method, `A(${x1},${y1}),\\quad B(${x1 + a},${y1 + b})`, `${c}`,
-      "x좌표 차와 y좌표 차를 직각변으로 하여 피타고라스 정리를 적용한다.",
-      [`${a + b}`, `${c ** 2}`, `${Math.abs(b - a)}`]);
+  if (method === "solid-diagonal") {
+    const [x, y, z, d] = BOX_QUADRUPLES[(index + integer(next, 0, BOX_QUADRUPLES.length - 1)) % BOX_QUADRUPLES.length];
+    return make(id, method, `\\text{직육면체의 가로 }${x},\\ \\text{세로 }${y},\\ \\text{높이 }${z}`, `${d}`,
+      "직육면체의 대각선은 밑면의 대각선과 높이를 직각변으로 하는 직각삼각형의 빗변이다.",
+      [`${x + y + z}`, `${d ** 2}`, `${d + 1}`]);
   }
   if (method === "right-triangle-check") {
     return make(id, method, `\\text{세 변의 길이 }${a},\\ ${b},\\ ${c}`, "\\text{직각삼각형}",

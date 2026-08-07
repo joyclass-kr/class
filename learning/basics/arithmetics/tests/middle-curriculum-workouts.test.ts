@@ -93,7 +93,7 @@ const EXPECTED_METHODS: Record<MiddleCurriculumKind, string[]> = {
   ],
   pythagorean: [
     "hypotenuse", "missing-leg", "rectangle-diagonal", "square-diagonal",
-    "coordinate-distance", "right-triangle-check", "isosceles-height", "composite-distance",
+    "solid-diagonal", "right-triangle-check", "isosceles-height", "composite-distance",
   ],
   "counting-probability": [
     "addition-rule", "multiplication-rule", "two-digit-numbers", "outfit-count",
