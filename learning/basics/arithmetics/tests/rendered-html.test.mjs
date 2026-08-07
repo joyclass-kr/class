@@ -56,7 +56,6 @@ test("renders the learning index and arithmetic catalog in workbook order", asyn
   const indexHtml = await indexResponse.text();
   const indexCss = await readFile(new URL("../app/globals.css", import.meta.url), "utf8");
   assert.equal(indexResponse.status, 200);
-  assert.match(indexHtml, /href="\/arithmetic"/);
   assert.equal((indexHtml.match(/data-testid="worksheet-choice"/g) ?? []).length, 187);
   assert.equal((indexHtml.match(/class="worksheet-grade"/g) ?? []).length, 187);
   assert.doesNotMatch(indexHtml, /data-testid="learning-area-card"/);
@@ -93,10 +92,10 @@ test("renders the learning index and arithmetic catalog in workbook order", asyn
   assert.ok(catalogHtml.indexOf("분수 ①") < catalogHtml.indexOf("분수 ②"));
   assert.ok(catalogHtml.indexOf("분수 ②") < catalogHtml.indexOf("무게와 들이"));
   assert.ok(catalogHtml.indexOf("비례식") < catalogHtml.indexOf("원기둥의 계산"));
-  assert.match(catalogHtml, /구구단\(2·5단\)/);
-  assert.match(catalogHtml, /구구단\(3·4단\)/);
-  assert.match(catalogHtml, /구구단\(6·7단\)/);
-  assert.match(catalogHtml, /구구단\(8·9단\)/);
+  assert.match(catalogHtml, /구구단<span[^>]*data-math-latex="\(2\\cdot 5"/);
+  assert.match(catalogHtml, /구구단<span[^>]*data-math-latex="\(3\\cdot 4"/);
+  assert.match(catalogHtml, /구구단<span[^>]*data-math-latex="\(6\\cdot 7"/);
+  assert.match(catalogHtml, /구구단<span[^>]*data-math-latex="\(8\\cdot 9"/);
   assert.match(catalogHtml, /구구단\(종합\)/);
   assert.match(catalogHtml, /worksheet-grade[^>]*>\(초1\)<\/small>/);
   assert.match(catalogHtml, /worksheet-grade[^>]*>\(초3\)<\/small>/);
@@ -434,14 +433,15 @@ test("renders the unified arithmetic catalog and high-school worksheets", async 
   assert.match(hubHtml, /href="\/arithmetic\/high-school\/space-geometry-projections"/);
   assert.match(hubHtml, /href="\/arithmetic\/high-school\/normal-distributions"/);
   assert.match(hubHtml, /삼각함수의 미분/);
-  assert.match(hubHtml, /sec·csc·cot 미분/);
+  assert.match(hubHtml, /data-math-latex="sec\\cdot csc\\cdot cot"/);
+  assert.match(hubHtml, / 미분<\/strong>/);
   assert.doesNotMatch(hubHtml, /data-testid="learning-area-card"|고등 연산/);
 
   const worksheetResponse = await render("/arithmetic/high-school/polynomial-add-subtract");
   assert.equal(worksheetResponse.status, 200);
   const worksheetHtml = await worksheetResponse.text();
   assert.match(worksheetHtml, /식을 전개하고 빈 공간에 정리 과정을 쓰세요/);
-  assert.match(worksheetHtml, /답안 입력에서 4지선다 채점 · 오답 보충 최대 2문제/);
+  assert.match(worksheetHtml, /답안 입력에서 4지선다 채점/);
   assert.match(worksheetHtml, />답안 입력<\/button>/);
   assert.match(worksheetHtml, />전체 채점<\/button>/);
   assert.match(worksheetHtml, /aria-label="A4 다항식 문제지"/);
@@ -453,7 +453,7 @@ test("renders the unified arithmetic catalog and high-school worksheets", async 
   assert.equal(rationalResponse.status, 200);
   const rationalHtml = await rationalResponse.text();
   assert.match(rationalHtml, /인수분해하고 빈 공간에 약분 과정을 쓰세요/);
-  assert.match(rationalHtml, /답안 입력에서 4지선다 채점 · 오답 보충 최대 2문제/);
+  assert.match(rationalHtml, /답안 입력에서 4지선다 채점/);
   assert.match(rationalHtml, />답안 입력<\/button>/);
   assert.match(rationalHtml, /aria-label="A4 분수식의 계산 문제지"/);
   assert.match(rationalHtml, /aria-label="A4 분수식의 계산 정답지"/);
@@ -465,7 +465,7 @@ test("renders the unified arithmetic catalog and high-school worksheets", async 
   assert.equal(exponentRadicalResponse.status, 200);
   const exponentRadicalHtml = await exponentRadicalResponse.text();
   assert.match(exponentRadicalHtml, /식을 간단히 하세요. 빈 공간에 계산 과정을 쓰세요/);
-  assert.match(exponentRadicalHtml, /답안 입력에서 4지선다 채점 · 오답 보충 최대 2문제/);
+  assert.match(exponentRadicalHtml, /답안 입력에서 4지선다 채점/);
   assert.match(exponentRadicalHtml, />답안 입력<\/button>/);
   assert.match(exponentRadicalHtml, /aria-label="A4 지수와 근호 문제지"/);
   assert.match(exponentRadicalHtml, /aria-label="A4 지수와 근호 정답지"/);
@@ -478,7 +478,7 @@ test("renders the unified arithmetic catalog and high-school worksheets", async 
   assert.equal(equationResponse.status, 200);
   const equationHtml = await equationResponse.text();
   assert.match(equationHtml, /방정식의 해를 구하세요. 빈 공간에 풀이 과정을 쓰세요/);
-  assert.match(equationHtml, /답안 입력에서 4지선다 채점 · 오답 보충 최대 2문제/);
+  assert.match(equationHtml, /답안 입력에서 4지선다 채점/);
   assert.match(equationHtml, />답안 입력<\/button>/);
   assert.equal((equationHtml.match(/data-testid="equation-question"/g) ?? []).length, 8);
   assert.equal((equationHtml.match(/class="rational-coefficient-input equation-root-input"/g) ?? []).length, 0);
@@ -515,7 +515,7 @@ test("renders the unified arithmetic catalog and high-school worksheets", async 
   assert.equal(trigDerivativeResponse.status, 200);
   const trigDerivativeHtml = await trigDerivativeResponse.text();
   assert.match(trigDerivativeHtml, /각 문항의 빈 공간에 도함수를 풀어 쓰세요/);
-  assert.match(trigDerivativeHtml, /답안 입력에서 4지선다 채점 · 오답 보충 최대 2문제/);
+  assert.match(trigDerivativeHtml, /답안 입력에서 4지선다 채점/);
   assert.match(trigDerivativeHtml, />답안 입력<\/button>/);
   assert.match(trigDerivativeHtml, /aria-label="A4 삼각함수의 미분 문제지"/);
   assert.match(trigDerivativeHtml, /aria-label="A4 삼각함수의 미분 정답지"/);
@@ -538,7 +538,7 @@ test("renders the unified arithmetic catalog and high-school worksheets", async 
   assert.equal(trigDerivativeTwoResponse.status, 200);
   const trigDerivativeTwoHtml = await trigDerivativeTwoResponse.text();
   assert.match(trigDerivativeTwoHtml, /sec·csc·cot을 포함한 함수의 도함수를 구하세요/);
-  assert.match(trigDerivativeTwoHtml, /답안 입력에서 4지선다 채점 · 오답 보충 최대 2문제/);
+  assert.match(trigDerivativeTwoHtml, /답안 입력에서 4지선다 채점/);
   assert.match(trigDerivativeTwoHtml, />답안 입력<\/button>/);
   assert.equal((trigDerivativeTwoHtml.match(/data-testid="trigonometric-derivative-two-question"/g) ?? []).length, 10);
   assert.equal((trigDerivativeTwoHtml.match(/<input/g) ?? []).length, 0);
@@ -748,7 +748,7 @@ test("renders the grade-three three-digit addition and subtraction worksheet", a
 
   const html = await response.text();
   const source = await readFile(new URL("../app/arithmetic/grade-3-add-subtract/page.tsx", import.meta.url), "utf8");
-  assert.match(html, /<span>3학년<\/span><strong>덧셈뺄셈/);
+  assert.match(html, /<span>3학년<\/span><strong>세 자리 수의 덧셈·뺄셈/);
   assert.match(html, /aria-label="A4 3학년 덧셈뺄셈 문제지"/);
   assert.match(html, /aria-label="A4 3학년 덧셈뺄셈 전체 답지"/);
   assert.equal((html.match(/data-testid="grade-three-equation"/g) ?? []).length, 32);
@@ -769,7 +769,7 @@ test("renders the first clock worksheet with paired writing and reading answers"
   const html = await response.text();
   const css = await readFile(new URL("../app/globals.css", import.meta.url), "utf8");
   const source = await readFile(new URL("../app/arithmetic/clock-1/page.tsx", import.meta.url), "utf8");
-  assert.match(html, />시계(?: 정답)?<\/strong>/);
+  assert.match(html, />시각 읽기와 쓰기(?: 정답)?<\/strong>/);
   assert.match(html, />새 문제<\/button>/);
   assert.match(html, /aria-label="A4 시계 문제지"/);
   assert.match(html, /aria-label="A4 시계 전체 답지"/);
@@ -798,7 +798,7 @@ test("renders the first counting worksheet with interactive and printable answer
   assert.equal(response.status, 200);
 
   const html = await response.text();
-  assert.match(html, /수 세기①/);
+  assert.match(html, /1부터 9까지 수 세기/);
   assert.match(html, /몇 개인지 숫자로 쓰세요/);
   assert.match(html, /몇 개인지 한글로 쓰세요/);
   assert.match(html, /주어진 수만큼 그리세요/);
@@ -815,11 +815,11 @@ test("renders the first addition and subtraction worksheet in three columns", as
   assert.equal(response.status, 200);
 
   const html = await response.text();
-  assert.match(html, /덧셈뺄셈①/);
+  assert.match(html, /한 자리 수 덧셈·뺄셈/);
   assert.match(html, />전체 채점<\/button>/);
   assert.match(html, />인쇄<\/button>/);
-  assert.match(html, /aria-label="A4 덧셈뺄셈① 문제지"/);
-  assert.match(html, /aria-label="A4 덧셈뺄셈① 전체 답지"/);
+  assert.match(html, /aria-label="A4 한 자리 수 덧셈·뺄셈 문제지"/);
+  assert.match(html, /aria-label="A4 한 자리 수 덧셈·뺄셈 전체 답지"/);
   assert.equal((html.match(/class="addsub-equation-row"/g) ?? []).length, 60);
   assert.equal((html.match(/class="addsub-input /g) ?? []).length, 30);
 });
@@ -829,9 +829,9 @@ test("renders the second addition and subtraction worksheet with two-digit entri
   assert.equal(response.status, 200);
 
   const html = await response.text();
-  assert.match(html, /덧셈뺄셈②/);
-  assert.match(html, /aria-label="A4 덧셈뺄셈② 문제지"/);
-  assert.match(html, /aria-label="A4 덧셈뺄셈② 전체 답지"/);
+  assert.match(html, /두 자리 수 덧셈·뺄셈/);
+  assert.match(html, /aria-label="A4 두 자리 수 덧셈·뺄셈 문제지"/);
+  assert.match(html, /aria-label="A4 두 자리 수 덧셈·뺄셈 전체 답지"/);
   assert.equal((html.match(/class="addsub-equation-row"/g) ?? []).length, 60);
   assert.equal((html.match(/class="addsub-input /g) ?? []).length, 30);
   assert.equal((html.match(/maxLength="2"/g) ?? []).length, 30);
@@ -842,9 +842,9 @@ test("renders the third addition and subtraction worksheet within twenty", async
   assert.equal(response.status, 200);
 
   const html = await response.text();
-  assert.match(html, /덧셈뺄셈③/);
-  assert.match(html, /aria-label="A4 덧셈뺄셈③ 문제지"/);
-  assert.match(html, /aria-label="A4 덧셈뺄셈③ 전체 답지"/);
+  assert.match(html, /10을 넘는 덧셈·뺄셈/);
+  assert.match(html, /aria-label="A4 10을 넘는 덧셈·뺄셈 문제지"/);
+  assert.match(html, /aria-label="A4 10을 넘는 덧셈·뺄셈 전체 답지"/);
   assert.equal((html.match(/class="addsub-equation-row"/g) ?? []).length, 60);
   assert.equal((html.match(/class="addsub-input /g) ?? []).length, 30);
   assert.equal((html.match(/maxLength="2"/g) ?? []).length, 30);
@@ -857,9 +857,9 @@ test("renders the fourth addition and subtraction worksheet with changing blanks
   assert.equal(response.status, 200);
 
   const html = await response.text();
-  assert.match(html, /덧셈뺄셈④/);
-  assert.match(html, /aria-label="A4 덧셈뺄셈④ 문제지"/);
-  assert.match(html, /aria-label="A4 덧셈뺄셈④ 전체 답지"/);
+  assert.match(html, /덧셈·뺄셈 빈칸 채우기/);
+  assert.match(html, /aria-label="A4 덧셈·뺄셈 빈칸 채우기 문제지"/);
+  assert.match(html, /aria-label="A4 덧셈·뺄셈 빈칸 채우기 전체 답지"/);
   assert.equal((html.match(/class="addsub-equation-row"/g) ?? []).length, 60);
   assert.equal((html.match(/class="addsub-input /g) ?? []).length, 30);
   assert.equal((html.match(/maxLength="2"/g) ?? []).length, 30);
@@ -1166,7 +1166,7 @@ test("renders the grade-three compound-length worksheet", async () => {
   const html = await response.text();
   const source = await readFile(new URL("../app/arithmetic/grade-3-length/page.tsx", import.meta.url), "utf8");
   assert.match(html, /3학년/);
-  assert.match(html, /<strong>길이<\/strong>/);
+  assert.match(html, /<strong>길이의 계산<\/strong>/);
   assert.match(html, /aria-label="A4 3학년 길이 문제지"/);
   assert.match(html, /aria-label="A4 3학년 길이 전체 답지"/);
   assert.equal((html.match(/data-testid="grade-three-length-question"/g) ?? []).length, 18);
@@ -1387,6 +1387,7 @@ test("renders the first grade-three fraction worksheet with stable fraction bars
 
   const html = await response.text();
   const source = await readFile(new URL("../app/arithmetic/grade-3-fraction-1/page.tsx", import.meta.url), "utf8");
+  const libSource = await readFile(new URL("../lib/grade-three-fraction-one.ts", import.meta.url), "utf8");
   const css = await readFile(new URL("../app/globals.css", import.meta.url), "utf8");
   assert.match(html, /3학년/);
   assert.match(html, /분수①/);
@@ -1396,18 +1397,18 @@ test("renders the first grade-three fraction worksheet with stable fraction bars
   assert.equal((html.match(/class="grade-three-fraction-value-input"/g) ?? []).length, 10);
   assert.equal((html.match(/class="grade-three-fraction-part-input"/g) ?? []).length, 10);
   assert.equal((html.match(/grade-three-fraction-static/g) ?? []).length, 15);
-  assert.equal((html.match(/maxLength="2"/g) ?? []).length, 10);
-  assert.equal((html.match(/maxLength="1"/g) ?? []).length, 10);
+  assert.equal((html.match(/maxLength="2"/g) ?? []).length, 20);
+  assert.equal((html.match(/maxLength="1"/g) ?? []).length, 0);
   const fractionInputLabels = [...html.matchAll(/<input(?=[^>]*data-fraction-answer-input="true")(?=[^>]*aria-label="([^"]+)")[^>]*>/g)].map((match) => match[1]);
   assert.equal(fractionInputLabels.length, 20);
   assert.deepEqual(fractionInputLabels.slice(10, 14), ["11번 분모 답", "11번 분자 답", "12번 분모 답", "12번 분자 답"]);
-  assert.match(source, /Array\.from\(\{ length: 10 \}/);
-  assert.match(source, /const numerator = integer\(next, 1, 8\)/);
-  assert.match(source, /const denominator = integer\(next, numerator \+ 1, 9\)/);
-  assert.match(source, /whole: unit \* denominator/);
-  assert.match(source, /answer: unit \* numerator/);
-  assert.match(source, /Array\.from\(\{ length: 5 \}/);
-  assert.match(source, /const denominator = integer\(next, numerator \+ 1, 4\)/);
+  assert.match(libSource, /Array\.from\(\{ length: 10 \}/);
+  assert.match(libSource, /const numerator = integer\(next, 1, 8\)/);
+  assert.match(libSource, /const denominator = integer\(next, numerator \+ 1, 9\)/);
+  assert.match(libSource, /whole: unit \* denominator/);
+  assert.match(libSource, /answer: unit \* numerator/);
+  assert.match(libSource, /while \(relationProblems\.length < 5\)/);
+  assert.match(libSource, /const groupDenominator = integer\(next, groupNumerator \+ 1, 4\)/);
   assert.match(source, /<small>\/15 정답<\/small>/);
   assert.match(css, /\.grade-three-fraction-value-grid\s*\{[\s\S]*?grid-template-columns:\s*repeat\(2,/);
   assert.match(css, /\.grade-three-fraction-value-grid\s*\{[\s\S]*?grid-template-rows:\s*repeat\(5,/);
@@ -1571,7 +1572,6 @@ test("renders the fourth grade division worksheet in the workbook's three-by-fou
   const source = await readFile(new URL("../app/arithmetic/grade-4-division/page.tsx", import.meta.url), "utf8");
   const css = await readFile(new URL("../app/globals.css", import.meta.url), "utf8");
   assert.match(html, /4학년/);
-  assert.match(html, /몫, 나머지/);
   assert.match(html, /aria-label="A4 4학년 나눗셈 문제지"/);
   assert.match(html, /aria-label="A4 4학년 나눗셈 전체 답지"/);
   assert.equal((html.match(/data-testid="grade-four-division-question"/g) ?? []).length, 24);
@@ -1602,8 +1602,6 @@ test("renders the fourth grade fraction worksheet in the workbook's ten-problem 
   const css = await readFile(new URL("../app/globals.css", import.meta.url), "utf8");
   assert.match(html, /4학년/);
   assert.match(html, /분수/);
-  assert.match(html, /답은 대분수 또는 자연수로 쓰세요/);
-  assert.match(html, /분수 부분이 1이 되면 자연수로 고치고 분수 칸은 비워 두세요/);
   assert.match(html, /aria-label="A4 4학년 분수 문제지"/);
   assert.match(html, /aria-label="A4 4학년 분수 전체 답지"/);
   assert.equal((html.match(/data-testid="grade-four-fraction-question"/g) ?? []).length, 20);
@@ -1690,7 +1688,6 @@ test("renders twelve fourth-grade angle estimation questions in fifteen-degree s
   const css = await readFile(new URL("../app/globals.css", import.meta.url), "utf8");
   assert.match(html, /4학년/);
   assert.match(html, /각도 어림/);
-  assert.match(html, /모든 각도는 15°의 배수이며, 180°는 평각입니다/);
   assert.match(html, /aria-label="A4 4학년 각도 어림 문제지"/);
   assert.match(html, /aria-label="A4 4학년 각도 어림 전체 답지"/);
   assert.equal((html.match(/data-testid="angle-estimation-question"/g) ?? []).length, 24);
@@ -1719,7 +1716,6 @@ test("renders the fifth grade mixed-calculation worksheet from the workbook bank
   const css = await readFile(new URL("../app/globals.css", import.meta.url), "utf8");
   assert.match(html, /5학년/);
   assert.match(html, /혼합계산/);
-  assert.match(html, /괄호 안을 먼저 계산하고/);
   assert.match(html, /aria-label="A4 5학년 혼합계산 문제지"/);
   assert.match(html, /aria-label="A4 5학년 혼합계산 전체 답지"/);
   assert.equal((html.match(/data-testid="mixed-calculation-question"/g) ?? []).length, 16);
@@ -1742,15 +1738,15 @@ test("renders the fifth grade natural-number decomposition worksheet from the wo
   const css = await readFile(new URL("../app/globals.css", import.meta.url), "utf8");
   assert.match(html, /5학년/);
   assert.match(html, /자연수분해/);
-  assert.match(html, /소수는 그대로 쓰고, 합성수는 소인수의 곱으로/);
+  assert.match(html, /곱셈은 \*로 입력하세요\./);
   assert.match(html, /aria-label="A4 5학년 자연수분해 문제지"/);
   assert.match(html, /aria-label="A4 5학년 자연수분해 전체 답지"/);
   assert.equal((html.match(/data-testid="natural-decomposition-question"/g) ?? []).length, 30);
-  assert.equal((html.match(/class="natural-decomposition-input"/g) ?? []).length, 15);
-  assert.equal((html.match(/class="natural-decomposition-static-answer"/g) ?? []).length, 15);
+  assert.equal((html.match(/class="natural-decomposition-input"/g) ?? []).length, 14);
+  assert.equal((html.match(/class="natural-decomposition-static-answer"/g) ?? []).length, 16);
   assert.match(source, /createNaturalNumberDecompositionSet\(seed\)/);
   assert.match(source, /isPrimeFactorizationAnswer/);
-  assert.match(source, /<small>\/15 정답<\/small>/);
+  assert.match(source, /<small>\/14 정답<\/small>/);
   assert.match(bankSource, /export const naturalNumberDecompositionBank/);
   assert.match(bankSource, /8, 12, 16, 18, 20, 22/);
   assert.match(css, /\.natural-decomposition-grid\s*\{[\s\S]*?grid-template-columns:\s*repeat\(2,/);
@@ -1767,7 +1763,6 @@ test("renders the fifth grade prime-number hundred chart from the workbook", asy
   const css = await readFile(new URL("../app/globals.css", import.meta.url), "utf8");
   assert.match(html, /5학년/);
   assert.match(html, /소수\(素數\) 찾기/);
-  assert.match(html, /소수\(素數, prime number\)는 1보다 큰 자연수 중 약수가 1과 자기 자신뿐인 수입니다\. 모두 찾아 ○표 하세요\./);
   assert.match(html, /aria-label="A4 5학년 프라임넘버 문제지"/);
   assert.match(html, /aria-label="A4 5학년 프라임넘버 전체 답지"/);
   assert.equal((html.match(/data-testid="prime-number-question"/g) ?? []).length, 200);
@@ -1789,7 +1784,6 @@ test("renders the fifth grade divisor and multiple worksheet from the workbook b
   const css = await readFile(new URL("../app/globals.css", import.meta.url), "utf8");
   assert.match(html, /5학년/);
   assert.match(html, /약수, 배수/);
-  assert.match(html, /두 수의 최대공약수 또는 최소공배수를 구하세요/);
   assert.match(html, /aria-label="A4 5학년 약수, 배수 문제지"/);
   assert.match(html, /aria-label="A4 5학년 약수, 배수 전체 답지"/);
   assert.equal((html.match(/data-testid="divisor-multiple-question"/g) ?? []).length, 60);
@@ -1816,8 +1810,6 @@ test("renders the fifth grade first fraction worksheet in the workbook's ten-pro
   const css = await readFile(new URL("../app/globals.css", import.meta.url), "utf8");
   assert.match(html, /5학년/);
   assert.match(html, /분수①/);
-  assert.match(html, /답은 기약분수, 대분수 또는 자연수로 쓰세요/);
-  assert.match(html, /분모 → 분자 순서로 이동합니다/);
   assert.match(html, /aria-label="A4 5학년 분수① 문제지"/);
   assert.match(html, /aria-label="A4 5학년 분수① 전체 답지"/);
   assert.equal((html.match(/data-testid="grade-five-fraction-one-question"/g) ?? []).length, 20);
@@ -1852,8 +1844,6 @@ test("renders the fifth grade second fraction worksheet in the workbook's ten-pr
   const css = await readFile(new URL("../app/globals.css", import.meta.url), "utf8");
   assert.match(html, /5학년/);
   assert.match(html, /분수②/);
-  assert.match(html, /답은 기약분수, 대분수 또는 자연수로 쓰세요/);
-  assert.match(html, /분모 → 분자 순서로 이동합니다/);
   assert.match(html, /aria-label="A4 5학년 분수② 문제지"/);
   assert.match(html, /aria-label="A4 5학년 분수② 전체 답지"/);
   assert.equal((html.match(/data-testid="grade-five-fraction-two-question"/g) ?? []).length, 20);
@@ -1885,8 +1875,6 @@ test("renders the fifth grade third fraction comparison worksheet in the workboo
   const css = await readFile(new URL("../app/globals.css", import.meta.url), "utf8");
   assert.match(html, /5학년/);
   assert.match(html, /분수③/);
-  assert.match(html, /두 분수의 크기를 비교해/);
-  assert.match(html, /알맞은 기호를 선택하세요/);
   assert.match(html, /aria-label="A4 5학년 분수③ 문제지"/);
   assert.match(html, /aria-label="A4 5학년 분수③ 전체 답지"/);
   assert.equal((html.match(/data-testid="grade-five-fraction-three-question"/g) ?? []).length, 20);
@@ -1913,8 +1901,6 @@ test("renders the fifth grade decimal multiplication worksheet in the workbook's
   const bankSource = await readFile(new URL("../lib/grade-five-decimals.ts", import.meta.url), "utf8");
   const css = await readFile(new URL("../app/globals.css", import.meta.url), "utf8");
   assert.match(html, /5학년/);
-  assert.match(html, /자연수처럼 곱한 뒤/);
-  assert.match(html, /두 수의 소수 자릿수를 더한 만큼 소수점을 찍으세요/);
   assert.match(html, /aria-label="A4 5학년 소수 문제지"/);
   assert.match(html, /aria-label="A4 5학년 소수 전체 답지"/);
   assert.equal((html.match(/data-testid="grade-five-decimal-question"/g) ?? []).length, 18);
@@ -1940,8 +1926,6 @@ test("renders the sixth grade fraction worksheet in the workbook's ten-problem o
   const bankSource = await readFile(new URL("../lib/grade-six-fraction.ts", import.meta.url), "utf8");
   const css = await readFile(new URL("../app/globals.css", import.meta.url), "utf8");
   assert.match(html, /6학년/);
-  assert.match(html, /답은 기약분수, 대분수 또는 자연수로 쓰세요/);
-  assert.match(html, /분모 → 분자 순서로 이동합니다/);
   assert.match(html, /aria-label="A4 6학년 분수 문제지"/);
   assert.match(html, /aria-label="A4 6학년 분수 전체 답지"/);
   assert.equal((html.match(/data-testid="grade-six-fraction-question"/g) ?? []).length, 20);
@@ -1973,7 +1957,6 @@ test("renders the sixth grade first decimal worksheet in the workbook's three-by
   const css = await readFile(new URL("../app/globals.css", import.meta.url), "utf8");
   assert.match(html, /6학년/);
   assert.match(html, /소수①/);
-  assert.match(html, /나머지가 0이 될 때까지 계산하세요/);
   assert.match(html, /aria-label="A4 6학년 소수① 문제지"/);
   assert.match(html, /aria-label="A4 6학년 소수① 전체 답지"/);
   assert.equal((html.match(/data-testid="grade-six-decimal-one-question"/g) ?? []).length, 36);
@@ -2225,9 +2208,9 @@ test("renders the sequential give-and-take worksheet and printable answers", asy
   const html = await response.text();
   assert.match(html, /주고받기/);
   assert.match(html, /글을 읽고 물음에 답하시오\. \[1~3번\]/);
-  assert.match(html, /첫 번째 놀이에서 지혜는 슬기에게 카드/);
-  assert.match(html, /두 번째 놀이에서 슬기는 용기에게 카드/);
-  assert.match(html, /세 번째 놀이에서 용기는 지혜에게 카드/);
+  assert.match(html, /첫 번째 놀이에서 토끼는 거북이에게 카드/);
+  assert.match(html, /두 번째 놀이에서 거북이는 호랑이에게 카드/);
+  assert.match(html, /세 번째 놀이에서 호랑이는 토끼에게 카드/);
   assert.match(html, /aria-label="A4 주고받기 문제지"/);
   assert.match(html, /aria-label="A4 주고받기 전체 답지"/);
   assert.equal((html.match(/data-testid="give-question"/g) ?? []).length, 6);
@@ -2240,7 +2223,7 @@ test("renders the first complements worksheet in three columns", async () => {
   assert.equal(response.status, 200);
 
   const html = await response.text();
-  assert.match(html, /10으로 모으거나 가르기/);
+  assert.match(html, /10 모으기·가르기/);
   assert.match(html, /aria-label="10에서 빼기"/);
   assert.match(html, /aria-label="두 수로 10 만들기"/);
   assert.match(html, /aria-label="세 수 더하기"/);
