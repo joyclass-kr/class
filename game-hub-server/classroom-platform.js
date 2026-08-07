@@ -1298,18 +1298,27 @@ function createClassroomPlatform(options = {}) {
       }
       return res.json({ signedIn: false, configured: true });
     }
-    const membership = (user.role === "student" || user.role === "user") ? await studentMembership(user.id) : null;
+    // A Google account's stored role is a single priority slot (admin beats
+    // teacher beats everything else), but one person can genuinely hold
+    // several of these positions at once (e.g. the site admin is also a
+    // school's homeroom teacher). Membership/teacher checks below run
+    // unconditionally so the profile picker can offer every role the account
+    // actually holds, not just the highest-priority one.
+    const membership = await studentMembership(user.id);
     if (membership && user.role === "user") {
       user.role = "student";
     }
     const guardianChildren = await getGuardianChildren(user);
+    const teacherRow = await pool.query("SELECT 1 FROM classroom_teachers WHERE user_id = $1 LIMIT 1", [user.id]);
+    const isTeacher = teacherRow.rowCount > 0;
 
     return res.json({
       signedIn: true,
       configured: current.enabled,
       user: publicUser(user),
       membership,
-      guardianChildren
+      guardianChildren,
+      isTeacher
     });
   }));
 
@@ -1899,7 +1908,7 @@ function createClassroomPlatform(options = {}) {
     setSessionCookie(res, sessionToken);
     const membership = (user.role === "student" || user.role === "user" || isStudent) ? await studentMembership(user.id) : null;
     const guardianChildren = await getGuardianChildren(user);
-    return res.json({ ok: true, user: publicUser(user), membership, guardianChildren });
+    return res.json({ ok: true, user: publicUser(user), membership, guardianChildren, isTeacher });
   }));
 
   router.post("/auth/logout", asyncRoute(async (req, res) => {
@@ -2240,6 +2249,60 @@ function createClassroomPlatform(options = {}) {
     res.json({ ok: true });
   }));
 
+  // Sets only the school's single "관리자" (master admin) teacher row.
+  // Deliberately separate from PUT .../teachers/roster, which replaces the
+  // whole roster and deletes any teacher left out of the submitted list --
+  // that endpoint must never be used to change just one field.
+  router.put("/admin/schools/:schoolId/master-email", asyncRoute(async (req, res) => {
+    await requireAdmin(req);
+    const schoolId = Number(req.params.schoolId);
+    if (!Number.isInteger(schoolId) || schoolId < 1) {
+      throw new HttpError(400, "INVALID_SCHOOL", "Check the school ID.");
+    }
+    const email = normalizeEmail(req.body?.email);
+    if (!email || !email.includes("@")) {
+      throw new HttpError(400, "INVALID_TEACHER_EMAIL", "올바른 구글 이메일 주소를 입력하세요.");
+    }
+
+    const schoolCheck = await pool.query("SELECT 1 FROM classroom_schools WHERE id = $1", [schoolId]);
+    if (schoolCheck.rowCount === 0) {
+      throw new HttpError(404, "SCHOOL_NOT_FOUND", "School not found.");
+    }
+
+    const existing = await pool.query(
+      `SELECT id FROM classroom_teachers
+       WHERE school_id = $1
+         AND (teacher_type IN ('관리자', '교장', '교감') OR teacher_name IN ('학교관리자', '학교 관리자', '관리자'))
+       LIMIT 1`,
+      [schoolId]
+    );
+
+    const conflict = await pool.query(
+      `SELECT id FROM classroom_teachers WHERE LOWER(google_email) = LOWER($1) AND id != $2`,
+      [email, existing.rows[0]?.id || -1]
+    );
+    if (conflict.rows[0]) {
+      throw new HttpError(400, "DUPLICATE_EMAIL", "이미 다른 교사가 사용 중인 이메일입니다.");
+    }
+
+    if (existing.rows[0]) {
+      await pool.query(
+        `UPDATE classroom_teachers
+         SET google_email = $1, teacher_type = '관리자', teacher_name = '학교 관리자', updated_at = NOW()
+         WHERE id = $2`,
+        [email, existing.rows[0].id]
+      );
+    } else {
+      await pool.query(
+        `INSERT INTO classroom_teachers
+           (school_id, teacher_name, password_hash, academic_year, grade, class_number, teacher_type, google_email)
+         VALUES ($1, '학교 관리자', 'OAUTH_ONLY', NULL, NULL, NULL, '관리자', $2)`,
+        [schoolId, email]
+      );
+    }
+    res.json({ ok: true, email });
+  }));
+
   router.post("/admin/schools/:schoolId/teachers", asyncRoute(async (req, res) => {
     await requireAdmin(req);
     const schoolId = Number(req.params.schoolId);
@@ -2449,10 +2512,11 @@ function createClassroomPlatform(options = {}) {
   }));
 
   router.get("/teacher/profile", asyncRoute(async (req, res) => {
+    // Deliberately not gated on user.role: a Google account's role is a
+    // single priority slot (admin/teacher can't both show there), but the
+    // same person can be a registered teacher in classroom_teachers
+    // regardless of what their top-level role says. Look the row up directly.
     const user = await requireUser(req);
-    if (user.role === "admin" || user.role === "student") {
-      throw new HttpError(403, "TEACHER_REQUIRED", "This page is for teachers only.");
-    }
     const result = await pool.query(
       `SELECT t.id, t.teacher_name, t.active, t.academic_year, t.grade, t.class_number, t.teacher_type,
               sc.enabled AS school_enabled,

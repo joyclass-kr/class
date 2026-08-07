@@ -1234,9 +1234,12 @@
                 const profileList = document.getElementById('profileList');
                 profileList.innerHTML = '';
                 
-                // Fetch teacher profile to get teacherType and schoolName
+                // Fetch teacher profile to get teacherType and schoolName. Not gated on
+                // state.user.role: role is a single priority slot (admin beats teacher),
+                // so an account can be registered as a teacher even while its top-level
+                // role says 'admin'. state.isTeacher reflects the real registration.
                 let teacherProfileData = null;
-                if (state.user?.role === 'teacher') {
+                if (state.user?.role === 'teacher' || state.isTeacher) {
                     const res = await api('/api/teacher/profile').catch(() => null);
                     teacherProfileData = res?.profile;
                 }
@@ -1251,7 +1254,7 @@
                 }
 
                 // 2. School Admin (Principal / Vice Principal) or Teacher
-                if (state.user?.role === 'teacher' && teacherProfileData) {
+                if (teacherProfileData) {
                     const btn = document.createElement('a');
                     const isSchoolAdmin = ['관리자', '교장', '교감'].includes(teacherProfileData.teacherType);
                     btn.className = isSchoolAdmin ? 'profile-btn school-admin' : 'profile-btn teacher';

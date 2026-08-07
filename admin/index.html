@@ -440,17 +440,12 @@
                     setStatus("올바른 구글 이메일 주소를 입력하세요.", true);
                     return;
                 }
-                const teachers = [{
-                    type: "관리자",
-                    name: "학교 관리자",
-                    email
-                }];
                 try {
                     saveMasterEmailButton.disabled = true;
                     saveMasterEmailButton.textContent = "저장 중...";
-                    await api(`/api/admin/schools/${school.id}/teachers/roster`, {
+                    await api(`/api/admin/schools/${school.id}/master-email`, {
                         method: "PUT",
-                        body: JSON.stringify({ teachers })
+                        body: JSON.stringify({ email })
                     });
                     await loadSchools(school.id);
                     setStatus(`'${school.name}'의 학교 마스터 관리자가 설정되었습니다: ${email}`);
