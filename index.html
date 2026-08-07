@@ -1246,7 +1246,7 @@
                     const btn = document.createElement('a');
                     btn.className = 'profile-btn admin';
                     btn.href = '/admin/';
-                    btn.innerHTML = `<span class="profile-title">${state.user.name}</span><span class="profile-desc">🛠️ 관리자 · 사이트 전체 관리 계정</span>`;
+                    btn.innerHTML = `<span class="profile-title">🛠️ ${state.user.name}</span><span class="profile-desc">관리자 · 사이트 전체 관리 계정</span>`;
                     profileList.appendChild(btn);
                 }
 
@@ -1259,7 +1259,7 @@
                     
                     const roleLabel = isSchoolAdmin ? '학교 관리자 계정' : '교직원 계정';
                     const icon = isSchoolAdmin ? '🏫' : '👨‍🏫';
-                    btn.innerHTML = `<span class="profile-title">${teacherProfileData.name}</span><span class="profile-desc">${icon} ${teacherProfileData.schoolName} · ${roleLabel}</span>`;
+                    btn.innerHTML = `<span class="profile-title">${icon} ${teacherProfileData.name}</span><span class="profile-desc">${teacherProfileData.schoolName} · ${roleLabel}</span>`;
                     profileList.appendChild(btn);
                     
                     // Also set up logic that showTeacherHome used to do
@@ -1284,7 +1284,7 @@
                     const gradeClassLabel = (m?.grade && m?.classNumber) ? `${m.grade}학년 ${m.classNumber}반 ${m.studentNumber}번 ` : '';
                     const studentName = m?.studentName || state.user?.displayName || state.user?.name || '학생';
                     
-                    btn.innerHTML = `<span class="profile-title">${studentName}</span><span class="profile-desc">🎓 ${schoolLabel} ${gradeClassLabel}학생 계정</span>`;
+                    btn.innerHTML = `<span class="profile-title">🎓 ${studentName}</span><span class="profile-desc">${schoolLabel} ${gradeClassLabel}학생 계정</span>`;
                     profileList.appendChild(btn);
 
                     const studentPlayerName = studentName;
@@ -1303,7 +1303,7 @@
                         const btn = document.createElement('a');
                         btn.className = 'profile-btn guardian';
                         btn.href = '/notice/';
-                        btn.innerHTML = `<span class="profile-title">${child.studentName}</span><span class="profile-desc">📱 ${child.schoolName} · 보호자 계정</span>`;
+                        btn.innerHTML = `<span class="profile-title">📱 ${child.studentName}</span><span class="profile-desc">${child.schoolName} · 보호자 계정</span>`;
                         profileList.appendChild(btn);
                     });
                 }
@@ -1316,8 +1316,8 @@
                     card.className = 'profile-btn player';
                     card.style.cssText = 'cursor:default; background: rgba(255,255,255,0.06); border: 1px solid rgba(255,255,255,0.15); border-radius: 12px; padding: 16px; margin-bottom: 12px;';
                     card.innerHTML = `
-                        <span class="profile-title" style="display:block; font-weight:700; font-size:16px; color:#fff;">${guestName}</span>
-                        <span class="profile-desc" style="display:block; font-size:13px; color:rgba(255,255,255,0.7); margin-top:4px;">🎮 게스트 플레이어 모드가 활성화되었습니다</span>
+                        <span class="profile-title" style="display:block; font-weight:700; font-size:16px; color:#fff;">🎮 ${guestName}</span>
+                        <span class="profile-desc" style="display:block; font-size:13px; color:rgba(255,255,255,0.7); margin-top:4px;">게스트 플레이어 모드가 활성화되었습니다</span>
                     `;
                     profileList.appendChild(card);
                     currentPlayerName = guestName;
@@ -1332,7 +1332,7 @@
                     btn.className = 'profile-btn student';
                     btn.href = '/classboard/';
                     const uName = state.user.name || state.user.displayName || '학생';
-                    btn.innerHTML = `<span class="profile-title">${uName}</span><span class="profile-desc">🎓 학생 계정</span>`;
+                    btn.innerHTML = `<span class="profile-title">🎓 ${uName}</span><span class="profile-desc">학생 계정</span>`;
                     profileList.appendChild(btn);
                     setHubLocked(false);
                 }
@@ -1575,8 +1575,8 @@
                     if (profileList) {
                         profileList.innerHTML = `
                             <div class="profile-btn player" style="cursor:default; background: rgba(255,255,255,0.06); border: 1px solid rgba(255,255,255,0.15); border-radius: 12px; padding: 16px; margin-bottom: 12px;">
-                                <span class="profile-title" style="display:block; font-weight:700; font-size:16px; color:#fff;">${guest.name}</span>
-                                <span class="profile-desc" style="display:block; font-size:13px; color:rgba(255,255,255,0.7); margin-top:4px;">🎮 게스트 플레이어 모드가 활성화되었습니다</span>
+                                <span class="profile-title" style="display:block; font-weight:700; font-size:16px; color:#fff;">🎮 ${guest.name}</span>
+                                <span class="profile-desc" style="display:block; font-size:13px; color:rgba(255,255,255,0.7); margin-top:4px;">게스트 플레이어 모드가 활성화되었습니다</span>
                             </div>
                         `;
                     }
