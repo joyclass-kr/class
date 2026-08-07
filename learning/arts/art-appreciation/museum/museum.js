@@ -347,6 +347,7 @@
   }
 
   function renderFinaleQuestion() {
+    let missedThisQuestion=false;
     const item=finaleQuizQuestions[finaleQuizIndex];
     finaleQuestionWrap.hidden=false;finaleComplete.hidden=true;finaleNext.hidden=true;
     finaleArtwork.hidden=!item.image;
@@ -360,9 +361,9 @@
     finaleOptions.replaceChildren(...item.options.map((label,index)=>{
       const button=document.createElement('button');button.type='button';button.className='finale-option';button.dataset.letter=String.fromCharCode(65+index);button.textContent=label;
       button.addEventListener('click',()=>{
-        if(index!==item.answer){button.classList.add('wrong');button.disabled=true;finaleFeedback.textContent='다시 생각하고 다른 답을 골라보세요.';return;}
+        if(index!==item.answer){missedThisQuestion=true;button.classList.add('wrong');button.disabled=true;finaleFeedback.textContent='다시 생각하고 다른 답을 골라보세요.';return;}
         [...finaleOptions.children].forEach(option=>option.disabled=true);
-        button.classList.add('correct');finaleQuizCorrect++;finaleFeedback.textContent=item.explain;finaleFeedback.classList.add('correct');window.ClassGameSfx?.play('card');
+        button.classList.add('correct');if(!missedThisQuestion){finaleQuizCorrect++;}finaleFeedback.textContent=item.explain;finaleFeedback.classList.add('correct');window.ClassGameSfx?.play('card');
         finaleNext.hidden=false;
       });return button;
     }));

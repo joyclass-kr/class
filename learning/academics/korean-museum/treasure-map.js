@@ -16,6 +16,7 @@
   let quizSessionIndex = 0;
   let quizSessionScore = 0;
   let quizSessionAnswered = false;
+  let quizSessionQuestionHadWrong = false;
   let quizSessionScope = 'all';
   let quizSessionLevel = 'mixed';
 
@@ -906,6 +907,7 @@
     );
 
     quizSessionAnswered = false;
+    quizSessionQuestionHadWrong = false;
     quizSessionEra.hidden = false;
     quizSessionEra.textContent = relic.quizKind === '추론'
       ? '유물·유적 자료 분석 · 추론형'
@@ -940,6 +942,7 @@
   function answerQuizSession(selectedButton, isCorrect, relic) {
     if (quizSessionAnswered) return;
     if (!isCorrect) {
+      quizSessionQuestionHadWrong = true;
       selectedButton.classList.add('wrong');
       selectedButton.disabled = true;
       quizSessionFeedback.textContent = '다시 생각하고 다른 답을 골라보세요.';
@@ -948,7 +951,7 @@
       return;
     }
     quizSessionAnswered = true;
-    if (isCorrect) quizSessionScore += 1;
+    if (!quizSessionQuestionHadWrong) quizSessionScore += 1;
 
     quizSessionOptions.querySelectorAll('.quiz-opt-btn').forEach(button => {
       button.disabled = true;

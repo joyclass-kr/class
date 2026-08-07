@@ -162,6 +162,7 @@
     let quizScore = 0;
     let quizStreak = 0;
     let quizAnswered = false;
+    let quizQuestionHadWrong = false;
     let quizMistakes = [];
     let quizIsMistakeRetry = false;
     let selectedLibraryTheme = "전체";
@@ -362,6 +363,7 @@
         const question = quiz[quizIndex];
         if (!question) return finishQuiz();
         quizAnswered = false;
+        quizQuestionHadWrong = false;
         elements.quizPosition.textContent = `문제 ${quizIndex + 1} / ${quiz.length}`;
         elements.quizStreak.textContent = quizStreak;
         elements.quizScore.textContent = quizScore;
@@ -401,6 +403,8 @@
         const answerIdiom = data.find((item) => item.id === question.answerId);
 
         if (!correct) {
+            quizQuestionHadWrong = true;
+            quizMistakes.push(question.answerId);
             const selected = elements.answerOptions.querySelector(`[data-answer-id="${answerId}"]`);
             if (selected) {
                 selected.disabled = true;
@@ -415,9 +419,11 @@
         }
         quizAnswered = true;
 
-        if (correct) {
+        if (!quizQuestionHadWrong) {
             quizScore += 1;
             quizStreak += 1;
+        } else {
+            quizStreak = 0;
         }
 
         elements.quizScore.textContent = quizScore;

@@ -207,11 +207,12 @@ $('#check-answer').addEventListener('click',()=>{
   current.forEach((q,i)=>{
     const field=$(`fieldset[data-id="${q.id}"]`),checked=field.querySelector(`input[name="q${i}"]:checked`);
     const ok=checked&&+checked.value===q.correct;
-    if(checked&&!ok){const label=checked.closest('label');label?.classList.add('answer-wrong');checked.disabled=true;checked.checked=false;field.querySelector('.feedback').textContent='다시 생각하고 다른 답을 골라보세요.';needsRetry=true;return}
+    if(checked&&!ok){const label=checked.closest('label');label?.classList.add('answer-wrong');checked.disabled=true;checked.checked=false;field.dataset.everWrong='1';field.querySelector('.feedback').textContent='다시 생각하고 다른 답을 골라보세요.';needsRetry=true;return}
     field.querySelectorAll('label').forEach((label,j)=>{label.classList.toggle('answer-correct',Boolean(ok)&&j===q.correct)});
-    if(checked)answered++;if(ok)score++;else needsRetry=true;
+    const trulyCorrect=ok&&field.dataset.everWrong!=='1';
+    if(checked)answered++;if(ok){if(trulyCorrect)score++}else needsRetry=true;
     field.querySelector('.feedback').textContent=ok?`정답! ${q.explain}`:'답을 고른 뒤 다시 확인해 주세요.';
-    if(checked){progress.solved++;if(ok){progress.correct++;progress.wrong=progress.wrong.filter(id=>id!==q.id)}else if(!progress.wrong.includes(q.id))progress.wrong.push(q.id)}
+    if(checked&&!field.dataset.counted){field.dataset.counted='1';progress.solved++;if(trulyCorrect){progress.correct++;progress.wrong=progress.wrong.filter(id=>id!==q.id)}else if(!progress.wrong.includes(q.id))progress.wrong.push(q.id)}
   });
   if(needsRetry){$('#result').innerHTML='<div class="result-card"><span>아직 정답을 찾지 못한 문제가 있어요. 다시 골라보세요.</span></div>';return}
   save();

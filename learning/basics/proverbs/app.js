@@ -11,6 +11,7 @@ let quizPosition = 0;
 let currentChoices = null;
 let correct = 0;
 let attempts = 0;
+let questionHadWrong = false;
 const $ = (id) => document.getElementById(id);
 
 function shuffle(items) {
@@ -78,6 +79,7 @@ function buildChoices(correctIndex) {
 }
 
 function renderQuiz() {
+  questionHadWrong = false;
   const itemIndex = quizOrder[quizPosition];
   const item = decks[language][itemIndex];
   const english = language === "en";
@@ -141,6 +143,7 @@ function answer(choiceIndex, selectedButton) {
   const item = decks[language][quizOrder[quizPosition]];
   const buttons = [...$("choices").querySelectorAll("button")];
   if (choiceIndex !== currentChoices.answer) {
+    questionHadWrong = true;
     selectedButton.classList.add("wrong");
     selectedButton.disabled = true;
     window.ClassGameSfx?.play("error");
@@ -154,13 +157,11 @@ function answer(choiceIndex, selectedButton) {
     if (buttonIndex === currentChoices.answer) button.classList.add("correct");
   });
   attempts += 1;
-  if (choiceIndex === currentChoices.answer) {
-    correct += 1;
-    window.ClassGameSfx?.play("success");
-    $("feedback").textContent = language === "en"
-      ? "Correct! You matched the proverb to the situation."
-      : "정답! 뜻과 상황을 잘 연결했어요.";
-  }
+  if (!questionHadWrong) correct += 1;
+  window.ClassGameSfx?.play("success");
+  $("feedback").textContent = language === "en"
+    ? "Correct! You matched the proverb to the situation."
+    : "정답! 뜻과 상황을 잘 연결했어요.";
   $("nextQuestion").disabled = false;
   const last = quizPosition === BATCH_SIZE - 1;
   $("nextQuestion").textContent = last

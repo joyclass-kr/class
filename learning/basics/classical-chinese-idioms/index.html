@@ -26,7 +26,7 @@
         <a class="back-link" href="../../../" aria-label="학습과 게임 메인으로 돌아가기">← 메인</a>
         <a class="brand" href="#" aria-label="고사성어 학습기 처음 화면">
             <span class="brand-seal" aria-hidden="true">故</span>
-            <span><strong>고사성어 학습기</strong><small>뜻 · 유래 · 출전 · 퀴즈</small></span>
+            <strong>고사성어 학습기</strong>
         </a>
         <div class="header-score" aria-label="현재 암기 현황">
             <span>암기 완료</span>
@@ -37,26 +37,21 @@
     <audio id="bgm" src="assets/audio/paper-lantern-drift.ogg" preload="auto"></audio>
 
     <main id="mainContent">
-        <section class="hero" aria-labelledby="pageTitle">
-            <div class="hero-copy">
-                <p id="playerGreeting" class="eyebrow">학습 자료</p>
-                <h1 id="pageTitle">고사성어<br><em>뜻과 유래</em></h1>
-                <p class="hero-description">한국어에서 자주 쓰이는 고사성어를 단계별로 제공합니다. 각 항목에서 뜻, 유래, 출전을 확인하고 퀴즈로 복습할 수 있습니다.</p>
-            </div>
+        <h1 id="pageTitle" class="visually-hidden">고사성어 뜻과 유래</h1>
+        <p id="playerGreeting" class="visually-hidden"></p>
 
-            <div class="progress-card" aria-label="전체 학습 현황">
-                <div class="progress-heading">
-                    <span>학습 현황</span>
-                    <strong id="masteryPercent">0%</strong>
-                </div>
-                <div class="progress-track" aria-hidden="true"><span id="masteryBar"></span></div>
-                <div class="progress-counts">
-                    <span><i class="dot known-dot"></i>암기 <b id="knownCount">0</b></span>
-                    <span><i class="dot review-dot"></i>복습 <b id="reviewCount">0</b></span>
-                    <span><i class="dot unseen-dot"></i>미학습 <b id="unseenCount">0</b></span>
-                </div>
+        <div class="progress-card" aria-label="전체 학습 현황">
+            <div class="progress-heading">
+                <span>학습 현황</span>
+                <strong id="masteryPercent">0%</strong>
             </div>
-        </section>
+            <div class="progress-track" aria-hidden="true"><span id="masteryBar"></span></div>
+            <div class="progress-counts">
+                <span><i class="dot known-dot"></i>암기 <b id="knownCount">0</b></span>
+                <span><i class="dot review-dot"></i>복습 <b id="reviewCount">0</b></span>
+                <span><i class="dot unseen-dot"></i>미학습 <b id="unseenCount">0</b></span>
+            </div>
+        </div>
 
         <nav class="mode-tabs" aria-label="학습 모드">
             <button class="mode-tab active" type="button" data-view="learn" aria-selected="true">

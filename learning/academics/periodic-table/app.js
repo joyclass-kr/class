@@ -18,7 +18,8 @@ document.addEventListener('DOMContentLoaded', () => {
             score: 0,
             streak: 0,
             currentQuestion: null,
-            answered: false
+            answered: false,
+            hadWrong: false
         },
 
         // Molecule lab state
@@ -525,6 +526,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
     function loadNewQuestion() {
         state.quiz.answered = false;
+        state.quiz.hadWrong = false;
 
         // Every question stays inside the exam scope: elements 1 through 20.
         const available = getExamElements();
@@ -612,6 +614,7 @@ document.addEventListener('DOMContentLoaded', () => {
         const explanation = getQuizExplanation(correctEl, chosenType);
 
         if (!isCorrect) {
+            state.quiz.hadWrong = true;
             btn.classList.add('wrong');
             btn.disabled = true;
             state.quiz.streak = 0;
@@ -622,11 +625,15 @@ document.addEventListener('DOMContentLoaded', () => {
         }
         state.quiz.answered = true;
 
-        if (isCorrect) {
+        if (!state.quiz.hadWrong) {
             btn.classList.add('correct');
             state.quiz.score += 10;
             state.quiz.streak += 1;
             msg.innerHTML = `<strong>🎉 정답입니다! (+10점)</strong><span>${explanation}</span>`;
+            msg.style.color = '#38ef7d';
+        } else {
+            btn.classList.add('correct');
+            msg.innerHTML = `<strong>정답입니다.</strong><span>${explanation}</span>`;
             msg.style.color = '#38ef7d';
         }
 

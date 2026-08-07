@@ -71,6 +71,7 @@
         currentIndex: 0,
         score: 0,
         answered: false,
+        hadWrong: false,
         answers: [],
         classSessionId: "",
         classResultSubmitted: false,
@@ -272,6 +273,7 @@
     function renderQuestion() {
         const question = state.questions[state.currentIndex];
         state.answered = false;
+        state.hadWrong = false;
 
         elements.questionNumber.textContent = String(state.currentIndex + 1);
         elements.progressFill.style.width = `${((state.currentIndex + 1) / SESSION_SIZE) * 100}%`;
@@ -313,6 +315,7 @@
         const buttons = [...elements.choiceList.querySelectorAll("button")];
 
         if (!isCorrect) {
+            state.hadWrong = true;
             selectedButton.classList.add("is-wrong");
             selectedButton.disabled = true;
             elements.feedbackTitle.textContent = "다시 생각해 보세요.";
@@ -331,10 +334,12 @@
             if (button.dataset.choice === question.answer) button.classList.add("is-correct");
         });
 
-        state.score += 1;
-        elements.currentScore.textContent = String(state.score);
+        if (!state.hadWrong) {
+            state.score += 1;
+            elements.currentScore.textContent = String(state.score);
+        }
 
-        state.answers.push({ question, selectedChoice, isCorrect });
+        state.answers.push({ question, selectedChoice, isCorrect: !state.hadWrong });
         elements.feedbackTitle.textContent = "정답이에요!";
         elements.feedback.classList.remove("is-wrong");
         elements.correctAnswer.textContent = `정답: ${question.answer}`;
