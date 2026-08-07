@@ -416,7 +416,7 @@
     const nav = document.getElementById('zone-tabs');
     nav.innerHTML = '';
     ZONES.forEach(zone => {
-      const b = document.createElement('button'); b.className = 'zone-tab'; b.type = 'button'; b.innerHTML = `<i></i><b>${zone.order}. ${zone.short}</b><small>${zone.subtitle}</small>`;
+      const b = document.createElement('button'); b.className = 'zone-tab'; b.type = 'button'; b.innerHTML = `<i></i><b>${zone.order}. ${zone.short}</b>`;
       b.addEventListener('click', () => teleport(zone)); zone.tab = b; nav.appendChild(b);
     });
   }
