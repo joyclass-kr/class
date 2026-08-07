@@ -1107,7 +1107,7 @@ test("renders the first grade-three division story worksheet", async () => {
   assert.match(source, /const groupSize = kind === "quotative" \? divisor : quotient;/);
   assert.match(source, /const groupCount = 6 \/ groupSize;/);
   assert.match(source, /const correctEquation = `6÷\$\{divisor\}=\$\{quotient\}`;/);
-  assert.match(source, /const swappedEquation = `6÷\$\{quotient\}=\$\{divisor\}`;/);
+  assert.match(source, /const CARD_ORDER: \[Card, Card, Card, Card\] = \[/);
   assert.match(source, /<small>\/10 정답<\/small>/);
   assert.match(css, /\.division-story-grid\s*\{[\s\S]*?grid-template-columns:\s*repeat\(2,[\s\S]*?grid-template-rows:\s*repeat\(5,/);
   assert.match(css, /\.division-story-problem\.is-correct[\s\S]*?background:\s*var\(--green-soft\)/);

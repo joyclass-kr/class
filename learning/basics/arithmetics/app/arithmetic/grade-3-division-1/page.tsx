@@ -17,6 +17,12 @@ type StoryProblem = {
 type ProblemSet = { seed: number; problems: StoryProblem[] };
 
 const INITIAL_SEED = 20260720;
+const CARD_ORDER: [Card, Card, Card, Card] = [
+  { equation: "6÷2=3", option: { groupSize: 2, groupCount: 3 } },
+  { equation: "6÷3=2", option: { groupSize: 3, groupCount: 2 } },
+  { equation: "6÷2=3", option: { groupSize: 3, groupCount: 2 } },
+  { equation: "6÷3=2", option: { groupSize: 2, groupCount: 3 } },
+];
 const STORY_KINDS: DivisionKind[] = [
   "quotative",
   "partitive",
@@ -55,22 +61,9 @@ function createProblemSet(seed: number): ProblemSet {
       const groupSize = kind === "quotative" ? divisor : quotient;
       const groupCount = 6 / groupSize;
       const correctOption: GroupOption = { groupSize, groupCount };
-      const swappedOption: GroupOption = { groupSize: groupCount, groupCount: groupSize };
       const correctEquation = `6÷${divisor}=${quotient}`;
-      const swappedEquation = `6÷${quotient}=${divisor}`;
-      const shuffled = [
-        { equation: correctEquation, option: correctOption, isCorrect: true },
-        { equation: correctEquation, option: swappedOption, isCorrect: false },
-        { equation: swappedEquation, option: correctOption, isCorrect: false },
-        { equation: swappedEquation, option: swappedOption, isCorrect: false },
-      ];
-      for (let i = shuffled.length - 1; i > 0; i--) {
-        const j = Math.floor(next() * (i + 1));
-        [shuffled[i], shuffled[j]] = [shuffled[j], shuffled[i]];
-      }
-      const correctCard = shuffled.findIndex((card) => card.isCorrect) as 0 | 1 | 2 | 3;
-      const cards = shuffled.map(({ equation, option }) => ({ equation, option })) as [Card, Card, Card, Card];
-      return { id: `division-story-${index}`, index, divisor, kind, cards, correctCard };
+      const correctCard = CARD_ORDER.findIndex((card) => card.equation === correctEquation && card.option.groupSize === correctOption.groupSize) as 0 | 1 | 2 | 3;
+      return { id: `division-story-${index}`, index, divisor, kind, cards: CARD_ORDER, correctCard };
     }),
   };
 }
