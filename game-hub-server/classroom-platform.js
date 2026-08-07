@@ -1235,7 +1235,11 @@ function createClassroomPlatform(options = {}) {
       const user = mode === "restricted" ? await sessionUser(req) : null;
       if (user?.role === "student" && (req.get("sec-fetch-dest") === "document" || req.accepts("html"))) {
         const classId = await userClassId(user);
-        const requestPath = normalizeContentPath(req.path);
+        // req.path is relative to whatever prefix in the app.use([...], requireSiteAccess)
+        // list matched (e.g. "/arithmetic" itself resolves to req.path === "/"), so it can
+        // never equal the full paths stored by the "공개 설정" UI. req.originalUrl keeps the
+        // real, unstripped path regardless of which mount prefix matched.
+        const requestPath = normalizeContentPath(req.originalUrl);
         if (classId && requestPath) {
           const enabled = await pool.query(
             `SELECT 1 FROM classroom_content_enabled
