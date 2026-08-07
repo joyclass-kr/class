@@ -46,10 +46,20 @@ async function initApp() {
         }
 
         currentUser = data.user;
-        
+
         // Setup Header
-        userInfoEl.textContent = `${currentUser.name} (${currentUser.role === 'teacher' ? '교사' : '학생'})`;
-        
+        userInfoEl.textContent = '';
+        const nameLabel = document.createElement('span');
+        nameLabel.textContent = `${currentUser.name} (${currentUser.role === 'teacher' ? '교사' : '학생'})`;
+        userInfoEl.appendChild(nameLabel);
+        if (currentUser.role === 'student') {
+            const settingsLink = document.createElement('a');
+            settingsLink.href = '/classtools/profile.html';
+            settingsLink.className = 'settings-link';
+            settingsLink.innerHTML = '<span class="material-symbols-outlined" style="font-size: 18px; vertical-align: middle;">settings</span> 내 정보 설정';
+            userInfoEl.appendChild(settingsLink);
+        }
+
         if (currentUser.role === 'teacher') {
             composerSection.classList.remove('hidden');
         }

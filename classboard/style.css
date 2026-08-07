@@ -65,7 +65,23 @@ body::before {
     color: var(--text-muted);
     display: flex;
     align-items: center;
-    gap: 10px;
+    gap: 14px;
+}
+
+.settings-link {
+    display: inline-flex;
+    align-items: center;
+    gap: 4px;
+    color: var(--accent);
+    font-size: 0.85rem;
+    font-weight: 600;
+    text-decoration: none;
+}
+
+.settings-link:hover,
+.settings-link:focus-visible {
+    color: var(--accent-hover);
+    text-decoration: underline;
 }
 
 .container {

@@ -1240,7 +1240,11 @@ function createClassroomPlatform(options = {}) {
         // never equal the full paths stored by the "공개 설정" UI. req.originalUrl keeps the
         // real, unstripped path regardless of which mount prefix matched.
         const requestPath = normalizeContentPath(req.originalUrl);
-        if (classId && requestPath) {
+        // Personal account settings (birthday/avatar), not a curated learning
+        // menu item -- must stay reachable regardless of what the homeroom
+        // teacher has enabled for the class.
+        const isAlwaysAllowed = requestPath === "/classtools/profile.html";
+        if (classId && requestPath && !isAlwaysAllowed) {
           const enabled = await pool.query(
             `SELECT 1 FROM classroom_content_enabled
              WHERE class_id = $1
