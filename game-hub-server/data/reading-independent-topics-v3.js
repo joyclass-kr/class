@@ -14,23 +14,23 @@ module.exports = [
       "작성 날짜를 보면 오래된 정보가 현재에도 적용되는지 판단하기 쉽다.",
       "주장은 그것을 뒷받침하는 관찰이나 자료와 구분해서 읽어야 한다.",
       "독립적인 여러 출처가 같은 사실을 확인하면 판단의 신뢰도가 높아질 수 있다.",
-      "사진과 그래프도 촬영 범위나 축 간격에 따라 과장되어 보일 수 있다.",
+      "사진은 촬영 범위에, 그래프는 축 간격에 따라 과장되어 보일 수 있다.",
       "전문가의 말도 그 사람이 해당 분야를 연구했는지 확인할 필요가 있다.",
       "확실하지 않은 정보는 단정하기보다 불확실성을 밝혀 전달하는 편이 안전하다."
     ],
     wrong: [
-      "조회 수가 많은 정보는 많은 사람의 검토를 거쳤으므로 조회 수가 신뢰도의 핵심 기준이 된다.",
+      "조회 수가 많은 정보는 많은 사람의 검토를 거쳤으므로 그 수치가 신뢰도의 핵심 기준이 된다.",
       "서로 다른 사이트에 같은 문장이 실리면 사이트들이 독립적으로 사실을 확인한 것이다.",
       "최근에 작성된 자료에는 현재 상황이 반영되므로 작성 시점이 정확성을 결정하는 기준이 된다.",
       "그래프에 정확한 숫자가 표시되면 축의 범위는 읽는 사람의 해석에 영향을 주지 않는다.",
-      "유명한 사람이 소개한 정보에서는 소개한 사람의 평판이 전문 분야보다 중요한 기준이 된다.",
-      "두 자료가 다른 결론을 내리면 결론의 차이만큼 두 자료의 근거 수준에도 차이가 생긴다.",
-      "작성자가 의견을 분명히 밝히면 관찰 자료와 주장 사이의 경계도 자연스럽게 분명해진다.",
-      "불확실한 정보를 자세히 설명하면 설명의 양에 비례하여 불확실성도 줄어든다."
+      "유명한 사람이 소개한 정보에서는 그 사람의 평판이 전문 분야보다 중요한 기준이 된다.",
+      "두 자료가 다른 결론을 내리면 그 차이만큼 근거 수준에도 차이가 생긴다.",
+      "작성자가 의견을 분명히 밝히면 관찰 자료와 주장 사이의 경계도 자연스럽게 뚜렷해진다.",
+      "불확실한 정보를 자세히 설명할수록 그 양에 비례하여 불확실성도 줄어든다."
     ],
     applications: [
       "건강 정보를 읽고 작성 기관과 제시된 연구 자료를 함께 확인한다.",
-      "같은 경기의 전체 장면과 일부 장면만 편집한 영상을 비교한다.",
+      "같은 경기의 전체 영상과 일부 장면만 편집한 영상을 비교한다.",
       "여행 안내문의 게시 날짜를 보고 현재 운행 시간과 다시 대조한다.",
       "기사에서 기자의 해석과 조사 결과로 제시된 수치를 따로 표시한다.",
       "서로 자료를 베끼지 않은 기관들의 발표가 일치하는지 살핀다.",
@@ -45,7 +45,7 @@ module.exports = [
     ko: "규칙과 예외의 판단",
     facts: [
       "공동체의 규칙은 비슷한 상황에서 무엇을 기대할 수 있는지 알려 준다.",
-      "규칙의 목적을 알면 그대로 적용하기 어려운 상황의 판단 기준을 찾기 쉽다.",
+      "규칙의 목적을 알면 그대로 적용하기 어려운 상황에서도 판단 기준을 찾기 쉽다.",
       "예외에는 다른 사람에게도 적용할 수 있는 이유가 있어야 한다.",
       "권리가 충돌할 때에는 한쪽의 편리뿐 아니라 각 선택의 영향을 살펴야 한다.",
       "같은 결과를 요구해도 출발 조건이 크게 다르면 불공정할 수 있다.",
@@ -55,13 +55,13 @@ module.exports = [
     ],
     wrong: [
       "규칙이 있으면 비슷해 보이는 상황에서는 같은 행동을 선택하는 것이 판단의 첫째 기준이 된다.",
-      "규칙의 문장이 분명하면 규칙을 만든 목적보다 문장에 맞게 적용하는 일이 우선한다.",
-      "어려운 사정에 따른 예외는 개인의 사정이므로 다른 사례에 적용할 공통 기준과 분리해야 한다.",
+      "규칙의 문구가 분명하면 규칙을 만든 목적보다 그 문구에 맞게 적용하는 일이 우선한다.",
+      "어려운 사정에 따른 예외는 개인적 상황이므로 다른 사례에 적용할 공통 기준과 분리해야 한다.",
       "권리가 충돌할 때에는 더 많은 사람이 원하는 선택이 각 선택의 영향을 판단하는 기준이 된다.",
       "같은 결과를 요구하는 규칙은 출발 조건의 차이보다 결과의 통일성을 통해 공정성을 만든다.",
       "규칙이 현재 문제를 해결하는 효과는 앞으로 생길 가능성이 있는 문제보다 먼저 평가해야 한다.",
-      "한 사례에서 옳았던 판단은 조건이 달라진 사례를 판단할 때에도 가장 강한 근거가 된다.",
-      "결정 결과를 공개하면 구성원은 그 결과를 통해 근거와 수정 절차도 이해할 수 있다."
+      "한 사례에서 옳았던 판단은 조건이 달라진 다른 경우를 판단할 때에도 가장 강한 근거가 된다.",
+      "결정 결과를 공개하면 구성원은 이를 통해 근거와 수정 절차도 이해할 수 있다."
     ],
     applications: [
       "도서관의 통화 금지 규칙을 보고 이용자가 조용한 환경을 기대할 수 있다고 판단한다.",
@@ -79,14 +79,14 @@ module.exports = [
     tracks: ["en"],
     en: "Attention and Notifications",
     facts: [
-      "Attention is limited, so signals cannot receive equal depth at once.",
+      "Attention is limited, so signals cannot all get equal depth of attention at once.",
       "A notification can interrupt a task despite taking moments to read.",
-      "After an interruption, recovering an earlier thought needs extra time and effort.",
-      "Frequent signals can form a habit of checking before judging usefulness.",
+      "After an interruption, returning to an earlier thought needs extra time and effort.",
+      "Frequent signals can form a habit of checking before judging whether the check was useful.",
       "Disabling low-priority alerts reduces outside demands on attention.",
       "Scheduled checks preserve access to messages while protecting focused work.",
       "Complex reasoning is harder to resume than a simple routine.",
-      "Attention management means choosing when a digital tool deserves attention."
+      "Attention management means choosing when a digital tool deserves that focus."
     ],
     wrong: [
       "Attention becomes deeper when several signals compete for it at the same time.",
@@ -101,7 +101,7 @@ module.exports = [
     applications: [
       "A student closes unrelated tabs while solving a problem that requires several connected steps.",
       "A writer notices that a brief message breaks the flow of a paragraph in progress.",
-      "After answering an alert, a reader rereads several lines to recover the earlier argument.",
+      "After answering an alert, a reader rereads several lines to pick up the earlier argument.",
       "A phone user reaches for the screen after a sound before asking whether the alert matters.",
       "A student keeps emergency calls active but disables promotional alerts during study.",
       "A group checks messages at the end of each work period instead of during active discussions.",
@@ -116,7 +116,7 @@ module.exports = [
     facts: [
       "Dark city surfaces absorb sunlight and become warmer than shaded ground.",
       "A tree canopy blocks sunlight before it reaches pavement, walls, and people.",
-      "Water released by leaves cools nearby air as it becomes vapor.",
+      "Water released by leaves cools nearby air as the water becomes vapor.",
       "Tree cooling depends on size, health, species, and access to water.",
       "Young trees need years of care before they provide mature shade.",
       "Shade matters most where people walk, wait, and live.",
@@ -136,7 +136,7 @@ module.exports = [
     applications: [
       "A shaded bench remains more comfortable than an exposed bench beside dark pavement.",
       "A city places broad tree canopies along a route used by children walking home.",
-      "Air near healthy leaves can cool as leaf water enters the air as vapor.",
+      "Air near healthy leaves can cool as water from the leaves turns to vapor.",
       "Planners compare species and water supply instead of treating the trees as identical.",
       "A neighborhood protects older trees while newly planted trees are still growing.",
       "Trees are placed near bus stops and homes rather than only beside an empty road.",

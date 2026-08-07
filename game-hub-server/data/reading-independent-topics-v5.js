@@ -16,7 +16,7 @@ module.exports = [
       "주장을 평가할 때에는 근거뿐 아니라 근거와 결론을 잇는 전제도 검토해야 한다."
     ],
     wrong: [
-      "주장에 근거가 제시되면 근거와 결론 사이의 연결은 근거 자체에 포함된다.",
+      "주장에 근거가 제시되면 근거와 결론 사이의 연결은 그 안에 포함된다.",
       "전제는 결론을 반복하여 근거의 뜻을 분명하게 만드는 문장이다.",
       "같은 근거에서 다른 결론이 나오면 둘 중 근거를 잘못 읽은 쪽이 생긴다.",
       "숨은 전제는 글에 직접 쓰인 조건 가운데 결론과 가장 가까운 문장이다.",
@@ -26,13 +26,13 @@ module.exports = [
       "근거가 충분한 주장은 전제보다 근거의 수와 출처를 중심으로 평가해야 한다."
     ],
     applications: [
-      "공원이 붐비니 더 넓혀야 한다는 주장에 넓은 공간이 혼잡을 줄인다는 생각이 깔렸는지 살핀다.",
+      "공원이 붐비니 확장해야 한다는 주장에 넓은 공간이 혼잡을 줄인다는 생각이 깔렸는지 살핀다.",
       "자료와 결론 사이에 빠진 연결을 한 문장으로 표현해 본다.",
       "같은 판매 자료를 두고 가격과 품질 중 무엇을 중시하는지에 따라 결론이 달라짐을 찾는다.",
       "결론이 성립하려면 근거 외에 어떤 조건이 필요한지 질문한다.",
       "정확한 이용자 수를 근거로 한 주장에서도 이용자 수가 필요성을 뜻하는지 검토한다.",
       "가장 싼 선택이 좋다는 주장에 비용을 우선하는 가치 판단이 있음을 찾는다.",
-      "도시에서는 맞는 교통 주장이 농촌에서도 성립하는지 반대 조건을 생각한다.",
+      "도시에서 타당한 교통 주장이 농촌에서도 성립하는지 반대 조건을 생각한다.",
       "통계 자료를 확인한 뒤 그 자료가 정책 결론으로 이어지는 전제도 평가한다."
     ]
   },
@@ -99,7 +99,7 @@ module.exports = [
       "A map leaves out small objects while preserving roads needed for travel.",
       "A climate model groups some details so large patterns can be studied.",
       "A weather prediction changes when new temperature data enter the model.",
-      "Researchers compare predicted river height with the height later measured.",
+      "Researchers compare predicted river height with the height measured later.",
       "An unexpected result leads researchers to inspect assumptions about soil.",
       "A growth model tested on young trees is used cautiously for old forests.",
       "One traffic model studies travel time while another studies air pollution.",

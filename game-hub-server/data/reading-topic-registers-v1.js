@@ -102,7 +102,7 @@ module.exports = {
         ],
         [
           "차가운 컵에 맺힌 물방울은 식은 수증기가 변한 것이다.",
-          "Drops on a cold cup show water gas cooling down."
+          "Drops on a cold cup show water vapor cooling down."
         ],
         [
           "구름 속 물방울이 뭉쳐 무거워지면 땅으로 떨어진다.",
@@ -737,7 +737,7 @@ module.exports = {
       ],
       "facts": [
         [
-          "날씨는 짧은 동안 그곳에 나타난 하늘 상태다.",
+          "날씨는 짧은 동안 그곳에 나타난 대기 상태다.",
           "Weather is the air at one place for a short time."
         ],
         [
@@ -765,7 +765,7 @@ module.exports = {
           "A forecast uses records and models to guess the coming weather."
         ],
         [
-          "평균이 닮은 두 곳도 사나운 날씨 횟수는 다르다.",
+          "평균이 닮은 두 곳도 거친 날씨 횟수는 다르다.",
           "Two places with equal averages can have more or fewer storms."
         ]
       ],
@@ -1488,7 +1488,7 @@ module.exports = {
         ],
         [
           "비밀번호가 알려져도 두 번째 확인이 침입을 막는다.",
-          "Even a leaked password still faces the second check step."
+          "Even a leaked password still has to clear a second check."
         ],
         [
           "링크를 누른 뒤에 확인하면 피해를 막을 수 없다.",
@@ -1526,7 +1526,7 @@ module.exports = {
         ],
         [
           "친구 이름으로 와도 주소가 이상하면 전화로 묻는다.",
-          "Even with a friend's name, an odd link needs a call."
+          "Even with a friend's name, call first if the link looks odd."
         ],
         [
           "보안 업데이트를 미루면 알려진 약점이 그대로 남는다.",
@@ -1542,7 +1542,7 @@ module.exports = {
         ],
         [
           "같은 말을 따로 알아본 곳이 또 있는지 찾아본다.",
-          "Look for other groups with their own study of it."
+          "Check whether other groups looked into it on their own."
         ]
       ],
       "wrongApplications": [
@@ -1556,7 +1556,7 @@ module.exports = {
         ],
         [
           "휴대폰을 잃은 뒤에는 다단계 인증을 꺼야 안전하다.",
-          "Losing a phone means turning off the second key helps."
+          "After losing a phone, turning off the second key is said to help."
         ],
         [
           "친구 이름으로 오면 주소는 안 봐도 눌러도 된다.",
@@ -1606,7 +1606,7 @@ module.exports = {
         ],
         [
           "앱 업데이트는 기능용이라 보안은 기기 바꿀 때 고친다.",
-          "App updates add features; fix security at device replacement."
+          "App updates just add features, so security gets fixed only when the device is replaced."
         ],
         [
           "개인정보는 글을 지우면 퍼진 것까지 되돌아온다.",
@@ -1850,7 +1850,7 @@ module.exports = {
         ],
         [
           "기준 없이 결과만 알리면 나중에 책임을 묻기 어렵다.",
-          "A result announced without the rules makes blame hard later."
+          "A result announced without the rules makes it hard to assign blame later."
         ],
         [
           "같은 규칙이라도 사람마다 부담의 크기는 다르다.",
@@ -2200,7 +2200,7 @@ module.exports = {
         ],
         [
           "학생 수가 늘어난 해에는 같은 인원도 비율이 낮다.",
-          "With more students, the same joiners are a smaller share."
+          "With more students, the same number of participants is a smaller share."
         ],
         [
           "한쪽이 2배일 때 다른 쪽이 그대로면 비례가 아니다.",
@@ -2268,7 +2268,7 @@ module.exports = {
         ],
         [
           "두 반의 참가자가 12명씩이니 참가 비율도 같다.",
-          "Both classes have 12 joiners, so their shares are equal."
+          "Both classes have 12 participants, so their shares are equal."
         ],
         [
           "재료는 3배로, 물은 2배로 늘려도 비는 그대로다.",
@@ -2554,7 +2554,7 @@ module.exports = {
         ],
         [
           "느낌만 적은 글은 부분을 짚은 짧은 글보다 약하다.",
-          "A page of feelings can persuade less than one detail."
+          "A page of feelings can persuade less than a note on one detail."
         ],
         [
           "시대를 알면 같은 표시가 다르게 보인다.",
@@ -2864,7 +2864,7 @@ module.exports = {
         "여러 곳에서 따로 확인한 사실은 더 믿을 만하다.",
         "사진은 찍은 범위에, 그래프는 축 간격에 따라 인상이 달라진다.",
         "전문가의 말도 그 사람이 해당 분야를 연구했는지 확인한다.",
-        "잘 모르는 것은 모른다는 점도 같이 알린다."
+        "확실하지 않은 내용은 모른다고 밝힌다."
       ],
       "inferences": [
         "글쓴이와 근거를 모르는 글은 판단을 미룬다.",
@@ -2987,7 +2987,7 @@ module.exports = {
       "applications": [
         "도서관에 통화 금지 규칙이 있어 조용할 줄 안다.",
         "대피 때는 문구보다 사람을 지키는 목적을 본다.",
-        "기한 예외를 낼 때 남에게도 통하는 조건을 낸다.",
+        "기한 예외를 요청할 때 남에게도 통하는 조건을 붙인다.",
         "사진 자유와 남의 사생활이 부딪칠 때 양쪽을 본다.",
         "계단 오르기가 몸 불편한 이에게 공정한지 따져 본다.",
         "교실 소음 규칙을 만들 때 발표가 힘들어질지 본다.",
@@ -3181,14 +3181,14 @@ module.exports = {
     "easy": {
       "intro": "This passage looks at trees and heat in city areas.",
       "facts": [
-        "Dark city surfaces soak up sun and get hotter than shade.",
+        "Dark city surfaces soak up sun and get hotter than shaded ground.",
         "A tree's leaves block sun from roads, walls, and people.",
         "Water from leaves turns to vapor and cools the air.",
-        "Cooling depends on a tree's size, health, kind, and water.",
+        "Cooling depends on a tree's size, health, and kind, plus how much water it gets.",
         "Young trees need years of care to give full shade.",
         "Shade helps most where people walk, wait, and live.",
         "Planting brings costs when roots, pollen, and upkeep are ignored.",
-        "A heat plan works best with trees, shade, buildings, and water."
+        "A heat plan works best with trees, built shade, buildings, and water."
       ],
       "inferences": [
         "Surface color helps explain warm spots on a street.",
@@ -3516,7 +3516,7 @@ module.exports = {
       ],
       "inferences": [
         "An easy feeling during rereading proves very little.",
-        "An open answer takes away the work of remembering.",
+        "A visible answer takes away the work of remembering.",
         "A hard, slow recall try still helps your memory later.",
         "An unchecked answer lets a mistake stay in your memory.",
         "The same study time works better spread over several days.",
@@ -3529,7 +3529,7 @@ module.exports = {
         "A learner writes three causes from memory, then opens the notes.",
         "A hard try to name an idea helps the next day.",
         "A student answers from memory, then checks a model answer.",
-        "A learner studies new words on five short days.",
+        "A learner studies new words over five short days.",
         "A worksheet mixes equations, so students pick a method each time.",
         "A missing step becomes the aim of the next review.",
         "A student recalls, checks, and returns to it two days later."
@@ -3540,7 +3540,7 @@ module.exports = {
         "A student drops the hard idea and studies easy ones instead.",
         "A student answers from memory and skips the model answer.",
         "A learner studies all the words in one long evening.",
-        "A worksheet groups the same equations, so students practice picking.",
+        "A worksheet groups the same equations, so students practice picking a way.",
         "A student skips the missing step and rereads the neat notes.",
         "A student recalls, checks, and moves on; the idea feels clear."
       ],
@@ -3617,7 +3617,7 @@ module.exports = {
         "Signals use sound, movement, color, smell, or a mix.",
         "A signal works only when the other animal notices it.",
         "Loud calls travel far, but they can also draw predators.",
-        "A weak animal cannot make some signals, so they are honest.",
+        "A weak animal cannot make some signals, so those signals stay honest.",
         "The meaning of a signal can change with the setting.",
         "Animals gain by answering honest and doubtful signals in different ways.",
         "Communication changes over time through senders and receivers alike."
@@ -3626,10 +3626,10 @@ module.exports = {
         "A signal's effect shows in what the receiver does next.",
         "A watcher who tapes sound alone misses the visible part.",
         "A signal's worth depends on what lies between the animals.",
-        "Calling far and staying hidden pull in two ways at once.",
+        "Calling far and staying hidden pull against each other.",
         "A costly display gives the receiver a reason to trust.",
         "Reading a signal without its setting can lead to mistakes.",
-        "Trusting a doubtful signal like a sure one costs the receiver.",
+        "Trusting a doubtful signal as if it were sure costs the receiver.",
         "Slow change in receivers over time can alter the signals senders use."
       ],
       "applications": [
@@ -3735,7 +3735,7 @@ module.exports = {
         "근거와 결론이 옳아도 사이가 빈 주장은 흔들린다.",
         "같은 자료에서 결론이 갈리면 전제가 다른 것이다.",
         "근거에 빠진 조건을 찾는 일이 곧 전제 찾기다.",
-        "자료가 맞나 보는 것으로는 결론을 믿을지 모른다.",
+        "자료가 맞는지 보는 것만으로는 결론을 믿어도 될지 알 수 없다.",
         "무엇이 낫다는 다툼은 사실보다 전제에서 생긴다.",
         "전제가 안 통하는 곳을 찾으면 주장 범위가 좁아진다.",
         "근거를 길게 늘어놓아도 빈 곳은 놓치기 쉽다."
@@ -3836,7 +3836,7 @@ module.exports = {
         "원인과 결과를 다룬 글은 둘의 관계를 요약에 넣는다.",
         "견주는 글은 한쪽 특징보다 둘의 큰 차이를 본다.",
         "세부 정보를 빼도 결론이 그대로면 줄여도 된다.",
-        "좋은 요약은 원문 범위를 넓히거나 덧붙이지 않는다."
+        "좋은 요약은 원문 범위를 넓히거나 새로운 내용을 덧붙이지 않는다."
       ],
       "inferences": [
         "문장 하나만 옮겨 적으면 중심 생각이 빠진다.",
@@ -3941,7 +3941,7 @@ module.exports = {
         "A simple model makes big links easy to see.",
         "A guess comes from the model and the data put in.",
         "A test puts the model's guess next to real data.",
-        "A wrong guess can show a bad idea or missing part.",
+        "A wrong guess can show a bad idea or a missing part.",
         "A model may work in one range and fail outside.",
         "Two models of one system can have two goals.",
         "A model earns trust from many tests, not extra parts."
@@ -4065,7 +4065,7 @@ module.exports = {
         "Tracing in one direction leaves the whole loop half described."
       ],
       "applications": [
-        "A thermostat reads room heat to decide about more heating.",
+        "A thermostat reads room heat to decide whether to heat more.",
         "Sweating moves body heat back toward a good range.",
         "Melting ice bares dark water. Dark water soaks heat and melts more.",
         "A heater keeps warming since its sensor reads an old temperature.",

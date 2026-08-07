@@ -26,14 +26,14 @@ const TOPICS = [
     ],
     wrong: [
       ["구름은 수증기가 높은 곳에서 빗방울 크기로 자라면서 처음 만들어진다.", "Clouds first form when vapor grows directly into raindrop-sized drops high in the air."],
-      ["지표에 내린 비는 땅의 경사를 따라 바다로 흐르는 과정을 중심으로 순환한다.", "Rain on the ground cycles mainly by following slopes directly toward the ocean."],
+      ["지표에 내린 비는 땅의 경사를 따라 바다로 흐르는 과정을 중심으로 순환한다.", "Rain on the ground mainly cycles back to the ocean by flowing down the slope of the land."],
       ["땅속으로 스며든 물은 지표의 물보다 먼저 수증기로 변해 대기로 돌아간다.", "Water in the soil returns to the air as vapor before water on the surface does."],
       ["식물은 뿌리에서 흡수한 물을 줄기 안에 저장하면서 물의 순환 속도를 늦춘다.", "Plants slow the water cycle by storing water from their roots inside their stems."],
       ["바람의 세기가 물의 순환을 움직이는 주된 에너지의 양을 결정한다.", "Wind strength determines the main supply of energy that drives the water cycle."]
     ],
     applications: [
       ["햇볕에 널어 둔 젖은 수건의 물이 공기 중으로 이동할 수 있다.", "Water in a wet towel can move into the air when the towel is left in sunlight."],
-      ["차가운 컵 표면에 물방울이 생기는 것은 기체 상태의 물이 식은 사례다.", "Droplets on a cold cup are an example of gaseous water cooling."],
+      ["차가운 컵 표면에 물방울이 생기는 것은 기체 상태의 물이 식은 사례다.", "Droplets on a cold cup are an example of water vapor cooling into a liquid."],
       ["구름 속 작은 물방울이 합쳐져 충분히 무거워지면 지표로 떨어질 수 있다.", "Tiny cloud droplets can join and fall when they become heavy enough."],
       ["비가 그친 뒤에도 일부 물은 땅속에 남아 이동한다.", "After rain stops, some water remains underground and continues moving."],
       ["산에 내린 비가 하천을 거쳐 바다로 가는 것은 순환의 한 경로다.", "Rain moving from a mountain through a river to the sea is one path in the cycle."],
@@ -71,7 +71,7 @@ const TOPICS = [
       ["곤충 한 종이 크게 줄면 그 곤충을 먹는 새도 영향을 받을 수 있다.", "A sharp decline in one insect species can affect birds that eat it."],
       ["연못이 마르면 그곳에서 먹이와 물을 얻던 생물의 생활이 어려워진다.", "If a pond dries up, organisms that relied on it for food and water may struggle."],
       ["비슷한 역할을 하는 종이 여럿이면 한 종의 감소를 다른 종이 일부 보완할 수 있다.", "When several species fill similar roles, others may partly offset the loss of one."],
-      ["같은 양의 먹이로는 초식동물보다 상위 포식자를 더 적게 지탱하게 된다.", "The same food base supports fewer top predators than herbivores."]
+      ["같은 양의 먹이로는 초식동물보다 상위 포식자를 더 적게 지탱하게 된다.", "The same food base supports fewer top predators than it does herbivores."]
     ]
   },
   {
@@ -92,7 +92,7 @@ const TOPICS = [
       ["일주일의 평균 기온은 그 지역의 계절별 기후를 대표하는 자료가 된다.", "A weekly mean temperature represents the seasonal climate of a region."],
       ["평년보다 추운 날이 이어지면 장기 기후 추세는 그 기간의 방향으로 이동한다.", "A run of colder-than-average days shifts the long-term climate trend in the same direction."],
       ["평균 기온이 같은 지역은 비슷한 대기 순환을 겪어 강수와 바람도 비슷해진다.", "Regions with the same mean temperature develop similar rainfall and wind through similar air circulation."],
-      ["해안과 내륙의 기온 변화 차이는 주로 두 지역의 위도 차이에서 생긴다.", "Differences between coastal and inland temperatures mainly result from differences in latitude."],
+      ["해안과 내륙의 기온 변화 차이는 주로 두 지역의 위도 차이에서 생긴다.", "The temperature gap between coastal and inland areas mainly results from a difference in latitude."],
       ["관측 지점이 많아질수록 예보 모형이 없어도 날씨 변화는 정확히 예측된다.", "As observation sites increase, a forecast model is no longer needed to calculate weather changes."]
     ],
     applications: [
@@ -130,7 +130,7 @@ const TOPICS = [
     applications: [
       ["전구가 켜질 때 빛뿐 아니라 열도 생길 수 있다.", "A lamp can produce heat as well as light when switched on."],
       ["같은 물체가 더 빠르게 움직이면 운동과 관련된 에너지도 커진다.", "When the same object moves faster, its energy of motion increases."],
-      ["책을 위쪽 선반에 두면 바닥에 있을 때보다 떨어지며 일을 할 가능성이 커진다.", "A raised book can do more work while falling than it could from the floor."],
+      ["책을 위쪽 선반에 두면 바닥에 있을 때보다 떨어지면서 더 많은 일을 할 수 있다.", "A raised book can do more work while falling than it could from the floor."],
       ["손전등은 배터리에 저장된 에너지를 이용해 전구에 전기를 공급한다.", "A flashlight uses stored battery energy to supply electricity to its lamp."],
       ["선풍기가 작동할 때 전기 에너지는 날개의 운동과 열 등으로 전환된다.", "When a fan runs, electrical energy changes into blade motion, heat, and other forms."],
       ["브레이크를 잡은 자전거 바퀴가 따뜻해지는 것은 에너지 전환의 결과다.", "A bicycle wheel warming under braking is evidence of an energy transformation."],
@@ -228,7 +228,7 @@ const TOPICS = [
       ["2 대 3의 두 항에 같은 수 2를 곱하면 4 대 6이 된다.", "Multiplying both terms of 2 to 3 by 2 gives 4 to 6."],
       ["180킬로미터를 3시간에 갔다면 한 시간당 거리는 60킬로미터다.", "Traveling 180 kilometers in 3 hours gives a unit rate of 60 kilometers per hour."],
       ["해당하는 수가 같아도 전체 규모가 달라지면 차지하는 몫은 달라진다.", "Equal counts can still describe unequal portions when their totals differ."],
-      ["각 재료의 양을 3배로 늘리면 비례하는 조리법의 맛의 비율은 유지된다.", "Multiplying each ingredient by three preserves the ratios in a proportional recipe."],
+      ["각 재료의 양을 3배로 늘리면 조리법에 담긴 맛의 비율은 그대로 유지된다.", "Multiplying each ingredient by three preserves the ratios in a proportional recipe."],
       ["거리와 시간이 비례하고 시작 거리가 0이라면 그래프는 원점을 지난다.", "If distance is proportional to time and starts at zero, its graph passes through the origin."],
       ["학생 200명의 25%는 전체를 네 등분한 한 부분인 50명이다.", "Twenty-five percent of 200 students is one quarter, or 50 students."],
       ["시속과 분속을 바로 비교하려면 먼저 시간 단위를 맞춰야 한다.", "Comparing hourly and per-minute rates requires matching time units."]

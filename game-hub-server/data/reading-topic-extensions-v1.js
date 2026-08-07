@@ -81,7 +81,7 @@ module.exports = {
         "In a forested area, trees hold water and the air can grow drier."
       ],
       [
-        "물이 얼음이 되면 순환에서 빠져나온 상태가 되는 경우다.",
+        "물이 얼음이 되면 순환에서 완전히 빠져나온 경우가 된다.",
         "Water becoming ice is a case of leaving the water cycle for good."
       ],
       [
@@ -95,7 +95,7 @@ module.exports = {
         "When a cloud disappears from the sky, the water it held has left the atmosphere."
       ],
       [
-        "지하수는 한번 흙 속에 들어가면 지표의 물과 섞이지 않는 별개의 물로 남는다.",
+        "지하수는 한번 흙 속에 들어가면 지표의 물과 섞이지 않고 별개로 남는다.",
         "Once water enters the soil it stays separate from surface water and does not return."
       ],
       [
@@ -112,10 +112,10 @@ module.exports = {
     "inferences": [
       [
         "생산자가 없는 곳에서는 다른 생물이 쓸 양분의 공급이 처음부터 끊어지게 된다.",
-        "In a place without producers, no new food is made there for any other organisms to use."
+        "In a place without producers, no new food is made for any other organisms to use."
       ],
       [
-        "소비자가 사는 곳에서는 먹이가 되는 생물이 함께 있어야 그 수가 유지된다.",
+        "소비자가 사는 곳에서는 먹이가 되는 생물이 함께 있어야 소비자의 수가 유지된다.",
         "The number of consumers in a place holds up when other organisms remain there as food."
       ],
       [
@@ -200,7 +200,7 @@ module.exports = {
     "inferences": [
       [
         "같은 도시라도 오전과 오후의 대기 상태가 다르면 날씨는 다르게 기록된다.",
-        "In one city, morning and afternoon differ in weather if the air differs."
+        "In one city, the weather differs between morning and afternoon if the air itself changes."
       ],
       [
         "올해의 기록 하나가 특이해도 여러 해 자료로 세운 그 지역 기후 설명은 유지된다.",
@@ -220,7 +220,7 @@ module.exports = {
       ],
       [
         "위도가 비슷한 두 지역이라도 바다와의 거리가 다르면 기후는 서로 달라진다.",
-        "Two regions at a similar latitude still differ in climate when their distance from the sea differs."
+        "Two regions at a similar latitude can still have different climates when their distance from the sea is not the same."
       ],
       [
         "예보가 빗나간 뒤에도 관측 자료와 모형을 이용한 예측은 계속 쓰일 수 있다.",
@@ -257,8 +257,8 @@ module.exports = {
         "Two sides of one mountain can be taken to have similar rainfall since they share the mountain."
       ],
       [
-        "예보는 처음 내용을 유지하고 새 자료는 다음에 쓴다.",
-        "A forecast should keep its first wording, so new data is saved."
+        "예보는 처음 내용을 그대로 유지하고 새로 들어온 자료는 반영하지 않는다.",
+        "A forecast should keep its original wording and ignore any new data that arrives."
       ],
       [
         "평균 기온이 같은 두 지역은 폭염 대비도 같은 수준으로 세운다.",
@@ -326,11 +326,11 @@ module.exports = {
       ],
       [
         "질량이 다른 두 공이 같은 속력으로 구르면 운동 에너지도 같아진다.",
-        "Two balls of different mass at one speed have equal energy of motion."
+        "Two balls of different mass moving at the same speed have equal energy of motion."
       ],
       [
         "높은 선반의 책과 바닥의 책은 무게가 같으면 위치 에너지도 같은 값이 된다.",
-        "A shelved book and a floor book of equal weight have equal position energy."
+        "A shelved book and a floor book of equal weight have equal potential energy."
       ],
       [
         "손전등이 켜지지 않으면 배터리에 있던 에너지가 사라진 결과다.",
@@ -349,7 +349,7 @@ module.exports = {
         "A solar cell in the shade can make as much electricity as one in bright light."
       ],
       [
-        "같은 일을 할 때 열이 더 나는 기계가 에너지를 더 잘 쓰는 기계일 수 있다.",
+        "같은 일을 할 때 열이 더 나는 쪽이 에너지를 더 잘 쓰는 기계일 수 있다.",
         "A machine that gives off more heat can be a sign that the energy put in is being used well."
       ]
     ],
@@ -376,7 +376,7 @@ module.exports = {
     "inferences": [
       [
         "짧은 비밀번호를 오래 써 온 사람도 글자 수를 늘리면 추측에 대한 저항을 높일 수 있다.",
-        "Someone who has used a short password can raise its resistance to guessing by adding characters."
+        "Someone who has used a short password can make it more resistant to guessing by adding characters."
       ],
       [
         "여러 서비스에 같은 비밀번호를 쓴다면 한 곳에서 생긴 사고가 나머지 계정의 위험도 키운다.",
@@ -387,7 +387,7 @@ module.exports = {
         "Even when a password is known, the extra verification step remains, so intrusion does not follow at once."
       ],
       [
-        "링크를 누른 뒤에 보낸 사람을 확인하는 순서에서는 확인 절차가 피해를 막는 힘을 잃게 된다.",
+        "링크를 누른 뒤에 보낸 사람을 확인하는 순서에서는 그 절차가 피해를 막는 힘을 잃게 된다.",
         "Checking the sender after the link has already been opened leaves the check unable to prevent the harm."
       ],
       [
@@ -652,7 +652,7 @@ module.exports = {
       ],
       [
         "느낌만 길게 늘어놓은 감상문은 화면의 부분을 짚은 짧은 글보다 설득력이 약할 수 있다.",
-        "A long response built out of feelings can persuade less than a short one pointing to parts of the picture."
+        "A long response built out of feelings can be less persuasive than a short one pointing to parts of the picture."
       ],
       [
         "같은 표시라도 그것이 쓰이던 시대를 알고 나서 보면 다른 뜻으로 읽힐 수 있다.",
@@ -729,7 +729,7 @@ module.exports = {
       "한 문단에 자료와 해석이 함께 있으면 둘을 나눈 뒤에 각각의 무게를 따로 정해야 한다.",
       "여러 곳에서 같은 내용을 보았어도 한 자료를 옮긴 것이면 확인한 출처는 하나로 유지된다.",
       "그림 자료가 준 인상이 강할수록 촬영 범위와 그래프 축의 간격을 다시 살펴야 한다.",
-      "직함이 붙은 사람의 말이라도 연구해 온 분야가 발언 내용과 맞는지는 따져 볼 일인 것이다.",
+      "직함이 붙은 사람의 말도 그 사람이 연구해 온 분야가 발언 내용과 맞는지 따져 봐야 한다.",
       "결론이 아직 확실하지 않다는 점을 함께 알리면 읽는 사람의 잘못된 이해를 미리 줄이게 된다."
     ],
     "wrongApplications": [
@@ -738,7 +738,7 @@ module.exports = {
       "여행 안내문의 시간표가 자세해서 게시 날짜 없이도 지금 운행에 맞는다고 본다.",
       "기사에 조사 수치가 인용되어 있어 기자의 해설도 결과로 표시한다.",
       "같은 문장을 실은 사이트가 많아서 확인된 자료로 보고 쓴다.",
-      "막대의 차이가 커 보여 세로축은 두고 막대 길이만으로 차이를 판단한다.",
+      "막대 사이의 차이가 커 보여 세로축은 살피지 않고 길이만으로 판단한다.",
       "식품 조언을 한 사람이 방송에 자주 나와서 연구 분야는 넘긴다.",
       "초기 조사 결과가 뚜렷해서 표본이 작다는 점은 빼고 결론만 정리해 알린다."
     ],
@@ -752,7 +752,7 @@ module.exports = {
       "자기 사정만 내세운 예외 요청은 같은 처지에 놓인 다른 사람에게 설명하기 어려운 요구다.",
       "어느 쪽이 더 편한지만 따져 결론을 내리면 상대가 겪게 될 불편이 판단에서 빠지게 된다.",
       "모두에게 같은 기준을 적용했다는 사실만으로 그 결정이 공정한 것이었다고 말하기는 어려운 일이다.",
-      "새 규칙이 눈앞의 문제를 줄였더라도 그 과정에서 어떤 불편이 새로 생겼는지 함께 살펴야 한다.",
+      "새 규칙이 눈앞의 문제를 줄였더라도 그 과정에서 어떤 불편이 생겨났는지 함께 살펴야 한다.",
       "다른 곳에서 잘 통한 방법이라도 조건이 다르면 여기서 같은 결과로 이어지지 않을 수도 있다.",
       "결론만 발표하고 그 근거를 밝히지 않으면 결정을 다시 살펴볼 통로가 그만큼 좁아지게 된다."
     ],
@@ -764,7 +764,7 @@ module.exports = {
       "같은 시간 안에 계단을 오르는 조건을 모두에게 똑같이 적용했으니 공정하다고 본다.",
       "교실 소음을 줄이는 규칙을 만들며 발표 활동이 줄어들 가능성은 뒤로 미룬다.",
       "예외가 한 번 인정된 사례를 근거로 조건이 다른 요청도 그대로 받아들인다.",
-      "학급 투표에서 나온 결론만 알리고 선택한 근거와 다시 논의할 시점은 뺀다."
+      "학급 투표에서 나온 결론만 알리고, 그 근거와 다시 논의할 시점은 밝히지 않는다."
     ],
     "wrongExtra": []
   },
@@ -805,7 +805,7 @@ module.exports = {
       "Trees form one part of a city's wider heat plan rather than a complete answer to summer heat."
     ],
     "wrongApplications": [
-      "A visitor picks a bench on dark pavement because that surface holds heat below.",
+      "A visitor picks a bench on dark pavement because that surface traps its heat underneath.",
       "A city waits until a street heats up before expecting its new canopy to help.",
       "A gardener expects air near watered leaves to warm as the water evaporates.",
       "Planners record each tree's height and expect equal cooling from trees of equal height.",
@@ -829,7 +829,7 @@ module.exports = {
       "한계를 함께 밝힌 비교는 그 결론을 어디까지 믿어도 될지를 읽는 사람에게 알려 준다."
     ],
     "wrongApplications": [
-      "두 이동 수단을 견주며 기준을 세우기 전에 눈에 띄는 차이부터 비교한다.",
+      "두 이동 수단을 견줄 때 기준을 세우기 전에 눈에 띄는 차이부터 살핀다.",
       "학생 수가 다른 두 학교의 결석을 그해에 발생한 건수 그대로 비교한다.",
       "여름과 겨울의 전력량 차이를 계절과 무관한 습관 변화로 정리한다.",
       "두 반의 평균 점수가 같으므로 최고점과 최저점의 분포도 비슷하다고 본다.",
@@ -895,7 +895,7 @@ module.exports = {
       "An observer who records sound alone may miss a visible part of a message.",
       "The value of a signal depends on the conditions between sender and receiver.",
       "Reaching a distant partner and staying hidden pull in different directions.",
-      "Cost is one reason a receiver can trust what a display shows about condition.",
+      "Cost is one reason a receiver can trust what a display shows about the sender's condition.",
       "Reading a signal without noticing the surrounding situation can lead to a mistake.",
       "Treating a doubtful signal like a dependable one can carry a cost for the receiver.",
       "A change on the receiver's side over many generations can reshape which signals continue to develop."
@@ -903,7 +903,7 @@ module.exports = {
     "wrongApplications": [
       "A bird hears an alarm call, keeps feeding, and is counted as responding.",
       "A lizard must finish its movement before any color display begins.",
-      "A quiet signal is expected to carry better beside a loud and noisy stream.",
+      "A quiet signal is expected to carry better beside a loud, rushing stream.",
       "A far-carrying mating call is treated as safe because distance hides the caller.",
       "A weak animal's frequent display is taken as evidence of good condition.",
       "The same movement is recorded as a warning in the next setting without checking.",
@@ -926,7 +926,7 @@ module.exports = {
     ],
     "wrongApplications": [
       "공원을 넓히자는 주장에 빠진 생각도 글에 쓰여 있다고 보고 그 문장들만 차례로 살핀다.",
-      "자료와 결론이 맞으므로 둘 사이의 연결도 맞는다고 본다.",
+      "자료와 결론이 타당하므로 둘 사이의 연결도 문제없다고 본다.",
       "같은 판매 자료에서 서로 다른 결론이 나오자 한쪽이 자료를 잘못 읽은 것이라고 판단한다.",
       "결론에 필요한 조건을 글에 이미 적힌 문장 가운데에서 골라 확인한다.",
       "이용자 수 자료가 정확한 것을 확인하고 그 주장의 결론도 믿을 만하다고 본다.",
@@ -950,7 +950,7 @@ module.exports = {
     ],
     "wrongApplications": [
       "각 문단에서 가장 긴 문장을 뽑아 그대로 이어 붙인다.",
-      "재미있는 일화가 인상 깊게 남았으므로 요약의 첫 문장으로 먼저 적어 둔다.",
+      "재미있는 일화가 인상 깊게 남았으므로 요약의 첫 문장으로 적어 둔다.",
       "여러 문장에 겹치는 낱말이 적으므로 서로 다른 내용이라고 본다.",
       "여러 동물 사례 가운데 가장 자세히 나온 하나를 글의 주제로 정한다.",
       "비와 식물 성장을 다룬 글에서 가장 자세히 설명된 강수량을 골라 요약한다.",
@@ -974,7 +974,7 @@ module.exports = {
     ],
     "wrongApplications": [
       "A map is redrawn with every small object so that travelers can trust it.",
-      "A climate model keeps each detail apart so large patterns stay visible.",
+      "A climate model keeps every detail intact so large patterns stay visible.",
       "A weather prediction is left unchanged after new temperature data arrive.",
       "Researchers adjust the measured river height to match the predicted height.",
       "An unexpected result leads researchers to leave the soil assumption alone.",
