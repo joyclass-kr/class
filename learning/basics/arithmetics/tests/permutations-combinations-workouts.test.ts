@@ -45,9 +45,9 @@ test("review selection and answer comparison work", () => {
   assert.equal(samePermutationCombinationAnswer("120", 120), true);
   assert.equal(samePermutationCombinationAnswer("120.0", 120), false);
 });
-test("permutation and combination worksheets follow common-math order without pre-solve formulas", async () => {
+test("permutation and combination worksheets follow common-math order and show the given data on the worksheet", async () => {
   const page = await readFile(new URL("../app/arithmetic/high-school/combinatorics-worksheet.tsx", import.meta.url), "utf8");
   assert.match(page, /subject=\{common \? "공통수학 1" : "확률과 통계"\}/);
-  assert.match(page, /showLatexOnWorksheet=\{false\}/);
+  assert.doesNotMatch(page, /showLatexOnWorksheet=\{false\}/);
   assert.match(page, /NumericChoiceWorksheet/);
 });

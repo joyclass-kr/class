@@ -22,6 +22,5 @@ export default function CombinatoricsWorksheet({ mode }: { mode: "common" | "pro
     instruction="조건에 맞는 경우의 수를 계산하세요."
     createSet={(seed) => { const set = createSet(seed); return { seed: set.seed, problems: set.problems.map(adapt) }; }}
     createReviews={(kinds, seed) => createPermutationCombinationReviewProblems(kinds as never[], seed).map(adapt)}
-    showLatexOnWorksheet={false}
   />;
 }
