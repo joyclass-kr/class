@@ -1284,7 +1284,7 @@
                     const gradeClassLabel = (m?.grade && m?.classNumber) ? `${m.grade}학년 ${m.classNumber}반 ${m.studentNumber}번 ` : '';
                     const studentName = m?.studentName || state.user?.displayName || state.user?.name || '학생';
                     
-                    btn.innerHTML = `<span class="profile-title">${studentName}</span><span class="profile-desc">🎓 ${schoolLabel} ${gradeClassLabel}학생 계정 · 구글 클래스룸 학급 알림장 열기</span>`;
+                    btn.innerHTML = `<span class="profile-title">${studentName}</span><span class="profile-desc">🎓 ${schoolLabel} ${gradeClassLabel}학생 계정</span>`;
                     profileList.appendChild(btn);
 
                     const studentPlayerName = studentName;
@@ -1332,7 +1332,7 @@
                     btn.className = 'profile-btn student';
                     btn.href = '/classboard/';
                     const uName = state.user.name || state.user.displayName || '학생';
-                    btn.innerHTML = `<span class="profile-title">${uName}</span><span class="profile-desc">🎓 학생 계정 · 구글 클래스룸 학급 알림장 열기</span>`;
+                    btn.innerHTML = `<span class="profile-title">${uName}</span><span class="profile-desc">🎓 학생 계정</span>`;
                     profileList.appendChild(btn);
                     setHubLocked(false);
                 }
