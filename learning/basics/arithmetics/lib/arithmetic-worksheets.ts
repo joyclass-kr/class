@@ -70,6 +70,7 @@ const readyRoutes: Record<string, string> = {
   "6비례식": "/arithmetic/grade-6-proportion",
   "6원": "/arithmetic/grade-6-circle",
   "6원기둥": "/arithmetic/grade-6-cylinder",
+  "6쌓기나무": "/arithmetic/grade-6-stacked-cubes",
 };
 
 const worksheetNames = [
@@ -78,7 +79,7 @@ const worksheetNames = [
   "3덧셈뺄셈", "3덧셈뺄셈빈칸", "3보수뺄셈100", "3보수뺄셈1000", "3덧셈뺄셈②", "3나눗셈①", "3곱셈①", "3곱셈②", "3길이", "3시간①", "3시간②", "3곱셈③", "19단", "제곱수", "3나눗셈②", "3나눗셈③", "3분수①", "3분수②", "3무게,들이", "3분수③",
   "4숫자읽기", "4각도어림", "4곱셈", "4큰수곱셈", "4나눗셈", "4분수", "4소수", "단위변환",
   "5혼합계산", "자연수분해", "프라임넘버", "5약수,배수", "5분수①", "5분수②", "5분수③", "5소수",
-  "6분수", "6소수①", "6소수②", "6소수③", "6혼합계산", "6비례식", "6원", "6원기둥",
+  "6분수", "6소수①", "6소수②", "6소수③", "6혼합계산", "6비례식", "6원", "6원기둥", "6쌓기나무",
 ] as const;
 
 const explicitGrades: Record<string, string> = {
@@ -153,6 +154,7 @@ const elementaryTitles: Record<string, string> = {
   "6비례식": "비례식",
   "6원": "원의 계산",
   "6원기둥": "원기둥의 계산",
+  "6쌓기나무": "쌓기나무",
 };
 
 const elementaryHorizontalMentalMathWorksheets = new Set([
