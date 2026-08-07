@@ -59,7 +59,6 @@
 
   const boardElement = document.getElementById('board');
   const titleElement = document.getElementById('gameTitle');
-  const mistakeElement = document.getElementById('mistakeCount');
   const timerElement = document.getElementById('timer');
   const bestElement = document.getElementById('bestScore');
   const statusElement = document.getElementById('status');
@@ -82,8 +81,6 @@
   let marked = [];
   let clues = { rows: [], cols: [] };
   let tool = 'fill';
-  let mistakes = 0;
-  let wrongEver = new Set();
   let elapsed = 0;
   let timerId = null;
   let started = false;
@@ -137,17 +134,6 @@
     }
   }
 
-  function rowSatisfied(r) {
-    return filled[r].every((value, c) => value === solution[r][c]);
-  }
-
-  function colSatisfied(c) {
-    for (let r = 0; r < n; r += 1) {
-      if (filled[r][c] !== solution[r][c]) return false;
-    }
-    return true;
-  }
-
   function render() {
     boardElement.className = `nono-board size-${n}`;
     boardElement.style.gridTemplateColumns = `var(--clue) repeat(${n}, var(--cell))`;
@@ -160,7 +146,7 @@
 
     for (let c = 0; c < n; c += 1) {
       const cell = document.createElement('div');
-      cell.className = `nb-col-clue${colSatisfied(c) ? ' done' : ''}`;
+      cell.className = 'nb-col-clue';
       clues.cols[c].forEach(num => {
         const span = document.createElement('span');
         span.textContent = num;
@@ -171,7 +157,7 @@
 
     for (let r = 0; r < n; r += 1) {
       const rowClue = document.createElement('div');
-      rowClue.className = `nb-row-clue${rowSatisfied(r) ? ' done' : ''}`;
+      rowClue.className = 'nb-row-clue';
       rowClue.textContent = clues.rows[r].join(' ');
       boardElement.append(rowClue);
 
@@ -179,38 +165,16 @@
         const cell = document.createElement('button');
         cell.type = 'button';
         cell.className = 'nb-cell';
-        if (filled[r][c]) cell.classList.add(solution[r][c] ? 'filled' : 'wrong-fill');
-        if (marked[r][c]) cell.classList.add('marked');
+        if (filled[r][c]) cell.classList.add('filled');
+        if (marked[r][c] && !filled[r][c]) cell.classList.add('marked');
         cell.dataset.r = String(r);
         cell.dataset.c = String(c);
         cell.dataset.sfx = 'none';
         cell.setAttribute('aria-label', `${r + 1}행 ${c + 1}열`);
-        if (filled[r][c] && !solution[r][c]) cell.textContent = '✕';
-        else if (marked[r][c] && !filled[r][c]) cell.textContent = '✕';
+        if (marked[r][c] && !filled[r][c]) cell.textContent = '✕';
         boardElement.append(cell);
       }
     }
-  }
-
-  function cellElement(r, c) {
-    return boardElement.querySelector(`.nb-cell[data-r="${r}"][data-c="${c}"]`);
-  }
-
-  function flashWrong(r, c) {
-    const el = cellElement(r, c);
-    if (!el) return;
-    el.classList.remove('wrong-pulse');
-    void el.offsetWidth;
-    el.classList.add('wrong-pulse');
-    setTimeout(() => el.classList.remove('wrong-pulse'), 320);
-  }
-
-  function markWrongOnce(r, c) {
-    const key = `${r},${c}`;
-    if (wrongEver.has(key)) return;
-    wrongEver.add(key);
-    mistakes += 1;
-    mistakeElement.textContent = mistakes;
   }
 
   function setCellFilled(r, c, value) {
@@ -219,13 +183,7 @@
     if (value) {
       if (marked[r][c]) marked[r][c] = false;
       startTimer();
-      if (solution[r][c]) {
-        playSfx('stone');
-      } else {
-        markWrongOnce(r, c);
-        playSfx('error');
-        flashWrong(r, c);
-      }
+      playSfx('stone');
     } else {
       playSfx('click');
     }
@@ -345,8 +303,8 @@
 
   function updateBest() {
     const best = JSON.parse(localStorage.getItem(bestKey()) || 'null');
-    bestElement.textContent = best ? `${best.mistakes}회` : '—';
-    bestElement.title = best ? `실수 ${best.mistakes}회, ${formatTime(best.time)}` : '';
+    bestElement.textContent = best ? formatTime(best.time) : '—';
+    bestElement.title = best ? `최고 기록 ${formatTime(best.time)}` : '';
   }
 
   function completePuzzle() {
@@ -354,13 +312,13 @@
     statusElement.textContent = 'PUZZLE COMPLETE!';
     statusElement.classList.add('success');
     const previous = JSON.parse(localStorage.getItem(bestKey()) || 'null');
-    if (!previous || mistakes < previous.mistakes || (mistakes === previous.mistakes && elapsed < previous.time)) {
-      localStorage.setItem(bestKey(), JSON.stringify({ mistakes, time: elapsed }));
+    if (!previous || elapsed < previous.time) {
+      localStorage.setItem(bestKey(), JSON.stringify({ time: elapsed }));
     }
     updateBest();
-    resultSummary.textContent = `${currentPuzzle.name} · ${formatTime(elapsed)} · 실수 ${mistakes}회`;
+    resultSummary.textContent = `${currentPuzzle.name} · ${formatTime(elapsed)}`;
     finisherBoard.register({
-      difficulty: `${n}×${n} · ${currentPuzzle.name} · 실수 ${mistakes}회`,
+      difficulty: `${n}×${n} · ${currentPuzzle.name}`,
       rank: n,
       targetId: 'result-finishers-list'
     });
@@ -390,11 +348,8 @@
     stopTimer();
     filled = Array.from({ length: n }, () => Array(n).fill(false));
     marked = Array.from({ length: n }, () => Array(n).fill(false));
-    wrongEver = new Set();
-    mistakes = 0;
     elapsed = 0;
     started = false;
-    mistakeElement.textContent = '0';
     timerElement.textContent = '00:00';
     statusElement.textContent = 'READY';
     statusElement.classList.remove('success');
