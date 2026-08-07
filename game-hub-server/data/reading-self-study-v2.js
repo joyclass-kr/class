@@ -100,7 +100,7 @@ const TOPICS = [
       ["한 도시의 계절적 특징을 알려면 여러 해의 기록을 살펴봐야 한다.", "To identify a city's seasonal pattern, records from many years should be examined."],
       ["수십 년의 변화 방향은 한파가 있었던 하루보다 장기간의 관측 자료로 판단해야 한다.", "A decades-long direction should be judged from long-term observations rather than one extremely cold day."],
       ["기온이 같아도 비와 바람이 다르면 두 날의 날씨는 다르게 설명된다.", "Two days with equal temperatures can have different weather if rain and wind differ."],
-      ["지역의 평소 경향을 설명하려면 짧은 기록보다 여러 세대에 걸친 관측을 살핀다.", "A researcher studies records across several decades before describing a region's usual pattern."],
+      ["지역의 평소 경향을 설명하려면 짧은 기록보다 수십 년에 걸친 관측을 살핀다.", "A researcher studies records across several decades before describing a region's usual pattern."],
       ["산의 양쪽 지역은 공기의 상승과 강수 차이 때문에 서로 다른 기후가 나타날 수 있다.", "Opposite sides of a mountain can have different climates because of rising air and rainfall."],
       ["새 관측 자료가 들어오면 예보 결과가 수정될 수 있다.", "A forecast may be revised when new observations become available."],
       ["평균 기온만 같은 두 지역이라도 폭염 위험은 다를 수 있다.", "Two regions with the same mean temperature can still have different heat-wave risks."]
@@ -228,7 +228,7 @@ const TOPICS = [
       ["2 대 3의 두 항에 같은 수 2를 곱하면 4 대 6이 된다.", "Multiplying both terms of 2 to 3 by 2 gives 4 to 6."],
       ["180킬로미터를 3시간에 갔다면 한 시간당 거리는 60킬로미터다.", "Traveling 180 kilometers in 3 hours gives a unit rate of 60 kilometers per hour."],
       ["해당하는 수가 같아도 전체 규모가 달라지면 차지하는 몫은 달라진다.", "Equal counts can still describe unequal portions when their totals differ."],
-      ["각 재료의 양을 3배로 늘리면 조리법에 담긴 맛의 비율은 그대로 유지된다.", "Multiplying each ingredient by three preserves the ratios in a proportional recipe."],
+      ["각 재료의 양을 3배로 늘리면 조리법에 담긴 재료의 비율은 그대로 유지된다.", "Multiplying each ingredient by three preserves the ratios in a proportional recipe."],
       ["거리와 시간이 비례하고 시작 거리가 0이라면 그래프는 원점을 지난다.", "If distance is proportional to time and starts at zero, its graph passes through the origin."],
       ["학생 200명의 25%는 전체를 네 등분한 한 부분인 50명이다.", "Twenty-five percent of 200 students is one quarter, or 50 students."],
       ["시속과 분속을 바로 비교하려면 먼저 시간 단위를 맞춰야 한다.", "Comparing hourly and per-minute rates requires matching time units."]

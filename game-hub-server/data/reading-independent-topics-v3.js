@@ -60,7 +60,7 @@ module.exports = [
       "권리가 충돌할 때에는 더 많은 사람이 원하는 선택이 각 선택의 영향을 판단하는 기준이 된다.",
       "같은 결과를 요구하는 규칙은 출발 조건의 차이보다 결과의 통일성을 통해 공정성을 만든다.",
       "규칙이 현재 문제를 해결하는 효과는 앞으로 생길 가능성이 있는 문제보다 먼저 평가해야 한다.",
-      "한 사례에서 옳았던 판단은 조건이 달라진 다른 경우를 판단할 때에도 가장 강한 근거가 된다.",
+      "한 사례에서 옳았던 판단은 조건이 달라진 다른 경우를 다룰 때에도 가장 강한 근거가 된다.",
       "결정 결과를 공개하면 구성원은 이를 통해 근거와 수정 절차도 이해할 수 있다."
     ],
     applications: [
@@ -79,14 +79,14 @@ module.exports = [
     tracks: ["en"],
     en: "Attention and Notifications",
     facts: [
-      "Attention is limited, so signals cannot all get equal depth of attention at once.",
+      "Attention is limited, so signals cannot all get equal depth of processing at once.",
       "A notification can interrupt a task despite taking moments to read.",
       "After an interruption, returning to an earlier thought needs extra time and effort.",
       "Frequent signals can form a habit of checking before judging whether the check was useful.",
       "Disabling low-priority alerts reduces outside demands on attention.",
       "Scheduled checks preserve access to messages while protecting focused work.",
       "Complex reasoning is harder to resume than a simple routine.",
-      "Attention management means choosing when a digital tool deserves that focus."
+      "Attention management means choosing when a digital tool deserves full focus."
     ],
     wrong: [
       "Attention becomes deeper when several signals compete for it at the same time.",
@@ -121,7 +121,7 @@ module.exports = [
       "Young trees need years of care before they provide mature shade.",
       "Shade matters most where people walk, wait, and live.",
       "Tree planting creates costs when roots, pollen, or maintenance are ignored.",
-      "A heat plan improves when trees are combined with shade, suitable buildings, and water."
+      "A heat plan improves when trees are combined with built shade, suitable buildings, and water."
     ],
     wrong: [
       "Dark pavement stays cooler than shaded ground because it stores sunlight below the surface.",
@@ -130,7 +130,7 @@ module.exports = [
       "Trees of equal height tend to provide an equivalent cooling effect across different conditions.",
       "Young trees provide mature shade as soon as they are placed beside a street.",
       "Planting locations matter less when a city increases the total number of trees.",
-      "Roots and maintenance costs disappear when a tree species grows quickly.",
+      "Costs from roots and maintenance disappear when a tree species grows quickly.",
       "A city with enough trees has little need for other forms of heat protection."
     ],
     applications: [

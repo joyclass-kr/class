@@ -2305,8 +2305,8 @@ module.exports = {
           "Two amounts rising by equal steps keep a steady ratio."
         ],
         [
-          "50%는 기준 수 50과 비교해 얻은 값을 뜻한다.",
-          "Fifty percent compares an amount with the number 50."
+          "50%는 언제나 기준 수 50을 그대로 가리키는 값이다.",
+          "Fifty percent always names the number 50 itself."
         ],
         [
           "단위율은 두 양 가운데 큰 쪽을 1로 놓은 값이다.",
@@ -3402,7 +3402,7 @@ module.exports = {
         "원인이 결과보다 먼저 있었는지 꼭 확인한다.",
         "조건을 비슷하게 맞추면 원인을 가려내기 쉽다.",
         "원인이 여럿 겹친 결과는 설명 하나로 모자라다.",
-        "같은 원인도 환경과 대상에 따라 크기가 달라진다.",
+        "같은 원인도 환경과 대상에 따라 결과의 크기가 달라진다.",
         "생각과 다른 사례는 설명의 조건을 다시 보게 한다.",
         "여러 번 살피고 다른 설명도 따질수록 주장이 세진다."
       ],
@@ -3442,7 +3442,7 @@ module.exports = {
         "원인과 결과의 관계가 센 자료는 순서가 덜 중요하다.",
         "대상 수가 많은 자료에서는 조건 맞추기를 건너뛴다.",
         "큰 원인을 찾은 뒤 나머지를 빼도 설명은 맞는다.",
-        "같은 원인은 대상이 달라도 크기가 비슷해야 한다.",
+        "같은 원인은 대상이 달라도 결과의 크기가 비슷해야 한다.",
         "생각과 다른 사례는 흐름에서 벗어나니 설명에서 뺀다.",
         "되풀이된 관찰에서는 검토보다 횟수가 주장을 세운다."
       ]
@@ -3520,7 +3520,7 @@ module.exports = {
         "A hard, slow recall try still helps your memory later.",
         "An unchecked answer lets a mistake stay in your memory.",
         "The same study time works better spread over several days.",
-        "Drilling one problem type hides your skill at picking a method.",
+        "Drilling one problem type hides whether you can pick the right method.",
         "A blank spot in your recalled answer marks your next study step.",
         "One corrected attempt is not a full round of spaced review work."
       ],
@@ -3540,7 +3540,7 @@ module.exports = {
         "A student drops the hard idea and studies easy ones instead.",
         "A student answers from memory and skips the model answer.",
         "A learner studies all the words in one long evening.",
-        "A worksheet groups the same equations, so students practice picking a way.",
+        "A worksheet groups the same equations, keeping the right method visible.",
         "A student skips the missing step and rereads the neat notes.",
         "A student recalls, checks, and moves on; the idea feels clear."
       ],
@@ -3637,7 +3637,7 @@ module.exports = {
         "A lizard shows color and movement in the same meeting.",
         "A soft signal works nearby but fails beside a loud stream.",
         "A far mating call draws mates and also draws a predator.",
-        "A hard display shows real proof of an animal's health.",
+        "A costly display shows real proof of an animal's health.",
         "One movement warns a rival here and guides a mate there.",
         "An animal answers a sure caller fast, a doubtful one slowly.",
         "A change in how receivers answer reshapes which signals win later."
@@ -3657,7 +3657,7 @@ module.exports = {
         "Animals mix signal forms after the first form has arrived.",
         "A signal grows more useful as it gets harder to notice.",
         "Loud calls keep a caller safe because distance hides it.",
-        "A hard signal is honest simply because it shows up often.",
+        "A costly signal is honest simply because it shows up often.",
         "A signal keeps one meaning even as the setting changes.",
         "Receivers gain more by answering all signals in the same way.",
         "Communication changes through senders alone, and receivers stay fixed."
@@ -3745,7 +3745,7 @@ module.exports = {
         "자료와 결론 사이 빠진 고리를 한 줄로 써 본다.",
         "같은 자료도 값이냐 품질이냐에 따라 갈리는지 본다.",
         "결론이 서려면 무엇이 더 있어야 하는지 묻는다.",
-        "이용자 수가 맞아도 그 수가 필요를 뜻하는지 본다.",
+        "이용자 수가 맞아도 그 수가 사업의 필요를 뜻하는지 본다.",
         "가장 싼 것이 좋다는 말에 값을 앞세운 뜻을 찾는다.",
         "도시에서 맞는 교통 주장이 농촌에서도 맞는지 따진다.",
         "통계를 본 뒤 결론으로 잇는 전제도 함께 살핀다."
@@ -4069,7 +4069,7 @@ module.exports = {
         "Sweating moves body heat back toward a good range.",
         "Melting ice bares dark water. Dark water soaks heat and melts more.",
         "A heater keeps warming since its sensor reads an old temperature.",
-        "Fast sharing helps a warning message but also spreads a rumor.",
+        "Fast sharing spreads a warning message but also spreads a rumor.",
         "A price rise cuts supply later, and low supply lifts price again.",
         "Losing one predator changes plants through its prey animals.",
         "A student traces demand to price, then back to demand."

@@ -400,7 +400,7 @@ module.exports = {
       ],
       [
         "백업을 원본과 같은 기기에 함께 두면 그 기기가 물에 젖거나 고장 났을 때 같이 잃게 된다.",
-        "A backup kept on the same device as the original is hard to use for recovery when that device itself fails."
+        "A backup kept on the same device as the original is lost along with it if that device gets wet or breaks."
       ],
       [
         "한 자료를 그대로 옮긴 여러 글에서는 글의 수가 늘어도 확인에 쓸 출처는 하나로 유지된다.",
@@ -882,7 +882,7 @@ module.exports = {
       "A student drops a concept that felt hard to recall and reviews easier ones instead.",
       "A student skips the model answer because the recalled response came from memory.",
       "A learner studies the whole vocabulary list in one long evening to keep it fresh.",
-      "A worksheet groups identical equations so students practice choosing a method.",
+      "A worksheet groups identical equations, so students rarely have to choose which method fits.",
       "A student ignores the missing step in an explanation and rereads the finished notes.",
       "A student recalls, checks feedback, and moves on because the idea now feels clear."
     ],
@@ -904,7 +904,7 @@ module.exports = {
       "A bird hears an alarm call, keeps feeding, and is counted as responding.",
       "A lizard must finish its movement before any color display begins.",
       "A quiet signal is expected to carry better beside a loud, rushing stream.",
-      "A far-carrying mating call is treated as safe because distance hides the caller.",
+      "A far-carrying mating call is treated as safe because predators are assumed to be too far away to hear it.",
       "A weak animal's frequent display is taken as evidence of good condition.",
       "The same movement is recorded as a warning in the next setting without checking.",
       "An animal reacts in the same way to dependable callers and to uncertain callers.",
