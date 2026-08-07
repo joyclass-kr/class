@@ -69,10 +69,10 @@ function story(problem: StoryProblem) {
     case 0: return <>선물 6개를 한 명당 {value}개씩 주면 몇 명이 받을까요?</>;
     case 1: return <>선물 6개를 {value}명이 똑같이 나누면 한 명당 몇 개일까요?</>;
     case 2: return <>선물 6개를 한 통에 {value}개씩 담으면 몇 통이 될까요?</>;
-    case 3: return <>선물 6개를 한 명당 {value}개씩 나누어주면 몇 명이 받을까요?</>;
+    case 3: return <>머핀 6개를 한 사람이 {value}개씩 사 가면 몇 명이 살 수 있을까요?</>;
     case 4: return <>과일 6개를 하루에 {value}개씩 먹으면 며칠 걸릴까요?</>;
     case 5: return <>과일 6개를 {value}일 동안 똑같이 먹으면 하루에 몇 개일까요?</>;
-    case 6: return <>학습지 6장을 하루에 {value}장씩 풀면 며칠 더 걸릴까요?</>;
+    case 6: return <>학습지 6장을 하루에 {value}장씩 풀면 며칠 걸릴까요?</>;
     case 7: return <>학습지 6장을 {value}일 동안 풀면 하루에 몇 장씩 풀까요?</>;
     case 8: return <>친구 6명이 자동차 {value}대에 똑같이 타면 한 차에 몇 명일까요?</>;
     default: return <>친구 6명이 한 차에 {value}명씩 타면 차가 몇 대 필요할까요?</>;
