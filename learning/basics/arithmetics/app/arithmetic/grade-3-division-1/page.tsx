@@ -8,7 +8,8 @@ type GroupOption = { groupSize: number; groupCount: number };
 type Card = { equation: string; option: GroupOption };
 type StoryProblem = {
   id: string;
-  index: number;
+  templateIndex: number;
+  position: number;
   divisor: number;
   kind: DivisionKind;
   cards: [Card, Card, Card, Card];
@@ -27,7 +28,7 @@ const STORY_KINDS: DivisionKind[] = [
   "quotative",
   "partitive",
   "quotative",
-  "quotative",
+  "partitive",
   "quotative",
   "partitive",
   "quotative",
@@ -51,11 +52,21 @@ function integer(next: () => number, minimum: number, maximum: number) {
   return minimum + Math.floor(next() * (maximum - minimum + 1));
 }
 
+function shuffledTemplateOrder(next: () => number) {
+  const order = STORY_KINDS.map((_, templateIndex) => templateIndex);
+  for (let i = order.length - 1; i > 0; i--) {
+    const j = Math.floor(next() * (i + 1));
+    [order[i], order[j]] = [order[j], order[i]];
+  }
+  return order;
+}
+
 function createProblemSet(seed: number): ProblemSet {
   const next = random(seed);
   return {
     seed,
-    problems: STORY_KINDS.map((kind, index) => {
+    problems: shuffledTemplateOrder(next).map((templateIndex, position) => {
+      const kind = STORY_KINDS[templateIndex];
       const divisor = integer(next, 2, 3);
       const quotient = 6 / divisor;
       const groupSize = kind === "quotative" ? divisor : quotient;
@@ -63,18 +74,18 @@ function createProblemSet(seed: number): ProblemSet {
       const correctOption: GroupOption = { groupSize, groupCount };
       const correctEquation = `6÷${divisor}=${quotient}`;
       const correctCard = CARD_ORDER.findIndex((card) => card.equation === correctEquation && card.option.groupSize === correctOption.groupSize) as 0 | 1 | 2 | 3;
-      return { id: `division-story-${index}`, index, divisor, kind, cards: CARD_ORDER, correctCard };
+      return { id: `division-story-${position}`, templateIndex, position, divisor, kind, cards: CARD_ORDER, correctCard };
     }),
   };
 }
 
 function story(problem: StoryProblem) {
   const value = problem.divisor;
-  switch (problem.index) {
+  switch (problem.templateIndex) {
     case 0: return <>선물 6개를 한 명당 {value}개씩 주면 몇 명이 받을까요?</>;
     case 1: return <>선물 6개를 {value}명이 똑같이 나누면 한 명당 몇 개일까요?</>;
-    case 2: return <>선물 6개를 한 통에 {value}개씩 담으면 몇 통이 될까요?</>;
-    case 3: return <>머핀 6개를 한 사람이 {value}개씩 사 가면 몇 명이 살 수 있을까요?</>;
+    case 2: return <>계란 6개를 한 묶음에 {value}개씩 담으면 몇 묶음이 될까요?</>;
+    case 3: return <>계란 6개를 똑같이 나누어 {value}묶음으로 만들면 한 묶음에 몇 개일까요?</>;
     case 4: return <>과일 6개를 하루에 {value}개씩 먹으면 며칠 걸릴까요?</>;
     case 5: return <>과일 6개를 {value}일 동안 똑같이 나누어 먹으면 하루에 몇 개일까요?</>;
     case 6: return <>학습지 6장을 하루에 {value}장씩 풀면 며칠 걸릴까요?</>;
@@ -155,7 +166,7 @@ export default function GradeThreeDivisionOnePage() {
     const selected = answers[problem.id];
     return (
       <article className={`division-story-problem${graded ? isCorrect ? " is-correct" : " is-wrong" : ""}`} data-testid="division-story-problem" key={problem.id}>
-        <p><b>{problem.index + 1}</b>{story(problem)}</p>
+        <p><b>{problem.position + 1}</b>{story(problem)}</p>
         <div className="division-story-options">
           {problem.cards.map((card, cardIndex) => {
             const isCorrectCard = cardIndex === problem.correctCard;
@@ -179,7 +190,7 @@ export default function GradeThreeDivisionOnePage() {
                 className="division-option"
                 onClick={() => selectCard(problem.id, cardIndex as 0 | 1 | 2 | 3)}
                 aria-pressed={isSelected}
-                aria-label={`${problem.index + 1}번 ${cardIndex + 1}번 카드 선택`}
+                aria-label={`${problem.position + 1}번 ${cardIndex + 1}번 카드 선택`}
                 key={cardIndex}
               >
                 {content}
