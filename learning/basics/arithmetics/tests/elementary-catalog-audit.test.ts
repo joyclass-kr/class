@@ -57,8 +57,11 @@ test("목록의 모든 암산 학습지는 실제 문제지 제목에도 암산 
 });
 
 test("초등 목록 버튼과 실제 학습지 제목은 같은 유형명을 쓴다", () => {
+  // 목록 버튼은 폭이 좁아 영어 병기까지 넣으면 카드가 커지므로, 이 학습지만 목록엔 짧은 제목을 쓴다.
+  const catalogShortTitleExceptions = new Set(["프라임넘버"]);
   for (const worksheet of arithmeticWorksheetCatalog) {
     if (!worksheet.route?.startsWith("/arithmetic/") || worksheet.route.includes("?")) continue;
+    if (catalogShortTitleExceptions.has(worksheet.name)) continue;
     const directory = worksheet.route.replace("/arithmetic/", "");
     const source = readFileSync(new URL(`../app/arithmetic/${directory}/page.tsx`, import.meta.url), "utf8");
     const literalTitle = source.match(/<strong>([^<{]+)\{answerSheet \?/u)?.[1];
