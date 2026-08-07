@@ -1,6 +1,7 @@
 const TILE_W = 34;
 const TILE_H = 17;
 const CUBE_H = 30;
+const MAP_GAP = 22;
 
 type Cube = { r: number; c: number; z: number; isTop: boolean };
 
@@ -28,7 +29,13 @@ function cubeFaces(r: number, c: number, z: number) {
   return { top, left, right };
 }
 
-export default function StackedCubesDiagram({ heights, className }: { heights: number[][]; className?: string }) {
+function floorCellPoints(r: number, c: number, offsetY: number) {
+  const x = (c - r) * TILE_W;
+  const y = (c + r) * TILE_H + offsetY;
+  return { x, y, points: `${x},${y - TILE_H} ${x + TILE_W},${y} ${x},${y + TILE_H} ${x - TILE_W},${y}` };
+}
+
+export default function StackedCubesDiagram({ heights, showMap = false, className }: { heights: number[][]; showMap?: boolean; className?: string }) {
   const size = heights.length;
   const cubes: Cube[] = [];
   for (let r = 0; r < size; r += 1) {
@@ -40,12 +47,19 @@ export default function StackedCubesDiagram({ heights, className }: { heights: n
   cubes.sort((a, b) => a.r + a.c - (b.r + b.c));
 
   const maxHeight = heights.reduce((max, row) => Math.max(max, ...row), 0);
-  const minX = -size * TILE_W;
+  const minX = -size * TILE_W - 20;
   const maxX = size * TILE_W;
   const minY = -maxHeight * CUBE_H - TILE_H;
-  const maxY = 2 * (size - 1) * TILE_H + TILE_H + CUBE_H;
+  const cubesMaxY = 2 * (size - 1) * TILE_H + TILE_H + CUBE_H;
+  const mapOffsetY = cubesMaxY + MAP_GAP;
+  const maxY = (showMap ? mapOffsetY + 2 * (size - 1) * TILE_H + TILE_H : cubesMaxY) + 10;
   const width = maxX - minX;
   const height = maxY - minY;
+
+  const arrowTailX = minX + 8;
+  const arrowTailY = cubesMaxY - 6;
+  const arrowTipX = arrowTailX + TILE_W * 0.85;
+  const arrowTipY = arrowTailY - TILE_H * 0.85;
 
   return (
     <svg
@@ -65,6 +79,21 @@ export default function StackedCubesDiagram({ heights, className }: { heights: n
           </g>
         );
       })}
+      <g className="stacked-cubes-direction">
+        <line x1={arrowTailX} y1={arrowTailY} x2={arrowTipX} y2={arrowTipY} />
+        <polygon points={`${arrowTipX},${arrowTipY} ${arrowTipX - 6},${arrowTipY + 2} ${arrowTipX - 2},${arrowTipY + 6}`} />
+        <text x={arrowTailX - 2} y={arrowTailY + 12}>앞</text>
+      </g>
+      {showMap && heights.map((row, r) => row.map((cellHeight, c) => {
+        if (cellHeight === 0) return null;
+        const { x, y, points } = floorCellPoints(r, c, mapOffsetY);
+        return (
+          <g key={`map-${r}-${c}`}>
+            <polygon className="stacked-cubes-map-cell" points={points} />
+            <text className="stacked-cubes-map-number" x={x} y={y + 4}>{cellHeight}</text>
+          </g>
+        );
+      }))}
     </svg>
   );
 }

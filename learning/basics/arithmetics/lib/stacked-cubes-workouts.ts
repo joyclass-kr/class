@@ -1,4 +1,4 @@
-export type StackKind = "count-basic" | "count-complex" | "three-view";
+export type StackKind = "count" | "count-map" | "three-view";
 
 export type ViewGrids = { top: boolean[][]; front: boolean[][]; side: boolean[][] };
 
@@ -16,7 +16,7 @@ export type StackProblemSet = { seed: number; problems: StackProblem[] };
 export const GRID_SIZE = 3;
 export const MAX_HEIGHT = 3;
 
-const KIND_PLAN: StackKind[] = ["count-basic", "count-basic", "count-complex", "count-complex", "three-view", "three-view"];
+const KIND_PLAN: StackKind[] = ["three-view", "count", "count", "count-map", "count-map"];
 
 function random(seed: number) {
   let value = seed >>> 0;
@@ -80,13 +80,13 @@ function total(heights: number[][]) {
 
 function buildProblem(next: () => number, kind: StackKind, id: string): StackProblem {
   const size = GRID_SIZE;
-  if (kind === "count-basic") {
+  if (kind === "count") {
     const footprint = randomFootprint(next, size, integer(next, 4, 6));
     const heights = buildHeights(next, footprint, 1, 2);
     return { id, kind, heights, size, total: total(heights), views: computeViews(heights, size) };
   }
-  if (kind === "count-complex") {
-    const footprint = randomFootprint(next, size, integer(next, 7, 9));
+  if (kind === "count-map") {
+    const footprint = randomFootprint(next, size, integer(next, 5, 8));
     const heights = buildHeights(next, footprint, 1, MAX_HEIGHT);
     return { id, kind, heights, size, total: total(heights), views: computeViews(heights, size) };
   }
@@ -97,14 +97,9 @@ function buildProblem(next: () => number, kind: StackKind, id: string): StackPro
 
 export function createStackedCubesProblemSet(seed: number): StackProblemSet {
   const next = random(seed);
-  const order = KIND_PLAN.map((kind, index) => ({ kind, index }));
-  for (let i = order.length - 1; i > 0; i -= 1) {
-    const j = Math.floor(next() * (i + 1));
-    [order[i], order[j]] = [order[j], order[i]];
-  }
   return {
     seed,
-    problems: order.map(({ kind, index }) => buildProblem(next, kind, `stacked-cubes-${index}`)),
+    problems: KIND_PLAN.map((kind, index) => buildProblem(next, kind, `stacked-cubes-${index}`)),
   };
 }
 

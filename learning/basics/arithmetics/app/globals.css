@@ -9541,16 +9541,17 @@ main {
   flex: 1 1 auto;
   display: grid;
   grid-template-columns: minmax(0, 1fr);
-  gap: 10px;
+  gap: 8px;
   margin-top: 12px;
   overflow: hidden;
 }
 
 .stack-problem-wrap {
   position: relative;
+  min-height: 0;
   border: 1px solid #d7cec1;
   border-radius: 10px;
-  padding: 10px 14px;
+  padding: 7px 14px;
   background: white;
 }
 
@@ -9563,8 +9564,8 @@ main {
 }
 
 .stack-problem > p {
-  margin: 0 0 8px;
-  font-size: 14px;
+  margin: 0 0 4px;
+  font-size: 13px;
   font-weight: 650;
   color: #17233c;
 }
@@ -9585,19 +9586,19 @@ main {
 .stack-view-body {
   display: flex;
   align-items: center;
-  gap: 18px;
-  flex-wrap: wrap;
+  gap: 14px;
+  flex-wrap: nowrap;
 }
 
 .stacked-cubes-diagram {
-  width: 150px;
+  width: 100px;
   height: auto;
   flex: 0 0 auto;
   overflow: visible;
 }
 
 .stack-view-body .stacked-cubes-diagram {
-  width: 110px;
+  width: 80px;
 }
 
 .stacked-cube-face {
@@ -9616,6 +9617,38 @@ main {
 
 .stacked-cube-face-right {
   fill: #dcc99e;
+}
+
+.stacked-cubes-direction {
+  color: #9a8f7a;
+}
+
+.stacked-cubes-direction line {
+  stroke: currentColor;
+  stroke-width: 2.5;
+}
+
+.stacked-cubes-direction polygon {
+  fill: currentColor;
+}
+
+.stacked-cubes-direction text {
+  fill: currentColor;
+  font-size: 13px;
+  font-weight: 800;
+}
+
+.stacked-cubes-map-cell {
+  fill: white;
+  stroke: #928979;
+  stroke-width: 1;
+}
+
+.stacked-cubes-map-number {
+  fill: #17233c;
+  font-size: 15px;
+  font-weight: 800;
+  text-anchor: middle;
 }
 
 .stack-count-answer {
@@ -9651,19 +9684,19 @@ main {
 
 .stack-view-grids {
   display: flex;
-  gap: 12px;
+  gap: 8px;
 }
 
 .stack-view {
   display: flex;
   flex-direction: column;
   align-items: center;
-  gap: 4px;
+  gap: 2px;
 }
 
 .stack-view-grid {
-  width: 66px;
-  height: 66px;
+  width: 56px;
+  height: 56px;
   display: grid;
   border: 1.5px solid #928979;
   border-radius: 4px;
