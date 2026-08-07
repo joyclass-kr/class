@@ -597,7 +597,7 @@
             async function init() {
                 try {
                     const session = await api('/api/auth/me').catch(() => ({ signedIn: false }));
-                    if (!session.signedIn || session.user?.role !== 'teacher') {
+                    if (!session.signedIn || !(session.user?.role === 'teacher' || session.isTeacher)) {
                         location.replace('/');
                         return;
                     }

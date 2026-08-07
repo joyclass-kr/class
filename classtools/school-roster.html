@@ -1482,7 +1482,7 @@
         try {
             const me = await api("/api/auth/me");
             if (!me.signedIn) { location.replace("/"); return; }
-            if (me.user?.role !== "teacher") { location.replace("/"); return; }
+            if (!(me.user?.role === "teacher" || me.isTeacher)) { location.replace("/"); return; }
             document.getElementById("userInfo").textContent = me.user.name || me.user.email;
         } catch (_) { location.replace("/"); return; }
 

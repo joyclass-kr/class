@@ -973,10 +973,11 @@ function createClassroomPlatform(options = {}) {
   }
 
   async function requireTeacher(req) {
+    // Not gated on user.role: role is a single priority slot (admin beats
+    // teacher), so a site admin who is also a registered active teacher
+    // would otherwise be locked out of every teacher-only action. The
+    // registration query below is the real, role-independent source of truth.
     const user = await requireUser(req);
-    if (user.role !== "teacher") {
-      throw new HttpError(403, "TEACHER_REQUIRED", "This page is for teachers only.");
-    }
     const registration = await pool.query(
       `SELECT 1
        FROM classroom_teachers t
@@ -1115,32 +1116,21 @@ function createClassroomPlatform(options = {}) {
   }
 
   async function userClassId(user) {
+    // Branches on actual classroom_teachers/classroom_students registration
+    // rather than user.role: role is a single priority slot (admin beats
+    // teacher), so a site admin who is also a registered homeroom teacher
+    // would otherwise never resolve to their class here.
     if (!user) return null;
-    if (user.role === "student" || user.role === "user") {
-      const res = await pool.query(
-        `SELECT c.id
-         FROM school_students s
-         JOIN classroom_classes c ON c.school_id = s.school_id AND c.grade = s.grade AND c.class_number = s.class_number
-         WHERE s.user_id = $1 OR (s.student_email IS NOT NULL AND LOWER(s.student_email) = (SELECT LOWER(email) FROM classroom_users WHERE id = $1))
-         UNION ALL
-         SELECT class_id FROM classroom_students WHERE user_id = $1
-         LIMIT 1`,
-        [user.id]
-      );
-      return res.rows[0]?.id || null;
-    }
-    if (user.role === "teacher") {
-      const tp = await pool.query(
-        `SELECT school_id, academic_year, grade, class_number
-         FROM classroom_teachers
-         WHERE (user_id = $1 OR (google_email IS NOT NULL AND LOWER(google_email) = (SELECT LOWER(email) FROM classroom_users WHERE id = $1)))
-           AND (grade IS NOT NULL AND class_number IS NOT NULL)
-         LIMIT 1`,
-        [user.id]
-      );
-      const t = tp.rows[0];
-      if (!t) return null;
-
+    const tp = await pool.query(
+      `SELECT school_id, academic_year, grade, class_number
+       FROM classroom_teachers
+       WHERE (user_id = $1 OR (google_email IS NOT NULL AND LOWER(google_email) = (SELECT LOWER(email) FROM classroom_users WHERE id = $1)))
+         AND (grade IS NOT NULL AND class_number IS NOT NULL)
+       LIMIT 1`,
+      [user.id]
+    );
+    const t = tp.rows[0];
+    if (t) {
       const year = t.academic_year || new Date().getFullYear();
       const clsRes = await pool.query(
         `INSERT INTO classroom_classes (school_id, academic_year, grade, class_number, teacher_user_id, teacher_name, join_code)
@@ -1151,7 +1141,18 @@ function createClassroomPlatform(options = {}) {
       );
       return clsRes.rows[0]?.id || null;
     }
-    return null;
+
+    const res = await pool.query(
+      `SELECT c.id
+       FROM school_students s
+       JOIN classroom_classes c ON c.school_id = s.school_id AND c.grade = s.grade AND c.class_number = s.class_number
+       WHERE s.user_id = $1 OR (s.student_email IS NOT NULL AND LOWER(s.student_email) = (SELECT LOWER(email) FROM classroom_users WHERE id = $1))
+       UNION ALL
+       SELECT class_id FROM classroom_students WHERE user_id = $1
+       LIMIT 1`,
+      [user.id]
+    );
+    return res.rows[0]?.id || null;
   }
 
   async function readableScheduleClassId(user, requestedClassId) {

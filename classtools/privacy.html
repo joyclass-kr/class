@@ -55,7 +55,7 @@
         
         async function load(){
             const me=await api('/api/auth/me');
-            if(!me.signedIn||me.user.role!=='teacher')throw new Error('교사 로그인이 필요합니다.');
+            if(!me.signedIn||!(me.user.role==='teacher'||me.isTeacher))throw new Error('교사 로그인이 필요합니다.');
             const data=await api('/api/teacher/privacy-requests');
             statusEl.textContent=`총 ${data.requests.length}건을 표시합니다.`;
             render(data.requests);

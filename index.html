@@ -811,15 +811,15 @@
             }
 
             function renderClassLocks() {
-                // The enabled/disabled set only restricts students. Teachers browsing
-                // their own home screen (outside the edit UI) and every other signed-in
-                // role must always see the full, unrestricted menu.
+                // The enabled/disabled set only blocks students from clicking through
+                // (enforced separately below via dataset.classLocked + isTeacherSignedIn).
+                // The grey visual itself always reflects the real per-item state, even
+                // for the teacher's own screen, so they can see what's on/off at a glance.
                 hubLinks.forEach((link) => {
                     const locked = !classEnabledPaths.has(contentPathForLink(link));
+                    link.classList.toggle('is-class-locked', locked);
                     link.dataset.classLocked = String(locked);
-                    const showLocked = locked && (!isTeacherSignedIn || contentAccessEditing);
-                    link.classList.toggle('is-class-locked', showLocked);
-                    if (showLocked) {
+                    if (locked) {
                         link.setAttribute('aria-disabled', contentAccessEditing ? 'false' : 'true');
                         link.setAttribute('aria-label', `${link.textContent.trim()} · 담임교사가 잠금`);
                     } else {
