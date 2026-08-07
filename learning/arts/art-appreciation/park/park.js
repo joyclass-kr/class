@@ -89,7 +89,7 @@
     },
     {
       id: 'sphinx', order: '06', title: '기자의 대스핑크스', short: '대스핑크스',
-      subtitle: '고대 이집트 기원전 2500년경 · 3D 포토그래메트리 스캔', position: [-24.375, 0, 15], arrival: [15.625, 1.62, 15], lookAt: [-24.375, 10, 15],
+      subtitle: '고대 이집트 기원전 2500년경 · 3D 포토그래메트리 스캔', position: [-65, 0, 60], arrival: [-25, 1.62, 60], lookAt: [-65, 10, 60],
       modelPath: 'assets/models/sphinx.glb', realHeight: 20.22, preserveMaterials: true,
       image: 'assets/sphinx.jpg',
       facts: [['길이', '73.5m'], ['너비', '19m'], ['높이', '20.22m']],
@@ -104,7 +104,7 @@
     },
     {
       id: 'liberty', order: '07', title: '자유의 여신상', short: '자유의 여신상',
-      subtitle: '프레데리크 바르톨디 1886 · 3D 포토그래메트리 스캔', position: [24.375, 0, 15], arrival: [24.375, 1.62, -43], lookAt: [24.375, 46, 15],
+      subtitle: '프레데리크 바르톨디 1886 · 3D 포토그래메트리 스캔', position: [65, 0, 60], arrival: [65, 1.62, 2], lookAt: [65, 46, 60],
       modelPath: 'assets/models/statue-of-liberty.glb', realHeight: 46.05, preserveMaterials: true,
       image: 'assets/liberty.jpg',
       facts: [['조각상 높이', '46.05m'], ['받침대', '46.94m'], ['총 높이', '92.99m']],
@@ -169,7 +169,7 @@
 
   const scene = new THREE.Scene();
   scene.background = new THREE.Color(0x9fc8d9);
-  scene.fog = new THREE.Fog(0xaccbd0, 35, 95);
+  scene.fog = new THREE.Fog(0xaccbd0, 65, 175);
 
   const camera = new THREE.PerspectiveCamera(61, innerWidth / innerHeight, .08, 650);
   camera.rotation.order = 'YXZ';
@@ -370,7 +370,7 @@
   }
 
   function makePark() {
-    const ground = addMesh(new THREE.CircleGeometry(55, 96), MAT.grass, park, [0, -.08, 0]); ground.rotation.x = -Math.PI / 2; ground.receiveShadow = true; ground.castShadow = false;
+    const ground = addMesh(new THREE.CircleGeometry(105, 96), MAT.grass, park, [0, -.08, 0]); ground.rotation.x = -Math.PI / 2; ground.receiveShadow = true; ground.castShadow = false;
     const plaza = addMesh(new THREE.CircleGeometry(6, 64), MAT.path, park, [0, .01, 0]); plaza.rotation.x = -Math.PI / 2;
     const ring = addMesh(new THREE.RingGeometry(5, 6, 64), MAT.pathEdge, park, [0, .025, 0]); ring.rotation.x = -Math.PI / 2;
 
@@ -392,9 +392,9 @@
       zoneObstacles.push({ x: zone.position[0], z: zone.position[2], r: obstacleR });
     });
 
-    for (let i = 0; i < 30; i++) {
-      const a = i * 2.399, r = 24 + (i * 37 % 26), x = Math.cos(a) * r, z = Math.sin(a) * r;
-      if (ZONES.some(q => Math.hypot(x - q.position[0], z - q.position[2]) < 8)) continue;
+    for (let i = 0; i < 45; i++) {
+      const a = i * 2.399, r = 24 + (i * 37 % 78), x = Math.cos(a) * r, z = Math.sin(a) * r;
+      if (ZONES.some(q => Math.hypot(x - q.position[0], z - q.position[2]) < (['sphinx', 'liberty'].includes(q.id) ? 45 : 8))) continue;
       const tree = new THREE.Group(), h = 3.5 + (i % 7) * .45;
       cylinder(.18, .28, h, 8, MAT.wood, tree, [0, h / 2, 0]);
       const crown = sphere(1.4 + (i % 4) * .18, i % 3 ? MAT.leaf : MAT.leaf2, tree, [0, h + .8, 0], 12, 9); crown.scale.y = 1.25;
@@ -406,7 +406,7 @@
   function setupLights() {
     scene.add(new THREE.HemisphereLight(0xd9efff, 0x354b2d, .64));
     const sun = new THREE.DirectionalLight(0xffeed0, 1.35); sun.position.set(-90, 160, 70); sun.castShadow = true;
-    sun.shadow.mapSize.set(2048, 2048); sun.shadow.camera.left = -40; sun.shadow.camera.right = 40; sun.shadow.camera.top = 40; sun.shadow.camera.bottom = -40; sun.shadow.camera.far = 90; sun.shadow.bias = -.0002; scene.add(sun);
+    sun.shadow.mapSize.set(2048, 2048); sun.shadow.camera.left = -75; sun.shadow.camera.right = 75; sun.shadow.camera.top = 75; sun.shadow.camera.bottom = -75; sun.shadow.camera.far = 170; sun.shadow.bias = -.0002; scene.add(sun);
   }
 
   function buildTabs() {
@@ -508,7 +508,7 @@
     const oldX = camera.position.x, oldZ = camera.position.z;
     camera.position.addScaledVector(velocity, dt);
     const radius = Math.hypot(camera.position.x, camera.position.z);
-    if (radius > 52) { camera.position.x *= 52 / radius; camera.position.z *= 52 / radius; }
+    if (radius > 100) { camera.position.x *= 100 / radius; camera.position.z *= 100 / radius; }
     for (const o of zoneObstacles) {
       const dx = camera.position.x - o.x, dz = camera.position.z - o.z, dist = Math.hypot(dx, dz);
       if (dist < o.r) { if (dist < .001) { camera.position.x = oldX; camera.position.z = oldZ; } else { camera.position.x = o.x + dx / dist * o.r; camera.position.z = o.z + dz / dist * o.r; } }

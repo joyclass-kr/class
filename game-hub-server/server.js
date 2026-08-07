@@ -421,13 +421,13 @@ function leavePark(socket) {
 
 const PARK_ZONE_OBSTACLES = [
   {x:9,z:-17.75,r:2.94},{x:-7.5,z:-19.5,r:2.94},{x:19.375,z:-6.875,r:2.94},{x:-19.375,z:-6.875,r:2.94},
-  {x:0,z:-21.25,r:2.94},{x:-24.375,z:15,r:10},{x:24.375,z:15,r:13.68},{x:0,z:21.25,r:2.94},{x:0,z:-13.75,r:2.94}
+  {x:0,z:-21.25,r:2.94},{x:-65,z:60,r:10},{x:65,z:60,r:13.68},{x:0,z:21.25,r:2.94},{x:0,z:-13.75,r:2.94}
 ];
 
 function safeParkPosition(x, z) {
   let nextX = Number(x) || 0, nextZ = Number(z) || 0;
   const radius = Math.hypot(nextX, nextZ);
-  if (radius > 52) { const scale = 52 / radius; nextX *= scale; nextZ *= scale; }
+  if (radius > 100) { const scale = 100 / radius; nextX *= scale; nextZ *= scale; }
   for (const obstacle of PARK_ZONE_OBSTACLES) {
     const dx = nextX - obstacle.x, dz = nextZ - obstacle.z, d = Math.hypot(dx, dz);
     if (d < obstacle.r) { const scale = obstacle.r / (d || 1); nextX = obstacle.x + (dx || .01) * scale; nextZ = obstacle.z + (dz || .01) * scale; }
