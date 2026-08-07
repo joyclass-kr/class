@@ -5236,7 +5236,8 @@ button.prime-number-question:focus-visible {
   flex: 1 1 auto;
   display: grid;
   grid-template-columns: repeat(2, minmax(0, 1fr));
-  gap: 8px;
+  grid-template-rows: repeat(2, minmax(0, 1fr));
+  gap: 4px 8px;
   margin-top: 4px;
 }
 
@@ -5246,9 +5247,10 @@ button.prime-number-question:focus-visible {
   display: flex;
   flex-direction: column;
   align-items: center;
-  gap: 4px;
+  justify-content: center;
+  gap: 2px;
   border: 0;
-  padding: 0 10%;
+  padding: 0 8%;
   background: transparent;
   font: inherit;
   cursor: pointer;
@@ -5256,6 +5258,13 @@ button.prime-number-question:focus-visible {
 
 button.division-option {
   -webkit-tap-highlight-color: transparent;
+}
+
+.division-option-equation {
+  font-size: 11px;
+  font-weight: 800;
+  color: #4b4438;
+  white-space: nowrap;
 }
 
 .division-option-mark {

@@ -1095,20 +1095,24 @@ test("renders the first grade-three division story worksheet", async () => {
   assert.match(html, /aria-label="A4 3학년 나눗셈① 전체 답지"/);
   assert.equal((html.match(/data-testid="division-story-problem"/g) ?? []).length, 20);
   assert.equal((html.match(/<canvas/g) ?? []).length, 0);
-  assert.equal((html.match(/class="division-group-diagram"/g) ?? []).length, 30);
+  assert.equal((html.match(/class="division-group-diagram"/g) ?? []).length, 70);
   assert.equal((html.match(/class="division-group-diagram is-answer"/g) ?? []).length, 10);
-  assert.equal((html.match(/class="division-option"/g) ?? []).length, 40);
-  assert.equal((html.match(/class="division-option-mark"/g) ?? []).length, 30);
+  assert.equal((html.match(/class="division-option"/g) ?? []).length, 80);
+  assert.equal((html.match(/class="division-option-mark"/g) ?? []).length, 70);
   assert.equal((html.match(/class="division-option-mark is-answer"/g) ?? []).length, 10);
-  assert.match(source, /const STORY_TYPES:[\s\S]*?quotative[\s\S]*?partitive/);
+  assert.equal((html.match(/class="division-option-equation"/g) ?? []).length, 80);
+  assert.match(source, /const STORY_KINDS:[\s\S]*?quotative[\s\S]*?partitive/);
   assert.match(source, /const divisor = integer\(next, 2, 3\);/);
-  assert.match(source, /const groupSize = kind === "quotative" \? divisor : 6 \/ divisor;/);
+  assert.match(source, /const quotient = 6 \/ divisor;/);
+  assert.match(source, /const groupSize = kind === "quotative" \? divisor : quotient;/);
   assert.match(source, /const groupCount = 6 \/ groupSize;/);
+  assert.match(source, /const correctEquation = `6÷\$\{divisor\}=\$\{quotient\}`;/);
+  assert.match(source, /const swappedEquation = `6÷\$\{quotient\}=\$\{divisor\}`;/);
   assert.match(source, /<small>\/10 정답<\/small>/);
   assert.match(css, /\.division-story-grid\s*\{[\s\S]*?grid-template-columns:\s*repeat\(2,[\s\S]*?grid-template-rows:\s*repeat\(5,/);
   assert.match(css, /\.division-story-problem\.is-correct[\s\S]*?background:\s*var\(--green-soft\)/);
   assert.match(css, /\.division-story-problem\.is-wrong[\s\S]*?background:\s*var\(--red-soft\)/);
-  assert.match(css, /\.division-story-options\s*\{[\s\S]*?grid-template-columns:\s*repeat\(2,/);
+  assert.match(css, /\.division-story-options\s*\{[\s\S]*?grid-template-columns:\s*repeat\(2,[\s\S]*?grid-template-rows:\s*repeat\(2,/);
 });
 
 test("renders the first grade-three multiplication worksheet", async () => {

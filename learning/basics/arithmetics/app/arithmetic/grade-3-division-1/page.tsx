@@ -5,29 +5,29 @@ import { useEffect, useState } from "react";
 type PrintMode = "worksheet" | "answers" | "both";
 type DivisionKind = "quotative" | "partitive";
 type GroupOption = { groupSize: number; groupCount: number };
+type Card = { equation: string; option: GroupOption };
 type StoryProblem = {
   id: string;
   index: number;
   divisor: number;
   kind: DivisionKind;
-  unit: string;
-  options: [GroupOption, GroupOption];
-  correctOption: 0 | 1;
+  cards: [Card, Card, Card, Card];
+  correctCard: 0 | 1 | 2 | 3;
 };
 type ProblemSet = { seed: number; problems: StoryProblem[] };
 
 const INITIAL_SEED = 20260720;
-const STORY_TYPES: Array<{ kind: DivisionKind; unit: string }> = [
-  { kind: "quotative", unit: "명" },
-  { kind: "partitive", unit: "개" },
-  { kind: "quotative", unit: "통" },
-  { kind: "quotative", unit: "명" },
-  { kind: "quotative", unit: "일" },
-  { kind: "partitive", unit: "개" },
-  { kind: "quotative", unit: "일" },
-  { kind: "partitive", unit: "장" },
-  { kind: "partitive", unit: "명" },
-  { kind: "quotative", unit: "대" },
+const STORY_KINDS: DivisionKind[] = [
+  "quotative",
+  "partitive",
+  "quotative",
+  "quotative",
+  "quotative",
+  "partitive",
+  "quotative",
+  "partitive",
+  "partitive",
+  "quotative",
 ];
 
 function random(seed: number) {
@@ -49,16 +49,28 @@ function createProblemSet(seed: number): ProblemSet {
   const next = random(seed);
   return {
     seed,
-    problems: STORY_TYPES.map(({ kind, unit }, index) => {
+    problems: STORY_KINDS.map((kind, index) => {
       const divisor = integer(next, 2, 3);
-      const groupSize = kind === "quotative" ? divisor : 6 / divisor;
+      const quotient = 6 / divisor;
+      const groupSize = kind === "quotative" ? divisor : quotient;
       const groupCount = 6 / groupSize;
-      const correct: GroupOption = { groupSize, groupCount };
-      const swapped: GroupOption = { groupSize: groupCount, groupCount: groupSize };
-      const swap = next() < 0.5;
-      const options: [GroupOption, GroupOption] = swap ? [swapped, correct] : [correct, swapped];
-      const correctOption: 0 | 1 = swap ? 1 : 0;
-      return { id: `division-story-${index}`, index, divisor, kind, unit, options, correctOption };
+      const correctOption: GroupOption = { groupSize, groupCount };
+      const swappedOption: GroupOption = { groupSize: groupCount, groupCount: groupSize };
+      const correctEquation = `6÷${divisor}=${quotient}`;
+      const swappedEquation = `6÷${quotient}=${divisor}`;
+      const shuffled = [
+        { equation: correctEquation, option: correctOption, isCorrect: true },
+        { equation: correctEquation, option: swappedOption, isCorrect: false },
+        { equation: swappedEquation, option: correctOption, isCorrect: false },
+        { equation: swappedEquation, option: swappedOption, isCorrect: false },
+      ];
+      for (let i = shuffled.length - 1; i > 0; i--) {
+        const j = Math.floor(next() * (i + 1));
+        [shuffled[i], shuffled[j]] = [shuffled[j], shuffled[i]];
+      }
+      const correctCard = shuffled.findIndex((card) => card.isCorrect) as 0 | 1 | 2 | 3;
+      const cards = shuffled.map(({ equation, option }) => ({ equation, option })) as [Card, Card, Card, Card];
+      return { id: `division-story-${index}`, index, divisor, kind, cards, correctCard };
     }),
   };
 }
@@ -93,7 +105,7 @@ function GroupDiagram({ option, className }: { option: GroupOption; className?: 
 
 export default function GradeThreeDivisionOnePage() {
   const [questionSet, setQuestionSet] = useState(() => createProblemSet(INITIAL_SEED));
-  const [answers, setAnswers] = useState<Record<string, 0 | 1>>({});
+  const [answers, setAnswers] = useState<Record<string, 0 | 1 | 2 | 3>>({});
   const [results, setResults] = useState<Record<string, boolean>>({});
   const [sheetScale, setSheetScale] = useState(0.6);
   const [printMenuOpen, setPrintMenuOpen] = useState(false);
@@ -110,8 +122,8 @@ export default function GradeThreeDivisionOnePage() {
   const completed = Object.keys(answers).length;
   const correctProblems = questionSet.problems.filter((problem) => results[problem.id] === true).length;
 
-  function selectOption(id: string, optionIndex: 0 | 1) {
-    setAnswers((current) => ({ ...current, [id]: optionIndex }));
+  function selectCard(id: string, cardIndex: 0 | 1 | 2 | 3) {
+    setAnswers((current) => ({ ...current, [id]: cardIndex }));
     setResults((current) => {
       if (!(id in current)) return current;
       const next = { ...current };
@@ -121,7 +133,7 @@ export default function GradeThreeDivisionOnePage() {
   }
 
   function checkAll() {
-    setResults(Object.fromEntries(questionSet.problems.map((problem) => [problem.id, answers[problem.id] === problem.correctOption])));
+    setResults(Object.fromEntries(questionSet.problems.map((problem) => [problem.id, answers[problem.id] === problem.correctCard])));
   }
 
   function resetAnswers() {
@@ -152,28 +164,30 @@ export default function GradeThreeDivisionOnePage() {
       <article className={`division-story-problem${graded ? isCorrect ? " is-correct" : " is-wrong" : ""}`} data-testid="division-story-problem" key={problem.id}>
         <p><b>{problem.index + 1}</b>{story(problem)}</p>
         <div className="division-story-options">
-          {problem.options.map((option, optionIndex) => {
-            const isCorrectOption = optionIndex === problem.correctOption;
-            const isSelected = selected === optionIndex;
-            const stateClass = answerSheet ? (isCorrectOption ? "is-answer" : "") : (isSelected ? "is-selected" : "");
+          {problem.cards.map((card, cardIndex) => {
+            const isCorrectCard = cardIndex === problem.correctCard;
+            const isSelected = selected === cardIndex;
+            const stateClass = answerSheet ? (isCorrectCard ? "is-answer" : "") : (isSelected ? "is-selected" : "");
             const markClass = ["division-option-mark", stateClass].filter(Boolean).join(" ");
-            const diagram = <GroupDiagram option={option} className={stateClass} />;
-            return answerSheet ? (
-              <div className="division-option" key={optionIndex}>
-                {diagram}
+            const content = (
+              <>
+                <span className="division-option-equation">{card.equation}</span>
+                <GroupDiagram option={card.option} className={stateClass} />
                 <span className={markClass} aria-hidden="true" />
-              </div>
+              </>
+            );
+            return answerSheet ? (
+              <div className="division-option" key={cardIndex}>{content}</div>
             ) : (
               <button
                 type="button"
                 className="division-option"
-                onClick={() => selectOption(problem.id, optionIndex as 0 | 1)}
+                onClick={() => selectCard(problem.id, cardIndex as 0 | 1 | 2 | 3)}
                 aria-pressed={isSelected}
-                aria-label={`${problem.index + 1}번 ${optionIndex === 0 ? "왼쪽" : "오른쪽"} 그림 선택`}
-                key={optionIndex}
+                aria-label={`${problem.index + 1}번 ${cardIndex + 1}번 카드 선택`}
+                key={cardIndex}
               >
-                {diagram}
-                <span className={markClass} aria-hidden="true" />
+                {content}
               </button>
             );
           })}
