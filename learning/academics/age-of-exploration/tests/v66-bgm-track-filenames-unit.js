@@ -3,23 +3,23 @@ const assert=require('node:assert/strict');
 const bgm=require('../public/js/bgm.js');
 
 // 원작 Windows판 Track02~Track29 파일명을 그대로 사용한다.
-assert.equal(bgm.TRACKS.city_africa.file,'Track02.mp3');
-assert.equal(bgm.TRACKS.city_america.file,'Track04.mp3');
-assert.equal(bgm.TRACKS.city_mediterranean.file,'Track05.mp3');
-assert.equal(bgm.TRACKS.city_china.file,'Track06.mp3');
-assert.equal(bgm.TRACKS.city_middle_east.file,'Track07.mp3');
-assert.equal(bgm.TRACKS.city_scandinavia.file,'Track09.mp3');
-assert.equal(bgm.TRACKS.city_iberia.file,'Track10.mp3');
-assert.equal(bgm.TRACKS.city_india.file,'Track12.mp3');
-assert.equal(bgm.TRACKS.sailing_indian_ocean.file,'Track13.mp3');
-assert.equal(bgm.TRACKS.sailing_near_europe.file,'Track15.mp3');
-assert.equal(bgm.TRACKS.city_japan.file,'Track18.mp3');
-assert.equal(bgm.TRACKS.sailing_polar.file,'Track19.mp3');
-assert.equal(bgm.TRACKS.voyage_preparation.file,'Track23.mp3');
-assert.equal(bgm.TRACKS.sailing_pacific.file,'Track24.mp3');
-assert.equal(bgm.TRACKS.sailing_atlantic.file,'Track25.mp3');
-assert.equal(bgm.TRACKS.land_expedition.file,'Track26.mp3');
-assert.equal(bgm.TRACKS.city_southeast_asia.file,'Track27.mp3');
+assert.equal(bgm.TRACKS.city_africa.file,'Track02.ogg');
+assert.equal(bgm.TRACKS.city_america.file,'Track04.ogg');
+assert.equal(bgm.TRACKS.city_mediterranean.file,'Track05.ogg');
+assert.equal(bgm.TRACKS.city_china.file,'Track06.ogg');
+assert.equal(bgm.TRACKS.city_middle_east.file,'Track07.ogg');
+assert.equal(bgm.TRACKS.city_scandinavia.file,'Track09.ogg');
+assert.equal(bgm.TRACKS.city_iberia.file,'Track10.ogg');
+assert.equal(bgm.TRACKS.city_india.file,'Track12.ogg');
+assert.equal(bgm.TRACKS.sailing_indian_ocean.file,'Track13.ogg');
+assert.equal(bgm.TRACKS.sailing_near_europe.file,'Track15.ogg');
+assert.equal(bgm.TRACKS.city_japan.file,'Track18.ogg');
+assert.equal(bgm.TRACKS.sailing_polar.file,'Track19.ogg');
+assert.equal(bgm.TRACKS.voyage_preparation.file,'Track23.ogg');
+assert.equal(bgm.TRACKS.sailing_pacific.file,'Track24.ogg');
+assert.equal(bgm.TRACKS.sailing_atlantic.file,'Track25.ogg');
+assert.equal(bgm.TRACKS.land_expedition.file,'Track26.ogg');
+assert.equal(bgm.TRACKS.city_southeast_asia.file,'Track27.ogg');
 
 // 도시 분류
 assert.equal(bgm.cityTrack({region:'동북아시아',countryCode:'JP'}),'city_japan');

@@ -1,10 +1,10 @@
 (() => {
   "use strict";
   const tracks = [
-    "assets/audio/keyboard-afternoon-01.mp3",
-    "assets/audio/keyboard-afternoon-02.mp3",
-    "assets/audio/breath-on-keys-01.mp3",
-    "assets/audio/breath-on-keys-02.mp3"
+    "assets/audio/keyboard-afternoon-01.ogg",
+    "assets/audio/keyboard-afternoon-02.ogg",
+    "assets/audio/breath-on-keys-01.ogg",
+    "assets/audio/breath-on-keys-02.ogg"
   ];
   const audio = document.getElementById("bgm");
   if (!audio) return;

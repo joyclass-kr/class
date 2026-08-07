@@ -29,11 +29,11 @@
   const presenceEl = document.getElementById('class-presence');
   const bgm = document.getElementById('bgm');
   const ROOM_MUSIC = [
-    '../assets/sound/museum/gallery-01-portrait.mp3',
-    '../assets/sound/museum/gallery-02-nature.mp3',
-    '../assets/sound/museum/gallery-03-story.mp3',
-    '../assets/sound/museum/gallery-04-line-color-imagination.mp3',
-    '../assets/sound/museum/gallery-05-form-space.mp3'
+    '../assets/sound/museum/gallery-01-portrait.ogg',
+    '../assets/sound/museum/gallery-02-nature.ogg',
+    '../assets/sound/museum/gallery-03-story.ogg',
+    '../assets/sound/museum/gallery-04-line-color-imagination.ogg',
+    '../assets/sound/museum/gallery-05-form-space.ogg'
   ];
 
   function setRoomMusic(index) {

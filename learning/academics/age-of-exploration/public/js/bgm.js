@@ -6,23 +6,23 @@
   'use strict';
 
   const TRACKS=Object.freeze({
-    voyage_preparation:{file:'Track23.mp3',label:'출항 준비'},
-    sailing_near_europe:{file:'Track15.mp3',label:'유럽 근해 항해'},
-    sailing_atlantic:{file:'Track25.mp3',label:'남대서양 항해'},
-    sailing_indian_ocean:{file:'Track13.mp3',label:'신대륙·동방 원양 항해'},
-    sailing_pacific:{file:'Track24.mp3',label:'남방·카리브 항해'},
-    sailing_polar:{file:'Track19.mp3',label:'극지 항해'},
-    city_iberia:{file:'Track10.mp3',label:'이베리아 도시'},
-    city_mediterranean:{file:'Track05.mp3',label:'지중해 도시'},
-    city_scandinavia:{file:'Track09.mp3',label:'북유럽 도시'},
-    city_middle_east:{file:'Track07.mp3',label:'중동·이슬람권 도시'},
-    city_africa:{file:'Track02.mp3',label:'아프리카 도시'},
-    city_india:{file:'Track12.mp3',label:'인도권 도시'},
-    city_southeast_asia:{file:'Track27.mp3',label:'동남아시아·중앙아시아 도시'},
-    city_china:{file:'Track06.mp3',label:'중국·조선 도시'},
-    city_japan:{file:'Track18.mp3',label:'일본 도시'},
-    city_america:{file:'Track04.mp3',label:'아메리카 도시'},
-    land_expedition:{file:'Track26.mp3',label:'육상 탐험'}
+    voyage_preparation:{file:'Track23.ogg',label:'출항 준비'},
+    sailing_near_europe:{file:'Track15.ogg',label:'유럽 근해 항해'},
+    sailing_atlantic:{file:'Track25.ogg',label:'남대서양 항해'},
+    sailing_indian_ocean:{file:'Track13.ogg',label:'신대륙·동방 원양 항해'},
+    sailing_pacific:{file:'Track24.ogg',label:'남방·카리브 항해'},
+    sailing_polar:{file:'Track19.ogg',label:'극지 항해'},
+    city_iberia:{file:'Track10.ogg',label:'이베리아 도시'},
+    city_mediterranean:{file:'Track05.ogg',label:'지중해 도시'},
+    city_scandinavia:{file:'Track09.ogg',label:'북유럽 도시'},
+    city_middle_east:{file:'Track07.ogg',label:'중동·이슬람권 도시'},
+    city_africa:{file:'Track02.ogg',label:'아프리카 도시'},
+    city_india:{file:'Track12.ogg',label:'인도권 도시'},
+    city_southeast_asia:{file:'Track27.ogg',label:'동남아시아·중앙아시아 도시'},
+    city_china:{file:'Track06.ogg',label:'중국·조선 도시'},
+    city_japan:{file:'Track18.ogg',label:'일본 도시'},
+    city_america:{file:'Track04.ogg',label:'아메리카 도시'},
+    land_expedition:{file:'Track26.ogg',label:'육상 탐험'}
   });
 
   const AFRICA_REGIONS=new Set(['동아프리카','서아프리카']);

@@ -47,17 +47,17 @@ test("menu-specific asset groups live with their menu", () => {
     "learning/basics/vocabulary/assets/data/english-vocabulary-3000-v2.json",
     "learning/basics/vocabulary/assets/images/apple-v2.webp",
     "learning/academics/body-explorer/assets/images/circulation-hero-v2.webp",
-    "learning/arts/art-appreciation/assets/sound/museum/gallery-01-portrait.mp3",
-    "learning/arts/art-appreciation/assets/sound/museum/gallery-02-nature.mp3",
-    "learning/arts/art-appreciation/assets/sound/museum/gallery-03-story.mp3",
-    "learning/arts/art-appreciation/assets/sound/museum/gallery-04-line-color-imagination.mp3",
-    "learning/arts/art-appreciation/assets/sound/museum/gallery-05-form-space.mp3",
+    "learning/arts/art-appreciation/assets/sound/museum/gallery-01-portrait.ogg",
+    "learning/arts/art-appreciation/assets/sound/museum/gallery-02-nature.ogg",
+    "learning/arts/art-appreciation/assets/sound/museum/gallery-03-story.ogg",
+    "learning/arts/art-appreciation/assets/sound/museum/gallery-04-line-color-imagination.ogg",
+    "learning/arts/art-appreciation/assets/sound/museum/gallery-05-form-space.ogg",
     "learning/arts/classical-music/assets/images/background.webp",
     "learning/arts/korean-music/assets/images/background.webp",
     "learning/games/omok/assets/images/background.webp",
-    "learning/games/omok/assets/sound/bgm.mp3",
+    "learning/games/omok/assets/sound/bgm.ogg",
     "learning/games/connect6/assets/images/background.webp",
-    "learning/games/connect6/assets/sound/bgm.mp3",
+    "learning/games/connect6/assets/sound/bgm.ogg",
   ];
 
   for (const relativePath of expected) {
@@ -82,13 +82,13 @@ test("museum galleries switch to their matching background music", () => {
   const index = read("learning/arts/art-appreciation/museum/index.html");
   const script = read("learning/arts/art-appreciation/museum/museum.js");
 
-  assert.match(index, /museum\/gallery-01-portrait\.mp3/);
+  assert.match(index, /museum\/gallery-01-portrait\.ogg/);
   for (const name of [
-    "gallery-01-portrait.mp3",
-    "gallery-02-nature.mp3",
-    "gallery-03-story.mp3",
-    "gallery-04-line-color-imagination.mp3",
-    "gallery-05-form-space.mp3",
+    "gallery-01-portrait.ogg",
+    "gallery-02-nature.ogg",
+    "gallery-03-story.ogg",
+    "gallery-04-line-color-imagination.ogg",
+    "gallery-05-form-space.ogg",
   ]) {
     assert.match(script, new RegExp(name.replaceAll(".", "\\.")));
   }
@@ -111,7 +111,7 @@ test("moved menu assets have no references to their former root locations", () =
   assert.doesNotMatch(sources, /(?:\.\.\/){3}assets\/images\/vocabulary\//);
   assert.doesNotMatch(sources, /(?:\.\.\/){3}assets\/images\/body-explorer\//);
   assert.doesNotMatch(sources, /(?:\.\.\/){2}assets\/images\/art\//);
-  assert.doesNotMatch(sources, /(?:\.\.\/){2,3}assets\/sound\/art-(?:appreciation|museum)\.mp3/);
+  assert.doesNotMatch(sources, /(?:\.\.\/){2,3}assets\/sound\/art-(?:appreciation|museum)\.ogg/);
   assert.doesNotMatch(sources, /\/assets\/(?:images|sound)\/stone-board/);
 });
 

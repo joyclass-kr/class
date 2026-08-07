@@ -20,11 +20,11 @@
     const MINOR_VARIANT_LABEL = { natural: "자연단조", harmonic: "화성단조", melodic: "가락단조" };
     const INVERSION_LABELS = ["기본형", "1전위", "2전위", "3전위"];
     const PIANO_SAMPLE_NOTES = [
-        { midi: 36, file: "C2.mp3" }, { midi: 42, file: "Fs2.mp3" },
-        { midi: 48, file: "C3.mp3" }, { midi: 54, file: "Fs3.mp3" },
-        { midi: 60, file: "C4.mp3" }, { midi: 66, file: "Fs4.mp3" },
-        { midi: 72, file: "C5.mp3" }, { midi: 78, file: "Fs5.mp3" },
-        { midi: 84, file: "C6.mp3" }
+        { midi: 36, file: "C2.ogg" }, { midi: 42, file: "Fs2.ogg" },
+        { midi: 48, file: "C3.ogg" }, { midi: 54, file: "Fs3.ogg" },
+        { midi: 60, file: "C4.ogg" }, { midi: 66, file: "Fs4.ogg" },
+        { midi: 72, file: "C5.ogg" }, { midi: 78, file: "Fs5.ogg" },
+        { midi: 84, file: "C6.ogg" }
     ];
     const PUBLIC_DOMAIN_MELODIES = [
         { name: "작은별", notes: [60, 60, 67, 67, 69, 69, 67, 65] },

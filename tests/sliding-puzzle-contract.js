@@ -21,7 +21,7 @@ assert.match(styles, /\.start-title span \{[^}]*display: block;[^}]*white-space:
 assert.match(html, /id="gameScreen"[^>]+hidden/);
 assert.match(html, /TODAY’S FINISHERS/);
 assert.match(html, /finisher-board\.js/);
-assert.match(html, /id="bgm"[^>]+assets\/sound\/bgm\.mp3/);
+assert.match(html, /id="bgm"[^>]+assets\/sound\/bgm\.ogg/);
 assert.match(html, /music-control\.js/);
 assert.match(styles, /assets\/images\/background\.webp/);
 assert.match(html, /8 PUZZLE 해결 순서/);

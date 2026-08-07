@@ -585,7 +585,7 @@
 
         root.setProperty(
             '--index-background-image',
-            `url('assets/images/monthly/${currentMonth}.jpg')`
+            `url('assets/images/monthly/${currentMonth}.webp')`
         );
 
         const theme = MONTH_THEMES[currentMonth];
@@ -595,7 +595,10 @@
             }
         }
     </script>
-    <audio id="bgm" src="assets/sound/index.mp3" autoplay loop preload="auto"></audio>
+    <audio id="bgm" autoplay loop preload="auto"></audio>
+    <script>
+        document.getElementById('bgm').src = `assets/sound/${currentMonth}.ogg`;
+    </script>
     <script src="assets/sound/music-control.js"></script>
     <div class="auth-panel" aria-live="polite">
         <button id="toggleGuestMode" class="guest-card-button" type="button" aria-label="게스트 로그인">게스트</button>

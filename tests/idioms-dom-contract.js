@@ -21,7 +21,7 @@ assert.deepStrictEqual(missingIds, [], `app.js에서 참조하지만 HTML에 없
     assert.ok(html.includes(`src="${file}"`), `${file} 스크립트 연결이 필요합니다.`);
 });
 assert.ok(html.includes('id="bgm"'), "고사성어 화면에 공용 배경 음악 요소가 필요합니다.");
-assert.ok(html.includes('assets/audio/paper-lantern-drift.mp3'), "첫 고사성어 배경 음악 연결이 필요합니다.");
+assert.ok(html.includes('assets/audio/paper-lantern-drift.ogg'), "첫 고사성어 배경 음악 연결이 필요합니다.");
 
 const illustrationBlock = app.match(/const ILLUSTRATIONS = \{([\s\S]*?)\n    \};/);
 assert.ok(illustrationBlock, "고사성어 삽화 매핑이 필요합니다.");
@@ -38,6 +38,6 @@ data.forEach((item) => {
     );
 });
 assert.ok(!/탐험대|뜻만 외우지 말고|이야기 박사|멋진 도전/.test(html + app), "과장된 홍보 문구를 사용하지 않습니다.");
-assert.ok(root.includes('href="learning/basics/classical-chinese-idioms/index.html"'), "메인 학습 메뉴에 고사성어 링크가 필요합니다.");
+assert.ok(root.includes('href="learning/basics/classical-chinese-idioms/"'), "메인 학습 메뉴에 고사성어 링크가 필요합니다.");
 
 console.log(`idioms DOM contract: ok (${htmlIds.length} ids)`);

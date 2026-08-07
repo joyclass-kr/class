@@ -3,9 +3,9 @@
 
     const TRACK_INDEX_KEY = "classIdiomsBgmTrackIndex";
     const tracks = [
-        "assets/audio/paper-lantern-drift.mp3",
-        "assets/audio/idiom-study-beat.mp3",
-        "assets/audio/hanjabi-rainy-night.mp3"
+        "assets/audio/paper-lantern-drift.ogg",
+        "assets/audio/idiom-study-beat.ogg",
+        "assets/audio/hanjabi-rainy-night.ogg"
     ];
     const audio = document.getElementById("bgm");
     if (!audio || !tracks.length) return;

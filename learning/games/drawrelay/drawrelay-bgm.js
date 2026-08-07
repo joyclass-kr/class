@@ -2,9 +2,9 @@
   "use strict";
 
   const tracks = [
-    "assets/sound/glass-pulse-01.mp3",
-    "assets/sound/glass-pulse-02.mp3",
-    "assets/sound/glass-pulse-03.mp3"
+    "assets/sound/glass-pulse-01.ogg",
+    "assets/sound/glass-pulse-02.ogg",
+    "assets/sound/glass-pulse-03.ogg"
   ];
   const audio = document.getElementById("bgm");
   if (!audio || !tracks.length) return;

@@ -38,10 +38,10 @@ async function waitForServer() {
   try {
     await waitForServer();
 
-    // 1. Test MP3 Audio asset Cache-Control header
-    const mp3Response = await fetch(`http://127.0.0.1:${port}/assets/sound/index.mp3`);
-    assert.equal(mp3Response.status, 200);
-    assert.equal(mp3Response.headers.get("cache-control"), "public, max-age=31536000, immutable");
+    // 1. Test Audio asset Cache-Control header
+    const audioResponse = await fetch(`http://127.0.0.1:${port}/assets/sound/1.ogg`);
+    assert.equal(audioResponse.status, 200);
+    assert.equal(audioResponse.headers.get("cache-control"), "public, max-age=31536000, immutable");
 
     // 2. Test Image asset Cache-Control header
     const imgResponse = await fetch(`http://127.0.0.1:${port}/assets/images/indexbg.jpg`);
