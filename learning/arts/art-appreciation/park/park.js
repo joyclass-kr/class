@@ -478,6 +478,7 @@
   function renderQuizQuestion() {
     const item = quizQuestions[quizIndex];
     const total = quizQuestions.length;
+    let missedThisQuestion = false;
     document.getElementById('finale-step').textContent = `QUESTION ${String(quizIndex + 1).padStart(2, '0')} / ${String(total).padStart(2, '0')}`;
     document.getElementById('finale-progress').style.width = `${quizIndex / total * 100}%`;
     document.getElementById('finale-total').textContent = `${quizCorrect} / ${total}`;
@@ -487,10 +488,11 @@
     finaleOptions.replaceChildren(...item.options.map((label, index) => {
       const button = document.createElement('button'); button.type = 'button'; button.className = 'finale-option'; button.dataset.letter = String.fromCharCode(65 + index); button.textContent = label;
       button.addEventListener('click', () => {
-        if (index !== item.answer) { button.classList.add('wrong'); button.disabled = true; finaleFeedback.textContent = '다시 생각하고 다른 답을 골라보세요.'; return; }
+        if (index !== item.answer) { missedThisQuestion = true; button.classList.add('wrong'); button.disabled = true; finaleFeedback.textContent = '다시 생각하고 다른 답을 골라보세요.'; return; }
         [...finaleOptions.children].forEach(option => option.disabled = true);
-        button.classList.add('correct'); quizCorrect++; finaleFeedback.textContent = item.explain; finaleFeedback.classList.add('correct');
-        document.getElementById('finale-total').textContent = `${quizCorrect} / ${total}`;
+        button.classList.add('correct');
+        if (!missedThisQuestion) { quizCorrect++; document.getElementById('finale-total').textContent = `${quizCorrect} / ${total}`; }
+        finaleFeedback.textContent = item.explain; finaleFeedback.classList.add('correct');
         finaleNext.hidden = false;
       });
       return button;
