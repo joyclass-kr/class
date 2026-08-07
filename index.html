@@ -10,16 +10,19 @@
             --index-background-image: url('assets/images/indexbg.jpg');
             --panel: #3a210f;
             --panel-dark: #261204;
+            --panel-darker: #1c0d04;
+            --panel-dark-rgb: 38, 18, 4;
+            --panel-darker-rgb: 28, 13, 4;
             --gold: #d7b47a;
             --gold-dark: #7d4a16;
-            --gold-mid: #b56e20;
+            --gold-mid: #b8721f;
             --gold-bright: #ffb54a;
         }
 
         * { box-sizing: border-box; }
 
         html {
-            background: #24344b;
+            background: var(--panel-dark);
         }
 
         body {
@@ -39,7 +42,7 @@
             position: fixed;
             inset: 0;
             z-index: -1;
-            background: #24344b var(--index-background-image) center / cover no-repeat;
+            background: var(--panel-dark) var(--index-background-image) center / cover no-repeat;
             pointer-events: none;
             transition: filter 0.3s ease, -webkit-filter 0.3s ease;
         }
@@ -72,22 +75,22 @@
             padding: 4px 5px;
             border: 2px solid var(--gold-dark);
             outline: 2px solid var(--panel-dark);
-            background: #2d1607;
-            box-shadow: inset 0 0 0 1px #1c0c02;
+            background: var(--panel-darker);
+            box-shadow: inset 0 0 0 1px rgba(var(--panel-darker-rgb), 0.9);
         }
 
         .volume-step {
             width: 22px;
             height: 21px;
             padding: 0;
-            border: 1px solid #b9782c;
-            background: #6b4218;
-            box-shadow: inset 0 0 0 1px #3f2309;
+            border: 1px solid var(--gold-mid);
+            background: var(--gold-dark);
+            box-shadow: inset 0 0 0 1px rgba(var(--panel-dark-rgb), 0.9);
             cursor: pointer;
         }
 
         .volume-step.active {
-            background: linear-gradient(135deg, #b56d21, var(--gold-bright));
+            background: linear-gradient(135deg, var(--gold-mid), var(--gold-bright));
             border-color: #ffd18a;
             box-shadow: inset 0 0 0 1px #9f5918;
         }
@@ -120,7 +123,7 @@
             border: 2px solid #ffd18a;
             outline: 2px solid #261204;
             border-radius: 6px;
-            background: linear-gradient(180deg, #6e3d16, #361a07);
+            background: linear-gradient(180deg, var(--panel), var(--panel-dark));
             color: #ffffff;
             font-family: Pretendard, "Noto Sans KR", sans-serif;
             font-size: 13px;
@@ -135,7 +138,7 @@
 
         .class-tools-link:hover,
         .class-tools-link:focus-visible {
-            background: linear-gradient(180deg, #ca7d28, #7a4613);
+            background: linear-gradient(180deg, var(--gold-mid), var(--gold-dark));
             border-color: #ffffff;
             color: #ffffff;
             transform: translateY(-2px);
@@ -186,7 +189,7 @@
             min-height: 82px;
             padding: 14px 16px;
             border: 2px solid var(--gold);
-            background: linear-gradient(135deg, #7d4a16, #3a210f);
+            background: linear-gradient(135deg, var(--gold-dark), var(--panel));
             color: #ffffff;
             text-align: left;
             text-decoration: none;
@@ -216,7 +219,7 @@
         .game-card-grid a:hover,
         .game-card-grid a:focus-visible {
             border-color: #ffd18a;
-            background: linear-gradient(135deg, #a9651c, #4a2910);
+            background: linear-gradient(135deg, var(--gold-mid), var(--panel-dark));
         }
 
         .worksheet-container a.is-class-locked,
@@ -350,7 +353,7 @@
             padding: 18px;
             border: 2px solid var(--gold-dark);
             outline: 2px solid var(--panel-dark);
-            background: rgba(38, 18, 4, 0.88);
+            background: rgba(var(--panel-dark-rgb), 0.88);
             box-shadow: inset 0 0 16px rgba(0,0,0,.35);
             font-family: Arial, sans-serif;
         }
@@ -364,7 +367,7 @@
             padding: 0 10px;
             border: 1px solid rgba(255, 209, 138, 0.45);
             border-radius: 6px;
-            background: rgba(27, 13, 3, 0.85);
+            background: rgba(var(--panel-darker-rgb), 0.85);
             color: #fff0c7;
             font-family: inherit;
             font-size: 12px;
@@ -377,7 +380,7 @@
         .guest-card-button:hover,
         .guest-card-button:focus-visible {
             border-color: #ffb54a;
-            background: #5d360f;
+            background: var(--gold-dark);
             color: #ffffff;
         }
 
@@ -426,8 +429,8 @@
             min-width: 0;
             height: 44px;
             padding: 8px 10px;
-            border: 2px solid #76501e;
-            background: #1b0d03;
+            border: 2px solid var(--gold-dark);
+            background: var(--panel-darker);
             color: #fff0c7;
             text-align: center;
             font-size: 14px;
@@ -452,8 +455,8 @@
         .auth-button {
             min-height: 44px;
             padding: 0 14px;
-            border: 2px solid #5d360f;
-            background: linear-gradient(#d6a75a, #99631f);
+            border: 2px solid var(--gold-dark);
+            background: linear-gradient(var(--gold), var(--gold-mid));
             color: #1d1005;
             font-family: Arial, sans-serif;
             font-weight: 700;
@@ -463,8 +466,8 @@
         .auth-button.secondary {
             min-height: auto;
             padding: 5px 9px;
-            border: 1px solid #76501e;
-            background: #3a210f;
+            border: 1px solid var(--gold-dark);
+            background: var(--panel);
             color: var(--gold);
             font-size: 11px;
         }
@@ -560,10 +563,37 @@
 </head>
 <body>
     <script>
-        document.documentElement.style.setProperty(
+        // 배경 사진의 실제 색상(매트 톤)에서 뽑아낸 월별 팔레트.
+        // 1/2/3/5/10/11/12월은 남색·보라 가죽, 4/9월은 짙은 청록, 6/7/8월은 원래의 갈색을 그대로 사용.
+        const MONTH_THEMES = {
+            1:  { 'gold-mid': '#1b3bbc', 'gold-dark': '#132980', panel: '#0e173b', 'panel-dark': '#030a27', 'panel-darker': '#03081d', 'panel-dark-rgb': '3, 10, 39', 'panel-darker-rgb': '3, 8, 29' },
+            2:  { 'gold-mid': '#2328b4', 'gold-dark': '#191c7a', panel: '#101139', 'panel-dark': '#050625', 'panel-darker': '#05051b', 'panel-dark-rgb': '5, 6, 37', 'panel-darker-rgb': '5, 5, 27' },
+            3:  { 'gold-mid': '#1b39bc', 'gold-dark': '#132780', panel: '#0e163b', 'panel-dark': '#030a27', 'panel-darker': '#03081d', 'panel-dark-rgb': '3, 10, 39', 'panel-darker-rgb': '3, 8, 29' },
+            4:  { 'gold-mid': '#14c3ac', 'gold-dark': '#0e8575', panel: '#0c3d37', 'panel-dark': '#012923', 'panel-darker': '#021e1a', 'panel-dark-rgb': '1, 41, 35', 'panel-darker-rgb': '2, 30, 26' },
+            5:  { 'gold-mid': '#311bbc', 'gold-dark': '#221380', panel: '#140e3b', 'panel-dark': '#080327', 'panel-darker': '#07031d', 'panel-dark-rgb': '8, 3, 39', 'panel-darker-rgb': '7, 3, 29' },
+            6:  { 'gold-mid': '#b8721f', 'gold-dark': '#7d4a16', panel: '#3a210f', 'panel-dark': '#261204', 'panel-darker': '#1c0d04', 'panel-dark-rgb': '38, 18, 4', 'panel-darker-rgb': '28, 13, 4' },
+            7:  { 'gold-mid': '#b8721f', 'gold-dark': '#7d4a16', panel: '#3a210f', 'panel-dark': '#261204', 'panel-darker': '#1c0d04', 'panel-dark-rgb': '38, 18, 4', 'panel-darker-rgb': '28, 13, 4' },
+            8:  { 'gold-mid': '#b8721f', 'gold-dark': '#7d4a16', panel: '#3a210f', 'panel-dark': '#261204', 'panel-darker': '#1c0d04', 'panel-dark-rgb': '38, 18, 4', 'panel-darker-rgb': '28, 13, 4' },
+            9:  { 'gold-mid': '#14c3b8', 'gold-dark': '#0e857d', panel: '#0c3d3a', 'panel-dark': '#012926', 'panel-darker': '#021e1c', 'panel-dark-rgb': '1, 41, 38', 'panel-darker-rgb': '2, 30, 28' },
+            10: { 'gold-mid': '#3b1bbc', 'gold-dark': '#291380', panel: '#170e3b', 'panel-dark': '#0a0327', 'panel-darker': '#08031d', 'panel-dark-rgb': '10, 3, 39', 'panel-darker-rgb': '8, 3, 29' },
+            11: { 'gold-mid': '#1f3bb8', 'gold-dark': '#16297d', panel: '#0f173a', 'panel-dark': '#040a26', 'panel-darker': '#04081c', 'panel-dark-rgb': '4, 10, 38', 'panel-darker-rgb': '4, 8, 28' },
+            12: { 'gold-mid': '#561bbc', 'gold-dark': '#3b1380', panel: '#1e0e3b', 'panel-dark': '#100327', 'panel-darker': '#0d031d', 'panel-dark-rgb': '16, 3, 39', 'panel-darker-rgb': '13, 3, 29' },
+        };
+
+        const currentMonth = new Date().getMonth() + 1;
+        const root = document.documentElement.style;
+
+        root.setProperty(
             '--index-background-image',
-            `url('assets/images/monthly/${new Date().getMonth() + 1}.jpg')`
+            `url('assets/images/monthly/${currentMonth}.jpg')`
         );
+
+        const theme = MONTH_THEMES[currentMonth];
+        if (theme) {
+            for (const [key, value] of Object.entries(theme)) {
+                root.setProperty(`--${key}`, value);
+            }
+        }
     </script>
     <audio id="bgm" src="assets/sound/index.mp3" autoplay loop preload="auto"></audio>
     <script src="assets/sound/music-control.js"></script>
@@ -623,7 +653,7 @@
             </a>
             <a href="learning/basics/spelling/" data-requires-player="true">
                 <span class="worksheet-copy"><strong>한글 맞춤법</strong><small>(Korean Spelling)</small></span>
-                <span class="worksheet-arrow" aria-hidden="true"><svg viewBox="0 0 24 24"><path fill="#29b6f6" d="M3 17.25V21h3.75L17.81 9.94l-3.75-3.75L3 17.25z"/><path fill="#0288d1" d="M20.71 7.04l-2.34-2.34a.996.996 0 0 0-1.41 0l-1.83 1.83 3.75 3.75 1.83-1.83a.996.996 0 0 0 0-1.41z"/><path fill="#66bb6a" d="M9 16.2l-3.5-3.5 1.4-1.4L9 13.4l7.1-7.1 1.4 1.4z"/></svg></span>
+                <span class="worksheet-arrow" aria-hidden="true"><svg viewBox="0 0 24 24"><rect x="2" y="2" width="20" height="20" rx="2" fill="#fff8e1" stroke="#ffb300" stroke-width="1.2"/><rect x="4" y="4" width="7" height="7" stroke="#ffb300" stroke-width="0.8" fill="none"/><text x="7.5" y="9.8" font-size="6" font-weight="bold" fill="#212121" text-anchor="middle" font-family="'Malgun Gothic', sans-serif">ㄱ</text><rect x="13" y="4" width="7" height="7" stroke="#ffb300" stroke-width="0.8" fill="none"/><text x="16.5" y="9.8" font-size="6" font-weight="bold" fill="#212121" text-anchor="middle" font-family="'Malgun Gothic', sans-serif">ㄴ</text><rect x="4" y="13" width="7" height="7" stroke="#ffb300" stroke-width="0.8" fill="none"/><text x="7.5" y="18.8" font-size="6" font-weight="bold" fill="#212121" text-anchor="middle" font-family="'Malgun Gothic', sans-serif">ㄷ</text><circle cx="16.5" cy="16.5" r="3.5" stroke="#e53935" stroke-width="1.2" fill="none"/><path fill="#e53935" d="M19 12l2 2-6 6h-2v-2l6-6z"/></svg></span>
             </a>
             <a href="learning/basics/phonics/">
                 <span class="worksheet-copy"><strong>파닉스</strong><small>(Phonics)</small></span>
