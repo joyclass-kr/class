@@ -280,13 +280,16 @@
     const c = document.createElement('canvas'); c.width = w; c.height = h; const g = c.getContext('2d'); draw(g, w, h);
     const t = new THREE.CanvasTexture(c); t.encoding = THREE.sRGBEncoding; t.anisotropy = Math.min(8, renderer.capabilities.getMaxAnisotropy()); return t;
   }
-  function makeBadge(text, width = 3.6) {
+  function makeBadge(text, width = 3.6, eyebrow = '') {
     const t = canvasTexture((g, w, h) => {
       g.fillStyle = 'rgba(14,35,28,.88)'; g.fillRect(0, 0, w, h); g.strokeStyle = '#dceab0'; g.lineWidth = 5; g.strokeRect(8, 8, w - 16, h - 16);
-      g.fillStyle = '#eef2df'; g.textAlign = 'center'; g.textBaseline = 'middle';
+      g.textAlign = 'center';
+      const midY = eyebrow ? h / 2 + 16 : h / 2 + 4;
+      if (eyebrow) { g.fillStyle = '#b8d177'; g.font = '700 26px sans-serif'; g.textBaseline = 'alphabetic'; g.fillText(eyebrow, w / 2, 46); }
+      g.fillStyle = '#eef2df'; g.textBaseline = 'middle';
       let fontSize = 64; const maxTextWidth = w - 60;
       do { g.font = `800 ${fontSize}px sans-serif`; fontSize -= 2; } while (g.measureText(text).width > maxTextWidth && fontSize > 10);
-      g.fillText(text, w / 2, h / 2 + 4);
+      g.fillText(text, w / 2, midY);
     }, 512, 160);
     return new THREE.Mesh(new THREE.PlaneGeometry(width, width * (160 / 512)), new THREE.MeshBasicMaterial({ map: t, transparent: true, toneMapped: false, side: THREE.DoubleSide }));
   }
@@ -395,7 +398,7 @@
     const hub = cylinder(1.1, 1.3, 1.1, 32, MAT.sandstone, park, [0, .55, 0]);
     const globe = sphere(.8, new THREE.MeshStandardMaterial({ color: 0x7a9f63, roughness: .62, metalness: .08 }), park, [0, 4.1, 0], 32, 20);
     globe.userData.isQuizTrigger = true; quizObjects.push(globe);
-    const quizBadge = makeBadge('큐레이터 퀴즈', 3.4); quizBadge.position.set(0, 5.6, 0); quizBadge.userData.faceCamera = true; quizBadge.userData.isQuizTrigger = true; park.add(quizBadge); quizObjects.push(quizBadge);
+    const quizBadge = makeBadge('큐레이터 퀴즈', 3.4, "CURATOR'S CHALLENGE"); quizBadge.position.set(0, 5.7, 0); quizBadge.userData.faceCamera = true; quizBadge.userData.isQuizTrigger = true; park.add(quizBadge); quizObjects.push(quizBadge);
 
     ZONES.forEach(zone => {
       loadZoneModel(zone);
