@@ -17,19 +17,70 @@ type Explanation = {
 const explanations = explanationsData as Record<string, Explanation>;
 const questionImageVersion = "20260721-fit";
 
+function TaegeukgiIcon() {
+  return (
+    <svg
+      className="taegeukgi-icon"
+      viewBox="0 0 36 24"
+      width="30"
+      height="20"
+      aria-label="태극기"
+      role="img"
+      style={{
+        display: "inline-block",
+        verticalAlign: "middle",
+        borderRadius: "3px",
+        boxShadow: "0 1px 3px rgba(0, 0, 0, 0.2)",
+      }}
+    >
+      <rect width="36" height="24" fill="#ffffff" rx="2" />
+      <g transform="translate(18,12) rotate(-33.69)">
+        <path d="M 0,-6 A 6,6 0 0,1 0,6 A 3,3 0 0,1 0,0 A 3,3 0 0,0 0,-6" fill="#CD2E3A" />
+        <path d="M 0,6 A 6,6 0 0,1 0,-6 A 3,3 0 0,1 0,0 A 3,3 0 0,0 0,6" fill="#0047A0" />
+      </g>
+      <g transform="translate(18,12) rotate(-33.69) translate(-10.5,0) rotate(90)">
+        <line x1="-3" y1="-2.2" x2="3" y2="-2.2" stroke="#000" strokeWidth="0.75" />
+        <line x1="-3" y1="0" x2="3" y2="0" stroke="#000" strokeWidth="0.75" />
+        <line x1="-3" y1="2.2" x2="3" y2="2.2" stroke="#000" strokeWidth="0.75" />
+      </g>
+      <g transform="translate(18,12) rotate(-33.69) translate(10.5,0) rotate(90)">
+        <line x1="-3" y1="-2.2" x2="-0.4" y2="-2.2" stroke="#000" strokeWidth="0.75" />
+        <line x1="0.4" y1="-2.2" x2="3" y2="-2.2" stroke="#000" strokeWidth="0.75" />
+        <line x1="-3" y1="0" x2="-0.4" y2="0" stroke="#000" strokeWidth="0.75" />
+        <line x1="0.4" y1="0" x2="3" y2="0" stroke="#000" strokeWidth="0.75" />
+        <line x1="-3" y1="2.2" x2="-0.4" y2="2.2" stroke="#000" strokeWidth="0.75" />
+        <line x1="0.4" y1="2.2" x2="3" y2="2.2" stroke="#000" strokeWidth="0.75" />
+      </g>
+      <g transform="translate(18,12) rotate(33.69) translate(10.5,0) rotate(90)">
+        <line x1="-3" y1="-2.2" x2="-0.4" y2="-2.2" stroke="#000" strokeWidth="0.75" />
+        <line x1="0.4" y1="-2.2" x2="3" y2="-2.2" stroke="#000" strokeWidth="0.75" />
+        <line x1="-3" y1="0" x2="3" y2="0" stroke="#000" strokeWidth="0.75" />
+        <line x1="-3" y1="2.2" x2="-0.4" y2="2.2" stroke="#000" strokeWidth="0.75" />
+        <line x1="0.4" y1="2.2" x2="3" y2="2.2" stroke="#000" strokeWidth="0.75" />
+      </g>
+      <g transform="translate(18,12) rotate(33.69) translate(-10.5,0) rotate(90)">
+        <line x1="-3" y1="-2.2" x2="3" y2="-2.2" stroke="#000" strokeWidth="0.75" />
+        <line x1="-3" y1="0" x2="-0.4" y2="0" stroke="#000" strokeWidth="0.75" />
+        <line x1="0.4" y1="0" x2="3" y2="0" stroke="#000" strokeWidth="0.75" />
+        <line x1="-3" y1="2.2" x2="3" y2="2.2" stroke="#000" strokeWidth="0.75" />
+      </g>
+    </svg>
+  );
+}
+
 const units = [
   { id: "prehistoric", name: "선사 시대와 고조선", short: "선사·고조선", icon: "🪨", color: "mint" },
   { id: "early-states", name: "여러 나라의 성장", short: "여러 나라", icon: "🌾", color: "yellow" },
   { id: "three-kingdoms", name: "삼국과 가야", short: "삼국·가야", icon: "👑", color: "coral" },
-  { id: "north-south", name: "남북국 시대", short: "남북국", icon: "🧭", color: "sky" },
+  { id: "north-south", name: "남북국 시대", short: "남북국", icon: "🪷", color: "sky" },
   { id: "goryeo", name: "고려", short: "고려", icon: "🏺", color: "lavender" },
   { id: "joseon-early", name: "조선 전기", short: "조선 전기", icon: "📜", color: "mint" },
-  { id: "joseon-late", name: "조선 후기", short: "조선 후기", icon: "🏯", color: "yellow" },
+  { id: "joseon-late", name: "조선 후기", short: "조선 후기", icon: "🎨", color: "yellow" },
   { id: "opening", name: "개항기와 대한제국", short: "개항기", icon: "🚂", color: "coral" },
-  { id: "occupation", name: "일제강점기", short: "일제강점기", icon: "✊", color: "sky" },
-  { id: "contemporary", name: "대한민국 현대사", short: "현대사", icon: "🇰🇷", color: "lavender" },
+  { id: "occupation", name: "일제강점기", short: "일제강점기", icon: <TaegeukgiIcon />, color: "sky" },
+  { id: "contemporary", name: "대한민국 현대사", short: "현대사", icon: "🏢", color: "lavender" },
   { id: "integrated", name: "시대 통합", short: "시대 통합", icon: "＋", color: "mint" },
-] as const;
+];
 
 const answerSymbols = ["", "①", "②", "③", "④"];
 const playerNameKey = "classPlayerName";
