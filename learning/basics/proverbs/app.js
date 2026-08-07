@@ -55,6 +55,8 @@ function renderStudy() {
     ? `THIS SET ${studyPosition + 1} / ${BATCH_SIZE} · BANK ${decks.en.length}`
     : `이번 학습 ${studyPosition + 1} / ${BATCH_SIZE} · 전체 은행 ${decks.ko.length}개`;
   $("proverb").textContent = item.proverb;
+  $("literal").textContent = item.literal || "";
+  $("literal").hidden = !item.literal;
   $("meaning").textContent = item.meaning;
   $("example").textContent = `예: ${item.example}`;
   $("previous").disabled = studyPosition === 0;

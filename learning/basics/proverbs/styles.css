@@ -24,7 +24,8 @@ button { cursor: pointer; font: inherit; border: 1px solid #c7d4e6; border-radiu
 .language-tabs { display: flex; gap: 10px; margin: 16px 0; }
 .language-tab.active { background: #875027; color: white; border-color: #875027; }
 .panel { background: #fffaf2f2; padding: clamp(24px, 6vw, 42px); border: 1px solid #fff8e8; border-radius: 18px; box-shadow: 0 9px 28px #4a29122b; backdrop-filter: blur(5px); }
-.study-card h2 { font-size: clamp(1.5rem, 5vw, 2.5rem); margin: 10px 0 20px; }
+.study-card h2 { font-size: clamp(1.5rem, 5vw, 2.5rem); margin: 10px 0 6px; }
+.literal { font-size: .85rem; color: #8a7660; margin: 0 0 18px; }
 .meaning { font-size: 1.1rem; line-height: 1.7; }
 .example { background: #f0f5fc; padding: 14px; border-radius: 10px; color: #46546a; }
 .actions { display: flex; gap: 8px; justify-content: flex-end; margin-top: 28px; }
