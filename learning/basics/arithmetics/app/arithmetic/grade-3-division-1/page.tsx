@@ -171,8 +171,10 @@ export default function GradeThreeDivisionOnePage() {
             const markClass = ["division-option-mark", stateClass].filter(Boolean).join(" ");
             const content = (
               <>
-                <span className={markClass} aria-hidden="true" />
-                <span className="division-option-equation">{card.equation}</span>
+                <span className="division-option-head">
+                  <span className={markClass} aria-hidden="true" />
+                  <span className="division-option-equation">{card.equation}</span>
+                </span>
                 <GroupDiagram option={card.option} className={stateClass} />
               </>
             );
