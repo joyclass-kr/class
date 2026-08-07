@@ -137,12 +137,13 @@ h1 { margin: 0; font-family: Georgia, "Times New Roman", serif; font-size: clamp
 .nb-cell:hover { filter: brightness(1.15); }
 .nb-cell:active { transform: scale(.94); }
 .nb-cell.filled { background: linear-gradient(145deg, #fff2c9, #d79a43); border-color: #e6b66d; box-shadow: inset 0 2px rgba(255,255,255,.6), inset 0 -3px rgba(99,48,15,.22); }
+.nb-cell.wrong-fill { background: linear-gradient(145deg, #e0776a, #96261c); border-color: #c94a3d; color: #fff0ec; font-weight: 900; box-shadow: inset 0 2px rgba(255,255,255,.28), inset 0 -3px rgba(60,10,6,.4); }
 .nb-cell.marked { color: rgba(255,140,120,.85); }
-.nb-cell.wrong { animation: nb-wrong-flash .3s ease; }
+.nb-cell.wrong-pulse { animation: nb-wrong-flash .3s ease; }
 
 @keyframes nb-wrong-flash {
-  0%, 100% { background: rgba(255,248,232,.06); }
-  50% { background: rgba(224,60,50,.55); }
+  0%, 100% { box-shadow: none; }
+  50% { box-shadow: 0 0 0 3px rgba(224,60,50,.85), 0 0 14px 3px rgba(224,60,50,.65); }
 }
 
 .status { min-height: 1.5em; margin: 14px 0 13px; color: var(--muted); }

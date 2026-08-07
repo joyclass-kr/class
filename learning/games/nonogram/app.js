@@ -83,6 +83,7 @@
   let clues = { rows: [], cols: [] };
   let tool = 'fill';
   let mistakes = 0;
+  let wrongEver = new Set();
   let elapsed = 0;
   let timerId = null;
   let started = false;
@@ -178,13 +179,14 @@
         const cell = document.createElement('button');
         cell.type = 'button';
         cell.className = 'nb-cell';
-        if (filled[r][c]) cell.classList.add('filled');
+        if (filled[r][c]) cell.classList.add(solution[r][c] ? 'filled' : 'wrong-fill');
         if (marked[r][c]) cell.classList.add('marked');
         cell.dataset.r = String(r);
         cell.dataset.c = String(c);
         cell.dataset.sfx = 'none';
         cell.setAttribute('aria-label', `${r + 1}행 ${c + 1}열`);
-        if (marked[r][c] && !filled[r][c]) cell.textContent = '✕';
+        if (filled[r][c] && !solution[r][c]) cell.textContent = '✕';
+        else if (marked[r][c] && !filled[r][c]) cell.textContent = '✕';
         boardElement.append(cell);
       }
     }
@@ -197,10 +199,37 @@
   function flashWrong(r, c) {
     const el = cellElement(r, c);
     if (!el) return;
-    el.classList.remove('wrong');
+    el.classList.remove('wrong-pulse');
     void el.offsetWidth;
-    el.classList.add('wrong');
-    setTimeout(() => el.classList.remove('wrong'), 320);
+    el.classList.add('wrong-pulse');
+    setTimeout(() => el.classList.remove('wrong-pulse'), 320);
+  }
+
+  function markWrongOnce(r, c) {
+    const key = `${r},${c}`;
+    if (wrongEver.has(key)) return;
+    wrongEver.add(key);
+    mistakes += 1;
+    mistakeElement.textContent = mistakes;
+  }
+
+  function setCellFilled(r, c, value) {
+    if (filled[r][c] === value) return false;
+    filled[r][c] = value;
+    if (value) {
+      if (marked[r][c]) marked[r][c] = false;
+      startTimer();
+      if (solution[r][c]) {
+        playSfx('stone');
+      } else {
+        markWrongOnce(r, c);
+        playSfx('error');
+        flashWrong(r, c);
+      }
+    } else {
+      playSfx('click');
+    }
+    return true;
   }
 
   function startTimer() {
@@ -237,28 +266,11 @@
     const key = `${r},${c}`;
     if (visited.has(key)) return;
     visited.add(key);
-    if (intent === 'fill') {
-      if (filled[r][c] || !celebration.hidden) return;
-      if (!solution[r][c]) {
-        startTimer();
-        mistakes += 1;
-        mistakeElement.textContent = mistakes;
-        playSfx('error');
-        flashWrong(r, c);
-        return;
-      }
-      if (marked[r][c]) marked[r][c] = false;
-      startTimer();
-      filled[r][c] = true;
-      playSfx('stone');
-      render();
-      if (isComplete()) completePuzzle();
-    } else {
-      if (!filled[r][c]) return;
-      filled[r][c] = false;
-      playSfx('click');
-      render();
-    }
+    if (!celebration.hidden) return;
+    const changed = setCellFilled(r, c, intent === 'fill');
+    if (!changed) return;
+    render();
+    if (isComplete()) completePuzzle();
   }
 
   function applyMarkIntent(r, c, intent, visited) {
@@ -360,24 +372,7 @@
   }
 
   function fillCell(r, c) {
-    if (filled[r][c]) {
-      filled[r][c] = false;
-      playSfx('click');
-      render();
-      return;
-    }
-    if (!solution[r][c]) {
-      startTimer();
-      mistakes += 1;
-      mistakeElement.textContent = mistakes;
-      playSfx('error');
-      flashWrong(r, c);
-      return;
-    }
-    if (marked[r][c]) marked[r][c] = false;
-    startTimer();
-    filled[r][c] = true;
-    playSfx('stone');
+    setCellFilled(r, c, !filled[r][c]);
     render();
     if (isComplete()) completePuzzle();
   }
@@ -395,6 +390,7 @@
     stopTimer();
     filled = Array.from({ length: n }, () => Array(n).fill(false));
     marked = Array.from({ length: n }, () => Array(n).fill(false));
+    wrongEver = new Set();
     mistakes = 0;
     elapsed = 0;
     started = false;
