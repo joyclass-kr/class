@@ -70,7 +70,10 @@ export default function DivisionBracket({
           />}
       </span>
       <span className="division-bracket-divisor" style={{ gridColumn: 1, gridRow: 2 }}>{divisor}</span>
-      <strong className="division-bracket-dividend" style={{ gridColumn: 2, gridRow: 2 }}>{dividend}</strong>
+      <span className="division-bracket-dividend-group" style={{ gridColumn: 2, gridRow: 2 }}>
+        <span className="division-bracket-curve" aria-hidden="true" />
+        <strong className="division-bracket-dividend">{dividend}</strong>
+      </span>
     </div>
   );
 }
