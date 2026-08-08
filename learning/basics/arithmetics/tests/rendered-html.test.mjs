@@ -1355,7 +1355,7 @@ test("renders the second grade-three division worksheet", async () => {
   assert.match(css, /\.division-remainder-columns\s*\{[\s\S]*?grid-template-columns:\s*repeat\(3,/);
   assert.match(css, /\.division-remainder-column-large\s*\{[\s\S]*?grid-template-rows:\s*repeat\(5,/);
   assert.match(css, /\.division-bracket-dividend\s*\{[\s\S]*?border-top:\s*2px solid #17233c;/);
-  assert.match(css, /\.division-bracket-curve\s*\{[\s\S]*?border-radius:\s*100% 0 0 100%;/);
+  assert.match(css, /\.division-bracket-curve\s*\{[\s\S]*?border-radius:\s*0 100% 100% 0;/);
 });
 
 test("renders the third grade-three division worksheet in the workbook's four columns", async () => {
