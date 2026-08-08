@@ -87,14 +87,12 @@ export default function GradeFourDivisionPage() {
   const completed = Object.values(answers).filter(divisionBracketAnswered).length;
   const correct = Object.values(results).filter(Boolean).length;
 
-  function updateQuotientDigit(problem: Problem, index: number, value: string) {
-    const digit = value.replace(/[^0-9]/g, "").slice(-1);
-    setAnswers((current) => {
-      const existing = current[problem.id] ?? blankDivisionBracketAnswer(String(problem.quotient).length);
-      const quotientDigits = [...existing.quotientDigits];
-      quotientDigits[index] = digit;
-      return { ...current, [problem.id]: { ...existing, quotientDigits } };
-    });
+  function updateQuotient(problem: Problem, value: string) {
+    const digits = value.replace(/[^0-9]/g, "").slice(0, String(problem.quotient).length);
+    setAnswers((current) => ({
+      ...current,
+      [problem.id]: { ...(current[problem.id] ?? blankDivisionBracketAnswer()), quotient: digits },
+    }));
     setResults((current) => {
       if (!(problem.id in current)) return current;
       const next = { ...current };
@@ -107,7 +105,7 @@ export default function GradeFourDivisionPage() {
     const digit = value.replace(/[^0-9]/g, "").slice(0, String(problem.divisor).length);
     setAnswers((current) => ({
       ...current,
-      [problem.id]: { ...(current[problem.id] ?? blankDivisionBracketAnswer(String(problem.quotient).length)), remainder: digit },
+      [problem.id]: { ...(current[problem.id] ?? blankDivisionBracketAnswer()), remainder: digit },
     }));
     setResults((current) => {
       if (!(problem.id in current)) return current;
@@ -155,7 +153,7 @@ export default function GradeFourDivisionPage() {
             remainder={problem.remainder}
             answerSheet={answerSheet}
             answer={answers[problem.id]}
-            onQuotientDigitChange={(digitIndex, value) => updateQuotientDigit(problem, digitIndex, value)}
+            onQuotientChange={(value) => updateQuotient(problem, value)}
             onRemainderChange={(value) => updateRemainder(problem, value)}
           />
         </div>

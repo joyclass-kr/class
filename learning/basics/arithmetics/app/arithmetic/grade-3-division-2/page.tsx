@@ -89,14 +89,12 @@ export default function GradeThreeDivisionTwoPage() {
     });
   }
 
-  function updateBracketQuotientDigit(problem: Problem, index: number, value: string) {
-    const digit = value.replace(/[^0-9]/g, "").slice(-1);
-    setBracketAnswers((current) => {
-      const existing = current[problem.id] ?? blankDivisionBracketAnswer(String(problem.quotient).length);
-      const quotientDigits = [...existing.quotientDigits];
-      quotientDigits[index] = digit;
-      return { ...current, [problem.id]: { ...existing, quotientDigits } };
-    });
+  function updateBracketQuotient(problem: Problem, value: string) {
+    const digits = value.replace(/[^0-9]/g, "").slice(0, String(problem.quotient).length);
+    setBracketAnswers((current) => ({
+      ...current,
+      [problem.id]: { ...(current[problem.id] ?? blankDivisionBracketAnswer()), quotient: digits },
+    }));
     setResults((current) => {
       if (!(problem.id in current)) return current;
       const next = { ...current };
@@ -109,7 +107,7 @@ export default function GradeThreeDivisionTwoPage() {
     const digit = value.replace(/[^0-9]/g, "").slice(0, String(problem.divisor).length);
     setBracketAnswers((current) => ({
       ...current,
-      [problem.id]: { ...(current[problem.id] ?? blankDivisionBracketAnswer(String(problem.quotient).length)), remainder: digit },
+      [problem.id]: { ...(current[problem.id] ?? blankDivisionBracketAnswer()), remainder: digit },
     }));
     setResults((current) => {
       if (!(problem.id in current)) return current;
@@ -163,7 +161,7 @@ export default function GradeThreeDivisionTwoPage() {
             remainder={problem.remainder}
             answerSheet={answerSheet}
             answer={bracketAnswers[problem.id]}
-            onQuotientDigitChange={(index, value) => updateBracketQuotientDigit(problem, index, value)}
+            onQuotientChange={(value) => updateBracketQuotient(problem, value)}
             onRemainderChange={(value) => updateBracketRemainder(problem, value)}
           />
           {resultBadge}

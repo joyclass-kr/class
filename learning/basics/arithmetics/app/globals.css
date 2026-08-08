@@ -1432,11 +1432,6 @@ html[data-race-mode="true"] body { padding-bottom: 72px; }
   justify-content: center;
 }
 
-.division-bracket-cell:not(.division-bracket-dividend-cell) input,
-.division-bracket-cell:not(.division-bracket-dividend-cell) strong {
-  margin: 0 2px;
-}
-
 .division-bracket-divisor {
   padding-right: 6px;
   font-size: 20px;

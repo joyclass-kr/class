@@ -1,17 +1,17 @@
 import type { CSSProperties } from "react";
 
-export type DivisionBracketAnswer = { quotientDigits: string[]; remainder: string };
+export type DivisionBracketAnswer = { quotient: string; remainder: string };
 
-export function blankDivisionBracketAnswer(quotientDigitCount: number): DivisionBracketAnswer {
-  return { quotientDigits: Array.from({ length: quotientDigitCount }, () => ""), remainder: "" };
+export function blankDivisionBracketAnswer(): DivisionBracketAnswer {
+  return { quotient: "", remainder: "" };
 }
 
 export function divisionBracketAnswered(answer: DivisionBracketAnswer | undefined) {
-  return Boolean(answer && (answer.quotientDigits.some((digit) => digit) || answer.remainder));
+  return Boolean(answer && (answer.quotient || answer.remainder));
 }
 
 export function divisionBracketIsCorrect(answer: DivisionBracketAnswer | undefined, quotient: number, remainder: number) {
-  return answer?.quotientDigits.join("") === String(quotient) && answer?.remainder === String(remainder);
+  return answer?.quotient === String(quotient) && answer?.remainder === String(remainder);
 }
 
 export default function DivisionBracket({
@@ -22,7 +22,7 @@ export default function DivisionBracket({
   remainder,
   answerSheet,
   answer,
-  onQuotientDigitChange,
+  onQuotientChange,
   onRemainderChange,
 }: {
   id: string;
@@ -32,14 +32,14 @@ export default function DivisionBracket({
   remainder: number;
   answerSheet: boolean;
   answer?: DivisionBracketAnswer;
-  onQuotientDigitChange: (index: number, value: string) => void;
+  onQuotientChange: (value: string) => void;
   onRemainderChange: (value: string) => void;
 }) {
   const dividendDigits = String(dividend).split("");
-  const quotientDigits = String(quotient).split("");
+  const quotientLength = String(quotient).length;
   const columnCount = dividendDigits.length;
-  const offset = columnCount - quotientDigits.length;
-  const currentQuotientDigits = answer?.quotientDigits ?? Array.from({ length: quotientDigits.length }, () => "");
+  const offset = columnCount - quotientLength;
+  const currentQuotient = answer?.quotient ?? "";
   const currentRemainder = answer?.remainder ?? "";
   const remainderMaxLength = String(divisor).length;
   const style = { gridTemplateColumns: `auto repeat(${columnCount}, minmax(26px, auto)) auto auto` } as CSSProperties;
@@ -56,22 +56,20 @@ export default function DivisionBracket({
           {digit}
         </span>
       ))}
-      {quotientDigits.map((digit, index) => (
-        <span className="division-bracket-cell" style={{ gridColumn: offset + index + 2, gridRow: 1 }} key={`quotient-${index}`}>
-          {answerSheet
-            ? <strong className="multiplication-static-answer division-remainder-static">{digit}</strong>
-            : <input
-              className="multiplication-input division-remainder-input"
-              type="text"
-              inputMode="numeric"
-              pattern="[0-9]*"
-              maxLength={1}
-              value={currentQuotientDigits[index] ?? ""}
-              onChange={(event) => onQuotientDigitChange(index, event.target.value)}
-              aria-label={`${id} 몫 ${index + 1}번째 자리`}
-            />}
-        </span>
-      ))}
+      <span className="division-bracket-cell" style={{ gridColumn: `${offset + 2} / span ${quotientLength}`, gridRow: 1 }}>
+        {answerSheet
+          ? <strong className="multiplication-static-answer division-remainder-static">{quotient}</strong>
+          : <input
+            className="multiplication-input division-remainder-input"
+            type="text"
+            inputMode="numeric"
+            pattern="[0-9]*"
+            maxLength={quotientLength}
+            value={currentQuotient}
+            onChange={(event) => onQuotientChange(event.target.value)}
+            aria-label={`${id} 몫`}
+          />}
+      </span>
       <span className="division-bracket-ellipsis" style={{ gridColumn: columnCount + 2, gridRow: 1 }}>···</span>
       <span style={{ gridColumn: columnCount + 3, gridRow: 1 }}>
         {answerSheet
