@@ -3022,7 +3022,10 @@ html[data-race-mode="true"] body { padding-bottom: 72px; }
   font-family: inherit;
   font-size: 19px;
   font-weight: 900;
-  text-align: center;
+  font-variant-numeric: tabular-nums;
+  text-align: left;
+  padding-left: 24px;
+  box-sizing: border-box;
 }
 
 .grade-six-decimal-one-input {
@@ -3033,7 +3036,7 @@ html[data-race-mode="true"] body { padding-bottom: 72px; }
 .grade-six-decimal-one-static-answer {
   display: inline-flex;
   align-items: center;
-  justify-content: center;
+  justify-content: flex-start;
 }
 
 .grade-six-decimal-one-input:focus {
