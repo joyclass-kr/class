@@ -1384,14 +1384,16 @@ function createClassroomPlatform(options = {}) {
     const result = await pool.query(
       `SELECT s.id AS student_id, s.roster_name, s.student_number, s.birthday_mmdd, s.birthday_visible,
               s.avatar_key, s.avatar_first_changed_year, s.avatar_second_changed_year,
-              s.school_id, s.academic_year, s.grade, s.class_number, sc.name AS school_name
+              s.school_id, s.academic_year, s.grade, s.class_number, sc.name AS school_name,
+              'school_students' AS source_table
        FROM school_students s
        JOIN classroom_schools sc ON sc.id = s.school_id
        WHERE s.user_id = $1
        UNION ALL
        SELECT s.id AS student_id, s.roster_name, s.student_number, s.birthday_mmdd, s.birthday_visible,
               s.avatar_key, s.avatar_first_changed_year, s.avatar_second_changed_year,
-              c.school_id, c.academic_year, c.grade, c.class_number, sc.name AS school_name
+              c.school_id, c.academic_year, c.grade, c.class_number, sc.name AS school_name,
+              'classroom_students' AS source_table
        FROM classroom_students s
        JOIN classroom_classes c ON c.id = s.class_id
        JOIN classroom_schools sc ON sc.id = c.school_id
@@ -1401,6 +1403,60 @@ function createClassroomPlatform(options = {}) {
     );
     const row = result.rows[0];
     if (!row) throw new HttpError(404, "STUDENT_MEMBERSHIP_REQUIRED", "Join your class before changing this setting.");
+
+    // Older rows (created before avatar auto-assignment existed, or a roster
+    // row that was never re-saved since) can reach here with no avatar_key.
+    // Assign one now instead of leaving the student permanently stuck on
+    // "not yet assigned" until an admin happens to re-save the roster.
+    if (!row.avatar_key) {
+      const client = await pool.connect();
+      try {
+        await client.query("BEGIN");
+        await client.query(
+          "SELECT pg_advisory_xact_lock(hashtextextended($1, 0))",
+          [`avatar:${row.school_id}:${row.academic_year}:${row.grade}`]
+        );
+        const recheck = await client.query(
+          `SELECT avatar_key FROM ${row.source_table} WHERE id = $1 FOR UPDATE`,
+          [row.student_id]
+        );
+        if (recheck.rows[0]?.avatar_key) {
+          row.avatar_key = recheck.rows[0].avatar_key;
+        } else {
+          const usageResult = await client.query(
+            `SELECT avatar_key, COUNT(*)::INTEGER AS usage_count,
+                    SUM(COUNT(*)) OVER()::INTEGER AS student_count
+             FROM (
+               SELECT avatar_key FROM school_students
+                WHERE school_id = $1 AND academic_year = $2 AND grade = $3
+               UNION ALL
+               SELECT s.avatar_key FROM classroom_students s
+                JOIN classroom_classes c ON c.id = s.class_id
+                WHERE c.school_id = $1 AND c.academic_year = $2 AND c.grade = $3
+             ) combined
+             GROUP BY avatar_key`,
+            [row.school_id, row.academic_year, row.grade]
+          );
+          const usageCounts = new Map(
+            usageResult.rows.filter((item) => item.avatar_key).map((item) => [item.avatar_key, Number(item.usage_count || 0)])
+          );
+          const capacity = avatarCapacity(Number(usageResult.rows[0]?.student_count || 0));
+          const newAvatarKey = pickRandomAvailableAvatar(usageCounts, capacity);
+          await client.query(
+            `UPDATE ${row.source_table} SET avatar_key = $2, updated_at = NOW() WHERE id = $1`,
+            [row.student_id, newAvatarKey]
+          );
+          row.avatar_key = newAvatarKey;
+        }
+        await client.query("COMMIT");
+      } catch (error) {
+        await client.query("ROLLBACK");
+        throw error;
+      } finally {
+        client.release();
+      }
+    }
+
     const avatarUsageResult = await pool.query(
       `SELECT avatar_key, COUNT(*)::INTEGER AS usage_count,
               SUM(COUNT(*)) OVER()::INTEGER AS student_count

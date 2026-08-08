@@ -57,3 +57,11 @@ test("requireSiteAccess always allows the student profile settings page in both 
   assert.match(body, /requestPath === "\/classtools\/profile\.html"/);
   assert.match(body, /requestPath === "\/classtools\/profile"/);
 });
+
+test("GET /student/profile backfills a missing avatar instead of leaving the student permanently unassigned", () => {
+  const body = handlerBody(serverSource, `router.get("/student/profile"`);
+  assert.match(body, /if \(!row\.avatar_key\) \{/);
+  assert.match(body, /pg_advisory_xact_lock/);
+  assert.match(body, /pickRandomAvailableAvatar\(usageCounts, capacity\)/);
+  assert.match(body, /UPDATE \$\{row\.source_table\} SET avatar_key = \$2/);
+});
