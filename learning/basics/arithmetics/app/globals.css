@@ -9647,11 +9647,10 @@ main {
   stroke-width: 1;
 }
 
-.stacked-cubes-map-number {
-  fill: #17233c;
-  font-size: 15px;
-  font-weight: 800;
-  text-anchor: middle;
+.stacked-cubes-map-guide {
+  stroke: #9a8f7a;
+  stroke-width: 1;
+  stroke-dasharray: 3 3;
 }
 
 .stack-count-answer {

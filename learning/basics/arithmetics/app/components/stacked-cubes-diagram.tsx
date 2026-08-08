@@ -35,20 +35,18 @@ function floorCellPoints(r: number, c: number, offsetY: number) {
   return { x, y, points: `${x},${y - TILE_H} ${x + TILE_W},${y} ${x},${y + TILE_H} ${x - TILE_W},${y}` };
 }
 
-export default function StackedCubesDiagram({ heights, showMap = false, showCubes = true, className }: { heights: number[][]; showMap?: boolean; showCubes?: boolean; className?: string }) {
+export default function StackedCubesDiagram({ heights, showMap = false, className }: { heights: number[][]; showMap?: boolean; className?: string }) {
   const size = heights.length;
   const cubes: Cube[] = [];
-  if (showCubes) {
-    for (let r = 0; r < size; r += 1) {
-      for (let c = 0; c < size; c += 1) {
-        const height = heights[r][c];
-        for (let z = 0; z < height; z += 1) cubes.push({ r, c, z, isTop: z === height - 1 });
-      }
+  for (let r = 0; r < size; r += 1) {
+    for (let c = 0; c < size; c += 1) {
+      const height = heights[r][c];
+      for (let z = 0; z < height; z += 1) cubes.push({ r, c, z, isTop: z === height - 1 });
     }
-    cubes.sort((a, b) => a.r + a.c - (b.r + b.c));
   }
+  cubes.sort((a, b) => a.r + a.c - (b.r + b.c));
 
-  const maxHeight = showCubes ? heights.reduce((max, row) => Math.max(max, ...row), 0) : 0;
+  const maxHeight = heights.reduce((max, row) => Math.max(max, ...row), 0);
   const minX = -size * TILE_W - 20;
   const maxX = size * TILE_W;
   const minY = -maxHeight * CUBE_H - TILE_H;
@@ -88,11 +86,12 @@ export default function StackedCubesDiagram({ heights, showMap = false, showCube
       </g>
       {showMap && heights.map((row, r) => row.map((cellHeight, c) => {
         if (cellHeight === 0) return null;
-        const { x, y, points } = floorCellPoints(r, c, mapOffsetY);
+        const { x, points } = floorCellPoints(r, c, mapOffsetY);
+        const groundY = (c + r) * TILE_H;
         return (
           <g key={`map-${r}-${c}`}>
+            <line className="stacked-cubes-map-guide" x1={x} y1={groundY + TILE_H} x2={x} y2={groundY + mapOffsetY - TILE_H} />
             <polygon className="stacked-cubes-map-cell" points={points} />
-            <text className="stacked-cubes-map-number" x={x} y={y + 4}>{cellHeight}</text>
           </g>
         );
       }))}
