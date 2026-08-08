@@ -1405,7 +1405,7 @@ html[data-race-mode="true"] body { padding-bottom: 72px; }
 
 .division-remainder-input-small,
 .division-remainder-static-small {
-  width: 32px;
+  width: 40px;
 }
 
 .division-bracket-question {
@@ -1420,39 +1420,47 @@ html[data-race-mode="true"] body { padding-bottom: 72px; }
 
 .division-bracket {
   display: inline-grid;
-  grid-template-columns: auto auto;
   grid-template-rows: auto auto;
-  align-items: end;
-  column-gap: 6px;
+  align-items: center;
+  justify-items: center;
+  row-gap: 4px;
 }
 
-.division-bracket-quotient-row {
-  grid-column: 2;
-  grid-row: 1;
+.division-bracket-cell {
   display: flex;
   align-items: center;
-  gap: 5px;
-  padding-bottom: 3px;
-  font-size: 16px;
-  font-weight: 700;
+  justify-content: center;
+}
+
+.division-bracket-cell:not(.division-bracket-dividend-cell) input,
+.division-bracket-cell:not(.division-bracket-dividend-cell) strong {
+  margin: 0 2px;
 }
 
 .division-bracket-divisor {
-  grid-column: 1;
-  grid-row: 2;
-  padding-right: 4px;
-  font-size: 21px;
+  padding-right: 6px;
+  font-size: 20px;
+  font-weight: 800;
+  text-align: right;
+}
+
+.division-bracket-dividend-cell {
+  min-width: 20px;
+  padding: 2px 3px 5px;
+  border-top: 2px solid #17233c;
+  font-size: 20px;
   font-weight: 800;
 }
 
-.division-bracket-dividend {
-  grid-column: 2;
-  grid-row: 2;
+.division-bracket-dividend-first {
+  padding-left: 8px;
   border-left: 2px solid #17233c;
-  border-top: 2px solid #17233c;
-  padding: 2px 14px 5px 8px;
-  font-size: 21px;
-  font-weight: 800;
+}
+
+.division-bracket-ellipsis {
+  padding: 0 5px;
+  font-size: 16px;
+  font-weight: 700;
 }
 
 /* 3나눗셈③ */
@@ -2490,50 +2498,10 @@ html[data-race-mode="true"] body { padding-bottom: 72px; }
   font-weight: 850;
 }
 
-.grade-four-division-ellipsis {
-  letter-spacing: 2px;
-}
-
-.grade-four-division-input,
-.grade-four-division-static-answer {
-  width: 48px;
-  height: 40px;
-  border-radius: 7px;
-  background: white;
-  color: #17233c;
-  font-family: inherit;
-  font-size: 20px;
-  font-weight: 900;
-  text-align: center;
-}
-
-.grade-four-division-input {
-  border: 1.5px solid #968f85;
-  outline: none;
-}
-
-.grade-four-division-static-answer {
-  display: inline-flex;
-  align-items: center;
-  justify-content: center;
-}
-
-.grade-four-division-input:focus {
-  border-color: #258f86;
-  box-shadow: 0 0 0 3px rgba(49, 168, 157, 0.2);
-}
-
 .grade-four-division-question .counting-result {
   right: 7px;
   bottom: 4px;
   font-size: 9px;
-}
-
-@media print {
-  .grade-four-division-input {
-    background: white;
-    color: black;
-  }
 }
 
 /* 4분수 */

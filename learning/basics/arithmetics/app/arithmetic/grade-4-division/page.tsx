@@ -1,11 +1,11 @@
 "use client";
 
 import { useEffect, useMemo, useState } from "react";
+import DivisionBracket, { blankDivisionBracketAnswer, divisionBracketAnswered, divisionBracketIsCorrect, type DivisionBracketAnswer } from "../../components/division-bracket";
 
 type PrintMode = "worksheet" | "answers" | "both";
 type Problem = { id: string; dividend: number; divisor: number; quotient: number; remainder: number };
 type ProblemSet = { seed: number; problems: Problem[] };
-type Answer = { quotient: string; remainder: string };
 
 const INITIAL_SEED = 20260720;
 
@@ -69,7 +69,7 @@ function createProblemSet(seed: number): ProblemSet {
 
 export default function GradeFourDivisionPage() {
   const [questionSet, setQuestionSet] = useState(() => createProblemSet(INITIAL_SEED));
-  const [answers, setAnswers] = useState<Record<string, Answer>>({});
+  const [answers, setAnswers] = useState<Record<string, DivisionBracketAnswer>>({});
   const [results, setResults] = useState<Record<string, boolean>>({});
   const [sheetScale, setSheetScale] = useState(0.6);
   const [printMenuOpen, setPrintMenuOpen] = useState(false);
@@ -84,31 +84,41 @@ export default function GradeFourDivisionPage() {
   }, []);
 
   const problems = useMemo(() => questionSet.problems, [questionSet]);
-  const completed = Object.values(answers).filter((answer) => answer.quotient || answer.remainder).length;
+  const completed = Object.values(answers).filter(divisionBracketAnswered).length;
   const correct = Object.values(results).filter(Boolean).length;
 
-  function updateAnswer(id: string, field: keyof Answer, value: string) {
+  function updateQuotientDigit(problem: Problem, index: number, value: string) {
+    const digit = value.replace(/[^0-9]/g, "").slice(-1);
+    setAnswers((current) => {
+      const existing = current[problem.id] ?? blankDivisionBracketAnswer(String(problem.quotient).length);
+      const quotientDigits = [...existing.quotientDigits];
+      quotientDigits[index] = digit;
+      return { ...current, [problem.id]: { ...existing, quotientDigits } };
+    });
+    setResults((current) => {
+      if (!(problem.id in current)) return current;
+      const next = { ...current };
+      delete next[problem.id];
+      return next;
+    });
+  }
+
+  function updateRemainder(problem: Problem, value: string) {
+    const digit = value.replace(/[^0-9]/g, "").slice(0, String(problem.divisor).length);
     setAnswers((current) => ({
       ...current,
-      [id]: {
-        quotient: current[id]?.quotient ?? "",
-        remainder: current[id]?.remainder ?? "",
-        [field]: value.replace(/[^0-9]/g, "").slice(0, 2),
-      },
+      [problem.id]: { ...(current[problem.id] ?? blankDivisionBracketAnswer(String(problem.quotient).length)), remainder: digit },
     }));
     setResults((current) => {
-      if (!(id in current)) return current;
+      if (!(problem.id in current)) return current;
       const next = { ...current };
-      delete next[id];
+      delete next[problem.id];
       return next;
     });
   }
 
   function checkAll() {
-    setResults(Object.fromEntries(problems.map((problem) => {
-      const answer = answers[problem.id];
-      return [problem.id, answer?.quotient === String(problem.quotient) && answer?.remainder === String(problem.remainder)];
-    })));
+    setResults(Object.fromEntries(problems.map((problem) => [problem.id, divisionBracketIsCorrect(answers[problem.id], problem.quotient, problem.remainder)])));
   }
 
   function resetAnswers() {
@@ -130,23 +140,6 @@ export default function GradeFourDivisionPage() {
     window.requestAnimationFrame(() => window.print());
   }
 
-  function renderAnswer(problem: Problem, field: keyof Answer, answerSheet: boolean) {
-    const value = problem[field];
-    if (answerSheet) return <strong className={`grade-four-division-static-answer ${field}`}>{value}</strong>;
-    return (
-      <input
-        className={`grade-four-division-input ${field}`}
-        type="text"
-        inputMode="numeric"
-        pattern="[0-9]*"
-        maxLength={2}
-        value={answers[problem.id]?.[field] ?? ""}
-        onChange={(event) => updateAnswer(problem.id, field, event.target.value)}
-        aria-label={`${problem.id} ${field === "quotient" ? "몫" : "나머지"}`}
-      />
-    );
-  }
-
   function renderProblem(problem: Problem, index: number, answerSheet: boolean) {
     const graded = problem.id in results;
     const isCorrect = results[problem.id] === true;
@@ -154,15 +147,17 @@ export default function GradeFourDivisionPage() {
       <div className={`multiplication-question grade-four-division-question${graded ? isCorrect ? " is-correct" : " is-wrong" : ""}`} data-testid="grade-four-division-question" key={problem.id}>
         <span className="grade-four-division-index">{index + 1}</span>
         <div className="division-bracket-question">
-          <div className="division-bracket">
-            <span className="division-bracket-quotient-row">
-              {renderAnswer(problem, "quotient", answerSheet)}
-              <span className="grade-four-division-ellipsis">…</span>
-              {renderAnswer(problem, "remainder", answerSheet)}
-            </span>
-            <span className="division-bracket-divisor">{problem.divisor}</span>
-            <span className="division-bracket-dividend">{problem.dividend}</span>
-          </div>
+          <DivisionBracket
+            id={problem.id}
+            dividend={problem.dividend}
+            divisor={problem.divisor}
+            quotient={problem.quotient}
+            remainder={problem.remainder}
+            answerSheet={answerSheet}
+            answer={answers[problem.id]}
+            onQuotientDigitChange={(digitIndex, value) => updateQuotientDigit(problem, digitIndex, value)}
+            onRemainderChange={(value) => updateRemainder(problem, value)}
+          />
         </div>
         {!answerSheet && graded && <span className={`counting-result ${isCorrect ? "correct" : "wrong"}`} role="status">{isCorrect ? "맞음" : "틀림"}</span>}
       </div>
