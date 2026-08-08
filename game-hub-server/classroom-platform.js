@@ -1270,8 +1270,12 @@ function createClassroomPlatform(options = {}) {
         const requestPath = normalizeContentPath(req.originalUrl);
         // Personal account settings (birthday/avatar), not a curated learning
         // menu item -- must stay reachable regardless of what the homeroom
-        // teacher has enabled for the class.
-        const isAlwaysAllowed = requestPath === "/classtools/profile.html";
+        // teacher has enabled for the class. The clean-URL middleware further
+        // down server.js 308-redirects "/classtools/profile.html" to
+        // "/classtools/profile" *after* this middleware runs, so the browser's
+        // follow-up request arrives here with the extension already stripped.
+        // Both forms must be recognized or that redirect defeats this bypass.
+        const isAlwaysAllowed = requestPath === "/classtools/profile.html" || requestPath === "/classtools/profile";
         if (classId && requestPath && !isAlwaysAllowed) {
           const enabled = await pool.query(
             `SELECT 1 FROM classroom_content_enabled
