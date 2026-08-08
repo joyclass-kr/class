@@ -263,7 +263,7 @@ document.addEventListener('DOMContentLoaded', () => {
             const res = await api(`/api/school-admin/dashboard?date=${dateStr}`);
             
             schoolNameTitle.textContent = res.schoolName + " 관리자 & 교육과정 포털";
-            renderDashboard(res.roster, res.notices, res.formalNotes);
+            renderDashboard(res.roster, res.notices, res.formalNotes, res.experientialApps);
             
             dashboardLoading.hidden = true;
             dashboardContent.hidden = false;
@@ -278,7 +278,7 @@ document.addEventListener('DOMContentLoaded', () => {
         }
     }
 
-    function renderDashboard(roster, notices, formalNotes) {
+    function renderDashboard(roster, notices, formalNotes, experientialApps) {
         dashboardTableBody.innerHTML = '';
         let sumTotal = 0, sumPresent = 0, sumAbsence = 0, sumTardy = 0, sumEarly = 0;
         const classMap = new Map();
@@ -321,6 +321,20 @@ document.addEventListener('DOMContentLoaded', () => {
             }
             const c = classMap.get(key);
             c.absence += parseInt(fn.count, 10);
+        });
+
+        (experientialApps || []).forEach(ea => {
+            const key = `${ea.grade}-${ea.class_number}`;
+            if (!classMap.has(key)) {
+                classMap.set(key, {
+                    grade: ea.grade,
+                    classNum: ea.class_number,
+                    total: 0,
+                    absence: 0, tardy: 0, early: 0
+                });
+            }
+            const c = classMap.get(key);
+            c.absence += parseInt(ea.count, 10);
         });
 
         const sortedClasses = Array.from(classMap.values()).sort((a, b) => {

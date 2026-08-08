@@ -512,7 +512,7 @@
     <section id="quizView" class="view" aria-label="확인 문제" hidden>
       <div class="quiz-grid">
         <article class="question" data-answer="3" data-note="동면(冬眠)은 겨울잠입니다. 입춘은 봄의 시작, 하계는 여름철, 추석의 추는 가을을 뜻합니다.">
-          <h2><span class="q-number">4</span>春夏秋冬가 들어간 말의 설명으로 바르지 않은 것은?</h2><div class="choices">
+          <h2><span class="q-number">1</span>春夏秋冬가 들어간 말의 설명으로 바르지 않은 것은?</h2><div class="choices">
             <button class="choice" type="button" data-hanja="立春">① <u>입춘</u> — 봄이 시작되는 절기</button><button class="choice" type="button" data-hanja="夏季">② <u>하계</u> — 여름철</button><button class="choice" type="button" data-hanja="秋夕">③ <u>추석</u> — 가을의 명절</button><button class="choice" type="button" data-hanja="冬眠">④ <u>동면</u> — 여름잠</button>
           </div><p class="feedback" aria-live="polite"></p></article>
       </div>
@@ -656,14 +656,16 @@
             choices.forEach((button) => { button.classList.remove('wrong'); });
 
             if (!correct) {
+              question.dataset.correct = 'false';
               choice.classList.add('wrong');
+              choice.disabled = true;
               feedback.textContent = '다시 생각하고 다른 답을 골라보세요.';
               feedback.className = 'feedback is-wrong';
               return;
             }
 
             question.dataset.done = 'true';
-            question.dataset.correct = 'true';
+            if (question.dataset.correct !== 'false') question.dataset.correct = 'true';
             choice.classList.add('correct');
             choices.forEach((button) => { button.disabled = true; });
             feedback.textContent = `맞았습니다. ${question.dataset.note}`;

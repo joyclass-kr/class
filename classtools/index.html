@@ -615,14 +615,7 @@
                             applyProfileData(classData.classroom);
                             studentCountInfo.textContent = `학생 수: ${classData.classroom.students?.length || 0}명`;
                         } else {
-                            // 로컬/예시 기본값
-                            applyProfileData({
-                                schoolName: '송화초등학교',
-                                academicYear: 2026,
-                                grade: 5,
-                                classNumber: 2,
-                                name: '김선생님'
-                            });
+                            applyProfileData({});
                         }
                     }
 

@@ -477,8 +477,8 @@
     <section id="quizView" class="view" aria-label="확인 문제" hidden>
       <div class="quiz-grid">
       </div>
-        <article class="question" data-answer="3" data-note="시간(時間)의 시는 때를 뜻하는 時(시)입니다. 도시·시내·시장에는 도시를 뜻하는 市(시)가 들어갑니다."><h2><span class="q-number">4</span>市(시)가 들어가지 않은 말은?</h2><div class="choices"><button class="choice" type="button" data-hanja="都市">① <u>도시</u></button><button class="choice" type="button" data-hanja="市內">② <u>시내</u></button><button class="choice" type="button" data-hanja="市場">③ <u>시장</u></button><button class="choice" type="button" data-hanja="時間">④ <u>시간</u></button></div><p class="feedback" aria-live="polite"></p></article>
-        <article class="question" data-answer="3" data-note="촌수(寸數)의 촌은 길이 단위를 뜻하는 寸(촌)입니다. 농촌·어촌·산촌에는 마을을 뜻하는 村(촌)이 들어갑니다."><h2><span class="q-number">5</span>村(촌)이 들어가지 않은 말은?</h2><div class="choices"><button class="choice" type="button" data-hanja="農村">① <u>농촌</u></button><button class="choice" type="button" data-hanja="漁村">② <u>어촌</u></button><button class="choice" type="button" data-hanja="山村">③ <u>산촌</u></button><button class="choice" type="button" data-hanja="寸數">④ <u>촌수</u></button></div><p class="feedback" aria-live="polite"></p></article>
+        <article class="question" data-answer="3" data-note="시간(時間)의 시는 때를 뜻하는 時(시)입니다. 도시·시내·시장에는 도시를 뜻하는 市(시)가 들어갑니다."><h2><span class="q-number">1</span>市(시)가 들어가지 않은 말은?</h2><div class="choices"><button class="choice" type="button" data-hanja="都市">① <u>도시</u></button><button class="choice" type="button" data-hanja="市內">② <u>시내</u></button><button class="choice" type="button" data-hanja="市場">③ <u>시장</u></button><button class="choice" type="button" data-hanja="時間">④ <u>시간</u></button></div><p class="feedback" aria-live="polite"></p></article>
+        <article class="question" data-answer="3" data-note="촌수(寸數)의 촌은 길이 단위를 뜻하는 寸(촌)입니다. 농촌·어촌·산촌에는 마을을 뜻하는 村(촌)이 들어갑니다."><h2><span class="q-number">2</span>村(촌)이 들어가지 않은 말은?</h2><div class="choices"><button class="choice" type="button" data-hanja="農村">① <u>농촌</u></button><button class="choice" type="button" data-hanja="漁村">② <u>어촌</u></button><button class="choice" type="button" data-hanja="山村">③ <u>산촌</u></button><button class="choice" type="button" data-hanja="寸數">④ <u>촌수</u></button></div><p class="feedback" aria-live="polite"></p></article>
 
       <p id="result" class="result" aria-live="polite" hidden></p>
       <div class="quiz-actions">
@@ -620,14 +620,16 @@
             choices.forEach((button) => { button.classList.remove('wrong'); });
 
             if (!correct) {
+              question.dataset.correct = 'false';
               choice.classList.add('wrong');
+              choice.disabled = true;
               feedback.textContent = '다시 생각하고 다른 답을 골라보세요.';
               feedback.className = 'feedback is-wrong';
               return;
             }
 
             question.dataset.done = 'true';
-            question.dataset.correct = 'true';
+            if (question.dataset.correct !== 'false') question.dataset.correct = 'true';
             choice.classList.add('correct');
             choices.forEach((button) => { button.disabled = true; });
             feedback.textContent = `맞았습니다. ${question.dataset.note}`;

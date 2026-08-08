@@ -1,0 +1,18 @@
+{
+  "version": "0.0.1",
+  "configurations": [
+    {
+      "name": "arithmetics-division",
+      "runtimeExecutable": "npm",
+      "runtimeArgs": ["--prefix", "learning/basics/arithmetics", "run", "dev"],
+      "port": 3000
+    },
+    {
+      "name": "site-static",
+      "runtimeExecutable": "npx",
+      "runtimeArgs": ["--yes", "serve", "."],
+      "port": 4173,
+      "autoPort": true
+    }
+  ]
+}

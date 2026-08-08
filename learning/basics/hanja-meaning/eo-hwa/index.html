@@ -494,7 +494,7 @@
 
 
         <article class="question" data-answer="1" data-note="話는 대화(對話)에 들어갑니다.">
-          <h2><span class="q-number">2</span>話(화)가 들어간 말은?</h2>
+          <h2><span class="q-number">1</span>話(화)가 들어간 말은?</h2>
           <div class="choices">
             <button class="choice" type="button" data-hanja="火曜日">① 다음 <u>화요일</u>에 체육 수업이 있습니다.</button>
             <button class="choice" type="button" data-hanja="對話">② 친구와 차분하게 <u>대화</u>했습니다.</button>
@@ -644,14 +644,16 @@
             choices.forEach((button) => { button.classList.remove('wrong'); });
 
             if (!correct) {
+              question.dataset.correct = 'false';
               choice.classList.add('wrong');
+              choice.disabled = true;
               feedback.textContent = '다시 생각하고 다른 답을 골라보세요.';
               feedback.className = 'feedback is-wrong';
               return;
             }
 
             question.dataset.done = 'true';
-            question.dataset.correct = 'true';
+            if (question.dataset.correct !== 'false') question.dataset.correct = 'true';
             choice.classList.add('correct');
             choices.forEach((button) => { button.disabled = true; });
             feedback.textContent = `맞았습니다. ${question.dataset.note}`;

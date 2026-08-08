@@ -278,19 +278,21 @@
             async function loadRoster() {
                 try {
                     const res = await fetch('/api/teacher/class');
-                    if (res.ok) {
-                        const data = await res.json();
-                        if (data.students) {
-                            data.students.forEach(s => {
-                                const opt = document.createElement('option');
-                                opt.value = s.name;
-                                opt.textContent = `${s.number || ''}번 ${s.name}`;
-                                studentSelect.appendChild(opt);
-                            });
-                        }
+                    const data = res.ok ? await res.json() : null;
+                    const students = data?.classroom?.students || [];
+                    if (students.length > 0) {
+                        students.forEach(s => {
+                            const opt = document.createElement('option');
+                            opt.value = s.name;
+                            opt.textContent = `${s.number || ''}번 ${s.name}`;
+                            studentSelect.appendChild(opt);
+                        });
+                    } else {
+                        studentSelect.options[0].textContent = '-- 학급 명단을 불러오지 못했습니다. 이름을 직접 입력해 주세요 --';
                     }
                 } catch (e) {
                     console.error('Failed to load roster', e);
+                    studentSelect.options[0].textContent = '-- 학급 명단을 불러오지 못했습니다. 이름을 직접 입력해 주세요 --';
                 }
             }
             loadRoster();

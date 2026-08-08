@@ -861,15 +861,12 @@
                         });
                         if (c.id && classSwitcherSelect) classSwitcherSelect.value = c.id;
                     } else {
-                        classHeader.textContent = '송화초등학교 5학년 2반 (김선생님)';
-                        students = [
-                            { number: "1", name: '김민준', gender: '남' }, { number: "2", name: '이서연', gender: '여' },
-                            { number: "3", name: '박지우', gender: '남' }, { number: "4", name: '최하늘', gender: '여' },
-                            { number: "5", name: '정예준', gender: '남' }, { number: "6", name: '강도윤', gender: '남' }
-                        ];
+                        classHeader.textContent = '담임 학급 정보를 불러오지 못했습니다. 학교 관리자에게 학급 배정을 확인해 주세요.';
+                        students = [];
                     }
                 } catch (_) {
-                    classHeader.textContent = '송화초등학교 5학년 2반 (김선생님)';
+                    classHeader.textContent = '담임 학급 정보를 불러오지 못했습니다. 학교 관리자에게 학급 배정을 확인해 주세요.';
+                    students = [];
                 }
                 loadSeatSettings();
                 updateTeacherViewButton();

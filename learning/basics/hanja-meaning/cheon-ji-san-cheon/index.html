@@ -496,7 +496,7 @@
       <div class="quiz-grid">
 
         <article class="question" data-answer="3" data-note="山은 등산(登山)에 들어갑니다.">
-          <h2><span class="q-number">3</span>山(산)이 들어간 말은?</h2>
+          <h2><span class="q-number">1</span>山(산)이 들어간 말은?</h2>
           <div class="choices">
             <button class="choice" type="button" data-hanja="散策">① 공원에서 천천히 <u>산책</u>했습니다.</button>
             <button class="choice" type="button" data-hanja="産業">② 지역의 주요 <u>산업</u>을 조사했습니다.</button>
@@ -646,14 +646,16 @@
             choices.forEach((button) => { button.classList.remove('wrong'); });
 
             if (!correct) {
+              question.dataset.correct = 'false';
               choice.classList.add('wrong');
+              choice.disabled = true;
               feedback.textContent = '다시 생각하고 다른 답을 골라보세요.';
               feedback.className = 'feedback is-wrong';
               return;
             }
 
             question.dataset.done = 'true';
-            question.dataset.correct = 'true';
+            if (question.dataset.correct !== 'false') question.dataset.correct = 'true';
             choice.classList.add('correct');
             choices.forEach((button) => { button.disabled = true; });
             feedback.textContent = `맞았습니다. ${question.dataset.note}`;

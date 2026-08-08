@@ -306,11 +306,6 @@
             const saveSchoolButton = document.querySelector("#saveSchoolButton");
             const deleteSchoolButton = document.querySelector("#deleteSchoolButton");
             const teacherManagement = document.querySelector("#teacherManagement");
-            const rosterType = document.querySelector("#rosterType");
-            const rosterName = document.querySelector("#rosterName");
-            const rosterEmail = document.querySelector("#rosterEmail");
-            const saveRosterButton = document.querySelector("#saveRosterButton");
-            const textareas = [rosterType, rosterName, rosterEmail];
             let saving = false;
             let schools = [];
             let selectedNeisSchool = null;
@@ -664,13 +659,7 @@
             }
 
             start();
-            
-            textareas.forEach((textarea) => {
-                textarea.addEventListener("scroll", (e) => {
-                    textareas.forEach((t) => { if (t !== e.target) t.scrollTop = e.target.scrollTop; });
-                }, { passive: true });
-            });
-            
+
             schoolSelect.addEventListener("change", () => {
                 renderTeachers();
                 renderSchoolDirectory();

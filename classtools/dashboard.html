@@ -1180,6 +1180,7 @@
         let canEditSchedules = false;
         let missingStudents = new Set(JSON.parse(localStorage.getItem("dashboardMissingStudents") || '[]'));
         let rosterStudents = [];
+        let rosterLoadMessage = "";
 
         // Timetable Default Data (월~금, 1~8교시)
         const defaultTimetable = {
@@ -1575,21 +1576,20 @@
                     if (data.classroom.schoolName || data.classroom.locationName) {
                         fetchRealtimeWeatherAndAirQuality(data.classroom.schoolName, data.classroom.locationName);
                     }
-                    if (data.classroom.students && data.classroom.students.length > 0) {
-                        rosterStudents = data.classroom.students;
-                        activeScheduleClassId = data.classroom.id;
-                        canEditSchedules = !data.classroom.isReadOnly;
-                        if (data.classroom.id && classSwitcherSelect) {
-                            classSwitcherSelect.value = data.classroom.id;
-                        }
-                    } else {
-                        rosterStudents = Array.from({length: 30}, (_, i) => ({ number: String(i+1), name: `${i+1}번` }));
+                    rosterStudents = data.classroom.students || [];
+                    activeScheduleClassId = data.classroom.id;
+                    canEditSchedules = !data.classroom.isReadOnly;
+                    if (data.classroom.id && classSwitcherSelect) {
+                        classSwitcherSelect.value = data.classroom.id;
                     }
+                    rosterLoadMessage = rosterStudents.length ? "" : "등록된 학생이 없습니다.";
                 } else {
-                    rosterStudents = Array.from({length: 30}, (_, i) => ({ number: String(i+1), name: `${i+1}번` }));
+                    rosterStudents = [];
+                    rosterLoadMessage = "담임 학급 정보를 불러오지 못했습니다. 학교 관리자에게 학급 배정을 확인해 주세요.";
                 }
             } catch (err) {
-                rosterStudents = Array.from({length: 30}, (_, i) => ({ number: String(i+1), name: `${i+1}번` }));
+                rosterStudents = [];
+                rosterLoadMessage = "담임 학급 정보를 불러오지 못했습니다. 학교 관리자에게 학급 배정을 확인해 주세요.";
             }
             renderChecklist();
             await loadSchedules(activeScheduleClassId);
@@ -1615,23 +1615,63 @@
         let todayQuickAlerts = new Map();
 
         async function fetchQuickAlertsForDashboard() {
+            const todayStr = new Date().toISOString().split("T")[0];
+            todayQuickAlerts.clear();
+
             try {
                 const res = await fetch("/api/teacher/quick-absences");
-                if (!res.ok) return;
-                const data = await res.json();
-                const alerts = data.alerts || [];
-                const todayStr = new Date().toISOString().split("T")[0];
-                todayQuickAlerts.clear();
-                alerts.forEach(a => {
-                    if (a.expectedDate === todayStr || String(a.expectedDate).startsWith(todayStr)) {
-                        todayQuickAlerts.set(String(a.studentNumber), a);
-                    }
-                });
-            } catch(e) {}
+                if (res.ok) {
+                    const data = await res.json();
+                    (data.alerts || []).forEach(a => {
+                        if (a.expectedDate === todayStr || String(a.expectedDate).startsWith(todayStr)) {
+                            todayQuickAlerts.set(String(a.studentNumber), a);
+                        }
+                    });
+                }
+            } catch (e) {}
+
+            try {
+                const res = await fetch("/api/teacher/absence-notes");
+                if (res.ok) {
+                    const data = await res.json();
+                    (data.notes || []).forEach(n => {
+                        if (n.status === "approved" && n.startDate <= todayStr && n.endDate >= todayStr) {
+                            todayQuickAlerts.set(String(n.studentNumber), {
+                                noticeType: n.reasonType || "결석",
+                                reason: n.reasonDetail || ""
+                            });
+                        }
+                    });
+                }
+            } catch (e) {}
+
+            try {
+                const res = await fetch("/api/teacher/experiential-apps");
+                if (res.ok) {
+                    const data = await res.json();
+                    (data.applications || []).forEach(a => {
+                        if (a.status === "approved" && a.startDate <= todayStr && a.endDate >= todayStr) {
+                            todayQuickAlerts.set(String(a.studentNumber), {
+                                noticeType: "체험학습",
+                                reason: a.location || a.planDetail || ""
+                            });
+                        }
+                    });
+                }
+            } catch (e) {}
         }
 
         function renderChecklist() {
             checklistGrid.replaceChildren();
+            if (rosterStudents.length === 0) {
+                const notice = document.createElement("div");
+                notice.className = "roster-empty-notice";
+                notice.style.cssText = "grid-column: 1 / -1; color: var(--muted, #6b7280); font-size: 13px; padding: 8px 4px;";
+                notice.textContent = rosterLoadMessage || "등록된 학생이 없습니다.";
+                checklistGrid.append(notice);
+                missingBadge.textContent = `미완료: ${missingStudents.size}명`;
+                return;
+            }
             rosterStudents.forEach((student) => {
                 const num = String(student.number);
                 const chip = document.createElement("div");

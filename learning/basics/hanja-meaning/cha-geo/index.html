@@ -393,9 +393,9 @@
       @keyframes appear { from { opacity: .2; transform: translateY(4px); } }
     }
     .hanja-generated { display:flex; gap:clamp(4px, .8vw, 9px); min-width:calc(var(--hanja-size) * 3); font-size:clamp(42px, 6vw, var(--hanja-size)); }
-    .word-row, .question { display: none; }
+    .word-row { display: none; }
     .word-row.active { display: grid; }
-    .question.active { display: block; }
+    .question { display: block; }
 
     html { background: #ded8ca; }
     body { background: #ded8ca; }
@@ -585,7 +585,7 @@
       const lessonView = document.getElementById('lessonView');
       const quizView = document.getElementById('quizView');
       const result = document.getElementById('result');
-      const questions = Array.from(document.querySelectorAll('.question.active'));
+      const questions = Array.from(document.querySelectorAll('.question'));
       const nextLesson = document.getElementById('nextLesson');
       const strokeSets = Array.from(document.querySelectorAll('.stroke-set'));
       const characterButtons = Array.from(document.querySelectorAll('.stroke-character'));
@@ -711,14 +711,16 @@
             choices.forEach((button) => { button.classList.remove('wrong'); });
 
             if (!correct) {
+              question.dataset.correct = 'false';
               choice.classList.add('wrong');
+              choice.disabled = true;
               feedback.textContent = '다시 생각하고 다른 답을 골라보세요.';
               feedback.className = 'feedback is-wrong';
               return;
             }
 
             question.dataset.done = 'true';
-            question.dataset.correct = 'true';
+            if (question.dataset.correct !== 'false') question.dataset.correct = 'true';
             choice.classList.add('correct');
             choices.forEach((button) => { button.disabled = true; });
             feedback.textContent = `맞았습니다. ${question.dataset.note}`;
