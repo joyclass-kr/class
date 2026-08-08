@@ -370,7 +370,8 @@
         elements.quizBar.style.width = `${(quizIndex / quiz.length) * 100}%`;
         const typeLabels = { story: "유래 문제", meaning: "뜻 문제", image: "삽화 문제" };
         elements.questionType.textContent = typeLabels[question.type] || "뜻 문제";
-        elements.questionPrompt.textContent = question.prompt;
+        elements.questionPrompt.hidden = question.type === "image";
+        elements.questionPrompt.textContent = question.type === "image" ? "" : question.prompt;
         const illustration = question.type === "image" ? ILLUSTRATIONS[question.id] : "";
         elements.questionIllustration.hidden = !illustration;
         if (illustration) {
