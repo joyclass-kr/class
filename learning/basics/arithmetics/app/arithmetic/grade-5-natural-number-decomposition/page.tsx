@@ -71,7 +71,7 @@ export default function GradeFiveNaturalNumberDecompositionPage() {
     const isCorrect = results[problem.id] === true;
     return (
       <div className={`multiplication-question natural-decomposition-question${graded ? isCorrect ? " is-correct" : " is-wrong" : ""}`} data-testid="natural-decomposition-question" key={problem.id}>
-        <span className="natural-decomposition-index">{index + 1}</span>
+        <span className="natural-decomposition-index">{isExample ? 0 : index}</span>
         <div className="natural-decomposition-expression">
           <strong>{problem.number}</strong>
           <span>→</span>

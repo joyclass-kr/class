@@ -1407,7 +1407,7 @@ html[data-race-mode="true"] body { padding-bottom: 72px; }
 .division-remainder-static {
   width: 47px;
   height: 39px;
-  font-size: 18px;
+  font-size: 20px;
 }
 
 .division-remainder-input-small,

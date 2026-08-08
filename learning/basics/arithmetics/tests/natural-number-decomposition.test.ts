@@ -20,8 +20,8 @@ test("원본 소인수식 문제은행 84개를 정확히 복원한다", () => {
 
 test("소수는 그대로, 합성수는 반복된 소인수의 곱으로 나타낸다", () => {
   assert.equal(formatPrimeFactorization(29), "29");
-  assert.equal(formatPrimeFactorization(72), "2×2×2×3×3");
-  assert.equal(formatPrimeFactorization(100), "2×2×5×5");
+  assert.equal(formatPrimeFactorization(72), "2*2*2*3*3");
+  assert.equal(formatPrimeFactorization(100), "2*2*5*5");
 });
 
 test("같은 seed는 중복 없는 같은 15문제를 만든다", () => {

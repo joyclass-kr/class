@@ -38,7 +38,7 @@ export function primeFactors(value: number) {
 }
 
 export function formatPrimeFactorization(value: number) {
-  return primeFactors(value).join("×");
+  return primeFactors(value).join("*");
 }
 
 export function normalizePrimeFactorInput(input: string) {
