@@ -481,11 +481,20 @@ function createReadingBank(options = {}) {
   //
   // The underlying topic data is static (bundled at deploy time), so the
   // ~900-item bank is built once per server process instead of on every
-  // request. Rebuilding it per request cost ~300ms of CPU plus a fresh
-  // ~1.5MB JSON serialization each time, which is what made the reading
-  // screen feel slow to load.
-  let cachedSelfStudyBody = null;
-  function buildSelfStudyBody() {
+  // request, and cached. That fixed the compute cost (~300ms -> ~6ms) but
+  // not the payload: the full bank serializes to ~1.5MB, and the dashboard
+  // only ever needs enough per item to draw four level cards (track, level,
+  // skill label, a count) -- it doesn't need passageText/choices/explanation
+  // for all 900 items just to show 4 buttons. Downloading and JSON-parsing
+  // that much data on every visit was the real remaining cause of the
+  // reading screen's slow first paint. So this route now serves two shapes:
+  //   GET /self-study                -> lightweight per-item summary
+  //   GET /self-study?track=ko&level=1 -> full items, filtered to one deck
+  let cachedSelfStudyItems = null;
+  let cachedSummaryBody = null;
+  const cachedLevelBodies = new Map();
+
+  function buildSelfStudyItems() {
     const seed = JSON.parse(fs.readFileSync(SAMPLE_SEED_PATH, "utf8"));
     const items = (seed.topics || []).flatMap((topic) => (topic.items || []).map((item) => ({
       id: item.itemKey,
@@ -499,13 +508,42 @@ function createReadingBank(options = {}) {
       correctIndex: item.correctIndex,
       explanation: item.explanation
     })));
-    return JSON.stringify({ items: items.concat(createSelfStudyItems()) });
+    return items.concat(createSelfStudyItems());
+  }
+
+  function selfStudyItems() {
+    if (!cachedSelfStudyItems) cachedSelfStudyItems = buildSelfStudyItems();
+    return cachedSelfStudyItems;
+  }
+
+  function selfStudySummaryBody() {
+    if (!cachedSummaryBody) {
+      const summary = selfStudyItems().map((item) => ({
+        track: item.track,
+        targetLevel: item.targetLevel,
+        skillFocus: item.skillFocus
+      }));
+      cachedSummaryBody = JSON.stringify({ items: summary });
+    }
+    return cachedSummaryBody;
+  }
+
+  function selfStudyLevelBody(track, level) {
+    const key = `${track}:${level}`;
+    if (!cachedLevelBodies.has(key)) {
+      const filtered = selfStudyItems().filter((item) => item.track === track && item.targetLevel === level);
+      cachedLevelBodies.set(key, JSON.stringify({ items: filtered }));
+    }
+    return cachedLevelBodies.get(key);
   }
 
   router.get("/self-study", (req, res, next) => {
     try {
-      if (!cachedSelfStudyBody) cachedSelfStudyBody = buildSelfStudyBody();
-      res.type("application/json").send(cachedSelfStudyBody);
+      const track = text(req.query.track, 2);
+      const level = Number(req.query.level);
+      const wantsOneDeck = TRACKS.has(track) && Number.isInteger(level) && level >= 1 && level <= 8;
+      const body = wantsOneDeck ? selfStudyLevelBody(track, level) : selfStudySummaryBody();
+      res.type("application/json").send(body);
     } catch (error) {
       next(error);
     }

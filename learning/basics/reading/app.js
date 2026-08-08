@@ -71,8 +71,23 @@
     }
   }
 
-  function startSet(level) {
-    const candidates = state.items.filter((item) => item.track === state.track && item.targetLevel === level);
+  // The dashboard only ever holds the lightweight per-item summary (track/
+  // level/skillFocus), not full passages -- so opening a level fetches that
+  // one deck's items on demand instead of shipping all ~900 items up front.
+  async function startSet(level) {
+    const list = $("levelList");
+    list.classList.add("is-loading");
+    let candidates;
+    try {
+      const response = await fetch(`/api/reading/self-study?track=${state.track}&level=${level}`);
+      if (!response.ok) throw new Error();
+      candidates = (await response.json()).items || [];
+    } catch (_) {
+      list.classList.remove("is-loading");
+      list.replaceChildren(node("p", "empty-pilots", "문제를 불러오지 못했습니다."));
+      return;
+    }
+    list.classList.remove("is-loading");
     state.deckStorageKey = deckStorageKey(level);
     const drawn = window.ReadingQuestionDeck.draw(candidates, 5, loadDeckHistory(state.deckStorageKey));
     state.set = drawn.items;
