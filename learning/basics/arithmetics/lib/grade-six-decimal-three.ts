@@ -27,13 +27,11 @@ const ROUNDING_SPECS: Record<"hundredths" | "tenths", readonly (readonly [Operan
     [[1, 99, 0], [1, 99, 2]],
     [[1, 19, 2], [2, 9, 1]],
     [[2, 9, 1], [1, 99, 2]],
-    [[1, 99, 2], [1, 99, 2]],
   ],
   tenths: [
     [[1, 99, 2], [1, 99, 2]],
     [[1, 99, 2], [2, 9, 1]],
     [[2, 9, 1], [1, 99, 2]],
-    [[1, 99, 0], [1, 99, 2]],
   ],
 };
 
@@ -121,16 +119,11 @@ function remainderProblem(next: () => number, position: number, index: number): 
     rightPlaces = 2;
     leftUnits = integer(next, Math.floor(rightUnits / 10) + 1, 99);
     leftPlaces = 1;
-  } else if (position === 2) {
+  } else {
     rightUnits = integer(next, 2, 9);
     rightPlaces = 1;
     leftUnits = integer(next, rightUnits + 1, 99);
     leftPlaces = 1;
-  } else {
-    leftUnits = integer(next, 1, 99);
-    leftPlaces = 0;
-    rightUnits = integer(next, 3, 99);
-    rightPlaces = 2;
   }
 
   const result = decimalQuotientAndRemainder(leftUnits, leftPlaces, rightUnits, rightPlaces);
@@ -154,9 +147,9 @@ export function createGradeSixDecimalThreeSet(seed: number): GradeSixDecimalThre
   return {
     seed,
     problems: [
-      ...Array.from({ length: 4 }, (_, position) => roundedProblem(next, "hundredths", position, position)),
-      ...Array.from({ length: 4 }, (_, position) => roundedProblem(next, "tenths", position, position + 4)),
-      ...Array.from({ length: 4 }, (_, position) => remainderProblem(next, position, position + 8)),
+      ...Array.from({ length: 3 }, (_, position) => roundedProblem(next, "hundredths", position, position)),
+      ...Array.from({ length: 3 }, (_, position) => roundedProblem(next, "tenths", position, position + 3)),
+      ...Array.from({ length: 3 }, (_, position) => remainderProblem(next, position, position + 6)),
     ],
   };
 }

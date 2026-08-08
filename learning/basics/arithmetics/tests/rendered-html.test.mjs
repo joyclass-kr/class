@@ -2001,18 +2001,18 @@ test("renders the sixth grade second decimal worksheet in the workbook's four-by
   assert.match(html, /소수 둘째 자리에서 반올림/);
   assert.match(html, /aria-label="A4 6학년 소수② 문제지"/);
   assert.match(html, /aria-label="A4 6학년 소수② 전체 답지"/);
-  assert.equal((html.match(/data-testid="grade-six-decimal-two-question"/g) ?? []).length, 24);
-  assert.equal((html.match(/class="grade-six-decimal-two-input"/g) ?? []).length, 12);
-  assert.equal((html.match(/class="grade-six-decimal-two-static-answer"/g) ?? []).length, 12);
-  assert.equal((html.match(/data-grade-six-decimal-two-input="true"/g) ?? []).length, 12);
-  assert.equal((html.match(/maxLength="8"/g) ?? []).length, 12);
+  assert.equal((html.match(/data-testid="grade-six-decimal-two-question"/g) ?? []).length, 18);
+  assert.equal((html.match(/class="grade-six-decimal-two-input"/g) ?? []).length, 9);
+  assert.equal((html.match(/class="grade-six-decimal-two-static-answer"/g) ?? []).length, 9);
+  assert.equal((html.match(/data-grade-six-decimal-two-input="true"/g) ?? []).length, 9);
+  assert.equal((html.match(/maxLength="8"/g) ?? []).length, 9);
   assert.match(source, /createGradeSixDecimalTwoSet\(seed\)/);
   assert.match(source, /matchesDecimalAnswer/);
-  assert.match(source, /<small>\/12 정답<\/small>/);
+  assert.match(source, /<small>\/9 정답<\/small>/);
   assert.match(engine, /6소수②!A1:W27/);
   assert.match(engine, /index === 1 \|\| index === 2 \? 1 : 0/);
   assert.match(engine, /integerDividend \? 6 : 2/);
-  assert.match(css, /\.grade-six-decimal-two-grid\s*\{[\s\S]*?grid-template-columns:\s*repeat\(4,/);
+  assert.match(css, /\.grade-six-decimal-two-grid\s*\{[\s\S]*?grid-template-columns:\s*repeat\(3,/);
   assert.match(css, /\.grade-six-decimal-two-sections\s*\{[\s\S]*?grid-template-rows:\s*repeat\(3,/);
 });
 
@@ -2029,18 +2029,18 @@ test("renders the sixth grade third decimal worksheet with rounding and quotient
   assert.match(html, /몫 ··· 나머지/);
   assert.match(html, /aria-label="A4 6학년 소수③ 문제지"/);
   assert.match(html, /aria-label="A4 6학년 소수③ 전체 답지"/);
-  assert.equal((html.match(/data-testid="grade-six-decimal-three-question"/g) ?? []).length, 24);
-  assert.equal((html.match(/data-grade-six-decimal-three-input="true"/g) ?? []).length, 16);
-  assert.equal((html.match(/grade-six-decimal-three-rounded-input/g) ?? []).length, 8);
-  assert.equal((html.match(/grade-six-decimal-three-static-answer/g) ?? []).length, 16);
+  assert.equal((html.match(/data-testid="grade-six-decimal-three-question"/g) ?? []).length, 18);
+  assert.equal((html.match(/data-grade-six-decimal-three-input="true"/g) ?? []).length, 12);
+  assert.equal((html.match(/grade-six-decimal-three-rounded-input/g) ?? []).length, 6);
+  assert.equal((html.match(/grade-six-decimal-three-static-answer/g) ?? []).length, 12);
   const inputLabels = [...html.matchAll(/<input(?=[^>]*data-grade-six-decimal-three-input="true")(?=[^>]*aria-label="([^"]+)")[^>]*>/g)].map((match) => match[1]);
   assert.deepEqual(inputLabels.slice(-8), [
-    "9번 몫", "9번 나머지", "10번 몫", "10번 나머지",
-    "11번 몫", "11번 나머지", "12번 몫", "12번 나머지",
+    "5번 답", "6번 답", "7번 몫", "7번 나머지",
+    "8번 몫", "8번 나머지", "9번 몫", "9번 나머지",
   ]);
   assert.match(source, /createGradeSixDecimalThreeSet\(seed\)/);
   assert.match(source, /matchesDecimalAnswer/);
-  assert.match(source, /<small>\/12 정답<\/small>/);
+  assert.match(source, /<small>\/9 정답<\/small>/);
   assert.match(engine, /6소수③!A1:X27/);
   assert.match(engine, /decimalQuotientAndRemainder/);
   assert.match(engine, /ROUNDING_SPECS/);

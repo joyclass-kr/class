@@ -91,9 +91,9 @@ export function createGradeSixDecimalTwoSet(seed: number): GradeSixDecimalTwoSet
   return {
     seed,
     problems: [
-      ...Array.from({ length: 4 }, (_, index) => multiplicationProblem(next, index)),
-      ...Array.from({ length: 4 }, (_, position) => divisionProblem(next, position, "hundredths", 2, position + 4)),
-      ...Array.from({ length: 4 }, (_, position) => divisionProblem(next, position, "tenths", 1, position + 8)),
+      ...Array.from({ length: 3 }, (_, index) => multiplicationProblem(next, index)),
+      ...Array.from({ length: 3 }, (_, position) => divisionProblem(next, position, "hundredths", 2, position + 3)),
+      ...Array.from({ length: 3 }, (_, position) => divisionProblem(next, position, "tenths", 1, position + 6)),
     ],
   };
 }

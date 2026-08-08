@@ -195,7 +195,7 @@ export default function GradeSixDecimalThreePage() {
     <main className="counting-page multiplication-page">
       <div className="counting-toolbar">
         <a className="counting-back" href="/arithmetic">← 연산</a>
-        <div className="counting-progress"><strong>{correct}<small>/12 정답</small></strong></div>
+        <div className="counting-progress"><strong>{correct}<small>/9 정답</small></strong></div>
         <div className="toolbar">
           <button className="button secondary" type="button" onClick={newSet}>새 문제</button>
           <button className="button ghost" type="button" onClick={resetAnswers}>다시 풀기</button>

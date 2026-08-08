@@ -7,17 +7,17 @@ import {
 } from "../lib/grade-six-decimal-two.ts";
 import { formatDecimal } from "../lib/grade-five-decimals.ts";
 
-test("6소수②는 원본처럼 곱셈 4문제와 두 반올림 구역 4문제씩을 만든다", () => {
+test("6소수②는 곱셈 3문제와 두 반올림 구역 3문제씩을 만든다", () => {
   const problems = createGradeSixDecimalTwoSet(20260721).problems;
-  assert.equal(problems.length, 12);
-  assert.equal(problems.filter((problem) => problem.section === "multiplication").length, 4);
-  assert.equal(problems.filter((problem) => problem.section === "hundredths").length, 4);
-  assert.equal(problems.filter((problem) => problem.section === "tenths").length, 4);
+  assert.equal(problems.length, 9);
+  assert.equal(problems.filter((problem) => problem.section === "multiplication").length, 3);
+  assert.equal(problems.filter((problem) => problem.section === "hundredths").length, 3);
+  assert.equal(problems.filter((problem) => problem.section === "tenths").length, 3);
 });
 
 test("소수 곱셈은 정수 자릿수 연산으로 정확한 답을 만든다", () => {
   for (let seed = 1; seed <= 100; seed += 1) {
-    const multiplication = createGradeSixDecimalTwoSet(seed).problems.slice(0, 4);
+    const multiplication = createGradeSixDecimalTwoSet(seed).problems.slice(0, 3);
     multiplication.forEach((problem, index) => {
       assert.equal(problem.answer, formatDecimal(problem.leftUnits * problem.rightUnits, problem.leftPlaces + problem.rightPlaces));
       assert.ok(problem.leftUnits >= 77 && problem.leftUnits <= 99);
@@ -35,8 +35,8 @@ test("나눗셈 답은 지정한 자리에서 정확하게 반올림한다", () 
 
   for (let seed = 1; seed <= 100; seed += 1) {
     const problems = createGradeSixDecimalTwoSet(seed).problems;
-    problems.slice(4).forEach((problem, offset) => {
-      const position = offset % 4;
+    problems.slice(3).forEach((problem, offset) => {
+      const position = offset % 3;
       assert.equal(problem.leftPlaces, position === 1 ? 0 : 2);
       assert.ok(problem.rightUnits >= (position === 1 ? 6 : 2) && problem.rightUnits <= 9);
       assert.equal(
@@ -47,7 +47,7 @@ test("나눗셈 답은 지정한 자리에서 정확하게 반올림한다", () 
   }
 });
 
-test("같은 시드는 같은 12문제를 만들고 다른 시드는 다른 문제를 만든다", () => {
+test("같은 시드는 같은 9문제를 만들고 다른 시드는 다른 문제를 만든다", () => {
   assert.deepEqual(createGradeSixDecimalTwoSet(1234), createGradeSixDecimalTwoSet(1234));
   assert.notDeepEqual(createGradeSixDecimalTwoSet(1234), createGradeSixDecimalTwoSet(5678));
 });

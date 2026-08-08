@@ -66,7 +66,7 @@
   min-height: 0;
   flex: 1 1 auto;
   display: grid;
-  grid-template-columns: repeat(4, minmax(0, 1fr));
+  grid-template-columns: repeat(3, minmax(0, 1fr));
 }
 
 .grade-six-decimal-two-question {
@@ -5285,7 +5285,7 @@ button.division-option {
 }
 
 .division-option-equation {
-  font-size: 11px;
+  font-size: 13px;
   font-weight: 800;
   color: #4b4438;
   white-space: nowrap;
