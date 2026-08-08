@@ -1757,7 +1757,7 @@ html[data-race-mode="true"] body { padding-bottom: 72px; }
 .measurement-answer span,
 .measurement-static-answer span {
   color: #566176;
-  font-family: "STIX Two Math", "Cambria Math", "Times New Roman", serif;
+  font-family: "Suneung Math", "STIX Two Math", "Cambria Math", "Times New Roman", serif;
   font-size: 16px;
   font-synthesis: none;
   font-weight: 500;
@@ -8959,7 +8959,7 @@ main {
   .large-unit-name,
   .large-unit-result-unit
 ) {
-  font-family: "STIX Two Math", "Cambria Math", "Times New Roman", serif;
+  font-family: "Suneung Math", "STIX Two Math", "Cambria Math", "Times New Roman", serif;
   font-synthesis: none;
   font-style: normal;
   font-weight: 500;

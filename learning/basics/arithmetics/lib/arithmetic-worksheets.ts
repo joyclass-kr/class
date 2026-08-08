@@ -157,14 +157,8 @@ const elementaryTitles: Record<string, string> = {
   "6쌓기나무": "쌓기나무",
 };
 
-const elementaryHorizontalMentalMathWorksheets = new Set([
-  "3보수뺄셈100", "3보수뺄셈1000", "3덧셈뺄셈②", "3나눗셈①",
-  "3곱셈②", "3시간①", "3곱셈③", "19단", "제곱수", "3나눗셈②", "3나눗셈③",
-  "3분수①", "3분수③",
-  "4숫자읽기", "4각도어림", "4큰수곱셈", "4나눗셈", "4분수", "4소수", "단위변환",
-  "5혼합계산", "자연수분해", "프라임넘버", "5약수,배수", "5분수①", "5분수②", "5분수③", "5소수",
-  "6분수", "6소수①", "6소수②", "6소수③", "6혼합계산", "6비례식", "6원", "6원기둥", "6쌓기나무",
-]);
+// 자동 분류를 그만두고, 사용자가 지정하는 학습지만 하나씩 추가한다.
+const elementaryHorizontalMentalMathWorksheets = new Set<string>([]);
 
 export const arithmeticWorksheetCatalog: ArithmeticWorksheet[] = worksheetNames.map((name) => {
   const gradeMatch = name.match(/^([1-6])(?!\d)(.+)$/);

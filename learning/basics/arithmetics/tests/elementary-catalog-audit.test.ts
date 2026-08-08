@@ -20,17 +20,9 @@ test("초1 학습지는 실제 유형명을 쓰고 암산 표시를 붙이지 �
   assert.equal(gradeOne.some(({ badge }) => badge === "암산"), false);
 });
 
-test("암산 표시는 3학년 이상 가로셈 학습지에만 붙인다", () => {
+test("암산 표시는 사용자가 지정한 학습지에만 하나씩 붙인다", () => {
   const elementary = arithmeticWorksheetCatalog.filter(({ grade }) => /^초[1-6]$/.test(grade));
-  assert.equal(elementary.filter(({ grade }) => grade === "초2").some(({ badge }) => badge === "암산"), false);
   assert.equal(elementary.filter(({ badge }) => badge === "암산").every(({ grade }) => Number(grade.slice(1)) >= 3), true);
-  assert.deepEqual(
-    elementary.filter(({ grade, badge }) => grade === "초3" && badge === "암산").map(({ name }) => name),
-    [
-      "3보수뺄셈100", "3보수뺄셈1000", "3덧셈뺄셈②", "3나눗셈①", "3곱셈②", "3시간①", "3곱셈③",
-      "19단", "제곱수", "3나눗셈②", "3나눗셈③", "3분수①", "3분수③",
-    ],
-  );
 });
 
 test("초등 문제지 제목은 중·고등 문제지와 같은 23px 제목 규격을 쓴다", () => {
@@ -42,7 +34,6 @@ test("초등 문제지 제목은 중·고등 문제지와 같은 23px 제목 규
 
 test("목록의 모든 암산 학습지는 실제 문제지 제목에도 암산 딱지를 표시한다", () => {
   const mentalWorksheets = arithmeticWorksheetCatalog.filter(({ badge }) => badge === "암산");
-  assert.ok(mentalWorksheets.length > 0);
   for (const worksheet of mentalWorksheets) {
     assert.ok(worksheet.route);
     const pagePath = worksheet.route!.startsWith("/arithmetic/")
