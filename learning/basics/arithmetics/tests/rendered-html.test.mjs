@@ -1973,7 +1973,9 @@ test("renders the sixth grade first decimal worksheet in the workbook's three-by
   assert.equal((html.match(/class="grade-six-decimal-one-input"/g) ?? []).length, 18);
   assert.equal((html.match(/class="grade-six-decimal-one-static-answer"/g) ?? []).length, 18);
   assert.equal((html.match(/data-grade-six-decimal-one-input="true"/g) ?? []).length, 18);
-  assert.equal((html.match(/maxLength="7"/g) ?? []).length, 18);
+  assert.equal((html.match(/maxLength="3"/g) ?? []).length, 2);
+  assert.equal((html.match(/maxLength="4"/g) ?? []).length, 14);
+  assert.equal((html.match(/maxLength="5"/g) ?? []).length, 2);
   assert.match(source, /createGradeSixDecimalOneSet\(seed\)/);
   assert.match(source, /matchesDecimalAnswer/);
   assert.match(source, /<small>\/18 정답<\/small>/);

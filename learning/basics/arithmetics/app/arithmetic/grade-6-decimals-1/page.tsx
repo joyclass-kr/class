@@ -75,13 +75,15 @@ export default function GradeSixDecimalOnePage() {
   }
 
   function renderAnswer(problem: GradeSixDecimalOneProblem, answerSheet: boolean) {
-    if (answerSheet) return <strong className="grade-six-decimal-one-static-answer">{problem.answer}</strong>;
+    const boxWidth = `${problem.answer.length + 1.5}ch`;
+    if (answerSheet) return <strong className="grade-six-decimal-one-static-answer" style={{ width: boxWidth }}>{problem.answer}</strong>;
     return (
       <input
         className="grade-six-decimal-one-input"
         type="text"
         inputMode="decimal"
-        maxLength={7}
+        maxLength={problem.answer.length}
+        style={{ width: boxWidth }}
         value={answers[problem.id] ?? ""}
         onChange={(event) => updateAnswer(problem.id, event.target.value)}
         onKeyDown={moveOnEnter}
