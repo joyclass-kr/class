@@ -81,8 +81,8 @@ function total(heights: number[][]) {
 function buildProblem(next: () => number, kind: StackKind, id: string): StackProblem {
   const size = GRID_SIZE;
   if (kind === "count") {
-    const footprint = randomFootprint(next, size, integer(next, 4, 6));
-    const heights = buildHeights(next, footprint, 1, 2);
+    const footprint = randomFootprint(next, size, integer(next, 5, 8));
+    const heights = buildHeights(next, footprint, 1, MAX_HEIGHT);
     return { id, kind, heights, size, total: total(heights), views: computeViews(heights, size) };
   }
   if (kind === "count-map") {
@@ -90,8 +90,8 @@ function buildProblem(next: () => number, kind: StackKind, id: string): StackPro
     const heights = buildHeights(next, footprint, 1, MAX_HEIGHT);
     return { id, kind, heights, size, total: total(heights), views: computeViews(heights, size) };
   }
-  const footprint = randomFootprint(next, size, integer(next, 3, 5));
-  const heights = buildHeights(next, footprint, 1, 2);
+  const footprint = randomFootprint(next, size, integer(next, 4, 7));
+  const heights = buildHeights(next, footprint, 1, MAX_HEIGHT);
   return { id, kind, heights, size, total: total(heights), views: computeViews(heights, size) };
 }
 

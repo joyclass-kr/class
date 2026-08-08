@@ -35,7 +35,7 @@ function floorCellPoints(r: number, c: number, offsetY: number) {
   return { x, y, points: `${x},${y - TILE_H} ${x + TILE_W},${y} ${x},${y + TILE_H} ${x - TILE_W},${y}` };
 }
 
-export default function StackedCubesDiagram({ heights, showMap = false, className }: { heights: number[][]; showMap?: boolean; className?: string }) {
+export default function StackedCubesDiagram({ heights, showMap = false, showDirection = true, className }: { heights: number[][]; showMap?: boolean; showDirection?: boolean; className?: string }) {
   const size = heights.length;
   const cubes: Cube[] = [];
   for (let r = 0; r < size; r += 1) {
@@ -79,11 +79,13 @@ export default function StackedCubesDiagram({ heights, showMap = false, classNam
           </g>
         );
       })}
-      <g className="stacked-cubes-direction">
-        <line x1={arrowTailX} y1={arrowTailY} x2={arrowTipX} y2={arrowTipY} />
-        <polygon points={`${arrowTipX},${arrowTipY} ${arrowTipX - 6},${arrowTipY + 2} ${arrowTipX - 2},${arrowTipY + 6}`} />
-        <text x={arrowTailX - 2} y={arrowTailY + 12}>앞</text>
-      </g>
+      {showDirection && (
+        <g className="stacked-cubes-direction">
+          <line x1={arrowTailX} y1={arrowTailY} x2={arrowTipX} y2={arrowTipY} />
+          <polygon points={`${arrowTipX},${arrowTipY} ${arrowTipX - 6},${arrowTipY + 2} ${arrowTipX - 2},${arrowTipY + 6}`} />
+          <text x={arrowTailX - 2} y={arrowTailY + 12}>앞</text>
+        </g>
+      )}
       {showMap && heights.map((row, r) => row.map((cellHeight, c) => {
         if (cellHeight === 0) return null;
         const { x, points } = floorCellPoints(r, c, mapOffsetY);
