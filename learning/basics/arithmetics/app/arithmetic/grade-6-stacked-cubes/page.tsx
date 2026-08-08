@@ -105,7 +105,7 @@ export default function GradeSixStackedCubesPage() {
       <article className="stack-problem stack-count-problem" data-testid="stack-problem" key={problem.id}>
         <p><b>{index + 1}</b>쌓기나무의 개수를 구하시오.</p>
         <div className="stack-count-body">
-          <StackedCubesDiagram heights={problem.heights} showMap={problem.kind === "count-map"} showDirection={index === 0} />
+          <StackedCubesDiagram heights={problem.heights} showMap={problem.kind === "count-map"} showDirection={index === 0 || index === 5} />
           <div className="stack-count-answer">
             <span>→</span>
             {answerSheet
@@ -133,7 +133,7 @@ export default function GradeSixStackedCubesPage() {
       <article className="stack-problem stack-view-problem" data-testid="stack-problem" key={problem.id}>
         <p><b>{index + 1}</b>쌓기나무를 위, 앞, 옆에서 본 모양을 그리시오.</p>
         <div className="stack-view-body">
-          <StackedCubesDiagram heights={problem.heights} showDirection={index === 0} />
+          <StackedCubesDiagram heights={problem.heights} showDirection={index === 0 || index === 5} />
           <div className="stack-view-grids">
             {VIEW_FIELDS.map(({ field, label }) => (
               <StackedCubesViewGrid
@@ -182,7 +182,7 @@ export default function GradeSixStackedCubesPage() {
     <main className="counting-page stack-page">
       <div className="counting-toolbar">
         <a className="counting-back" href="/arithmetic">← 연산</a>
-        <div className="counting-progress"><strong>{correctProblems}<small>/5 정답</small></strong></div>
+        <div className="counting-progress"><strong>{correctProblems}<small>/10 정답</small></strong></div>
         <div className="toolbar">
           <button className="button secondary" type="button" onClick={newSet}>새 문제</button>
           <button className="button ghost" type="button" onClick={resetAnswers}>다시 풀기</button>

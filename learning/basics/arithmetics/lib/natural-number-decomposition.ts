@@ -58,17 +58,29 @@ export function isPrimeFactorizationAnswer(value: number, input: string) {
   return submitted.length === expected.length && submitted.every((factor, index) => factor === expected[index]);
 }
 
-export function createNaturalNumberDecompositionSet(seed: number, count = 15): NaturalNumberDecompositionProblem[] {
-  const next = random(seed);
-  const shuffled = [...naturalNumberDecompositionBank];
-  for (let index = shuffled.length - 1; index > 0; index -= 1) {
-    const target = Math.floor(next() * (index + 1));
-    [shuffled[index], shuffled[target]] = [shuffled[target], shuffled[index]];
-  }
-  return shuffled.slice(0, count).map((number) => ({
+export const PRIME_EXAMPLE_NUMBER = 13;
+export const COMPOSITE_EXAMPLE_NUMBER = 8;
+
+function makeProblem(number: number): NaturalNumberDecompositionProblem {
+  return {
     id: `natural-decomposition-${number}`,
     number,
     factors: primeFactors(number),
     answer: formatPrimeFactorization(number),
-  }));
+  };
+}
+
+export function createNaturalNumberDecompositionSet(seed: number, count = 12): NaturalNumberDecompositionProblem[] {
+  const next = random(seed);
+  const pool = naturalNumberDecompositionBank.filter((number) => number !== PRIME_EXAMPLE_NUMBER && number !== COMPOSITE_EXAMPLE_NUMBER);
+  const shuffled = [...pool];
+  for (let index = shuffled.length - 1; index > 0; index -= 1) {
+    const target = Math.floor(next() * (index + 1));
+    [shuffled[index], shuffled[target]] = [shuffled[target], shuffled[index]];
+  }
+  return [
+    makeProblem(PRIME_EXAMPLE_NUMBER),
+    makeProblem(COMPOSITE_EXAMPLE_NUMBER),
+    ...shuffled.slice(0, count).map(makeProblem),
+  ];
 }

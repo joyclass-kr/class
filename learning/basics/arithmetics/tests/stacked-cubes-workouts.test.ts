@@ -3,10 +3,13 @@ import test from "node:test";
 
 import { computeViews, createStackedCubesProblemSet, sameViewGrids } from "../lib/stacked-cubes-workouts.ts";
 
-test("problem set always has 5 problems in a fixed kind order with positive totals matching their height grids", () => {
+test("problem set always has 10 problems in a fixed kind order with positive totals matching their height grids", () => {
   for (let seed = 1; seed <= 30; seed += 1) {
     const set = createStackedCubesProblemSet(seed);
-    assert.deepEqual(set.problems.map(({ kind }) => kind), ["three-view", "count", "count", "count-map", "count-map"]);
+    assert.deepEqual(set.problems.map(({ kind }) => kind), [
+      "three-view", "count", "count", "count-map", "count-map",
+      "three-view", "count", "count", "count-map", "count-map",
+    ]);
     for (const problem of set.problems) {
       const summed = problem.heights.reduce((sum, row) => sum + row.reduce((a, b) => a + b, 0), 0);
       assert.equal(problem.total, summed);

@@ -57,7 +57,7 @@ export default function StackedCubesDiagram({ heights, showMap = false, showDire
   const height = maxY - minY;
 
   const arrowTailX = minX + 8;
-  const arrowTailY = cubesMaxY - 6;
+  const arrowTailY = cubesMaxY - 30;
   const arrowTipX = arrowTailX + TILE_W * 0.85;
   const arrowTipY = arrowTailY - TILE_H * 0.85;
 

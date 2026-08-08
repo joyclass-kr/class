@@ -1751,16 +1751,16 @@ test("renders the fifth grade natural-number decomposition worksheet from the wo
   assert.match(html, /곱셈은 \*로 입력하세요\./);
   assert.match(html, /aria-label="A4 5학년 자연수분해 문제지"/);
   assert.match(html, /aria-label="A4 5학년 자연수분해 전체 답지"/);
-  assert.equal((html.match(/data-testid="natural-decomposition-question"/g) ?? []).length, 30);
-  assert.equal((html.match(/class="natural-decomposition-input"/g) ?? []).length, 14);
+  assert.equal((html.match(/data-testid="natural-decomposition-question"/g) ?? []).length, 28);
+  assert.equal((html.match(/class="natural-decomposition-input"/g) ?? []).length, 12);
   assert.equal((html.match(/class="natural-decomposition-static-answer"/g) ?? []).length, 16);
   assert.match(source, /createNaturalNumberDecompositionSet\(seed\)/);
   assert.match(source, /isPrimeFactorizationAnswer/);
-  assert.match(source, /<small>\/14 정답<\/small>/);
+  assert.match(source, /<small>\/12 정답<\/small>/);
   assert.match(bankSource, /export const naturalNumberDecompositionBank/);
   assert.match(bankSource, /8, 12, 16, 18, 20, 22/);
   assert.match(css, /\.natural-decomposition-grid\s*\{[\s\S]*?grid-template-columns:\s*repeat\(2,/);
-  assert.match(css, /\.natural-decomposition-grid\s*\{[\s\S]*?grid-template-rows:\s*repeat\(8,/);
+  assert.match(css, /\.natural-decomposition-grid\s*\{[\s\S]*?grid-template-rows:\s*repeat\(7,/);
   assert.match(css, /\.natural-decomposition-grid\s*\{[\s\S]*?grid-auto-flow:\s*column/);
 });
 

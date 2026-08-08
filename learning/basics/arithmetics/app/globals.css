@@ -3510,7 +3510,7 @@ html[data-race-mode="true"] body { padding-bottom: 72px; }
   flex: 1 1 auto;
   display: grid;
   grid-template-columns: repeat(2, minmax(0, 1fr));
-  grid-template-rows: repeat(8, minmax(0, 1fr));
+  grid-template-rows: repeat(7, minmax(0, 1fr));
   grid-auto-flow: column;
   overflow: hidden;
   border: 1px solid #b9afa1;
@@ -3535,14 +3535,6 @@ html[data-race-mode="true"] body { padding-bottom: 72px; }
 }
 
 .natural-decomposition-question:nth-child(8),
-.natural-decomposition-empty {
-  border-bottom: 0;
-}
-
-.natural-decomposition-empty {
-  background: #fbfaf7;
-}
-
 .natural-decomposition-question.is-correct {
   background: #edf8f1;
 }
@@ -9558,7 +9550,9 @@ main {
   min-height: 0;
   flex: 1 1 auto;
   display: grid;
-  grid-template-columns: minmax(0, 1fr);
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  grid-template-rows: repeat(5, minmax(0, 1fr));
+  grid-auto-flow: column;
   gap: 8px;
   margin-top: 12px;
   overflow: hidden;
@@ -9652,7 +9646,7 @@ main {
 
 .stacked-cubes-direction text {
   fill: currentColor;
-  font-size: 13px;
+  font-size: 17px;
   font-weight: 800;
 }
 

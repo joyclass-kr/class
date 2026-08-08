@@ -2,11 +2,13 @@ import assert from "node:assert/strict";
 import test from "node:test";
 
 import {
+  COMPOSITE_EXAMPLE_NUMBER,
   createNaturalNumberDecompositionSet,
   formatPrimeFactorization,
   isPrimeFactorizationAnswer,
   naturalNumberDecompositionBank,
   primeFactors,
+  PRIME_EXAMPLE_NUMBER,
 } from "../lib/natural-number-decomposition.ts";
 
 test("원본 소인수식 문제은행 84개를 정확히 복원한다", () => {
@@ -24,12 +26,23 @@ test("소수는 그대로, 합성수는 반복된 소인수의 곱으로 나타�
   assert.equal(formatPrimeFactorization(100), "2*2*5*5");
 });
 
-test("같은 seed는 중복 없는 같은 15문제를 만든다", () => {
+test("맨 앞 두 문제는 소수 예시와 합성수 예시로 고정된다", () => {
+  for (const seed of [1, 20260721, 555]) {
+    const problems = createNaturalNumberDecompositionSet(seed);
+    assert.equal(problems[0].number, PRIME_EXAMPLE_NUMBER);
+    assert.equal(problems[0].factors.length, 1);
+    assert.equal(problems[1].number, COMPOSITE_EXAMPLE_NUMBER);
+    assert.ok(problems[1].factors.length > 1);
+    assert.ok(problems.slice(2).every((problem) => problem.number !== PRIME_EXAMPLE_NUMBER && problem.number !== COMPOSITE_EXAMPLE_NUMBER));
+  }
+});
+
+test("같은 seed는 중복 없는 같은 14문제를 만든다", () => {
   const first = createNaturalNumberDecompositionSet(20260721);
   const second = createNaturalNumberDecompositionSet(20260721);
   assert.deepEqual(first, second);
-  assert.equal(first.length, 15);
-  assert.equal(new Set(first.map((problem) => problem.number)).size, 15);
+  assert.equal(first.length, 14);
+  assert.equal(new Set(first.map((problem) => problem.number)).size, 14);
   assert.notDeepEqual(first, createNaturalNumberDecompositionSet(1));
 });
 
