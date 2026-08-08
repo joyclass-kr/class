@@ -704,6 +704,16 @@ function createClassroomPlatform(options = {}) {
       )`,
       `ALTER TABLE school_students
         ADD COLUMN IF NOT EXISTS custom_fields JSONB NOT NULL DEFAULT '{}'::jsonb`,
+      `ALTER TABLE school_students
+        ADD COLUMN IF NOT EXISTS avatar_key TEXT`,
+      `ALTER TABLE school_students
+        ADD COLUMN IF NOT EXISTS avatar_first_changed_year INTEGER`,
+      `ALTER TABLE school_students
+        ADD COLUMN IF NOT EXISTS avatar_second_changed_year INTEGER`,
+      `ALTER TABLE school_students
+        ADD COLUMN IF NOT EXISTS birthday_mmdd TEXT`,
+      `ALTER TABLE school_students
+        ADD COLUMN IF NOT EXISTS birthday_visible BOOLEAN NOT NULL DEFAULT FALSE`,
       `CREATE INDEX IF NOT EXISTS school_students_school_year_idx
         ON school_students (school_id, academic_year, grade, class_number)`,
       `CREATE INDEX IF NOT EXISTS school_students_email_idx
@@ -1370,24 +1380,35 @@ function createClassroomPlatform(options = {}) {
     const result = await pool.query(
       `SELECT s.id AS student_id, s.roster_name, s.student_number, s.birthday_mmdd, s.birthday_visible,
               s.avatar_key, s.avatar_first_changed_year, s.avatar_second_changed_year,
+              s.school_id, s.academic_year, s.grade, s.class_number, sc.name AS school_name
+       FROM school_students s
+       JOIN classroom_schools sc ON sc.id = s.school_id
+       WHERE s.user_id = $1
+       UNION ALL
+       SELECT s.id AS student_id, s.roster_name, s.student_number, s.birthday_mmdd, s.birthday_visible,
+              s.avatar_key, s.avatar_first_changed_year, s.avatar_second_changed_year,
               c.school_id, c.academic_year, c.grade, c.class_number, sc.name AS school_name
        FROM classroom_students s
        JOIN classroom_classes c ON c.id = s.class_id
        JOIN classroom_schools sc ON sc.id = c.school_id
        WHERE s.user_id = $1
-       ORDER BY c.updated_at DESC
        LIMIT 1`,
       [user.id]
     );
     const row = result.rows[0];
     if (!row) throw new HttpError(404, "STUDENT_MEMBERSHIP_REQUIRED", "Join your class before changing this setting.");
     const avatarUsageResult = await pool.query(
-      `SELECT s.avatar_key, COUNT(*)::INTEGER AS usage_count,
+      `SELECT avatar_key, COUNT(*)::INTEGER AS usage_count,
               SUM(COUNT(*)) OVER()::INTEGER AS student_count
-       FROM classroom_students s
-       JOIN classroom_classes c ON c.id = s.class_id
-       WHERE c.school_id = $1 AND c.academic_year = $2 AND c.grade = $3
-       GROUP BY s.avatar_key`,
+       FROM (
+         SELECT avatar_key FROM school_students
+          WHERE school_id = $1 AND academic_year = $2 AND grade = $3
+         UNION ALL
+         SELECT s.avatar_key FROM classroom_students s
+          JOIN classroom_classes c ON c.id = s.class_id
+          WHERE c.school_id = $1 AND c.academic_year = $2 AND c.grade = $3
+       ) combined
+       GROUP BY avatar_key`,
       [row.school_id, row.academic_year, row.grade]
     );
     const cohortStudentCount = Number(avatarUsageResult.rows[0]?.student_count || 0);
@@ -1447,13 +1468,22 @@ function createClassroomPlatform(options = {}) {
     if (birthdayVisible && !birthdayMmdd) {
       throw new HttpError(400, "BIRTHDAY_REQUIRED", "Enter your birthday before turning on birthday sharing.");
     }
-    const result = await pool.query(
-      `UPDATE classroom_students
-       SET birthday_mmdd = $2, birthday_visible = $3, birth_date = NULL, updated_at = NOW()
+    let result = await pool.query(
+      `UPDATE school_students
+       SET birthday_mmdd = $2, birthday_visible = $3, updated_at = NOW()
        WHERE user_id = $1
        RETURNING roster_name, student_number, birthday_mmdd, birthday_visible`,
       [user.id, birthdayMmdd || null, Boolean(birthdayMmdd && birthdayVisible)]
     );
+    if (!result.rows[0]) {
+      result = await pool.query(
+        `UPDATE classroom_students
+         SET birthday_mmdd = $2, birthday_visible = $3, birth_date = NULL, updated_at = NOW()
+         WHERE user_id = $1
+         RETURNING roster_name, student_number, birthday_mmdd, birthday_visible`,
+        [user.id, birthdayMmdd || null, Boolean(birthdayMmdd && birthdayVisible)]
+      );
+    }
     const row = result.rows[0];
     if (!row) throw new HttpError(404, "STUDENT_MEMBERSHIP_REQUIRED", "Join your class before changing this setting.");
     res.json({
@@ -1482,17 +1512,30 @@ function createClassroomPlatform(options = {}) {
     const client = await pool.connect();
     try {
       await client.query("BEGIN");
-      const studentResult = await client.query(
+      let source = "school_students";
+      let studentResult = await client.query(
         `SELECT s.id, s.avatar_key, s.avatar_first_changed_year, s.avatar_second_changed_year,
-                c.school_id, c.academic_year, c.grade
-         FROM classroom_students s
-         JOIN classroom_classes c ON c.id = s.class_id
+                s.school_id, s.academic_year, s.grade
+         FROM school_students s
          WHERE s.user_id = $1
-         ORDER BY c.updated_at DESC
          LIMIT 1
          FOR UPDATE OF s`,
         [user.id]
       );
+      if (!studentResult.rows[0]) {
+        source = "classroom_students";
+        studentResult = await client.query(
+          `SELECT s.id, s.avatar_key, s.avatar_first_changed_year, s.avatar_second_changed_year,
+                  c.school_id, c.academic_year, c.grade
+           FROM classroom_students s
+           JOIN classroom_classes c ON c.id = s.class_id
+           WHERE s.user_id = $1
+           ORDER BY c.updated_at DESC
+           LIMIT 1
+           FOR UPDATE OF s`,
+          [user.id]
+        );
+      }
       const student = studentResult.rows[0];
       if (!student) throw new HttpError(404, "STUDENT_MEMBERSHIP_REQUIRED", "Join your class before changing the avatar.");
       if (!student.avatar_key) throw new HttpError(409, "AVATAR_NOT_ASSIGNED", "Ask your teacher to save the roster first.");
@@ -1513,13 +1556,24 @@ function createClassroomPlatform(options = {}) {
         throw new HttpError(409, "AVATAR_CHANGE_ALREADY_USED", `${changeWindow.label} \ubcc0\uacbd \uae30\ud68c\ub97c \uc774\ubbf8 \uc0ac\uc6a9\ud588\uc2b5\ub2c8\ub2e4.`);
       }
 
+      // Usage/capacity spans both roster tables, since the grade's cohort may have
+      // students in either. The current student is excluded from whichever table
+      // they actually live in; the other exclude id is impossible (-1) so it never matches.
+      const schoolExcludeId = source === "school_students" ? student.id : -1;
+      const classroomExcludeId = source === "classroom_students" ? student.id : -1;
       const capacityResult = await client.query(
-        `SELECT COUNT(*)::INTEGER AS student_count,
-                COUNT(*) FILTER (WHERE s.avatar_key = $4 AND s.id <> $5)::INTEGER AS selected_count
-         FROM classroom_students s
-         JOIN classroom_classes c ON c.id = s.class_id
-         WHERE c.school_id = $1 AND c.academic_year = $2 AND c.grade = $3`,
-        [student.school_id, student.academic_year, student.grade, requestedAvatarKey, student.id]
+        `SELECT
+           (
+             (SELECT COUNT(*) FROM school_students WHERE school_id = $1 AND academic_year = $2 AND grade = $3) +
+             (SELECT COUNT(*) FROM classroom_students s JOIN classroom_classes c ON c.id = s.class_id
+               WHERE c.school_id = $1 AND c.academic_year = $2 AND c.grade = $3)
+           )::INTEGER AS student_count,
+           (
+             (SELECT COUNT(*) FROM school_students WHERE school_id = $1 AND academic_year = $2 AND grade = $3 AND avatar_key = $4 AND id <> $5) +
+             (SELECT COUNT(*) FROM classroom_students s JOIN classroom_classes c ON c.id = s.class_id
+               WHERE c.school_id = $1 AND c.academic_year = $2 AND c.grade = $3 AND s.avatar_key = $4 AND s.id <> $6)
+           )::INTEGER AS selected_count`,
+        [student.school_id, student.academic_year, student.grade, requestedAvatarKey, schoolExcludeId, classroomExcludeId]
       );
       const usage = capacityResult.rows[0];
       const maximumAvatarUses = avatarCapacity(Number(usage.student_count || 0));
@@ -1527,21 +1581,14 @@ function createClassroomPlatform(options = {}) {
         throw new HttpError(409, "AVATAR_UNAVAILABLE", "\uac19\uc740 \ud559\ub144\uc758 \ub2e4\ub978 \ud559\uc0dd\uc774 \uc774\ubbf8 \uc0ac\uc6a9 \uc911\uc778 \uc544\ubc14\ud0c0\uc785\ub2c8\ub2e4.");
       }
 
-      if (changeWindow.period === "first") {
-        await client.query(
-          `UPDATE classroom_students
-           SET avatar_key = $2, avatar_first_changed_year = $3, updated_at = NOW()
-           WHERE id = $1`,
-          [student.id, requestedAvatarKey, changeWindow.year]
-        );
-      } else {
-        await client.query(
-          `UPDATE classroom_students
-           SET avatar_key = $2, avatar_second_changed_year = $3, updated_at = NOW()
-           WHERE id = $1`,
-          [student.id, requestedAvatarKey, changeWindow.year]
-        );
-      }
+      const changedYearColumn = changeWindow.period === "first" ? "avatar_first_changed_year" : "avatar_second_changed_year";
+      const table = source === "school_students" ? "school_students" : "classroom_students";
+      await client.query(
+        `UPDATE ${table}
+         SET avatar_key = $2, ${changedYearColumn} = $3, updated_at = NOW()
+         WHERE id = $1`,
+        [student.id, requestedAvatarKey, changeWindow.year]
+      );
       await client.query("COMMIT");
       return res.json({
         changed: true,
@@ -4067,14 +4114,56 @@ function createClassroomPlatform(options = {}) {
       seenKeys.add(key);
     }
 
+    const gradeTotalCounts = new Map();
+    for (const s of clean) {
+      gradeTotalCounts.set(s.grade, (gradeTotalCounts.get(s.grade) || 0) + 1);
+    }
+
     const client = await pool.connect();
     try {
       await client.query("BEGIN");
+
+      // Avatars are assigned once per new student and kept stable afterward
+      // (mirrors the classroom_students roster-save assignment below). Usage
+      // is tracked per grade so the whole-school save can span many grades.
+      const existingResult = await client.query(
+        `SELECT grade, class_number, student_number, avatar_key
+         FROM school_students
+         WHERE school_id = $1 AND academic_year = $2`,
+        [schoolId, academicYear]
+      );
+      const existingAvatarByKey = new Map(
+        existingResult.rows.map((row) => [`${row.grade}-${row.class_number}-${row.student_number}`, row.avatar_key || ""])
+      );
+      const usageResult = await client.query(
+        `SELECT grade, avatar_key, COUNT(*)::INTEGER AS usage_count
+         FROM school_students
+         WHERE school_id = $1 AND academic_year = $2 AND avatar_key IS NOT NULL
+         GROUP BY grade, avatar_key`,
+        [schoolId, academicYear]
+      );
+      const avatarUsageByGrade = new Map();
+      for (const row of usageResult.rows) {
+        if (!avatarUsageByGrade.has(row.grade)) avatarUsageByGrade.set(row.grade, new Map());
+        avatarUsageByGrade.get(row.grade).set(row.avatar_key, Number(row.usage_count || 0));
+      }
+
       for (const s of clean) {
+        const rosterKey = `${s.grade}-${s.classNumber}-${s.studentNumber}`;
+        const existingAvatarKey = existingAvatarByKey.get(rosterKey);
+        let avatarKey = existingAvatarKey || null;
+        if (!avatarKey) {
+          if (!avatarUsageByGrade.has(s.grade)) avatarUsageByGrade.set(s.grade, new Map());
+          const gradeUsage = avatarUsageByGrade.get(s.grade);
+          const capacity = avatarCapacity(gradeTotalCounts.get(s.grade));
+          avatarKey = pickRandomAvailableAvatar(gradeUsage, capacity);
+          gradeUsage.set(avatarKey, Number(gradeUsage.get(avatarKey) || 0) + 1);
+        }
+
         await client.query(
           `INSERT INTO school_students
-             (school_id, academic_year, grade, class_number, student_number, roster_name, gender, student_email, guardian1_email, guardian2_email, custom_fields)
-           VALUES ($1, $2, $3, $4, $5, $6, $7, $8, $9, $10, $11)
+             (school_id, academic_year, grade, class_number, student_number, roster_name, gender, student_email, guardian1_email, guardian2_email, custom_fields, avatar_key)
+           VALUES ($1, $2, $3, $4, $5, $6, $7, $8, $9, $10, $11, $12)
            ON CONFLICT (school_id, academic_year, grade, class_number, student_number) DO UPDATE SET
              roster_name = EXCLUDED.roster_name,
              gender = EXCLUDED.gender,
@@ -4082,8 +4171,9 @@ function createClassroomPlatform(options = {}) {
              guardian1_email = EXCLUDED.guardian1_email,
              guardian2_email = EXCLUDED.guardian2_email,
              custom_fields = EXCLUDED.custom_fields,
+             avatar_key = COALESCE(school_students.avatar_key, EXCLUDED.avatar_key),
              updated_at = NOW()`,
-          [schoolId, academicYear, s.grade, s.classNumber, s.studentNumber, s.rosterName, s.gender, s.studentEmail, s.guardian1Email, s.guardian2Email, JSON.stringify(s.customFields)]
+          [schoolId, academicYear, s.grade, s.classNumber, s.studentNumber, s.rosterName, s.gender, s.studentEmail, s.guardian1Email, s.guardian2Email, JSON.stringify(s.customFields), avatarKey]
         );
         // Auto-link student Google account
         if (s.studentEmail) {
