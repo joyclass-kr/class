@@ -1,0 +1,451 @@
+<!doctype html>
+<html lang="ko">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="theme-color" content="#f6f3ec">
+    <title>월중 행사 등록</title>
+    <style>
+        :root {
+            color-scheme: light;
+            --ink: #18211d;
+            --muted: #647069;
+            --paper: #fffdf8;
+            --canvas: #f3efe7;
+            --line: #d8d2c6;
+            --brand: #246b55;
+            --brand-dark: #18503f;
+            --brand-soft: #dfeee8;
+            --danger: #b43c36;
+            --danger-soft: #fff0ee;
+            --shadow: 0 18px 50px rgba(41, 50, 45, 0.10);
+        }
+        * { box-sizing: border-box; }
+        body {
+            margin: 0;
+            min-height: 100vh;
+            color: var(--ink);
+            background: radial-gradient(circle at top left, rgba(255,255,255,0.9), transparent 34rem), var(--canvas);
+            font-family: Pretendard, "Noto Sans KR", "Apple SD Gothic Neo", system-ui, sans-serif;
+            font-size: 14px;
+        }
+        button, input, select { font: inherit; }
+
+        .top-bar {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            gap: 12px;
+            padding: 12px 20px;
+            background: var(--paper);
+            border-bottom: 1px solid var(--line);
+            position: sticky;
+            top: 0;
+            z-index: 50;
+        }
+        .top-bar-left { display: flex; align-items: center; gap: 10px; }
+        .back-btn {
+            display: flex; align-items: center; justify-content: center;
+            width: 36px; height: 36px;
+            border: 1px solid var(--line);
+            border-radius: 8px;
+            background: transparent;
+            color: var(--muted);
+            cursor: pointer;
+            text-decoration: none;
+            font-size: 16px;
+        }
+        .back-btn:hover { background: var(--canvas); }
+        .top-title { font-weight: 800; font-size: 15px; }
+        .top-school { font-size: 12px; color: var(--muted); }
+
+        .main { padding: 16px 24px; max-width: 1100px; margin: 0 auto; }
+
+        .card {
+            background: var(--paper);
+            border: 1px solid var(--line);
+            border-radius: 16px;
+            padding: 20px;
+            margin-bottom: 16px;
+            box-shadow: var(--shadow);
+        }
+        .card-title { font-size: 15px; font-weight: 800; margin: 0 0 4px; }
+        .card-desc { color: var(--muted); font-size: 12px; margin: 0 0 16px; line-height: 1.5; }
+
+        .month-nav { display: flex; align-items: center; gap: 10px; margin-bottom: 16px; }
+        .icon-btn {
+            display: flex; align-items: center; justify-content: center;
+            width: 40px; height: 40px;
+            border: 1px solid var(--line);
+            border-radius: 8px;
+            background: var(--paper);
+            color: var(--ink);
+            cursor: pointer;
+            font-size: 16px;
+        }
+        .icon-btn:hover { background: var(--canvas); }
+        .month-title { font-size: 17px; font-weight: 800; min-width: 120px; text-align: center; }
+
+        .form-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+            gap: 10px;
+            align-items: end;
+        }
+        .field label { display: block; font-size: 11px; color: var(--muted); font-weight: 700; margin-bottom: 4px; }
+        .field input, .field select {
+            width: 100%;
+            padding: 8px 10px;
+            border: 1px solid var(--line);
+            border-radius: 8px;
+            background: var(--paper);
+            color: var(--ink);
+            min-height: 40px;
+        }
+        .grade-checks { display: flex; flex-wrap: wrap; gap: 6px 10px; padding: 8px 0; }
+        .grade-checks[hidden] { display: none; }
+        .grade-checks label { display: inline-flex; align-items: center; gap: 4px; font-size: 12px; font-weight: normal; color: var(--ink); }
+
+        .btn {
+            display: inline-flex; align-items: center; justify-content: center; gap: 6px;
+            min-height: 40px; padding: 0 16px;
+            border: none; border-radius: 10px;
+            font-weight: 800; font-size: 13px;
+            cursor: pointer;
+            white-space: nowrap;
+            background: var(--brand); color: #fff;
+        }
+        .btn:hover { background: var(--brand-dark); }
+        .btn-danger { background: var(--danger-soft); border: 1px solid #f0b8b5; color: var(--danger); min-height: 32px; padding: 0 10px; font-size: 12px; }
+        .btn-danger:hover { background: #ffdbd9; }
+
+        .status-msg { font-size: 13px; color: var(--muted); min-height: 20px; margin-top: 8px; }
+        .status-msg.error { color: var(--danger); }
+
+        .table-wrap {
+            overflow: auto;
+            border: 1px solid var(--line);
+            border-radius: 12px;
+            background: var(--paper);
+        }
+        table { width: 100%; border-collapse: collapse; font-size: 13px; }
+        th {
+            background: var(--canvas);
+            color: var(--muted);
+            font-weight: 700;
+            font-size: 11px;
+            text-align: left;
+            padding: 8px 10px;
+            border-bottom: 1px solid var(--line);
+            white-space: nowrap;
+        }
+        td { padding: 8px 10px; border-bottom: 1px solid var(--line); vertical-align: top; }
+        tr.sat td:first-child, tr.sat td:nth-child(2) { color: #2b6cb0; }
+        tr.sun td:first-child, tr.sun td:nth-child(2), tr.holiday td:first-child, tr.holiday td:nth-child(2) { color: var(--danger); }
+        tr.holiday { background: var(--danger-soft); }
+        .empty-row td { color: var(--muted); text-align: center; padding: 20px; }
+        .holiday-name { color: var(--danger); font-weight: 700; }
+        .event-list { list-style: none; margin: 0; padding: 0; display: flex; flex-direction: column; gap: 4px; }
+        .event-list li { display: flex; align-items: baseline; gap: 6px; flex-wrap: wrap; }
+        .event-bullet { color: var(--brand); }
+        .event-meta { color: var(--muted); font-size: 12px; }
+        .event-organizer { color: var(--muted); font-size: 12px; }
+    </style>
+</head>
+<body>
+
+<div class="top-bar">
+    <div class="top-bar-left">
+        <a href="/classtools/" class="back-btn" title="뒤로">←</a>
+        <div>
+            <div class="top-title">📌 월중 행사 등록</div>
+            <div class="top-school" id="schoolName">학교 불러오는 중…</div>
+        </div>
+    </div>
+</div>
+
+<div class="main">
+    <div class="card">
+        <div class="card-title">행사 등록</div>
+        <div class="card-desc">등교 여부(190일 산정)에 영향을 주는 입학·시업식/방학식/개학식/졸업식/재량휴업일은 "학사일정"에서 관리자가 등록합니다. 그 외 일반 행사는 여기서 누구나 등록할 수 있고, 등록한 선생님이 담당자로 자동 기록됩니다.</div>
+        <form id="addEventForm">
+            <div class="form-grid">
+                <div class="field">
+                    <label>날짜 *</label>
+                    <input type="date" id="eventDate" required>
+                </div>
+                <div class="field">
+                    <label>종료일 (연속 여러 날짜인 경우)</label>
+                    <input type="date" id="eventEndDate">
+                </div>
+                <div class="field" style="grid-column: span 2;">
+                    <label>행사명 *</label>
+                    <input type="text" id="eventTitle" maxlength="100" required placeholder="예: 학교폭력예방 교육">
+                </div>
+                <div class="field">
+                    <label>장소</label>
+                    <input type="text" id="eventLocation" maxlength="60" placeholder="예: 교원연수실">
+                </div>
+                <div class="field">
+                    <label>시간</label>
+                    <input type="text" id="eventTime" maxlength="30" placeholder="예: 14:00~14:20">
+                </div>
+                <div class="field">
+                    <label>교시</label>
+                    <input type="text" id="eventPeriod" maxlength="20" placeholder="예: 2교시">
+                </div>
+                <div class="field">
+                    <label>해당 학급</label>
+                    <select id="eventScope">
+                        <option value="ALL">전교</option>
+                        <option value="GRADE">특정 학년</option>
+                    </select>
+                </div>
+                <div class="field" style="min-height:40px;">
+                    <button type="submit" class="btn">+ 행사 등록</button>
+                </div>
+            </div>
+            <div class="grade-checks" id="gradeChecksRow" hidden>
+                <label><input type="checkbox" name="grade" value="1"> 1학년</label>
+                <label><input type="checkbox" name="grade" value="2"> 2학년</label>
+                <label><input type="checkbox" name="grade" value="3"> 3학년</label>
+                <label><input type="checkbox" name="grade" value="4"> 4학년</label>
+                <label><input type="checkbox" name="grade" value="5"> 5학년</label>
+                <label><input type="checkbox" name="grade" value="6"> 6학년</label>
+            </div>
+            <div class="status-msg" id="formStatus"></div>
+        </form>
+    </div>
+
+    <div class="card">
+        <div class="month-nav">
+            <button class="icon-btn" id="prevMonthBtn">←</button>
+            <div class="month-title" id="monthTitle">2026년 8월</div>
+            <button class="icon-btn" id="nextMonthBtn">→</button>
+        </div>
+        <div class="table-wrap">
+            <table>
+                <thead>
+                    <tr>
+                        <th>일</th><th>요일</th><th>공휴일 등 행사</th><th>행사 내용</th>
+                    </tr>
+                </thead>
+                <tbody id="eventsTableBody"></tbody>
+            </table>
+        </div>
+    </div>
+</div>
+
+<script>
+(() => {
+    "use strict";
+
+    const IS_LOCAL = ["localhost", "127.0.0.1"].includes(location.hostname);
+    const BASE = IS_LOCAL ? "http://localhost:3000" : "https://songhwaplay.onrender.com";
+    const WEEKDAY_NAMES = ["일", "월", "화", "수", "목", "금", "토"];
+
+    let currentMonth = new Date().toISOString().slice(0, 7); // YYYY-MM
+
+    async function api(path, opts = {}) {
+        const res = await fetch(BASE + path, {
+            ...opts,
+            credentials: "include",
+            headers: { "Content-Type": "application/json", ...(opts.headers || {}) }
+        });
+        const data = await res.json().catch(() => ({}));
+        if (!res.ok) {
+            const err = new Error(data.message || "서버 오류가 발생했습니다.");
+            err.status = res.status;
+            throw err;
+        }
+        return data;
+    }
+
+    function esc(str) {
+        return String(str ?? "").replace(/&/g, "&amp;").replace(/</g, "&lt;").replace(/>/g, "&gt;").replace(/"/g, "&quot;");
+    }
+
+    function setStatus(msg, isError) {
+        const el = document.getElementById("formStatus");
+        el.textContent = msg || "";
+        el.className = "status-msg" + (isError ? " error" : "");
+    }
+
+    function renderMonthTitle() {
+        const [y, m] = currentMonth.split("-").map(Number);
+        document.getElementById("monthTitle").textContent = `${y}년 ${m}월`;
+    }
+
+    function eventMetaText(ev) {
+        const target = ev.target_scope === "GRADE" && ev.target_grades?.length
+            ? ev.target_grades.slice().sort((a, b) => a - b).map(g => g + "학년").join(",")
+            : "전교";
+        const parts = [ev.event_time, ev.period, ev.location, target].filter(Boolean);
+        return parts.join(", ");
+    }
+
+    // 1일~말일까지 모든 날짜를 세로로 표시하고, 여러 날짜에 걸친 행사는 해당하는 모든 날짜 행에 표시한다.
+    function renderMonthGrid(events, holidaysMap) {
+        const tbody = document.getElementById("eventsTableBody");
+        tbody.innerHTML = "";
+
+        const [year, monthNum] = currentMonth.split("-").map(Number);
+        const lastDay = new Date(year, monthNum, 0).getDate();
+
+        for (let d = 1; d <= lastDay; d++) {
+            const dateStr = `${currentMonth}-${String(d).padStart(2, "0")}`;
+            const dateObj = new Date(year, monthNum - 1, d);
+            const dayOfWeek = dateObj.getDay();
+            const holidayName = holidaysMap[dateStr];
+            const dayEvents = events.filter(ev => ev.event_date <= dateStr && (ev.end_date || ev.event_date) >= dateStr);
+
+            const tr = document.createElement("tr");
+            const classes = [];
+            if (holidayName) classes.push("holiday");
+            else if (dayOfWeek === 0) classes.push("sun");
+            else if (dayOfWeek === 6) classes.push("sat");
+            tr.className = classes.join(" ");
+
+            const eventsHtml = dayEvents.length === 0 ? "" : `<ul class="event-list">${dayEvents.map(ev => `
+                <li>
+                    <span class="event-bullet">◆</span>
+                    <span>${esc(ev.title)}</span>
+                    ${eventMetaText(ev) ? `<span class="event-meta">(${esc(eventMetaText(ev))})</span>` : ""}
+                    <span class="event-organizer">— ${esc(ev.organizer_name)}</span>
+                    ${ev.isOwner ? `<button class="btn-danger" data-id="${ev.id}">삭제</button>` : ""}
+                </li>
+            `).join("")}</ul>`;
+
+            tr.innerHTML = `
+                <td>${d}</td>
+                <td>${WEEKDAY_NAMES[dayOfWeek]}</td>
+                <td>${holidayName ? `<span class="holiday-name">${esc(holidayName)}</span>` : ""}</td>
+                <td>${eventsHtml}</td>
+            `;
+            tbody.appendChild(tr);
+        }
+
+        tbody.querySelectorAll(".btn-danger").forEach(btn => {
+            btn.addEventListener("click", async () => {
+                if (!confirm("이 행사를 삭제할까요?")) return;
+                try {
+                    await api(`/api/teacher/general-events/${btn.dataset.id}`, { method: "DELETE" });
+                    await loadEvents();
+                } catch (err) {
+                    alert(err.message || "삭제하지 못했습니다.");
+                }
+            });
+        });
+    }
+
+    function vacationLabelForDate(dateStr, settings) {
+        if (!settings) return null;
+        const { summer_start, summer_end, winter_start, winter_end, spring_start, spring_end, is_integrated } = settings;
+        if (summer_start && summer_end && dateStr >= summer_start && dateStr <= summer_end) return "여름방학";
+        if (winter_start && winter_end && dateStr >= winter_start && dateStr <= winter_end) {
+            return is_integrated ? "겨울/학년말방학" : "겨울방학";
+        }
+        if (!is_integrated && spring_start && spring_end && dateStr >= spring_start && dateStr <= spring_end) return "학년말방학";
+        return null;
+    }
+
+    async function loadEvents() {
+        renderMonthTitle();
+        try {
+            const [y, m] = currentMonth.split("-").map(Number);
+            const academicYear = m >= 3 ? y : y - 1;
+            const [eventsRes, holidaysRes, vacationRes] = await Promise.all([
+                api(`/api/teacher/general-events?month=${currentMonth}`),
+                api(`/api/teacher/public-holidays?year=${y}`).catch(() => ({ holidays: [] })),
+                api(`/api/teacher/vacation-settings?academicYear=${academicYear}`).catch(() => ({ settings: null }))
+            ]);
+            if (eventsRes.schoolName) document.getElementById("schoolName").textContent = eventsRes.schoolName;
+
+            const holidaysMap = {};
+            (holidaysRes.holidays || []).forEach(h => { holidaysMap[h.date] = h.name; });
+
+            const lastDay = new Date(y, m, 0).getDate();
+            for (let d = 1; d <= lastDay; d++) {
+                const dateStr = `${currentMonth}-${String(d).padStart(2, "0")}`;
+                if (holidaysMap[dateStr]) continue;
+                const vac = vacationLabelForDate(dateStr, vacationRes.settings);
+                if (vac) holidaysMap[dateStr] = vac;
+            }
+
+            renderMonthGrid(eventsRes.events || [], holidaysMap);
+        } catch (err) {
+            document.getElementById("eventsTableBody").innerHTML = `<tr class="empty-row"><td colspan="4">${esc(err.message || "불러오지 못했습니다.")}</td></tr>`;
+            if (err.status === 401 || err.status === 403) {
+                setTimeout(() => { location.href = "/classtools/"; }, 2000);
+            }
+        }
+    }
+
+    document.getElementById("prevMonthBtn").addEventListener("click", () => {
+        const [y, m] = currentMonth.split("-").map(Number);
+        const d = new Date(y, m - 2, 1);
+        currentMonth = d.toISOString().slice(0, 7);
+        loadEvents();
+    });
+    document.getElementById("nextMonthBtn").addEventListener("click", () => {
+        const [y, m] = currentMonth.split("-").map(Number);
+        const d = new Date(y, m, 1);
+        currentMonth = d.toISOString().slice(0, 7);
+        loadEvents();
+    });
+
+    document.getElementById("eventScope").addEventListener("change", (e) => {
+        document.getElementById("gradeChecksRow").hidden = e.target.value !== "GRADE";
+    });
+
+    document.getElementById("addEventForm").addEventListener("submit", async (e) => {
+        e.preventDefault();
+        const date = document.getElementById("eventDate").value;
+        const endDate = document.getElementById("eventEndDate").value;
+        const title = document.getElementById("eventTitle").value.trim();
+        const scope = document.getElementById("eventScope").value;
+        const targetGrades = Array.from(document.querySelectorAll('input[name="grade"]:checked')).map(cb => Number(cb.value));
+
+        if (!date || !title) {
+            setStatus("날짜와 행사명은 필수입니다.", true);
+            return;
+        }
+        if (endDate && endDate < date) {
+            setStatus("종료일은 시작일과 같거나 이후여야 합니다.", true);
+            return;
+        }
+        if (scope === "GRADE" && targetGrades.length === 0) {
+            setStatus("특정 학년을 선택하거나 '전교'를 선택하세요.", true);
+            return;
+        }
+
+        try {
+            await api("/api/teacher/general-events", {
+                method: "POST",
+                body: JSON.stringify({
+                    date,
+                    endDate: endDate || null,
+                    title,
+                    location: document.getElementById("eventLocation").value.trim(),
+                    eventTime: document.getElementById("eventTime").value.trim(),
+                    period: document.getElementById("eventPeriod").value.trim(),
+                    targetScope: scope,
+                    targetGrades
+                })
+            });
+            setStatus("등록되었습니다.");
+            document.getElementById("addEventForm").reset();
+            document.getElementById("eventDate").value = new Date().toISOString().slice(0, 10);
+            document.getElementById("gradeChecksRow").hidden = true;
+            await loadEvents();
+        } catch (err) {
+            setStatus(err.message || "등록하지 못했습니다.", true);
+        }
+    });
+
+    document.getElementById("eventDate").value = new Date().toISOString().slice(0, 10);
+    loadEvents();
+})();
+</script>
+</body>
+</html>

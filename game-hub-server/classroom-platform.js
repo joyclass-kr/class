@@ -832,6 +832,26 @@ function createClassroomPlatform(options = {}) {
       `ALTER TABLE school_annual_schedules ADD COLUMN IF NOT EXISTS grade_periods JSONB NOT NULL DEFAULT '{}'::jsonb`,
       `CREATE INDEX IF NOT EXISTS school_annual_schedules_lookup_idx
         ON school_annual_schedules (school_id, academic_year, event_date)`,
+      // 등교여부(190일 산정)에 영향 없는 일반 행사 — 관리자뿐 아니라 모든 교사가 등록할 수 있다.
+      `CREATE TABLE IF NOT EXISTS school_general_events (
+        id BIGSERIAL PRIMARY KEY,
+        school_id BIGINT NOT NULL REFERENCES classroom_schools(id) ON DELETE CASCADE,
+        event_date DATE NOT NULL,
+        end_date DATE,
+        title TEXT NOT NULL CHECK (char_length(title) BETWEEN 1 AND 100),
+        location TEXT NOT NULL DEFAULT '',
+        event_time TEXT NOT NULL DEFAULT '',
+        period TEXT NOT NULL DEFAULT '',
+        target_scope TEXT NOT NULL DEFAULT 'ALL' CHECK (target_scope IN ('ALL', 'GRADE')),
+        target_grades INTEGER[] NOT NULL DEFAULT '{}',
+        organizer_name TEXT NOT NULL,
+        created_by BIGINT REFERENCES classroom_users(id) ON DELETE SET NULL,
+        created_at TIMESTAMPTZ NOT NULL DEFAULT NOW(),
+        updated_at TIMESTAMPTZ NOT NULL DEFAULT NOW(),
+        CHECK (end_date IS NULL OR end_date >= event_date)
+      )`,
+      `CREATE INDEX IF NOT EXISTS school_general_events_lookup_idx
+        ON school_general_events (school_id, event_date, end_date)`,
       `CREATE TABLE IF NOT EXISTS school_vacation_settings (
         id BIGSERIAL PRIMARY KEY,
         school_id BIGINT NOT NULL REFERENCES classroom_schools(id) ON DELETE CASCADE,
@@ -883,6 +903,32 @@ function createClassroomPlatform(options = {}) {
       `ALTER TABLE school_curriculum_hours
         ADD CONSTRAINT school_curriculum_hours_category_check
         CHECK (category IN ('SUBJECT', 'CHANGTAE'))`,
+      `CREATE TABLE IF NOT EXISTS school_bell_schedule (
+        id BIGSERIAL PRIMARY KEY,
+        school_id BIGINT NOT NULL REFERENCES classroom_schools(id) ON DELETE CASCADE,
+        academic_year INTEGER NOT NULL,
+        grade INTEGER NOT NULL CHECK (grade BETWEEN 1 AND 12),
+        arrival_start TIME,
+        arrival_end TIME,
+        period_times JSONB NOT NULL DEFAULT '{}'::jsonb,
+        lunch_after_period INTEGER NOT NULL DEFAULT 4 CHECK (lunch_after_period BETWEEN 0 AND 8),
+        lunch_start TIME,
+        lunch_end TIME,
+        created_at TIMESTAMPTZ NOT NULL DEFAULT NOW(),
+        updated_at TIMESTAMPTZ NOT NULL DEFAULT NOW(),
+        UNIQUE (school_id, academic_year, grade)
+      )`,
+      `CREATE TABLE IF NOT EXISTS school_weekly_period_allocation (
+        id BIGSERIAL PRIMARY KEY,
+        school_id BIGINT NOT NULL REFERENCES classroom_schools(id) ON DELETE CASCADE,
+        academic_year INTEGER NOT NULL,
+        grade INTEGER NOT NULL CHECK (grade BETWEEN 1 AND 12),
+        day_of_week INTEGER NOT NULL CHECK (day_of_week BETWEEN 1 AND 5),
+        period_count INTEGER NOT NULL DEFAULT 0 CHECK (period_count BETWEEN 0 AND 8),
+        created_at TIMESTAMPTZ NOT NULL DEFAULT NOW(),
+        updated_at TIMESTAMPTZ NOT NULL DEFAULT NOW(),
+        UNIQUE (school_id, academic_year, grade, day_of_week)
+      )`,
       `CREATE TABLE IF NOT EXISTS school_master_timetable (
         id BIGSERIAL PRIMARY KEY,
         school_id BIGINT NOT NULL REFERENCES classroom_schools(id) ON DELETE CASCADE,
@@ -3103,6 +3149,151 @@ function createClassroomPlatform(options = {}) {
     res.status(201).json({ ok: true, noticeId: String(insertRes.rows[0].id) });
   }));
 
+  // ── General School Events (일반 행사) ──
+  // 등교여부(190일 산정)에는 영향을 주지 않는 일반 행사. 학사일정(school_annual_schedules)과
+  // 달리 관리자 전용이 아니라 모든 교사가 등록할 수 있고, 등록한 교사가 담당자로 자동 기록된다.
+  async function getTeacherContext(teacherId) {
+    const res = await pool.query(
+      `SELECT t.school_id, t.teacher_name, t.teacher_type, sc.name AS school_name
+       FROM classroom_teachers t
+       JOIN classroom_schools sc ON sc.id = t.school_id
+       WHERE t.user_id = $1 AND t.active = TRUE`,
+      [teacherId]
+    );
+    return res.rows[0] || null;
+  }
+
+  router.get("/teacher/general-events", asyncRoute(async (req, res) => {
+    const teacher = await requireTeacher(req);
+    const ctx = await getTeacherContext(teacher.id);
+    if (!ctx) throw new HttpError(403, "TEACHER_REGISTRATION_REQUIRED", "학급 등록 정보를 찾을 수 없습니다.");
+
+    const month = /^\d{4}-\d{2}$/.test(req.query.month) ? req.query.month : new Date().toISOString().slice(0, 7);
+    const [monthYear, monthNum] = month.split("-").map(Number);
+    const monthStart = `${month}-01`;
+    const monthEnd = new Date(monthYear, monthNum, 0).toISOString().slice(0, 10); // last day of month
+    const result = await pool.query(
+      `SELECT id, event_date::TEXT AS event_date, end_date::TEXT AS end_date, title, location, event_time, period,
+              target_scope, target_grades, organizer_name, created_by
+       FROM school_general_events
+       WHERE school_id = $1 AND event_date <= $3 AND COALESCE(end_date, event_date) >= $2
+       ORDER BY event_date, id`,
+      [ctx.school_id, monthStart, monthEnd]
+    );
+    res.json({
+      month,
+      schoolName: ctx.school_name,
+      events: result.rows.map(e => ({ ...e, isOwner: String(e.created_by) === String(teacher.id) }))
+    });
+  }));
+
+  router.post("/teacher/general-events", asyncRoute(async (req, res) => {
+    const teacher = await requireTeacher(req);
+    const ctx = await getTeacherContext(teacher.id);
+    if (!ctx) throw new HttpError(403, "TEACHER_REGISTRATION_REQUIRED", "학급 등록 정보를 찾을 수 없습니다.");
+
+    const date = String(req.body?.date || "").trim();
+    const endDateRaw = String(req.body?.endDate || "").trim();
+    const endDate = endDateRaw || null;
+    const title = String(req.body?.title || "").normalize("NFC").trim();
+    const location = String(req.body?.location || "").normalize("NFC").trim();
+    const eventTime = String(req.body?.eventTime || "").trim();
+    const period = String(req.body?.period || "").normalize("NFC").trim();
+    const targetScope = String(req.body?.targetScope || "ALL").toUpperCase();
+    const targetGrades = Array.isArray(req.body?.targetGrades) ? req.body.targetGrades.map(Number).filter(n => n >= 1 && n <= 12) : [];
+
+    if (!/^\d{4}-\d{2}-\d{2}$/.test(date)) {
+      throw new HttpError(400, "INVALID_DATE", "유효한 날짜를 입력하세요.");
+    }
+    if (endDate && (!/^\d{4}-\d{2}-\d{2}$/.test(endDate) || endDate < date)) {
+      throw new HttpError(400, "INVALID_END_DATE", "종료일은 시작일과 같거나 이후 날짜여야 합니다.");
+    }
+    if (!title || title.length > 100) {
+      throw new HttpError(400, "INVALID_TITLE", "행사명은 1~100자로 입력하세요.");
+    }
+
+    const result = await pool.query(
+      `INSERT INTO school_general_events
+       (school_id, event_date, end_date, title, location, event_time, period, target_scope, target_grades, organizer_name, created_by)
+       VALUES ($1, $2::DATE, $3::DATE, $4, $5, $6, $7, $8, $9, $10, $11)
+       RETURNING id, event_date::TEXT AS event_date, end_date::TEXT AS end_date, title, location, event_time, period, target_scope, target_grades, organizer_name, created_by`,
+      [ctx.school_id, date, endDate, title, location, eventTime, period, targetScope, targetGrades, ctx.teacher_name, teacher.id]
+    );
+
+    res.status(201).json({ event: { ...result.rows[0], isOwner: true } });
+  }));
+
+  router.delete("/teacher/general-events/:eventId", asyncRoute(async (req, res) => {
+    const teacher = await requireTeacher(req);
+    const ctx = await getTeacherContext(teacher.id);
+    if (!ctx) throw new HttpError(403, "TEACHER_REGISTRATION_REQUIRED", "학급 등록 정보를 찾을 수 없습니다.");
+
+    const eventId = Number(req.params.eventId);
+    if (!Number.isInteger(eventId) || eventId < 1) {
+      throw new HttpError(400, "INVALID_EVENT", "행사를 찾을 수 없습니다.");
+    }
+
+    const isAdmin = ["관리자", "교장", "교감"].includes(ctx.teacher_type);
+    const condition = isAdmin ? `id = $1 AND school_id = $2` : `id = $1 AND school_id = $2 AND created_by = $3`;
+    const params = isAdmin ? [eventId, ctx.school_id] : [eventId, ctx.school_id, teacher.id];
+
+    const result = await pool.query(
+      `DELETE FROM school_general_events WHERE ${condition} RETURNING id`,
+      params
+    );
+    if (!result.rows[0]) throw new HttpError(404, "EVENT_NOT_FOUND", "행사를 찾을 수 없거나 삭제 권한이 없습니다(등록한 담당자 또는 관리자만 삭제 가능).");
+    res.json({ ok: true });
+  }));
+
+  // Read-only holiday view for the general-events page — reuses the same per-school cache
+  // the school-admin public-holidays endpoints maintain (see below), just without write access.
+  router.get("/teacher/public-holidays", asyncRoute(async (req, res) => {
+    const teacher = await requireTeacher(req);
+    const ctx = await getTeacherContext(teacher.id);
+    if (!ctx) throw new HttpError(403, "TEACHER_REGISTRATION_REQUIRED", "학급 등록 정보를 찾을 수 없습니다.");
+
+    const year = Number(req.query.year || new Date().getFullYear());
+    let cached = await pool.query(
+      `SELECT holiday_date::TEXT AS date, name, excluded
+       FROM school_public_holidays_cache WHERE school_id = $1 AND year = $2 ORDER BY holiday_date`,
+      [ctx.school_id, year]
+    );
+
+    if (cached.rows.length === 0) {
+      try {
+        const holidays = await fetchNagerHolidays(year);
+        await upsertApiHolidays(ctx.school_id, year, holidays);
+        cached = await pool.query(
+          `SELECT holiday_date::TEXT AS date, name, excluded
+           FROM school_public_holidays_cache WHERE school_id = $1 AND year = $2 ORDER BY holiday_date`,
+          [ctx.school_id, year]
+        );
+      } catch (err) {
+        console.error("Failed to fetch live public holidays:", err.message);
+      }
+    }
+
+    res.json({ year, holidays: cached.rows.filter(h => !h.excluded).map(h => ({ date: h.date, name: h.name })) });
+  }));
+
+  // Read-only vacation-period view for the general-events page (여름방학/겨울방학/학년말방학 표시용).
+  router.get("/teacher/vacation-settings", asyncRoute(async (req, res) => {
+    const teacher = await requireTeacher(req);
+    const ctx = await getTeacherContext(teacher.id);
+    if (!ctx) throw new HttpError(403, "TEACHER_REGISTRATION_REQUIRED", "학급 등록 정보를 찾을 수 없습니다.");
+
+    const year = Number(req.query.academicYear || new Date().getFullYear());
+    const result = await pool.query(
+      `SELECT is_integrated, summer_start::TEXT AS summer_start, summer_end::TEXT AS summer_end,
+              winter_start::TEXT AS winter_start, winter_end::TEXT AS winter_end,
+              spring_start::TEXT AS spring_start, spring_end::TEXT AS spring_end
+       FROM school_vacation_settings
+       WHERE school_id = $1 AND academic_year = $2`,
+      [ctx.school_id, year]
+    );
+    res.json({ settings: result.rows[0] || null });
+  }));
+
   // 2. Fetch Notice List (Parent / Student / Teacher)
   router.get("/notice/list", asyncRoute(async (req, res) => {
     let user = await sessionUser(req);
@@ -3952,6 +4143,21 @@ function createClassroomPlatform(options = {}) {
     res.json({ hours: result.rows });
   }));
 
+  // Total weekly hours per grade (all subjects/changtae summed) — used to validate that
+  // the weekly period allocation (시정표 탭) actually adds up to what curriculum hours requires.
+  router.get("/school-admin/curriculum-hours-summary", asyncRoute(async (req, res) => {
+    const { profile } = await requireSchoolAdmin(req);
+    const year = Number(req.query.academicYear || new Date().getFullYear());
+    const result = await pool.query(
+      `SELECT grade, COALESCE(SUM(weekly_hours), 0) AS total_weekly_hours
+       FROM school_curriculum_hours
+       WHERE school_id = $1 AND academic_year = $2
+       GROUP BY grade`,
+      [profile.school_id, year]
+    );
+    res.json({ totals: result.rows.map(r => ({ grade: r.grade, totalWeeklyHours: Number(r.total_weekly_hours) })) });
+  }));
+
   router.post("/school-admin/curriculum-hours", asyncRoute(async (req, res) => {
     const { profile } = await requireSchoolAdmin(req);
     const year = Number(req.body?.academicYear || new Date().getFullYear());
@@ -3978,6 +4184,93 @@ function createClassroomPlatform(options = {}) {
              category = EXCLUDED.category,
              updated_at = NOW()`,
         [profile.school_id, year, grade, subjectName, weeklyHours, annualRequiredHours, category]
+      );
+    }
+    res.json({ ok: true });
+  }));
+
+  // ── Bell Schedule (시정표) APIs ──
+  // Stored per-grade (not a fixed 1~3/4~6 band) since schools vary: some run one
+  // schedule for all grades, some split by band, some differ grade-by-grade.
+  router.get("/school-admin/bell-schedule", asyncRoute(async (req, res) => {
+    const { profile } = await requireSchoolAdmin(req);
+    const year = Number(req.query.academicYear || new Date().getFullYear());
+    const result = await pool.query(
+      `SELECT grade, arrival_start::TEXT AS arrival_start, arrival_end::TEXT AS arrival_end,
+              period_times, lunch_after_period, lunch_start::TEXT AS lunch_start, lunch_end::TEXT AS lunch_end
+       FROM school_bell_schedule
+       WHERE school_id = $1 AND academic_year = $2
+       ORDER BY grade`,
+      [profile.school_id, year]
+    );
+    res.json({ schedules: result.rows });
+  }));
+
+  router.post("/school-admin/bell-schedule", asyncRoute(async (req, res) => {
+    const { profile } = await requireSchoolAdmin(req);
+    const year = Number(req.body?.academicYear || new Date().getFullYear());
+    const grades = Array.isArray(req.body?.grades) ? req.body.grades.map(Number).filter(g => Number.isInteger(g) && g >= 1 && g <= 12) : [];
+    if (grades.length === 0) {
+      throw new HttpError(400, "INVALID_GRADES", "적용할 학년을 1개 이상 선택하세요.");
+    }
+    const arrivalStart = req.body?.arrivalStart || null;
+    const arrivalEnd = req.body?.arrivalEnd || null;
+    const periodTimes = typeof req.body?.periodTimes === "object" && req.body?.periodTimes !== null ? req.body.periodTimes : {};
+    const lunchAfterPeriod = Math.min(8, Math.max(0, Number(req.body?.lunchAfterPeriod || 0)));
+    const lunchStart = req.body?.lunchStart || null;
+    const lunchEnd = req.body?.lunchEnd || null;
+
+    for (const grade of grades) {
+      await pool.query(
+        `INSERT INTO school_bell_schedule
+         (school_id, academic_year, grade, arrival_start, arrival_end, period_times, lunch_after_period, lunch_start, lunch_end)
+         VALUES ($1, $2, $3, $4, $5, $6::jsonb, $7, $8, $9)
+         ON CONFLICT (school_id, academic_year, grade) DO UPDATE
+         SET arrival_start = EXCLUDED.arrival_start,
+             arrival_end = EXCLUDED.arrival_end,
+             period_times = EXCLUDED.period_times,
+             lunch_after_period = EXCLUDED.lunch_after_period,
+             lunch_start = EXCLUDED.lunch_start,
+             lunch_end = EXCLUDED.lunch_end,
+             updated_at = NOW()`,
+        [profile.school_id, year, grade, arrivalStart, arrivalEnd, JSON.stringify(periodTimes), lunchAfterPeriod, lunchStart, lunchEnd]
+      );
+    }
+    res.json({ ok: true });
+  }));
+
+  // ── Weekly Period Allocation (학년별 주간 수업 배당표) APIs ──
+  router.get("/school-admin/weekly-period-allocation", asyncRoute(async (req, res) => {
+    const { profile } = await requireSchoolAdmin(req);
+    const year = Number(req.query.academicYear || new Date().getFullYear());
+    const result = await pool.query(
+      `SELECT grade, day_of_week, period_count
+       FROM school_weekly_period_allocation
+       WHERE school_id = $1 AND academic_year = $2
+       ORDER BY grade, day_of_week`,
+      [profile.school_id, year]
+    );
+    res.json({ allocations: result.rows });
+  }));
+
+  router.post("/school-admin/weekly-period-allocation", asyncRoute(async (req, res) => {
+    const { profile } = await requireSchoolAdmin(req);
+    const year = Number(req.body?.academicYear || new Date().getFullYear());
+    const allocations = Array.isArray(req.body?.allocations) ? req.body.allocations : [];
+
+    for (const item of allocations) {
+      const grade = Number(item.grade);
+      const dayOfWeek = Number(item.dayOfWeek);
+      const periodCount = Math.min(8, Math.max(0, Number(item.periodCount || 0)));
+      if (!Number.isInteger(grade) || grade < 1 || grade > 12) continue;
+      if (!Number.isInteger(dayOfWeek) || dayOfWeek < 1 || dayOfWeek > 5) continue;
+
+      await pool.query(
+        `INSERT INTO school_weekly_period_allocation (school_id, academic_year, grade, day_of_week, period_count)
+         VALUES ($1, $2, $3, $4, $5)
+         ON CONFLICT (school_id, academic_year, grade, day_of_week) DO UPDATE
+         SET period_count = EXCLUDED.period_count, updated_at = NOW()`,
+        [profile.school_id, year, grade, dayOfWeek, periodCount]
       );
     }
     res.json({ ok: true });
@@ -4129,16 +4422,28 @@ function createClassroomPlatform(options = {}) {
     const grade = Number(req.query.grade || 5);
     const classNum = Number(req.query.classNumber || 1);
 
+    const academicYearStart = `${year}-03-01`;
+    const academicYearEnd = new Date(year + 1, 2, 0).toISOString().slice(0, 10); // Feb 28/29 of next year
+
     // Fetch DB Data
-    const [vacRes, schedRes, ttRes] = await Promise.all([
+    const [vacRes, schedRes, ttRes, genEvRes] = await Promise.all([
       pool.query(`SELECT * FROM school_vacation_settings WHERE school_id = $1 AND academic_year = $2`, [profile.school_id, year]),
       pool.query(`SELECT event_date::TEXT AS event_date, title, category FROM school_annual_schedules WHERE school_id = $1 AND academic_year = $2`, [profile.school_id, year]),
-      pool.query(`SELECT day_of_week, period, subject_name FROM school_master_timetable WHERE school_id = $1 AND academic_year = $2 AND grade = $3 AND class_number = $4`, [profile.school_id, year, grade, classNum])
+      pool.query(`SELECT day_of_week, period, subject_name FROM school_master_timetable WHERE school_id = $1 AND academic_year = $2 AND grade = $3 AND class_number = $4`, [profile.school_id, year, grade, classNum]),
+      // 등교여부와 무관한 일반 행사 — 시간표 과목은 바꾸지 않고 딱지(요약 텍스트)로만 덧붙인다.
+      pool.query(
+        `SELECT event_date::TEXT AS event_date, end_date::TEXT AS end_date, title, event_time, period, location
+         FROM school_general_events
+         WHERE school_id = $1 AND event_date <= $2 AND COALESCE(end_date, event_date) >= $3
+           AND (target_scope = 'ALL' OR $4 = ANY(target_grades))`,
+        [profile.school_id, academicYearEnd, academicYearStart, grade]
+      )
     ]);
 
     const vacSettings = vacRes.rows[0] || {};
     const schedList = schedRes.rows || [];
     const ttList = ttRes.rows || [];
+    const generalEvents = genEvRes.rows || [];
 
     // Calculate daily period count per day_of_week (1..5) from actual class master timetable
     const dailyPeriodsMap = { 1: 0, 2: 0, 3: 0, 4: 0, 5: 0 };
@@ -4161,6 +4466,7 @@ function createClassroomPlatform(options = {}) {
       classNumber: classNum,
       vacationSettings: vacSettings,
       schedules: schedList,
+      generalEvents,
       dailyPeriodsMap
     });
   }));

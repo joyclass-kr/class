@@ -25,22 +25,6 @@ document.addEventListener('DOMContentLoaded', () => {
     const tabButtons = document.querySelectorAll('.tab-button');
     const tabContents = document.querySelectorAll('.tab-content');
     
-    // Dashboard Tab
-    const dashboardDate = document.getElementById('dashboardDate');
-    const prevDateBtn = document.getElementById('prevDateBtn');
-    const nextDateBtn = document.getElementById('nextDateBtn');
-    const refreshDashboardBtn = document.getElementById('refreshDashboardBtn');
-    const dashboardLoading = document.getElementById('dashboardLoading');
-    const dashboardError = document.getElementById('dashboardError');
-    const dashboardContent = document.getElementById('dashboardContent');
-    const dashboardTableBody = document.getElementById('dashboardTableBody');
-    const dashboardTableFoot = document.getElementById('dashboardTableFoot');
-    
-    const countTotal = document.getElementById('totalStudentsCount');
-    const countAbsence = document.getElementById('totalAbsenceCount');
-    const countTardy = document.getElementById('totalTardyCount');
-    const countEarly = document.getElementById('totalEarlyCount');
-
     // Roster Tab
     const rosterSearch = document.getElementById('rosterSearch');
     const rosterLoading = document.getElementById('rosterLoading');
@@ -83,6 +67,18 @@ document.addEventListener('DOMContentLoaded', () => {
     const refreshHolidaysBtn = document.getElementById('refreshHolidaysBtn');
     let holidaysCacheData = [];
 
+    // Bell Schedule & Weekly Period Allocation Tab
+    const bellLunchAfterSelect = document.getElementById('bellLunchAfterSelect');
+    const bellGradeCheckboxes = document.getElementById('bellGradeCheckboxes');
+    const bellTableBody = document.getElementById('bellTableBody');
+    const saveBellBtn = document.getElementById('saveBellBtn');
+    const bellSummaryTableBody = document.getElementById('bellSummaryTableBody');
+    const weeklyAllocationTableBody = document.getElementById('weeklyAllocationTableBody');
+    const saveWeeklyAllocationBtn = document.getElementById('saveWeeklyAllocationBtn');
+    let bellScheduleByGrade = {}; // { 1: {...}, 2: {...}, ... }
+    let weeklyAllocationData = [];
+    let curriculumHoursTotals = {}; // { grade: totalWeeklyHours }
+
     // Curriculum Hours Tab
     const curriculumGradeSelect = document.getElementById('curriculumGradeSelect');
     const curriculumTableBody = document.getElementById('curriculumTableBody');
@@ -94,6 +90,8 @@ document.addEventListener('DOMContentLoaded', () => {
     const subjectPalette = document.getElementById('subjectPalette');
     const timetableMatrixBody = document.getElementById('timetableMatrixBody');
     const saveTimetableBtn = document.getElementById('saveTimetableBtn');
+    const timetableLockedBanner = document.getElementById('timetableLockedBanner');
+    const timetableUnlockedContent = document.getElementById('timetableUnlockedContent');
 
     // State
     let currentDate = new Date();
@@ -129,7 +127,6 @@ document.addEventListener('DOMContentLoaded', () => {
 
     // --- Initialization ---
     function init() {
-        dashboardDate.value = formatDate(currentDate);
         if (annualDateInput) annualDateInput.value = formatDate(currentDate);
 
         // 학년도 드롭박스: 현재 학년도와 다음 학년도만 허용 (과거 학년도는 편집 대상 아님)
@@ -158,15 +155,6 @@ document.addEventListener('DOMContentLoaded', () => {
         tabButtons.forEach(btn => {
             btn.addEventListener('click', () => switchTab(btn.dataset.tab));
         });
-
-        // Dashboard Listeners
-        prevDateBtn.addEventListener('click', () => changeDate(-1));
-        nextDateBtn.addEventListener('click', () => changeDate(1));
-        dashboardDate.addEventListener('change', (e) => {
-            currentDate = new Date(e.target.value);
-            loadDashboard();
-        });
-        refreshDashboardBtn.addEventListener('click', loadDashboard);
 
         // Roster Search
         if (rosterSearch) rosterSearch.addEventListener('input', renderRosterTable);
@@ -231,8 +219,9 @@ document.addEventListener('DOMContentLoaded', () => {
 
         renderSubjectPalette();
 
-        // Initial Load
-        loadDashboard();
+        // Initial Load (annual tab is the default active tab)
+        loadVacationDates();
+        loadAnnualSchedules();
     }
 
     // --- Tab Logic ---
@@ -249,6 +238,8 @@ document.addEventListener('DOMContentLoaded', () => {
             await loadAnnualSchedules();
         } else if (tabId === 'curriculum') {
             await loadCurriculumHours();
+        } else if (tabId === 'bellSchedule') {
+            await loadBellScheduleTab();
         } else if (tabId === 'timetable') {
             renderSubjectPalette();
             await loadMasterTimetable();
@@ -269,139 +260,6 @@ document.addEventListener('DOMContentLoaded', () => {
         if (day.length < 2) day = '0' + day;
 
         return [year, month, day].join('-');
-    }
-
-    function changeDate(days) {
-        currentDate.setDate(currentDate.getDate() + days);
-        dashboardDate.value = formatDate(currentDate);
-        loadDashboard();
-    }
-
-    // --- Dashboard Logic ---
-    async function loadDashboard() {
-        dashboardLoading.hidden = false;
-        dashboardError.hidden = true;
-        dashboardContent.hidden = true;
-
-        try {
-            const dateStr = dashboardDate.value;
-            const res = await api(`/api/school-admin/dashboard?date=${dateStr}`);
-            
-            schoolNameTitle.textContent = res.schoolName + " 관리자 & 교육과정 포털";
-            renderDashboard(res.roster, res.notices, res.formalNotes, res.experientialApps);
-            
-            dashboardLoading.hidden = true;
-            dashboardContent.hidden = false;
-        } catch (error) {
-            dashboardLoading.hidden = true;
-            dashboardError.textContent = error.message;
-            dashboardError.hidden = false;
-            
-            if (error.status === 401 || error.status === 403) {
-                setTimeout(() => location.href = '/', 2000);
-            }
-        }
-    }
-
-    function renderDashboard(roster, notices, formalNotes, experientialApps) {
-        dashboardTableBody.innerHTML = '';
-        let sumTotal = 0, sumPresent = 0, sumAbsence = 0, sumTardy = 0, sumEarly = 0;
-        const classMap = new Map();
-
-        roster.forEach(r => {
-            const key = `${r.grade}-${r.class_number}`;
-            classMap.set(key, {
-                grade: r.grade,
-                classNum: r.class_number,
-                total: parseInt(r.total_students, 10),
-                absence: 0, tardy: 0, early: 0
-            });
-        });
-
-        notices.forEach(n => {
-            const key = `${n.grade}-${n.class_number}`;
-            if (!classMap.has(key)) {
-                classMap.set(key, {
-                    grade: n.grade,
-                    classNum: n.class_number,
-                    total: 0,
-                    absence: 0, tardy: 0, early: 0
-                });
-            }
-            const c = classMap.get(key);
-            if (n.notice_type === '결석') c.absence += parseInt(n.count, 10);
-            else if (n.notice_type === '지각') c.tardy += parseInt(n.count, 10);
-            else if (n.notice_type === '조퇴') c.early += parseInt(n.count, 10);
-        });
-
-        formalNotes.forEach(fn => {
-            const key = `${fn.grade}-${fn.class_number}`;
-            if (!classMap.has(key)) {
-                classMap.set(key, {
-                    grade: fn.grade,
-                    classNum: fn.class_number,
-                    total: 0,
-                    absence: 0, tardy: 0, early: 0
-                });
-            }
-            const c = classMap.get(key);
-            c.absence += parseInt(fn.count, 10);
-        });
-
-        (experientialApps || []).forEach(ea => {
-            const key = `${ea.grade}-${ea.class_number}`;
-            if (!classMap.has(key)) {
-                classMap.set(key, {
-                    grade: ea.grade,
-                    classNum: ea.class_number,
-                    total: 0,
-                    absence: 0, tardy: 0, early: 0
-                });
-            }
-            const c = classMap.get(key);
-            c.absence += parseInt(ea.count, 10);
-        });
-
-        const sortedClasses = Array.from(classMap.values()).sort((a, b) => {
-            if (a.grade !== b.grade) return a.grade - b.grade;
-            return a.classNum - b.classNum;
-        });
-
-        sortedClasses.forEach(c => {
-            const present = Math.max(0, c.total - c.absence);
-            sumTotal += c.total;
-            sumPresent += present;
-            sumAbsence += c.absence;
-            sumTardy += c.tardy;
-            sumEarly += c.early;
-
-            const tr = document.createElement('tr');
-            tr.innerHTML = `
-                <td>${c.grade}학년 ${c.classNum}반</td>
-                <td>${c.total}</td>
-                <td>${present}</td>
-                <td class="${c.absence > 0 ? 'status-warning' : 'status-normal'}">${c.absence}</td>
-                <td class="${c.tardy > 0 ? 'status-info' : 'status-normal'}">${c.tardy}</td>
-                <td class="${c.early > 0 ? 'status-info' : 'status-normal'}">${c.early}</td>
-            `;
-            dashboardTableBody.appendChild(tr);
-        });
-
-        dashboardTableFoot.innerHTML = `
-            <tr>
-                <td>총계</td>
-                <td>${sumTotal}</td>
-                <td>${sumPresent}</td>
-                <td class="${sumAbsence > 0 ? 'status-warning' : ''}">${sumAbsence}</td>
-                <td class="${sumTardy > 0 ? 'status-info' : ''}">${sumTardy}</td>
-                <td class="${sumEarly > 0 ? 'status-info' : ''}">${sumEarly}</td>
-            </tr>
-        `;
-
-        countTotal.textContent = sumTotal;
-        countAbsence.textContent = sumAbsence;
-        countTardy.textContent = sumTardy;
-        countEarly.textContent = sumEarly;
     }
 
     // --- Annual Calendar & Schedules Logic ---
@@ -539,7 +397,11 @@ document.addEventListener('DOMContentLoaded', () => {
             await fetchLivePublicHolidays();
             const res = await api(`/api/school-admin/annual-schedules?academicYear=${selectedAcademicYear}`);
             annualSchedulesData = res.schedules || [];
-            
+
+            if (schoolNameTitle && res.schoolName) {
+                schoolNameTitle.textContent = res.schoolName + " 관리자 & 교육과정 포털";
+            }
+
             renderCalendarGrid();
             renderAnnualSchedulesTable();
             calculateSchoolDaysAudit();
@@ -550,6 +412,10 @@ document.addEventListener('DOMContentLoaded', () => {
             annualLoading.hidden = true;
             annualError.textContent = error.message || '학사일정을 불러오지 못했습니다.';
             annualError.hidden = false;
+
+            if (error.status === 401 || error.status === 403) {
+                setTimeout(() => location.href = '/', 2000);
+            }
         }
     }
 
@@ -949,7 +815,7 @@ document.addEventListener('DOMContentLoaded', () => {
         }
     }
 
-    // --- 2단계: 시수편성 (Curriculum Hours Allocation & Adjustment) ---
+    // --- 시수편성 (Curriculum Hours Allocation & Adjustment) ---
     const GRADE_SUBJECT_BASE_HOURS = {
         1: [
             { name: '국어', base: 210, weekly: 6, category: 'SUBJECT' },
@@ -1175,6 +1041,339 @@ document.addEventListener('DOMContentLoaded', () => {
         }
     }
 
+    // --- Bell Schedule (시정표) & Weekly Period Allocation Logic ---
+    const BELL_MAX_PERIODS = 8;
+    const WEEKDAY_NAMES = ['월', '화', '수', '목', '금'];
+
+    function computeDurationMinutes(start, end) {
+        if (!start || !end) return null;
+        const [sh, sm] = start.split(':').map(Number);
+        const [eh, em] = end.split(':').map(Number);
+        const mins = (eh * 60 + em) - (sh * 60 + sm);
+        return mins > 0 ? mins : null;
+    }
+
+    function populateLunchAfterSelect(selectEl) {
+        if (!selectEl) return;
+        selectEl.innerHTML = '';
+        const noneOpt = document.createElement('option');
+        noneOpt.value = '0';
+        noneOpt.textContent = '없음';
+        selectEl.appendChild(noneOpt);
+        for (let p = 1; p <= BELL_MAX_PERIODS; p++) {
+            const opt = document.createElement('option');
+            opt.value = String(p);
+            opt.textContent = `${p}교시 후`;
+            selectEl.appendChild(opt);
+        }
+    }
+
+    function populateBellGradeCheckboxes() {
+        if (!bellGradeCheckboxes) return;
+        bellGradeCheckboxes.innerHTML = '';
+        for (let grade = 1; grade <= 6; grade++) {
+            const label = document.createElement('label');
+            label.innerHTML = `<input type="checkbox" name="bellGrade" value="${grade}" checked> ${grade}학년`;
+            bellGradeCheckboxes.appendChild(label);
+        }
+    }
+
+    function getCheckedBellGrades() {
+        if (!bellGradeCheckboxes) return [];
+        return Array.from(bellGradeCheckboxes.querySelectorAll('input[name="bellGrade"]:checked')).map(cb => Number(cb.value));
+    }
+
+    function renderBellTableBody(prefix, tbodyEl, data) {
+        if (!tbodyEl) return;
+        const periodTimes = (data && data.period_times) || {};
+        const lunchAfter = data ? Number(data.lunch_after_period || 0) : 0;
+        const arrivalStart = (data && data.arrival_start) || '';
+        const arrivalEnd = (data && data.arrival_end) || '';
+        const lunchStart = (data && data.lunch_start) || '';
+        const lunchEnd = (data && data.lunch_end) || '';
+
+        let rowsHtml = `
+            <tr data-row="arrival">
+                <td>등교시간</td>
+                <td><input type="time" class="form-input bell-start" value="${arrivalStart}"></td>
+                <td><input type="time" class="form-input bell-end" value="${arrivalEnd}"></td>
+                <td class="bell-duration">${computeDurationMinutes(arrivalStart, arrivalEnd) ?? ''}</td>
+            </tr>
+        `;
+
+        for (let p = 1; p <= BELL_MAX_PERIODS; p++) {
+            const t = periodTimes[String(p)] || {};
+            rowsHtml += `
+                <tr data-row="period" data-period="${p}">
+                    <td>${p}교시</td>
+                    <td><input type="time" class="form-input bell-start" value="${t.start || ''}"></td>
+                    <td><input type="time" class="form-input bell-end" value="${t.end || ''}"></td>
+                    <td class="bell-duration">${computeDurationMinutes(t.start, t.end) ?? ''}</td>
+                </tr>
+            `;
+            if (lunchAfter === p) {
+                rowsHtml += `
+                    <tr data-row="lunch" style="color:#f87171; font-weight:700;">
+                        <td>점심시간</td>
+                        <td><input type="time" class="form-input bell-start" value="${lunchStart}"></td>
+                        <td><input type="time" class="form-input bell-end" value="${lunchEnd}"></td>
+                        <td class="bell-duration">${computeDurationMinutes(lunchStart, lunchEnd) ?? ''}</td>
+                    </tr>
+                `;
+            }
+        }
+
+        tbodyEl.innerHTML = rowsHtml;
+
+        tbodyEl.querySelectorAll('tr').forEach(tr => {
+            const startInput = tr.querySelector('.bell-start');
+            const endInput = tr.querySelector('.bell-end');
+            const durationCell = tr.querySelector('.bell-duration');
+            const recompute = () => {
+                const mins = computeDurationMinutes(startInput.value, endInput.value);
+                durationCell.textContent = mins ?? '';
+            };
+            startInput.addEventListener('input', recompute);
+            endInput.addEventListener('input', recompute);
+        });
+    }
+
+    function collectBellTableData(tbodyEl) {
+        const result = { arrivalStart: null, arrivalEnd: null, periodTimes: {}, lunchStart: null, lunchEnd: null };
+        if (!tbodyEl) return result;
+        tbodyEl.querySelectorAll('tr').forEach(tr => {
+            const rowType = tr.dataset.row;
+            const start = tr.querySelector('.bell-start')?.value || null;
+            const end = tr.querySelector('.bell-end')?.value || null;
+            if (rowType === 'arrival') {
+                result.arrivalStart = start;
+                result.arrivalEnd = end;
+            } else if (rowType === 'lunch') {
+                result.lunchStart = start;
+                result.lunchEnd = end;
+            } else if (rowType === 'period') {
+                const p = tr.dataset.period;
+                if (start || end) result.periodTimes[p] = { start, end };
+            }
+        });
+        return result;
+    }
+
+    function renderBellSummaryTable() {
+        if (!bellSummaryTableBody) return;
+        bellSummaryTableBody.innerHTML = '';
+
+        for (let grade = 1; grade <= 6; grade++) {
+            const s = bellScheduleByGrade[grade];
+            const tr = document.createElement('tr');
+            let dismissal = '';
+            if (s) {
+                const periodTimes = s.period_times || {};
+                const filledPeriods = Object.keys(periodTimes).map(Number).filter(p => periodTimes[p] && periodTimes[p].end);
+                if (filledPeriods.length > 0) {
+                    const lastPeriod = Math.max(...filledPeriods);
+                    dismissal = periodTimes[lastPeriod].end || '';
+                }
+            }
+            const lunchText = s && s.lunch_start && s.lunch_end ? `${s.lunch_start}~${s.lunch_end}` : '-';
+            tr.innerHTML = `
+                <td style="font-weight:800;">${grade}학년</td>
+                <td>${s?.arrival_start || '-'}</td>
+                <td>${dismissal || '-'}</td>
+                <td>${lunchText}</td>
+                <td><button type="button" class="primary-button secondary load-bell-grade-btn" data-grade="${grade}" style="padding:4px 10px; height:32px;">불러와서 수정</button></td>
+            `;
+            bellSummaryTableBody.appendChild(tr);
+        }
+
+        bellSummaryTableBody.querySelectorAll('.load-bell-grade-btn').forEach(btn => {
+            btn.addEventListener('click', () => {
+                const grade = Number(btn.dataset.grade);
+                const s = bellScheduleByGrade[grade];
+                const lunchAfter = (s && s.lunch_after_period) || Number(bellLunchAfterSelect?.value || 4);
+                if (bellLunchAfterSelect) bellLunchAfterSelect.value = String(lunchAfter);
+                renderBellTableBody('bell', bellTableBody, { ...(s || {}), lunch_after_period: lunchAfter });
+                if (bellGradeCheckboxes) {
+                    bellGradeCheckboxes.querySelectorAll('input[name="bellGrade"]').forEach(cb => {
+                        cb.checked = Number(cb.value) === grade;
+                    });
+                }
+            });
+        });
+    }
+
+    async function fetchBellScheduleByGrade() {
+        try {
+            const res = await api(`/api/school-admin/bell-schedule?academicYear=${selectedAcademicYear}`);
+            bellScheduleByGrade = {};
+            (res.schedules || []).forEach(s => { bellScheduleByGrade[s.grade] = s; });
+        } catch (err) {
+            console.error('Failed to load bell schedule:', err);
+            bellScheduleByGrade = {};
+        }
+    }
+
+    async function loadBellSchedule() {
+        await fetchBellScheduleByGrade();
+
+        // 편집기 기본값: 학년별로 다르면 관리자가 "불러와서 수정"으로 개별 확인하고,
+        // 처음에는 가장 낮은 학년(보통 가장 많이 겹치는 기준)의 값을 기본으로 보여준다.
+        const firstGrade = Object.keys(bellScheduleByGrade).map(Number).sort((a, b) => a - b)[0];
+        const defaultData = firstGrade ? bellScheduleByGrade[firstGrade] : null;
+        const defaultLunchAfter = (defaultData && defaultData.lunch_after_period) || 4;
+        if (bellLunchAfterSelect) bellLunchAfterSelect.value = String(defaultLunchAfter);
+        renderBellTableBody('bell', bellTableBody, { ...(defaultData || {}), lunch_after_period: defaultLunchAfter });
+        renderBellSummaryTable();
+    }
+
+    if (bellLunchAfterSelect) {
+        bellLunchAfterSelect.addEventListener('change', () => {
+            const data = collectBellTableData(bellTableBody);
+            renderBellTableBody('bell', bellTableBody, {
+                arrival_start: data.arrivalStart, arrival_end: data.arrivalEnd,
+                period_times: data.periodTimes, lunch_after_period: Number(bellLunchAfterSelect.value),
+                lunch_start: data.lunchStart, lunch_end: data.lunchEnd
+            });
+        });
+    }
+
+    if (saveBellBtn) {
+        saveBellBtn.addEventListener('click', async () => {
+            const grades = getCheckedBellGrades();
+            if (grades.length === 0) {
+                alert('적용할 학년을 1개 이상 선택하세요.');
+                return;
+            }
+            const data = collectBellTableData(bellTableBody);
+            try {
+                await api('/api/school-admin/bell-schedule', {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify({
+                        academicYear: selectedAcademicYear,
+                        grades,
+                        arrivalStart: data.arrivalStart,
+                        arrivalEnd: data.arrivalEnd,
+                        periodTimes: data.periodTimes,
+                        lunchAfterPeriod: Number(bellLunchAfterSelect ? bellLunchAfterSelect.value : 0),
+                        lunchStart: data.lunchStart,
+                        lunchEnd: data.lunchEnd
+                    })
+                });
+                alert(`${grades.map(g => g + '학년').join(', ')}에 시정표가 저장되었습니다!`);
+                await loadBellSchedule();
+            } catch (err) {
+                alert(err.message || '시정표를 저장하지 못했습니다.');
+            }
+        });
+    }
+
+    function renderWeeklyAllocationTable() {
+        if (!weeklyAllocationTableBody) return;
+        weeklyAllocationTableBody.innerHTML = '';
+
+        for (let grade = 1; grade <= 6; grade++) {
+            const target = curriculumHoursTotals[grade];
+            const locked = target === undefined;
+            const tr = document.createElement('tr');
+            if (locked) tr.style.opacity = '0.5';
+            let cellsHtml = `<td style="font-weight:800;">${grade}학년</td>`;
+            for (let day = 1; day <= 5; day++) {
+                const found = weeklyAllocationData.find(a => a.grade === grade && a.day_of_week === day);
+                const count = found ? found.period_count : 0;
+                const disabledAttr = locked ? ' disabled title="먼저 시수편성 탭에서 이 학년의 주당 시수를 정하세요"' : '';
+                cellsHtml += `<td><input type="number" min="0" max="8" class="form-input weekly-count-input" data-grade="${grade}" data-day="${day}" value="${count}" style="width:56px; text-align:center;"${disabledAttr}></td>`;
+            }
+            cellsHtml += `<td class="weekly-total" data-grade-total="${grade}" style="font-weight:800;">0</td>`;
+            cellsHtml += `<td>${target !== undefined ? target + '시간' : '-'}</td>`;
+            cellsHtml += `<td class="weekly-status" data-grade-status="${grade}"></td>`;
+            tr.innerHTML = cellsHtml;
+            weeklyAllocationTableBody.appendChild(tr);
+        }
+
+        function recomputeTotal(grade) {
+            const inputs = weeklyAllocationTableBody.querySelectorAll(`input[data-grade="${grade}"]`);
+            let sum = 0;
+            inputs.forEach(inp => { sum += Number(inp.value || 0); });
+            const totalCell = weeklyAllocationTableBody.querySelector(`[data-grade-total="${grade}"]`);
+            if (totalCell) totalCell.textContent = sum;
+
+            const statusCell = weeklyAllocationTableBody.querySelector(`[data-grade-status="${grade}"]`);
+            if (statusCell) {
+                const target = curriculumHoursTotals[grade];
+                if (target === undefined) {
+                    statusCell.innerHTML = `<span style="color:var(--text-muted);">시수편성 미입력</span>`;
+                } else if (sum === target) {
+                    statusCell.innerHTML = `<span style="color:var(--success);">✅ 일치</span>`;
+                } else {
+                    const diff = target - sum;
+                    statusCell.innerHTML = `<span style="color:var(--danger); font-weight:700;">⚠️ ${diff > 0 ? diff + '시간 부족' : Math.abs(diff) + '시간 초과'}</span>`;
+                }
+            }
+        }
+
+        weeklyAllocationTableBody.querySelectorAll('.weekly-count-input').forEach(inp => {
+            inp.addEventListener('input', () => recomputeTotal(inp.dataset.grade));
+        });
+        for (let grade = 1; grade <= 6; grade++) recomputeTotal(grade);
+    }
+
+    async function fetchWeeklyAllocationData() {
+        try {
+            const res = await api(`/api/school-admin/weekly-period-allocation?academicYear=${selectedAcademicYear}`);
+            weeklyAllocationData = res.allocations || [];
+        } catch (err) {
+            console.error('Failed to load weekly period allocation:', err);
+            weeklyAllocationData = [];
+        }
+    }
+
+    async function fetchCurriculumHoursTotals() {
+        try {
+            const res = await api(`/api/school-admin/curriculum-hours-summary?academicYear=${selectedAcademicYear}`);
+            curriculumHoursTotals = {};
+            (res.totals || []).forEach(t => { curriculumHoursTotals[t.grade] = t.totalWeeklyHours; });
+        } catch (err) {
+            console.error('Failed to load curriculum hours summary:', err);
+            curriculumHoursTotals = {};
+        }
+    }
+
+    async function loadWeeklyAllocation() {
+        await Promise.all([fetchWeeklyAllocationData(), fetchCurriculumHoursTotals()]);
+        renderWeeklyAllocationTable();
+    }
+
+    if (saveWeeklyAllocationBtn) {
+        saveWeeklyAllocationBtn.addEventListener('click', async () => {
+            const allocations = [];
+            weeklyAllocationTableBody.querySelectorAll('.weekly-count-input').forEach(inp => {
+                allocations.push({
+                    grade: Number(inp.dataset.grade),
+                    dayOfWeek: Number(inp.dataset.day),
+                    periodCount: Number(inp.value || 0)
+                });
+            });
+            try {
+                await api('/api/school-admin/weekly-period-allocation', {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify({ academicYear: selectedAcademicYear, allocations })
+                });
+                alert('주간 수업 배당표가 저장되었습니다!');
+            } catch (err) {
+                alert(err.message || '주간 수업 배당표를 저장하지 못했습니다.');
+            }
+        });
+    }
+
+    async function loadBellScheduleTab() {
+        if (bellLunchAfterSelect) populateLunchAfterSelect(bellLunchAfterSelect);
+        populateBellGradeCheckboxes();
+        await loadBellSchedule();
+        await loadWeeklyAllocation();
+    }
+
     // --- Master Timetable Grid Logic (1~8 Periods Support) ---
     function renderSubjectPalette() {
         if (!subjectPalette) return;
@@ -1205,10 +1404,40 @@ document.addEventListener('DOMContentLoaded', () => {
         timetableClassSelect.addEventListener('change', loadMasterTimetable);
     }
 
+    function getWeeklyAllocationTotal(grade) {
+        return weeklyAllocationData
+            .filter(a => a.grade === grade)
+            .reduce((sum, a) => sum + a.period_count, 0);
+    }
+
+    // 기초시간표(요일×교시 과목배치)는 "시수편성 → 주간 수업 배당표"가 그 학년에 대해
+    // 완전히 끝난 뒤에만 열린다 — 배당 합계가 시수편성 목표와 정확히 같아야 통과.
+    function isWeeklyAllocationCompleteForGrade(grade) {
+        const target = curriculumHoursTotals[grade];
+        if (target === undefined || target <= 0) return false;
+        return getWeeklyAllocationTotal(grade) === target;
+    }
+
     async function loadMasterTimetable() {
         if (!timetableMatrixBody) return;
-        const grade = timetableGradeSelect.value;
+        const grade = Number(timetableGradeSelect.value);
         const classNum = timetableClassSelect ? timetableClassSelect.value : 1;
+
+        await Promise.all([fetchBellScheduleByGrade(), fetchWeeklyAllocationData(), fetchCurriculumHoursTotals()]);
+
+        if (!isWeeklyAllocationCompleteForGrade(grade)) {
+            const target = curriculumHoursTotals[grade];
+            if (timetableLockedBanner) {
+                timetableLockedBanner.hidden = false;
+                timetableLockedBanner.textContent = target === undefined || target <= 0
+                    ? `${grade}학년의 시수편성이 아직 입력되지 않았습니다. "시수편성" 탭에서 먼저 학년별 주당 시수를 정하세요.`
+                    : `${grade}학년의 주간 수업 배당표가 시수편성 목표(${target}시간)와 아직 일치하지 않습니다. (현재 배당 합계: ${getWeeklyAllocationTotal(grade)}시간) "시정표 & 주간 수업 배당" 탭에서 먼저 맞춰주세요.`;
+            }
+            if (timetableUnlockedContent) timetableUnlockedContent.hidden = true;
+            return;
+        }
+        if (timetableLockedBanner) timetableLockedBanner.hidden = true;
+        if (timetableUnlockedContent) timetableUnlockedContent.hidden = false;
 
         try {
             const res = await api(`/api/school-admin/master-timetable?academicYear=${selectedAcademicYear}&grade=${grade}&classNumber=${classNum}`);
@@ -1221,6 +1450,11 @@ document.addEventListener('DOMContentLoaded', () => {
             timetableMatrixData = {};
             renderTimetableMatrix();
         }
+    }
+
+    function getAllocatedPeriodCount(grade, dayOfWeek) {
+        const found = weeklyAllocationData.find(a => a.grade === grade && a.day_of_week === dayOfWeek);
+        return found ? found.period_count : null; // null = 배당표 미설정 (제한 없음)
     }
 
     function auditTimetableGradeHours() {
@@ -1268,16 +1502,25 @@ document.addEventListener('DOMContentLoaded', () => {
         if (!timetableMatrixBody) return;
         timetableMatrixBody.innerHTML = '';
 
+        const grade = Number(timetableGradeSelect ? timetableGradeSelect.value : 5);
+        const gradeBell = bellScheduleByGrade[grade];
+        const gradePeriodTimes = (gradeBell && gradeBell.period_times) || {};
+
         // 1 to 8 Periods (하루 최대 8교시)
         for (let period = 1; period <= 8; period++) {
             const tr = document.createElement('tr');
-            let cellsHtml = `<td style="font-weight:800; background:rgba(255,255,255,0.03);">${period}교시</td>`;
+            const t = gradePeriodTimes[String(period)];
+            const timeLabel = t && t.start && t.end ? `<div style="font-size:0.72rem; font-weight:normal; color:var(--text-muted);">${t.start}~${t.end}</div>` : '';
+            let cellsHtml = `<td style="font-weight:800; background:rgba(255,255,255,0.03);">${period}교시${timeLabel}</td>`;
 
             // Mon(1) to Fri(5)
             for (let day = 1; day <= 5; day++) {
+                const allocated = getAllocatedPeriodCount(grade, day);
+                const isInactive = allocated !== null && period > allocated;
                 const sub = timetableMatrixData[`${day}_${period}`] || '-';
                 const tagHtml = sub !== '-' && sub !== '수업없음' ? `<span class="cell-subject-tag">${escapeHtml(sub)}</span>` : `<span style="color:var(--text-muted);">${sub}</span>`;
-                cellsHtml += `<td class="timetable-cell" data-day="${day}" data-period="${period}">${tagHtml}</td>`;
+                const inactiveAttrs = isInactive ? ' style="opacity:0.3; pointer-events:none;" title="이 요일의 배당 교시수를 초과했습니다"' : '';
+                cellsHtml += `<td class="timetable-cell" data-day="${day}" data-period="${period}"${inactiveAttrs}>${tagHtml}</td>`;
             }
 
             tr.innerHTML = cellsHtml;
@@ -1325,7 +1568,7 @@ document.addEventListener('DOMContentLoaded', () => {
         }
     }
 
-    // --- 5단계: 학급별 연간 34주차 종합 시간표 & 서류 출력 ---
+    // --- 학급별 연간 34주차 종합 시간표 & 서류 출력 ---
     const annualTimetableGradeSelect = document.getElementById('annualTimetableGradeSelect');
     const annualTimetableClassSelect = document.getElementById('annualTimetableClassSelect');
     const annualTimetableTableBody = document.getElementById('annualTimetableTableBody');
@@ -1353,6 +1596,7 @@ document.addEventListener('DOMContentLoaded', () => {
             const synthData = await api(`/api/school-admin/annual-timetable-34weeks?academicYear=${selectedAcademicYear}&grade=${grade}&classNumber=${classNum}`);
             const dailyPeriodsMap = synthData.dailyPeriodsMap || { 1: 6, 2: 6, 3: 5, 4: 6, 5: 6 };
             const schedList = synthData.schedules || [];
+            const generalEventList = synthData.generalEvents || [];
 
             const activeHolidays = Object.keys(dynamicPublicHolidays).length > 0 ? dynamicPublicHolidays : KOREAN_NATIONAL_HOLIDAYS;
 
@@ -1414,6 +1658,11 @@ document.addEventListener('DOMContentLoaded', () => {
                     } else {
                         weekSchoolDays++;
                     }
+
+                    // 일반 행사는 기존 시간표/등교일수 계산에는 영향을 주지 않고, 딱지(요약 텍스트)만 덧붙인다.
+                    generalEventList
+                        .filter(e => e.event_date <= dateStr && (e.end_date || e.event_date) >= dateStr)
+                        .forEach(e => weekLabels.push(`📌 ${e.title}`));
                 }
 
                 if (semesterNum === 1) totalSchoolDays1 += weekSchoolDays;

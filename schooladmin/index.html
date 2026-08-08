@@ -18,76 +18,17 @@
 
     <nav class="tabs-nav">
         <div class="tabs">
-            <button class="tab-button active" data-tab="dashboard">출결 현황판</button>
-            <button class="tab-button" data-tab="annual">📅 [1단계] 학사일정 (190일)</button>
-            <button class="tab-button" data-tab="curriculum">📚 [2단계] 시수편성 (정해진시수+증감)</button>
-            <button class="tab-button" data-tab="timetable">🗓️ [4단계] 학급별 기초시간표</button>
-            <button class="tab-button" data-tab="annualTimetable">📊 [5단계] 학급별 연간시간표 & 서류출력</button>
+            <button class="tab-button active" data-tab="annual">📅 학사일정 (190일)</button>
+            <button class="tab-button" data-tab="curriculum">📚 시수편성 (정해진시수+증감)</button>
+            <button class="tab-button" data-tab="bellSchedule">⏰ 시정표 & 주간 수업 배당</button>
+            <button class="tab-button" data-tab="timetable">🗓️ 학급별 기초시간표</button>
+            <button class="tab-button" data-tab="annualTimetable">📊 학급별 연간시간표 & 서류출력</button>
         </div>
     </nav>
 
     <main class="app-main">
-        <!-- 1. Dashboard Tab -->
-        <section id="dashboardTab" class="tab-content active">
-            <div class="controls-row">
-                <div class="date-picker-wrap">
-                    <button id="prevDateBtn" class="icon-button"><span class="material-symbols-outlined">chevron_left</span></button>
-                    <input type="date" id="dashboardDate" class="date-input">
-                    <button id="nextDateBtn" class="icon-button"><span class="material-symbols-outlined">chevron_right</span></button>
-                </div>
-                <button id="refreshDashboardBtn" class="primary-button">
-                    <span class="material-symbols-outlined">refresh</span> 새로고침
-                </button>
-            </div>
-
-            <div id="dashboardLoading" class="loading-state">데이터를 불러오는 중입니다...</div>
-            <div id="dashboardError" class="error-state" hidden></div>
-
-            <div id="dashboardContent" hidden>
-                <div class="summary-cards">
-                    <div class="summary-card">
-                        <div class="card-title">총 현원</div>
-                        <div class="card-value" id="totalStudentsCount">0</div>
-                    </div>
-                    <div class="summary-card warning">
-                        <div class="card-title">결석</div>
-                        <div class="card-value" id="totalAbsenceCount">0</div>
-                    </div>
-                    <div class="summary-card info">
-                        <div class="card-title">지각</div>
-                        <div class="card-value" id="totalTardyCount">0</div>
-                    </div>
-                    <div class="summary-card info">
-                        <div class="card-title">조퇴</div>
-                        <div class="card-value" id="totalEarlyCount">0</div>
-                    </div>
-                </div>
-
-                <div class="table-container">
-                    <table class="data-table">
-                        <thead>
-                            <tr>
-                                <th>학년-반</th>
-                                <th>재적</th>
-                                <th>출석</th>
-                                <th>결석</th>
-                                <th>지각</th>
-                                <th>조퇴</th>
-                            </tr>
-                        </thead>
-                        <tbody id="dashboardTableBody">
-                            <!-- Rows will be injected here -->
-                        </tbody>
-                        <tfoot id="dashboardTableFoot">
-                            <!-- Totals will be injected here -->
-                        </tfoot>
-                    </table>
-                </div>
-            </div>
-        </section>
-
-        <!-- 2. Annual Schedules & 12-Month Calendar Tab -->
-        <section id="annualTab" class="tab-content" hidden>
+        <!-- 1. Annual Schedules & 12-Month Calendar Tab -->
+        <section id="annualTab" class="tab-content active">
             <!-- 190-Day Audit Summary Banner -->
             <div class="audit-summary-banner">
                 <div class="audit-card highlight">
@@ -115,7 +56,7 @@
             <!-- Vacation & Discretionary Holidays Setting Card -->
             <div class="schedule-editor-panel" style="margin-bottom:20px; background:rgba(255,255,255,0.02);">
                 <h3 style="display:flex; align-items:center; justify-content:space-between; flex-wrap:wrap; gap:8px;">
-                    <span>🏖️ [1단계] 방학 기간 및 재량휴업일 설정</span>
+                    <span>🏖️ 방학 기간 및 재량휴업일 설정</span>
                     <span style="font-size:0.85rem; color:var(--text-muted); font-weight:normal;">방학 및 휴업일 지정 시 연간 달력과 법정 수업일수가 자동 재정산됩니다.</span>
                 </h3>
                 <div style="margin-top:10px;">
@@ -346,7 +287,7 @@
         <section id="curriculumTab" class="tab-content" hidden>
             <div class="section-header-bar">
                 <div>
-                    <h2>📚 [2단계] 학년별 교과 & 창체 시수 편제표</h2>
+                    <h2>📚 학년별 교과 & 창체 시수 편제표</h2>
                     <p class="section-desc">2022 개정 교육과정 학년별 정해진 법정 기준 시수를 자동 제시하고, 20% 범위 내 시수 증감(증가/감축)을 자유롭게 조절합니다.</p>
                 </div>
                 <div class="grade-selector-wrap">
@@ -393,12 +334,77 @@
             </div>
         </section>
 
+        <!-- Bell Schedule & Weekly Period Allocation Tab -->
+        <section id="bellScheduleTab" class="tab-content" hidden>
+            <div class="section-header-bar">
+                <div>
+                    <h2>⏰ 시정표 & 학년별 주간 수업 배당표</h2>
+                    <p class="section-desc">등교~하교 교시별 시각과 요일별 수업 교시수를 정합니다. 학교마다 학년별로 시정표가 같을 수도, 다를 수도 있으므로 아래에서 적용할 학년을 직접 선택하세요.</p>
+                </div>
+            </div>
+
+            <div class="schedule-editor-panel margin-top">
+                <h3 style="display:flex; align-items:center; justify-content:space-between; flex-wrap:wrap; gap:8px;">
+                    <span>⏰ 시정표 편집</span>
+                    <label style="font-size:0.85rem; font-weight:normal; display:flex; align-items:center; gap:6px;">
+                        점심 위치:
+                        <select id="bellLunchAfterSelect" class="form-select" style="padding:4px 6px;"></select>
+                    </label>
+                </h3>
+                <div class="form-row" style="margin-top:8px; align-items:center; gap:10px;">
+                    <span class="form-label-text">적용 학년:</span>
+                    <div class="grade-checkboxes" id="bellGradeCheckboxes">
+                        <!-- 1~6학년 checkboxes injected via JS -->
+                    </div>
+                </div>
+                <table class="data-table bell-schedule-table margin-top">
+                    <thead>
+                        <tr><th></th><th>시작</th><th>끝</th><th>소요(분)</th></tr>
+                    </thead>
+                    <tbody id="bellTableBody"></tbody>
+                </table>
+                <button type="button" id="saveBellBtn" class="primary-button margin-top">
+                    <span class="material-symbols-outlined">save</span> 선택한 학년에 시정표 저장
+                </button>
+            </div>
+
+            <div class="schedule-editor-panel margin-top">
+                <h3>학년별 시정표 현황</h3>
+                <div class="table-container margin-top">
+                    <table class="data-table">
+                        <thead>
+                            <tr><th>학년</th><th>등교</th><th>하교</th><th>점심시간</th><th>관리</th></tr>
+                        </thead>
+                        <tbody id="bellSummaryTableBody"></tbody>
+                    </table>
+                </div>
+            </div>
+
+            <div class="schedule-editor-panel margin-top">
+                <h3 style="display:flex; align-items:center; justify-content:space-between; flex-wrap:wrap; gap:8px;">
+                    <span>학년별 주간 수업 배당표</span>
+                    <span style="font-size:0.85rem; color:var(--text-muted); font-weight:normal;">"목표"는 시수편성 탭에서 정한 학년별 주당 총 시수입니다. 배당 합계가 이와 다르면 경고가 표시됩니다.</span>
+                </h3>
+                <div class="table-container margin-top">
+                    <table class="data-table">
+                        <thead>
+                            <tr><th></th><th>월</th><th>화</th><th>수</th><th>목</th><th>금</th><th>계</th><th>목표(시수편성)</th><th>상태</th></tr>
+                        </thead>
+                        <tbody id="weeklyAllocationTableBody"></tbody>
+                    </table>
+                </div>
+                <button type="button" id="saveWeeklyAllocationBtn" class="primary-button margin-top">
+                    <span class="material-symbols-outlined">save</span> 주간 수업 배당표 저장
+                </button>
+            </div>
+        </section>
+
         <!-- 4. Weekly Master Timetable Matrix Tab -->
         <section id="timetableTab" class="tab-content" hidden>
             <div class="section-header-bar">
                 <div>
-                    <h2>🗓️ [4단계] 학급별 기초시간표 매트릭스 (1~8교시)</h2>
-                    <p class="section-desc">학년 공통 시수(2단계)는 100% 동일하며, 반별(1반, 2반...) 요일/교시 배치 및 전담/이동 수업을 독립 편성합니다.</p>
+                    <h2>🗓️ 학급별 기초시간표 매트릭스 (1~8교시)</h2>
+                    <p class="section-desc">학년 공통 시수는 100% 동일하며, 반별(1반, 2반...) 요일/교시 배치 및 전담/이동 수업을 독립 편성합니다.</p>
                 </div>
                 <div class="grade-selector-wrap" style="display:flex; gap:12px; align-items:center;">
                     <label>학년:
@@ -423,53 +429,57 @@
                 </div>
             </div>
 
+            <div id="timetableLockedBanner" class="error-state margin-top" hidden></div>
+
             <!-- Grade Hours Audit Live Bar for Class -->
-            <div class="schedule-editor-panel margin-top" style="background:rgba(255,255,255,0.02); padding:16px;">
-                <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:8px;">
-                    <strong style="color:var(--primary); font-size:0.95rem;">⚖️ 학년 주당 목표시수 일치 검증:</strong>
-                    <span id="timetableAuditStatusBadge" class="audit-status status-ok">✅ 학년 기준시수 100% 일치</span>
+            <div id="timetableUnlockedContent">
+                <div class="schedule-editor-panel margin-top" style="background:rgba(255,255,255,0.02); padding:16px;">
+                    <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:8px;">
+                        <strong style="color:var(--primary); font-size:0.95rem;">⚖️ 학년 주당 목표시수 일치 검증:</strong>
+                        <span id="timetableAuditStatusBadge" class="audit-status status-ok">✅ 학년 기준시수 100% 일치</span>
+                    </div>
+                    <div id="timetableHoursAuditBar" style="display:flex; gap:10px; flex-wrap:wrap; font-size:0.88rem;">
+                        <!-- Injected via JS -->
+                    </div>
                 </div>
-                <div id="timetableHoursAuditBar" style="display:flex; gap:10px; flex-wrap:wrap; font-size:0.88rem;">
-                    <!-- Injected via JS -->
+
+                <div class="palette-container margin-top">
+                    <span class="palette-title">과목 팔레트 (셀 클릭 후 배치):</span>
+                    <div class="subject-tags-palette" id="subjectPalette">
+                        <!-- Palette items -->
+                    </div>
                 </div>
-            </div>
 
-            <div class="palette-container margin-top">
-                <span class="palette-title">과목 팔레트 (셀 클릭 후 배치):</span>
-                <div class="subject-tags-palette" id="subjectPalette">
-                    <!-- Palette items -->
+                <div class="table-container margin-top">
+                    <table class="data-table timetable-matrix-table">
+                        <thead>
+                            <tr>
+                                <th>교시</th>
+                                <th>월요일</th>
+                                <th>화요일</th>
+                                <th>수요일</th>
+                                <th>목요일</th>
+                                <th>금요일</th>
+                            </tr>
+                        </thead>
+                        <tbody id="timetableMatrixBody">
+                            <!-- Matrix rows (1..6 periods) injected via JS -->
+                        </tbody>
+                    </table>
                 </div>
-            </div>
 
-            <div class="table-container margin-top">
-                <table class="data-table timetable-matrix-table">
-                    <thead>
-                        <tr>
-                            <th>교시</th>
-                            <th>월요일</th>
-                            <th>화요일</th>
-                            <th>수요일</th>
-                            <th>목요일</th>
-                            <th>금요일</th>
-                        </tr>
-                    </thead>
-                    <tbody id="timetableMatrixBody">
-                        <!-- Matrix rows (1..6 periods) injected via JS -->
-                    </tbody>
-                </table>
-            </div>
-
-            <div class="form-actions-row margin-top">
-                <button id="saveTimetableBtn" class="primary-button large">
-                    <span class="material-symbols-outlined">save</span> 주간 기본 시간표 저장하기
-                </button>
+                <div class="form-actions-row margin-top">
+                    <button id="saveTimetableBtn" class="primary-button large">
+                        <span class="material-symbols-outlined">save</span> 주간 기본 시간표 저장하기
+                    </button>
+                </div>
             </div>
         <!-- 5. Class Annual Timetable & Official Exporter Tab -->
         <section id="annualTimetableTab" class="tab-content" hidden>
             <div class="section-header-bar">
                 <div>
-                    <h2>📊 [5단계] 학급별 연간시간표 & 공식 서류 출력</h2>
-                    <p class="section-desc">1~4단계(학사일정+시수편성+행사+기초시간표)가 종합 결합된 연간 34주차 종합 시간표 및 공식 인쇄/PDF 출력 모듈입니다.</p>
+                    <h2>📊 학급별 연간시간표 & 공식 서류 출력</h2>
+                    <p class="section-desc">학사일정+시수편성+행사+기초시간표가 종합 결합된 연간 34주차 종합 시간표 및 공식 인쇄/PDF 출력 모듈입니다.</p>
                 </div>
                 <div class="grade-selector-wrap" style="display:flex; gap:12px; align-items:center;">
                     <label>학년:

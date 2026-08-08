@@ -249,6 +249,28 @@
         }
 
         /* 1. Timetable Widget */
+        .today-events-banner {
+            display: flex;
+            flex-direction: column;
+            gap: 4px;
+            margin-bottom: 8px;
+            padding: 8px 10px;
+            border-radius: 10px;
+            background: rgba(251, 191, 36, 0.12);
+            border: 1px solid rgba(251, 191, 36, 0.3);
+        }
+        .today-events-banner .today-event-line {
+            font-size: 12px;
+            color: var(--text-main, #eee);
+            display: flex;
+            gap: 6px;
+            flex-wrap: wrap;
+            align-items: baseline;
+        }
+        .today-events-banner .today-event-meta {
+            color: var(--text-muted, #999);
+            font-size: 11px;
+        }
         .timetable-list {
             display: flex;
             flex-direction: column;
@@ -1003,6 +1025,7 @@
                     <button class="icon-btn" id="editTimetableBtn">수정</button>
                 </div>
             </div>
+            <div class="today-events-banner" id="todayEventsBanner" hidden></div>
             <div class="timetable-list" id="timetableList">
                 <!-- 1 ~ 8 periods loaded by JS -->
             </div>
@@ -1546,6 +1569,45 @@
             return ClassroomAvatars.getAvatarForStudentRecord(student || { number: num }, activeScheduleClassId || 'dashboard-demo');
         }
 
+        function escHtmlLocal(str) {
+            return String(str ?? "").replace(/&/g, "&amp;").replace(/</g, "&lt;").replace(/>/g, "&gt;");
+        }
+
+        // 오늘 날짜 + 우리 학급(전교 포함) 대상 일반 행사를 배너로만 보여준다.
+        // 기존 시간표 위젯의 과목/장소는 절대 건드리지 않는다.
+        async function loadTodayEvents(grade) {
+            const banner = document.getElementById("todayEventsBanner");
+            if (!banner) return;
+            try {
+                const now = new Date();
+                const month = `${now.getFullYear()}-${String(now.getMonth() + 1).padStart(2, "0")}`;
+                const todayStr = `${month}-${String(now.getDate()).padStart(2, "0")}`;
+                const res = await fetch(`/api/teacher/general-events?month=${month}`);
+                const data = await res.json();
+                const events = (data.events || []).filter(ev => {
+                    const inRange = ev.event_date <= todayStr && (ev.end_date || ev.event_date) >= todayStr;
+                    const matchesGrade = ev.target_scope === "ALL" || (Array.isArray(ev.target_grades) && grade && ev.target_grades.includes(grade));
+                    return inRange && matchesGrade;
+                });
+
+                banner.replaceChildren();
+                if (events.length === 0) {
+                    banner.hidden = true;
+                    return;
+                }
+                events.forEach(ev => {
+                    const line = document.createElement("div");
+                    line.className = "today-event-line";
+                    const metaParts = [ev.event_time, ev.period, ev.location].filter(Boolean).join(", ");
+                    line.innerHTML = `<span>📌 ${escHtmlLocal(ev.title)}</span>${metaParts ? `<span class="today-event-meta">(${escHtmlLocal(metaParts)})</span>` : ""}`;
+                    banner.appendChild(line);
+                });
+                banner.hidden = false;
+            } catch (err) {
+                banner.hidden = true;
+            }
+        }
+
         // 4. Student Roster Checklist & Birthday Check & Class Switcher
         async function fetchRosterAndRenderChecklist(classId = null) {
             try {
@@ -1583,6 +1645,7 @@
                         classSwitcherSelect.value = data.classroom.id;
                     }
                     rosterLoadMessage = rosterStudents.length ? "" : "등록된 학생이 없습니다.";
+                    loadTodayEvents(data.classroom.grade);
                 } else {
                     rosterStudents = [];
                     rosterLoadMessage = "담임 학급 정보를 불러오지 못했습니다. 학교 관리자에게 학급 배정을 확인해 주세요.";
