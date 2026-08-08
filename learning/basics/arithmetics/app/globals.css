@@ -1434,6 +1434,11 @@ html[data-race-mode="true"] body { padding-bottom: 72px; }
   column-gap: 4px;
 }
 
+.division-bracket input,
+.division-bracket strong {
+  text-align: right;
+}
+
 .division-bracket-divisor {
   padding-right: 6px;
   font-size: 20px;
