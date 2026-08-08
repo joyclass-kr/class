@@ -81,6 +81,11 @@
   color: #17233c;
 }
 
+.multiplication-question.grade-six-decimal-two-question {
+  display: flex;
+  grid-template-columns: none;
+}
+
 .grade-six-decimal-two-question:last-child {
   border-right: 0;
 }
