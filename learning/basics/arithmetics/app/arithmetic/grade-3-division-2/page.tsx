@@ -128,11 +128,10 @@ export default function GradeThreeDivisionTwoPage() {
       return (
         <div className={`multiplication-question division-remainder-question division-bracket-question${graded ? isCorrect ? " is-correct" : " is-wrong" : ""}`} data-testid="division-remainder-question" key={problem.id}>
           <div className="division-bracket">
-            <span className="division-bracket-quotient">{quotientField}</span>
+            <span className="division-bracket-quotient-row">{quotientField}<span>···</span>{remainderField}</span>
             <span className="division-bracket-divisor">{problem.divisor}</span>
             <span className="division-bracket-dividend">{problem.dividend}</span>
           </div>
-          <div className="division-bracket-remainder"><span>···</span>{remainderField}</div>
           {resultBadge}
         </div>
       );

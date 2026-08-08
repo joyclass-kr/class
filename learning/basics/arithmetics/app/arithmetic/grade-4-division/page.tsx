@@ -51,10 +51,7 @@ function createProblemSet(seed: number): ProblemSet {
   dividend = integer(next, 555, 989);
   addProblem(dividend, integer(next, Number(String(dividend).slice(0, 2)) + 1, 99));
 
-  // XLSM의 B24:C24, E24:F24, H24:I24 수식 계열
-  dividend = integer(next, 555, 809);
-  addProblem(dividend, integer(next, Number(String(dividend).slice(0, 2)) + 1, 99));
-  addProblem(integer(next, 666, 999), integer(next, 14, 29));
+  // XLSM의 B24:C24, H24:I24 수식 계열
   divisor = integer(next, 11, 99);
   addProblem(integer(next, divisor, 999), divisor);
 
@@ -156,14 +153,16 @@ export default function GradeFourDivisionPage() {
     return (
       <div className={`multiplication-question grade-four-division-question${graded ? isCorrect ? " is-correct" : " is-wrong" : ""}`} data-testid="grade-four-division-question" key={problem.id}>
         <span className="grade-four-division-index">{index + 1}</span>
-        <div className="grade-four-division-operation">
-          <strong>{problem.dividend}</strong>
-          <span>÷</span>
-          <strong>{problem.divisor}</strong>
-          <span>=</span>
-          {renderAnswer(problem, "quotient", answerSheet)}
-          <span className="grade-four-division-ellipsis">…</span>
-          {renderAnswer(problem, "remainder", answerSheet)}
+        <div className="division-bracket-question">
+          <div className="division-bracket">
+            <span className="division-bracket-quotient-row">
+              {renderAnswer(problem, "quotient", answerSheet)}
+              <span className="grade-four-division-ellipsis">…</span>
+              {renderAnswer(problem, "remainder", answerSheet)}
+            </span>
+            <span className="division-bracket-divisor">{problem.divisor}</span>
+            <span className="division-bracket-dividend">{problem.dividend}</span>
+          </div>
         </div>
         {!answerSheet && graded && <span className={`counting-result ${isCorrect ? "correct" : "wrong"}`} role="status">{isCorrect ? "맞음" : "틀림"}</span>}
       </div>
@@ -186,7 +185,7 @@ export default function GradeFourDivisionPage() {
     <main className="counting-page multiplication-page">
       <div className="counting-toolbar">
         <a className="counting-back" href="/arithmetic">← 연산</a>
-        <div className="counting-progress"><strong>{correct}<small>/12 정답</small></strong></div>
+        <div className="counting-progress"><strong>{correct}<small>/10 정답</small></strong></div>
         <div className="toolbar">
           <button className="button secondary" type="button" onClick={newSet}>새 문제</button>
           <button className="button ghost" type="button" onClick={resetAnswers}>다시 풀기</button>

@@ -1577,12 +1577,13 @@ test("renders the fourth grade division worksheet in the workbook's three-by-fou
   assert.match(html, /4학년/);
   assert.match(html, /aria-label="A4 4학년 나눗셈 문제지"/);
   assert.match(html, /aria-label="A4 4학년 나눗셈 전체 답지"/);
-  assert.equal((html.match(/data-testid="grade-four-division-question"/g) ?? []).length, 24);
-  assert.equal((html.match(/class="grade-four-division-input quotient"/g) ?? []).length, 12);
-  assert.equal((html.match(/class="grade-four-division-input remainder"/g) ?? []).length, 12);
-  assert.equal((html.match(/class="grade-four-division-static-answer quotient"/g) ?? []).length, 12);
-  assert.equal((html.match(/class="grade-four-division-static-answer remainder"/g) ?? []).length, 12);
-  assert.equal((html.match(/maxLength="2"/g) ?? []).length, 24);
+  assert.equal((html.match(/data-testid="grade-four-division-question"/g) ?? []).length, 20);
+  assert.equal((html.match(/class="grade-four-division-input quotient"/g) ?? []).length, 10);
+  assert.equal((html.match(/class="grade-four-division-input remainder"/g) ?? []).length, 10);
+  assert.equal((html.match(/class="grade-four-division-static-answer quotient"/g) ?? []).length, 10);
+  assert.equal((html.match(/class="grade-four-division-static-answer remainder"/g) ?? []).length, 10);
+  assert.equal((html.match(/maxLength="2"/g) ?? []).length, 20);
+  assert.equal((html.match(/class="division-bracket-dividend"/g) ?? []).length, 20);
   assert.match(source, /integer\(next, 555, 809\)/);
   assert.match(source, /integer\(next, 666, 999\)/);
   assert.match(source, /integer\(next, divisor \* 10, 990\) \+ integer\(next, 0, 9\)/);
@@ -1590,9 +1591,8 @@ test("renders the fourth grade division worksheet in the workbook's three-by-fou
   assert.match(source, /leadingPair \+ 1, leadingPair \+ 20/);
   assert.match(source, /Math\.floor\(dividend \/ divisor\)/);
   assert.match(source, /remainder: dividend % divisor/);
-  assert.match(source, /<small>\/12 정답<\/small>/);
-  assert.match(css, /\.grade-four-division-grid\s*\{[\s\S]*?grid-template-columns:\s*repeat\(3,/);
-  assert.match(css, /\.grade-four-division-grid\s*\{[\s\S]*?grid-template-rows:\s*repeat\(4,/);
+  assert.match(source, /<small>\/10 정답<\/small>/);
+  assert.match(css, /\.grade-four-division-grid\s*\{[\s\S]*?grid-template-columns:\s*repeat\(2,[\s\S]*?grid-template-rows:\s*repeat\(5,[\s\S]*?\}/);
   assert.match(css, /\.grade-four-division-ellipsis\s*\{/);
 });
 

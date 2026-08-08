@@ -1426,10 +1426,15 @@ html[data-race-mode="true"] body { padding-bottom: 72px; }
   column-gap: 6px;
 }
 
-.division-bracket-quotient {
+.division-bracket-quotient-row {
   grid-column: 2;
   grid-row: 1;
+  display: flex;
+  align-items: center;
+  gap: 5px;
   padding-bottom: 3px;
+  font-size: 16px;
+  font-weight: 700;
 }
 
 .division-bracket-divisor {
@@ -1448,14 +1453,6 @@ html[data-race-mode="true"] body { padding-bottom: 72px; }
   padding: 2px 14px 5px 8px;
   font-size: 21px;
   font-weight: 800;
-}
-
-.division-bracket-remainder {
-  display: flex;
-  align-items: center;
-  gap: 5px;
-  font-size: 16px;
-  font-weight: 700;
 }
 
 /* 3나눗셈③ */
@@ -2457,7 +2454,7 @@ html[data-race-mode="true"] body { padding-bottom: 72px; }
   flex: 1 1 auto;
   display: grid;
   grid-template-columns: repeat(2, minmax(0, 1fr));
-  grid-template-rows: repeat(6, minmax(0, 1fr));
+  grid-template-rows: repeat(5, minmax(0, 1fr));
   margin-top: 14px;
   overflow: hidden;
   border: 1px solid #d8d0c5;
@@ -2491,23 +2488,6 @@ html[data-race-mode="true"] body { padding-bottom: 72px; }
   color: #647087;
   font-size: 11px;
   font-weight: 850;
-}
-
-.grade-four-division-operation {
-  width: 100%;
-  justify-self: center;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  gap: 7px;
-  color: #17233c;
-  font-size: 23px;
-  font-weight: 900;
-  white-space: nowrap;
-}
-
-.grade-four-division-operation > strong {
-  font: inherit;
 }
 
 .grade-four-division-ellipsis {
