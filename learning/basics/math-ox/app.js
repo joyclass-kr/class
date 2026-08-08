@@ -1530,11 +1530,11 @@
               </div>
               <div class="explanation-section">
                 <div class="exp-box pitfall">
-                  <div class="exp-label">낚시 포인트</div>
+                  <div class="exp-label">자주 하는 착각</div>
                   <div class="exp-content">${q.pitfall}</div>
                 </div>
                 <div class="exp-box reason">
-                  <div class="exp-label">💡 명쾌한 이유 설명</div>
+                  <div class="exp-label">💡 해설</div>
                   <div class="exp-content">${q.reason}</div>
                 </div>
               </div>
