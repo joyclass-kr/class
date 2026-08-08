@@ -1,5 +1,3 @@
-import type { CSSProperties } from "react";
-
 export type DivisionBracketAnswer = { quotient: string; remainder: string };
 
 export function blankDivisionBracketAnswer(): DivisionBracketAnswer {
@@ -35,28 +33,14 @@ export default function DivisionBracket({
   onQuotientChange: (value: string) => void;
   onRemainderChange: (value: string) => void;
 }) {
-  const dividendDigits = String(dividend).split("");
   const quotientLength = String(quotient).length;
-  const columnCount = dividendDigits.length;
-  const offset = columnCount - quotientLength;
   const currentQuotient = answer?.quotient ?? "";
   const currentRemainder = answer?.remainder ?? "";
   const remainderMaxLength = String(divisor).length;
-  const style = { gridTemplateColumns: `auto repeat(${columnCount}, minmax(26px, auto)) auto auto` } as CSSProperties;
 
   return (
-    <div className="division-bracket" style={style}>
-      <span className="division-bracket-divisor" style={{ gridColumn: 1, gridRow: 2 }}>{divisor}</span>
-      {dividendDigits.map((digit, index) => (
-        <span
-          className={`division-bracket-cell division-bracket-dividend-cell${index === 0 ? " division-bracket-dividend-first" : ""}`}
-          style={{ gridColumn: index + 2, gridRow: 2 }}
-          key={`dividend-${index}`}
-        >
-          {digit}
-        </span>
-      ))}
-      <span className="division-bracket-cell" style={{ gridColumn: `${offset + 2} / span ${quotientLength}`, gridRow: 1 }}>
+    <div className="division-bracket">
+      <span className="division-bracket-quotient" style={{ gridColumn: 2, gridRow: 1 }}>
         {answerSheet
           ? <strong className="multiplication-static-answer division-remainder-static">{quotient}</strong>
           : <input
@@ -70,8 +54,8 @@ export default function DivisionBracket({
             aria-label={`${id} 몫`}
           />}
       </span>
-      <span className="division-bracket-ellipsis" style={{ gridColumn: columnCount + 2, gridRow: 1 }}>···</span>
-      <span style={{ gridColumn: columnCount + 3, gridRow: 1 }}>
+      <span className="division-bracket-ellipsis" style={{ gridColumn: 3, gridRow: 1 }}>···</span>
+      <span style={{ gridColumn: 4, gridRow: 1 }}>
         {answerSheet
           ? <strong className="multiplication-static-answer division-remainder-static division-remainder-static-small">{remainder}</strong>
           : <input
@@ -85,6 +69,8 @@ export default function DivisionBracket({
             aria-label={`${id} 나머지`}
           />}
       </span>
+      <span className="division-bracket-divisor" style={{ gridColumn: 1, gridRow: 2 }}>{divisor}</span>
+      <strong className="division-bracket-dividend" style={{ gridColumn: 2, gridRow: 2 }}>{dividend}</strong>
     </div>
   );
 }

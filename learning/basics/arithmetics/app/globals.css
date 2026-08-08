@@ -1429,14 +1429,9 @@ html[data-race-mode="true"] body { padding-bottom: 72px; }
   display: inline-grid;
   grid-template-rows: auto auto;
   align-items: center;
-  justify-items: center;
+  justify-items: end;
   row-gap: 4px;
-}
-
-.division-bracket-cell {
-  display: flex;
-  align-items: center;
-  justify-content: center;
+  column-gap: 4px;
 }
 
 .division-bracket-divisor {
@@ -1446,18 +1441,15 @@ html[data-race-mode="true"] body { padding-bottom: 72px; }
   text-align: right;
 }
 
-.division-bracket-dividend-cell {
-  justify-self: stretch;
-  min-width: 20px;
-  padding: 2px 3px 5px;
+.division-bracket-dividend {
+  min-width: 44px;
+  box-sizing: border-box;
+  padding: 2px 6px 5px 8px;
   border-top: 2px solid #17233c;
+  border-left: 2px solid #17233c;
   font-size: 20px;
   font-weight: 800;
-}
-
-.division-bracket-dividend-first {
-  padding-left: 8px;
-  border-left: 2px solid #17233c;
+  text-align: right;
 }
 
 .division-bracket-ellipsis {

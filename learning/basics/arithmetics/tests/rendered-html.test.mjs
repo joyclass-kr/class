@@ -1345,8 +1345,7 @@ test("renders the second grade-three division worksheet", async () => {
   assert.equal((html.match(/class="division-bracket-ellipsis"/g) ?? []).length, 10);
   assert.equal((html.match(/class="multiplication-question division-remainder-question division-bracket-question/g) ?? []).length, 10);
   assert.equal((html.match(/class="division-bracket"/g) ?? []).length, 10);
-  assert.equal((html.match(/division-bracket-dividend-cell/g) ?? []).length, 30);
-  assert.equal((html.match(/division-bracket-dividend-first/g) ?? []).length, 10);
+  assert.equal((html.match(/class="division-bracket-dividend"/g) ?? []).length, 10);
   assert.match(source, /Array\.from\(\{ length: 20 \}/);
   assert.match(source, /integer\(next, 11, 99\)/);
   assert.match(source, /shuffle\(\[2, 3, 4, 5, 6, 7, 8, 9\], next\)\.slice\(0, 5\)/);
@@ -1355,8 +1354,7 @@ test("renders the second grade-three division worksheet", async () => {
   assert.match(source, /<small>\/25 정답<\/small>/);
   assert.match(css, /\.division-remainder-columns\s*\{[\s\S]*?grid-template-columns:\s*repeat\(3,/);
   assert.match(css, /\.division-remainder-column-large\s*\{[\s\S]*?grid-template-rows:\s*repeat\(5,/);
-  assert.match(css, /\.division-bracket-dividend-cell\s*\{[\s\S]*?border-top:\s*2px solid #17233c;/);
-  assert.match(css, /\.division-bracket-dividend-first\s*\{[\s\S]*?border-left:\s*2px solid #17233c;/);
+  assert.match(css, /\.division-bracket-dividend\s*\{[\s\S]*?border-top:\s*2px solid #17233c;[\s\S]*?border-left:\s*2px solid #17233c;/);
 });
 
 test("renders the third grade-three division worksheet in the workbook's four columns", async () => {
@@ -1584,8 +1582,7 @@ test("renders the fourth grade division worksheet in the workbook's three-by-fou
   assert.match(html, /aria-label="A4 4학년 나눗셈 전체 답지"/);
   assert.equal((html.match(/data-testid="grade-four-division-question"/g) ?? []).length, 20);
   assert.equal((html.match(/class="division-bracket"/g) ?? []).length, 20);
-  assert.equal((html.match(/division-bracket-dividend-cell/g) ?? []).length, 58);
-  assert.equal((html.match(/division-bracket-dividend-first/g) ?? []).length, 20);
+  assert.equal((html.match(/class="division-bracket-dividend"/g) ?? []).length, 20);
   assert.equal((html.match(/class="multiplication-input division-remainder-input"/g) ?? []).length, 10);
   assert.equal((html.match(/class="multiplication-input division-remainder-input division-remainder-input-small"/g) ?? []).length, 10);
   assert.equal((html.match(/class="multiplication-static-answer division-remainder-static"/g) ?? []).length, 10);
