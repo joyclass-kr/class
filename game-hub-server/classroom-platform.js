@@ -847,6 +847,22 @@ function createClassroomPlatform(options = {}) {
         updated_at TIMESTAMPTZ NOT NULL DEFAULT NOW(),
         UNIQUE (school_id, academic_year)
       )`,
+      `ALTER TABLE school_vacation_settings ADD COLUMN IF NOT EXISTS entrance_ceremony_date DATE`,
+      `ALTER TABLE school_vacation_settings ADD COLUMN IF NOT EXISTS graduation_ceremony_date DATE`,
+      `CREATE TABLE IF NOT EXISTS school_public_holidays_cache (
+        id BIGSERIAL PRIMARY KEY,
+        school_id BIGINT NOT NULL REFERENCES classroom_schools(id) ON DELETE CASCADE,
+        year INTEGER NOT NULL,
+        holiday_date DATE NOT NULL,
+        name TEXT NOT NULL,
+        source TEXT NOT NULL DEFAULT 'API' CHECK (source IN ('API', 'MANUAL')),
+        excluded BOOLEAN NOT NULL DEFAULT FALSE,
+        created_at TIMESTAMPTZ NOT NULL DEFAULT NOW(),
+        updated_at TIMESTAMPTZ NOT NULL DEFAULT NOW(),
+        UNIQUE (school_id, year, holiday_date)
+      )`,
+      `CREATE INDEX IF NOT EXISTS school_public_holidays_cache_lookup_idx
+        ON school_public_holidays_cache (school_id, year)`,
       `CREATE TABLE IF NOT EXISTS school_curriculum_hours (
         id BIGSERIAL PRIMARY KEY,
         school_id BIGINT NOT NULL REFERENCES classroom_schools(id) ON DELETE CASCADE,
@@ -3798,24 +3814,117 @@ function createClassroomPlatform(options = {}) {
     res.json({ ok: true });
   }));
 
-  // Live Public Holidays Fetcher (Public Data API / Nager.Date API)
-  router.get("/school-admin/public-holidays", asyncRoute(async (req, res) => {
-    const year = Number(req.query.year || new Date().getFullYear());
-    try {
-      const resp = await fetch(`https://date.nager.at/api/v3/PublicHolidays/${year}/KR`);
-      if (resp.ok) {
-        const data = await resp.json();
-        const holidays = data.map(h => ({
-          date: h.date,
-          localName: h.localName,
-          name: h.name
-        }));
-        return res.json({ year, holidays });
-      }
-    } catch (err) {
-      console.error("Failed to fetch live public holidays:", err.message);
+  // ── Public Holidays: DB-cached + admin-correctable ──
+  // Cache is per-school so a school admin's manual corrections never affect other schools.
+  async function fetchNagerHolidays(year) {
+    const resp = await fetch(`https://date.nager.at/api/v3/PublicHolidays/${year}/KR`);
+    if (!resp.ok) throw new Error(`Nager.Date API responded ${resp.status}`);
+    const data = await resp.json();
+    return data.map(h => ({ date: h.date, name: h.localName || h.name }));
+  }
+
+  // Upserts freshly-fetched holidays into the cache, but never overwrites a row
+  // the school admin has manually added, renamed, or excluded (source = 'MANUAL').
+  async function upsertApiHolidays(schoolId, year, holidays) {
+    for (const h of holidays) {
+      await pool.query(
+        `INSERT INTO school_public_holidays_cache (school_id, year, holiday_date, name, source, excluded)
+         VALUES ($1, $2, $3::DATE, $4, 'API', FALSE)
+         ON CONFLICT (school_id, year, holiday_date) DO UPDATE
+         SET name = EXCLUDED.name, updated_at = NOW()
+         WHERE school_public_holidays_cache.source = 'API'`,
+        [schoolId, year, h.date, h.name]
+      );
     }
-    res.json({ year, holidays: [] });
+  }
+
+  router.get("/school-admin/public-holidays", asyncRoute(async (req, res) => {
+    const { profile } = await requireSchoolAdmin(req);
+    const year = Number(req.query.year || new Date().getFullYear());
+
+    let cached = await pool.query(
+      `SELECT id, holiday_date::TEXT AS date, name, source, excluded
+       FROM school_public_holidays_cache WHERE school_id = $1 AND year = $2 ORDER BY holiday_date`,
+      [profile.school_id, year]
+    );
+
+    if (cached.rows.length === 0) {
+      try {
+        const holidays = await fetchNagerHolidays(year);
+        await upsertApiHolidays(profile.school_id, year, holidays);
+        cached = await pool.query(
+          `SELECT id, holiday_date::TEXT AS date, name, source, excluded
+           FROM school_public_holidays_cache WHERE school_id = $1 AND year = $2 ORDER BY holiday_date`,
+          [profile.school_id, year]
+        );
+      } catch (err) {
+        console.error("Failed to fetch live public holidays:", err.message);
+      }
+    }
+
+    res.json({
+      year,
+      holidays: cached.rows
+        .filter(h => !h.excluded)
+        .map(h => ({ date: h.date, localName: h.name, name: h.name })),
+      all: cached.rows
+    });
+  }));
+
+  // Re-fetches from the source API and refreshes API-sourced rows (manual overrides are untouched).
+  router.post("/school-admin/public-holidays/refresh", asyncRoute(async (req, res) => {
+    const { profile } = await requireSchoolAdmin(req);
+    const year = Number(req.body?.year || new Date().getFullYear());
+    const holidays = await fetchNagerHolidays(year);
+    await upsertApiHolidays(profile.school_id, year, holidays);
+    const result = await pool.query(
+      `SELECT id, holiday_date::TEXT AS date, name, source, excluded
+       FROM school_public_holidays_cache WHERE school_id = $1 AND year = $2 ORDER BY holiday_date`,
+      [profile.school_id, year]
+    );
+    res.json({ year, all: result.rows });
+  }));
+
+  // Manual correction: add a missing holiday (e.g. a newly-announced election day) or
+  // exclude/rename one the admin knows is wrong for their school.
+  router.post("/school-admin/public-holidays", asyncRoute(async (req, res) => {
+    const { profile } = await requireSchoolAdmin(req);
+    const year = Number(req.body?.year || new Date().getFullYear());
+    const date = String(req.body?.date || "").trim();
+    const name = String(req.body?.name || "").normalize("NFC").trim();
+    const excluded = Boolean(req.body?.excluded);
+
+    if (!/^\d{4}-\d{2}-\d{2}$/.test(date)) {
+      throw new HttpError(400, "INVALID_DATE", "유효한 날짜를 입력하세요.");
+    }
+    if (!excluded && (!name || name.length > 60)) {
+      throw new HttpError(400, "INVALID_NAME", "공휴일 이름은 1~60자로 입력하세요.");
+    }
+
+    const result = await pool.query(
+      `INSERT INTO school_public_holidays_cache (school_id, year, holiday_date, name, source, excluded)
+       VALUES ($1, $2, $3::DATE, $4, 'MANUAL', $5)
+       ON CONFLICT (school_id, year, holiday_date) DO UPDATE
+       SET name = EXCLUDED.name, source = 'MANUAL', excluded = EXCLUDED.excluded, updated_at = NOW()
+       RETURNING id, holiday_date::TEXT AS date, name, source, excluded`,
+      [profile.school_id, year, date, name || '제외됨', excluded]
+    );
+    res.status(201).json({ holiday: result.rows[0] });
+  }));
+
+  // Reverts a manual correction back to whatever the source API says (deletes the override row).
+  router.delete("/school-admin/public-holidays/:holidayId", asyncRoute(async (req, res) => {
+    const { profile } = await requireSchoolAdmin(req);
+    const holidayId = Number(req.params.holidayId);
+    if (!Number.isInteger(holidayId) || holidayId < 1) {
+      throw new HttpError(400, "INVALID_HOLIDAY", "공휴일 항목을 찾을 수 없습니다.");
+    }
+    const result = await pool.query(
+      `DELETE FROM school_public_holidays_cache WHERE id = $1 AND school_id = $2 RETURNING id`,
+      [holidayId, profile.school_id]
+    );
+    if (!result.rows[0]) throw new HttpError(404, "HOLIDAY_NOT_FOUND", "항목을 찾을 수 없거나 삭제 권한이 없습니다.");
+    res.json({ ok: true });
   }));
 
   // ── Curriculum Hours APIs ──
@@ -3970,7 +4079,9 @@ function createClassroomPlatform(options = {}) {
     const result = await pool.query(
       `SELECT is_integrated, summer_start::TEXT AS summer_start, summer_end::TEXT AS summer_end,
               winter_start::TEXT AS winter_start, winter_end::TEXT AS winter_end,
-              spring_start::TEXT AS spring_start, spring_end::TEXT AS spring_end
+              spring_start::TEXT AS spring_start, spring_end::TEXT AS spring_end,
+              entrance_ceremony_date::TEXT AS entrance_ceremony_date,
+              graduation_ceremony_date::TEXT AS graduation_ceremony_date
        FROM school_vacation_settings
        WHERE school_id = $1 AND academic_year = $2`,
       [profile.school_id, year]
@@ -3988,11 +4099,13 @@ function createClassroomPlatform(options = {}) {
     const winterEnd = req.body?.winterEnd || null;
     const springStart = req.body?.springStart || null;
     const springEnd = req.body?.springEnd || null;
+    const entranceCeremonyDate = req.body?.entranceCeremonyDate || null;
+    const graduationCeremonyDate = req.body?.graduationCeremonyDate || null;
 
     await pool.query(
       `INSERT INTO school_vacation_settings
-       (school_id, academic_year, is_integrated, summer_start, summer_end, winter_start, winter_end, spring_start, spring_end)
-       VALUES ($1, $2, $3, $4, $5, $6, $7, $8, $9)
+       (school_id, academic_year, is_integrated, summer_start, summer_end, winter_start, winter_end, spring_start, spring_end, entrance_ceremony_date, graduation_ceremony_date)
+       VALUES ($1, $2, $3, $4, $5, $6, $7, $8, $9, $10, $11)
        ON CONFLICT (school_id, academic_year) DO UPDATE
        SET is_integrated = EXCLUDED.is_integrated,
            summer_start = EXCLUDED.summer_start,
@@ -4001,8 +4114,10 @@ function createClassroomPlatform(options = {}) {
            winter_end = EXCLUDED.winter_end,
            spring_start = EXCLUDED.spring_start,
            spring_end = EXCLUDED.spring_end,
+           entrance_ceremony_date = EXCLUDED.entrance_ceremony_date,
+           graduation_ceremony_date = EXCLUDED.graduation_ceremony_date,
            updated_at = NOW()`,
-      [profile.school_id, year, isIntegrated, summerStart, summerEnd, winterStart, winterEnd, springStart, springEnd]
+      [profile.school_id, year, isIntegrated, summerStart, summerEnd, winterStart, winterEnd, springStart, springEnd, entranceCeremonyDate, graduationCeremonyDate]
     );
     res.json({ ok: true });
   }));

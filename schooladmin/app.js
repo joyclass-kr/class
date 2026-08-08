@@ -71,6 +71,17 @@ document.addEventListener('DOMContentLoaded', () => {
     const annualError = document.getElementById('annualError');
     const annualContent = document.getElementById('annualContent');
     const annualTableBody = document.getElementById('annualTableBody');
+    const entranceCeremonyDate = document.getElementById('entranceCeremonyDate');
+    const graduationCeremonyDate = document.getElementById('graduationCeremonyDate');
+
+    // Public Holidays Panel
+    const addHolidayForm = document.getElementById('addHolidayForm');
+    const holidayDateInput = document.getElementById('holidayDateInput');
+    const holidayNameInput = document.getElementById('holidayNameInput');
+    const holidayExcludedInput = document.getElementById('holidayExcludedInput');
+    const holidaysTableBody = document.getElementById('holidaysTableBody');
+    const refreshHolidaysBtn = document.getElementById('refreshHolidaysBtn');
+    let holidaysCacheData = [];
 
     // Curriculum Hours Tab
     const curriculumGradeSelect = document.getElementById('curriculumGradeSelect');
@@ -86,8 +97,10 @@ document.addEventListener('DOMContentLoaded', () => {
 
     // State
     let currentDate = new Date();
-    let selectedAcademicYear = 2026;
-    let currentCalYear = 2026;
+    // 학년도는 3월에 시작하므로, 1~2월은 전년도 학년도에 속함
+    const currentAcademicYear = currentDate.getMonth() + 1 >= 3 ? currentDate.getFullYear() : currentDate.getFullYear() - 1;
+    let selectedAcademicYear = currentAcademicYear;
+    let currentCalYear = currentAcademicYear;
     let currentCalMonth = 3; // March start for Academic Year
     let rosterData = [];
     let annualSchedulesData = [];
@@ -118,6 +131,18 @@ document.addEventListener('DOMContentLoaded', () => {
     function init() {
         dashboardDate.value = formatDate(currentDate);
         if (annualDateInput) annualDateInput.value = formatDate(currentDate);
+
+        // 학년도 드롭박스: 현재 학년도와 다음 학년도만 허용 (과거 학년도는 편집 대상 아님)
+        if (annualYearSelect) {
+            annualYearSelect.innerHTML = '';
+            [currentAcademicYear, currentAcademicYear + 1].forEach(year => {
+                const opt = document.createElement('option');
+                opt.value = String(year);
+                opt.textContent = `${year}학년도 (${year}.3~${year + 1}.2)`;
+                annualYearSelect.appendChild(opt);
+            });
+            annualYearSelect.value = String(selectedAcademicYear);
+        }
 
         // Sign Out
         signOutButton.addEventListener('click', () => {
@@ -396,18 +421,112 @@ document.addEventListener('DOMContentLoaded', () => {
 
     async function fetchLivePublicHolidays() {
         try {
-            const h1 = await api(`/api/school-admin/public-holidays?year=${selectedAcademicYear}`).catch(() => ({ holidays: [] }));
-            const h2 = await api(`/api/school-admin/public-holidays?year=${selectedAcademicYear + 1}`).catch(() => ({ holidays: [] }));
-            
+            const h1 = await api(`/api/school-admin/public-holidays?year=${selectedAcademicYear}`).catch(() => ({ holidays: [], all: [] }));
+            const h2 = await api(`/api/school-admin/public-holidays?year=${selectedAcademicYear + 1}`).catch(() => ({ holidays: [], all: [] }));
+
             dynamicPublicHolidays = { ...KOREAN_NATIONAL_HOLIDAYS };
             (h1.holidays || []).concat(h2.holidays || []).forEach(item => {
                 if (item.date && item.localName) {
                     dynamicPublicHolidays[item.date] = item.localName;
                 }
             });
+
+            holidaysCacheData = (h1.all || []).concat(h2.all || []).sort((a, b) => a.date.localeCompare(b.date));
+            renderHolidaysTable();
         } catch (_) {
             dynamicPublicHolidays = { ...KOREAN_NATIONAL_HOLIDAYS };
         }
+    }
+
+    function renderHolidaysTable() {
+        if (!holidaysTableBody) return;
+        holidaysTableBody.innerHTML = '';
+
+        if (holidaysCacheData.length === 0) {
+            const tr = document.createElement('tr');
+            tr.innerHTML = `<td colspan="5">등록된 공휴일이 없습니다. "공휴일 새로고침"을 눌러 자동으로 가져오세요.</td>`;
+            holidaysTableBody.appendChild(tr);
+            return;
+        }
+
+        holidaysCacheData.forEach(h => {
+            const tr = document.createElement('tr');
+            const sourceText = h.source === 'MANUAL' ? '✍️ 수동' : '🌐 자동';
+            const statusText = h.excluded ? '🚫 제외됨' : '✅ 적용됨';
+            tr.innerHTML = `
+                <td>${h.date}</td>
+                <td>${escapeHtml(h.name)}</td>
+                <td>${sourceText}</td>
+                <td>${statusText}</td>
+                <td><button type="button" class="icon-button delete-holiday-btn" data-id="${h.id}" title="삭제/원복"><span class="material-symbols-outlined">delete</span></button></td>
+            `;
+            holidaysTableBody.appendChild(tr);
+        });
+
+        holidaysTableBody.querySelectorAll('.delete-holiday-btn').forEach(btn => {
+            btn.addEventListener('click', async () => {
+                if (!confirm('이 항목을 삭제할까요? (자동 수집 항목은 다음 새로고침 시 다시 나타날 수 있습니다)')) return;
+                try {
+                    await api(`/api/school-admin/public-holidays/${btn.dataset.id}`, { method: 'DELETE' });
+                    await fetchLivePublicHolidays();
+                    renderCalendarGrid();
+                    calculateSchoolDaysAudit();
+                } catch (err) {
+                    alert(err.message || '삭제하지 못했습니다.');
+                }
+            });
+        });
+    }
+
+    if (addHolidayForm) {
+        addHolidayForm.addEventListener('submit', async (e) => {
+            e.preventDefault();
+            try {
+                await api('/api/school-admin/public-holidays', {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify({
+                        year: Number((holidayDateInput.value || '').slice(0, 4)) || selectedAcademicYear,
+                        date: holidayDateInput.value,
+                        name: holidayNameInput.value,
+                        excluded: Boolean(holidayExcludedInput.checked)
+                    })
+                });
+                addHolidayForm.reset();
+                await fetchLivePublicHolidays();
+                renderCalendarGrid();
+                calculateSchoolDaysAudit();
+            } catch (err) {
+                alert(err.message || '공휴일을 저장하지 못했습니다.');
+            }
+        });
+    }
+
+    if (refreshHolidaysBtn) {
+        refreshHolidaysBtn.addEventListener('click', async () => {
+            try {
+                refreshHolidaysBtn.disabled = true;
+                await Promise.all([
+                    api('/api/school-admin/public-holidays/refresh', {
+                        method: 'POST',
+                        headers: { 'Content-Type': 'application/json' },
+                        body: JSON.stringify({ year: selectedAcademicYear })
+                    }),
+                    api('/api/school-admin/public-holidays/refresh', {
+                        method: 'POST',
+                        headers: { 'Content-Type': 'application/json' },
+                        body: JSON.stringify({ year: selectedAcademicYear + 1 })
+                    })
+                ]);
+                await fetchLivePublicHolidays();
+                renderCalendarGrid();
+                calculateSchoolDaysAudit();
+            } catch (err) {
+                alert(err.message || '공휴일을 새로고침하지 못했습니다.');
+            } finally {
+                refreshHolidaysBtn.disabled = false;
+            }
+        });
     }
 
     async function loadAnnualSchedules() {
@@ -510,6 +629,8 @@ document.addEventListener('DOMContentLoaded', () => {
             if (winterVacationEnd) winterVacationEnd.value = stored.winter_end || (isIntegrated ? `${selectedAcademicYear + 1}-02-28` : `${selectedAcademicYear + 1}-01-30`);
             if (springVacationStart) springVacationStart.value = stored.spring_start || `${selectedAcademicYear + 1}-02-15`;
             if (springVacationEnd) springVacationEnd.value = stored.spring_end || `${selectedAcademicYear + 1}-02-28`;
+            if (entranceCeremonyDate) entranceCeremonyDate.value = stored.entrance_ceremony_date || `${selectedAcademicYear}-03-02`;
+            if (graduationCeremonyDate) graduationCeremonyDate.value = stored.graduation_ceremony_date || `${selectedAcademicYear + 1}-02-13`;
         } catch (err) {
             console.error('Failed to load vacation settings:', err);
         }
@@ -534,7 +655,9 @@ document.addEventListener('DOMContentLoaded', () => {
                 winterStart: winterVacationStart?.value || null,
                 winterEnd: winterVacationEnd?.value || null,
                 springStart: springVacationStart?.value || null,
-                springEnd: springVacationEnd?.value || null
+                springEnd: springVacationEnd?.value || null,
+                entranceCeremonyDate: entranceCeremonyDate?.value || null,
+                graduationCeremonyDate: graduationCeremonyDate?.value || null
             };
             try {
                 await api('/api/school-admin/vacation-settings', {
@@ -565,6 +688,12 @@ document.addEventListener('DOMContentLoaded', () => {
             return isIntegrated ? '겨울/통합방학' : '겨울방학';
         }
         if (!isIntegrated && spStart && spEnd && dateStr >= spStart && dateStr <= spEnd) return '학년말방학';
+        return null;
+    }
+
+    function getCeremonyLabel(dateStr) {
+        if (entranceCeremonyDate?.value && dateStr === entranceCeremonyDate.value) return '🎉 입학·시업식';
+        if (graduationCeremonyDate?.value && dateStr === graduationCeremonyDate.value) return '🎓 졸업·종업식';
         return null;
     }
 
@@ -628,6 +757,10 @@ document.addEventListener('DOMContentLoaded', () => {
             if (vacType) {
                 const vacIcon = vacType === '여름방학' ? '🏖️' : vacType === '겨울방학' ? '❄️' : '🌸';
                 eventsHtml += `<div class="cal-event-pill vacation">${vacIcon} ${vacType}</div>`;
+            }
+            const ceremonyLabel = getCeremonyLabel(dateKey);
+            if (ceremonyLabel) {
+                eventsHtml += `<div class="cal-event-pill event">${ceremonyLabel}</div>`;
             }
             if (eventItem) {
                 const catClass = eventItem.category.toLowerCase();

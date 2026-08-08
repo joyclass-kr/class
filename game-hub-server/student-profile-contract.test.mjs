@@ -26,6 +26,14 @@ test("student profile screen confirms the new password and keeps birthday choice
   assert.match(pageSource, /newPassword\.value!==confirmPassword\.value/);
 });
 
+test("student profile screen offers birthday as month/day dropdowns instead of a single free-text field", () => {
+  assert.match(pageSource, /id="birthdayMonth"/);
+  assert.match(pageSource, /id="birthdayDay"/);
+  assert.doesNotMatch(pageSource, /id="birthdayMmdd"/);
+  assert.match(pageSource, /function currentMmdd\(\)/);
+  assert.match(pageSource, /function populateDayOptions\(/);
+});
+
 test("teacher roster cannot overwrite student-managed birthday or password", async () => {
   const rosterSource = await readFile(new URL("../classtools/roster.html", import.meta.url), "utf8");
   assert.match(rosterSource, /id="birthdates" disabled/);
