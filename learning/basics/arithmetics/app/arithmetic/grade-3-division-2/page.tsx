@@ -116,17 +116,35 @@ export default function GradeThreeDivisionTwoPage() {
     const graded = problem.id in results;
     const isCorrect = results[problem.id] === true;
     const answer = answers[problem.id] ?? { quotient: "", remainder: "" };
+    const quotientField = answerSheet
+      ? <strong className="multiplication-static-answer division-remainder-static">{problem.quotient}</strong>
+      : <input className="multiplication-input division-remainder-input" type="text" inputMode="numeric" pattern="[0-9]*" maxLength={3} value={answer.quotient} onChange={(event) => updateAnswer(problem.id, "quotient", event.target.value)} aria-label={`${problem.id} 몫`} />;
+    const remainderField = answerSheet
+      ? <strong className="multiplication-static-answer division-remainder-static division-remainder-static-small">{problem.remainder}</strong>
+      : <input className="multiplication-input division-remainder-input division-remainder-input-small" type="text" inputMode="numeric" pattern="[0-9]*" maxLength={1} value={answer.remainder} onChange={(event) => updateAnswer(problem.id, "remainder", event.target.value)} aria-label={`${problem.id} 나머지`} />;
+    const resultBadge = !answerSheet && graded && <span className={`counting-result ${isCorrect ? "correct" : "wrong"}`} role="status">{isCorrect ? "맞음" : "틀림"}</span>;
+
+    if (problem.large) {
+      return (
+        <div className={`multiplication-question division-remainder-question division-bracket-question${graded ? isCorrect ? " is-correct" : " is-wrong" : ""}`} data-testid="division-remainder-question" key={problem.id}>
+          <div className="division-bracket">
+            <span className="division-bracket-quotient">{quotientField}</span>
+            <span className="division-bracket-divisor">{problem.divisor}</span>
+            <span className="division-bracket-dividend">{problem.dividend}</span>
+          </div>
+          <div className="division-bracket-remainder"><span>···</span>{remainderField}</div>
+          {resultBadge}
+        </div>
+      );
+    }
+
     return (
-      <div className={`multiplication-question division-remainder-question${problem.large ? " division-remainder-question-large" : ""}${graded ? isCorrect ? " is-correct" : " is-wrong" : ""}`} data-testid="division-remainder-question" key={problem.id}>
+      <div className={`multiplication-question division-remainder-question${graded ? isCorrect ? " is-correct" : " is-wrong" : ""}`} data-testid="division-remainder-question" key={problem.id}>
         <strong>{problem.dividend}</strong><span>÷</span><strong>{problem.divisor}</strong><span>=</span>
-        {answerSheet
-          ? <strong className="multiplication-static-answer division-remainder-static">{problem.quotient}</strong>
-          : <input className="multiplication-input division-remainder-input" type="text" inputMode="numeric" pattern="[0-9]*" maxLength={3} value={answer.quotient} onChange={(event) => updateAnswer(problem.id, "quotient", event.target.value)} aria-label={`${problem.id} 몫`} />}
+        {quotientField}
         <span>···</span>
-        {answerSheet
-          ? <strong className="multiplication-static-answer division-remainder-static division-remainder-static-small">{problem.remainder}</strong>
-          : <input className="multiplication-input division-remainder-input division-remainder-input-small" type="text" inputMode="numeric" pattern="[0-9]*" maxLength={1} value={answer.remainder} onChange={(event) => updateAnswer(problem.id, "remainder", event.target.value)} aria-label={`${problem.id} 나머지`} />}
-        {!answerSheet && graded && <span className={`counting-result ${isCorrect ? "correct" : "wrong"}`} role="status">{isCorrect ? "맞음" : "틀림"}</span>}
+        {remainderField}
+        {resultBadge}
       </div>
     );
   }
