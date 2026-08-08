@@ -105,7 +105,7 @@ export default function GradeSixStackedCubesPage() {
       <article className="stack-problem stack-count-problem" data-testid="stack-problem" key={problem.id}>
         <p><b>{index + 1}</b>쌓기나무의 개수를 구하시오.</p>
         <div className="stack-count-body">
-          <StackedCubesDiagram heights={problem.heights} showMap={problem.kind === "count-map"} />
+          <StackedCubesDiagram heights={problem.heights} showMap={problem.kind === "count-map"} showCubes={problem.kind !== "count-map"} />
           <div className="stack-count-answer">
             <span>→</span>
             {answerSheet
