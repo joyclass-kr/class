@@ -31,24 +31,24 @@ const fingerNames={lp:'왼손 새끼손가락',lr:'왼손 약손가락',lm:'왼�
 const keyboardRows=[[['`','`','lp','`','~'],['1','1','lp','1','!'],['2','2','lr','2','@'],['3','3','lm','3','#'],['4','4','li','4','$'],['5','5','li','5','%'],['6','6','ri','6','^'],['7','7','ri','7','&'],['8','8','rm','8','*'],['9','9','rr','9','('],['0','0','rp','0',')'],['-','-','rp','-','_'],['=','=','rp','=','+']],[['Q','ㅂ','lp'],['W','ㅈ','lr'],['E','ㄷ','lm'],['R','ㄱ','li'],['T','ㅅ','li'],['Y','ㅛ','ri'],['U','ㅕ','ri'],['I','ㅑ','rm'],['O','ㅐ','rr'],['P','ㅔ','rr-rp']],[['A','ㅁ','lp'],['S','ㄴ','lr'],['D','ㅇ','lm'],['F','ㄹ','li'],['G','ㅎ','li'],['H','ㅗ','ri'],['J','ㅓ','ri'],['K','ㅏ','rm'],['L','ㅣ','rr']],[['Shift','⇧ Shift','lp','shift-left'],['Z','ㅋ','lp'],['X','ㅌ','lr'],['C','ㅊ','lm'],['V','ㅍ','li'],['B','ㅠ','li'],['N','ㅜ','ri'],['M','ㅡ','ri'],['Shift','⇧ Shift','rp','shift-right']]];
 const baseGuideOrder=['f','j','d','k','s','l','a','g','h','r','u','e','i','w','o','q','p','t','y','v','m','c','x','z','b','n'];
 const koreanShiftGuide=['shift-right+q','shift-right+w','shift-right+e','shift-right+r','shift-right+t','shift-left+o','shift-left+p'];
-const baseSymbolGuide=['`','1','2','3','4','5','6','7','8','9','0','-','='];
+const baseSymbolGuide=['1','2','3','4','5','6','7','8','9','0'];
 const shiftedSymbolGuide=[...['`','1','2','3','4','5'].map(key=>`shift-right+${key}`),...['6','7','8','9','0','-','='].map(key=>`shift-left+${key}`)];
 const shiftedSymbols={'`':'~','1':'!','2':'@','3':'#','4':'$','5':'%','6':'^','7':'&','8':'*','9':'(','0':')','-':'_','=':'+'};
 const shiftedKorean={q:'ㅃ',w:'ㅉ',e:'ㄸ',r:'ㄲ',t:'ㅆ',o:'ㅒ',p:'ㅖ'};
 const leftHandLetters=[...'qwertasdfgzxcvb'],rightHandLetters=[...'yuiophjklnm'];
 const guideStages={
   ko:[
-    {label:'기본 자리',items:['f','j','d','k','s','l','a','g','h']},
-    {label:'윗글쇠',items:['q','w','e','r','t','y','u','i','o','p']},
-    {label:'아랫글쇠',items:['z','x','c','v','b','n','m']},
-    {label:'받침',items:[]},
-    {label:'Shift',items:[...koreanShiftGuide]}
+    {label:'기본 자리',items:['f','j','d','k','s','l','a','g','h'],wordNote:'기본 자리만 사용해요'},
+    {label:'윗글쇠',items:['q','w','e','r','t','y','u','i','o','p'],wordNote:'기본 자리와 윗글쇠를 함께 사용해요'},
+    {label:'아랫글쇠',items:['z','x','c','v','b','n','m'],wordNote:'배운 모든 자리를 함께 사용해요'},
+    {label:'받침 넣기',items:[],wordNote:'배운 자리에 받침을 더해요'},
+    {label:'Shift',items:[...koreanShiftGuide],wordNote:'반대쪽 Shift와 함께 사용해요'}
   ],
   en:[
-    {label:'기본 자리',items:['f','j','d','k','s','l','a','g','h']},
-    {label:'윗글쇠',items:['q','w','e','r','t','y','u','i','o','p']},
-    {label:'아랫글쇠',items:['z','x','c','v','b','n','m']},
-    {label:'대문자',items:[]}
+    {label:'기본 자리',items:['f','j','d','k','s','l','a','g','h'],wordNote:'기본 자리만 사용해요'},
+    {label:'윗글쇠',items:['q','w','e','r','t','y','u','i','o','p'],wordNote:'기본 자리와 윗글쇠를 함께 사용해요'},
+    {label:'아랫글쇠',items:['z','x','c','v','b','n','m'],wordNote:'배운 모든 자리를 함께 사용해요'},
+    {label:'대문자',items:[],wordNote:'반대쪽 Shift와 함께 사용해요'}
   ],
   symbols:[
     {label:'숫자',items:[...baseSymbolGuide]},
@@ -56,15 +56,15 @@ const guideStages={
   ]
 };
 const guideWordBanks={
-  'ko-0':['나','너','나이','아이','오이','이마','나라','하나','하마','머리','미리','아마','엄마','어머니','할머니','오리','미나리','아리아','이모','이리','오라','나아','모아','알아','일어나'],
-  'ko-1':['가지','바다','사자','여자','가게','기러기','개미','도서','보리','세모','소리','고리','가요','자요','모자','바지','다리','아버지','나비','고양이','사과','기차역','여우','지도','이야기','해바라기','교실','도리','가위','제비'],
-  'ko-2':['우유','치마','나무','코끼리','토마토','포도','기차','구두','주머니','부추','치즈','크기','흐리다','파도','쿠키','타조','바구니','비누','고무','유리','튜브','피아노','나비','무지개','두부','카메라','기지개','마루','메추리','호두'],
-  'ko-3':['산','달','강','학교','친구','공원','마음','구름','바람','연필','책상','창문','운동장','선생님','학생','동물','식물','햇살','봄날','가을','겨울','숲길','별빛','약속','생각','웃음','도서관','놀이터','고양이','강아지'],
-  'ko-4':['아빠','오빠','토끼','어깨','꼬리','까치','쓰기','씨앗','짜다','찌개','예쁘다','똑똑','빨리','쏘다','떡','꿈','깨끗이','꼭대기','쑥쑥','짝꿍','뛰다','따뜻하다','씩씩하다','반짝이다','깜짝'],
+  'ko-0':['나','너','나이','아이','오이','이마','나라','하나','하마','머리','미리','아마','어머니','오리','미나리','아리아','이모','이리','오라','나아','모아'],
+  'ko-1':['가지','바다','사자','여자','가게','기러기','개미','도서','보리','세모','소리','고리','가요','자요','모자','바지','다리','아버지','나비','사과','지도','이야기','해바라기','도리','제비'],
+  'ko-2':['우유','치마','나무','토마토','포도','기차','구두','주머니','부추','치즈','크기','흐리다','파도','쿠키','타조','바구니','비누','고무','유리','튜브','피아노','무지개','두부','카메라','마루','메추리','호두'],
+  'ko-3':['산','달','강','학교','친구','공원','마음','구름','바람','연필','책상','창문','운동장','선생님','학생','동물','식물','햇살','봄날','가을','겨울','숲길','별빛','약속','생각','웃음','도서관','놀이터','고양이','강아지','앉다','읽다','없다','젊다','닭장','값어치'],
+  'ko-4':['아빠','오빠','토끼','어깨','꼬리','까치','쓰기','씨앗','짜다','찌개','예쁘다','똑똑','빨리','쏘다','떡','꿈','깨끗이','꼭대기','쑥쑥','짝꿍','뛰다','따뜻하다','씩씩하다','반짝이다','깜짝','얘기','걔네','쟤네'],
   'en-0':['sad','dad','fall','glass','flag','ask','hall','half','salad','flash','glad','dash','hash','shall','flask','salsa','saga','jag','lag','gas','ash','fad','lash','gall','add'],
-  'en-1':['write','quiet','type','read','tree','water','paper','yellow','school','teacher','light','right','little','story','house','earth','idea','radio','star','flower','fruit','horse','turtle','people','please','share','repeat','square','weather','today'],
+  'en-1':['write','quiet','type','read','tree','water','paper','yellow','writer','reader','light','right','little','story','house','earth','idea','radio','star','flower','fruit','horse','turtle','people','please','share','repeat','square','weather','today'],
   'en-2':['mix','zinc','van','book','music','green','friend','family','smile','morning','pencil','class','number','window','garden','planet','animal','bright','cloud','river','market','picnic','jungle','basket','computer','village','blanket','orange','silver','winter'],
-  'symbols-0':['26453','2026','1004','365','12345','98765','1010','777','8282','10000','3.14','1,000','24','60','12','31415','5050','8080','119','112','20260802','13579','24680','100','99'],
+  'symbols-0':['26453','2026','1004','365','12345','98765','1010','777','8282','10000','24','60','12','31415','5050','8080','119','112','20260802','13579','24680','100','99'],
   'symbols-1':['100%','^_^','!!','!@#','10+20=30','7*8=56','5-2=3','1+1=2','50%','3^2=9','(1+2)','(5-3)','1_2','$5','$10','#1','#2','@1','~1~','99%','2*3=6','4+5=9','6-1=5','100+200','1+2+3','(10)','5%','7&8']
 };
 let guideLang='ko',guideStage=0,guideIndex=0,guideWordKeyIndex=0,currentGuideOrder=null,virtualShift='',englishShiftGuide=[];
@@ -78,6 +78,40 @@ const codeChars={Space:' ',Backquote:'`',Period:'.',Comma:',',Slash:'/',Semicolo
 let forcedKeyProgress=0,forcedWrongBuffer='',previousInputLength=0,manualInputUntil=0,audioContext=null;
 const input=$('#typingInput'),prompt=$('#prompt'),feedback=$('#feedback');
 function keySequenceForChar(char){if(koJamoKeys[char])return koJamoKeys[char];const code=char.charCodeAt(0);if(code>=0xAC00&&code<=0xD7A3){const offset=code-0xAC00,initial=Math.floor(offset/588),medial=Math.floor((offset%588)/28),final=offset%28;return koInitial[initial]+koMedial[medial]+koFinal[final]}return char}
+const homeGuideKeys=new Set(['f','j','d','k','s','l','a','g','h']);
+const topGuideKeys=new Set(['q','w','e','r','t','y','u','i','o','p']);
+const bottomGuideKeys=new Set(['z','x','c','v','b','n','m']);
+const plainKoreanGuideKeys=new Set([...homeGuideKeys,...topGuideKeys,...bottomGuideKeys]);
+const guideWordRules={
+  'ko-0':{allowed:homeGuideKeys,required:homeGuideKeys,final:'forbid',shift:'forbid'},
+  'ko-1':{allowed:new Set([...homeGuideKeys,...topGuideKeys]),required:topGuideKeys,final:'forbid',shift:'forbid'},
+  'ko-2':{allowed:plainKoreanGuideKeys,required:bottomGuideKeys,final:'forbid',shift:'forbid'},
+  'ko-3':{allowed:plainKoreanGuideKeys,final:'require',shift:'forbid'},
+  'ko-4':{allowed:plainKoreanGuideKeys,shift:'require'},
+  'en-0':{allowed:homeGuideKeys,required:homeGuideKeys},
+  'en-1':{allowed:new Set([...homeGuideKeys,...topGuideKeys]),required:topGuideKeys},
+  'en-2':{allowed:plainKoreanGuideKeys,required:bottomGuideKeys},
+  'symbols-0':{allowed:new Set([...'0123456789'])},
+  'symbols-1':{allowed:new Set([...'0123456789`~!@#$%^&*()-_=+']),required:new Set([...'`~!@#$%^&*()-_=+'])}
+};
+function koreanWordHasFinal(word){return [...word].some(char=>{const code=char.charCodeAt(0);return code>=0xAC00&&code<=0xD7A3&&(code-0xAC00)%28!==0})}
+function guideWordTokens(ruleKey,word){return ruleKey.startsWith('ko-')?[...word].flatMap(char=>[...keySequenceForChar(char)]):[...word.toLowerCase()]}
+function guideWordIsValid(ruleKey,word){
+  const rule=guideWordRules[ruleKey];if(!rule)return true;
+  const tokens=guideWordTokens(ruleKey,word),plainTokens=tokens.map(token=>token.toLowerCase()),usesShift=tokens.some(token=>/[A-Z]/.test(token));
+  if(rule.allowed&&plainTokens.some(token=>!rule.allowed.has(token)))return false;
+  if(rule.required&&!plainTokens.some(token=>rule.required.has(token)))return false;
+  if(rule.final==='forbid'&&koreanWordHasFinal(word))return false;
+  if(rule.final==='require'&&!koreanWordHasFinal(word))return false;
+  if(rule.shift==='forbid'&&usesShift)return false;
+  if(rule.shift==='require'&&!usesShift)return false;
+  return true;
+}
+function validGuideWords(ruleKey){
+  const bank=guideWordBanks[ruleKey]||[],invalid=bank.filter(word=>!guideWordIsValid(ruleKey,word));
+  if(invalid.length)console.error(`자리 익히기 단계 규칙 위반: ${ruleKey}`,invalid);
+  return bank.filter(word=>guideWordIsValid(ruleKey,word));
+}
 function targetKeySequence(){return [...target()].map(keySequenceForChar).join('')}
 function completedTargetPrefix(progress){let used=0,result='';for(const char of [...target()]){const length=keySequenceForChar(char).length;if(used+length>progress)break;used+=length;result+=char}return result}
 function completedKeyProgress(progress){let used=0;for(const char of [...target()]){const length=keySequenceForChar(char).length;if(used+length>progress)break;used+=length}return used}
@@ -90,7 +124,7 @@ function pickRandom(items,count){return [...items].sort(()=>Math.random()-.5).sl
 function refreshEnglishShiftGuide(){englishShiftGuide=[...pickRandom(rightHandLetters,2).map(letter=>`shift-left+${letter}`),...pickRandom(leftHandLetters,2).map(letter=>`shift-right+${letter}`)].sort(()=>Math.random()-.5)}
 function renderGuideStages(){const stages=guideStages[guideLang];$('#guideStages').innerHTML=stages.map((stage,index)=>`<button type="button" class="${index===guideStage?'active':''}" data-guide-stage="${index}" aria-pressed="${index===guideStage}">${index+1}. ${stage.label}</button>`).join('');$$('[data-guide-stage]').forEach(button=>button.addEventListener('click',()=>{guideStage=Number(button.dataset.guideStage);guideIndex=0;guideWordKeyIndex=0;currentGuideOrder=null;if(guideLang==='en'&&guideStage===3)refreshEnglishShiftGuide();renderGuideStages();showGuide()}))}
 function buildKeyboard(){const box=$('#keyboard'),rows=guideLang==='symbols'?[keyboardRows[0],keyboardRows[3].filter(([en])=>en==='Shift')]:keyboardRows.slice(1);box.innerHTML=rows.map((row,index)=>`<div class="key-row ${guideLang==='symbols'&&index===1?'shift-only-row':''}">${row.map(([en,ko,f,code,shifted])=>`<button type="button" class="key ${(en==='F'||en==='J')?'home-key':''} ${en==='Shift'?'shift-key':''} ${shifted?'number-key':''}" data-code="${code||en.toLowerCase()}" data-ko="${ko}" data-shifted="${shifted||''}" data-finger="${f}">${en==='Shift'?'⇧ Shift':shifted?en:guideLang==='ko'?ko:en.toLowerCase()}</button>`).join('')}</div>`).join('');box.querySelectorAll('.key').forEach(k=>k.addEventListener('click',()=>{const code=k.dataset.code;if(code.startsWith('shift-')){virtualShift=code.slice(6);return}checkGuide(code,virtualShift);virtualShift=''}));renderGuideStages();showGuide()}
-function guideOrder(){if(currentGuideOrder)return currentGuideOrder;const keys=guideLang==='en'&&guideStage===3?englishShiftGuide:guideStages[guideLang][guideStage].items,bank=guideWordBanks[`${guideLang}-${guideStage}`]||[];currentGuideOrder=[...keys,...pickRandom(bank,Math.min(10,bank.length)).map(word=>`word:${word}`)];return currentGuideOrder}
+function guideOrder(){if(currentGuideOrder)return currentGuideOrder;const keys=guideLang==='en'&&guideStage===3?englishShiftGuide:guideStages[guideLang][guideStage].items,bank=validGuideWords(`${guideLang}-${guideStage}`);currentGuideOrder=[...keys,...pickRandom(bank,Math.min(10,bank.length)).map(word=>`word:${word}`)];return currentGuideOrder}
 function guideTarget(){const order=guideOrder();return order[guideIndex%order.length]}
 function guideWord(){const target=guideTarget();return target.startsWith('word:')?target.slice(5):''}
 function guideWordSequence(){return [...guideWord()].map(keySequenceForChar).join('')}
@@ -114,7 +148,7 @@ function showGuide(){
     if(shiftEl){shiftEl.classList.add('active');activateFinger(shiftEl.dataset.finger)}
     $('#fingerBadge').textContent=guideStages[guideLang][guideStage].label;
     $('#guideKey').textContent=word;
-    $('#guideMessage').innerHTML=`<b>${word}</b> 입력 중 · ${guideWordKeyIndex+1}/${guideWordSequence().length}`;
+    const note=guideStages[guideLang][guideStage].wordNote;$('#guideMessage').innerHTML=`<b>${word}</b> 입력 중 · ${guideWordKeyIndex+1}/${guideWordSequence().length}${note?`<br><small>${note}</small>`:''}`;
   }else{
     const combo=guideCombo(),symbolCombo=Boolean(combo&&shiftedSymbols[combo.letter]);
     setEnglishKeyboardCase(Boolean(combo&&!symbolCombo));setNumberKeyboardShift(symbolCombo);setKoreanShiftLabel(combo);
@@ -149,7 +183,7 @@ function wordDifficulty(word){if(state.lang==='en')return word.length<=4?'easy':
 function sentenceDifficulty(sentence){const length=sentence.length;if(state.lang==='en')return length<=24?'easy':length<=35?'normal':'hard';return length<=15?'easy':length<=30?'normal':'hard'}
 function filteredPracticeSource(){if(state.mode==='words'&&state.lang==='avatars')return avatarItems.filter(item=>item.category===state.filter).map(item=>item.answer);const source=state.mode==='words'?wordPools[state.lang]:sentencePools[state.lang],filtered=source.filter(item=>(state.mode==='words'?wordDifficulty(item):sentenceDifficulty(item))===state.filter);return filtered.length?filtered:source}
 async function openPractice(mode='words',resume=false){const saved=resume?readTypingSession():null;state.mode=mode;state.filter=saved?.mode===mode?saved.filter:'easy';state.level={words:0,sentences:1}[mode]??0;await wordBankReady;if(saved?.mode===mode)selectLanguage(saved.lang);$('#typingHome').hidden=true;$('#fingerGuide').hidden=true;$('.practice').hidden=false;$('.practice').classList.toggle('sentence-mode',mode==='sentences');$('#practiceTitle').textContent={words:'단어 연습',sentences:'문장 연습'}[mode];$('#languageControls').hidden=false;const symbolButton=$('[data-language="symbols"]'),avatarButton=$('[data-language="avatars"]');symbolButton.hidden=mode!=='words';avatarButton.hidden=mode!=='words';if(mode!=='words'&&['symbols','avatars'].includes(state.lang))selectLanguage('ko');if(mode==='words'&&state.lang==='avatars'&&!['animal','food','object'].includes(state.filter))state.filter='animal';if(state.lang!=='avatars'&&['animal','food','object'].includes(state.filter))state.filter='easy';renderPracticeFilters();if(saved?.mode===mode&&Array.isArray(saved.items)&&saved.items.length){state.items=saved.items;state.index=Math.min(saved.index||0,state.items.length-1);state.start=0;state.typed=0;state.correct=0;state.totalTyped=0;state.totalCorrect=0;state.streak=0;state.speeds=[];state.activeMs=0;state.locked=false;input.disabled=false;$('.practice').hidden=false;$('#resultCard').hidden=true;showItem();stats();setTimeout(()=>input.focus(),50)}else setup()}
-function openGuide(resume=false){const saved=resume?readTypingSession():null;if(saved?.mode==='position'){guideLang=saved.guideLang||'ko';guideStage=Math.min(saved.guideStage||0,guideStages[guideLang].length-1);guideIndex=saved.guideIndex||0;guideWordKeyIndex=saved.guideWordKeyIndex||0;currentGuideOrder=saved.order||null;$$('[data-guide-language]').forEach(button=>{const active=button.dataset.guideLanguage===guideLang;button.classList.toggle('active',active);button.setAttribute('aria-pressed',active)})}else{guideIndex=0;guideWordKeyIndex=0;currentGuideOrder=null}if(guideLang==='en'&&guideStage===3&&!currentGuideOrder)refreshEnglishShiftGuide();$('#typingHome').hidden=true;$('.practice').hidden=true;$('#resultCard').hidden=true;$('#fingerGuide').hidden=false;buildKeyboard()}
+function openGuide(resume=false){const saved=resume?readTypingSession():null;if(saved?.mode==='position'){guideLang=saved.guideLang||'ko';guideStage=Math.min(saved.guideStage||0,guideStages[guideLang].length-1);const ruleKey=`${guideLang}-${guideStage}`,savedOrder=Array.isArray(saved.order)?saved.order:null,sanitizedOrder=savedOrder?.filter(item=>!item.startsWith('word:')||guideWordIsValid(ruleKey,item.slice(5)))||null,orderChanged=Boolean(savedOrder&&sanitizedOrder.length!==savedOrder.length);currentGuideOrder=sanitizedOrder;guideIndex=Math.min(saved.guideIndex||0,Math.max((currentGuideOrder?.length||1)-1,0));guideWordKeyIndex=orderChanged?0:saved.guideWordKeyIndex||0;$$('[data-guide-language]').forEach(button=>{const active=button.dataset.guideLanguage===guideLang;button.classList.toggle('active',active);button.setAttribute('aria-pressed',active)})}else{guideIndex=0;guideWordKeyIndex=0;currentGuideOrder=null}if(guideLang==='en'&&guideStage===3&&!currentGuideOrder)refreshEnglishShiftGuide();$('#typingHome').hidden=true;$('.practice').hidden=true;$('#resultCard').hidden=true;$('#fingerGuide').hidden=false;buildKeyboard()}
 function key(){return `typing-best-${state.mode}-${state.lang}-${state.filter}`}
 function target(){return state.items[state.index]}
 function chars(s){return [...s]}
