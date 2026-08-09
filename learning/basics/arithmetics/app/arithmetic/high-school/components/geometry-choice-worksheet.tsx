@@ -116,6 +116,14 @@ export default function GeometryChoiceWorksheet({ subject = "기하", title, see
                   <MiddleCurriculumVisual visual={{ type: "geometry", variant: problem.visualVariant, labels: [] }} />
                 )}
                 <div className="derivative-expression trig-derivative-expression geometry-choice-expression"><MathFormula latex={problem.latex} displayStyle /></div>
+                <div className="geometry-sheet-choices" aria-label="선택지">
+                  {problem.choices.map((choice, choiceIndex) => (
+                    <div className={answerSheet && choice.correct ? "is-answer" : ""} key={choice.id}>
+                      <span>{["①", "②", "③", "④"][choiceIndex] ?? `${choiceIndex + 1}.`}</span>
+                      <MathFormula latex={choice.latex} />
+                    </div>
+                  ))}
+                </div>
                 {answerSheet && <div className="derivative-static-answer"><MathFormula latex={problem.correctLatex} displayStyle /></div>}
               </div>
             </article>

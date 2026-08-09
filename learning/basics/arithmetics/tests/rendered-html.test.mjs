@@ -620,8 +620,10 @@ test("renders the reconstructed conic tangents and space geometry worksheets", a
   assert.equal((spaceHtml.match(/class="a4-stage counting-a4-stage worksheet-stage"/g) ?? []).length, 1);
   assert.equal((spaceHtml.match(/class="a4-stage counting-a4-stage answer-stage"/g) ?? []).length, 1);
   assert.equal((spaceHtml.match(/polynomial-sheet-8/g) ?? []).length, 2);
+  assert.equal((spaceHtml.match(/class="geometry-sheet-choices"/g) ?? []).length, 16);
 
   assert.doesNotMatch(spaceHtml, /직선과 평면의 위치 관계/);
+  assert.doesNotMatch(spaceHtml, /<text[^>]*>a⃗|<text[^>]*>b⃗|<text[^>]*>proj</);
   assert.match(spaceHtml, /평면에 내린 수선의 발/);
   assert.match(spaceHtml, /직선 방향으로의 벡터 정사영/);
   assert.match(spaceHtml, /평면도형의 정사영 넓이/);
