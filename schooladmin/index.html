@@ -41,16 +41,17 @@
                     </div>
                 </div>
                 <div class="audit-card" id="calculatedSchoolDaysCard">
-                    <span class="audit-label">현재 책정 수업일수</span>
+                    <span class="audit-label">현재 책정 수업일수 (학년별 최저)</span>
                     <span class="audit-value" id="calculatedSchoolDaysVal">192일</span>
                     <span class="audit-status status-ok" id="schoolDaysStatusBadge">✅ 기준 충족</span>
+                    <span class="section-desc" id="perGradeSchoolDaysNote" style="margin-top:2px;"></span>
                 </div>
                 <div class="audit-card">
-                    <span class="audit-label">휴업일 / 공휴일 / 방학</span>
+                    <span class="audit-label">휴업일 / 공휴일 / 방학 (전교 공통)</span>
                     <span class="audit-value" id="totalHolidaysVal">115일</span>
                 </div>
                 <div class="audit-card">
-                    <span class="audit-label">전교 & 학년 행사일</span>
+                    <span class="audit-label">등록된 재량휴업일 건수</span>
                     <span class="audit-value" id="totalEventsVal">18일</span>
                 </div>
             </div>
@@ -191,76 +192,33 @@
 
             <!-- Schedule Add & List Panel -->
             <div class="schedule-editor-panel margin-top">
-                <h3>📌 일정 일괄/개별 등록 및 관리</h3>
+                <h3>📌 재량휴업일 등록 및 관리</h3>
+                <p class="section-desc" style="margin-bottom:8px;">등교 여부(수업일수 산정)에 영향을 주는 재량휴업일만 여기서 관리합니다. 체육대회·현장체험학습 같은 일반 행사는 등교일수에 영향을 주지 않으므로 교사 포털의 "월중 행사 등록"에서 누구나 등록합니다.</p>
                 <form id="addAnnualScheduleForm" class="schedule-form">
                     <div class="form-row">
                         <label>
-                            <span>일정 날짜</span>
+                            <span>날짜</span>
                             <input type="date" id="annualDateInput" required class="form-input">
                         </label>
-                        <label class="flex-grow">
-                            <span>일정명</span>
-                            <input type="text" id="annualTitleInput" placeholder="예: 현장체험학습, 체육대회, 개학식" required maxlength="60" class="form-input">
-                        </label>
                     </div>
-                    <div class="form-row">
-                        <label>
-                            <span>구분</span>
-                            <select id="annualCategorySelect" class="form-select">
-                                <option value="EVENT">🏫 행사</option>
-                                <option value="DISCRETIONARY">🟡 재량휴업일</option>
-                            </select>
-                        </label>
-                        <label>
-                            <span>적용 대상</span>
-                            <select id="annualTargetScopeSelect" class="form-select">
-                                <option value="ALL">🏢 전교 공통</option>
-                                <option value="GRADE">🏫 특정 학년 지정</option>
-                            </select>
-                        </label>
-                    </div>
-                    <div class="form-row" id="gradeSelectionRow" hidden>
-                        <span class="form-label-text">대상 학년:</span>
+                    <div class="form-row" id="gradeSelectionRow">
+                        <span class="form-label-text">대상 학년 (체크한 학년만 재량휴업, 예: 6학년 졸업식 날 1~5학년만 휴업):</span>
                         <div class="grade-checkboxes">
-                            <label><input type="checkbox" name="targetGrade" value="1"> 1학년</label>
-                            <label><input type="checkbox" name="targetGrade" value="2"> 2학년</label>
-                            <label><input type="checkbox" name="targetGrade" value="3"> 3학년</label>
-                            <label><input type="checkbox" name="targetGrade" value="4"> 4학년</label>
-                            <label><input type="checkbox" name="targetGrade" value="5"> 5학년</label>
-                            <label><input type="checkbox" name="targetGrade" value="6"> 6학년</label>
-                        </div>
-                    </div>
-                    <div class="form-row" id="eventPeriodsRow">
-                        <label>
-                            <span>기본 행사 인정 시수</span>
-                            <select id="annualDefaultPeriodsSelect" class="form-select">
-                                <option value="6">6교시 (기본 전일제)</option>
-                                <option value="5">5교시 (단축 수업)</option>
-                                <option value="4">4교시 (반일제/오전 수업)</option>
-                                <option value="3">3교시</option>
-                                <option value="2">2교시 (의식 행사)</option>
-                                <option value="1">1교시</option>
-                            </select>
-                        </label>
-                    </div>
-                    <div class="form-row" id="gradePeriodsOverrideRow" style="flex-direction:column; align-items:flex-start; gap:8px; margin-top:8px;">
-                        <span class="form-label-text" style="font-weight:800; font-size:0.9rem;">⏱️ 학년별 행사 인정 교시(시수) 개별 지정:</span>
-                        <div class="grade-periods-inputs" style="display:flex; flex-wrap:wrap; gap:12px; align-items:center;">
-                            <label style="display:flex; align-items:center; gap:4px; font-size:0.88rem; font-weight:700;">1학년: <input type="number" id="gradePeriod1" value="4" min="0" max="8" style="width:50px; padding:4px; border-radius:6px; border:1px solid var(--border-color); background:#fff; color:var(--text-main); text-align:center;">교시</label>
-                            <label style="display:flex; align-items:center; gap:4px; font-size:0.88rem; font-weight:700;">2학년: <input type="number" id="gradePeriod2" value="4" min="0" max="8" style="width:50px; padding:4px; border-radius:6px; border:1px solid var(--border-color); background:#fff; color:var(--text-main); text-align:center;">교시</label>
-                            <label style="display:flex; align-items:center; gap:4px; font-size:0.88rem; font-weight:700;">3학년: <input type="number" id="gradePeriod3" value="5" min="0" max="8" style="width:50px; padding:4px; border-radius:6px; border:1px solid var(--border-color); background:#fff; color:var(--text-main); text-align:center;">교시</label>
-                            <label style="display:flex; align-items:center; gap:4px; font-size:0.88rem; font-weight:700;">4학년: <input type="number" id="gradePeriod4" value="5" min="0" max="8" style="width:50px; padding:4px; border-radius:6px; border:1px solid var(--border-color); background:#fff; color:var(--text-main); text-align:center;">교시</label>
-                            <label style="display:flex; align-items:center; gap:4px; font-size:0.88rem; font-weight:700;">5학년: <input type="number" id="gradePeriod5" value="6" min="0" max="8" style="width:50px; padding:4px; border-radius:6px; border:1px solid var(--border-color); background:#fff; color:var(--text-main); text-align:center;">교시</label>
-                            <label style="display:flex; align-items:center; gap:4px; font-size:0.88rem; font-weight:700;">6학년: <input type="number" id="gradePeriod6" value="6" min="0" max="8" style="width:50px; padding:4px; border-radius:6px; border:1px solid var(--border-color); background:#fff; color:var(--text-main); text-align:center;">교시</label>
+                            <label><input type="checkbox" name="targetGrade" value="1" checked> 1학년</label>
+                            <label><input type="checkbox" name="targetGrade" value="2" checked> 2학년</label>
+                            <label><input type="checkbox" name="targetGrade" value="3" checked> 3학년</label>
+                            <label><input type="checkbox" name="targetGrade" value="4" checked> 4학년</label>
+                            <label><input type="checkbox" name="targetGrade" value="5" checked> 5학년</label>
+                            <label><input type="checkbox" name="targetGrade" value="6" checked> 6학년</label>
                         </div>
                     </div>
                     <div class="form-row align-end">
                         <label class="flex-grow">
-                            <span>상세 설명 (선택)</span>
-                            <input type="text" id="annualDetailsInput" placeholder="비고 및 안내 사항" maxlength="160" class="form-input">
+                            <span>사유 (선택)</span>
+                            <input type="text" id="annualDetailsInput" placeholder="예: 학교 재량휴업일, 미세먼지 비상저감조치" maxlength="60" class="form-input">
                         </label>
                         <button type="submit" class="primary-button add-schedule-btn">
-                            <span class="material-symbols-outlined">add</span> 일정 저장
+                            <span class="material-symbols-outlined">add</span> 재량휴업일 저장
                         </button>
                     </div>
                 </form>
@@ -274,10 +232,8 @@
                     <thead>
                         <tr>
                             <th>날짜</th>
-                            <th>구분</th>
                             <th>적용 대상</th>
-                            <th>일정명</th>
-                            <th>상세 내용</th>
+                            <th>사유</th>
                             <th>관리</th>
                         </tr>
                     </thead>

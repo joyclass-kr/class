@@ -322,6 +322,7 @@ body { background-color: var(--bg-color); color: var(--text-main); line-height: 
 }
 .cal-event-pill.event { background: rgba(124, 58, 237, 0.16); color: #6d28d9; }
 .cal-event-pill.holiday { background: rgba(220, 38, 38, 0.16); color: #b91c1c; }
+.cal-event-pill.discretionary { background: rgba(180, 83, 9, 0.16); color: #92400e; }
 .cal-event-pill.trip { background: rgba(37, 99, 235, 0.16); color: #1d4ed8; }
 .cal-event-pill.exam { background: rgba(180, 83, 9, 0.16); color: #92400e; }
 .cal-event-pill.vacation { background: rgba(2, 132, 199, 0.14); color: #0369a1; }

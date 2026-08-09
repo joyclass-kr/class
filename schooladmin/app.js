@@ -37,6 +37,7 @@ document.addEventListener('DOMContentLoaded', () => {
     const schoolDaysStatusBadge = document.getElementById('schoolDaysStatusBadge');
     const totalHolidaysVal = document.getElementById('totalHolidaysVal');
     const totalEventsVal = document.getElementById('totalEventsVal');
+    const perGradeSchoolDaysNote = document.getElementById('perGradeSchoolDaysNote');
 
     const prevMonthBtn = document.getElementById('prevMonthBtn');
     const nextMonthBtn = document.getElementById('nextMonthBtn');
@@ -45,9 +46,6 @@ document.addEventListener('DOMContentLoaded', () => {
 
     const addAnnualScheduleForm = document.getElementById('addAnnualScheduleForm');
     const annualDateInput = document.getElementById('annualDateInput');
-    const annualTitleInput = document.getElementById('annualTitleInput');
-    const annualCategorySelect = document.getElementById('annualCategorySelect');
-    const annualTargetScopeSelect = document.getElementById('annualTargetScopeSelect');
     const gradeSelectionRow = document.getElementById('gradeSelectionRow');
     const annualDetailsInput = document.getElementById('annualDetailsInput');
     const annualYearSelect = document.getElementById('annualYearSelect');
@@ -180,46 +178,16 @@ document.addEventListener('DOMContentLoaded', () => {
                 await renderAnnualTimetable34Weeks();
             });
         }
-        function updateGradeCheckboxesByScope(scope) {
-            const checkboxes = addAnnualScheduleForm ? addAnnualScheduleForm.querySelectorAll('input[name="targetGrade"]') : [];
-            if (scope === 'ALL') {
-                checkboxes.forEach(cb => cb.checked = true);
-            }
-            if (gradeSelectionRow) gradeSelectionRow.hidden = false;
-        }
-
-        const eventPeriodsRow = document.getElementById('eventPeriodsRow');
-        const gradePeriodsOverrideRow = document.getElementById('gradePeriodsOverrideRow');
-
-        if (annualCategorySelect) {
-            annualCategorySelect.addEventListener('change', (e) => {
-                const isDiscretionary = e.target.value === 'DISCRETIONARY';
-                if (eventPeriodsRow) eventPeriodsRow.style.display = isDiscretionary ? 'none' : 'flex';
-                if (gradePeriodsOverrideRow) gradePeriodsOverrideRow.style.display = isDiscretionary ? 'none' : 'flex';
-            });
-        }
-
-        // 방학 설정 박스는 재량휴업일을 직접 입력받지 않고, 아래 통합 일정 등록 폼(같은
-        // school_annual_schedules 저장소)으로 구분을 재량휴업일로 맞춰서 이동시켜준다.
+        // 방학 설정 박스는 재량휴업일을 직접 입력받지 않고, 아래 등록 폼으로 스크롤+포커스만 시켜준다.
         const jumpToDiscretionaryBtn = document.getElementById('jumpToDiscretionaryBtn');
         if (jumpToDiscretionaryBtn) {
             jumpToDiscretionaryBtn.addEventListener('click', () => {
-                if (annualCategorySelect) {
-                    annualCategorySelect.value = 'DISCRETIONARY';
-                    annualCategorySelect.dispatchEvent(new Event('change'));
-                }
                 const dateInput = document.getElementById('annualDateInput');
                 if (addAnnualScheduleForm) addAnnualScheduleForm.scrollIntoView({ behavior: 'smooth', block: 'center' });
                 if (dateInput) dateInput.focus();
             });
         }
 
-        if (annualTargetScopeSelect) {
-            annualTargetScopeSelect.addEventListener('change', (e) => {
-                updateGradeCheckboxesByScope(e.target.value);
-            });
-            updateGradeCheckboxesByScope(annualTargetScopeSelect.value || 'ALL');
-        }
         if (addAnnualScheduleForm) {
             addAnnualScheduleForm.addEventListener('submit', handleAddAnnualSchedule);
         }
@@ -527,11 +495,33 @@ document.addEventListener('DOMContentLoaded', () => {
         }
     }
 
+    // toISOString()은 UTC로 변환하므로 한국(UTC+9)에서는 자정 기준 날짜가 하루
+    // 앞당겨질 수 있다 -- 로컬 날짜 구성요소로 직접 포맷한다.
+    function dayAfter(dateStr) {
+        const d = new Date(`${dateStr}T00:00:00`);
+        d.setDate(d.getDate() + 1);
+        const y = d.getFullYear();
+        const m = String(d.getMonth() + 1).padStart(2, '0');
+        const day = String(d.getDate()).padStart(2, '0');
+        return `${y}-${m}-${day}`;
+    }
+
     if (integrateWinterSpringVacation) {
         integrateWinterSpringVacation.addEventListener('change', (e) => {
             toggleIntegratedVacationUI(e.target.checked);
-            if (e.target.checked && winterVacationEnd) {
-                winterVacationEnd.value = `${selectedAcademicYear + 1}-02-28`;
+            if (e.target.checked) {
+                if (winterVacationEnd) winterVacationEnd.value = `${selectedAcademicYear + 1}-02-28`;
+                // 통합 운영이면 졸업·종업식 다음날부터 바로 방학이 시작되는 것으로 본다.
+                if (winterVacationStart && graduationCeremonyDate?.value) {
+                    winterVacationStart.value = dayAfter(graduationCeremonyDate.value);
+                }
+            }
+        });
+    }
+    if (graduationCeremonyDate) {
+        graduationCeremonyDate.addEventListener('change', () => {
+            if (integrateWinterSpringVacation?.checked && winterVacationStart && graduationCeremonyDate.value) {
+                winterVacationStart.value = dayAfter(graduationCeremonyDate.value);
             }
         });
     }
@@ -669,7 +659,7 @@ document.addEventListener('DOMContentLoaded', () => {
             // Click cell to fill form date
             cell.addEventListener('click', () => {
                 annualDateInput.value = dateKey;
-                annualTitleInput.focus();
+                if (annualDetailsInput) annualDetailsInput.focus();
             });
 
             annualCalendarGrid.appendChild(cell);
@@ -681,11 +671,14 @@ document.addEventListener('DOMContentLoaded', () => {
         targetSchoolDaysInput.addEventListener('input', calculateSchoolDaysAudit);
     }
 
+    // 재량휴업일은 학년별로 다르게 지정될 수 있으므로(예: 6학년 졸업식 날 1~5학년만
+    // 재량휴업), 수업일수는 학년마다 따로 세야 한다. 학교 전체를 하나의 숫자로만
+    // 세면 특정 학년만 쉬는 날도 전교생이 쉬는 것처럼 잘못 계산된다.
     function calculateSchoolDaysAudit() {
         const targetDays = Number(targetSchoolDaysInput ? targetSchoolDaysInput.value : 190);
-        let totalSchoolDays = 0;
-        let totalHolidays = 0;
-        let totalEvents = annualSchedulesData.length;
+        const perGradeSchoolDays = { 1: 0, 2: 0, 3: 0, 4: 0, 5: 0, 6: 0 };
+        let totalHolidays = 0; // 전교 공통 휴업일(공휴일/방학)만 집계 -- 학년별 재량휴업일은 아래 학년별 카운트에 반영
+        const totalEvents = annualSchedulesData.length;
 
         const activeHolidays = Object.keys(dynamicPublicHolidays).length > 0 ? dynamicPublicHolidays : KOREAN_NATIONAL_HOLIDAYS;
 
@@ -701,30 +694,38 @@ document.addEventListener('DOMContentLoaded', () => {
             const dayOfWeek = d.getDay();
 
             const isWeekend = dayOfWeek === 0 || dayOfWeek === 6;
+            if (isWeekend) continue;
+
             const isPublicHoliday = Boolean(activeHolidays[dateStr]);
             const vacType = getVacationType(dateStr);
-            const customEvent = annualSchedulesData.find(item => item.event_date === dateStr);
-            const isCustomHoliday = customEvent && (customEvent.category === 'HOLIDAY' || customEvent.category === 'DISCRETIONARY');
-
-            if (isWeekend) {
-                // Weekend - not counted as school day or school holiday
-            } else if (isPublicHoliday || vacType || isCustomHoliday) {
+            const isWholeSchoolOff = isPublicHoliday || vacType;
+            if (isWholeSchoolOff) {
                 totalHolidays++;
-            } else {
-                totalSchoolDays++;
+                continue;
+            }
+
+            const dayEvents = annualSchedulesData.filter(item => item.event_date === dateStr && (item.category === 'HOLIDAY' || item.category === 'DISCRETIONARY'));
+            for (let grade = 1; grade <= 6; grade++) {
+                const isGradeOff = dayEvents.some(item => item.target_scope === 'ALL' || (Array.isArray(item.target_grades) && item.target_grades.includes(grade)));
+                if (!isGradeOff) perGradeSchoolDays[grade]++;
             }
         }
 
-        if (calculatedSchoolDaysVal) calculatedSchoolDaysVal.textContent = `${totalSchoolDays}일`;
+        const minSchoolDays = Math.min(...Object.values(perGradeSchoolDays));
+
+        if (calculatedSchoolDaysVal) calculatedSchoolDaysVal.textContent = `${minSchoolDays}일`;
         if (totalHolidaysVal) totalHolidaysVal.textContent = `${totalHolidays}일`;
-        if (totalEventsVal) totalEventsVal.textContent = `${totalEvents}일`;
+        if (totalEventsVal) totalEventsVal.textContent = `${totalEvents}건`;
+        if (perGradeSchoolDaysNote) {
+            perGradeSchoolDaysNote.textContent = [1, 2, 3, 4, 5, 6].map(g => `${g}학년 ${perGradeSchoolDays[g]}일`).join(' · ');
+        }
 
         if (schoolDaysStatusBadge) {
-            if (totalSchoolDays >= targetDays) {
+            if (minSchoolDays >= targetDays) {
                 schoolDaysStatusBadge.textContent = `✅ 목표 (${targetDays}일) 충족`;
                 schoolDaysStatusBadge.className = 'audit-status status-ok';
             } else {
-                schoolDaysStatusBadge.textContent = `⚠️ 목표 대비 ${targetDays - totalSchoolDays}일 부족!`;
+                schoolDaysStatusBadge.textContent = `⚠️ 목표 대비 ${targetDays - minSchoolDays}일 부족!`;
                 schoolDaysStatusBadge.className = 'audit-status status-warn';
             }
         }
@@ -734,13 +735,6 @@ document.addEventListener('DOMContentLoaded', () => {
         if (!annualTableBody) return;
 
         annualTableBody.innerHTML = '';
-        const categoryLabels = {
-            EVENT: '🏫 행사',
-            DISCRETIONARY: '🟡 재량휴업일',
-            HOLIDAY: '🔴 법정공휴일',
-            TRIP: '🏫 행사',
-            EXAM: '🏫 행사'
-        };
 
         annualSchedulesData.forEach(item => {
             const tr = document.createElement('tr');
@@ -750,22 +744,10 @@ document.addEventListener('DOMContentLoaded', () => {
                 targetText = `🏫 ${grades}학년`;
             }
 
-            let periodText = '';
-            if (item.category === 'DISCRETIONARY') {
-                periodText = ' <span style="font-size:0.82rem; color:var(--text-muted);">(0교시)</span>';
-            } else if (item.grade_periods && Object.keys(item.grade_periods).length > 0) {
-                const gp = item.grade_periods;
-                periodText = ` <span style="font-size:0.82rem; color:var(--primary); font-weight:700;">(${gp['1'] || 6}/${gp['2'] || 6}/${gp['3'] || 6}/${gp['4'] || 6}/${gp['5'] || 6}/${gp['6'] || 6}교시)</span>`;
-            } else if (item.event_periods) {
-                periodText = ` <span style="font-size:0.82rem; color:var(--primary); font-weight:700;">(${item.event_periods}교시)</span>`;
-            }
-
             tr.innerHTML = `
                 <td style="font-weight:600;">${item.event_date}</td>
-                <td><span class="badge category-${item.category.toLowerCase()}">${categoryLabels[item.category] || item.category}</span></td>
                 <td><span class="badge scope-${item.target_scope.toLowerCase()}">${targetText}</span></td>
-                <td style="font-weight:600;">${escapeHtml(item.title)}${periodText}</td>
-                <td>${escapeHtml(item.details || '-')}</td>
+                <td>${escapeHtml(item.details || item.title || '재량휴업일')}</td>
                 <td>
                     <button class="delete-schedule-btn text-button danger" data-id="${item.id}">삭제</button>
                 </td>
@@ -775,7 +757,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
         if (annualSchedulesData.length === 0) {
             const tr = document.createElement('tr');
-            tr.innerHTML = `<td colspan="6">등록된 학사일정이 없습니다.</td>`;
+            tr.innerHTML = `<td colspan="4">등록된 재량휴업일이 없습니다.</td>`;
             annualTableBody.appendChild(tr);
         }
 
@@ -787,30 +769,16 @@ document.addEventListener('DOMContentLoaded', () => {
     async function handleAddAnnualSchedule(e) {
         e.preventDefault();
         const date = annualDateInput.value;
-        const title = annualTitleInput.value.trim();
-        const category = annualCategorySelect.value;
-        const targetScope = annualTargetScopeSelect.value;
         const details = annualDetailsInput.value.trim();
+        const title = details || '재량휴업일';
 
-        let targetGrades = [1, 2, 3, 4, 5, 6];
-        if (targetScope === 'GRADE') {
-            const checkboxes = addAnnualScheduleForm.querySelectorAll('input[name="targetGrade"]:checked');
-            targetGrades = Array.from(checkboxes).map(cb => Number(cb.value));
-            if (targetGrades.length === 0) {
-                alert('적용 대상 학년을 최소 1개 이상 선택해 주세요.');
-                return;
-            }
+        const checkboxes = addAnnualScheduleForm.querySelectorAll('input[name="targetGrade"]:checked');
+        const targetGrades = Array.from(checkboxes).map(cb => Number(cb.value));
+        if (targetGrades.length === 0) {
+            alert('대상 학년을 최소 1개 이상 선택해 주세요.');
+            return;
         }
-
-        const eventPeriods = category === 'DISCRETIONARY' ? 0 : Number(document.getElementById('annualDefaultPeriodsSelect')?.value || 6);
-        const gradePeriods = {
-            1: Number(document.getElementById('gradePeriod1')?.value || eventPeriods),
-            2: Number(document.getElementById('gradePeriod2')?.value || eventPeriods),
-            3: Number(document.getElementById('gradePeriod3')?.value || eventPeriods),
-            4: Number(document.getElementById('gradePeriod4')?.value || eventPeriods),
-            5: Number(document.getElementById('gradePeriod5')?.value || eventPeriods),
-            6: Number(document.getElementById('gradePeriod6')?.value || eventPeriods)
-        };
+        const targetScope = targetGrades.length === 6 ? 'ALL' : 'GRADE';
 
         try {
             await api('/api/school-admin/annual-schedules', {
@@ -818,15 +786,14 @@ document.addEventListener('DOMContentLoaded', () => {
                 headers: { 'Content-Type': 'application/json' },
                 body: JSON.stringify({
                     academicYear: selectedAcademicYear,
-                    date, title, category, targetScope, targetGrades, eventPeriods, gradePeriods, details
+                    date, title, category: 'DISCRETIONARY', targetScope, targetGrades, eventPeriods: 0, gradePeriods: {}, details
                 })
             });
 
-            annualTitleInput.value = '';
             annualDetailsInput.value = '';
             await loadAnnualSchedules();
         } catch (error) {
-            alert(error.message || '일정을 등록하지 못했습니다.');
+            alert(error.message || '재량휴업일을 등록하지 못했습니다.');
         }
     }
 
@@ -1958,6 +1925,8 @@ document.addEventListener('DOMContentLoaded', () => {
 
                     const natHoliday = activeHolidays[dateStr];
                     const vacType = getVacationType(dateStr);
+                    // 서버가 이미 이 학년에 해당되는 항목만 내려준다 (target_scope='ALL' 이거나
+                    // target_grades에 이 학년이 포함된 것만).
                     const customEvt = schedList.find(e => e.event_date === dateStr);
 
                     if (natHoliday) {

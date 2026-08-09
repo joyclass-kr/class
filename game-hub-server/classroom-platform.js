@@ -361,6 +361,7 @@ function createClassroomPlatform(options = {}) {
         ADD COLUMN IF NOT EXISTS school_code TEXT`,
       `ALTER TABLE classroom_schools
         ADD COLUMN IF NOT EXISTS location_name TEXT`,
+
       `ALTER TABLE classroom_schools
         ADD COLUMN IF NOT EXISTS enabled BOOLEAN NOT NULL DEFAULT TRUE`,
       `ALTER TABLE classroom_schools
@@ -4719,7 +4720,14 @@ function createClassroomPlatform(options = {}) {
     // Fetch DB Data
     const [vacRes, schedRes, ttRes, genEvRes] = await Promise.all([
       pool.query(`SELECT * FROM school_vacation_settings WHERE school_id = $1 AND academic_year = $2`, [profile.school_id, year]),
-      pool.query(`SELECT event_date::TEXT AS event_date, title, category FROM school_annual_schedules WHERE school_id = $1 AND academic_year = $2`, [profile.school_id, year]),
+      // 재량휴업일은 특정 학년에만 적용될 수 있으므로, 이 반의 학년에 실제로 해당되는
+      // 항목만 가져온다 (다른 학년만 쉬는 날을 이 학년도 쉬는 것처럼 잘못 표시하지 않도록).
+      pool.query(
+        `SELECT event_date::TEXT AS event_date, title, category
+         FROM school_annual_schedules
+         WHERE school_id = $1 AND academic_year = $2 AND (target_scope = 'ALL' OR $3 = ANY(target_grades))`,
+        [profile.school_id, year, grade]
+      ),
       pool.query(`SELECT day_of_week, period, subject_name FROM school_master_timetable WHERE school_id = $1 AND academic_year = $2 AND grade = $3 AND class_number = $4`, [profile.school_id, year, grade, classNum]),
       // 등교여부와 무관한 일반 행사 — 시간표 과목은 바꾸지 않고 딱지(요약 텍스트)로만 덧붙인다.
       pool.query(
