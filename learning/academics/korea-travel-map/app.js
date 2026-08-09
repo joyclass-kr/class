@@ -8,6 +8,7 @@
     ['경상남도', 35.25, 128.25], ['대구광역시', 35.8714, 128.6014], ['울산광역시', 35.5384, 129.3114], ['부산광역시', 35.1796, 129.0756],
     ['제주특별자치도', 33.37, 126.53]
   ];
+  let municipalityLabels = [];
 
   const modal = document.querySelector('#placeModal');
   const modalClose = document.querySelector('#modalClose');
@@ -22,7 +23,7 @@
     center: [36.15, 127.75], zoom: 7, minZoom: 6, maxZoom: 14,
     zoomControl: true, attributionControl: true, preferCanvas: true
   });
-  L.tileLayer('https://{s}.basemaps.cartocdn.com/light_all/{z}/{x}/{y}{r}.png', {
+  L.tileLayer('https://{s}.basemaps.cartocdn.com/light_nolabels/{z}/{x}/{y}{r}.png', {
     attribution: '&copy; OpenStreetMap &copy; CARTO', subdomains: 'abcd', maxZoom: 20
   }).addTo(map);
 
@@ -91,15 +92,60 @@
       }));
   }
 
-  function renderLabels() {
-    labelLayer.clearLayers();
-    labels.forEach(([name, lat, lng]) => {
-      const icon = L.divIcon({
-        className: 'map-admin-label-wrapper',
-        html: `<span class="map-admin-label">${name}</span>`,
-        iconSize: [112, 24], iconAnchor: [56, 12]
+  async function loadMunicipalityLabels() {
+    try {
+      const response = await fetch("../korean-museum/data/korea-sigungu-centers.csv?v=20260730-7");
+      if (!response.ok) throw new Error(`HTTP ${response.status}`);
+      const csvText = new TextDecoder("euc-kr").decode(await response.arrayBuffer());
+      const retiredIncheonCodes = new Set(["28110", "28140", "28260"]);
+      const raw = csvText.trim().split(/\r?\n/).slice(1).map((line) => line.split(","))
+        .filter((columns) => columns.length >= 5 && !retiredIncheonCodes.has(columns[2]))
+        .map((columns) => ({ name: columns.at(-1).trim(), lat: Number(columns[1]), lng: Number(columns[0]), code: columns[2] }))
+        .filter((label) => label.name && Number.isFinite(label.lat) && Number.isFinite(label.lng));
+
+      const grouped = new Map();
+      raw.forEach((label) => {
+        if (label.code.startsWith("11")) {
+          grouped.set(`seoul-${label.code}`, { name: label.name, latTotal: label.lat, lngTotal: label.lng, count: 1, kind: "district" });
+          return;
+        }
+        const subdividedCity = label.name.match(/^(.+시)\s+.+구$/u);
+        const displayName = subdividedCity ? subdividedCity[1] : label.name;
+        if (!subdividedCity && displayName.endsWith("구")) return;
+        if (!/(시|군)$/u.test(displayName)) return;
+        const group = grouped.get(displayName) || { name: displayName, latTotal: 0, lngTotal: 0, count: 0, kind: "municipality" };
+        group.latTotal += label.lat;
+        group.lngTotal += label.lng;
+        group.count += 1;
+        grouped.set(displayName, group);
       });
-      labelLayer.addLayer(L.marker([lat, lng], { icon, pane: 'adminLabels', interactive: false }));
+      municipalityLabels = Array.from(grouped.values(), (group) => ({
+        name: group.name,
+        lat: group.latTotal / group.count,
+        lng: group.lngTotal / group.count,
+        kind: group.kind
+      }));
+      renderLabels();
+    } catch (error) {
+      console.warn("시·군·구 지도 이름을 불러오지 못했습니다.", error);
+    }
+  }
+
+  function renderLabels() {
+    const zoom = map.getZoom();
+    const visibleBounds = map.getBounds().pad(0.12);
+    labelLayer.clearLayers();
+    const visibleLabels = zoom <= 7
+      ? labels.map(([name, lat, lng]) => ({ name, lat, lng, kind: "province" }))
+      : municipalityLabels;
+    visibleLabels.forEach(({ name, lat, lng, kind }) => {
+      if (!visibleBounds.contains([lat, lng])) return;
+      const icon = L.divIcon({
+        className: "map-admin-label-wrapper",
+        html: `<span class="map-admin-label map-admin-label--${kind}">${name}</span>`,
+        iconSize: null
+      });
+      labelLayer.addLayer(L.marker([lat, lng], { icon, pane: "adminLabels", interactive: false }));
     });
   }
 
@@ -321,9 +367,11 @@
     });
   });
 
-  map.on('zoomend', renderMarkers);
+  map.on('zoomend', () => { renderMarkers(); renderLabels(); });
+  map.on('moveend', renderLabels);
   loadBoundaries();
   renderLabels();
+  loadMunicipalityLabels();
   renderMarkers();
   loadMembership();
   if (currentPlace) renderModal();
