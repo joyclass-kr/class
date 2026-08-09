@@ -1,12 +1,9 @@
-export type WorksheetTrack = "필수 통합" | "집중 훈련" | "도형 필수" | "심화·선행";
-
 export type ArithmeticWorksheet = {
   name: string;
   route: string | null;
   grade: string;
   title: string;
   badge?: "암산";
-  track?: WorksheetTrack;
 };
 
 const readyRoutes: Record<string, string> = {
@@ -187,36 +184,6 @@ const mergedMiddleSchoolRoutes = new Set([
   "/arithmetic/middle-school/statistics?kind=mean-applications",
 ]);
 
-const integratedWorksheetRoutes = new Set([
-  "/arithmetic/middle-school/rational-mixed",
-  "/arithmetic/middle-school/curriculum-calculations?kind=coordinate-proportion",
-  "/arithmetic/middle-school/statistics?kind=representative-values",
-  "/arithmetic/middle-school/core-calculations?kind=radical-calculation",
-  "/arithmetic/middle-school/quadratic-equations?kind=factorization",
-  "/arithmetic/high-school/function-transformations",
-]);
-
-const geometryWorksheetRouteParts = [
-  "construction-congruence", "plane-geometry", "solid-geometry", "frequency-graphs",
-  "triangle-quadrilateral", "similarity", "pythagorean", "quartiles-boxplot",
-  "/trigonometry", "/circle-properties", "/coordinate-lines", "/circle-equations",
-  "/sine-cosine-laws", "/conic-", "/plane-vectors", "/vector-", "/space-",
-];
-
-const advancedWorksheetRoutes = new Set([
-  "/arithmetic/high-school/advanced-factorization",
-  "/arithmetic/high-school/arc-length",
-  "/arithmetic/high-school/probability-rules-advanced",
-]);
-
-function worksheetTrack(route: string | null): WorksheetTrack {
-  if (!route) return "집중 훈련";
-  if (advancedWorksheetRoutes.has(route)) return "심화·선행";
-  if (geometryWorksheetRouteParts.some((part) => route.includes(part))) return "도형 필수";
-  if (integratedWorksheetRoutes.has(route)) return "필수 통합";
-  return "집중 훈련";
-}
-
 const combinedMiddleSchoolTitles: Record<string, string> = {
   "/arithmetic/middle-school/core-calculations?kind=linear-equation": "일차방정식과 활용 계산",
   "/arithmetic/middle-school/core-calculations?kind=radical-calculation": "제곱근과 근호 계산",
@@ -250,10 +217,8 @@ export const middleSchoolWorksheetCatalog: ArithmeticWorksheet[] = [
   { grade: "중2", name: "연립방정식 가감법", title: "연립방정식 가감법", route: "/arithmetic/middle-school/core-calculations?kind=simultaneous-elimination" },
   { grade: "중2", name: "연립방정식 활용", title: "연립방정식 활용", route: "/arithmetic/middle-school/core-calculations?kind=simultaneous-application" },
   { grade: "중2", name: "연립방정식의 해의 개수", title: "연립방정식의 해의 개수", route: "/arithmetic/middle-school/core-calculations?kind=simultaneous-special" },
-  { grade: "중2", name: "일차함수의 값·기울기·절편", title: "일차함수의 값·기울기·절편", route: "/arithmetic/middle-school/curriculum-calculations?kind=linear-function-basics" },
-  { grade: "중2", name: "일차함수의 식과 방정식", title: "일차함수의 식과 방정식", route: "/arithmetic/middle-school/curriculum-calculations?kind=linear-function-equations" },
+  { grade: "중2", name: "일차함수", title: "일차함수", route: "/arithmetic/middle-school/curriculum-calculations?kind=linear-function-basics" },
   { grade: "중2", name: "삼각형과 사각형의 계산", title: "삼각형과 사각형의 계산", route: "/arithmetic/middle-school/curriculum-calculations?kind=triangle-quadrilateral" },
-  { grade: "중2", name: "닮음과 평행선의 길이 계산", title: "닮음과 평행선의 길이 계산", route: "/arithmetic/middle-school/curriculum-calculations?kind=similarity" },
   { grade: "중2", name: "피타고라스 정리 계산", title: "피타고라스 정리 계산", route: "/arithmetic/middle-school/curriculum-calculations?kind=pythagorean" },
   { grade: "중2", name: "경우의 수와 확률 계산", title: "경우의 수와 확률 계산", route: "/arithmetic/middle-school/curriculum-calculations?kind=counting-probability" },
 
@@ -265,7 +230,6 @@ export const middleSchoolWorksheetCatalog: ArithmeticWorksheet[] = [
   { grade: "중3", name: "인수분해: 두 항씩 묶기", title: "인수분해: 두 항씩 묶기", route: "/arithmetic/middle-school/factorization?kind=grouping" },
   { grade: "중3", name: "인수분해: 완전제곱식", title: "인수분해: 완전제곱식", route: "/arithmetic/middle-school/factorization?kind=perfect-square" },
   { grade: "중3", name: "인수분해: 제곱의 차", title: "인수분해: 제곱의 차", route: "/arithmetic/middle-school/factorization?kind=difference-squares" },
-  { grade: "중3", name: "인수분해: 계수가 1인 이차삼항식", title: "인수분해: 계수가 1인 이차삼항식", route: "/arithmetic/middle-school/factorization?kind=monic-trinomial" },
   { grade: "중3", name: "인수분해: 일반 이차삼항식", title: "인수분해: 일반 이차삼항식", route: "/arithmetic/middle-school/factorization?kind=nonmonic-trinomial" },
   { grade: "중3", name: "인수분해: 세 문자식", title: "인수분해: 세 문자식", route: "/arithmetic/middle-school/factorization?kind=three-variables" },
   { grade: "중3", name: "인수분해: 3차식 공통인수", title: "인수분해: 3차식 공통인수", route: "/arithmetic/middle-school/factorization?kind=cubic-common" },
@@ -302,8 +266,7 @@ export const middleSchoolWorksheetCatalog: ArithmeticWorksheet[] = [
     return combinedTitle
       ? { ...worksheet, name: combinedTitle, title: combinedTitle }
       : worksheet;
-  })
-  .map((worksheet) => ({ ...worksheet, track: worksheetTrack(worksheet.route) }));
+  });
 
 export const highSchoolWorksheetCatalog: ArithmeticWorksheet[] = [
   { grade: "공수1", name: "다항식의 연산", title: "다항식의 연산", route: "/arithmetic/high-school/polynomial-add-subtract" },
@@ -372,7 +335,7 @@ export const highSchoolWorksheetCatalog: ArithmeticWorksheet[] = [
   { grade: "확통", name: "이산확률분포와 이항분포", title: "이산확률분포와 이항분포", route: "/arithmetic/high-school/probability-distributions" },
   { grade: "확통", name: "정규분포의 계산", title: "정규분포의 계산", route: "/arithmetic/high-school/normal-distributions" },
   { grade: "확통", name: "통계적 추정", title: "통계적 추정", route: "/arithmetic/high-school/statistical-inference" },
-].map((worksheet) => ({ ...worksheet, track: worksheetTrack(worksheet.route) }));
+];
 
 export const stemWorksheetCatalog: ArithmeticWorksheet[] = [
   { grade: "이공계 기초", name: "복소수의 극형식·오일러 공식", title: "복소수의 극형식·오일러 공식", route: "/arithmetic/stem/foundation?kind=complex-polar" },

@@ -267,7 +267,17 @@ function questionFor(kind: MiddleCoreKind, structure: string) {
   }
   if (kind === "linear-inequality-application") return "최대로 살 수 있는 개수는?";
   if (kind === "simultaneous-application") {
-    return structure === "ticket-count" ? "학생과 어른은 각각 몇 명인가?" : "두 수는?";
+    const questions: Record<string, string> = {
+      "sum-difference": "두 자연수는?",
+      "ticket-count": "학생과 어른은 각각 몇 명인가?",
+      "animal-count": "닭과 토끼는 각각 몇 마리인가?",
+      "coin-count": "100원짜리와 500원짜리는 각각 몇 개인가?",
+      "rectangle-dimensions": "직사각형의 가로와 세로는?",
+      "two-digit-number": "처음 두 자리 자연수는?",
+      "age-relation": "아이와 어른의 현재 나이는?",
+      "opposite-directions": "두 사람의 속력은?",
+    };
+    return questions[structure] ?? "구하는 값은?";
   }
   if (kind === "simultaneous-special") return "해의 개수는?";
   const questions: Record<MiddleCoreKind, string> = {
@@ -761,33 +771,101 @@ function build(
   }
 
   if (kind === "simultaneous-application") {
-    if (index % 2 === 0) {
-      const x = integer(next, 4, 12);
-      const y = integer(next, 2, x - 1);
-      const sum = x + y;
-      const difference = x - y;
+    const variant = index % 8;
+    if (variant === 0) {
+      const larger = integer(next, 7, 15);
+      const smaller = integer(next, 2, larger - 2);
       return make(id, kind,
-        `\\text{두 자연수의 합은 }${sum}\\text{이고 차는 }${difference}\\text{이다.}`,
-        `(${x},${y})`,
-        "큰 수를 x, 작은 수를 y로 놓고 합과 차에 대한 두 식을 연립하여 푼다.",
-        [`(${y},${x})`, `(${x + 1},${y - 1})`, `(${sum},${difference})`],
+        `\\text{두 자연수의 합은 }${larger + smaller}\\text{이고 차는 }${larger - smaller}\\text{이다.}`,
+        `(${larger},${smaller})`,
+        "큰 수를 x, 작은 수를 y로 놓고 합과 차에 대한 연립방정식을 푼다.",
+        [`(${smaller},${larger})`, `(${larger + 1},${smaller - 1})`, `(${larger + smaller},${larger - smaller})`],
         "sum-difference");
     }
-    const students = integer(next, 5, 14);
-    const adults = integer(next, 2, 8);
-    const studentPrice = 3000;
-    const adultPrice = 5000;
-    const people = students + adults;
-    const revenue = studentPrice * students + adultPrice * adults;
+    if (variant === 1) {
+      const students = integer(next, 7, 15);
+      const adults = integer(next, 2, 8);
+      const people = students + adults;
+      const revenue = 3000 * students + 5000 * adults;
+      return make(id, kind,
+        `\\text{학생과 어른이 모두 }${people}\\text{명이고 입장료 합계는 }${revenue}\\text{원이다.}\\quad \\text{학생 }3000\\text{원, 어른 }5000\\text{원}`,
+        `(${students},${adults})`,
+        "학생 수와 어른 수를 미지수로 놓고 인원수와 입장료 합계에 대한 두 식을 세운다.",
+        [`(${adults},${students})`, `(${students + 1},${adults - 1})`, `(${people},${adults})`],
+        "ticket-count");
+    }
+    if (variant === 2) {
+      const chickens = integer(next, 5, 13);
+      const rabbits = integer(next, 2, 8);
+      const total = chickens + rabbits;
+      const legs = 2 * chickens + 4 * rabbits;
+      return make(id, kind,
+        `\\text{닭과 토끼가 모두 }${total}\\text{마리이고 다리 수의 합은 }${legs}\\text{개이다.}`,
+        `(${chickens},${rabbits})`,
+        "닭과 토끼의 수를 미지수로 놓고 마릿수와 다리 수에 대한 두 식을 세운다.",
+        [`(${rabbits},${chickens})`, `(${chickens + 2},${rabbits - 1})`, `(${total},${rabbits})`],
+        "animal-count");
+    }
+    if (variant === 3) {
+      const hundreds = integer(next, 4, 12);
+      const fiveHundreds = integer(next, 2, 9);
+      const count = hundreds + fiveHundreds;
+      const value = 100 * hundreds + 500 * fiveHundreds;
+      return make(id, kind,
+        `100\\text{원짜리와 }500\\text{원짜리 동전이 모두 }${count}\\text{개이고 금액은 }${value}\\text{원이다.}`,
+        `(${hundreds},${fiveHundreds})`,
+        "두 동전의 개수와 전체 금액에 대한 연립방정식을 세운다.",
+        [`(${fiveHundreds},${hundreds})`, `(${hundreds + 1},${fiveHundreds - 1})`, `(${count},${fiveHundreds})`],
+        "coin-count");
+    }
+    if (variant === 4) {
+      const width = integer(next, 4, 10);
+      const gap = integer(next, 2, 6);
+      const length = width + gap;
+      const perimeter = 2 * (length + width);
+      return make(id, kind,
+        `\\text{가로가 세로보다 }${gap}\\text{만큼 길고 둘레가 }${perimeter}\\text{인 직사각형}`,
+        `(${length},${width})`,
+        "가로와 세로의 차, 둘레에 대한 두 식을 세운다.",
+        [`(${width},${length})`, `(${length + 1},${width - 1})`, `(${perimeter / 2},${gap})`],
+        "rectangle-dimensions");
+    }
+    if (variant === 5) {
+      const tens = integer(next, 4, 9);
+      const ones = integer(next, 1, tens - 1);
+      const digitSum = tens + ones;
+      const difference = 9 * (tens - ones);
+      const number = 10 * tens + ones;
+      return make(id, kind,
+        `\\text{십의 자리와 일의 자리의 합이 }${digitSum}\\text{이고, 자리 수를 바꾼 수보다 }${difference}\\text{만큼 큰 두 자리 자연수}`,
+        `${number}`,
+        "십의 자리와 일의 자리를 미지수로 놓고 자리값을 이용해 두 식을 세운다.",
+        [`${10 * ones + tens}`, `${number + 9}`, `${number - 9}`],
+        "two-digit-number");
+    }
+    if (variant === 6) {
+      const child = integer(next, 8, 15);
+      const years = integer(next, 3, 8);
+      const adult = 2 * child + years;
+      return make(id, kind,
+        `\\text{아이와 어른의 현재 나이의 합은 }${child + adult}\\text{살이고, }${years}\\text{년 뒤 어른의 나이는 아이의 나이의 2배이다.}`,
+        `(${child},${adult})`,
+        "현재 나이를 미지수로 놓고 나이의 합과 몇 년 뒤의 관계를 식으로 세운다.",
+        [`(${adult},${child})`, `(${child + years},${adult + years})`, `(${child + 1},${adult - 1})`],
+        "age-relation");
+    }
+    const slower = integer(next, 3, 7);
+    const speedGap = integer(next, 2, 5);
+    const faster = slower + speedGap;
+    const hours = integer(next, 2, 4);
+    const distance = (slower + faster) * hours;
     return make(id, kind,
-      `\\text{학생과 어른이 모두 }${people}\\text{명이고 입장료 합계는 }${revenue}\\text{원이다.}\\quad
-      \\text{학생 }${studentPrice}\\text{원, 어른 }${adultPrice}\\text{원}`,
-      `(${students},${adults})`,
-      "학생 수를 x, 어른 수를 y로 놓고 인원수와 입장료 합계에 대한 두 식을 세운다.",
-      [`(${adults},${students})`, `(${students + 1},${adults - 1})`, `(${people},${adults})`],
-      "ticket-count");
+      `\\text{두 사람이 같은 곳에서 반대 방향으로 }${hours}\\text{시간 이동한 뒤 }${distance}\\text{km 떨어졌다. 한 사람은 다른 사람보다 시속 }${speedGap}\\text{km 빠르다.}`,
+      `(${slower},${faster})`,
+      "두 속력의 합과 차에 대한 연립방정식을 세운다.",
+      [`(${faster},${slower})`, `(${slower + 1},${faster - 1})`, `(${distance / hours},${speedGap})`],
+      "opposite-directions");
   }
-
   if (kind === "simultaneous-special") {
     const a = 2 + (index % 3);
     const b = 1 + ((index + 1) % 4);

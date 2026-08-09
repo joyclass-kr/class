@@ -1,13 +1,11 @@
 export type MiddleCurriculumKind =
   | "coordinate-proportion"
   | "linear-function-basics"
-  | "linear-function-equations"
   | "construction-congruence"
   | "frequency-graphs"
   | "plane-geometry"
   | "solid-geometry"
   | "triangle-quadrilateral"
-  | "similarity"
   | "pythagorean"
   | "counting-probability"
   | "quartiles-boxplot";
@@ -35,13 +33,11 @@ export type MiddleCurriculumVisual =
 export const MIDDLE_CURRICULUM_KINDS: MiddleCurriculumKind[] = [
   "coordinate-proportion",
   "linear-function-basics",
-  "linear-function-equations",
   "construction-congruence",
   "frequency-graphs",
   "plane-geometry",
   "solid-geometry",
   "triangle-quadrilateral",
-  "similarity",
   "pythagorean",
   "counting-probability",
   "quartiles-boxplot",
@@ -49,14 +45,12 @@ export const MIDDLE_CURRICULUM_KINDS: MiddleCurriculumKind[] = [
 
 export const MIDDLE_CURRICULUM_TITLES: Record<MiddleCurriculumKind, string> = {
   "coordinate-proportion": "좌표·정비례·반비례 계산",
-  "linear-function-basics": "일차함수의 값·기울기·절편",
-  "linear-function-equations": "일차함수의 식과 방정식",
+  "linear-function-basics": "일차함수",
   "construction-congruence": "기본도형·작도·합동",
   "frequency-graphs": "도수분포·상대도수 그래프",
   "plane-geometry": "기본각·다각형·부채꼴 계산",
   "solid-geometry": "입체도형의 겉넓이와 부피",
   "triangle-quadrilateral": "삼각형과 사각형의 계산",
-  similarity: "닮음과 평행선의 길이 계산",
   pythagorean: "피타고라스 정리 계산",
   "counting-probability": "경우의 수와 확률 계산",
   "quartiles-boxplot": "사분위수와 상자그림 계산",
@@ -65,13 +59,11 @@ export const MIDDLE_CURRICULUM_TITLES: Record<MiddleCurriculumKind, string> = {
 export const MIDDLE_CURRICULUM_GRADES: Record<MiddleCurriculumKind, string> = {
   "coordinate-proportion": "중1",
   "linear-function-basics": "중2",
-  "linear-function-equations": "중2",
   "construction-congruence": "중1",
   "frequency-graphs": "중1",
   "plane-geometry": "중1",
   "solid-geometry": "중1",
   "triangle-quadrilateral": "중2",
-  similarity: "중2",
   pythagorean: "중2",
   "counting-probability": "중2",
   "quartiles-boxplot": "중3",
@@ -90,22 +82,12 @@ const METHOD_PLANS: Record<MiddleCurriculumKind, string[]> = {
   ],
   "linear-function-basics": [
     "function-value",
-    "input-from-value",
+    "table-equation",
     "slope-two-points",
-    "y-intercept",
-    "x-intercept",
-    "equation-slope-intercept",
-    "coefficient-from-point",
-    "parallel-slope",
-  ],
-  "linear-function-equations": [
-    "point-parameter",
+    "both-intercepts",
     "equation-two-points",
     "parallel-through-point",
     "intersection",
-    "system-graph-solution",
-    "x-axis-intersection",
-    "y-axis-intersection",
     "two-lines-parameter",
   ],
   "construction-congruence": [
@@ -158,16 +140,6 @@ const METHOD_PLANS: Record<MiddleCurriculumKind, string[]> = {
     "incenter-bisector",
     "centroid-ratio",
   ],
-  similarity: [
-    "scale-factor",
-    "missing-side",
-    "perimeter-ratio",
-    "area-ratio",
-    "parallel-segment",
-    "midpoint-segment",
-    "two-triangles",
-    "combined-similarity",
-  ],
   pythagorean: [
     "hypotenuse",
     "missing-leg",
@@ -210,8 +182,10 @@ const METHOD_TITLES: Record<string, string> = {
   "direct-table": "정비례 표의 빈칸",
   "inverse-table": "반비례 표의 빈칸",
   "function-value": "일차함수의 함숫값",
+  "table-equation": "표에서 일차함수의 식 구하기",
   "input-from-value": "함숫값에서 x 구하기",
   "slope-two-points": "두 점을 지나는 기울기",
+  "both-intercepts": "x절편과 y절편",
   "y-intercept": "y절편",
   "x-intercept": "x절편",
   "equation-slope-intercept": "기울기와 절편으로 식 구하기",
@@ -484,6 +458,9 @@ function buildLinearFunction(
   next: () => number,
   id: string,
 ) {
+  if (["equation-two-points", "parallel-through-point", "intersection", "two-lines-parameter"].includes(method)) {
+    return buildLinearRelation(method, next, id);
+  }
   const m = nonzero(next, -5, 5);
   const b = nonzero(next, -8, 8);
   const x = nonzero(next, -6, 6);
@@ -503,6 +480,17 @@ function buildLinearFunction(
         `${x * (m + b)}`,
         `${m + x - b}`,
       ]);
+  }
+  if (method === "table-equation") {
+    const x2 = x + 2;
+    const x3 = x + 4;
+    const y2 = m * x2 + b;
+    const y3 = m * x3 + b;
+    return make(id, method,
+      `\\begin{array}{c|ccc}x&${x}&${x2}&${x3}\\\\ \\hline y&${y}&${y2}&${y3}\\end{array}`,
+      equation(m, b),
+      "x가 일정하게 증가할 때 y의 증가량으로 기울기를 구한 뒤 한 좌표를 대입한다.",
+      [equation(-m, b), equation(m, -b), equation(b, m), equation(-m, -b)]);
   }
   if (method === "input-from-value") {
     return make(id, method, `f(x)=${linear(m, b)},\\quad f(x)=${y},\\quad x=?`, `${x}`,
@@ -524,6 +512,13 @@ function buildLinearFunction(
         `${(y2 - y) + (x2 - x)}`,
         `${(y2 - y) - (x2 - x)}`,
       ]);
+  }
+  if (method === "both-intercepts") {
+    const root = nonzero(next, -7, 7);
+    const constant = -m * root;
+    return make(id, method, equation(m, constant), `(${root},${constant})`,
+      "y=0을 대입해 x절편을 구하고, x=0을 대입해 y절편을 구한다.",
+      [`(${constant},${root})`, `(${-root},${constant})`, `(${root},${-constant})`, `(${root + 1},${constant})`, `(${root},${constant + 1})`, `(0,${constant})`, `(${root},0)`]);
   }
   if (method === "y-intercept") {
     return make(id, method, equation(m, b), `${b}`,
@@ -1332,13 +1327,11 @@ function build(
 ) {
   if (group === "coordinate-proportion") return buildCoordinate(method, next, id, index);
   if (group === "linear-function-basics") return buildLinearFunction(method, next, id);
-  if (group === "linear-function-equations") return buildLinearRelation(method, next, id);
   if (group === "construction-congruence") return buildConstructionCongruence(method, id);
   if (group === "frequency-graphs") return buildFrequencyGraphs(method, next, id);
   if (group === "plane-geometry") return buildPlaneGeometry(method, next, id);
   if (group === "solid-geometry") return buildSolidGeometry(method, next, id);
   if (group === "triangle-quadrilateral") return withGeometry(buildTriangleQuadrilateral(method, next, id), method, []);
-  if (group === "similarity") return withGeometry(buildSimilarity(method, next, id), method, []);
   if (group === "pythagorean") return withGeometry(buildPythagorean(method, next, id, index), method, []);
   if (group === "counting-probability") return buildProbability(method, next, id);
   return buildQuartiles(method, next, id, index);
@@ -1357,10 +1350,14 @@ export function isMiddleCurriculumKind(value: string | null): value is MiddleCur
 export function createMiddleCurriculumProblemSet(kind: MiddleCurriculumKind, seed: number) {
   const next = random(seed);
   const signatures = new Set<string>();
+  const plannedMethods = METHOD_PLANS[kind];
+  const methods = kind === "frequency-graphs"
+    ? Array.from({ length: 4 }, (_, index) => plannedMethods[(((Math.abs(seed) - 1) * 4) + index) % plannedMethods.length])
+    : plannedMethods;
   return {
     seed,
     kind,
-    problems: METHOD_PLANS[kind].map((method, index) => {
+    problems: methods.map((method, index) => {
       let problem = build(kind, method, next, `middle-curriculum-${kind}-${index}`, index);
       let signature = `${problem.latex}|${problem.answerLatex}`;
       for (let attempt = 0; signatures.has(signature) && attempt < 20; attempt += 1) {

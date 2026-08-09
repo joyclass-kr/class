@@ -6047,10 +6047,6 @@ button.division-option {
     white-space: nowrap;
   }
 
-  .worksheet-track[data-track="필수 통합"] { color: #315f94; }
-  .worksheet-track[data-track="도형 필수"] { color: #8a4f16; }
-  .worksheet-track[data-track="심화·선행"] { color: #7b3f91; }
-
   .inline-math-text-formula {
     display: inline-flex;
     white-space: nowrap;

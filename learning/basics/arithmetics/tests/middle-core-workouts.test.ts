@@ -9,7 +9,7 @@ import {
 } from "../lib/middle-core-workouts.ts";
 import { middleSchoolWorksheetCatalog } from "../lib/arithmetic-worksheets.ts";
 
-test("중등 핵심 연산 24개 유형이 각각 8문제를 생성한다", () => {
+test("학등 핵심 연산 24개 유형이 각각 8문제를 생성한다", () => {
   assert.equal(MIDDLE_CORE_KINDS.length, 24);
   for (const kind of MIDDLE_CORE_KINDS) {
     const set = createMiddleCoreProblemSet(kind, 20260803);
@@ -108,7 +108,7 @@ test("통합 학습지는 쉬운 하위 유형을 한 문제지 안에서 순환
   );
 });
 
-test("중2 통합 학습지는 쉬운 풀이를 한 문제씩만 두고 활용·특수 유형에 다섯 문제를 배정한다", () => {
+test("학2 통합 학습지는 쉬운 풀이를 한 문제씩만 두고 활용·특수 유형에 다섯 문제를 배정한다", () => {
   const problems = createMiddleCoreProblemSet("linear-system-comprehensive", 20260809).problems;
   assert.deepEqual(
     problems.map(({ kind }) => kind),
@@ -125,14 +125,14 @@ test("중2 통합 학습지는 쉬운 풀이를 한 문제씩만 두고 활용·
   );
   assert.deepEqual(
     problems.slice(3).map(({ structure }) => structure),
-    ["budget-maximum", "sum-difference", "ticket-count", "no-solution", "infinitely-many"],
+    ["budget-maximum", "rectangle-dimensions", "two-digit-number", "no-solution", "infinitely-many"],
   );
   assert.equal(problems.filter(({ kind }) => kind === "linear-inequality").length, 1);
   assert.equal(problems.filter(({ kind }) => kind === "simultaneous-substitution").length, 1);
   assert.equal(problems.filter(({ kind }) => kind === "simultaneous-elimination").length, 1);
 });
 
-test("연립방정식은 두 식이나 등식의 좌우만 바꾼 문제를 중복으로 세지 않는다", () => {
+test("연립방정식은 두 식이나 등식의 좌우만 바꾼 문제를 학복으로 세지 않는다", () => {
   const normalize = (latex: string) => {
     const compact = latex.replace(/\s+/g, "");
     const cases = /\\begin\{cases\}([\s\S]+)\\end\{cases\}/.exec(compact);
@@ -165,7 +165,7 @@ test("새 문제는 직전 문제지와 동일한 문제를 두 개 이상 반�
   }
 });
 
-test("근호 계산은 중복 덧셈·뺄셈과 단순 대소 비교 없이 필수 계산 유형을 한 번씩 다룬다", () => {
+test("근호 계산은 학복 덧셈·뺄셈과 단순 대소 비교 없이 필수 계산 유형을 한 번씩 다룬다", () => {
   const problems = createMiddleCoreProblemSet("radical-calculation", 20260803).problems;
   assert.deepEqual(
     problems.map(({ structure }) => structure),
@@ -200,8 +200,8 @@ test("오답 보충은 서로 다른 유형에서 최대 두 문제만 만든다
   assert.ok(reviews.every(({ difficulty }) => difficulty === "advanced"));
 });
 
-test("중학교 필수 목록 56개는 쉬운 유형을 통합하고 모두 연결된다", () => {
-  assert.equal(middleSchoolWorksheetCatalog.length, 56);
+test("중학교 필수 목록 53개는 쉬운 유형을 통합하고 모두 연결된다", () => {
+  assert.equal(middleSchoolWorksheetCatalog.length, 53);
   assert.ok(middleSchoolWorksheetCatalog.every(({ route }) => route !== null));
   assert.equal(
     new Set(middleSchoolWorksheetCatalog.map(({ name }) => name)).size,
@@ -213,7 +213,7 @@ test("중학교 필수 목록 56개는 쉬운 유형을 통합하고 모두 연�
   );
 });
 
-test("통합된 쉬운 중등 학습지는 목록에서 별도 페이지로 중복 노출하지 않는다", () => {
+test("통합된 쉬운 학등 학습지는 목록에서 별도 페이지로 학복 노출하지 않는다", () => {
   const routes = middleSchoolWorksheetCatalog.map(({ route }) => route);
   assert.ok(!routes.some((route) => route?.includes("linear-equation-application")));
   assert.ok(!routes.some((route) => route?.includes("kind=square-roots-real")));
@@ -261,7 +261,7 @@ test("prime factorization advances from exponent notation to middle-school appli
   assert.doesNotMatch(problems.map(({ latex }) => latex).join(" "), /구하여라/);
 });
 
-test("최대공약수와 최소공배수 문제는 식 안의 중복 질문 없이 구할 대상을 한 번만 묻는다", () => {
+test("최대공약수와 최소공배수 문제는 식 안의 학복 질문 없이 구할 대상을 한 번만 묻는다", () => {
   const expectedQuestions = [
     "최대공약수와 최소공배수는?",
     "최대공약수는?",

@@ -11,6 +11,16 @@ export function targetQuestion(label: string) {
 }
 
 export function worksheetQuestionForLabel(label: string) {
+  if (/표에서 일차함수의 식/.test(label)) return "일차함수의 식은?";
+  if (/x절편과 y절편/.test(label)) return "(x절편, y절편)은?";
+  if (/직육면체의 부피/.test(label)) return "직육면체의 부피는?";
+  if (/직육면체의 겉넓이/.test(label)) return "직육면체의 겉넓이는?";
+  if (/각기둥의 부피/.test(label)) return "각기둥의 부피는?";
+  if (/각뿔의 부피/.test(label)) return "각뿔의 부피는?";
+  if (/원기둥의 부피/.test(label)) return "원기둥의 부피는?";
+  if (/원기둥의 겉넓이/.test(label)) return "원기둥의 겉넓이는?";
+  if (/원뿔의 부피/.test(label)) return "원뿔의 부피는?";
+  if (/구의 부피와 겉넓이/.test(label)) return "구의 부피와 겉넓이는?";
   if (/좌표와 사분면/.test(label)) return "점이 속한 사분면은?";
   if (/좌표축 위의 점/.test(label)) return "점이 놓인 좌표축은?";
   if (/정비례 상수|반비례 상수/.test(label)) return "상수 $a$는?";

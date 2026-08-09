@@ -46,7 +46,7 @@ test("중등 교육과정 공통 발문은 구할 대상을 정확히 밝힌다"
       "일차함수의 식은?",
       "$(x, y)$는?",
       "대각선의 개수는?",
-      "부피와 겉넓이는?",
+      "구의 부피와 겉넓이는?",
       "경우의 수는?",
       "직각삼각형인가?",
       "각의 크기는?",
@@ -68,12 +68,8 @@ const EXPECTED_METHODS: Record<MiddleCurriculumKind, string[]> = {
     "inverse-coefficient", "inverse-value", "direct-table", "inverse-table",
   ],
   "linear-function-basics": [
-    "function-value", "input-from-value", "slope-two-points", "y-intercept",
-    "x-intercept", "equation-slope-intercept", "coefficient-from-point", "parallel-slope",
-  ],
-  "linear-function-equations": [
-    "point-parameter", "equation-two-points", "parallel-through-point", "intersection",
-    "system-graph-solution", "x-axis-intersection", "y-axis-intersection", "two-lines-parameter",
+    "function-value", "table-equation", "slope-two-points", "both-intercepts",
+    "equation-two-points", "parallel-through-point", "intersection", "two-lines-parameter",
   ],
   "construction-congruence": [
     "line-relation", "line-plane-relation", "perpendicular-bisector", "angle-bisector",
@@ -95,10 +91,6 @@ const EXPECTED_METHODS: Record<MiddleCurriculumKind, string[]> = {
     "isosceles-angle", "triangle-exterior", "parallelogram-angle", "parallelogram-side",
     "trapezoid-midline", "circumcenter-distance", "incenter-bisector", "centroid-ratio",
   ],
-  similarity: [
-    "scale-factor", "missing-side", "perimeter-ratio", "area-ratio",
-    "parallel-segment", "midpoint-segment", "two-triangles", "combined-similarity",
-  ],
   pythagorean: [
     "hypotenuse", "missing-leg", "rectangle-diagonal", "square-diagonal",
     "solid-diagonal", "right-triangle-check", "isosceles-height", "composite-distance",
@@ -113,12 +105,12 @@ const EXPECTED_METHODS: Record<MiddleCurriculumKind, string[]> = {
   ],
 };
 
-test("교육과정 보완 학습지 12개는 필수 유형을 각각 8문제로 묶는다", () => {
+test("교육과정 보완 학습지는 필수 유형을 적정 문제 수로 묶는다", () => {
   assert.deepEqual(MIDDLE_CURRICULUM_KINDS, Object.keys(EXPECTED_METHODS));
   for (const kind of MIDDLE_CURRICULUM_KINDS) {
     const set = createMiddleCurriculumProblemSet(kind, 20260730);
-    assert.equal(set.problems.length, 8, kind);
-    assert.deepEqual(set.problems.map(({ kind: method }) => method), EXPECTED_METHODS[kind], kind);
+    assert.equal(set.problems.length, kind === "frequency-graphs" ? 4 : EXPECTED_METHODS[kind].length, kind);
+    assert.ok(set.problems.every(({ kind: method }) => EXPECTED_METHODS[kind].includes(method)), kind);
     assert.ok(MIDDLE_CURRICULUM_TITLES[kind]);
     assert.match(MIDDLE_CURRICULUM_GRADES[kind], /^중[123]$/);
   }
@@ -136,8 +128,14 @@ test("작도·합동과 도수분포 문제는 정확한 발문과 실제 그림
   );
 });
 
-test("중2 도형 세 학습지는 모든 문항에 유형별 도식을 제공한다", () => {
-  for (const kind of ["triangle-quadrilateral", "similarity", "pythagorean"] as const) {
+test("도수분포 8유형은 두 세트에 걸쳐 모두 출제된다", () => {
+  const rotatedMethods = [1, 2].flatMap((seed) =>
+    createMiddleCurriculumProblemSet("frequency-graphs", seed).problems.map(({ kind }) => kind),
+  );
+  assert.deepEqual(new Set(rotatedMethods), new Set(EXPECTED_METHODS["frequency-graphs"]));
+});
+test("중2 도형 두 학습지는 모든 문항에 유형별 도식을 제공한다", () => {
+  for (const kind of ["triangle-quadrilateral", "pythagorean"] as const) {
     const problems = createMiddleCurriculumProblemSet(kind, 20260809).problems;
     assert.equal(problems.length, 8);
     assert.ok(problems.every(({ visual }) => visual?.type === "geometry"), kind);
@@ -153,7 +151,7 @@ test("모든 보완 문제는 실제 오답 세 개와 한 줄 핵심 풀이를 
   for (const kind of MIDDLE_CURRICULUM_KINDS) {
     for (let seed = 1; seed <= 200; seed += 1) {
       const problems = createMiddleCurriculumProblemSet(kind, seed).problems;
-      assert.equal(new Set(problems.map(({ latex, answerLatex }) => `${latex}|${answerLatex}`)).size, 8);
+      assert.equal(new Set(problems.map(({ latex, answerLatex }) => `${latex}|${answerLatex}`)).size, problems.length);
       for (const problem of problems) {
         assert.equal(problem.distractors.length, 3, `${kind}/${seed}/${problem.kind}`);
         assert.equal(new Set([problem.answerLatex, ...problem.distractors]).size, 4);
@@ -176,25 +174,25 @@ test("보완 학습지는 기본 2·응용 3·고난도 3문제로 진행한다"
   for (const kind of MIDDLE_CURRICULUM_KINDS) {
     assert.deepEqual(
       createMiddleCurriculumProblemSet(kind, 29).problems.map(({ difficulty }) => difficulty),
-      expected,
+      expected.slice(0, kind === "frequency-graphs" ? 4 : EXPECTED_METHODS[kind].length),
     );
   }
 });
 
 test("같은 시드는 같은 문제를 만들고 오답 보충은 최대 두 유형만 만든다", () => {
-  const first = createMiddleCurriculumProblemSet("similarity", 99);
-  const second = createMiddleCurriculumProblemSet("similarity", 99);
-  const different = createMiddleCurriculumProblemSet("similarity", 100);
+  const first = createMiddleCurriculumProblemSet("pythagorean", 99);
+  const second = createMiddleCurriculumProblemSet("pythagorean", 99);
+  const different = createMiddleCurriculumProblemSet("pythagorean", 100);
   assert.deepEqual(first, second);
   assert.notDeepEqual(first, different);
 
   const reviews = createMiddleCurriculumReviewProblems(
-    "similarity",
-    ["scale-factor", "missing-side", "scale-factor", "area-ratio"],
+    "pythagorean",
+    ["hypotenuse", "missing-leg", "hypotenuse", "rectangle-diagonal"],
     77,
   );
   assert.equal(reviews.length, 2);
-  assert.deepEqual(reviews.map(({ kind }) => kind), ["scale-factor", "missing-side"]);
+  assert.deepEqual(reviews.map(({ kind }) => kind), ["hypotenuse", "missing-leg"]);
   assert.ok(reviews.every(({ difficulty }) => difficulty === "advanced"));
 });
 

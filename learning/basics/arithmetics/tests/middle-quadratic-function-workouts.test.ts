@@ -24,8 +24,8 @@ test("묶음 학습지는 필요한 세부 계산 유형을 빠짐없이 섞는�
   assert.deepEqual(
     new Set(createMiddleQuadraticFunctionProblemSet("values-and-forms", 7).problems.map(({ kind }) => kind)),
     new Set([
-      "basic-value", "vertex-value", "expand-vertex-form", "fraction-decimal",
-      "vertex-axis", "extreme-value", "complete-square",
+      "basic-value", "expand-vertex-form", "vertex-axis", "complete-square",
+      "extreme-value", "coefficient-from-point", "equation-from-vertex-point", "intercepts",
     ]),
   );
   assert.deepEqual(
@@ -96,12 +96,13 @@ test("그래프 작도 없이 꼭짓점에서 최댓값·최솟값을 계산한�
   }
 });
 
-test("분수·소수 계수는 한 묶음 안에서 두 표기를 모두 연습한다", () => {
-  const problems = createMiddleQuadraticFunctionProblemSet("values-and-forms", 20260730).problems
-    .filter(({ kind }) => kind === "fraction-decimal");
-  assert.deepEqual(problems.map(({ structure }) => structure).sort(), ["decimal-value", "fraction-value"]);
-  assert.ok(problems.some(({ latex }) => latex.includes("\\dfrac{1}{2}")));
-  assert.ok(problems.some(({ latex }) => latex.includes("-0.5")));
+test("식과 꼭짓점 학습지는 단순 함숫값을 한 문제만 둔다", () => {
+  const problems = createMiddleQuadraticFunctionProblemSet("values-and-forms", 20260730).problems;
+  assert.equal(
+    problems.filter(({ kind }) => ["basic-value", "vertex-value", "fraction-decimal"].includes(kind)).length,
+    1,
+  );
+  assert.equal(problems[0].kind, "basic-value");
 });
 
 test("이차함수 종합은 연속 세 세트에서 모든 계산 유형을 순환한다", () => {

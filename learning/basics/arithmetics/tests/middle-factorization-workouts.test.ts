@@ -141,7 +141,15 @@ test("인수분해 13개 세부 유형이 각각 8문제를 생성한다", () =>
   for (const kind of MIDDLE_FACTORIZATION_KINDS) {
     const problemSet = createMiddleFactorizationProblemSet(kind, 20260727);
     assert.equal(problemSet.problems.length, 8);
-    assert.ok(problemSet.problems.every((problem) => problem.kind === kind || kind === "comprehensive"));
+    if (kind === "nonmonic-trinomial") {
+      assert.deepEqual(problemSet.problems.map(({ kind: problemKind }) => problemKind), [
+        "monic-trinomial", "monic-trinomial",
+        "nonmonic-trinomial", "nonmonic-trinomial", "nonmonic-trinomial",
+        "nonmonic-trinomial", "nonmonic-trinomial", "nonmonic-trinomial",
+      ]);
+    } else {
+      assert.ok(problemSet.problems.every((problem) => problem.kind === kind || kind === "comprehensive"));
+    }
     assert.ok(problemSet.problems.every((problem) => !/^인수분해:/.test(problem.label)));
     assert.ok(problemSet.problems.every((problem) => !/[²³⁴⁵⁶⁷⁸⁹]/.test(problem.label)));
   }

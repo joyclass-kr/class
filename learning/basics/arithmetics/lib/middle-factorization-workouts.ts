@@ -764,7 +764,11 @@ export function createMiddleFactorizationProblemSet(kind: MiddleFactorizationKin
     problems: Array.from({ length: 8 }, (_, index) => (
       {
         ...build(
-          kind === "comprehensive" ? comprehensiveKind(seed, index) : kind,
+          kind === "comprehensive"
+            ? comprehensiveKind(seed, index)
+            : kind === "nonmonic-trinomial" && index < 2
+              ? "monic-trinomial"
+              : kind,
           next,
           `middle-factorization-${kind}-${index}`,
           index,

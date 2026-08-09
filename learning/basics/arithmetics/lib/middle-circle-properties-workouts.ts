@@ -256,7 +256,7 @@ function build(
   if (kind === "tangent-expression") {
     const solution = integer(next, 4, 10);
     return make(id, kind,
-      `PA=x+${solution},\quad PB=2x,\quad PA=PB`,
+      `PA=x+${solution},\\quad PB=2x,\\quad PA=PB`,
       `${solution}`,
       `한 점에서 그은 두 접선의 길이는 같으므로 x+${solution}=2x를 푼다.`,
       [`${solution * 2}`, `${solution + 1}`, `${Math.max(1, solution - 1)}`],
@@ -269,7 +269,7 @@ function build(
     const chord = integer(next, 4, 10);
     const perimeter = tangent * 2 + chord;
     return make(id, kind,
-      `PA,PB:\text{ 접선},\quad PA=${tangent},\quad AB=${chord},\quad \triangle PAB\text{의 둘레}`,
+      `PA,PB:\\text{ 접선},\\quad PA=${tangent},\\quad AB=${chord},\\quad \\triangle PAB\\text{의 둘레}`,
       `${perimeter}`,
       `PA=PB=${tangent}이므로 삼각형의 둘레는 ${tangent}+${tangent}+${chord}이다.`,
       [`${tangent + chord}`, `${tangent * 2}`, `${perimeter + tangent}`],
@@ -280,7 +280,7 @@ function build(
   if (kind === "equal-chord-distance") {
     const distance = integer(next, 3, 9);
     return make(id, kind,
-      `AB=CD,\quad OM\perp AB,\quad ON\perp CD,\quad OM=${distance},\quad ON`,
+      `AB=CD,\\quad OM\\perp AB,\\quad ON\\perp CD,\\quad OM=${distance},\\quad ON`,
       `${distance}`,
       "한 원에서 길이가 같은 두 현은 중심에서 같은 거리에 있다.",
       [`${distance + 1}`, `${distance * 2}`, `${Math.max(1, distance - 1)}`],
@@ -291,7 +291,7 @@ function build(
   if (kind === "equal-chord-length") {
     const chord = 2 * integer(next, 4, 10);
     return make(id, kind,
-      `OM=ON,\quad OM\perp AB,\quad ON\perp CD,\quad AB=${chord},\quad CD`,
+      `OM=ON,\\quad OM\\perp AB,\\quad ON\\perp CD,\\quad AB=${chord},\\quad CD`,
       `${chord}`,
       "한 원에서 중심으로부터 같은 거리에 있는 두 현의 길이는 같다.",
       [`${chord / 2}`, `${chord + 2}`, `${chord * 2}`],
@@ -303,10 +303,10 @@ function build(
     const near = integer(next, 2, 5);
     const far = near + integer(next, 1, 4);
     return make(id, kind,
-      `OM\perp AB,\quad ON\perp CD,\quad OM=${near},\quad ON=${far}`,
-      `\overline{AB}`,
+      `OM\\perp AB,\\quad ON\\perp CD,\\quad OM=${near},\\quad ON=${far}`,
+      `\\overline{AB}`,
       "한 원에서 중심에 더 가까운 현이 더 길다. OM<ON이므로 AB가 더 길다.",
-      ["\overline{CD}", "\overline{AB}=\overline{CD}", "\text{판단할 수 없음}"],
+      ["\\overline{CD}", "\\overline{AB}=\\overline{CD}", "\\text{판단할 수 없음}"],
       "compare-chords-by-distance",
     );
   }

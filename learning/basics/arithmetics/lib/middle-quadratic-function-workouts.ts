@@ -446,9 +446,8 @@ function comprehensiveKind(seed: number, index: number) {
 
 const GROUP_METHOD_PLANS: Record<Exclude<MiddleQuadraticFunctionKind, "comprehensive">, MiddleQuadraticFunctionMethodKind[]> = {
   "values-and-forms": [
-    "basic-value", "vertex-value",
-    "expand-vertex-form", "vertex-axis", "fraction-decimal",
-    "fraction-decimal", "extreme-value", "complete-square",
+    "basic-value", "expand-vertex-form", "vertex-axis", "complete-square",
+    "extreme-value", "coefficient-from-point", "equation-from-vertex-point", "intercepts",
   ],
   "vertex-and-axis": [
     "vertex-axis", "complete-square",

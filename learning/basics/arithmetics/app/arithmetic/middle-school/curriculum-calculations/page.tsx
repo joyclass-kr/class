@@ -58,7 +58,12 @@ export default function MiddleCurriculumCalculationsPage() {
   const [scale, setScale] = useState(0.6);
 
   useEffect(() => {
-    const requested = searchParams.get("kind");
+    const legacyKind = searchParams.get("kind");
+    if (legacyKind === "similarity") {
+      window.location.replace("/arithmetic");
+      return;
+    }
+    const requested = legacyKind === "linear-function-equations" ? "linear-function-basics" : legacyKind;
     if (!isMiddleCurriculumKind(requested) || requested === kind) return;
     setKind(requested);
     setProblemSet(createMiddleCurriculumProblemSet(requested, INITIAL_SEED));
