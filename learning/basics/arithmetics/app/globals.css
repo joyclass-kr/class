@@ -3792,7 +3792,7 @@ button.prime-number-question:focus-visible {
 .divisor-multiple-column {
   min-width: 0;
   display: grid;
-  grid-template-rows: 42px repeat(11, minmax(0, 1fr));
+  grid-template-rows: 42px repeat(10, minmax(0, 1fr));
   border-right: 1px solid #cfc6ba;
 }
 
@@ -3845,32 +3845,6 @@ button.prime-number-question:focus-visible {
   text-align: center;
 }
 
-.divisor-multiple-basic-expression {
-  min-width: 0;
-  display: grid;
-  justify-items: start;
-  align-content: center;
-  gap: 5px;
-}
-
-.divisor-multiple-basic-expression strong {
-  color: #17233c;
-  font-size: 13px;
-  line-height: 1.25;
-}
-
-.divisor-multiple-input.is-list,
-.divisor-multiple-static-answer.is-list {
-  width: min(100%, 175px);
-  height: 34px;
-  padding-inline: 7px;
-  font-size: 12px;
-  text-align: left;
-}
-
-.divisor-multiple-question.is-basic {
-  padding-block: 5px 10px;
-}
 
 .divisor-multiple-expression > span {
   text-align: center;

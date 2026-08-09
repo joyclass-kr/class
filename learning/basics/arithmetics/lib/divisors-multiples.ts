@@ -1,18 +1,11 @@
-export type DivisorMultipleKind =
-  | "divisors"
-  | "multiples"
-  | "common-divisors"
-  | "common-multiples"
-  | "gcd"
-  | "lcm";
+export type DivisorMultipleKind = "gcd" | "lcm";
 
 export type DivisorMultipleProblem = {
   id: string;
   kind: DivisorMultipleKind;
   left: number;
-  right?: number;
-  answer: string;
-  prompt: string;
+  right: number;
+  answer: number;
 };
 
 export type DivisorMultipleProblemSet = {
@@ -90,90 +83,40 @@ function combinations(values: readonly number[]) {
   return pairs;
 }
 
-export function divisors(value: number) {
-  return Array.from({ length: value }, (_, index) => index + 1).filter((candidate) => value % candidate === 0);
-}
-
-export function multiples(value: number, count: number) {
-  return Array.from({ length: count }, (_, index) => value * (index + 1));
-}
-
-export function commonDivisors(left: number, right: number) {
-  return divisors(greatestCommonDivisor(left, right));
-}
-
-export function commonMultiples(left: number, right: number, count: number) {
-  return multiples(leastCommonMultiple(left, right), count);
-}
-
 export function createDivisorMultipleSet(seed: number): DivisorMultipleProblemSet {
   const next = random(seed);
-  const divisorValues = shuffle([12, 18, 20, 24, 28, 30], next).slice(0, 2);
-  const multipleValues = shuffle([4, 6, 7, 8, 9], next).slice(0, 2);
-  const commonDivisorPairs = shuffle([[12, 18], [18, 24], [20, 30], [24, 36]] as const, next).slice(0, 2);
-  const commonMultiplePairs = shuffle([[4, 6], [6, 8], [6, 9], [8, 12]] as const, next).slice(0, 2);
-
-  const basicProblems: DivisorMultipleProblem[] = [
-    ...divisorValues.map((value, index) => ({
-      id: "divisor-multiple-divisors-" + index,
-      kind: "divisors" as const,
-      left: value,
-      answer: divisors(value).join(","),
-      prompt: value + "의 약수는?",
-    })),
-    ...multipleValues.map((value, index) => ({
-      id: "divisor-multiple-multiples-" + index,
-      kind: "multiples" as const,
-      left: value,
-      answer: multiples(value, 5).join(","),
-      prompt: value + "의 배수를 작은 것부터 5개 쓰면?",
-    })),
-    ...commonDivisorPairs.map(([left, right], index) => ({
-      id: "divisor-multiple-common-divisors-" + index,
-      kind: "common-divisors" as const,
-      left,
-      right,
-      answer: commonDivisors(left, right).join(","),
-      prompt: left + "와 " + right + "의 공약수는?",
-    })),
-    ...commonMultiplePairs.map(([left, right], index) => ({
-      id: "divisor-multiple-common-multiples-" + index,
-      kind: "common-multiples" as const,
-      left,
-      right,
-      answer: commonMultiples(left, right, 3).join(","),
-      prompt: left + "와 " + right + "의 공배수를 작은 것부터 3개 쓰면?",
-    })),
-  ];
-
   const usedPairs = new Set<string>();
-  const gcdProblems = shuffle(GCD_CANDIDATE_ROWS, next).slice(0, 11).map((row, index) => {
-    const candidates = shuffle(combinations(row), next);
-    const pair = candidates.find(([left, right]) => !usedPairs.has(left + ":" + right)) ?? candidates[0];
+  const gcdProblems = shuffle(GCD_CANDIDATE_ROWS, next).slice(0, 20).map((row, index) => {
+    const candidates = shuffle(combinations(row), next).filter(([left, right]) => right !== left * 2);
+    const pair = candidates.find(([left, right]) => !usedPairs.has(`${left}:${right}`)) ?? candidates[0];
     const [left, right] = next() < 0.5 ? pair : [pair[1], pair[0]];
-    usedPairs.add(Math.min(left, right) + ":" + Math.max(left, right));
+    usedPairs.add(`${Math.min(left, right)}:${Math.max(left, right)}`);
     return {
-      id: "divisor-multiple-gcd-" + index,
+      id: `divisor-multiple-gcd-${index}`,
       kind: "gcd" as const,
       left,
       right,
-      answer: String(greatestCommonDivisor(left, right)),
-      prompt: left + "와 " + right + "의 최대공약수는?",
+      answer: greatestCommonDivisor(left, right),
     };
   });
 
-  const lcmProblems = shuffle(LCM_BASES, next).slice(0, 11).map((base, index) => {
-    const choices: Array<[number, number]> = [[base * 2, base * 3], [base * 3, base * 4], [base * 4, base * 2]];
+  const doubledPairIndex = Math.floor(next() * 10);
+  const lcmProblems = shuffle(LCM_BASES, next).slice(0, 10).map((base, index) => {
+    const choices: Array<[number, number]> = index === doubledPairIndex
+      ? [[base * 4, base * 2]]
+      : [[base * 2, base * 3], [base * 3, base * 4]];
     const [left, right] = choices[Math.floor(next() * choices.length)];
     return {
-      id: "divisor-multiple-lcm-" + index,
+      id: `divisor-multiple-lcm-${index}`,
       kind: "lcm" as const,
       left,
       right,
-      answer: String(leastCommonMultiple(left, right)),
-      prompt: left + "와 " + right + "의 최소공배수는?",
+      answer: leastCommonMultiple(left, right),
     };
   });
 
-  return { seed, columns: [basicProblems, gcdProblems, lcmProblems] };
+  return {
+    seed,
+    columns: [gcdProblems.slice(0, 10), gcdProblems.slice(10), lcmProblems],
+  };
 }

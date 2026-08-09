@@ -141,7 +141,7 @@ const elementaryTitles: Record<string, string> = {
   "5혼합계산": "혼합 계산",
   "자연수분해": "자연수의 분해",
   "프라임넘버": "소수(素數) 찾기",
-  "5약수,배수": "약수·배수 종합",
+  "5약수,배수": "약수와 배수",
   "5분수①": "분수 ①",
   "5분수②": "분수 ②",
   "5분수③": "분수 ③",
@@ -158,7 +158,7 @@ const elementaryTitles: Record<string, string> = {
 };
 
 // 자동 분류를 그만두고, 사용자가 지정하는 학습지만 하나씩 추가한다.
-const elementaryHorizontalMentalMathWorksheets = new Set<string>(["5약수,배수"]);
+const elementaryHorizontalMentalMathWorksheets = new Set<string>([]);
 
 export const arithmeticWorksheetCatalog: ArithmeticWorksheet[] = worksheetNames.map((name) => {
   const gradeMatch = name.match(/^([1-6])(?!\d)(.+)$/);
