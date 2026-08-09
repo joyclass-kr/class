@@ -14,7 +14,8 @@
     const PLAYBACK_TIME_KEY = "classMusicPlaybackTime";
     const PLAYBACK_POSITIONS_KEY = "classMusicPlaybackPositions";
     const DEFAULT_MUSIC_VOLUME = 0.3;
-    const DEFAULT_SFX_VOLUME = 0.65;
+    const DEFAULT_SFX_VOLUME = 0.6;
+    const DEFAULT_MUSIC_MUTED = true;
     const DEFAULT_MUSIC_LEVEL = Math.max(1, Math.round(DEFAULT_MUSIC_VOLUME * 5));
     const DEFAULT_SFX_LEVEL = Math.max(1, Math.round(DEFAULT_SFX_VOLUME * 5));
 
@@ -54,7 +55,8 @@
         : Math.max(1, Math.round(musicVolume * 5));
     // Older games stored booleans as "true" while newer menus use "1".
     // Treat both as the same shared setting during the migration.
-    let musicMuted = ["1", "true"].includes(localStorage.getItem(MUSIC_MUTED_KEY));
+    const storedMusicMuted = localStorage.getItem(MUSIC_MUTED_KEY);
+    let musicMuted = storedMusicMuted === null ? DEFAULT_MUSIC_MUTED : ["1", "true"].includes(storedMusicMuted);
 
     // Load SFX State
     const savedSfxLevel = Number(localStorage.getItem(SFX_LEVEL_KEY));
@@ -177,7 +179,8 @@
             musicVolume = DEFAULT_MUSIC_VOLUME;
             musicLevel = DEFAULT_MUSIC_LEVEL;
         }
-        musicMuted = ["1", "true"].includes(localStorage.getItem(MUSIC_MUTED_KEY));
+        const reloadedMusicMuted = localStorage.getItem(MUSIC_MUTED_KEY);
+        musicMuted = reloadedMusicMuted === null ? DEFAULT_MUSIC_MUTED : ["1", "true"].includes(reloadedMusicMuted);
 
         const storedSfxLevel = Number(localStorage.getItem(SFX_LEVEL_KEY));
         const storedSfxVolume = Number(localStorage.getItem(SFX_VOLUME_KEY));
