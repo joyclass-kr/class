@@ -2,13 +2,14 @@ import assert from "node:assert/strict";
 import test from "node:test";
 
 import {
+  createAdvancedProbabilityProblems,
   createDistributionProblems,
   createProbabilityProblems,
 } from "../lib/foundation-generated-workouts.ts";
 import { createNormalDistributionProblems } from "../lib/normal-distribution-workouts.ts";
 import { createStatisticalInferenceProblems } from "../lib/statistical-inference-workouts.ts";
 
-test("확률 계산은 여사건부터 베이즈 정리까지 여덟 알고리즘을 다룬다", () => {
+test("확률 계산은 필수 여섯 유형과 심화 두 유형을 분리한다", () => {
   assert.deepEqual(createProbabilityProblems(20260819).map(({ label }) => label), [
     "여사건",
     "합사건",
@@ -16,6 +17,8 @@ test("확률 계산은 여사건부터 베이즈 정리까지 여덟 알고리�
     "독립사건",
     "독립 시행",
     "곱셈정리",
+  ]);
+  assert.deepEqual(createAdvancedProbabilityProblems(20260819).map(({ label }) => label), [
     "전체확률",
     "베이즈 정리",
   ]);

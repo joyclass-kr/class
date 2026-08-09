@@ -8,6 +8,10 @@ type PrintMode = "worksheet" | "answers" | "both";
 
 const INITIAL_SEED = 20260721;
 
+function normalizeAnswer(value: string) {
+  return value.replace(/，/g, ",").replace(/\s+/g, "").replace(/,+/g, ",").replace(/^,|,$/g, "");
+}
+
 export default function GradeFiveDivisorsMultiplesPage() {
   const [seed, setSeed] = useState(INITIAL_SEED);
   const [answers, setAnswers] = useState<Record<string, string>>({});
@@ -30,7 +34,7 @@ export default function GradeFiveDivisorsMultiplesPage() {
   const correct = Object.values(results).filter(Boolean).length;
 
   function updateAnswer(id: string, value: string) {
-    setAnswers((current) => ({ ...current, [id]: value.replace(/[^0-9]/g, "").slice(0, 3) }));
+    setAnswers((current) => ({ ...current, [id]: value.replace(/[^0-9,，\s]/g, "").slice(0, 32) }));
     setResults((current) => {
       if (!(id in current)) return current;
       const next = { ...current };
@@ -52,7 +56,7 @@ export default function GradeFiveDivisorsMultiplesPage() {
   function checkAll() {
     setResults(Object.fromEntries(problems.map((problem) => [
       problem.id,
-      answers[problem.id] === String(problem.answer),
+      normalizeAnswer(answers[problem.id] ?? "") === problem.answer,
     ])));
   }
 
@@ -78,18 +82,29 @@ export default function GradeFiveDivisorsMultiplesPage() {
   function renderProblem(problem: DivisorMultipleProblem, index: number, answerSheet: boolean) {
     const graded = problem.id in results;
     const isCorrect = results[problem.id] === true;
+    const isBasic = problem.kind !== "gcd" && problem.kind !== "lcm";
+    const input = answerSheet
+      ? <span className={`divisor-multiple-static-answer${isBasic ? " is-list" : ""}`}>{problem.answer}</span>
+      : <input
+          className={`divisor-multiple-input${isBasic ? " is-list" : ""}`}
+          data-divisor-answer
+          type="text"
+          inputMode={isBasic ? "text" : "numeric"}
+          maxLength={isBasic ? 32 : 3}
+          value={answers[problem.id] ?? ""}
+          onChange={(event) => updateAnswer(problem.id, event.target.value)}
+          onKeyDown={moveOnEnter}
+          aria-label={problem.prompt}
+        />;
+
     return (
-      <div className={`multiplication-question divisor-multiple-question${graded ? isCorrect ? " is-correct" : " is-wrong" : ""}`} data-testid="divisor-multiple-question" key={problem.id}>
+      <div className={`multiplication-question divisor-multiple-question${isBasic ? " is-basic" : ""}${graded ? isCorrect ? " is-correct" : " is-wrong" : ""}`} data-testid="divisor-multiple-question" key={problem.id}>
         <span className="divisor-multiple-index">{index + 1}</span>
-        <div className="divisor-multiple-expression">
-          <strong>{problem.left}</strong>
-          <span>,</span>
-          <strong>{problem.right}</strong>
-          <span>→</span>
-          {answerSheet
-            ? <span className="divisor-multiple-static-answer">{problem.answer}</span>
-            : <input className="divisor-multiple-input" data-divisor-answer type="text" inputMode="numeric" pattern="[0-9]*" maxLength={3} value={answers[problem.id] ?? ""} onChange={(event) => updateAnswer(problem.id, event.target.value)} onKeyDown={moveOnEnter} aria-label={`${problem.left}과 ${problem.right}의 ${problem.kind === "gcd" ? "최대공약수" : "최소공배수"} 답`} />}
-        </div>
+        {isBasic
+          ? <div className="divisor-multiple-basic-expression"><strong>{problem.prompt}</strong>{input}</div>
+          : <div className="divisor-multiple-expression">
+              <strong>{problem.left}</strong><span>,</span><strong>{problem.right}</strong><span>→</span>{input}
+            </div>}
         {!answerSheet && graded && <span className={`counting-result ${isCorrect ? "correct" : "wrong"}`} role="status">{isCorrect ? "맞음" : "틀림"}</span>}
       </div>
     );
@@ -99,13 +114,13 @@ export default function GradeFiveDivisorsMultiplesPage() {
     return (
       <div className="a4-sheet counting-sheet divisor-multiple-sheet" style={{ transform: `scale(${sheetScale})` }}>
         <header className="counting-sheet-header">
-          <div className="counting-sheet-title"><span>5학년</span><strong>약수와 배수{answerSheet ? " 정답" : ""}</strong></div>
+          <div className="counting-sheet-title"><span>5학년</span><strong>약수·배수 종합{answerSheet ? " 정답" : ""}</strong></div>
           <div className="counting-sheet-info"><span>이름 <i /></span><span>날짜 <i /></span><small>문제지 {seed}</small></div>
         </header>
         <div className="divisor-multiple-columns">
           {problemSet.columns.map((column, columnIndex) => (
             <section className="divisor-multiple-column" key={columnIndex}>
-              <h2>{columnIndex < 2 ? "최대공약수" : "최소공배수"}</h2>
+              <h2>{["약수·배수 기초", "최대공약수", "최소공배수"][columnIndex]}</h2>
               {column.map((problem, rowIndex) => renderProblem(problem, rowIndex, answerSheet))}
             </section>
           ))}
@@ -133,8 +148,8 @@ export default function GradeFiveDivisorsMultiplesPage() {
           <button className="button primary" type="button" onClick={checkAll}>전체 채점</button>
         </div>
       </div>
-      <div className="a4-stage counting-a4-stage worksheet-stage" style={{ width: 794 * sheetScale, height: 1123 * sheetScale }} aria-label="A4 5학년 약수, 배수 문제지">{renderSheet(false)}</div>
-      <div className="a4-stage counting-a4-stage answer-stage" style={{ width: 794 * sheetScale, height: 1123 * sheetScale }} aria-label="A4 5학년 약수, 배수 전체 답지">{renderSheet(true)}</div>
+      <div className="a4-stage counting-a4-stage worksheet-stage" style={{ width: 794 * sheetScale, height: 1123 * sheetScale }} aria-label="A4 5학년 약수·배수 종합 문제지">{renderSheet(false)}</div>
+      <div className="a4-stage counting-a4-stage answer-stage" style={{ width: 794 * sheetScale, height: 1123 * sheetScale }} aria-label="A4 5학년 약수·배수 종합 전체 답지">{renderSheet(true)}</div>
     </main>
   );
 }

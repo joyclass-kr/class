@@ -1,65 +1,14 @@
 "use client";
 
 import { useEffect, useMemo, useState } from "react";
+import { createMultiplicationFiveProblemSet } from "../../../lib/multiplication-five";
 
 type PrintMode = "worksheet" | "answers" | "both";
-type Fact = { multiplicand: number; factor: number };
-type Problem = Fact & { id: string; product: number };
-type ProblemSet = { seed: number; columns: Problem[][] };
 
 const INITIAL_SEED = 20260720;
 
-function random(seed: number) {
-  let value = seed >>> 0;
-  return () => {
-    value += 0x6d2b79f5;
-    let next = value;
-    next = Math.imul(next ^ (next >>> 15), next | 1);
-    next ^= next + Math.imul(next ^ (next >>> 7), next | 61);
-    return ((next ^ (next >>> 14)) >>> 0) / 4294967296;
-  };
-}
-
-function shuffle<T>(values: T[], next: () => number) {
-  const result = [...values];
-  for (let index = result.length - 1; index > 0; index -= 1) {
-    const target = Math.floor(next() * (index + 1));
-    [result[index], result[target]] = [result[target], result[index]];
-  }
-  return result;
-}
-
-function sourceFacts(): Fact[] {
-  const standard = Array.from({ length: 8 }, (_, multiplicandIndex) =>
-    Array.from({ length: 8 }, (_, factorIndex) => ({ multiplicand: multiplicandIndex + 2, factor: factorIndex + 2 })),
-  ).flat();
-  const extras = [
-    [1, 5], [3, 1], [1, 9], [6, 1], [1, 7], [1, 6], [6, 1], [0, 8], [4, 0], [1, 1],
-  ].map(([multiplicand, factor]) => ({ multiplicand, factor }));
-  const repeatedUpperFacts = [
-    { multiplicand: 6, factor: 8 },
-    { multiplicand: 6, factor: 9 },
-    ...Array.from({ length: 3 }, (_, multiplicandIndex) =>
-      Array.from({ length: 8 }, (_, factorIndex) => ({ multiplicand: multiplicandIndex + 7, factor: factorIndex + 2 })),
-    ).flat(),
-  ];
-  return [...standard, ...extras, ...repeatedUpperFacts];
-}
-
-function createProblemSet(seed: number): ProblemSet {
-  const ordered = shuffle(sourceFacts(), random(seed));
-  const columns = Array.from({ length: 5 }, (_, columnIndex) =>
-    ordered.slice(columnIndex * 20, columnIndex * 20 + 20).map((fact, rowIndex) => ({
-      ...fact,
-      id: `multiplication-five-${columnIndex}-${rowIndex}`,
-      product: fact.multiplicand * fact.factor,
-    })),
-  );
-  return { seed, columns };
-}
-
 export default function MultiplicationFivePage() {
-  const [questionSet, setQuestionSet] = useState(() => createProblemSet(INITIAL_SEED));
+  const [questionSet, setQuestionSet] = useState(() => createMultiplicationFiveProblemSet(INITIAL_SEED));
   const [answers, setAnswers] = useState<Record<string, string>>({});
   const [results, setResults] = useState<Record<string, boolean>>({});
   const [sheetScale, setSheetScale] = useState(0.6);
@@ -99,7 +48,7 @@ export default function MultiplicationFivePage() {
 
   function newSet() {
     if (completed > 0 && !window.confirm("쓴 답이 사라집니다. 새 문제를 만들까요?")) return;
-    setQuestionSet(createProblemSet((Date.now() ^ Math.floor(Math.random() * 0xffffffff)) >>> 0));
+    setQuestionSet(createMultiplicationFiveProblemSet((Date.now() ^ Math.floor(Math.random() * 0xffffffff)) >>> 0));
     resetAnswers();
   }
 

@@ -18,6 +18,26 @@ type AuditedProblem = {
 
 const INTENSIVE_DRILL_ROUTES = new Map([
   [
+    "/arithmetic/middle-school/core-calculations?kind=linear-inequality-application",
+    "일차부등식을 세워 자연수 최댓값을 구하는 과정을 계수와 경곗값을 바꾸어 반복",
+  ],
+  [
+    "/arithmetic/middle-school/core-calculations?kind=simultaneous-substitution",
+    "x 또는 y가 정리된 두 형태를 번갈아 대입하여 소거하는 방법을 각각 4회 적용",
+  ],
+  [
+    "/arithmetic/middle-school/core-calculations?kind=simultaneous-elimination",
+    "x항 또는 y항을 없애는 가감법을 각각 4회 적용",
+  ],
+  [
+    "/arithmetic/middle-school/core-calculations?kind=simultaneous-application",
+    "합·차와 인원·요금 상황에서 두 미지수를 정하고 식을 세우는 과정을 각각 4회 적용",
+  ],
+  [
+    "/arithmetic/middle-school/core-calculations?kind=simultaneous-special",
+    "해가 없는 경우와 무수히 많은 경우의 계수비 판정을 각각 4회 적용",
+  ],
+  [
     "/arithmetic/middle-school/quadratic-equations?kind=quadratic-formula",
     "계수 1인 식과 일반계수 식에 근의 공식을 각각 4회 적용",
   ],

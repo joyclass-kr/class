@@ -23,7 +23,8 @@ const EXCLUDED_UNIVERSITY_COURSE_LABELS = [
   "수치해석",
 ];
 
-const kinds = stemWorksheetCatalog.map(({ route, title }) => {
+const bridgeCatalog = stemWorksheetCatalog.slice(0, STEM_BRIDGE_KINDS.length);
+const kinds = bridgeCatalog.map(({ route, title }) => {
   if (!route) throw new Error(`주소가 없는 이공계 기초 학습지: ${title}`);
   const kind = new URL(route, "https://worksheet.local").searchParams.get("kind");
   if (!kind || !STEM_BRIDGE_KINDS.includes(kind as StemFoundationKind)) {
@@ -32,15 +33,15 @@ const kinds = stemWorksheetCatalog.map(({ route, title }) => {
   return kind as StemFoundationKind;
 });
 
-if (stemWorksheetCatalog.length !== STEM_BRIDGE_KINDS.length) {
-  throw new Error(`공개 목차 ${stemWorksheetCatalog.length}개와 진학 준비 범위 ${STEM_BRIDGE_KINDS.length}개가 다릅니다.`);
+if (bridgeCatalog.length !== STEM_BRIDGE_KINDS.length || stemWorksheetCatalog.length !== STEM_BRIDGE_KINDS.length) {
+  throw new Error(`공개 목차 ${stemWorksheetCatalog.length}개는 공대 진학 준비 필수 6장이어야 합니다.`);
 }
 
 if (new Set(kinds).size !== kinds.length) {
   throw new Error("같은 이공계 기초 학습지가 목차에 중복되어 있습니다.");
 }
 
-const rows = stemWorksheetCatalog.map((worksheet, index) => {
+const rows = bridgeCatalog.map((worksheet, index) => {
   const kind = kinds[index];
   const problems = createStemFoundationProblems(kind, 20260910);
   const labels = problems.map(({ label }) => label);
@@ -85,4 +86,4 @@ const rows = stemWorksheetCatalog.map((worksheet, index) => {
 });
 
 console.table(rows);
-console.log(`\n검사 완료: 공개 이공계 기초 ${rows.length}개 학습지, ${rows.length * 8}문항, 중복·쉬운 단독 유형·범위 초과 0개.`);
+console.log(`\n검사 완료: 이공계 기초 ${rows.length}장, ${rows.length * 8}문항의 중복·쉬운 단독 유형·범위 초과 0개.`);

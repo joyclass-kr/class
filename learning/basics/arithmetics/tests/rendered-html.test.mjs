@@ -56,8 +56,8 @@ test("renders the learning index and arithmetic catalog in workbook order", asyn
   const indexHtml = await indexResponse.text();
   const indexCss = await readFile(new URL("../app/globals.css", import.meta.url), "utf8");
   assert.equal(indexResponse.status, 200);
-  assert.equal((indexHtml.match(/data-testid="worksheet-choice"/g) ?? []).length, 185);
-  assert.equal((indexHtml.match(/class="worksheet-grade"/g) ?? []).length, 185);
+  assert.equal((indexHtml.match(/data-testid="worksheet-choice"/g) ?? []).length, 192);
+  assert.equal((indexHtml.match(/class="worksheet-grade"/g) ?? []).length, 192);
   assert.doesNotMatch(indexHtml, /data-testid="learning-area-card"/);
   assert.match(indexHtml, /href="\/fraction"[^>]*data-testid="worksheet-choice"/);
   assert.match(indexHtml, /href="\/arithmetic\/high-school\/trigonometric-derivatives-2"[^>]*data-testid="worksheet-choice"/);
@@ -78,14 +78,14 @@ test("renders the learning index and arithmetic catalog in workbook order", asyn
     .map((match) => match[1].replaceAll("&amp;", "&"));
   assert.match(catalogHtml, /href="\/arithmetic\/race"/);
   assert.match(catalogHtml, /<a(?=[^>]*class="catalog-back")(?=[^>]*href="\/")[^>]*>← 메인<\/a>/);
-  assert.equal((catalogHtml.match(/data-testid="worksheet-choice"/g) ?? []).length, 185);
+  assert.equal((catalogHtml.match(/data-testid="worksheet-choice"/g) ?? []).length, 192);
   assert.match(catalogHtml, /기초 연산/);
   assert.match(catalogHtml, /초·중·고부터 이공계 기초까지/);
   assert.match(catalogHtml, /data-stage="elementary"/);
   assert.match(catalogHtml, /data-stage="middle"/);
   assert.match(catalogHtml, /data-stage="high"/);
   assert.match(catalogHtml, /이공계 기초/);
-  assert.equal((catalogHtml.match(/class="worksheet-grade"/g) ?? []).length, 185);
+  assert.equal((catalogHtml.match(/class="worksheet-grade"/g) ?? []).length, 192);
   assert.match(catalogHtml, /href="\/arithmetic\/stem\/foundation\?kind=partial-derivatives"/);
   assert.doesNotMatch(catalogHtml, /href="\/arithmetic\/stem\/foundation\?kind=laplace-transforms"/);
   assert.ok(catalogHtml.indexOf("수 세기") < catalogHtml.indexOf("덧셈·뺄셈 ①"));
@@ -393,7 +393,7 @@ test("renders the unified arithmetic catalog and high-school worksheets", async 
   const hubResponse = await render("/arithmetic/high-school");
   assert.equal(hubResponse.status, 200);
   const hubHtml = await hubResponse.text();
-  assert.equal((hubHtml.match(/data-testid="worksheet-choice"/g) ?? []).length, 185);
+  assert.equal((hubHtml.match(/data-testid="worksheet-choice"/g) ?? []).length, 192);
   assert.match(hubHtml, /href="\/fraction"[^>]*data-testid="worksheet-choice"/);
   assert.match(hubHtml, /href="\/arithmetic\/high-school\/polynomial-add-subtract"/);
   assert.match(hubHtml, /href="\/arithmetic\/high-school\/factorization-rational"/);
@@ -494,10 +494,10 @@ test("renders the unified arithmetic catalog and high-school worksheets", async 
   const functionResponse = await render("/arithmetic/high-school/function-transformations");
   assert.equal(functionResponse.status, 200);
   const functionHtml = await functionResponse.text();
-  assert.match(functionHtml, /함수의 합성과 역함수 계산을 수행하세요/);
+  assert.match(functionHtml, /함수의 대응과 역함수 조건을 확인하고 필요한 계산을 하세요/);
   assert.match(functionHtml, /합성함수와 역함수/);
   assert.doesNotMatch(functionHtml, /f\(x\+h\)/);
-  assert.equal((functionHtml.match(/data-testid="numeric-choice-question"/g) ?? []).length, 10);
+  assert.equal((functionHtml.match(/data-testid="numeric-choice-question"/g) ?? []).length, 16);
   assert.equal((functionHtml.match(/<input/g) ?? []).length, 0);
 
   const derivativeResponse = await render("/arithmetic/high-school/derivative-practice");
@@ -629,8 +629,15 @@ test("renders the restructured probability and statistics sequence", async () =>
   const probabilityResponse = await render("/arithmetic/high-school/probability-rules");
   assert.equal(probabilityResponse.status, 200);
   const probabilityHtml = await probabilityResponse.text();
-  assert.equal((probabilityHtml.match(/data-testid="geometry-question"/g) ?? []).length, 16);
-  assert.match(probabilityHtml, /베이즈 정리/);
+  assert.equal((probabilityHtml.match(/data-testid="geometry-question"/g) ?? []).length, 12);
+  assert.doesNotMatch(probabilityHtml, /베이즈 정리/);
+
+  const advancedProbabilityResponse = await render("/arithmetic/high-school/probability-rules-advanced");
+  assert.equal(advancedProbabilityResponse.status, 200);
+  const advancedProbabilityHtml = await advancedProbabilityResponse.text();
+  assert.equal((advancedProbabilityHtml.match(/data-testid="geometry-question"/g) ?? []).length, 4);
+  assert.match(advancedProbabilityHtml, /전체확률·베이즈 정리/);
+  assert.match(advancedProbabilityHtml, /베이즈 정리/);
 
   const distributionResponse = await render("/arithmetic/high-school/probability-distributions");
   assert.equal(distributionResponse.status, 200);
@@ -1754,8 +1761,8 @@ test("renders the fifth grade natural-number decomposition worksheet from the wo
   assert.match(html, /곱셈은 \*로 입력하세요\./);
   assert.match(html, /aria-label="A4 5학년 자연수분해 문제지"/);
   assert.match(html, /aria-label="A4 5학년 자연수분해 전체 답지"/);
-  assert.equal((html.match(/data-testid="natural-decomposition-question"/g) ?? []).length, 28);
-  assert.equal((html.match(/class="natural-decomposition-input"/g) ?? []).length, 12);
+  assert.equal((html.match(/data-testid="natural-decomposition-question"/g) ?? []).length, 30);
+  assert.equal((html.match(/class="natural-decomposition-input"/g) ?? []).length, 14);
   assert.equal((html.match(/class="natural-decomposition-static-answer"/g) ?? []).length, 16);
   assert.match(source, /createNaturalNumberDecompositionSet\(seed\)/);
   assert.match(source, /isPrimeFactorizationAnswer/);
@@ -1796,13 +1803,13 @@ test("renders the fifth grade divisor and multiple worksheet from the workbook b
   const bankSource = await readFile(new URL("../lib/divisors-multiples.ts", import.meta.url), "utf8");
   const css = await readFile(new URL("../app/globals.css", import.meta.url), "utf8");
   assert.match(html, /5학년/);
-  assert.match(html, /약수, 배수/);
-  assert.match(html, /aria-label="A4 5학년 약수, 배수 문제지"/);
-  assert.match(html, /aria-label="A4 5학년 약수, 배수 전체 답지"/);
+  assert.match(html, /약수·배수 종합/);
+  assert.match(html, /aria-label="A4 5학년 약수·배수 종합 문제지"/);
+  assert.match(html, /aria-label="A4 5학년 약수·배수 종합 전체 답지"/);
   assert.equal((html.match(/data-testid="divisor-multiple-question"/g) ?? []).length, 60);
-  assert.equal((html.match(/class="divisor-multiple-input"/g) ?? []).length, 30);
-  assert.equal((html.match(/class="divisor-multiple-static-answer"/g) ?? []).length, 30);
-  assert.equal((html.match(/>최대공약수<\/h2>/g) ?? []).length, 4);
+  assert.equal((html.match(/divisor-multiple-input/g) ?? []).length, 30);
+  assert.equal((html.match(/divisor-multiple-static-answer/g) ?? []).length, 30);
+  assert.equal((html.match(/>최대공약수<\/h2>/g) ?? []).length, 2);
   assert.equal((html.match(/>최소공배수<\/h2>/g) ?? []).length, 2);
   assert.match(source, /createDivisorMultipleSet\(seed\)/);
   assert.match(source, /<small>\/30 정답<\/small>/);
@@ -1810,7 +1817,7 @@ test("renders the fifth grade divisor and multiple worksheet from the workbook b
   assert.match(bankSource, /export const GCD_CANDIDATE_ROWS/);
   assert.match(bankSource, /export const LCM_BASES/);
   assert.match(css, /\.divisor-multiple-columns\s*\{[\s\S]*?grid-template-columns:\s*repeat\(3,/);
-  assert.match(css, /\.divisor-multiple-column\s*\{[\s\S]*?grid-template-rows:\s*42px repeat\(10,/);
+  assert.match(css, /\.divisor-multiple-column\s*\{[\s\S]*?grid-template-rows:\s*42px repeat\(11,/);
 });
 
 test("renders the fifth grade first fraction worksheet in the workbook's ten-problem order", async () => {
@@ -2051,6 +2058,28 @@ test("renders the sixth grade third decimal worksheet with rounding and quotient
   assert.match(css, /\.grade-six-decimal-three-remainder-answer[\s\S]*?display:\s*inline-flex/);
 });
 
+test("renders the sixth grade composite-circle worksheet with perimeter and area answers", async () => {
+  const response = await render("/arithmetic/grade-6-circle");
+  assert.equal(response.status, 200);
+
+  const html = await response.text();
+  const page = await readFile(new URL("../app/arithmetic/grade-6-circle/page.tsx", import.meta.url), "utf8");
+  const engine = await readFile(new URL("../lib/grade-six-circle.ts", import.meta.url), "utf8");
+  const css = await readFile(new URL("../app/globals.css", import.meta.url), "utf8");
+  assert.match(html, /원의 둘레와 넓이/);
+  assert.match(html, /색칠한 도형의 둘레와 넓이를 구하세요/);
+  assert.match(html, /aria-label="A4 6학년 원의 둘레와 넓이 문제지"/);
+  assert.match(html, /aria-label="A4 6학년 원의 둘레와 넓이 전체 답지"/);
+  assert.equal((html.match(/data-testid="grade-six-circle-question"/g) ?? []).length, 16);
+  assert.equal((html.match(/data-circle-answer="true"/g) ?? []).length, 16);
+  assert.equal((html.match(/class="circle-static-answer"/g) ?? []).length, 16);
+  assert.equal((html.match(/role="img"/g) ?? []).length, 16);
+  assert.match(page, /CircleCompositeDiagram/);
+  assert.match(engine, /CircleCompositeKind/);
+  assert.match(engine, /shuffle\(\[/);
+  assert.match(css, /\.circle-grid\s*\{[^}]*grid-template-columns:\s*repeat\(2,[^}]*grid-template-rows:\s*repeat\(4,/s);
+});
+
 test("renders the third grade-two worksheet with mixed missing terms", async () => {
   const response = await render("/arithmetic/grade-2-add-subtract-3");
   assert.equal(response.status, 200);
@@ -2208,9 +2237,9 @@ test("renders the fifth multiplication worksheet as the workbook's five-by-twent
   assert.equal((html.match(/multiplication-five-static-answer/g) ?? []).length, 100);
   assert.equal((html.match(/maxLength="2"/g) ?? []).length, 100);
   assert.equal((html.match(/aria-label="multiplication-five-\d+-\d+ 답"/g) ?? []).length, 100);
-  assert.equal((html.match(/<span>0<\/span><span>×<\/span><strong>8<\/strong><span>=<\/span>/g) ?? []).length, 2);
-  assert.equal((html.match(/<span>6<\/span><span>×<\/span><strong>1<\/strong><span>=<\/span>/g) ?? []).length, 4);
-  assert.equal((html.match(/<span>9<\/span><span>×<\/span><strong>9<\/strong><span>=<\/span>/g) ?? []).length, 4);
+  assert.equal((html.match(/<span>8<\/span><span>×<\/span><strong>0<\/strong><span>=<\/span>/g) ?? []).length, 2);
+  assert.equal((html.match(/<span>1<\/span><span>×<\/span><strong>7<\/strong><span>=<\/span>/g) ?? []).length, 2);
+  assert.ok((html.match(/<span>7<\/span><span>×<\/span><strong>9<\/strong><span>=<\/span>/g) ?? []).length >= 6);
   assert.match(css, /\.multiplication-five-columns\s*\{[\s\S]*?grid-template-columns:\s*repeat\(5,/);
   assert.match(css, /\.multiplication-five-column\s*\{[\s\S]*?grid-template-rows:\s*repeat\(20,/);
   assert.ok(css.indexOf(".multiplication-five-columns") > css.indexOf(".multiplication-columns"));

@@ -1,6 +1,7 @@
 import test from "node:test";
 import assert from "node:assert/strict";
 import {
+  createAdvancedProbabilityProblems,
   createArcSectorProblems,
   createDistributionProblems,
   createProbabilityProblems,
@@ -30,7 +31,7 @@ const factories = [
   createSpaceGeometryProjectionProblems,
 ];
 
-const combinedFactories = [createRadianArcSectorProblems, createProbabilityProblems];
+const combinedFactories = [createRadianArcSectorProblems, createProbabilityProblems, createAdvancedProbabilityProblems];
 
 test("고정 객관식이 아닌 실제 새 문제 세트를 생성한다", () => {
   for (const createSet of factories) {
@@ -46,12 +47,17 @@ test("고정 객관식이 아닌 실제 새 문제 세트를 생성한다", () =
   }
 });
 
-test("통합 호도법·부채꼴 학습지는 여덟 유형을 새로 생성한다", () => {
+test("통합 호도법과 필수·심화 확률 학습지는 정해진 유형을 새로 생성한다", () => {
   for (const createSet of combinedFactories) {
     const first = createSet(20260801);
     const second = createSet(20260802);
-    assert.equal(first.length, 8);
-    assert.equal(second.length, 8);
+    const expectedLength = createSet === createProbabilityProblems
+      ? 6
+      : createSet === createAdvancedProbabilityProblems
+        ? 2
+        : 8;
+    assert.equal(first.length, expectedLength);
+    assert.equal(second.length, expectedLength);
     assert.notDeepEqual(
       first.map(({ latex, correctLatex }) => [latex, correctLatex]),
       second.map(({ latex, correctLatex }) => [latex, correctLatex]),

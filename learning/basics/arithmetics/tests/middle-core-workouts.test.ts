@@ -9,8 +9,8 @@ import {
 } from "../lib/middle-core-workouts.ts";
 import { middleSchoolWorksheetCatalog } from "../lib/arithmetic-worksheets.ts";
 
-test("중등 핵심 연산 22개 유형이 각각 8문제를 생성한다", () => {
-  assert.equal(MIDDLE_CORE_KINDS.length, 22);
+test("중등 핵심 연산 24개 유형이 각각 8문제를 생성한다", () => {
+  assert.equal(MIDDLE_CORE_KINDS.length, 24);
   for (const kind of MIDDLE_CORE_KINDS) {
     const set = createMiddleCoreProblemSet(kind, 20260803);
     assert.equal(set.problems.length, 8);
@@ -200,8 +200,8 @@ test("오답 보충은 서로 다른 유형에서 최대 두 문제만 만든다
   assert.ok(reviews.every(({ difficulty }) => difficulty === "advanced"));
 });
 
-test("중학교 필수 목록 51개는 쉬운 유형을 통합하고 모두 연결된다", () => {
-  assert.equal(middleSchoolWorksheetCatalog.length, 51);
+test("중학교 필수 목록 56개는 쉬운 유형을 통합하고 모두 연결된다", () => {
+  assert.equal(middleSchoolWorksheetCatalog.length, 56);
   assert.ok(middleSchoolWorksheetCatalog.every(({ route }) => route !== null));
   assert.equal(
     new Set(middleSchoolWorksheetCatalog.map(({ name }) => name)).size,

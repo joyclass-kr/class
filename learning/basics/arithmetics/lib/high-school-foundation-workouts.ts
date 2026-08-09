@@ -22,6 +22,7 @@ const foundationPromptById: Record<string, string> = {
   q5: "정확히 2번 성공할 확률은?",
   q6: "교사건의 확률 $P(A\\cap B)$는?",
   q7: "확률 $P(B)$는?",
+  q8: "조건부확률 $P(A\\mid B)$는?",
   d1: "기댓값 $E(X)$는?",
   d2: "분산 $V(X)$는?",
   d3: "이항분포의 평균 $E(X)$는?",
@@ -80,7 +81,10 @@ export const probabilityProblems: GeometryChoiceItem[] = [
   item("q4", "독립사건", String.raw`P(A)=\frac23,\quad P(B)=\frac35`, String.raw`P(A\cap B)=\frac25`, [String.raw`\frac1{15}`, String.raw`\frac45`, String.raw`\frac{19}{15}`]),
   item("q5", "시행의 반복", String.raw`P(\text{성공})=\frac13,\quad 3\text{번 중 정확히 2번 성공}`, String.raw`\frac29`, [String.raw`\frac19`, String.raw`\frac13`, String.raw`\frac49`]),
   item("q6", "곱셈정리", String.raw`P(A)=\frac45,\quad P(B\mid A)=\frac12`, String.raw`P(A\cap B)=\frac25`, [String.raw`\frac3{10}`, String.raw`\frac45`, String.raw`\frac12`]),
+];
+export const advancedProbabilityProblems: GeometryChoiceItem[] = [
   item("q7", "전확률", String.raw`P(A)=\frac14,\ P(B\mid A)=\frac23,\ P(B\mid A^c)=\frac13`, String.raw`P(B)=\frac5{12}`, [String.raw`\frac14`, String.raw`\frac12`, String.raw`\frac7{12}`]),
+  item("q8", "베이즈 정리", String.raw`P(A)=\frac14,\ P(B\mid A)=\frac23,\ P(B\mid A^c)=\frac13`, String.raw`P(A\mid B)=\frac25`, [String.raw`\frac15`, String.raw`\frac12`, String.raw`\frac35`]),
 ];
 
 export const distributionProblems: GeometryChoiceItem[] = [

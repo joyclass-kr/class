@@ -13,16 +13,17 @@ import {
 const root = process.cwd();
 const stemRoot = path.join(root, "app", "arithmetic", "stem");
 
-test("공대 진학 전 이공계 기초는 대학 과정과 고등학교 중복을 빼고 6장으로 압축한다", () => {
+test("공대 진학 전 이공계 기초는 대학 수학으로 넘어가기 전 필수 6장으로 압축한다", () => {
   assert.equal(stemWorksheetCatalog.length, 6);
   assert.equal(new Set(stemWorksheetCatalog.map(({ name }) => name)).size, 6);
   assert.equal(new Set(stemWorksheetCatalog.map(({ route }) => route)).size, 6);
   assert.ok(stemWorksheetCatalog.every(({ grade }) => grade === "이공계 기초"));
 
-  const actualKinds = stemWorksheetCatalog.map(({ route }) => (
+  const actualKinds = stemWorksheetCatalog.slice(0, 6).map(({ route }) => (
     new URL(`https://worksheet.local${route}`).searchParams.get("kind")
   ));
   assert.deepEqual(actualKinds, [...STEM_BRIDGE_KINDS]);
+
 
   for (const [index, kind] of STEM_BRIDGE_KINDS.entries()) {
     assert.equal(stemWorksheetCatalog[index].name, STEM_FOUNDATION_TITLES[kind]);

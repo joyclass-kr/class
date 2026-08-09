@@ -112,7 +112,7 @@ export function createRadianArcSectorProblems(seed: number): GeometryChoiceItem[
   ];
 }
 
-export function createProbabilityProblems(seed: number): GeometryChoiceItem[] {
+function createAllProbabilityProblems(seed: number): GeometryChoiceItem[] {
   const next = rng(seed);
   const denominator = pick(next, [6, 8, 10, 12] as const);
   const a = integer(next, 1, denominator - 2);
@@ -135,6 +135,14 @@ export function createProbabilityProblems(seed: number): GeometryChoiceItem[] {
     item("q7", "전체확률", `P(A)=${fraction(a, denominator)},\\ P(B\\mid A)=${fraction(b, denominator)},\\ P(B\\mid A^c)=${fraction(intersection, denominator)},\\quad P(B)=?`, fraction(totalProbabilityNumerator, denominator * denominator), [fraction(Math.max(0, totalProbabilityNumerator - 1), denominator * denominator), fraction(totalProbabilityNumerator + 1, denominator * denominator), fraction(totalProbabilityNumerator + denominator * denominator, denominator * denominator)]),
     item("q8", "베이즈 정리", `P(A)=${fraction(a, denominator)},\\ P(B\\mid A)=${fraction(b, denominator)},\\ P(B\\mid A^c)=${fraction(intersection, denominator)},\\quad P(A\\mid B)=?`, fraction(a * b, totalProbabilityNumerator), [fraction(Math.max(0, a * b - 1), totalProbabilityNumerator), fraction(a * b + 1, totalProbabilityNumerator), fraction(a * b + totalProbabilityNumerator, totalProbabilityNumerator)]),
   ];
+}
+
+export function createProbabilityProblems(seed: number): GeometryChoiceItem[] {
+  return createAllProbabilityProblems(seed).slice(0, 6);
+}
+
+export function createAdvancedProbabilityProblems(seed: number): GeometryChoiceItem[] {
+  return createAllProbabilityProblems(seed).slice(6);
 }
 
 function combination(n: number, r: number) {

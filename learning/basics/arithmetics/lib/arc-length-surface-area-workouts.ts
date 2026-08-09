@@ -88,3 +88,14 @@ export const arcLengthSurfaceAreaProblems: GeometryChoiceItem[] = [
     [String.raw`18\pi`, String.raw`27\pi`, String.raw`54\pi`],
   ),
 ];
+
+export function createArcLengthProblems(seed: number): GeometryChoiceItem[] {
+  const offset = Math.abs(seed) % 3;
+  return arcLengthSurfaceAreaProblems.slice(0, 4).map((problem, index) => ({
+    ...problem,
+    id: `${problem.id}-${offset}-${index}`,
+    choices: problem.choices.map((choice) => ({ ...choice, id: `${choice.id}-${offset}` })),
+  }));
+}
+
+export const arcLengthProblems = createArcLengthProblems(20260809);

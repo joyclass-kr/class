@@ -1,9 +1,12 @@
+export type WorksheetTrack = "필수 통합" | "집중 훈련" | "도형 필수" | "심화·선행";
+
 export type ArithmeticWorksheet = {
   name: string;
   route: string | null;
   grade: string;
   title: string;
   badge?: "암산";
+  track?: WorksheetTrack;
 };
 
 const readyRoutes: Record<string, string> = {
@@ -141,7 +144,7 @@ const elementaryTitles: Record<string, string> = {
   "5혼합계산": "혼합 계산",
   "자연수분해": "자연수의 분해",
   "프라임넘버": "소수(素數) 찾기",
-  "5약수,배수": "약수와 배수",
+  "5약수,배수": "약수·배수 종합",
   "5분수①": "분수 ①",
   "5분수②": "분수 ②",
   "5분수③": "분수 ③",
@@ -152,13 +155,13 @@ const elementaryTitles: Record<string, string> = {
   "6소수③": "소수의 나눗셈과 반올림",
   "6혼합계산": "분수·소수 혼합 계산",
   "6비례식": "비례식",
-  "6원": "원의 계산",
+  "6원": "원의 둘레와 넓이",
   "6원기둥": "원기둥의 계산",
   "6쌓기나무": "쌓기나무",
 };
 
 // 자동 분류를 그만두고, 사용자가 지정하는 학습지만 하나씩 추가한다.
-const elementaryHorizontalMentalMathWorksheets = new Set<string>([]);
+const elementaryHorizontalMentalMathWorksheets = new Set<string>(["5약수,배수"]);
 
 export const arithmeticWorksheetCatalog: ArithmeticWorksheet[] = worksheetNames.map((name) => {
   const gradeMatch = name.match(/^([1-6])(?!\d)(.+)$/);
@@ -183,6 +186,36 @@ const mergedMiddleSchoolRoutes = new Set([
   "/arithmetic/middle-school/circle-properties?kind=comprehensive",
   "/arithmetic/middle-school/statistics?kind=mean-applications",
 ]);
+
+const integratedWorksheetRoutes = new Set([
+  "/arithmetic/middle-school/rational-mixed",
+  "/arithmetic/middle-school/curriculum-calculations?kind=coordinate-proportion",
+  "/arithmetic/middle-school/statistics?kind=representative-values",
+  "/arithmetic/middle-school/core-calculations?kind=radical-calculation",
+  "/arithmetic/middle-school/quadratic-equations?kind=factorization",
+  "/arithmetic/high-school/function-transformations",
+]);
+
+const geometryWorksheetRouteParts = [
+  "construction-congruence", "plane-geometry", "solid-geometry", "frequency-graphs",
+  "triangle-quadrilateral", "similarity", "pythagorean", "quartiles-boxplot",
+  "/trigonometry", "/circle-properties", "/coordinate-lines", "/circle-equations",
+  "/sine-cosine-laws", "/conic-", "/plane-vectors", "/vector-", "/space-",
+];
+
+const advancedWorksheetRoutes = new Set([
+  "/arithmetic/high-school/advanced-factorization",
+  "/arithmetic/high-school/arc-length",
+  "/arithmetic/high-school/probability-rules-advanced",
+]);
+
+function worksheetTrack(route: string | null): WorksheetTrack {
+  if (!route) return "집중 훈련";
+  if (advancedWorksheetRoutes.has(route)) return "심화·선행";
+  if (geometryWorksheetRouteParts.some((part) => route.includes(part))) return "도형 필수";
+  if (integratedWorksheetRoutes.has(route)) return "필수 통합";
+  return "집중 훈련";
+}
 
 const combinedMiddleSchoolTitles: Record<string, string> = {
   "/arithmetic/middle-school/core-calculations?kind=linear-equation": "일차방정식과 활용 계산",
@@ -211,7 +244,12 @@ export const middleSchoolWorksheetCatalog: ArithmeticWorksheet[] = [
   { grade: "중2", name: "유리수와 순환소수", title: "유리수와 순환소수", route: "/arithmetic/middle-school/core-calculations?kind=repeating-decimal" },
   { grade: "중2", name: "지수법칙", title: "지수법칙", route: "/arithmetic/middle-school/core-calculations?kind=exponent-laws" },
   { grade: "중2", name: "문자식 기본연산 종합", title: "문자식 기본연산 종합", route: "/arithmetic/middle-school/core-calculations?kind=polynomial-add-subtract" },
-  { grade: "중2", name: "일차부등식과 연립일차방정식", title: "일차부등식과 연립일차방정식", route: "/arithmetic/middle-school/core-calculations?kind=linear-system-comprehensive" },
+  { grade: "중2", name: "일차부등식", title: "일차부등식", route: "/arithmetic/middle-school/core-calculations?kind=linear-inequality" },
+  { grade: "중2", name: "일차부등식 활용", title: "일차부등식 활용", route: "/arithmetic/middle-school/core-calculations?kind=linear-inequality-application" },
+  { grade: "중2", name: "연립방정식 대입법", title: "연립방정식 대입법", route: "/arithmetic/middle-school/core-calculations?kind=simultaneous-substitution" },
+  { grade: "중2", name: "연립방정식 가감법", title: "연립방정식 가감법", route: "/arithmetic/middle-school/core-calculations?kind=simultaneous-elimination" },
+  { grade: "중2", name: "연립방정식 활용", title: "연립방정식 활용", route: "/arithmetic/middle-school/core-calculations?kind=simultaneous-application" },
+  { grade: "중2", name: "연립방정식의 해의 개수", title: "연립방정식의 해의 개수", route: "/arithmetic/middle-school/core-calculations?kind=simultaneous-special" },
   { grade: "중2", name: "일차함수의 값·기울기·절편", title: "일차함수의 값·기울기·절편", route: "/arithmetic/middle-school/curriculum-calculations?kind=linear-function-basics" },
   { grade: "중2", name: "일차함수의 식과 방정식", title: "일차함수의 식과 방정식", route: "/arithmetic/middle-school/curriculum-calculations?kind=linear-function-equations" },
   { grade: "중2", name: "삼각형과 사각형의 계산", title: "삼각형과 사각형의 계산", route: "/arithmetic/middle-school/curriculum-calculations?kind=triangle-quadrilateral" },
@@ -264,7 +302,8 @@ export const middleSchoolWorksheetCatalog: ArithmeticWorksheet[] = [
     return combinedTitle
       ? { ...worksheet, name: combinedTitle, title: combinedTitle }
       : worksheet;
-  });
+  })
+  .map((worksheet) => ({ ...worksheet, track: worksheetTrack(worksheet.route) }));
 
 export const highSchoolWorksheetCatalog: ArithmeticWorksheet[] = [
   { grade: "공수1", name: "다항식의 연산", title: "다항식의 연산", route: "/arithmetic/high-school/polynomial-add-subtract" },
@@ -317,6 +356,7 @@ export const highSchoolWorksheetCatalog: ArithmeticWorksheet[] = [
   { grade: "미적2", name: "치환적분과 부분적분", title: "치환적분과 부분적분", route: "/arithmetic/high-school/integration-techniques" },
   { grade: "미적2", name: "정적분 계산", title: "정적분 계산", route: "/arithmetic/high-school/definite-integrals" },
   { grade: "미적2", name: "정적분의 활용", title: "정적분의 활용", route: "/arithmetic/high-school/definite-integral-applications" },
+  { grade: "미적2", name: "곡선의 길이", title: "곡선의 길이", route: "/arithmetic/high-school/arc-length" },
   { grade: "미적2", name: "회전체의 부피", title: "회전체의 부피", route: "/arithmetic/high-school/solids-of-revolution" },
   { grade: "기하", name: "이차곡선의 방정식", title: "이차곡선의 방정식", route: "/arithmetic/high-school/conic-sections" },
   { grade: "기하", name: "이차곡선의 접선", title: "이차곡선의 접선", route: "/arithmetic/high-school/conic-transformations-tangents" },
@@ -328,10 +368,11 @@ export const highSchoolWorksheetCatalog: ArithmeticWorksheet[] = [
   { grade: "확통", name: "순열의 활용과 중복조합", title: "순열의 활용과 중복조합", route: "/arithmetic/high-school/combinations" },
   { grade: "확통", name: "이항정리", title: "이항정리", route: "/arithmetic/high-school/binomial-theorem" },
   { grade: "확통", name: "확률의 계산", title: "확률의 계산", route: "/arithmetic/high-school/probability-rules" },
+  { grade: "확통", name: "전체확률·베이즈 정리", title: "전체확률·베이즈 정리", route: "/arithmetic/high-school/probability-rules-advanced" },
   { grade: "확통", name: "이산확률분포와 이항분포", title: "이산확률분포와 이항분포", route: "/arithmetic/high-school/probability-distributions" },
   { grade: "확통", name: "정규분포의 계산", title: "정규분포의 계산", route: "/arithmetic/high-school/normal-distributions" },
   { grade: "확통", name: "통계적 추정", title: "통계적 추정", route: "/arithmetic/high-school/statistical-inference" },
-];
+].map((worksheet) => ({ ...worksheet, track: worksheetTrack(worksheet.route) }));
 
 export const stemWorksheetCatalog: ArithmeticWorksheet[] = [
   { grade: "이공계 기초", name: "복소수의 극형식·오일러 공식", title: "복소수의 극형식·오일러 공식", route: "/arithmetic/stem/foundation?kind=complex-polar" },

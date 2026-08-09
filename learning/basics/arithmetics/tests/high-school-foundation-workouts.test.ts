@@ -5,11 +5,12 @@ import {
   arcSectorProblems,
   radianArcSectorProblems,
   probabilityProblems,
+  advancedProbabilityProblems,
   distributionProblems,
 } from "../lib/high-school-foundation-workouts.ts";
 
 test("keeps foundational high-school workouts complete and unambiguous", () => {
-  for (const problems of [radianProblems, arcSectorProblems, probabilityProblems, distributionProblems]) {
+  for (const problems of [radianProblems, arcSectorProblems, distributionProblems]) {
     assert.equal(problems.length, 7);
     for (const problem of problems) {
       assert.equal(problem.choices.length, 4);
@@ -17,6 +18,14 @@ test("keeps foundational high-school workouts complete and unambiguous", () => {
       assert.equal(new Set(problem.choices.map(({ latex }) => latex)).size, 4);
       assert.match(problem.prompt ?? "", /\?$/, `${problem.id} needs an explicit question`);
     }
+  }
+  assert.equal(probabilityProblems.length, 6);
+  assert.equal(advancedProbabilityProblems.length, 2);
+  for (const problem of [...probabilityProblems, ...advancedProbabilityProblems]) {
+    assert.equal(problem.choices.length, 4);
+    assert.equal(problem.choices.filter(({ correct }) => correct).length, 1);
+    assert.equal(new Set(problem.choices.map(({ latex }) => latex)).size, 4);
+    assert.match(problem.prompt ?? "", /\?$/, `${problem.id} needs an explicit question`);
   }
   assert.ok(radianProblems.some(({ label }) => label === "육십분법을 호도법으로"));
   assert.ok(arcSectorProblems.some(({ label }) => label === "부채꼴의 넓이"));

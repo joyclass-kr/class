@@ -2861,27 +2861,22 @@ html[data-race-mode="true"] body { padding-bottom: 72px; }
   bottom: 4px;
 }
 
-.circle-sheet { gap: 14px; padding-bottom: 28px; }
-.circle-guide { margin: 0; padding: 10px 15px; border-radius: 8px; background: #f4f0e8; color: #40536a; font-size: 13px; font-weight: 750; }
-.circle-grid { min-height: 0; flex: 1; display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); grid-template-rows: repeat(4, minmax(0, 1fr)); overflow: hidden; border: 1px solid #cec5b8; border-radius: 14px; background: #fff; }
-.circle-question { position: relative; min-width: 0; display: grid; grid-template-columns: 20px 152px minmax(0, 1fr); align-items: center; gap: 12px; padding: 13px 15px 17px 10px; border-right: 1px dashed #d8d2ca; border-bottom: 1px dashed #d8d2ca; background: #fff; }
-.circle-question:nth-child(2n) { border-right: 0; }
-.circle-question:nth-last-child(-n + 2) { border-bottom: 0; }
+.circle-sheet { gap: 10px; padding-bottom: 24px; }
+.circle-guide { margin: 0; color: #40536a; font-size: 12px; font-weight: 750; }
+.circle-grid { min-height: 0; flex: 1; display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); grid-template-rows: repeat(4, minmax(0, 1fr)); gap: 7px; overflow: hidden; }
+.circle-question { position: relative; min-width: 0; display: grid; grid-template-columns: 18px minmax(0, 1fr); grid-template-rows: minmax(0, 1fr) auto; column-gap: 5px; padding: 7px 9px 8px 6px; border: 1px solid #ded7cd; border-radius: 10px; background: #fff; }
 .circle-question.is-correct { background: #edf8f1; }
 .circle-question.is-wrong { background: #fff0ed; }
-.circle-index { align-self: start; color: #596a80; font-size: 12px; font-weight: 850; }
-.circle-diagram { position: relative; width: 142px; height: 142px; border: 2.2px solid #172f50; border-radius: 50%; background: radial-gradient(circle at center, #172f50 0 3px, transparent 3.5px), #fff; }
-.circle-diagram i { position: absolute; top: calc(50% - 1px); height: 2px; background: #d55b3e; }
-.circle-diagram.radius i { left: 50%; width: 50%; }
-.circle-diagram.diameter i { left: 0; width: 100%; }
-.circle-diagram b { position: absolute; left: 50%; top: calc(50% - 29px); display: flex; flex-direction: column; align-items: center; gap: 1px; padding: 3px 6px; border: 1px solid #eadfd4; border-radius: 6px; background: #fff; color: #172f50; font-size: 13px; line-height: 1.1; white-space: nowrap; transform: translateX(-50%); }
-.circle-diagram.radius b { left: 75%; }
-.circle-diagram b small { color: #7b5b4f; font-size: 9px; font-weight: 750; }
-.circle-equation { min-width: 0; display: grid; grid-template-columns: auto 13px minmax(72px, 1fr) auto; align-items: center; gap: 7px; font-size: 17px; font-weight: 850; }
-.circle-equation input, .circle-equation em { min-width: 0; width: 100%; height: 46px; border: 1.5px solid #968f85; border-radius: 8px; background: white; color: #17233c; font: inherit; font-style: normal; text-align: center; }
+.circle-index { grid-row: 1 / 3; color: #596a80; font-size: 10px; font-weight: 850; }
+.circle-question svg { width: 100%; height: 105px; overflow: visible; }
+.circle-svg-label { fill: #17233c; font-family: var(--font-korean); font-size: 10px; font-weight: 750; text-anchor: middle; }
+.circle-svg-measure { stroke: #d55b3e; stroke-width: 1.5; }
+.circle-answer-pair { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 7px; }
+.circle-equation { position: relative; min-width: 0; display: grid; grid-template-columns: auto 9px minmax(50px, 1fr) auto; align-items: center; gap: 4px; font-size: 13px; font-weight: 850; }
+.circle-equation input, .circle-equation em { min-width: 0; width: 100%; height: 31px; border: 1.2px solid #968f85; border-radius: 6px; background: white; color: #17233c; font: inherit; font-style: normal; text-align: center; }
 .circle-equation em { display: flex; align-items: center; justify-content: center; border-color: transparent; }
-.circle-equation small { color: #44556c; font-size: 12px; }
-.circle-question .counting-result { right: 6px; bottom: 4px; font-size: 9px; }
+.circle-equation small { color: #44556c; font-size: 9px; }
+.circle-equation b { position: absolute; right: 1px; bottom: -8px; font-size: 7px; }
 
 .cylinder-sheet { gap: 14px; padding-bottom: 28px; }
 .cylinder-guide { margin: 0; padding: 10px 15px; border-radius: 8px; background: #f4f0e8; color: #40536a; font-size: 13px; font-weight: 750; }
@@ -3797,7 +3792,7 @@ button.prime-number-question:focus-visible {
 .divisor-multiple-column {
   min-width: 0;
   display: grid;
-  grid-template-rows: 42px repeat(10, minmax(0, 1fr));
+  grid-template-rows: 42px repeat(11, minmax(0, 1fr));
   border-right: 1px solid #cfc6ba;
 }
 
@@ -3848,6 +3843,33 @@ button.prime-number-question:focus-visible {
 .divisor-multiple-expression strong {
   font: inherit;
   text-align: center;
+}
+
+.divisor-multiple-basic-expression {
+  min-width: 0;
+  display: grid;
+  justify-items: start;
+  align-content: center;
+  gap: 5px;
+}
+
+.divisor-multiple-basic-expression strong {
+  color: #17233c;
+  font-size: 13px;
+  line-height: 1.25;
+}
+
+.divisor-multiple-input.is-list,
+.divisor-multiple-static-answer.is-list {
+  width: min(100%, 175px);
+  height: 34px;
+  padding-inline: 7px;
+  font-size: 12px;
+  text-align: left;
+}
+
+.divisor-multiple-question.is-basic {
+  padding-block: 5px 10px;
 }
 
 .divisor-multiple-expression > span {
@@ -6024,6 +6046,10 @@ button.division-option {
     line-height: 1;
     white-space: nowrap;
   }
+
+  .worksheet-track[data-track="필수 통합"] { color: #315f94; }
+  .worksheet-track[data-track="도형 필수"] { color: #8a4f16; }
+  .worksheet-track[data-track="심화·선행"] { color: #7b3f91; }
 
   .inline-math-text-formula {
     display: inline-flex;

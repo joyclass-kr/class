@@ -38,7 +38,7 @@ const FACTORIES: Record<string, readonly [modulePath: string, exportName: string
   "coordinate-lines": ["../lib/coordinate-line-workouts.ts", "createCoordinateLineProblemSet"],
   "circle-equations": ["../lib/circle-equation-workouts.ts", "createCircleProblemSet"],
   "sets-propositions": ["../lib/sets-propositions-workouts.ts", "createLogicProblemSet"],
-  "function-transformations": ["../lib/function-transformation-workouts.ts", "createFunctionTransformationProblemSet"],
+  "function-transformations": ["../lib/function-foundation-workouts.ts", "createCombinedFunctionTransformationProblemSet"],
   "rational-radical-functions": ["../lib/rational-radical-function-workouts.ts", "createRationalRadicalProblemSet"],
   logarithms: ["../lib/logarithm-workouts.ts", "createLogarithmProblemSet"],
   "exponential-log-functions": ["../lib/exponential-log-function-workouts.ts", "createExponentialLogFunctionProblems"],
@@ -69,6 +69,7 @@ const FACTORIES: Record<string, readonly [modulePath: string, exportName: string
   "integration-techniques": ["../lib/integration-technique-workouts.ts", "createIntegrationTechniqueProblemSet"],
   "definite-integrals": ["../lib/definite-integral-workouts.ts", "createDefiniteIntegralProblemSet"],
   "definite-integral-applications": ["../lib/definite-integral-application-workouts.ts", "createDefiniteIntegralApplicationSet"],
+  "arc-length": ["../lib/arc-length-surface-area-workouts.ts", "createArcLengthProblems"],
   "solids-of-revolution": ["../lib/solid-of-revolution-workouts.ts", "createSolidOfRevolutionProblems"],
   "conic-sections": ["../lib/geometry-generated-workouts.ts", "createConicProblems"],
   "conic-transformations-tangents": ["../lib/geometry-generated-workouts.ts", "createConicMoveTangentProblems"],
@@ -80,12 +81,16 @@ const FACTORIES: Record<string, readonly [modulePath: string, exportName: string
   combinations: ["../lib/permutations-combinations-workouts.ts", "createProbabilityCountingProblemSet"],
   "binomial-theorem": ["../lib/binomial-theorem-workouts.ts", "createBinomialTheoremProblems"],
   "probability-rules": ["../lib/foundation-generated-workouts.ts", "createProbabilityProblems"],
+  "probability-rules-advanced": ["../lib/foundation-generated-workouts.ts", "createAdvancedProbabilityProblems"],
   "probability-distributions": ["../lib/foundation-generated-workouts.ts", "createDistributionProblems"],
   "normal-distributions": ["../lib/normal-distribution-workouts.ts", "createNormalDistributionProblems"],
   "statistical-inference": ["../lib/statistical-inference-workouts.ts", "createStatisticalInferenceProblems"],
 };
 
-const INTENSIVE_DRILL_ROUTES = new Map<string, string>();
+const INTENSIVE_DRILL_ROUTES = new Map<string, string>([[
+  "/arithmetic/high-school/probability-rules-advanced",
+  "전체확률과 베이즈 정리를 필수 확률 계산에서 분리해 한 문제씩 확인",
+]]);
 
 function slugFromRoute(route: string) {
   return route.split("/").filter(Boolean).at(-1) ?? "";

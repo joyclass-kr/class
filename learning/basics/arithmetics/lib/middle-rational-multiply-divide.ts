@@ -78,17 +78,17 @@ function problem(
 
 function build(kind: MiddleRationalMultiplyKind, next: () => number, id: string) {
   if (kind === "integer-multiply") {
-    const a = nonzero(next, -12, 12);
+    const a = -integer(next, 2, 12);
     const b = nonzero(next, -12, 12);
     return problem(id, kind, "정수의 곱셈", `(${a})\\times(${b})`, a * b);
   }
   if (kind === "integer-divide") {
-    const divisor = nonzero(next, -12, 12);
+    const divisor = -integer(next, 2, 12);
     const quotient = nonzero(next, -12, 12);
     return problem(id, kind, "정수의 나눗셈", `${divisor * quotient}\\div(${divisor})`, quotient);
   }
   if (kind === "integer-three") {
-    const a = nonzero(next, -7, 7);
+    const a = -integer(next, 2, 7);
     const b = nonzero(next, -7, 7);
     const c = nonzero(next, -6, 6);
     return problem(id, kind, "세 정수의 계산", `(${a})\\times(${b})\\div(${c})`, a * b, c);
@@ -98,15 +98,16 @@ function build(kind: MiddleRationalMultiplyKind, next: () => number, id: string)
   const d2 = integer(next, 2, 9);
   const n1 = nonzero(next, -d1 + 1, d1 - 1);
   const n2 = nonzero(next, -d2 + 1, d2 - 1);
+  const signedNumerator = -Math.abs(n1);
 
   if (kind === "fraction-multiply") {
-    return problem(id, kind, "유리수의 곱셈", `${latex(n1, d1)}\\times(${latex(n2, d2)})`, n1 * n2, d1 * d2);
+    return problem(id, kind, "유리수의 곱셈", `${latex(signedNumerator, d1)}\\times(${latex(n2, d2)})`, signedNumerator * n2, d1 * d2);
   }
   if (kind === "fraction-cancel") {
     const common = integer(next, 2, 5);
     const leftNumerator = nonzero(next, 1, 6);
     const rightNumerator = nonzero(next, 1, 6);
-    const sign = integer(next, 0, 1) ? -1 : 1;
+    const sign = -1;
     return problem(
       id,
       kind,
@@ -117,7 +118,7 @@ function build(kind: MiddleRationalMultiplyKind, next: () => number, id: string)
     );
   }
   if (kind === "fraction-divide") {
-    return problem(id, kind, "유리수의 나눗셈", `${latex(n1, d1)}\\div(${latex(n2, d2)})`, n1 * d2, d1 * n2);
+    return problem(id, kind, "유리수의 나눗셈", `${latex(signedNumerator, d1)}\\div(${latex(n2, d2)})`, signedNumerator * d2, d1 * n2);
   }
   if (kind === "negative-fraction-divide") {
     return problem(
@@ -136,8 +137,8 @@ function build(kind: MiddleRationalMultiplyKind, next: () => number, id: string)
     id,
     kind,
     "곱셈과 나눗셈의 혼합",
-    `${latex(n1, d1)}\\times(${latex(n2, d2)})\\div(${latex(n3, d3)})`,
-    n1 * n2 * d3,
+    `${latex(signedNumerator, d1)}\\times(${latex(n2, d2)})\\div(${latex(n3, d3)})`,
+    signedNumerator * n2 * d3,
     d1 * d2 * n3,
   );
 }

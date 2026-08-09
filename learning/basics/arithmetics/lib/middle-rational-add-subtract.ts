@@ -32,20 +32,28 @@ function fractionLatex(n: number, d: number) {
 function build(kind: MiddleRationalKind, next: () => number, id: string): NumericWorksheetProblem {
   if (kind.startsWith("integer")) {
     const a = nonzero(next, -18, 18), b = nonzero(next, -18, 18), c = nonzero(next, -12, 12);
-    if (kind === "integer-add") return { id, kind, label: "정수의 덧셈", prompt: "계산하세요.", latex: `${a}+(${b})`, answers: [a + b], answerLabels: ["답"] };
-    if (kind === "integer-subtract") return { id, kind, label: "정수의 뺄셈", prompt: "계산하세요.", latex: `${a}-(${b})`, answers: [a - b], answerLabels: ["답"] };
-    return { id, kind, label: "세 정수의 계산", prompt: "계산하세요.", latex: `${a}-(${b})+(${c})`, answers: [a - b + c], answerLabels: ["답"] };
+    if (kind === "integer-add") {
+      const signedAddend = -Math.abs(b);
+      return { id, kind, label: "정수의 덧셈", prompt: "계산하세요.", latex: `${a}+(${signedAddend})`, answers: [a + signedAddend], answerLabels: ["답"] };
+    }
+    if (kind === "integer-subtract") {
+      const signedSubtrahend = -Math.abs(b);
+      return { id, kind, label: "정수의 뺄셈", prompt: "계산하세요.", latex: `${a}-(${signedSubtrahend})`, answers: [a - signedSubtrahend], answerLabels: ["답"] };
+    }
+    const signedMiddle = -Math.abs(b);
+    return { id, kind, label: "세 정수의 계산", prompt: "계산하세요.", latex: `${a}-(${signedMiddle})+(${c})`, answers: [a - signedMiddle + c], answerLabels: ["답"] };
   }
   const d1 = integer(next, 3, 9);
   let d2 = integer(next, 2, 10);
   while (d2 === d1) d2 = integer(next, 2, 10);
   const n1 = nonzero(next, -d1 + 1, d1 - 1), n2 = nonzero(next, -d2 + 1, d2 - 1);
   if (kind === "same-denominator") {
-    const n3 = nonzero(next, -d1 + 1, d1 - 1);
-    const answer = reduce(n1 + n3, d1);
-    return { id, kind, label: "분모가 같은 유리수", prompt: "계산하세요.", latex: `${fractionLatex(n1, d1)}+(${fractionLatex(n3, d1)})`, answers: answer, answerLabels: ["분자", "분모"] };
+    const signedNumerator = -Math.abs(n1);
+    const n3 = integer(next, 1, d1 - 1);
+    const answer = reduce(signedNumerator + n3, d1);
+    return { id, kind, label: "분모가 같은 유리수", prompt: "계산하세요.", latex: `${fractionLatex(signedNumerator, d1)}+(${fractionLatex(n3, d1)})`, answers: answer, answerLabels: ["분자", "분모"] };
   }
-  const baseNumerator = kind === "negative-fractions" ? -Math.abs(n1) : n1;
+  const baseNumerator = -Math.abs(n1);
   const thirdD = integer(next, 2, 8), thirdN = nonzero(next, -thirdD + 1, thirdD - 1);
   let numerator = baseNumerator * d2 + n2 * d1, denominator = d1 * d2;
   let latex = `${fractionLatex(baseNumerator, d1)}+(${fractionLatex(n2, d2)})`;

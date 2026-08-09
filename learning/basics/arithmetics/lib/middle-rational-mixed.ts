@@ -2,7 +2,6 @@ import type { NumericWorksheetProblem } from "../app/arithmetic/high-school/comp
 
 export type MiddleRationalMixedKind =
   | "integer-absolute"
-  | "integer-comparison"
   | "integer-priority"
   | "integer-parentheses"
   | "integer-power"
@@ -15,7 +14,6 @@ export type MiddleRationalMixedKind =
 
 const KINDS: MiddleRationalMixedKind[] = [
   "integer-absolute",
-  "integer-comparison",
   "integer-priority",
   "integer-parentheses",
   "integer-power",
@@ -77,7 +75,7 @@ function makeProblem(
     id,
     kind,
     label,
-    prompt: kind === "integer-comparison" || kind === "fraction-comparison"
+    prompt: kind === "fraction-comparison"
       ? "알맞은 부등호는?"
       : "",
     latex: expression,
@@ -96,17 +94,13 @@ function build(kind: MiddleRationalMixedKind, next: () => number, id: string) {
     const right = Math.abs(b);
     return makeProblem(id, kind, "절댓값 계산", `|${left}|+|${right}|`, Math.abs(left) + Math.abs(right));
   }
-  if (kind === "integer-comparison") {
-    const left = nonzero(next, -12, 12);
-    let right = nonzero(next, -12, 12);
-    while (right === left) right = nonzero(next, -12, 12);
-    return makeProblem(id, kind, "정수의 대소 비교", `${left}\\ \\square\\ ${right}`, Math.sign(left - right));
-  }
   if (kind === "integer-priority") {
-    return makeProblem(id, kind, "곱셈이 있는 정수 계산", `${a}+${signedTerm(b)}\\times${signedTerm(c)}`, a + b * c);
+    const signedMultiplier = -Math.abs(b);
+    return makeProblem(id, kind, "곱셈이 있는 정수 계산", `${a}+${signedTerm(signedMultiplier)}\\times${signedTerm(c)}`, a + signedMultiplier * c);
   }
   if (kind === "integer-parentheses") {
-    return makeProblem(id, kind, "괄호가 있는 정수 계산", `\\left(${a}-${signedTerm(b)}\\right)\\times${signedTerm(c)}`, (a - b) * c);
+    const signedSubtrahend = -Math.abs(b);
+    return makeProblem(id, kind, "괄호가 있는 정수 계산", `\\left(${a}-${signedTerm(signedSubtrahend)}\\right)\\times${signedTerm(c)}`, (a - signedSubtrahend) * c);
   }
   if (kind === "integer-power") {
     const base = nonzero(next, -5, 5);
@@ -128,42 +122,52 @@ function build(kind: MiddleRationalMixedKind, next: () => number, id: string) {
   const n3 = nonzero(next, -d3 + 1, d3 - 1);
 
   if (kind === "fraction-comparison") {
-    let rightNumerator = n2;
-    while (n1 * d2 === rightNumerator * d1) {
-      rightNumerator = nonzero(next, -d2 + 1, d2 - 1);
+    const leftNumerator = -Math.abs(n1);
+    let rightDenominator = d2;
+    let rightNumerator = -Math.abs(n2);
+    if (leftNumerator * rightDenominator === rightNumerator * d1) {
+      if (Math.abs(rightNumerator) < rightDenominator - 1) {
+        rightNumerator -= 1;
+      } else {
+        rightDenominator += 1;
+        rightNumerator = -1;
+      }
     }
     return makeProblem(
       id,
       kind,
       "유리수의 대소 비교",
-      `${latex(n1, d1)}\\ \\square\\ ${latex(rightNumerator, d2)}`,
-      Math.sign(n1 * d2 - rightNumerator * d1),
+      `${latex(leftNumerator, d1)}\\ \\square\\ ${latex(rightNumerator, rightDenominator)}`,
+      Math.sign(leftNumerator * rightDenominator - rightNumerator * d1),
     );
   }
   if (kind === "fraction-priority") {
-    const numerator = n1 * d2 * d3 + n2 * n3 * d1;
-    return makeProblem(id, kind, "유리수의 계산 순서", `${latex(n1, d1)}+${signedTerm(latex(n2, d2))}\\times${signedTerm(latex(n3, d3))}`, numerator, d1 * d2 * d3);
+    const signedNumerator = -Math.abs(n2);
+    const numerator = n1 * d2 * d3 + signedNumerator * n3 * d1;
+    return makeProblem(id, kind, "유리수의 계산 순서", `${latex(n1, d1)}+${signedTerm(latex(signedNumerator, d2))}\\times${signedTerm(latex(n3, d3))}`, numerator, d1 * d2 * d3);
   }
   if (kind === "fraction-parentheses") {
-    const numerator = (n1 * d2 - n2 * d1) * n3;
-    return makeProblem(id, kind, "괄호가 있는 유리수 계산", `\\left(${latex(n1, d1)}-${signedTerm(latex(n2, d2))}\\right)\\times${signedTerm(latex(n3, d3))}`, numerator, d1 * d2 * d3);
+    const signedNumerator = -Math.abs(n1);
+    const numerator = (signedNumerator * d2 - n2 * d1) * n3;
+    return makeProblem(id, kind, "괄호가 있는 유리수 계산", `\\left(${latex(signedNumerator, d1)}-${signedTerm(latex(n2, d2))}\\right)\\times${signedTerm(latex(n3, d3))}`, numerator, d1 * d2 * d3);
   }
   if (kind === "fraction-power") {
     const baseNumerator = nonzero(next, -4, 4);
     const baseDenominator = integer(next, 2, 6);
-    const numerator = baseNumerator ** 2 * d1 + n1 * baseDenominator ** 2;
-    return makeProblem(id, kind, "분수의 거듭제곱", `\\left(${latex(baseNumerator, baseDenominator)}\\right)^2+${signedTerm(latex(n1, d1))}`, numerator, baseDenominator ** 2 * d1);
+    const signedNumerator = -Math.abs(n1);
+    const numerator = baseNumerator ** 2 * d1 + signedNumerator * baseDenominator ** 2;
+    return makeProblem(id, kind, "분수의 거듭제곱", `\\left(${latex(baseNumerator, baseDenominator)}\\right)^2+${signedTerm(latex(signedNumerator, d1))}`, numerator, baseDenominator ** 2 * d1);
   }
 
   const productNumerator = n2 * n3;
   const productDenominator = d2 * d3;
-  const numerator = n1 * productNumerator - d1 * productDenominator;
+  const numerator = -Math.abs(n1) * productNumerator - d1 * productDenominator;
   const denominator = d1 * productNumerator;
   return makeProblem(
     id,
     kind,
     "유리수 종합 계산",
-    `${latex(n1, d1)}-1\\div\\left\\{${latex(n2, d2)}\\times${signedTerm(latex(n3, d3))}\\right\\}`,
+    `${latex(-Math.abs(n1), d1)}-1\\div\\left\\{${latex(n2, d2)}\\times${signedTerm(latex(n3, d3))}\\right\\}`,
     numerator,
     denominator,
   );
@@ -189,7 +193,7 @@ export function formatMiddleRationalMixedChoice(
   problem: NumericWorksheetProblem,
   values: number[],
 ) {
-  if (problem.kind === "integer-comparison" || problem.kind === "fraction-comparison") {
+  if (problem.kind === "fraction-comparison") {
     return values[0] < 0 ? "<" : values[0] > 0 ? ">" : "=";
   }
   return values.length === 1 ? String(values[0]) : latex(values[0], values[1]);
