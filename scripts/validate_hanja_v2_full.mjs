@@ -100,6 +100,8 @@ const stageQuizLinks = [...progress.matchAll(/class="stage-quiz" href="\.\/quiz\
 if (stageQuizLinks.length !== stageCount) errors.push(`단계 문제 풀기 링크: ${stageQuizLinks.length} (예상 ${stageCount})`);
 if (/\d+~\d+차시 · \d+개/.test(progress)) errors.push('단계 머리말에 불필요한 차시 범위·개수 표시가 남았습니다.');
 if (!progress.includes('class="stage-toggle"') || !progress.includes('class="stage-quiz"')) errors.push('단계 열기와 문제 풀기 버튼이 분리되지 않았습니다.');
+if ((progress.match(/class="stage-toggle"[^>]*aria-expanded="true"/g) || []).length !== 0) errors.push('진도표에서 단계가 자동으로 펼쳐집니다.');
+if ((progress.match(/class="lesson-list"[^>]* hidden/g) || []).length !== stageCount) errors.push('진도표의 모든 단계 목록이 처음에 닫혀 있지 않습니다.');
 
 let stageQuizQuestions = 0;
 for (let stageIndex = 0; stageIndex < stageCount; stageIndex += 1) {

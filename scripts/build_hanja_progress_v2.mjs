@@ -41,7 +41,7 @@ function getStageLessons(stage) {
   return lessons.filter((lesson) => lesson.number >= stage.start && lesson.number <= stage.end);
 }
 
-const stageHtml = stages.map((stage, stageIndex) => {
+const stageHtml = stages.map((stage) => {
   const stageLessons = getStageLessons(stage);
   const listId = `stage-list-${stage.number}`;
   const items = stageLessons.map((lesson) => `
@@ -54,10 +54,10 @@ const stageHtml = stages.map((stage, stageIndex) => {
   return `
       <section class="stage">
         <div class="stage-head">
-          <button class="stage-toggle" type="button" aria-expanded="${stageIndex === 0}" aria-controls="${listId}">${stage.title}</button>
+          <button class="stage-toggle" type="button" aria-expanded="false" aria-controls="${listId}">${stage.title}</button>
           <a class="stage-quiz" href="./quiz/${String(stage.number).padStart(2, '0')}/">문제 풀기</a>
         </div>
-        <ol class="lesson-list" id="${listId}" start="${stage.start}"${stageIndex === 0 ? '' : ' hidden'}>${items}
+        <ol class="lesson-list" id="${listId}" start="${stage.start}" hidden>${items}
         </ol>
       </section>`;
 }).join('');
