@@ -199,6 +199,21 @@ document.addEventListener('DOMContentLoaded', () => {
             });
         }
 
+        // 방학 설정 박스는 재량휴업일을 직접 입력받지 않고, 아래 통합 일정 등록 폼(같은
+        // school_annual_schedules 저장소)으로 구분을 재량휴업일로 맞춰서 이동시켜준다.
+        const jumpToDiscretionaryBtn = document.getElementById('jumpToDiscretionaryBtn');
+        if (jumpToDiscretionaryBtn) {
+            jumpToDiscretionaryBtn.addEventListener('click', () => {
+                if (annualCategorySelect) {
+                    annualCategorySelect.value = 'DISCRETIONARY';
+                    annualCategorySelect.dispatchEvent(new Event('change'));
+                }
+                const dateInput = document.getElementById('annualDateInput');
+                if (addAnnualScheduleForm) addAnnualScheduleForm.scrollIntoView({ behavior: 'smooth', block: 'center' });
+                if (dateInput) dateInput.focus();
+            });
+        }
+
         if (annualTargetScopeSelect) {
             annualTargetScopeSelect.addEventListener('change', (e) => {
                 updateGradeCheckboxesByScope(e.target.value);
@@ -1477,7 +1492,7 @@ document.addEventListener('DOMContentLoaded', () => {
         tbody.innerHTML = '';
         for (let period = 1; period <= 8; period++) {
             const tr = document.createElement('tr');
-            let cellsHtml = `<td style="font-weight:800; background:rgba(255,255,255,0.03);">${period}교시</td>`;
+            let cellsHtml = `<td style="font-weight:800; background:rgba(0,0,0,0.02);">${period}교시</td>`;
             for (let day = 1; day <= 5; day++) {
                 const cell = dataMap[`${day}_${period}`];
                 const label = cell
@@ -1753,7 +1768,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
             const chipColor = isOk ? 'var(--success)' : 'var(--danger)';
             const statusIcon = isOk ? '✅' : '⚠️';
-            auditChipsHtml += `<span style="background:rgba(255,255,255,0.06); padding:4px 10px; border-radius:6px; border:1px solid rgba(255,255,255,0.1); color:${chipColor}; font-weight:700;">${def.name}: ${placed}/${target}시간 ${statusIcon}</span>`;
+            auditChipsHtml += `<span style="background:rgba(0,0,0,0.03); padding:4px 10px; border-radius:6px; border:1px solid rgba(0,0,0,0.08); color:${chipColor}; font-weight:700;">${def.name}: ${placed}/${target}시간 ${statusIcon}</span>`;
         });
 
         timetableHoursAuditBar.innerHTML = auditChipsHtml;
@@ -1782,7 +1797,7 @@ document.addEventListener('DOMContentLoaded', () => {
             const tr = document.createElement('tr');
             const t = gradePeriodTimes[String(period)];
             const timeLabel = t && t.start && t.end ? `<div style="font-size:0.72rem; font-weight:normal; color:var(--text-muted);">${t.start}~${t.end}</div>` : '';
-            let cellsHtml = `<td style="font-weight:800; background:rgba(255,255,255,0.03);">${period}교시${timeLabel}</td>`;
+            let cellsHtml = `<td style="font-weight:800; background:rgba(0,0,0,0.02);">${period}교시${timeLabel}</td>`;
 
             // Mon(1) to Fri(5)
             for (let day = 1; day <= 5; day++) {
