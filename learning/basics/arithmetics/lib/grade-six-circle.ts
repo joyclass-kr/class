@@ -1,12 +1,20 @@
 export type CircleCompositeKind =
-  | "annulus"
-  | "square-circle-hole"
-  | "corner-quarters"
-  | "arbelos"
-  | "stadium"
+  | "square-yin-yang"
+  | "offset-half-circle"
+  | "inward-semicircle-square"
+  | "double-circle-rectangle"
   | "quarter-annulus"
-  | "square-side-cutouts"
-  | "arched-rectangle";
+  | "annulus"
+  | "one-sixth-sector"
+  | "circle-square-hole"
+  | "semicircle-circle-hole"
+  | "square-semicircle-hole"
+  | "circle-yin-yang"
+  | "square-top-bottom-cutouts"
+  | "eccentric-circle-hole"
+  | "corner-quarter-shading"
+  | "square-circle-hole"
+  | "semicircle-side-hole";
 
 export type CircleProblem = {
   id: string;
@@ -57,32 +65,51 @@ function problem(kind: CircleCompositeKind, dimensions: Record<string, number>, 
 
 export function createGradeSixCircleSet(seed: number): CircleProblem[] {
   const next = random(seed);
-  const outer = integer(next, 7, 11);
-  const inner = integer(next, 2, outer - 3);
-  const squareHoleSide = even(next, 8, 16);
-  const squareHoleRadius = squareHoleSide / 2;
-  const cornerSide = even(next, 10, 18);
+  const squareYinRadius = integer(next, 5, 9);
+  const offset = integer(next, 4, 7);
+  const offsetInner = integer(next, 3, 6);
+  const offsetOuter = offset + offsetInner;
+  const inwardSide = even(next, 14, 24);
+  const doubleRadius = integer(next, 3, 6);
+  const quarterOuter = integer(next, 9, 15);
+  const quarterInner = integer(next, 3, quarterOuter - 4);
+  const annulusInner = integer(next, 2, 5);
+  const annulusWidth = integer(next, 3, 7);
+  const annulusOuter = annulusInner + annulusWidth;
+  const sectorRadius = integer(next, 4, 10);
+  const inscribedRadius = integer(next, 5, 10);
+  const inscribedSide = rounded(inscribedRadius * Math.SQRT2);
+  const semicircleCircleRadius = even(next, 8, 16);
+  const semicircleHoleRadius = semicircleCircleRadius / 2;
+  const squareSemicircleSide = even(next, 12, 24);
+  const circleYinRadius = even(next, 6, 14);
+  const topBottomSide = even(next, 12, 24);
+  const eccentricOuter = even(next, 8, 18);
+  const eccentricInner = eccentricOuter / 2;
+  const cornerSide = even(next, 12, 24);
   const cornerRadius = cornerSide / 2;
-  const arbelosDiameter = even(next, 4, 10);
-  const stadiumRadius = integer(next, 2, 5);
-  const stadiumStraight = integer(next, 6, 12);
-  const quarterOuter = integer(next, 8, 14);
-  const quarterInner = integer(next, 2, quarterOuter - 3);
-  const cutoutSide = even(next, 8, 16);
-  const cutoutRadius = cutoutSide / 2;
-  const archWidth = even(next, 8, 16);
-  const archRadius = archWidth / 2;
-  const archHeight = integer(next, 4, 10);
+  const squareHoleSide = even(next, 10, 22);
+  const squareHoleRadius = squareHoleSide / 2;
+  const sideHoleRadius = even(next, 8, 18);
+  const smallSideHoleRadius = sideHoleRadius / 2;
 
   return shuffle([
-    problem("annulus", { outer, inner }, 2 * PI * (outer + inner), PI * (outer ** 2 - inner ** 2)),
-    problem("square-circle-hole", { side: squareHoleSide, radius: squareHoleRadius }, 4 * squareHoleSide + 2 * PI * squareHoleRadius, squareHoleSide ** 2 - PI * squareHoleRadius ** 2),
-    problem("corner-quarters", { side: cornerSide, radius: cornerRadius }, 2 * PI * cornerRadius, cornerSide ** 2 - PI * cornerRadius ** 2),
-    problem("arbelos", { diameter: arbelosDiameter }, 2 * PI * arbelosDiameter, PI * arbelosDiameter ** 2 / 4),
-    problem("stadium", { radius: stadiumRadius, straight: stadiumStraight }, 2 * stadiumStraight + 2 * PI * stadiumRadius, 2 * stadiumRadius * stadiumStraight + PI * stadiumRadius ** 2),
+    problem("square-yin-yang", { radius: squareYinRadius }, 8 * squareYinRadius + 2 * PI * squareYinRadius, 4 * squareYinRadius ** 2 - PI * squareYinRadius ** 2 / 2),
+    problem("offset-half-circle", { offset, innerRadius: offsetInner, outerRadius: offsetOuter }, PI * offsetOuter + 2 * offsetOuter + 2 * PI * offsetInner, PI * offsetOuter ** 2 / 2),
+    problem("inward-semicircle-square", { side: inwardSide }, PI * inwardSide, inwardSide ** 2 - PI * inwardSide ** 2 / 4),
+    problem("double-circle-rectangle", { radius: doubleRadius, width: 2 * doubleRadius, height: 4 * doubleRadius }, 12 * doubleRadius + 4 * PI * doubleRadius, 8 * doubleRadius ** 2 - 2 * PI * doubleRadius ** 2),
     problem("quarter-annulus", { outer: quarterOuter, inner: quarterInner }, PI * (quarterOuter + quarterInner) / 2 + 2 * (quarterOuter - quarterInner), PI * (quarterOuter ** 2 - quarterInner ** 2) / 4),
-    problem("square-side-cutouts", { side: cutoutSide, radius: cutoutRadius }, 2 * cutoutSide + 2 * PI * cutoutRadius, cutoutSide ** 2 - PI * cutoutRadius ** 2),
-    problem("arched-rectangle", { width: archWidth, radius: archRadius, height: archHeight }, archWidth + 2 * archHeight + PI * archRadius, archWidth * archHeight + PI * archRadius ** 2 / 2),
+    problem("annulus", { outer: annulusOuter, inner: annulusInner, width: annulusWidth }, 2 * PI * (annulusOuter + annulusInner), PI * (annulusOuter ** 2 - annulusInner ** 2)),
+    problem("one-sixth-sector", { radius: sectorRadius }, 2 * sectorRadius + PI * sectorRadius / 3, PI * sectorRadius ** 2 / 6),
+    problem("circle-square-hole", { radius: inscribedRadius, squareSide: inscribedSide }, 2 * PI * inscribedRadius + 4 * inscribedSide, PI * inscribedRadius ** 2 - inscribedSide ** 2),
+    problem("semicircle-circle-hole", { outerRadius: semicircleCircleRadius, innerRadius: semicircleHoleRadius }, PI * semicircleCircleRadius + 2 * semicircleCircleRadius + 2 * PI * semicircleHoleRadius, PI * semicircleCircleRadius ** 2 / 2 - PI * semicircleHoleRadius ** 2),
+    problem("square-semicircle-hole", { side: squareSemicircleSide }, 5 * squareSemicircleSide + PI * squareSemicircleSide / 2, squareSemicircleSide ** 2 - PI * squareSemicircleSide ** 2 / 8),
+    problem("circle-yin-yang", { radius: circleYinRadius }, 2 * PI * circleYinRadius, PI * circleYinRadius ** 2 / 2),
+    problem("square-top-bottom-cutouts", { side: topBottomSide }, 2 * topBottomSide + PI * topBottomSide, topBottomSide ** 2 - PI * topBottomSide ** 2 / 4),
+    problem("eccentric-circle-hole", { outerRadius: eccentricOuter, innerRadius: eccentricInner }, 2 * PI * (eccentricOuter + eccentricInner), PI * (eccentricOuter ** 2 - eccentricInner ** 2)),
+    problem("corner-quarter-shading", { side: cornerSide, radius: cornerRadius }, 4 * cornerSide + 2 * PI * cornerRadius, PI * cornerRadius ** 2),
+    problem("square-circle-hole", { side: squareHoleSide, radius: squareHoleRadius }, 4 * squareHoleSide + 2 * PI * squareHoleRadius, squareHoleSide ** 2 - PI * squareHoleRadius ** 2),
+    problem("semicircle-side-hole", { outerRadius: sideHoleRadius, innerRadius: smallSideHoleRadius }, PI * sideHoleRadius + PI * smallSideHoleRadius + sideHoleRadius, PI * sideHoleRadius ** 2 / 2 - PI * smallSideHoleRadius ** 2 / 2),
   ], next).slice(0, 3);
 }
 

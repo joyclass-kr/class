@@ -2075,6 +2075,7 @@ test("renders the sixth grade composite-circle worksheet with perimeter and area
   assert.equal((html.match(/class="circle-static-answer"/g) ?? []).length, 6);
   assert.equal((html.match(/role="img"/g) ?? []).length, 6);
   assert.match(page, /CircleCompositeDiagram/);
+  assert.equal((page.match(/role="img"/g) ?? []).length, 16);
   assert.match(engine, /CircleCompositeKind/);
   assert.match(engine, /shuffle\(\[/);
   assert.match(css, /\.circle-grid\s*\{[^}]*grid-template-columns:\s*minmax\(0, 1fr\)[^}]*grid-template-rows:\s*repeat\(3,/s);

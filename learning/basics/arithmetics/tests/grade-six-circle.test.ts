@@ -2,12 +2,16 @@ import assert from "node:assert/strict";
 import test from "node:test";
 import { createGradeSixCircleSet } from "../lib/grade-six-circle.ts";
 
-test("원의 둘레와 넓이는 여덟 유형 중 서로 다른 세 도형만 뽑는다", () => {
+test("원의 둘레와 넓이는 열여섯 유형 중 서로 다른 세 도형만 뽑는다", () => {
   const problems = createGradeSixCircleSet(20260722);
   assert.equal(problems.length, 3);
   assert.equal(new Set(problems.map((problem) => problem.kind)).size, 3);
   assert.ok(problems.every((problem) => problem.perimeter > 0 && problem.area > 0));
   assert.deepEqual(createGradeSixCircleSet(20260722), problems);
+  const bankProblems = Array.from({ length: 160 }, (_, index) => createGradeSixCircleSet(20260722 + index)).flat();
+  const kinds = new Set(bankProblems.map((problem) => problem.kind));
+  assert.equal(kinds.size, 16);
+  assert.ok(bankProblems.every((problem) => problem.perimeter > 0 && problem.area > 0));
 });
 
 test("새 시드는 숫자와 복합도형 배치를 함께 바꾼다", () => {
