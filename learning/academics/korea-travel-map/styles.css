@@ -21,3 +21,10 @@
   .visual-summary strong{font-size:1.55rem}
   .modal-route-map-wrap{min-height:300px}
 }
+/* Match the compact 44px markers used by the Korean relic map. */
+.travel-marker{width:44px;height:44px;padding:0;border:2.5px solid #fff;border-radius:50%;box-shadow:0 4px 12px rgba(21,53,59,.3);font-size:21px;line-height:1;transform:none}
+.travel-marker::after{display:none}
+.travel-marker:hover,.travel-marker:active,.travel-marker:focus{transform:scale(1.24)}
+.travel-marker:focus-visible{outline:4px solid #ffd36e;outline-offset:2px}
+.travel-place-tooltip{padding:6px 10px;border:1px solid rgba(25,63,69,.18);border-radius:999px;color:#163b44;background:rgba(255,255,255,.97);box-shadow:0 4px 12px rgba(28,59,63,.18);font-size:13px;font-weight:900}
+.travel-place-tooltip.leaflet-tooltip-top::before{border-top-color:rgba(255,255,255,.97)}

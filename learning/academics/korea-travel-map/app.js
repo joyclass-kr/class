@@ -70,13 +70,19 @@
   }
 
   function markerIcon(place){
-    return L.divIcon({className:'travel-icon-wrapper',html:`<button class="travel-marker ${place.category}" type="button" aria-label="${place.name} 자세히 보기"><span aria-hidden="true">${place.emoji}</span><strong class="travel-marker-label">${place.name}</strong></button>`,iconSize:[70,92],iconAnchor:[35,76]});
+    return L.divIcon({
+      className:'travel-icon-wrapper',
+      html:'<button class="travel-marker '+place.category+'" type="button" aria-label="'+place.name+' 자세히 보기"><span aria-hidden="true">'+place.emoji+'</span></button>',
+      iconSize:[44,44],
+      iconAnchor:[22,22]
+    });
   }
 
   function renderMarkers(){
     markerLayer.clearLayers();
     places.filter(place=>currentCategory==='all'||place.category===currentCategory).forEach(place=>{
       const marker=L.marker([place.lat,place.lng],{icon:markerIcon(place),title:place.name,riseOnHover:true});
+      marker.bindTooltip(place.name,{direction:'top',offset:[0,-14],className:'travel-place-tooltip'});
       marker.on('click',()=>openPlace(place));
       markerLayer.addLayer(marker);
     });
