@@ -237,6 +237,7 @@ function createClassroomPlatform(options = {}) {
   let databaseReady = false;
   let initializationError = null;
   const travelSchoolCoordinateCache = new Map();
+  const travelRouteCache = new Map();
   let travelGeocodeQueue = Promise.resolve();
   let travelLastGeocodeAt = 0;
 
@@ -1549,6 +1550,14 @@ function createClassroomPlatform(options = {}) {
     const school = await travelSchoolForUser(user);
     if (!school) throw new HttpError(404, "SCHOOL_NOT_REGISTERED", "등록된 학교가 없습니다.");
     const origin = await travelSchoolCoordinates(school);
+    const routeCacheKey = String(school.school_id) + ':' + destinationLatitude.toFixed(5) + ',' + destinationLongitude.toFixed(5);
+    const cachedRoute = travelRouteCache.get(routeCacheKey);
+    if (cachedRoute?.expiresAt > Date.now()) {
+      res.json(cachedRoute.value);
+      return;
+    }
+    if (cachedRoute) travelRouteCache.delete(routeCacheKey);
+
     const routeUrl = `https://router.project-osrm.org/route/v1/driving/${origin.longitude},${origin.latitude};${destinationLongitude},${destinationLatitude}?overview=simplified&geometries=geojson&steps=false&alternatives=false`;
     let routeData;
     try {
@@ -1564,7 +1573,7 @@ function createClassroomPlatform(options = {}) {
       throw new HttpError(404, "ROUTE_NOT_FOUND", "이 관광지까지의 자동차 경로를 찾지 못했습니다.");
     }
 
-    res.json({
+    const responseBody = {
       school: {
         id: String(school.school_id),
         name: school.school_name,
@@ -1579,7 +1588,17 @@ function createClassroomPlatform(options = {}) {
         coordinates: Array.isArray(route.geometry?.coordinates) ? route.geometry.coordinates : []
       },
       notice: "자동차 기준 참고 경로이며 실시간 교통 상황은 반영되지 않습니다."
+    };
+
+    if (travelRouteCache.size >= 2000) {
+      const oldestKey = travelRouteCache.keys().next().value;
+      if (oldestKey) travelRouteCache.delete(oldestKey);
+    }
+    travelRouteCache.set(routeCacheKey, {
+      value: responseBody,
+      expiresAt: Date.now() + (3 * 60 * 60 * 1000)
     });
+    res.json(responseBody);
   }));
 
   router.get("/privacy/requests", asyncRoute(async (req, res) => {

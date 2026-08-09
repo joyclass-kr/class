@@ -6,7 +6,7 @@
   <title>국내 여행 지도</title>
   <meta name="description" content="우리 학교에서 출발해 국내 관광지를 탐색하는 학습 지도">
   <link rel="stylesheet" href="../korean-museum/vendor/leaflet/leaflet.css">
-  <link rel="stylesheet" href="styles.css?v=20260809-2">
+  <link rel="stylesheet" href="styles.css?v=20260809-3">
 </head>
 <body>
   <header class="app-header">
@@ -16,7 +16,6 @@
         <h1>국내 여행 지도</h1>
         <p id="schoolSummary">학교 정보를 확인하고 있어요.</p>
       </div>
-      <button id="levelButton" class="level-button" type="button" aria-pressed="false">초등 설명</button>
     </div>
     <div class="filter-bar" aria-label="관광지 종류 선택">
       <span class="filter-label">어떤 여행을 떠날까요?</span>
@@ -36,13 +35,18 @@
       <button id="modalClose" class="modal-close" type="button" aria-label="관광지 설명 닫기">✕</button>
       <div class="modal-grid">
         <section class="place-visual" id="placeVisual">
-          <span id="placeEmoji" aria-hidden="true">🏯</span>
-          <div><small id="placeRegion">서울특별시</small><strong id="visualPlaceName">경복궁</strong></div>
+          <div class="visual-summary">
+            <span id="placeEmoji" aria-hidden="true">🏯</span>
+            <div><small id="placeRegion">서울특별시</small><strong id="visualPlaceName">경복궁</strong></div>
+          </div>
+          <div class="modal-route-map-wrap">
+            <div class="route-map-heading"><strong>실제 도로 경로</strong><span>학교에서 관광지까지</span></div>
+            <div id="modalRouteMap" aria-label="학교에서 관광지까지의 자동차 경로 지도"></div>
+          </div>
         </section>
         <section class="place-info">
           <div class="title-row">
             <div><span id="placeCategory" class="category-badge">역사·문화</span><h2 id="placeName">경복궁</h2></div>
-            <button id="modalLevelButton" class="modal-level-button" type="button">초등 설명</button>
           </div>
           <section class="route-card">
             <h3>우리 학교에서 출발</h3>
@@ -59,6 +63,6 @@
   </dialog>
 
   <script src="../korean-museum/vendor/leaflet/leaflet.js"></script>
-  <script src="app.js?v=20260809-4"></script>
+  <script src="app.js?v=20260809-5"></script>
 </body>
 </html>

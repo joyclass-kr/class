@@ -18,10 +18,7 @@
 
   const modal = document.querySelector('#placeModal');
   const modalClose = document.querySelector('#modalClose');
-  const levelButton = document.querySelector('#levelButton');
-  const modalLevelButton = document.querySelector('#modalLevelButton');
   let membership = null;
-  let middleLevel = false;
   let currentPlace = places[0];
   let markerLayer = null;
   let currentCategory = 'all';
@@ -31,6 +28,9 @@
 
   const map = L.map('map-container', { center:[36.15,127.75], zoom:7, minZoom:6, maxZoom:14, zoomControl:true, attributionControl:true });
   L.tileLayer('https://{s}.basemaps.cartocdn.com/light_nolabels/{z}/{x}/{y}{r}.png', { attribution:'&copy; OpenStreetMap &copy; CARTO', subdomains:'abcd', maxZoom:20 }).addTo(map);
+  const modalRouteMap = L.map('modalRouteMap', { center:[36.15,127.75], zoom:6, minZoom:5, maxZoom:15, zoomControl:true, attributionControl:true });
+  L.tileLayer('https://{s}.basemaps.cartocdn.com/light_all/{z}/{x}/{y}{r}.png', { attribution:'&copy; OpenStreetMap &copy; CARTO', subdomains:'abcd', maxZoom:20 }).addTo(modalRouteMap);
+  const modalRouteLayer = L.layerGroup().addTo(modalRouteMap);
   map.createPane('provinceBoundaries');
   map.getPane('provinceBoundaries').style.zIndex = 430;
   map.getPane('provinceBoundaries').style.pointerEvents = 'none';
@@ -86,6 +86,7 @@
     currentPlace=place;
     renderModal();
     modal.showModal();
+    requestAnimationFrame(()=>modalRouteMap.invalidateSize());
     loadRoute(place);
   }
 
@@ -99,6 +100,7 @@
   function clearRoute(){
     if(routeLine){map.removeLayer(routeLine);routeLine=null;}
     if(schoolOriginMarker){map.removeLayer(schoolOriginMarker);schoolOriginMarker=null;}
+    modalRouteLayer.clearLayers();
   }
 
   async function loadRoute(place){
@@ -122,6 +124,13 @@
         schoolOriginMarker=L.circleMarker([data.school.latitude,data.school.longitude],{radius:10,color:'#fff',weight:4,fillColor:'#277562',fillOpacity:1}).addTo(map);
         schoolOriginMarker.bindTooltip(data.school.name,{direction:'top',offset:[0,-8]});
         map.fitBounds(routeLine.getBounds(),{padding:[55,55],maxZoom:10});
+        const modalLine=L.polyline(latLngs,{color:'#ef6b3b',weight:6,opacity:.9,lineCap:'round',lineJoin:'round'}).addTo(modalRouteLayer);
+        L.circleMarker([data.school.latitude,data.school.longitude],{radius:9,color:'#fff',weight:3,fillColor:'#277562',fillOpacity:1})
+          .bindTooltip(data.school.name,{direction:'top'}).addTo(modalRouteLayer);
+        L.circleMarker([place.lat,place.lng],{radius:9,color:'#fff',weight:3,fillColor:'#ef6b3b',fillOpacity:1})
+          .bindTooltip(place.name,{direction:'top'}).addTo(modalRouteLayer);
+        modalRouteMap.invalidateSize();
+        modalRouteMap.fitBounds(modalLine.getBounds(),{padding:[28,28],maxZoom:11});
       }
     }catch(error){
       if(requestId!==routeRequestId) return;
@@ -136,22 +145,19 @@
     document.querySelector('#placeEmoji').textContent=currentPlace.emoji;
     document.querySelector('#routeSchool').textContent=membership?.schoolName||'등록된 학교 없음';
     document.querySelector('#routeDestination').textContent=currentPlace.name;
-    document.querySelector('#placeDescription').textContent=middleLevel?currentPlace.middle:currentPlace.elementary;
+    document.querySelector('#placeDescription').textContent=currentPlace.middle||currentPlace.elementary;
     document.querySelector('#placeMission').textContent=currentPlace.mission;
-    const label=middleLevel?'중등 설명':'초등 설명';
-    levelButton.textContent=label; modalLevelButton.textContent=label;
   }
-  function toggleLevel(){ middleLevel=!middleLevel; levelButton.setAttribute('aria-pressed',String(middleLevel)); renderModal(); }
-  levelButton.addEventListener('click',toggleLevel);
-  modalLevelButton.addEventListener('click',toggleLevel);
   modalClose.addEventListener('click',()=>modal.close());
   modal.addEventListener('click',event=>{if(event.target===modal) modal.close();});
   document.querySelectorAll('.filter-btn').forEach(button=>button.addEventListener('click',()=>{currentCategory=button.dataset.category;document.querySelectorAll('.filter-btn').forEach(item=>item.classList.toggle('active',item===button));renderMarkers();}));
 
   async function fetchJson(url){
     const response=await fetch(url,{headers:{Accept:'application/json'}});
-    if(!response.ok) throw new Error(`HTTP_${response.status}`);
-    return response.json();
+    let data=null;
+    try{data=await response.json();}catch(error){data=null;}
+    if(!response.ok) throw new Error(data?.message||'현재 경로를 계산하지 못했습니다. 잠시 후 다시 시도해 주세요.');
+    return data;
   }
 
   async function resolveSchoolContext(state){
