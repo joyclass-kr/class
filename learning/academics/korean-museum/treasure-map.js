@@ -705,6 +705,16 @@
         Math.min(118, markerSpacing / (2 * Math.sin(Math.PI / cluster.length)))
       );
 
+      L.circleMarker(leafletMap.containerPointToLatLng(center), {
+        pane: 'markerLinks',
+        interactive: false,
+        radius: 3,
+        color: '#ffffff',
+        weight: 1.5,
+        opacity: 0.9,
+        fillColor: '#a96a00',
+        fillOpacity: 0.9
+      }).addTo(mapMarkerLinksGroup);
       cluster.forEach((entry, index) => {
         const angle = (-Math.PI / 2) + ((Math.PI * 2 * index) / cluster.length);
         const targetPoint = L.point(
