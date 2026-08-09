@@ -4,9 +4,9 @@
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
   <title>국내 여행 지도</title>
-  <meta name="description" content="우리 학교에서 출발해 국내 관광지를 탐색하는 학습 지도">
+  <meta name="description" content="우리 학교에서 출발하는 경로와 함께 전국 체험학습 장소를 살펴보는 학습 지도">
   <link rel="stylesheet" href="../korean-museum/vendor/leaflet/leaflet.css">
-  <link rel="stylesheet" href="styles.css?v=20260809-4">
+  <link rel="stylesheet" href="styles.css?v=20260809-7">
 </head>
 <body>
   <header class="app-header">
@@ -16,53 +16,76 @@
         <h1>국내 여행 지도</h1>
         <p id="schoolSummary">학교 정보를 확인하고 있어요.</p>
       </div>
+      <div class="place-count" aria-label="등록 장소 수"><strong id="placeCount">34</strong><span>곳</span></div>
     </div>
-    <div class="filter-bar" aria-label="관광지 종류 선택">
-      <span class="filter-label">어떤 여행을 떠날까요?</span>
+    <div class="filter-bar" aria-label="체험 장소 종류 선택">
+      <span class="filter-label">어떤 체험을 찾을까요?</span>
       <button class="filter-btn active" data-category="all" type="button">전체</button>
-      <button class="filter-btn" data-category="history" type="button">역사·문화</button>
+      <button class="filter-btn" data-category="theme" type="button">놀이·테마</button>
+      <button class="filter-btn" data-category="animal" type="button">동물·생태</button>
+      <button class="filter-btn" data-category="science" type="button">과학·진로</button>
       <button class="filter-btn" data-category="nature" type="button">자연·생태</button>
+      <button class="filter-btn" data-category="culture" type="button">역사·문화</button>
+      <button class="filter-btn" data-category="adventure" type="button">모험·체육</button>
+      <button class="filter-btn" data-category="career" type="button">직업·생활</button>
     </div>
   </header>
 
   <main class="map-shell">
-    <div id="map-container" aria-label="국내 관광지 지도"></div>
-    <div class="map-guide"><strong>지도를 움직이고 확대해 보세요.</strong><span>관광지 그림을 누르면 자세한 내용이 열려요.</span></div>
+    <div id="map-container" aria-label="전국 체험학습 장소 지도"></div>
+    <div class="map-guide">
+      <strong>그림을 누르면 자세히 볼 수 있어요</strong>
+      <span>숫자 표시는 가까이 모인 장소예요. 누르면 지도가 확대돼요.</span>
+    </div>
   </main>
 
   <dialog id="placeModal" class="place-modal" aria-labelledby="placeName">
     <article class="modal-card">
-      <button id="modalClose" class="modal-close" type="button" aria-label="관광지 설명 닫기">✕</button>
+      <button id="modalClose" class="modal-close" type="button" aria-label="장소 설명 닫기">×</button>
       <div class="modal-grid">
-        <section class="place-visual" id="placeVisual">
+        <section class="place-visual">
+          <figure id="placePhotoFrame" class="place-photo-frame">
+            <img id="placePhoto" alt="" loading="lazy">
+            <div id="photoFallback" class="photo-fallback" aria-hidden="true">🎡</div>
+            <figcaption id="photoCredit"></figcaption>
+          </figure>
           <div class="visual-summary">
-            <span id="placeEmoji" aria-hidden="true">🏯</span>
-            <div><small id="placeRegion">서울특별시</small><strong id="visualPlaceName">경복궁</strong></div>
+            <span id="placeEmoji" aria-hidden="true">🎡</span>
+            <div><small id="placeRegion">서울특별시</small><strong id="visualPlaceName">롯데월드 어드벤처</strong></div>
           </div>
           <div class="modal-route-map-wrap">
-            <div class="route-map-heading"><strong>실제 도로 경로</strong><span>학교에서 관광지까지</span></div>
-            <div id="modalRouteMap" aria-label="학교에서 관광지까지의 자동차 경로 지도"></div>
+            <div class="route-map-heading"><strong>실제 도로 경로</strong><span>학교에서 체험 장소까지</span></div>
+            <div id="modalRouteMap" aria-label="학교에서 체험 장소까지의 자동차 경로 지도"></div>
           </div>
         </section>
+
         <section class="place-info">
           <div class="title-row">
-            <div><span id="placeCategory" class="category-badge">역사·문화</span><h2 id="placeName">경복궁</h2></div>
+            <div><span id="placeCategory" class="category-badge">놀이·테마</span><h2 id="placeName">롯데월드 어드벤처</h2></div>
+          </div>
+          <div class="fact-row" aria-label="방문 정보">
+            <span id="placeSeason"></span>
+            <span id="placeWeather"></span>
+            <span id="placeReservation"></span>
           </div>
           <section class="route-card">
             <h3>우리 학교에서 출발</h3>
             <div class="route-point"><span class="school-dot"></span><strong id="routeSchool">등록된 학교 없음</strong></div>
             <div class="route-line"></div>
-            <div class="route-point"><span class="place-dot"></span><strong id="routeDestination">경복궁</strong></div>
-            <p id="routeStatus">관광지를 선택하면 우리 학교에서 출발하는 자동차 경로와 예상 시간을 계산합니다.</p>
+            <div class="route-point"><span class="place-dot"></span><strong id="routeDestination">롯데월드 어드벤처</strong></div>
+            <p id="routeStatus">장소를 선택하면 자동차 경로와 예상 시간을 계산합니다.</p>
           </section>
-          <section class="description-card"><h3>이곳은 어떤 곳일까요?</h3><p id="placeDescription"></p></section>
+          <section class="description-card"><h3>이곳에서는 무엇을 배울까요?</h3><p id="placeDescription"></p></section>
           <section class="mission-card"><h3>🔎 관찰 미션</h3><p id="placeMission"></p></section>
+          <a id="officialSite" class="official-site" href="#" target="_blank" rel="noopener noreferrer">공식 홈페이지에서 운영·예약 확인하기 <span>↗</span></a>
         </section>
       </div>
     </article>
   </dialog>
 
   <script src="../korean-museum/vendor/leaflet/leaflet.js"></script>
-  <script src="app.js?v=20260809-6"></script>
+  <script src="places.js?v=20260809-1"></script>
+  <script src="image-manifest.js?v=20260809-1"></script>
+  <script src="app.js?v=20260809-7"></script>
 </body>
 </html>
