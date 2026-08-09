@@ -100,8 +100,44 @@
   modal.addEventListener('click',event=>{if(event.target===modal) modal.close();});
   document.querySelectorAll('.filter-btn').forEach(button=>button.addEventListener('click',()=>{currentCategory=button.dataset.category;document.querySelectorAll('.filter-btn').forEach(item=>item.classList.toggle('active',item===button));renderMarkers();}));
 
+  async function fetchJson(url){
+    const response=await fetch(url,{headers:{Accept:'application/json'}});
+    if(!response.ok) throw new Error(`HTTP_${response.status}`);
+    return response.json();
+  }
+
+  async function resolveSchoolContext(state){
+    if(state.membership?.schoolName) return {...state.membership,source:'student'};
+
+    if(state.isTeacher){
+      try{
+        const teacherState=await fetchJson('/api/teacher/profile');
+        if(teacherState.registered && teacherState.profile?.schoolName){
+          return {...teacherState.profile,source:'teacher'};
+        }
+      }catch(error){
+        console.warn('교사 학교 정보를 불러오지 못했습니다.',error);
+      }
+    }
+
+    const child=Array.isArray(state.guardianChildren)
+      ? state.guardianChildren.find(item=>item?.schoolName)
+      : null;
+    return child ? {...child,source:'guardian'} : null;
+  }
+
   async function loadMembership(){
-    try{const response=await fetch('/api/auth/me',{headers:{Accept:'application/json'}});if(!response.ok)throw new Error('AUTH');const state=await response.json();membership=state.membership||null;document.querySelector('#schoolSummary').textContent=membership?.schoolName?`${membership.schoolName}에서 출발하는 여행을 준비해요.`:'학교 소속을 등록하면 우리 학교에서 출발할 수 있어요.';}catch(_){document.querySelector('#schoolSummary').textContent='학교 정보를 불러오지 못했어요.';}
+    try{
+      const state=await fetchJson('/api/auth/me');
+      membership=await resolveSchoolContext(state);
+      document.querySelector('#schoolSummary').textContent=membership?.schoolName
+        ? `${membership.schoolName}에서 출발하는 여행을 준비해요.`
+        : '등록된 학교 정보를 찾지 못했어요.';
+      renderModal();
+    }catch(error){
+      console.warn('학교 정보를 불러오지 못했습니다.',error);
+      document.querySelector('#schoolSummary').textContent='학교 정보를 불러오지 못했어요.';
+    }
   }
 
   loadBoundaries(); renderLabels(); renderMarkers(); loadMembership();
