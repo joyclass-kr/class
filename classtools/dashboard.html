@@ -1621,6 +1621,14 @@
                     classSwitcherSelect.hidden = false;
                     const prevVal = classSwitcherSelect.value;
                     classSwitcherSelect.replaceChildren();
+                    // 이 계정 자신의 담임 학급이 아직 정해지지 않은 상태(관리자 등)에서
+                    // <select>가 아무것도 선택 안 된 채로 남으면 브라우저가 그냥 목록의
+                    // 첫 번째 학급(다른 담임의 반)을 자동으로 보여준다 -- 마치 그게 내
+                    // 학급인 것처럼 보이므로, 명시적인 빈 선택지를 기본값으로 둔다.
+                    const placeholderOpt = document.createElement("option");
+                    placeholderOpt.value = "";
+                    placeholderOpt.textContent = "학급을 선택하세요";
+                    classSwitcherSelect.appendChild(placeholderOpt);
                     availableData.classes.forEach(c => {
                         const opt = document.createElement("option");
                         opt.value = c.id;
@@ -1629,6 +1637,7 @@
                     });
                     if (classId) classSwitcherSelect.value = classId;
                     else if (prevVal) classSwitcherSelect.value = prevVal;
+                    else classSwitcherSelect.value = "";
                 }
 
                 const fetchUrl = classId ? `/api/teacher/class?classId=${classId}` : "/api/teacher/class";

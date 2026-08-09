@@ -5185,7 +5185,7 @@ function createClassroomPlatform(options = {}) {
     if (!tp.rows[0]) throw new HttpError(403, "TEACHER_REQUIRED", "교사 계정이 필요합니다.");
     const schoolId = tp.rows[0].school_id;
     const year = Number(req.query.year) || new Date().getFullYear();
-    const isAdmin = Boolean(tp.rows[0]);
+    const isAdmin = ["관리자", "교장", "교감"].includes(tp.rows[0].teacher_type);
 
     const [clubs, afterschool, shuttle] = await Promise.all([
       pool.query(`SELECT id, club_name, sort_order FROM school_clubs WHERE school_id = $1 AND academic_year = $2 ORDER BY sort_order, id`, [schoolId, year]),
@@ -5272,7 +5272,7 @@ function createClassroomPlatform(options = {}) {
     );
     if (!tp.rows[0]) throw new HttpError(403, "TEACHER_REQUIRED", "교사 계정이 필요합니다.");
     const schoolId = tp.rows[0].school_id;
-    const isAdmin = Boolean(tp.rows[0]);
+    const isAdmin = ["관리자", "교장", "교감"].includes(tp.rows[0].teacher_type);
 
     const teachersResult = await pool.query(
       `SELECT id, teacher_name, teacher_type, google_email, grade, class_number, subject_name, room_name, active, user_id IS NOT NULL AS linked
@@ -5298,7 +5298,8 @@ function createClassroomPlatform(options = {}) {
     });
   }));
 
-  // PUT: 학교 교사 명단 저장/수정
+  // PUT: 학교 교사 명단 저장/수정 (관리자 전용 -- 전교 교사의 학년/반/이메일을 일괄로
+  // 바꾸고 목록에 없는 교사는 삭제하므로, 반드시 관리자만 호출할 수 있어야 한다)
   router.put("/school/teachers", asyncRoute(async (req, res) => {
     const teacher = await requireTeacher(req);
     const tp = await pool.query(
@@ -5306,6 +5307,9 @@ function createClassroomPlatform(options = {}) {
       [teacher.id]
     );
     if (!tp.rows[0]) throw new HttpError(403, "TEACHER_REQUIRED", "교사 계정이 필요합니다.");
+    if (!["관리자", "교장", "교감"].includes(tp.rows[0].teacher_type)) {
+      throw new HttpError(403, "ADMIN_ONLY", "교사 명단 편집 권한은 학교 관리자만 갖고 있습니다.");
+    }
     const schoolId = tp.rows[0].school_id;
     const teachers = Array.isArray(req.body?.teachers) ? req.body.teachers : [];
 
