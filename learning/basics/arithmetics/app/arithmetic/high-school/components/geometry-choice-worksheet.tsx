@@ -24,9 +24,10 @@ type Props = {
   createProblems?: (seed: number) => GeometryChoiceItem[];
   createSet?: (seed: number) => GeometryChoiceItem[];
   pageClassName?: string;
+  problemsPerSheet?: number;
 };
 
-export default function GeometryChoiceWorksheet({ subject = "기하", title, seed, problems, problemSets, createProblems, createSet, pageClassName = "" }: Props) {
+export default function GeometryChoiceWorksheet({ subject = "기하", title, seed, problems, problemSets, createProblems, createSet, pageClassName = "", problemsPerSheet }: Props) {
   const [selected, setSelected] = useState<Record<string, string>>({});
   const [results, setResults] = useState<Record<string, boolean>>({});
   const [panelOpen, setPanelOpen] = useState(false);
@@ -48,6 +49,12 @@ export default function GeometryChoiceWorksheet({ subject = "기하", title, see
       ? <MiddleCurriculumVisual visual={{ type: "geometry", variant: problem.visualVariant, labels: [] }} />
       : problem.visual,
   })), [displayedProblems]);
+  const problemPages = useMemo(() => {
+    const pageSize = problemsPerSheet && problemsPerSheet > 0 ? problemsPerSheet : displayedProblems.length;
+    return Array.from({ length: Math.ceil(displayedProblems.length / pageSize) }, (_, index) =>
+      displayedProblems.slice(index * pageSize, (index + 1) * pageSize)
+    );
+  }, [displayedProblems, problemsPerSheet]);
 
   useEffect(() => {
     const fit = () => setScale(Math.min((window.innerWidth - 32) / 794, 1));
@@ -83,21 +90,21 @@ export default function GeometryChoiceWorksheet({ subject = "기하", title, see
     });
   }
 
-  function sheet(answerSheet: boolean) {
+  function sheet(answerSheet: boolean, sheetProblems = displayedProblems, pageIndex = 0) {
     return (
-      <div className={`a4-sheet counting-sheet polynomial-sheet derivative-sheet trig-derivative-sheet geometry-choice-sheet polynomial-sheet-${displayedProblems.length}`} style={{ transform: `scale(${scale})` }}>
+      <div className={`a4-sheet counting-sheet polynomial-sheet derivative-sheet trig-derivative-sheet geometry-choice-sheet polynomial-sheet-${sheetProblems.length}`} style={{ transform: `scale(${scale})` }}>
         <header className="counting-sheet-header polynomial-sheet-header">
           <div className="counting-sheet-title"><span>{subject}</span><strong>{title}{answerSheet ? " 정답" : ""}</strong></div>
-          <div className="counting-sheet-info"><span>이름 <i /></span><span>날짜 <i /></span><small>문제지 {worksheetSeed}</small></div>
+          <div className="counting-sheet-info"><span>이름 <i /></span><span>날짜 <i /></span><small>문제지 {worksheetSeed}{problemPages.length > 1 ? " · " + (pageIndex + 1) + "/" + problemPages.length : ""}</small></div>
         </header>
         <div className="polynomial-problem-grid derivative-problem-grid trig-derivative-problem-grid">
-          {displayedProblems.map((problem, index) => (
+          {sheetProblems.map((problem, index) => (
             <article
               className="polynomial-question derivative-question trig-derivative-question geometry-choice-question"
               key={problem.id}
               data-testid="geometry-question"
             >
-              <div className="polynomial-question-number">{String(index + 1).padStart(2, "0")}</div>
+              <div className="polynomial-question-number">{String(pageIndex * (problemsPerSheet ?? displayedProblems.length) + index + 1).padStart(2, "0")}</div>
               <div className="polynomial-question-body">
                 <span className="polynomial-focus-label"><InlineMathText text={problem.label} /></span>
                 <WorksheetQuestionPrompt
@@ -132,8 +139,16 @@ export default function GeometryChoiceWorksheet({ subject = "기하", title, see
         </div>
       </div>
       {panelOpen && <WorksheetChoicePanel title={title} problems={panelProblems} displayStyle selected={selected} results={results} onSelect={selectChoice} onGrade={checkAll} onClose={() => setPanelOpen(false)} />}
-      <div className="a4-stage counting-a4-stage worksheet-stage" style={{ width: 794 * scale, height: 1123 * scale }}>{sheet(false)}</div>
-      <div className="a4-stage counting-a4-stage answer-stage" style={{ width: 794 * scale, height: 1123 * scale }}>{sheet(true)}</div>
+      {problemPages.map((pageProblems, pageIndex) => (
+        <div className="a4-stage counting-a4-stage worksheet-stage" style={{ width: 794 * scale, height: 1123 * scale }} key={"worksheet-" + pageIndex}>
+          {sheet(false, pageProblems, pageIndex)}
+        </div>
+      ))}
+      {problemPages.map((pageProblems, pageIndex) => (
+        <div className="a4-stage counting-a4-stage answer-stage" style={{ width: 794 * scale, height: 1123 * scale }} key={"answers-" + pageIndex}>
+          {sheet(true, pageProblems, pageIndex)}
+        </div>
+      ))}
     </main>
   );
 }

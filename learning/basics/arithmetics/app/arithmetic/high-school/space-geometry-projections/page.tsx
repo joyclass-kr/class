@@ -12,6 +12,7 @@ export default function SpaceGeometryProjectionsPage() {
       seed={20260817}
       problems={initialProblems}
       createSet={createSpaceGeometryProjectionProblems}
+      problemsPerSheet={5}
     />
   );
 }

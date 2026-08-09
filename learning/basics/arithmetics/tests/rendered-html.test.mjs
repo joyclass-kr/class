@@ -56,8 +56,8 @@ test("renders the learning index and arithmetic catalog in workbook order", asyn
   const indexHtml = await indexResponse.text();
   const indexCss = await readFile(new URL("../app/globals.css", import.meta.url), "utf8");
   assert.equal(indexResponse.status, 200);
-  assert.equal((indexHtml.match(/data-testid="worksheet-choice"/g) ?? []).length, 192);
-  assert.equal((indexHtml.match(/class="worksheet-grade"/g) ?? []).length, 192);
+  assert.equal((indexHtml.match(/data-testid="worksheet-choice"/g) ?? []).length, 189);
+  assert.equal((indexHtml.match(/class="worksheet-grade"/g) ?? []).length, 189);
   assert.doesNotMatch(indexHtml, /data-testid="learning-area-card"/);
   assert.match(indexHtml, /href="\/fraction"[^>]*data-testid="worksheet-choice"/);
   assert.match(indexHtml, /href="\/arithmetic\/high-school\/trigonometric-derivatives-2"[^>]*data-testid="worksheet-choice"/);
@@ -78,14 +78,14 @@ test("renders the learning index and arithmetic catalog in workbook order", asyn
     .map((match) => match[1].replaceAll("&amp;", "&"));
   assert.match(catalogHtml, /href="\/arithmetic\/race"/);
   assert.match(catalogHtml, /<a(?=[^>]*class="catalog-back")(?=[^>]*href="\/")[^>]*>← 메인<\/a>/);
-  assert.equal((catalogHtml.match(/data-testid="worksheet-choice"/g) ?? []).length, 192);
+  assert.equal((catalogHtml.match(/data-testid="worksheet-choice"/g) ?? []).length, 189);
   assert.match(catalogHtml, /기초 연산/);
   assert.match(catalogHtml, /초·중·고부터 이공계 기초까지/);
   assert.match(catalogHtml, /data-stage="elementary"/);
   assert.match(catalogHtml, /data-stage="middle"/);
   assert.match(catalogHtml, /data-stage="high"/);
   assert.match(catalogHtml, /이공계 기초/);
-  assert.equal((catalogHtml.match(/class="worksheet-grade"/g) ?? []).length, 192);
+  assert.equal((catalogHtml.match(/class="worksheet-grade"/g) ?? []).length, 189);
   assert.match(catalogHtml, /href="\/arithmetic\/stem\/foundation\?kind=partial-derivatives"/);
   assert.doesNotMatch(catalogHtml, /href="\/arithmetic\/stem\/foundation\?kind=laplace-transforms"/);
   assert.ok(catalogHtml.indexOf("수 세기") < catalogHtml.indexOf("덧셈·뺄셈 ①"));
@@ -251,7 +251,7 @@ test("renders the middle-school quadratic-function calculation worksheet", async
   const html = await response.text();
   assert.equal((html.match(/data-testid="middle-quadratic-function-question"/g) ?? []).length, 16);
   assert.doesNotMatch(html, /middle-function-difficulty-label|middle-function-solution-hint|<strong>핵심<\/strong>/);
-  assert.equal((html.match(/함숫값은\?/g) ?? []).length, 8);
+  assert.equal((html.match(/함숫값은\?/g) ?? []).length, 2);
   assert.equal((html.match(/전개한 식은\?/g) ?? []).length, 2);
   assert.equal((html.match(/꼭짓점형은\?/g) ?? []).length, 2);
   assert.equal((html.match(/꼭짓점과 대칭축은\?/g) ?? []).length, 2);
@@ -393,7 +393,7 @@ test("renders the unified arithmetic catalog and high-school worksheets", async 
   const hubResponse = await render("/arithmetic/high-school");
   assert.equal(hubResponse.status, 200);
   const hubHtml = await hubResponse.text();
-  assert.equal((hubHtml.match(/data-testid="worksheet-choice"/g) ?? []).length, 192);
+  assert.equal((hubHtml.match(/data-testid="worksheet-choice"/g) ?? []).length, 189);
   assert.match(hubHtml, /href="\/fraction"[^>]*data-testid="worksheet-choice"/);
   assert.match(hubHtml, /href="\/arithmetic\/high-school\/polynomial-add-subtract"/);
   assert.match(hubHtml, /href="\/arithmetic\/high-school\/factorization-rational"/);
@@ -616,6 +616,10 @@ test("renders the reconstructed conic tangents and space geometry worksheets", a
   const spaceHtml = await spaceResponse.text();
   assert.match(spaceHtml, /공간도형의 위치 관계와 정사영/);
   assert.equal((spaceHtml.match(/data-testid="geometry-question"/g) ?? []).length, 18);
+  assert.equal((spaceHtml.match(/class="a4-stage counting-a4-stage worksheet-stage"/g) ?? []).length, 2);
+  assert.equal((spaceHtml.match(/class="a4-stage counting-a4-stage answer-stage"/g) ?? []).length, 2);
+  assert.equal((spaceHtml.match(/polynomial-sheet-5/g) ?? []).length, 2);
+  assert.equal((spaceHtml.match(/polynomial-sheet-4/g) ?? []).length, 2);
   assert.match(spaceHtml, /직선과 평면의 위치 관계/);
   assert.match(spaceHtml, /평면에 내린 수선의 발/);
   assert.match(spaceHtml, /직선 방향으로의 벡터 정사영/);
@@ -1803,13 +1807,13 @@ test("renders the fifth grade divisor and multiple worksheet from the workbook b
   const bankSource = await readFile(new URL("../lib/divisors-multiples.ts", import.meta.url), "utf8");
   const css = await readFile(new URL("../app/globals.css", import.meta.url), "utf8");
   assert.match(html, /5학년/);
-  assert.match(html, /약수·배수 종합/);
-  assert.match(html, /aria-label="A4 5학년 약수·배수 종합 문제지"/);
-  assert.match(html, /aria-label="A4 5학년 약수·배수 종합 전체 답지"/);
+  assert.match(html, /약수와 배수/);
+  assert.match(html, /aria-label="A4 5학년 약수, 배수 문제지"/);
+  assert.match(html, /aria-label="A4 5학년 약수, 배수 전체 답지"/);
   assert.equal((html.match(/data-testid="divisor-multiple-question"/g) ?? []).length, 60);
   assert.equal((html.match(/divisor-multiple-input/g) ?? []).length, 30);
   assert.equal((html.match(/divisor-multiple-static-answer/g) ?? []).length, 30);
-  assert.equal((html.match(/>최대공약수<\/h2>/g) ?? []).length, 2);
+  assert.equal((html.match(/>최대공약수<\/h2>/g) ?? []).length, 4);
   assert.equal((html.match(/>최소공배수<\/h2>/g) ?? []).length, 2);
   assert.match(source, /createDivisorMultipleSet\(seed\)/);
   assert.match(source, /<small>\/30 정답<\/small>/);
@@ -1817,7 +1821,7 @@ test("renders the fifth grade divisor and multiple worksheet from the workbook b
   assert.match(bankSource, /export const GCD_CANDIDATE_ROWS/);
   assert.match(bankSource, /export const LCM_BASES/);
   assert.match(css, /\.divisor-multiple-columns\s*\{[\s\S]*?grid-template-columns:\s*repeat\(3,/);
-  assert.match(css, /\.divisor-multiple-column\s*\{[\s\S]*?grid-template-rows:\s*42px repeat\(11,/);
+  assert.match(css, /\.divisor-multiple-column\s*\{[\s\S]*?grid-template-rows:\s*42px repeat\(10,/);
 });
 
 test("renders the fifth grade first fraction worksheet in the workbook's ten-problem order", async () => {
