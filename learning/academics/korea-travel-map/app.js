@@ -22,7 +22,7 @@
     center: [36.15, 127.75], zoom: 7, minZoom: 6, maxZoom: 14,
     zoomControl: true, attributionControl: true, preferCanvas: true
   });
-  L.tileLayer('https://{s}.basemaps.cartocdn.com/light_nolabels/{z}/{x}/{y}{r}.png', {
+  L.tileLayer('https://{s}.basemaps.cartocdn.com/light_all/{z}/{x}/{y}{r}.png', {
     attribution: '&copy; OpenStreetMap &copy; CARTO', subdomains: 'abcd', maxZoom: 20
   }).addTo(map);
 
