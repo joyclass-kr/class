@@ -245,7 +245,6 @@
   function renderModal() {
     if (!currentPlace) return;
     document.querySelector('#placeName').textContent = currentPlace.name;
-    document.querySelector('#visualPlaceName').textContent = currentPlace.name;
     document.querySelector('#placeRegion').textContent = currentPlace.region;
     const categoryWrap = document.querySelector('#placeCategories');
     const categoryNames = currentPlace.categoryNames?.length ? currentPlace.categoryNames : [currentPlace.categoryName];

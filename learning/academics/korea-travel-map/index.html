@@ -6,7 +6,7 @@
   <title>국내 여행 지도</title>
   <meta name="description" content="우리 학교에서 출발하는 경로와 함께 전국 체험학습 장소를 살펴보는 학습 지도">
   <link rel="stylesheet" href="../korean-museum/vendor/leaflet/leaflet.css">
-  <link rel="stylesheet" href="styles.css?v=20260810-2">
+  <link rel="stylesheet" href="styles.css?v=20260810-3">
 </head>
 <body>
   <header class="app-header">
@@ -50,19 +50,19 @@
             <div id="photoFallback" class="photo-fallback" aria-hidden="true">🎡</div>
             <figcaption id="photoCredit"></figcaption>
           </figure>
-          <div class="visual-summary">
-            <span id="placeEmoji" aria-hidden="true">🎡</span>
-            <div><small id="placeRegion">서울특별시</small><strong id="visualPlaceName">롯데월드 어드벤처</strong></div>
-          </div>
           <div class="modal-route-map-wrap">
-            <div class="route-map-heading"><strong>실제 도로 경로</strong><span>학교에서 체험 장소까지</span></div>
             <div id="modalRouteMap" aria-label="학교에서 체험 장소까지의 자동차 경로 지도"></div>
           </div>
         </section>
 
         <section class="place-info">
           <div class="title-row">
-            <div><div id="placeCategories" class="category-badges"><span class="category-badge">놀이·테마</span></div><h2 id="placeName">롯데월드 어드벤처</h2></div>
+            <span id="placeEmoji" class="title-emoji" aria-hidden="true">🎡</span>
+            <div class="title-copy">
+              <small id="placeRegion">서울특별시</small>
+              <h2 id="placeName">롯데월드 어드벤처</h2>
+              <div id="placeCategories" class="category-badges"><span class="category-badge">놀이·테마</span></div>
+            </div>
           </div>
           <div class="fact-row" aria-label="방문 정보">
             <span id="placeSeason"></span>
@@ -97,6 +97,6 @@
   <script src="category-classifications.js?v=20260810-1"></script>
   <script src="icon-overrides.js?v=20260810-1"></script>
   <script src="image-manifest.js?v=20260809-1"></script>
-  <script src="app.js?v=20260810-4"></script>
+  <script src="app.js?v=20260810-5"></script>
 </body>
 </html>
