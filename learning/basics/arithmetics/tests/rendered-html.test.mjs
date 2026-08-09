@@ -2070,14 +2070,14 @@ test("renders the sixth grade composite-circle worksheet with perimeter and area
   assert.match(html, /색칠한 도형의 둘레와 넓이를 구하세요/);
   assert.match(html, /aria-label="A4 6학년 원의 둘레와 넓이 문제지"/);
   assert.match(html, /aria-label="A4 6학년 원의 둘레와 넓이 전체 답지"/);
-  assert.equal((html.match(/data-testid="grade-six-circle-question"/g) ?? []).length, 16);
-  assert.equal((html.match(/data-circle-answer="true"/g) ?? []).length, 16);
-  assert.equal((html.match(/class="circle-static-answer"/g) ?? []).length, 16);
-  assert.equal((html.match(/role="img"/g) ?? []).length, 16);
+  assert.equal((html.match(/data-testid="grade-six-circle-question"/g) ?? []).length, 6);
+  assert.equal((html.match(/data-circle-answer="true"/g) ?? []).length, 6);
+  assert.equal((html.match(/class="circle-static-answer"/g) ?? []).length, 6);
+  assert.equal((html.match(/role="img"/g) ?? []).length, 6);
   assert.match(page, /CircleCompositeDiagram/);
   assert.match(engine, /CircleCompositeKind/);
   assert.match(engine, /shuffle\(\[/);
-  assert.match(css, /\.circle-grid\s*\{[^}]*grid-template-columns:\s*repeat\(2,[^}]*grid-template-rows:\s*repeat\(4,/s);
+  assert.match(css, /\.circle-grid\s*\{[^}]*grid-template-columns:\s*minmax\(0, 1fr\)[^}]*grid-template-rows:\s*repeat\(3,/s);
 });
 
 test("renders the third grade-two worksheet with mixed missing terms", async () => {

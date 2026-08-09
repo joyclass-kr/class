@@ -2863,15 +2863,15 @@ html[data-race-mode="true"] body { padding-bottom: 72px; }
 
 .circle-sheet { gap: 10px; padding-bottom: 24px; }
 .circle-guide { margin: 0; color: #40536a; font-size: 12px; font-weight: 750; }
-.circle-grid { min-height: 0; flex: 1; display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); grid-template-rows: repeat(4, minmax(0, 1fr)); gap: 7px; overflow: hidden; }
-.circle-question { position: relative; min-width: 0; display: grid; grid-template-columns: 18px minmax(0, 1fr); grid-template-rows: minmax(0, 1fr) auto; column-gap: 5px; padding: 7px 9px 8px 6px; border: 1px solid #ded7cd; border-radius: 10px; background: #fff; }
+.circle-grid { min-height: 0; flex: 1; display: grid; grid-template-columns: minmax(0, 1fr); grid-template-rows: repeat(3, minmax(0, 1fr)); gap: 10px; overflow: hidden; }
+.circle-question { position: relative; min-width: 0; display: grid; grid-template-columns: 24px minmax(0, 1.35fr) minmax(250px, 1fr); grid-template-rows: minmax(0, 1fr); align-items: center; column-gap: 12px; padding: 12px 16px 12px 10px; border: 1px solid #ded7cd; border-radius: 10px; background: #fff; }
 .circle-question.is-correct { background: #edf8f1; }
 .circle-question.is-wrong { background: #fff0ed; }
-.circle-index { grid-row: 1 / 3; color: #596a80; font-size: 10px; font-weight: 850; }
-.circle-question svg { width: 100%; height: 105px; overflow: visible; }
+.circle-index { align-self: start; color: #596a80; font-size: 13px; font-weight: 850; }
+.circle-question svg { width: 100%; height: 220px; overflow: visible; }
 .circle-svg-label { fill: #17233c; font-family: var(--font-korean); font-size: 10px; font-weight: 750; text-anchor: middle; }
 .circle-svg-measure { stroke: #d55b3e; stroke-width: 1.5; }
-.circle-answer-pair { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 7px; }
+.circle-answer-pair { display: grid; grid-template-columns: minmax(0, 1fr); gap: 16px; }
 .circle-equation { position: relative; min-width: 0; display: grid; grid-template-columns: auto 9px minmax(50px, 1fr) auto; align-items: center; gap: 4px; font-size: 13px; font-weight: 850; }
 .circle-equation input, .circle-equation em { min-width: 0; width: 100%; height: 31px; border: 1.2px solid #968f85; border-radius: 6px; background: white; color: #17233c; font: inherit; font-style: normal; text-align: center; }
 .circle-equation em { display: flex; align-items: center; justify-content: center; border-color: transparent; }

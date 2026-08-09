@@ -83,7 +83,7 @@ export function createGradeSixCircleSet(seed: number): CircleProblem[] {
     problem("quarter-annulus", { outer: quarterOuter, inner: quarterInner }, PI * (quarterOuter + quarterInner) / 2 + 2 * (quarterOuter - quarterInner), PI * (quarterOuter ** 2 - quarterInner ** 2) / 4),
     problem("square-side-cutouts", { side: cutoutSide, radius: cutoutRadius }, 2 * cutoutSide + 2 * PI * cutoutRadius, cutoutSide ** 2 - PI * cutoutRadius ** 2),
     problem("arched-rectangle", { width: archWidth, radius: archRadius, height: archHeight }, archWidth + 2 * archHeight + PI * archRadius, archWidth * archHeight + PI * archRadius ** 2 / 2),
-  ], next);
+  ], next).slice(0, 3);
 }
 
 export function normalizeCircleAnswer(input: string) {
