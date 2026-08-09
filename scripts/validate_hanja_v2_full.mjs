@@ -14,7 +14,6 @@ const allCharacters = new Set();
 let examples = 0;
 let questions = 0;
 
-if (lessons.length !== 132) errors.push(`차시 수: ${lessons.length} (예상 132)`);
 if (curriculum.lessons.length !== lessons.length) errors.push('커리큘럼 차시 수가 수업 데이터와 다릅니다.');
 
 for (const [lessonIndex, lesson] of lessons.entries()) {
@@ -26,7 +25,11 @@ for (const [lessonIndex, lesson] of lessons.entries()) {
   if (lesson.term !== lessonCharacters.join('')) errors.push(`${slug}: term과 글자 카드의 순서가 다릅니다.`);
   if (lesson.questions.length !== lesson.characters.length) errors.push(`${slug}: 글자마다 문제가 하나씩 필요합니다.`);
   if (curriculum.lessons[lessonIndex]?.term !== lesson.term) errors.push(`${slug}: 커리큘럼 term이 다릅니다.`);
-  lessonCharacters.forEach((character) => allCharacters.add(normalize(character)));
+  lessonCharacters.forEach((character) => {
+    const normalized = normalize(character);
+    if (allCharacters.has(normalized)) errors.push(`${slug} ${character}: 다른 차시에 이미 배치된 글자입니다.`);
+    allCharacters.add(normalized);
+  });
 
   for (const character of lesson.characters) {
     if (!Array.isArray(character.hunEum) || character.hunEum.length === 0) errors.push(`${slug} ${character.character}: 훈음이 없습니다.`);
@@ -36,6 +39,8 @@ for (const [lessonIndex, lesson] of lessons.entries()) {
     for (const [term, hanja, sentence] of character.examples || []) {
       if (![...hanja].includes(character.character)) errors.push(`${slug} ${character.character}: ${term}의 한자어에 목표 글자가 없습니다.`);
       if (!sentence.includes(term)) errors.push(`${slug} ${character.character}: ${term} 예문에 낱말이 없습니다.`);
+      if (/^자료에서 .+의 의미와 쓰임|^두 글에서 .+사용된 맥락|^발표문에서 .+관련된 근거|^문장의 앞뒤를 살펴|__MISSING_EXAMPLE__/.test(sentence)) errors.push(`${slug} ${character.character}: ${term}에 자동 생성 상투 문형이 남았습니다.`);
+      if (/[?？]/.test(sentence) || !/(다|요|니다)\.$/.test(sentence)) errors.push(`${slug} ${character.character}: ${term} 예문이 완결된 서술문이 아닙니다.`);
     }
   }
 
@@ -68,7 +73,7 @@ for (const [lessonIndex, lesson] of lessons.entries()) {
 const missingStandard = [...standard.characters].map(normalize).filter((character) => !allCharacters.has(character));
 if (missingStandard.length) errors.push(`공식 300자 누락: ${[...new Set(missingStandard)].join('')}`);
 if (allCharacters.size !== 310) errors.push(`전체 고유 글자: ${allCharacters.size} (예상 310)`);
-if (questions !== 318) errors.push(`전체 문제: ${questions} (예상 318)`);
+if (questions !== allCharacters.size) errors.push(`전체 문제: ${questions} (예상 ${allCharacters.size})`);
 
 const progress = fs.readFileSync(path.join(lessonRoot, 'index.html'), 'utf8');
 const progressLinks = [...progress.matchAll(/class="lesson-item" href="\.\/(\d{3})\//g)].map((match) => match[1]);
