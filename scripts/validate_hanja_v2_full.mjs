@@ -85,6 +85,44 @@ const progressLinks = [...progress.matchAll(/class="lesson-item" href="\.\/(\d{3
 if (progressLinks.length !== lessons.length) errors.push(`진도표 링크: ${progressLinks.length} (예상 ${lessons.length})`);
 if (!progress.includes(`${lessons.length}차시 · ${allCharacters.size}자`)) errors.push('진도표의 전체 차시·글자 수가 틀렸습니다.');
 
+const stageSize = 14;
+const stageCount = Math.ceil(lessons.length / stageSize);
+const stageQuizLinks = [...progress.matchAll(/class="stage-quiz" href="\.\/quiz\/(\d{2})\//g)].map((match) => match[1]);
+if (stageQuizLinks.length !== stageCount) errors.push(`단계 문제 풀기 링크: ${stageQuizLinks.length} (예상 ${stageCount})`);
+if (/\d+~\d+차시 · \d+개/.test(progress)) errors.push('단계 머리말에 불필요한 차시 범위·개수 표시가 남았습니다.');
+if (!progress.includes('class="stage-toggle"') || !progress.includes('class="stage-quiz"')) errors.push('단계 열기와 문제 풀기 버튼이 분리되지 않았습니다.');
+
+let stageQuizQuestions = 0;
+for (let stageIndex = 0; stageIndex < stageCount; stageIndex += 1) {
+  const stageNumber = stageIndex + 1;
+  const stageSlug = String(stageNumber).padStart(2, '0');
+  const stageLessons = lessons.slice(stageIndex * stageSize, (stageIndex + 1) * stageSize);
+  const expectedQuestions = stageLessons.reduce((sum, lesson) => sum + lesson.questions.length, 0);
+  const quizPath = path.join(lessonRoot, 'quiz', stageSlug, 'index.html');
+  if (!fs.existsSync(quizPath)) { errors.push(`${stageNumber}단계: 문제 풀기 페이지가 없습니다.`); continue; }
+  const quizHtml = fs.readFileSync(quizPath, 'utf8');
+  const dataMatch = quizHtml.match(/<script type="application\/json" id="quiz-data">([\s\S]*?)<\/script>/);
+  if (!dataMatch) { errors.push(`${stageNumber}단계: 문제 데이터가 없습니다.`); continue; }
+  let quizData;
+  try { quizData = JSON.parse(dataMatch[1]); } catch { errors.push(`${stageNumber}단계: 문제 데이터 JSON이 깨졌습니다.`); continue; }
+  stageQuizQuestions += quizData.length;
+  if (quizData.length !== expectedQuestions) errors.push(`${stageNumber}단계: 문제 ${quizData.length}개 (예상 ${expectedQuestions}개)`);
+  const expectedSource = stageLessons.flatMap((lesson) => lesson.questions.map((question) => ({
+    target: question.target,
+    note: question.note,
+    options: question.options.map((option, optionIndex) => ({ word: option[0], sentence: option[2], correct: optionIndex === question.answer }))
+  })));
+  for (const [questionIndex, expected] of expectedSource.entries()) {
+    const actual = quizData[questionIndex];
+    if (!actual || actual.target !== expected.target || actual.note !== expected.note || JSON.stringify(actual.options) !== JSON.stringify(expected.options)) errors.push(`${stageNumber}단계 ${questionIndex + 1}번: 원본 문제·선지 내용이 달라졌습니다.`);
+  }
+  for (const question of quizData) {
+    if (question.options.length !== 4) errors.push(`${stageNumber}단계 ${question.target}: 선지가 4개가 아닙니다.`);
+    if (question.options.filter((option) => option.correct).length !== 1) errors.push(`${stageNumber}단계 ${question.target}: 정답 선지가 정확히 하나가 아닙니다.`);
+  }
+  if (!quizHtml.includes('questions=shuffle(source)') || !quizHtml.includes('options:shuffle(question.options)')) errors.push(`${stageNumber}단계: 문제·선지 순서 무작위화가 없습니다.`);
+}
+if (stageQuizQuestions !== questions) errors.push(`단계 문제 총합: ${stageQuizQuestions} (예상 ${questions})`);
 const carLesson = lessons.find((lesson) => lesson.characters.some((item) => item.character === '車'));
 const carQuestion = carLesson?.questions.find((question) => question.target === '車');
 const carTerms = carQuestion?.options.map((option) => option[0]) || [];
@@ -101,6 +139,8 @@ const report = {
   examples,
   questions,
   progressLinks: progressLinks.length,
+  stageQuizLinks: stageQuizLinks.length,
+  stageQuizQuestions,
   errors
 };
 console.log(JSON.stringify(report, null, 2));

@@ -1,11 +1,14 @@
 <!doctype html>
 <html lang="ko"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover"><title>한자 진도표 | 기초학력</title>
 <style>
-@font-face{font-family:KleeHanja;src:url("../../../../assets/fonts/klee-one/KleeOne-SemiBold.ttf") format("truetype");font-display:swap}:root{--paper:#f7f5ef;--card:#fffdf8;--ink:#202630;--muted:#68717a;--line:#d8d4ca;--blue:#245f8d;--soft:#eaf2f7}*{box-sizing:border-box}body{margin:0;min-width:320px;color:var(--ink);background:#ded8ca url("../assets/hanja-background.webp") center/cover fixed no-repeat;font-family:"Noto Serif KR","Batang",serif}body:before{content:"";position:fixed;inset:0;background:rgba(247,245,239,.84);pointer-events:none}.page{position:relative;width:min(1060px,100%);min-height:100svh;margin:auto;padding:8px clamp(16px,3vw,36px) 32px}.utility{min-height:44px;display:flex;align-items:center;justify-content:space-between;gap:16px}.back{min-height:44px;display:inline-flex;align-items:center;color:var(--blue);font:700 14px system-ui,sans-serif;text-decoration:none}.count{color:var(--muted);font:700 14px system-ui,sans-serif;white-space:nowrap}.stages{display:grid;gap:9px}.stage{overflow:hidden;border:1px solid var(--line);border-radius:9px;background:rgba(255,253,248,.96)}summary{min-height:54px;display:flex;align-items:center;justify-content:space-between;gap:16px;padding:8px 14px;cursor:pointer;list-style:none;font-size:17px;font-weight:800}summary::-webkit-details-marker{display:none}summary small{color:var(--muted);font:700 13px system-ui,sans-serif}.lesson-list{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));margin:0;padding:0 10px 10px;list-style:none;border-top:1px solid var(--line)}.lesson-item{min-height:68px;color:inherit;text-decoration:none;display:grid;grid-template-columns:38px 76px minmax(0,1fr) auto;align-items:center;gap:8px;padding:8px 9px;border-bottom:1px solid #e4e0d7}.lesson-item:nth-child(odd){border-right:1px solid var(--line)}.lesson-number{color:var(--muted);font:800 12px system-ui,sans-serif}.lesson-term{color:var(--blue);font:600 27px KleeHanja,serif;white-space:nowrap}.lesson-copy{min-width:0;display:grid;gap:2px}.lesson-copy strong{font-size:15px}.lesson-copy small{overflow:hidden;color:var(--muted);font-size:13px;text-overflow:ellipsis;white-space:nowrap}.new-characters{padding:4px 7px;border-radius:999px;color:#3d5e76;background:var(--soft);font:700 11px system-ui,sans-serif;white-space:nowrap}summary:focus-visible,.back:focus-visible,.lesson-item:focus-visible{outline:3px solid #77a9cb;outline-offset:2px}@media(max-width:720px){.lesson-list{grid-template-columns:1fr}.lesson-item:nth-child(odd){border-right:0}}@media(max-width:500px){.lesson-item{grid-template-columns:34px 68px minmax(0,1fr)}.new-characters{grid-column:3;justify-self:start}}
+@font-face{font-family:KleeHanja;src:url("../../../../assets/fonts/klee-one/KleeOne-SemiBold.ttf") format("truetype");font-display:swap}:root{--paper:#f7f5ef;--card:#fffdf8;--ink:#202630;--muted:#68717a;--line:#d8d4ca;--blue:#245f8d;--soft:#eaf2f7}*{box-sizing:border-box}body{margin:0;min-width:320px;color:var(--ink);background:#ded8ca url("../assets/hanja-background.webp") center/cover fixed no-repeat;font-family:"Noto Serif KR","Batang",serif}body:before{content:"";position:fixed;inset:0;background:rgba(247,245,239,.84);pointer-events:none}.page{position:relative;width:min(1060px,100%);min-height:100svh;margin:auto;padding:8px clamp(16px,3vw,36px) 32px}.utility{min-height:44px;display:flex;align-items:center;justify-content:space-between;gap:16px}.back{min-height:44px;display:inline-flex;align-items:center;color:var(--blue);font:700 14px system-ui,sans-serif;text-decoration:none}.count{color:var(--muted);font:700 14px system-ui,sans-serif;white-space:nowrap}.stages{display:grid;gap:9px}.stage{overflow:hidden;border:1px solid var(--line);border-radius:9px;background:rgba(255,253,248,.96)}.stage-head{min-height:54px;display:grid;grid-template-columns:minmax(0,1fr) auto;align-items:center;gap:8px;padding:4px 8px 4px 0}.stage-toggle{min-height:46px;padding:0 14px;border:0;background:transparent;color:var(--ink);font:800 17px "Noto Serif KR","Batang",serif;text-align:left;cursor:pointer}.stage-toggle:after{content:"⌄";display:inline-block;margin-left:8px;color:var(--muted);font-family:system-ui,sans-serif;transform:rotate(-90deg)}.stage-toggle[aria-expanded=true]:after{transform:rotate(0)}.stage-quiz{min-height:44px;display:inline-flex;align-items:center;justify-content:center;padding:0 16px;border-radius:7px;color:white;background:var(--blue);font:800 14px system-ui,sans-serif;text-decoration:none}.lesson-list{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));margin:0;padding:0 10px 10px;list-style:none;border-top:1px solid var(--line)}.lesson-list[hidden]{display:none}.lesson-item{min-height:68px;color:inherit;text-decoration:none;display:grid;grid-template-columns:38px 76px minmax(0,1fr) auto;align-items:center;gap:8px;padding:8px 9px;border-bottom:1px solid #e4e0d7}.lesson-item:nth-child(odd){border-right:1px solid var(--line)}.lesson-number{color:var(--muted);font:800 12px system-ui,sans-serif}.lesson-term{color:var(--blue);font:600 27px KleeHanja,serif;white-space:nowrap}.lesson-copy{min-width:0;display:grid;gap:2px}.lesson-copy strong{font-size:15px}.lesson-copy small{overflow:hidden;color:var(--muted);font-size:13px;text-overflow:ellipsis;white-space:nowrap}.new-characters{padding:4px 7px;border-radius:999px;color:#3d5e76;background:var(--soft);font:700 11px system-ui,sans-serif;white-space:nowrap}.stage-toggle:focus-visible,.stage-quiz:focus-visible,.back:focus-visible,.lesson-item:focus-visible{outline:3px solid #77a9cb;outline-offset:2px}@media(max-width:720px){.lesson-list{grid-template-columns:1fr}.lesson-item:nth-child(odd){border-right:0}}@media(max-width:500px){.lesson-item{grid-template-columns:34px 68px minmax(0,1fr)}.new-characters{grid-column:3;justify-self:start}.stage-quiz{padding:0 12px}}
 </style></head><body><main class="page"><nav class="utility" aria-label="진도표 도구"><span class="count">196차시 · 522자</span><a class="back" href="../../../../">학습 홈</a></nav><section class="stages" aria-label="단계별 진도">
-      <details class="stage" open>
-        <summary><span>1단계</span><small>1~14차시 · 14개</small></summary>
-        <ol class="lesson-list" start="1">
+      <section class="stage">
+        <div class="stage-head">
+          <button class="stage-toggle" type="button" aria-expanded="true" aria-controls="stage-list-1">1단계</button>
+          <a class="stage-quiz" href="./quiz/01/">문제 풀기</a>
+        </div>
+        <ol class="lesson-list" id="stage-list-1" start="1">
           <a class="lesson-item" href="./001/">
             <span class="lesson-number">001</span>
             <span class="lesson-term" aria-label="인 · 생">人生</span>
@@ -91,10 +94,13 @@
             <span class="new-characters">百 · 千 · 萬</span>
           </a>
         </ol>
-      </details>
-      <details class="stage">
-        <summary><span>2단계</span><small>15~28차시 · 14개</small></summary>
-        <ol class="lesson-list" start="15">
+      </section>
+      <section class="stage">
+        <div class="stage-head">
+          <button class="stage-toggle" type="button" aria-expanded="false" aria-controls="stage-list-2">2단계</button>
+          <a class="stage-quiz" href="./quiz/02/">문제 풀기</a>
+        </div>
+        <ol class="lesson-list" id="stage-list-2" start="15" hidden>
           <a class="lesson-item" href="./015/">
             <span class="lesson-number">015</span>
             <span class="lesson-term" aria-label="시 · 분">時分</span>
@@ -180,10 +186,13 @@
             <span class="new-characters">水 · 火</span>
           </a>
         </ol>
-      </details>
-      <details class="stage">
-        <summary><span>3단계</span><small>29~42차시 · 14개</small></summary>
-        <ol class="lesson-list" start="29">
+      </section>
+      <section class="stage">
+        <div class="stage-head">
+          <button class="stage-toggle" type="button" aria-expanded="false" aria-controls="stage-list-3">3단계</button>
+          <a class="stage-quiz" href="./quiz/03/">문제 풀기</a>
+        </div>
+        <ol class="lesson-list" id="stage-list-3" start="29" hidden>
           <a class="lesson-item" href="./029/">
             <span class="lesson-number">029</span>
             <span class="lesson-term" aria-label="목 · 재">木材</span>
@@ -269,10 +278,13 @@
             <span class="new-characters">家 · 庭</span>
           </a>
         </ol>
-      </details>
-      <details class="stage">
-        <summary><span>4단계</span><small>43~56차시 · 14개</small></summary>
-        <ol class="lesson-list" start="43">
+      </section>
+      <section class="stage">
+        <div class="stage-head">
+          <button class="stage-toggle" type="button" aria-expanded="false" aria-controls="stage-list-4">4단계</button>
+          <a class="stage-quiz" href="./quiz/04/">문제 풀기</a>
+        </div>
+        <ol class="lesson-list" id="stage-list-4" start="43" hidden>
           <a class="lesson-item" href="./043/">
             <span class="lesson-number">043</span>
             <span class="lesson-term" aria-label="교 · 실">敎室</span>
@@ -358,10 +370,13 @@
             <span class="new-characters">自 · 轉 · 車</span>
           </a>
         </ol>
-      </details>
-      <details class="stage">
-        <summary><span>5단계</span><small>57~70차시 · 14개</small></summary>
-        <ol class="lesson-list" start="57">
+      </section>
+      <section class="stage">
+        <div class="stage-head">
+          <button class="stage-toggle" type="button" aria-expanded="false" aria-controls="stage-list-5">5단계</button>
+          <a class="stage-quiz" href="./quiz/05/">문제 풀기</a>
+        </div>
+        <ol class="lesson-list" id="stage-list-5" start="57" hidden>
           <a class="lesson-item" href="./057/">
             <span class="lesson-number">057</span>
             <span class="lesson-term" aria-label="가 · 각 · 각">歌各角</span>
@@ -447,10 +462,13 @@
             <span class="new-characters">圖 · 度</span>
           </a>
         </ol>
-      </details>
-      <details class="stage">
-        <summary><span>6단계</span><small>71~84차시 · 14개</small></summary>
-        <ol class="lesson-list" start="71">
+      </section>
+      <section class="stage">
+        <div class="stage-head">
+          <button class="stage-toggle" type="button" aria-expanded="false" aria-controls="stage-list-6">6단계</button>
+          <a class="stage-quiz" href="./quiz/06/">문제 풀기</a>
+        </div>
+        <ol class="lesson-list" id="stage-list-6" start="71" hidden>
           <a class="lesson-item" href="./071/">
             <span class="lesson-number">071</span>
             <span class="lesson-term" aria-label="동·통 · 동 · 두">洞童頭</span>
@@ -536,10 +554,13 @@
             <span class="new-characters">不 · 事</span>
           </a>
         </ol>
-      </details>
-      <details class="stage">
-        <summary><span>7단계</span><small>85~98차시 · 14개</small></summary>
-        <ol class="lesson-list" start="85">
+      </section>
+      <section class="stage">
+        <div class="stage-head">
+          <button class="stage-toggle" type="button" aria-expanded="false" aria-controls="stage-list-7">7단계</button>
+          <a class="stage-quiz" href="./quiz/07/">문제 풀기</a>
+        </div>
+        <ol class="lesson-list" id="stage-list-7" start="85" hidden>
           <a class="lesson-item" href="./085/">
             <span class="lesson-number">085</span>
             <span class="lesson-term" aria-label="사 · 사 · 사">使死社</span>
@@ -625,10 +646,13 @@
             <span class="new-characters">洋 · 陽 · 言</span>
           </a>
         </ol>
-      </details>
-      <details class="stage">
-        <summary><span>8단계</span><small>99~112차시 · 14개</small></summary>
-        <ol class="lesson-list" start="99">
+      </section>
+      <section class="stage">
+        <div class="stage-head">
+          <button class="stage-toggle" type="button" aria-expanded="false" aria-controls="stage-list-8">8단계</button>
+          <a class="stage-quiz" href="./quiz/08/">문제 풀기</a>
+        </div>
+        <ol class="lesson-list" id="stage-list-8" start="99" hidden>
           <a class="lesson-item" href="./099/">
             <span class="lesson-number">099</span>
             <span class="lesson-term" aria-label="업 · 연">業然</span>
@@ -714,10 +738,13 @@
             <span class="new-characters">主 · 住</span>
           </a>
         </ol>
-      </details>
-      <details class="stage">
-        <summary><span>9단계</span><small>113~126차시 · 14개</small></summary>
-        <ol class="lesson-list" start="113">
+      </section>
+      <section class="stage">
+        <div class="stage-head">
+          <button class="stage-toggle" type="button" aria-expanded="false" aria-controls="stage-list-9">9단계</button>
+          <a class="stage-quiz" href="./quiz/09/">문제 풀기</a>
+        </div>
+        <ol class="lesson-list" id="stage-list-9" start="113" hidden>
           <a class="lesson-item" href="./113/">
             <span class="lesson-number">113</span>
             <span class="lesson-term" aria-label="주 · 주 · 중">晝注重</span>
@@ -803,10 +830,13 @@
             <span class="new-characters">商 · 象</span>
           </a>
         </ol>
-      </details>
-      <details class="stage">
-        <summary><span>10단계</span><small>127~140차시 · 14개</small></summary>
-        <ol class="lesson-list" start="127">
+      </section>
+      <section class="stage">
+        <div class="stage-head">
+          <button class="stage-toggle" type="button" aria-expanded="false" aria-controls="stage-list-10">10단계</button>
+          <a class="stage-quiz" href="./quiz/10/">문제 풀기</a>
+        </div>
+        <ol class="lesson-list" id="stage-list-10" start="127" hidden>
           <a class="lesson-item" href="./127/">
             <span class="lesson-number">127</span>
             <span class="lesson-term" aria-label="결 · 당 · 정">結當政</span>
@@ -892,10 +922,13 @@
             <span class="new-characters">裝 · 期 · 格</span>
           </a>
         </ol>
-      </details>
-      <details class="stage">
-        <summary><span>11단계</span><small>141~154차시 · 14개</small></summary>
-        <ol class="lesson-list" start="141">
+      </section>
+      <section class="stage">
+        <div class="stage-head">
+          <button class="stage-toggle" type="button" aria-expanded="false" aria-controls="stage-list-11">11단계</button>
+          <a class="stage-quiz" href="./quiz/11/">문제 풀기</a>
+        </div>
+        <ol class="lesson-list" id="stage-list-11" start="141" hidden>
           <a class="lesson-item" href="./141/">
             <span class="lesson-number">141</span>
             <span class="lesson-term" aria-label="상 · 제 · 이">像提以</span>
@@ -981,10 +1014,13 @@
             <span class="new-characters">論 · 處 · 演</span>
           </a>
         </ol>
-      </details>
-      <details class="stage">
-        <summary><span>12단계</span><small>155~168차시 · 14개</small></summary>
-        <ol class="lesson-list" start="155">
+      </section>
+      <section class="stage">
+        <div class="stage-head">
+          <button class="stage-toggle" type="button" aria-expanded="false" aria-controls="stage-list-12">12단계</button>
+          <a class="stage-quiz" href="./quiz/12/">문제 풀기</a>
+        </div>
+        <ol class="lesson-list" id="stage-list-12" start="155" hidden>
           <a class="lesson-item" href="./155/">
             <span class="lesson-number">155</span>
             <span class="lesson-term" aria-label="시 · 제 · 산">示除産</span>
@@ -1070,10 +1106,13 @@
             <span class="new-characters">與 · 態 · 推</span>
           </a>
         </ol>
-      </details>
-      <details class="stage">
-        <summary><span>13단계</span><small>169~182차시 · 14개</small></summary>
-        <ol class="lesson-list" start="169">
+      </section>
+      <section class="stage">
+        <div class="stage-head">
+          <button class="stage-toggle" type="button" aria-expanded="false" aria-controls="stage-list-13">13단계</button>
+          <a class="stage-quiz" href="./quiz/13/">문제 풀기</a>
+        </div>
+        <ol class="lesson-list" id="stage-list-13" start="169" hidden>
           <a class="lesson-item" href="./169/">
             <span class="lesson-number">169</span>
             <span class="lesson-term" aria-label="종 · 주 · 표">種週標</span>
@@ -1159,10 +1198,13 @@
             <span class="new-characters">調 · 請 · 原</span>
           </a>
         </ol>
-      </details>
-      <details class="stage">
-        <summary><span>14단계</span><small>183~196차시 · 14개</small></summary>
-        <ol class="lesson-list" start="183">
+      </section>
+      <section class="stage">
+        <div class="stage-head">
+          <button class="stage-toggle" type="button" aria-expanded="false" aria-controls="stage-list-14">14단계</button>
+          <a class="stage-quiz" href="./quiz/14/">문제 풀기</a>
+        </div>
+        <ol class="lesson-list" id="stage-list-14" start="183" hidden>
           <a class="lesson-item" href="./183/">
             <span class="lesson-number">183</span>
             <span class="lesson-term" aria-label="책 · 단 · 착">策段着</span>
@@ -1248,4 +1290,4 @@
             <span class="new-characters">費 · 則 · 憂</span>
           </a>
         </ol>
-      </details></section></main></body></html>
+      </section></section></main><script>document.querySelectorAll('.stage-toggle').forEach((button)=>button.addEventListener('click',()=>{const list=document.getElementById(button.getAttribute('aria-controls'));const expanded=button.getAttribute('aria-expanded')==='true';button.setAttribute('aria-expanded',String(!expanded));list.toggleAttribute('hidden',expanded)}));</script></body></html>
