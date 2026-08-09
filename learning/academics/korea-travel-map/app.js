@@ -18,8 +18,6 @@
   let schoolOriginMarker = null;
   let routeRequestId = 0;
 
-  document.querySelector('#placeCount').textContent = String(places.length);
-
   const map = L.map('map-container', {
     center: [36.15, 127.75], zoom: 7, minZoom: 6, maxZoom: 14,
     zoomControl: true, attributionControl: true, preferCanvas: true
@@ -153,7 +151,6 @@
       marker.on('click', () => map.fitBounds(bounds.pad(0.55), { maxZoom: 10, padding: [60, 60] }));
       markerLayer.addLayer(marker);
     });
-    document.querySelector('#placeCount').textContent = String(filtered.length);
   }
 
   function openPlace(place) {
@@ -212,7 +209,7 @@
     document.querySelector('#placeMission').textContent = currentPlace.mission;
     document.querySelector('#placeSeason').textContent = `🗓️ ${currentPlace.season}`;
     document.querySelector('#placeWeather').textContent = `☔ ${currentPlace.weather}`;
-    document.querySelector('#placeReservation').textContent = `🚌 ${currentPlace.reservation}`;
+    document.querySelector('#placeReservation').textContent = `🎟️ ${currentPlace.reservation}`;
     const officialSite = document.querySelector('#officialSite');
     officialSite.href = currentPlace.officialUrl;
     officialSite.setAttribute('aria-label', `${currentPlace.name} 공식 홈페이지 새 창에서 열기`);
