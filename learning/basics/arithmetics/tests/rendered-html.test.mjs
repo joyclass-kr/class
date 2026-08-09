@@ -56,8 +56,8 @@ test("renders the learning index and arithmetic catalog in workbook order", asyn
   const indexHtml = await indexResponse.text();
   const indexCss = await readFile(new URL("../app/globals.css", import.meta.url), "utf8");
   assert.equal(indexResponse.status, 200);
-  assert.equal((indexHtml.match(/data-testid="worksheet-choice"/g) ?? []).length, 187);
-  assert.equal((indexHtml.match(/class="worksheet-grade"/g) ?? []).length, 187);
+  assert.equal((indexHtml.match(/data-testid="worksheet-choice"/g) ?? []).length, 185);
+  assert.equal((indexHtml.match(/class="worksheet-grade"/g) ?? []).length, 185);
   assert.doesNotMatch(indexHtml, /data-testid="learning-area-card"/);
   assert.match(indexHtml, /href="\/fraction"[^>]*data-testid="worksheet-choice"/);
   assert.match(indexHtml, /href="\/arithmetic\/high-school\/trigonometric-derivatives-2"[^>]*data-testid="worksheet-choice"/);
@@ -78,14 +78,14 @@ test("renders the learning index and arithmetic catalog in workbook order", asyn
     .map((match) => match[1].replaceAll("&amp;", "&"));
   assert.match(catalogHtml, /href="\/arithmetic\/race"/);
   assert.match(catalogHtml, /<a(?=[^>]*class="catalog-back")(?=[^>]*href="\/")[^>]*>← 메인<\/a>/);
-  assert.equal((catalogHtml.match(/data-testid="worksheet-choice"/g) ?? []).length, 187);
+  assert.equal((catalogHtml.match(/data-testid="worksheet-choice"/g) ?? []).length, 185);
   assert.match(catalogHtml, /기초 연산/);
   assert.match(catalogHtml, /초·중·고부터 이공계 기초까지/);
   assert.match(catalogHtml, /data-stage="elementary"/);
   assert.match(catalogHtml, /data-stage="middle"/);
   assert.match(catalogHtml, /data-stage="high"/);
   assert.match(catalogHtml, /이공계 기초/);
-  assert.equal((catalogHtml.match(/class="worksheet-grade"/g) ?? []).length, 187);
+  assert.equal((catalogHtml.match(/class="worksheet-grade"/g) ?? []).length, 185);
   assert.match(catalogHtml, /href="\/arithmetic\/stem\/foundation\?kind=partial-derivatives"/);
   assert.doesNotMatch(catalogHtml, /href="\/arithmetic\/stem\/foundation\?kind=laplace-transforms"/);
   assert.ok(catalogHtml.indexOf("수 세기") < catalogHtml.indexOf("덧셈·뺄셈 ①"));
@@ -170,8 +170,8 @@ test("renders the learning index and arithmetic catalog in workbook order", asyn
   assert.ok(catalogRoutes.findIndex((route) => route.includes("kind=repeating-decimal")) < catalogRoutes.findIndex((route) => route.includes("kind=radical-calculation")));
   assert.ok(catalogRoutes.findIndex((route) => route.includes("kind=radical-calculation")) < catalogRoutes.findIndex((route) => route.includes("kind=formula-comprehensive")));
   assert.match(catalogHtml, /href="\/arithmetic\/middle-school\/factorization\?kind=cubic-common"/);
-  assert.match(catalogHtml, /href="\/arithmetic\/middle-school\/factorization\?kind=cubic-grouping"/);
-  assert.match(catalogHtml, /href="\/arithmetic\/middle-school\/factorization\?kind=cubic-sum-difference"/);
+  assert.doesNotMatch(catalogHtml, /href="\/arithmetic\/middle-school\/factorization\?kind=cubic-grouping"/);
+  assert.doesNotMatch(catalogHtml, /href="\/arithmetic\/middle-school\/factorization\?kind=cubic-sum-difference"/);
   assert.doesNotMatch(catalogHtml, /href="\/arithmetic\/middle-school\/quadratic-equations\?kind=roots-and-squares"/);
   assert.match(catalogHtml, /href="\/arithmetic\/middle-school\/quadratic-equations\?kind=factorization"/);
   assert.match(catalogHtml, /href="\/arithmetic\/middle-school\/quadratic-equations\?kind=quadratic-formula"/);
@@ -185,11 +185,11 @@ test("renders the learning index and arithmetic catalog in workbook order", asyn
   assert.match(catalogHtml, /href="\/arithmetic\/middle-school\/trigonometry\?kind=ratios"/);
   assert.doesNotMatch(catalogHtml, /href="\/arithmetic\/middle-school\/trigonometry\?kind=special-angles"/);
   assert.match(catalogHtml, /href="\/arithmetic\/middle-school\/trigonometry\?kind=side-lengths"/);
-  assert.match(catalogHtml, /href="\/arithmetic\/middle-school\/trigonometry\?kind=comprehensive"/);
+  assert.doesNotMatch(catalogHtml, /href="\/arithmetic\/middle-school\/trigonometry\?kind=comprehensive"/);
   assert.match(catalogHtml, /href="\/arithmetic\/middle-school\/circle-properties\?kind=inscribed-angles"/);
   assert.doesNotMatch(catalogHtml, /href="\/arithmetic\/middle-school\/circle-properties\?kind=angle-applications"/);
   assert.match(catalogHtml, /href="\/arithmetic\/middle-school\/circle-properties\?kind=circle-lengths"/);
-  assert.match(catalogHtml, /href="\/arithmetic\/middle-school\/circle-properties\?kind=comprehensive"/);
+  assert.doesNotMatch(catalogHtml, /href="\/arithmetic\/middle-school\/circle-properties\?kind=comprehensive"/);
   assert.match(catalogHtml, /href="\/arithmetic\/middle-school\/statistics\?kind=representative-values"/);
   assert.doesNotMatch(catalogHtml, /href="\/arithmetic\/middle-school\/statistics\?kind=mean-applications"/);
   assert.match(catalogHtml, /href="\/arithmetic\/middle-school\/statistics\?kind=dispersion"/);
@@ -393,7 +393,7 @@ test("renders the unified arithmetic catalog and high-school worksheets", async 
   const hubResponse = await render("/arithmetic/high-school");
   assert.equal(hubResponse.status, 200);
   const hubHtml = await hubResponse.text();
-  assert.equal((hubHtml.match(/data-testid="worksheet-choice"/g) ?? []).length, 187);
+  assert.equal((hubHtml.match(/data-testid="worksheet-choice"/g) ?? []).length, 185);
   assert.match(hubHtml, /href="\/fraction"[^>]*data-testid="worksheet-choice"/);
   assert.match(hubHtml, /href="\/arithmetic\/high-school\/polynomial-add-subtract"/);
   assert.match(hubHtml, /href="\/arithmetic\/high-school\/factorization-rational"/);
@@ -615,10 +615,13 @@ test("renders the reconstructed conic tangents and space geometry worksheets", a
   assert.equal(spaceResponse.status, 200);
   const spaceHtml = await spaceResponse.text();
   assert.match(spaceHtml, /공간도형의 위치 관계와 정사영/);
-  assert.equal((spaceHtml.match(/data-testid="geometry-question"/g) ?? []).length, 14);
+  assert.equal((spaceHtml.match(/data-testid="geometry-question"/g) ?? []).length, 18);
   assert.match(spaceHtml, /직선과 평면의 위치 관계/);
   assert.match(spaceHtml, /평면에 내린 수선의 발/);
   assert.match(spaceHtml, /직선 방향으로의 벡터 정사영/);
+  assert.match(spaceHtml, /평면도형의 정사영 넓이/);
+  assert.match(spaceHtml, /삼수선의 정리/);
+  assert.match(spaceHtml, /<svg/);
   assert.doesNotMatch(spaceHtml, /\uFFFD/);
 });
 
@@ -1756,7 +1759,7 @@ test("renders the fifth grade natural-number decomposition worksheet from the wo
   assert.equal((html.match(/class="natural-decomposition-static-answer"/g) ?? []).length, 16);
   assert.match(source, /createNaturalNumberDecompositionSet\(seed\)/);
   assert.match(source, /isPrimeFactorizationAnswer/);
-  assert.match(source, /<small>\/12 정답<\/small>/);
+  assert.match(source, /<small>\/14 정답<\/small>/);
   assert.match(bankSource, /export const naturalNumberDecompositionBank/);
   assert.match(bankSource, /8, 12, 16, 18, 20, 22/);
   assert.match(css, /\.natural-decomposition-grid\s*\{[\s\S]*?grid-template-columns:\s*repeat\(2,/);

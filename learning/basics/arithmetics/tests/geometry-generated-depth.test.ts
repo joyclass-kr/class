@@ -27,7 +27,7 @@ test("이차곡선 접선은 쉬운 이동 문제 대신 일반점과 매개변�
 
 test("공간도형 학습지는 위치 관계·거리·정사영을 서로 다른 계산으로 다룬다", () => {
   const problems = createSpaceGeometryProjectionProblems(20260817);
-  assert.equal(problems.length, 7);
+  assert.equal(problems.length, 9);
   assert.deepEqual(problems.map(({ label }) => label), [
     "두 직선이 이루는 각",
     "직선과 평면의 위치 관계",
@@ -36,12 +36,16 @@ test("공간도형 학습지는 위치 관계·거리·정사영을 서로 다�
     "평행한 두 평면 사이의 거리",
     "평면에 내린 수선의 발",
     "직선 방향으로의 벡터 정사영",
+    "평면도형의 정사영 넓이",
+    "삼수선의 정리",
   ]);
   for (const problem of problems) {
     assert.equal(problem.choices.length, 4);
     assert.equal(new Set(problem.choices.map(({ latex }) => latex)).size, 4);
     assert.equal(problem.choices.filter(({ correct }) => correct).length, 1);
     assert.doesNotMatch(problem.choices.map(({ latex }) => latex).join(" "), /\+1(?:$|\s)/);
+    assert.match(problem.prompt ?? "", /\?$/);
+    assert.ok(problem.visualVariant);
   }
 });
 

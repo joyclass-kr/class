@@ -70,7 +70,7 @@ export const MIDDLE_QUADRATIC_EQUATION_METHOD_KINDS: MiddleQuadraticEquationMeth
 
 export const MIDDLE_QUADRATIC_EQUATION_TITLES: Record<MiddleQuadraticEquationKind, string> = {
   "roots-and-squares": "이차방정식: 제곱근·완전제곱",
-  factorization: "이차방정식: 인수분해로 풀기",
+  factorization: "이차방정식: 기본·인수분해",
   "quadratic-formula": "이차방정식: 근의 공식",
   "normalize-and-solve": "이차방정식: 식 정리 후 풀기",
   applications: "이차방정식 활용 계산",
@@ -508,11 +508,11 @@ const GROUP_METHOD_PLANS: Record<Exclude<MiddleQuadraticEquationKind, "comprehen
     "completing-square",
   ],
   factorization: [
+    "square-root-basic",
+    "perfect-square",
     "zero-product",
     "common-factor",
     "monic-factorization",
-    "monic-factorization",
-    "nonmonic-factorization",
     "nonmonic-factorization",
     "negative-leading",
     "nonmonic-factorization",

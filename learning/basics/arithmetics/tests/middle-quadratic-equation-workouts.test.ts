@@ -64,13 +64,15 @@ test("제곱근·완전제곱 학습지는 단순 제곱근에서 완전제곱�
   assert.ok(kinds.slice(5).includes("completing-square"));
 });
 
-test("인수분해 학습지는 쉬운 곱셈식에서 일반형과 부호 정리로 진행한다", () => {
+test("기본·인수분해 학습지는 쉬운 제곱식부터 일반형과 부호 정리까지 통합한다", () => {
   const kinds = createMiddleQuadraticEquationProblemSet("factorization", 20260729)
     .problems.map(({ kind }) => kind);
-  assert.deepEqual(kinds.slice(0, 2), ["zero-product", "common-factor"]);
-  assert.ok(kinds.slice(2, 5).includes("monic-factorization"));
-  assert.ok(kinds.slice(5).includes("nonmonic-factorization"));
-  assert.ok(kinds.slice(5).includes("negative-leading"));
+  assert.deepEqual(kinds.slice(0, 2), ["square-root-basic", "perfect-square"]);
+  assert.ok(kinds.includes("zero-product"));
+  assert.ok(kinds.includes("common-factor"));
+  assert.ok(kinds.includes("monic-factorization"));
+  assert.ok(kinds.includes("nonmonic-factorization"));
+  assert.ok(kinds.includes("negative-leading"));
 });
 
 test("근의 공식 학습지는 계수가 1인 식과 일반형을 한 장에서 반복한다", () => {

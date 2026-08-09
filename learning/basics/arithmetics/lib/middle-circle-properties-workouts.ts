@@ -7,8 +7,13 @@ export type MiddleCirclePropertiesMethodKind =
   | "cyclic-quadrilateral"
   | "tangent-chord-angle"
   | "tangent-length"
+  | "tangent-expression"
+  | "tangent-perimeter"
   | "chord-length"
   | "center-to-chord"
+  | "equal-chord-distance"
+  | "equal-chord-length"
+  | "chord-comparison"
   | "arc-sum";
 
 export type MiddleCirclePropertiesKind =
@@ -29,13 +34,12 @@ export type MiddleCirclePropertiesProblem = {
   answerLatex: string;
   solutionHint: string;
   distractors: string[];
+  visual?: { type: "geometry"; variant: string; labels?: string[] };
 };
 
 export const MIDDLE_CIRCLE_PROPERTIES_KINDS: MiddleCirclePropertiesKind[] = [
   "inscribed-angles",
-  "angle-applications",
   "circle-lengths",
-  "comprehensive",
 ];
 
 export const MIDDLE_CIRCLE_PROPERTIES_METHOD_KINDS: MiddleCirclePropertiesMethodKind[] = [
@@ -68,8 +72,13 @@ const MIDDLE_CIRCLE_PROPERTIES_METHOD_TITLES: Record<MiddleCirclePropertiesMetho
   "cyclic-quadrilateral": "원에 내접하는 사각형",
   "tangent-chord-angle": "접선과 현이 이루는 각",
   "tangent-length": "한 점에서 그은 두 접선",
+  "tangent-expression": "두 접선의 식",
+  "tangent-perimeter": "두 접선과 삼각형의 둘레",
   "chord-length": "중심과 현의 길이",
   "center-to-chord": "현에서 중심까지의 거리",
+  "equal-chord-distance": "같은 길이의 현과 중심거리",
+  "equal-chord-length": "같은 중심거리와 현",
+  "chord-comparison": "현의 길이 비교",
   "arc-sum": "호의 크기 합산",
 };
 
@@ -148,6 +157,7 @@ function make(
     answerLatex,
     solutionHint,
     distractors: uniqueDistractors(answerLatex, distractors),
+    visual: { type: "geometry", variant: kind, labels: [] },
   };
 }
 
@@ -243,6 +253,64 @@ function build(
     );
   }
 
+  if (kind === "tangent-expression") {
+    const solution = integer(next, 4, 10);
+    return make(id, kind,
+      `PA=x+${solution},\quad PB=2x,\quad PA=PB`,
+      `${solution}`,
+      `한 점에서 그은 두 접선의 길이는 같으므로 x+${solution}=2x를 푼다.`,
+      [`${solution * 2}`, `${solution + 1}`, `${Math.max(1, solution - 1)}`],
+      "tangent-linear-equation",
+    );
+  }
+
+  if (kind === "tangent-perimeter") {
+    const tangent = integer(next, 5, 12);
+    const chord = integer(next, 4, 10);
+    const perimeter = tangent * 2 + chord;
+    return make(id, kind,
+      `PA,PB:\text{ 접선},\quad PA=${tangent},\quad AB=${chord},\quad \triangle PAB\text{의 둘레}`,
+      `${perimeter}`,
+      `PA=PB=${tangent}이므로 삼각형의 둘레는 ${tangent}+${tangent}+${chord}이다.`,
+      [`${tangent + chord}`, `${tangent * 2}`, `${perimeter + tangent}`],
+      "two-tangents-perimeter",
+    );
+  }
+
+  if (kind === "equal-chord-distance") {
+    const distance = integer(next, 3, 9);
+    return make(id, kind,
+      `AB=CD,\quad OM\perp AB,\quad ON\perp CD,\quad OM=${distance},\quad ON`,
+      `${distance}`,
+      "한 원에서 길이가 같은 두 현은 중심에서 같은 거리에 있다.",
+      [`${distance + 1}`, `${distance * 2}`, `${Math.max(1, distance - 1)}`],
+      "equal-chords-equal-distance",
+    );
+  }
+
+  if (kind === "equal-chord-length") {
+    const chord = 2 * integer(next, 4, 10);
+    return make(id, kind,
+      `OM=ON,\quad OM\perp AB,\quad ON\perp CD,\quad AB=${chord},\quad CD`,
+      `${chord}`,
+      "한 원에서 중심으로부터 같은 거리에 있는 두 현의 길이는 같다.",
+      [`${chord / 2}`, `${chord + 2}`, `${chord * 2}`],
+      "equal-distance-equal-chords",
+    );
+  }
+
+  if (kind === "chord-comparison") {
+    const near = integer(next, 2, 5);
+    const far = near + integer(next, 1, 4);
+    return make(id, kind,
+      `OM\perp AB,\quad ON\perp CD,\quad OM=${near},\quad ON=${far}`,
+      `\overline{AB}`,
+      "한 원에서 중심에 더 가까운 현이 더 길다. OM<ON이므로 AB가 더 길다.",
+      ["\overline{CD}", "\overline{AB}=\overline{CD}", "\text{판단할 수 없음}"],
+      "compare-chords-by-distance",
+    );
+  }
+
   if (kind === "chord-length") {
     const [halfChordBase, distanceBase, radiusBase] = RIGHT_TRIANGLES[index % RIGHT_TRIANGLES.length];
     const scale = 1 + Math.floor(index / RIGHT_TRIANGLES.length);
@@ -301,9 +369,8 @@ const GROUP_METHOD_PLANS: Record<Exclude<MiddleCirclePropertiesKind, "comprehens
     "tangent-chord-angle", "cyclic-quadrilateral", "tangent-chord-angle",
   ],
   "circle-lengths": [
-    "tangent-length", "chord-length",
-    "center-to-chord", "tangent-length", "chord-length",
-    "center-to-chord", "chord-length", "center-to-chord",
+    "tangent-length", "tangent-expression", "tangent-perimeter", "chord-length",
+    "center-to-chord", "equal-chord-distance", "equal-chord-length", "chord-comparison",
   ],
 };
 
@@ -314,11 +381,16 @@ const LEGACY_KIND_GROUPS: Record<MiddleCirclePropertiesMethodKind, MiddleCircleP
   "same-arc": "inscribed-angles",
   "semicircle-angle": "inscribed-angles",
   "arc-sum": "inscribed-angles",
-  "cyclic-quadrilateral": "angle-applications",
-  "tangent-chord-angle": "angle-applications",
+  "cyclic-quadrilateral": "inscribed-angles",
+  "tangent-chord-angle": "inscribed-angles",
   "tangent-length": "circle-lengths",
+  "tangent-expression": "circle-lengths",
+  "tangent-perimeter": "circle-lengths",
   "chord-length": "circle-lengths",
   "center-to-chord": "circle-lengths",
+  "equal-chord-distance": "circle-lengths",
+  "equal-chord-length": "circle-lengths",
+  "chord-comparison": "circle-lengths",
 };
 
 export function isMiddleCirclePropertiesKind(value: string | null): value is MiddleCirclePropertiesKind {
@@ -326,6 +398,7 @@ export function isMiddleCirclePropertiesKind(value: string | null): value is Mid
 }
 
 export function resolveMiddleCirclePropertiesKind(value: string | null): MiddleCirclePropertiesKind | null {
+  if (value === "angle-applications" || value === "comprehensive") return "inscribed-angles";
   if (isMiddleCirclePropertiesKind(value)) return value;
   if (MIDDLE_CIRCLE_PROPERTIES_METHOD_KINDS.includes(value as MiddleCirclePropertiesMethodKind)) {
     return LEGACY_KIND_GROUPS[value as MiddleCirclePropertiesMethodKind];

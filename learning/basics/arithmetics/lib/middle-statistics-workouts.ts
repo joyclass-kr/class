@@ -387,9 +387,9 @@ function comprehensiveKind(seed: number, index: number) {
 
 const GROUP_METHOD_PLANS: Record<Exclude<MiddleStatisticsKind, "comprehensive">, MiddleStatisticsMethodKind[]> = {
   "representative-values": [
-    "mean", "median",
-    "mode", "frequency-mean", "total-frequency",
-    "relative-frequency", "missing-frequency", "relative-percentage",
+    "mean", "median", "mode", "range",
+    "missing-from-mean", "frequency-mean",
+    "total-frequency", "relative-frequency",
   ],
   "mean-applications": [
     "mean", "missing-from-mean",

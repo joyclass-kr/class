@@ -736,9 +736,15 @@ function difficultyForIndex(index: number): MiddleFactorizationDifficulty {
   return "advanced";
 }
 
-const COMPREHENSIVE_ROTATION = MIDDLE_FACTORIZATION_KINDS.filter(
-  (kind) => kind !== "comprehensive",
+export const MIDDLE_FACTORIZATION_CORE_KINDS = MIDDLE_FACTORIZATION_KINDS.filter(
+  (kind) => (
+    kind !== "comprehensive"
+    && kind !== "cubic-grouping"
+    && kind !== "cubic-sum-difference"
+  ),
 );
+
+const COMPREHENSIVE_ROTATION = MIDDLE_FACTORIZATION_CORE_KINDS;
 
 function comprehensiveKind(seed: number, index: number) {
   const offset = (((seed - 1) * 8) % COMPREHENSIVE_ROTATION.length + COMPREHENSIVE_ROTATION.length)

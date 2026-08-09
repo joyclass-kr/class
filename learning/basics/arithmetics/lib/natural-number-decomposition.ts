@@ -70,7 +70,7 @@ function makeProblem(number: number): NaturalNumberDecompositionProblem {
   };
 }
 
-export function createNaturalNumberDecompositionSet(seed: number, count = 12): NaturalNumberDecompositionProblem[] {
+export function createNaturalNumberDecompositionSet(seed: number, count = 14): NaturalNumberDecompositionProblem[] {
   const next = random(seed);
   const pool = naturalNumberDecompositionBank.filter((number) => number !== PRIME_EXAMPLE_NUMBER && number !== COMPOSITE_EXAMPLE_NUMBER);
   const shuffled = [...pool];
@@ -80,7 +80,6 @@ export function createNaturalNumberDecompositionSet(seed: number, count = 12): N
   }
   return [
     makeProblem(PRIME_EXAMPLE_NUMBER),
-    makeProblem(COMPOSITE_EXAMPLE_NUMBER),
     ...shuffled.slice(0, count).map(makeProblem),
   ];
 }

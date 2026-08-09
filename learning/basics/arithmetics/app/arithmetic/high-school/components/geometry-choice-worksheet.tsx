@@ -3,6 +3,7 @@
 import { useEffect, useMemo, useState } from "react";
 import MathFormula from "../../../components/math-formula";
 import InlineMathText from "../../../components/inline-math-text";
+import MiddleCurriculumVisual from "../../../components/middle-curriculum-visual";
 import WorksheetQuestionPrompt from "../../../components/worksheet-question-prompt";
 import { rotateChoices } from "../../../../lib/worksheet-choice-utils";
 import WorksheetChoicePanel, { type WorksheetChoiceProblem } from "./worksheet-choice-panel";
@@ -11,6 +12,7 @@ export type GeometryChoiceItem = WorksheetChoiceProblem & {
   latex: string;
   prompt?: string;
   difficulty?: "basic" | "application" | "advanced";
+  visualVariant?: string;
 };
 
 type Props = {
@@ -40,6 +42,12 @@ export default function GeometryChoiceWorksheet({ subject = "기하", title, see
       choices: rotateChoices(problem.choices, `${worksheetSeed}-${problem.id}-${arrangement}`),
     }));
   }, [arrangement, problemFactory, problemSets, problems, worksheetSeed]);
+  const panelProblems = useMemo(() => displayedProblems.map((problem) => ({
+    ...problem,
+    visual: problem.visualVariant
+      ? <MiddleCurriculumVisual visual={{ type: "geometry", variant: problem.visualVariant, labels: [] }} />
+      : problem.visual,
+  })), [displayedProblems]);
 
   useEffect(() => {
     const fit = () => setScale(Math.min((window.innerWidth - 32) / 794, 1));
@@ -97,6 +105,9 @@ export default function GeometryChoiceWorksheet({ subject = "기하", title, see
                   label={problem.label}
                   prompt={problem.prompt}
                 />
+                {problem.visualVariant && (
+                  <MiddleCurriculumVisual visual={{ type: "geometry", variant: problem.visualVariant, labels: [] }} />
+                )}
                 <div className="derivative-expression trig-derivative-expression geometry-choice-expression"><MathFormula latex={problem.latex} displayStyle /></div>
                 {answerSheet && <div className="derivative-static-answer"><MathFormula latex={problem.correctLatex} displayStyle /></div>}
               </div>
@@ -120,7 +131,7 @@ export default function GeometryChoiceWorksheet({ subject = "기하", title, see
           <button className="button primary" onClick={checkAll}>전체 채점</button>
         </div>
       </div>
-      {panelOpen && <WorksheetChoicePanel title={title} problems={displayedProblems} displayStyle selected={selected} results={results} onSelect={selectChoice} onGrade={checkAll} onClose={() => setPanelOpen(false)} />}
+      {panelOpen && <WorksheetChoicePanel title={title} problems={panelProblems} displayStyle selected={selected} results={results} onSelect={selectChoice} onGrade={checkAll} onClose={() => setPanelOpen(false)} />}
       <div className="a4-stage counting-a4-stage worksheet-stage" style={{ width: 794 * scale, height: 1123 * scale }}>{sheet(false)}</div>
       <div className="a4-stage counting-a4-stage answer-stage" style={{ width: 794 * scale, height: 1123 * scale }}>{sheet(true)}</div>
     </main>

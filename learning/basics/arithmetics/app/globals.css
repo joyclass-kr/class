@@ -3440,7 +3440,7 @@ html[data-race-mode="true"] body { padding-bottom: 72px; }
   overflow-wrap: anywhere;
   font: inherit;
   letter-spacing: 0.01em;
-  text-align: right;
+  text-align: left;
 }
 
 .mixed-calculation-expression > span:not(.mixed-calculation-static-answer) {
@@ -8967,10 +8967,10 @@ main {
   .large-unit-name,
   .large-unit-result-unit
 ) {
-  font-family: "Suneung Math", "STIX Two Math", "Cambria Math", "Times New Roman", serif;
+  font-family: var(--elementary-math-font);
   font-synthesis: none;
   font-style: normal;
-  font-weight: 500;
+  font-weight: 400;
   letter-spacing: 0;
 }
 
@@ -9756,4 +9756,109 @@ main {
   .stack-grid {
     margin-top: 3.7mm;
   }
+}
+
+.middle-curriculum-visual {
+  width: min(100%, 310px);
+  margin: 4px 0 2px;
+}
+
+.middle-curriculum-visual svg {
+  display: block;
+  width: 100%;
+  height: 116px;
+  overflow: visible;
+}
+
+.curriculum-visual-guide,
+.curriculum-visual-highlight,
+.curriculum-visual-mark,
+.curriculum-visual-arc,
+.curriculum-chart-axis,
+.curriculum-chart-line {
+  fill: none;
+  stroke: #17233c;
+  stroke-width: 2;
+  stroke-linecap: round;
+  stroke-linejoin: round;
+}
+
+.curriculum-visual-highlight {
+  stroke: #315bb5;
+  stroke-width: 4;
+}
+
+.curriculum-visual-mark,
+.curriculum-visual-arc {
+  stroke: #d05a44;
+}
+
+.curriculum-visual-plane {
+  fill: #edf3ff;
+  stroke: #17233c;
+  stroke-width: 2;
+}
+
+.curriculum-visual-point,
+.curriculum-chart-point {
+  fill: #315bb5;
+}
+
+.curriculum-visual-label,
+.curriculum-chart-label,
+.curriculum-chart-value {
+  fill: #17233c;
+  font-family: "Noto Sans KR", "Pretendard", sans-serif;
+  font-size: 12px;
+  font-weight: 700;
+}
+
+.curriculum-chart-bar {
+  fill: #dce7fb;
+  stroke: #315bb5;
+  stroke-width: 1.5;
+}
+
+.curriculum-chart-bar.is-highlighted {
+  fill: #f6b69e;
+  stroke: #c74b35;
+}
+
+.curriculum-chart-line {
+  stroke: #315bb5;
+  stroke-width: 2.5;
+}
+
+@media print {
+  .middle-curriculum-visual svg {
+    height: 108px;
+  }
+}
+
+.geometry-choice-sheet.polynomial-sheet-9 .polynomial-problem-grid {
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  grid-template-rows: repeat(5, minmax(0, 1fr));
+}
+
+.geometry-choice-sheet.polynomial-sheet-9 .geometry-choice-question {
+  padding: 6px 9px 6px 34px;
+}
+
+.geometry-choice-sheet.polynomial-sheet-9 .polynomial-question-number {
+  left: 10px;
+  top: 9px;
+}
+
+.geometry-choice-sheet.polynomial-sheet-9 .middle-curriculum-visual {
+  width: min(100%, 190px);
+  margin-block: 1px;
+}
+
+.geometry-choice-sheet.polynomial-sheet-9 .middle-curriculum-visual svg {
+  height: 74px;
+}
+
+.geometry-choice-sheet.polynomial-sheet-9 .geometry-choice-expression {
+  font-size: 13px;
+  line-height: 1.05;
 }

@@ -5,6 +5,7 @@ import {
   createMiddleFactorizationProblemSet,
   createMiddleFactorizationReviewProblems,
   formatNormalizedLinearCombination,
+  MIDDLE_FACTORIZATION_CORE_KINDS,
   MIDDLE_FACTORIZATION_KINDS,
 } from "../lib/middle-factorization-workouts.ts";
 
@@ -248,19 +249,20 @@ test("인수분해 오답은 임의의 수를 덧붙이지 않고 실제로 틀�
   }
 });
 
-test("종합 카드는 세 세트마다 전체 세부 유형을 정확히 두 번씩 순환한다", () => {
+test("중등 종합 카드는 고등 선행을 제외한 핵심 유형만 균등하게 순환한다", () => {
   const counts = new Map<string, number>();
-  for (let seed = 1; seed <= 3; seed += 1) {
+  for (let seed = 1; seed <= 5; seed += 1) {
     for (const { kind } of createMiddleFactorizationProblemSet("comprehensive", seed).problems) {
       counts.set(kind, (counts.get(kind) ?? 0) + 1);
     }
   }
 
-  assert.equal(counts.size, MIDDLE_FACTORIZATION_KINDS.length - 1);
-  for (const kind of MIDDLE_FACTORIZATION_KINDS) {
-    if (kind === "comprehensive") continue;
-    assert.equal(counts.get(kind), 2, `${kind} is not balanced in comprehensive rotation`);
+  assert.equal(counts.size, MIDDLE_FACTORIZATION_CORE_KINDS.length);
+  for (const kind of MIDDLE_FACTORIZATION_CORE_KINDS) {
+    assert.equal(counts.get(kind), 4, `${kind} is not balanced in comprehensive rotation`);
   }
+  assert.ok(!counts.has("cubic-grouping"));
+  assert.ok(!counts.has("cubic-sum-difference"));
 });
 
 test("새 문제를 반복 생성해도 각 카드에 충분히 다양한 식이 나온다", () => {

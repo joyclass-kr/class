@@ -11,8 +11,11 @@ export type MiddleCoreKind =
   | "monomial-comprehensive"
   | "polynomial-add-subtract"
   | "linear-inequality"
+  | "linear-inequality-application"
   | "simultaneous-substitution"
   | "simultaneous-elimination"
+  | "simultaneous-application"
+  | "simultaneous-special"
   | "linear-system-comprehensive"
   | "square-roots-real"
   | "radical-calculation"
@@ -75,8 +78,11 @@ export const MIDDLE_CORE_TITLES: Record<MiddleCoreKind, string> = {
   "monomial-comprehensive": "단항식의 곱셈과 나눗셈",
   "polynomial-add-subtract": "문자식 기본연산 종합",
   "linear-inequality": "일차부등식",
+  "linear-inequality-application": "일차부등식 활용",
   "simultaneous-substitution": "연립일차방정식 대입법",
   "simultaneous-elimination": "연립일차방정식 가감법",
+  "simultaneous-application": "연립일차방정식 활용",
+  "simultaneous-special": "연립일차방정식의 해의 개수",
   "linear-system-comprehensive": "일차부등식과 연립일차방정식",
   "square-roots-real": "제곱근과 실수",
   "radical-calculation": "근호를 포함한 식의 계산",
@@ -113,6 +119,11 @@ const LINEAR_SYSTEM_COMPREHENSIVE_PARTS: AtomicMiddleCoreKind[] = [
   "linear-inequality",
   "simultaneous-substitution",
   "simultaneous-elimination",
+  "linear-inequality-application",
+  "simultaneous-application",
+  "simultaneous-application",
+  "simultaneous-special",
+  "simultaneous-special",
 ];
 const FORMULA_COMPREHENSIVE_PARTS: AtomicMiddleCoreKind[] = [
   "polynomial-multiply",
@@ -241,6 +252,8 @@ function questionFor(kind: MiddleCoreKind, structure: string) {
     return "다른 한 수는?";
   }
   if (kind === "radical-calculation") {
+    if (structure === "perfect-square-root") return "제곱근의 값은?";
+    if (structure === "square-under-root") return "근호를 없애 간단히 하면?";
     if (structure === "simplify-radical") {
       return "근호 안의 수가 가장 작은 자연수가 되도록 간단히 하면?";
     }
@@ -250,6 +263,11 @@ function questionFor(kind: MiddleCoreKind, structure: string) {
     if (structure === "rationalize-denominator") return "분모를 유리화한 식은?";
     return "계산한 값은?";
   }
+  if (kind === "linear-inequality-application") return "최대로 살 수 있는 개수는?";
+  if (kind === "simultaneous-application") {
+    return structure === "ticket-count" ? "학생과 어른은 각각 몇 명인가?" : "두 수는?";
+  }
+  if (kind === "simultaneous-special") return "해의 개수는?";
   const questions: Record<MiddleCoreKind, string> = {
     "prime-factorization": "소인수분해한 결과는?",
     "gcd-lcm": "최대공약수 또는 최소공배수는?",
@@ -263,8 +281,11 @@ function questionFor(kind: MiddleCoreKind, structure: string) {
     "monomial-comprehensive": "계산한 식은?",
     "polynomial-add-subtract": "계산한 식은?",
     "linear-inequality": "부등식의 해는?",
+    "linear-inequality-application": "최대로 살 수 있는 개수는?",
     "simultaneous-substitution": "(x, y)는?",
     "simultaneous-elimination": "(x, y)는?",
+    "simultaneous-application": "(x, y)는?",
+    "simultaneous-special": "해의 개수는?",
     "linear-system-comprehensive": "구하는 해는?",
     "square-roots-real": "계산한 값은?",
     "radical-calculation": "계산한 값은?",
@@ -721,6 +742,71 @@ function build(
       [`(x,y)=(${y},${x})`, `(x,y)=(${-x},${y})`, `(x,y)=(${x},${-y})`], "eliminate-y");
   }
 
+  if (kind === "linear-inequality-application") {
+    const unitPrice = 200 + 100 * (index % 5);
+    const maximum = 4 + integer(next, 2, 8);
+    const budget = unitPrice * maximum + integer(next, 1, unitPrice - 1);
+    return make(id, kind,
+      `\\text{한 개에 }${unitPrice}\\text{원인 물건을 }x\\text{개 살 때, }${budget}\\text{원 이하로 쓰려고 한다.}`,
+      `${maximum}\\text{개}`,
+      `${unitPrice}x\\le ${budget}을 풀고 자연수 x의 최댓값을 고른다.`,
+      [
+        `${maximum - 1}\\text{개}`,
+        `${maximum + 1}\\text{개}`,
+        `${Math.floor(budget / 100)}\\text{개}`,
+      ],
+      "budget-maximum");
+  }
+
+  if (kind === "simultaneous-application") {
+    if (index % 2 === 0) {
+      const x = integer(next, 4, 12);
+      const y = integer(next, 2, x - 1);
+      const sum = x + y;
+      const difference = x - y;
+      return make(id, kind,
+        `\\text{두 자연수의 합은 }${sum}\\text{이고 차는 }${difference}\\text{이다.}`,
+        `(${x},${y})`,
+        "큰 수를 x, 작은 수를 y로 놓고 합과 차에 대한 두 식을 연립하여 푼다.",
+        [`(${y},${x})`, `(${x + 1},${y - 1})`, `(${sum},${difference})`],
+        "sum-difference");
+    }
+    const students = integer(next, 5, 14);
+    const adults = integer(next, 2, 8);
+    const studentPrice = 3000;
+    const adultPrice = 5000;
+    const people = students + adults;
+    const revenue = studentPrice * students + adultPrice * adults;
+    return make(id, kind,
+      `\\text{학생과 어른이 모두 }${people}\\text{명이고 입장료 합계는 }${revenue}\\text{원이다.}\\quad
+      \\text{학생 }${studentPrice}\\text{원, 어른 }${adultPrice}\\text{원}`,
+      `(${students},${adults})`,
+      "학생 수를 x, 어른 수를 y로 놓고 인원수와 입장료 합계에 대한 두 식을 세운다.",
+      [`(${adults},${students})`, `(${students + 1},${adults - 1})`, `(${people},${adults})`],
+      "ticket-count");
+  }
+
+  if (kind === "simultaneous-special") {
+    const a = 2 + (index % 3);
+    const b = 1 + ((index + 1) % 4);
+    const c = integer(next, 3, 9);
+    const multiple = 2 + (index % 2);
+    if (index % 2 === 0) {
+      return make(id, kind,
+        `\\begin{cases}${a}x+${b}y=${c}\\\\${a * multiple}x+${b * multiple}y=${c * multiple + 1}\\end{cases}`,
+        "\\text{해가 없다}",
+        "x, y의 계수 비는 같지만 상수항의 비가 달라 두 직선은 평행하다.",
+        ["\\text{해가 1개}", "\\text{해가 2개}", "\\text{해가 무수히 많다}"],
+        "no-solution");
+    }
+    return make(id, kind,
+      `\\begin{cases}${a}x+${b}y=${c}\\\\${a * multiple}x+${b * multiple}y=${c * multiple}\\end{cases}`,
+      "\\text{해가 무수히 많다}",
+      "둘째 식이 첫째 식의 배수이므로 두 식은 같은 직선을 나타낸다.",
+      ["\\text{해가 없다}", "\\text{해가 1개}", "\\text{해가 2개}"],
+      "infinitely-many");
+  }
+
   if (kind === "square-roots-real") {
     const mode = index % 4;
     const root = 2 + index;
@@ -753,19 +839,21 @@ function build(
     const a = 2 + (index % 5);
     const b = 1 + ((index + 2) % 4);
     if (mode === 0) {
+      return make(id, kind, `\\sqrt{${a * a}}`, `${a}`,
+        `제곱해서 ${a * a}이 되는 양의 수는 ${a}이다.`,
+        [`${-a}`, `\\pm${a}`, `${a * a}`], "perfect-square-root");
+    }
+    if (mode === 1) {
+      return make(id, kind, `\\sqrt{(-${a})^2}`, `${a}`,
+        `\\sqrt{x^2}=|x|이므로 \\sqrt{(-${a})^2}=${a}이다.`,
+        [`-${a}`, `\\pm${a}`, `${a * a}`], "square-under-root");
+    }
+    if (mode === 2) {
       return make(id, kind, `\\sqrt{${a * a * n}}`, `${a}\\sqrt{${n}}`,
         `근호 안의 제곱인수 ${a * a}을 근호 밖으로 꺼낸다.`,
         [`${a * n}`, `\\sqrt{${a * n}}`, `${n}\\sqrt{${a}}`], "simplify-radical");
     }
-    if (mode === 1) {
-      return make(id, kind,
-        `\\sqrt{${4 * n}}+\\sqrt{${9 * n}}-\\sqrt{${n}}`,
-        `4\\sqrt{${n}}`,
-        "각 근호를 먼저 간단히 한 뒤 근호 안이 같은 항의 계수를 계산한다.",
-        [`5\\sqrt{${n}}`, `3\\sqrt{${n}}`, `4\\sqrt{${2 * n}}`],
-        "simplify-then-combine");
-    }
-    if (mode === 2) {
+    if (mode === 3) {
       return make(id, kind,
         `${a}\\sqrt{${n}}+${b}\\sqrt{${n}}-\\sqrt{${n}}`,
         `${a + b - 1}\\sqrt{${n}}`,
@@ -773,41 +861,30 @@ function build(
         [`${a + b}\\sqrt{${n}}`, `${a * b - 1}\\sqrt{${n}}`, `${a + b - 1}\\sqrt{${2 * n}}`],
         "like-radicals-combined");
     }
-    if (mode === 3) {
+    if (mode === 4) {
       const other = SQUARE_FREE[(index + 1) % SQUARE_FREE.length];
       return make(id, kind,
         `2(\\sqrt{${n}}+\\sqrt{${other}})-(\\sqrt{${n}}-2\\sqrt{${other}})`,
         `\\sqrt{${n}}+4\\sqrt{${other}}`,
         "괄호를 풀고 근호 안이 같은 항끼리 각각 정리한다.",
-        [
-          `\\sqrt{${n}}`,
-          `3\\sqrt{${n}}`,
-          `\\sqrt{${n}}+2\\sqrt{${other}}`,
-        ],
+        [`\\sqrt{${n}}`, `3\\sqrt{${n}}`, `\\sqrt{${n}}+2\\sqrt{${other}}`],
         "radical-parentheses");
     }
-    if (mode === 4) {
+    if (mode === 5) {
       return make(id, kind, `2\\sqrt{3}\\times3\\sqrt{6}`, `18\\sqrt{2}`,
         "계수끼리 곱하고 근호끼리 곱한 뒤 √18을 3√2로 간단히 한다.",
         [`6\\sqrt{2}`, `6\\sqrt{18}`, `18\\sqrt{3}`], "radical-multiply");
     }
-    if (mode === 5) {
+    if (mode === 6) {
       return make(id, kind, `4\\sqrt{15}\\div2\\sqrt{3}`, `2\\sqrt{5}`,
         "계수끼리 나누고 근호 안의 수를 나눈 뒤 √5로 정리한다.",
         [`2\\sqrt{12}`, `2\\sqrt{18}`, `4\\sqrt{5}`], "radical-divide");
     }
-    if (mode === 6) {
-      const numerator = n + 1;
-      return make(id, kind, `\\dfrac{${numerator}}{\\sqrt{${n}}}`, `\\dfrac{${numerator}\\sqrt{${n}}}{${n}}`,
-        "분자와 분모에 같은 제곱근을 곱해 분모를 유리화한다.",
-        [`\\dfrac{${numerator}}{${n}}`, `${numerator}\\sqrt{${n}}`, `\\dfrac{\\sqrt{${n}}}{${numerator}}`], "rationalize-denominator");
-    }
-    const constant = n + a;
-    return make(id, kind, `(${constant}+\\sqrt{${n}})(${constant}-\\sqrt{${n}})`, `${constant * constant - n}`,
-      "합과 차의 곱을 이용해 앞 수의 제곱에서 근호 안의 수를 뺀다.",
-      [`${constant * constant + n}`, `${constant - n}`, `${constant * constant}`], "conjugates");
+    const numerator = n + 1;
+    return make(id, kind, `\\dfrac{${numerator}}{\\sqrt{${n}}}`, `\\dfrac{${numerator}\\sqrt{${n}}}{${n}}`,
+      "분자와 분모에 같은 제곱근을 곱해 분모를 유리화한다.",
+      [`\\dfrac{${numerator}}{${n}}`, `${numerator}\\sqrt{${n}}`, `\\dfrac{\\sqrt{${n}}}{${numerator}}`], "rationalize-denominator");
   }
-
   if (kind === "polynomial-multiply") {
     const mode = index % 3;
     const a = nonzero(next, -5, 5);
@@ -902,15 +979,30 @@ export function isMiddleCoreKind(value: string | null): value is MiddleCoreKind 
   return MIDDLE_CORE_KINDS.includes(value as MiddleCoreKind);
 }
 
+function canonicalProblemSignature(problem: MiddleCoreProblem) {
+  const compact = problem.latex.replace(/\s+/g, "");
+  const cases = /\\begin\{cases\}([\s\S]+)\\end\{cases\}/.exec(compact);
+  if (!cases) return `${compact}|${problem.answerLatex}`;
+  const equations = cases[1]
+    .split("\\\\")
+    .map((equation) => equation.split("=").sort().join("="))
+    .sort()
+    .join(";");
+  return `${equations}|${problem.answerLatex}`;
+}
+
 export function createMiddleCoreProblemSet(kind: MiddleCoreKind, seed: number) {
   const next = random(seed);
   const signatures = new Set<string>();
   const problems = Array.from({ length: 8 }, (_, index) => {
     let problem = build(actualKind(kind, index), next, `middle-core-${kind}-${index}`, index);
-    let signature = `${problem.latex}|${problem.answerLatex}`;
+    let signature = canonicalProblemSignature(problem);
     for (let attempt = 0; signatures.has(signature) && attempt < 20; attempt += 1) {
       problem = build(actualKind(kind, index), next, `middle-core-${kind}-${index}`, index);
-      signature = `${problem.latex}|${problem.answerLatex}`;
+      signature = canonicalProblemSignature(problem);
+    }
+    if (signatures.has(signature)) {
+      throw new Error(`${kind}: 순서만 바뀐 문제를 포함해 같은 문제가 반복됩니다.`);
     }
     signatures.add(signature);
     return { ...problem, difficulty: difficultyForIndex(index) };
@@ -920,6 +1012,21 @@ export function createMiddleCoreProblemSet(kind: MiddleCoreKind, seed: number) {
     kind,
     problems,
   };
+}
+
+export function createFreshMiddleCoreProblemSet(
+  kind: MiddleCoreKind,
+  seed: number,
+  previousProblems: MiddleCoreProblem[],
+) {
+  const previous = new Set(previousProblems.map(canonicalProblemSignature));
+  let candidate = createMiddleCoreProblemSet(kind, seed);
+  for (let attempt = 0; attempt < 20; attempt += 1) {
+    const overlap = candidate.problems.filter((problem) => previous.has(canonicalProblemSignature(problem))).length;
+    if (overlap <= 1) return candidate;
+    candidate = createMiddleCoreProblemSet(kind, (seed + (attempt + 1) * 2654435761) >>> 0);
+  }
+  throw new Error(`${kind}: 직전 문제지와 겹치지 않는 새 문제를 만들지 못했습니다.`);
 }
 
 export function createMiddleCoreReviewProblems(wrongKinds: MiddleCoreKind[], seed: number) {

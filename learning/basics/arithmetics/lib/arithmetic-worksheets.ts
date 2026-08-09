@@ -178,7 +178,9 @@ const mergedMiddleSchoolRoutes = new Set([
   "/arithmetic/middle-school/quadratic-equations?kind=roots-and-squares",
   "/arithmetic/middle-school/quadratic-functions?kind=vertex-and-axis",
   "/arithmetic/middle-school/trigonometry?kind=special-angles",
+  "/arithmetic/middle-school/trigonometry?kind=comprehensive",
   "/arithmetic/middle-school/circle-properties?kind=angle-applications",
+  "/arithmetic/middle-school/circle-properties?kind=comprehensive",
   "/arithmetic/middle-school/statistics?kind=mean-applications",
 ]);
 
@@ -200,8 +202,10 @@ export const middleSchoolWorksheetCatalog: ArithmeticWorksheet[] = [
   { grade: "중1", name: "일차방정식", title: "일차방정식", route: "/arithmetic/middle-school/core-calculations?kind=linear-equation" },
   { grade: "중1", name: "일차방정식 활용 계산", title: "일차방정식 활용 계산", route: "/arithmetic/middle-school/core-calculations?kind=linear-equation-application" },
   { grade: "중1", name: "좌표·정비례·반비례 계산", title: "좌표·정비례·반비례 계산", route: "/arithmetic/middle-school/curriculum-calculations?kind=coordinate-proportion" },
+  { grade: "중1", name: "기본도형·작도·합동", title: "기본도형·작도·합동", route: "/arithmetic/middle-school/curriculum-calculations?kind=construction-congruence" },
   { grade: "중1", name: "기본각·다각형·부채꼴 계산", title: "기본각·다각형·부채꼴 계산", route: "/arithmetic/middle-school/curriculum-calculations?kind=plane-geometry" },
   { grade: "중1", name: "입체도형의 겉넓이와 부피", title: "입체도형의 겉넓이와 부피", route: "/arithmetic/middle-school/curriculum-calculations?kind=solid-geometry" },
+  { grade: "중1", name: "도수분포·상대도수 그래프", title: "도수분포·상대도수 그래프", route: "/arithmetic/middle-school/curriculum-calculations?kind=frequency-graphs" },
   { grade: "중1", name: "대푯값·도수·상대도수", title: "대푯값·도수·상대도수", route: "/arithmetic/middle-school/statistics?kind=representative-values" },
 
   { grade: "중2", name: "유리수와 순환소수", title: "유리수와 순환소수", route: "/arithmetic/middle-school/core-calculations?kind=repeating-decimal" },
@@ -227,12 +231,12 @@ export const middleSchoolWorksheetCatalog: ArithmeticWorksheet[] = [
   { grade: "중3", name: "인수분해: 일반 이차삼항식", title: "인수분해: 일반 이차삼항식", route: "/arithmetic/middle-school/factorization?kind=nonmonic-trinomial" },
   { grade: "중3", name: "인수분해: 세 문자식", title: "인수분해: 세 문자식", route: "/arithmetic/middle-school/factorization?kind=three-variables" },
   { grade: "중3", name: "인수분해: 3차식 공통인수", title: "인수분해: 3차식 공통인수", route: "/arithmetic/middle-school/factorization?kind=cubic-common" },
-  { grade: "중3", name: "인수분해: 3차식 묶어내기", title: "인수분해: 3차식 묶어내기", route: "/arithmetic/middle-school/factorization?kind=cubic-grouping" },
-  { grade: "중3", name: "인수분해: 세제곱의 합과 차", title: "인수분해: 세제곱의 합과 차", route: "/arithmetic/middle-school/factorization?kind=cubic-sum-difference" },
+
+
   { grade: "중3", name: "인수분해: 식 정리 후 인수분해", title: "인수분해: 식 정리 후 인수분해", route: "/arithmetic/middle-school/factorization?kind=normalize-first" },
   { grade: "중3", name: "인수분해 종합", title: "인수분해 종합", route: "/arithmetic/middle-school/factorization?kind=comprehensive" },
   { grade: "중3", name: "이차방정식: 제곱근·완전제곱", title: "이차방정식: 제곱근·완전제곱", route: "/arithmetic/middle-school/quadratic-equations?kind=roots-and-squares" },
-  { grade: "중3", name: "이차방정식: 인수분해로 풀기", title: "이차방정식: 인수분해로 풀기", route: "/arithmetic/middle-school/quadratic-equations?kind=factorization" },
+  { grade: "중3", name: "이차방정식: 기본·인수분해", title: "이차방정식: 기본·인수분해", route: "/arithmetic/middle-school/quadratic-equations?kind=factorization" },
   { grade: "중3", name: "이차방정식: 근의 공식", title: "이차방정식: 근의 공식", route: "/arithmetic/middle-school/quadratic-equations?kind=quadratic-formula" },
   { grade: "중3", name: "이차방정식: 식 정리 후 풀기", title: "이차방정식: 식 정리 후 풀기", route: "/arithmetic/middle-school/quadratic-equations?kind=normalize-and-solve" },
   { grade: "중3", name: "이차방정식 활용 계산", title: "이차방정식 활용 계산", route: "/arithmetic/middle-school/quadratic-equations?kind=applications" },

@@ -36,8 +36,9 @@ test("고정 객관식이 아닌 실제 새 문제 세트를 생성한다", () =
   for (const createSet of factories) {
     const first = createSet(20260801);
     const second = createSet(20260802);
-    assert.equal(first.length, 7);
-    assert.equal(second.length, 7);
+    const expectedLength = createSet === createSpaceGeometryProjectionProblems ? 9 : 7;
+    assert.equal(first.length, expectedLength);
+    assert.equal(second.length, expectedLength);
     assert.notDeepEqual(
       first.map(({ latex, correctLatex }) => [latex, correctLatex]),
       second.map(({ latex, correctLatex }) => [latex, correctLatex]),

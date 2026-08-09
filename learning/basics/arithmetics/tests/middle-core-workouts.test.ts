@@ -1,6 +1,7 @@
 import assert from "node:assert/strict";
 import test from "node:test";
 import {
+  createFreshMiddleCoreProblemSet,
   createMiddleCoreProblemSet,
   createMiddleCoreReviewProblems,
   MIDDLE_CORE_KINDS,
@@ -96,8 +97,72 @@ test("통합 학습지는 쉬운 하위 유형을 한 문제지 안에서 순환
   );
   assert.deepEqual(
     new Set(createMiddleCoreProblemSet("linear-system-comprehensive", 31).problems.map(({ kind }) => kind)),
-    new Set(["linear-inequality", "simultaneous-substitution", "simultaneous-elimination"]),
+    new Set([
+      "linear-inequality",
+      "simultaneous-substitution",
+      "simultaneous-elimination",
+      "linear-inequality-application",
+      "simultaneous-application",
+      "simultaneous-special",
+    ]),
   );
+});
+
+test("중2 통합 학습지는 쉬운 풀이를 한 문제씩만 두고 활용·특수 유형에 다섯 문제를 배정한다", () => {
+  const problems = createMiddleCoreProblemSet("linear-system-comprehensive", 20260809).problems;
+  assert.deepEqual(
+    problems.map(({ kind }) => kind),
+    [
+      "linear-inequality",
+      "simultaneous-substitution",
+      "simultaneous-elimination",
+      "linear-inequality-application",
+      "simultaneous-application",
+      "simultaneous-application",
+      "simultaneous-special",
+      "simultaneous-special",
+    ],
+  );
+  assert.deepEqual(
+    problems.slice(3).map(({ structure }) => structure),
+    ["budget-maximum", "sum-difference", "ticket-count", "no-solution", "infinitely-many"],
+  );
+  assert.equal(problems.filter(({ kind }) => kind === "linear-inequality").length, 1);
+  assert.equal(problems.filter(({ kind }) => kind === "simultaneous-substitution").length, 1);
+  assert.equal(problems.filter(({ kind }) => kind === "simultaneous-elimination").length, 1);
+});
+
+test("연립방정식은 두 식이나 등식의 좌우만 바꾼 문제를 중복으로 세지 않는다", () => {
+  const normalize = (latex: string) => {
+    const compact = latex.replace(/\s+/g, "");
+    const cases = /\\begin\{cases\}([\s\S]+)\\end\{cases\}/.exec(compact);
+    if (!cases) return compact;
+    return cases[1]
+      .split("\\\\")
+      .map((equation) => equation.split("=").sort().join("="))
+      .sort()
+      .join(";");
+  };
+  for (let seed = 1; seed <= 100; seed += 1) {
+    const problems = createMiddleCoreProblemSet("linear-system-comprehensive", seed).problems;
+    assert.equal(new Set(problems.map(({ latex }) => normalize(latex))).size, problems.length);
+  }
+});
+
+test("새 문제는 직전 문제지와 동일한 문제를 두 개 이상 반복하지 않는다", () => {
+  for (let seed = 1; seed <= 100; seed += 1) {
+    const previous = createMiddleCoreProblemSet("linear-system-comprehensive", seed);
+    const next = createFreshMiddleCoreProblemSet(
+      "linear-system-comprehensive",
+      seed + 1,
+      previous.problems,
+    );
+    const previousSignatures = new Set(previous.problems.map(({ latex, answerLatex }) => `${latex}|${answerLatex}`));
+    const overlap = next.problems.filter(
+      ({ latex, answerLatex }) => previousSignatures.has(`${latex}|${answerLatex}`),
+    ).length;
+    assert.ok(overlap <= 1, `${seed}: ${overlap} repeated problems`);
+  }
 });
 
 test("근호 계산은 중복 덧셈·뺄셈과 단순 대소 비교 없이 필수 계산 유형을 한 번씩 다룬다", () => {
@@ -105,14 +170,14 @@ test("근호 계산은 중복 덧셈·뺄셈과 단순 대소 비교 없이 필�
   assert.deepEqual(
     problems.map(({ structure }) => structure),
     [
+      "perfect-square-root",
+      "square-under-root",
       "simplify-radical",
-      "simplify-then-combine",
       "like-radicals-combined",
       "radical-parentheses",
       "radical-multiply",
       "radical-divide",
       "rationalize-denominator",
-      "conjugates",
     ],
   );
   assert.ok(!problems.some(({ structure }) => structure === "compare-radicals"));
@@ -135,8 +200,8 @@ test("오답 보충은 서로 다른 유형에서 최대 두 문제만 만든다
   assert.ok(reviews.every(({ difficulty }) => difficulty === "advanced"));
 });
 
-test("중학교 연산 목록 53개는 쉬운 유형을 통합하고 모두 연결된다", () => {
-  assert.equal(middleSchoolWorksheetCatalog.length, 53);
+test("중학교 필수 목록 51개는 쉬운 유형을 통합하고 모두 연결된다", () => {
+  assert.equal(middleSchoolWorksheetCatalog.length, 51);
   assert.ok(middleSchoolWorksheetCatalog.every(({ route }) => route !== null));
   assert.equal(
     new Set(middleSchoolWorksheetCatalog.map(({ name }) => name)).size,
@@ -155,7 +220,9 @@ test("통합된 쉬운 중등 학습지는 목록에서 별도 페이지로 중�
   assert.ok(!routes.some((route) => route?.includes("kind=roots-and-squares")));
   assert.ok(!routes.some((route) => route?.includes("kind=vertex-and-axis")));
   assert.ok(!routes.some((route) => route?.includes("kind=special-angles")));
+  assert.ok(!routes.some((route) => route?.includes("trigonometry?kind=comprehensive")));
   assert.ok(!routes.some((route) => route?.includes("kind=angle-applications")));
+  assert.ok(!routes.some((route) => route?.includes("circle-properties?kind=comprehensive")));
   assert.ok(!routes.some((route) => route?.includes("kind=mean-applications")));
   assert.ok(!routes.some((route) => route?.includes("kind=monomial-comprehensive")));
 });

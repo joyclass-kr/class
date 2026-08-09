@@ -5,13 +5,12 @@ import {
   createMiddleTrigonometryProblemSet,
   createMiddleTrigonometryReviewProblems,
   MIDDLE_TRIGONOMETRY_KINDS,
-  MIDDLE_TRIGONOMETRY_METHOD_KINDS,
   resolveMiddleTrigonometryKind,
   type MiddleTrigonometryMethodKind,
 } from "../lib/middle-trigonometry-workouts.ts";
 
-test("중3 삼각비 계산은 쉬운 세부 유형을 합친 4개 학습지로 구성된다", () => {
-  assert.equal(MIDDLE_TRIGONOMETRY_KINDS.length, 4);
+test("중3 삼각비 계산은 필수 훈련만 남긴 2개 통합 학습지로 구성된다", () => {
+  assert.deepEqual(MIDDLE_TRIGONOMETRY_KINDS, ["ratios", "side-lengths"]);
   for (const kind of MIDDLE_TRIGONOMETRY_KINDS) {
     const set = createMiddleTrigonometryProblemSet(kind, 20260731);
     assert.equal(set.problems.length, 8);
@@ -27,10 +26,7 @@ test("묶음 학습지는 필요한 세부 계산 유형을 빠짐없이 섞는�
       "special-angle", "special-angle-expression", "radical-side",
     ]),
   );
-  assert.deepEqual(
-    new Set(createMiddleTrigonometryProblemSet("special-angles", 7).problems.map(({ kind }) => kind)),
-    new Set(["special-angle", "special-angle-expression", "radical-side"]),
-  );
+
   assert.deepEqual(
     new Set(createMiddleTrigonometryProblemSet("side-lengths", 7).problems.map(({ kind }) => kind)),
     new Set([
@@ -40,6 +36,16 @@ test("묶음 학습지는 필요한 세부 계산 유형을 빠짐없이 섞는�
   );
 });
 
+test("두 삼각비 통합지는 모든 문항에 직각삼각형 도식을 제공한다", () => {
+  for (const kind of MIDDLE_TRIGONOMETRY_KINDS) {
+    const problems = createMiddleTrigonometryProblemSet(kind, 20260809).problems;
+    assert.ok(problems.every(({ visual }) => visual?.type === "geometry"), kind);
+  }
+});
+test("변의 길이 통합지는 숫자만 바꾼 반복 없이 8개 구조를 한 번씩 다룬다", () => {
+  const problems = createMiddleTrigonometryProblemSet("side-lengths", 20260809).problems;
+  assert.equal(new Set(problems.map(({ structure }) => structure)).size, 8);
+});
 test("모든 삼각비 문제는 서로 다른 네 선택지와 한 줄 핵심 풀이를 제공한다", () => {
   for (const kind of MIDDLE_TRIGONOMETRY_KINDS) {
     for (let seed = 1; seed <= 100; seed += 1) {
@@ -105,21 +111,12 @@ test("분수·소수 길이 계산은 한 묶음 안에서 두 표기를 모두 
   }
 });
 
-test("삼각비 종합은 연속 세 세트에서 모든 계산 유형을 순환한다", () => {
-  const kinds = new Set<string>();
-  for (const seed of [1, 2, 3]) {
-    for (const problem of createMiddleTrigonometryProblemSet("comprehensive", seed).problems) {
-      kinds.add(problem.kind);
-    }
-  }
-  assert.deepEqual([...kinds].sort(), [...MIDDLE_TRIGONOMETRY_METHOD_KINDS].sort());
-});
-
 test("기존 세부 유형 주소는 해당 묶음 학습지로 연결된다", () => {
   assert.equal(resolveMiddleTrigonometryKind("single-ratio"), "ratios");
-  assert.equal(resolveMiddleTrigonometryKind("special-angle"), "special-angles");
+  assert.equal(resolveMiddleTrigonometryKind("special-angle"), "ratios");
+  assert.equal(resolveMiddleTrigonometryKind("special-angles"), "ratios");
   assert.equal(resolveMiddleTrigonometryKind("side-from-sine"), "side-lengths");
-  assert.equal(resolveMiddleTrigonometryKind("comprehensive"), "comprehensive");
+  assert.equal(resolveMiddleTrigonometryKind("comprehensive"), "side-lengths");
   assert.equal(resolveMiddleTrigonometryKind("unknown"), null);
 });
 

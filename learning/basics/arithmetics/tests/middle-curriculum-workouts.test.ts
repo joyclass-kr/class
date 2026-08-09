@@ -75,6 +75,14 @@ const EXPECTED_METHODS: Record<MiddleCurriculumKind, string[]> = {
     "point-parameter", "equation-two-points", "parallel-through-point", "intersection",
     "system-graph-solution", "x-axis-intersection", "y-axis-intersection", "two-lines-parameter",
   ],
+  "construction-congruence": [
+    "line-relation", "line-plane-relation", "perpendicular-bisector", "angle-bisector",
+    "triangle-construction", "sss-congruence", "sas-congruence", "asa-congruence",
+  ],
+  "frequency-graphs": [
+    "frequency-table", "histogram-frequency", "histogram-total", "frequency-polygon-maximum",
+    "relative-frequency", "relative-frequency-compare", "missing-class-frequency", "class-width",
+  ],
   "plane-geometry": [
     "vertical-angles", "parallel-angles", "triangle-angle", "polygon-interior-sum",
     "regular-polygon-angle", "regular-polygon-exterior", "polygon-diagonals", "sector-arc-area",
@@ -105,7 +113,7 @@ const EXPECTED_METHODS: Record<MiddleCurriculumKind, string[]> = {
   ],
 };
 
-test("교육과정 보완 학습지 10개는 필수 계산 유형을 각각 8문제로 묶는다", () => {
+test("교육과정 보완 학습지 12개는 필수 유형을 각각 8문제로 묶는다", () => {
   assert.deepEqual(MIDDLE_CURRICULUM_KINDS, Object.keys(EXPECTED_METHODS));
   for (const kind of MIDDLE_CURRICULUM_KINDS) {
     const set = createMiddleCurriculumProblemSet(kind, 20260730);
@@ -113,6 +121,31 @@ test("교육과정 보완 학습지 10개는 필수 계산 유형을 각각 8문
     assert.deepEqual(set.problems.map(({ kind: method }) => method), EXPECTED_METHODS[kind], kind);
     assert.ok(MIDDLE_CURRICULUM_TITLES[kind]);
     assert.match(MIDDLE_CURRICULUM_GRADES[kind], /^중[123]$/);
+  }
+});
+
+test("작도·합동과 도수분포 문제는 정확한 발문과 실제 그림 자료를 제공한다", () => {
+  for (const kind of ["construction-congruence", "frequency-graphs"] as const) {
+    const problems = createMiddleCurriculumProblemSet(kind, 20260809).problems;
+    assert.ok(problems.some(({ visual }) => visual));
+    assert.ok(problems.filter(({ visual }) => visual).every(({ question }) => question?.endsWith("?")));
+  }
+  assert.ok(
+    createMiddleCurriculumProblemSet("construction-congruence", 20260809)
+      .problems.every(({ kind }) => !["line-name", "point-name"].includes(kind)),
+  );
+});
+
+test("중2 도형 세 학습지는 모든 문항에 유형별 도식을 제공한다", () => {
+  for (const kind of ["triangle-quadrilateral", "similarity", "pythagorean"] as const) {
+    const problems = createMiddleCurriculumProblemSet(kind, 20260809).problems;
+    assert.equal(problems.length, 8);
+    assert.ok(problems.every(({ visual }) => visual?.type === "geometry"), kind);
+    assert.deepEqual(
+      problems.map(({ visual }) => visual?.type === "geometry" ? visual.variant : ""),
+      problems.map(({ kind: method }) => method),
+      kind,
+    );
   }
 });
 

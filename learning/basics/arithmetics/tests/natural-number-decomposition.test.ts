@@ -31,9 +31,7 @@ test("맨 앞 두 문제는 소수 예시와 합성수 예시로 고정된다", 
     const problems = createNaturalNumberDecompositionSet(seed);
     assert.equal(problems[0].number, PRIME_EXAMPLE_NUMBER);
     assert.equal(problems[0].factors.length, 1);
-    assert.equal(problems[1].number, COMPOSITE_EXAMPLE_NUMBER);
-    assert.ok(problems[1].factors.length > 1);
-    assert.ok(problems.slice(2).every((problem) => problem.number !== PRIME_EXAMPLE_NUMBER && problem.number !== COMPOSITE_EXAMPLE_NUMBER));
+    assert.ok(problems.slice(1).every((problem) => problem.number !== PRIME_EXAMPLE_NUMBER && problem.number !== COMPOSITE_EXAMPLE_NUMBER));
   }
 });
 
@@ -41,8 +39,8 @@ test("같은 seed는 중복 없는 같은 14문제를 만든다", () => {
   const first = createNaturalNumberDecompositionSet(20260721);
   const second = createNaturalNumberDecompositionSet(20260721);
   assert.deepEqual(first, second);
-  assert.equal(first.length, 14);
-  assert.equal(new Set(first.map((problem) => problem.number)).size, 14);
+  assert.equal(first.length, 15);
+  assert.equal(new Set(first.map((problem) => problem.number)).size, 15);
   assert.notDeepEqual(first, createNaturalNumberDecompositionSet(1));
 });
 

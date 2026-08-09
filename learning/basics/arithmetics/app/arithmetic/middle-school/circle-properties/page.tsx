@@ -4,7 +4,8 @@ import { useEffect, useMemo, useState } from "react";
 import { useSearchParams } from "next/navigation";
 import InlineMathText from "../../../components/inline-math-text";
 import MathFormula from "../../../components/math-formula";
-import WorksheetQuestionPrompt, { worksheetQuestion } from "../../../components/worksheet-question-prompt";
+import MiddleCurriculumVisual from "../../../components/middle-curriculum-visual";
+import WorksheetQuestionPrompt from "../../../components/worksheet-question-prompt";
 import WorksheetChoicePanel, {
   type WorksheetChoiceProblem,
 } from "../../high-school/components/worksheet-choice-panel";
@@ -29,8 +30,13 @@ const TARGET_LABELS: Record<MiddleCirclePropertiesMethodKind, string> = {
   "cyclic-quadrilateral": "∠C의 크기는?",
   "tangent-chord-angle": "∠APB의 크기는?",
   "tangent-length": "PB의 길이는?",
+  "tangent-expression": "$x$의 값은?",
+  "tangent-perimeter": "$\\triangle PAB$의 둘레는?",
   "chord-length": "현 AB의 길이는?",
   "center-to-chord": "OM의 길이는?",
+  "equal-chord-distance": "ON의 길이는?",
+  "equal-chord-length": "현 CD의 길이는?",
+  "chord-comparison": "더 긴 현은?",
   "arc-sum": "호 CA의 크기는?",
 };
 
@@ -47,7 +53,7 @@ function choiceProblem(problem: MiddleCirclePropertiesProblem): WorksheetChoiceP
   return {
     id: problem.id,
     label: problem.label,
-    prompt: worksheetQuestion(problem.label),
+    prompt: TARGET_LABELS[problem.kind],
     latex: problem.latex,
     correctLatex: problem.answerLatex,
     choices: [...choices.slice(shift), ...choices.slice(0, shift)],
@@ -124,7 +130,7 @@ export default function MiddleCirclePropertiesPage() {
         <div className="polynomial-question-number">{String(index + 1).padStart(2, "0")}</div>
         <div className="polynomial-question-body">
           <span className="polynomial-focus-label"><InlineMathText text={problem.label} /></span>
-          <WorksheetQuestionPrompt label={problem.label} />
+          <WorksheetQuestionPrompt label={problem.label} prompt={TARGET_LABELS[problem.kind]} />
           <div className="logarithm-expression">
             <MathFormula latex={problem.latex} />
           </div>

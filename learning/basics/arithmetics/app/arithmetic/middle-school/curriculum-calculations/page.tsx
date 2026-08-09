@@ -4,6 +4,7 @@ import { useEffect, useMemo, useState } from "react";
 import { useSearchParams } from "next/navigation";
 import InlineMathText from "../../../components/inline-math-text";
 import MathFormula from "../../../components/math-formula";
+import MiddleCurriculumVisual from "../../../components/middle-curriculum-visual";
 import WorksheetQuestionPrompt, { worksheetQuestion } from "../../../components/worksheet-question-prompt";
 import WorksheetChoicePanel, {
   type WorksheetChoiceProblem,
@@ -36,8 +37,9 @@ function choiceProblem(problem: MiddleCurriculumProblem): WorksheetChoiceProblem
   return {
     id: problem.id,
     label: problem.label,
-    prompt: worksheetQuestion(problem.label),
+    prompt: problem.question ?? worksheetQuestion(problem.label),
     latex: problem.latex,
+    visual: problem.visual ? <MiddleCurriculumVisual visual={problem.visual} /> : undefined,
     correctLatex: problem.answerLatex,
     choices: [...choices.slice(shift), ...choices.slice(0, shift)],
   };
@@ -118,7 +120,8 @@ export default function MiddleCurriculumCalculationsPage() {
           <span className="polynomial-focus-label">
             <InlineMathText text={problem.label} />
           </span>
-          <WorksheetQuestionPrompt label={problem.label} />
+          <WorksheetQuestionPrompt label={problem.label} prompt={problem.question} />
+          {problem.visual && <MiddleCurriculumVisual visual={problem.visual} />}
           <div className="logarithm-expression">
             <MathFormula latex={problem.latex} display />
           </div>

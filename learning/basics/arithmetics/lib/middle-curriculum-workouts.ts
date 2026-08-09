@@ -2,6 +2,8 @@ export type MiddleCurriculumKind =
   | "coordinate-proportion"
   | "linear-function-basics"
   | "linear-function-equations"
+  | "construction-congruence"
+  | "frequency-graphs"
   | "plane-geometry"
   | "solid-geometry"
   | "triangle-quadrilateral"
@@ -22,12 +24,20 @@ export type MiddleCurriculumProblem = {
   answerLatex: string;
   solutionHint: string;
   distractors: string[];
+  question?: string;
+  visual?: MiddleCurriculumVisual;
 };
+
+export type MiddleCurriculumVisual =
+  | { type: "geometry"; variant: string; labels?: string[] }
+  | { type: "histogram" | "frequency-polygon"; values: number[]; labels: string[]; highlight?: number };
 
 export const MIDDLE_CURRICULUM_KINDS: MiddleCurriculumKind[] = [
   "coordinate-proportion",
   "linear-function-basics",
   "linear-function-equations",
+  "construction-congruence",
+  "frequency-graphs",
   "plane-geometry",
   "solid-geometry",
   "triangle-quadrilateral",
@@ -41,6 +51,8 @@ export const MIDDLE_CURRICULUM_TITLES: Record<MiddleCurriculumKind, string> = {
   "coordinate-proportion": "좌표·정비례·반비례 계산",
   "linear-function-basics": "일차함수의 값·기울기·절편",
   "linear-function-equations": "일차함수의 식과 방정식",
+  "construction-congruence": "기본도형·작도·합동",
+  "frequency-graphs": "도수분포·상대도수 그래프",
   "plane-geometry": "기본각·다각형·부채꼴 계산",
   "solid-geometry": "입체도형의 겉넓이와 부피",
   "triangle-quadrilateral": "삼각형과 사각형의 계산",
@@ -54,6 +66,8 @@ export const MIDDLE_CURRICULUM_GRADES: Record<MiddleCurriculumKind, string> = {
   "coordinate-proportion": "중1",
   "linear-function-basics": "중2",
   "linear-function-equations": "중2",
+  "construction-congruence": "중1",
+  "frequency-graphs": "중1",
   "plane-geometry": "중1",
   "solid-geometry": "중1",
   "triangle-quadrilateral": "중2",
@@ -93,6 +107,26 @@ const METHOD_PLANS: Record<MiddleCurriculumKind, string[]> = {
     "x-axis-intersection",
     "y-axis-intersection",
     "two-lines-parameter",
+  ],
+  "construction-congruence": [
+    "line-relation",
+    "line-plane-relation",
+    "perpendicular-bisector",
+    "angle-bisector",
+    "triangle-construction",
+    "sss-congruence",
+    "sas-congruence",
+    "asa-congruence",
+  ],
+  "frequency-graphs": [
+    "frequency-table",
+    "histogram-frequency",
+    "histogram-total",
+    "frequency-polygon-maximum",
+    "relative-frequency",
+    "relative-frequency-compare",
+    "missing-class-frequency",
+    "class-width",
   ],
   "plane-geometry": [
     "vertical-angles",
@@ -191,6 +225,22 @@ const METHOD_TITLES: Record<string, string> = {
   "x-axis-intersection": "x축과의 교점",
   "y-axis-intersection": "y축과의 교점",
   "two-lines-parameter": "두 직선의 교점 조건",
+  "line-relation": "두 직선의 위치 관계",
+  "line-plane-relation": "직선과 평면의 위치 관계",
+  "perpendicular-bisector": "선분의 수직이등분선 작도",
+  "angle-bisector": "각의 이등분선 작도",
+  "triangle-construction": "삼각형의 작도",
+  "sss-congruence": "SSS 합동",
+  "sas-congruence": "SAS 합동",
+  "asa-congruence": "ASA 합동",
+  "frequency-table": "도수분포표",
+  "histogram-frequency": "히스토그램의 도수",
+  "histogram-total": "히스토그램의 전체 도수",
+  "frequency-polygon-maximum": "도수분포다각형",
+  "relative-frequency": "상대도수",
+  "relative-frequency-compare": "두 집단의 상대도수",
+  "missing-class-frequency": "빠진 계급의 도수",
+  "class-width": "계급의 크기",
   "vertical-angles": "맞꼭지각",
   "parallel-angles": "평행선의 동위각·엇각",
   "triangle-angle": "삼각형의 내각",
@@ -346,6 +396,14 @@ function make(
     solutionHint,
     distractors: uniqueDistractors(answerLatex, distractors, kind),
   };
+}
+
+function withGeometry(
+  problem: MiddleCurriculumProblem,
+  variant: string,
+  labels: string[],
+): MiddleCurriculumProblem {
+  return { ...problem, visual: { type: "geometry", variant, labels } };
 }
 
 function buildCoordinate(
@@ -1096,6 +1154,175 @@ function buildQuartiles(method: string, next: () => number, id: string, index: n
     ["B", "A=B", "\\text{판단 불가}"]);
 }
 
+function makeVisual(
+  id: string,
+  method: string,
+  latex: string,
+  answerLatex: string,
+  solutionHint: string,
+  distractors: string[],
+  question: string,
+  visual: MiddleCurriculumVisual,
+) {
+  return {
+    ...make(id, method, latex, answerLatex, solutionHint, distractors),
+    question,
+    visual,
+  };
+}
+
+function buildConstructionCongruence(method: string, id: string) {
+  if (method === "line-relation") {
+    return makeVisual(id, method, `\\text{정육면체에서 }\\overline{AB}\\text{와 }\\overline{CG}`, `\\text{꼬인 위치}`,
+      "한 평면 위에 있지 않고 만나지도 평행하지도 않으므로 꼬인 위치이다.",
+      ["\\text{평행}", "\\text{수직}", "\\text{한 점에서 만남}"],
+      "두 직선의 위치 관계는?",
+      { type: "geometry", variant: "cube-skew", labels: ["A", "B", "C", "G"] });
+  }
+  if (method === "line-plane-relation") {
+    return makeVisual(id, method, `\\text{직선 }l\\text{과 평면 }\\alpha`, `\\text{수직}`,
+      "직선 l이 평면 위의 서로 만나는 두 직선에 모두 수직이므로 평면과 수직이다.",
+      ["\\text{평행}", "\\text{포함}", "\\text{꼬인 위치}"],
+      "직선과 평면의 위치 관계는?",
+      { type: "geometry", variant: "line-plane-perpendicular", labels: ["l", "α"] });
+  }
+  if (method === "perpendicular-bisector") {
+    return makeVisual(id, method, `P\\text{는 }\\overline{AB}\\text{의 수직이등분선 위의 점}`, "PA=PB",
+      "수직이등분선 위의 점은 선분의 두 끝점에서 같은 거리에 있다.",
+      ["PA>PB", "PA<PB", "AB=PB"],
+      "항상 성립하는 관계는?",
+      { type: "geometry", variant: "perpendicular-bisector", labels: ["A", "B", "P"] });
+  }
+  if (method === "angle-bisector") {
+    return makeVisual(id, method, `\\overrightarrow{OX}\\text{는 }\\angle AOB\\text{의 이등분선}`,
+      "\\angle AOX=\\angle XOB",
+      "각의 이등분선은 원래 각을 크기가 같은 두 각으로 나눈다.",
+      ["\\angle AOX=\\angle AOB", "\\angle XOB=2\\angle AOX", "OA=OB"],
+      "항상 성립하는 관계는?",
+      { type: "geometry", variant: "angle-bisector", labels: ["A", "O", "X", "B"] });
+  }
+  if (method === "triangle-construction") {
+    return makeVisual(id, method, "3,\\ 4,\\ 6", "\\text{작도 가능}",
+      "가장 긴 변 6이 나머지 두 변의 합 7보다 작으므로 삼각형을 작도할 수 있다.",
+      ["\\text{작도 불가능}", "\\text{직각삼각형만 가능}", "\\text{정삼각형만 가능}"],
+      "이 세 길이로 삼각형을 작도할 수 있는가?",
+      { type: "geometry", variant: "triangle-construction", labels: ["3", "4", "6"] });
+  }
+  if (method === "sss-congruence") {
+    return makeVisual(id, method, `AB=DE,\\ BC=EF,\\ CA=FD`, "\\mathrm{SSS}",
+      "세 대응변의 길이가 각각 같으므로 SSS 합동이다.",
+      ["\\mathrm{SAS}", "\\mathrm{ASA}", "\\mathrm{RHS}"],
+      "두 삼각형의 합동 조건은?",
+      { type: "geometry", variant: "triangle-pair-sss", labels: ["A", "B", "C", "D", "E", "F"] });
+  }
+  if (method === "sas-congruence") {
+    return makeVisual(id, method, `AB=DE,\\ AC=DF,\\ \\angle A=\\angle D`, "\\mathrm{SAS}",
+      "두 대응변과 그 끼인각이 각각 같으므로 SAS 합동이다.",
+      ["\\mathrm{SSS}", "\\mathrm{ASA}", "\\mathrm{RHS}"],
+      "두 삼각형의 합동 조건은?",
+      { type: "geometry", variant: "triangle-pair-sas", labels: ["A", "B", "C", "D", "E", "F"] });
+  }
+  return makeVisual(id, method, `\\angle A=\\angle D,\\ AB=DE,\\ \\angle B=\\angle E`, "\\mathrm{ASA}",
+    "한 대응변과 그 양 끝각이 각각 같으므로 ASA 합동이다.",
+    ["\\mathrm{SSS}", "\\mathrm{SAS}", "\\mathrm{RHS}"],
+    "두 삼각형의 합동 조건은?",
+    { type: "geometry", variant: "triangle-pair-asa", labels: ["A", "B", "C", "D", "E", "F"] });
+}
+
+function buildFrequencyGraphs(method: string, next: () => number, id: string) {
+  const values = [
+    integer(next, 3, 6),
+    integer(next, 6, 10),
+    integer(next, 5, 9),
+    integer(next, 2, 6),
+  ];
+  const labels = ["0~10", "10~20", "20~30", "30~40"];
+  const total = values.reduce((sum, value) => sum + value, 0);
+  const chart = {
+    type: method === "frequency-polygon-maximum" ? "frequency-polygon" : "histogram",
+    values,
+    labels,
+  } as MiddleCurriculumVisual;
+  if (method === "frequency-table") {
+    return make(id, method,
+      `\\begin{array}{c|cccc}\\text{계급}&0\\sim10&10\\sim20&20\\sim30&30\\sim40\\\\\\hline\\text{도수}&${values[0]}&${values[1]}&${values[2]}&${values[3]}\\end{array}`,
+      `${values[2]}`,
+      "20 이상 30 미만인 계급의 도수는 표의 해당 칸을 읽는다.",
+      [
+        `${values[0]}`, `${values[1]}`, `${total}`,
+        `${values[2] + 1}`, `${Math.max(1, values[2] - 1)}`, `${total - values[2]}`,
+      ],
+      "frequency-table");
+  }
+  if (method === "histogram-frequency") {
+    return makeVisual(id, method, "\\text{색칠한 계급}", `${values[1]}`,
+      "색칠한 막대의 높이가 그 계급의 도수이다.",
+      [
+        `${values[0]}`, `${values[2]}`, `${total}`,
+        `${values[1] + 1}`, `${Math.max(1, values[1] - 1)}`, `${total - values[1]}`,
+      ],
+      "색칠한 계급의 도수는?",
+      { ...chart, highlight: 1 });
+  }
+  if (method === "histogram-total") {
+    return makeVisual(id, method, "\\text{전체 자료}", `${total}`,
+      "각 막대의 높이를 모두 더하면 전체 자료의 수이다.",
+      [`${total - values[0]}`, `${total + values[3]}`, `${Math.max(...values)}`],
+      "전체 도수는?",
+      chart);
+  }
+  if (method === "frequency-polygon-maximum") {
+    const maximum = Math.max(...values);
+    const maximumIndex = values.indexOf(maximum);
+    return makeVisual(id, method, "\\text{도수가 가장 큰 계급}", `\\text{${labels[maximumIndex]}}`,
+      "도수분포다각형에서 가장 높은 점에 대응하는 계급을 찾는다.",
+      labels.filter((_, index) => index !== maximumIndex).map((label) => `\\text{${label}}`),
+      "도수가 가장 큰 계급은?",
+      chart);
+  }
+  if (method === "relative-frequency") {
+    return makeVisual(id, method, "\\text{색칠한 계급의 상대도수}", fraction(values[2], total),
+      "해당 계급의 도수를 전체 도수로 나누어 상대도수를 구한다.",
+      [
+        fraction(values[2], total + values[0]),
+        fraction(values[1], total),
+        fraction(total, values[2]),
+        fraction(values[2] + 1, total),
+        fraction(values[2], total + 1),
+      ],
+      "색칠한 계급의 상대도수는?",
+      { ...chart, highlight: 2 });
+  }
+  if (method === "relative-frequency-compare") {
+    const second = [...values];
+    second[1] = values[1] + 3;
+    const firstRatio = values[1] / total;
+    const secondTotal = second.reduce((sum, value) => sum + value, 0);
+    const answer = firstRatio > second[1] / secondTotal ? "A" : "B";
+    return makeVisual(id, method, `A:\\frac{${values[1]}}{${total}},\\quad B:\\frac{${second[1]}}{${secondTotal}}`, answer,
+      "자료의 수가 다르므로 도수가 아니라 각 집단의 상대도수를 비교한다.",
+      [answer === "A" ? "B" : "A", "A=B", "\\text{판단 불가}"],
+      "해당 계급의 상대도수가 더 큰 집단은?",
+      { ...chart, highlight: 1 });
+  }
+  if (method === "missing-class-frequency") {
+    const known = values[0] + values[1] + values[3];
+    return makeVisual(id, method, `\\text{전체 }${total},\\quad \\text{알려진 도수의 합 }${known}`, `${values[2]}`,
+      "전체 도수에서 알려진 세 계급의 도수 합을 뺀다.",
+      [
+        `${known}`, `${total - values[0]}`, `${values[1] + values[2]}`,
+        `${values[2] + 1}`, `${Math.max(1, values[2] - 1)}`, `${total - values[2]}`,
+      ],
+      "빠진 계급의 도수는?",
+      { ...chart, highlight: 2 });
+  }
+  return makeVisual(id, method, "\\text{가로축의 계급 경계}", "10",
+    "이웃한 두 계급의 경계값 차가 계급의 크기이다.",
+    ["5", "20", "40"],
+    "계급의 크기는?",
+    chart);
+}
+
 function build(
   group: MiddleCurriculumKind,
   method: string,
@@ -1106,11 +1333,13 @@ function build(
   if (group === "coordinate-proportion") return buildCoordinate(method, next, id, index);
   if (group === "linear-function-basics") return buildLinearFunction(method, next, id);
   if (group === "linear-function-equations") return buildLinearRelation(method, next, id);
+  if (group === "construction-congruence") return buildConstructionCongruence(method, id);
+  if (group === "frequency-graphs") return buildFrequencyGraphs(method, next, id);
   if (group === "plane-geometry") return buildPlaneGeometry(method, next, id);
   if (group === "solid-geometry") return buildSolidGeometry(method, next, id);
-  if (group === "triangle-quadrilateral") return buildTriangleQuadrilateral(method, next, id);
-  if (group === "similarity") return buildSimilarity(method, next, id);
-  if (group === "pythagorean") return buildPythagorean(method, next, id, index);
+  if (group === "triangle-quadrilateral") return withGeometry(buildTriangleQuadrilateral(method, next, id), method, []);
+  if (group === "similarity") return withGeometry(buildSimilarity(method, next, id), method, []);
+  if (group === "pythagorean") return withGeometry(buildPythagorean(method, next, id, index), method, []);
   if (group === "counting-probability") return buildProbability(method, next, id);
   return buildQuartiles(method, next, id, index);
 }

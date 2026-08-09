@@ -30,13 +30,12 @@ export type MiddleTrigonometryProblem = {
   answerLatex: string;
   solutionHint: string;
   distractors: string[];
+  visual?: { type: "geometry"; variant: string; labels?: string[] };
 };
 
 export const MIDDLE_TRIGONOMETRY_KINDS: MiddleTrigonometryKind[] = [
   "ratios",
-  "special-angles",
   "side-lengths",
-  "comprehensive",
 ];
 
 export const MIDDLE_TRIGONOMETRY_METHOD_KINDS: MiddleTrigonometryMethodKind[] = [
@@ -154,6 +153,7 @@ function make(
     answerLatex,
     solutionHint,
     distractors: uniqueDistractors(answerLatex, distractors),
+    visual: { type: "geometry", variant: kind, labels: [] },
   };
 }
 
@@ -369,7 +369,7 @@ const GROUP_METHOD_PLANS: Record<Exclude<MiddleTrigonometryKind, "comprehensive"
   "side-lengths": [
     "side-from-sine", "side-from-cosine",
     "side-from-tangent", "ratio-scale", "fraction-decimal",
-    "side-from-sine", "radical-side", "fraction-decimal",
+    "radical-side", "radical-side", "fraction-decimal",
   ],
 };
 
@@ -377,9 +377,9 @@ const LEGACY_KIND_GROUPS: Record<MiddleTrigonometryMethodKind, MiddleTrigonometr
   "single-ratio": "ratios",
   "three-ratios": "ratios",
   "pythagorean-first": "ratios",
-  "special-angle": "special-angles",
-  "special-angle-expression": "special-angles",
-  "radical-side": "special-angles",
+  "special-angle": "ratios",
+  "special-angle-expression": "ratios",
+  "radical-side": "side-lengths",
   "side-from-sine": "side-lengths",
   "side-from-cosine": "side-lengths",
   "side-from-tangent": "side-lengths",
@@ -392,6 +392,8 @@ export function isMiddleTrigonometryKind(value: string | null): value is MiddleT
 }
 
 export function resolveMiddleTrigonometryKind(value: string | null): MiddleTrigonometryKind | null {
+  if (value === "special-angles") return "ratios";
+  if (value === "comprehensive") return "side-lengths";
   if (isMiddleTrigonometryKind(value)) return value;
   if (MIDDLE_TRIGONOMETRY_METHOD_KINDS.includes(value as MiddleTrigonometryMethodKind)) {
     return LEGACY_KIND_GROUPS[value as MiddleTrigonometryMethodKind];

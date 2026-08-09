@@ -40,7 +40,7 @@ export default function GradeFiveNaturalNumberDecompositionPage() {
   }
 
   function checkAll() {
-    setResults(Object.fromEntries(problems.slice(2).map((problem) => [
+    setResults(Object.fromEntries(problems.slice(1).map((problem) => [
       problem.id,
       isPrimeFactorizationAnswer(problem.number, answers[problem.id] ?? ""),
     ])));
@@ -66,12 +66,12 @@ export default function GradeFiveNaturalNumberDecompositionPage() {
   }
 
   function renderProblem(problem: NaturalNumberDecompositionProblem, index: number, answerSheet: boolean) {
-    const isExample = index < 2;
+    const isExample = index === 0;
     const graded = problem.id in results;
     const isCorrect = results[problem.id] === true;
     return (
       <div className={`multiplication-question natural-decomposition-question${graded ? isCorrect ? " is-correct" : " is-wrong" : ""}`} data-testid="natural-decomposition-question" key={problem.id}>
-        <span className="natural-decomposition-index">{isExample ? 0 : index - 1}</span>
+        <span className="natural-decomposition-index">{isExample ? "예" : index}</span>
         <div className="natural-decomposition-expression">
           <strong>{problem.number}</strong>
           <span>→</span>
@@ -103,7 +103,7 @@ export default function GradeFiveNaturalNumberDecompositionPage() {
     <main className="counting-page multiplication-page">
       <div className="counting-toolbar">
         <a className="counting-back" href="/arithmetic">← 연산</a>
-        <div className="counting-progress"><strong>{correct}<small>/12 정답</small></strong></div>
+        <div className="counting-progress"><strong>{correct}<small>/14 정답</small></strong></div>
         <div className="toolbar">
           <button className="button secondary" type="button" onClick={newSet}>새 문제</button>
           <button className="button ghost" type="button" onClick={resetAnswers}>다시 쓰기</button>

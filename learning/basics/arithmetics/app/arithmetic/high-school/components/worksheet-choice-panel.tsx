@@ -1,5 +1,7 @@
 "use client";
 
+import type { ReactNode } from "react";
+
 import MathFormula from "../../../components/math-formula";
 import InlineMathText from "../../../components/inline-math-text";
 import { worksheetQuestion } from "../../../components/worksheet-question-prompt";
@@ -15,6 +17,7 @@ export type WorksheetChoiceProblem = {
   label: string;
   prompt: string;
   latex?: string;
+  visual?: ReactNode;
   choices: WorksheetChoice[];
   correctLatex: string;
 };
@@ -55,6 +58,7 @@ export default function WorksheetChoicePanel({ title, problems, displayStyle = f
                   <span><InlineMathText text={worksheetQuestion(problem.label, problem.prompt)} /></span>
                   {problemGraded && <b className={`trig-derivative-answer-status ${problemCorrect ? "is-correct" : "is-wrong"}`}>{problemCorrect ? "맞음" : "틀림"}</b>}
                 </div>
+                {problem.visual && <div className="worksheet-choice-problem-visual">{problem.visual}</div>}
                 {problem.latex && <div className="trig-derivative-answer-question"><MathFormula latex={problem.latex} displayStyle /></div>}
                 <div className="trig-derivative-choices">
                   {problem.choices.map((choice, choiceIndex) => {

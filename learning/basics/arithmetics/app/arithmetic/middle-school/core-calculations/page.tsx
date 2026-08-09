@@ -9,6 +9,7 @@ import WorksheetChoicePanel, {
   type WorksheetChoiceProblem,
 } from "../../high-school/components/worksheet-choice-panel";
 import {
+  createFreshMiddleCoreProblemSet,
   createMiddleCoreProblemSet,
   createMiddleCoreReviewProblems,
   isMiddleCoreKind,
@@ -141,7 +142,7 @@ export default function MiddleCoreCalculationsPage() {
         <a className="counting-back" href="/arithmetic">← 연산</a>
         <div className="counting-progress"><strong>{Object.values(results).filter(Boolean).length}<small>/{problems.length} 정답</small></strong></div>
         <div className="toolbar">
-          <button className="button secondary" type="button" onClick={() => { setProblemSet(createMiddleCoreProblemSet(kind, Date.now() >>> 0)); reset(); }}>새 문제</button>
+          <button className="button secondary" type="button" onClick={() => { setProblemSet(createFreshMiddleCoreProblemSet(kind, Date.now() >>> 0, problemSet.problems)); reset(); }}>새 문제</button>
           <button className="button ghost" type="button" onClick={reset}>다시 풀기</button>
           <button className="button secondary" type="button" onClick={() => setPanelOpen(true)}>답안 입력</button>
           <button className="button ghost" type="button" onClick={() => window.print()}>인쇄</button>

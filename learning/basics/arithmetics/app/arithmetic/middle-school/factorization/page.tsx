@@ -1,7 +1,7 @@
 "use client";
 
 import { useEffect, useMemo, useState } from "react";
-import { useSearchParams } from "next/navigation";
+import { useRouter, useSearchParams } from "next/navigation";
 import InlineMathText from "../../../components/inline-math-text";
 import MathFormula from "../../../components/math-formula";
 import WorksheetQuestionPrompt from "../../../components/worksheet-question-prompt";
@@ -40,6 +40,7 @@ function choiceProblem(problem: MiddleFactorizationProblem): WorksheetChoiceProb
 }
 
 export default function MiddleFactorizationPage() {
+  const router = useRouter();
   const searchParams = useSearchParams();
   const [kind, setKind] = useState<MiddleFactorizationKind>(DEFAULT_KIND);
   const [problemSet, setProblemSet] = useState(() => (
@@ -53,13 +54,21 @@ export default function MiddleFactorizationPage() {
 
   useEffect(() => {
     const requestedKind = searchParams.get("kind");
+    if (requestedKind === "cubic-grouping") {
+      router.replace("/arithmetic/high-school/advanced-factorization");
+      return;
+    }
+    if (requestedKind === "cubic-sum-difference") {
+      router.replace("/arithmetic/high-school/cubic-sum-difference-factorization");
+      return;
+    }
     if (!isMiddleFactorizationKind(requestedKind) || requestedKind === kind) return;
     setKind(requestedKind);
     setProblemSet(createMiddleFactorizationProblemSet(requestedKind, INITIAL_SEED));
     setReviews([]);
     setSelected({});
     setResults({});
-  }, [kind, searchParams]);
+  }, [kind, router, searchParams]);
 
   useEffect(() => {
     const fit = () => setScale(Math.min((window.innerWidth - 32) / 794, 1));
