@@ -4010,15 +4010,31 @@ function createClassroomPlatform(options = {}) {
 
   router.get("/school-admin/students", asyncRoute(async (req, res) => {
     const { profile } = await requireSchoolAdmin(req);
-    
+
+    // school_students (the whole-school roster admins actually maintain) is the
+    // source of truth; classroom_students only fills in students that exist
+    // there but not yet in school_students (legacy per-teacher entries). This
+    // used to go classroom_teachers -> classroom_classes -> classroom_students,
+    // which silently dropped an entire homeroom's students whenever that
+    // teacher hadn't been auto-provisioned into classroom_classes yet.
     const result = await pool.query(
-      `SELECT t.grade, t.class_number, s.student_number, s.roster_name as name
-       FROM classroom_teachers t
-       JOIN classroom_classes c ON c.teacher_user_id = t.user_id
-       JOIN classroom_students s ON s.class_id = c.id
-       WHERE t.school_id = $1 AND t.active = TRUE AND t.grade IS NOT NULL
-       ORDER BY t.grade, t.class_number, 
-                NULLIF(regexp_replace(s.student_number, '\\D', '', 'g'), '')::int`,
+      `SELECT grade, class_number, student_number, name FROM (
+         SELECT grade, class_number, student_number, roster_name AS name
+         FROM school_students
+         WHERE school_id = $1
+         UNION ALL
+         SELECT c.grade, c.class_number, s.student_number, s.roster_name AS name
+         FROM classroom_students s
+         JOIN classroom_classes c ON c.id = s.class_id
+         WHERE c.school_id = $1
+           AND NOT EXISTS (
+             SELECT 1 FROM school_students ss
+             WHERE ss.school_id = $1 AND ss.grade = c.grade AND ss.class_number = c.class_number
+               AND ss.student_number = s.student_number
+           )
+       ) combined
+       ORDER BY grade, class_number,
+                NULLIF(regexp_replace(student_number, '\\D', '', 'g'), '')::int`,
       [profile.school_id]
     );
 
@@ -5324,12 +5340,16 @@ function createClassroomPlatform(options = {}) {
     const teacher = await requireTeacher(req);
     const year = Number(req.query.year) || new Date().getFullYear();
 
-    // Auto-provision default homeroom group if teacher has a class assigned
+    // Auto-provision default homeroom group if teacher has a class assigned.
+    // Reads the assignment directly off classroom_teachers rather than via
+    // classroom_classes, so a teacher who has never opened their dashboard
+    // (and so was never auto-provisioned into classroom_classes) still gets
+    // their default group created here.
     const teacherClass = await pool.query(
-      `SELECT t.school_id, c.grade, c.class_number
+      `SELECT t.school_id, t.grade, t.class_number
        FROM classroom_teachers t
-       JOIN classroom_classes c ON c.teacher_user_id = t.user_id AND c.academic_year = $2
-       WHERE t.user_id = $1 AND t.active = TRUE AND c.grade IS NOT NULL AND c.class_number IS NOT NULL
+       WHERE t.user_id = $1 AND t.active = TRUE AND t.academic_year = $2
+         AND t.grade IS NOT NULL AND t.class_number IS NOT NULL
        LIMIT 1`,
       [teacher.id, year]
     );
