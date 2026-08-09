@@ -1,0 +1,666 @@
+<!doctype html>
+<html lang="ko">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+  <title>한자 새 진도표 | 기초학력</title>
+  <style>
+    @font-face { font-family: "KleeHanja"; src: url("../../../../assets/fonts/klee-one/KleeOne-SemiBold.ttf") format("truetype"); font-display: swap; }
+    :root { --paper:#f7f5ef; --card:#fffdf8; --ink:#202630; --muted:#68717a; --line:#d8d4ca; --blue:#245f8d; --blue-soft:#eaf2f7; }
+    * { box-sizing:border-box; }
+    body { margin:0; min-width:320px; color:var(--ink); background:#ded8ca url("../assets/hanja-background.webp") center/cover fixed no-repeat; font-family:"Noto Serif KR","Batang",serif; }
+    body::before { content:""; position:fixed; inset:0; background:rgba(247,245,239,.82); pointer-events:none; }
+    .page { position:relative; width:min(1060px,100%); min-height:100svh; margin:auto; padding:18px clamp(18px,4vw,44px) 36px; }
+    .topbar { min-height:52px; display:flex; align-items:center; justify-content:space-between; gap:20px; border-bottom:1px solid var(--line); }
+    h1 { margin:0; font-family:"KleeHanja",serif; font-size:clamp(30px,4vw,42px); }
+    .back { min-height:44px; display:inline-flex; align-items:center; color:var(--blue); font:700 15px system-ui,sans-serif; text-decoration:none; }
+    .section-head { display:flex; align-items:baseline; justify-content:space-between; gap:16px; margin:18px 0 9px; }
+    .section-head h2 { margin:0; font-size:21px; }
+    .count { color:var(--muted); font:700 14px system-ui,sans-serif; white-space:nowrap; }
+    .stages { display:grid; gap:10px; }
+    .stage { overflow:hidden; border:1px solid var(--line); border-radius:10px; background:rgba(255,253,248,.95); }
+    summary { min-height:56px; display:flex; align-items:center; justify-content:space-between; gap:16px; padding:10px 16px; cursor:pointer; list-style:none; font-size:18px; font-weight:800; }
+    summary::-webkit-details-marker { display:none; }
+    summary small { color:var(--muted); font:700 13px system-ui,sans-serif; }
+    .lesson-list { display:grid; grid-template-columns:repeat(2,minmax(0,1fr)); margin:0; padding:0 12px 12px; list-style:none; border-top:1px solid var(--line); }
+    .lesson-item { min-height:68px; color:inherit; text-decoration:none; display:grid; grid-template-columns:34px 72px minmax(0,1fr) auto; align-items:center; gap:9px; padding:8px 10px; border-bottom:1px solid #e4e0d7; }
+    .lesson-item:nth-child(odd) { border-right:1px solid var(--line); }
+    .lesson-number { color:var(--muted); font:800 13px system-ui,sans-serif; }
+    .lesson-term { color:var(--blue); font:600 28px "KleeHanja",serif; white-space:nowrap; }
+    .lesson-copy { min-width:0; display:grid; gap:2px; }
+    .lesson-copy strong { font-size:16px; }
+    .lesson-copy small { overflow:hidden; color:var(--muted); font-size:13px; text-overflow:ellipsis; white-space:nowrap; }
+    .new-characters { padding:4px 7px; border-radius:999px; color:#3d5e76; background:var(--blue-soft); font:700 11px system-ui,sans-serif; white-space:nowrap; }
+    summary:focus-visible,.back:focus-visible,.lesson-item:focus-visible { outline:3px solid #77a9cb; outline-offset:2px; }
+    @media (max-width:720px) {
+      .lesson-list { grid-template-columns:1fr; }
+      .lesson-item:nth-child(odd) { border-right:0; }
+    }
+    @media (max-width:500px) {
+      .lesson-item { grid-template-columns:30px 62px minmax(0,1fr); }
+      .new-characters { grid-column:3; justify-self:start; }
+    }
+  </style>
+</head>
+<body>
+  <main class="page">
+    <header class="topbar">
+      <h1>韓字</h1>
+      <a class="back" href="../">현재 진도표</a>
+    </header>
+    <div class="section-head">
+      <h2>전체 차시</h2>
+      <span class="count">63차시 · 125자</span>
+    </div>
+    <section class="stages" aria-label="단계별 진도">
+      <details class="stage" open>
+        <summary>
+          <span>1단계 · 기본 개념과 수</span>
+          <small>1~14차시 · 14개</small>
+        </summary>
+        <ol class="lesson-list" start="1">
+          <a class="lesson-item" href="./001/">
+            <span class="lesson-number">01</span>
+            <span class="lesson-term" aria-label="인생">人生</span>
+            <span class="lesson-copy">
+              <strong>인생</strong>
+              <small>사람이 태어나 살아가는 삶</small>
+            </span>
+            <span class="new-characters">새 글자 人·生</span>
+          </a>
+          <a class="lesson-item" href="./002/">
+            <span class="lesson-number">02</span>
+            <span class="lesson-term" aria-label="남녀">男女</span>
+            <span class="lesson-copy">
+              <strong>남녀</strong>
+              <small>남자와 여자</small>
+            </span>
+            <span class="new-characters">새 글자 男·女</span>
+          </a>
+          <a class="lesson-item" href="./003/">
+            <span class="lesson-number">03</span>
+            <span class="lesson-term" aria-label="대소">大小</span>
+            <span class="lesson-copy">
+              <strong>대소</strong>
+              <small>크고 작음</small>
+            </span>
+            <span class="new-characters">새 글자 大·小</span>
+          </a>
+          <a class="lesson-item" href="./004/">
+            <span class="lesson-number">04</span>
+            <span class="lesson-term" aria-label="다소">多少</span>
+            <span class="lesson-copy">
+              <strong>다소</strong>
+              <small>많고 적음</small>
+            </span>
+            <span class="new-characters">새 글자 多·少</span>
+          </a>
+          <a class="lesson-item" href="./005/">
+            <span class="lesson-number">05</span>
+            <span class="lesson-term" aria-label="상하">上下</span>
+            <span class="lesson-copy">
+              <strong>상하</strong>
+              <small>위와 아래</small>
+            </span>
+            <span class="new-characters">새 글자 上·下</span>
+          </a>
+          <a class="lesson-item" href="./006/">
+            <span class="lesson-number">06</span>
+            <span class="lesson-term" aria-label="좌우">左右</span>
+            <span class="lesson-copy">
+              <strong>좌우</strong>
+              <small>왼쪽과 오른쪽</small>
+            </span>
+            <span class="new-characters">새 글자 左·右</span>
+          </a>
+          <a class="lesson-item" href="./007/">
+            <span class="lesson-number">07</span>
+            <span class="lesson-term" aria-label="동서">東西</span>
+            <span class="lesson-copy">
+              <strong>동서</strong>
+              <small>동쪽과 서쪽</small>
+            </span>
+            <span class="new-characters">새 글자 東·西</span>
+          </a>
+          <a class="lesson-item" href="./008/">
+            <span class="lesson-number">08</span>
+            <span class="lesson-term" aria-label="남북">南北</span>
+            <span class="lesson-copy">
+              <strong>남북</strong>
+              <small>남쪽과 북쪽</small>
+            </span>
+            <span class="new-characters">새 글자 南·北</span>
+          </a>
+          <a class="lesson-item" href="./009/">
+            <span class="lesson-number">09</span>
+            <span class="lesson-term" aria-label="일월">日月</span>
+            <span class="lesson-copy">
+              <strong>일월</strong>
+              <small>해와 달</small>
+            </span>
+            <span class="new-characters">새 글자 日·月</span>
+          </a>
+          <a class="lesson-item" href="./010/">
+            <span class="lesson-number">10</span>
+            <span class="lesson-term" aria-label="연월">年月</span>
+            <span class="lesson-copy">
+              <strong>연월</strong>
+              <small>해와 달의 흐름</small>
+            </span>
+            <span class="new-characters">새 글자 年</span>
+          </a>
+          <a class="lesson-item" href="./011/">
+            <span class="lesson-number">11</span>
+            <span class="lesson-term" aria-label="일 · 이 · 삼">一二三</span>
+            <span class="lesson-copy">
+              <strong>일 · 이 · 삼</strong>
+              <small>한 · 두 · 석</small>
+            </span>
+            <span class="new-characters">새 글자 一·二·三</span>
+          </a>
+          <a class="lesson-item" href="./012/">
+            <span class="lesson-number">12</span>
+            <span class="lesson-term" aria-label="사 · 오">四五</span>
+            <span class="lesson-copy">
+              <strong>사 · 오</strong>
+              <small>넉 · 다섯</small>
+            </span>
+            <span class="new-characters">새 글자 四·五</span>
+          </a>
+          <a class="lesson-item" href="./013/">
+            <span class="lesson-number">13</span>
+            <span class="lesson-term" aria-label="육·유 · 칠">六七</span>
+            <span class="lesson-copy">
+              <strong>육·유 · 칠</strong>
+              <small>여섯 · 일곱</small>
+            </span>
+            <span class="new-characters">새 글자 六·七</span>
+          </a>
+          <a class="lesson-item" href="./014/">
+            <span class="lesson-number">14</span>
+            <span class="lesson-term" aria-label="팔 · 구 · 십">八九十</span>
+            <span class="lesson-copy">
+              <strong>팔 · 구 · 십</strong>
+              <small>여덟 · 아홉 · 열</small>
+            </span>
+            <span class="new-characters">새 글자 八·九·十</span>
+          </a>
+        </ol>
+      </details>
+      <details class="stage">
+        <summary>
+          <span>2단계 · 시간과 생활</span>
+          <small>15~27차시 · 13개</small>
+        </summary>
+        <ol class="lesson-list" start="15">
+          <a class="lesson-item" href="./015/">
+            <span class="lesson-number">15</span>
+            <span class="lesson-term" aria-label="백 · 년·연">百年</span>
+            <span class="lesson-copy">
+              <strong>백 · 년·연</strong>
+              <small>일백 · 해</small>
+            </span>
+            <span class="new-characters">새 글자 百</span>
+          </a>
+          <a class="lesson-item" href="./016/">
+            <span class="lesson-number">16</span>
+            <span class="lesson-term" aria-label="천 · 만">千萬</span>
+            <span class="lesson-copy">
+              <strong>천 · 만</strong>
+              <small>일천 · 일만</small>
+            </span>
+            <span class="new-characters">새 글자 千·萬</span>
+          </a>
+          <a class="lesson-item" href="./017/">
+            <span class="lesson-number">17</span>
+            <span class="lesson-term" aria-label="시 · 분">時分</span>
+            <span class="lesson-copy">
+              <strong>시 · 분</strong>
+              <small>때 · 나눌</small>
+            </span>
+            <span class="new-characters">새 글자 時·分</span>
+          </a>
+          <a class="lesson-item" href="./018/">
+            <span class="lesson-number">18</span>
+            <span class="lesson-term" aria-label="정 · 오">正午</span>
+            <span class="lesson-copy">
+              <strong>정 · 오</strong>
+              <small>바를 · 낮</small>
+            </span>
+            <span class="new-characters">새 글자 正·午</span>
+          </a>
+          <a class="lesson-item" href="./019/">
+            <span class="lesson-number">19</span>
+            <span class="lesson-term" aria-label="고 · 금">古今</span>
+            <span class="lesson-copy">
+              <strong>고 · 금</strong>
+              <small>옛 · 이제</small>
+            </span>
+            <span class="new-characters">새 글자 古·今</span>
+          </a>
+          <a class="lesson-item" href="./020/">
+            <span class="lesson-number">20</span>
+            <span class="lesson-term" aria-label="춘 · 하">春夏</span>
+            <span class="lesson-copy">
+              <strong>춘 · 하</strong>
+              <small>봄 · 여름</small>
+            </span>
+            <span class="new-characters">새 글자 春·夏</span>
+          </a>
+          <a class="lesson-item" href="./021/">
+            <span class="lesson-number">21</span>
+            <span class="lesson-term" aria-label="추 · 동">秋冬</span>
+            <span class="lesson-copy">
+              <strong>추 · 동</strong>
+              <small>가을 · 겨울</small>
+            </span>
+            <span class="new-characters">새 글자 秋·冬</span>
+          </a>
+          <a class="lesson-item" href="./022/">
+            <span class="lesson-number">22</span>
+            <span class="lesson-term" aria-label="부 · 모">父母</span>
+            <span class="lesson-copy">
+              <strong>부 · 모</strong>
+              <small>아비 · 어미</small>
+            </span>
+            <span class="new-characters">새 글자 父·母</span>
+          </a>
+          <a class="lesson-item" href="./023/">
+            <span class="lesson-number">23</span>
+            <span class="lesson-term" aria-label="자 · 우">子友</span>
+            <span class="lesson-copy">
+              <strong>자 · 우</strong>
+              <small>아들 · 벗</small>
+            </span>
+            <span class="new-characters">새 글자 子·友</span>
+          </a>
+          <a class="lesson-item" href="./024/">
+            <span class="lesson-number">24</span>
+            <span class="lesson-term" aria-label="학 · 교">學校</span>
+            <span class="lesson-copy">
+              <strong>학 · 교</strong>
+              <small>배울 · 학교</small>
+            </span>
+            <span class="new-characters">새 글자 學·校</span>
+          </a>
+          <a class="lesson-item" href="./025/">
+            <span class="lesson-number">25</span>
+            <span class="lesson-term" aria-label="선 · 전 · 후">先前後</span>
+            <span class="lesson-copy">
+              <strong>선 · 전 · 후</strong>
+              <small>먼저 · 앞 · 뒤</small>
+            </span>
+            <span class="new-characters">새 글자 先·前·後</span>
+          </a>
+          <a class="lesson-item" href="./026/">
+            <span class="lesson-number">26</span>
+            <span class="lesson-term" aria-label="중 · 내 · 외">中內外</span>
+            <span class="lesson-copy">
+              <strong>중 · 내 · 외</strong>
+              <small>가운데 · 안 · 밖</small>
+            </span>
+            <span class="new-characters">새 글자 中·內·外</span>
+          </a>
+          <a class="lesson-item" href="./027/">
+            <span class="lesson-number">27</span>
+            <span class="lesson-term" aria-label="입 · 출 · 문">入出門</span>
+            <span class="lesson-copy">
+              <strong>입 · 출 · 문</strong>
+              <small>들 · 날 · 문</small>
+            </span>
+            <span class="new-characters">새 글자 入·出·門</span>
+          </a>
+        </ol>
+      </details>
+      <details class="stage">
+        <summary>
+          <span>3단계 · 자연과 몸</span>
+          <small>28~39차시 · 12개</small>
+        </summary>
+        <ol class="lesson-list" start="28">
+          <a class="lesson-item" href="./028/">
+            <span class="lesson-number">28</span>
+            <span class="lesson-term" aria-label="천 · 지">天地</span>
+            <span class="lesson-copy">
+              <strong>천 · 지</strong>
+              <small>하늘 · 땅</small>
+            </span>
+            <span class="new-characters">새 글자 天·地</span>
+          </a>
+          <a class="lesson-item" href="./029/">
+            <span class="lesson-number">29</span>
+            <span class="lesson-term" aria-label="산 · 천">山川</span>
+            <span class="lesson-copy">
+              <strong>산 · 천</strong>
+              <small>메 · 내</small>
+            </span>
+            <span class="new-characters">새 글자 山·川</span>
+          </a>
+          <a class="lesson-item" href="./030/">
+            <span class="lesson-number">30</span>
+            <span class="lesson-term" aria-label="수 · 화">水火</span>
+            <span class="lesson-copy">
+              <strong>수 · 화</strong>
+              <small>물 · 불</small>
+            </span>
+            <span class="new-characters">새 글자 水·火</span>
+          </a>
+          <a class="lesson-item" href="./031/">
+            <span class="lesson-number">31</span>
+            <span class="lesson-term" aria-label="목 · 재">木材</span>
+            <span class="lesson-copy">
+              <strong>목 · 재</strong>
+              <small>나무 · 재목</small>
+            </span>
+            <span class="new-characters">새 글자 木·材</span>
+          </a>
+          <a class="lesson-item" href="./032/">
+            <span class="lesson-number">32</span>
+            <span class="lesson-term" aria-label="토 · 지">土地</span>
+            <span class="lesson-copy">
+              <strong>토 · 지</strong>
+              <small>흙 · 땅</small>
+            </span>
+            <span class="new-characters">새 글자 土</span>
+          </a>
+          <a class="lesson-item" href="./033/">
+            <span class="lesson-number">33</span>
+            <span class="lesson-term" aria-label="금 · 속">金屬</span>
+            <span class="lesson-copy">
+              <strong>금 · 속</strong>
+              <small>쇠 · 무리</small>
+            </span>
+            <span class="new-characters">새 글자 金·屬</span>
+          </a>
+          <a class="lesson-item" href="./034/">
+            <span class="lesson-number">34</span>
+            <span class="lesson-term" aria-label="풍 · 우">風雨</span>
+            <span class="lesson-copy">
+              <strong>풍 · 우</strong>
+              <small>바람 · 비</small>
+            </span>
+            <span class="new-characters">새 글자 風·雨</span>
+          </a>
+          <a class="lesson-item" href="./035/">
+            <span class="lesson-number">35</span>
+            <span class="lesson-term" aria-label="강 · 설">降雪</span>
+            <span class="lesson-copy">
+              <strong>강 · 설</strong>
+              <small>내릴 · 눈</small>
+            </span>
+            <span class="new-characters">새 글자 降·雪</span>
+          </a>
+          <a class="lesson-item" href="./036/">
+            <span class="lesson-number">36</span>
+            <span class="lesson-term" aria-label="목 · 적">目的</span>
+            <span class="lesson-copy">
+              <strong>목 · 적</strong>
+              <small>눈 · 과녁</small>
+            </span>
+            <span class="new-characters">새 글자 目·的</span>
+          </a>
+          <a class="lesson-item" href="./037/">
+            <span class="lesson-number">37</span>
+            <span class="lesson-term" aria-label="구 · 수 · 족">口手足</span>
+            <span class="lesson-copy">
+              <strong>구 · 수 · 족</strong>
+              <small>입 · 손 · 발</small>
+            </span>
+            <span class="new-characters">새 글자 口·手·足</span>
+          </a>
+          <a class="lesson-item" href="./038/">
+            <span class="lesson-number">38</span>
+            <span class="lesson-term" aria-label="심 · 신">心身</span>
+            <span class="lesson-copy">
+              <strong>심 · 신</strong>
+              <small>마음 · 몸</small>
+            </span>
+            <span class="new-characters">새 글자 心·身</span>
+          </a>
+          <a class="lesson-item" href="./039/">
+            <span class="lesson-number">39</span>
+            <span class="lesson-term" aria-label="체 · 력">體力</span>
+            <span class="lesson-copy">
+              <strong>체 · 력</strong>
+              <small>몸 · 힘</small>
+            </span>
+            <span class="new-characters">새 글자 體·力</span>
+          </a>
+        </ol>
+      </details>
+      <details class="stage">
+        <summary>
+          <span>4단계 · 언어와 사회</span>
+          <small>40~51차시 · 12개</small>
+        </summary>
+        <ol class="lesson-list" start="40">
+          <a class="lesson-item" href="./040/">
+            <span class="lesson-number">40</span>
+            <span class="lesson-term" aria-label="문 · 자">文字</span>
+            <span class="lesson-copy">
+              <strong>문 · 자</strong>
+              <small>글월 · 글자</small>
+            </span>
+            <span class="new-characters">새 글자 文·字</span>
+          </a>
+          <a class="lesson-item" href="./041/">
+            <span class="lesson-number">41</span>
+            <span class="lesson-term" aria-label="국 · 어">國語</span>
+            <span class="lesson-copy">
+              <strong>국 · 어</strong>
+              <small>나라 · 말씀</small>
+            </span>
+            <span class="new-characters">새 글자 國·語</span>
+          </a>
+          <a class="lesson-item" href="./042/">
+            <span class="lesson-number">42</span>
+            <span class="lesson-term" aria-label="대 · 화">對話</span>
+            <span class="lesson-copy">
+              <strong>대 · 화</strong>
+              <small>대할 · 말씀</small>
+            </span>
+            <span class="new-characters">새 글자 對·話</span>
+          </a>
+          <a class="lesson-item" href="./043/">
+            <span class="lesson-number">43</span>
+            <span class="lesson-term" aria-label="독 · 서">讀書</span>
+            <span class="lesson-copy">
+              <strong>독 · 서</strong>
+              <small>읽을 · 글</small>
+            </span>
+            <span class="new-characters">새 글자 讀·書</span>
+          </a>
+          <a class="lesson-item" href="./044/">
+            <span class="lesson-number">44</span>
+            <span class="lesson-term" aria-label="문 · 답">問答</span>
+            <span class="lesson-copy">
+              <strong>문 · 답</strong>
+              <small>물을 · 대답</small>
+            </span>
+            <span class="new-characters">새 글자 問·答</span>
+          </a>
+          <a class="lesson-item" href="./045/">
+            <span class="lesson-number">45</span>
+            <span class="lesson-term" aria-label="국 · 민">國民</span>
+            <span class="lesson-copy">
+              <strong>국 · 민</strong>
+              <small>나라 · 백성</small>
+            </span>
+            <span class="new-characters">새 글자 民</span>
+          </a>
+          <a class="lesson-item" href="./046/">
+            <span class="lesson-number">46</span>
+            <span class="lesson-term" aria-label="가 · 정">家庭</span>
+            <span class="lesson-copy">
+              <strong>가 · 정</strong>
+              <small>집 · 뜰</small>
+            </span>
+            <span class="new-characters">새 글자 家·庭</span>
+          </a>
+          <a class="lesson-item" href="./047/">
+            <span class="lesson-number">47</span>
+            <span class="lesson-term" aria-label="교 · 실">敎室</span>
+            <span class="lesson-copy">
+              <strong>교 · 실</strong>
+              <small>가르칠 · 집</small>
+            </span>
+            <span class="new-characters">새 글자 敎·室</span>
+          </a>
+          <a class="lesson-item" href="./048/">
+            <span class="lesson-number">48</span>
+            <span class="lesson-term" aria-label="장 · 소">場所</span>
+            <span class="lesson-copy">
+              <strong>장 · 소</strong>
+              <small>마당 · 바</small>
+            </span>
+            <span class="new-characters">새 글자 場·所</span>
+          </a>
+          <a class="lesson-item" href="./049/">
+            <span class="lesson-number">49</span>
+            <span class="lesson-term" aria-label="도 · 로">道路</span>
+            <span class="lesson-copy">
+              <strong>도 · 로</strong>
+              <small>길 · 길</small>
+            </span>
+            <span class="new-characters">새 글자 道·路</span>
+          </a>
+          <a class="lesson-item" href="./050/">
+            <span class="lesson-number">50</span>
+            <span class="lesson-term" aria-label="도 · 시">都市</span>
+            <span class="lesson-copy">
+              <strong>도 · 시</strong>
+              <small>도읍 · 저자</small>
+            </span>
+            <span class="new-characters">새 글자 都·市</span>
+          </a>
+          <a class="lesson-item" href="./051/">
+            <span class="lesson-number">51</span>
+            <span class="lesson-term" aria-label="농 · 촌">農村</span>
+            <span class="lesson-copy">
+              <strong>농 · 촌</strong>
+              <small>농사 · 마을</small>
+            </span>
+            <span class="new-characters">새 글자 農·村</span>
+          </a>
+        </ol>
+      </details>
+      <details class="stage">
+        <summary>
+          <span>5단계 · 비교와 과학</span>
+          <small>52~63차시 · 12개</small>
+        </summary>
+        <ol class="lesson-list" start="52">
+          <a class="lesson-item" href="./052/">
+            <span class="lesson-number">52</span>
+            <span class="lesson-term" aria-label="장 · 단">長短</span>
+            <span class="lesson-copy">
+              <strong>장 · 단</strong>
+              <small>길 · 짧을</small>
+            </span>
+            <span class="new-characters">새 글자 長·短</span>
+          </a>
+          <a class="lesson-item" href="./053/">
+            <span class="lesson-number">53</span>
+            <span class="lesson-term" aria-label="고 · 저">高低</span>
+            <span class="lesson-copy">
+              <strong>고 · 저</strong>
+              <small>높을 · 낮을</small>
+            </span>
+            <span class="new-characters">새 글자 高·低</span>
+          </a>
+          <a class="lesson-item" href="./054/">
+            <span class="lesson-number">54</span>
+            <span class="lesson-term" aria-label="신 · 문">新聞</span>
+            <span class="lesson-copy">
+              <strong>신 · 문</strong>
+              <small>새 · 들을</small>
+            </span>
+            <span class="new-characters">새 글자 新·聞</span>
+          </a>
+          <a class="lesson-item" href="./055/">
+            <span class="lesson-number">55</span>
+            <span class="lesson-term" aria-label="정 · 반">正反</span>
+            <span class="lesson-copy">
+              <strong>정 · 반</strong>
+              <small>바를 · 돌이킬</small>
+            </span>
+            <span class="new-characters">새 글자 反</span>
+          </a>
+          <a class="lesson-item" href="./056/">
+            <span class="lesson-number">56</span>
+            <span class="lesson-term" aria-label="동 · 일">同一</span>
+            <span class="lesson-copy">
+              <strong>동 · 일</strong>
+              <small>한가지 · 한</small>
+            </span>
+            <span class="new-characters">새 글자 同</span>
+          </a>
+          <a class="lesson-item" href="./057/">
+            <span class="lesson-number">57</span>
+            <span class="lesson-term" aria-label="분 · 별">分別</span>
+            <span class="lesson-copy">
+              <strong>분 · 별</strong>
+              <small>나눌 · 나눌</small>
+            </span>
+            <span class="new-characters">새 글자 別</span>
+          </a>
+          <a class="lesson-item" href="./058/">
+            <span class="lesson-number">58</span>
+            <span class="lesson-term" aria-label="동 · 물">動物</span>
+            <span class="lesson-copy">
+              <strong>동 · 물</strong>
+              <small>움직일 · 물건</small>
+            </span>
+            <span class="new-characters">새 글자 動·物</span>
+          </a>
+          <a class="lesson-item" href="./059/">
+            <span class="lesson-number">59</span>
+            <span class="lesson-term" aria-label="식 · 물">植物</span>
+            <span class="lesson-copy">
+              <strong>식 · 물</strong>
+              <small>심을 · 물건</small>
+            </span>
+            <span class="new-characters">새 글자 植</span>
+          </a>
+          <a class="lesson-item" href="./060/">
+            <span class="lesson-number">60</span>
+            <span class="lesson-term" aria-label="전 · 광">電光</span>
+            <span class="lesson-copy">
+              <strong>전 · 광</strong>
+              <small>번개 · 빛</small>
+            </span>
+            <span class="new-characters">새 글자 電·光</span>
+          </a>
+          <a class="lesson-item" href="./061/">
+            <span class="lesson-number">61</span>
+            <span class="lesson-term" aria-label="음 · 성">音聲</span>
+            <span class="lesson-copy">
+              <strong>음 · 성</strong>
+              <small>소리 · 소리</small>
+            </span>
+            <span class="new-characters">새 글자 音·聲</span>
+          </a>
+          <a class="lesson-item" href="./062/">
+            <span class="lesson-number">62</span>
+            <span class="lesson-term" aria-label="공 · 기">空氣</span>
+            <span class="lesson-copy">
+              <strong>공 · 기</strong>
+              <small>빌 · 기운</small>
+            </span>
+            <span class="new-characters">새 글자 空·氣</span>
+          </a>
+          <a class="lesson-item" href="./063/">
+            <span class="lesson-number">63</span>
+            <span class="lesson-term" aria-label="자 · 전 · 차·거">自轉車</span>
+            <span class="lesson-copy">
+              <strong>자 · 전 · 차·거</strong>
+              <small>스스로 · 구를 · 수레</small>
+            </span>
+            <span class="new-characters">새 글자 自·轉·車</span>
+          </a>
+        </ol>
+      </details>
+    </section>
+  </main>
+</body>
+</html>
