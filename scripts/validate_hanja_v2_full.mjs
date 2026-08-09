@@ -68,6 +68,9 @@ for (const [lessonIndex, lesson] of lessons.entries()) {
   if (!html.includes(`${number} / ${lessons.length}`)) errors.push(`${slug}: 전체 차시 표시가 틀렸습니다.`);
   if ((html.match(/class="meaning-card"/g) || []).length !== lesson.characters.length) errors.push(`${slug}: 뜻 카드 수가 다릅니다.`);
   if ((html.match(/class="question" data-answer=/g) || []).length !== lesson.questions.length) errors.push(`${slug}: 문제 카드 수가 다릅니다.`);
+  if ((html.match(/class="stroke-set"/g) || []).length !== lesson.characters.length) errors.push(`${slug}: 획순 글자 그룹 수가 다릅니다.`);
+  if ((html.match(/class="stroke-set"[^>]* hidden/g) || []).length !== lesson.characters.length - 1) errors.push(`${slug}: 처음 선택하지 않은 획순 그룹이 숨겨지지 않았습니다.`);
+  if (!html.includes('.stroke-set[hidden]{display:none}') || !html.includes("toggleAttribute('hidden'")) errors.push(`${slug}: SVG 획순 그룹 전환 장치가 없습니다.`);
   if (/<details|펼쳐 보기|>더 보기</.test(html)) errors.push(`${slug}: 예문을 감추는 펼치기 UI가 있습니다.`);
   if (/MISSING|\uFFFD/.test(html)) errors.push(`${slug}: 깨진 데이터 표지가 있습니다.`);
 }
