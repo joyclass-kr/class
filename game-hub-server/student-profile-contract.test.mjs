@@ -11,19 +11,17 @@ test("student profile changes are scoped to the signed-in student", () => {
   assert.match(serverSource, /birthday_visible = \$3/);
 });
 
-test("student password changes verify the current password and store a hash", () => {
-  assert.match(serverSource, /router\.patch\("\/student\/password"/);
-  assert.match(serverSource, /verifyStudentPassword\(currentPassword, student\.password_hash\)/);
-  assert.match(serverSource, /hashStudentPassword\(newPassword\)/);
-  assert.doesNotMatch(serverSource, /SET password_hash = newPassword/);
-  assert.match(serverSource, /existingPassword\?\.passwordHash \|\| hashStudentPassword\(DEFAULT_STUDENT_PASSWORD\)/);
+test("the site has no student password login path -- Google account access only", () => {
+  assert.doesNotMatch(serverSource, /router\.patch\("\/student\/password"/);
+  assert.doesNotMatch(serverSource, /verifyStudentPassword/);
+  assert.doesNotMatch(serverSource, /hashStudentPassword/);
 });
 
-test("student profile screen confirms the new password and keeps birthday choice concise", () => {
-  assert.match(pageSource, /id="confirmPassword"/);
+test("student profile screen keeps the birthday sharing choice concise, with no password fields", () => {
   assert.match(pageSource, /id="birthdayVisible"/);
   assert.doesNotMatch(pageSource, /불이익/);
-  assert.match(pageSource, /newPassword\.value!==confirmPassword\.value/);
+  assert.doesNotMatch(pageSource, /id="confirmPassword"/);
+  assert.doesNotMatch(pageSource, /비밀번호/);
 });
 
 test("student profile screen offers birthday as month/day dropdowns instead of a single free-text field", () => {
@@ -34,13 +32,12 @@ test("student profile screen offers birthday as month/day dropdowns instead of a
   assert.match(pageSource, /function populateDayOptions\(/);
 });
 
-test("teacher roster cannot overwrite student-managed birthday or password", async () => {
+test("teacher roster cannot overwrite the student's own birthday choice, and the roster screen has no password field to overwrite either", async () => {
   const rosterSource = await readFile(new URL("../classtools/roster.html", import.meta.url), "utf8");
   assert.match(rosterSource, /id="birthdates" disabled/);
-  assert.match(rosterSource, /id="birthday-visible" disabled/);
-  assert.match(rosterSource, /id="passwords" disabled/);
+  assert.doesNotMatch(rosterSource, /id="passwords"/);
+  assert.doesNotMatch(rosterSource, /비밀번호/);
   assert.match(serverSource, /existingPassword\?\.birthdayMmdd \|\| null/);
-  assert.match(serverSource, /existingPassword\?\.passwordHash \|\| hashStudentPassword\(DEFAULT_STUDENT_PASSWORD\)/);
   assert.doesNotMatch(serverSource, /student\.birthdayMmdd \|\| null, student\.birthdayVisible/);
 });
 
@@ -52,5 +49,6 @@ test("teacher student deletion removes the full roster record and revokes linked
   assert.match(serverSource, /DELETE FROM classroom_students WHERE id = \$1/);
   assert.match(serverSource, /removedStudentsResult/);
   assert.match(rosterSource, /id="student-delete-select"/);
-  assert.match(rosterSource, /계정 연결, 생일, 공개 설정, 비밀번호가 함께 삭제/);
+  assert.match(rosterSource, /계정 연결, 생일, 공개 설정가 함께 삭제/);
+  assert.doesNotMatch(rosterSource, /비밀번호/);
 });

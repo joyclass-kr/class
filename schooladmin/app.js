@@ -83,6 +83,7 @@ document.addEventListener('DOMContentLoaded', () => {
     const curriculumGradeSelect = document.getElementById('curriculumGradeSelect');
     const curriculumTableBody = document.getElementById('curriculumTableBody');
     const curriculumTableFoot = document.getElementById('curriculumTableFoot');
+    const curriculumPrevYearHeader = document.getElementById('curriculumPrevYearHeader');
     const saveCurriculumBtn = document.getElementById('saveCurriculumBtn');
 
     // Master Timetable Grid Tab
@@ -124,6 +125,10 @@ document.addEventListener('DOMContentLoaded', () => {
 
     // Timetable grid state: { "day_period": "국어" }
     let timetableMatrixData = {};
+    // Cells claimed by the specialist-teacher/special-room screens; the class
+    // view may only clear these, never assign new ones (single source of truth).
+    // { "day_period": { teacherUserId, roomName } }
+    let timetableMatrixLocks = {};
 
     // --- Initialization ---
     function init() {
@@ -243,6 +248,11 @@ document.addEventListener('DOMContentLoaded', () => {
         } else if (tabId === 'timetable') {
             renderSubjectPalette();
             await loadMasterTimetable();
+        } else if (tabId === 'specialistTimetable') {
+            await loadSpecialistTeachersList();
+            await loadSpecialistTimetable();
+        } else if (tabId === 'roomTimetable') {
+            await loadRoomsList();
         } else if (tabId === 'annualTimetable') {
             await loadVacationDates();
             await renderAnnualTimetable34Weeks();
@@ -911,33 +921,66 @@ document.addEventListener('DOMContentLoaded', () => {
         try {
             const res = await api(`/api/school-admin/curriculum-hours?academicYear=${selectedAcademicYear}&grade=${grade}`);
             const savedHours = res.hours || [];
-            
             const hourMap = new Map(savedHours.map(h => [h.subject_name, h]));
+
+            const prevHourMap = new Map((res.previousYear?.hours || []).map(h => [h.subject_name, h]));
+            // For the second year of a 2022-revised-curriculum grade band (2/4/6학년),
+            // suggest "학년군 총 기준시수 - 작년 실제 편성시수" as the starting point
+            // instead of always defaulting to this grade's own base -- only when the
+            // admin hasn't already saved a value for this grade/subject, so it never
+            // overwrites something they already chose.
+            const prevGradeDefaults = res.previousYear ? (GRADE_SUBJECT_BASE_HOURS[res.previousYear.grade] || []) : [];
+            const prevBaseMap = new Map(prevGradeDefaults.map(def => [def.name, def.base]));
+
             const rowsData = gradeDefaults.map(def => {
                 const saved = hourMap.get(def.name);
-                return {
-                    name: def.name,
-                    weekly: saved ? saved.weekly_hours : def.weekly,
-                    base: def.base,
-                    adj: saved && saved.annual_required_hours ? (saved.annual_required_hours - def.base) : 0,
-                    category: def.category
-                };
+                if (saved) {
+                    return {
+                        name: def.name,
+                        weekly: saved.weekly_hours,
+                        base: def.base,
+                        adj: saved.annual_required_hours ? (saved.annual_required_hours - def.base) : 0,
+                        category: def.category
+                    };
+                }
+                if (res.previousYear && prevBaseMap.has(def.name)) {
+                    const prevSaved = prevHourMap.get(def.name);
+                    const prevFinal = prevSaved && prevSaved.annual_required_hours
+                        ? prevSaved.annual_required_hours
+                        : prevBaseMap.get(def.name);
+                    const bandTotal = prevBaseMap.get(def.name) + def.base;
+                    const suggestedFinal = bandTotal - prevFinal;
+                    return {
+                        name: def.name,
+                        weekly: def.weekly,
+                        base: def.base,
+                        adj: suggestedFinal - def.base,
+                        category: def.category
+                    };
+                }
+                return { name: def.name, weekly: def.weekly, base: def.base, adj: 0, category: def.category };
             });
 
-            renderCurriculumTable(rowsData);
+            renderCurriculumTable(rowsData, res.previousYear ? { ...res.previousYear, hourMap: prevHourMap } : null);
         } catch (error) {
             const rowsData = gradeDefaults.map(def => ({ ...def, adj: 0 }));
-            renderCurriculumTable(rowsData);
+            renderCurriculumTable(rowsData, null);
         }
     }
 
-    function renderCurriculumTable(rowsData) {
+    function renderCurriculumTable(rowsData, previousYear) {
         curriculumTableBody.innerHTML = '';
         let totalWeekly = 0;
         let totalBase = 0;
         let totalAdj = 0;
         let totalFinal = 0;
         let totalCalculated = 0;
+
+        if (curriculumPrevYearHeader) {
+            curriculumPrevYearHeader.textContent = previousYear
+                ? `${previousYear.academicYear}년 ${previousYear.grade}학년 참고`
+                : '작년(한 학년 아래) 참고';
+        }
 
         rowsData.forEach(row => {
             const finalAnnual = row.base + (row.adj || 0);
@@ -961,6 +1004,8 @@ document.addEventListener('DOMContentLoaded', () => {
             }
 
             const categoryText = row.category === 'CHANGTAE' ? '🎒 창체' : '📖 교과';
+            const prevHour = previousYear?.hourMap.get(row.name);
+            const prevCellText = previousYear ? (prevHour ? `${prevHour.annual_required_hours}시간` : '미배정') : '—';
 
             const tr = document.createElement('tr');
             tr.innerHTML = `
@@ -972,6 +1017,7 @@ document.addEventListener('DOMContentLoaded', () => {
                 <td style="font-weight:800;">${finalAnnual}시간</td>
                 <td style="font-weight:700;">${calcAnnual}시간</td>
                 <td class="${diffClass}">${diffStr}</td>
+                <td style="color:var(--muted);">${prevCellText}</td>
             `;
             curriculumTableBody.appendChild(tr);
         });
@@ -988,6 +1034,7 @@ document.addEventListener('DOMContentLoaded', () => {
                 <td>${totalFinal}시간</td>
                 <td>${totalCalculated}시간</td>
                 <td class="${totalDiff >= 0 ? 'diff-positive' : 'diff-negative'}">${totalDiffStr}</td>
+                <td></td>
             </tr>
         `;
 
@@ -1404,6 +1451,224 @@ document.addEventListener('DOMContentLoaded', () => {
         timetableClassSelect.addEventListener('change', loadMasterTimetable);
     }
 
+    // --- Specialist Teacher Timetable (전담교사별 시간표) ---
+    const specialistTeacherSelect = document.getElementById('specialistTeacherSelect');
+    const specialistTimetableEmpty = document.getElementById('specialistTimetableEmpty');
+    const specialistTimetableContent = document.getElementById('specialistTimetableContent');
+    const specialistTimetableMatrixBody = document.getElementById('specialistTimetableMatrixBody');
+    let specialistTeachersCache = [];
+    let specialistTimetableData = {}; // "day_period" -> { grade, classNumber, subjectName, roomName }
+
+    async function loadSpecialistTeachersList() {
+        if (!specialistTeacherSelect) return;
+        try {
+            const res = await api('/api/school-admin/specialist-teachers');
+            specialistTeachersCache = res.teachers || [];
+            const prevValue = specialistTeacherSelect.value;
+            specialistTeacherSelect.innerHTML = '<option value="">교사를 선택하세요</option>' +
+                specialistTeachersCache.map(t => `<option value="${t.id}">${escapeHtml(t.name)} (${escapeHtml(t.type)})</option>`).join('');
+            if (prevValue) specialistTeacherSelect.value = prevValue;
+        } catch (error) {
+            if (specialistTimetableEmpty) specialistTimetableEmpty.textContent = error.message;
+        }
+    }
+
+    function renderGridMatrix(tbody, dataMap, onCellClick) {
+        tbody.innerHTML = '';
+        for (let period = 1; period <= 8; period++) {
+            const tr = document.createElement('tr');
+            let cellsHtml = `<td style="font-weight:800; background:rgba(255,255,255,0.03);">${period}교시</td>`;
+            for (let day = 1; day <= 5; day++) {
+                const cell = dataMap[`${day}_${period}`];
+                const label = cell
+                    ? `${cell.grade}학년 ${cell.classNumber}반<br><small>${escapeHtml(cell.subjectName || '')}</small>`
+                    : '<span style="color:var(--text-muted);">-</span>';
+                cellsHtml += `<td class="timetable-cell" data-day="${day}" data-period="${period}">${label}</td>`;
+            }
+            tr.innerHTML = cellsHtml;
+            tbody.appendChild(tr);
+        }
+        tbody.querySelectorAll('.timetable-cell').forEach(cell => {
+            cell.addEventListener('click', () => onCellClick(Number(cell.dataset.day), Number(cell.dataset.period)));
+        });
+    }
+
+    async function loadSpecialistTimetable() {
+        const teacherId = specialistTeacherSelect.value;
+        if (!teacherId) {
+            if (specialistTimetableContent) specialistTimetableContent.hidden = true;
+            if (specialistTimetableEmpty) {
+                specialistTimetableEmpty.hidden = false;
+                specialistTimetableEmpty.textContent = '교사를 선택하면 시간표가 표시됩니다.';
+            }
+            return;
+        }
+        try {
+            const res = await api(`/api/school-admin/specialist-timetable?academicYear=${selectedAcademicYear}&teacherUserId=${teacherId}`);
+            specialistTimetableData = {};
+            (res.timetable || []).forEach(row => {
+                specialistTimetableData[`${row.day_of_week}_${row.period}`] = {
+                    grade: row.grade, classNumber: row.class_number, subjectName: row.subject_name, roomName: row.room_name
+                };
+            });
+            if (specialistTimetableEmpty) specialistTimetableEmpty.hidden = true;
+            if (specialistTimetableContent) specialistTimetableContent.hidden = false;
+            renderGridMatrix(specialistTimetableMatrixBody, specialistTimetableData, handleSpecialistCellClick);
+        } catch (error) {
+            if (specialistTimetableEmpty) {
+                specialistTimetableEmpty.hidden = false;
+                specialistTimetableEmpty.textContent = error.message;
+            }
+            if (specialistTimetableContent) specialistTimetableContent.hidden = true;
+        }
+    }
+
+    async function handleSpecialistCellClick(day, period) {
+        const teacherId = specialistTeacherSelect.value;
+        if (!teacherId) return;
+        const key = `${day}_${period}`;
+        const existing = specialistTimetableData[key];
+
+        if (existing) {
+            if (!confirm(`${existing.grade}학년 ${existing.classNumber}반의 이 배정을 지울까요?`)) return;
+            try {
+                await api('/api/school-admin/specialist-timetable', {
+                    method: 'PUT',
+                    body: JSON.stringify({
+                        academicYear: selectedAcademicYear,
+                        teacherUserId: teacherId,
+                        cells: [{ grade: existing.grade, classNumber: existing.classNumber, dayOfWeek: day, period, clear: true }]
+                    })
+                });
+                await loadSpecialistTimetable();
+            } catch (error) {
+                alert(error.message || '지우지 못했습니다.');
+            }
+            return;
+        }
+
+        const grade = prompt('학년(1~6)을 입력하세요:');
+        if (!grade) return;
+        const classNumber = prompt('반을 입력하세요:');
+        if (!classNumber) return;
+        const subjectName = prompt('과목명을 입력하세요:', '');
+        if (subjectName === null) return;
+
+        try {
+            await api('/api/school-admin/specialist-timetable', {
+                method: 'PUT',
+                body: JSON.stringify({
+                    academicYear: selectedAcademicYear,
+                    teacherUserId: teacherId,
+                    cells: [{ grade: Number(grade), classNumber: Number(classNumber), dayOfWeek: day, period, subjectName }]
+                })
+            });
+            await loadSpecialistTimetable();
+        } catch (error) {
+            alert(error.message || '배정하지 못했습니다.');
+        }
+    }
+
+    if (specialistTeacherSelect) {
+        specialistTeacherSelect.addEventListener('change', loadSpecialistTimetable);
+    }
+
+    // --- Special Room Timetable (특별실별 시간표) ---
+    const roomNameInput = document.getElementById('roomNameInput');
+    const roomNameList = document.getElementById('roomNameList');
+    const loadRoomTimetableBtn = document.getElementById('loadRoomTimetableBtn');
+    const roomTimetableEmpty = document.getElementById('roomTimetableEmpty');
+    const roomTimetableContent = document.getElementById('roomTimetableContent');
+    const roomTimetableMatrixBody = document.getElementById('roomTimetableMatrixBody');
+    let roomTimetableData = {};
+    let currentRoomName = '';
+
+    async function loadRoomsList() {
+        if (!roomNameList) return;
+        try {
+            const res = await api(`/api/school-admin/rooms?academicYear=${selectedAcademicYear}`);
+            roomNameList.innerHTML = (res.rooms || []).map(r => `<option value="${escapeHtml(r)}"></option>`).join('');
+        } catch (error) { /* non-critical */ }
+    }
+
+    async function loadRoomTimetable() {
+        const roomName = roomNameInput.value.trim();
+        if (!roomName) {
+            if (roomTimetableEmpty) {
+                roomTimetableEmpty.hidden = false;
+                roomTimetableEmpty.textContent = '특별실 이름을 입력하세요.';
+            }
+            if (roomTimetableContent) roomTimetableContent.hidden = true;
+            return;
+        }
+        currentRoomName = roomName;
+        try {
+            const res = await api(`/api/school-admin/room-timetable?academicYear=${selectedAcademicYear}&room=${encodeURIComponent(roomName)}`);
+            roomTimetableData = {};
+            (res.timetable || []).forEach(row => {
+                roomTimetableData[`${row.day_of_week}_${row.period}`] = {
+                    grade: row.grade, classNumber: row.class_number, subjectName: row.subject_name, teacherUserId: row.teacher_user_id
+                };
+            });
+            if (roomTimetableEmpty) roomTimetableEmpty.hidden = true;
+            if (roomTimetableContent) roomTimetableContent.hidden = false;
+            renderGridMatrix(roomTimetableMatrixBody, roomTimetableData, handleRoomCellClick);
+            await loadRoomsList();
+        } catch (error) {
+            if (roomTimetableEmpty) {
+                roomTimetableEmpty.hidden = false;
+                roomTimetableEmpty.textContent = error.message;
+            }
+            if (roomTimetableContent) roomTimetableContent.hidden = true;
+        }
+    }
+
+    async function handleRoomCellClick(day, period) {
+        if (!currentRoomName) return;
+        const key = `${day}_${period}`;
+        const existing = roomTimetableData[key];
+
+        if (existing) {
+            if (!confirm(`${existing.grade}학년 ${existing.classNumber}반의 이 배정을 지울까요?`)) return;
+            try {
+                await api('/api/school-admin/room-timetable', {
+                    method: 'PUT',
+                    body: JSON.stringify({
+                        academicYear: selectedAcademicYear,
+                        room: currentRoomName,
+                        cells: [{ grade: existing.grade, classNumber: existing.classNumber, dayOfWeek: day, period, clear: true }]
+                    })
+                });
+                await loadRoomTimetable();
+            } catch (error) {
+                alert(error.message || '지우지 못했습니다.');
+            }
+            return;
+        }
+
+        const grade = prompt('학년(1~6)을 입력하세요:');
+        if (!grade) return;
+        const classNumber = prompt('반을 입력하세요:');
+        if (!classNumber) return;
+        const subjectName = prompt('과목명을 입력하세요 (선택 사항):', '') || '';
+
+        try {
+            await api('/api/school-admin/room-timetable', {
+                method: 'PUT',
+                body: JSON.stringify({
+                    academicYear: selectedAcademicYear,
+                    room: currentRoomName,
+                    cells: [{ grade: Number(grade), classNumber: Number(classNumber), dayOfWeek: day, period, subjectName }]
+                })
+            });
+            await loadRoomTimetable();
+        } catch (error) {
+            alert(error.message || '배정하지 못했습니다.');
+        }
+    }
+
+    if (loadRoomTimetableBtn) loadRoomTimetableBtn.addEventListener('click', loadRoomTimetable);
+
     function getWeeklyAllocationTotal(grade) {
         return weeklyAllocationData
             .filter(a => a.grade === grade)
@@ -1442,12 +1707,18 @@ document.addEventListener('DOMContentLoaded', () => {
         try {
             const res = await api(`/api/school-admin/master-timetable?academicYear=${selectedAcademicYear}&grade=${grade}&classNumber=${classNum}`);
             timetableMatrixData = {};
+            timetableMatrixLocks = {};
             (res.timetable || []).forEach(cell => {
-                timetableMatrixData[`${cell.day_of_week}_${cell.period}`] = cell.subject_name;
+                const key = `${cell.day_of_week}_${cell.period}`;
+                timetableMatrixData[key] = cell.subject_name;
+                if (cell.teacher_user_id || cell.room_name) {
+                    timetableMatrixLocks[key] = { teacherUserId: cell.teacher_user_id, roomName: cell.room_name };
+                }
             });
             renderTimetableMatrix();
         } catch (error) {
             timetableMatrixData = {};
+            timetableMatrixLocks = {};
             renderTimetableMatrix();
         }
     }
@@ -1518,9 +1789,12 @@ document.addEventListener('DOMContentLoaded', () => {
                 const allocated = getAllocatedPeriodCount(grade, day);
                 const isInactive = allocated !== null && period > allocated;
                 const sub = timetableMatrixData[`${day}_${period}`] || '-';
-                const tagHtml = sub !== '-' && sub !== '수업없음' ? `<span class="cell-subject-tag">${escapeHtml(sub)}</span>` : `<span style="color:var(--text-muted);">${sub}</span>`;
+                const lock = timetableMatrixLocks[`${day}_${period}`];
+                const lockBadge = lock ? `<div style="font-size:0.68rem; color:var(--primary);">${lock.teacherUserId ? '🎯전담' : ''}${lock.teacherUserId && lock.roomName ? ' · ' : ''}${lock.roomName ? `🚪${escapeHtml(lock.roomName)}` : ''}</div>` : '';
+                const tagHtml = (sub !== '-' && sub !== '수업없음' ? `<span class="cell-subject-tag">${escapeHtml(sub)}</span>` : `<span style="color:var(--text-muted);">${sub}</span>`) + lockBadge;
                 const inactiveAttrs = isInactive ? ' style="opacity:0.3; pointer-events:none;" title="이 요일의 배당 교시수를 초과했습니다"' : '';
-                cellsHtml += `<td class="timetable-cell" data-day="${day}" data-period="${period}"${inactiveAttrs}>${tagHtml}</td>`;
+                const lockAttrs = lock ? ' data-locked="true" title="전담교사별/특별실별 시간표에서 배정됨 - 클릭하면 지울 수 있습니다"' : '';
+                cellsHtml += `<td class="timetable-cell" data-day="${day}" data-period="${period}"${inactiveAttrs}${lockAttrs}>${tagHtml}</td>`;
             }
 
             tr.innerHTML = cellsHtml;
@@ -1534,10 +1808,35 @@ document.addEventListener('DOMContentLoaded', () => {
             cell.addEventListener('click', () => {
                 const day = cell.dataset.day;
                 const period = cell.dataset.period;
-                timetableMatrixData[`${day}_${period}`] = activePaletteSubject;
+                const key = `${day}_${period}`;
+                if (cell.dataset.locked === 'true') {
+                    clearLockedTimetableCell(Number(day), Number(period));
+                    return;
+                }
+                timetableMatrixData[key] = activePaletteSubject;
                 renderTimetableMatrix();
             });
         });
+    }
+
+    async function clearLockedTimetableCell(day, period) {
+        if (!confirm('이 시간은 전담교사별/특별실별 시간표에서 배정되었습니다. 여기서 지우면 그쪽 배정도 함께 사라집니다. 지울까요?')) return;
+        const grade = timetableGradeSelect.value;
+        const classNum = timetableClassSelect ? timetableClassSelect.value : 1;
+        try {
+            await api('/api/school-admin/master-timetable', {
+                method: 'POST',
+                body: JSON.stringify({
+                    academicYear: selectedAcademicYear,
+                    grade,
+                    classNumber: classNum,
+                    cells: [{ dayOfWeek: day, period, clearSpecialist: true }]
+                })
+            });
+            await loadMasterTimetable();
+        } catch (error) {
+            alert(error.message || '지우지 못했습니다.');
+        }
     }
 
     async function saveMasterTimetable() {

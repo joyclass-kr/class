@@ -220,15 +220,11 @@
 (() => {
     "use strict";
 
-    const IS_LOCAL = ["localhost", "127.0.0.1"].includes(location.hostname);
-    const BASE = IS_LOCAL ? "http://localhost:3000" : "https://songhwaplay.onrender.com";
-
     let currentDate = new Date();
 
     async function api(path, opts = {}) {
-        const res = await fetch(BASE + path, {
+        const res = await fetch(path, {
             ...opts,
-            credentials: "include",
             headers: { "Content-Type": "application/json", ...(opts.headers || {}) }
         });
         const data = await res.json().catch(() => ({}));

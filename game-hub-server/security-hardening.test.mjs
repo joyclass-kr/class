@@ -61,12 +61,10 @@ test("server applies same-origin controls and baseline security headers", () => 
   assert.match(serverSource, /Cache-Control", "no-store"/);
 });
 
-test("password verification routes share the 30-failure limiter", () => {
+test("Google sign-in is rate-limited by the 30-failure limiter (the only login path -- there is no password verification route to share it with)", () => {
   assert.match(platformSource, /const AUTH_FAILURE_LIMIT = 30/);
   assert.match(platformSource, /const AUTH_FAILURE_WINDOW_MS = 15 \* 60 \* 1000/);
-  for (const scope of ["google-sign-in", "teacher-claim", "student-join", "student-password"]) {
-    assert.match(platformSource, new RegExp(`authFailureLimiter\\.enforce\\(req, "${scope}"`));
-  }
-  assert.match(platformSource, /INVALID_STUDENT_DETAILS/);
+  assert.match(platformSource, /authFailureLimiter\.enforce\(req, "google-sign-in"/);
+  assert.doesNotMatch(platformSource, /"student-password"/);
   assert.match(platformSource, /Retry-After/);
 });

@@ -1,0 +1,46 @@
+import assert from "node:assert/strict";
+import { readFile } from "node:fs/promises";
+import test from "node:test";
+
+const serverSource = await readFile(new URL("./classroom-platform.js", import.meta.url), "utf8");
+const schoolRosterSource = await readFile(new URL("../classtools/school-roster.html", import.meta.url), "utf8");
+const schoolEventsSource = await readFile(new URL("../classtools/school-events.html", import.meta.url), "utf8");
+
+function handlerBody(source, routeSignature) {
+  const start = source.indexOf(routeSignature);
+  assert.ok(start !== -1, `Route not found: ${routeSignature}`);
+  const end = source.indexOf("\n  }));", start);
+  assert.ok(end !== -1, `Route handler close not found for: ${routeSignature}`);
+  return source.slice(start, end);
+}
+
+test("GET /school/teachers returns each teacher's subject/room so the specialist-timetable picker has something to show", () => {
+  const body = handlerBody(serverSource, `router.get("/school/teachers"`);
+  assert.match(body, /subject_name, room_name/);
+  assert.match(body, /subjectName: r\.subject_name/);
+  assert.match(body, /roomName: r\.room_name/);
+});
+
+test("PUT /school/teachers persists subjectName/roomName on both the update and insert branches, and blanks them for admin rows", () => {
+  const body = handlerBody(serverSource, `router.put("/school/teachers"`);
+  assert.match(body, /subjectName: t\?\.subjectName \? String\(t\.subjectName\)/);
+  assert.match(body, /subject_name = \$6, room_name = \$7/);
+  assert.match(body, /finalSubject = isAdminRow \? null : t\.subjectName/);
+  assert.match(body, /VALUES \(\$1, \$2, 'OAUTH_ONLY', \$3, \$4, \$5, \$6, \$7, \$8\)/);
+});
+
+test("school-roster.html's teacher table lets an admin type each teacher's subject and default special room", () => {
+  assert.match(schoolRosterSource, /담당 과목 \(전담\)/);
+  assert.match(schoolRosterSource, /기본 특별실/);
+  assert.match(schoolRosterSource, /updateTeacherField\(\$\{idx\}, 'subjectName', this\.value\)/);
+  assert.match(schoolRosterSource, /updateTeacherField\(\$\{idx\}, 'roomName', this\.value\)/);
+});
+
+test("school-roster.html and school-events.html no longer call a hardcoded production host from the browser", () => {
+  for (const [name, source] of [
+    ["school-roster.html", schoolRosterSource],
+    ["school-events.html", schoolEventsSource],
+  ]) {
+    assert.doesNotMatch(source, /onrender\.com|localhost:\d+/, `${name} should use relative fetch paths`);
+  }
+});

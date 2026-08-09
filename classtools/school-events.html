@@ -240,16 +240,13 @@
 (() => {
     "use strict";
 
-    const IS_LOCAL = ["localhost", "127.0.0.1"].includes(location.hostname);
-    const BASE = IS_LOCAL ? "http://localhost:3000" : "https://songhwaplay.onrender.com";
     const WEEKDAY_NAMES = ["일", "월", "화", "수", "목", "금", "토"];
 
     let currentMonth = new Date().toISOString().slice(0, 7); // YYYY-MM
 
     async function api(path, opts = {}) {
-        const res = await fetch(BASE + path, {
+        const res = await fetch(path, {
             ...opts,
-            credentials: "include",
             headers: { "Content-Type": "application/json", ...(opts.headers || {}) }
         });
         const data = await res.json().catch(() => ({}));

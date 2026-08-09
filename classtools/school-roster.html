@@ -527,6 +527,8 @@
                             <th>구글 계정</th>
                             <th style="width:80px;">담당 학년</th>
                             <th style="width:80px;">담당 반</th>
+                            <th style="width:110px;">담당 과목 (전담)</th>
+                            <th style="width:110px;">기본 특별실</th>
                             <th style="width:110px;">직책 (자동)</th>
                             <th style="width:90px;">연동 상태</th>
                             <th style="width:60px;">관리</th>
@@ -633,9 +635,6 @@
 (() => {
     "use strict";
 
-    const IS_LOCAL = ["localhost", "127.0.0.1"].includes(location.hostname);
-    const BASE = IS_LOCAL ? "http://localhost:3000" : "https://songhwaplay.onrender.com";
-
     let currentYear = new Date().getFullYear();
     let schoolSettings = { clubs: [], afterschool: [], shuttleSlots: [] };
     let allStudents = [];
@@ -644,9 +643,8 @@
 
     // ─── API ───────────────────────────────────────────────────
     async function api(path, opts = {}) {
-        const res = await fetch(BASE + path, {
+        const res = await fetch(path, {
             ...opts,
-            credentials: "include",
             headers: { "Content-Type": "application/json", ...(opts.headers || {}) }
         });
         const data = await res.json().catch(() => ({}));
@@ -701,7 +699,7 @@
         if (!tbody) return;
 
         if (allTeachers.length === 0) {
-            tbody.innerHTML = `<tr><td colspan="7" class="no-data">등록된 교사 명단이 없습니다. '📥 붙여넣기로 입력' 또는 '+ 교사 추가'로 등록하세요.</td></tr>`;
+            tbody.innerHTML = `<tr><td colspan="9" class="no-data">등록된 교사 명단이 없습니다. '📥 붙여넣기로 입력' 또는 '+ 교사 추가'로 등록하세요.</td></tr>`;
             return;
         }
 
@@ -731,6 +729,12 @@
                         <td>
                             <input class="roster-cell-input" style="width:100%;border:1px solid #e5e7eb;background:#f3f4f6;color:#9ca3af;cursor:not-allowed;border-radius:4px;padding:3px 6px;text-align:center;" value="" placeholder="-" readonly title="학교 관리자는 담임 지정을 할 수 없습니다">
                         </td>
+                        <td>
+                            <input class="roster-cell-input" style="width:100%;border:1px solid #e5e7eb;background:#f3f4f6;color:#9ca3af;cursor:not-allowed;border-radius:4px;padding:3px 6px;text-align:center;" value="" placeholder="-" readonly title="학교 관리자는 과목을 지정할 수 없습니다">
+                        </td>
+                        <td>
+                            <input class="roster-cell-input" style="width:100%;border:1px solid #e5e7eb;background:#f3f4f6;color:#9ca3af;cursor:not-allowed;border-radius:4px;padding:3px 6px;text-align:center;" value="" placeholder="-" readonly title="학교 관리자는 특별실을 지정할 수 없습니다">
+                        </td>
                         <td style="text-align:center;">${roleBadge}</td>
                         <td style="text-align:center;">${linkedBadge}</td>
                         <td style="text-align:center;">
@@ -754,6 +758,12 @@
                     <td>
                         <input class="roster-cell-input" style="width:100%;border:1px solid #d1d5db;border-radius:4px;padding:3px 6px;" value="${esc(t.classNumber ?? '')}" placeholder="반" onchange="updateTeacherField(${idx}, 'classNumber', this.value)">
                     </td>
+                    <td>
+                        <input class="roster-cell-input" style="width:100%;border:1px solid #d1d5db;border-radius:4px;padding:3px 6px;" value="${esc(t.subjectName ?? '')}" placeholder="예: 음악" onchange="updateTeacherField(${idx}, 'subjectName', this.value)">
+                    </td>
+                    <td>
+                        <input class="roster-cell-input" style="width:100%;border:1px solid #d1d5db;border-radius:4px;padding:3px 6px;" value="${esc(t.roomName ?? '')}" placeholder="예: 음악실" onchange="updateTeacherField(${idx}, 'roomName', this.value)">
+                    </td>
                     <td style="text-align:center;">${roleBadge}</td>
                     <td style="text-align:center;">${linkedBadge}</td>
                     <td style="text-align:center;">
@@ -772,7 +782,7 @@
     };
 
     window.addTeacherRow = function() {
-        allTeachers.push({ name: "", email: "", grade: "", classNumber: "", linked: false });
+        allTeachers.push({ name: "", email: "", grade: "", classNumber: "", subjectName: "", roomName: "", linked: false });
         renderTeacherRosterTable();
         setStatus("teacherRosterStatus", "새 교사 행이 추가되었습니다. 내용을 작성 후 '💾 저장' 버튼을 누르세요.");
     };
@@ -813,7 +823,9 @@
                     name: cleanName,
                     email: cleanEmail,
                     grade: g,
-                    classNumber: c
+                    classNumber: c,
+                    subjectName: t.subjectName ? String(t.subjectName).trim() : null,
+                    roomName: t.roomName ? String(t.roomName).trim() : null
                 };
             }).filter(t => t.name);
 

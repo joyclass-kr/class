@@ -3,26 +3,35 @@ import { readFile } from "node:fs/promises";
 import test from "node:test";
 
 const serverSource = await readFile(new URL("./classroom-platform.js", import.meta.url), "utf8");
-const adminPage = await readFile(new URL("../admin/students.html", import.meta.url), "utf8");
+const studentsPage = await readFile(new URL("../classtools/students.html", import.meta.url), "utf8");
 
-test("student access reset is restricted to administrators and transactional", () => {
-  assert.match(serverSource, /router\.post\("\/admin\/students\/:studentId\/reset-access"/);
-  assert.match(serverSource, /const admin = await requireAdmin\(req\)/);
-  assert.match(serverSource, /WHERE id = \$1\s+FOR UPDATE/);
-  assert.match(serverSource, /await client\.query\("BEGIN"\)/);
-  assert.match(serverSource, /await client\.query\("COMMIT"\)/);
+function handlerBody(source, routeSignature) {
+  const start = source.indexOf(routeSignature);
+  assert.ok(start !== -1, `Route not found: ${routeSignature}`);
+  const end = source.indexOf("\n  }));", start);
+  assert.ok(end !== -1, `Route handler close not found for: ${routeSignature}`);
+  return source.slice(start, end);
+}
+
+test("student access reset is a teacher action (the homeroom teacher unlinking their own student), scoped and transactional", () => {
+  const body = handlerBody(serverSource, `router.post("/teacher/students/:studentId/reset-access"`);
+  assert.match(body, /await requireTeacher\(req\)/);
+  assert.match(body, /WHERE s\.id = \$1 AND c\.teacher_user_id = \$2/);
+  assert.match(body, /FOR UPDATE/);
+  assert.match(body, /await client\.query\("BEGIN"\)/);
+  assert.match(body, /await client\.query\("COMMIT"\)/);
 });
 
-test("reset revokes sessions, unlinks identity, clears optional birthday, and hashes the initial password", () => {
-  assert.match(serverSource, /DELETE FROM classroom_sessions WHERE user_id = \$1/);
-  assert.match(serverSource, /SET user_id = NULL, claimed_at = NULL/);
-  assert.match(serverSource, /birthday_mmdd = NULL, birthday_visible = FALSE/);
-  assert.match(serverSource, /hashStudentPassword\(DEFAULT_STUDENT_PASSWORD\)/);
-  assert.match(serverSource, /INSERT INTO classroom_student_access_resets/);
+test("reset revokes the session and unlinks the Google account, and never touches a password (there is none)", () => {
+  const body = handlerBody(serverSource, `router.post("/teacher/students/:studentId/reset-access"`);
+  assert.match(body, /DELETE FROM classroom_sessions WHERE user_id = \$1/);
+  assert.match(body, /SET user_id = NULL, claimed_at = NULL/);
+  assert.match(body, /birthday_mmdd = NULL, birthday_visible = FALSE/);
+  assert.match(body, /INSERT INTO classroom_student_access_resets/);
+  assert.doesNotMatch(body, /password/i);
 });
 
-test("admin recovery screen explains irreversible effects before confirmation", () => {
-  assert.match(adminPage, /되돌릴 수 없습니다/);
-  assert.match(adminPage, /if\(!confirm\(message\)\)return/);
-  assert.match(adminPage, /초기 비밀번호 재발급/);
+test("the roster screen describes this as unlinking a Google account, not resetting a password", () => {
+  assert.match(studentsPage, /Google 계정 연결 해제/);
+  assert.doesNotMatch(studentsPage, /비밀번호/);
 });

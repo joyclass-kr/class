@@ -28,6 +28,7 @@ const sandbox = {
     if (specifier === "google-auth-library") return { OAuth2Client: class {} };
     if (specifier === "pg") return { Pool: class {} };
     if (specifier === "./reading-bank") return { createReadingBank: () => ({ router: {} }) };
+    if (specifier === "./metacognition") return { createMetacognition: () => ({ router: {}, initialize: async () => {} }) };
     throw new Error(`Unexpected dependency: ${specifier}`);
   }
 };

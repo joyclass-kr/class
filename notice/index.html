@@ -423,6 +423,15 @@
                 </form>
             </div>
         </section>
+
+        <!-- Tab 5: 내가 낸 신청 내역 -->
+        <section id="tab-my-submissions" class="hidden">
+            <h2 style="font-size:18px; margin:0 0 14px;">📋 내가 낸 신청 내역</h2>
+            <div class="card">
+                <p style="font-size:13px; color:var(--muted); margin:0 0 14px;">결석계·체험학습 신청서가 담임선생님께 승인됐는지 여기서 확인하세요. (당일 출결 예고는 승인 절차가 없어 표시되지 않습니다.)</p>
+                <div id="mySubmissionsList">불러오는 중…</div>
+            </div>
+        </section>
     </main>
 
     <!-- Bottom Navigation Bar -->
@@ -442,6 +451,10 @@
         <button class="nav-item" onclick="switchTab('exp-learning', this)">
             <span class="icon">✈️</span>
             <span>체험학습</span>
+        </button>
+        <button class="nav-item" onclick="switchTab('my-submissions', this)">
+            <span class="icon">📋</span>
+            <span>신청 내역</span>
         </button>
     </nav>
 
@@ -859,6 +872,50 @@
             }
 
             loadNotices();
+            loadMySubmissions();
+        }
+
+        function escNoticeHtml(str) {
+            return String(str ?? '').replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;').replace(/"/g, '&quot;');
+        }
+
+        async function loadMySubmissions() {
+            const listEl = document.getElementById('mySubmissionsList');
+            if (!listEl) return;
+            try {
+                const res = await fetch('/api/notice/my-submissions');
+                if (!res.ok) { listEl.textContent = '불러오지 못했습니다.'; return; }
+                const data = await res.json();
+                const submissions = data.submissions || [];
+
+                if (submissions.length === 0) {
+                    listEl.innerHTML = '<div style="text-align:center; color:var(--muted); padding:20px 0;">아직 낸 신청서가 없습니다.</div>';
+                    return;
+                }
+
+                listEl.innerHTML = submissions.map(s => {
+                    const typeLabel = s.type === 'absenceNote' ? '📝 결석계' : '✈️ 체험학습';
+                    const isApproved = s.status === 'approved';
+                    const statusBadge = isApproved
+                        ? '<span class="tag" style="background:#1f4730; color:#7CFFB2;">✅ 승인됨</span>'
+                        : '<span class="tag" style="background:#4a3a1f; color:#ffcf7c;">⏳ 검토 중</span>';
+                    const period = s.startDate === s.endDate
+                        ? escNoticeHtml(s.startDate)
+                        : `${escNoticeHtml(s.startDate)} ~ ${escNoticeHtml(s.endDate)}`;
+                    return `
+                        <div class="card">
+                            <div class="card-title">
+                                <span>${typeLabel} · ${escNoticeHtml(s.studentName)}</span>
+                                ${statusBadge}
+                            </div>
+                            <p style="color:var(--muted); font-size:13px; margin:6px 0 0;">${period} · ${escNoticeHtml(s.detail || '')}</p>
+                        </div>
+                    `;
+                }).join('');
+            } catch (err) {
+                listEl.textContent = '불러오지 못했습니다.';
+                console.error('Failed to load my submissions:', err);
+            }
         }
 
         async function checkAuthSession() {

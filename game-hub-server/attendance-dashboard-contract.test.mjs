@@ -4,7 +4,9 @@ import test from "node:test";
 
 const serverSource = await readFile(new URL("./classroom-platform.js", import.meta.url), "utf8");
 const dashboardSource = await readFile(new URL("../classtools/dashboard.html", import.meta.url), "utf8");
-const schoolAdminAppSource = await readFile(new URL("../schooladmin/app.js", import.meta.url), "utf8");
+// The schoolwide attendance board used to be a tab inside schooladmin/app.js;
+// it now lives in its own page, linked from classtools/index.html.
+const attendanceDashboardSource = await readFile(new URL("../classtools/attendance-dashboard.html", import.meta.url), "utf8");
 const noticeIndexSource = await readFile(new URL("../notice/index.html", import.meta.url), "utf8");
 
 function handlerBody(source, routeSignature) {
@@ -36,9 +38,14 @@ test("GET /school-admin/dashboard counts approved experiential learning applicat
   assert.match(body, /experientialApps: experientialAppsRes\.rows/);
 });
 
-test("school-admin dashboard rendering folds experiential learning applications into the absence count", () => {
-  assert.match(schoolAdminAppSource, /renderDashboard\(res\.roster, res\.notices, res\.formalNotes, res\.experientialApps\)/);
-  assert.match(schoolAdminAppSource, /function renderDashboard\(roster, notices, formalNotes, experientialApps\)/);
+test("the schoolwide attendance dashboard page folds experiential learning applications into the absence count", () => {
+  assert.match(attendanceDashboardSource, /renderDashboard\(res\.roster, res\.notices, res\.formalNotes, res\.experientialApps\)/);
+  assert.match(attendanceDashboardSource, /function renderDashboard\(roster, notices, formalNotes, experientialApps\)/);
+});
+
+test("the schoolwide attendance dashboard page calls the API with a relative path, not a hardcoded host", () => {
+  assert.doesNotMatch(attendanceDashboardSource, /onrender\.com|localhost:\d+/);
+  assert.match(attendanceDashboardSource, /fetch\(path,/);
 });
 
 test("the teacher dashboard's daily alert badges include approved absence notes and experiential learning applications, not just quick notices", () => {
@@ -70,8 +77,8 @@ test("the parent-facing same-day attendance notice (출결 예고) covers all th
   const quickAbsenceBlock = dashboardBody.slice(0, dashboardBody.indexOf('"/api/teacher/absence-notes"'));
   assert.doesNotMatch(quickAbsenceBlock, /noticeType\s*===/);
 
-  // The school-admin dashboard must bucket all three notice types, not just 결석.
+  // The schoolwide attendance dashboard must bucket all three notice types, not just 결석.
   for (const type of ["결석", "지각", "조퇴"]) {
-    assert.match(schoolAdminAppSource, new RegExp(`n\\.notice_type === '${type}'`));
+    assert.match(attendanceDashboardSource, new RegExp(`n\\.notice_type === "${type}"`));
   }
 });

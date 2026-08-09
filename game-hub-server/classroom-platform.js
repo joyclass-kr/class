@@ -198,12 +198,6 @@ function hashSessionToken(token) {
   return crypto.createHash("sha256").update(token).digest("hex");
 }
 
-// Legacy stub — password system has been removed; this always returns null.
-// References remain in old classroom_students and legacy teacher APIs; they store null.
-function hashStudentPassword(_password) {
-  return null;
-}
-
 function makeJoinCode() {
   const bytes = crypto.randomBytes(6);
   let code = "";
@@ -942,6 +936,19 @@ function createClassroomPlatform(options = {}) {
         updated_at TIMESTAMPTZ NOT NULL DEFAULT NOW(),
         UNIQUE (school_id, academic_year, grade, class_number, day_of_week, period)
       )`,
+      `ALTER TABLE school_master_timetable
+        ADD COLUMN IF NOT EXISTS teacher_user_id BIGINT REFERENCES classroom_users(id) ON DELETE SET NULL`,
+      `ALTER TABLE school_master_timetable
+        ADD COLUMN IF NOT EXISTS room_name TEXT`,
+      // 전담교사별/특별실별 시간표는 이 표를 다른 시점(교사 기준/방 기준)으로 보고 쓰는
+      // 화면일 뿐 별도 저장소가 아니다 -- 같은 교사·같은 방이 같은 시간에 두 반에
+      // 겹쳐 배정되는 걸 DB 제약으로 원천 차단한다.
+      `CREATE UNIQUE INDEX IF NOT EXISTS school_master_timetable_teacher_slot_idx
+        ON school_master_timetable (school_id, academic_year, teacher_user_id, day_of_week, period)
+        WHERE teacher_user_id IS NOT NULL`,
+      `CREATE UNIQUE INDEX IF NOT EXISTS school_master_timetable_room_slot_idx
+        ON school_master_timetable (school_id, academic_year, room_name, day_of_week, period)
+        WHERE room_name IS NOT NULL`,
       `CREATE TABLE IF NOT EXISTS classroom_teacher_dashboard_settings (
         id BIGSERIAL PRIMARY KEY,
         user_id BIGINT NOT NULL UNIQUE REFERENCES classroom_users(id) ON DELETE CASCADE,
@@ -1852,9 +1859,9 @@ function createClassroomPlatform(options = {}) {
         `UPDATE classroom_students
          SET user_id = NULL, claimed_at = NULL,
              birthday_mmdd = NULL, birthday_visible = FALSE,
-             birth_date = NULL, password_hash = $2, updated_at = NOW()
+             birth_date = NULL, updated_at = NOW()
          WHERE id = $1`,
-        [student.id, hashStudentPassword(DEFAULT_STUDENT_PASSWORD)]
+        [student.id]
       );
       await client.query(
         `INSERT INTO classroom_student_access_resets
@@ -1863,7 +1870,7 @@ function createClassroomPlatform(options = {}) {
         [student.id, student.class_id, student.student_number, student.roster_name, student.user_id, req.user.id]
       );
       await client.query("COMMIT");
-      res.json({ ok: true, studentId: String(student.id), initialPassword: DEFAULT_STUDENT_PASSWORD });
+      res.json({ ok: true, studentId: String(student.id) });
     } catch (error) {
       await client.query("ROLLBACK");
       throw error;
@@ -2691,8 +2698,7 @@ function createClassroomPlatform(options = {}) {
               s.student_email, s.guardian1_email, s.guardian2_email,
               s.user_id IS NOT NULL AS student_linked,
               EXISTS(SELECT 1 FROM classroom_users u WHERE LOWER(u.email) = LOWER(s.guardian1_email)) AS guardian1_linked,
-              EXISTS(SELECT 1 FROM classroom_users u WHERE LOWER(u.email) = LOWER(s.guardian2_email)) AS guardian2_linked,
-              FALSE AS password_configured
+              EXISTS(SELECT 1 FROM classroom_users u WHERE LOWER(u.email) = LOWER(s.guardian2_email)) AS guardian2_linked
        FROM school_students s
        WHERE s.school_id = $1 AND s.academic_year = $2 AND s.grade = $3 AND s.class_number = $4
        UNION ALL
@@ -2702,8 +2708,7 @@ function createClassroomPlatform(options = {}) {
               s.student_email, s.guardian1_email, s.guardian2_email,
               s.user_id IS NOT NULL AS student_linked,
               EXISTS(SELECT 1 FROM classroom_users u WHERE LOWER(u.email) = LOWER(s.guardian1_email)) AS guardian1_linked,
-              EXISTS(SELECT 1 FROM classroom_users u WHERE LOWER(u.email) = LOWER(s.guardian2_email)) AS guardian2_linked,
-              s.password_hash IS NOT NULL AS password_configured
+              EXISTS(SELECT 1 FROM classroom_users u WHERE LOWER(u.email) = LOWER(s.guardian2_email)) AS guardian2_linked
        FROM classroom_students s
        WHERE s.class_id = $5
          AND NOT EXISTS (
@@ -2743,8 +2748,7 @@ function createClassroomPlatform(options = {}) {
           guardian2Email: student.guardian2_email || "",
           studentLinked: student.student_linked,
           guardian1Linked: student.guardian1_linked,
-          guardian2Linked: student.guardian2_linked,
-          passwordConfigured: student.password_configured
+          guardian2Linked: student.guardian2_linked
         }))
       }
     });
@@ -2913,14 +2917,13 @@ function createClassroomPlatform(options = {}) {
         [classroom.id, numbers]
       );
       const existingPasswordsResult = await client.query(
-        `SELECT student_number, password_hash, user_id, birthday_mmdd, birthday_visible, avatar_key
+        `SELECT student_number, user_id, birthday_mmdd, birthday_visible, avatar_key
          FROM classroom_students
          WHERE class_id = $1 AND student_number = ANY($2::TEXT[])`,
         [classroom.id, numbers]
       );
       const existingPasswords = new Map(
         existingPasswordsResult.rows.map((student) => [student.student_number, {
-          passwordHash: student.password_hash,
           claimed: Boolean(student.user_id),
           birthdayMmdd: student.birthday_mmdd,
           birthdayVisible: student.birthday_visible === true,
@@ -2947,7 +2950,6 @@ function createClassroomPlatform(options = {}) {
 
       for (const student of cleanStudents) {
         const existingPassword = existingPasswords.get(student.number);
-        const passwordHash = existingPassword?.passwordHash || hashStudentPassword(DEFAULT_STUDENT_PASSWORD);
         const avatarKey = existingPassword?.avatarKey || pickRandomAvailableAvatar(avatarUsageCounts, maximumAvatarUses);
         if (!existingPassword?.avatarKey) {
           avatarUsageCounts.set(avatarKey, Number(avatarUsageCounts.get(avatarKey) || 0) + 1);
@@ -2955,8 +2957,8 @@ function createClassroomPlatform(options = {}) {
 
         await client.query(
           `INSERT INTO classroom_students
-            (class_id, student_number, roster_name, gender, birthday_mmdd, birthday_visible, birth_date, avatar_key, password_hash, student_email, guardian1_email, guardian2_email)
-           VALUES ($1, $2, $3, $4, $5, $6, NULL, $7, $8, $9, $10, $11)
+            (class_id, student_number, roster_name, gender, birthday_mmdd, birthday_visible, birth_date, avatar_key, student_email, guardian1_email, guardian2_email)
+           VALUES ($1, $2, $3, $4, $5, $6, NULL, $7, $8, $9, $10)
            ON CONFLICT (class_id, student_number) DO UPDATE SET
              roster_name = EXCLUDED.roster_name,
              gender = EXCLUDED.gender,
@@ -2964,13 +2966,12 @@ function createClassroomPlatform(options = {}) {
              birthday_visible = EXCLUDED.birthday_visible,
              birth_date = NULL,
              avatar_key = COALESCE(classroom_students.avatar_key, EXCLUDED.avatar_key),
-             password_hash = EXCLUDED.password_hash,
              student_email = EXCLUDED.student_email,
              guardian1_email = EXCLUDED.guardian1_email,
              guardian2_email = EXCLUDED.guardian2_email,
              updated_at = NOW()`,
           [classroom.id, student.number, student.name, student.gender,
-           existingPassword?.birthdayMmdd || null, existingPassword?.birthdayVisible || false, avatarKey, passwordHash,
+           existingPassword?.birthdayMmdd || null, existingPassword?.birthdayVisible || false, avatarKey,
            student.studentEmail || null, student.guardian1Email || null, student.guardian2Email || null]
         );
       }
@@ -3318,17 +3319,23 @@ function createClassroomPlatform(options = {}) {
     );
 
     const filtered = noticesRes.rows.filter(n => {
-      if (!n.school_id || !schoolId || String(n.school_id) === String(schoolId)) {
-        if (n.target_type === 'all') return true;
-        if (n.target_type === 'grade' && Number(n.target_grade) === Number(grade)) return true;
-        if (n.target_type === 'class' && Number(n.target_grade) === Number(grade) && Number(n.target_class_number) === Number(classNumber)) return true;
-        if (n.target_type === 'students' && Number(n.target_grade) === Number(grade) && Number(n.target_class_number) === Number(classNumber)) {
-          if (!n.target_student_numbers || !studentNumber) return true;
-          const nums = String(n.target_student_numbers).split(',').map(s => s.trim());
-          return nums.includes(String(studentNumber));
-        }
+      // Deny by default: a notice is only visible once its targeting actually
+      // matches this viewer. (This used to fall through to `return true` for
+      // any unmatched case, which leaked every notice -- including ones aimed
+      // at a different school -- to every viewer.)
+      if (n.school_id && schoolId && String(n.school_id) !== String(schoolId)) return false;
+      if (n.target_type === 'all') return true;
+      if (n.target_type === 'grade') return Number(n.target_grade) === Number(grade);
+      if (n.target_type === 'class') {
+        return Number(n.target_grade) === Number(grade) && Number(n.target_class_number) === Number(classNumber);
       }
-      return true;
+      if (n.target_type === 'students') {
+        if (Number(n.target_grade) !== Number(grade) || Number(n.target_class_number) !== Number(classNumber)) return false;
+        if (!n.target_student_numbers || !studentNumber) return true;
+        const nums = String(n.target_student_numbers).split(',').map(s => s.trim());
+        return nums.includes(String(studentNumber));
+      }
+      return false;
     });
 
     res.json({
@@ -3348,17 +3355,14 @@ function createClassroomPlatform(options = {}) {
   // Resolve which student a notice submission is for. Logged-in parents are trusted via
   // their session membership; anonymous submissions must match a real roster entry so
   // arbitrary school/grade/class/student combinations can't be injected.
+  // Verifies the signed-in caller is actually this student's own account or one of
+  // their registered guardian accounts before accepting a submission on that
+  // student's behalf. (Previously gated on `user?.membership`, a property
+  // sessionUser() never actually sets -- every submission silently fell through
+  // to trusting whatever schoolId/grade/classNumber/studentNumber the client
+  // sent, with no check that the signed-in account had any relationship to
+  // that student at all.)
   async function resolveNoticeStudent(user, body) {
-    if (user?.membership) {
-      return {
-        schoolId: user.membership.schoolId,
-        grade: user.membership.grade,
-        classNumber: user.membership.classNumber,
-        studentNumber: String(user.membership.studentNumber || ""),
-        studentName: String(user.membership.name || "학생").trim()
-      };
-    }
-
     const schoolId = Number(body?.schoolId);
     const grade = Number(body?.grade);
     const classNumber = Number(body?.classNumber);
@@ -3369,17 +3373,34 @@ function createClassroomPlatform(options = {}) {
     }
 
     const rosterRes = await pool.query(
-      `SELECT roster_name FROM school_students
+      `SELECT roster_name, student_email, guardian1_email, guardian2_email
+       FROM school_students
        WHERE school_id = $1 AND grade = $2 AND class_number = $3 AND student_number = $4
-       ORDER BY academic_year DESC
+       UNION ALL
+       SELECT s.roster_name, s.student_email, s.guardian1_email, s.guardian2_email
+       FROM classroom_students s
+       JOIN classroom_classes c ON c.id = s.class_id
+       WHERE c.school_id = $1 AND c.grade = $2 AND c.class_number = $3 AND s.student_number = $4
        LIMIT 1`,
       [schoolId, grade, classNumber, studentNumber]
     );
-    if (!rosterRes.rows[0]) {
+    const row = rosterRes.rows[0];
+    if (!row) {
       throw new HttpError(400, "STUDENT_NOT_FOUND", "입력하신 학년/반/번호와 일치하는 학생을 찾을 수 없습니다.");
     }
 
-    return { schoolId, grade, classNumber, studentNumber, studentName: rosterRes.rows[0].roster_name };
+    if (!user) {
+      throw new HttpError(401, "SIGN_IN_REQUIRED", "제출하려면 로그인이 필요합니다.");
+    }
+    const email = String(user.email || "").toLowerCase();
+    const isThisStudent = row.student_email && String(row.student_email).toLowerCase() === email;
+    const isGuardian = (row.guardian1_email && String(row.guardian1_email).toLowerCase() === email)
+      || (row.guardian2_email && String(row.guardian2_email).toLowerCase() === email);
+    if (!isThisStudent && !isGuardian) {
+      throw new HttpError(403, "NOT_AUTHORIZED_FOR_STUDENT", "본인 또는 보호자로 등록된 구글 계정으로 로그인해야 제출할 수 있습니다.");
+    }
+
+    return { schoolId, grade, classNumber, studentNumber, studentName: row.roster_name };
   }
 
   // 3. Quick Attendance Alert (Parent -> Teacher)
@@ -3575,6 +3596,73 @@ function createClassroomPlatform(options = {}) {
     res.status(201).json({ ok: true, id: String(insertRes.rows[0].id) });
   }));
 
+  // 학부모/학생이 낸 결석계·체험학습 신청서가 승인됐는지 확인할 방법이 없었다 --
+  // 제출 후 조용히 잠기는 문제. 로그인한 학생 본인, 또는 학부모라면 연결된
+  // 자녀 전원의 최근 제출 내역과 상태(검토 중/승인됨)를 함께 보여준다.
+  router.get("/notice/my-submissions", asyncRoute(async (req, res) => {
+    const user = await sessionUser(req);
+    if (!user) return res.json({ submissions: [] });
+
+    let targets = [];
+    const membership = await studentMembership(user.id);
+    if (membership) {
+      targets = [{
+        schoolId: null, grade: membership.grade, classNumber: membership.classNumber,
+        studentNumber: membership.studentNumber, studentName: membership.studentName
+      }];
+      // studentMembership() doesn't return school_id -- look it up once.
+      const schoolRes = await pool.query(
+        `SELECT s.id FROM school_students s WHERE s.user_id = $1
+         UNION ALL
+         SELECT sc.id FROM classroom_students s
+          JOIN classroom_classes c ON c.id = s.class_id JOIN classroom_schools sc ON sc.id = c.school_id
+          WHERE s.user_id = $1
+         LIMIT 1`,
+        [user.id]
+      );
+      if (schoolRes.rows[0]) targets[0].schoolId = schoolRes.rows[0].id;
+    } else {
+      const children = await getGuardianChildren(user);
+      targets = children.map(c => ({
+        schoolId: c.schoolId, grade: c.grade, classNumber: c.classNumber,
+        studentNumber: c.studentNumber, studentName: c.studentName
+      }));
+    }
+    targets = targets.filter(t => t.schoolId && t.grade && t.classNumber && t.studentNumber);
+    if (targets.length === 0) return res.json({ submissions: [] });
+
+    const submissions = [];
+    for (const t of targets) {
+      const notesRes = await pool.query(
+        `SELECT id, start_date, end_date, reason_type, status, created_at
+         FROM classroom_absence_notes
+         WHERE school_id = $1 AND grade = $2 AND class_number = $3 AND student_number = $4
+         ORDER BY created_at DESC LIMIT 20`,
+        [t.schoolId, t.grade, t.classNumber, t.studentNumber]
+      );
+      notesRes.rows.forEach(r => submissions.push({
+        id: String(r.id), type: "absenceNote", studentName: t.studentName,
+        startDate: r.start_date, endDate: r.end_date, detail: r.reason_type,
+        status: r.status, createdAt: r.created_at
+      }));
+
+      const appsRes = await pool.query(
+        `SELECT id, start_date, end_date, location, status, created_at
+         FROM classroom_experiential_apps
+         WHERE school_id = $1 AND grade = $2 AND class_number = $3 AND student_number = $4
+         ORDER BY created_at DESC LIMIT 20`,
+        [t.schoolId, t.grade, t.classNumber, t.studentNumber]
+      );
+      appsRes.rows.forEach(r => submissions.push({
+        id: String(r.id), type: "experientialApp", studentName: t.studentName,
+        startDate: r.start_date, endDate: r.end_date, detail: r.location,
+        status: r.status, createdAt: r.created_at
+      }));
+    }
+    submissions.sort((a, b) => new Date(b.createdAt) - new Date(a.createdAt));
+    res.json({ submissions });
+  }));
+
   router.get("/teacher/experiential-apps", asyncRoute(async (req, res) => {
     const teacher = await requireTeacher(req);
     const appsRes = await pool.query(
@@ -3717,8 +3805,8 @@ function createClassroomPlatform(options = {}) {
     const scopeClause = isAdmin
       ? "d.school_id = $2"
       : `d.school_id = $2 AND EXISTS (
-           SELECT 1 FROM classroom_classes c
-           WHERE c.teacher_user_id = $3 AND c.grade = d.grade AND c.class_number = d.class_number
+           SELECT 1 FROM classroom_teachers t
+           WHERE t.user_id = $3 AND t.grade = d.grade AND t.class_number = d.class_number
          )`;
     const params = isAdmin ? [docId, teacherInfo.school_id] : [docId, teacherInfo.school_id, teacher.id];
 
@@ -4140,7 +4228,23 @@ function createClassroomPlatform(options = {}) {
        ORDER BY category, id`,
       [profile.school_id, year, grade]
     );
-    res.json({ hours: result.rows });
+
+    // 2022 개정 교육과정 기준시수는 학년군(1-2, 3-4, 5-6) 단위로 정해지므로, 각 군의
+    // 두 번째 학년(2/4/6)에서는 첫 번째 학년(작년, 한 학년 아래)에 이미 배정한 시수를
+    // 참고용으로 같이 보여준다. 편집이나 재계산에는 관여하지 않음 -- 순수 참고 정보.
+    let previousYear = null;
+    if (grade % 2 === 0 && grade > 1) {
+      const prevResult = await pool.query(
+        `SELECT subject_name, weekly_hours, annual_required_hours, category
+         FROM school_curriculum_hours
+         WHERE school_id = $1 AND academic_year = $2 AND grade = $3
+         ORDER BY category, id`,
+        [profile.school_id, year - 1, grade - 1]
+      );
+      previousYear = { academicYear: year - 1, grade: grade - 1, hours: prevResult.rows };
+    }
+
+    res.json({ hours: result.rows, previousYear });
   }));
 
   // Total weekly hours per grade (all subjects/changtae summed) — used to validate that
@@ -4332,7 +4436,7 @@ function createClassroomPlatform(options = {}) {
     const classNum = Number(req.query.classNumber || 0);
 
     const result = await pool.query(
-      `SELECT day_of_week, period, subject_name
+      `SELECT day_of_week, period, subject_name, teacher_user_id, room_name
        FROM school_master_timetable
        WHERE school_id = $1 AND academic_year = $2 AND grade = $3 AND class_number = $4`,
       [profile.school_id, year, grade, classNum]
@@ -4340,6 +4444,11 @@ function createClassroomPlatform(options = {}) {
     res.json({ timetable: result.rows });
   }));
 
+  // The class-side 기초시간표 view may only edit subject_name on cells that no
+  // specialist-teacher/special-room screen has claimed, and may only *clear*
+  // (never assign) a claimed cell -- creation happens only through
+  // PUT /school-admin/specialist-timetable and /room-timetable, which is the
+  // single source of truth that keeps a teacher/room from double-booking.
   router.post("/school-admin/master-timetable", asyncRoute(async (req, res) => {
     const { profile } = await requireSchoolAdmin(req);
     const year = Number(req.body?.academicYear || new Date().getFullYear());
@@ -4351,15 +4460,197 @@ function createClassroomPlatform(options = {}) {
       const dayOfWeek = Number(cell.dayOfWeek);
       const period = Number(cell.period);
       const subjectName = String(cell.subjectName || "").trim();
+      const clearSpecialist = Boolean(cell.clearSpecialist);
 
       if (dayOfWeek >= 1 && dayOfWeek <= 5 && period >= 1 && period <= 8) {
+        if (clearSpecialist) {
+          await pool.query(
+            `UPDATE school_master_timetable
+             SET subject_name = '', teacher_user_id = NULL, room_name = NULL, updated_at = NOW()
+             WHERE school_id = $1 AND academic_year = $2 AND grade = $3 AND class_number = $4 AND day_of_week = $5 AND period = $6`,
+            [profile.school_id, year, grade, classNum, dayOfWeek, period]
+          );
+          continue;
+        }
         await pool.query(
           `INSERT INTO school_master_timetable (school_id, academic_year, grade, class_number, day_of_week, period, subject_name)
            VALUES ($1, $2, $3, $4, $5, $6, $7)
            ON CONFLICT (school_id, academic_year, grade, class_number, day_of_week, period) DO UPDATE
-           SET subject_name = EXCLUDED.subject_name, updated_at = NOW()`,
+           SET subject_name = EXCLUDED.subject_name, updated_at = NOW()
+           WHERE school_master_timetable.teacher_user_id IS NULL AND school_master_timetable.room_name IS NULL`,
           [profile.school_id, year, grade, classNum, dayOfWeek, period, subjectName]
         );
+      }
+    }
+    res.json({ ok: true });
+  }));
+
+  // 전담교사 한 명 = 그리드 하나. 담당 학년/반을 배정하면 school_master_timetable에
+  // 바로 반영되므로 기초시간표 쪽에서 별도 동기화가 필요 없다. 같은 교사를 같은
+  // 요일/교시에 다른 반에 또 배정하면 school_master_timetable_teacher_slot_idx가 막는다.
+  router.get("/school-admin/specialist-teachers", asyncRoute(async (req, res) => {
+    const { profile } = await requireSchoolAdmin(req);
+    const result = await pool.query(
+      `SELECT id, teacher_name, teacher_type, grade, class_number
+       FROM classroom_teachers
+       WHERE school_id = $1 AND active = TRUE AND user_id IS NOT NULL
+         AND teacher_type NOT IN ('관리자', '교장', '교감')
+       ORDER BY teacher_type, teacher_name`,
+      [profile.school_id]
+    );
+    res.json({
+      teachers: result.rows.map(row => ({
+        id: String(row.id),
+        name: row.teacher_name,
+        type: row.teacher_type,
+        homeroomGrade: row.grade,
+        homeroomClassNumber: row.class_number
+      }))
+    });
+  }));
+
+  router.get("/school-admin/specialist-timetable", asyncRoute(async (req, res) => {
+    const { profile } = await requireSchoolAdmin(req);
+    const year = Number(req.query.academicYear || new Date().getFullYear());
+    const teacherUserId = Number(req.query.teacherUserId);
+    if (!Number.isInteger(teacherUserId) || teacherUserId < 1) {
+      throw new HttpError(400, "INVALID_TEACHER", "교사를 선택하세요.");
+    }
+    const result = await pool.query(
+      `SELECT grade, class_number, day_of_week, period, subject_name, room_name
+       FROM school_master_timetable
+       WHERE school_id = $1 AND academic_year = $2 AND teacher_user_id = $3`,
+      [profile.school_id, year, teacherUserId]
+    );
+    res.json({ timetable: result.rows });
+  }));
+
+  router.put("/school-admin/specialist-timetable", asyncRoute(async (req, res) => {
+    const { profile } = await requireSchoolAdmin(req);
+    const year = Number(req.body?.academicYear || new Date().getFullYear());
+    const teacherUserId = Number(req.body?.teacherUserId);
+    if (!Number.isInteger(teacherUserId) || teacherUserId < 1) {
+      throw new HttpError(400, "INVALID_TEACHER", "교사를 선택하세요.");
+    }
+    const cells = Array.isArray(req.body?.cells) ? req.body.cells : [];
+
+    for (const cell of cells) {
+      const grade = Number(cell.grade);
+      const classNumber = Number(cell.classNumber);
+      const dayOfWeek = Number(cell.dayOfWeek);
+      const period = Number(cell.period);
+      if (!(grade >= 1 && grade <= 12 && classNumber >= 1 && classNumber <= 30 && dayOfWeek >= 1 && dayOfWeek <= 5 && period >= 1 && period <= 8)) continue;
+
+      if (cell.clear) {
+        await pool.query(
+          `UPDATE school_master_timetable
+           SET teacher_user_id = NULL, subject_name = ''
+           WHERE school_id = $1 AND academic_year = $2 AND grade = $3 AND class_number = $4
+             AND day_of_week = $5 AND period = $6 AND teacher_user_id = $7`,
+          [profile.school_id, year, grade, classNumber, dayOfWeek, period, teacherUserId]
+        );
+        continue;
+      }
+
+      const subjectName = String(cell.subjectName || "").trim();
+      let conflictResult;
+      try {
+        conflictResult = await pool.query(
+          `INSERT INTO school_master_timetable (school_id, academic_year, grade, class_number, day_of_week, period, subject_name, teacher_user_id)
+           VALUES ($1, $2, $3, $4, $5, $6, $7, $8)
+           ON CONFLICT (school_id, academic_year, grade, class_number, day_of_week, period) DO UPDATE
+           SET subject_name = EXCLUDED.subject_name, teacher_user_id = EXCLUDED.teacher_user_id, updated_at = NOW()
+           WHERE school_master_timetable.teacher_user_id IS NULL OR school_master_timetable.teacher_user_id = EXCLUDED.teacher_user_id
+           RETURNING id`,
+          [profile.school_id, year, grade, classNumber, dayOfWeek, period, subjectName, teacherUserId]
+        );
+      } catch (error) {
+        if (error.code === "23505") {
+          throw new HttpError(409, "TEACHER_ALREADY_BOOKED", `이 교사는 이 요일·교시에 이미 다른 반 수업이 배정되어 있습니다.`);
+        }
+        throw error;
+      }
+      if (conflictResult.rowCount === 0) {
+        throw new HttpError(409, "SLOT_ALREADY_TAKEN", `${grade}학년 ${classNumber}반의 이 시간은 이미 다른 전담교사가 배정되어 있습니다.`);
+      }
+    }
+    res.json({ ok: true });
+  }));
+
+  // 특별실 하나 = 그리드 하나. 같은 방을 같은 요일/교시에 다른 반이 또 배정하면
+  // school_master_timetable_room_slot_idx가 막는다. teacher_user_id는 건드리지
+  // 않으므로 전담교사가 이미 배정된 칸에 방만 추가로 지정할 수 있다.
+  router.get("/school-admin/room-timetable", asyncRoute(async (req, res) => {
+    const { profile } = await requireSchoolAdmin(req);
+    const year = Number(req.query.academicYear || new Date().getFullYear());
+    const roomName = String(req.query.room || "").trim();
+    if (!roomName) throw new HttpError(400, "INVALID_ROOM", "특별실 이름을 입력하세요.");
+    const result = await pool.query(
+      `SELECT grade, class_number, day_of_week, period, subject_name, teacher_user_id
+       FROM school_master_timetable
+       WHERE school_id = $1 AND academic_year = $2 AND room_name = $3`,
+      [profile.school_id, year, roomName]
+    );
+    res.json({ timetable: result.rows });
+  }));
+
+  router.get("/school-admin/rooms", asyncRoute(async (req, res) => {
+    const { profile } = await requireSchoolAdmin(req);
+    const year = Number(req.query.academicYear || new Date().getFullYear());
+    const result = await pool.query(
+      `SELECT DISTINCT room_name FROM school_master_timetable
+       WHERE school_id = $1 AND academic_year = $2 AND room_name IS NOT NULL
+       ORDER BY room_name`,
+      [profile.school_id, year]
+    );
+    res.json({ rooms: result.rows.map(r => r.room_name) });
+  }));
+
+  router.put("/school-admin/room-timetable", asyncRoute(async (req, res) => {
+    const { profile } = await requireSchoolAdmin(req);
+    const year = Number(req.body?.academicYear || new Date().getFullYear());
+    const roomName = String(req.body?.room || "").trim();
+    if (!roomName) throw new HttpError(400, "INVALID_ROOM", "특별실 이름을 입력하세요.");
+    const cells = Array.isArray(req.body?.cells) ? req.body.cells : [];
+
+    for (const cell of cells) {
+      const grade = Number(cell.grade);
+      const classNumber = Number(cell.classNumber);
+      const dayOfWeek = Number(cell.dayOfWeek);
+      const period = Number(cell.period);
+      if (!(grade >= 1 && grade <= 12 && classNumber >= 1 && classNumber <= 30 && dayOfWeek >= 1 && dayOfWeek <= 5 && period >= 1 && period <= 8)) continue;
+
+      if (cell.clear) {
+        await pool.query(
+          `UPDATE school_master_timetable
+           SET room_name = NULL
+           WHERE school_id = $1 AND academic_year = $2 AND grade = $3 AND class_number = $4
+             AND day_of_week = $5 AND period = $6 AND room_name = $7`,
+          [profile.school_id, year, grade, classNumber, dayOfWeek, period, roomName]
+        );
+        continue;
+      }
+
+      const subjectName = String(cell.subjectName || "").trim();
+      let conflictResult;
+      try {
+        conflictResult = await pool.query(
+          `INSERT INTO school_master_timetable (school_id, academic_year, grade, class_number, day_of_week, period, subject_name, room_name)
+           VALUES ($1, $2, $3, $4, $5, $6, $7, $8)
+           ON CONFLICT (school_id, academic_year, grade, class_number, day_of_week, period) DO UPDATE
+           SET subject_name = COALESCE(NULLIF(EXCLUDED.subject_name, ''), school_master_timetable.subject_name), room_name = EXCLUDED.room_name, updated_at = NOW()
+           WHERE school_master_timetable.room_name IS NULL OR school_master_timetable.room_name = EXCLUDED.room_name
+           RETURNING id`,
+          [profile.school_id, year, grade, classNumber, dayOfWeek, period, subjectName, roomName]
+        );
+      } catch (error) {
+        if (error.code === "23505") {
+          throw new HttpError(409, "ROOM_ALREADY_BOOKED", `이 특별실은 이 요일·교시에 이미 다른 반이 사용 중입니다.`);
+        }
+        throw error;
+      }
+      if (conflictResult.rowCount === 0) {
+        throw new HttpError(409, "SLOT_ALREADY_TAKEN", `${grade}학년 ${classNumber}반의 이 시간은 이미 다른 특별실이 배정되어 있습니다.`);
       }
     }
     res.json({ ok: true });
@@ -4808,7 +5099,7 @@ function createClassroomPlatform(options = {}) {
     const isAdmin = Boolean(tp.rows[0]);
 
     const teachersResult = await pool.query(
-      `SELECT id, teacher_name, teacher_type, google_email, grade, class_number, active, user_id IS NOT NULL AS linked
+      `SELECT id, teacher_name, teacher_type, google_email, grade, class_number, subject_name, room_name, active, user_id IS NOT NULL AS linked
        FROM classroom_teachers
        WHERE school_id = $1
        ORDER BY CASE WHEN teacher_type = '관리자' THEN 1 WHEN teacher_type = '담임' THEN 2 ELSE 3 END, grade, class_number, id`,
@@ -4823,6 +5114,8 @@ function createClassroomPlatform(options = {}) {
         email: r.google_email,
         grade: r.grade,
         classNumber: r.class_number,
+        subjectName: r.subject_name,
+        roomName: r.room_name,
         linked: r.linked
       })),
       isAdmin
@@ -4845,7 +5138,9 @@ function createClassroomPlatform(options = {}) {
       name: String(t?.name || "").normalize("NFC").replace(/\s+/g, ""),
       email: (t?.email && String(t.email).includes("@")) ? normalizeEmail(t.email) : null,
       grade: t?.grade ? Number(t.grade) : null,
-      classNumber: t?.classNumber ? Number(t.classNumber) : null
+      classNumber: t?.classNumber ? Number(t.classNumber) : null,
+      subjectName: t?.subjectName ? String(t.subjectName).trim().slice(0, 50) : null,
+      roomName: t?.roomName ? String(t.roomName).trim().slice(0, 50) : null
     })).filter(t => t.name);
 
     for (const t of cleanTeachers) {
@@ -4885,20 +5180,23 @@ function createClassroomPlatform(options = {}) {
           const finalType = isAdminRow ? "관리자" : t.type;
           const finalGrade = isAdminRow ? null : t.grade;
           const finalClass = isAdminRow ? null : t.classNumber;
+          const finalSubject = isAdminRow ? null : t.subjectName;
+          const finalRoom = isAdminRow ? null : t.roomName;
 
           const updated = await client.query(
             `UPDATE classroom_teachers
-             SET teacher_name = $1, teacher_type = $2, google_email = $3, grade = $4, class_number = $5, updated_at = NOW()
-             WHERE id = $6 RETURNING id`,
-            [finalName, finalType, finalEmail, finalGrade, finalClass, existing.id]
+             SET teacher_name = $1, teacher_type = $2, google_email = $3, grade = $4, class_number = $5,
+                 subject_name = $6, room_name = $7, updated_at = NOW()
+             WHERE id = $8 RETURNING id`,
+            [finalName, finalType, finalEmail, finalGrade, finalClass, finalSubject, finalRoom, existing.id]
           );
           savedIds.push(updated.rows[0].id);
         } else {
           const inserted = await client.query(
             `INSERT INTO classroom_teachers
-               (school_id, teacher_name, password_hash, grade, class_number, teacher_type, google_email)
-             VALUES ($1, $2, 'OAUTH_ONLY', $3, $4, $5, $6) RETURNING id`,
-            [schoolId, t.name, t.grade, t.classNumber, t.type, t.email]
+               (school_id, teacher_name, password_hash, grade, class_number, teacher_type, google_email, subject_name, room_name)
+             VALUES ($1, $2, 'OAUTH_ONLY', $3, $4, $5, $6, $7, $8) RETURNING id`,
+            [schoolId, t.name, t.grade, t.classNumber, t.type, t.email, t.subjectName, t.roomName]
           );
           savedIds.push(inserted.rows[0].id);
         }
