@@ -1911,7 +1911,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
             const endDate = new Date(selectedAcademicYear + 1, 2, 0); // Last day of February (28 or 29)
 
-            while (currMon <= endDate && weekIndex <= 34) {
+            while (currMon <= endDate) {
                 const currFri = new Date(currMon);
                 currFri.setDate(currFri.getDate() + 4);
 
@@ -1967,30 +1967,36 @@ document.addEventListener('DOMContentLoaded', () => {
                 if (semesterNum === 1) totalSchoolDays1 += weekSchoolDays;
                 else totalSchoolDays2 += weekSchoolDays;
 
-                const weeklyHours = weekSchoolDays > 0 ? (monP + tueP + wedP + thuP + friP) : 0;
-                cumulativeHours += weeklyHours;
+                // 34주는 실제 등교(수업)한 주만 세는 기준이므로 -- 방학처럼 등교일이
+                // 하루도 없는 주는 행을 만들지도, 주차 번호를 소모하지도 않는다.
+                // (school_curriculum_hours의 연간필요시수도 "주당시수 × 34"로 계산되므로
+                // 이 표의 34주는 실수업주와 일치해야 함)
+                if (weekSchoolDays > 0) {
+                    const weeklyHours = monP + tueP + wedP + thuP + friP;
+                    cumulativeHours += weeklyHours;
 
-                const eventSummary = weekLabels.length > 0 ? Array.from(new Set(weekLabels)).join(', ') : '정상 수업';
+                    const eventSummary = weekLabels.length > 0 ? Array.from(new Set(weekLabels)).join(', ') : '정상 수업';
 
-                const tr = document.createElement('tr');
-                tr.innerHTML = `
-                    <td><span class="badge ${semesterNum === 1 ? 'category-event' : 'category-trip'}">${semesterLabel}</span></td>
-                    <td style="font-weight:700;">${weekIndex}주차</td>
-                    <td>${periodStr}</td>
-                    <td style="font-weight:700;">${weekSchoolDays}일</td>
-                    <td>${monP}h</td>
-                    <td>${tueP}h</td>
-                    <td>${wedP}h</td>
-                    <td>${thuP}h</td>
-                    <td>${friP}h</td>
-                    <td style="font-weight:800; color:var(--primary);">${weeklyHours}시간</td>
-                    <td style="font-weight:800;">${cumulativeHours}시간</td>
-                    <td style="font-size:0.88rem; color:var(--text-muted);">${eventSummary}</td>
-                `;
-                annualTimetableTableBody.appendChild(tr);
+                    const tr = document.createElement('tr');
+                    tr.innerHTML = `
+                        <td><span class="badge ${semesterNum === 1 ? 'category-event' : 'category-trip'}">${semesterLabel}</span></td>
+                        <td style="font-weight:700;">${weekIndex}주차</td>
+                        <td>${periodStr}</td>
+                        <td style="font-weight:700;">${weekSchoolDays}일</td>
+                        <td>${monP}h</td>
+                        <td>${tueP}h</td>
+                        <td>${wedP}h</td>
+                        <td>${thuP}h</td>
+                        <td>${friP}h</td>
+                        <td style="font-weight:800; color:var(--primary);">${weeklyHours}시간</td>
+                        <td style="font-weight:800;">${cumulativeHours}시간</td>
+                        <td style="font-size:0.88rem; color:var(--text-muted);">${eventSummary}</td>
+                    `;
+                    annualTimetableTableBody.appendChild(tr);
+                    weekIndex++;
+                }
 
                 currMon.setDate(currMon.getDate() + 7);
-                weekIndex++;
             }
 
             if (annualTotalHoursVal) annualTotalHoursVal.textContent = `${cumulativeHours.toLocaleString()}시간`;
