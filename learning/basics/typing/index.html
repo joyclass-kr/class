@@ -43,11 +43,11 @@
           <div class="hand left-hand"><span class="finger pinky" data-finger="lp"><i></i><b>새끼</b></span><span class="finger ring" data-finger="lr"><i></i><b>약지</b></span><span class="finger middle" data-finger="lm"><i></i><b>가운데</b></span><span class="finger index" data-finger="li"><i></i><b>검지</b></span><span class="finger thumb" data-finger="lt"><i></i><b>엄지</b></span><div class="palm">왼손</div></div>
           <div class="hand right-hand"><span class="finger thumb" data-finger="rt"><i></i><b>엄지</b></span><span class="finger index" data-finger="ri"><i></i><b>검지</b></span><span class="finger middle" data-finger="rm"><i></i><b>가운데</b></span><span class="finger ring" data-finger="rr"><i></i><b>약지</b></span><span class="finger pinky" data-finger="rp"><i></i><b>새끼</b></span><div class="palm">오른손</div></div>
         </div>
-        <div class="finger-instruction"><span id="fingerBadge">왼손 검지</span><strong id="guideKey">ㄹ</strong><p id="guideMessage">노란색으로 표시된 손가락으로 <b>ㄹ</b> 키를 눌러 보세요.</p></div>
+        <div class="finger-instruction" aria-live="polite"><span id="fingerBadge">왼손 검지</span><strong id="guideKey">ㄹ</strong><p id="guideMessage">노란색으로 표시된 손가락으로 <b>ㄹ</b> 키를 눌러 보세요.</p></div>
       </div>
       <div id="keyboard" class="keyboard" aria-label="키보드 운지법"></div>
       <div class="guide-progress"><span id="guideCount">0 / 12</span><div><i id="guideBar"></i></div></div>
-      <div class="actions"><button id="startWordsButton" class="secondary" type="button">낱말 연습으로 건너뛰기</button></div>
+      <div class="actions"><button id="guideNextButton" class="primary" type="button" hidden>다음 단계</button><button id="startWordsButton" class="secondary" type="button">낱말 연습으로 건너뛰기</button></div>
     </section>
     <section class="practice" aria-labelledby="practiceTitle" hidden>
       <div class="practice-heading"><button class="back-to-menu" type="button" data-back-to-menu>← 연습 선택</button><h2 id="practiceTitle">단어 연습</h2></div>

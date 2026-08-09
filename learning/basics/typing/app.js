@@ -136,6 +136,9 @@ function setEnglishKeyboardCase(upper){if(guideLang!=='en')return;$$('.key:not(.
 function setNumberKeyboardShift(shifted){$$('.number-key').forEach(key=>{key.textContent=shifted?key.dataset.shifted:key.dataset.code})}
 function setKoreanShiftLabel(combo){if(guideLang!=='ko')return;$$('.key:not(.shift-key):not(.number-key)').forEach(key=>{key.textContent=key.dataset.ko});if(combo&&shiftedKorean[combo.letter])$(`.key[data-code="${combo.letter}"]`).textContent=shiftedKorean[combo.letter]}
 function showGuide(){
+  $('#fingerGuide').classList.remove('stage-complete');
+  $('#guideNextButton').hidden=true;
+  $('#startWordsButton').hidden=false;
   virtualShift='';
   $$('.key,.finger').forEach(x=>x.classList.remove('active'));
   const word=guideWord();
@@ -164,9 +167,29 @@ function showGuide(){
   const order=guideOrder();$('#guideCount').textContent=`${guideIndex} / ${order.length}`;$('#guideBar').style.width=`${guideIndex/order.length*100}%`;saveGuideSession();
 }
 function finishGuideStage(){
-  $('#guideCount').textContent='완료!';$('#guideBar').style.width='100%';$('#guideMessage').innerHTML=`<b>${guideStages[guideLang][guideStage].label} 완료</b>`;writeTypingRecord(`position-${guideLang}-${guideStage}`,{mode:'position',lang:guideLang,stage:guideStages[guideLang][guideStage].label,addCompletion:true});saveGuideSession(true);
+  const stages=guideStages[guideLang],stage=stages[guideStage],last=guideStage>=stages.length-1,order=guideOrder(),nextButton=$('#guideNextButton');
+  $$('.key,.finger').forEach(item=>item.classList.remove('active'));
+  $('#fingerGuide').classList.add('stage-complete');
+  $('#fingerBadge').textContent=last?'자리 연습 완료':'단계 완료';
+  $('#guideKey').textContent='✓';
+  $('#guideMessage').innerHTML=`<b>${stage.label} 연습을 마쳤어요!</b><br>${last?'이제 낱말 연습을 시작해 보세요.':`다음은 ${stages[guideStage+1].label} 단계예요.`}`;
+  $('#guideCount').textContent=`${order.length} / ${order.length} · 완료`;
+  $('#guideBar').style.width='100%';
+  nextButton.textContent=last?'낱말 연습 시작':`다음 단계: ${stages[guideStage+1].label}`;
+  nextButton.hidden=false;
+  $('#startWordsButton').hidden=true;
+  nextButton.focus();
+  writeTypingRecord(`position-${guideLang}-${guideStage}`,{mode:'position',lang:guideLang,stage:stage.label,addCompletion:true});saveGuideSession(true);
+}
+function advanceGuideStage(){
+  const stages=guideStages[guideLang];
+  if(guideStage>=stages.length-1)return openPractice('words');
+  guideStage++;guideIndex=0;guideWordKeyIndex=0;currentGuideOrder=null;
+  if(guideLang==='en'&&guideStage===3)refreshEnglishShiftGuide();
+  renderGuideStages();showGuide();
 }
 function checkGuide(code,shiftSide=''){
+  if($('#fingerGuide').classList.contains('stage-complete'))return;
   const word=guideWord();
   if(word){
     const expected=wordExpectedPress();if(code!==expected.code||shiftSide!==expected.side)return ping(false);ping(true);guideWordKeyIndex++;
@@ -218,4 +241,4 @@ $$('[data-back-to-menu]').forEach(button=>button.addEventListener('click',showHo
 $('#recordsButton').addEventListener('click',openRecords);
 $('#resetRecordsButton').addEventListener('click',()=>{if(!confirm('타자연습 기록과 이어하기 정보를 모두 지울까요?'))return;const keys=[];for(let index=0;index<localStorage.length;index++){const name=localStorage.key(index);if(name?.startsWith('typing-'))keys.push(name)}keys.forEach(name=>localStorage.removeItem(name));renderRecords();updateHomeContinue()});
 $('#audioPromptButton')?.addEventListener('click',()=>speakWord(target()));
-$('#startWordsButton').addEventListener('click',()=>openPractice('words'));$('#againButton').addEventListener('click',setup);$('#skipButton').addEventListener('click',skip);buildKeyboard();showHome();
+$('#guideNextButton').addEventListener('click',advanceGuideStage);$('#startWordsButton').addEventListener('click',()=>openPractice('words'));$('#againButton').addEventListener('click',setup);$('#skipButton').addEventListener('click',skip);buildKeyboard();showHome();
