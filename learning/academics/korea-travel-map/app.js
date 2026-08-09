@@ -152,7 +152,7 @@
   function markerIcon(place) {
     return L.divIcon({
       className: 'travel-icon-wrapper',
-      html: `<button class="travel-marker ${place.category}" type="button" aria-label="${place.name} 자세히 보기"><span aria-hidden="true">${place.emoji}</span></button>`,
+      html: `<button class="travel-marker ${place.primaryCategory || place.category}" type="button" aria-label="${place.name} 자세히 보기"><span aria-hidden="true">${place.emoji}</span></button>`,
       iconSize: [44, 44], iconAnchor: [22, 22]
     });
   }
@@ -180,7 +180,7 @@
 
   function renderMarkers() {
     markerLayer.clearLayers();
-    const filtered = places.filter((place) => currentCategory === 'all' || place.category === currentCategory);
+    const filtered = places.filter((place) => currentCategory === 'all' || (place.categories || [place.category]).includes(currentCategory));
     groupedPlaces(filtered).forEach((group) => {
       if (group.length === 1) {
         const place = group[0];
@@ -247,7 +247,14 @@
     document.querySelector('#placeName').textContent = currentPlace.name;
     document.querySelector('#visualPlaceName').textContent = currentPlace.name;
     document.querySelector('#placeRegion').textContent = currentPlace.region;
-    document.querySelector('#placeCategory').textContent = currentPlace.categoryName;
+    const categoryWrap = document.querySelector('#placeCategories');
+    const categoryNames = currentPlace.categoryNames?.length ? currentPlace.categoryNames : [currentPlace.categoryName];
+    categoryWrap.replaceChildren(...categoryNames.map((name) => {
+      const badge = document.createElement('span');
+      badge.className = 'category-badge';
+      badge.textContent = name;
+      return badge;
+    }));
     document.querySelector('#placeEmoji').textContent = currentPlace.emoji;
     document.querySelector('#routeSchool').textContent = membership?.schoolName || '등록된 학교 없음';
     document.querySelector('#routeDestination').textContent = currentPlace.name;

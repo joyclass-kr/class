@@ -21,12 +21,14 @@
       <span class="filter-label">어떤 체험을 찾을까요?</span>
       <button class="filter-btn active" data-category="all" type="button">전체</button>
       <button class="filter-btn" data-category="theme" type="button">놀이·테마</button>
-      <button class="filter-btn" data-category="animal" type="button">동물·생태</button>
-      <button class="filter-btn" data-category="science" type="button">과학·진로</button>
-      <button class="filter-btn" data-category="nature" type="button">자연·생태</button>
+      <button class="filter-btn" data-category="science" type="button">과학·기술</button>
       <button class="filter-btn" data-category="culture" type="button">역사·문화</button>
-      <button class="filter-btn" data-category="adventure" type="button">모험·체육</button>
-      <button class="filter-btn" data-category="career" type="button">직업·생활</button>
+      <button class="filter-btn" data-category="nature" type="button">자연·지질</button>
+      <button class="filter-btn" data-category="biology" type="button">생물·생태</button>
+      <button class="filter-btn" data-category="career" type="button">직업·산업</button>
+      <button class="filter-btn" data-category="society" type="button">사회·공공</button>
+      <button class="filter-btn" data-category="arts" type="button">예술·창작</button>
+      <button class="filter-btn" data-category="adventure" type="button">모험·스포츠</button>
     </div>
   </header>
 
@@ -60,7 +62,7 @@
 
         <section class="place-info">
           <div class="title-row">
-            <div><span id="placeCategory" class="category-badge">놀이·테마</span><h2 id="placeName">롯데월드 어드벤처</h2></div>
+            <div><div id="placeCategories" class="category-badges"><span class="category-badge">놀이·테마</span></div><h2 id="placeName">롯데월드 어드벤처</h2></div>
           </div>
           <div class="fact-row" aria-label="방문 정보">
             <span id="placeSeason"></span>
@@ -92,7 +94,9 @@
   <script src="regional-value-places.js?v=20260810-1"></script>
   <script src="regional-fun-places.js?v=20260810-1"></script>
   <script src="coordinate-overrides.js?v=20260810-1"></script>
+  <script src="category-classifications.js?v=20260810-1"></script>
+  <script src="icon-overrides.js?v=20260810-1"></script>
   <script src="image-manifest.js?v=20260809-1"></script>
-  <script src="app.js?v=20260810-3"></script>
+  <script src="app.js?v=20260810-4"></script>
 </body>
 </html>
