@@ -2,7 +2,7 @@ import fs from 'node:fs';
 import path from 'node:path';
 
 const repoRoot = path.resolve(import.meta.dirname, '..');
-const batchFiles = ['hanja-v2-lessons-01.json', 'hanja-v2-lessons-02.json', 'hanja-v2-lessons-03.json', 'hanja-v2-lessons-04.json', 'hanja-v2-lessons-05.json'];
+const batchFiles = ['hanja-v2-lessons-01.json', 'hanja-v2-lessons-02.json', 'hanja-v2-lessons-03.json', 'hanja-v2-lessons-04.json', 'hanja-v2-lessons-05.json', 'hanja-v2-lessons-06.json'];
 const outputDir = path.join(repoRoot, 'learning', 'basics', 'hanja-meaning', 'v2');
 const rawLessons = batchFiles.flatMap((name) => JSON.parse(fs.readFileSync(path.join(repoRoot, 'scripts', name), 'utf8')));
 
@@ -19,12 +19,19 @@ const lessons = rawLessons.map((lesson, index) => {
 });
 
 const stageSize = 14;
-const stages = Array.from({ length: Math.ceil(lessons.length / stageSize) }, (_, index) => ({
-  title: `${index + 1}단계`,
-  start: index * stageSize + 1,
-  end: Math.min((index + 1) * stageSize, lessons.length)
-}));
-
+function makeStages(start, end, prefix) {
+  if (start > end) return [];
+  return Array.from({ length: Math.ceil((end - start + 1) / stageSize) }, (_, index) => ({
+    title: `${prefix} ${index + 1}단계`,
+    start: start + index * stageSize,
+    end: Math.min(start + (index + 1) * stageSize - 1, end)
+  }));
+}
+const foundationEnd = Math.min(125, lessons.length);
+const stages = [
+  ...makeStages(1, foundationEnd, '기초'),
+  ...makeStages(foundationEnd + 1, lessons.length, '수능 어휘')
+];
 const stageHtml = stages.map((stage, stageIndex) => {
   const stageLessons = lessons.filter((lesson) => lesson.number >= stage.start && lesson.number <= stage.end);
   const items = stageLessons.map((lesson) => `

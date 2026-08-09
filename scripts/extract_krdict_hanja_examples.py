@@ -8,6 +8,7 @@ from xml.etree import ElementTree as ET
 
 SCRIPT_DIR = Path(__file__).resolve().parent
 OUTPUT = SCRIPT_DIR / 'hanja-krdict-examples.json'
+BAD_CONTEXT = re.compile(r'나는|내가|우리는|우리 가족|아버지|어머니|할머니|할아버지|남편|아내|엄마|아빠|언니|오빠|누나|형부|동생|사촌|여자 친구|남자 친구|친구가|친구에게|선생님께서|교수님|사모님|민수|민준|지수|승규|유민|영수|수지|지민|그는|그녀|그 사람|김 [가-힣]+|김씨|형은|맞아요|있대요|심하네요|“|”|"|\?|!|네,|아뇨|저는|제가|나의|우리 집')
 
 
 def norm(value: str) -> str:
@@ -28,7 +29,7 @@ def nested_feat_value(element, path, att):
 
 def load_targets():
     targets = {}
-    for batch_number in range(1, 6):
+    for batch_number in range(1, 7):
         source = SCRIPT_DIR / f'hanja-v2-lessons-{batch_number:02d}.json'
         lessons = json.loads(source.read_text(encoding='utf-8'))
         for lesson in lessons:
@@ -78,15 +79,15 @@ def main(xml_dir: Path):
                         if feat.get('att') != 'example':
                             continue
                         sentence = feat.get('val', '').strip()
-                        if lemma in sentence and 12 <= len(sentence) <= 120:
+                        if lemma in sentence and 24 <= len(sentence) <= 110 and not BAD_CONTEXT.search(sentence):
                             sentences.append(sentence)
             if sentences:
-                sentences.sort(key=lambda value: (len(value), value))
+                sentences.sort(key=lambda value: (abs(len(value) - 52), value))
                 found[(lemma, origin)] = {
                     'term': lemma,
                     'hanja': targets[(lemma, origin)]['hanja'],
                     'definition': definitions[0] if definitions else '',
-                    'sentences': sentences[:10],
+                    'sentences': sentences[:20],
                     'source': '국립국어원 한국어기초사전'
                 }
             entry.clear()

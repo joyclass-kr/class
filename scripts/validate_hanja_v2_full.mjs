@@ -3,11 +3,13 @@ import path from 'node:path';
 
 const root = path.resolve(import.meta.dirname, '..');
 const lessonRoot = path.join(root, 'learning', 'basics', 'hanja-meaning', 'v2');
-const files = ['hanja-v2-lessons-01.json', 'hanja-v2-lessons-02.json', 'hanja-v2-lessons-03.json', 'hanja-v2-lessons-04.json', 'hanja-v2-lessons-05.json'];
+const files = ['hanja-v2-lessons-01.json', 'hanja-v2-lessons-02.json', 'hanja-v2-lessons-03.json', 'hanja-v2-lessons-04.json', 'hanja-v2-lessons-05.json', 'hanja-v2-lessons-06.json'];
 const lessons = files.flatMap((name) => JSON.parse(fs.readFileSync(path.join(import.meta.dirname, name), 'utf8')));
 const curriculum = JSON.parse(fs.readFileSync(path.join(import.meta.dirname, 'hanja-curriculum-v2.json'), 'utf8'));
 const standard = JSON.parse(fs.readFileSync(path.join(import.meta.dirname, 'hanja-grade6-300.json'), 'utf8'));
 const strokes = JSON.parse(fs.readFileSync(path.join(import.meta.dirname, 'hanja-strokes.json'), 'utf8'));
+const expansionSelection = JSON.parse(fs.readFileSync(path.join(import.meta.dirname, 'hanja-csat-expansion-selection.json'), 'utf8'));
+const expectedCharacterCount = 310 + [...expansionSelection.characters].length;
 const errors = [];
 const normalize = (character) => ({ 强: '強' }[character] || character);
 const allCharacters = new Set();
@@ -66,13 +68,13 @@ for (const [lessonIndex, lesson] of lessons.entries()) {
   if (!html.includes(`${number} / ${lessons.length}`)) errors.push(`${slug}: 전체 차시 표시가 틀렸습니다.`);
   if ((html.match(/class="meaning-card"/g) || []).length !== lesson.characters.length) errors.push(`${slug}: 뜻 카드 수가 다릅니다.`);
   if ((html.match(/class="question" data-answer=/g) || []).length !== lesson.questions.length) errors.push(`${slug}: 문제 카드 수가 다릅니다.`);
-  if (/<details|펼쳐 보기|더 보기/.test(html)) errors.push(`${slug}: 예문을 감추는 펼치기 UI가 있습니다.`);
+  if (/<details|펼쳐 보기|>더 보기</.test(html)) errors.push(`${slug}: 예문을 감추는 펼치기 UI가 있습니다.`);
   if (/MISSING|\uFFFD/.test(html)) errors.push(`${slug}: 깨진 데이터 표지가 있습니다.`);
 }
 
 const missingStandard = [...standard.characters].map(normalize).filter((character) => !allCharacters.has(character));
 if (missingStandard.length) errors.push(`공식 300자 누락: ${[...new Set(missingStandard)].join('')}`);
-if (allCharacters.size !== 310) errors.push(`전체 고유 글자: ${allCharacters.size} (예상 310)`);
+if (allCharacters.size !== expectedCharacterCount) errors.push(`전체 고유 글자: ${allCharacters.size} (예상 ${expectedCharacterCount})`);
 if (questions !== allCharacters.size) errors.push(`전체 문제: ${questions} (예상 ${allCharacters.size})`);
 
 const progress = fs.readFileSync(path.join(lessonRoot, 'index.html'), 'utf8');
