@@ -11,6 +11,12 @@
     deckHistory: null,
     deckStorageKey: ""
   };
+  const LEVELS = Object.freeze([
+    { level: 1, skillFocus: "사실 확인과 직접 적용" },
+    { level: 2, skillFocus: "추론과 인과 관계" },
+    { level: 3, skillFocus: "정보 종합과 조건 판단" },
+    { level: 4, skillFocus: "근거 적용과 범위 평가" }
+  ]);
   const $ = (id) => document.getElementById(id);
   const node = (tag, className, text) => { const el = document.createElement(tag); if (className) el.className = className; if (text !== undefined) el.textContent = text; return el; };
   const shuffle = (items) => {
@@ -33,18 +39,13 @@
   function renderLevels() {
     const list = $("levelList"); list.replaceChildren();
     const items = state.items.filter((item) => item.track === state.track);
-    const levels = [...new Set(items.map((item) => item.targetLevel))].sort((left, right) => left - right);
-    if (!levels.length) {
-      list.replaceChildren(node("p", "empty-pilots", "문제를 불러오지 못했습니다."));
-      return;
-    }
-    levels.forEach((level) => {
+    LEVELS.forEach(({ level, skillFocus }) => {
       const group = items.filter((item) => item.targetLevel === level);
       const labelled = group.find((item) => item.skillFocus) || {};
       const card = node("button", "level-card", ""); card.type = "button";
       card.append(node("strong", "level-code", `${state.track === "en" ? "E" : "K"}${level}`));
-      if (labelled.skillFocus) card.append(node("span", "level-focus", labelled.skillFocus));
-      card.append(node("span", "level-count", `${group.length}문항`));
+      card.append(node("span", "level-focus", labelled.skillFocus || skillFocus));
+      if (group.length) card.append(node("span", "level-count", `${group.length}문항`));
       card.addEventListener("click", () => startSet(level)); list.append(card);
     });
   }
@@ -144,8 +145,17 @@
   function next() { if (state.index + 1 < state.set.length) { state.index += 1; renderQuestion(); } else { $("resultTitle").textContent = `${state.score} / ${state.set.length}`; $("resultCopy").textContent = `정답 ${state.score}개 · 오답 ${state.set.length - state.score}개`; show("result"); } }
 
   async function start() {
-    try { const response = await fetch("/api/reading/self-study"); if (!response.ok) throw new Error(); state.items = (await response.json()).items || []; renderLevels(); }
-    catch (_) { $("levelList").replaceChildren(node("p", "empty-pilots", "문제를 불러오지 못했습니다.")); }
+    // Render the useful controls before waiting for a cold server or network.
+    // The summary request only enriches the cards with live item counts.
+    renderLevels();
+    try {
+      const response = await fetch("/api/reading/self-study");
+      if (!response.ok) throw new Error();
+      state.items = (await response.json()).items || [];
+      renderLevels();
+    } catch (_) {
+      // Level buttons remain usable and fetch their deck on demand.
+    }
   }
   document.querySelectorAll(".tab").forEach((tab) => tab.addEventListener("click", () => { state.track = tab.dataset.track; document.querySelectorAll(".tab").forEach((button) => button.classList.toggle("active", button === tab)); renderLevels(); }));
   $("backButton").addEventListener("click", () => show("dashboard")); $("restartButton").addEventListener("click", () => show("dashboard")); $("nextButton").addEventListener("click", () => {});
