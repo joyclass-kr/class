@@ -15,6 +15,8 @@ const normalize = (character) => ({ 强: '強' }[character] || character);
 const allCharacters = new Set();
 let examples = 0;
 let questions = 0;
+let hanjaFeedback = 0;
+let nonHanjaFeedback = 0;
 
 if (curriculum.lessons.length !== lessons.length) errors.push('커리큘럼 차시 수가 수업 데이터와 다릅니다.');
 
@@ -55,6 +57,12 @@ for (const [lessonIndex, lesson] of lessons.entries()) {
     const contains = question.options.map((option) => [...option[1]].includes(question.target));
     if (contains.filter(Boolean).length !== 3) errors.push(`${slug} ${question.target}: 목표 한자가 든 보기는 정확히 3개여야 합니다.`);
     if (contains[question.answer] !== false) errors.push(`${slug} ${question.target}: 정답 번호가 목표 한자가 없는 보기를 가리키지 않습니다.`);
+    const correctWord = question.options[question.answer]?.[0] || '';
+    if (!question.note.startsWith(`‘${correctWord}’`)) errors.push(`${slug} ${question.target}: 정답 해설이 정답 낱말로 시작하지 않습니다.`);
+    if (/글자가 쓰입니다|쓰이지 않습니다|·/.test(question.note)) errors.push(`${slug} ${question.target}: 예전 나열식 해설이 남았습니다.`);
+    if (/’[을를] 씁니다\.$/.test(question.note)) hanjaFeedback += 1;
+    else if (/(?:한자음이 아닙니다|외래어이므로 한자를 쓰지 않습니다)\.$/.test(question.note)) nonHanjaFeedback += 1;
+    else errors.push(`${slug} ${question.target}: 정답 해설 형식이 올바르지 않습니다.`);
     const readings = character.reading.split('·').filter(Boolean);
     for (const option of question.options) {
       if (!readings.some((reading) => option[0].includes(reading))) errors.push(`${slug} ${question.target}: ${option[0]}에 표시 독음이 없습니다.`);
@@ -71,6 +79,7 @@ for (const [lessonIndex, lesson] of lessons.entries()) {
   if ((html.match(/class="stroke-set"/g) || []).length !== lesson.characters.length) errors.push(`${slug}: 획순 글자 그룹 수가 다릅니다.`);
   if ((html.match(/class="stroke-set"[^>]* hidden/g) || []).length !== lesson.characters.length - 1) errors.push(`${slug}: 처음 선택하지 않은 획순 그룹이 숨겨지지 않았습니다.`);
   if (!html.includes('.stroke-set[hidden]{display:none}') || !html.includes("toggleAttribute('hidden'")) errors.push(`${slug}: SVG 획순 그룹 전환 장치가 없습니다.`);
+  if (!html.includes("feedback.textContent='다시 생각해 보세요.'") || !html.includes("feedback.textContent='맞았습니다. '+q.dataset.note")) errors.push(`${slug}: 정답·오답 해설 동작이 올바르지 않습니다.`);
   if (/<details|펼쳐 보기|>더 보기</.test(html)) errors.push(`${slug}: 예문을 감추는 펼치기 UI가 있습니다.`);
   if (/MISSING|\uFFFD/.test(html)) errors.push(`${slug}: 깨진 데이터 표지가 있습니다.`);
 }
@@ -121,6 +130,7 @@ for (let stageIndex = 0; stageIndex < stageCount; stageIndex += 1) {
     if (question.options.filter((option) => option.correct).length !== 1) errors.push(`${stageNumber}단계 ${question.target}: 정답 선지가 정확히 하나가 아닙니다.`);
   }
   if (!quizHtml.includes('questions=shuffle(source)') || !quizHtml.includes('options:shuffle(question.options)')) errors.push(`${stageNumber}단계: 문제·선지 순서 무작위화가 없습니다.`);
+  if (!quizHtml.includes("feedback.textContent='다시 생각해 보세요.';return") || !quizHtml.includes("feedback.textContent='맞았습니다. '+question.note")) errors.push(`${stageNumber}단계: 정답·오답 해설 동작이 올바르지 않습니다.`);
 }
 if (stageQuizQuestions !== questions) errors.push(`단계 문제 총합: ${stageQuizQuestions} (예상 ${questions})`);
 const carLesson = lessons.find((lesson) => lesson.characters.some((item) => item.character === '車'));
@@ -138,6 +148,8 @@ const report = {
   characterPlacements: lessons.reduce((sum, lesson) => sum + lesson.characters.length, 0),
   examples,
   questions,
+  hanjaFeedback,
+  nonHanjaFeedback,
   progressLinks: progressLinks.length,
   stageQuizLinks: stageQuizLinks.length,
   stageQuizQuestions,
