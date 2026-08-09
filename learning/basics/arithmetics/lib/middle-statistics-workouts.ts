@@ -2,6 +2,8 @@ export type MiddleStatisticsMethodKind =
   | "mean"
   | "missing-from-mean"
   | "frequency-mean"
+  | "histogram-frequency"
+  | "frequency-polygon-maximum"
   | "total-frequency"
   | "relative-frequency"
   | "missing-frequency"
@@ -33,6 +35,14 @@ export type MiddleStatisticsProblem = {
   answerLatex: string;
   solutionHint: string;
   distractors: string[];
+  visual?: MiddleStatisticsVisual;
+};
+
+export type MiddleStatisticsVisual = {
+  type: "histogram" | "frequency-polygon";
+  values: number[];
+  labels: string[];
+  highlight?: number;
 };
 
 export const MIDDLE_STATISTICS_KINDS: MiddleStatisticsKind[] = [
@@ -46,6 +56,8 @@ export const MIDDLE_STATISTICS_METHOD_KINDS: MiddleStatisticsMethodKind[] = [
   "mean",
   "missing-from-mean",
   "frequency-mean",
+  "histogram-frequency",
+  "frequency-polygon-maximum",
   "total-frequency",
   "relative-frequency",
   "missing-frequency",
@@ -71,6 +83,8 @@ const MIDDLE_STATISTICS_METHOD_TITLES: Record<MiddleStatisticsMethodKind, string
   mean: "평균 계산",
   "missing-from-mean": "평균으로 빠진 값 구하기",
   "frequency-mean": "도수 자료의 평균",
+  "histogram-frequency": "히스토그램 읽기",
+  "frequency-polygon-maximum": "도수분포다각형 읽기",
   "total-frequency": "전체 도수",
   "relative-frequency": "상대도수",
   "missing-frequency": "빠진 도수",
@@ -165,6 +179,7 @@ function make(
   solutionHint: string,
   distractors: string[],
   structure = kind,
+  visual?: MiddleStatisticsVisual,
 ): MiddleStatisticsProblem {
   return {
     id,
@@ -176,6 +191,7 @@ function make(
     answerLatex,
     solutionHint,
     distractors: uniqueDistractors(answerLatex, distractors),
+    visual,
   };
 }
 
@@ -245,6 +261,30 @@ function build(
       `frequency-${sideFrequency}-${centerFrequency}`);
   }
 
+  if (kind === "histogram-frequency") {
+    const labels = ["0~10", "10~20", "20~30", "30~40"];
+    const values = [3 + index % 3, 5 + (index + 1) % 4, 4 + (index + 2) % 3, 2 + (index + 3) % 3];
+    const targetIndex = (index + 1) % values.length;
+    const answer = values[targetIndex];
+    return make(id, kind, "", `${answer}`,
+      "색칠한 계급의 막대 위에 표시된 도수를 읽는다.",
+      values.filter((_, valueIndex) => valueIndex !== targetIndex).map(String),
+      `histogram-frequency-${targetIndex}-${values.join("-")}`,
+      { type: "histogram", values, labels, highlight: targetIndex });
+  }
+
+  if (kind === "frequency-polygon-maximum") {
+    const labels = ["0~10", "10~20", "20~30", "30~40"];
+    const values = [3 + index % 3, 4 + (index + 1) % 3, 3 + (index + 2) % 3, 2 + (index + 3) % 3];
+    const maximumIndex = (index + 2) % values.length;
+    values[maximumIndex] = Math.max(...values) + 3;
+    const answer = `\\text{${labels[maximumIndex]}}`;
+    return make(id, kind, "", answer,
+      "도수분포다각형에서 점의 높이가 가장 높은 계급을 찾는다.",
+      labels.filter((_, labelIndex) => labelIndex !== maximumIndex).map((label) => `\\text{${label}}`),
+      `frequency-polygon-maximum-${maximumIndex}-${values.join("-")}`,
+      { type: "frequency-polygon", values, labels, highlight: maximumIndex });
+  }
   if (kind === "total-frequency") {
     const frequencies = [2 + index % 3, 3 + index % 4, 4 + index % 2, 2 + (index + 1) % 4];
     const total = frequencies.reduce((sum, value) => sum + value, 0);
@@ -387,9 +427,9 @@ function comprehensiveKind(seed: number, index: number) {
 
 const GROUP_METHOD_PLANS: Record<Exclude<MiddleStatisticsKind, "comprehensive">, MiddleStatisticsMethodKind[]> = {
   "representative-values": [
-    "mean", "median", "mode", "range",
+    "mean", "median", "mode", "histogram-frequency",
     "missing-from-mean", "frequency-mean",
-    "total-frequency", "relative-frequency",
+    "frequency-polygon-maximum", "relative-frequency",
   ],
   "mean-applications": [
     "mean", "missing-from-mean",
@@ -410,6 +450,8 @@ const LEGACY_KIND_GROUPS: Record<MiddleStatisticsMethodKind, MiddleStatisticsKin
   range: "representative-values",
   "missing-from-mean": "mean-applications",
   "frequency-mean": "mean-applications",
+  "histogram-frequency": "representative-values",
+  "frequency-polygon-maximum": "representative-values",
   "total-frequency": "representative-values",
   "relative-frequency": "representative-values",
   "missing-frequency": "representative-values",

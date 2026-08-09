@@ -15,17 +15,17 @@ const physicalPages = fs.readdirSync(pageRoot, { withFileTypes: true })
 
 const baseRoute = (route: string | null) => route?.split("?")[0].split("/").at(-1) ?? "";
 
-test("중등 53개 필수 목차는 중복 없이 모두 실제 페이지에 연결된다", () => {
-  assert.equal(middleSchoolWorksheetCatalog.length, 53);
+test("중등 52개 필수 목차는 중복 없이 모두 실제 페이지에 연결된다", () => {
+  assert.equal(middleSchoolWorksheetCatalog.length, 52);
   assert.deepEqual(
     middleSchoolWorksheetCatalog.reduce<Record<string, number>>((counts, worksheet) => {
       counts[worksheet.grade] = (counts[worksheet.grade] ?? 0) + 1;
       return counts;
     }, {}),
-    { 중1: 12, 중2: 13, 중3: 28 },
+    { 중1: 11, 중2: 13, 중3: 28 },
   );
-  assert.equal(new Set(middleSchoolWorksheetCatalog.map(({ name }) => name)).size, 53);
-  assert.equal(new Set(middleSchoolWorksheetCatalog.map(({ route }) => route)).size, 53);
+  assert.equal(new Set(middleSchoolWorksheetCatalog.map(({ name }) => name)).size, 52);
+  assert.equal(new Set(middleSchoolWorksheetCatalog.map(({ route }) => route)).size, 52);
   assert.deepEqual(
     middleSchoolWorksheetCatalog
       .filter(({ route }) => !physicalPages.includes(baseRoute(route)))
@@ -45,7 +45,6 @@ test("필수 연산 영역은 목차에 하나도 빠지지 않는다", () => {
     "/arithmetic/middle-school/core-calculations?kind=linear-equation",
     "/arithmetic/middle-school/curriculum-calculations?kind=coordinate-proportion",
     "/arithmetic/middle-school/curriculum-calculations?kind=construction-congruence",
-    "/arithmetic/middle-school/curriculum-calculations?kind=frequency-graphs",
     "/arithmetic/middle-school/curriculum-calculations?kind=plane-geometry",
     "/arithmetic/middle-school/curriculum-calculations?kind=solid-geometry",
     "/arithmetic/middle-school/statistics?kind=representative-values",

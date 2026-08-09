@@ -181,7 +181,6 @@ export function createSpaceCoordinateProblems(seed: number): GeometryChoiceItem[
 export function createSpaceGeometryProjectionProblems(seed: number): GeometryChoiceItem[] {
   const next = rng(seed);
   const scale = integer(next, 2, 5);
-  const relationKind = integer(next, 0, 2);
   const hx = nonzero(next, -4, 4);
   const hy = nonzero(next, -4, 4);
   const hz = nonzero(next, -4, 4);
@@ -192,25 +191,19 @@ export function createSpaceGeometryProjectionProblems(seed: number): GeometryCho
   const pointX = hx + distanceScale;
   const pointY = hy + 2 * distanceScale;
   const pointZ = hz + 2 * distanceScale;
-  const relationVectors = [
-    { direction: "(1,2,2)", equation: `2x-y=${scale}`, answer: "\\text{평행}" },
-    { direction: "(1,2,2)", equation: `x+2y+2z=${scale}`, answer: "\\text{수직}" },
-    { direction: "(1,2,2)", equation: `x+y+z=${scale}`, answer: "\\text{한 점에서 만남}" },
-  ][relationKind];
   const projectionX = 3 * projectionScale + 4 * perpendicularScale;
   const projectionY = 4 * projectionScale - 3 * perpendicularScale;
   const projectionZ = nonzero(next, -4, 4);
   const originalArea = 12 * scale;
   const projectedArea = originalArea / 2;
   return [
-    item("sg1", "두 직선이 이루는 각", `\\ell_1:\\vec x=(1,0,0)+s(${scale},0,0),\\quad\\ell_2:\\vec x=(0,1,0)+t(${scale},${scale},0)`, `\\frac{\\pi}{4}`, [`\\frac{\\pi}{3}`, `\\frac{\\pi}{6}`, `\\frac{\\pi}{2}`], "두 직선이 이루는 각은?", "space-lines-angle"),
-    item("sg2", "직선과 평면의 위치 관계", `\\ell:\\vec x=(0,0,0)+t${relationVectors.direction},\\quad\\alpha:${relationVectors.equation}`, relationVectors.answer, ["\\text{평행}", "\\text{수직}", "\\text{한 점에서 만남}", "\\text{일치}"].filter((answer) => answer !== relationVectors.answer), "직선과 평면의 위치 관계는?", "space-line-plane"),
-    item("sg3", "두 평면이 이루는 각", `\\alpha:${scale}x=${scale},\\quad\\beta:${scale}x+${scale}y=${2 * scale}`, `\\frac{\\pi}{4}`, [`\\frac{\\pi}{3}`, `\\frac{\\pi}{6}`, `\\frac{\\pi}{2}`], "두 평면이 이루는 각은?", "space-planes-angle"),
-    item("sg4", "점과 평면 사이의 거리", `P(${pointX},${pointY},${pointZ}),\\quad\\alpha:x+2y+2z=${planeConstant}`, `${3 * distanceScale}`, [`${distanceScale}`, `${9 * distanceScale}`, `\\sqrt{${3 * distanceScale}}`], "점 P와 평면 α 사이의 거리는?", "space-point-plane-distance"),
-    item("sg5", "평행한 두 평면 사이의 거리", `\\alpha:x+2y+2z=${planeConstant},\\quad\\beta:x+2y+2z=${planeConstant + 3 * scale}`, `${scale}`, [`${3 * scale}`, `${9 * scale}`, `\\frac{${scale}}{3}`], "두 평면 사이의 거리는?", "space-parallel-planes"),
-    item("sg6", "평면에 내린 수선의 발", `P(${pointX},${pointY},${pointZ}),\\quad\\alpha:x+2y+2z=${planeConstant}`, `H=(${hx},${hy},${hz})`, [`H=(${pointX},${pointY},${pointZ})`, `H=(${hx},${hy},${pointZ})`, `H=(${-hx},${-hy},${-hz})`, `H=(${pointX},${hy},${hz})`, `H=(${hx},${pointY},${hz})`], "수선의 발 H의 좌표는?", "space-perpendicular-foot"),
-    item("sg7", "직선 방향으로의 벡터 정사영", `\\vec a=(${projectionX},${projectionY},${projectionZ}),\\quad\\vec b=(3,4,0)`, `(${3 * projectionScale},${4 * projectionScale},0)`, [`(${projectionX},${projectionY},0)`, `(${4 * projectionScale},${3 * projectionScale},0)`, `(${-3 * projectionScale},${-4 * projectionScale},0)`], "$\\mathrm{proj}_{\\vec b}\\vec a$는?", "space-vector-projection"),
-    item("sg8", "평면도형의 정사영 넓이", `S=${originalArea},\\quad \\theta=60^\\circ`, `${projectedArea}`, [`${originalArea}`, `${originalArea * 2}`, `${originalArea * 3 / 2}`], "정사영의 넓이는?", "space-area-projection"),
-    item("sg9", "삼수선의 정리", `PH\\perp\\alpha,\\quad HA\\perp AB,\\quad A,B,H\\in\\alpha`, `PA\\perp AB`, [`PA\\parallel AB`, `PH\\perp AB`, `PA\\parallel HA`], "삼수선의 정리로 알 수 있는 관계는?", "space-three-perpendiculars"),
+    item("sg1", "두 직선이 이루는 각", `\\begin{gathered}\\ell_1:\\vec x=(1,0,0)+s(${scale},0,0)\\\\[4pt]\\ell_2:\\vec x=(0,1,0)+t(${scale},${scale},0)\\end{gathered}`, `\\frac{\\pi}{4}`, [`\\frac{\\pi}{3}`, `\\frac{\\pi}{6}`, `\\frac{\\pi}{2}`], "두 직선이 이루는 각은?", "space-lines-angle"),
+    item("sg3", "두 평면이 이루는 각", `\\begin{gathered}\\alpha:x=${scale}\\\\[4pt]\\beta:x+y=${2 * scale}\\end{gathered}`, `\\frac{\\pi}{4}`, [`\\frac{\\pi}{3}`, `\\frac{\\pi}{6}`, `\\frac{\\pi}{2}`], "두 평면이 이루는 각은?", "space-planes-angle"),
+    item("sg4", "점과 평면 사이의 거리", `\\begin{gathered}P(${pointX},${pointY},${pointZ})\\\\[4pt]\\alpha:x+2y+2z=${planeConstant}\\end{gathered}`, `${3 * distanceScale}`, [`${distanceScale}`, `${9 * distanceScale}`, `\\sqrt{${3 * distanceScale}}`], "점 P와 평면 α 사이의 거리는?", "space-point-plane-distance"),
+    item("sg5", "평행한 두 평면 사이의 거리", `\\begin{gathered}\\alpha:x+2y+2z=${planeConstant}\\\\[4pt]\\beta:x+2y+2z=${planeConstant + 3 * scale}\\end{gathered}`, `${scale}`, [`${3 * scale}`, `${9 * scale}`, `\\frac{${scale}}{3}`], "두 평면 사이의 거리는?", "space-parallel-planes"),
+    item("sg6", "평면에 내린 수선의 발", `\\begin{gathered}P(${pointX},${pointY},${pointZ})\\\\[4pt]\\alpha:x+2y+2z=${planeConstant}\\end{gathered}`, `H=(${hx},${hy},${hz})`, [`H=(${pointX},${pointY},${pointZ})`, `H=(${hx},${hy},${pointZ})`, `H=(${-hx},${-hy},${-hz})`, `H=(${pointX},${hy},${hz})`, `H=(${hx},${pointY},${hz})`], "수선의 발 H의 좌표는?", "space-perpendicular-foot"),
+    item("sg7", "직선 방향으로의 벡터 정사영", `\\begin{gathered}\\vec a=(${projectionX},${projectionY},${projectionZ})\\\\[4pt]\\vec b=(3,4,0)\\end{gathered}`, `(${3 * projectionScale},${4 * projectionScale},0)`, [`(${projectionX},${projectionY},0)`, `(${4 * projectionScale},${3 * projectionScale},0)`, `(${-3 * projectionScale},${-4 * projectionScale},0)`], "$\\mathrm{proj}_{\\vec b}\\vec a$는?", "space-vector-projection"),
+    item("sg8", "평면도형의 정사영 넓이", `\\begin{gathered}S=${originalArea}\\\\[4pt]\\theta=60^\\circ\\end{gathered}`, `${projectedArea}`, [`${originalArea}`, `${originalArea * 2}`, `${originalArea * 3 / 2}`], "정사영의 넓이는?", "space-area-projection"),
+    item("sg9", "삼수선의 정리", `\\begin{gathered}PH\\perp\\alpha\\\\[3pt]HA\\perp AB\\\\[3pt]A,B,H\\in\\alpha\\end{gathered}`, `PA\\perp AB`, [`PA\\parallel AB`, `PH\\perp AB`, `PA\\parallel HA`], "삼수선의 정리로 알 수 있는 관계는?", "space-three-perpendiculars"),
   ];
 }

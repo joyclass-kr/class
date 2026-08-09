@@ -9759,6 +9759,28 @@ main {
   margin: 4px 0 2px;
 }
 
+.middle-statistics-visual {
+  width: min(100%, 210px);
+  margin: 1px 0;
+}
+
+.middle-statistics-visual .middle-curriculum-visual {
+  width: 100%;
+  margin: 0;
+}
+
+.middle-statistics-visual .middle-curriculum-visual svg {
+  height: 78px;
+}
+
+.worksheet-choice-problem-visual .middle-curriculum-visual {
+  width: min(100%, 230px);
+}
+
+.worksheet-choice-problem-visual .middle-curriculum-visual svg {
+  height: 92px;
+}
+
 .middle-curriculum-visual svg {
   display: block;
   width: 100%;
@@ -9829,6 +9851,34 @@ main {
   .middle-curriculum-visual svg {
     height: 108px;
   }
+}
+
+.space-geometry-projections-page .geometry-choice-sheet.polynomial-sheet-8 .polynomial-problem-grid {
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  grid-template-rows: repeat(4, minmax(0, 1fr));
+}
+
+.space-geometry-projections-page .geometry-choice-sheet.polynomial-sheet-8 .geometry-choice-question {
+  padding: 7px 10px 7px 34px;
+}
+
+.space-geometry-projections-page .geometry-choice-sheet.polynomial-sheet-8 .polynomial-question-number {
+  left: 10px;
+  top: 10px;
+}
+
+.space-geometry-projections-page .geometry-choice-sheet.polynomial-sheet-8 .middle-curriculum-visual {
+  width: min(100%, 200px);
+  margin-block: 1px;
+}
+
+.space-geometry-projections-page .geometry-choice-sheet.polynomial-sheet-8 .middle-curriculum-visual svg {
+  height: 82px;
+}
+
+.space-geometry-projections-page .geometry-choice-sheet.polynomial-sheet-8 .geometry-choice-expression {
+  font-size: 13px;
+  line-height: 1.08;
 }
 
 .geometry-choice-sheet.polynomial-sheet-9 .polynomial-problem-grid {

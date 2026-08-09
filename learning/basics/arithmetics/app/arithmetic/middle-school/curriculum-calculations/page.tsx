@@ -59,6 +59,10 @@ export default function MiddleCurriculumCalculationsPage() {
 
   useEffect(() => {
     const legacyKind = searchParams.get("kind");
+    if (legacyKind === "frequency-graphs") {
+      window.location.replace("/arithmetic/middle-school/statistics?kind=representative-values");
+      return;
+    }
     if (legacyKind === "similarity") {
       window.location.replace("/arithmetic");
       return;

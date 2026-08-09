@@ -205,7 +205,6 @@ export const middleSchoolWorksheetCatalog: ArithmeticWorksheet[] = [
   { grade: "중1", name: "기본도형·작도·합동", title: "기본도형·작도·합동", route: "/arithmetic/middle-school/curriculum-calculations?kind=construction-congruence" },
   { grade: "중1", name: "기본각·다각형·부채꼴 계산", title: "기본각·다각형·부채꼴 계산", route: "/arithmetic/middle-school/curriculum-calculations?kind=plane-geometry" },
   { grade: "중1", name: "입체도형의 겉넓이와 부피", title: "입체도형의 겉넓이와 부피", route: "/arithmetic/middle-school/curriculum-calculations?kind=solid-geometry" },
-  { grade: "중1", name: "도수분포·상대도수 그래프", title: "도수분포·상대도수 그래프", route: "/arithmetic/middle-school/curriculum-calculations?kind=frequency-graphs" },
   { grade: "중1", name: "대푯값·도수·상대도수", title: "대푯값·도수·상대도수", route: "/arithmetic/middle-school/statistics?kind=representative-values" },
 
   { grade: "중2", name: "유리수와 순환소수", title: "유리수와 순환소수", route: "/arithmetic/middle-school/core-calculations?kind=repeating-decimal" },

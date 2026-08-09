@@ -4,6 +4,7 @@ import { useEffect, useMemo, useState } from "react";
 import { useSearchParams } from "next/navigation";
 import InlineMathText from "../../../components/inline-math-text";
 import MathFormula from "../../../components/math-formula";
+import MiddleCurriculumVisual from "../../../components/middle-curriculum-visual";
 import WorksheetQuestionPrompt from "../../../components/worksheet-question-prompt";
 import WorksheetChoicePanel, {
   type WorksheetChoiceProblem,
@@ -24,6 +25,8 @@ const TARGET_LABELS: Record<MiddleStatisticsMethodKind, string> = {
   mean: "평균은?",
   "missing-from-mean": "x의 값은?",
   "frequency-mean": "평균은?",
+  "histogram-frequency": "색칠한 계급의 도수는?",
+  "frequency-polygon-maximum": "도수가 가장 큰 계급은?",
   "total-frequency": "전체 도수는?",
   "relative-frequency": "상대도수는?",
   "missing-frequency": "x의 값은?",
@@ -53,6 +56,7 @@ function choiceProblem(problem: MiddleStatisticsProblem): WorksheetChoiceProblem
     label: problem.label,
     prompt: TARGET_LABELS[problem.kind],
     latex: problem.latex,
+    visual: problem.visual ? <MiddleCurriculumVisual visual={problem.visual} /> : undefined,
     correctLatex: problem.answerLatex,
     choices: [...choices.slice(shift), ...choices.slice(0, shift)],
   };
@@ -139,9 +143,16 @@ export default function MiddleStatisticsPage() {
             label={problem.label}
             prompt={TARGET_LABELS[problem.kind]}
           />
-          <div className="logarithm-expression">
-            <MathFormula latex={problem.latex} />
-          </div>
+          {problem.visual && (
+            <div className="middle-statistics-visual">
+              <MiddleCurriculumVisual visual={problem.visual} />
+            </div>
+          )}
+          {problem.latex && (
+            <div className="logarithm-expression">
+              <MathFormula latex={problem.latex} />
+            </div>
+          )}
           {answerSheet && (
             <div className="middle-equation-static-answer">
               <strong>정답</strong>

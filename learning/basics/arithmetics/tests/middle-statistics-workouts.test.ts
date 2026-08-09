@@ -29,10 +29,14 @@ test("묶음 학습지는 필요한 세부 계산 유형을 빠짐없이 섞는�
   assert.deepEqual(
     new Set(createMiddleStatisticsProblemSet("representative-values", 7).problems.map(({ kind }) => kind)),
     new Set([
-      "mean", "median", "mode", "range",
-      "missing-from-mean", "frequency-mean", "total-frequency", "relative-frequency",
+      "mean", "median", "mode", "histogram-frequency",
+      "missing-from-mean", "frequency-mean", "frequency-polygon-maximum", "relative-frequency",
     ]),
   );
+  const graphProblems = createMiddleStatisticsProblemSet("representative-values", 7).problems
+    .filter(({ visual }) => visual);
+  assert.deepEqual(graphProblems.map(({ kind }) => kind), ["histogram-frequency", "frequency-polygon-maximum"]);
+  assert.ok(graphProblems.every(({ latex, visual }) => latex === "" && visual?.values.length === 4));
   assert.deepEqual(
     new Set(createMiddleStatisticsProblemSet("mean-applications", 7).problems.map(({ kind }) => kind)),
     new Set(["mean", "missing-from-mean", "frequency-mean"]),
