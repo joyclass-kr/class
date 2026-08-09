@@ -1,7 +1,7 @@
 import fs from 'node:fs';
 import path from 'node:path';
 
-const files = ['hanja-v2-lessons-01.json', 'hanja-v2-lessons-02.json', 'hanja-v2-lessons-03.json', 'hanja-v2-lessons-04.json'];
+const files = ['hanja-v2-lessons-01.json', 'hanja-v2-lessons-02.json', 'hanja-v2-lessons-03.json', 'hanja-v2-lessons-04.json', 'hanja-v2-lessons-05.json'];
 const lessons = files.flatMap((name) => JSON.parse(fs.readFileSync(path.join(import.meta.dirname, name), 'utf8')));
 const errors = [];
 
@@ -18,7 +18,7 @@ for (const [lessonIndex, lesson] of lessons.entries()) {
     const nonContaining = containing.filter((value) => !value).length;
     if (nonContaining !== 1) errors.push(`${lesson.term} Q${questionIndex + 1}: 목표 한자가 없는 보기는 정확히 하나여야 합니다.`);
     const targetCharacter = lesson.characters.find((item) => item.character === question.target);
-    const readings = (targetCharacter?.hunEum || []).map((item) => item.eum);
+    const readings = (targetCharacter?.reading || '').split('·').filter(Boolean);
     if (!question.options.every((option) => readings.some((reading) => option[0].includes(reading)))) {
       errors.push(`${lesson.term} Q${questionIndex + 1}: 모든 보기에 목표 글자의 독음이 드러나야 합니다.`);
     }

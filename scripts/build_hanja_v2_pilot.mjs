@@ -3,7 +3,7 @@ import path from 'node:path';
 
 const repoRoot = path.resolve(import.meta.dirname, '..');
 const root = path.join(repoRoot, 'learning', 'basics', 'hanja-meaning', 'v2');
-const lessons = ['hanja-v2-lessons-01.json', 'hanja-v2-lessons-02.json', 'hanja-v2-lessons-03.json', 'hanja-v2-lessons-04.json'].flatMap((name) => JSON.parse(fs.readFileSync(path.join(import.meta.dirname, name), 'utf8')));
+const lessons = ['hanja-v2-lessons-01.json', 'hanja-v2-lessons-02.json', 'hanja-v2-lessons-03.json', 'hanja-v2-lessons-04.json', 'hanja-v2-lessons-05.json'].flatMap((name) => JSON.parse(fs.readFileSync(path.join(import.meta.dirname, name), 'utf8')));
 const strokes = JSON.parse(fs.readFileSync(path.join(import.meta.dirname, 'hanja-strokes.json'), 'utf8'));
 for (const entry of fs.readdirSync(path.join(repoRoot, 'learning', 'basics', 'hanja-meaning'), { withFileTypes: true })) {
   if (!entry.isDirectory() || entry.name === 'v2') continue;
