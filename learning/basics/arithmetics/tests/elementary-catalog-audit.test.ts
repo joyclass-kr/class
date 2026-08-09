@@ -94,3 +94,25 @@ test("주고받기 문제는 동물 친구 이름과 어린이 눈높이 표현�
   assert.match(source, /세 친구가 가지고 있는 카드는 각각 몇 장입니까\?/);
   assert.doesNotMatch(source, /지혜|슬기|용기|세 사람이/);
 });
+test("초4~6 제목은 번호표나 포괄어 대신 실제 훈련 유형을 설명한다", () => {
+  const upperElementary = arithmeticWorksheetCatalog.filter(({ grade }) => ["초4", "초5", "초6"].includes(grade));
+  const vagueTitles = new Set(["곱셈", "나눗셈", "분수", "소수", "원기둥", "쌓기나무"]);
+  for (const worksheet of upperElementary) {
+    assert.equal(/[①②③④⑤]/u.test(worksheet.title), false, worksheet.title);
+    assert.equal(vagueTitles.has(worksheet.title), false, worksheet.title);
+  }
+
+  assert.equal(upperElementary.find(({ name }) => name === "4분수")?.title, "분모가 같은 대분수의 덧셈·뺄셈");
+  assert.equal(upperElementary.find(({ name }) => name === "5분수③")?.title, "분수의 크기 비교");
+  assert.equal(upperElementary.find(({ name }) => name === "6원기둥")?.title, "원기둥의 겉넓이와 부피");
+  assert.equal(upperElementary.find(({ name }) => name === "6쌓기나무")?.title, "쌓기나무의 개수와 세 방향 모양");
+});
+
+test("혼합수의 자연수와 분수 숫자는 같은 글자 크기 기준을 쓴다", () => {
+  const css = readFileSync(new URL("../app/globals.css", import.meta.url), "utf8");
+  assert.match(css, /\.grade-four-fraction-number\s*\{[^}]*font-size:\s*1em;/);
+  assert.match(css, /\.fraction-number\s*\{[^}]*font-size:\s*1em;/);
+  assert.match(css, /\.grade-five-fraction-one-number\s*\{[^}]*font-size:\s*1em;/);
+  assert.match(css, /\.grade-five-fraction-two-expression \.grade-five-fraction-one-number\s*\{[^}]*font-size:\s*1em;/);
+  assert.match(css, /\.grade-six-fraction-expression \.grade-five-fraction-one-number\s*\{[^}]*font-size:\s*1em;/);
+});

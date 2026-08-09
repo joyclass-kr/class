@@ -18,36 +18,28 @@ import {
   type MiddleQuadraticFunctionProblem,
 } from "../../../../lib/middle-quadratic-function-workouts";
 
-const DEFAULT_KIND: MiddleQuadraticFunctionKind = "values-and-forms";
+const DEFAULT_KIND: MiddleQuadraticFunctionKind = "comprehensive";
 const INITIAL_SEED = 20260730;
 const TARGET_LABELS: Record<MiddleQuadraticFunctionMethodKind, string> = {
-  "basic-value": "함숫값",
-  "vertex-value": "함숫값",
   "expand-vertex-form": "전개한 이차함수의 식",
   "complete-square": "꼭짓점형으로 바꾼 식",
   "vertex-axis": "꼭짓점과 대칭축",
   "extreme-value": "최댓값·최솟값",
-  "coefficient-from-point": "계수 a",
   "equation-from-vertex-point": "이차함수의 식",
   intercepts: "x절편과 y절편",
   "line-intersections": "교점의 x좌표",
   "normalize-first": "꼭짓점과 대칭축",
-  "fraction-decimal": "함숫값",
 };
 
 const QUESTION_PROMPTS: Record<MiddleQuadraticFunctionMethodKind, string> = {
-  "basic-value": "함숫값은?",
-  "vertex-value": "함숫값은?",
   "expand-vertex-form": "전개한 식은?",
   "complete-square": "꼭짓점형은?",
   "vertex-axis": "꼭짓점과 대칭축은?",
   "extreme-value": "최댓값 또는 최솟값은?",
-  "coefficient-from-point": "a의 값은?",
   "equation-from-vertex-point": "이차함수의 식은?",
   intercepts: "x절편과 y절편은?",
   "line-intersections": "교점의 x좌표는?",
   "normalize-first": "꼭짓점과 대칭축은?",
-  "fraction-decimal": "함숫값은?",
 };
 
 function choiceProblem(problem: MiddleQuadraticFunctionProblem): WorksheetChoiceProblem {
@@ -161,7 +153,6 @@ export default function MiddleQuadraticFunctionsPage() {
           <div className="counting-sheet-title"><span>중3</span><strong><InlineMathText text={title} />{answerSheet ? " 정답" : ""}</strong></div>
           <div className="counting-sheet-info"><span>이름 <i /></span><span>날짜 <i /></span><small>문제지 {problemSet.seed}</small></div>
         </header>
-        <div className="polynomial-instruction"><b>주어진 이차함수의 값 또는 식을 구하세요.</b><span>답안 입력에서 4지선다 채점</span></div>
         <div className="polynomial-problem-grid logarithm-grid">{problems.map((problem, index) => row(problem, index, answerSheet))}</div>
       </div>
     );

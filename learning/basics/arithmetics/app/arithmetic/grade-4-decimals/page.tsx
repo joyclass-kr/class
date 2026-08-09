@@ -180,7 +180,7 @@ export default function GradeFourDecimalsPage() {
     return (
       <div className="a4-sheet counting-sheet grade-four-decimal-sheet" style={{ transform: `scale(${sheetScale})` }}>
         <header className="counting-sheet-header">
-          <div className="counting-sheet-title"><span>4학년</span><strong>소수{answerSheet ? " 정답" : ""}</strong></div>
+          <div className="counting-sheet-title"><span>4학년</span><strong>소수의 덧셈·뺄셈{answerSheet ? " 정답" : ""}</strong></div>
           <div className="counting-sheet-info"><span>이름 <i /></span><span>날짜 <i /></span><small>문제지 {questionSet.seed}</small></div>
         </header>
         <div className="grade-four-decimal-grid">

@@ -174,7 +174,7 @@ export default function GradeFiveFractionOnePage() {
     return (
       <div className="a4-sheet counting-sheet grade-five-fraction-one-sheet" style={{ transform: `scale(${sheetScale})` }}>
         <header className="counting-sheet-header">
-          <div className="counting-sheet-title"><span>5학년</span><strong>분수 ①{answerSheet ? " 정답" : ""}</strong></div>
+          <div className="counting-sheet-title"><span>5학년</span><strong>분수의 덧셈·뺄셈·곱셈{answerSheet ? " 정답" : ""}</strong></div>
           <div className="counting-sheet-info"><span>이름 <i /></span><span>날짜 <i /></span><small>문제지 {seed}</small></div>
         </header>
         <div className="grade-five-fraction-one-columns">

@@ -2627,7 +2627,7 @@ html[data-race-mode="true"] body { padding-bottom: 72px; }
   align-items: center;
   justify-content: center;
   min-width: 0;
-  font-size: 20px;
+  font-size: 1em;
   font-weight: 900;
   line-height: 1;
   text-align: center;
@@ -4007,7 +4007,7 @@ button.prime-number-question:focus-visible {
   align-items: center;
   justify-content: center;
   min-width: 0;
-  font-size: 19px;
+  font-size: 1em;
   font-weight: 900;
   line-height: 1;
   text-align: center;
@@ -4111,7 +4111,7 @@ button.prime-number-question:focus-visible {
 }
 
 .grade-five-fraction-two-expression .grade-five-fraction-one-number {
-  font-size: 17px;
+  font-size: 1em;
 }
 
 .grade-five-fraction-two-static-answer {
@@ -4142,7 +4142,7 @@ button.prime-number-question:focus-visible {
 }
 
 .grade-six-fraction-expression .grade-five-fraction-one-number {
-  font-size: 17px;
+  font-size: 1em;
 }
 
 .grade-six-fraction-static-answer {
@@ -7640,7 +7640,7 @@ main {
   min-height: 25px;
   display: grid;
   place-items: center;
-  font-size: 0.88em;
+  font-size: 1em;
   font-weight: 800;
   line-height: 1;
 }

@@ -4,7 +4,6 @@ import path from "node:path";
 import test from "node:test";
 
 import { middleSchoolWorksheetCatalog } from "../lib/arithmetic-worksheets.ts";
-import { createMiddleExpressionValueProblemSet } from "../lib/middle-expression-values.ts";
 
 const root = process.cwd();
 const pageRoot = path.join(root, "app", "arithmetic", "middle-school");
@@ -15,17 +14,17 @@ const physicalPages = fs.readdirSync(pageRoot, { withFileTypes: true })
 
 const baseRoute = (route: string | null) => route?.split("?")[0].split("/").at(-1) ?? "";
 
-test("중등 52개 필수 목차는 중복 없이 모두 실제 페이지에 연결된다", () => {
-  assert.equal(middleSchoolWorksheetCatalog.length, 52);
+test("중등 48개 필수 목차는 중복 없이 모두 실제 페이지에 연결된다", () => {
+  assert.equal(middleSchoolWorksheetCatalog.length, 48);
   assert.deepEqual(
     middleSchoolWorksheetCatalog.reduce<Record<string, number>>((counts, worksheet) => {
       counts[worksheet.grade] = (counts[worksheet.grade] ?? 0) + 1;
       return counts;
     }, {}),
-    { 중1: 11, 중2: 13, 중3: 28 },
+    { 중1: 10, 중2: 13, 중3: 25 },
   );
-  assert.equal(new Set(middleSchoolWorksheetCatalog.map(({ name }) => name)).size, 52);
-  assert.equal(new Set(middleSchoolWorksheetCatalog.map(({ route }) => route)).size, 52);
+  assert.equal(new Set(middleSchoolWorksheetCatalog.map(({ name }) => name)).size, 48);
+  assert.equal(new Set(middleSchoolWorksheetCatalog.map(({ route }) => route)).size, 48);
   assert.deepEqual(
     middleSchoolWorksheetCatalog
       .filter(({ route }) => !physicalPages.includes(baseRoute(route)))
@@ -40,7 +39,6 @@ test("필수 연산 영역은 목차에 하나도 빠지지 않는다", () => {
     "/arithmetic/middle-school/core-calculations?kind=prime-factorization",
     "/arithmetic/middle-school/core-calculations?kind=gcd-lcm",
     "/arithmetic/middle-school/rational-mixed",
-    "/arithmetic/middle-school/expression-values",
     "/arithmetic/middle-school/core-calculations?kind=linear-expression",
     "/arithmetic/middle-school/core-calculations?kind=linear-equation",
     "/arithmetic/middle-school/curriculum-calculations?kind=coordinate-proportion",
@@ -65,7 +63,7 @@ test("필수 연산 영역은 목차에 하나도 빠지지 않는다", () => {
     "/arithmetic/middle-school/core-calculations?kind=formula-comprehensive",
     "/arithmetic/middle-school/factorization?kind=comprehensive",
     "/arithmetic/middle-school/quadratic-equations?kind=applications",
-    "/arithmetic/middle-school/quadratic-functions?kind=values-and-forms",
+    "/arithmetic/middle-school/quadratic-functions?kind=comprehensive",
     "/arithmetic/middle-school/trigonometry?kind=ratios",
     "/arithmetic/middle-school/circle-properties?kind=inscribed-angles",
     "/arithmetic/middle-school/statistics?kind=dispersion",
@@ -105,16 +103,6 @@ test("옛 유리수 세부 주소는 통합 학습지로 이동한다", () => {
     const source = fs.readFileSync(path.join(pageRoot, legacy, "page.tsx"), "utf8");
     assert.match(source, /redirect\("\/arithmetic\/middle-school\/rational-mixed"\)/);
     assert.doesNotMatch(source, /NumericChoiceWorksheet|createMiddleRational/);
-  }
-});
-
-test("문자식은 계수가 1 또는 -1일 때 숫자 1을 쓰지 않는다", () => {
-  for (let seed = 1; seed <= 200; seed += 1) {
-    const text = createMiddleExpressionValueProblemSet(seed).problems
-      .map(({ latex }) => latex)
-      .join(" ");
-    assert.doesNotMatch(text, /(?:^|[=+(\-])1[xy]/);
-    assert.doesNotMatch(text, /(?:^|[=+(])\-1[xy]/);
   }
 });
 

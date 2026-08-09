@@ -2,7 +2,6 @@ import { middleSchoolWorksheetCatalog } from "../lib/arithmetic-worksheets.ts";
 import { createMiddleCirclePropertiesProblemSet, type MiddleCirclePropertiesKind } from "../lib/middle-circle-properties-workouts.ts";
 import { createMiddleCoreProblemSet, type MiddleCoreKind } from "../lib/middle-core-workouts.ts";
 import { createMiddleCurriculumProblemSet, type MiddleCurriculumKind } from "../lib/middle-curriculum-workouts.ts";
-import { createMiddleExpressionValueProblemSet } from "../lib/middle-expression-values.ts";
 import { createMiddleFactorizationProblemSet, type MiddleFactorizationKind } from "../lib/middle-factorization-workouts.ts";
 import { createMiddleQuadraticEquationProblemSet, type MiddleQuadraticEquationKind } from "../lib/middle-quadratic-equation-workouts.ts";
 import { createMiddleQuadraticFunctionProblemSet, type MiddleQuadraticFunctionKind } from "../lib/middle-quadratic-function-workouts.ts";
@@ -81,9 +80,6 @@ function createProblems(route: string): AuditedProblem[] {
   }
   if (url.pathname.endsWith("/rational-mixed")) {
     return createMiddleRationalMixedProblemSet(20260803).problems;
-  }
-  if (url.pathname.endsWith("/expression-values")) {
-    return createMiddleExpressionValueProblemSet(20260803).problems;
   }
   throw new Error(`감사 생성기가 연결되지 않은 중등 학습지: ${route}`);
 }

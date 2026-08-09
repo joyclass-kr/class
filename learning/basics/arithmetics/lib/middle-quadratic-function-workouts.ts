@@ -1,16 +1,12 @@
 export type MiddleQuadraticFunctionMethodKind =
-  | "basic-value"
-  | "vertex-value"
   | "expand-vertex-form"
   | "complete-square"
   | "vertex-axis"
   | "extreme-value"
-  | "coefficient-from-point"
   | "equation-from-vertex-point"
   | "intercepts"
   | "line-intersections"
   | "normalize-first"
-  | "fraction-decimal";
 
 export type MiddleQuadraticFunctionKind =
   | "values-and-forms"
@@ -34,49 +30,37 @@ export type MiddleQuadraticFunctionProblem = {
 };
 
 export const MIDDLE_QUADRATIC_FUNCTION_KINDS: MiddleQuadraticFunctionKind[] = [
-  "values-and-forms",
-  "vertex-and-axis",
-  "determine-equation",
-  "intercepts-and-intersections",
   "comprehensive",
 ];
 
 export const MIDDLE_QUADRATIC_FUNCTION_METHOD_KINDS: MiddleQuadraticFunctionMethodKind[] = [
-  "basic-value",
-  "vertex-value",
   "expand-vertex-form",
   "complete-square",
   "vertex-axis",
   "extreme-value",
-  "coefficient-from-point",
   "equation-from-vertex-point",
   "intercepts",
   "line-intersections",
   "normalize-first",
-  "fraction-decimal",
 ];
 
 export const MIDDLE_QUADRATIC_FUNCTION_TITLES: Record<MiddleQuadraticFunctionKind, string> = {
-  "values-and-forms": "이차함수의 식과 꼭짓점",
-  "vertex-and-axis": "이차함수: 꼭짓점과 대칭축",
-  "determine-equation": "이차함수: 조건으로 식 구하기",
-  "intercepts-and-intersections": "이차함수: 절편과 교점",
-  comprehensive: "이차함수 계산 종합",
+  "values-and-forms": "이차함수",
+  "vertex-and-axis": "이차함수",
+  "determine-equation": "이차함수",
+  "intercepts-and-intersections": "이차함수",
+  comprehensive: "이차함수",
 };
 
 const MIDDLE_QUADRATIC_FUNCTION_METHOD_TITLES: Record<MiddleQuadraticFunctionMethodKind, string> = {
-  "basic-value": "기본형의 함숫값",
-  "vertex-value": "꼭짓점형의 함숫값",
   "expand-vertex-form": "꼭짓점형 전개",
   "complete-square": "일반형을 꼭짓점형으로",
   "vertex-axis": "꼭짓점과 대칭축",
   "extreme-value": "최댓값·최솟값",
-  "coefficient-from-point": "한 점으로 계수 구하기",
   "equation-from-vertex-point": "꼭짓점과 한 점으로 식 구하기",
   intercepts: "x절편과 y절편",
   "line-intersections": "직선과의 교점 계산",
   "normalize-first": "식 정리 후 꼭짓점",
-  "fraction-decimal": "분수·소수 계수",
 };
 
 function random(seed: number) {
@@ -144,10 +128,6 @@ function generalForm(a: number, b: number, c: number) {
   return `y=${quadraticExpression(a, b, c)}`;
 }
 
-function valueAnswer(value: number) {
-  return `y=${numberLatex(value)}`;
-}
-
 function rootPairAnswer(first: number, second: number) {
   const roots = [...new Set([first, second])].sort((left, right) => left - right);
   return roots.length === 1
@@ -203,16 +183,6 @@ function distinctRoots(next: () => number, limit: number) {
   return [first, second] as const;
 }
 
-function objectParticle(value: number) {
-  return [0, 1, 3, 6, 7, 8].includes(Math.abs(value) % 10) ? "을" : "를";
-}
-
-function substitutedSquare(a: number, x: number) {
-  if (a === 1) return `(${x})^2`;
-  if (a === -1) return `-(${x})^2`;
-  return `${a}\\times(${x})^2`;
-}
-
 function build(
   kind: MiddleQuadraticFunctionMethodKind,
   next: () => number,
@@ -225,22 +195,6 @@ function build(
   const q = integer(next, -8, 8);
   let x = integer(next, -7, 7);
   while (x === p) x = integer(next, -7, 7);
-
-  if (kind === "basic-value") {
-    const value = a * x * x;
-    return make(id, kind, `y=${coefficient(a, "x^2", true)},\\quad x=${x}`, valueAnswer(value),
-      `${x}${objectParticle(x)} x에 대입해 ${substitutedSquare(a, x)}을 계산한다.`,
-      [valueAnswer(-value), valueAnswer(a * x), valueAnswer(value + a)],
-      a > 0 ? "positive-coefficient-value" : "negative-coefficient-value");
-  }
-
-  if (kind === "vertex-value") {
-    const value = a * (x - p) ** 2 + q;
-    return make(id, kind, `${vertexForm(a, p, q)},\\quad x=${x}`, valueAnswer(value),
-      `괄호 안의 값 ${x - p}을 먼저 계산한 뒤 제곱하고 ${q}를 더한다.`,
-      [valueAnswer(a * (x - p) + q), valueAnswer(a * (x + p) ** 2 + q), valueAnswer(value - q)],
-      p === 0 ? "unshifted-value" : "shifted-value");
-  }
 
   if (kind === "expand-vertex-form") {
     const b = -2 * a * p;
@@ -309,18 +263,6 @@ function build(
         `\\text{${extremeLabel} }${q - step}`,
       ],
       a > 0 ? "minimum-from-vertex" : "maximum-from-vertex");
-  }
-
-  if (kind === "coefficient-from-point") {
-    const value = a * (x - p) ** 2 + q;
-    const answer = `a=${a}`;
-    const inside = p === 0 ? "x" : `x${p > 0 ? "-" : "+"}${Math.abs(p)}`;
-    return make(id, kind,
-      `y=a(${inside})^2${q === 0 ? "" : signedNumber(q)},\\quad (${x},${value})`,
-      answer,
-      `점의 좌표를 대입해 ${value}=a(${x - p})^2${q === 0 ? "" : signedNumber(q)} 꼴로 a를 구한다.`,
-      [`a=${-a}`, `a=${a * (x - p)}`, `a=${a + q}`],
-      Math.abs(x - p) === 1 ? "unit-distance-point" : "scaled-distance-point");
   }
 
   if (kind === "equation-from-vertex-point") {
@@ -406,26 +348,6 @@ function build(
       variantHint < 4 ? "combine-linear-terms" : "combine-all-like-terms");
   }
 
-  if (kind === "fraction-decimal") {
-    const fractionalA = variantHint % 2 === 0 ? 0.5 : -0.5;
-    const value = fractionalA * (x - p) ** 2 + q;
-    const displayedA = variantHint % 2 === 0 ? "\\dfrac{1}{2}" : "-0.5";
-    const inside = p === 0 ? "x" : `x${p > 0 ? "-" : "+"}${Math.abs(p)}`;
-    return make(id, kind,
-      `y=${displayedA}(${inside})^2${q === 0 ? "" : signedNumber(q)},\\quad x=${x}`,
-      valueAnswer(value),
-      "괄호 안을 먼저 계산하고 제곱한 뒤 분수·소수 계수를 곱한다.",
-      [
-        valueAnswer(-value),
-        valueAnswer(fractionalA * (x + p) ** 2 + q),
-        valueAnswer(value - q),
-        valueAnswer(value + 1),
-        valueAnswer(value - 1),
-        valueAnswer(value + 2),
-      ],
-      variantHint % 2 === 0 ? "fraction-value" : "decimal-value");
-  }
-
   throw new Error(`지원하지 않는 이차함수 계산 유형: ${kind}`);
 }
 
@@ -435,84 +357,58 @@ function difficultyForIndex(index: number): MiddleQuadraticFunctionDifficulty {
   return "advanced";
 }
 
-function comprehensiveKind(seed: number, index: number) {
-  const offset = (((seed - 1) * 8) % MIDDLE_QUADRATIC_FUNCTION_METHOD_KINDS.length
-    + MIDDLE_QUADRATIC_FUNCTION_METHOD_KINDS.length)
-    % MIDDLE_QUADRATIC_FUNCTION_METHOD_KINDS.length;
-  return MIDDLE_QUADRATIC_FUNCTION_METHOD_KINDS[
-    (offset + index) % MIDDLE_QUADRATIC_FUNCTION_METHOD_KINDS.length
-  ];
-}
-
-const GROUP_METHOD_PLANS: Record<Exclude<MiddleQuadraticFunctionKind, "comprehensive">, MiddleQuadraticFunctionMethodKind[]> = {
-  "values-and-forms": [
-    "basic-value", "expand-vertex-form", "vertex-axis", "complete-square",
-    "extreme-value", "coefficient-from-point", "equation-from-vertex-point", "intercepts",
-  ],
-  "vertex-and-axis": [
-    "vertex-axis", "complete-square",
-    "vertex-axis", "complete-square", "normalize-first",
-    "normalize-first", "complete-square", "vertex-axis",
-  ],
-  "determine-equation": [
-    "coefficient-from-point", "equation-from-vertex-point",
-    "coefficient-from-point", "equation-from-vertex-point", "coefficient-from-point",
-    "equation-from-vertex-point", "coefficient-from-point", "equation-from-vertex-point",
-  ],
-  "intercepts-and-intersections": [
-    "intercepts", "line-intersections",
-    "intercepts", "line-intersections", "intercepts",
-    "line-intersections", "intercepts", "line-intersections",
-  ],
-};
-
-const LEGACY_KIND_GROUPS: Record<MiddleQuadraticFunctionMethodKind, MiddleQuadraticFunctionKind> = {
-  "basic-value": "values-and-forms",
-  "vertex-value": "values-and-forms",
-  "expand-vertex-form": "values-and-forms",
-  "fraction-decimal": "values-and-forms",
-  "complete-square": "vertex-and-axis",
-  "vertex-axis": "vertex-and-axis",
-  "extreme-value": "values-and-forms",
-  "normalize-first": "vertex-and-axis",
-  "coefficient-from-point": "determine-equation",
-  "equation-from-vertex-point": "determine-equation",
-  intercepts: "intercepts-and-intersections",
-  "line-intersections": "intercepts-and-intersections",
-};
-
 export function isMiddleQuadraticFunctionKind(value: string | null): value is MiddleQuadraticFunctionKind {
   return MIDDLE_QUADRATIC_FUNCTION_KINDS.includes(value as MiddleQuadraticFunctionKind);
 }
 
 export function resolveMiddleQuadraticFunctionKind(value: string | null): MiddleQuadraticFunctionKind | null {
-  if (isMiddleQuadraticFunctionKind(value)) return value;
-  if (MIDDLE_QUADRATIC_FUNCTION_METHOD_KINDS.includes(value as MiddleQuadraticFunctionMethodKind)) {
-    return LEGACY_KIND_GROUPS[value as MiddleQuadraticFunctionMethodKind];
+  if (
+    value === "comprehensive"
+    || value === "values-and-forms"
+    || value === "vertex-and-axis"
+    || value === "determine-equation"
+    || value === "intercepts-and-intersections"
+    || value === "basic-value"
+    || value === "vertex-value"
+    || value === "coefficient-from-point"
+    || value === "fraction-decimal"
+    || MIDDLE_QUADRATIC_FUNCTION_METHOD_KINDS.includes(value as MiddleQuadraticFunctionMethodKind)
+  ) {
+    return "comprehensive";
   }
   return null;
 }
 
+const CONSOLIDATED_METHOD_PLAN: MiddleQuadraticFunctionMethodKind[] = [
+  "expand-vertex-form",
+  "vertex-axis",
+  "complete-square",
+  "extreme-value",
+  "normalize-first",
+  "equation-from-vertex-point",
+  "intercepts",
+  "line-intersections",
+];
+
 export function createMiddleQuadraticFunctionProblemSet(
-  kind: MiddleQuadraticFunctionKind,
+  _kind: MiddleQuadraticFunctionKind,
   seed: number,
 ) {
   const next = random(seed);
   return {
     seed,
-    kind,
-    problems: Array.from({ length: 8 }, (_, index) => ({
+    kind: "comprehensive" as const,
+    problems: CONSOLIDATED_METHOD_PLAN.map((method, index) => ({
       ...build(
-        kind === "comprehensive" ? comprehensiveKind(seed, index) : GROUP_METHOD_PLANS[kind][index],
+        method,
         next,
-        `middle-quadratic-function-${kind}-${index}`,
+        "middle-quadratic-function-comprehensive-" + index,
         index,
       ),
       difficulty: difficultyForIndex(index),
     })),
   };
 }
-
 export function createMiddleQuadraticFunctionReviewProblems(
   kinds: MiddleQuadraticFunctionMethodKind[],
   seed: number,
