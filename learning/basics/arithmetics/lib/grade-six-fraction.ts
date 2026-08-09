@@ -1,5 +1,6 @@
 import {
   FRACTION_DENOMINATORS,
+  greatestCommonDivisor,
   PAIRED_DENOMINATOR_ROWS,
   PRODUCT_DENOMINATOR_ROWS,
   PROPER_NUMERATOR_ROWS,
@@ -9,11 +10,12 @@ import type { MixedFractionAnswer } from "./grade-five-fraction-one.ts";
 
 export type GradeSixFractionOperand =
   | { kind: "fraction"; numerator: number; denominator: number }
+  | { kind: "mixed"; whole: number; numerator: number; denominator: number }
   | { kind: "natural"; value: number };
 
 export type GradeSixFractionProblem = {
   id: string;
-  kind: "addition" | "subtraction" | "three-factor-product" | "fraction-division-natural" | "fraction-natural-product";
+  kind: "addition" | "subtraction" | "three-factor-product" | "mixed-division-fraction" | "mixed-division-natural" | "fraction-division-natural" | "fraction-natural-product";
   operands: GradeSixFractionOperand[];
   operators: Array<"+" | "−" | "×" | "÷">;
   answer: MixedFractionAnswer;
@@ -54,6 +56,10 @@ function pick<T>(next: () => number, values: readonly T[]): T {
 
 function fraction(numerator: number, denominator: number): GradeSixFractionOperand {
   return { kind: "fraction", numerator, denominator };
+}
+
+function mixed(whole: number, numerator: number, denominator: number): GradeSixFractionOperand {
+  return { kind: "mixed", whole, numerator, denominator };
 }
 
 function natural(value: number): GradeSixFractionOperand {
@@ -116,9 +122,30 @@ function productFraction(next: () => number) {
 
 // 6분수!A41:O71, 분수원본!A18:Q35
 function threeFactorProduct(next: () => number, index: number, naturalPosition: 0 | 1 | 2): GradeSixFractionProblem {
-  const first = productFraction(next);
-  const second = productFraction(next);
-  const naturalValue = integer(next, 2, 15);
+  let first = productFraction(next);
+  let second = productFraction(next);
+  let naturalValue = 2;
+  let selected = false;
+
+  for (let attempt = 0; attempt < 100; attempt += 1) {
+    first = productFraction(next);
+    second = productFraction(next);
+    const rawDenominator = first.denominator * second.denominator;
+    const cancellableNaturals = Array.from({ length: 14 }, (_, offset) => offset + 2)
+      .filter((value) => {
+        const rawNumerator = value * first.numerator * second.numerator;
+        const divisor = greatestCommonDivisor(rawNumerator, rawDenominator);
+        return divisor > 1 && rawDenominator / divisor <= 30;
+      });
+    if (cancellableNaturals.length === 0) continue;
+    naturalValue = pick(next, cancellableNaturals);
+    selected = true;
+    break;
+  }
+
+  // 제한된 재추출 안에 조합을 못 찾은 극단적인 경우에도 약분과 작은 분모를 보장한다.
+  if (!selected) naturalValue = first.denominator * second.denominator;
+
   const operands: GradeSixFractionOperand[] = [fraction(first.numerator, first.denominator), fraction(second.numerator, second.denominator)];
   operands.splice(naturalPosition, 0, natural(naturalValue));
   return {
@@ -129,7 +156,6 @@ function threeFactorProduct(next: () => number, index: number, naturalPosition: 
     answer: toMixedFraction(naturalValue * first.numerator * second.numerator, first.denominator * second.denominator),
   };
 }
-
 function divisionNatural(next: () => number, numerator: number) {
   if (numerator === 4 || numerator === 8) return 2 * integer(next, 1, 4);
   if (numerator === 5) return integer(next, 2, 5);
@@ -146,6 +172,57 @@ function multiplicationNatural(next: () => number, denominator: number) {
   return 2 * integer(next, 2, 4);
 }
 
+// 대분수를 가분수로 바꾸고 나누는 분수의 역수를 곱하는 편이 자연스러운 유형.
+function mixedDivisionFraction(next: () => number, index: number): GradeSixFractionProblem {
+  for (let attempt = 0; attempt < 100; attempt += 1) {
+    const denominator = integer(next, 3, 12);
+    const numerator = integer(next, 1, denominator - 1);
+    if (greatestCommonDivisor(numerator, denominator) !== 1) continue;
+    const whole = integer(next, 2, 9);
+    const divisorNumerator = integer(next, 2, 12);
+    const divisorDenominator = integer(next, divisorNumerator + 1, 16);
+    if (greatestCommonDivisor(divisorNumerator, divisorDenominator) !== 1) continue;
+
+    const improperNumerator = whole * denominator + numerator;
+    const rawNumerator = improperNumerator * divisorDenominator;
+    const rawDenominator = denominator * divisorNumerator;
+    if (greatestCommonDivisor(rawNumerator, rawDenominator) === 1) continue;
+    const answer = toMixedFraction(rawNumerator, rawDenominator);
+    if (answer.whole > 40) continue;
+    return {
+      id: `grade-six-fraction-${index}`,
+      kind: "mixed-division-fraction",
+      operands: [mixed(whole, numerator, denominator), fraction(divisorNumerator, divisorDenominator)],
+      operators: ["÷"],
+      answer,
+    };
+  }
+
+  return {
+    id: `grade-six-fraction-${index}`,
+    kind: "mixed-division-fraction",
+    operands: [mixed(3, 1, 2), fraction(7, 8)],
+    operators: ["÷"],
+    answer: toMixedFraction(28, 7),
+  };
+}
+// 자연수 부분과 분자 부분이 모두 나누어떨어져 가분수로 바꾸지 않고 바로 계산하는 유형.
+// 가분수로 바꾸면 분자가 네 자리 이상이 되도록 수를 구성한다.
+function mixedDivisionNatural(next: () => number, index: number): GradeSixFractionProblem {
+  const divisor = pick(next, [4, 5, 6, 7, 8, 9] as const);
+  const denominator = pick(next, [23, 29, 31, 37, 41, 43, 47, 53] as const);
+  const quotientWhole = integer(next, 12, 24);
+  const quotientNumerator = integer(next, 1, Math.floor((denominator - 1) / divisor));
+  const whole = quotientWhole * divisor;
+  const numerator = quotientNumerator * divisor;
+  return {
+    id: `grade-six-fraction-${index}`,
+    kind: "mixed-division-natural",
+    operands: [mixed(whole, numerator, denominator), natural(divisor)],
+    operators: ["÷"],
+    answer: toMixedFraction(quotientWhole * denominator + quotientNumerator, denominator),
+  };
+}
 // 6분수!A77:O89
 function fractionAndNatural(next: () => number, index: number, kind: "fraction-division-natural" | "fraction-natural-product"): GradeSixFractionProblem {
   const denominator = integer(next, 5, 10);
@@ -175,8 +252,8 @@ export function createGradeSixFractionSet(seed: number): GradeSixFractionSet {
       addOrSubtract(next, 3, "subtraction"),
       threeFactorProduct(next, 4, 0),
       threeFactorProduct(next, 5, 1),
-      threeFactorProduct(next, 6, 2),
-      threeFactorProduct(next, 7, 0),
+      mixedDivisionFraction(next, 6),
+      mixedDivisionNatural(next, 7),
       fractionAndNatural(next, 8, "fraction-division-natural"),
       fractionAndNatural(next, 9, "fraction-natural-product"),
     ],

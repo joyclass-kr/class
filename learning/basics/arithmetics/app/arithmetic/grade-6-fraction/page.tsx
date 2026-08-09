@@ -34,6 +34,9 @@ function FractionStack({ numerator, denominator, className = "", inputOrder = fa
 
 function Operand({ value }: { value: GradeSixFractionOperand }) {
   if (value.kind === "natural") return <span className="grade-five-fraction-one-natural">{value.value}</span>;
+  if (value.kind === "mixed") {
+    return <span className="grade-five-fraction-one-value mixed grade-six-fraction-mixed-operand"><strong>{value.whole}</strong><FractionStack numerator={value.numerator} denominator={value.denominator} /></span>;
+  }
   return <FractionStack numerator={value.numerator} denominator={value.denominator} />;
 }
 

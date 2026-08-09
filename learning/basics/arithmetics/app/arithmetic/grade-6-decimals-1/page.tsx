@@ -75,15 +75,13 @@ export default function GradeSixDecimalOnePage() {
   }
 
   function renderAnswer(problem: GradeSixDecimalOneProblem, answerSheet: boolean) {
-    const boxWidth = `${problem.answer.length + 1.5}ch`;
-    if (answerSheet) return <strong className="grade-six-decimal-one-static-answer" style={{ width: boxWidth }}>{problem.answer}</strong>;
+    if (answerSheet) return <strong className="grade-six-decimal-one-static-answer">{problem.answer}</strong>;
     return (
       <input
         className="grade-six-decimal-one-input"
         type="text"
         inputMode="decimal"
         maxLength={problem.answer.length}
-        style={{ width: boxWidth }}
         value={answers[problem.id] ?? ""}
         onChange={(event) => updateAnswer(problem.id, event.target.value)}
         onKeyDown={moveOnEnter}
@@ -110,7 +108,7 @@ export default function GradeSixDecimalOnePage() {
 
   function renderSheet(answerSheet: boolean) {
     return (
-      <div className="a4-sheet counting-sheet grade-six-decimal-one-sheet" style={{ transform: `scale(${sheetScale})` }}>
+      <div className="a4-sheet counting-sheet mental-math-sheet grade-six-decimal-one-sheet" style={{ transform: `scale(${sheetScale})` }}>
         <header className="counting-sheet-header">
           <div className="counting-sheet-title"><span>6학년</span><strong>자연수 ÷ 자연수의 몫을 소수로 나타내기{answerSheet ? " 정답" : ""}</strong></div>
           <div className="counting-sheet-info"><span>이름 <i /></span><span>날짜 <i /></span><small>문제지 {seed}</small></div>

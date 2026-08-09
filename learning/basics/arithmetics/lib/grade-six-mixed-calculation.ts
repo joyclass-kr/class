@@ -1,6 +1,13 @@
+export type GradeSixMixedCalculationOperand =
+  | { kind: "natural"; value: number }
+  | { kind: "decimal"; value: string }
+  | { kind: "fraction"; numerator: number; denominator: number }
+  | { kind: "mixed"; whole: number; numerator: number; denominator: number };
+
 export type GradeSixMixedCalculationProblem = {
   id: string;
-  expression: string;
+  operands: GradeSixMixedCalculationOperand[];
+  operators: Array<"+" | "−" | "×" | "÷">;
   answer: string;
   kind: "fraction" | "decimal";
 };
@@ -45,8 +52,7 @@ function formatFraction(value: Rational) {
 }
 
 function formatDecimal(value: Rational) {
-  const result = value.numerator / value.denominator;
-  return String(Number(result.toFixed(4)));
+  return String(value.numerator / value.denominator);
 }
 
 function random(seed: number) {
@@ -64,8 +70,34 @@ function integer(next: () => number, minimum: number, maximum: number) {
   return minimum + Math.floor(next() * (maximum - minimum + 1));
 }
 
-function fractionText(value: Rational) {
-  return value.denominator === 1 ? String(value.numerator) : `${value.numerator}/${value.denominator}`;
+function pick<T>(next: () => number, values: readonly T[]) {
+  return values[integer(next, 0, values.length - 1)];
+}
+
+function properFraction(next: () => number, minimumDenominator: number, maximumDenominator: number) {
+  for (;;) {
+    const denominator = integer(next, minimumDenominator, maximumDenominator);
+    const numerator = integer(next, 1, denominator - 1);
+    const value = rational(numerator, denominator);
+    if (value.numerator > 0 && value.numerator < value.denominator) return value;
+  }
+}
+
+function naturalOperand(value: number): GradeSixMixedCalculationOperand {
+  return { kind: "natural", value };
+}
+
+function decimalOperand(value: Rational): GradeSixMixedCalculationOperand {
+  return { kind: "decimal", value: formatDecimal(value) };
+}
+
+function fractionOperand(value: Rational): GradeSixMixedCalculationOperand {
+  return { kind: "fraction", numerator: value.numerator, denominator: value.denominator };
+}
+
+function mixedOperand(whole: number, numerator: number, denominator: number): GradeSixMixedCalculationOperand {
+  const fraction = rational(numerator, denominator);
+  return { kind: "mixed", whole, numerator: fraction.numerator, denominator: fraction.denominator };
 }
 
 export function normalizeGradeSixMixedAnswer(input: string) {
@@ -80,35 +112,77 @@ export function normalizeGradeSixMixedAnswer(input: string) {
 
 export function createGradeSixMixedCalculationSet(seed: number): GradeSixMixedCalculationProblem[] {
   const next = random(seed);
-  const a = rational(integer(next, 1, 2) * integer(next, 4, 8) + integer(next, 1, 3), integer(next, 4, 8));
-  const b = rational(integer(next, 1, 2) * integer(next, 4, 8) + integer(next, 1, 3), integer(next, 4, 8));
-  const c = rational(integer(next, 1, 2) * integer(next, 4, 8) + integer(next, 1, 3), integer(next, 4, 8));
-  const one = divide(a, b);
+
+  const a = properFraction(next, 4, 9);
+  const b = properFraction(next, 4, 9);
+  const c = properFraction(next, 4, 9);
+  const one = multiply(divide(a, b), c);
+
   const twoLeft = rational(integer(next, 666, 999), 100);
   const twoRight = rational(integer(next, 11, 55), 10);
-  const twoDivisor = integer(next, 20, 50);
-  const threeNatural = integer(next, 1, 3);
-  const threeFraction = rational(integer(next, 2, 8), integer(next, 9, 15));
+  const twoDivisor = pick(next, [2, 4, 5, 8, 10, 20, 25, 40, 50] as const);
+
+  const threeNatural = integer(next, 2, 4);
+  const threeFraction = properFraction(next, 9, 15);
   const threeDecimal = rational(integer(next, 2, 9), 10);
+
   const fourDecimal = rational(integer(next, 7, 9), 10);
   const fourNatural = integer(next, 5, 8);
-  const fourDenominator = next() < .5 ? 4 : 8;
-  const fourSubtractDenominator = next() < .5 ? 4 : 8;
+  const fourDenominator = pick(next, [4, 8] as const);
+  const fourSubtractDenominator = pick(next, [4, 8] as const);
+
   const fiveNatural = integer(next, 6, 9);
-  const fiveFractionDenominator = [4, 8, 16][integer(next, 0, 2)];
+  const fiveFractionDenominator = pick(next, [4, 8, 16] as const);
   const fiveDecimal = rational(integer(next, 101, 999), 100);
   const fiveMultiplier = integer(next, 3, 9);
+
   const sixNatural = integer(next, 2, 4);
-  const sixFraction = rational(integer(next, 2, 6), integer(next, 4, 7));
+  const sixFraction = properFraction(next, 5, 9);
   const sixDecimal = rational(integer(next, 12, 48), 100);
   const sixDivisor = integer(next, 4, 5);
 
   return [
-    { id: "grade-six-mixed-1", expression: `(${fractionText(a)}) ÷ (${fractionText(b)}) × (${fractionText(c)})`, answer: formatFraction(multiply(one, c)), kind: "fraction" },
-    { id: "grade-six-mixed-2", expression: `${formatDecimal(twoLeft)} − ${formatDecimal(twoRight)} ÷ ${twoDivisor}`, answer: formatDecimal(subtract(twoLeft, divide(twoRight, rational(twoDivisor)))), kind: "decimal" },
-    { id: "grade-six-mixed-3", expression: `${threeNatural} + ${fractionText(threeFraction)} ÷ ${formatDecimal(threeDecimal)}`, answer: formatFraction(add(rational(threeNatural), divide(threeFraction, threeDecimal))), kind: "fraction" },
-    { id: "grade-six-mixed-4", expression: `${formatDecimal(fourDecimal)} × (${fourNatural} + 1/${fourDenominator}) − 1/${fourSubtractDenominator}`, answer: formatDecimal(subtract(multiply(fourDecimal, add(rational(fourNatural), rational(1, fourDenominator))), rational(1, fourSubtractDenominator))), kind: "decimal" },
-    { id: "grade-six-mixed-5", expression: `${fiveNatural} + 1/${fiveFractionDenominator} + ${formatDecimal(fiveDecimal)} × ${fiveMultiplier}`, answer: formatDecimal(add(add(rational(fiveNatural), rational(1, fiveFractionDenominator)), multiply(fiveDecimal, rational(fiveMultiplier)))), kind: "decimal" },
-    { id: "grade-six-mixed-6", expression: `${sixNatural} + ${fractionText(sixFraction)} ÷ ${formatDecimal(sixDecimal)} ÷ ${sixDivisor}`, answer: formatFraction(add(rational(sixNatural), divide(divide(sixFraction, sixDecimal), rational(sixDivisor)))), kind: "fraction" },
+    {
+      id: "grade-six-mixed-1",
+      operands: [fractionOperand(a), fractionOperand(b), fractionOperand(c)],
+      operators: ["÷", "×"],
+      answer: formatFraction(one),
+      kind: "fraction",
+    },
+    {
+      id: "grade-six-mixed-2",
+      operands: [decimalOperand(twoLeft), decimalOperand(twoRight), naturalOperand(twoDivisor)],
+      operators: ["−", "÷"],
+      answer: formatDecimal(subtract(twoLeft, divide(twoRight, rational(twoDivisor)))),
+      kind: "decimal",
+    },
+    {
+      id: "grade-six-mixed-3",
+      operands: [naturalOperand(threeNatural), fractionOperand(threeFraction), decimalOperand(threeDecimal)],
+      operators: ["+", "÷"],
+      answer: formatFraction(add(rational(threeNatural), divide(threeFraction, threeDecimal))),
+      kind: "fraction",
+    },
+    {
+      id: "grade-six-mixed-4",
+      operands: [decimalOperand(fourDecimal), mixedOperand(fourNatural, 1, fourDenominator), fractionOperand(rational(1, fourSubtractDenominator))],
+      operators: ["×", "−"],
+      answer: formatDecimal(subtract(multiply(fourDecimal, add(rational(fourNatural), rational(1, fourDenominator))), rational(1, fourSubtractDenominator))),
+      kind: "decimal",
+    },
+    {
+      id: "grade-six-mixed-5",
+      operands: [naturalOperand(fiveNatural), fractionOperand(rational(1, fiveFractionDenominator)), decimalOperand(fiveDecimal), naturalOperand(fiveMultiplier)],
+      operators: ["+", "+", "×"],
+      answer: formatDecimal(add(add(rational(fiveNatural), rational(1, fiveFractionDenominator)), multiply(fiveDecimal, rational(fiveMultiplier)))),
+      kind: "decimal",
+    },
+    {
+      id: "grade-six-mixed-6",
+      operands: [naturalOperand(sixNatural), fractionOperand(sixFraction), decimalOperand(sixDecimal), naturalOperand(sixDivisor)],
+      operators: ["+", "÷", "÷"],
+      answer: formatFraction(add(rational(sixNatural), divide(divide(sixFraction, sixDecimal), rational(sixDivisor)))),
+      kind: "fraction",
+    },
   ];
 }

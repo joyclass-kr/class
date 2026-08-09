@@ -92,7 +92,7 @@ export default function GradeFivePrimeNumbersPage() {
     return (
       <div className="a4-sheet counting-sheet prime-number-sheet" style={{ transform: `scale(${sheetScale})` }}>
         <header className="counting-sheet-header">
-          <div className="counting-sheet-title"><span>5학년</span><strong>소수(素數, prime number) 찾기{answerSheet ? " 정답" : ""}</strong></div>
+          <div className="counting-sheet-title"><span>5학년</span><strong>소수(素數) 찾기{answerSheet ? " 정답" : ""}</strong></div>
           <div className="counting-sheet-info"><span>이름 <i /></span><span>날짜 <i /></span><small>1~100</small></div>
         </header>
         <p className="prime-number-guide">약수가 2개(1과 자기 자신)인 수</p>
@@ -122,8 +122,8 @@ export default function GradeFivePrimeNumbersPage() {
           <button className="button primary" type="button" onClick={checkAll}>전체 채점</button>
         </div>
       </div>
-      <div className="a4-stage counting-a4-stage worksheet-stage" style={{ width: 794 * sheetScale, height: 1123 * sheetScale }} aria-label="A4 5학년 프라임넘버 문제지">{renderSheet(false)}</div>
-      <div className="a4-stage counting-a4-stage answer-stage" style={{ width: 794 * sheetScale, height: 1123 * sheetScale }} aria-label="A4 5학년 프라임넘버 전체 답지">{renderSheet(true)}</div>
+      <div className="a4-stage counting-a4-stage worksheet-stage" style={{ width: 794 * sheetScale, height: 1123 * sheetScale }} aria-label="A4 5학년 소수(素數) 찾기 문제지">{renderSheet(false)}</div>
+      <div className="a4-stage counting-a4-stage answer-stage" style={{ width: 794 * sheetScale, height: 1123 * sheetScale }} aria-label="A4 5학년 소수(素數) 찾기 전체 답지">{renderSheet(true)}</div>
     </main>
   );
 }

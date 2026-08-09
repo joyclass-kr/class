@@ -3,7 +3,7 @@ export type ArithmeticWorksheet = {
   route: string | null;
   grade: string;
   title: string;
-  badge?: "암산";
+  badge?: "암산" | "암기";
 };
 
 const readyRoutes: Record<string, string> = {
@@ -137,28 +137,40 @@ const elementaryTitles: Record<string, string> = {
   "4나눗셈": "세 자리 수 ÷ 두 자리 수",
   "4분수": "분모가 같은 대분수의 덧셈·뺄셈",
   "4소수": "소수의 덧셈·뺄셈",
-  "단위변환": "단위 변환",
-  "5혼합계산": "혼합 계산",
-  "자연수분해": "자연수의 분해",
+  "단위변환": "길이의 단위 변환",
+  "5혼합계산": "자연수의 혼합 계산",
+  "자연수분해": "자연수를 소수의 곱으로 나타내기",
   "프라임넘버": "소수(素數) 찾기",
-  "5약수,배수": "약수와 배수",
+  "5약수,배수": "최대공약수·최소공배수",
   "5분수①": "분수의 덧셈·뺄셈·곱셈",
   "5분수②": "대분수의 덧셈·뺄셈·곱셈",
   "5분수③": "분수의 크기 비교",
   "5소수": "소수의 곱셈",
   "6분수": "분수의 사칙 계산",
   "6소수①": "자연수 ÷ 자연수의 몫을 소수로 나타내기",
-  "6소수②": "소수의 곱셈과 자연수로 나누기",
-  "6소수③": "소수로 나누기와 몫·나머지",
+  "6소수②": "소수의 곱셈·나눗셈과 반올림",
+  "6소수③": "소수의 나눗셈과 몫·나머지",
   "6혼합계산": "분수·소수 혼합 계산",
-  "6비례식": "비례식",
+  "6비례식": "비와 비례식",
   "6원": "원의 둘레와 넓이",
   "6원기둥": "원기둥의 겉넓이와 부피",
   "6쌓기나무": "쌓기나무의 개수와 세 방향 모양",
 };
 
 // 자동 분류를 그만두고, 사용자가 지정하는 학습지만 하나씩 추가한다.
-const elementaryHorizontalMentalMathWorksheets = new Set<string>([]);
+const elementaryHorizontalMentalMathWorksheets = new Set<string>([
+  "2덧셈뺄셈③",
+  "3덧셈뺄셈②",
+  "3보수뺄셈100",
+  "3보수뺄셈1000",
+  "3곱셈②",
+  "19단",
+  "4큰수곱셈",
+  "5약수,배수",
+  "5분수③",
+  "6소수①",
+]);
+const elementaryMemorizationWorksheets = new Set<string>(["제곱수"]);
 
 export const arithmeticWorksheetCatalog: ArithmeticWorksheet[] = worksheetNames.map((name) => {
   const gradeMatch = name.match(/^([1-6])(?!\d)(.+)$/);
@@ -168,7 +180,7 @@ export const arithmeticWorksheetCatalog: ArithmeticWorksheet[] = worksheetNames.
     route: readyRoutes[name] ?? null,
     grade: `초${grade}`,
     title: elementaryTitles[name] ?? (explicitGrades[name] ? name : gradeMatch ? gradeMatch[2] : name),
-    badge: Number(grade) >= 3 && elementaryHorizontalMentalMathWorksheets.has(name) ? "암산" : undefined,
+    badge: elementaryMemorizationWorksheets.has(name) ? "암기" : elementaryHorizontalMentalMathWorksheets.has(name) ? "암산" : undefined,
   };
 });
 

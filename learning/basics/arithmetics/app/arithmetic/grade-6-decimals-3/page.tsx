@@ -174,7 +174,7 @@ export default function GradeSixDecimalThreePage() {
     return (
       <div className="a4-sheet counting-sheet grade-six-decimal-two-sheet grade-six-decimal-three-sheet" style={{ transform: `scale(${sheetScale})` }}>
         <header className="counting-sheet-header">
-          <div className="counting-sheet-title"><span>6학년</span><strong>소수로 나누기와 몫·나머지{answerSheet ? " 정답" : ""}</strong></div>
+          <div className="counting-sheet-title"><span>6학년</span><strong>소수의 나눗셈과 몫·나머지{answerSheet ? " 정답" : ""}</strong></div>
           <div className="counting-sheet-info"><span>이름 <i /></span><span>날짜 <i /></span><small>문제지 {seed}</small></div>
         </header>
         <div className="grade-six-decimal-two-sections grade-six-decimal-three-sections">
@@ -210,8 +210,8 @@ export default function GradeSixDecimalThreePage() {
           <button className="button primary" type="button" onClick={checkAll}>전체 채점</button>
         </div>
       </div>
-      <div className="a4-stage counting-a4-stage worksheet-stage" style={{ width: 794 * sheetScale, height: 1123 * sheetScale }} aria-label="A4 6학년 소수③ 문제지">{renderSheet(false)}</div>
-      <div className="a4-stage counting-a4-stage answer-stage" style={{ width: 794 * sheetScale, height: 1123 * sheetScale }} aria-label="A4 6학년 소수③ 전체 답지">{renderSheet(true)}</div>
+      <div className="a4-stage counting-a4-stage worksheet-stage" style={{ width: 794 * sheetScale, height: 1123 * sheetScale }} aria-label="A4 6학년 소수의 나눗셈과 몫·나머지 문제지">{renderSheet(false)}</div>
+      <div className="a4-stage counting-a4-stage answer-stage" style={{ width: 794 * sheetScale, height: 1123 * sheetScale }} aria-label="A4 6학년 소수의 나눗셈과 몫·나머지 전체 답지">{renderSheet(true)}</div>
     </main>
   );
 }

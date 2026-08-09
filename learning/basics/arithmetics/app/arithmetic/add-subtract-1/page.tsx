@@ -410,7 +410,7 @@ function EquationRow({
   );
 }
 
-export function AdditionSubtractionWorksheet({ variant }: { variant: AdditionSubtractionVariant }) {
+export function AdditionSubtractionWorksheet({ variant, mentalMath = false }: { variant: AdditionSubtractionVariant; mentalMath?: boolean }) {
   const title =
     variant === "grade-two-missing-parts"
       ? "덧셈뺄셈③"
@@ -478,7 +478,7 @@ export function AdditionSubtractionWorksheet({ variant }: { variant: AdditionSub
   function renderSheet(answerSheet: boolean) {
     const columns = [questionSet.additions, questionSet.subtractions, questionSet.mixed];
     return (
-      <div className={`a4-sheet counting-sheet addsub-sheet${variant === "single-digit" ? "" : " two-digit"}`} style={{ transform: `scale(${sheetScale})` }}>
+      <div className={`a4-sheet counting-sheet${mentalMath ? " mental-math-sheet" : ""} addsub-sheet${variant === "single-digit" ? "" : " two-digit"}`} style={{ transform: `scale(${sheetScale})` }}>
         <header className="counting-sheet-header">
           <div className="counting-sheet-title">
             <span>{grade}</span>

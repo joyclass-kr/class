@@ -1339,20 +1339,44 @@ html[data-race-mode="true"] body { padding-bottom: 72px; }
   color: #e46753;
 }
 
-.square-memory-blank,
+.square-memory-input,
 .square-memory-answer {
-  min-width: 35px;
-  height: 24px;
+  width: 43px;
+  height: 30px;
+  box-sizing: border-box;
   display: inline-flex;
   align-items: center;
   justify-content: center;
-  border-bottom: 1.5px solid #8e96a3;
+  border: 1.5px solid #8e96a3;
+  border-radius: 6px;
+  background: white;
   color: #17233c;
+  font: inherit;
   font-size: 15px;
+  text-align: center;
 }
 
-.square-memory-blank {
-  color: transparent;
+.square-memory-input {
+  outline: none;
+}
+
+.square-memory-input:focus {
+  border-color: #258f86;
+  box-shadow: 0 0 0 3px rgba(49, 168, 157, 0.2);
+}
+
+.square-memory-input.is-correct {
+  border-color: #258f86;
+  background: #edf8f1;
+}
+
+.square-memory-input.is-wrong {
+  border-color: #d45c4b;
+  background: #fff0ed;
+}
+
+.square-memory-answer {
+  border-color: transparent;
 }
 
 .square-number-columns {
@@ -1452,8 +1476,14 @@ html[data-race-mode="true"] body { padding-bottom: 72px; }
 }
 
 .division-bracket-dividend-group {
+  width: 56px;
   display: flex;
   align-items: stretch;
+}
+
+.division-bracket .division-remainder-input:not(.division-remainder-input-small),
+.division-bracket .division-remainder-static:not(.division-remainder-static-small) {
+  width: 56px;
 }
 
 .division-bracket-curve {
@@ -2963,10 +2993,10 @@ html[data-race-mode="true"] body { padding-bottom: 72px; }
 }
 
 .grade-six-decimal-one-operation {
-  width: 164px;
+  width: 140px;
   justify-self: center;
   display: grid;
-  grid-template-columns: 62px minmax(0, 1fr);
+  grid-template-columns: 44px 96px;
   grid-template-areas:
     ". quotient"
     "bracket bracket";
@@ -2977,13 +3007,13 @@ html[data-race-mode="true"] body { padding-bottom: 72px; }
 .grade-six-decimal-one-quotient {
   grid-area: quotient;
   display: flex;
-  justify-content: flex-end;
+  justify-content: stretch;
 }
 
 .grade-six-decimal-one-bracket {
   grid-area: bracket;
   display: grid;
-  grid-template-columns: 62px minmax(0, 1fr);
+  grid-template-columns: 44px 96px;
   align-items: center;
   font-size: 24px;
   font-weight: 900;
@@ -3014,8 +3044,9 @@ html[data-race-mode="true"] body { padding-bottom: 72px; }
 
 .grade-six-decimal-one-input,
 .grade-six-decimal-one-static-answer {
-  min-width: 44px;
-  height: 38px;
+  width: 96px;
+  min-width: 96px;
+  height: 42px;
   border-radius: 7px;
   background: white;
   color: #17233c;
@@ -3110,8 +3141,10 @@ html[data-race-mode="true"] body { padding-bottom: 72px; }
   grid-template-columns: minmax(170px, 0.85fr) 22px minmax(0, 1.65fr);
   align-items: center;
   gap: 8px;
+  font-family: var(--elementary-math-font);
   font-size: 20px;
-  font-weight: 850;
+  font-synthesis: none;
+  font-weight: 400;
 }
 
 .unit-conversion-parts {
@@ -3149,8 +3182,11 @@ html[data-race-mode="true"] body { padding-bottom: 72px; }
 .unit-conversion-static-answer small,
 .unit-conversion-answer small {
   color: #526078;
+  font-family: var(--elementary-math-font);
   font-size: 0.72em;
-  font-weight: 850;
+  font-synthesis: none;
+  font-style: normal;
+  font-weight: 400;
 }
 
 .unit-conversion-equals {
@@ -3482,6 +3518,152 @@ html[data-race-mode="true"] body { padding-bottom: 72px; }
   }
 }
 
+/* 6학년 분수·소수 혼합 계산 */
+.grade-six-mixed-calculation-grid {
+  grid-template-rows: repeat(6, minmax(0, 1fr));
+}
+
+.grade-six-mixed-question {
+  border-bottom: 0;
+  padding: 14px 20px;
+}
+
+.grade-six-mixed-expression {
+  grid-template-columns: minmax(0, 1fr) 24px 190px;
+  gap: 10px;
+  min-height: 76px;
+  font-family: "Suneung Math", "STIX Two Math", "Cambria Math", serif;
+  font-synthesis: none;
+  font-weight: 400;
+}
+
+.grade-six-mixed-expression-parts,
+.grade-six-mixed-term,
+.grade-six-mixed-mixed-number {
+  min-width: 0;
+  display: inline-flex;
+  align-items: center;
+}
+
+.grade-six-mixed-expression-parts {
+  justify-content: flex-start;
+  gap: 0;
+  white-space: nowrap;
+}
+
+.grade-six-mixed-term {
+  gap: 9px;
+}
+
+.grade-six-mixed-operator {
+  min-width: 18px;
+  text-align: center;
+}
+
+.grade-six-mixed-mixed-number {
+  gap: 4px;
+}
+
+.grade-six-mixed-mixed-number > strong {
+  font: inherit;
+}
+
+.grade-six-mixed-fraction {
+  width: 36px;
+  grid-template-rows: 25px 2px 25px;
+}
+
+.grade-six-mixed-answer-wrap {
+  width: 190px;
+  display: inline-flex;
+  align-items: center;
+  justify-content: flex-start;
+  gap: 7px;
+}
+
+.grade-six-mixed-answer-wrap > small {
+  flex: 0 0 auto;
+  color: #687286;
+  font-family: var(--elementary-korean-font);
+  font-size: 10px;
+  font-weight: 700;
+  letter-spacing: -0.04em;
+  white-space: nowrap;
+}
+
+.grade-six-mixed-fraction-answer {
+  display: inline-flex;
+  align-items: center;
+  gap: 4px;
+}
+
+.grade-six-mixed-whole-input,
+.grade-six-mixed-part-input {
+  border: 1.5px solid #968f85;
+  border-radius: 6px;
+  outline: none;
+  background: white;
+  color: #17233c;
+  font-family: "Suneung Math", "STIX Two Math", "Cambria Math", serif;
+  font-weight: 400;
+  text-align: center;
+}
+
+.grade-six-mixed-whole-input {
+  width: 40px;
+  height: 46px;
+  font-size: 19px;
+}
+
+.grade-six-mixed-fraction.answer {
+  width: 46px;
+  grid-template-rows: 30px 2px 30px;
+}
+
+.grade-six-mixed-part-input {
+  width: 46px;
+  height: 29px;
+  padding: 0 2px;
+  font-size: 15px;
+}
+
+.grade-six-mixed-whole-input:focus,
+.grade-six-mixed-part-input:focus {
+  border-color: #258f86;
+  box-shadow: 0 0 0 3px rgba(49, 168, 157, 0.2);
+}
+
+.grade-six-mixed-decimal-input {
+  width: 94px;
+  height: 46px;
+  font-family: "Suneung Math", "STIX Two Math", "Cambria Math", serif;
+  font-weight: 400;
+}
+
+.grade-six-mixed-static-fraction,
+.grade-six-mixed-static-decimal {
+  width: 116px;
+  min-height: 58px;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 4px;
+  font-family: "Suneung Math", "STIX Two Math", "Cambria Math", serif;
+  font-weight: 400;
+}
+
+.grade-six-mixed-static-fraction > strong {
+  font: inherit;
+}
+
+@media print {
+  .grade-six-mixed-whole-input,
+  .grade-six-mixed-part-input,
+  .grade-six-mixed-decimal-input {
+    background: white;
+    color: black;
+  }
+}
 /* 5학년 자연수분해 */
 .natural-decomposition-sheet {
   padding-bottom: 26px;
@@ -9004,7 +9186,8 @@ main {
   white-space: nowrap;
 }
 
-.mental-math-sheet .counting-sheet-title::after {
+.mental-math-sheet .counting-sheet-title::after,
+.memory-math-sheet .counting-sheet-title::after {
   display: inline-flex;
   align-items: center;
   min-height: 20px;
@@ -9020,6 +9203,17 @@ main {
   line-height: 1;
   letter-spacing: 0;
   white-space: nowrap;
+}
+
+.mental-math-sheet .counting-sheet-title::after {
+  content: "암산";
+}
+
+.memory-math-sheet .counting-sheet-title::after {
+  border-color: #b36a24;
+  color: #8f4f16;
+  background: #fff5e8;
+  content: "암기";
 }
 
 .mental-math-sheet :where(

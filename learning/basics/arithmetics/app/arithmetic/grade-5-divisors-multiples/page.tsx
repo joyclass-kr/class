@@ -97,9 +97,9 @@ export default function GradeFiveDivisorsMultiplesPage() {
 
   function renderSheet(answerSheet: boolean) {
     return (
-      <div className="a4-sheet counting-sheet divisor-multiple-sheet" style={{ transform: `scale(${sheetScale})` }}>
+      <div className="a4-sheet counting-sheet mental-math-sheet divisor-multiple-sheet" style={{ transform: `scale(${sheetScale})` }}>
         <header className="counting-sheet-header">
-          <div className="counting-sheet-title"><span>5학년</span><strong>약수와 배수{answerSheet ? " 정답" : ""}</strong></div>
+          <div className="counting-sheet-title"><span>5학년</span><strong>최대공약수·최소공배수{answerSheet ? " 정답" : ""}</strong></div>
           <div className="counting-sheet-info"><span>이름 <i /></span><span>날짜 <i /></span><small>문제지 {seed}</small></div>
         </header>
         <div className="divisor-multiple-columns">
@@ -133,8 +133,8 @@ export default function GradeFiveDivisorsMultiplesPage() {
           <button className="button primary" type="button" onClick={checkAll}>전체 채점</button>
         </div>
       </div>
-      <div className="a4-stage counting-a4-stage worksheet-stage" style={{ width: 794 * sheetScale, height: 1123 * sheetScale }} aria-label="A4 5학년 약수, 배수 문제지">{renderSheet(false)}</div>
-      <div className="a4-stage counting-a4-stage answer-stage" style={{ width: 794 * sheetScale, height: 1123 * sheetScale }} aria-label="A4 5학년 약수, 배수 전체 답지">{renderSheet(true)}</div>
+      <div className="a4-stage counting-a4-stage worksheet-stage" style={{ width: 794 * sheetScale, height: 1123 * sheetScale }} aria-label="A4 5학년 최대공약수·최소공배수 문제지">{renderSheet(false)}</div>
+      <div className="a4-stage counting-a4-stage answer-stage" style={{ width: 794 * sheetScale, height: 1123 * sheetScale }} aria-label="A4 5학년 최대공약수·최소공배수 전체 답지">{renderSheet(true)}</div>
     </main>
   );
 }

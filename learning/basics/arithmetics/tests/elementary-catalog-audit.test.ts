@@ -20,9 +20,12 @@ test("초1 학습지는 실제 유형명을 쓰고 암산 표시를 붙이지 �
   assert.equal(gradeOne.some(({ badge }) => badge === "암산"), false);
 });
 
-test("암산 표시는 사용자가 지정한 학습지에만 하나씩 붙인다", () => {
-  const elementary = arithmeticWorksheetCatalog.filter(({ grade }) => /^초[1-6]$/.test(grade));
-  assert.equal(elementary.filter(({ badge }) => badge === "암산").every(({ grade }) => Number(grade.slice(1)) >= 3), true);
+test("암산과 암기 표시는 사용자가 지정한 학습지에만 붙인다", () => {
+  assert.deepEqual(
+    arithmeticWorksheetCatalog.filter(({ badge }) => badge === "암산").map(({ name }) => name),
+    ["2덧셈뺄셈③", "3보수뺄셈100", "3보수뺄셈1000", "3덧셈뺄셈②", "3곱셈②", "19단", "4큰수곱셈", "5약수,배수", "5분수③", "6소수①"],
+  );
+  assert.deepEqual(arithmeticWorksheetCatalog.filter(({ badge }) => badge === "암기").map(({ name }) => name), ["제곱수"]);
 });
 
 test("초등 문제지 제목은 중·고등 문제지와 같은 23px 제목 규격을 쓴다", () => {
@@ -40,16 +43,27 @@ test("목록의 모든 암산 학습지는 실제 문제지 제목에도 암산 
       ? `../app/arithmetic/${worksheet.route!.replace("/arithmetic/", "")}/page.tsx`
       : `../app${worksheet.route}/page.tsx`;
     const source = readFileSync(new URL(pagePath, import.meta.url), "utf8");
-    assert.match(source, /className="a4-sheet counting-sheet mental-math-sheet /, worksheet.route!);
+    if (worksheet.name === "2덧셈뺄셈③") assert.match(source, /mentalMath/, worksheet.route!);
+    else assert.match(source, /className="a4-sheet counting-sheet mental-math-sheet /, worksheet.route!);
   }
   const css = readFileSync(new URL("../app/globals.css", import.meta.url), "utf8");
   assert.match(css, /\.mental-math-sheet \.counting-sheet-title::after\s*\{[\s\S]*?content:\s*"암산";/);
   assert.match(css, /\.mental-math-sheet :where\([\s\S]*?\.multiplication-question,[\s\S]*?\.digit-equation,[\s\S]*?\.complement-row,[\s\S]*?input,[\s\S]*?button[\s\S]*?\)\s*\{[\s\S]*?font-family:\s*"Suneung Math", "STIX Two Math"[\s\S]*?font-synthesis:\s*none;[\s\S]*?font-weight:\s*400;/);
 });
 
+test("제곱수 학습지는 암기 딱지와 2·5제곱수 입력칸을 쓴다", () => {
+  const worksheet = arithmeticWorksheetCatalog.find(({ name }) => name === "제곱수");
+  assert.equal(worksheet?.badge, "암기");
+  const source = readFileSync(new URL("../app/arithmetic/square-numbers/page.tsx", import.meta.url), "utf8");
+  const css = readFileSync(new URL("../app/globals.css", import.meta.url), "utf8");
+  assert.equal(source.includes('className="a4-sheet counting-sheet memory-math-sheet '), true);
+  assert.equal(source.includes('data-testid="square-memory-input"'), true);
+  assert.equal(source.includes("<small>/41 정답</small>"), true);
+  assert.equal(css.includes('content: "암기";'), true);
+});
 test("초등 목록 버튼과 실제 학습지 제목은 같은 유형명을 쓴다", () => {
   // 목록 버튼은 폭이 좁아 영어 병기까지 넣으면 카드가 커지므로, 이 학습지만 목록엔 짧은 제목을 쓴다.
-  const catalogShortTitleExceptions = new Set(["프라임넘버"]);
+  const catalogShortTitleExceptions = new Set<string>();
   for (const worksheet of arithmeticWorksheetCatalog) {
     if (!worksheet.route?.startsWith("/arithmetic/") || worksheet.route.includes("?")) continue;
     if (catalogShortTitleExceptions.has(worksheet.name)) continue;
@@ -78,7 +92,7 @@ test("가로 계산식은 작은 글씨로 왼쪽 정렬하고 불필요한 안�
   }
 
   const primeNumbers = readFileSync(new URL("../app/arithmetic/grade-5-prime-numbers/page.tsx", import.meta.url), "utf8");
-  assert.match(primeNumbers, /소수\(素數, prime number\) 찾기/);
+  assert.match(primeNumbers, /소수\(素數\) 찾기/);
   assert.match(primeNumbers, /<p className="prime-number-guide">약수가 2개\(1과 자기 자신\)인 수<\/p>/);
 
   const decomposition = readFileSync(new URL("../app/arithmetic/grade-5-natural-number-decomposition/page.tsx", import.meta.url), "utf8");
@@ -102,10 +116,23 @@ test("초4~6 제목은 번호표나 포괄어 대신 실제 훈련 유형을 설
     assert.equal(vagueTitles.has(worksheet.title), false, worksheet.title);
   }
 
-  assert.equal(upperElementary.find(({ name }) => name === "4분수")?.title, "분모가 같은 대분수의 덧셈·뺄셈");
-  assert.equal(upperElementary.find(({ name }) => name === "5분수③")?.title, "분수의 크기 비교");
-  assert.equal(upperElementary.find(({ name }) => name === "6원기둥")?.title, "원기둥의 겉넓이와 부피");
-  assert.equal(upperElementary.find(({ name }) => name === "6쌓기나무")?.title, "쌓기나무의 개수와 세 방향 모양");
+  const expectedTitles = new Map([
+    ["4분수", "분모가 같은 대분수의 덧셈·뺄셈"],
+    ["단위변환", "길이의 단위 변환"],
+    ["5혼합계산", "자연수의 혼합 계산"],
+    ["자연수분해", "자연수를 소수의 곱으로 나타내기"],
+    ["프라임넘버", "소수(素數) 찾기"],
+    ["5약수,배수", "최대공약수·최소공배수"],
+    ["5분수③", "분수의 크기 비교"],
+    ["6소수②", "소수의 곱셈·나눗셈과 반올림"],
+    ["6소수③", "소수의 나눗셈과 몫·나머지"],
+    ["6비례식", "비와 비례식"],
+    ["6원기둥", "원기둥의 겉넓이와 부피"],
+    ["6쌓기나무", "쌓기나무의 개수와 세 방향 모양"],
+  ]);
+  for (const [name, title] of expectedTitles) {
+    assert.equal(upperElementary.find((worksheet) => worksheet.name === name)?.title, title, name);
+  }
 });
 
 test("혼합수의 자연수와 분수 숫자는 같은 글자 크기 기준을 쓴다", () => {

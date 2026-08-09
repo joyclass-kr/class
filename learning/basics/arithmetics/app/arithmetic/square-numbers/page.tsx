@@ -22,6 +22,10 @@ const POWER_PRODUCTS: Fact[] = [
 ];
 const TWO_POWERS = [2, 4, 8, 16, 32, 64, 128, 256, 512, 1024];
 const FIVE_POWERS = [5, 25, 125, 625];
+const MEMORY_VALUES = [
+  ...TWO_POWERS.map((value, index) => ({ id: `square-memory-two-${index}`, value })),
+  ...FIVE_POWERS.map((value, index) => ({ id: `square-memory-five-${index}`, value })),
+];
 
 function random(seed: number) {
   let value = seed >>> 0;
@@ -82,7 +86,10 @@ export default function SquareNumbersPage() {
   }
 
   function checkAll() {
-    setResults(Object.fromEntries(problems.map((problem) => [problem.id, answers[problem.id] === String(problem.product)])));
+    setResults(Object.fromEntries([
+      ...problems.map((problem) => [problem.id, answers[problem.id] === String(problem.product)] as const),
+      ...MEMORY_VALUES.map((item) => [item.id, answers[item.id] === String(item.value)] as const),
+    ]));
   }
 
   function resetAnswers() {
@@ -104,8 +111,15 @@ export default function SquareNumbersPage() {
     window.requestAnimationFrame(() => window.print());
   }
 
-  function renderMemoryRow(label: string, values: number[], shown: number, answerSheet: boolean) {
-    return <div className="square-memory-row"><strong>{label}</strong>{values.map((value, index) => <span key={value}>{index > 0 && "→"}{index < shown ? value : <i className={answerSheet ? "square-memory-answer" : "square-memory-blank"} data-testid="square-memory-blank">{value}</i>}</span>)}</div>;
+  function renderMemoryRow(label: string, keyPrefix: "two" | "five", values: number[], answerSheet: boolean) {
+    return <div className="square-memory-row"><strong>{label}</strong>{values.map((value, index) => {
+      const id = `square-memory-${keyPrefix}-${index}`;
+      const graded = id in results;
+      const isCorrect = results[id] === true;
+      return <span key={id}>{index > 0 && "→"}{answerSheet
+        ? <i className="square-memory-answer">{value}</i>
+        : <input className={`square-memory-input${graded ? isCorrect ? " is-correct" : " is-wrong" : ""}`} data-testid="square-memory-input" type="text" inputMode="numeric" pattern="[0-9]*" maxLength={4} value={answers[id] ?? ""} onChange={(event) => updateAnswer(id, event.target.value)} aria-label={`${label} ${index + 1}번째 수`} />}</span>;
+    })}</div>;
   }
 
   function renderProblem(problem: Problem, answerSheet: boolean) {
@@ -124,14 +138,14 @@ export default function SquareNumbersPage() {
 
   function renderSheet(answerSheet: boolean) {
     return (
-      <div className="a4-sheet counting-sheet multiplication-sheet" style={{ transform: `scale(${sheetScale})` }}>
+      <div className="a4-sheet counting-sheet memory-math-sheet multiplication-sheet" style={{ transform: `scale(${sheetScale})` }}>
         <header className="counting-sheet-header">
           <div className="counting-sheet-title"><span>3학년</span><strong>제곱수{answerSheet ? " 정답" : ""}</strong></div>
           <div className="counting-sheet-info"><span>이름 <i /></span><span>날짜 <i /></span><small>문제지 {questionSet.seed}</small></div>
         </header>
         <div className="square-memory">
-          {renderMemoryRow("2제곱수:", TWO_POWERS, 3, answerSheet)}
-          {renderMemoryRow("5제곱수:", FIVE_POWERS, 2, answerSheet)}
+          {renderMemoryRow("2제곱수:", "two", TWO_POWERS, answerSheet)}
+          {renderMemoryRow("5제곱수:", "five", FIVE_POWERS, answerSheet)}
         </div>
         <div className="multiplication-columns square-number-columns">
           {questionSet.columns.map((column, columnIndex) => <div className="multiplication-column square-number-column" key={columnIndex}>{column.map((problem) => renderProblem(problem, answerSheet))}</div>)}
@@ -144,7 +158,7 @@ export default function SquareNumbersPage() {
     <main className="counting-page multiplication-page">
       <div className="counting-toolbar">
         <a className="counting-back" href="/arithmetic">← 연산</a>
-        <div className="counting-progress"><strong>{correct}<small>/27 정답</small></strong></div>
+        <div className="counting-progress"><strong>{correct}<small>/41 정답</small></strong></div>
         <div className="toolbar">
           <button className="button secondary" type="button" onClick={newSet}>새 문제</button>
           <button className="button ghost" type="button" onClick={resetAnswers}>다시 풀기</button>
