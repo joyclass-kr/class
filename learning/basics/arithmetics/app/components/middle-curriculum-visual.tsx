@@ -245,10 +245,16 @@ function GeometryVisual({ variant }: { variant: string }) {
   if (variant === "space-vector-projection") {
     return (
       <svg viewBox="0 0 300 150" role="img" aria-label="벡터의 정사영">
-        <path className="curriculum-visual-guide" d="M35 122H270 M35 122L192 27 M192 27V122" />
+        <path className="curriculum-visual-guide" d="M35 122H270 M260 116L270 122L260 128" />
+        <path className="curriculum-visual-guide" d="M35 122L192 27 M181 30L192 27L188 38" />
+        <path className="curriculum-visual-guide" d="M192 27V122" />
         <path className="curriculum-visual-highlight" d="M35 122H192" />
         <path className="curriculum-visual-guide" d="M176 122V106H192" />
-        <g className="curriculum-visual-label"><text x="191" y="23">a⃗</text><text x="255" y="140">b⃗</text><text x="103" y="115">proj</text></g>
+        <g className="curriculum-visual-label">
+          <text x="197" y="28" className="curriculum-visual-vector-label">a</text>
+          <text x="260" y="140" className="curriculum-visual-vector-label">b</text>
+          <text x="88" y="112">정사영</text>
+        </g>
       </svg>
     );
   }

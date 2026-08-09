@@ -10025,6 +10025,13 @@ main {
   font-weight: 700;
 }
 
+.curriculum-visual-vector-label {
+  font-family: "Suneung Math", "STIX Two Math", "Cambria Math", serif;
+  font-size: 16px;
+  font-style: italic;
+  font-weight: 400;
+}
+
 .curriculum-chart-bar {
   fill: #dce7fb;
   stroke: #315bb5;
