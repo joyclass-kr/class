@@ -2217,16 +2217,8 @@ function createClassroomPlatform(options = {}) {
     );
     const teachersResult = await pool.query(
       `SELECT t.id, t.school_id, t.teacher_name, t.google_email, t.active, t.teacher_type,
-              t.user_id IS NOT NULL AS linked,
-              t.academic_year AS assigned_academic_year,
-              t.grade AS assigned_grade,
-              t.class_number AS assigned_class_number,
-              c.id AS saved_class_id,
-              COUNT(s.id)::INTEGER AS student_count
+              t.user_id IS NOT NULL AS linked
        FROM classroom_teachers t
-       LEFT JOIN classroom_classes c ON c.teacher_user_id = t.user_id
-       LEFT JOIN classroom_students s ON s.class_id = c.id
-       GROUP BY t.id, c.id
        ORDER BY t.teacher_name, t.id`
     );
     const teachersBySchool = new Map();
@@ -2239,14 +2231,7 @@ function createClassroomPlatform(options = {}) {
         email: teacher.google_email || "",
         type: teacher.teacher_type || "homeroom",
         active: teacher.active,
-        linked: teacher.linked,
-        classroom: teacher.assigned_academic_year ? {
-          academicYear: teacher.assigned_academic_year,
-          grade: teacher.assigned_grade,
-          classNumber: teacher.assigned_class_number,
-          studentCount: teacher.student_count,
-          rosterSaved: Boolean(teacher.saved_class_id)
-        } : null
+        linked: teacher.linked
       });
     }
     res.json({
@@ -2376,8 +2361,8 @@ function createClassroomPlatform(options = {}) {
     } else {
       await pool.query(
         `INSERT INTO classroom_teachers
-           (school_id, teacher_name, password_hash, academic_year, grade, class_number, teacher_type, google_email)
-         VALUES ($1, '학교 관리자', 'OAUTH_ONLY', NULL, NULL, NULL, '관리자', $2)`,
+           (school_id, teacher_name, academic_year, grade, class_number, teacher_type, google_email)
+         VALUES ($1, '학교 관리자', NULL, NULL, NULL, '관리자', $2)`,
         [schoolId, email]
       );
     }
@@ -3129,9 +3114,8 @@ function createClassroomPlatform(options = {}) {
     }
 
     const teacherProfileRes = await pool.query(
-      `SELECT t.school_id, t.teacher_name, c.grade, c.class_number
+      `SELECT t.school_id, t.teacher_name
        FROM classroom_teachers t
-       LEFT JOIN classroom_classes c ON c.teacher_user_id = t.user_id
        WHERE t.user_id = $1`,
       [teacher.id]
     );
@@ -5210,8 +5194,8 @@ function createClassroomPlatform(options = {}) {
         } else {
           const inserted = await client.query(
             `INSERT INTO classroom_teachers
-               (school_id, teacher_name, password_hash, grade, class_number, teacher_type, google_email, subject_name, room_name)
-             VALUES ($1, $2, 'OAUTH_ONLY', $3, $4, $5, $6, $7, $8) RETURNING id`,
+               (school_id, teacher_name, grade, class_number, teacher_type, google_email, subject_name, room_name)
+             VALUES ($1, $2, $3, $4, $5, $6, $7, $8) RETURNING id`,
             [schoolId, t.name, t.grade, t.classNumber, t.type, t.email, t.subjectName, t.roomName]
           );
           savedIds.push(inserted.rows[0].id);

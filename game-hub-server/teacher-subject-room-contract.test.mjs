@@ -26,7 +26,8 @@ test("PUT /school/teachers persists subjectName/roomName on both the update and 
   assert.match(body, /subjectName: t\?\.subjectName \? String\(t\.subjectName\)/);
   assert.match(body, /subject_name = \$6, room_name = \$7/);
   assert.match(body, /finalSubject = isAdminRow \? null : t\.subjectName/);
-  assert.match(body, /VALUES \(\$1, \$2, 'OAUTH_ONLY', \$3, \$4, \$5, \$6, \$7, \$8\)/);
+  assert.match(body, /\(school_id, teacher_name, grade, class_number, teacher_type, google_email, subject_name, room_name\)/);
+  assert.doesNotMatch(body, /OAUTH_ONLY/);
 });
 
 test("school-roster.html's teacher table lets an admin type each teacher's subject and default special room", () => {

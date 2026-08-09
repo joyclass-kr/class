@@ -214,22 +214,9 @@
                                 <span class="badge pending" style="background:#1f4730; color:#fff; padding:6px 12px; font-size:13px;">🌐 전교생 학부모 전체 (기본)</span>
                             </div>
                         </div>
-
-                        <div style="flex:1; min-width: 200px;">
-                            <label>본문 작성 방식</label>
-                            <select id="nContentType" onchange="toggleContentMode()">
-                                <option value="pdf">📄 이미 작성된 PDF 파일 업로드</option>
-                                <option value="text">✍️ 직접 텍스트 작성</option>
-                            </select>
-                        </div>
                     </div>
 
-                    <div id="pdfBox" class="form-group">
-                        <label>PDF 문서 첨부 (HWP/Word에서 PDF로 저장한 문서)</label>
-                        <input type="file" id="nPdfFile" accept="application/pdf">
-                    </div>
-
-                    <div id="textBox" class="form-group hidden">
+                    <div id="textBox" class="form-group">
                         <label>가정통신문 본문 내용</label>
                         <textarea id="nTextBody" placeholder="학부모님께 전달할 알림 내용을 상세히 입력하세요."></textarea>
                     </div>
@@ -347,12 +334,6 @@
         function toggleStudentTargetInput() {
             const val = document.getElementById('nTargetType').value;
             document.getElementById('targetStudentBox').classList.toggle('hidden', val !== 'students');
-        }
-
-        function toggleContentMode() {
-            const val = document.getElementById('nContentType').value;
-            document.getElementById('pdfBox').classList.toggle('hidden', val !== 'pdf');
-            document.getElementById('textBox').classList.toggle('hidden', val !== 'text');
         }
 
         function openPrintForm(type, docId) {
@@ -577,19 +558,9 @@
         async function handleNoticeSend(e) {
             e.preventDefault();
             const title = document.getElementById('nTitle').value.trim();
-            const contentType = document.getElementById('nContentType').value;
+            const contentType = 'text';
             const deduplicateGuardians = document.getElementById('nDeduplicateGuardians')?.checked || false;
-            const textBody = document.getElementById('nTextBody').value.trim();
-            
-            let contentBody = textBody;
-            if (contentType === 'pdf') {
-                const pdfInput = document.getElementById('nPdfFile');
-                if (pdfInput && pdfInput.files && pdfInput.files[0]) {
-                    contentBody = `[PDF 첨부파일: ${pdfInput.files[0].name}]\n` + textBody;
-                } else {
-                    contentBody = `[PDF 가정통신문]\n` + textBody;
-                }
-            }
+            const contentBody = document.getElementById('nTextBody').value.trim();
 
             const targetStudentNumbers = selectedTargets.map(t => t.id).join(',');
 
