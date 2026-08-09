@@ -25,6 +25,9 @@
   let currentPlace = places[0];
   let markerLayer = null;
   let currentCategory = 'all';
+  let routeLine = null;
+  let schoolOriginMarker = null;
+  let routeRequestId = 0;
 
   const map = L.map('map-container', { center:[36.15,127.75], zoom:7, minZoom:6, maxZoom:14, zoomControl:true, attributionControl:true });
   L.tileLayer('https://{s}.basemaps.cartocdn.com/light_nolabels/{z}/{x}/{y}{r}.png', { attribution:'&copy; OpenStreetMap &copy; CARTO', subdomains:'abcd', maxZoom:20 }).addTo(map);
@@ -79,7 +82,52 @@
     });
   }
 
-  function openPlace(place){ currentPlace=place; renderModal(); modal.showModal(); }
+  function openPlace(place){
+    currentPlace=place;
+    renderModal();
+    modal.showModal();
+    loadRoute(place);
+  }
+
+  function formatDuration(totalMinutes){
+    const hours=Math.floor(totalMinutes/60);
+    const minutes=totalMinutes%60;
+    if(!hours) return `약 ${minutes}분`;
+    return minutes ? `약 ${hours}시간 ${minutes}분` : `약 ${hours}시간`;
+  }
+
+  function clearRoute(){
+    if(routeLine){map.removeLayer(routeLine);routeLine=null;}
+    if(schoolOriginMarker){map.removeLayer(schoolOriginMarker);schoolOriginMarker=null;}
+  }
+
+  async function loadRoute(place){
+    const requestId=++routeRequestId;
+    const status=document.querySelector('#routeStatus');
+    status.textContent='우리 학교에서 출발하는 자동차 경로를 계산하고 있어요.';
+    clearRoute();
+    try{
+      const data=await fetchJson(`/api/travel/route?destinationLat=${encodeURIComponent(place.lat)}&destinationLng=${encodeURIComponent(place.lng)}`);
+      if(requestId!==routeRequestId) return;
+      membership={...(membership||{}),schoolName:data.school.name};
+      document.querySelector('#routeSchool').textContent=data.school.name;
+      document.querySelector('#schoolSummary').textContent=`${data.school.name}에서 출발하는 여행을 준비해요.`;
+      status.textContent=`자동차 기준 ${formatDuration(data.route.durationMinutes)} · ${data.route.distanceKm.toLocaleString('ko-KR')}km · 실시간 교통은 반영되지 않은 참고값이에요.`;
+
+      const latLngs=Array.isArray(data.route.coordinates)
+        ? data.route.coordinates.map(point=>[Number(point[1]),Number(point[0])]).filter(point=>Number.isFinite(point[0])&&Number.isFinite(point[1]))
+        : [];
+      if(latLngs.length>1){
+        routeLine=L.polyline(latLngs,{color:'#ef6b3b',weight:6,opacity:.86,lineCap:'round',lineJoin:'round'}).addTo(map);
+        schoolOriginMarker=L.circleMarker([data.school.latitude,data.school.longitude],{radius:10,color:'#fff',weight:4,fillColor:'#277562',fillOpacity:1}).addTo(map);
+        schoolOriginMarker.bindTooltip(data.school.name,{direction:'top',offset:[0,-8]});
+        map.fitBounds(routeLine.getBounds(),{padding:[55,55],maxZoom:10});
+      }
+    }catch(error){
+      if(requestId!==routeRequestId) return;
+      status.textContent=error.message||'현재 경로를 계산하지 못했습니다. 잠시 후 다시 시도해 주세요.';
+    }
+  }
   function renderModal(){
     document.querySelector('#placeName').textContent=currentPlace.name;
     document.querySelector('#visualPlaceName').textContent=currentPlace.name;

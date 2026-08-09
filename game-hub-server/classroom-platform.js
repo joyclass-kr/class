@@ -236,6 +236,9 @@ function createClassroomPlatform(options = {}) {
   const authFailureLimiter = createAuthenticationFailureLimiter();
   let databaseReady = false;
   let initializationError = null;
+  const travelSchoolCoordinateCache = new Map();
+  let travelGeocodeQueue = Promise.resolve();
+  let travelLastGeocodeAt = 0;
 
   if (pool) {
     pool.on("error", (error) => {
@@ -1430,6 +1433,152 @@ function createClassroomPlatform(options = {}) {
       membership,
       guardianChildren,
       isTeacher
+    });
+  }));
+
+  async function travelSchoolForUser(user) {
+    const result = await pool.query(
+      `SELECT school_id, school_name, office_code, school_code, location_name
+       FROM (
+         SELECT sc.id AS school_id, sc.name AS school_name, sc.office_code, sc.school_code, sc.location_name, 1 AS priority
+         FROM school_students s
+         JOIN classroom_schools sc ON sc.id = s.school_id
+         WHERE s.user_id = $1 OR (s.student_email IS NOT NULL AND LOWER(s.student_email) = LOWER($2))
+         UNION ALL
+         SELECT sc.id, sc.name, sc.office_code, sc.school_code, sc.location_name, 1
+         FROM classroom_students s
+         JOIN classroom_classes c ON c.id = s.class_id
+         JOIN classroom_schools sc ON sc.id = c.school_id
+         WHERE s.user_id = $1 OR (s.student_email IS NOT NULL AND LOWER(s.student_email) = LOWER($2))
+         UNION ALL
+         SELECT sc.id, sc.name, sc.office_code, sc.school_code, sc.location_name, 2
+         FROM classroom_teachers t
+         JOIN classroom_schools sc ON sc.id = t.school_id
+         WHERE t.user_id = $1 OR (t.google_email IS NOT NULL AND LOWER(t.google_email) = LOWER($2))
+         UNION ALL
+         SELECT sc.id, sc.name, sc.office_code, sc.school_code, sc.location_name, 3
+         FROM school_students s
+         JOIN classroom_schools sc ON sc.id = s.school_id
+         WHERE LOWER(s.guardian1_email) = LOWER($2) OR LOWER(s.guardian2_email) = LOWER($2)
+         UNION ALL
+         SELECT sc.id, sc.name, sc.office_code, sc.school_code, sc.location_name, 3
+         FROM classroom_students s
+         JOIN classroom_classes c ON c.id = s.class_id
+         JOIN classroom_schools sc ON sc.id = c.school_id
+         WHERE LOWER(s.guardian1_email) = LOWER($2) OR LOWER(s.guardian2_email) = LOWER($2)
+       ) candidates
+       ORDER BY priority, school_id
+       LIMIT 1`,
+      [user.id, user.email || ""]
+    );
+    return result.rows[0] || null;
+  }
+
+  async function travelSchoolAddress(school) {
+    if (!school) return "";
+    if (school.office_code && school.school_code) {
+      const keyParam = process.env.NEIS_API_KEY ? `&KEY=${process.env.NEIS_API_KEY}` : "";
+      const neisUrl = `https://open.neis.go.kr/hub/schoolInfo?Type=json&pIndex=1&pSize=1${keyParam}&ATPT_OFCDC_SC_CODE=${encodeURIComponent(school.office_code)}&SD_SCHUL_CODE=${encodeURIComponent(school.school_code)}`;
+      try {
+        const response = await fetch(neisUrl, { signal: AbortSignal.timeout(8000) });
+        if (response.ok) {
+          const data = await response.json();
+          const row = data?.schoolInfo?.[1]?.row?.[0];
+          if (row?.ORG_RDNMA) return row.ORG_RDNMA;
+        }
+      } catch (error) {
+        console.warn("Travel map NEIS address lookup failed:", error.message);
+      }
+    }
+    return [school.location_name, school.school_name].filter(Boolean).join(" ");
+  }
+
+  function queueTravelGeocode(task) {
+    const run = travelGeocodeQueue.then(async () => {
+      const waitMs = Math.max(0, 1050 - (Date.now() - travelLastGeocodeAt));
+      if (waitMs) await new Promise((resolve) => setTimeout(resolve, waitMs));
+      travelLastGeocodeAt = Date.now();
+      return task();
+    });
+    travelGeocodeQueue = run.catch(() => undefined);
+    return run;
+  }
+
+  async function travelSchoolCoordinates(school) {
+    const cacheKey = String(school.school_id);
+    const cached = travelSchoolCoordinateCache.get(cacheKey);
+    if (cached && cached.expiresAt > Date.now()) return cached.value;
+
+    const address = await travelSchoolAddress(school);
+    const query = address || `${school.school_name} 대한민국`;
+    const value = await queueTravelGeocode(async () => {
+      const url = new URL("https://nominatim.openstreetmap.org/search");
+      url.searchParams.set("format", "jsonv2");
+      url.searchParams.set("countrycodes", "kr");
+      url.searchParams.set("limit", "1");
+      url.searchParams.set("q", query);
+      const response = await fetch(url, {
+        headers: { "User-Agent": "classroom-game-hub/1.0 (Korea school travel map)" },
+        signal: AbortSignal.timeout(10000)
+      });
+      if (!response.ok) throw new HttpError(502, "SCHOOL_GEOCODE_FAILED", "학교 위치를 찾지 못했습니다.");
+      const rows = await response.json();
+      const first = rows?.[0];
+      const latitude = Number(first?.lat);
+      const longitude = Number(first?.lon);
+      if (!Number.isFinite(latitude) || !Number.isFinite(longitude)) {
+        throw new HttpError(404, "SCHOOL_LOCATION_NOT_FOUND", "등록 학교의 정확한 위치를 찾지 못했습니다.");
+      }
+      return { latitude, longitude, address, displayName: first.display_name || address };
+    });
+
+    travelSchoolCoordinateCache.set(cacheKey, { value, expiresAt: Date.now() + (30 * 24 * 60 * 60 * 1000) });
+    return value;
+  }
+
+  router.get("/travel/route", asyncRoute(async (req, res) => {
+    const user = await requireUser(req);
+    const destinationLatitude = Number(req.query.destinationLat);
+    const destinationLongitude = Number(req.query.destinationLng);
+    if (!Number.isFinite(destinationLatitude) || !Number.isFinite(destinationLongitude)
+      || destinationLatitude < 32 || destinationLatitude > 39.5
+      || destinationLongitude < 124 || destinationLongitude > 132) {
+      throw new HttpError(400, "INVALID_DESTINATION", "올바른 국내 관광지 좌표가 필요합니다.");
+    }
+
+    const school = await travelSchoolForUser(user);
+    if (!school) throw new HttpError(404, "SCHOOL_NOT_REGISTERED", "등록된 학교가 없습니다.");
+    const origin = await travelSchoolCoordinates(school);
+    const routeUrl = `https://router.project-osrm.org/route/v1/driving/${origin.longitude},${origin.latitude};${destinationLongitude},${destinationLatitude}?overview=simplified&geometries=geojson&steps=false&alternatives=false`;
+    let routeData;
+    try {
+      const routeResponse = await fetch(routeUrl, { signal: AbortSignal.timeout(15000) });
+      if (!routeResponse.ok) throw new Error(`HTTP ${routeResponse.status}`);
+      routeData = await routeResponse.json();
+    } catch (error) {
+      console.warn("Travel map route lookup failed:", error.message);
+      throw new HttpError(502, "ROUTE_LOOKUP_FAILED", "현재 경로를 계산하지 못했습니다. 잠시 후 다시 시도해 주세요.");
+    }
+    const route = routeData?.routes?.[0];
+    if (!route || !Number.isFinite(route.distance) || !Number.isFinite(route.duration)) {
+      throw new HttpError(404, "ROUTE_NOT_FOUND", "이 관광지까지의 자동차 경로를 찾지 못했습니다.");
+    }
+
+    res.json({
+      school: {
+        id: String(school.school_id),
+        name: school.school_name,
+        address: origin.address,
+        latitude: origin.latitude,
+        longitude: origin.longitude
+      },
+      route: {
+        mode: "driving",
+        distanceKm: Math.round((route.distance / 1000) * 10) / 10,
+        durationMinutes: Math.max(1, Math.round(route.duration / 60)),
+        coordinates: Array.isArray(route.geometry?.coordinates) ? route.geometry.coordinates : []
+      },
+      notice: "자동차 기준 참고 경로이며 실시간 교통 상황은 반영되지 않습니다."
     });
   }));
 
