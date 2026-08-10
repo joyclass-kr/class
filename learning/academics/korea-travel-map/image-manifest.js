@@ -223,6 +223,14 @@ window.KOREA_TRAVEL_IMAGES = {
     "license": "CC BY 2.0",
     "licenseUrl": "https://creativecommons.org/licenses/by/2.0"
   },
+  "national-folk-museum": {
+    "src": "images/national-folk-museum.webp",
+    "pageUrl": "https://www.wikidata.org/wiki/Q486449",
+    "filePageUrl": "https://commons.wikimedia.org/wiki/File:Folk_Museum_of_Korea.jpg",
+    "author": "Julian Fong",
+    "license": "CC BY-SA 2.0",
+    "licenseUrl": "https://creativecommons.org/licenses/by-sa/2.0"
+  },
   "seodaemun-prison": {
     "src": "images/seodaemun-prison.webp",
     "pageUrl": "https://commons.wikimedia.org/wiki/File:%EC%84%9C%EB%8C%80%EB%AC%B8_%ED%98%95%EB%AC%B4%EC%86%8C.jpg",
@@ -238,6 +246,14 @@ window.KOREA_TRAVEL_IMAGES = {
     "author": "*Youngjin",
     "license": "CC BY-SA 4.0",
     "licenseUrl": "https://creativecommons.org/licenses/by-sa/4.0"
+  },
+  "children-science-seoul": {
+    "src": "images/children-science-seoul.webp",
+    "pageUrl": "https://www.wikidata.org/wiki/Q10855565",
+    "filePageUrl": "https://commons.wikimedia.org/wiki/File:Seoul_National_Science_Museum_Oct_2014.JPG",
+    "author": "User:Piotrus",
+    "license": "CC BY-SA 3.0",
+    "licenseUrl": "https://creativecommons.org/licenses/by-sa/3.0"
   },
   "seoul-botanic-park": {
     "src": "images/seoul-botanic-park.webp",
@@ -271,11 +287,43 @@ window.KOREA_TRAVEL_IMAGES = {
     "license": "CC BY-SA 3.0",
     "licenseUrl": "https://creativecommons.org/licenses/by-sa/3.0"
   },
+  "korean-folk-village": {
+    "src": "images/korean-folk-village.webp",
+    "pageUrl": "https://www.wikidata.org/wiki/Q494649",
+    "filePageUrl": "https://commons.wikimedia.org/wiki/File:Equestrian_Performance.jpg",
+    "author": "AnbyG",
+    "license": "CC BY-SA 4.0",
+    "licenseUrl": "https://creativecommons.org/licenses/by-sa/4.0"
+  },
   "suwon-hwaseong": {
     "src": "images/suwon-hwaseong.webp",
     "pageUrl": "https://commons.wikimedia.org/wiki/File:%EC%88%98%EC%9B%90_%ED%99%94%EC%84%B1_%EC%84%9C%EB%B6%81%EA%B0%81%EB%A3%A8.jpg",
     "filePageUrl": "https://commons.wikimedia.org/wiki/File:%EC%88%98%EC%9B%90_%ED%99%94%EC%84%B1_%EC%84%9C%EB%B6%81%EA%B0%81%EB%A3%A8.jpg",
     "author": "잉여빵",
+    "license": "CC BY-SA 3.0",
+    "licenseUrl": "https://creativecommons.org/licenses/by-sa/3.0"
+  },
+  "railroad-museum": {
+    "src": "images/railroad-museum.webp",
+    "pageUrl": "https://www.wikidata.org/wiki/Q11273675",
+    "filePageUrl": "https://commons.wikimedia.org/wiki/File:Korea_Railroad_Museum.jpg",
+    "author": "조사부장 from kowp",
+    "license": "CC BY-SA 3.0",
+    "licenseUrl": "http://creativecommons.org/licenses/by-sa/3.0/"
+  },
+  "korea-manhwa-museum": {
+    "src": "images/korea-manhwa-museum.webp",
+    "pageUrl": "https://www.wikidata.org/wiki/Q18648580",
+    "filePageUrl": "https://commons.wikimedia.org/wiki/File:Korea_Manhwa_Museum.JPG",
+    "author": "hyolee2",
+    "license": "CC BY-SA 3.0",
+    "licenseUrl": "https://creativecommons.org/licenses/by-sa/3.0"
+  },
+  "national-maritime-museum": {
+    "src": "images/national-maritime-museum.webp",
+    "pageUrl": "https://www.wikidata.org/wiki/Q130628",
+    "filePageUrl": "https://commons.wikimedia.org/wiki/File:Korea_National_Maritime_Museum_Maritime_Library.jpg",
+    "author": "이강철",
     "license": "CC BY-SA 3.0",
     "licenseUrl": "https://creativecommons.org/licenses/by-sa/3.0"
   },
@@ -287,6 +335,14 @@ window.KOREA_TRAVEL_IMAGES = {
     "license": "CC BY-SA 4.0",
     "licenseUrl": "https://creativecommons.org/licenses/by-sa/4.0"
   },
+  "daegu-national-museum": {
+    "src": "images/daegu-national-museum.webp",
+    "pageUrl": "https://www.wikidata.org/wiki/Q4896382",
+    "filePageUrl": "https://commons.wikimedia.org/wiki/File:Daegu_National_Museum.jpg",
+    "author": "Trainholic",
+    "license": "CC BY-SA 3.0",
+    "licenseUrl": "https://creativecommons.org/licenses/by-sa/3.0"
+  },
   "sorae-wetland": {
     "src": "images/sorae-wetland.webp",
     "pageUrl": "https://commons.wikimedia.org/wiki/File:%EC%86%8C%EB%9E%98%EC%8A%B5%EC%A7%80%EC%83%9D%ED%83%9C%EA%B3%B5%EC%9B%90_%EC%86%8C%EC%97%BC%EA%B5%90,_2025%EB%85%84_12%EC%9B%94.jpg",
@@ -295,11 +351,51 @@ window.KOREA_TRAVEL_IMAGES = {
     "license": "CC BY 4.0",
     "licenseUrl": "https://creativecommons.org/licenses/by/4.0"
   },
+  "asia-culture-center": {
+    "src": "images/asia-culture-center.webp",
+    "pageUrl": "https://www.wikidata.org/wiki/Q12585739",
+    "filePageUrl": "https://commons.wikimedia.org/wiki/File:Culture_Minister_Meeting_24_(14935586203).jpg",
+    "author": "Republic of Korea from Seoul, Republic of Korea",
+    "license": "CC BY-SA 2.0",
+    "licenseUrl": "https://creativecommons.org/licenses/by-sa/2.0"
+  },
+  "mudeungsan": {
+    "src": "images/mudeungsan.webp",
+    "pageUrl": "https://www.wikidata.org/wiki/Q6931712",
+    "filePageUrl": "https://commons.wikimedia.org/wiki/File:Gwangju_Mudeungsan.jpg",
+    "author": "Kgw1226",
+    "license": "CC BY-SA 4.0",
+    "licenseUrl": "https://creativecommons.org/licenses/by-sa/4.0"
+  },
   "currency-museum": {
     "src": "images/currency-museum.webp",
     "pageUrl": "https://commons.wikimedia.org/wiki/File:%ED%99%94%ED%8F%90%EB%B0%95%EB%AC%BC%EA%B4%80_Currency_Museum.jpg",
     "filePageUrl": "https://commons.wikimedia.org/wiki/File:%ED%99%94%ED%8F%90%EB%B0%95%EB%AC%BC%EA%B4%80_Currency_Museum.jpg",
     "author": "Rickinasia",
+    "license": "CC BY-SA 4.0",
+    "licenseUrl": "https://creativecommons.org/licenses/by-sa/4.0"
+  },
+  "geological-museum": {
+    "src": "images/geological-museum.webp",
+    "pageUrl": "https://www.wikidata.org/wiki/Q12618082",
+    "filePageUrl": "https://commons.wikimedia.org/wiki/File:%EC%A7%80%EC%A7%88%EB%B0%95%EB%AC%BC%EA%B4%80_Geological_Museum_KIGAM.jpg",
+    "author": "Rickinasia",
+    "license": "CC BY-SA 4.0",
+    "licenseUrl": "https://creativecommons.org/licenses/by-sa/4.0"
+  },
+  "hanbat-arboretum": {
+    "src": "images/hanbat-arboretum.webp",
+    "pageUrl": "https://www.wikidata.org/wiki/Q16172014",
+    "filePageUrl": "https://commons.wikimedia.org/wiki/File:Hanbat_Treegarden_West_Flowers.JPG",
+    "author": "Created by 람다람쥐",
+    "license": "CC BY-SA 3.0",
+    "licenseUrl": "https://creativecommons.org/licenses/by-sa/3.0"
+  },
+  "daewangam-park": {
+    "src": "images/daewangam-park.webp",
+    "pageUrl": "https://www.wikidata.org/wiki/Q61100314",
+    "filePageUrl": "https://commons.wikimedia.org/wiki/File:Daewangam_Park.jpg",
+    "author": "Shinfull",
     "license": "CC BY-SA 4.0",
     "licenseUrl": "https://creativecommons.org/licenses/by-sa/4.0"
   },
@@ -318,6 +414,22 @@ window.KOREA_TRAVEL_IMAGES = {
     "author": "Jocelyndurrey",
     "license": "CC BY-SA 4.0",
     "licenseUrl": "https://creativecommons.org/licenses/by-sa/4.0"
+  },
+  "hwalok-cave": {
+    "src": "images/hwalok-cave.webp",
+    "pageUrl": "https://www.wikidata.org/wiki/Q135293451",
+    "filePageUrl": "https://commons.wikimedia.org/wiki/File:CH-JC-F.jpg",
+    "author": "Dittwjfsdgkvkdjg",
+    "license": "CC BY-SA 3.0",
+    "licenseUrl": "https://creativecommons.org/licenses/by-sa/3.0"
+  },
+  "independence-hall": {
+    "src": "images/independence-hall.webp",
+    "pageUrl": "https://www.wikidata.org/wiki/Q626811",
+    "filePageUrl": "https://commons.wikimedia.org/wiki/File:Independence_Hall_of_Korea_01.JPG",
+    "author": "Lawinc82",
+    "license": "CC BY-SA 3.0",
+    "licenseUrl": "https://creativecommons.org/licenses/by-sa/3.0"
   },
   "baekje-culture-land": {
     "src": "images/baekje-culture-land.webp",
@@ -343,6 +455,14 @@ window.KOREA_TRAVEL_IMAGES = {
     "license": "CC BY-SA 3.0",
     "licenseUrl": "https://creativecommons.org/licenses/by-sa/3.0"
   },
+  "gunsan-modern-museum": {
+    "src": "images/gunsan-modern-museum.webp",
+    "pageUrl": "https://www.wikidata.org/wiki/Q131763127",
+    "filePageUrl": "https://commons.wikimedia.org/wiki/File:Gunsanhistorym.jpg",
+    "author": "Kimhs5400",
+    "license": "CC BY-SA 4.0",
+    "licenseUrl": "https://creativecommons.org/licenses/by-sa/4.0"
+  },
   "suncheon-wetland": {
     "src": "images/suncheon-wetland.webp",
     "pageUrl": "https://commons.wikimedia.org/wiki/File:%EC%88%9C%EC%B2%9C%EB%A7%8C%EC%8A%B5%EC%A7%80.jpg",
@@ -350,6 +470,14 @@ window.KOREA_TRAVEL_IMAGES = {
     "author": "Moonhayun",
     "license": "CC BY-SA 4.0",
     "licenseUrl": "https://creativecommons.org/licenses/by-sa/4.0"
+  },
+  "suncheon-garden": {
+    "src": "images/suncheon-garden.webp",
+    "pageUrl": "https://www.wikidata.org/wiki/Q21257333",
+    "filePageUrl": "https://commons.wikimedia.org/wiki/File:Panorama_of_International_Garden_Exposition_Suncheon_Bay_Korea_2013.jpg",
+    "author": "Donghwan Seong",
+    "license": "CC BY-SA 3.0",
+    "licenseUrl": "https://creativecommons.org/licenses/by-sa/3.0"
   },
   "mokpo-cable-car": {
     "src": "images/mokpo-cable-car.webp",
@@ -367,6 +495,54 @@ window.KOREA_TRAVEL_IMAGES = {
     "license": "CC BY-SA 4.0",
     "licenseUrl": "https://creativecommons.org/licenses/by-sa/4.0"
   },
+  "seokguram": {
+    "src": "images/seokguram.webp",
+    "pageUrl": "https://www.wikidata.org/wiki/Q489820",
+    "filePageUrl": "https://commons.wikimedia.org/wiki/File:Korea-Gyeongju-Seokguram-13.jpg",
+    "author": "by eimoberg",
+    "license": "CC BY 2.0",
+    "licenseUrl": "https://creativecommons.org/licenses/by/2.0"
+  },
+  "gyeongju-museum": {
+    "src": "images/gyeongju-museum.webp",
+    "pageUrl": "https://www.wikidata.org/wiki/Q390124",
+    "filePageUrl": "https://commons.wikimedia.org/wiki/File:Korea-Gyeongju.National.Museum-04.jpg",
+    "author": "by martinroell",
+    "license": "CC BY-SA 2.0",
+    "licenseUrl": "https://creativecommons.org/licenses/by-sa/2.0"
+  },
+  "lighthouse-museum": {
+    "src": "images/lighthouse-museum.webp",
+    "pageUrl": "https://www.wikidata.org/wiki/Q20739954",
+    "filePageUrl": "https://commons.wikimedia.org/wiki/File:Lighthouse_museum_entrance.jpg",
+    "author": "User:Altostratus",
+    "license": "CC BY-SA 4.0",
+    "licenseUrl": "https://creativecommons.org/licenses/by-sa/4.0"
+  },
+  "upo-wetland": {
+    "src": "images/upo-wetland.webp",
+    "pageUrl": "https://www.wikidata.org/wiki/Q496402",
+    "filePageUrl": "https://commons.wikimedia.org/wiki/File:Upo_Wetland%27s_Many_Colours.jpg",
+    "author": "Speedyturtle2000",
+    "license": "CC BY-SA 3.0",
+    "licenseUrl": "https://creativecommons.org/licenses/by-sa/3.0"
+  },
+  "jinju-museum": {
+    "src": "images/jinju-museum.webp",
+    "pageUrl": "https://www.wikidata.org/wiki/Q6202570",
+    "filePageUrl": "https://commons.wikimedia.org/wiki/File:The_Jinju_National_Museum.jpg",
+    "author": "kangbyeongkee",
+    "license": "CC BY 3.0",
+    "licenseUrl": "https://creativecommons.org/licenses/by/3.0"
+  },
+  "geoje-pow-camp": {
+    "src": "images/geoje-pow-camp.webp",
+    "pageUrl": "https://www.wikidata.org/wiki/Q5535287",
+    "filePageUrl": "https://commons.wikimedia.org/wiki/File:1951%EB%85%84_%EA%B1%B0%EC%A0%9C%EB%8F%84_%ED%8F%AC%EB%A1%9C%EC%88%98%EC%9A%A9%EC%86%8C_1.jpg",
+    "author": "한국저작권위원회",
+    "license": "CC BY 4.0",
+    "licenseUrl": "https://creativecommons.org/licenses/by/4.0"
+  },
   "goseong-dinosaur": {
     "src": "images/goseong-dinosaur.webp",
     "pageUrl": "https://ko.wikipedia.org/wiki/%EA%B3%A0%EC%84%B1%EA%B3%B5%EB%A3%A1%EB%B0%95%EB%AC%BC%EA%B4%80",
@@ -382,6 +558,22 @@ window.KOREA_TRAVEL_IMAGES = {
     "author": "Korea Heritage Service",
     "license": "CC BY-SA 4.0",
     "licenseUrl": "https://creativecommons.org/licenses/by-sa/4.0"
+  },
+  "ecoland-jeju": {
+    "src": "images/ecoland-jeju.webp",
+    "pageUrl": "https://www.wikidata.org/wiki/Q12606754",
+    "filePageUrl": "https://commons.wikimedia.org/wiki/File:Jeju_Ecoland.jpg",
+    "author": "Christian Bolz",
+    "license": "CC BY-SA 4.0",
+    "licenseUrl": "https://creativecommons.org/licenses/by-sa/4.0"
+  },
+  "imjingak-peace": {
+    "src": "images/imjingak-peace.webp",
+    "pageUrl": "https://www.wikidata.org/wiki/Q489493",
+    "filePageUrl": "https://commons.wikimedia.org/wiki/File:Imjingak_001.jpg",
+    "author": "Rbtjd0201 ( talk / Contributions ) at the Korean Wikipedia",
+    "license": "Public domain",
+    "licenseUrl": "https://commons.wikimedia.org/wiki/File:Imjingak_001.jpg"
   },
   "ganghwa-dolmen-site": {
     "src": "images/ganghwa-dolmen-site.webp",
@@ -399,6 +591,14 @@ window.KOREA_TRAVEL_IMAGES = {
     "license": "CC BY-SA 4.0",
     "licenseUrl": "https://creativecommons.org/licenses/by-sa/4.0"
   },
+  "cheongju-early-printing": {
+    "src": "images/cheongju-early-printing.webp",
+    "pageUrl": "https://www.wikidata.org/wiki/Q12485627",
+    "filePageUrl": "https://commons.wikimedia.org/wiki/File:Heungdeoksa_01.JPG",
+    "author": "Lawinc82",
+    "license": "CC BY-SA 3.0",
+    "licenseUrl": "https://creativecommons.org/licenses/by-sa/3.0"
+  },
   "jeonju-hanok-village": {
     "src": "images/jeonju-hanok-village.webp",
     "pageUrl": "https://ko.wikipedia.org/wiki/%EC%A0%84%EC%A3%BC%ED%95%9C%EC%98%A5%EB%A7%88%EC%9D%84",
@@ -415,11 +615,27 @@ window.KOREA_TRAVEL_IMAGES = {
     "license": "CC0",
     "licenseUrl": "http://creativecommons.org/publicdomain/zero/1.0/deed.en"
   },
+  "gimhae-national-museum": {
+    "src": "images/gimhae-national-museum.webp",
+    "pageUrl": "https://www.wikidata.org/wiki/Q5562690",
+    "filePageUrl": "https://commons.wikimedia.org/wiki/File:Gimhae_national_museum.JPG",
+    "author": "hyolee2",
+    "license": "CC BY-SA 3.0",
+    "licenseUrl": "https://creativecommons.org/licenses/by-sa/3.0"
+  },
   "gwangmyeong-cave": {
     "src": "images/gwangmyeong-cave.webp",
     "pageUrl": "https://ko.wikipedia.org/wiki/%EA%B4%91%EB%AA%85%EB%8F%99%EA%B5%B4",
     "filePageUrl": "https://commons.wikimedia.org/wiki/File:Gwangmyeong_Cave.jpg",
     "author": "S099001",
+    "license": "CC BY-SA 4.0",
+    "licenseUrl": "https://creativecommons.org/licenses/by-sa/4.0"
+  },
+  "seodaemun-natural-history": {
+    "src": "images/seodaemun-natural-history.webp",
+    "pageUrl": "https://www.wikidata.org/wiki/Q7451507",
+    "filePageUrl": "https://commons.wikimedia.org/wiki/File:%EC%A4%91%EC%95%99%ED%99%80.jpg",
+    "author": "Sdmmuseum",
     "license": "CC BY-SA 4.0",
     "licenseUrl": "https://creativecommons.org/licenses/by-sa/4.0"
   },
@@ -431,6 +647,54 @@ window.KOREA_TRAVEL_IMAGES = {
     "license": "CC BY-SA 3.0",
     "licenseUrl": "https://creativecommons.org/licenses/by-sa/3.0"
   },
+  "gwangju-national-museum": {
+    "src": "images/gwangju-national-museum.webp",
+    "pageUrl": "https://www.wikidata.org/wiki/Q4896461",
+    "filePageUrl": "https://commons.wikimedia.org/wiki/File:Gwangju_National_Museum.jpg",
+    "author": "Leedkmn",
+    "license": "CC BY-SA 3.0",
+    "licenseUrl": "https://creativecommons.org/licenses/by-sa/3.0"
+  },
+  "jeju-stone-park": {
+    "src": "images/jeju-stone-park.webp",
+    "pageUrl": "https://www.wikidata.org/wiki/Q55734281",
+    "filePageUrl": "https://commons.wikimedia.org/wiki/File:Jeju_Stone_Museum_01.jpg",
+    "author": "Bernard Gagnon",
+    "license": "CC0",
+    "licenseUrl": "http://creativecommons.org/publicdomain/zero/1.0/deed.en"
+  },
+  "chuncheon-animation-museum": {
+    "src": "images/chuncheon-animation-museum.webp",
+    "pageUrl": "https://www.wikidata.org/wiki/Q18605480",
+    "filePageUrl": "https://commons.wikimedia.org/wiki/File:Sign_01_of_Animation_Museum_of_South_Korea.jpg",
+    "author": "Twotwo2019",
+    "license": "CC BY 4.0",
+    "licenseUrl": "https://creativecommons.org/licenses/by/4.0"
+  },
+  "value-대한민국역사박물관": {
+    "src": "images/value-대한민국역사박물관.webp",
+    "pageUrl": "https://www.wikidata.org/wiki/Q12592360",
+    "filePageUrl": "https://commons.wikimedia.org/wiki/File:National_Museum_of_Korean_Contemporary_History.jpg",
+    "author": "National Museum of Korean Contemporary History",
+    "license": "CC BY-SA 4.0",
+    "licenseUrl": "https://creativecommons.org/licenses/by-sa/4.0"
+  },
+  "value-서울역사박물관": {
+    "src": "images/value-서울역사박물관.webp",
+    "pageUrl": "https://www.wikidata.org/wiki/Q484862",
+    "filePageUrl": "https://commons.wikimedia.org/wiki/File:Seoul_Museum_of_History.JPG",
+    "author": "Jjw",
+    "license": "CC BY-SA 3.0",
+    "licenseUrl": "https://creativecommons.org/licenses/by-sa/3.0"
+  },
+  "value-부산박물관": {
+    "src": "images/value-부산박물관.webp",
+    "pageUrl": "https://www.wikidata.org/wiki/Q16689597",
+    "filePageUrl": "https://commons.wikimedia.org/wiki/File:Busan_museum.JPG",
+    "author": "hyolee2",
+    "license": "CC BY-SA 3.0",
+    "licenseUrl": "https://creativecommons.org/licenses/by-sa/3.0"
+  },
   "value-대구근대역사관": {
     "src": "images/value-대구근대역사관.webp",
     "pageUrl": "https://ko.wikipedia.org/wiki/%EB%8C%80%EA%B5%AC%EA%B7%BC%EB%8C%80%EC%97%AD%EC%82%AC%EA%B4%80",
@@ -439,6 +703,46 @@ window.KOREA_TRAVEL_IMAGES = {
     "license": "CC BY-SA 4.0",
     "licenseUrl": "https://creativecommons.org/licenses/by-sa/4.0"
   },
+  "value-도동서원": {
+    "src": "images/value-도동서원.webp",
+    "pageUrl": "https://www.wikidata.org/wiki/Q12592972",
+    "filePageUrl": "https://commons.wikimedia.org/wiki/File:Dodong1.jpg",
+    "author": "Dittwjfsdgkvkdjg",
+    "license": "CC BY-SA 3.0",
+    "licenseUrl": "https://creativecommons.org/licenses/by-sa/3.0"
+  },
+  "value-강화역사박물관": {
+    "src": "images/value-강화역사박물관.webp",
+    "pageUrl": "https://www.wikidata.org/wiki/Q18013186",
+    "filePageUrl": "https://commons.wikimedia.org/wiki/File:20141013%EA%B0%95%ED%99%94%EC%97%AD%EC%82%AC%EB%B0%95%EB%AC%BC%EA%B4%80%EA%B3%A0%EC%9D%B8%EB%8F%8C.jpg",
+    "author": "Cuhullin",
+    "license": "CC BY-SA 4.0",
+    "licenseUrl": "https://creativecommons.org/licenses/by-sa/4.0"
+  },
+  "value-국립대전현충원": {
+    "src": "images/value-국립대전현충원.webp",
+    "pageUrl": "https://www.wikidata.org/wiki/Q18149764",
+    "filePageUrl": "https://commons.wikimedia.org/wiki/File:%EA%B5%AD%EB%A6%BD%EB%8C%80%EC%A0%84%ED%98%84%EC%B6%A9%EC%9B%90_%ED%98%84%EC%B6%A9%EB%AC%B8.png",
+    "author": "jmk2765",
+    "license": "CC BY-SA 3.0",
+    "licenseUrl": "https://creativecommons.org/licenses/by-sa/3.0"
+  },
+  "value-국립현대미술관-과천": {
+    "src": "images/value-국립현대미술관-과천.webp",
+    "pageUrl": "https://www.wikidata.org/wiki/Q60823450",
+    "filePageUrl": "https://commons.wikimedia.org/wiki/File:141022%EB%B0%A9%EB%B0%B0119%EC%95%88%EC%A0%84%EC%84%BC%ED%84%B0_%EC%B6%94%EA%B3%84_%EC%9B%8C%ED%81%AC%EC%83%B531.JPG",
+    "author": "최광모",
+    "license": "CC BY-SA 4.0",
+    "licenseUrl": "https://creativecommons.org/licenses/by-sa/4.0"
+  },
+  "value-경기도박물관": {
+    "src": "images/value-경기도박물관.webp",
+    "pageUrl": "https://www.wikidata.org/wiki/Q16093603",
+    "filePageUrl": "https://commons.wikimedia.org/wiki/File:%EC%9A%94%EC%A7%80%EC%97%B0%EB%8F%84_%EA%B2%BD%EA%B8%B0%EB%8F%84%EB%B0%95%EB%AC%BC%EA%B4%80_%EC%86%8C%EC%9E%A5%EB%B3%B8.jpg",
+    "author": "심사정",
+    "license": "Public domain",
+    "licenseUrl": "https://commons.wikimedia.org/wiki/File:%EC%9A%94%EC%A7%80%EC%97%B0%EB%8F%84_%EA%B2%BD%EA%B8%B0%EB%8F%84%EB%B0%95%EB%AC%BC%EA%B4%80_%EC%86%8C%EC%9E%A5%EB%B3%B8.jpg"
+  },
   "value-남한산성": {
     "src": "images/value-남한산성.webp",
     "pageUrl": "https://ko.wikipedia.org/wiki/%EB%82%A8%ED%95%9C%EC%82%B0%EC%84%B1",
@@ -446,6 +750,22 @@ window.KOREA_TRAVEL_IMAGES = {
     "author": "Arne Hückelheim",
     "license": "CC BY-SA 3.0",
     "licenseUrl": "https://creativecommons.org/licenses/by-sa/3.0"
+  },
+  "value-설악산국립공원": {
+    "src": "images/value-설악산국립공원.webp",
+    "pageUrl": "https://www.wikidata.org/wiki/Q706310",
+    "filePageUrl": "https://commons.wikimedia.org/wiki/File:Seoraksan_National_Park_panorama_3.jpg",
+    "author": "kallerna",
+    "license": "CC BY-SA 4.0",
+    "licenseUrl": "https://creativecommons.org/licenses/by-sa/4.0"
+  },
+  "value-국립춘천박물관": {
+    "src": "images/value-국립춘천박물관.webp",
+    "pageUrl": "https://www.wikidata.org/wiki/Q5116242",
+    "filePageUrl": "https://commons.wikimedia.org/wiki/File:%EA%B5%AD%EB%A6%BD%EC%B6%98%EC%B2%9C%EB%B0%95%EB%AC%BC%EA%B4%80_%EC%A0%95%EC%B8%A1%EB%A9%B4.jpg",
+    "author": "Sadopaul",
+    "license": "CC BY 4.0",
+    "licenseUrl": "https://creativecommons.org/licenses/by/4.0"
   },
   "value-공산성": {
     "src": "images/value-공산성.webp",
@@ -470,6 +790,14 @@ window.KOREA_TRAVEL_IMAGES = {
     "author": "Trainholic",
     "license": "CC BY-SA 3.0",
     "licenseUrl": "https://creativecommons.org/licenses/by-sa/3.0"
+  },
+  "value-목포근대역사관": {
+    "src": "images/value-목포근대역사관.webp",
+    "pageUrl": "https://www.wikidata.org/wiki/Q12595395",
+    "filePageUrl": "https://commons.wikimedia.org/wiki/File:Mokpo_Modern_History_Museum_(Building_1)_20241005_003.jpg",
+    "author": "Mobius6",
+    "license": "CC BY-SA 4.0",
+    "licenseUrl": "https://creativecommons.org/licenses/by-sa/4.0"
   },
   "tongyeong-sebyeonggwan": {
     "src": "images/tongyeong-sebyeonggwan.webp",
