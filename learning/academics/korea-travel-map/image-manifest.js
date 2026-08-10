@@ -231,6 +231,22 @@ window.KOREA_TRAVEL_IMAGES = {
     "license": "CC0",
     "licenseUrl": "http://creativecommons.org/publicdomain/zero/1.0/deed.en"
   },
+  "war-memorial": {
+    "src": "images/war-memorial.webp",
+    "pageUrl": "https://ko.wikipedia.org/wiki/%EC%A0%84%EC%9F%81%EA%B8%B0%EB%85%90%EA%B4%80_(%EB%8C%80%ED%95%9C%EB%AF%BC%EA%B5%AD)",
+    "filePageUrl": "https://commons.wikimedia.org/wiki/File:The_War_Memorial_Of_Korea_240615_02.jpg",
+    "author": "*Youngjin",
+    "license": "CC BY-SA 4.0",
+    "licenseUrl": "https://creativecommons.org/licenses/by-sa/4.0"
+  },
+  "seoul-botanic-park": {
+    "src": "images/seoul-botanic-park.webp",
+    "pageUrl": "https://commons.wikimedia.org/wiki/File:%EC%84%9C%EC%9A%B8%EC%8B%9D%EB%AC%BC%EC%9B%90.jpg",
+    "filePageUrl": "https://commons.wikimedia.org/wiki/File:%EC%84%9C%EC%9A%B8%EC%8B%9D%EB%AC%BC%EC%9B%90.jpg",
+    "author": "Saewon108",
+    "license": "CC BY-SA 4.0",
+    "licenseUrl": "https://creativecommons.org/licenses/by-sa/4.0"
+  },
   "seoul-grand-park": {
     "src": "images/seoul-grand-park.webp",
     "pageUrl": "https://ko.wikipedia.org/wiki/%EC%84%9C%EC%9A%B8%EB%8C%80%EA%B3%B5%EC%9B%90",
@@ -295,6 +311,22 @@ window.KOREA_TRAVEL_IMAGES = {
     "license": "CC BY-SA 4.0",
     "licenseUrl": "https://creativecommons.org/licenses/by-sa/4.0"
   },
+  "cheongnamdae": {
+    "src": "images/cheongnamdae.webp",
+    "pageUrl": "https://ko.wikipedia.org/wiki/%EC%B2%AD%EB%82%A8%EB%8C%80",
+    "filePageUrl": "https://commons.wikimedia.org/wiki/File:%EC%B2%AD%EB%82%A8%EB%8C%80_%EB%B3%B8%EA%B4%80_(2).JPG",
+    "author": "Jocelyndurrey",
+    "license": "CC BY-SA 4.0",
+    "licenseUrl": "https://creativecommons.org/licenses/by-sa/4.0"
+  },
+  "baekje-culture-land": {
+    "src": "images/baekje-culture-land.webp",
+    "pageUrl": "https://ko.wikipedia.org/wiki/%EB%B0%B1%EC%A0%9C%EB%AC%B8%ED%99%94%EB%8B%A8%EC%A7%80",
+    "filePageUrl": "https://commons.wikimedia.org/wiki/File:Baekje_Cultural_Land_007_(9706835400).jpg",
+    "author": "travel oriented from Seoul, South Korea",
+    "license": "CC BY-SA 2.0",
+    "licenseUrl": "https://creativecommons.org/licenses/by-sa/2.0"
+  },
   "chollipo-arboretum": {
     "src": "images/chollipo-arboretum.webp",
     "pageUrl": "https://commons.wikimedia.org/wiki/File:%EC%B2%9C%EB%A6%AC%ED%8F%AC%EC%88%98%EB%AA%A9%EC%9B%90.jpg",
@@ -310,6 +342,14 @@ window.KOREA_TRAVEL_IMAGES = {
     "author": "Seohae1999",
     "license": "CC BY-SA 3.0",
     "licenseUrl": "https://creativecommons.org/licenses/by-sa/3.0"
+  },
+  "suncheon-wetland": {
+    "src": "images/suncheon-wetland.webp",
+    "pageUrl": "https://commons.wikimedia.org/wiki/File:%EC%88%9C%EC%B2%9C%EB%A7%8C%EC%8A%B5%EC%A7%80.jpg",
+    "filePageUrl": "https://commons.wikimedia.org/wiki/File:%EC%88%9C%EC%B2%9C%EB%A7%8C%EC%8A%B5%EC%A7%80.jpg",
+    "author": "Moonhayun",
+    "license": "CC BY-SA 4.0",
+    "licenseUrl": "https://creativecommons.org/licenses/by-sa/4.0"
   },
   "mokpo-cable-car": {
     "src": "images/mokpo-cable-car.webp",
@@ -343,6 +383,22 @@ window.KOREA_TRAVEL_IMAGES = {
     "license": "CC BY-SA 4.0",
     "licenseUrl": "https://creativecommons.org/licenses/by-sa/4.0"
   },
+  "ganghwa-dolmen-site": {
+    "src": "images/ganghwa-dolmen-site.webp",
+    "pageUrl": "https://ko.wikipedia.org/wiki/%EA%B3%A0%EC%B0%BD_%ED%99%94%EC%88%9C_%EA%B0%95%ED%99%94_%EA%B3%A0%EC%9D%B8%EB%8F%8C_%EC%9C%A0%EC%A0%81",
+    "filePageUrl": "https://commons.wikimedia.org/wiki/File:Korea-Ganghwado-Dolmen-01.jpg",
+    "author": "The original uploader was Jtm71 at Korean Wikipedia .",
+    "license": "CC BY-SA 2.0 kr",
+    "licenseUrl": "https://creativecommons.org/licenses/by-sa/2.0/kr/deed.en"
+  },
+  "may18-records": {
+    "src": "images/may18-records.webp",
+    "pageUrl": "https://commons.wikimedia.org/wiki/File:5.18_%EB%AF%BC%EC%A3%BC%ED%99%94%EC%9A%B4%EB%8F%99%EA%B8%B0%EB%A1%9D%EA%B4%80_%EC%A0%84%EA%B2%BD.jpg",
+    "filePageUrl": "https://commons.wikimedia.org/wiki/File:5.18_%EB%AF%BC%EC%A3%BC%ED%99%94%EC%9A%B4%EB%8F%99%EA%B8%B0%EB%A1%9D%EA%B4%80_%EC%A0%84%EA%B2%BD.jpg",
+    "author": "Kimge2020",
+    "license": "CC BY-SA 4.0",
+    "licenseUrl": "https://creativecommons.org/licenses/by-sa/4.0"
+  },
   "jeonju-hanok-village": {
     "src": "images/jeonju-hanok-village.webp",
     "pageUrl": "https://ko.wikipedia.org/wiki/%EC%A0%84%EC%A3%BC%ED%95%9C%EC%98%A5%EB%A7%88%EC%9D%84",
@@ -358,6 +414,14 @@ window.KOREA_TRAVEL_IMAGES = {
     "author": "Striker9498",
     "license": "CC0",
     "licenseUrl": "http://creativecommons.org/publicdomain/zero/1.0/deed.en"
+  },
+  "gwangmyeong-cave": {
+    "src": "images/gwangmyeong-cave.webp",
+    "pageUrl": "https://ko.wikipedia.org/wiki/%EA%B4%91%EB%AA%85%EB%8F%99%EA%B5%B4",
+    "filePageUrl": "https://commons.wikimedia.org/wiki/File:Gwangmyeong_Cave.jpg",
+    "author": "S099001",
+    "license": "CC BY-SA 4.0",
+    "licenseUrl": "https://creativecommons.org/licenses/by-sa/4.0"
   },
   "taebaek-coal-museum": {
     "src": "images/taebaek-coal-museum.webp",
