@@ -17,8 +17,8 @@ button{font:inherit}
 .filter-btn{min-height:44px;padding:0 15px;border:1px solid rgba(255,255,255,.28);border-radius:999px;color:#eaf5f3;background:rgba(255,255,255,.08);font-weight:800;white-space:nowrap}
 .filter-btn.active{border-color:#ffd893;color:#1c3a40;background:#ffd893}
 .map-shell{position:relative;height:calc(100dvh - 124px)}
-#map-container{width:100%;height:100%;background:#cfdcde}
-#map-container .leaflet-tile-pane{filter:brightness(.96) saturate(.46) contrast(.9);opacity:.84}
+#map-container{width:100%;height:100%;background:#cfe2e6}
+#map-container .leaflet-tile-pane{filter:brightness(.98) saturate(.92) contrast(.96);opacity:.96}
 .leaflet-div-icon{border:0!important;background:transparent!important}
 .map-admin-label-wrapper{width:0!important;height:0!important;border:0!important;background:transparent!important}
 .map-admin-label{position:absolute;transform:translate(-50%,-50%);white-space:nowrap;color:#375b64;font-size:13px;font-weight:900;text-shadow:-1px -1px 0 rgba(255,255,255,.95),1px -1px 0 rgba(255,255,255,.95),-1px 1px 0 rgba(255,255,255,.95),1px 1px 0 rgba(255,255,255,.95),0 2px 6px rgba(255,255,255,.92)}.map-admin-label--province{font-size:clamp(12px,1.15vw,16px)}.map-admin-label--municipality{font-size:12px}.map-admin-label--district{padding:2px 5px;border:1px solid rgba(55,91,100,.2);border-radius:999px;background:rgba(255,255,255,.62);font-size:11px}
@@ -46,7 +46,8 @@ button{font:inherit}
 .place-photo-frame figcaption{position:absolute;left:0;right:0;bottom:0;min-height:28px;padding:6px 9px;color:#fff;background:rgba(5,25,31,.78);font-size:.65rem;line-height:1.35}
 .place-photo-frame figcaption:empty{display:none}.place-photo-frame figcaption a{color:#fff}
 .modal-route-map-wrap{position:relative;min-height:220px;width:100%;overflow:hidden;border:2px solid rgba(255,255,255,.7);border-radius:18px;background:#e8efeb;box-shadow:0 12px 30px rgba(3,25,32,.28)}
-#modalRouteMap{height:100%;min-height:220px;width:100%;text-align:left;background:#dfe8e5}
+#modalRouteMap{height:100%;min-height:220px;width:100%;text-align:left;background:#d8e8e9}
+#modalRouteMap .leaflet-tile-pane{filter:brightness(.98) saturate(.88) contrast(.96)}
 #modalRouteMap .leaflet-control-attribution{font-size:9px}#modalRouteMap .leaflet-control-zoom a{width:40px;height:40px;line-height:40px}
 .place-info{padding:34px;overflow:auto}
 .title-row{display:flex;align-items:center;gap:14px;padding-right:54px}
