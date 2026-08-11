@@ -132,6 +132,81 @@
         var ufoLobby = null;
         var ufoRoomRole = null;
         var ufoTimeSyncTimer = null;
+        var ufoPositionSyncTimer = null;
+        var ufoRemotePlayers = Object.create(null);
+
+        function removeRemoteUfo(playerId) {
+            var remote = ufoRemotePlayers[String(playerId || '')];
+            if (!remote) return;
+            if (remote.mesh && scene) scene.remove(remote.mesh);
+            if (remote.label) remote.label.remove();
+            delete ufoRemotePlayers[String(playerId || '')];
+        }
+
+        function clearRemoteUfos() {
+            Object.keys(ufoRemotePlayers).forEach(removeRemoteUfo);
+        }
+
+        function createRemoteUfo(playerId, playerName) {
+            var id = String(playerId || '');
+            if (!id || !ufoMesh || !scene) return null;
+            if (ufoRemotePlayers[id]) return ufoRemotePlayers[id];
+
+            var mesh = ufoMesh.clone(true);
+            mesh.visible = true;
+            mesh.scale.multiplyScalar(0.88);
+            mesh.traverse(function (part) {
+                if (part.isLight) part.visible = false;
+            });
+            scene.add(mesh);
+
+            var label = document.createElement('div');
+            label.textContent = '🛸 ' + (String(playerName || '').trim() || '참가자');
+            label.style.position = 'absolute';
+            label.style.color = '#bae6fd';
+            label.style.background = 'rgba(15, 23, 42, 0.78)';
+            label.style.border = '1px solid rgba(125, 211, 252, 0.45)';
+            label.style.padding = '2px 7px';
+            label.style.borderRadius = '10px';
+            label.style.fontSize = '11px';
+            label.style.fontWeight = '700';
+            label.style.transform = 'translate(-50%, -100%)';
+            label.style.pointerEvents = 'none';
+            label.style.display = 'none';
+            var labelsContainer = document.getElementById('labelsContainer');
+            if (labelsContainer) labelsContainer.appendChild(label);
+
+            ufoRemotePlayers[id] = {
+                mesh: mesh,
+                label: label,
+                targetPos: mesh.position.clone(),
+                targetHeading: 0,
+                lastSeen: performance.now()
+            };
+            return ufoRemotePlayers[id];
+        }
+
+        function updateRemoteUfo(playerId, payload) {
+            if (!payload || !ufoLobby) return;
+            var id = String(playerId || payload.playerId || '');
+            var myId = String(ufoLobby.snapshot().myId || '');
+            if (!id || id === myId) return;
+
+            var x = Number(payload.x);
+            var y = Number(payload.y);
+            var z = Number(payload.z);
+            var heading = Number(payload.heading);
+            if (![x, y, z, heading].every(Number.isFinite)) return;
+
+            var remote = createRemoteUfo(id, payload.name);
+            if (!remote) return;
+            remote.targetPos.set(x, y, z);
+            remote.targetHeading = heading;
+            remote.lastSeen = performance.now();
+            if (remote.label && payload.name) {
+                remote.label.textContent = '🛸 ' + String(payload.name).trim();
+            }
+        }
 
         function buildUFOMesh() {
             if (ufoMesh && scene) scene.remove(ufoMesh);
@@ -2155,6 +2230,25 @@
                 }
             }
 
+            if (ufoState.active) {
+                var remoteNow = performance.now();
+                Object.keys(ufoRemotePlayers).forEach(function (playerId) {
+                    var remote = ufoRemotePlayers[playerId];
+                    if (!remote || !remote.mesh) return;
+                    if (remoteNow - remote.lastSeen > 12000) {
+                        removeRemoteUfo(playerId);
+                        return;
+                    }
+                    remote.mesh.position.lerp(remote.targetPos, 0.22);
+                    var headingDelta = Math.atan2(
+                        Math.sin(remote.targetHeading - remote.mesh.rotation.y),
+                        Math.cos(remote.targetHeading - remote.mesh.rotation.y)
+                    );
+                    remote.mesh.rotation.y += headingDelta * 0.22;
+                    remote.mesh.visible = true;
+                });
+            }
+
             if (controls) controls.update();
             updateGalaxyBackdrop();
             if (renderer && scene && camera) {
@@ -2174,6 +2268,7 @@
             var hw = w / 2;
             var hh = h / 2;
             var vec = new THREE.Vector3();
+            var occupiedUfoLabels = [];
 
             // Update UFO Pilot Floating Name Tag Position (Tight Fit)
             if (ufoState.active && ufoMesh && ufoState.nameLabel) {
@@ -2186,12 +2281,42 @@
                     ufoState.nameLabel.style.display = 'block';
                     ufoState.nameLabel.style.left = ux + 'px';
                     ufoState.nameLabel.style.top = uy + 'px';
+
+                    occupiedUfoLabels.push({ x: ux, y: uy });
                 } else {
                     ufoState.nameLabel.style.display = 'none';
                 }
             } else if (ufoState.nameLabel) {
                 ufoState.nameLabel.style.display = 'none';
             }
+
+            Object.keys(ufoRemotePlayers).forEach(function (playerId) {
+                var remote = ufoRemotePlayers[playerId];
+                if (!ufoState.active || !remote || !remote.mesh || !remote.label) {
+                    if (remote && remote.label) remote.label.style.display = 'none';
+                    return;
+                }
+                vec.copy(remote.mesh.position);
+                vec.y += 3.0;
+                vec.project(camera);
+                if (vec.z <= 1.0 && Math.abs(vec.x) <= 1.1 && Math.abs(vec.y) <= 1.1) {
+                    var remoteX = (vec.x * hw) + hw;
+                    var remoteY = -(vec.y * hh) + hh;
+                    var overlapsLabel = occupiedUfoLabels.some(function (point) {
+                        return Math.abs(point.x - remoteX) < 72 && Math.abs(point.y - remoteY) < 24;
+                    });
+                    if (overlapsLabel) {
+                        remote.label.style.display = 'none';
+                    } else {
+                        remote.label.style.display = 'block';
+                        remote.label.style.left = remoteX + 'px';
+                        remote.label.style.top = remoteY + 'px';
+                        occupiedUfoLabels.push({ x: remoteX, y: remoteY });
+                    }
+                } else {
+                    remote.label.style.display = 'none';
+                }
+            });
 
             if (state.simMode !== '2d' || !camera || !renderer) return;
 
@@ -2575,6 +2700,11 @@
                 }
                 setUfoTimeAuthority(isTeacher);
             } else {
+                if (ufoPositionSyncTimer) {
+                    clearInterval(ufoPositionSyncTimer);
+                    ufoPositionSyncTimer = null;
+                }
+                clearRemoteUfos();
                 if (ufoModeBtn) {
                     ufoModeBtn.textContent = '🛸 UFO Flight (방번호 입력)';
                     ufoModeBtn.style.background = 'rgba(56, 189, 248, 0.15)';
@@ -2603,6 +2733,42 @@
                     isPlaying: state.isPlaying
                 });
             }, 350);
+        }
+
+        function beginUfoPositionSync() {
+            if (ufoPositionSyncTimer) clearInterval(ufoPositionSyncTimer);
+            if (!ufoLobby) return;
+            var lastPacket = null;
+            var lastSentAt = 0;
+
+            function sendPosition() {
+                if (!ufoState.active || !ufoLobby) return;
+                var now = performance.now();
+                var moved = !lastPacket
+                    || Math.abs(lastPacket.x - ufoState.pos.x) > 0.02
+                    || Math.abs(lastPacket.y - ufoState.pos.y) > 0.02
+                    || Math.abs(lastPacket.z - ufoState.pos.z) > 0.02
+                    || Math.abs(lastPacket.heading - ufoState.heading) > 0.002;
+                if (!moved && now - lastSentAt < 1500) return;
+
+                var snapshot = ufoLobby.snapshot();
+                var payload = {
+                    type: 'UFO_POSITION',
+                    playerId: snapshot.myId,
+                    name: ufoState.pilotName,
+                    x: ufoState.pos.x,
+                    y: ufoState.pos.y,
+                    z: ufoState.pos.z,
+                    heading: ufoState.heading
+                };
+                if (ufoRoomRole === 'host') ufoLobby.broadcast(payload);
+                else ufoLobby.send(payload);
+                lastPacket = payload;
+                lastSentAt = now;
+            }
+
+            sendPosition();
+            ufoPositionSyncTimer = setInterval(sendPosition, 180);
         }
 
         function initUfoClassroomLobby() {
@@ -2685,16 +2851,49 @@
                     overlay.classList.add('hidden');
                     setUfoFlightActive(true);
                     beginUfoTeacherTimeSync();
+                    beginUfoPositionSync();
                 },
-                onGameMessage: function (_senderId, payload) {
-                    if (!payload || payload.type !== 'UFO_TIME_SYNC' || ufoRoomRole === 'host') return;
-                    state.simTimeYears = Number(payload.simTimeYears) || 0;
-                    state.orbitSpeed = Number(payload.orbitSpeed) || 1;
-                    state.isPlaying = payload.isPlaying !== false;
-                    if (speedSlider) speedSlider.value = String(state.orbitSpeed);
-                    if (speedValBadge) speedValBadge.textContent = state.orbitSpeed.toFixed(1) + 'x';
-                    if (playPauseBtn) playPauseBtn.textContent = state.isPlaying ? '⏸' : '▶';
-                    if (simTimeVal) simTimeVal.textContent = state.simTimeYears.toFixed(1) + ' yrs';
+                onGameMessage: function (senderId, payload) {
+                    if (!payload) return;
+
+                    if (payload.type === 'UFO_TIME_SYNC') {
+                        if (ufoRoomRole === 'host') return;
+                        state.simTimeYears = Number(payload.simTimeYears) || 0;
+                        state.orbitSpeed = Number(payload.orbitSpeed) || 1;
+                        state.isPlaying = payload.isPlaying !== false;
+                        if (speedSlider) speedSlider.value = String(state.orbitSpeed);
+                        if (speedValBadge) speedValBadge.textContent = state.orbitSpeed.toFixed(1) + 'x';
+                        if (playPauseBtn) playPauseBtn.textContent = state.isPlaying ? '⏸' : '▶';
+                        if (simTimeVal) simTimeVal.textContent = state.simTimeYears.toFixed(1) + ' yrs';
+                        return;
+                    }
+
+                    if (payload.type === 'UFO_POSITION') {
+                        var remotePlayerId = String(payload.playerId || senderId || '');
+                        updateRemoteUfo(remotePlayerId, payload);
+                        if (ufoRoomRole === 'host' && String(senderId || '') !== String(ufoLobby.snapshot().myId || '')) {
+                            ufoLobby.broadcast({
+                                type: 'UFO_POSITION',
+                                playerId: remotePlayerId,
+                                name: payload.name,
+                                x: payload.x,
+                                y: payload.y,
+                                z: payload.z,
+                                heading: payload.heading
+                            });
+                        }
+                        return;
+                    }
+
+                    if (payload.type === 'UFO_PLAYER_LEFT') {
+                        removeRemoteUfo(payload.playerId);
+                    }
+                },
+                onPlayerLeftDuringGame: function (info) {
+                    removeRemoteUfo(info.playerId);
+                    if (ufoLobby && ufoRoomRole === 'host') {
+                        ufoLobby.broadcast({ type: 'UFO_PLAYER_LEFT', playerId: info.playerId });
+                    }
                 },
                 onAbort: function () {
                     ufoRoomRole = null;
