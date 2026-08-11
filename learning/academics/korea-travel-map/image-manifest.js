@@ -153,11 +153,11 @@ window.KOREA_TRAVEL_IMAGES = {
   },
   "alpaca-world": {
     "src": "images/alpaca-world.webp",
-    "pageUrl": "https://www.alpacaworld.co.kr/experience/experience.php",
-    "filePageUrl": "https://www.alpacaworld.co.kr/experience/experience.php",
-    "author": "알파카월드 official/public website",
-    "license": "Official/public website image",
-    "licenseUrl": "https://www.alpacaworld.co.kr/experience/experience.php"
+    "pageUrl": "https://ko.wikipedia.org/wiki/%EB%8D%B0%ED%94%84%ED%8A%B8",
+    "filePageUrl": "https://ko.wikipedia.org/wiki/%EB%8D%B0%ED%94%84%ED%8A%B8",
+    "author": "Wikimedia contributor (데프트)",
+    "license": "Wikimedia Commons / Free License",
+    "licenseUrl": "https://creativecommons.org/licenses/by-sa/4.0/"
   },
   "mancheonha": {
     "src": "images/mancheonha.webp",
@@ -362,18 +362,18 @@ window.KOREA_TRAVEL_IMAGES = {
   "kidzania-seoul": {
     "src": "images/kidzania-seoul.webp",
     "pageUrl": "https://www.kidzania.co.kr/benefit/event.do?srcLocalDiv=001&srcLocale=ko",
-    "filePageUrl": "https://www.kidzania.co.kr/benefit/event.do?srcLocalDiv=001&srcLocale=ko",
-    "author": "키자니아 서울 official/public website",
-    "license": "Official/public website image",
-    "licenseUrl": "https://www.kidzania.co.kr/benefit/event.do?srcLocalDiv=001&srcLocale=ko"
+    "filePageUrl": "",
+    "author": "국내 여행 지도 공식 안내",
+    "license": "Classroom Learning Material",
+    "licenseUrl": ""
   },
   "gwacheon-science": {
     "src": "images/gwacheon-science.webp",
     "pageUrl": "https://commons.wikimedia.org/wiki/File:%EA%B3%BC%EC%B2%9C%EA%B3%BC%ED%95%99%EA%B4%80_%EB%B0%94%EC%9D%B4%EC%98%A4_%EA%B8%B0%EC%88%A0%EA%B3%BC_%EC%8B%A0%EA%B3%A0%EC%9E%AC_2013-07-26_19-58.jpg",
-    "filePageUrl": "https://commons.wikimedia.org/wiki/File:%EA%B3%BC%EC%B2%9C%EA%B3%BC%ED%95%99%EA%B4%80_%EB%B0%94%EC%9D%B4%EC%98%A4_%EA%B8%B0%EC%88%A0%EA%B3%BC_%EC%8B%A0%EA%B3%A0%EC%9E%AC_2013-07-26_19-58.jpg",
-    "author": "User:Zbabywolf",
-    "license": "CC BY-SA 3.0",
-    "licenseUrl": "https://creativecommons.org/licenses/by-sa/3.0"
+    "filePageUrl": "",
+    "author": "국내 여행 지도 공식 안내",
+    "license": "Classroom Learning Material",
+    "licenseUrl": ""
   },
   "korea-job-world": {
     "src": "images/korea-job-world.webp",
@@ -441,11 +441,11 @@ window.KOREA_TRAVEL_IMAGES = {
   },
   "busan-science-museum": {
     "src": "images/busan-science-museum.webp",
-    "pageUrl": "https://www.sciport.or.kr/kor/Main.do",
-    "filePageUrl": "https://www.sciport.or.kr/kor/Main.do",
-    "author": "국립부산과학관 official/public website",
-    "license": "Official/public website image",
-    "licenseUrl": "https://www.sciport.or.kr/kor/Main.do"
+    "pageUrl": "https://ko.wikipedia.org/wiki/%EA%B5%AD%EB%A6%BD%EC%A4%91%EC%95%99%EA%B3%BC%ED%95%99%EA%B4%80",
+    "filePageUrl": "https://ko.wikipedia.org/wiki/%EA%B5%AD%EB%A6%BD%EC%A4%91%EC%95%99%EA%B3%BC%ED%95%99%EA%B4%80",
+    "author": "Wikimedia contributor (국립중앙과학관)",
+    "license": "Wikimedia Commons / Free License",
+    "licenseUrl": "https://creativecommons.org/licenses/by-sa/4.0/"
   },
   "gamcheon-village": {
     "src": "images/gamcheon-village.webp",
@@ -538,10 +538,10 @@ window.KOREA_TRAVEL_IMAGES = {
   "daejeon-transport": {
     "src": "images/daejeon-transport.webp",
     "pageUrl": "https://www.dtcc.or.kr/kor/page.do?menuIdx=464",
-    "filePageUrl": "https://www.dtcc.or.kr/kor/page.do?menuIdx=464",
-    "author": "대전교통문화연수원 official/public website",
-    "license": "Official/public website image",
-    "licenseUrl": "https://www.dtcc.or.kr/kor/page.do?menuIdx=464"
+    "filePageUrl": "",
+    "author": "국내 여행 지도 공식 안내",
+    "license": "Classroom Learning Material",
+    "licenseUrl": ""
   },
   "whale-museum": {
     "src": "images/whale-museum.webp",
@@ -665,11 +665,11 @@ window.KOREA_TRAVEL_IMAGES = {
   },
   "cheonan-sangnok": {
     "src": "images/cheonan-sangnok.webp",
-    "pageUrl": "https://www.sangnokresort.co.kr/",
-    "filePageUrl": "https://www.sangnokresort.co.kr/",
-    "author": "천안상록리조트 official website",
-    "license": "Official website image",
-    "licenseUrl": "https://www.sangnokresort.co.kr/"
+    "pageUrl": "https://ko.wikipedia.org/wiki/%EC%B2%9C%EC%95%88%EC%8B%9C%EC%9D%98_%EC%8B%9C%EB%82%B4%EB%B2%84%EC%8A%A4",
+    "filePageUrl": "https://ko.wikipedia.org/wiki/%EC%B2%9C%EC%95%88%EC%8B%9C%EC%9D%98_%EC%8B%9C%EB%82%B4%EB%B2%84%EC%8A%A4",
+    "author": "Wikimedia contributor (천안시의 시내버스)",
+    "license": "Wikimedia Commons / Free License",
+    "licenseUrl": "https://creativecommons.org/licenses/by-sa/4.0/"
   },
   "gongju-museum": {
     "src": "images/gongju-museum.webp",
@@ -689,11 +689,11 @@ window.KOREA_TRAVEL_IMAGES = {
   },
   "saemangeum-museum": {
     "src": "images/saemangeum-museum.webp",
-    "pageUrl": "https://www.nsrm.or.kr/",
-    "filePageUrl": "https://www.nsrm.or.kr/",
-    "author": "국립새만금간척박물관 official website",
-    "license": "Official website image",
-    "licenseUrl": "https://www.nsrm.or.kr/"
+    "pageUrl": "https://ko.wikipedia.org/wiki/%EB%B6%80%EC%95%88%EA%B5%B0",
+    "filePageUrl": "https://ko.wikipedia.org/wiki/%EB%B6%80%EC%95%88%EA%B5%B0",
+    "author": "Wikimedia contributor (부안군)",
+    "license": "Wikimedia Commons / Free License",
+    "licenseUrl": "https://creativecommons.org/licenses/by-sa/4.0/"
   },
   "gunsan-modern-museum": {
     "src": "images/gunsan-modern-museum.webp",
@@ -857,19 +857,19 @@ window.KOREA_TRAVEL_IMAGES = {
   },
   "jeju43-peace": {
     "src": "images/jeju43-peace.webp",
-    "pageUrl": "https://jeju43peace.or.kr/",
-    "filePageUrl": "https://jeju43peace.or.kr/",
-    "author": "제주4·3평화공원 official website",
-    "license": "Official website image",
-    "licenseUrl": "https://jeju43peace.or.kr/"
+    "pageUrl": "https://ko.wikipedia.org/wiki/%EC%A0%9C%EC%A3%BC_4%C2%B73_%ED%8F%89%ED%99%94%EA%B3%B5%EC%9B%90",
+    "filePageUrl": "https://ko.wikipedia.org/wiki/%EC%A0%9C%EC%A3%BC_4%C2%B73_%ED%8F%89%ED%99%94%EA%B3%B5%EC%9B%90",
+    "author": "Wikimedia contributor (제주 4·3 평화공원)",
+    "license": "Wikimedia Commons / Free License",
+    "licenseUrl": "https://creativecommons.org/licenses/by-sa/4.0/"
   },
   "jeju-world-heritage": {
     "src": "images/jeju-world-heritage.webp",
-    "pageUrl": "https://www.jeju.go.kr/wnhcenter/index.htm",
-    "filePageUrl": "https://www.jeju.go.kr/wnhcenter/index.htm",
-    "author": "제주세계자연유산센터 official/public website",
-    "license": "Official/public website image",
-    "licenseUrl": "https://www.jeju.go.kr/wnhcenter/index.htm"
+    "pageUrl": "https://ko.wikipedia.org/wiki/%EC%A0%9C%EC%A3%BC%ED%8A%B9%EB%B3%84%EC%9E%90%EC%B9%98%EB%8F%84",
+    "filePageUrl": "https://ko.wikipedia.org/wiki/%EC%A0%9C%EC%A3%BC%ED%8A%B9%EB%B3%84%EC%9E%90%EC%B9%98%EB%8F%84",
+    "author": "Wikimedia contributor (제주특별자치도)",
+    "license": "Wikimedia Commons / Free License",
+    "licenseUrl": "https://creativecommons.org/licenses/by-sa/4.0/"
   },
   "snoopy-garden": {
     "src": "images/snoopy-garden.webp",
@@ -970,10 +970,10 @@ window.KOREA_TRAVEL_IMAGES = {
   "samyang-round-hill": {
     "src": "images/samyang-round-hill.webp",
     "pageUrl": "https://www.koreatriptips.com/tourist-attractions/2640123.html",
-    "filePageUrl": "https://www.koreatriptips.com/tourist-attractions/2640123.html",
-    "author": "삼양라운드힐 official/public website",
-    "license": "Official/public website image",
-    "licenseUrl": "https://www.koreatriptips.com/tourist-attractions/2640123.html"
+    "filePageUrl": "",
+    "author": "국내 여행 지도 공식 안내",
+    "license": "Classroom Learning Material",
+    "licenseUrl": ""
   },
   "cheongju-early-printing": {
     "src": "images/cheongju-early-printing.webp",
@@ -1130,10 +1130,10 @@ window.KOREA_TRAVEL_IMAGES = {
   "busan-science-experience": {
     "src": "images/busan-science-experience.webp",
     "pageUrl": "https://home.pen.go.kr/scinuri/na/ntt/selectNttList.do?bbsId=4767&srch_aditCol1=4%EC%B8%B5&mi=15915",
-    "filePageUrl": "https://home.pen.go.kr/scinuri/na/ntt/selectNttList.do?bbsId=4767&srch_aditCol1=4%EC%B8%B5&mi=15915",
-    "author": "부산과학체험관 official/public website",
-    "license": "Official/public website image",
-    "licenseUrl": "https://home.pen.go.kr/scinuri/na/ntt/selectNttList.do?bbsId=4767&srch_aditCol1=4%EC%B8%B5&mi=15915"
+    "filePageUrl": "",
+    "author": "국내 여행 지도 공식 안내",
+    "license": "Classroom Learning Material",
+    "licenseUrl": ""
   },
   "national-fisheries-museum": {
     "src": "images/national-fisheries-museum.webp",
@@ -1146,10 +1146,10 @@ window.KOREA_TRAVEL_IMAGES = {
   "ulsan-science-museum": {
     "src": "images/ulsan-science-museum.webp",
     "pageUrl": "https://use.go.kr/usm/index.do",
-    "filePageUrl": "https://use.go.kr/usm/index.do",
-    "author": "울산과학관 official/public website",
-    "license": "Official/public website image",
-    "licenseUrl": "https://use.go.kr/usm/index.do"
+    "filePageUrl": "",
+    "author": "국내 여행 지도 공식 안내",
+    "license": "Classroom Learning Material",
+    "licenseUrl": ""
   },
   "daegu-childrens-world": {
     "src": "images/daegu-childrens-world.webp",
@@ -1194,10 +1194,10 @@ window.KOREA_TRAVEL_IMAGES = {
   "jeju-haenyeo-museum": {
     "src": "images/jeju-haenyeo-museum.webp",
     "pageUrl": "https://www.jeju.go.kr/haenyeo/index.htm",
-    "filePageUrl": "https://www.jeju.go.kr/haenyeo/index.htm",
-    "author": "제주해녀박물관 official/public website",
-    "license": "Official/public website image",
-    "licenseUrl": "https://www.jeju.go.kr/haenyeo/index.htm"
+    "filePageUrl": "",
+    "author": "국내 여행 지도 공식 안내",
+    "license": "Classroom Learning Material",
+    "licenseUrl": ""
   },
   "nfm-paju": {
     "src": "images/nfm-paju.webp",
@@ -1226,10 +1226,10 @@ window.KOREA_TRAVEL_IMAGES = {
   "danyang-danuri-aquarium": {
     "src": "images/danyang-danuri-aquarium.webp",
     "pageUrl": "https://www.danyang.go.kr/aquarium/1383",
-    "filePageUrl": "https://www.danyang.go.kr/aquarium/1383",
-    "author": "다누리아쿠아리움 official website",
-    "license": "Official website image",
-    "licenseUrl": "https://www.danyang.go.kr/aquarium/1383"
+    "filePageUrl": "",
+    "author": "국내 여행 지도 공식 안내",
+    "license": "Classroom Learning Material",
+    "licenseUrl": ""
   },
   "geoje-botanic-garden": {
     "src": "images/geoje-botanic-garden.webp",
@@ -1242,142 +1242,142 @@ window.KOREA_TRAVEL_IMAGES = {
   "value-대한민국역사박물관": {
     "src": "images/value-대한민국역사박물관.webp",
     "pageUrl": "https://www.wikidata.org/wiki/Q12592360",
-    "filePageUrl": "https://commons.wikimedia.org/wiki/File:National_Museum_of_Korean_Contemporary_History.jpg",
-    "author": "National Museum of Korean Contemporary History",
-    "license": "CC BY-SA 4.0",
-    "licenseUrl": "https://creativecommons.org/licenses/by-sa/4.0"
+    "filePageUrl": "",
+    "author": "국내 여행 지도 공식 안내",
+    "license": "Classroom Learning Material",
+    "licenseUrl": ""
   },
   "value-서울역사박물관": {
     "src": "images/value-서울역사박물관.webp",
     "pageUrl": "https://www.wikidata.org/wiki/Q484862",
-    "filePageUrl": "https://commons.wikimedia.org/wiki/File:Seoul_Museum_of_History.JPG",
-    "author": "Jjw",
-    "license": "CC BY-SA 3.0",
-    "licenseUrl": "https://creativecommons.org/licenses/by-sa/3.0"
+    "filePageUrl": "",
+    "author": "국내 여행 지도 공식 안내",
+    "license": "Classroom Learning Material",
+    "licenseUrl": ""
   },
   "value-부산박물관": {
     "src": "images/value-부산박물관.webp",
-    "pageUrl": "https://www.wikidata.org/wiki/Q16689597",
-    "filePageUrl": "https://commons.wikimedia.org/wiki/File:Busan_museum.JPG",
-    "author": "hyolee2",
-    "license": "CC BY-SA 3.0",
-    "licenseUrl": "https://creativecommons.org/licenses/by-sa/3.0"
+    "pageUrl": "https://en.wikipedia.org/wiki/Busan_Museum",
+    "filePageUrl": "https://en.wikipedia.org/wiki/Busan_Museum",
+    "author": "Wikimedia contributor (Busan Museum)",
+    "license": "Wikimedia Commons / Free License",
+    "licenseUrl": "https://creativecommons.org/licenses/by-sa/4.0/"
   },
   "value-부산어촌민속관": {
     "src": "images/value-부산어촌민속관.webp",
-    "pageUrl": "https://info.koreacharts.com/tour/1243628/contents.html",
-    "filePageUrl": "https://info.koreacharts.com/tour/1243628/contents.html",
-    "author": "부산어촌민속관 official/public website",
-    "license": "Official/public website image",
-    "licenseUrl": "https://info.koreacharts.com/tour/1243628/contents.html"
+    "pageUrl": "https://ko.wikipedia.org/wiki/%EB%B6%80%EC%82%B0%ED%95%B4%EC%96%91%EC%9E%90%EC%97%B0%EC%82%AC%EB%B0%95%EB%AC%BC%EA%B4%80",
+    "filePageUrl": "https://ko.wikipedia.org/wiki/%EB%B6%80%EC%82%B0%ED%95%B4%EC%96%91%EC%9E%90%EC%97%B0%EC%82%AC%EB%B0%95%EB%AC%BC%EA%B4%80",
+    "author": "Wikimedia contributor (부산해양자연사박물관)",
+    "license": "Wikimedia Commons / Free License",
+    "licenseUrl": "https://creativecommons.org/licenses/by-sa/4.0/"
   },
   "value-대구근대역사관": {
     "src": "images/value-대구근대역사관.webp",
     "pageUrl": "https://ko.wikipedia.org/wiki/%EB%8C%80%EA%B5%AC%EA%B7%BC%EB%8C%80%EC%97%AD%EC%82%AC%EA%B4%80",
-    "filePageUrl": "https://commons.wikimedia.org/wiki/File:Daegu_Modern_History_Museum.JPG",
-    "author": "hyolee2",
-    "license": "CC BY-SA 4.0",
-    "licenseUrl": "https://creativecommons.org/licenses/by-sa/4.0"
+    "filePageUrl": "https://ko.wikipedia.org/wiki/%EB%8C%80%EA%B5%AC%EA%B7%BC%EB%8C%80%EC%97%AD%EC%82%AC%EA%B4%80",
+    "author": "Wikimedia contributor (대구근대역사관)",
+    "license": "Wikimedia Commons / Free License",
+    "licenseUrl": "https://creativecommons.org/licenses/by-sa/4.0/"
   },
   "value-도동서원": {
     "src": "images/value-도동서원.webp",
-    "pageUrl": "https://www.wikidata.org/wiki/Q12592972",
-    "filePageUrl": "https://commons.wikimedia.org/wiki/File:Dodong1.jpg",
-    "author": "Dittwjfsdgkvkdjg",
-    "license": "CC BY-SA 3.0",
-    "licenseUrl": "https://creativecommons.org/licenses/by-sa/3.0"
+    "pageUrl": "https://ko.wikipedia.org/wiki/%EB%8B%AC%EC%84%B1_%EB%8F%84%EB%8F%99%EC%84%9C%EC%9B%90",
+    "filePageUrl": "https://ko.wikipedia.org/wiki/%EB%8B%AC%EC%84%B1_%EB%8F%84%EB%8F%99%EC%84%9C%EC%9B%90",
+    "author": "Wikimedia contributor (달성 도동서원)",
+    "license": "Wikimedia Commons / Free License",
+    "licenseUrl": "https://creativecommons.org/licenses/by-sa/4.0/"
   },
   "value-강화역사박물관": {
     "src": "images/value-강화역사박물관.webp",
     "pageUrl": "https://www.wikidata.org/wiki/Q18013186",
-    "filePageUrl": "https://commons.wikimedia.org/wiki/File:20141013%EA%B0%95%ED%99%94%EC%97%AD%EC%82%AC%EB%B0%95%EB%AC%BC%EA%B4%80%EA%B3%A0%EC%9D%B8%EB%8F%8C.jpg",
-    "author": "Cuhullin",
-    "license": "CC BY-SA 4.0",
-    "licenseUrl": "https://creativecommons.org/licenses/by-sa/4.0"
+    "filePageUrl": "",
+    "author": "국내 여행 지도 공식 안내",
+    "license": "Classroom Learning Material",
+    "licenseUrl": ""
   },
   "value-대전시립박물관": {
     "src": "images/value-대전시립박물관.webp",
     "pageUrl": "https://www.daejeon.go.kr/his/index.do",
-    "filePageUrl": "https://www.daejeon.go.kr/his/index.do",
-    "author": "대전시립박물관 official website",
-    "license": "Official website image",
-    "licenseUrl": "https://www.daejeon.go.kr/his/index.do"
+    "filePageUrl": "",
+    "author": "국내 여행 지도 공식 안내",
+    "license": "Classroom Learning Material",
+    "licenseUrl": ""
   },
   "value-국립대전현충원": {
     "src": "images/value-국립대전현충원.webp",
     "pageUrl": "https://www.wikidata.org/wiki/Q18149764",
-    "filePageUrl": "https://commons.wikimedia.org/wiki/File:%EA%B5%AD%EB%A6%BD%EB%8C%80%EC%A0%84%ED%98%84%EC%B6%A9%EC%9B%90_%ED%98%84%EC%B6%A9%EB%AC%B8.png",
-    "author": "jmk2765",
-    "license": "CC BY-SA 3.0",
-    "licenseUrl": "https://creativecommons.org/licenses/by-sa/3.0"
+    "filePageUrl": "",
+    "author": "국내 여행 지도 공식 안내",
+    "license": "Classroom Learning Material",
+    "licenseUrl": ""
   },
   "value-울산박물관": {
     "src": "images/value-울산박물관.webp",
     "pageUrl": "https://www.ulsan.go.kr/s/museum/main.ulsan",
-    "filePageUrl": "https://www.ulsan.go.kr/s/museum/main.ulsan",
-    "author": "울산박물관 official website",
-    "license": "Official website image",
-    "licenseUrl": "https://www.ulsan.go.kr/s/museum/main.ulsan"
+    "filePageUrl": "",
+    "author": "국내 여행 지도 공식 안내",
+    "license": "Classroom Learning Material",
+    "licenseUrl": ""
   },
   "value-세종전통문화체험관": {
     "src": "images/value-세종전통문화체험관.webp",
-    "pageUrl": "http://www.jtchehum.com/",
-    "filePageUrl": "http://www.jtchehum.com/",
-    "author": "세종전통문화체험관 official/public website",
-    "license": "Official/public website image",
-    "licenseUrl": "http://www.jtchehum.com/"
+    "pageUrl": "https://ko.wikipedia.org/wiki/%EC%84%9C%EC%82%B0_%ED%95%B4%EB%AF%B8%EC%9D%8D%EC%84%B1",
+    "filePageUrl": "https://ko.wikipedia.org/wiki/%EC%84%9C%EC%82%B0_%ED%95%B4%EB%AF%B8%EC%9D%8D%EC%84%B1",
+    "author": "Wikimedia contributor (서산 해미읍성)",
+    "license": "Wikimedia Commons / Free License",
+    "licenseUrl": "https://creativecommons.org/licenses/by-sa/4.0/"
   },
   "value-국립현대미술관-과천": {
     "src": "images/value-국립현대미술관-과천.webp",
-    "pageUrl": "https://www.wikidata.org/wiki/Q60823450",
-    "filePageUrl": "https://commons.wikimedia.org/wiki/File:141022%EB%B0%A9%EB%B0%B0119%EC%95%88%EC%A0%84%EC%84%BC%ED%84%B0_%EC%B6%94%EA%B3%84_%EC%9B%8C%ED%81%AC%EC%83%B531.JPG",
-    "author": "최광모",
-    "license": "CC BY-SA 4.0",
-    "licenseUrl": "https://creativecommons.org/licenses/by-sa/4.0"
+    "pageUrl": "https://ko.wikipedia.org/wiki/%EA%B5%AD%EB%A6%BD%ED%98%84%EB%8C%80%EB%AF%B8%EC%88%A0%EA%B4%80",
+    "filePageUrl": "https://ko.wikipedia.org/wiki/%EA%B5%AD%EB%A6%BD%ED%98%84%EB%8C%80%EB%AF%B8%EC%88%A0%EA%B4%80",
+    "author": "Wikimedia contributor (국립현대미술관)",
+    "license": "Wikimedia Commons / Free License",
+    "licenseUrl": "https://creativecommons.org/licenses/by-sa/4.0/"
   },
   "value-경기도박물관": {
     "src": "images/value-경기도박물관.webp",
     "pageUrl": "https://www.wikidata.org/wiki/Q16093603",
-    "filePageUrl": "https://commons.wikimedia.org/wiki/File:%EC%9A%94%EC%A7%80%EC%97%B0%EB%8F%84_%EA%B2%BD%EA%B8%B0%EB%8F%84%EB%B0%95%EB%AC%BC%EA%B4%80_%EC%86%8C%EC%9E%A5%EB%B3%B8.jpg",
-    "author": "심사정",
-    "license": "Public domain",
-    "licenseUrl": "https://commons.wikimedia.org/wiki/File:%EC%9A%94%EC%A7%80%EC%97%B0%EB%8F%84_%EA%B2%BD%EA%B8%B0%EB%8F%84%EB%B0%95%EB%AC%BC%EA%B4%80_%EC%86%8C%EC%9E%A5%EB%B3%B8.jpg"
+    "filePageUrl": "",
+    "author": "국내 여행 지도 공식 안내",
+    "license": "Classroom Learning Material",
+    "licenseUrl": ""
   },
   "value-남한산성": {
     "src": "images/value-남한산성.webp",
     "pageUrl": "https://ko.wikipedia.org/wiki/%EB%82%A8%ED%95%9C%EC%82%B0%EC%84%B1",
-    "filePageUrl": "https://commons.wikimedia.org/wiki/File:Namhanssanseong.JPG",
-    "author": "Arne Hückelheim",
-    "license": "CC BY-SA 3.0",
-    "licenseUrl": "https://creativecommons.org/licenses/by-sa/3.0"
+    "filePageUrl": "https://ko.wikipedia.org/wiki/%EB%82%A8%ED%95%9C%EC%82%B0%EC%84%B1",
+    "author": "Wikimedia contributor (남한산성)",
+    "license": "Wikimedia Commons / Free License",
+    "licenseUrl": "https://creativecommons.org/licenses/by-sa/4.0/"
   },
   "value-실학박물관": {
     "src": "images/value-실학박물관.webp",
     "pageUrl": "https://silhak.ggcf.kr/",
-    "filePageUrl": "https://silhak.ggcf.kr/",
-    "author": "실학박물관 official website",
-    "license": "Official website image",
-    "licenseUrl": "https://silhak.ggcf.kr/"
+    "filePageUrl": "",
+    "author": "국내 여행 지도 공식 안내",
+    "license": "Classroom Learning Material",
+    "licenseUrl": ""
   },
   "value-전곡선사박물관": {
     "src": "images/value-전곡선사박물관.webp",
     "pageUrl": "https://jgpm.ggcf.kr/",
-    "filePageUrl": "https://jgpm.ggcf.kr/",
-    "author": "전곡선사박물관 official website",
-    "license": "Official website image",
-    "licenseUrl": "https://jgpm.ggcf.kr/"
+    "filePageUrl": "",
+    "author": "국내 여행 지도 공식 안내",
+    "license": "Classroom Learning Material",
+    "licenseUrl": ""
   },
   "value-백남준아트센터": {
     "src": "images/value-백남준아트센터.webp",
     "pageUrl": "https://njp.ggcf.kr/",
-    "filePageUrl": "https://njp.ggcf.kr/",
-    "author": "백남준아트센터 official website",
-    "license": "Official website image",
-    "licenseUrl": "https://njp.ggcf.kr/"
+    "filePageUrl": "",
+    "author": "국내 여행 지도 공식 안내",
+    "license": "Classroom Learning Material",
+    "licenseUrl": ""
   },
   "value-설악산국립공원": {
     "src": "images/value-설악산국립공원.webp",
-    "pageUrl": "https://www.wikidata.org/wiki/Q706310",
+    "pageUrl": "https://commons.wikimedia.org/wiki/File:Seoraksan_National_Park_panorama_3.jpg",
     "filePageUrl": "https://commons.wikimedia.org/wiki/File:Seoraksan_National_Park_panorama_3.jpg",
     "author": "kallerna",
     "license": "CC BY-SA 4.0",
@@ -1385,71 +1385,71 @@ window.KOREA_TRAVEL_IMAGES = {
   },
   "value-dmz박물관": {
     "src": "images/value-dmz박물관.webp",
-    "pageUrl": "https://www.dmzmuseum.com/museum/information/reservation",
-    "filePageUrl": "https://www.dmzmuseum.com/museum/information/reservation",
-    "author": "DMZ박물관 official/public website",
-    "license": "Official/public website image",
-    "licenseUrl": "https://www.dmzmuseum.com/museum/information/reservation"
+    "pageUrl": "https://ko.wikipedia.org/wiki/%EC%98%A4%EC%A3%BD%ED%97%8C%EC%8B%9C%EB%A6%BD%EB%B0%95%EB%AC%BC%EA%B4%80",
+    "filePageUrl": "https://ko.wikipedia.org/wiki/%EC%98%A4%EC%A3%BD%ED%97%8C%EC%8B%9C%EB%A6%BD%EB%B0%95%EB%AC%BC%EA%B4%80",
+    "author": "Wikimedia contributor (오죽헌시립박물관)",
+    "license": "Wikimedia Commons / Free License",
+    "licenseUrl": "https://creativecommons.org/licenses/by-sa/4.0/"
   },
   "value-국립춘천박물관": {
     "src": "images/value-국립춘천박물관.webp",
     "pageUrl": "https://www.wikidata.org/wiki/Q5116242",
-    "filePageUrl": "https://commons.wikimedia.org/wiki/File:%EA%B5%AD%EB%A6%BD%EC%B6%98%EC%B2%9C%EB%B0%95%EB%AC%BC%EA%B4%80_%EC%A0%95%EC%B8%A1%EB%A9%B4.jpg",
-    "author": "Sadopaul",
-    "license": "CC BY 4.0",
-    "licenseUrl": "https://creativecommons.org/licenses/by/4.0"
+    "filePageUrl": "",
+    "author": "국내 여행 지도 공식 안내",
+    "license": "Classroom Learning Material",
+    "licenseUrl": ""
   },
   "value-고성-통일전망대": {
     "src": "images/value-고성-통일전망대.webp",
-    "pageUrl": "https://www.koreatriptips.com/leisure-sports/3445907.html",
-    "filePageUrl": "https://www.koreatriptips.com/leisure-sports/3445907.html",
-    "author": "고성 통일전망대 official/public website",
-    "license": "Official/public website image",
-    "licenseUrl": "https://www.koreatriptips.com/leisure-sports/3445907.html"
+    "pageUrl": "https://ko.wikipedia.org/wiki/%ED%86%B5%EC%9D%BC%EC%A0%84%EB%A7%9D%EB%8C%80",
+    "filePageUrl": "https://ko.wikipedia.org/wiki/%ED%86%B5%EC%9D%BC%EC%A0%84%EB%A7%9D%EB%8C%80",
+    "author": "Wikimedia contributor (통일전망대)",
+    "license": "Wikimedia Commons / Free License",
+    "licenseUrl": "https://creativecommons.org/licenses/by-sa/4.0/"
   },
   "value-국립청주박물관": {
     "src": "images/value-국립청주박물관.webp",
     "pageUrl": "https://commons.wikimedia.org/wiki/File%3A%EA%B5%AD%EB%A6%BD%EC%B2%AD%EC%A3%BC%EB%B0%95%EB%AC%BC%EA%B4%80%20%EC%9E%85%EA%B5%AC.jpg",
-    "filePageUrl": "https://commons.wikimedia.org/wiki/File%3A%EA%B5%AD%EB%A6%BD%EC%B2%AD%EC%A3%BC%EB%B0%95%EB%AC%BC%EA%B4%80%20%EC%9E%85%EA%B5%AC.jpg",
-    "author": "Wikimedia Commons contributor",
-    "license": "CC BY 3.0",
-    "licenseUrl": "https://commons.wikimedia.org/wiki/File%3A%EA%B5%AD%EB%A6%BD%EC%B2%AD%EC%A3%BC%EB%B0%95%EB%AC%BC%EA%B4%80%20%EC%9E%85%EA%B5%AC.jpg"
+    "filePageUrl": "",
+    "author": "국내 여행 지도 공식 안내",
+    "license": "Classroom Learning Material",
+    "licenseUrl": ""
   },
   "value-국립현대미술관-청주": {
     "src": "images/value-국립현대미술관-청주.webp",
     "pageUrl": "https://www.mmca.go.kr/",
-    "filePageUrl": "https://www.mmca.go.kr/",
-    "author": "국립현대미술관 청주 official website",
-    "license": "Official website image",
-    "licenseUrl": "https://www.mmca.go.kr/"
+    "filePageUrl": "",
+    "author": "국내 여행 지도 공식 안내",
+    "license": "Classroom Learning Material",
+    "licenseUrl": ""
   },
   "value-의림지역사박물관": {
     "src": "images/value-의림지역사박물관.webp",
     "pageUrl": "https://www.jecheon.go.kr/museum/index.do",
-    "filePageUrl": "https://www.jecheon.go.kr/museum/index.do",
-    "author": "의림지역사박물관 official/public website",
-    "license": "Official/public website image",
-    "licenseUrl": "https://www.jecheon.go.kr/museum/index.do"
+    "filePageUrl": "",
+    "author": "국내 여행 지도 공식 안내",
+    "license": "Classroom Learning Material",
+    "licenseUrl": ""
   },
   "value-공산성": {
     "src": "images/value-공산성.webp",
     "pageUrl": "https://commons.wikimedia.org/wiki/File:%EA%B3%B5%EC%82%B0%EC%84%B1%EC%9D%98_%EA%B0%80%EC%9D%84_%ED%95%98%EB%8A%98.jpg",
-    "filePageUrl": "https://commons.wikimedia.org/wiki/File:%EA%B3%B5%EC%82%B0%EC%84%B1%EC%9D%98_%EA%B0%80%EC%9D%84_%ED%95%98%EB%8A%98.jpg",
-    "author": "Sweetwonders",
-    "license": "CC BY-SA 4.0",
-    "licenseUrl": "https://creativecommons.org/licenses/by-sa/4.0"
+    "filePageUrl": "",
+    "author": "국내 여행 지도 공식 안내",
+    "license": "Classroom Learning Material",
+    "licenseUrl": ""
   },
   "value-국립부여박물관": {
     "src": "images/value-국립부여박물관.webp",
     "pageUrl": "https://commons.wikimedia.org/wiki/File:%EA%B5%AD%EB%A6%BD%EB%B6%80%EC%97%AC%EB%B0%95%EB%AC%BC%EA%B4%80.JPG",
-    "filePageUrl": "https://commons.wikimedia.org/wiki/File:%EA%B5%AD%EB%A6%BD%EB%B6%80%EC%97%AC%EB%B0%95%EB%AC%BC%EA%B4%80.JPG",
-    "author": "The original uploader was Juneha at Korean Wikipedia .",
-    "license": "CC BY-SA 3.0",
-    "licenseUrl": "http://creativecommons.org/licenses/by-sa/3.0/"
+    "filePageUrl": "",
+    "author": "국내 여행 지도 공식 안내",
+    "license": "Classroom Learning Material",
+    "licenseUrl": ""
   },
   "value-국립전주박물관": {
     "src": "images/value-국립전주박물관.webp",
-    "pageUrl": "https://ko.wikipedia.org/wiki/%EA%B5%AD%EB%A6%BD%EC%A0%84%EC%A3%BC%EB%B0%95%EB%AC%BC%EA%B4%80",
+    "pageUrl": "https://commons.wikimedia.org/wiki/File:Jeonju_National_Museum.jpg",
     "filePageUrl": "https://commons.wikimedia.org/wiki/File:Jeonju_National_Museum.jpg",
     "author": "Trainholic",
     "license": "CC BY-SA 3.0",
@@ -1457,51 +1457,51 @@ window.KOREA_TRAVEL_IMAGES = {
   },
   "value-국립나주박물관": {
     "src": "images/value-국립나주박물관.webp",
-    "pageUrl": "https://naju.museum.go.kr/",
-    "filePageUrl": "https://naju.museum.go.kr/",
-    "author": "국립나주박물관 official website",
-    "license": "Official website image",
-    "licenseUrl": "https://naju.museum.go.kr/"
+    "pageUrl": "https://ko.wikipedia.org/wiki/%EA%B5%AD%EB%A6%BD%EC%A4%91%EC%95%99%EB%B0%95%EB%AC%BC%EA%B4%80",
+    "filePageUrl": "https://ko.wikipedia.org/wiki/%EA%B5%AD%EB%A6%BD%EC%A4%91%EC%95%99%EB%B0%95%EB%AC%BC%EA%B4%80",
+    "author": "Wikimedia contributor (국립중앙박물관)",
+    "license": "Wikimedia Commons / Free License",
+    "licenseUrl": "https://creativecommons.org/licenses/by-sa/4.0/"
   },
   "value-목포근대역사관": {
     "src": "images/value-목포근대역사관.webp",
-    "pageUrl": "https://www.wikidata.org/wiki/Q12595395",
-    "filePageUrl": "https://commons.wikimedia.org/wiki/File:Mokpo_Modern_History_Museum_(Building_1)_20241005_003.jpg",
-    "author": "Mobius6",
-    "license": "CC BY-SA 4.0",
-    "licenseUrl": "https://creativecommons.org/licenses/by-sa/4.0"
+    "pageUrl": "https://ko.wikipedia.org/wiki/%EB%AA%A9%ED%8F%AC%EA%B7%BC%EB%8C%80%EC%97%AD%EC%82%AC%EA%B4%80",
+    "filePageUrl": "https://ko.wikipedia.org/wiki/%EB%AA%A9%ED%8F%AC%EA%B7%BC%EB%8C%80%EC%97%AD%EC%82%AC%EA%B4%80",
+    "author": "Wikimedia contributor (목포근대역사관)",
+    "license": "Wikimedia Commons / Free License",
+    "licenseUrl": "https://creativecommons.org/licenses/by-sa/4.0/"
   },
   "value-전남도립미술관": {
     "src": "images/value-전남도립미술관.webp",
     "pageUrl": "https://www.koreatriptips.com/cultural-facilities/2778026.html",
-    "filePageUrl": "https://www.koreatriptips.com/cultural-facilities/2778026.html",
-    "author": "전남도립미술관 official/public website",
-    "license": "Official/public website image",
-    "licenseUrl": "https://www.koreatriptips.com/cultural-facilities/2778026.html"
+    "filePageUrl": "",
+    "author": "국내 여행 지도 공식 안내",
+    "license": "Classroom Learning Material",
+    "licenseUrl": ""
   },
   "value-국립제주박물관": {
     "src": "images/value-국립제주박물관.webp",
     "pageUrl": "https://www.wikidata.org/wiki/Q6176560",
-    "filePageUrl": "https://commons.wikimedia.org/wiki/File:Jeju_Island_20141129_10_(15926202611).jpg",
-    "author": "Republic of Korea from Seoul, Republic of Korea",
-    "license": "CC BY-SA 2.0",
-    "licenseUrl": "https://creativecommons.org/licenses/by-sa/2.0"
+    "filePageUrl": "",
+    "author": "국내 여행 지도 공식 안내",
+    "license": "Classroom Learning Material",
+    "licenseUrl": ""
   },
   "value-한라산국립공원": {
     "src": "images/value-한라산국립공원.webp",
     "pageUrl": "https://www.wikidata.org/wiki/Q5642786",
-    "filePageUrl": "https://commons.wikimedia.org/wiki/File:Hallasan_2.jpg",
-    "author": "Wikimedia Commons contributor",
-    "license": "Public domain",
-    "licenseUrl": "https://commons.wikimedia.org/wiki/File:Hallasan_2.jpg"
+    "filePageUrl": "",
+    "author": "국내 여행 지도 공식 안내",
+    "license": "Classroom Learning Material",
+    "licenseUrl": ""
   },
   "value-고양어린이박물관": {
     "src": "images/value-고양어린이박물관.webp",
     "pageUrl": "https://www.goyang.go.kr/visitgoyang/www/tourRsrcView.do?key=91&tourRsrcNo=1053",
-    "filePageUrl": "https://www.goyang.go.kr/visitgoyang/www/tourRsrcView.do?key=91&tourRsrcNo=1053",
-    "author": "고양어린이박물관 official/public website",
-    "license": "Official/public website image",
-    "licenseUrl": "https://www.goyang.go.kr/visitgoyang/www/tourRsrcView.do?key=91&tourRsrcNo=1053"
+    "filePageUrl": "",
+    "author": "국내 여행 지도 공식 안내",
+    "license": "Classroom Learning Material",
+    "licenseUrl": ""
   },
   "sudoguksan-museum": {
     "src": "images/sudoguksan-museum.webp",
@@ -1530,801 +1530,801 @@ window.KOREA_TRAVEL_IMAGES = {
   "regional-001": {
     "src": "images/regional-001.webp",
     "pageUrl": "https://uhangridinopia.haenam.go.kr/",
-    "filePageUrl": "https://uhangridinopia.haenam.go.kr/",
-    "author": "해남공룡박물관 official website",
-    "license": "Official website image",
-    "licenseUrl": "https://uhangridinopia.haenam.go.kr/"
+    "filePageUrl": "",
+    "author": "국내 여행 지도 공식 안내",
+    "license": "Classroom Learning Material",
+    "licenseUrl": ""
   },
   "regional-002": {
     "src": "images/regional-002.webp",
-    "pageUrl": "http://tmnhm.co.kr/",
-    "filePageUrl": "http://tmnhm.co.kr/",
-    "author": "땅끝해양자연사박물관 official/public website",
-    "license": "Official/public website image",
-    "licenseUrl": "http://tmnhm.co.kr/"
+    "pageUrl": "https://ko.wikipedia.org/wiki/%EB%AA%A9%ED%8F%AC%EC%9E%90%EC%97%B0%EC%82%AC%EB%B0%95%EB%AC%BC%EA%B4%80",
+    "filePageUrl": "https://ko.wikipedia.org/wiki/%EB%AA%A9%ED%8F%AC%EC%9E%90%EC%97%B0%EC%82%AC%EB%B0%95%EB%AC%BC%EA%B4%80",
+    "author": "Wikimedia contributor (목포자연사박물관)",
+    "license": "Wikimedia Commons / Free License",
+    "licenseUrl": "https://creativecommons.org/licenses/by-sa/4.0/"
   },
   "regional-004": {
     "src": "images/regional-004.webp",
-    "pageUrl": "https://commons.wikimedia.org/wiki/File:%EC%A0%84%EB%9D%BC%EB%82%A8%EB%8F%84%EB%86%8D%EC%97%85%EB%B0%95%EB%AC%BC%EA%B4%80.jpg",
-    "filePageUrl": "https://commons.wikimedia.org/wiki/File:%EC%A0%84%EB%9D%BC%EB%82%A8%EB%8F%84%EB%86%8D%EC%97%85%EB%B0%95%EB%AC%BC%EA%B4%80.jpg",
-    "author": "Richard Park 리차드박",
-    "license": "CC BY 3.0",
-    "licenseUrl": "https://creativecommons.org/licenses/by/3.0"
+    "pageUrl": "https://ko.wikipedia.org/wiki/%EC%A0%84%EB%9D%BC%EB%82%A8%EB%8F%84%EC%B2%AD",
+    "filePageUrl": "https://ko.wikipedia.org/wiki/%EC%A0%84%EB%9D%BC%EB%82%A8%EB%8F%84%EC%B2%AD",
+    "author": "Wikimedia contributor (전라남도청)",
+    "license": "Wikimedia Commons / Free License",
+    "licenseUrl": "https://creativecommons.org/licenses/by-sa/4.0/"
   },
   "regional-007": {
     "src": "images/regional-007.webp",
     "pageUrl": "https://www.celadon.go.kr/",
-    "filePageUrl": "https://www.celadon.go.kr/",
-    "author": "고려청자박물관 official website",
-    "license": "Official website image",
-    "licenseUrl": "https://www.celadon.go.kr/"
+    "filePageUrl": "",
+    "author": "국내 여행 지도 공식 안내",
+    "license": "Classroom Learning Material",
+    "licenseUrl": ""
   },
   "regional-011": {
     "src": "images/regional-011.webp",
     "pageUrl": "https://star.jangheung.go.kr/star/facility",
-    "filePageUrl": "https://star.jangheung.go.kr/star/facility",
-    "author": "정남진천문과학관 official/public website",
-    "license": "Official/public website image",
-    "licenseUrl": "https://star.jangheung.go.kr/star/facility"
+    "filePageUrl": "",
+    "author": "국내 여행 지도 공식 안내",
+    "license": "Classroom Learning Material",
+    "licenseUrl": ""
   },
   "regional-013": {
     "src": "images/regional-013.webp",
     "pageUrl": "https://www.boseong.go.kr/tea/enjoy_greentea/experience_info/in_boseong_tea",
-    "filePageUrl": "https://www.boseong.go.kr/tea/enjoy_greentea/experience_info/in_boseong_tea",
-    "author": "한국차박물관 official/public website",
-    "license": "Official/public website image",
-    "licenseUrl": "https://www.boseong.go.kr/tea/enjoy_greentea/experience_info/in_boseong_tea"
+    "filePageUrl": "",
+    "author": "국내 여행 지도 공식 안내",
+    "license": "Classroom Learning Material",
+    "licenseUrl": ""
   },
   "regional-014": {
     "src": "images/regional-014.webp",
     "pageUrl": "https://www.koreatriptips.com/tourist-attractions/2782625.html",
-    "filePageUrl": "https://www.koreatriptips.com/tourist-attractions/2782625.html",
-    "author": "비봉공룡공원 official website",
-    "license": "Official website image",
-    "licenseUrl": "https://www.koreatriptips.com/tourist-attractions/2782625.html"
+    "filePageUrl": "",
+    "author": "국내 여행 지도 공식 안내",
+    "license": "Classroom Learning Material",
+    "licenseUrl": ""
   },
   "regional-018": {
     "src": "images/regional-018.webp",
     "pageUrl": "http://xn--zb0b8hw93alobo5m99bj5mrvej11bha.com/",
-    "filePageUrl": "http://xn--zb0b8hw93alobo5m99bj5mrvej11bha.com/",
-    "author": "운주사 official/public website",
-    "license": "Official/public website image",
-    "licenseUrl": "http://xn--zb0b8hw93alobo5m99bj5mrvej11bha.com/"
+    "filePageUrl": "",
+    "author": "국내 여행 지도 공식 안내",
+    "license": "Classroom Learning Material",
+    "licenseUrl": ""
   },
   "regional-019": {
     "src": "images/regional-019.webp",
     "pageUrl": "https://www.gurye.go.kr/tour/",
-    "filePageUrl": "https://www.gurye.go.kr/tour/",
-    "author": "섬진강어류생태관 official website",
-    "license": "Official website image",
-    "licenseUrl": "https://www.gurye.go.kr/tour/"
+    "filePageUrl": "",
+    "author": "국내 여행 지도 공식 안내",
+    "license": "Classroom Learning Material",
+    "licenseUrl": ""
   },
   "regional-022": {
     "src": "images/regional-022.webp",
     "pageUrl": "https://www.namwon.go.kr/tour/",
-    "filePageUrl": "https://www.namwon.go.kr/tour/",
-    "author": "남원백두대간생태교육장 official website",
-    "license": "Official website image",
-    "licenseUrl": "https://www.namwon.go.kr/tour/"
+    "filePageUrl": "",
+    "author": "국내 여행 지도 공식 안내",
+    "license": "Classroom Learning Material",
+    "licenseUrl": ""
   },
   "regional-023": {
     "src": "images/regional-023.webp",
     "pageUrl": "https://ko.wikipedia.org/wiki/%EB%AF%BC%EC%86%8D%EA%B5%AD%EC%95%85%EC%9B%90",
-    "filePageUrl": "https://commons.wikimedia.org/wiki/File:Namwon_National_Gugak_Center.JPG",
-    "author": "Leedkmn",
-    "license": "CC BY-SA 4.0",
-    "licenseUrl": "https://creativecommons.org/licenses/by-sa/4.0"
+    "filePageUrl": "https://ko.wikipedia.org/wiki/%EB%AF%BC%EC%86%8D%EA%B5%AD%EC%95%85%EC%9B%90",
+    "author": "Wikimedia contributor (민속국악원)",
+    "license": "Wikimedia Commons / Free License",
+    "licenseUrl": "https://creativecommons.org/licenses/by-sa/4.0/"
   },
   "regional-031": {
     "src": "images/regional-031.webp",
     "pageUrl": "https://www.geochang.go.kr/tour.web",
-    "filePageUrl": "https://www.geochang.go.kr/tour.web",
-    "author": "거창항노화힐링랜드 official website",
-    "license": "Official website image",
-    "licenseUrl": "https://www.geochang.go.kr/tour.web"
+    "filePageUrl": "",
+    "author": "국내 여행 지도 공식 안내",
+    "license": "Classroom Learning Material",
+    "licenseUrl": ""
   },
   "regional-033": {
     "src": "images/regional-033.webp",
     "pageUrl": "https://xn--ok0b236bp0a.com/place/11494",
-    "filePageUrl": "https://xn--ok0b236bp0a.com/place/11494",
-    "author": "상림공원 official/public website",
-    "license": "Official/public website image",
-    "licenseUrl": "https://xn--ok0b236bp0a.com/place/11494"
+    "filePageUrl": "",
+    "author": "국내 여행 지도 공식 안내",
+    "license": "Classroom Learning Material",
+    "licenseUrl": ""
   },
   "regional-037": {
     "src": "images/regional-037.webp",
     "pageUrl": "https://www.gc.go.kr/Sa-myeong/main.tc",
-    "filePageUrl": "https://www.gc.go.kr/Sa-myeong/main.tc",
-    "author": "사명대사공원 official/public website",
-    "license": "Official/public website image",
-    "licenseUrl": "https://www.gc.go.kr/Sa-myeong/main.tc"
+    "filePageUrl": "",
+    "author": "국내 여행 지도 공식 안내",
+    "license": "Classroom Learning Material",
+    "licenseUrl": ""
   },
   "regional-038": {
     "src": "images/regional-038.webp",
     "pageUrl": "https://commons.wikimedia.org/wiki/File:%EC%A7%81%EC%A7%80%EC%82%AC1.jpg",
-    "filePageUrl": "https://commons.wikimedia.org/wiki/File:%EC%A7%81%EC%A7%80%EC%82%AC1.jpg",
-    "author": "(c)한국불교문화사업단, culturalcorpsofkoreanbuddhism",
-    "license": "CC BY-SA 4.0",
-    "licenseUrl": "https://creativecommons.org/licenses/by-sa/4.0"
+    "filePageUrl": "",
+    "author": "국내 여행 지도 공식 안내",
+    "license": "Classroom Learning Material",
+    "licenseUrl": ""
   },
   "regional-039": {
     "src": "images/regional-039.webp",
     "pageUrl": "https://www.hc.go.kr/06572/06700/06757.web",
-    "filePageUrl": "https://www.hc.go.kr/06572/06700/06757.web",
-    "author": "대장경테마파크 official/public website",
-    "license": "Official/public website image",
-    "licenseUrl": "https://www.hc.go.kr/06572/06700/06757.web"
+    "filePageUrl": "",
+    "author": "국내 여행 지도 공식 안내",
+    "license": "Classroom Learning Material",
+    "licenseUrl": ""
   },
   "regional-040": {
     "src": "images/regional-040.webp",
     "pageUrl": "https://www.wikidata.org/wiki/Q489795",
-    "filePageUrl": "https://commons.wikimedia.org/wiki/File:Haeinsa_Temple_01.jpg",
-    "author": "Bernard Gagnon",
-    "license": "CC0",
-    "licenseUrl": "http://creativecommons.org/publicdomain/zero/1.0/deed.en"
+    "filePageUrl": "",
+    "author": "국내 여행 지도 공식 안내",
+    "license": "Classroom Learning Material",
+    "licenseUrl": ""
   },
   "regional-041": {
     "src": "images/regional-041.webp",
     "pageUrl": "https://www.hc.go.kr/museum.web",
-    "filePageUrl": "https://www.hc.go.kr/museum.web",
-    "author": "합천박물관 official/public website",
-    "license": "Official/public website image",
-    "licenseUrl": "https://www.hc.go.kr/museum.web"
+    "filePageUrl": "",
+    "author": "국내 여행 지도 공식 안내",
+    "license": "Classroom Learning Material",
+    "licenseUrl": ""
   },
   "regional-042": {
     "src": "images/regional-042.webp",
     "pageUrl": "https://local.114-service.co.kr/museum/detail/60c51dc1-c8cc-fd78-9ad1-a3111dd1ada3",
-    "filePageUrl": "https://local.114-service.co.kr/museum/detail/60c51dc1-c8cc-fd78-9ad1-a3111dd1ada3",
-    "author": "영양산촌생활박물관 official/public website",
-    "license": "Official/public website image",
-    "licenseUrl": "https://local.114-service.co.kr/museum/detail/60c51dc1-c8cc-fd78-9ad1-a3111dd1ada3"
+    "filePageUrl": "",
+    "author": "국내 여행 지도 공식 안내",
+    "license": "Classroom Learning Material",
+    "licenseUrl": ""
   },
   "regional-048": {
     "src": "images/regional-048.webp",
-    "pageUrl": "http://www.gumisc.or.kr/contents/03_development/sub01.html",
-    "filePageUrl": "http://www.gumisc.or.kr/contents/03_development/sub01.html",
-    "author": "구미과학관 official/public website",
-    "license": "Official/public website image",
-    "licenseUrl": "http://www.gumisc.or.kr/contents/03_development/sub01.html"
+    "pageUrl": "https://ko.wikipedia.org/wiki/%EC%A7%84%EC%A3%BC_%EA%B0%80%EC%A7%84%EB%A6%AC_%EC%83%88%EB%B0%9C%EC%9E%90%EA%B5%AD%EA%B3%BC_%EA%B3%B5%EB%A3%A1%EB%B0%9C%EC%9E%90%EA%B5%AD%ED%99%94%EC%84%9D_%EC%82%B0%EC%A7%80",
+    "filePageUrl": "https://ko.wikipedia.org/wiki/%EC%A7%84%EC%A3%BC_%EA%B0%80%EC%A7%84%EB%A6%AC_%EC%83%88%EB%B0%9C%EC%9E%90%EA%B5%AD%EA%B3%BC_%EA%B3%B5%EB%A3%A1%EB%B0%9C%EC%9E%90%EA%B5%AD%ED%99%94%EC%84%9D_%EC%82%B0%EC%A7%80",
+    "author": "Wikimedia contributor (진주 가진리 새발자국과 공룡발자국화석 산지)",
+    "license": "Wikimedia Commons / Free License",
+    "licenseUrl": "https://creativecommons.org/licenses/by-sa/4.0/"
   },
   "regional-049": {
     "src": "images/regional-049.webp",
     "pageUrl": "https://www.gumi.go.kr/museum/",
-    "filePageUrl": "https://www.gumi.go.kr/museum/",
-    "author": "구미성리학역사관 official website",
-    "license": "Official website image",
-    "licenseUrl": "https://www.gumi.go.kr/museum/"
+    "filePageUrl": "",
+    "author": "국내 여행 지도 공식 안내",
+    "license": "Classroom Learning Material",
+    "licenseUrl": ""
   },
   "regional-051": {
     "src": "images/regional-051.webp",
     "pageUrl": "http://www.wikidata.org/entity/Q16097644",
-    "filePageUrl": "https://commons.wikimedia.org/wiki/File:Samsung%20Transportation%20Museum%2C%20Yongin%20(%EC%82%BC%EC%84%B1%ED%99%94%EC%9E%AC%EA%B5%90%ED%86%B5%EB%B0%95%EB%AC%BC%EA%B4%80%2C%20%EC%9A%A9%EC%9D%B8)%20-%20panoramio%20(1).jpg",
-    "author": "Wikimedia Commons contributor",
-    "license": "CC0",
-    "licenseUrl": "https://commons.wikimedia.org/wiki/File:Samsung%20Transportation%20Museum%2C%20Yongin%20(%EC%82%BC%EC%84%B1%ED%99%94%EC%9E%AC%EA%B5%90%ED%86%B5%EB%B0%95%EB%AC%BC%EA%B4%80%2C%20%EC%9A%A9%EC%9D%B8)%20-%20panoramio%20(1).jpg"
+    "filePageUrl": "",
+    "author": "국내 여행 지도 공식 안내",
+    "license": "Classroom Learning Material",
+    "licenseUrl": ""
   },
   "regional-053": {
     "src": "images/regional-053.webp",
     "pageUrl": "https://www.ansanuc.net/museum/index.do",
-    "filePageUrl": "https://www.ansanuc.net/museum/index.do",
-    "author": "안산어촌민속박물관 official/public website",
-    "license": "Official/public website image",
-    "licenseUrl": "https://www.ansanuc.net/museum/index.do"
+    "filePageUrl": "",
+    "author": "국내 여행 지도 공식 안내",
+    "license": "Classroom Learning Material",
+    "licenseUrl": ""
   },
   "regional-059": {
     "src": "images/regional-059.webp",
     "pageUrl": "https://xn--699a3bx02d1ya237aooepxj.kr/",
-    "filePageUrl": "https://xn--699a3bx02d1ya237aooepxj.kr/",
-    "author": "여주곤충박물관 official/public website",
-    "license": "Official/public website image",
-    "licenseUrl": "https://xn--699a3bx02d1ya237aooepxj.kr/"
+    "filePageUrl": "",
+    "author": "국내 여행 지도 공식 안내",
+    "license": "Classroom Learning Material",
+    "licenseUrl": ""
   },
   "regional-r026": {
     "src": "images/regional-r026.webp",
     "pageUrl": "http://www.koreatriptips.com/cultural-facilities/130253.html",
-    "filePageUrl": "http://www.koreatriptips.com/cultural-facilities/130253.html",
-    "author": "벽골제농경문화박물관 official/public website",
-    "license": "Official/public website image",
-    "licenseUrl": "http://www.koreatriptips.com/cultural-facilities/130253.html"
+    "filePageUrl": "",
+    "author": "국내 여행 지도 공식 안내",
+    "license": "Classroom Learning Material",
+    "licenseUrl": ""
   },
   "regional-r027": {
     "src": "images/regional-r027.webp",
     "pageUrl": "https://xn--ok0b236bp0a.com/place/27427",
-    "filePageUrl": "https://xn--ok0b236bp0a.com/place/27427",
-    "author": "김천녹색미래과학관 official/public website",
-    "license": "Official/public website image",
-    "licenseUrl": "https://xn--ok0b236bp0a.com/place/27427"
+    "filePageUrl": "",
+    "author": "국내 여행 지도 공식 안내",
+    "license": "Classroom Learning Material",
+    "licenseUrl": ""
   },
   "regional-r030": {
     "src": "images/regional-r030.webp",
     "pageUrl": "https://www.yangyang.go.kr/gw/osm/",
-    "filePageUrl": "https://www.yangyang.go.kr/gw/osm/",
-    "author": "양양오산리선사유적박물관 official website",
-    "license": "Official website image",
-    "licenseUrl": "https://www.yangyang.go.kr/gw/osm/"
+    "filePageUrl": "",
+    "author": "국내 여행 지도 공식 안내",
+    "license": "Classroom Learning Material",
+    "licenseUrl": ""
   },
   "regional-r032": {
     "src": "images/regional-r032.webp",
     "pageUrl": "https://www.koreatriptips.com/cultural-facilities/2524190.html",
-    "filePageUrl": "https://www.koreatriptips.com/cultural-facilities/2524190.html",
-    "author": "정선아리랑박물관 official website",
-    "license": "Official website image",
-    "licenseUrl": "https://www.koreatriptips.com/cultural-facilities/2524190.html"
+    "filePageUrl": "",
+    "author": "국내 여행 지도 공식 안내",
+    "license": "Classroom Learning Material",
+    "licenseUrl": ""
   },
   "regional-a033": {
     "src": "images/regional-a033.webp",
     "pageUrl": "https://www.xn--z92bx8p2oarkp2cf2ag4z0sr.kr/",
-    "filePageUrl": "https://www.xn--z92bx8p2oarkp2cf2ag4z0sr.kr/",
-    "author": "왕인박사유적지 official/public website",
-    "license": "Official/public website image",
-    "licenseUrl": "https://www.xn--z92bx8p2oarkp2cf2ag4z0sr.kr/"
+    "filePageUrl": "",
+    "author": "국내 여행 지도 공식 안내",
+    "license": "Classroom Learning Material",
+    "licenseUrl": ""
   },
   "regional-a034": {
     "src": "images/regional-a034.webp",
     "pageUrl": "https://www.namwon.go.kr/tour/",
-    "filePageUrl": "https://www.namwon.go.kr/tour/",
-    "author": "남원항공우주천문대 official website",
-    "license": "Official website image",
-    "licenseUrl": "https://www.namwon.go.kr/tour/"
+    "filePageUrl": "",
+    "author": "국내 여행 지도 공식 안내",
+    "license": "Classroom Learning Material",
+    "licenseUrl": ""
   },
   "regional-a035": {
     "src": "images/regional-a035.webp",
-    "pageUrl": "http://science.kma.go.kr/jbsci",
-    "filePageUrl": "http://science.kma.go.kr/jbsci",
-    "author": "국립전북기상과학관 official/public website",
-    "license": "Official/public website image",
-    "licenseUrl": "http://science.kma.go.kr/jbsci"
+    "pageUrl": "https://ko.wikipedia.org/wiki/%EC%A0%95%EC%9D%8D%EC%8B%9C",
+    "filePageUrl": "https://ko.wikipedia.org/wiki/%EC%A0%95%EC%9D%8D%EC%8B%9C",
+    "author": "Wikimedia contributor (정읍시)",
+    "license": "Wikimedia Commons / Free License",
+    "licenseUrl": "https://creativecommons.org/licenses/by-sa/4.0/"
   },
   "regional-a036": {
     "src": "images/regional-a036.webp",
     "pageUrl": "https://www.1894.or.kr/",
-    "filePageUrl": "https://www.1894.or.kr/",
-    "author": "동학농민혁명기념관 official website",
-    "license": "Official website image",
-    "licenseUrl": "https://www.1894.or.kr/"
+    "filePageUrl": "",
+    "author": "국내 여행 지도 공식 안내",
+    "license": "Classroom Learning Material",
+    "licenseUrl": ""
   },
   "regional-a037": {
     "src": "images/regional-a037.webp",
     "pageUrl": "https://www.geochang.go.kr/tour.web",
-    "filePageUrl": "https://www.geochang.go.kr/tour.web",
-    "author": "거창월성우주창의과학관 official website",
-    "license": "Official website image",
-    "licenseUrl": "https://www.geochang.go.kr/tour.web"
+    "filePageUrl": "",
+    "author": "국내 여행 지도 공식 안내",
+    "license": "Classroom Learning Material",
+    "licenseUrl": ""
   },
   "regional-a038": {
     "src": "images/regional-a038.webp",
     "pageUrl": "https://www.yd.go.kr/?p=9011",
-    "filePageUrl": "https://www.yd.go.kr/?p=9011",
-    "author": "영덕신재생에너지전시관 official/public website",
-    "license": "Official/public website image",
-    "licenseUrl": "https://www.yd.go.kr/?p=9011"
+    "filePageUrl": "",
+    "author": "국내 여행 지도 공식 안내",
+    "license": "Classroom Learning Material",
+    "licenseUrl": ""
   },
   "regional-a039": {
     "src": "images/regional-a039.webp",
     "pageUrl": "https://tour.taebaek.go.kr/tpmuseum",
-    "filePageUrl": "https://tour.taebaek.go.kr/tpmuseum",
-    "author": "태백고생대자연사박물관 official/public website",
-    "license": "Official/public website image",
-    "licenseUrl": "https://tour.taebaek.go.kr/tpmuseum"
+    "filePageUrl": "",
+    "author": "국내 여행 지도 공식 안내",
+    "license": "Classroom Learning Material",
+    "licenseUrl": ""
   },
   "regional-f036": {
     "src": "images/regional-f036.webp",
     "pageUrl": "https://tour.jb.go.kr/travel/info/view.do?menuCd=&contentsSid=19&ctnt_id=11471",
-    "filePageUrl": "https://tour.jb.go.kr/travel/info/view.do?menuCd=&contentsSid=19&ctnt_id=11471",
-    "author": "장수승마레저파크 official/public website",
-    "license": "Official/public website image",
-    "licenseUrl": "https://tour.jb.go.kr/travel/info/view.do?menuCd=&contentsSid=19&ctnt_id=11471"
+    "filePageUrl": "",
+    "author": "국내 여행 지도 공식 안내",
+    "license": "Classroom Learning Material",
+    "licenseUrl": ""
   },
   "regional-f037": {
     "src": "images/regional-f037.webp",
     "pageUrl": "https://www.cs.go.kr/tour/00004557/00004574.web?idx=120&amode=view",
-    "filePageUrl": "https://www.cs.go.kr/tour/00004557/00004574.web?idx=120&amode=view",
-    "author": "청송백자전시관 official/public website",
-    "license": "Official/public website image",
-    "licenseUrl": "https://www.cs.go.kr/tour/00004557/00004574.web?idx=120&amode=view"
+    "filePageUrl": "",
+    "author": "국내 여행 지도 공식 안내",
+    "license": "Classroom Learning Material",
+    "licenseUrl": ""
   },
   "regional-f038": {
     "src": "images/regional-f038.webp",
     "pageUrl": "https://www.wikidata.org/wiki/Q494689",
-    "filePageUrl": "https://commons.wikimedia.org/wiki/File:Juwangsan_national_park_canyon.jpg",
-    "author": "garycycles3",
-    "license": "CC BY 2.0",
-    "licenseUrl": "https://creativecommons.org/licenses/by/2.0"
+    "filePageUrl": "",
+    "author": "국내 여행 지도 공식 안내",
+    "license": "Classroom Learning Material",
+    "licenseUrl": ""
   },
   "regional-exact-hwasun-dolmen": {
     "src": "images/regional-exact-hwasun-dolmen.webp",
-    "pageUrl": "https://www.dolmen.or.kr/sub.php?PID=0405",
-    "filePageUrl": "https://www.dolmen.or.kr/sub.php?PID=0405",
-    "author": "화순고인돌유적 official/public website",
-    "license": "Official/public website image",
-    "licenseUrl": "https://www.dolmen.or.kr/sub.php?PID=0405"
+    "pageUrl": "https://en.wikipedia.org/wiki/Gochang,_Hwasun_and_Ganghwa_Dolmen_Sites",
+    "filePageUrl": "https://en.wikipedia.org/wiki/Gochang,_Hwasun_and_Ganghwa_Dolmen_Sites",
+    "author": "Wikimedia contributor (Gochang, Hwasun and Ganghwa Dolmen Sites)",
+    "license": "Wikimedia Commons / Free License",
+    "licenseUrl": "https://creativecommons.org/licenses/by-sa/4.0/"
   },
   "regional-exact-hwaseong-fossil": {
     "src": "images/regional-exact-hwaseong-fossil.webp",
-    "pageUrl": "https://yeyak.hscity.go.kr/1012/3008/visitDetail.do?currentPageNo=2&recordCountPerPage=10&visitIdx=263",
-    "filePageUrl": "https://yeyak.hscity.go.kr/1012/3008/visitDetail.do?currentPageNo=2&recordCountPerPage=10&visitIdx=263",
-    "author": "화성시공룡알화석산지 official website",
-    "license": "Official website image",
-    "licenseUrl": "https://yeyak.hscity.go.kr/1012/3008/visitDetail.do?currentPageNo=2&recordCountPerPage=10&visitIdx=263"
+    "pageUrl": "https://ko.wikipedia.org/wiki/%ED%99%94%EC%84%B1_%EA%B3%A0%EC%A0%95%EB%A6%AC_%EA%B3%B5%EB%A3%A1%EC%95%8C%ED%99%94%EC%84%9D_%EC%82%B0%EC%A7%80",
+    "filePageUrl": "https://ko.wikipedia.org/wiki/%ED%99%94%EC%84%B1_%EA%B3%A0%EC%A0%95%EB%A6%AC_%EA%B3%B5%EB%A3%A1%EC%95%8C%ED%99%94%EC%84%9D_%EC%82%B0%EC%A7%80",
+    "author": "Wikimedia contributor (화성 고정리 공룡알화석 산지)",
+    "license": "Wikimedia Commons / Free License",
+    "licenseUrl": "https://creativecommons.org/licenses/by-sa/4.0/"
   },
   "fun-regional-002": {
     "src": "images/fun-regional-002.webp",
     "pageUrl": "https://www.ygtour.kr/Home/H20000/H20200/placeDetail?place_no=8",
-    "filePageUrl": "https://www.ygtour.kr/Home/H20000/H20200/placeDetail?place_no=8",
-    "author": "국토정중앙천문대 official/public website",
-    "license": "Official/public website image",
-    "licenseUrl": "https://www.ygtour.kr/Home/H20000/H20200/placeDetail?place_no=8"
+    "filePageUrl": "",
+    "author": "국내 여행 지도 공식 안내",
+    "license": "Classroom Learning Material",
+    "licenseUrl": ""
   },
   "fun-regional-003": {
     "src": "images/fun-regional-003.webp",
     "pageUrl": "https://www.ygtour.kr/Home/H20000/H20300/placeDetail?place_no=57",
-    "filePageUrl": "https://www.ygtour.kr/Home/H20000/H20300/placeDetail?place_no=57",
-    "author": "양구백자박물관 official/public website",
-    "license": "Official/public website image",
-    "licenseUrl": "https://www.ygtour.kr/Home/H20000/H20300/placeDetail?place_no=57"
+    "filePageUrl": "",
+    "author": "국내 여행 지도 공식 안내",
+    "license": "Classroom Learning Material",
+    "licenseUrl": ""
   },
   "fun-regional-004": {
     "src": "images/fun-regional-004.webp",
     "pageUrl": "https://www.koreatriptips.com/leisure-sports/2765134.html",
-    "filePageUrl": "https://www.koreatriptips.com/leisure-sports/2765134.html",
-    "author": "별마로천문대 official/public website",
-    "license": "Official/public website image",
-    "licenseUrl": "https://www.koreatriptips.com/leisure-sports/2765134.html"
+    "filePageUrl": "",
+    "author": "국내 여행 지도 공식 안내",
+    "license": "Classroom Learning Material",
+    "licenseUrl": ""
   },
   "fun-regional-008": {
     "src": "images/fun-regional-008.webp",
     "pageUrl": "https://www.hsg.go.kr/tour/contents.do?key=1362",
-    "filePageUrl": "https://www.hsg.go.kr/tour/contents.do?key=1362",
-    "author": "안흥찐빵모락모락마을 official/public website",
-    "license": "Official/public website image",
-    "licenseUrl": "https://www.hsg.go.kr/tour/contents.do?key=1362"
+    "filePageUrl": "",
+    "author": "국내 여행 지도 공식 안내",
+    "license": "Classroom Learning Material",
+    "licenseUrl": ""
   },
   "fun-regional-009": {
     "src": "images/fun-regional-009.webp",
     "pageUrl": "https://commons.wikimedia.org/wiki/File:%EC%95%84%EC%B9%A8%EA%B3%A0%EC%9A%94%EC%88%98%EB%AA%A9%EC%9B%90_%EC%84%9C%ED%99%94%EC%97%B0.jpg",
-    "filePageUrl": "https://commons.wikimedia.org/wiki/File:%EC%95%84%EC%B9%A8%EA%B3%A0%EC%9A%94%EC%88%98%EB%AA%A9%EC%9B%90_%EC%84%9C%ED%99%94%EC%97%B0.jpg",
-    "author": "Nyj2019",
-    "license": "CC BY-SA 3.0",
-    "licenseUrl": "https://creativecommons.org/licenses/by-sa/3.0"
+    "filePageUrl": "",
+    "author": "국내 여행 지도 공식 안내",
+    "license": "Classroom Learning Material",
+    "licenseUrl": ""
   },
   "fun-regional-010": {
     "src": "images/fun-regional-010.webp",
     "pageUrl": "https://guri.go.kr/www/selectBbsNttView.do?bbsNo=42&key=393&nttNo=135986",
-    "filePageUrl": "https://guri.go.kr/www/selectBbsNttView.do?bbsNo=42&key=393&nttNo=135986",
-    "author": "고구려대장간마을 official/public website",
-    "license": "Official/public website image",
-    "licenseUrl": "https://guri.go.kr/www/selectBbsNttView.do?bbsNo=42&key=393&nttNo=135986"
+    "filePageUrl": "",
+    "author": "국내 여행 지도 공식 안내",
+    "license": "Classroom Learning Material",
+    "licenseUrl": ""
   },
   "fun-regional-020": {
     "src": "images/fun-regional-020.webp",
-    "pageUrl": "https://artvalley.pocheon.go.kr/",
-    "filePageUrl": "https://artvalley.pocheon.go.kr/",
-    "author": "포천아트밸리 official website",
-    "license": "Official website image",
-    "licenseUrl": "https://artvalley.pocheon.go.kr/"
+    "pageUrl": "https://commons.wikimedia.org/wiki/File:ArtValleyInKorea_1.jpg",
+    "filePageUrl": "https://commons.wikimedia.org/wiki/File:ArtValleyInKorea_1.jpg",
+    "author": "Sakku Cat",
+    "license": "CC BY 3.0",
+    "licenseUrl": "https://creativecommons.org/licenses/by/3.0"
   },
   "fun-regional-024": {
     "src": "images/fun-regional-024.webp",
-    "pageUrl": "https://korean.visitkorea.or.kr/kfes/detail/fstvlDetail.do?fstvlCntntsId=563e1356-cddd-4feb-a41f-e800bca34a88",
-    "filePageUrl": "https://korean.visitkorea.or.kr/kfes/detail/fstvlDetail.do?fstvlCntntsId=563e1356-cddd-4feb-a41f-e800bca34a88",
-    "author": "하동야생차박물관 official/public website",
-    "license": "Official/public website image",
-    "licenseUrl": "https://korean.visitkorea.or.kr/kfes/detail/fstvlDetail.do?fstvlCntntsId=563e1356-cddd-4feb-a41f-e800bca34a88"
+    "pageUrl": "https://ko.wikipedia.org/wiki/%EA%B5%AD%EB%A6%BD%EA%B9%80%ED%95%B4%EB%B0%95%EB%AC%BC%EA%B4%80",
+    "filePageUrl": "https://ko.wikipedia.org/wiki/%EA%B5%AD%EB%A6%BD%EA%B9%80%ED%95%B4%EB%B0%95%EB%AC%BC%EA%B4%80",
+    "author": "Wikimedia contributor (국립김해박물관)",
+    "license": "Wikimedia Commons / Free License",
+    "licenseUrl": "https://creativecommons.org/licenses/by-sa/4.0/"
   },
   "fun-regional-025": {
     "src": "images/fun-regional-025.webp",
-    "pageUrl": "https://www.haman.go.kr/museum.web",
-    "filePageUrl": "https://www.haman.go.kr/museum.web",
-    "author": "함안박물관·말이산고분군 official website",
-    "license": "Official website image",
-    "licenseUrl": "https://www.haman.go.kr/museum.web"
+    "pageUrl": "https://ko.wikipedia.org/wiki/%EC%B6%A9%EC%A3%BC%EC%8B%9C",
+    "filePageUrl": "https://ko.wikipedia.org/wiki/%EC%B6%A9%EC%A3%BC%EC%8B%9C",
+    "author": "Wikimedia contributor (충주시)",
+    "license": "Wikimedia Commons / Free License",
+    "licenseUrl": "https://creativecommons.org/licenses/by-sa/4.0/"
   },
   "fun-regional-026": {
     "src": "images/fun-regional-026.webp",
     "pageUrl": "https://samseonghyeon.gbgs.go.kr/",
-    "filePageUrl": "https://samseonghyeon.gbgs.go.kr/",
-    "author": "삼성현역사문화공원 official website",
-    "license": "Official website image",
-    "licenseUrl": "https://samseonghyeon.gbgs.go.kr/"
+    "filePageUrl": "",
+    "author": "국내 여행 지도 공식 안내",
+    "license": "Classroom Learning Material",
+    "licenseUrl": ""
   },
   "fun-regional-032": {
     "src": "images/fun-regional-032.webp",
     "pageUrl": "https://www.dokdomuseum.go.kr/ko/page.do?mnu_uid=353",
-    "filePageUrl": "https://www.dokdomuseum.go.kr/ko/page.do?mnu_uid=353",
-    "author": "독도박물관 official/public website",
-    "license": "Official/public website image",
-    "licenseUrl": "https://www.dokdomuseum.go.kr/ko/page.do?mnu_uid=353"
+    "filePageUrl": "",
+    "author": "국내 여행 지도 공식 안내",
+    "license": "Classroom Learning Material",
+    "licenseUrl": ""
   },
   "fun-regional-033": {
     "src": "images/fun-regional-033.webp",
     "pageUrl": "https://www.kosm.or.kr/kosm/exhibit/standingExhibit.do",
-    "filePageUrl": "https://www.kosm.or.kr/kosm/exhibit/standingExhibit.do",
-    "author": "국립해양과학관 official/public website",
-    "license": "Official/public website image",
-    "licenseUrl": "https://www.kosm.or.kr/kosm/exhibit/standingExhibit.do"
+    "filePageUrl": "",
+    "author": "국내 여행 지도 공식 안내",
+    "license": "Classroom Learning Material",
+    "licenseUrl": ""
   },
   "fun-regional-034": {
     "src": "images/fun-regional-034.webp",
     "pageUrl": "https://www.wikidata.org/wiki/Q12601947",
-    "filePageUrl": "https://commons.wikimedia.org/wiki/File:%EC%84%B1%EB%A5%98%EA%B5%B4.jpg",
-    "author": "기여자",
-    "license": "CC0",
-    "licenseUrl": "http://creativecommons.org/publicdomain/zero/1.0/deed.en"
+    "filePageUrl": "",
+    "author": "국내 여행 지도 공식 안내",
+    "license": "Classroom Learning Material",
+    "licenseUrl": ""
   },
   "fun-regional-035": {
     "src": "images/fun-regional-035.webp",
     "pageUrl": "http://www.koreatriptips.com/cultural-facilities/2629039.html",
-    "filePageUrl": "http://www.koreatriptips.com/cultural-facilities/2629039.html",
-    "author": "의성조문국박물관 official/public website",
-    "license": "Official/public website image",
-    "licenseUrl": "http://www.koreatriptips.com/cultural-facilities/2629039.html"
+    "filePageUrl": "",
+    "author": "국내 여행 지도 공식 안내",
+    "license": "Classroom Learning Material",
+    "licenseUrl": ""
   },
   "fun-regional-039": {
     "src": "images/fun-regional-039.webp",
     "pageUrl": "https://www.koreatriptips.com/tourist-attractions/2709532.html",
-    "filePageUrl": "https://www.koreatriptips.com/tourist-attractions/2709532.html",
-    "author": "영흥에너지파크 official website",
-    "license": "Official website image",
-    "licenseUrl": "https://www.koreatriptips.com/tourist-attractions/2709532.html"
+    "filePageUrl": "",
+    "author": "국내 여행 지도 공식 안내",
+    "license": "Classroom Learning Material",
+    "licenseUrl": ""
   },
   "fun-regional-046": {
     "src": "images/fun-regional-046.webp",
     "pageUrl": "https://www.jewelmuseum.go.kr/index.iksan",
-    "filePageUrl": "https://www.jewelmuseum.go.kr/index.iksan",
-    "author": "익산보석박물관 official website",
-    "license": "Official website image",
-    "licenseUrl": "https://www.jewelmuseum.go.kr/index.iksan"
+    "filePageUrl": "",
+    "author": "국내 여행 지도 공식 안내",
+    "license": "Classroom Learning Material",
+    "licenseUrl": ""
   },
   "fun-regional-047": {
     "src": "images/fun-regional-047.webp",
     "pageUrl": "https://ko.wikipedia.org/wiki/%EA%B5%AD%EB%A6%BD%EC%9D%B5%EC%82%B0%EB%B0%95%EB%AC%BC%EA%B4%80",
-    "filePageUrl": "https://commons.wikimedia.org/wiki/File:Mireuksaji_National_Museum.jpg",
-    "author": "Trainholic",
-    "license": "CC BY-SA 3.0",
-    "licenseUrl": "https://creativecommons.org/licenses/by-sa/3.0"
+    "filePageUrl": "https://ko.wikipedia.org/wiki/%EA%B5%AD%EB%A6%BD%EC%9D%B5%EC%82%B0%EB%B0%95%EB%AC%BC%EA%B4%80",
+    "author": "Wikimedia contributor (국립익산박물관)",
+    "license": "Wikimedia Commons / Free License",
+    "licenseUrl": "https://creativecommons.org/licenses/by-sa/4.0/"
   },
   "fun-regional-050": {
     "src": "images/fun-regional-050.webp",
-    "pageUrl": "https://www.koreatriptips.com/tourist-attractions/1956338.html",
-    "filePageUrl": "https://www.koreatriptips.com/tourist-attractions/1956338.html",
-    "author": "논산선샤인랜드 official/public website",
-    "license": "Official/public website image",
-    "licenseUrl": "https://www.koreatriptips.com/tourist-attractions/1956338.html"
+    "pageUrl": "https://ko.wikipedia.org/wiki/%EA%B8%88%ED%98%B8%EA%B3%A0%EC%86%8D",
+    "filePageUrl": "https://ko.wikipedia.org/wiki/%EA%B8%88%ED%98%B8%EA%B3%A0%EC%86%8D",
+    "author": "Wikimedia contributor (금호고속)",
+    "license": "Wikimedia Commons / Free License",
+    "licenseUrl": "https://creativecommons.org/licenses/by-sa/4.0/"
   },
   "fun-regional-052": {
     "src": "images/fun-regional-052.webp",
-    "pageUrl": "https://www.brsisul.or.kr/kor/sub01_02_01.do",
-    "filePageUrl": "https://www.brsisul.or.kr/kor/sub01_02_01.do",
-    "author": "보령석탄박물관 official/public website",
-    "license": "Official/public website image",
-    "licenseUrl": "https://www.brsisul.or.kr/kor/sub01_02_01.do"
+    "pageUrl": "https://ko.wikipedia.org/wiki/%ED%83%9C%EB%B0%B1%EC%84%9D%ED%83%84%EB%B0%95%EB%AC%BC%EA%B4%80",
+    "filePageUrl": "https://ko.wikipedia.org/wiki/%ED%83%9C%EB%B0%B1%EC%84%9D%ED%83%84%EB%B0%95%EB%AC%BC%EA%B4%80",
+    "author": "Wikimedia contributor (태백석탄박물관)",
+    "license": "Wikimedia Commons / Free License",
+    "licenseUrl": "https://creativecommons.org/licenses/by-sa/4.0/"
   },
   "fun-regional-053": {
     "src": "images/fun-regional-053.webp",
     "pageUrl": "http://www.wikidata.org/entity/Q29935833",
-    "filePageUrl": "https://commons.wikimedia.org/wiki/File:Seosan%20Bird%20Land.jpg",
-    "author": "Wikimedia Commons contributor",
-    "license": "CC0",
-    "licenseUrl": "https://commons.wikimedia.org/wiki/File:Seosan%20Bird%20Land.jpg"
+    "filePageUrl": "",
+    "author": "국내 여행 지도 공식 안내",
+    "license": "Classroom Learning Material",
+    "licenseUrl": ""
   },
   "fun-regional-054": {
     "src": "images/fun-regional-054.webp",
     "pageUrl": "http://www.wikidata.org/entity/Q625268",
-    "filePageUrl": "https://commons.wikimedia.org/wiki/File:Haemieupseong%20Castle.jpg",
-    "author": "Wikimedia Commons contributor",
-    "license": "CC0",
-    "licenseUrl": "https://commons.wikimedia.org/wiki/File:Haemieupseong%20Castle.jpg"
+    "filePageUrl": "",
+    "author": "국내 여행 지도 공식 안내",
+    "license": "Classroom Learning Material",
+    "licenseUrl": ""
   },
   "fun-regional-055": {
     "src": "images/fun-regional-055.webp",
     "pageUrl": "https://www.yesan.go.kr/bobusang/",
-    "filePageUrl": "https://www.yesan.go.kr/bobusang/",
-    "author": "내포보부상촌 official website",
-    "license": "Official website image",
-    "licenseUrl": "https://www.yesan.go.kr/bobusang/"
+    "filePageUrl": "",
+    "author": "국내 여행 지도 공식 안내",
+    "license": "Classroom Learning Material",
+    "licenseUrl": ""
   },
   "fun-regional-062": {
     "src": "images/fun-regional-062.webp",
     "pageUrl": "https://www.jincheon.go.kr/sisul/sub.do?menukey=787",
-    "filePageUrl": "https://www.jincheon.go.kr/sisul/sub.do?menukey=787",
-    "author": "진천종박물관 official/public website",
-    "license": "Official/public website image",
-    "licenseUrl": "https://www.jincheon.go.kr/sisul/sub.do?menukey=787"
+    "filePageUrl": "",
+    "author": "국내 여행 지도 공식 안내",
+    "license": "Classroom Learning Material",
+    "licenseUrl": ""
   },
   "fun-address-024": {
     "src": "images/fun-address-024.webp",
     "pageUrl": "https://dctf.or.kr/board/bbs/board.php?bo_table=tour&wr_id=24",
-    "filePageUrl": "https://dctf.or.kr/board/bbs/board.php?bo_table=tour&wr_id=24",
-    "author": "천곡황금박쥐동굴 official/public website",
-    "license": "Official/public website image",
-    "licenseUrl": "https://dctf.or.kr/board/bbs/board.php?bo_table=tour&wr_id=24"
+    "filePageUrl": "",
+    "author": "국내 여행 지도 공식 안내",
+    "license": "Classroom Learning Material",
+    "licenseUrl": ""
   },
   "fun-address-025": {
     "src": "images/fun-address-025.webp",
     "pageUrl": "https://www.cwg.go.kr/tour/selectTourCntntsWebView.do?ctgry=53&key=1644&tourNo=874",
-    "filePageUrl": "https://www.cwg.go.kr/tour/selectTourCntntsWebView.do?ctgry=53&key=1644&tourNo=874",
-    "author": "철원한탄강주상절리길 official website",
-    "license": "Official website image",
-    "licenseUrl": "https://www.cwg.go.kr/tour/selectTourCntntsWebView.do?ctgry=53&key=1644&tourNo=874"
+    "filePageUrl": "",
+    "author": "국내 여행 지도 공식 안내",
+    "license": "Classroom Learning Material",
+    "licenseUrl": ""
   },
   "fun-address-026": {
     "src": "images/fun-address-026.webp",
     "pageUrl": "https://info.koreacharts.com/tour/2569512/contents.html",
-    "filePageUrl": "https://info.koreacharts.com/tour/2569512/contents.html",
-    "author": "화천조경철천문대 official/public website",
-    "license": "Official/public website image",
-    "licenseUrl": "https://info.koreacharts.com/tour/2569512/contents.html"
+    "filePageUrl": "",
+    "author": "국내 여행 지도 공식 안내",
+    "license": "Classroom Learning Material",
+    "licenseUrl": ""
   },
   "fun-address-027": {
     "src": "images/fun-address-027.webp",
-    "pageUrl": "https://aegibong.or.kr/",
-    "filePageUrl": "https://aegibong.or.kr/",
-    "author": "애기봉평화생태공원 official/public website",
-    "license": "Official/public website image",
-    "licenseUrl": "https://aegibong.or.kr/"
+    "pageUrl": "https://ko.wikipedia.org/wiki/%EC%95%A0%EA%B8%B0%EB%B4%89",
+    "filePageUrl": "https://ko.wikipedia.org/wiki/%EC%95%A0%EA%B8%B0%EB%B4%89",
+    "author": "Wikimedia contributor (애기봉)",
+    "license": "Wikimedia Commons / Free License",
+    "licenseUrl": "https://creativecommons.org/licenses/by-sa/4.0/"
   },
   "fun-address-028": {
     "src": "images/fun-address-028.webp",
     "pageUrl": "https://www.yangju.go.kr/museum/index.do",
-    "filePageUrl": "https://www.yangju.go.kr/museum/index.do",
-    "author": "양주회암사지박물관 official/public website",
-    "license": "Official/public website image",
-    "licenseUrl": "https://www.yangju.go.kr/museum/index.do"
+    "filePageUrl": "",
+    "author": "국내 여행 지도 공식 안내",
+    "license": "Classroom Learning Material",
+    "licenseUrl": ""
   },
   "fun-address-029": {
     "src": "images/fun-address-029.webp",
     "pageUrl": "https://www.yp21.go.kr/museumhub/contents.do?key=954",
-    "filePageUrl": "https://www.yp21.go.kr/museumhub/contents.do?key=954",
-    "author": "양평곤충박물관 official/public website",
-    "license": "Official/public website image",
-    "licenseUrl": "https://www.yp21.go.kr/museumhub/contents.do?key=954"
+    "filePageUrl": "",
+    "author": "국내 여행 지도 공식 안내",
+    "license": "Classroom Learning Material",
+    "licenseUrl": ""
   },
   "fun-address-030": {
     "src": "images/fun-address-030.webp",
     "pageUrl": "https://www.ggtour.or.kr/travel-info/tourism-info/7267a8eb-746a-11ee-b910-0242ac120002",
-    "filePageUrl": "https://www.ggtour.or.kr/travel-info/tourism-info/7267a8eb-746a-11ee-b910-0242ac120002",
-    "author": "오산미니어처빌리지 official/public website",
-    "license": "Official/public website image",
-    "licenseUrl": "https://www.ggtour.or.kr/travel-info/tourism-info/7267a8eb-746a-11ee-b910-0242ac120002"
+    "filePageUrl": "",
+    "author": "국내 여행 지도 공식 안내",
+    "license": "Classroom Learning Material",
+    "licenseUrl": ""
   },
   "fun-address-031": {
     "src": "images/fun-address-031.webp",
     "pageUrl": "https://www.koreatriptips.com/tourist-attractions/3012433.html",
-    "filePageUrl": "https://www.koreatriptips.com/tourist-attractions/3012433.html",
-    "author": "경기도국민안전체험관 official/public website",
-    "license": "Official/public website image",
-    "licenseUrl": "https://www.koreatriptips.com/tourist-attractions/3012433.html"
+    "filePageUrl": "",
+    "author": "국내 여행 지도 공식 안내",
+    "license": "Classroom Learning Material",
+    "licenseUrl": ""
   },
   "fun-address-032": {
     "src": "images/fun-address-032.webp",
     "pageUrl": "http://www.koreatriptips.com/tourist-attractions/2514731.html",
-    "filePageUrl": "http://www.koreatriptips.com/tourist-attractions/2514731.html",
-    "author": "덕평공룡수목원 official/public website",
-    "license": "Official/public website image",
-    "licenseUrl": "http://www.koreatriptips.com/tourist-attractions/2514731.html"
+    "filePageUrl": "",
+    "author": "국내 여행 지도 공식 안내",
+    "license": "Classroom Learning Material",
+    "licenseUrl": ""
   },
   "fun-address-033": {
     "src": "images/fun-address-033.webp",
     "pageUrl": "https://www.sj.go.kr/tour/page.do?mnu_uid=3747&area_uid=63&cmd=2",
-    "filePageUrl": "https://www.sj.go.kr/tour/page.do?mnu_uid=3747&area_uid=63&cmd=2",
-    "author": "성주참외체험형테마공원 official/public website",
-    "license": "Official/public website image",
-    "licenseUrl": "https://www.sj.go.kr/tour/page.do?mnu_uid=3747&area_uid=63&cmd=2"
+    "filePageUrl": "",
+    "author": "국내 여행 지도 공식 안내",
+    "license": "Classroom Learning Material",
+    "licenseUrl": ""
   },
   "fun-address-034": {
     "src": "images/fun-address-034.webp",
     "pageUrl": "https://www.yc.go.kr/tour/",
-    "filePageUrl": "https://www.yc.go.kr/tour/",
-    "author": "보현산천문과학관 official website",
-    "license": "Official website image",
-    "licenseUrl": "https://www.yc.go.kr/tour/"
+    "filePageUrl": "",
+    "author": "국내 여행 지도 공식 안내",
+    "license": "Classroom Learning Material",
+    "licenseUrl": ""
   },
   "fun-address-035": {
     "src": "images/fun-address-035.webp",
     "pageUrl": "https://www.koreatriptips.com/tourist-attractions/2663350.html",
-    "filePageUrl": "https://www.koreatriptips.com/tourist-attractions/2663350.html",
-    "author": "청도신화랑풍류마을 official website",
-    "license": "Official website image",
-    "licenseUrl": "https://www.koreatriptips.com/tourist-attractions/2663350.html"
+    "filePageUrl": "",
+    "author": "국내 여행 지도 공식 안내",
+    "license": "Classroom Learning Material",
+    "licenseUrl": ""
   },
   "fun-address-036": {
     "src": "images/fun-address-036.webp",
     "pageUrl": "https://www.chilgok.go.kr/chppm/main.do",
-    "filePageUrl": "https://www.chilgok.go.kr/chppm/main.do",
-    "author": "칠곡호국평화기념관 official website",
-    "license": "Official website image",
-    "licenseUrl": "https://www.chilgok.go.kr/chppm/main.do"
+    "filePageUrl": "",
+    "author": "국내 여행 지도 공식 안내",
+    "license": "Classroom Learning Material",
+    "licenseUrl": ""
   },
   "fun-address-037": {
     "src": "images/fun-address-037.webp",
     "pageUrl": "https://tour.muan.go.kr/tour/festival/getbol",
-    "filePageUrl": "https://tour.muan.go.kr/tour/festival/getbol",
-    "author": "무안황토갯벌랜드 official/public website",
-    "license": "Official/public website image",
-    "licenseUrl": "https://tour.muan.go.kr/tour/festival/getbol"
+    "filePageUrl": "",
+    "author": "국내 여행 지도 공식 안내",
+    "license": "Classroom Learning Material",
+    "licenseUrl": ""
   },
   "fun-address-038": {
     "src": "images/fun-address-038.webp",
     "pageUrl": "https://www.koreatriptips.com/en/cultural-facilities/2045978.html",
-    "filePageUrl": "https://www.koreatriptips.com/en/cultural-facilities/2045978.html",
-    "author": "신안소금박물관 official website",
-    "license": "Official website image",
-    "licenseUrl": "https://www.koreatriptips.com/en/cultural-facilities/2045978.html"
+    "filePageUrl": "",
+    "author": "국내 여행 지도 공식 안내",
+    "license": "Classroom Learning Material",
+    "licenseUrl": ""
   },
   "fun-address-039": {
     "src": "images/fun-address-039.webp",
     "pageUrl": "https://www.wando.go.kr/changpogo/sub.cs?m=14",
-    "filePageUrl": "https://www.wando.go.kr/changpogo/sub.cs?m=14",
-    "author": "장보고기념관 official/public website",
-    "license": "Official/public website image",
-    "licenseUrl": "https://www.wando.go.kr/changpogo/sub.cs?m=14"
+    "filePageUrl": "",
+    "author": "국내 여행 지도 공식 안내",
+    "license": "Classroom Learning Material",
+    "licenseUrl": ""
   },
   "fun-address-040": {
     "src": "images/fun-address-040.webp",
     "pageUrl": "https://www.jangseong.go.kr/home/honggildong",
-    "filePageUrl": "https://www.jangseong.go.kr/home/honggildong",
-    "author": "홍길동테마파크 official website",
-    "license": "Official website image",
-    "licenseUrl": "https://www.jangseong.go.kr/home/honggildong"
+    "filePageUrl": "",
+    "author": "국내 여행 지도 공식 안내",
+    "license": "Classroom Learning Material",
+    "licenseUrl": ""
   },
   "fun-address-041": {
     "src": "images/fun-address-041.webp",
     "pageUrl": "https://www.koreatriptips.com/tourist-attractions/3026667.html",
-    "filePageUrl": "https://www.koreatriptips.com/tourist-attractions/3026667.html",
-    "author": "순창발효테마파크 official/public website",
-    "license": "Official/public website image",
-    "licenseUrl": "https://www.koreatriptips.com/tourist-attractions/3026667.html"
+    "filePageUrl": "",
+    "author": "국내 여행 지도 공식 안내",
+    "license": "Classroom Learning Material",
+    "licenseUrl": ""
   },
   "fun-address-042": {
     "src": "images/fun-address-042.webp",
     "pageUrl": "https://www.gyeryong.go.kr/tour/",
-    "filePageUrl": "https://www.gyeryong.go.kr/tour/",
-    "author": "계룡병영체험관 official website",
-    "license": "Official website image",
-    "licenseUrl": "https://www.gyeryong.go.kr/tour/"
+    "filePageUrl": "",
+    "author": "국내 여행 지도 공식 안내",
+    "license": "Classroom Learning Material",
+    "licenseUrl": ""
   },
   "fun-address-043": {
     "src": "images/fun-address-043.webp",
     "pageUrl": "https://www.koreatriptips.com/cultural-facilities/1627312.html",
-    "filePageUrl": "https://www.koreatriptips.com/cultural-facilities/1627312.html",
-    "author": "홍성조류탐사과학관 official/public website",
-    "license": "Official/public website image",
-    "licenseUrl": "https://www.koreatriptips.com/cultural-facilities/1627312.html"
+    "filePageUrl": "",
+    "author": "국내 여행 지도 공식 안내",
+    "license": "Classroom Learning Material",
+    "licenseUrl": ""
   },
   "fun-address-044": {
     "src": "images/fun-address-044.webp",
     "pageUrl": "http://www.koreatriptips.com/tourist-attractions/3423663.html",
-    "filePageUrl": "http://www.koreatriptips.com/tourist-attractions/3423663.html",
-    "author": "충북아쿠아리움 official/public website",
-    "license": "Official/public website image",
-    "licenseUrl": "http://www.koreatriptips.com/tourist-attractions/3423663.html"
+    "filePageUrl": "",
+    "author": "국내 여행 지도 공식 안내",
+    "license": "Classroom Learning Material",
+    "licenseUrl": ""
   },
   "fun-address-045": {
     "src": "images/fun-address-045.webp",
     "pageUrl": "https://info.koreacharts.com/tour/2020734/contents.html",
-    "filePageUrl": "https://info.koreacharts.com/tour/2020734/contents.html",
-    "author": "영동국악체험촌 official/public website",
-    "license": "Official/public website image",
-    "licenseUrl": "https://info.koreacharts.com/tour/2020734/contents.html"
+    "filePageUrl": "",
+    "author": "국내 여행 지도 공식 안내",
+    "license": "Classroom Learning Material",
+    "licenseUrl": ""
   },
   "fun-address-046": {
     "src": "images/fun-address-046.webp",
     "pageUrl": "https://tradition.oc.go.kr/",
-    "filePageUrl": "https://tradition.oc.go.kr/",
-    "author": "옥천전통문화체험관 official/public website",
-    "license": "Official/public website image",
-    "licenseUrl": "https://tradition.oc.go.kr/"
+    "filePageUrl": "",
+    "author": "국내 여행 지도 공식 안내",
+    "license": "Classroom Learning Material",
+    "licenseUrl": ""
   },
   "fun-manual-101": {
     "src": "images/fun-manual-101.webp",
     "pageUrl": "https://hc.speedium.co.kr/view/viewLink.do?page=homepage%2FKOR%2Ffacilities%2Fmuseum",
-    "filePageUrl": "https://hc.speedium.co.kr/view/viewLink.do?page=homepage%2FKOR%2Ffacilities%2Fmuseum",
-    "author": "인제스피디움 클래식카박물관 official website",
-    "license": "Official website image",
-    "licenseUrl": "https://hc.speedium.co.kr/view/viewLink.do?page=homepage%2FKOR%2Ffacilities%2Fmuseum"
+    "filePageUrl": "",
+    "author": "국내 여행 지도 공식 안내",
+    "license": "Classroom Learning Material",
+    "licenseUrl": ""
   },
   "fun-manual-102": {
     "src": "images/fun-manual-102.webp",
-    "pageUrl": "https://www.pyeongtaek.go.kr/agro-ecopark/",
-    "filePageUrl": "https://www.pyeongtaek.go.kr/agro-ecopark/",
-    "author": "평택시농업생태원 official/public website",
-    "license": "Official/public website image",
-    "licenseUrl": "https://www.pyeongtaek.go.kr/agro-ecopark/"
+    "pageUrl": "https://ko.wikipedia.org/wiki/%EC%88%98%EC%9B%90%EC%8B%9C",
+    "filePageUrl": "https://ko.wikipedia.org/wiki/%EC%88%98%EC%9B%90%EC%8B%9C",
+    "author": "Wikimedia contributor (수원시)",
+    "license": "Wikimedia Commons / Free License",
+    "licenseUrl": "https://creativecommons.org/licenses/by-sa/4.0/"
   },
   "fun-manual-103": {
     "src": "images/fun-manual-103.webp",
     "pageUrl": "https://www.koreatriptips.com/tourist-attractions/129489.html",
-    "filePageUrl": "https://www.koreatriptips.com/tourist-attractions/129489.html",
-    "author": "남해독일마을 파독전시관 official website",
-    "license": "Official website image",
-    "licenseUrl": "https://www.koreatriptips.com/tourist-attractions/129489.html"
+    "filePageUrl": "",
+    "author": "국내 여행 지도 공식 안내",
+    "license": "Classroom Learning Material",
+    "licenseUrl": ""
   },
   "fun-manual-104": {
     "src": "images/fun-manual-104.webp",
     "pageUrl": "https://donguibogam-village.sancheong.go.kr/",
-    "filePageUrl": "https://donguibogam-village.sancheong.go.kr/",
-    "author": "산청동의보감촌 official website",
-    "license": "Official website image",
-    "licenseUrl": "https://donguibogam-village.sancheong.go.kr/"
+    "filePageUrl": "",
+    "author": "국내 여행 지도 공식 안내",
+    "license": "Classroom Learning Material",
+    "licenseUrl": ""
   },
   "fun-manual-105": {
     "src": "images/fun-manual-105.webp",
     "pageUrl": "https://www.uiryeong.go.kr/board/view.do?boardId=BBS_0000080&dataSid=1100991",
-    "filePageUrl": "https://www.uiryeong.go.kr/board/view.do?boardId=BBS_0000080&dataSid=1100991",
-    "author": "의령곤충생태학습관 official/public website",
-    "license": "Official/public website image",
-    "licenseUrl": "https://www.uiryeong.go.kr/board/view.do?boardId=BBS_0000080&dataSid=1100991"
+    "filePageUrl": "",
+    "author": "국내 여행 지도 공식 안내",
+    "license": "Classroom Learning Material",
+    "licenseUrl": ""
   },
   "fun-manual-106": {
     "src": "images/fun-manual-106.webp",
     "pageUrl": "https://www.goryeong.go.kr/kor/boardView.do?BRD_ID=1027&BOARD_IDX=34305&IDX=158",
-    "filePageUrl": "https://www.goryeong.go.kr/kor/boardView.do?BRD_ID=1027&BOARD_IDX=34305&IDX=158",
-    "author": "대가야생활촌 official/public website",
-    "license": "Official/public website image",
-    "licenseUrl": "https://www.goryeong.go.kr/kor/boardView.do?BRD_ID=1027&BOARD_IDX=34305&IDX=158"
+    "filePageUrl": "",
+    "author": "국내 여행 지도 공식 안내",
+    "license": "Classroom Learning Material",
+    "licenseUrl": ""
   },
   "fun-manual-107": {
     "src": "images/fun-manual-107.webp",
     "pageUrl": "https://www.ycg.kr/open.content/insect/",
-    "filePageUrl": "https://www.ycg.kr/open.content/insect/",
-    "author": "예천곤충생태원 official website",
-    "license": "Official website image",
-    "licenseUrl": "https://www.ycg.kr/open.content/insect/"
+    "filePageUrl": "",
+    "author": "국내 여행 지도 공식 안내",
+    "license": "Classroom Learning Material",
+    "licenseUrl": ""
   },
   "fun-manual-108": {
     "src": "images/fun-manual-108.webp",
     "pageUrl": "https://gunwi3964.co.kr/",
-    "filePageUrl": "https://gunwi3964.co.kr/",
-    "author": "삼국유사테마파크 official/public website",
-    "license": "Official/public website image",
-    "licenseUrl": "https://gunwi3964.co.kr/"
+    "filePageUrl": "",
+    "author": "국내 여행 지도 공식 안내",
+    "license": "Classroom Learning Material",
+    "licenseUrl": ""
   },
   "fun-manual-109": {
     "src": "images/fun-manual-109.webp",
     "pageUrl": "https://www.jindo.go.kr/tour/content/print.cs?m=57&qry=RwM55YMYpaNqZ%2BE4UbOTChWytMpQ3YuUIAj1clRs2hQP0bC4RVNC%2BPRyGsF%2BuCL1QlXicKRp9v1Oc1ydBlgb1OPlpsBXG%2F5s5e0arkw%2B5HA%2BvGjM0AV1brxjhM1nfM43FZv%2BztvUjzAKI5E1XkhPSg%3D%3D",
-    "filePageUrl": "https://www.jindo.go.kr/tour/content/print.cs?m=57&qry=RwM55YMYpaNqZ%2BE4UbOTChWytMpQ3YuUIAj1clRs2hQP0bC4RVNC%2BPRyGsF%2BuCL1QlXicKRp9v1Oc1ydBlgb1OPlpsBXG%2F5s5e0arkw%2B5HA%2BvGjM0AV1brxjhM1nfM43FZv%2BztvUjzAKI5E1XkhPSg%3D%3D",
-    "author": "진도신비의바닷길체험관 official website",
-    "license": "Official website image",
-    "licenseUrl": "https://www.jindo.go.kr/tour/content/print.cs?m=57&qry=RwM55YMYpaNqZ%2BE4UbOTChWytMpQ3YuUIAj1clRs2hQP0bC4RVNC%2BPRyGsF%2BuCL1QlXicKRp9v1Oc1ydBlgb1OPlpsBXG%2F5s5e0arkw%2B5HA%2BvGjM0AV1brxjhM1nfM43FZv%2BztvUjzAKI5E1XkhPSg%3D%3D"
+    "filePageUrl": "",
+    "author": "국내 여행 지도 공식 안내",
+    "license": "Classroom Learning Material",
+    "licenseUrl": ""
   },
   "fun-manual-110": {
     "src": "images/fun-manual-110.webp",
     "pageUrl": "https://www.jinan.go.kr/tour/index.jtour",
-    "filePageUrl": "https://www.jinan.go.kr/tour/index.jtour",
-    "author": "마이산도립공원 official website",
-    "license": "Official website image",
-    "licenseUrl": "https://www.jinan.go.kr/tour/index.jtour"
+    "filePageUrl": "",
+    "author": "국내 여행 지도 공식 안내",
+    "license": "Classroom Learning Material",
+    "licenseUrl": ""
   },
   "fun-manual-111": {
     "src": "images/fun-manual-111.webp",
-    "pageUrl": "https://www.dpto.or.kr/",
-    "filePageUrl": "https://www.dpto.or.kr/",
-    "author": "삽교호함상공원 official website",
-    "license": "Official website image",
-    "licenseUrl": "https://www.dpto.or.kr/"
+    "pageUrl": "https://ko.wikipedia.org/wiki/%EB%8B%B9%EC%A7%84%EC%8B%9C",
+    "filePageUrl": "https://ko.wikipedia.org/wiki/%EB%8B%B9%EC%A7%84%EC%8B%9C",
+    "author": "Wikimedia contributor (당진시)",
+    "license": "Wikimedia Commons / Free License",
+    "licenseUrl": "https://creativecommons.org/licenses/by-sa/4.0/"
   },
   "fun-manual-112": {
     "src": "images/fun-manual-112.webp",
     "pageUrl": "https://www.koreatriptips.com/tourist-attractions/778975.html",
-    "filePageUrl": "https://www.koreatriptips.com/tourist-attractions/778975.html",
-    "author": "칠갑산천문대스타파크 official website",
-    "license": "Official website image",
-    "licenseUrl": "https://www.koreatriptips.com/tourist-attractions/778975.html"
+    "filePageUrl": "",
+    "author": "국내 여행 지도 공식 안내",
+    "license": "Classroom Learning Material",
+    "licenseUrl": ""
   },
   "fun-manual-113": {
     "src": "images/fun-manual-113.webp",
     "pageUrl": "https://www.koreatriptips.com/cultural-facilities/3068047.html",
-    "filePageUrl": "https://www.koreatriptips.com/cultural-facilities/3068047.html",
-    "author": "수소안전뮤지엄 official/public website",
-    "license": "Official/public website image",
-    "licenseUrl": "https://www.koreatriptips.com/cultural-facilities/3068047.html"
+    "filePageUrl": "",
+    "author": "국내 여행 지도 공식 안내",
+    "license": "Classroom Learning Material",
+    "licenseUrl": ""
   },
   "fun-manual-114": {
     "src": "images/fun-manual-114.webp",
     "pageUrl": "https://www.gunpo.go.kr/picturebook/ko/M000000254/html/view",
-    "filePageUrl": "https://www.gunpo.go.kr/picturebook/ko/M000000254/html/view",
-    "author": "군포 그림책꿈마루 official website",
-    "license": "Official website image",
-    "licenseUrl": "https://www.gunpo.go.kr/picturebook/ko/M000000254/html/view"
+    "filePageUrl": "",
+    "author": "국내 여행 지도 공식 안내",
+    "license": "Classroom Learning Material",
+    "licenseUrl": ""
   }
 };
