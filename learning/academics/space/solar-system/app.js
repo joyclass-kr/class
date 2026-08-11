@@ -2721,6 +2721,103 @@
             }
         }
 
+        function createUfoCelestialSnapshot() {
+            var bodies = {};
+            Object.keys(celestialBodies).forEach(function (key) {
+                if (key === 'meteor') return;
+                var body = celestialBodies[key];
+                if (!body) return;
+                var holder = body.planetPositionGroup || body.bodyTiltGroup || body.pivot || null;
+                var item = {};
+
+                if (Number.isFinite(body.orbitAngle)) item.orbitAngle = body.orbitAngle;
+                if (holder) {
+                    item.holderPosition = [holder.position.x, holder.position.y, holder.position.z];
+                    item.holderRotation = [holder.rotation.x, holder.rotation.y, holder.rotation.z];
+                }
+                if (body.mesh) {
+                    item.meshPosition = [body.mesh.position.x, body.mesh.position.y, body.mesh.position.z];
+                    item.meshRotation = [body.mesh.rotation.x, body.mesh.rotation.y, body.mesh.rotation.z];
+                }
+                if (body.satList && body.satList.length) {
+                    item.satellites = body.satList.map(function (sat) {
+                        return {
+                            angle: Number.isFinite(sat.angle) ? sat.angle : 0,
+                            rotationY: sat.pivot ? sat.pivot.rotation.y : 0
+                        };
+                    });
+                }
+                bodies[key] = item;
+            });
+            return bodies;
+        }
+
+        function ufoLerpAngle(current, target, amount) {
+            if (!Number.isFinite(current)) return target;
+            return current + Math.atan2(Math.sin(target - current), Math.cos(target - current)) * amount;
+        }
+
+        function applyUfoCelestialSnapshot(snapshot, immediate) {
+            if (!snapshot || typeof snapshot !== 'object') return;
+            var amount = immediate ? 1 : 0.65;
+
+            Object.keys(snapshot).forEach(function (key) {
+                var item = snapshot[key];
+                var body = celestialBodies[key];
+                if (!item || !body) return;
+                var holder = body.planetPositionGroup || body.bodyTiltGroup || body.pivot || null;
+
+                if (Number.isFinite(item.orbitAngle)) {
+                    body.orbitAngle = immediate
+                        ? item.orbitAngle
+                        : ufoLerpAngle(body.orbitAngle, item.orbitAngle, amount);
+                }
+                if (holder && Array.isArray(item.holderPosition) && item.holderPosition.length === 3) {
+                    var holderTarget = new THREE.Vector3(
+                        Number(item.holderPosition[0]) || 0,
+                        Number(item.holderPosition[1]) || 0,
+                        Number(item.holderPosition[2]) || 0
+                    );
+                    if (immediate) holder.position.copy(holderTarget);
+                    else holder.position.lerp(holderTarget, amount);
+                }
+                if (holder && Array.isArray(item.holderRotation) && item.holderRotation.length === 3) {
+                    holder.rotation.x = ufoLerpAngle(holder.rotation.x, Number(item.holderRotation[0]) || 0, amount);
+                    holder.rotation.y = ufoLerpAngle(holder.rotation.y, Number(item.holderRotation[1]) || 0, amount);
+                    holder.rotation.z = ufoLerpAngle(holder.rotation.z, Number(item.holderRotation[2]) || 0, amount);
+                }
+                if (body.mesh && Array.isArray(item.meshPosition) && item.meshPosition.length === 3) {
+                    var meshTarget = new THREE.Vector3(
+                        Number(item.meshPosition[0]) || 0,
+                        Number(item.meshPosition[1]) || 0,
+                        Number(item.meshPosition[2]) || 0
+                    );
+                    if (immediate) body.mesh.position.copy(meshTarget);
+                    else body.mesh.position.lerp(meshTarget, amount);
+                }
+                if (body.mesh && Array.isArray(item.meshRotation) && item.meshRotation.length === 3) {
+                    body.mesh.rotation.x = ufoLerpAngle(body.mesh.rotation.x, Number(item.meshRotation[0]) || 0, amount);
+                    body.mesh.rotation.y = ufoLerpAngle(body.mesh.rotation.y, Number(item.meshRotation[1]) || 0, amount);
+                    body.mesh.rotation.z = ufoLerpAngle(body.mesh.rotation.z, Number(item.meshRotation[2]) || 0, amount);
+                }
+                if (Array.isArray(item.satellites) && body.satList) {
+                    item.satellites.forEach(function (satState, index) {
+                        var sat = body.satList[index];
+                        if (!sat) return;
+                        var targetAngle = Number(satState.angle);
+                        if (Number.isFinite(targetAngle)) {
+                            sat.angle = immediate ? targetAngle : ufoLerpAngle(sat.angle, targetAngle, amount);
+                        }
+                        if (sat.pivot && Number.isFinite(Number(satState.rotationY))) {
+                            sat.pivot.rotation.y = immediate
+                                ? Number(satState.rotationY)
+                                : ufoLerpAngle(sat.pivot.rotation.y, Number(satState.rotationY), amount);
+                        }
+                    });
+                }
+            });
+        }
+
         function beginUfoTeacherTimeSync() {
             if (ufoTimeSyncTimer) clearInterval(ufoTimeSyncTimer);
             if (!ufoLobby || ufoRoomRole !== 'host') return;
@@ -2730,7 +2827,8 @@
                     type: 'UFO_TIME_SYNC',
                     simTimeYears: state.simTimeYears,
                     orbitSpeed: state.orbitSpeed,
-                    isPlaying: state.isPlaying
+                    isPlaying: state.isPlaying,
+                    celestialState: createUfoCelestialSnapshot()
                 });
             }, 350);
         }
@@ -2833,7 +2931,8 @@
                         teacherTime: {
                             simTimeYears: state.simTimeYears,
                             orbitSpeed: state.orbitSpeed,
-                            isPlaying: state.isPlaying
+                            isPlaying: state.isPlaying,
+                            celestialState: createUfoCelestialSnapshot()
                         }
                     };
                 },
@@ -2844,6 +2943,7 @@
                         state.simTimeYears = Number(teacherTime.simTimeYears) || 0;
                         state.orbitSpeed = Number(teacherTime.orbitSpeed) || 1;
                         state.isPlaying = teacherTime.isPlaying !== false;
+                        applyUfoCelestialSnapshot(teacherTime.celestialState, true);
                         if (speedSlider) speedSlider.value = String(state.orbitSpeed);
                         if (speedValBadge) speedValBadge.textContent = state.orbitSpeed.toFixed(1) + 'x';
                         if (playPauseBtn) playPauseBtn.textContent = state.isPlaying ? '⏸' : '▶';
@@ -2861,6 +2961,7 @@
                         state.simTimeYears = Number(payload.simTimeYears) || 0;
                         state.orbitSpeed = Number(payload.orbitSpeed) || 1;
                         state.isPlaying = payload.isPlaying !== false;
+                        applyUfoCelestialSnapshot(payload.celestialState, false);
                         if (speedSlider) speedSlider.value = String(state.orbitSpeed);
                         if (speedValBadge) speedValBadge.textContent = state.orbitSpeed.toFixed(1) + 'x';
                         if (playPauseBtn) playPauseBtn.textContent = state.isPlaying ? '⏸' : '▶';
