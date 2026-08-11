@@ -1025,11 +1025,11 @@ window.KOREA_TRAVEL_IMAGES = {
   },
   "yeongju-sunbi-world": {
     "src": "images/yeongju-sunbi-world.webp",
-    "pageUrl": "https://www.yeongju.go.kr/sunbeeworld/main.do",
-    "filePageUrl": "https://www.yeongju.go.kr/sunbeeworld/main.do",
-    "author": "영주 선비세상 official/public website",
-    "license": "Official/public website image",
-    "licenseUrl": "https://www.yeongju.go.kr/sunbeeworld/main.do"
+    "pageUrl": "https://www.koreatriptips.com/tourist-attractions/2961095.html",
+    "filePageUrl": "https://www.koreatriptips.com/tourist-attractions/2961095.html",
+    "author": "영주 선비세상 official website",
+    "license": "Official website image",
+    "licenseUrl": "https://www.koreatriptips.com/tourist-attractions/2961095.html"
   },
   "gimhae-national-museum": {
     "src": "images/gimhae-national-museum.webp",

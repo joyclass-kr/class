@@ -235,7 +235,7 @@
     photo.fetchPriority = 'high';
     const photoPath = String(image.src || '').replace(/^\.?\//, '');
     const photoUrl = new URL(`/learning/academics/korea-travel-map/${photoPath}`, window.location.origin);
-    photoUrl.searchParams.set('v', '20260811-6');
+    photoUrl.searchParams.set('v', '20260811-7');
     photo.src = photoUrl.href;
 
     const source = document.createElement('a');
