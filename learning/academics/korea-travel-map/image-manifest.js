@@ -25,11 +25,11 @@ window.KOREA_TRAVEL_IMAGES = {
   },
   "sea-life-busan": {
     "src": "images/sea-life-busan.webp",
-    "pageUrl": "https://ko.wikipedia.org/wiki/%EC%94%A8%EB%9D%BC%EC%9D%B4%ED%94%84_%EB%B6%80%EC%82%B0_%EC%95%84%EC%BF%A0%EC%95%84%EB%A6%AC%EC%9B%80",
-    "filePageUrl": "",
-    "author": "Wikimedia Commons contributor",
-    "license": "Wikimedia Commons",
-    "licenseUrl": ""
+    "pageUrl": "http://www.koreatriptips.com/cultural-facilities/229912.html",
+    "filePageUrl": "http://www.koreatriptips.com/cultural-facilities/229912.html",
+    "author": "SEA LIFE 부산아쿠아리움 official/public website",
+    "license": "Official/public website image",
+    "licenseUrl": "http://www.koreatriptips.com/cultural-facilities/229912.html"
   },
   "e-world": {
     "src": "images/e-world.webp",
@@ -265,11 +265,11 @@ window.KOREA_TRAVEL_IMAGES = {
   },
   "aquaplanet-jeju": {
     "src": "images/aquaplanet-jeju.webp",
-    "pageUrl": "https://ko.wikipedia.org/wiki/%EC%95%84%EC%BF%A0%EC%95%84%ED%94%8C%EB%9D%BC%EB%84%B7",
-    "filePageUrl": "",
-    "author": "Wikimedia Commons contributor",
-    "license": "Wikimedia Commons",
-    "licenseUrl": ""
+    "pageUrl": "https://www.koreatriptips.com/tourist-attractions/2048059.html",
+    "filePageUrl": "https://www.koreatriptips.com/tourist-attractions/2048059.html",
+    "author": "아쿠아플라넷 제주 official/public website",
+    "license": "Official/public website image",
+    "licenseUrl": "https://www.koreatriptips.com/tourist-attractions/2048059.html"
   },
   "gyeongbokgung": {
     "src": "images/gyeongbokgung.webp",
@@ -377,11 +377,11 @@ window.KOREA_TRAVEL_IMAGES = {
   },
   "korea-job-world": {
     "src": "images/korea-job-world.webp",
-    "pageUrl": "https://www.koreajobworld.or.kr/main.do?site=1",
-    "filePageUrl": "https://www.koreajobworld.or.kr/main.do?site=1",
+    "pageUrl": "https://www.koreatriptips.com/cultural-facilities/1907759.html",
+    "filePageUrl": "https://www.koreatriptips.com/cultural-facilities/1907759.html",
     "author": "한국잡월드 official/public website",
     "license": "Official/public website image",
-    "licenseUrl": "https://www.koreajobworld.or.kr/main.do?site=1"
+    "licenseUrl": "https://www.koreatriptips.com/cultural-facilities/1907759.html"
   },
   "korean-folk-village": {
     "src": "images/korean-folk-village.webp",
@@ -401,11 +401,11 @@ window.KOREA_TRAVEL_IMAGES = {
   },
   "agriculture-museum": {
     "src": "images/agriculture-museum.webp",
-    "pageUrl": "https://www.namuk.or.kr/kr/index.do",
-    "filePageUrl": "https://www.namuk.or.kr/kr/index.do",
+    "pageUrl": "https://www.koreatriptips.com/cultural-facilities/2944481.html",
+    "filePageUrl": "https://www.koreatriptips.com/cultural-facilities/2944481.html",
     "author": "국립농업박물관 official/public website",
     "license": "Official/public website image",
-    "licenseUrl": "https://www.namuk.or.kr/kr/index.do"
+    "licenseUrl": "https://www.koreatriptips.com/cultural-facilities/2944481.html"
   },
   "railroad-museum": {
     "src": "images/railroad-museum.webp",
@@ -465,11 +465,11 @@ window.KOREA_TRAVEL_IMAGES = {
   },
   "daegu-education-museum": {
     "src": "images/daegu-education-museum.webp",
-    "pageUrl": "https://platformdodam.com/museum-gallery/1484",
-    "filePageUrl": "https://platformdodam.com/museum-gallery/1484",
-    "author": "대구교육박물관 official/public website",
-    "license": "Official/public website image",
-    "licenseUrl": "https://platformdodam.com/museum-gallery/1484"
+    "pageUrl": "https://www.koreatriptips.com/cultural-facilities/2554087.html",
+    "filePageUrl": "https://www.koreatriptips.com/cultural-facilities/2554087.html",
+    "author": "대구교육박물관 official website",
+    "license": "Official website image",
+    "licenseUrl": "https://www.koreatriptips.com/cultural-facilities/2554087.html"
   },
   "daegu-arboretum": {
     "src": "images/daegu-arboretum.webp",
@@ -553,11 +553,11 @@ window.KOREA_TRAVEL_IMAGES = {
   },
   "onggi-village": {
     "src": "images/onggi-village.webp",
-    "pageUrl": "https://www.onggi.or.kr/",
-    "filePageUrl": "https://www.onggi.or.kr/",
+    "pageUrl": "https://www.koreatriptips.com/tourist-attractions/128208.html",
+    "filePageUrl": "https://www.koreatriptips.com/tourist-attractions/128208.html",
     "author": "외고산 옹기마을 official/public website",
     "license": "Official/public website image",
-    "licenseUrl": "https://www.onggi.or.kr/"
+    "licenseUrl": "https://www.koreatriptips.com/tourist-attractions/128208.html"
   },
   "daewangam-park": {
     "src": "images/daewangam-park.webp",
@@ -833,11 +833,11 @@ window.KOREA_TRAVEL_IMAGES = {
   },
   "tongyeong-luge": {
     "src": "images/tongyeong-luge.webp",
-    "pageUrl": "https://skylineluge.kr/tongyeong/",
-    "filePageUrl": "https://skylineluge.kr/tongyeong/",
+    "pageUrl": "https://www.koreatriptips.com/leisure-sports/2488148.html",
+    "filePageUrl": "https://www.koreatriptips.com/leisure-sports/2488148.html",
     "author": "통영 스카이라인루지 official website",
     "license": "Official website image",
-    "licenseUrl": "https://skylineluge.kr/tongyeong/"
+    "licenseUrl": "https://www.koreatriptips.com/leisure-sports/2488148.html"
   },
   "goseong-dinosaur": {
     "src": "images/goseong-dinosaur.webp",
@@ -873,11 +873,11 @@ window.KOREA_TRAVEL_IMAGES = {
   },
   "snoopy-garden": {
     "src": "images/snoopy-garden.webp",
-    "pageUrl": "https://www.snoopygarden.com/",
-    "filePageUrl": "https://www.snoopygarden.com/",
-    "author": "스누피가든 official website",
-    "license": "Official website image",
-    "licenseUrl": "https://www.snoopygarden.com/"
+    "pageUrl": "https://www.koreatriptips.com/tourist-attractions/2714222.html",
+    "filePageUrl": "https://www.koreatriptips.com/tourist-attractions/2714222.html",
+    "author": "스누피가든 official/public website",
+    "license": "Official/public website image",
+    "licenseUrl": "https://www.koreatriptips.com/tourist-attractions/2714222.html"
   },
   "hueree": {
     "src": "images/hueree.webp",
@@ -961,19 +961,19 @@ window.KOREA_TRAVEL_IMAGES = {
   },
   "chuncheon-forest-center": {
     "src": "images/chuncheon-forest-center.webp",
-    "pageUrl": "https://www.sooperang.go.kr/indvz/main.do?hmpgId=FA00006",
-    "filePageUrl": "https://www.sooperang.go.kr/indvz/main.do?hmpgId=FA00006",
-    "author": "국립춘천숲체원 official/public website",
-    "license": "Official/public website image",
-    "licenseUrl": "https://www.sooperang.go.kr/indvz/main.do?hmpgId=FA00006"
+    "pageUrl": "https://www.yna.co.kr/view/AKR20210507138700062",
+    "filePageUrl": "https://www.yna.co.kr/view/AKR20210507138700062",
+    "author": "국립춘천숲체원 official website",
+    "license": "Official website image",
+    "licenseUrl": "https://www.yna.co.kr/view/AKR20210507138700062"
   },
   "samyang-round-hill": {
     "src": "images/samyang-round-hill.webp",
-    "pageUrl": "https://samyangroundhill.com/",
-    "filePageUrl": "https://samyangroundhill.com/",
-    "author": "삼양라운드힐 official website",
-    "license": "Official website image",
-    "licenseUrl": "https://samyangroundhill.com/"
+    "pageUrl": "https://www.koreatriptips.com/tourist-attractions/2640123.html",
+    "filePageUrl": "https://www.koreatriptips.com/tourist-attractions/2640123.html",
+    "author": "삼양라운드힐 official/public website",
+    "license": "Official/public website image",
+    "licenseUrl": "https://www.koreatriptips.com/tourist-attractions/2640123.html"
   },
   "cheongju-early-printing": {
     "src": "images/cheongju-early-printing.webp",
@@ -1065,11 +1065,11 @@ window.KOREA_TRAVEL_IMAGES = {
   },
   "seoul-sangsangnara": {
     "src": "images/seoul-sangsangnara.webp",
-    "pageUrl": "https://www.seoulchildrensmuseum.org/",
-    "filePageUrl": "https://www.seoulchildrensmuseum.org/",
-    "author": "서울상상나라 official website",
-    "license": "Official website image",
-    "licenseUrl": "https://www.seoulchildrensmuseum.org/"
+    "pageUrl": "https://www.koreatriptips.com/cultural-facilities/1897833.html",
+    "filePageUrl": "https://www.koreatriptips.com/cultural-facilities/1897833.html",
+    "author": "서울상상나라 official/public website",
+    "license": "Official/public website image",
+    "licenseUrl": "https://www.koreatriptips.com/cultural-facilities/1897833.html"
   },
   "seodaemun-natural-history": {
     "src": "images/seodaemun-natural-history.webp",
@@ -1177,11 +1177,11 @@ window.KOREA_TRAVEL_IMAGES = {
   },
   "gimhae-nakdong-railpark": {
     "src": "images/gimhae-nakdong-railpark.webp",
-    "pageUrl": "https://www.ghrp.co.kr/",
-    "filePageUrl": "https://www.ghrp.co.kr/",
-    "author": "김해낙동강레일파크 official website",
-    "license": "Official website image",
-    "licenseUrl": "https://www.ghrp.co.kr/"
+    "pageUrl": "https://www.koreatriptips.com/tourist-attractions/2656496.html",
+    "filePageUrl": "https://www.koreatriptips.com/tourist-attractions/2656496.html",
+    "author": "김해낙동강레일파크 official/public website",
+    "license": "Official/public website image",
+    "licenseUrl": "https://www.koreatriptips.com/tourist-attractions/2656496.html"
   },
   "jeju-stone-park": {
     "src": "images/jeju-stone-park.webp",
@@ -1201,11 +1201,11 @@ window.KOREA_TRAVEL_IMAGES = {
   },
   "nfm-paju": {
     "src": "images/nfm-paju.webp",
-    "pageUrl": "https://www.nfm.go.kr/home/subIndex/1241.do",
-    "filePageUrl": "https://www.nfm.go.kr/home/subIndex/1241.do",
-    "author": "국립민속박물관 파주 official website",
-    "license": "Official website image",
-    "licenseUrl": "https://www.nfm.go.kr/home/subIndex/1241.do"
+    "pageUrl": "http://www.koreatriptips.com/cultural-facilities/2738515.html",
+    "filePageUrl": "http://www.koreatriptips.com/cultural-facilities/2738515.html",
+    "author": "국립민속박물관 파주 official/public website",
+    "license": "Official/public website image",
+    "licenseUrl": "http://www.koreatriptips.com/cultural-facilities/2738515.html"
   },
   "jeongseon-hwaam-cave": {
     "src": "images/jeongseon-hwaam-cave.webp",
@@ -1401,11 +1401,11 @@ window.KOREA_TRAVEL_IMAGES = {
   },
   "value-고성-통일전망대": {
     "src": "images/value-고성-통일전망대.webp",
-    "pageUrl": "http://www.tongiltour.co.kr/",
-    "filePageUrl": "http://www.tongiltour.co.kr/",
+    "pageUrl": "https://www.koreatriptips.com/leisure-sports/3445907.html",
+    "filePageUrl": "https://www.koreatriptips.com/leisure-sports/3445907.html",
     "author": "고성 통일전망대 official/public website",
     "license": "Official/public website image",
-    "licenseUrl": "http://www.tongiltour.co.kr/"
+    "licenseUrl": "https://www.koreatriptips.com/leisure-sports/3445907.html"
   },
   "value-국립청주박물관": {
     "src": "images/value-국립청주박물관.webp",
@@ -1473,11 +1473,11 @@ window.KOREA_TRAVEL_IMAGES = {
   },
   "value-전남도립미술관": {
     "src": "images/value-전남도립미술관.webp",
-    "pageUrl": "https://artmuseum.jeonnam.go.kr/www/29",
-    "filePageUrl": "https://artmuseum.jeonnam.go.kr/www/29",
+    "pageUrl": "https://www.koreatriptips.com/cultural-facilities/2778026.html",
+    "filePageUrl": "https://www.koreatriptips.com/cultural-facilities/2778026.html",
     "author": "전남도립미술관 official/public website",
     "license": "Official/public website image",
-    "licenseUrl": "https://artmuseum.jeonnam.go.kr/www/29"
+    "licenseUrl": "https://www.koreatriptips.com/cultural-facilities/2778026.html"
   },
   "value-국립제주박물관": {
     "src": "images/value-국립제주박물관.webp",
@@ -1577,11 +1577,11 @@ window.KOREA_TRAVEL_IMAGES = {
   },
   "regional-014": {
     "src": "images/regional-014.webp",
-    "pageUrl": "https://www.boseong.go.kr/tour/theme/lesure?mode=view&idx=216",
-    "filePageUrl": "https://www.boseong.go.kr/tour/theme/lesure?mode=view&idx=216",
-    "author": "비봉공룡공원 official/public website",
-    "license": "Official/public website image",
-    "licenseUrl": "https://www.boseong.go.kr/tour/theme/lesure?mode=view&idx=216"
+    "pageUrl": "https://www.koreatriptips.com/tourist-attractions/2782625.html",
+    "filePageUrl": "https://www.koreatriptips.com/tourist-attractions/2782625.html",
+    "author": "비봉공룡공원 official website",
+    "license": "Official website image",
+    "licenseUrl": "https://www.koreatriptips.com/tourist-attractions/2782625.html"
   },
   "regional-018": {
     "src": "images/regional-018.webp",
@@ -1721,11 +1721,11 @@ window.KOREA_TRAVEL_IMAGES = {
   },
   "regional-r026": {
     "src": "images/regional-r026.webp",
-    "pageUrl": "https://tour.jb.go.kr/travel/info/view.do?menuCd=&contentsSid=22&ctnt_id=14248",
-    "filePageUrl": "https://tour.jb.go.kr/travel/info/view.do?menuCd=&contentsSid=22&ctnt_id=14248",
+    "pageUrl": "http://www.koreatriptips.com/cultural-facilities/130253.html",
+    "filePageUrl": "http://www.koreatriptips.com/cultural-facilities/130253.html",
     "author": "벽골제농경문화박물관 official/public website",
     "license": "Official/public website image",
-    "licenseUrl": "https://tour.jb.go.kr/travel/info/view.do?menuCd=&contentsSid=22&ctnt_id=14248"
+    "licenseUrl": "http://www.koreatriptips.com/cultural-facilities/130253.html"
   },
   "regional-r027": {
     "src": "images/regional-r027.webp",
@@ -1745,11 +1745,11 @@ window.KOREA_TRAVEL_IMAGES = {
   },
   "regional-r032": {
     "src": "images/regional-r032.webp",
-    "pageUrl": "https://museum.jacf.or.kr/",
-    "filePageUrl": "https://museum.jacf.or.kr/",
-    "author": "정선아리랑박물관 official/public website",
-    "license": "Official/public website image",
-    "licenseUrl": "https://museum.jacf.or.kr/"
+    "pageUrl": "https://www.koreatriptips.com/cultural-facilities/2524190.html",
+    "filePageUrl": "https://www.koreatriptips.com/cultural-facilities/2524190.html",
+    "author": "정선아리랑박물관 official website",
+    "license": "Official website image",
+    "licenseUrl": "https://www.koreatriptips.com/cultural-facilities/2524190.html"
   },
   "regional-a033": {
     "src": "images/regional-a033.webp",
@@ -1865,11 +1865,11 @@ window.KOREA_TRAVEL_IMAGES = {
   },
   "fun-regional-004": {
     "src": "images/fun-regional-004.webp",
-    "pageUrl": "https://www.ywfmc.or.kr/",
-    "filePageUrl": "https://www.ywfmc.or.kr/",
+    "pageUrl": "https://www.koreatriptips.com/leisure-sports/2765134.html",
+    "filePageUrl": "https://www.koreatriptips.com/leisure-sports/2765134.html",
     "author": "별마로천문대 official/public website",
     "license": "Official/public website image",
-    "licenseUrl": "https://www.ywfmc.or.kr/"
+    "licenseUrl": "https://www.koreatriptips.com/leisure-sports/2765134.html"
   },
   "fun-regional-008": {
     "src": "images/fun-regional-008.webp",
@@ -1953,19 +1953,19 @@ window.KOREA_TRAVEL_IMAGES = {
   },
   "fun-regional-035": {
     "src": "images/fun-regional-035.webp",
-    "pageUrl": "https://platformdodam.com/museum-gallery/970",
-    "filePageUrl": "https://platformdodam.com/museum-gallery/970",
+    "pageUrl": "http://www.koreatriptips.com/cultural-facilities/2629039.html",
+    "filePageUrl": "http://www.koreatriptips.com/cultural-facilities/2629039.html",
     "author": "의성조문국박물관 official/public website",
     "license": "Official/public website image",
-    "licenseUrl": "https://platformdodam.com/museum-gallery/970"
+    "licenseUrl": "http://www.koreatriptips.com/cultural-facilities/2629039.html"
   },
   "fun-regional-039": {
     "src": "images/fun-regional-039.webp",
-    "pageUrl": "https://platformdodam.com/public-institution-facilities/1141",
-    "filePageUrl": "https://platformdodam.com/public-institution-facilities/1141",
-    "author": "영흥에너지파크 official/public website",
-    "license": "Official/public website image",
-    "licenseUrl": "https://platformdodam.com/public-institution-facilities/1141"
+    "pageUrl": "https://www.koreatriptips.com/tourist-attractions/2709532.html",
+    "filePageUrl": "https://www.koreatriptips.com/tourist-attractions/2709532.html",
+    "author": "영흥에너지파크 official website",
+    "license": "Official website image",
+    "licenseUrl": "https://www.koreatriptips.com/tourist-attractions/2709532.html"
   },
   "fun-regional-046": {
     "src": "images/fun-regional-046.webp",
@@ -1985,11 +1985,11 @@ window.KOREA_TRAVEL_IMAGES = {
   },
   "fun-regional-050": {
     "src": "images/fun-regional-050.webp",
-    "pageUrl": "https://www.nonsan.go.kr/sunshine/",
-    "filePageUrl": "https://www.nonsan.go.kr/sunshine/",
-    "author": "논산선샤인랜드 official website",
-    "license": "Official website image",
-    "licenseUrl": "https://www.nonsan.go.kr/sunshine/"
+    "pageUrl": "https://www.koreatriptips.com/tourist-attractions/1956338.html",
+    "filePageUrl": "https://www.koreatriptips.com/tourist-attractions/1956338.html",
+    "author": "논산선샤인랜드 official/public website",
+    "license": "Official/public website image",
+    "licenseUrl": "https://www.koreatriptips.com/tourist-attractions/1956338.html"
   },
   "fun-regional-052": {
     "src": "images/fun-regional-052.webp",
@@ -2089,19 +2089,19 @@ window.KOREA_TRAVEL_IMAGES = {
   },
   "fun-address-031": {
     "src": "images/fun-address-031.webp",
-    "pageUrl": "https://ggsec.gg.go.kr/",
-    "filePageUrl": "https://ggsec.gg.go.kr/",
+    "pageUrl": "https://www.koreatriptips.com/tourist-attractions/3012433.html",
+    "filePageUrl": "https://www.koreatriptips.com/tourist-attractions/3012433.html",
     "author": "경기도국민안전체험관 official/public website",
     "license": "Official/public website image",
-    "licenseUrl": "https://ggsec.gg.go.kr/"
+    "licenseUrl": "https://www.koreatriptips.com/tourist-attractions/3012433.html"
   },
   "fun-address-032": {
     "src": "images/fun-address-032.webp",
-    "pageUrl": "https://dinovill.com/",
-    "filePageUrl": "https://dinovill.com/",
-    "author": "덕평공룡수목원 official website",
-    "license": "Official website image",
-    "licenseUrl": "https://dinovill.com/"
+    "pageUrl": "http://www.koreatriptips.com/tourist-attractions/2514731.html",
+    "filePageUrl": "http://www.koreatriptips.com/tourist-attractions/2514731.html",
+    "author": "덕평공룡수목원 official/public website",
+    "license": "Official/public website image",
+    "licenseUrl": "http://www.koreatriptips.com/tourist-attractions/2514731.html"
   },
   "fun-address-033": {
     "src": "images/fun-address-033.webp",
@@ -2169,11 +2169,11 @@ window.KOREA_TRAVEL_IMAGES = {
   },
   "fun-address-041": {
     "src": "images/fun-address-041.webp",
-    "pageUrl": "https://tour.jb.go.kr/travel/info/view.do?menuCd=&contentsSid=22&ctnt_id=25327",
-    "filePageUrl": "https://tour.jb.go.kr/travel/info/view.do?menuCd=&contentsSid=22&ctnt_id=25327",
+    "pageUrl": "https://www.koreatriptips.com/tourist-attractions/3026667.html",
+    "filePageUrl": "https://www.koreatriptips.com/tourist-attractions/3026667.html",
     "author": "순창발효테마파크 official/public website",
     "license": "Official/public website image",
-    "licenseUrl": "https://tour.jb.go.kr/travel/info/view.do?menuCd=&contentsSid=22&ctnt_id=25327"
+    "licenseUrl": "https://www.koreatriptips.com/tourist-attractions/3026667.html"
   },
   "fun-address-042": {
     "src": "images/fun-address-042.webp",
@@ -2185,19 +2185,19 @@ window.KOREA_TRAVEL_IMAGES = {
   },
   "fun-address-043": {
     "src": "images/fun-address-043.webp",
-    "pageUrl": "https://www.hongseong.go.kr/tour/",
-    "filePageUrl": "https://www.hongseong.go.kr/tour/",
-    "author": "홍성조류탐사과학관 official website",
-    "license": "Official website image",
-    "licenseUrl": "https://www.hongseong.go.kr/tour/"
+    "pageUrl": "https://www.koreatriptips.com/cultural-facilities/1627312.html",
+    "filePageUrl": "https://www.koreatriptips.com/cultural-facilities/1627312.html",
+    "author": "홍성조류탐사과학관 official/public website",
+    "license": "Official/public website image",
+    "licenseUrl": "https://www.koreatriptips.com/cultural-facilities/1627312.html"
   },
   "fun-address-044": {
     "src": "images/fun-address-044.webp",
-    "pageUrl": "https://www.chungbuk.go.kr/www/index.do",
-    "filePageUrl": "https://www.chungbuk.go.kr/www/index.do",
-    "author": "충북아쿠아리움 official website",
-    "license": "Official website image",
-    "licenseUrl": "https://www.chungbuk.go.kr/www/index.do"
+    "pageUrl": "http://www.koreatriptips.com/tourist-attractions/3423663.html",
+    "filePageUrl": "http://www.koreatriptips.com/tourist-attractions/3423663.html",
+    "author": "충북아쿠아리움 official/public website",
+    "license": "Official/public website image",
+    "licenseUrl": "http://www.koreatriptips.com/tourist-attractions/3423663.html"
   },
   "fun-address-045": {
     "src": "images/fun-address-045.webp",
@@ -2217,11 +2217,11 @@ window.KOREA_TRAVEL_IMAGES = {
   },
   "fun-manual-101": {
     "src": "images/fun-manual-101.webp",
-    "pageUrl": "https://www.speedium.co.kr/",
-    "filePageUrl": "https://www.speedium.co.kr/",
+    "pageUrl": "https://hc.speedium.co.kr/view/viewLink.do?page=homepage%2FKOR%2Ffacilities%2Fmuseum",
+    "filePageUrl": "https://hc.speedium.co.kr/view/viewLink.do?page=homepage%2FKOR%2Ffacilities%2Fmuseum",
     "author": "인제스피디움 클래식카박물관 official website",
     "license": "Official website image",
-    "licenseUrl": "https://www.speedium.co.kr/"
+    "licenseUrl": "https://hc.speedium.co.kr/view/viewLink.do?page=homepage%2FKOR%2Ffacilities%2Fmuseum"
   },
   "fun-manual-102": {
     "src": "images/fun-manual-102.webp",
@@ -2321,10 +2321,10 @@ window.KOREA_TRAVEL_IMAGES = {
   },
   "fun-manual-114": {
     "src": "images/fun-manual-114.webp",
-    "pageUrl": "https://www.gunpo.go.kr/picturebook/",
-    "filePageUrl": "https://www.gunpo.go.kr/picturebook/",
+    "pageUrl": "https://www.gunpo.go.kr/picturebook/ko/M000000254/html/view",
+    "filePageUrl": "https://www.gunpo.go.kr/picturebook/ko/M000000254/html/view",
     "author": "군포 그림책꿈마루 official website",
     "license": "Official website image",
-    "licenseUrl": "https://www.gunpo.go.kr/picturebook/"
+    "licenseUrl": "https://www.gunpo.go.kr/picturebook/ko/M000000254/html/view"
   }
 };
