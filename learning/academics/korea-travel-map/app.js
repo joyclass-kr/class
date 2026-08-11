@@ -165,6 +165,14 @@
     });
   }
 
+  function clusterTooltipText(group) {
+    const visibleNames = group.slice(0, 2).map((place) => place.name);
+    const remainingCount = group.length - visibleNames.length;
+    return remainingCount > 0
+      ? visibleNames.join(' · ') + ' 외 ' + remainingCount + '곳'
+      : visibleNames.join(' · ');
+  }
+
   function groupedPlaces(filteredPlaces) {
     if (map.getZoom() >= 9) return filteredPlaces.map((place) => [place]);
     const cellSize = map.getZoom() <= 7 ? 72 : 56;
@@ -193,7 +201,7 @@
 
       const bounds = L.latLngBounds(group.map((place) => [place.lat, place.lng]));
       const marker = L.marker(bounds.getCenter(), { icon: clusterIcon(group.length), riseOnHover: true });
-      marker.bindTooltip(group.map((place) => place.name).join(' · '), { direction: 'top', offset: [0, -16], className: 'travel-place-tooltip cluster-tooltip' });
+      marker.bindTooltip(clusterTooltipText(group), { direction: 'auto', offset: [0, -16], className: 'travel-place-tooltip cluster-tooltip' });
       marker.on('click', () => map.fitBounds(bounds.pad(0.55), { maxZoom: 10, padding: [60, 60] }));
       markerLayer.addLayer(marker);
     });
