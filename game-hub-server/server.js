@@ -223,6 +223,13 @@ app.use(
   "/questions",
   express.static(path.join(SITE_ROOT, "learning", "academics", "korean-history", "dist", "client", "questions"), staticAssetOptions),
 );
+// Travel-map photos are requested by an <img> after the gated page opens.
+// Serve this immutable asset directory before requireSiteAccess so a session
+// check cannot turn an image response into login HTML.
+app.use(
+  "/learning/academics/korea-travel-map/images",
+  express.static(path.join(SITE_ROOT, "learning", "academics", "korea-travel-map", "images"), staticAssetOptions),
+);
 const MAX_ROOM_PLAYERS = {
   setgame: 4,
   nimgame: 2,
