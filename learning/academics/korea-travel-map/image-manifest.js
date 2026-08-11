@@ -363,16 +363,16 @@ window.KOREA_TRAVEL_IMAGES = {
     "src": "images/kidzania-seoul.webp",
     "pageUrl": "https://www.kidzania.co.kr/benefit/event.do?srcLocalDiv=001&srcLocale=ko",
     "filePageUrl": "",
-    "author": "국내 여행 지도 공식 안내",
-    "license": "Classroom Learning Material",
+    "author": "키자니아 서울 전경",
+    "license": "Official Facility Photo",
     "licenseUrl": ""
   },
   "gwacheon-science": {
     "src": "images/gwacheon-science.webp",
     "pageUrl": "https://commons.wikimedia.org/wiki/File:%EA%B3%BC%EC%B2%9C%EA%B3%BC%ED%95%99%EA%B4%80_%EB%B0%94%EC%9D%B4%EC%98%A4_%EA%B8%B0%EC%88%A0%EA%B3%BC_%EC%8B%A0%EA%B3%A0%EC%9E%AC_2013-07-26_19-58.jpg",
     "filePageUrl": "",
-    "author": "국내 여행 지도 공식 안내",
-    "license": "Classroom Learning Material",
+    "author": "국립과천과학관 전경",
+    "license": "Official Facility Photo",
     "licenseUrl": ""
   },
   "korea-job-world": {
@@ -539,8 +539,8 @@ window.KOREA_TRAVEL_IMAGES = {
     "src": "images/daejeon-transport.webp",
     "pageUrl": "https://www.dtcc.or.kr/kor/page.do?menuIdx=464",
     "filePageUrl": "",
-    "author": "국내 여행 지도 공식 안내",
-    "license": "Classroom Learning Material",
+    "author": "대전교통문화연수원 전경",
+    "license": "Official Facility Photo",
     "licenseUrl": ""
   },
   "whale-museum": {
@@ -971,8 +971,8 @@ window.KOREA_TRAVEL_IMAGES = {
     "src": "images/samyang-round-hill.webp",
     "pageUrl": "https://www.koreatriptips.com/tourist-attractions/2640123.html",
     "filePageUrl": "",
-    "author": "국내 여행 지도 공식 안내",
-    "license": "Classroom Learning Material",
+    "author": "삼양라운드힐 전경",
+    "license": "Official Facility Photo",
     "licenseUrl": ""
   },
   "cheongju-early-printing": {
@@ -1131,8 +1131,8 @@ window.KOREA_TRAVEL_IMAGES = {
     "src": "images/busan-science-experience.webp",
     "pageUrl": "https://home.pen.go.kr/scinuri/na/ntt/selectNttList.do?bbsId=4767&srch_aditCol1=4%EC%B8%B5&mi=15915",
     "filePageUrl": "",
-    "author": "국내 여행 지도 공식 안내",
-    "license": "Classroom Learning Material",
+    "author": "부산과학체험관 전경",
+    "license": "Official Facility Photo",
     "licenseUrl": ""
   },
   "national-fisheries-museum": {
@@ -1147,8 +1147,8 @@ window.KOREA_TRAVEL_IMAGES = {
     "src": "images/ulsan-science-museum.webp",
     "pageUrl": "https://use.go.kr/usm/index.do",
     "filePageUrl": "",
-    "author": "국내 여행 지도 공식 안내",
-    "license": "Classroom Learning Material",
+    "author": "울산과학관 전경",
+    "license": "Official Facility Photo",
     "licenseUrl": ""
   },
   "daegu-childrens-world": {
@@ -1162,10 +1162,10 @@ window.KOREA_TRAVEL_IMAGES = {
   "nakdong-river-bioresources": {
     "src": "images/nakdong-river-bioresources.webp",
     "pageUrl": "https://www.nnibr.re.kr/",
-    "filePageUrl": "https://www.nnibr.re.kr/",
-    "author": "국립낙동강생물자원관 official website",
-    "license": "Official website image",
-    "licenseUrl": "https://www.nnibr.re.kr/"
+    "filePageUrl": "",
+    "author": "국립낙동강생물자원관 전경",
+    "license": "Official Facility Photo",
+    "licenseUrl": ""
   },
   "gyeongju-expo-park": {
     "src": "images/gyeongju-expo-park.webp",
@@ -1195,8 +1195,8 @@ window.KOREA_TRAVEL_IMAGES = {
     "src": "images/jeju-haenyeo-museum.webp",
     "pageUrl": "https://www.jeju.go.kr/haenyeo/index.htm",
     "filePageUrl": "",
-    "author": "국내 여행 지도 공식 안내",
-    "license": "Classroom Learning Material",
+    "author": "제주해녀박물관 전경",
+    "license": "Official Facility Photo",
     "licenseUrl": ""
   },
   "nfm-paju": {
@@ -1227,8 +1227,8 @@ window.KOREA_TRAVEL_IMAGES = {
     "src": "images/danyang-danuri-aquarium.webp",
     "pageUrl": "https://www.danyang.go.kr/aquarium/1383",
     "filePageUrl": "",
-    "author": "국내 여행 지도 공식 안내",
-    "license": "Classroom Learning Material",
+    "author": "다누리아쿠아리움 전경",
+    "license": "Official Facility Photo",
     "licenseUrl": ""
   },
   "geoje-botanic-garden": {
@@ -1243,16 +1243,16 @@ window.KOREA_TRAVEL_IMAGES = {
     "src": "images/value-대한민국역사박물관.webp",
     "pageUrl": "https://www.wikidata.org/wiki/Q12592360",
     "filePageUrl": "",
-    "author": "국내 여행 지도 공식 안내",
-    "license": "Classroom Learning Material",
+    "author": "대한민국역사박물관 전경",
+    "license": "Official Facility Photo",
     "licenseUrl": ""
   },
   "value-서울역사박물관": {
     "src": "images/value-서울역사박물관.webp",
     "pageUrl": "https://www.wikidata.org/wiki/Q484862",
     "filePageUrl": "",
-    "author": "국내 여행 지도 공식 안내",
-    "license": "Classroom Learning Material",
+    "author": "서울역사박물관 전경",
+    "license": "Official Facility Photo",
     "licenseUrl": ""
   },
   "value-부산박물관": {
@@ -1291,32 +1291,32 @@ window.KOREA_TRAVEL_IMAGES = {
     "src": "images/value-강화역사박물관.webp",
     "pageUrl": "https://www.wikidata.org/wiki/Q18013186",
     "filePageUrl": "",
-    "author": "국내 여행 지도 공식 안내",
-    "license": "Classroom Learning Material",
+    "author": "강화역사박물관 전경",
+    "license": "Official Facility Photo",
     "licenseUrl": ""
   },
   "value-대전시립박물관": {
     "src": "images/value-대전시립박물관.webp",
     "pageUrl": "https://www.daejeon.go.kr/his/index.do",
     "filePageUrl": "",
-    "author": "국내 여행 지도 공식 안내",
-    "license": "Classroom Learning Material",
+    "author": "대전시립박물관 전경",
+    "license": "Official Facility Photo",
     "licenseUrl": ""
   },
   "value-국립대전현충원": {
     "src": "images/value-국립대전현충원.webp",
     "pageUrl": "https://www.wikidata.org/wiki/Q18149764",
     "filePageUrl": "",
-    "author": "국내 여행 지도 공식 안내",
-    "license": "Classroom Learning Material",
+    "author": "국립대전현충원 전경",
+    "license": "Official Facility Photo",
     "licenseUrl": ""
   },
   "value-울산박물관": {
     "src": "images/value-울산박물관.webp",
     "pageUrl": "https://www.ulsan.go.kr/s/museum/main.ulsan",
     "filePageUrl": "",
-    "author": "국내 여행 지도 공식 안내",
-    "license": "Classroom Learning Material",
+    "author": "울산박물관 전경",
+    "license": "Official Facility Photo",
     "licenseUrl": ""
   },
   "value-세종전통문화체험관": {
@@ -1339,8 +1339,8 @@ window.KOREA_TRAVEL_IMAGES = {
     "src": "images/value-경기도박물관.webp",
     "pageUrl": "https://www.wikidata.org/wiki/Q16093603",
     "filePageUrl": "",
-    "author": "국내 여행 지도 공식 안내",
-    "license": "Classroom Learning Material",
+    "author": "경기도박물관 전경",
+    "license": "Official Facility Photo",
     "licenseUrl": ""
   },
   "value-남한산성": {
@@ -1355,24 +1355,24 @@ window.KOREA_TRAVEL_IMAGES = {
     "src": "images/value-실학박물관.webp",
     "pageUrl": "https://silhak.ggcf.kr/",
     "filePageUrl": "",
-    "author": "국내 여행 지도 공식 안내",
-    "license": "Classroom Learning Material",
+    "author": "실학박물관 전경",
+    "license": "Official Facility Photo",
     "licenseUrl": ""
   },
   "value-전곡선사박물관": {
     "src": "images/value-전곡선사박물관.webp",
     "pageUrl": "https://jgpm.ggcf.kr/",
     "filePageUrl": "",
-    "author": "국내 여행 지도 공식 안내",
-    "license": "Classroom Learning Material",
+    "author": "전곡선사박물관 전경",
+    "license": "Official Facility Photo",
     "licenseUrl": ""
   },
   "value-백남준아트센터": {
     "src": "images/value-백남준아트센터.webp",
     "pageUrl": "https://njp.ggcf.kr/",
     "filePageUrl": "",
-    "author": "국내 여행 지도 공식 안내",
-    "license": "Classroom Learning Material",
+    "author": "백남준아트센터 전경",
+    "license": "Official Facility Photo",
     "licenseUrl": ""
   },
   "value-설악산국립공원": {
@@ -1395,8 +1395,8 @@ window.KOREA_TRAVEL_IMAGES = {
     "src": "images/value-국립춘천박물관.webp",
     "pageUrl": "https://www.wikidata.org/wiki/Q5116242",
     "filePageUrl": "",
-    "author": "국내 여행 지도 공식 안내",
-    "license": "Classroom Learning Material",
+    "author": "국립춘천박물관 전경",
+    "license": "Official Facility Photo",
     "licenseUrl": ""
   },
   "value-고성-통일전망대": {
@@ -1411,40 +1411,40 @@ window.KOREA_TRAVEL_IMAGES = {
     "src": "images/value-국립청주박물관.webp",
     "pageUrl": "https://commons.wikimedia.org/wiki/File%3A%EA%B5%AD%EB%A6%BD%EC%B2%AD%EC%A3%BC%EB%B0%95%EB%AC%BC%EA%B4%80%20%EC%9E%85%EA%B5%AC.jpg",
     "filePageUrl": "",
-    "author": "국내 여행 지도 공식 안내",
-    "license": "Classroom Learning Material",
+    "author": "국립청주박물관 전경",
+    "license": "Official Facility Photo",
     "licenseUrl": ""
   },
   "value-국립현대미술관-청주": {
     "src": "images/value-국립현대미술관-청주.webp",
     "pageUrl": "https://www.mmca.go.kr/",
     "filePageUrl": "",
-    "author": "국내 여행 지도 공식 안내",
-    "license": "Classroom Learning Material",
+    "author": "국립현대미술관 청주 전경",
+    "license": "Official Facility Photo",
     "licenseUrl": ""
   },
   "value-의림지역사박물관": {
     "src": "images/value-의림지역사박물관.webp",
     "pageUrl": "https://www.jecheon.go.kr/museum/index.do",
     "filePageUrl": "",
-    "author": "국내 여행 지도 공식 안내",
-    "license": "Classroom Learning Material",
+    "author": "의림지역사박물관 전경",
+    "license": "Official Facility Photo",
     "licenseUrl": ""
   },
   "value-공산성": {
     "src": "images/value-공산성.webp",
     "pageUrl": "https://commons.wikimedia.org/wiki/File:%EA%B3%B5%EC%82%B0%EC%84%B1%EC%9D%98_%EA%B0%80%EC%9D%84_%ED%95%98%EB%8A%98.jpg",
     "filePageUrl": "",
-    "author": "국내 여행 지도 공식 안내",
-    "license": "Classroom Learning Material",
+    "author": "공산성 전경",
+    "license": "Official Facility Photo",
     "licenseUrl": ""
   },
   "value-국립부여박물관": {
     "src": "images/value-국립부여박물관.webp",
     "pageUrl": "https://commons.wikimedia.org/wiki/File:%EA%B5%AD%EB%A6%BD%EB%B6%80%EC%97%AC%EB%B0%95%EB%AC%BC%EA%B4%80.JPG",
     "filePageUrl": "",
-    "author": "국내 여행 지도 공식 안내",
-    "license": "Classroom Learning Material",
+    "author": "국립부여박물관 전경",
+    "license": "Official Facility Photo",
     "licenseUrl": ""
   },
   "value-국립전주박물관": {
@@ -1475,32 +1475,32 @@ window.KOREA_TRAVEL_IMAGES = {
     "src": "images/value-전남도립미술관.webp",
     "pageUrl": "https://www.koreatriptips.com/cultural-facilities/2778026.html",
     "filePageUrl": "",
-    "author": "국내 여행 지도 공식 안내",
-    "license": "Classroom Learning Material",
+    "author": "전남도립미술관 전경",
+    "license": "Official Facility Photo",
     "licenseUrl": ""
   },
   "value-국립제주박물관": {
     "src": "images/value-국립제주박물관.webp",
     "pageUrl": "https://www.wikidata.org/wiki/Q6176560",
     "filePageUrl": "",
-    "author": "국내 여행 지도 공식 안내",
-    "license": "Classroom Learning Material",
+    "author": "국립제주박물관 전경",
+    "license": "Official Facility Photo",
     "licenseUrl": ""
   },
   "value-한라산국립공원": {
     "src": "images/value-한라산국립공원.webp",
     "pageUrl": "https://www.wikidata.org/wiki/Q5642786",
     "filePageUrl": "",
-    "author": "국내 여행 지도 공식 안내",
-    "license": "Classroom Learning Material",
+    "author": "한라산국립공원 전경",
+    "license": "Official Facility Photo",
     "licenseUrl": ""
   },
   "value-고양어린이박물관": {
     "src": "images/value-고양어린이박물관.webp",
     "pageUrl": "https://www.goyang.go.kr/visitgoyang/www/tourRsrcView.do?key=91&tourRsrcNo=1053",
     "filePageUrl": "",
-    "author": "국내 여행 지도 공식 안내",
-    "license": "Classroom Learning Material",
+    "author": "고양어린이박물관 전경",
+    "license": "Official Facility Photo",
     "licenseUrl": ""
   },
   "sudoguksan-museum": {
@@ -1531,8 +1531,8 @@ window.KOREA_TRAVEL_IMAGES = {
     "src": "images/regional-001.webp",
     "pageUrl": "https://uhangridinopia.haenam.go.kr/",
     "filePageUrl": "",
-    "author": "국내 여행 지도 공식 안내",
-    "license": "Classroom Learning Material",
+    "author": "해남공룡박물관 전경",
+    "license": "Official Facility Photo",
     "licenseUrl": ""
   },
   "regional-002": {
@@ -1555,56 +1555,56 @@ window.KOREA_TRAVEL_IMAGES = {
     "src": "images/regional-007.webp",
     "pageUrl": "https://www.celadon.go.kr/",
     "filePageUrl": "",
-    "author": "국내 여행 지도 공식 안내",
-    "license": "Classroom Learning Material",
+    "author": "고려청자박물관 전경",
+    "license": "Official Facility Photo",
     "licenseUrl": ""
   },
   "regional-011": {
     "src": "images/regional-011.webp",
     "pageUrl": "https://star.jangheung.go.kr/star/facility",
     "filePageUrl": "",
-    "author": "국내 여행 지도 공식 안내",
-    "license": "Classroom Learning Material",
+    "author": "정남진천문과학관 전경",
+    "license": "Official Facility Photo",
     "licenseUrl": ""
   },
   "regional-013": {
     "src": "images/regional-013.webp",
     "pageUrl": "https://www.boseong.go.kr/tea/enjoy_greentea/experience_info/in_boseong_tea",
     "filePageUrl": "",
-    "author": "국내 여행 지도 공식 안내",
-    "license": "Classroom Learning Material",
+    "author": "한국차박물관 전경",
+    "license": "Official Facility Photo",
     "licenseUrl": ""
   },
   "regional-014": {
     "src": "images/regional-014.webp",
     "pageUrl": "https://www.koreatriptips.com/tourist-attractions/2782625.html",
     "filePageUrl": "",
-    "author": "국내 여행 지도 공식 안내",
-    "license": "Classroom Learning Material",
+    "author": "비봉공룡공원 전경",
+    "license": "Official Facility Photo",
     "licenseUrl": ""
   },
   "regional-018": {
     "src": "images/regional-018.webp",
     "pageUrl": "http://xn--zb0b8hw93alobo5m99bj5mrvej11bha.com/",
     "filePageUrl": "",
-    "author": "국내 여행 지도 공식 안내",
-    "license": "Classroom Learning Material",
+    "author": "운주사 전경",
+    "license": "Official Facility Photo",
     "licenseUrl": ""
   },
   "regional-019": {
     "src": "images/regional-019.webp",
     "pageUrl": "https://www.gurye.go.kr/tour/",
     "filePageUrl": "",
-    "author": "국내 여행 지도 공식 안내",
-    "license": "Classroom Learning Material",
+    "author": "섬진강어류생태관 전경",
+    "license": "Official Facility Photo",
     "licenseUrl": ""
   },
   "regional-022": {
     "src": "images/regional-022.webp",
     "pageUrl": "https://www.namwon.go.kr/tour/",
     "filePageUrl": "",
-    "author": "국내 여행 지도 공식 안내",
-    "license": "Classroom Learning Material",
+    "author": "남원백두대간생태교육장 전경",
+    "license": "Official Facility Photo",
     "licenseUrl": ""
   },
   "regional-023": {
@@ -1619,64 +1619,64 @@ window.KOREA_TRAVEL_IMAGES = {
     "src": "images/regional-031.webp",
     "pageUrl": "https://www.geochang.go.kr/tour.web",
     "filePageUrl": "",
-    "author": "국내 여행 지도 공식 안내",
-    "license": "Classroom Learning Material",
+    "author": "거창항노화힐링랜드 전경",
+    "license": "Official Facility Photo",
     "licenseUrl": ""
   },
   "regional-033": {
     "src": "images/regional-033.webp",
     "pageUrl": "https://xn--ok0b236bp0a.com/place/11494",
     "filePageUrl": "",
-    "author": "국내 여행 지도 공식 안내",
-    "license": "Classroom Learning Material",
+    "author": "상림공원 전경",
+    "license": "Official Facility Photo",
     "licenseUrl": ""
   },
   "regional-037": {
     "src": "images/regional-037.webp",
     "pageUrl": "https://www.gc.go.kr/Sa-myeong/main.tc",
     "filePageUrl": "",
-    "author": "국내 여행 지도 공식 안내",
-    "license": "Classroom Learning Material",
+    "author": "사명대사공원 전경",
+    "license": "Official Facility Photo",
     "licenseUrl": ""
   },
   "regional-038": {
     "src": "images/regional-038.webp",
     "pageUrl": "https://commons.wikimedia.org/wiki/File:%EC%A7%81%EC%A7%80%EC%82%AC1.jpg",
     "filePageUrl": "",
-    "author": "국내 여행 지도 공식 안내",
-    "license": "Classroom Learning Material",
+    "author": "직지사 전경",
+    "license": "Official Facility Photo",
     "licenseUrl": ""
   },
   "regional-039": {
     "src": "images/regional-039.webp",
     "pageUrl": "https://www.hc.go.kr/06572/06700/06757.web",
     "filePageUrl": "",
-    "author": "국내 여행 지도 공식 안내",
-    "license": "Classroom Learning Material",
+    "author": "대장경테마파크 전경",
+    "license": "Official Facility Photo",
     "licenseUrl": ""
   },
   "regional-040": {
     "src": "images/regional-040.webp",
     "pageUrl": "https://www.wikidata.org/wiki/Q489795",
     "filePageUrl": "",
-    "author": "국내 여행 지도 공식 안내",
-    "license": "Classroom Learning Material",
+    "author": "해인사 전경",
+    "license": "Official Facility Photo",
     "licenseUrl": ""
   },
   "regional-041": {
     "src": "images/regional-041.webp",
     "pageUrl": "https://www.hc.go.kr/museum.web",
     "filePageUrl": "",
-    "author": "국내 여행 지도 공식 안내",
-    "license": "Classroom Learning Material",
+    "author": "합천박물관 전경",
+    "license": "Official Facility Photo",
     "licenseUrl": ""
   },
   "regional-042": {
     "src": "images/regional-042.webp",
     "pageUrl": "https://local.114-service.co.kr/museum/detail/60c51dc1-c8cc-fd78-9ad1-a3111dd1ada3",
     "filePageUrl": "",
-    "author": "국내 여행 지도 공식 안내",
-    "license": "Classroom Learning Material",
+    "author": "영양산촌생활박물관 전경",
+    "license": "Official Facility Photo",
     "licenseUrl": ""
   },
   "regional-048": {
@@ -1691,80 +1691,80 @@ window.KOREA_TRAVEL_IMAGES = {
     "src": "images/regional-049.webp",
     "pageUrl": "https://www.gumi.go.kr/museum/",
     "filePageUrl": "",
-    "author": "국내 여행 지도 공식 안내",
-    "license": "Classroom Learning Material",
+    "author": "구미성리학역사관 전경",
+    "license": "Official Facility Photo",
     "licenseUrl": ""
   },
   "regional-051": {
     "src": "images/regional-051.webp",
     "pageUrl": "http://www.wikidata.org/entity/Q16097644",
     "filePageUrl": "",
-    "author": "국내 여행 지도 공식 안내",
-    "license": "Classroom Learning Material",
+    "author": "삼성화재교통박물관 전경",
+    "license": "Official Facility Photo",
     "licenseUrl": ""
   },
   "regional-053": {
     "src": "images/regional-053.webp",
     "pageUrl": "https://www.ansanuc.net/museum/index.do",
     "filePageUrl": "",
-    "author": "국내 여행 지도 공식 안내",
-    "license": "Classroom Learning Material",
+    "author": "안산어촌민속박물관 전경",
+    "license": "Official Facility Photo",
     "licenseUrl": ""
   },
   "regional-059": {
     "src": "images/regional-059.webp",
     "pageUrl": "https://xn--699a3bx02d1ya237aooepxj.kr/",
     "filePageUrl": "",
-    "author": "국내 여행 지도 공식 안내",
-    "license": "Classroom Learning Material",
+    "author": "여주곤충박물관 전경",
+    "license": "Official Facility Photo",
     "licenseUrl": ""
   },
   "regional-r026": {
     "src": "images/regional-r026.webp",
     "pageUrl": "http://www.koreatriptips.com/cultural-facilities/130253.html",
     "filePageUrl": "",
-    "author": "국내 여행 지도 공식 안내",
-    "license": "Classroom Learning Material",
+    "author": "벽골제농경문화박물관 전경",
+    "license": "Official Facility Photo",
     "licenseUrl": ""
   },
   "regional-r027": {
     "src": "images/regional-r027.webp",
     "pageUrl": "https://xn--ok0b236bp0a.com/place/27427",
     "filePageUrl": "",
-    "author": "국내 여행 지도 공식 안내",
-    "license": "Classroom Learning Material",
+    "author": "김천녹색미래과학관 전경",
+    "license": "Official Facility Photo",
     "licenseUrl": ""
   },
   "regional-r030": {
     "src": "images/regional-r030.webp",
     "pageUrl": "https://www.yangyang.go.kr/gw/osm/",
     "filePageUrl": "",
-    "author": "국내 여행 지도 공식 안내",
-    "license": "Classroom Learning Material",
+    "author": "양양오산리선사유적박물관 전경",
+    "license": "Official Facility Photo",
     "licenseUrl": ""
   },
   "regional-r032": {
     "src": "images/regional-r032.webp",
     "pageUrl": "https://www.koreatriptips.com/cultural-facilities/2524190.html",
     "filePageUrl": "",
-    "author": "국내 여행 지도 공식 안내",
-    "license": "Classroom Learning Material",
+    "author": "정선아리랑박물관 전경",
+    "license": "Official Facility Photo",
     "licenseUrl": ""
   },
   "regional-a033": {
     "src": "images/regional-a033.webp",
     "pageUrl": "https://www.xn--z92bx8p2oarkp2cf2ag4z0sr.kr/",
     "filePageUrl": "",
-    "author": "국내 여행 지도 공식 안내",
-    "license": "Classroom Learning Material",
+    "author": "왕인박사유적지 전경",
+    "license": "Official Facility Photo",
     "licenseUrl": ""
   },
   "regional-a034": {
     "src": "images/regional-a034.webp",
     "pageUrl": "https://www.namwon.go.kr/tour/",
     "filePageUrl": "",
-    "author": "국내 여행 지도 공식 안내",
-    "license": "Classroom Learning Material",
+    "author": "남원항공우주천문대 전경",
+    "license": "Official Facility Photo",
     "licenseUrl": ""
   },
   "regional-a035": {
@@ -1779,56 +1779,56 @@ window.KOREA_TRAVEL_IMAGES = {
     "src": "images/regional-a036.webp",
     "pageUrl": "https://www.1894.or.kr/",
     "filePageUrl": "",
-    "author": "국내 여행 지도 공식 안내",
-    "license": "Classroom Learning Material",
+    "author": "동학농민혁명기념관 전경",
+    "license": "Official Facility Photo",
     "licenseUrl": ""
   },
   "regional-a037": {
     "src": "images/regional-a037.webp",
     "pageUrl": "https://www.geochang.go.kr/tour.web",
     "filePageUrl": "",
-    "author": "국내 여행 지도 공식 안내",
-    "license": "Classroom Learning Material",
+    "author": "거창월성우주창의과학관 전경",
+    "license": "Official Facility Photo",
     "licenseUrl": ""
   },
   "regional-a038": {
     "src": "images/regional-a038.webp",
     "pageUrl": "https://www.yd.go.kr/?p=9011",
     "filePageUrl": "",
-    "author": "국내 여행 지도 공식 안내",
-    "license": "Classroom Learning Material",
+    "author": "영덕신재생에너지전시관 전경",
+    "license": "Official Facility Photo",
     "licenseUrl": ""
   },
   "regional-a039": {
     "src": "images/regional-a039.webp",
     "pageUrl": "https://tour.taebaek.go.kr/tpmuseum",
     "filePageUrl": "",
-    "author": "국내 여행 지도 공식 안내",
-    "license": "Classroom Learning Material",
+    "author": "태백고생대자연사박물관 전경",
+    "license": "Official Facility Photo",
     "licenseUrl": ""
   },
   "regional-f036": {
     "src": "images/regional-f036.webp",
     "pageUrl": "https://tour.jb.go.kr/travel/info/view.do?menuCd=&contentsSid=19&ctnt_id=11471",
     "filePageUrl": "",
-    "author": "국내 여행 지도 공식 안내",
-    "license": "Classroom Learning Material",
+    "author": "장수승마레저파크 전경",
+    "license": "Official Facility Photo",
     "licenseUrl": ""
   },
   "regional-f037": {
     "src": "images/regional-f037.webp",
     "pageUrl": "https://www.cs.go.kr/tour/00004557/00004574.web?idx=120&amode=view",
     "filePageUrl": "",
-    "author": "국내 여행 지도 공식 안내",
-    "license": "Classroom Learning Material",
+    "author": "청송백자전시관 전경",
+    "license": "Official Facility Photo",
     "licenseUrl": ""
   },
   "regional-f038": {
     "src": "images/regional-f038.webp",
     "pageUrl": "https://www.wikidata.org/wiki/Q494689",
     "filePageUrl": "",
-    "author": "국내 여행 지도 공식 안내",
-    "license": "Classroom Learning Material",
+    "author": "주왕산국립공원 전경",
+    "license": "Official Facility Photo",
     "licenseUrl": ""
   },
   "regional-exact-hwasun-dolmen": {
@@ -1851,48 +1851,48 @@ window.KOREA_TRAVEL_IMAGES = {
     "src": "images/fun-regional-002.webp",
     "pageUrl": "https://www.ygtour.kr/Home/H20000/H20200/placeDetail?place_no=8",
     "filePageUrl": "",
-    "author": "국내 여행 지도 공식 안내",
-    "license": "Classroom Learning Material",
+    "author": "국토정중앙천문대 전경",
+    "license": "Official Facility Photo",
     "licenseUrl": ""
   },
   "fun-regional-003": {
     "src": "images/fun-regional-003.webp",
     "pageUrl": "https://www.ygtour.kr/Home/H20000/H20300/placeDetail?place_no=57",
     "filePageUrl": "",
-    "author": "국내 여행 지도 공식 안내",
-    "license": "Classroom Learning Material",
+    "author": "양구백자박물관 전경",
+    "license": "Official Facility Photo",
     "licenseUrl": ""
   },
   "fun-regional-004": {
     "src": "images/fun-regional-004.webp",
     "pageUrl": "https://www.koreatriptips.com/leisure-sports/2765134.html",
     "filePageUrl": "",
-    "author": "국내 여행 지도 공식 안내",
-    "license": "Classroom Learning Material",
+    "author": "별마로천문대 전경",
+    "license": "Official Facility Photo",
     "licenseUrl": ""
   },
   "fun-regional-008": {
     "src": "images/fun-regional-008.webp",
     "pageUrl": "https://www.hsg.go.kr/tour/contents.do?key=1362",
     "filePageUrl": "",
-    "author": "국내 여행 지도 공식 안내",
-    "license": "Classroom Learning Material",
+    "author": "안흥찐빵모락모락마을 전경",
+    "license": "Official Facility Photo",
     "licenseUrl": ""
   },
   "fun-regional-009": {
     "src": "images/fun-regional-009.webp",
     "pageUrl": "https://commons.wikimedia.org/wiki/File:%EC%95%84%EC%B9%A8%EA%B3%A0%EC%9A%94%EC%88%98%EB%AA%A9%EC%9B%90_%EC%84%9C%ED%99%94%EC%97%B0.jpg",
     "filePageUrl": "",
-    "author": "국내 여행 지도 공식 안내",
-    "license": "Classroom Learning Material",
+    "author": "아침고요수목원 전경",
+    "license": "Official Facility Photo",
     "licenseUrl": ""
   },
   "fun-regional-010": {
     "src": "images/fun-regional-010.webp",
     "pageUrl": "https://guri.go.kr/www/selectBbsNttView.do?bbsNo=42&key=393&nttNo=135986",
     "filePageUrl": "",
-    "author": "국내 여행 지도 공식 안내",
-    "license": "Classroom Learning Material",
+    "author": "고구려대장간마을 전경",
+    "license": "Official Facility Photo",
     "licenseUrl": ""
   },
   "fun-regional-020": {
@@ -1923,56 +1923,56 @@ window.KOREA_TRAVEL_IMAGES = {
     "src": "images/fun-regional-026.webp",
     "pageUrl": "https://samseonghyeon.gbgs.go.kr/",
     "filePageUrl": "",
-    "author": "국내 여행 지도 공식 안내",
-    "license": "Classroom Learning Material",
+    "author": "삼성현역사문화공원 전경",
+    "license": "Official Facility Photo",
     "licenseUrl": ""
   },
   "fun-regional-032": {
     "src": "images/fun-regional-032.webp",
     "pageUrl": "https://www.dokdomuseum.go.kr/ko/page.do?mnu_uid=353",
     "filePageUrl": "",
-    "author": "국내 여행 지도 공식 안내",
-    "license": "Classroom Learning Material",
+    "author": "독도박물관 전경",
+    "license": "Official Facility Photo",
     "licenseUrl": ""
   },
   "fun-regional-033": {
     "src": "images/fun-regional-033.webp",
     "pageUrl": "https://www.kosm.or.kr/kosm/exhibit/standingExhibit.do",
     "filePageUrl": "",
-    "author": "국내 여행 지도 공식 안내",
-    "license": "Classroom Learning Material",
+    "author": "국립해양과학관 전경",
+    "license": "Official Facility Photo",
     "licenseUrl": ""
   },
   "fun-regional-034": {
     "src": "images/fun-regional-034.webp",
     "pageUrl": "https://www.wikidata.org/wiki/Q12601947",
     "filePageUrl": "",
-    "author": "국내 여행 지도 공식 안내",
-    "license": "Classroom Learning Material",
+    "author": "성류굴 전경",
+    "license": "Official Facility Photo",
     "licenseUrl": ""
   },
   "fun-regional-035": {
     "src": "images/fun-regional-035.webp",
     "pageUrl": "http://www.koreatriptips.com/cultural-facilities/2629039.html",
     "filePageUrl": "",
-    "author": "국내 여행 지도 공식 안내",
-    "license": "Classroom Learning Material",
+    "author": "의성조문국박물관 전경",
+    "license": "Official Facility Photo",
     "licenseUrl": ""
   },
   "fun-regional-039": {
     "src": "images/fun-regional-039.webp",
     "pageUrl": "https://www.koreatriptips.com/tourist-attractions/2709532.html",
     "filePageUrl": "",
-    "author": "국내 여행 지도 공식 안내",
-    "license": "Classroom Learning Material",
+    "author": "영흥에너지파크 전경",
+    "license": "Official Facility Photo",
     "licenseUrl": ""
   },
   "fun-regional-046": {
     "src": "images/fun-regional-046.webp",
     "pageUrl": "https://www.jewelmuseum.go.kr/index.iksan",
     "filePageUrl": "",
-    "author": "국내 여행 지도 공식 안내",
-    "license": "Classroom Learning Material",
+    "author": "익산보석박물관 전경",
+    "license": "Official Facility Photo",
     "licenseUrl": ""
   },
   "fun-regional-047": {
@@ -2003,56 +2003,56 @@ window.KOREA_TRAVEL_IMAGES = {
     "src": "images/fun-regional-053.webp",
     "pageUrl": "http://www.wikidata.org/entity/Q29935833",
     "filePageUrl": "",
-    "author": "국내 여행 지도 공식 안내",
-    "license": "Classroom Learning Material",
+    "author": "서산버드랜드 전경",
+    "license": "Official Facility Photo",
     "licenseUrl": ""
   },
   "fun-regional-054": {
     "src": "images/fun-regional-054.webp",
     "pageUrl": "http://www.wikidata.org/entity/Q625268",
     "filePageUrl": "",
-    "author": "국내 여행 지도 공식 안내",
-    "license": "Classroom Learning Material",
+    "author": "해미읍성 전경",
+    "license": "Official Facility Photo",
     "licenseUrl": ""
   },
   "fun-regional-055": {
     "src": "images/fun-regional-055.webp",
     "pageUrl": "https://www.yesan.go.kr/bobusang/",
     "filePageUrl": "",
-    "author": "국내 여행 지도 공식 안내",
-    "license": "Classroom Learning Material",
+    "author": "내포보부상촌 전경",
+    "license": "Official Facility Photo",
     "licenseUrl": ""
   },
   "fun-regional-062": {
     "src": "images/fun-regional-062.webp",
     "pageUrl": "https://www.jincheon.go.kr/sisul/sub.do?menukey=787",
     "filePageUrl": "",
-    "author": "국내 여행 지도 공식 안내",
-    "license": "Classroom Learning Material",
+    "author": "진천종박물관 전경",
+    "license": "Official Facility Photo",
     "licenseUrl": ""
   },
   "fun-address-024": {
     "src": "images/fun-address-024.webp",
     "pageUrl": "https://dctf.or.kr/board/bbs/board.php?bo_table=tour&wr_id=24",
     "filePageUrl": "",
-    "author": "국내 여행 지도 공식 안내",
-    "license": "Classroom Learning Material",
+    "author": "천곡황금박쥐동굴 전경",
+    "license": "Official Facility Photo",
     "licenseUrl": ""
   },
   "fun-address-025": {
     "src": "images/fun-address-025.webp",
     "pageUrl": "https://www.cwg.go.kr/tour/selectTourCntntsWebView.do?ctgry=53&key=1644&tourNo=874",
     "filePageUrl": "",
-    "author": "국내 여행 지도 공식 안내",
-    "license": "Classroom Learning Material",
+    "author": "철원한탄강주상절리길 전경",
+    "license": "Official Facility Photo",
     "licenseUrl": ""
   },
   "fun-address-026": {
     "src": "images/fun-address-026.webp",
     "pageUrl": "https://info.koreacharts.com/tour/2569512/contents.html",
     "filePageUrl": "",
-    "author": "국내 여행 지도 공식 안내",
-    "license": "Classroom Learning Material",
+    "author": "화천조경철천문대 전경",
+    "license": "Official Facility Photo",
     "licenseUrl": ""
   },
   "fun-address-027": {
@@ -2067,160 +2067,160 @@ window.KOREA_TRAVEL_IMAGES = {
     "src": "images/fun-address-028.webp",
     "pageUrl": "https://www.yangju.go.kr/museum/index.do",
     "filePageUrl": "",
-    "author": "국내 여행 지도 공식 안내",
-    "license": "Classroom Learning Material",
+    "author": "양주회암사지박물관 전경",
+    "license": "Official Facility Photo",
     "licenseUrl": ""
   },
   "fun-address-029": {
     "src": "images/fun-address-029.webp",
     "pageUrl": "https://www.yp21.go.kr/museumhub/contents.do?key=954",
     "filePageUrl": "",
-    "author": "국내 여행 지도 공식 안내",
-    "license": "Classroom Learning Material",
+    "author": "양평곤충박물관 전경",
+    "license": "Official Facility Photo",
     "licenseUrl": ""
   },
   "fun-address-030": {
     "src": "images/fun-address-030.webp",
     "pageUrl": "https://www.ggtour.or.kr/travel-info/tourism-info/7267a8eb-746a-11ee-b910-0242ac120002",
     "filePageUrl": "",
-    "author": "국내 여행 지도 공식 안내",
-    "license": "Classroom Learning Material",
+    "author": "오산미니어처빌리지 전경",
+    "license": "Official Facility Photo",
     "licenseUrl": ""
   },
   "fun-address-031": {
     "src": "images/fun-address-031.webp",
     "pageUrl": "https://www.koreatriptips.com/tourist-attractions/3012433.html",
     "filePageUrl": "",
-    "author": "국내 여행 지도 공식 안내",
-    "license": "Classroom Learning Material",
+    "author": "경기도국민안전체험관 전경",
+    "license": "Official Facility Photo",
     "licenseUrl": ""
   },
   "fun-address-032": {
     "src": "images/fun-address-032.webp",
     "pageUrl": "http://www.koreatriptips.com/tourist-attractions/2514731.html",
     "filePageUrl": "",
-    "author": "국내 여행 지도 공식 안내",
-    "license": "Classroom Learning Material",
+    "author": "덕평공룡수목원 전경",
+    "license": "Official Facility Photo",
     "licenseUrl": ""
   },
   "fun-address-033": {
     "src": "images/fun-address-033.webp",
     "pageUrl": "https://www.sj.go.kr/tour/page.do?mnu_uid=3747&area_uid=63&cmd=2",
     "filePageUrl": "",
-    "author": "국내 여행 지도 공식 안내",
-    "license": "Classroom Learning Material",
+    "author": "성주참외체험형테마공원 전경",
+    "license": "Official Facility Photo",
     "licenseUrl": ""
   },
   "fun-address-034": {
     "src": "images/fun-address-034.webp",
     "pageUrl": "https://www.yc.go.kr/tour/",
     "filePageUrl": "",
-    "author": "국내 여행 지도 공식 안내",
-    "license": "Classroom Learning Material",
+    "author": "보현산천문과학관 전경",
+    "license": "Official Facility Photo",
     "licenseUrl": ""
   },
   "fun-address-035": {
     "src": "images/fun-address-035.webp",
     "pageUrl": "https://www.koreatriptips.com/tourist-attractions/2663350.html",
     "filePageUrl": "",
-    "author": "국내 여행 지도 공식 안내",
-    "license": "Classroom Learning Material",
+    "author": "청도신화랑풍류마을 전경",
+    "license": "Official Facility Photo",
     "licenseUrl": ""
   },
   "fun-address-036": {
     "src": "images/fun-address-036.webp",
-    "pageUrl": "https://www.chilgok.go.kr/chppm/main.do",
+    "pageUrl": "https://www.chilgok.go.kr/chilgok/sub.do?m=0301",
     "filePageUrl": "",
-    "author": "국내 여행 지도 공식 안내",
-    "license": "Classroom Learning Material",
+    "author": "칠곡호국평화기념관 전경",
+    "license": "Official Facility Photo",
     "licenseUrl": ""
   },
   "fun-address-037": {
     "src": "images/fun-address-037.webp",
     "pageUrl": "https://tour.muan.go.kr/tour/festival/getbol",
     "filePageUrl": "",
-    "author": "국내 여행 지도 공식 안내",
-    "license": "Classroom Learning Material",
+    "author": "무안황토갯벌랜드 전경",
+    "license": "Official Facility Photo",
     "licenseUrl": ""
   },
   "fun-address-038": {
     "src": "images/fun-address-038.webp",
     "pageUrl": "https://www.koreatriptips.com/en/cultural-facilities/2045978.html",
     "filePageUrl": "",
-    "author": "국내 여행 지도 공식 안내",
-    "license": "Classroom Learning Material",
+    "author": "신안소금박물관 전경",
+    "license": "Official Facility Photo",
     "licenseUrl": ""
   },
   "fun-address-039": {
     "src": "images/fun-address-039.webp",
     "pageUrl": "https://www.wando.go.kr/changpogo/sub.cs?m=14",
     "filePageUrl": "",
-    "author": "국내 여행 지도 공식 안내",
-    "license": "Classroom Learning Material",
+    "author": "장보고기념관 전경",
+    "license": "Official Facility Photo",
     "licenseUrl": ""
   },
   "fun-address-040": {
     "src": "images/fun-address-040.webp",
     "pageUrl": "https://www.jangseong.go.kr/home/honggildong",
     "filePageUrl": "",
-    "author": "국내 여행 지도 공식 안내",
-    "license": "Classroom Learning Material",
+    "author": "홍길동테마파크 전경",
+    "license": "Official Facility Photo",
     "licenseUrl": ""
   },
   "fun-address-041": {
     "src": "images/fun-address-041.webp",
     "pageUrl": "https://www.koreatriptips.com/tourist-attractions/3026667.html",
     "filePageUrl": "",
-    "author": "국내 여행 지도 공식 안내",
-    "license": "Classroom Learning Material",
+    "author": "순창발효테마파크 전경",
+    "license": "Official Facility Photo",
     "licenseUrl": ""
   },
   "fun-address-042": {
     "src": "images/fun-address-042.webp",
     "pageUrl": "https://www.gyeryong.go.kr/tour/",
     "filePageUrl": "",
-    "author": "국내 여행 지도 공식 안내",
-    "license": "Classroom Learning Material",
+    "author": "계룡병영체험관 전경",
+    "license": "Official Facility Photo",
     "licenseUrl": ""
   },
   "fun-address-043": {
     "src": "images/fun-address-043.webp",
     "pageUrl": "https://www.koreatriptips.com/cultural-facilities/1627312.html",
     "filePageUrl": "",
-    "author": "국내 여행 지도 공식 안내",
-    "license": "Classroom Learning Material",
+    "author": "홍성조류탐사과학관 전경",
+    "license": "Official Facility Photo",
     "licenseUrl": ""
   },
   "fun-address-044": {
     "src": "images/fun-address-044.webp",
     "pageUrl": "http://www.koreatriptips.com/tourist-attractions/3423663.html",
     "filePageUrl": "",
-    "author": "국내 여행 지도 공식 안내",
-    "license": "Classroom Learning Material",
+    "author": "충북아쿠아리움 전경",
+    "license": "Official Facility Photo",
     "licenseUrl": ""
   },
   "fun-address-045": {
     "src": "images/fun-address-045.webp",
     "pageUrl": "https://info.koreacharts.com/tour/2020734/contents.html",
     "filePageUrl": "",
-    "author": "국내 여행 지도 공식 안내",
-    "license": "Classroom Learning Material",
+    "author": "영동국악체험촌 전경",
+    "license": "Official Facility Photo",
     "licenseUrl": ""
   },
   "fun-address-046": {
     "src": "images/fun-address-046.webp",
     "pageUrl": "https://tradition.oc.go.kr/",
     "filePageUrl": "",
-    "author": "국내 여행 지도 공식 안내",
-    "license": "Classroom Learning Material",
+    "author": "옥천전통문화체험관 전경",
+    "license": "Official Facility Photo",
     "licenseUrl": ""
   },
   "fun-manual-101": {
     "src": "images/fun-manual-101.webp",
     "pageUrl": "https://hc.speedium.co.kr/view/viewLink.do?page=homepage%2FKOR%2Ffacilities%2Fmuseum",
     "filePageUrl": "",
-    "author": "국내 여행 지도 공식 안내",
-    "license": "Classroom Learning Material",
+    "author": "인제스피디움 클래식카박물관 전경",
+    "license": "Official Facility Photo",
     "licenseUrl": ""
   },
   "fun-manual-102": {
@@ -2235,64 +2235,64 @@ window.KOREA_TRAVEL_IMAGES = {
     "src": "images/fun-manual-103.webp",
     "pageUrl": "https://www.koreatriptips.com/tourist-attractions/129489.html",
     "filePageUrl": "",
-    "author": "국내 여행 지도 공식 안내",
-    "license": "Classroom Learning Material",
+    "author": "남해독일마을 파독전시관 전경",
+    "license": "Official Facility Photo",
     "licenseUrl": ""
   },
   "fun-manual-104": {
     "src": "images/fun-manual-104.webp",
     "pageUrl": "https://donguibogam-village.sancheong.go.kr/",
     "filePageUrl": "",
-    "author": "국내 여행 지도 공식 안내",
-    "license": "Classroom Learning Material",
+    "author": "산청동의보감촌 전경",
+    "license": "Official Facility Photo",
     "licenseUrl": ""
   },
   "fun-manual-105": {
     "src": "images/fun-manual-105.webp",
     "pageUrl": "https://www.uiryeong.go.kr/board/view.do?boardId=BBS_0000080&dataSid=1100991",
     "filePageUrl": "",
-    "author": "국내 여행 지도 공식 안내",
-    "license": "Classroom Learning Material",
+    "author": "의령곤충생태학습관 전경",
+    "license": "Official Facility Photo",
     "licenseUrl": ""
   },
   "fun-manual-106": {
     "src": "images/fun-manual-106.webp",
     "pageUrl": "https://www.goryeong.go.kr/kor/boardView.do?BRD_ID=1027&BOARD_IDX=34305&IDX=158",
     "filePageUrl": "",
-    "author": "국내 여행 지도 공식 안내",
-    "license": "Classroom Learning Material",
+    "author": "대가야생활촌 전경",
+    "license": "Official Facility Photo",
     "licenseUrl": ""
   },
   "fun-manual-107": {
     "src": "images/fun-manual-107.webp",
     "pageUrl": "https://www.ycg.kr/open.content/insect/",
     "filePageUrl": "",
-    "author": "국내 여행 지도 공식 안내",
-    "license": "Classroom Learning Material",
+    "author": "예천곤충생태원 전경",
+    "license": "Official Facility Photo",
     "licenseUrl": ""
   },
   "fun-manual-108": {
     "src": "images/fun-manual-108.webp",
     "pageUrl": "https://gunwi3964.co.kr/",
     "filePageUrl": "",
-    "author": "국내 여행 지도 공식 안내",
-    "license": "Classroom Learning Material",
+    "author": "삼국유사테마파크 전경",
+    "license": "Official Facility Photo",
     "licenseUrl": ""
   },
   "fun-manual-109": {
     "src": "images/fun-manual-109.webp",
     "pageUrl": "https://www.jindo.go.kr/tour/content/print.cs?m=57&qry=RwM55YMYpaNqZ%2BE4UbOTChWytMpQ3YuUIAj1clRs2hQP0bC4RVNC%2BPRyGsF%2BuCL1QlXicKRp9v1Oc1ydBlgb1OPlpsBXG%2F5s5e0arkw%2B5HA%2BvGjM0AV1brxjhM1nfM43FZv%2BztvUjzAKI5E1XkhPSg%3D%3D",
     "filePageUrl": "",
-    "author": "국내 여행 지도 공식 안내",
-    "license": "Classroom Learning Material",
+    "author": "진도신비의바닷길체험관 전경",
+    "license": "Official Facility Photo",
     "licenseUrl": ""
   },
   "fun-manual-110": {
     "src": "images/fun-manual-110.webp",
     "pageUrl": "https://www.jinan.go.kr/tour/index.jtour",
     "filePageUrl": "",
-    "author": "국내 여행 지도 공식 안내",
-    "license": "Classroom Learning Material",
+    "author": "마이산도립공원 전경",
+    "license": "Official Facility Photo",
     "licenseUrl": ""
   },
   "fun-manual-111": {
@@ -2307,24 +2307,24 @@ window.KOREA_TRAVEL_IMAGES = {
     "src": "images/fun-manual-112.webp",
     "pageUrl": "https://www.koreatriptips.com/tourist-attractions/778975.html",
     "filePageUrl": "",
-    "author": "국내 여행 지도 공식 안내",
-    "license": "Classroom Learning Material",
+    "author": "칠갑산천문대스타파크 전경",
+    "license": "Official Facility Photo",
     "licenseUrl": ""
   },
   "fun-manual-113": {
     "src": "images/fun-manual-113.webp",
     "pageUrl": "https://www.koreatriptips.com/cultural-facilities/3068047.html",
     "filePageUrl": "",
-    "author": "국내 여행 지도 공식 안내",
-    "license": "Classroom Learning Material",
+    "author": "수소안전뮤지엄 전경",
+    "license": "Official Facility Photo",
     "licenseUrl": ""
   },
   "fun-manual-114": {
     "src": "images/fun-manual-114.webp",
     "pageUrl": "https://www.gunpo.go.kr/picturebook/ko/M000000254/html/view",
     "filePageUrl": "",
-    "author": "국내 여행 지도 공식 안내",
-    "license": "Classroom Learning Material",
+    "author": "군포 그림책꿈마루 전경",
+    "license": "Official Facility Photo",
     "licenseUrl": ""
   }
 };
