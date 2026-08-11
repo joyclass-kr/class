@@ -8,15 +8,13 @@ body{overflow:hidden;color:var(--ink);background:#d8e4e3;font-family:Pretendard,
 button,a{-webkit-tap-highlight-color:transparent}
 button{font:inherit}
 .app-header{position:relative;z-index:1000;color:#fff;background:linear-gradient(135deg,#173b4b,#245b61);box-shadow:0 4px 18px rgba(9,36,44,.25)}
-.brand-row{min-height:70px;display:grid;grid-template-columns:46px 1fr;align-items:center;gap:12px;padding:9px clamp(14px,3vw,30px)}
 .home-link{min-width:44px;min-height:44px;display:grid;place-items:center;border:1px solid rgba(255,255,255,.35);border-radius:12px;color:#fff;background:rgba(255,255,255,.12);font-size:1.35rem;font-weight:900;text-decoration:none}
-.brand-copy h1{margin:0;font-size:clamp(1.25rem,2.4vw,1.75rem)}
-.brand-copy p{margin:3px 0 0;color:#d8eeee;font-size:.84rem}
-.filter-bar{min-height:54px;display:flex;align-items:center;gap:8px;padding:6px clamp(14px,3vw,30px);overflow-x:auto;scrollbar-width:thin;background:rgba(5,27,35,.22)}
-.filter-label{margin-right:4px;white-space:nowrap;color:#f7dfb2;font-size:.86rem;font-weight:900}
+.filter-bar{min-height:58px;display:flex;align-items:center;gap:8px;padding:7px clamp(10px,2vw,20px);overflow-x:auto;scrollbar-width:thin;background:rgba(5,27,35,.22)}
+.compact-brand{display:flex;align-items:center;gap:10px;flex:0 0 auto;margin-right:6px;padding-right:14px;border-right:1px solid rgba(255,255,255,.24)}
+.compact-brand h1{margin:0;color:#fff;font-size:clamp(1.05rem,2vw,1.35rem);line-height:1;white-space:nowrap}
 .filter-btn{min-height:44px;padding:0 15px;border:1px solid rgba(255,255,255,.28);border-radius:999px;color:#eaf5f3;background:rgba(255,255,255,.08);font-weight:800;white-space:nowrap}
 .filter-btn.active{border-color:#ffd893;color:#1c3a40;background:#ffd893}
-.map-shell{position:relative;height:calc(100dvh - 124px)}
+.map-shell{position:relative;height:calc(100dvh - 58px)}
 #map-container{width:100%;height:100%;background:#cfe2e6}
 #map-container .leaflet-tile-pane{filter:brightness(.98) saturate(.92) contrast(.96);opacity:.96}
 .leaflet-div-icon{border:0!important;background:transparent!important}
@@ -30,8 +28,6 @@ button{font:inherit}
 .travel-place-tooltip{max-width:260px;padding:6px 10px;border:1px solid rgba(25,63,69,.18);border-radius:999px;color:#163b44;background:rgba(255,255,255,.97);box-shadow:0 4px 12px rgba(28,59,63,.18);font-size:13px;font-weight:900;white-space:nowrap;width:max-content;max-width:none;text-align:center}.travel-place-tooltip.cluster-tooltip{white-space:normal;width:auto;max-width:260px}
 .travel-place-tooltip.leaflet-tooltip-top::before{border-top-color:rgba(255,255,255,.97)}
 .cluster-tooltip{border-radius:12px;line-height:1.45}
-.map-guide{position:absolute;left:18px;bottom:24px;z-index:500;max-width:320px;padding:12px 15px;border:1px solid rgba(37,77,78,.16);border-radius:14px;background:rgba(255,251,240,.95);box-shadow:0 7px 20px rgba(32,63,66,.18);pointer-events:none}
-.map-guide strong,.map-guide span{display:block}.map-guide strong{font-size:.9rem}.map-guide span{margin-top:3px;color:#597076;font-size:.78rem;line-height:1.45}
 .place-modal:not([open]){display:none}
 .place-modal{width:100vw;max-width:none;height:100dvh;max-height:none;margin:0;padding:18px;border:0;background:transparent}
 .place-modal::backdrop{background:rgba(5,18,25,.72);backdrop-filter:blur(7px)}
@@ -62,6 +58,6 @@ h3{margin:0 0 11px;font-size:1rem}.route-point{min-width:0;min-height:28px;displ
   .modal-card{overflow:auto}.modal-grid{grid-template-columns:1fr;max-height:none}.place-visual{min-height:610px;padding:68px 20px 20px}.place-info{overflow:visible}.place-modal{overflow:auto;place-items:start center}
 }
 @media(max-width:680px){
-  .brand-row{grid-template-columns:44px 1fr}.filter-label{display:none}.place-modal{padding:0}.modal-card{min-height:100dvh;max-height:none;border-radius:0}.map-guide{display:none}.place-visual{padding:64px 14px 16px}.place-info{padding:22px 16px 30px}.title-row h2{font-size:1.75rem}
+  .compact-brand{margin-right:2px;padding-right:10px}.compact-brand h1{font-size:1rem}.place-modal{padding:0}.modal-card{min-height:100dvh;max-height:none;border-radius:0}.place-visual{padding:64px 14px 16px}.place-info{padding:22px 16px 30px}.title-row h2{font-size:1.75rem}
 }
 @media(prefers-reduced-motion:reduce){*{transition:none!important}}

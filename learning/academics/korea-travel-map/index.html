@@ -6,19 +6,16 @@
   <title>국내 여행 지도</title>
   <meta name="description" content="우리 학교에서 출발하는 경로와 함께 전국 체험학습 장소를 살펴보는 학습 지도">
   <link rel="stylesheet" href="../korean-museum/vendor/leaflet/leaflet.css">
-  <link rel="stylesheet" href="styles.css?v=20260811-2">
+  <link rel="stylesheet" href="styles.css?v=20260811-3">
 </head>
 <body>
   <header class="app-header">
-    <div class="brand-row">
-      <a class="home-link" href="/" aria-label="학습 메뉴로 돌아가기">←</a>
-      <div class="brand-copy">
+    <div class="filter-bar" aria-label="국내 여행 지도와 체험 장소 종류 선택">
+      <div class="compact-brand">
+        <a class="home-link" href="/" aria-label="학습 메뉴로 돌아가기">←</a>
         <h1>국내 여행 지도</h1>
-        <p id="schoolSummary">학교 정보를 확인하고 있어요.</p>
+        <span id="schoolSummary" hidden>학교 정보를 확인하고 있어요.</span>
       </div>
-    </div>
-    <div class="filter-bar" aria-label="체험 장소 종류 선택">
-      <span class="filter-label">어떤 체험을 찾을까요?</span>
       <button class="filter-btn active" data-category="all" type="button">전체</button>
       <button class="filter-btn" data-category="theme" type="button">놀이·테마</button>
       <button class="filter-btn" data-category="science" type="button">과학·기술</button>
@@ -34,10 +31,7 @@
 
   <main class="map-shell">
     <div id="map-container" aria-label="전국 체험학습 장소 지도"></div>
-    <div class="map-guide">
-      <strong>그림을 누르면 자세히 볼 수 있어요</strong>
-      <span>숫자 표시는 가까이 모인 장소예요. 누르면 지도가 확대돼요.</span>
-    </div>
+
   </main>
 
   <dialog id="placeModal" class="place-modal" aria-labelledby="placeName">
