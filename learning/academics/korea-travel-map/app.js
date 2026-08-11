@@ -231,6 +231,8 @@
       fallback.hidden = false;
     };
     photo.alt = `${place.name} 대표 사진`;
+    photo.loading = 'eager';
+    photo.fetchPriority = 'high';
     const photoPath = String(image.src || '').replace(/^\.?\//, '');
     const photoUrl = new URL(`/learning/academics/korea-travel-map/${photoPath}`, window.location.origin);
     photoUrl.searchParams.set('v', '20260811-5');
