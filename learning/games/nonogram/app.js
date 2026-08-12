@@ -178,7 +178,9 @@
   let tool = 'fill';
   let elapsed = 0;
   let timerId = null;
+  let completionRevealId = null;
   let started = false;
+  let completed = false;
   let playerName = '';
   let currentPuzzle = null;
   const lastIndex = {};
@@ -300,6 +302,7 @@
   }
 
   function toggleMark(r, c) {
+    if (completed) return;
     if (filled[r][c]) return;
     marked[r][c] = !marked[r][c];
     playSfx('click');
@@ -319,7 +322,7 @@
     const key = `${r},${c}`;
     if (visited.has(key)) return;
     visited.add(key);
-    if (!celebration.hidden) return;
+    if (completed) return;
     const changed = setCellFilled(r, c, intent === 'fill');
     if (!changed) return;
     render();
@@ -372,7 +375,7 @@
   }
 
   function startDrag(r, c) {
-    if (!celebration.hidden) return;
+    if (completed) return;
     let intent;
     if (tool === 'mark') {
       if (filled[r][c]) return;
@@ -403,6 +406,8 @@
   }
 
   function completePuzzle() {
+    if (completed) return;
+    completed = true;
     stopTimer();
     statusElement.textContent = 'PUZZLE COMPLETE!';
     statusElement.classList.add('success');
@@ -417,20 +422,23 @@
       rank: n,
       targetId: 'result-finishers-list'
     });
-    window.setTimeout(() => {
+    completionRevealId = window.setTimeout(() => {
+      completionRevealId = null;
       celebration.hidden = false;
       document.getElementById('playAgainButton').focus();
       playSfx('success');
-    }, 220);
+    }, 900);
   }
 
   function fillCell(r, c) {
+    if (completed) return;
     setCellFilled(r, c, !filled[r][c]);
     render();
     if (isComplete()) completePuzzle();
   }
 
   function handleCellTap(r, c) {
+    if (completed) return;
     if (tool === 'mark') {
       toggleMark(r, c);
       return;
@@ -441,6 +449,9 @@
   function resetRound() {
     endDrag();
     stopTimer();
+    window.clearTimeout(completionRevealId);
+    completionRevealId = null;
+    completed = false;
     filled = Array.from({ length: n }, () => Array(n).fill(false));
     marked = Array.from({ length: n }, () => Array(n).fill(false));
     elapsed = 0;
@@ -478,6 +489,10 @@
   function showSettings() {
     endDrag();
     stopTimer();
+    window.clearTimeout(completionRevealId);
+    completionRevealId = null;
+    completed = false;
+    celebration.hidden = true;
     closeGuide();
     gameScreen.hidden = true;
     startScreen.hidden = false;

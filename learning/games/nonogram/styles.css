@@ -168,14 +168,22 @@ h1 { margin: 0; font-family: Georgia, "Times New Roman", serif; font-size: clamp
 .solve-guide strong { color: var(--ink); }
 .solve-tip { margin-top: 16px; padding: 12px 14px; border-left: 3px solid var(--gold); background: rgba(0,0,0,.22); }
 
-.celebration { position: fixed; inset: 0; z-index: 10; display: grid; place-items: center; padding: 20px; background: rgba(8,5,3,.78); backdrop-filter: blur(7px); }
+.celebration {
+  position: fixed;
+  inset: 0;
+  z-index: 10;
+  display: grid;
+  place-items: center end;
+  padding: clamp(12px, 2vw, 24px);
+  background: linear-gradient(90deg, rgba(8,5,3,.04) 0 58%, rgba(8,5,3,.64) 100%);
+}
 .celebration[hidden] { display: none; }
-.result-card { width: min(100%, 400px); border: 1px solid var(--gold); border-radius: 22px; padding: 34px; text-align: center; background: linear-gradient(145deg, #4e2b17, #21140d); box-shadow: 0 25px 70px #000; }
-.result-card h2 { margin: 4px 0 10px; font-size: 2rem; }
+.result-card { width: min(248px, calc(50vw - 260px)); border: 1px solid var(--gold); border-radius: 22px; padding: 22px 20px; text-align: center; background: linear-gradient(145deg, #4e2b17, #21140d); box-shadow: 0 18px 50px rgba(0,0,0,.82); }
+.result-card h2 { margin: 4px 0 8px; font-size: 1.45rem; }
 .result-card p:not(.eyebrow) { color: var(--muted); }
-.result-card .finishers-panel { max-height: 190px; overflow: auto; }
-.result-card .primary { margin-top: 16px; }
-.result-mark { display: grid; place-items: center; width: 60px; height: 60px; margin: 0 auto 15px; border-radius: 50%; color: #2a170b; background: var(--gold-bright); font-size: 2rem; font-weight: 900; }
+.result-card .finishers-panel { max-height: 82px; overflow: auto; }
+.result-card .primary { width: 100%; margin-top: 14px; }
+.result-mark { display: grid; place-items: center; width: 48px; height: 48px; margin: 0 auto 10px; border-radius: 50%; color: #2a170b; background: var(--gold-bright); font-size: 1.6rem; font-weight: 900; }
 
 button:focus-visible, a:focus-visible { outline: 3px solid #fff; outline-offset: 3px; }
 
@@ -188,6 +196,31 @@ button:focus-visible, a:focus-visible { outline: 3px solid #fff; outline-offset:
   .guide-panel { position: fixed; z-index: 51; inset: 0 0 0 auto; width: min(90vw, 430px); max-height: none; padding: 22px; box-shadow: -18px 0 45px rgba(0,0,0,.55); }
   .guide-header { top: -22px; margin: -22px -22px 8px; padding-inline: 22px; }
   .guide-backdrop { position: fixed; z-index: 50; inset: 0; border: 0; background: rgba(8,5,3,.6); backdrop-filter: blur(2px); }
+  .celebration {
+    place-items: end center;
+    padding: 12px;
+    background: linear-gradient(180deg, rgba(8,5,3,0) 0 55%, rgba(8,5,3,.68) 82%);
+  }
+  .result-card {
+    display: grid;
+    grid-template-columns: 48px minmax(0, 1fr);
+    align-items: center;
+    column-gap: 12px;
+    width: min(100%, 520px);
+    padding: 16px 20px;
+    text-align: left;
+  }
+  .result-mark { grid-column: 1; grid-row: 1 / span 3; margin: 0; }
+  .result-card > .eyebrow,
+  .result-card > h2,
+  .result-card > p { grid-column: 2; }
+  .result-card > .eyebrow { align-self: end; }
+  .result-card > h2 { align-self: center; }
+  .result-card > p { align-self: start; margin-block: 0 8px; }
+  .result-card .finishers-panel,
+  .result-card .primary { grid-column: 1 / -1; }
+  .result-card .finishers-panel { max-height: 64px; text-align: center; }
+  .result-card .primary { margin-top: 10px; }
 }
 
 @media (max-width: 480px) {
