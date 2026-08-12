@@ -27,7 +27,7 @@ from typing import Any
 from urllib.parse import quote
 
 import requests
-from PIL import Image, UnidentifiedImageError
+from PIL import Image, ImageOps, UnidentifiedImageError
 
 
 ROOT = Path(__file__).resolve().parents[1]
@@ -46,7 +46,7 @@ MIN_HEIGHT = 270
 USER_AGENT = "KoreaTravelLearningMapImageCollector/2.0 (educational site; contact via repository)"
 TIMEOUT = (10, 35)
 WORKERS = 6
-IMAGE_VERSION = "20260812-1"
+IMAGE_VERSION = "20260812-2"
 STOP_WORDS = {"국립", "시립", "도립", "공립", "재단", "대한민국", "한국", "관광지", "전경", "대표", "사진"}
 REJECT_WORDS = {"로고", "logo", "아이콘", "icon", "지도", "map", "포스터", "poster", "캐릭터", "symbol"}
 _thread_local = threading.local()
@@ -258,6 +258,7 @@ def download_and_validate(candidate: Candidate, output_path: Path) -> tuple[int,
     try:
         with Image.open(io.BytesIO(payload)) as image:
             image.load()
+            image = ImageOps.exif_transpose(image)
             width, height = image.size
             if width < MIN_WIDTH or height < MIN_HEIGHT:
                 raise ValueError(f"resolution too small: {width}x{height}")

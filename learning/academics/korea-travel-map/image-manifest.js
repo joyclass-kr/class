@@ -1,6 +1,6 @@
 window.KOREA_TRAVEL_IMAGES = {
   "agriculture-museum": {
-    "src": "images/agriculture-museum.webp?v=20260812-1",
+    "src": "images/agriculture-museum.webp?v=20260812-2",
     "pageUrl": "https://www.jungle.co.kr/magazine/206238",
     "filePageUrl": "https://www.jungle.co.kr/magazine/206238",
     "author": "Bing",
@@ -13,7 +13,7 @@ window.KOREA_TRAVEL_IMAGES = {
     "height": 666
   },
   "alpaca-world": {
-    "src": "images/alpaca-world.webp?v=20260812-1",
+    "src": "images/alpaca-world.webp?v=20260812-2",
     "pageUrl": "https://www.tournews21.com/news/articleView.html?idxno=96643",
     "filePageUrl": "https://www.tournews21.com/news/articleView.html?idxno=96643",
     "author": "Bing",
@@ -26,7 +26,7 @@ window.KOREA_TRAVEL_IMAGES = {
     "height": 400
   },
   "andong-hahoe": {
-    "src": "images/andong-hahoe.webp?v=20260812-1",
+    "src": "images/andong-hahoe.webp?v=20260812-2",
     "pageUrl": "https://www.wegive.co.kr/contents/wetownDetail/894027",
     "filePageUrl": "https://www.wegive.co.kr/contents/wetownDetail/894027",
     "author": "Bing",
@@ -39,7 +39,7 @@ window.KOREA_TRAVEL_IMAGES = {
     "height": 627
   },
   "anseong-farmland": {
-    "src": "images/anseong-farmland.webp?v=20260812-1",
+    "src": "images/anseong-farmland.webp?v=20260812-2",
     "pageUrl": "https://www.fnnews.com/news/202212141539050889",
     "filePageUrl": "https://www.fnnews.com/news/202212141539050889",
     "author": "Bing",
@@ -52,7 +52,7 @@ window.KOREA_TRAVEL_IMAGES = {
     "height": 533
   },
   "aquaplanet-jeju": {
-    "src": "images/aquaplanet-jeju.webp?v=20260812-1",
+    "src": "images/aquaplanet-jeju.webp?v=20260812-2",
     "pageUrl": "https://www.headlinejeju.co.kr/news/articleView.html?idxno=283647",
     "filePageUrl": "https://www.headlinejeju.co.kr/news/articleView.html?idxno=283647",
     "author": "Bing",
@@ -65,7 +65,7 @@ window.KOREA_TRAVEL_IMAGES = {
     "height": 375
   },
   "aquaplanet-yeosu": {
-    "src": "images/aquaplanet-yeosu.webp?v=20260812-1",
+    "src": "images/aquaplanet-yeosu.webp?v=20260812-2",
     "pageUrl": "https://news.nate.com/view/20140514n27415",
     "filePageUrl": "https://news.nate.com/view/20140514n27415",
     "author": "Bing",
@@ -78,7 +78,7 @@ window.KOREA_TRAVEL_IMAGES = {
     "height": 399
   },
   "asan-jangyeongsil-science": {
-    "src": "images/asan-jangyeongsil-science.webp?v=20260812-1",
+    "src": "images/asan-jangyeongsil-science.webp?v=20260812-2",
     "pageUrl": "http://www.dhinsight.co.kr/news/articleView.html?idxno=9180",
     "filePageUrl": "http://www.dhinsight.co.kr/news/articleView.html?idxno=9180",
     "author": "Bing",
@@ -91,7 +91,7 @@ window.KOREA_TRAVEL_IMAGES = {
     "height": 450
   },
   "asia-culture-center": {
-    "src": "images/asia-culture-center.webp?v=20260812-1",
+    "src": "images/asia-culture-center.webp?v=20260812-2",
     "pageUrl": "https://inmun360.culture.go.kr/content/580.do?mode=view&page=8&cid=2369957&sf_cat1=CWS178",
     "filePageUrl": "https://inmun360.culture.go.kr/content/580.do?mode=view&page=8&cid=2369957&sf_cat1=CWS178",
     "author": "Bing",
@@ -104,7 +104,7 @@ window.KOREA_TRAVEL_IMAGES = {
     "height": 420
   },
   "aviation-museum": {
-    "src": "images/aviation-museum.webp?v=20260812-1",
+    "src": "images/aviation-museum.webp?v=20260812-2",
     "pageUrl": "https://www.kdrm.kr/news/articleView.html?idxno=600187",
     "filePageUrl": "https://www.kdrm.kr/news/articleView.html?idxno=600187",
     "author": "Bing",
@@ -117,7 +117,7 @@ window.KOREA_TRAVEL_IMAGES = {
     "height": 960
   },
   "baekdudaegan-arboretum": {
-    "src": "images/baekdudaegan-arboretum.webp?v=20260812-1",
+    "src": "images/baekdudaegan-arboretum.webp?v=20260812-2",
     "pageUrl": "https://www.shinailbo.co.kr/news/articleView.html?idxno=1069119",
     "filePageUrl": "https://www.shinailbo.co.kr/news/articleView.html?idxno=1069119",
     "author": "Bing",
@@ -130,7 +130,7 @@ window.KOREA_TRAVEL_IMAGES = {
     "height": 408
   },
   "baekje-culture-land": {
-    "src": "images/baekje-culture-land.webp?v=20260812-1",
+    "src": "images/baekje-culture-land.webp?v=20260812-2",
     "pageUrl": "https://www.newsfreezone.co.kr/news/articleView.html?idxno=516259",
     "filePageUrl": "https://www.newsfreezone.co.kr/news/articleView.html?idxno=516259",
     "author": "Bing",
@@ -143,7 +143,7 @@ window.KOREA_TRAVEL_IMAGES = {
     "height": 446
   },
   "bear-tree-park": {
-    "src": "images/bear-tree-park.webp?v=20260812-1",
+    "src": "images/bear-tree-park.webp?v=20260812-2",
     "pageUrl": "https://ko.wikipedia.org/wiki/%EB%B2%A0%EC%96%B4%ED%8A%B8%EB%A6%AC%ED%8C%8C%ED%81%AC",
     "filePageUrl": "https://commons.wikimedia.org/wiki/File:%EB%B2%A0%EC%9D%B4%ED%8A%B8%EB%A6%AC%ED%8C%8C%ED%81%AC1.jpg",
     "author": "JKD",
@@ -156,7 +156,7 @@ window.KOREA_TRAVEL_IMAGES = {
     "height": 512
   },
   "bulguksa": {
-    "src": "images/bulguksa.webp?v=20260812-1",
+    "src": "images/bulguksa.webp?v=20260812-2",
     "pageUrl": "https://www.nocutnews.co.kr/news/5864124",
     "filePageUrl": "https://www.nocutnews.co.kr/news/5864124",
     "author": "Bing",
@@ -169,7 +169,7 @@ window.KOREA_TRAVEL_IMAGES = {
     "height": 472
   },
   "busan-science-experience": {
-    "src": "images/busan-science-experience.webp?v=20260812-1",
+    "src": "images/busan-science-experience.webp?v=20260812-2",
     "pageUrl": "https://www.wbcb.co.kr/news/articleView.html?idxno=84768",
     "filePageUrl": "https://www.wbcb.co.kr/news/articleView.html?idxno=84768",
     "author": "Bing",
@@ -182,7 +182,7 @@ window.KOREA_TRAVEL_IMAGES = {
     "height": 800
   },
   "busan-science-museum": {
-    "src": "images/busan-science-museum.webp?v=20260812-1",
+    "src": "images/busan-science-museum.webp?v=20260812-2",
     "pageUrl": "https://www.sedaily.com/NewsView/29QYTUQW4K",
     "filePageUrl": "https://www.sedaily.com/NewsView/29QYTUQW4K",
     "author": "Bing",
@@ -195,7 +195,7 @@ window.KOREA_TRAVEL_IMAGES = {
     "height": 426
   },
   "changdeokgung": {
-    "src": "images/changdeokgung.webp?v=20260812-1",
+    "src": "images/changdeokgung.webp?v=20260812-2",
     "pageUrl": "https://kr.hotels.com/go/south-korea/seoul-changdeokgung-palace",
     "filePageUrl": "https://kr.hotels.com/go/south-korea/seoul-changdeokgung-palace",
     "author": "Bing",
@@ -208,7 +208,7 @@ window.KOREA_TRAVEL_IMAGES = {
     "height": 1066
   },
   "cheonan-sangnok": {
-    "src": "images/cheonan-sangnok.webp?v=20260812-1",
+    "src": "images/cheonan-sangnok.webp?v=20260812-2",
     "pageUrl": "https://www.agoda.com/ko-kr/cheonan-sangnok-resort/hotel/cheonan-si-kr.html",
     "filePageUrl": "https://www.agoda.com/ko-kr/cheonan-sangnok-resort/hotel/cheonan-si-kr.html",
     "author": "Bing",
@@ -221,7 +221,7 @@ window.KOREA_TRAVEL_IMAGES = {
     "height": 768
   },
   "cheongju-early-printing": {
-    "src": "images/cheongju-early-printing.webp?v=20260812-1",
+    "src": "images/cheongju-early-printing.webp?v=20260812-2",
     "pageUrl": "https://www.iminju.net/news/articleView.html?idxno=33154",
     "filePageUrl": "https://www.iminju.net/news/articleView.html?idxno=33154",
     "author": "Bing",
@@ -234,7 +234,7 @@ window.KOREA_TRAVEL_IMAGES = {
     "height": 396
   },
   "cheongju-zoo": {
-    "src": "images/cheongju-zoo.webp?v=20260812-1",
+    "src": "images/cheongju-zoo.webp?v=20260812-2",
     "pageUrl": "https://www.cctoday.co.kr/news/articleView.html?idxno=1151282",
     "filePageUrl": "https://www.cctoday.co.kr/news/articleView.html?idxno=1151282",
     "author": "Bing",
@@ -247,7 +247,7 @@ window.KOREA_TRAVEL_IMAGES = {
     "height": 415
   },
   "cheongnamdae": {
-    "src": "images/cheongnamdae.webp?v=20260812-1",
+    "src": "images/cheongnamdae.webp?v=20260812-2",
     "pageUrl": "https://www.ajunews.com/view/20230704161101274",
     "filePageUrl": "https://www.ajunews.com/view/20230704161101274",
     "author": "Bing",
@@ -260,7 +260,7 @@ window.KOREA_TRAVEL_IMAGES = {
     "height": 480
   },
   "children-science-seoul": {
-    "src": "images/children-science-seoul.webp?v=20260812-1",
+    "src": "images/children-science-seoul.webp?v=20260812-2",
     "pageUrl": "https://blog.naver.com/ariel720/222871359170",
     "filePageUrl": "https://blog.naver.com/ariel720/222871359170",
     "author": "Bing",
@@ -273,7 +273,7 @@ window.KOREA_TRAVEL_IMAGES = {
     "height": 556
   },
   "chollipo-arboretum": {
-    "src": "images/chollipo-arboretum.webp?v=20260812-1",
+    "src": "images/chollipo-arboretum.webp?v=20260812-2",
     "pageUrl": "https://www.yna.co.kr/view/AKR20230607115300805",
     "filePageUrl": "https://www.yna.co.kr/view/AKR20230607115300805",
     "author": "Bing",
@@ -286,7 +286,7 @@ window.KOREA_TRAVEL_IMAGES = {
     "height": 682
   },
   "choochoo-park": {
-    "src": "images/choochoo-park.webp?v=20260812-1",
+    "src": "images/choochoo-park.webp?v=20260812-2",
     "pageUrl": "https://www.yna.co.kr/view/AKR20150617054200062",
     "filePageUrl": "https://www.yna.co.kr/view/AKR20150617054200062",
     "author": "Bing",
@@ -299,7 +299,7 @@ window.KOREA_TRAVEL_IMAGES = {
     "height": 682
   },
   "chuncheon-animation-museum": {
-    "src": "images/chuncheon-animation-museum.webp?v=20260812-1",
+    "src": "images/chuncheon-animation-museum.webp?v=20260812-2",
     "pageUrl": "https://www.koreabybike.com/member-%EA%B2%BD%EB%A1%9C/%EB%B6%81%ED%95%9C%EA%B0%95-%EC%9E%90%EC%A0%84%EA%B1%B0%EA%B8%B8/%ED%95%98%EC%9D%B4%EB%9D%BC%EC%9D%B4%ED%8A%B8/%EC%95%A0%EB%8B%88%EB%A9%94%EC%9D%B4%EC%85%98%EB%B0%95%EB%AC%BC%EA%B4%80/",
     "filePageUrl": "https://www.koreabybike.com/member-%EA%B2%BD%EB%A1%9C/%EB%B6%81%ED%95%9C%EA%B0%95-%EC%9E%90%EC%A0%84%EA%B1%B0%EA%B8%B8/%ED%95%98%EC%9D%B4%EB%9D%BC%EC%9D%B4%ED%8A%B8/%EC%95%A0%EB%8B%88%EB%A9%94%EC%9D%B4%EC%85%98%EB%B0%95%EB%AC%BC%EA%B4%80/",
     "author": "Bing",
@@ -312,7 +312,7 @@ window.KOREA_TRAVEL_IMAGES = {
     "height": 1441
   },
   "chuncheon-forest-center": {
-    "src": "images/chuncheon-forest-center.webp?v=20260812-1",
+    "src": "images/chuncheon-forest-center.webp?v=20260812-2",
     "pageUrl": "https://www.news1.kr/local/daejeon-chungnam/5190614",
     "filePageUrl": "https://www.news1.kr/local/daejeon-chungnam/5190614",
     "author": "Bing",
@@ -325,7 +325,7 @@ window.KOREA_TRAVEL_IMAGES = {
     "height": 1049
   },
   "chungju-goguryeo-observatory": {
-    "src": "images/chungju-goguryeo-observatory.webp?v=20260812-1",
+    "src": "images/chungju-goguryeo-observatory.webp?v=20260812-2",
     "pageUrl": "https://www.inews365.com/news/article.html?no=32290",
     "filePageUrl": "https://www.inews365.com/news/article.html?no=32290",
     "author": "Bing",
@@ -338,7 +338,7 @@ window.KOREA_TRAVEL_IMAGES = {
     "height": 450
   },
   "currency-museum": {
-    "src": "images/currency-museum.webp?v=20260812-1",
+    "src": "images/currency-museum.webp?v=20260812-2",
     "pageUrl": "https://www.sportsseoul.com/news/read/1146441",
     "filePageUrl": "https://www.sportsseoul.com/news/read/1146441",
     "author": "Bing",
@@ -351,7 +351,7 @@ window.KOREA_TRAVEL_IMAGES = {
     "height": 296
   },
   "daegu-arboretum": {
-    "src": "images/daegu-arboretum.webp?v=20260812-1",
+    "src": "images/daegu-arboretum.webp?v=20260812-2",
     "pageUrl": "https://www.mindminmax.com/2025/10/blog-post.html",
     "filePageUrl": "https://www.mindminmax.com/2025/10/blog-post.html",
     "author": "Bing",
@@ -364,7 +364,7 @@ window.KOREA_TRAVEL_IMAGES = {
     "height": 320
   },
   "daegu-childrens-world": {
-    "src": "images/daegu-childrens-world.webp?v=20260812-1",
+    "src": "images/daegu-childrens-world.webp?v=20260812-2",
     "pageUrl": "https://v.daum.net/v/20260205135002227",
     "filePageUrl": "https://v.daum.net/v/20260205135002227",
     "author": "Bing",
@@ -377,7 +377,7 @@ window.KOREA_TRAVEL_IMAGES = {
     "height": 360
   },
   "daegu-education-museum": {
-    "src": "images/daegu-education-museum.webp?v=20260812-1",
+    "src": "images/daegu-education-museum.webp?v=20260812-2",
     "pageUrl": "https://www.idaegu.com/news/articleView.html?idxno=428277",
     "filePageUrl": "https://www.idaegu.com/news/articleView.html?idxno=428277",
     "author": "Bing",
@@ -390,7 +390,7 @@ window.KOREA_TRAVEL_IMAGES = {
     "height": 427
   },
   "daegu-national-museum": {
-    "src": "images/daegu-national-museum.webp?v=20260812-1",
+    "src": "images/daegu-national-museum.webp?v=20260812-2",
     "pageUrl": "http://www.dgmagazine.co.kr/news/articleView.html?idxno=2571",
     "filePageUrl": "http://www.dgmagazine.co.kr/news/articleView.html?idxno=2571",
     "author": "Bing",
@@ -403,7 +403,7 @@ window.KOREA_TRAVEL_IMAGES = {
     "height": 450
   },
   "daegu-science-museum": {
-    "src": "images/daegu-science-museum.webp?v=20260812-1",
+    "src": "images/daegu-science-museum.webp?v=20260812-2",
     "pageUrl": "https://www.etnews.com/20211115000055",
     "filePageUrl": "https://www.etnews.com/20211115000055",
     "author": "Bing",
@@ -416,7 +416,7 @@ window.KOREA_TRAVEL_IMAGES = {
     "height": 1000
   },
   "daegwallyeong-sheep": {
-    "src": "images/daegwallyeong-sheep.webp?v=20260812-1",
+    "src": "images/daegwallyeong-sheep.webp?v=20260812-2",
     "pageUrl": "https://www.e2news.com/news/articleView.html?idxno=253219",
     "filePageUrl": "https://www.e2news.com/news/articleView.html?idxno=253219",
     "author": "Bing",
@@ -429,7 +429,7 @@ window.KOREA_TRAVEL_IMAGES = {
     "height": 400
   },
   "daejeon-o-world": {
-    "src": "images/daejeon-o-world.webp?v=20260812-1",
+    "src": "images/daejeon-o-world.webp?v=20260812-2",
     "pageUrl": "https://www.yna.co.kr/view/AKR20210629067700063",
     "filePageUrl": "https://www.yna.co.kr/view/AKR20210629067700063",
     "author": "Bing",
@@ -442,7 +442,7 @@ window.KOREA_TRAVEL_IMAGES = {
     "height": 564
   },
   "daejeon-transport": {
-    "src": "images/daejeon-transport.webp?v=20260812-1",
+    "src": "images/daejeon-transport.webp?v=20260812-2",
     "pageUrl": "https://dtcc.or.kr/kor/boardView.do?menuIdx=448&bbscd=1&bbs_idx=254",
     "filePageUrl": "https://dtcc.or.kr/kor/boardView.do?menuIdx=448&bbscd=1&bbs_idx=254",
     "author": "Bing",
@@ -455,7 +455,7 @@ window.KOREA_TRAVEL_IMAGES = {
     "height": 2912
   },
   "daeseongdong-tombs": {
-    "src": "images/daeseongdong-tombs.webp?v=20260812-1",
+    "src": "images/daeseongdong-tombs.webp?v=20260812-2",
     "pageUrl": "https://blog.naver.com/chswha12/223894982976",
     "filePageUrl": "https://blog.naver.com/chswha12/223894982976",
     "author": "Bing",
@@ -468,7 +468,7 @@ window.KOREA_TRAVEL_IMAGES = {
     "height": 991
   },
   "daewangam-park": {
-    "src": "images/daewangam-park.webp?v=20260812-1",
+    "src": "images/daewangam-park.webp?v=20260812-2",
     "pageUrl": "https://www.ulsanpress.net/news/articleView.html?idxno=500301",
     "filePageUrl": "https://www.ulsanpress.net/news/articleView.html?idxno=500301",
     "author": "Bing",
@@ -481,7 +481,7 @@ window.KOREA_TRAVEL_IMAGES = {
     "height": 513
   },
   "danyang-danuri-aquarium": {
-    "src": "images/danyang-danuri-aquarium.webp?v=20260812-1",
+    "src": "images/danyang-danuri-aquarium.webp?v=20260812-2",
     "pageUrl": "https://www.wolyo.co.kr/news/articleView.html?idxno=303571",
     "filePageUrl": "https://www.wolyo.co.kr/news/articleView.html?idxno=303571",
     "author": "Bing",
@@ -494,7 +494,7 @@ window.KOREA_TRAVEL_IMAGES = {
     "height": 800
   },
   "e-world": {
-    "src": "images/e-world.webp?v=20260812-1",
+    "src": "images/e-world.webp?v=20260812-2",
     "pageUrl": "https://ko.wikipedia.org/wiki/%EC%9D%B4%EC%9B%94%EB%93%9C",
     "filePageUrl": "https://commons.wikimedia.org/wiki/File:E_WORLD_in_Daegu_on_April_5th_2013.jpg",
     "author": "Choi2451",
@@ -507,7 +507,7 @@ window.KOREA_TRAVEL_IMAGES = {
     "height": 1152
   },
   "ecoland-jeju": {
-    "src": "images/ecoland-jeju.webp?v=20260812-1",
+    "src": "images/ecoland-jeju.webp?v=20260812-2",
     "pageUrl": "https://www.i-rang.net/place/jeju-eco-land",
     "filePageUrl": "https://www.i-rang.net/place/jeju-eco-land",
     "author": "Bing",
@@ -520,7 +520,7 @@ window.KOREA_TRAVEL_IMAGES = {
     "height": 400
   },
   "everland": {
-    "src": "images/everland.webp?v=20260812-1",
+    "src": "images/everland.webp?v=20260812-2",
     "pageUrl": "https://www.hankookilbo.com/News/Read/201510191133470301",
     "filePageUrl": "https://www.hankookilbo.com/News/Read/201510191133470301",
     "author": "Bing",
@@ -533,7 +533,7 @@ window.KOREA_TRAVEL_IMAGES = {
     "height": 398
   },
   "fun-address-024": {
-    "src": "images/fun-address-024.webp?v=20260812-1",
+    "src": "images/fun-address-024.webp?v=20260812-2",
     "pageUrl": "https://in.naver.com/weeeunjee/contents/internal/444224306792864",
     "filePageUrl": "https://in.naver.com/weeeunjee/contents/internal/444224306792864",
     "author": "Bing",
@@ -546,7 +546,7 @@ window.KOREA_TRAVEL_IMAGES = {
     "height": 743
   },
   "fun-address-025": {
-    "src": "images/fun-address-025.webp?v=20260812-1",
+    "src": "images/fun-address-025.webp?v=20260812-2",
     "pageUrl": "https://www.jibangnews.co.kr/news/articleView.html?idxno=1644",
     "filePageUrl": "https://www.jibangnews.co.kr/news/articleView.html?idxno=1644",
     "author": "Bing",
@@ -559,7 +559,7 @@ window.KOREA_TRAVEL_IMAGES = {
     "height": 449
   },
   "fun-address-026": {
-    "src": "images/fun-address-026.webp?v=20260812-1",
+    "src": "images/fun-address-026.webp?v=20260812-2",
     "pageUrl": "http://www.chamnews.net/news/articleView.html?idxno=225420",
     "filePageUrl": "http://www.chamnews.net/news/articleView.html?idxno=225420",
     "author": "Bing",
@@ -572,7 +572,7 @@ window.KOREA_TRAVEL_IMAGES = {
     "height": 400
   },
   "fun-address-027": {
-    "src": "images/fun-address-027.webp?v=20260812-1",
+    "src": "images/fun-address-027.webp?v=20260812-2",
     "pageUrl": "https://www.thepublic.kr/news/articleView.html?idxno=242226",
     "filePageUrl": "https://www.thepublic.kr/news/articleView.html?idxno=242226",
     "author": "Bing",
@@ -585,7 +585,7 @@ window.KOREA_TRAVEL_IMAGES = {
     "height": 854
   },
   "fun-address-028": {
-    "src": "images/fun-address-028.webp?v=20260812-1",
+    "src": "images/fun-address-028.webp?v=20260812-2",
     "pageUrl": "https://www.kgnews.co.kr/mobile/article.html?no=755330",
     "filePageUrl": "https://www.kgnews.co.kr/mobile/article.html?no=755330",
     "author": "Bing",
@@ -598,7 +598,7 @@ window.KOREA_TRAVEL_IMAGES = {
     "height": 379
   },
   "fun-address-029": {
-    "src": "images/fun-address-029.webp?v=20260812-1",
+    "src": "images/fun-address-029.webp?v=20260812-2",
     "pageUrl": "https://www.kyeonggi.com/article/20240411580366",
     "filePageUrl": "https://www.kyeonggi.com/article/20240411580366",
     "author": "Bing",
@@ -611,7 +611,7 @@ window.KOREA_TRAVEL_IMAGES = {
     "height": 381
   },
   "fun-address-030": {
-    "src": "images/fun-address-030.webp?v=20260812-1",
+    "src": "images/fun-address-030.webp?v=20260812-2",
     "pageUrl": "https://sailing-blog.click/1431",
     "filePageUrl": "https://sailing-blog.click/1431",
     "author": "Bing",
@@ -624,7 +624,7 @@ window.KOREA_TRAVEL_IMAGES = {
     "height": 625
   },
   "fun-address-031": {
-    "src": "images/fun-address-031.webp?v=20260812-1",
+    "src": "images/fun-address-031.webp?v=20260812-2",
     "pageUrl": "https://ontrip.kr/travel-guides/details/3012433",
     "filePageUrl": "https://ontrip.kr/travel-guides/details/3012433",
     "author": "Bing",
@@ -637,7 +637,7 @@ window.KOREA_TRAVEL_IMAGES = {
     "height": 625
   },
   "fun-address-032": {
-    "src": "images/fun-address-032.webp?v=20260812-1",
+    "src": "images/fun-address-032.webp?v=20260812-2",
     "pageUrl": "https://blog.naver.com/shin_118/224028403843",
     "filePageUrl": "https://blog.naver.com/shin_118/224028403843",
     "author": "Bing",
@@ -650,7 +650,7 @@ window.KOREA_TRAVEL_IMAGES = {
     "height": 743
   },
   "fun-address-033": {
-    "src": "images/fun-address-033.webp?v=20260812-1",
+    "src": "images/fun-address-033.webp?v=20260812-2",
     "pageUrl": "https://tv.naver.com/v/40078815",
     "filePageUrl": "https://tv.naver.com/v/40078815",
     "author": "Bing",
@@ -663,7 +663,7 @@ window.KOREA_TRAVEL_IMAGES = {
     "height": 624
   },
   "fun-address-034": {
-    "src": "images/fun-address-034.webp?v=20260812-1",
+    "src": "images/fun-address-034.webp?v=20260812-2",
     "pageUrl": "http://www.kbitv.net/news/articleView.html?idxno=2788",
     "filePageUrl": "http://www.kbitv.net/news/articleView.html?idxno=2788",
     "author": "Bing",
@@ -676,7 +676,7 @@ window.KOREA_TRAVEL_IMAGES = {
     "height": 337
   },
   "fun-address-035": {
-    "src": "images/fun-address-035.webp?v=20260812-1",
+    "src": "images/fun-address-035.webp?v=20260812-2",
     "pageUrl": "https://www.wegive.co.kr/contents/wetownDetail/2663350",
     "filePageUrl": "https://www.wegive.co.kr/contents/wetownDetail/2663350",
     "author": "Bing",
@@ -689,7 +689,7 @@ window.KOREA_TRAVEL_IMAGES = {
     "height": 705
   },
   "fun-address-036": {
-    "src": "images/fun-address-036.webp?v=20260812-1",
+    "src": "images/fun-address-036.webp?v=20260812-2",
     "pageUrl": "https://www.m-i.kr/news/articleView.html?idxno=1319508",
     "filePageUrl": "https://www.m-i.kr/news/articleView.html?idxno=1319508",
     "author": "Bing",
@@ -702,7 +702,7 @@ window.KOREA_TRAVEL_IMAGES = {
     "height": 400
   },
   "fun-address-037": {
-    "src": "images/fun-address-037.webp?v=20260812-1",
+    "src": "images/fun-address-037.webp?v=20260812-2",
     "pageUrl": "https://www.ajunews.com/view/20220607084748349",
     "filePageUrl": "https://www.ajunews.com/view/20220607084748349",
     "author": "Bing",
@@ -715,7 +715,7 @@ window.KOREA_TRAVEL_IMAGES = {
     "height": 359
   },
   "fun-address-038": {
-    "src": "images/fun-address-038.webp?v=20260812-1",
+    "src": "images/fun-address-038.webp?v=20260812-2",
     "pageUrl": "https://blog.naver.com/holy_moly_lol/224077924415",
     "filePageUrl": "https://blog.naver.com/holy_moly_lol/224077924415",
     "author": "Bing",
@@ -728,7 +728,7 @@ window.KOREA_TRAVEL_IMAGES = {
     "height": 495
   },
   "fun-address-039": {
-    "src": "images/fun-address-039.webp?v=20260812-1",
+    "src": "images/fun-address-039.webp?v=20260812-2",
     "pageUrl": "https://www.ohmynews.com/NWS_Web/View/img_pg.aspx?CNTN_CD=IE000901401",
     "filePageUrl": "https://www.ohmynews.com/NWS_Web/View/img_pg.aspx?CNTN_CD=IE000901401",
     "author": "Bing",
@@ -741,7 +741,7 @@ window.KOREA_TRAVEL_IMAGES = {
     "height": 367
   },
   "fun-address-040": {
-    "src": "images/fun-address-040.webp?v=20260812-1",
+    "src": "images/fun-address-040.webp?v=20260812-2",
     "pageUrl": "https://www.asiae.co.kr/article/2019080714544094804",
     "filePageUrl": "https://www.asiae.co.kr/article/2019080714544094804",
     "author": "Bing",
@@ -754,7 +754,7 @@ window.KOREA_TRAVEL_IMAGES = {
     "height": 495
   },
   "fun-address-041": {
-    "src": "images/fun-address-041.webp?v=20260812-1",
+    "src": "images/fun-address-041.webp?v=20260812-2",
     "pageUrl": "https://newenergyinfo.kr/44/?bmode=view&idx=11521403",
     "filePageUrl": "https://newenergyinfo.kr/44/?bmode=view&idx=11521403",
     "author": "Bing",
@@ -767,7 +767,7 @@ window.KOREA_TRAVEL_IMAGES = {
     "height": 683
   },
   "fun-address-042": {
-    "src": "images/fun-address-042.webp?v=20260812-1",
+    "src": "images/fun-address-042.webp?v=20260812-2",
     "pageUrl": "https://www.dtnews24.com/news/articleView.html?idxno=789956",
     "filePageUrl": "https://www.dtnews24.com/news/articleView.html?idxno=789956",
     "author": "Bing",
@@ -780,7 +780,7 @@ window.KOREA_TRAVEL_IMAGES = {
     "height": 850
   },
   "fun-address-043": {
-    "src": "images/fun-address-043.webp?v=20260812-1",
+    "src": "images/fun-address-043.webp?v=20260812-2",
     "pageUrl": "http://www.traveli.co.kr/read/contentsView/2879/24",
     "filePageUrl": "http://www.traveli.co.kr/read/contentsView/2879/24",
     "author": "Bing",
@@ -793,7 +793,7 @@ window.KOREA_TRAVEL_IMAGES = {
     "height": 450
   },
   "fun-address-044": {
-    "src": "images/fun-address-044.webp?v=20260812-1",
+    "src": "images/fun-address-044.webp?v=20260812-2",
     "pageUrl": "https://www.gukjenews.com/news/articleView.html?idxno=3339174",
     "filePageUrl": "https://www.gukjenews.com/news/articleView.html?idxno=3339174",
     "author": "Bing",
@@ -806,7 +806,7 @@ window.KOREA_TRAVEL_IMAGES = {
     "height": 400
   },
   "fun-address-045": {
-    "src": "images/fun-address-045.webp?v=20260812-1",
+    "src": "images/fun-address-045.webp?v=20260812-2",
     "pageUrl": "https://www.ccdailynews.com/news/articleView.html?idxno=2139911",
     "filePageUrl": "https://www.ccdailynews.com/news/articleView.html?idxno=2139911",
     "author": "Bing",
@@ -819,7 +819,7 @@ window.KOREA_TRAVEL_IMAGES = {
     "height": 640
   },
   "fun-address-046": {
-    "src": "images/fun-address-046.webp?v=20260812-1",
+    "src": "images/fun-address-046.webp?v=20260812-2",
     "pageUrl": "https://www.ccdailynews.com/news/articleView.html?idxno=2342882",
     "filePageUrl": "https://www.ccdailynews.com/news/articleView.html?idxno=2342882",
     "author": "Bing",
@@ -832,7 +832,7 @@ window.KOREA_TRAVEL_IMAGES = {
     "height": 416
   },
   "fun-manual-101": {
-    "src": "images/fun-manual-101.webp?v=20260812-1",
+    "src": "images/fun-manual-101.webp?v=20260812-2",
     "pageUrl": "https://mom-mom.net/travel/places/684916aae10556c7f1dfdec7",
     "filePageUrl": "https://mom-mom.net/travel/places/684916aae10556c7f1dfdec7",
     "author": "Bing",
@@ -841,11 +841,11 @@ window.KOREA_TRAVEL_IMAGES = {
     "source": "duckduckgo",
     "evidence": "DuckDuckGo: \"인제스피디움 클래식카박물관\" 전경 대표 사진 | 인제스피디움 클래식카박물관 - 강원 인제군에서 아이와 갈 곳 추천 - 맘맘",
     "downloadBytes": 241678,
-    "width": 1080,
-    "height": 810
+    "width": 810,
+    "height": 1080
   },
   "fun-manual-102": {
-    "src": "images/fun-manual-102.webp?v=20260812-1",
+    "src": "images/fun-manual-102.webp?v=20260812-2",
     "pageUrl": "https://www.ptsisa.com/news/articleView.html?idxno=41348",
     "filePageUrl": "https://www.ptsisa.com/news/articleView.html?idxno=41348",
     "author": "Bing",
@@ -858,7 +858,7 @@ window.KOREA_TRAVEL_IMAGES = {
     "height": 337
   },
   "fun-manual-103": {
-    "src": "images/fun-manual-103.webp?v=20260812-1",
+    "src": "images/fun-manual-103.webp?v=20260812-2",
     "pageUrl": "https://www.telltrip.com/domestic-travel/namhae-german-village-guide/",
     "filePageUrl": "https://www.telltrip.com/domestic-travel/namhae-german-village-guide/",
     "author": "Bing",
@@ -871,7 +871,7 @@ window.KOREA_TRAVEL_IMAGES = {
     "height": 675
   },
   "fun-manual-104": {
-    "src": "images/fun-manual-104.webp?v=20260812-1",
+    "src": "images/fun-manual-104.webp?v=20260812-2",
     "pageUrl": "http://www.gnmaeil.com/news/articleView.html?idxno=556843",
     "filePageUrl": "http://www.gnmaeil.com/news/articleView.html?idxno=556843",
     "author": "Bing",
@@ -884,7 +884,7 @@ window.KOREA_TRAVEL_IMAGES = {
     "height": 400
   },
   "fun-manual-105": {
-    "src": "images/fun-manual-105.webp?v=20260812-1",
+    "src": "images/fun-manual-105.webp?v=20260812-2",
     "pageUrl": "https://www.gnnews.co.kr/news/articleView.html?idxno=500815",
     "filePageUrl": "https://www.gnnews.co.kr/news/articleView.html?idxno=500815",
     "author": "Bing",
@@ -897,7 +897,7 @@ window.KOREA_TRAVEL_IMAGES = {
     "height": 367
   },
   "fun-manual-106": {
-    "src": "images/fun-manual-106.webp?v=20260812-1",
+    "src": "images/fun-manual-106.webp?v=20260812-2",
     "pageUrl": "https://go.seoul.co.kr/news/newsView.php?id=20190402016028",
     "filePageUrl": "https://go.seoul.co.kr/news/newsView.php?id=20190402016028",
     "author": "Bing",
@@ -910,7 +910,7 @@ window.KOREA_TRAVEL_IMAGES = {
     "height": 360
   },
   "fun-manual-107": {
-    "src": "images/fun-manual-107.webp?v=20260812-1",
+    "src": "images/fun-manual-107.webp?v=20260812-2",
     "pageUrl": "https://www.hankookilbo.com/news/article/A2026042810150002434",
     "filePageUrl": "https://www.hankookilbo.com/news/article/A2026042810150002434",
     "author": "Bing",
@@ -923,7 +923,7 @@ window.KOREA_TRAVEL_IMAGES = {
     "height": 407
   },
   "fun-manual-108": {
-    "src": "images/fun-manual-108.webp?v=20260812-1",
+    "src": "images/fun-manual-108.webp?v=20260812-2",
     "pageUrl": "https://www.wikitree.co.kr/articles/896912",
     "filePageUrl": "https://www.wikitree.co.kr/articles/896912",
     "author": "Bing",
@@ -936,7 +936,7 @@ window.KOREA_TRAVEL_IMAGES = {
     "height": 675
   },
   "fun-manual-109": {
-    "src": "images/fun-manual-109.webp?v=20260812-1",
+    "src": "images/fun-manual-109.webp?v=20260812-2",
     "pageUrl": "https://www.kmib.co.kr/article/view.asp?arcid=0006343574",
     "filePageUrl": "https://www.kmib.co.kr/article/view.asp?arcid=0006343574",
     "author": "Bing",
@@ -949,7 +949,7 @@ window.KOREA_TRAVEL_IMAGES = {
     "height": 294
   },
   "fun-manual-110": {
-    "src": "images/fun-manual-110.webp?v=20260812-1",
+    "src": "images/fun-manual-110.webp?v=20260812-2",
     "pageUrl": "https://www.bizwnews.com/news/articleView.html?idxno=58814",
     "filePageUrl": "https://www.bizwnews.com/news/articleView.html?idxno=58814",
     "author": "Bing",
@@ -962,7 +962,7 @@ window.KOREA_TRAVEL_IMAGES = {
     "height": 640
   },
   "fun-manual-111": {
-    "src": "images/fun-manual-111.webp?v=20260812-1",
+    "src": "images/fun-manual-111.webp?v=20260812-2",
     "pageUrl": "https://m.gettyimagesbank.com/view/%ED%95%AD%EA%B3%B5%EC%B4%AC%EC%98%81%ED%92%8D%EA%B2%BD%ED%92%8D%EA%B2%BD%EA%B2%BD%EC%B9%98%EC%A0%84%EA%B2%BD%EC%8B%A4%EC%99%B8%ED%8C%8C%EB%85%B8%EB%9D%BC%EB%A7%88%EA%B5%B0%ED%95%A8%EC%82%BD%EA%B5%90%ED%98%B8%ED%95%A8%EC%83%81%EA%B3%B5%EC%9B%90%ED%95%A8%EC%83%81%EA%B3%B5%EC%9B%90%EA%B3%B5%EC%9B%90%EA%B5%B0%ED%95%A8%EC%A0%84%EC%8B%9C%EB%B0%94%EB%8B%A4%ED%95%B4%EB%B3%80%ED%95%B4%EC%95%88%EC%82%BD%EA%B5%90%EC%B2%9C%EB%B0%A9%EC%A1%B0%EC%A0%9C%EC%82%BD%EA%B5%90%EC%B2%9C%EB%B0%A9%EC%A1%B0%EC%A0%9C%EB%B0%94%EB%8B%A4%ED%95%B4%EB%B3%80%ED%95%B4%EC%95%88%EC%82%BD%EA%B5%90%ED%98%B8%EC%9A%B4%EC%A0%95%EB%A6%AC%EB%8B%B9%EC%A7%84%EC%8B%9C%EC%B6%A9%EB%82%A8%EC%B6%A9%EC%B2%AD%EB%82%A8%EB%8F%84%ED%95%9C%EA%B5%AD%EA%B5%AD%EB%82%B4%EC%97%AC%ED%96%89/a12210268",
     "filePageUrl": "https://m.gettyimagesbank.com/view/%ED%95%AD%EA%B3%B5%EC%B4%AC%EC%98%81%ED%92%8D%EA%B2%BD%ED%92%8D%EA%B2%BD%EA%B2%BD%EC%B9%98%EC%A0%84%EA%B2%BD%EC%8B%A4%EC%99%B8%ED%8C%8C%EB%85%B8%EB%9D%BC%EB%A7%88%EA%B5%B0%ED%95%A8%EC%82%BD%EA%B5%90%ED%98%B8%ED%95%A8%EC%83%81%EA%B3%B5%EC%9B%90%ED%95%A8%EC%83%81%EA%B3%B5%EC%9B%90%EA%B3%B5%EC%9B%90%EA%B5%B0%ED%95%A8%EC%A0%84%EC%8B%9C%EB%B0%94%EB%8B%A4%ED%95%B4%EB%B3%80%ED%95%B4%EC%95%88%EC%82%BD%EA%B5%90%EC%B2%9C%EB%B0%A9%EC%A1%B0%EC%A0%9C%EC%82%BD%EA%B5%90%EC%B2%9C%EB%B0%A9%EC%A1%B0%EC%A0%9C%EB%B0%94%EB%8B%A4%ED%95%B4%EB%B3%80%ED%95%B4%EC%95%88%EC%82%BD%EA%B5%90%ED%98%B8%EC%9A%B4%EC%A0%95%EB%A6%AC%EB%8B%B9%EC%A7%84%EC%8B%9C%EC%B6%A9%EB%82%A8%EC%B6%A9%EC%B2%AD%EB%82%A8%EB%8F%84%ED%95%9C%EA%B5%AD%EA%B5%AD%EB%82%B4%EC%97%AC%ED%96%89/a12210268",
     "author": "Bing",
@@ -975,7 +975,7 @@ window.KOREA_TRAVEL_IMAGES = {
     "height": 333
   },
   "fun-manual-112": {
-    "src": "images/fun-manual-112.webp?v=20260812-1",
+    "src": "images/fun-manual-112.webp?v=20260812-2",
     "pageUrl": "https://www.koreatriptips.com/en/tourist-attractions/1766781.html",
     "filePageUrl": "https://www.koreatriptips.com/en/tourist-attractions/1766781.html",
     "author": "Bing",
@@ -988,7 +988,7 @@ window.KOREA_TRAVEL_IMAGES = {
     "height": 465
   },
   "fun-manual-113": {
-    "src": "images/fun-manual-113.webp?v=20260812-1",
+    "src": "images/fun-manual-113.webp?v=20260812-2",
     "pageUrl": "https://www.etnews.com/20221215000176",
     "filePageUrl": "https://www.etnews.com/20221215000176",
     "author": "Bing",
@@ -1001,7 +1001,7 @@ window.KOREA_TRAVEL_IMAGES = {
     "height": 563
   },
   "fun-manual-114": {
-    "src": "images/fun-manual-114.webp?v=20260812-1",
+    "src": "images/fun-manual-114.webp?v=20260812-2",
     "pageUrl": "https://www.ibabynews.com/news/articleView.html?idxno=134517",
     "filePageUrl": "https://www.ibabynews.com/news/articleView.html?idxno=134517",
     "author": "Bing",
@@ -1014,7 +1014,7 @@ window.KOREA_TRAVEL_IMAGES = {
     "height": 400
   },
   "fun-regional-002": {
-    "src": "images/fun-regional-002.webp?v=20260812-1",
+    "src": "images/fun-regional-002.webp?v=20260812-2",
     "pageUrl": "https://www.msn.com/ko-kr/news/other/%ED%95%9C%EB%B0%98%EB%8F%84-%EC%A0%95%EC%A4%91%EC%95%99%EC%97%90-%EC%9E%90%EB%A6%AC-%EC%9E%A1%EC%9D%80-%ED%95%98%EC%96%80-%EC%9A%B0%EC%A3%BC%EA%B8%B0%EC%A7%80/ar-AA1MBNYD",
     "filePageUrl": "https://www.msn.com/ko-kr/news/other/%ED%95%9C%EB%B0%98%EB%8F%84-%EC%A0%95%EC%A4%91%EC%95%99%EC%97%90-%EC%9E%90%EB%A6%AC-%EC%9E%A1%EC%9D%80-%ED%95%98%EC%96%80-%EC%9A%B0%EC%A3%BC%EA%B8%B0%EC%A7%80/ar-AA1MBNYD",
     "author": "Bing",
@@ -1027,7 +1027,7 @@ window.KOREA_TRAVEL_IMAGES = {
     "height": 432
   },
   "fun-regional-003": {
-    "src": "images/fun-regional-003.webp?v=20260812-1",
+    "src": "images/fun-regional-003.webp?v=20260812-2",
     "pageUrl": "https://ncms.nculture.org/story-of-our-hometown/tag/byid/10692",
     "filePageUrl": "https://ncms.nculture.org/story-of-our-hometown/tag/byid/10692",
     "author": "Bing",
@@ -1040,7 +1040,7 @@ window.KOREA_TRAVEL_IMAGES = {
     "height": 683
   },
   "fun-regional-004": {
-    "src": "images/fun-regional-004.webp?v=20260812-1",
+    "src": "images/fun-regional-004.webp?v=20260812-2",
     "pageUrl": "https://www.telltrip.com/domestic-travel/yeongwol-byeolmaro-astronomical-observatory/",
     "filePageUrl": "https://www.telltrip.com/domestic-travel/yeongwol-byeolmaro-astronomical-observatory/",
     "author": "Bing",
@@ -1053,7 +1053,7 @@ window.KOREA_TRAVEL_IMAGES = {
     "height": 800
   },
   "fun-regional-008": {
-    "src": "images/fun-regional-008.webp?v=20260812-1",
+    "src": "images/fun-regional-008.webp?v=20260812-2",
     "pageUrl": "https://gnhong.com/3334",
     "filePageUrl": "https://gnhong.com/3334",
     "author": "Bing",
@@ -1066,7 +1066,7 @@ window.KOREA_TRAVEL_IMAGES = {
     "height": 853
   },
   "fun-regional-009": {
-    "src": "images/fun-regional-009.webp?v=20260812-1",
+    "src": "images/fun-regional-009.webp?v=20260812-2",
     "pageUrl": "https://www.fetimes.co.kr/news/articleView.html?idxno=123740",
     "filePageUrl": "https://www.fetimes.co.kr/news/articleView.html?idxno=123740",
     "author": "Bing",
@@ -1079,7 +1079,7 @@ window.KOREA_TRAVEL_IMAGES = {
     "height": 450
   },
   "fun-regional-010": {
-    "src": "images/fun-regional-010.webp?v=20260812-1",
+    "src": "images/fun-regional-010.webp?v=20260812-2",
     "pageUrl": "https://blog.naver.com/PostView.nhn?blogId=kimmir4&logNo=223038760307",
     "filePageUrl": "https://blog.naver.com/PostView.nhn?blogId=kimmir4&logNo=223038760307",
     "author": "Bing",
@@ -1092,7 +1092,7 @@ window.KOREA_TRAVEL_IMAGES = {
     "height": 299
   },
   "fun-regional-020": {
-    "src": "images/fun-regional-020.webp?v=20260812-1",
+    "src": "images/fun-regional-020.webp?v=20260812-2",
     "pageUrl": "https://go.seoul.co.kr/news/newsView.php?id=20221124500124",
     "filePageUrl": "https://go.seoul.co.kr/news/newsView.php?id=20221124500124",
     "author": "Bing",
@@ -1105,7 +1105,7 @@ window.KOREA_TRAVEL_IMAGES = {
     "height": 620
   },
   "fun-regional-024": {
-    "src": "images/fun-regional-024.webp?v=20260812-1",
+    "src": "images/fun-regional-024.webp?v=20260812-2",
     "pageUrl": "http://www.gnynews.co.kr/news/articleView.html?idxno=254955",
     "filePageUrl": "http://www.gnynews.co.kr/news/articleView.html?idxno=254955",
     "author": "Bing",
@@ -1118,7 +1118,7 @@ window.KOREA_TRAVEL_IMAGES = {
     "height": 466
   },
   "fun-regional-025": {
-    "src": "images/fun-regional-025.webp?v=20260812-1",
+    "src": "images/fun-regional-025.webp?v=20260812-2",
     "pageUrl": "https://www.koya-culture.com/mobile/article.html?no=113069",
     "filePageUrl": "https://www.koya-culture.com/mobile/article.html?no=113069",
     "author": "Bing",
@@ -1131,7 +1131,7 @@ window.KOREA_TRAVEL_IMAGES = {
     "height": 361
   },
   "fun-regional-026": {
-    "src": "images/fun-regional-026.webp?v=20260812-1",
+    "src": "images/fun-regional-026.webp?v=20260812-2",
     "pageUrl": "https://www.ejanews.co.kr/news/articleView.html?idxno=202498",
     "filePageUrl": "https://www.ejanews.co.kr/news/articleView.html?idxno=202498",
     "author": "Bing",
@@ -1144,7 +1144,7 @@ window.KOREA_TRAVEL_IMAGES = {
     "height": 450
   },
   "fun-regional-032": {
-    "src": "images/fun-regional-032.webp?v=20260812-1",
+    "src": "images/fun-regional-032.webp?v=20260812-2",
     "pageUrl": "https://www.kbmaeil.com/article/202409100405041",
     "filePageUrl": "https://www.kbmaeil.com/article/202409100405041",
     "author": "Bing",
@@ -1157,7 +1157,7 @@ window.KOREA_TRAVEL_IMAGES = {
     "height": 407
   },
   "fun-regional-033": {
-    "src": "images/fun-regional-033.webp?v=20260812-1",
+    "src": "images/fun-regional-033.webp?v=20260812-2",
     "pageUrl": "https://www.getnews.co.kr/news/articleView.html?idxno=227952",
     "filePageUrl": "https://www.getnews.co.kr/news/articleView.html?idxno=227952",
     "author": "Bing",
@@ -1170,7 +1170,7 @@ window.KOREA_TRAVEL_IMAGES = {
     "height": 378
   },
   "fun-regional-034": {
-    "src": "images/fun-regional-034.webp?v=20260812-1",
+    "src": "images/fun-regional-034.webp?v=20260812-2",
     "pageUrl": "https://blog.naver.com/oahu00/224175575923",
     "filePageUrl": "https://blog.naver.com/oahu00/224175575923",
     "author": "Bing",
@@ -1183,7 +1183,7 @@ window.KOREA_TRAVEL_IMAGES = {
     "height": 966
   },
   "fun-regional-035": {
-    "src": "images/fun-regional-035.webp?v=20260812-1",
+    "src": "images/fun-regional-035.webp?v=20260812-2",
     "pageUrl": "https://www.imaeil.com/page/view/2020072110565882747",
     "filePageUrl": "https://www.imaeil.com/page/view/2020072110565882747",
     "author": "Bing",
@@ -1196,7 +1196,7 @@ window.KOREA_TRAVEL_IMAGES = {
     "height": 426
   },
   "fun-regional-039": {
-    "src": "images/fun-regional-039.webp?v=20260812-1",
+    "src": "images/fun-regional-039.webp?v=20260812-2",
     "pageUrl": "https://www.incheontoday.com/news/articleView.html?idxno=309035",
     "filePageUrl": "https://www.incheontoday.com/news/articleView.html?idxno=309035",
     "author": "Bing",
@@ -1209,7 +1209,7 @@ window.KOREA_TRAVEL_IMAGES = {
     "height": 373
   },
   "fun-regional-046": {
-    "src": "images/fun-regional-046.webp?v=20260812-1",
+    "src": "images/fun-regional-046.webp?v=20260812-2",
     "pageUrl": "http://www.jtnews.kr/news/articleView.html?idxno=44069",
     "filePageUrl": "http://www.jtnews.kr/news/articleView.html?idxno=44069",
     "author": "Bing",
@@ -1222,7 +1222,7 @@ window.KOREA_TRAVEL_IMAGES = {
     "height": 450
   },
   "fun-regional-047": {
-    "src": "images/fun-regional-047.webp?v=20260812-1",
+    "src": "images/fun-regional-047.webp?v=20260812-2",
     "pageUrl": "https://v.daum.net/v/20220209181350922",
     "filePageUrl": "https://v.daum.net/v/20220209181350922",
     "author": "Bing",
@@ -1235,7 +1235,7 @@ window.KOREA_TRAVEL_IMAGES = {
     "height": 490
   },
   "fun-regional-050": {
-    "src": "images/fun-regional-050.webp?v=20260812-1",
+    "src": "images/fun-regional-050.webp?v=20260812-2",
     "pageUrl": "https://www.fnnews.com/news/201902031001550056",
     "filePageUrl": "https://www.fnnews.com/news/201902031001550056",
     "author": "Bing",
@@ -1248,7 +1248,7 @@ window.KOREA_TRAVEL_IMAGES = {
     "height": 321
   },
   "fun-regional-052": {
-    "src": "images/fun-regional-052.webp?v=20260812-1",
+    "src": "images/fun-regional-052.webp?v=20260812-2",
     "pageUrl": "https://www.yna.co.kr/view/AKR20140425070000063",
     "filePageUrl": "https://www.yna.co.kr/view/AKR20140425070000063",
     "author": "Bing",
@@ -1261,7 +1261,7 @@ window.KOREA_TRAVEL_IMAGES = {
     "height": 685
   },
   "fun-regional-053": {
-    "src": "images/fun-regional-053.webp?v=20260812-1",
+    "src": "images/fun-regional-053.webp?v=20260812-2",
     "pageUrl": "https://www.chungnamilbo.co.kr/news/articleView.html?idxno=717748",
     "filePageUrl": "https://www.chungnamilbo.co.kr/news/articleView.html?idxno=717748",
     "author": "Bing",
@@ -1274,7 +1274,7 @@ window.KOREA_TRAVEL_IMAGES = {
     "height": 353
   },
   "fun-regional-054": {
-    "src": "images/fun-regional-054.webp?v=20260812-1",
+    "src": "images/fun-regional-054.webp?v=20260812-2",
     "pageUrl": "https://www.tournews21.com/news/articleView.html?idxno=84442",
     "filePageUrl": "https://www.tournews21.com/news/articleView.html?idxno=84442",
     "author": "Bing",
@@ -1287,7 +1287,7 @@ window.KOREA_TRAVEL_IMAGES = {
     "height": 854
   },
   "fun-regional-055": {
-    "src": "images/fun-regional-055.webp?v=20260812-1",
+    "src": "images/fun-regional-055.webp?v=20260812-2",
     "pageUrl": "https://yesan.theborn.co.kr/board/visit?bbs_section=view&idx=6",
     "filePageUrl": "https://yesan.theborn.co.kr/board/visit?bbs_section=view&idx=6",
     "author": "Bing",
@@ -1300,7 +1300,7 @@ window.KOREA_TRAVEL_IMAGES = {
     "height": 350
   },
   "fun-regional-062": {
-    "src": "images/fun-regional-062.webp?v=20260812-1",
+    "src": "images/fun-regional-062.webp?v=20260812-2",
     "pageUrl": "https://www.dominilbo.com/news/articleView.html?idxno=235174",
     "filePageUrl": "https://www.dominilbo.com/news/articleView.html?idxno=235174",
     "author": "Bing",
@@ -1313,7 +1313,7 @@ window.KOREA_TRAVEL_IMAGES = {
     "height": 375
   },
   "gamcheon-village": {
-    "src": "images/gamcheon-village.webp?v=20260812-1",
+    "src": "images/gamcheon-village.webp?v=20260812-2",
     "pageUrl": "https://kr.hotels.com/go/south-korea/busan-gamcheon-culture-village",
     "filePageUrl": "https://kr.hotels.com/go/south-korea/busan-gamcheon-culture-village",
     "author": "Bing",
@@ -1326,7 +1326,7 @@ window.KOREA_TRAVEL_IMAGES = {
     "height": 1066
   },
   "gangchon-rail-bike": {
-    "src": "images/gangchon-rail-bike.webp?v=20260812-1",
+    "src": "images/gangchon-rail-bike.webp?v=20260812-2",
     "pageUrl": "https://www.telltrip.com/news/chuncheon-10th-place/",
     "filePageUrl": "https://www.telltrip.com/news/chuncheon-10th-place/",
     "author": "Bing",
@@ -1339,7 +1339,7 @@ window.KOREA_TRAVEL_IMAGES = {
     "height": 800
   },
   "ganghwa-dolmen-site": {
-    "src": "images/ganghwa-dolmen-site.webp?v=20260812-1",
+    "src": "images/ganghwa-dolmen-site.webp?v=20260812-2",
     "pageUrl": "https://www.pinterest.co.kr/pin/317996423672830062/",
     "filePageUrl": "https://www.pinterest.co.kr/pin/317996423672830062/",
     "author": "Bing",
@@ -1352,7 +1352,7 @@ window.KOREA_TRAVEL_IMAGES = {
     "height": 491
   },
   "gaya-theme-park": {
-    "src": "images/gaya-theme-park.webp?v=20260812-1",
+    "src": "images/gaya-theme-park.webp?v=20260812-2",
     "pageUrl": "https://www.telltrip.com/domestic-travel/%EA%B9%80%ED%95%B4%EC%97%90%EB%8F%84-%EC%9D%B4%EB%9F%B0-%EA%B3%B3%EC%9D%B4-%EC%9E%88%EC%97%88%EB%84%A4-%EC%9E%90%EC%97%B0%EA%B3%BC-%EC%97%AD%EC%82%AC-%EB%AC%B8%ED%99%94%EA%B0%80/",
     "filePageUrl": "https://www.telltrip.com/domestic-travel/%EA%B9%80%ED%95%B4%EC%97%90%EB%8F%84-%EC%9D%B4%EB%9F%B0-%EA%B3%B3%EC%9D%B4-%EC%9E%88%EC%97%88%EB%84%A4-%EC%9E%90%EC%97%B0%EA%B3%BC-%EC%97%AD%EC%82%AC-%EB%AC%B8%ED%99%94%EA%B0%80/",
     "author": "Bing",
@@ -1365,7 +1365,7 @@ window.KOREA_TRAVEL_IMAGES = {
     "height": 800
   },
   "geoje-botanic-garden": {
-    "src": "images/geoje-botanic-garden.webp?v=20260812-1",
+    "src": "images/geoje-botanic-garden.webp?v=20260812-2",
     "pageUrl": "http://www.koreaeaglenews.com/news/articleView.html?idxno=89883",
     "filePageUrl": "http://www.koreaeaglenews.com/news/articleView.html?idxno=89883",
     "author": "Bing",
@@ -1378,7 +1378,7 @@ window.KOREA_TRAVEL_IMAGES = {
     "height": 338
   },
   "geoje-pow-camp": {
-    "src": "images/geoje-pow-camp.webp?v=20260812-1",
+    "src": "images/geoje-pow-camp.webp?v=20260812-2",
     "pageUrl": "https://www.yna.co.kr/view/AKR20230308141900052",
     "filePageUrl": "https://www.yna.co.kr/view/AKR20230308141900052",
     "author": "Bing",
@@ -1391,7 +1391,7 @@ window.KOREA_TRAVEL_IMAGES = {
     "height": 576
   },
   "geological-museum": {
-    "src": "images/geological-museum.webp?v=20260812-1",
+    "src": "images/geological-museum.webp?v=20260812-2",
     "pageUrl": "http://www.ktsketch.co.kr/news/articleView.html?idxno=4224",
     "filePageUrl": "http://www.ktsketch.co.kr/news/articleView.html?idxno=4224",
     "author": "Bing",
@@ -1404,7 +1404,7 @@ window.KOREA_TRAVEL_IMAGES = {
     "height": 642
   },
   "gimhae-nakdong-railpark": {
-    "src": "images/gimhae-nakdong-railpark.webp?v=20260812-1",
+    "src": "images/gimhae-nakdong-railpark.webp?v=20260812-2",
     "pageUrl": "https://www.thetrippick.com/news/articleView.html?idxno=1953",
     "filePageUrl": "https://www.thetrippick.com/news/articleView.html?idxno=1953",
     "author": "Bing",
@@ -1417,7 +1417,7 @@ window.KOREA_TRAVEL_IMAGES = {
     "height": 698
   },
   "gimhae-national-museum": {
-    "src": "images/gimhae-national-museum.webp?v=20260812-1",
+    "src": "images/gimhae-national-museum.webp?v=20260812-2",
     "pageUrl": "https://ko.wikipedia.org/wiki/%EA%B5%AD%EB%A6%BD%EA%B9%80%ED%95%B4%EB%B0%95%EB%AC%BC%EA%B4%80",
     "filePageUrl": "https://commons.wikimedia.org/wiki/File:Gimhae_national_museum.JPG",
     "author": "hyolee2",
@@ -1430,7 +1430,7 @@ window.KOREA_TRAVEL_IMAGES = {
     "height": 1440
   },
   "gochang-dolmen-museum": {
-    "src": "images/gochang-dolmen-museum.webp?v=20260812-1",
+    "src": "images/gochang-dolmen-museum.webp?v=20260812-2",
     "pageUrl": "https://m.blog.naver.com/PostView.naver?blogId=jbgokr&logNo=220510413066",
     "filePageUrl": "https://m.blog.naver.com/PostView.naver?blogId=jbgokr&logNo=220510413066",
     "author": "Bing",
@@ -1443,7 +1443,7 @@ window.KOREA_TRAVEL_IMAGES = {
     "height": 740
   },
   "gokseong-train-village": {
-    "src": "images/gokseong-train-village.webp?v=20260812-1",
+    "src": "images/gokseong-train-village.webp?v=20260812-2",
     "pageUrl": "https://www.news1.kr/local/gwangju-jeonnam/5670879",
     "filePageUrl": "https://www.news1.kr/local/gwangju-jeonnam/5670879",
     "author": "Bing",
@@ -1456,7 +1456,7 @@ window.KOREA_TRAVEL_IMAGES = {
     "height": 787
   },
   "gongju-museum": {
-    "src": "images/gongju-museum.webp?v=20260812-1",
+    "src": "images/gongju-museum.webp?v=20260812-2",
     "pageUrl": "https://triple.guide/attractions/b47191ad-1a82-4d9e-8080-4be1676fd1ea",
     "filePageUrl": "https://triple.guide/attractions/b47191ad-1a82-4d9e-8080-4be1676fd1ea",
     "author": "Bing",
@@ -1469,7 +1469,7 @@ window.KOREA_TRAVEL_IMAGES = {
     "height": 466
   },
   "goseong-dinosaur": {
-    "src": "images/goseong-dinosaur.webp?v=20260812-1",
+    "src": "images/goseong-dinosaur.webp?v=20260812-2",
     "pageUrl": "https://www.knnewstoday.co.kr/news/articleView.html?idxno=317165",
     "filePageUrl": "https://www.knnewstoday.co.kr/news/articleView.html?idxno=317165",
     "author": "Bing",
@@ -1482,7 +1482,7 @@ window.KOREA_TRAVEL_IMAGES = {
     "height": 720
   },
   "gunsan-modern-museum": {
-    "src": "images/gunsan-modern-museum.webp?v=20260812-1",
+    "src": "images/gunsan-modern-museum.webp?v=20260812-2",
     "pageUrl": "https://www.newspim.com/news/view/20200117000355",
     "filePageUrl": "https://www.newspim.com/news/view/20200117000355",
     "author": "Bing",
@@ -1495,7 +1495,7 @@ window.KOREA_TRAVEL_IMAGES = {
     "height": 382
   },
   "gwacheon-science": {
-    "src": "images/gwacheon-science.webp?v=20260812-1",
+    "src": "images/gwacheon-science.webp?v=20260812-2",
     "pageUrl": "https://m.dongascience.com/ko/news/69261",
     "filePageUrl": "https://m.dongascience.com/ko/news/69261",
     "author": "Bing",
@@ -1508,7 +1508,7 @@ window.KOREA_TRAVEL_IMAGES = {
     "height": 397
   },
   "gwangju-family-land": {
-    "src": "images/gwangju-family-land.webp?v=20260812-1",
+    "src": "images/gwangju-family-land.webp?v=20260812-2",
     "pageUrl": "https://dh.aks.ac.kr/~gwangju/wiki/index.php/%EA%B4%91%EC%A3%BC%ED%8C%A8%EB%B0%80%EB%A6%AC%EB%9E%9C%EB%93%9C",
     "filePageUrl": "https://dh.aks.ac.kr/~gwangju/wiki/index.php/%EA%B4%91%EC%A3%BC%ED%8C%A8%EB%B0%80%EB%A6%AC%EB%9E%9C%EB%93%9C",
     "author": "Bing",
@@ -1521,7 +1521,7 @@ window.KOREA_TRAVEL_IMAGES = {
     "height": 3000
   },
   "gwangju-national-museum": {
-    "src": "images/gwangju-national-museum.webp?v=20260812-1",
+    "src": "images/gwangju-national-museum.webp?v=20260812-2",
     "pageUrl": "https://inmun360.culture.go.kr/content/580.do?mode=view&cid=2370042",
     "filePageUrl": "https://inmun360.culture.go.kr/content/580.do?mode=view&cid=2370042",
     "author": "Bing",
@@ -1534,7 +1534,7 @@ window.KOREA_TRAVEL_IMAGES = {
     "height": 420
   },
   "gwangju-science-museum": {
-    "src": "images/gwangju-science-museum.webp?v=20260812-1",
+    "src": "images/gwangju-science-museum.webp?v=20260812-2",
     "pageUrl": "https://www.enewstoday.co.kr/news/articleView.html?idxno=2046071",
     "filePageUrl": "https://www.enewstoday.co.kr/news/articleView.html?idxno=2046071",
     "author": "Bing",
@@ -1547,7 +1547,7 @@ window.KOREA_TRAVEL_IMAGES = {
     "height": 539
   },
   "gwangmyeong-cave": {
-    "src": "images/gwangmyeong-cave.webp?v=20260812-1",
+    "src": "images/gwangmyeong-cave.webp?v=20260812-2",
     "pageUrl": "https://news.gm.go.kr/bbs/view.html?idxno=949",
     "filePageUrl": "https://news.gm.go.kr/bbs/view.html?idxno=949",
     "author": "Bing",
@@ -1560,7 +1560,7 @@ window.KOREA_TRAVEL_IMAGES = {
     "height": 1797
   },
   "gyeongbokgung": {
-    "src": "images/gyeongbokgung.webp?v=20260812-1",
+    "src": "images/gyeongbokgung.webp?v=20260812-2",
     "pageUrl": "https://www.tournews21.com/news/articleView.html?idxno=98394",
     "filePageUrl": "https://www.tournews21.com/news/articleView.html?idxno=98394",
     "author": "Bing",
@@ -1573,7 +1573,7 @@ window.KOREA_TRAVEL_IMAGES = {
     "height": 1254
   },
   "gyeonggi-children-museum": {
-    "src": "images/gyeonggi-children-museum.webp?v=20260812-1",
+    "src": "images/gyeonggi-children-museum.webp?v=20260812-2",
     "pageUrl": "https://www.kgnews.co.kr/mobile/article.html?no=668063",
     "filePageUrl": "https://www.kgnews.co.kr/mobile/article.html?no=668063",
     "author": "Bing",
@@ -1586,7 +1586,7 @@ window.KOREA_TRAVEL_IMAGES = {
     "height": 453
   },
   "gyeongju-daereungwon": {
-    "src": "images/gyeongju-daereungwon.webp?v=20260812-1",
+    "src": "images/gyeongju-daereungwon.webp?v=20260812-2",
     "pageUrl": "https://www.gukjenews.com/news/articleView.html?idxno=2641647",
     "filePageUrl": "https://www.gukjenews.com/news/articleView.html?idxno=2641647",
     "author": "Bing",
@@ -1599,7 +1599,7 @@ window.KOREA_TRAVEL_IMAGES = {
     "height": 797
   },
   "gyeongju-expo-park": {
-    "src": "images/gyeongju-expo-park.webp?v=20260812-1",
+    "src": "images/gyeongju-expo-park.webp?v=20260812-2",
     "pageUrl": "https://www.tournews21.com/news/articleView.html?idxno=82340",
     "filePageUrl": "https://www.tournews21.com/news/articleView.html?idxno=82340",
     "author": "Bing",
@@ -1612,7 +1612,7 @@ window.KOREA_TRAVEL_IMAGES = {
     "height": 540
   },
   "gyeongju-museum": {
-    "src": "images/gyeongju-museum.webp?v=20260812-1",
+    "src": "images/gyeongju-museum.webp?v=20260812-2",
     "pageUrl": "https://www.nocutnews.co.kr/news/6391582",
     "filePageUrl": "https://www.nocutnews.co.kr/news/6391582",
     "author": "Bing",
@@ -1625,7 +1625,7 @@ window.KOREA_TRAVEL_IMAGES = {
     "height": 532
   },
   "gyeongju-world": {
-    "src": "images/gyeongju-world.webp?v=20260812-1",
+    "src": "images/gyeongju-world.webp?v=20260812-2",
     "pageUrl": "https://blog.naver.com/PostView.nhn?blogId=pic7stay&logNo=221386952461",
     "filePageUrl": "https://blog.naver.com/PostView.nhn?blogId=pic7stay&logNo=221386952461",
     "author": "Bing",
@@ -1638,7 +1638,7 @@ window.KOREA_TRAVEL_IMAGES = {
     "height": 557
   },
   "gyeongpo-aquarium": {
-    "src": "images/gyeongpo-aquarium.webp?v=20260812-1",
+    "src": "images/gyeongpo-aquarium.webp?v=20260812-2",
     "pageUrl": "https://www.wegive.co.kr/contents/wetownDetail/2687981",
     "filePageUrl": "https://www.wegive.co.kr/contents/wetownDetail/2687981",
     "author": "Bing",
@@ -1651,7 +1651,7 @@ window.KOREA_TRAVEL_IMAGES = {
     "height": 466
   },
   "hampyeong-expo-park": {
-    "src": "images/hampyeong-expo-park.webp?v=20260812-1",
+    "src": "images/hampyeong-expo-park.webp?v=20260812-2",
     "pageUrl": "https://m.blog.naver.com/amyangela/223068196611",
     "filePageUrl": "https://m.blog.naver.com/amyangela/223068196611",
     "author": "Bing",
@@ -1664,7 +1664,7 @@ window.KOREA_TRAVEL_IMAGES = {
     "height": 743
   },
   "hanbat-arboretum": {
-    "src": "images/hanbat-arboretum.webp?v=20260812-1",
+    "src": "images/hanbat-arboretum.webp?v=20260812-2",
     "pageUrl": "http://www.daehannews.kr/mobile/article.html?no=503290",
     "filePageUrl": "http://www.daehannews.kr/mobile/article.html?no=503290",
     "author": "Bing",
@@ -1677,7 +1677,7 @@ window.KOREA_TRAVEL_IMAGES = {
     "height": 468
   },
   "hueree": {
-    "src": "images/hueree.webp?v=20260812-1",
+    "src": "images/hueree.webp?v=20260812-2",
     "pageUrl": "https://www.waug.com/ko/activities/102708",
     "filePageUrl": "https://www.waug.com/ko/activities/102708",
     "author": "Bing",
@@ -1690,7 +1690,7 @@ window.KOREA_TRAVEL_IMAGES = {
     "height": 420
   },
   "hwalok-cave": {
-    "src": "images/hwalok-cave.webp?v=20260812-1",
+    "src": "images/hwalok-cave.webp?v=20260812-2",
     "pageUrl": "https://www.gukjenews.com/news/articleView.html?idxno=2034319",
     "filePageUrl": "https://www.gukjenews.com/news/articleView.html?idxno=2034319",
     "author": "Bing",
@@ -1703,7 +1703,7 @@ window.KOREA_TRAVEL_IMAGES = {
     "height": 400
   },
   "imjingak-peace": {
-    "src": "images/imjingak-peace.webp?v=20260812-1",
+    "src": "images/imjingak-peace.webp?v=20260812-2",
     "pageUrl": "https://www.ibtravel.co.kr/travel/27167/",
     "filePageUrl": "https://www.ibtravel.co.kr/travel/27167/",
     "author": "Bing",
@@ -1716,7 +1716,7 @@ window.KOREA_TRAVEL_IMAGES = {
     "height": 2938
   },
   "imsil-cheese-park": {
-    "src": "images/imsil-cheese-park.webp?v=20260812-1",
+    "src": "images/imsil-cheese-park.webp?v=20260812-2",
     "pageUrl": "https://www.ajunews.com/view/20221110112559463",
     "filePageUrl": "https://www.ajunews.com/view/20221110112559463",
     "author": "Bing",
@@ -1729,7 +1729,7 @@ window.KOREA_TRAVEL_IMAGES = {
     "height": 361
   },
   "incheon-children-science": {
-    "src": "images/incheon-children-science.webp?v=20260812-1",
+    "src": "images/incheon-children-science.webp?v=20260812-2",
     "pageUrl": "https://www.incheonin.com/news/articleView.html?idxno=93344",
     "filePageUrl": "https://www.incheonin.com/news/articleView.html?idxno=93344",
     "author": "Bing",
@@ -1742,7 +1742,7 @@ window.KOREA_TRAVEL_IMAGES = {
     "height": 327
   },
   "incheon-open-port-museum": {
-    "src": "images/incheon-open-port-museum.webp?v=20260812-1",
+    "src": "images/incheon-open-port-museum.webp?v=20260812-2",
     "pageUrl": "https://inmun360.culture.go.kr/content/580.do?mode=view&cid=2373068",
     "filePageUrl": "https://inmun360.culture.go.kr/content/580.do?mode=view&cid=2373068",
     "author": "Bing",
@@ -1755,7 +1755,7 @@ window.KOREA_TRAVEL_IMAGES = {
     "height": 369
   },
   "independence-hall": {
-    "src": "images/independence-hall.webp?v=20260812-1",
+    "src": "images/independence-hall.webp?v=20260812-2",
     "pageUrl": "https://www.ohmynews.com/NWS_Web/View/at_pg.aspx?CNTN_CD=A0002512348",
     "filePageUrl": "https://www.ohmynews.com/NWS_Web/View/at_pg.aspx?CNTN_CD=A0002512348",
     "author": "Bing",
@@ -1768,7 +1768,7 @@ window.KOREA_TRAVEL_IMAGES = {
     "height": 853
   },
   "jangsaengpo-whale-village": {
-    "src": "images/jangsaengpo-whale-village.webp?v=20260812-1",
+    "src": "images/jangsaengpo-whale-village.webp?v=20260812-2",
     "pageUrl": "https://www.yna.co.kr/view/AKR20230214157600057",
     "filePageUrl": "https://www.yna.co.kr/view/AKR20230214157600057",
     "author": "Bing",
@@ -1781,7 +1781,7 @@ window.KOREA_TRAVEL_IMAGES = {
     "height": 719
   },
   "jeju-aerospace-museum": {
-    "src": "images/jeju-aerospace-museum.webp?v=20260812-1",
+    "src": "images/jeju-aerospace-museum.webp?v=20260812-2",
     "pageUrl": "https://museum.or.kr/museum-member/%EC%A0%9C%EC%A3%BC%ED%95%AD%EA%B3%B5%EC%9A%B0%EC%A3%BC%EB%B0%95%EB%AC%BC%EA%B4%80/",
     "filePageUrl": "https://museum.or.kr/museum-member/%EC%A0%9C%EC%A3%BC%ED%95%AD%EA%B3%B5%EC%9A%B0%EC%A3%BC%EB%B0%95%EB%AC%BC%EA%B4%80/",
     "author": "Bing",
@@ -1794,7 +1794,7 @@ window.KOREA_TRAVEL_IMAGES = {
     "height": 600
   },
   "jeju-folk-village": {
-    "src": "images/jeju-folk-village.webp?v=20260812-1",
+    "src": "images/jeju-folk-village.webp?v=20260812-2",
     "pageUrl": "https://m.gettyimagesbank.com/view/%EC%B4%88%EA%B0%80%EC%A7%91%EC%9C%A0%EC%B1%84%EA%BD%83%EC%A0%9C%EC%A3%BC%EB%AF%BC%EC%86%8D%EC%B4%8C%EB%AF%BC%EC%86%8D%EC%B4%8C%EB%A7%88%EC%9D%84%EC%8B%9C%EA%B3%A8%EB%86%8D%EC%B4%8C%EA%B1%B4%EC%B6%95%EA%B1%B4%EB%AC%BC%ED%95%9C%EC%98%A5%ED%92%8D%EA%B2%BD%EC%A0%84%EA%B2%BD%EC%8B%A4%EC%99%B8%EC%84%9C%EA%B7%80%ED%8F%AC%EC%8B%9C%EC%A0%9C%EC%A3%BC%EB%8F%84%ED%95%9C%EA%B5%AD%EA%B5%AD%EB%82%B4%EC%97%AC%ED%96%89%EB%B4%84%ED%95%98%EB%8A%98%EB%82%98%EB%AC%B4%EC%88%B2/a12140825",
     "filePageUrl": "https://m.gettyimagesbank.com/view/%EC%B4%88%EA%B0%80%EC%A7%91%EC%9C%A0%EC%B1%84%EA%BD%83%EC%A0%9C%EC%A3%BC%EB%AF%BC%EC%86%8D%EC%B4%8C%EB%AF%BC%EC%86%8D%EC%B4%8C%EB%A7%88%EC%9D%84%EC%8B%9C%EA%B3%A8%EB%86%8D%EC%B4%8C%EA%B1%B4%EC%B6%95%EA%B1%B4%EB%AC%BC%ED%95%9C%EC%98%A5%ED%92%8D%EA%B2%BD%EC%A0%84%EA%B2%BD%EC%8B%A4%EC%99%B8%EC%84%9C%EA%B7%80%ED%8F%AC%EC%8B%9C%EC%A0%9C%EC%A3%BC%EB%8F%84%ED%95%9C%EA%B5%AD%EA%B5%AD%EB%82%B4%EC%97%AC%ED%96%89%EB%B4%84%ED%95%98%EB%8A%98%EB%82%98%EB%AC%B4%EC%88%B2/a12140825",
     "author": "Bing",
@@ -1807,7 +1807,7 @@ window.KOREA_TRAVEL_IMAGES = {
     "height": 342
   },
   "jeju-haenyeo-museum": {
-    "src": "images/jeju-haenyeo-museum.webp?v=20260812-1",
+    "src": "images/jeju-haenyeo-museum.webp?v=20260812-2",
     "pageUrl": "https://bricksmagazine.co.kr/asia/?bmode=view&idx=165955079",
     "filePageUrl": "https://bricksmagazine.co.kr/asia/?bmode=view&idx=165955079",
     "author": "Bing",
@@ -1820,7 +1820,7 @@ window.KOREA_TRAVEL_IMAGES = {
     "height": 1333
   },
   "jeju-stone-park": {
-    "src": "images/jeju-stone-park.webp?v=20260812-1",
+    "src": "images/jeju-stone-park.webp?v=20260812-2",
     "pageUrl": "https://www.msn.com/ko-kr/news/other/%EC%9E%90%EC%97%B0%EC%9D%84-%EB%AC%B8%ED%99%94%EB%A1%9C-%EB%B0%94%EA%BE%BC-25%EB%85%84-%EC%A0%9C%EC%A3%BC%EB%8F%8C%EB%AC%B8%ED%99%94%EA%B3%B5%EC%9B%90-%EB%B0%B1%EC%84%9C-%EB%B0%9C%EA%B0%84/ar-AA1WMqbT",
     "filePageUrl": "https://www.msn.com/ko-kr/news/other/%EC%9E%90%EC%97%B0%EC%9D%84-%EB%AC%B8%ED%99%94%EB%A1%9C-%EB%B0%94%EA%BE%BC-25%EB%85%84-%EC%A0%9C%EC%A3%BC%EB%8F%8C%EB%AC%B8%ED%99%94%EA%B3%B5%EC%9B%90-%EB%B0%B1%EC%84%9C-%EB%B0%9C%EA%B0%84/ar-AA1WMqbT",
     "author": "Bing",
@@ -1833,7 +1833,7 @@ window.KOREA_TRAVEL_IMAGES = {
     "height": 434
   },
   "jeju-world-heritage": {
-    "src": "images/jeju-world-heritage.webp?v=20260812-1",
+    "src": "images/jeju-world-heritage.webp?v=20260812-2",
     "pageUrl": "https://www.yna.co.kr/view/AKR20161006079200056",
     "filePageUrl": "https://www.yna.co.kr/view/AKR20161006079200056",
     "author": "Bing",
@@ -1846,7 +1846,7 @@ window.KOREA_TRAVEL_IMAGES = {
     "height": 756
   },
   "jeju43-peace": {
-    "src": "images/jeju43-peace.webp?v=20260812-1",
+    "src": "images/jeju43-peace.webp?v=20260812-2",
     "pageUrl": "https://www.ohmynews.com/NWS_Web/View/img_pg.aspx?CNTN_CD=IE002342893",
     "filePageUrl": "https://www.ohmynews.com/NWS_Web/View/img_pg.aspx?CNTN_CD=IE002342893",
     "author": "Bing",
@@ -1859,7 +1859,7 @@ window.KOREA_TRAVEL_IMAGES = {
     "height": 424
   },
   "jeongseon-hwaam-cave": {
-    "src": "images/jeongseon-hwaam-cave.webp?v=20260812-1",
+    "src": "images/jeongseon-hwaam-cave.webp?v=20260812-2",
     "pageUrl": "https://www.newsnbook.com/news/articleView.html?idxno=16042",
     "filePageUrl": "https://www.newsnbook.com/news/articleView.html?idxno=16042",
     "author": "Bing",
@@ -1872,7 +1872,7 @@ window.KOREA_TRAVEL_IMAGES = {
     "height": 400
   },
   "jeonju-hanok-village": {
-    "src": "images/jeonju-hanok-village.webp?v=20260812-1",
+    "src": "images/jeonju-hanok-village.webp?v=20260812-2",
     "pageUrl": "https://www.seoul.co.kr/news/newsView.php?id=20230505500032",
     "filePageUrl": "https://www.seoul.co.kr/news/newsView.php?id=20230505500032",
     "author": "Bing",
@@ -1885,7 +1885,7 @@ window.KOREA_TRAVEL_IMAGES = {
     "height": 799
   },
   "jeonju-zoo": {
-    "src": "images/jeonju-zoo.webp?v=20260812-1",
+    "src": "images/jeonju-zoo.webp?v=20260812-2",
     "pageUrl": "https://www.yna.co.kr/view/AKR20250430070900055",
     "filePageUrl": "https://www.yna.co.kr/view/AKR20250430070900055",
     "author": "Bing",
@@ -1898,7 +1898,7 @@ window.KOREA_TRAVEL_IMAGES = {
     "height": 644
   },
   "jinju-museum": {
-    "src": "images/jinju-museum.webp?v=20260812-1",
+    "src": "images/jinju-museum.webp?v=20260812-2",
     "pageUrl": "https://www.idomin.com/news/articleView.html?idxno=943844",
     "filePageUrl": "https://www.idomin.com/news/articleView.html?idxno=943844",
     "author": "Bing",
@@ -1911,7 +1911,7 @@ window.KOREA_TRAVEL_IMAGES = {
     "height": 426
   },
   "juknokwon": {
-    "src": "images/juknokwon.webp?v=20260812-1",
+    "src": "images/juknokwon.webp?v=20260812-2",
     "pageUrl": "https://news.nate.com/view/20221213n21625?mid=n0207",
     "filePageUrl": "https://news.nate.com/view/20221213n21625?mid=n0207",
     "author": "Bing",
@@ -1924,7 +1924,7 @@ window.KOREA_TRAVEL_IMAGES = {
     "height": 510
   },
   "jwagusan": {
-    "src": "images/jwagusan.webp?v=20260812-1",
+    "src": "images/jwagusan.webp?v=20260812-2",
     "pageUrl": "http://www.jbknews.co.kr/news/articleView.html?idxno=212199",
     "filePageUrl": "http://www.jbknews.co.kr/news/articleView.html?idxno=212199",
     "author": "Bing",
@@ -1937,7 +1937,7 @@ window.KOREA_TRAVEL_IMAGES = {
     "height": 400
   },
   "kidzania-seoul": {
-    "src": "images/kidzania-seoul.webp?v=20260812-1",
+    "src": "images/kidzania-seoul.webp?v=20260812-2",
     "pageUrl": "https://www.thetrippick.com/news/articleView.html?idxno=800",
     "filePageUrl": "https://www.thetrippick.com/news/articleView.html?idxno=800",
     "author": "Bing",
@@ -1950,7 +1950,7 @@ window.KOREA_TRAVEL_IMAGES = {
     "height": 524
   },
   "korea-job-world": {
-    "src": "images/korea-job-world.webp?v=20260812-1",
+    "src": "images/korea-job-world.webp?v=20260812-2",
     "pageUrl": "http://www.shnews.net/news/articleView.html?idxno=49489",
     "filePageUrl": "http://www.shnews.net/news/articleView.html?idxno=49489",
     "author": "Bing",
@@ -1963,7 +1963,7 @@ window.KOREA_TRAVEL_IMAGES = {
     "height": 357
   },
   "korea-manhwa-museum": {
-    "src": "images/korea-manhwa-museum.webp?v=20260812-1",
+    "src": "images/korea-manhwa-museum.webp?v=20260812-2",
     "pageUrl": "https://www.newswhoplus.com/news/articleView.html?idxno=52200",
     "filePageUrl": "https://www.newswhoplus.com/news/articleView.html?idxno=52200",
     "author": "Bing",
@@ -1976,7 +1976,7 @@ window.KOREA_TRAVEL_IMAGES = {
     "height": 400
   },
   "korean-folk-village": {
-    "src": "images/korean-folk-village.webp?v=20260812-1",
+    "src": "images/korean-folk-village.webp?v=20260812-2",
     "pageUrl": "http://www.mediatrip.kr/news/news_view.php?idx_no=10131",
     "filePageUrl": "http://www.mediatrip.kr/news/news_view.php?idx_no=10131",
     "author": "Bing",
@@ -1989,7 +1989,7 @@ window.KOREA_TRAVEL_IMAGES = {
     "height": 427
   },
   "legoland-korea": {
-    "src": "images/legoland-korea.webp?v=20260812-1",
+    "src": "images/legoland-korea.webp?v=20260812-2",
     "pageUrl": "https://theqoo.net/square/3832695103",
     "filePageUrl": "https://theqoo.net/square/3832695103",
     "author": "Bing",
@@ -2002,7 +2002,7 @@ window.KOREA_TRAVEL_IMAGES = {
     "height": 400
   },
   "lighthouse-museum": {
-    "src": "images/lighthouse-museum.webp?v=20260812-1",
+    "src": "images/lighthouse-museum.webp?v=20260812-2",
     "pageUrl": "https://www.yna.co.kr/view/AKR20250117040900053",
     "filePageUrl": "https://www.yna.co.kr/view/AKR20250117040900053",
     "author": "Bing",
@@ -2015,7 +2015,7 @@ window.KOREA_TRAVEL_IMAGES = {
     "height": 800
   },
   "lotte-world-busan": {
-    "src": "images/lotte-world-busan.webp?v=20260812-1",
+    "src": "images/lotte-world-busan.webp?v=20260812-2",
     "pageUrl": "https://ko.wikipedia.org/wiki/%EB%A1%AF%EB%8D%B0%EC%9B%94%EB%93%9C_%EC%96%B4%EB%93%9C%EB%B2%A4%EC%B2%98_%EB%B6%80%EC%82%B0",
     "filePageUrl": "https://commons.wikimedia.org/wiki/File:%EB%B6%80%EC%82%B0_%EB%A1%AF%EB%8D%B0%EC%9B%94%EB%93%9C_%EB%B6%84%EC%88%98.jpg",
     "author": "이중 환상",
@@ -2028,7 +2028,7 @@ window.KOREA_TRAVEL_IMAGES = {
     "height": 2560
   },
   "lotte-world-seoul": {
-    "src": "images/lotte-world-seoul.webp?v=20260812-1",
+    "src": "images/lotte-world-seoul.webp?v=20260812-2",
     "pageUrl": "https://www.hantoday.net/news/articleView.html?idxno=33480",
     "filePageUrl": "https://www.hantoday.net/news/articleView.html?idxno=33480",
     "author": "Bing",
@@ -2041,7 +2041,7 @@ window.KOREA_TRAVEL_IMAGES = {
     "height": 852
   },
   "mancheonha": {
-    "src": "images/mancheonha.webp?v=20260812-1",
+    "src": "images/mancheonha.webp?v=20260812-2",
     "pageUrl": "https://www.telltrip.com/domestic-travel/danyang-mancheonha-skywalk-guide/",
     "filePageUrl": "https://www.telltrip.com/domestic-travel/danyang-mancheonha-skywalk-guide/",
     "author": "Bing",
@@ -2054,7 +2054,7 @@ window.KOREA_TRAVEL_IMAGES = {
     "height": 675
   },
   "may18-records": {
-    "src": "images/may18-records.webp?v=20260812-1",
+    "src": "images/may18-records.webp?v=20260812-2",
     "pageUrl": "https://blog.naver.com/sma9995/223871718814",
     "filePageUrl": "https://blog.naver.com/sma9995/223871718814",
     "author": "Bing",
@@ -2067,7 +2067,7 @@ window.KOREA_TRAVEL_IMAGES = {
     "height": 725
   },
   "miryang-weather-science": {
-    "src": "images/miryang-weather-science.webp?v=20260812-1",
+    "src": "images/miryang-weather-science.webp?v=20260812-2",
     "pageUrl": "https://science.kma.go.kr/miryang/",
     "filePageUrl": "https://science.kma.go.kr/miryang/",
     "author": "Bing",
@@ -2080,7 +2080,7 @@ window.KOREA_TRAVEL_IMAGES = {
     "height": 971
   },
   "mokpo-cable-car": {
-    "src": "images/mokpo-cable-car.webp?v=20260812-1",
+    "src": "images/mokpo-cable-car.webp?v=20260812-2",
     "pageUrl": "http://mmcablecar.com/cablecar/gallery_view.html?board_name=gallery&gotopage=1&no=104",
     "filePageUrl": "http://mmcablecar.com/cablecar/gallery_view.html?board_name=gallery&gotopage=1&no=104",
     "author": "Bing",
@@ -2093,7 +2093,7 @@ window.KOREA_TRAVEL_IMAGES = {
     "height": 1667
   },
   "mountain-museum": {
-    "src": "images/mountain-museum.webp?v=20260812-1",
+    "src": "images/mountain-museum.webp?v=20260812-2",
     "pageUrl": "https://place.tripmate.co.kr/ko/detail.php?contentId=2513889&contentTypeId=14",
     "filePageUrl": "https://place.tripmate.co.kr/ko/detail.php?contentId=2513889&contentTypeId=14",
     "author": "Bing",
@@ -2106,7 +2106,7 @@ window.KOREA_TRAVEL_IMAGES = {
     "height": 626
   },
   "mudeungsan": {
-    "src": "images/mudeungsan.webp?v=20260812-1",
+    "src": "images/mudeungsan.webp?v=20260812-2",
     "pageUrl": "https://tour.gwangju.go.kr/home/board/B0048.cs?act=read&articleId=7078&m=343&pageIndex=1",
     "filePageUrl": "https://tour.gwangju.go.kr/home/board/B0048.cs?act=read&articleId=7078&m=343&pageIndex=1",
     "author": "Bing",
@@ -2119,7 +2119,7 @@ window.KOREA_TRAVEL_IMAGES = {
     "height": 639
   },
   "mungyeong-eco-world": {
-    "src": "images/mungyeong-eco-world.webp?v=20260812-1",
+    "src": "images/mungyeong-eco-world.webp?v=20260812-2",
     "pageUrl": "https://daily.hankooki.com/news/articleView.html?idxno=912830",
     "filePageUrl": "https://daily.hankooki.com/news/articleView.html?idxno=912830",
     "author": "Bing",
@@ -2132,7 +2132,7 @@ window.KOREA_TRAVEL_IMAGES = {
     "height": 337
   },
   "nakdong-estuary": {
-    "src": "images/nakdong-estuary.webp?v=20260812-1",
+    "src": "images/nakdong-estuary.webp?v=20260812-2",
     "pageUrl": "https://www.newspim.com/news/view/20200721000051",
     "filePageUrl": "https://www.newspim.com/news/view/20200721000051",
     "author": "Bing",
@@ -2145,7 +2145,7 @@ window.KOREA_TRAVEL_IMAGES = {
     "height": 453
   },
   "nakdong-river-bioresources": {
-    "src": "images/nakdong-river-bioresources.webp?v=20260812-1",
+    "src": "images/nakdong-river-bioresources.webp?v=20260812-2",
     "pageUrl": "https://www.hkbs.co.kr/news/articleView.html?idxno=799797",
     "filePageUrl": "https://www.hkbs.co.kr/news/articleView.html?idxno=799797",
     "author": "Bing",
@@ -2158,7 +2158,7 @@ window.KOREA_TRAVEL_IMAGES = {
     "height": 407
   },
   "nami-island": {
-    "src": "images/nami-island.webp?v=20260812-1",
+    "src": "images/nami-island.webp?v=20260812-2",
     "pageUrl": "http://www.chamnews.net/news/articleView.html?idxno=220837",
     "filePageUrl": "http://www.chamnews.net/news/articleView.html?idxno=220837",
     "author": "Bing",
@@ -2171,7 +2171,7 @@ window.KOREA_TRAVEL_IMAGES = {
     "height": 400
   },
   "naro-space-center": {
-    "src": "images/naro-space-center.webp?v=20260812-1",
+    "src": "images/naro-space-center.webp?v=20260812-2",
     "pageUrl": "https://www.ilyosisa.co.kr/news/article.html?no=234678",
     "filePageUrl": "https://www.ilyosisa.co.kr/news/article.html?no=234678",
     "author": "Bing",
@@ -2184,7 +2184,7 @@ window.KOREA_TRAVEL_IMAGES = {
     "height": 427
   },
   "national-biological-resources": {
-    "src": "images/national-biological-resources.webp?v=20260812-1",
+    "src": "images/national-biological-resources.webp?v=20260812-2",
     "pageUrl": "https://v.daum.net/v/20220227070114054",
     "filePageUrl": "https://v.daum.net/v/20220227070114054",
     "author": "Bing",
@@ -2197,7 +2197,7 @@ window.KOREA_TRAVEL_IMAGES = {
     "height": 388
   },
   "national-ecology-institute": {
-    "src": "images/national-ecology-institute.webp?v=20260812-1",
+    "src": "images/national-ecology-institute.webp?v=20260812-2",
     "pageUrl": "https://treeworld.co.kr/g_02/44494",
     "filePageUrl": "https://treeworld.co.kr/g_02/44494",
     "author": "Bing",
@@ -2210,7 +2210,7 @@ window.KOREA_TRAVEL_IMAGES = {
     "height": 1440
   },
   "national-fisheries-museum": {
-    "src": "images/national-fisheries-museum.webp?v=20260812-1",
+    "src": "images/national-fisheries-museum.webp?v=20260812-2",
     "pageUrl": "https://m.blog.naver.com/doggudai80/222220365551",
     "filePageUrl": "https://m.blog.naver.com/doggudai80/222220365551",
     "author": "Bing",
@@ -2223,7 +2223,7 @@ window.KOREA_TRAVEL_IMAGES = {
     "height": 533
   },
   "national-folk-museum": {
-    "src": "images/national-folk-museum.webp?v=20260812-1",
+    "src": "images/national-folk-museum.webp?v=20260812-2",
     "pageUrl": "https://data.si.re.kr/photo/01100244Cc8000",
     "filePageUrl": "https://data.si.re.kr/photo/01100244Cc8000",
     "author": "Bing",
@@ -2236,7 +2236,7 @@ window.KOREA_TRAVEL_IMAGES = {
     "height": 600
   },
   "national-maritime-museum": {
-    "src": "images/national-maritime-museum.webp?v=20260812-1",
+    "src": "images/national-maritime-museum.webp?v=20260812-2",
     "pageUrl": "https://www.fnnews.com/news/202504020942017600",
     "filePageUrl": "https://www.fnnews.com/news/202504020942017600",
     "author": "Bing",
@@ -2249,7 +2249,7 @@ window.KOREA_TRAVEL_IMAGES = {
     "height": 479
   },
   "national-museum-korea": {
-    "src": "images/national-museum-korea.webp?v=20260812-1",
+    "src": "images/national-museum-korea.webp?v=20260812-2",
     "pageUrl": "https://www.tripadvisor.co.kr/Attraction_Review-g294197-d325043-Reviews-National_Museum_Of_Korea-Seoul.html",
     "filePageUrl": "https://www.tripadvisor.co.kr/Attraction_Review-g294197-d325043-Reviews-National_Museum_Of_Korea-Seoul.html",
     "author": "Bing",
@@ -2262,7 +2262,7 @@ window.KOREA_TRAVEL_IMAGES = {
     "height": 800
   },
   "national-science-museum": {
-    "src": "images/national-science-museum.webp?v=20260812-1",
+    "src": "images/national-science-museum.webp?v=20260812-2",
     "pageUrl": "https://www.hani.co.kr/arti/society/schooling/1088722.html",
     "filePageUrl": "https://www.hani.co.kr/arti/society/schooling/1088722.html",
     "author": "Bing",
@@ -2275,7 +2275,7 @@ window.KOREA_TRAVEL_IMAGES = {
     "height": 545
   },
   "nfm-paju": {
-    "src": "images/nfm-paju.webp?v=20260812-1",
+    "src": "images/nfm-paju.webp?v=20260812-2",
     "pageUrl": "https://v.daum.net/v/20210909160607138",
     "filePageUrl": "https://v.daum.net/v/20210909160607138",
     "author": "Bing",
@@ -2288,7 +2288,7 @@ window.KOREA_TRAVEL_IMAGES = {
     "height": 405
   },
   "noljasoop": {
-    "src": "images/noljasoop.webp?v=20260812-1",
+    "src": "images/noljasoop.webp?v=20260812-2",
     "pageUrl": "https://www.hani.co.kr/arti/area/capital/990855.html",
     "filePageUrl": "https://www.hani.co.kr/arti/area/capital/990855.html",
     "author": "Bing",
@@ -2301,7 +2301,7 @@ window.KOREA_TRAVEL_IMAGES = {
     "height": 632
   },
   "oeam-village": {
-    "src": "images/oeam-village.webp?v=20260812-1",
+    "src": "images/oeam-village.webp?v=20260812-2",
     "pageUrl": "https://www.startupn.kr/news/articleView.html?idxno=41216",
     "filePageUrl": "https://www.startupn.kr/news/articleView.html?idxno=41216",
     "author": "Bing",
@@ -2314,7 +2314,7 @@ window.KOREA_TRAVEL_IMAGES = {
     "height": 434
   },
   "onggi-village": {
-    "src": "images/onggi-village.webp?v=20260812-1",
+    "src": "images/onggi-village.webp?v=20260812-2",
     "pageUrl": "https://www.telltrip.com/festival/the-largest-traditional-onggi-community/",
     "filePageUrl": "https://www.telltrip.com/festival/the-largest-traditional-onggi-community/",
     "author": "Bing",
@@ -2327,7 +2327,7 @@ window.KOREA_TRAVEL_IMAGES = {
     "height": 800
   },
   "park-981-jeju": {
-    "src": "images/park-981-jeju.webp?v=20260812-1",
+    "src": "images/park-981-jeju.webp?v=20260812-2",
     "pageUrl": "https://kind.krx.co.kr/external/2025/06/11/000595/20250611001639/10081.htm",
     "filePageUrl": "https://kind.krx.co.kr/external/2025/06/11/000595/20250611001639/10081.htm",
     "author": "Bing",
@@ -2340,7 +2340,7 @@ window.KOREA_TRAVEL_IMAGES = {
     "height": 1240
   },
   "presidential-archives": {
-    "src": "images/presidential-archives.webp?v=20260812-1",
+    "src": "images/presidential-archives.webp?v=20260812-2",
     "pageUrl": "https://www.nanumnews.com/64232",
     "filePageUrl": "https://www.nanumnews.com/64232",
     "author": "Bing",
@@ -2353,7 +2353,7 @@ window.KOREA_TRAVEL_IMAGES = {
     "height": 363
   },
   "railroad-museum": {
-    "src": "images/railroad-museum.webp?v=20260812-1",
+    "src": "images/railroad-museum.webp?v=20260812-2",
     "pageUrl": "https://www.redaily.co.kr/news/articleView.html?idxno=5133",
     "filePageUrl": "https://www.redaily.co.kr/news/articleView.html?idxno=5133",
     "author": "Bing",
@@ -2366,7 +2366,7 @@ window.KOREA_TRAVEL_IMAGES = {
     "height": 720
   },
   "regional-001": {
-    "src": "images/regional-001.webp?v=20260812-1",
+    "src": "images/regional-001.webp?v=20260812-2",
     "pageUrl": "https://cielsoft.kr/south-korea-tourist-attractions-info-250467",
     "filePageUrl": "https://cielsoft.kr/south-korea-tourist-attractions-info-250467",
     "author": "Bing",
@@ -2379,7 +2379,7 @@ window.KOREA_TRAVEL_IMAGES = {
     "height": 467
   },
   "regional-002": {
-    "src": "images/regional-002.webp?v=20260812-1",
+    "src": "images/regional-002.webp?v=20260812-2",
     "pageUrl": "http://tmnhm.co.kr/%EB%B0%95%EB%AC%BC%EA%B4%80-%EC%9D%B4%EC%95%BC%EA%B8%B0%EC%84%A4%EB%A6%BD%EB%B0%B0%EA%B2%BD/",
     "filePageUrl": "http://tmnhm.co.kr/%EB%B0%95%EB%AC%BC%EA%B4%80-%EC%9D%B4%EC%95%BC%EA%B8%B0%EC%84%A4%EB%A6%BD%EB%B0%B0%EA%B2%BD/",
     "author": "Bing",
@@ -2392,7 +2392,7 @@ window.KOREA_TRAVEL_IMAGES = {
     "height": 1236
   },
   "regional-004": {
-    "src": "images/regional-004.webp?v=20260812-1",
+    "src": "images/regional-004.webp?v=20260812-2",
     "pageUrl": "https://www.localview.co.kr/store/detail.asp?seq=100974579",
     "filePageUrl": "https://www.localview.co.kr/store/detail.asp?seq=100974579",
     "author": "Bing",
@@ -2405,7 +2405,7 @@ window.KOREA_TRAVEL_IMAGES = {
     "height": 466
   },
   "regional-007": {
-    "src": "images/regional-007.webp?v=20260812-1",
+    "src": "images/regional-007.webp?v=20260812-2",
     "pageUrl": "https://www.gangjintoday.co.kr/news/articleView.html?idxno=5878",
     "filePageUrl": "https://www.gangjintoday.co.kr/news/articleView.html?idxno=5878",
     "author": "Bing",
@@ -2418,7 +2418,7 @@ window.KOREA_TRAVEL_IMAGES = {
     "height": 382
   },
   "regional-011": {
-    "src": "images/regional-011.webp?v=20260812-1",
+    "src": "images/regional-011.webp?v=20260812-2",
     "pageUrl": "https://www.dbltv.com/news/articleView.html?idxno=23050",
     "filePageUrl": "https://www.dbltv.com/news/articleView.html?idxno=23050",
     "author": "Bing",
@@ -2431,7 +2431,7 @@ window.KOREA_TRAVEL_IMAGES = {
     "height": 510
   },
   "regional-013": {
-    "src": "images/regional-013.webp?v=20260812-1",
+    "src": "images/regional-013.webp?v=20260812-2",
     "pageUrl": "http://www.weeklycarnews.com/news/articleView.html?idxno=40147",
     "filePageUrl": "http://www.weeklycarnews.com/news/articleView.html?idxno=40147",
     "author": "Bing",
@@ -2444,7 +2444,7 @@ window.KOREA_TRAVEL_IMAGES = {
     "height": 366
   },
   "regional-014": {
-    "src": "images/regional-014.webp?v=20260812-1",
+    "src": "images/regional-014.webp?v=20260812-2",
     "pageUrl": "https://in.naver.com/yenny/contents/internal/868425669392288",
     "filePageUrl": "https://in.naver.com/yenny/contents/internal/868425669392288",
     "author": "Bing",
@@ -2457,7 +2457,7 @@ window.KOREA_TRAVEL_IMAGES = {
     "height": 557
   },
   "regional-018": {
-    "src": "images/regional-018.webp?v=20260812-1",
+    "src": "images/regional-018.webp?v=20260812-2",
     "pageUrl": "https://theqoo.net/square/2825167612",
     "filePageUrl": "https://theqoo.net/square/2825167612",
     "author": "Bing",
@@ -2470,7 +2470,7 @@ window.KOREA_TRAVEL_IMAGES = {
     "height": 1365
   },
   "regional-019": {
-    "src": "images/regional-019.webp?v=20260812-1",
+    "src": "images/regional-019.webp?v=20260812-2",
     "pageUrl": "https://daily.hankooki.com/news/articleView.html?idxno=979610",
     "filePageUrl": "https://daily.hankooki.com/news/articleView.html?idxno=979610",
     "author": "Bing",
@@ -2483,7 +2483,7 @@ window.KOREA_TRAVEL_IMAGES = {
     "height": 337
   },
   "regional-022": {
-    "src": "images/regional-022.webp?v=20260812-1",
+    "src": "images/regional-022.webp?v=20260812-2",
     "pageUrl": "https://www.namwon.net/index.php?mid=education&document_srl=69284",
     "filePageUrl": "https://www.namwon.net/index.php?mid=education&document_srl=69284",
     "author": "Bing",
@@ -2496,7 +2496,7 @@ window.KOREA_TRAVEL_IMAGES = {
     "height": 469
   },
   "regional-023": {
-    "src": "images/regional-023.webp?v=20260812-1",
+    "src": "images/regional-023.webp?v=20260812-2",
     "pageUrl": "https://www.jjan.kr/article/20240121580204",
     "filePageUrl": "https://www.jjan.kr/article/20240121580204",
     "author": "Bing",
@@ -2509,7 +2509,7 @@ window.KOREA_TRAVEL_IMAGES = {
     "height": 357
   },
   "regional-031": {
-    "src": "images/regional-031.webp?v=20260812-1",
+    "src": "images/regional-031.webp?v=20260812-2",
     "pageUrl": "https://www.knnewstoday.co.kr/news/articleView.html?idxno=312994",
     "filePageUrl": "https://www.knnewstoday.co.kr/news/articleView.html?idxno=312994",
     "author": "Bing",
@@ -2522,7 +2522,7 @@ window.KOREA_TRAVEL_IMAGES = {
     "height": 449
   },
   "regional-033": {
-    "src": "images/regional-033.webp?v=20260812-1",
+    "src": "images/regional-033.webp?v=20260812-2",
     "pageUrl": "https://www.youtube.com/watch?v=bnw-Hb8HksM",
     "filePageUrl": "https://www.youtube.com/watch?v=bnw-Hb8HksM",
     "author": "Bing",
@@ -2535,7 +2535,7 @@ window.KOREA_TRAVEL_IMAGES = {
     "height": 720
   },
   "regional-037": {
-    "src": "images/regional-037.webp?v=20260812-1",
+    "src": "images/regional-037.webp?v=20260812-2",
     "pageUrl": "https://www.imaeil.com/page/view/2022101714570853917",
     "filePageUrl": "https://www.imaeil.com/page/view/2022101714570853917",
     "author": "Bing",
@@ -2548,7 +2548,7 @@ window.KOREA_TRAVEL_IMAGES = {
     "height": 427
   },
   "regional-038": {
-    "src": "images/regional-038.webp?v=20260812-1",
+    "src": "images/regional-038.webp?v=20260812-2",
     "pageUrl": "https://news.bbsi.co.kr/news/articleView.html?idxno=4047551",
     "filePageUrl": "https://news.bbsi.co.kr/news/articleView.html?idxno=4047551",
     "author": "Bing",
@@ -2561,7 +2561,7 @@ window.KOREA_TRAVEL_IMAGES = {
     "height": 540
   },
   "regional-039": {
-    "src": "images/regional-039.webp?v=20260812-1",
+    "src": "images/regional-039.webp?v=20260812-2",
     "pageUrl": "https://www.knnewstoday.co.kr/news/articleView.html?idxno=312787",
     "filePageUrl": "https://www.knnewstoday.co.kr/news/articleView.html?idxno=312787",
     "author": "Bing",
@@ -2574,7 +2574,7 @@ window.KOREA_TRAVEL_IMAGES = {
     "height": 540
   },
   "regional-040": {
-    "src": "images/regional-040.webp?v=20260812-1",
+    "src": "images/regional-040.webp?v=20260812-2",
     "pageUrl": "https://www.kndaily.co.kr/news/articleView.html?idxno=71719",
     "filePageUrl": "https://www.kndaily.co.kr/news/articleView.html?idxno=71719",
     "author": "Bing",
@@ -2587,7 +2587,7 @@ window.KOREA_TRAVEL_IMAGES = {
     "height": 428
   },
   "regional-041": {
-    "src": "images/regional-041.webp?v=20260812-1",
+    "src": "images/regional-041.webp?v=20260812-2",
     "pageUrl": "https://www.knnewstoday.co.kr/news/articleView.html?idxno=315666",
     "filePageUrl": "https://www.knnewstoday.co.kr/news/articleView.html?idxno=315666",
     "author": "Bing",
@@ -2600,7 +2600,7 @@ window.KOREA_TRAVEL_IMAGES = {
     "height": 402
   },
   "regional-042": {
-    "src": "images/regional-042.webp?v=20260812-1",
+    "src": "images/regional-042.webp?v=20260812-2",
     "pageUrl": "https://blog.naver.com/manhoc2002/221461519399",
     "filePageUrl": "https://blog.naver.com/manhoc2002/221461519399",
     "author": "Bing",
@@ -2613,7 +2613,7 @@ window.KOREA_TRAVEL_IMAGES = {
     "height": 419
   },
   "regional-048": {
-    "src": "images/regional-048.webp?v=20260812-1",
+    "src": "images/regional-048.webp?v=20260812-2",
     "pageUrl": "https://www.vegannews.co.kr/news/article.html?no=246044",
     "filePageUrl": "https://www.vegannews.co.kr/news/article.html?no=246044",
     "author": "Bing",
@@ -2626,7 +2626,7 @@ window.KOREA_TRAVEL_IMAGES = {
     "height": 500
   },
   "regional-049": {
-    "src": "images/regional-049.webp?v=20260812-1",
+    "src": "images/regional-049.webp?v=20260812-2",
     "pageUrl": "https://www.shinailbo.co.kr/news/articleView.html?idxno=2153531",
     "filePageUrl": "https://www.shinailbo.co.kr/news/articleView.html?idxno=2153531",
     "author": "Bing",
@@ -2639,7 +2639,7 @@ window.KOREA_TRAVEL_IMAGES = {
     "height": 355
   },
   "regional-051": {
-    "src": "images/regional-051.webp?v=20260812-1",
+    "src": "images/regional-051.webp?v=20260812-2",
     "pageUrl": "https://ko.wikipedia.org/wiki/%EC%82%BC%EC%84%B1%ED%99%94%EC%9E%AC%EA%B5%90%ED%86%B5%EB%B0%95%EB%AC%BC%EA%B4%80",
     "filePageUrl": "https://commons.wikimedia.org/wiki/File:1998_Samsung_SM530L_KPQ_Black_(1).jpg",
     "author": "Damian B Oh",
@@ -2652,7 +2652,7 @@ window.KOREA_TRAVEL_IMAGES = {
     "height": 1440
   },
   "regional-053": {
-    "src": "images/regional-053.webp?v=20260812-1",
+    "src": "images/regional-053.webp?v=20260812-2",
     "pageUrl": "https://www.ansantimes.co.kr/news/articleView.html?idxno=74376",
     "filePageUrl": "https://www.ansantimes.co.kr/news/articleView.html?idxno=74376",
     "author": "Bing",
@@ -2665,7 +2665,7 @@ window.KOREA_TRAVEL_IMAGES = {
     "height": 854
   },
   "regional-059": {
-    "src": "images/regional-059.webp?v=20260812-1",
+    "src": "images/regional-059.webp?v=20260812-2",
     "pageUrl": "http://www.ktsketch.co.kr/news/articleView.html?idxno=7464",
     "filePageUrl": "http://www.ktsketch.co.kr/news/articleView.html?idxno=7464",
     "author": "Bing",
@@ -2678,7 +2678,7 @@ window.KOREA_TRAVEL_IMAGES = {
     "height": 1440
   },
   "regional-a033": {
-    "src": "images/regional-a033.webp?v=20260812-1",
+    "src": "images/regional-a033.webp?v=20260812-2",
     "pageUrl": "https://brunch.co.kr/@ariasmiraa/104",
     "filePageUrl": "https://brunch.co.kr/@ariasmiraa/104",
     "author": "Bing",
@@ -2691,7 +2691,7 @@ window.KOREA_TRAVEL_IMAGES = {
     "height": 960
   },
   "regional-a034": {
-    "src": "images/regional-a034.webp?v=20260812-1",
+    "src": "images/regional-a034.webp?v=20260812-2",
     "pageUrl": "https://www.jjan.kr/article/20211019742293",
     "filePageUrl": "https://www.jjan.kr/article/20211019742293",
     "author": "Bing",
@@ -2704,7 +2704,7 @@ window.KOREA_TRAVEL_IMAGES = {
     "height": 379
   },
   "regional-a035": {
-    "src": "images/regional-a035.webp?v=20260812-1",
+    "src": "images/regional-a035.webp?v=20260812-2",
     "pageUrl": "http://designgg.com/portfolio-posts/%EA%B8%B0%EC%83%81%EC%B2%AD-%EA%B5%AD%EB%A6%BD%EC%A0%84%EB%B6%81%EA%B8%B0%EC%83%81%EA%B3%BC%ED%95%99%EA%B4%80-%EC%82%AC%EC%9D%B4%EB%B2%84%EA%B3%BC%ED%95%99%EA%B4%80/",
     "filePageUrl": "http://designgg.com/portfolio-posts/%EA%B8%B0%EC%83%81%EC%B2%AD-%EA%B5%AD%EB%A6%BD%EC%A0%84%EB%B6%81%EA%B8%B0%EC%83%81%EA%B3%BC%ED%95%99%EA%B4%80-%EC%82%AC%EC%9D%B4%EB%B2%84%EA%B3%BC%ED%95%99%EA%B4%80/",
     "author": "Bing",
@@ -2717,7 +2717,7 @@ window.KOREA_TRAVEL_IMAGES = {
     "height": 600
   },
   "regional-a036": {
-    "src": "images/regional-a036.webp?v=20260812-1",
+    "src": "images/regional-a036.webp?v=20260812-2",
     "pageUrl": "https://ko.wikipedia.org/wiki/%EB%8F%99%ED%95%99%EB%86%8D%EB%AF%BC%ED%98%81%EB%AA%85%EA%B8%B0%EB%85%90%EA%B4%80",
     "filePageUrl": "https://commons.wikimedia.org/wiki/File:Donghak_Peasant_Revolution_Foundation.jpg",
     "author": "고려",
@@ -2730,7 +2730,7 @@ window.KOREA_TRAVEL_IMAGES = {
     "height": 1080
   },
   "regional-a037": {
-    "src": "images/regional-a037.webp?v=20260812-1",
+    "src": "images/regional-a037.webp?v=20260812-2",
     "pageUrl": "https://blog.naver.com/okm12313/223997806487",
     "filePageUrl": "https://blog.naver.com/okm12313/223997806487",
     "author": "Bing",
@@ -2743,7 +2743,7 @@ window.KOREA_TRAVEL_IMAGES = {
     "height": 421
   },
   "regional-a038": {
-    "src": "images/regional-a038.webp?v=20260812-1",
+    "src": "images/regional-a038.webp?v=20260812-2",
     "pageUrl": "https://www.ydct.org/board/gallery/read/17",
     "filePageUrl": "https://www.ydct.org/board/gallery/read/17",
     "author": "Bing",
@@ -2756,7 +2756,7 @@ window.KOREA_TRAVEL_IMAGES = {
     "height": 1000
   },
   "regional-a039": {
-    "src": "images/regional-a039.webp?v=20260812-1",
+    "src": "images/regional-a039.webp?v=20260812-2",
     "pageUrl": "http://localsegye.co.kr/news/view/1065602989295288",
     "filePageUrl": "http://localsegye.co.kr/news/view/1065602989295288",
     "author": "Bing",
@@ -2769,7 +2769,7 @@ window.KOREA_TRAVEL_IMAGES = {
     "height": 466
   },
   "regional-exact-hwaseong-fossil": {
-    "src": "images/regional-exact-hwaseong-fossil.webp?v=20260812-1",
+    "src": "images/regional-exact-hwaseong-fossil.webp?v=20260812-2",
     "pageUrl": "https://www.ohmynews.com/NWS_Web/View/img_pg.aspx?CNTN_CD=IE003271132",
     "filePageUrl": "https://www.ohmynews.com/NWS_Web/View/img_pg.aspx?CNTN_CD=IE003271132",
     "author": "Bing",
@@ -2782,7 +2782,7 @@ window.KOREA_TRAVEL_IMAGES = {
     "height": 399
   },
   "regional-exact-hwasun-dolmen": {
-    "src": "images/regional-exact-hwasun-dolmen.webp?v=20260812-1",
+    "src": "images/regional-exact-hwasun-dolmen.webp?v=20260812-2",
     "pageUrl": "https://www.ibtravel.co.kr/travel/19403/",
     "filePageUrl": "https://www.ibtravel.co.kr/travel/19403/",
     "author": "Bing",
@@ -2795,7 +2795,7 @@ window.KOREA_TRAVEL_IMAGES = {
     "height": 1792
   },
   "regional-f036": {
-    "src": "images/regional-f036.webp?v=20260812-1",
+    "src": "images/regional-f036.webp?v=20260812-2",
     "pageUrl": "https://tv.naver.com/v/30773461",
     "filePageUrl": "https://tv.naver.com/v/30773461",
     "author": "Bing",
@@ -2808,7 +2808,7 @@ window.KOREA_TRAVEL_IMAGES = {
     "height": 624
   },
   "regional-f037": {
-    "src": "images/regional-f037.webp?v=20260812-1",
+    "src": "images/regional-f037.webp?v=20260812-2",
     "pageUrl": "https://view.nate.com/travel/view/196378/",
     "filePageUrl": "https://view.nate.com/travel/view/196378/",
     "author": "Bing",
@@ -2821,7 +2821,7 @@ window.KOREA_TRAVEL_IMAGES = {
     "height": 645
   },
   "regional-f038": {
-    "src": "images/regional-f038.webp?v=20260812-1",
+    "src": "images/regional-f038.webp?v=20260812-2",
     "pageUrl": "https://www.fnnews.com/news/202410090732325210",
     "filePageUrl": "https://www.fnnews.com/news/202410090732325210",
     "author": "Bing",
@@ -2834,7 +2834,7 @@ window.KOREA_TRAVEL_IMAGES = {
     "height": 532
   },
   "regional-r026": {
-    "src": "images/regional-r026.webp?v=20260812-1",
+    "src": "images/regional-r026.webp?v=20260812-2",
     "pageUrl": "https://museum.or.kr/museum-member/%EB%B2%BD%EA%B3%A8%EC%A0%9C%EB%86%8D%EA%B2%BD%EB%AC%B8%ED%99%94%EB%B0%95%EB%AC%BC%EA%B4%80/",
     "filePageUrl": "https://museum.or.kr/museum-member/%EB%B2%BD%EA%B3%A8%EC%A0%9C%EB%86%8D%EA%B2%BD%EB%AC%B8%ED%99%94%EB%B0%95%EB%AC%BC%EA%B4%80/",
     "author": "Bing",
@@ -2847,7 +2847,7 @@ window.KOREA_TRAVEL_IMAGES = {
     "height": 600
   },
   "regional-r027": {
-    "src": "images/regional-r027.webp?v=20260812-1",
+    "src": "images/regional-r027.webp?v=20260812-2",
     "pageUrl": "https://www.spacea.com/renew/works_detail.html?idx=686",
     "filePageUrl": "https://www.spacea.com/renew/works_detail.html?idx=686",
     "author": "Bing",
@@ -2860,7 +2860,7 @@ window.KOREA_TRAVEL_IMAGES = {
     "height": 674
   },
   "regional-r030": {
-    "src": "images/regional-r030.webp?v=20260812-1",
+    "src": "images/regional-r030.webp?v=20260812-2",
     "pageUrl": "https://www.ajunews.com/view/20230620101801343",
     "filePageUrl": "https://www.ajunews.com/view/20230620101801343",
     "author": "Bing",
@@ -2873,7 +2873,7 @@ window.KOREA_TRAVEL_IMAGES = {
     "height": 480
   },
   "regional-r032": {
-    "src": "images/regional-r032.webp?v=20260812-1",
+    "src": "images/regional-r032.webp?v=20260812-2",
     "pageUrl": "https://www.shinailbo.co.kr/news/articleView.html?idxno=1766226",
     "filePageUrl": "https://www.shinailbo.co.kr/news/articleView.html?idxno=1766226",
     "author": "Bing",
@@ -2886,7 +2886,7 @@ window.KOREA_TRAVEL_IMAGES = {
     "height": 309
   },
   "robot-land": {
-    "src": "images/robot-land.webp?v=20260812-1",
+    "src": "images/robot-land.webp?v=20260812-2",
     "pageUrl": "http://monthly.knnews.co.kr/news/articleView.html?idxno=585",
     "filePageUrl": "http://monthly.knnews.co.kr/news/articleView.html?idxno=585",
     "author": "Bing",
@@ -2899,7 +2899,7 @@ window.KOREA_TRAVEL_IMAGES = {
     "height": 634
   },
   "sacheon-aerospace-museum": {
-    "src": "images/sacheon-aerospace-museum.webp?v=20260812-1",
+    "src": "images/sacheon-aerospace-museum.webp?v=20260812-2",
     "pageUrl": "http://www.traveli.co.kr/read/contentsView/875/26",
     "filePageUrl": "http://www.traveli.co.kr/read/contentsView/875/26",
     "author": "Bing",
@@ -2912,7 +2912,7 @@ window.KOREA_TRAVEL_IMAGES = {
     "height": 408
   },
   "saemangeum-museum": {
-    "src": "images/saemangeum-museum.webp?v=20260812-1",
+    "src": "images/saemangeum-museum.webp?v=20260812-2",
     "pageUrl": "https://www.news1.kr/local/jeonbuk/5590167",
     "filePageUrl": "https://www.news1.kr/local/jeonbuk/5590167",
     "author": "Bing",
@@ -2925,7 +2925,7 @@ window.KOREA_TRAVEL_IMAGES = {
     "height": 788
   },
   "samyang-round-hill": {
-    "src": "images/samyang-round-hill.webp?v=20260812-1",
+    "src": "images/samyang-round-hill.webp?v=20260812-2",
     "pageUrl": "https://www.koreatriptips.com/en/tourist-attractions/2818896.html",
     "filePageUrl": "https://www.koreatriptips.com/en/tourist-attractions/2818896.html",
     "author": "Bing",
@@ -2938,7 +2938,7 @@ window.KOREA_TRAVEL_IMAGES = {
     "height": 627
   },
   "sea-life-busan": {
-    "src": "images/sea-life-busan.webp?v=20260812-1",
+    "src": "images/sea-life-busan.webp?v=20260812-2",
     "pageUrl": "https://triple.guide/tna/products/c78292f3-067b-48ca-aa08-86dbe6511525",
     "filePageUrl": "https://triple.guide/tna/products/c78292f3-067b-48ca-aa08-86dbe6511525",
     "author": "Bing",
@@ -2951,7 +2951,7 @@ window.KOREA_TRAVEL_IMAGES = {
     "height": 1024
   },
   "seaquarium-seocheon": {
-    "src": "images/seaquarium-seocheon.webp?v=20260812-1",
+    "src": "images/seaquarium-seocheon.webp?v=20260812-2",
     "pageUrl": "https://museum.or.kr/museum-member/%EA%B5%AD%EB%A6%BD%ED%95%B4%EC%96%91%EC%83%9D%EB%AC%BC%EC%9E%90%EC%9B%90%EA%B4%80-%EC%94%A8%ED%81%90%EB%A6%AC%EC%9B%80/",
     "filePageUrl": "https://museum.or.kr/museum-member/%EA%B5%AD%EB%A6%BD%ED%95%B4%EC%96%91%EC%83%9D%EB%AC%BC%EC%9E%90%EC%9B%90%EA%B4%80-%EC%94%A8%ED%81%90%EB%A6%AC%EC%9B%80/",
     "author": "Bing",
@@ -2964,7 +2964,7 @@ window.KOREA_TRAVEL_IMAGES = {
     "height": 600
   },
   "sejong-arboretum": {
-    "src": "images/sejong-arboretum.webp?v=20260812-1",
+    "src": "images/sejong-arboretum.webp?v=20260812-2",
     "pageUrl": "https://www.sedaily.com/NewsView/26DJ80CHAB",
     "filePageUrl": "https://www.sedaily.com/NewsView/26DJ80CHAB",
     "author": "Bing",
@@ -2977,7 +2977,7 @@ window.KOREA_TRAVEL_IMAGES = {
     "height": 397
   },
   "seodaemun-natural-history": {
-    "src": "images/seodaemun-natural-history.webp?v=20260812-1",
+    "src": "images/seodaemun-natural-history.webp?v=20260812-2",
     "pageUrl": "https://www.doopedia.co.kr/travel/viewContent.do?idx=220530000147748",
     "filePageUrl": "https://www.doopedia.co.kr/travel/viewContent.do?idx=220530000147748",
     "author": "Bing",
@@ -2990,7 +2990,7 @@ window.KOREA_TRAVEL_IMAGES = {
     "height": 683
   },
   "seodaemun-prison": {
-    "src": "images/seodaemun-prison.webp?v=20260812-1",
+    "src": "images/seodaemun-prison.webp?v=20260812-2",
     "pageUrl": "https://www.newswhoplus.com/news/articleView.html?idxno=48640",
     "filePageUrl": "https://www.newswhoplus.com/news/articleView.html?idxno=48640",
     "author": "Bing",
@@ -3003,7 +3003,7 @@ window.KOREA_TRAVEL_IMAGES = {
     "height": 343
   },
   "seokguram": {
-    "src": "images/seokguram.webp?v=20260812-1",
+    "src": "images/seokguram.webp?v=20260812-2",
     "pageUrl": "https://www.ulsanpress.net/news/articleView.html?idxno=370053",
     "filePageUrl": "https://www.ulsanpress.net/news/articleView.html?idxno=370053",
     "author": "Bing",
@@ -3016,7 +3016,7 @@ window.KOREA_TRAVEL_IMAGES = {
     "height": 538
   },
   "seongsan-ilchulbong": {
-    "src": "images/seongsan-ilchulbong.webp?v=20260812-1",
+    "src": "images/seongsan-ilchulbong.webp?v=20260812-2",
     "pageUrl": "https://www.pinterest.co.kr/pin/37225134405089672/",
     "filePageUrl": "https://www.pinterest.co.kr/pin/37225134405089672/",
     "author": "Bing",
@@ -3029,7 +3029,7 @@ window.KOREA_TRAVEL_IMAGES = {
     "height": 3752
   },
   "seoul-botanic-park": {
-    "src": "images/seoul-botanic-park.webp?v=20260812-1",
+    "src": "images/seoul-botanic-park.webp?v=20260812-2",
     "pageUrl": "https://www.the-pr.co.kr/news/articleView.html?idxno=60743",
     "filePageUrl": "https://www.the-pr.co.kr/news/articleView.html?idxno=60743",
     "author": "Bing",
@@ -3042,7 +3042,7 @@ window.KOREA_TRAVEL_IMAGES = {
     "height": 467
   },
   "seoul-children-park": {
-    "src": "images/seoul-children-park.webp?v=20260812-1",
+    "src": "images/seoul-children-park.webp?v=20260812-2",
     "pageUrl": "https://ko.wikipedia.org/wiki/%EC%84%9C%EC%9A%B8%EC%96%B4%EB%A6%B0%EC%9D%B4%EB%8C%80%EA%B3%B5%EC%9B%90",
     "filePageUrl": "https://commons.wikimedia.org/wiki/File:Seoul_Childrens_Grand_Park_Main_Gate.jpg",
     "author": "Integral",
@@ -3055,7 +3055,7 @@ window.KOREA_TRAVEL_IMAGES = {
     "height": 1200
   },
   "seoul-grand-park": {
-    "src": "images/seoul-grand-park.webp?v=20260812-1",
+    "src": "images/seoul-grand-park.webp?v=20260812-2",
     "pageUrl": "http://www.tlnews.co.kr/news/articleView.html?idxno=11053",
     "filePageUrl": "http://www.tlnews.co.kr/news/articleView.html?idxno=11053",
     "author": "Bing",
@@ -3068,7 +3068,7 @@ window.KOREA_TRAVEL_IMAGES = {
     "height": 388
   },
   "seoul-land": {
-    "src": "images/seoul-land.webp?v=20260812-1",
+    "src": "images/seoul-land.webp?v=20260812-2",
     "pageUrl": "https://gwacheon-senior.com/opinion/10863/",
     "filePageUrl": "https://gwacheon-senior.com/opinion/10863/",
     "author": "Bing",
@@ -3081,7 +3081,7 @@ window.KOREA_TRAVEL_IMAGES = {
     "height": 864
   },
   "seoul-sangsangnara": {
-    "src": "images/seoul-sangsangnara.webp?v=20260812-1",
+    "src": "images/seoul-sangsangnara.webp?v=20260812-2",
     "pageUrl": "https://www.wegive.co.kr/contents/wetownDetail/1897833",
     "filePageUrl": "https://www.wegive.co.kr/contents/wetownDetail/1897833",
     "author": "Bing",
@@ -3094,7 +3094,7 @@ window.KOREA_TRAVEL_IMAGES = {
     "height": 626
   },
   "siheung-gaetgol": {
-    "src": "images/siheung-gaetgol.webp?v=20260812-1",
+    "src": "images/siheung-gaetgol.webp?v=20260812-2",
     "pageUrl": "https://www.telltrip.com/domestic-travel/siheung-gaetgol-eco-park-salt-farm/",
     "filePageUrl": "https://www.telltrip.com/domestic-travel/siheung-gaetgol-eco-park-salt-farm/",
     "author": "Bing",
@@ -3107,7 +3107,7 @@ window.KOREA_TRAVEL_IMAGES = {
     "height": 675
   },
   "snoopy-garden": {
-    "src": "images/snoopy-garden.webp?v=20260812-1",
+    "src": "images/snoopy-garden.webp?v=20260812-2",
     "pageUrl": "https://www.wegive.co.kr/contents/wetownDetail/2714222",
     "filePageUrl": "https://www.wegive.co.kr/contents/wetownDetail/2714222",
     "author": "Bing",
@@ -3120,7 +3120,7 @@ window.KOREA_TRAVEL_IMAGES = {
     "height": 627
   },
   "sogeumsan": {
-    "src": "images/sogeumsan.webp?v=20260812-1",
+    "src": "images/sogeumsan.webp?v=20260812-2",
     "pageUrl": "https://go.seoul.co.kr/news/newsView.php?id=20240906500237",
     "filePageUrl": "https://go.seoul.co.kr/news/newsView.php?id=20240906500237",
     "author": "Bing",
@@ -3133,7 +3133,7 @@ window.KOREA_TRAVEL_IMAGES = {
     "height": 1050
   },
   "sorae-wetland": {
-    "src": "images/sorae-wetland.webp?v=20260812-1",
+    "src": "images/sorae-wetland.webp?v=20260812-2",
     "pageUrl": "https://ic.newdaily.co.kr/site/data/html/2025/08/17/2025081700073.html",
     "filePageUrl": "https://ic.newdaily.co.kr/site/data/html/2025/08/17/2025081700073.html",
     "author": "Bing",
@@ -3146,7 +3146,7 @@ window.KOREA_TRAVEL_IMAGES = {
     "height": 584
   },
   "sudoguksan-museum": {
-    "src": "images/sudoguksan-museum.webp?v=20260812-1",
+    "src": "images/sudoguksan-museum.webp?v=20260812-2",
     "pageUrl": "http://www.mkinews.com/news/articleView.html?idxno=13290",
     "filePageUrl": "http://www.mkinews.com/news/articleView.html?idxno=13290",
     "author": "Bing",
@@ -3159,7 +3159,7 @@ window.KOREA_TRAVEL_IMAGES = {
     "height": 449
   },
   "suncheon-garden": {
-    "src": "images/suncheon-garden.webp?v=20260812-1",
+    "src": "images/suncheon-garden.webp?v=20260812-2",
     "pageUrl": "http://minibox.co.kr/bbs/board.php?bo_table=photo_01&wr_id=20707",
     "filePageUrl": "http://minibox.co.kr/bbs/board.php?bo_table=photo_01&wr_id=20707",
     "author": "Bing",
@@ -3172,7 +3172,7 @@ window.KOREA_TRAVEL_IMAGES = {
     "height": 1050
   },
   "suncheon-wetland": {
-    "src": "images/suncheon-wetland.webp?v=20260812-1",
+    "src": "images/suncheon-wetland.webp?v=20260812-2",
     "pageUrl": "https://www.newsfreezone.co.kr/news/articleView.html?idxno=93986",
     "filePageUrl": "https://www.newsfreezone.co.kr/news/articleView.html?idxno=93986",
     "author": "Bing",
@@ -3185,7 +3185,7 @@ window.KOREA_TRAVEL_IMAGES = {
     "height": 438
   },
   "suwon-hwaseong": {
-    "src": "images/suwon-hwaseong.webp?v=20260812-1",
+    "src": "images/suwon-hwaseong.webp?v=20260812-2",
     "pageUrl": "https://www.pinterest.com/pin/15340454959759282/",
     "filePageUrl": "https://www.pinterest.com/pin/15340454959759282/",
     "author": "Bing",
@@ -3198,7 +3198,7 @@ window.KOREA_TRAVEL_IMAGES = {
     "height": 1417
   },
   "taebaek-coal-museum": {
-    "src": "images/taebaek-coal-museum.webp?v=20260812-1",
+    "src": "images/taebaek-coal-museum.webp?v=20260812-2",
     "pageUrl": "https://www.newspim.com/news/view/20220513000189",
     "filePageUrl": "https://www.newspim.com/news/view/20220513000189",
     "author": "Bing",
@@ -3211,7 +3211,7 @@ window.KOREA_TRAVEL_IMAGES = {
     "height": 453
   },
   "taekwondowon": {
-    "src": "images/taekwondowon.webp?v=20260812-1",
+    "src": "images/taekwondowon.webp?v=20260812-2",
     "pageUrl": "https://www.yna.co.kr/view/AKR20230706064900055",
     "filePageUrl": "https://www.yna.co.kr/view/AKR20230706064900055",
     "author": "Bing",
@@ -3224,7 +3224,7 @@ window.KOREA_TRAVEL_IMAGES = {
     "height": 681
   },
   "tongyeong-luge": {
-    "src": "images/tongyeong-luge.webp?v=20260812-1",
+    "src": "images/tongyeong-luge.webp?v=20260812-2",
     "pageUrl": "https://www.newsis.com/view/NISX20200716_0001097534",
     "filePageUrl": "https://www.newsis.com/view/NISX20200716_0001097534",
     "author": "Bing",
@@ -3237,7 +3237,7 @@ window.KOREA_TRAVEL_IMAGES = {
     "height": 360
   },
   "tongyeong-sebyeonggwan": {
-    "src": "images/tongyeong-sebyeonggwan.webp?v=20260812-1",
+    "src": "images/tongyeong-sebyeonggwan.webp?v=20260812-2",
     "pageUrl": "https://encykorea.aks.ac.kr/Article/E0029803",
     "filePageUrl": "https://encykorea.aks.ac.kr/Article/E0029803",
     "author": "Bing",
@@ -3250,7 +3250,7 @@ window.KOREA_TRAVEL_IMAGES = {
     "height": 800
   },
   "ulsan-grand-park": {
-    "src": "images/ulsan-grand-park.webp?v=20260812-1",
+    "src": "images/ulsan-grand-park.webp?v=20260812-2",
     "pageUrl": "https://www.ohmynews.com/NWS_Web/View/img_pg.aspx?CNTN_CD=IE002962702",
     "filePageUrl": "https://www.ohmynews.com/NWS_Web/View/img_pg.aspx?CNTN_CD=IE002962702",
     "author": "Bing",
@@ -3263,7 +3263,7 @@ window.KOREA_TRAVEL_IMAGES = {
     "height": 398
   },
   "ulsan-science-museum": {
-    "src": "images/ulsan-science-museum.webp?v=20260812-1",
+    "src": "images/ulsan-science-museum.webp?v=20260812-2",
     "pageUrl": "https://www.iusm.co.kr/news/articleView.html?idxno=1011088",
     "filePageUrl": "https://www.iusm.co.kr/news/articleView.html?idxno=1011088",
     "author": "Bing",
@@ -3276,7 +3276,7 @@ window.KOREA_TRAVEL_IMAGES = {
     "height": 356
   },
   "upo-wetland": {
-    "src": "images/upo-wetland.webp?v=20260812-1",
+    "src": "images/upo-wetland.webp?v=20260812-2",
     "pageUrl": "http://wiki.hash.kr/index.php/%EC%B0%BD%EB%85%95%EC%9A%B0%ED%8F%AC%EB%8A%AA",
     "filePageUrl": "http://wiki.hash.kr/index.php/%EC%B0%BD%EB%85%95%EC%9A%B0%ED%8F%AC%EB%8A%AA",
     "author": "Bing",
@@ -3289,7 +3289,7 @@ window.KOREA_TRAVEL_IMAGES = {
     "height": 450
   },
   "value-dmz박물관": {
-    "src": "images/value-dmz박물관.webp?v=20260812-1",
+    "src": "images/value-dmz박물관.webp?v=20260812-2",
     "pageUrl": "https://www.thetrippick.com/news/articleView.html?idxno=2050",
     "filePageUrl": "https://www.thetrippick.com/news/articleView.html?idxno=2050",
     "author": "Bing",
@@ -3302,7 +3302,7 @@ window.KOREA_TRAVEL_IMAGES = {
     "height": 698
   },
   "value-강화역사박물관": {
-    "src": "images/value-강화역사박물관.webp?v=20260812-1",
+    "src": "images/value-강화역사박물관.webp?v=20260812-2",
     "pageUrl": "https://www.ghnp.kr/news/articleView.html?idxno=9040",
     "filePageUrl": "https://www.ghnp.kr/news/articleView.html?idxno=9040",
     "author": "Bing",
@@ -3315,7 +3315,7 @@ window.KOREA_TRAVEL_IMAGES = {
     "height": 853
   },
   "value-경기도박물관": {
-    "src": "images/value-경기도박물관.webp?v=20260812-1",
+    "src": "images/value-경기도박물관.webp?v=20260812-2",
     "pageUrl": "https://www.joongboo.com/news/articleView.html?idxno=363710343",
     "filePageUrl": "https://www.joongboo.com/news/articleView.html?idxno=363710343",
     "author": "Bing",
@@ -3328,7 +3328,7 @@ window.KOREA_TRAVEL_IMAGES = {
     "height": 480
   },
   "value-고성-통일전망대": {
-    "src": "images/value-고성-통일전망대.webp?v=20260812-1",
+    "src": "images/value-고성-통일전망대.webp?v=20260812-2",
     "pageUrl": "http://www.jaturi.kr/news/articleView.html?idxno=6555",
     "filePageUrl": "http://www.jaturi.kr/news/articleView.html?idxno=6555",
     "author": "Bing",
@@ -3341,7 +3341,7 @@ window.KOREA_TRAVEL_IMAGES = {
     "height": 448
   },
   "value-고양어린이박물관": {
-    "src": "images/value-고양어린이박물관.webp?v=20260812-1",
+    "src": "images/value-고양어린이박물관.webp?v=20260812-2",
     "pageUrl": "https://www.korearank.com/tour/tour_detail.php?uid=10059",
     "filePageUrl": "https://www.korearank.com/tour/tour_detail.php?uid=10059",
     "author": "Bing",
@@ -3354,7 +3354,7 @@ window.KOREA_TRAVEL_IMAGES = {
     "height": 627
   },
   "value-공산성": {
-    "src": "images/value-공산성.webp?v=20260812-1",
+    "src": "images/value-공산성.webp?v=20260812-2",
     "pageUrl": "https://www.localtoday.co.kr/news/articleView.html?idxno=208346",
     "filePageUrl": "https://www.localtoday.co.kr/news/articleView.html?idxno=208346",
     "author": "Bing",
@@ -3367,7 +3367,7 @@ window.KOREA_TRAVEL_IMAGES = {
     "height": 399
   },
   "value-국립나주박물관": {
-    "src": "images/value-국립나주박물관.webp?v=20260812-1",
+    "src": "images/value-국립나주박물관.webp?v=20260812-2",
     "pageUrl": "https://www.thebigdata.co.kr/view.php?ud=202512121434238439e91b94b033_23",
     "filePageUrl": "https://www.thebigdata.co.kr/view.php?ud=202512121434238439e91b94b033_23",
     "author": "Bing",
@@ -3380,7 +3380,7 @@ window.KOREA_TRAVEL_IMAGES = {
     "height": 450
   },
   "value-국립대전현충원": {
-    "src": "images/value-국립대전현충원.webp?v=20260812-1",
+    "src": "images/value-국립대전현충원.webp?v=20260812-2",
     "pageUrl": "https://daejeontour.co.kr/sights_djt/118",
     "filePageUrl": "https://daejeontour.co.kr/sights_djt/118",
     "author": "Bing",
@@ -3393,7 +3393,7 @@ window.KOREA_TRAVEL_IMAGES = {
     "height": 960
   },
   "value-국립부여박물관": {
-    "src": "images/value-국립부여박물관.webp?v=20260812-1",
+    "src": "images/value-국립부여박물관.webp?v=20260812-2",
     "pageUrl": "https://www.ccdn.co.kr/news/articleView.html?idxno=1042055",
     "filePageUrl": "https://www.ccdn.co.kr/news/articleView.html?idxno=1042055",
     "author": "Bing",
@@ -3406,7 +3406,7 @@ window.KOREA_TRAVEL_IMAGES = {
     "height": 1000
   },
   "value-국립전주박물관": {
-    "src": "images/value-국립전주박물관.webp?v=20260812-1",
+    "src": "images/value-국립전주박물관.webp?v=20260812-2",
     "pageUrl": "https://museum.or.kr/museum-member/%EA%B5%AD%EB%A6%BD%EC%A0%84%EC%A3%BC%EB%B0%95%EB%AC%BC%EA%B4%80/",
     "filePageUrl": "https://museum.or.kr/museum-member/%EA%B5%AD%EB%A6%BD%EC%A0%84%EC%A3%BC%EB%B0%95%EB%AC%BC%EA%B4%80/",
     "author": "Bing",
@@ -3419,7 +3419,7 @@ window.KOREA_TRAVEL_IMAGES = {
     "height": 600
   },
   "value-국립제주박물관": {
-    "src": "images/value-국립제주박물관.webp?v=20260812-1",
+    "src": "images/value-국립제주박물관.webp?v=20260812-2",
     "pageUrl": "http://www.gnnews.co.kr/news/articleView.html?idxno=512846",
     "filePageUrl": "http://www.gnnews.co.kr/news/articleView.html?idxno=512846",
     "author": "Bing",
@@ -3432,7 +3432,7 @@ window.KOREA_TRAVEL_IMAGES = {
     "height": 366
   },
   "value-국립청주박물관": {
-    "src": "images/value-국립청주박물관.webp?v=20260812-1",
+    "src": "images/value-국립청주박물관.webp?v=20260812-2",
     "pageUrl": "https://www.ccreview.co.kr/news/articleView.html?idxno=335562",
     "filePageUrl": "https://www.ccreview.co.kr/news/articleView.html?idxno=335562",
     "author": "Bing",
@@ -3445,7 +3445,7 @@ window.KOREA_TRAVEL_IMAGES = {
     "height": 493
   },
   "value-국립춘천박물관": {
-    "src": "images/value-국립춘천박물관.webp?v=20260812-1",
+    "src": "images/value-국립춘천박물관.webp?v=20260812-2",
     "pageUrl": "https://www.discoverynews.kr/news/articleView.html?idxno=1040238",
     "filePageUrl": "https://www.discoverynews.kr/news/articleView.html?idxno=1040238",
     "author": "Bing",
@@ -3458,7 +3458,7 @@ window.KOREA_TRAVEL_IMAGES = {
     "height": 400
   },
   "value-국립현대미술관-과천": {
-    "src": "images/value-국립현대미술관-과천.webp?v=20260812-1",
+    "src": "images/value-국립현대미술관-과천.webp?v=20260812-2",
     "pageUrl": "https://www.doopedia.co.kr/travel/viewContent.do?idx=221028000158028",
     "filePageUrl": "https://www.doopedia.co.kr/travel/viewContent.do?idx=221028000158028",
     "author": "Bing",
@@ -3471,7 +3471,7 @@ window.KOREA_TRAVEL_IMAGES = {
     "height": 682
   },
   "value-국립현대미술관-청주": {
-    "src": "images/value-국립현대미술관-청주.webp?v=20260812-1",
+    "src": "images/value-국립현대미술관-청주.webp?v=20260812-2",
     "pageUrl": "https://www.jbnews.com/news/articleView.html?idxno=1446752",
     "filePageUrl": "https://www.jbnews.com/news/articleView.html?idxno=1446752",
     "author": "Bing",
@@ -3484,7 +3484,7 @@ window.KOREA_TRAVEL_IMAGES = {
     "height": 551
   },
   "value-남한산성": {
-    "src": "images/value-남한산성.webp?v=20260812-1",
+    "src": "images/value-남한산성.webp?v=20260812-2",
     "pageUrl": "https://thewiki.kr/w/%EB%82%A8%ED%95%9C%EC%82%B0%EC%84%B1",
     "filePageUrl": "https://thewiki.kr/w/%EB%82%A8%ED%95%9C%EC%82%B0%EC%84%B1",
     "author": "Bing",
@@ -3497,7 +3497,7 @@ window.KOREA_TRAVEL_IMAGES = {
     "height": 600
   },
   "value-대구근대역사관": {
-    "src": "images/value-대구근대역사관.webp?v=20260812-1",
+    "src": "images/value-대구근대역사관.webp?v=20260812-2",
     "pageUrl": "https://bukseongro.or.kr/%EB%B6%81%EC%84%B1%EB%A1%9C-%EC%82%AC%EC%A7%84%EA%B4%80/?vid=4",
     "filePageUrl": "https://bukseongro.or.kr/%EB%B6%81%EC%84%B1%EB%A1%9C-%EC%82%AC%EC%A7%84%EA%B4%80/?vid=4",
     "author": "Bing",
@@ -3510,7 +3510,7 @@ window.KOREA_TRAVEL_IMAGES = {
     "height": 667
   },
   "value-대전시립박물관": {
-    "src": "images/value-대전시립박물관.webp?v=20260812-1",
+    "src": "images/value-대전시립박물관.webp?v=20260812-2",
     "pageUrl": "https://www.fnnews.com/news/202305301517510032",
     "filePageUrl": "https://www.fnnews.com/news/202305301517510032",
     "author": "Bing",
@@ -3523,7 +3523,7 @@ window.KOREA_TRAVEL_IMAGES = {
     "height": 425
   },
   "value-대한민국역사박물관": {
-    "src": "images/value-대한민국역사박물관.webp?v=20260812-1",
+    "src": "images/value-대한민국역사박물관.webp?v=20260812-2",
     "pageUrl": "https://www.discoverynews.kr/news/articleView.html?idxno=628257",
     "filePageUrl": "https://www.discoverynews.kr/news/articleView.html?idxno=628257",
     "author": "Bing",
@@ -3536,7 +3536,7 @@ window.KOREA_TRAVEL_IMAGES = {
     "height": 400
   },
   "value-도동서원": {
-    "src": "images/value-도동서원.webp?v=20260812-1",
+    "src": "images/value-도동서원.webp?v=20260812-2",
     "pageUrl": "https://ncms.nculture.org/confucianism/story/2691",
     "filePageUrl": "https://ncms.nculture.org/confucianism/story/2691",
     "author": "Bing",
@@ -3549,7 +3549,7 @@ window.KOREA_TRAVEL_IMAGES = {
     "height": 768
   },
   "value-목포근대역사관": {
-    "src": "images/value-목포근대역사관.webp?v=20260812-1",
+    "src": "images/value-목포근대역사관.webp?v=20260812-2",
     "pageUrl": "https://www.psnews.co.kr/news/articleView.html?idxno=2019922",
     "filePageUrl": "https://www.psnews.co.kr/news/articleView.html?idxno=2019922",
     "author": "Bing",
@@ -3562,7 +3562,7 @@ window.KOREA_TRAVEL_IMAGES = {
     "height": 387
   },
   "value-백남준아트센터": {
-    "src": "images/value-백남준아트센터.webp?v=20260812-1",
+    "src": "images/value-백남준아트센터.webp?v=20260812-2",
     "pageUrl": "https://pskinc.com/bbs/board.php?bo_table=notice&wr_id=108",
     "filePageUrl": "https://pskinc.com/bbs/board.php?bo_table=notice&wr_id=108",
     "author": "Bing",
@@ -3575,7 +3575,7 @@ window.KOREA_TRAVEL_IMAGES = {
     "height": 400
   },
   "value-부산박물관": {
-    "src": "images/value-부산박물관.webp?v=20260812-1",
+    "src": "images/value-부산박물관.webp?v=20260812-2",
     "pageUrl": "http://www.kmecnews.co.kr/news/articleView.html?idxno=46329",
     "filePageUrl": "http://www.kmecnews.co.kr/news/articleView.html?idxno=46329",
     "author": "Bing",
@@ -3588,7 +3588,7 @@ window.KOREA_TRAVEL_IMAGES = {
     "height": 450
   },
   "value-부산어촌민속관": {
-    "src": "images/value-부산어촌민속관.webp?v=20260812-1",
+    "src": "images/value-부산어촌민속관.webp?v=20260812-2",
     "pageUrl": "http://www.traveli.co.kr/read/contentsView/635/0",
     "filePageUrl": "http://www.traveli.co.kr/read/contentsView/635/0",
     "author": "Bing",
@@ -3601,7 +3601,7 @@ window.KOREA_TRAVEL_IMAGES = {
     "height": 480
   },
   "value-서울역사박물관": {
-    "src": "images/value-서울역사박물관.webp?v=20260812-1",
+    "src": "images/value-서울역사박물관.webp?v=20260812-2",
     "pageUrl": "https://www.nc.press/news/articleView.html?idxno=606528",
     "filePageUrl": "https://www.nc.press/news/articleView.html?idxno=606528",
     "author": "Bing",
@@ -3614,7 +3614,7 @@ window.KOREA_TRAVEL_IMAGES = {
     "height": 538
   },
   "value-설악산국립공원": {
-    "src": "images/value-설악산국립공원.webp?v=20260812-1",
+    "src": "images/value-설악산국립공원.webp?v=20260812-2",
     "pageUrl": "https://ko.koreaetour.com/%EC%84%A4%EC%95%85%EC%82%B0-%EA%B5%AD%EB%A6%BD%EA%B3%B5%EC%9B%90/",
     "filePageUrl": "https://ko.koreaetour.com/%EC%84%A4%EC%95%85%EC%82%B0-%EA%B5%AD%EB%A6%BD%EA%B3%B5%EC%9B%90/",
     "author": "Bing",
@@ -3627,7 +3627,7 @@ window.KOREA_TRAVEL_IMAGES = {
     "height": 667
   },
   "value-세종전통문화체험관": {
-    "src": "images/value-세종전통문화체험관.webp?v=20260812-1",
+    "src": "images/value-세종전통문화체험관.webp?v=20260812-2",
     "pageUrl": "http://www.jtchehum.com/",
     "filePageUrl": "http://www.jtchehum.com/",
     "author": "Bing",
@@ -3640,7 +3640,7 @@ window.KOREA_TRAVEL_IMAGES = {
     "height": 950
   },
   "value-실학박물관": {
-    "src": "images/value-실학박물관.webp?v=20260812-1",
+    "src": "images/value-실학박물관.webp?v=20260812-2",
     "pageUrl": "http://www.ktsketch.co.kr/news/articleView.html?idxno=7928",
     "filePageUrl": "http://www.ktsketch.co.kr/news/articleView.html?idxno=7928",
     "author": "Bing",
@@ -3653,7 +3653,7 @@ window.KOREA_TRAVEL_IMAGES = {
     "height": 640
   },
   "value-울산박물관": {
-    "src": "images/value-울산박물관.webp?v=20260812-1",
+    "src": "images/value-울산박물관.webp?v=20260812-2",
     "pageUrl": "https://v.daum.net/v/20210426104056920",
     "filePageUrl": "https://v.daum.net/v/20210426104056920",
     "author": "Bing",
@@ -3666,7 +3666,7 @@ window.KOREA_TRAVEL_IMAGES = {
     "height": 420
   },
   "value-의림지역사박물관": {
-    "src": "images/value-의림지역사박물관.webp?v=20260812-1",
+    "src": "images/value-의림지역사박물관.webp?v=20260812-2",
     "pageUrl": "https://www.ccdailynews.com/news/articleView.html?idxno=2310312",
     "filePageUrl": "https://www.ccdailynews.com/news/articleView.html?idxno=2310312",
     "author": "Bing",
@@ -3679,7 +3679,7 @@ window.KOREA_TRAVEL_IMAGES = {
     "height": 570
   },
   "value-전곡선사박물관": {
-    "src": "images/value-전곡선사박물관.webp?v=20260812-1",
+    "src": "images/value-전곡선사박물관.webp?v=20260812-2",
     "pageUrl": "https://www.psnews.co.kr/news/articleView.html?idxno=2001745",
     "filePageUrl": "https://www.psnews.co.kr/news/articleView.html?idxno=2001745",
     "author": "Bing",
@@ -3692,7 +3692,7 @@ window.KOREA_TRAVEL_IMAGES = {
     "height": 399
   },
   "value-전남도립미술관": {
-    "src": "images/value-전남도립미술관.webp?v=20260812-1",
+    "src": "images/value-전남도립미술관.webp?v=20260812-2",
     "pageUrl": "https://www.munwhamagazine.co.kr/news/articleView.html?idxno=2459",
     "filePageUrl": "https://www.munwhamagazine.co.kr/news/articleView.html?idxno=2459",
     "author": "Bing",
@@ -3705,7 +3705,7 @@ window.KOREA_TRAVEL_IMAGES = {
     "height": 351
   },
   "value-한라산국립공원": {
-    "src": "images/value-한라산국립공원.webp?v=20260812-1",
+    "src": "images/value-한라산국립공원.webp?v=20260812-2",
     "pageUrl": "http://hankuknews.com/news/view.php?no=2783",
     "filePageUrl": "http://hankuknews.com/news/view.php?no=2783",
     "author": "Bing",
@@ -3718,7 +3718,7 @@ window.KOREA_TRAVEL_IMAGES = {
     "height": 477
   },
   "war-memorial": {
-    "src": "images/war-memorial.webp?v=20260812-1",
+    "src": "images/war-memorial.webp?v=20260812-2",
     "pageUrl": "https://www.fnnews.com/news/202312291509326579",
     "filePageUrl": "https://www.fnnews.com/news/202312291509326579",
     "author": "Bing",
@@ -3731,7 +3731,7 @@ window.KOREA_TRAVEL_IMAGES = {
     "height": 319
   },
   "whale-museum": {
-    "src": "images/whale-museum.webp?v=20260812-1",
+    "src": "images/whale-museum.webp?v=20260812-2",
     "pageUrl": "https://museumnews.kr/264edu02/",
     "filePageUrl": "https://museumnews.kr/264edu02/",
     "author": "Bing",
@@ -3744,7 +3744,7 @@ window.KOREA_TRAVEL_IMAGES = {
     "height": 427
   },
   "world-writing-museum": {
-    "src": "images/world-writing-museum.webp?v=20260812-1",
+    "src": "images/world-writing-museum.webp?v=20260812-2",
     "pageUrl": "https://www.kocis.go.kr/koreanet/view.do?seq=1045301&page=253&photoPageSize=6&searchType=null&searchCondition=1",
     "filePageUrl": "https://www.kocis.go.kr/koreanet/view.do?seq=1045301&page=253&photoPageSize=6&searchType=null&searchCondition=1",
     "author": "Bing",
@@ -3757,7 +3757,7 @@ window.KOREA_TRAVEL_IMAGES = {
     "height": 682
   },
   "yeongju-sunbi-world": {
-    "src": "images/yeongju-sunbi-world.webp?v=20260812-1",
+    "src": "images/yeongju-sunbi-world.webp?v=20260812-2",
     "pageUrl": "https://www.imaeil.com/page/view/2022082410454304125",
     "filePageUrl": "https://www.imaeil.com/page/view/2022082410454304125",
     "author": "Bing",
@@ -3770,7 +3770,7 @@ window.KOREA_TRAVEL_IMAGES = {
     "height": 384
   },
   "yeosu-cable-car": {
-    "src": "images/yeosu-cable-car.webp?v=20260812-1",
+    "src": "images/yeosu-cable-car.webp?v=20260812-2",
     "pageUrl": "https://ko.wikipedia.org/wiki/%EC%97%AC%EC%88%98_%ED%95%B4%EC%83%81%EC%BC%80%EC%9D%B4%EB%B8%94%EC%B9%B4",
     "filePageUrl": "https://commons.wikimedia.org/wiki/File:Yeosu_cablecar_station_2.jpg",
     "author": "User:Altostratus",
