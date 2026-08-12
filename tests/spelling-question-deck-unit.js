@@ -27,28 +27,30 @@ function random() {
 }
 
 const firstCycle = [];
-for (let round = 0; round < 16; round += 1) {
+const roundsToExhaust = Math.ceil(questions.length / 10);
+for (let round = 0; round < roundsToExhaust; round += 1) {
     const selected = deck.take({ questions, size: 10, storageKey: "unit-deck", storage, random });
     assert.equal(selected.length, 10, `Round ${round + 1} should have 10 questions.`);
     assert.equal(new Set(selected).size, 10, `Round ${round + 1} should not repeat within the round.`);
     firstCycle.push(...selected);
 }
 
-assert.equal(firstCycle.length, 160);
-assert.equal(new Set(firstCycle).size, 160, "All 160 questions must appear before any question repeats.");
+const completeBankPass = firstCycle.slice(0, questions.length);
+assert.equal(completeBankPass.length, 202);
+assert.equal(new Set(completeBankPass).size, 202, "All 202 questions must appear before any question repeats.");
 assert.deepEqual(
-    [...new Set(firstCycle)].sort(),
+    [...new Set(completeBankPass)].sort(),
     Array.from(questions, (question) => question.id).sort(),
     "The first cycle should cover the complete question bank."
 );
 
 const nextRound = deck.take({ questions, size: 10, storageKey: "unit-deck", storage, random });
 assert.equal(nextRound.length, 10);
-assert.ok(nextRound.every((id) => firstCycle.includes(id)), "Repeats are allowed only after the full cycle is exhausted.");
+assert.ok(nextRound.every((id) => completeBankPass.includes(id)), "Repeats are allowed only after the full cycle is exhausted.");
 
 stored.set("corrupt-deck", JSON.stringify([questions[0].id, questions[0].id, "missing-question"]));
 const recovered = deck.take({ questions, size: 10, storageKey: "corrupt-deck", storage, random });
 assert.equal(recovered.length, 10);
 assert.equal(new Set(recovered).size, 10, "A corrupted saved deck should recover without duplicates.");
 
-console.log("spelling-question-deck-unit: 160 unique questions before repeat, storage recovery ok");
+console.log("spelling-question-deck-unit: 202 unique questions before repeat, storage recovery ok");

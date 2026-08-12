@@ -32,7 +32,11 @@ vm.runInContext(extraQuestionsSource, questionContext, { filename: extraQuestion
 
 const questions = questionContext.window.SPELLING_QUESTIONS;
 assert.ok(Array.isArray(questions), "Question bank must be an array.");
-assert.strictEqual(questions.length, 160, "Question bank should contain 160 questions.");
+assert.strictEqual(questions.length, 202, "Question bank should contain 202 questions.");
+
+for (const requiredId of ["danhap", "damhap", "jiyang-avoid", "jihyang-aim", "bangjeung", "banjeung"]) {
+    assert.ok(questions.some((question) => question.id === requiredId), `Missing meaning distinction question: ${requiredId}`);
+}
 
 const ids = new Set();
 for (const question of questions) {
