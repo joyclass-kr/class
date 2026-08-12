@@ -109,7 +109,7 @@
     },
     {
       id: 'sphinx', order: '06', title: '기자의 대스핑크스', short: '대스핑크스',
-      subtitle: '고대 이집트 기원전 2500년경 · 3D 포토그래메트리 스캔', position: [0, 0, 50], arrival: [40, 1.62, 50], lookAt: [0, 10, 50], modelRotation: [0, Math.PI, 0],
+      subtitle: '고대 이집트 기원전 2500년경 · 3D 포토그래메트리 스캔', position: [0, 0, 50], arrival: [40, 1.62, 50], lookAt: [0, 10, 50], modelRotation: [0, Math.PI, 0], collisionSize: [24.2, 44.5],
       modelPath: 'assets/models/sphinx.glb', realHeight: 20.22, preserveMaterials: true,
       image: 'assets/sphinx.jpg',
       facts: [['길이', '73.5m'], ['너비', '19m'], ['높이', '20.22m']],
@@ -439,8 +439,10 @@
     ZONES.forEach(zone => {
       loadZoneModel(zone);
       if (zone.id === 'sphinx') {
-        // 실측 비율(길이 73.5m x 너비 19m)과 다르게 원본 스캔은 세로(Z)로 긴 형태라 원형 충돌로는 몸통 안까지 걸어 들어갈 수 있어 실측 발자국에 맞춘 사각 충돌을 사용
-        zoneObstacles.push({ x: zone.position[0], z: zone.position[2], hx: 20, hz: 30 });
+        // 높이 20.22m로 보정한 현재 GLB의 렌더링 바운드(약 24.1m x 44.5m)에
+        // 플레이어 여유 0.42m만 더해, 보이지 않는 장벽 없이 몸통 바로 옆까지 접근하게 한다.
+        const [width, length] = zone.collisionSize;
+        zoneObstacles.push({ x: zone.position[0], z: zone.position[2], hx: width / 2 + .42, hz: length / 2 + .42 });
         return;
       }
       const baseW = Math.max(3.5, zone.realHeight * 0.4);
