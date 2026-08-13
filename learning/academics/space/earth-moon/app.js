@@ -97,12 +97,17 @@
             let observerDiskTextures = {};
             const SUN_ORBIT_RADIUS = 135.0;
             const MOON_ORBIT_RADIUS = 34.0;
-            const EARTH_DAYS_PER_YEAR = 365;
-            // 366 inertial rotations produce about 365 solar days because Earth
-            // advances once around the Sun during the same year.
-            const EARTH_ROTATIONS_PER_YEAR = EARTH_DAYS_PER_YEAR + 1;
-            const HOURS_PER_YEAR = EARTH_DAYS_PER_YEAR * 24;
-            const JANUARY_FIRST_ORBIT_ANGLE = (10 / EARTH_DAYS_PER_YEAR) * Math.PI * 2;
+            const CALENDAR_DAYS_PER_YEAR = 365;
+            const TROPICAL_YEAR_DAYS = 365.2422;
+            const EARTH_ROTATIONS_PER_YEAR = TROPICAL_YEAR_DAYS + 1;
+            const LUNAR_SIDEREAL_MONTH_DAYS = 27.321661;
+            const LUNAR_SIDEREAL_ORBITS_PER_YEAR = TROPICAL_YEAR_DAYS / LUNAR_SIDEREAL_MONTH_DAYS;
+            // moonRelAngle is measured from the moving Sun-Earth line. Subtracting
+            // Earth's one annual orbit converts sidereal lunar orbits to phase cycles.
+            const LUNAR_SYNODIC_CYCLES_PER_YEAR = LUNAR_SIDEREAL_ORBITS_PER_YEAR - 1;
+            const SYNODIC_MONTH_DAYS = TROPICAL_YEAR_DAYS / LUNAR_SYNODIC_CYCLES_PER_YEAR;
+            const HOURS_PER_YEAR = TROPICAL_YEAR_DAYS * 24;
+            const JANUARY_FIRST_ORBIT_ANGLE = (10 / TROPICAL_YEAR_DAYS) * Math.PI * 2;
             const OVERVIEW_FRAMING_Y = -34;
             const SOLAR_OVERVIEW_CAMERA_POSITION = new THREE.Vector3(0, 190 + OVERVIEW_FRAMING_Y, 300);
             const SOLAR_OVERVIEW_TARGET = new THREE.Vector3(0, OVERVIEW_FRAMING_Y, 0);
@@ -642,10 +647,10 @@
             }
 
             function jumpToSeasonPoint(point) {
-                const yearProgress = point.dayOfYear / EARTH_DAYS_PER_YEAR;
+                const yearProgress = point.dayOfYear / TROPICAL_YEAR_DAYS;
                 earthOrbitAngle = point.angle;
                 elapsedSimulationHours = point.dayOfYear * 24;
-                moonRelAngle = (Math.PI / 2 + yearProgress * Math.PI * 2 * 13.38) % (Math.PI * 2);
+                moonRelAngle = (yearProgress * Math.PI * 2 * LUNAR_SYNODIC_CYCLES_PER_YEAR) % (Math.PI * 2);
                 earthSpinAngle = (
                     Math.PI / 2
                     + JANUARY_FIRST_ORBIT_ANGLE
@@ -991,7 +996,7 @@
             function getMainSimulationDate() {
                 const monthDays = [31, 28, 31, 30, 31, 30, 31, 31, 30, 31, 30, 31];
                 const totalHours = ((elapsedSimulationHours % HOURS_PER_YEAR) + HOURS_PER_YEAR) % HOURS_PER_YEAR;
-                let dayOfYear = Math.floor(totalHours / 24) + 1;
+                let dayOfYear = Math.min(CALENDAR_DAYS_PER_YEAR, Math.floor(totalHours / 24) + 1);
                 let month = 0;
                 while (dayOfYear > monthDays[month]) {
                     dayOfYear -= monthDays[month];
@@ -1000,7 +1005,7 @@
                 return {
                     month: month + 1,
                     day: dayOfYear,
-                    dayOfYear: Math.floor(totalHours / 24) + 1,
+                    dayOfYear: Math.min(CALENDAR_DAYS_PER_YEAR, Math.floor(totalHours / 24) + 1),
                     hour: Math.floor(totalHours % 24)
                 };
             }
@@ -1010,8 +1015,8 @@
                 const elapsedDays = Math.max(0, elapsedSimulationHours / 24);
                 const phaseNames = ['삭', '초승달', '상현달', '팽대달', '망/보름달', '팽대달', '하현달', '그믐달'];
                 return {
-                    month: Math.floor(elapsedDays / 29.53) % 12 + 1,
-                    day: Math.floor((phaseAngle / (Math.PI * 2)) * 29.53) + 1,
+                    month: Math.floor(elapsedDays / SYNODIC_MONTH_DAYS) % 12 + 1,
+                    day: Math.floor((phaseAngle / (Math.PI * 2)) * SYNODIC_MONTH_DAYS) + 1,
                     hour: Math.floor(elapsedSimulationHours + 0.000001) % 24,
                     phase: phaseNames[Math.round((phaseAngle / (Math.PI * 2)) * 8) % 8]
                 };
@@ -1023,7 +1028,7 @@
             function syncMoonCalendarControls() {
                 const totalHours = ((elapsedSimulationHours % HOURS_PER_YEAR) + HOURS_PER_YEAR) % HOURS_PER_YEAR;
                 if (moonDaySlider && document.activeElement !== moonDaySlider) {
-                    moonDaySlider.value = String(Math.floor(totalHours / 24) + 1);
+                    moonDaySlider.value = String(Math.min(CALENDAR_DAYS_PER_YEAR, Math.floor(totalHours / 24) + 1));
                 }
                 if (moonTimeSlider && document.activeElement !== moonTimeSlider) {
                     moonTimeSlider.value = String(Math.floor(totalHours % 24));
@@ -1033,13 +1038,13 @@
             function applyMoonCalendarControls() {
                 if (!moonDaySlider || !moonTimeSlider) return;
 
-                const dayIndex = Math.max(0, Math.min(EARTH_DAYS_PER_YEAR - 1, Number(moonDaySlider.value) - 1));
+                const dayIndex = Math.max(0, Math.min(CALENDAR_DAYS_PER_YEAR - 1, Number(moonDaySlider.value) - 1));
                 const hour = Math.max(0, Math.min(23, Number(moonTimeSlider.value)));
                 elapsedSimulationHours = dayIndex * 24 + hour;
 
                 const yearProgress = elapsedSimulationHours / HOURS_PER_YEAR;
                 earthOrbitAngle = normalizeRadians(JANUARY_FIRST_ORBIT_ANGLE + yearProgress * Math.PI * 2);
-                moonRelAngle = normalizeRadians(yearProgress * Math.PI * 2 * 13.38);
+                moonRelAngle = normalizeRadians(yearProgress * Math.PI * 2 * LUNAR_SYNODIC_CYCLES_PER_YEAR);
                 earthSpinAngle = normalizeRadians(
                     Math.PI / 2
                     + JANUARY_FIRST_ORBIT_ANGLE
@@ -1125,7 +1130,7 @@
                 const continuousDayOfYear = continuousHours / 24 + 1;
                 const solarHourAngle = (continuousHour - 12) * 15 * Math.PI / 180;
                 const sunLongitude = normalizeRadians(
-                    ((continuousDayOfYear - 80) / EARTH_DAYS_PER_YEAR) * Math.PI * 2
+                    ((continuousDayOfYear - 80) / TROPICAL_YEAR_DAYS) * Math.PI * 2
                 );
                 const moonLongitude = normalizeRadians(sunLongitude + moonRelAngle);
                 const sunEquatorial = equatorialFromEcliptic(sunLongitude);
@@ -1537,11 +1542,11 @@
                 requestAnimationFrame(animate);
 
                 // Physical speed steps:
-                // Earth Orbit around Sun: 1 full circle = 365 days
-                // Moon Orbit around Earth: 13.38 full circles per year
-                // Earth Self Rotation: 366 inertial turns = 365 solar days
+                // One tropical year = 365.2422 mean solar days.
+                // Earth: 366.2422 inertial turns - 1 orbit = 365.2422 solar days.
+                // Moon: 13.3687 sidereal orbits - 1 Earth orbit = 12.3687 phase cycles.
                 const dEarthOrbitStep = 0.00025 * speed;
-                const dMoonStep = dEarthOrbitStep * 13.38;
+                const dMoonStep = dEarthOrbitStep * LUNAR_SYNODIC_CYCLES_PER_YEAR;
                 const dEarthSpinStep = dEarthOrbitStep * EARTH_ROTATIONS_PER_YEAR;
                 const dElapsedHours = (dEarthOrbitStep / (Math.PI * 2)) * HOURS_PER_YEAR;
 

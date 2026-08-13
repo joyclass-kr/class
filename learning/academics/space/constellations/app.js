@@ -2079,8 +2079,10 @@
 
                 function animate3D() {
                     requestAnimationFrame(animate3D);
+                    // One tropical year contains 366.2422 inertial Earth turns but
+                    // 365.2422 mean solar days. The space view uses the inertial rate.
                     const currentEarthStep = baseEarthRotStep * celestialSpeedMult;
-                    const currentSunStep = (baseEarthRotStep / 365.2422) * celestialSpeedMult;
+                    const currentSunStep = (baseEarthRotStep / 366.2422) * celestialSpeedMult;
 
                     if (celestialViewMode === 'space') {
                         // Space Real View: Earth rotates, Celestial Sphere is static

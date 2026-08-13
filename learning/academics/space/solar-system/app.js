@@ -429,10 +429,15 @@
             pluto: 0.004
         };
 
+        // Rates are inertial (distant-star-frame) axial turns per tropical year.
+        // Earth therefore turns once more than the number of mean solar days:
+        // 366.2422 sidereal turns - 1 orbital turn = 365.2422 solar days.
+        var TROPICAL_YEAR_DAYS = 365.2422;
+        var EARTH_SIDEREAL_ROTATIONS_PER_YEAR = TROPICAL_YEAR_DAYS + 1;
         var SELF_ROTATION_RATES = {
             mercury: 6.23,
             venus: 1.50,
-            earth: 365.25,
+            earth: EARTH_SIDEREAL_ROTATIONS_PER_YEAR,
             mars: 354.6,
             jupiter: 890.8,
             saturn: 811.6,
@@ -935,9 +940,31 @@
 
             planetAxisArrows.forEach(function (axis) {
                 if (!axis || !axis.arrow) return;
-                axis.arrow.visible = state.simMode === '3d' && state.showOrbits && orbitFade > 0.012;
+                var axisVisibility = orbitFade;
+
+                // In UFO flight, a faraway planet can shrink to only a few pixels
+                // while its directed axis still reads as a bright streak. That can
+                // look like a field of stationary comets. Fade the axis with the
+                // planet's projected screen size and restore it when approached.
+                if (ufoState.active && camera && renderer) {
+                    var axisBody = celestialBodies[axis.key];
+                    var axisMesh = axisBody && axisBody.mesh;
+                    if (axisMesh) {
+                        var axisWorldPosition = new THREE.Vector3();
+                        axisMesh.getWorldPosition(axisWorldPosition);
+                        var axisDistance = Math.max(0.001, camera.position.distanceTo(axisWorldPosition));
+                        var viewportHeight = renderer.domElement.clientHeight || renderer.domElement.height || 1;
+                        var fovRadians = ((camera.fov || 45) * Math.PI) / 180;
+                        var projectedDiameter = (getBodyScaleRadius(axis.key) * 2 * viewportHeight)
+                            / (2 * axisDistance * Math.tan(fovRadians / 2));
+                        var projectedFade = smoothStep01((projectedDiameter - 12) / 12);
+                        axisVisibility *= projectedFade;
+                    }
+                }
+
+                axis.arrow.visible = state.simMode === '3d' && state.showOrbits && axisVisibility > 0.035;
                 [axis.arrow.line.material, axis.arrow.cone.material].forEach(function (material) {
-                    material.opacity = axis.baseOpacity * orbitFade;
+                    material.opacity = axis.baseOpacity * axisVisibility;
                 });
             });
         }
@@ -1915,7 +1942,7 @@
                             // on Earth, independent of Earth's axial tilt.
                             b.pivot.position.set(0, 0, 0);
 
-                            var lunarCyclesPerEarthYear = 365.25 / 27.321661;
+                            var lunarCyclesPerEarthYear = TROPICAL_YEAR_DAYS / 27.321661;
                             b.orbitAngle = (b.orbitAngle || 0) - timeDelta * (Math.PI * 2) * lunarCyclesPerEarthYear;
                             b.orbitAngle %= (Math.PI * 2);
                             var moonAngle = b.orbitAngle;
@@ -2157,7 +2184,7 @@
                             if (b.satList && b.satList.length > 0) {
                                 b.satList.forEach(function(sat) {
                                     var physicalCyclesPerEarthYear = sat.data.periodDays
-                                        ? (365.25 / sat.data.periodDays)
+                                        ? (TROPICAL_YEAR_DAYS / sat.data.periodDays)
                                         : ((sat.data.speed || 1.0) * 8.0);
                                     // Moon periods span several orders of magnitude.
                                     // Square-root compression keeps the physical
