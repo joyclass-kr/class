@@ -17,6 +17,9 @@ __pycache__/
 # Locally generated reports and previews
 /outputs/
 /tmp/
+/scratch/
+/inspect_review_pdf.py
+/make_pdf_previews.py
 
 # Former standalone deployment metadata kept only as a local backup.
 /learning/basics/arithmetics/.sites-git-backup/
