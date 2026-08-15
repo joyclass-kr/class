@@ -1,6 +1,6 @@
 "use client";
 
-import { useEffect, useMemo, useState } from "react";
+import { type ReactNode, useEffect, useMemo, useState } from "react";
 import { createNumericChoices } from "../../../../lib/worksheet-choice-utils";
 import MathFormula from "../../../components/math-formula";
 import WorksheetQuestionPrompt from "../../../components/worksheet-question-prompt";
@@ -28,6 +28,8 @@ type Props = {
   formatChoice?: (problem: NumericWorksheetProblem, values: number[]) => string;
   makeChoices?: (problem: NumericWorksheetProblem) => Array<{ id: string; values: number[]; correct: boolean }>;
   showLatexOnWorksheet?: boolean;
+  formulaGuide?: ReactNode;
+  pageClassName?: string;
 };
 
 function answerLatex(problem: NumericWorksheetProblem, values: number[]) {
@@ -41,12 +43,13 @@ function answerLatex(problem: NumericWorksheetProblem, values: number[]) {
   }).join(",\\quad ");
 }
 
-export default function NumericChoiceWorksheet({ initialSeed, subject, title, instruction, createSet, createReviews, formatChoice = answerLatex, makeChoices, showLatexOnWorksheet = true }: Props) {
+export default function NumericChoiceWorksheet({ initialSeed, subject, title, instruction, createSet, createReviews, formatChoice = answerLatex, makeChoices, showLatexOnWorksheet = true, formulaGuide, pageClassName = "" }: Props) {
   const [set, setSet] = useState(() => createSet(initialSeed));
   const [reviews, setReviews] = useState<NumericWorksheetProblem[]>([]);
   const [selected, setSelected] = useState<Record<string, string>>({});
   const [results, setResults] = useState<Record<string, boolean>>({});
   const [panelOpen, setPanelOpen] = useState(false);
+  const [showFormulaGuide, setShowFormulaGuide] = useState(true);
   const [scale, setScale] = useState(0.6);
   const problems = useMemo(() => [...set.problems, ...reviews], [set.problems, reviews]);
   const wrong = set.problems.filter((problem) => results[problem.id] === false);
@@ -114,20 +117,24 @@ export default function NumericChoiceWorksheet({ initialSeed, subject, title, in
           <div className="counting-sheet-title"><span>{subject}</span><strong>{title}{answerSheet ? " 정답" : ""}</strong></div>
           <div className="counting-sheet-info"><span>이름 <i /></span><span>날짜 <i /></span><small>문제지 {set.seed}</small></div>
         </header>
-        <div className="polynomial-instruction"><b>{instruction} 빈 공간에 풀이 과정을 쓰세요.</b><span>답안 입력에서 4지선다 채점</span></div>
+        {formulaGuide && (showFormulaGuide || answerSheet) && (
+          <div className="numeric-formula-guide" data-testid="numeric-formula-guide">{formulaGuide}</div>
+        )}
+        {!formulaGuide && instruction && <div className="polynomial-instruction"><b>{instruction}</b><span>답안 입력에서 4지선다 채점</span></div>}
         <div className="polynomial-problem-grid logarithm-grid">{problems.map((problem, index) => row(problem, index, answerSheet))}</div>
       </div>
     );
   }
 
   return (
-    <main className="counting-page polynomial-page logarithm-page numeric-choice-page">
+    <main className={`counting-page polynomial-page logarithm-page numeric-choice-page ${pageClassName}`.trim()}>
       <div className="counting-toolbar">
         <a className="counting-back" href="/arithmetic">← 연산</a>
         <div className="counting-progress"><strong>{Object.values(results).filter(Boolean).length}<small>/{problems.length} 정답</small></strong></div>
         <div className="toolbar">
           <button className="button secondary" type="button" onClick={() => { setSet(createSet(Date.now() >>> 0)); reset(); }}>새 문제</button>
           <button className="button ghost" type="button" onClick={reset}>다시 풀기</button>
+          {formulaGuide && <button className="button ghost" type="button" aria-pressed={showFormulaGuide} onClick={() => setShowFormulaGuide((value) => !value)}>{showFormulaGuide ? "공식 가리기" : "공식 보기"}</button>}
           <button className="button secondary" type="button" onClick={() => setPanelOpen(true)}>답안 입력</button>
           <button className="button ghost" type="button" onClick={() => window.print()}>인쇄</button>
           <button className="button primary" type="button" onClick={checkAll}>전체 채점</button>

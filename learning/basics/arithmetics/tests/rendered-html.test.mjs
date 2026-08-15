@@ -602,6 +602,18 @@ test("merged high-school worksheet routes redirect to their canonical sheets", a
   }
 });
 
+test("renders the definite-integral formula guide and eight application problems", async () => {
+  const response = await render("/arithmetic/high-school/definite-integral-applications");
+  assert.equal(response.status, 200);
+  const html = await response.text();
+  assert.match(html, /공식 가리기/);
+  assert.equal((html.match(/data-testid="numeric-formula-guide"/g) ?? []).length, 2);
+  assert.equal((html.match(/data-testid="numeric-choice-question"/g) ?? []).length, 16);
+  assert.match(html, /두 근 사이의 넓이/);
+  assert.match(html, /이중근이 있는 삼차식/);
+  assert.match(html, /삼중근이 있는 사차식/);
+  assert.match(html, /두 이중근이 있는 사차식/);
+});
 test("renders the reconstructed conic tangents and space geometry worksheets", async () => {
   const tangentResponse = await render("/arithmetic/high-school/conic-transformations-tangents");
   assert.equal(tangentResponse.status, 200);

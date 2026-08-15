@@ -1624,3 +1624,96 @@
     line-height: 1.1;
   }
 }
+/* 정적분 넓이 공식 암기·적용 */
+.numeric-formula-guide {
+  flex: 0 0 128px;
+  display: grid;
+  grid-template-columns: 128px minmax(0, 1fr);
+  align-items: center;
+  gap: 10px;
+  border: 1px solid #cfd7e7;
+  border-bottom: 0;
+  border-radius: 10px 10px 0 0;
+  background: #f5f7fc;
+  padding: 10px 14px;
+  color: #17233c;
+}
+
+.numeric-formula-guide > strong {
+  display: grid;
+  gap: 6px;
+  color: #344786;
+  font-family: var(--high-school-korean-font);
+  font-size: 13px;
+}
+
+.numeric-formula-guide > strong .math-formula {
+  color: #17233c;
+  font-size: 14px;
+}
+
+.numeric-formula-guide > div {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 7px 18px;
+  font-size: 13px;
+}
+
+.definite-integral-applications-page .numeric-formula-guide > div > .math-formula:last-child {
+  grid-column: 1 / -1;
+}
+
+.definite-integral-applications-page .numeric-formula-guide + .polynomial-problem-grid {
+  border-radius: 0 0 10px 10px;
+}
+
+.definite-integral-applications-page .logarithm-sheet.polynomial-sheet-8 .polynomial-problem-grid {
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  grid-template-rows: repeat(4, minmax(0, 1fr));
+}
+
+.definite-integral-applications-page .logarithm-sheet.polynomial-sheet-8 .logarithm-question {
+  display: block;
+  min-height: 0;
+  border-right: 1px solid #e1d9ce;
+  border-bottom: 1px solid #e1d9ce;
+  padding: 9px 10px 7px 36px;
+}
+
+.definite-integral-applications-page .logarithm-sheet.polynomial-sheet-8 .logarithm-question:nth-child(2n) {
+  border-right: 0;
+}
+
+.definite-integral-applications-page .logarithm-sheet.polynomial-sheet-8 .logarithm-question:nth-last-child(-n + 2) {
+  border-bottom: 0;
+}
+
+.definite-integral-applications-page .logarithm-sheet.polynomial-sheet-8 .polynomial-question-number {
+  left: 11px;
+  top: 11px;
+}
+
+.definite-integral-applications-page .logarithm-sheet.polynomial-sheet-8 .polynomial-focus-label {
+  margin-bottom: 5px;
+  padding-block: 3px;
+}
+
+.definite-integral-applications-page .worksheet-question-prompt {
+  margin: 0;
+  font-size: 12px;
+  line-height: 1.35;
+}
+
+.polynomial-page.definite-integral-applications-page .worksheet-stage .logarithm-expression {
+  margin-top: 7px;
+  font-size: 15px !important;
+  white-space: normal;
+}
+
+.polynomial-page.definite-integral-applications-page .answer-stage .logarithm-response {
+  justify-content: flex-start;
+  padding-top: 7px;
+  color: #1f6b4f;
+  font-size: 15px;
+  font-weight: 700;
+}
