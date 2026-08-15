@@ -1626,7 +1626,7 @@
 }
 /* 정적분 넓이 공식 암기·적용 */
 .numeric-formula-guide {
-  flex: 0 0 128px;
+  flex: 0 0 142px;
   display: grid;
   grid-template-columns: 128px minmax(0, 1fr);
   align-items: center;

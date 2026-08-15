@@ -8,16 +8,16 @@ import MathFormula from "../../../components/math-formula";
 import NumericChoiceWorksheet, { type NumericWorksheetProblem } from "../components/numeric-choice-worksheet";
 
 const areaFormulas = [
-  String.raw`|a|(x-\alpha)(\beta-x)\ \Rightarrow\ \dfrac{|a|}{6}L^3`,
-  String.raw`|a|(x-\alpha)^2(\beta-x)\ \Rightarrow\ \dfrac{|a|}{12}L^4`,
-  String.raw`|a|(x-\alpha)^3(\beta-x)\ \Rightarrow\ \dfrac{|a|}{20}L^5`,
-  String.raw`|a|(x-\alpha)^2(\beta-x)^2\ \Rightarrow\ \dfrac{|a|}{30}L^5`,
-  String.raw`f'(x)=a(x-\alpha)(x-\beta)\ \Rightarrow\ |f(\alpha)-f(\beta)|=\dfrac{|a|}{6}L^3`,
+  String.raw`a(x-\alpha)(x-\beta)\ \Rightarrow\ S=\dfrac{|a|}{6}L^3`,
+  String.raw`f(x)-\ell(x)=a(x-\alpha)^2(x-\beta)\ \Rightarrow\ S=\dfrac{|a|}{12}L^4`,
+  String.raw`f(x)-\ell(x)=a(x-m+h)(x-m)(x-m-h)\ \Rightarrow\ S_{\text{한쪽}}=\dfrac{|a|}{4}h^4`,
+  String.raw`f(x)=a(x-\alpha)(x-\beta)(x-\gamma)\ \Rightarrow\ S=\dfrac{|a|}{6}L^3|\gamma-m|`,
+  String.raw`f(x)=Ax^3+\cdots\ \Rightarrow\ |f(\alpha)-f(\beta)|=\dfrac{|A|}{2}L^3`,
 ];
 
 function AreaFormulaGuide() {
   return <>
-    <strong>넓이·극값 공식 <MathFormula latex={String.raw`L=\beta-\alpha`} /></strong>
+    <strong>필수 넓이 공식 <MathFormula latex={String.raw`L=\beta-\alpha,\quad m=\dfrac{\alpha+\beta}{2}`} /></strong>
     <div>{areaFormulas.map((formula) => <MathFormula latex={formula} key={formula} />)}</div>
   </>;
 }

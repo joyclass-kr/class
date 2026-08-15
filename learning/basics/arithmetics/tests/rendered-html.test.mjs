@@ -609,10 +609,12 @@ test("renders the definite-integral formula guide and eight application problems
   assert.match(html, /공식 가리기/);
   assert.equal((html.match(/data-testid="numeric-formula-guide"/g) ?? []).length, 2);
   assert.equal((html.match(/data-testid="numeric-choice-question"/g) ?? []).length, 16);
-  assert.match(html, /두 근 사이의 넓이/);
-  assert.match(html, /이중근이 있는 삼차식/);
-  assert.match(html, /삼중근이 있는 사차식/);
-  assert.match(html, /두 이중근이 있는 사차식/);
+  assert.match(html, /이차함수 6분의 공식/);
+  assert.match(html, /삼차함수와 접선 12분의 공식/);
+  assert.match(html, /변곡점과 한쪽 넓이 4분의 공식/);
+  assert.match(html, /일반 삼차함수 6분의 보정치/);
+  assert.match(html, /삼차함수 극댓값과 극솟값의 차이|극값 차로/);
+  assert.doesNotMatch(html, /20분의|30분의|사차식/);
 });
 test("renders the reconstructed conic tangents and space geometry worksheets", async () => {
   const tangentResponse = await render("/arithmetic/high-school/conic-transformations-tangents");
