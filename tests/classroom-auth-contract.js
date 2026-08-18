@@ -47,17 +47,25 @@ assert.match(indexScript, /schoolId: schoolInput\.value/);
 assert.match(indexScript, /\/api\/schools/);
 assert.match(indexScript, /grade: Number\(studentGradeInput\.value\)/);
 assert.match(indexScript, /classNumber: Number\(studentClassInput\.value\)/);
-assert.match(indexScript, /name: studentNameInput\.value\.trim\(\)/);
+assert.match(indexScript, /const studentName = normalizePlayerName\(studentNameInput\.value\.trim\(\)\);/);
+assert.equal([...indexScript.matchAll(/name: studentName,/g)].length, 2);
 assert.match(indexScript, /user\?\.role === 'teacher'/,
   "Teacher and student routes must be selected from the server role.");
 assert.match(indexScript, /localStorage\.setItem\('classPlayerName'/,
   "Open development access should preserve only the device-local player name.");
-assert.doesNotMatch(indexScript, /guestNameInput\.addEventListener\(['"]input['"]/,
-  "Korean IME composition must not be rewritten while a syllable is being typed.");
-assert.match(indexScript, /const playerName = guestNameInput\.value\.trim\(\);/,
-  "The completed player name must be read when the form is submitted.");
-assert.match(indexScript, /if \(!isValidPlayerName\(playerName\)\)/,
-  "The completed player name must still be validated before submission.");
+assert.doesNotMatch(indexScript, /guestNameInput\.oninput\s*=/,
+  "Guest QWERTY conversion must not rewrite the field during input.");
+assert.equal(
+  [...indexScript.matchAll(/guestForm\.addEventListener\(['"]submit['"]/g)].length,
+  1,
+  "Guest login must use one submit handler so it cannot send an obsolete request without a passcode."
+);
+assert.match(indexScript, /const name = normalizePlayerName\(guestNameInput\.value\.trim\(\)\);/,
+  "The complete QWERTY name must be converted when the guest form is submitted.");
+assert.match(indexScript, /if \(!isValidPlayerName\(name\)\)/,
+  "The normalized guest name must still be validated before submission.");
+assert.match(indexScript, /JSON\.stringify\(\{ name, passcode \}\)/,
+  "Guest login must submit both the normalized name and the passcode.");
 assert.doesNotMatch(indexScript, /localStorage\.setItem\([^)]*(auth|token|session)/i,
   "Authentication state must not be stored in browser storage.");
 

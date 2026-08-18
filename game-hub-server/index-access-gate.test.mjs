@@ -30,12 +30,12 @@ assert.match(
 );
 assert.match(
     html,
-    /updatePlayerLearningLinks\((?:playerName|guest\.name)\);\s*setHubLocked\(false\);\s*setStatus\(`PLAYER/,
+    /updatePlayerLearningLinks\(guest\.name\);\s*setHubLocked\(false\);\s*restrictedPreview = false;\s*setStatus\(''\);/,
     'Submitting a valid player name must unlock the hub.',
 );
 assert.match(
     html,
-    /updatePlayerLearningLinks\(['"]['"]\);\s*setHubLocked\(true\);/,
+    /if \(!openAccess \|\| isValidPlayerName\(currentPlayerName\)\) return;\s*const link = event\.target\.closest\('a'\);\s*if \(link && hubContent\.contains\(link\)\) \{\s*event\.preventDefault\(\);\s*setStatus\('Enter a Korean player name before opening a game\.', true\);\s*guestNameInput\.focus\(\);/,
     'Open access without a valid saved name must lock the hub.',
 );
 assert.match(

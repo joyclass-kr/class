@@ -286,6 +286,7 @@
         }
 
         .worksheet-container a.is-class-locked,
+        .worksheet-group > summary.is-class-locked,
         .game-card-grid a.is-class-locked {
             border-color: #555555 !important;
             background: linear-gradient(135deg, #444444, #222222) !important;
@@ -295,6 +296,7 @@
         }
 
         .worksheet-container a.is-class-locked *,
+        .worksheet-group > summary.is-class-locked *,
         .game-card-grid a.is-class-locked * {
             color: #888888 !important;
         }
@@ -567,17 +569,22 @@
         }
 
         body.content-access-editing .worksheet-container a,
+        body.content-access-editing .worksheet-group > summary,
         body.content-access-editing .game-card-grid a {
             box-shadow: 0 0 0 2px rgba(255, 215, 0, 0.4);
             transition: transform 0.2s ease, box-shadow 0.2s ease;
         }
 
         body.content-access-editing .worksheet-container a:hover,
+        body.content-access-editing .worksheet-group > summary:hover,
         body.content-access-editing .game-card-grid a:hover {
             box-shadow: 0 0 0 3px #ffd700, 0 4px 16px rgba(255, 215, 0, 0.5);
             transform: scale(1.02);
         }
 
+        body.content-access-editing .worksheet-group-options {
+            display: none;
+        }
 
 
         @media (max-width: 1180px) and (min-width: 761px) {
@@ -679,7 +686,7 @@
         <div id="googleSignInButton" class="google-sign-in" hidden></div>
 
         <form id="guestForm" class="join-form guest-form" hidden>
-            <input id="guestName" class="auth-input guest-name" type="text" maxlength="6" autocomplete="off" placeholder="한글 가명 (2~6자)" aria-label="Player name">
+            <input id="guestName" class="auth-input guest-name" type="text" maxlength="30" autocomplete="off" placeholder="한글 가명 (2~6자)" aria-label="Player name">
             <input id="guestPasscode" class="auth-input guest-passcode" type="password" maxlength="4" inputmode="numeric" autocomplete="off" placeholder="비밀번호 4자리" aria-label="Passcode">
             <button class="auth-button join-wide" type="submit">게스트 로그인</button>
         </form>
@@ -691,7 +698,7 @@
             <input id="studentGrade" class="auth-input" type="text" maxlength="2" inputmode="numeric" autocomplete="off" placeholder="GRADE" aria-label="Grade">
             <input id="studentClass" class="auth-input" type="text" maxlength="2" inputmode="numeric" autocomplete="off" placeholder="CLASS" aria-label="Class">
             <input id="studentNumber" class="auth-input" type="text" maxlength="3" inputmode="numeric" autocomplete="off" placeholder="NUMBER" aria-label="Student number">
-            <input id="studentName" class="auth-input student-name" type="text" maxlength="6" autocomplete="name" placeholder="NAME" aria-label="Student name">
+            <input id="studentName" class="auth-input student-name" type="text" maxlength="30" autocomplete="name" placeholder="NAME" aria-label="Student name">
             <input id="studentPassword" class="auth-input join-wide" type="password" maxlength="6" inputmode="numeric" autocomplete="current-password" placeholder="PASSWORD" aria-label="Student password">
             <button class="auth-button" type="submit">로그인</button>
         </form>
@@ -765,18 +772,19 @@
                 <span class="worksheet-copy"><strong>한능검(기본) 기출</strong><small>(Korean History Basics)</small></span>
                 <span class="worksheet-arrow" aria-hidden="true"><svg viewBox="0 0 24 24"><path fill="#004d40" d="M12 2c-3.5 0-6.5 1.5-9 3v2c2.5-1.2 5.5-2 9-2s6.5.8 9 2V5c-2.5-1.5-5.5-3-9-3z"/><rect x="4" y="7" width="16" height="1.5" fill="#ffb300"/><path fill="#00695c" d="M12 8.5c-4 0-7.5 1.5-10.5 3v2c3-1.2 6.5-2 10.5-2s7.5 1.5 10.5 2v-2c-3-1.5-6-3-10.5-3z"/><rect x="2" y="13.5" width="20" height="1.5" fill="#ffb300"/><rect x="4" y="15" width="2" height="5" fill="#c62828"/><rect x="8" y="15" width="2" height="5" fill="#c62828"/><rect x="10.5" y="15" width="3" height="5" fill="#ff8f00"/><rect x="14" y="15" width="2" height="5" fill="#c62828"/><rect x="18" y="15" width="2" height="5" fill="#c62828"/><rect x="1" y="20" width="22" height="3" rx="1" fill="#78909c"/></svg></span>
             </a>
-            <details class="worksheet-group">
-                <summary aria-label="국내 지도 메뉴 열기">
+            <details class="worksheet-group" data-access-group="korea-maps">
+                <summary aria-label="국내 지도 메뉴 열기"
+                         data-content-paths="learning/academics/korean-museum/|learning/academics/korea-travel-map/">
                     <span class="worksheet-copy"><strong>국내 지도</strong><small>(Korea Maps)</small></span>
                     <span class="worksheet-arrow" aria-hidden="true" style="font-size:1.45rem;line-height:1">🗺️</span>
                 </summary>
                 <div class="worksheet-group-options" aria-label="국내 지도 선택">
-                    <a href="learning/academics/korean-museum/" data-requires-player="true">
+                    <a href="learning/academics/korean-museum/" data-requires-player="true" data-access-parent="korea-maps">
                         <span class="worksheet-copy"><strong>한국사 유물·유적</strong><small>(Korean Artifacts &amp; Sites)</small></span>
                         <span class="worksheet-arrow" aria-hidden="true">🏺</span>
                     </a>
 
-                    <a href="learning/academics/korea-travel-map/" data-requires-player="true">
+                    <a href="learning/academics/korea-travel-map/" data-requires-player="true" data-access-parent="korea-maps">
                         <span class="worksheet-copy"><strong>국내 여행 지도</strong><small>(Korea Travel Map)</small></span>
                         <span class="worksheet-arrow" aria-hidden="true">📍</span>
                     </a>
@@ -801,10 +809,27 @@
                 <span class="worksheet-copy"><strong>과학 실험실</strong><small>(Science Lab)</small></span>
                 <span class="worksheet-arrow" aria-hidden="true"><svg viewBox="0 0 24 24"><path fill="#b0bec5" d="M14 11V4h1V2H9v2h1v7L5 19c-.6.9 0 2 1.1 2h11.8c1.1 0 1.7-1.1 1.1-2l-5-8z"/><path fill="#00e676" d="M7 17l3-5h4l3 5H7z"/><circle cx="10" cy="14" r="1" fill="#fff"/><circle cx="13" cy="15.5" r="0.8" fill="#fff"/></svg></span>
             </a>
-            <a href="learning/academics/space/" data-requires-player="true">
-                <span class="worksheet-copy"><strong>우주 관찰</strong><small>(Space Observation)</small></span>
-                <span class="worksheet-arrow" aria-hidden="true"><svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="9" fill="#ffecb3" opacity="0.25"/><polygon points="12,2 15.1,8.3 22,9.3 17,14.1 18.2,21 12,17.7 5.8,21 7,14.1 2,9.3 8.9,8.3" fill="#ffc107" stroke="#ff8f00" stroke-width="1"/><polygon points="12,4.5 14.1,8.8 18.8,9.5 15.4,12.8 16.2,17.5 12,15.2" fill="#ffe082"/><polygon points="4,4 5,4 4.5,3 4.5,5" fill="#fff"/><polygon points="20,5 21,5 20.5,4 20.5,6" fill="#fff"/></svg></span>
-            </a>
+            <details class="worksheet-group" data-access-group="space-observation">
+                <summary aria-label="우주 관찰 메뉴 열기"
+                         data-content-paths="learning/academics/space/">
+                    <span class="worksheet-copy"><strong>우주 관찰</strong><small>(Space Observation)</small></span>
+                    <span class="worksheet-arrow" aria-hidden="true" style="font-size:1.45rem;line-height:1">⭐</span>
+                </summary>
+                <div class="worksheet-group-options" aria-label="우주 관찰 선택">
+                    <a href="learning/academics/space/solar-system/" data-requires-player="true" data-access-parent="space-observation">
+                        <span class="worksheet-copy"><strong>태양계</strong><small>(Solar System)</small></span>
+                        <span class="worksheet-arrow" aria-hidden="true">🪐</span>
+                    </a>
+                    <a href="learning/academics/space/constellations/" data-requires-player="true" data-access-parent="space-observation">
+                        <span class="worksheet-copy"><strong>별과 별자리</strong><small>(Stars &amp; Constellations)</small></span>
+                        <span class="worksheet-arrow" aria-hidden="true">⭐</span>
+                    </a>
+                    <a href="learning/academics/space/earth-moon/" data-requires-player="true" data-access-parent="space-observation">
+                        <span class="worksheet-copy"><strong>지구와 달의 운동</strong><small>(Earth &amp; Moon)</small></span>
+                        <span class="worksheet-arrow" aria-hidden="true">🌍</span>
+                    </a>
+                </div>
+            </details>
         </div>
     </section>
 
@@ -900,6 +925,7 @@
             const hubContent = document.getElementById('hubContent');
             const hubLinks = Array.from(hubContent.querySelectorAll('a[href]'));
             const playerLearningLinks = Array.from(document.querySelectorAll('[data-requires-player="true"]'));
+            const accessGroupControls = Array.from(document.querySelectorAll('[data-content-paths]'));
             let openAccess = false;
             let restrictedPreview = false;
             let currentPlayerName = '';
@@ -907,20 +933,42 @@
             let contentAccessEditing = false;
             let classEnabledPaths = new Set();
 
-            function contentPathForLink(link) {
-                const href = link.dataset.baseHref || link.dataset.lockedHref || link.getAttribute('href');
+            function normalizedContentPath(href) {
                 if (!href) return '';
                 const url = new URL(href, window.location.href);
                 return url.pathname.length > 1 ? url.pathname.replace(/\/+$/, '') : url.pathname;
             }
 
+            function contentPathForLink(link) {
+                const href = link.dataset.baseHref || link.dataset.lockedHref || link.getAttribute('href');
+                return normalizedContentPath(href);
+            }
+
+            function contentPathsForControl(control) {
+                return String(control?.dataset.contentPaths || '')
+                    .split('|')
+                    .map(normalizedContentPath)
+                    .filter(Boolean);
+            }
+
+            function accessControlForLink(link) {
+                const groupName = link?.dataset.accessParent;
+                if (!groupName) return null;
+                return accessGroupControls.find((control) => control.closest('[data-access-group]')?.dataset.accessGroup === groupName) || null;
+            }
+
+            function isAccessControlEnabled(control) {
+                const paths = contentPathsForControl(control);
+                return paths.length > 0 && paths.every((path) => classEnabledPaths.has(path));
+            }
+
             function renderClassLocks() {
-                // The enabled/disabled set only blocks students from clicking through
-                // (enforced separately below via dataset.classLocked + isTeacherSignedIn).
-                // The grey visual itself always reflects the real per-item state, even
-                // for the teacher's own screen, so they can see what's on/off at a glance.
+                // Group children inherit the state of their single parent control.
                 hubLinks.forEach((link) => {
-                    const locked = !classEnabledPaths.has(contentPathForLink(link));
+                    const groupControl = accessControlForLink(link);
+                    const locked = groupControl
+                        ? !isAccessControlEnabled(groupControl)
+                        : !classEnabledPaths.has(contentPathForLink(link));
                     link.classList.toggle('is-class-locked', locked);
                     link.dataset.classLocked = String(locked);
                     if (locked) {
@@ -931,6 +979,19 @@
                         link.removeAttribute('aria-label');
                     }
                 });
+
+                accessGroupControls.forEach((control) => {
+                    if (!control.dataset.baseAriaLabel) {
+                        control.dataset.baseAriaLabel = control.getAttribute('aria-label') || control.textContent.trim();
+                    }
+                    const locked = !isAccessControlEnabled(control);
+                    control.classList.toggle('is-class-locked', locked);
+                    control.dataset.classLocked = String(locked);
+                    control.setAttribute('aria-label', locked
+                        ? `${control.dataset.baseAriaLabel} · 담임교사가 잠금`
+                        : control.dataset.baseAriaLabel);
+                    control.setAttribute('aria-disabled', locked && !contentAccessEditing ? 'true' : 'false');
+                });
             }
 
             async function loadClassContentAccess() {
@@ -939,6 +1000,45 @@
                 contentAccessButton.hidden = !result.canManage;
                 renderClassLocks();
             }
+
+            async function handleGroupedContentAccess(event) {
+                const control = event.target.closest('[data-content-paths]');
+                if (!control || !hubContent.contains(control)) return;
+
+                if (contentAccessEditing) {
+                    event.preventDefault();
+                    event.stopImmediatePropagation();
+                    const paths = contentPathsForControl(control);
+                    if (paths.length === 0) return;
+                    const nextEnabled = !paths.every((path) => classEnabledPaths.has(path));
+                    try {
+                        await Promise.all(paths.map((path) => api('/api/teacher/home-content-access', {
+                            method: 'PUT',
+                            body: JSON.stringify({ path, enabled: nextEnabled }),
+                        })));
+                        paths.forEach((path) => {
+                            if (nextEnabled) classEnabledPaths.add(path);
+                            else classEnabledPaths.delete(path);
+                        });
+                        renderClassLocks();
+                        setStatus(nextEnabled
+                            ? '이 메뉴와 모든 하위 메뉴를 우리 반 학생에게 공개했습니다.'
+                            : '이 메뉴와 모든 하위 메뉴를 우리 반 학생에게 잠갔습니다.');
+                    } catch (error) {
+                        await loadClassContentAccess().catch(() => renderClassLocks());
+                        setStatus(error.message, true);
+                    }
+                    return;
+                }
+
+                if (control.dataset.classLocked === 'true' && !isTeacherSignedIn) {
+                    event.preventDefault();
+                    event.stopImmediatePropagation();
+                    setStatus('선생님이 열어 주시면 이용할 수 있습니다.');
+                }
+            }
+
+            hubContent.addEventListener('click', handleGroupedContentAccess, true);
 
             classToolsLink?.addEventListener('click', (event) => {
                 if (!isTeacherSignedIn) {
@@ -959,14 +1059,14 @@
                     'q':'ㅂ','w':'ㅈ','e':'ㄷ','r':'ㄱ','t':'ㅅ','y':'ㅛ','u':'ㅕ','i':'ㅑ','o':'ㅐ','p':'ㅔ',
                     'a':'ㅁ','s':'ㄴ','d':'ㅇ','f':'ㄹ','g':'ㅎ','h':'ㅗ','j':'ㅓ','k':'ㅏ','l':'ㅣ',
                     'z':'ㅋ','x':'ㅌ','c':'ㅊ','v':'ㅍ','b':'ㅠ','n':'ㅜ','m':'ㅡ',
-                    'Q':'ㅃ','W':'ㅉ','E':'ㄸ','R':'ㄲ','T':'ㅆ','O':'ㅖ','P':'ㅖ',
+                    'Q':'ㅃ','W':'ㅉ','E':'ㄸ','R':'ㄲ','T':'ㅆ','O':'ㅒ','P':'ㅖ',
                     'A':'ㅁ','S':'ㄴ','D':'ㅇ','F':'ㄹ','G':'ㅎ','H':'ㅗ','J':'ㅓ','K':'ㅏ','L':'ㅣ',
                     'Z':'ㅋ','X':'ㅌ','C':'ㅊ','V':'ㅍ','B':'ㅠ','N':'ㅜ','M':'ㅡ',
                     'Y':'ㅛ','U':'ㅕ','I':'ㅑ'
                 };
                 const CHO = ["ㄱ","ㄲ","ㄴ","ㄷ","ㄸ","ㄹ","ㅁ","ㅂ","ㅃ","ㅅ","ㅆ","ㅇ","ㅈ","ㅉ","ㅊ","ㅋ","ㅌ","ㅍ","ㅎ"];
-                const JOUNG = ["ㅏ","ㅐ","ㅑ","ㅒ","ㅓ","ㅔ","ㅕ","ㅖ","ㅗ","ㅘ","ㅙ","ㅚ","ㅛ","ㅜ","ㅝ","ㅞ","ㅟ","ㅠ","ㅡ","ㅢ"];
-                const JONG = ["","ㄱ","ㄲ","ㄳ","ㄴ","ㄵ","ㄶ","ㄷ","ㄹ","ㄻ","ㄼ","ㄽ","ㄾ","ㄿ","ㅀ","ㅁ","ㅂ","ㅄ","ㅅ","ㅆ","ㅇ","ㅈ","ㅊ","ㅋ","ㅌ","ㅍ","ㅎ"];
+                const JOUNG = ["ㅏ","ㅐ","ㅑ","ㅒ","ㅓ","ㅔ","ㅕ","ㅖ","ㅗ","ㅘ","ㅙ","ㅚ","ㅛ","ㅜ","ㅝ","ㅞ","ㅟ","ㅠ","ㅡ","ㅢ","ㅣ"];
+                const JONG = ["","ㄱ","ㄲ","ㄳ","ㄴ","ㄵ","ㄶ","ㄷ","ㄹ","ㄺ","ㄻ","ㄼ","ㄽ","ㄾ","ㄿ","ㅀ","ㅁ","ㅂ","ㅄ","ㅅ","ㅆ","ㅇ","ㅈ","ㅊ","ㅋ","ㅌ","ㅍ","ㅎ"];
                 const COMPOUND_JOUNG = {
                     'ㅗㅏ':'ㅘ', 'ㅗㅐ':'ㅙ', 'ㅗㅣ':'ㅚ',
                     'ㅜㅓ':'ㅝ', 'ㅜㅔ':'ㅞ', 'ㅜㅣ':'ㅟ',
@@ -980,7 +1080,7 @@
 
                 const DECOMPOSE_JONG = {
                     'ㄳ': 'ㄱㅅ', 'ㄵ': 'ㄴㅈ', 'ㄶ': 'ㄴㅎ',
-                    'ㄺ': 'ㄹㄱ', 'ㄻ': 'ㄹㅁ', 'ㄼ': 'ㄹㅂ', 'ㄽ': 'ㄹㅅ', 'ㄾ': 'ㄹㄾ', 'ㄿ': 'ㄹㅍ', 'ㅀ': 'ㄹㅎ',
+                    'ㄺ': 'ㄹㄱ', 'ㄻ': 'ㄹㅁ', 'ㄼ': 'ㄹㅂ', 'ㄽ': 'ㄹㅅ', 'ㄾ': 'ㄹㅌ', 'ㄿ': 'ㄹㅍ', 'ㅀ': 'ㄹㅎ',
                     'ㅄ': 'ㅂㅅ'
                 };
 
@@ -1095,17 +1195,10 @@
                 return result.slice(0, 6);
             }
 
-            function fixCommonNameTypos(name) {
-                return String(name || '')
-                    .replace(/솠|솧|홧/g, '송')
-                    .replace(/돴|돟/g, '동')
-                    .replace(/봯/g, '범');
-            }
-
             function normalizePlayerName(value) {
                 const converted = convertQwertyToHangul(String(value || ''));
                 const cleaned = converted.replace(/[^가-힣]/g, '');
-                return fixCommonNameTypos(cleaned).slice(0, 6);
+                return cleaned.slice(0, 6);
             }
 
             function isValidPlayerName(value) {
@@ -1241,11 +1334,11 @@
                 if (parentNoticeLink) parentNoticeLink.hidden = false;
                 if (classboardLink) classboardLink.hidden = true;
                 studentProfileLink.hidden = true;
-                
+
                 signedInName.textContent = state.user?.name || '학부모님';
                 const childInfo = state.guardianChildren[0];
                 classMembership.textContent = `${childInfo.schoolName} · G${childInfo.grade}-${childInfo.classNumber} · No. ${childInfo.studentNumber} 학부모 계정`;
-                
+
                 hubContent.hidden = true;
                 setStatus('');
             }
@@ -1337,7 +1430,7 @@
 
                 const profileList = document.getElementById('profileList');
                 profileList.innerHTML = '';
-                
+
                 // Fetch teacher profile to get teacherType and schoolName. Not gated on
                 // state.user.role: role is a single priority slot (admin beats teacher),
                 // so an account can be registered as a teacher even while its top-level
@@ -1363,12 +1456,12 @@
                     const isSchoolAdmin = ['관리자', '교장', '교감'].includes(teacherProfileData.teacherType);
                     btn.className = isSchoolAdmin ? 'profile-btn school-admin' : 'profile-btn teacher';
                     btn.href = '/classtools/';
-                    
+
                     const roleLabel = isSchoolAdmin ? '학교 관리자 계정' : '교직원 계정';
                     const icon = isSchoolAdmin ? '🏫' : '👨‍🏫';
                     btn.innerHTML = `<span class="profile-title">${icon} ${teacherProfileData.name}</span><span class="profile-desc">${teacherProfileData.schoolName} · ${roleLabel}</span>`;
                     profileList.appendChild(btn);
-                    
+
                     // Also set up logic that showTeacherHome used to do
                     isTeacherSignedIn = true;
                     restrictedPreview = false;
@@ -1390,7 +1483,7 @@
                     const schoolLabel = m?.schoolName || state.user?.schoolName || '학급';
                     const gradeClassLabel = (m?.grade && m?.classNumber) ? `${m.grade}학년 ${m.classNumber}반 ${m.studentNumber}번 ` : '';
                     const studentName = m?.studentName || state.user?.displayName || state.user?.name || '학생';
-                    
+
                     btn.innerHTML = `<span class="profile-title">🎓 ${studentName}</span><span class="profile-desc">${schoolLabel} ${gradeClassLabel}학생 계정</span>`;
                     profileList.appendChild(btn);
 
@@ -1443,7 +1536,7 @@
                     profileList.appendChild(btn);
                     setHubLocked(false);
                 }
-                
+
                 setStatus('');
             }
 
@@ -1488,30 +1581,9 @@
                 });
             }
 
-            guestForm.addEventListener('submit', async (event) => {
-                event.preventDefault();
-                const playerName = guestNameInput.value.trim();
-                if (!isValidPlayerName(playerName)) {
-                    setStatus('Enter a Korean name with 2 to 6 characters.', true);
-                    guestNameInput.focus();
-                    return;
-                }
-                try {
-                    const guest = await api('/api/auth/guest', {
-                        method: 'POST',
-                        body: JSON.stringify({ name: playerName }),
-                    });
-                    currentPlayerName = guest.name;
-                    localStorage.setItem('classPlayerName', guest.name);
-                    updatePlayerLearningLinks(guest.name);
-                    setHubLocked(false);
-                    setStatus(`PLAYER · ${guest.name}`);
-                } catch (error) {
-                    setStatus(error.message, true);
-                }
-            });
             hubContent.addEventListener('click', async (event) => {
-                const selectedLink = event.target.closest('a');
+                                const selectedLink = event.target.closest('a');
+
                 if (contentAccessEditing && selectedLink && hubContent.contains(selectedLink)) {
                     event.preventDefault();
                     const path = contentPathForLink(selectedLink);
@@ -1533,6 +1605,7 @@
                     }
                     return;
                 }
+
                 if (selectedLink?.dataset.classLocked === 'true' && !isTeacherSignedIn) {
                     event.preventDefault();
                     setStatus('선생님이 열어 주시면 이용할 수 있습니다.');
@@ -1562,17 +1635,14 @@
                 contentAccessButton.textContent = contentAccessEditing ? '✅ 공개 설정 완료' : '🔓 공개 설정 모드';
                 contentAccessButton.style.background = contentAccessEditing ? 'linear-gradient(135deg, #059669, #10b981)' : 'linear-gradient(135deg, #0284c7, #2563eb)';
                 document.body.classList.toggle('content-access-editing', contentAccessEditing);
+                if (contentAccessEditing) {
+                    document.querySelectorAll('.worksheet-group[open]').forEach((group) => group.removeAttribute('open'));
+                }
                 renderClassLocks();
                 setStatus(contentAccessEditing
-                    ? '각 버튼을 눌러 우리 반 학생의 접근을 잠그거나 공개하세요.'
+                    ? '각 상위 버튼을 눌러 공개하세요. 하위 메뉴는 상위 설정을 함께 따릅니다.'
                     : '우리 반 공개 설정을 저장했습니다.');
             });
-            guestNameInput.oninput = () => {
-                guestNameInput.value = convertQwertyToHangul(guestNameInput.value);
-            };
-            studentNameInput.oninput = () => {
-                studentNameInput.value = convertQwertyToHangul(studentNameInput.value);
-            };
             guestPasscodeInput.addEventListener('input', () => {
                 guestPasscodeInput.value = guestPasscodeInput.value.replace(/\D/g, '').slice(0, 4);
             });
@@ -1591,6 +1661,13 @@
             });
             joinForm.addEventListener('submit', async (event) => {
                 event.preventDefault();
+                const studentName = normalizePlayerName(studentNameInput.value.trim());
+                studentNameInput.value = studentName;
+                if (!isValidPlayerName(studentName)) {
+                    setStatus('이름은 한글 2~6자로 입력하세요.', true);
+                    studentNameInput.focus();
+                    return;
+                }
                 const isTeacherLogin = studentNumberInput.value === '0';
                 setStatus(isTeacherLogin ? 'Checking teacher registration…' : 'Linking your class…');
                 try {
@@ -1601,7 +1678,7 @@
                                 schoolId: schoolInput.value,
                                 grade: Number(studentGradeInput.value),
                                 classNumber: Number(studentClassInput.value),
-                                name: studentNameInput.value.trim(),
+                                name: studentName,
                                 password: studentPasswordInput.value,
                             }),
                         });
@@ -1616,7 +1693,7 @@
                             grade: Number(studentGradeInput.value),
                             classNumber: Number(studentClassInput.value),
                             studentNumber: studentNumberInput.value,
-                            name: studentNameInput.value.trim(),
+                            name: studentName,
                             password: studentPasswordInput.value,
                         }),
                     });
@@ -1647,7 +1724,7 @@
             });
             guestForm.addEventListener('submit', async (event) => {
                 event.preventDefault();
-                const name = guestNameInput.value.trim().replace(/[^가-힣]/g, '');
+                const name = normalizePlayerName(guestNameInput.value.trim());
                 guestNameInput.value = name;
                 const passcode = guestPasscodeInput.value.trim();
                 if (!isValidPlayerName(name)) {
