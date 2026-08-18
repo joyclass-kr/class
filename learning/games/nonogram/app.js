@@ -416,9 +416,9 @@
       localStorage.setItem(bestKey(), JSON.stringify({ time: elapsed }));
     }
     updateBest();
-    resultSummary.textContent = `${currentPuzzle.name} · ${formatTime(elapsed)}`;
+    resultSummary.textContent = formatTime(elapsed);
     finisherBoard.register({
-      difficulty: `${n}×${n} · ${currentPuzzle.name}`,
+      difficulty: `${n}×${n}`,
       rank: n,
       targetId: 'result-finishers-list'
     });
