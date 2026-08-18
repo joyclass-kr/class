@@ -77,6 +77,14 @@ assert.match(patternTrio, /\["blue", "orange", "teal"\]/, "패턴 3장은 독자
 const quest = read("learning/games/avalon/avalon.html");
 assert.match(quest, /Merlin:"예언자"/, "원정대 추리의 역할명을 독자화해야 합니다.");
 assert.match(quest, /Assassin:"추격자"/, "원정대 추리의 역할명을 독자화해야 합니다.");
+assert.match(quest, /Merlin:"Seer"/, "예언자 카드의 영어 역할명을 병기해야 합니다.");
+assert.match(quest, /Percival:"Guardian"/, "수호자 카드의 영어 역할명을 병기해야 합니다.");
+assert.match(quest, /Assassin:"Pursuer"/, "추격자 카드의 영어 역할명을 병기해야 합니다.");
+assert.match(quest, /Morgana:"Illusionist"/, "환영술사 카드의 영어 역할명을 병기해야 합니다.");
+assert.match(quest, /Mordred:"Infiltrator"/, "잠입자 카드의 영어 역할명을 병기해야 합니다.");
+assert.match(quest, /Oberon:"Lone Spy"/, "고독한 첩자 카드의 영어 역할명을 병기해야 합니다.");
+assert.match(quest, /"Loyal Servant":"Quest Member"/, "원정대원 카드의 영어 역할명을 병기해야 합니다.");
+assert.match(quest, /"Minion of Mordred":"Shadow Minion"/, "어둠의 추종자 카드의 영어 역할명을 병기해야 합니다.");
 assert.match(quest, /roleCardTitleOverlay/, "기존 카드 이미지의 제목을 독자 역할명으로 가려야 합니다.");
 assert.match(quest, /applyQuestRules\(\)/, "원정대 추리의 규칙 설명을 독자 문구로 교체해야 합니다.");
 
