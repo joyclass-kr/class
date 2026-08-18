@@ -11,11 +11,11 @@ const koreaMaps = groupByName.get('korea-maps') || '';
 assert.ok(koreaMaps, 'The domestic-map tools must be grouped in one disclosure menu.');
 assert.match(koreaMaps, /<strong>국내 지도<\/strong><small>\(Korea Maps\)<\/small>/);
 assert.match(koreaMaps, /data-content-paths="learning\/academics\/korean-museum\/\|learning\/academics\/korea-travel-map\/"/);
-for (const [href, label] of [
-  ['learning/academics/korean-museum/', '한국사 유물·유적'],
-  ['learning/academics/korea-travel-map/', '국내 여행 지도'],
+for (const [href, label, englishLabel] of [
+  ['learning/academics/korean-museum/', '유물·유적', 'Artifacts &amp; Sites'],
+  ['learning/academics/korea-travel-map/', '체험·관광', 'Experiences &amp; Tourism'],
 ]) {
-  assert.match(koreaMaps, new RegExp(`href="${href}"[^>]*data-access-parent="korea-maps"[\\s\\S]*?<strong>${label}<\\/strong>`));
+  assert.match(koreaMaps, new RegExp(`href="${href}"[^>]*data-access-parent="korea-maps"[\\s\\S]*?<strong>${label}<\\/strong><small>\\(${englishLabel}\\)<\\/small>`));
 }
 assert.doesNotMatch(koreaMaps, /learning\/academics\/east-asia-history-lab\/|한국사 지도/);
 
