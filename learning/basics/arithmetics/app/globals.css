@@ -9108,6 +9108,29 @@ main {
   justify-content: flex-end;
 }
 
+/* Keep every worksheet action reachable on iPad portrait without squeezing the
+   A4 sheet or letting the toolbar overflow off-screen. */
+@media screen and (min-width: 621px) and (max-width: 840px) {
+  .counting-toolbar {
+    height: auto;
+    min-height: 104px;
+    grid-template-columns: auto 92px;
+    grid-template-rows: 44px auto;
+    align-content: center;
+  }
+
+  .counting-toolbar .toolbar {
+    grid-column: 1 / -1;
+    width: 100%;
+    flex-wrap: wrap;
+  }
+
+  .counting-toolbar .button {
+    min-height: 44px;
+    white-space: nowrap;
+  }
+}
+
 .counting-a4-stage {
   margin: 0 auto;
 }
@@ -9478,9 +9501,13 @@ main {
 
 @media (max-width: 620px) {
   .counting-toolbar {
-    grid-template-columns: auto 64px minmax(0, 1fr);
-    gap: 5px;
-    padding-inline: 5px;
+    height: auto;
+    min-height: 108px;
+    grid-template-columns: minmax(0, 1fr) auto;
+    grid-template-rows: 44px auto;
+    align-content: center;
+    gap: 6px 8px;
+    padding: 6px 8px 8px;
   }
 
   .counting-back {
@@ -9491,15 +9518,31 @@ main {
     padding-inline: 5px;
   }
 
+  .counting-toolbar .toolbar {
+    grid-column: 1 / -1;
+    display: flex;
+    width: 100%;
+    flex-wrap: wrap;
+    gap: 6px;
+  }
+
   .counting-toolbar .button {
-    min-height: 32px;
-    padding-inline: 7px;
-    font-size: 9px;
+    min-width: 0;
+    min-height: 44px;
+    flex: 1 1 72px;
+    padding-inline: 8px;
+    font-size: 11px;
+    white-space: nowrap;
   }
 
   .counting-toolbar .print-control,
-  .counting-toolbar .button.secondary {
+  .counting-toolbar .print-button,
+  .counting-toolbar .toolbar > .button.ghost:nth-last-child(2) {
     display: none;
+  }
+
+  .counting-toolbar .button.primary {
+    grid-column: auto;
   }
 }
 
