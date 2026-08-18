@@ -5,7 +5,7 @@ const html = fs.readFileSync(new URL('../index.html', import.meta.url), 'utf8');
 const group = html.match(/<details class="worksheet-group">[\s\S]*?<\/details>/)?.[0] || '';
 
 assert.ok(group, 'The domestic-map tools must be grouped in one disclosure menu.');
-assert.match(group, /<strong>국내 지도<\/strong><small>\(Korea Maps · 2\)<\/small>/);
+assert.match(group, /<strong>국내 지도<\/strong><small>\(Korea Maps\)<\/small>/);
 assert.equal((html.match(/<details class="worksheet-group">/g) || []).length, 1);
 
 for (const [href, label] of [
