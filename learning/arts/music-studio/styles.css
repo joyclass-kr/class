@@ -102,7 +102,7 @@ button:focus-visible, a:focus-visible, select:focus-visible, input:focus-visible
 .streak { justify-self: end; display: flex; align-items: center; gap: 10px; color: var(--muted); font-size: 12px; }
 .streak strong { display: grid; place-items: center; width: 34px; height: 34px; color: var(--bg); background: var(--yellow); border-radius: 50%; font: 800 14px Montserrat, sans-serif; }
 
-.section-kicker, .mini-label { color: var(--mint); font: 800 11px "Segoe UI", sans-serif; letter-spacing: 1px; }
+.mini-label { color: var(--mint); font: 800 11px "Segoe UI", sans-serif; letter-spacing: 1px; }
 
 .lab-tabs { display: grid; grid-template-columns: 1fr 1fr; gap: 1px; margin-top: 12px; background: var(--line); border: 1px solid var(--line); border-radius: 14px 14px 0 0; overflow: hidden; }
 .lab-tab { min-height: 58px; display: flex; align-items: center; justify-content: center; gap: 12px; padding: 8px 16px; border: 0; background: rgba(27,31,50,.88); cursor: pointer; text-align: left; transition: background .2s, color .2s; }
@@ -113,11 +113,6 @@ button:focus-visible, a:focus-visible, select:focus-visible, input:focus-visible
 .lab-tab b { display: block; font-size: 16px; }
 
 .lab-panel { padding: 28px 4%; border: 1px solid var(--line); border-top: 0; background: rgba(18,23,42,.84); box-shadow: var(--shadow); backdrop-filter: blur(24px); }
-.section-heading { display: flex; align-items: end; justify-content: space-between; gap: 30px; margin-bottom: 35px; }
-.section-heading h2 { margin: 8px 0 10px; font-size: clamp(30px, 4vw, 46px); letter-spacing: -2px; }
-.section-heading p { margin: 0; color: var(--muted); line-height: 1.6; }
-.section-kicker { margin: 0 !important; }
-.section-kicker.coral { color: var(--coral); }
 .harmony-controls { display: flex; flex-wrap: wrap; justify-content: flex-end; gap: 12px; flex: 0 1 820px; }
 .harmony-controls label { display: flex; flex-direction: column; gap: 6px; color: var(--muted); font-size: 10px; font-weight: 800; letter-spacing: 1px; }
 .harmony-controls select { min-width: 128px; height: 48px; padding: 0 38px 0 14px; border: 1px solid var(--line); border-radius: 8px; color: var(--ink); background: var(--panel-2); }
@@ -130,11 +125,6 @@ button:focus-visible, a:focus-visible, select:focus-visible, input:focus-visible
 .fixed-voicing small { color: var(--muted); font-size: 9px; font-weight: 700; letter-spacing: 0; }
 
 .foundation-course { margin-bottom: 18px; border: 1px solid rgba(108,229,202,.3); border-radius: 18px; background: linear-gradient(145deg, rgba(41,45,70,.96), rgba(24,29,50,.96)); overflow: hidden; }
-.foundation-intro { display: flex; align-items: start; justify-content: space-between; gap: 24px; padding: 28px 30px 24px; border-bottom: 1px solid var(--line); }
-.foundation-intro h3 { margin: 9px 0 8px; font-size: clamp(21px, 3vw, 29px); letter-spacing: -1px; }
-.foundation-intro p { max-width: 760px; margin: 0; color: var(--muted); font-size: 13px; line-height: 1.65; }
-.course-badge { display: inline-flex; padding: 6px 10px; border-radius: 50px; color: #10201c; background: var(--mint); font-size: 10px; font-weight: 900; }
-.course-badge.coral-badge { color: #29120e; background: var(--coral); }
 .foundation-steps { display: grid; grid-template-columns: repeat(3, 1fr); }
 .basic-key-picker { display: grid; grid-template-columns: minmax(220px, .9fr) 1fr auto; align-items: end; gap: 18px; padding: 18px 30px; border-bottom: 1px solid var(--line); background: rgba(108,229,202,.04); }
 .basic-key-picker label { display: grid; gap: 7px; }
@@ -284,7 +274,6 @@ button:focus-visible, a:focus-visible, select:focus-visible, input:focus-visible
 .quiz-feedback { grid-column: 3; min-height: 16px; margin: -10px 0 0; color: var(--mint); font-size: 10px; }
 .text-button { border: 0; color: var(--muted); background: transparent; font-size: 11px; cursor: pointer; }
 
-.rhythm-heading { align-items: center; }
 .rhythm-mode-switch { display: inline-flex; gap: 4px; margin-bottom: 18px; padding: 4px; border: 1px solid var(--line); border-radius: 9px; background: var(--panel-2); }
 .rhythm-mode-switch button { height: 44px; padding: 0 18px; border: 0; border-radius: 6px; color: var(--muted); background: transparent; font-size: 11px; font-weight: 800; cursor: pointer; }
 .rhythm-mode-switch button.active { color: var(--bg); background: var(--coral); }
@@ -417,7 +406,6 @@ footer b { color: var(--ink); font: 800 11px Montserrat, sans-serif; letter-spac
 
 @media (max-width: 900px) {
     .lab-panel { padding: 24px 3%; }
-    .section-heading { align-items: start; }
     .harmony-layout, .rhythm-layout, .dictation-layout { grid-template-columns: 1fr; }
     .ear-quiz-card, .voicing-quiz-card { grid-template-columns: 1fr auto; }
     .quiz-choices { grid-column: 1; }.quiz-feedback { grid-column: 1; }.ear-quiz-card > .text-button, .voicing-quiz-card > .text-button { grid-column: 2; grid-row: 2; }
@@ -434,8 +422,8 @@ footer b { color: var(--ink); font: 800 11px Montserrat, sans-serif; letter-spac
     .app-shell { width: min(100% - 20px, 1240px); }
     .topbar { min-height: 60px; grid-template-columns: auto 1fr auto; }.brand { justify-self: center; }.brand small, .streak span { display: none; }
     .lab-tabs { margin-top: 8px; }.lab-tab { min-height: 52px; gap: 8px; padding: 6px 8px; }.tab-number { display: none; }.lab-tab b { font-size: 14px; }
-    .lab-panel { padding: 20px 15px; }.section-heading { display: grid; }.section-heading h2 { font-size: 32px; }.harmony-controls { width: 100%; justify-content: flex-start; }.harmony-controls label, .harmony-controls .control-stack { flex: 1 1 130px; }.harmony-controls select { width: 100%; }
-    .foundation-intro { padding: 22px 19px; }.basic-key-picker { grid-template-columns: 1fr; padding: 17px 19px; }.basic-key-picker > button { grid-column: auto; }.foundation-step { padding: 23px 18px; }.foundation-summary { display: grid; gap: 4px; padding: 15px 19px; }.practice-gate { min-height: 72px; padding: 14px 18px; }.practice-heading { display: grid; }.practice-heading h3 { font-size: 24px; }
+    .lab-panel { padding: 20px 15px; }.harmony-controls { width: 100%; justify-content: flex-start; }.harmony-controls label, .harmony-controls .control-stack { flex: 1 1 130px; }.harmony-controls select { width: 100%; }
+    .basic-key-picker { grid-template-columns: 1fr; padding: 17px 19px; }.basic-key-picker > button { grid-column: auto; }.foundation-step { padding: 23px 18px; }.foundation-summary { display: grid; gap: 4px; padding: 15px 19px; }.practice-gate { min-height: 72px; padding: 14px 18px; }.practice-heading { display: grid; }.practice-heading h3 { font-size: 24px; }
     .progression-card, .function-card, .chord-bank-card, .ear-quiz-card, .voicing-quiz-card, .rhythm-player-card, .pattern-list-card, .dictation-card, .dictation-bank-card { padding: 18px; }
     .progression-slots { grid-template-columns: 1fr 1fr; }.chord-slot { min-height: 104px; }
     .function-flow b { font-size: 9px; }
@@ -443,7 +431,7 @@ footer b { color: var(--ink); font: 800 11px Montserrat, sans-serif; letter-spac
     .chord-bank { grid-template-columns: repeat(3, 1fr); }.chord-button:last-child { grid-column: 2; }
     .piano { height: 94px; margin-left: -8px; margin-right: -8px; }
     .ear-quiz-card, .voicing-quiz-card { grid-template-columns: 1fr; }.ear-quiz-card > *, .voicing-quiz-card > *, .quiz-choices, .quiz-feedback, .ear-quiz-card > .text-button, .voicing-quiz-card > .text-button { grid-column: 1; grid-row: auto; }.quiz-choices { flex-wrap: wrap; }
-    .rhythm-heading { display: grid; }.tempo-box { width: 100%; justify-content: space-between; }.tempo-box input { width: min(55%, 190px); }
+    .tempo-box { width: 100%; justify-content: space-between; }.tempo-box input { width: min(55%, 190px); }
     .rhythm-mode-switch { display: flex; }.rhythm-mode-switch button { flex: 1; }
     .dictation-toolbar { grid-template-columns: 1fr auto; }.dictation-listen-button { grid-column: 1 / -1; }
     .notation-choice-card { padding: 18px; }.notation-choice { grid-template-columns: 30px minmax(0, 1fr); min-height: 82px; padding: 10px; gap: 8px; }.notation-choice > b { width: 27px; height: 27px; }.notation-choice-staff { min-height: 54px; padding: 4px 2px; }.notation-symbol { font-size: 15px; }.notation-choice-actions { align-items: stretch; flex-direction: column; }.notation-choice-actions button { width: 100%; }
