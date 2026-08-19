@@ -148,9 +148,18 @@
             position: relative;
             color: #2b1c0e;
             border: 2px solid #906832;
-            background:
+            background-color: #ecdcb4;
+            background-image:
+                url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='150' height='150'><filter id='n'><feTurbulence type='fractalNoise' baseFrequency='0.82' numOctaves='2' stitchTiles='stitch'/><feColorMatrix type='matrix' values='0 0 0 0 0.30 0 0 0 0 0.20 0 0 0 0 0.08 0 0 0 0.10 0'/></filter><rect width='100%25' height='100%25' filter='url(%23n)'/></svg>"),
+                radial-gradient(ellipse 55% 42% at 16% 10%, rgba(255, 250, 232, 0.45), transparent 62%),
+                radial-gradient(ellipse 60% 55% at 90% 92%, rgba(117, 76, 30, 0.16), transparent 65%),
+                radial-gradient(ellipse 65% 55% at 75% 6%, rgba(117, 76, 30, 0.11), transparent 60%),
                 linear-gradient(rgba(246, 234, 208, 0.88), rgba(223, 199, 158, 0.90)),
-                url('/learning/games/sphinx/assets/images/background.webp') center / cover;
+                url('/learning/games/sphinx/assets/images/background.webp');
+            background-position: 0 0, 0 0, 0 0, 0 0, 0 0, center;
+            background-size: 150px 150px, auto, auto, auto, auto, cover;
+            background-repeat: repeat, no-repeat, no-repeat, no-repeat, no-repeat, no-repeat;
+            background-blend-mode: overlay, normal, normal, normal, normal, normal;
             box-shadow:
                 inset 0 0 24px rgba(78, 43, 14, 0.18),
                 0 10px 20px rgba(0,0,0,0.27);
@@ -181,9 +190,10 @@
             white-space: pre-wrap;
             text-align: left;
             word-break: keep-all;
-            font-size: 16px;
+            font-family: Batang, '바탕', 'HY Batang', serif;
+            font-size: 17px;
             font-weight: 600;
-            line-height: 1.75;
+            line-height: 1.8;
         }
 
         .options-container {
