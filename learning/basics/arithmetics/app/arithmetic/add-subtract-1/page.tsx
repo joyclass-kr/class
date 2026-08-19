@@ -413,7 +413,7 @@ function EquationRow({
 export function AdditionSubtractionWorksheet({ variant, mentalMath = false }: { variant: AdditionSubtractionVariant; mentalMath?: boolean }) {
   const title =
     variant === "grade-two-missing-parts"
-      ? "덧셈뺄셈③"
+      ? "덧셈·뺄셈 빈칸"
       : variant === "two-digit"
       ? "두 자리 수 덧셈·뺄셈"
       : variant === "within-twenty"

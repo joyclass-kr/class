@@ -189,7 +189,7 @@ export default function GradeThreeMeasurementPage() {
     return (
       <div className="a4-sheet counting-sheet measurement-sheet" style={{ transform: `scale(${sheetScale})` }}>
         <header className="counting-sheet-header">
-          <div className="counting-sheet-title"><span>3학년</span><strong>무게와 들이{answerSheet ? " 정답" : ""}</strong></div>
+          <div className="counting-sheet-title"><span>3학년</span><strong>무게와 들이의 계산{answerSheet ? " 정답" : ""}</strong></div>
           <div className="counting-sheet-info"><span>이름 <i /></span><span>날짜 <i /></span><small>문제지 {questionSet.seed}</small></div>
         </header>
         <div className="measurement-grid">{questionSet.problems.map((problem, index) => renderProblem(problem, index, answerSheet))}</div>

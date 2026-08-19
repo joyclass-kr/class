@@ -593,7 +593,7 @@ export default function Home() {
           <header className="sheet-header">
             <div className="sheet-title">
               <span>3학년</span>
-              <strong>대분수와 가분수 변환</strong>
+              <strong>대분수와 가분수</strong>
             </div>
             <div className="sheet-info">
               <span>이름 <i aria-hidden="true" /></span>
@@ -614,7 +614,7 @@ export default function Home() {
           <header className="sheet-header">
             <div className="sheet-title">
               <span>3학년</span>
-              <strong>대분수와 가분수 변환 · 전체 답지</strong>
+              <strong>대분수와 가분수 · 전체 답지</strong>
             </div>
             <div className="sheet-info">
               <span>문제지 <b>{questionSet.seed}</b></span>

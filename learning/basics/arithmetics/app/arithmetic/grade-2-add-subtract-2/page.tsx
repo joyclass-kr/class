@@ -205,7 +205,7 @@ export default function GradeTwoAdditionSubtractionTwoPage() {
         <header className="counting-sheet-header">
           <div className="counting-sheet-title">
             <span>2학년</span>
-            <strong>덧셈·뺄셈 ②{answerSheet ? " 정답" : ""}</strong>
+            <strong>세로셈 빈칸{answerSheet ? " 정답" : ""}</strong>
           </div>
           <div className="counting-sheet-info">
             <span>이름 <i /></span>

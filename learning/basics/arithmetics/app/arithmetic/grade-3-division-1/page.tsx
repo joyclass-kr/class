@@ -207,7 +207,7 @@ export default function GradeThreeDivisionOnePage() {
     return (
       <div className="a4-sheet counting-sheet division-story-sheet" style={{ transform: `scale(${sheetScale})` }}>
         <header className="counting-sheet-header">
-          <div className="counting-sheet-title"><span>3학년</span><strong>나눗셈 ①{answerSheet ? " 정답" : ""}</strong></div>
+          <div className="counting-sheet-title"><span>3학년</span><strong>나눗셈의 뜻{answerSheet ? " 정답" : ""}</strong></div>
           <div className="counting-sheet-info"><span>이름 <i /></span><span>날짜 <i /></span><small>문제지 {questionSet.seed}</small></div>
         </header>
         <div className="division-story-grid">{questionSet.problems.map((problem) => renderProblem(problem, answerSheet))}</div>

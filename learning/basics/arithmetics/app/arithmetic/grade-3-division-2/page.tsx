@@ -192,7 +192,7 @@ export default function GradeThreeDivisionTwoPage() {
     return (
       <div className="a4-sheet counting-sheet multiplication-sheet" style={{ transform: `scale(${sheetScale})` }}>
         <header className="counting-sheet-header">
-          <div className="counting-sheet-title"><span>3학년</span><strong>나눗셈 ②{answerSheet ? " 정답" : ""}</strong></div>
+          <div className="counting-sheet-title"><span>3학년</span><strong>몫과 나머지{answerSheet ? " 정답" : ""}</strong></div>
           <div className="counting-sheet-info"><span>이름 <i /></span><span>날짜 <i /></span><small>문제지 {questionSet.seed}</small></div>
         </header>
         <div className="multiplication-columns division-remainder-columns">

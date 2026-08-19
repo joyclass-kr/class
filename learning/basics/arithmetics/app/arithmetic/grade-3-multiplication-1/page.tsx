@@ -115,7 +115,7 @@ export default function GradeThreeMultiplicationOnePage() {
     return (
       <div className="a4-sheet counting-sheet vertical-sheet" style={{ transform: `scale(${sheetScale})` }}>
         <header className="counting-sheet-header">
-          <div className="counting-sheet-title"><span>3학년</span><strong>곱셈 ①{answerSheet ? " 정답" : ""}</strong></div>
+          <div className="counting-sheet-title"><span>3학년</span><strong>두 자리 수 × 한 자리 수 세로셈{answerSheet ? " 정답" : ""}</strong></div>
           <div className="counting-sheet-info"><span>이름 <i /></span><span>날짜 <i /></span><small>문제지 {questionSet.seed}</small></div>
         </header>
         <div className="vertical-grid">{questionSet.problems.map((problem) => renderProblem(problem, answerSheet))}</div>
