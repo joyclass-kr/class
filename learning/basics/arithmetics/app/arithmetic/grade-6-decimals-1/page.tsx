@@ -110,7 +110,7 @@ export default function GradeSixDecimalOnePage() {
     return (
       <div className="a4-sheet counting-sheet mental-math-sheet grade-six-decimal-one-sheet" style={{ transform: `scale(${sheetScale})` }}>
         <header className="counting-sheet-header">
-          <div className="counting-sheet-title"><span>6학년</span><strong>자연수 ÷ 자연수의 몫을 소수로 나타내기{answerSheet ? " 정답" : ""}</strong></div>
+          <div className="counting-sheet-title"><span>6학년</span><strong>자연수÷자연수를 소수로 나타내기{answerSheet ? " 정답" : ""}</strong></div>
           <div className="counting-sheet-info"><span>이름 <i /></span><span>날짜 <i /></span><small>문제지 {seed}</small></div>
         </header>
         <div className="grade-six-decimal-one-grid">

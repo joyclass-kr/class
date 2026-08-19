@@ -84,6 +84,10 @@
 .multiplication-question.grade-six-decimal-two-question {
   display: flex;
   grid-template-columns: none;
+  align-items: flex-start;
+  justify-content: flex-start;
+  padding: 32px 12px 12px;
+  text-align: left;
 }
 
 .grade-six-decimal-two-question:last-child {
@@ -111,7 +115,7 @@
   min-width: 0;
   display: flex;
   align-items: center;
-  justify-content: center;
+  justify-content: flex-start;
   gap: 7px;
   font-size: 18px;
   font-weight: 900;
@@ -2751,13 +2755,14 @@ html[data-race-mode="true"] body { padding-bottom: 72px; }
 .grade-four-decimal-question {
   position: relative;
   min-width: 0;
-  display: grid;
-  grid-template-columns: 28px minmax(0, 1fr);
-  align-items: center;
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  justify-content: flex-start;
   gap: 10px;
   border-right: 1px solid #b9afa1;
   border-bottom: 1px dashed #d8d2ca;
-  padding: 22px 18px 28px;
+  padding: 12px 14px 18px;
   color: #17233c;
 }
 
@@ -2787,8 +2792,9 @@ html[data-race-mode="true"] body { padding-bottom: 72px; }
 .grade-four-decimal-expression {
   min-width: 0;
   display: grid;
-  grid-template-columns: minmax(72px, 1fr) 24px minmax(72px, 1fr) 24px minmax(96px, 1fr);
+  grid-template-columns: max-content 24px max-content 24px 96px;
   align-items: center;
+  justify-content: start;
   gap: 7px;
   font-size: 24px;
   font-weight: 850;
