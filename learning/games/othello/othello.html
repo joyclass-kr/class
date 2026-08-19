@@ -1,0 +1,512 @@
+<!doctype html>
+<html lang="ko">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<title>오델로</title>
+<link rel="stylesheet" href="../../../assets/network/multiplayer-lobby.css">
+<style>
+:root{font-family:system-ui,-apple-system,"Segoe UI",sans-serif;color:#f2f7f0;background:#0d1811}*{box-sizing:border-box}body{margin:0;min-height:100vh;padding:22px;background:linear-gradient(#08130d82,#060f09b8),url("/learning/games/othello/assets/images/background.webp") center/cover fixed no-repeat,#0d1811}button,input{font:inherit}.shell{width:min(820px,100%);margin:auto}.panel{margin-bottom:15px;padding:20px;border:1px solid #2f6b45;border-radius:17px;background:#12241ae8;box-shadow:0 18px 50px #0007}.hidden{display:none!important}.eyebrow{margin-bottom:6px;color:#7fd99f;font-size:12px;font-weight:900;letter-spacing:.18em}.title{margin:0;font-family:Georgia,"Times New Roman",serif;font-size:clamp(38px,8vw,66px);letter-spacing:.08em}.subtitle{margin:3px 0 0;color:#b8d6c2}.row{display:flex;align-items:center;gap:9px;flex-wrap:wrap}.spread{justify-content:space-between}.primary,.secondary{min-height:42px;padding:9px 15px;border:1px solid #3f9463;border-radius:10px;font-weight:850;cursor:pointer}.primary{background:linear-gradient(#4fae74,#2a6b46);color:#06150c}.secondary{background:#1a3324;color:#e3f4e8}.primary:disabled,.secondary:disabled{cursor:not-allowed;opacity:.45}.code{font-size:28px;font-weight:950;letter-spacing:.16em}.playersLegend{display:grid;grid-template-columns:1fr 1fr;gap:10px;margin:13px 0}.playerCard{display:flex;align-items:center;gap:10px;padding:11px;border:1px solid #2c5b3c;border-radius:12px;background:#0e1c14}.playerCard.active{border-color:#7fd99f;box-shadow:0 0 0 2px #7fd99f38}.stoneSample{width:30px;height:30px;flex:0 0 auto;border-radius:50%}.stoneSample.black{background:radial-gradient(circle at 35% 30%,#595959,#171717 56%,#020202);box-shadow:0 4px 8px #000b}.stoneSample.white{background:radial-gradient(circle at 35% 28%,#fff,#e9e4da 58%,#a99f90);box-shadow:0 4px 8px #0008}.playerMeta{display:grid;flex:1}.playerMeta small{color:#9dc2ac}.playerScore{font-size:20px;font-weight:950;color:#dff5e6}.turnArea{display:grid;grid-template-columns:1fr auto;gap:9px;align-items:stretch;margin:12px 0}.turnBanner{display:grid;place-items:center;min-height:58px;padding:12px;border:1px solid #2f6b45;border-radius:11px;background:#0b1610;text-align:center;font-size:17px;font-weight:850}.turnClock{display:grid;place-items:center;min-width:68px;padding:8px 12px;border:2px solid #4fae74;border-radius:11px;background:#08120c;color:#c7f5d6;font-size:28px;font-weight:950;font-variant-numeric:tabular-nums}.turnClock.warning{border-color:#ff5d49;background:#3b0d08;color:#ff8b78;box-shadow:0 0 15px #ff3c2873}.boardFrame{width:min(560px,100%);margin:auto;padding:clamp(7px,2vw,14px);border:4px solid #2a2016;border-radius:8px;background:#2a2016;box-shadow:inset 0 0 22px #00000066,0 18px 38px #0008}.board{display:grid;grid-template-columns:repeat(8,1fr);aspect-ratio:1;gap:2px;background:#183d24;border:2px solid #0f2818;border-radius:4px;overflow:hidden}.cell{position:relative;min-width:0;aspect-ratio:1;padding:0;border:0;border-radius:0;background:#1c4a2c;cursor:default}.cell.legal{cursor:pointer}.cell.legal:hover{background:#235a35}.hint{position:absolute;z-index:1;left:50%;top:50%;width:22%;height:22%;border-radius:50%;background:#ffffff3d;transform:translate(-50%,-50%)}.disc{position:absolute;z-index:2;inset:9%;border-radius:50%}.disc.black{background:radial-gradient(circle at 34% 29%,#626262 0,#1e1e1e 45%,#030303 78%);box-shadow:0 2px 5px #000b}.disc.white{background:radial-gradient(circle at 34% 28%,#fff 0,#eee9df 54%,#b6ab99 82%);box-shadow:0 2px 5px #0008}.cell.last .disc{outline:2px solid #e14835;outline-offset:-4px}.cell.flipped .disc{box-shadow:0 0 0 2px #7fd99f88}.resultActions{display:flex;gap:9px;justify-content:center;flex-wrap:wrap;margin-top:13px}.overlay{position:fixed;inset:0;z-index:20;display:grid;place-items:center;padding:18px;background:#050a06dc}.modal{width:min(590px,100%);max-height:86vh;overflow:auto;padding:23px;border:1px solid #3f9463;border-radius:16px;background:#132318;color:#eaf7ee}.modal li{margin-bottom:8px}.toast{position:fixed;right:17px;bottom:17px;z-index:30;max-width:min(380px,calc(100vw - 34px));padding:12px 15px;border:1px solid #3f9463;border-radius:10px;background:#0d1a11;color:white;box-shadow:0 10px 30px #0009}.gameNote{color:#9dc2ac;text-align:center;font-size:13px}#lobbyScreen #lobbyGuide{padding:8px 10px;border-left:3px solid #7fd99f;background:#0e1c14;color:#c7f5d6;font-weight:800}@media(max-width:560px){body{padding:10px}.panel{padding:14px}.playersLegend{grid-template-columns:1fr}.turnClock{min-width:59px;font-size:24px}.boardFrame{border-width:3px}.disc{inset:6%}.cell.last .disc{outline-width:1px;outline-offset:-3px}.title{font-size:42px}}
+</style>
+<script src="../../../assets/network/game-network.js"></script>
+<script src="../../../assets/network/multiplayer-lobby.js"></script>
+<script src="../../../assets/sound/music-control.js" defer></script>
+<link rel="stylesheet" href="../../../assets/device-game.css">
+</head>
+<body>
+<main class="shell">
+  <section id="missingScreen" class="panel hidden">
+    <div class="eyebrow">PLAYER NAME REQUIRED</div>
+    <h1>이름이 없습니다</h1>
+    <p>이름 변경은 메인 화면에서만 가능합니다.</p>
+    <button class="primary" type="button" onclick="location.href='../../../'">메인 화면으로</button>
+  </section>
+
+  <section id="lobbyScreen" class="hidden mp-lobby-compact mp-lobby-standard" data-multiplayer-lobby>
+    <header class="panel">
+      <h1 class="title">OTHELLO</h1>
+      <p class="subtitle">오델로 · 2 PLAYERS</p>
+      <p>PLAYER · <strong id="savedName">-</strong></p>
+      <div class="mp-lobby-tabs">
+        <button id="hostTab" class="primary" type="button">CREATE ROOM</button>
+        <button id="joinTab" class="secondary" type="button">JOIN ROOM</button>
+      </div>
+    </header>
+
+    <section id="hostPane" class="panel mp-lobby-card hidden">
+      <div class="row spread">
+        <div><div class="eyebrow">ROOM CODE</div><div id="roomCode" class="code">----</div></div>
+        <button id="copyBtn" class="secondary" type="button">COPY CODE</button>
+      </div>
+      <div id="hostStatus" class="mp-lobby-status">방을 만드는 중입니다.</div>
+    </section>
+
+    <section id="joinPane" class="panel mp-lobby-card hidden">
+      <div class="mp-lobby-row">
+        <input id="joinCode" class="mp-lobby-code-input" inputmode="numeric" maxlength="4" placeholder="ROOM CODE · 4 DIGITS">
+        <button id="joinBtn" class="primary" type="button">JOIN ROOM</button>
+      </div>
+      <div id="joinStatus" class="mp-lobby-status">방장이 알려준 번호를 입력하세요.</div>
+    </section>
+
+    <section class="panel">
+      <h2>PLAYERS</h2>
+      <div id="lobbyPlayers" class="mp-lobby-players"></div>
+      <p id="lobbyGuide" class="mp-lobby-guide">첫 대국은 방장이 흑(선공)입니다. 오델로는 초기 배치가 대칭이라 선공 이점이 크지 않습니다.</p>
+      <button id="startBtn" class="primary" type="button" disabled>WAITING FOR OPPONENT</button>
+      <div class="row" style="margin-top:10px">
+        <button id="rulesBtnLobby" class="secondary" type="button">RULES</button>
+        <button id="leaveBtnLobby" class="secondary" type="button">메인 화면</button>
+      </div>
+    </section>
+  </section>
+
+  <section id="gameScreen" class="hidden">
+    <header class="panel">
+      <div class="row spread">
+        <div><div class="eyebrow">ROOM CODE</div><div id="gameRoomCode" class="code">----</div></div>
+        <div class="row">
+          <button id="rulesBtnGame" class="secondary" type="button">RULES</button>
+          <button id="leaveBtnGame" class="secondary" type="button">메인 화면</button>
+        </div>
+      </div>
+      <div class="playersLegend">
+        <div id="blackCard" class="playerCard">
+          <span class="stoneSample black"></span>
+          <span class="playerMeta"><small>BLACK · 선공</small><strong id="blackName">-</strong></span>
+          <span id="blackScore" class="playerScore">2</span>
+        </div>
+        <div id="whiteCard" class="playerCard">
+          <span class="stoneSample white"></span>
+          <span class="playerMeta"><small>WHITE · 후공</small><strong id="whiteName">-</strong></span>
+          <span id="whiteScore" class="playerScore">2</span>
+        </div>
+      </div>
+      <div class="turnArea">
+        <div id="turnBanner" class="turnBanner">대국을 준비하는 중입니다.</div>
+        <div id="turnClock" class="turnClock" role="timer" aria-label="남은 시간">20</div>
+      </div>
+    </header>
+
+    <section class="panel">
+      <div class="boardFrame"><div id="board" class="board" role="grid" aria-label="8x8 오델로판"></div></div>
+      <p class="gameNote">빨간 테두리는 방금 놓은 돌, 초록 테두리는 이번 수에 뒤집힌 돌입니다.</p>
+      <div id="resultActions" class="resultActions hidden">
+        <button id="rematchBtn" class="primary" type="button">REMATCH · 패배자 선공</button>
+        <button id="returnLobbyBtn" class="secondary" type="button">RETURN TO LOBBY</button>
+      </div>
+    </section>
+  </section>
+</main>
+
+<!-- 아직 전용 BGM이 없어 src를 비워 둔다(탐사대와 같은 형태). assets/sound/bgm.ogg 를 넣고 src만 채우면 된다. -->
+<audio id="bgm" loop preload="auto"></audio>
+
+<section id="rulesOverlay" class="overlay hidden" role="dialog" aria-modal="true">
+  <div class="modal">
+    <div class="eyebrow">HOW TO PLAY</div>
+    <h2>오델로 규칙</h2>
+    <ol>
+      <li>첫 대국은 방장이 흑을 맡아 먼저 둡니다. 이후 흑과 백이 한 번씩 번갈아 돌을 놓습니다.</li>
+      <li>자신의 돌 사이에 상대 돌을 가로·세로·대각선으로 한 줄 이상 끼우는 자리에만 둘 수 있으며, 그 사이의 상대 돌은 모두 자신의 색으로 뒤집힙니다.</li>
+      <li>둘 수 있는 자리가 없으면 자동으로 차례가 상대에게 넘어갑니다(패스).</li>
+      <li>양쪽 모두 둘 자리가 없거나 64칸이 모두 채워지면 대국이 끝나며, 돌 개수가 더 많은 쪽이 승리합니다. 동수면 무승부입니다.</li>
+      <li>한 수의 제한 시간은 20초이며 마지막 5초에는 빨간색 경고가 표시됩니다. 시간 초과 시 해당 대국에서 패배합니다.</li>
+      <li>재대국에서는 직전 대국의 패배자가 흑으로 먼저 둡니다. 무승부일 때만 흑백을 교대합니다.</li>
+    </ol>
+    <button id="closeRulesBtn" class="primary" type="button">CLOSE</button>
+  </div>
+</section>
+
+<section id="abortOverlay" class="overlay hidden" role="dialog" aria-modal="true">
+  <div class="modal">
+    <h2 id="abortTitle">대국 중단</h2>
+    <p id="abortMessage"></p>
+    <button id="reloadBtn" class="primary" type="button">처음부터</button>
+  </div>
+</section>
+
+<div id="toast" class="toast hidden" role="status" aria-live="polite"></div>
+
+<script>
+"use strict";
+
+const GAME_ID="othello";
+const NAME_KEY="classPlayerName";
+const BOARD_SIZE=8;
+const TURN_TIME_MS=20000;
+const MESSAGE=Object.freeze({ACTION:"OTHELLO_ACTION",STATE:"OTHELLO_STATE",RETURN_LOBBY:"OTHELLO_RETURN_LOBBY"});
+const DIRECTIONS=[[-1,-1],[-1,0],[-1,1],[0,-1],[0,1],[1,-1],[1,0],[1,1]];
+const $=id=>document.getElementById(id);
+
+let lobby=null;
+let gameState=null;
+let toastTimer=null;
+let hostTurnTimer=null;
+let localTurnDeadline=0;
+const savedName=String(localStorage.getItem(NAME_KEY)||"").trim();
+
+function boardIndex(row,col){return row*BOARD_SIZE+col}
+function initialBoard(){
+  const board=Array(BOARD_SIZE*BOARD_SIZE).fill(0);
+  board[boardIndex(3,3)]=2;
+  board[boardIndex(3,4)]=1;
+  board[boardIndex(4,3)]=1;
+  board[boardIndex(4,4)]=2;
+  return board;
+}
+function legalMovesFor(board,color){
+  const opponent=color===1?2:1;
+  const moves=[];
+  for(let row=0;row<BOARD_SIZE;row+=1){
+    for(let col=0;col<BOARD_SIZE;col+=1){
+      if(board[boardIndex(row,col)]!==0)continue;
+      const flips=[];
+      for(const [dr,dc] of DIRECTIONS){
+        let r=row+dr,c=col+dc;
+        const line=[];
+        while(r>=0&&r<BOARD_SIZE&&c>=0&&c<BOARD_SIZE&&board[boardIndex(r,c)]===opponent){
+          line.push([r,c]);
+          r+=dr;c+=dc;
+        }
+        if(line.length&&r>=0&&r<BOARD_SIZE&&c>=0&&c<BOARD_SIZE&&board[boardIndex(r,c)]===color){
+          flips.push(...line);
+        }
+      }
+      if(flips.length)moves.push({row,col,flips});
+    }
+  }
+  return moves;
+}
+function countDiscs(board){
+  let black=0,white=0;
+  for(const value of board){
+    if(value===1)black+=1;else if(value===2)white+=1;
+  }
+  return {black,white};
+}
+function showToast(message){
+  clearTimeout(toastTimer);
+  $("toast").textContent=message;
+  $("toast").classList.remove("hidden");
+  toastTimer=setTimeout(()=>$("toast").classList.add("hidden"),2200);
+}
+function showRules(){$("rulesOverlay").classList.remove("hidden")}
+function hideRules(){$("rulesOverlay").classList.add("hidden")}
+function showGame(){$("lobbyScreen").classList.add("hidden");$("gameScreen").classList.remove("hidden")}
+function showLobby(){clearHostTurnTimer();gameState=null;localTurnDeadline=0;$("gameScreen").classList.add("hidden");$("lobbyScreen").classList.remove("hidden")}
+
+function createInitialState(snapshot,previous){
+  const currentIds=Object.keys(snapshot.players);
+  const previousIds=previous&&Array.isArray(previous.playerOrder)?previous.playerOrder:[];
+  const samePlayers=previousIds.length===2&&previousIds.every(id=>currentIds.includes(id));
+  let playerOrder=currentIds;
+  if(samePlayers){
+    if(previous.winner){
+      const loserIndex=previous.winner===1?1:0;
+      playerOrder=[previousIds[loserIndex],previousIds[1-loserIndex]];
+    }else{
+      playerOrder=[previousIds[1],previousIds[0]];
+    }
+  }
+  const now=Date.now();
+  return {
+    board:initialBoard(),
+    playerOrder,
+    turn:0,
+    moveCount:0,
+    winner:0,
+    draw:false,
+    endReason:null,
+    timeoutLoser:0,
+    lastMove:null,
+    lastFlips:[],
+    passedColor:0,
+    match:Number(previous&&previous.match||0)+1,
+    turnToken:Number(previous&&previous.turnToken||0)+1,
+    hostNow:now,
+    turnDeadline:now+TURN_TIME_MS
+  };
+}
+
+function makeBoard(){
+  const fragment=document.createDocumentFragment();
+  for(let row=0;row<BOARD_SIZE;row+=1){
+    for(let col=0;col<BOARD_SIZE;col+=1){
+      const cell=document.createElement("button");
+      cell.type="button";
+      cell.className="cell";
+      cell.dataset.row=String(row);
+      cell.dataset.col=String(col);
+      cell.setAttribute("role","gridcell");
+      cell.addEventListener("click",()=>requestMove(row,col));
+      fragment.appendChild(cell);
+    }
+  }
+  $("board").replaceChildren(fragment);
+}
+
+function playerName(id){
+  return lobby.snapshot().players[id]&&lobby.snapshot().players[id].name||"참가자";
+}
+
+function clearHostTurnTimer(){
+  clearTimeout(hostTurnTimer);
+  hostTurnTimer=null;
+}
+
+function syncLocalTurnDeadline(){
+  if(!gameState||gameState.winner||gameState.draw){
+    localTurnDeadline=0;
+    return;
+  }
+  const remaining=Math.max(0,Number(gameState.turnDeadline)-Number(gameState.hostNow));
+  localTurnDeadline=Date.now()+remaining;
+  updateTurnClock();
+}
+
+function updateTurnClock(){
+  const clock=$("turnClock");
+  if(!clock)return;
+  const ended=!gameState||gameState.winner||gameState.draw;
+  clock.classList.toggle("hidden",Boolean(ended));
+  if(ended)return;
+  const seconds=Math.max(0,Math.ceil((localTurnDeadline-Date.now())/1000));
+  clock.textContent=String(seconds);
+  clock.classList.toggle("warning",seconds<=5);
+}
+
+function scheduleHostTurnTimeout(){
+  clearHostTurnTimer();
+  if(!gameState||gameState.winner||gameState.draw||lobby.snapshot().role!=="host")return;
+  const token=gameState.turnToken;
+  const delay=Math.max(0,Number(gameState.turnDeadline)-Date.now());
+  hostTurnTimer=setTimeout(()=>finishTurnTimeout(token),delay+20);
+}
+
+function installGameState(nextState,broadcast){
+  gameState=nextState;
+  syncLocalTurnDeadline();
+  scheduleHostTurnTimeout();
+  if(broadcast)lobby.broadcast({type:MESSAGE.STATE,state:gameState});
+  renderGame();
+}
+
+function finishTurnTimeout(token){
+  if(!gameState||gameState.turnToken!==token||gameState.winner||gameState.draw||lobby.snapshot().role!=="host")return;
+  const loserColor=gameState.turn+1;
+  const now=Date.now();
+  installGameState({
+    ...gameState,
+    winner:loserColor===1?2:1,
+    endReason:"timeout",
+    timeoutLoser:loserColor,
+    hostNow:now,
+    turnDeadline:now,
+    lastFlips:[]
+  },true);
+}
+
+function renderGame(){
+  if(!gameState)return;
+  const snapshot=lobby.snapshot();
+  const blackId=gameState.playerOrder[0];
+  const whiteId=gameState.playerOrder[1];
+  const activeId=gameState.playerOrder[gameState.turn];
+  const ended=Boolean(gameState.winner||gameState.draw);
+  const counts=countDiscs(gameState.board);
+  $("blackName").textContent=playerName(blackId)+(snapshot.myId===blackId?" · 나":"");
+  $("whiteName").textContent=playerName(whiteId)+(snapshot.myId===whiteId?" · 나":"");
+  $("blackScore").textContent=String(counts.black);
+  $("whiteScore").textContent=String(counts.white);
+  $("blackCard").classList.toggle("active",!ended&&gameState.turn===0);
+  $("whiteCard").classList.toggle("active",!ended&&gameState.turn===1);
+
+  if(gameState.winner){
+    const winnerId=gameState.playerOrder[gameState.winner-1];
+    if(gameState.endReason==="timeout"){
+      const loserId=gameState.playerOrder[gameState.timeoutLoser-1];
+      $("turnBanner").textContent=playerName(loserId)+" 시간 초과 · "+playerName(winnerId)+" 승리";
+    }else{
+      $("turnBanner").textContent=playerName(winnerId)+" 승리 · "+counts.black+" : "+counts.white;
+    }
+  }else if(gameState.draw){
+    $("turnBanner").textContent="무승부 · "+counts.black+" : "+counts.white;
+  }else{
+    const color=gameState.turn===0?"흑":"백";
+    let text=(activeId===snapshot.myId?"내 차례":"상대 차례")+" · "+color+" "+playerName(activeId);
+    if(gameState.passedColor){
+      text=(gameState.passedColor===1?"흑":"백")+" 둘 자리 없음 · "+text;
+    }
+    $("turnBanner").textContent=text;
+  }
+
+  const legal=ended?[]:legalMovesFor(gameState.board,gameState.turn+1);
+  const legalMap=new Map(legal.map(move=>[move.row+","+move.col,move]));
+  const flipped=new Set((gameState.lastFlips||[]).map(item=>item[0]+","+item[1]));
+  const canPlay=!ended&&activeId===snapshot.myId;
+  document.querySelectorAll(".cell").forEach(cell=>{
+    const row=Number(cell.dataset.row);
+    const col=Number(cell.dataset.col);
+    const key=row+","+col;
+    const value=gameState.board[boardIndex(row,col)];
+    const isLast=gameState.lastMove&&gameState.lastMove.row===row&&gameState.lastMove.col===col;
+    const isLegal=legalMap.has(key);
+    cell.classList.toggle("last",Boolean(isLast));
+    cell.classList.toggle("flipped",flipped.has(key));
+    cell.classList.toggle("legal",isLegal&&canPlay);
+    cell.setAttribute("aria-label",(row+1)+"행 "+(col+1)+"열"+(value?(value===1?" 흑돌":" 백돌"):isLegal?" 둘 수 있음":" 빈 자리"));
+    if(value){
+      cell.innerHTML='<span class="disc '+(value===1?"black":"white")+'"></span>';
+    }else if(isLegal){
+      cell.innerHTML='<span class="hint"></span>';
+    }else{
+      cell.replaceChildren();
+    }
+  });
+
+  $("resultActions").classList.toggle("hidden",!ended||snapshot.role!=="host");
+  updateTurnClock();
+}
+
+function applyMove(senderId,payload){
+  const snapshot=lobby.snapshot();
+  if(snapshot.role!=="host"||!gameState||gameState.winner||gameState.draw)return;
+  if(Date.now()>=Number(gameState.turnDeadline)){
+    finishTurnTimeout(gameState.turnToken);
+    return;
+  }
+  const row=Number(payload.row);
+  const col=Number(payload.col);
+  if(!Number.isInteger(row)||!Number.isInteger(col)||row<0||row>=BOARD_SIZE||col<0||col>=BOARD_SIZE)return;
+  if(senderId!==gameState.playerOrder[gameState.turn])return;
+  const color=gameState.turn+1;
+  const move=legalMovesFor(gameState.board,color).find(item=>item.row===row&&item.col===col);
+  if(!move)return;
+
+  const board=[...gameState.board];
+  board[boardIndex(row,col)]=color;
+  move.flips.forEach(([r,c])=>{board[boardIndex(r,c)]=color});
+
+  const opponent=color===1?2:1;
+  const opponentMoves=legalMovesFor(board,opponent);
+  const selfMoves=legalMovesFor(board,color);
+  const gameOver=!opponentMoves.length&&!selfMoves.length;
+  let nextTurn=gameState.turn;
+  let passedColor=0;
+  if(!gameOver){
+    if(opponentMoves.length){
+      nextTurn=1-gameState.turn;
+    }else{
+      passedColor=opponent;
+    }
+  }
+  let winner=0,draw=false;
+  if(gameOver){
+    const counts=countDiscs(board);
+    if(counts.black>counts.white)winner=1;
+    else if(counts.white>counts.black)winner=2;
+    else draw=true;
+  }
+  const now=Date.now();
+  const nextState={
+    ...gameState,
+    board,
+    turn:nextTurn,
+    moveCount:gameState.moveCount+1,
+    winner:gameOver?winner:0,
+    draw:gameOver?draw:false,
+    endReason:gameOver?(draw?"draw":"discs"):null,
+    timeoutLoser:0,
+    lastMove:{row,col},
+    lastFlips:move.flips,
+    passedColor,
+    turnToken:gameState.turnToken+1,
+    hostNow:now,
+    turnDeadline:gameOver?now:now+TURN_TIME_MS
+  };
+  installGameState(nextState,true);
+}
+
+function requestMove(row,col){
+  if(!gameState)return;
+  const snapshot=lobby.snapshot();
+  const payload={type:MESSAGE.ACTION,action:"PLACE",row,col};
+  if(snapshot.role==="host")applyMove(snapshot.myId,payload);
+  else lobby.send(payload);
+}
+
+function handleGameMessage(senderId,payload,snapshot){
+  if(payload.type===MESSAGE.ACTION&&payload.action==="PLACE"&&snapshot.role==="host"){
+    applyMove(senderId,payload);
+    return;
+  }
+  if(payload.type===MESSAGE.STATE){
+    showGame();
+    installGameState(payload.state,false);
+    return;
+  }
+  if(payload.type===MESSAGE.RETURN_LOBBY){
+    showLobby();
+    lobby.returnToLobby();
+  }
+}
+
+function startRematch(){
+  if(lobby.snapshot().role!=="host"||!gameState||(!gameState.winner&&!gameState.draw))return;
+  installGameState(createInitialState(lobby.snapshot(),gameState),true);
+}
+
+function returnToLobby(){
+  if(lobby.snapshot().role!=="host")return;
+  lobby.broadcast({type:MESSAGE.RETURN_LOBBY});
+  showLobby();
+  lobby.returnToLobby();
+}
+
+function syncLobby(snapshot){$("gameRoomCode").textContent=snapshot.roomCode||"----"}
+function showAbort({title,message}){
+  $("abortTitle").textContent=title;
+  $("abortMessage").textContent=message;
+  $("abortOverlay").classList.remove("hidden");
+}
+
+function init(){
+  makeBoard();
+  lobby=ClassroomMultiplayerLobby.create({
+    gameId:GAME_ID,
+    getPlayerName:()=>/^[가-힣]{2,6}$/.test(savedName)?savedName:"",
+    allowedPlayerCounts:[2],
+    maxPlayers:2,
+    rulesButtonIds:["rulesBtnLobby","rulesBtnGame"],
+    leaveButtonIds:["leaveBtnLobby","leaveBtnGame"],
+    onRules:showRules,
+    onLeave:()=>location.href="../../../",
+    onNotice:showToast,
+    onInvalidStart:()=>showToast("오델로는 정확히 2명이 필요합니다."),
+    onStateChange:syncLobby,
+    getLobbyPresentation:({count,role,canStart})=>({
+      canStart,
+      startText:role==="host"&&canStart?"START · 방장 흑(선공)":"WAITING FOR OPPONENT",
+      guideText:role==="host"
+        ?(count===2?"첫 대국은 방장이 흑(선공)입니다. 오델로는 초기 배치가 대칭이라 선공 이점이 크지 않습니다.":"첫 대국은 방장이 흑(선공)입니다. 상대방을 기다리는 중입니다.")
+        :"첫 대국은 방장이 흑(선공)입니다. 방장이 시작할 때까지 기다리세요."
+    }),
+    createStartData:snapshot=>({state:createInitialState(snapshot,null)}),
+    onStarted:({data})=>{showGame();installGameState(data.state,false)},
+    onGameMessage:handleGameMessage,
+    onAbort:showAbort
+  }).mount();
+
+  $("closeRulesBtn").addEventListener("click",hideRules);
+  $("rulesOverlay").addEventListener("click",event=>{if(event.target===$("rulesOverlay"))hideRules()});
+  $("rematchBtn").addEventListener("click",startRematch);
+  $("returnLobbyBtn").addEventListener("click",returnToLobby);
+  $("reloadBtn").addEventListener("click",()=>location.reload());
+  setInterval(updateTurnClock,200);
+}
+
+window.addEventListener("DOMContentLoaded",init);
+</script>
+</body>
+</html>
