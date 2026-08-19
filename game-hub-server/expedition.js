@@ -83,7 +83,8 @@ function createPlayer(id, name) {
     carrying: 0,
     relics: 0,
     inCave: false,
-    decision: null
+    decision: null,
+    caught: false
   };
 }
 
@@ -154,6 +155,7 @@ function resetToLobby(game, notice = "대기실로 돌아왔습니다.") {
     player.relics = 0;
     player.inCave = false;
     player.decision = null;
+    player.caught = false;
   });
   game.pool = basePool();
   game.relicQueue = [...RELIC_VALUES];
@@ -203,6 +205,7 @@ function startRound(game, pick = randomInt) {
     player.carrying = 0;
     player.inCave = true;
     player.decision = null;
+    player.caught = false;
   });
   // 희귀 보물은 라운드마다 한 장씩 덱에 섞여 들어가고, 한 번 나오면 덱으로 돌아오지 않는다.
   const cards = [...game.pool];
@@ -336,6 +339,8 @@ function endRound(game, reason, hazard = null) {
       player.carrying = 0;
       player.inCave = false;
       player.decision = null;
+      // 스스로 돌아온 사람과 구별해야 라운드 결과 화면이 읽힌다.
+      player.caught = true;
     });
     // 라운드를 끝낸 위험 카드 한 장은 게임에서 완전히 빠져 뒤 라운드가 조금 달라진다.
     const index = game.pool.findIndex(card => card.kind === "hazard" && card.hazard === hazard);
@@ -416,7 +421,8 @@ function stateFor(game, viewerId) {
       bank: player.bank,
       carrying: player.carrying,
       relics: player.relics,
-      inCave: player.inCave
+      inCave: player.inCave,
+      caught: player.caught
     })),
     lastSplit: game.lastSplit ? { ...game.lastSplit } : null,
     lastReturn: game.lastReturn ? { ...game.lastReturn, names: [...game.lastReturn.names] } : null,

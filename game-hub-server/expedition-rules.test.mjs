@@ -91,6 +91,31 @@ test("같은 위험이 두 번 나오면 남아 있던 사람은 빈손이 되�
   });
   const poolAfter = game.pool.filter(card => card.kind === "hazard" && card.hazard === 0).length;
   assert.equal(poolAfter, poolBefore - 1);
+  // 스스로 돌아온 사람과 구별되어야 결과 화면에서 무슨 일이 있었는지 읽힌다.
+  Expedition.stateFor(game, "p1").players.forEach(player => assert.equal(player.caught, true));
+});
+
+test("스스로 돌아온 사람은 쫓겨난 것으로 표시되지 않는다", () => {
+  const game = threePlayerGame();
+  Expedition.startMatch(game);
+  stage(game, [{ kind: "treasure", value: 9 }, { kind: "hazard", hazard: 1 }, { kind: "hazard", hazard: 1 }]);
+  allContinue(game); // 보물 9 → 각자 3
+
+  Expedition.decide(game, "p1", "return");
+  Expedition.decide(game, "p2", "continue");
+  Expedition.decide(game, "p3", "continue");
+  allContinue(game); // 위험 1회차
+  allContinue(game); // 위험 2회차 — 남은 둘만 쫓겨난다
+
+  const seen = Expedition.stateFor(game, "p1").players;
+  assert.equal(seen.find(player => player.id === "p1").caught, false);
+  assert.equal(seen.find(player => player.id === "p1").bank, 3);
+  assert.equal(seen.find(player => player.id === "p2").caught, true);
+  assert.equal(seen.find(player => player.id === "p3").caught, true);
+
+  // 다음 라운드가 시작되면 표시가 지워진다.
+  assert.equal(Expedition.nextRound(game).ok, true);
+  Expedition.stateFor(game, "p1").players.forEach(player => assert.equal(player.caught, false));
 });
 
 test("돌아가면 들고 있던 몫이 확정되고 바닥의 나머지를 다시 나눈다", () => {

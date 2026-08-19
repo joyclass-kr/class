@@ -43,14 +43,14 @@ h1,h2,h3,p{margin-top:0}
 .badge span{font-size:11px;color:#b7a888;letter-spacing:.08em}
 .headline{text-align:center;font-weight:900;color:#ffe6b4;font-size:clamp(15px,2.4vw,19px);line-height:1.4}
 
-.trail{display:flex;gap:7px;flex-wrap:wrap;min-height:74px;padding:12px;border:1px solid var(--panel-edge);border-radius:13px;background:#00000038}
-.card{display:grid;place-content:center;gap:2px;width:60px;min-height:74px;padding:6px 4px;border-radius:8px;text-align:center;font-weight:900;line-height:1.15}
+.trail{display:flex;gap:8px;flex-wrap:wrap;min-height:92px;padding:12px;border:1px solid var(--panel-edge);border-radius:13px;background:#00000038}
+.card{display:grid;place-content:center;gap:2px;width:74px;min-height:92px;padding:6px 4px;border-radius:8px;text-align:center;font-weight:900;line-height:1.15}
 .card small{display:block;font-size:10px;font-weight:700;opacity:.85}
 .card.treasure{background:linear-gradient(#f2cd76,#b98529);color:#3a2708;border:1px solid #dcb45e}
 .card.hazard{background:linear-gradient(#e0705e,#973325);color:#fff0ec;border:1px solid #eb8a79;font-size:12px}
 .card.hazard.repeat{box-shadow:0 0 0 3px #ffdcd4,0 0 18px #d1503f}
 .card.relic{background:linear-gradient(#c49ae8,#6f43a8);color:#fff;border:1px solid #d3b3f0}
-.cardValue{font-size:22px}
+.cardValue{font-size:27px}
 
 .floor{display:grid;grid-template-columns:1fr auto;gap:14px;align-items:center;margin-top:12px;padding:14px;border:1px dashed var(--accent-soft);border-radius:13px;background:#00000030}
 .floorMain{font-size:15px;color:#e6d7ba}
@@ -72,6 +72,7 @@ h1,h2,h3,p{margin-top:0}
 .seatState{margin-top:6px;font-size:11px;font-weight:800;letter-spacing:.06em}
 .seatState.in{color:var(--safe)}
 .seatState.back{color:#b7a888}
+.seatState.caught{color:var(--danger)}
 
 .decisionBox{margin-top:14px;padding:16px;border:1px solid var(--accent-soft);border-radius:14px;background:#00000045;text-align:center}
 .decisionButtons{display:grid;grid-template-columns:1fr 1fr;gap:12px;margin-top:12px}
@@ -87,6 +88,29 @@ h1,h2,h3,p{margin-top:0}
 .rankRow{display:flex;justify-content:center;gap:8px;flex-wrap:wrap;margin:12px 0}
 .rankChip{padding:8px 12px;border:1px solid var(--panel-edge);border-radius:999px;background:#241e16;font-size:13px}
 .rankChip.win{border-color:var(--accent);background:#3a2c12;color:#ffe6b4;font-weight:900}
+
+/* 카드가 열리는 순간이 이 게임의 전부라 화면 가운데서 크게 한 번 보여 준다. */
+.revealStage{position:fixed;inset:0;z-index:40;display:grid;place-items:center;pointer-events:none}
+.revealCard{width:min(230px,56vw);padding:24px 16px;border-radius:20px;text-align:center;font-weight:900;box-shadow:0 26px 70px #000c;animation:revealPop 1.3s ease-out forwards}
+.revealValue{display:block;font-size:66px;line-height:1}
+.revealLabel{display:block;margin-top:8px;font-size:16px;letter-spacing:.06em}
+.revealNote{display:block;margin-top:12px;font-size:13px;font-weight:700;opacity:.92}
+@keyframes revealPop{
+  0%{opacity:0;transform:scale(.5) rotate(-9deg)}
+  15%{opacity:1;transform:scale(1.07) rotate(1.5deg)}
+  25%{transform:scale(1) rotate(0)}
+  74%{opacity:1;transform:scale(1)}
+  100%{opacity:0;transform:scale(.85) translateY(-28px)}
+}
+.revealCard.hazardRepeat{animation:revealPop 1.9s ease-out forwards,shake .46s ease-in-out 3}
+@keyframes shake{0%,100%{margin-left:0}25%{margin-left:-15px}75%{margin-left:15px}}
+.roundBanner{padding:18px 30px;border-radius:15px;border:1px solid var(--accent);background:#000000a8;color:#ffe6b4;font-family:Georgia,serif;font-size:30px;font-weight:900;animation:bannerFade 1.5s ease-out forwards}
+@keyframes bannerFade{0%{opacity:0;transform:translateY(16px)}18%{opacity:1;transform:none}70%{opacity:1}100%{opacity:0}}
+
+/* 지금 나에게 걸린 게 뭔지 한 줄로. 이게 없으면 숫자판으로만 보인다. */
+.situation{margin-top:12px;padding:13px 15px;border-radius:12px;background:#00000045;color:#e6d7ba;font-size:14px;line-height:1.55;text-align:center}
+.situation b{color:#ffe0a0;font-size:18px}
+.seatDot{display:inline-block;width:10px;height:10px;border-radius:50%;margin-right:6px;vertical-align:middle}
 
 .overlay{position:fixed;inset:0;z-index:30;display:grid;place-items:center;padding:18px;background:#0a0806e8}
 .modal{width:min(700px,100%);max-height:88vh;overflow:auto;padding:22px;border:1px solid var(--accent-soft);border-radius:16px;background:var(--panel)}
@@ -178,6 +202,8 @@ h1,h2,h3,p{margin-top:0}
         <div id="headline" class="headline">탐사를 준비하는 중입니다.</div>
         <div class="badge"><strong id="deckValue">0</strong><span>남은 카드</span></div>
       </div>
+
+      <div id="situation" class="situation"></div>
 
       <div class="eyebrow" style="margin-top:16px">지나온 길</div>
       <div id="trail" class="trail"></div>
@@ -314,6 +340,68 @@ function renderThemePicker(){
   });
 }
 
+function sfx(name){try{window.ClassGameSfx?.play(name)}catch(_){}}
+
+// 화면 가운데에 잠깐 띄웠다 사라지는 레이어. 클릭은 통과시킨다.
+function flash(node,ms){
+  const layer=document.createElement("div");
+  layer.className="revealStage";
+  layer.appendChild(node);
+  document.body.appendChild(layer);
+  setTimeout(()=>layer.remove(),ms);
+}
+
+function announceRound(round){
+  const banner=document.createElement("div");
+  banner.className="roundBanner";
+  banner.textContent=`${round} 라운드`;
+  flash(banner,1500);
+  sfx("bell");
+}
+
+function flashCard(card,index){
+  const el=document.createElement("div");
+  let ms=1300;
+  if(card.kind==="treasure"){
+    const split=state.lastSplit;
+    el.className="revealCard treasure";
+    el.innerHTML=`<span class="revealValue">${card.value}</span><span class="revealLabel">${escapeHtml(state.treasureLabel)}</span>`
+      +(split?`<span class="revealNote">${split.total} ÷ ${split.explorers} = ${split.each} … ${split.remainder}</span>`:"");
+    sfx("card");
+  }else if(card.kind==="relic"){
+    el.className="revealCard relic";
+    el.innerHTML=`<span class="revealValue">${card.value}</span><span class="revealLabel">${escapeHtml(state.relicLabel)}</span><span class="revealNote">혼자 돌아가야 가져갑니다</span>`;
+    sfx("bell");
+  }else{
+    const name=state.hazardNames[card.hazard]||"위험";
+    const repeat=state.revealed.slice(0,index).some(other=>other.kind==="hazard"&&other.hazard===card.hazard);
+    el.className=`revealCard hazard${repeat?" hazardRepeat":""}`;
+    el.innerHTML=`<span class="revealLabel" style="font-size:27px">${escapeHtml(name)}</span><span class="revealNote">${repeat?"두 번째! 라운드가 끝납니다":"한 번 더 나오면 끝입니다"}</span>`;
+    if(repeat)ms=1900;
+    sfx(repeat?"error":"stone");
+  }
+  flash(el,ms);
+}
+
+// 상태가 바뀐 이유를 앞뒤로 비교해서 그때만 연출을 태운다.
+function reactToChange(before,now){
+  if(!before||now.phase==="lobby")return;
+  const roundChanged=before.round!==now.round;
+  if(roundChanged&&now.round>0)announceRound(now.round);
+  const newIndex=roundChanged
+    ?(now.revealed.length?now.revealed.length-1:-1)
+    :(now.revealed.length>before.revealed.length?now.revealed.length-1:-1);
+  // 라운드 배너가 걷힌 뒤에 첫 카드를 보여 준다.
+  if(newIndex>=0){
+    const card=now.revealed[newIndex];
+    if(roundChanged)setTimeout(()=>flashCard(card,newIndex),1150);
+    else flashCard(card,newIndex);
+  }
+  if(before.phase==="deciding"&&(now.phase==="roundEnd"||now.phase==="gameEnd")&&now.roundReason!=="hazard"){
+    sfx("success");
+  }
+}
+
 function cardMarkup(card,index){
   if(card.kind==="treasure"){
     return `<div class="card treasure"><span class="cardValue">${card.value}</span><small>${escapeHtml(state.treasureLabel)}</small></div>`;
@@ -354,20 +442,38 @@ function renderHazards(){
   }).join("");
 }
 
+// 한 반에서 같은 이름이 겹칠 수 있어 색으로도 구분한다.
+const PLAYER_COLORS=["#e0a03c","#5fa8d8","#7fc98a","#d8827f","#b98cd8","#d8c05f","#7fd8cf","#d89a6a"];
+
+function renderSituation(){
+  const me=state.players.find(player=>player.id===myId());
+  const box=$("situation");
+  if(!me||state.phase==="lobby"){box.textContent="";return}
+  if(state.phase==="roundEnd"||state.phase==="gameEnd"){
+    box.innerHTML=`내가 확정한 ${escapeHtml(state.treasureLabel)} <b>${me.bank}</b>${escapeHtml(state.unit)}`;
+    return;
+  }
+  box.innerHTML=me.inCave
+    ? `나는 <b>${me.carrying}</b>${escapeHtml(withParticle(state.unit,"을","를"))} 들고 ${escapeHtml(state.site)} 안에 있습니다. `
+      + `돌아가면 확정, 더 들어가면 전부 잃을 수도 있습니다. <span style="opacity:.7">(이미 확정한 것 ${me.bank})</span>`
+    : `나는 이미 돌아왔습니다. 확정 <b>${me.bank}</b>${escapeHtml(state.unit)} — 이번 라운드에는 더 잃지 않습니다.`;
+}
+
 function renderPlayers(){
   const decided=new Set(state.decidedIds);
-  $("playerGrid").innerHTML=state.players.map(player=>{
+  $("playerGrid").innerHTML=state.players.map((player,index)=>{
     const me=player.id===myId();
     const classes=["seat"];
     if(!player.inCave)classes.push("out");
     if(me)classes.push("me");
     if(player.inCave&&decided.has(player.id))classes.push("decided");
+    const dot=`<span class="seatDot" style="background:${PLAYER_COLORS[index%PLAYER_COLORS.length]}"></span>`;
     // 안에 있는 사람이 들고 있는 양은 본인만 정확히 안다 — 는 규칙이 아니므로 모두에게 보여준다.
     return `<div class="${classes.join(" ")}">
-      <div class="seatName">${escapeHtml(player.name)}${me?" · 나":""}</div>
+      <div class="seatName">${dot}${escapeHtml(player.name)}${me?" · 나":""}</div>
       <div class="seatLine">확정 <b>${player.bank}</b>${player.relics?` · ${escapeHtml(state.relicLabel)} ${player.relics}`:""}</div>
       <div class="seatLine">들고 있음 <b>${player.inCave?player.carrying:0}</b></div>
-      <div class="seatState ${player.inCave?"in":"back"}">${player.inCave?(decided.has(player.id)?"결정함":`${state.site} 안`):"돌아옴"}</div>
+      <div class="seatState ${player.inCave?"in":player.caught?"caught":"back"}">${player.inCave?(decided.has(player.id)?"결정함":`${state.site} 안`):player.caught?"빈손으로 쫓겨남":"돌아옴"}</div>
     </div>`;
   }).join("");
 }
@@ -438,6 +544,7 @@ function render(){
   $("roundValue").textContent=`${state.round} / ${state.totalRounds}`;
   $("deckValue").textContent=state.deckCount;
   $("headline").textContent=state.lastAction;
+  renderSituation();
   renderTrail();
   renderFloor();
   renderHazards();
@@ -450,8 +557,10 @@ function sendAction(payload){lobby.sendServer({type:"EXPEDITION_ACTION",...paylo
 
 function handleServerMessage(message){
   if(message.type==="EXPEDITION_STATE"){
+    const before=state;
     state=message.state;
     render();
+    reactToChange(before,state);
     return;
   }
   if(message.type==="EXPEDITION_ERROR"){
@@ -496,10 +605,12 @@ function init(){
   }).mount();
 
   $("continueBtn").addEventListener("click",()=>{
+    sfx("click");
     $("continueBtn").disabled=true;$("returnBtn").disabled=true;
     sendAction({action:"DECIDE",choice:"continue"});
   });
   $("returnBtn").addEventListener("click",()=>{
+    sfx("click");
     $("continueBtn").disabled=true;$("returnBtn").disabled=true;
     sendAction({action:"DECIDE",choice:"return"});
   });
