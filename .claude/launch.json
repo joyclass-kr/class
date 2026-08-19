@@ -13,6 +13,13 @@
       "runtimeArgs": ["--yes", "serve", "."],
       "port": 4173,
       "autoPort": true
+    },
+    {
+      "name": "game-hub",
+      "runtimeExecutable": "node",
+      "runtimeArgs": ["game-hub-server/server.js"],
+      "port": 10000,
+      "autoPort": true
     }
   ]
 }
