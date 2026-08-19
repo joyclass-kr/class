@@ -55,9 +55,11 @@ export default function ArithmeticCatalog() {
             const content = <>
               <span className="worksheet-number">{String(index + 1).padStart(2, "0")}</span>
               <span className="worksheet-title">
-                <small className="worksheet-grade">{`(${grade})`}</small>
+                <span className="worksheet-meta">
+                  <small className="worksheet-grade">{`(${grade})`}</small>
+                  {badge && <span className={`worksheet-badge worksheet-badge-${badge === "암산" ? "mental" : "memorization"}`}>{badge}</span>}
+                </span>
                 <strong><InlineMathText text={title} /></strong>
-                {badge && <span className="worksheet-badge">{badge}</span>}
               </span>
               {route && <span className="worksheet-arrow" aria-hidden="true">→</span>}
             </>;
