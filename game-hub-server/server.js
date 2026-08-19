@@ -10,6 +10,7 @@ const LastCard = require("./lastcard");
 const Rummikub = require("./rummikub");
 const Blokus = require("./blokus");
 const DrawRelay = require("./drawrelay");
+const Expedition = require("./expedition");
 const { createClassroomPlatform } = require("./classroom-platform");
 
 const app = express();
@@ -242,6 +243,7 @@ const MAX_ROOM_PLAYERS = {
   rummikub: 4,
   blokus: 4,
   drawrelay: 8,
+  expedition: 8,
   avalon: 8,
   spelling: 61,
   circulation: 61,
@@ -499,6 +501,20 @@ function blokusBroadcast(room) {
 
 function blokusError(socket, message) {
   safeSend(socket, { type: "BLOKUS_ERROR", message });
+}
+
+function expeditionBroadcast(room) {
+  if (!room?.expedition) return;
+  for (const [id, client] of room.clients) {
+    safeSend(client, {
+      type: "EXPEDITION_STATE",
+      state: Expedition.stateFor(room.expedition, id)
+    });
+  }
+}
+
+function expeditionError(socket, message) {
+  safeSend(socket, { type: "EXPEDITION_ERROR", message });
 }
 
 function drawRelayBroadcast(room) {
@@ -1268,6 +1284,7 @@ wss.on("connection", socket => {
         if (existingRoom.rummikub) rummikubBroadcast(existingRoom);
         if (existingRoom.blokus) blokusBroadcast(existingRoom);
         if (existingRoom.drawrelay) drawRelayBroadcast(existingRoom);
+        if (existingRoom.expedition) expeditionBroadcast(existingRoom);
         if (existingRoom.spelling) spellingBroadcast(existingRoom);
         if (existingRoom.circulation) circulationBroadcast(existingRoom);
         if (existingRoom.digestion) digestionBroadcast(existingRoom);
@@ -1316,6 +1333,9 @@ wss.on("connection", socket => {
       }
       if (gameId === "drawrelay") {
         room.drawrelay = DrawRelay.createGame(playerId, cleanToken(message.name, 12) || "방장");
+      }
+      if (gameId === "expedition") {
+        room.expedition = Expedition.createGame(playerId, cleanToken(message.name, 12) || "방장", cleanToken(message.theme, 20));
       }
       if (gameId === "spelling") {
         room.spelling = {
@@ -1368,6 +1388,7 @@ wss.on("connection", socket => {
       if (room.rummikub) rummikubBroadcast(room);
       if (room.blokus) blokusBroadcast(room);
       if (room.drawrelay) drawRelayBroadcast(room);
+      if (room.expedition) expeditionBroadcast(room);
       if (room.spelling) spellingBroadcast(room);
       if (room.circulation) circulationBroadcast(room);
       if (room.digestion) digestionBroadcast(room);
@@ -1412,6 +1433,7 @@ wss.on("connection", socket => {
         if (room.rummikub) rummikubBroadcast(room);
         if (room.blokus) blokusBroadcast(room);
         if (room.drawrelay) drawRelayBroadcast(room);
+        if (room.expedition) expeditionBroadcast(room);
         if (room.spelling) spellingBroadcast(room);
         if (room.circulation) circulationBroadcast(room);
         if (room.digestion) digestionBroadcast(room);
@@ -1501,6 +1523,16 @@ wss.on("connection", socket => {
           return;
         }
         DrawRelay.addPlayer(room.drawrelay, playerId, cleanToken(message.name, 12) || `플레이어 ${room.drawrelay.players.length + 1}`);
+      }
+      if (room.expedition) {
+        if (room.expedition.phase !== "lobby") {
+          room.clients.delete(playerId);
+          socket.meta.roomKey = null;
+          socket.meta.role = null;
+          safeSend(socket, { type: "ERROR", message: "이미 시작한 게임입니다." });
+          return;
+        }
+        Expedition.addPlayer(room.expedition, playerId, cleanToken(message.name, 12) || `플레이어 ${room.expedition.players.length + 1}`);
       }
       if (room.spelling) {
         if (room.spelling.phase !== "lobby") {
@@ -1684,6 +1716,7 @@ wss.on("connection", socket => {
       if (room.rummikub) rummikubBroadcast(room);
       if (room.blokus) blokusBroadcast(room);
       if (room.drawrelay) drawRelayBroadcast(room);
+      if (room.expedition) expeditionBroadcast(room);
       if (room.spelling) spellingBroadcast(room);
       if (room.circulation) circulationBroadcast(room);
       if (room.digestion) digestionBroadcast(room);
@@ -2721,6 +2754,53 @@ wss.on("connection", socket => {
       return;
     }
 
+    if (type === "EXPEDITION_ACTION") {
+      const room = socket.meta.roomKey ? rooms.get(socket.meta.roomKey) : null;
+      const game = room?.expedition;
+      const action = cleanToken(message.action, 30);
+      if (!room || !game) {
+        expeditionError(socket, "탐사대 방에 참가하지 않았습니다.");
+        return;
+      }
+
+      let result;
+      if (action === "SET_THEME") {
+        result = playerId === room.hostId
+          ? Expedition.setTheme(game, cleanToken(message.theme, 20))
+          : { ok: false, error: "방장만 테마를 바꿀 수 있습니다." };
+      } else if (action === "START") {
+        result = playerId === room.hostId
+          ? Expedition.startMatch(game)
+          : { ok: false, error: "방장만 게임을 시작할 수 있습니다." };
+      } else if (action === "DECIDE") {
+        result = Expedition.decide(game, playerId, cleanToken(message.choice, 10));
+      } else if (action === "NEXT_ROUND") {
+        result = playerId === room.hostId
+          ? Expedition.nextRound(game)
+          : { ok: false, error: "방장만 다음 라운드를 시작할 수 있습니다." };
+      } else if (action === "NEW_GAME") {
+        result = playerId === room.hostId
+          ? Expedition.newGame(game)
+          : { ok: false, error: "방장만 새 게임을 시작할 수 있습니다." };
+      } else if (action === "RETURN_LOBBY") {
+        if (playerId === room.hostId) {
+          Expedition.resetToLobby(game);
+          result = { ok: true };
+        } else {
+          result = { ok: false, error: "방장만 대기실로 돌아갈 수 있습니다." };
+        }
+      } else {
+        result = { ok: false, error: "알 수 없는 행동입니다." };
+      }
+
+      if (!result.ok) {
+        expeditionError(socket, result.error || "행동을 처리하지 못했습니다.");
+        return;
+      }
+      expeditionBroadcast(room);
+      return;
+    }
+
     if (type === "DRAWRELAY_ACTION") {
       const room = socket.meta.roomKey ? rooms.get(socket.meta.roomKey) : null;
       const game = room?.drawrelay;
@@ -2846,6 +2926,14 @@ wss.on("connection", socket => {
           Blokus.resetToLobby(currentRoom.blokus, "플레이어가 나가 게임을 중단하고 대기실로 돌아왔습니다.");
         }
       }
+      if (currentRoom.expedition) {
+        const gameWasActive = currentRoom.expedition.phase !== "lobby";
+        Expedition.removePlayer(currentRoom.expedition, playerId);
+        // 탐사 중 인원이 빠지면 남은 사람 수로 정원이 깨지므로 대기실로 되돌린다.
+        if (gameWasActive && currentRoom.expedition.players.length < Expedition.MIN_PLAYERS) {
+          Expedition.resetToLobby(currentRoom.expedition, "플레이어가 나가 게임을 중단하고 대기실로 돌아왔습니다.");
+        }
+      }
       if (currentRoom.drawrelay) {
         const gameWasActive = currentRoom.drawrelay.phase !== "lobby";
         DrawRelay.removePlayer(currentRoom.drawrelay, playerId);
@@ -2945,6 +3033,7 @@ wss.on("connection", socket => {
       if (currentRoom.rummikub) rummikubBroadcast(currentRoom);
       if (currentRoom.blokus) blokusBroadcast(currentRoom);
       if (currentRoom.drawrelay) drawRelayBroadcast(currentRoom);
+      if (currentRoom.expedition) expeditionBroadcast(currentRoom);
       if (currentRoom.spelling) spellingBroadcast(currentRoom);
       if (currentRoom.circulation) circulationBroadcast(currentRoom);
       if (currentRoom.digestion) digestionBroadcast(currentRoom);
