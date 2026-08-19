@@ -1136,14 +1136,12 @@ body {
 #tab-sim .sim-controls-panel {
     flex: 0 0 auto;
     display: grid;
-    grid-template-columns: 105px minmax(0, 1fr);
-    grid-template-areas:
-        "time controls"
-        "quick quick";
+    grid-template-columns: 82px minmax(540px, 1fr) minmax(240px, 0.9fr);
+    grid-template-areas: "time controls quick";
     align-items: center;
-    column-gap: 18px;
-    row-gap: 6px;
-    padding: 8px 16px;
+    column-gap: 12px;
+    padding: 6px 10px;
+    overflow: hidden;
 }
 
 #tab-sim .sim-time-display {
@@ -1162,9 +1160,9 @@ body {
 #tab-sim .control-rows {
     grid-area: controls;
     display: grid;
-    grid-template-columns: minmax(330px, 1.7fr) minmax(215px, auto) minmax(125px, auto);
+    grid-template-columns: minmax(210px, 1fr) auto auto;
     align-items: center;
-    gap: 14px;
+    gap: 10px;
     width: 100%;
     max-width: none;
 }
@@ -1185,45 +1183,42 @@ body {
 
 #tab-sim .planet-quick-bar {
     grid-area: quick;
+    flex-wrap: nowrap !important;
+    justify-content: flex-start !important;
     gap: 6px !important;
-    padding-top: 6px !important;
+    min-width: 0;
+    padding: 0 !important;
+    border-top: 0 !important;
+}
+
+#tab-sim .planet-chip {
+    min-height: 44px;
 }
 
 @media (max-width: 1050px) {
     #tab-sim .sim-controls-panel {
-        grid-template-columns: 90px minmax(0, 1fr);
-        column-gap: 12px;
+        grid-template-columns: 76px minmax(470px, 1fr) minmax(160px, 0.7fr);
+        column-gap: 8px;
     }
 
     #tab-sim .control-rows {
-        grid-template-columns: minmax(270px, 1fr) auto;
-        gap: 8px 12px;
-    }
-
-    #tab-sim .control-rows .ctrl-row:last-child {
-        grid-column: 2;
+        grid-template-columns: minmax(170px, 1fr) auto auto;
+        gap: 8px;
     }
 }
 
 @media (max-width: 760px) {
     #tab-sim .sim-controls-panel {
-        grid-template-columns: 1fr;
-        grid-template-areas:
-            "time"
-            "controls"
-            "quick";
-        padding: 7px 10px;
+        grid-template-columns: 72px minmax(455px, 1fr) minmax(150px, 0.6fr);
+        grid-template-areas: "time controls quick";
+        overflow-x: auto;
+        padding: 5px 8px;
     }
 
     #tab-sim .control-rows {
-        grid-template-columns: 1fr;
-    }
-
-    #tab-sim .control-rows .ctrl-row:last-child {
-        grid-column: auto;
+        grid-template-columns: minmax(160px, 1fr) auto auto;
     }
 }
-
 /* Compact UFO room and rebalanced planet modal */
 .modal-feature-box {
     width: 100%;

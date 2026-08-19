@@ -974,10 +974,11 @@
 
             var viewTarget = controls ? controls.target : new THREE.Vector3(0, 0, 0);
             var cameraDistance = camera.position.distanceTo(viewTarget);
+            var canShow = state.simMode === '3d' && !ufoState.active;
             if (controls) {
-                var shouldLockGalaxyView = galaxyInteractionLocked
+                var shouldLockGalaxyView = canShow && (galaxyInteractionLocked
                     ? cameraDistance >= GALAXY_VIEW.fadeStart * 0.82
-                    : cameraDistance >= GALAXY_VIEW.fadeStart * 0.95;
+                    : cameraDistance >= GALAXY_VIEW.fadeStart * 0.95);
 
                 if (shouldLockGalaxyView && !galaxyInteractionLocked) {
                     // Preserve the current viewing direction and distance while
@@ -996,18 +997,32 @@
                 controls.enablePan = false;
                 controls.enableZoom = true;
             }
+            if (!canShow) {
+                if (galaxyBackdrop) {
+                    galaxyBackdrop.visible = false;
+                    galaxyBackdrop.material.opacity = 0;
+                }
+                if (galaxyBackdropDom) galaxyBackdropDom.style.opacity = '0';
+                if (localGroupLayer) localGroupLayer.style.opacity = '0';
+                if (deepSpaceLayer) deepSpaceLayer.style.opacity = '0';
+                if (galaxyScaleIndicator) {
+                    galaxyScaleIndicator.style.setProperty('--galaxy-visibility', '0');
+                    galaxyScaleIndicator.setAttribute('aria-hidden', 'true');
+                }
+                updateSolarSystemGalaxyBlend(0);
+                return;
+            }
             var range = GALAXY_VIEW.fadeEnd - GALAXY_VIEW.fadeStart;
             var fade = smoothStep01((cameraDistance - GALAXY_VIEW.fadeStart) / range);
-            var canShow = state.simMode === '3d' && !ufoState.active;
-            var visibility = canShow ? fade : 0;
-            var localGroupPresence = canShow ? smoothStep01(
+            var visibility = fade;
+            var localGroupPresence = smoothStep01(
                 (cameraDistance - GALAXY_VIEW.localGroupStart) /
                 (GALAXY_VIEW.localGroupEnd - GALAXY_VIEW.localGroupStart)
-            ) : 0;
-            var deepSpacePresence = canShow ? smoothStep01(
+            );
+            var deepSpacePresence = smoothStep01(
                 (cameraDistance - GALAXY_VIEW.deepSpaceStart) /
                 (GALAXY_VIEW.deepSpaceEnd - GALAXY_VIEW.deepSpaceStart)
-            ) : 0;
+            );
             // Hand the real image nucleus to a sub-pixel point only after the
             // detailed galaxy is already very small. The overlap prevents a
             // blink, while the point itself later fades into the deep field.
