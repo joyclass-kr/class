@@ -142,7 +142,8 @@
             const zodiacMotionState = {
                 playing: false,
                 speed: 1,
-                lastFrame: performance.now()
+                lastFrame: performance.now(),
+                timeAnchor: 24
             };
 
             function createZodiacLabelSprite(text, color, width = 160, height = 20, fontSize = 32) {
@@ -746,6 +747,9 @@
             if (speedSlider) {
                 speedSlider.addEventListener('input', function() {
                     const spd = parseFloat(this.value);
+                    // Re-anchor so the new speed only applies going forward.
+                    zodiacMotionState.lastFrame = performance.now();
+                    zodiacMotionState.timeAnchor = window.currentZodiacTime;
                     zodiacMotionState.speed = spd;
                     if (speedBadge) speedBadge.textContent = spd.toFixed(1) + 'x';
                 });
@@ -774,6 +778,7 @@
                     }
                     zodiacMotionState.playing = !zodiacMotionState.playing;
                     zodiacMotionState.lastFrame = performance.now();
+                    zodiacMotionState.timeAnchor = window.currentZodiacTime;
                     window.zodiacPlaying = zodiacMotionState.playing;
                     this.textContent = zodiacMotionState.playing ? '⏸ 일시정지' : '▶ 재생';
                     this.style.background = zodiacMotionState.playing ? '#0ea5e9' : 'rgba(251,191,36,.18)';
@@ -782,12 +787,18 @@
             }
 
             function animateZodiacOrbit(now) {
-                const deltaSeconds = Math.min(0.1, Math.max(0, (now - zodiacMotionState.lastFrame) / 1000));
-                zodiacMotionState.lastFrame = now;
                 if (zodiacMotionState.playing && timeSlider) {
-                    // Same elapsed-time animation pattern as Earth & Moon.
+                    // Derive the simulated time from real elapsed time since the last
+                    // anchor (play started / speed changed) rather than accumulating
+                    // per-frame deltas. Accumulating with a clamped per-frame delta
+                    // silently drops time whenever frames are delayed or throttled
+                    // (backgrounded tab, laptop power saving, etc.), and at low speed
+                    // (e.g. 0.2x) each frame's contribution is already so small that
+                    // the dropped time made playback look completely frozen while
+                    // higher speeds stayed visibly ahead of that noise floor.
                     // At 1x, six simulated hours pass per real second.
-                    window.currentZodiacTime += deltaSeconds * 6 * zodiacMotionState.speed;
+                    const elapsedSeconds = Math.max(0, (now - zodiacMotionState.lastFrame) / 1000);
+                    window.currentZodiacTime = zodiacMotionState.timeAnchor + elapsedSeconds * 6 * zodiacMotionState.speed;
                     if (window.currentZodiacTime >= 30) {
                         window.currentZodiacTime = 30;
                         zodiacMotionState.playing = false;
@@ -815,6 +826,7 @@
                         initThreeZodiac();
                         updateZodiacUI();
                         zodiacMotionState.lastFrame = performance.now();
+                        zodiacMotionState.timeAnchor = window.currentZodiacTime;
                         requestAnimationFrame(animateZodiacOrbit);
                     } else {
                         // resize
@@ -836,6 +848,7 @@
                 zodiacMotionState.playing = false;
                 zodiacMotionState.speed = 1;
                 zodiacMotionState.lastFrame = performance.now();
+                zodiacMotionState.timeAnchor = window.currentZodiacTime;
                 if (monthSlider) monthSlider.value = '5';
                 if (timeSlider) timeSlider.value = '24';
                 if (speedSlider) speedSlider.value = '1';
@@ -850,6 +863,7 @@
             initThreeZodiac();
             updateZodiacUI();
             zodiacMotionState.lastFrame = performance.now();
+            zodiacMotionState.timeAnchor = window.currentZodiacTime;
             requestAnimationFrame(animateZodiacOrbit);
         })();
 
