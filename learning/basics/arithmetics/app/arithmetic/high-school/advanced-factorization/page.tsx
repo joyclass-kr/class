@@ -14,6 +14,7 @@ export default function AdvancedFactorizationPage() {
       seed={20260803}
       problems={highAdvancedFactorizationProblems}
       createSet={createHighAdvancedFactorizationProblems}
+      pageClassName="factorization-page"
     />
   );
 }

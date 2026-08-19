@@ -126,7 +126,7 @@ export default function CubicSumDifferenceFactorizationPage() {
   }
 
   return (
-    <main className="counting-page polynomial-page logarithm-page numeric-choice-page middle-quadratic-page">
+    <main className="counting-page polynomial-page logarithm-page numeric-choice-page middle-quadratic-page factorization-page">
       <div className="counting-toolbar">
         <a className="counting-back" href="/arithmetic">← 연산</a>
         <div className="counting-progress">

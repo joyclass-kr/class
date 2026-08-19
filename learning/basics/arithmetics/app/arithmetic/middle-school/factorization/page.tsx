@@ -138,7 +138,7 @@ export default function MiddleFactorizationPage() {
   }
 
   return (
-    <main className="counting-page polynomial-page logarithm-page numeric-choice-page">
+    <main className="counting-page polynomial-page logarithm-page numeric-choice-page factorization-page">
       <div className="counting-toolbar">
         <a className="counting-back" href="/arithmetic">← 연산</a>
         <div className="counting-progress"><strong>{Object.values(results).filter(Boolean).length}<small>/{problems.length} 정답</small></strong></div>

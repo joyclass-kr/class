@@ -6786,6 +6786,42 @@ button.division-option {
   display: none;
 }
 
+.factorization-page .polynomial-instruction,
+.rational-page .polynomial-instruction {
+  height: 36px;
+  flex: 0 0 36px;
+  display: flex;
+  padding-inline: 10px;
+}
+
+.factorization-page .polynomial-instruction b,
+.rational-page .polynomial-instruction b {
+  font-size: 11px;
+}
+
+.factorization-page .worksheet-question-prompt,
+.rational-page .worksheet-question-prompt {
+  display: none;
+}
+
+.factorization-page .polynomial-sheet-8 .polynomial-problem-grid {
+  grid-template-rows: repeat(8, minmax(0, 1fr));
+}
+
+.factorization-page .polynomial-sheet-8 .polynomial-question {
+  padding-top: 7px;
+  padding-bottom: 7px;
+}
+
+.factorization-page .polynomial-sheet-8 .polynomial-question-number {
+  top: 9px;
+}
+
+.factorization-page .polynomial-sheet-8 .polynomial-focus-label {
+  margin-bottom: 4px;
+  padding-block: 2px;
+}
+
 .polynomial-page .polynomial-expression,
 .polynomial-page .polynomial-static-answer,
 .polynomial-page .polynomial-answer-preview span {
