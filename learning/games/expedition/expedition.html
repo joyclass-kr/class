@@ -89,6 +89,43 @@ h1,h2,h3,p{margin-top:0}
 .rankChip{padding:8px 12px;border:1px solid var(--panel-edge);border-radius:999px;background:#241e16;font-size:13px}
 .rankChip.win{border-color:var(--accent);background:#3a2c12;color:#ffe6b4;font-weight:900}
 
+/* 캠프(왼쪽) ─ 길(오른쪽) 구조. 누가 안에 있고 누가 나왔는지가 위치로 보여야 한다. */
+.tunnel{display:grid;grid-template-columns:132px minmax(0,1fr);gap:12px;margin-top:14px}
+.camp{padding:12px 10px;border:1px dashed var(--accent-soft);border-radius:13px;background:#00000038;text-align:center}
+.path{min-width:0}
+.zoneLabel{color:var(--accent);font-size:11px;font-weight:900;letter-spacing:.18em;margin-bottom:8px}
+.zoneNote{margin-top:8px;color:#8d8168;font-size:10px}
+.pathFoot{display:flex;align-items:center;gap:14px;margin-top:10px;padding:10px 12px;border-radius:12px;background:#00000038}
+
+.tokens{display:flex;gap:7px;flex-wrap:wrap;justify-content:center;min-height:44px;align-items:center}
+.tokens.party{justify-content:flex-start}
+.token{position:relative;display:grid;place-items:center;width:38px;height:38px;border-radius:50%;border:2px solid #00000060;color:#1b1207;font-weight:900;font-size:15px;box-shadow:0 4px 10px #0007;transition:transform .35s ease}
+.token.me{box-shadow:0 0 0 3px #fff2d0,0 4px 10px #0007}
+.token.decided::after{content:"✓";position:absolute;right:-4px;top:-5px;width:16px;height:16px;border-radius:50%;background:var(--safe);color:#06210f;font-size:11px;display:grid;place-items:center}
+.token .carry{position:absolute;bottom:-8px;left:50%;transform:translateX(-50%);padding:1px 5px;border-radius:8px;background:#1a1206;color:#ffe0a0;font-size:10px;font-weight:900;border:1px solid var(--accent-soft)}
+.token.walk{animation:walkIn .45s ease-out}
+@keyframes walkIn{from{transform:translateX(-26px);opacity:.3}to{transform:none;opacity:1}}
+.token.flee{animation:flee .5s ease-in}
+@keyframes flee{from{transform:none}to{transform:translateX(24px) scale(.8);opacity:.35}}
+
+.floorPile{display:flex;align-items:center;gap:6px;min-width:96px;color:#c4b79c;font-size:12px}
+.floorPile .gems{display:flex;gap:2px;flex-wrap:wrap;max-width:92px}
+.floorPile i{width:9px;height:9px;border-radius:50%;background:linear-gradient(#f2cd76,#b98529);box-shadow:0 1px 2px #0008}
+.floorPile b{color:#ffe0a0;font-size:16px}
+
+/* 보석이 실제로 옮겨 가야 나눗셈이 눈에 보인다. */
+.gainPop{position:absolute;left:50%;top:-6px;transform:translateX(-50%);color:#ffe0a0;font-weight:900;font-size:14px;pointer-events:none;animation:gainUp 1.1s ease-out forwards}
+@keyframes gainUp{0%{opacity:0;transform:translate(-50%,6px)}20%{opacity:1}100%{opacity:0;transform:translate(-50%,-26px)}}
+.dropPop{color:#e6c483;font-weight:900;font-size:13px;animation:gainUp 1.2s ease-out forwards}
+
+/* 다 같이 고르고 다 같이 까는 게 이 게임의 사회적 순간이다. */
+.showdown{display:flex;gap:12px;flex-wrap:wrap;justify-content:center;padding:22px;border-radius:18px;background:#0d0a06f0;border:1px solid var(--accent);box-shadow:0 24px 70px #000c}
+.showdownCard{width:118px;padding:14px 10px;border-radius:13px;text-align:center;font-weight:900;opacity:0;animation:flipUp .5s ease-out forwards}
+.showdownCard.stay{background:linear-gradient(#e8b455,#a56f18);color:#2a1c05}
+.showdownCard.leave{background:linear-gradient(#5fa87a,#2f6b47);color:#eafff1}
+.showdownCard span{display:block;margin-top:6px;font-size:12px;opacity:.9}
+@keyframes flipUp{from{opacity:0;transform:rotateX(90deg) translateY(14px)}to{opacity:1;transform:none}}
+
 /* 카드가 열리는 순간이 이 게임의 전부라 화면 가운데서 크게 한 번 보여 준다. */
 .revealStage{position:fixed;inset:0;z-index:40;display:grid;place-items:center;pointer-events:none}
 .revealCard{width:min(230px,56vw);padding:24px 16px;border-radius:20px;text-align:center;font-weight:900;box-shadow:0 26px 70px #000c;animation:revealPop 1.3s ease-out forwards}
@@ -205,8 +242,21 @@ h1,h2,h3,p{margin-top:0}
 
       <div id="situation" class="situation"></div>
 
-      <div class="eyebrow" style="margin-top:16px">지나온 길</div>
-      <div id="trail" class="trail"></div>
+      <div class="tunnel">
+        <div class="camp">
+          <div class="zoneLabel">캠프</div>
+          <div id="campTokens" class="tokens"></div>
+          <div class="zoneNote">돌아온 사람</div>
+        </div>
+        <div class="path">
+          <div class="zoneLabel" id="pathLabel">지나온 길</div>
+          <div id="trail" class="trail"></div>
+          <div class="pathFoot">
+            <div id="floorPile" class="floorPile"></div>
+            <div id="partyTokens" class="tokens party"></div>
+          </div>
+        </div>
+      </div>
 
       <div class="floor">
         <div class="floorMain">
@@ -384,21 +434,29 @@ function flashCard(card,index){
 }
 
 // 상태가 바뀐 이유를 앞뒤로 비교해서 그때만 연출을 태운다.
+// 순서가 중요하다: 라운드 배너 → 동시 공개 → 카드 뒤집기 → 보석 이동.
 function reactToChange(before,now){
   if(!before||now.phase==="lobby")return;
   const roundChanged=before.round!==now.round;
-  if(roundChanged&&now.round>0)announceRound(now.round);
   const newIndex=roundChanged
     ?(now.revealed.length?now.revealed.length-1:-1)
     :(now.revealed.length>before.revealed.length?now.revealed.length-1:-1);
-  // 라운드 배너가 걷힌 뒤에 첫 카드를 보여 준다.
+  const resolved=!roundChanged&&before.phase==="deciding"
+    &&(newIndex>=0||now.phase==="roundEnd"||now.phase==="gameEnd");
+
+  let delay=0;
+  if(roundChanged&&now.round>0){announceRound(now.round);delay=1150}
+  if(resolved){showdown(before,now);delay=1500}
+
   if(newIndex>=0){
     const card=now.revealed[newIndex];
-    if(roundChanged)setTimeout(()=>flashCard(card,newIndex),1150);
-    else flashCard(card,newIndex);
+    setTimeout(()=>{
+      flashCard(card,newIndex);
+      if(card.kind==="treasure"&&now.lastSplit)popGains(now.lastSplit.each,now.lastSplit.remainder);
+    },delay);
   }
   if(before.phase==="deciding"&&(now.phase==="roundEnd"||now.phase==="gameEnd")&&now.roundReason!=="hazard"){
-    sfx("success");
+    setTimeout(()=>sfx("success"),delay);
   }
 }
 
@@ -457,6 +515,69 @@ function renderSituation(){
     ? `나는 <b>${me.carrying}</b>${escapeHtml(withParticle(state.unit,"을","를"))} 들고 ${escapeHtml(state.site)} 안에 있습니다. `
       + `돌아가면 확정, 더 들어가면 전부 잃을 수도 있습니다. <span style="opacity:.7">(이미 확정한 것 ${me.bank})</span>`
     : `나는 이미 돌아왔습니다. 확정 <b>${me.bank}</b>${escapeHtml(state.unit)} — 이번 라운드에는 더 잃지 않습니다.`;
+}
+
+function colorOf(index){return PLAYER_COLORS[index%PLAYER_COLORS.length]}
+function initialOf(name){return String(name||"?").trim().slice(-2)}
+
+// 캠프와 길에 사람을 실제로 세운다. 누가 안에 있는지 표로 읽지 않고 위치로 본다.
+function renderTokens(){
+  const decided=new Set(state.decidedIds);
+  const camp=[],party=[];
+  state.players.forEach((player,index)=>{
+    const classes=["token"];
+    if(player.id===myId())classes.push("me");
+    if(player.inCave&&decided.has(player.id))classes.push("decided");
+    const carry=player.inCave&&player.carrying?`<span class="carry">${player.carrying}</span>`:"";
+    const html=`<div class="${classes.join(" ")}" style="background:${colorOf(index)}" title="${escapeHtml(player.name)}">${escapeHtml(initialOf(player.name))}${carry}</div>`;
+    (player.inCave?party:camp).push(html);
+  });
+  $("campTokens").innerHTML=camp.join("")||`<span class="zoneNote">아직 없음</span>`;
+  $("partyTokens").innerHTML=party.join("")||`<span class="zoneNote">아무도 남지 않았습니다</span>`;
+  $("pathLabel").textContent=state.explorerCount?`지나온 길 · ${state.site} 안 ${state.explorerCount}명`:"지나온 길";
+
+  const gems=Math.min(state.path.gems,18);
+  $("floorPile").innerHTML=state.path.gems
+    ? `<div class="gems">${'<i></i>'.repeat(gems)}</div><b>${state.path.gems}</b>`
+    : `<span class="zoneNote">바닥 비어 있음</span>`;
+}
+
+// 몫이 각자에게, 나머지가 바닥에 — 숫자가 아니라 움직임으로 보여 준다.
+function popGains(each,remainder){
+  if(each>0){
+    $("partyTokens").querySelectorAll(".token").forEach(token=>{
+      token.style.position="relative";
+      const pop=document.createElement("span");
+      pop.className="gainPop";
+      pop.textContent=`+${each}`;
+      token.appendChild(pop);
+      setTimeout(()=>pop.remove(),1150);
+    });
+  }
+  if(remainder>0){
+    const pop=document.createElement("span");
+    pop.className="dropPop";
+    pop.textContent=`+${remainder} 바닥`;
+    $("floorPile").appendChild(pop);
+    setTimeout(()=>pop.remove(),1250);
+  }
+}
+
+// 모두 정한 뒤 한 번에 뒤집는 순간.
+function showdown(before,now){
+  const returned=new Set((now.lastReturn?.names)||[]);
+  const wasIn=before.players.filter(player=>player.inCave);
+  if(wasIn.length<2)return;
+  const cards=wasIn.map(player=>{
+    const index=now.players.findIndex(item=>item.id===player.id);
+    const leaving=returned.has(player.name);
+    return `<div class="showdownCard ${leaving?"leave":"stay"}" style="animation-delay:${index*70}ms">
+      ${escapeHtml(player.name)}<span>${leaving?"돌아간다":"더 들어간다"}</span></div>`;
+  }).join("");
+  const box=document.createElement("div");
+  box.className="showdown";
+  box.innerHTML=cards;
+  flash(box,1500);
 }
 
 function renderPlayers(){
@@ -545,6 +666,7 @@ function render(){
   $("deckValue").textContent=state.deckCount;
   $("headline").textContent=state.lastAction;
   renderSituation();
+  renderTokens();
   renderTrail();
   renderFloor();
   renderHazards();
