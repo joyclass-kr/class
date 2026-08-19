@@ -35,7 +35,7 @@ export default function StemFoundationPage() {
       problems={initialProblems}
       createSet={createSet}
       pageClassName="stem-foundation-page"
-      problemsPerSheet={4}
+      problemsPerSheet={3}
     />
   );
 }
