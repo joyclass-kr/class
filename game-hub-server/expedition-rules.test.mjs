@@ -295,3 +295,28 @@ test("남의 선택은 전원이 정하기 전까지 보이지 않는다", () =>
   assert.equal(Expedition.stateFor(game, "p1").myDecision, "return");
   assert.equal(JSON.stringify(seenByOther).includes('"decision"'), false);
 });
+
+test("남은 보석은 카드마다 그 자리에 붙어 있고, 주워 가면 앞 카드부터 덜어진다", () => {
+  const game = threePlayerGame();
+  Expedition.startMatch(game);
+  stage(game, [{ kind: "treasure", value: 14 }, { kind: "treasure", value: 5 }, { kind: "treasure", value: 3 }]);
+  allContinue(game); // 14 ÷ 3 = 4 … 2  → 첫 카드에 2
+  allContinue(game); // 5 ÷ 3 = 1 … 2   → 둘째 카드에 2
+
+  let seen = Expedition.stateFor(game, "p1").revealed;
+  assert.equal(seen[0].left, 2);
+  assert.equal(seen[1].left, 2);
+  // 카드에 붙은 합계는 바닥 총량과 항상 같아야 한다.
+  assert.equal(seen.reduce((sum, card) => sum + (card.left || 0), 0), game.path.gems);
+
+  // 둘이 돌아가면 바닥 4 중 2씩 가져가고 0이 남는다 → 카드에서도 4가 사라진다.
+  Expedition.decide(game, "p1", "return");
+  Expedition.decide(game, "p2", "return");
+  Expedition.decide(game, "p3", "continue");
+
+  seen = Expedition.stateFor(game, "p1").revealed;
+  assert.equal(seen[0].left, 0);
+  assert.equal(seen[1].left, 0);
+  assert.equal(seen.reduce((sum, card) => sum + (card.left || 0), 0), game.path.gems);
+  assert.equal(game.players[0].bank, 7); // 들고 있던 5 + 바닥에서 2
+});

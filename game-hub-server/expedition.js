@@ -233,6 +233,7 @@ function revealCard(game) {
     const each = Math.floor(card.value / active.length);
     const remainder = card.value - each * active.length;
     active.forEach(player => { player.carrying += each; });
+    card.left = remainder;
     game.path.gems += remainder;
     // 이 값이 학년별 문제(2차)의 원천이 된다. 몫과 나머지를 그대로 보관한다.
     game.lastSplit = { total: card.value, explorers: active.length, each, remainder };
@@ -299,6 +300,14 @@ function settleIfEveryoneDecided(game) {
       player.inCave = false;
       player.decision = null;
     });
+    let picking = share * returners.length;
+    for (const revealed of game.revealed) {
+      if (picking <= 0) break;
+      if (!revealed.left) continue;
+      const take = Math.min(revealed.left, picking);
+      revealed.left -= take;
+      picking -= take;
+    }
     game.path.gems = leftover;
     // 혼자 돌아갈 때만 바닥의 희귀 보물을 챙긴다.
     if (returners.length === 1 && game.path.relics.length) {
