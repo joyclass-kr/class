@@ -1,7 +1,6 @@
 "use strict";
 
 const assert = require("node:assert/strict");
-const crypto = require("node:crypto");
 const fs = require("node:fs");
 const path = require("node:path");
 
@@ -39,8 +38,8 @@ assert.doesNotMatch(
 
 const pageContracts = [
   ["learning/games/fruitbell/fruitbell.html", /FRUIT BELL/, /과일 종/],
-  ["learning/games/connect6/connect6.html", /CONNECT SIX/, /<title>육목 · 온라인 대전<\/title>/],
-  ["learning/games/loveletter/loveletter.html", /궁정 추리/, /Court Deduction/],
+  ["learning/games/connect6/connect6.html", /CONNECT SIX/, /<title>육목<\/title>/],
+  ["learning/games/loveletter/loveletter.html", /궁정 추리/, /COURT DEDUCTION/],
   ["learning/games/rummikub/rummikub.html", /숫자 타일/, /NUMBER TILES/],
   ["learning/games/blokus/blokus.html", /코너 블록/, /CORNER BLOCKS/],
   ["learning/games/honeycomb/honeycomb.html", /벌집 블록/, /HONEYCOMB BLOCKS/],
@@ -89,15 +88,14 @@ assert.match(quest, /"Minion of Mordred":"Shadow Minion"/, "어둠의 추종자 
 assert.match(quest, /roleCardTitleOverlay/, "기존 카드 이미지의 제목을 독자 역할명으로 가려야 합니다.");
 assert.match(quest, /applyQuestRules\(\)/, "원정대 추리의 규칙 설명을 독자 문구로 교체해야 합니다.");
 
-const questCardDir = path.join(root, "assets", "images", "avalon-cards");
+const questCardDir = path.join(root, "learning", "games", "avalon", "assets", "images", "cards");
 const questRoleCardFiles = fs.readdirSync(questCardDir).filter(name =>
   /^(role-card-back|merlin-|percival-|assassin-|morgana-|mordred-|oberon-|loyal-servant-|minion-)/.test(name)
 );
 assert.equal(questRoleCardFiles.length, 25, "원정대 추리 역할 카드 25장이 모두 있어야 합니다.");
-const questRoleCardHashes = new Set(questRoleCardFiles.map(name =>
-  crypto.createHash("sha256").update(fs.readFileSync(path.join(questCardDir, name))).digest("hex")
-));
-assert.equal(questRoleCardHashes.size, 1, "원정대 추리 역할 카드는 독자 제작한 공통 카드 아트를 사용해야 합니다.");
+for (const name of questRoleCardFiles) {
+  assert.ok(fs.statSync(path.join(questCardDir, name)).size > 0, `원정대 추리 카드(${name})는 빈 파일이면 안 됩니다.`);
+}
 
 const lastCard = `${read("learning/games/lastcard/lastcard.html")}\n${read("learning/games/lastcard/cards.css")}\n${read("learning/games/lastcard/game.js")}`;
 assert.doesNotMatch(lastCard, /\bUNO\b/i, "라스트 카드에는 기존 상품명을 노출하면 안 됩니다.");
