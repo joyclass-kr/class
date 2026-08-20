@@ -16,40 +16,42 @@ const CENTER_ROOM = 4;
 
 // Corridor grid: two straight hallways run the width of the board - a top
 // hallway between room-row 0 and room-row 1, and a bottom hallway between
-// room-row 1 and room-row 2 - each cut into 7 tiles. 온실/무도회장/주방 only
+// room-row 1 and room-row 2 - each laid out as a real strip of 19 tiles (not
+// a handful of waypoints), like the physical board's hallway squares, so a
+// 1d6 roll actually constrains how far you get. 온실/무도회장/주방 only
 // border the top hallway, 사무실/현관/당구실 only border the bottom one, and
-// 서재/거실/식당 sit between the two so each has a door onto both. Every
-// other hallway tile (t0/t2/t4/t6, b0/b2/b4/b6) is a secret staircase; taking
-// one instantly drops you on the tile directly across the mansion from it.
+// 서재/거실/식당 sit between the two so each has a door onto both. Every 3rd
+// tile is an anchor (door or secret staircase); the rest are plain hallway
+// tiles. Taking a staircase drops you on the tile diagonally across the
+// mansion from it.
 const CORRIDOR_CELLS = Object.freeze([
-  "t0", "t1", "t2", "t3", "t4", "t5", "t6",
-  "b0", "b1", "b2", "b3", "b4", "b5", "b6"
+  "t0", "t1", "t2", "t3", "t4", "t5", "t6", "t7", "t8", "t9", "t10", "t11", "t12", "t13", "t14", "t15", "t16", "t17", "t18",
+  "b0", "b1", "b2", "b3", "b4", "b5", "b6", "b7", "b8", "b9", "b10", "b11", "b12", "b13", "b14", "b15", "b16", "b17", "b18"
 ]);
 // The board is drawn procedurally (see clue.html buildBoard), not traced
-// onto an external illustration, so these are exact by construction: each
-// hallway is a straight line of 7 evenly spaced tiles at a fixed y.
+// onto an external illustration, so these are exact by construction.
 const CELL_COORDS = Object.freeze({
-  t0: [20, 130], t1: [70, 130], t2: [130, 130], t3: [190, 130], t4: [250, 130], t5: [310, 130], t6: [360, 130],
-  b0: [20, 250], b1: [70, 250], b2: [130, 250], b3: [190, 250], b4: [250, 250], b5: [310, 250], b6: [360, 250]
+  t0: [20, 125], t1: [33.3, 125], t2: [46.7, 125], t3: [60, 125], t4: [81.7, 125], t5: [103.3, 125], t6: [125, 125], t7: [146.7, 125], t8: [168.3, 125], t9: [190, 125], t10: [211.7, 125], t11: [233.3, 125], t12: [255, 125], t13: [276.7, 125], t14: [298.3, 125], t15: [320, 125], t16: [333.3, 125], t17: [346.7, 125], t18: [360, 125],
+  b0: [20, 255], b1: [33.3, 255], b2: [46.7, 255], b3: [60, 255], b4: [81.7, 255], b5: [103.3, 255], b6: [125, 255], b7: [146.7, 255], b8: [168.3, 255], b9: [190, 255], b10: [211.7, 255], b11: [233.3, 255], b12: [255, 255], b13: [276.7, 255], b14: [298.3, 255], b15: [320, 255], b16: [333.3, 255], b17: [346.7, 255], b18: [360, 255]
 });
 const CELL_NEIGHBORS = Object.freeze({
-  t0: ["t1"], t1: ["t0", "t2"], t2: ["t1", "t3"], t3: ["t2", "t4"], t4: ["t3", "t5"], t5: ["t4", "t6"], t6: ["t5"],
-  b0: ["b1"], b1: ["b0", "b2"], b2: ["b1", "b3"], b3: ["b2", "b4"], b4: ["b3", "b5"], b5: ["b4", "b6"], b6: ["b5"]
+  t0: ["t1"], t1: ["t0", "t2"], t2: ["t1", "t3"], t3: ["t2", "t4"], t4: ["t3", "t5"], t5: ["t4", "t6"], t6: ["t5", "t7"], t7: ["t6", "t8"], t8: ["t7", "t9"], t9: ["t8", "t10"], t10: ["t9", "t11"], t11: ["t10", "t12"], t12: ["t11", "t13"], t13: ["t12", "t14"], t14: ["t13", "t15"], t15: ["t14", "t16"], t16: ["t15", "t17"], t17: ["t16", "t18"], t18: ["t17"],
+  b0: ["b1"], b1: ["b0", "b2"], b2: ["b1", "b3"], b3: ["b2", "b4"], b4: ["b3", "b5"], b5: ["b4", "b6"], b6: ["b5", "b7"], b7: ["b6", "b8"], b8: ["b7", "b9"], b9: ["b8", "b10"], b10: ["b9", "b11"], b11: ["b10", "b12"], b12: ["b11", "b13"], b13: ["b12", "b14"], b14: ["b13", "b15"], b15: ["b14", "b16"], b16: ["b15", "b17"], b17: ["b16", "b18"], b18: ["b17"]
 });
 const CELL_ROOMS = Object.freeze({
-  t1: [0, 3], t3: [1, 4], t5: [2, 5],
-  b1: [3, 6], b3: [4, 7], b5: [5, 8]
+  t3: [0, 3], t9: [1, 4], t15: [2, 5],
+  b3: [3, 6], b9: [4, 7], b15: [5, 8]
 });
 const ROOM_CELLS = Object.freeze({
-  0: ["t1"], 1: ["t3"], 2: ["t5"],
-  3: ["t1", "b1"], 4: ["t3", "b3"], 5: ["t5", "b5"],
-  6: ["b1"], 7: ["b3"], 8: ["b5"]
+  0: ["t3"], 1: ["t9"], 2: ["t15"],
+  3: ["t3", "b3"], 4: ["t9", "b9"], 5: ["t15", "b15"],
+  6: ["b3"], 7: ["b9"], 8: ["b15"]
 });
 // Paired diagonally (mirrored left-right too), not straight across the same
 // hallway position - that's what makes each one a real shortcut to the far
 // side of the mansion instead of a one-step hop to the tile right next to it.
 const SECRET_PASSAGE_PAIRS = Object.freeze({
-  t0: "b6", b6: "t0", t2: "b4", b4: "t2", t4: "b2", b2: "t4", t6: "b0", b0: "t6"
+  t0: "b18", b18: "t0", t6: "b12", b12: "t6", t12: "b6", b6: "t12", t18: "b0", b0: "t18"
 });
 const START_ROOMS = Object.freeze([0, 2, 3, 5, 6, 8]);
 const MIN_PLAYERS = 3;

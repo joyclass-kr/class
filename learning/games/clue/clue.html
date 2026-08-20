@@ -58,25 +58,29 @@ h1,h2,h3,p{margin-top:0}
 
 .boardWrap{width:min(900px,100%);margin:auto}
 .boardBg{fill:#12141c}
-.hallway{fill:#262b3a;stroke:#3a3f52;stroke-width:1}
+.hallwayEdge{fill:none;stroke:#2a2013;stroke-width:2}
 .roomRect{stroke:var(--panel-edge);stroke-width:1.5;cursor:default;pointer-events:all}
 .roomRect.centerRoom{stroke:var(--accent-soft);stroke-width:2}
 .roomRect.reachable{stroke:var(--safe);stroke-width:4;cursor:pointer;filter:drop-shadow(0 0 6px #3f9e6cbb)}
 .roomRect.reachable:hover{stroke:#5fd99a}
 .roomRect.current{stroke:var(--accent);stroke-width:4}
-.roomIcon{font-size:24px;text-anchor:middle;pointer-events:none}
-.roomLabel{font-size:11px;font-weight:800;fill:#e8ceb0;text-anchor:middle;pointer-events:none;letter-spacing:.02em}
-.cellHit{fill:#d9a44133;stroke:#d9a44166;stroke-width:1;cursor:default;pointer-events:all;transition:fill .15s,stroke .15s}
-.cellHit.passage{fill:#8a662a55;stroke:var(--accent);stroke-width:1.5;stroke-dasharray:3 2}
-.cellHit.reachable{fill:#3f9e6c66;stroke:var(--safe);stroke-width:2.5;cursor:pointer;filter:drop-shadow(0 0 5px #3f9e6cbb)}
-.cellHit.reachable:hover{fill:#5fd99a99}
-.cellHit.current{stroke:var(--accent);stroke-width:2.5;fill:#d9a44166}
-.passageIcon{font-size:11px;fill:#f0dfb0;text-anchor:middle;pointer-events:none}
+.roomIcon{font-size:19px;text-anchor:middle;pointer-events:none}
+.roomLabel{font-size:10px;font-weight:800;fill:#e8ceb0;text-anchor:middle;pointer-events:none;letter-spacing:.02em}
+.doorNotch{fill:#8a662a;stroke:var(--accent);stroke-width:1;opacity:.9;pointer-events:none}
+.cellHit{cursor:default;pointer-events:all;fill:transparent;stroke:none;transition:fill .15s,stroke .15s}
+.cellHit.door{stroke:var(--accent);stroke-width:1.5;fill:#d9a44144}
+.cellHit.passage{stroke:var(--accent);stroke-width:1.5;stroke-dasharray:2.5 1.5;fill:#8a662a44}
+.cellHit.reachable{fill:#3f9e6c99;stroke:var(--safe);stroke-width:2.5;cursor:pointer;filter:drop-shadow(0 0 5px #3f9e6cbb)}
+.cellHit.reachable:hover{fill:#5fd99acc}
+.cellHit.current{stroke:var(--accent);stroke-width:2.5;fill:#d9a441cc}
+.passageIcon{font-size:9.5px;fill:#2a2013;text-anchor:middle;pointer-events:none}
 .token{stroke:#fff;stroke-width:1.5}
 .tokenAvatar{pointer-events:none}
 .reachRing{fill:none;stroke:var(--safe);stroke-width:3;opacity:.9;pointer-events:none;transform-box:fill-box;transform-origin:center;animation:reachPulse 1.2s ease-out infinite}
+.reachRing.cellRing{stroke-width:2;animation:reachPulseSmall 1.2s ease-out infinite}
 .reachDot{fill:var(--safe);stroke:#fff;stroke-width:2;pointer-events:none}
 @keyframes reachPulse{0%{r:14;opacity:.9}80%{r:34;opacity:0}100%{r:34;opacity:0}}
+@keyframes reachPulseSmall{0%{r:6;opacity:.9}80%{r:16;opacity:0}100%{r:16;opacity:0}}
 
 .actionBar{display:flex;flex-wrap:wrap;gap:8px;justify-content:center;padding:6px 0 2px}
 .pendingBanner{text-align:center;padding:9px;border-radius:10px;background:#241a10;color:#f0c988;font-weight:800;font-size:13px}
@@ -363,8 +367,8 @@ function cardImage(id){return "/learning/games/clue/assets/images/cards/"+CARD_F
 const CARDBACK_IMG="/learning/games/clue/assets/images/cards/cardback.webp";
 const ROOM_POS=[[0,0],[0,1],[0,2],[1,0],[1,1],[1,2],[2,0],[2,1],[2,2]];
 const CELL_COORDS={
-  t0:[20,130],t1:[70,130],t2:[130,130],t3:[190,130],t4:[250,130],t5:[310,130],t6:[360,130],
-  b0:[20,250],b1:[70,250],b2:[130,250],b3:[190,250],b4:[250,250],b5:[310,250],b6:[360,250]
+  t0:[20,125],t1:[33.3,125],t2:[46.7,125],t3:[60,125],t4:[81.7,125],t5:[103.3,125],t6:[125,125],t7:[146.7,125],t8:[168.3,125],t9:[190,125],t10:[211.7,125],t11:[233.3,125],t12:[255,125],t13:[276.7,125],t14:[298.3,125],t15:[320,125],t16:[333.3,125],t17:[346.7,125],t18:[360,125],
+  b0:[20,255],b1:[33.3,255],b2:[46.7,255],b3:[60,255],b4:[81.7,255],b5:[103.3,255],b6:[125,255],b7:[146.7,255],b8:[168.3,255],b9:[190,255],b10:[211.7,255],b11:[233.3,255],b12:[255,255],b13:[276.7,255],b14:[298.3,255],b15:[320,255],b16:[333.3,255],b17:[346.7,255],b18:[360,255]
 };
 const ROOM_META=[
   {icon:"🌿",color:"#234a35"},{icon:"🎹",color:"#4a2140"},{icon:"🍳",color:"#4a3319"},
@@ -372,12 +376,12 @@ const ROOM_META=[
   {icon:"🗄️",color:"#263038"},{icon:"🚪",color:"#1c3a3a"},{icon:"🎱",color:"#1a3d2e"}
 ];
 const CELL_NEIGHBORS={
-  t0:["t1"],t1:["t0","t2"],t2:["t1","t3"],t3:["t2","t4"],t4:["t3","t5"],t5:["t4","t6"],t6:["t5"],
-  b0:["b1"],b1:["b0","b2"],b2:["b1","b3"],b3:["b2","b4"],b4:["b3","b5"],b5:["b4","b6"],b6:["b5"]
+  t0:["t1"],t1:["t0","t2"],t2:["t1","t3"],t3:["t2","t4"],t4:["t3","t5"],t5:["t4","t6"],t6:["t5","t7"],t7:["t6","t8"],t8:["t7","t9"],t9:["t8","t10"],t10:["t9","t11"],t11:["t10","t12"],t12:["t11","t13"],t13:["t12","t14"],t14:["t13","t15"],t15:["t14","t16"],t16:["t15","t17"],t17:["t16","t18"],t18:["t17"],
+  b0:["b1"],b1:["b0","b2"],b2:["b1","b3"],b3:["b2","b4"],b4:["b3","b5"],b5:["b4","b6"],b6:["b5","b7"],b7:["b6","b8"],b8:["b7","b9"],b9:["b8","b10"],b10:["b9","b11"],b11:["b10","b12"],b12:["b11","b13"],b13:["b12","b14"],b14:["b13","b15"],b15:["b14","b16"],b16:["b15","b17"],b17:["b16","b18"],b18:["b17"]
 };
-const CELL_ROOMS={t1:[0,3],t3:[1,4],t5:[2,5],b1:[3,6],b3:[4,7],b5:[5,8]};
-const ROOM_CELLS={0:["t1"],1:["t3"],2:["t5"],3:["t1","b1"],4:["t3","b3"],5:["t5","b5"],6:["b1"],7:["b3"],8:["b5"]};
-const SECRET_PASSAGE_PAIRS={t0:"b6",b6:"t0",t2:"b4",b4:"t2",t4:"b2",b2:"t4",t6:"b0",b0:"t6"};
+const CELL_ROOMS={t3:[0,3],t9:[1,4],t15:[2,5],b3:[3,6],b9:[4,7],b15:[5,8]};
+const ROOM_CELLS={0:["t3"],1:["t9"],2:["t15"],3:["t3","b3"],4:["t9","b9"],5:["t15","b15"],6:["b3"],7:["b9"],8:["b15"]};
+const SECRET_PASSAGE_PAIRS={t0:"b18",b18:"t0",t6:"b12",b12:"t6",t12:"b6",b6:"t12",t18:"b0",b0:"t18"};
 const SERVER_MESSAGE=Object.freeze({STATE:"CLUE_STATE",REVEAL:"CLUE_REVEAL",ERROR:"CLUE_ERROR"});
 const $=id=>document.getElementById(id);
 
@@ -477,29 +481,70 @@ function showLobby(){
   $("lobbyScreen").classList.remove("hidden");
 }
 
+function checkerFloor(x0,y0,width,height){
+  const cw=10,rows=Math.round(height/cw),cols=Math.round(width/cw);
+  const parts=[];
+  for(let r=0;r<rows;r+=1){
+    for(let c=0;c<cols;c+=1){
+      const dark=(r+c)%2===0;
+      parts.push(`<rect x="${x0+c*cw}" y="${y0+r*cw}" width="${cw}" height="${cw}" fill="${dark?"#b9ac8c":"#cabf9f"}"/>`);
+    }
+  }
+  return parts.join("");
+}
+
+function roomTexture(size){
+  const cw=10,n=Math.round(size/cw);
+  const parts=[];
+  for(let r=0;r<n;r+=1){
+    for(let c=0;c<n;c+=1){
+      if((r+c)%2===0)continue;
+      parts.push(`<rect x="${c*cw}" y="${r*cw}" width="${cw}" height="${cw}" fill="#00000022"/>`);
+    }
+  }
+  return parts.join("");
+}
+
 function buildBoard(){
   const svg=$("board");
-  const defs=[`<clipPath id="tokenClip" clipPathUnits="objectBoundingBox"><circle cx="0.5" cy="0.5" r="0.5"/></clipPath>`];
+  const defs=[`<clipPath id="tokenClip" clipPathUnits="objectBoundingBox"><circle cx="0.5" cy="0.5" r="0.5"/></clipPath>`,
+    `<clipPath id="hallwayClipTop"><rect x="20" y="100" width="340" height="50" rx="6"/></clipPath>`,
+    `<clipPath id="hallwayClipBottom"><rect x="20" y="230" width="340" height="50" rx="6"/></clipPath>`];
   const parts=[`<rect class="boardBg" x="0" y="0" width="380" height="380" rx="14"/>`];
-  const cellSize=100,gap=20,margin=20;
-  parts.push(`<rect class="hallway" x="${margin}" y="120" width="340" height="20" rx="6"/>`);
-  parts.push(`<rect class="hallway" x="${margin}" y="240" width="340" height="20" rx="6"/>`);
+  const cellSize=80,gap=50,margin=20;
+  parts.push(`<g clip-path="url(#hallwayClipTop)">${checkerFloor(20,100,340,50)}</g>`);
+  parts.push(`<g clip-path="url(#hallwayClipBottom)">${checkerFloor(20,230,340,50)}</g>`);
+  parts.push(`<rect class="hallwayEdge" x="${margin}" y="100" width="340" height="50" rx="6"/>`);
+  parts.push(`<rect class="hallwayEdge" x="${margin}" y="230" width="340" height="50" rx="6"/>`);
   for(let i=0;i<9;i+=1){
     const [row,col]=ROOM_POS[i];
     const x=margin+col*(cellSize+gap),y=margin+row*(cellSize+gap);
     const meta=ROOM_META[i];
     parts.push(`<g data-room="${i}" transform="translate(${x},${y})">`);
-    parts.push(`<rect class="roomRect${i===CENTER_ROOM?" centerRoom":""}" data-room="${i}" x="0" y="0" width="${cellSize}" height="${cellSize}" rx="10" fill="${meta.color}"/>`);
-    parts.push(`<text class="roomIcon" x="${cellSize/2}" y="42">${meta.icon}</text>`);
-    parts.push(`<text class="roomLabel" x="${cellSize/2}" y="60">${ROOMS[i]}</text>`);
+    parts.push(`<rect class="roomRect${i===CENTER_ROOM?" centerRoom":""}" data-room="${i}" x="0" y="0" width="${cellSize}" height="${cellSize}" rx="8" fill="${meta.color}"/>`);
+    parts.push(`<g clip-path="inset(0 round 8px)">${roomTexture(cellSize)}</g>`);
+    parts.push(`<text class="roomIcon" x="${cellSize/2}" y="30">${meta.icon}</text>`);
+    parts.push(`<text class="roomLabel" x="${cellSize/2}" y="47">${ROOMS[i]}</text>`);
     parts.push(`<g class="tokenLayer" data-tokens="r${i}"></g>`);
     parts.push(`</g>`);
   }
+  const wallY={t:[100,150],b:[230,280]};
+  Object.entries(CELL_ROOMS).forEach(([cellId,rooms])=>{
+    const [cx]=CELL_COORDS[cellId];
+    const [above,below]=wallY[cellId[0]];
+    rooms.forEach((roomIdx,idx)=>{
+      const y0=idx===0?above-14:below;
+      parts.push(`<rect class="doorNotch" x="${cx-8}" y="${y0}" width="16" height="14" rx="2"/>`);
+    });
+  });
   Object.entries(CELL_COORDS).forEach(([cellId,pos])=>{
     const isPassage=Boolean(SECRET_PASSAGE_PAIRS[cellId]);
+    const isDoor=Boolean(CELL_ROOMS[cellId]);
+    const kind=isPassage?"passage":isDoor?"door":"plain";
+    const size=isPassage||isDoor?15:11;
     parts.push(`<g data-cell="${cellId}" transform="translate(${pos[0]},${pos[1]})">`);
-    parts.push(`<circle class="cellHit${isPassage?" passage":""}" data-cell="${cellId}" cx="0" cy="0" r="${isPassage?13:9}"/>`);
-    if(isPassage)parts.push(`<text class="passageIcon" x="0" y="4">🌀</text>`);
+    parts.push(`<rect class="cellHit ${kind}" data-cell="${cellId}" x="${-size/2}" y="${-size/2}" width="${size}" height="${size}" rx="3"/>`);
+    if(isPassage)parts.push(`<text class="passageIcon" x="0" y="3.5">🌀</text>`);
     parts.push(`<g class="tokenLayer" data-tokens="c${cellId}"></g>`);
     parts.push(`</g>`);
   });
@@ -545,22 +590,22 @@ function renderTokens(){
     if(!key)return;
     (byPos[key]=byPos[key]||[]).push(player);
   });
-  const cellSize=100;
+  const cellSize=80;
   const svgNS="http://www.w3.org/2000/svg";
   Object.entries(byPos).forEach(([key,players])=>{
     const layer=document.querySelector(`.tokenLayer[data-tokens="${key}"]`);
     if(!layer)return;
     const isRoom=key.startsWith("r");
     players.forEach((player,index)=>{
-      const cx=isRoom?28+(index%3)*22:(index%3-1)*11;
-      const cy=isRoom?36+Math.floor(index/3)*22:Math.floor(index/3)*13-4;
-      const size=isRoom?16:12;
+      const cx=isRoom?20+(index%3)*20:0;
+      const cy=isRoom?62+Math.floor(index/3)*16:0;
+      const size=isRoom?13:9;
       const color=playerColor(player);
       const ring=document.createElementNS(svgNS,"circle");
       ring.setAttribute("class","token");
       ring.setAttribute("cx",cx);
       ring.setAttribute("cy",cy);
-      ring.setAttribute("r",isRoom?9:7);
+      ring.setAttribute("r",isRoom?7:5.5);
       ring.setAttribute("fill",player.avatarUrl?"#12141c":color);
       ring.setAttribute("stroke",color);
       layer.appendChild(ring);
@@ -584,13 +629,13 @@ function renderTokens(){
       if(rect)rect.classList.add("reachable");
       const layer=document.querySelector(`.tokenLayer[data-tokens="r${room}"]`);
       if(!layer)return;
-      const cx=cellSize/2,cy=cellSize/2;
+      const cx=cellSize/2,cy=64;
       const ring=document.createElementNS(svgNS,"circle");
       ring.setAttribute("class","reachRing");
-      ring.setAttribute("cx",cx);ring.setAttribute("cy",cy);ring.setAttribute("r",14);
+      ring.setAttribute("cx",cx);ring.setAttribute("cy",cy);ring.setAttribute("r",11);
       const dot=document.createElementNS(svgNS,"circle");
       dot.setAttribute("class","reachDot");
-      dot.setAttribute("cx",cx);dot.setAttribute("cy",cy);dot.setAttribute("r",9);
+      dot.setAttribute("cx",cx);dot.setAttribute("cy",cy);dot.setAttribute("r",7);
       layer.appendChild(ring);
       layer.appendChild(dot);
     });
@@ -600,8 +645,8 @@ function renderTokens(){
       const layer=document.querySelector(`.tokenLayer[data-tokens="c${cellId}"]`);
       if(!layer)return;
       const ring=document.createElementNS(svgNS,"circle");
-      ring.setAttribute("class","reachRing");
-      ring.setAttribute("cx",0);ring.setAttribute("cy",0);ring.setAttribute("r",9);
+      ring.setAttribute("class","reachRing cellRing");
+      ring.setAttribute("cx",0);ring.setAttribute("cy",0);ring.setAttribute("r",6);
       layer.appendChild(ring);
     });
   }
