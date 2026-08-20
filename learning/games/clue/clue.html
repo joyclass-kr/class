@@ -1,0 +1,736 @@
+<!doctype html>
+<html lang="ko">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<title>저택 추리</title>
+<link rel="stylesheet" href="../../../assets/network/multiplayer-lobby.css">
+<style>
+:root{font-family:system-ui,-apple-system,"Segoe UI",sans-serif;color:#eef0f5;background:#10121a;--accent:#d9a441;--accent-soft:#8a662a;--panel:#1b1f2b;--panel-edge:#3a3f52;--danger:#c8544a;--safe:#3f9e6c}
+*{box-sizing:border-box}
+body{margin:0;min-height:100vh;padding:20px;background:linear-gradient(180deg,#0c0d1382,#08090eb8),url("/learning/games/clue/assets/images/background.webp") center/cover fixed no-repeat,#10121a}
+button,input,select{font:inherit}
+.hidden{display:none!important}
+.shell{width:min(1280px,100%);margin:auto}
+#missingScreen,#lobbyScreen{max-width:720px;margin:auto}
+.panel{margin-bottom:14px;padding:18px;border:1px solid var(--panel-edge);border-radius:16px;background:var(--panel);box-shadow:0 16px 44px #0007}
+h1,h2,h3,p{margin-top:0}
+.eyebrow{margin-bottom:5px;color:var(--accent);font-size:11px;font-weight:900;letter-spacing:.2em}
+.title{margin:0;font-family:Georgia,"Times New Roman",serif;font-size:clamp(36px,7vw,58px);letter-spacing:.06em;color:#f3ddb0}
+.subtitle{margin:4px 0 0;color:#b7bcca}
+.row{display:flex;align-items:center;gap:9px;flex-wrap:wrap}
+.spread{justify-content:space-between}
+.primary,.secondary,.pickBtn{min-height:40px;padding:9px 14px;border:1px solid var(--accent-soft);border-radius:10px;font-weight:850;cursor:pointer}
+.primary{background:linear-gradient(#e6bd6c,#a9762c);color:#221304}
+.secondary{background:#262b3a;color:#e8ebf3}
+.danger{background:linear-gradient(#d9695c,#933);color:#2a0603}
+.primary:disabled,.secondary:disabled,.danger:disabled,.pickBtn:disabled{cursor:not-allowed;opacity:.4}
+.code{font-size:26px;font-weight:950;letter-spacing:.16em}
+#lobbyScreen #lobbyGuide{padding:8px 10px;border-left:3px solid var(--accent);background:#20253200;background:#181c27;color:#e4cf9c;font-weight:800}
+
+.gameLayout{display:flex;gap:14px;align-items:flex-start}
+.gameSidebar{flex:0 0 320px;display:flex;flex-direction:column;gap:14px;min-width:0}
+.gameSidebar>.panel{margin-bottom:0}
+.gameMain{flex:1;min-width:0;display:flex;flex-direction:column;gap:14px}
+@media(max-width:980px){.gameLayout{flex-direction:column}.gameSidebar{flex:0 0 auto;width:100%}}
+
+.playerRow{display:flex;align-items:center;gap:9px;padding:8px 9px;border:1px solid #2c3142;border-radius:10px;margin-bottom:7px;background:#141824}
+.playerRow:last-child{margin-bottom:0}
+.playerRow.active{border-color:var(--accent);box-shadow:0 0 0 2px #d9a44133}
+.playerRow.eliminated{opacity:.5}
+.suspectDot{width:16px;height:16px;border-radius:50%;flex:0 0 auto;box-shadow:0 0 0 2px #ffffff22}
+.playerMeta2{flex:1;min-width:0;display:grid}
+.playerMeta2 strong{font-size:14px;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+.playerMeta2 small{color:#9aa0b4;font-size:11px}
+.playerTag{font-size:10px;padding:2px 7px;border-radius:20px;background:#2c3142;color:#c7cbdb;font-weight:800}
+.playerTag.out{background:#4a1e1e;color:#ff9d92}
+
+.logLine{padding:9px 11px;border-radius:10px;background:#151a26;color:#c9cee0;font-size:13px;min-height:20px}
+.diceRow{display:flex;align-items:center;justify-content:center;gap:14px;padding:10px 0}
+.dieFace{width:52px;height:52px;border-radius:12px;border:2px solid var(--accent);background:#1a1d29;display:grid;place-items:center;font-size:26px;font-weight:950;color:#f3ddb0}
+.turnBanner2{text-align:center;font-weight:850;padding:8px 4px}
+
+.boardWrap{width:min(560px,100%);margin:auto}
+.roomRect{fill:#1c2130;stroke:#3a3f52;stroke-width:2;cursor:default}
+.roomRect.reachable{fill:#22331f;stroke:var(--safe);stroke-width:3;cursor:pointer}
+.roomRect.reachable:hover{fill:#2b4028}
+.roomRect.current{stroke:var(--accent);stroke-width:3}
+.roomLabel{fill:#d8dceb;font-size:11px;font-weight:800;text-anchor:middle;pointer-events:none}
+.corridorLine{stroke:#3a3f52;stroke-width:3}
+.passageLine{stroke:#6a4fae;stroke-width:2;stroke-dasharray:5 5}
+.passageTag{fill:#b7a2ee;font-size:8px;font-weight:800;text-anchor:middle;pointer-events:none}
+.token{stroke:#00000066;stroke-width:1.5}
+
+.actionBar{display:flex;flex-wrap:wrap;gap:8px;justify-content:center;padding:6px 0 2px}
+.pendingBanner{text-align:center;padding:9px;border-radius:10px;background:#241a10;color:#f0c988;font-weight:800;font-size:13px}
+
+.handRow{display:flex;flex-wrap:wrap;gap:8px}
+.cardChip{display:flex;align-items:center;gap:7px;padding:7px 10px;border-radius:10px;font-weight:800;font-size:12.5px;color:#fff;min-width:0}
+.cardChip .cardIcon{width:16px;height:16px;flex:0 0 auto}
+.cardChip span{overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+
+.notebookGrid{display:grid;grid-template-columns:repeat(3,1fr);gap:14px}
+.notebookGroup h4{margin:0 0 7px;color:#9aa0b4;font-size:11px;letter-spacing:.12em}
+.notebookCell{display:flex;align-items:center;gap:7px;padding:6px 8px;border-radius:8px;background:#151a26;margin-bottom:5px;cursor:pointer;user-select:none;border:1px solid #232838}
+.notebookCell.mine{cursor:default;border-color:#3f9e6c88}
+.notebookCell .mark{width:18px;text-align:center;font-weight:950;color:#8b91a5}
+.notebookCell.mark-1 .mark{color:var(--danger)}
+.notebookCell.mark-2 .mark{color:var(--safe)}
+.notebookCell.mine .mark{color:var(--safe)}
+.notebookCell span.label{font-size:12px;flex:1;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+@media(max-width:700px){.notebookGrid{grid-template-columns:1fr}}
+
+.pickGrid{display:flex;flex-wrap:wrap;gap:8px;justify-content:center;margin:10px 0}
+.pickBtn{background:#20242f;color:#dfe3ee}
+.pickBtn.active{background:var(--accent);color:#241404;box-shadow:0 0 0 2px #d9a44155}
+
+.overlay{position:fixed;inset:0;z-index:30;display:grid;place-items:center;padding:18px;background:#06070ce0}
+.modal{width:min(640px,100%);max-height:88vh;overflow:auto;padding:22px;border:1px solid var(--accent-soft);border-radius:16px;background:#171b26}
+.modal li{margin-bottom:8px}
+.modal h2{color:#f3ddb0}
+.toast{position:fixed;right:17px;bottom:17px;z-index:50;max-width:min(390px,calc(100vw - 34px));padding:12px 15px;border:1px solid var(--accent-soft);border-radius:10px;background:#171b26;color:#fff;box-shadow:0 10px 30px #0009}
+
+.resultModal{text-align:center;width:min(460px,100%)}
+.resultModal .outcome{margin:4px 0 6px;font-size:clamp(28px,6vw,38px);font-weight:950}
+.resultModal .outcome.outcome-win{color:var(--safe);text-shadow:0 0 24px #3f9e6c55}
+.resultModal .outcome.outcome-lose{color:#e0a86f}
+.resultModal .outcome.outcome-draw{color:var(--accent)}
+.solutionRow{display:flex;justify-content:center;gap:8px;flex-wrap:wrap;margin:14px 0}
+</style>
+<script src="../../../assets/network/game-network.js"></script>
+<script src="../../../assets/network/multiplayer-lobby.js"></script>
+<script src="../../../assets/sound/music-control.js" defer></script>
+<link rel="stylesheet" href="../../../assets/device-game.css">
+</head>
+<body>
+<main class="shell">
+  <section id="missingScreen" class="panel hidden">
+    <div class="eyebrow">PLAYER NAME REQUIRED</div>
+    <h1>이름이 없습니다</h1>
+    <p>이름 변경은 메인 화면에서만 가능합니다.</p>
+    <button class="primary" type="button" onclick="location.href='../../../'">메인 화면으로</button>
+  </section>
+
+  <section id="lobbyScreen" class="hidden mp-lobby-compact mp-lobby-standard" data-multiplayer-lobby>
+    <header class="panel">
+      <h1 class="title">MANOR MYSTERY</h1>
+      <p class="subtitle">저택 추리 · 3–6 PLAYERS</p>
+      <p>PLAYER · <strong id="savedName">-</strong></p>
+      <div class="mp-lobby-tabs">
+        <button id="hostTab" class="primary" type="button">CREATE ROOM</button>
+        <button id="joinTab" class="secondary" type="button">JOIN ROOM</button>
+      </div>
+    </header>
+
+    <section id="hostPane" class="panel mp-lobby-card hidden">
+      <div class="row spread">
+        <div><div class="eyebrow">ROOM CODE</div><div id="roomCode" class="code">----</div></div>
+        <button id="copyBtn" class="secondary" type="button">COPY CODE</button>
+      </div>
+      <div id="hostStatus" class="mp-lobby-status">방을 만드는 중입니다.</div>
+    </section>
+
+    <section id="joinPane" class="panel mp-lobby-card hidden">
+      <div class="mp-lobby-row">
+        <input id="joinCode" class="mp-lobby-code-input" inputmode="numeric" maxlength="4" placeholder="ROOM CODE · 4 DIGITS">
+        <button id="joinBtn" class="primary" type="button">JOIN ROOM</button>
+      </div>
+      <div id="joinStatus" class="mp-lobby-status">방장이 알려준 번호를 입력하세요.</div>
+    </section>
+
+    <section class="panel">
+      <h2>PLAYERS</h2>
+      <div id="lobbyPlayers" class="mp-lobby-players"></div>
+      <p id="lobbyGuide" class="mp-lobby-guide">3~6명이 모이면 방장이 시작할 수 있습니다.</p>
+      <button id="startBtn" class="primary" type="button" disabled>WAITING FOR PLAYERS</button>
+      <div class="row" style="margin-top:10px">
+        <button id="rulesBtnLobby" class="secondary" type="button">RULES</button>
+        <button id="leaveBtnLobby" class="secondary" type="button">메인 화면</button>
+      </div>
+    </section>
+  </section>
+
+  <section id="gameScreen" class="hidden">
+    <div class="gameLayout">
+      <aside class="gameSidebar">
+        <div class="panel">
+          <div class="row spread">
+            <div><div class="eyebrow">ROOM CODE</div><div id="gameRoomCode" class="code">----</div></div>
+          </div>
+          <div class="row" style="margin-top:10px">
+            <button id="rulesBtnGame" class="secondary" type="button">RULES</button>
+            <button id="leaveBtnGame" class="secondary" type="button">메인 화면</button>
+          </div>
+        </div>
+        <div class="panel">
+          <div class="eyebrow">SUSPECTS</div>
+          <div id="playerList"></div>
+        </div>
+        <div class="panel">
+          <div id="turnBanner" class="turnBanner2">대국을 준비하는 중입니다.</div>
+          <div class="diceRow"><div id="dieFace" class="dieFace">-</div></div>
+          <div id="logLine" class="logLine"></div>
+        </div>
+      </aside>
+
+      <div class="gameMain">
+        <section class="panel">
+          <div class="boardWrap"><svg id="board" viewBox="0 0 380 380" role="img" aria-label="저택 평면도"></svg></div>
+          <div id="pendingBanner" class="pendingBanner hidden"></div>
+          <div id="actionBar" class="actionBar"></div>
+        </section>
+
+        <section class="panel">
+          <div class="eyebrow">내 카드</div>
+          <div id="handRow" class="handRow"></div>
+        </section>
+
+        <section class="panel">
+          <div class="eyebrow">추리 메모장 · 클릭해서 표시(✕/✓)</div>
+          <div class="notebookGrid">
+            <div class="notebookGroup"><h4>용의자</h4><div id="notebookSuspects"></div></div>
+            <div class="notebookGroup"><h4>무기</h4><div id="notebookWeapons"></div></div>
+            <div class="notebookGroup"><h4>장소</h4><div id="notebookRooms"></div></div>
+          </div>
+        </section>
+      </div>
+    </div>
+  </section>
+</main>
+
+<!-- 아직 전용 BGM이 없어 src를 비워 둔다. assets/sound/bgm.ogg 를 넣고 src만 채우면 된다. -->
+<audio id="bgm" loop preload="auto"></audio>
+
+<section id="rulesOverlay" class="overlay hidden" role="dialog" aria-modal="true">
+  <div class="modal">
+    <div class="eyebrow">HOW TO PLAY</div>
+    <h2>저택 추리 규칙</h2>
+    <ol>
+      <li>범인(용의자 1명) · 흉기(무기 1명) · 범행 장소(방 1곳) 카드가 각 1장씩 몰래 빠져 뒤집혀 놓입니다. 나머지 18장은 참가자에게 고르게 나눠집니다.</li>
+      <li>자기 차례에는 주사위를 굴려 나온 수만큼 복도를 이동해 인접한 방에 들어가거나, 비밀통로가 있는 방이라면 주사위 없이 대각선 방으로 바로 이동할 수 있습니다. 이동을 포기하고 제자리에 머물 수도 있습니다.</li>
+      <li>방에 들어갔다면(또는 이미 있었다면) "용의자 + 무기"를 추리로 발표할 수 있습니다. 장소는 자신이 있는 방으로 자동 지정됩니다.</li>
+      <li>다음 차례부터 순서대로 다른 참가자들에게 그 용의자·무기·장소 카드 중 한 장이라도 있는지 묻습니다. 가진 사람이 나오면 그 카드 한 장을 추리한 사람에게만 몰래 보여줍니다. 아무도 없으면 공개적으로 "반박 없음"이 됩니다.</li>
+      <li>확신이 서면 "고발"로 범인·흉기·장소를 모두 지목할 수 있습니다. 정답이면 즉시 승리! 틀리면 그 사람은 더 이상 이동·추리·고발을 할 수 없지만, 다른 사람의 추리를 반박하는 데는 계속 참여합니다.</li>
+      <li>모두가 틀린 고발로 탈락하면 미제 사건으로 종료됩니다.</li>
+    </ol>
+    <button id="closeRulesBtn" class="primary" type="button">CLOSE</button>
+  </div>
+</section>
+
+<section id="suggestOverlay" class="overlay hidden" role="dialog" aria-modal="true">
+  <div class="modal">
+    <h2>추리 발표</h2>
+    <p id="suggestRoomLine" class="logLine"></p>
+    <div class="eyebrow" style="margin-top:12px">용의자</div>
+    <div id="suggestSuspects" class="pickGrid"></div>
+    <div class="eyebrow">무기</div>
+    <div id="suggestWeapons" class="pickGrid"></div>
+    <div class="row spread" style="margin-top:12px">
+      <button id="suggestCancelBtn" class="secondary" type="button">취소</button>
+      <button id="suggestConfirmBtn" class="primary" type="button" disabled>추리 발표</button>
+    </div>
+  </div>
+</section>
+
+<section id="accuseOverlay" class="overlay hidden" role="dialog" aria-modal="true">
+  <div class="modal">
+    <h2>최종 고발</h2>
+    <p class="logLine">틀리면 더 이상 이동·추리·고발을 할 수 없습니다. 신중하게 고르세요.</p>
+    <div class="eyebrow" style="margin-top:12px">용의자</div>
+    <div id="accuseSuspects" class="pickGrid"></div>
+    <div class="eyebrow">무기</div>
+    <div id="accuseWeapons" class="pickGrid"></div>
+    <div class="eyebrow">장소</div>
+    <div id="accuseRooms" class="pickGrid"></div>
+    <div class="row spread" style="margin-top:12px">
+      <button id="accuseCancelBtn" class="secondary" type="button">취소</button>
+      <button id="accuseConfirmBtn" class="danger" type="button" disabled>고발하기</button>
+    </div>
+  </div>
+</section>
+
+<section id="refuteOverlay" class="overlay hidden" role="dialog" aria-modal="true">
+  <div class="modal">
+    <h2>반박할 카드 선택</h2>
+    <p class="logLine">추리와 겹치는 카드가 여러 장입니다. 하나만 골라 몰래 보여주세요.</p>
+    <div id="refuteChoices" class="pickGrid"></div>
+  </div>
+</section>
+
+<section id="revealOverlay" class="overlay hidden" role="dialog" aria-modal="true">
+  <div class="modal">
+    <h2 id="revealTitle">카드 확인</h2>
+    <p id="revealMessage" class="logLine"></p>
+    <button id="closeRevealBtn" class="primary" type="button">CLOSE</button>
+  </div>
+</section>
+
+<section id="resultOverlay" class="overlay hidden" role="dialog" aria-modal="true">
+  <div class="modal resultModal">
+    <div class="eyebrow">GAME OVER</div>
+    <h2 id="resultTitle" class="outcome">-</h2>
+    <p id="resultDetail" class="logLine"></p>
+    <div id="solutionRow" class="solutionRow"></div>
+    <div class="row" style="justify-content:center;margin-top:10px">
+      <button id="rematchBtn" class="primary hidden" type="button">REMATCH</button>
+      <button id="returnLobbyBtn" class="secondary hidden" type="button">RETURN TO LOBBY</button>
+    </div>
+    <p id="resultWaitingNote" class="logLine hidden">호스트가 재대국을 준비할 때까지 기다려 주세요.</p>
+  </div>
+</section>
+
+<section id="abortOverlay" class="overlay hidden" role="dialog" aria-modal="true">
+  <div class="modal">
+    <h2 id="abortTitle">대국 중단</h2>
+    <p id="abortMessage"></p>
+    <button id="reloadBtn" class="primary" type="button">처음부터</button>
+  </div>
+</section>
+
+<div id="toast" class="toast hidden" role="status" aria-live="polite"></div>
+
+<script>
+"use strict";
+
+const GAME_ID="clue";
+const NAME_KEY="classPlayerName";
+const SUSPECTS=[
+  {name:"백작부인",color:"#b03a6b"},
+  {name:"집사장",color:"#5b6270"},
+  {name:"정원사",color:"#2e7d46"},
+  {name:"주치의",color:"#c17f18"},
+  {name:"골동품상",color:"#1f4e8c"},
+  {name:"무희",color:"#b8283a"}
+];
+const WEAPONS=["촛대","밧줄","렌치","권총","단검","납파이프"];
+const ROOMS=["온실","무도회장","주방","서재","현관홀","식당","응접실","집무실","당구실"];
+const ROOM_POS=[[0,0],[0,1],[0,2],[1,0],[1,1],[1,2],[2,0],[2,1],[2,2]];
+const ADJACENCY=[
+  [{to:1,cost:3},{to:3,cost:3}],
+  [{to:0,cost:3},{to:2,cost:3},{to:4,cost:3}],
+  [{to:1,cost:3},{to:5,cost:3}],
+  [{to:0,cost:3},{to:4,cost:3},{to:6,cost:3}],
+  [{to:1,cost:3},{to:3,cost:3},{to:5,cost:3},{to:7,cost:3}],
+  [{to:2,cost:3},{to:4,cost:3},{to:8,cost:3}],
+  [{to:3,cost:3},{to:7,cost:3}],
+  [{to:4,cost:3},{to:6,cost:3},{to:8,cost:3}],
+  [{to:5,cost:3},{to:7,cost:3}]
+];
+const SECRET_PASSAGES={0:8,8:0,2:6,6:2};
+const SERVER_MESSAGE=Object.freeze({STATE:"CLUE_STATE",REVEAL:"CLUE_REVEAL",ERROR:"CLUE_ERROR"});
+const $=id=>document.getElementById(id);
+
+function cardType(id){return id<6?"suspect":id<12?"weapon":"room"}
+function cardName(id){return id<6?SUSPECTS[id].name:id<12?WEAPONS[id-6]:ROOMS[id-12]}
+function cardColor(id){return id<6?SUSPECTS[id].color:id<12?"#7a7f8c":"#b98a33"}
+
+let lobby=null;
+let gameState=null;
+let toastTimer=null;
+let notebook={};
+let suggestSuspect=null;
+let suggestWeapon=null;
+let accuseSuspect=null,accuseWeapon=null,accuseRoom=null;
+const savedName=String(localStorage.getItem(NAME_KEY)||"").trim();
+
+function showToast(message){
+  clearTimeout(toastTimer);
+  $("toast").textContent=message;
+  $("toast").classList.remove("hidden");
+  toastTimer=setTimeout(()=>$("toast").classList.add("hidden"),2400);
+}
+function showRules(){$("rulesOverlay").classList.remove("hidden")}
+function hideRules(){$("rulesOverlay").classList.add("hidden")}
+function showGame(){$("lobbyScreen").classList.add("hidden");$("gameScreen").classList.remove("hidden");buildBoard()}
+function showLobby(){
+  gameState=null;notebook={};
+  $("gameScreen").classList.add("hidden");
+  $("resultOverlay").classList.add("hidden");
+  $("suggestOverlay").classList.add("hidden");
+  $("accuseOverlay").classList.add("hidden");
+  $("refuteOverlay").classList.add("hidden");
+  $("lobbyScreen").classList.remove("hidden");
+}
+
+function buildBoard(){
+  const svg=$("board");
+  const parts=[];
+  const cellSize=100,gap=20,margin=20;
+  function centerOf(index){
+    const [row,col]=ROOM_POS[index];
+    return [margin+col*(cellSize+gap)+cellSize/2, margin+row*(cellSize+gap)+cellSize/2];
+  }
+  const drawn=new Set();
+  for(let i=0;i<9;i+=1){
+    for(const edge of ADJACENCY[i]){
+      const key=i<edge.to?i+"-"+edge.to:edge.to+"-"+i;
+      if(drawn.has(key))continue;
+      drawn.add(key);
+      const [x1,y1]=centerOf(i),[x2,y2]=centerOf(edge.to);
+      parts.push(`<line class="corridorLine" x1="${x1}" y1="${y1}" x2="${x2}" y2="${y2}"/>`);
+    }
+  }
+  const passageDrawn=new Set();
+  Object.entries(SECRET_PASSAGES).forEach(([from,to])=>{
+    const key=Number(from)<to?from+"-"+to:to+"-"+from;
+    if(passageDrawn.has(key))return;
+    passageDrawn.add(key);
+    const [x1,y1]=centerOf(Number(from)),[x2,y2]=centerOf(to);
+    parts.push(`<line class="passageLine" x1="${x1}" y1="${y1}" x2="${x2}" y2="${y2}"/>`);
+  });
+  for(let i=0;i<9;i+=1){
+    const [row,col]=ROOM_POS[i];
+    const x=margin+col*(cellSize+gap),y=margin+row*(cellSize+gap);
+    parts.push(`<g data-room="${i}">`);
+    parts.push(`<rect class="roomRect" data-room="${i}" x="${x}" y="${y}" width="${cellSize}" height="${cellSize}" rx="8"/>`);
+    parts.push(`<text class="roomLabel" x="${x+cellSize/2}" y="${y+16}">${ROOMS[i]}</text>`);
+    if(SECRET_PASSAGES[i]!==undefined){
+      parts.push(`<text class="passageTag" x="${x+cellSize/2}" y="${y+cellSize-8}">비밀통로</text>`);
+    }
+    parts.push(`<g class="tokenLayer" data-tokens="${i}"></g>`);
+    parts.push(`</g>`);
+  }
+  svg.innerHTML=parts.join("");
+  svg.addEventListener("click",onBoardClick);
+}
+
+function onBoardClick(event){
+  const target=event.target.closest("[data-room]");
+  if(!target)return;
+  const room=Number(target.getAttribute("data-room"));
+  if(!gameState||gameState.phase!=="playing")return;
+  const snapshot=lobby.snapshot();
+  if(gameState.turnPlayerId!==snapshot.myId||gameState.pendingSuggestion)return;
+  if(gameState.turnPhase!=="move"||gameState.dice===null||gameState.moved)return;
+  const me=gameState.players.find(p=>p.id===snapshot.myId);
+  const options=ADJACENCY[me.roomIndex].filter(edge=>edge.cost<=gameState.dice).map(edge=>edge.to);
+  if(!options.includes(room))return;
+  sendAction("MOVE",{room});
+}
+
+function playerName(id){
+  const player=gameState&&gameState.players.find(p=>p.id===id);
+  return player?player.name:"참가자";
+}
+
+function renderTokens(){
+  document.querySelectorAll(".tokenLayer").forEach(layer=>layer.replaceChildren());
+  document.querySelectorAll(".roomRect").forEach(rect=>{
+    rect.classList.remove("reachable","current");
+  });
+  if(!gameState)return;
+  const snapshot=lobby.snapshot();
+  const me=gameState.players.find(p=>p.id===snapshot.myId);
+  const byRoom={};
+  gameState.players.forEach(player=>{
+    if(player.roomIndex<0)return;
+    (byRoom[player.roomIndex]=byRoom[player.roomIndex]||[]).push(player);
+  });
+  const cellSize=100,gap=20,margin=20;
+  Object.entries(byRoom).forEach(([room,players])=>{
+    const layer=document.querySelector(`.tokenLayer[data-tokens="${room}"]`);
+    if(!layer)return;
+    players.forEach((player,index)=>{
+      const cx=28+(index%3)*22,cy=36+Math.floor(index/3)*22;
+      const circle=document.createElementNS("http://www.w3.org/2000/svg","circle");
+      circle.setAttribute("class","token");
+      circle.setAttribute("cx",cx);
+      circle.setAttribute("cy",cy);
+      circle.setAttribute("r",8);
+      circle.setAttribute("fill",SUSPECTS[player.suspectIndex]?.color||"#888");
+      layer.appendChild(circle);
+    });
+  });
+  if(gameState.phase==="playing"&&me&&gameState.turnPlayerId===snapshot.myId&&!gameState.pendingSuggestion&&gameState.turnPhase==="move"&&gameState.dice!==null&&!gameState.moved){
+    const options=ADJACENCY[me.roomIndex].filter(edge=>edge.cost<=gameState.dice).map(edge=>edge.to);
+    options.forEach(room=>{
+      const rect=document.querySelector(`.roomRect[data-room="${room}"]`);
+      if(rect)rect.classList.add("reachable");
+    });
+  }
+  if(me&&me.roomIndex>=0){
+    const rect=document.querySelector(`.roomRect[data-room="${me.roomIndex}"]`);
+    if(rect)rect.classList.add("current");
+  }
+}
+
+function renderPlayerList(){
+  if(!gameState)return;
+  const snapshot=lobby.snapshot();
+  const rows=gameState.players.map(player=>{
+    const suspect=SUSPECTS[player.suspectIndex];
+    const isTurn=gameState.turnPlayerId===player.id;
+    const isMe=snapshot.myId===player.id;
+    return `<div class="playerRow${isTurn?" active":""}${!player.active?" eliminated":""}">
+      <span class="suspectDot" style="background:${suspect?suspect.color:"#666"}"></span>
+      <span class="playerMeta2"><strong>${player.name}${isMe?" · 나":""}</strong><small>${suspect?suspect.name:""} · ${player.roomIndex>=0?ROOMS[player.roomIndex]:"-"} · 카드 ${player.handCount}</small></span>
+      ${!player.active?'<span class="playerTag out">고발 실패</span>':""}
+    </div>`;
+  }).join("");
+  $("playerList").innerHTML=rows;
+}
+
+function reachableOptions(){
+  const snapshot=lobby.snapshot();
+  const me=gameState.players.find(p=>p.id===snapshot.myId);
+  if(!me||gameState.dice===null)return [];
+  return ADJACENCY[me.roomIndex].filter(edge=>edge.cost<=gameState.dice).map(edge=>edge.to);
+}
+
+function renderActionBar(){
+  const bar=$("actionBar");
+  bar.innerHTML="";
+  if(!gameState||gameState.phase!=="playing")return;
+  const snapshot=lobby.snapshot();
+  const isMyTurn=gameState.turnPlayerId===snapshot.myId;
+  if(gameState.pendingSuggestion||!isMyTurn)return;
+  const me=gameState.players.find(p=>p.id===snapshot.myId);
+  const buttons=[];
+  if(gameState.turnPhase==="move"){
+    if(gameState.dice===null){
+      buttons.push(`<button id="rollBtn" class="primary" type="button">주사위 굴리기</button>`);
+      if(SECRET_PASSAGES[me.roomIndex]!==undefined){
+        buttons.push(`<button id="passageBtn" class="secondary" type="button">비밀통로 이용</button>`);
+      }
+    }else if(!gameState.moved){
+      buttons.push(`<button id="stayBtn" class="secondary" type="button">이 방에 머물기</button>`);
+    }
+  }else if(gameState.turnPhase==="act"){
+    if(!gameState.suggestionUsed){
+      buttons.push(`<button id="suggestBtn" class="primary" type="button">추리 발표</button>`);
+    }
+    buttons.push(`<button id="accuseBtn" class="danger" type="button">최종 고발</button>`);
+    buttons.push(`<button id="endTurnBtn" class="secondary" type="button">차례 넘기기</button>`);
+  }
+  bar.innerHTML=buttons.join("");
+  if($("rollBtn"))$("rollBtn").addEventListener("click",()=>sendAction("ROLL"));
+  if($("passageBtn"))$("passageBtn").addEventListener("click",()=>sendAction("SECRET_PASSAGE"));
+  if($("stayBtn"))$("stayBtn").addEventListener("click",()=>sendAction("STAY"));
+  if($("suggestBtn"))$("suggestBtn").addEventListener("click",openSuggestOverlay);
+  if($("accuseBtn"))$("accuseBtn").addEventListener("click",openAccuseOverlay);
+  if($("endTurnBtn"))$("endTurnBtn").addEventListener("click",()=>sendAction("END_TURN"));
+}
+
+function renderPending(){
+  const banner=$("pendingBanner");
+  const suggestion=gameState&&gameState.pendingSuggestion;
+  if(!suggestion){banner.classList.add("hidden");return}
+  banner.classList.remove("hidden");
+  const suggesterName=playerName(suggestion.suggesterId);
+  banner.textContent=`${suggesterName}님의 추리 · ${cardName(suggestion.suspect)} · ${cardName(suggestion.weapon)} · ${cardName(suggestion.room)} — 반박 확인 중`;
+  const snapshot=lobby.snapshot();
+  if(suggestion.awaitingChoice&&suggestion.refuterId===snapshot.myId&&suggestion.myChoices&&suggestion.myChoices.length){
+    openRefuteOverlay(suggestion.myChoices);
+  }else{
+    $("refuteOverlay").classList.add("hidden");
+  }
+}
+
+function cardChip(id){
+  return `<span class="cardChip" style="background:${cardColor(id)}"><span>${cardName(id)}</span></span>`;
+}
+
+function renderHand(){
+  if(!gameState){$("handRow").innerHTML="";return}
+  $("handRow").innerHTML=(gameState.hand||[]).map(cardChip).join("")||'<span class="logLine">카드가 없습니다.</span>';
+  (gameState.hand||[]).forEach(id=>{notebook[id]=2});
+}
+
+function notebookCell(id){
+  const mine=Boolean(gameState&&(gameState.hand||[]).includes(id));
+  const mark=notebook[id]||0;
+  const symbol=mark===1?"✕":mark===2?"✓":"";
+  return `<div class="notebookCell${mine?" mine":""} mark-${mark}" data-card="${id}"><span class="mark">${symbol}</span><span class="label">${cardName(id)}</span></div>`;
+}
+
+function renderNotebook(){
+  const suspects=[],weapons=[],rooms=[];
+  for(let i=0;i<21;i+=1){
+    const html=notebookCell(i);
+    if(i<6)suspects.push(html);else if(i<12)weapons.push(html);else rooms.push(html);
+  }
+  $("notebookSuspects").innerHTML=suspects.join("");
+  $("notebookWeapons").innerHTML=weapons.join("");
+  $("notebookRooms").innerHTML=rooms.join("");
+  document.querySelectorAll(".notebookCell:not(.mine)").forEach(cell=>{
+    cell.addEventListener("click",()=>{
+      const id=Number(cell.getAttribute("data-card"));
+      notebook[id]=((notebook[id]||0)+1)%3;
+      renderNotebook();
+    });
+  });
+}
+
+function pickGrid(containerId,ids,selected,onPick){
+  const container=$(containerId);
+  container.innerHTML=ids.map(id=>`<button type="button" class="pickBtn${selected===id?" active":""}" data-id="${id}">${cardName(id)}</button>`).join("");
+  container.querySelectorAll("button").forEach(button=>{
+    button.addEventListener("click",()=>onPick(Number(button.getAttribute("data-id"))));
+  });
+}
+
+function openSuggestOverlay(){
+  suggestSuspect=null;suggestWeapon=null;
+  const snapshot=lobby.snapshot();
+  const me=gameState.players.find(p=>p.id===snapshot.myId);
+  $("suggestRoomLine").textContent=`현재 위치: ${ROOMS[me.roomIndex]} (장소는 자동 지정됩니다)`;
+  renderSuggestPickers();
+  $("suggestOverlay").classList.remove("hidden");
+}
+function renderSuggestPickers(){
+  pickGrid("suggestSuspects",[0,1,2,3,4,5],suggestSuspect,id=>{suggestSuspect=id;renderSuggestPickers()});
+  pickGrid("suggestWeapons",[6,7,8,9,10,11],suggestWeapon,id=>{suggestWeapon=id;renderSuggestPickers()});
+  $("suggestConfirmBtn").disabled=suggestSuspect===null||suggestWeapon===null;
+}
+
+function openAccuseOverlay(){
+  accuseSuspect=null;accuseWeapon=null;accuseRoom=null;
+  renderAccusePickers();
+  $("accuseOverlay").classList.remove("hidden");
+}
+function renderAccusePickers(){
+  pickGrid("accuseSuspects",[0,1,2,3,4,5],accuseSuspect,id=>{accuseSuspect=id;renderAccusePickers()});
+  pickGrid("accuseWeapons",[6,7,8,9,10,11],accuseWeapon,id=>{accuseWeapon=id;renderAccusePickers()});
+  pickGrid("accuseRooms",[12,13,14,15,16,17,18,19,20],accuseRoom,id=>{accuseRoom=id;renderAccusePickers()});
+  $("accuseConfirmBtn").disabled=accuseSuspect===null||accuseWeapon===null||accuseRoom===null;
+}
+
+function openRefuteOverlay(choices){
+  $("refuteChoices").innerHTML=choices.map(id=>`<button type="button" class="pickBtn" data-id="${id}">${cardName(id)}</button>`).join("");
+  $("refuteChoices").querySelectorAll("button").forEach(button=>{
+    button.addEventListener("click",()=>{
+      sendAction("CHOOSE_CARD",{card:Number(button.getAttribute("data-id"))});
+      $("refuteOverlay").classList.add("hidden");
+    });
+  });
+  $("refuteOverlay").classList.remove("hidden");
+}
+
+function renderResult(){
+  const overlay=$("resultOverlay");
+  if(!gameState||gameState.phase!=="gameEnd"){overlay.classList.add("hidden");return}
+  const snapshot=lobby.snapshot();
+  const title=$("resultTitle");
+  let outcomeClass="outcome-draw",text="미제 사건",detail="아무도 진범을 밝히지 못했습니다.";
+  if(gameState.winnerId){
+    const won=gameState.winnerId===snapshot.myId;
+    outcomeClass=won?"outcome-win":"outcome-lose";
+    text=won?"사건 해결!":`${playerName(gameState.winnerId)}님이 해결`;
+    detail=won?"진범을 정확히 밝혀냈습니다.":`${playerName(gameState.winnerId)}님이 먼저 진범을 밝혀냈습니다.`;
+  }
+  title.textContent=text;
+  title.className="outcome "+outcomeClass;
+  $("resultDetail").textContent=detail;
+  const solution=gameState.solution;
+  $("solutionRow").innerHTML=solution?[solution.suspect,solution.weapon,solution.room].map(cardChip).join(""):"";
+  const isHost=snapshot.role==="host";
+  $("rematchBtn").classList.toggle("hidden",!isHost);
+  $("returnLobbyBtn").classList.toggle("hidden",!isHost);
+  $("resultWaitingNote").classList.toggle("hidden",isHost);
+  overlay.classList.remove("hidden");
+}
+
+function renderGame(){
+  if(!gameState)return;
+  const snapshot=lobby.snapshot();
+  renderPlayerList();
+  renderTokens();
+  const ended=gameState.phase==="gameEnd";
+  $("dieFace").textContent=gameState.dice===null||gameState.dice===undefined?"-":String(gameState.dice);
+  if(ended){
+    $("turnBanner").textContent=gameState.log||"게임이 종료되었습니다.";
+  }else{
+    const activeName=playerName(gameState.turnPlayerId);
+    const isMyTurn=gameState.turnPlayerId===snapshot.myId;
+    if(gameState.pendingSuggestion){
+      $("turnBanner").textContent="반박을 확인하는 중입니다.";
+    }else if(gameState.turnPhase==="move"){
+      $("turnBanner").textContent=(isMyTurn?"내 차례":activeName+"님 차례")+" · 이동 단계";
+    }else{
+      $("turnBanner").textContent=(isMyTurn?"내 차례":activeName+"님 차례")+" · 행동 단계";
+    }
+  }
+  $("logLine").textContent=gameState.log||"";
+  renderActionBar();
+  renderPending();
+  renderHand();
+  renderNotebook();
+  renderResult();
+}
+
+function installState(state){
+  gameState=state;
+  if(state.phase==="lobby"){
+    if(lobby.snapshot().started){showLobby();lobby.returnToLobby()}
+    return;
+  }
+  renderGame();
+}
+
+function showReveal(reveal){
+  $("revealTitle").textContent=reveal.title||"카드 확인";
+  $("revealMessage").textContent=reveal.message||"";
+  $("revealOverlay").classList.remove("hidden");
+}
+
+function handleServerMessage(message){
+  if(message.type===SERVER_MESSAGE.STATE&&message.state){installState(message.state);return}
+  if(message.type===SERVER_MESSAGE.REVEAL&&message.reveal){showReveal(message.reveal);return}
+  if(message.type===SERVER_MESSAGE.ERROR){showToast(message.message||"행동을 처리하지 못했습니다.")}
+}
+
+function sendAction(action,extra){
+  if(!lobby)return;
+  lobby.sendServer(Object.assign({type:"CLUE_ACTION",action},extra||{}));
+}
+function sendHostAction(action){if(lobby.snapshot().role==="host")sendAction(action)}
+function syncLobby(snapshot){$("gameRoomCode").textContent=snapshot.roomCode||"----"}
+function showAbort({title,message}){$("abortTitle").textContent=title;$("abortMessage").textContent=message;$("abortOverlay").classList.remove("hidden")}
+
+function init(){
+  lobby=ClassroomMultiplayerLobby.create({
+    gameId:GAME_ID,
+    getPlayerName:()=>/^[가-힣]{2,6}$/.test(savedName)?savedName:"",
+    allowedPlayerCounts:[3,4,5,6],
+    maxPlayers:6,
+    rulesButtonIds:["rulesBtnLobby","rulesBtnGame"],
+    leaveButtonIds:["leaveBtnLobby","leaveBtnGame"],
+    onRules:showRules,
+    onLeave:()=>location.href="../../../",
+    onNotice:showToast,
+    onInvalidStart:()=>showToast("3~6명이 모여야 시작할 수 있습니다."),
+    onStateChange:syncLobby,
+    getLobbyPresentation:({count,role,canStart})=>({
+      canStart,
+      startText:role==="host"&&canStart?`START · ${count} PLAYERS`:"WAITING FOR PLAYERS",
+      guideText:role==="host"?`현재 ${count}명 · 3~6명일 때 시작 가능`:"방장이 게임을 시작할 때까지 기다리세요."
+    }),
+    createStartData:()=>({serverAuthoritative:true}),
+    onStarted:()=>{showGame();sendHostAction("START")},
+    onServerMessage:handleServerMessage,
+    onPlayerLeftDuringGame:()=>showToast("플레이어가 나가 대기실로 돌아갑니다."),
+    onAbort:showAbort
+  }).mount();
+
+  $("closeRulesBtn").addEventListener("click",hideRules);
+  $("rulesOverlay").addEventListener("click",event=>{if(event.target===$("rulesOverlay"))hideRules()});
+  $("closeRevealBtn").addEventListener("click",()=>$("revealOverlay").classList.add("hidden"));
+  $("suggestCancelBtn").addEventListener("click",()=>$("suggestOverlay").classList.add("hidden"));
+  $("suggestConfirmBtn").addEventListener("click",()=>{
+    sendAction("SUGGEST",{suspect:suggestSuspect,weapon:suggestWeapon});
+    $("suggestOverlay").classList.add("hidden");
+  });
+  $("accuseCancelBtn").addEventListener("click",()=>$("accuseOverlay").classList.add("hidden"));
+  $("accuseConfirmBtn").addEventListener("click",()=>{
+    sendAction("ACCUSE",{suspect:accuseSuspect,weapon:accuseWeapon,room:accuseRoom});
+    $("accuseOverlay").classList.add("hidden");
+  });
+  $("rematchBtn").addEventListener("click",()=>sendHostAction("NEW_GAME"));
+  $("returnLobbyBtn").addEventListener("click",()=>sendHostAction("RETURN_LOBBY"));
+  $("reloadBtn").addEventListener("click",()=>location.reload());
+}
+
+window.addEventListener("DOMContentLoaded",init);
+</script>
+</body>
+</html>
