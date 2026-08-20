@@ -278,8 +278,9 @@ h1,h2,h3,p{margin-top:0}
 </section>
 
 <section id="revealOverlay" class="overlay hidden" role="dialog" aria-modal="true">
-  <div class="modal">
+  <div class="modal" style="text-align:center">
     <h2 id="revealTitle">카드 확인</h2>
+    <img id="revealImage" src="" alt="" style="width:min(220px,60%);aspect-ratio:3/4;object-fit:cover;border-radius:12px;border:3px solid var(--accent-soft);box-shadow:0 10px 30px #0008;margin:10px 0">
     <p id="revealMessage" class="logLine"></p>
     <button id="closeRevealBtn" class="primary" type="button">CLOSE</button>
   </div>
@@ -698,6 +699,14 @@ function installState(state){
 function showReveal(reveal){
   $("revealTitle").textContent=reveal.title||"카드 확인";
   $("revealMessage").textContent=reveal.message||"";
+  const image=$("revealImage");
+  if(Number.isInteger(reveal.card)){
+    image.src=cardImage(reveal.card);
+    image.alt=cardName(reveal.card);
+    image.classList.remove("hidden");
+  }else{
+    image.classList.add("hidden");
+  }
   $("revealOverlay").classList.remove("hidden");
 }
 
