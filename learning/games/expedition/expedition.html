@@ -122,7 +122,6 @@ h1,h2,h3,p{margin-top:0}
 .hazardPip.seen{border-color:var(--danger);background:#3a1a15;color:#ffcfc6;font-weight:800}
 
 
-.musicNote{margin-bottom:10px;color:#8d8168;font-size:12px}
 .bandBox{display:flex;justify-content:space-between;align-items:center;gap:12px;flex-wrap:wrap;padding:12px 14px;border:1px solid var(--panel-edge);border-radius:12px;background:#00000038}
 .bandBox b{color:#ffe6b4;font-size:16px}
 .bandBox span{display:block;margin-top:3px;color:#b7a888;font-size:12px}
@@ -292,7 +291,6 @@ h1,h2,h3,p{margin-top:0}
 
     <section class="panel">
       <div class="eyebrow">수학 문제</div>
-      <div id="musicNote" class="musicNote"></div>
       <div id="bandBox" class="bandBox">
         <div><b id="bandName">확인하는 중</b><span id="bandDesc"></span></div>
         <span class="bandLock">방장 학년 기준 · 변경 불가</span>
@@ -550,15 +548,6 @@ async function loadBand(){
     learnerBand=BANDS[data.band]?data.band:"middle";
   }catch(_){ /* 못 받아도 기본값(중학교)으로 돈다 */ }
   renderBandBox();
-}
-
-// 게스트 화면에서 음악이 안 나오는 이유를 알려 준다. 고장으로 오해하기 쉽다.
-function renderMusicNote(){
-  const note=$("musicNote");
-  if(!note)return;
-  note.textContent=isHost()
-    ? "배경음악은 이 기기에서 나옵니다."
-    : "참가자 기기는 음소거로 시작합니다. 듣고 싶으면 오른쪽 위 음악 버튼으로 켜세요.";
 }
 
 function renderBandBox(){
@@ -1094,7 +1083,6 @@ function init(){
     onInvalidStart:()=>showToast("3명 이상 모여야 시작할 수 있습니다."),
     onStateChange:snapshot=>{
       $("gameRoomCode").textContent=snapshot.roomCode||"----";
-      renderMusicNote();
       renderThemePicker();
     },
     getRoomRequestData:()=>({theme:selectedTheme,bandTicket}),
