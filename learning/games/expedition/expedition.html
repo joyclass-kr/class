@@ -694,10 +694,10 @@ function flashCard(card,index){
     el.className=`revealCard relic${photo?" photo":""}`;
     if(photo){
       el.style.backgroundImage=`url('${photo}')`;
-      el.innerHTML=`<span class="valueBadge big">${card.value}</span>`
+      el.innerHTML=`<span class="valueBadge big">${state.nextRelicValue}</span>`
         +`<span class="revealNote">하나뿐이라 나눌 수 없음 · 혼자 돌아가야 가져감</span>`;
     }else{
-      el.innerHTML=`<span class="art big">${relicArt(state.theme)}</span><span class="revealValue">${card.value}</span><span class="revealLabel">${escapeHtml(state.relicLabel)}</span><span class="revealNote">하나뿐이라 나눌 수 없음 · 혼자 돌아가야 가져감</span>`;
+      el.innerHTML=`<span class="art big">${relicArt(state.theme)}</span><span class="revealValue">${state.nextRelicValue}</span><span class="revealLabel">${escapeHtml(state.relicLabel)}</span><span class="revealNote">지금 가져가면 ${state.nextRelicValue}점 · 하나뿐이라 나눌 수 없어 혼자 돌아가야 가져감</span>`;
     }
     sfx("relic","bell");
   }else{
@@ -792,10 +792,10 @@ function cardMarkup(card,index){
     const photo=relicPhoto(state.theme);
     if(photo){
       return `<div class="card relic photo" style="background-image:url('${photo}')" title="${escapeHtml(state.relicLabel)}">`
-        +`<span class="valueBadge">${card.value}</span></div>`;
+        +`<span class="valueBadge">${state.nextRelicValue}</span></div>`;
     }
     return `<div class="card relic"><span class="art">${relicArt(state.theme)}</span>`
-      +`<span class="cardValue small">${card.value}</span><small>${escapeHtml(state.relicLabel)}</small></div>`;
+      +`<span class="cardValue small">${state.nextRelicValue}</span><small>${escapeHtml(state.relicLabel)}</small></div>`;
   }
   const name=state.hazardNames[card.hazard]||"위험";
   // 같은 위험이 앞에 이미 나왔다면 이 카드가 라운드를 끝낸 두 번째 장이다.

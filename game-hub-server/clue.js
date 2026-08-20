@@ -10,8 +10,8 @@ const SUSPECTS = Object.freeze([
   { name: "골동품상", color: "#1f4e8c" },
   { name: "무희", color: "#b8283a" }
 ]);
-const WEAPONS = Object.freeze(["촛대", "밧줄", "렌치", "권총", "단검", "납파이프"]);
-const ROOMS = Object.freeze(["온실", "무도회장", "주방", "서재", "현관홀", "식당", "응접실", "집무실", "당구실"]);
+const WEAPONS = Object.freeze(["촛대", "밧줄", "렌치", "손전등", "만능열쇠", "유리칼"]);
+const ROOMS = Object.freeze(["온실", "무도회장", "주방", "서재", "현관", "식당", "거실", "사무실", "당구실"]);
 
 // Original mansion layout (not the licensed Cluedo board art): 3x3 room grid,
 // index = row*3+col. Every corridor costs the same so a 1d6 roll is either
@@ -341,7 +341,7 @@ function accuse(game, playerId, suspect, weapon, room) {
     game.phase = "gameEnd";
     game.winnerId = actor.id;
     game.solutionRevealed = true;
-    game.log = `${actor.name}님이 진범을 밝혀냈습니다! 범인은 ${SUSPECTS[game.solution.suspect].name} · ${WEAPONS[game.solution.weapon - 6]} · ${ROOMS[game.solution.room - 12]}였습니다.`;
+    game.log = `${actor.name}님이 도둑을 밝혀냈습니다! 범인은 ${SUSPECTS[game.solution.suspect].name} · ${WEAPONS[game.solution.weapon - 6]} · ${ROOMS[game.solution.room - 12]}였습니다.`;
     return { ok: true, reveals: [] };
   }
   actor.active = false;
@@ -351,7 +351,7 @@ function accuse(game, playerId, suspect, weapon, room) {
     game.phase = "gameEnd";
     game.winnerId = null;
     game.solutionRevealed = true;
-    game.log = `아무도 진범을 밝히지 못해 미제 사건으로 남았습니다. 범인은 ${SUSPECTS[game.solution.suspect].name} · ${WEAPONS[game.solution.weapon - 6]} · ${ROOMS[game.solution.room - 12]}였습니다.`;
+    game.log = `아무도 도둑을 밝히지 못해 미제 사건으로 남았습니다. 범인은 ${SUSPECTS[game.solution.suspect].name} · ${WEAPONS[game.solution.weapon - 6]} · ${ROOMS[game.solution.room - 12]}였습니다.`;
   } else {
     advanceTurn(game);
   }

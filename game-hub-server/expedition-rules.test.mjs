@@ -16,7 +16,7 @@ function stage(game, cards) {
   game.deck = [...cards].reverse();
   game.revealed = [];
   game.hazardCounts = {};
-  game.path = { gems: 0, relics: [] };
+  game.path = { gems: 0, relics: 0 };
   game.lastSplit = null;
   game.lastReturn = null;
   game.players.forEach(player => {
@@ -158,27 +158,72 @@ test("바닥 나머지가 귀환 인원으로 나누어떨어지지 않으면 �
 test("희귀 보물은 혼자 돌아갈 때만 가져간다", () => {
   const solo = threePlayerGame();
   Expedition.startMatch(solo);
-  stage(solo, [{ kind: "relic", value: 10 }, { kind: "treasure", value: 3 }]);
+  stage(solo, [{ kind: "relic" }, { kind: "treasure", value: 3 }]);
   allContinue(solo);
-  assert.deepEqual(solo.path.relics, [10]);
+  assert.equal(solo.path.relics, 1);
 
   Expedition.decide(solo, "p1", "return");
   Expedition.decide(solo, "p2", "continue");
   Expedition.decide(solo, "p3", "continue");
-  assert.equal(solo.players[0].bank, 10);
+  assert.equal(solo.players[0].bank, 5); // 처음 가져간 것이라 5점
   assert.equal(solo.players[0].relics, 1);
-  assert.deepEqual(solo.path.relics, []);
+  assert.equal(solo.path.relics, 0);
 
   const pair = threePlayerGame();
   Expedition.startMatch(pair);
-  stage(pair, [{ kind: "relic", value: 10 }, { kind: "treasure", value: 3 }]);
+  stage(pair, [{ kind: "relic" }, { kind: "treasure", value: 3 }]);
   allContinue(pair);
   Expedition.decide(pair, "p1", "return");
   Expedition.decide(pair, "p2", "return");
   Expedition.decide(pair, "p3", "continue");
   assert.equal(pair.players[0].bank, 0);
   assert.equal(pair.players[1].bank, 0);
-  assert.deepEqual(pair.path.relics, [10]); // 아무도 못 가져가고 바닥에 남는다
+  assert.equal(pair.path.relics, 1); // 아무도 못 가져가고 바닥에 남는다
+});
+
+test("희귀 보물 값은 카드가 아니라 몇 번째로 가져갔는지가 정한다", () => {
+  assert.equal(Expedition.relicValueAt(1), 5);
+  assert.equal(Expedition.relicValueAt(3), 5);
+  assert.equal(Expedition.relicValueAt(4), 10);
+  assert.equal(Expedition.relicValueAt(5), 10);
+
+  const game = threePlayerGame();
+  Expedition.startMatch(game);
+  // 앞 라운드에서 아무도 안 가져가면 값이 소진되지 않는다.
+  // 라운드 순서로 값을 박아 두면 이 경우 뒤에 가져간 사람이 10점을 받아 원작과 어긋난다.
+  assert.equal(Expedition.stateFor(game, "p1").nextRelicValue, 5);
+
+  const takeAlone = () => {
+    stage(game, [{ kind: "relic" }, { kind: "treasure", value: 3 }]);
+    allContinue(game);
+    Expedition.decide(game, "p1", "return");
+    Expedition.decide(game, "p2", "continue");
+    Expedition.decide(game, "p3", "continue");
+  };
+
+  let expected = 0;
+  [5, 5, 5, 10, 10].forEach((value, index) => {
+    takeAlone();
+    expected += value;
+    assert.equal(game.players[0].bank, expected, `${index + 1}번째 획득은 ${value}점이어야 한다`);
+  });
+  assert.equal(game.players[0].relics, 5);
+});
+
+test("한 번에 여러 개를 가져가면 획득 순서대로 값이 매겨진다", () => {
+  const game = threePlayerGame();
+  Expedition.startMatch(game);
+  game.relicsTaken = 2; // 이미 둘을 가져간 상태
+  stage(game, [{ kind: "relic" }, { kind: "relic" }, { kind: "treasure", value: 3 }]);
+  allContinue(game);
+  allContinue(game);
+  assert.equal(game.path.relics, 2);
+
+  Expedition.decide(game, "p1", "return");
+  Expedition.decide(game, "p2", "continue");
+  Expedition.decide(game, "p3", "continue");
+  // 3번째(5점)와 4번째(10점)를 한꺼번에 가져간다.
+  assert.equal(game.players[0].bank, 15);
 });
 
 test("전원이 결정하기 전에는 다음 카드가 열리지 않는다", () => {

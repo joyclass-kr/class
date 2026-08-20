@@ -33,7 +33,14 @@ const DEFAULT_THEME = "orerun";
 
 const TREASURE_VALUES = Object.freeze([1, 2, 3, 4, 5, 5, 7, 7, 9, 11, 11, 13, 14, 15, 17]);
 const HAZARD_COPIES = 3;
-const RELIC_VALUES = Object.freeze([5, 5, 5, 10, 10]);
+const RELIC_COUNT = 5;
+// 원작에서 값은 카드에 적혀 있지 않다. 먼저 가져간 셋이 5점, 나중 둘이 10점으로
+// "몇 번째로 가져갔는지" 가 값을 정한다. 아무도 안 가져가면 값이 소진되지 않는다.
+const RELIC_EARLY = 3;
+
+function relicValueAt(order) {
+  return order <= RELIC_EARLY ? 5 : 10;
+}
 const TOTAL_ROUNDS = 5;
 // 마지막 한 명을 무한정 기다리면 나머지가 멈춘다. 이진 선택이라 이 정도면 충분하고,
 // 학년군 문제를 푸는 시간까지 감안한 길이다.
@@ -125,11 +132,12 @@ function createGame(hostId, hostName, theme = DEFAULT_THEME, hostBand = DEFAULT_
     band: normalizeBand(hostBand),
     players: [createPlayer(hostId, hostName || "방장")],
     pool: basePool(),
-    relicQueue: [...RELIC_VALUES],
+    relicsLeft: RELIC_COUNT,
+    relicsTaken: 0,
     deck: [],
     revealed: [],
     hazardCounts: {},
-    path: { gems: 0, relics: [] },
+    path: { gems: 0, relics: 0 },
     round: 0,
     totalRounds: TOTAL_ROUNDS,
     lastSplit: null,
@@ -182,11 +190,12 @@ function resetToLobby(game, notice = "대기실로 돌아왔습니다.") {
     player.caught = false;
   });
   game.pool = basePool();
-  game.relicQueue = [...RELIC_VALUES];
+  game.relicsLeft = RELIC_COUNT;
+  game.relicsTaken = 0;
   game.deck = [];
   game.revealed = [];
   game.hazardCounts = {};
-  game.path = { gems: 0, relics: [] };
+  game.path = { gems: 0, relics: 0 };
   game.round = 0;
   game.lastSplit = null;
   game.lastReturn = null;
@@ -211,7 +220,8 @@ function startMatch(game, pick = randomInt) {
     player.relics = 0;
   });
   game.pool = basePool();
-  game.relicQueue = [...RELIC_VALUES];
+  game.relicsLeft = RELIC_COUNT;
+  game.relicsTaken = 0;
   game.round = 0;
   game.gameWinnerIds = [];
   startRound(game, pick);
@@ -222,7 +232,7 @@ function startRound(game, pick = randomInt) {
   game.round += 1;
   game.revealed = [];
   game.hazardCounts = {};
-  game.path = { gems: 0, relics: [] };
+  game.path = { gems: 0, relics: 0 };
   game.roundReason = null;
   game.lastSplit = null;
   game.lastReturn = null;
@@ -234,7 +244,8 @@ function startRound(game, pick = randomInt) {
   });
   // 희귀 보물은 라운드마다 한 장씩 덱에 섞여 들어가고, 한 번 나오면 덱으로 돌아오지 않는다.
   const cards = [...game.pool];
-  if (game.relicQueue.length) cards.push({ kind: "relic", value: game.relicQueue.shift() });
+  // 값은 가져갈 때 정해지므로 카드에는 적지 않는다.
+  if (game.relicsLeft > 0) { cards.push({ kind: "relic" }); game.relicsLeft -= 1; }
   game.deck = shuffle(cards, pick);
   game.lastAction = `${game.round}라운드 시작! 모두 ${themeOf(game).site}에 들어섰습니다.`;
   game.actionNumber += 1;
@@ -271,7 +282,7 @@ function revealCard(game) {
       game.lastAction = `${label} ${active.length}명이 ${each}${themeOf(game).unit}씩 나눠 갖고, ${remainder}${withParticle(themeOf(game).unit, "은", "는")} 바닥에 남았습니다.`;
     }
   } else if (card.kind === "relic") {
-    game.path.relics.push(card.value);
+    game.path.relics += 1;
     game.lastSplit = null;
     game.lastAction = `${withParticle(themeOf(game).relic, "이", "가")} 나왔습니다. 하나뿐이라 나눌 수 없어, 혼자 돌아가는 사람만 가져갑니다.`;
   } else {
@@ -349,11 +360,14 @@ function settleIfEveryoneDecided(game) {
     }
     game.path.gems = leftover;
     // 혼자 돌아갈 때만 바닥의 희귀 보물을 챙긴다.
-    if (returners.length === 1 && game.path.relics.length) {
-      relicTotal = game.path.relics.reduce((sum, value) => sum + value, 0);
+    if (returners.length === 1 && game.path.relics > 0) {
+      for (let taken = 0; taken < game.path.relics; taken += 1) {
+        game.relicsTaken += 1;
+        relicTotal += relicValueAt(game.relicsTaken);
+      }
       returners[0].bank += relicTotal;
-      returners[0].relics += game.path.relics.length;
-      game.path.relics = [];
+      returners[0].relics += game.path.relics;
+      game.path.relics = 0;
     }
     game.lastReturn = {
       names: returners.map(player => player.name),
@@ -407,7 +421,7 @@ function endRound(game, reason, hazard = null) {
   }
 
   // 챙겨가지 않은 희귀 보물은 그대로 묻힌다.
-  game.path = { gems: 0, relics: [] };
+  game.path = { gems: 0, relics: 0 };
   game.roundReason = reason;
   game.decideUntil = 0;
   game.roundHazard = reason === "hazard" ? hazard : null;
@@ -432,7 +446,8 @@ function newGame(game, pick = randomInt) {
     player.relics = 0;
   });
   game.pool = basePool();
-  game.relicQueue = [...RELIC_VALUES];
+  game.relicsLeft = RELIC_COUNT;
+  game.relicsTaken = 0;
   game.round = 0;
   game.gameWinnerIds = [];
   startRound(game, pick);
@@ -476,7 +491,9 @@ function stateFor(game, viewerId) {
     remaining: remainingCounts(game),
     revealed: game.revealed.map(card => ({ ...card })),
     hazardCounts: { ...game.hazardCounts },
-    path: { gems: game.path.gems, relics: [...game.path.relics] },
+    path: { gems: game.path.gems, relics: game.path.relics },
+    // 카드에 값이 없으므로 "지금 가져가면 얼마" 를 알려 준다.
+    nextRelicValue: relicValueAt(game.relicsTaken + 1),
     explorerCount: active.length,
     // 남이 뭘 골랐는지는 모두 정하기 전까지 숨긴다. 동시 선택이 핵심이라서.
     decidedIds: active.filter(player => player.decision).map(player => player.id),
@@ -507,7 +524,8 @@ module.exports = {
   bandForGrade,
   normalizeBand,
   TREASURE_VALUES,
-  RELIC_VALUES,
+  RELIC_COUNT,
+  relicValueAt,
   TOTAL_ROUNDS,
   MIN_PLAYERS,
   MAX_PLAYERS,

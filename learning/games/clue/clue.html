@@ -44,6 +44,8 @@ h1,h2,h3,p{margin-top:0}
 .playerMeta2 small{color:#9aa0b4;font-size:11px}
 .playerTag{font-size:10px;padding:2px 7px;border-radius:20px;background:#2c3142;color:#c7cbdb;font-weight:800}
 .playerTag.out{background:#4a1e1e;color:#ff9d92}
+.miniBackRow{display:flex;margin-top:3px}
+.miniBackRow img{width:14px;aspect-ratio:3/4;object-fit:cover;border-radius:2px;border:1px solid #00000066;margin-right:-6px;box-shadow:0 1px 3px #0006}
 
 .logLine{padding:9px 11px;border-radius:10px;background:#151a26;color:#c9cee0;font-size:13px;min-height:20px}
 .diceRow{display:flex;align-items:center;justify-content:center;gap:14px;padding:10px 0}
@@ -64,10 +66,10 @@ h1,h2,h3,p{margin-top:0}
 .actionBar{display:flex;flex-wrap:wrap;gap:8px;justify-content:center;padding:6px 0 2px}
 .pendingBanner{text-align:center;padding:9px;border-radius:10px;background:#241a10;color:#f0c988;font-weight:800;font-size:13px}
 
-.handRow{display:flex;flex-wrap:wrap;gap:8px}
-.cardChip{display:flex;align-items:center;gap:7px;padding:7px 10px;border-radius:10px;font-weight:800;font-size:12.5px;color:#fff;min-width:0}
-.cardChip .cardIcon{width:16px;height:16px;flex:0 0 auto}
-.cardChip span{overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+.handRow{display:flex;flex-wrap:wrap;gap:10px}
+.cardChip{display:flex;flex-direction:column;align-items:center;gap:5px;width:92px;font-weight:800;font-size:11.5px;color:#dfe3ee;text-align:center}
+.cardChip img{width:100%;aspect-ratio:3/4;object-fit:cover;border-radius:9px;border:2px solid var(--accent-soft);box-shadow:0 5px 14px #0007;background:#141824}
+.cardChip span{overflow:hidden;text-overflow:ellipsis;white-space:nowrap;max-width:100%}
 
 .notebookGrid{display:grid;grid-template-columns:repeat(3,1fr);gap:14px}
 .notebookGroup h4{margin:0 0 7px;color:#9aa0b4;font-size:11px;letter-spacing:.12em}
@@ -189,7 +191,7 @@ h1,h2,h3,p{margin-top:0}
           <div class="eyebrow">추리 메모장 · 클릭해서 표시(✕/✓)</div>
           <div class="notebookGrid">
             <div class="notebookGroup"><h4>용의자</h4><div id="notebookSuspects"></div></div>
-            <div class="notebookGroup"><h4>무기</h4><div id="notebookWeapons"></div></div>
+            <div class="notebookGroup"><h4>도구</h4><div id="notebookWeapons"></div></div>
             <div class="notebookGroup"><h4>장소</h4><div id="notebookRooms"></div></div>
           </div>
         </section>
@@ -224,11 +226,11 @@ h1,h2,h3,p{margin-top:0}
     <div class="eyebrow">HOW TO PLAY</div>
     <h2>저택 추리 규칙</h2>
     <ol>
-      <li>범인(용의자 1명) · 흉기(무기 1명) · 범행 장소(방 1곳) 카드가 각 1장씩 몰래 빠져 뒤집혀 놓입니다. 나머지 18장은 참가자에게 고르게 나눠집니다.</li>
+      <li>저택의 가보를 훔친 도둑(용의자 1명) · 사용한 도구(1개) · 범행 장소(방 1곳) 카드가 각 1장씩 몰래 빠져 뒤집혀 놓입니다. 나머지 18장은 참가자에게 고르게 나눠집니다.</li>
       <li>자기 차례에는 주사위를 굴려 나온 수만큼 복도를 이동해 인접한 방에 들어가거나, 비밀통로가 있는 방이라면 주사위 없이 대각선 방으로 바로 이동할 수 있습니다. 이동을 포기하고 제자리에 머물 수도 있습니다.</li>
-      <li>방에 들어갔다면(또는 이미 있었다면) "용의자 + 무기"를 추리로 발표할 수 있습니다. 장소는 자신이 있는 방으로 자동 지정됩니다.</li>
-      <li>다음 차례부터 순서대로 다른 참가자들에게 그 용의자·무기·장소 카드 중 한 장이라도 있는지 묻습니다. 가진 사람이 나오면 그 카드 한 장을 추리한 사람에게만 몰래 보여줍니다. 아무도 없으면 공개적으로 "반박 없음"이 됩니다.</li>
-      <li>확신이 서면 "고발"로 범인·흉기·장소를 모두 지목할 수 있습니다. 정답이면 즉시 승리! 틀리면 그 사람은 더 이상 이동·추리·고발을 할 수 없지만, 다른 사람의 추리를 반박하는 데는 계속 참여합니다.</li>
+      <li>방에 들어갔다면(또는 이미 있었다면) "용의자 + 도구"를 추리로 발표할 수 있습니다. 장소는 자신이 있는 방으로 자동 지정됩니다.</li>
+      <li>다음 차례부터 순서대로 다른 참가자들에게 그 용의자·도구·장소 카드 중 한 장이라도 있는지 묻습니다. 가진 사람이 나오면 그 카드 한 장을 추리한 사람에게만 몰래 보여줍니다. 아무도 없으면 공개적으로 "반박 없음"이 됩니다.</li>
+      <li>확신이 서면 "고발"로 도둑·도구·장소를 모두 지목할 수 있습니다. 정답이면 즉시 승리! 틀리면 그 사람은 더 이상 이동·추리·고발을 할 수 없지만, 다른 사람의 추리를 반박하는 데는 계속 참여합니다.</li>
       <li>모두가 틀린 고발로 탈락하면 미제 사건으로 종료됩니다.</li>
     </ol>
     <button id="closeRulesBtn" class="primary" type="button">CLOSE</button>
@@ -241,7 +243,7 @@ h1,h2,h3,p{margin-top:0}
     <p id="suggestRoomLine" class="logLine"></p>
     <div class="eyebrow" style="margin-top:12px">용의자</div>
     <div id="suggestSuspects" class="pickGrid"></div>
-    <div class="eyebrow">무기</div>
+    <div class="eyebrow">도구</div>
     <div id="suggestWeapons" class="pickGrid"></div>
     <div class="row spread" style="margin-top:12px">
       <button id="suggestCancelBtn" class="secondary" type="button">취소</button>
@@ -256,7 +258,7 @@ h1,h2,h3,p{margin-top:0}
     <p class="logLine">틀리면 더 이상 이동·추리·고발을 할 수 없습니다. 신중하게 고르세요.</p>
     <div class="eyebrow" style="margin-top:12px">용의자</div>
     <div id="accuseSuspects" class="pickGrid"></div>
-    <div class="eyebrow">무기</div>
+    <div class="eyebrow">도구</div>
     <div id="accuseWeapons" class="pickGrid"></div>
     <div class="eyebrow">장소</div>
     <div id="accuseRooms" class="pickGrid"></div>
@@ -320,8 +322,15 @@ const SUSPECTS=[
   {name:"골동품상",color:"#1f4e8c"},
   {name:"무희",color:"#b8283a"}
 ];
-const WEAPONS=["촛대","밧줄","렌치","권총","단검","납파이프"];
-const ROOMS=["온실","무도회장","주방","서재","현관홀","식당","응접실","집무실","당구실"];
+const WEAPONS=["촛대","밧줄","렌치","손전등","만능열쇠","유리칼"];
+const ROOMS=["온실","무도회장","주방","서재","현관","식당","거실","사무실","당구실"];
+const CARD_FILES=[
+  "countess","butler","gardener","physician","antiquarian","dancer",
+  "candlestick","rope","wrench","flashlight","masterkey","glasscutter",
+  "conservatory","ballroom","kitchen","library","entrance","diningroom","livingroom","office","billiardroom"
+];
+function cardImage(id){return "/learning/games/clue/assets/images/cards/"+CARD_FILES[id]+".webp"}
+const CARDBACK_IMG="/learning/games/clue/assets/images/cards/cardback.webp";
 const ROOM_POS=[[0,0],[0,1],[0,2],[1,0],[1,1],[1,2],[2,0],[2,1],[2,2]];
 const ADJACENCY=[
   [{to:1,cost:3},{to:3,cost:3}],
@@ -479,9 +488,10 @@ function renderPlayerList(){
     const suspect=SUSPECTS[player.suspectIndex];
     const isTurn=gameState.turnPlayerId===player.id;
     const isMe=snapshot.myId===player.id;
+    const backs=Array.from({length:player.handCount||0}).map(()=>`<img src="${CARDBACK_IMG}" alt="" >`).join("");
     return `<div class="playerRow${isTurn?" active":""}${!player.active?" eliminated":""}">
       <span class="suspectDot" style="background:${suspect?suspect.color:"#666"}"></span>
-      <span class="playerMeta2"><strong>${player.name}${isMe?" · 나":""}</strong><small>${suspect?suspect.name:""} · ${player.roomIndex>=0?ROOMS[player.roomIndex]:"-"} · 카드 ${player.handCount}</small></span>
+      <span class="playerMeta2"><strong>${player.name}${isMe?" · 나":""}</strong><small>${suspect?suspect.name:""} · ${player.roomIndex>=0?ROOMS[player.roomIndex]:"-"}</small><span class="miniBackRow">${backs}</span></span>
       ${!player.active?'<span class="playerTag out">고발 실패</span>':""}
     </div>`;
   }).join("");
@@ -545,7 +555,7 @@ function renderPending(){
 }
 
 function cardChip(id){
-  return `<span class="cardChip" style="background:${cardColor(id)}"><span>${cardName(id)}</span></span>`;
+  return `<span class="cardChip"><img src="${cardImage(id)}" alt="${cardName(id)}" ><span>${cardName(id)}</span></span>`;
 }
 
 function renderHand(){
