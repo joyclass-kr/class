@@ -29,7 +29,7 @@ const ADJACENCY = Object.freeze([
   [{ to: 4, cost: 3 }, { to: 6, cost: 3 }, { to: 8, cost: 3 }],
   [{ to: 5, cost: 3 }, { to: 7, cost: 3 }]
 ]);
-const SECRET_PASSAGES = Object.freeze({ 0: 8, 8: 0, 2: 6, 6: 2 });
+const SECRET_PASSAGE_ROOMS = Object.freeze([0, 2, 6, 8]);
 const START_ROOMS = Object.freeze([0, 2, 3, 5, 6, 8]);
 const MIN_PLAYERS = 3;
 const MAX_PLAYERS = 6;
@@ -244,14 +244,15 @@ function stay(game, playerId) {
   return { ok: true, reveals: [] };
 }
 
-function secretPassage(game, playerId) {
+function secretPassage(game, playerId, pick = randomInt) {
   if (game.phase !== "playing") return { ok: false, error: "진행 중인 게임이 없습니다." };
   if (game.pendingSuggestion) return { ok: false, error: "다른 플레이어의 반박을 기다리는 중입니다." };
   const actor = activePlayer(game);
   if (!actor || actor.id !== String(playerId)) return { ok: false, error: "현재 차례가 아닙니다." };
   if (game.turnPhase !== "move" || game.dice !== null || game.moved) return { ok: false, error: "지금은 비밀통로를 사용할 수 없습니다." };
-  const target = SECRET_PASSAGES[actor.roomIndex];
-  if (target === undefined) return { ok: false, error: "이 방에는 비밀통로가 없습니다." };
+  if (!SECRET_PASSAGE_ROOMS.includes(actor.roomIndex)) return { ok: false, error: "이 방에는 비밀통로가 없습니다." };
+  const options = SECRET_PASSAGE_ROOMS.filter(room => room !== actor.roomIndex);
+  const target = options[pick(options.length)];
   actor.roomIndex = target;
   game.moved = true;
   game.turnPhase = "act";
@@ -442,7 +443,7 @@ function stateFor(game, viewerId) {
 }
 
 module.exports = {
-  SUSPECTS, WEAPONS, ROOMS, ADJACENCY, SECRET_PASSAGES, START_ROOMS,
+  SUSPECTS, WEAPONS, ROOMS, ADJACENCY, SECRET_PASSAGE_ROOMS, START_ROOMS,
   MIN_PLAYERS, MAX_PLAYERS, TURN_TIME_MS, REFUTE_TIME_MS,
   createGame, addPlayer, removePlayer, resetToLobby,
   startMatch, roll, move, stay, secretPassage, suggest, chooseCard, accuse, endTurn, newGame,
