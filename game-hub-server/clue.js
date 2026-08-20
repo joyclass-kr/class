@@ -29,7 +29,11 @@ const ADJACENCY = Object.freeze([
   [{ to: 4, cost: 3 }, { to: 6, cost: 3 }, { to: 8, cost: 3 }],
   [{ to: 5, cost: 3 }, { to: 7, cost: 3 }]
 ]);
-const SECRET_PASSAGE_ROOMS = Object.freeze([0, 2, 6, 8]);
+// The corridor's 4 secret staircases sit between these room pairs (온실-서재,
+// 주방-식당, 서재-사무실, 식당-당구실), not inside any single room - 서재 and
+// 식당 each sit next to two staircases. Taking any staircase from an adjacent
+// room drops you at a random other adjacent room, not a fixed pair.
+const SECRET_PASSAGE_ROOMS = Object.freeze([0, 2, 3, 5, 6, 8]);
 const START_ROOMS = Object.freeze([0, 2, 3, 5, 6, 8]);
 const MIN_PLAYERS = 3;
 const MAX_PLAYERS = 6;
