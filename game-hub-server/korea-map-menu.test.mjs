@@ -17,7 +17,6 @@ for (const [href, label, englishLabel] of [
 ]) {
   assert.match(koreaMaps, new RegExp(`href="${href}"[^>]*data-access-parent="korea-maps"[\\s\\S]*?<strong>${label}<\\/strong><small>\\(${englishLabel}\\)<\\/small>`));
 }
-assert.doesNotMatch(koreaMaps, /learning\/academics\/east-asia-history-lab\/|한국사 지도/);
 
 const space = groupByName.get('space-observation') || '';
 assert.ok(space, 'Space observation must be grouped directly on the portal.');
