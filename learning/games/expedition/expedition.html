@@ -215,6 +215,7 @@ h1,h2,h3,p{margin-top:0}
 <script src="../../../assets/network/game-network.js"></script>
 <script src="../../../assets/network/multiplayer-lobby.js"></script>
 <script src="../../../assets/sound/music-control.js" defer></script>
+<script src="expedition-sfx.js" defer></script>
 </head>
 <body>
 <main class="shell">
@@ -444,7 +445,11 @@ function setTrack(name){
   // 음소거 상태거나 아직 사용자 조작 전이면 조용히 실패한다. 그때는 music-control 이 튼다.
   audio.play().catch(()=>{});
 }
-function sfx(name){try{window.ClassGameSfx?.play(name)}catch(_){}}
+// 전용 소리가 있으면 그것을, 없으면 사이트 공용 소리를 쓴다.
+function sfx(name,fallback){
+  try{ if(window.ExpeditionSfx?.play(name))return; }catch(_){}
+  try{ window.ClassGameSfx?.play(fallback||name) }catch(_){}
+}
 
 // 화면 가운데에 잠깐 띄웠다 사라지는 레이어. 클릭은 통과시킨다.
 function flash(node,ms){
@@ -471,7 +476,7 @@ function flashCard(card,index){
     el.className="revealCard treasure";
     el.innerHTML=`<span class="art big">${treasureArt(state.theme)}</span><span class="revealValue">${card.value}</span><span class="revealLabel">${escapeHtml(state.treasureLabel)}</span>`
       +(split?`<span class="revealNote">${split.total} ÷ ${split.explorers} = ${split.each} … ${split.remainder}</span>`:"");
-    sfx("card");
+    sfx("treasure","card");
   }else if(card.kind==="relic"){
     const photo=relicPhoto(state.theme);
     el.className=`revealCard relic${photo?" photo":""}`;
@@ -482,7 +487,7 @@ function flashCard(card,index){
     }else{
       el.innerHTML=`<span class="art big">${relicArt(state.theme)}</span><span class="revealValue">${card.value}</span><span class="revealLabel">${escapeHtml(state.relicLabel)}</span><span class="revealNote">하나뿐이라 나눌 수 없음 · 혼자 돌아가야 가져감</span>`;
     }
-    sfx("bell");
+    sfx("relic","bell");
   }else{
     const name=state.hazardNames[card.hazard]||"위험";
     const repeat=state.revealed.slice(0,index).some(other=>other.kind==="hazard"&&other.hazard===card.hazard);
@@ -495,7 +500,9 @@ function flashCard(card,index){
       el.innerHTML=`<span class="art big">${hazardArt(state.theme,card.hazard)}</span><span class="revealLabel" style="font-size:27px">${escapeHtml(name)}</span><span class="revealNote">${repeat?"두 번째! 라운드가 끝납니다":"한 번 더 나오면 끝입니다"}</span>`;
     }
     if(repeat)ms=1900;
-    sfx(repeat?"error":"stone");
+    // 같은 위험이 두 번째면 라운드가 끝나므로 그 위험 소리 뒤에 붕괴음을 겹친다.
+    sfx(`hazard${card.hazard}`,"stone");
+    if(repeat)setTimeout(()=>sfx("wipe","error"),260);
   }
   flash(el,ms);
 }
@@ -523,7 +530,7 @@ function reactToChange(before,now){
     },delay);
   }
   if(before.phase==="deciding"&&(now.phase==="roundEnd"||now.phase==="gameEnd")&&now.roundReason!=="hazard"){
-    setTimeout(()=>sfx("success"),delay);
+    setTimeout(()=>sfx("bank","success"),delay);
   }
 }
 
@@ -714,6 +721,7 @@ function showdown(before,now){
     return `<div class="showdownCard ${leaving?"leave":"stay"}" style="animation-delay:${index*70}ms">
       ${escapeHtml(player.name)}<span>${leaving?"돌아간다":"더 들어간다"}</span></div>`;
   }).join("");
+  sfx("showdown","click");
   const box=document.createElement("div");
   box.className="showdown";
   box.innerHTML=cards;
