@@ -10,10 +10,10 @@
 *{box-sizing:border-box}
 /* 배경 위에 어두운 막을 덮어야 판과 글자가 읽힌다. 배경은 분위기지 주인공이 아니다.
    대기실에는 세 테마가 다 나오는 합본을 쓴다. */
-body{margin:0;min-height:100vh;padding:20px;background:linear-gradient(180deg,rgba(18,13,8,.72),rgba(9,7,5,.9)),url("/learning/games/expedition/assets/images/lobby.webp") center/cover fixed no-repeat,#12100c}
-body.inGame{background:linear-gradient(180deg,rgba(18,13,8,.72),rgba(9,7,5,.9)),url("/learning/games/expedition/assets/images/orerun.webp") center/cover fixed no-repeat,#12100c}
-body.theme-tombdig{--accent:#c9a24a;--accent-soft:#7a5c23;--panel:#1d1a16;--panel-edge:#4b402d;--danger:#c14a4a;--relic:#c08cd0;background:linear-gradient(180deg,rgba(20,16,10,.74),rgba(10,8,5,.9)),url("/learning/games/expedition/assets/images/tombdig.webp") center/cover fixed no-repeat,#14110d}
-body.theme-voidrun{--accent:#5fa8d8;--accent-soft:#2c5c80;--panel:#141a22;--panel-edge:#2f4560;--danger:#e0644f;--relic:#9d8ce8;background:linear-gradient(180deg,rgba(8,14,22,.76),rgba(4,7,12,.92)),url("/learning/games/expedition/assets/images/voidrun.webp") center/cover fixed no-repeat,#0b1018}
+body{margin:0;min-height:100vh;padding:20px;background:linear-gradient(180deg,rgba(18,13,8,.34),rgba(9,7,5,.6)),url("/learning/games/expedition/assets/images/lobby.webp") center/cover fixed no-repeat,#12100c}
+body.inGame{background:linear-gradient(180deg,rgba(18,13,8,.34),rgba(9,7,5,.6)),url("/learning/games/expedition/assets/images/orerun.webp") center/cover fixed no-repeat,#12100c}
+body.theme-tombdig{--accent:#c9a24a;--accent-soft:#7a5c23;--panel:#1d1a16;--panel-edge:#4b402d;--danger:#c14a4a;--relic:#c08cd0;background:linear-gradient(180deg,rgba(20,16,10,.36),rgba(10,8,5,.62)),url("/learning/games/expedition/assets/images/tombdig.webp") center/cover fixed no-repeat,#14110d}
+body.theme-voidrun{--accent:#5fa8d8;--accent-soft:#2c5c80;--panel:#141a22;--panel-edge:#2f4560;--danger:#e0644f;--relic:#9d8ce8;background:linear-gradient(180deg,rgba(8,14,22,.4),rgba(4,7,12,.66)),url("/learning/games/expedition/assets/images/voidrun.webp") center/cover fixed no-repeat,#0b1018}
 button,input{font:inherit}
 .hidden{display:none!important}
 .shell{width:min(1120px,100%);margin:auto}
@@ -42,9 +42,9 @@ h1,h2,h3,p{margin-top:0}
 /* 방 번호는 게임판과 같은 무게로 놓일 이유가 없다. */
 .topbar{display:flex;justify-content:space-between;align-items:center;gap:10px;margin-bottom:10px;padding:0 4px}
 .topbarLeft{display:flex;align-items:baseline;gap:12px}
-.gameTag{font-family:Georgia,serif;font-size:20px;font-weight:900;color:#ffe6b4}
-.roomTag{color:#8d8168;font-size:12px;letter-spacing:.12em}
-.roomTag b{color:#c4b79c;font-size:16px;letter-spacing:.2em}
+.gameTag{font-family:Georgia,serif;font-size:20px;font-weight:900;color:#ffe6b4;text-shadow:0 2px 6px #000c}
+.roomTag{color:#c4b79c;font-size:12px;letter-spacing:.12em;text-shadow:0 2px 6px #000c}
+.roomTag b{color:#fff0d0;font-size:16px;letter-spacing:.2em}
 .topbarRight{display:flex;gap:7px}
 .ghost{min-height:34px;padding:6px 12px;border:1px solid var(--panel-edge);border-radius:9px;background:transparent;color:#b7a888;font-size:12px;font-weight:800;cursor:pointer}
 .ghost:hover{color:#ffe6b4;border-color:var(--accent-soft)}
