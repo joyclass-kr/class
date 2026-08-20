@@ -99,6 +99,10 @@ assert.ok(html.includes("game-network.js"), "Class ranking mode must load the cl
 assert.ok(html.includes("multiplayer-lobby.js"), "Class ranking mode must load the shared lobby.");
 assert.ok(html.includes("학급 단체전 · 순위 모드"), "Class ranking mode choice is missing.");
 assert.ok(html.includes("나의 오답노트"), "Personal wrong-answer notebook is missing.");
+assert.ok(html.includes('class="compact-title"'), "Spelling title should stay compact in the top bar.");
+assert.ok(html.includes('class="panel start-panel mode-panel"'), "Mode choices should be the primary first-screen content.");
+assert.ok(!html.includes('class="title-block"'), "The advertising-style title hero should be removed.");
+assert.ok(!html.includes('id="playerGreeting"'), "The promotional greeting should be removed.");
 assert.ok(html.includes("한국어 어문 규범"), "Official language norms source should be visible.");
 assert.ok(html.includes("표준국어대사전"), "Standard dictionary source should be visible.");
 

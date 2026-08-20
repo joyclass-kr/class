@@ -20,6 +20,7 @@
     <div class="page-shell">
         <header class="topbar">
             <a class="back-link" href="../../../" aria-label="메인 화면으로 돌아가기">← 메인</a>
+            <h1 class="compact-title">한글 맞춤법</h1>
             <div class="topbar-actions">
                 <div class="record" aria-label="개인 모드 최고 기록">
                     <span>개인 최고 기록</span>
@@ -29,15 +30,8 @@
         </header>
 
         <main>
-            <div class="title-block">
-                <h1>한글 맞춤법</h1>
-                <p id="playerGreeting" class="player-greeting">헷갈리는 우리말, 하나씩 골라 볼까요?</p>
-            </div>
-
-            <section id="modeScreen" class="panel start-panel" aria-labelledby="modeTitle">
-                <span class="seal" aria-hidden="true">가</span>
-                <h2 id="modeTitle">학습 방식을 선택하세요</h2>
-                <p class="lead">혼자 연습하거나, 같은 반 친구들과 동시에 풀고 순위를 겨룰 수 있어요.</p>
+            <section id="modeScreen" class="panel start-panel mode-panel" aria-labelledby="modeTitle">
+                <h2 id="modeTitle" class="sr-only">학습 방식 선택</h2>
                 <div class="mode-grid">
                     <button id="personalModeButton" class="mode-card" type="button">
                         <strong>개인 모드</strong>

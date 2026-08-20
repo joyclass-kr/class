@@ -24,7 +24,6 @@
         restartButton: document.getElementById("restartButton"),
         resultModeButton: document.getElementById("resultModeButton"),
         nextButton: document.getElementById("nextButton"),
-        playerGreeting: document.getElementById("playerGreeting"),
         headerBestScore: document.getElementById("headerBestScore"),
         classWaitingPanel: document.getElementById("classWaitingPanel"),
         joinPane: document.getElementById("joinPane"),
@@ -142,13 +141,6 @@
 
     function updateHeaderBest() {
         elements.headerBestScore.textContent = `${getBestScore()}/${SESSION_SIZE}`;
-    }
-
-    function setGreeting() {
-        const playerName = getPlayerName();
-        elements.playerGreeting.textContent = playerName
-            ? `${playerName} 님, 헷갈리는 우리말을 골라 볼까요?`
-            : "헷갈리는 우리말, 하나씩 골라 볼까요?";
     }
 
     function showModeScreen() {
@@ -499,7 +491,6 @@
     document.querySelectorAll(".mode-back-button").forEach((button) => button.addEventListener("click", showModeScreen));
     document.addEventListener("keydown", handleKeyboard);
 
-    setGreeting();
     updateHeaderBest();
     setScreen(elements.modeScreen);
 })();
