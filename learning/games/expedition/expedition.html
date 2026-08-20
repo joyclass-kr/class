@@ -117,6 +117,21 @@ h1,h2,h3,p{margin-top:0}
 .hazardPip.seen{border-color:var(--danger);background:#3a1a15;color:#ffcfc6;font-weight:800}
 
 
+.bandBox{display:flex;justify-content:space-between;align-items:center;gap:12px;flex-wrap:wrap;padding:12px 14px;border:1px solid var(--panel-edge);border-radius:12px;background:#00000038}
+.bandBox b{color:#ffe6b4;font-size:16px}
+.bandBox span{display:block;margin-top:3px;color:#b7a888;font-size:12px}
+.bandLock{align-self:center;padding:4px 10px;border:1px solid var(--panel-edge);border-radius:999px;color:#8d8168;font-size:11px;font-weight:800;white-space:nowrap}
+
+/* 문제는 게임을 막지 않는다. 맞히든 틀리든 판은 그대로 흘러간다. */
+.quizBox{margin-top:12px;padding:13px 15px;border:1px solid var(--panel-edge);border-radius:12px;background:#00000045}
+.quizHead{display:flex;align-items:baseline;gap:9px;flex-wrap:wrap;color:#e6d7ba;font-size:15px}
+.quizTag{padding:2px 8px;border-radius:999px;background:var(--accent-soft);color:#ffeec9;font-size:10px;font-weight:900;letter-spacing:.1em}
+.quizRow{display:flex;align-items:center;gap:8px;margin-top:9px;flex-wrap:wrap}
+.quizInput{width:140px;min-height:38px;padding:6px 11px;border:1px solid var(--panel-edge);border-radius:9px;background:#140f08;color:#fff0d0;font-weight:800}
+.quizMark{font-size:20px;font-weight:900}
+.quizMark.ok{color:var(--safe)}
+.quizMark.no{color:var(--danger)}
+.quizNote{margin-top:7px;color:#b7a888;font-size:12px}
 .decisionBox{margin-top:14px;padding:16px;border:1px solid var(--accent-soft);border-radius:14px;background:#00000045;text-align:center}
 .decisionButtons{display:grid;grid-template-columns:1fr 1fr;gap:12px;margin-top:12px}
 .bigChoice{min-height:82px;padding:12px;border-radius:14px;border:2px solid transparent;font-size:clamp(15px,3vw,19px);font-weight:900;cursor:pointer}
@@ -263,6 +278,14 @@ h1,h2,h3,p{margin-top:0}
     </section>
 
     <section class="panel">
+      <div class="eyebrow">수학 문제</div>
+      <div id="bandBox" class="bandBox">
+        <div><b id="bandName">확인하는 중</b><span id="bandDesc"></span></div>
+        <span class="bandLock">방장 학년 기준 · 변경 불가</span>
+      </div>
+    </section>
+
+    <section class="panel">
       <h2>PLAYERS</h2>
       <div id="lobbyPlayers" class="mp-lobby-players"></div>
       <p id="lobbyGuide" class="mp-lobby-guide">참가자를 기다리는 중입니다.</p>
@@ -309,6 +332,16 @@ h1,h2,h3,p{margin-top:0}
     </div>
 
     <div id="situation" class="situation"></div>
+
+      <div id="quizBox" class="quizBox hidden">
+        <div class="quizHead"><span class="quizTag">수학</span><span id="quizAsk"></span></div>
+        <div class="quizRow">
+          <input id="quizInput" class="quizInput" inputmode="text" autocomplete="off" placeholder="답">
+          <button id="quizBtn" class="secondary" type="button">확인</button>
+          <span id="quizMark" class="quizMark"></span>
+        </div>
+        <div id="quizNote" class="quizNote"></div>
+      </div>
 
       <div id="decisionBox" class="decisionBox hidden">
         <div id="decisionTitle" style="font-weight:900;color:#ffe6b4">계속 갈까요, 돌아갈까요?</div>
@@ -450,6 +483,134 @@ function setTrack(name){
   audio.play().catch(()=>{});
 }
 // 전용 소리가 있으면 그것을, 없으면 사이트 공용 소리를 쓴다.
+
+// 2022 개정 교육과정은 성취기준을 학년군으로 준다. 방장 계정의 학년으로 정해지고 아무도 못 바꾼다.
+const BANDS={
+  primary34:{name:"초등 3~4학년군",desc:"나눗셈의 몫과 나머지"},
+  primary56:{name:"초등 5~6학년군",desc:"분수·소수로 나타낸 몫, 평균, 백분율"},
+  middle:{name:"중학교",desc:"경우의 수와 확률"}
+};
+let learnerBand="middle";
+let bandTicket="";
+let quizState=null;
+let quizScore={right:0,total:0};
+
+async function loadBand(){
+  try{
+    const res=await fetch("/api/learner/band",{credentials:"same-origin"});
+    if(!res.ok)return;
+    const data=await res.json();
+    bandTicket=data.ticket||"";
+    learnerBand=BANDS[data.band]?data.band:"middle";
+  }catch(_){ /* 못 받아도 기본값(중학교)으로 돈다 */ }
+  renderBandBox();
+}
+
+function renderBandBox(){
+  const band=BANDS[learnerBand]||BANDS.middle;
+  const name=$("bandName"); const desc=$("bandDesc");
+  if(name)name.textContent=band.name;
+  if(desc)desc.textContent=band.desc;
+}
+
+function gcd(a,b){return b?gcd(b,a%b):a}
+function asFraction(top,bottom){
+  const g=gcd(top,bottom)||1;
+  const t=top/g,b=bottom/g;
+  return b===1?String(t):`${t}/${b}`;
+}
+
+// 지금 판에서 실제로 벌어진 일로만 문제를 만든다. 억지로 지어내지 않는다.
+function buildQuiz(){
+  const band=state.band||"middle";
+  const split=state.lastSplit;
+  const left=state.remaining;
+
+  if(band==="primary34"){
+    if(!split)return null;
+    return {
+      ask:`${split.total} ÷ ${split.explorers} = ?  (몫과 나머지를 "몫 나머지" 처럼 두 수로)`,
+      accepts:[`${split.each} ${split.remainder}`,`${split.each},${split.remainder}`],
+      note:`한 사람당 ${split.each}, 바닥에 ${split.remainder}`
+    };
+  }
+
+  if(band==="primary56"){
+    if(split&&split.remainder>0){
+      return {
+        ask:`바닥에 남은 ${split.remainder}을 ${split.explorers}명이 똑같이 나누면 한 사람당? (기약분수)`,
+        accepts:[asFraction(split.remainder,split.explorers)],
+        note:`${split.remainder}/${split.explorers} 을 약분하면 ${asFraction(split.remainder,split.explorers)}`
+      };
+    }
+    if(left&&left.total>0){
+      const percent=Math.round(left.hazard/left.total*100);
+      return {
+        ask:`남은 카드 ${left.total}장 중 위험이 ${left.hazard}장. 몇 %? (반올림해 정수로)`,
+        accepts:[String(percent),`${percent}%`],
+        note:`${left.hazard} ÷ ${left.total} = 약 ${percent}%`
+      };
+    }
+    return null;
+  }
+
+  // 중학교: 경우의 수와 확률
+  if(left&&left.total>0&&left.deadly>0){
+    return {
+      ask:`남은 ${left.total}장 중 이번에 나오면 라운드가 끝나는 카드가 ${left.deadly}장. 다음 한 장에 끝날 확률은? (기약분수)`,
+      accepts:[asFraction(left.deadly,left.total)],
+      note:`${left.deadly}/${left.total} → ${asFraction(left.deadly,left.total)}`
+    };
+  }
+  if(left&&left.total>0){
+    return {
+      ask:`남은 ${left.total}장 중 위험 카드가 ${left.hazard}장. 다음 한 장이 위험일 확률은? (기약분수)`,
+      accepts:[asFraction(left.hazard,left.total)],
+      note:`${left.hazard}/${left.total} → ${asFraction(left.hazard,left.total)}`
+    };
+  }
+  return null;
+}
+
+function normalizeAnswer(value){
+  return String(value||"").trim().replace(/\s+/g," ").replace(/\s*\/\s*/g,"/");
+}
+
+function renderQuiz(){
+  const box=$("quizBox");
+  if(state.phase!=="deciding"){box.classList.add("hidden");return}
+  // 카드가 새로 열릴 때만 문제를 새로 낸다. 결정 하나 할 때마다 바뀌면 정신없다.
+  if(!quizState||quizState.at!==state.revealed.length||quizState.round!==state.round){
+    const made=buildQuiz();
+    quizState=made?{...made,at:state.revealed.length,round:state.round,done:false}:null;
+    $("quizInput").value="";
+    $("quizMark").textContent="";
+    $("quizMark").className="quizMark";
+    $("quizNote").textContent="";
+  }
+  if(!quizState){box.classList.add("hidden");return}
+  box.classList.remove("hidden");
+  $("quizAsk").textContent=quizState.ask;
+  $("quizInput").disabled=quizState.done;
+  $("quizBtn").disabled=quizState.done;
+}
+
+function submitQuiz(){
+  if(!quizState||quizState.done)return;
+  const given=normalizeAnswer($("quizInput").value);
+  if(!given)return;
+  const right=quizState.accepts.some(a=>normalizeAnswer(a)===given);
+  quizState.done=true;
+  quizScore.total+=1;
+  if(right)quizScore.right+=1;
+  $("quizMark").textContent=right?"○":"×";
+  $("quizMark").className=`quizMark ${right?"ok":"no"}`;
+  $("quizNote").textContent=`${quizState.note} · 지금까지 ${quizScore.right}/${quizScore.total}`;
+  $("quizInput").disabled=true;
+  $("quizBtn").disabled=true;
+  sfx(right?"bank":"showdown","click");
+}
+
 function sfx(name,fallback){
   try{ if(window.ExpeditionSfx?.play(name))return; }catch(_){}
   try{ window.ClassGameSfx?.play(fallback||name) }catch(_){}
@@ -801,6 +962,7 @@ function render(){
   $("deckValue").textContent=state.deckCount;
   $("headline").textContent=state.lastAction;
   renderSituation();
+  renderQuiz();
   renderTokens();
   renderTrail();
   renderHazards();
@@ -832,6 +994,7 @@ function showAbort({title,message}){
 function init(){
   applyThemeSkin(selectedTheme);
   setTrack("lobby");
+  loadBand();
   lobby=ClassroomMultiplayerLobby.create({
     gameId:GAME_ID,
     getPlayerName:()=>/^[가-힣]{2,6}$/.test(savedName)?savedName:"",
@@ -847,7 +1010,7 @@ function init(){
       $("gameRoomCode").textContent=snapshot.roomCode||"----";
       renderThemePicker();
     },
-    getRoomRequestData:()=>({theme:selectedTheme}),
+    getRoomRequestData:()=>({theme:selectedTheme,bandTicket}),
     getLobbyPresentation:({count,role,canStart})=>({
       canStart,
       startText:role==="host"&&canStart?`START · ${count} PLAYERS`:"WAITING FOR PLAYERS",
@@ -873,6 +1036,8 @@ function init(){
   $("nextRoundBtn").addEventListener("click",()=>sendAction({action:"NEXT_ROUND"}));
   $("newGameBtn").addEventListener("click",()=>sendAction({action:"NEW_GAME"}));
   $("lobbyBtn").addEventListener("click",()=>{sendAction({action:"RETURN_LOBBY"});showLobby()});
+  $("quizBtn").addEventListener("click",submitQuiz);
+  $("quizInput").addEventListener("keydown",event=>{if(event.key==="Enter")submitQuiz()});
   $("closeRulesBtn").addEventListener("click",hideRules);
   $("rulesOverlay").addEventListener("click",event=>{if(event.target===$("rulesOverlay"))hideRules()});
   $("reloadBtn").addEventListener("click",()=>location.reload());

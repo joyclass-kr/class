@@ -1373,14 +1373,15 @@ function createClassroomPlatform(options = {}) {
     return `${body}.${signature}`;
   }
 
-  function verifyMuseumPresenceTicket(ticket) {
+  function verifyMuseumPresenceTicket(ticket, kind) {
     const [body, signature] = String(ticket || "").split(".");
     if (!body || !signature) return null;
     const expected = crypto.createHmac("sha256", museumPresenceSecret).update(body).digest("base64url");
     if (signature.length !== expected.length || !crypto.timingSafeEqual(Buffer.from(signature), Buffer.from(expected))) return null;
     try {
       const payload = JSON.parse(Buffer.from(body, "base64url").toString("utf8"));
-      return payload.exp > Date.now() && payload.kind === "museum-presence" ? payload : null;
+      if (!(payload.exp > Date.now())) return null;
+      return payload.kind === (kind || "museum-presence") ? payload : null;
     } catch (_) { return null; }
   }
 
@@ -2090,6 +2091,46 @@ function createClassroomPlatform(options = {}) {
     });
     res.json({ ticket, expiresAt, scope: "class" });
   }));
+
+
+  // 학습 난이도를 정할 학년군. 방을 만든 사람의 계정 학년을 따르므로 서명해서 내보낸다.
+  // 학년을 모르는 사람(관리자·게스트·담임 배정이 없는 교사)은 가장 높은 군으로 둔다.
+  function gradeBand(grade) {
+    const value = Number(grade);
+    if (!Number.isInteger(value) || value < 1 || value > 12) return "middle";
+    if (value <= 4) return "primary34";
+    if (value <= 6) return "primary56";
+    return "middle";
+  }
+
+  router.get("/learner/band", asyncRoute(async (req, res) => {
+    const expiresAt = Date.now() + 30 * 60 * 1000;
+    let grade = null;
+    const user = await sessionUser(req);
+    if (user) {
+      // 담임 교사면 맡은 학급의 학년, 학생이면 본인 학년.
+      const taught = await pool.query(
+        `SELECT grade FROM classroom_teachers
+         WHERE (user_id = $1 OR (google_email IS NOT NULL AND LOWER(google_email) = (SELECT LOWER(email) FROM classroom_users WHERE id = $1)))
+           AND grade IS NOT NULL
+         LIMIT 1`,
+        [user.id]
+      );
+      grade = taught.rows[0]?.grade ?? null;
+      if (grade === null) {
+        const membership = await studentMembership(user.id);
+        grade = membership?.grade ?? null;
+      }
+    }
+    const band = gradeBand(grade);
+    const ticket = signMuseumPresence({ kind: "learner-band", exp: expiresAt, band });
+    res.json({ ticket, band, expiresAt });
+  }));
+
+  function verifyLearnerBand(ticket) {
+    const payload = verifyMuseumPresenceTicket(ticket, "learner-band");
+    return payload ? payload.band : null;
+  }
 
   router.get("/site/access", asyncRoute(async (req, res) => {
     const mode = await getSiteAccessMode();
@@ -5643,6 +5684,7 @@ function createClassroomPlatform(options = {}) {
     configuration,
     requireSiteAccess,
     verifyMuseumPresenceTicket,
+    verifyLearnerBand,
     listFinisherRecords,
     saveFinisherRecord
   };

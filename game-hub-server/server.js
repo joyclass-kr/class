@@ -1351,7 +1351,14 @@ wss.on("connection", socket => {
         room.drawrelay = DrawRelay.createGame(playerId, cleanToken(message.name, 12) || "방장");
       }
       if (gameId === "expedition") {
-        room.expedition = Expedition.createGame(playerId, cleanToken(message.name, 12) || "방장", cleanToken(message.theme, 20));
+        // 학년군은 방장 계정에서 온다. 아무도 화면에서 고를 수 없다.
+        const band = classroomPlatform.verifyLearnerBand(cleanToken(message.bandTicket, 2048));
+        room.expedition = Expedition.createGame(
+          playerId,
+          cleanToken(message.name, 12) || "방장",
+          cleanToken(message.theme, 20),
+          band || Expedition.DEFAULT_BAND
+        );
       }
       if (gameId === "clue") {
         room.clue = Clue.createGame(playerId, cleanToken(message.name, 12) || "방장");

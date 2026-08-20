@@ -38,6 +38,25 @@ const TOTAL_ROUNDS = 5;
 const MIN_PLAYERS = 3;
 const MAX_PLAYERS = 8;
 
+
+// 2022 개정 교육과정은 성취기준을 학년군으로 준다. 5학년과 6학년을 갈라 놓을 근거가 없다.
+// 방 하나에 학년군 하나다. 방장 계정의 학년을 따르고, 학년을 모르면 가장 높은 군으로 둔다
+// (관리자·게스트가 쉬운 문제를 받아 민망한 것보다 낫다).
+const BANDS = Object.freeze(["primary34", "primary56", "middle"]);
+const DEFAULT_BAND = "middle";
+
+function bandForGrade(grade) {
+  const value = Number(grade);
+  // Number(null) 과 Number("") 은 0 이라, 정수 검사만으로는 "정보 없음" 이 초등 저학년으로 떨어진다.
+  if (!Number.isInteger(value) || value < 1 || value > 12) return DEFAULT_BAND;
+  if (value <= 4) return "primary34";
+  if (value <= 6) return "primary56";
+  return "middle";
+}
+
+function normalizeBand(value) {
+  return BANDS.includes(String(value)) ? String(value) : DEFAULT_BAND;
+}
 function randomInt(maximum) {
   return crypto.randomInt(maximum);
 }
@@ -96,10 +115,11 @@ function basePool() {
   return pool;
 }
 
-function createGame(hostId, hostName, theme = DEFAULT_THEME) {
+function createGame(hostId, hostName, theme = DEFAULT_THEME, hostBand = DEFAULT_BAND) {
   return {
     phase: "lobby",
     theme: normalizeTheme(theme),
+    band: normalizeBand(hostBand),
     players: [createPlayer(hostId, hostName || "방장")],
     pool: basePool(),
     relicQueue: [...RELIC_VALUES],
@@ -399,6 +419,20 @@ function newGame(game, pick = randomInt) {
   return { ok: true };
 }
 
+function remainingCounts(game) {
+  const counts = { total: game.deck.length, treasure: 0, hazard: 0, relic: 0, deadly: 0 };
+  game.deck.forEach(card => {
+    if (card.kind === "treasure") counts.treasure += 1;
+    else if (card.kind === "relic") counts.relic += 1;
+    else {
+      counts.hazard += 1;
+      // 이미 한 번 나온 종류가 또 나오면 그 자리에서 라운드가 끝난다.
+      if ((game.hazardCounts[card.hazard] || 0) >= 1) counts.deadly += 1;
+    }
+  });
+  return counts;
+}
+
 function stateFor(game, viewerId) {
   const safeViewer = String(viewerId);
   const active = explorers(game);
@@ -417,6 +451,8 @@ function stateFor(game, viewerId) {
     minPlayers: MIN_PLAYERS,
     maxPlayers: MAX_PLAYERS,
     deckCount: game.deck.length,
+    band: game.band,
+    remaining: remainingCounts(game),
     revealed: game.revealed.map(card => ({ ...card })),
     hazardCounts: { ...game.hazardCounts },
     path: { gems: game.path.gems, relics: [...game.path.relics] },
@@ -445,6 +481,10 @@ function stateFor(game, viewerId) {
 
 module.exports = {
   THEMES,
+  BANDS,
+  DEFAULT_BAND,
+  bandForGrade,
+  normalizeBand,
   TREASURE_VALUES,
   RELIC_VALUES,
   TOTAL_ROUNDS,
