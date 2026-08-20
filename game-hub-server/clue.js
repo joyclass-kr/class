@@ -14,26 +14,37 @@ const WEAPONS = Object.freeze(["촛대", "밧줄", "렌치", "손전등", "만�
 const ROOMS = Object.freeze(["온실", "무도회장", "주방", "서재", "거실", "식당", "사무실", "현관", "당구실"]);
 const CENTER_ROOM = 4;
 
-// Original mansion layout (not the licensed Cluedo board art): 3x3 room grid,
-// index = row*3+col. Every corridor costs the same so a 1d6 roll is either
-// "reach a neighbor" (3-6) or "stuck this turn" (1-2), mirroring the classic
-// board's mix of easy and blocked moves without needing a full hallway grid.
-const ADJACENCY = Object.freeze([
-  [{ to: 1, cost: 3 }, { to: 3, cost: 3 }],
-  [{ to: 0, cost: 3 }, { to: 2, cost: 3 }, { to: 4, cost: 3 }],
-  [{ to: 1, cost: 3 }, { to: 5, cost: 3 }],
-  [{ to: 0, cost: 3 }, { to: 4, cost: 3 }, { to: 6, cost: 3 }],
-  [{ to: 1, cost: 3 }, { to: 3, cost: 3 }, { to: 5, cost: 3 }, { to: 7, cost: 3 }],
-  [{ to: 2, cost: 3 }, { to: 4, cost: 3 }, { to: 8, cost: 3 }],
-  [{ to: 3, cost: 3 }, { to: 7, cost: 3 }],
-  [{ to: 4, cost: 3 }, { to: 6, cost: 3 }, { to: 8, cost: 3 }],
-  [{ to: 5, cost: 3 }, { to: 7, cost: 3 }]
+// Corridor grid: two straight hallways run the width of the board - a top
+// hallway between room-row 0 and room-row 1, and a bottom hallway between
+// room-row 1 and room-row 2 - each cut into 7 tiles. 온실/무도회장/주방 only
+// border the top hallway, 사무실/현관/당구실 only border the bottom one, and
+// 서재/거실/식당 sit between the two so each has a door onto both. Every
+// other hallway tile (t0/t2/t4/t6, b0/b2/b4/b6) is a secret staircase; taking
+// one instantly drops you on the tile directly across the mansion from it.
+const CORRIDOR_CELLS = Object.freeze([
+  "t0", "t1", "t2", "t3", "t4", "t5", "t6",
+  "b0", "b1", "b2", "b3", "b4", "b5", "b6"
 ]);
-// The corridor's 4 secret staircases sit between these room pairs (온실-서재,
-// 주방-식당, 서재-사무실, 식당-당구실), not inside any single room - 서재 and
-// 식당 each sit next to two staircases. Taking any staircase from an adjacent
-// room drops you at a random other adjacent room, not a fixed pair.
-const SECRET_PASSAGE_ROOMS = Object.freeze([0, 2, 3, 5, 6, 8]);
+const CELL_COORDS = Object.freeze({
+  t0: [20, 130], t1: [70, 130], t2: [130, 130], t3: [190, 130], t4: [250, 130], t5: [310, 130], t6: [360, 130],
+  b0: [20, 250], b1: [70, 250], b2: [130, 250], b3: [190, 250], b4: [250, 250], b5: [310, 250], b6: [360, 250]
+});
+const CELL_NEIGHBORS = Object.freeze({
+  t0: ["t1"], t1: ["t0", "t2"], t2: ["t1", "t3"], t3: ["t2", "t4"], t4: ["t3", "t5"], t5: ["t4", "t6"], t6: ["t5"],
+  b0: ["b1"], b1: ["b0", "b2"], b2: ["b1", "b3"], b3: ["b2", "b4"], b4: ["b3", "b5"], b5: ["b4", "b6"], b6: ["b5"]
+});
+const CELL_ROOMS = Object.freeze({
+  t1: [0, 3], t3: [1, 4], t5: [2, 5],
+  b1: [3, 6], b3: [4, 7], b5: [5, 8]
+});
+const ROOM_CELLS = Object.freeze({
+  0: ["t1"], 1: ["t3"], 2: ["t5"],
+  3: ["t1", "b1"], 4: ["t3", "b3"], 5: ["t5", "b5"],
+  6: ["b1"], 7: ["b3"], 8: ["b5"]
+});
+const SECRET_PASSAGE_PAIRS = Object.freeze({
+  t0: "b0", b0: "t0", t2: "b2", b2: "t2", t4: "b4", b4: "t4", t6: "b6", b6: "t6"
+});
 const START_ROOMS = Object.freeze([0, 2, 3, 5, 6, 8]);
 const MIN_PLAYERS = 3;
 const MAX_PLAYERS = 6;
@@ -76,6 +87,7 @@ function createPlayer(id, name, avatarUrl) {
     name: String(name || "플레이어").trim() || "플레이어",
     avatarUrl: safeAvatarUrl(avatarUrl),
     roomIndex: -1,
+    cellId: null,
     active: true
   };
 }
@@ -120,6 +132,7 @@ function resetToLobby(game, notice = "대기실로 돌아왔습니다.") {
   game.phase = "lobby";
   game.players.forEach(player => {
     player.roomIndex = -1;
+    player.cellId = null;
     player.active = true;
   });
   game.hands = {};
@@ -151,6 +164,7 @@ function startMatch(game, pick = randomInt) {
   }
   game.players.forEach((player, index) => {
     player.roomIndex = START_ROOMS[index];
+    player.cellId = null;
     player.active = true;
   });
 
@@ -199,12 +213,46 @@ function advanceTurn(game) {
   }
 }
 
-function reachableRooms(game, player, dice) {
-  const options = [];
-  for (const edge of ADJACENCY[player.roomIndex]) {
-    if (edge.cost <= dice) options.push(edge.to);
+function cellOccupant(game, cellId, excludePlayerId) {
+  return game.players.find(player => player.cellId === cellId && player.id !== String(excludePlayerId));
+}
+
+// Step-by-step BFS over the corridor grid, up to `dice` tiles. Rooms are
+// terminal (you can enter one but not walk back out the same turn) except
+// the room the player starts the turn in. Occupied corridor tiles block
+// passage, same as the real board; rooms never block.
+function reachablePositions(game, player, dice) {
+  const startInRoom = player.roomIndex >= 0;
+  const startKey = startInRoom ? `r${player.roomIndex}` : player.cellId;
+  const visited = new Set([startKey]);
+  const rooms = new Set();
+  const cells = new Set();
+  let frontier = [{ room: startInRoom ? player.roomIndex : -1, cell: startInRoom ? null : player.cellId, steps: 0 }];
+  while (frontier.length) {
+    const next = [];
+    for (const node of frontier) {
+      if (node.steps >= dice) continue;
+      if (node.room >= 0 && node.steps > 0) continue;
+      const neighbors = [];
+      if (node.cell) {
+        for (const cellId of CELL_NEIGHBORS[node.cell]) neighbors.push({ type: "cell", value: cellId });
+        for (const roomIdx of CELL_ROOMS[node.cell] || []) neighbors.push({ type: "room", value: roomIdx });
+      } else if (node.room >= 0) {
+        for (const cellId of ROOM_CELLS[node.room] || []) neighbors.push({ type: "cell", value: cellId });
+      }
+      for (const nb of neighbors) {
+        const key = nb.type === "room" ? `r${nb.value}` : nb.value;
+        if (visited.has(key)) continue;
+        if (nb.type === "cell" && cellOccupant(game, nb.value, player.id)) continue;
+        visited.add(key);
+        if (nb.type === "room") rooms.add(nb.value);
+        else cells.add(nb.value);
+        next.push({ room: nb.type === "room" ? nb.value : -1, cell: nb.type === "cell" ? nb.value : null, steps: node.steps + 1 });
+      }
+    }
+    frontier = next;
   }
-  return options;
+  return { rooms: [...rooms], cells: [...cells] };
 }
 
 function roll(game, playerId, pick = randomInt) {
@@ -219,18 +267,28 @@ function roll(game, playerId, pick = randomInt) {
   return { ok: true, reveals: [] };
 }
 
-function move(game, playerId, targetRoom) {
+function move(game, playerId, target) {
   if (game.phase !== "playing") return { ok: false, error: "진행 중인 게임이 없습니다." };
   if (game.pendingSuggestion) return { ok: false, error: "다른 플레이어의 반박을 기다리는 중입니다." };
   const actor = activePlayer(game);
   if (!actor || actor.id !== String(playerId)) return { ok: false, error: "현재 차례가 아닙니다." };
   if (game.turnPhase !== "move" || game.dice === null || game.moved) return { ok: false, error: "지금은 이동할 수 없습니다." };
-  const options = reachableRooms(game, actor, game.dice);
-  if (!options.includes(targetRoom)) return { ok: false, error: "주사위 눈으로 이동할 수 없는 방입니다." };
-  actor.roomIndex = targetRoom;
+  if (typeof target !== "string" || !target) return { ok: false, error: "이동할 곳을 선택하세요." };
+  const { rooms, cells } = reachablePositions(game, actor, game.dice);
+  if (target.startsWith("r")) {
+    const roomIdx = Number(target.slice(1));
+    if (!rooms.includes(roomIdx)) return { ok: false, error: "주사위 눈으로 이동할 수 없는 방입니다." };
+    actor.roomIndex = roomIdx;
+    actor.cellId = null;
+    game.log = `${actor.name}님이 ${ROOMS[roomIdx]}(으)로 이동했습니다.`;
+  } else {
+    if (!cells.includes(target)) return { ok: false, error: "주사위 눈으로 이동할 수 없는 칸입니다." };
+    actor.roomIndex = -1;
+    actor.cellId = target;
+    game.log = `${actor.name}님이 복도를 이동했습니다.`;
+  }
   game.moved = true;
   game.turnPhase = "act";
-  game.log = `${actor.name}님이 ${ROOMS[targetRoom]}(으)로 이동했습니다.`;
   game.actionNumber += 1;
   return { ok: true, reveals: [] };
 }
@@ -243,24 +301,25 @@ function stay(game, playerId) {
   if (game.turnPhase !== "move" || game.moved) return { ok: false, error: "지금은 사용할 수 없습니다." };
   game.moved = true;
   game.turnPhase = "act";
-  game.log = `${actor.name}님이 ${ROOMS[actor.roomIndex]}에 머물렀습니다.`;
+  const label = actor.roomIndex >= 0 ? ROOMS[actor.roomIndex] : "복도";
+  game.log = `${actor.name}님이 ${label}에 머물렀습니다.`;
   game.actionNumber += 1;
   return { ok: true, reveals: [] };
 }
 
-function secretPassage(game, playerId, pick = randomInt) {
+function secretPassage(game, playerId) {
   if (game.phase !== "playing") return { ok: false, error: "진행 중인 게임이 없습니다." };
   if (game.pendingSuggestion) return { ok: false, error: "다른 플레이어의 반박을 기다리는 중입니다." };
   const actor = activePlayer(game);
   if (!actor || actor.id !== String(playerId)) return { ok: false, error: "현재 차례가 아닙니다." };
-  if (game.turnPhase !== "move" || game.dice !== null || game.moved) return { ok: false, error: "지금은 비밀통로를 사용할 수 없습니다." };
-  if (!SECRET_PASSAGE_ROOMS.includes(actor.roomIndex)) return { ok: false, error: "이 방에는 비밀통로가 없습니다." };
-  const options = SECRET_PASSAGE_ROOMS.filter(room => room !== actor.roomIndex);
-  const target = options[pick(options.length)];
-  actor.roomIndex = target;
+  if (game.turnPhase !== "move" && game.turnPhase !== "act") return { ok: false, error: "지금은 비밀통로를 사용할 수 없습니다." };
+  const target = actor.cellId && SECRET_PASSAGE_PAIRS[actor.cellId];
+  if (!target) return { ok: false, error: "이 위치에는 비밀통로가 없습니다." };
+  actor.cellId = target;
+  actor.roomIndex = -1;
   game.moved = true;
   game.turnPhase = "act";
-  game.log = `${actor.name}님이 비밀통로로 ${ROOMS[target]}(으)로 이동했습니다.`;
+  game.log = `${actor.name}님이 비밀통로로 이동했습니다.`;
   game.actionNumber += 1;
   return { ok: true, reveals: [] };
 }
@@ -294,6 +353,7 @@ function suggest(game, playerId, suspect, weapon) {
   const actor = activePlayer(game);
   if (!actor || actor.id !== String(playerId)) return { ok: false, error: "현재 차례가 아닙니다." };
   if (game.turnPhase !== "act" || game.suggestionUsed) return { ok: false, error: "지금은 추리를 발표할 수 없습니다." };
+  if (actor.roomIndex < 0) return { ok: false, error: "방 안에서만 추리를 발표할 수 있습니다." };
   if (!Number.isInteger(suspect) || suspect < 0 || suspect > 5) return { ok: false, error: "용의자를 선택하세요." };
   if (!Number.isInteger(weapon) || weapon < 6 || weapon > 11) return { ok: false, error: "무기를 선택하세요." };
 
@@ -405,6 +465,9 @@ function newGame(game) {
 function stateFor(game, viewerId) {
   const safeViewer = String(viewerId);
   const suggestion = game.pendingSuggestion;
+  const turnPlayer = game.phase === "playing" ? activePlayer(game) : null;
+  const canShowReachable = turnPlayer && turnPlayer.id === safeViewer && game.turnPhase === "move" && game.dice !== null && !game.moved && !suggestion;
+  const reachable = canShowReachable ? reachablePositions(game, turnPlayer, game.dice) : { rooms: [], cells: [] };
   return {
     phase: game.phase,
     hand: game.phase === "playing" || game.phase === "gameEnd" ? [...(game.hands[safeViewer] || [])] : [],
@@ -413,13 +476,15 @@ function stateFor(game, viewerId) {
       name: player.name,
       avatarUrl: player.avatarUrl,
       roomIndex: player.roomIndex,
+      cellId: player.cellId,
       active: player.active,
       handCount: (game.hands[player.id] || []).length
     })),
-    turnPlayerId: game.phase === "playing" ? activePlayer(game)?.id || null : null,
+    turnPlayerId: turnPlayer?.id || null,
     turnPhase: game.turnPhase,
     dice: game.dice,
     moved: game.moved,
+    reachable,
     suggestionUsed: game.suggestionUsed,
     deadline: game.phase === "playing" ? game.deadline : null,
     now: Date.now(),
@@ -440,10 +505,12 @@ function stateFor(game, viewerId) {
 }
 
 module.exports = {
-  SUSPECTS, WEAPONS, ROOMS, ADJACENCY, SECRET_PASSAGE_ROOMS, START_ROOMS,
+  SUSPECTS, WEAPONS, ROOMS, CENTER_ROOM,
+  CORRIDOR_CELLS, CELL_COORDS, CELL_NEIGHBORS, CELL_ROOMS, ROOM_CELLS, SECRET_PASSAGE_PAIRS,
+  START_ROOMS,
   MIN_PLAYERS, MAX_PLAYERS, TURN_TIME_MS, REFUTE_TIME_MS,
   createGame, addPlayer, removePlayer, resetToLobby,
   startMatch, roll, move, stay, secretPassage, suggest, chooseCard, accuse, endTurn, newGame,
-  forceTimeout,
+  forceTimeout, reachablePositions,
   stateFor, shuffle, cardName, cardType
 };

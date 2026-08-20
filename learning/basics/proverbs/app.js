@@ -59,6 +59,13 @@ function renderStudy() {
   $("literal").textContent = item.literal || "";
   $("literal").hidden = !item.literal;
   $("meaning").textContent = item.meaning;
+  if (item.image) {
+    $("proverbIllustrationImage").src = item.image;
+    $("proverbIllustrationImage").alt = item.proverb;
+    $("proverbIllustrationFrame").hidden = false;
+  } else {
+    $("proverbIllustrationFrame").hidden = true;
+  }
   $("example").textContent = `예: ${item.example}`;
   $("previous").disabled = studyPosition === 0;
   $("next").textContent = studyPosition === BATCH_SIZE - 1

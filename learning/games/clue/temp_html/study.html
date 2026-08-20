@@ -1,0 +1,211 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="utf-8">
+<style>
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  body {
+    width: 600px;
+    height: 800px;
+    background: #0b071e;
+    overflow: hidden;
+    font-family: 'Malgun Gothic', '맑은 고딕', 'Apple SD Gothic Neo', sans-serif;
+  }
+  .card {
+    width: 600px;
+    height: 800px;
+    position: relative;
+    background: radial-gradient(ellipse at 50% 35%, #3a226b 0%, #1a1038 65%, #0d0722 100%);
+  }
+</style>
+</head>
+<body>
+<div class="card">
+<svg width="600" height="800" viewBox="0 0 600 800" xmlns="http://www.w3.org/2000/svg">
+  <defs>
+    <!-- Card outer border glow -->
+    <filter id="goldGlow" x="-20%" y="-20%" width="140%" height="140%">
+      <feGaussianBlur stdDeviation="3" result="blur" />
+      <feComposite in="SourceGraphic" in2="blur" operator="over" />
+    </filter>
+    <filter id="glow" x="-40%" y="-40%" width="180%" height="180%">
+      <feGaussianBlur stdDeviation="6" result="blur1" />
+      <feMerge>
+        <feMergeNode in="blur1" />
+        <feMergeNode in="SourceGraphic" />
+      </feMerge>
+    </filter>
+    <filter id="flameGlow" x="-50%" y="-50%" width="200%" height="200%">
+      <feGaussianBlur stdDeviation="8" result="blur1" />
+      <feGaussianBlur stdDeviation="15" result="blur2" />
+      <feMerge>
+        <feMergeNode in="blur2" />
+        <feMergeNode in="blur1" />
+        <feMergeNode in="SourceGraphic" />
+      </feMerge>
+    </filter>
+
+    <!-- Gradients -->
+    <linearGradient id="frameBorder" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#7e3af2"/>
+      <stop offset="50%" stop-color="#3b1578"/>
+      <stop offset="100%" stop-color="#1e0a45"/>
+    </linearGradient>
+
+    <linearGradient id="goldGradient" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#ffe875"/>
+      <stop offset="50%" stop-color="#f59e0b"/>
+      <stop offset="100%" stop-color="#d97706"/>
+    </linearGradient>
+
+    <linearGradient id="brassGradient" x1="0%" y1="0%" x2="100%" y2="0%">
+      <stop offset="0%" stop-color="#fbbf24"/>
+      <stop offset="30%" stop-color="#fef08a"/>
+      <stop offset="70%" stop-color="#f59e0b"/>
+      <stop offset="100%" stop-color="#b45309"/>
+    </linearGradient>
+
+    <linearGradient id="titleGrad" x1="0%" y1="0%" x2="0%" y2="100%">
+      <stop offset="0%" stop-color="#38bdf8"/>
+      <stop offset="45%" stop-color="#facc15"/>
+      <stop offset="100%" stop-color="#fb7185"/>
+    </linearGradient>
+
+    <linearGradient id="flameGrad" x1="0%" y1="0%" x2="0%" y2="100%">
+      <stop offset="0%" stop-color="#ffffff"/>
+      <stop offset="25%" stop-color="#fef08a"/>
+      <stop offset="65%" stop-color="#f97316"/>
+      <stop offset="100%" stop-color="#dc2626"/>
+    </linearGradient>
+
+    <radialGradient id="aura" cx="50%" cy="55%" r="45%">
+      <stop offset="0%" stop-color="#fbbf24" stop-opacity="0.3"/>
+      <stop offset="50%" stop-color="#a855f7" stop-opacity="0.18"/>
+      <stop offset="100%" stop-color="#000000" stop-opacity="0"/>
+    </radialGradient>
+
+    <!-- Star Symbols -->
+    <g id="star">
+      <polygon points="0,-16 4.7,-4.8 16,-4.8 6.8,2.4 10,14 0,7 -10,14 -6.8,2.4 -16,-4.8 -4.7,-4.8" fill="#fde047" stroke="#78350f" stroke-width="1.5"/>
+    </g>
+    <g id="sparkle">
+      <path d="M 0,-14 Q 0,0 14,0 Q 0,0 0,14 Q 0,0 -14,0 Q 0,0 0,-14 Z" fill="#ffffff"/>
+    </g>
+    <g id="bat">
+      <path d="M -15,0 Q -10,-8 0,-2 Q 10,-8 15,0 Q 22,-5 25,5 Q 15,10 10,6 Q 5,12 0,8 Q -5,12 -10,6 Q -15,10 -25,5 Q -22,-5 -15,0 Z" fill="#2e1065"/>
+    </g>
+  </defs>
+
+  <!-- Background Aura -->
+  <circle cx="300" cy="460" r="230" fill="url(#aura)"/>
+
+  <!-- Moon in Sky -->
+  <path d="M 75,90 A 22,22 0 1 0 110,110 A 18,18 0 1 1 75,90 Z" fill="#fef08a" opacity="0.9"/>
+
+  <!-- Starry Background Dots -->
+  <use href="#sparkle" x="140" y="110" transform="scale(0.5) translate(140, 110)"/>
+  <use href="#sparkle" x="460" y="105" transform="scale(0.6) translate(307, 70)"/>
+  <use href="#sparkle" x="90" y="700"/>
+  <use href="#sparkle" x="510" y="690"/>
+  <circle cx="160" cy="180" r="2" fill="#fff" opacity="0.8"/>
+  <circle cx="440" cy="190" r="2.5" fill="#fff" opacity="0.9"/>
+  <circle cx="110" cy="650" r="2" fill="#fff" opacity="0.6"/>
+  <circle cx="490" cy="640" r="2" fill="#fff" opacity="0.7"/>
+
+  <!-- Outer Card Frame -->
+  <rect x="10" y="10" width="580" height="780" rx="28" fill="none" stroke="url(#frameBorder)" stroke-width="14"/>
+  <rect x="20" y="20" width="560" height="760" rx="20" fill="none" stroke="#f59e0b" stroke-width="4" filter="url(#goldGlow)"/>
+  <rect x="26" y="26" width="548" height="748" rx="16" fill="none" stroke="#6b21a8" stroke-width="2"/>
+
+  <!-- Corner Stars & Bats -->
+  <use href="#star" x="45" y="45"/>
+  <use href="#star" x="555" y="45"/>
+  <use href="#star" x="45" y="755"/>
+  <use href="#star" x="555" y="755"/>
+  <use href="#bat" x="520" y="65"/>
+
+  <!-- Title Text Header -->
+  <g id="titleGroup">
+    <text x="303" y="118" text-anchor="middle" font-size="82" font-weight="900" fill="#090514" font-family="'Malgun Gothic', sans-serif">집무실</text>
+    <text x="300" y="120" text-anchor="middle" font-size="82" font-weight="900" fill="#1e1035" font-family="'Malgun Gothic', sans-serif">집무실</text>
+    <text x="300" y="114" text-anchor="middle" font-size="82" font-weight="900" fill="none" stroke="#ffffff" stroke-width="16" stroke-linejoin="round" font-family="'Malgun Gothic', sans-serif">집무실</text>
+    <text x="300" y="114" text-anchor="middle" font-size="82" font-weight="900" fill="none" stroke="#1e1b4b" stroke-width="6" stroke-linejoin="round" font-family="'Malgun Gothic', sans-serif">집무실</text>
+    <text x="300" y="114" text-anchor="middle" font-size="82" font-weight="900" fill="url(#titleGrad)" font-family="'Malgun Gothic', sans-serif">집무실</text>
+  </g>
+  <use href="#sparkle" x="170" y="90"/>
+  <use href="#sparkle" x="430" y="90"/>
+
+  <g transform="translate(0, 40)">
+    <!-- Bookshelf Wall in Background -->
+    <rect x="80" y="160" width="440" height="260" rx="10" fill="#451a03" stroke="#78350f" stroke-width="6"/>
+    <!-- Shelves -->
+    <line x1="80" y1="240" x2="520" y2="240" stroke="#78350f" stroke-width="6"/>
+    <line x1="80" y1="330" x2="520" y2="330" stroke="#78350f" stroke-width="6"/>
+
+    <!-- Colorful Books on Shelves -->
+    <g transform="translate(100, 175)">
+      <rect x="0" y="0" width="18" height="60" fill="#dc2626"/>
+      <rect x="22" y="0" width="22" height="60" fill="#2563eb"/>
+      <rect x="48" y="0" width="16" height="60" fill="#16a34a"/>
+      <rect x="68" y="0" width="25" height="60" fill="#d97706"/>
+      <rect x="97" y="0" width="20" height="60" fill="#9333ea"/>
+      <rect x="220" y="0" width="18" height="60" fill="#dc2626"/>
+      <rect x="242" y="0" width="22" height="60" fill="#2563eb"/>
+      <rect x="268" y="0" width="26" height="60" fill="#d97706"/>
+    </g>
+    <g transform="translate(100, 260)">
+      <rect x="0" y="0" width="22" height="65" fill="#2563eb"/>
+      <rect x="26" y="0" width="18" height="65" fill="#dc2626"/>
+      <rect x="48" y="0" width="28" height="65" fill="#16a34a"/>
+      <rect x="220" y="0" width="20" height="65" fill="#9333ea"/>
+      <rect x="244" y="0" width="25" height="65" fill="#d97706"/>
+    </g>
+
+    <!-- Executive Wooden Desk -->
+    <rect x="70" y="440" width="460" height="40" fill="#92400e" stroke="#451a03" stroke-width="5"/>
+    <rect x="90" y="480" width="420" height="160" fill="#78350f" stroke="#451a03" stroke-width="5"/>
+    <!-- Desk Drawers -->
+    <rect x="110" y="500" width="120" height="120" rx="4" fill="#b45309" stroke="#451a03" stroke-width="3"/>
+    <rect x="370" y="500" width="120" height="120" rx="4" fill="#b45309" stroke="#451a03" stroke-width="3"/>
+    <circle cx="170" cy="560" r="6" fill="#fbbf24"/>
+    <circle cx="430" cy="560" r="6" fill="#fbbf24"/>
+
+    <!-- Green Banker Lamp on Left Desk -->
+    <g transform="translate(140, 340)">
+      <circle cx="20" cy="30" r="40" fill="#22c55e" opacity="0.4" filter="url(#flameGlow)"/>
+      <rect x="0" y="90" width="40" height="12" rx="4" fill="#fbbf24" stroke="#d97706" stroke-width="2"/>
+      <path d="M 20,90 Q 30,50 20,30" fill="none" stroke="#fbbf24" stroke-width="6"/>
+      <!-- Green Glass Shade -->
+      <path d="M -5,30 Q 20,10 45,30 Z" fill="#15803d" stroke="#166534" stroke-width="3"/>
+    </g>
+
+    <!-- Open Book & Inkwell (Center Desk) -->
+    <g transform="translate(260, 420)">
+      <!-- Open Book Pages -->
+      <path d="M -40,15 Q 0,5 40,15 L 35,-15 Q 0,-25 -35,-15 Z" fill="#fffbeb" stroke="#78350f" stroke-width="2"/>
+      <path d="M -40,15 Q 0,25 40,15 L 35,-15 Q 0,-5 -35,-15 Z" fill="#fef3c7" stroke="#78350f" stroke-width="2"/>
+      <line x1="0" y1="-20" x2="0" y2="20" stroke="#78350f" stroke-width="2"/>
+      <!-- Inkwell & Feather Quill -->
+      <rect x="50" y="-5" width="20" height="20" rx="4" fill="#1e293b"/>
+      <path d="M 60,-5 Q 85,-40 95,-70" fill="none" stroke="#f8fafc" stroke-width="4" stroke-linecap="round"/>
+    </g>
+
+    <!-- World Globe on Right Desk -->
+    <g transform="translate(420, 370)">
+      <circle cx="20" cy="20" r="28" fill="#0284c7" stroke="#0369a1" stroke-width="3"/>
+      <!-- Continents -->
+      <path d="M 5,15 Q 20,5 30,18 Q 15,30 5,15 Z" fill="#22c55e"/>
+      <path d="M 15,30 Q 30,25 35,35 Z" fill="#22c55e"/>
+      <!-- Stand Arc -->
+      <path d="M -5,20 C -5,-15 45,-15 45,20 C 45,45 -5,45 -5,20" fill="none" stroke="#fbbf24" stroke-width="4"/>
+      <rect x="12" y="52" width="16" height="18" fill="#fbbf24"/>
+    </g>
+
+    <use href="#sparkle" x="160" y="340" transform="scale(1.1)"/>
+    <use href="#sparkle" x="300" y="390"/>
+  </g>
+
+</svg>
+</div>
+</body>
+</html>

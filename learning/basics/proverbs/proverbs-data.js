@@ -105,8 +105,25 @@ window.PROVERB_BANKS = {
   ]
 };
 
+const PROVERB_ILLUSTRATIONS = {
+  "돌다리도 두들겨 보고 건너라": "assets/illustrations/doldari.jpg",
+  "소 잃고 외양간 고친다": "assets/illustrations/soilko.jpg",
+  "원숭이도 나무에서 떨어진다": "assets/illustrations/wonsungi.jpg",
+  "백지장도 맞들면 낫다": "assets/illustrations/baekji.jpg",
+  "Look before you leap.": "assets/illustrations/doldari.jpg",
+  "Many hands make light work.": "assets/illustrations/baekji.jpg"
+};
+
 for (const language of Object.keys(window.PROVERB_BANKS)) {
   window.PROVERB_BANKS[language] = window.PROVERB_BANKS[language].map(
-    ([proverb, meaning, example, question, literal]) => ({ proverb, meaning, example, question, literal })
+    ([proverb, meaning, example, question, literal]) => ({
+      proverb,
+      meaning,
+      example,
+      question,
+      literal,
+      image: PROVERB_ILLUSTRATIONS[proverb] || null
+    })
   );
 }
+

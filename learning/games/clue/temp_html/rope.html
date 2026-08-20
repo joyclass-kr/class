@@ -1,0 +1,210 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="utf-8">
+<style>
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  body {
+    width: 600px;
+    height: 800px;
+    background: #0b071e;
+    overflow: hidden;
+    font-family: 'Malgun Gothic', '맑은 고딕', 'Apple SD Gothic Neo', sans-serif;
+  }
+  .card {
+    width: 600px;
+    height: 800px;
+    position: relative;
+    background: radial-gradient(ellipse at 50% 35%, #3a226b 0%, #1a1038 65%, #0d0722 100%);
+  }
+</style>
+</head>
+<body>
+<div class="card">
+<svg width="600" height="800" viewBox="0 0 600 800" xmlns="http://www.w3.org/2000/svg">
+  <defs>
+    <!-- Card outer border glow -->
+    <filter id="goldGlow" x="-20%" y="-20%" width="140%" height="140%">
+      <feGaussianBlur stdDeviation="3" result="blur" />
+      <feComposite in="SourceGraphic" in2="blur" operator="over" />
+    </filter>
+    <filter id="glow" x="-40%" y="-40%" width="180%" height="180%">
+      <feGaussianBlur stdDeviation="6" result="blur1" />
+      <feMerge>
+        <feMergeNode in="blur1" />
+        <feMergeNode in="SourceGraphic" />
+      </feMerge>
+    </filter>
+    <filter id="flameGlow" x="-50%" y="-50%" width="200%" height="200%">
+      <feGaussianBlur stdDeviation="8" result="blur1" />
+      <feGaussianBlur stdDeviation="15" result="blur2" />
+      <feMerge>
+        <feMergeNode in="blur2" />
+        <feMergeNode in="blur1" />
+        <feMergeNode in="SourceGraphic" />
+      </feMerge>
+    </filter>
+
+    <!-- Gradients -->
+    <linearGradient id="frameBorder" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#7e3af2"/>
+      <stop offset="50%" stop-color="#3b1578"/>
+      <stop offset="100%" stop-color="#1e0a45"/>
+    </linearGradient>
+
+    <linearGradient id="goldGradient" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#ffe875"/>
+      <stop offset="50%" stop-color="#f59e0b"/>
+      <stop offset="100%" stop-color="#d97706"/>
+    </linearGradient>
+
+    <linearGradient id="brassGradient" x1="0%" y1="0%" x2="100%" y2="0%">
+      <stop offset="0%" stop-color="#fbbf24"/>
+      <stop offset="30%" stop-color="#fef08a"/>
+      <stop offset="70%" stop-color="#f59e0b"/>
+      <stop offset="100%" stop-color="#b45309"/>
+    </linearGradient>
+
+    <linearGradient id="titleGrad" x1="0%" y1="0%" x2="0%" y2="100%">
+      <stop offset="0%" stop-color="#38bdf8"/>
+      <stop offset="45%" stop-color="#facc15"/>
+      <stop offset="100%" stop-color="#fb7185"/>
+    </linearGradient>
+
+    <linearGradient id="flameGrad" x1="0%" y1="0%" x2="0%" y2="100%">
+      <stop offset="0%" stop-color="#ffffff"/>
+      <stop offset="25%" stop-color="#fef08a"/>
+      <stop offset="65%" stop-color="#f97316"/>
+      <stop offset="100%" stop-color="#dc2626"/>
+    </linearGradient>
+
+    <radialGradient id="aura" cx="50%" cy="55%" r="45%">
+      <stop offset="0%" stop-color="#fbbf24" stop-opacity="0.3"/>
+      <stop offset="50%" stop-color="#a855f7" stop-opacity="0.18"/>
+      <stop offset="100%" stop-color="#000000" stop-opacity="0"/>
+    </radialGradient>
+
+    <!-- Star Symbols -->
+    <g id="star">
+      <polygon points="0,-16 4.7,-4.8 16,-4.8 6.8,2.4 10,14 0,7 -10,14 -6.8,2.4 -16,-4.8 -4.7,-4.8" fill="#fde047" stroke="#78350f" stroke-width="1.5"/>
+    </g>
+    <g id="sparkle">
+      <path d="M 0,-14 Q 0,0 14,0 Q 0,0 0,14 Q 0,0 -14,0 Q 0,0 0,-14 Z" fill="#ffffff"/>
+    </g>
+    <g id="bat">
+      <path d="M -15,0 Q -10,-8 0,-2 Q 10,-8 15,0 Q 22,-5 25,5 Q 15,10 10,6 Q 5,12 0,8 Q -5,12 -10,6 Q -15,10 -25,5 Q -22,-5 -15,0 Z" fill="#2e1065"/>
+    </g>
+  </defs>
+
+  <!-- Background Aura -->
+  <circle cx="300" cy="460" r="230" fill="url(#aura)"/>
+
+  <!-- Moon in Sky -->
+  <path d="M 75,90 A 22,22 0 1 0 110,110 A 18,18 0 1 1 75,90 Z" fill="#fef08a" opacity="0.9"/>
+
+  <!-- Starry Background Dots -->
+  <use href="#sparkle" x="140" y="110" transform="scale(0.5) translate(140, 110)"/>
+  <use href="#sparkle" x="460" y="105" transform="scale(0.6) translate(307, 70)"/>
+  <use href="#sparkle" x="90" y="700"/>
+  <use href="#sparkle" x="510" y="690"/>
+  <circle cx="160" cy="180" r="2" fill="#fff" opacity="0.8"/>
+  <circle cx="440" cy="190" r="2.5" fill="#fff" opacity="0.9"/>
+  <circle cx="110" cy="650" r="2" fill="#fff" opacity="0.6"/>
+  <circle cx="490" cy="640" r="2" fill="#fff" opacity="0.7"/>
+
+  <!-- Outer Card Frame -->
+  <rect x="10" y="10" width="580" height="780" rx="28" fill="none" stroke="url(#frameBorder)" stroke-width="14"/>
+  <rect x="20" y="20" width="560" height="760" rx="20" fill="none" stroke="#f59e0b" stroke-width="4" filter="url(#goldGlow)"/>
+  <rect x="26" y="26" width="548" height="748" rx="16" fill="none" stroke="#6b21a8" stroke-width="2"/>
+
+  <!-- Corner Stars & Bats -->
+  <use href="#star" x="45" y="45"/>
+  <use href="#star" x="555" y="45"/>
+  <use href="#star" x="45" y="755"/>
+  <use href="#star" x="555" y="755"/>
+  <use href="#bat" x="520" y="65"/>
+
+  <!-- Title Text Header -->
+  <g id="titleGroup">
+    <text x="303" y="118" text-anchor="middle" font-size="82" font-weight="900" fill="#090514" font-family="'Malgun Gothic', sans-serif">밧줄</text>
+    <text x="300" y="120" text-anchor="middle" font-size="82" font-weight="900" fill="#1e1035" font-family="'Malgun Gothic', sans-serif">밧줄</text>
+    <text x="300" y="114" text-anchor="middle" font-size="82" font-weight="900" fill="none" stroke="#ffffff" stroke-width="16" stroke-linejoin="round" font-family="'Malgun Gothic', sans-serif">밧줄</text>
+    <text x="300" y="114" text-anchor="middle" font-size="82" font-weight="900" fill="none" stroke="#1e1b4b" stroke-width="6" stroke-linejoin="round" font-family="'Malgun Gothic', sans-serif">밧줄</text>
+    <text x="300" y="114" text-anchor="middle" font-size="82" font-weight="900" fill="url(#titleGrad)" font-family="'Malgun Gothic', sans-serif">밧줄</text>
+  </g>
+  <use href="#sparkle" x="170" y="90"/>
+  <use href="#sparkle" x="430" y="90"/>
+
+  <g transform="translate(0, 40)">
+    <!-- Swirling Magic Particles -->
+    <path d="M 120,440 Q 200,240 300,240 Q 400,240 480,440 Q 400,600 300,600 Q 200,600 120,440 Z" fill="none" stroke="#a855f7" stroke-width="3" stroke-dasharray="10 15" opacity="0.6"/>
+    <circle cx="300" cy="420" r="190" fill="#fde047" opacity="0.1" filter="url(#glow)"/>
+
+    <!-- Coiled Rope Outer Loops -->
+    <!-- Loop 1 (Back) -->
+    <path d="M 160,400 Q 140,280 300,280 Q 460,280 440,400 Q 460,540 300,540 Q 140,540 160,400 Z" fill="none" stroke="#78350f" stroke-width="34" stroke-linecap="round"/>
+    <path d="M 160,400 Q 140,280 300,280 Q 460,280 440,400 Q 460,540 300,540 Q 140,540 160,400 Z" fill="none" stroke="#d97706" stroke-width="24" stroke-linecap="round"/>
+    <path d="M 160,400 Q 140,280 300,280 Q 460,280 440,400 Q 460,540 300,540 Q 140,540 160,400 Z" fill="none" stroke="#fef08a" stroke-width="8" stroke-dasharray="14 12" stroke-linecap="round"/>
+
+    <!-- Loop 2 (Front) -->
+    <path d="M 170,440 Q 150,310 300,310 Q 450,310 430,440 Q 450,560 300,560 Q 150,560 170,440 Z" fill="none" stroke="#451a03" stroke-width="30" stroke-linecap="round"/>
+    <path d="M 170,440 Q 150,310 300,310 Q 450,310 430,440 Q 450,560 300,560 Q 150,560 170,440 Z" fill="none" stroke="#b45309" stroke-width="20" stroke-linecap="round"/>
+    <path d="M 170,440 Q 150,310 300,310 Q 450,310 430,440 Q 450,560 300,560 Q 150,560 170,440 Z" fill="none" stroke="#fef08a" stroke-width="6" stroke-dasharray="12 10" stroke-linecap="round"/>
+
+    <!-- Central Knot -->
+    <rect x="230" y="370" width="140" height="110" rx="40" fill="#d97706" stroke="#451a03" stroke-width="8"/>
+    <rect x="240" y="380" width="120" height="90" rx="30" fill="#fbbf24"/>
+    <!-- Knot Strands -->
+    <line x1="260" y1="370" x2="260" y2="480" stroke="#78350f" stroke-width="4"/>
+    <line x1="300" y1="370" x2="300" y2="480" stroke="#78350f" stroke-width="4"/>
+    <line x1="340" y1="370" x2="340" y2="480" stroke="#78350f" stroke-width="4"/>
+
+    <!-- Hanging Rope Tails -->
+    <path d="M 260,470 Q 230,550 210,640" fill="none" stroke="#451a03" stroke-width="26" stroke-linecap="round"/>
+    <path d="M 260,470 Q 230,550 210,640" fill="none" stroke="#d97706" stroke-width="18" stroke-linecap="round"/>
+    <path d="M 260,470 Q 230,550 210,640" fill="none" stroke="#fef08a" stroke-width="5" stroke-dasharray="10 10"/>
+
+    <path d="M 340,470 Q 370,550 390,630" fill="none" stroke="#451a03" stroke-width="26" stroke-linecap="round"/>
+    <path d="M 340,470 Q 370,550 390,630" fill="none" stroke="#d97706" stroke-width="18" stroke-linecap="round"/>
+    <path d="M 340,470 Q 370,550 390,630" fill="none" stroke="#fef08a" stroke-width="5" stroke-dasharray="10 10"/>
+
+    <!-- Frayed Ends -->
+    <g transform="translate(210, 640)">
+      <line x1="0" y1="0" x2="-10" y2="20" stroke="#d97706" stroke-width="5" stroke-linecap="round"/>
+      <line x1="0" y1="0" x2="0" y2="25" stroke="#fbbf24" stroke-width="5" stroke-linecap="round"/>
+      <line x1="0" y1="0" x2="10" y2="18" stroke="#d97706" stroke-width="5" stroke-linecap="round"/>
+    </g>
+    <g transform="translate(390, 630)">
+      <line x1="0" y1="0" x2="-10" y2="18" stroke="#d97706" stroke-width="5" stroke-linecap="round"/>
+      <line x1="0" y1="0" x2="0" y2="25" stroke="#fbbf24" stroke-width="5" stroke-linecap="round"/>
+      <line x1="0" y1="0" x2="10" y2="20" stroke="#d97706" stroke-width="5" stroke-linecap="round"/>
+    </g>
+
+    <!-- KAWAII FACE ON KNOT -->
+    <g id="kawaiiFace" transform="translate(300, 425)">
+      <!-- Left Eye -->
+      <ellipse cx="-24" cy="0" rx="10" ry="12" fill="#18181b"/>
+      <circle cx="-27" cy="-4" r="4" fill="#ffffff"/>
+      <circle cx="-21" cy="3" r="2" fill="#ffffff"/>
+      <!-- Right Eye -->
+      <ellipse cx="24" cy="0" rx="10" ry="12" fill="#18181b"/>
+      <circle cx="21" cy="-4" r="4" fill="#ffffff"/>
+      <circle cx="27" cy="3" r="2" fill="#ffffff"/>
+      <!-- Cheek Blush -->
+      <ellipse cx="-36" cy="8" rx="9" ry="5" fill="#f43f5e" opacity="0.7"/>
+      <ellipse cx="36" cy="8" rx="9" ry="5" fill="#f43f5e" opacity="0.7"/>
+      <!-- Mouth -->
+      <path d="M -9,6 Q 0,16 9,6" fill="#be123c" stroke="#18181b" stroke-width="2.8" stroke-linecap="round"/>
+    </g>
+
+    <!-- Floating Sparkles -->
+    <use href="#sparkle" x="140" y="270" transform="scale(0.9)"/>
+    <use href="#sparkle" x="460" y="280" transform="scale(0.9)"/>
+    <use href="#sparkle" x="120" y="550"/>
+    <use href="#sparkle" x="480" y="540"/>
+  </g>
+
+</svg>
+</div>
+</body>
+</html>

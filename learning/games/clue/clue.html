@@ -56,11 +56,16 @@ h1,h2,h3,p{margin-top:0}
 .turnTimer.warning{color:var(--danger)}
 .turnBanner2{text-align:center;font-weight:850;padding:8px 4px}
 
-.boardWrap{width:min(560px,100%);margin:auto}
+.boardWrap{width:min(900px,100%);margin:auto}
 .roomRect{fill:none;stroke:none;cursor:default;pointer-events:all}
 .roomRect.reachable{stroke:var(--safe);stroke-width:4;cursor:pointer;filter:drop-shadow(0 0 6px #3f9e6cbb)}
 .roomRect.reachable:hover{stroke:#5fd99a}
 .roomRect.current{stroke:var(--accent);stroke-width:4}
+.cellHit{fill:#00000000;stroke:none;cursor:default;pointer-events:all}
+.cellHit.reachable{fill:#3f9e6c40;stroke:var(--safe);stroke-width:2.5;cursor:pointer;filter:drop-shadow(0 0 5px #3f9e6cbb)}
+.cellHit.reachable:hover{fill:#5fd99a55}
+.cellHit.current{stroke:var(--accent);stroke-width:2.5;fill:#d9a44140}
+.cellHit.passage{stroke-dasharray:3 2}
 .token{stroke:#fff;stroke-width:1.5}
 .tokenAvatar{pointer-events:none}
 .reachRing{fill:none;stroke:var(--safe);stroke-width:3;opacity:.9;pointer-events:none;transform-box:fill-box;transform-origin:center;animation:reachPulse 1.2s ease-out infinite}
@@ -237,8 +242,8 @@ h1,h2,h3,p{margin-top:0}
     <h2>저택 추리 규칙</h2>
     <ol>
       <li>저택의 가보를 훔친 도둑(용의자 1명) · 사용한 도구(1개) · 범행 장소(방 1곳) 카드가 각 1장씩 몰래 빠져 뒤집혀 놓입니다. 나머지 18장은 참가자에게 고르게 나눠집니다.</li>
-      <li>자기 차례에는 주사위를 굴려 나온 수만큼 복도를 이동해 인접한 방에 들어가거나, 복도 비밀계단과 붙어있는 방(온실·서재·주방·식당·사무실·당구실)에서는 주사위 없이 비밀계단을 이용할 수 있습니다. 계단은 방이 아니라 복도에 있어서, 어디로 나올지는 무작위로 나머지 다섯 방 중 한 곳입니다. 이동을 포기하고 제자리에 머물 수도 있습니다.</li>
-      <li>방에 들어갔다면(또는 이미 있었다면) "용의자 + 도구"를 추리로 발표할 수 있습니다. 장소는 자신이 있는 방으로 자동 지정됩니다.</li>
+      <li>자기 차례에는 주사위를 굴려 나온 수만큼 복도 타일을 한 칸씩 이동합니다. 이동 가능한 칸과 방은 초록색으로 표시되며, 원하는 곳을 눌러 이동합니다. 복도에는 총 8개의 비밀계단이 있는데(칸에 점선 표시), 그 위에 서면 저택 반대편 맞은편 계단으로 즉시 이동할 수 있습니다. 이동을 포기하고 제자리에 머물 수도 있습니다.</li>
+      <li>방 안에 있을 때만 "용의자 + 도구"를 추리로 발표할 수 있습니다. 장소는 자신이 있는 방으로 자동 지정됩니다. 복도에 멈춰 있으면 추리를 발표할 수 없습니다.</li>
       <li>다음 차례부터 순서대로 다른 참가자들에게 그 용의자·도구·장소 카드 중 한 장이라도 있는지 묻습니다. 가진 사람이 나오면 그 카드 한 장을 추리한 사람에게만 몰래 보여줍니다. 아무도 없으면 공개적으로 "반박 없음"이 됩니다.</li>
       <li>확신이 서면 거실로 돌아와 "고발"로 도둑·도구·장소를 모두 지목할 수 있습니다(고발은 거실에 있을 때만 가능). 정답이면 즉시 승리! 틀리면 그 사람은 더 이상 이동·추리·고발을 할 수 없지만, 다른 사람의 추리를 반박하는 데는 계속 참여합니다.</li>
       <li>모두가 틀린 고발로 탈락하면 미제 사건으로 종료됩니다.</li>
@@ -349,18 +354,17 @@ const CARD_FILES=[
 function cardImage(id){return "/learning/games/clue/assets/images/cards/"+CARD_FILES[id]+".webp"}
 const CARDBACK_IMG="/learning/games/clue/assets/images/cards/cardback.webp";
 const ROOM_POS=[[0,0],[0,1],[0,2],[1,0],[1,1],[1,2],[2,0],[2,1],[2,2]];
-const ADJACENCY=[
-  [{to:1,cost:3},{to:3,cost:3}],
-  [{to:0,cost:3},{to:2,cost:3},{to:4,cost:3}],
-  [{to:1,cost:3},{to:5,cost:3}],
-  [{to:0,cost:3},{to:4,cost:3},{to:6,cost:3}],
-  [{to:1,cost:3},{to:3,cost:3},{to:5,cost:3},{to:7,cost:3}],
-  [{to:2,cost:3},{to:4,cost:3},{to:8,cost:3}],
-  [{to:3,cost:3},{to:7,cost:3}],
-  [{to:4,cost:3},{to:6,cost:3},{to:8,cost:3}],
-  [{to:5,cost:3},{to:7,cost:3}]
-];
-const SECRET_PASSAGE_ROOMS=[0,2,3,5,6,8];
+const CELL_COORDS={
+  t0:[20,130],t1:[70,130],t2:[130,130],t3:[190,130],t4:[250,130],t5:[310,130],t6:[360,130],
+  b0:[20,250],b1:[70,250],b2:[130,250],b3:[190,250],b4:[250,250],b5:[310,250],b6:[360,250]
+};
+const CELL_NEIGHBORS={
+  t0:["t1"],t1:["t0","t2"],t2:["t1","t3"],t3:["t2","t4"],t4:["t3","t5"],t5:["t4","t6"],t6:["t5"],
+  b0:["b1"],b1:["b0","b2"],b2:["b1","b3"],b3:["b2","b4"],b4:["b3","b5"],b5:["b4","b6"],b6:["b5"]
+};
+const CELL_ROOMS={t1:[0,3],t3:[1,4],t5:[2,5],b1:[3,6],b3:[4,7],b5:[5,8]};
+const ROOM_CELLS={0:["t1"],1:["t3"],2:["t5"],3:["t1","b1"],4:["t3","b3"],5:["t5","b5"],6:["b1"],7:["b3"],8:["b5"]};
+const SECRET_PASSAGE_PAIRS={t0:"b0",b0:"t0",t2:"b2",b2:"t2",t4:"b4",b4:"t4",t6:"b6",b6:"t6"};
 const SERVER_MESSAGE=Object.freeze({STATE:"CLUE_STATE",REVEAL:"CLUE_REVEAL",ERROR:"CLUE_ERROR"});
 const $=id=>document.getElementById(id);
 
@@ -468,27 +472,40 @@ function buildBoard(){
   for(let i=0;i<9;i+=1){
     const [row,col]=ROOM_POS[i];
     const x=margin+col*(cellSize+gap),y=margin+row*(cellSize+gap);
-    parts.push(`<g data-room="${i}">`);
-    parts.push(`<rect class="roomRect" data-room="${i}" x="${x}" y="${y}" width="${cellSize}" height="${cellSize}" rx="8"/>`);
-    parts.push(`<g class="tokenLayer" data-tokens="${i}"></g>`);
+    parts.push(`<g data-room="${i}" transform="translate(${x},${y})">`);
+    parts.push(`<rect class="roomRect" data-room="${i}" x="0" y="0" width="${cellSize}" height="${cellSize}" rx="8"/>`);
+    parts.push(`<g class="tokenLayer" data-tokens="r${i}"></g>`);
     parts.push(`</g>`);
   }
+  Object.entries(CELL_COORDS).forEach(([cellId,pos])=>{
+    const isPassage=Boolean(SECRET_PASSAGE_PAIRS[cellId]);
+    parts.push(`<g data-cell="${cellId}" transform="translate(${pos[0]},${pos[1]})">`);
+    parts.push(`<circle class="cellHit${isPassage?" passage":""}" data-cell="${cellId}" cx="0" cy="0" r="15"/>`);
+    parts.push(`<g class="tokenLayer" data-tokens="c${cellId}"></g>`);
+    parts.push(`</g>`);
+  });
   svg.innerHTML=`<defs>${defs.join("")}</defs>`+parts.join("");
   svg.addEventListener("click",onBoardClick);
 }
 
 function onBoardClick(event){
-  const target=event.target.closest("[data-room]");
-  if(!target)return;
-  const room=Number(target.getAttribute("data-room"));
+  const roomTarget=event.target.closest("[data-room]");
+  const cellTarget=roomTarget?null:event.target.closest("[data-cell]");
+  if(!roomTarget&&!cellTarget)return;
   if(!gameState||gameState.phase!=="playing")return;
   const snapshot=lobby.snapshot();
   if(gameState.turnPlayerId!==snapshot.myId||gameState.pendingSuggestion)return;
   if(gameState.turnPhase!=="move"||gameState.dice===null||gameState.moved)return;
-  const me=gameState.players.find(p=>p.id===snapshot.myId);
-  const options=ADJACENCY[me.roomIndex].filter(edge=>edge.cost<=gameState.dice).map(edge=>edge.to);
-  if(!options.includes(room))return;
-  sendAction("MOVE",{room});
+  const reachable=gameState.reachable||{rooms:[],cells:[]};
+  if(roomTarget){
+    const room=Number(roomTarget.getAttribute("data-room"));
+    if(!reachable.rooms.includes(room))return;
+    sendAction("MOVE",{target:"r"+room});
+  }else{
+    const cellId=cellTarget.getAttribute("data-cell");
+    if(!reachable.cells.includes(cellId))return;
+    sendAction("MOVE",{target:cellId});
+  }
 }
 
 function playerName(id){
@@ -498,30 +515,33 @@ function playerName(id){
 
 function renderTokens(){
   document.querySelectorAll(".tokenLayer").forEach(layer=>layer.replaceChildren());
-  document.querySelectorAll(".roomRect").forEach(rect=>{
-    rect.classList.remove("reachable","current");
-  });
+  document.querySelectorAll(".roomRect").forEach(rect=>rect.classList.remove("reachable","current"));
+  document.querySelectorAll(".cellHit").forEach(hit=>hit.classList.remove("reachable","current"));
   if(!gameState)return;
   const snapshot=lobby.snapshot();
   const me=gameState.players.find(p=>p.id===snapshot.myId);
-  const byRoom={};
+  const byPos={};
   gameState.players.forEach(player=>{
-    if(player.roomIndex<0)return;
-    (byRoom[player.roomIndex]=byRoom[player.roomIndex]||[]).push(player);
+    const key=player.roomIndex>=0?("r"+player.roomIndex):(player.cellId?("c"+player.cellId):null);
+    if(!key)return;
+    (byPos[key]=byPos[key]||[]).push(player);
   });
-  const cellSize=100,gap=20,margin=20;
+  const cellSize=100;
   const svgNS="http://www.w3.org/2000/svg";
-  Object.entries(byRoom).forEach(([room,players])=>{
-    const layer=document.querySelector(`.tokenLayer[data-tokens="${room}"]`);
+  Object.entries(byPos).forEach(([key,players])=>{
+    const layer=document.querySelector(`.tokenLayer[data-tokens="${key}"]`);
     if(!layer)return;
+    const isRoom=key.startsWith("r");
     players.forEach((player,index)=>{
-      const cx=28+(index%3)*22,cy=36+Math.floor(index/3)*22;
+      const cx=isRoom?28+(index%3)*22:(index%3-1)*11;
+      const cy=isRoom?36+Math.floor(index/3)*22:Math.floor(index/3)*13-4;
+      const size=isRoom?16:12;
       const color=playerColor(player);
       const ring=document.createElementNS(svgNS,"circle");
       ring.setAttribute("class","token");
       ring.setAttribute("cx",cx);
       ring.setAttribute("cy",cy);
-      ring.setAttribute("r",9);
+      ring.setAttribute("r",isRoom?9:7);
       ring.setAttribute("fill",player.avatarUrl?"#12141c":color);
       ring.setAttribute("stroke",color);
       layer.appendChild(ring);
@@ -529,21 +549,21 @@ function renderTokens(){
         const img=document.createElementNS(svgNS,"image");
         img.setAttribute("class","tokenAvatar");
         img.setAttribute("href",player.avatarUrl);
-        img.setAttribute("x",cx-8);
-        img.setAttribute("y",cy-8);
-        img.setAttribute("width",16);
-        img.setAttribute("height",16);
+        img.setAttribute("x",cx-size/2);
+        img.setAttribute("y",cy-size/2);
+        img.setAttribute("width",size);
+        img.setAttribute("height",size);
         img.setAttribute("clip-path","url(#tokenClip)");
         layer.appendChild(img);
       }
     });
   });
   if(gameState.phase==="playing"&&me&&gameState.turnPlayerId===snapshot.myId&&!gameState.pendingSuggestion&&gameState.turnPhase==="move"&&gameState.dice!==null&&!gameState.moved){
-    const options=ADJACENCY[me.roomIndex].filter(edge=>edge.cost<=gameState.dice).map(edge=>edge.to);
-    options.forEach(room=>{
+    const reachable=gameState.reachable||{rooms:[],cells:[]};
+    reachable.rooms.forEach(room=>{
       const rect=document.querySelector(`.roomRect[data-room="${room}"]`);
       if(rect)rect.classList.add("reachable");
-      const layer=document.querySelector(`.tokenLayer[data-tokens="${room}"]`);
+      const layer=document.querySelector(`.tokenLayer[data-tokens="r${room}"]`);
       if(!layer)return;
       const cx=cellSize/2,cy=cellSize/2;
       const ring=document.createElementNS(svgNS,"circle");
@@ -555,10 +575,29 @@ function renderTokens(){
       layer.appendChild(ring);
       layer.appendChild(dot);
     });
+    reachable.cells.forEach(cellId=>{
+      const hit=document.querySelector(`.cellHit[data-cell="${cellId}"]`);
+      if(hit)hit.classList.add("reachable");
+      const layer=document.querySelector(`.tokenLayer[data-tokens="c${cellId}"]`);
+      if(!layer)return;
+      const ring=document.createElementNS(svgNS,"circle");
+      ring.setAttribute("class","reachRing");
+      ring.setAttribute("cx",0);ring.setAttribute("cy",0);ring.setAttribute("r",10);
+      const dot=document.createElementNS(svgNS,"circle");
+      dot.setAttribute("class","reachDot");
+      dot.setAttribute("cx",0);dot.setAttribute("cy",0);dot.setAttribute("r",6);
+      layer.appendChild(ring);
+      layer.appendChild(dot);
+    });
   }
-  if(me&&me.roomIndex>=0){
-    const rect=document.querySelector(`.roomRect[data-room="${me.roomIndex}"]`);
-    if(rect)rect.classList.add("current");
+  if(me){
+    if(me.roomIndex>=0){
+      const rect=document.querySelector(`.roomRect[data-room="${me.roomIndex}"]`);
+      if(rect)rect.classList.add("current");
+    }else if(me.cellId){
+      const hit=document.querySelector(`.cellHit[data-cell="${me.cellId}"]`);
+      if(hit)hit.classList.add("current");
+    }
   }
 }
 
@@ -575,18 +614,11 @@ function renderPlayerList(){
       :`<span class="suspectDot" style="background:${color}"></span>`;
     return `<div class="playerRow${isTurn?" active":""}${!player.active?" eliminated":""}">
       ${avatar}
-      <span class="playerMeta2"><strong>${player.name}${isMe?" · 나":""}</strong><small>${player.roomIndex>=0?ROOMS[player.roomIndex]:"-"}</small><span class="miniBackRow">${backs}</span></span>
+      <span class="playerMeta2"><strong>${player.name}${isMe?" · 나":""}</strong><small>${player.roomIndex>=0?ROOMS[player.roomIndex]:(player.cellId?"복도":"-")}</small><span class="miniBackRow">${backs}</span></span>
       ${!player.active?'<span class="playerTag out">고발 실패</span>':""}
     </div>`;
   }).join("");
   $("playerList").innerHTML=rows;
-}
-
-function reachableOptions(){
-  const snapshot=lobby.snapshot();
-  const me=gameState.players.find(p=>p.id===snapshot.myId);
-  if(!me||gameState.dice===null)return [];
-  return ADJACENCY[me.roomIndex].filter(edge=>edge.cost<=gameState.dice).map(edge=>edge.to);
 }
 
 function renderActionBar(){
@@ -597,19 +629,25 @@ function renderActionBar(){
   const isMyTurn=gameState.turnPlayerId===snapshot.myId;
   if(gameState.pendingSuggestion||!isMyTurn)return;
   const me=gameState.players.find(p=>p.id===snapshot.myId);
+  const hasPassage=Boolean(me.cellId&&SECRET_PASSAGE_PAIRS[me.cellId]);
   const buttons=[];
   if(gameState.turnPhase==="move"){
     if(gameState.dice===null){
       buttons.push(`<button id="rollBtn" class="primary" type="button">주사위 굴리기</button>`);
-      if(SECRET_PASSAGE_ROOMS.includes(me.roomIndex)){
+      if(hasPassage){
         buttons.push(`<button id="passageBtn" class="secondary" type="button">비밀통로 이용</button>`);
       }
     }else if(!gameState.moved){
-      buttons.push(`<button id="stayBtn" class="secondary" type="button">이 방에 머물기</button>`);
+      const label=me.roomIndex>=0?`${ROOMS[me.roomIndex]}에 머물기`:"복도에 머물기";
+      buttons.push(`<button id="stayBtn" class="secondary" type="button">${label}</button>`);
     }
   }else if(gameState.turnPhase==="act"){
+    if(hasPassage){
+      buttons.push(`<button id="passageBtn" class="secondary" type="button">비밀통로 이용</button>`);
+    }
     if(!gameState.suggestionUsed){
-      buttons.push(`<button id="suggestBtn" class="primary" type="button">추리 발표</button>`);
+      const inRoom=me.roomIndex>=0;
+      buttons.push(`<button id="suggestBtn" class="primary" type="button"${inRoom?"":" disabled"}>추리 발표${inRoom?"":" (방 안에서만)"}</button>`);
     }
     const inLivingRoom=me.roomIndex===CENTER_ROOM;
     buttons.push(`<button id="accuseBtn" class="danger" type="button"${inLivingRoom?"":" disabled"}>최종 고발${inLivingRoom?"":" (거실에서만)"}</button>`);

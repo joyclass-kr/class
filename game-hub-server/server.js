@@ -2731,7 +2731,7 @@ wss.on("connection", socket => {
       } else if (action === "ROLL") {
         result = Clue.roll(game, playerId);
       } else if (action === "MOVE") {
-        result = Clue.move(game, playerId, Number(message.room));
+        result = Clue.move(game, playerId, cleanToken(message.target, 8));
       } else if (action === "STAY") {
         result = Clue.stay(game, playerId);
       } else if (action === "SECRET_PASSAGE") {

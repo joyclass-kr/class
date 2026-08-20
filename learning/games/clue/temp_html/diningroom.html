@@ -1,0 +1,211 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="utf-8">
+<style>
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  body {
+    width: 600px;
+    height: 800px;
+    background: #0b071e;
+    overflow: hidden;
+    font-family: 'Malgun Gothic', '맑은 고딕', 'Apple SD Gothic Neo', sans-serif;
+  }
+  .card {
+    width: 600px;
+    height: 800px;
+    position: relative;
+    background: radial-gradient(ellipse at 50% 35%, #3a226b 0%, #1a1038 65%, #0d0722 100%);
+  }
+</style>
+</head>
+<body>
+<div class="card">
+<svg width="600" height="800" viewBox="0 0 600 800" xmlns="http://www.w3.org/2000/svg">
+  <defs>
+    <!-- Card outer border glow -->
+    <filter id="goldGlow" x="-20%" y="-20%" width="140%" height="140%">
+      <feGaussianBlur stdDeviation="3" result="blur" />
+      <feComposite in="SourceGraphic" in2="blur" operator="over" />
+    </filter>
+    <filter id="glow" x="-40%" y="-40%" width="180%" height="180%">
+      <feGaussianBlur stdDeviation="6" result="blur1" />
+      <feMerge>
+        <feMergeNode in="blur1" />
+        <feMergeNode in="SourceGraphic" />
+      </feMerge>
+    </filter>
+    <filter id="flameGlow" x="-50%" y="-50%" width="200%" height="200%">
+      <feGaussianBlur stdDeviation="8" result="blur1" />
+      <feGaussianBlur stdDeviation="15" result="blur2" />
+      <feMerge>
+        <feMergeNode in="blur2" />
+        <feMergeNode in="blur1" />
+        <feMergeNode in="SourceGraphic" />
+      </feMerge>
+    </filter>
+
+    <!-- Gradients -->
+    <linearGradient id="frameBorder" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#7e3af2"/>
+      <stop offset="50%" stop-color="#3b1578"/>
+      <stop offset="100%" stop-color="#1e0a45"/>
+    </linearGradient>
+
+    <linearGradient id="goldGradient" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#ffe875"/>
+      <stop offset="50%" stop-color="#f59e0b"/>
+      <stop offset="100%" stop-color="#d97706"/>
+    </linearGradient>
+
+    <linearGradient id="brassGradient" x1="0%" y1="0%" x2="100%" y2="0%">
+      <stop offset="0%" stop-color="#fbbf24"/>
+      <stop offset="30%" stop-color="#fef08a"/>
+      <stop offset="70%" stop-color="#f59e0b"/>
+      <stop offset="100%" stop-color="#b45309"/>
+    </linearGradient>
+
+    <linearGradient id="titleGrad" x1="0%" y1="0%" x2="0%" y2="100%">
+      <stop offset="0%" stop-color="#38bdf8"/>
+      <stop offset="45%" stop-color="#facc15"/>
+      <stop offset="100%" stop-color="#fb7185"/>
+    </linearGradient>
+
+    <linearGradient id="flameGrad" x1="0%" y1="0%" x2="0%" y2="100%">
+      <stop offset="0%" stop-color="#ffffff"/>
+      <stop offset="25%" stop-color="#fef08a"/>
+      <stop offset="65%" stop-color="#f97316"/>
+      <stop offset="100%" stop-color="#dc2626"/>
+    </linearGradient>
+
+    <radialGradient id="aura" cx="50%" cy="55%" r="45%">
+      <stop offset="0%" stop-color="#fbbf24" stop-opacity="0.3"/>
+      <stop offset="50%" stop-color="#a855f7" stop-opacity="0.18"/>
+      <stop offset="100%" stop-color="#000000" stop-opacity="0"/>
+    </radialGradient>
+
+    <!-- Star Symbols -->
+    <g id="star">
+      <polygon points="0,-16 4.7,-4.8 16,-4.8 6.8,2.4 10,14 0,7 -10,14 -6.8,2.4 -16,-4.8 -4.7,-4.8" fill="#fde047" stroke="#78350f" stroke-width="1.5"/>
+    </g>
+    <g id="sparkle">
+      <path d="M 0,-14 Q 0,0 14,0 Q 0,0 0,14 Q 0,0 -14,0 Q 0,0 0,-14 Z" fill="#ffffff"/>
+    </g>
+    <g id="bat">
+      <path d="M -15,0 Q -10,-8 0,-2 Q 10,-8 15,0 Q 22,-5 25,5 Q 15,10 10,6 Q 5,12 0,8 Q -5,12 -10,6 Q -15,10 -25,5 Q -22,-5 -15,0 Z" fill="#2e1065"/>
+    </g>
+  </defs>
+
+  <!-- Background Aura -->
+  <circle cx="300" cy="460" r="230" fill="url(#aura)"/>
+
+  <!-- Moon in Sky -->
+  <path d="M 75,90 A 22,22 0 1 0 110,110 A 18,18 0 1 1 75,90 Z" fill="#fef08a" opacity="0.9"/>
+
+  <!-- Starry Background Dots -->
+  <use href="#sparkle" x="140" y="110" transform="scale(0.5) translate(140, 110)"/>
+  <use href="#sparkle" x="460" y="105" transform="scale(0.6) translate(307, 70)"/>
+  <use href="#sparkle" x="90" y="700"/>
+  <use href="#sparkle" x="510" y="690"/>
+  <circle cx="160" cy="180" r="2" fill="#fff" opacity="0.8"/>
+  <circle cx="440" cy="190" r="2.5" fill="#fff" opacity="0.9"/>
+  <circle cx="110" cy="650" r="2" fill="#fff" opacity="0.6"/>
+  <circle cx="490" cy="640" r="2" fill="#fff" opacity="0.7"/>
+
+  <!-- Outer Card Frame -->
+  <rect x="10" y="10" width="580" height="780" rx="28" fill="none" stroke="url(#frameBorder)" stroke-width="14"/>
+  <rect x="20" y="20" width="560" height="760" rx="20" fill="none" stroke="#f59e0b" stroke-width="4" filter="url(#goldGlow)"/>
+  <rect x="26" y="26" width="548" height="748" rx="16" fill="none" stroke="#6b21a8" stroke-width="2"/>
+
+  <!-- Corner Stars & Bats -->
+  <use href="#star" x="45" y="45"/>
+  <use href="#star" x="555" y="45"/>
+  <use href="#star" x="45" y="755"/>
+  <use href="#star" x="555" y="755"/>
+  <use href="#bat" x="520" y="65"/>
+
+  <!-- Title Text Header -->
+  <g id="titleGroup">
+    <text x="303" y="118" text-anchor="middle" font-size="82" font-weight="900" fill="#090514" font-family="'Malgun Gothic', sans-serif">식당</text>
+    <text x="300" y="120" text-anchor="middle" font-size="82" font-weight="900" fill="#1e1035" font-family="'Malgun Gothic', sans-serif">식당</text>
+    <text x="300" y="114" text-anchor="middle" font-size="82" font-weight="900" fill="none" stroke="#ffffff" stroke-width="16" stroke-linejoin="round" font-family="'Malgun Gothic', sans-serif">식당</text>
+    <text x="300" y="114" text-anchor="middle" font-size="82" font-weight="900" fill="none" stroke="#1e1b4b" stroke-width="6" stroke-linejoin="round" font-family="'Malgun Gothic', sans-serif">식당</text>
+    <text x="300" y="114" text-anchor="middle" font-size="82" font-weight="900" fill="url(#titleGrad)" font-family="'Malgun Gothic', sans-serif">식당</text>
+  </g>
+  <use href="#sparkle" x="170" y="90"/>
+  <use href="#sparkle" x="430" y="90"/>
+
+  <g transform="translate(0, 40)">
+    <!-- Chandelier Overhead -->
+    <g transform="translate(300, 160)">
+      <line x1="0" y1="0" x2="0" y2="40" stroke="#fbbf24" stroke-width="4"/>
+      <path d="M -90,70 Q 0,110 90,70" fill="none" stroke="#fbbf24" stroke-width="6"/>
+      <!-- Candles on Chandelier -->
+      <g transform="translate(-80, 40)">
+        <circle cx="0" cy="-10" r="18" fill="#fde047" opacity="0.5" filter="url(#flameGlow)"/>
+        <rect x="-6" y="0" width="12" height="30" fill="#fff"/>
+        <path d="M 0,-15 C -8,-5 0,0 0,0 C 0,0 8,-5 0,-15 Z" fill="#f97316"/>
+      </g>
+      <g transform="translate(0, 50)">
+        <circle cx="0" cy="-10" r="18" fill="#fde047" opacity="0.5" filter="url(#flameGlow)"/>
+        <rect x="-6" y="0" width="12" height="30" fill="#fff"/>
+        <path d="M 0,-15 C -8,-5 0,0 0,0 C 0,0 8,-5 0,-15 Z" fill="#f97316"/>
+      </g>
+      <g transform="translate(80, 40)">
+        <circle cx="0" cy="-10" r="18" fill="#fde047" opacity="0.5" filter="url(#flameGlow)"/>
+        <rect x="-6" y="0" width="12" height="30" fill="#fff"/>
+        <path d="M 0,-15 C -8,-5 0,0 0,0 C 0,0 8,-5 0,-15 Z" fill="#f97316"/>
+      </g>
+    </g>
+
+    <!-- High Back Chairs -->
+    <!-- Left Chair -->
+    <rect x="90" y="310" width="60" height="180" rx="8" fill="#991b1b" stroke="#451a03" stroke-width="4"/>
+    <rect x="80" y="440" width="80" height="20" rx="4" fill="#b91c1c" stroke="#451a03" stroke-width="3"/>
+    <rect x="90" y="460" width="15" height="150" fill="#451a03"/>
+    <rect x="135" y="460" width="15" height="150" fill="#451a03"/>
+
+    <!-- Right Chair -->
+    <rect x="450" y="310" width="60" height="180" rx="8" fill="#991b1b" stroke="#451a03" stroke-width="4"/>
+    <rect x="440" y="440" width="80" height="20" rx="4" fill="#b91c1c" stroke="#451a03" stroke-width="3"/>
+    <rect x="450" y="460" width="15" height="150" fill="#451a03"/>
+    <rect x="495" y="460" width="15" height="150" fill="#451a03"/>
+
+    <!-- Main Dining Table -->
+    <ellipse cx="300" cy="460" rx="200" ry="40" fill="#b45309" stroke="#451a03" stroke-width="6"/>
+    <!-- Tablecloth -->
+    <ellipse cx="300" cy="455" rx="190" ry="32" fill="#f8fafc" stroke="#cbd5e1" stroke-width="3"/>
+    <path d="M 110,455 C 110,540 490,540 490,455 Z" fill="#f1f5f9" stroke="#cbd5e1" stroke-width="3"/>
+    <line x1="110" y1="455" x2="490" y2="455" stroke="#e2e8f0" stroke-width="4"/>
+
+    <!-- Centerpiece Silver Cloche (Food Cover) -->
+    <ellipse cx="300" cy="445" rx="65" ry="18" fill="#cbd5e1" stroke="#475569" stroke-width="3"/>
+    <path d="M 235,445 C 235,370 365,370 365,445 Z" fill="#e2e8f0" stroke="#475569" stroke-width="4"/>
+    <!-- Cloche Handle -->
+    <circle cx="300" cy="365" r="10" fill="#fbbf24" stroke="#d97706" stroke-width="2"/>
+
+    <!-- Wine Glasses / Goblets -->
+    <g transform="translate(180, 420)">
+      <path d="M -10,-20 L 10,-20 L 6,0 L -6,0 Z" fill="#f43f5e" opacity="0.8"/>
+      <path d="M -12,-25 L 12,-25 L 8,5 L -8,5 Z" fill="none" stroke="#fff" stroke-width="2"/>
+      <line x1="0" y1="5" x2="0" y2="20" stroke="#fff" stroke-width="2"/>
+      <line x1="-8" y1="20" x2="8" y2="20" stroke="#fff" stroke-width="2"/>
+    </g>
+
+    <g transform="translate(420, 420)">
+      <path d="M -10,-20 L 10,-20 L 6,0 L -6,0 Z" fill="#f43f5e" opacity="0.8"/>
+      <path d="M -12,-25 L 12,-25 L 8,5 L -8,5 Z" fill="none" stroke="#fff" stroke-width="2"/>
+      <line x1="0" y1="5" x2="0" y2="20" stroke="#fff" stroke-width="2"/>
+      <line x1="-8" y1="20" x2="8" y2="20" stroke="#fff" stroke-width="2"/>
+    </g>
+
+    <!-- Sparkles on Silverware -->
+    <use href="#sparkle" x="300" y="340" transform="scale(1.1)"/>
+    <use href="#sparkle" x="220" y="420"/>
+    <use href="#sparkle" x="380" y="420"/>
+  </g>
+
+</svg>
+</div>
+</body>
+</html>
