@@ -42,19 +42,27 @@ h1,h2,h3,p{margin-top:0}
 .modeBtn.active small{color:#4a2408}
 .modeBtn:disabled{cursor:not-allowed;opacity:.55}
 
+.playLayout{display:grid;grid-template-columns:1fr 230px;gap:16px;align-items:start}
+.playMain{min-width:0}
 .boards{display:grid;grid-template-columns:1fr 1fr;gap:14px}
+@media(max-width:900px){.playLayout{grid-template-columns:1fr}}
 @media(max-width:640px){.boards{grid-template-columns:1fr}}
 .cardWrap{text-align:center}
-.cardLabel{margin-bottom:8px;font-weight:900;letter-spacing:.08em;color:#c9bfe0;font-size:12px}
-.dobbleCard{position:relative;width:100%;aspect-ratio:1/1;margin:auto;border-radius:50%;background:radial-gradient(circle,#2f2748,#1a1528);border:3px solid var(--panel-edge);overflow:hidden}
-.symbol{position:absolute;width:29%;aspect-ratio:1/1;transform:translate(-50%,-50%);filter:drop-shadow(0 2px 3px #00000080)}
+.cardLabel{margin-bottom:8px;font-weight:900;letter-spacing:.08em;font-size:12px}
+#centerLabel{color:#a89bdc}
+#myLabel{color:#f0b088}
+.dobbleCard{position:relative;width:100%;aspect-ratio:1/1;margin:auto;border-radius:50%;overflow:hidden;box-shadow:inset 0 0 0 7px #00000026,inset 0 0 36px #00000059}
+#centerCard{background:radial-gradient(circle at 32% 28%,#5445a0,#2c2352 52%,#150f26 100%);border:3px solid #8879c9}
+#myCard{background:radial-gradient(circle at 32% 28%,#c97a3f,#5c3018 52%,#241209 100%);border:3px solid var(--accent)}
+.symbol{position:absolute;width:29%;aspect-ratio:1/1;transform:translate(-50%,-50%) rotate(var(--rotate,0deg));filter:drop-shadow(0 2px 3px #00000080)}
 .symbol img{width:100%;height:100%;object-fit:contain;display:block}
 .symbol.clickable{cursor:pointer}
-.symbol.clickable:hover{transform:translate(-50%,-50%) scale(1.15);z-index:2;filter:drop-shadow(0 0 9px var(--accent)) drop-shadow(0 2px 3px #00000080)}
-.symbol.clickable:active{transform:translate(-50%,-50%) scale(0.98)}
+.symbol.clickable:hover{transform:translate(-50%,-50%) rotate(var(--rotate,0deg)) scale(1.15);z-index:2;filter:drop-shadow(0 0 9px var(--accent)) drop-shadow(0 2px 3px #00000080)}
+.symbol.clickable:active{transform:translate(-50%,-50%) rotate(var(--rotate,0deg)) scale(0.98)}
 
-.standings{margin-top:10px}
-.standingsRow{display:flex;justify-content:space-between;padding:6px 4px;border-bottom:1px solid #34293f;font-size:14px}
+#playArea .standings{padding:14px;border:1px solid var(--panel-edge);border-radius:12px;background:#1b1729}
+#playArea .standings h3{margin:0 0 8px;font-size:13px;letter-spacing:.05em;color:#c9bfe0}
+.standingsRow{display:flex;flex-direction:column;gap:1px;padding:7px 4px;border-bottom:1px solid #34293f;font-size:13.5px}
 .standingsRow.me{color:var(--accent);font-weight:900}
 .standingsRow .rank{color:#e4cf9c;font-weight:900;width:26px}
 
@@ -132,20 +140,24 @@ h1,h2,h3,p{margin-top:0}
     </section>
 
     <section id="playArea" class="panel hidden">
-      <p id="drawPileNote" class="note hidden"></p>
-      <div class="boards">
-        <div class="cardWrap">
-          <div id="centerLabel" class="cardLabel">중앙 카드</div>
-          <div id="centerCard" class="dobbleCard"></div>
+      <div class="playLayout">
+        <div class="playMain">
+          <p id="drawPileNote" class="note hidden"></p>
+          <div class="boards">
+            <div class="cardWrap">
+              <div id="centerLabel" class="cardLabel">중앙 카드</div>
+              <div id="centerCard" class="dobbleCard"></div>
+            </div>
+            <div class="cardWrap">
+              <div id="myLabel" class="cardLabel">내 카드 · 겹치는 그림을 찾아 누르세요</div>
+              <div id="myCard" class="dobbleCard"></div>
+            </div>
+          </div>
         </div>
-        <div class="cardWrap">
-          <div id="myLabel" class="cardLabel">내 카드 · 겹치는 그림을 찾아 누르세요</div>
-          <div id="myCard" class="dobbleCard"></div>
+        <div class="standings">
+          <h3>순위</h3>
+          <div id="standingsList"></div>
         </div>
-      </div>
-      <div class="standings">
-        <h3>순위</h3>
-        <div id="standingsList"></div>
       </div>
     </section>
 
@@ -217,17 +229,27 @@ const NAME_KEY = "classPlayerName";
 const $ = id => document.getElementById(id);
 const savedName = String(localStorage.getItem(NAME_KEY) || "").trim();
 
-// 8개 그림을 카드 안에 원형으로 흩뿌려 실제 카드처럼 보이게 배치한다.
+// 8개 그림을 카드 안에 원형으로, 겹치지 않게 앵커 위치만 고정한다. 실제 크기·회전은
+// 그림마다 (카드가 바뀌기 전까진 안정적으로) 무작위로 정해서 원작처럼 크기로 눈치채지
+// 못하게 한다.
 const SLOT_LAYOUT = [
-  { top: "17%", left: "50%", scale: 0.85 },
-  { top: "29%", left: "76%", scale: 0.75 },
-  { top: "57%", left: "82%", scale: 0.9 },
-  { top: "80%", left: "64%", scale: 0.8 },
-  { top: "80%", left: "36%", scale: 0.95 },
-  { top: "57%", left: "18%", scale: 0.8 },
-  { top: "29%", left: "24%", scale: 0.75 },
-  { top: "50%", left: "50%", scale: 0.6 }
+  { top: "17%", left: "50%" },
+  { top: "29%", left: "76%" },
+  { top: "57%", left: "82%" },
+  { top: "80%", left: "64%" },
+  { top: "80%", left: "36%" },
+  { top: "57%", left: "18%" },
+  { top: "29%", left: "24%" },
+  { top: "50%", left: "50%" }
 ];
+
+// 같은 카드가 다시 그려질 때(브로드캐스트마다) 크기/회전이 흔들리지 않도록, 카드
+// 안에서의 자리(index)까지 섞은 값으로 시드를 잡는 결정적 의사난수.
+function seededUnit(seedText) {
+  let hash = 0;
+  for (let i = 0; i < seedText.length; i += 1) hash = (hash * 31 + seedText.charCodeAt(i)) | 0;
+  return ((hash >>> 0) % 10000) / 10000;
+}
 
 const MODES = [
   { id: "tower", label: "타워", hint: "손패를 먼저 다 내면 승리" },
@@ -279,9 +301,12 @@ function avatarUrl(symbolKey) {
 function renderCard(container, symbols, clickable) {
   container.innerHTML = (symbols || []).map((symbol, index) => {
     const slot = SLOT_LAYOUT[index % SLOT_LAYOUT.length];
-    const size = 29 * slot.scale;
+    const seed = `${symbol}:${index}`;
+    const scale = 0.55 + seededUnit(seed + ":scale") * 0.3; // 0.55~0.85, 슬롯끼리 겹치지 않는 안전 범위
+    const rotate = -35 + seededUnit(seed + ":rotate") * 70; // -35~35도
+    const size = 29 * scale;
     return `<div class="symbol${clickable ? " clickable" : ""}" data-symbol="${esc(symbol)}"
-      style="top:${slot.top};left:${slot.left};width:${size}%">
+      style="top:${slot.top};left:${slot.left};width:${size}%;--rotate:${rotate}deg">
       <img src="${avatarUrl(symbol)}" alt=""></div>`;
   }).join("");
   if (clickable) {
