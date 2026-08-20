@@ -9,6 +9,7 @@ const LoveLetter = require("./loveletter");
 const LastCard = require("./lastcard");
 const Rummikub = require("./rummikub");
 const Blokus = require("./blokus");
+const Honeycomb = require("./honeycomb");
 const DrawRelay = require("./drawrelay");
 const Expedition = require("./expedition");
 const Clue = require("./clue");
@@ -273,6 +274,7 @@ const MAX_ROOM_PLAYERS = {
   loveletter: 4,
   rummikub: 4,
   blokus: 4,
+  honeycomb: 6,
   drawrelay: 8,
   expedition: 8,
   avalon: 8,
@@ -620,6 +622,20 @@ function blokusBroadcast(room) {
 
 function blokusError(socket, message) {
   safeSend(socket, { type: "BLOKUS_ERROR", message });
+}
+
+function honeycombBroadcast(room) {
+  if (!room?.honeycomb) return;
+  for (const [id, client] of room.clients) {
+    safeSend(client, {
+      type: "HONEYCOMB_STATE",
+      state: Honeycomb.stateFor(room.honeycomb, id)
+    });
+  }
+}
+
+function honeycombError(socket, message) {
+  safeSend(socket, { type: "HONEYCOMB_ERROR", message });
 }
 
 function codenamesBroadcast(room) {
@@ -1450,6 +1466,7 @@ wss.on("connection", socket => {
         if (existingRoom.loveletter) loveLetterBroadcast(existingRoom);
         if (existingRoom.rummikub) rummikubBroadcast(existingRoom);
         if (existingRoom.blokus) blokusBroadcast(existingRoom);
+        if (existingRoom.honeycomb) honeycombBroadcast(existingRoom);
         if (existingRoom.drawrelay) drawRelayBroadcast(existingRoom);
         if (existingRoom.expedition) expeditionBroadcast(existingRoom);
         if (existingRoom.codenames) codenamesBroadcast(existingRoom);
@@ -1499,6 +1516,9 @@ wss.on("connection", socket => {
       }
       if (gameId === "blokus") {
         room.blokus = Blokus.createGame(playerId, cleanToken(message.name, 12) || "방장");
+      }
+      if (gameId === "honeycomb") {
+        room.honeycomb = Honeycomb.createGame(playerId, cleanToken(message.name, 12) || "방장");
       }
       if (gameId === "drawrelay") {
         room.drawrelay = DrawRelay.createGame(playerId, cleanToken(message.name, 12) || "방장");
@@ -1573,6 +1593,7 @@ wss.on("connection", socket => {
       if (room.loveletter) loveLetterBroadcast(room);
       if (room.rummikub) rummikubBroadcast(room);
       if (room.blokus) blokusBroadcast(room);
+      if (room.honeycomb) honeycombBroadcast(room);
       if (room.drawrelay) drawRelayBroadcast(room);
       if (room.expedition) expeditionBroadcast(room);
       if (room.clue) clueBroadcast(room);
@@ -1625,6 +1646,7 @@ wss.on("connection", socket => {
         if (room.loveletter) loveLetterBroadcast(room);
         if (room.rummikub) rummikubBroadcast(room);
         if (room.blokus) blokusBroadcast(room);
+        if (room.honeycomb) honeycombBroadcast(room);
         if (room.drawrelay) drawRelayBroadcast(room);
         if (room.expedition) expeditionBroadcast(room);
       if (room.clue) clueBroadcast(room);
@@ -1707,6 +1729,16 @@ wss.on("connection", socket => {
           return;
         }
         Blokus.addPlayer(room.blokus, playerId, cleanToken(message.name, 12) || `플레이어 ${room.blokus.players.length + 1}`);
+      }
+      if (room.honeycomb) {
+        if (room.honeycomb.phase !== "lobby") {
+          room.clients.delete(playerId);
+          socket.meta.roomKey = null;
+          socket.meta.role = null;
+          safeSend(socket, { type: "ERROR", message: "이미 시작한 게임입니다." });
+          return;
+        }
+        Honeycomb.addPlayer(room.honeycomb, playerId, cleanToken(message.name, 12) || `플레이어 ${room.honeycomb.players.length + 1}`);
       }
       if (room.drawrelay) {
         if (room.drawrelay.phase !== "lobby") {
@@ -1939,6 +1971,7 @@ wss.on("connection", socket => {
       if (room.loveletter) loveLetterBroadcast(room);
       if (room.rummikub) rummikubBroadcast(room);
       if (room.blokus) blokusBroadcast(room);
+      if (room.honeycomb) honeycombBroadcast(room);
       if (room.drawrelay) drawRelayBroadcast(room);
       if (room.expedition) expeditionBroadcast(room);
       if (room.clue) clueBroadcast(room);
@@ -3137,6 +3170,47 @@ wss.on("connection", socket => {
       return;
     }
 
+    if (type === "HONEYCOMB_ACTION") {
+      const room = socket.meta.roomKey ? rooms.get(socket.meta.roomKey) : null;
+      const game = room?.honeycomb;
+      const action = cleanToken(message.action, 30);
+      if (!room || !game) {
+        honeycombError(socket, "벌집 블록 방에 참가하지 않았습니다.");
+        return;
+      }
+
+      let result;
+      if (action === "START") {
+        result = playerId === room.hostId
+          ? Honeycomb.startGame(game)
+          : { ok: false, error: "방장만 게임을 시작할 수 있습니다." };
+      } else if (action === "PLACE") {
+        result = Honeycomb.place(game, playerId, cleanToken(message.pieceId, 10), message.cells);
+      } else if (action === "PASS") {
+        result = Honeycomb.pass(game, playerId);
+      } else if (action === "NEW_GAME") {
+        if (playerId !== room.hostId) result = { ok: false, error: "방장만 새 게임을 시작할 수 있습니다." };
+        else if (game.phase !== "ended") result = { ok: false, error: "게임이 끝난 뒤 새 게임을 시작할 수 있습니다." };
+        else {
+          Honeycomb.resetToLobby(game);
+          result = Honeycomb.startGame(game);
+        }
+      } else if (action === "RETURN_LOBBY") {
+        result = playerId === room.hostId
+          ? Honeycomb.resetToLobby(game)
+          : { ok: false, error: "방장만 대기실로 돌아갈 수 있습니다." };
+      } else {
+        result = { ok: false, error: "알 수 없는 행동입니다." };
+      }
+
+      if (!result.ok) {
+        honeycombError(socket, result.error || "행동을 처리하지 못했습니다.");
+        return;
+      }
+      honeycombBroadcast(room);
+      return;
+    }
+
     if (type === "EXPEDITION_ACTION") {
       const room = socket.meta.roomKey ? rooms.get(socket.meta.roomKey) : null;
       const game = room?.expedition;
@@ -3310,6 +3384,13 @@ wss.on("connection", socket => {
           Blokus.resetToLobby(currentRoom.blokus, "플레이어가 나가 게임을 중단하고 대기실로 돌아왔습니다.");
         }
       }
+      if (currentRoom.honeycomb) {
+        const gameWasActive = currentRoom.honeycomb.phase !== "lobby";
+        Honeycomb.removePlayer(currentRoom.honeycomb, playerId);
+        if (gameWasActive) {
+          Honeycomb.resetToLobby(currentRoom.honeycomb, "플레이어가 나가 게임을 중단하고 대기실로 돌아왔습니다.");
+        }
+      }
       if (currentRoom.expedition) {
         const gameWasActive = currentRoom.expedition.phase !== "lobby";
         Expedition.removePlayer(currentRoom.expedition, playerId);
@@ -3437,6 +3518,7 @@ wss.on("connection", socket => {
       if (currentRoom.loveletter) loveLetterBroadcast(currentRoom);
       if (currentRoom.rummikub) rummikubBroadcast(currentRoom);
       if (currentRoom.blokus) blokusBroadcast(currentRoom);
+      if (currentRoom.honeycomb) honeycombBroadcast(currentRoom);
       if (currentRoom.drawrelay) drawRelayBroadcast(currentRoom);
       if (currentRoom.expedition) expeditionBroadcast(currentRoom);
       if (currentRoom.clue) clueBroadcast(currentRoom);

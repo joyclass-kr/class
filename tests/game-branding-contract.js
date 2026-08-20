@@ -33,7 +33,7 @@ for (const [ko, en] of indexLabels) {
 
 assert.doesNotMatch(
   indexVisibleText,
-  /할리갈리|Halli Galli|러브레터|Love Letter|루미큐브|Rummikub|블로커스|Blokus|다빈치 코드|Da Vinci Code|트래버스|Traverse|레지스탕스|The Resistance|Connect6|<strong>세트<\/strong>/i,
+  /할리갈리|Halli Galli|러브레터|Love Letter|루미큐브|Rummikub|블로커스|Blokus|다빈치 코드|Da Vinci Code|트래버스|Traverse|레지스탕스|The Resistance|Connect6|젬블로|Gemblo|<strong>세트<\/strong>/i,
   "index에는 기존 상품명을 노출하면 안 됩니다."
 );
 
@@ -43,6 +43,7 @@ const pageContracts = [
   ["learning/games/loveletter/loveletter.html", /궁정 추리/, /Court Deduction/],
   ["learning/games/rummikub/rummikub.html", /숫자 타일/, /NUMBER TILES/],
   ["learning/games/blokus/blokus.html", /코너 블록/, /CORNER BLOCKS/],
+  ["learning/games/honeycomb/honeycomb.html", /벌집 블록/, /HONEYCOMB BLOCKS/],
   ["learning/games/setgame/setgame.html", /PATTERN TRIO/, /pattern3-bg\.webp/],
   ["learning/games/davincicode/davincicode.html", /NUMBER CODE/, /숫자 암호/],
   ["learning/games/traverse/traverse.html", /SHAPE CROSSING/, /도형 건너기/],
@@ -103,7 +104,10 @@ assert.doesNotMatch(lastCard, /\bUNO\b/i, "라스트 카드에는 기존 상품�
 assert.match(lastCard, /EMBER/, "라스트 카드는 독자 색상 체계를 사용해야 합니다.");
 assert.match(lastCard, /SHIFT/, "라스트 카드는 독자 액션 명칭을 사용해야 합니다.");
 
+const honeycomb = `${read("learning/games/honeycomb/honeycomb.html")}\n${read("game-hub-server/honeycomb.js")}`;
+assert.doesNotMatch(honeycomb, /젬블로|Gemblo/i, "벌집 블록에는 기존 상품명을 노출하면 안 됩니다.");
+
 const server = read("game-hub-server/server.js");
 assert.doesNotMatch(server, /러브레터 방|루미큐브 방|블로커스 방|아발론 방|수업용 아발론/, "서버 안내에도 기존 상품명을 노출하면 안 됩니다.");
 
-console.log("game-branding-contract: 10 independent game brands and server messages ok");
+console.log("game-branding-contract: 11 independent game brands and server messages ok");
