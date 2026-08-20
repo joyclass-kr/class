@@ -38,29 +38,38 @@ assert.equal(started.centerPile.length, 1);
 const claimGame = gameWithTwoPlayers();
 Dobble.startGame(claimGame, () => 0);
 const player = claimGame.players[0];
+const other = claimGame.players[1];
 const centerCard = claimGame.centerPile[0];
 const myCard = player.stack[0];
 const realMatch = Dobble.sharedSymbol(myCard, centerCard);
 assert.ok(realMatch, "손패 카드와 중앙 카드는 반드시 그림 하나가 겹쳐야 합니다.");
 
 const wrongGuess = myCard.find(symbol => symbol !== realMatch) || "존재하지않는그림";
-const wrongAt = 1000;
-const badResult = Dobble.claim(claimGame, player.id, wrongGuess, wrongAt);
+const badResult = Dobble.claim(claimGame, player.id, wrongGuess);
 assert.equal(badResult.ok, false, "겹치지 않는 그림을 지목하면 거부되어야 합니다.");
 assert.equal(badResult.wrongGuess, true, "오답에는 wrongGuess 플래그가 있어야 합니다.");
 assert.equal(claimGame.centerPile.length, 1, "오답이면 중앙 카드가 바뀌지 않아야 합니다.");
+assert.equal(Dobble.stateFor(claimGame, player.id).myLocked, true, "오답을 내면 이번 카드에서 잠겨야 합니다.");
 
-// 오답 직후 곧바로(페널티 안에) 다시 시도하면, 이번엔 정답이라도 막혀야 한다.
-const tooSoonResult = Dobble.claim(claimGame, player.id, realMatch, wrongAt + 100);
-assert.equal(tooSoonResult.ok, false, "오답 페널티 중에는 정답이라도 거부되어야 합니다.");
-assert.equal(claimGame.centerPile.length, 1, "페널티 중 시도는 카드에 영향을 주면 안 됩니다.");
+// 같은 카드 조합에서는 정답을 알아도 다시 찍을 수 없다 — 시간이 아니라 "이번 판" 단위 페널티.
+const tooSoonResult = Dobble.claim(claimGame, player.id, realMatch);
+assert.equal(tooSoonResult.ok, false, "오답을 낸 카드에서는 정답이라도 거부되어야 합니다.");
+assert.equal(claimGame.centerPile.length, 1, "잠긴 상태의 시도는 카드에 영향을 주면 안 됩니다.");
+
+// 다른 사람이 정답을 맞혀 카드가 바뀌면(actionNumber 증가) 잠금이 풀린다.
+const otherCard = other.stack[0];
+const otherMatch = Dobble.sharedSymbol(otherCard, centerCard);
+const otherResult = Dobble.claim(claimGame, other.id, otherMatch);
+assert.equal(otherResult.ok, true, "다른 사람의 정답 지목은 성공해야 합니다.");
+assert.equal(Dobble.stateFor(claimGame, player.id).myLocked, false, "카드가 바뀌면 잠금이 풀려야 합니다.");
 
 const beforeCount = player.stack.length;
-const goodResult = Dobble.claim(claimGame, player.id, realMatch, wrongAt + 5000);
-assert.equal(goodResult.ok, true, "페널티가 끝난 뒤에는 다시 시도할 수 있어야 합니다.");
+const newCenter = claimGame.centerPile[claimGame.centerPile.length - 1];
+const newMatch = Dobble.sharedSymbol(player.stack[0], newCenter);
+const goodResult = Dobble.claim(claimGame, player.id, newMatch);
+assert.equal(goodResult.ok, true, "잠금이 풀린 뒤에는 다시 시도할 수 있어야 합니다.");
 assert.equal(player.stack.length, beforeCount - 1, "정답이면 손패가 한 장 줄어야 합니다.");
-assert.equal(claimGame.centerPile[claimGame.centerPile.length - 1], myCard, "낸 카드가 새 중앙 카드가 되어야 합니다.");
-assert.equal(claimGame.lastMatch.symbol, realMatch, "lastMatch에 방금 맞힌 그림이 기록되어야 합니다.");
+assert.equal(claimGame.lastMatch.symbol, newMatch, "lastMatch에 방금 맞힌 그림이 기록되어야 합니다.");
 
 // 손패를 모두 낸 사람이 즉시 승리한다.
 const winGame = gameWithTwoPlayers();
@@ -100,14 +109,22 @@ assert.ok(Array.isArray(catalogView.challengerCard));
 
 // 오답은 거부되고, 정답을 맞히면 기준 카드를 가져가며 더미 맨 위가 새 기준 카드가 된다.
 const catalogPlayer = catalogGame.players[0];
+const catalogOther = catalogGame.players[1];
 const centerBefore = catalogGame.centerCard;
 const challengerBefore = catalogGame.drawPile[catalogGame.drawPile.length - 1];
 const catalogMatch = Dobble.sharedSymbol(centerBefore, challengerBefore);
-const catalogBad = Dobble.claim(catalogGame, catalogPlayer.id, centerBefore.find(s => s !== catalogMatch), 1000);
+const catalogBad = Dobble.claim(catalogGame, catalogPlayer.id, centerBefore.find(s => s !== catalogMatch));
 assert.equal(catalogBad.ok, false, "겹치지 않는 그림은 거부되어야 합니다.");
-const catalogGood = Dobble.claim(catalogGame, catalogPlayer.id, catalogMatch, 1000 + 5000);
+assert.equal(Dobble.stateFor(catalogGame, catalogPlayer.id).myLocked, true, "카탈로그도 오답을 내면 이번 카드에서 잠겨야 합니다.");
+
+// 오답을 낸 사람은 같은 카드에서 정답을 다시 대도 거부된다.
+assert.equal(Dobble.claim(catalogGame, catalogPlayer.id, catalogMatch).ok, false, "잠긴 사람은 정답이라도 거부되어야 합니다.");
+
+// 다른 사람이 대신 맞히면 카드가 넘어가고, 그제서야 잠금이 풀린다.
+const catalogGood = Dobble.claim(catalogGame, catalogOther.id, catalogMatch);
 assert.equal(catalogGood.ok, true);
-assert.deepEqual(catalogPlayer.collected[0], centerBefore, "맞히면 이전 기준 카드를 가져가야 합니다.");
+assert.deepEqual(catalogOther.collected[0], centerBefore, "맞히면 이전 기준 카드를 가져가야 합니다.");
+assert.equal(Dobble.stateFor(catalogGame, catalogPlayer.id).myLocked, false, "카드가 넘어가면 잠금이 풀려야 합니다.");
 assert.deepEqual(catalogGame.centerCard, challengerBefore, "방금 뒤집힌 카드가 새 기준 카드가 되어야 합니다.");
 
 // 더미가 소진되면 가장 많이 모은 사람이 승리한다.
