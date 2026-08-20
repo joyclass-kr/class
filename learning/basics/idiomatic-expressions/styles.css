@@ -1,0 +1,52 @@
+@import url("../proverbs/styles.css");
+
+:root {
+  color: #243127;
+  background: #d7bc8c;
+}
+
+body {
+  background:
+    linear-gradient(#fff9e94d, #4e32171f),
+    url("../proverbs/assets/wooden-board.webp") center / cover fixed no-repeat;
+}
+
+.back { color: #315c44; min-height: 44px; display: inline-flex; align-items: center; }
+output, .label { color: #315c44; }
+button { min-height: 48px; }
+button:focus-visible, .back:focus-visible { outline: 3px solid #f1ad32; outline-offset: 3px; }
+.mode-tab.active { color: #1f6042; }
+.primary { color: #fff; border-color: #347355; background: #347355; }
+.study-card h1, .quiz h1 { margin: 12px 0 20px; font-size: clamp(1.65rem, 4vw, 2.35rem); line-height: 1.22; }
+.lesson-picker { display:flex; align-items:center; justify-content:space-between; gap:16px; margin:0 0 14px; padding:14px 16px; border-radius:14px; background:#fff9edeb; border:1px solid #73917b66; }
+.lesson-picker div { display:grid; gap:3px; }
+.lesson-picker small { color:#54705c; }
+.lesson-picker select { min-height:44px; max-width:58%; padding:8px 36px 8px 12px; border:1px solid #82a18c; border-radius:10px; background:#fff; color:inherit; font:700 15px system-ui,sans-serif; }
+
+.category {
+  display: inline-flex;
+  margin: 0;
+  padding: 5px 10px;
+  border-radius: 999px;
+  color: #72501e;
+  background: #f6e3b8;
+  font-size: .86rem;
+  font-weight: 750;
+}
+
+.meaning-block {
+  padding: 16px 18px;
+  border-left: 5px solid #4f9a70;
+  border-radius: 8px 12px 12px 8px;
+  background: #edf7ef;
+}
+
+.meaning-block strong { color: #2f704e; }
+.meaning-block p, .question { margin: 6px 0 0; font-size: 1.08rem; line-height: 1.65; }
+.choices button:hover:not(:disabled) { border-color: #347355; background: #f0f8f2; }
+#feedback { min-height: 2.9em; margin-bottom: 0; line-height: 1.45; }
+
+@media (max-width: 520px) {
+  .panel { padding: 22px 18px; }
+  .actions button { flex: 1 1 140px; }
+}

@@ -1,0 +1,58 @@
+<!doctype html>
+<html lang="ko">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="description" content="학생이 자주 만나는 핵심 관용구의 뜻과 쓰임을 익히는 학습 도구">
+  <title>관용구</title>
+  <link rel="stylesheet" href="styles.css">
+  <script src="../../../assets/sound/music-control.js" defer></script>
+  <script src="idiomatic-expressions-data.js" defer></script>
+  <script src="app.js" defer></script>
+</head>
+<body>
+  <header>
+    <a class="back" href="../../../">← 메인</a>
+    <div><strong>관용구 학습</strong><small>말뜻을 덩어리째 익히기</small></div>
+    <output id="score" aria-live="polite" hidden>정답 0 / 0</output>
+  </header>
+  <audio id="bgm" src="../proverbs/assets/paper-lantern-drift.ogg" preload="auto" loop></audio>
+
+  <main>
+    <section class="lesson-picker" aria-labelledby="lessonHeading">
+      <div><strong id="lessonHeading">차시 선택</strong><small>주제에 맞는 표현을 문맥으로 익혀요</small></div>
+      <select id="lessonSelect" aria-label="관용구 차시 선택"></select>
+    </section>
+    <nav class="mode-tabs" aria-label="학습 모드 선택">
+      <button class="mode-tab active" data-mode="study" type="button" aria-selected="true">관용구 공부</button>
+      <button class="mode-tab" data-mode="quiz" type="button" aria-selected="false">문제 풀기</button>
+    </nav>
+
+    <section id="studyView" class="panel study-card" aria-live="polite">
+      <p id="progress" class="label"></p>
+      <p id="category" class="category"></p>
+      <h1 id="expression"></h1>
+      <div class="meaning-block">
+        <strong>뜻</strong>
+        <p id="meaning"></p>
+      </div>
+      <p id="example" class="example"></p>
+      <div class="actions">
+        <button id="previous" type="button">이전</button>
+        <button id="next" class="primary" type="button">다음 관용구</button>
+      </div>
+    </section>
+
+    <section id="quizView" class="panel quiz" aria-labelledby="quizTitle" hidden>
+      <p id="quizProgress" class="label">확인 문제</p>
+      <h1 id="quizTitle">이 상황에 알맞은 관용구는?</h1>
+      <p id="question" class="question"></p>
+      <div id="choices" class="choices"></div>
+      <p id="feedback" role="status" aria-live="polite"></p>
+      <div class="actions">
+        <button id="nextQuestion" class="primary" type="button" disabled>다음 문제</button>
+      </div>
+    </section>
+  </main>
+</body>
+</html>
