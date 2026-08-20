@@ -80,8 +80,6 @@ h1,h2,h3,p{margin-top:0}
 .cardChip img{width:100%;aspect-ratio:3/4;object-fit:cover;border-radius:9px;border:2px solid var(--accent-soft);box-shadow:0 5px 14px #0007;background:#141824}
 .cardChip span{overflow:hidden;text-overflow:ellipsis;white-space:nowrap;max-width:100%}
 .miniBtn{min-height:auto;padding:4px 11px;font-size:11.5px}
-.handRow.blurred .cardChip img{filter:blur(11px) brightness(.55);transition:filter .15s}
-.handRow.blurred .cardChip span{visibility:hidden}
 
 .notebookGrid{display:grid;grid-template-columns:repeat(3,1fr);gap:14px}
 .notebookGroup h4{margin:0 0 7px;color:#9aa0b4;font-size:11px;letter-spacing:.12em}
@@ -97,6 +95,10 @@ h1,h2,h3,p{margin-top:0}
 .pickGrid{display:flex;flex-wrap:wrap;gap:8px;justify-content:center;margin:10px 0}
 .pickBtn{background:#20242f;color:#dfe3ee}
 .pickBtn.active{background:var(--accent);color:#241404;box-shadow:0 0 0 2px #d9a44155}
+.refuteChoiceBtn{display:flex;flex-direction:column;align-items:center;gap:6px;width:100px;padding:8px;border:1px solid var(--accent-soft);border-radius:12px;background:#20242f;cursor:pointer;font-weight:800;font-size:11.5px;color:#dfe3ee}
+.refuteChoiceBtn:hover{border-color:var(--accent);background:#262b3a}
+.refuteChoiceBtn img{width:100%;aspect-ratio:3/4;object-fit:cover;border-radius:9px;border:2px solid var(--accent-soft);box-shadow:0 5px 14px #0007}
+.refuteChoiceBtn span{overflow:hidden;text-overflow:ellipsis;white-space:nowrap;max-width:100%}
 
 .overlay{position:fixed;inset:0;z-index:30;display:grid;place-items:center;padding:18px;background:#06070ce0}
 .modal{width:min(640px,100%);max-height:88vh;overflow:auto;padding:22px;border:1px solid var(--accent-soft);border-radius:16px;background:#171b26}
@@ -199,7 +201,7 @@ h1,h2,h3,p{margin-top:0}
             <div class="eyebrow">내 카드</div>
             <button id="handToggleBtn" class="secondary miniBtn" type="button">카드 보기</button>
           </div>
-          <div id="handRow" class="handRow blurred"></div>
+          <div id="handRow" class="handRow"></div>
         </section>
 
         <section class="panel">
@@ -287,7 +289,7 @@ h1,h2,h3,p{margin-top:0}
 <section id="refuteOverlay" class="overlay hidden" role="dialog" aria-modal="true">
   <div class="modal">
     <h2>반박할 카드 선택</h2>
-    <p class="logLine">추리와 겹치는 카드가 여러 장입니다. 하나만 골라 몰래 보여주세요.</p>
+    <p class="logLine">추리와 겹치는 카드입니다. 하나를 골라 몰래 보여주세요.</p>
     <div id="refuteChoices" class="pickGrid"></div>
   </div>
 </section>
@@ -355,8 +357,8 @@ function cardImage(id){return "/learning/games/clue/assets/images/cards/"+CARD_F
 const CARDBACK_IMG="/learning/games/clue/assets/images/cards/cardback.webp";
 const ROOM_POS=[[0,0],[0,1],[0,2],[1,0],[1,1],[1,2],[2,0],[2,1],[2,2]];
 const CELL_COORDS={
-  t0:[20,130],t1:[70,130],t2:[130,130],t3:[190,130],t4:[250,130],t5:[310,130],t6:[360,130],
-  b0:[20,250],b1:[70,250],b2:[130,250],b3:[190,250],b4:[250,250],b5:[310,250],b6:[360,250]
+  t0:[29,127],t1:[70,130],t2:[124,37],t3:[190,130],t4:[256,37],t5:[310,130],t6:[351,127],
+  b0:[27,253],b1:[70,250],b2:[125,342],b3:[190,250],b4:[255,342],b5:[310,250],b6:[353,253]
 };
 const CELL_NEIGHBORS={
   t0:["t1"],t1:["t0","t2"],t2:["t1","t3"],t3:["t2","t4"],t4:["t3","t5"],t5:["t4","t6"],t6:["t5"],
@@ -364,7 +366,7 @@ const CELL_NEIGHBORS={
 };
 const CELL_ROOMS={t1:[0,3],t3:[1,4],t5:[2,5],b1:[3,6],b3:[4,7],b5:[5,8]};
 const ROOM_CELLS={0:["t1"],1:["t3"],2:["t5"],3:["t1","b1"],4:["t3","b3"],5:["t5","b5"],6:["b1"],7:["b3"],8:["b5"]};
-const SECRET_PASSAGE_PAIRS={t0:"b0",b0:"t0",t2:"b2",b2:"t2",t4:"b4",b4:"t4",t6:"b6",b6:"t6"};
+const SECRET_PASSAGE_PAIRS={t0:"b6",b6:"t0",t2:"b4",b4:"t2",t4:"b2",b2:"t4",t6:"b0",b0:"t6"};
 const SERVER_MESSAGE=Object.freeze({STATE:"CLUE_STATE",REVEAL:"CLUE_REVEAL",ERROR:"CLUE_ERROR"});
 const $=id=>document.getElementById(id);
 
@@ -677,22 +679,22 @@ function renderPending(){
   }
 }
 
-function cardChip(id){
-  return `<span class="cardChip"><img src="${cardImage(id)}" alt="${cardName(id)}" ><span>${cardLabel(id)}</span></span>`;
+function cardChip(id,hidden){
+  const src=hidden?CARDBACK_IMG:cardImage(id);
+  const label=hidden?"":cardLabel(id);
+  return `<span class="cardChip"><img src="${src}" alt="${hidden?"":cardName(id)}" ><span>${label}</span></span>`;
 }
 
 function renderHand(){
   if(!gameState){$("handRow").innerHTML="";return}
-  $("handRow").innerHTML=(gameState.hand||[]).map(cardChip).join("")||'<span class="logLine">카드가 없습니다.</span>';
-  $("handRow").classList.toggle("blurred",handHidden);
+  $("handRow").innerHTML=(gameState.hand||[]).map(id=>cardChip(id,handHidden)).join("")||'<span class="logLine">카드가 없습니다.</span>';
   if($("handToggleBtn"))$("handToggleBtn").textContent=handHidden?"카드 보기":"카드 가리기";
   (gameState.hand||[]).forEach(id=>{notebook[id]=2});
 }
 
 function toggleHandVisibility(){
   handHidden=!handHidden;
-  $("handRow").classList.toggle("blurred",handHidden);
-  $("handToggleBtn").textContent=handHidden?"카드 보기":"카드 가리기";
+  renderHand();
 }
 
 function notebookCell(id){
@@ -755,7 +757,7 @@ function renderAccusePickers(){
 }
 
 function openRefuteOverlay(choices){
-  $("refuteChoices").innerHTML=choices.map(id=>`<button type="button" class="pickBtn" data-id="${id}">${cardLabel(id)}</button>`).join("");
+  $("refuteChoices").innerHTML=choices.map(id=>`<button type="button" class="refuteChoiceBtn" data-id="${id}"><img src="${cardImage(id)}" alt="${cardName(id)}"><span>${cardLabel(id)}</span></button>`).join("");
   $("refuteChoices").querySelectorAll("button").forEach(button=>{
     button.addEventListener("click",()=>{
       sendAction("CHOOSE_CARD",{card:Number(button.getAttribute("data-id"))});
@@ -781,7 +783,7 @@ function renderResult(){
   title.className="outcome "+outcomeClass;
   $("resultDetail").textContent=detail;
   const solution=gameState.solution;
-  $("solutionRow").innerHTML=solution?[solution.suspect,solution.weapon,solution.room].map(cardChip).join(""):"";
+  $("solutionRow").innerHTML=solution?[solution.suspect,solution.weapon,solution.room].map(id=>cardChip(id)).join(""):"";
   const isHost=snapshot.role==="host";
   $("rematchBtn").classList.toggle("hidden",!isHost);
   $("returnLobbyBtn").classList.toggle("hidden",!isHost);

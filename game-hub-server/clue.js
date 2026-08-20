@@ -25,9 +25,14 @@ const CORRIDOR_CELLS = Object.freeze([
   "t0", "t1", "t2", "t3", "t4", "t5", "t6",
   "b0", "b1", "b2", "b3", "b4", "b5", "b6"
 ]);
+// Coordinates measured directly off the board art (2000x2000 source, scaled
+// to this 380-unit viewBox). The band-end staircases (t0/t6/b0/b6) and the
+// room doors (t1/t3/t5/b1/b3/b5) sit on the two hallway lines, but the
+// mid-row staircases (t2/t4/b2/b4) sit inside their own room row, near its
+// outer edge - not on the hallway line - so their y differs from the rest.
 const CELL_COORDS = Object.freeze({
-  t0: [20, 130], t1: [70, 130], t2: [130, 130], t3: [190, 130], t4: [250, 130], t5: [310, 130], t6: [360, 130],
-  b0: [20, 250], b1: [70, 250], b2: [130, 250], b3: [190, 250], b4: [250, 250], b5: [310, 250], b6: [360, 250]
+  t0: [29, 127], t1: [70, 130], t2: [124, 37], t3: [190, 130], t4: [256, 37], t5: [310, 130], t6: [351, 127],
+  b0: [27, 253], b1: [70, 250], b2: [125, 342], b3: [190, 250], b4: [255, 342], b5: [310, 250], b6: [353, 253]
 });
 const CELL_NEIGHBORS = Object.freeze({
   t0: ["t1"], t1: ["t0", "t2"], t2: ["t1", "t3"], t3: ["t2", "t4"], t4: ["t3", "t5"], t5: ["t4", "t6"], t6: ["t5"],
@@ -42,8 +47,11 @@ const ROOM_CELLS = Object.freeze({
   3: ["t1", "b1"], 4: ["t3", "b3"], 5: ["t5", "b5"],
   6: ["b1"], 7: ["b3"], 8: ["b5"]
 });
+// Paired diagonally (mirrored left-right too), not straight across the same
+// hallway position - that's what makes each one a real shortcut to the far
+// side of the mansion instead of a one-step hop to the tile right next to it.
 const SECRET_PASSAGE_PAIRS = Object.freeze({
-  t0: "b0", b0: "t0", t2: "b2", b2: "t2", t4: "b4", b4: "t4", t6: "b6", b6: "t6"
+  t0: "b6", b6: "t0", t2: "b4", b4: "t2", t4: "b2", b2: "t4", t6: "b0", b0: "t6"
 });
 const START_ROOMS = Object.freeze([0, 2, 3, 5, 6, 8]);
 const MIN_PLAYERS = 3;
