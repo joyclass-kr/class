@@ -629,7 +629,12 @@
 
                 // A separate time control demonstrates diurnal motion in the observer's sky.
                 // 18:00 rises in the east, 24:00 culminates in the south, 06:00 sets in the west.
-                const timeVal = timeSlider ? parseFloat(timeSlider.value) : window.currentZodiacTime;
+                // Keep the high-precision simulation clock authoritative while playing.
+                // The range input rounds values to its 0.05-hour step, which used to
+                // erase every small 0.2x update and made playback appear frozen.
+                const timeVal = Number.isFinite(window.currentZodiacTime)
+                    ? window.currentZodiacTime
+                    : (timeSlider ? parseFloat(timeSlider.value) : 24);
                 window.currentZodiacTime = Number.isFinite(timeVal) ? timeVal : 24;
                 const totalMinutes = Math.round(window.currentZodiacTime * 60);
                 const displayHour = Math.floor(totalMinutes / 60) % 24;
@@ -796,9 +801,10 @@
                     // (e.g. 0.2x) each frame's contribution is already so small that
                     // the dropped time made playback look completely frozen while
                     // higher speeds stayed visibly ahead of that noise floor.
-                    // At 1x, six simulated hours pass per real second.
+                    // Learning-paced motion: at 1x, one simulated hour passes per
+                    // real second (a full 12-hour path takes 12 seconds).
                     const elapsedSeconds = Math.max(0, (now - zodiacMotionState.lastFrame) / 1000);
-                    window.currentZodiacTime = zodiacMotionState.timeAnchor + elapsedSeconds * 6 * zodiacMotionState.speed;
+                    window.currentZodiacTime = zodiacMotionState.timeAnchor + elapsedSeconds * zodiacMotionState.speed;
                     if (window.currentZodiacTime >= 30) {
                         window.currentZodiacTime = 30;
                         zodiacMotionState.playing = false;
