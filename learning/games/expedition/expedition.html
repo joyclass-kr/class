@@ -57,6 +57,11 @@ h1,h2,h3,p{margin-top:0}
 .roundTag{text-align:center;min-width:74px}
 .roundTag b{display:block;color:#ffe0a0;font-size:24px;line-height:1}
 .roundTag span{color:#8d8168;font-size:10px;font-weight:800;letter-spacing:.14em}
+/* 남은 카드를 세는 것은 원작에서도 정당한 전략이다. 다만 세는 수고를 수학으로 대신한다. */
+.countBox{margin:-4px 0 14px;padding:9px 13px;border-radius:11px;background:#00000045;text-align:center;font-size:13px;color:#c4b79c}
+.countBox.locked{color:#8d8168}
+.countBox b{color:#ffe0a0;font-size:15px}
+.countBox .danger{color:#ff9c8a}
 .headline{text-align:center;font-weight:900;color:#ffe6b4;font-size:clamp(15px,2.4vw,19px);line-height:1.4}
 
 .trail{display:flex;gap:10px;min-height:196px;padding:16px 14px;border-radius:14px;overflow-x:auto;align-items:center;background:linear-gradient(90deg,#00000020,#000000aa 70%,#000000e0)}
@@ -154,6 +159,7 @@ h1,h2,h3,p{margin-top:0}
 .rankRow{display:flex;justify-content:center;gap:8px;flex-wrap:wrap;margin:12px 0}
 .rankChip{padding:8px 12px;border:1px solid var(--panel-edge);border-radius:999px;background:#241e16;font-size:13px}
 .rankChip.win{border-color:var(--accent);background:#3a2c12;color:#ffe6b4;font-weight:900}
+.mathScore{margin:2px 0 14px;color:#a8e0b4;font-size:14px;font-weight:800}
 
 /* 캠프(왼쪽) ─ 길(오른쪽) 구조. 누가 안에 있고 누가 나왔는지가 위치로 보여야 한다. */
 .tunnel{display:grid;grid-template-columns:140px minmax(0,1fr);gap:16px;margin-top:6px}
@@ -323,6 +329,8 @@ h1,h2,h3,p{margin-top:0}
         <div class="roundTag"><b id="deckValue">0</b><span>남은 카드</span></div>
       </div>
 
+      <div id="countBox" class="countBox"></div>
+
       <div class="tunnel">
         <div class="camp">
           <div class="zoneLabel">캠프</div>
@@ -370,6 +378,7 @@ h1,h2,h3,p{margin-top:0}
       <h2 id="resultTitle">라운드 종료</h2>
       <p id="resultText"></p>
       <div id="rankRow" class="rankRow"></div>
+      <div id="mathScore" class="mathScore"></div>
       <div class="row" style="justify-content:center">
         <button id="nextRoundBtn" class="primary hidden" type="button">다음 라운드</button>
         <button id="newGameBtn" class="primary hidden" type="button">새 게임</button>
@@ -504,6 +513,29 @@ let learnerBand="middle";
 let bandTicket="";
 let quizState=null;
 let quizScore={right:0,total:0};
+// 맞힌 라운드에만 카운터가 열린다. 라운드가 바뀌면 다시 잠긴다.
+let countsUnlockedRound=0;
+
+// 초등 3~4학년군의 문제는 화면에 답이 이미 보여서 정보로 줄 것이 없다.
+// 그 군은 카운터를 처음부터 열어 두고, 대신 계산 점수를 결과 화면에 세운다.
+function countsAlwaysOpen(){return (state?.band||"middle")==="primary34"}
+function countsOpen(){return countsAlwaysOpen()||countsUnlockedRound===state.round}
+
+function renderCounts(){
+  const box=$("countBox");
+  const left=state.remaining;
+  if(state.phase==="lobby"||!left){box.textContent="";return}
+  if(!countsOpen()){
+    box.className="countBox locked";
+    box.textContent="남은 카드 ? · 수학 문제를 맞히면 이번 라운드 동안 보입니다";
+    $("deckValue").textContent="?";
+    return;
+  }
+  box.className="countBox";
+  $("deckValue").textContent=left.total;
+  box.innerHTML=`남은 <b>${left.total}</b>장 · 보물 <b>${left.treasure}</b> · 위험 <b>${left.hazard}</b>`
+    +(left.deadly?` · <span class="danger">이번에 나오면 끝나는 카드 <b>${left.deadly}</b></span>`:"");
+}
 
 async function loadBand(){
   try{
@@ -613,9 +645,14 @@ function submitQuiz(){
   quizState.done=true;
   quizScore.total+=1;
   if(right)quizScore.right+=1;
+  // 계산할 줄 안다는 것을 보이면 그 라운드 동안 카운터를 갖는다. 보석이 아니라 정보로 갚는다.
+  if(right&&!countsAlwaysOpen())countsUnlockedRound=state.round;
   $("quizMark").textContent=right?"○":"×";
   $("quizMark").className=`quizMark ${right?"ok":"no"}`;
-  $("quizNote").textContent=`${quizState.note} · 지금까지 ${quizScore.right}/${quizScore.total}`;
+  $("quizNote").textContent=right&&!countsAlwaysOpen()
+    ? `${quizState.note} · 이번 라운드 동안 남은 카드가 보입니다 · 지금까지 ${quizScore.right}/${quizScore.total}`
+    : `${quizState.note} · 지금까지 ${quizScore.right}/${quizScore.total}`;
+  renderCounts();
   $("quizInput").disabled=true;
   $("quizBtn").disabled=true;
   sfx(right?"bank":"showdown","click");
@@ -976,6 +1013,9 @@ function renderResult(){
         :"모두 돌아와 라운드가 끝났습니다.";
   }
   $("rankRow").innerHTML=rankMarkup();
+  $("mathScore").textContent=quizScore.total
+    ? `내 계산 ${quizScore.right}/${quizScore.total}`
+    : "";
   $("nextRoundBtn").classList.toggle("hidden",state.phase!=="roundEnd"||!host);
   $("newGameBtn").classList.toggle("hidden",state.phase!=="gameEnd"||!host);
   $("lobbyBtn").classList.toggle("hidden",state.phase!=="gameEnd"||!host);
@@ -992,9 +1032,9 @@ function render(){
   }
   showGame();
   $("roundValue").textContent=`${state.round} / ${state.totalRounds}`;
-  $("deckValue").textContent=state.deckCount;
   $("headline").textContent=state.lastAction;
   renderSituation();
+  renderCounts();
   renderQuiz();
   renderTokens();
   renderTrail();
