@@ -1410,7 +1410,7 @@ wss.on("connection", socket => {
         );
       }
       if (gameId === "clue") {
-        room.clue = Clue.createGame(playerId, cleanToken(message.name, 12) || "방장");
+        room.clue = Clue.createGame(playerId, cleanToken(message.name, 12) || "방장", message.avatarUrl);
       }
       if (gameId === "codenames") {
         room.codenames = Codenames.createGame(playerId, cleanToken(message.name, 12) || "방장");
@@ -1627,7 +1627,7 @@ wss.on("connection", socket => {
           safeSend(socket, { type: "ERROR", message: "이미 시작한 게임입니다." });
           return;
         }
-        Clue.addPlayer(room.clue, playerId, cleanToken(message.name, 12) || `플레이어 ${room.clue.players.length + 1}`);
+        Clue.addPlayer(room.clue, playerId, cleanToken(message.name, 12) || `플레이어 ${room.clue.players.length + 1}`, message.avatarUrl);
       }
       if (room.codenames) {
         if (room.codenames.phase !== "lobby") {
@@ -3362,6 +3362,26 @@ const heartbeatTimer = setInterval(() => {
 }, 30000);
 heartbeatTimer.unref?.();
 wss.on("close", () => clearInterval(heartbeatTimer));
+
+// Clue runs server-authoritative turns with a per-turn deadline. Rather than
+// scheduling a precise setTimeout per room (more bookkeeping to leak-proof
+// across resets/disconnects), a 1s sweep just checks every live room's
+// deadline; Clue.forceTimeout() is a no-op until it actually expires.
+const clueTimeoutTimer = setInterval(() => {
+  for (const room of rooms.values()) {
+    if (!room.clue || room.clue.phase !== "playing") continue;
+    const result = Clue.forceTimeout(room.clue);
+    if (!result.ok) continue;
+    for (const reveal of result.reveals || []) {
+      safeSend(room.clients.get(reveal.playerId), {
+        type: "CLUE_REVEAL",
+        reveal: { title: reveal.title, message: reveal.message, card: reveal.card }
+      });
+    }
+    clueBroadcast(room);
+  }
+}, 1000);
+clueTimeoutTimer.unref?.();
 
 classroomPlatform.initialize().finally(() => {
   server.listen(PORT, "0.0.0.0", () => {

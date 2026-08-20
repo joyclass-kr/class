@@ -38,7 +38,7 @@ h1,h2,h3,p{margin-top:0}
 .playerRow:last-child{margin-bottom:0}
 .playerRow.active{border-color:var(--accent);box-shadow:0 0 0 2px #d9a44133}
 .playerRow.eliminated{opacity:.5}
-.suspectDot{width:16px;height:16px;border-radius:50%;flex:0 0 auto;box-shadow:0 0 0 2px #ffffff22}
+.suspectDot{width:16px;height:16px;border-radius:50%;flex:0 0 auto;box-shadow:0 0 0 2px #ffffff22;object-fit:cover;border:2px solid transparent}
 .playerMeta2{flex:1;min-width:0;display:grid}
 .playerMeta2 strong{font-size:14px;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
 .playerMeta2 small{color:#9aa0b4;font-size:11px}
@@ -49,19 +49,26 @@ h1,h2,h3,p{margin-top:0}
 
 .logLine{padding:9px 11px;border-radius:10px;background:#151a26;color:#c9cee0;font-size:13px;min-height:20px}
 .diceRow{display:flex;align-items:center;justify-content:center;gap:14px;padding:10px 0}
-.dieFace{width:52px;height:52px;border-radius:12px;border:2px solid var(--accent);background:#1a1d29;display:grid;place-items:center;font-size:26px;font-weight:950;color:#f3ddb0}
+.dieFace{width:52px;height:52px;border-radius:12px;border:2px solid var(--accent);background:#1a1d29;display:grid;place-items:center;font-size:26px;font-weight:950;color:#f3ddb0;transition:transform .08s}
+.dieFace.rolling{animation:dieShake .12s linear infinite}
+@keyframes dieShake{0%{transform:rotate(-10deg) scale(1.08)}50%{transform:rotate(10deg) scale(.94)}100%{transform:rotate(-10deg) scale(1.08)}}
+.turnTimer{min-width:56px;text-align:center;font-size:20px;font-weight:900;color:#9aa0b4;font-variant-numeric:tabular-nums}
+.turnTimer.warning{color:var(--danger)}
 .turnBanner2{text-align:center;font-weight:850;padding:8px 4px}
 
 .boardWrap{width:min(560px,100%);margin:auto}
-.roomRect{fill:#1c2130;stroke:#3a3f52;stroke-width:2;cursor:default}
-.roomRect.reachable{fill:#22331f;stroke:var(--safe);stroke-width:3;cursor:pointer}
-.roomRect.reachable:hover{fill:#2b4028}
-.roomRect.current{stroke:var(--accent);stroke-width:3}
-.roomLabel{fill:#d8dceb;font-size:11px;font-weight:800;text-anchor:middle;pointer-events:none}
+.roomRect{fill:none;stroke:#3a3f52;stroke-width:2;cursor:default;pointer-events:all}
+.roomRect.reachable{stroke:var(--safe);stroke-width:4;cursor:pointer;filter:drop-shadow(0 0 5px #3f9e6c88)}
+.roomRect.reachable:hover{stroke:#5fd99a}
+.roomRect.current{stroke:var(--accent);stroke-width:4}
+.roomShade{fill:#0a0d14;opacity:.5;pointer-events:none}
+.roomImg{pointer-events:none}
+.roomLabel{fill:#fff;font-size:12px;font-weight:900;text-anchor:middle;pointer-events:none;text-shadow:0 1px 3px #000}
 .corridorLine{stroke:#3a3f52;stroke-width:3}
-.passageLine{stroke:#6a4fae;stroke-width:2;stroke-dasharray:5 5}
-.passageTag{fill:#b7a2ee;font-size:8px;font-weight:800;text-anchor:middle;pointer-events:none}
-.token{stroke:#00000066;stroke-width:1.5}
+.passageLine{stroke:#a78bef;stroke-width:2;stroke-dasharray:5 5}
+.passageTag{fill:#d7c8fa;font-size:8px;font-weight:800;text-anchor:middle;pointer-events:none;text-shadow:0 1px 2px #000}
+.token{stroke:#fff;stroke-width:1.5}
+.tokenAvatar{pointer-events:none}
 
 .actionBar{display:flex;flex-wrap:wrap;gap:8px;justify-content:center;padding:6px 0 2px}
 .pendingBanner{text-align:center;padding:9px;border-radius:10px;background:#241a10;color:#f0c988;font-weight:800;font-size:13px}
@@ -170,7 +177,7 @@ h1,h2,h3,p{margin-top:0}
         </div>
         <div class="panel">
           <div id="turnBanner" class="turnBanner2">대국을 준비하는 중입니다.</div>
-          <div class="diceRow"><div id="dieFace" class="dieFace">-</div></div>
+          <div class="diceRow"><div id="dieFace" class="dieFace">-</div><div id="turnTimer" class="turnTimer">--</div></div>
           <div id="logLine" class="logLine"></div>
         </div>
       </aside>
@@ -324,11 +331,11 @@ const SUSPECTS=[
   {name:"무희",color:"#b8283a"}
 ];
 const WEAPONS=["촛대","밧줄","렌치","손전등","만능열쇠","유리칼"];
-const ROOMS=["온실","무도회장","주방","서재","현관","식당","거실","사무실","당구실"];
+const ROOMS=["온실","무도회장","주방","서재","사무실","식당","거실","현관","당구실"];
 const CARD_FILES=[
   "countess","butler","gardener","physician","antiquarian","dancer",
   "candlestick","rope","wrench","flashlight","masterkey","glasscutter",
-  "conservatory","ballroom","kitchen","library","entrance","diningroom","livingroom","office","billiardroom"
+  "conservatory","ballroom","kitchen","library","office","diningroom","livingroom","entrance","billiardroom"
 ];
 function cardImage(id){return "/learning/games/clue/assets/images/cards/"+CARD_FILES[id]+".webp"}
 const CARDBACK_IMG="/learning/games/clue/assets/images/cards/cardback.webp";
@@ -348,8 +355,14 @@ const SECRET_PASSAGES={0:8,8:0,2:6,6:2};
 const SERVER_MESSAGE=Object.freeze({STATE:"CLUE_STATE",REVEAL:"CLUE_REVEAL",ERROR:"CLUE_ERROR"});
 const $=id=>document.getElementById(id);
 
+const ENGLISH_NAMES=[
+  "Countess","Butler","Gardener","Physician","Antiquarian","Dancer",
+  "Candlestick","Rope","Wrench","Flashlight","Master Key","Glass Cutter",
+  "Conservatory","Ballroom","Kitchen","Library","Office","Dining Room","Living Room","Entrance","Billiard Room"
+];
 function cardType(id){return id<6?"suspect":id<12?"weapon":"room"}
 function cardName(id){return id<6?SUSPECTS[id].name:id<12?WEAPONS[id-6]:ROOMS[id-12]}
+function cardLabel(id){return cardName(id)+"("+ENGLISH_NAMES[id]+")"}
 function cardColor(id){return id<6?SUSPECTS[id].color:id<12?"#7a7f8c":"#b98a33"}
 
 let lobby=null;
@@ -359,7 +372,64 @@ let notebook={};
 let suggestSuspect=null;
 let suggestWeapon=null;
 let accuseSuspect=null,accuseWeapon=null,accuseRoom=null;
+let myAvatarUrl=null;
+let dieAnimating=false;
+let localDeadline=0;
 const savedName=String(localStorage.getItem(NAME_KEY)||"").trim();
+
+const GUEST_AVATAR_KEYS=[
+  "animal-bear","animal-bee","animal-butterfly","animal-cat","animal-chick","animal-crab","animal-crested-gecko","animal-crocodile","animal-deer","animal-dog",
+  "animal-dolphin","animal-dragon","animal-dragonfly","animal-duck","animal-eagle","animal-elephant","animal-flamingo","animal-fox","animal-frog","animal-giraffe",
+  "animal-hedgehog","animal-hippopotamus","animal-kangaroo","animal-koala","animal-ladybug","animal-leopard-gecko","animal-lion","animal-llama","animal-meerkat","animal-monkey",
+  "animal-mouse","animal-octopus","animal-ostrich","animal-owl","animal-panda","animal-peacock","animal-penguin","animal-praying-mantis","animal-rabbit","animal-ratsnake",
+  "animal-rhinoceros","animal-seal","animal-shark","animal-sloth","animal-snail","animal-squirrel","animal-tiger","animal-turtle","animal-unicorn","animal-viper",
+  "animal-whale","animal-wolf","fruit-apple","fruit-avocado","fruit-banana","fruit-blueberry","fruit-cherry","fruit-grape","fruit-mango","fruit-melon",
+  "fruit-orange","fruit-peach","fruit-persimmon","fruit-pineapple","fruit-strawberry","fruit-watermelon","theme-balloons","theme-rainbow","theme-star","theme-sun"
+];
+async function loadMyAvatar(){
+  try{
+    const response=await fetch("/api/student/profile");
+    if(response.ok){
+      const data=await response.json();
+      myAvatarUrl=data&&data.profile&&data.profile.avatar&&data.profile.avatar.url||null;
+      if(myAvatarUrl)return;
+    }
+  }catch(_){}
+  const key=GUEST_AVATAR_KEYS[Math.floor(Math.random()*GUEST_AVATAR_KEYS.length)];
+  myAvatarUrl="/assets/avatars/"+key+".webp";
+}
+
+function playDiceAnimation(){
+  dieAnimating=true;
+  const face=$("dieFace");
+  face.classList.add("rolling");
+  let ticks=0;
+  const timer=setInterval(()=>{
+    face.textContent=String(1+Math.floor(Math.random()*6));
+    ticks+=1;
+    if(ticks>=9){
+      clearInterval(timer);
+      dieAnimating=false;
+      face.classList.remove("rolling");
+      renderGame();
+    }
+  },70);
+}
+
+function syncLocalDeadline(){
+  if(!gameState||gameState.phase!=="playing"||!gameState.deadline){localDeadline=0;return}
+  const remaining=Math.max(0,Number(gameState.deadline)-Number(gameState.now||Date.now()));
+  localDeadline=Date.now()+remaining;
+}
+
+function updateTurnTimer(){
+  const el=$("turnTimer");
+  if(!el)return;
+  if(!localDeadline){el.textContent="--";el.classList.remove("warning");return}
+  const seconds=Math.max(0,Math.ceil((localDeadline-Date.now())/1000));
+  el.textContent=seconds+"s";
+  el.classList.toggle("warning",seconds<=5);
+}
 
 function showToast(message){
   clearTimeout(toastTimer);
@@ -383,6 +453,7 @@ function showLobby(){
 function buildBoard(){
   const svg=$("board");
   const parts=[];
+  const defs=[`<clipPath id="tokenClip" clipPathUnits="objectBoundingBox"><circle cx="0.5" cy="0.5" r="0.5"/></clipPath>`];
   const cellSize=100,gap=20,margin=20;
   function centerOf(index){
     const [row,col]=ROOM_POS[index];
@@ -409,7 +480,10 @@ function buildBoard(){
   for(let i=0;i<9;i+=1){
     const [row,col]=ROOM_POS[i];
     const x=margin+col*(cellSize+gap),y=margin+row*(cellSize+gap);
+    defs.push(`<clipPath id="roomClip${i}"><rect x="${x}" y="${y}" width="${cellSize}" height="${cellSize}" rx="8"/></clipPath>`);
     parts.push(`<g data-room="${i}">`);
+    parts.push(`<image class="roomImg" href="${cardImage(12+i)}" x="${x}" y="${y}" width="${cellSize}" height="${cellSize}" preserveAspectRatio="xMidYMid slice" clip-path="url(#roomClip${i})"/>`);
+    parts.push(`<rect class="roomShade" x="${x}" y="${y}" width="${cellSize}" height="${cellSize}" rx="8" clip-path="url(#roomClip${i})"/>`);
     parts.push(`<rect class="roomRect" data-room="${i}" x="${x}" y="${y}" width="${cellSize}" height="${cellSize}" rx="8"/>`);
     parts.push(`<text class="roomLabel" x="${x+cellSize/2}" y="${y+16}">${ROOMS[i]}</text>`);
     if(SECRET_PASSAGES[i]!==undefined){
@@ -418,7 +492,7 @@ function buildBoard(){
     parts.push(`<g class="tokenLayer" data-tokens="${i}"></g>`);
     parts.push(`</g>`);
   }
-  svg.innerHTML=parts.join("");
+  svg.innerHTML=`<defs>${defs.join("")}</defs>`+parts.join("");
   svg.addEventListener("click",onBoardClick);
 }
 
@@ -458,15 +532,29 @@ function renderTokens(){
   Object.entries(byRoom).forEach(([room,players])=>{
     const layer=document.querySelector(`.tokenLayer[data-tokens="${room}"]`);
     if(!layer)return;
+    const svgNS="http://www.w3.org/2000/svg";
     players.forEach((player,index)=>{
       const cx=28+(index%3)*22,cy=36+Math.floor(index/3)*22;
-      const circle=document.createElementNS("http://www.w3.org/2000/svg","circle");
-      circle.setAttribute("class","token");
-      circle.setAttribute("cx",cx);
-      circle.setAttribute("cy",cy);
-      circle.setAttribute("r",8);
-      circle.setAttribute("fill",SUSPECTS[player.suspectIndex]?.color||"#888");
-      layer.appendChild(circle);
+      const suspectColor=SUSPECTS[player.suspectIndex]?.color||"#888";
+      const ring=document.createElementNS(svgNS,"circle");
+      ring.setAttribute("class","token");
+      ring.setAttribute("cx",cx);
+      ring.setAttribute("cy",cy);
+      ring.setAttribute("r",9);
+      ring.setAttribute("fill",player.avatarUrl?"#12141c":suspectColor);
+      ring.setAttribute("stroke",suspectColor);
+      layer.appendChild(ring);
+      if(player.avatarUrl){
+        const img=document.createElementNS(svgNS,"image");
+        img.setAttribute("class","tokenAvatar");
+        img.setAttribute("href",player.avatarUrl);
+        img.setAttribute("x",cx-8);
+        img.setAttribute("y",cy-8);
+        img.setAttribute("width",16);
+        img.setAttribute("height",16);
+        img.setAttribute("clip-path","url(#tokenClip)");
+        layer.appendChild(img);
+      }
     });
   });
   if(gameState.phase==="playing"&&me&&gameState.turnPlayerId===snapshot.myId&&!gameState.pendingSuggestion&&gameState.turnPhase==="move"&&gameState.dice!==null&&!gameState.moved){
@@ -490,8 +578,11 @@ function renderPlayerList(){
     const isTurn=gameState.turnPlayerId===player.id;
     const isMe=snapshot.myId===player.id;
     const backs=Array.from({length:player.handCount||0}).map(()=>`<img src="${CARDBACK_IMG}" alt="" >`).join("");
+    const avatar=player.avatarUrl
+      ?`<img class="suspectDot" src="${player.avatarUrl}" alt="" style="border-color:${suspect?suspect.color:"#666"}">`
+      :`<span class="suspectDot" style="background:${suspect?suspect.color:"#666"}"></span>`;
     return `<div class="playerRow${isTurn?" active":""}${!player.active?" eliminated":""}">
-      <span class="suspectDot" style="background:${suspect?suspect.color:"#666"}"></span>
+      ${avatar}
       <span class="playerMeta2"><strong>${player.name}${isMe?" · 나":""}</strong><small>${suspect?suspect.name:""} · ${player.roomIndex>=0?ROOMS[player.roomIndex]:"-"}</small><span class="miniBackRow">${backs}</span></span>
       ${!player.active?'<span class="playerTag out">고발 실패</span>':""}
     </div>`;
@@ -532,7 +623,7 @@ function renderActionBar(){
     buttons.push(`<button id="endTurnBtn" class="secondary" type="button">차례 넘기기</button>`);
   }
   bar.innerHTML=buttons.join("");
-  if($("rollBtn"))$("rollBtn").addEventListener("click",()=>sendAction("ROLL"));
+  if($("rollBtn"))$("rollBtn").addEventListener("click",()=>{playDiceAnimation();sendAction("ROLL")});
   if($("passageBtn"))$("passageBtn").addEventListener("click",()=>sendAction("SECRET_PASSAGE"));
   if($("stayBtn"))$("stayBtn").addEventListener("click",()=>sendAction("STAY"));
   if($("suggestBtn"))$("suggestBtn").addEventListener("click",openSuggestOverlay);
@@ -546,7 +637,7 @@ function renderPending(){
   if(!suggestion){banner.classList.add("hidden");return}
   banner.classList.remove("hidden");
   const suggesterName=playerName(suggestion.suggesterId);
-  banner.textContent=`${suggesterName}님의 추리 · ${cardName(suggestion.suspect)} · ${cardName(suggestion.weapon)} · ${cardName(suggestion.room)} — 반박 확인 중`;
+  banner.textContent=`${suggesterName}님의 추리 · ${cardLabel(suggestion.suspect)} · ${cardLabel(suggestion.weapon)} · ${cardLabel(suggestion.room)} — 반박 확인 중`;
   const snapshot=lobby.snapshot();
   if(suggestion.awaitingChoice&&suggestion.refuterId===snapshot.myId&&suggestion.myChoices&&suggestion.myChoices.length){
     openRefuteOverlay(suggestion.myChoices);
@@ -556,7 +647,7 @@ function renderPending(){
 }
 
 function cardChip(id){
-  return `<span class="cardChip"><img src="${cardImage(id)}" alt="${cardName(id)}" ><span>${cardName(id)}</span></span>`;
+  return `<span class="cardChip"><img src="${cardImage(id)}" alt="${cardName(id)}" ><span>${cardLabel(id)}</span></span>`;
 }
 
 function renderHand(){
@@ -569,7 +660,7 @@ function notebookCell(id){
   const mine=Boolean(gameState&&(gameState.hand||[]).includes(id));
   const mark=notebook[id]||0;
   const symbol=mark===1?"✕":mark===2?"✓":"";
-  return `<div class="notebookCell${mine?" mine":""} mark-${mark}" data-card="${id}"><span class="mark">${symbol}</span><span class="label">${cardName(id)}</span></div>`;
+  return `<div class="notebookCell${mine?" mine":""} mark-${mark}" data-card="${id}"><span class="mark">${symbol}</span><span class="label">${cardLabel(id)}</span></div>`;
 }
 
 function renderNotebook(){
@@ -592,7 +683,7 @@ function renderNotebook(){
 
 function pickGrid(containerId,ids,selected,onPick){
   const container=$(containerId);
-  container.innerHTML=ids.map(id=>`<button type="button" class="pickBtn${selected===id?" active":""}" data-id="${id}">${cardName(id)}</button>`).join("");
+  container.innerHTML=ids.map(id=>`<button type="button" class="pickBtn${selected===id?" active":""}" data-id="${id}">${cardLabel(id)}</button>`).join("");
   container.querySelectorAll("button").forEach(button=>{
     button.addEventListener("click",()=>onPick(Number(button.getAttribute("data-id"))));
   });
@@ -625,7 +716,7 @@ function renderAccusePickers(){
 }
 
 function openRefuteOverlay(choices){
-  $("refuteChoices").innerHTML=choices.map(id=>`<button type="button" class="pickBtn" data-id="${id}">${cardName(id)}</button>`).join("");
+  $("refuteChoices").innerHTML=choices.map(id=>`<button type="button" class="pickBtn" data-id="${id}">${cardLabel(id)}</button>`).join("");
   $("refuteChoices").querySelectorAll("button").forEach(button=>{
     button.addEventListener("click",()=>{
       sendAction("CHOOSE_CARD",{card:Number(button.getAttribute("data-id"))});
@@ -665,7 +756,9 @@ function renderGame(){
   renderPlayerList();
   renderTokens();
   const ended=gameState.phase==="gameEnd";
-  $("dieFace").textContent=gameState.dice===null||gameState.dice===undefined?"-":String(gameState.dice);
+  if(!dieAnimating)$("dieFace").textContent=gameState.dice===null||gameState.dice===undefined?"-":String(gameState.dice);
+  syncLocalDeadline();
+  updateTurnTimer();
   if(ended){
     $("turnBanner").textContent=gameState.log||"게임이 종료되었습니다.";
   }else{
@@ -724,7 +817,8 @@ function sendHostAction(action){if(lobby.snapshot().role==="host")sendAction(act
 function syncLobby(snapshot){$("gameRoomCode").textContent=snapshot.roomCode||"----"}
 function showAbort({title,message}){$("abortTitle").textContent=title;$("abortMessage").textContent=message;$("abortOverlay").classList.remove("hidden")}
 
-function init(){
+async function init(){
+  await loadMyAvatar();
   lobby=ClassroomMultiplayerLobby.create({
     gameId:GAME_ID,
     getPlayerName:()=>/^[가-힣]{2,6}$/.test(savedName)?savedName:"",
@@ -742,12 +836,15 @@ function init(){
       startText:role==="host"&&canStart?`START · ${count} PLAYERS`:"WAITING FOR PLAYERS",
       guideText:role==="host"?`현재 ${count}명 · 3~6명일 때 시작 가능`:"방장이 게임을 시작할 때까지 기다리세요."
     }),
+    getRoomRequestData:()=>({avatarUrl:myAvatarUrl}),
     createStartData:()=>({serverAuthoritative:true}),
     onStarted:()=>{showGame();sendHostAction("START")},
     onServerMessage:handleServerMessage,
     onPlayerLeftDuringGame:()=>showToast("플레이어가 나가 대기실로 돌아갑니다."),
     onAbort:showAbort
   }).mount();
+
+  setInterval(updateTurnTimer,500);
 
   $("closeRulesBtn").addEventListener("click",hideRules);
   $("rulesOverlay").addEventListener("click",event=>{if(event.target===$("rulesOverlay"))hideRules()});

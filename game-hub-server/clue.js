@@ -11,7 +11,7 @@ const SUSPECTS = Object.freeze([
   { name: "무희", color: "#b8283a" }
 ]);
 const WEAPONS = Object.freeze(["촛대", "밧줄", "렌치", "손전등", "만능열쇠", "유리칼"]);
-const ROOMS = Object.freeze(["온실", "무도회장", "주방", "서재", "현관", "식당", "거실", "사무실", "당구실"]);
+const ROOMS = Object.freeze(["온실", "무도회장", "주방", "서재", "사무실", "식당", "거실", "현관", "당구실"]);
 
 // Original mansion layout (not the licensed Cluedo board art): 3x3 room grid,
 // index = row*3+col. Every corridor costs the same so a 1d6 roll is either
@@ -32,6 +32,13 @@ const SECRET_PASSAGES = Object.freeze({ 0: 8, 8: 0, 2: 6, 6: 2 });
 const START_ROOMS = Object.freeze([0, 2, 3, 5, 6, 8]);
 const MIN_PLAYERS = 3;
 const MAX_PLAYERS = 6;
+const TURN_TIME_MS = 45000;
+const REFUTE_TIME_MS = 15000;
+const AVATAR_URL_PATTERN = /^\/assets\/avatars\/[A-Za-z0-9._%()-]+\.webp$/i;
+
+function safeAvatarUrl(url) {
+  return typeof url === "string" && AVATAR_URL_PATTERN.test(url) ? url : null;
+}
 
 function randomInt(maximum) {
   return crypto.randomInt(maximum);
@@ -58,20 +65,21 @@ function cardName(id) {
   return ROOMS[id - 12];
 }
 
-function createPlayer(id, name) {
+function createPlayer(id, name, avatarUrl) {
   return {
     id: String(id),
     name: String(name || "플레이어").trim() || "플레이어",
+    avatarUrl: safeAvatarUrl(avatarUrl),
     suspectIndex: -1,
     roomIndex: -1,
     active: true
   };
 }
 
-function createGame(hostId, hostName) {
+function createGame(hostId, hostName, hostAvatarUrl) {
   return {
     phase: "lobby",
-    players: [createPlayer(hostId, hostName || "방장")],
+    players: [createPlayer(hostId, hostName || "방장", hostAvatarUrl)],
     hands: {},
     solution: null,
     turnIndex: 0,
@@ -82,15 +90,16 @@ function createGame(hostId, hostName) {
     pendingSuggestion: null,
     winnerId: null,
     solutionRevealed: false,
+    deadline: null,
     log: "플레이어를 기다리는 중입니다.",
     actionNumber: 0
   };
 }
 
-function addPlayer(game, id, name) {
+function addPlayer(game, id, name, avatarUrl) {
   const safeId = String(id);
   if (game.phase !== "lobby" || game.players.some(player => player.id === safeId) || game.players.length >= MAX_PLAYERS) return false;
-  game.players.push(createPlayer(safeId, name));
+  game.players.push(createPlayer(safeId, name, avatarUrl));
   game.log = `${String(name || "플레이어").trim() || "플레이어"}님이 입장했습니다.`;
   return true;
 }
@@ -120,6 +129,7 @@ function resetToLobby(game, notice = "대기실로 돌아왔습니다.") {
   game.pendingSuggestion = null;
   game.winnerId = null;
   game.solutionRevealed = false;
+  game.deadline = null;
   game.log = notice;
   game.actionNumber += 1;
 }
@@ -156,14 +166,11 @@ function startMatch(game, pick = randomInt) {
   });
 
   game.turnIndex = 0;
-  game.turnPhase = "move";
-  game.dice = null;
-  game.moved = false;
-  game.suggestionUsed = false;
   game.pendingSuggestion = null;
   game.winnerId = null;
   game.solutionRevealed = false;
   game.phase = "playing";
+  resetTurnState(game);
   game.log = `${game.players[0].name}님부터 시작합니다.`;
   game.actionNumber += 1;
   return { ok: true, reveals: [] };
@@ -174,6 +181,7 @@ function resetTurnState(game) {
   game.dice = null;
   game.moved = false;
   game.suggestionUsed = false;
+  game.deadline = Date.now() + TURN_TIME_MS;
 }
 
 function advanceTurn(game) {
@@ -265,6 +273,7 @@ function checkNextRefuter(game) {
       const reveal = { playerId: suggestion.suggesterId, title: `${candidate.name}님의 반박`, message: `${candidate.name}님이 ${cardName(matches[0])} 카드를 보여줍니다.`, card: matches[0] };
       game.log = `${candidate.name}님이 카드를 보여주며 반박했습니다.`;
       game.pendingSuggestion = null;
+      game.deadline = Date.now() + TURN_TIME_MS;
       return { reveals: [reveal] };
     }
     if (matches.length > 1) {
@@ -272,12 +281,14 @@ function checkNextRefuter(game) {
       suggestion.matchingCards = matches;
       suggestion.awaitingChoice = true;
       game.log = `${candidate.name}님이 반박할 카드를 고르는 중입니다.`;
+      game.deadline = Date.now() + REFUTE_TIME_MS;
       return { reveals: [] };
     }
     suggestion.checkPos += 1;
   }
   game.log = "아무도 반박하지 못했습니다.";
   game.pendingSuggestion = null;
+  game.deadline = Date.now() + TURN_TIME_MS;
   return { reveals: [] };
 }
 
@@ -321,8 +332,29 @@ function chooseCard(game, playerId, card) {
   const reveal = { playerId: suggestion.suggesterId, title: `${refuter.name}님의 반박`, message: `${refuter.name}님이 ${cardName(card)} 카드를 보여줍니다.`, card };
   game.log = `${refuter.name}님이 카드를 보여주며 반박했습니다.`;
   game.pendingSuggestion = null;
+  game.deadline = Date.now() + TURN_TIME_MS;
   game.actionNumber += 1;
   return { ok: true, reveals: [reveal] };
+}
+
+function forceTimeout(game) {
+  if (game.phase !== "playing" || !game.deadline || Date.now() < game.deadline) return { ok: false };
+  if (game.pendingSuggestion && game.pendingSuggestion.awaitingChoice) {
+    const suggestion = game.pendingSuggestion;
+    const card = suggestion.matchingCards[0];
+    const refuter = playerById(game, suggestion.refuterId);
+    const reveal = { playerId: suggestion.suggesterId, title: `${refuter.name}님의 반박`, message: `${refuter.name}님이 ${cardName(card)} 카드를 보여줍니다.`, card };
+    game.log = `시간 초과 · ${refuter.name}님이 자동으로 카드를 보여주며 반박했습니다.`;
+    game.pendingSuggestion = null;
+    game.deadline = Date.now() + TURN_TIME_MS;
+    game.actionNumber += 1;
+    return { ok: true, reveals: [reveal] };
+  }
+  const actor = activePlayer(game);
+  if (actor) game.log = `${actor.name}님이 시간을 초과해 차례를 넘겼습니다.`;
+  advanceTurn(game);
+  game.actionNumber += 1;
+  return { ok: true, reveals: [] };
 }
 
 function accuse(game, playerId, suspect, weapon, room) {
@@ -384,6 +416,7 @@ function stateFor(game, viewerId) {
     players: game.players.map(player => ({
       id: player.id,
       name: player.name,
+      avatarUrl: player.avatarUrl,
       suspectIndex: player.suspectIndex,
       roomIndex: player.roomIndex,
       active: player.active,
@@ -394,6 +427,8 @@ function stateFor(game, viewerId) {
     dice: game.dice,
     moved: game.moved,
     suggestionUsed: game.suggestionUsed,
+    deadline: game.phase === "playing" ? game.deadline : null,
+    now: Date.now(),
     pendingSuggestion: suggestion ? {
       suggesterId: suggestion.suggesterId,
       suspect: suggestion.suspect,
@@ -412,8 +447,9 @@ function stateFor(game, viewerId) {
 
 module.exports = {
   SUSPECTS, WEAPONS, ROOMS, ADJACENCY, SECRET_PASSAGES, START_ROOMS,
-  MIN_PLAYERS, MAX_PLAYERS,
+  MIN_PLAYERS, MAX_PLAYERS, TURN_TIME_MS, REFUTE_TIME_MS,
   createGame, addPlayer, removePlayer, resetToLobby,
   startMatch, roll, move, stay, secretPassage, suggest, chooseCard, accuse, endTurn, newGame,
+  forceTimeout,
   stateFor, shuffle, cardName, cardType
 };
