@@ -14,7 +14,7 @@ body.theme-tombdig{--accent:#c9a24a;--accent-soft:#7a5c23;--panel:#1d1a16;--pane
 body.theme-voidrun{--accent:#5fa8d8;--accent-soft:#2c5c80;--panel:#141a22;--panel-edge:#2f4560;--danger:#e0644f;--relic:#9d8ce8;background:linear-gradient(180deg,rgba(8,14,22,.66),rgba(4,7,12,.9)),url("/learning/games/expedition/assets/images/background.webp") center/cover fixed no-repeat,#0b1018}
 button,input{font:inherit}
 .hidden{display:none!important}
-.shell{width:min(1060px,100%);margin:auto}
+.shell{width:min(1120px,100%);margin:auto}
 .panel{margin-bottom:14px;padding:18px;border:1px solid var(--panel-edge);border-radius:16px;background:var(--panel);box-shadow:0 14px 40px #0007}
 h1,h2,h3,p{margin-top:0}
 .eyebrow{margin-bottom:4px;color:var(--accent);font-size:11px;font-weight:900;letter-spacing:.2em}
@@ -37,26 +37,40 @@ h1,h2,h3,p{margin-top:0}
 .themeCard small{color:#c4b79c;font-size:12px;line-height:1.4}
 
 /* 게임 화면 */
-.statusBar{display:grid;grid-template-columns:auto 1fr auto;align-items:center;gap:14px}
-.badge{padding:9px 13px;border:1px solid var(--panel-edge);border-radius:11px;background:#161209;text-align:center;min-width:78px}
-.badge strong{display:block;color:#ffe0a0;font-size:21px}
-.badge span{font-size:11px;color:#b7a888;letter-spacing:.08em}
+/* 방 번호는 게임판과 같은 무게로 놓일 이유가 없다. */
+.topbar{display:flex;justify-content:space-between;align-items:center;gap:10px;margin-bottom:10px;padding:0 4px}
+.topbarLeft{display:flex;align-items:baseline;gap:12px}
+.gameTag{font-family:Georgia,serif;font-size:20px;font-weight:900;color:#ffe6b4}
+.roomTag{color:#8d8168;font-size:12px;letter-spacing:.12em}
+.roomTag b{color:#c4b79c;font-size:16px;letter-spacing:.2em}
+.topbarRight{display:flex;gap:7px}
+.ghost{min-height:34px;padding:6px 12px;border:1px solid var(--panel-edge);border-radius:9px;background:transparent;color:#b7a888;font-size:12px;font-weight:800;cursor:pointer}
+.ghost:hover{color:#ffe6b4;border-color:var(--accent-soft)}
+
+/* 판. 테두리 상자가 아니라 하나의 장면으로 보이게 안쪽으로 어둡게 판다. */
+.scene{padding:20px;border-radius:20px;border:1px solid var(--panel-edge);
+  background:radial-gradient(ellipse at 78% 50%,#00000000,#000000c8 72%),linear-gradient(180deg,#00000055,#00000090),var(--panel);
+  box-shadow:inset 0 2px 40px #000a,0 20px 60px #0008}
+.sceneTop{display:grid;grid-template-columns:auto 1fr auto;align-items:center;gap:16px;margin-bottom:16px}
+.roundTag{text-align:center;min-width:74px}
+.roundTag b{display:block;color:#ffe0a0;font-size:24px;line-height:1}
+.roundTag span{color:#8d8168;font-size:10px;font-weight:800;letter-spacing:.14em}
 .headline{text-align:center;font-weight:900;color:#ffe6b4;font-size:clamp(15px,2.4vw,19px);line-height:1.4}
 
-.trail{display:flex;gap:8px;flex-wrap:wrap;min-height:92px;padding:12px;border:1px solid var(--panel-edge);border-radius:13px;background:#00000038}
-.card{display:grid;place-content:center;gap:2px;width:74px;min-height:92px;padding:6px 4px;border-radius:8px;text-align:center;font-weight:900;line-height:1.15}
-.card small{display:block;font-size:10px;font-weight:700;opacity:.85}
+.trail{display:flex;gap:10px;min-height:140px;padding:14px;border-radius:14px;overflow-x:auto;align-items:center;background:linear-gradient(90deg,#00000020,#000000aa 70%,#000000e0)}
+.card{display:grid;place-content:center;gap:3px;width:108px;min-height:140px;padding:10px 6px;border-radius:11px;text-align:center;font-weight:900;line-height:1.15}
+.card small{display:block;font-size:12px;font-weight:700;opacity:.85}
 .card.treasure{background:linear-gradient(#f2cd76,#b98529);color:#3a2708;border:1px solid #dcb45e}
-.card.hazard{background:linear-gradient(#e0705e,#973325);color:#fff0ec;border:1px solid #eb8a79;font-size:12px}
+.card.hazard{background:linear-gradient(#e0705e,#973325);color:#fff0ec;border:1px solid #eb8a79;font-size:16px}
 .card.hazard.repeat{box-shadow:0 0 0 3px #ffdcd4,0 0 18px #d1503f}
 .card.relic{background:linear-gradient(#c49ae8,#6f43a8);color:#fff;border:1px solid #d3b3f0}
-.cardValue{font-size:27px}
+.cardValue{font-size:44px}
 
 .splitNote{margin-top:6px;font-size:13px;color:#b7a888}
 
 .card{position:relative}
-.onCard{position:absolute;left:0;right:0;bottom:5px;display:flex;gap:2px;justify-content:center;align-items:center}
-.onCard i{width:8px;height:8px;border-radius:50%;background:radial-gradient(circle at 35% 30%,#ff8d7a,#a11f1f);box-shadow:0 1px 2px #0009}
+.onCard{position:absolute;left:0;right:0;bottom:8px;display:flex;gap:2px;justify-content:center;align-items:center}
+.onCard i{width:11px;height:11px;border-radius:50%;background:radial-gradient(circle at 35% 30%,#ff8d7a,#a11f1f);box-shadow:0 1px 2px #0009}
 .onCard b{margin-left:3px;color:#3a2708;font-size:11px}
 .leftTag{color:#ffcf84}
 .hazardLead{align-self:center;color:#9d907a;font-size:11px;font-weight:900;letter-spacing:.14em;margin-right:2px}
@@ -75,15 +89,17 @@ h1,h2,h3,p{margin-top:0}
 .bigChoice:disabled{cursor:not-allowed;opacity:.4}
 .waitNote{margin-top:10px;font-size:13px;color:#b7a888}
 
-.resultPanel{margin-top:14px;padding:18px;border:2px solid var(--accent);border-radius:14px;background:#00000055;text-align:center}
-.resultPanel h2{margin-bottom:6px;color:#ffe6b4}
+.resultOverlay{position:fixed;inset:0;z-index:25;display:grid;place-items:center;padding:20px;background:#07050390}
+.resultCard{width:min(560px,100%);padding:26px;border:2px solid var(--accent);border-radius:18px;text-align:center;
+  background:linear-gradient(180deg,#241d12,#14100a);box-shadow:0 26px 80px #000d}
+.resultCard h2{margin-bottom:6px;color:#ffe6b4;font-family:Georgia,serif;font-size:30px}
 .rankRow{display:flex;justify-content:center;gap:8px;flex-wrap:wrap;margin:12px 0}
 .rankChip{padding:8px 12px;border:1px solid var(--panel-edge);border-radius:999px;background:#241e16;font-size:13px}
 .rankChip.win{border-color:var(--accent);background:#3a2c12;color:#ffe6b4;font-weight:900}
 
 /* 캠프(왼쪽) ─ 길(오른쪽) 구조. 누가 안에 있고 누가 나왔는지가 위치로 보여야 한다. */
-.tunnel{display:grid;grid-template-columns:132px minmax(0,1fr);gap:12px;margin-top:14px}
-.camp{padding:12px 10px;border:1px dashed var(--accent-soft);border-radius:13px;background:#00000038;text-align:center}
+.tunnel{display:grid;grid-template-columns:140px minmax(0,1fr);gap:16px;margin-top:6px}
+.camp{padding:14px 10px;border-right:1px solid var(--panel-edge);text-align:center}
 .path{min-width:0}
 .zoneLabel{color:var(--accent);font-size:11px;font-weight:900;letter-spacing:.18em;margin-bottom:8px}
 .zoneNote{margin-top:8px;color:#8d8168;font-size:10px}
@@ -135,7 +151,7 @@ h1,h2,h3,p{margin-top:0}
 @keyframes bannerFade{0%{opacity:0;transform:translateY(16px)}18%{opacity:1;transform:none}70%{opacity:1}100%{opacity:0}}
 
 /* 지금 나에게 걸린 게 뭔지 한 줄로. 이게 없으면 숫자판으로만 보인다. */
-.situation{margin-top:12px;padding:13px 15px;border-radius:12px;background:#00000045;color:#e6d7ba;font-size:14px;line-height:1.55;text-align:center}
+.situation{margin-top:12px;border:1px solid var(--panel-edge);padding:13px 15px;border-radius:12px;background:#00000045;color:#e6d7ba;font-size:14px;line-height:1.55;text-align:center}
 .situation b{color:#ffe0a0;font-size:18px}
 .situation .risk{color:var(--danger);font-weight:900}
 
@@ -147,9 +163,15 @@ h1,h2,h3,p{margin-top:0}
 @media(max-width:640px){
   body{padding:10px}.panel{padding:14px}
   .themeGrid{grid-template-columns:1fr}
-  .statusBar{grid-template-columns:1fr 1fr}
-  .statusBar .headline{grid-column:1/-1;grid-row:1}
-  .floor{grid-template-columns:1fr}
+  .scene{padding:13px}
+  .sceneTop{grid-template-columns:1fr 1fr;gap:8px}
+  .sceneTop .headline{grid-column:1/-1;grid-row:1}
+  /* 좁은 화면에서는 캠프를 길 위로 올리고 가로줄로 나눈다. */
+  .tunnel{grid-template-columns:1fr;gap:10px}
+  .camp{border-right:0;border-bottom:1px solid var(--panel-edge);padding-bottom:10px}
+  .card{width:88px;min-height:118px}
+  .cardValue{font-size:34px}
+  .trail{min-height:118px}
   .decisionButtons{grid-template-columns:1fr}
 }
 </style>
@@ -213,30 +235,29 @@ h1,h2,h3,p{margin-top:0}
   </section>
 
   <section id="gameScreen" class="hidden">
-    <section class="panel">
-      <div class="row spread">
-        <div><div class="eyebrow">ROOM CODE</div><div id="gameRoomCode" class="code">----</div></div>
-        <div class="row">
-          <button id="rulesBtnGame" class="secondary" type="button">RULES</button>
-          <button id="leaveBtnGame" class="secondary" type="button">나가기</button>
-        </div>
+    <div class="topbar">
+      <div class="topbarLeft">
+        <span class="gameTag">탐사대</span>
+        <span class="roomTag">ROOM <b id="gameRoomCode">----</b></span>
       </div>
-    </section>
+      <div class="topbarRight">
+        <button id="rulesBtnGame" class="ghost" type="button">RULES</button>
+        <button id="leaveBtnGame" class="ghost" type="button">나가기</button>
+      </div>
+    </div>
 
-    <section class="panel">
-      <div class="statusBar">
-        <div class="badge"><strong id="roundValue">1 / 5</strong><span>ROUND</span></div>
+    <!-- 게임판은 패널 안에 가두지 않는다. 화면에서 제일 큰 것이 판이어야 한다. -->
+    <div class="scene">
+      <div class="sceneTop">
+        <div class="roundTag"><b id="roundValue">1 / 5</b><span>ROUND</span></div>
         <div id="headline" class="headline">탐사를 준비하는 중입니다.</div>
-        <div class="badge"><strong id="deckValue">0</strong><span>남은 카드</span></div>
+        <div class="roundTag"><b id="deckValue">0</b><span>남은 카드</span></div>
       </div>
-
-      <div id="situation" class="situation"></div>
 
       <div class="tunnel">
         <div class="camp">
           <div class="zoneLabel">캠프</div>
           <div id="campTokens" class="tokens"></div>
-          <div class="zoneNote">돌아온 사람</div>
         </div>
         <div class="path">
           <div class="zoneLabel" id="pathLabel">지나온 길</div>
@@ -248,6 +269,9 @@ h1,h2,h3,p{margin-top:0}
       </div>
 
       <div id="hazardTrack" class="hazardTrack"></div>
+    </div>
+
+    <div id="situation" class="situation"></div>
 
       <div id="decisionBox" class="decisionBox hidden">
         <div id="decisionTitle" style="font-weight:900;color:#ffe6b4">계속 갈까요, 돌아갈까요?</div>
@@ -258,18 +282,21 @@ h1,h2,h3,p{margin-top:0}
         <div id="waitNote" class="waitNote"></div>
       </div>
 
-      <div id="resultPanel" class="resultPanel hidden">
-        <h2 id="resultTitle">라운드 종료</h2>
-        <p id="resultText"></p>
-        <div id="rankRow" class="rankRow"></div>
-        <div class="row" style="justify-content:center">
-          <button id="nextRoundBtn" class="primary hidden" type="button">다음 라운드</button>
-          <button id="newGameBtn" class="primary hidden" type="button">새 게임</button>
-          <button id="lobbyBtn" class="secondary hidden" type="button">대기실로</button>
-        </div>
-      </div>
-    </section>
   </section>
+
+  <!-- 결과는 화면을 아래로 늘리는 대신 판 위에 덮는다. -->
+  <div id="resultPanel" class="resultOverlay hidden">
+    <div class="resultCard">
+      <h2 id="resultTitle">라운드 종료</h2>
+      <p id="resultText"></p>
+      <div id="rankRow" class="rankRow"></div>
+      <div class="row" style="justify-content:center">
+        <button id="nextRoundBtn" class="primary hidden" type="button">다음 라운드</button>
+        <button id="newGameBtn" class="primary hidden" type="button">새 게임</button>
+        <button id="lobbyBtn" class="secondary hidden" type="button">대기실로</button>
+      </div>
+    </div>
+  </div>
 </main>
 
 <section id="rulesOverlay" class="overlay hidden" aria-modal="true" role="dialog">
