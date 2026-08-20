@@ -198,8 +198,26 @@ h1,h2,h3,p{margin-top:0}
   </section>
 </main>
 
-<!-- 아직 전용 BGM이 없어 src를 비워 둔다. assets/sound/bgm.ogg 를 넣고 src만 채우면 된다. -->
-<audio id="bgm" loop preload="auto"></audio>
+<audio id="bgm" preload="auto"></audio>
+<script>
+(() => {
+  "use strict";
+  const TRACKS = [
+    "/learning/games/clue/assets/sound/bgm-1.ogg",
+    "/learning/games/clue/assets/sound/bgm-2.ogg",
+    "/learning/games/clue/assets/sound/bgm-3.ogg"
+  ];
+  const audio = document.getElementById("bgm");
+  if (!audio) return;
+  let index = Math.floor(Math.random() * TRACKS.length);
+  audio.src = TRACKS[index];
+  audio.addEventListener("ended", () => {
+    index = (index + 1) % TRACKS.length;
+    audio.src = TRACKS[index];
+    audio.play().catch(() => {});
+  });
+})();
+</script>
 
 <section id="rulesOverlay" class="overlay hidden" role="dialog" aria-modal="true">
   <div class="modal">
