@@ -35,6 +35,9 @@ const TREASURE_VALUES = Object.freeze([1, 2, 3, 4, 5, 5, 7, 7, 9, 11, 11, 13, 14
 const HAZARD_COPIES = 3;
 const RELIC_VALUES = Object.freeze([5, 5, 5, 10, 10]);
 const TOTAL_ROUNDS = 5;
+// 마지막 한 명을 무한정 기다리면 나머지가 멈춘다. 이진 선택이라 이 정도면 충분하고,
+// 학년군 문제를 푸는 시간까지 감안한 길이다.
+const DECIDE_MS = 25000;
 const MIN_PLAYERS = 3;
 const MAX_PLAYERS = 8;
 
@@ -133,6 +136,7 @@ function createGame(hostId, hostName, theme = DEFAULT_THEME, hostBand = DEFAULT_
     lastReturn: null,
     roundReason: null,
     gameWinnerIds: [],
+    decideUntil: 0,
     lastAction: "플레이어를 기다리는 중입니다.",
     actionNumber: 0
   };
@@ -188,6 +192,7 @@ function resetToLobby(game, notice = "대기실로 돌아왔습니다.") {
   game.lastReturn = null;
   game.roundReason = null;
   game.gameWinnerIds = [];
+  game.decideUntil = 0;
   game.lastAction = notice;
   game.actionNumber += 1;
 }
@@ -282,6 +287,7 @@ function revealCard(game) {
 
   game.players.forEach(player => { player.decision = null; });
   game.phase = "deciding";
+  game.decideUntil = Date.now() + DECIDE_MS;
   game.actionNumber += 1;
 }
 
@@ -295,6 +301,19 @@ function decide(game, playerId, choice) {
   game.actionNumber += 1;
   settleIfEveryoneDecided(game);
   return { ok: true };
+}
+
+function decideTimedOut(game) {
+  if (game.phase !== "deciding") return false;
+  const waiting = explorers(game).filter(player => !player.decision);
+  if (!waiting.length) return false;
+  waiting.forEach(player => { player.decision = "return"; });
+  game.lastAction = waiting.length === 1
+    ? `${waiting[0].name}님이 시간 안에 정하지 못해 그대로 돌아왔습니다.`
+    : `${waiting.length}명이 시간 안에 정하지 못해 그대로 돌아왔습니다.`;
+  game.actionNumber += 1;
+  settleIfEveryoneDecided(game);
+  return true;
 }
 
 function settleIfEveryoneDecided(game) {
@@ -390,6 +409,7 @@ function endRound(game, reason, hazard = null) {
   // 챙겨가지 않은 희귀 보물은 그대로 묻힌다.
   game.path = { gems: 0, relics: [] };
   game.roundReason = reason;
+  game.decideUntil = 0;
   game.roundHazard = reason === "hazard" ? hazard : null;
   game.phase = game.round >= game.totalRounds ? "gameEnd" : "roundEnd";
   if (game.phase === "gameEnd") {
@@ -451,6 +471,7 @@ function stateFor(game, viewerId) {
     minPlayers: MIN_PLAYERS,
     maxPlayers: MAX_PLAYERS,
     deckCount: game.deck.length,
+    decideUntil: game.phase === "deciding" ? game.decideUntil : 0,
     band: game.band,
     remaining: remainingCounts(game),
     revealed: game.revealed.map(card => ({ ...card })),
@@ -497,6 +518,8 @@ module.exports = {
   resetToLobby,
   startMatch,
   decide,
+  decideTimedOut,
+  DECIDE_MS,
   nextRound,
   newGame,
   stateFor,

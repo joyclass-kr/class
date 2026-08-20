@@ -12,6 +12,7 @@ const Blokus = require("./blokus");
 const DrawRelay = require("./drawrelay");
 const Expedition = require("./expedition");
 const Clue = require("./clue");
+const Codenames = require("./codenames");
 const { createClassroomPlatform } = require("./classroom-platform");
 
 const app = express();
@@ -519,8 +520,23 @@ function blokusError(socket, message) {
   safeSend(socket, { type: "BLOKUS_ERROR", message });
 }
 
+// 결정 마감이 걸려 있으면 그때 깨어나 아직 안 정한 사람을 귀환시킨다.
+// 시간을 클라이언트가 재면 조작할 수 있으므로 서버가 주인이다.
+function expeditionSchedule(room) {
+  clearTimeout(room?.expeditionTimer);
+  const game = room?.expedition;
+  if (!game || game.phase !== "deciding" || !game.decideUntil) return;
+  const wait = Math.max(50, game.decideUntil - Date.now());
+  room.expeditionTimer = setTimeout(() => {
+    if (rooms.get(roomKey(room.gameId, room.roomCode)) !== room) return;
+    if (Expedition.decideTimedOut(game)) expeditionBroadcast(room);
+  }, wait);
+  room.expeditionTimer.unref?.();
+}
+
 function expeditionBroadcast(room) {
   if (!room?.expedition) return;
+  expeditionSchedule(room);
   for (const [id, client] of room.clients) {
     safeSend(client, {
       type: "EXPEDITION_STATE",
@@ -2973,6 +2989,7 @@ wss.on("connection", socket => {
 
       if (socket.meta.role === "host" || playerId === currentRoom.hostId) {
         clearTimeout(currentRoom.drawrelayTimer);
+        clearTimeout(currentRoom.expeditionTimer);
         for (const [id, client] of currentRoom.clients) {
           if (id !== playerId) {
             safeSend(client, {

@@ -359,3 +359,54 @@ test("확률 문제를 낼 수 있도록 덱에 남은 카드를 종류별로 �
   assert.equal(left.deadly, 1);
   assert.equal(left.treasure + left.hazard + left.relic, left.total);
 });
+
+test("시간이 다 되면 아직 안 정한 사람만 안전하게 돌려보낸다", () => {
+  const game = threePlayerGame();
+  Expedition.startMatch(game);
+  stage(game, [{ kind: "treasure", value: 9 }, { kind: "treasure", value: 6 }]);
+  allContinue(game); // 각자 3을 들고 있다
+
+  const before = Expedition.stateFor(game, "p1");
+  assert.ok(before.decideUntil > Date.now(), "결정 중에는 마감 시각이 있어야 한다");
+
+  Expedition.decide(game, "p1", "continue");
+  assert.equal(Expedition.decideTimedOut(game), true);
+
+  const seen = Expedition.stateFor(game, "p1").players;
+  // 제때 고른 사람은 그대로 안에 남는다.
+  assert.equal(seen.find(player => player.id === "p1").inCave, true);
+  // 못 고른 사람은 들고 있던 것을 챙겨 나온다. 계속 가기로 넘기면 자리를 비운 사이 전부 잃는다.
+  ["p2", "p3"].forEach(id => {
+    const player = seen.find(item => item.id === id);
+    assert.equal(player.inCave, false);
+    assert.equal(player.bank, 3);
+    assert.equal(player.caught, false);
+  });
+});
+
+test("결정을 기다리는 중이 아니면 시간 초과는 아무 일도 하지 않는다", () => {
+  // 전원이 정하는 순간 다음 카드가 열려 다시 "아무도 안 정한" 상태가 되므로,
+  // "모두 정한 상태" 자체는 관찰할 수 없다. 실제 방어선은 단계 검사다.
+  const lobby = threePlayerGame();
+  assert.equal(lobby.phase, "lobby");
+  assert.equal(Expedition.decideTimedOut(lobby), false);
+
+  const game = threePlayerGame();
+  Expedition.startMatch(game);
+  stage(game, [{ kind: "treasure", value: 3 }]);
+  game.players.forEach(player => Expedition.decide(game, player.id, "return"));
+  assert.equal(game.phase, "roundEnd");
+  const revealed = game.revealed.length;
+  assert.equal(Expedition.decideTimedOut(game), false);
+  assert.equal(game.revealed.length, revealed);
+});
+
+test("라운드가 끝나면 기다릴 마감이 사라진다", () => {
+  const game = threePlayerGame();
+  Expedition.startMatch(game);
+  stage(game, [{ kind: "treasure", value: 3 }]);
+  game.players.forEach(player => Expedition.decide(game, player.id, "return"));
+  assert.equal(game.phase, "roundEnd");
+  assert.equal(Expedition.stateFor(game, "p1").decideUntil, 0);
+  assert.equal(Expedition.decideTimedOut(game), false);
+});

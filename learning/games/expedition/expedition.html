@@ -133,6 +133,12 @@ h1,h2,h3,p{margin-top:0}
 .quizMark.no{color:var(--danger)}
 .quizNote{margin-top:7px;color:#b7a888;font-size:12px}
 .decisionBox{margin-top:14px;padding:16px;border:1px solid var(--accent-soft);border-radius:14px;background:#00000045;text-align:center}
+.decisionHead{display:flex;justify-content:center;align-items:center;gap:12px;flex-wrap:wrap;font-weight:900;color:#ffe6b4}
+.clock{min-width:44px;padding:2px 9px;border-radius:999px;background:#1a1206;border:1px solid var(--accent-soft);color:#ffe0a0;font-size:15px;font-variant-numeric:tabular-nums}
+.clock.hurry{background:#3a1a15;border-color:var(--danger);color:#ffcfc6}
+.clockBar{height:5px;margin-top:9px;border-radius:999px;background:#00000060;overflow:hidden}
+.clockBar i{display:block;height:100%;width:100%;background:linear-gradient(90deg,var(--accent),var(--accent-soft));transition:width .25s linear}
+.clockBar i.hurry{background:linear-gradient(90deg,#ff8a76,var(--danger))}
 .decisionButtons{display:grid;grid-template-columns:1fr 1fr;gap:12px;margin-top:12px}
 .bigChoice{min-height:82px;padding:12px;border-radius:14px;border:2px solid transparent;font-size:clamp(15px,3vw,19px);font-weight:900;cursor:pointer}
 .bigChoice small{display:block;margin-top:4px;font-size:12px;font-weight:700;opacity:.85}
@@ -344,7 +350,11 @@ h1,h2,h3,p{margin-top:0}
       </div>
 
       <div id="decisionBox" class="decisionBox hidden">
-        <div id="decisionTitle" style="font-weight:900;color:#ffe6b4">계속 갈까요, 돌아갈까요?</div>
+        <div class="decisionHead">
+          <span id="decisionTitle">계속 갈까요, 돌아갈까요?</span>
+          <span id="decisionClock" class="clock"></span>
+        </div>
+        <div class="clockBar"><i id="clockFill"></i></div>
         <div class="decisionButtons">
           <button id="continueBtn" class="bigChoice goDeeper" type="button">더 들어간다<small>보물은 늘지만 위험도 늘어난다</small></button>
           <button id="returnBtn" class="bigChoice turnBack" type="button">돌아간다<small>지금까지 챙긴 것을 확정한다</small></button>
@@ -893,12 +903,35 @@ function showdown(before,now){
   flash(box,1500);
 }
 
+let clockTimer=null;
+
+// 마감은 서버가 정한다. 여기서는 남은 시간을 그리기만 하므로 시계를 돌려도 소용없다.
+function renderClock(){
+  const clock=$("decisionClock"), fill=$("clockFill");
+  if(!state||!state.decideUntil){
+    clearInterval(clockTimer); clockTimer=null;
+    if(clock)clock.textContent="";
+    if(fill)fill.style.width="100%";
+    return;
+  }
+  const left=Math.max(0,state.decideUntil-Date.now());
+  const seconds=Math.ceil(left/1000);
+  const ratio=Math.max(0,Math.min(1,left/25000));
+  const hurry=seconds<=7;
+  clock.textContent=`${seconds}초`;
+  clock.classList.toggle("hurry",hurry);
+  fill.style.width=`${ratio*100}%`;
+  fill.classList.toggle("hurry",hurry);
+  if(!clockTimer)clockTimer=setInterval(renderClock,250);
+}
+
 function renderDecision(){
   const box=$("decisionBox");
   const deciding=state.phase==="deciding";
   const me=state.players.find(player=>player.id===myId());
   const iAmIn=Boolean(me?.inCave);
   box.classList.toggle("hidden",!deciding);
+  renderClock();
   if(!deciding)return;
 
   const waiting=state.explorerCount-state.decidedIds.length;
