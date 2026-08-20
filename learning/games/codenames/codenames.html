@@ -1,0 +1,458 @@
+<!doctype html>
+<html lang="ko">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<title>낱말 암호</title>
+<link rel="stylesheet" href="../../../assets/network/multiplayer-lobby.css">
+<style>
+:root{font-family:system-ui,-apple-system,"Segoe UI",sans-serif;color:#eef0f5;background:#10121a;--accent:#d9a441;--accent-soft:#8a662a;--panel:#1b1f2b;--panel-edge:#3a3f52;--red:#b3453c;--red-soft:#7a2b26;--blue:#3468a6;--blue-soft:#20456f;--neutral:#c9bfa4;--bomb:#2a2a2f}
+*{box-sizing:border-box}
+body{margin:0;min-height:100vh;padding:20px;background:linear-gradient(180deg,#0c0d1382,#08090eb8),url("/learning/games/codenames/assets/images/background.jpg") center/cover fixed no-repeat,#10121a}
+button,input,select{font:inherit}
+.hidden{display:none!important}
+.shell{width:min(1100px,100%);margin:auto}
+#missingScreen,#entry{max-width:640px;margin:auto}
+.panel{margin-bottom:14px;padding:18px;border:1px solid var(--panel-edge);border-radius:16px;background:var(--panel);box-shadow:0 16px 44px #0007}
+h1,h2,h3,p{margin-top:0}
+.eyebrow{margin-bottom:5px;color:var(--accent);font-size:11px;font-weight:900;letter-spacing:.2em}
+.title{margin:0;font-family:Georgia,"Times New Roman",serif;font-size:clamp(32px,7vw,54px);letter-spacing:.04em;color:#f3ddb0}
+.subtitle{margin:4px 0 0;color:#b7bcca}
+.row{display:flex;align-items:center;gap:9px;flex-wrap:wrap}
+.spread{justify-content:space-between}
+.primary,.secondary,.pickBtn,.gradeBtn{min-height:40px;padding:9px 14px;border:1px solid var(--accent-soft);border-radius:10px;font-weight:850;cursor:pointer;background:#262b3a;color:#e8ebf3}
+.primary{background:linear-gradient(#e6bd6c,#a9762c);color:#221304}
+.danger{background:linear-gradient(#d9695c,#933);color:#2a0603}
+.primary:disabled,.secondary:disabled,.danger:disabled,.pickBtn:disabled,.gradeBtn:disabled{cursor:not-allowed;opacity:.4}
+.code{font-size:26px;font-weight:950;letter-spacing:.16em}
+.status{min-height:22px;color:#e4cf9c;font-weight:700}
+.entryActions{display:grid;grid-template-columns:repeat(2,1fr);gap:9px}
+.entryPane{margin-top:12px}
+.entryPane input{width:100%;padding:12px;border-radius:10px;border:1px solid var(--panel-edge);background:#0e1017;color:#fff}
+
+.gradeRow{display:flex;flex-wrap:wrap;gap:7px;margin:8px 0}
+.gradeBtn.active{background:var(--accent);color:#241404;border-color:var(--accent)}
+.note{color:#9aa0b4;font-size:12.5px}
+
+.teamPickGrid{display:grid;grid-template-columns:1fr 1fr;gap:12px;margin-top:10px}
+.teamCol h3{margin:0 0 8px;font-size:14px;letter-spacing:.05em}
+.teamCol.red h3{color:#f2a49c}
+.teamCol.blue h3{color:#a7c8ef}
+.teamCol .pickBtn{width:100%;margin-bottom:7px;text-align:center}
+.teamCol.red .pickBtn.active{background:var(--red);border-color:var(--red);color:#fff}
+.teamCol.blue .pickBtn.active{background:var(--blue);border-color:var(--blue);color:#fff}
+.roster{margin-top:8px;font-size:12.5px;color:#c9cee0;line-height:1.6}
+.unassignedRow{margin-top:10px;color:#e0a86f;font-size:12.5px}
+.startGuide{margin-top:10px;font-size:13px;color:#b7bcca}
+
+.boardWrap{max-width:640px;margin:0 auto}
+.board{display:grid;grid-template-columns:repeat(5,1fr);gap:8px}
+.tile{position:relative;aspect-ratio:4/3;padding:6px;border-radius:10px;border:2px solid var(--panel-edge);background:#232838;color:#e8ebf3;font-weight:800;font-size:clamp(11px,2.4vw,13px);cursor:pointer;display:flex;align-items:center;justify-content:center;text-align:center;line-height:1.2;word-break:keep-all}
+.tile:disabled{cursor:default}
+.tile.color-red{background:var(--red);border-color:#e08076;color:#fff}
+.tile.color-blue{background:var(--blue);border-color:#7fb0e6;color:#fff}
+.tile.color-neutral{background:var(--neutral);border-color:#e6dcc0;color:#2a2418}
+.tile.color-bomb{background:var(--bomb);border-color:#6a6a75;color:#f0a}
+.tile.revealed{opacity:.55}
+.tile.clickable:hover{filter:brightness(1.12);transform:translateY(-1px)}
+
+.scoreRow{display:flex;justify-content:center;gap:22px;margin:6px 0 12px;font-weight:900}
+.scoreRow .red{color:#f2a49c}
+.scoreRow .blue{color:#a7c8ef}
+.turnBanner{text-align:center;font-weight:850;padding:8px 4px}
+.hintDisplay{text-align:center;padding:9px;border-radius:10px;background:#151a26;color:#f0c988;font-weight:800;margin-bottom:10px}
+.hintForm{display:flex;gap:8px;flex-wrap:wrap;justify-content:center;margin-bottom:10px}
+.hintForm input{flex:1;min-width:140px;padding:10px;border-radius:10px;border:1px solid var(--panel-edge);background:#0e1017;color:#fff}
+.hintForm select{padding:10px;border-radius:10px;border:1px solid var(--panel-edge);background:#0e1017;color:#fff}
+.actionBar{display:flex;justify-content:center;gap:8px;margin-top:6px}
+
+.overlay{position:fixed;inset:0;z-index:30;display:grid;place-items:center;padding:18px;background:#06070ce0}
+.modal{width:min(640px,100%);max-height:88vh;overflow:auto;padding:22px;border:1px solid var(--accent-soft);border-radius:16px;background:#171b26}
+.modal li{margin-bottom:8px}
+.modal h2{color:#f3ddb0}
+.toast{position:fixed;right:17px;bottom:17px;z-index:50;max-width:min(390px,calc(100vw - 34px));padding:12px 15px;border:1px solid var(--accent-soft);border-radius:10px;background:#171b26;color:#fff;box-shadow:0 10px 30px #0009}
+
+.resultModal{text-align:center;width:min(460px,100%)}
+.resultModal .outcome{margin:4px 0 6px;font-size:clamp(26px,6vw,36px);font-weight:950}
+.resultModal .outcome.red{color:#f2a49c}
+.resultModal .outcome.blue{color:#a7c8ef}
+
+@media(max-width:600px){.teamPickGrid{grid-template-columns:1fr}}
+</style>
+<script src="../../../assets/network/game-network.js"></script>
+<script src="../../../assets/network/multiplayer-lobby.js"></script>
+<script src="../../../assets/sound/music-control.js" defer></script>
+<link rel="stylesheet" href="../../../assets/device-game.css">
+</head>
+<body>
+<main class="shell">
+  <section id="missingScreen" class="panel hidden">
+    <div class="eyebrow">PLAYER NAME REQUIRED</div>
+    <h1>이름이 없습니다</h1>
+    <p>이름 변경은 메인 화면에서만 가능합니다.</p>
+    <button class="primary" type="button" onclick="location.href='../../../'">메인 화면으로</button>
+  </section>
+
+  <section id="entry" class="hidden" data-multiplayer-lobby>
+    <header class="panel">
+      <h1 class="title">CODE WORDS</h1>
+      <p class="subtitle">낱말 암호 · 4~10 PLAYERS · 2팀</p>
+      <p>PLAYER · <strong id="savedPlayerName">-</strong></p>
+      <div class="entryActions">
+        <button id="createTab" class="primary" type="button">CREATE ROOM</button>
+        <button id="joinTab" class="secondary" type="button">JOIN ROOM</button>
+        <button id="rulesEntryBtn" class="secondary" type="button">HOW TO PLAY</button>
+        <button id="leaveEntryBtn" class="secondary" type="button">메인 화면으로</button>
+      </div>
+    </header>
+
+    <section id="createPane" class="panel entryPane hidden">
+      <div class="row spread">
+        <div><div class="eyebrow">ROOM CODE</div><div id="roomCode" class="code">----</div></div>
+        <button id="copyBtn" class="secondary" type="button">COPY CODE</button>
+      </div>
+      <div id="entryStatus" class="status">방을 만드는 중입니다.</div>
+    </section>
+
+    <section id="joinPane" class="panel entryPane hidden">
+      <div class="row">
+        <input id="joinCode" inputmode="numeric" maxlength="4" placeholder="ROOM CODE · 4 DIGITS">
+        <button id="joinBtn" class="primary" type="button">JOIN ROOM</button>
+      </div>
+      <div class="status" id="joinStatusText">방장이 알려준 번호를 입력하세요.</div>
+    </section>
+  </section>
+
+  <section id="game" class="hidden">
+    <div class="panel row spread">
+      <div><div class="eyebrow">ROOM CODE</div><div id="gameRoomCode" class="code">----</div></div>
+      <div class="row">
+        <button id="rulesGameBtn" class="secondary" type="button">RULES</button>
+        <button id="leaveGameBtn" class="secondary" type="button">메인 화면</button>
+      </div>
+    </div>
+
+    <section id="lobbySetup" class="panel hidden">
+      <h2>팀과 역할 정하기</h2>
+      <div class="eyebrow">낱말 학년군 범위 · 방장만 변경 가능</div>
+      <div id="bandRow" class="gradeRow"></div>
+      <p id="bandNote" class="note"></p>
+
+      <div class="teamPickGrid">
+        <div class="teamCol red">
+          <h3>레드팀</h3>
+          <button id="pick-red-spymaster" class="pickBtn" type="button">스파이마스터로 선택</button>
+          <button id="pick-red-operative" class="pickBtn" type="button">요원으로 선택</button>
+          <div id="roster-red" class="roster"></div>
+        </div>
+        <div class="teamCol blue">
+          <h3>블루팀</h3>
+          <button id="pick-blue-spymaster" class="pickBtn" type="button">스파이마스터로 선택</button>
+          <button id="pick-blue-operative" class="pickBtn" type="button">요원으로 선택</button>
+          <div id="roster-blue" class="roster"></div>
+        </div>
+      </div>
+      <div id="unassignedRow" class="unassignedRow"></div>
+
+      <div class="row" style="margin-top:14px">
+        <button id="beginGameBtn" class="primary hidden" type="button" disabled>START GAME</button>
+      </div>
+      <p id="startGuide" class="startGuide"></p>
+      <p id="waitingHostNote" class="note hidden">방장이 게임을 시작할 때까지 기다려 주세요.</p>
+    </section>
+
+    <section id="boardArea" class="panel hidden">
+      <div id="turnBanner" class="turnBanner"></div>
+      <div class="scoreRow"><span class="red">레드 <span id="remainingRed">-</span></span><span class="blue">블루 <span id="remainingBlue">-</span></span></div>
+      <div id="hintDisplay" class="hintDisplay hidden"></div>
+      <form id="hintForm" class="hintForm hidden">
+        <input id="hintWord" placeholder="힌트 낱말" maxlength="20" autocomplete="off">
+        <select id="hintCount">
+          <option value="0">0 (무제한)</option>
+          <option value="1">1</option><option value="2">2</option><option value="3">3</option>
+          <option value="4">4</option><option value="5">5</option><option value="6">6</option>
+          <option value="7">7</option><option value="8">8</option><option value="9">9</option>
+        </select>
+        <button class="primary" type="submit">힌트 주기</button>
+      </form>
+      <div class="boardWrap"><div id="board" class="board"></div></div>
+      <div class="actionBar">
+        <button id="passBtn" class="secondary hidden" type="button">차례 넘기기</button>
+      </div>
+    </section>
+
+    <section id="resultPanel" class="panel hidden">
+      <div class="resultModal" style="margin:auto">
+        <div class="eyebrow">GAME OVER</div>
+        <h2 id="resultTitle" class="outcome">-</h2>
+        <p id="resultReason" class="status"></p>
+        <div class="row" style="justify-content:center;margin-top:10px">
+          <button id="rematchBtn" class="primary hidden" type="button">REMATCH</button>
+          <button id="returnLobbyBtn" class="secondary hidden" type="button">RETURN TO LOBBY</button>
+        </div>
+        <p id="resultWaitingNote" class="note hidden">호스트가 다음 게임을 준비할 때까지 기다려 주세요.</p>
+      </div>
+    </section>
+  </section>
+</main>
+
+<audio id="bgm" preload="auto"></audio>
+<script>
+(() => {
+  "use strict";
+  const TRACKS = [
+    "/learning/games/codenames/assets/sound/bgm-1.mp3",
+    "/learning/games/codenames/assets/sound/bgm-2.mp3",
+    "/learning/games/codenames/assets/sound/bgm-3.mp3"
+  ];
+  const audio = document.getElementById("bgm");
+  if (!audio) return;
+  let index = Math.floor(Math.random() * TRACKS.length);
+  audio.src = TRACKS[index];
+  audio.addEventListener("ended", () => {
+    index = (index + 1) % TRACKS.length;
+    audio.src = TRACKS[index];
+    audio.play().catch(() => {});
+  });
+})();
+</script>
+
+<section id="rulesOverlay" class="overlay hidden" role="dialog" aria-modal="true">
+  <div class="modal">
+    <div class="eyebrow">HOW TO PLAY</div>
+    <h2>낱말 암호 규칙</h2>
+    <ol>
+      <li>레드팀·블루팀으로 나뉘고, 각 팀은 스파이마스터 1명과 요원 1명 이상으로 구성됩니다.</li>
+      <li>보드에는 낱말 카드 25장이 놓입니다. 스파이마스터만 어떤 낱말이 우리 팀·상대 팀·무관한 낱말·폭탄인지 알 수 있습니다.</li>
+      <li>자기 팀 차례가 되면 스파이마스터가 낱말 하나와 숫자 하나로 힌트를 냅니다. 숫자는 그 힌트로 가리키는 우리 팀 낱말의 개수입니다 (0은 "숫자 제한 없음"을 뜻합니다).</li>
+      <li>요원들은 힌트를 의논해 보드에서 낱말을 하나씩 고릅니다. 우리 팀 낱말이면 계속 고를 수 있고(숫자+1번까지), 상관없는 낱말이나 상대 팀 낱말이면 즉시 차례가 넘어갑니다.</li>
+      <li>폭탄 카드를 고르면 그 자리에서 즉시 패배합니다.</li>
+      <li>자기 팀 낱말 9장(먼저 시작한 팀) 또는 8장(나중에 시작한 팀)을 모두 찾으면 승리합니다.</li>
+    </ol>
+    <button id="closeRulesBtn" class="primary" type="button">CLOSE</button>
+  </div>
+</section>
+
+<div id="toast" class="toast hidden" role="status" aria-live="polite"></div>
+
+<script>
+"use strict";
+
+const GAME_ID = "codenames";
+const NAME_KEY = "classPlayerName";
+const $ = id => document.getElementById(id);
+const savedName = String(localStorage.getItem(NAME_KEY) || "").trim();
+
+let lobby = null;
+let state = null;
+let myId = null;
+let isHost = false;
+let toastTimer = null;
+
+function esc(value) {
+  return String(value).replace(/[&<>"']/g, c => ({ "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;", "'": "&#39;" }[c]));
+}
+
+function notice(message) {
+  clearTimeout(toastTimer);
+  $("toast").textContent = message;
+  $("toast").classList.remove("hidden");
+  toastTimer = setTimeout(() => $("toast").classList.add("hidden"), 2600);
+}
+
+function send(payload) {
+  return lobby ? lobby.sendServer(payload) : false;
+}
+function sendAction(action, extra) {
+  send(Object.assign({ type: "CODENAMES_ACTION", action }, extra || {}));
+}
+
+function showRules() { $("rulesOverlay").classList.remove("hidden"); }
+function hideRules() { $("rulesOverlay").classList.add("hidden"); }
+
+function syncLobbyTransport(snapshot) {
+  myId = snapshot.myId;
+  isHost = snapshot.role === "host";
+  if (snapshot.connected) {
+    $("entry").classList.add("hidden");
+    $("game").classList.remove("hidden");
+    $("gameRoomCode").textContent = snapshot.roomCode || "----";
+    $("roomCode").textContent = snapshot.roomCode || "----";
+  }
+}
+
+function canStartClient(s) {
+  if (!s || s.players.length < 4) return false;
+  if (s.players.some(player => !player.team || !player.role)) return false;
+  return ["red", "blue"].every(team => {
+    const spymasters = s.players.filter(player => player.team === team && player.role === "spymaster").length;
+    const operatives = s.players.filter(player => player.team === team && player.role === "operative").length;
+    return spymasters === 1 && operatives >= 1;
+  });
+}
+
+const BAND_LABELS = { low: "1~2학년군", mid: "3~4학년군", high: "5~6학년군" };
+const BAND_ORDER = ["low", "mid", "high"];
+
+function renderLobbySetup() {
+  $("bandRow").innerHTML = BAND_ORDER.map(band =>
+    `<button type="button" class="gradeBtn${state.band === band ? " active" : ""}" data-band="${band}" ${isHost ? "" : "disabled"}>${BAND_LABELS[band]}</button>`
+  ).join("");
+  $("bandRow").querySelectorAll("button").forEach(button => {
+    button.addEventListener("click", () => sendAction("SET_BAND", { band: button.dataset.band }));
+  });
+  const bandIndex = BAND_ORDER.indexOf(state.band);
+  const belowLabel = bandIndex <= 0 ? BAND_LABELS[state.band] : BAND_ORDER.slice(0, bandIndex).map(b => BAND_LABELS[b]).join(", ");
+  $("bandNote").textContent = `${belowLabel} 낱말 ${state.poolSize}개 중에서 25장을 뽑습니다.`;
+
+  const me = state.players.find(player => player.id === myId);
+  ["red", "blue"].forEach(team => {
+    ["spymaster", "operative"].forEach(role => {
+      const button = $(`pick-${team}-${role}`);
+      const takenByOther = role === "spymaster" && state.players.some(player => player.team === team && player.role === "spymaster" && player.id !== myId);
+      button.disabled = takenByOther;
+      button.classList.toggle("active", Boolean(me && me.team === team && me.role === role));
+    });
+
+    const spymaster = state.players.find(player => player.team === team && player.role === "spymaster");
+    const operatives = state.players.filter(player => player.team === team && player.role === "operative");
+    $(`roster-${team}`).innerHTML =
+      `<div>스파이마스터: ${spymaster ? esc(spymaster.name) : "-"}</div><div>요원: ${operatives.map(player => esc(player.name)).join(", ") || "-"}</div>`;
+  });
+
+  const unassigned = state.players.filter(player => !player.team);
+  $("unassignedRow").textContent = unassigned.length ? `아직 팀을 선택하지 않음: ${unassigned.map(player => player.name).join(", ")}` : "";
+
+  const ready = canStartClient(state);
+  $("beginGameBtn").classList.toggle("hidden", !isHost);
+  $("beginGameBtn").disabled = !ready;
+  $("startGuide").textContent = ready
+    ? "시작할 준비가 되었습니다."
+    : "두 팀 모두 스파이마스터 1명과 요원 1명 이상이 필요하고, 모든 참가자가 팀을 선택해야 합니다.";
+  $("waitingHostNote").classList.toggle("hidden", isHost);
+}
+
+function renderBoardArea() {
+  const me = state.players.find(player => player.id === myId);
+  const myTurnToGuess = Boolean(me && me.role === "operative" && me.team === state.currentTeam && state.turnStage === "guess");
+
+  $("board").innerHTML = state.board.map((card, index) => {
+    const colorClass = card.color ? `color-${card.color}` : "";
+    const clickable = myTurnToGuess && !card.revealed;
+    return `<button type="button" class="tile ${colorClass}${card.revealed ? " revealed" : ""}${clickable ? " clickable" : ""}" data-index="${index}" ${card.revealed ? "disabled" : ""}>${esc(card.word)}</button>`;
+  }).join("");
+  if (myTurnToGuess) {
+    $("board").querySelectorAll(".tile:not([disabled])").forEach(tile => {
+      tile.addEventListener("click", () => sendAction("GUESS", { cardIndex: Number(tile.dataset.index) }));
+    });
+  }
+
+  $("remainingRed").textContent = state.remaining ? state.remaining.red : "-";
+  $("remainingBlue").textContent = state.remaining ? state.remaining.blue : "-";
+
+  const teamLabel = state.currentTeam === "red" ? "레드팀" : "블루팀";
+  $("turnBanner").textContent = state.phase === "gameEnd"
+    ? state.log
+    : `${teamLabel} 차례 · ${state.turnStage === "hint" ? "스파이마스터가 힌트를 내는 중" : "요원이 낱말을 고르는 중"}`;
+
+  const isMySpymasterHintTurn = Boolean(me && me.role === "spymaster" && me.team === state.currentTeam && state.turnStage === "hint" && state.phase === "playing");
+  $("hintForm").classList.toggle("hidden", !isMySpymasterHintTurn);
+
+  $("hintDisplay").classList.toggle("hidden", !state.hint);
+  if (state.hint) {
+    const left = state.guessesRemaining === null ? "무제한" : Math.max(0, state.guessesRemaining - state.guessesUsed);
+    $("hintDisplay").textContent = `힌트: "${state.hint.word}" ${state.hint.count} · 남은 기회 ${left}`;
+  }
+
+  $("passBtn").classList.toggle("hidden", !myTurnToGuess);
+}
+
+function renderResult() {
+  $("resultTitle").textContent = state.winner === "red" ? "레드팀 승리!" : "블루팀 승리!";
+  $("resultTitle").className = "outcome " + (state.winner === "red" ? "red" : "blue");
+  $("resultReason").textContent = state.winReason === "bomb" ? "폭탄 카드를 뽑아 게임이 끝났습니다." : "팀 낱말을 모두 찾아냈습니다.";
+  $("rematchBtn").classList.toggle("hidden", !isHost);
+  $("returnLobbyBtn").classList.toggle("hidden", !isHost);
+  $("resultWaitingNote").classList.toggle("hidden", isHost);
+}
+
+function render() {
+  if (!state) return;
+  $("lobbySetup").classList.toggle("hidden", state.phase !== "lobby");
+  $("boardArea").classList.toggle("hidden", state.phase === "lobby");
+  $("resultPanel").classList.toggle("hidden", state.phase !== "gameEnd");
+
+  if (state.phase === "lobby") renderLobbySetup();
+  else renderBoardArea();
+  if (state.phase === "gameEnd") renderResult();
+}
+
+function handleServerMessage(message) {
+  if (message.type === "CODENAMES_STATE" && message.state) { state = message.state; render(); return; }
+  if (message.type === "CODENAMES_ERROR" || message.type === "ERROR") notice(message.message || "요청을 처리하지 못했습니다.");
+}
+
+function init() {
+  lobby = ClassroomMultiplayerLobby.create({
+    gameId: GAME_ID,
+    autoCreate: false,
+    ids: {
+      lobbyScreen: "entry",
+      savedName: "savedPlayerName",
+      hostTab: "createTab",
+      joinTab: "joinTab",
+      hostPane: "createPane",
+      joinPane: "joinPane",
+      roomCode: "roomCode",
+      hostStatus: "entryStatus",
+      joinCode: "joinCode",
+      joinButton: "joinBtn",
+      joinStatus: "joinStatusText",
+      copyButton: "copyBtn"
+    },
+    getPlayerName: () => /^[가-힣]{2,6}$/.test(savedName) ? savedName : "",
+    allowedPlayerCounts: [4, 5, 6, 7, 8, 9, 10],
+    maxPlayers: 10,
+    rulesButtonIds: ["rulesEntryBtn", "rulesGameBtn"],
+    leaveButtonIds: ["leaveEntryBtn", "leaveGameBtn"],
+    onRules: showRules,
+    onLeave: () => location.href = "../../../",
+    onNotice: notice,
+    onStateChange: syncLobbyTransport,
+    onServerMessage: handleServerMessage,
+    onPlayerLeftDuringGame: () => notice("플레이어가 나가 대기실로 돌아갑니다."),
+    onAbort: ({ message }) => notice(message)
+  }).mount();
+
+  if (savedName) $("createTab").addEventListener("click", () => lobby.createRoom());
+
+  $("closeRulesBtn").addEventListener("click", hideRules);
+  $("rulesOverlay").addEventListener("click", event => { if (event.target === $("rulesOverlay")) hideRules(); });
+
+  ["red", "blue"].forEach(team => {
+    ["spymaster", "operative"].forEach(role => {
+      $(`pick-${team}-${role}`).addEventListener("click", () => {
+        const me = state && state.players.find(player => player.id === myId);
+        const already = Boolean(me && me.team === team && me.role === role);
+        sendAction("SET_TEAM", { team: already ? null : team, role: already ? null : role });
+      });
+    });
+  });
+
+  $("beginGameBtn").addEventListener("click", () => sendAction("START"));
+  $("hintForm").addEventListener("submit", event => {
+    event.preventDefault();
+    const word = $("hintWord").value.trim();
+    if (!word) return;
+    sendAction("HINT", { word, count: Number($("hintCount").value) });
+    $("hintWord").value = "";
+  });
+  $("passBtn").addEventListener("click", () => sendAction("END_GUESSING"));
+  $("rematchBtn").addEventListener("click", () => sendAction("NEW_GAME"));
+  $("returnLobbyBtn").addEventListener("click", () => sendAction("RETURN_LOBBY"));
+}
+
+window.addEventListener("DOMContentLoaded", init);
+</script>
+</body>
+</html>
