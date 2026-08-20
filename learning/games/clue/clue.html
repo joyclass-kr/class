@@ -74,6 +74,9 @@ h1,h2,h3,p{margin-top:0}
 .cardChip{display:flex;flex-direction:column;align-items:center;gap:5px;width:92px;font-weight:800;font-size:11.5px;color:#dfe3ee;text-align:center}
 .cardChip img{width:100%;aspect-ratio:3/4;object-fit:cover;border-radius:9px;border:2px solid var(--accent-soft);box-shadow:0 5px 14px #0007;background:#141824}
 .cardChip span{overflow:hidden;text-overflow:ellipsis;white-space:nowrap;max-width:100%}
+.miniBtn{min-height:auto;padding:4px 11px;font-size:11.5px}
+.handRow.blurred .cardChip img{filter:blur(11px) brightness(.55);transition:filter .15s}
+.handRow.blurred .cardChip span{visibility:hidden}
 
 .notebookGrid{display:grid;grid-template-columns:repeat(3,1fr);gap:14px}
 .notebookGroup h4{margin:0 0 7px;color:#9aa0b4;font-size:11px;letter-spacing:.12em}
@@ -187,8 +190,11 @@ h1,h2,h3,p{margin-top:0}
         </section>
 
         <section class="panel">
-          <div class="eyebrow">내 카드</div>
-          <div id="handRow" class="handRow"></div>
+          <div class="row spread">
+            <div class="eyebrow">내 카드</div>
+            <button id="handToggleBtn" class="secondary miniBtn" type="button">카드 보기</button>
+          </div>
+          <div id="handRow" class="handRow blurred"></div>
         </section>
 
         <section class="panel">
@@ -372,6 +378,7 @@ let lobby=null;
 let gameState=null;
 let toastTimer=null;
 let notebook={};
+let handHidden=true;
 let suggestSuspect=null;
 let suggestWeapon=null;
 let accuseSuspect=null,accuseWeapon=null,accuseRoom=null;
@@ -639,7 +646,15 @@ function cardChip(id){
 function renderHand(){
   if(!gameState){$("handRow").innerHTML="";return}
   $("handRow").innerHTML=(gameState.hand||[]).map(cardChip).join("")||'<span class="logLine">카드가 없습니다.</span>';
+  $("handRow").classList.toggle("blurred",handHidden);
+  if($("handToggleBtn"))$("handToggleBtn").textContent=handHidden?"카드 보기":"카드 가리기";
   (gameState.hand||[]).forEach(id=>{notebook[id]=2});
+}
+
+function toggleHandVisibility(){
+  handHidden=!handHidden;
+  $("handRow").classList.toggle("blurred",handHidden);
+  $("handToggleBtn").textContent=handHidden?"카드 보기":"카드 가리기";
 }
 
 function notebookCell(id){
@@ -832,6 +847,7 @@ async function init(){
 
   setInterval(updateTurnTimer,500);
 
+  $("handToggleBtn").addEventListener("click",toggleHandVisibility);
   $("closeRulesBtn").addEventListener("click",hideRules);
   $("rulesOverlay").addEventListener("click",event=>{if(event.target===$("rulesOverlay"))hideRules()});
   $("closeRevealBtn").addEventListener("click",()=>$("revealOverlay").classList.add("hidden"));

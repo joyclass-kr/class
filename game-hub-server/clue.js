@@ -272,14 +272,7 @@ function checkNextRefuter(game) {
     const candidate = playerById(game, candidateId);
     const hand = game.hands[candidateId] || [];
     const matches = hand.filter(card => card === suggestion.suspect || card === suggestion.weapon || card === suggestion.room);
-    if (matches.length === 1) {
-      const reveal = { playerId: suggestion.suggesterId, title: `${candidate.name}님의 반박`, message: `${candidate.name}님이 ${cardName(matches[0])} 카드를 보여줍니다.`, card: matches[0] };
-      game.log = `${candidate.name}님이 카드를 보여주며 반박했습니다.`;
-      game.pendingSuggestion = null;
-      game.deadline = Date.now() + TURN_TIME_MS;
-      return { reveals: [reveal] };
-    }
-    if (matches.length > 1) {
+    if (matches.length > 0) {
       suggestion.refuterId = candidateId;
       suggestion.matchingCards = matches;
       suggestion.awaitingChoice = true;
