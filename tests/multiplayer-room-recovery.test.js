@@ -57,6 +57,8 @@ test("server and client recovery contracts keep rooms through restarts", () => {
   assert.match(serverSource, /ROOM_RECONNECT_GRACE_MS[^\n]+120000/);
   assert.match(serverSource, /restorePersistedRoom\(gameId, roomCode\)/);
   assert.match(serverSource, /persistRoomSnapshot\(room, true\)/);
+  assert.doesNotMatch(serverSource, /clientMatchesToken\([^\n]+\) && [^\n]*readyState !== WebSocket\.OPEN/);
+  assert.match(serverSource, /previousSocket\.close\(4003, "REPLACED"\)/);
   assert.match(platformSource, /CREATE TABLE IF NOT EXISTS multiplayer_room_snapshots/);
   assert.match(platformSource, /saveMultiplayerRoomSnapshot/);
   assert.match(platformSource, /loadMultiplayerRoomSnapshot/);

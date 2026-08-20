@@ -1433,8 +1433,11 @@ wss.on("connection", socket => {
       let existingRoom = rooms.get(key);
       if (!existingRoom) existingRoom = await restorePersistedRoom(gameId, roomCode);
       const previousHost = existingRoom?.clients.get(existingRoom.hostId);
-      if (existingRoom && clientToken && clientMatchesToken(previousHost, clientToken) && previousHost.readyState !== WebSocket.OPEN) {
+      if (existingRoom && clientToken && clientMatchesToken(previousHost, clientToken)) {
         clearTimeout(previousHost.meta.disconnectTimer);
+        if (previousHost !== socket && previousHost.readyState === WebSocket.OPEN) {
+          try { previousHost.close(4003, "REPLACED"); } catch (_) {}
+        }
         playerId = existingRoom.hostId;
         socket.meta.playerId = playerId;
         socket.meta.roomKey = key;
@@ -1602,11 +1605,14 @@ wss.on("connection", socket => {
       }
 
       const resumeEntry = clientToken
-        ? [...room.clients.entries()].find(([, client]) => clientMatchesToken(client, clientToken) && client.readyState !== WebSocket.OPEN)
+        ? [...room.clients.entries()].find(([, client]) => clientMatchesToken(client, clientToken))
         : null;
       if (resumeEntry) {
         const [resumeId, previousSocket] = resumeEntry;
         clearTimeout(previousSocket.meta.disconnectTimer);
+        if (previousSocket !== socket && previousSocket.readyState === WebSocket.OPEN) {
+          try { previousSocket.close(4003, "REPLACED"); } catch (_) {}
+        }
         playerId = resumeId;
         socket.meta.playerId = playerId;
         socket.meta.roomKey = key;
