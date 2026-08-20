@@ -13,6 +13,7 @@ const DrawRelay = require("./drawrelay");
 const Expedition = require("./expedition");
 const Clue = require("./clue");
 const Codenames = require("./codenames");
+const Dobble = require("./dobble");
 const { createClassroomPlatform } = require("./classroom-platform");
 
 const app = express();
@@ -249,6 +250,7 @@ const MAX_ROOM_PLAYERS = {
   avalon: 8,
   clue: 6,
   codenames: 10,
+  dobble: 8,
   spelling: 61,
   circulation: 61,
   digestion: 61,
@@ -533,6 +535,20 @@ function codenamesBroadcast(room) {
 
 function codenamesError(socket, message) {
   safeSend(socket, { type: "CODENAMES_ERROR", message });
+}
+
+function dobbleBroadcast(room) {
+  if (!room?.dobble) return;
+  for (const [id, client] of room.clients) {
+    safeSend(client, {
+      type: "DOBBLE_STATE",
+      state: Dobble.stateFor(room.dobble, id)
+    });
+  }
+}
+
+function dobbleError(socket, message) {
+  safeSend(socket, { type: "DOBBLE_ERROR", message });
 }
 
 // 결정 마감이 걸려 있으면 그때 깨어나 아직 안 정한 사람을 귀환시킨다.
@@ -1333,6 +1349,7 @@ wss.on("connection", socket => {
         if (existingRoom.drawrelay) drawRelayBroadcast(existingRoom);
         if (existingRoom.expedition) expeditionBroadcast(existingRoom);
         if (existingRoom.codenames) codenamesBroadcast(existingRoom);
+        if (existingRoom.dobble) dobbleBroadcast(existingRoom);
         if (existingRoom.spelling) spellingBroadcast(existingRoom);
         if (existingRoom.circulation) circulationBroadcast(existingRoom);
         if (existingRoom.digestion) digestionBroadcast(existingRoom);
@@ -1398,6 +1415,9 @@ wss.on("connection", socket => {
       if (gameId === "codenames") {
         room.codenames = Codenames.createGame(playerId, cleanToken(message.name, 12) || "방장");
       }
+      if (gameId === "dobble") {
+        room.dobble = Dobble.createGame(playerId, cleanToken(message.name, 12) || "방장");
+      }
       if (gameId === "spelling") {
         room.spelling = {
           phase: "lobby",
@@ -1452,6 +1472,7 @@ wss.on("connection", socket => {
       if (room.expedition) expeditionBroadcast(room);
       if (room.clue) clueBroadcast(room);
       if (room.codenames) codenamesBroadcast(room);
+      if (room.dobble) dobbleBroadcast(room);
       if (room.spelling) spellingBroadcast(room);
       if (room.circulation) circulationBroadcast(room);
       if (room.digestion) digestionBroadcast(room);
@@ -1617,6 +1638,16 @@ wss.on("connection", socket => {
           return;
         }
         Codenames.addPlayer(room.codenames, playerId, cleanToken(message.name, 12) || `플레이어 ${room.codenames.players.length + 1}`);
+      }
+      if (room.dobble) {
+        if (room.dobble.phase !== "lobby") {
+          room.clients.delete(playerId);
+          socket.meta.roomKey = null;
+          socket.meta.role = null;
+          safeSend(socket, { type: "ERROR", message: "이미 시작한 게임입니다." });
+          return;
+        }
+        Dobble.addPlayer(room.dobble, playerId, cleanToken(message.name, 12) || `플레이어 ${room.dobble.players.length + 1}`);
       }
       if (room.spelling) {
         if (room.spelling.phase !== "lobby") {
@@ -1803,6 +1834,7 @@ wss.on("connection", socket => {
       if (room.expedition) expeditionBroadcast(room);
       if (room.clue) clueBroadcast(room);
       if (room.codenames) codenamesBroadcast(room);
+      if (room.dobble) dobbleBroadcast(room);
       if (room.spelling) spellingBroadcast(room);
       if (room.circulation) circulationBroadcast(room);
       if (room.digestion) digestionBroadcast(room);
@@ -2792,6 +2824,49 @@ wss.on("connection", socket => {
       return;
     }
 
+    if (type === "DOBBLE_ACTION") {
+      const room = socket.meta.roomKey ? rooms.get(socket.meta.roomKey) : null;
+      const game = room?.dobble;
+      const action = cleanToken(message.action, 30);
+      if (!room || !game) {
+        dobbleError(socket, "도블 방에 참가하지 않았습니다.");
+        return;
+      }
+
+      let result;
+      if (action === "SET_MODE") {
+        result = playerId === room.hostId
+          ? Dobble.setMode(game, message.mode)
+          : { ok: false, error: "방장만 규칙을 바꿀 수 있습니다." };
+      } else if (action === "START") {
+        result = playerId === room.hostId
+          ? Dobble.startGame(game)
+          : { ok: false, error: "방장만 게임을 시작할 수 있습니다." };
+      } else if (action === "CLAIM") {
+        result = Dobble.claim(game, playerId, message.symbolKey);
+      } else if (action === "NEW_GAME") {
+        result = playerId === room.hostId
+          ? Dobble.newGame(game)
+          : { ok: false, error: "방장만 새 게임을 시작할 수 있습니다." };
+      } else if (action === "RETURN_LOBBY") {
+        if (playerId === room.hostId) {
+          Dobble.resetToLobby(game);
+          result = { ok: true };
+        } else {
+          result = { ok: false, error: "방장만 대기실로 돌아갈 수 있습니다." };
+        }
+      } else {
+        result = { ok: false, error: "알 수 없는 행동입니다." };
+      }
+
+      if (!result.ok) {
+        dobbleError(socket, result.error || "행동을 처리하지 못했습니다.");
+        return;
+      }
+      dobbleBroadcast(room);
+      return;
+    }
+
     if (type === "AVALON_ACTION") {
       const room = socket.meta.roomKey ? rooms.get(socket.meta.roomKey) : null;
       const game = room?.avalon;
@@ -3144,6 +3219,13 @@ wss.on("connection", socket => {
           Codenames.resetToLobby(currentRoom.codenames, "플레이어가 나가 게임을 중단하고 대기실로 돌아왔습니다.");
         }
       }
+      if (currentRoom.dobble) {
+        const gameWasActive = currentRoom.dobble.phase !== "lobby";
+        Dobble.removePlayer(currentRoom.dobble, playerId);
+        if (gameWasActive && !Dobble.canStart(currentRoom.dobble)) {
+          Dobble.resetToLobby(currentRoom.dobble, "플레이어가 나가 게임을 중단하고 대기실로 돌아왔습니다.");
+        }
+      }
       if (currentRoom.drawrelay) {
         const gameWasActive = currentRoom.drawrelay.phase !== "lobby";
         DrawRelay.removePlayer(currentRoom.drawrelay, playerId);
@@ -3246,6 +3328,7 @@ wss.on("connection", socket => {
       if (currentRoom.expedition) expeditionBroadcast(currentRoom);
       if (currentRoom.clue) clueBroadcast(currentRoom);
       if (currentRoom.codenames) codenamesBroadcast(currentRoom);
+      if (currentRoom.dobble) dobbleBroadcast(currentRoom);
       if (currentRoom.spelling) spellingBroadcast(currentRoom);
       if (currentRoom.circulation) circulationBroadcast(currentRoom);
       if (currentRoom.digestion) digestionBroadcast(currentRoom);

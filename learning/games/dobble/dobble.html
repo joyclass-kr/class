@@ -1,0 +1,426 @@
+<!doctype html>
+<html lang="ko">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<title>같은 그림 찾기</title>
+<link rel="stylesheet" href="../../../assets/network/multiplayer-lobby.css">
+<style>
+:root{font-family:system-ui,-apple-system,"Segoe UI",sans-serif;color:#eef0f5;background:#161221;--accent:#e0855a;--accent-soft:#8a4a2a;--panel:#211b30;--panel-edge:#453a5c}
+*{box-sizing:border-box}
+body{margin:0;min-height:100vh;padding:20px;background:linear-gradient(180deg,#16122182,#0e0c16b8),url("/learning/games/dobble/assets/images/background.jpg") center/cover fixed no-repeat,#161221}
+button,input{font:inherit}
+.hidden{display:none!important}
+.shell{width:min(880px,100%);margin:auto}
+#missingScreen,#entry{max-width:640px;margin:auto}
+.panel{margin-bottom:14px;padding:18px;border:1px solid var(--panel-edge);border-radius:16px;background:var(--panel);box-shadow:0 16px 44px #0007}
+h1,h2,h3,p{margin-top:0}
+.eyebrow{margin-bottom:5px;color:var(--accent);font-size:11px;font-weight:900;letter-spacing:.2em}
+.title{margin:0;font-family:Georgia,"Times New Roman",serif;font-size:clamp(30px,7vw,48px);letter-spacing:.03em;color:#f6d8b0}
+.subtitle{margin:4px 0 0;color:#b7bcca}
+.row{display:flex;align-items:center;gap:9px;flex-wrap:wrap}
+.spread{justify-content:space-between}
+.primary,.secondary{min-height:40px;padding:9px 14px;border:1px solid var(--accent-soft);border-radius:10px;font-weight:850;cursor:pointer;background:#2c2640;color:#e8ebf3}
+.primary{background:linear-gradient(#f0a878,#b6592c);color:#2a1204}
+.primary:disabled,.secondary:disabled{cursor:not-allowed;opacity:.4}
+.code{font-size:26px;font-weight:950;letter-spacing:.16em}
+.status{min-height:22px;color:#e4cf9c;font-weight:700}
+.entryActions{display:grid;grid-template-columns:repeat(2,1fr);gap:9px}
+.entryPane{margin-top:12px}
+.entryPane input{width:100%;padding:12px;border-radius:10px;border:1px solid var(--panel-edge);background:#120f1c;color:#fff}
+
+.playerList{display:flex;flex-wrap:wrap;gap:8px;margin:10px 0}
+.playerChip{padding:7px 12px;border:1px solid var(--panel-edge);border-radius:999px;background:#2c2640;font-weight:800;font-size:13px}
+.playerChip.me{border-color:var(--accent);color:var(--accent)}
+.note{color:#a49fb4;font-size:12.5px}
+
+.modeRow{display:flex;flex-wrap:wrap;gap:8px;margin:8px 0}
+.modeBtn{flex:1 1 200px;min-height:56px;padding:9px 12px;border:1px solid var(--panel-edge);border-radius:12px;background:#2c2640;color:#e8ebf3;font-weight:800;cursor:pointer;text-align:left}
+.modeBtn strong{display:block;font-size:14px}
+.modeBtn small{display:block;margin-top:2px;color:#b7bcca;font-weight:600;font-size:11.5px}
+.modeBtn.active{background:linear-gradient(#f0a878,#b6592c);color:#2a1204;border-color:var(--accent)}
+.modeBtn.active small{color:#4a2408}
+.modeBtn:disabled{cursor:not-allowed;opacity:.55}
+
+.boards{display:grid;grid-template-columns:1fr 1fr;gap:14px}
+@media(max-width:640px){.boards{grid-template-columns:1fr}}
+.cardWrap{text-align:center}
+.cardLabel{margin-bottom:8px;font-weight:900;letter-spacing:.08em;color:#c9bfe0;font-size:12px}
+.dobbleCard{position:relative;width:100%;aspect-ratio:1/1;margin:auto;border-radius:50%;background:radial-gradient(circle,#2f2748,#1a1528);border:3px solid var(--panel-edge);overflow:hidden}
+.symbol{position:absolute;width:29%;aspect-ratio:1/1;transform:translate(-50%,-50%);border-radius:10px;overflow:hidden;background:#0e0c16;border:2px solid #453a5c}
+.symbol img{width:100%;height:100%;object-fit:cover;display:block}
+.symbol.clickable{cursor:pointer;border-color:var(--accent)}
+.symbol.clickable:hover{transform:translate(-50%,-50%) scale(1.12);z-index:2;border-color:#ffd9a8}
+.symbol.clickable:active{transform:translate(-50%,-50%) scale(0.96)}
+
+.standings{margin-top:10px}
+.standingsRow{display:flex;justify-content:space-between;padding:6px 4px;border-bottom:1px solid #34293f;font-size:14px}
+.standingsRow.me{color:var(--accent);font-weight:900}
+.standingsRow .rank{color:#e4cf9c;font-weight:900;width:26px}
+
+.overlay{position:fixed;inset:0;z-index:30;display:grid;place-items:center;padding:18px;background:#06070ce0}
+.modal{width:min(640px,100%);max-height:88vh;overflow:auto;padding:22px;border:1px solid var(--accent-soft);border-radius:16px;background:#1b1729}
+.modal li{margin-bottom:8px}
+.modal h2{color:#f6d8b0}
+.toast{position:fixed;right:17px;bottom:17px;z-index:50;max-width:min(390px,calc(100vw - 34px));padding:12px 15px;border:1px solid var(--accent-soft);border-radius:10px;background:#1b1729;color:#fff;box-shadow:0 10px 30px #0009}
+
+.resultModal{text-align:center;width:min(460px,100%)}
+.resultModal .outcome{margin:4px 0 6px;font-size:clamp(26px,6vw,36px);font-weight:950;color:var(--accent)}
+</style>
+<script src="../../../assets/network/game-network.js"></script>
+<script src="../../../assets/network/multiplayer-lobby.js"></script>
+<script src="../../../assets/sound/music-control.js" defer></script>
+<link rel="stylesheet" href="../../../assets/device-game.css">
+</head>
+<body>
+<main class="shell">
+  <section id="missingScreen" class="panel hidden">
+    <div class="eyebrow">PLAYER NAME REQUIRED</div>
+    <h1>이름이 없습니다</h1>
+    <p>이름 변경은 메인 화면에서만 가능합니다.</p>
+    <button class="primary" type="button" onclick="location.href='../../../'">메인 화면으로</button>
+  </section>
+
+  <section id="entry" class="hidden" data-multiplayer-lobby>
+    <header class="panel">
+      <h1 class="title">SPOT MATCH</h1>
+      <p class="subtitle">같은 그림 찾기 · 2~8 PLAYERS</p>
+      <p>PLAYER · <strong id="savedPlayerName">-</strong></p>
+      <div class="entryActions">
+        <button id="createTab" class="primary" type="button">CREATE ROOM</button>
+        <button id="joinTab" class="secondary" type="button">JOIN ROOM</button>
+        <button id="rulesEntryBtn" class="secondary" type="button">HOW TO PLAY</button>
+        <button id="leaveEntryBtn" class="secondary" type="button">메인 화면으로</button>
+      </div>
+    </header>
+
+    <section id="createPane" class="panel entryPane hidden">
+      <div class="row spread">
+        <div><div class="eyebrow">ROOM CODE</div><div id="roomCode" class="code">----</div></div>
+        <button id="copyBtn" class="secondary" type="button">COPY CODE</button>
+      </div>
+      <div id="entryStatus" class="status">방을 만드는 중입니다.</div>
+    </section>
+
+    <section id="joinPane" class="panel entryPane hidden">
+      <div class="row">
+        <input id="joinCode" inputmode="numeric" maxlength="4" placeholder="ROOM CODE · 4 DIGITS">
+        <button id="joinBtn" class="primary" type="button">JOIN ROOM</button>
+      </div>
+      <div class="status" id="joinStatusText">방장이 알려준 번호를 입력하세요.</div>
+    </section>
+  </section>
+
+  <section id="game" class="hidden">
+    <div class="panel row spread">
+      <div><div class="eyebrow">ROOM CODE</div><div id="gameRoomCode" class="code">----</div></div>
+      <div class="row">
+        <button id="rulesGameBtn" class="secondary" type="button">RULES</button>
+        <button id="leaveGameBtn" class="secondary" type="button">메인 화면</button>
+      </div>
+    </div>
+
+    <section id="lobbySetup" class="panel hidden">
+      <div class="eyebrow">규칙 · 방장만 변경 가능</div>
+      <div id="modeRow" class="modeRow"></div>
+      <p id="modeNote" class="note"></p>
+      <h2>참가자</h2>
+      <div id="playerList" class="playerList"></div>
+      <button id="beginGameBtn" class="primary hidden" type="button" disabled>START GAME</button>
+      <p id="startGuide" class="note"></p>
+      <p id="waitingHostNote" class="note hidden">방장이 게임을 시작할 때까지 기다려 주세요.</p>
+    </section>
+
+    <section id="playArea" class="panel hidden">
+      <p id="drawPileNote" class="note hidden"></p>
+      <div class="boards">
+        <div class="cardWrap">
+          <div id="centerLabel" class="cardLabel">중앙 카드</div>
+          <div id="centerCard" class="dobbleCard"></div>
+        </div>
+        <div class="cardWrap">
+          <div id="myLabel" class="cardLabel">내 카드 · 겹치는 그림을 찾아 누르세요</div>
+          <div id="myCard" class="dobbleCard"></div>
+        </div>
+      </div>
+      <div class="standings">
+        <h3>순위</h3>
+        <div id="standingsList"></div>
+      </div>
+    </section>
+
+    <section id="resultPanel" class="panel hidden">
+      <div class="resultModal" style="margin:auto">
+        <div class="eyebrow">GAME OVER</div>
+        <h2 id="resultTitle" class="outcome">-</h2>
+        <div id="standingsListEnd"></div>
+        <div class="row" style="justify-content:center;margin-top:10px">
+          <button id="rematchBtn" class="primary hidden" type="button">REMATCH</button>
+          <button id="returnLobbyBtn" class="secondary hidden" type="button">RETURN TO LOBBY</button>
+        </div>
+        <p id="resultWaitingNote" class="note hidden">호스트가 다음 게임을 준비할 때까지 기다려 주세요.</p>
+      </div>
+    </section>
+  </section>
+</main>
+
+<audio id="bgm" preload="auto"></audio>
+<script>
+(() => {
+  "use strict";
+  const TRACKS = [
+    "/learning/games/dobble/assets/sound/bgm-1.mp3",
+    "/learning/games/dobble/assets/sound/bgm-2.mp3"
+  ];
+  const audio = document.getElementById("bgm");
+  if (!audio) return;
+  let index = Math.floor(Math.random() * TRACKS.length);
+  audio.src = TRACKS[index];
+  audio.addEventListener("ended", () => {
+    index = (index + 1) % TRACKS.length;
+    audio.src = TRACKS[index];
+    audio.play().catch(() => {});
+  });
+})();
+</script>
+
+<section id="rulesOverlay" class="overlay hidden" role="dialog" aria-modal="true">
+  <div class="modal">
+    <div class="eyebrow">HOW TO PLAY</div>
+    <h2>같은 그림 찾기 규칙</h2>
+    <p>카드는 모두 8개의 그림을 담고 있고, 어떤 두 장을 비교해도 겹치는 그림은 정확히 하나뿐입니다. 방장이 대기실에서 규칙을 고를 수 있어요.</p>
+    <h3>타워</h3>
+    <ol>
+      <li>카드가 참가자들에게 똑같이 나뉘고, 1장은 중앙에 놓입니다.</li>
+      <li>내 카드와 중앙 카드를 비교해서 겹치는 그림을 가장 먼저 찾아 눌러 보세요.</li>
+      <li>맞히면 내 카드가 새로운 중앙 카드가 되고, 다음 내 카드로 넘어갑니다.</li>
+      <li>내 카드를 가장 먼저 다 낸 사람이 승리합니다!</li>
+    </ol>
+    <h3>카탈로그</h3>
+    <ol>
+      <li>기준 카드 1장이 중앙에 놓이고, 나머지는 모두가 함께 보는 더미로 쌓입니다.</li>
+      <li>기준 카드와 더미 맨 위에 새로 뒤집힌 카드를 비교해서 겹치는 그림을 가장 먼저 찾아 눌러 보세요.</li>
+      <li>맞히면 기준 카드를 내가 가져가고, 방금 뒤집힌 카드가 새로운 기준 카드가 됩니다.</li>
+      <li>더미가 모두 소진되면 카드를 가장 많이 모은 사람이 승리합니다!</li>
+    </ol>
+    <button id="closeRulesBtn" class="primary" type="button">CLOSE</button>
+  </div>
+</section>
+
+<div id="toast" class="toast hidden" role="status" aria-live="polite"></div>
+
+<script>
+"use strict";
+
+const GAME_ID = "dobble";
+const NAME_KEY = "classPlayerName";
+const $ = id => document.getElementById(id);
+const savedName = String(localStorage.getItem(NAME_KEY) || "").trim();
+
+// 8개 그림을 카드 안에 원형으로 흩뿌려 실제 카드처럼 보이게 배치한다.
+const SLOT_LAYOUT = [
+  { top: "50%", left: "50%", scale: 1.15 },
+  { top: "18%", left: "50%", scale: 0.85 },
+  { top: "30%", left: "80%", scale: 0.8 },
+  { top: "68%", left: "84%", scale: 0.9 },
+  { top: "85%", left: "55%", scale: 0.85 },
+  { top: "78%", left: "20%", scale: 0.8 },
+  { top: "34%", left: "16%", scale: 0.85 },
+  { top: "55%", left: "50%", scale: 0.55 }
+];
+
+const MODES = [
+  { id: "tower", label: "타워", hint: "손패를 먼저 다 내면 승리" },
+  { id: "catalog", label: "카탈로그", hint: "카드를 가장 많이 모으면 승리" }
+];
+
+let lobby = null;
+let state = null;
+let myId = null;
+let isHost = false;
+let toastTimer = null;
+
+function esc(value) {
+  return String(value).replace(/[&<>"']/g, c => ({ "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;", "'": "&#39;" }[c]));
+}
+
+function notice(message) {
+  clearTimeout(toastTimer);
+  $("toast").textContent = message;
+  $("toast").classList.remove("hidden");
+  toastTimer = setTimeout(() => $("toast").classList.add("hidden"), 2600);
+}
+
+function send(payload) {
+  return lobby ? lobby.sendServer(payload) : false;
+}
+function sendAction(action, extra) {
+  send(Object.assign({ type: "DOBBLE_ACTION", action }, extra || {}));
+}
+
+function showRules() { $("rulesOverlay").classList.remove("hidden"); }
+function hideRules() { $("rulesOverlay").classList.add("hidden"); }
+
+function syncLobbyTransport(snapshot) {
+  myId = snapshot.myId;
+  isHost = snapshot.role === "host";
+  if (snapshot.connected) {
+    $("entry").classList.add("hidden");
+    $("game").classList.remove("hidden");
+    $("gameRoomCode").textContent = snapshot.roomCode || "----";
+    $("roomCode").textContent = snapshot.roomCode || "----";
+  }
+}
+
+function avatarUrl(symbolKey) {
+  return `/assets/avatars/${encodeURIComponent(symbolKey)}`;
+}
+
+function renderCard(container, symbols, clickable) {
+  container.innerHTML = (symbols || []).map((symbol, index) => {
+    const slot = SLOT_LAYOUT[index % SLOT_LAYOUT.length];
+    const size = 29 * slot.scale;
+    return `<div class="symbol${clickable ? " clickable" : ""}" data-symbol="${esc(symbol)}"
+      style="top:${slot.top};left:${slot.left};width:${size}%">
+      <img src="${avatarUrl(symbol)}" alt=""></div>`;
+  }).join("");
+  if (clickable) {
+    container.querySelectorAll(".symbol").forEach(node => {
+      node.addEventListener("click", () => sendAction("CLAIM", { symbolKey: node.dataset.symbol }));
+    });
+  }
+}
+
+function canStartClient(s) {
+  return Boolean(s) && s.players.length >= 2 && s.players.length <= 8;
+}
+
+function renderModeRow() {
+  $("modeRow").innerHTML = MODES.map(mode =>
+    `<button type="button" class="modeBtn${state.mode === mode.id ? " active" : ""}" data-mode="${mode.id}" ${isHost ? "" : "disabled"}>
+      <strong>${esc(mode.label)}</strong><small>${esc(mode.hint)}</small>
+    </button>`
+  ).join("");
+  $("modeRow").querySelectorAll("button").forEach(button => {
+    button.addEventListener("click", () => sendAction("SET_MODE", { mode: button.dataset.mode }));
+  });
+  const current = MODES.find(mode => mode.id === state.mode) || MODES[0];
+  $("modeNote").textContent = `현재 규칙: ${current.label} · ${current.hint}`;
+}
+
+function renderLobbySetup() {
+  renderModeRow();
+  $("playerList").innerHTML = state.players.map(player =>
+    `<span class="playerChip${player.id === myId ? " me" : ""}">${esc(player.name)}${player.id === myId ? " (나)" : ""}</span>`
+  ).join("");
+
+  const ready = canStartClient(state);
+  $("beginGameBtn").classList.toggle("hidden", !isHost);
+  $("beginGameBtn").disabled = !ready;
+  $("startGuide").textContent = ready
+    ? "시작할 준비가 되었습니다."
+    : "2~8명이 모여야 시작할 수 있습니다.";
+  $("waitingHostNote").classList.toggle("hidden", isHost);
+}
+
+function renderStandings(target) {
+  const isCatalog = state.mode === "catalog";
+  const ranked = [...state.players].sort((a, b) => {
+    if (isCatalog) return b.collectedCount - a.collectedCount;
+    if (a.finishedAt !== b.finishedAt) return (a.finishedAt ?? Infinity) - (b.finishedAt ?? Infinity);
+    return a.cardsLeft - b.cardsLeft;
+  });
+  target.innerHTML = ranked.map((player, index) => `
+    <div class="standingsRow${player.id === myId ? " me" : ""}">
+      <span><span class="rank">${player.finishedAt || index + 1}</span>${esc(player.name)}${player.id === myId ? " (나)" : ""}</span>
+      <span>${isCatalog ? `모은 카드 ${player.collectedCount}장` : (player.finishedAt ? "완주!" : `남은 카드 ${player.cardsLeft}장`)}</span>
+    </div>`).join("");
+}
+
+function renderPlayArea() {
+  const isCatalog = state.mode === "catalog";
+  $("centerLabel").textContent = isCatalog ? "기준 카드" : "중앙 카드";
+  $("myLabel").textContent = isCatalog ? "새로 뒤집힌 카드 · 겹치는 그림을 찾아 누르세요" : "내 카드 · 겹치는 그림을 찾아 누르세요";
+  renderCard($("centerCard"), state.centerCard, false);
+  if (isCatalog) {
+    renderCard($("myCard"), state.challengerCard, Boolean(state.challengerCard));
+    $("drawPileNote").classList.remove("hidden");
+    $("drawPileNote").textContent = `더미에 남은 카드 ${state.drawPileCount}장`;
+  } else {
+    renderCard($("myCard"), state.myCard, Boolean(state.myCard) && state.myFinishedAt === null);
+    $("drawPileNote").classList.add("hidden");
+  }
+  renderStandings($("standingsList"));
+}
+
+function renderResult() {
+  const winner = state.players.find(player => player.id === state.winner);
+  $("resultTitle").textContent = winner ? `${winner.name}님 승리!` : "게임 종료";
+  renderStandings($("standingsListEnd"));
+  $("rematchBtn").classList.toggle("hidden", !isHost);
+  $("returnLobbyBtn").classList.toggle("hidden", !isHost);
+  $("resultWaitingNote").classList.toggle("hidden", isHost);
+}
+
+function render() {
+  if (!state) return;
+  $("lobbySetup").classList.toggle("hidden", state.phase !== "lobby");
+  $("playArea").classList.toggle("hidden", state.phase !== "playing");
+  $("resultPanel").classList.toggle("hidden", state.phase !== "gameEnd");
+
+  if (state.phase === "lobby") renderLobbySetup();
+  else if (state.phase === "playing") renderPlayArea();
+  else if (state.phase === "gameEnd") renderResult();
+}
+
+function handleServerMessage(message) {
+  if (message.type === "DOBBLE_STATE" && message.state) { state = message.state; render(); return; }
+  if (message.type === "DOBBLE_ERROR" || message.type === "ERROR") notice(message.message || "요청을 처리하지 못했습니다.");
+}
+
+function init() {
+  lobby = ClassroomMultiplayerLobby.create({
+    gameId: GAME_ID,
+    autoCreate: false,
+    ids: {
+      lobbyScreen: "entry",
+      savedName: "savedPlayerName",
+      hostTab: "createTab",
+      joinTab: "joinTab",
+      hostPane: "createPane",
+      joinPane: "joinPane",
+      roomCode: "roomCode",
+      hostStatus: "entryStatus",
+      joinCode: "joinCode",
+      joinButton: "joinBtn",
+      joinStatus: "joinStatusText",
+      copyButton: "copyBtn"
+    },
+    getPlayerName: () => /^[가-힣]{2,6}$/.test(savedName) ? savedName : "",
+    allowedPlayerCounts: [2, 3, 4, 5, 6, 7, 8],
+    maxPlayers: 8,
+    rulesButtonIds: ["rulesEntryBtn", "rulesGameBtn"],
+    leaveButtonIds: ["leaveEntryBtn", "leaveGameBtn"],
+    onRules: showRules,
+    onLeave: () => location.href = "../../../",
+    onNotice: notice,
+    onStateChange: syncLobbyTransport,
+    onServerMessage: handleServerMessage,
+    onPlayerLeftDuringGame: () => notice("플레이어가 나가 대기실로 돌아갑니다."),
+    onAbort: ({ message }) => notice(message)
+  }).mount();
+
+  if (savedName) $("createTab").addEventListener("click", () => lobby.createRoom());
+
+  $("closeRulesBtn").addEventListener("click", hideRules);
+  $("rulesOverlay").addEventListener("click", event => { if (event.target === $("rulesOverlay")) hideRules(); });
+
+  $("beginGameBtn").addEventListener("click", () => sendAction("START"));
+  $("rematchBtn").addEventListener("click", () => sendAction("NEW_GAME"));
+  $("returnLobbyBtn").addEventListener("click", () => sendAction("RETURN_LOBBY"));
+}
+
+window.addEventListener("DOMContentLoaded", init);
+</script>
+</body>
+</html>
