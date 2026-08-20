@@ -163,6 +163,11 @@ if (fs.existsSync(htmlPath)) {
   assert.match(html, /function toViewPoint\s*\(/, "서버 좌표를 화면 좌표로 변환해야 합니다.");
   assert.match(html, /function fromViewPoint\s*\(/, "화면에서 선택한 칸을 서버 좌표로 복원해야 합니다.");
   assert.match(html, /내 시작점이 보드 아래쪽/, "플레이어 시점 안내가 필요합니다.");
+  assert.match(html, /assets\/images\/honeycomb-cover\.webp/, "벌집 블록 표지 이미지를 사용해야 합니다.");
+  assert.match(html, /assets\/sound\/honeycomb-bgm\.ogg/, "벌집 블록 배경음악을 사용해야 합니다.");
+  assert.match(html, /assets\/sound\/music-control\.js/, "공통 음악 컨트롤을 연결해야 합니다.");
+  assert.ok(fs.statSync(path.resolve(__dirname, "..", "learning", "games", "honeycomb", "assets", "images", "honeycomb-cover.webp")).size > 0);
+  assert.ok(fs.statSync(path.resolve(__dirname, "..", "learning", "games", "honeycomb", "assets", "sound", "honeycomb-bgm.ogg")).size > 0);
   assert.doesNotMatch(html, /id=["']placeBtn["']/, "별도의 배치 확정 버튼이 없어야 합니다.");
   assert.match(
     html,

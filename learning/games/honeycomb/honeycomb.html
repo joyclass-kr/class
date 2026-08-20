@@ -5,13 +5,16 @@
 <meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
 <meta name="theme-color" content="#142238">
 <title>벌집 블록</title>
+<link rel="preload" as="image" href="/learning/games/honeycomb/assets/images/honeycomb-cover.webp">
 <link rel="stylesheet" href="../../../assets/network/multiplayer-lobby.css">
 <link rel="stylesheet" href="styles.css">
 <script src="../../../assets/network/game-network.js?v=20260821"></script>
 <script src="../../../assets/network/multiplayer-lobby.js"></script>
+<script src="../../../assets/sound/music-control.js" defer></script>
 <link rel="stylesheet" href="../../../assets/device-game.css">
 </head>
 <body>
+<audio id="bgm" src="/learning/games/honeycomb/assets/sound/honeycomb-bgm.ogg" loop preload="auto"></audio>
 <main class="shell">
   <section id="missingScreen" class="panel missing-panel hidden">
     <div class="eyebrow">PLAYER NAME REQUIRED</div>
@@ -33,16 +36,7 @@
         </div>
       </div>
       <figure class="hero-art" aria-hidden="true">
-        <svg viewBox="-60 -70 120 140" xmlns="http://www.w3.org/2000/svg">
-          <g stroke="#0a172a" stroke-width="1.5" stroke-linejoin="round">
-            <polygon points="0,-52 26,-26 26,26 0,52 -26,26 -26,-26" fill="#e0483f"/>
-            <polygon points="52,-26 78,0 78,52 52,78 26,52 26,0" fill="#ea8a2e" transform="translate(-26,-26)"/>
-            <polygon points="0,-52 26,-26 26,26 0,52 -26,26 -26,-26" fill="#e9c53a" transform="translate(52,0)"/>
-            <polygon points="0,-52 26,-26 26,26 0,52 -26,26 -26,-26" fill="#34a869" transform="translate(-52,0)"/>
-            <polygon points="0,-52 26,-26 26,26 0,52 -26,26 -26,-26" fill="#2f83d6" transform="translate(26,26)"/>
-            <polygon points="0,-52 26,-26 26,26 0,52 -26,26 -26,-26" fill="#9457c9" transform="translate(-26,26)"/>
-          </g>
-        </svg>
+        <img src="/learning/games/honeycomb/assets/images/honeycomb-cover.webp" alt="">
       </figure>
     </article>
 
