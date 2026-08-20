@@ -8,10 +8,12 @@
 <style>
 :root{font-family:"Malgun Gothic","Apple SD Gothic Neo",sans-serif;color:#f2ecdf;background:#12100c;--accent:#e0a03c;--accent-soft:#8a5f22;--panel:#1e1a14;--panel-edge:#4a3d2a;--danger:#d1503f;--relic:#a878d8;--safe:#4f9d69}
 *{box-sizing:border-box}
-/* 배경 그림은 아직 없다. 넣을 때는 각 테마 규칙의 gradient 뒤에 url(...) 한 겹만 더하면 된다. */
-body{margin:0;min-height:100vh;padding:20px;background:linear-gradient(180deg,rgba(18,13,8,.58),rgba(9,7,5,.86)),#12100c}
-body.theme-tombdig{--accent:#c9a24a;--accent-soft:#7a5c23;--panel:#1d1a16;--panel-edge:#4b402d;--danger:#c14a4a;--relic:#c08cd0;background:linear-gradient(180deg,rgba(20,16,10,.6),rgba(10,8,5,.88)),#14110d}
-body.theme-voidrun{--accent:#5fa8d8;--accent-soft:#2c5c80;--panel:#141a22;--panel-edge:#2f4560;--danger:#e0644f;--relic:#9d8ce8;background:linear-gradient(180deg,rgba(8,14,22,.66),rgba(4,7,12,.9)),#0b1018}
+/* 배경 위에 어두운 막을 덮어야 판과 글자가 읽힌다. 배경은 분위기지 주인공이 아니다.
+   대기실에는 세 테마가 다 나오는 합본을 쓴다. */
+body{margin:0;min-height:100vh;padding:20px;background:linear-gradient(180deg,rgba(18,13,8,.72),rgba(9,7,5,.9)),url("/learning/games/expedition/assets/images/lobby.webp") center/cover fixed no-repeat,#12100c}
+body.inGame{background:linear-gradient(180deg,rgba(18,13,8,.72),rgba(9,7,5,.9)),url("/learning/games/expedition/assets/images/orerun.webp") center/cover fixed no-repeat,#12100c}
+body.theme-tombdig{--accent:#c9a24a;--accent-soft:#7a5c23;--panel:#1d1a16;--panel-edge:#4b402d;--danger:#c14a4a;--relic:#c08cd0;background:linear-gradient(180deg,rgba(20,16,10,.74),rgba(10,8,5,.9)),url("/learning/games/expedition/assets/images/tombdig.webp") center/cover fixed no-repeat,#14110d}
+body.theme-voidrun{--accent:#5fa8d8;--accent-soft:#2c5c80;--panel:#141a22;--panel-edge:#2f4560;--danger:#e0644f;--relic:#9d8ce8;background:linear-gradient(180deg,rgba(8,14,22,.76),rgba(4,7,12,.92)),url("/learning/games/expedition/assets/images/voidrun.webp") center/cover fixed no-repeat,#0b1018}
 button,input{font:inherit}
 .hidden{display:none!important}
 .shell{width:min(1120px,100%);margin:auto}
@@ -404,9 +406,11 @@ function showLobby(){$("gameScreen").classList.add("hidden");$("lobbyScreen").cl
 function isHost(){return lobby?.snapshot().role==="host"}
 function myId(){return lobby?.snapshot().myId}
 
-function applyThemeSkin(themeId){
+function applyThemeSkin(themeId,inGame){
   document.body.classList.remove("theme-orerun","theme-tombdig","theme-voidrun");
-  document.body.classList.add(`theme-${themeId}`);
+  // 대기실에서는 세 테마 합본 배경을 그대로 두고, 게임에 들어가야 테마 배경으로 바꾼다.
+  document.body.classList.toggle("inGame",Boolean(inGame));
+  if(inGame)document.body.classList.add(`theme-${themeId}`);
 }
 
 function renderThemePicker(){
@@ -785,7 +789,7 @@ function renderResult(){
 
 function render(){
   if(!state)return;
-  applyThemeSkin(state.theme);
+  applyThemeSkin(state.theme,state.phase!=="lobby");
   preloadPhotos(state.theme);
   setTrack(state.phase==="lobby"?"lobby":state.theme);
   if(state.phase==="lobby"){
