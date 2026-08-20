@@ -492,6 +492,17 @@ function createClassroomPlatform(options = {}) {
       )`,
       `CREATE INDEX IF NOT EXISTS game_finisher_records_lookup_idx
         ON game_finisher_records (record_date, game_id, finished_time, player_name)`,
+      `CREATE TABLE IF NOT EXISTS multiplayer_room_snapshots (
+        room_key TEXT PRIMARY KEY,
+        game_id TEXT NOT NULL,
+        room_code TEXT NOT NULL,
+        snapshot JSONB NOT NULL,
+        expires_at TIMESTAMPTZ NOT NULL,
+        created_at TIMESTAMPTZ NOT NULL DEFAULT NOW(),
+        updated_at TIMESTAMPTZ NOT NULL DEFAULT NOW()
+      )`,
+      `CREATE INDEX IF NOT EXISTS multiplayer_room_snapshots_expiry_idx
+        ON multiplayer_room_snapshots (expires_at)`,
       `ALTER TABLE classroom_classes
         DROP CONSTRAINT IF EXISTS classroom_classes_grade_check`,
       `ALTER TABLE classroom_classes
@@ -970,6 +981,7 @@ function createClassroomPlatform(options = {}) {
       for (const statement of statements) await pool.query(statement);
       await pool.query("DELETE FROM classroom_sessions WHERE expires_at <= NOW()");
       await pool.query("DELETE FROM privacy_requests WHERE created_at < NOW() - INTERVAL '1 year'");
+      await pool.query("DELETE FROM multiplayer_room_snapshots WHERE expires_at <= NOW()");
       await readingBank.initialize();
       await metacognition.initialize();
       databaseReady = true;
@@ -1037,6 +1049,41 @@ function createClassroomPlatform(options = {}) {
       [date]
     );
     return listFinisherRecords(date, gameId);
+  }
+
+  async function saveMultiplayerRoomSnapshot({ roomKey, gameId, roomCode, snapshot, ttlSeconds = 10800 }) {
+    if (!pool || !databaseReady) return false;
+    const safeTtlSeconds = Math.max(300, Math.min(21600, Number(ttlSeconds) || 10800));
+    await pool.query(
+      `INSERT INTO multiplayer_room_snapshots
+         (room_key, game_id, room_code, snapshot, expires_at)
+       VALUES ($1, $2, $3, $4::jsonb, NOW() + ($5 * INTERVAL '1 second'))
+       ON CONFLICT (room_key) DO UPDATE
+       SET game_id = EXCLUDED.game_id,
+           room_code = EXCLUDED.room_code,
+           snapshot = EXCLUDED.snapshot,
+           expires_at = EXCLUDED.expires_at,
+           updated_at = NOW()`,
+      [roomKey, gameId, roomCode, JSON.stringify(snapshot), safeTtlSeconds]
+    );
+    return true;
+  }
+
+  async function loadMultiplayerRoomSnapshot(roomKey) {
+    if (!pool || !databaseReady) return null;
+    const result = await pool.query(
+      `SELECT game_id, room_code, snapshot
+       FROM multiplayer_room_snapshots
+       WHERE room_key = $1 AND expires_at > NOW()`,
+      [roomKey]
+    );
+    return result.rows[0] || null;
+  }
+
+  async function deleteMultiplayerRoomSnapshot(roomKey) {
+    if (!pool || !databaseReady) return false;
+    await pool.query("DELETE FROM multiplayer_room_snapshots WHERE room_key = $1", [roomKey]);
+    return true;
   }
 
   async function requireUser(req) {
@@ -5686,7 +5733,10 @@ function createClassroomPlatform(options = {}) {
     verifyMuseumPresenceTicket,
     verifyLearnerBand,
     listFinisherRecords,
-    saveFinisherRecord
+    saveFinisherRecord,
+    saveMultiplayerRoomSnapshot,
+    loadMultiplayerRoomSnapshot,
+    deleteMultiplayerRoomSnapshot
   };
 }
 

@@ -15,6 +15,11 @@ const Clue = require("./clue");
 const Codenames = require("./codenames");
 const Dobble = require("./dobble");
 const { createClassroomPlatform } = require("./classroom-platform");
+const {
+  clientMatchesToken,
+  restoreRoom,
+  snapshotRoom
+} = require("./room-snapshots");
 
 const app = express();
 app.disable("x-powered-by");
@@ -33,6 +38,9 @@ const PORT = Number(process.env.PORT) || 10000;
 const ARITHMETIC_PORT = Number(process.env.ARITHMETIC_PORT) || 10001;
 const HANGUKSA_PORT = Number(process.env.HANGUKSA_PORT) || 10002;
 const WORLD_VOYAGE_PORT = Number(process.env.WORLD_VOYAGE_PORT) || 10003;
+const ROOM_RECONNECT_GRACE_MS = Math.max(30000, Number(process.env.ROOM_RECONNECT_GRACE_MS) || 120000);
+const ROOM_SNAPSHOT_TTL_SECONDS = Math.max(900, Number(process.env.ROOM_SNAPSHOT_TTL_SECONDS) || 10800);
+const ROOM_SNAPSHOT_INTERVAL_MS = 2000;
 const SITE_ROOT = path.resolve(__dirname, "..");
 const WORLD_VOYAGE_PREFIX = "/learn/world-voyage";
 const MUTATING_METHODS = new Set(["POST", "PUT", "PATCH", "DELETE"]);
@@ -170,8 +178,28 @@ const stopLearningApps = () => {
   hanguksaApp.kill();
   worldVoyageApp.kill();
 };
-process.once("SIGTERM", stopLearningApps);
-process.once("SIGINT", stopLearningApps);
+let shutdownStarted = false;
+async function shutdownServer(signal) {
+  if (shutdownStarted) return;
+  shutdownStarted = true;
+  console.log(`Received ${signal}; saving multiplayer rooms before shutdown.`);
+  const forcedExit = setTimeout(() => process.exit(0), 8000);
+  try {
+    await persistAllRoomSnapshots();
+  } finally {
+    stopLearningApps();
+    for (const client of wss.clients) {
+      try { client.close(1012, "SERVER_RESTART"); } catch (_) {}
+    }
+    wss.close();
+    server.close(() => {
+      clearTimeout(forcedExit);
+      process.exit(0);
+    });
+  }
+}
+process.once("SIGTERM", () => { void shutdownServer("SIGTERM"); });
+process.once("SIGINT", () => { void shutdownServer("SIGINT"); });
 
 const staticAssetOptions = {
   dotfiles: "ignore",
@@ -369,6 +397,8 @@ for (const directory of ["admin", "classboard", "classtools", "css", "js", "lear
 const rooms = new Map();
 const museumClasses = new Map();
 const parkClasses = new Map();
+const roomSnapshotFingerprints = new Map();
+const roomRestorePromises = new Map();
 
 function safeSend(socket, payload) {
   if (socket && socket.readyState === WebSocket.OPEN) {
@@ -382,6 +412,75 @@ function cleanToken(value, maxLength = 40) {
 
 function roomKey(gameId, roomCode) {
   return `${gameId}:${roomCode}`;
+}
+
+function roomSnapshotFingerprint(snapshot) {
+  return crypto.createHash("sha256").update(JSON.stringify(snapshot)).digest("hex");
+}
+
+async function persistRoomSnapshot(room, force = false) {
+  if (!room) return false;
+  const key = roomKey(room.gameId, room.roomCode);
+  const snapshot = snapshotRoom(room);
+  if (!snapshot) return false;
+  const fingerprint = roomSnapshotFingerprint(snapshot);
+  if (!force && roomSnapshotFingerprints.get(key) === fingerprint) return true;
+  roomSnapshotFingerprints.set(key, fingerprint);
+  try {
+    return await classroomPlatform.saveMultiplayerRoomSnapshot({
+      roomKey: key,
+      gameId: room.gameId,
+      roomCode: room.roomCode,
+      snapshot,
+      ttlSeconds: ROOM_SNAPSHOT_TTL_SECONDS
+    });
+  } catch (error) {
+    roomSnapshotFingerprints.delete(key);
+    console.error(`Failed to persist multiplayer room ${key}:`, error);
+    return false;
+  }
+}
+
+async function persistAllRoomSnapshots() {
+  await Promise.allSettled([...rooms.values()].map(room => persistRoomSnapshot(room, true)));
+}
+
+async function restorePersistedRoom(gameId, roomCode) {
+  const key = roomKey(gameId, roomCode);
+  if (rooms.has(key)) return rooms.get(key);
+  if (roomRestorePromises.has(key)) return roomRestorePromises.get(key);
+
+  const restorePromise = (async () => {
+    try {
+      const record = await classroomPlatform.loadMultiplayerRoomSnapshot(key);
+      if (!record || record.game_id !== gameId || record.room_code !== roomCode) return null;
+      if (rooms.has(key)) return rooms.get(key);
+      const restored = restoreRoom(record.snapshot, { closedReadyState: WebSocket.CLOSED });
+      if (!restored || restored.gameId !== gameId || restored.roomCode !== roomCode) return null;
+      rooms.set(key, restored);
+      roomSnapshotFingerprints.set(key, roomSnapshotFingerprint(record.snapshot));
+      if (restored.expedition) expeditionSchedule(restored);
+      if (restored.drawrelay) scheduleDrawRelayDeadline(restored);
+      console.log(`Restored multiplayer room ${key} from PostgreSQL.`);
+      return restored;
+    } catch (error) {
+      console.error(`Failed to restore multiplayer room ${key}:`, error);
+      return null;
+    } finally {
+      roomRestorePromises.delete(key);
+    }
+  })();
+
+  roomRestorePromises.set(key, restorePromise);
+  return restorePromise;
+}
+
+function removeRoom(key) {
+  rooms.delete(key);
+  roomSnapshotFingerprints.delete(key);
+  void classroomPlatform.deleteMultiplayerRoomSnapshot(key).catch(error => {
+    console.error(`Failed to delete multiplayer room snapshot ${key}:`, error);
+  });
 }
 
 function museumBroadcast(classKey) {
@@ -1260,6 +1359,7 @@ wss.on("connection", socket => {
     roomKey: null,
     role: null,
     clientToken: null,
+    clientTokenHash: null,
     disconnectTimer: null
   };
 
@@ -1268,7 +1368,7 @@ wss.on("connection", socket => {
     playerId
   });
 
-  socket.on("message", raw => {
+  socket.on("message", async raw => {
     let message;
     try {
       message = JSON.parse(raw.toString());
@@ -1330,9 +1430,10 @@ wss.on("connection", socket => {
       }
 
       const key = roomKey(gameId, roomCode);
-      const existingRoom = rooms.get(key);
+      let existingRoom = rooms.get(key);
+      if (!existingRoom) existingRoom = await restorePersistedRoom(gameId, roomCode);
       const previousHost = existingRoom?.clients.get(existingRoom.hostId);
-      if (existingRoom && clientToken && previousHost?.meta?.clientToken === clientToken && previousHost.readyState !== WebSocket.OPEN) {
+      if (existingRoom && clientToken && clientMatchesToken(previousHost, clientToken) && previousHost.readyState !== WebSocket.OPEN) {
         clearTimeout(previousHost.meta.disconnectTimer);
         playerId = existingRoom.hostId;
         socket.meta.playerId = playerId;
@@ -1456,6 +1557,7 @@ wss.on("connection", socket => {
       socket.meta.roomKey = key;
       socket.meta.role = "host";
       socket.meta.clientToken = clientToken;
+      void persistRoomSnapshot(room, true);
 
       safeSend(socket, {
         type: "ROOM_CREATED",
@@ -1491,7 +1593,8 @@ wss.on("connection", socket => {
       const clientToken = cleanToken(message.clientToken, 80);
       const resumeOnly = message.resumeOnly === true;
       const key = roomKey(gameId, roomCode);
-      const room = rooms.get(key);
+      let room = rooms.get(key);
+      if (!room) room = await restorePersistedRoom(gameId, roomCode);
 
       if (!room) {
         safeSend(socket, { type: "ROOM_NOT_FOUND", gameId, roomCode });
@@ -1499,7 +1602,7 @@ wss.on("connection", socket => {
       }
 
       const resumeEntry = clientToken
-        ? [...room.clients.entries()].find(([, client]) => client?.meta?.clientToken === clientToken && client.readyState !== WebSocket.OPEN)
+        ? [...room.clients.entries()].find(([, client]) => clientMatchesToken(client, clientToken) && client.readyState !== WebSocket.OPEN)
         : null;
       if (resumeEntry) {
         const [resumeId, previousSocket] = resumeEntry;
@@ -1844,6 +1947,7 @@ wss.on("connection", socket => {
       if (room.movement) movementBroadcast(room);
       if (room.excretion) excretionBroadcast(room);
       if (room.temperature) temperatureBroadcast(room);
+      void persistRoomSnapshot(room, true);
       return;
     }
 
@@ -3157,7 +3261,7 @@ wss.on("connection", socket => {
             try { client.close(4002, "HOST_LEFT"); } catch (_) {}
           }
         }
-        rooms.delete(key);
+        removeRoom(key);
         return;
       }
 
@@ -3342,11 +3446,11 @@ wss.on("connection", socket => {
       if (currentRoom.excretion) excretionBroadcast(currentRoom);
       if (currentRoom.temperature) temperatureBroadcast(currentRoom);
 
-      if (currentRoom.clients.size === 0) rooms.delete(key);
+      if (currentRoom.clients.size === 0) removeRoom(key);
     };
 
     if (Number(code) === 4000) finishDisconnect();
-    else socket.meta.disconnectTimer = setTimeout(finishDisconnect, 12000);
+    else socket.meta.disconnectTimer = setTimeout(finishDisconnect, ROOM_RECONNECT_GRACE_MS);
   });
 });
 
@@ -3361,7 +3465,14 @@ const heartbeatTimer = setInterval(() => {
   }
 }, 30000);
 heartbeatTimer.unref?.();
-wss.on("close", () => clearInterval(heartbeatTimer));
+const roomSnapshotTimer = setInterval(() => {
+  for (const room of rooms.values()) void persistRoomSnapshot(room);
+}, ROOM_SNAPSHOT_INTERVAL_MS);
+roomSnapshotTimer.unref?.();
+wss.on("close", () => {
+  clearInterval(heartbeatTimer);
+  clearInterval(roomSnapshotTimer);
+});
 
 // Clue runs server-authoritative turns with a per-turn deadline. Rather than
 // scheduling a precise setTimeout per room (more bookkeeping to leak-proof

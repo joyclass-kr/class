@@ -9,7 +9,10 @@
     const WS_URL = useLocalServer
         ? "ws://127.0.0.1:10000"
         : `${window.location.protocol === "https:" ? "wss:" : "ws:"}//${window.location.host}`;
-    const MAX_OPEN_ATTEMPTS = 3;
+    const INITIAL_OPEN_ATTEMPTS = 3;
+    const MAX_OPEN_ATTEMPTS = 20;
+    const RECONNECT_WINDOW_MS = 120000;
+    const SOCKET_OPEN_TIMEOUT_MS = 10000;
     const HEALTH_ATTEMPTS = 3;
     let statusElement = null;
     let lastHealthyAt = 0;
@@ -109,6 +112,7 @@
             this._openAttempts = 0;
             this._roomEstablished = false;
             this._reconnecting = false;
+            this._reconnectStartedAt = 0;
             this._savedRoomRequest = null;
             this._sessionToken = getRoomSessionToken();
             this.onopen = null;
@@ -139,6 +143,10 @@
 
         _openNative() {
             if (this._intentional) return;
+            if (this._reconnecting && !this._canRetry()) {
+                this._finishConnectionLoss();
+                return;
+            }
             this._openAttempts += 1;
             showStatus(
                 this._openAttempts === 1 ? "CONNECTING TO ROOM SERVER..." : `RECONNECTING... ${this._openAttempts}/${MAX_OPEN_ATTEMPTS}`,
@@ -153,8 +161,13 @@
                 return;
             }
             this._socket = nativeSocket;
+            const openTimeout = setTimeout(() => {
+                if (this._socket !== nativeSocket || nativeSocket.readyState !== WebSocket.CONNECTING) return;
+                try { nativeSocket.close(4001, "OPEN_TIMEOUT"); } catch (_) {}
+            }, SOCKET_OPEN_TIMEOUT_MS);
 
             nativeSocket.addEventListener("open", () => {
+                clearTimeout(openTimeout);
                 if (this._socket !== nativeSocket || this._intentional) return;
                 this._emit("open", new Event("open"));
             });
@@ -181,6 +194,7 @@
                 if (message?.type === "ROOM_RESUMED") {
                     this._roomEstablished = true;
                     this._reconnecting = false;
+                    this._reconnectStartedAt = 0;
                     this._openAttempts = 0;
                     hideStatus();
                     this._emit("message", new MessageEvent("message", {
@@ -191,6 +205,7 @@
                 if (message?.type === "ROOM_CREATED" || message?.type === "ROOM_JOINED") {
                     this._roomEstablished = true;
                     this._reconnecting = false;
+                    this._reconnectStartedAt = 0;
                     this._openAttempts = 0;
                     hideStatus();
                 }
@@ -198,13 +213,8 @@
                     hideStatus();
                 }
                 if (this._reconnecting && (message?.type === "ROOM_NOT_FOUND" || message?.type === "ROOM_CLOSED" || message?.type === "ERROR")) {
-                    this._reconnecting = false;
-                    this._intentional = true;
-                    showStatus("CONNECTION LOST", "기존 방을 복구하지 못했습니다. 새 방을 만들어 주세요.", true);
-                    this._emit("message", cloneMessageEvent(event));
-                    this._emit("error", new Event("error"));
-                    this._emit("close", new CloseEvent("close", { code: 4001, reason: "ROOM_RESUME_FAILED", wasClean: false }));
-                    try { nativeSocket.close(4001, "ROOM_RESUME_FAILED"); } catch (_) {}
+                    showStatus("RECONNECTING...", "서버에서 기존 방을 복구하는 중입니다. 잠시 기다려 주세요.");
+                    try { nativeSocket.close(4001, "ROOM_RESUME_RETRY"); } catch (_) {}
                     return;
                 }
                 this._emit("message", cloneMessageEvent(event));
@@ -218,43 +228,71 @@
             });
 
             nativeSocket.addEventListener("close", event => {
+                clearTimeout(openTimeout);
                 if (this._socket !== nativeSocket || this._intentional) return;
                 this._socket = null;
                 this._handshakeReady = false;
                 if (this._roomEstablished) {
                     this._roomEstablished = false;
                     this._reconnecting = true;
+                    this._reconnectStartedAt = Date.now();
                     this._openAttempts = 0;
                     this._retryBeforeRoom();
                     return;
                 }
-                if (!this._roomEstablished && this._openAttempts < MAX_OPEN_ATTEMPTS) {
+                if (this._canRetry()) {
                     this._retryBeforeRoom();
                     return;
                 }
-                showStatus(
-                    "CONNECTION LOST",
-                    this._roomEstablished
-                        ? "게임 서버 연결이 끊어졌습니다. 화면 안내에 따라 다시 접속해 주세요."
-                        : "서버에 연결하지 못했습니다. 잠시 후 다시 시도해 주세요.",
-                    true
-                );
-                this._emit("error", new Event("error"));
-                this._emit("close", new CloseEvent("close", {
-                    code: event.code,
-                    reason: event.reason,
-                    wasClean: event.wasClean
-                }));
+                this._finishConnectionLoss(event);
             });
         }
 
         async _retryBeforeRoom() {
+            if (this._reconnecting && this._openAttempts === 0) {
+                lastHealthyAt = 0;
+                await wakeServer();
+            }
+            if (this._intentional) return;
             showStatus(
                 `RECONNECTING... ${Math.min(this._openAttempts + 1, MAX_OPEN_ATTEMPTS)}/${MAX_OPEN_ATTEMPTS}`,
                 "서버 응답을 기다리고 있습니다."
             );
-            await wait(Math.max(700, this._openAttempts * 900));
+            await wait(Math.min(5000, Math.max(700, this._openAttempts * 700)));
+            if (!this._canRetry()) {
+                this._finishConnectionLoss();
+                return;
+            }
             this._openNative();
+        }
+
+        _canRetry() {
+            if (this._intentional) return false;
+            if (this._reconnecting) {
+                return this._openAttempts < MAX_OPEN_ATTEMPTS
+                    && Date.now() - this._reconnectStartedAt < RECONNECT_WINDOW_MS;
+            }
+            return this._openAttempts < INITIAL_OPEN_ATTEMPTS;
+        }
+
+        _finishConnectionLoss(event = {}) {
+            if (this._intentional) return;
+            const wasReconnecting = this._reconnecting;
+            this._reconnecting = false;
+            this._intentional = true;
+            showStatus(
+                "CONNECTION LOST",
+                wasReconnecting
+                    ? "2분 동안 기존 방을 복구하지 못했습니다. 새 방을 만들어 주세요."
+                    : "서버에 연결하지 못했습니다. 잠시 후 다시 시도해 주세요.",
+                true
+            );
+            this._emit("error", new Event("error"));
+            this._emit("close", new CloseEvent("close", {
+                code: Number(event.code) || 4001,
+                reason: event.reason || "ROOM_RESUME_FAILED",
+                wasClean: event.wasClean === true
+            }));
         }
 
         _queueMessage(data) {
