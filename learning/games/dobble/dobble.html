@@ -47,11 +47,11 @@ h1,h2,h3,p{margin-top:0}
 .cardWrap{text-align:center}
 .cardLabel{margin-bottom:8px;font-weight:900;letter-spacing:.08em;color:#c9bfe0;font-size:12px}
 .dobbleCard{position:relative;width:100%;aspect-ratio:1/1;margin:auto;border-radius:50%;background:radial-gradient(circle,#2f2748,#1a1528);border:3px solid var(--panel-edge);overflow:hidden}
-.symbol{position:absolute;width:29%;aspect-ratio:1/1;transform:translate(-50%,-50%);border-radius:10px;overflow:hidden;background:#0e0c16;border:2px solid #453a5c}
-.symbol img{width:100%;height:100%;object-fit:cover;display:block}
-.symbol.clickable{cursor:pointer;border-color:var(--accent)}
-.symbol.clickable:hover{transform:translate(-50%,-50%) scale(1.12);z-index:2;border-color:#ffd9a8}
-.symbol.clickable:active{transform:translate(-50%,-50%) scale(0.96)}
+.symbol{position:absolute;width:29%;aspect-ratio:1/1;transform:translate(-50%,-50%);filter:drop-shadow(0 2px 3px #00000080)}
+.symbol img{width:100%;height:100%;object-fit:contain;display:block}
+.symbol.clickable{cursor:pointer}
+.symbol.clickable:hover{transform:translate(-50%,-50%) scale(1.15);z-index:2;filter:drop-shadow(0 0 9px var(--accent)) drop-shadow(0 2px 3px #00000080)}
+.symbol.clickable:active{transform:translate(-50%,-50%) scale(0.98)}
 
 .standings{margin-top:10px}
 .standingsRow{display:flex;justify-content:space-between;padding:6px 4px;border-bottom:1px solid #34293f;font-size:14px}
@@ -219,14 +219,14 @@ const savedName = String(localStorage.getItem(NAME_KEY) || "").trim();
 
 // 8개 그림을 카드 안에 원형으로 흩뿌려 실제 카드처럼 보이게 배치한다.
 const SLOT_LAYOUT = [
-  { top: "50%", left: "50%", scale: 1.15 },
-  { top: "18%", left: "50%", scale: 0.85 },
-  { top: "30%", left: "80%", scale: 0.8 },
-  { top: "68%", left: "84%", scale: 0.9 },
-  { top: "85%", left: "55%", scale: 0.85 },
-  { top: "78%", left: "20%", scale: 0.8 },
-  { top: "34%", left: "16%", scale: 0.85 },
-  { top: "55%", left: "50%", scale: 0.55 }
+  { top: "17%", left: "50%", scale: 0.85 },
+  { top: "29%", left: "76%", scale: 0.75 },
+  { top: "57%", left: "82%", scale: 0.9 },
+  { top: "80%", left: "64%", scale: 0.8 },
+  { top: "80%", left: "36%", scale: 0.95 },
+  { top: "57%", left: "18%", scale: 0.8 },
+  { top: "29%", left: "24%", scale: 0.75 },
+  { top: "50%", left: "50%", scale: 0.6 }
 ];
 
 const MODES = [
