@@ -37,9 +37,13 @@ test("관용구 화면과 메인 메뉴가 내용별 차시 학습에 연결된�
   ]) {
     assert.match(html, new RegExp("id=\\\"" + id + "\\\""), id);
   }
-  assert.match(html, /id="lessonSelect"/);
+  assert.match(html, /id="lessonOverview"/);
+  assert.match(html, /id="lessonList"/);
+  assert.match(html, /id="backToLessons"/);
   assert.match(app, /const LESSONS =/);
   assert.match(app, /1차시 · 마음과 감정/);
+  assert.match(app, /renderLessonList/);
+  assert.match(app, /completedLessons/);
   assert.doesNotMatch(app, /BATCH_SIZE = 5/);
   assert.match(app, /이 상황에 알맞은 관용구는/);
   assert.match(styles, /min-height:\s*48px/);

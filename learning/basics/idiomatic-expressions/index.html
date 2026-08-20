@@ -19,10 +19,12 @@
   <audio id="bgm" src="../proverbs/assets/paper-lantern-drift.ogg" preload="auto" loop></audio>
 
   <main>
-    <section class="lesson-picker" aria-labelledby="lessonHeading">
-      <div><strong id="lessonHeading">차시 선택</strong><small>주제에 맞는 표현을 문맥으로 익혀요</small></div>
-      <select id="lessonSelect" aria-label="관용구 차시 선택"></select>
+    <section id="lessonOverview" class="lesson-overview" aria-labelledby="lessonHeading">
+      <div class="overview-heading"><div><h1 id="lessonHeading">관용구 차시 학습</h1><p>배울 차시를 선택하세요.</p></div><strong id="completionSummary">0 / 7 완료</strong></div>
+      <div id="lessonList" class="lesson-list"></div>
     </section>
+    <div id="learningShell" hidden>
+      <div class="learning-utility"><button id="backToLessons" type="button">← 차시 목록</button><strong id="currentLessonTitle"></strong></div>
     <nav class="mode-tabs" aria-label="학습 모드 선택">
       <button class="mode-tab active" data-mode="study" type="button" aria-selected="true">관용구 공부</button>
       <button class="mode-tab" data-mode="quiz" type="button" aria-selected="false">문제 풀기</button>
@@ -53,6 +55,7 @@
         <button id="nextQuestion" class="primary" type="button" disabled>다음 문제</button>
       </div>
     </section>
+    </div>
   </main>
 </body>
 </html>

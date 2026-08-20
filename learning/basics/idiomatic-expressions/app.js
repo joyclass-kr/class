@@ -1,7 +1,18 @@
 "use strict";
 
 const bank = window.IDIOMATIC_EXPRESSION_BANK;
-const LESSONS = [{title:"1차시 · 마음과 감정",test:/^(마음|몸)/},{title:"2차시 · 생각하고 판단하기",test:/^(생각|능숙함)/},{title:"3차시 · 말하고 듣기",test:/^말/},{title:"4차시 · 사람과 관계",test:/^관계/},{title:"5차시 · 행동과 책임",test:/^행동/},{title:"6차시 · 관심과 평가",test:/^(평가|관심|성과)/},{title:"7차시 · 상황과 생활",test:/^(시간|상황|생활)/}]; let lessonIndex=0; let BATCH_SIZE=0;
+const LESSONS = [
+  { title: "1차시 · 마음과 감정", copy: "기쁨·걱정·긴장을 나타내는 표현", test: /^(마음|몸)/ },
+  { title: "2차시 · 생각하고 판단하기", copy: "생각의 방향과 깨달음을 나타내는 표현", test: /^(생각|능숙함)/ },
+  { title: "3차시 · 말하고 듣기", copy: "대화와 의견에 쓰는 표현", test: /^말/ },
+  { title: "4차시 · 사람과 관계", copy: "도움·협력·신뢰를 나타내는 표현", test: /^관계/ },
+  { title: "5차시 · 행동과 책임", copy: "실천·도움·책임에 쓰는 표현", test: /^행동/ },
+  { title: "6차시 · 관심과 평가", copy: "관심·평가·성과를 나타내는 표현", test: /^(평가|관심|성과)/ },
+  { title: "7차시 · 상황과 생활", copy: "시간·상황·생활에 쓰는 표현", test: /^(시간|상황|생활)/ }
+];
+const COMPLETION_KEY = "class-idiomatic-expression-lessons";
+let completedLessons = new Set(JSON.parse(localStorage.getItem(COMPLETION_KEY) || "[]"));
+let lessonIndex=0; let BATCH_SIZE=0;
 let mode = "study";
 let bankOrder = [];
 let bankCursor = 0;
@@ -25,8 +36,19 @@ function shuffle(items) {
   return result;
 }
 
+function lessonFor(item) {
+  const category = item.category;
+  if (/^(마음|몸)/.test(category)) return 0;
+  if (/^(생각|능숙함)/.test(category)) return 1;
+  if (/^말/.test(category)) return 2;
+  if (/관계|협력|교류|도움/.test(category)) return 3;
+  if (/^행동/.test(category)) return 4;
+  if (/^(평가|관심|성과)/.test(category)) return 5;
+  return 6;
+}
+
 function resetBank() {
-  bankOrder = Array.from({ length: bank.length }, (_, index) => index).filter((index) => LESSONS[lessonIndex].test.test(bank[index].category)); BATCH_SIZE = bankOrder.length;
+  bankOrder = Array.from({ length: bank.length }, (_, index) => index).filter((index) => lessonFor(bank[index]) === lessonIndex); BATCH_SIZE = bankOrder.length;
   bankCursor = 0;
 }
 
@@ -128,6 +150,8 @@ function renderQuizComplete() {
   byId("nextQuestion").disabled = false;
   byId("nextQuestion").dataset.action = "next-batch";
   byId("nextQuestion").textContent = "이 차시 다시 공부";
+  completedLessons.add(lessonIndex);
+  localStorage.setItem(COMPLETION_KEY, JSON.stringify([...completedLessons]));
 }
 
 function setMode(nextMode) {
@@ -178,9 +202,31 @@ if (!Array.isArray(bank) || bank.length < BATCH_SIZE) {
   throw new Error("관용구 학습 자료를 불러오지 못했습니다.");
 }
 
-const lessonSelect = byId("lessonSelect");
-LESSONS.forEach((lesson, index) => { const count = bank.filter((item) => lesson.test.test(item.category)).length; lessonSelect.add(new Option(lesson.title + " · " + count + "개", String(index))); });
-lessonSelect.addEventListener("change", () => { lessonIndex = Number(lessonSelect.value); resetBank(); prepareBatch(); setMode("study"); });
-resetBank();
-prepareBatch();
-renderStudy();
+function lessonItems(index) {
+  return bank.filter((item) => lessonFor(item) === index);
+}
+
+function renderLessonList() {
+  byId("completionSummary").textContent = completedLessons.size + " / " + LESSONS.length + " 완료";
+  byId("lessonList").replaceChildren(...LESSONS.map((lesson, index) => {
+    const items = lessonItems(index);
+    const button = document.createElement("button");
+    button.type = "button";
+    button.className = "lesson-item";
+    button.innerHTML = "<span class=\"lesson-number\">" + String(index + 1).padStart(2, "0") + "</span><span class=\"lesson-copy\"><strong>" + lesson.title.replace(/^\\d+차시 · /, "") + "</strong><small>" + lesson.copy + "</small><em>" + items.slice(0, 3).map((item) => item.expression).join(" · ") + "</em></span><span class=\"lesson-meta\">" + items.length + "개" + (completedLessons.has(index) ? "<b>✓ 완료</b>" : "") + "</span>";
+    button.addEventListener("click", () => startLesson(index));
+    return button;
+  }));
+}
+
+function startLesson(index) {
+  lessonIndex = index; resetBank(); prepareBatch();
+  byId("lessonOverview").hidden = true; byId("learningShell").hidden = false;
+  byId("currentLessonTitle").textContent = LESSONS[index].title;
+  setMode("study");
+}
+
+byId("backToLessons").addEventListener("click", () => {
+  byId("learningShell").hidden = true; byId("lessonOverview").hidden = false; renderLessonList();
+});
+renderLessonList();
