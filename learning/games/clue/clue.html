@@ -57,15 +57,21 @@ h1,h2,h3,p{margin-top:0}
 .turnBanner2{text-align:center;font-weight:850;padding:8px 4px}
 
 .boardWrap{width:min(900px,100%);margin:auto}
-.roomRect{fill:none;stroke:none;cursor:default;pointer-events:all}
+.boardBg{fill:#12141c}
+.hallway{fill:#262b3a;stroke:#3a3f52;stroke-width:1}
+.roomRect{stroke:var(--panel-edge);stroke-width:1.5;cursor:default;pointer-events:all}
+.roomRect.centerRoom{stroke:var(--accent-soft);stroke-width:2}
 .roomRect.reachable{stroke:var(--safe);stroke-width:4;cursor:pointer;filter:drop-shadow(0 0 6px #3f9e6cbb)}
 .roomRect.reachable:hover{stroke:#5fd99a}
 .roomRect.current{stroke:var(--accent);stroke-width:4}
-.cellHit{fill:#00000000;stroke:none;cursor:default;pointer-events:all}
-.cellHit.reachable{fill:#3f9e6c40;stroke:var(--safe);stroke-width:2.5;cursor:pointer;filter:drop-shadow(0 0 5px #3f9e6cbb)}
-.cellHit.reachable:hover{fill:#5fd99a55}
-.cellHit.current{stroke:var(--accent);stroke-width:2.5;fill:#d9a44140}
-.cellHit.passage{stroke-dasharray:3 2}
+.roomIcon{font-size:24px;text-anchor:middle;pointer-events:none}
+.roomLabel{font-size:11px;font-weight:800;fill:#e8ceb0;text-anchor:middle;pointer-events:none;letter-spacing:.02em}
+.cellHit{fill:#d9a44133;stroke:#d9a44166;stroke-width:1;cursor:default;pointer-events:all;transition:fill .15s,stroke .15s}
+.cellHit.passage{fill:#8a662a55;stroke:var(--accent);stroke-width:1.5;stroke-dasharray:3 2}
+.cellHit.reachable{fill:#3f9e6c66;stroke:var(--safe);stroke-width:2.5;cursor:pointer;filter:drop-shadow(0 0 5px #3f9e6cbb)}
+.cellHit.reachable:hover{fill:#5fd99a99}
+.cellHit.current{stroke:var(--accent);stroke-width:2.5;fill:#d9a44166}
+.passageIcon{font-size:11px;fill:#f0dfb0;text-anchor:middle;pointer-events:none}
 .token{stroke:#fff;stroke-width:1.5}
 .tokenAvatar{pointer-events:none}
 .reachRing{fill:none;stroke:var(--safe);stroke-width:3;opacity:.9;pointer-events:none;transform-box:fill-box;transform-origin:center;animation:reachPulse 1.2s ease-out infinite}
@@ -357,9 +363,14 @@ function cardImage(id){return "/learning/games/clue/assets/images/cards/"+CARD_F
 const CARDBACK_IMG="/learning/games/clue/assets/images/cards/cardback.webp";
 const ROOM_POS=[[0,0],[0,1],[0,2],[1,0],[1,1],[1,2],[2,0],[2,1],[2,2]];
 const CELL_COORDS={
-  t0:[29,127],t1:[70,130],t2:[124,37],t3:[190,130],t4:[256,37],t5:[310,130],t6:[351,127],
-  b0:[27,253],b1:[70,250],b2:[125,342],b3:[190,250],b4:[255,342],b5:[310,250],b6:[353,253]
+  t0:[20,130],t1:[70,130],t2:[130,130],t3:[190,130],t4:[250,130],t5:[310,130],t6:[360,130],
+  b0:[20,250],b1:[70,250],b2:[130,250],b3:[190,250],b4:[250,250],b5:[310,250],b6:[360,250]
 };
+const ROOM_META=[
+  {icon:"🌿",color:"#234a35"},{icon:"🎹",color:"#4a2140"},{icon:"🍳",color:"#4a3319"},
+  {icon:"📖",color:"#33241c"},{icon:"🛋️",color:"#4a3c14"},{icon:"🍽️",color:"#4a1f24"},
+  {icon:"🗄️",color:"#263038"},{icon:"🚪",color:"#1c3a3a"},{icon:"🎱",color:"#1a3d2e"}
+];
 const CELL_NEIGHBORS={
   t0:["t1"],t1:["t0","t2"],t2:["t1","t3"],t3:["t2","t4"],t4:["t3","t5"],t5:["t4","t6"],t6:["t5"],
   b0:["b1"],b1:["b0","b2"],b2:["b1","b3"],b3:["b2","b4"],b4:["b3","b5"],b5:["b4","b6"],b6:["b5"]
@@ -468,21 +479,27 @@ function showLobby(){
 
 function buildBoard(){
   const svg=$("board");
-  const parts=[`<image href="/learning/games/clue/assets/images/board.webp" x="0" y="0" width="380" height="380"/>`];
   const defs=[`<clipPath id="tokenClip" clipPathUnits="objectBoundingBox"><circle cx="0.5" cy="0.5" r="0.5"/></clipPath>`];
+  const parts=[`<rect class="boardBg" x="0" y="0" width="380" height="380" rx="14"/>`];
   const cellSize=100,gap=20,margin=20;
+  parts.push(`<rect class="hallway" x="${margin}" y="120" width="340" height="20" rx="6"/>`);
+  parts.push(`<rect class="hallway" x="${margin}" y="240" width="340" height="20" rx="6"/>`);
   for(let i=0;i<9;i+=1){
     const [row,col]=ROOM_POS[i];
     const x=margin+col*(cellSize+gap),y=margin+row*(cellSize+gap);
+    const meta=ROOM_META[i];
     parts.push(`<g data-room="${i}" transform="translate(${x},${y})">`);
-    parts.push(`<rect class="roomRect" data-room="${i}" x="0" y="0" width="${cellSize}" height="${cellSize}" rx="8"/>`);
+    parts.push(`<rect class="roomRect${i===CENTER_ROOM?" centerRoom":""}" data-room="${i}" x="0" y="0" width="${cellSize}" height="${cellSize}" rx="10" fill="${meta.color}"/>`);
+    parts.push(`<text class="roomIcon" x="${cellSize/2}" y="42">${meta.icon}</text>`);
+    parts.push(`<text class="roomLabel" x="${cellSize/2}" y="60">${ROOMS[i]}</text>`);
     parts.push(`<g class="tokenLayer" data-tokens="r${i}"></g>`);
     parts.push(`</g>`);
   }
   Object.entries(CELL_COORDS).forEach(([cellId,pos])=>{
     const isPassage=Boolean(SECRET_PASSAGE_PAIRS[cellId]);
     parts.push(`<g data-cell="${cellId}" transform="translate(${pos[0]},${pos[1]})">`);
-    parts.push(`<circle class="cellHit${isPassage?" passage":""}" data-cell="${cellId}" cx="0" cy="0" r="15"/>`);
+    parts.push(`<circle class="cellHit${isPassage?" passage":""}" data-cell="${cellId}" cx="0" cy="0" r="${isPassage?13:9}"/>`);
+    if(isPassage)parts.push(`<text class="passageIcon" x="0" y="4">🌀</text>`);
     parts.push(`<g class="tokenLayer" data-tokens="c${cellId}"></g>`);
     parts.push(`</g>`);
   });
@@ -584,12 +601,8 @@ function renderTokens(){
       if(!layer)return;
       const ring=document.createElementNS(svgNS,"circle");
       ring.setAttribute("class","reachRing");
-      ring.setAttribute("cx",0);ring.setAttribute("cy",0);ring.setAttribute("r",10);
-      const dot=document.createElementNS(svgNS,"circle");
-      dot.setAttribute("class","reachDot");
-      dot.setAttribute("cx",0);dot.setAttribute("cy",0);dot.setAttribute("r",6);
+      ring.setAttribute("cx",0);ring.setAttribute("cy",0);ring.setAttribute("r",9);
       layer.appendChild(ring);
-      layer.appendChild(dot);
     });
   }
   if(me){
