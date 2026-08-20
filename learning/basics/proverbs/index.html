@@ -19,14 +19,20 @@
   </header>
   <audio id="bgm" src="assets/paper-lantern-drift.ogg" preload="auto" loop></audio>
   <main>
-    <nav class="mode-tabs" aria-label="학습 모드 선택">
-      <button class="mode-tab active" data-mode="study" type="button" aria-selected="true">속담 공부</button>
-      <button class="mode-tab" data-mode="quiz" type="button" aria-selected="false">문제 풀기</button>
-    </nav>
     <section class="language-tabs" aria-label="속담 언어 선택">
       <button class="language-tab active" data-language="ko" type="button">한국 속담</button>
       <button class="language-tab" data-language="en" type="button">영어 속담</button>
     </section>
+    <section id="lessonOverview" class="lesson-overview" aria-labelledby="lessonHeading">
+      <div class="overview-heading"><div><h1 id="lessonHeading">한국 속담 차시 학습</h1><p id="lessonIntro">뜻이 이어지는 속담을 함께 익혀요.</p></div><strong id="completionSummary">0 / 10 완료</strong></div>
+      <div id="lessonList" class="lesson-list"></div>
+    </section>
+    <div id="learningShell" hidden>
+      <div class="learning-utility"><button id="backToLessons" type="button">← 차시 목록</button><strong id="currentLessonTitle"></strong></div>
+      <nav class="mode-tabs" aria-label="학습 모드 선택">
+        <button class="mode-tab active" data-mode="study" type="button" aria-selected="true">속담 공부</button>
+        <button class="mode-tab" data-mode="quiz" type="button" aria-selected="false">문제 풀기</button>
+      </nav>
 
     <section id="studyView" class="panel study-card" aria-live="polite">
       <p id="label" class="label"></p>
@@ -54,6 +60,7 @@
         <button id="nextQuestion" class="primary" type="button" disabled>다음 문제</button>
       </div>
     </section>
+    </div>
   </main>
 </body>
 </html>

@@ -1,230 +1,65 @@
+"use strict";
+
 const decks = window.PROVERB_BANKS;
-const BATCH_SIZE = 5;
-let language = "ko";
-let mode = "study";
-let bankOrder = [];
-let bankCursor = 0;
-let studyBatch = [];
-let studyPosition = 0;
-let quizOrder = [];
-let quizPosition = 0;
-let currentChoices = null;
-let correct = 0;
-let attempts = 0;
-let questionHadWrong = false;
 const $ = (id) => document.getElementById(id);
+const LESSONS = {
+  ko: [
+    ["말과 소통", "말의 힘과 바른 소통", /말|입은|아 다르고|낮말|발 없는|소문/],
+    ["노력과 성장", "작은 노력과 꾸준한 성장", /노력|연습|꾸준|시작|공든|낙숫|천 리|한 술|구슬|고생|티끌|서당/],
+    ["준비와 실수", "서두름·방심·뒤늦은 후회", /실수|확인|미리|뒤늦|급할수록|호미|소 잃|돌다리|아는 길|원숭이|다 된/],
+    ["사람과 관계", "협력·신뢰·갈등과 관계", /친구|함께|서로|사촌|누이|팔은|손뼉|백지장|고래|가재|믿는 도끼/],
+    ["욕심과 이익", "욕심·기대·이익과 손해", /욕심|이익|손해|달면|김칫국|말 타면|배보다|꿩 먹고|혹 떼러/],
+    ["겉모습과 본질", "겉과 속을 구별하는 판단", /겉|실속|본질|눈 가리고|수박|개살구|빈 수레|제 눈|그림의 떡/],
+    ["어려움과 희망", "위기에서 찾는 용기와 희망", /어려|위급|위태|희망|호랑이|하늘|쥐구멍|산 넘어|바람 앞/],
+    ["행동과 결과", "원인·행동·습관이 만드는 결과", /결과|원인|행동|버릇|도둑|콩 심|바늘|씨가 된다/],
+    ["재능과 겸손", "재능·실력·겸손을 보는 태도", /실력|재주|겸손|뛰어난|공자|벼는|굼벵이|작은 고추|뛰는 놈/],
+    ["세상살이의 지혜", "비교·선택·질서와 삶의 지혜", /.*/]
+  ],
+  en: [
+    ["Effort and growth", "Practice, patience, and progress", /연습|노력|인내|기회|시작|성공|배우|지식/],
+    ["Words and relationships", "Honesty, friendship, and communication", /친구|정직|말|사람|함께|관습|웃음/],
+    ["Careful choices", "Planning, caution, and consequences", /조심|서두|결과|위험|판단|확실|잃|낭비/],
+    ["Life wisdom", "Choices and lessons for everyday life", /.*/]
+  ]
+};
+let language = "ko", lessonIndex = 0, mode = "study";
+let studyBatch = [], studyPosition = 0, quizOrder = [], quizPosition = 0;
+let currentChoices = null, correct = 0, attempts = 0, questionHadWrong = false;
+let completed = loadCompleted();
 
-function shuffle(items) {
-  const result = [...items];
-  for (let current = result.length - 1; current > 0; current -= 1) {
-    const swap = Math.floor(Math.random() * (current + 1));
-    [result[current], result[swap]] = [result[swap], result[current]];
-  }
-  return result;
-}
+function shuffle(items) { const a=[...items]; for(let i=a.length-1;i>0;i--){const j=Math.floor(Math.random()*(i+1));[a[i],a[j]]=[a[j],a[i]];} return a; }
+function key() { return "class-proverb-lessons-" + language; }
+function loadCompleted() { try { return new Set(JSON.parse(localStorage.getItem("class-proverb-lessons-" + language) || "[]")); } catch (_) { return new Set(); } }
+function lessonFor(item) { const text=item.proverb+" "+item.meaning; const lessons=LESSONS[language]; for(let i=0;i<lessons.length;i++) if(lessons[i][2].test(text)) return i; return lessons.length-1; }
+function lessonItems(index) { return decks[language].filter((item)=>lessonFor(item)===index); }
 
-function resetBank() {
-  bankOrder = shuffle(Array.from({ length: decks[language].length }, (_, index) => index));
-  bankCursor = 0;
-}
-
-function prepareBatch() {
-  if (!bankOrder.length || bankCursor + BATCH_SIZE > bankOrder.length) resetBank();
-  studyBatch = bankOrder.slice(bankCursor, bankCursor + BATCH_SIZE);
-  bankCursor += BATCH_SIZE;
-  studyPosition = 0;
-  quizOrder = shuffle(studyBatch);
-  quizPosition = 0;
-  currentChoices = null;
-  correct = 0;
-  attempts = 0;
-  $("nextQuestion").dataset.action = "next";
-}
-
-function updateNavigationLocale() {
-  const english = language === "en";
-  document.querySelector('[data-mode="study"]').textContent = english ? "Study" : "속담 공부";
-  document.querySelector('[data-mode="quiz"]').textContent = english ? "Quiz" : "문제 풀기";
-  document.querySelector('[data-language="ko"]').textContent = english ? "Korean Proverbs" : "한국 속담";
-  document.querySelector('[data-language="en"]').textContent = english ? "English Proverbs" : "영어 속담";
-}
-
-function renderStudy() {
-  const item = decks[language][studyBatch[studyPosition]];
-  const english = language === "en";
-  $("label").textContent = english
-    ? `THIS SET ${studyPosition + 1} / ${BATCH_SIZE} · BANK ${decks.en.length}`
-    : `이번 학습 ${studyPosition + 1} / ${BATCH_SIZE} · 전체 은행 ${decks.ko.length}개`;
-  $("proverb").textContent = item.proverb;
-  $("literal").textContent = item.literal || "";
-  $("literal").hidden = !item.literal;
-  $("meaning").textContent = item.meaning;
-  if (item.image) {
-    $("proverbIllustrationImage").src = item.image;
-    $("proverbIllustrationImage").alt = item.proverb;
-    $("proverbIllustrationFrame").hidden = false;
-  } else {
-    $("proverbIllustrationFrame").hidden = true;
-  }
-  $("example").textContent = `예: ${item.example}`;
-  $("previous").disabled = studyPosition === 0;
-  $("next").textContent = studyPosition === BATCH_SIZE - 1
-    ? (english ? "Start quiz" : "문제 풀기")
-    : (english ? "Next proverb" : "다음 속담");
-}
-
-function buildChoices(correctIndex) {
-  const distractors = shuffle(
-    Array.from({ length: decks[language].length }, (_, index) => index)
-      .filter((index) => index !== correctIndex)
-  ).slice(0, 2);
-  const choiceIndices = shuffle([correctIndex, ...distractors]);
-  return {
-    texts: choiceIndices.map((index) => decks[language][index].proverb),
-    answer: choiceIndices.indexOf(correctIndex)
-  };
-}
-
-function renderQuiz() {
-  questionHadWrong = false;
-  const itemIndex = quizOrder[quizPosition];
-  const item = decks[language][itemIndex];
-  const english = language === "en";
-  currentChoices = buildChoices(itemIndex);
-  $("quizKicker").textContent = english
-    ? `QUICK QUIZ · ${quizPosition + 1} / ${BATCH_SIZE}`
-    : `확인 퀴즈 · ${quizPosition + 1} / ${BATCH_SIZE}`;
-  $("quiz-title").textContent = english
-    ? "Which proverb best fits this situation?"
-    : "이 상황에 알맞은 속담은?";
-  $("reviewAnswer").textContent = english ? "Study this proverb again" : "이 속담 다시 공부하기";
-  $("nextQuestion").textContent = english ? "Next question" : "다음 문제";
-  $("nextQuestion").dataset.action = "next";
-  $("score").textContent = english ? `Correct ${correct} / ${attempts}` : `정답 ${correct} / ${attempts}`;
-  $("question").textContent = item.question;
-  $("feedback").textContent = "";
-  $("reviewAnswer").hidden = true;
-  $("nextQuestion").hidden = false;
-  $("nextQuestion").disabled = true;
-  $("choices").replaceChildren(...currentChoices.texts.map((choice, choiceIndex) => {
-    const button = document.createElement("button");
-    button.type = "button";
-    button.textContent = choice;
-    button.dataset.sfx = "none";
-    button.addEventListener("click", () => answer(choiceIndex, button));
-    return button;
+function renderLessonList() {
+  const lessons=LESSONS[language];
+  $("lessonHeading").textContent=language==="ko"?"한국 속담 차시 학습":"English Proverb Lessons";
+  $("lessonIntro").textContent=language==="ko"?"비슷한 뜻과 쓰임을 연결해 익혀요.":"Study proverbs by meaning and use.";
+  $("completionSummary").textContent=completed.size+" / "+lessons.length+(language==="ko"?" 완료":" complete");
+  $("lessonList").replaceChildren(...lessons.map((lesson,index)=>{
+    const items=lessonItems(index), button=document.createElement("button"); button.type="button"; button.className="lesson-item";
+    button.innerHTML='<span class="lesson-number">'+String(index+1).padStart(2,"0")+'</span><span class="lesson-copy"><strong>'+lesson[0]+'</strong><small>'+lesson[1]+'</small><em>'+items.slice(0,3).map(x=>x.proverb).join(" · ")+'</em></span><span class="lesson-meta">'+items.length+(language==="ko"?"개":"")+(completed.has(index)?'<b>✓ '+(language==="ko"?"완료":"done")+'</b>':"")+'</span>';
+    button.addEventListener("click",()=>startLesson(index)); return button;
   }));
 }
+function prepareLesson() { studyBatch=decks[language].map((_,i)=>i).filter(i=>lessonFor(decks[language][i])===lessonIndex); studyPosition=0; quizOrder=shuffle(studyBatch); quizPosition=0; correct=0; attempts=0; currentChoices=null; }
+function startLesson(index){ lessonIndex=index; prepareLesson(); $("lessonOverview").hidden=true; $("learningShell").hidden=false; $("currentLessonTitle").textContent=(language==="ko"?(index+1)+"차시 · ":"Lesson "+(index+1)+" · ")+LESSONS[language][index][0]; setMode("study"); }
+function renderStudy(){ const item=decks[language][studyBatch[studyPosition]], en=language==="en"; $("label").textContent=(studyPosition+1)+" / "+studyBatch.length; $("proverb").textContent=item.proverb; $("literal").textContent=item.literal||""; $("literal").hidden=!item.literal; $("meaning").textContent=item.meaning; if(item.image){$("proverbIllustrationImage").src=item.image;$("proverbIllustrationImage").alt=item.proverb;$("proverbIllustrationFrame").hidden=false;}else $("proverbIllustrationFrame").hidden=true; $("example").textContent=(en?"Example: ":"예: ")+item.example; $("previous").disabled=studyPosition===0; $("next").textContent=studyPosition===studyBatch.length-1?(en?"Lesson quiz":"차시 확인 문제"):(en?"Next proverb":"다음 속담"); }
+function buildChoices(correctIndex){ const wrong=shuffle(decks[language].map((_,i)=>i).filter(i=>i!==correctIndex)).slice(0,2), ids=shuffle([correctIndex,...wrong]); return {texts:ids.map(i=>decks[language][i].proverb),answer:ids.indexOf(correctIndex)}; }
+function renderQuiz(){ questionHadWrong=false; const idx=quizOrder[quizPosition],item=decks[language][idx],en=language==="en"; currentChoices=buildChoices(idx); $("quizKicker").textContent=(en?"LESSON CHECK ":"차시 확인 ")+(quizPosition+1)+" / "+quizOrder.length; $("quiz-title").textContent=en?"Which proverb best fits?":"이 상황에 알맞은 속담은?"; $("question").textContent=item.question; $("feedback").textContent=""; $("reviewAnswer").hidden=true; $("nextQuestion").hidden=false; $("nextQuestion").disabled=true; $("nextQuestion").dataset.action="next"; $("nextQuestion").textContent=en?"Next question":"다음 문제"; $("choices").replaceChildren(...currentChoices.texts.map((text,i)=>{const b=document.createElement("button");b.type="button";b.textContent=text;b.addEventListener("click",()=>answer(i,b));return b;})); }
+function answer(choice,button){ const buttons=[...$("choices").querySelectorAll("button")]; if(choice!==currentChoices.answer){questionHadWrong=true;button.classList.add("wrong");button.disabled=true;$("feedback").textContent=language==="ko"?"다시 생각해 보세요.":"Try again.";return;} buttons.forEach((b,i)=>{b.disabled=true;if(i===currentChoices.answer)b.classList.add("correct")}); attempts++;if(!questionHadWrong)correct++;$("score").textContent=(language==="ko"?"정답 ":"Correct ")+correct+" / "+attempts;$("feedback").textContent=language==="ko"?"정답! 뜻과 상황을 잘 연결했어요.":"Correct!";$("nextQuestion").disabled=false;$("nextQuestion").textContent=quizPosition===quizOrder.length-1?(language==="ko"?"차시 마무리":"Finish lesson"):(language==="ko"?"다음 문제":"Next question"); }
+function completeQuiz(){ completed.add(lessonIndex);localStorage.setItem(key(),JSON.stringify([...completed]));$("quizKicker").textContent=language==="ko"?"차시 학습 완료":"LESSON COMPLETE";$("quiz-title").textContent=language==="ko"?"이번 차시를 끝냈어요!":"Great work!";$("question").textContent=quizOrder.length+(language==="ko"?"문제 중 ":" questions, ")+correct+(language==="ko"?"문제를 한 번에 맞혔습니다.":" correct on the first try.");$("choices").replaceChildren();$("feedback").textContent="";$("nextQuestion").disabled=false;$("nextQuestion").dataset.action="overview";$("nextQuestion").textContent=language==="ko"?"차시 목록으로":"Back to lessons"; }
+function setMode(next){mode=next;const study=mode==="study";$("studyView").hidden=!study;$("quizView").hidden=study;$("score").hidden=study;document.querySelectorAll(".mode-tab").forEach(b=>{const a=b.dataset.mode===mode;b.classList.toggle("active",a);b.setAttribute("aria-selected",String(a));});study?renderStudy():renderQuiz();}
+function showOverview(){ $("learningShell").hidden=true;$("lessonOverview").hidden=false;renderLessonList(); }
 
-function renderQuizComplete() {
-  const english = language === "en";
-  $("quizKicker").textContent = english ? "SET COMPLETE" : "5개 학습 완료";
-  $("quiz-title").textContent = english ? "Great work!" : "이번 묶음을 끝냈어요!";
-  $("question").textContent = english
-    ? `You answered ${correct} out of ${BATCH_SIZE} questions correctly.`
-    : `5문제 중 ${correct}문제를 맞혔습니다.`;
-  $("choices").replaceChildren();
-  $("feedback").textContent = "";
-  $("reviewAnswer").hidden = true;
-  $("nextQuestion").hidden = false;
-  $("nextQuestion").disabled = false;
-  $("nextQuestion").dataset.action = "next-batch";
-  $("nextQuestion").textContent = english ? "Study the next 5" : "다음 5개 공부";
-}
-
-function setMode(nextMode) {
-  mode = nextMode;
-  const studying = mode === "study";
-  $("studyView").hidden = !studying;
-  $("quizView").hidden = studying;
-  $("score").hidden = studying;
-  document.querySelectorAll(".mode-tab").forEach((button) => {
-    const active = button.dataset.mode === mode;
-    button.classList.toggle("active", active);
-    button.setAttribute("aria-selected", String(active));
-  });
-  studying ? renderStudy() : renderQuiz();
-}
-
-function answer(choiceIndex, selectedButton) {
-  const item = decks[language][quizOrder[quizPosition]];
-  const buttons = [...$("choices").querySelectorAll("button")];
-  if (choiceIndex !== currentChoices.answer) {
-    questionHadWrong = true;
-    selectedButton.classList.add("wrong");
-    selectedButton.disabled = true;
-    window.ClassGameSfx?.play("error");
-    $("feedback").textContent = language === "en"
-      ? "Try again and choose a different answer."
-      : "다시 생각하고 다른 답을 골라보세요.";
-    return;
-  }
-  buttons.forEach((button, buttonIndex) => {
-    button.disabled = true;
-    if (buttonIndex === currentChoices.answer) button.classList.add("correct");
-  });
-  attempts += 1;
-  if (!questionHadWrong) correct += 1;
-  window.ClassGameSfx?.play("success");
-  $("feedback").textContent = language === "en"
-    ? "Correct! You matched the proverb to the situation."
-    : "정답! 뜻과 상황을 잘 연결했어요.";
-  $("nextQuestion").disabled = false;
-  const last = quizPosition === BATCH_SIZE - 1;
-  $("nextQuestion").textContent = last
-    ? (language === "en" ? "See results" : "결과 보기")
-    : (language === "en" ? "Next question" : "다음 문제");
-  $("score").textContent = language === "en"
-    ? `Correct ${correct} / ${attempts}`
-    : `정답 ${correct} / ${attempts}`;
-}
-
-document.querySelectorAll(".mode-tab").forEach((button) => {
-  button.addEventListener("click", () => setMode(button.dataset.mode));
-});
-
-document.querySelectorAll(".language-tab").forEach((button) => {
-  button.addEventListener("click", () => {
-    language = button.dataset.language;
-    resetBank();
-    prepareBatch();
-    document.querySelectorAll(".language-tab").forEach((tab) => tab.classList.toggle("active", tab === button));
-    updateNavigationLocale();
-    mode === "study" ? renderStudy() : renderQuiz();
-  });
-});
-
-$("next").addEventListener("click", () => {
-  if (studyPosition === BATCH_SIZE - 1) setMode("quiz");
-  else {
-    studyPosition += 1;
-    renderStudy();
-  }
-});
-
-$("previous").addEventListener("click", () => {
-  if (studyPosition > 0) studyPosition -= 1;
-  renderStudy();
-});
-
-$("nextQuestion").addEventListener("click", () => {
-  if ($("nextQuestion").dataset.action === "next-batch") {
-    prepareBatch();
-    setMode("study");
-  } else if (quizPosition === BATCH_SIZE - 1) {
-    renderQuizComplete();
-  } else {
-    quizPosition += 1;
-    renderQuiz();
-  }
-});
-
-$("reviewAnswer").addEventListener("click", () => {
-  studyPosition = studyBatch.indexOf(quizOrder[quizPosition]);
-  setMode("study");
-});
-
-updateNavigationLocale();
-resetBank();
-prepareBatch();
-renderStudy();
+document.querySelectorAll(".language-tab").forEach(b=>b.addEventListener("click",()=>{language=b.dataset.language;lessonIndex=0;completed=loadCompleted();document.querySelectorAll(".language-tab").forEach(x=>x.classList.toggle("active",x===b));showOverview();}));
+document.querySelectorAll(".mode-tab").forEach(b=>b.addEventListener("click",()=>setMode(b.dataset.mode)));
+$("backToLessons").addEventListener("click",showOverview);
+$("next").addEventListener("click",()=>{if(studyPosition===studyBatch.length-1)setMode("quiz");else{studyPosition++;renderStudy();}});
+$("previous").addEventListener("click",()=>{if(studyPosition>0)studyPosition--;renderStudy();});
+$("nextQuestion").addEventListener("click",()=>{if($("nextQuestion").dataset.action==="overview")showOverview();else if(quizPosition===quizOrder.length-1)completeQuiz();else{quizPosition++;renderQuiz();}});
+$("reviewAnswer").addEventListener("click",()=>{});
+if(!decks?.ko?.length||!decks?.en?.length)throw new Error("속담 자료를 불러오지 못했습니다.");
+renderLessonList();
