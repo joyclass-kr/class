@@ -57,15 +57,39 @@ h1,h2,h3,p{margin-top:0}
 .roundTag span{color:#8d8168;font-size:10px;font-weight:800;letter-spacing:.14em}
 .headline{text-align:center;font-weight:900;color:#ffe6b4;font-size:clamp(15px,2.4vw,19px);line-height:1.4}
 
-.trail{display:flex;gap:10px;min-height:140px;padding:14px;border-radius:14px;overflow-x:auto;align-items:center;background:linear-gradient(90deg,#00000020,#000000aa 70%,#000000e0)}
-.card{display:grid;place-content:center;gap:3px;width:108px;min-height:140px;padding:10px 6px;border-radius:11px;text-align:center;font-weight:900;line-height:1.15}
+.trail{display:flex;gap:10px;min-height:196px;padding:16px 14px;border-radius:14px;overflow-x:auto;align-items:center;background:linear-gradient(90deg,#00000020,#000000aa 70%,#000000e0)}
+.card{display:grid;place-content:center;gap:4px;width:120px;min-height:162px;padding:10px 6px;border-radius:11px;text-align:center;font-weight:900;line-height:1.15}
 .card small{display:block;font-size:12px;font-weight:700;opacity:.85}
 .card.treasure{background:linear-gradient(#f2cd76,#b98529);color:#3a2708;border:1px solid #dcb45e}
 .card.hazard{background:linear-gradient(#e0705e,#973325);color:#fff0ec;border:1px solid #eb8a79;font-size:16px}
 .card.hazard.repeat{box-shadow:0 0 0 3px #ffdcd4,0 0 18px #d1503f}
 .card.relic{background:linear-gradient(#c49ae8,#6f43a8);color:#fff;border:1px solid #d3b3f0}
-.cardValue{font-size:44px}
+.cardValue{font-size:46px}
+.card{flex-shrink:0}
+/* 앞으로 갈 길. 엎어진 카드가 깔려 있어야 판이 비어 보이지 않는다. */
+.card.facedown{background:repeating-linear-gradient(48deg,#241a10 0 9px,#2f2416 9px 18px);border:1px solid #4a3d2a;box-shadow:inset 0 0 24px #000a;flex-shrink:0}
+.backMark{color:#5c4c31;font-size:34px;font-family:Georgia,serif}
+.moreAhead{align-self:center;flex-shrink:0;padding:0 10px;color:#5c5240;font-size:13px;font-weight:900}
+/* 탐사대가 서 있는 지점 표시 */
+.hereMark{position:relative;flex-shrink:0;width:2px;align-self:stretch;margin:0 10px;background:linear-gradient(180deg,transparent,var(--accent),transparent)}
+.hereMark span{position:absolute;top:-4px;left:50%;transform:translateX(-50%);white-space:nowrap;padding:2px 8px;border-radius:999px;background:var(--accent);color:#241704;font-size:10px;font-weight:900}
 
+
+
+/* 카드 그림 */
+.art{display:block;line-height:0}
+.art svg{width:74px;height:74px;display:block;margin:0 auto;filter:drop-shadow(0 2px 3px #0006)}
+.art.small svg{width:26px;height:26px;opacity:.85}
+.art.big svg{width:118px;height:118px}
+.hazardName{display:block;font-size:15px;line-height:1.2;margin-top:2px}
+.cardValue.small{font-size:30px}
+/* 스크롤바가 판을 가로지르지 않게 숨긴다. */
+.trail{scrollbar-width:none;-ms-overflow-style:none}
+.trail::-webkit-scrollbar{display:none}
+/* 사람은 길 위 현재 지점에 선다. */
+.partyHere{position:relative;flex-shrink:0;display:grid;place-items:center;padding:0 12px;align-self:stretch;border-left:2px dashed #6b5836;border-right:2px dashed #6b5836}
+.hereTag{position:absolute;top:2px;left:50%;transform:translateX(-50%);white-space:nowrap;padding:2px 9px;border-radius:999px;background:var(--accent);color:#241704;font-size:10px;font-weight:900}
+.partyHere .tokens{margin-top:14px;max-width:190px}
 .splitNote{margin-top:6px;font-size:13px;color:#b7a888}
 
 .card{position:relative}
@@ -99,20 +123,22 @@ h1,h2,h3,p{margin-top:0}
 
 /* 캠프(왼쪽) ─ 길(오른쪽) 구조. 누가 안에 있고 누가 나왔는지가 위치로 보여야 한다. */
 .tunnel{display:grid;grid-template-columns:140px minmax(0,1fr);gap:16px;margin-top:6px}
+.tunnel.noCamp{grid-template-columns:minmax(0,1fr)}
+.tunnel.noCamp .camp{display:none}
 .camp{padding:14px 10px;border-right:1px solid var(--panel-edge);text-align:center}
 .path{min-width:0}
 .zoneLabel{color:var(--accent);font-size:11px;font-weight:900;letter-spacing:.18em;margin-bottom:8px}
 .zoneNote{margin-top:8px;color:#8d8168;font-size:10px}
-.pathFoot{display:flex;align-items:center;gap:14px;margin-top:10px;padding:10px 12px;border-radius:12px;background:#00000038}
+.pathFoot{display:flex;align-items:center;gap:14px;margin-top:12px;padding:12px;border-radius:12px;background:#00000038;min-height:82px}
 
-.tokens{display:flex;gap:7px;flex-wrap:wrap;justify-content:center;min-height:44px;align-items:center}
+.tokens{display:flex;gap:9px;flex-wrap:wrap;justify-content:center;min-height:58px;align-items:center}
 .tokens.party{justify-content:flex-start}
-.token{position:relative;display:grid;place-items:center;width:38px;height:38px;border-radius:50%;border:2px solid #00000060;color:#1b1207;font-weight:900;font-size:15px;box-shadow:0 4px 10px #0007;transition:transform .35s ease}
+.token{position:relative;display:grid;place-items:center;width:52px;height:52px;border-radius:50%;border:2px solid #00000060;color:#1b1207;font-weight:900;font-size:17px;box-shadow:0 4px 10px #0007;transition:transform .35s ease}
 .token.me{box-shadow:0 0 0 3px #fff2d0,0 4px 10px #0007}
 .token.decided::after{content:"✓";position:absolute;right:-4px;top:-5px;width:16px;height:16px;border-radius:50%;background:var(--safe);color:#06210f;font-size:11px;display:grid;place-items:center}
 .token .carry.banked{background:#12200f;color:#a8e0b4;border-color:#3f7a52}
 .token.caught{filter:grayscale(.6);opacity:.6}
-.token .carry{position:absolute;bottom:-8px;left:50%;transform:translateX(-50%);padding:1px 5px;border-radius:8px;background:#1a1206;color:#ffe0a0;font-size:10px;font-weight:900;border:1px solid var(--accent-soft)}
+.token .carry{position:absolute;bottom:-7px;left:50%;transform:translateX(-50%);padding:1px 7px;border-radius:8px;background:#1a1206;color:#ffe0a0;font-size:12px;font-weight:900;border:1px solid var(--accent-soft)}
 .token.walk{animation:walkIn .45s ease-out}
 @keyframes walkIn{from{transform:translateX(-26px);opacity:.3}to{transform:none;opacity:1}}
 .token.flee{animation:flee .5s ease-in}
@@ -262,9 +288,6 @@ h1,h2,h3,p{margin-top:0}
         <div class="path">
           <div class="zoneLabel" id="pathLabel">지나온 길</div>
           <div id="trail" class="trail"></div>
-          <div class="pathFoot">
-            <div id="partyTokens" class="tokens party"></div>
-          </div>
         </div>
       </div>
 
@@ -422,18 +445,18 @@ function flashCard(card,index){
   if(card.kind==="treasure"){
     const split=state.lastSplit;
     el.className="revealCard treasure";
-    el.innerHTML=`<span class="revealValue">${card.value}</span><span class="revealLabel">${escapeHtml(state.treasureLabel)}</span>`
+    el.innerHTML=`<span class="art big">${treasureArt(state.theme)}</span><span class="revealValue">${card.value}</span><span class="revealLabel">${escapeHtml(state.treasureLabel)}</span>`
       +(split?`<span class="revealNote">${split.total} ÷ ${split.explorers} = ${split.each} … ${split.remainder}</span>`:"");
     sfx("card");
   }else if(card.kind==="relic"){
     el.className="revealCard relic";
-    el.innerHTML=`<span class="revealValue">${card.value}</span><span class="revealLabel">${escapeHtml(state.relicLabel)}</span><span class="revealNote">혼자 돌아가야 가져갑니다</span>`;
+    el.innerHTML=`<span class="art big">${relicArt(state.theme)}</span><span class="revealValue">${card.value}</span><span class="revealLabel">${escapeHtml(state.relicLabel)}</span><span class="revealNote">혼자 돌아가야 가져갑니다</span>`;
     sfx("bell");
   }else{
     const name=state.hazardNames[card.hazard]||"위험";
     const repeat=state.revealed.slice(0,index).some(other=>other.kind==="hazard"&&other.hazard===card.hazard);
     el.className=`revealCard hazard${repeat?" hazardRepeat":""}`;
-    el.innerHTML=`<span class="revealLabel" style="font-size:27px">${escapeHtml(name)}</span><span class="revealNote">${repeat?"두 번째! 라운드가 끝납니다":"한 번 더 나오면 끝입니다"}</span>`;
+    el.innerHTML=`<span class="art big">${hazardArt(state.theme,card.hazard)}</span><span class="revealLabel" style="font-size:27px">${escapeHtml(name)}</span><span class="revealNote">${repeat?"두 번째! 라운드가 끝납니다":"한 번 더 나오면 끝입니다"}</span>`;
     if(repeat)ms=1900;
     sfx(repeat?"error":"stone");
   }
@@ -467,26 +490,45 @@ function reactToChange(before,now){
   }
 }
 
+
+// 카드에 그림이 없으면 색깔 상자에 글자를 쓴 라벨로 보인다. 실물 카드에는 그림이 있다.
+const CARD_ART={"hazards":{"orerun":["<svg viewBox=\"0 0 64 64\" aria-hidden=\"true\"><g fill=\"#ffe9e4\"><path d=\"M20 30l11-7 10 8-6 10-12-2z\"/><path d=\"M41 41l9-4 6 6-4 8-10-2z\"/><path d=\"M9 45l8-4 6 6-3 8-9-2z\"/></g><g stroke=\"#ffb4a6\" stroke-width=\"3.4\" stroke-linecap=\"round\"><path d=\"M17 9v8M31 5v9M45 10v8\"/></g></svg>","<svg viewBox=\"0 0 64 64\" aria-hidden=\"true\"><g fill=\"#dcffd2\"><circle cx=\"23\" cy=\"37\" r=\"12\"/><circle cx=\"40\" cy=\"35\" r=\"14\"/><circle cx=\"31\" cy=\"25\" r=\"10\"/><rect x=\"13\" y=\"37\" width=\"38\" height=\"13\" rx=\"6.5\"/></g><g fill=\"#2f6b32\"><circle cx=\"26\" cy=\"33\" r=\"3\"/><circle cx=\"39\" cy=\"32\" r=\"3\"/><rect x=\"27\" y=\"41\" width=\"11\" height=\"3.4\" rx=\"1.7\"/></g></svg>","<svg viewBox=\"0 0 64 64\" aria-hidden=\"true\"><g fill=\"#ffe9e4\"><path d=\"M6 20l22-3 3 10-6 5-19-3z\"/><path d=\"M58 17l-21 6-1 10 7 3 15-4z\"/></g><g fill=\"#ffcdbe\"><path d=\"M14 44l10-4 7 6-4 8-12-2z\"/><path d=\"M38 47l9-4 6 6-4 7-10-2z\"/></g></svg>","<svg viewBox=\"0 0 64 64\" aria-hidden=\"true\"><path fill=\"#d3ecff\" d=\"M32 6c6 10 11 14 11 20a11 11 0 01-22 0c0-6 5-10 11-20z\"/><g stroke=\"#d3ecff\" stroke-width=\"5.5\" fill=\"none\" stroke-linecap=\"round\"><path d=\"M7 44c6-6 12-6 18 0s12 6 18 0 11-6 14-3\"/><path d=\"M7 55c6-6 12-6 18 0s12 6 18 0 11-6 14-3\"/></g></svg>","<svg viewBox=\"0 0 64 64\" aria-hidden=\"true\"><g fill=\"#ffe9e4\"><path d=\"M32 24c-3-5-10-9-17-8 4 3 5 6 4 10 4-2 7 0 9 3l4 4 4-4c2-3 5-5 9-3-1-4 0-7 4-10-7-1-14 3-17 8z\"/><path d=\"M13 44c-2-3-6-5-10-5 2 2 3 4 2 6 2-1 4 0 5 2l3 2 2-2c1-2 3-3 5-2-1-2 0-4 2-6-4 0-7 2-9 5z\" opacity=\".85\"/><path d=\"M51 46c-2-3-6-5-10-5 2 2 3 4 2 6 2-1 4 0 5 2l3 2 2-2c1-2 3-3 5-2-1-2 0-4 2-6-4 0-7 2-9 5z\" opacity=\".85\"/></g></svg>"],"tombdig":["<svg viewBox=\"0 0 64 64\" aria-hidden=\"true\"><g fill=\"#ffe9e4\"><path d=\"M8 52l6-22 6 22zM22 52l6-26 6 26zM36 52l6-22 6 22zM50 52l5-17 5 17z\"/></g><rect x=\"4\" y=\"52\" width=\"56\" height=\"6\" rx=\"2\" fill=\"#ffcdbe\"/></svg>","<svg viewBox=\"0 0 64 64\" aria-hidden=\"true\"><g fill=\"#ffe9e4\"><ellipse cx=\"30\" cy=\"38\" rx=\"10\" ry=\"7\"/><path d=\"M40 36c8-2 12-8 11-16l-5 1c1 6-2 9-7 10z\"/><circle cx=\"46\" cy=\"17\" r=\"4.5\"/><path d=\"M20 33l-9-6 3-4 9 6zM20 43l-9 6 3 4 9-6z\"/><path d=\"M24 31l-5-8M24 45l-5 8\" stroke=\"#ffe9e4\" stroke-width=\"3\" stroke-linecap=\"round\"/></g></svg>","<svg viewBox=\"0 0 64 64\" aria-hidden=\"true\"><circle cx=\"32\" cy=\"32\" r=\"19\" fill=\"#ffd9cd\"/><path fill=\"#b8352a\" d=\"M30 13l6 14-9 4 8 22-3-17 9-4-7-19z\"/><g stroke=\"#b8352a\" stroke-width=\"2.4\" fill=\"none\"><path d=\"M18 24l-8-5M46 24l8-5M18 42l-8 5M46 42l8 5\"/></g></svg>","<svg viewBox=\"0 0 64 64\" aria-hidden=\"true\"><g fill=\"#ffe9e4\"><path d=\"M16 8h32v6l-13 18 13 18v6H16v-6l13-18-13-18z\"/></g><path fill=\"#e8b06a\" d=\"M22 12h20l-10 14zM32 40l9 12H23z\"/></svg>","<svg viewBox=\"0 0 64 64\" aria-hidden=\"true\"><path fill=\"#ffe9e4\" d=\"M32 8c-12 0-20 8-20 19 0 7 4 11 7 14v9h26v-9c3-3 7-7 7-14 0-11-8-19-20-19z\"/><g fill=\"#5d1b1b\"><ellipse cx=\"24\" cy=\"29\" rx=\"5.5\" ry=\"6.5\"/><ellipse cx=\"40\" cy=\"29\" rx=\"5.5\" ry=\"6.5\"/><path d=\"M32 37l4 8h-8z\"/></g></svg>"],"voidrun":["<svg viewBox=\"0 0 64 64\" aria-hidden=\"true\"><circle cx=\"40\" cy=\"26\" r=\"13\" fill=\"#ffe9e4\"/><g fill=\"#ffb87a\"><path d=\"M27 34L6 52l24-11z\"/><path d=\"M31 40L14 56l21-8z\" opacity=\".8\"/></g><g fill=\"#c9857a\"><circle cx=\"37\" cy=\"22\" r=\"3.4\"/><circle cx=\"45\" cy=\"30\" r=\"2.4\"/></g></svg>","<svg viewBox=\"0 0 64 64\" aria-hidden=\"true\"><circle cx=\"32\" cy=\"32\" r=\"12\" fill=\"#ffe38a\"/><g stroke=\"#ffd05c\" stroke-width=\"4.5\" stroke-linecap=\"round\"><path d=\"M32 6v8M32 50v8M6 32h8M50 32h8M14 14l6 6M44 44l6 6M50 14l-6 6M20 44l-6 6\"/></g></svg>","<svg viewBox=\"0 0 64 64\" aria-hidden=\"true\"><rect x=\"18\" y=\"10\" width=\"24\" height=\"30\" rx=\"5\" fill=\"#ffe9e4\"/><rect x=\"26\" y=\"4\" width=\"8\" height=\"8\" rx=\"2\" fill=\"#ffcdbe\"/><g fill=\"#9fe3a0\"><path d=\"M32 44c3 5 5 7 5 10a5 5 0 01-10 0c0-3 2-5 5-10z\"/><circle cx=\"21\" cy=\"52\" r=\"4\"/><circle cx=\"44\" cy=\"50\" r=\"3.2\"/></g></svg>","<svg viewBox=\"0 0 64 64\" aria-hidden=\"true\"><g fill=\"none\" stroke=\"#ffe9e4\" stroke-width=\"4.5\" stroke-linecap=\"round\"><path d=\"M18 40a20 20 0 0128 0\"/><path d=\"M26 47a10 10 0 0112 0\"/></g><circle cx=\"32\" cy=\"54\" r=\"4\" fill=\"#ffe9e4\"/><g stroke=\"#ff6b5c\" stroke-width=\"6\" stroke-linecap=\"round\"><path d=\"M12 12l40 40M52 12L12 52\"/></g></svg>","<svg viewBox=\"0 0 64 64\" aria-hidden=\"true\"><g fill=\"none\" stroke=\"#ffe9e4\" stroke-width=\"4\" stroke-linecap=\"round\"><path d=\"M32 8c14 0 24 10 24 24S46 56 32 56 8 46 8 32\"/><path d=\"M32 18c8 0 14 6 14 14s-6 14-14 14-14-6-14-14\"/><path d=\"M32 27c3 0 5 2 5 5\"/></g></svg>"]},"treasures":{"orerun":"<svg viewBox=\"0 0 64 64\" aria-hidden=\"true\"><g fill=\"#4a3110\"><path d=\"M24 24l8-14 9 14-9 28z\"/><path d=\"M10 32l7-10 6 10-6 18z\"/><path d=\"M44 30l7-9 6 9-7 19z\"/></g></svg>","tombdig":"<svg viewBox=\"0 0 64 64\" aria-hidden=\"true\"><g fill=\"#4a3110\"><path d=\"M22 12h20l-3 7c6 3 10 10 10 18 0 10-8 17-17 17s-17-7-17-17c0-8 4-15 10-18z\"/></g><path fill=\"#f2cd76\" d=\"M26 36h12v5H26z\"/></svg>","voidrun":"<svg viewBox=\"0 0 64 64\" aria-hidden=\"true\"><g fill=\"#123044\"><rect x=\"18\" y=\"14\" width=\"28\" height=\"36\" rx=\"7\"/></g><g fill=\"#8fd8f0\"><rect x=\"24\" y=\"20\" width=\"16\" height=\"7\" rx=\"3\"/><circle cx=\"32\" cy=\"40\" r=\"5\"/></g></svg>"},"relics":{"orerun":"<svg viewBox=\"0 0 64 64\" aria-hidden=\"true\"><path fill=\"#fff\" d=\"M32 6l16 12-16 40L16 18z\"/><path fill=\"#e3ccff\" d=\"M32 6l16 12H16zM32 58l16-40-8 6z\"/></svg>","tombdig":"<svg viewBox=\"0 0 64 64\" aria-hidden=\"true\"><path fill=\"#fff\" d=\"M32 8l20 10v14c0 14-9 21-20 24-11-3-20-10-20-24V18z\"/><path fill=\"#8a4ad0\" d=\"M32 20l4 9 9 1-7 6 2 9-8-5-8 5 2-9-7-6 9-1z\"/></svg>","voidrun":"<svg viewBox=\"0 0 64 64\" aria-hidden=\"true\"><path fill=\"#fff\" d=\"M26 6h12v10l8 26a14 14 0 01-28 0l8-26z\"/><path fill=\"#7fe6c8\" d=\"M22 38h20a12 12 0 01-20 8z\"/></svg>"}};
+function hazardArt(theme,index){return (CARD_ART.hazards[theme]||CARD_ART.hazards.orerun)[index]||""}
+function treasureArt(theme){return CARD_ART.treasures[theme]||CARD_ART.treasures.orerun}
+function relicArt(theme){return CARD_ART.relics[theme]||CARD_ART.relics.orerun}
 function cardMarkup(card,index){
   if(card.kind==="treasure"){
     // 실물처럼 남은 보석이 그 카드 위에 얹혀 있어야 "바닥"이 어디인지 읽힌다.
     const left=card.left||0;
     const gems=left?`<span class="onCard">${'<i></i>'.repeat(Math.min(left,6))}${left>6?`<b>${left}</b>`:""}</span>`:"";
-    return `<div class="card treasure"><span class="cardValue">${card.value}</span><small>${escapeHtml(state.treasureLabel)}</small>${gems}</div>`;
+    return `<div class="card treasure"><span class="art small">${treasureArt(state.theme)}</span>`
+      +`<span class="cardValue">${card.value}</span><small>${escapeHtml(state.treasureLabel)}</small>${gems}</div>`;
   }
   if(card.kind==="relic"){
-    return `<div class="card relic"><span class="cardValue">${card.value}</span><small>${escapeHtml(state.relicLabel)}</small></div>`;
+    return `<div class="card relic"><span class="art">${relicArt(state.theme)}</span>`
+      +`<span class="cardValue small">${card.value}</span><small>${escapeHtml(state.relicLabel)}</small></div>`;
   }
   const name=state.hazardNames[card.hazard]||"위험";
   // 같은 위험이 앞에 이미 나왔다면 이 카드가 라운드를 끝낸 두 번째 장이다.
   const isRepeat=state.revealed.slice(0,index).some(other=>other.kind==="hazard"&&other.hazard===card.hazard);
-  return `<div class="card hazard${isRepeat?" repeat":""}">${escapeHtml(name)}<small>${isRepeat?"두 번째":"경고"}</small></div>`;
+  return `<div class="card hazard${isRepeat?" repeat":""}"><span class="art">${hazardArt(state.theme,card.hazard)}</span>`
+    +`<span class="hazardName">${escapeHtml(name)}</span><small>${isRepeat?"두 번째":"경고"}</small></div>`;
 }
 
 function renderTrail(){
-  $("trail").innerHTML=state.revealed.length
-    ?state.revealed.map((card,index)=>cardMarkup(card,index)).join("")
-    :`<div class="splitNote">아직 뒤집은 카드가 없습니다.</div>`;
+  const opened=state.revealed.map((card,index)=>cardMarkup(card,index)).join("");
+  // 앞길이 엎어진 카드로 깔려 있어야 "길"로 보인다. 빈 상자는 갈 곳이 없어 보인다.
+  const ahead=Math.min(state.deckCount,9);
+  const facedown=Array.from({length:ahead},(_,i)=>
+    `<div class="card facedown" style="opacity:${(1-i*0.085).toFixed(2)}"><span class="backMark">?</span></div>`).join("");
+  const decided=new Set(state.decidedIds);
+  const party=state.players
+    .map((player,index)=>({player,index}))
+    .filter(item=>item.player.inCave)
+    .map(item=>tokenMarkup(item.player,item.index,decided)).join("");
+  const partyAt=party?`<div class="partyHere"><div class="tokens party">${party}</div><span class="hereTag">여기</span></div>`:"";
+  $("trail").innerHTML=opened+partyAt+facedown
+    +(state.deckCount>ahead?`<div class="moreAhead">+${state.deckCount-ahead}</div>`:"");
 }
 
 function renderHazards(){
@@ -502,6 +544,19 @@ function renderHazards(){
 // 한 반에서 같은 이름이 겹칠 수 있어 색으로도 구분한다.
 const PLAYER_COLORS=["#e0a03c","#5fa8d8","#7fc98a","#d8827f","#b98cd8","#d8c05f","#7fd8cf","#d89a6a"];
 
+function tokenMarkup(player,index,decided){
+  const classes=["token"];
+  if(player.id===myId())classes.push("me");
+  if(player.inCave&&decided.has(player.id))classes.push("decided");
+  if(!player.inCave&&player.caught)classes.push("caught");
+  const badge=player.inCave
+    ? (player.carrying?`<span class="carry">${player.carrying}</span>`:"")
+    : `<span class="carry banked">${player.bank}</span>`;
+  const tip=`${player.name} · 확정 ${player.bank}`
+    +(player.inCave?` · 들고 있음 ${player.carrying}`:player.caught?" · 빈손으로 쫓겨남":" · 돌아옴");
+  return `<div class="${classes.join(" ")}" style="background:${colorOf(index)}" title="${escapeHtml(tip)}">`
+    +`${escapeHtml(initialOf(player.name))}${badge}</div>`;
+}
 function renderSituation(){
   const me=state.players.find(player=>player.id===myId());
   const box=$("situation");
@@ -530,23 +585,13 @@ function initialOf(name){return String(name||"?").trim().slice(-2)}
 // 캠프와 길에 사람을 실제로 세운다. 누가 안에 있는지 표로 읽지 않고 위치로 본다.
 function renderTokens(){
   const decided=new Set(state.decidedIds);
-  const camp=[],party=[];
-  state.players.forEach((player,index)=>{
-    const classes=["token"];
-    if(player.id===myId())classes.push("me");
-    if(player.inCave&&decided.has(player.id))classes.push("decided");
-    // 안에 있으면 잃을 수 있는 양, 나왔으면 확정한 양. 지금 중요한 숫자만 붙인다.
-    if(!player.inCave&&player.caught)classes.push("caught");
-    const badge=player.inCave
-      ? (player.carrying?`<span class="carry">${player.carrying}</span>`:"")
-      : `<span class="carry banked">${player.bank}</span>`;
-    const tip=`${player.name} · 확정 ${player.bank}`
-      +(player.inCave?` · 들고 있음 ${player.carrying}`:player.caught?" · 빈손으로 쫓겨남":" · 돌아옴");
-    const html=`<div class="${classes.join(" ")}" style="background:${colorOf(index)}" title="${escapeHtml(tip)}">${escapeHtml(initialOf(player.name))}${badge}</div>`;
-    (player.inCave?party:camp).push(html);
-  });
-  $("campTokens").innerHTML=camp.join("")||`<span class="zoneNote">아직 없음</span>`;
-  $("partyTokens").innerHTML=party.join("")||`<span class="zoneNote">아무도 남지 않았습니다</span>`;
+  const camp=state.players
+    .map((player,index)=>({player,index}))
+    .filter(item=>!item.player.inCave)
+    .map(item=>tokenMarkup(item.player,item.index,decided));
+  $("campTokens").innerHTML=camp.join("");
+  // 아무도 안 돌아왔으면 캠프 칸이 빈 자리만 차지한다.
+  document.querySelector(".tunnel").classList.toggle("noCamp",camp.length===0);
   $("pathLabel").innerHTML=state.explorerCount
     ? `지나온 길 · ${escapeHtml(state.site)} 안 ${state.explorerCount}명`
       +(state.path.gems?` · <span class="leftTag">바닥에 ${state.path.gems}</span>`:"")
@@ -556,7 +601,7 @@ function renderTokens(){
 // 몫이 각자에게, 나머지가 바닥에 — 숫자가 아니라 움직임으로 보여 준다.
 function popGains(each,remainder){
   if(each>0){
-    $("partyTokens").querySelectorAll(".token").forEach(token=>{
+    $("trail").querySelectorAll(".partyHere .token").forEach(token=>{
       token.style.position="relative";
       const pop=document.createElement("span");
       pop.className="gainPop";
