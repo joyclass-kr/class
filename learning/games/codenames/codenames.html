@@ -96,7 +96,7 @@ h1,h2,h3,p{margin-top:0}
   <section id="entry" class="hidden" data-multiplayer-lobby>
     <header class="panel">
       <h1 class="title">CODE WORDS</h1>
-      <p class="subtitle">낱말 암호 · 4~10 PLAYERS · 2팀</p>
+      <p class="subtitle">낱말 암호 · 4~5 PLAYERS · 2팀 + 관전 1명</p>
       <p>PLAYER · <strong id="savedPlayerName">-</strong></p>
       <div class="entryActions">
         <button id="createTab" class="primary" type="button">CREATE ROOM</button>
@@ -142,13 +142,13 @@ h1,h2,h3,p{margin-top:0}
         <div class="teamCol red">
           <h3>레드팀</h3>
           <button id="pick-red-spymaster" class="pickBtn" type="button">스파이마스터로 선택</button>
-          <button id="pick-red-operative" class="pickBtn" type="button">요원으로 선택</button>
+          <button id="pick-red-operative" class="pickBtn" type="button">대표 요원으로 선택</button>
           <div id="roster-red" class="roster"></div>
         </div>
         <div class="teamCol blue">
           <h3>블루팀</h3>
           <button id="pick-blue-spymaster" class="pickBtn" type="button">스파이마스터로 선택</button>
-          <button id="pick-blue-operative" class="pickBtn" type="button">요원으로 선택</button>
+          <button id="pick-blue-operative" class="pickBtn" type="button">대표 요원으로 선택</button>
           <div id="roster-blue" class="roster"></div>
         </div>
       </div>
@@ -222,12 +222,13 @@ h1,h2,h3,p{margin-top:0}
     <div class="eyebrow">HOW TO PLAY</div>
     <h2>낱말 암호 규칙</h2>
     <ol>
-      <li>레드팀·블루팀으로 나뉘고, 각 팀은 스파이마스터 1명과 요원 1명 이상으로 구성됩니다.</li>
+      <li>레드팀·블루팀으로 나뉘고, 각 팀은 스파이마스터 1명과 대표 요원 1명, 딱 두 명만 화면에서 역할을 맡습니다. 나머지 반 친구들은 그 팀에 붙어서 교실에서 직접 의논에 참여합니다.</li>
       <li>보드에는 낱말 카드 25장이 놓입니다. 스파이마스터만 어떤 낱말이 우리 팀·상대 팀·무관한 낱말·폭탄인지 알 수 있습니다.</li>
       <li>자기 팀 차례가 되면 스파이마스터가 낱말 하나와 숫자 하나로 힌트를 냅니다. 숫자는 그 힌트로 가리키는 우리 팀 낱말의 개수입니다 (0은 "숫자 제한 없음"을 뜻합니다).</li>
-      <li>요원들은 힌트를 의논해 보드에서 낱말을 하나씩 고릅니다. 우리 팀 낱말이면 계속 고를 수 있고(숫자+1번까지), 상관없는 낱말이나 상대 팀 낱말이면 즉시 차례가 넘어갑니다.</li>
+      <li>팀 전체가 교실에서 소리 내어 의논한 뒤, 대표 요원이 정해진 낱말 하나를 화면에서 클릭합니다. 우리 팀 낱말이면 계속 고를 수 있고(숫자+1번까지), 상관없는 낱말이나 상대 팀 낱말이면 즉시 차례가 넘어갑니다.</li>
       <li>폭탄 카드를 고르면 그 자리에서 즉시 패배합니다.</li>
       <li>자기 팀 낱말 9장(먼저 시작한 팀) 또는 8장(나중에 시작한 팀)을 모두 찾으면 승리합니다.</li>
+      <li>방에는 두 팀 4명 외에 관전 화면 1개를 더 열 수 있습니다 — 교사가 이 화면을 프로젝터로 띄워 반 전체가 보드를 함께 볼 때 씁니다. 관전 화면도 낱말의 색은 보이지 않습니다.</li>
     </ol>
     <button id="closeRulesBtn" class="primary" type="button">CLOSE</button>
   </div>
@@ -283,11 +284,10 @@ function syncLobbyTransport(snapshot) {
 
 function canStartClient(s) {
   if (!s || s.players.length < 4) return false;
-  if (s.players.some(player => !player.team || !player.role)) return false;
   return ["red", "blue"].every(team => {
     const spymasters = s.players.filter(player => player.team === team && player.role === "spymaster").length;
     const operatives = s.players.filter(player => player.team === team && player.role === "operative").length;
-    return spymasters === 1 && operatives >= 1;
+    return spymasters === 1 && operatives === 1;
   });
 }
 
@@ -313,26 +313,26 @@ function renderLobbySetup() {
   ["red", "blue"].forEach(team => {
     ["spymaster", "operative"].forEach(role => {
       const button = $(`pick-${team}-${role}`);
-      const takenByOther = role === "spymaster" && state.players.some(player => player.team === team && player.role === "spymaster" && player.id !== myId);
+      const takenByOther = state.players.some(player => player.team === team && player.role === role && player.id !== myId);
       button.disabled = takenByOther;
       button.classList.toggle("active", Boolean(me && me.team === team && me.role === role));
     });
 
     const spymaster = state.players.find(player => player.team === team && player.role === "spymaster");
-    const operatives = state.players.filter(player => player.team === team && player.role === "operative");
+    const operative = state.players.find(player => player.team === team && player.role === "operative");
     $(`roster-${team}`).innerHTML =
-      `<div>스파이마스터: ${spymaster ? esc(spymaster.name) : "-"}</div><div>요원: ${operatives.map(player => esc(player.name)).join(", ") || "-"}</div>`;
+      `<div>스파이마스터: ${spymaster ? esc(spymaster.name) : "-"}</div><div>대표 요원: ${operative ? esc(operative.name) : "-"}</div>`;
   });
 
   const unassigned = state.players.filter(player => !player.team);
-  $("unassignedRow").textContent = unassigned.length ? `아직 팀을 선택하지 않음: ${unassigned.map(player => player.name).join(", ")}` : "";
+  $("unassignedRow").textContent = unassigned.length ? `관전: ${unassigned.map(player => player.name).join(", ")} (교사 화면 등)` : "";
 
   const ready = canStartClient(state);
   $("beginGameBtn").classList.toggle("hidden", !isHost);
   $("beginGameBtn").disabled = !ready;
   $("startGuide").textContent = ready
     ? "시작할 준비가 되었습니다."
-    : "두 팀 모두 스파이마스터 1명과 요원 1명 이상이 필요하고, 모든 참가자가 팀을 선택해야 합니다.";
+    : "두 팀 모두 스파이마스터 1명과 대표 요원 1명이 필요합니다. 그 외 참가자는 관전으로 남습니다.";
   $("waitingHostNote").classList.toggle("hidden", isHost);
 }
 
@@ -415,8 +415,8 @@ function init() {
       copyButton: "copyBtn"
     },
     getPlayerName: () => /^[가-힣]{2,6}$/.test(savedName) ? savedName : "",
-    allowedPlayerCounts: [4, 5, 6, 7, 8, 9, 10],
-    maxPlayers: 10,
+    allowedPlayerCounts: [4, 5],
+    maxPlayers: 5,
     rulesButtonIds: ["rulesEntryBtn", "rulesGameBtn"],
     leaveButtonIds: ["leaveEntryBtn", "leaveGameBtn"],
     onRules: showRules,

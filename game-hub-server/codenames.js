@@ -3,8 +3,11 @@
 const crypto = require("crypto");
 const WORD_BANK = require("./data/codenames-word-bank");
 
+// 팀 대표 1명이 카드를 클릭한다 — 여러 명이 동시에 낱말을 고르면 합의 없이 마구
+// 클릭하게 되므로, 방 정원을 "레드 스파이마스터·레드 대표·블루 스파이마스터·블루 대표"
+// 4명 + 교사 관전용 화면 1개로 제한한다. 팀 토의는 화면이 아니라 교실에서 직접 한다.
 const MIN_PLAYERS = 4;
-const MAX_PLAYERS = 10;
+const MAX_PLAYERS = 5;
 const MIN_GRADE = 1;
 const MAX_GRADE = 6;
 const BOARD_SIZE = 25;
@@ -130,21 +133,31 @@ function setGrade(game, hostId, grade) {
   return { ok: true };
 }
 
+// 팀마다 스파이마스터 1명·대표 요원 1명뿐이다. 자리가 이미 찼으면 거부한다.
+// 아무 팀도 고르지 않은 사람은 관전자로 남는다(교사 화면 등) — canStart는 이런
+// 사람이 있어도 막지 않는다.
 function setTeamRole(game, playerId, team, role) {
   if (game.phase !== "lobby") return { ok: false, error: "대기실에서만 팀을 정할 수 있습니다." };
   const player = playerById(game, playerId);
   if (!player) return { ok: false, error: "참가자를 찾을 수 없습니다." };
   const safeTeam = TEAMS.includes(team) ? team : null;
   const safeRole = safeTeam && ROLES.includes(role) ? role : null;
-  if (safeTeam && safeRole === "spymaster") {
-    const taken = game.players.some(other => other.id !== player.id && other.team === safeTeam && other.role === "spymaster");
-    if (taken) return { ok: false, error: "이미 다른 사람이 그 팀의 스파이마스터입니다." };
+  if (safeTeam && safeRole) {
+    const taken = game.players.some(other => other.id !== player.id && other.team === safeTeam && other.role === safeRole);
+    if (taken) {
+      return {
+        ok: false,
+        error: safeRole === "spymaster"
+          ? "이미 다른 사람이 그 팀의 스파이마스터입니다."
+          : "이미 다른 사람이 그 팀의 대표 요원입니다. 대표는 한 명만 클릭할 수 있습니다."
+      };
+    }
   }
   player.team = safeTeam;
   player.role = safeTeam ? safeRole : null;
   game.log = safeTeam
-    ? `${player.name}님이 ${safeTeam === "red" ? "레드팀" : "블루팀"} ${safeRole === "spymaster" ? "스파이마스터" : "요원"}을 선택했습니다.`
-    : `${player.name}님이 팀 선택을 취소했습니다.`;
+    ? `${player.name}님이 ${safeTeam === "red" ? "레드팀" : "블루팀"} ${safeRole === "spymaster" ? "스파이마스터" : "대표 요원"}을 선택했습니다.`
+    : `${player.name}님이 관전으로 돌아갔습니다.`;
   return { ok: true };
 }
 
@@ -158,10 +171,9 @@ function teamComposition(game, team) {
 
 function canStart(game) {
   if (game.players.length < MIN_PLAYERS) return false;
-  if (game.players.some(player => !player.team || !player.role)) return false;
   return TEAMS.every(team => {
     const composition = teamComposition(game, team);
-    return composition.spymasters.length === 1 && composition.operatives.length >= 1;
+    return composition.spymasters.length === 1 && composition.operatives.length === 1;
   });
 }
 

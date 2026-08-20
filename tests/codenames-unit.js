@@ -58,6 +58,18 @@ Codenames.setTeamRole(clash, "host", "red", "spymaster");
 const clashResult = Codenames.setTeamRole(clash, "guest1", "red", "spymaster");
 assert.equal(clashResult.ok, false, "한 팀에는 스파이마스터가 한 명만 있어야 합니다.");
 
+// 대표 요원 자리도 한 명뿐이다 — 여러 명이 동시에 카드를 클릭하면 안 된다.
+const operativeClash = gameWithFourPlayers();
+Codenames.setTeamRole(operativeClash, "host", "red", "operative");
+const operativeClashResult = Codenames.setTeamRole(operativeClash, "guest1", "red", "operative");
+assert.equal(operativeClashResult.ok, false, "한 팀에는 대표 요원이 한 명만 있어야 합니다.");
+
+// 5번째 참가자는 팀을 정하지 않아도(관전) 시작을 막지 않는다.
+const withSpectator = twoTeamGame();
+Codenames.addPlayer(withSpectator, "teacher", "선생님");
+assert.equal(Codenames.canStart(withSpectator), true, "4명만 역할을 채우면 관전자가 있어도 시작할 수 있어야 합니다.");
+assert.equal(Codenames.MAX_PLAYERS, 5, "정원은 4명 + 관전 1명, 총 5명이어야 합니다.");
+
 // 정상적으로 팀이 갖춰지면 시작할 수 있고 보드가 25장, 9/8/7/1 분포여야 한다.
 const ready = twoTeamGame();
 assert.equal(Codenames.canStart(ready), true);

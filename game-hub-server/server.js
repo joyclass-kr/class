@@ -249,7 +249,7 @@ const MAX_ROOM_PLAYERS = {
   expedition: 8,
   avalon: 8,
   clue: 6,
-  codenames: 10,
+  codenames: 5,
   dobble: 8,
   spelling: 61,
   circulation: 61,
