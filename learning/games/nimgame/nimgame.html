@@ -1133,6 +1133,7 @@ textarea,
             <button class="secondary-btn" id="cancel-btn" onclick="clearSelection()" disabled>CANCEL</button>
             <button class="secondary-btn" id="rules-btn-game" type="button">RULES</button>
             <button class="danger-btn" id="new-round-btn" onclick="requestNewRound()">NEW ROUND</button>
+            <button class="secondary-btn" id="leave-btn-game" type="button">메인 화면으로</button>
         </div>
 
         <div class="music-control">
@@ -1259,7 +1260,7 @@ textarea,
             allowedPlayerCounts: [2],
             maxPlayers: 2,
             rulesButtonIds: ["rules-btn-lobby", "rules-btn-game"],
-            leaveButtonIds: ["leave-btn"],
+            leaveButtonIds: ["leave-btn", "leave-btn-game"],
             onRules: openRules,
             onLeave: () => location.href = "../../../index.html",
             onNotice: showToast,
