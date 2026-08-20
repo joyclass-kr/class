@@ -2753,10 +2753,10 @@ wss.on("connection", socket => {
       }
 
       let result;
-      if (action === "SET_BAND") {
+      if (action === "SET_GRADE") {
         result = playerId === room.hostId
-          ? Codenames.setBand(game, playerId, message.band)
-          : { ok: false, error: "방장만 학년군을 바꿀 수 있습니다." };
+          ? Codenames.setGrade(game, playerId, message.grade)
+          : { ok: false, error: "방장만 학년을 바꿀 수 있습니다." };
       } else if (action === "SET_TEAM") {
         result = Codenames.setTeamRole(game, playerId, message.team, message.role);
       } else if (action === "START") {

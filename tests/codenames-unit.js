@@ -21,13 +21,31 @@ function twoTeamGame() {
     return game;
 }
 
-// 학년군 범위: 방장이 고른 학년군보다 아래 학년군까지만 낱말 풀에 포함되어야 한다.
-const lowPool = Codenames.wordPoolForBand("low");
-const midPool = Codenames.wordPoolForBand("mid");
-const highPool = Codenames.wordPoolForBand("high");
-assert.deepEqual(new Set(lowPool), new Set(lowPool), "1~2학년군은 자기 학년군 낱말만 사용합니다.");
-assert.deepEqual(new Set(midPool), new Set(lowPool), "3~4학년군 방은 1~2학년군 낱말만 사용해야 합니다.");
-assert.ok(highPool.length > midPool.length, "5~6학년군 범위는 1~2·3~4학년군 낱말을 모두 합쳐 더 많아야 합니다.");
+// 학년 범위: 1~2학년은 같은 생활 낱말 목록을 쓰고, 3학년 이상은 학기별로 갈린다.
+const marchDate = new Date(2026, 3, 1); // 4월, 아직 1학기
+const octDate = new Date(2026, 9, 1); // 10월, 2학기
+
+const grade1Pool = Codenames.wordPoolForGrade(1);
+const grade2Pool = Codenames.wordPoolForGrade(2);
+assert.deepEqual(new Set(grade1Pool), new Set(grade2Pool), "1학년과 2학년은 같은 생활 낱말 목록을 사용합니다.");
+
+const grade4PoolBeforeSept = Codenames.wordPoolForGrade(4, marchDate);
+const grade4PoolAfterSept = Codenames.wordPoolForGrade(4, octDate);
+assert.ok(
+  grade4PoolAfterSept.length > grade4PoolBeforeSept.length,
+  "2학기가 되면 그 학년의 1학기 낱말이 추가로 포함되어야 합니다."
+);
+
+const grade5PoolBeforeSept = Codenames.wordPoolForGrade(5, marchDate);
+assert.ok(
+  grade5PoolBeforeSept.length > grade4PoolBeforeSept.length,
+  "5학년 범위는 4학년 전체를 더 포함해 4학년 범위보다 많아야 합니다."
+);
+
+// 6학년 2학기 전용 낱말(원주율)은 5학년 방에는 어떤 시점에도 나오면 안 된다.
+const grade5PoolAfterSept = Codenames.wordPoolForGrade(5, octDate);
+assert.ok(!grade5PoolBeforeSept.includes("원주율"), "6학년 전용 낱말이 5학년 방에 나오면 안 됩니다.");
+assert.ok(!grade5PoolAfterSept.includes("원주율"), "6학년 전용 낱말이 5학년 방에 나오면 안 됩니다(2학기여도).");
 
 // 팀 구성이 안 갖춰지면 시작할 수 없다.
 const incomplete = gameWithFourPlayers();

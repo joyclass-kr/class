@@ -5,12 +5,49 @@ const WORD_BANK = require("./data/codenames-word-bank");
 
 const MIN_PLAYERS = 4;
 const MAX_PLAYERS = 10;
+const MIN_GRADE = 1;
+const MAX_GRADE = 6;
 const BOARD_SIZE = 25;
 const TEAMS = Object.freeze(["red", "blue"]);
 const ROLES = Object.freeze(["spymaster", "operative"]);
-// 2022 개정 교육과정의 학년군 구분(1~2/3~4/5~6학년군)을 그대로 따른다.
-const BANDS = Object.freeze(["low", "mid", "high"]);
-const BAND_LABELS = Object.freeze({ low: "1~2학년군", mid: "3~4학년군", high: "5~6학년군" });
+
+// 학년 1~2학년은 학기 구분이 없는 "low" 낱말 목록을 쓴다. 3~6학년은 학기별로
+// 태그된 목록(예: "4-1", "4-2")을 쓴다. isSecondSemesterNow()가 실제 학사 일정과
+// 완전히 같지는 않지만, 3월 신학기~여름방학까지를 1학기로, 9월부터 다음 2월까지를
+// 2학기로 보는 통상적인 구분과는 맞아떨어진다.
+function isSecondSemesterNow(now = new Date()) {
+  const month = now.getMonth(); // 0=1월 ... 11=12월
+  return month >= 8 || month <= 1; // 9월~12월 또는 1~2월
+}
+
+// 방장의 학년(과 오늘 날짜)을 기준으로 "이미 배웠다고 볼 수 있는" 낱말만 모은다.
+// - 방장보다 낮은 학년은 학기와 무관하게 전부 포함한다(이미 한 학년을 다 마쳤으므로).
+// - 방장의 학년 1학기 내용은 2학기가 시작된(9월 이후) 뒤에만 포함한다 — 그 전에는
+//   아직 배우는 중일 수 있다.
+// - 방장의 학년 2학기 내용은 그 학년이 끝나기 전까지는 넣지 않는다.
+function wordPoolForGrade(grade, now = new Date()) {
+  const safeGrade = Math.max(MIN_GRADE, Math.min(MAX_GRADE, Math.round(Number(grade)) || MIN_GRADE));
+  const seen = new Set();
+  const pool = [];
+  const add = list => {
+    for (const word of list || []) {
+      if (!seen.has(word)) {
+        seen.add(word);
+        pool.push(word);
+      }
+    }
+  };
+
+  add(WORD_BANK.low);
+  if (safeGrade <= 2) return pool;
+
+  for (let g = 3; g < safeGrade; g += 1) {
+    add(WORD_BANK[`${g}-1`]);
+    add(WORD_BANK[`${g}-2`]);
+  }
+  if (isSecondSemesterNow(now)) add(WORD_BANK[`${safeGrade}-1`]);
+  return pool;
+}
 
 function randomInt(maximum) {
   return crypto.randomInt(maximum);
@@ -29,22 +66,6 @@ function otherTeam(team) {
   return team === "red" ? "blue" : "red";
 }
 
-function wordPoolForBand(band) {
-  const index = BANDS.indexOf(band);
-  const topIndex = index <= 0 ? 0 : index - 1;
-  const seen = new Set();
-  const pool = [];
-  for (let i = 0; i <= topIndex; i += 1) {
-    for (const word of WORD_BANK[BANDS[i]] || []) {
-      if (!seen.has(word)) {
-        seen.add(word);
-        pool.push(word);
-      }
-    }
-  }
-  return pool;
-}
-
 function createPlayer(id, name) {
   return {
     id: String(id),
@@ -57,7 +78,7 @@ function createPlayer(id, name) {
 function createGame(hostId, hostName) {
   return {
     phase: "lobby",
-    band: "mid",
+    grade: 4,
     players: [createPlayer(hostId, hostName || "방장")],
     board: [],
     currentTeam: "red",
@@ -91,13 +112,21 @@ function playerById(game, id) {
   return game.players.find(player => player.id === String(id));
 }
 
-function setBand(game, hostId, band) {
-  if (game.phase !== "lobby") return { ok: false, error: "대기실에서만 학년군을 바꿀 수 있습니다." };
-  if (!BANDS.includes(band)) return { ok: false, error: "학년군이 올바르지 않습니다." };
-  game.band = band;
-  const index = BANDS.indexOf(band);
-  const belowLabel = index <= 0 ? BAND_LABELS[band] : BANDS.slice(0, index).map(b => BAND_LABELS[b]).join(", ");
-  game.log = `낱말 범위가 ${belowLabel}(${BAND_LABELS[band]} 방 기준)으로 설정되었습니다.`;
+function setGrade(game, hostId, grade) {
+  if (game.phase !== "lobby") return { ok: false, error: "대기실에서만 학년을 바꿀 수 있습니다." };
+  const safeGrade = Math.round(Number(grade));
+  if (!Number.isInteger(safeGrade) || safeGrade < MIN_GRADE || safeGrade > MAX_GRADE) {
+    return { ok: false, error: "학년 범위가 올바르지 않습니다." };
+  }
+  game.grade = safeGrade;
+  if (safeGrade <= 2) {
+    game.log = "낱말 범위가 1~2학년 생활 낱말로 설정되었습니다.";
+  } else {
+    const belowText = safeGrade === 3 ? "1~2학년" : `1~${safeGrade - 1}학년`;
+    game.log = isSecondSemesterNow()
+      ? `낱말 범위가 ${belowText} 전체 + ${safeGrade}학년 1학기로 설정되었습니다 (2학기라 1학기분은 이미 배운 것으로 봅니다).`
+      : `낱말 범위가 ${belowText} 전체로 설정되었습니다 (아직 1학기라 ${safeGrade}학년 낱말은 빠집니다).`;
+  }
   return { ok: true };
 }
 
@@ -137,7 +166,7 @@ function canStart(game) {
 }
 
 function buildBoard(game, pick) {
-  const pool = wordPoolForBand(game.band);
+  const pool = wordPoolForGrade(game.grade);
   if (pool.length < BOARD_SIZE) return null;
   const words = shuffle(pool, pick).slice(0, BOARD_SIZE);
   const startingTeam = pick(2) === 0 ? "red" : "blue";
@@ -299,8 +328,9 @@ function stateFor(game, viewerId) {
   const viewerIsSpymaster = Boolean(viewer && viewer.role === "spymaster");
   return {
     phase: game.phase,
-    band: game.band,
-    poolSize: wordPoolForBand(game.band).length,
+    grade: game.grade,
+    isSecondSemester: isSecondSemesterNow(),
+    poolSize: wordPoolForGrade(game.grade).length,
     players: game.players.map(player => ({ id: player.id, name: player.name, team: player.team, role: player.role })),
     board: game.board.map(card => ({
       word: card.word,
@@ -323,14 +353,14 @@ function stateFor(game, viewerId) {
 module.exports = {
   MIN_PLAYERS,
   MAX_PLAYERS,
+  MIN_GRADE,
+  MAX_GRADE,
   BOARD_SIZE,
   TEAMS,
-  BANDS,
-  BAND_LABELS,
   createGame,
   addPlayer,
   removePlayer,
-  setBand,
+  setGrade,
   setTeamRole,
   canStart,
   startGame,
@@ -340,6 +370,7 @@ module.exports = {
   newGame,
   resetToLobby,
   stateFor,
-  wordPoolForBand,
+  wordPoolForGrade,
+  isSecondSemesterNow,
   shuffle
 };
