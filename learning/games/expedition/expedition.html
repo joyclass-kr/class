@@ -8,10 +8,10 @@
 <style>
 :root{font-family:"Malgun Gothic","Apple SD Gothic Neo",sans-serif;color:#f2ecdf;background:#12100c;--accent:#e0a03c;--accent-soft:#8a5f22;--panel:#1e1a14;--panel-edge:#4a3d2a;--danger:#d1503f;--relic:#a878d8;--safe:#4f9d69}
 *{box-sizing:border-box}
-/* 배경 사진은 테마별 오버레이로 색만 갈아입힌다. background.webp 가 없어도 그라데이션과 바탕색으로 떨어진다. */
-body{margin:0;min-height:100vh;padding:20px;background:linear-gradient(180deg,rgba(18,13,8,.58),rgba(9,7,5,.86)),url("/learning/games/expedition/assets/images/background.webp") center/cover fixed no-repeat,#12100c}
-body.theme-tombdig{--accent:#c9a24a;--accent-soft:#7a5c23;--panel:#1d1a16;--panel-edge:#4b402d;--danger:#c14a4a;--relic:#c08cd0;background:linear-gradient(180deg,rgba(20,16,10,.6),rgba(10,8,5,.88)),url("/learning/games/expedition/assets/images/background.webp") center/cover fixed no-repeat,#14110d}
-body.theme-voidrun{--accent:#5fa8d8;--accent-soft:#2c5c80;--panel:#141a22;--panel-edge:#2f4560;--danger:#e0644f;--relic:#9d8ce8;background:linear-gradient(180deg,rgba(8,14,22,.66),rgba(4,7,12,.9)),url("/learning/games/expedition/assets/images/background.webp") center/cover fixed no-repeat,#0b1018}
+/* 배경 그림은 아직 없다. 넣을 때는 각 테마 규칙의 gradient 뒤에 url(...) 한 겹만 더하면 된다. */
+body{margin:0;min-height:100vh;padding:20px;background:linear-gradient(180deg,rgba(18,13,8,.58),rgba(9,7,5,.86)),#12100c}
+body.theme-tombdig{--accent:#c9a24a;--accent-soft:#7a5c23;--panel:#1d1a16;--panel-edge:#4b402d;--danger:#c14a4a;--relic:#c08cd0;background:linear-gradient(180deg,rgba(20,16,10,.6),rgba(10,8,5,.88)),#14110d}
+body.theme-voidrun{--accent:#5fa8d8;--accent-soft:#2c5c80;--panel:#141a22;--panel-edge:#2f4560;--danger:#e0644f;--relic:#9d8ce8;background:linear-gradient(180deg,rgba(8,14,22,.66),rgba(4,7,12,.9)),#0b1018}
 button,input{font:inherit}
 .hidden{display:none!important}
 .shell{width:min(1120px,100%);margin:auto}
@@ -77,6 +77,13 @@ h1,h2,h3,p{margin-top:0}
 
 
 /* 카드 그림 */
+/* 그림이 있는 카드는 그림이 카드 전체다. 제목은 그림 안에 이미 있다. */
+.card.photo{padding:0;overflow:hidden;background-size:cover;background-position:center;border:1px solid #00000070;align-content:end;gap:0}
+.card.photo .stateTag{display:block;padding:4px 0;background:#000000b0;color:#ffd9d0;font-size:11px;font-weight:900;letter-spacing:.1em}
+.card.facedown.photo{background-size:cover;background-position:center;border-color:#5b4a2e}
+.revealCard.photo{width:min(300px,66vw);aspect-ratio:896/1200;padding:0;overflow:hidden;background-size:cover;background-position:center;display:grid;align-content:end;border:2px solid #ffd9a0}
+.revealCard.photo .revealNote{margin:0;padding:8px 6px;background:#000000bb;font-size:14px}
+
 .art{display:block;line-height:0}
 .art svg{width:74px;height:74px;display:block;margin:0 auto;filter:drop-shadow(0 2px 3px #0006)}
 .art.small svg{width:26px;height:26px;opacity:.85}
@@ -455,8 +462,14 @@ function flashCard(card,index){
   }else{
     const name=state.hazardNames[card.hazard]||"위험";
     const repeat=state.revealed.slice(0,index).some(other=>other.kind==="hazard"&&other.hazard===card.hazard);
-    el.className=`revealCard hazard${repeat?" hazardRepeat":""}`;
-    el.innerHTML=`<span class="art big">${hazardArt(state.theme,card.hazard)}</span><span class="revealLabel" style="font-size:27px">${escapeHtml(name)}</span><span class="revealNote">${repeat?"두 번째! 라운드가 끝납니다":"한 번 더 나오면 끝입니다"}</span>`;
+    const photo=hazardPhoto(state.theme,card.hazard);
+    el.className=`revealCard hazard${photo?" photo":""}${repeat?" hazardRepeat":""}`;
+    if(photo){
+      el.style.backgroundImage=`url('${photo}')`;
+      el.innerHTML=`<span class="revealNote">${repeat?"두 번째! 라운드가 끝납니다":"한 번 더 나오면 끝입니다"}</span>`;
+    }else{
+      el.innerHTML=`<span class="art big">${hazardArt(state.theme,card.hazard)}</span><span class="revealLabel" style="font-size:27px">${escapeHtml(name)}</span><span class="revealNote">${repeat?"두 번째! 라운드가 끝납니다":"한 번 더 나오면 끝입니다"}</span>`;
+    }
     if(repeat)ms=1900;
     sfx(repeat?"error":"stone");
   }
@@ -491,7 +504,26 @@ function reactToChange(before,now){
 }
 
 
-// 카드에 그림이 없으면 색깔 상자에 글자를 쓴 라벨로 보인다. 실물 카드에는 그림이 있다.
+
+// 테마별 카드 그림. 그림에 제목이 그려져 있어 카드에 이름을 따로 쓰지 않는다.
+const CARD_DIR="/learning/games/expedition/assets/cards";
+const CARD_PHOTOS={
+  orerun:{
+    back:`${CARD_DIR}/orerun/back.webp`,
+    hazards:["falling-rocks","toxic-gas","tunnel-collapse","underground-water","bat-swarm"]
+      .map(name=>`${CARD_DIR}/orerun/${name}.webp`)
+  }
+};
+function hazardPhoto(theme,index){return CARD_PHOTOS[theme]?.hazards?.[index]||""}
+function backPhoto(theme){return CARD_PHOTOS[theme]?.back||""}
+// 첫 공개가 빈 칸으로 뜨지 않게 미리 받아 둔다.
+function preloadPhotos(theme){
+  const set=CARD_PHOTOS[theme];
+  if(!set||set.loaded)return;
+  set.loaded=true;
+  [set.back,...(set.hazards||[])].forEach(src=>{const img=new Image();img.src=src});
+}
+// 그림이 아직 없는 테마용 아이콘. 실물 카드에는 그림이 있다.
 const CARD_ART={"hazards":{"orerun":["<svg viewBox=\"0 0 64 64\" aria-hidden=\"true\"><g fill=\"#ffe9e4\"><path d=\"M20 30l11-7 10 8-6 10-12-2z\"/><path d=\"M41 41l9-4 6 6-4 8-10-2z\"/><path d=\"M9 45l8-4 6 6-3 8-9-2z\"/></g><g stroke=\"#ffb4a6\" stroke-width=\"3.4\" stroke-linecap=\"round\"><path d=\"M17 9v8M31 5v9M45 10v8\"/></g></svg>","<svg viewBox=\"0 0 64 64\" aria-hidden=\"true\"><g fill=\"#dcffd2\"><circle cx=\"23\" cy=\"37\" r=\"12\"/><circle cx=\"40\" cy=\"35\" r=\"14\"/><circle cx=\"31\" cy=\"25\" r=\"10\"/><rect x=\"13\" y=\"37\" width=\"38\" height=\"13\" rx=\"6.5\"/></g><g fill=\"#2f6b32\"><circle cx=\"26\" cy=\"33\" r=\"3\"/><circle cx=\"39\" cy=\"32\" r=\"3\"/><rect x=\"27\" y=\"41\" width=\"11\" height=\"3.4\" rx=\"1.7\"/></g></svg>","<svg viewBox=\"0 0 64 64\" aria-hidden=\"true\"><g fill=\"#ffe9e4\"><path d=\"M6 20l22-3 3 10-6 5-19-3z\"/><path d=\"M58 17l-21 6-1 10 7 3 15-4z\"/></g><g fill=\"#ffcdbe\"><path d=\"M14 44l10-4 7 6-4 8-12-2z\"/><path d=\"M38 47l9-4 6 6-4 7-10-2z\"/></g></svg>","<svg viewBox=\"0 0 64 64\" aria-hidden=\"true\"><path fill=\"#d3ecff\" d=\"M32 6c6 10 11 14 11 20a11 11 0 01-22 0c0-6 5-10 11-20z\"/><g stroke=\"#d3ecff\" stroke-width=\"5.5\" fill=\"none\" stroke-linecap=\"round\"><path d=\"M7 44c6-6 12-6 18 0s12 6 18 0 11-6 14-3\"/><path d=\"M7 55c6-6 12-6 18 0s12 6 18 0 11-6 14-3\"/></g></svg>","<svg viewBox=\"0 0 64 64\" aria-hidden=\"true\"><g fill=\"#ffe9e4\"><path d=\"M32 24c-3-5-10-9-17-8 4 3 5 6 4 10 4-2 7 0 9 3l4 4 4-4c2-3 5-5 9-3-1-4 0-7 4-10-7-1-14 3-17 8z\"/><path d=\"M13 44c-2-3-6-5-10-5 2 2 3 4 2 6 2-1 4 0 5 2l3 2 2-2c1-2 3-3 5-2-1-2 0-4 2-6-4 0-7 2-9 5z\" opacity=\".85\"/><path d=\"M51 46c-2-3-6-5-10-5 2 2 3 4 2 6 2-1 4 0 5 2l3 2 2-2c1-2 3-3 5-2-1-2 0-4 2-6-4 0-7 2-9 5z\" opacity=\".85\"/></g></svg>"],"tombdig":["<svg viewBox=\"0 0 64 64\" aria-hidden=\"true\"><g fill=\"#ffe9e4\"><path d=\"M8 52l6-22 6 22zM22 52l6-26 6 26zM36 52l6-22 6 22zM50 52l5-17 5 17z\"/></g><rect x=\"4\" y=\"52\" width=\"56\" height=\"6\" rx=\"2\" fill=\"#ffcdbe\"/></svg>","<svg viewBox=\"0 0 64 64\" aria-hidden=\"true\"><g fill=\"#ffe9e4\"><ellipse cx=\"30\" cy=\"38\" rx=\"10\" ry=\"7\"/><path d=\"M40 36c8-2 12-8 11-16l-5 1c1 6-2 9-7 10z\"/><circle cx=\"46\" cy=\"17\" r=\"4.5\"/><path d=\"M20 33l-9-6 3-4 9 6zM20 43l-9 6 3 4 9-6z\"/><path d=\"M24 31l-5-8M24 45l-5 8\" stroke=\"#ffe9e4\" stroke-width=\"3\" stroke-linecap=\"round\"/></g></svg>","<svg viewBox=\"0 0 64 64\" aria-hidden=\"true\"><circle cx=\"32\" cy=\"32\" r=\"19\" fill=\"#ffd9cd\"/><path fill=\"#b8352a\" d=\"M30 13l6 14-9 4 8 22-3-17 9-4-7-19z\"/><g stroke=\"#b8352a\" stroke-width=\"2.4\" fill=\"none\"><path d=\"M18 24l-8-5M46 24l8-5M18 42l-8 5M46 42l8 5\"/></g></svg>","<svg viewBox=\"0 0 64 64\" aria-hidden=\"true\"><g fill=\"#ffe9e4\"><path d=\"M16 8h32v6l-13 18 13 18v6H16v-6l13-18-13-18z\"/></g><path fill=\"#e8b06a\" d=\"M22 12h20l-10 14zM32 40l9 12H23z\"/></svg>","<svg viewBox=\"0 0 64 64\" aria-hidden=\"true\"><path fill=\"#ffe9e4\" d=\"M32 8c-12 0-20 8-20 19 0 7 4 11 7 14v9h26v-9c3-3 7-7 7-14 0-11-8-19-20-19z\"/><g fill=\"#5d1b1b\"><ellipse cx=\"24\" cy=\"29\" rx=\"5.5\" ry=\"6.5\"/><ellipse cx=\"40\" cy=\"29\" rx=\"5.5\" ry=\"6.5\"/><path d=\"M32 37l4 8h-8z\"/></g></svg>"],"voidrun":["<svg viewBox=\"0 0 64 64\" aria-hidden=\"true\"><circle cx=\"40\" cy=\"26\" r=\"13\" fill=\"#ffe9e4\"/><g fill=\"#ffb87a\"><path d=\"M27 34L6 52l24-11z\"/><path d=\"M31 40L14 56l21-8z\" opacity=\".8\"/></g><g fill=\"#c9857a\"><circle cx=\"37\" cy=\"22\" r=\"3.4\"/><circle cx=\"45\" cy=\"30\" r=\"2.4\"/></g></svg>","<svg viewBox=\"0 0 64 64\" aria-hidden=\"true\"><circle cx=\"32\" cy=\"32\" r=\"12\" fill=\"#ffe38a\"/><g stroke=\"#ffd05c\" stroke-width=\"4.5\" stroke-linecap=\"round\"><path d=\"M32 6v8M32 50v8M6 32h8M50 32h8M14 14l6 6M44 44l6 6M50 14l-6 6M20 44l-6 6\"/></g></svg>","<svg viewBox=\"0 0 64 64\" aria-hidden=\"true\"><rect x=\"18\" y=\"10\" width=\"24\" height=\"30\" rx=\"5\" fill=\"#ffe9e4\"/><rect x=\"26\" y=\"4\" width=\"8\" height=\"8\" rx=\"2\" fill=\"#ffcdbe\"/><g fill=\"#9fe3a0\"><path d=\"M32 44c3 5 5 7 5 10a5 5 0 01-10 0c0-3 2-5 5-10z\"/><circle cx=\"21\" cy=\"52\" r=\"4\"/><circle cx=\"44\" cy=\"50\" r=\"3.2\"/></g></svg>","<svg viewBox=\"0 0 64 64\" aria-hidden=\"true\"><g fill=\"none\" stroke=\"#ffe9e4\" stroke-width=\"4.5\" stroke-linecap=\"round\"><path d=\"M18 40a20 20 0 0128 0\"/><path d=\"M26 47a10 10 0 0112 0\"/></g><circle cx=\"32\" cy=\"54\" r=\"4\" fill=\"#ffe9e4\"/><g stroke=\"#ff6b5c\" stroke-width=\"6\" stroke-linecap=\"round\"><path d=\"M12 12l40 40M52 12L12 52\"/></g></svg>","<svg viewBox=\"0 0 64 64\" aria-hidden=\"true\"><g fill=\"none\" stroke=\"#ffe9e4\" stroke-width=\"4\" stroke-linecap=\"round\"><path d=\"M32 8c14 0 24 10 24 24S46 56 32 56 8 46 8 32\"/><path d=\"M32 18c8 0 14 6 14 14s-6 14-14 14-14-6-14-14\"/><path d=\"M32 27c3 0 5 2 5 5\"/></g></svg>"]},"treasures":{"orerun":"<svg viewBox=\"0 0 64 64\" aria-hidden=\"true\"><g fill=\"#4a3110\"><path d=\"M24 24l8-14 9 14-9 28z\"/><path d=\"M10 32l7-10 6 10-6 18z\"/><path d=\"M44 30l7-9 6 9-7 19z\"/></g></svg>","tombdig":"<svg viewBox=\"0 0 64 64\" aria-hidden=\"true\"><g fill=\"#4a3110\"><path d=\"M22 12h20l-3 7c6 3 10 10 10 18 0 10-8 17-17 17s-17-7-17-17c0-8 4-15 10-18z\"/></g><path fill=\"#f2cd76\" d=\"M26 36h12v5H26z\"/></svg>","voidrun":"<svg viewBox=\"0 0 64 64\" aria-hidden=\"true\"><g fill=\"#123044\"><rect x=\"18\" y=\"14\" width=\"28\" height=\"36\" rx=\"7\"/></g><g fill=\"#8fd8f0\"><rect x=\"24\" y=\"20\" width=\"16\" height=\"7\" rx=\"3\"/><circle cx=\"32\" cy=\"40\" r=\"5\"/></g></svg>"},"relics":{"orerun":"<svg viewBox=\"0 0 64 64\" aria-hidden=\"true\"><path fill=\"#fff\" d=\"M32 6l16 12-16 40L16 18z\"/><path fill=\"#e3ccff\" d=\"M32 6l16 12H16zM32 58l16-40-8 6z\"/></svg>","tombdig":"<svg viewBox=\"0 0 64 64\" aria-hidden=\"true\"><path fill=\"#fff\" d=\"M32 8l20 10v14c0 14-9 21-20 24-11-3-20-10-20-24V18z\"/><path fill=\"#8a4ad0\" d=\"M32 20l4 9 9 1-7 6 2 9-8-5-8 5 2-9-7-6 9-1z\"/></svg>","voidrun":"<svg viewBox=\"0 0 64 64\" aria-hidden=\"true\"><path fill=\"#fff\" d=\"M26 6h12v10l8 26a14 14 0 01-28 0l8-26z\"/><path fill=\"#7fe6c8\" d=\"M22 38h20a12 12 0 01-20 8z\"/></svg>"}};
 function hazardArt(theme,index){return (CARD_ART.hazards[theme]||CARD_ART.hazards.orerun)[index]||""}
 function treasureArt(theme){return CARD_ART.treasures[theme]||CARD_ART.treasures.orerun}
@@ -511,6 +543,11 @@ function cardMarkup(card,index){
   const name=state.hazardNames[card.hazard]||"위험";
   // 같은 위험이 앞에 이미 나왔다면 이 카드가 라운드를 끝낸 두 번째 장이다.
   const isRepeat=state.revealed.slice(0,index).some(other=>other.kind==="hazard"&&other.hazard===card.hazard);
+  const photo=hazardPhoto(state.theme,card.hazard);
+  if(photo){
+    return `<div class="card hazard photo${isRepeat?" repeat":""}" style="background-image:url('${photo}')" title="${escapeHtml(name)}">`
+      +`<span class="stateTag">${isRepeat?"두 번째":"경고"}</span></div>`;
+  }
   return `<div class="card hazard${isRepeat?" repeat":""}"><span class="art">${hazardArt(state.theme,card.hazard)}</span>`
     +`<span class="hazardName">${escapeHtml(name)}</span><small>${isRepeat?"두 번째":"경고"}</small></div>`;
 }
@@ -519,8 +556,13 @@ function renderTrail(){
   const opened=state.revealed.map((card,index)=>cardMarkup(card,index)).join("");
   // 앞길이 엎어진 카드로 깔려 있어야 "길"로 보인다. 빈 상자는 갈 곳이 없어 보인다.
   const ahead=Math.min(state.deckCount,9);
-  const facedown=Array.from({length:ahead},(_,i)=>
-    `<div class="card facedown" style="opacity:${(1-i*0.085).toFixed(2)}"><span class="backMark">?</span></div>`).join("");
+  const back=backPhoto(state.theme);
+  const facedown=Array.from({length:ahead},(_,i)=>{
+    const fade=(1-i*0.085).toFixed(2);
+    return back
+      ? `<div class="card facedown photo" style="opacity:${fade};background-image:url('${back}')"></div>`
+      : `<div class="card facedown" style="opacity:${fade}"><span class="backMark">?</span></div>`;
+  }).join("");
   const decided=new Set(state.decidedIds);
   const party=state.players
     .map((player,index)=>({player,index}))
@@ -698,6 +740,7 @@ function renderResult(){
 function render(){
   if(!state)return;
   applyThemeSkin(state.theme);
+  preloadPhotos(state.theme);
   if(state.phase==="lobby"){
     if(state.theme!==selectedTheme){selectedTheme=state.theme;renderThemePicker()}
     return;
