@@ -122,21 +122,22 @@ h1,h2,h3,p{margin-top:0}
 .hazardPip.seen{border-color:var(--danger);background:#3a1a15;color:#ffcfc6;font-weight:800}
 
 
-.bandBox{display:flex;justify-content:space-between;align-items:center;gap:12px;flex-wrap:wrap;padding:12px 14px;border:1px solid var(--panel-edge);border-radius:12px;background:#00000038}
-.bandBox b{color:#ffe6b4;font-size:16px}
-.bandBox span{display:block;margin-top:3px;color:#b7a888;font-size:12px}
-.bandLock{align-self:center;padding:4px 10px;border:1px solid var(--panel-edge);border-radius:999px;color:#8d8168;font-size:11px;font-weight:800;white-space:nowrap}
+/* 이 판단은 "내가 지금 얼마를 걸고 있나" 하나로 결정된다. 그 수가 화면에서 제일 커야 한다. */
+.pack{display:grid;grid-template-columns:1fr 1fr;gap:12px;margin-top:12px}
+.packSide{padding:13px 15px;border-radius:13px;border:1px solid var(--panel-edge);background:#00000048}
+.packSide.risk{border-color:var(--accent-soft)}
+.packSide.safe{border-color:#3f7a52}
+.packLabel{display:block;color:#9d907a;font-size:11px;font-weight:800;letter-spacing:.06em}
+.packSide b{display:block;margin-top:4px;font-size:34px;line-height:1;color:#ffe0a0}
+.packSide.safe b{color:#a8e0b4}
+.gemRow{display:flex;flex-wrap:wrap;gap:4px;align-items:center;min-height:26px;margin-top:8px}
+.gem{width:17px;height:19px;clip-path:polygon(50% 0,100% 34%,78% 100%,22% 100%,0 34%);
+  background:linear-gradient(160deg,#ffeaa9,var(--accent) 45%,var(--accent-soft));
+  box-shadow:0 1px 2px #0009}
+.packSide.safe .gem{background:linear-gradient(160deg,#d6ffe2,#6cc98a 45%,#2f6b47)}
+.gemMore{color:#c4b79c;font-size:13px;font-weight:900;margin-left:2px}
+@media(max-width:640px){.pack{grid-template-columns:1fr}}
 
-/* 문제는 게임을 막지 않는다. 맞히든 틀리든 판은 그대로 흘러간다. */
-.quizBox{margin-top:12px;padding:13px 15px;border:1px solid var(--panel-edge);border-radius:12px;background:#00000045}
-.quizHead{display:flex;align-items:baseline;gap:9px;flex-wrap:wrap;color:#e6d7ba;font-size:15px}
-.quizTag{padding:2px 8px;border-radius:999px;background:var(--accent-soft);color:#ffeec9;font-size:10px;font-weight:900;letter-spacing:.1em}
-.quizRow{display:flex;align-items:center;gap:8px;margin-top:9px;flex-wrap:wrap}
-.quizInput{width:140px;min-height:38px;padding:6px 11px;border:1px solid var(--panel-edge);border-radius:9px;background:#140f08;color:#fff0d0;font-weight:800}
-.quizMark{font-size:20px;font-weight:900}
-.quizMark.ok{color:var(--safe)}
-.quizMark.no{color:var(--danger)}
-.quizNote{margin-top:7px;color:#b7a888;font-size:12px}
 .decisionBox{margin-top:14px;padding:16px;border:1px solid var(--accent-soft);border-radius:14px;background:#00000045;text-align:center}
 .decisionHead{display:flex;justify-content:center;align-items:center;gap:12px;flex-wrap:wrap;font-weight:900;color:#ffe6b4}
 .clock{min-width:44px;padding:2px 9px;border-radius:999px;background:#1a1206;border:1px solid var(--accent-soft);color:#ffe0a0;font-size:15px;font-variant-numeric:tabular-nums}
@@ -159,26 +160,35 @@ h1,h2,h3,p{margin-top:0}
 .rankRow{display:flex;justify-content:center;gap:8px;flex-wrap:wrap;margin:12px 0}
 .rankChip{padding:8px 12px;border:1px solid var(--panel-edge);border-radius:999px;background:#241e16;font-size:13px}
 .rankChip.win{border-color:var(--accent);background:#3a2c12;color:#ffe6b4;font-weight:900}
-.mathScore{margin:2px 0 14px;color:#a8e0b4;font-size:14px;font-weight:800}
 
 /* 캠프(왼쪽) ─ 길(오른쪽) 구조. 누가 안에 있고 누가 나왔는지가 위치로 보여야 한다. */
 .tunnel{display:grid;grid-template-columns:140px minmax(0,1fr);gap:16px;margin-top:6px}
-.tunnel.noCamp{grid-template-columns:minmax(0,1fr)}
-.tunnel.noCamp .camp{display:none}
-.camp{padding:14px 10px;border-right:1px solid var(--panel-edge);text-align:center}
+.camp{padding:14px 8px;border-right:1px solid var(--panel-edge);text-align:center}
+.tent{display:grid;justify-items:center;gap:1px;padding:5px 3px;border-radius:9px}
+.tent.me{background:#ffffff14}
+.tent.away{opacity:.45}
+.tentIcon{width:38px;height:29px;filter:drop-shadow(0 2px 3px #0008)}
+.tentName{color:#c4b79c;font-size:10px;font-weight:900}
+.tentGems{display:flex;flex-wrap:wrap;gap:2px;justify-content:center;max-width:66px;min-height:9px}
+.tentGems .gem{width:9px;height:10px}
+.tent b{color:#ffe0a0;font-size:14px;line-height:1.1}
 .path{min-width:0}
 .zoneLabel{color:var(--accent);font-size:11px;font-weight:900;letter-spacing:.18em;margin-bottom:8px}
 .zoneNote{margin-top:8px;color:#8d8168;font-size:10px}
 .pathFoot{display:flex;align-items:center;gap:14px;margin-top:12px;padding:12px;border-radius:12px;background:#00000038;min-height:82px}
 
-.tokens{display:flex;gap:9px;flex-wrap:wrap;justify-content:center;min-height:58px;align-items:center}
+.tokens{display:flex;gap:8px;flex-wrap:wrap;justify-content:center;min-height:70px;align-items:flex-end}
+#campTokens{display:grid;gap:4px;min-height:0}
 .tokens.party{justify-content:flex-start}
-.token{position:relative;display:grid;place-items:center;width:52px;height:52px;border-radius:50%;border:2px solid #00000060;color:#1b1207;font-weight:900;font-size:17px;box-shadow:0 4px 10px #0007;transition:transform .35s ease}
-.token.me{box-shadow:0 0 0 3px #fff2d0,0 4px 10px #0007}
-.token.decided::after{content:"✓";position:absolute;right:-4px;top:-5px;width:16px;height:16px;border-radius:50%;background:var(--safe);color:#06210f;font-size:11px;display:grid;place-items:center}
+.token{position:relative;display:grid;justify-items:center;width:54px;padding-bottom:14px;transition:transform .35s ease}
+.meeple{width:44px;height:50px;display:block;filter:drop-shadow(0 3px 4px #0008)}
+.tokenName{margin-top:-2px;color:#f0e3c8;font-size:11px;font-weight:900;text-shadow:0 1px 3px #000}
+.token.me .meeple{filter:drop-shadow(0 0 3px #fff2d0) drop-shadow(0 3px 4px #0008)}
+.token.me .tokenName{color:#ffe6b4}
+.token.decided::after{content:"✓";position:absolute;right:0;top:-3px;width:17px;height:17px;border-radius:50%;background:var(--safe);color:#06210f;font-size:11px;font-weight:900;display:grid;place-items:center}
 .token .carry.banked{background:#12200f;color:#a8e0b4;border-color:#3f7a52}
 .token.caught{filter:grayscale(.6);opacity:.6}
-.token .carry{position:absolute;bottom:-7px;left:50%;transform:translateX(-50%);padding:1px 7px;border-radius:8px;background:#1a1206;color:#ffe0a0;font-size:12px;font-weight:900;border:1px solid var(--accent-soft)}
+.token .carry{position:absolute;bottom:0;left:50%;transform:translateX(-50%);padding:1px 8px;border-radius:8px;background:#1a1206;color:#ffe0a0;font-size:12px;font-weight:900;border:1px solid var(--accent-soft);white-space:nowrap}
 .token.walk{animation:walkIn .45s ease-out}
 @keyframes walkIn{from{transform:translateX(-26px);opacity:.3}to{transform:none;opacity:1}}
 .token.flee{animation:flee .5s ease-in}
@@ -290,14 +300,6 @@ h1,h2,h3,p{margin-top:0}
     </section>
 
     <section class="panel">
-      <div class="eyebrow">수학 문제</div>
-      <div id="bandBox" class="bandBox">
-        <div><b id="bandName">확인하는 중</b><span id="bandDesc"></span></div>
-        <span class="bandLock">방장 학년 기준 · 변경 불가</span>
-      </div>
-    </section>
-
-    <section class="panel">
       <h2>PLAYERS</h2>
       <div id="lobbyPlayers" class="mp-lobby-players"></div>
       <p id="lobbyGuide" class="mp-lobby-guide">참가자를 기다리는 중입니다.</p>
@@ -345,17 +347,20 @@ h1,h2,h3,p{margin-top:0}
       <div id="hazardTrack" class="hazardTrack"></div>
     </div>
 
-    <div id="situation" class="situation"></div>
-
-      <div id="quizBox" class="quizBox hidden">
-        <div class="quizHead"><span class="quizTag">수학</span><span id="quizAsk"></span></div>
-        <div class="quizRow">
-          <input id="quizInput" class="quizInput" inputmode="text" autocomplete="off" placeholder="답">
-          <button id="quizBtn" class="secondary" type="button">확인</button>
-          <span id="quizMark" class="quizMark"></span>
-        </div>
-        <div id="quizNote" class="quizNote"></div>
+    <div id="pack" class="pack hidden">
+      <div class="packSide risk">
+        <span class="packLabel">지금 들고 있는 것 · 잃을 수 있음</span>
+        <div id="packGems" class="gemRow"></div>
+        <b id="packCount">0</b>
       </div>
+      <div class="packSide safe">
+        <span class="packLabel">이미 확정한 것 · 안전함</span>
+        <div id="bankGems" class="gemRow"></div>
+        <b id="bankCount">0</b>
+      </div>
+    </div>
+
+    <div id="situation" class="situation"></div>
 
       <div id="decisionBox" class="decisionBox hidden">
         <div class="decisionHead">
@@ -378,7 +383,6 @@ h1,h2,h3,p{margin-top:0}
       <h2 id="resultTitle">라운드 종료</h2>
       <p id="resultText"></p>
       <div id="rankRow" class="rankRow"></div>
-      <div id="mathScore" class="mathScore"></div>
       <div class="row" style="justify-content:center">
         <button id="nextRoundBtn" class="primary hidden" type="button">다음 라운드</button>
         <button id="newGameBtn" class="primary hidden" type="button">새 게임</button>
@@ -505,159 +509,14 @@ function setTrack(name){
 }
 // 전용 소리가 있으면 그것을, 없으면 사이트 공용 소리를 쓴다.
 
-// 2022 개정 교육과정은 성취기준을 학년군으로 준다. 방장 계정의 학년으로 정해지고 아무도 못 바꾼다.
-const BANDS={
-  primary34:{name:"초등 3~4학년군",desc:"나눗셈의 몫과 나머지"},
-  primary56:{name:"초등 5~6학년군",desc:"분수·소수로 나타낸 몫, 평균, 백분율"},
-  middle:{name:"중학교",desc:"경우의 수와 확률"}
-};
-let learnerBand="middle";
-let bandTicket="";
-let quizState=null;
-let quizScore={right:0,total:0};
-// 맞힌 라운드에만 카운터가 열린다. 라운드가 바뀌면 다시 잠긴다.
-let countsUnlockedRound=0;
-
-// 초등 3~4학년군의 문제는 화면에 답이 이미 보여서 정보로 줄 것이 없다.
-// 그 군은 카운터를 처음부터 열어 두고, 대신 계산 점수를 결과 화면에 세운다.
-function countsAlwaysOpen(){return (state?.band||"middle")==="primary34"}
-function countsOpen(){return countsAlwaysOpen()||countsUnlockedRound===state.round}
-
 function renderCounts(){
   const box=$("countBox");
   const left=state.remaining;
   if(state.phase==="lobby"||!left){box.textContent="";return}
-  if(!countsOpen()){
-    box.className="countBox locked";
-    box.textContent="남은 카드 ? · 수학 문제를 맞히면 이번 라운드 동안 보입니다";
-    $("deckValue").textContent="?";
-    return;
-  }
   box.className="countBox";
   $("deckValue").textContent=left.total;
   box.innerHTML=`남은 <b>${left.total}</b>장 · 보물 <b>${left.treasure}</b> · 위험 <b>${left.hazard}</b>`
     +(left.deadly?` · <span class="danger">이번에 나오면 끝나는 카드 <b>${left.deadly}</b></span>`:"");
-}
-
-async function loadBand(){
-  try{
-    const res=await fetch("/api/learner/band",{credentials:"same-origin"});
-    if(!res.ok)return;
-    const data=await res.json();
-    bandTicket=data.ticket||"";
-    learnerBand=BANDS[data.band]?data.band:"middle";
-  }catch(_){ /* 못 받아도 기본값(중학교)으로 돈다 */ }
-  renderBandBox();
-}
-
-function renderBandBox(){
-  const band=BANDS[learnerBand]||BANDS.middle;
-  const name=$("bandName"); const desc=$("bandDesc");
-  if(name)name.textContent=band.name;
-  if(desc)desc.textContent=band.desc;
-}
-
-function gcd(a,b){return b?gcd(b,a%b):a}
-function asFraction(top,bottom){
-  const g=gcd(top,bottom)||1;
-  const t=top/g,b=bottom/g;
-  return b===1?String(t):`${t}/${b}`;
-}
-
-// 지금 판에서 실제로 벌어진 일로만 문제를 만든다. 억지로 지어내지 않는다.
-function buildQuiz(){
-  const band=state.band||"middle";
-  const split=state.lastSplit;
-  const left=state.remaining;
-
-  if(band==="primary34"){
-    if(!split)return null;
-    return {
-      ask:`${split.total} ÷ ${split.explorers} = ?  (몫과 나머지를 "몫 나머지" 처럼 두 수로)`,
-      accepts:[`${split.each} ${split.remainder}`,`${split.each},${split.remainder}`],
-      note:`한 사람당 ${split.each}, 바닥에 ${split.remainder}`
-    };
-  }
-
-  if(band==="primary56"){
-    if(split&&split.remainder>0){
-      return {
-        ask:`바닥에 남은 ${split.remainder}을 ${split.explorers}명이 똑같이 나누면 한 사람당? (기약분수)`,
-        accepts:[asFraction(split.remainder,split.explorers)],
-        note:`${split.remainder}/${split.explorers} 을 약분하면 ${asFraction(split.remainder,split.explorers)}`
-      };
-    }
-    if(left&&left.total>0){
-      const percent=Math.round(left.hazard/left.total*100);
-      return {
-        ask:`남은 카드 ${left.total}장 중 위험이 ${left.hazard}장. 몇 %? (반올림해 정수로)`,
-        accepts:[String(percent),`${percent}%`],
-        note:`${left.hazard} ÷ ${left.total} = 약 ${percent}%`
-      };
-    }
-    return null;
-  }
-
-  // 중학교: 경우의 수와 확률
-  if(left&&left.total>0&&left.deadly>0){
-    return {
-      ask:`남은 ${left.total}장 중 이번에 나오면 라운드가 끝나는 카드가 ${left.deadly}장. 다음 한 장에 끝날 확률은? (기약분수)`,
-      accepts:[asFraction(left.deadly,left.total)],
-      note:`${left.deadly}/${left.total} → ${asFraction(left.deadly,left.total)}`
-    };
-  }
-  if(left&&left.total>0){
-    return {
-      ask:`남은 ${left.total}장 중 위험 카드가 ${left.hazard}장. 다음 한 장이 위험일 확률은? (기약분수)`,
-      accepts:[asFraction(left.hazard,left.total)],
-      note:`${left.hazard}/${left.total} → ${asFraction(left.hazard,left.total)}`
-    };
-  }
-  return null;
-}
-
-function normalizeAnswer(value){
-  return String(value||"").trim().replace(/\s+/g," ").replace(/\s*\/\s*/g,"/");
-}
-
-function renderQuiz(){
-  const box=$("quizBox");
-  if(state.phase!=="deciding"){box.classList.add("hidden");return}
-  // 카드가 새로 열릴 때만 문제를 새로 낸다. 결정 하나 할 때마다 바뀌면 정신없다.
-  if(!quizState||quizState.at!==state.revealed.length||quizState.round!==state.round){
-    const made=buildQuiz();
-    quizState=made?{...made,at:state.revealed.length,round:state.round,done:false}:null;
-    $("quizInput").value="";
-    $("quizMark").textContent="";
-    $("quizMark").className="quizMark";
-    $("quizNote").textContent="";
-  }
-  if(!quizState){box.classList.add("hidden");return}
-  box.classList.remove("hidden");
-  $("quizAsk").textContent=quizState.ask;
-  $("quizInput").disabled=quizState.done;
-  $("quizBtn").disabled=quizState.done;
-}
-
-function submitQuiz(){
-  if(!quizState||quizState.done)return;
-  const given=normalizeAnswer($("quizInput").value);
-  if(!given)return;
-  const right=quizState.accepts.some(a=>normalizeAnswer(a)===given);
-  quizState.done=true;
-  quizScore.total+=1;
-  if(right)quizScore.right+=1;
-  // 계산할 줄 안다는 것을 보이면 그 라운드 동안 카운터를 갖는다. 보석이 아니라 정보로 갚는다.
-  if(right&&!countsAlwaysOpen())countsUnlockedRound=state.round;
-  $("quizMark").textContent=right?"○":"×";
-  $("quizMark").className=`quizMark ${right?"ok":"no"}`;
-  $("quizNote").textContent=right&&!countsAlwaysOpen()
-    ? `${quizState.note} · 이번 라운드 동안 남은 카드가 보입니다 · 지금까지 ${quizScore.right}/${quizScore.total}`
-    : `${quizState.note} · 지금까지 ${quizScore.right}/${quizScore.total}`;
-  renderCounts();
-  $("quizInput").disabled=true;
-  $("quizBtn").disabled=true;
-  sfx(right?"bank":"showdown","click");
 }
 
 function sfx(name,fallback){
@@ -845,6 +704,18 @@ function renderHazards(){
 // 한 반에서 같은 이름이 겹칠 수 있어 색으로도 구분한다.
 const PLAYER_COLORS=["#e0a03c","#5fa8d8","#7fc98a","#d8827f","#b98cd8","#d8c05f","#7fd8cf","#d89a6a"];
 
+// 실물의 말은 사람 모양이다. 글자 쓴 동그라미로는 "누가 갱도 안에 서 있다" 가 안 읽힌다.
+function meepleSvg(color){
+  return '<svg class="meeple" viewBox="0 0 40 48" aria-hidden="true">'
+    +'<ellipse cx="20" cy="45" rx="12" ry="3" fill="#00000055"/>'
+    +'<path d="M20 18c7 0 11 5 12 12l1 10H7l1-10c1-7 5-12 12-12z" fill="'+color+'"/>'
+    +'<circle cx="20" cy="12" r="8" fill="'+color+'"/>'
+    +'<path d="M10 12a10 10 0 0120 0z" fill="#241a08" opacity=".8"/>'
+    +'<rect x="6" y="11" width="28" height="3" rx="1.5" fill="#241a08" opacity=".8"/>'
+    +'<circle cx="20" cy="8.5" r="2.3" fill="#ffe9a8"/>'
+    +'</svg>';
+}
+
 function tokenMarkup(player,index,decided){
   const classes=["token"];
   if(player.id===myId())classes.push("me");
@@ -855,9 +726,31 @@ function tokenMarkup(player,index,decided){
     : `<span class="carry banked">${player.bank}</span>`;
   const tip=`${player.name} · 확정 ${player.bank}`
     +(player.inCave?` · 들고 있음 ${player.carrying}`:player.caught?" · 빈손으로 쫓겨남":" · 돌아옴");
-  return `<div class="${classes.join(" ")}" style="background:${colorOf(index)}" title="${escapeHtml(tip)}">`
-    +`${escapeHtml(initialOf(player.name))}${badge}</div>`;
+  return `<div class="${classes.join(" ")}" title="${escapeHtml(tip)}">`
+    +meepleSvg(colorOf(index))
+    +`<span class="tokenName">${escapeHtml(initialOf(player.name))}</span>${badge}</div>`;
 }
+const GEM_CAP=14;
+function gemMarkup(count){
+  const shown=Math.min(count,GEM_CAP);
+  return '<i class="gem"></i>'.repeat(shown)
+    +(count>shown?'<span class="gemMore">+'+(count-shown)+'</span>':"")
+    +(count===0?'<span class="gemMore">없음</span>':"");
+}
+
+// 숫자를 배지로 흘려보내지 않고, 지금 걸려 있는 양을 그림과 큰 수로 보여 준다.
+function renderPack(){
+  const box=$("pack");
+  const me=state.players.find(player=>player.id===myId());
+  if(!me||state.phase==="lobby"){box.classList.add("hidden");return}
+  box.classList.remove("hidden");
+  const carrying=me.inCave?me.carrying:0;
+  $("packGems").innerHTML=gemMarkup(carrying);
+  $("packCount").textContent=carrying;
+  $("bankGems").innerHTML=gemMarkup(me.bank);
+  $("bankCount").textContent=me.bank;
+}
+
 function renderSituation(){
   const me=state.players.find(player=>player.id===myId());
   const box=$("situation");
@@ -884,15 +777,24 @@ function colorOf(index){return PLAYER_COLORS[index%PLAYER_COLORS.length]}
 function initialOf(name){return String(name||"?").trim().slice(-2)}
 
 // 캠프와 길에 사람을 실제로 세운다. 누가 안에 있는지 표로 읽지 않고 위치로 본다.
+// 실물에는 사람마다 텐트가 있고 확정한 보석이 그 안에 쌓인다.
+// 숫자로만 두면 누가 얼마나 벌었는지가 판에서 안 보인다.
+function tentMarkup(player,index){
+  const gems=Math.min(player.bank,10);
+  const tip=`${player.name} · 확정 ${player.bank}`+(player.inCave?` · ${state.site} 안`:"");
+  return `<div class="tent${player.id===myId()?" me":""}${player.inCave?" away":""}" title="${escapeHtml(tip)}">`
+    +`<svg class="tentIcon" viewBox="0 0 44 34" aria-hidden="true">`
+    +`<path d="M22 3 41 31H3z" fill="${colorOf(index)}"/>`
+    +`<path d="M22 3 30 31H14z" fill="#00000055"/>`
+    +`<path d="M3 31h38" stroke="#241a08" stroke-width="2.5" stroke-linecap="round"/></svg>`
+    +`<span class="tentName">${escapeHtml(initialOf(player.name))}</span>`
+    +`<span class="tentGems">${'<i class="gem"></i>'.repeat(gems)}</span>`
+    +`<b>${player.bank}</b></div>`;
+}
+
 function renderTokens(){
   const decided=new Set(state.decidedIds);
-  const camp=state.players
-    .map((player,index)=>({player,index}))
-    .filter(item=>!item.player.inCave)
-    .map(item=>tokenMarkup(item.player,item.index,decided));
-  $("campTokens").innerHTML=camp.join("");
-  // 아무도 안 돌아왔으면 캠프 칸이 빈 자리만 차지한다.
-  document.querySelector(".tunnel").classList.toggle("noCamp",camp.length===0);
+  $("campTokens").innerHTML=state.players.map((player,index)=>tentMarkup(player,index)).join("");
   $("pathLabel").innerHTML=state.explorerCount
     ? `지나온 길 · ${escapeHtml(state.site)} 안 ${state.explorerCount}명`
       +(state.path.gems?` · <span class="leftTag">바닥에 ${state.path.gems}</span>`:"")
@@ -1015,9 +917,6 @@ function renderResult(){
         :"모두 돌아와 라운드가 끝났습니다.";
   }
   $("rankRow").innerHTML=rankMarkup();
-  $("mathScore").textContent=quizScore.total
-    ? `내 계산 ${quizScore.right}/${quizScore.total}`
-    : "";
   $("nextRoundBtn").classList.toggle("hidden",state.phase!=="roundEnd"||!host);
   $("newGameBtn").classList.toggle("hidden",state.phase!=="gameEnd"||!host);
   $("lobbyBtn").classList.toggle("hidden",state.phase!=="gameEnd"||!host);
@@ -1035,9 +934,9 @@ function render(){
   showGame();
   $("roundValue").textContent=`${state.round} / ${state.totalRounds}`;
   $("headline").textContent=state.lastAction;
+  renderPack();
   renderSituation();
   renderCounts();
-  renderQuiz();
   renderTokens();
   renderTrail();
   renderHazards();
@@ -1069,7 +968,6 @@ function showAbort({title,message}){
 function init(){
   applyThemeSkin(selectedTheme);
   setTrack("lobby");
-  loadBand();
   lobby=ClassroomMultiplayerLobby.create({
     gameId:GAME_ID,
     getPlayerName:()=>/^[가-힣]{2,6}$/.test(savedName)?savedName:"",
@@ -1085,7 +983,7 @@ function init(){
       $("gameRoomCode").textContent=snapshot.roomCode||"----";
       renderThemePicker();
     },
-    getRoomRequestData:()=>({theme:selectedTheme,bandTicket}),
+    getRoomRequestData:()=>({theme:selectedTheme}),
     getLobbyPresentation:({count,role,canStart})=>({
       canStart,
       startText:role==="host"&&canStart?`START · ${count} PLAYERS`:"WAITING FOR PLAYERS",
@@ -1111,8 +1009,6 @@ function init(){
   $("nextRoundBtn").addEventListener("click",()=>sendAction({action:"NEXT_ROUND"}));
   $("newGameBtn").addEventListener("click",()=>sendAction({action:"NEW_GAME"}));
   $("lobbyBtn").addEventListener("click",()=>{sendAction({action:"RETURN_LOBBY"});showLobby()});
-  $("quizBtn").addEventListener("click",submitQuiz);
-  $("quizInput").addEventListener("keydown",event=>{if(event.key==="Enter")submitQuiz()});
   $("closeRulesBtn").addEventListener("click",hideRules);
   $("rulesOverlay").addEventListener("click",event=>{if(event.target===$("rulesOverlay"))hideRules()});
   $("reloadBtn").addEventListener("click",()=>location.reload());
