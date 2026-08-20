@@ -9,7 +9,7 @@ const THEMES = Object.freeze({
     site: "갱도",
     treasure: "광물",
     unit: "덩이",
-    relic: "희귀 원석",
+    relic: "금덩이",
     hazards: Object.freeze(["낙석", "유독가스", "갱도 붕괴", "지하수", "박쥐 떼"])
   }),
   tombdig: Object.freeze({
@@ -17,7 +17,7 @@ const THEMES = Object.freeze({
     site: "묘도",
     treasure: "부장품",
     unit: "점",
-    relic: "봉인 유물",
+    relic: "황금 가면",
     hazards: Object.freeze(["함정", "독충", "봉인 파손", "모래 붕괴", "저주"])
   }),
   voidrun: Object.freeze({
@@ -25,7 +25,7 @@ const THEMES = Object.freeze({
     site: "항로",
     treasure: "자원",
     unit: "유닛",
-    relic: "미확인 시료",
+    relic: "우주 보석",
     hazards: Object.freeze(["운석", "태양풍", "연료 누출", "통신 두절", "중력 이상"])
   })
 });
@@ -248,7 +248,7 @@ function revealCard(game) {
   } else if (card.kind === "relic") {
     game.path.relics.push(card.value);
     game.lastSplit = null;
-    game.lastAction = `${withParticle(themeOf(game).relic, "이", "가")} 나왔습니다. 혼자 돌아가는 사람만 가져갈 수 있습니다.`;
+    game.lastAction = `${withParticle(themeOf(game).relic, "이", "가")} 나왔습니다. 하나뿐이라 나눌 수 없어, 혼자 돌아가는 사람만 가져갑니다.`;
   } else {
     const count = (game.hazardCounts[card.hazard] || 0) + 1;
     game.hazardCounts[card.hazard] = count;
