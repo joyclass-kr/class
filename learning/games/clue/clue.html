@@ -57,16 +57,10 @@ h1,h2,h3,p{margin-top:0}
 .turnBanner2{text-align:center;font-weight:850;padding:8px 4px}
 
 .boardWrap{width:min(560px,100%);margin:auto}
-.roomRect{fill:none;stroke:#3a3f52;stroke-width:2;cursor:default;pointer-events:all}
+.roomRect{fill:none;stroke:none;cursor:default;pointer-events:all}
 .roomRect.reachable{stroke:var(--safe);stroke-width:4;cursor:pointer;filter:drop-shadow(0 0 5px #3f9e6c88)}
 .roomRect.reachable:hover{stroke:#5fd99a}
 .roomRect.current{stroke:var(--accent);stroke-width:4}
-.roomShade{fill:#0a0d14;opacity:.5;pointer-events:none}
-.roomImg{pointer-events:none}
-.roomLabel{fill:#fff;font-size:12px;font-weight:900;text-anchor:middle;pointer-events:none;text-shadow:0 1px 3px #000}
-.corridorLine{stroke:#3a3f52;stroke-width:3}
-.passageLine{stroke:#a78bef;stroke-width:2;stroke-dasharray:5 5}
-.passageTag{fill:#d7c8fa;font-size:8px;font-weight:800;text-anchor:middle;pointer-events:none;text-shadow:0 1px 2px #000}
 .token{stroke:#fff;stroke-width:1.5}
 .tokenAvatar{pointer-events:none}
 
@@ -458,43 +452,14 @@ function showLobby(){
 
 function buildBoard(){
   const svg=$("board");
-  const parts=[];
+  const parts=[`<image href="/learning/games/clue/assets/images/board.webp" x="0" y="0" width="380" height="380"/>`];
   const defs=[`<clipPath id="tokenClip" clipPathUnits="objectBoundingBox"><circle cx="0.5" cy="0.5" r="0.5"/></clipPath>`];
   const cellSize=100,gap=20,margin=20;
-  function centerOf(index){
-    const [row,col]=ROOM_POS[index];
-    return [margin+col*(cellSize+gap)+cellSize/2, margin+row*(cellSize+gap)+cellSize/2];
-  }
-  const drawn=new Set();
-  for(let i=0;i<9;i+=1){
-    for(const edge of ADJACENCY[i]){
-      const key=i<edge.to?i+"-"+edge.to:edge.to+"-"+i;
-      if(drawn.has(key))continue;
-      drawn.add(key);
-      const [x1,y1]=centerOf(i),[x2,y2]=centerOf(edge.to);
-      parts.push(`<line class="corridorLine" x1="${x1}" y1="${y1}" x2="${x2}" y2="${y2}"/>`);
-    }
-  }
-  const passageDrawn=new Set();
-  Object.entries(SECRET_PASSAGES).forEach(([from,to])=>{
-    const key=Number(from)<to?from+"-"+to:to+"-"+from;
-    if(passageDrawn.has(key))return;
-    passageDrawn.add(key);
-    const [x1,y1]=centerOf(Number(from)),[x2,y2]=centerOf(to);
-    parts.push(`<line class="passageLine" x1="${x1}" y1="${y1}" x2="${x2}" y2="${y2}"/>`);
-  });
   for(let i=0;i<9;i+=1){
     const [row,col]=ROOM_POS[i];
     const x=margin+col*(cellSize+gap),y=margin+row*(cellSize+gap);
-    defs.push(`<clipPath id="roomClip${i}"><rect x="${x}" y="${y}" width="${cellSize}" height="${cellSize}" rx="8"/></clipPath>`);
     parts.push(`<g data-room="${i}">`);
-    parts.push(`<image class="roomImg" href="${cardImage(12+i)}" x="${x}" y="${y}" width="${cellSize}" height="${cellSize}" preserveAspectRatio="xMidYMid slice" clip-path="url(#roomClip${i})"/>`);
-    parts.push(`<rect class="roomShade" x="${x}" y="${y}" width="${cellSize}" height="${cellSize}" rx="8" clip-path="url(#roomClip${i})"/>`);
     parts.push(`<rect class="roomRect" data-room="${i}" x="${x}" y="${y}" width="${cellSize}" height="${cellSize}" rx="8"/>`);
-    parts.push(`<text class="roomLabel" x="${x+cellSize/2}" y="${y+16}">${ROOMS[i]}</text>`);
-    if(SECRET_PASSAGES[i]!==undefined){
-      parts.push(`<text class="passageTag" x="${x+cellSize/2}" y="${y+cellSize-8}">비밀통로</text>`);
-    }
     parts.push(`<g class="tokenLayer" data-tokens="${i}"></g>`);
     parts.push(`</g>`);
   }
