@@ -431,6 +431,19 @@ function renderThemePicker(){
   });
 }
 
+
+const BGM_DIR="/learning/games/expedition/assets/sound";
+let currentTrack="";
+function setTrack(name){
+  const audio=$("bgm");
+  const src=`${BGM_DIR}/${name}.ogg`;
+  if(!audio||currentTrack===src)return;
+  currentTrack=src;
+  audio.src=src;
+  audio.load();
+  // 음소거 상태거나 아직 사용자 조작 전이면 조용히 실패한다. 그때는 music-control 이 튼다.
+  audio.play().catch(()=>{});
+}
 function sfx(name){try{window.ClassGameSfx?.play(name)}catch(_){}}
 
 // 화면 가운데에 잠깐 띄웠다 사라지는 레이어. 클릭은 통과시킨다.
@@ -766,6 +779,7 @@ function render(){
   if(!state)return;
   applyThemeSkin(state.theme);
   preloadPhotos(state.theme);
+  setTrack(state.phase==="lobby"?"lobby":state.theme);
   if(state.phase==="lobby"){
     if(state.theme!==selectedTheme){selectedTheme=state.theme;renderThemePicker()}
     return;
@@ -805,6 +819,7 @@ function showAbort({title,message}){
 
 function init(){
   applyThemeSkin(selectedTheme);
+  setTrack("lobby");
   lobby=ClassroomMultiplayerLobby.create({
     gameId:GAME_ID,
     getPlayerName:()=>/^[가-힣]{2,6}$/.test(savedName)?savedName:"",
