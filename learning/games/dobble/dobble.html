@@ -11,7 +11,7 @@
 body{margin:0;min-height:100vh;padding:20px;background:linear-gradient(180deg,#16122182,#0e0c16b8),url("/learning/games/dobble/assets/images/background.jpg") center/cover fixed no-repeat,#161221}
 button,input{font:inherit}
 .hidden{display:none!important}
-.shell{width:min(880px,100%);margin:auto}
+.shell{width:min(1040px,100%);margin:auto}
 #missingScreen,#entry{max-width:640px;margin:auto}
 .panel{margin-bottom:14px;padding:18px;border:1px solid var(--panel-edge);border-radius:16px;background:var(--panel);box-shadow:0 16px 44px #0007}
 h1,h2,h3,p{margin-top:0}
@@ -51,9 +51,13 @@ h1,h2,h3,p{margin-top:0}
 .cardLabel{margin-bottom:8px;font-weight:900;letter-spacing:.08em;font-size:12px}
 #centerLabel{color:#a89bdc}
 #myLabel{color:#f0b088}
-.dobbleCard{position:relative;width:100%;aspect-ratio:1/1;margin:auto;border-radius:50%;overflow:hidden;box-shadow:inset 0 0 0 7px #00000026,inset 0 0 36px #00000059}
+.dobbleCard{position:relative;width:100%;aspect-ratio:1/1;margin:auto;border-radius:50%;overflow:hidden;box-shadow:inset 0 0 0 7px #00000026,inset 0 0 36px #00000059;transition:opacity .2s,filter .2s}
 #centerCard{background:radial-gradient(circle at 32% 28%,#5445a0,#2c2352 52%,#150f26 100%);border:3px solid #8879c9}
 #myCard{background:radial-gradient(circle at 32% 28%,#c97a3f,#5c3018 52%,#241209 100%);border:3px solid var(--accent)}
+.dobbleCard.locked{opacity:.5;filter:grayscale(.55)}
+.cooldownNote{margin:8px 0 0;color:#ff9d8f;font-weight:800;font-size:12.5px}
+@keyframes dobblePulse{0%{box-shadow:inset 0 0 0 7px #00000026,inset 0 0 36px #00000059,0 0 0 0 #ffe6ab00}30%{box-shadow:inset 0 0 0 7px #00000026,inset 0 0 36px #00000059,0 0 26px 10px #ffe6abcc}100%{box-shadow:inset 0 0 0 7px #00000026,inset 0 0 36px #00000059,0 0 0 0 #ffe6ab00}}
+.dobbleCard.pulse{animation:dobblePulse .55s ease-out}
 .symbol{position:absolute;width:29%;aspect-ratio:1/1;transform:translate(-50%,-50%) rotate(var(--rotate,0deg));filter:drop-shadow(0 2px 3px #00000080)}
 .symbol img{width:100%;height:100%;object-fit:contain;display:block}
 .symbol.clickable{cursor:pointer}
@@ -151,6 +155,7 @@ h1,h2,h3,p{margin-top:0}
             <div class="cardWrap">
               <div id="myLabel" class="cardLabel">내 카드 · 겹치는 그림을 찾아 누르세요</div>
               <div id="myCard" class="dobbleCard"></div>
+              <p id="cooldownNote" class="cooldownNote hidden"></p>
             </div>
           </div>
         </div>
@@ -261,6 +266,15 @@ let state = null;
 let myId = null;
 let isHost = false;
 let toastTimer = null;
+let previousPhase = null;
+let previousActionNumber = null;
+let awaitingClaimResult = false;
+let cooldownTimer = null;
+let pulseOnNextRender = false;
+
+function playSfx(name) {
+  window.ClassGameSfx?.play(name);
+}
 
 function esc(value) {
   return String(value).replace(/[&<>"']/g, c => ({ "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;", "'": "&#39;" }[c]));
@@ -277,6 +291,7 @@ function send(payload) {
   return lobby ? lobby.sendServer(payload) : false;
 }
 function sendAction(action, extra) {
+  if (action === "CLAIM") awaitingClaimResult = true;
   send(Object.assign({ type: "DOBBLE_ACTION", action }, extra || {}));
 }
 
@@ -302,7 +317,7 @@ function renderCard(container, symbols, clickable) {
   container.innerHTML = (symbols || []).map((symbol, index) => {
     const slot = SLOT_LAYOUT[index % SLOT_LAYOUT.length];
     const seed = `${symbol}:${index}`;
-    const scale = 0.55 + seededUnit(seed + ":scale") * 0.3; // 0.55~0.85, 슬롯끼리 겹치지 않는 안전 범위
+    const scale = 0.72 + seededUnit(seed + ":scale") * 0.2; // 0.72~0.92, 슬롯끼리 겹치지 않는 안전 범위 안에서 최대한 크게
     const rotate = -35 + seededUnit(seed + ":rotate") * 70; // -35~35도
     const size = 29 * scale;
     return `<div class="symbol${clickable ? " clickable" : ""}" data-symbol="${esc(symbol)}"
@@ -362,20 +377,42 @@ function renderStandings(target) {
     </div>`).join("");
 }
 
+function updateCooldownUi() {
+  clearTimeout(cooldownTimer);
+  const remaining = state?.myPenaltyUntil ? state.myPenaltyUntil - Date.now() : 0;
+  const active = remaining > 0;
+  $("myCard").classList.toggle("locked", active);
+  $("cooldownNote").classList.toggle("hidden", !active);
+  if (active) {
+    $("cooldownNote").textContent = `오답! ${Math.ceil(remaining / 1000)}초 뒤에 다시 시도하세요.`;
+    cooldownTimer = setTimeout(() => { if (state?.phase === "playing") render(); }, remaining + 80);
+  }
+  return active;
+}
+
 function renderPlayArea() {
   const isCatalog = state.mode === "catalog";
   $("centerLabel").textContent = isCatalog ? "기준 카드" : "중앙 카드";
   $("myLabel").textContent = isCatalog ? "새로 뒤집힌 카드 · 겹치는 그림을 찾아 누르세요" : "내 카드 · 겹치는 그림을 찾아 누르세요";
   renderCard($("centerCard"), state.centerCard, false);
+  const cooldownActive = updateCooldownUi();
   if (isCatalog) {
-    renderCard($("myCard"), state.challengerCard, Boolean(state.challengerCard));
+    renderCard($("myCard"), state.challengerCard, Boolean(state.challengerCard) && !cooldownActive);
     $("drawPileNote").classList.remove("hidden");
     $("drawPileNote").textContent = `더미에 남은 카드 ${state.drawPileCount}장`;
   } else {
-    renderCard($("myCard"), state.myCard, Boolean(state.myCard) && state.myFinishedAt === null);
+    renderCard($("myCard"), state.myCard, Boolean(state.myCard) && state.myFinishedAt === null && !cooldownActive);
     $("drawPileNote").classList.add("hidden");
   }
   renderStandings($("standingsList"));
+  if (pulseOnNextRender) {
+    pulseOnNextRender = false;
+    [$("centerCard"), $("myCard")].forEach(card => {
+      card.classList.remove("pulse");
+      void card.offsetWidth; // 리플로우를 강제해서 다시 트리거해도 애니메이션이 재생되게 한다.
+      card.classList.add("pulse");
+    });
+  }
 }
 
 function renderResult() {
@@ -399,8 +436,28 @@ function render() {
 }
 
 function handleServerMessage(message) {
-  if (message.type === "DOBBLE_STATE" && message.state) { state = message.state; render(); return; }
-  if (message.type === "DOBBLE_ERROR" || message.type === "ERROR") notice(message.message || "요청을 처리하지 못했습니다.");
+  if (message.type === "DOBBLE_STATE" && message.state) {
+    const next = message.state;
+    // 이전 상태도 "진행 중"이었고 행동 번호가 늘었다면 누군가(나일 수도, 다른 사람일 수도) 정답을
+    // 맞혀 카드가 넘어간 것이다. 마지막 승리 수까지 포함해서 카드 넘어가는 소리 + 연출을 준다.
+    const wasClaim = previousPhase === "playing" && (next.phase === "playing" || next.phase === "gameEnd")
+      && previousActionNumber !== null && next.actionNumber > previousActionNumber;
+    if (wasClaim) {
+      playSfx("card");
+      playSfx("success");
+      pulseOnNextRender = true;
+    }
+    awaitingClaimResult = false;
+    previousPhase = next.phase;
+    previousActionNumber = next.actionNumber;
+    state = next;
+    render();
+    return;
+  }
+  if (message.type === "DOBBLE_ERROR" || message.type === "ERROR") {
+    if (awaitingClaimResult) { awaitingClaimResult = false; playSfx("error"); }
+    notice(message.message || "요청을 처리하지 못했습니다.");
+  }
 }
 
 function init() {

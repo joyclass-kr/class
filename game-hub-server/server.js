@@ -2861,6 +2861,9 @@ wss.on("connection", socket => {
 
       if (!result.ok) {
         dobbleError(socket, result.error || "행동을 처리하지 못했습니다.");
+        // 오답 페널티(대기 시간)는 실패한 CLAIM에서도 게임 상태를 바꾸므로, 그 갱신된
+        // 상태(myPenaltyUntil)를 클라이언트가 받을 수 있도록 이때도 방송한다.
+        if (action === "CLAIM") dobbleBroadcast(room);
         return;
       }
       dobbleBroadcast(room);

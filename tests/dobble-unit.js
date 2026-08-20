@@ -44,15 +44,23 @@ const realMatch = Dobble.sharedSymbol(myCard, centerCard);
 assert.ok(realMatch, "손패 카드와 중앙 카드는 반드시 그림 하나가 겹쳐야 합니다.");
 
 const wrongGuess = myCard.find(symbol => symbol !== realMatch) || "존재하지않는그림";
-const badResult = Dobble.claim(claimGame, player.id, wrongGuess);
+const wrongAt = 1000;
+const badResult = Dobble.claim(claimGame, player.id, wrongGuess, wrongAt);
 assert.equal(badResult.ok, false, "겹치지 않는 그림을 지목하면 거부되어야 합니다.");
+assert.equal(badResult.wrongGuess, true, "오답에는 wrongGuess 플래그가 있어야 합니다.");
 assert.equal(claimGame.centerPile.length, 1, "오답이면 중앙 카드가 바뀌지 않아야 합니다.");
 
+// 오답 직후 곧바로(페널티 안에) 다시 시도하면, 이번엔 정답이라도 막혀야 한다.
+const tooSoonResult = Dobble.claim(claimGame, player.id, realMatch, wrongAt + 100);
+assert.equal(tooSoonResult.ok, false, "오답 페널티 중에는 정답이라도 거부되어야 합니다.");
+assert.equal(claimGame.centerPile.length, 1, "페널티 중 시도는 카드에 영향을 주면 안 됩니다.");
+
 const beforeCount = player.stack.length;
-const goodResult = Dobble.claim(claimGame, player.id, realMatch);
-assert.equal(goodResult.ok, true);
+const goodResult = Dobble.claim(claimGame, player.id, realMatch, wrongAt + 5000);
+assert.equal(goodResult.ok, true, "페널티가 끝난 뒤에는 다시 시도할 수 있어야 합니다.");
 assert.equal(player.stack.length, beforeCount - 1, "정답이면 손패가 한 장 줄어야 합니다.");
 assert.equal(claimGame.centerPile[claimGame.centerPile.length - 1], myCard, "낸 카드가 새 중앙 카드가 되어야 합니다.");
+assert.equal(claimGame.lastMatch.symbol, realMatch, "lastMatch에 방금 맞힌 그림이 기록되어야 합니다.");
 
 // 손패를 모두 낸 사람이 즉시 승리한다.
 const winGame = gameWithTwoPlayers();
@@ -95,9 +103,9 @@ const catalogPlayer = catalogGame.players[0];
 const centerBefore = catalogGame.centerCard;
 const challengerBefore = catalogGame.drawPile[catalogGame.drawPile.length - 1];
 const catalogMatch = Dobble.sharedSymbol(centerBefore, challengerBefore);
-const catalogBad = Dobble.claim(catalogGame, catalogPlayer.id, centerBefore.find(s => s !== catalogMatch));
+const catalogBad = Dobble.claim(catalogGame, catalogPlayer.id, centerBefore.find(s => s !== catalogMatch), 1000);
 assert.equal(catalogBad.ok, false, "겹치지 않는 그림은 거부되어야 합니다.");
-const catalogGood = Dobble.claim(catalogGame, catalogPlayer.id, catalogMatch);
+const catalogGood = Dobble.claim(catalogGame, catalogPlayer.id, catalogMatch, 1000 + 5000);
 assert.equal(catalogGood.ok, true);
 assert.deepEqual(catalogPlayer.collected[0], centerBefore, "맞히면 이전 기준 카드를 가져가야 합니다.");
 assert.deepEqual(catalogGame.centerCard, challengerBefore, "방금 뒤집힌 카드가 새 기준 카드가 되어야 합니다.");

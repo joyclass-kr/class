@@ -74,6 +74,7 @@ function sharedSymbol(cardA, cardB) {
 const MODES = Object.freeze(["tower", "catalog"]);
 const MODE_LABELS = Object.freeze({ tower: "타워", catalog: "카탈로그" });
 const DEFAULT_MODE = "tower";
+const WRONG_GUESS_PENALTY_MS = 1500; // 오답을 찍으면 잠깐 못 찍게 해서 마구잡이 클릭을 막는다.
 
 function createPlayer(id, name) {
   return {
@@ -81,7 +82,8 @@ function createPlayer(id, name) {
     name: String(name || "플레이어").trim() || "플레이어",
     stack: [], // (타워) 앞으로 뒤집을 카드들, [0]이 다음 카드
     finishedAt: null, // (타워) 자기 카드를 다 없앤 순서 (1등, 2등, ...)
-    collected: [] // (카탈로그) 맞혀서 모은 카드들
+    collected: [], // (카탈로그) 맞혀서 모은 카드들
+    penaltyUntil: 0 // 오답 페널티로 다음 시도가 막히는 시각(ms epoch)
   };
 }
 
@@ -93,6 +95,7 @@ function createGame(hostId, hostName) {
     centerPile: [], // (타워) 맨 끝이 현재 중앙 카드
     drawPile: [], // (카탈로그) 아직 안 뒤집은 카드 더미
     centerCard: null, // (카탈로그) 현재 기준 카드
+    lastMatch: null, // 방금 맞힌 그림 { symbol, by, at } — 클라이언트가 정답 연출을 넣을 때 씀
     winner: null,
     log: "플레이어를 기다리는 중입니다.",
     actionNumber: 0
@@ -134,7 +137,7 @@ function canStart(game) {
 // 타워: 카드 57장 중 1장을 중앙에 놓고, 나머지를 인원수만큼 최대한 고르게 나눈다.
 function startTower(game, deck, players) {
   const centerCard = deck.pop();
-  players.forEach(player => { player.stack = []; player.finishedAt = null; });
+  players.forEach(player => { player.stack = []; player.finishedAt = null; player.penaltyUntil = 0; });
   deck.forEach((card, index) => players[index % players.length].stack.push(card));
   game.centerPile = [centerCard];
   game.drawPile = [];
@@ -144,7 +147,7 @@ function startTower(game, deck, players) {
 
 // 카탈로그: 카드 1장을 기준 카드로 놓고, 나머지는 모두가 함께 보는 더미로 쌓는다.
 function startCatalog(game, deck, players) {
-  players.forEach(player => { player.collected = []; });
+  players.forEach(player => { player.collected = []; player.penaltyUntil = 0; });
   game.centerCard = deck.pop();
   game.drawPile = deck;
   game.centerPile = [];
@@ -186,12 +189,13 @@ function claimTower(game, player, safeSymbol) {
   const centerCard = game.centerPile[game.centerPile.length - 1];
   const actualMatch = sharedSymbol(myCard, centerCard);
   if (!actualMatch || safeSymbol !== actualMatch) {
-    return { ok: false, error: "그림이 서로 겹치지 않습니다." };
+    return { ok: false, wrongGuess: true, error: "그림이 서로 겹치지 않습니다." };
   }
 
   player.stack.shift();
   game.centerPile.push(myCard);
   game.actionNumber += 1;
+  game.lastMatch = { symbol: actualMatch, by: player.id, at: game.actionNumber };
   checkTowerFinish(game, player);
   if (game.phase !== "gameEnd") {
     game.log = `${player.name}님이 그림을 맞혀 카드를 냈습니다. (남은 카드 ${player.stack.length}장)`;
@@ -207,13 +211,14 @@ function claimCatalog(game, player, safeSymbol) {
   const challenger = game.drawPile[game.drawPile.length - 1];
   const actualMatch = sharedSymbol(game.centerCard, challenger);
   if (!actualMatch || safeSymbol !== actualMatch) {
-    return { ok: false, error: "그림이 서로 겹치지 않습니다." };
+    return { ok: false, wrongGuess: true, error: "그림이 서로 겹치지 않습니다." };
   }
 
   player.collected.push(game.centerCard);
   game.centerCard = challenger;
   game.drawPile.pop();
   game.actionNumber += 1;
+  game.lastMatch = { symbol: actualMatch, by: player.id, at: game.actionNumber };
 
   if (game.drawPile.length === 0) {
     const best = game.players.reduce((top, p) => (!top || p.collected.length > top.collected.length ? p : top), null);
@@ -227,13 +232,19 @@ function claimCatalog(game, player, safeSymbol) {
 }
 
 // 플레이어가 "겹치는 그림"을 지목한다. 서버가 실제로 두 카드에 그 그림이 모두
-// 있는지 검증하므로 클라이언트를 신뢰하지 않는다.
-function claim(game, playerId, symbolKey) {
+// 있는지 검증하므로 클라이언트를 신뢰하지 않는다. 오답은 잠깐 페널티를 줘서
+// 8개를 순서대로 마구 눌러보는 것을 막는다.
+function claim(game, playerId, symbolKey, now = Date.now()) {
   if (game.phase !== "playing") return { ok: false, error: "진행 중인 게임이 없습니다." };
   const player = playerById(game, playerId);
   if (!player) return { ok: false, error: "참가자를 찾을 수 없습니다." };
+  if (player.penaltyUntil > now) {
+    return { ok: false, error: `오답 페널티 중입니다. ${Math.ceil((player.penaltyUntil - now) / 1000)}초 기다리세요.` };
+  }
   const safeSymbol = String(symbolKey || "");
-  return game.mode === "catalog" ? claimCatalog(game, player, safeSymbol) : claimTower(game, player, safeSymbol);
+  const result = game.mode === "catalog" ? claimCatalog(game, player, safeSymbol) : claimTower(game, player, safeSymbol);
+  if (result.wrongGuess) player.penaltyUntil = now + WRONG_GUESS_PENALTY_MS;
+  return result;
 }
 
 function newGame(game, pick = randomInt) {
@@ -246,8 +257,9 @@ function resetToLobby(game, notice = "대기실로 돌아왔습니다.") {
   game.centerPile = [];
   game.drawPile = [];
   game.centerCard = null;
+  game.lastMatch = null;
   game.winner = null;
-  game.players.forEach(player => { player.stack = []; player.finishedAt = null; player.collected = []; });
+  game.players.forEach(player => { player.stack = []; player.finishedAt = null; player.collected = []; player.penaltyUntil = 0; });
   game.log = notice;
   game.actionNumber += 1;
 }
@@ -268,9 +280,11 @@ function stateFor(game, viewerId) {
     myCard: !isCatalog && viewer && viewer.stack.length > 0 ? viewer.stack[0] : null,
     myCardsLeft: viewer ? viewer.stack.length : 0,
     myFinishedAt: viewer ? viewer.finishedAt : null,
+    myPenaltyUntil: viewer ? viewer.penaltyUntil : 0,
     centerCard: isCatalog ? game.centerCard : (game.centerPile.length > 0 ? game.centerPile[game.centerPile.length - 1] : null),
     challengerCard: isCatalog && game.drawPile.length > 0 ? game.drawPile[game.drawPile.length - 1] : null,
     drawPileCount: game.drawPile.length,
+    lastMatch: game.lastMatch,
     winner: game.winner,
     log: game.log,
     actionNumber: game.actionNumber
