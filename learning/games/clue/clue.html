@@ -172,7 +172,7 @@ h1,h2,h3,p{margin-top:0}
           </div>
         </div>
         <div class="panel">
-          <div class="eyebrow">SUSPECTS</div>
+          <div class="eyebrow">DETECTIVES</div>
           <div id="playerList"></div>
         </div>
         <div class="panel">
@@ -237,7 +237,7 @@ h1,h2,h3,p{margin-top:0}
       <li>자기 차례에는 주사위를 굴려 나온 수만큼 복도를 이동해 인접한 방에 들어가거나, 비밀통로가 있는 방이라면 주사위 없이 대각선 방으로 바로 이동할 수 있습니다. 이동을 포기하고 제자리에 머물 수도 있습니다.</li>
       <li>방에 들어갔다면(또는 이미 있었다면) "용의자 + 도구"를 추리로 발표할 수 있습니다. 장소는 자신이 있는 방으로 자동 지정됩니다.</li>
       <li>다음 차례부터 순서대로 다른 참가자들에게 그 용의자·도구·장소 카드 중 한 장이라도 있는지 묻습니다. 가진 사람이 나오면 그 카드 한 장을 추리한 사람에게만 몰래 보여줍니다. 아무도 없으면 공개적으로 "반박 없음"이 됩니다.</li>
-      <li>확신이 서면 "고발"로 도둑·도구·장소를 모두 지목할 수 있습니다. 정답이면 즉시 승리! 틀리면 그 사람은 더 이상 이동·추리·고발을 할 수 없지만, 다른 사람의 추리를 반박하는 데는 계속 참여합니다.</li>
+      <li>확신이 서면 거실로 돌아와 "고발"로 도둑·도구·장소를 모두 지목할 수 있습니다(고발은 거실에 있을 때만 가능). 정답이면 즉시 승리! 틀리면 그 사람은 더 이상 이동·추리·고발을 할 수 없지만, 다른 사람의 추리를 반박하는 데는 계속 참여합니다.</li>
       <li>모두가 틀린 고발로 탈락하면 미제 사건으로 종료됩니다.</li>
     </ol>
     <button id="closeRulesBtn" class="primary" type="button">CLOSE</button>
@@ -331,11 +331,17 @@ const SUSPECTS=[
   {name:"무희",color:"#b8283a"}
 ];
 const WEAPONS=["촛대","밧줄","렌치","손전등","만능열쇠","유리칼"];
-const ROOMS=["온실","무도회장","주방","서재","사무실","식당","거실","현관","당구실"];
+const ROOMS=["온실","무도회장","주방","서재","거실","식당","사무실","현관","당구실"];
+const CENTER_ROOM=4;
+const PLAYER_COLORS=["#4f8fd4","#e0824a","#5fbf7a","#c95b8f","#d4b23c","#8a7fe0"];
+function playerColor(player){
+  const index=gameState?gameState.players.findIndex(p=>p.id===player.id):-1;
+  return PLAYER_COLORS[index<0?0:index%PLAYER_COLORS.length];
+}
 const CARD_FILES=[
   "countess","butler","gardener","physician","antiquarian","dancer",
   "candlestick","rope","wrench","flashlight","masterkey","glasscutter",
-  "conservatory","ballroom","kitchen","library","office","diningroom","livingroom","entrance","billiardroom"
+  "conservatory","ballroom","kitchen","library","livingroom","diningroom","office","entrance","billiardroom"
 ];
 function cardImage(id){return "/learning/games/clue/assets/images/cards/"+CARD_FILES[id]+".webp"}
 const CARDBACK_IMG="/learning/games/clue/assets/images/cards/cardback.webp";
@@ -358,7 +364,7 @@ const $=id=>document.getElementById(id);
 const ENGLISH_NAMES=[
   "Countess","Butler","Gardener","Physician","Antiquarian","Dancer",
   "Candlestick","Rope","Wrench","Flashlight","Master Key","Glass Cutter",
-  "Conservatory","Ballroom","Kitchen","Library","Office","Dining Room","Living Room","Entrance","Billiard Room"
+  "Conservatory","Ballroom","Kitchen","Library","Living Room","Dining Room","Office","Entrance","Billiard Room"
 ];
 function cardType(id){return id<6?"suspect":id<12?"weapon":"room"}
 function cardName(id){return id<6?SUSPECTS[id].name:id<12?WEAPONS[id-6]:ROOMS[id-12]}
@@ -535,14 +541,14 @@ function renderTokens(){
     const svgNS="http://www.w3.org/2000/svg";
     players.forEach((player,index)=>{
       const cx=28+(index%3)*22,cy=36+Math.floor(index/3)*22;
-      const suspectColor=SUSPECTS[player.suspectIndex]?.color||"#888";
+      const color=playerColor(player);
       const ring=document.createElementNS(svgNS,"circle");
       ring.setAttribute("class","token");
       ring.setAttribute("cx",cx);
       ring.setAttribute("cy",cy);
       ring.setAttribute("r",9);
-      ring.setAttribute("fill",player.avatarUrl?"#12141c":suspectColor);
-      ring.setAttribute("stroke",suspectColor);
+      ring.setAttribute("fill",player.avatarUrl?"#12141c":color);
+      ring.setAttribute("stroke",color);
       layer.appendChild(ring);
       if(player.avatarUrl){
         const img=document.createElementNS(svgNS,"image");
@@ -574,16 +580,16 @@ function renderPlayerList(){
   if(!gameState)return;
   const snapshot=lobby.snapshot();
   const rows=gameState.players.map(player=>{
-    const suspect=SUSPECTS[player.suspectIndex];
+    const color=playerColor(player);
     const isTurn=gameState.turnPlayerId===player.id;
     const isMe=snapshot.myId===player.id;
     const backs=Array.from({length:player.handCount||0}).map(()=>`<img src="${CARDBACK_IMG}" alt="" >`).join("");
     const avatar=player.avatarUrl
-      ?`<img class="suspectDot" src="${player.avatarUrl}" alt="" style="border-color:${suspect?suspect.color:"#666"}">`
-      :`<span class="suspectDot" style="background:${suspect?suspect.color:"#666"}"></span>`;
+      ?`<img class="suspectDot" src="${player.avatarUrl}" alt="" style="border-color:${color}">`
+      :`<span class="suspectDot" style="background:${color}"></span>`;
     return `<div class="playerRow${isTurn?" active":""}${!player.active?" eliminated":""}">
       ${avatar}
-      <span class="playerMeta2"><strong>${player.name}${isMe?" · 나":""}</strong><small>${suspect?suspect.name:""} · ${player.roomIndex>=0?ROOMS[player.roomIndex]:"-"}</small><span class="miniBackRow">${backs}</span></span>
+      <span class="playerMeta2"><strong>${player.name}${isMe?" · 나":""}</strong><small>${player.roomIndex>=0?ROOMS[player.roomIndex]:"-"}</small><span class="miniBackRow">${backs}</span></span>
       ${!player.active?'<span class="playerTag out">고발 실패</span>':""}
     </div>`;
   }).join("");
@@ -619,7 +625,8 @@ function renderActionBar(){
     if(!gameState.suggestionUsed){
       buttons.push(`<button id="suggestBtn" class="primary" type="button">추리 발표</button>`);
     }
-    buttons.push(`<button id="accuseBtn" class="danger" type="button">최종 고발</button>`);
+    const inLivingRoom=me.roomIndex===CENTER_ROOM;
+    buttons.push(`<button id="accuseBtn" class="danger" type="button"${inLivingRoom?"":" disabled"}>최종 고발${inLivingRoom?"":" (거실에서만)"}</button>`);
     buttons.push(`<button id="endTurnBtn" class="secondary" type="button">차례 넘기기</button>`);
   }
   bar.innerHTML=buttons.join("");

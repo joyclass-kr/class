@@ -11,7 +11,8 @@ const SUSPECTS = Object.freeze([
   { name: "무희", color: "#b8283a" }
 ]);
 const WEAPONS = Object.freeze(["촛대", "밧줄", "렌치", "손전등", "만능열쇠", "유리칼"]);
-const ROOMS = Object.freeze(["온실", "무도회장", "주방", "서재", "사무실", "식당", "거실", "현관", "당구실"]);
+const ROOMS = Object.freeze(["온실", "무도회장", "주방", "서재", "거실", "식당", "사무실", "현관", "당구실"]);
+const CENTER_ROOM = 4;
 
 // Original mansion layout (not the licensed Cluedo board art): 3x3 room grid,
 // index = row*3+col. Every corridor costs the same so a 1d6 roll is either
@@ -70,7 +71,6 @@ function createPlayer(id, name, avatarUrl) {
     id: String(id),
     name: String(name || "플레이어").trim() || "플레이어",
     avatarUrl: safeAvatarUrl(avatarUrl),
-    suspectIndex: -1,
     roomIndex: -1,
     active: true
   };
@@ -115,7 +115,6 @@ function removePlayer(game, id) {
 function resetToLobby(game, notice = "대기실로 돌아왔습니다.") {
   game.phase = "lobby";
   game.players.forEach(player => {
-    player.suspectIndex = -1;
     player.roomIndex = -1;
     player.active = true;
   });
@@ -147,7 +146,6 @@ function startMatch(game, pick = randomInt) {
     return { ok: false, error: `${MIN_PLAYERS}~${MAX_PLAYERS}명이 모여야 시작할 수 있습니다.` };
   }
   game.players.forEach((player, index) => {
-    player.suspectIndex = index;
     player.roomIndex = START_ROOMS[index];
     player.active = true;
   });
@@ -302,8 +300,6 @@ function suggest(game, playerId, suspect, weapon) {
   if (!Number.isInteger(weapon) || weapon < 6 || weapon > 11) return { ok: false, error: "무기를 선택하세요." };
 
   const room = 12 + actor.roomIndex;
-  const suggestedPlayer = game.players.find(player => player.suspectIndex === suspect);
-  if (suggestedPlayer) suggestedPlayer.roomIndex = actor.roomIndex;
 
   const checkOrder = [];
   for (let offset = 1; offset < game.players.length; offset += 1) {
@@ -363,6 +359,7 @@ function accuse(game, playerId, suspect, weapon, room) {
   const actor = activePlayer(game);
   if (!actor || actor.id !== String(playerId)) return { ok: false, error: "현재 차례가 아닙니다." };
   if (game.turnPhase !== "act") return { ok: false, error: "지금은 고발할 수 없습니다." };
+  if (actor.roomIndex !== CENTER_ROOM) return { ok: false, error: `최종 고발은 ${ROOMS[CENTER_ROOM]}에 있을 때만 할 수 있습니다.` };
   if (!Number.isInteger(suspect) || suspect < 0 || suspect > 5) return { ok: false, error: "용의자를 선택하세요." };
   if (!Number.isInteger(weapon) || weapon < 6 || weapon > 11) return { ok: false, error: "무기를 선택하세요." };
   if (!Number.isInteger(room) || room < 12 || room > 20) return { ok: false, error: "장소를 선택하세요." };
@@ -417,7 +414,6 @@ function stateFor(game, viewerId) {
       id: player.id,
       name: player.name,
       avatarUrl: player.avatarUrl,
-      suspectIndex: player.suspectIndex,
       roomIndex: player.roomIndex,
       active: player.active,
       handCount: (game.hands[player.id] || []).length
