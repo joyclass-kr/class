@@ -60,6 +60,11 @@ h1,h2,h3,p{margin-top:0}
 .scoreRow .red{color:#f2a49c}
 .scoreRow .blue{color:#a7c8ef}
 .turnBanner{text-align:center;font-weight:850;padding:8px 4px}
+.turn-clock{display:flex;flex-direction:column;align-items:center;gap:5px;margin:0 auto 8px}
+.turn-clock-label{font-weight:900;font-variant-numeric:tabular-nums;font-size:15px}
+.turn-clock.urgent .turn-clock-label{color:#f2a49c}
+.turn-track{width:88px;height:6px;overflow:hidden;border-radius:999px;background:rgba(255,255,255,.14)}
+.turn-bar{width:100%;height:100%;transform-origin:left center;background:linear-gradient(90deg,#7fd8a0,#f2c94c,#f2a49c);transition:transform .2s linear}
 .hintDisplay{text-align:center;padding:9px;border-radius:10px;background:#151a26;color:#f0c988;font-weight:800;margin-bottom:10px}
 .hintForm{display:flex;gap:8px;flex-wrap:wrap;justify-content:center;margin-bottom:10px}
 .hintForm input{flex:1;min-width:140px;padding:10px;border-radius:10px;border:1px solid var(--panel-edge);background:#0e1017;color:#fff}
@@ -163,6 +168,10 @@ h1,h2,h3,p{margin-top:0}
 
     <section id="boardArea" class="panel hidden">
       <div id="turnBanner" class="turnBanner"></div>
+      <div id="turnClock" class="turn-clock hidden">
+        <span id="turnSeconds" class="turn-clock-label">60초</span>
+        <div class="turn-track"><div id="turnTimerBar" class="turn-bar"></div></div>
+      </div>
       <div class="scoreRow"><span class="red">레드 <span id="remainingRed">-</span></span><span class="blue">블루 <span id="remainingBlue">-</span></span></div>
       <div id="hintDisplay" class="hintDisplay hidden"></div>
       <form id="hintForm" class="hintForm hidden">
@@ -336,6 +345,19 @@ function renderLobbySetup() {
   $("waitingHostNote").classList.toggle("hidden", isHost);
 }
 
+function renderTurnClock() {
+  const clock = $("turnClock");
+  const deadline = state?.turnDeadline;
+  if (state?.phase !== "playing" || !deadline) { clock.classList.add("hidden"); return; }
+  clock.classList.remove("hidden");
+  const totalMs = (state.turnSeconds || 60) * 1000;
+  const remainingMs = Math.max(0, deadline - Date.now());
+  const remainingSeconds = Math.ceil(remainingMs / 1000);
+  $("turnSeconds").textContent = `${remainingSeconds}초`;
+  $("turnTimerBar").style.transform = `scaleX(${Math.max(0, Math.min(1, remainingMs / totalMs))})`;
+  clock.classList.toggle("urgent", remainingSeconds <= 5);
+}
+
 function renderBoardArea() {
   const me = state.players.find(player => player.id === myId);
   const myTurnToGuess = Boolean(me && me.role === "operative" && me.team === state.currentTeam && state.turnStage === "guess");
@@ -368,6 +390,8 @@ function renderBoardArea() {
     $("hintDisplay").textContent = `힌트: "${state.hint.word}" ${state.hint.count} · 남은 기회 ${left}`;
   }
 
+  renderTurnClock();
+
   $("passBtn").classList.toggle("hidden", !myTurnToGuess);
 }
 
@@ -397,6 +421,7 @@ function handleServerMessage(message) {
 }
 
 function init() {
+  setInterval(renderTurnClock, 250);
   lobby = ClassroomMultiplayerLobby.create({
     gameId: GAME_ID,
     autoCreate: false,

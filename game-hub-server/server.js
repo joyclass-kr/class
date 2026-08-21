@@ -729,10 +729,26 @@ function codenamesBroadcast(room) {
       state: Codenames.stateFor(room.codenames, id)
     });
   }
+  scheduleCodenamesTimeout(room);
 }
 
 function codenamesError(socket, message) {
   safeSend(socket, { type: "CODENAMES_ERROR", message });
+}
+
+function scheduleCodenamesTimeout(room) {
+  clearTimeout(room?.codenamesTimer);
+  const game = room?.codenames;
+  if (!game || game.phase !== "playing" || !game.turnDeadline) return;
+  const expectedAction = game.actionNumber;
+  const wait = Math.max(50, game.turnDeadline - Date.now());
+  room.codenamesTimer = setTimeout(() => {
+    if (rooms.get(roomKey(room.gameId, room.roomCode)) !== room) return;
+    if (game.phase !== "playing" || game.actionNumber !== expectedAction) return;
+    Codenames.timeoutTurn(game);
+    codenamesBroadcast(room);
+  }, wait);
+  room.codenamesTimer.unref?.();
 }
 
 function dobbleBroadcast(room) {
@@ -1227,6 +1243,9 @@ const AVALON_TEAM_SIZES = {
   8: [3, 4, 4, 5, 5]
 };
 const AVALON_EVIL_COUNTS = { 5: 2, 6: 2, 7: 3, 8: 3 };
+// 원정대 제안·투표는 교실에서 직접 토의한 뒤 화면에 반영하는 경우가 많아
+// 코드네임즈와 같은 여유 있는 제한시간을 준다.
+const AVALON_TURN_SECONDS = 60;
 
 function recommendedAvalonSettings(count) {
   if (count === 7) return { percival: true, morgana: true, mordred: false, oberon: true };
@@ -1293,13 +1312,16 @@ function avalonPublicState(room) {
     settings: game.settings,
     settingsCustomized: game.settingsCustomized,
     recommendedSettings: recommendedAvalonSettings(game.players.length),
-    roleSummary
+    roleSummary,
+    turnDeadline: game.turnDeadline || null,
+    turnSeconds: AVALON_TURN_SECONDS
   };
 }
 
 function avalonBroadcast(room) {
   const payload = { type: "AVALON_STATE", state: avalonPublicState(room) };
   for (const client of room.clients.values()) safeSend(client, payload);
+  scheduleAvalonTimeout(room);
 }
 
 function avalonNotice(room, message) {
@@ -1319,11 +1341,90 @@ function resetAvalonToLobby(game) {
   game.results = [];
   game.winner = null;
   game.assassinId = null;
+  game.turnDeadline = null;
   game.players.forEach(player => {
     delete player.role;
     delete player.resolvedCharacterStyle;
     delete player.cardVariant;
   });
+}
+
+// 제안 찬반 투표 집계 — 정상 투표든 시간 초과로 채워진 기본값이든 동일하게 처리한다.
+function avalonTallyProposal(room) {
+  const game = room.avalon;
+  const approvals = Object.values(game.proposalVotes).filter(Boolean).length;
+  if (approvals > game.players.length / 2) {
+    game.phase = "questVote"; game.questVotes = {};
+    game.turnDeadline = Date.now() + AVALON_TURN_SECONDS * 1000;
+    avalonNotice(room, `원정대가 ${approvals}:${game.players.length - approvals}로 승인되었습니다.`);
+  } else {
+    game.rejects += 1; game.leaderIndex = (game.leaderIndex + 1) % game.players.length; game.phase = "team";
+    game.turnDeadline = Date.now() + AVALON_TURN_SECONDS * 1000;
+    avalonNotice(room, `원정대가 ${approvals}:${game.players.length - approvals}로 부결되었습니다.`);
+  }
+  if (game.rejects >= 5) { game.winner = "evil"; game.phase = "ended"; game.turnDeadline = null; avalonRevealRoles(room); }
+}
+
+// 임무 투표 집계 — 위와 동일한 이유로 별도 함수로 분리했다.
+function avalonTallyQuest(room) {
+  const game = room.avalon;
+  const fails = Object.values(game.questVotes).filter(v => !v).length;
+  const needed = game.players.length >= 7 && game.quest === 3 ? 2 : 1;
+  const success = fails < needed;
+  game.results.push({ success, fails }); game.quest += 1; game.rejects = 0;
+  const goodWins = game.results.filter(r => r.success).length;
+  const evilWins = game.results.filter(r => !r.success).length;
+  if (evilWins >= 3) { game.winner = "evil"; game.phase = "ended"; game.turnDeadline = null; avalonRevealRoles(room); }
+  else if (goodWins >= 3) { game.phase = "assassination"; game.turnDeadline = Date.now() + AVALON_TURN_SECONDS * 1000; }
+  else { game.leaderIndex = (game.leaderIndex + 1) % game.players.length; game.phase = "team"; game.turnDeadline = Date.now() + AVALON_TURN_SECONDS * 1000; }
+  avalonNotice(room, success ? `임무 성공! (실패 카드 ${fails}장)` : `임무 실패! (실패 카드 ${fails}장)`);
+}
+
+// 시간이 다 되면 그때까지 못 정한 것을 기본값으로 채우고 넘어간다: 원정대 제안은
+// 앞에서부터 필요한 인원을 자동으로 채우고, 투표는 안 한 사람을 찬성/성공으로
+// 처리하며(게임이 멈추지 않도록), 암살은 무작위 대상을 고른다.
+function avalonTimeoutPhase(room) {
+  const game = room.avalon;
+  if (game.phase === "team") {
+    const required = AVALON_TEAM_SIZES[game.players.length][game.quest];
+    const leader = game.players[game.leaderIndex];
+    game.selectedTeam = game.players.slice(0, required).map(p => p.id);
+    game.proposalVotes = {};
+    game.phase = "proposalVote";
+    game.turnDeadline = Date.now() + AVALON_TURN_SECONDS * 1000;
+    avalonNotice(room, `${leader?.name || "리더"}님이 시간 초과로 원정대가 자동 구성되었습니다.`);
+  } else if (game.phase === "proposalVote") {
+    for (const p of game.players) if (!(p.id in game.proposalVotes)) game.proposalVotes[p.id] = true;
+    avalonTallyProposal(room);
+  } else if (game.phase === "questVote") {
+    for (const id of game.selectedTeam) if (!(id in game.questVotes)) game.questVotes[id] = true;
+    avalonTallyQuest(room);
+  } else if (game.phase === "assassination") {
+    const candidates = game.players.filter(p => p.id !== game.assassinId);
+    const target = candidates[crypto.randomInt(candidates.length)];
+    if (target) {
+      game.winner = target.role === "Merlin" ? "evil" : "good";
+      game.phase = "ended";
+      game.turnDeadline = null;
+      avalonRevealRoles(room);
+    }
+  }
+}
+
+function scheduleAvalonTimeout(room) {
+  clearTimeout(room?.avalonTimer);
+  const game = room?.avalon;
+  if (!game || game.phase === "lobby" || game.phase === "ended" || !game.turnDeadline) return;
+  const expectedPhase = game.phase;
+  const expectedDeadline = game.turnDeadline;
+  const wait = Math.max(50, game.turnDeadline - Date.now());
+  room.avalonTimer = setTimeout(() => {
+    if (rooms.get(roomKey(room.gameId, room.roomCode)) !== room) return;
+    if (game.phase !== expectedPhase || game.turnDeadline !== expectedDeadline) return;
+    avalonTimeoutPhase(room);
+    avalonBroadcast(room);
+  }, wait);
+  room.avalonTimer.unref?.();
 }
 
 function avalonRevealRoles(room) {
@@ -1585,7 +1686,7 @@ wss.on("connection", socket => {
           phase: "lobby", players: [{ id: playerId, name: cleanToken(message.name, 12) || "방장", characterStyle: normalizeAvalonCharacterStyle(message.characterStyle) }],
           settings: recommendedAvalonSettings(1), settingsCustomized: false,
           leaderIndex: 0, quest: 0, selectedTeam: [], proposalVotes: {}, questVotes: {},
-          rejects: 0, results: [], winner: null, assassinId: null
+          rejects: 0, results: [], winner: null, assassinId: null, turnDeadline: null
         };
       }
       if (gameId === "loveletter") {
@@ -3128,6 +3229,7 @@ wss.on("connection", socket => {
         });
         game.leaderIndex = crypto.randomInt(game.players.length);
         game.phase = "team";
+        game.turnDeadline = Date.now() + AVALON_TURN_SECONDS * 1000;
         game.assassinId = game.players.find(p => p.role === "Assassin")?.id || null;
         game.players.forEach(p => safeSend(room.clients.get(p.id), { type: "AVALON_ROLE", info: avalonRoleInfo(game, p) }));
         avalonBroadcast(room);
@@ -3135,36 +3237,22 @@ wss.on("connection", socket => {
         const team = Array.isArray(message.team) ? [...new Set(message.team.map(id => cleanToken(id, 60)))] : [];
         const required = AVALON_TEAM_SIZES[game.players.length][game.quest];
         if (team.length !== required || team.some(id => !game.players.some(p => p.id === id))) return safeSend(socket, { type: "ERROR", message: `원정대 ${required}명을 선택하세요.` });
-        game.selectedTeam = team; game.proposalVotes = {}; game.phase = "proposalVote"; avalonBroadcast(room);
+        game.selectedTeam = team; game.proposalVotes = {}; game.phase = "proposalVote";
+        game.turnDeadline = Date.now() + AVALON_TURN_SECONDS * 1000;
+        avalonBroadcast(room);
       } else if (action === "PROPOSAL_VOTE" && game.phase === "proposalVote" && !(playerId in game.proposalVotes)) {
         game.proposalVotes[playerId] = !!message.approve;
-        if (Object.keys(game.proposalVotes).length === game.players.length) {
-          const approvals = Object.values(game.proposalVotes).filter(Boolean).length;
-          if (approvals > game.players.length / 2) { game.phase = "questVote"; game.questVotes = {}; avalonNotice(room, `원정대가 ${approvals}:${game.players.length - approvals}로 승인되었습니다.`); }
-          else { game.rejects += 1; game.leaderIndex = (game.leaderIndex + 1) % game.players.length; game.phase = "team"; avalonNotice(room, `원정대가 ${approvals}:${game.players.length - approvals}로 부결되었습니다.`); }
-          if (game.rejects >= 5) { game.winner = "evil"; game.phase = "ended"; avalonRevealRoles(room); }
-        }
+        if (Object.keys(game.proposalVotes).length === game.players.length) avalonTallyProposal(room);
         avalonBroadcast(room);
       } else if (action === "QUEST_VOTE" && game.phase === "questVote" && game.selectedTeam.includes(playerId) && !(playerId in game.questVotes)) {
         const evil = ["Assassin", "Morgana", "Mordred", "Oberon", "Minion of Mordred"].includes(player.role);
         game.questVotes[playerId] = evil ? !!message.success : true;
-        if (Object.keys(game.questVotes).length === game.selectedTeam.length) {
-          const fails = Object.values(game.questVotes).filter(v => !v).length;
-          const needed = game.players.length >= 7 && game.quest === 3 ? 2 : 1;
-          const success = fails < needed;
-          game.results.push({ success, fails }); game.quest += 1; game.rejects = 0;
-          const goodWins = game.results.filter(r => r.success).length;
-          const evilWins = game.results.filter(r => !r.success).length;
-          if (evilWins >= 3) { game.winner = "evil"; game.phase = "ended"; avalonRevealRoles(room); }
-          else if (goodWins >= 3) { game.phase = "assassination"; }
-          else { game.leaderIndex = (game.leaderIndex + 1) % game.players.length; game.phase = "team"; }
-          avalonNotice(room, success ? `임무 성공! (실패 카드 ${fails}장)` : `임무 실패! (실패 카드 ${fails}장)`);
-        }
+        if (Object.keys(game.questVotes).length === game.selectedTeam.length) avalonTallyQuest(room);
         avalonBroadcast(room);
       } else if (action === "ASSASSINATE" && game.phase === "assassination" && playerId === game.assassinId) {
         const target = game.players.find(p => p.id === cleanToken(message.targetId, 60));
         if (!target) return;
-        game.winner = target.role === "Merlin" ? "evil" : "good"; game.phase = "ended";
+        game.winner = target.role === "Merlin" ? "evil" : "good"; game.phase = "ended"; game.turnDeadline = null;
         avalonRevealRoles(room);
         avalonBroadcast(room);
       }
@@ -3420,6 +3508,8 @@ wss.on("connection", socket => {
         clearTimeout(currentRoom.loveletterTimer);
         clearTimeout(currentRoom.rummikubTimer);
         clearTimeout(currentRoom.lastcardTimer);
+        clearTimeout(currentRoom.codenamesTimer);
+        clearTimeout(currentRoom.avalonTimer);
         for (const [id, client] of currentRoom.clients) {
           if (id !== playerId) {
             safeSend(client, {

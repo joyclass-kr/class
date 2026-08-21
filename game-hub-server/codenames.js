@@ -13,6 +13,8 @@ const MAX_GRADE = 6;
 const BOARD_SIZE = 25;
 const TEAMS = Object.freeze(["red", "blue"]);
 const ROLES = Object.freeze(["spymaster", "operative"]);
+// 팀 토의가 화면 밖(교실)에서 이뤄지는 게임이라 다른 게임들의 30초보다 넉넉하게 준다.
+const TURN_SECONDS = 60;
 
 // 학년 1~2학년은 학기 구분이 없는 "low" 낱말 목록을 쓴다. 3~6학년은 학기별로
 // 태그된 목록(예: "4-1", "4-2")을 쓴다. isSecondSemesterNow()가 실제 학사 일정과
@@ -91,6 +93,7 @@ function createGame(hostId, hostName) {
     guessesUsed: 0,
     winner: null,
     winReason: null,
+    turnDeadline: null,
     log: "팀과 역할을 정하는 중입니다.",
     actionNumber: 0
   };
@@ -206,6 +209,7 @@ function startGame(game, pick = randomInt) {
   game.winner = null;
   game.winReason = null;
   game.phase = "playing";
+  game.turnDeadline = Date.now() + TURN_SECONDS * 1000;
   game.log = `${built.startingTeam === "red" ? "레드팀" : "블루팀"}부터 시작합니다. 스파이마스터가 힌트를 낼 차례입니다.`;
   game.actionNumber += 1;
   return { ok: true };
@@ -221,6 +225,7 @@ function checkVictory(game) {
       game.winner = team;
       game.winReason = "all-words";
       game.phase = "gameEnd";
+      game.turnDeadline = null;
       game.log = `${team === "red" ? "레드팀" : "블루팀"}이 자기 팀 낱말을 모두 찾아 승리했습니다.`;
       return true;
     }
@@ -234,7 +239,21 @@ function switchTurn(game, reasonText) {
   game.hint = null;
   game.guessesRemaining = 0;
   game.guessesUsed = 0;
+  game.turnDeadline = Date.now() + TURN_SECONDS * 1000;
   game.log = reasonText;
+}
+
+// 힌트도 못 내거나 낱말도 못 고른 채 시간이 다 되면 그냥 상대 팀으로 넘긴다 —
+// 힌트는 자유 서술이라 대신 만들어 낼 수 없으므로 이 방법이 유일하게 말이 된다.
+function timeoutTurn(game) {
+  if (game.phase !== "playing") return { ok: false, error: "진행 중인 게임이 없습니다." };
+  const teamLabel = game.currentTeam === "red" ? "레드팀" : "블루팀";
+  const reason = game.turnStage === "hint"
+    ? `${teamLabel}이 시간 안에 힌트를 내지 못해 차례가 넘어갑니다.`
+    : `${teamLabel}이 시간 안에 낱말을 고르지 못해 차례가 넘어갑니다.`;
+  switchTurn(game, reason);
+  game.actionNumber += 1;
+  return { ok: true };
 }
 
 function giveHint(game, playerId, word, count) {
@@ -254,6 +273,7 @@ function giveHint(game, playerId, word, count) {
   game.guessesRemaining = safeCount === 0 ? Infinity : safeCount + 1;
   game.guessesUsed = 0;
   game.turnStage = "guess";
+  game.turnDeadline = Date.now() + TURN_SECONDS * 1000;
   game.log = `${player.name}님의 힌트: "${safeWord}" ${safeCount}`;
   game.actionNumber += 1;
   return { ok: true };
@@ -279,6 +299,7 @@ function guess(game, playerId, cardIndex) {
     game.winner = winner;
     game.winReason = "bomb";
     game.phase = "gameEnd";
+    game.turnDeadline = null;
     game.log = `${player.name}님이 폭탄 카드를 뽑아 ${winner === "red" ? "레드팀" : "블루팀"}이 승리했습니다.`;
     return { ok: true };
   }
@@ -289,6 +310,7 @@ function guess(game, playerId, cardIndex) {
     if (game.guessesUsed >= game.guessesRemaining) {
       switchTurn(game, `${card.word}: 우리 팀 낱말! 기회를 모두 사용해 차례가 넘어갑니다.`);
     } else {
+      game.turnDeadline = Date.now() + TURN_SECONDS * 1000;
       game.log = `${card.word}: 우리 팀 낱말입니다. 계속 고를 수 있습니다.`;
     }
     return { ok: true };
@@ -331,6 +353,7 @@ function resetToLobby(game, notice = "대기실로 돌아왔습니다.") {
   game.guessesUsed = 0;
   game.winner = null;
   game.winReason = null;
+  game.turnDeadline = null;
   game.log = notice;
   game.actionNumber += 1;
 }
@@ -357,6 +380,8 @@ function stateFor(game, viewerId) {
     guessesUsed: game.guessesUsed,
     winner: game.winner,
     winReason: game.winReason,
+    turnDeadline: game.turnDeadline || null,
+    turnSeconds: TURN_SECONDS,
     log: game.log,
     actionNumber: game.actionNumber
   };
@@ -379,6 +404,8 @@ module.exports = {
   giveHint,
   guess,
   endGuessing,
+  timeoutTurn,
+  TURN_SECONDS,
   newGame,
   resetToLobby,
   stateFor,

@@ -100,6 +100,20 @@ Codenames.guess(turnGame, operativeId, otherTeamCardIndex);
 assert.equal(turnGame.currentTeam, otherTeam, "상대 팀 낱말을 고르면 차례가 즉시 넘어가야 합니다.");
 assert.equal(turnGame.turnStage, "hint");
 
+// 턴 제한시간: 힌트도 낱말 선택도 자유 서술/합의가 필요해 대신 만들어 줄 수
+// 없으므로, 시간이 다 되면 그냥 상대 팀으로 넘긴다.
+assert.equal(Codenames.TURN_SECONDS, 60, "팀 토의 시간을 고려해 다른 게임보다 넉넉해야 합니다.");
+const timedGame = twoTeamGame();
+Codenames.startGame(timedGame, () => 0);
+assert.ok(Number.isFinite(timedGame.turnDeadline) && timedGame.turnDeadline > Date.now(), "시작하면 제한시간이 설정돼야 합니다.");
+const teamBeforeTimeout = timedGame.currentTeam;
+const timeoutResult = Codenames.timeoutTurn(timedGame);
+assert.equal(timeoutResult.ok, true);
+assert.notEqual(timedGame.currentTeam, teamBeforeTimeout, "힌트 단계에서 시간 초과되면 상대 팀으로 넘어가야 합니다.");
+assert.equal(timedGame.turnStage, "hint");
+assert.match(timedGame.log, /시간 안에 힌트를 내지 못해/);
+assert.ok(timedGame.turnDeadline > Date.now(), "다음 팀도 새 제한시간을 받아야 합니다.");
+
 // 폭탄 카드를 고르면 상대 팀이 즉시 승리한다.
 const bombGame = twoTeamGame();
 Codenames.startGame(bombGame, () => 0);

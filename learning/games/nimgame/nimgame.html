@@ -499,6 +499,12 @@
             box-shadow: 0 0 16px rgba(240,215,124,0.13);
         }
 
+        .turn-clock { display: flex; flex-direction: column; align-items: center; gap: 5px; min-width: 88px; }
+        .turn-clock-label { font-weight: 900; font-variant-numeric: tabular-nums; color: var(--gold-bright); font-size: 15px; }
+        .turn-clock.urgent .turn-clock-label { color: var(--red); }
+        .turn-track { width: 88px; height: 6px; overflow: hidden; border-radius: 999px; background: rgba(255,255,255,.12); }
+        .turn-bar { width: 100%; height: 100%; transform-origin: left center; background: linear-gradient(90deg, var(--green), var(--gold), var(--red)); transition: transform .2s linear; }
+
         .stage-card {
             flex: 1;
             min-height: 380px;
@@ -1114,6 +1120,10 @@ textarea,
                 <span class="meta-chip" id="mode-chip">MODE</span>
             </div>
             <div class="turn-badge" id="turn-badge">WAITING...</div>
+            <div id="turn-clock" class="turn-clock hidden">
+                <span id="turn-seconds" class="turn-clock-label">30초</span>
+                <div class="turn-track"><div id="turn-timer-bar" class="turn-bar"></div></div>
+            </div>
             <div class="header-right">
                 <span class="meta-chip" id="round-chip">ROUND 1</span>
                 <span class="meta-chip" id="connection-chip">● CONNECTED</span>
@@ -1192,8 +1202,11 @@ textarea,
         moveNumber: 0,
         started: false,
         over: false,
-        winner: null
+        winner: null,
+        turnDeadline: null
     };
+
+    const TURN_MS = 30000;
 
     let lobby = null;
     let myId = null;
@@ -1237,6 +1250,7 @@ textarea,
     function initialize() {
         setMusicVolume(0.6, 3);
         syncLobbyUI();
+        setInterval(() => { renderTurnClock(); checkTurnTimeout(); }, 250);
         $("new-code-btn").addEventListener("click", () => lobby?.setMode("host"));
         lobby = ClassroomMultiplayerLobby.create({
             gameId: GAME_ID,
@@ -1578,6 +1592,7 @@ textarea,
         nextState.over = false;
         nextState.winner = null;
         nextState.coinTaken = 0;
+        nextState.turnDeadline = Date.now() + TURN_MS;
 
         if (nextState.mode === "nim") {
             nextState.nimRows = generateNimRows(nextState.nimLines, nextState.nimLayout);
@@ -1656,6 +1671,7 @@ textarea,
 
         renderStage();
         renderTurnStatus();
+        renderTurnClock();
         renderLogs();
         updateControlState();
     }
@@ -1861,9 +1877,11 @@ textarea,
             winner = nextState.winRule === "misere" ? otherPlayer(actor) : actor;
             nextState.over = true;
             nextState.winner = winner;
+            nextState.turnDeadline = null;
             // 승패 계산은 턴을 넘기기 전 actor를 기준으로 한다.
         } else {
             nextState.currentPlayer = otherPlayer(actor);
+            nextState.turnDeadline = Date.now() + TURN_MS;
         }
 
         const sent = sendPacket({ type: "state", state: nextState, log, winner });
@@ -1938,6 +1956,36 @@ textarea,
             ? `WINNER: PLAYER ${state.winner}`
             : `TURN: PLAYER ${state.currentPlayer}`;
         $("remaining-label").textContent = `REMAINING: ${countRemaining()}`;
+    }
+
+    // 두 플레이어 모두 같은 state.turnDeadline을 공유하므로(호스트 경유 없이
+    // 직접 주고받는 구조) 각자 자기 화면에서 카운트다운을 표시하면 된다.
+    function renderTurnClock() {
+        const clock = $("turn-clock");
+        if (!state.started || state.over || !state.turnDeadline) { clock.classList.add("hidden"); return; }
+        clock.classList.remove("hidden");
+        const remainingMs = Math.max(0, state.turnDeadline - Date.now());
+        const remainingSeconds = Math.ceil(remainingMs / 1000);
+        $("turn-seconds").textContent = `${remainingSeconds}초`;
+        $("turn-timer-bar").style.transform = `scaleX(${Math.max(0, Math.min(1, remainingMs / TURN_MS))})`;
+        clock.classList.toggle("urgent", remainingSeconds <= 5);
+    }
+
+    // 시간이 다 되면 내 턴일 때 스스로 최소한의 합법적인 수(1개 획득)를 골라
+    // 자동으로 진행한다. 두 클라이언트 모두 자기 턴에서만 이 검사를 통과한다.
+    function checkTurnTimeout() {
+        if (!connected || !state.started || state.over || !isMyTurn() || !state.turnDeadline) return;
+        if (Date.now() < state.turnDeadline) return;
+        if (state.mode === "nim") {
+            const row = state.nimRows.findIndex(count => count > 0);
+            if (row < 0) return;
+            selection = { row, count: 1 };
+        } else {
+            const remaining = state.coinTotal - state.coinTaken;
+            if (remaining <= 0) return;
+            selection = { row: null, count: Math.min(1, state.coinLimit, remaining) };
+        }
+        commitMove();
     }
 
     function updateControlState() {
