@@ -105,7 +105,7 @@
     $("questionTopic").textContent = item.topicTitle;
     $("progressFill").style.width = `${((state.index + 1) / state.set.length) * 100}%`;
     $("studentPassage").textContent = item.passageText; $("studentPrompt").textContent = item.promptText;
-    $("feedback").hidden = true; $("answerStatus").textContent = "";
+    $("feedback").hidden = true; $("readingAid").hidden = true; $("answerStatus").textContent = "";
     const choices = $("studentChoices"); choices.replaceChildren();
     shuffle(item.choices.map((choice, originalIndex) => ({ choice, originalIndex }))).forEach(({ choice, originalIndex }, index) => {
       const button = node("button", "student-choice", ""); button.type = "button";
@@ -139,7 +139,24 @@
     saveDeckHistory();
     [...$("studentChoices").children].forEach((button) => { const choiceIndex = Number(button.dataset.choiceIndex); button.disabled = true; if (choiceIndex === item.correctIndex) button.classList.add("correct"); else if (choiceIndex === index) button.classList.add("wrong"); });
     const feedback = $("feedback"); feedback.className = "feedback is-correct"; feedback.textContent = `정답 · ${item.explanation}`; feedback.hidden = false;
+    renderReadingAid(item);
     $("nextButton").textContent = state.index === state.set.length - 1 ? "결과 보기" : "다음 문제";
+  }
+
+  // 영어 지문에만 해석·중요 단어를 보여 준다. 국어 지문이거나, 아직 번역이
+  // 없는 영어 주제(신규 추가분)라면 조용히 숨긴다.
+  function renderReadingAid(item) {
+    const aid = $("readingAid");
+    if (item.track !== "en" || !item.translation) { aid.hidden = true; return; }
+    $("translationText").textContent = item.translation;
+    const vocabList = $("vocabList"); vocabList.replaceChildren();
+    (item.vocabulary || []).forEach(({ word, meaning }) => {
+      const entry = node("li", "vocab-entry", "");
+      entry.append(node("span", "vocab-word", word), node("span", "vocab-meaning", meaning));
+      vocabList.append(entry);
+    });
+    $("vocabBlock").hidden = !(item.vocabulary || []).length;
+    aid.hidden = false;
   }
 
   function next() { if (state.index + 1 < state.set.length) { state.index += 1; renderQuestion(); } else { $("resultTitle").textContent = `${state.score} / ${state.set.length}`; $("resultCopy").textContent = `정답 ${state.score}개 · 오답 ${state.set.length - state.score}개`; show("result"); } }

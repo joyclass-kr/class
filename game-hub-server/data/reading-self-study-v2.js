@@ -6,6 +6,8 @@ const FINAL_INDEPENDENT_TOPICS = require("./reading-independent-topics-v5");
 const TOPIC_EXTENSIONS = require("./reading-topic-extensions-v1");
 const TOPIC_REGISTERS = require("./reading-topic-registers-v1");
 const OPENER_FALLBACKS = require("./reading-topic-opener-fallbacks-v1");
+const TOPIC_VOCAB = require("./reading-topic-vocabulary-v1");
+const TOPIC_TRANSLATIONS = require("./reading-topic-translations-v1");
 
 // The classroom pilot bank stays deliberately small and reviewed.  This
 // catalogue supplies broader, low-stakes self-study practice without changing
@@ -567,6 +569,31 @@ function explanationFor(track, questionType, evidence) {
     : `This follows one step beyond “${quoted}.” The other options conflict with the passage.`;
 }
 
+// 영어 문항에 붙는 "해석" 문단. 이중 언어 주제는 같은 facts 배열의 한국어
+// 짝을 그대로 쓰고, 한국어 짝이 없는 단일 언어(영어) 주제는
+// reading-topic-translations-v1.js 에 따로 옮겨 둔 번역을 쓴다.
+function translationFor(topic, content, profile, windowIndexes) {
+  if (Array.isArray(content.facts[0])) {
+    const sentences = windowIndexes.map((index) => localizedText(content.facts[index], 0));
+    if (sentences.length && OPENER_FALLBACKS[sentences[0]]) sentences[0] = OPENER_FALLBACKS[sentences[0]];
+    return joinPassage(localizedText(content.intro, 0), sentences, profile.useIntro);
+  }
+  const registerData = (TOPIC_TRANSLATIONS[topic.key] || {})[profile.register];
+  if (!registerData) return null;
+  const sentences = windowIndexes.map((index) => registerData.facts[index]);
+  return joinPassage(registerData.intro, sentences, profile.useIntro);
+}
+
+// 지문에 실제로 등장하는 단어만 골라 "중요 단어" 목록으로 보여 준다.
+function vocabularyFor(topic, passageText) {
+  const words = TOPIC_VOCAB[topic.key];
+  if (!words) return [];
+  const lowerText = passageText.toLowerCase();
+  return words
+    .filter(([word]) => lowerText.includes(word.toLowerCase()))
+    .map(([word, meaning]) => ({ word, meaning }));
+}
+
 function buildItem(topic, track, level, variant = 0) {
   const profile = LEVEL_PROFILES[level];
   const languageIndex = track === "ko" ? 0 : 1;
@@ -630,6 +657,8 @@ function buildItem(topic, track, level, variant = 0) {
 
   const evidence = localizedText(content.facts[factIndex], languageIndex);
   const isKorean = track === "ko";
+  const translation = track === "en" ? translationFor(topic, content, profile, windowIndexes) : null;
+  const vocabulary = track === "en" ? vocabularyFor(topic, passageText) : [];
 
   return {
     id: `${topic.key}-${isKorean ? "K" : "E"}${level}-V${variant + 1}`,
@@ -647,7 +676,9 @@ function buildItem(topic, track, level, variant = 0) {
     promptText: promptFor(track, questionType),
     choices,
     correctIndex,
-    explanation: explanationFor(track, questionType, evidence)
+    explanation: explanationFor(track, questionType, evidence),
+    translation,
+    vocabulary
   };
 }
 

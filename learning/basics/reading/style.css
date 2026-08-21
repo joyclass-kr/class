@@ -85,6 +85,14 @@ button, input { font: inherit; }
 .feedback { margin-top: 16px; padding: 15px 16px; border: 1px solid var(--line); border-radius: 13px; line-height: 1.65; font-size: 14px; }
 .feedback.is-correct { border-color: #9bc8a7; background: #edf7ee; }
 .feedback.is-wrong { border-color: #e0af98; background: #fff0e9; }
+.reading-aid { margin-top: 12px; display: grid; gap: 12px; }
+.reading-aid-block { padding: 14px 16px; border: 1px solid var(--line); border-radius: 13px; background: #fbfaf5; }
+.reading-aid-block h3 { margin: 0 0 8px; font-size: 12px; letter-spacing: .04em; color: var(--muted); }
+.reading-aid-block p { margin: 0; line-height: 1.75; font-size: 14px; }
+.vocab-list { margin: 0; padding: 0; list-style: none; display: flex; flex-wrap: wrap; gap: 8px 16px; }
+.vocab-entry { display: flex; align-items: baseline; gap: 6px; font-size: 14px; }
+.vocab-word { font-weight: 700; color: #14513e; }
+.vocab-meaning { color: var(--muted); }
 .answer-actions { margin-top: 24px; }
 #answerStatus { color: var(--orange); font-size: 12px; }
 .completion-view { min-height: 60vh; display: grid; place-content: center; justify-items: center; text-align: center; }
