@@ -35,7 +35,7 @@
       id: 'thinker', order: '02', title: '생각하는 사람', short: '생각하는 사람',
       subtitle: '오귀스트 로댕 · Scan the World 3D 스캔 GLB', position: [-7.5, 0, -19.5], arrival: [-7.5, 1.62, -26.5], lookAt: [-7.5, 2.5, -19.5],
       modelPath: '../museum/assets/models/thinker.glb', realHeight: 1.89, materialColor: 0x38271d, metalness: 0.78, roughness: 0.3,
-      image: '../museum/assets/artworks/d01.png',
+      image: '../museum/assets/artworks/d01.webp',
       facts: [['높이', '1.89m'], ['재질', '청동 주조본'], ['제작', '1903년']],
       size: '높이 189cm (대형 청동 주조본 기준)',
       scale: 'Scan the World 3D 정밀 스캔 GLB 실물 크기',

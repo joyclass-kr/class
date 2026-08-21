@@ -287,7 +287,7 @@ body {
     left: var(--galaxy-center-x);
     height: 43%;
     aspect-ratio: 1;
-    background: url('assets/images/milky-way-top-view.png') center / contain no-repeat;
+    background: url('assets/images/milky-way-top-view.webp') center / contain no-repeat;
     transform: translate(-50%, -50%);
     opacity: var(--galaxy-detail-opacity);
     -webkit-mask-image: radial-gradient(circle, #000 0%, #000 68%, rgba(0, 0, 0, 0.9) 78%, transparent 100%);

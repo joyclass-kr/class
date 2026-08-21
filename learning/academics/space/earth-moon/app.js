@@ -739,7 +739,7 @@
                         observerDiskMaterial.needsUpdate = true;
                     }
                 };
-                koreaMapImage.src = 'assets/images/korea-map.png';
+                koreaMapImage.src = 'assets/images/korea-map.webp';
             }
 
             function createObserverDiskTexture(locationKey, koreaMapImage) {
