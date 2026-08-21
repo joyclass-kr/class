@@ -46,7 +46,7 @@
             <div class="lesson-overview-heading">
                 <div>
                     <p class="section-kicker">차시 학습</p>
-                    <h2 id="lessonOverviewTitle">뜻이 이어지는 성어끼리 배워요</h2>
+                    <h2 id="lessonOverviewTitle">고사성어 차시 학습</h2>
                     <p>차시마다 개수를 맞추지 않고, 의미와 유래의 흐름에 따라 묶었습니다.</p>
                 </div>
                 <p class="lesson-overview-total"><strong id="lessonKnownTotal">0</strong> / <span id="lessonItemTotal">0</span> 암기</p>
@@ -58,6 +58,7 @@
             <div class="lesson-toolbar">
                 <button id="backToLessons" type="button">← 차시 목록</button>
                 <div><span id="currentLessonNumber"></span><strong id="currentLessonTitle"></strong></div>
+                <button id="currentLessonQuiz" class="lesson-quiz-button" type="button">문제 풀기</button>
             </div>
 
         <div class="progress-card" aria-label="전체 학습 현황">
@@ -144,7 +145,7 @@
                     </div>
                 </article>
 
-                <div class="card-navigation" aria-label="카드 이동">
+                <div id="cardNavigation" class="card-navigation" aria-label="카드 이동">
                     <button id="previousCard" type="button">← 이전</button>
                     <button id="revealCard" class="reveal-button" type="button" aria-expanded="false">뜻과 유래 보기</button>
                     <button id="nextCard" type="button">다음 →</button>

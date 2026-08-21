@@ -152,7 +152,8 @@
         lessonOverview: byId("lessonOverview"), learningShell: byId("learningShell"), lessonList: byId("lessonList"),
         lessonKnownTotal: byId("lessonKnownTotal"), lessonItemTotal: byId("lessonItemTotal"),
         backToLessons: byId("backToLessons"), currentLessonNumber: byId("currentLessonNumber"),
-        currentLessonTitle: byId("currentLessonTitle")
+        currentLessonTitle: byId("currentLessonTitle"), currentLessonQuiz: byId("currentLessonQuiz"),
+        cardNavigation: byId("cardNavigation")
     };
 
     let progress = loadProgress();
@@ -307,7 +308,7 @@
     function moveCard(direction) {
         if (!deck.length) return;
         currentIndex = (currentIndex + direction + deck.length) % deck.length;
-        revealed = false;
+        revealed = true;
         renderCard();
         elements.idiomCard.focus({ preventScroll: true });
     }
@@ -548,9 +549,13 @@ function renderLessonOverview() {
         elements.themeSelect.value = "전체";
         elements.currentLessonNumber.textContent = `${currentLessonIndex + 1}차시`;
         elements.currentLessonTitle.textContent = lesson.title;
+        elements.currentLessonQuiz.textContent = "문제 풀기";
+        document.body.classList.add("lesson-active");
         elements.lessonOverview.hidden = true;
         elements.learningShell.hidden = false;
         buildDeck({ keepId });
+        revealed = true;
+        renderCard();
         switchView("learn");
         elements.learningShell.scrollIntoView({ behavior: "smooth", block: "start" });
     }
@@ -642,6 +647,11 @@ function renderLessonOverview() {
     });
 
     elements.backToLessons.addEventListener("click", showLessonOverview);
+    elements.currentLessonQuiz.addEventListener("click", () => {
+        const gameVisible = !byId("gameView").hidden;
+        switchView(gameVisible ? "learn" : "game");
+        elements.currentLessonQuiz.textContent = gameVisible ? "문제 풀기" : "설명 보기";
+    });
     elements.themeSelect.addEventListener("change", () => {
         selectedTheme = elements.themeSelect.value;
         buildDeck();
@@ -718,6 +728,7 @@ function renderLessonOverview() {
         if (playerName) elements.playerGreeting.textContent = `${playerName} 학습 기록`;
         elements.libraryTotal.textContent = data.length;
         buildThemeControls();
+        elements.studyArea.insertBefore(elements.cardNavigation, elements.idiomCard);
         renderSummary();
         renderBestScore();
         renderLessonOverview();
