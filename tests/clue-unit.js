@@ -13,24 +13,29 @@ assert.deepEqual(
 );
 assert.equal(Object.keys(Clue.SECRET_PASSAGE_PAIRS).length, 8, "비밀통로 입구는 정확히 8곳이어야 합니다.");
 for (const [entrance, exit] of Object.entries(Clue.SECRET_PASSAGE_PAIRS)) {
-const expectedDoorCounts=[2,3,2,3,4,3,2,3,2];
-Object.entries(Clue.ROOM_CELLS).forEach(([roomIndex,doorCells])=>{
-  assert.equal(doorCells.length,expectedDoorCounts[Number(roomIndex)],"각 방의 위치에 맞는 문 개수여야 합니다.");
-  doorCells.forEach(cellId=>{
-    assert.ok(Clue.CORRIDOR_CELLS.includes(cellId),"모든 방 입구는 실제 복도 타일이어야 합니다.");
-    assert.ok(Clue.CELL_ROOMS[cellId].includes(Number(roomIndex)),"방에서 나가는 문과 복도에서 들어오는 문 판정이 같아야 합니다.");
-  });
-});
-Object.entries(Clue.CELL_ROOMS).forEach(([cellId,roomIndexes])=>{
-  roomIndexes.forEach(roomIndex=>assert.ok(Clue.ROOM_CELLS[roomIndex].includes(cellId),"타일→방 연결은 방→타일 연결과 양방향이어야 합니다."));
-});
-
   assert.equal(Clue.SECRET_PASSAGE_PAIRS[exit], entrance, "비밀통로 연결은 양방향이어야 합니다.");
   const [entranceX, entranceY] = Clue.CELL_COORDS[entrance];
   const [exitX, exitY] = Clue.CELL_COORDS[exit];
   assert.ok(Math.abs(entranceX + exitX - 380) < 0.01, "비밀통로 출구는 중심을 기준으로 반대편이어야 합니다.");
   assert.ok(Math.abs(entranceY + exitY - 380) < 0.01, "비밀통로 출구는 중심에서 180도 회전한 위치여야 합니다.");
 }
+
+const expectedRoomDoors={
+  0:["t3"],1:["t9"],2:["t15"],
+  3:["b3"],4:["t9","b9"],5:["b15"],
+  6:["b3"],7:["b9"],8:["b15"]
+};
+assert.deepEqual(Clue.ROOM_CELLS,expectedRoomDoors,"원본 그림에서 실제로 열린 문만 방 입구여야 합니다.");
+assert.deepEqual(Clue.CELL_ROOMS,{
+  t3:[0],t9:[1,4],t15:[2],
+  b3:[3,6],b9:[4,7],b15:[5,8]
+},"여섯 문 타일만 방과 연결되어야 합니다.");
+Object.entries(Clue.ROOM_CELLS).forEach(([roomIndex,doorCells])=>{
+  doorCells.forEach(cellId=>{
+    assert.ok(Clue.CORRIDOR_CELLS.includes(cellId),"모든 방 입구는 실제 복도 타일이어야 합니다.");
+    assert.ok(Clue.CELL_ROOMS[cellId].includes(Number(roomIndex)),"방과 문 타일의 연결은 양방향이어야 합니다.");
+  });
+});
 
 const game = Clue.createGame("host", "방장");
 Clue.addPlayer(game, "guest1", "하늘");
@@ -43,7 +48,7 @@ assert.equal(game.dice, 3);
 assert.equal(game.stepsRemaining, 3);
 
 let view = Clue.stateFor(game, "host");
-assert.deepEqual(view.reachable.cells, ["t3", "l3"], "방에서 나온 첫 이동은 연결된 문 앞 한 칸만 선택할 수 있어야 합니다.");
+assert.deepEqual(view.reachable.cells, ["t3"], "온실에서는 그림에 열린 아래쪽 문으로만 나갈 수 있어야 합니다.");
 assert.deepEqual(view.reachable.rooms, []);
 
 assert.equal(Clue.move(game, "host", "t3").ok, true);
@@ -51,7 +56,7 @@ assert.equal(game.stepsRemaining, 2);
 assert.equal(game.turnPhase, "move");
 view = Clue.stateFor(game, "host");
 assert.deepEqual(view.reachable.cells, ["t2", "t4"], "한 번 이동한 뒤에는 바로 이웃한 타일만 보여야 합니다.");
-assert.deepEqual(view.reachable.rooms, [3], "문 타일에서는 이어진 방 한 곳만 새 선택지여야 합니다.");
+assert.deepEqual(view.reachable.rooms, [], "온실 문 타일 건너편의 막힌 서재 벽은 입구가 아니어야 합니다.");
 assert.equal(Clue.move(game, "host", "t5").ok, false, "두 칸 떨어진 타일로 점프할 수 없어야 합니다.");
 assert.equal(game.players[0].cellId, "t3");
 

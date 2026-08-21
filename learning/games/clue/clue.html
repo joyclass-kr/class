@@ -416,13 +416,13 @@ const CELL_COORDS=CORRIDOR_MODEL.coords;
 const CELL_NEIGHBORS=CORRIDOR_MODEL.neighbors;
 const CELL_ORIENTATION=CORRIDOR_MODEL.orientations;
 const CELL_ROOMS={
-  t3:[0,3],t9:[1,4],t15:[2,5],b3:[3,6],b9:[4,7],b15:[5,8],
-  l3:[0,1],l9:[3,4],l15:[6,7],r3:[1,2],r9:[4,5],r15:[7,8]
+  t3:[0],t9:[1,4],t15:[2],
+  b3:[3,6],b9:[4,7],b15:[5,8]
 };
 const ROOM_CELLS={
-  0:["t3","l3"],1:["t9","l3","r3"],2:["t15","r3"],
-  3:["t3","b3","l9"],4:["t9","b9","l9","r9"],5:["t15","b15","r9"],
-  6:["b3","l15"],7:["b9","l15","r15"],8:["b15","r15"]
+  0:["t3"],1:["t9"],2:["t15"],
+  3:["b3"],4:["t9","b9"],5:["b15"],
+  6:["b3"],7:["b9"],8:["b15"]
 };
 const SECRET_PASSAGE_PAIRS={
   t0:"b18",b18:"t0",t18:"b0",b0:"t18",
