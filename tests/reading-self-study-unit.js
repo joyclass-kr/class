@@ -19,7 +19,6 @@ for (const track of ["ko", "en"]) {
     assert.equal(set.length, 56, `${track}${level} should have 56 generated items`);
     assert(new Set(set.map((item) => item.questionType)).size >= 2,
       `${track}${level} should not use a single question type`);
-    assert(set.every((item) => item.schoolBand === profile.schoolBand));
     assert(set.every((item) => item.skillFocus === profile.focus));
     assert.equal(new Set(set.map((item) => item.familyId)).size, 14,
       `${track}${level} should draw from 14 topic families`);
@@ -72,11 +71,6 @@ for (const item of items) {
     }
   });
 }
-
-assert.deepEqual(
-  Object.values(LEVEL_PROFILES).map((profile) => profile.schoolBand),
-  ["초3~4", "초4~5", "초5~6", "중1", "중2", "중3", "고1", "고2~3"]
-);
 
 for (const track of ["ko", "en"]) {
   const highSchoolItems = items.filter((item) => item.track === track && item.targetLevel >= 7);

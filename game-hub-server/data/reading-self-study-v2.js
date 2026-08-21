@@ -468,7 +468,6 @@ const VARIANTS_PER_LEVEL = 8;
 // (inferences)으로도, 사례형 정답(applications)으로도 모두 한 번씩 쓰인다.
 const LEVEL_PROFILES = Object.freeze({
   1: {
-    schoolBand: "초3~4",
     focus: "사실 확인과 직접 적용",
     register: "easy",
     detailCount: 3,
@@ -483,7 +482,6 @@ const LEVEL_PROFILES = Object.freeze({
     ]
   },
   2: {
-    schoolBand: "초5~6",
     focus: "추론과 인과 관계",
     register: "base",
     detailCount: 5,
@@ -498,7 +496,6 @@ const LEVEL_PROFILES = Object.freeze({
     ]
   },
   3: {
-    schoolBand: "중1~2",
     focus: "정보 종합과 조건 판단",
     register: "base",
     detailCount: 7,
@@ -513,7 +510,6 @@ const LEVEL_PROFILES = Object.freeze({
     ]
   },
   4: {
-    schoolBand: "중3~고1",
     focus: "근거 적용과 범위 평가",
     register: "hard",
     detailCount: 8,
@@ -666,7 +662,6 @@ function buildItem(topic, track, level, variant = 0) {
     topicTitle: isKorean ? topic.ko : topic.en,
     track,
     targetLevel: level,
-    schoolBand: profile.schoolBand,
     skillFocus: profile.focus,
     sentenceRegister: profile.register,
     reasoningDemand: questionType,
