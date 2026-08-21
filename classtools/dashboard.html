@@ -2127,23 +2127,40 @@
         loadMeals();
 
         // 7-2. Realtime Weather, Humidity & Air Quality (PM10) Dynamic Geocoding Integration
+        //
+        // open-meteo's own /v1/search geocoder barely matches Korean-language
+        // queries at all (confirmed: even "서울" and "강남구" return zero
+        // results there, while the English "Seoul" works) -- it's an
+        // English/romanized gazetteer, not a Korean address geocoder. Use
+        // OSM Nominatim instead, which indexes Korean school names directly
+        // (e.g. "계상초등학교" resolves to the exact real campus) and only
+        // fetch the weather itself from open-meteo once we have real coords.
+        async function geocode(query) {
+            const cleaned = String(query || "").trim();
+            if (cleaned.length < 2) return null;
+            try {
+                const geoRes = await fetch(`https://nominatim.openstreetmap.org/search?q=${encodeURIComponent(cleaned)}&format=json&limit=1&accept-language=ko&countrycodes=kr`);
+                const geoData = await geoRes.json();
+                const first = geoData?.[0];
+                if (first?.lat && first?.lon) return { lat: Number(first.lat), lon: Number(first.lon) };
+            } catch (_) {}
+            return null;
+        }
+
         async function fetchRealtimeWeatherAndAirQuality(schoolName = "", locationName = "") {
             try {
                 let lat = 37.65;
                 let lon = 127.06;
                 let geoFound = false;
 
-                const searchLocation = (locationName || schoolName || "").replace(/(초등|중|고등)?학교/g, "").trim();
-                if (searchLocation && searchLocation.length >= 2) {
-                    try {
-                        const geoRes = await fetch(`https://geocoding-api.open-meteo.com/v1/search?name=${encodeURIComponent(searchLocation)}&count=1&language=ko&format=json`);
-                        const geoData = await geoRes.json();
-                        if (geoData?.results?.[0]?.latitude && geoData?.results?.[0]?.longitude) {
-                            lat = geoData.results[0].latitude;
-                            lon = geoData.results[0].longitude;
-                            geoFound = true;
-                        }
-                    } catch (_) {}
+                // The school's own name is the most precise query (an exact
+                // campus, not just a city); fall back to the broader
+                // location/district name if that specific lookup finds
+                // nothing.
+                const match = (await geocode(schoolName)) || (await geocode(locationName));
+                if (match) {
+                    ({ lat, lon } = match);
+                    geoFound = true;
                 }
 
                 if (!geoFound && navigator.geolocation) {
