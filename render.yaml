@@ -1,6 +1,6 @@
 services:
   - type: web
-    name: classroom-game-hub
+    name: songhwaplay
     runtime: node
     plan: free
     buildCommand: npm --prefix game-hub-server install
