@@ -7,13 +7,13 @@ module.exports = [
     ko: "주장의 숨은 전제",
     facts: [
       "주장은 글에 직접 쓰이지 않은 생각을 전제로 삼기도 한다.",
-      "전제는 근거에서 결론으로 넘어가는 연결이 성립하도록 돕는다.",
-      "같은 근거도 어떤 전제를 사용하느냐에 따라 다른 결론으로 이어질 수 있다.",
-      "숨은 전제를 찾으려면 결론에 필요한 조건이 근거에 들어 있는지 살펴야 한다.",
-      "전제가 사실과 맞지 않으면 근거가 정확해도 결론은 약해질 수 있다.",
-      "가치 판단이 포함된 주장에는 글쓴이가 무엇을 더 중요하게 보는지가 전제로 놓일 수 있다.",
-      "반대 사례를 생각하면 전제가 적용되는 범위를 확인하는 데 도움이 된다.",
-      "주장을 평가할 때에는 근거뿐 아니라 근거와 결론을 잇는 전제도 검토해야 한다."
+      "이런 전제는 근거에서 결론으로 넘어가는 연결이 성립하도록 돕는 역할을 한다.",
+      "그래서 같은 근거라도 어떤 전제를 사용하느냐에 따라 다른 결론으로 이어질 수 있다.",
+      "이렇게 결론을 좌우하는 숨은 전제를 찾으려면 결론에 필요한 조건이 근거에 들어 있는지 살펴야 한다.",
+      "이렇게 찾은 전제가 사실과 맞지 않으면 근거가 정확해도 결론은 약해질 수 있다.",
+      "특히 가치 판단이 포함된 주장에는 글쓴이가 무엇을 더 중요하게 보는지가 전제로 놓일 수 있다.",
+      "이런 전제가 적용되는 범위를 확인하려면 반대 사례를 생각해 보는 것이 도움이 된다.",
+      "그러므로 주장을 평가할 때에는 근거뿐 아니라 근거와 결론을 잇는 전제도 함께 검토해야 한다."
     ],
     wrong: [
       "주장에 근거가 제시되면 근거와 결론 사이의 연결은 그 안에 포함된다.",
@@ -42,13 +42,13 @@ module.exports = [
     ko: "핵심 정보 가려내기",
     facts: [
       "글의 핵심은 여러 문장을 하나로 묶는 중심 생각에서 찾을 수 있다.",
-      "흥미로운 사례도 중심 생각을 뒷받침해야 핵심 정보가 된다.",
-      "반복되는 낱말보다 문장들이 공통으로 설명하는 관계를 살펴야 한다.",
-      "예시는 중심 생각을 구체화하지만 예시 하나가 글 전체의 주제는 아니다.",
-      "원인과 결과를 설명하는 글에서는 두 요소의 관계가 요약에 포함되어야 한다.",
-      "대조하는 글은 어느 한쪽의 특징보다 둘의 중요한 차이에 초점을 둘 수 있다.",
-      "세부 정보를 빼도 글의 결론이 유지된다면 그 정보는 요약에서 줄일 수 있다.",
-      "좋은 요약은 원문의 범위를 넓히거나 새로운 판단을 덧붙이지 않는다."
+      "이 중심 생각을 기준으로 보면 흥미로운 사례도 그 생각을 뒷받침해야 핵심 정보가 된다.",
+      "이때 중심 생각을 찾으려면 반복되는 낱말보다 문장들이 공통으로 설명하는 관계를 살펴야 한다.",
+      "이런 관계를 보여 주는 예시는 중심 생각을 구체화하지만 예시 하나가 글 전체의 주제는 아니다.",
+      "예를 들어 원인과 결과를 설명하는 글에서는 두 요소의 관계가 요약에 포함되어야 한다.",
+      "반면 대조하는 글은 어느 한쪽의 특징보다 둘의 중요한 차이에 초점을 둘 수 있다.",
+      "이렇게 중심 생각을 가려낼 때 세부 정보를 빼도 글의 결론이 유지된다면 그 정보는 요약에서 줄일 수 있다.",
+      "다만 좋은 요약은 이렇게 줄이더라도 원문의 범위를 넓히거나 새로운 판단을 덧붙이지 않는다."
     ],
     wrong: [
       "글에서 가장 자주 반복되는 낱말을 포함한 문장이 중심 생각이 된다.",
@@ -77,13 +77,13 @@ module.exports = [
     en: "Models and Predictions",
     facts: [
       "A model represents selected features of a system rather than every detail.",
-      "Useful models simplify reality so important relationships become easier to examine.",
-      "A prediction depends on both the model and the information entered into it.",
-      "Testing compares a model's prediction with observations from the world.",
-      "A failed prediction can reveal a weak assumption or missing factor.",
-      "A model may work well in one range and poorly beyond that range.",
-      "Different models can serve different purposes while describing the same system.",
-      "Model confidence grows through repeated tests, not through complexity alone."
+      "Choosing which features to keep this way is what lets useful models simplify reality so important relationships become easier to examine.",
+      "Working from that simplified picture, a prediction depends on both the model and the information entered into it.",
+      "Testing then compares that prediction with observations from the world.",
+      "When a test fails, the failed prediction can reveal a weak assumption or missing factor in the model.",
+      "That is also why a model may work well in one range and poorly beyond it.",
+      "Because of these limits, different models can serve different purposes while describing the same system.",
+      "Across all of this, model confidence grows through repeated tests, not through complexity alone."
     ],
     wrong: [
       "A model becomes accurate when it includes details from each part of a system.",
@@ -112,13 +112,13 @@ module.exports = [
     en: "Feedback in Systems",
     facts: [
       "Feedback occurs when a system's output influences what the system does next.",
-      "Balancing feedback pushes a changing system back toward a target range.",
-      "Reinforcing feedback makes an initial change grow through later effects.",
-      "A delay can cause feedback to act after conditions have already changed.",
-      "The same feedback process can be helpful in one setting and harmful in another.",
-      "Observing one step may hide a feedback loop that develops over several steps.",
-      "Changing one connection in a loop can affect distant parts of the system.",
-      "Understanding feedback requires tracing how effects return to earlier causes."
+      "One form this feedback can take is balancing feedback, which pushes a changing system back toward a target range.",
+      "Reinforcing feedback works the opposite way, making an initial change grow through later effects instead.",
+      "Either kind of feedback can be thrown off by a delay, which causes it to act only after conditions have already changed.",
+      "Because of that delay and the loop itself, the same feedback process can be helpful in one setting and harmful in another.",
+      "Judging that from a single moment is difficult, since observing one step may hide a feedback loop that develops over several steps.",
+      "Within such a loop, changing just one connection can affect distant parts of the system.",
+      "Understanding feedback like this requires tracing how effects return to earlier causes."
     ],
     wrong: [
       "Feedback occurs when an output leaves a system and begins a separate process.",

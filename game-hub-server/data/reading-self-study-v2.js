@@ -5,6 +5,7 @@ const MORE_INDEPENDENT_TOPICS = require("./reading-independent-topics-v4");
 const FINAL_INDEPENDENT_TOPICS = require("./reading-independent-topics-v5");
 const TOPIC_EXTENSIONS = require("./reading-topic-extensions-v1");
 const TOPIC_REGISTERS = require("./reading-topic-registers-v1");
+const OPENER_FALLBACKS = require("./reading-topic-opener-fallbacks-v1");
 
 // The classroom pilot bank stays deliberately small and reviewed.  This
 // catalogue supplies broader, low-stakes self-study practice without changing
@@ -15,14 +16,14 @@ const TOPICS = [
     ko: "물의 순환",
     en: "The Water Cycle",
     facts: [
-      ["햇빛을 받은 물은 수증기가 되어 공기 중으로 올라간다.", "Water warmed by sunlight can become vapor and rise into the air."],
-      ["수증기가 식으면 작은 물방울로 변해 구름을 이룬다.", "When water vapor cools, it forms tiny droplets that make clouds."],
-      ["구름 속 물방울이 무거워지면 비나 눈으로 내린다.", "When droplets in clouds become heavy, they fall as rain or snow."],
-      ["땅에 내린 물의 일부는 흙 속으로 스며든다.", "Some water that reaches the ground soaks into the soil."],
-      ["강과 지하수의 물은 다시 바다로 흘러갈 수 있다.", "Water in rivers and underground can flow back to the ocean."],
-      ["식물은 잎을 통해 수증기를 공기 중으로 내보낸다.", "Plants release water vapor into the air through their leaves."],
-      ["물의 순환은 물이 여러 장소와 상태 사이를 이동하는 과정이다.", "The water cycle moves water among places and physical states."],
-      ["물의 순환을 움직이는 주요 에너지원은 태양이다.", "The Sun is the main energy source that drives the water cycle."]
+      ["햇빛을 받은 물은 수증기가 되어 공기 중으로 올라간다.", "Water warmed by sunlight turns into vapor and rises into the air."],
+      ["위로 올라간 그 수증기는 식으면서 작은 물방울로 바뀌어 구름을 이룬다.", "As that rising vapor cools, it turns into tiny droplets that gather into a cloud."],
+      ["구름 속 물방울이 서로 뭉쳐 무거워지면 비나 눈이 되어 땅으로 떨어진다.", "Inside the cloud, the droplets collide and grow heavier until they fall as rain or snow."],
+      ["땅으로 떨어진 물 가운데 일부는 강으로 흘러가는 대신 흙 속으로 스며들어 지하수가 된다.", "Some of the water that falls does not run into a river but soaks into the soil and becomes groundwater."],
+      ["이렇게 흙 속에 스민 지하수와 강물은 서로 다른 길을 지나지만 둘 다 결국 바다로 흘러간다.", "That groundwater and the water in rivers travel different paths, but both eventually flow into the ocean."],
+      ["바다나 땅 위에 자라는 식물도 잎을 통해 물을 수증기로 내보내며 순환에 새 수증기를 더한다.", "Plants growing on land add to the cycle too, releasing water vapor into the air through their leaves."],
+      ["이처럼 물이 여러 장소를 오가며 액체와 기체 상태를 바꾸는 과정 전체를 물의 순환이라 부른다.", "This whole movement of water between places, and between liquid and gas, is what people call the water cycle."],
+      ["이 순환을 처음부터 움직이는 힘은 물을 데워 수증기로 만드는 태양의 에너지다.", "The force that drives this cycle from the very start is the Sun's energy, the same energy that warms water into vapor in the first place."]
     ],
     wrong: [
       ["구름은 수증기가 높은 곳에서 빗방울 크기로 자라면서 처음 만들어진다.", "Clouds first form when vapor grows directly into raindrop-sized drops high in the air."],
@@ -48,13 +49,13 @@ const TOPICS = [
     en: "Connections in Ecosystems",
     facts: [
       ["생산자는 햇빛 등의 에너지를 이용해 스스로 양분을 만든다.", "Producers use energy such as sunlight to make their own food."],
-      ["소비자는 다른 생물을 먹어 에너지를 얻는다.", "Consumers get energy by eating other organisms."],
-      ["분해자는 죽은 생물을 분해해 물질이 다시 순환하도록 돕는다.", "Decomposers break down dead organisms and help matter cycle again."],
-      ["먹이 그물은 여러 먹이 사슬이 서로 연결된 모습이다.", "A food web shows how several food chains are connected."],
-      ["한 종의 수가 크게 변하면 연결된 다른 종에도 영향이 갈 수 있다.", "A large change in one population can affect other connected species."],
-      ["서식지는 생물이 먹이와 물, 공간을 얻어 살아가는 장소다.", "A habitat is where an organism finds food, water, and space to live."],
-      ["생물 다양성이 높으면 환경 변화에 대응할 가능성이 커질 수 있다.", "Greater biodiversity can improve an ecosystem's ability to handle change."],
-      ["에너지는 먹이 관계를 따라 이동하지만 양은 단계마다 줄어든다.", "Energy moves through feeding relationships but decreases at each step."]
+      ["소비자는 이런 생산자나 다른 생물을 먹어 에너지를 얻는다.", "Consumers get energy by eating these producers or other organisms."],
+      ["이렇게 생산자와 소비자가 죽으면 분해자는 그 몸을 분해해 물질이 다시 순환하도록 돕는다.", "When producers and consumers die, decomposers break down their bodies and help that matter cycle again."],
+      ["생산자·소비자·분해자가 서로 먹고 먹히며 연결된 모습을 먹이 그물이라 부른다.", "The way these three roles feed into and depend on one another forms what is called a food web."],
+      ["먹이 그물 안에서 한 종의 수가 크게 변하면 거기에 연결된 다른 종에도 영향이 갈 수 있다.", "Within that web, a large change in one population can affect other species connected to it."],
+      ["이렇게 영향을 주고받는 생물들이 먹이와 물, 공간을 얻어 살아가는 장소를 서식지라고 한다.", "The place where these interacting organisms find the food, water, and space they need to live is called a habitat."],
+      ["한 서식지에 다양한 생물종이 있을수록, 즉 생물 다양성이 높을수록 환경 변화에 대응할 가능성이 커질 수 있다.", "The more species a habitat holds — in other words, the higher its biodiversity — the better it can handle environmental change."],
+      ["이런 먹이 관계를 따라 에너지도 함께 이동하지만 그 양은 단계마다 줄어든다.", "Energy also moves along these feeding relationships, but the amount available decreases at each step."]
     ],
     wrong: [
       ["생산자는 다른 생물에서 얻은 물질을 햇빛으로 바꾸어 자신의 양분을 만든다.", "Producers use sunlight to change material taken from other organisms into their own food."],
@@ -80,13 +81,13 @@ const TOPICS = [
     en: "Weather and Climate",
     facts: [
       ["날씨는 특정 장소의 짧은 기간 동안 나타나는 대기 상태다.", "Weather is the state of the atmosphere at a place over a short time."],
-      ["기후는 한 지역의 날씨를 오랫동안 관찰해 나타낸 경향이다.", "Climate describes long-term weather patterns in a region."],
-      ["하루의 추운 날씨 하나만으로 장기적인 기후 변화를 판단할 수 없다.", "One cold day cannot by itself show a long-term climate change."],
-      ["기온, 강수량, 바람은 날씨를 설명하는 요소다.", "Temperature, precipitation, and wind are elements of weather."],
-      ["기후를 비교하려면 여러 해 동안 모은 자료가 필요하다.", "Comparing climates requires data collected over many years."],
-      ["바다와 산맥은 지역의 기후에 영향을 줄 수 있다.", "Oceans and mountain ranges can influence regional climate."],
-      ["일기 예보는 관측 자료와 모형을 사용해 앞으로의 날씨를 예상한다.", "Weather forecasts use observations and models to predict future conditions."],
-      ["기후의 평균이 비슷해도 극한 날씨의 빈도는 달라질 수 있다.", "Places with similar climate averages can differ in extreme weather frequency."]
+      ["이런 날씨를 한 지역에서 오랫동안 관찰해 나타낸 경향을 기후라고 한다.", "Climate is what you get by observing this weather in a region over a long stretch of time."],
+      ["그래서 하루의 추운 날씨 하나만으로는 기후처럼 장기적인 변화를 판단할 수 없다.", "That is why one cold day by itself cannot show a long-term change in climate."],
+      ["날씨를 설명할 때 살펴보는 요소는 기온, 강수량, 바람이다.", "The elements used to describe weather are temperature, precipitation, and wind."],
+      ["반면 기후를 비교하려면 하루치 자료가 아니라 여러 해 동안 모은 자료가 필요하다.", "Comparing climates, by contrast, calls for data gathered over many years, not just one day."],
+      ["이렇게 여러 해에 걸친 기후에는 바다와 산맥 같은 지역적 요인도 영향을 줄 수 있다.", "Factors such as oceans and mountain ranges can shape the climate that forms over those many years."],
+      ["한편 앞으로의 날씨는 관측 자료와 모형을 사용한 일기 예보로 예상할 수 있다.", "Forecasting the weather that is coming, meanwhile, relies on observations and models."],
+      ["이때 기후의 평균이 비슷한 두 지역이라도 극한 날씨가 나타나는 빈도는 서로 다를 수 있다.", "Even two regions with a similar climate average can differ in how often extreme weather occurs."]
     ],
     wrong: [
       ["일주일의 평균 기온은 그 지역의 계절별 기후를 대표하는 자료가 된다.", "A weekly mean temperature represents the seasonal climate of a region."],
@@ -112,13 +113,13 @@ const TOPICS = [
     en: "Energy Transformations",
     facts: [
       ["전구는 전기 에너지의 일부를 빛 에너지로 바꾼다.", "A lamp changes some electrical energy into light energy."],
-      ["움직이는 물체는 운동 에너지를 가진다.", "A moving object has kinetic energy."],
-      ["높은 곳에 있는 물체는 위치와 관련된 에너지를 가질 수 있다.", "An object above the ground can have energy related to its position."],
-      ["배터리는 저장된 화학 에너지를 전기 에너지로 바꿀 수 있다.", "A battery can change stored chemical energy into electrical energy."],
-      ["에너지는 전환 과정에서 사라지기보다 다른 형태로 이동하거나 바뀐다.", "During a transformation, energy moves or changes form rather than vanishing."],
-      ["마찰이 일어나면 운동 에너지의 일부가 열에너지로 바뀔 수 있다.", "Friction can change some kinetic energy into thermal energy."],
-      ["태양 전지는 빛 에너지를 전기 에너지로 전환한다.", "Solar cells transform light energy into electrical energy."],
-      ["기계의 효율은 들어간 에너지 중 유용하게 전환된 비율과 관련된다.", "Machine efficiency relates to the fraction of input energy changed usefully."]
+      ["이렇게 형태를 바꾸는 에너지에는 운동 에너지도 있는데, 움직이는 물체는 이 운동 에너지를 가진다.", "Energy that shifts form like this also shows up as kinetic energy: a moving object carries this kind of energy."],
+      ["운동 에너지처럼 높은 곳에 있는 물체도 위치와 관련된 에너지를 가질 수 있다.", "Just like kinetic energy, an object high above the ground can have energy related to its position."],
+      ["배터리는 이런 에너지들과 달리 저장된 화학 에너지를 전기 에너지로 바꿀 수 있다.", "Unlike these, a battery works by changing energy already stored chemically into electrical energy."],
+      ["이렇게 여러 형태를 오가면서도 에너지는 전환 과정에서 사라지기보다 다른 형태로 이동하거나 바뀔 뿐이다.", "Moving between all these forms, energy does not vanish during a transformation — it only shifts or changes shape."],
+      ["이 원리는 마찰에서도 나타나는데, 마찰이 일어나면 운동 에너지의 일부가 열에너지로 바뀔 수 있다.", "This same principle shows up with friction: when friction occurs, some kinetic energy can change into thermal energy."],
+      ["태양 전지 역시 같은 원리로 빛 에너지를 전기 에너지로 전환한다.", "Solar cells work by the same principle, transforming light energy into electrical energy."],
+      ["기계의 효율은 이렇게 들어간 에너지 중 얼마나 유용한 형태로 전환되었는지를 나타내는 비율이다.", "A machine's efficiency, then, is the share of that input energy which actually gets changed into a useful form."]
     ],
     wrong: [
       ["전구는 빛이 강해질수록 전기 에너지에서 빛으로 바뀌는 비율도 같은 폭으로 커진다.", "As a lamp becomes brighter, the fraction of electrical energy changed into light rises by the same amount."],
@@ -144,13 +145,13 @@ const TOPICS = [
     en: "Digital Safety",
     facts: [
       ["긴 비밀번호는 짧은 비밀번호보다 추측하기 어려운 경우가 많다.", "A long password is often harder to guess than a short one."],
-      ["서비스마다 다른 비밀번호를 쓰면 한 계정의 유출이 다른 계정으로 번지는 위험을 줄인다.", "Unique passwords reduce the risk that one breach spreads to other accounts."],
-      ["다단계 인증은 비밀번호 외의 확인 단계를 추가한다.", "Multi-factor authentication adds a check beyond the password."],
-      ["의심스러운 링크를 누르기 전에 보낸 사람과 주소를 확인해야 한다.", "Before opening a suspicious link, check the sender and address."],
-      ["운영체제와 앱을 업데이트하면 알려진 보안 문제를 고칠 수 있다.", "Updating systems and apps can fix known security problems."],
-      ["공개 게시물에는 주소나 연락처 같은 개인정보를 올리지 않는 편이 안전하다.", "It is safer not to post private details such as an address or phone number publicly."],
-      ["백업은 기기가 고장 나거나 파일이 손상됐을 때 복구에 도움이 된다.", "Backups help recovery when a device fails or files are damaged."],
-      ["온라인 정보는 여러 신뢰할 만한 출처와 비교해 확인해야 한다.", "Online information should be checked against several reliable sources."]
+      ["이런 비밀번호를 서비스마다 다르게 정해 두면 한 계정의 유출이 다른 계정으로 번지는 위험을 줄일 수 있다.", "Setting a different password like this for each service keeps a breach at one account from spreading to the others."],
+      ["비밀번호 관리만으로 부족할 때를 대비해 다단계 인증은 비밀번호 외의 확인 단계를 추가로 요구한다.", "Because password management alone is not always enough, multi-factor authentication adds a check beyond the password."],
+      ["이렇게 계정을 지켜도 의심스러운 링크를 누르면 뚫릴 수 있으므로, 누르기 전에 보낸 사람과 주소를 확인해야 한다.", "Even with a protected account, clicking a suspicious link can still let an attacker in, so check the sender and address before opening it."],
+      ["마찬가지로 운영체제와 앱을 제때 업데이트하면 이미 알려진 보안 문제를 고칠 수 있다.", "In the same way, updating systems and apps in time can fix security problems that are already known."],
+      ["이런 관리 못지않게 공개 게시물에 주소나 연락처 같은 개인정보를 올리지 않는 것도 안전을 지키는 방법이다.", "Just as important as this upkeep is not posting private details, such as an address or phone number, in public posts."],
+      ["그래도 문제가 생겼을 때를 대비한 것이 백업인데, 기기가 고장 나거나 파일이 손상됐을 때 복구에 도움이 된다.", "Backups exist for when something still goes wrong, helping with recovery when a device fails or files are damaged."],
+      ["이렇게 계정과 기기를 지키는 것 못지않게 온라인에서 얻은 정보 자체도 여러 신뢰할 만한 출처와 비교해 확인해야 한다.", "Alongside protecting accounts and devices like this, online information itself should be checked against several reliable sources."]
     ],
     wrong: [
       ["긴 비밀번호를 여러 서비스에 함께 쓰면 짧고 서로 다른 비밀번호보다 유출 위험을 낮출 수 있다.", "Reusing one long password across services can lower breach risk more than using shorter unique passwords."],
@@ -176,13 +177,13 @@ const TOPICS = [
     en: "Making Decisions Together",
     facts: [
       ["공동의 결정에서는 서로 다른 의견을 들을 기회가 필요하다.", "A shared decision should give different views a chance to be heard."],
-      ["주장의 근거를 확인하면 의견을 더 공정하게 비교할 수 있다.", "Checking evidence helps people compare claims more fairly."],
-      ["다수결은 한 가지 결정 방법이지만 소수의 권리도 함께 고려해야 한다.", "Majority voting is one method, but minority rights still matter."],
-      ["토론의 목적은 상대를 모욕하는 것이 아니라 쟁점을 검토하는 것이다.", "The purpose of discussion is to examine issues, not insult opponents."],
-      ["결정 과정과 기준을 공개하면 책임성을 높일 수 있다.", "Sharing the process and criteria can increase accountability."],
-      ["이해관계가 다른 사람들은 같은 정책의 영향을 다르게 받을 수 있다.", "People with different interests can be affected differently by one policy."],
-      ["합의는 모든 차이를 없애기보다 함께 받아들일 수 있는 안을 찾는 과정이다.", "Consensus seeks an acceptable option rather than erasing every difference."],
-      ["결정 뒤에도 결과를 살펴보고 필요하면 규칙을 고칠 수 있다.", "After a decision, people can review results and revise rules when needed."]
+      ["이때 각 의견의 주장을 그 근거까지 확인하면 서로를 더 공정하게 비교할 수 있다.", "Checking the evidence behind each view, at this point, helps people compare them more fairly."],
+      ["이렇게 근거를 견주어 본 뒤 다수결로 정하더라도, 그것은 한 가지 결정 방법일 뿐 소수의 권리도 함께 고려해야 한다.", "Even after weighing the evidence this way, deciding by majority vote is only one method — minority rights still matter."],
+      ["다수결로 정하는 과정에서도 토론의 목적은 상대를 모욕하는 것이 아니라 쟁점을 검토하는 데 있다.", "Even while deciding by majority vote, the purpose of discussion is to examine the issue, not insult the other side."],
+      ["이런 토론과 결정의 과정, 그리고 그 기준을 공개하면 책임성을 높일 수 있다.", "Sharing this process of discussion and decision, along with its criteria, can increase accountability."],
+      ["그런데 이렇게 정한 정책이라도 이해관계가 다른 사람들은 그 영향을 다르게 받을 수 있다.", "Even a policy decided this way can still affect people with different interests differently."],
+      ["그래서 합의는 모든 차이를 없애기보다, 이런 사람들이 함께 받아들일 수 있는 안을 찾는 과정이다.", "That is why consensus seeks an option these different people can accept together, rather than erasing every difference between them."],
+      ["이렇게 정한 뒤에도 그 결과를 살펴보고 필요하면 규칙을 고칠 수 있다.", "Even after a decision is reached this way, people can still review the results and revise the rules if needed."]
     ],
     wrong: [
       ["참여자가 많을수록 대표 의견을 먼저 정리한 뒤 소수 의견을 추가로 듣는 방식이 효율적이다.", "With many participants, it is efficient to settle the representative view first and hear minority views afterward."],
@@ -208,13 +209,13 @@ const TOPICS = [
     en: "Ratios and Rates",
     facts: [
       ["비는 두 양의 크기를 비교하는 방법이다.", "A ratio compares the sizes of two quantities."],
-      ["2 대 3과 4 대 6은 같은 관계를 나타내는 동치비다.", "The ratios 2 to 3 and 4 to 6 describe the same relationship."],
-      ["단위율은 비교하는 양 중 하나를 1로 놓고 나타낸 비율이다.", "A unit rate expresses a comparison for one unit."],
-      ["전체가 달라지면 같은 개수라도 비율은 달라질 수 있다.", "The same count can represent a different fraction when the total changes."],
-      ["비례 관계에서는 한 양이 일정한 배수가 되면 다른 양도 같은 배수가 된다.", "In a proportional relationship, scaling one quantity scales the other equally."],
-      ["그래프가 원점을 지나는 직선이면 비례 관계를 나타낼 수 있다.", "A straight line through the origin can represent a proportional relationship."],
-      ["백분율은 전체를 100으로 보았을 때의 비율이다.", "A percentage is a ratio expressed out of one hundred."],
-      ["단위가 다른 비율을 비교할 때는 단위를 같게 맞춰야 한다.", "Rates with different units should be converted to matching units before comparison."]
+      ["이런 비 가운데 2 대 3과 4 대 6처럼 같은 관계를 나타내는 것을 동치비라고 한다.", "Among these ratios, ones like 2 to 3 and 4 to 6 that describe the same relationship are called equivalent ratios."],
+      ["비를 나타내는 또 다른 방법으로, 비교하는 양 중 하나를 1로 놓은 것을 단위율이라 한다.", "Another way to express a ratio is a unit rate, which sets one of the compared quantities equal to 1."],
+      ["이런 비율은 전체가 달라지면 같은 개수라도 값이 달라질 수 있다는 점에 주의해야 한다.", "A rate like this can change even for the same count, because the fraction it represents depends on the total."],
+      ["반면 비례 관계에서는 한 양이 일정한 배수가 되면 다른 양도 같은 배수가 되어 비율이 항상 일정하게 유지된다.", "A proportional relationship, by contrast, keeps that ratio constant: scaling one quantity by a certain amount scales the other by the same amount."],
+      ["이런 비례 관계를 그래프로 나타내면 원점을 지나는 직선이 된다.", "Graphing a proportional relationship like this produces a straight line through the origin."],
+      ["비율을 나타내는 방법 중 전체를 100으로 놓은 것이 백분율이다.", "Among the ways to express a ratio, the one that sets the whole to 100 is called a percentage."],
+      ["이렇게 구한 비율이나 백분율이라도 단위가 다르면 비교하기 전에 단위를 같게 맞춰야 한다.", "Even ratios or percentages found this way need matching units before they can be compared."]
     ],
     wrong: [
       ["비의 앞항과 뒷항을 바꾸면 비교 기준이 달라져도 두 양의 관계는 유지된다.", "Reversing the terms changes the reference point while preserving the relationship between the quantities."],
@@ -239,14 +240,14 @@ const TOPICS = [
     ko: "작품을 보는 방법",
     en: "Looking at Art",
     facts: [
-      ["작품 감상은 먼저 화면에서 실제로 보이는 것을 관찰하는 데서 시작할 수 있다.", "Art viewing can begin by observing what is actually visible."],
-      ["색, 선, 형태, 질감은 작품을 설명할 때 살펴볼 수 있는 요소다.", "Color, line, shape, and texture are elements used to describe art."],
-      ["같은 작품도 관람자의 경험에 따라 다르게 해석될 수 있다.", "The same artwork can be interpreted differently depending on a viewer's experience."],
-      ["해석에는 작품에서 찾은 구체적인 근거를 덧붙이는 것이 좋다.", "An interpretation is stronger when supported by specific evidence from the artwork."],
-      ["작품이 만들어진 시대와 장소는 의미를 이해하는 데 도움을 줄 수 있다.", "The time and place in which art was made can help explain its meaning."],
-      ["작가의 의도는 중요한 정보지만 작품의 의미를 하나로만 고정하지는 않는다.", "An artist's intention matters but does not always fix a single meaning."],
-      ["재료와 제작 방법은 작품이 주는 느낌에 영향을 줄 수 있다.", "Materials and techniques can influence the effect of an artwork."],
-      ["감상에서는 관찰한 사실과 개인의 느낌을 구분해 말할 수 있다.", "In art discussion, viewers can distinguish observations from personal reactions."]
+      ["작품 감상은 먼저 화면에서 실제로 보이는 것을 관찰하는 데서 시작할 수 있다.", "Art viewing can begin by observing what is actually visible on the surface."],
+      ["이때 색, 선, 형태, 질감은 그렇게 관찰할 때 살펴볼 수 있는 요소다.", "Color, line, shape, and texture are the elements to look for while making that observation."],
+      ["같은 요소를 보아도 같은 작품이 관람자의 경험에 따라 다르게 해석될 수 있다.", "Even with the same elements in view, the same artwork can be interpreted differently depending on a viewer's experience."],
+      ["이렇게 서로 다른 해석에는 작품에서 찾은 구체적인 근거를 덧붙이는 것이 좋다.", "An interpretation like this is stronger when it is backed by specific evidence found in the artwork."],
+      ["그 근거를 찾을 때 작품이 만들어진 시대와 장소를 알면 의미를 이해하는 데 도움을 줄 수 있다.", "Looking for that evidence, knowing the time and place in which the art was made can help explain its meaning."],
+      ["이때 작가의 의도도 중요한 정보지만, 그것이 작품의 의미를 하나로만 고정하지는 않는다.", "An artist's intention matters here too, but it does not always fix the artwork's meaning to just one reading."],
+      ["의미뿐 아니라 재료와 제작 방법도 작품이 주는 느낌에 영향을 줄 수 있다.", "Beyond meaning, the materials and techniques used can also influence the effect an artwork has."],
+      ["이런 여러 요소를 살필 때 감상에서는 관찰한 사실과 개인의 느낌을 구분해 말할 수 있다.", "Weighing all of these elements, a viewer can still tell apart what was observed from what was simply felt."]
     ],
     wrong: [
       ["처음 떠오른 느낌을 기준으로 색과 선의 특징을 정리하면 작품 해석의 방향이 분명해진다.", "Using the first emotional response to organize colors and lines makes the direction of interpretation clearer."],
@@ -348,28 +349,13 @@ const APPLICATION_QUESTION_TYPES = new Set([
   "causal_reasoning"
 ]);
 
-const CONNECTIVES = {
-  ko: { second: "또한 ", late: "이와 함께 " },
-  en: { second: "Also, ", late: "At the same time, " }
-};
-
-function lowerFirst(sentence) {
-  return sentence.charAt(0).toLowerCase() + sentence.slice(1);
-}
-
-function joinPassage(intro, sentences, track, useIntro) {
-  const parts = sentences.slice();
-  const marks = CONNECTIVES[track === "en" ? "en" : "ko"];
-  if (parts.length >= 3) {
-    parts[1] = track === "en" ? marks.second + lowerFirst(parts[1]) : marks.second + parts[1];
-  }
-  if (parts.length >= 5) {
-    const lateIndex = parts.length - 2;
-    parts[lateIndex] = track === "en"
-      ? marks.late + lowerFirst(parts[lateIndex])
-      : marks.late + parts[lateIndex];
-  }
-  return (useIntro ? [intro].concat(parts) : parts).join(" ");
+// 지문이 자연스럽게 읽히려면 접속어를 기계적으로 끼워 넣는 게 아니라
+// facts 문장 자체가 앞 문장을 받아 이어지도록 써야 한다(대명사·지시어로
+// 앞 내용을 받거나, 같은 소재를 자연스럽게 넘겨받는 식). 그래서 이 함수는
+// 접속어를 강제로 추가하지 않고 문장을 그대로 이어 붙이기만 한다 — 이음새는
+// 콘텐츠(각 topic의 facts 배열)가 책임진다.
+function joinPassage(intro, sentences, useIntro) {
+  return (useIntro ? [intro].concat(sentences) : sentences).join(" ");
 }
 
 function questionTypeFor(level, variant) {
@@ -601,10 +587,16 @@ function buildItem(topic, track, level, variant = 0) {
   ).filter((index) => index < content.facts.length);
 
   const sentences = windowIndexes.map((index) => localizedText(content.facts[index], languageIndex));
+  // facts[i] (i > 0) is written to pick up the sentence right before it
+  // ("이런 X", "그래서 Y" ...). When the window doesn't start at facts[0],
+  // that predecessor isn't shown, so swap the window's first line back to
+  // its standalone form.
+  if (sentences.length && OPENER_FALLBACKS[sentences[0]]) {
+    sentences[0] = OPENER_FALLBACKS[sentences[0]];
+  }
   const passageText = joinPassage(
     localizedText(content.intro, languageIndex),
     sentences,
-    track,
     profile.useIntro
   );
 

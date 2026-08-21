@@ -7,13 +7,13 @@ module.exports = [
     ko: "비교 기준 세우기",
     facts: [
       "둘을 비교하려면 무엇을 기준으로 삼았는지 먼저 분명히 해야 한다.",
-      "전체 크기가 다른 집단은 수보다 비율로 비교하는 편이 적절할 수 있다.",
-      "측정 시점이 다르면 대상의 변화와 시점의 영향을 구분해야 한다.",
-      "평균이 같아도 값이 퍼진 정도와 분포의 모양은 다를 수 있다.",
-      "장점 하나만 비교하면 다른 중요한 차이가 결론에서 빠질 수 있다.",
-      "비교 대상이 같은 조건에서 측정되었는지 확인해야 결과를 해석하기 쉽다.",
-      "대표 사례 하나는 가능성을 보여 주지만 일반적인 경향을 증명하지는 못한다.",
-      "좋은 비교는 기준과 자료의 한계를 함께 밝혀 결론의 범위를 드러낸다."
+      "이 기준을 정할 때 전체 크기가 다른 집단이라면 수보다 비율로 비교하는 편이 적절할 수 있다.",
+      "비율로 맞추어도 측정 시점이 다르면 대상 자체의 변화와 시점이 준 영향을 구분해야 한다.",
+      "이렇게 시점을 맞춰도 평균이 같은 자료라도 값이 퍼진 정도와 분포의 모양은 다를 수 있다.",
+      "평균이나 분포 같은 한 가지 장점만 비교하면 다른 중요한 차이가 결론에서 빠질 수 있다.",
+      "이런 여러 기준으로 비교할 때는 비교 대상이 같은 조건에서 측정되었는지 확인해야 결과를 해석하기 쉽다.",
+      "다만 이렇게 같은 조건에서 뽑은 대표 사례 하나는 가능성을 보여 줄 뿐 일반적인 경향을 증명하지는 못한다.",
+      "그래서 좋은 비교는 기준과 자료의 한계를 함께 밝혀 결론이 미치는 범위를 드러낸다."
     ],
     wrong: [
       "비교 결과에 숫자가 제시되면 사용한 기준보다 수치의 차이가 결론에 더 큰 영향을 준다.",
@@ -42,13 +42,13 @@ module.exports = [
     ko: "원인과 다른 가능성",
     facts: [
       "두 현상이 함께 변해도 한쪽을 다른 쪽의 원인으로 바로 결론 낼 수는 없다.",
-      "두 현상에 함께 영향을 주는 세 번째 요인이 있을 수 있다.",
-      "원인은 결과보다 먼저 나타났는지 확인해야 한다.",
-      "다른 조건을 비슷하게 맞춘 비교는 원인의 영향을 구분하는 데 도움이 된다.",
-      "한 결과에는 여러 원인이 함께 작용할 수 있어 하나의 설명으로는 부족할 수 있다.",
-      "같은 원인도 환경과 대상에 따라 다른 크기의 결과를 낼 수 있다.",
-      "예상과 다른 사례는 설명이 적용되는 조건을 다시 살피게 한다.",
-      "원인 주장은 관찰을 반복하고 다른 설명을 검토할수록 강해질 수 있다."
+      "성급하게 결론 내리지 않아야 하는 이유는 두 현상에 함께 영향을 주는 세 번째 요인이 있을 수 있기 때문이다.",
+      "이런 요인을 가려내려면 먼저 원인이 결과보다 먼저 나타났는지 확인해야 한다.",
+      "순서를 확인한 뒤에는 다른 조건을 비슷하게 맞춘 비교가 원인의 영향을 구분하는 데 도움이 된다.",
+      "이렇게 구분해도 한 결과에는 여러 원인이 함께 작용할 수 있어 하나의 설명으로는 부족할 수 있다.",
+      "게다가 같은 원인이라도 환경과 대상에 따라 다른 크기의 결과를 낼 수 있다.",
+      "그래서 예상과 다른 사례가 나오면 그 설명이 적용되는 조건을 다시 살피게 된다.",
+      "이런 과정을 거치며 원인 주장은 관찰을 반복하고 다른 설명을 검토할수록 강해질 수 있다."
     ],
     wrong: [
       "두 현상이 같은 방향으로 여러 번 변하면 변화의 모양이 인과 관계를 보여 준다.",
@@ -77,13 +77,13 @@ module.exports = [
     en: "Remembering by Retrieval",
     facts: [
       "Rereading makes information familiar, but familiarity can be mistaken for strong memory.",
-      "Retrieval practice asks a learner to recall information before looking at the answer.",
-      "An effortful recall attempt can strengthen later access to the information.",
-      "Checking an answer after recall helps correct errors before they become stable.",
-      "Spacing practice across time creates more useful retrieval than one crowded session.",
-      "Mixing related problem types requires a learner to choose a method, not merely repeat it.",
-      "A failed recall attempt can guide study by revealing what needs more work.",
-      "Effective review combines recall, feedback, and another chance to retrieve later."
+      "A better test of that memory is retrieval practice, which asks a learner to recall information before looking at the answer.",
+      "Making that kind of effortful recall attempt can strengthen later access to the information.",
+      "Checking the answer once recall is finished then helps correct errors before they become stable.",
+      "Spread out across time, this cycle of recall and checking creates more useful retrieval than one crowded session.",
+      "Mixing related problem types within that practice requires a learner to choose a method, not merely repeat it.",
+      "Even a failed recall attempt in this process can guide study by revealing what needs more work.",
+      "Put together, effective review combines recall, feedback, and another chance to retrieve later."
     ],
     wrong: [
       "Familiar information is stored strongly because it feels easy during rereading.",
@@ -112,13 +112,13 @@ module.exports = [
     en: "Signals Among Animals",
     facts: [
       "An animal signal can change a receiver's behavior.",
-      "Signals may use sound, movement, color, scent, or combinations of these forms.",
-      "A signal is useful only when a receiver can detect it in the surrounding environment.",
-      "Loud calls can travel far, but they may also reveal the caller to predators.",
-      "Some signals are reliable because producing them is difficult for a weak animal.",
-      "The meaning of a signal can depend on the situation in which it appears.",
-      "Receivers benefit from responding differently when signals vary in reliability.",
-      "Communication evolves through the behavior of both signalers and receivers."
+      "Signals capable of changing behavior this way may use sound, movement, color, scent, or combinations of these forms.",
+      "Whichever form it takes, a signal is only useful when a receiver can actually detect it in the surrounding environment.",
+      "A loud call solves that detection problem over distance, but it may also reveal the caller to predators.",
+      "Some signals stay reliable despite this risk, because producing them is difficult for a weak animal to fake.",
+      "Beyond how reliable a signal is, its meaning can also depend on the situation in which it appears.",
+      "Because reliability and meaning both vary this way, receivers benefit from responding differently to different signals.",
+      "Communication evolves, in the end, through the behavior of both the signalers sending these signals and the receivers interpreting them."
     ],
     wrong: [
       "An animal signal carries information through its form while the receiver's behavior stays unchanged.",

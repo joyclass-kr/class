@@ -10,13 +10,13 @@ module.exports = [
     ko: "정보의 근거 판단",
     facts: [
       "정보를 판단할 때에는 만든 사람과 제시된 근거를 함께 살펴야 한다.",
-      "같은 사건도 자료 선택에 따라 서로 다른 인상을 줄 수 있다.",
-      "작성 날짜를 보면 오래된 정보가 현재에도 적용되는지 판단하기 쉽다.",
-      "주장은 그것을 뒷받침하는 관찰이나 자료와 구분해서 읽어야 한다.",
-      "독립적인 여러 출처가 같은 사실을 확인하면 판단의 신뢰도가 높아질 수 있다.",
-      "사진은 촬영 범위에, 그래프는 축 간격에 따라 과장되어 보일 수 있다.",
-      "전문가의 말도 그 사람이 해당 분야를 연구했는지 확인할 필요가 있다.",
-      "확실하지 않은 정보는 단정하기보다 불확실성을 밝혀 전달하는 편이 안전하다."
+      "이렇게 만든 사람과 근거를 살필 때는 같은 사건이라도 어떤 자료를 골랐는지에 따라 서로 다른 인상을 줄 수 있다는 점도 함께 봐야 한다.",
+      "그 자료를 볼 때는 작성 날짜도 확인해야 하는데, 오래된 정보가 지금도 그대로 적용되는지는 날짜를 보면 판단하기 쉽다.",
+      "이때 주장 자체는 그것을 뒷받침하는 관찰이나 자료와 구분해서 읽어야 한다.",
+      "이렇게 구분한 관찰과 자료라도, 독립적인 여러 출처가 같은 사실을 확인해 줄 때 판단의 신뢰도가 높아질 수 있다.",
+      "다만 그 자료가 사진이나 그래프라면, 사진은 촬영 범위에 그래프는 축 간격에 따라 과장되어 보일 수 있다는 점도 주의해야 한다.",
+      "자료뿐 아니라 전문가의 말을 인용할 때도 그 사람이 해당 분야를 연구했는지 확인할 필요가 있다.",
+      "이렇게 확인해도 확실하지 않은 정보라면 단정하기보다 불확실성을 밝혀 전달하는 편이 안전하다."
     ],
     wrong: [
       "조회 수가 많은 정보는 많은 사람의 검토를 거쳤으므로 그 수치가 신뢰도의 핵심 기준이 된다.",
@@ -45,13 +45,13 @@ module.exports = [
     ko: "규칙과 예외의 판단",
     facts: [
       "공동체의 규칙은 비슷한 상황에서 무엇을 기대할 수 있는지 알려 준다.",
-      "규칙의 목적을 알면 그대로 적용하기 어려운 상황에서도 판단 기준을 찾기 쉽다.",
-      "예외에는 다른 사람에게도 적용할 수 있는 이유가 있어야 한다.",
-      "권리가 충돌할 때에는 한쪽의 편리뿐 아니라 각 선택의 영향을 살펴야 한다.",
-      "같은 결과를 요구해도 출발 조건이 크게 다르면 불공정할 수 있다.",
-      "규칙을 바꿀 때에는 해결할 문제와 새로 생길 문제를 함께 검토해야 한다.",
-      "한 사례의 판단을 넓혀 적용하기 전에 중요한 조건이 같은지 확인해야 한다.",
-      "좋은 결정 절차는 결론뿐 아니라 근거와 수정 방법도 공개한다."
+      "그런데 규칙을 그대로 적용하기 어려운 상황도 있는데, 이때는 규칙의 목적을 알면 판단 기준을 찾기 쉽다.",
+      "이렇게 목적에 따라 예외를 두더라도, 그 예외에는 다른 사람에게도 적용할 수 있는 이유가 있어야 한다.",
+      "이런 예외를 판단하다 보면 권리가 충돌하는 경우도 생기는데, 이때는 한쪽의 편리뿐 아니라 각 선택의 영향을 살펴야 한다.",
+      "영향을 살필 때는 같은 결과를 요구하더라도 출발 조건이 크게 다르면 불공정할 수 있다는 점도 고려해야 한다.",
+      "이런 불공정을 바로잡으려 규칙을 바꿀 때에는 해결할 문제와 새로 생길 문제를 함께 검토해야 한다.",
+      "다만 이렇게 검토해 내린 한 사례의 판단을 넓혀 적용하기 전에는 중요한 조건이 같은지 먼저 확인해야 한다.",
+      "이 모든 과정을 거친 좋은 결정 절차는 결론뿐 아니라 근거와 수정 방법도 함께 공개한다."
     ],
     wrong: [
       "규칙이 있으면 비슷해 보이는 상황에서는 같은 행동을 선택하는 것이 판단의 첫째 기준이 된다.",
@@ -80,13 +80,13 @@ module.exports = [
     en: "Attention and Notifications",
     facts: [
       "Attention is limited, so signals cannot all get equal depth of processing at once.",
-      "A notification can interrupt a task despite taking moments to read.",
-      "After an interruption, returning to an earlier thought needs extra time and effort.",
-      "Frequent signals can form a habit of checking before judging whether the check was useful.",
-      "Disabling low-priority alerts reduces outside demands on attention.",
-      "Scheduled checks preserve access to messages while protecting focused work.",
-      "Complex reasoning is harder to resume than a simple routine.",
-      "Attention management means choosing when a digital tool deserves full focus."
+      "Because attention works this way, even a notification that takes only moments to read can interrupt a task in progress.",
+      "Once that interruption happens, returning to the earlier thought needs extra time and effort.",
+      "When such interruptions repeat often enough, they can form a habit of checking before anyone judges whether the check was actually useful.",
+      "Disabling low-priority alerts is one way to break that habit, since it reduces outside demands on attention.",
+      "Scheduled checks work in a similar way, preserving access to messages while still protecting focused work.",
+      "These habits matter most for complex reasoning, which is harder to resume after a break than a simple routine.",
+      "Attention management, in the end, means choosing when a task deserves full focus rather than reacting to every signal."
     ],
     wrong: [
       "Attention becomes deeper when several signals compete for it at the same time.",
@@ -115,13 +115,13 @@ module.exports = [
     en: "Trees and Heat in Cities",
     facts: [
       "Dark city surfaces absorb sunlight and become warmer than shaded ground.",
-      "A tree canopy blocks sunlight before it reaches pavement, walls, and people.",
-      "Water released by leaves cools nearby air as the water becomes vapor.",
-      "Tree cooling depends on size, health, species, and access to water.",
-      "Young trees need years of care before they provide mature shade.",
-      "Shade matters most where people walk, wait, and live.",
-      "Tree planting creates costs when roots, pollen, or maintenance are ignored.",
-      "A heat plan improves when trees are combined with built shade, suitable buildings, and water."
+      "A tree canopy helps prevent that heat build-up by blocking sunlight before it reaches pavement, walls, and people.",
+      "Beyond blocking sunlight, leaves also cool the air nearby as the water they release turns into vapor.",
+      "How much cooling a tree provides this way depends on its size, health, species, and access to water.",
+      "Because of these factors, a young tree needs years of care before it can provide that kind of mature shade.",
+      "Wherever that shade finally appears, it matters most in the places where people walk, wait, and live.",
+      "Planting trees in those places still creates costs if roots, pollen, or maintenance are ignored.",
+      "Weighing both sides, a heat plan improves most when trees are combined with built shade, suitable buildings, and water."
     ],
     wrong: [
       "Dark pavement stays cooler than shaded ground because it stores sunlight below the surface.",

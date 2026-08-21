@@ -33,32 +33,32 @@ module.exports = {
           "Water warmed by sunlight turns to vapor and rises."
         ],
         [
-          "식은 수증기는 작은 물방울이 되어 구름을 만든다.",
-          "Cool vapor turns into tiny drops and forms a cloud."
+          "이렇게 올라간 수증기가 식으면 작은 물방울이 되어 구름을 만든다.",
+          "As that rising vapor cools, it turns into tiny drops and forms a cloud."
         ],
         [
-          "구름 속 물방울이 무거워지면 비나 눈으로 내린다.",
-          "Heavy drops in a cloud fall as rain or snow."
+          "구름 속 물방울이 무거워지면 비나 눈이 되어 떨어진다.",
+          "Once the drops in that cloud grow heavy, they fall as rain or snow."
         ],
         [
-          "땅에 내린 물 가운데 일부는 흙 속으로 스며든다.",
-          "Some water on the ground soaks into the soil."
+          "이렇게 내린 물 가운데 일부는 땅속으로 스며든다.",
+          "Some of that falling water soaks into the soil."
         ],
         [
-          "강과 땅속의 물은 다시 바다로 흘러갈 수 있다.",
-          "Water in rivers and soil can flow back to the sea."
+          "땅속에 스민 물과 강물은 다시 바다로 흘러갈 수 있다.",
+          "Water in the soil and in rivers can flow back to the sea."
         ],
         [
-          "식물은 잎으로 수증기를 공기 중에 내보낸다.",
-          "Plants send water vapor into the air through their leaves."
+          "바다나 땅 위 식물도 잎으로 수증기를 공기 중에 내보낸다.",
+          "Plants near the land or sea also send water vapor into the air through their leaves."
         ],
         [
-          "물의 순환에서 물은 여러 곳을 돌고 모습도 바꾼다.",
-          "In the water cycle, water moves and changes its form."
+          "이렇게 물이 여러 곳을 돌고 모습도 바꾸는 것을 물의 순환이라 한다.",
+          "This whole movement of water, changing form as it goes, is called the water cycle."
         ],
         [
-          "물의 순환을 일으키는 가장 큰 힘은 태양이다.",
-          "The Sun gives most of the energy for this cycle."
+          "이 순환을 일으키는 가장 큰 힘은 태양이다.",
+          "The Sun gives most of the energy that drives this cycle."
         ]
       ],
       "inferences": [
@@ -387,32 +387,32 @@ module.exports = {
           "Producers make their own food using energy from sunlight."
         ],
         [
-          "소비자는 다른 생물을 먹어서 힘을 얻는다.",
-          "Consumers eat other living things to get energy."
+          "소비자는 이런 생산자나 다른 생물을 먹어서 힘을 얻는다.",
+          "Consumers eat these producers or other living things to get energy."
         ],
         [
-          "분해자는 죽은 생물을 잘게 나누어 흙으로 돌려보낸다.",
-          "Decomposers break down dead matter and return it to soil."
+          "생산자와 소비자가 죽으면 분해자가 잘게 나누어 흙으로 돌려보낸다.",
+          "When producers and consumers die, decomposers break down their remains and return them to the soil."
         ],
         [
-          "먹이 그물은 여러 먹이 사슬이 이어진 모습이다.",
-          "A food web links several food chains together."
+          "이렇게 이어진 생산자·소비자·분해자를 먹이 그물이라 한다.",
+          "Producers, consumers, and decomposers linked this way form a food web."
         ],
         [
-          "어떤 종의 수가 바뀌면 이어진 종도 영향을 받는다.",
-          "A big change in one species touches other linked species."
+          "먹이 그물 안에서 한 종의 수가 바뀌면 이어진 다른 종도 영향을 받는다.",
+          "Within that web, a big change in one species touches other linked species."
         ],
         [
-          "서식지는 생물이 먹이와 물, 자리를 얻는 곳이다.",
-          "A habitat gives an animal food, water, and space."
+          "이렇게 이어진 생물들이 먹이와 물, 자리를 얻는 곳을 서식지라 한다.",
+          "The place where these linked species find food, water, and space is a habitat."
         ],
         [
-          "사는 종이 다양한 곳은 환경 변화에 잘 버틴다.",
-          "Places with many kinds of species handle change well."
+          "한 서식지에 사는 종이 다양할수록 환경 변화에 잘 버틴다.",
+          "A habitat with many kinds of species handles change well."
         ],
         [
-          "에너지는 먹이를 따라 옮겨 가며 단계마다 줄어든다.",
-          "Energy moves along food links and drops at each step."
+          "이런 먹이 관계를 따라 에너지도 옮겨 가며 단계마다 줄어든다.",
+          "Energy also moves along these food links, dropping at each step."
         ]
       ],
       "inferences": [
@@ -741,32 +741,32 @@ module.exports = {
           "Weather is the air at one place for a short time."
         ],
         [
-          "기후는 그 지역에 오래 이어진 날씨 흐름이다.",
-          "Climate is the long-term pattern of weather in a region."
+          "이런 날씨를 그 지역에서 오래 지켜본 흐름을 기후라 한다.",
+          "Climate is what you get by watching this weather in a region over the long term."
         ],
         [
-          "하루 추운 날로 기후 변화를 말하지 못한다.",
-          "One cold day is not enough to show a climate change."
+          "그래서 하루 추운 날 하나로는 기후 변화를 말하지 못한다.",
+          "That is why one cold day is not enough to show a climate change."
         ],
         [
-          "기온과 비와 바람은 날씨를 이루는 요소다.",
-          "Temperature, rain, and wind make up the weather."
+          "날씨를 이루는 요소는 기온과 비와 바람이다.",
+          "The elements that make up weather are temperature, rain, and wind."
         ],
         [
-          "기후를 견주는 데는 여러 해 자료가 필요하다.",
-          "Comparing climates needs data from many years."
+          "반면 기후를 견주려면 하루가 아니라 여러 해 자료가 필요하다.",
+          "Comparing climates, by contrast, needs data from many years, not one day."
         ],
         [
-          "바다와 큰 산은 그 지역 기후를 바꾸기도 한다.",
-          "Seas and big mountains can change a region's climate."
+          "이런 여러 해의 기후는 바다와 큰 산이 바꾸기도 한다.",
+          "Seas and big mountains can shape the climate that forms over those years."
         ],
         [
-          "예보는 관측 자료와 모형으로 날씨를 미리 본다.",
-          "A forecast uses records and models to guess the coming weather."
+          "한편 다가올 날씨는 관측 자료와 모형으로 예보에서 미리 본다.",
+          "Forecasting the weather ahead, meanwhile, uses records and models."
         ],
         [
-          "평균이 닮은 두 곳도 거친 날씨 횟수는 다르다.",
-          "Two places with equal averages can have more or fewer storms."
+          "평균이 닮은 두 곳도 거친 날씨가 나타나는 횟수는 다를 수 있다.",
+          "Even two places with equal averages can have more or fewer storms."
         ]
       ],
       "inferences": [
@@ -1095,32 +1095,32 @@ module.exports = {
           "A lamp turns some electric energy into light."
         ],
         [
-          "움직이는 물체는 모두 운동 에너지를 가진다.",
-          "Every moving object has energy of motion."
+          "이렇게 형태를 바꾸는 에너지에는 운동 에너지도 있어, 움직이는 물체는 모두 이 에너지를 가진다.",
+          "Energy that changes form like this also shows up as motion energy, which every moving object has."
         ],
         [
-          "높은 곳에 있는 물체도 위치 에너지를 가진다.",
-          "An object up high can hold position energy."
+          "운동 에너지처럼 높은 곳에 있는 물체도 위치 에너지를 가진다.",
+          "Just like motion energy, an object up high can hold position energy."
         ],
         [
-          "배터리는 안에 모은 화학 에너지를 전기로 바꾼다.",
-          "A battery turns stored chemical energy into electricity."
+          "배터리는 이런 에너지들과 달리 안에 모은 화학 에너지를 전기로 바꾼다.",
+          "Unlike these, a battery turns chemical energy stored inside it into electricity."
         ],
         [
-          "에너지는 없어지지 않는다. 다른 모습으로 바뀐다.",
-          "Energy does not vanish. It changes into another form."
+          "이렇게 여러 모습을 오가도 에너지는 없어지지 않는다. 다른 모습으로 바뀔 뿐이다.",
+          "Moving between all these forms, energy does not vanish — it only changes into another form."
         ],
         [
-          "마찰이 생기면 운동 에너지가 열로 바뀐다.",
-          "Rubbing turns some energy of motion into heat."
+          "이 원리는 마찰에서도 나타나, 마찰이 생기면 운동 에너지가 열로 바뀐다.",
+          "This same idea shows up in rubbing, which turns some energy of motion into heat."
         ],
         [
-          "태양 전지는 빛 에너지를 전기로 바꾼다.",
-          "A solar cell turns light energy into electricity."
+          "태양 전지도 같은 원리로 빛 에너지를 전기로 바꾼다.",
+          "A solar cell works the same way, turning light energy into electricity."
         ],
         [
-          "효율은 넣은 에너지 중 쓸모 있게 바뀐 몫이다.",
-          "Efficiency is the useful share of the energy put in."
+          "효율은 이렇게 넣은 에너지 중 쓸모 있게 바뀐 몫을 말한다.",
+          "Efficiency, then, is the useful share of that energy put in."
         ]
       ],
       "inferences": [
@@ -1449,32 +1449,32 @@ module.exports = {
           "A long password is harder to guess than a short one."
         ],
         [
-          "사이트마다 비밀번호를 다르게 쓴다. 피해가 덜 번진다.",
-          "Different passwords for each site keep a leak from spreading."
+          "이런 비밀번호를 사이트마다 다르게 쓰면 피해가 덜 번진다.",
+          "Setting a different password for each site like this keeps a leak from spreading."
         ],
         [
-          "다단계 인증은 비밀번호 말고 하나 더 물어본다.",
-          "Two-step checking adds one more check besides the password."
+          "비밀번호만으로 모자랄 때를 대비해 다단계 인증은 하나 더 물어본다.",
+          "In case a password alone is not enough, two-step checking adds one more check."
         ],
         [
-          "수상해 보이는 링크는 보낸 사람과 주소를 먼저 본다.",
-          "Check the sender and address of a strange link first."
+          "이렇게 지켜도 수상해 보이는 링크는 누르기 전에 보낸 사람과 주소를 먼저 본다.",
+          "Even with these guards up, check the sender and address of a strange link before clicking it."
         ],
         [
-          "업데이트는 앱과 기기의 보안 문제를 고쳐 준다.",
-          "Updates fix known security problems in apps and systems."
+          "마찬가지로 업데이트는 앱과 기기의 보안 문제를 고쳐 준다.",
+          "In the same way, updates fix known security problems in apps and systems."
         ],
         [
-          "집 주소나 전화번호는 공개 글에 올리지 않는다.",
-          "Do not post your home address or phone number publicly."
+          "이런 관리 못지않게 집 주소나 전화번호는 공개 글에 올리지 않는다.",
+          "Just as important, do not post your home address or phone number in public posts."
         ],
         [
-          "백업은 고장 난 기기의 파일을 되찾게 해 준다.",
-          "A backup helps you get files back from a broken device."
+          "그래도 문제가 생기면 백업은 고장 난 기기의 파일을 되찾게 해 준다.",
+          "If something still goes wrong, a backup helps you get files back from a broken device."
         ],
         [
-          "인터넷 정보는 믿을 곳 여러 군데에서 다시 확인한다.",
-          "Check online information against several sources you can trust."
+          "이렇게 계정과 기기를 지키듯 인터넷 정보도 믿을 곳 여러 군데에서 다시 확인한다.",
+          "Protecting accounts and devices like this, also check online information against several sources you trust."
         ]
       ],
       "inferences": [
@@ -1803,32 +1803,32 @@ module.exports = {
           "A group decision needs a chance for different views."
         ],
         [
-          "근거를 살펴야 의견을 더 공정하게 비교한다.",
-          "Checking the evidence makes a fair comparison of views easier."
+          "이때 근거를 살펴야 의견을 더 공정하게 비교할 수 있다.",
+          "Checking the evidence at this point makes a fair comparison of views easier."
         ],
         [
-          "다수결도 방법이다. 소수의 권리도 함께 살핀다.",
-          "Majority voting is one way. Minority rights still matter."
+          "이렇게 견준 뒤 다수결로 정해도, 그것도 한 방법일 뿐 소수의 권리도 함께 살핀다.",
+          "Even after weighing evidence this way, majority voting is only one way — minority rights still matter."
         ],
         [
-          "토론은 놀리는 자리가 아니라 문제를 따지는 자리다.",
-          "Discussion is not for insults. It is for examining issues."
+          "다수결로 정하는 자리에서도 토론은 놀리는 자리가 아니라 문제를 따지는 자리다.",
+          "Even while deciding by vote, discussion is not for insults. It is for examining issues."
         ],
         [
-          "과정과 기준을 공개하면 책임을 묻기 쉬워진다.",
-          "Sharing the process and rules makes people answerable."
+          "이런 토론과 결정의 과정과 기준을 공개하면 책임을 묻기 쉬워진다.",
+          "Sharing this process of discussion and decision, along with its rules, makes people answerable."
         ],
         [
-          "처지가 다른 사람은 같은 규칙도 다르게 겪는다.",
-          "One rule can affect different people in different ways."
+          "그런데 이렇게 정해도 처지가 다른 사람은 같은 규칙을 다르게 겪는다.",
+          "Even a rule shared this way can still affect different people in different ways."
         ],
         [
-          "합의는 차이를 없애기보다 받아들일 안을 찾는 일이다.",
-          "Consensus looks for an option everyone can accept, not sameness."
+          "그래서 합의는 차이를 없애기보다 이런 사람들이 받아들일 안을 찾는 일이다.",
+          "That is why consensus looks for an option everyone can accept, not sameness."
         ],
         [
-          "결정 뒤에도 결과를 살펴서 규칙을 고칠 수 있다.",
-          "A rule can change later once the results are reviewed."
+          "이렇게 정한 뒤에도 결과를 살펴서 규칙을 고칠 수 있다.",
+          "Even a rule decided this way can change later once the results are reviewed."
         ]
       ],
       "inferences": [
@@ -2157,32 +2157,32 @@ module.exports = {
           "A ratio compares the size of two amounts."
         ],
         [
-          "2 대 3과 4 대 6은 같은 비를 나타낸다.",
-          "The ratio 2 to 3 equals the ratio 4 to 6."
+          "이런 비 가운데 2 대 3과 4 대 6은 같은 비를 나타낸다.",
+          "Among these ratios, 2 to 3 equals 4 to 6."
         ],
         [
-          "단위율은 한쪽 양을 1로 맞추어 나타낸 비다.",
-          "A unit rate tells the amount for one unit."
+          "비를 나타내는 또 다른 방법으로, 단위율은 한쪽 양을 1로 맞추어 나타낸 비다.",
+          "Another way to show a ratio is a unit rate, which tells the amount for one unit."
         ],
         [
-          "전체 수가 다르면 같은 개수라도 비율이 다르다.",
-          "A bigger total makes the same count a smaller share."
+          "이런 비율은 전체 수가 다르면 같은 개수라도 값이 달라진다.",
+          "A share like this changes even for the same count, since a bigger total makes it smaller."
         ],
         [
-          "비례에서는 어느 한쪽이 2배가 되면 나머지도 2배다.",
-          "In a proportional pair, doubling one doubles the other."
+          "반면 비례에서는 어느 한쪽이 2배가 되면 나머지도 2배가 되어 비율이 그대로다.",
+          "A proportional pair, by contrast, keeps that share the same: doubling one doubles the other."
         ],
         [
-          "원점을 지나는 곧은 직선은 비례를 나타낼 수 있다.",
-          "A straight line through the origin can show proportion."
+          "이런 비례는 원점을 지나는 곧은 직선으로 나타낼 수 있다.",
+          "A proportional pair like this can be shown as a straight line through the origin."
         ],
         [
-          "백분율은 전체를 100으로 볼 때의 비율이다.",
-          "A percent is a share out of one hundred."
+          "비율을 나타내는 방법 중 전체를 100으로 보는 것이 백분율이다.",
+          "Among the ways to show a ratio, the one that sets the whole to one hundred is a percent."
         ],
         [
-          "비교하기 전에 서로 다른 단위를 같게 맞춘다.",
-          "Rates in unlike units need the same unit first."
+          "이렇게 구한 비율이라도 단위가 다르면 비교하기 전에 같게 맞춘다.",
+          "Even a share found this way needs matching units before it can be compared."
         ]
       ],
       "inferences": [
@@ -2511,32 +2511,32 @@ module.exports = {
           "Looking at art starts with what you can see."
         ],
         [
-          "색, 선, 모양, 질감은 작품을 설명하는 요소다.",
-          "Color, line, shape, and texture help describe a work."
+          "이때 색, 선, 모양, 질감은 그렇게 살필 때 볼 수 있는 요소다.",
+          "Color, line, shape, and texture are what to look for while doing that."
         ],
         [
-          "같은 작품도 보는 사람에 따라 다르게 읽힌다.",
-          "People can read the same work in their own ways."
+          "같은 요소를 보아도 같은 작품이 보는 사람에 따라 다르게 읽힌다.",
+          "Even seeing the same elements, people can read the same work in their own ways."
         ],
         [
-          "해석에는 작품에서 찾은 근거를 함께 대는 것이 좋다.",
-          "An interpretation gets stronger with evidence from the work."
+          "이렇게 다른 해석에는 작품에서 찾은 근거를 함께 대는 것이 좋다.",
+          "An interpretation like this gets stronger with evidence from the work."
         ],
         [
-          "작품이 만들어진 때와 곳은 뜻풀이에 도움이 된다.",
-          "The time and place of a work help explain it."
+          "그 근거를 찾을 때 작품이 만들어진 때와 곳을 알면 뜻풀이에 도움이 된다.",
+          "Looking for that evidence, knowing the time and place of a work can help explain it."
         ],
         [
-          "작가의 말이 중요해도 작품 뜻은 하나가 아니다.",
-          "The artist's aim matters, but it fixes no single meaning."
+          "작가의 말도 중요하지만 그것이 작품 뜻을 하나로만 정하지는 않는다.",
+          "The artist's aim matters too, but it fixes no single meaning."
         ],
         [
-          "재료와 만드는 방법은 작품의 느낌을 바꿀 수 있다.",
-          "Materials and methods can change how a work feels."
+          "뜻만이 아니라 재료와 만드는 방법도 작품의 느낌을 바꿀 수 있다.",
+          "Beyond meaning, materials and methods can also change how a work feels."
         ],
         [
-          "감상에서는 본 것과 느낀 것을 나누어 말한다.",
-          "In talking about art, keep facts and feelings apart."
+          "이런 여러 요소를 볼 때 감상에서는 본 것과 느낀 것을 나누어 말한다.",
+          "Weighing all of this, keep what you saw and what you felt apart."
         ]
       ],
       "inferences": [
@@ -2858,13 +2858,13 @@ module.exports = {
       "intro": "정보를 믿기 전에 무엇을 볼지 알아보자.",
       "facts": [
         "정보를 볼 때는 만든 사람과 근거를 같이 본다.",
-        "같은 일도 고른 자료에 따라 다르게 보인다.",
-        "날짜를 보면 지금도 맞는 정보인지 알기 쉽다.",
-        "주장과 그 근거가 되는 자료는 나누어 읽는다.",
-        "여러 곳에서 따로 확인한 사실은 더 믿을 만하다.",
-        "사진은 찍은 범위에, 그래프는 축 간격에 따라 인상이 달라진다.",
-        "전문가의 말도 그 사람이 해당 분야를 연구했는지 확인한다.",
-        "확실하지 않은 내용은 모른다고 밝힌다."
+        "이렇게 볼 때 같은 일도 고른 자료에 따라 다르게 보일 수 있다.",
+        "그 자료를 볼 때는 날짜도 봐야 지금도 맞는 정보인지 알기 쉽다.",
+        "이때 주장과 그 근거가 되는 자료는 나누어 읽는다.",
+        "이렇게 나눈 근거라도 여러 곳에서 따로 확인한 사실이 더 믿을 만하다.",
+        "다만 그 자료가 사진이나 그래프라면 찍은 범위나 축 간격에 따라 인상이 달라질 수 있다.",
+        "자료뿐 아니라 전문가의 말도 그 사람이 해당 분야를 연구했는지 확인한다.",
+        "이렇게 확인해도 확실하지 않은 내용은 모른다고 밝힌다."
       ],
       "inferences": [
         "글쓴이와 근거를 모르는 글은 판단을 미룬다.",
@@ -2966,13 +2966,13 @@ module.exports = {
       "intro": "규칙을 지킬 때와 고칠 때 볼 점을 알아보자.",
       "facts": [
         "규칙은 같은 상황에서 서로 무엇을 할지 알려 준다.",
-        "목적을 아는 사람은 어려운 상황도 잘 판단한다.",
-        "예외에는 남에게도 통하는 이유가 있어야 한다.",
-        "한쪽 편함만 보지 않고 남에게 줄 영향도 본다.",
-        "출발 조건이 다르면 같은 결과 요구는 불공정하다.",
-        "규칙을 고칠 때는 풀 문제와 생길 문제를 본다.",
-        "사례를 넓혀 쓰기 전에 조건이 같은지 본다.",
-        "좋은 결정은 결론과 근거와 고칠 방법도 알린다."
+        "이런 규칙을 그대로 적용하기 어려울 때 목적을 아는 사람은 그 상황도 잘 판단한다.",
+        "이렇게 목적에 따라 예외를 두어도 남에게도 통하는 이유가 있어야 한다.",
+        "이런 예외를 살필 때는 한쪽 편함만 보지 않고 남에게 줄 영향도 본다.",
+        "영향을 볼 때는 출발 조건이 다르면 같은 결과 요구가 불공정할 수 있다는 점도 본다.",
+        "이런 불공정을 고치려 규칙을 바꿀 때는 풀 문제와 생길 문제를 함께 본다.",
+        "다만 이렇게 본 사례를 넓혀 쓰기 전에는 조건이 같은지 먼저 본다.",
+        "이 모든 과정을 거친 좋은 결정은 결론과 근거와 고칠 방법도 함께 알린다."
       ],
       "inferences": [
         "규칙을 모르면 남의 다음 행동을 그리기 어렵다.",
@@ -3074,13 +3074,13 @@ module.exports = {
       "intro": "This part looks at alerts and attention during daily digital work.",
       "facts": [
         "Attention is limited, so signals cannot all get deep focus at once.",
-        "A short alert takes seconds but still breaks a task.",
-        "After a break, getting the idea back costs extra effort.",
-        "Frequent alerts build a habit of checking first and judging later.",
-        "Turning off small alerts cuts outside demands on attention.",
-        "Checking at set times keeps messages open and guards focus.",
-        "Hard thinking is harder to restart than a simple routine.",
-        "Managing attention means picking the right time for each tool."
+        "Because attention works this way, even a short alert that takes seconds to read can still break a task.",
+        "Once that break happens, getting the idea back costs extra effort.",
+        "When breaks like this repeat often, they build a habit of checking first and judging later whether it mattered.",
+        "Turning off small alerts is one way to break that habit, since it cuts outside demands on attention.",
+        "Checking at set times works in a similar way, keeping messages open while still guarding focus.",
+        "These habits matter most for hard thinking, which is harder to restart than a simple routine.",
+        "Managing attention, then, means picking the right time for each tool instead of reacting to every signal."
       ],
       "inferences": [
         "A second job lowers the care given to both tasks.",
@@ -3182,13 +3182,13 @@ module.exports = {
       "intro": "This passage looks at trees and heat in city areas.",
       "facts": [
         "Dark city surfaces soak up sun and get hotter than shaded ground.",
-        "A tree's leaves block sun from roads, walls, and people.",
-        "Water from leaves turns to vapor and cools the air.",
-        "Cooling depends on a tree's size, health, and kind, plus how much water it gets.",
-        "Young trees need years of care to give full shade.",
-        "Shade helps most where people walk, wait, and live.",
-        "Planting brings costs when roots, pollen, and upkeep are ignored.",
-        "A heat plan works best with trees, built shade, buildings, and water."
+        "A tree's leaves help stop that heat by blocking sun from roads, walls, and people.",
+        "Beyond blocking sun, leaves also cool the air as the water inside them turns to vapor.",
+        "How much cooling this brings depends on a tree's size, health, and kind, plus how much water it gets.",
+        "Because of this, young trees need years of care before they can give full shade.",
+        "Wherever that shade appears, it helps most where people walk, wait, and live.",
+        "Planting trees in those places still brings costs when roots, pollen, and upkeep are ignored.",
+        "Weighing both sides, a heat plan works best with trees, built shade, buildings, and water together."
       ],
       "inferences": [
         "Surface color helps explain warm spots on a street.",
@@ -3290,13 +3290,13 @@ module.exports = {
       "intro": "두 가지를 견줄 때 무엇을 먼저 정할지 알아보자.",
       "facts": [
         "둘을 견줄 때 기준을 무엇으로 삼았는지 밝힌다.",
-        "크기가 다른 무리는 비율로 견주는 편이 낫다.",
-        "잰 날이 다를 때는 대상 변화와 시기 영향을 나눈다.",
-        "평균이 같은 자료도 퍼진 모양은 다를 수 있다.",
-        "장점 하나만 견주는 비교는 큰 차이를 놓친다.",
-        "조건이 같은지 알아야 결과를 읽기 쉽다.",
-        "사례 하나는 가능성만 보인다. 흐름은 못 밝힌다.",
-        "좋은 비교는 기준과 한계를 밝혀 범위를 보인다."
+        "이 기준을 정할 때 크기가 다른 무리라면 비율로 견주는 편이 낫다.",
+        "비율로 맞추어도 잰 날이 다르면 대상 변화와 시기 영향을 나눈다.",
+        "이렇게 시기를 맞춰도 평균이 같은 자료라도 퍼진 모양은 다를 수 있다.",
+        "이런 장점 하나만 견주는 비교는 다른 큰 차이를 놓친다.",
+        "이런 여러 기준으로 견줄 때는 조건이 같은지 알아야 결과를 읽기 쉽다.",
+        "다만 이렇게 뽑은 사례 하나는 가능성만 보일 뿐 흐름은 못 밝힌다.",
+        "그래서 좋은 비교는 기준과 한계를 밝혀 범위를 보인다."
       ],
       "inferences": [
         "기준 없는 비교는 사람마다 결론이 달라진다.",
@@ -3398,13 +3398,13 @@ module.exports = {
       "intro": "어떤 일의 원인을 찾을 때 무엇을 살필지 알아보자.",
       "facts": [
         "둘이 같이 변해도 바로 원인을 정하지는 못한다.",
-        "세 번째 원인이 둘에 함께 영향을 줄 수 있다.",
-        "원인이 결과보다 먼저 있었는지 꼭 확인한다.",
-        "조건을 비슷하게 맞추면 원인을 가려내기 쉽다.",
-        "원인이 여럿 겹친 결과는 설명 하나로 모자라다.",
-        "같은 원인도 환경과 대상에 따라 결과의 크기가 달라진다.",
-        "생각과 다른 사례는 설명의 조건을 다시 보게 한다.",
-        "여러 번 살피고 다른 설명도 따질수록 주장이 세진다."
+        "성급히 정하면 안 되는 까닭은 세 번째 원인이 둘에 함께 영향을 줄 수 있어서다.",
+        "이런 원인을 가리려면 원인이 결과보다 먼저 있었는지 꼭 확인한다.",
+        "순서를 본 다음에는 조건을 비슷하게 맞추면 원인을 가려내기 쉽다.",
+        "이렇게 가려도 원인이 여럿 겹친 결과는 설명 하나로 모자라다.",
+        "게다가 같은 원인도 환경과 대상에 따라 결과의 크기가 달라진다.",
+        "그래서 생각과 다른 사례가 나오면 설명의 조건을 다시 보게 한다.",
+        "이런 과정을 거치며 여러 번 살피고 다른 설명도 따질수록 주장이 세진다."
       ],
       "inferences": [
         "나란히 오르내린 자료로는 아직 원인을 못 정한다.",
@@ -3506,13 +3506,13 @@ module.exports = {
       "intro": "This passage shows how study habits change what you remember.",
       "facts": [
         "Rereading makes a page feel known, but that feeling can mislead.",
-        "Recall practice means you try to remember before you check.",
-        "A hard try to remember makes memory stronger later.",
-        "Checking the answer after you recall fixes mistakes early.",
-        "Short study times on many days beat one long session.",
-        "Mixed problems make you pick a way, not just repeat one.",
-        "A failed try shows you what to study next.",
-        "Good review has three parts: recall, feedback, and a later try."
+        "A better test than that feeling is recall practice, where you try to remember before you check.",
+        "Making a hard try like this to remember makes memory stronger later.",
+        "Checking the answer once you finish trying then fixes mistakes early.",
+        "Spread across many days, this kind of practice beats one long crowded session.",
+        "Mixed problems within that practice make you pick a way, not just repeat one.",
+        "Even a failed try in this process shows you what to study next.",
+        "Put together, good review has three parts: recall, feedback, and a later try."
       ],
       "inferences": [
         "An easy feeling during rereading proves very little.",
@@ -3614,13 +3614,13 @@ module.exports = {
       "intro": "This passage shows how animals send signals and how others answer.",
       "facts": [
         "An animal signal can change what another animal does.",
-        "Signals use sound, movement, color, smell, or a mix.",
-        "A signal works only when the other animal notices it.",
-        "Loud calls travel far, but they can also draw predators.",
-        "A weak animal cannot make some signals, so those signals stay honest.",
-        "The meaning of a signal can change with the setting.",
-        "Animals gain by answering honest and doubtful signals in different ways.",
-        "Communication changes over time through senders and receivers alike."
+        "Signals that change behavior this way use sound, movement, color, smell, or a mix of these.",
+        "Whichever form it takes, a signal works only when the other animal notices it.",
+        "A loud call solves that problem over distance, but it can also draw predators.",
+        "Some signals stay honest despite this risk, because a weak animal cannot fake them.",
+        "Beyond how honest a signal is, its meaning can also change with the setting.",
+        "Because signals vary this way, animals gain by answering honest and doubtful ones differently.",
+        "Communication changes over time, in the end, through senders and receivers alike."
       ],
       "inferences": [
         "A signal's effect shows in what the receiver does next.",
@@ -3722,13 +3722,13 @@ module.exports = {
       "intro": "주장을 살필 때 전제를 어떻게 다루는지 알아보자.",
       "facts": [
         "주장은 글에 적히지 않은 생각도 전제로 삼는다.",
-        "전제는 근거에서 결론으로 넘어가도록 이어 준다.",
-        "같은 근거도 전제에 따라 다른 결론을 낳는다.",
-        "숨은 전제를 찾으려면 근거에 빠진 조건을 살핀다.",
-        "전제가 틀리면 맞는 근거도 결론을 지키지 못한다.",
-        "무엇이 더 좋다는 주장에는 글쓴이가 중요하게 보는 것이 전제로 깔린다.",
-        "반대 사례를 떠올려 전제가 닿는 범위를 본다.",
-        "주장을 볼 때는 근거와 함께 전제도 살펴야 한다."
+        "이런 전제는 근거에서 결론으로 넘어가도록 이어 주는 구실을 한다.",
+        "그래서 같은 근거도 전제에 따라 다른 결론을 낳는다.",
+        "이렇게 결론을 가르는 숨은 전제를 찾으려면 근거에 빠진 조건을 살핀다.",
+        "이렇게 찾은 전제가 틀리면 맞는 근거도 결론을 지키지 못한다.",
+        "특히 무엇이 더 좋다는 주장에는 글쓴이가 중요하게 보는 것이 전제로 깔린다.",
+        "이런 전제가 닿는 범위를 보려면 반대 사례를 떠올려 본다.",
+        "그러므로 주장을 볼 때는 근거와 함께 전제도 살펴야 한다."
       ],
       "inferences": [
         "문장을 다 읽어도 주장의 바탕은 안 보인다.",
@@ -3830,13 +3830,13 @@ module.exports = {
       "intro": "긴 글에서 무엇을 남길지 정하는 법을 알아보자.",
       "facts": [
         "글의 핵심은 문장들을 묶는 중심 생각에 있다.",
-        "재미있는 사례도 중심 생각을 받쳐야 핵심이 된다.",
-        "겹치는 낱말보다 문장들이 함께 말하는 것을 본다.",
-        "예시는 중심 생각을 보여 주나 주제 자체는 아니다.",
-        "원인과 결과를 다룬 글은 둘의 관계를 요약에 넣는다.",
-        "견주는 글은 한쪽 특징보다 둘의 큰 차이를 본다.",
-        "세부 정보를 빼도 결론이 그대로면 줄여도 된다.",
-        "좋은 요약은 원문 범위를 넓히거나 새로운 내용을 덧붙이지 않는다."
+        "이 중심 생각을 기준으로 보면 재미있는 사례도 그 생각을 받쳐야 핵심이 된다.",
+        "이때 중심 생각을 찾으려면 겹치는 낱말보다 문장들이 함께 말하는 것을 본다.",
+        "이런 관계를 보여 주는 예시는 중심 생각을 보여 주나 주제 자체는 아니다.",
+        "이를테면 원인과 결과를 다룬 글은 둘의 관계를 요약에 넣는다.",
+        "반면 견주는 글은 한쪽 특징보다 둘의 큰 차이를 본다.",
+        "이렇게 중심 생각을 가릴 때 세부 정보를 빼도 결론이 그대로면 줄여도 된다.",
+        "다만 좋은 요약은 이렇게 줄여도 원문 범위를 넓히거나 새로운 내용을 덧붙이지 않는다."
       ],
       "inferences": [
         "문장 하나만 옮겨 적으면 중심 생각이 빠진다.",
@@ -3938,13 +3938,13 @@ module.exports = {
       "intro": "This passage tells what models do and how we test them.",
       "facts": [
         "A model shows some parts of a system, not all.",
-        "A simple model makes big links easy to see.",
-        "A guess comes from the model and the data put in.",
-        "A test puts the model's guess next to real data.",
-        "A wrong guess can show a bad idea or a missing part.",
-        "A model may work in one range and fail outside.",
-        "Two models of one system can have two goals.",
-        "A model earns trust from many tests, not extra parts."
+        "Choosing which parts to show this way is what makes a simple model's big links easy to see.",
+        "Working from that simple picture, a guess comes from the model and the data put in.",
+        "A test then puts that guess next to real data.",
+        "When a test fails, the wrong guess can show a bad idea or a missing part.",
+        "That is also why a model may work in one range and fail outside it.",
+        "Because of these limits, two models of one system can have two different goals.",
+        "Through all of this, a model earns trust from many tests, not from extra parts."
       ],
       "inferences": [
         "Dropping detail can be a choice, not a flaw.",
@@ -4046,13 +4046,13 @@ module.exports = {
       "intro": "This passage shows how a system's output shapes its next step.",
       "facts": [
         "Feedback happens as a system's output shapes its next move.",
-        "Balancing feedback pushes a system back toward its target range.",
-        "Reinforcing feedback lets a small change grow through later effects.",
-        "A delay makes feedback act late, once the state has changed.",
-        "One loop can help in one place and hurt in another.",
-        "One step can hide a loop built over many steps.",
-        "One changed link can touch far parts of the system.",
-        "To grasp feedback, trace how effects go back to causes."
+        "One form this feedback can take is balancing feedback, which pushes a system back toward its target range.",
+        "Reinforcing feedback works the opposite way, letting a small change grow through later effects.",
+        "Either kind can be thrown off by a delay, which makes it act late, once the state has changed.",
+        "Because of that delay and the loop itself, one loop can help in one place and hurt in another.",
+        "Judging that from one step is hard, since a step like this can hide a loop built over many steps.",
+        "Within such a loop, one changed link can touch far parts of the system.",
+        "To grasp feedback like this, trace how effects go back to causes."
       ],
       "inferences": [
         "A result that does not come back is not feedback.",
