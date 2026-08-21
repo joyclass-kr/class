@@ -131,9 +131,12 @@ h1,h2,h3,p{margin-top:0}
 .packSide b{display:block;margin-top:4px;font-size:34px;line-height:1;color:#ffe0a0}
 .packSide.safe b{color:#a8e0b4}
 .gemRow{display:flex;flex-wrap:wrap;gap:4px;align-items:center;min-height:26px;margin-top:8px}
-.gem{width:17px;height:19px;clip-path:polygon(50% 0,100% 34%,78% 100%,22% 100%,0 34%);
+.gem{width:16px;height:18px;clip-path:polygon(50% 0,100% 34%,78% 100%,22% 100%,0 34%);
   background:linear-gradient(160deg,#ffeaa9,var(--accent) 45%,var(--accent-soft));
   box-shadow:0 1px 2px #0009}
+/* 큰 보석 = 10개. 테두리를 밝게 줘서 낱개와 구분한다. */
+.gem.big{width:27px;height:30px;background:linear-gradient(160deg,#fff6d4,#ffd062 40%,var(--accent-soft));
+  filter:drop-shadow(0 0 2px #ffe0a066)}
 .packSide.safe .gem{background:linear-gradient(160deg,#d6ffe2,#6cc98a 45%,#2f6b47)}
 .gemMore{color:#c4b79c;font-size:13px;font-weight:900;margin-left:2px}
 @media(max-width:640px){.pack{grid-template-columns:1fr}}
@@ -169,8 +172,10 @@ h1,h2,h3,p{margin-top:0}
 .tent.away{opacity:.45}
 .tentIcon{width:38px;height:29px;filter:drop-shadow(0 2px 3px #0008)}
 .tentName{color:#c4b79c;font-size:10px;font-weight:900}
-.tentGems{display:flex;flex-wrap:wrap;gap:2px;justify-content:center;max-width:66px;min-height:9px}
+.tentGems{display:flex;flex-wrap:wrap;gap:2px;justify-content:center;align-items:center;max-width:70px;min-height:10px}
 .tentGems .gem{width:9px;height:10px}
+.tentGems .gem.big{width:15px;height:17px}
+.tentGems .gemMore{font-size:10px}
 .tent b{color:#ffe0a0;font-size:14px;line-height:1.1}
 .path{min-width:0}
 .zoneLabel{color:var(--accent);font-size:11px;font-weight:900;letter-spacing:.18em;margin-bottom:8px}
@@ -182,6 +187,10 @@ h1,h2,h3,p{margin-top:0}
 .tokens.party{justify-content:flex-start}
 .token{position:relative;display:grid;justify-items:center;width:54px;padding-bottom:14px;transition:transform .35s ease}
 .meeple{width:44px;height:50px;display:block;filter:drop-shadow(0 3px 4px #0008)}
+/* 아바타가 있으면 아바타를 말로 쓴다. 테두리 색으로 플레이어를 구분한다. */
+.avatarRing{display:block;width:46px;height:46px;border-radius:50%;border:3px solid;overflow:hidden;background:#1a1206;box-shadow:0 3px 6px #0008}
+.avatarImg{width:100%;height:100%;object-fit:cover;display:block}
+.tentAvatar{width:22px;height:22px;border-radius:50%;object-fit:cover;margin-top:-13px;border:2px solid #241a08;background:#1a1206}
 .tokenName{margin-top:-2px;color:#f0e3c8;font-size:11px;font-weight:900;text-shadow:0 1px 3px #000}
 .token.me .meeple{filter:drop-shadow(0 0 3px #fff2d0) drop-shadow(0 3px 4px #0008)}
 .token.me .tokenName{color:#ffe6b4}
@@ -495,6 +504,17 @@ function renderThemePicker(){
 
 const BGM_DIR="/learning/games/expedition/assets/sound";
 let currentTrack="";
+let myAvatarKey="";
+
+// 이 사이트에는 학생마다 아바타가 있다. 게임 말도 그 아바타여야 "쟤가 나" 가 바로 보인다.
+async function loadAvatar(){
+  try{
+    const res=await fetch("/api/student/profile",{credentials:"same-origin"});
+    if(!res.ok)return;
+    const data=await res.json();
+    myAvatarKey=data?.profile?.avatar?.key||"";
+  }catch(_){ /* 못 받으면 그려 둔 말로 간다 */ }
+}
 function setTrack(name){
   const audio=$("bgm");
   const src=`${BGM_DIR}/${name}.ogg`;
@@ -726,16 +746,18 @@ function tokenMarkup(player,index,decided){
     : `<span class="carry banked">${player.bank}</span>`;
   const tip=`${player.name} · 확정 ${player.bank}`
     +(player.inCave?` · 들고 있음 ${player.carrying}`:player.caught?" · 빈손으로 쫓겨남":" · 돌아옴");
+  const figure=player.avatar
+    ? `<span class="avatarRing" style="border-color:${colorOf(index)}"><img class="avatarImg" src="${escapeHtml(player.avatar)}" alt=""></span>`
+    : meepleSvg(colorOf(index));
   return `<div class="${classes.join(" ")}" title="${escapeHtml(tip)}">`
-    +meepleSvg(colorOf(index))
+    +figure
     +`<span class="tokenName">${escapeHtml(initialOf(player.name))}</span>${badge}</div>`;
 }
-const GEM_CAP=14;
+// 큰 보석 하나가 10, 작은 것이 1. 자릿값 모형과 같아서 수를 자르지 않고도 한눈에 읽힌다.
 function gemMarkup(count){
-  const shown=Math.min(count,GEM_CAP);
-  return '<i class="gem"></i>'.repeat(shown)
-    +(count>shown?'<span class="gemMore">+'+(count-shown)+'</span>':"")
-    +(count===0?'<span class="gemMore">없음</span>':"");
+  if(count<=0)return '<span class="gemMore">없음</span>';
+  return '<i class="gem big"></i>'.repeat(Math.floor(count/10))
+    +'<i class="gem"></i>'.repeat(count%10);
 }
 
 // 숫자를 배지로 흘려보내지 않고, 지금 걸려 있는 양을 그림과 큰 수로 보여 준다.
@@ -780,15 +802,15 @@ function initialOf(name){return String(name||"?").trim().slice(-2)}
 // 실물에는 사람마다 텐트가 있고 확정한 보석이 그 안에 쌓인다.
 // 숫자로만 두면 누가 얼마나 벌었는지가 판에서 안 보인다.
 function tentMarkup(player,index){
-  const gems=Math.min(player.bank,10);
   const tip=`${player.name} · 확정 ${player.bank}`+(player.inCave?` · ${state.site} 안`:"");
   return `<div class="tent${player.id===myId()?" me":""}${player.inCave?" away":""}" title="${escapeHtml(tip)}">`
     +`<svg class="tentIcon" viewBox="0 0 44 34" aria-hidden="true">`
     +`<path d="M22 3 41 31H3z" fill="${colorOf(index)}"/>`
     +`<path d="M22 3 30 31H14z" fill="#00000055"/>`
     +`<path d="M3 31h38" stroke="#241a08" stroke-width="2.5" stroke-linecap="round"/></svg>`
+    +(player.avatar?`<img class="tentAvatar" src="${escapeHtml(player.avatar)}" alt="">`:"")
     +`<span class="tentName">${escapeHtml(initialOf(player.name))}</span>`
-    +`<span class="tentGems">${'<i class="gem"></i>'.repeat(gems)}</span>`
+    +`<span class="tentGems">${gemMarkup(player.bank)}</span>`
     +`<b>${player.bank}</b></div>`;
 }
 
@@ -968,6 +990,7 @@ function showAbort({title,message}){
 function init(){
   applyThemeSkin(selectedTheme);
   setTrack("lobby");
+  loadAvatar();
   lobby=ClassroomMultiplayerLobby.create({
     gameId:GAME_ID,
     getPlayerName:()=>/^[가-힣]{2,6}$/.test(savedName)?savedName:"",
@@ -983,7 +1006,7 @@ function init(){
       $("gameRoomCode").textContent=snapshot.roomCode||"----";
       renderThemePicker();
     },
-    getRoomRequestData:()=>({theme:selectedTheme}),
+    getRoomRequestData:()=>({theme:selectedTheme,avatarKey:myAvatarKey}),
     getLobbyPresentation:({count,role,canStart})=>({
       canStart,
       startText:role==="host"&&canStart?`START · ${count} PLAYERS`:"WAITING FOR PLAYERS",
