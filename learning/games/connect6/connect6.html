@@ -182,6 +182,7 @@ function createInitialState(snapshot,previous){
     draw:false,
     endReason:null,
     timeoutLoser:0,
+    timeoutNotice:"",
     lastMove:null,
     winningLine:[],
     match:Number(previous&&previous.match||0)+1,
@@ -256,15 +257,19 @@ function installGameState(nextState,broadcast){
 
 function finishTurnTimeout(token){
   if(!gameState||gameState.turnToken!==token||gameState.winner||gameState.draw||lobby.snapshot().role!=="host")return;
-  const loserColor=gameState.turn+1;
+  const timedOutId=gameState.playerOrder[gameState.turn];
   const now=Date.now();
   installGameState({
     ...gameState,
-    winner:loserColor===1?2:1,
-    endReason:"timeout",
-    timeoutLoser:loserColor,
+    turn:1-gameState.turn,
+    stonesRemaining:2,
+    openingMove:false,
+    turnToken:gameState.turnToken+1,
+    endReason:null,
+    timeoutLoser:0,
+    timeoutNotice:playerName(timedOutId)+" 시간 초과 · 차례를 넘겼습니다.",
     hostNow:now,
-    turnDeadline:now,
+    turnDeadline:now+TURN_TIME_MS,
     winningLine:[]
   },true);
 }
@@ -294,7 +299,7 @@ function renderGame(){
   }else{
     const color=gameState.turn===0?"흑":"백";
     const placementGuide=gameState.openingMove?"첫 수 1개":`이번 차례 ${gameState.stonesRemaining}개 남음`;
-    $("turnBanner").textContent=(activeId===snapshot.myId?"내 차례":"상대 차례")+" · "+color+" "+playerName(activeId)+" · "+placementGuide;
+    $("turnBanner").textContent=(gameState.timeoutNotice?gameState.timeoutNotice+" · ":"")+(activeId===snapshot.myId?"내 차례":"상대 차례")+" · "+color+" "+playerName(activeId)+" · "+placementGuide;
   }
 
   const winning=new Set((gameState.winningLine||[]).map(item=>item[0]+","+item[1]));
@@ -361,6 +366,7 @@ function createPlacementState(state,row,col,now=Date.now()){
     draw,
     endReason:winningLine.length?"six":draw?"draw":null,
     timeoutLoser:0,
+    timeoutNotice:"",
     lastMove:{row,col},
     winningLine,
     turnToken:state.turnToken+(finishesTurn||winningLine.length||draw?1:0),

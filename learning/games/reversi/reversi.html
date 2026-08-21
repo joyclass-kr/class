@@ -110,7 +110,7 @@
       <li>자신의 돌 사이에 상대 돌을 가로·세로·대각선으로 한 줄 이상 끼우는 자리에만 둘 수 있으며, 그 사이의 상대 돌은 모두 자신의 색으로 뒤집힙니다.</li>
       <li>둘 수 있는 자리가 없으면 자동으로 차례가 상대에게 넘어갑니다(패스).</li>
       <li>양쪽 모두 둘 자리가 없거나 64칸이 모두 채워지면 대국이 끝나며, 돌 개수가 더 많은 쪽이 승리합니다. 동수면 무승부입니다.</li>
-      <li>한 수의 제한 시간은 20초이며 마지막 5초에는 빨간색 경고가 표시됩니다. 시간 초과 시 해당 대국에서 패배합니다.</li>
+      <li>한 수의 제한 시간은 20초이며 마지막 5초에는 빨간색 경고가 표시됩니다. 시간 초과 시 차례가 상대에게 넘어갑니다.</li>
       <li>재대국에서는 직전 대국의 패배자가 흑으로 먼저 둡니다. 무승부일 때만 흑백을 교대합니다.</li>
     </ol>
     <button id="closeRulesBtn" class="primary" type="button">CLOSE</button>
@@ -235,6 +235,7 @@ function createInitialState(snapshot,previous){
     draw:false,
     endReason:null,
     timeoutLoser:0,
+    timeoutNotice:"",
     lastMove:null,
     lastFlips:[],
     passedColor:0,
@@ -310,15 +311,17 @@ function installGameState(nextState,broadcast){
 
 function finishTurnTimeout(token){
   if(!gameState||gameState.turnToken!==token||gameState.winner||gameState.draw||lobby.snapshot().role!=="host")return;
-  const loserColor=gameState.turn+1;
+  const timedOutId=gameState.playerOrder[gameState.turn];
   const now=Date.now();
   installGameState({
     ...gameState,
-    winner:loserColor===1?2:1,
-    endReason:"timeout",
-    timeoutLoser:loserColor,
+    turn:1-gameState.turn,
+    turnToken:gameState.turnToken+1,
+    endReason:null,
+    timeoutLoser:0,
+    timeoutNotice:playerName(timedOutId)+" 시간 초과 · 차례를 넘겼습니다.",
     hostNow:now,
-    turnDeadline:now,
+    turnDeadline:now+TURN_TIME_MS,
     lastFlips:[]
   },true);
 }
@@ -379,7 +382,7 @@ function renderGame(){
   }
   if(!ended){
     const color=gameState.turn===0?"흑":"백";
-    let text=(activeId===snapshot.myId?"내 차례":"상대 차례")+" · "+color+" "+playerName(activeId);
+    let text=(gameState.timeoutNotice?gameState.timeoutNotice+" · ":"")+(activeId===snapshot.myId?"내 차례":"상대 차례")+" · "+color+" "+playerName(activeId);
     if(gameState.passedColor){
       text=(gameState.passedColor===1?"흑":"백")+" 둘 자리 없음 · "+text;
     }
@@ -462,6 +465,7 @@ function applyMove(senderId,payload){
     draw:gameOver?draw:false,
     endReason:gameOver?(draw?"draw":"discs"):null,
     timeoutLoser:0,
+    timeoutNotice:"",
     lastMove:{row,col},
     lastFlips:move.flips,
     passedColor,

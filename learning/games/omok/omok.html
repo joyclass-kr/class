@@ -107,7 +107,7 @@
       <li>첫 대국은 방장이 흑을 맡아 먼저 둡니다. 이후 흑과 백이 한 번씩 번갈아 돌을 놓습니다.</li>
       <li>가로, 세로 또는 대각선으로 같은 색 돌을 5개 이상 연속으로 놓으면 승리합니다.</li>
       <li>이미 돌이 놓인 자리에는 다시 놓을 수 없습니다.</li>
-      <li>한 수의 제한 시간은 15초이며 마지막 5초에는 빨간색 경고가 표시됩니다. 시간 초과 시 해당 대국에서 패배합니다.</li>
+      <li>한 수의 제한 시간은 15초이며 마지막 5초에는 빨간색 경고가 표시됩니다. 시간 초과 시 차례가 상대에게 넘어갑니다.</li>
       <li>이 버전은 삼삼·사사·장목 금수를 적용하지 않으므로 흑의 선공 이점이 큽니다.</li>
       <li>재대국에서는 직전 대국의 패배자가 흑으로 먼저 둡니다. 무승부일 때만 흑백을 교대합니다.</li>
     </ol>
@@ -179,6 +179,7 @@ function createInitialState(snapshot,previous){
     draw:false,
     endReason:null,
     timeoutLoser:0,
+    timeoutNotice:"",
     lastMove:null,
     winningLine:[],
     match:Number(previous&&previous.match||0)+1,
@@ -253,15 +254,17 @@ function installGameState(nextState,broadcast){
 
 function finishTurnTimeout(token){
   if(!gameState||gameState.turnToken!==token||gameState.winner||gameState.draw||lobby.snapshot().role!=="host")return;
-  const loserColor=gameState.turn+1;
+  const timedOutId=gameState.playerOrder[gameState.turn];
   const now=Date.now();
   installGameState({
     ...gameState,
-    winner:loserColor===1?2:1,
-    endReason:"timeout",
-    timeoutLoser:loserColor,
+    turn:1-gameState.turn,
+    turnToken:gameState.turnToken+1,
+    endReason:null,
+    timeoutLoser:0,
+    timeoutNotice:playerName(timedOutId)+" 시간 초과 · 차례를 넘겼습니다.",
     hostNow:now,
-    turnDeadline:now,
+    turnDeadline:now+TURN_TIME_MS,
     winningLine:[]
   },true);
 }
@@ -290,7 +293,7 @@ function renderGame(){
     $("turnBanner").textContent="무승부 · 모든 자리가 채워졌습니다.";
   }else{
     const color=gameState.turn===0?"흑":"백";
-    $("turnBanner").textContent=(activeId===snapshot.myId?"내 차례":"상대 차례")+" · "+color+" "+playerName(activeId);
+    $("turnBanner").textContent=(gameState.timeoutNotice?gameState.timeoutNotice+" · ":"")+(activeId===snapshot.myId?"내 차례":"상대 차례")+" · "+color+" "+playerName(activeId);
   }
 
   const winning=new Set((gameState.winningLine||[]).map(item=>item[0]+","+item[1]));
@@ -364,6 +367,7 @@ function applyMove(senderId,payload){
     draw,
     endReason:winningLine.length?"five":draw?"draw":null,
     timeoutLoser:0,
+    timeoutNotice:"",
     lastMove:{row,col},
     winningLine,
     turnToken:gameState.turnToken+1,

@@ -559,6 +559,50 @@
         }
     }
 
+    const TIMER_WARNING_SECONDS = 10;
+    const timerWarningState = new WeakMap();
+    let timerAudioContext = null;
+
+    function timerSecondsFromText(text) {
+        const value = String(text || "").trim();
+        const clock = value.match(/^(\d+):(\d{2})$/);
+        if (clock) return Number(clock[1]) * 60 + Number(clock[2]);
+        const seconds = value.match(/(\d+(?:\.\d+)?)\s*(?:초)?/);
+        return seconds ? Math.ceil(Number(seconds[1])) : null;
+    }
+
+    function playTimerTick() {
+        if (window.ClassGameSfx?.play) { window.ClassGameSfx.play("tick"); return; }
+        const AudioContextClass = window.AudioContext || window.webkitAudioContext;
+        if (!AudioContextClass) return;
+        try {
+            timerAudioContext ||= new AudioContextClass({ latencyHint: "interactive" });
+            if (timerAudioContext.state === "suspended") { timerAudioContext.resume().catch(() => {}); return; }
+            const now = timerAudioContext.currentTime, oscillator = timerAudioContext.createOscillator(), gain = timerAudioContext.createGain();
+            oscillator.type = "square"; oscillator.frequency.setValueAtTime(1180, now); oscillator.frequency.exponentialRampToValueAtTime(930, now + 0.025);
+            gain.gain.setValueAtTime(0.0001, now); gain.gain.exponentialRampToValueAtTime(0.1, now + 0.003); gain.gain.exponentialRampToValueAtTime(0.0001, now + 0.03);
+            oscillator.connect(gain); gain.connect(timerAudioContext.destination); oscillator.start(now); oscillator.stop(now + 0.04);
+        } catch (_) {}
+    }
+
+    function updateTimerWarnings() {
+        document.querySelectorAll("#turnSeconds, #turn-seconds, #turnClock, #timerText, #timer-countdown").forEach(element => {
+            if (element.querySelector("#turnSeconds, #turn-seconds, #timerText, #timer-countdown")) return;
+            const seconds = timerSecondsFromText(element.textContent);
+            const urgent = Number.isFinite(seconds) && seconds > 0 && seconds <= TIMER_WARNING_SECONDS;
+            element.classList.toggle("class-timer-urgent", urgent);
+            const previous = timerWarningState.get(element);
+            if (urgent && previous !== seconds) playTimerTick();
+            timerWarningState.set(element, seconds);
+        });
+    }
+
+    const timerWarningStyle = document.createElement("style");
+    timerWarningStyle.textContent = ".class-timer-urgent{color:#e53935!important;text-shadow:0 0 10px rgba(229,57,53,.35)}";
+    document.head.appendChild(timerWarningStyle);
+    document.addEventListener("pointerdown", () => { const AudioContextClass = window.AudioContext || window.webkitAudioContext; if (!timerAudioContext && !window.ClassGameSfx?.unlock && AudioContextClass) { try { timerAudioContext = new AudioContextClass({ latencyHint: "interactive" }); timerAudioContext.resume().catch(() => {}); } catch (_) {} } window.ClassGameSfx?.unlock?.(); }, { capture: true, passive: true, once: true });
+    window.setInterval(updateTimerWarnings, 100);
+
     window.ClassroomMultiplayerLobby = Object.freeze({
         create: options => new MultiplayerLobby(options),
         // 게임 화면에서도 참가자 얼굴을 그린다. 키 모양을 각자 검사하지 않도록 여기서 내준다.
