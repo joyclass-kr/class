@@ -106,6 +106,20 @@
             : "게임이 끝났습니다";
         $("actionLog").textContent = gameState.lastAction || "카드를 준비하고 있습니다.";
         $("drawButton").disabled = !myTurn() || actionPending;
+        renderTurnClock();
+    }
+
+    function renderTurnClock() {
+        const clock = $("turnClock");
+        const deadline = gameState?.turnDeadline;
+        if (gameState?.phase !== "playing" || !deadline) { clock.classList.add("hidden"); return; }
+        clock.classList.remove("hidden");
+        const totalMs = (gameState.turnSeconds || 30) * 1000;
+        const remainingMs = Math.max(0, deadline - Date.now());
+        const remainingSeconds = Math.ceil(remainingMs / 1000);
+        $("turnSeconds").textContent = `${remainingSeconds}초`;
+        $("turnTimerBar").style.transform = `scaleX(${Math.max(0, Math.min(1, remainingMs / totalMs))})`;
+        clock.classList.toggle("urgent", remainingSeconds <= 5);
     }
 
     function selectCard(cardId) {
@@ -263,6 +277,7 @@
     function hideRules() { $("rulesOverlay").classList.add("hidden"); }
 
     function init() {
+        setInterval(renderTurnClock, 250);
         lobby = window.ClassroomMultiplayerLobby.create({
             gameId: GAME_ID,
             getPlayerName: () => /^[가-힣]{2,6}$/.test(savedName) ? savedName : "",

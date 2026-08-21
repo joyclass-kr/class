@@ -2,6 +2,8 @@
 
 const crypto = require("crypto");
 
+const TURN_SECONDS = 30;
+
 const COLORS = Object.freeze(["red", "blue", "black", "orange"]);
 const COLOR_ORDER = Object.freeze(Object.fromEntries(COLORS.map((color, index) => [color, index])));
 
@@ -50,6 +52,7 @@ function createGame(hostId, hostName) {
     turnIndex: 0,
     passCount: 0,
     winnerId: null,
+    turnDeadline: null,
     lastAction: "2~4명이 모이면 시작할 수 있습니다.",
     revision: 0
   };
@@ -81,6 +84,7 @@ function resetToLobby(game, message = "대기실로 돌아왔습니다.") {
   game.turnIndex = 0;
   game.passCount = 0;
   game.winnerId = null;
+  game.turnDeadline = null;
   game.players.forEach(player => { player.opened = false; });
   game.lastAction = message;
   game.revision += 1;
@@ -104,6 +108,7 @@ function startGame(game, randomIndex) {
   game.passCount = 0;
   game.winnerId = null;
   game.phase = "playing";
+  game.turnDeadline = Date.now() + TURN_SECONDS * 1000;
   game.lastAction = `${game.players[0].name}님부터 시작합니다.`;
   game.revision += 1;
   return { ok: true };
@@ -152,6 +157,7 @@ function currentPlayer(game) {
 
 function advanceTurn(game) {
   if (game.players.length) game.turnIndex = (game.turnIndex + 1) % game.players.length;
+  game.turnDeadline = Date.now() + TURN_SECONDS * 1000;
 }
 
 function play(game, playerId, proposedGroups) {
@@ -205,6 +211,7 @@ function play(game, playerId, proposedGroups) {
   if (game.hands[id].length === 0) {
     game.phase = "ended";
     game.winnerId = id;
+    game.turnDeadline = null;
     game.lastAction = `${player.name}님이 모든 타일을 내려놓아 승리했습니다!`;
     return { ok: true };
   }
@@ -242,6 +249,7 @@ function draw(game, playerId) {
     const winner = ranked[0];
     game.phase = "ended";
     game.winnerId = winner?.id || null;
+    game.turnDeadline = null;
     game.lastAction = `더 이상 낼 타일이 없어 ${winner?.name || "플레이어"}님이 가장 낮은 손패 점수로 승리했습니다!`;
   }
   return { ok: true };
@@ -263,6 +271,8 @@ function stateFor(game, playerId) {
     turnPlayerId: currentPlayer(game)?.id || null,
     winnerId: game.winnerId,
     lastAction: game.lastAction,
+    turnDeadline: game.turnDeadline || null,
+    turnSeconds: TURN_SECONDS,
     revision: game.revision
   };
 }
@@ -270,6 +280,7 @@ function stateFor(game, playerId) {
 module.exports = {
   COLORS,
   BASE_TILES,
+  TURN_SECONDS,
   createGame,
   addPlayer,
   removePlayer,

@@ -27,6 +27,18 @@ const hostView = Rummikub.stateFor(started, "host");
 assert.equal(hostView.hand.length, 14);
 assert.equal(Object.hasOwn(hostView.players[1], "hand"), false, "다른 사람의 손패는 공개하면 안 됩니다.");
 
+// Turn timer: 30 seconds per turn; timing out just draws a tile and passes,
+// same as the existing voluntary draw action.
+assert.equal(Rummikub.TURN_SECONDS, 30);
+assert.ok(Number.isFinite(started.turnDeadline) && started.turnDeadline > Date.now(), "시작하면 제한시간이 설정돼야 합니다.");
+const deckBeforeTimeout = started.deck.length;
+const drawResult = Rummikub.draw(started, "host");
+assert.equal(drawResult.ok, true);
+assert.equal(started.hands.host.length, 15, "시간 초과로 뽑으면 손패가 한 장 늘어야 합니다.");
+assert.equal(started.deck.length, deckBeforeTimeout - 1);
+assert.equal(started.turnIndex, 1, "시간 초과 후에는 다음 사람 차례여야 합니다.");
+assert.ok(started.turnDeadline > Date.now(), "다음 차례도 새 제한시간을 받아야 합니다.");
+
 function playingGame({ hand, board = [], opened = false }) {
   const game = Rummikub.createGame("host", "방장");
   Rummikub.addPlayer(game, "guest", "하늘");

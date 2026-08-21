@@ -47,6 +47,18 @@ assert.equal(started.deck.length, 11, "비공개 1장, 시작 손패 3장, 첫 �
 assert.equal(started.hands.host.length, 2, "첫 플레이어는 카드 두 장으로 차례를 시작합니다.");
 assert.equal(started.hands.guest1.length, 1);
 
+// Turn timer: 30 seconds per turn; timing out auto-plays a legal card
+// (preferring the Handmaid) instead of leaving the round stuck.
+assert.equal(LoveLetter.TURN_SECONDS, 30);
+assert.ok(Number.isFinite(started.turnDeadline) && started.turnDeadline > Date.now(), "차례가 시작되면 제한시간이 설정돼야 합니다.");
+const beforeActionNumber = started.actionNumber;
+const beforeTurnIndex = started.turnIndex;
+const autoResult = LoveLetter.autoPlay(started);
+assert.equal(autoResult.ok, true, "손에 있는 카드 중 하나로 자동 진행할 수 있어야 합니다.");
+assert.notEqual(started.turnIndex, beforeTurnIndex, "자동 진행 후에는 다음 사람 차례여야 합니다.");
+assert.ok(started.actionNumber > beforeActionNumber);
+assert.match(started.lastAction, /^시간 초과 ·/);
+
 const fourPlayer = gameWithPlayers();
 LoveLetter.addPlayer(fourPlayer, "guest3", "구름");
 LoveLetter.startMatch(fourPlayer, () => 0);

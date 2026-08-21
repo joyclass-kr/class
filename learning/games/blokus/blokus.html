@@ -108,6 +108,10 @@
               <div id="turnMessage" class="turn-message">서버 상태를 기다리는 중입니다.</div>
             </div>
           </div>
+          <div id="turnClock" class="turn-clock hidden">
+            <span id="turnSeconds" class="turn-clock-label">30초</span>
+            <div class="turn-track"><div id="turnTimerBar" class="turn-bar"></div></div>
+          </div>
           <span id="turnTag" class="turn-tag">20 × 20 BOARD</span>
         </div>
         <div id="boardScroll" class="board-scroll">
@@ -512,6 +516,19 @@
     $("turnMessage").textContent = gameState.lastAction || "모서리로 길을 이어 보세요.";
   }
 
+  function renderTurnClock() {
+    const clock = $("turnClock");
+    const deadline = gameState?.turnDeadline;
+    if (gameState?.phase !== "playing" || !deadline) { clock.classList.add("hidden"); return; }
+    clock.classList.remove("hidden");
+    const totalMs = (gameState.turnSeconds || 30) * 1000;
+    const remainingMs = Math.max(0, deadline - Date.now());
+    const remainingSeconds = Math.ceil(remainingMs / 1000);
+    $("turnSeconds").textContent = `${remainingSeconds}초`;
+    $("turnTimerBar").style.transform = `scaleX(${Math.max(0, Math.min(1, remainingMs / totalMs))})`;
+    clock.classList.toggle("urgent", remainingSeconds <= 5);
+  }
+
   function renderPieces() {
     const color = gameState?.activeColor;
     const remaining = gameState?.remaining?.[color] || [];
@@ -639,7 +656,7 @@
 
   function renderGame() {
     if (!gameState || gameState.phase === "lobby") return;
-    showGame(); renderPlayers(); renderTurn(); renderBoard(); renderPieces(); renderSelection(); renderResult();
+    showGame(); renderPlayers(); renderTurn(); renderTurnClock(); renderBoard(); renderPieces(); renderSelection(); renderResult();
   }
 
   function installState(state) {
@@ -673,6 +690,7 @@
 
   function init() {
     createBoard();
+    setInterval(renderTurnClock, 250);
     lobby = ClassroomMultiplayerLobby.create({
       gameId: GAME_ID,
       getPlayerName: () => /^[가-힣]{2,6}$/.test(savedName) ? savedName : "",

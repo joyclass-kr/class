@@ -2,6 +2,8 @@
 
 const crypto = require("crypto");
 
+const TURN_SECONDS = 30;
+
 const COLORS = Object.freeze(["ember", "tide", "leaf", "volt"]);
 const ACTION_KINDS = Object.freeze(["skip", "turn", "draw2"]);
 const HAND_SIZE = 7;
@@ -55,6 +57,7 @@ function createGame(hostId, hostName) {
     turnIndex: 0,
     winnerId: null,
     round: 0,
+    turnDeadline: null,
     lastAction: "플레이어를 기다리고 있습니다.",
     actionNumber: 0
   };
@@ -84,6 +87,7 @@ function resetToLobby(game, message = "대기실로 돌아왔습니다.") {
   game.direction = 1;
   game.turnIndex = 0;
   game.winnerId = null;
+  game.turnDeadline = null;
   game.lastAction = message;
   game.actionNumber += 1;
   return { ok: true };
@@ -157,6 +161,7 @@ function startMatch(game, pick = randomInt) {
   const [firstCard] = game.deck.splice(firstNumberIndex, 1);
   game.discard.push(firstCard);
   game.activeColor = firstCard.color;
+  game.turnDeadline = Date.now() + TURN_SECONDS * 1000;
   game.lastAction = `${game.players[0].name}님의 차례로 게임을 시작합니다.`;
   game.actionNumber += 1;
   return { ok: true };
@@ -189,6 +194,7 @@ function playCard(game, playerId, message, pick = randomInt) {
   if (hand.length === 0) {
     game.phase = "finished";
     game.winnerId = actor.id;
+    game.turnDeadline = null;
     game.lastAction = `${actor.name}님이 마지막 카드를 내고 승리했습니다!`;
     game.actionNumber += 1;
     return { ok: true };
@@ -221,6 +227,7 @@ function playCard(game, playerId, message, pick = randomInt) {
   }
 
   game.turnIndex = advanceIndex(game, game.turnIndex, steps);
+  game.turnDeadline = Date.now() + TURN_SECONDS * 1000;
   game.lastAction = actionParts.join(" ");
   game.actionNumber += 1;
   return { ok: true };
@@ -232,6 +239,7 @@ function drawAndPass(game, playerId, pick = randomInt) {
   if (!actor || actor.id !== String(playerId)) return { ok: false, error: "현재 차례가 아닙니다." };
   const count = drawCards(game, actor.id, 1, pick).length;
   game.turnIndex = advanceIndex(game, game.turnIndex, 1);
+  game.turnDeadline = Date.now() + TURN_SECONDS * 1000;
   game.lastAction = count
     ? `${actor.name}님이 카드 1장을 뽑고 차례를 넘겼습니다.`
     : `${actor.name}님이 뽑을 카드가 없어 차례를 넘겼습니다.`;
@@ -257,6 +265,8 @@ function stateFor(game, viewerId) {
     deckCount: game.deck.length,
     winnerId: game.winnerId,
     lastAction: game.lastAction,
+    turnDeadline: game.turnDeadline || null,
+    turnSeconds: TURN_SECONDS,
     actionNumber: game.actionNumber
   };
 }
@@ -267,6 +277,7 @@ module.exports = {
   HAND_SIZE,
   MIN_PLAYERS,
   MAX_PLAYERS,
+  TURN_SECONDS,
   buildDeck,
   shuffle,
   createGame,

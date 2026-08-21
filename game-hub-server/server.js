@@ -562,10 +562,26 @@ function loveLetterBroadcast(room) {
       state: LoveLetter.stateFor(room.loveletter, id)
     });
   }
+  scheduleLoveLetterTimeout(room);
 }
 
 function loveLetterError(socket, message) {
   safeSend(socket, { type: "LOVELETTER_ERROR", message });
+}
+
+function scheduleLoveLetterTimeout(room) {
+  clearTimeout(room?.loveletterTimer);
+  const game = room?.loveletter;
+  if (!game || game.phase !== "playing" || !game.turnDeadline) return;
+  const expectedAction = game.actionNumber;
+  const wait = Math.max(50, game.turnDeadline - Date.now());
+  room.loveletterTimer = setTimeout(() => {
+    if (rooms.get(roomKey(room.gameId, room.roomCode)) !== room) return;
+    if (game.phase !== "playing" || game.actionNumber !== expectedAction) return;
+    LoveLetter.autoPlay(game);
+    loveLetterBroadcast(room);
+  }, wait);
+  room.loveletterTimer.unref?.();
 }
 
 function clueBroadcast(room) {
@@ -590,10 +606,27 @@ function lastCardBroadcast(room) {
       state: LastCard.stateFor(room.lastcard, id)
     });
   }
+  scheduleLastCardTimeout(room);
 }
 
 function lastCardError(socket, message) {
   safeSend(socket, { type: "LASTCARD_ERROR", message });
+}
+
+function scheduleLastCardTimeout(room) {
+  clearTimeout(room?.lastcardTimer);
+  const game = room?.lastcard;
+  if (!game || game.phase !== "playing" || !game.turnDeadline) return;
+  const expectedAction = game.actionNumber;
+  const wait = Math.max(50, game.turnDeadline - Date.now());
+  room.lastcardTimer = setTimeout(() => {
+    if (rooms.get(roomKey(room.gameId, room.roomCode)) !== room) return;
+    if (game.phase !== "playing" || game.actionNumber !== expectedAction) return;
+    const activeId = game.players[game.turnIndex]?.id;
+    if (activeId) LastCard.drawAndPass(game, activeId);
+    lastCardBroadcast(room);
+  }, wait);
+  room.lastcardTimer.unref?.();
 }
 
 function rummikubBroadcast(room) {
@@ -604,10 +637,27 @@ function rummikubBroadcast(room) {
       state: Rummikub.stateFor(room.rummikub, id)
     });
   }
+  scheduleRummikubTimeout(room);
 }
 
 function rummikubError(socket, message) {
   safeSend(socket, { type: "RUMMIKUB_ERROR", message });
+}
+
+function scheduleRummikubTimeout(room) {
+  clearTimeout(room?.rummikubTimer);
+  const game = room?.rummikub;
+  if (!game || game.phase !== "playing" || !game.turnDeadline) return;
+  const expectedRevision = game.revision;
+  const wait = Math.max(50, game.turnDeadline - Date.now());
+  room.rummikubTimer = setTimeout(() => {
+    if (rooms.get(roomKey(room.gameId, room.roomCode)) !== room) return;
+    if (game.phase !== "playing" || game.revision !== expectedRevision) return;
+    const activeId = game.players[game.turnIndex]?.id;
+    if (activeId) Rummikub.draw(game, activeId);
+    rummikubBroadcast(room);
+  }, wait);
+  room.rummikubTimer.unref?.();
 }
 
 function blokusBroadcast(room) {
@@ -618,10 +668,26 @@ function blokusBroadcast(room) {
       state: Blokus.stateFor(room.blokus, id)
     });
   }
+  scheduleBlokusTimeout(room);
 }
 
 function blokusError(socket, message) {
   safeSend(socket, { type: "BLOKUS_ERROR", message });
+}
+
+function scheduleBlokusTimeout(room) {
+  clearTimeout(room?.blokusTimer);
+  const game = room?.blokus;
+  if (!game || game.phase !== "playing" || !game.turnDeadline) return;
+  const expectedRevision = game.revision;
+  const wait = Math.max(50, game.turnDeadline - Date.now());
+  room.blokusTimer = setTimeout(() => {
+    if (rooms.get(roomKey(room.gameId, room.roomCode)) !== room) return;
+    if (game.phase !== "playing" || game.revision !== expectedRevision) return;
+    Blokus.skipTurn(game);
+    blokusBroadcast(room);
+  }, wait);
+  room.blokusTimer.unref?.();
 }
 
 function honeycombBroadcast(room) {
@@ -632,10 +698,27 @@ function honeycombBroadcast(room) {
       state: Honeycomb.stateFor(room.honeycomb, id)
     });
   }
+  scheduleHoneycombTimeout(room);
 }
 
 function honeycombError(socket, message) {
   safeSend(socket, { type: "HONEYCOMB_ERROR", message });
+}
+
+// 차례 제한시간은 서버가 재야 조작할 수 없다. 다음 배치·패스가 오면 다시 예약한다.
+function scheduleHoneycombTimeout(room) {
+  clearTimeout(room?.honeycombTimer);
+  const game = room?.honeycomb;
+  if (!game || game.phase !== "playing" || !game.turnDeadline) return;
+  const expectedRevision = game.revision;
+  const wait = Math.max(50, game.turnDeadline - Date.now());
+  room.honeycombTimer = setTimeout(() => {
+    if (rooms.get(roomKey(room.gameId, room.roomCode)) !== room) return;
+    if (game.phase !== "playing" || game.revision !== expectedRevision) return;
+    Honeycomb.skipTurn(game);
+    honeycombBroadcast(room);
+  }, wait);
+  room.honeycombTimer.unref?.();
 }
 
 function codenamesBroadcast(room) {
@@ -3332,6 +3415,11 @@ wss.on("connection", socket => {
       if (socket.meta.role === "host" || playerId === currentRoom.hostId) {
         clearTimeout(currentRoom.drawrelayTimer);
         clearTimeout(currentRoom.expeditionTimer);
+        clearTimeout(currentRoom.honeycombTimer);
+        clearTimeout(currentRoom.blokusTimer);
+        clearTimeout(currentRoom.loveletterTimer);
+        clearTimeout(currentRoom.rummikubTimer);
+        clearTimeout(currentRoom.lastcardTimer);
         for (const [id, client] of currentRoom.clients) {
           if (id !== playerId) {
             safeSend(client, {

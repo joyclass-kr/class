@@ -1,5 +1,6 @@
 "use strict";
 
+const TURN_SECONDS = 30;
 const COLOR_ORDER = Object.freeze(["blue", "red", "yellow", "green"]);
 const COLOR_LABELS = Object.freeze({ blue: "파랑", red: "빨강", yellow: "노랑", green: "초록" });
 const START_CORNERS = Object.freeze({
@@ -91,6 +92,7 @@ function createGame(hostId, hostName) {
     lastPiece: {},
     placements: [],
     winnerIds: [],
+    turnDeadline: null,
     lastAction: "2명 또는 4명이 모이면 시작할 수 있습니다.",
     revision: 0
   };
@@ -123,6 +125,7 @@ function resetToLobby(game, message = "대기실로 돌아왔습니다.") {
   game.lastPiece = {};
   game.placements = [];
   game.winnerIds = [];
+  game.turnDeadline = null;
   game.lastAction = message;
   game.revision += 1;
   return { ok: true };
@@ -170,6 +173,7 @@ function startGame(game) {
   game.placements = [];
   game.winnerIds = [];
   game.phase = "playing";
+  game.turnDeadline = Date.now() + TURN_SECONDS * 1000;
   game.lastAction = `${game.players[0].name}님의 ${COLOR_LABELS[game.turnColors[0]]} 차례로 시작합니다.`;
   game.revision += 1;
   return { ok: true };
@@ -281,11 +285,23 @@ function finishGame(game) {
 function advanceTurn(game) {
   if (game.turnColors.every(color => game.passed[color])) {
     finishGame(game);
+    game.turnDeadline = null;
     return;
   }
   do {
     game.turnColorIndex = (game.turnColorIndex + 1) % game.turnColors.length;
   } while (game.passed[currentColor(game)]);
+  game.turnDeadline = Date.now() + TURN_SECONDS * 1000;
+}
+
+function skipTurn(game) {
+  if (game.phase !== "playing") return { ok: false, error: "진행 중인 게임이 아닙니다." };
+  const color = currentColor(game);
+  const player = playerById(game, game.colorOwners[color]);
+  game.lastAction = `${player?.name || "플레이어"}님의 ${COLOR_LABELS[color]}이(가) 시간 초과로 차례를 넘겼습니다.`;
+  advanceTurn(game);
+  game.revision += 1;
+  return { ok: true };
 }
 
 function place(game, playerId, pieceId, proposedCells) {
@@ -370,6 +386,8 @@ function stateFor(game, playerId) {
     canPass: activePlayerId === id && !hasMove,
     winnerIds: [...game.winnerIds],
     lastAction: game.lastAction,
+    turnDeadline: game.turnDeadline || null,
+    turnSeconds: TURN_SECONDS,
     revision: game.revision
   };
 }
@@ -380,6 +398,7 @@ module.exports = {
   START_CORNERS,
   PIECES,
   ORIENTATIONS,
+  TURN_SECONDS,
   createGame,
   addPlayer,
   removePlayer,
@@ -392,5 +411,6 @@ module.exports = {
   colorScore,
   place,
   pass,
+  skipTurn,
   stateFor
 };

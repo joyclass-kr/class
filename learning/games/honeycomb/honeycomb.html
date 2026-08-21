@@ -23,64 +23,43 @@
     <button class="primary" type="button" onclick="location.href='../../../'">메인 화면으로</button>
   </section>
 
-  <section id="lobbyScreen" class="lobby-layout hidden">
-    <article class="panel hero-panel">
-      <div class="hero-copy">
-        <div class="eyebrow">THE ONE-HEX-GAP STRATEGY</div>
-        <h1 class="hero-title">HONEYCOMB BLOCKS<span>벌집 블록</span></h1>
-        <p class="hero-lead">여섯 색의 투명한 육각 조각을 벌집 모양 판에 늘어놓아요. 같은 색끼리는 절대 붙을 수 없고, 딱 한 칸 간격만 허용됩니다.</p>
-        <div class="hero-facts">
-          <div class="hero-fact"><strong>169칸</strong><span>육각 벌집판</span></div>
-          <div class="hero-fact"><strong>18 · 72</strong><span>색마다 조각 수·칸 수</span></div>
-          <div class="hero-fact"><strong>2·3·4·6</strong><span>지원하는 인원</span></div>
-        </div>
+  <section id="lobbyScreen" class="hidden mp-lobby-compact mp-lobby-standard" data-multiplayer-lobby>
+    <header class="panel">
+      <h1 class="title">HONEYCOMB BLOCKS</h1>
+      <p class="subtitle">벌집 블록 · 2–6 PLAYERS</p>
+      <p>PLAYER · <strong id="savedName">-</strong></p>
+      <div class="mp-lobby-tabs">
+        <button id="hostTab" class="primary" type="button">CREATE ROOM</button>
+        <button id="joinTab" class="secondary" type="button">JOIN ROOM</button>
       </div>
-      <figure class="hero-art" aria-hidden="true">
-        <img src="/learning/games/honeycomb/assets/images/honeycomb-cover.webp" alt="">
-      </figure>
-    </article>
+    </header>
 
-    <article class="panel lobby-panel">
-      <div class="lobby-topline">
-        <div><div class="eyebrow">CLASSROOM EDITION</div></div>
-        <span class="player-badge"><span id="savedName">플레이어</span></span>
+    <section id="hostPane" class="panel mp-lobby-card hidden">
+      <div class="row spread">
+        <div><div class="eyebrow">ROOM CODE</div><div id="roomCode" class="code">----</div></div>
+        <button id="copyBtn" class="secondary" type="button">COPY CODE</button>
       </div>
-      <h2>게임 테이블 준비</h2>
-      <p class="lobby-sub">새 방을 만들거나 친구가 알려준 네 자리 방 번호를 입력하세요.</p>
+      <div id="hostStatus" class="mp-lobby-status">방을 만드는 중입니다.</div>
+    </section>
 
-      <div class="mp-lobby-tabs" role="tablist" aria-label="방 참여 방법">
-        <button id="hostTab" class="mp-lobby-tab active" type="button" role="tab">방 만들기</button>
-        <button id="joinTab" class="mp-lobby-tab" type="button" role="tab">방 참가하기</button>
+    <section id="joinPane" class="panel mp-lobby-card hidden">
+      <div class="mp-lobby-row">
+        <input id="joinCode" class="mp-lobby-code-input" inputmode="numeric" maxlength="4" placeholder="ROOM CODE · 4 DIGITS">
+        <button id="joinBtn" class="primary" type="button">JOIN ROOM</button>
       </div>
+      <div id="joinStatus" class="mp-lobby-status">방장이 알려준 번호를 입력하세요.</div>
+    </section>
 
-      <section id="hostPane" class="mp-lobby-pane">
-        <div class="eyebrow">ROOM CODE</div>
-        <div id="roomCode" class="mp-lobby-code">----</div>
-        <button id="copyBtn" class="secondary" type="button">방 번호 복사</button>
-        <div id="hostStatus" class="mp-lobby-status">새 게임 방을 준비하고 있습니다.</div>
-      </section>
-
-      <section id="joinPane" class="mp-lobby-pane hidden">
-        <label class="eyebrow" for="joinCode">ROOM CODE</label>
-        <div class="mp-lobby-join-row">
-          <input id="joinCode" class="mp-lobby-code-input" inputmode="numeric" maxlength="4" placeholder="4자리 번호" autocomplete="off">
-          <button id="joinBtn" class="primary" type="button">입장</button>
-        </div>
-        <div id="joinStatus" class="mp-lobby-status">방장이 알려준 번호를 입력하세요.</div>
-      </section>
-
-      <section class="lobby-roster">
-        <div class="lobby-roster-head"><div class="eyebrow">PLAYERS</div><span>입장 순서대로 색을 배정해요</span></div>
-        <div id="lobbyPlayers" class="mp-lobby-players"></div>
-        <p id="lobbyGuide" class="mp-lobby-guide">2, 3, 4, 6명이 모이면 시작할 수 있습니다.</p>
-      </section>
-
-      <div class="lobby-actions">
-        <button id="startBtn" class="primary" type="button" disabled>플레이어를 기다리는 중</button>
-        <button id="rulesBtnLobby" class="secondary" type="button">게임 규칙</button>
-        <button id="leaveBtnLobby" class="quiet" type="button">메인으로</button>
+    <section class="panel">
+      <h2>PLAYERS</h2>
+      <div id="lobbyPlayers" class="mp-lobby-players"></div>
+      <p id="lobbyGuide" class="mp-lobby-guide">2, 3, 4, 6명이 모이면 시작할 수 있습니다.</p>
+      <button id="startBtn" class="primary" type="button" disabled>WAITING FOR PLAYERS</button>
+      <div class="row" style="margin-top:10px">
+        <button id="rulesBtnLobby" class="secondary" type="button">RULES</button>
+        <button id="leaveBtnLobby" class="secondary" type="button">메인 화면</button>
       </div>
-    </article>
+    </section>
   </section>
 </main>
 
@@ -108,6 +87,10 @@
             <h2 id="turnTitle" class="turn-title">게임을 준비하고 있습니다</h2>
             <div id="turnMessage" class="turn-message">서버 상태를 기다리는 중입니다.</div>
           </div>
+        </div>
+        <div id="turnClock" class="turn-clock hidden">
+          <span id="turnSeconds" class="turn-clock-label">30초</span>
+          <div class="turn-track"><div id="turnTimerBar" class="turn-bar"></div></div>
         </div>
         <span id="turnTag" class="turn-tag">169 HEX BOARD</span>
       </div>
@@ -378,16 +361,19 @@ function hexPoints(cx, cy, size) {
   return points.join(" ");
 }
 
+// Every piece shares the same viewBox "zoom" (a fixed radius of user-units
+// around its own centre) so a single hex always renders at the same pixel
+// size as one hex inside a five-hex piece, instead of each piece stretching
+// to fill its box independently.
 function makeHexGraphic(shape, size, boxSize, color) {
   const cells = normalize(shape);
   const pts = cells.map(cell => axialToPixel(cell, size));
   const hexR = size * 0.92;
-  const minX = Math.min(...pts.map(p => p.x)) - hexR;
-  const maxX = Math.max(...pts.map(p => p.x)) + hexR;
-  const minY = Math.min(...pts.map(p => p.y)) - hexR;
-  const maxY = Math.max(...pts.map(p => p.y)) + hexR;
+  const half = size * 4.3;
+  const centerX = (Math.min(...pts.map(p => p.x)) + Math.max(...pts.map(p => p.x))) / 2;
+  const centerY = (Math.min(...pts.map(p => p.y)) + Math.max(...pts.map(p => p.y))) / 2;
   const svg = document.createElementNS(SVG_NS, "svg");
-  svg.setAttribute("viewBox", `${minX} ${minY} ${maxX - minX} ${maxY - minY}`);
+  svg.setAttribute("viewBox", `${centerX - half} ${centerY - half} ${half * 2} ${half * 2}`);
   svg.setAttribute("width", String(boxSize));
   svg.setAttribute("height", String(boxSize));
   svg.setAttribute("preserveAspectRatio", "xMidYMid meet");
@@ -619,6 +605,23 @@ function renderTurn() {
   $("turnMessage").textContent = gameState.lastAction || "한 칸 간격을 지키며 벌집을 채워 보세요.";
 }
 
+// 시간은 서버가 잰다. 여기서는 서버가 보낸 마감 시각을 화면에만 반영한다.
+function renderTurnClock() {
+  const clock = $("turnClock");
+  const deadline = gameState?.turnDeadline;
+  if (gameState?.phase !== "playing" || !deadline) {
+    clock.classList.add("hidden");
+    return;
+  }
+  clock.classList.remove("hidden");
+  const totalMs = (gameState.turnSeconds || 30) * 1000;
+  const remainingMs = Math.max(0, deadline - Date.now());
+  const remainingSeconds = Math.ceil(remainingMs / 1000);
+  $("turnSeconds").textContent = `${remainingSeconds}초`;
+  $("turnTimerBar").style.transform = `scaleX(${Math.max(0, Math.min(1, remainingMs / totalMs))})`;
+  clock.classList.toggle("urgent", remainingSeconds <= 5);
+}
+
 function renderPieces() {
   const color = gameState?.activeColor;
   const remaining = gameState?.remaining?.[color] || [];
@@ -742,7 +745,7 @@ function renderResult() {
 
 function renderGame() {
   if (!gameState || gameState.phase === "lobby") return;
-  showGame(); renderPlayers(); renderTurn(); renderBoard(); renderPieces(); renderSelection(); renderResult();
+  showGame(); renderPlayers(); renderTurn(); renderTurnClock(); renderBoard(); renderPieces(); renderSelection(); renderResult();
 }
 
 function installState(state) {
@@ -776,6 +779,7 @@ function showAbort({ title, message }) { $("abortTitle").textContent = title; $(
 
 function init() {
   createBoard();
+  setInterval(renderTurnClock, 250);
   lobby = ClassroomMultiplayerLobby.create({
     gameId: GAME_ID,
     getPlayerName: () => /^[가-힣]{2,6}$/.test(savedName) ? savedName : "",

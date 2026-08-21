@@ -151,6 +151,23 @@ perfect.placedCount = { red: 0 };
 assert.equal(Honeycomb.place(perfect, "host", "H1", [{ q: 7, r: 0 }]).ok, true);
 assert.equal(perfect.phase, "ended");
 assert.equal(Honeycomb.colorScore(perfect, "red"), 0, "조각을 모두 놓으면 남은 칸이 0이어야 합니다.");
+assert.equal(perfect.turnDeadline, null, "게임이 끝나면 제한시간도 사라져야 합니다.");
+
+// Turn timer: each turn gets a fresh 30-second deadline, and timing out just
+// skips that single turn (the colour keeps its remaining pieces).
+assert.equal(Honeycomb.TURN_SECONDS, 30);
+const timed = Honeycomb.createGame("host", "가람");
+Honeycomb.addPlayer(timed, "guest", "누리");
+Honeycomb.startGame(timed);
+const firstDeadline = timed.turnDeadline;
+assert.ok(Number.isFinite(firstDeadline) && firstDeadline > Date.now(), "시작하면 제한시간이 설정돼야 합니다.");
+const skipResult = Honeycomb.skipTurn(timed);
+assert.equal(skipResult.ok, true);
+assert.equal(timed.turnColorIndex, 1, "시간 초과는 다음 색으로 차례를 넘겨야 합니다.");
+assert.equal(timed.remaining.red.length, 18, "시간 초과로 넘긴 색은 조각을 그대로 유지해야 합니다.");
+assert.equal(timed.passed.red, false, "시간 초과는 영구 탈락이 아니라 한 차례만 건너뛰어야 합니다.");
+assert.ok(timed.turnDeadline >= firstDeadline, "다음 차례는 새 제한시간을 받아야 합니다.");
+assert.match(timed.lastAction, /시간 초과로 차례를 넘겼습니다/);
 
 const htmlPath = path.resolve(__dirname, "..", "learning", "games", "honeycomb", "honeycomb.html");
 if (fs.existsSync(htmlPath)) {

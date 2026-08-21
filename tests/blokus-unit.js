@@ -107,6 +107,20 @@ perfect.lastPiece = { blue: null };
 assert.equal(Blokus.place(perfect, "host", "I1", [{ x: 0, y: 0 }]).ok, true);
 assert.equal(perfect.phase, "ended");
 assert.equal(Blokus.colorScore(perfect, "blue"), 20, "한 칸 조각을 마지막으로 모두 놓으면 20점입니다.");
+assert.equal(perfect.turnDeadline, null, "게임이 끝나면 제한시간도 사라져야 합니다.");
+
+// Turn timer: 30 seconds per turn, and timing out just skips the turn
+// without eliminating the colour (its pieces stay available).
+assert.equal(Blokus.TURN_SECONDS, 30);
+const timed = Blokus.createGame("host", "가람");
+Blokus.addPlayer(timed, "guest", "누리");
+Blokus.startGame(timed);
+assert.ok(Number.isFinite(timed.turnDeadline) && timed.turnDeadline > Date.now(), "시작하면 제한시간이 설정돼야 합니다.");
+assert.equal(Blokus.skipTurn(timed).ok, true);
+assert.equal(timed.turnColorIndex, 1, "시간 초과는 다음 색으로 차례를 넘겨야 합니다.");
+assert.equal(timed.remaining.blue.length, 21, "시간 초과로 넘긴 색은 조각을 그대로 유지해야 합니다.");
+assert.equal(timed.passed.blue, false, "시간 초과는 영구 탈락이 아니라 한 차례만 건너뛰어야 합니다.");
+assert.match(timed.lastAction, /시간 초과로 차례를 넘겼습니다/);
 
 const htmlPath = path.resolve(__dirname, "..", "learning", "games", "blokus", "blokus.html");
 if (fs.existsSync(htmlPath)) {

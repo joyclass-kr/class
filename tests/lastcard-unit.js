@@ -50,6 +50,18 @@ assert.equal(started.discard.length, 1);
 assert.equal(started.discard[0].kind, "number", "첫 공개 카드는 숫자 카드여야 합니다.");
 assert.equal(started.deck.length, 39, "4명에게 7장씩 나눠주고 첫 카드 1장을 공개해야 합니다.");
 
+// Turn timer: 30 seconds per turn; timing out just draws a card and passes,
+// same as the existing voluntary draw-and-pass action.
+assert.equal(LastCard.TURN_SECONDS, 30);
+assert.ok(Number.isFinite(started.turnDeadline) && started.turnDeadline > Date.now(), "시작하면 제한시간이 설정돼야 합니다.");
+const firstPlayerId = started.players[started.turnIndex].id;
+const handBeforeTimeout = started.hands[firstPlayerId].length;
+const timeoutResult = LastCard.drawAndPass(started, firstPlayerId);
+assert.equal(timeoutResult.ok, true);
+assert.equal(started.hands[firstPlayerId].length, handBeforeTimeout + 1, "시간 초과로 뽑으면 손패가 한 장 늘어야 합니다.");
+assert.notEqual(started.players[started.turnIndex].id, firstPlayerId, "시간 초과 후에는 다음 사람 차례여야 합니다.");
+assert.ok(started.turnDeadline > Date.now(), "다음 차례도 새 제한시간을 받아야 합니다.");
+
 assert.equal(LastCard.isPlayable(number("same-color", "ember", 9), number("top", "ember", 5), "ember"), true);
 assert.equal(LastCard.isPlayable(number("same-number", "tide", 5), number("top", "ember", 5), "ember"), true);
 assert.equal(LastCard.isPlayable(number("miss", "tide", 9), number("top", "ember", 5), "ember"), false);

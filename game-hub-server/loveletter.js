@@ -2,6 +2,8 @@
 
 const crypto = require("crypto");
 
+const TURN_SECONDS = 30;
+
 const CARD_NAMES = Object.freeze({
   1: "근위병",
   2: "마법사",
@@ -54,6 +56,7 @@ function createGame(hostId, hostName) {
     gameWinnerIds: [],
     revealedHands: {},
     roundReason: null,
+    turnDeadline: null,
     lastAction: "플레이어를 기다리는 중입니다.",
     actionNumber: 0
   };
@@ -93,6 +96,7 @@ function resetToLobby(game, notice = "대기실로 돌아왔습니다.") {
   game.gameWinnerIds = [];
   game.revealedHands = {};
   game.roundReason = null;
+  game.turnDeadline = null;
   game.lastAction = notice;
   game.actionNumber += 1;
 }
@@ -145,6 +149,7 @@ function beginTurn(game) {
   if (!player || !player.alive) return;
   player.protected = false;
   if (game.deck.length) game.hands[player.id].push(game.deck.shift());
+  game.turnDeadline = Date.now() + TURN_SECONDS * 1000;
 }
 
 function activePlayer(game) {
@@ -274,6 +279,7 @@ function finishRound(game, reason) {
   game.roundReason = reason;
   game.gameWinnerIds = winners.filter(player => player.score >= game.targetScore).map(player => player.id);
   game.phase = game.gameWinnerIds.length ? "gameEnd" : "roundEnd";
+  game.turnDeadline = null;
   const names = winners.map(player => player.name).join(", ");
   game.lastAction = `${names}님이 ${reason === "lastPlayer" ? "마지막까지 살아남아" : "가장 높은 카드를 남겨"} 라운드에서 승리했습니다.`;
   game.actionNumber += 1;
@@ -317,6 +323,37 @@ function play(game, playerId, message) {
   return { ok: true, reveals: resolution.reveals };
 }
 
+// Timeout fallback: pick any legal (card, target, guess) combo from the hand,
+// preferring the Handmaid (protect self, no target) as the lowest-impact play.
+function autoPlay(game) {
+  if (game.phase !== "playing") return { ok: false, error: "진행 중인 라운드가 없습니다." };
+  const actor = activePlayer(game);
+  if (!actor) return { ok: false, error: "진행 중인 라운드가 없습니다." };
+  const hand = game.hands[actor.id] || [];
+  const others = eligibleOtherTargets(game, actor.id);
+  const candidates = [];
+  for (const card of hand) {
+    if (card === 1 && others.length) {
+      for (const target of others) candidates.push({ card, targetId: target.id, guess: 2 });
+    } else if ([2, 3, 6].includes(card) && others.length) {
+      candidates.push({ card, targetId: others[0].id, guess: null });
+    } else if (card === 5) {
+      candidates.push({ card, targetId: (others[0] || actor).id, guess: null });
+    } else {
+      candidates.push({ card, targetId: "", guess: null });
+    }
+  }
+  candidates.sort((a, b) => (a.card === 4 ? 0 : 1) - (b.card === 4 ? 0 : 1));
+  for (const candidate of candidates) {
+    if (!validatePlay(game, actor, candidate.card, candidate.targetId, candidate.guess)) {
+      const result = play(game, actor.id, candidate);
+      if (result.ok) game.lastAction = `시간 초과 · ${game.lastAction}`;
+      return result;
+    }
+  }
+  return { ok: false, error: "자동으로 낼 수 있는 카드가 없습니다." };
+}
+
 function nextRound(game, pick = randomInt) {
   if (game.phase !== "roundEnd") return { ok: false, error: "다음 라운드를 시작할 수 없습니다." };
   startRound(game, pick);
@@ -356,6 +393,8 @@ function stateFor(game, viewerId) {
     gameWinnerIds: [...game.gameWinnerIds],
     roundReason: game.roundReason,
     lastAction: game.lastAction,
+    turnDeadline: game.turnDeadline || null,
+    turnSeconds: TURN_SECONDS,
     actionNumber: game.actionNumber
   };
 }
@@ -364,6 +403,7 @@ module.exports = {
   BASE_DECK,
   CARD_NAMES,
   TARGET_SCORES,
+  TURN_SECONDS,
   createGame,
   addPlayer,
   removePlayer,
@@ -372,6 +412,7 @@ module.exports = {
   nextRound,
   newGame,
   play,
+  autoPlay,
   stateFor,
   shuffle
 };
