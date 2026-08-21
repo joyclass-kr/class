@@ -14,44 +14,76 @@ const WEAPONS = Object.freeze(["촛대", "밧줄", "렌치", "손전등", "만�
 const ROOMS = Object.freeze(["온실", "무도회장", "주방", "서재", "거실", "식당", "사무실", "현관", "당구실"]);
 const CENTER_ROOM = 4;
 
-// Corridor grid: two straight hallways run the width of the board - a top
-// hallway between room-row 0 and room-row 1, and a bottom hallway between
-// room-row 1 and room-row 2 - each laid out as a real strip of 19 tiles (not
-// a handful of waypoints), like the physical board's hallway squares, so a
-// 1d6 roll actually constrains how far you get. 온실/무도회장/주방 only
-// border the top hallway, 사무실/현관/당구실 only border the bottom one, and
-// 서재/거실/식당 sit between the two so each has a door onto both. Every 3rd
-// tile is an anchor (door or secret staircase); the rest are plain hallway
-// tiles. Taking a staircase drops you on the tile diagonally across the
-// mansion from it.
-const CORRIDOR_CELLS = Object.freeze([
-  "t0", "t1", "t2", "t3", "t4", "t5", "t6", "t7", "t8", "t9", "t10", "t11", "t12", "t13", "t14", "t15", "t16", "t17", "t18",
-  "b0", "b1", "b2", "b3", "b4", "b5", "b6", "b7", "b8", "b9", "b10", "b11", "b12", "b13", "b14", "b15", "b16", "b17", "b18"
+// Four strips of 19 floor tiles form the mansion's real # corridor network:
+// two horizontal, two vertical, with shared nodes at all four intersections.
+// The 8 outer endpoints are secret stairwells; every pair exits at the point
+// rotated 180 degrees across the centre of the mansion.
+const TRACK_POSITIONS = Object.freeze([20, 38.9, 57.8, 76.7, 95.6, 114.4, 133.3, 152.2, 171.1, 190, 208.9, 227.8, 246.7, 265.6, 284.4, 303.3, 322.2, 341.1, 360]);
+const TRACKS = Object.freeze([
+  Object.freeze({ prefix: "t", axis: "h", fixed: 125, intersections: Object.freeze({ 6: "xTL", 12: "xTR" }) }),
+  Object.freeze({ prefix: "b", axis: "h", fixed: 255, intersections: Object.freeze({ 6: "xBL", 12: "xBR" }) }),
+  Object.freeze({ prefix: "l", axis: "v", fixed: 133.3, intersections: Object.freeze({ 6: "xTL", 12: "xBL" }) }),
+  Object.freeze({ prefix: "r", axis: "v", fixed: 246.7, intersections: Object.freeze({ 6: "xTR", 12: "xBR" }) })
 ]);
-// The board is drawn procedurally (see clue.html buildBoard), not traced
-// onto an external illustration, so these are exact by construction.
-const CELL_COORDS = Object.freeze({
-  t0: [20, 125], t1: [33.3, 125], t2: [46.7, 125], t3: [60, 125], t4: [81.7, 125], t5: [103.3, 125], t6: [125, 125], t7: [146.7, 125], t8: [168.3, 125], t9: [190, 125], t10: [211.7, 125], t11: [233.3, 125], t12: [255, 125], t13: [276.7, 125], t14: [298.3, 125], t15: [320, 125], t16: [333.3, 125], t17: [346.7, 125], t18: [360, 125],
-  b0: [20, 255], b1: [33.3, 255], b2: [46.7, 255], b3: [60, 255], b4: [81.7, 255], b5: [103.3, 255], b6: [125, 255], b7: [146.7, 255], b8: [168.3, 255], b9: [190, 255], b10: [211.7, 255], b11: [233.3, 255], b12: [255, 255], b13: [276.7, 255], b14: [298.3, 255], b15: [320, 255], b16: [333.3, 255], b17: [346.7, 255], b18: [360, 255]
-});
-const CELL_NEIGHBORS = Object.freeze({
-  t0: ["t1"], t1: ["t0", "t2"], t2: ["t1", "t3"], t3: ["t2", "t4"], t4: ["t3", "t5"], t5: ["t4", "t6"], t6: ["t5", "t7"], t7: ["t6", "t8"], t8: ["t7", "t9"], t9: ["t8", "t10"], t10: ["t9", "t11"], t11: ["t10", "t12"], t12: ["t11", "t13"], t13: ["t12", "t14"], t14: ["t13", "t15"], t15: ["t14", "t16"], t16: ["t15", "t17"], t17: ["t16", "t18"], t18: ["t17"],
-  b0: ["b1"], b1: ["b0", "b2"], b2: ["b1", "b3"], b3: ["b2", "b4"], b4: ["b3", "b5"], b5: ["b4", "b6"], b6: ["b5", "b7"], b7: ["b6", "b8"], b8: ["b7", "b9"], b9: ["b8", "b10"], b10: ["b9", "b11"], b11: ["b10", "b12"], b12: ["b11", "b13"], b13: ["b12", "b14"], b14: ["b13", "b15"], b15: ["b14", "b16"], b16: ["b15", "b17"], b17: ["b16", "b18"], b18: ["b17"]
-});
+
+function trackCellId(track, index) {
+  return track.intersections[index] || track.prefix + index;
+}
+
+function buildCorridorModel() {
+  const coords = {};
+  const neighborSets = {};
+  const orientations = {};
+  TRACKS.forEach((track) => {
+    let previous = null;
+    TRACK_POSITIONS.forEach((position, index) => {
+      const cellId = trackCellId(track, index);
+      if (!coords[cellId]) {
+        coords[cellId] = track.axis === "h" ? [position, track.fixed] : [track.fixed, position];
+      }
+      if (orientations[cellId] && orientations[cellId] !== track.axis) orientations[cellId] = "x";
+      else if (!orientations[cellId]) orientations[cellId] = track.axis;
+      if (!neighborSets[cellId]) neighborSets[cellId] = new Set();
+      if (previous && previous !== cellId) {
+        neighborSets[cellId].add(previous);
+        neighborSets[previous].add(cellId);
+      }
+      previous = cellId;
+    });
+  });
+  const cells = Object.freeze(Object.keys(coords));
+  const neighbors = Object.freeze(Object.fromEntries(cells.map((cellId) => [
+    cellId,
+    Object.freeze([...neighborSets[cellId]])
+  ])));
+  return Object.freeze({
+    cells,
+    coords: Object.freeze(coords),
+    neighbors,
+    orientations: Object.freeze(orientations)
+  });
+}
+
+const CORRIDOR_MODEL = buildCorridorModel();
+const CORRIDOR_CELLS = CORRIDOR_MODEL.cells;
+const CELL_COORDS = CORRIDOR_MODEL.coords;
+const CELL_NEIGHBORS = CORRIDOR_MODEL.neighbors;
 const CELL_ROOMS = Object.freeze({
   t3: [0, 3], t9: [1, 4], t15: [2, 5],
-  b3: [3, 6], b9: [4, 7], b15: [5, 8]
+  b3: [3, 6], b9: [4, 7], b15: [5, 8],
+  l3: [0, 1], l9: [3, 4], l15: [6, 7],
+  r3: [1, 2], r9: [4, 5], r15: [7, 8]
 });
 const ROOM_CELLS = Object.freeze({
-  0: ["t3"], 1: ["t9"], 2: ["t15"],
-  3: ["t3", "b3"], 4: ["t9", "b9"], 5: ["t15", "b15"],
-  6: ["b3"], 7: ["b9"], 8: ["b15"]
+  0: ["t3", "l3"], 1: ["t9", "l3", "r3"], 2: ["t15", "r3"],
+  3: ["t3", "b3", "l9"], 4: ["t9", "b9", "l9", "r9"], 5: ["t15", "b15", "r9"],
+  6: ["b3", "l15"], 7: ["b9", "l15", "r15"], 8: ["b15", "r15"]
 });
-// Paired diagonally (mirrored left-right too), not straight across the same
-// hallway position - that's what makes each one a real shortcut to the far
-// side of the mansion instead of a one-step hop to the tile right next to it.
 const SECRET_PASSAGE_PAIRS = Object.freeze({
-  t0: "b18", b18: "t0", t6: "b12", b12: "t6", t12: "b6", b6: "t12", t18: "b0", b0: "t18"
+  t0: "b18", b18: "t0",
+  t18: "b0", b0: "t18",
+  l0: "r18", r18: "l0",
+  r0: "l18", l18: "r0"
 });
 const START_ROOMS = Object.freeze([0, 2, 3, 5, 6, 8]);
 const MIN_PLAYERS = 3;
@@ -109,6 +141,9 @@ function createGame(hostId, hostName, hostAvatarUrl) {
     turnIndex: 0,
     turnPhase: "move",
     dice: null,
+    diceValues: null,
+    stepsRemaining: 0,
+    movePath: [],
     moved: false,
     suggestionUsed: false,
     pendingSuggestion: null,
@@ -148,6 +183,9 @@ function resetToLobby(game, notice = "대기실로 돌아왔습니다.") {
   game.turnIndex = 0;
   game.turnPhase = "move";
   game.dice = null;
+  game.diceValues = null;
+  game.stepsRemaining = 0;
+  game.movePath = [];
   game.moved = false;
   game.suggestionUsed = false;
   game.pendingSuggestion = null;
@@ -203,6 +241,9 @@ function startMatch(game, pick = randomInt) {
 function resetTurnState(game) {
   game.turnPhase = "move";
   game.dice = null;
+  game.diceValues = null;
+  game.stepsRemaining = 0;
+  game.movePath = [];
   game.moved = false;
   game.suggestionUsed = false;
   game.deadline = Date.now() + TURN_TIME_MS;
@@ -263,14 +304,26 @@ function reachablePositions(game, player, dice) {
   return { rooms: [...rooms], cells: [...cells] };
 }
 
+function nextStepPositions(game, player) {
+  const { rooms, cells } = reachablePositions(game, player, 1);
+  const visited = new Set(game.movePath || []);
+  return { rooms: rooms.filter(room => !visited.has(`r${room}`)), cells: cells.filter(cell => !visited.has(cell)) };
+}
+
 function roll(game, playerId, pick = randomInt) {
   if (game.phase !== "playing") return { ok: false, error: "진행 중인 게임이 없습니다." };
   if (game.pendingSuggestion) return { ok: false, error: "다른 플레이어의 반박을 기다리는 중입니다." };
   const actor = activePlayer(game);
   if (!actor || actor.id !== String(playerId)) return { ok: false, error: "현재 차례가 아닙니다." };
   if (game.turnPhase !== "move" || game.dice !== null || game.moved) return { ok: false, error: "지금은 주사위를 굴릴 수 없습니다." };
-  game.dice = 1 + pick(6);
-  game.log = `${actor.name}님이 주사위 ${game.dice}을(를) 굴렸습니다.`;
+  const firstDie = 1 + pick(6);
+  const secondDie = 1 + pick(6);
+  game.diceValues = [firstDie, secondDie];
+  game.dice = firstDie + secondDie;
+  game.stepsRemaining = game.dice;
+  const startKey = actor.roomIndex >= 0 ? `r${actor.roomIndex}` : actor.cellId;
+  game.movePath = startKey ? [startKey] : [];
+  game.log = `${actor.name}님이 주사위 ${firstDie}와 ${secondDie}, 합계 ${game.dice}을(를) 굴렸습니다. 말을 한 칸씩 옮기세요.`;
   game.actionNumber += 1;
   return { ok: true, reveals: [] };
 }
@@ -280,23 +333,34 @@ function move(game, playerId, target) {
   if (game.pendingSuggestion) return { ok: false, error: "다른 플레이어의 반박을 기다리는 중입니다." };
   const actor = activePlayer(game);
   if (!actor || actor.id !== String(playerId)) return { ok: false, error: "현재 차례가 아닙니다." };
-  if (game.turnPhase !== "move" || game.dice === null || game.moved) return { ok: false, error: "지금은 이동할 수 없습니다." };
+  if (game.turnPhase !== "move" || game.dice === null || game.moved || game.stepsRemaining <= 0) return { ok: false, error: "지금은 이동할 수 없습니다." };
   if (typeof target !== "string" || !target) return { ok: false, error: "이동할 곳을 선택하세요." };
-  const { rooms, cells } = reachablePositions(game, actor, game.dice);
+  const { rooms, cells } = nextStepPositions(game, actor);
+  let enteredRoom = false;
+  let destinationKey = target;
   if (target.startsWith("r")) {
     const roomIdx = Number(target.slice(1));
-    if (!rooms.includes(roomIdx)) return { ok: false, error: "주사위 눈으로 이동할 수 없는 방입니다." };
+    if (!rooms.includes(roomIdx)) return { ok: false, error: "현재 칸과 이어진 방이 아닙니다." };
     actor.roomIndex = roomIdx;
     actor.cellId = null;
-    game.log = `${actor.name}님이 ${ROOMS[roomIdx]}(으)로 이동했습니다.`;
+    enteredRoom = true;
+    destinationKey = `r${roomIdx}`;
   } else {
-    if (!cells.includes(target)) return { ok: false, error: "주사위 눈으로 이동할 수 없는 칸입니다." };
+    if (!cells.includes(target)) return { ok: false, error: "현재 위치에서 한 칸 떨어진 타일을 선택하세요." };
     actor.roomIndex = -1;
     actor.cellId = target;
-    game.log = `${actor.name}님이 복도를 이동했습니다.`;
   }
-  game.moved = true;
-  game.turnPhase = "act";
+  game.movePath.push(destinationKey);
+  game.stepsRemaining = Math.max(0, game.stepsRemaining - 1);
+  if (enteredRoom) game.stepsRemaining = 0;
+  if (enteredRoom || game.stepsRemaining === 0) {
+    game.moved = true;
+    game.turnPhase = "act";
+    const label = enteredRoom ? ROOMS[actor.roomIndex] : "복도";
+    game.log = `${actor.name}님이 ${label}(으)로 이동을 마쳤습니다.`;
+  } else {
+    game.log = `${actor.name}님이 한 칸 이동했습니다. ${game.stepsRemaining}칸 남았습니다.`;
+  }
   game.actionNumber += 1;
   return { ok: true, reveals: [] };
 }
@@ -307,6 +371,8 @@ function stay(game, playerId) {
   const actor = activePlayer(game);
   if (!actor || actor.id !== String(playerId)) return { ok: false, error: "현재 차례가 아닙니다." };
   if (game.turnPhase !== "move" || game.moved) return { ok: false, error: "지금은 사용할 수 없습니다." };
+  game.stepsRemaining = 0;
+  game.movePath = [];
   game.moved = true;
   game.turnPhase = "act";
   const label = actor.roomIndex >= 0 ? ROOMS[actor.roomIndex] : "복도";
@@ -322,9 +388,12 @@ function secretPassage(game, playerId) {
   if (!actor || actor.id !== String(playerId)) return { ok: false, error: "현재 차례가 아닙니다." };
   if (game.turnPhase !== "move" && game.turnPhase !== "act") return { ok: false, error: "지금은 비밀통로를 사용할 수 없습니다." };
   const target = actor.cellId && SECRET_PASSAGE_PAIRS[actor.cellId];
+  if (cellOccupant(game, target, actor.id)) return { ok: false, error: "비밀통로 출구에 다른 플레이어가 있습니다." };
   if (!target) return { ok: false, error: "이 위치에는 비밀통로가 없습니다." };
   actor.cellId = target;
   actor.roomIndex = -1;
+  game.stepsRemaining = 0;
+  game.movePath = [];
   game.moved = true;
   game.turnPhase = "act";
   game.log = `${actor.name}님이 비밀통로로 이동했습니다.`;
@@ -475,7 +544,7 @@ function stateFor(game, viewerId) {
   const suggestion = game.pendingSuggestion;
   const turnPlayer = game.phase === "playing" ? activePlayer(game) : null;
   const canShowReachable = turnPlayer && turnPlayer.id === safeViewer && game.turnPhase === "move" && game.dice !== null && !game.moved && !suggestion;
-  const reachable = canShowReachable ? reachablePositions(game, turnPlayer, game.dice) : { rooms: [], cells: [] };
+  const reachable = canShowReachable ? nextStepPositions(game, turnPlayer) : { rooms: [], cells: [] };
   return {
     phase: game.phase,
     hand: game.phase === "playing" || game.phase === "gameEnd" ? [...(game.hands[safeViewer] || [])] : [],
@@ -491,6 +560,8 @@ function stateFor(game, viewerId) {
     turnPlayerId: turnPlayer?.id || null,
     turnPhase: game.turnPhase,
     dice: game.dice,
+    diceValues: game.diceValues ? [...game.diceValues] : null,
+    stepsRemaining: game.stepsRemaining,
     moved: game.moved,
     reachable,
     suggestionUsed: game.suggestionUsed,
@@ -519,6 +590,6 @@ module.exports = {
   MIN_PLAYERS, MAX_PLAYERS, TURN_TIME_MS, REFUTE_TIME_MS,
   createGame, addPlayer, removePlayer, resetToLobby,
   startMatch, roll, move, stay, secretPassage, suggest, chooseCard, accuse, endTurn, newGame,
-  forceTimeout, reachablePositions,
+  forceTimeout, reachablePositions, nextStepPositions,
   stateFor, shuffle, cardName, cardType
 };

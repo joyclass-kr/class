@@ -4,6 +4,7 @@
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
 <title>저택 추리</title>
+<link rel="preload" as="image" href="/learning/games/clue/assets/images/board-v3.webp">
 <link rel="stylesheet" href="../../../assets/network/multiplayer-lobby.css">
 <style>
 :root{font-family:system-ui,-apple-system,"Segoe UI",sans-serif;color:#eef0f5;background:#10121a;--accent:#d9a441;--accent-soft:#8a662a;--panel:#1b1f2b;--panel-edge:#3a3f52;--danger:#c8544a;--safe:#3f9e6c}
@@ -20,7 +21,7 @@ h1,h2,h3,p{margin-top:0}
 .subtitle{margin:4px 0 0;color:#b7bcca}
 .row{display:flex;align-items:center;gap:9px;flex-wrap:wrap}
 .spread{justify-content:space-between}
-.primary,.secondary,.pickBtn{min-height:40px;padding:9px 14px;border:1px solid var(--accent-soft);border-radius:10px;font-weight:850;cursor:pointer}
+.primary,.secondary,.danger,.pickBtn{min-height:44px;padding:9px 14px;border:1px solid var(--accent-soft);border-radius:10px;font-weight:850;cursor:pointer}
 .primary{background:linear-gradient(#e6bd6c,#a9762c);color:#221304}
 .secondary{background:#262b3a;color:#e8ebf3}
 .danger{background:linear-gradient(#d9695c,#933);color:#2a0603}
@@ -32,7 +33,7 @@ h1,h2,h3,p{margin-top:0}
 .gameSidebar{flex:0 0 320px;display:flex;flex-direction:column;gap:14px;min-width:0}
 .gameSidebar>.panel{margin-bottom:0}
 .gameMain{flex:1;min-width:0;display:flex;flex-direction:column;gap:14px}
-@media(max-width:980px){.gameLayout{flex-direction:column}.gameSidebar{flex:0 0 auto;width:100%}}
+@media(max-width:1200px){.gameLayout{flex-direction:column}.gameMain{order:-1;width:100%}.gameSidebar{flex:0 0 auto;width:100%}}
 
 .playerRow{display:flex;align-items:center;gap:9px;padding:8px 9px;border:1px solid #2c3142;border-radius:10px;margin-bottom:7px;background:#141824}
 .playerRow:last-child{margin-bottom:0}
@@ -50,6 +51,7 @@ h1,h2,h3,p{margin-top:0}
 .logLine{padding:9px 11px;border-radius:10px;background:#151a26;color:#c9cee0;font-size:13px;min-height:20px}
 .diceRow{display:flex;align-items:center;justify-content:center;gap:14px;padding:10px 0}
 .dieFace{width:52px;height:52px;border-radius:12px;border:2px solid var(--accent);background:#1a1d29;display:grid;place-items:center;font-size:26px;font-weight:950;color:#f3ddb0;transition:transform .08s}
+.diceFaces{display:flex;gap:6px}
 .dieFace.rolling{animation:dieShake .12s linear infinite}
 @keyframes dieShake{0%{transform:rotate(-10deg) scale(1.08)}50%{transform:rotate(10deg) scale(.94)}100%{transform:rotate(-10deg) scale(1.08)}}
 .turnTimer{min-width:56px;text-align:center;font-size:20px;font-weight:900;color:#9aa0b4;font-variant-numeric:tabular-nums}
@@ -57,25 +59,34 @@ h1,h2,h3,p{margin-top:0}
 .turnBanner2{text-align:center;font-weight:850;padding:8px 4px}
 
 .boardWrap{width:min(900px,100%);margin:auto}
-.boardBg{fill:#12141c}
-.hallwayEdge{fill:none;stroke:#2a2013;stroke-width:2}
-.roomRect{stroke:var(--panel-edge);stroke-width:1.5;cursor:default;pointer-events:all}
-.roomRect.centerRoom{stroke:var(--accent-soft);stroke-width:2}
-.roomRect.reachable{stroke:var(--safe);stroke-width:4;cursor:pointer;filter:drop-shadow(0 0 6px #3f9e6cbb)}
-.roomRect.reachable:hover{stroke:#5fd99a}
-.roomRect.current{stroke:var(--accent);stroke-width:4}
-.roomIcon{font-size:19px;text-anchor:middle;pointer-events:none}
-.roomLabel{font-size:10px;font-weight:800;fill:#e8ceb0;text-anchor:middle;pointer-events:none;letter-spacing:.02em}
-.doorNotch{fill:#8a662a;stroke:var(--accent);stroke-width:1;opacity:.9;pointer-events:none}
-.cellHit{cursor:default;pointer-events:all;fill:transparent;stroke:none;transition:fill .15s,stroke .15s}
-.cellHit.door{stroke:var(--accent);stroke-width:1.5;fill:#d9a44144}
-.cellHit.passage{stroke:var(--accent);stroke-width:1.5;stroke-dasharray:2.5 1.5;fill:#8a662a44}
-.cellHit.reachable{fill:#3f9e6c99;stroke:var(--safe);stroke-width:2.5;cursor:pointer;filter:drop-shadow(0 0 5px #3f9e6cbb)}
-.cellHit.reachable:hover{fill:#5fd99acc}
-.cellHit.current{stroke:var(--accent);stroke-width:2.5;fill:#d9a441cc}
-.passageIcon{font-size:9.5px;fill:#2a2013;text-anchor:middle;pointer-events:none}
+#board{display:block;width:100%;height:auto;border-radius:14px;background:#090a0e;box-shadow:0 16px 32px #0009;touch-action:manipulation}
+.boardBg{fill:#090a0e}
+.boardArt{pointer-events:none}
+.roomRect{fill:#0000;stroke:#f3ddb02e;stroke-width:1.1;cursor:default;pointer-events:all;transition:fill .15s,stroke .15s}
+.roomRect.centerRoom{stroke:#d9a44188;stroke-width:1.5}
+.roomRect.reachable{fill:#3f9e6c24;stroke:var(--safe);stroke-width:4;cursor:pointer;filter:drop-shadow(0 0 6px #3f9e6cbb)}
+.roomRect.reachable:hover{fill:#3f9e6c3d;stroke:#5fd99a}
+.roomRect.current{fill:#d9a44120;stroke:var(--accent);stroke-width:4}
+.roomLabelPlate{fill:#0a0b0ed9;stroke:#d9a441b8;stroke-width:.8;pointer-events:none}
+.roomLabel{font-size:10.5px;font-weight:900;fill:#fff4dc;text-anchor:middle;pointer-events:none;letter-spacing:.02em;paint-order:stroke;stroke:#0009;stroke-width:.7px}
+.doorNotch{fill:#d9a441aa;stroke:#fff0c2;stroke-width:.8;opacity:.86;pointer-events:none}
+.corridorTile{fill:#eadfc5c7;stroke:#5d4935;stroke-width:.8;pointer-events:none}
+.cellGroup.shade .corridorTile{fill:#cbbb98c7}
+.cellGroup.door .corridorTile{fill:#e8c66fd9;stroke:#fff0bd}
+.cellGroup.passage .corridorTile{fill:#1a110d;stroke:#d9a441;stroke-width:1.2}
+.cellHit{fill:transparent;stroke:none;pointer-events:none}
+.cellGroup.reachable .cellHit,.cellGroup.passage.current .cellHit{pointer-events:all;cursor:pointer}
+.cellGroup.reachable .corridorTile{fill:#48b87ee6;stroke:#d8ffe9;stroke-width:1.4;filter:drop-shadow(0 0 5px #3f9e6cbb)}
+.cellGroup.reachable:hover .corridorTile{fill:#65d99be6}
+.cellGroup.current .corridorTile{fill:#d9a441e8;stroke:#fff3ce;stroke-width:1.4}
+.passageFrame{fill:#080604;stroke:#e2b85b;stroke-width:1;pointer-events:none}
+.passageSteps{fill:none;stroke:#f5d18a;stroke-width:1.1;stroke-linecap:round;pointer-events:none}
+.passageArrow{fill:#f5d18a;pointer-events:none}
+.boardLegend{display:flex;justify-content:center;gap:8px;flex-wrap:wrap;margin-top:10px;color:#d8d0bf;font-size:12px;font-weight:800}
+.boardLegend span{min-height:28px;display:inline-flex;align-items:center;padding:4px 9px;border:1px solid #4a4338;border-radius:999px;background:#12141ccc}
 .token{stroke:#fff;stroke-width:1.5}
 .tokenAvatar{pointer-events:none}
+.tokenName{font-size:4.2px;font-weight:950;fill:#fff;text-anchor:middle;paint-order:stroke fill;stroke:#090a0e;stroke-width:1.2px;stroke-linejoin:round;pointer-events:none}
 .reachRing{fill:none;stroke:var(--safe);stroke-width:3;opacity:.9;pointer-events:none;transform-box:fill-box;transform-origin:center;animation:reachPulse 1.2s ease-out infinite}
 .reachRing.cellRing{stroke-width:2;animation:reachPulseSmall 1.2s ease-out infinite}
 .reachDot{fill:var(--safe);stroke:#fff;stroke-width:2;pointer-events:none}
@@ -83,6 +94,7 @@ h1,h2,h3,p{margin-top:0}
 @keyframes reachPulseSmall{0%{r:6;opacity:.9}80%{r:16;opacity:0}100%{r:16;opacity:0}}
 
 .actionBar{display:flex;flex-wrap:wrap;gap:8px;justify-content:center;padding:6px 0 2px}
+.moveCounter{min-height:44px;display:inline-flex;align-items:center;gap:5px;padding:8px 13px;border:1px solid #3f9e6c99;border-radius:10px;background:#13231c;color:#d9f4e4;font-weight:850}.moveCounter strong{font-size:18px;color:#73dda4}
 .pendingBanner{text-align:center;padding:9px;border-radius:10px;background:#241a10;color:#f0c988;font-weight:800;font-size:13px}
 
 .handRow{display:flex;flex-wrap:wrap;gap:10px}
@@ -194,14 +206,17 @@ h1,h2,h3,p{margin-top:0}
         </div>
         <div class="panel">
           <div id="turnBanner" class="turnBanner2">대국을 준비하는 중입니다.</div>
-          <div class="diceRow"><div id="dieFace" class="dieFace">-</div><div id="turnTimer" class="turnTimer">--</div></div>
+          <div class="diceRow"><div class="diceFaces" aria-label="주사위 두 개"><div id="dieFace1" class="dieFace">-</div><div id="dieFace2" class="dieFace">-</div></div><div id="turnTimer" class="turnTimer">--</div></div>
           <div id="logLine" class="logLine"></div>
         </div>
       </aside>
 
       <div class="gameMain">
         <section class="panel">
-          <div class="boardWrap"><svg id="board" viewBox="0 0 380 380" role="img" aria-label="저택 평면도"></svg></div>
+          <div class="boardWrap">
+            <svg id="board" viewBox="0 0 380 380" role="img" aria-label="가로·세로 복도가 교차하고 비밀통로 8곳이 있는 저택 평면도"></svg>
+            <div class="boardLegend"><span>▦ #형 복도를 한 칸씩 이동</span><span>▱ 비밀통로 8곳 · 정반대 출구로 연결</span></div>
+          </div>
           <div id="pendingBanner" class="pendingBanner hidden"></div>
           <div id="actionBar" class="actionBar"></div>
         </section>
@@ -254,7 +269,7 @@ h1,h2,h3,p{margin-top:0}
     <h2>저택 추리 규칙</h2>
     <ol>
       <li>저택의 가보를 훔친 도둑(용의자 1명) · 사용한 도구(1개) · 범행 장소(방 1곳) 카드가 각 1장씩 몰래 빠져 뒤집혀 놓입니다. 나머지 18장은 참가자에게 고르게 나눠집니다.</li>
-      <li>자기 차례에는 주사위를 굴려 나온 수만큼 복도 타일을 한 칸씩 이동합니다. 이동 가능한 칸과 방은 초록색으로 표시되며, 원하는 곳을 눌러 이동합니다. 복도에는 총 8개의 비밀계단이 있는데(칸에 점선 표시), 그 위에 서면 저택 반대편 맞은편 계단으로 즉시 이동할 수 있습니다. 이동을 포기하고 제자리에 머물 수도 있습니다.</li>
+      <li>자기 차례에는 주사위 두 개를 굴려 나온 합계만큼 복도 타일을 한 칸씩 이동합니다. 지정된 금색 문 타일에서만 연결된 방으로 들어갈 수 있고, 방에 들어가면 이동이 끝납니다. 이동 가능한 칸과 방은 초록색으로 표시됩니다. 복도에는 총 8개의 비밀계단이 있으며, 그 위에 서면 저택 정반대편 계단으로 즉시 이동할 수 있습니다.</li>
       <li>방 안에 있을 때만 "용의자 + 도구"를 추리로 발표할 수 있습니다. 장소는 자신이 있는 방으로 자동 지정됩니다. 복도에 멈춰 있으면 추리를 발표할 수 없습니다.</li>
       <li>다음 차례부터 순서대로 다른 참가자들에게 그 용의자·도구·장소 카드 중 한 장이라도 있는지 묻습니다. 가진 사람이 나오면 그 카드 한 장을 추리한 사람에게만 몰래 보여줍니다. 아무도 없으면 공개적으로 "반박 없음"이 됩니다.</li>
       <li>확신이 서면 거실로 돌아와 "고발"로 도둑·도구·장소를 모두 지목할 수 있습니다(고발은 거실에 있을 때만 가능). 정답이면 즉시 승리! 틀리면 그 사람은 더 이상 이동·추리·고발을 할 수 없지만, 다른 사람의 추리를 반박하는 데는 계속 참여합니다.</li>
@@ -366,22 +381,53 @@ const CARD_FILES=[
 function cardImage(id){return "/learning/games/clue/assets/images/cards/"+CARD_FILES[id]+".webp"}
 const CARDBACK_IMG="/learning/games/clue/assets/images/cards/cardback.webp";
 const ROOM_POS=[[0,0],[0,1],[0,2],[1,0],[1,1],[1,2],[2,0],[2,1],[2,2]];
-const CELL_COORDS={
-  t0:[20,125],t1:[33.3,125],t2:[46.7,125],t3:[60,125],t4:[81.7,125],t5:[103.3,125],t6:[125,125],t7:[146.7,125],t8:[168.3,125],t9:[190,125],t10:[211.7,125],t11:[233.3,125],t12:[255,125],t13:[276.7,125],t14:[298.3,125],t15:[320,125],t16:[333.3,125],t17:[346.7,125],t18:[360,125],
-  b0:[20,255],b1:[33.3,255],b2:[46.7,255],b3:[60,255],b4:[81.7,255],b5:[103.3,255],b6:[125,255],b7:[146.7,255],b8:[168.3,255],b9:[190,255],b10:[211.7,255],b11:[233.3,255],b12:[255,255],b13:[276.7,255],b14:[298.3,255],b15:[320,255],b16:[333.3,255],b17:[346.7,255],b18:[360,255]
-};
-const ROOM_META=[
-  {icon:"🌿",color:"#234a35"},{icon:"🎹",color:"#4a2140"},{icon:"🍳",color:"#4a3319"},
-  {icon:"📖",color:"#33241c"},{icon:"🛋️",color:"#4a3c14"},{icon:"🍽️",color:"#4a1f24"},
-  {icon:"🗄️",color:"#263038"},{icon:"🚪",color:"#1c3a3a"},{icon:"🎱",color:"#1a3d2e"}
+const TRACK_POSITIONS=[20,38.9,57.8,76.7,95.6,114.4,133.3,152.2,171.1,190,208.9,227.8,246.7,265.6,284.4,303.3,322.2,341.1,360];
+const TRACKS=[
+  {prefix:"t",axis:"h",fixed:125,intersections:{6:"xTL",12:"xTR"}},
+  {prefix:"b",axis:"h",fixed:255,intersections:{6:"xBL",12:"xBR"}},
+  {prefix:"l",axis:"v",fixed:133.3,intersections:{6:"xTL",12:"xBL"}},
+  {prefix:"r",axis:"v",fixed:246.7,intersections:{6:"xTR",12:"xBR"}}
 ];
-const CELL_NEIGHBORS={
-  t0:["t1"],t1:["t0","t2"],t2:["t1","t3"],t3:["t2","t4"],t4:["t3","t5"],t5:["t4","t6"],t6:["t5","t7"],t7:["t6","t8"],t8:["t7","t9"],t9:["t8","t10"],t10:["t9","t11"],t11:["t10","t12"],t12:["t11","t13"],t13:["t12","t14"],t14:["t13","t15"],t15:["t14","t16"],t16:["t15","t17"],t17:["t16","t18"],t18:["t17"],
-  b0:["b1"],b1:["b0","b2"],b2:["b1","b3"],b3:["b2","b4"],b4:["b3","b5"],b5:["b4","b6"],b6:["b5","b7"],b7:["b6","b8"],b8:["b7","b9"],b9:["b8","b10"],b10:["b9","b11"],b11:["b10","b12"],b12:["b11","b13"],b13:["b12","b14"],b14:["b13","b15"],b15:["b14","b16"],b16:["b15","b17"],b17:["b16","b18"],b18:["b17"]
+function trackCellId(track,index){return track.intersections[index]||track.prefix+index}
+function buildCorridorModel(){
+  const coords={},neighborSets={},orientations={};
+  TRACKS.forEach(track=>{
+    let previous=null;
+    TRACK_POSITIONS.forEach((position,index)=>{
+      const cellId=trackCellId(track,index);
+      if(!coords[cellId])coords[cellId]=track.axis==="h"?[position,track.fixed]:[track.fixed,position];
+      if(orientations[cellId]&&orientations[cellId]!==track.axis)orientations[cellId]="x";
+      else if(!orientations[cellId])orientations[cellId]=track.axis;
+      if(!neighborSets[cellId])neighborSets[cellId]=new Set();
+      if(previous&&previous!==cellId){
+        neighborSets[cellId].add(previous);
+        neighborSets[previous].add(cellId);
+      }
+      previous=cellId;
+    });
+  });
+  const cells=Object.keys(coords);
+  const neighbors=Object.fromEntries(cells.map(cellId=>[cellId,[...neighborSets[cellId]]]));
+  return {cells,coords,neighbors,orientations};
+}
+const CORRIDOR_MODEL=buildCorridorModel();
+const CORRIDOR_CELLS=CORRIDOR_MODEL.cells;
+const CELL_COORDS=CORRIDOR_MODEL.coords;
+const CELL_NEIGHBORS=CORRIDOR_MODEL.neighbors;
+const CELL_ORIENTATION=CORRIDOR_MODEL.orientations;
+const CELL_ROOMS={
+  t3:[0,3],t9:[1,4],t15:[2,5],b3:[3,6],b9:[4,7],b15:[5,8],
+  l3:[0,1],l9:[3,4],l15:[6,7],r3:[1,2],r9:[4,5],r15:[7,8]
 };
-const CELL_ROOMS={t3:[0,3],t9:[1,4],t15:[2,5],b3:[3,6],b9:[4,7],b15:[5,8]};
-const ROOM_CELLS={0:["t3"],1:["t9"],2:["t15"],3:["t3","b3"],4:["t9","b9"],5:["t15","b15"],6:["b3"],7:["b9"],8:["b15"]};
-const SECRET_PASSAGE_PAIRS={t0:"b18",b18:"t0",t6:"b12",b12:"t6",t12:"b6",b6:"t12",t18:"b0",b0:"t18"};
+const ROOM_CELLS={
+  0:["t3","l3"],1:["t9","l3","r3"],2:["t15","r3"],
+  3:["t3","b3","l9"],4:["t9","b9","l9","r9"],5:["t15","b15","r9"],
+  6:["b3","l15"],7:["b9","l15","r15"],8:["b15","r15"]
+};
+const SECRET_PASSAGE_PAIRS={
+  t0:"b18",b18:"t0",t18:"b0",b0:"t18",
+  l0:"r18",r18:"l0",r0:"l18",l18:"r0"
+};
 const SERVER_MESSAGE=Object.freeze({STATE:"CLUE_STATE",REVEAL:"CLUE_REVEAL",ERROR:"CLUE_ERROR"});
 const $=id=>document.getElementById(id);
 
@@ -432,16 +478,16 @@ async function loadMyAvatar(){
 
 function playDiceAnimation(){
   dieAnimating=true;
-  const face=$("dieFace");
-  face.classList.add("rolling");
+  const faces=[$("dieFace1"),$("dieFace2")];
+  faces.forEach(face=>face.classList.add("rolling"));
   let ticks=0;
   const timer=setInterval(()=>{
-    face.textContent=String(1+Math.floor(Math.random()*6));
+    faces.forEach(face=>{face.textContent=String(1+Math.floor(Math.random()*6))});
     ticks+=1;
     if(ticks>=9){
       clearInterval(timer);
       dieAnimating=false;
-      face.classList.remove("rolling");
+      faces.forEach(face=>face.classList.remove("rolling"));
       renderGame();
     }
   },70);
@@ -481,70 +527,40 @@ function showLobby(){
   $("lobbyScreen").classList.remove("hidden");
 }
 
-function checkerFloor(x0,y0,width,height){
-  const cw=10,rows=Math.round(height/cw),cols=Math.round(width/cw);
-  const parts=[];
-  for(let r=0;r<rows;r+=1){
-    for(let c=0;c<cols;c+=1){
-      const dark=(r+c)%2===0;
-      parts.push(`<rect x="${x0+c*cw}" y="${y0+r*cw}" width="${cw}" height="${cw}" fill="${dark?"#b9ac8c":"#cabf9f"}"/>`);
-    }
-  }
-  return parts.join("");
-}
-
-function roomTexture(size){
-  const cw=10,n=Math.round(size/cw);
-  const parts=[];
-  for(let r=0;r<n;r+=1){
-    for(let c=0;c<n;c+=1){
-      if((r+c)%2===0)continue;
-      parts.push(`<rect x="${c*cw}" y="${r*cw}" width="${cw}" height="${cw}" fill="#00000022"/>`);
-    }
-  }
-  return parts.join("");
-}
-
 function buildBoard(){
   const svg=$("board");
   const defs=[`<clipPath id="tokenClip" clipPathUnits="objectBoundingBox"><circle cx="0.5" cy="0.5" r="0.5"/></clipPath>`,
-    `<clipPath id="hallwayClipTop"><rect x="20" y="100" width="340" height="50" rx="6"/></clipPath>`,
-    `<clipPath id="hallwayClipBottom"><rect x="20" y="230" width="340" height="50" rx="6"/></clipPath>`];
-  const parts=[`<rect class="boardBg" x="0" y="0" width="380" height="380" rx="14"/>`];
+    `<clipPath id="boardClip"><rect x="0" y="0" width="380" height="380" rx="14"/></clipPath>`];
+  const parts=[`<rect class="boardBg" x="0" y="0" width="380" height="380" rx="14"/>`,
+    `<image class="boardArt" href="/learning/games/clue/assets/images/board-v3.webp" x="0" y="0" width="380" height="380" preserveAspectRatio="xMidYMid meet" clip-path="url(#boardClip)"/>`];
   const cellSize=80,gap=50,margin=20;
-  parts.push(`<g clip-path="url(#hallwayClipTop)">${checkerFloor(20,100,340,50)}</g>`);
-  parts.push(`<g clip-path="url(#hallwayClipBottom)">${checkerFloor(20,230,340,50)}</g>`);
-  parts.push(`<rect class="hallwayEdge" x="${margin}" y="100" width="340" height="50" rx="6"/>`);
-  parts.push(`<rect class="hallwayEdge" x="${margin}" y="230" width="340" height="50" rx="6"/>`);
   for(let i=0;i<9;i+=1){
     const [row,col]=ROOM_POS[i];
     const x=margin+col*(cellSize+gap),y=margin+row*(cellSize+gap);
-    const meta=ROOM_META[i];
     parts.push(`<g data-room="${i}" transform="translate(${x},${y})">`);
-    parts.push(`<rect class="roomRect${i===CENTER_ROOM?" centerRoom":""}" data-room="${i}" x="0" y="0" width="${cellSize}" height="${cellSize}" rx="8" fill="${meta.color}"/>`);
-    parts.push(`<g clip-path="inset(0 round 8px)">${roomTexture(cellSize)}</g>`);
-    parts.push(`<text class="roomIcon" x="${cellSize/2}" y="30">${meta.icon}</text>`);
-    parts.push(`<text class="roomLabel" x="${cellSize/2}" y="47">${ROOMS[i]}</text>`);
+    parts.push(`<rect class="roomRect${i===CENTER_ROOM?" centerRoom":""}" data-room="${i}" x="0" y="0" width="${cellSize}" height="${cellSize}" rx="8"/>`);
+    parts.push(`<rect class="roomLabelPlate" x="12" y="29" width="56" height="21" rx="6"/>`);
+    parts.push(`<text class="roomLabel" x="${cellSize/2}" y="43.5">${ROOMS[i]}</text>`);
     parts.push(`<g class="tokenLayer" data-tokens="r${i}"></g>`);
     parts.push(`</g>`);
   }
-  const wallY={t:[100,150],b:[230,280]};
-  Object.entries(CELL_ROOMS).forEach(([cellId,rooms])=>{
-    const [cx]=CELL_COORDS[cellId];
-    const [above,below]=wallY[cellId[0]];
-    rooms.forEach((roomIdx,idx)=>{
-      const y0=idx===0?above-14:below;
-      parts.push(`<rect class="doorNotch" x="${cx-8}" y="${y0}" width="16" height="14" rx="2"/>`);
-    });
-  });
-  Object.entries(CELL_COORDS).forEach(([cellId,pos])=>{
+  Object.entries(CELL_COORDS).forEach(([cellId,pos],cellIndex)=>{
     const isPassage=Boolean(SECRET_PASSAGE_PAIRS[cellId]);
     const isDoor=Boolean(CELL_ROOMS[cellId]);
     const kind=isPassage?"passage":isDoor?"door":"plain";
-    const size=isPassage||isDoor?15:11;
-    parts.push(`<g data-cell="${cellId}" transform="translate(${pos[0]},${pos[1]})">`);
-    parts.push(`<rect class="cellHit ${kind}" data-cell="${cellId}" x="${-size/2}" y="${-size/2}" width="${size}" height="${size}" rx="3"/>`);
-    if(isPassage)parts.push(`<text class="passageIcon" x="0" y="3.5">🌀</text>`);
+    const shade=cellIndex%2?" shade":"";
+    const orientation=CELL_ORIENTATION[cellId]||"h";
+    const tileWidth=orientation==="h"?18.2:22;
+    const tileHeight=orientation==="v"?18.2:22;
+    parts.push(`<g class="cellGroup ${kind}${shade}" data-cell="${cellId}" transform="translate(${pos[0]},${pos[1]})">`);
+    if(isPassage)parts.push(`<title>비밀통로 · ${SECRET_PASSAGE_PAIRS[cellId]} 맞은편 출구로 이동</title>`);
+    parts.push(`<rect class="corridorTile" x="${-tileWidth/2}" y="${-tileHeight/2}" width="${tileWidth}" height="${tileHeight}" rx="1.5"/>`);
+    parts.push(`<rect class="cellHit" x="-14" y="-14" width="28" height="28" rx="4"/>`);
+    if(isPassage){
+      parts.push(`<rect class="passageFrame" x="-6.5" y="-8.5" width="13" height="17" rx="2"/>`);
+      parts.push(`<path class="passageSteps" d="M-4.5 -4.5H4.5M-4.5 -1.5H4.5M-4.5 1.5H4.5M-4.5 4.5H4.5"/>`);
+      parts.push(`<path class="passageArrow" d="M0 -7L3 -4H-3Z"/>`);
+    }
     parts.push(`<g class="tokenLayer" data-tokens="c${cellId}"></g>`);
     parts.push(`</g>`);
   });
@@ -559,6 +575,15 @@ function onBoardClick(event){
   if(!gameState||gameState.phase!=="playing")return;
   const snapshot=lobby.snapshot();
   if(gameState.turnPlayerId!==snapshot.myId||gameState.pendingSuggestion)return;
+  const me=gameState.players.find(player=>player.id===snapshot.myId);
+  if(cellTarget&&me){
+    const currentCell=cellTarget.getAttribute("data-cell");
+    const canUsePassage=me.cellId===currentCell&&Boolean(SECRET_PASSAGE_PAIRS[currentCell])&&(gameState.turnPhase==="move"||gameState.turnPhase==="act");
+    if(canUsePassage){
+      sendAction("SECRET_PASSAGE");
+      return;
+    }
+  }
   if(gameState.turnPhase!=="move"||gameState.dice===null||gameState.moved)return;
   const reachable=gameState.reachable||{rooms:[],cells:[]};
   if(roomTarget){
@@ -580,7 +605,7 @@ function playerName(id){
 function renderTokens(){
   document.querySelectorAll(".tokenLayer").forEach(layer=>layer.replaceChildren());
   document.querySelectorAll(".roomRect").forEach(rect=>rect.classList.remove("reachable","current"));
-  document.querySelectorAll(".cellHit").forEach(hit=>hit.classList.remove("reachable","current"));
+  document.querySelectorAll(".cellGroup").forEach(cell=>cell.classList.remove("reachable","current"));
   if(!gameState)return;
   const snapshot=lobby.snapshot();
   const me=gameState.players.find(p=>p.id===snapshot.myId);
@@ -620,6 +645,18 @@ function renderTokens(){
         img.setAttribute("clip-path","url(#tokenClip)");
         layer.appendChild(img);
       }
+      const nameTag=document.createElementNS(svgNS,"text");
+      const nameChars=Array.from(String(player.name||""));
+      const displayName=nameChars.length<=4?nameChars.join(""):nameChars.slice(0,3).join("")+"…";
+      nameTag.setAttribute("class","tokenName");
+      nameTag.setAttribute("x",cx);
+      nameTag.setAttribute("y",cy-(isRoom?9.5:8));
+      nameTag.setAttribute("aria-label",player.name);
+      nameTag.textContent=displayName;
+      const nameTitle=document.createElementNS(svgNS,"title");
+      nameTitle.textContent=player.name;
+      nameTag.appendChild(nameTitle);
+      layer.appendChild(nameTag);
     });
   });
   if(gameState.phase==="playing"&&me&&gameState.turnPlayerId===snapshot.myId&&!gameState.pendingSuggestion&&gameState.turnPhase==="move"&&gameState.dice!==null&&!gameState.moved){
@@ -640,7 +677,7 @@ function renderTokens(){
       layer.appendChild(dot);
     });
     reachable.cells.forEach(cellId=>{
-      const hit=document.querySelector(`.cellHit[data-cell="${cellId}"]`);
+      const hit=document.querySelector(`.cellGroup[data-cell="${cellId}"]`);
       if(hit)hit.classList.add("reachable");
       const layer=document.querySelector(`.tokenLayer[data-tokens="c${cellId}"]`);
       if(!layer)return;
@@ -655,7 +692,7 @@ function renderTokens(){
       const rect=document.querySelector(`.roomRect[data-room="${me.roomIndex}"]`);
       if(rect)rect.classList.add("current");
     }else if(me.cellId){
-      const hit=document.querySelector(`.cellHit[data-cell="${me.cellId}"]`);
+      const hit=document.querySelector(`.cellGroup[data-cell="${me.cellId}"]`);
       if(hit)hit.classList.add("current");
     }
   }
@@ -693,17 +730,22 @@ function renderActionBar(){
   const buttons=[];
   if(gameState.turnPhase==="move"){
     if(gameState.dice===null){
-      buttons.push(`<button id="rollBtn" class="primary" type="button">주사위 굴리기</button>`);
+      buttons.push(`<button id="rollBtn" class="primary" type="button">주사위 2개 굴리기</button>`);
       if(hasPassage){
-        buttons.push(`<button id="passageBtn" class="secondary" type="button">비밀통로 이용</button>`);
+        buttons.push(`<button id="passageBtn" class="secondary" type="button">비밀통로 → 맞은편</button>`);
       }
     }else if(!gameState.moved){
-      const label=me.roomIndex>=0?`${ROOMS[me.roomIndex]}에 머물기`:"복도에 머물기";
+      const remaining=Number(gameState.stepsRemaining??gameState.dice);
+      buttons.push(`<span class="moveCounter">남은 이동 <strong>${remaining}</strong>칸</span>`);
+      if(hasPassage){
+        buttons.push(`<button id="passageBtn" class="secondary" type="button">비밀통로 → 맞은편</button>`);
+      }
+      const label=me.roomIndex>=0?`${ROOMS[me.roomIndex]}에서 이동 종료`:"이 칸에서 이동 종료";
       buttons.push(`<button id="stayBtn" class="secondary" type="button">${label}</button>`);
     }
   }else if(gameState.turnPhase==="act"){
     if(hasPassage){
-      buttons.push(`<button id="passageBtn" class="secondary" type="button">비밀통로 이용</button>`);
+      buttons.push(`<button id="passageBtn" class="secondary" type="button">비밀통로 → 맞은편</button>`);
     }
     if(!gameState.suggestionUsed){
       const inRoom=me.roomIndex>=0;
@@ -855,7 +897,13 @@ function renderGame(){
   renderPlayerList();
   renderTokens();
   const ended=gameState.phase==="gameEnd";
-  if(!dieAnimating)$("dieFace").textContent=gameState.dice===null||gameState.dice===undefined?"-":String(gameState.dice);
+  if(!dieAnimating){
+    const diceValues=Array.isArray(gameState.diceValues)?gameState.diceValues:["-","-"];
+    $("dieFace1").textContent=String(diceValues[0]??"-");
+    $("dieFace2").textContent=String(diceValues[1]??"-");
+    const diceLabel=gameState.dice===null||gameState.dice===undefined?"주사위 결과 없음":`주사위 ${diceValues.join(" + ")} = ${gameState.dice}`;
+    document.querySelector(".diceFaces").setAttribute("aria-label",diceLabel);
+  }
   syncLocalDeadline();
   updateTurnTimer();
   if(ended){
@@ -866,7 +914,8 @@ function renderGame(){
     if(gameState.pendingSuggestion){
       $("turnBanner").textContent="반박을 확인하는 중입니다.";
     }else if(gameState.turnPhase==="move"){
-      $("turnBanner").textContent=(isMyTurn?"내 차례":activeName+"님 차례")+" · 이동 단계";
+      const moveStatus=gameState.dice===null?"주사위를 굴리세요":`남은 이동 ${Number(gameState.stepsRemaining??gameState.dice)}칸`;
+      $("turnBanner").textContent=(isMyTurn?"내 차례":activeName+"님 차례")+" · "+moveStatus;
     }else{
       $("turnBanner").textContent=(isMyTurn?"내 차례":activeName+"님 차례")+" · 행동 단계";
     }
