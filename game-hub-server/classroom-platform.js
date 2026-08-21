@@ -2914,30 +2914,32 @@ function createClassroomPlatform(options = {}) {
     if (!classroom) return res.json({ classroom: null, isReadOnly: isSubjectTeacher });
 
     const studentsResult = await pool.query(
-      `SELECT s.student_number::TEXT AS student_number, s.roster_name, COALESCE(s.gender, '여') AS gender,
-              NULL AS birthday_mmdd, TRUE AS birthday_visible,
-              NULL AS avatar_key,
-              s.student_email, s.guardian1_email, s.guardian2_email,
-              s.user_id IS NOT NULL AS student_linked,
-              EXISTS(SELECT 1 FROM classroom_users u WHERE LOWER(u.email) = LOWER(s.guardian1_email)) AS guardian1_linked,
-              EXISTS(SELECT 1 FROM classroom_users u WHERE LOWER(u.email) = LOWER(s.guardian2_email)) AS guardian2_linked
-       FROM school_students s
-       WHERE s.school_id = $1 AND s.academic_year = $2 AND s.grade = $3 AND s.class_number = $4
-       UNION ALL
-       SELECT s.student_number::TEXT AS student_number, s.roster_name, COALESCE(s.gender, '남') AS gender,
-              s.birthday_mmdd, s.birthday_visible,
-              s.avatar_key,
-              s.student_email, s.guardian1_email, s.guardian2_email,
-              s.user_id IS NOT NULL AS student_linked,
-              EXISTS(SELECT 1 FROM classroom_users u WHERE LOWER(u.email) = LOWER(s.guardian1_email)) AS guardian1_linked,
-              EXISTS(SELECT 1 FROM classroom_users u WHERE LOWER(u.email) = LOWER(s.guardian2_email)) AS guardian2_linked
-       FROM classroom_students s
-       WHERE s.class_id = $5
-         AND NOT EXISTS (
-           SELECT 1 FROM school_students ss
-           WHERE ss.school_id = $1 AND ss.academic_year = $2 AND ss.grade = $3 AND ss.class_number = $4
-             AND ss.student_number = s.student_number::TEXT
-         )
+      `SELECT * FROM (
+         SELECT s.student_number::TEXT AS student_number, s.roster_name, COALESCE(s.gender, '여') AS gender,
+                NULL AS birthday_mmdd, TRUE AS birthday_visible,
+                NULL AS avatar_key,
+                s.student_email, s.guardian1_email, s.guardian2_email,
+                s.user_id IS NOT NULL AS student_linked,
+                EXISTS(SELECT 1 FROM classroom_users u WHERE LOWER(u.email) = LOWER(s.guardian1_email)) AS guardian1_linked,
+                EXISTS(SELECT 1 FROM classroom_users u WHERE LOWER(u.email) = LOWER(s.guardian2_email)) AS guardian2_linked
+         FROM school_students s
+         WHERE s.school_id = $1 AND s.academic_year = $2 AND s.grade = $3 AND s.class_number = $4
+         UNION ALL
+         SELECT s.student_number::TEXT AS student_number, s.roster_name, COALESCE(s.gender, '남') AS gender,
+                s.birthday_mmdd, s.birthday_visible,
+                s.avatar_key,
+                s.student_email, s.guardian1_email, s.guardian2_email,
+                s.user_id IS NOT NULL AS student_linked,
+                EXISTS(SELECT 1 FROM classroom_users u WHERE LOWER(u.email) = LOWER(s.guardian1_email)) AS guardian1_linked,
+                EXISTS(SELECT 1 FROM classroom_users u WHERE LOWER(u.email) = LOWER(s.guardian2_email)) AS guardian2_linked
+         FROM classroom_students s
+         WHERE s.class_id = $5
+           AND NOT EXISTS (
+             SELECT 1 FROM school_students ss
+             WHERE ss.school_id = $1 AND ss.academic_year = $2 AND ss.grade = $3 AND ss.class_number = $4
+               AND ss.student_number = s.student_number::TEXT
+           )
+       ) combined
        ORDER BY CASE WHEN student_number ~ '^[0-9]+$' THEN student_number::INTEGER END,
                 student_number`,
       [classroom.school_id, classroom.academic_year, classroom.grade, classroom.class_number, classroom.id]
