@@ -362,3 +362,7 @@ body.lesson-active .card-media .source-block {
             "media";
     }
 }
+/* 차시 화면에서는 차시 제목만 보여 분류명이 제목처럼 겹치지 않게 함 */
+body.lesson-active .card-topline {
+    display: none;
+}

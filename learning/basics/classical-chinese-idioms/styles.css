@@ -399,7 +399,7 @@ select { padding: 0 34px 0 12px; color: var(--ink); }
 .theme-badge,
 .library-theme { background: var(--gold-soft); color: #76551f; }
 .library-level { background: var(--green-soft); color: var(--green); }
-.verification-badge { background: var(--green-soft); color: var(--green); }
+.verification-badge { display: none; background: var(--green-soft); color: var(--green); }
 .verification-badge.compare { background: var(--red-soft); color: var(--red); }
 
 .idiom-face {
