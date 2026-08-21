@@ -2613,16 +2613,16 @@ module.exports = {
           "Saying blue curves repeat is closer to interpretation."
         ],
         [
-          "긴장감을 말했다면 선과 질감은 안 봐도 된다.",
-          "Once tension is named, lines and texture can be skipped."
+          "긴장감을 말하면서 색이 어둡다는 점만 근거로 들고 선과 형태는 안 봐도 된다고 본다.",
+          "Naming tension and pointing only to the dark color is treated as enough, without also checking lines and shape."
         ],
         [
           "해석이 다르면 더 오래 본 사람이 맞는 쪽이다.",
           "The person who looked longer has the right reading."
         ],
         [
-          "‘불안해 보인다’는 해석은 느낌이라 근거가 필요 없다.",
-          "An anxious reading is a feeling and needs no lines."
+          "’불안해 보인다’는 해석의 근거를 그림이 아니라 자신의 최근 경험에서 찾아 설명한다.",
+          "An anxious reading is explained by pointing to the viewer's own recent experience instead of anything in the picture."
         ],
         [
           "시대를 안 뒤에는 표시를 넘기고 시대로 푼다.",
@@ -2789,16 +2789,16 @@ module.exports = {
           "The sentence saying that blue curves repeat across the canvas reports an impression the viewer formed, which puts it nearer interpretation."
         ],
         [
-          "긴장감을 느꼈다고 말한 관람자는 두꺼운 직선과 거친 질감을 살피지 않더라도, 그 해석은 설명으로 충분히 갖추어진다.",
-          "A viewer who reports tension has given an account that stands, even though the thick lines and the rough texture went unexamined."
+          "긴장감을 느꼈다고 말한 관람자는 그 근거로 어두운 색만 짚어 들고, 두꺼운 직선과 거친 질감까지 함께 살피지 않아도 설명은 충분히 갖추어진다고 본다.",
+          "A viewer who reports tension points only to the picture's dark color as evidence, treating that as enough even though the thick lines and rough texture go unexamined."
         ],
         [
           "미술관을 자주 찾던 사람과 처음 온 사람의 해석이 갈릴 때에는, 더 오래 본 사람의 해석을 맞다고 보면 된다.",
           "When a regular visitor and a first-time visitor disagree, the reading that comes from the one who looked longer can be taken as correct."
         ],
         [
-          "‘불안해 보인다’고 해석한 관람자는 그것이 느낌을 말한 것이므로, 화면에서 근거를 찾지 않아도 해석은 그대로 선다.",
-          "A viewer who reads the mood as anxious has named a feeling, so the reading stands even though the picture offers nothing to cite."
+          "’불안해 보인다’고 해석한 관람자는 그 근거를 화면의 색이나 선이 아니라 자신의 최근 경험에서 찾아 설명해도 해석은 그대로 선다고 본다.",
+          "A viewer who reads the mood as anxious explains that reading by citing their own recent experience rather than anything in the picture, and takes the reading to stand regardless."
         ],
         [
           "갈등이 이어지던 시대에 그려진 작품이라면, 화면에 되풀이되는 표시는 지나치고 시대 설명만으로 뜻을 정해도 된다.",
@@ -2889,11 +2889,11 @@ module.exports = {
       "wrongApplications": [
         "건강 글이 자세하니 만든 기관은 넘기고 정리한다.",
         "일부만 자른 영상으로 경기 전체 흐름을 짐작한다.",
-        "시간표가 자세하니 게시 날짜 없이 맞다고 본다.",
+        "게시 날짜가 최근이라 보고, 실제 운행 시간과 다시 맞대 보지 않는다.",
         "조사 수치가 있어 기자 해설도 조사 결과로 표시한다.",
         "같은 글을 실은 곳이 많아서 확인된 자료로 본다.",
         "막대가 길어 보여 세로축은 빼고 길이로만 본다.",
-        "식품 조언을 준 사람이 유명하니 연구 분야는 넘긴다.",
+        "식품 조언을 준 사람이 '박사'라 불리니 그 분야를 연구했다고 본다.",
         "조사 결과가 뚜렷하니 표본이 작다는 점은 뺀다."
       ],
       "wrong": [
@@ -2942,11 +2942,11 @@ module.exports = {
       "wrongApplications": [
         "건강 정보의 설명이 자세하고 조리도 있어 보이므로, 그 글을 낸 기관이 어디인지는 찾아보지 않은 채 정리한다.",
         "일부만 잘라 편집한 영상만 보고도 경기의 흐름은 짐작된다고 여겨, 전체 영상과 견주는 절차는 건너뛴다.",
-        "여행 안내문의 시간표가 자세하므로 게시 날짜가 없어도 지금 운행에 맞을 것이라고 보고 그대로 따른다.",
+        "여행 안내문에 게시 날짜가 적혀 있고 그 날짜가 최근이라는 것까지 확인했지만, 실제 운행 시간과 다시 맞대어 보지는 않은 채 안내문 내용을 그대로 따른다.",
         "기사에 조사 수치가 인용되어 있으므로 기자가 덧붙인 해설도 조사에서 나온 결과인 것으로 보고 표시한다.",
         "같은 문장을 실은 사이트가 여럿이므로 그 내용은 이미 확인된 자료인 것으로 보고 출처는 따지지 않는다.",
         "막대의 차이가 한눈에 커 보이므로 세로축이 어디에서 시작하는지는 살피지 않고 길이만으로 차이를 판단한다.",
-        "식품 조언을 한 사람이 방송에 자주 나와 낯익으므로 그 사람이 어느 분야를 연구했는지는 따지지 않는다.",
+        "식품 조언을 한 사람이 '박사'라는 호칭으로 소개되었다는 것만 확인하고, 그 호칭이 식품이나 영양 분야를 연구한 결과인지는 따로 따지지 않는다.",
         "초기 조사 결과의 방향이 뚜렷하므로 표본이 작다는 사정은 굳이 알리지 않고 결론만 간추려 전한다."
       ],
       "wrong": [
@@ -2995,8 +2995,8 @@ module.exports = {
         "투표 결과와 근거, 다시 볼 시점을 함께 알린다."
       ],
       "wrongApplications": [
-        "통화 금지 문구만 있으니 음악은 크게 들어도 된다.",
-        "대피 때도 문구가 분명하니 목적은 빼고 따른다.",
+        "통화 금지 문구가 있는 도서관을 보고, 다른 도서관도 같은 규칙일 거라 여기고 따로 확인하지 않는다.",
+        "대피 때 문구의 목적이 평소 안전 관리에 있다고 보고, 지금은 그 목적을 따로 생각하지 않아도 된다고 본다.",
         "예외 신청에 그동안 바빴다는 제 사정만 적어 낸다.",
         "사진 자유가 먼저라 보고 찍히는 사람 불편은 뺀다.",
         "계단 오르기를 모두에게 똑같이 적용해 공정하다고 본다.",
@@ -3048,8 +3048,8 @@ module.exports = {
         "학급 투표를 마친 뒤 결과만 내놓지 않고 그렇게 정한 근거와 언제 다시 논의할 수 있는지까지 함께 알린다."
       ],
       "wrongApplications": [
-        "도서관에 통화 금지 문구만 적혀 있으므로, 음악을 크게 틀어 놓는 일은 규칙에 걸리지 않는다고 판단한다.",
-        "대피 상황에서도 출입 금지 문구가 분명하므로, 그 규칙이 무엇을 지키려는 것인지는 살피지 않고 그대로 따른다.",
+        "도서관에 통화 금지 문구가 걸려 있는 것을 보고, 안내문이 따로 없는 다른 도서관에서도 같은 수준의 정숙함을 기대할 수 있다고 본다.",
+        "대피 상황에서 출입 금지 문구의 목적이 평소의 안전 관리에 있음을 알아차렸지만, 그 목적은 평소에만 해당한다고 보아 지금은 따로 고려하지 않는다.",
         "과제 기한의 예외를 요청하면서, 그동안 자신이 바빴다는 사정만을 이유로 들고 다른 조건은 붙이지 않는다.",
         "사진을 찍을 자유가 앞선다고 보고 찍히는 사람이 겪을 불편은 견주지 않은 채 그 사진을 그대로 올린다.",
         "같은 시간 안에 계단을 오르는 조건을 모두에게 똑같이 적용했으므로, 그 규칙은 공정한 규칙이라고 판단한다.",
