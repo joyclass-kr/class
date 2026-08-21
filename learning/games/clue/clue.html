@@ -118,7 +118,7 @@ h1,h2,h3,p{margin-top:0}
 .boardLegend{display:flex;justify-content:center;gap:8px;flex-wrap:wrap;margin-top:10px;color:#d8d0bf;font-size:12px;font-weight:800}
 .boardLegend span{min-height:28px;display:inline-flex;align-items:center;padding:4px 9px;border:1px solid #4a4338;border-radius:999px;background:#12141ccc}
 .token{stroke:#fff;stroke-width:1.5}
-.tokenAvatar{pointer-events:none}
+.tokenAvatar{pointer-events:none;filter:drop-shadow(0 1px 1px #000b);overflow:visible}
 .tokenName{font-size:4.2px;font-weight:950;fill:#fff;text-anchor:middle;paint-order:stroke fill;stroke:#090a0e;stroke-width:1.2px;stroke-linejoin:round;pointer-events:none}
 .reachRing{fill:none;stroke:var(--safe);stroke-width:3;opacity:.9;pointer-events:none;transform-box:fill-box;transform-origin:center;animation:reachPulse 1.2s ease-out infinite}
 .reachRing.cellRing{stroke-width:2;animation:reachPulseSmall 1.2s ease-out infinite}
@@ -673,16 +673,18 @@ function renderTokens(){
     players.forEach((player,index)=>{
       const cx=isRoom?20+(index%3)*20:0;
       const cy=isRoom?62+Math.floor(index/3)*16:0;
-      const size=isRoom?13:9;
+      const size=player.avatarUrl?(isRoom?16:11):(isRoom?13:9);
       const color=playerColor(player);
-      const ring=document.createElementNS(svgNS,"circle");
-      ring.setAttribute("class","token");
-      ring.setAttribute("cx",cx);
-      ring.setAttribute("cy",cy);
-      ring.setAttribute("r",isRoom?7:5.5);
-      ring.setAttribute("fill",player.avatarUrl?"#12141c":color);
-      ring.setAttribute("stroke",color);
-      layer.appendChild(ring);
+      if(!player.avatarUrl){
+        const ring=document.createElementNS(svgNS,"circle");
+        ring.setAttribute("class","token");
+        ring.setAttribute("cx",cx);
+        ring.setAttribute("cy",cy);
+        ring.setAttribute("r",isRoom?6.5:5);
+        ring.setAttribute("fill",color);
+        ring.setAttribute("stroke",color);
+        layer.appendChild(ring);
+      }
       if(player.avatarUrl){
         const img=document.createElementNS(svgNS,"image");
         img.setAttribute("class","tokenAvatar");
@@ -691,7 +693,6 @@ function renderTokens(){
         img.setAttribute("y",cy-size/2);
         img.setAttribute("width",size);
         img.setAttribute("height",size);
-        img.setAttribute("clip-path","url(#tokenClip)");
         layer.appendChild(img);
       }
       const nameTag=document.createElementNS(svgNS,"text");
