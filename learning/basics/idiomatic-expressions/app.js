@@ -2,13 +2,13 @@
 
 const bank = window.IDIOMATIC_EXPRESSION_BANK;
 const LESSONS = [
-  { title: "1차시 · 마음과 감정", copy: "기쁨·걱정·긴장을 나타내는 표현", test: /^(마음|몸)/ },
-  { title: "2차시 · 생각하고 판단하기", copy: "생각의 방향과 깨달음을 나타내는 표현", test: /^(생각|능숙함)/ },
-  { title: "3차시 · 말하고 듣기", copy: "대화와 의견에 쓰는 표현", test: /^말/ },
-  { title: "4차시 · 사람과 관계", copy: "도움·협력·신뢰를 나타내는 표현", test: /^관계/ },
-  { title: "5차시 · 행동과 책임", copy: "실천·도움·책임에 쓰는 표현", test: /^행동/ },
-  { title: "6차시 · 관심과 평가", copy: "관심·평가·성과를 나타내는 표현", test: /^(평가|관심|성과)/ },
-  { title: "7차시 · 상황과 생활", copy: "시간·상황·생활에 쓰는 표현", test: /^(시간|상황|생활)/ }
+  { title: "1차시 · 감정과 반응", copy: "걱정·긴장·놀람을 나타내는 표현" },
+  { title: "2차시 · 생각하고 판단하기", copy: "고민·깨달음·판단을 나타내는 표현" },
+  { title: "3차시 · 말하고 듣기", copy: "대화·경청·의견에 쓰는 표현" },
+  { title: "4차시 · 사람과 관계", copy: "도움·신뢰·협력에 쓰는 표현" },
+  { title: "5차시 · 태도와 책임", copy: "결심·인내·책임에 쓰는 표현" },
+  { title: "6차시 · 관심과 평가", copy: "관심·평가·성과를 나타내는 표현" },
+  { title: "7차시 · 상황과 생활", copy: "시간·진행·생활에 쓰는 표현" }
 ];
 const COMPLETION_KEY = "class-idiomatic-expression-lessons";
 let completedLessons = new Set(JSON.parse(localStorage.getItem(COMPLETION_KEY) || "[]"));
@@ -37,14 +37,7 @@ function shuffle(items) {
 }
 
 function lessonFor(item) {
-  const category = item.category;
-  if (/^(마음|몸)/.test(category)) return 0;
-  if (/^(생각|능숙함)/.test(category)) return 1;
-  if (/^말/.test(category)) return 2;
-  if (/관계|협력|교류|도움/.test(category)) return 3;
-  if (/^행동/.test(category)) return 4;
-  if (/^(평가|관심|성과)/.test(category)) return 5;
-  return 6;
+  return item.lesson;
 }
 
 function resetBank() {
@@ -198,7 +191,7 @@ byId("nextQuestion").addEventListener("click", () => {
   }
 });
 
-if (!Array.isArray(bank) || bank.length < BATCH_SIZE) {
+if (!Array.isArray(bank) || bank.some((item) => !Number.isInteger(item.lesson))) {
   throw new Error("관용구 학습 자료를 불러오지 못했습니다.");
 }
 

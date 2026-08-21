@@ -19,7 +19,12 @@ test("관용구 핵심 학습 은행은 선별된 완성형 자료다", () => {
     assert.ok(item.meaning.endsWith("."), item.expression);
     assert.ok(item.example.endsWith("요."), item.expression);
     assert.ok(item.question.endsWith("요."), item.expression);
+    assert.ok(Number.isInteger(item.lesson), item.expression);
   }
+  assert.deepEqual(
+    Array.from({ length: 7 }, (_, lesson) => data.filter((item) => item.lesson === lesson).length),
+    [11, 11, 11, 11, 11, 10, 10]
+  );
   const expressions = data.map((item) => item.expression).join("\n");
   assert.doesNotMatch(expressions, /누워서 떡 먹기|가뭄에 콩 나듯|갈수록 태산|천 리 길도/);
 });
@@ -41,7 +46,7 @@ test("관용구 화면과 메인 메뉴가 내용별 차시 학습에 연결된�
   assert.match(html, /id="lessonList"/);
   assert.match(html, /id="backToLessons"/);
   assert.match(app, /const LESSONS =/);
-  assert.match(app, /1차시 · 마음과 감정/);
+  assert.match(app, /1차시 · 감정과 반응/);
   assert.match(app, /renderLessonList/);
   assert.match(app, /completedLessons/);
   assert.doesNotMatch(app, /BATCH_SIZE = 5/);
