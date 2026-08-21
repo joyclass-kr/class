@@ -206,35 +206,35 @@ module.exports = {
       "facts": [
         [
           "햇빛에서 열을 얻으면 물은 액체 상태를 벗어나 수증기가 되며 그 수증기는 공기 중으로 올라간다.",
-          "When water absorbs enough heat from sunlight it leaves its liquid state and turns into a vapour that rises into the air above."
+          "When water absorbs heat from sunlight, it turns from a liquid into vapor and rises into the air."
         ],
         [
           "위로 올라간 수증기가 식으면 아주 작은 물방울로 변하는데, 이 물방울들이 모여서 구름을 이룬다.",
-          "As vapour is carried upward it cools, and because cool air holds less moisture, the vapour condenses into droplets that gather as clouds."
+          "As that vapor rises, it cools, and the cooling turns it into tiny droplets that gather together as a cloud."
         ],
         [
           "구름 속 물방울이 뭉쳐 무거워지면 공기가 더는 떠받치지 못하므로, 그 방울은 비나 눈이 되어 땅으로 떨어진다.",
-          "When the droplets that fill a cloud merge until they are too heavy for the air to hold, they fall as rain or snow."
+          "Once the droplets inside a cloud merge and grow too heavy for the air to support, they fall as rain or snow."
         ],
         [
           "땅에 닿은 물이 모두 강으로 흘러가는 것은 아니며 일부는 흙 사이 틈을 따라 내려가며 지하수가 된다.",
-          "Not all of the rain that reaches the ground runs straight off, because part of it sinks through gaps in the soil and becomes groundwater."
+          "Not all of that rain runs off the surface — some of it sinks through the soil and becomes groundwater."
         ],
         [
           "강물은 지표를 지나고 지하수는 보이지 않는 길을 지나지만, 두 물줄기는 모두 바다로 되돌아갈 수 있다.",
-          "Water in a river travels across the surface while groundwater creeps underground, yet both routes can return the water that they carry to the sea."
+          "Rivers carry water across the surface while groundwater moves underground, but both eventually return it to the sea."
         ],
         [
           "식물은 뿌리로 빨아올린 물을 잎의 구멍으로 내보내며 이 과정에서 상당한 양의 수증기가 대기에 더해진다.",
-          "Plants draw up water through their roots and release it from openings in their leaves, which steadily adds vapour to the air that surrounds them."
+          "Plants also draw water up through their roots and release it as vapor through their leaves, adding moisture to the air around them."
         ],
         [
           "물의 순환은 동일한 물이 장소를 옮기는 이동에 그치지 않고 액체와 기체, 고체를 오가는 상태 변화도 포함한다.",
-          "The water cycle is not simply a journey between places, because the same water also moves between liquid, gas and solid states as it travels."
+          "The water cycle, then, is not just water moving between places — it is also water changing between liquid, gas, and solid states."
         ],
         [
           "순환에 관여하는 힘은 여럿이지만, 증발과 대기의 흐름을 실제로 움직이는 주된 에너지원인 태양이 중심에 있다.",
-          "Several forces act on the water cycle, but the energy that actually drives evaporation and the movement of the air comes from the Sun."
+          "Several forces drive this cycle, but the energy that powers evaporation and moves the air ultimately comes from the Sun."
         ]
       ],
       "inferences": [
@@ -560,35 +560,35 @@ module.exports = {
       "facts": [
         [
           "생산자는 다른 생물에 기대지 않고 햇빛 같은 에너지를 받아들여 자기 몸에 필요한 양분을 스스로 만든다.",
-          "Producers do not depend on other organisms for food, because they capture energy such as sunlight and build the nutrients that they need."
+          "Producers do not rely on other organisms for food, because they capture energy such as sunlight and use it to build their own nutrients."
         ],
         [
           "소비자는 스스로 양분을 만들지 못하므로, 식물이든 동물이든 다른 생물을 먹는 방식으로 필요한 에너지를 얻는다.",
-          "Consumers cannot build nutrients of their own, which is why they obtain the energy that keeps them alive by feeding on other organisms."
+          "Consumers cannot build nutrients this way, so they get their energy by feeding on producers or on other organisms."
         ],
         [
           "분해자는 죽은 생물과 배설물을 잘게 분해하며 그 속에 묶여 있던 물질이 흙으로 돌아가고 다시 쓰이도록 돕는다.",
-          "Decomposers break dead bodies and waste into smaller pieces, which frees the matter that was locked inside and returns it to the soil."
+          "Decomposers break down dead organisms and waste, releasing the matter locked inside them back into the soil."
         ],
         [
           "먹이 그물은 사슬 하나를 따로 떼어 낸 그림이 아니며 여러 사슬이 서로 얽히고 이어진 관계를 한꺼번에 보여 준다.",
-          "A food web is not a single chain on its own, but the whole tangle of chains that link the species that share a place."
+          "A food web is not a single chain but the whole network of chains that link the species sharing a habitat."
         ],
         [
           "어떤 한 종의 수가 크게 늘거나 줄면, 그 종과 먹이 관계로 이어진 다른 종들에게도 변화가 차례로 이어진다.",
-          "When the population of one species rises or falls sharply, the species that are joined to it by feeding can change in turn."
+          "When one species' population rises or falls sharply, the species connected to it through feeding can change as well."
         ],
         [
           "서식지는 생물이 먹이와 물을 구하고 몸을 숨기거나 새끼를 기르는 데 필요한 공간까지 얻는 생활의 터전이다.",
-          "A habitat is not simply a source of food and water, since it also supplies the space in which an organism shelters when it breeds."
+          "A habitat supplies more than food and water — it also gives an organism the space it needs to shelter and breed."
         ],
         [
           "한 지역에 사는 생물의 종류가 다양하면, 환경이 달라지더라도 그 변화를 견디고 이겨 낼 가능성이 커진다.",
-          "Where many kinds of organism live side by side, the community that they form is more likely to withstand a change when it comes."
+          "A community with many different species living together tends to withstand change better than one with few."
         ],
         [
           "에너지는 먹고 먹히는 관계를 따라 위 단계로 이동하지만, 단계를 지날 때마다 그 양은 눈에 띄게 줄어든다.",
-          "Energy passes upward along feeding relationships, yet the amount that arrives at each level shrinks because much is lost on the way."
+          "Energy passes upward through these feeding relationships, but the amount available shrinks at every step because much of it is lost along the way."
         ]
       ],
       "inferences": [
@@ -914,35 +914,35 @@ module.exports = {
       "facts": [
         [
           "날씨는 어느 한 장소에서 짧은 기간 나타나는 대기 상태이며 같은 하루 안에서도 시간마다 달라질 수 있다.",
-          "Weather refers to the state of the atmosphere at one place over a short span, a state that can shift from hour to hour."
+          "Weather is the state of the atmosphere at one place over a short span of time, and it can shift from hour to hour."
         ],
         [
           "기후는 한 지역에서 여러 해에 걸쳐 관찰한 날씨의 경향이므로, 하루의 기록과는 층위가 다르다.",
-          "Climate is the tendency that emerges when a region's weather is gathered across many years, which sits apart from one day's record."
+          "Climate, by contrast, is the pattern that emerges when a region's weather is tracked over many years."
         ],
         [
           "하루의 추운 날씨가 아무리 두드러지더라도, 그 하나만으로 여러 해에 걸친 기후 변화를 판단할 수는 없다.",
-          "However striking one cold day may seem, that day cannot serve as ground for judging the direction in which a climate has changed."
+          "However striking one cold day may feel, it cannot serve as evidence that a region's climate has changed."
         ],
         [
           "기온과 강수량과 바람은 모두 그날의 날씨를 이루므로, 하나만 적어 두면 그날의 대기 상태는 드러나지 않는다.",
-          "Because temperature, precipitation, and wind all make up a day's weather, a record that lists one of them alone cannot show the whole state."
+          "Temperature, precipitation, and wind together make up a day's weather, so a record of just one of them tells only part of the story."
         ],
         [
           "두 지역의 기후를 견주려면 몇 해 치 기록으로는 모자라며 여러 해에 걸쳐 꾸준히 모은 자료가 있어야 한다.",
-          "When two regions' climates are compared, a few years of notes will not do, because the figures have to span many years."
+          "Comparing two regions' climates takes more than a few years of data — the record has to span many years to be reliable."
         ],
         [
           "바다와 산맥이 만드는 조건은 공기와 습기의 흐름을 바꾸므로, 위도가 같은 지역이더라도 기후는 갈라질 수 있다.",
-          "Conditions set by the sea or a mountain range alter air and moisture, so that regions which share one latitude can hold unlike climates."
+          "The sea and mountain ranges can alter the air and moisture around them, so two places at the same latitude can still have different climates."
         ],
         [
           "일기 예보는 관측 자료와 모형으로 앞으로의 대기 상태를 추정하므로, 결과가 어긋나더라도 방법이 무너지지는 않는다.",
-          "A forecast estimates the coming state of the air by joining observations to models, so that a forecast which misses does not undo the method."
+          "A forecast combines observations with models to estimate coming weather, and a forecast that misses does not mean the method itself has failed."
         ],
         [
           "평균값이 비슷한 두 지역이라도 극한 날씨의 빈도까지 같다고 볼 수는 없으며 대비할 위험의 종류도 달라진다.",
-          "Two regions whose averages look alike need not match in how often extreme weather strikes, and the hazards they prepare for may differ."
+          "Two regions with similar averages need not share the same frequency of extreme weather, so the risks each must prepare for can differ."
         ]
       ],
       "inferences": [
@@ -1268,35 +1268,35 @@ module.exports = {
       "facts": [
         [
           "전구는 흘러 들어온 전기 에너지의 일부를 빛으로 바꾸지만, 나머지는 열이 되어 주위로 흩어지고 만다.",
-          "A lamp turns part of the electric energy that reaches it into light, while the rest leaves as heat that spreads into the air."
+          "A lamp turns part of the electrical energy it receives into light, while the rest escapes as heat."
         ],
         [
           "움직이는 물체는 그 움직임과 관련된 에너지를 지니며 같은 물체라면 빠르기가 클수록 그 양도 커진다.",
-          "A moving object carries energy that belongs to its motion, and for one object that energy grows larger when the speed grows."
+          "A moving object carries energy of motion, and that energy grows larger as its speed increases."
         ],
         [
           "바닥에서 높이 들어 올려진 물체는 위치 덕분에 에너지를 지니며 같은 물체라면 높을수록 그 양이 커진다.",
-          "An object that has been lifted above the ground can hold energy because of where it sits, and that store grows as the height grows."
+          "An object lifted above the ground holds energy because of its position, and that stored energy grows with height."
         ],
         [
           "배터리는 저장해 둔 화학 에너지를 전기 에너지로 바꾸어 내보내므로, 저장된 양이 줄면 나오는 전기도 줄어든다.",
-          "A battery is a device that changes the chemical energy stored inside into electrical energy, so that the flow weakens when the store runs down."
+          "A battery changes chemical energy stored inside it into electrical energy, so its output weakens as that store runs down."
         ],
         [
           "에너지는 전환 과정에서 없어지지 않고 다른 형태로 옮겨 가거나 모습을 바꾸므로, 쓸모가 줄었다고 사라진 것은 아니다.",
-          "Energy is not destroyed while it changes, because it moves elsewhere or takes another form, so a drop in output does not mean loss."
+          "Energy is never destroyed as it changes — it only moves elsewhere or takes another form."
         ],
         [
           "두 물체가 서로 스치며 마찰이 일어나면 운동 에너지의 일부가 열로 바뀌므로, 닿은 자리의 온도가 올라간다.",
-          "When two surfaces rub against each other, part of the energy of motion turns into heat, so that the place where they touch grows warmer."
+          "When two surfaces rub against each other, some of their motion energy turns into heat, warming the point of contact."
         ],
         [
           "태양 전지는 표면에 닿은 빛 에너지를 전기 에너지로 바꾸므로, 들어오는 빛이 약해지면 만드는 전기도 줄어든다.",
-          "A solar cell changes the light that falls on it into electrical energy, so that the current it supplies drops when the light grows weak."
+          "A solar cell converts the light that falls on it into electrical energy, so its output drops when the light grows weaker."
         ],
         [
           "기계의 효율은 넣어 준 에너지 가운데 쓸모 있는 일로 바뀐 몫을 가리키며 열로 빠져나가는 양이 많으면 낮아진다.",
-          "Efficiency tells what share of the energy put into a machine becomes useful work, which means that a machine losing much as heat rates low."
+          "Efficiency measures how much of a machine's input energy becomes useful work, so a machine that loses much of it as heat rates low."
         ]
       ],
       "inferences": [
@@ -1622,35 +1622,35 @@ module.exports = {
       "facts": [
         [
           "글자 수가 넉넉한 비밀번호는 가능한 조합이 훨씬 늘어나므로, 짧은 비밀번호보다 추측으로 뚫리기 어렵다.",
-          "Because a longer password allows far more possible combinations, it is usually harder to guess than a short one that a person picks quickly."
+          "A longer password allows for far more possible combinations, so it is usually harder to guess than a short one chosen quickly."
         ],
         [
           "비밀번호를 서비스마다 다르게 정해 두면, 한 곳에서 유출이 일어나더라도 다른 계정까지 번지지는 않는다.",
-          "When a different password is set for each service, a leak at one site is less likely to spread to the accounts that remain."
+          "Setting a different password for each service keeps a leak at one site from spreading to the accounts that remain."
         ],
         [
           "다단계 인증은 비밀번호가 맞는지 보는 데서 끝나지 않으며 본인만 지닌 수단을 한 번 더 확인한다.",
-          "Multi-factor authentication does not stop when the password matches, because it also asks for a second proof that the user alone holds."
+          "Multi-factor authentication does not stop at a matching password — it also requires a second proof that only the real user holds."
         ],
         [
           "의심이 드는 링크라면 곧바로 누르지 말고 보낸 사람과 주소가 어디로 이어지는지를 먼저 확인해야 한다.",
-          "If a link looks suspicious, check who actually sent the message and where the address leads before you open it in a browser."
+          "Before opening a suspicious link, check who actually sent it and where the address leads."
         ],
         [
           "운영체제와 앱을 제때 업데이트하면, 이미 알려진 보안 결함을 제조사가 마련한 수정으로 메울 수 있다.",
-          "When systems and apps are updated on time, many of the security flaws that have already been made public can be closed by the maker's fix."
+          "Updating systems and apps promptly closes security flaws that have already been made public and could otherwise be exploited."
         ],
         [
           "누구나 볼 수 있고 오래 남는 공개 글에는, 개인을 특정할 수 있는 주소나 연락처를 올리지 않는 편이 안전하다.",
-          "A public post that anyone can read and that stays online is safer if it leaves out details such as a home address or phone number."
+          "A public post that stays online is safer if it leaves out details such as a home address or phone number."
         ],
         [
           "백업은 평소에는 쓸 일이 없지만, 기기가 고장 나거나 파일이 손상된 뒤 원래대로 되돌리려 할 때 큰 도움이 된다.",
-          "A backup, which sits unused most of the time, becomes decisive when a device breaks or files are damaged and an earlier state has to be restored."
+          "A backup sits unused most of the time, but it becomes essential once a device fails or files are damaged and need to be restored."
         ],
         [
           "온라인에서 얻은 정보는 그대로 받아들이지 말고 믿을 만한 여러 출처와 견주어 확인해 보아야 한다.",
-          "Information found online should not be accepted as it stands, because it needs to be set against several sources that a reader can trust."
+          "Information found online should be checked against several trustworthy sources rather than accepted as it stands."
         ]
       ],
       "inferences": [
@@ -1976,35 +1976,35 @@ module.exports = {
       "facts": [
         [
           "공동의 결정을 내리는 자리라면 결론을 서두르기보다, 서로 다른 의견을 말할 기회가 먼저 주어져야 한다.",
-          "When a group is settling a matter together, the chance to state views that differ has to come before the conclusion is fixed."
+          "Before a group settles a matter together, everyone with a different view needs the chance to state it."
         ],
         [
           "각 주장이 어떤 근거 위에 서 있는지 확인하고 나면, 서로 다른 의견을 한결 공정하게 견주어 볼 수 있다.",
-          "When the evidence that each claim rests on is checked first, competing views can be set beside each other far more fairly."
+          "Checking the evidence behind each claim first lets competing views be compared more fairly."
         ],
         [
           "다수결은 여럿의 뜻을 모으는 한 가지 방법이지만, 그 결과가 소수의 권리를 어떻게 건드리는지도 살펴야 한다.",
-          "Majority voting is one way of settling a question, though the rights of the minority still have to be weighed when the count is done."
+          "Majority voting is one way to settle a question, but the rights of the minority still have to be weighed once the votes are counted."
         ],
         [
           "토론의 목적은 상대를 깎아내리는 데 있지 않고 어느 주장이 더 단단한 근거를 지녔는지 따져 보는 데 있다.",
-          "The point of a discussion is not to humiliate an opponent, but to examine the issue and see which claim rests on evidence that holds."
+          "The point of discussion is not to humiliate an opponent but to examine the issue and see which claim the evidence actually supports."
         ],
         [
           "어떤 과정을 거쳐 무슨 기준으로 골랐는지를 공개하고 기록으로 남기면, 나중에 책임을 묻기가 한결 쉬워진다.",
-          "When the steps and the criteria behind a choice are published, the people that made the choice can be held answerable for it later."
+          "Publishing the process and criteria behind a decision lets people later hold the decision-makers accountable for it."
         ],
         [
           "이해관계가 다른 사람들은 같은 정책이 시행되더라도, 처지에 따라 영향의 크기를 다르게 겪고 평가한다.",
-          "People whose interests differ can feel the weight of one and the same policy in unequal ways, because their situations are not alike."
+          "Because people's situations differ, the same policy can affect them in different ways."
         ],
         [
           "합의는 구성원의 차이를 남김없이 없애는 일이 아니며 서로 감당할 수 있는 안을 함께 찾아 가는 과정에 가깝다.",
-          "Consensus is less a matter of wiping out every difference than a process in which the group looks for an option that all sides can bear."
+          "Consensus is less about erasing every difference than about finding an option every side can accept."
         ],
         [
           "결정을 내린 뒤에도 그 결정이 실제로 어떤 결과를 낳았는지 살펴보고 필요하다면 규칙을 다시 고칠 수 있다.",
-          "Even after a decision has been made, the group can look at the results it produced and revise the rule if that turns out to be needed."
+          "Even after a decision is made, a group can review its results and revise the rule if that turns out to be necessary."
         ]
       ],
       "inferences": [
@@ -2330,35 +2330,35 @@ module.exports = {
       "facts": [
         [
           "비는 어느 쪽을 앞에 두는가에 따라 표현이 달라지지만, 두 양의 크기를 견주는 방법인 점은 변하지 않는다.",
-          "A ratio compares two quantities, and although the wording changes depending on which term comes first, the comparison itself stays the same."
+          "A ratio compares two quantities, and the comparison stays the same no matter which term is written first."
         ],
         [
           "2 대 3과 4 대 6은 적힌 값이 다르지만, 두 항이 같은 배수로 늘어난 관계이므로 같은 비를 나타낸다.",
-          "The ratios 2 to 3 and 4 to 6 use different numbers, but because both terms were scaled alike, they describe one relationship."
+          "The ratios 2 to 3 and 4 to 6 describe the same relationship, because both terms were scaled by the same amount."
         ],
         [
           "단위율은 두 양 가운데 하나를 1로 고정한 뒤 남은 양을 나타낸 값이므로, 기준이 다른 자료끼리도 견줄 수 있다.",
-          "A unit rate fixes one quantity at a single unit and reports the other, which means that unlike totals can still be compared."
+          "A unit rate sets one of the compared quantities to a single unit, which makes it easier to compare unlike totals."
         ],
         [
           "부분의 개수가 같더라도 전체가 커지거나 작아지면 그 부분이 차지하는 비율은 달라지므로, 개수만으로 판단할 수 없다.",
-          "Even when the count of a part stays fixed, a change in the total shifts the share that the part occupies."
+          "Even when a part's count stays fixed, a change in the total can shift the share that part represents."
         ],
         [
           "비례 관계에서는 한 양이 일정한 배수로 커지면 다른 양도 같은 배수로 커지므로, 두 양의 비는 어디서 재도 같다.",
-          "In a proportional pair, scaling one quantity scales the other by that same factor, so the ratio holds at whichever point it is read."
+          "In a proportional relationship, scaling one quantity by some factor scales the other by that same factor."
         ],
         [
           "그래프가 직선이면서 원점을 지난다면 비례 관계일 수 있지만, 직선이라는 사실만으로 비례를 확인하기는 어렵다.",
-          "A graph that runs straight through the origin can stand for a proportional relationship, though straightness alone is not yet evidence."
+          "A straight line through the origin can represent a proportional relationship, though a straight line alone is not enough to prove one."
         ],
         [
           "백분율은 전체를 100으로 환산한 비율이므로, 같은 백분율이라도 전체가 다르면 가리키는 실제 수량은 달라진다.",
-          "A percentage restates a ratio out of one hundred, which means that equal percentages can point to very different counts when totals differ."
+          "A percentage restates a ratio out of one hundred, so equal percentages can still represent very different actual counts."
         ],
         [
           "단위가 다른 비율을 놓고 견줄 때에는 단위를 먼저 맞추어야 하며, 그러지 않으면 수의 크기만 보고 잘못 판단한다.",
-          "Rates in unlike units have to be converted before they are compared, because the bare numbers otherwise invite a wrong conclusion."
+          "Rates given in different units need to be converted to the same unit before they can be fairly compared."
         ]
       ],
       "inferences": [
@@ -2684,35 +2684,35 @@ module.exports = {
       "facts": [
         [
           "작품 감상은 무엇을 뜻하는지 묻기 전에, 화면에 실제로 무엇이 놓여 있는지 관찰하는 데서 시작할 수 있다.",
-          "Looking at art can begin with a plain record of what is present on the surface, which comes before any question about meaning."
+          "Looking at art can begin with a plain record of what is actually visible, before any question of meaning comes up."
         ],
         [
           "색과 선, 형태와 질감은 작품을 설명할 때 손에 잡히는 단서가 되므로, 감상을 말로 옮길 때 먼저 살펴본다.",
-          "Color, line, shape, and texture give a viewer terms that can be checked against the work, which is why descriptions begin there."
+          "Color, line, shape, and texture give a viewer terms that can be checked against the work itself."
         ],
         [
           "같은 작품이라도 관람자가 지나온 경험이 서로 다르면, 눈에 들어오는 부분이 달라져 해석도 여러 갈래로 갈린다.",
-          "One work can be read in several ways, because viewers who bring different experiences notice different parts of it."
+          "The same work can be read in several ways, because viewers bring different experiences to what they notice in it."
         ],
         [
           "해석은 그것을 뒷받침하는 근거를 화면에서 찾아 함께 제시할 때, 듣는 사람이 확인할 수 있는 주장이 된다.",
-          "An interpretation becomes something a listener can check when it arrives with specific evidence drawn from the work itself."
+          "An interpretation becomes something others can evaluate once it is backed by specific evidence drawn from the work."
         ],
         [
           "작품이 만들어진 시대와 장소를 알고 나면, 화면에 놓인 표시가 그때 어떤 뜻으로 쓰였는지 가늠할 수 있다.",
-          "Knowing the time and place of a work, a viewer can weigh a sign in the picture against the meaning that it carried when it was made."
+          "Knowing when and where a work was made can help a viewer weigh what a particular detail meant at the time."
         ],
         [
           "작가가 밝힌 의도는 작품을 이해하는 데 쓸모 있는 정보이지만, 화면에서 읽히는 뜻까지 하나로 못 박지는 않는다.",
-          "What the artist says about the aim is useful information, though it does not settle the meaning that later viewers find."
+          "What an artist says about their intent is useful, but it does not settle the meaning that later viewers find."
         ],
         [
           "재료를 무엇으로 고르고 어떤 방법으로 만드는가가 달라지면, 작품의 겉모습과 관람자가 받는 느낌도 함께 달라진다.",
-          "The material a maker chooses and the method that shapes it change how a piece looks and how it strikes a person before it."
+          "The material an artist chooses, and the method used to shape it, changes how a piece looks and feels."
         ],
         [
           "감상을 말할 때 화면에서 관찰한 사실과 마음에 일어난 느낌을 구분해 두면, 무엇을 근거로 삼았는지 드러난다.",
-          "In talking about art, a viewer can keep what was observed apart from what was felt, which shows that each claim rests on its own ground."
+          "In discussing art, a viewer can keep what was observed separate from what was simply felt."
         ]
       ],
       "inferences": [
@@ -3126,14 +3126,14 @@ module.exports = {
     "hard": {
       "intro": "Notifications rarely arrive at a convenient moment, and the passage below traces what that does to attention during work that depends on digital tools.",
       "facts": [
-        "Because attention is a finite resource, the many signals that reach a person at one time cannot each be granted the same depth of processing.",
-        "A notification, though it takes no more than a few seconds to read, can still interrupt a task that a person has entered deeply.",
-        "After an interruption ends, the earlier line of thinking does not come back on its own, which means recovering it costs time and effort.",
-        "When signals arrive frequently, checking can harden into a habit that runs before a person has judged whether the message is worth the attention.",
-        "Switching off alerts that carry low priority reduces the number of outside demands that arrive without warning and claim a share of a person's attention.",
-        "Checks that happen at scheduled times keep messages available to a person while still protecting the stretches of work that require unbroken concentration.",
-        "Reasoning that holds several linked steps in mind is harder to resume after a pause than a simple routine, which can be picked up at once.",
-        "Managing attention means deciding when a digital tool deserves focus, a choice that belongs to the person rather than to the flow of incoming signals."
+        "Because attention is limited, the many signals reaching a person at once cannot all receive the same depth of processing.",
+        "A notification may take only seconds to read, but it can still interrupt a task a person was deeply focused on.",
+        "Once an interruption ends, the earlier train of thought does not simply return — recovering it takes time and effort.",
+        "When signals arrive often enough, checking them can become a habit that runs before anyone judges whether it was worth the interruption.",
+        "Turning off low-priority alerts cuts down on the outside demands competing for a person's attention.",
+        "Checking messages at scheduled times keeps them accessible while still protecting long stretches of focused work.",
+        "Reasoning that depends on several linked steps is harder to pick back up after a pause than a simple routine is.",
+        "Managing attention, in the end, means deciding when a task deserves full focus instead of reacting to every signal."
       ],
       "inferences": [
         "When a second demand is added to a task that already requires focus, the depth of attention available to each falls rather than rising.",
@@ -3234,14 +3234,14 @@ module.exports = {
     "hard": {
       "intro": "City summers build up heat unevenly from block to block, and what follows traces the part trees play in where that heat gathers and where it does not.",
       "facts": [
-        "Dark surfaces in a city absorb the sunlight that reaches them and become warmer than ground that lies in shade during the same hours.",
-        "A tree canopy intercepts sunlight before it reaches the pavement, walls, and people below, which prevents heat rather than removing it after a surface warms.",
-        "Water that leaves release cools the air around them when it becomes vapor, because the change from liquid to gas draws heat from that air.",
-        "The cooling that a tree provides depends on its size, its health, the species it belongs to, and the water that its roots can reach.",
-        "Young trees need years of watering and care before they can cast the kind of shade that a mature canopy spreads across a street.",
-        "Shade matters most in the places where people walk, wait, and live, because that is where a cooler surface is felt by someone.",
-        "Planting trees creates costs of its own when roots, pollen, and long-term maintenance are left out of the plan that a city prepares.",
-        "A heat plan improves when trees are combined with built shade, buildings that suit the climate, and water, because no single measure cools every street."
+        "Dark surfaces in a city absorb sunlight and grow hotter than ground that stays shaded through the same hours.",
+        "A tree canopy blocks that sunlight before it ever reaches the pavement, walls, and people below.",
+        "Beyond blocking sunlight, a tree's leaves also cool the surrounding air as the water they release turns into vapor.",
+        "How much cooling a tree provides depends on its size, health, species, and how much water its roots can reach.",
+        "A young tree needs years of care before it can cast the kind of shade a mature canopy provides.",
+        "Shade matters most in places where people actually walk, wait, and live.",
+        "Planting trees still carries costs when roots, pollen, and long-term upkeep are left out of the plan.",
+        "A heat plan works best when trees are combined with built shade, climate-suited buildings, and water, since no single measure cools every street."
       ],
       "inferences": [
         "Because surfaces differ in color, one part of a street can feel warmer in the afternoon than another part that lies a few steps away.",
@@ -3558,14 +3558,14 @@ module.exports = {
     "hard": {
       "intro": "Two learners can log the same hours of study and still remember very differently, and the paragraphs below trace why the method chosen matters more than the time spent.",
       "facts": [
-        "Rereading makes a passage feel familiar, and that familiarity, though easily mistaken for durable knowledge, says little about what could be recalled unaided.",
-        "Retrieval practice asks that learners produce the material from memory first, so that the answer is consulted after the attempt rather than before it.",
-        "An attempt at recall that costs the learner real effort tends to strengthen later access, even when the attempt itself feels slow.",
-        "Checking an answer after the recall attempt lets the learner correct an error while it is still loose, before repetition settles it into memory.",
-        "Practice spread across several days yields retrievals more useful than a single crowded session supplies, because each return begins after some forgetting.",
-        "When problem types are mixed, a learner selects a method for each item rather than repeating one that the worksheet has already chosen.",
-        "A recall attempt that fails is still informative, because the gap it exposes marks the topic that the next session should address.",
-        "Review works best when recall, feedback, and a later attempt are combined, since no single part of that cycle does the job alone."
+        "Rereading makes a passage feel familiar, but that familiarity is easy to mistake for knowledge that could actually be recalled.",
+        "Retrieval practice asks a learner to produce the material from memory first, checking the answer only afterward.",
+        "An effortful attempt to recall something tends to strengthen later access to it, even when the attempt feels slow.",
+        "Checking the answer right after that attempt lets a learner correct a mistake before it settles into memory.",
+        "Practice spread across several days produces more useful retrieval than one long, crowded session, because each attempt follows some forgetting.",
+        "When problem types are mixed together, a learner has to choose a method for each one rather than simply repeating the last.",
+        "Even a failed recall attempt is useful, because the gap it exposes shows what the next study session should target.",
+        "Review works best when recall, feedback, and a later attempt are all combined, since no single part does the job alone."
       ],
       "inferences": [
         "The smoothness a learner feels while rereading reports on the page in view, not on what would survive once that page is closed.",
@@ -3666,14 +3666,14 @@ module.exports = {
     "hard": {
       "intro": "An animal signal means little by itself; what follows traces how it is produced and how receivers, shaped by generations of response, decide what it comes to mean.",
       "facts": [
-        "When one animal signals, the behavior of the animal that receives it can change, and that change is what signaling is for.",
-        "Signals may travel as sound, movement, color, or scent, and a display that combines two of these forms is common rather than unusual.",
-        "A signal has value when the receiver can detect it in the environment between them, and none at all when the surroundings block it.",
-        "A loud call reaches receivers that a quiet one cannot, though the volume that carries the message also reveals the caller to nearby predators.",
-        "Some signals are reliable because a weak animal cannot meet the cost of producing them, and that cost is what the receiver reads.",
-        "The same display can mean different things depending on the situation in which it appears, so the setting forms part of the message.",
-        "Receivers do better when the response matches the signal's reliability, reacting fully to sources that have proved dependable and cautiously to the rest.",
-        "Communication evolves on both sides at once, because a signal that spreads through a population does so when receiver responses make producing it worthwhile."
+        "When an animal sends a signal, it can change the behavior of the animal that receives it — that is what the signal is for.",
+        "Signals can travel as sound, movement, color, or scent, and combining more than one of these forms is common.",
+        "A signal only has value if the receiver can actually detect it in the environment between them.",
+        "A loud call reaches farther than a quiet one, but the same volume can also reveal the caller to nearby predators.",
+        "Some signals stay reliable because a weak animal cannot afford the cost of producing them.",
+        "The same display can mean different things depending on the situation, so context becomes part of the message.",
+        "Receivers do better when they match their response to a signal's reliability, trusting proven sources more than uncertain ones.",
+        "Communication evolves on both sides at once, since a signal only spreads if receivers keep responding to it in ways that make it worthwhile."
       ],
       "inferences": [
         "What a signal accomplishes is visible in the receiver rather than the sender, because the change that follows is where the effect appears.",
@@ -3990,14 +3990,14 @@ module.exports = {
     "hard": {
       "intro": "Every model leaves something out on purpose, and what follows traces what it keeps, what it drops, and how its predictions hold up against what is actually observed.",
       "facts": [
-        "A model represents the features that its makers judged relevant, which means copying every detail of the system was not the aim.",
-        "Models that prove useful strip away detail, because a reduced picture, though less complete, lets an important relationship stand out.",
-        "A prediction rests on the structure of the model and the information fed into it, so that changing either one can shift the forecast.",
-        "Testing is the moment when a prediction is set beside observations from the world, so that agreement or mismatch between them becomes visible.",
-        "When a prediction fails, the failure often points to an assumption that was weaker than it looked, or to a factor the model omitted.",
-        "A model may perform well within the range where it was tested while performing poorly beyond it, because the relationships it captures need not extend.",
-        "Different models of the same system need not compete, because each is built for a purpose that the others were not designed to serve.",
-        "Confidence in a model grows because its predictions keep surviving tests, whereas the complexity that a model displays, however impressive, earns no such standing."
+        "A model represents only the features its makers judged relevant, not every detail of the real system.",
+        "Useful models strip away detail on purpose, because a simpler picture makes an important relationship easier to see.",
+        "A prediction depends on both the model's structure and the information fed into it, so changing either one can shift the forecast.",
+        "Testing is the moment when a prediction is set beside real-world observations to see whether they agree.",
+        "When a prediction fails, the failure often points to a weak assumption or a factor the model left out.",
+        "A model can perform well within the range it was tested on and poorly beyond it, since its relationships need not hold everywhere.",
+        "Different models of the same system do not have to compete, because each may serve a different purpose.",
+        "A model earns confidence by having its predictions survive repeated tests, not by how complex it looks."
       ],
       "inferences": [
         "Detail left out on purpose is a decision rather than a defect, provided that the omission does not touch the question that matters.",
@@ -4098,14 +4098,14 @@ module.exports = {
     "hard": {
       "intro": "A system's own output can quietly steer what it does next, and the paragraphs below trace how that loop works and why it disappears from view when only one step is watched.",
       "facts": [
-        "Feedback is present whenever the output of a system travels back into it and shapes the behavior that follows, rather than leaving the loop.",
-        "Balancing feedback works against whatever change is under way, so that a system that drifts from its target range is pulled back toward it.",
-        "Reinforcing feedback works in the opposite direction, because each effect that a change produces feeds the change itself, so a small beginning grows larger.",
-        "When a loop carries a delay, the response it delivers arrives after the conditions that called for it have already shifted.",
-        "One and the same feedback process can steady a system in one setting while driving it toward damage in another, because conditions differ.",
-        "Watching a single step can conceal a loop that needs several steps to complete, since the return path appears when the whole cycle is traced.",
-        "Altering one connection inside a loop can change parts of the system that sit far away, because the loop carries the effect onward.",
-        "Understanding a feedback process means tracing the path by which an effect travels back to the cause that produced it, rather than stopping early."
+        "Feedback occurs whenever a system's output loops back and shapes what the system does next.",
+        "Balancing feedback works against whatever change is under way, pulling a drifting system back toward its target.",
+        "Reinforcing feedback works the opposite way, letting each effect feed the next so a small change grows larger.",
+        "A delay in the loop means the response arrives only after the conditions that triggered it have already shifted.",
+        "The same feedback process can stabilize a system in one setting and destabilize it in another, depending on conditions.",
+        "Watching a single step can hide a loop that only becomes visible once the whole cycle is traced.",
+        "Changing one connection inside a loop can affect parts of the system that seem far removed from it.",
+        "Understanding feedback means tracing how an effect travels back to the cause that produced it."
       ],
       "inferences": [
         "A process whose result travels outward and does not return to the system that produced it falls outside what feedback describes.",
