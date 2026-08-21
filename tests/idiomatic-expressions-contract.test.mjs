@@ -11,7 +11,7 @@ const styles = fs.readFileSync("learning/basics/idiomatic-expressions/styles.css
 const menu = fs.readFileSync("index.html", "utf8");
 
 test("관용구 핵심 학습 은행은 선별된 완성형 자료다", () => {
-  assert.equal(data.length, 75);
+  assert.equal(data.length, 110);
   assert.equal(new Set(data.map((item) => item.expression)).size, data.length);
   for (const item of data) {
     assert.ok(item.expression.length >= 3, item.expression);
@@ -23,7 +23,7 @@ test("관용구 핵심 학습 은행은 선별된 완성형 자료다", () => {
   }
   assert.deepEqual(
     Array.from({ length: 7 }, (_, lesson) => data.filter((item) => item.lesson === lesson).length),
-    [11, 11, 11, 11, 11, 10, 10]
+    [20, 14, 14, 16, 18, 11, 17]
   );
   const expressions = data.map((item) => item.expression).join("\n");
   assert.doesNotMatch(expressions, /누워서 떡 먹기|가뭄에 콩 나듯|갈수록 태산|천 리 길도/);
