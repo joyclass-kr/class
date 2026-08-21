@@ -5,7 +5,8 @@
         STATE: "CLASSROOM_LOBBY_STATE",
         START: "CLASSROOM_LOBBY_START",
         ABORT: "CLASSROOM_LOBBY_ABORT",
-        PLAYER_UPDATE: "CLASSROOM_LOBBY_PLAYER_UPDATE"
+        PLAYER_UPDATE: "CLASSROOM_LOBBY_PLAYER_UPDATE",
+        RTC_SIGNAL: "CLASSROOM_LOBBY_RTC_SIGNAL"
     });
 
     const DEFAULT_IDS = Object.freeze({
@@ -296,6 +297,11 @@
             return this.role === "host" && this.send(payload);
         }
 
+        // Point-to-point delivery to one peer, routed through the host when needed.
+        sendSignal(toId, data) {
+            return this.send({ type: MESSAGE.RTC_SIGNAL, to: String(toId), data });
+        }
+
         _handleServerMessage(message) {
             if (!message || typeof message.type !== "string") return;
             if (message.type === "CONNECTED") {
@@ -415,6 +421,16 @@
                     this._broadcastLobbyState();
                     this.render();
                 }
+                return;
+            }
+            if (payload.type === MESSAGE.RTC_SIGNAL) {
+                // The server only relays guest->host and host->everyone. A signal meant for
+                // one specific peer in a room with 3+ players has to bounce through the host.
+                if (String(payload.to) !== String(this.myId)) {
+                    if (this.role === "host") this.broadcast(payload);
+                    return;
+                }
+                this.options.onRtcSignal?.(String(senderId ?? ""), payload.data);
                 return;
             }
             this.options.onGameMessage?.(String(senderId ?? ""), payload, this.snapshot());
