@@ -95,26 +95,29 @@
 /* 한자 차시 화면과 같은 직접 학습 흐름 */
 body.lesson-active .site-header,
 body.lesson-active .mode-tabs,
-body.lesson-active .deck-tools { display: none; }
+body.lesson-active .deck-tools,
+body.lesson-active .learn-view .section-heading { display: none; }
 
 body.lesson-active main {
     width: min(1060px, 100%);
-    padding: 0 clamp(16px, 3vw, 36px) 30px;
+    padding: 8px clamp(16px, 3vw, 36px) 24px;
 }
 
 body.lesson-active .lesson-toolbar {
-    min-height: 58px;
-    margin: 0;
+    min-height: 46px;
+    margin: 0 0 10px;
+    padding-bottom: 8px;
     border-bottom: 1px solid var(--line);
 }
 
+body.lesson-active .lesson-toolbar button { min-height: 40px; background: var(--card); }
 body.lesson-active .lesson-toolbar > div { flex: 1; }
-body.lesson-active .lesson-toolbar button { background: var(--card); }
 body.lesson-active .lesson-quiz-button { color: white; background: var(--green); border-color: var(--green); }
-body.lesson-active .view-panel { padding: 12px 0 30px; }
+body.lesson-active .view-panel { padding: 0 0 20px; }
 body.lesson-active .study-area { width: 100%; }
-body.lesson-active .card-position { margin-bottom: 8px; }
+body.lesson-active .card-position { margin: 0 auto 6px; }
 body.lesson-active .card-navigation { margin: 0 0 10px; }
+body.lesson-active .idiom-face { min-height: 190px; }
 
 body.lesson-active .idiom-card {
     min-height: 0;
@@ -173,4 +176,24 @@ body.lesson-active .memory-actions > div { margin-top: 0; }
     body.lesson-active .idiom-illustration,
     body.lesson-active .story-block,
     body.lesson-active .source-block { grid-column: 1; grid-row: auto; }
+}
+
+/* PC/아이패드/크롬북에서 스크롤 없이 한 화면에 들어오도록 여백 압축 */
+@media (max-height: 960px) and (min-width: 641px) {
+    body.lesson-active main { padding-top: 6px; }
+    body.lesson-active .lesson-toolbar { min-height: 40px; margin-bottom: 6px; }
+    body.lesson-active .card-position { margin-bottom: 4px; }
+    body.lesson-active .card-navigation { margin-bottom: 8px; }
+    body.lesson-active .idiom-card { padding: 14px 20px; }
+    body.lesson-active .idiom-face { min-height: 140px; }
+    body.lesson-active .idiom-card.revealed .idiom-face { padding: 10px 0 10px; }
+    body.lesson-active .card-details { padding-top: 12px; gap: 10px 18px; }
+    body.lesson-active .hanja-expl-block { margin-bottom: 10px; }
+    body.lesson-active .story-block { margin-top: 10px; padding: 12px 16px; }
+    body.lesson-active .memory-actions { margin-top: 8px; padding: 10px; }
+}
+.lesson-overview-actions { display: flex; align-items: center; gap: 12px; }
+.lesson-overview-actions .lesson-quiz-button { min-height: 44px; padding: 0 14px; border: 1px solid var(--green); border-radius: 10px; color: white; background: var(--green); font-weight: 800; cursor: pointer; }
+@media (max-width: 640px) {
+    .lesson-overview-actions { margin-top: 10px; justify-content: space-between; }
 }

@@ -179,7 +179,7 @@
         libraryGrid: byId("libraryGrid"), libraryEmpty: byId("libraryEmpty"), toast: byId("toast"),
         playerGreeting: byId("playerGreeting"),
         lessonOverview: byId("lessonOverview"), learningShell: byId("learningShell"), lessonList: byId("lessonList"),
-        lessonKnownTotal: byId("lessonKnownTotal"), lessonItemTotal: byId("lessonItemTotal"),
+        lessonKnownTotal: byId("lessonKnownTotal"), lessonItemTotal: byId("lessonItemTotal"), allQuizButton: byId("allQuizButton"),
         backToLessons: byId("backToLessons"), currentLessonNumber: byId("currentLessonNumber"),
         currentLessonTitle: byId("currentLessonTitle"), currentLessonQuiz: byId("currentLessonQuiz"),
         cardNavigation: byId("cardNavigation")
@@ -187,6 +187,7 @@
 
     let progress = loadProgress();
     let currentLessonIndex = 0;
+    let quizScope = "lesson";
     let deck = [...data];
     let currentIndex = 0;
     let revealed = false;
@@ -234,6 +235,7 @@
     }
 
     function currentLessonItems() {
+        if (quizScope === "all") return data;
         const lesson = lessons[currentLessonIndex];
         if (!lesson) return data;
         const lessonIds = new Set(lesson.ids);
@@ -570,6 +572,7 @@ function renderLessonOverview() {
     }
 
     function openLesson(index, keepId = "") {
+        quizScope = "lesson";
         currentLessonIndex = Math.max(0, Math.min(index, lessons.length - 1));
         const lesson = lessons[currentLessonIndex];
         reviewOnly = false;
@@ -589,6 +592,17 @@ function renderLessonOverview() {
         elements.learningShell.scrollIntoView({ behavior: "smooth", block: "start" });
     }
 
+    function openAllQuiz() {
+        quizScope = "all";
+        document.body.classList.add("lesson-active");
+        elements.lessonOverview.hidden = true;
+        elements.learningShell.hidden = false;
+        elements.currentLessonNumber.textContent = "전체";
+        elements.currentLessonTitle.textContent = "문제은행";
+        elements.currentLessonQuiz.textContent = "설명 보기";
+        switchView("game");
+        elements.learningShell.scrollIntoView({ behavior: "smooth", block: "start" });
+    }
     function showLessonOverview() {
         elements.learningShell.hidden = true;
         elements.lessonOverview.hidden = false;
@@ -676,6 +690,7 @@ function renderLessonOverview() {
     });
 
     elements.backToLessons.addEventListener("click", showLessonOverview);
+    elements.allQuizButton.addEventListener("click", openAllQuiz);
     elements.currentLessonQuiz.addEventListener("click", () => {
         const gameVisible = !byId("gameView").hidden;
         switchView(gameVisible ? "learn" : "game");
