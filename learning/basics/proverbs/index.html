@@ -19,12 +19,14 @@
   </header>
   <audio id="bgm" src="assets/paper-lantern-drift.ogg" preload="auto" loop></audio>
   <main>
-    <section class="language-tabs" aria-label="속담 언어 선택">
-      <button class="language-tab active" data-language="ko" type="button">한국 속담</button>
-      <button class="language-tab" data-language="en" type="button">영어 속담</button>
+    <section class="lesson-toolbar">
+      <div class="language-tabs" aria-label="속담 언어 선택">
+        <button class="language-tab active" data-language="ko" type="button">한국 속담</button>
+        <button class="language-tab" data-language="en" type="button">영어 속담</button>
+      </div>
+      <strong id="completionSummary" aria-live="polite">0 / 10 완료</strong>
     </section>
-    <section id="lessonOverview" class="lesson-overview" aria-labelledby="lessonHeading">
-      <div class="overview-heading"><div><h1 id="lessonHeading">한국 속담 차시 학습</h1><p id="lessonIntro">뜻이 이어지는 속담을 함께 익혀요.</p></div><strong id="completionSummary">0 / 10 완료</strong></div>
+    <section id="lessonOverview" class="lesson-overview" aria-label="속담 차시 목록">
       <div id="lessonList" class="lesson-list"></div>
     </section>
     <div id="learningShell" hidden>

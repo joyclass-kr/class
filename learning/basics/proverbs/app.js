@@ -46,8 +46,6 @@ function lessonItems(index) { return decks[language].filter((item)=>lessonFor(it
 
 function renderLessonList() {
   const lessons=LESSONS[language];
-  $("lessonHeading").textContent=language==="ko"?"한국 속담 차시 학습":"English Proverb Lessons";
-  $("lessonIntro").textContent=language==="ko"?"비슷한 뜻과 쓰임을 연결해 익혀요.":"Study proverbs by meaning and use.";
   $("completionSummary").textContent=completed.size+" / "+lessons.length+(language==="ko"?" 완료":" complete");
   $("lessonList").replaceChildren(...lessons.map((lesson,index)=>{
     const items=lessonItems(index), button=document.createElement("button"); button.type="button"; button.className="lesson-item";
