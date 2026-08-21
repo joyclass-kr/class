@@ -314,7 +314,8 @@ function renderPlayers(){
   for(const player of gameState.players){
     const seat=document.createElement("article");
     seat.className=`playerSeat${player.id===gameState.turnPlayerId&&gameState.phase==="playing"?" active":""}${player.id===gameState.winnerId?" winner":""}`;
-    seat.innerHTML=`<div class="playerTop"><span class="playerName">${html(player.name)}${player.id===myId()?" · 나":""}</span><span class="playerCount">${player.tileCount}개</span></div><div class="playerMeta">${player.opened?"최초 등록 완료":"최초 등록 전"}</div>`;
+    const face=lobby?.playerAvatar(player.id);
+    seat.innerHTML=`<div class="playerTop">${face?`<img class="mp-face" src="${face}" alt="">`:""}<span class="playerName">${html(player.name)}${player.id===myId()?" · 나":""}</span><span class="playerCount">${player.tileCount}개</span></div><div class="playerMeta">${player.opened?"최초 등록 완료":"최초 등록 전"}</div>`;
     fragment.appendChild(seat);
   }
   $("playerBar").replaceChildren(fragment);

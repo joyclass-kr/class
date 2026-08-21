@@ -282,3 +282,22 @@
     vertical-align: -6px;
     background: #00000030;
 }
+
+/* 게임 화면 안에서도 참가자 얼굴을 쓴다. 크기는 게임마다 --mp-face-size 로 맞춘다. */
+.mp-face {
+    width: var(--mp-face-size, 26px);
+    height: var(--mp-face-size, 26px);
+    border-radius: 50%;
+    object-fit: cover;
+    flex: none;
+    align-self: center;
+    display: block;
+    background: #00000026;
+}
+
+/* 자리 윗줄은 대개 space-between 이라, 얼굴을 넣으면 이름이 가운데로 밀린다.
+   바로 뒤 요소가 남는 자리를 먹게 해서 얼굴과 이름을 붙여 둔다. */
+.mp-face + * {
+    flex: 1 1 auto;
+    min-width: 0;
+}

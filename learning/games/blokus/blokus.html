@@ -493,7 +493,8 @@
       card.className = `player-card${active ? " active" : ""}${player.out ? " out" : ""}`;
       card.style.setProperty("--active-color", active ? colorValue(gameState.activeColor) : "#a5adb6");
       const dots = player.colors.map(color => `<i class="color-dot" style="--dot-color:${colorValue(color)}" title="${COLORS[color].label}"></i>`).join("");
-      card.innerHTML = `<div class="player-card-top"><span class="player-name">${html(player.name)}${player.id === myId() ? " · 나" : ""}</span><span class="player-piece-count">${player.pieceCount}조각</span></div><div class="color-dots">${dots}<span class="player-score">${gameState.phase === "ended" ? `${player.score}점` : `${player.squareCount}칸 남음`}</span></div>`;
+      const face = lobby?.playerAvatar(player.id);
+      card.innerHTML = `<div class="player-card-top">${face ? `<img class="mp-face" src="${face}" alt="">` : ""}<span class="player-name">${html(player.name)}${player.id === myId() ? " · 나" : ""}</span><span class="player-piece-count">${player.pieceCount}조각</span></div><div class="color-dots">${dots}<span class="player-score">${gameState.phase === "ended" ? `${player.score}점` : `${player.squareCount}칸 남음`}</span></div>`;
       fragment.appendChild(card);
     }
     $("playerStrip").replaceChildren(fragment);

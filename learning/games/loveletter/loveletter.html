@@ -258,6 +258,8 @@ function renderPlayers(){
     const state=document.createElement("span");state.className="playerState";
     state.textContent=!player.alive?"탈락":player.protected?"보호 중":gameState.turnPlayerId===player.id?"차례":"대기";
     top.append(name,state);
+    const face=lobby?.playerAvatar(player.id);
+    if(face){const image=document.createElement("img");image.className="mp-face";image.src=face;image.alt="";top.prepend(image)}
     const hearts=document.createElement("div");hearts.className="hearts";hearts.textContent="♥".repeat(player.score)+"♡".repeat(Math.max(0,gameState.targetScore-player.score));
     const discards=document.createElement("div");discards.className="discardRow";
     player.discarded.forEach(value=>{const image=document.createElement("img");image.className="discardCard";image.src=imagePath(value);image.alt=`버린 ${CARD_META[value].name}`;image.title=`${value} ${CARD_META[value].name}`;discards.appendChild(image)});

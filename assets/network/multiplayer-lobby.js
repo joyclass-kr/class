@@ -139,6 +139,11 @@
             });
         }
 
+        // 게임 화면에서 참가자 얼굴을 그릴 때 쓴다. 없으면 빈 문자열이라 그대로 조건문에 넣으면 된다.
+        playerAvatar(playerId) {
+            return avatarUrlFor(this.players[String(playerId ?? "")]?.avatarKey);
+        }
+
         snapshot() {
             return {
                 role: this.role,

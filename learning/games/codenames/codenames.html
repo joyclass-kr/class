@@ -42,6 +42,7 @@ h1,h2,h3,p{margin-top:0}
 .teamCol.red .pickBtn.active{background:var(--red);border-color:var(--red);color:#fff}
 .teamCol.blue .pickBtn.active{background:var(--blue);border-color:var(--blue);color:#fff}
 .roster{margin-top:8px;font-size:12.5px;color:#c9cee0;line-height:1.6}
+.rosterRow{display:flex;align-items:center;gap:6px;--mp-face-size:22px}
 .unassignedRow{margin-top:10px;color:#e0a86f;font-size:12.5px}
 .startGuide{margin-top:10px;font-size:13px;color:#b7bcca}
 
@@ -330,7 +331,7 @@ function renderLobbySetup() {
     const spymaster = state.players.find(player => player.team === team && player.role === "spymaster");
     const operative = state.players.find(player => player.team === team && player.role === "operative");
     $(`roster-${team}`).innerHTML =
-      `<div>스파이마스터: ${spymaster ? esc(spymaster.name) : "-"}</div><div>대표 요원: ${operative ? esc(operative.name) : "-"}</div>`;
+      `<div class="rosterRow">스파이마스터: ${rosterFace(spymaster)}</div><div class="rosterRow">대표 요원: ${rosterFace(operative)}</div>`;
   });
 
   const unassigned = state.players.filter(player => !player.team);
@@ -402,6 +403,13 @@ function renderResult() {
   $("rematchBtn").classList.toggle("hidden", !isHost);
   $("returnLobbyBtn").classList.toggle("hidden", !isHost);
   $("resultWaitingNote").classList.toggle("hidden", isHost);
+}
+
+// 스파이마스터와 대표 요원은 얼굴이 붙어야 누구 말을 듣는 건지 바로 보인다.
+function rosterFace(player) {
+  if (!player) return "-";
+  const face = lobby?.playerAvatar(player.id);
+  return `${face ? `<img class="mp-face" src="${face}" alt="">` : ""}<span>${esc(player.name)}</span>`;
 }
 
 function render() {

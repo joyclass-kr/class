@@ -81,6 +81,14 @@
             turn.className = "player-seat__turn";
             turn.textContent = gameState.turnPlayerId === player.id ? "PLAYING" : "";
             top.append(name, turn);
+            const face = lobby?.playerAvatar(player.id);
+            if (face) {
+                const image = document.createElement("img");
+                image.className = "mp-face";
+                image.src = face;
+                image.alt = "";
+                top.prepend(image);
+            }
 
             const count = document.createElement("div");
             count.className = "player-seat__count";
