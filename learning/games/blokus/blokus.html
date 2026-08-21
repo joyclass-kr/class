@@ -6,7 +6,7 @@
   <meta name="theme-color" content="#142238">
   <title>코너 블록</title>
   <link rel="stylesheet" href="../../../assets/network/multiplayer-lobby.css">
-  <link rel="stylesheet" href="styles.css">
+  <link rel="stylesheet" href="styles.css?v=20260822b">
   <script src="../../../assets/network/game-network.js?v=20260821"></script>
   <script src="../../../assets/network/multiplayer-lobby.js"></script>
   <script src="../../../assets/sound/music-control.js" defer></script>
@@ -22,64 +22,44 @@
       <button class="primary" type="button" onclick="location.href='../../../'">메인 화면으로</button>
     </section>
 
-    <section id="lobbyScreen" class="lobby-layout hidden">
-      <article class="panel hero-panel">
-        <div class="hero-copy">
-          <div class="eyebrow">THE CORNER-TO-CORNER STRATEGY</div>
-          <h1 class="hero-title">CORNER BLOCKS<span>코너 블록</span></h1>
-          <p class="hero-lead">변은 피하고, 모서리는 잇고. 단 한 칸의 틈까지 계산해 내 색의 길을 넓혀 보세요.</p>
-          <div class="hero-facts">
-            <div class="hero-fact"><strong>20×20</strong><span>정식 게임 보드</span></div>
-            <div class="hero-fact"><strong>21</strong><span>색마다 다른 조각</span></div>
-            <div class="hero-fact"><strong>2 / 4</strong><span>지원하는 플레이어</span></div>
-          </div>
+    <section id="lobbyScreen" class="hidden mp-lobby-compact mp-lobby-standard" data-multiplayer-lobby>
+      <header class="panel">
+        <div class="eyebrow">CORNER STRATEGY</div>
+        <h1 class="title">CORNER BLOCKS</h1>
+        <p class="subtitle">코너 블록 · 2명 또는 4명</p>
+        <p>PLAYER · <strong id="savedName">플레이어</strong></p>
+        <div class="mp-lobby-tabs">
+          <button id="hostTab" class="primary" type="button">CREATE ROOM</button>
+          <button id="joinTab" class="secondary" type="button">JOIN ROOM</button>
         </div>
-        <figure class="hero-art" aria-hidden="true">
-          <img src="/learning/games/blokus/assets/images/blokus-cover.webp" alt="">
-        </figure>
-      </article>
+      </header>
 
-      <article class="panel lobby-panel">
-        <div class="lobby-topline">
-          <div><div class="eyebrow">CLASSROOM EDITION</div></div>
-          <span class="player-badge"><span id="savedName">플레이어</span></span>
+      <section id="hostPane" class="panel mp-lobby-card hidden">
+        <div class="row spread">
+          <div><div class="eyebrow">ROOM CODE</div><div id="roomCode" class="mp-lobby-room-code">----</div></div>
+          <button id="copyBtn" class="secondary" type="button">COPY CODE</button>
         </div>
-        <h2>게임 테이블 준비</h2>
-        <p class="lobby-sub">새 방을 만들거나 친구가 알려준 네 자리 방 번호를 입력하세요.</p>
+        <div id="hostStatus" class="mp-lobby-status">방을 만드는 중입니다.</div>
+      </section>
 
-        <div class="mp-lobby-tabs" role="tablist" aria-label="방 참여 방법">
-          <button id="hostTab" class="mp-lobby-tab active" type="button" role="tab">방 만들기</button>
-          <button id="joinTab" class="mp-lobby-tab" type="button" role="tab">방 참가하기</button>
+      <section id="joinPane" class="panel mp-lobby-card hidden">
+        <div class="mp-lobby-row">
+          <input id="joinCode" class="mp-lobby-code-input" inputmode="numeric" maxlength="4" placeholder="ROOM CODE · 4 DIGITS" autocomplete="off">
+          <button id="joinBtn" class="primary" type="button">JOIN ROOM</button>
         </div>
+        <div id="joinStatus" class="mp-lobby-status">방장이 알려준 번호를 입력하세요.</div>
+      </section>
 
-        <section id="hostPane" class="mp-lobby-pane">
-          <div class="eyebrow">ROOM CODE</div>
-          <div id="roomCode" class="mp-lobby-code">----</div>
-          <button id="copyBtn" class="secondary" type="button">방 번호 복사</button>
-          <div id="hostStatus" class="mp-lobby-status">새 게임 방을 준비하고 있습니다.</div>
-        </section>
-
-        <section id="joinPane" class="mp-lobby-pane hidden">
-          <label class="eyebrow" for="joinCode">ROOM CODE</label>
-          <div class="mp-lobby-join-row">
-            <input id="joinCode" class="mp-lobby-code-input" inputmode="numeric" maxlength="4" placeholder="4자리 번호" autocomplete="off">
-            <button id="joinBtn" class="primary" type="button">입장</button>
-          </div>
-          <div id="joinStatus" class="mp-lobby-status">방장이 알려준 번호를 입력하세요.</div>
-        </section>
-
-        <section class="lobby-roster">
-          <div class="lobby-roster-head"><div class="eyebrow">PLAYERS</div><span>입장 순서대로 색을 배정해요</span></div>
-          <div id="lobbyPlayers" class="mp-lobby-players"></div>
-          <p id="lobbyGuide" class="mp-lobby-guide">2명 또는 4명이 모이면 시작할 수 있습니다.</p>
-        </section>
-
-        <div class="lobby-actions">
-          <button id="startBtn" class="primary" type="button" disabled>플레이어를 기다리는 중</button>
-          <button id="rulesBtnLobby" class="secondary" type="button">게임 규칙</button>
-          <button id="leaveBtnLobby" class="quiet" type="button">메인으로</button>
+      <section class="panel">
+        <h2>PLAYERS</h2>
+        <div id="lobbyPlayers" class="mp-lobby-players"></div>
+        <p id="lobbyGuide" class="mp-lobby-guide">2명 또는 4명이 모이면 시작할 수 있습니다.</p>
+        <button id="startBtn" class="primary" type="button" disabled>WAITING FOR PLAYERS</button>
+        <div class="row lobby-links">
+          <button id="rulesBtnLobby" class="secondary" type="button">RULES</button>
+          <button id="leaveBtnLobby" class="quiet" type="button">메인 화면</button>
         </div>
-      </article>
+      </section>
     </section>
   </main>
 

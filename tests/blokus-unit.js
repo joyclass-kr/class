@@ -125,6 +125,7 @@ assert.match(timed.lastAction, /시간 초과로 차례를 넘겼습니다/);
 const htmlPath = path.resolve(__dirname, "..", "learning", "games", "blokus", "blokus.html");
 if (fs.existsSync(htmlPath)) {
   const html = fs.readFileSync(htmlPath, "utf8");
+  const css = fs.readFileSync(path.resolve(__dirname, "..", "learning", "games", "blokus", "styles.css"), "utf8");
   assert.match(html, /allowedPlayerCounts:\s*\[2,\s*4\]/);
   assert.match(html, /BLOKUS_ACTION/);
   assert.match(html, /rotate|회전/i);
@@ -133,7 +134,8 @@ if (fs.existsSync(htmlPath)) {
   assert.match(html, /function toViewPoint\s*\(/, "서버 좌표를 화면 좌표로 변환해야 합니다.");
   assert.match(html, /function fromViewPoint\s*\(/, "화면에서 선택한 칸을 서버 좌표로 복원해야 합니다.");
   assert.match(html, /내 시작점이 왼쪽 아래/, "플레이어 시점 안내가 필요합니다.");
-  assert.match(html, /assets\/images\/blokus-cover\.webp/, "블로커스 표지 이미지를 사용해야 합니다.");
+  assert.match(css, /assets\/images\/blokus-cover\.webp/, "블로커스 표지 이미지를 페이지 후경에 사용해야 합니다.");
+  assert.doesNotMatch(css, /\.board\s*\{[^}]*blokus-cover\.webp/s, "표지 이미지는 게임판 전경에 들어가면 안 됩니다.");
   assert.match(html, /assets\/sound\/blokus-bgm\.ogg/, "블로커스 배경음악을 사용해야 합니다.");
   assert.match(html, /assets\/sound\/music-control\.js/, "공통 음악 컨트롤을 연결해야 합니다.");
   assert.ok(fs.statSync(path.resolve(__dirname, "..", "learning", "games", "blokus", "assets", "images", "blokus-cover.webp")).size > 0);
