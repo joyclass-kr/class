@@ -677,16 +677,16 @@ module.exports = {
         "Saying that blue curves repeat in a painting is closer to interpretation than to observation."
       ],
       [
-        "작품에서 느낀 긴장감을 말했다면 선과 질감을 따로 살피지 않아도 설명이 될 수 있다.",
-        "Once tension is stated, an account can stand without examining line and texture."
+        "작품에서 느낀 긴장감을 말하면서 그 근거로 색이 어둡다는 점만 언급하고 선과 형태는 살피지 않아도 충분하다고 본다.",
+        "Citing only the picture's dark color as evidence for a reading of tension is treated as enough, without also checking its line and shape."
       ],
       [
         "두 해석이 다르면 작품을 더 오래 본 사람의 해석을 맞는 것으로 볼 수 있다.",
         "When two readings differ, the one from the viewer who looked longer can be taken as correct."
       ],
       [
-        "‘불안해 보인다’는 해석은 느낌을 말한 것이므로 그림에서 근거를 찾지 않아도 된다.",
-        "An interpretation of anxiety states a feeling, so evidence from the picture is not needed."
+        "‘불안해 보인다’고 해석했다면, 그 이유를 그림의 색이나 선이 아니라 관람자 자신의 최근 경험에서 찾아 설명한다.",
+        "Having read the picture as anxious, a viewer explains that reading by pointing to their own recent experience rather than to anything in the picture."
       ],
       [
         "그림의 시대를 알게 되자 화면에 반복되는 표시는 넘기고 시대 설명으로 해석을 정한다.",
@@ -735,11 +735,11 @@ module.exports = {
     "wrongApplications": [
       "건강 정보의 설명이 자세해서 작성 기관은 찾아보지 않고 정리한다.",
       "경기의 일부 장면만 담은 영상으로 전체 흐름을 짐작해 비교한다.",
-      "여행 안내문의 시간표가 자세해서 게시 날짜 없이도 지금 운행에 맞는다고 본다.",
+      "여행 안내문에 적힌 게시 날짜가 최근으로 보여서, 실제 운행 시간과는 대조하지 않고 안내문 내용을 그대로 따른다.",
       "기사에 조사 수치가 인용되어 있어 기자의 해설도 결과로 표시한다.",
       "같은 문장을 실은 사이트가 많아서 확인된 자료로 보고 쓴다.",
       "막대 사이의 차이가 커 보여 세로축은 살피지 않고 길이만으로 판단한다.",
-      "식품 조언을 한 사람이 방송에 자주 나와서 연구 분야는 넘긴다.",
+      "식품 조언을 한 사람이 '박사'라는 호칭으로 소개되어, 그 호칭만으로 식품 분야를 연구해 온 사람이라고 본다.",
       "초기 조사 결과가 뚜렷해서 표본이 작다는 점은 빼고 결론만 정리해 알린다."
     ],
     "wrongExtra": []
@@ -758,7 +758,7 @@ module.exports = {
     ],
     "wrongApplications": [
       "도서관에 통화 금지 규칙이 적혀 있으니 음악을 크게 들어도 문제가 없다고 판단한다.",
-      "대피 상황에서 출입 금지 문구가 분명하다는 이유로 규칙의 목적은 살피지 않고 따른다.",
+      "대피 상황에서는 출입 금지문의 목적이 평소의 안전 관리에 있다고 보고, 그 목적은 평소에만 해당하므로 지금은 참고하지 않아도 된다고 판단한다.",
       "과제 기한의 예외를 자신이 그동안 바빴다는 사정만 이유로 들어 그대로 요청한다.",
       "사진 촬영의 자유가 먼저라고 보고 찍히는 사람의 불편은 빼고 사진을 게시한다.",
       "같은 시간 안에 계단을 오르는 조건을 모두에게 똑같이 적용했으니 공정하다고 본다.",
