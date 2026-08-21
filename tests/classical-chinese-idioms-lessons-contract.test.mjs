@@ -7,11 +7,11 @@ const idioms = require("../learning/basics/classical-chinese-idioms/idioms-data.
 require("../learning/basics/classical-chinese-idioms/idioms-lessons-data.js");
 const lessons = globalThis.IDIOM_LESSONS;
 
-test("고사성어 112개가 의미 차시에 빠짐없이 한 번씩 배정된다", () => {
+test("한자성어 112개가 의미 차시에 빠짐없이 한 번씩 배정된다", () => {
     const dataIds = idioms.map((idiom) => idiom.id).sort();
     const assignedIds = lessons.flatMap((lesson) => lesson.ids);
 
-    assert.equal(new Set(assignedIds).size, assignedIds.length, "중복 배정된 고사성어가 없어야 한다");
+    assert.equal(new Set(assignedIds).size, assignedIds.length, "중복 배정된 한자성어가 없어야 한다");
     assert.deepEqual([...assignedIds].sort(), dataIds);
 });
 

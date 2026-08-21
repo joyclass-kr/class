@@ -10,7 +10,7 @@ const retryBanks = [
   ['독해', 'learning/basics/reading/app.js', /다시 생각하고 다른 답을 골라보세요/],
   ['맞춤법', 'learning/basics/spelling/app.js', /다시 생각하고 다른 답을 골라보세요/],
   ['속담', 'learning/basics/proverbs/app.js', /다시 생각하고 다른 답을 골라보세요/],
-  ['고사성어', 'learning/basics/classical-chinese-idioms/app.js', /다른 답을 골라보세요/],
+  ['한자성어', 'learning/basics/classical-chinese-idioms/app.js', /다른 답을 골라보세요/],
   ['어휘', 'learning/basics/vocabulary/app.js', /다시 생각하고 다른 그림을 골라보세요/],
   ['인체', 'learning/academics/body-explorer/app.js', /button\.disabled = true;[\s\S]{0,180}button\.classList\.add\("is-wrong"\)/],
   ['한국 문화유산', 'learning/academics/korean-museum/treasure-map.js', /다시 생각하고 다른 답을 골라보세요/],

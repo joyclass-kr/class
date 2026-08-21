@@ -9,7 +9,7 @@ const data = require("../learning/basics/classical-chinese-idioms/idioms-data.js
 const app = fs.readFileSync(new URL("../learning/basics/classical-chinese-idioms/app.js", import.meta.url), "utf8");
 const assetDirectory = new URL("../learning/basics/classical-chinese-idioms/assets/idioms-v2/", import.meta.url);
 
-test("모든 고사성어가 같은 이름의 새 삽화를 가진다", () => {
+test("모든 한자성어가 같은 이름의 새 삽화를 가진다", () => {
     const mappings = [...app.matchAll(/^\s*([a-z0-9]+): "assets\/idioms-v2\/([a-z0-9]+)\.webp"/gm)];
     const mapped = new Map(mappings.map((match) => [match[1], match[2]]));
     const files = new Set(fs.readdirSync(assetDirectory).filter((file) => file.endsWith(".webp")).map((file) => path.basename(file, ".webp")));

@@ -4,7 +4,7 @@ const assert = require("node:assert");
 const core = require("../learning/basics/classical-chinese-idioms/idioms-core.js");
 const data = require("../learning/basics/classical-chinese-idioms/idioms-data.js");
 
-assert.ok(data.length >= 40, "검증된 핵심 고사성어가 40개 이상이어야 합니다.");
+assert.ok(data.length >= 40, "검증된 핵심 한자성어가 40개 이상이어야 합니다.");
 assert.strictEqual(new Set(data.map((item) => item.id)).size, data.length, "id는 중복될 수 없습니다.");
 data.forEach((item) => {
     ["word", "hanja", "hanjaExpl", "level", "meaning", "story", "lesson", "source", "reference", "verification"].forEach((field) => {
@@ -17,7 +17,7 @@ data.forEach((item) => {
 });
 
 const allDeck = core.filterDeck(data, { status: "all", progress: {} }, "전체");
-assert.strictEqual(allDeck.length, data.length, "전체 덱은 모든 고사성어를 포함해야 합니다.");
+assert.strictEqual(allDeck.length, data.length, "전체 덱은 모든 한자성어를 포함해야 합니다.");
 const wisdomDeck = core.filterDeck(data, { status: "all", progress: {} }, "지혜·처세");
 assert.ok(wisdomDeck.length >= 10, "지혜·처세 주제 덱에 충분한 성어가 포함되어야 합니다.");
 

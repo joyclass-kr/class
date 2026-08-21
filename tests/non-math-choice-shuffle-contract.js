@@ -11,7 +11,7 @@ const checks = [
   ['맞춤법', 'learning/basics/spelling/app.js', /choices: shuffle\(question\.choices\)/],
   ['어휘', 'learning/basics/vocabulary/vocabulary-core.js', /choices: shuffleWords\(\[target, \.\.\.distractors\]/],
   ['속담', 'learning/basics/proverbs/app.js', /shuffle\(\[correctIndex, \.\.\.distractors\]\)/],
-  ['고사성어', 'learning/basics/classical-chinese-idioms/idioms-core.js', /const options = shuffle\(\[idiom, \.\.\.wrong\]/],
+  ['한자성어', 'learning/basics/classical-chinese-idioms/idioms-core.js', /const options = shuffle\(\[idiom, \.\.\.wrong\]/],
   ['인체', 'learning/academics/body-explorer/app.js', /shuffledChoices\(stage\.choices\)/],
   ['대항해시대', 'learning/academics/age-of-exploration/lib/final-quiz.js', /function shuffledQuestion\(source\)/],
   ['한국 문화유산', 'learning/academics/korean-museum/treasure-map.js', /const randomizedOptions = shuffledCopy\(/],

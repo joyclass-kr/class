@@ -423,7 +423,7 @@
         elements.questionIllustration.hidden = !illustration;
         if (illustration) {
             elements.questionIllustrationImage.src = illustration;
-            elements.questionIllustrationImage.alt = "고사성어 유래를 나타낸 문제 삽화";
+            elements.questionIllustrationImage.alt = "한자성어 유래를 나타낸 문제 삽화";
         } else {
             elements.questionIllustrationImage.removeAttribute("src");
             elements.questionIllustrationImage.alt = "";

@@ -3,15 +3,15 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <meta name="description" content="고사성어의 뜻, 유래, 출전과 복습 퀴즈를 제공하는 학습 도구">
+    <meta name="description" content="한자성어의 뜻, 유래, 출전과 복습 퀴즈를 제공하는 학습 도구">
     <meta property="og:type" content="website">
     <meta property="og:locale" content="ko_KR">
-    <meta property="og:title" content="고사성어 학습기">
+    <meta property="og:title" content="한자성어 학습기">
     <meta property="og:description" content="뜻, 유래, 출전, 퀴즈">
     <meta name="twitter:card" content="summary">
-    <meta name="twitter:title" content="고사성어 학습기">
+    <meta name="twitter:title" content="한자성어 학습기">
     <meta name="twitter:description" content="뜻, 유래, 출전, 퀴즈">
-    <title>고사성어</title>
+    <title>한자성어</title>
     <link rel="stylesheet" href="styles.css">
     <link rel="stylesheet" href="lessons.css">
     <script src="idioms-bgm.js" defer></script>
@@ -26,9 +26,9 @@
 
     <header class="site-header">
         <a class="back-link" href="../../../" aria-label="학습과 게임 메인으로 돌아가기">← 메인</a>
-        <a class="brand" href="#" aria-label="고사성어 처음 화면">
-            <span class="brand-seal" aria-hidden="true">故</span>
-            <strong>고사성어</strong>
+        <a class="brand" href="#" aria-label="한자성어 처음 화면">
+            <span class="brand-seal" aria-hidden="true">字</span>
+            <strong>한자성어</strong>
         </a>
         <div class="header-score" aria-label="현재 암기 현황">
             <span>암기 완료</span>
@@ -39,20 +39,13 @@
     <audio id="bgm" src="assets/audio/paper-lantern-drift.ogg" preload="auto"></audio>
 
     <main id="mainContent">
-        <h1 id="pageTitle" class="visually-hidden">고사성어 뜻과 유래</h1>
+        <h1 id="pageTitle" class="visually-hidden">한자성어 뜻과 유래</h1>
         <p id="playerGreeting" class="visually-hidden"></p>
 
-        <section id="lessonOverview" class="lesson-overview" aria-labelledby="lessonOverviewTitle">
-            <div class="lesson-overview-heading">
-                <div>
-                    <p class="section-kicker">차시 학습</p>
-                    <h2 id="lessonOverviewTitle">차시 목록</h2>
-                    <p>차시마다 개수를 맞추지 않고, 의미와 유래의 흐름에 따라 묶었습니다.</p>
-                </div>
-                <div class="lesson-overview-actions">
-                    <p class="lesson-overview-total"><strong id="lessonKnownTotal">0</strong> / <span id="lessonItemTotal">0</span> 암기</p>
-                    <button id="allQuizButton" class="lesson-quiz-button" type="button">전체 문제은행</button>
-                </div>
+        <section id="lessonOverview" class="lesson-overview" aria-label="차시 목록">
+            <div class="lesson-overview-actions">
+                <p class="lesson-overview-total"><strong id="lessonKnownTotal">0</strong> / <span id="lessonItemTotal">0</span> 암기</p>
+                <button id="allQuizButton" class="lesson-quiz-button" type="button">전체 문제은행</button>
             </div>
             <div id="lessonList" class="lesson-list"></div>
         </section>
@@ -169,7 +162,7 @@
                 <div class="section-heading centered-heading">
                     <div>
                         <h2 id="gameHeading" class="visually-hidden">퀴즈</h2>
-                        <p>뜻·유래·삽화에 맞는 고사성어를 선택하세요.</p>
+                        <p>뜻·유래·삽화에 맞는 한자성어를 선택하세요.</p>
                     </div>
                 </div>
                 <div class="quiz-mode-grid" role="radiogroup" aria-label="문제 유형">
@@ -212,7 +205,7 @@
                 <h2 id="resultTitle">퀴즈 결과</h2>
                 <strong id="resultScore">0 / 10</strong>
                 <p id="resultMessage"></p>
-                <ul id="resultMistakeList" class="result-mistake-list" aria-label="틀린 고사성어" hidden></ul>
+                <ul id="resultMistakeList" class="result-mistake-list" aria-label="틀린 한자성어" hidden></ul>
                 <div class="result-actions">
                     <button id="retryQuiz" class="primary-button" type="button">새 문제 풀기</button>
                     <button id="retryMistakes" class="quiet-button" type="button">오답 다시 풀기</button>

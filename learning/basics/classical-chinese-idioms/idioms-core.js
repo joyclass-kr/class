@@ -108,7 +108,7 @@
             id: idiom.id,
             type: promptType,
             prompt: promptType === "image"
-                ? "이 삽화에 해당하는 고사성어는?"
+                ? "이 삽화에 해당하는 한자성어는?"
                 : (promptType === "story" ? idiom.story : idiom.meaning),
             answerId: idiom.id,
             answerLabel: `${idiom.word} · ${idiom.hanja}`,

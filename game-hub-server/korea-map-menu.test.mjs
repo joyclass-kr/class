@@ -25,7 +25,7 @@ assert.match(idiomaticLanguage, /data-content-paths="learning\/basics\/idiomatic
 const orderedIdiomaticItems = [
   ['learning/basics/idiomatic-expressions/', '관용구'],
   ['learning/basics/proverbs/', '속담'],
-  ['learning/basics/classical-chinese-idioms/', '고사성어'],
+  ['learning/basics/classical-chinese-idioms/', '한자성어'],
 ];
 let previousIdiomaticIndex = -1;
 for (const [href, label] of orderedIdiomaticItems) {
