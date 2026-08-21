@@ -29,11 +29,45 @@ h1,h2,h3,p{margin-top:0}
 .code{font-size:26px;font-weight:950;letter-spacing:.16em}
 #lobbyScreen #lobbyGuide{padding:8px 10px;border-left:3px solid var(--accent);background:#20253200;background:#181c27;color:#e4cf9c;font-weight:800}
 
-.gameLayout{display:flex;gap:14px;align-items:flex-start}
-.gameSidebar{flex:0 0 320px;display:flex;flex-direction:column;gap:14px;min-width:0}
-.gameSidebar>.panel{margin-bottom:0}
-.gameMain{flex:1;min-width:0;display:flex;flex-direction:column;gap:14px}
-@media(max-width:1200px){.gameLayout{flex-direction:column}.gameMain{order:-1;width:100%}.gameSidebar{flex:0 0 auto;width:100%}}
+.gameLayout{display:grid;grid-template-columns:320px minmax(0,1fr);gap:14px;align-items:start}
+.gameSidebar{display:flex;flex-direction:column;gap:14px;min-width:0}
+.gameSidebar>.panel,.gameMain>.panel{margin-bottom:0}
+.gameMain{min-width:0;display:flex;flex-direction:column;gap:14px}
+.turnPanel{order:-3}
+.turnControls{display:flex;align-items:center;justify-content:center;gap:10px;flex-wrap:wrap}
+.turnControls .diceRow,.turnControls .actionBar{padding:0}
+.boardWrap{width:min(900px,100%,calc(100dvh - 126px));margin:auto}
+
+@media(max-width:1200px) and (min-width:820px){
+  body{padding:8px}
+  .gameLayout{grid-template-columns:clamp(220px,24vw,270px) minmax(0,1fr);gap:8px}
+  .gameSidebar,.gameMain{gap:8px}
+  #gameScreen .panel{padding:10px;border-radius:12px}
+  .playersPanel{order:-2;max-height:240px;overflow:auto}
+  .roomPanel{order:-1}
+  .boardWrap{width:min(100%,calc(100dvh - 112px))}
+  .boardLegend{margin-top:5px;font-size:11px}
+  .boardLegend span{min-height:24px;padding:2px 7px}
+}
+@media(max-width:819px){
+  body{padding:8px}
+  .gameLayout{display:flex;flex-direction:column;gap:8px}
+  .gameSidebar{width:100%;display:grid;grid-template-columns:minmax(0,1fr) minmax(190px,220px);gap:8px}
+  .gameMain{width:100%;gap:8px}
+  #gameScreen .panel{padding:10px;border-radius:12px}
+  .turnPanel{grid-column:1;grid-row:1}
+  .roomPanel{grid-column:2;grid-row:1}
+  .playersPanel{grid-column:1/-1;grid-row:2;max-height:96px;overflow:auto}
+  .playerRow{padding:5px 7px;margin-bottom:4px}
+  .boardWrap{width:min(100%,calc(100dvh - 300px))}
+  .boardLegend{display:none}
+}
+@media(max-width:600px){
+  .gameSidebar{display:flex}
+  .turnPanel{order:-3}.roomPanel{order:-2}.playersPanel{order:-1}
+  .playersPanel{max-height:120px}
+  .boardWrap{width:100%}
+}
 
 .playerRow{display:flex;align-items:center;gap:9px;padding:8px 9px;border:1px solid #2c3142;border-radius:10px;margin-bottom:7px;background:#141824}
 .playerRow:last-child{margin-bottom:0}
@@ -58,17 +92,16 @@ h1,h2,h3,p{margin-top:0}
 .turnTimer.warning{color:var(--danger)}
 .turnBanner2{text-align:center;font-weight:850;padding:8px 4px}
 
-.boardWrap{width:min(900px,100%);margin:auto}
 #board{display:block;width:100%;height:auto;border-radius:14px;background:#090a0e;box-shadow:0 16px 32px #0009;touch-action:manipulation}
 .boardBg{fill:#090a0e}
 .boardArt{pointer-events:none}
 .roomRect{fill:#0000;stroke:#f3ddb02e;stroke-width:1.1;cursor:default;pointer-events:all;transition:fill .15s,stroke .15s}
 .roomRect.centerRoom{stroke:#d9a44188;stroke-width:1.5}
-.roomRect.reachable{fill:#3f9e6c24;stroke:var(--safe);stroke-width:4;cursor:pointer;filter:drop-shadow(0 0 6px #3f9e6cbb)}
+.roomRect.reachable{fill:#3f9e6c18;stroke:var(--safe);stroke-width:2.2;cursor:pointer;filter:drop-shadow(0 0 3px #3f9e6c99)}
 .roomRect.reachable:hover{fill:#3f9e6c3d;stroke:#5fd99a}
-.roomRect.current{fill:#d9a44120;stroke:var(--accent);stroke-width:4}
+.roomRect.current{fill:#d9a44112;stroke:var(--accent);stroke-width:2.2}
 .roomLabelPlate{fill:#0a0b0ed9;stroke:#d9a441b8;stroke-width:.8;pointer-events:none}
-.roomLabel{font-size:10.5px;font-weight:900;fill:#fff4dc;text-anchor:middle;pointer-events:none;letter-spacing:.02em;paint-order:stroke;stroke:#0009;stroke-width:.7px}
+.roomLabel{font-size:6.2px;font-weight:850;fill:#fff4dc;text-anchor:middle;pointer-events:none;letter-spacing:.01em;paint-order:stroke;stroke:#000b;stroke-width:.45px}
 .doorNotch{fill:#d9a441aa;stroke:#fff0c2;stroke-width:.8;opacity:.86;pointer-events:none}
 .corridorTile{fill:#eadfc5c7;stroke:#5d4935;stroke-width:.8;pointer-events:none}
 .cellGroup.shade .corridorTile{fill:#cbbb98c7}
@@ -191,7 +224,7 @@ h1,h2,h3,p{margin-top:0}
   <section id="gameScreen" class="hidden">
     <div class="gameLayout">
       <aside class="gameSidebar">
-        <div class="panel">
+        <div class="panel roomPanel">
           <div class="row spread">
             <div><div class="eyebrow">ROOM CODE</div><div id="gameRoomCode" class="code">----</div></div>
           </div>
@@ -200,13 +233,13 @@ h1,h2,h3,p{margin-top:0}
             <button id="leaveBtnGame" class="secondary" type="button">메인 화면</button>
           </div>
         </div>
-        <div class="panel">
+        <div class="panel playersPanel">
           <div class="eyebrow">DETECTIVES</div>
           <div id="playerList"></div>
         </div>
-        <div class="panel">
+        <div class="panel turnPanel">
           <div id="turnBanner" class="turnBanner2">대국을 준비하는 중입니다.</div>
-          <div class="diceRow"><div class="diceFaces" aria-label="주사위 두 개"><div id="dieFace1" class="dieFace">-</div><div id="dieFace2" class="dieFace">-</div></div><div id="turnTimer" class="turnTimer">--</div></div>
+          <div class="turnControls"><div class="diceRow"><div class="diceFaces" aria-label="주사위 두 개"><div id="dieFace1" class="dieFace">-</div><div id="dieFace2" class="dieFace">-</div></div><div id="turnTimer" class="turnTimer">--</div></div><div id="actionBar" class="actionBar"></div></div>
           <div id="logLine" class="logLine"></div>
         </div>
       </aside>
@@ -218,7 +251,6 @@ h1,h2,h3,p{margin-top:0}
             <div class="boardLegend"><span>▦ #형 복도를 한 칸씩 이동</span><span>▱ 비밀통로 8곳 · 정반대 출구로 연결</span></div>
           </div>
           <div id="pendingBanner" class="pendingBanner hidden"></div>
-          <div id="actionBar" class="actionBar"></div>
         </section>
 
         <section class="panel">
@@ -382,29 +414,45 @@ function cardImage(id){return "/learning/games/clue/assets/images/cards/"+CARD_F
 const CARDBACK_IMG="/learning/games/clue/assets/images/cards/cardback.webp";
 const ROOM_POS=[[0,0],[0,1],[0,2],[1,0],[1,1],[1,2],[2,0],[2,1],[2,2]];
 const TRACK_POSITIONS=[20,38.9,57.8,76.7,95.6,114.4,133.3,152.2,171.1,190,208.9,227.8,246.7,265.6,284.4,303.3,322.2,341.1,360];
-const TRACKS=[
-  {prefix:"t",axis:"h",fixed:125,intersections:{6:"xTL",12:"xTR"}},
-  {prefix:"b",axis:"h",fixed:255,intersections:{6:"xBL",12:"xBR"}},
-  {prefix:"l",axis:"v",fixed:133.3,intersections:{6:"xTL",12:"xBL"}},
-  {prefix:"r",axis:"v",fixed:246.7,intersections:{6:"xTR",12:"xBR"}}
-];
-function trackCellId(track,index){return track.intersections[index]||track.prefix+index}
+const HORIZONTAL_BANDS=[{rows:[5,6],portals:["htL","htR"]},{rows:[12,13],portals:["hbL","hbR"]}];
+const VERTICAL_BANDS=[{columns:[5,6],portals:["vlT","vlB"]},{columns:[12,13],portals:["vrT","vrB"]}];
+function gridCellId(xIndex,yIndex){return "g"+xIndex+"_"+yIndex}
 function buildCorridorModel(){
   const coords={},neighborSets={},orientations={};
-  TRACKS.forEach(track=>{
-    let previous=null;
-    TRACK_POSITIONS.forEach((position,index)=>{
-      const cellId=trackCellId(track,index);
-      if(!coords[cellId])coords[cellId]=track.axis==="h"?[position,track.fixed]:[track.fixed,position];
-      if(orientations[cellId]&&orientations[cellId]!==track.axis)orientations[cellId]="x";
-      else if(!orientations[cellId])orientations[cellId]=track.axis;
-      if(!neighborSets[cellId])neighborSets[cellId]=new Set();
-      if(previous&&previous!==cellId){
-        neighborSets[cellId].add(previous);
-        neighborSets[previous].add(cellId);
+  const addNode=(cellId,x,y,orientation)=>{
+    if(!coords[cellId])coords[cellId]=[x,y];
+    if(orientations[cellId]&&orientations[cellId]!==orientation)orientations[cellId]="x";
+    else if(!orientations[cellId])orientations[cellId]=orientation;
+    if(!neighborSets[cellId])neighborSets[cellId]=new Set();
+  };
+  const connect=(first,second)=>{neighborSets[first].add(second);neighborSets[second].add(first)};
+  HORIZONTAL_BANDS.forEach(band=>{
+    band.rows.forEach(row=>{
+      for(let column=1;column<=17;column+=1){
+        const cellId=gridCellId(column,row);
+        addNode(cellId,TRACK_POSITIONS[column],TRACK_POSITIONS[row],"h");
+        if(column>1)connect(gridCellId(column-1,row),cellId);
       }
-      previous=cellId;
     });
+    for(let column=1;column<=17;column+=1)connect(gridCellId(column,band.rows[0]),gridCellId(column,band.rows[1]));
+    const centreY=(TRACK_POSITIONS[band.rows[0]]+TRACK_POSITIONS[band.rows[1]])/2;
+    addNode(band.portals[0],TRACK_POSITIONS[0],centreY,"h");
+    addNode(band.portals[1],TRACK_POSITIONS[18],centreY,"h");
+    band.rows.forEach(row=>{connect(band.portals[0],gridCellId(1,row));connect(band.portals[1],gridCellId(17,row))});
+  });
+  VERTICAL_BANDS.forEach(band=>{
+    band.columns.forEach(column=>{
+      for(let row=1;row<=17;row+=1){
+        const cellId=gridCellId(column,row);
+        addNode(cellId,TRACK_POSITIONS[column],TRACK_POSITIONS[row],"v");
+        if(row>1)connect(gridCellId(column,row-1),cellId);
+      }
+    });
+    for(let row=1;row<=17;row+=1)connect(gridCellId(band.columns[0],row),gridCellId(band.columns[1],row));
+    const centreX=(TRACK_POSITIONS[band.columns[0]]+TRACK_POSITIONS[band.columns[1]])/2;
+    addNode(band.portals[0],centreX,TRACK_POSITIONS[0],"v");
+    addNode(band.portals[1],centreX,TRACK_POSITIONS[18],"v");
+    band.columns.forEach(column=>{connect(band.portals[0],gridCellId(column,1));connect(band.portals[1],gridCellId(column,17))});
   });
   const cells=Object.keys(coords);
   const neighbors=Object.fromEntries(cells.map(cellId=>[cellId,[...neighborSets[cellId]]]));
@@ -416,17 +464,18 @@ const CELL_COORDS=CORRIDOR_MODEL.coords;
 const CELL_NEIGHBORS=CORRIDOR_MODEL.neighbors;
 const CELL_ORIENTATION=CORRIDOR_MODEL.orientations;
 const CELL_ROOMS={
-  t3:[0],t9:[1,4],t15:[2],
-  b3:[3,6],b9:[4,7],b15:[5,8]
+  g3_5:[0],g9_5:[1],g15_5:[2],
+  g3_12:[3],g9_6:[4],g9_12:[4],g15_12:[5],
+  g3_13:[6],g9_13:[7],g15_13:[8]
 };
 const ROOM_CELLS={
-  0:["t3"],1:["t9"],2:["t15"],
-  3:["b3"],4:["t9","b9"],5:["b15"],
-  6:["b3"],7:["b9"],8:["b15"]
+  0:["g3_5"],1:["g9_5"],2:["g15_5"],
+  3:["g3_12"],4:["g9_6","g9_12"],5:["g15_12"],
+  6:["g3_13"],7:["g9_13"],8:["g15_13"]
 };
 const SECRET_PASSAGE_PAIRS={
-  t0:"b18",b18:"t0",t18:"b0",b0:"t18",
-  l0:"r18",r18:"l0",r0:"l18",l18:"r0"
+  htL:"hbR",hbR:"htL",htR:"hbL",hbL:"htR",
+  vlT:"vrB",vrB:"vlT",vrT:"vlB",vlB:"vrT"
 };
 const SERVER_MESSAGE=Object.freeze({STATE:"CLUE_STATE",REVEAL:"CLUE_REVEAL",ERROR:"CLUE_ERROR"});
 const $=id=>document.getElementById(id);
@@ -539,8 +588,8 @@ function buildBoard(){
     const x=margin+col*(cellSize+gap),y=margin+row*(cellSize+gap);
     parts.push(`<g data-room="${i}" transform="translate(${x},${y})">`);
     parts.push(`<rect class="roomRect${i===CENTER_ROOM?" centerRoom":""}" data-room="${i}" x="0" y="0" width="${cellSize}" height="${cellSize}" rx="8"/>`);
-    parts.push(`<rect class="roomLabelPlate" x="12" y="29" width="56" height="21" rx="6"/>`);
-    parts.push(`<text class="roomLabel" x="${cellSize/2}" y="43.5">${ROOMS[i]}</text>`);
+    parts.push(`<rect class="roomLabelPlate" x="23" y="6" width="34" height="12" rx="3"/>`);
+    parts.push(`<text class="roomLabel" x="${cellSize/2}" y="14.4">${ROOMS[i]}</text>`);
     parts.push(`<g class="tokenLayer" data-tokens="r${i}"></g>`);
     parts.push(`</g>`);
   }
@@ -550,12 +599,12 @@ function buildBoard(){
     const kind=isPassage?"passage":isDoor?"door":"plain";
     const shade=cellIndex%2?" shade":"";
     const orientation=CELL_ORIENTATION[cellId]||"h";
-    const tileWidth=orientation==="h"?18.2:22;
-    const tileHeight=orientation==="v"?18.2:22;
+    const tileWidth=isPassage?20:17.2;
+    const tileHeight=isPassage?20:17.2;
     parts.push(`<g class="cellGroup ${kind}${shade}" data-cell="${cellId}" transform="translate(${pos[0]},${pos[1]})">`);
     if(isPassage)parts.push(`<title>비밀통로 · ${SECRET_PASSAGE_PAIRS[cellId]} 맞은편 출구로 이동</title>`);
     parts.push(`<rect class="corridorTile" x="${-tileWidth/2}" y="${-tileHeight/2}" width="${tileWidth}" height="${tileHeight}" rx="1.5"/>`);
-    parts.push(`<rect class="cellHit" x="-14" y="-14" width="28" height="28" rx="4"/>`);
+    parts.push(`<rect class="cellHit" x="-9.3" y="-9.3" width="18.6" height="18.6" rx="3"/>`);
     if(isPassage){
       parts.push(`<rect class="passageFrame" x="-6.5" y="-8.5" width="13" height="17" rx="2"/>`);
       parts.push(`<path class="passageSteps" d="M-4.5 -4.5H4.5M-4.5 -1.5H4.5M-4.5 1.5H4.5M-4.5 4.5H4.5"/>`);

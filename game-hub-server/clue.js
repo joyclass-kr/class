@@ -14,41 +14,70 @@ const WEAPONS = Object.freeze(["촛대", "밧줄", "렌치", "손전등", "만�
 const ROOMS = Object.freeze(["온실", "무도회장", "주방", "서재", "거실", "식당", "사무실", "현관", "당구실"]);
 const CENTER_ROOM = 4;
 
-// Four strips of 19 floor tiles form the mansion's real # corridor network:
-// two horizontal, two vertical, with shared nodes at all four intersections.
+// Four two-tile-wide corridor bands form the mansion's real # network.
+// Coordinate-based ids merge each crossing into a connected 2x2 junction.
 // The 8 outer endpoints are secret stairwells; every pair exits at the point
 // rotated 180 degrees across the centre of the mansion.
 const TRACK_POSITIONS = Object.freeze([20, 38.9, 57.8, 76.7, 95.6, 114.4, 133.3, 152.2, 171.1, 190, 208.9, 227.8, 246.7, 265.6, 284.4, 303.3, 322.2, 341.1, 360]);
-const TRACKS = Object.freeze([
-  Object.freeze({ prefix: "t", axis: "h", fixed: 125, intersections: Object.freeze({ 6: "xTL", 12: "xTR" }) }),
-  Object.freeze({ prefix: "b", axis: "h", fixed: 255, intersections: Object.freeze({ 6: "xBL", 12: "xBR" }) }),
-  Object.freeze({ prefix: "l", axis: "v", fixed: 133.3, intersections: Object.freeze({ 6: "xTL", 12: "xBL" }) }),
-  Object.freeze({ prefix: "r", axis: "v", fixed: 246.7, intersections: Object.freeze({ 6: "xTR", 12: "xBR" }) })
+const HORIZONTAL_BANDS = Object.freeze([
+  Object.freeze({ rows: Object.freeze([5, 6]), portals: Object.freeze(["htL", "htR"]) }),
+  Object.freeze({ rows: Object.freeze([12, 13]), portals: Object.freeze(["hbL", "hbR"]) })
+]);
+const VERTICAL_BANDS = Object.freeze([
+  Object.freeze({ columns: Object.freeze([5, 6]), portals: Object.freeze(["vlT", "vlB"]) }),
+  Object.freeze({ columns: Object.freeze([12, 13]), portals: Object.freeze(["vrT", "vrB"]) })
 ]);
 
-function trackCellId(track, index) {
-  return track.intersections[index] || track.prefix + index;
+function gridCellId(xIndex, yIndex) {
+  return "g" + xIndex + "_" + yIndex;
 }
 
 function buildCorridorModel() {
   const coords = {};
   const neighborSets = {};
   const orientations = {};
-  TRACKS.forEach((track) => {
-    let previous = null;
-    TRACK_POSITIONS.forEach((position, index) => {
-      const cellId = trackCellId(track, index);
-      if (!coords[cellId]) {
-        coords[cellId] = track.axis === "h" ? [position, track.fixed] : [track.fixed, position];
+  const addNode = (cellId, x, y, orientation) => {
+    if (!coords[cellId]) coords[cellId] = [x, y];
+    if (orientations[cellId] && orientations[cellId] !== orientation) orientations[cellId] = "x";
+    else if (!orientations[cellId]) orientations[cellId] = orientation;
+    if (!neighborSets[cellId]) neighborSets[cellId] = new Set();
+  };
+  const connect = (first, second) => {
+    neighborSets[first].add(second);
+    neighborSets[second].add(first);
+  };
+  HORIZONTAL_BANDS.forEach((band) => {
+    band.rows.forEach((row) => {
+      for (let column = 1; column <= 17; column += 1) {
+        const cellId = gridCellId(column, row);
+        addNode(cellId, TRACK_POSITIONS[column], TRACK_POSITIONS[row], "h");
+        if (column > 1) connect(gridCellId(column - 1, row), cellId);
       }
-      if (orientations[cellId] && orientations[cellId] !== track.axis) orientations[cellId] = "x";
-      else if (!orientations[cellId]) orientations[cellId] = track.axis;
-      if (!neighborSets[cellId]) neighborSets[cellId] = new Set();
-      if (previous && previous !== cellId) {
-        neighborSets[cellId].add(previous);
-        neighborSets[previous].add(cellId);
+    });
+    for (let column = 1; column <= 17; column += 1) connect(gridCellId(column, band.rows[0]), gridCellId(column, band.rows[1]));
+    const centreY = (TRACK_POSITIONS[band.rows[0]] + TRACK_POSITIONS[band.rows[1]]) / 2;
+    addNode(band.portals[0], TRACK_POSITIONS[0], centreY, "h");
+    addNode(band.portals[1], TRACK_POSITIONS[18], centreY, "h");
+    band.rows.forEach((row) => {
+      connect(band.portals[0], gridCellId(1, row));
+      connect(band.portals[1], gridCellId(17, row));
+    });
+  });
+  VERTICAL_BANDS.forEach((band) => {
+    band.columns.forEach((column) => {
+      for (let row = 1; row <= 17; row += 1) {
+        const cellId = gridCellId(column, row);
+        addNode(cellId, TRACK_POSITIONS[column], TRACK_POSITIONS[row], "v");
+        if (row > 1) connect(gridCellId(column, row - 1), cellId);
       }
-      previous = cellId;
+    });
+    for (let row = 1; row <= 17; row += 1) connect(gridCellId(band.columns[0], row), gridCellId(band.columns[1], row));
+    const centreX = (TRACK_POSITIONS[band.columns[0]] + TRACK_POSITIONS[band.columns[1]]) / 2;
+    addNode(band.portals[0], centreX, TRACK_POSITIONS[0], "v");
+    addNode(band.portals[1], centreX, TRACK_POSITIONS[18], "v");
+    band.columns.forEach((column) => {
+      connect(band.portals[0], gridCellId(column, 1));
+      connect(band.portals[1], gridCellId(column, 17));
     });
   });
   const cells = Object.freeze(Object.keys(coords));
@@ -69,19 +98,20 @@ const CORRIDOR_CELLS = CORRIDOR_MODEL.cells;
 const CELL_COORDS = CORRIDOR_MODEL.coords;
 const CELL_NEIGHBORS = CORRIDOR_MODEL.neighbors;
 const CELL_ROOMS = Object.freeze({
-  t3: [0], t9: [1, 4], t15: [2],
-  b3: [3, 6], b9: [4, 7], b15: [5, 8]
+  g3_5: [0], g9_5: [1], g15_5: [2],
+  g3_12: [3], g9_6: [4], g9_12: [4], g15_12: [5],
+  g3_13: [6], g9_13: [7], g15_13: [8]
 });
 const ROOM_CELLS = Object.freeze({
-  0: ["t3"], 1: ["t9"], 2: ["t15"],
-  3: ["b3"], 4: ["t9", "b9"], 5: ["b15"],
-  6: ["b3"], 7: ["b9"], 8: ["b15"]
+  0: ["g3_5"], 1: ["g9_5"], 2: ["g15_5"],
+  3: ["g3_12"], 4: ["g9_6", "g9_12"], 5: ["g15_12"],
+  6: ["g3_13"], 7: ["g9_13"], 8: ["g15_13"]
 });
 const SECRET_PASSAGE_PAIRS = Object.freeze({
-  t0: "b18", b18: "t0",
-  t18: "b0", b0: "t18",
-  l0: "r18", r18: "l0",
-  r0: "l18", l18: "r0"
+  htL: "hbR", hbR: "htL",
+  htR: "hbL", hbL: "htR",
+  vlT: "vrB", vrB: "vlT",
+  vrT: "vlB", vlB: "vrT"
 });
 const START_ROOMS = Object.freeze([0, 2, 3, 5, 6, 8]);
 const MIN_PLAYERS = 3;
