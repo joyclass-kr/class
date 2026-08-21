@@ -22,15 +22,15 @@ ko: [
     ["사람과 형편", "사람의 속마음·처지·만남", /가지 많은|내 코|열 길|원수는/]
   ],
   en: [
-    ["Effort and growth", "Practice, learning, and progress", /연습|노력|시작|성공|배우/],
-    ["Patience and opportunity", "Time, patience, health, and opportunity", /인내|기회|기다|시간|건강/],
-    ["Words and honesty", "Honesty, words, writing, and knowledge", /정직|말|글|지식/],
-    ["Friends and community", "Friendship, cooperation, and customs", /친구|사람|함께|관습|웃음|비슷/],
-    ["Careful choices", "Caution, risk, and sound judgment", /조심|서두|위험|판단|확실/],
-    ["Actions and consequences", "Planning, results, loss, and waste", /결과|잃|낭비|쉽게|미리|준비/],
-    ["Hope and possibility", "Hope, timing, and invention", /늦|희망|발명/],
-    ["Family and cooperation", "Cooperation, distance, and family ties", /여럿|떨어져|비슷한 성향|가족/],
-    ["Values and resources", "Value, limits, variety, and everyday resources", /.* /]
+    ["Effort and growth", "Practice, courage, and steady progress", ["Practice makes perfect.", "Where there is a will, there is a way.", "No pain, no gain.", "Slow and steady wins the race.", "When the going gets tough, the tough get going.", "Fortune favors the bold."]],
+    ["Time and opportunity", "Timing, patience, preparation, and change", ["The early bird catches the worm.", "Better late than never.", "Time flies.", "Good things come to those who wait.", "Strike while the iron is hot.", "Prevention is better than cure."]],
+    ["Words and knowledge", "Truth, communication, learning, and influence", ["Actions speak louder than words.", "Honesty is the best policy.", "Knowledge is power.", "The pen is mightier than the sword.", "A picture is worth a thousand words.", "Barking dogs seldom bite."]],
+    ["Cooperation and community", "Teamwork, friendship, similarity, and customs", ["Two heads are better than one.", "A friend in need is a friend indeed.", "Many hands make light work.", "Birds of a feather flock together.", "Great minds think alike.", "Too many cooks spoil the broth."]],
+    ["Careful choices", "Caution, risk, planning, and learning from experience", ["Look before you leap.", "Haste makes waste.", "Curiosity killed the cat.", "Once bitten, twice shy.", "Don't count your chickens before they hatch.", "Don't put all your eggs in one basket."]],
+    ["Results and resources", "Gain, loss, saving, limits, and satisfaction", ["Easy come, easy go.", "A penny saved is a penny earned.", "You can't have your cake and eat it too.", "Beggars can't be choosers.", "The grass is always greener on the other side."]],
+    ["Hope and well-being", "Hope, healing, joy, invention, and variety", ["Every cloud has a silver lining.", "Time heals all wounds.", "Laughter is the best medicine.", "Necessity is the mother of invention.", "Variety is the spice of life."]],
+    ["Family and belonging", "Family ties, home, loyalty, and social customs", ["Absence makes the heart grow fonder.", "Blood is thicker than water.", "Home is where the heart is.", "When in Rome, do as the Romans do.", "Don't bite the hand that feeds you."]],
+    ["Values and perspectives", "Judgment, beauty, health, and personal choice", ["Don't judge a book by its cover.", "Beauty is in the eye of the beholder.", "Cleanliness is next to godliness.", "You can lead a horse to water, but you can't make it drink.", "An apple a day keeps the doctor away."]]
   ]
 };
 let language = "ko", lessonIndex = 0, mode = "study";
@@ -41,7 +41,7 @@ let completed = loadCompleted();
 function shuffle(items) { const a=[...items]; for(let i=a.length-1;i>0;i--){const j=Math.floor(Math.random()*(i+1));[a[i],a[j]]=[a[j],a[i]];} return a; }
 function key() { return "class-proverb-lessons-" + language; }
 function loadCompleted() { try { return new Set(JSON.parse(localStorage.getItem("class-proverb-lessons-" + language) || "[]")); } catch (_) { return new Set(); } }
-function lessonFor(item) { const text=item.proverb+" "+item.meaning; const lessons=LESSONS[language]; for(let i=0;i<lessons.length;i++) if(lessons[i][2].test(text)) return i; return lessons.length-1; }
+function lessonFor(item) { const text=item.proverb+" "+item.meaning; const lessons=LESSONS[language]; for(let i=0;i<lessons.length;i++){const matcher=lessons[i][2];if(Array.isArray(matcher)?matcher.includes(item.proverb):matcher.test(text))return i;} return lessons.length-1; }
 function lessonItems(index) { return decks[language].filter((item)=>lessonFor(item)===index); }
 
 function renderLessonList() {
