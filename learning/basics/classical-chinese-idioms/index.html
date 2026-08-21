@@ -52,9 +52,12 @@
 
         <section id="learningShell" hidden>
             <div class="lesson-toolbar">
-                <button id="backToLessons" type="button">← 차시 목록</button>
-                <div><span id="currentLessonNumber"></span><strong id="currentLessonTitle"></strong></div>
-                <button id="currentLessonQuiz" class="lesson-quiz-button" type="button">문제 풀기</button>
+                <div class="lesson-toolbar-actions">
+                    <a class="lesson-home-link" href="../../../">← 메인</a>
+                    <button id="backToLessons" type="button">차시 목록</button>
+                </div>
+                <div class="lesson-heading"><span id="currentLessonNumber"></span><strong id="currentLessonTitle"></strong></div>
+                <button id="currentLessonQuiz" class="lesson-quiz-button" type="button">이 차시 퀴즈</button>
             </div>
 
         <div class="progress-card" aria-label="전체 학습 현황">
@@ -102,12 +105,16 @@
             </div>
 
             <div id="studyArea" class="study-area">
-                <div class="card-position" aria-live="polite">
-                    <span id="cardPosition">1 / 1</span>
+                <div class="card-position">
+                    <span id="cardPosition" aria-live="polite">1 / 1</span>
                     <div class="mini-track" aria-hidden="true"><span id="cardProgress"></span></div>
+                    <nav id="cardNavigation" class="card-navigation" aria-label="성어 이동">
+                        <button id="previousCard" type="button">← 이전</button>
+                        <button id="nextCard" type="button">다음 →</button>
+                    </nav>
                 </div>
 
-                <article id="idiomCard" class="idiom-card" tabindex="0" aria-describedby="revealHint">
+                <article id="idiomCard" class="idiom-card" tabindex="-1">
                     <div class="card-topline">
                         <span id="themeBadge" class="theme-badge">지혜</span>
                         <span id="verificationBadge" class="verification-badge">원전 확인</span>
@@ -115,17 +122,18 @@
                     <div class="idiom-face">
                         <p id="idiomHanja" class="idiom-hanja">守株待兔</p>
                         <h3 id="idiomWord">수주대토</h3>
-                        <p id="revealHint" class="reveal-hint">카드를 누르면 뜻과 유래가 표시됩니다. <kbd>Space</kbd></p>
                     </div>
 
                     <div id="cardDetails" class="card-details" hidden>
-                        <div class="hanja-expl-block">
-                            <span class="detail-label">한자 풀이</span>
-                            <div id="idiomHanjaExpl" class="hanja-chips"></div>
-                        </div>
-                        <div class="meaning-block">
-                            <span class="detail-label">뜻</span>
-                            <p id="idiomMeaning"></p>
+                        <div class="card-summary">
+                            <div class="hanja-expl-block">
+                                <span class="detail-label">한자 풀이</span>
+                                <div id="idiomHanjaExpl" class="hanja-chips"></div>
+                            </div>
+                            <div class="meaning-block">
+                                <span class="detail-label">뜻</span>
+                                <p id="idiomMeaning"></p>
+                            </div>
                         </div>
                         <figure id="idiomIllustration" class="idiom-illustration" hidden>
                             <img id="idiomIllustrationImage" alt="" width="1200" height="800" loading="lazy" decoding="async">
@@ -141,11 +149,6 @@
                     </div>
                 </article>
 
-                <div id="cardNavigation" class="card-navigation" aria-label="카드 이동">
-                    <button id="previousCard" type="button">← 이전</button>
-                    <button id="revealCard" class="reveal-button" type="button" aria-expanded="false">뜻과 유래 보기</button>
-                    <button id="nextCard" type="button">다음 →</button>
-                </div>
 
                 <div id="memoryActions" class="memory-actions" hidden aria-label="암기 상태 선택">
                     <p>학습 상태</p>
@@ -234,9 +237,6 @@
         </section>
     </main>
 
-    <footer>
-        <p>유래는 학습용으로 요약했습니다.</p>
-    </footer>
 
     <div id="toast" class="toast" role="status" aria-live="polite"></div>
 </body>

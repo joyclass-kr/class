@@ -163,7 +163,7 @@
         idiomHanjaExpl: byId("idiomHanjaExpl"), idiomMeaning: byId("idiomMeaning"), idiomStory: byId("idiomStory"),
         idiomIllustration: byId("idiomIllustration"), idiomIllustrationImage: byId("idiomIllustrationImage"),
         idiomSource: byId("idiomSource"), sourceNote: byId("sourceNote"),
-        previousCard: byId("previousCard"), nextCard: byId("nextCard"), revealCard: byId("revealCard"),
+        previousCard: byId("previousCard"), nextCard: byId("nextCard"),
         memoryActions: byId("memoryActions"), markReview: byId("markReview"), markKnown: byId("markKnown"),
         gameIntro: byId("gameIntro"), quizStage: byId("quizStage"), quizResult: byId("quizResult"),
         bestScore: byId("bestScore"), startQuiz: byId("startQuiz"), quizPosition: byId("quizPosition"),
@@ -267,18 +267,16 @@
         if (options.shuffle) deck = core.shuffle(deck);
         const preservedIndex = previousId ? deck.findIndex((item) => item.id === previousId) : -1;
         currentIndex = preservedIndex >= 0 ? preservedIndex : Math.min(currentIndex, Math.max(0, deck.length - 1));
-        revealed = false;
+        revealed = true;
         renderCard();
     }
 
-    function setRevealed(value) {
+    function setRevealed() {
         if (!currentIdiom()) return;
-        revealed = value;
-        elements.idiomCard.classList.toggle("revealed", revealed);
-        elements.cardDetails.hidden = !revealed;
-        elements.memoryActions.hidden = !revealed;
-        elements.revealCard.textContent = revealed ? "뜻과 유래 접기" : "뜻과 유래 보기";
-        elements.revealCard.setAttribute("aria-expanded", String(revealed));
+        revealed = true;
+        elements.idiomCard.classList.add("revealed");
+        elements.cardDetails.hidden = false;
+        elements.memoryActions.hidden = false;
     }
 
     function renderMemoryStatus(idiom) {
@@ -540,7 +538,7 @@
         buildDeck({ keepId: quizMistakes[0] });
         const targetIndex = deck.findIndex((item) => item.id === quizMistakes[0]);
         if (targetIndex >= 0) currentIndex = targetIndex;
-        revealed = false;
+        revealed = true;
         renderCard();
         switchView("learn");
         document.getElementById("learnHeading")?.scrollIntoView({ behavior: "smooth", block: "start" });
@@ -581,7 +579,7 @@ function renderLessonOverview() {
         elements.themeSelect.value = "전체";
         elements.currentLessonNumber.textContent = `${currentLessonIndex + 1}차시`;
         elements.currentLessonTitle.textContent = lesson.title;
-        elements.currentLessonQuiz.textContent = "문제 풀기";
+        elements.currentLessonQuiz.textContent = "이 차시 퀴즈";
         document.body.classList.add("lesson-active");
         elements.lessonOverview.hidden = true;
         elements.learningShell.hidden = false;
@@ -599,11 +597,12 @@ function renderLessonOverview() {
         elements.learningShell.hidden = false;
         elements.currentLessonNumber.textContent = "전체";
         elements.currentLessonTitle.textContent = "문제은행";
-        elements.currentLessonQuiz.textContent = "설명 보기";
+        elements.currentLessonQuiz.textContent = "성어 설명";
         switchView("game");
         elements.learningShell.scrollIntoView({ behavior: "smooth", block: "start" });
     }
     function showLessonOverview() {
+        document.body.classList.remove("lesson-active");
         elements.learningShell.hidden = true;
         elements.lessonOverview.hidden = false;
         renderLessonOverview();
@@ -694,7 +693,7 @@ function renderLessonOverview() {
     elements.currentLessonQuiz.addEventListener("click", () => {
         const gameVisible = !byId("gameView").hidden;
         switchView(gameVisible ? "learn" : "game");
-        elements.currentLessonQuiz.textContent = gameVisible ? "문제 풀기" : "설명 보기";
+        elements.currentLessonQuiz.textContent = gameVisible ? "이 차시 퀴즈" : "성어 설명";
     });
     elements.themeSelect.addEventListener("change", () => {
         selectedTheme = elements.themeSelect.value;
@@ -718,11 +717,7 @@ function renderLessonOverview() {
     });
     elements.previousCard.addEventListener("click", () => moveCard(-1));
     elements.nextCard.addEventListener("click", () => moveCard(1));
-    elements.revealCard.addEventListener("click", () => setRevealed(!revealed));
-    elements.idiomCard.addEventListener("click", (event) => {
-        if (event.target.closest("a, button")) return;
-        setRevealed(!revealed);
-    });
+
     elements.markKnown.addEventListener("click", () => markCurrent("known"));
     elements.markReview.addEventListener("click", () => markCurrent("review"));
 
@@ -748,10 +743,7 @@ function renderLessonOverview() {
         const quizVisible = !elements.quizStage.hidden;
 
         if (learnVisible) {
-            if (event.key === " ") {
-                event.preventDefault();
-                setRevealed(!revealed);
-            } else if (event.key === "ArrowLeft") moveCard(-1);
+            if (event.key === "ArrowLeft") moveCard(-1);
             else if (event.key === "ArrowRight") moveCard(1);
             else if (revealed && event.key.toLocaleLowerCase() === "k") markCurrent("known");
             else if (revealed && event.key.toLocaleLowerCase() === "r") markCurrent("review");
@@ -772,7 +764,7 @@ function renderLessonOverview() {
         if (playerName) elements.playerGreeting.textContent = `${playerName} 학습 기록`;
         elements.libraryTotal.textContent = data.length;
         buildThemeControls();
-        elements.studyArea.insertBefore(elements.cardNavigation, elements.idiomCard);
+
         renderSummary();
         renderBestScore();
         renderLessonOverview();
