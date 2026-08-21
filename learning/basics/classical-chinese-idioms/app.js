@@ -3,6 +3,7 @@
 
     const data = Array.isArray(window.IDIOM_DATA) ? window.IDIOM_DATA : [];
     const core = window.IdiomCore;
+    const lessons = Array.isArray(window.IDIOM_LESSONS) ? window.IDIOM_LESSONS : [];
     const PLAYER_NAME_KEY = "classPlayerName";
     const LEGACY_PROGRESS_KEY = "classIdiomsProgressV1";
     const LEGACY_BEST_SCORE_KEY = "classIdiomsBestScoreV1";
@@ -147,10 +148,15 @@
         retryQuiz: byId("retryQuiz"), retryMistakes: byId("retryMistakes"), reviewMistakes: byId("reviewMistakes"),
         libraryTotal: byId("libraryTotal"), librarySearch: byId("librarySearch"), themeFilters: byId("themeFilters"),
         libraryGrid: byId("libraryGrid"), libraryEmpty: byId("libraryEmpty"), toast: byId("toast"),
-        playerGreeting: byId("playerGreeting")
+        playerGreeting: byId("playerGreeting"),
+        lessonOverview: byId("lessonOverview"), learningShell: byId("learningShell"), lessonList: byId("lessonList"),
+        lessonKnownTotal: byId("lessonKnownTotal"), lessonItemTotal: byId("lessonItemTotal"),
+        backToLessons: byId("backToLessons"), currentLessonNumber: byId("currentLessonNumber"),
+        currentLessonTitle: byId("currentLessonTitle")
     };
 
     let progress = loadProgress();
+    let currentLessonIndex = 0;
     let deck = [...data];
     let currentIndex = 0;
     let revealed = false;
@@ -197,6 +203,13 @@
         toastTimer = setTimeout(() => elements.toast.classList.remove("show"), 1700);
     }
 
+    function currentLessonItems() {
+        const lesson = lessons[currentLessonIndex];
+        if (!lesson) return data;
+        const lessonIds = new Set(lesson.ids);
+        return data.filter((idiom) => lessonIds.has(idiom.id));
+    }
+
     function currentIdiom() {
         return deck[currentIndex] || null;
     }
@@ -214,7 +227,7 @@
 
     function buildDeck(options = {}) {
         const previousId = options.keepId || currentIdiom()?.id;
-        deck = core.filterDeck(data, {
+        deck = core.filterDeck(currentLessonItems(), {
             status: reviewOnly ? "review" : "all",
             progress
         }, selectedTheme);
@@ -305,6 +318,7 @@
         progress[idiom.id] = { status, updatedAt: new Date().toISOString() };
         saveProgress();
         renderSummary();
+        renderLessonOverview();
         showToast(`${idiom.word}: ${status === "known" ? "암기 완료" : "복습 필요"}`);
 
         if (reviewOnly && status === "known") {
@@ -332,9 +346,10 @@
     }
 
     function startQuiz(mistakeIds = null) {
+        const lessonPool = currentLessonItems();
         const quizPool = selectedQuizMode === "image"
-            ? data.filter((idiom) => Boolean(ILLUSTRATIONS[idiom.id]))
-            : data;
+            ? lessonPool.filter((idiom) => Boolean(ILLUSTRATIONS[idiom.id]))
+            : lessonPool;
         if (quizPool.length < 4) {
             showToast("이 단계에는 삽화 문제가 없습니다.");
             return;
@@ -346,7 +361,7 @@
                 .map((idiom) => core.createQuestion(idiom, quizPool, selectedQuizMode));
             if (!quiz.length) return;
         } else {
-            quiz = core.buildQuiz(quizPool, 10, selectedQuizMode);
+            quiz = core.buildQuiz(quizPool, Math.min(10, quizPool.length), selectedQuizMode);
         }
         quizIndex = 0;
         quizScore = 0;
@@ -499,6 +514,54 @@
         document.getElementById("learnHeading")?.scrollIntoView({ behavior: "smooth", block: "start" });
     }
 
+function renderLessonOverview() {
+        const knownTotal = data.filter((idiom) => progress[idiom.id]?.status === "known").length;
+        elements.lessonKnownTotal.textContent = knownTotal;
+        elements.lessonItemTotal.textContent = data.length;
+        elements.lessonList.replaceChildren();
+
+        lessons.forEach((lesson, index) => {
+            const items = lesson.ids.map((id) => data.find((idiom) => idiom.id === id)).filter(Boolean);
+            const known = items.filter((idiom) => progress[idiom.id]?.status === "known").length;
+            const button = document.createElement("button");
+            button.type = "button";
+            button.className = `lesson-card${known === items.length ? " complete" : ""}`;
+            button.innerHTML = `
+                <span class="lesson-number">${index + 1}</span>
+                <span class="lesson-card-body">
+                    <span class="lesson-card-top"><strong>${lesson.title}</strong><b>${items.length}개</b></span>
+                    <span class="lesson-description">${lesson.description}</span>
+                    <span class="lesson-examples">${items.slice(0, 3).map((item) => item.word).join(" · ")}</span>
+                </span>
+                <span class="lesson-progress">${known === items.length ? "완료" : `${known}/${items.length}`}</span>`;
+            button.addEventListener("click", () => openLesson(index));
+            elements.lessonList.append(button);
+        });
+    }
+
+    function openLesson(index, keepId = "") {
+        currentLessonIndex = Math.max(0, Math.min(index, lessons.length - 1));
+        const lesson = lessons[currentLessonIndex];
+        reviewOnly = false;
+        selectedTheme = "전체";
+        elements.reviewOnlyButton.setAttribute("aria-pressed", "false");
+        elements.themeSelect.value = "전체";
+        elements.currentLessonNumber.textContent = `${currentLessonIndex + 1}차시`;
+        elements.currentLessonTitle.textContent = lesson.title;
+        elements.lessonOverview.hidden = true;
+        elements.learningShell.hidden = false;
+        buildDeck({ keepId });
+        switchView("learn");
+        elements.learningShell.scrollIntoView({ behavior: "smooth", block: "start" });
+    }
+
+    function showLessonOverview() {
+        elements.learningShell.hidden = true;
+        elements.lessonOverview.hidden = false;
+        renderLessonOverview();
+        elements.lessonOverview.scrollIntoView({ behavior: "smooth", block: "start" });
+    }
+
     function buildThemeControls() {
         const themes = ["전체", ...new Set(data.map((item) => item.theme))];
         themes.slice(1).forEach((theme) => {
@@ -524,7 +587,8 @@
     }
 
     function openIdiomFromLibrary(id) {
-        const selectedIdiom = data.find((idiom) => idiom.id === id);
+        const lessonIndex = lessons.findIndex((lesson) => lesson.ids.includes(id));
+        if (lessonIndex >= 0) openLesson(lessonIndex, id);
         reviewOnly = false;
         selectedTheme = "전체";
         elements.reviewOnlyButton.setAttribute("aria-pressed", "false");
@@ -577,6 +641,7 @@
         button.addEventListener("click", () => switchView(button.dataset.view));
     });
 
+    elements.backToLessons.addEventListener("click", showLessonOverview);
     elements.themeSelect.addEventListener("change", () => {
         selectedTheme = elements.themeSelect.value;
         buildDeck();
@@ -655,6 +720,7 @@
         buildThemeControls();
         renderSummary();
         renderBestScore();
+        renderLessonOverview();
         buildDeck();
         renderLibrary();
     }

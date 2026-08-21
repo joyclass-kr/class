@@ -1,0 +1,100 @@
+.lesson-overview { padding: 26px 0 56px; }
+
+.lesson-overview-heading {
+    display: flex;
+    align-items: end;
+    justify-content: space-between;
+    gap: 24px;
+    margin-bottom: 20px;
+}
+
+.lesson-overview-heading h2 {
+    margin: 0;
+    font-family: "Batang", "Noto Serif KR", serif;
+    font-size: clamp(25px, 3.5vw, 36px);
+}
+
+.lesson-overview-heading p:not(.section-kicker) {
+    margin: 8px 0 0;
+    color: var(--muted);
+    font-size: 14px;
+    line-height: 1.55;
+}
+
+.lesson-overview-total { flex: none; }
+.lesson-overview-total strong { color: var(--green); font-size: 22px; }
+
+.lesson-list { display: grid; gap: 10px; }
+
+.lesson-card {
+    display: grid;
+    grid-template-columns: 48px minmax(0, 1fr) auto;
+    align-items: center;
+    gap: 16px;
+    min-height: 104px;
+    padding: 15px 18px;
+    border: 1px solid var(--line);
+    border-radius: 18px 18px 6px 18px;
+    background: rgba(255, 253, 247, 0.86);
+    text-align: left;
+    cursor: pointer;
+}
+
+.lesson-card:hover,
+.lesson-card:focus-visible { border-color: var(--green); background: var(--green-light); }
+
+.lesson-number {
+    display: grid;
+    place-items: center;
+    width: 44px;
+    height: 44px;
+    border-radius: 50%;
+    background: var(--green);
+    color: white;
+    font-family: Georgia, serif;
+    font-weight: 800;
+}
+
+.lesson-card.complete .lesson-number { background: var(--gold); }
+.lesson-card-body, .lesson-card-top, .lesson-description, .lesson-examples { display: block; }
+.lesson-card-top { display: flex; align-items: baseline; justify-content: space-between; gap: 12px; }
+.lesson-card-top strong { font-family: "Batang", serif; font-size: 18px; }
+.lesson-card-top b, .lesson-progress { color: var(--green); font-size: 12px; }
+.lesson-description { margin-top: 4px; color: var(--muted); font-size: 13px; line-height: 1.45; }
+.lesson-examples { margin-top: 7px; color: #76551f; font-size: 12px; }
+.lesson-progress { min-width: 42px; text-align: right; font-weight: 900; }
+
+.lesson-toolbar {
+    display: flex;
+    align-items: center;
+    gap: 14px;
+    margin-top: 14px;
+}
+
+.lesson-toolbar button {
+    min-height: 44px;
+    padding: 0 14px;
+    border: 1px solid var(--line);
+    border-radius: 11px;
+    background: rgba(255, 253, 247, 0.88);
+    color: var(--green);
+    font-weight: 800;
+    cursor: pointer;
+}
+
+.lesson-toolbar div { display: flex; align-items: baseline; gap: 9px; }
+.lesson-toolbar span { color: var(--red); font-size: 12px; font-weight: 900; }
+.lesson-toolbar strong { font-family: "Batang", serif; font-size: 19px; }
+
+@media (min-width: 760px) {
+    .lesson-list { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+}
+
+@media (max-width: 640px) {
+    .lesson-overview-heading { display: block; }
+    .lesson-overview-total { margin-top: 12px !important; }
+    .lesson-card { grid-template-columns: 44px minmax(0, 1fr); gap: 12px; padding: 14px; }
+    .lesson-progress { grid-column: 2; text-align: left; }
+    .lesson-card-top b { display: none; }
+    .lesson-description { font-size: 12px; }
+}
