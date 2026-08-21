@@ -9,6 +9,7 @@
     const SHUFFLE_PREFERENCE_KEY = "englishVocabularyShuffleEnabledV1";
     const SPELLING_WRONG_KEY = "englishVocabularySpellingWrongV1";
     const GAME_TIME_LIMIT = 15;
+    const LESSON_SIZE = 20;
     const STAGES = [
         { code: "elementary", name: "Elementary School", description: "800 words · LEVEL 01-04", cardLabel: "Elementary School Word", levels: [1, 2, 3, 4] },
         { code: "middle_common", name: "Middle & High Common", description: "1,200 words · LEVEL 05-10", cardLabel: "Middle & High Common Word", levels: [5, 6, 7, 8, 9, 10] },
@@ -38,7 +39,7 @@
 
     const core = window.VocabularyCore;
     const elements = Object.fromEntries([
-        "levelScreen", "studyScreen", "bandListScreen", "stageGroups", "loadingState", "toast",
+        "levelScreen", "lessonScreen", "studyScreen", "bandListScreen", "stageGroups", "loadingState", "toast",
         "totalKnown", "overallPercent", "overallBar", "totalUnknown", "backToLevels",
         "shuffleButton", "studyStage", "studyTitle", "cardPosition", "levelStatus", "sessionBar",
         "flashcard", "cardBadge", "wordText", "posText", "meaningText", "exampleBlock", "exampleLabel", "exampleText",
@@ -58,6 +59,8 @@
         "spellingResultBestStreak", "spellingWrongList", "spellingRetryWrongButton", "spellingPlayAgainButton",
         "spellingReviewButton", "spellingStoredWrongCount", "spellingModeLabel", "spellingTitle",
         "viewAllWordsButton", "backFromBandList", "bandListTitle", "bandSearchInput", "bandListCount", "bandListBody",
+        "recommendedLessonButton", "recommendedLessonTitle", "recommendedLessonMeta",
+        "backFromLessons", "lessonStage", "lessonScreenTitle", "lessonGrid",
     ].map((id) => [id, document.getElementById(id)]));
 
     const state = {
@@ -66,6 +69,8 @@
         levels: new Map(),
         progress: loadProgress(),
         currentLevel: null,
+        currentLesson: 0,
+        recommendedLesson: null,
         currentWords: [],
         currentIndex: 0,
         revealed: false,
@@ -159,20 +164,62 @@
         elements.overallBar.style.width = `${percent}%`;
     }
 
+    function lessonsForLevel(level) {
+        const words = state.levels.get(Number(level)) || [];
+        const lessons = [];
+        for (let index = 0; index < words.length; index += LESSON_SIZE) {
+            lessons.push(words.slice(index, index + LESSON_SIZE));
+        }
+        return lessons;
+    }
+
+    function currentLessonWords() {
+        return lessonsForLevel(state.currentLevel)[state.currentLesson] || [];
+    }
+
+    function findRecommendedLesson(level = null) {
+        const levels = level ? [Number(level)] : STAGES.flatMap((stage) => stage.levels);
+        let reviewFallback = null;
+        for (const candidateLevel of levels) {
+            const lessons = lessonsForLevel(candidateLevel);
+            for (let lessonIndex = 0; lessonIndex < lessons.length; lessonIndex += 1) {
+                const summary = core.summarizeWords(lessons[lessonIndex], state.progress);
+                if (summary.unseen > 0) return { level: candidateLevel, lessonIndex };
+                if (!reviewFallback && summary.unknown > 0) reviewFallback = { level: candidateLevel, lessonIndex };
+            }
+        }
+        const lastLevel = levels[levels.length - 1];
+        return reviewFallback || { level: lastLevel, lessonIndex: lessonsForLevel(lastLevel).length - 1 };
+    }
+
+    function renderRecommendedLesson() {
+        state.recommendedLesson = findRecommendedLesson();
+        const { level, lessonIndex } = state.recommendedLesson;
+        const words = lessonsForLevel(level)[lessonIndex] || [];
+        const summary = core.summarizeWords(words, state.progress);
+        elements.recommendedLessonTitle.textContent = `${levelName(level)} · ${lessonIndex + 1}차시`;
+        elements.recommendedLessonMeta.textContent = summary.unseen > 0
+            ? `${words.length}단어 · 약 10분 · 새 단어 ${summary.unseen}개`
+            : `${words.length}단어 · 복습할 단어 ${summary.unknown}개`;
+    }
+
     function createLevelButton(level, words) {
         const summary = core.summarizeWords(words, state.progress);
-        const percent = Math.round((summary.known / words.length) * 100);
+        const lessons = lessonsForLevel(level);
+        const completedLessons = lessons.filter((lesson) => core.summarizeWords(lesson, state.progress).unseen === 0).length;
+        const percent = Math.round(((summary.known + summary.unknown) / words.length) * 100);
         const button = document.createElement("button");
         button.type = "button";
         button.className = `level-button ${core.stageClass(words[0].stageCode)}`;
-        button.setAttribute("aria-label", `${levelName(level)}, ${summary.known} words learned`);
+        button.setAttribute("aria-label", `${levelName(level)}, ${lessons.length}차시 중 ${completedLessons}차시 완료`);
         button.innerHTML = `
             <span class="level-number">LEVEL ${String(level).padStart(2, "0")}</span>
             <strong class="level-name">${levelName(level)}</strong>
+            <span class="level-plan">${lessons.length}차시 · 차시당 ${LESSON_SIZE}단어</span>
             <span class="level-progress" aria-hidden="true"><span style="width:${percent}%"></span></span>
-            <span class="level-count">Know ${summary.known} · Review ${summary.unknown}</span>
+            <span class="level-count">${completedLessons}/${lessons.length}차시 완료 · 복습 ${summary.unknown}</span>
         `;
-        button.addEventListener("click", () => openLevel(level));
+        button.addEventListener("click", () => openLevelPicker(level));
         return button;
     }
 
@@ -253,24 +300,70 @@
         renderLevelGroups();
         window.scrollTo({ top: 0, behavior: "smooth" });
     }
-    function openLevel(level, options = {}) {
-        const baseWords = state.levels.get(level) || [];
+    function renderLessonPicker(level) {
+        const words = state.levels.get(Number(level)) || [];
+        const lessons = lessonsForLevel(level);
+        const recommended = findRecommendedLesson(level);
+        elements.lessonStage.textContent = STAGE_CARD_LABELS[words[0]?.stageCode] || "Official 2022 List";
+        elements.lessonScreenTitle.textContent = levelName(level);
+        elements.lessonGrid.replaceChildren(...lessons.map((lessonWords, lessonIndex) => {
+            const summary = core.summarizeWords(lessonWords, state.progress);
+            const touched = summary.known + summary.unknown;
+            const percent = Math.round((touched / lessonWords.length) * 100);
+            const isRecommended = recommended.lessonIndex === lessonIndex;
+            const button = document.createElement("button");
+            button.type = "button";
+            button.className = `lesson-button ${summary.unseen === 0 ? "complete" : ""} ${isRecommended ? "recommended" : ""}`.trim();
+            button.setAttribute("aria-label", `${lessonIndex + 1}차시, ${lessonWords.length}단어, ${touched}개 확인`);
+            button.innerHTML = `
+                <span class="lesson-number">${lessonIndex + 1}차시 ${isRecommended ? '<b>추천</b>' : ''}</span>
+                <strong>${lessonIndex * LESSON_SIZE + 1}–${lessonIndex * LESSON_SIZE + lessonWords.length}번 단어</strong>
+                <span class="lesson-progress" aria-hidden="true"><span style="width:${percent}%"></span></span>
+                <small>${summary.unseen === 0 ? "완료" : `${touched}/${lessonWords.length} 확인`} · 복습 ${summary.unknown}</small>
+            `;
+            button.addEventListener("click", () => openLesson(level, lessonIndex));
+            return button;
+        }));
+    }
+
+    function openLevelPicker(level) {
+        state.currentLevel = Number(level);
+        renderLessonPicker(state.currentLevel);
+        elements.levelScreen.hidden = true;
+        elements.studyScreen.hidden = true;
+        elements.lessonScreen.hidden = false;
+        window.scrollTo({ top: 0, behavior: "smooth" });
+    }
+
+    function openLesson(level, lessonIndex, options = {}) {
+        state.currentLevel = Number(level);
+        state.currentLesson = Number(lessonIndex);
+        const baseWords = currentLessonWords();
         const unknownOnly = Boolean(options.unknownOnly);
         const unknownWords = baseWords.filter((word) => state.progress[String(word.id)]?.status === "unknown");
         if (unknownOnly && !unknownWords.length) {
-            showToast("No words are marked ‘Not yet’ in this level.");
+            showToast("이 차시에 ‘Not yet’으로 표시한 단어가 없습니다.");
             return;
         }
-        state.currentLevel = level;
         state.unknownOnly = unknownOnly;
-        const levelWords = unknownOnly ? unknownWords : [...baseWords];
-        state.currentWords = state.shuffleEnabled ? core.shuffleWords(levelWords) : levelWords;
+        const lessonWords = unknownOnly ? unknownWords : [...baseWords];
+        state.currentWords = state.shuffleEnabled ? core.shuffleWords(lessonWords) : lessonWords;
         state.currentIndex = 0;
         state.revealed = false;
         elements.levelScreen.hidden = true;
+        elements.lessonScreen.hidden = true;
         elements.studyScreen.hidden = false;
         window.scrollTo({ top: 0, behavior: "smooth" });
         renderStudyCard();
+    }
+
+    function backFromLessons() {
+        elements.lessonScreen.hidden = true;
+        elements.levelScreen.hidden = false;
+        renderLevelGroups();
+        renderRecommendedLesson();
+        renderOverallProgress();
+        window.scrollTo({ top: 0, behavior: "smooth" });
     }
 
     function currentWord() {
@@ -313,14 +406,14 @@
         const word = currentWord();
         if (!word) return;
         const status = state.progress[String(word.id)]?.status || "unseen";
-        const baseWords = state.levels.get(state.currentLevel) || [];
+        const baseWords = currentLessonWords();
         const summary = core.summarizeWords(baseWords, state.progress);
         const completion = Math.round(((state.currentIndex + 1) / state.currentWords.length) * 100);
 
         elements.studyStage.textContent = `${STAGE_CARD_LABELS[word.stageCode] || word.stage} · Official 2022 List`;
-        elements.studyTitle.textContent = state.unknownOnly ? `${levelName(word.globalLevel)} · Review` : levelName(word.globalLevel);
+        elements.studyTitle.textContent = `${levelName(word.globalLevel)} · ${state.currentLesson + 1}차시${state.unknownOnly ? " 복습" : ""}`;
         elements.cardPosition.textContent = `${state.currentIndex + 1} / ${state.currentWords.length}`;
-        elements.levelStatus.textContent = `Know ${summary.known} · Review ${summary.unknown}`;
+        elements.levelStatus.textContent = `확인 ${summary.known + summary.unknown}/${baseWords.length} · 복습 ${summary.unknown}`;
         elements.sessionBar.style.width = `${completion}%`;
         elements.wordText.textContent = word.word;
         elements.posText.textContent = word.pos.map((pos) => POS_NAMES[pos] || pos).join(" · ");
@@ -414,7 +507,7 @@
     function toggleShuffle() {
         state.shuffleEnabled = !state.shuffleEnabled;
         localStorage.setItem(SHUFFLE_PREFERENCE_KEY, String(state.shuffleEnabled));
-        const baseWords = state.levels.get(state.currentLevel) || [];
+        const baseWords = currentLessonWords();
         const levelWords = state.unknownOnly
             ? baseWords.filter((word) => state.progress[String(word.id)]?.status === "unknown")
             : [...baseWords];
@@ -428,8 +521,8 @@
 
     function backToLevels() {
         elements.studyScreen.hidden = true;
-        elements.levelScreen.hidden = false;
-        renderLevelGroups();
+        elements.lessonScreen.hidden = false;
+        renderLessonPicker(state.currentLevel);
         renderOverallProgress();
         window.scrollTo({ top: 0, behavior: "smooth" });
     }
@@ -924,6 +1017,10 @@
     }
 
     function bindEvents() {
+        elements.recommendedLessonButton.addEventListener("click", () => {
+            const lesson = state.recommendedLesson || findRecommendedLesson();
+            openLesson(lesson.level, lesson.lessonIndex);
+        });
         elements.viewAllWordsButton.addEventListener("click", openBandList);
         elements.backFromBandList.addEventListener("click", backFromBandList);
         elements.bandSearchInput.addEventListener("input", () => renderBandList(elements.bandSearchInput.value));
@@ -939,8 +1036,9 @@
             elements.wordImageBlock.hidden = true;
             elements.answerLayout.classList.remove("has-image");
         });
+        elements.backFromLessons.addEventListener("click", backFromLessons);
         elements.backToLevels.addEventListener("click", backToLevels);
-        elements.reviewUnknownButton.addEventListener("click", () => openLevel(state.currentLevel, { unknownOnly: true }));
+        elements.reviewUnknownButton.addEventListener("click", () => openLesson(state.currentLevel, state.currentLesson, { unknownOnly: true }));
         elements.gameStartButton.addEventListener("click", openGame);
         elements.backFromGame.addEventListener("click", backFromGame);
         elements.gameNextButton.addEventListener("click", continueGame);
@@ -1069,6 +1167,7 @@
             updateShuffleToggle();
             renderOverallProgress();
             renderLevelGroups();
+            renderRecommendedLesson();
             bindEvents();
             elements.loadingState.hidden = true;
         } catch (error) {

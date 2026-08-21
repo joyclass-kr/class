@@ -5,9 +5,9 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta name="description" content="Learn all 3,000 words from Korea's official 2022 English curriculum">
     <title>영단어 3,000</title>
-    <link rel="stylesheet" href="styles.css?v=20260803e">
+    <link rel="stylesheet" href="styles.css?v=20260822a">
     <script src="vocabulary-core.js?v=20260803a" defer></script>
-    <script src="app.js?v=20260803f" defer></script>
+    <script src="app.js?v=20260822a" defer></script>
 </head>
 <body>
     <main>
@@ -28,6 +28,15 @@
                 <div class="overall-track" aria-hidden="true"><span id="overallBar"></span></div>
                 <p><b id="totalKnown">0</b> learned / 3,000 · <b id="totalUnknown">0</b> to review</p>
             </div>
+
+            <button id="recommendedLessonButton" class="recommended-lesson" type="button">
+                <span class="recommended-kicker">NEXT LESSON</span>
+                <span class="recommended-copy">
+                    <strong id="recommendedLessonTitle">Level 1 · 1차시</strong>
+                    <small id="recommendedLessonMeta">20단어 · 약 10분</small>
+                </span>
+                <span class="recommended-action">학습 시작 →</span>
+            </button>
 
             <button id="viewAllWordsButton" class="all-words-button" type="button"><span>View all 3,000 words</span><small>A · Level&nbsp;&nbsp; B · English Word&nbsp;&nbsp; C · 한글 뜻</small></button>
 
@@ -58,6 +67,18 @@
             <div id="stageGroups" class="stage-groups" aria-live="polite"></div>
         </section>
 
+        <section id="lessonScreen" class="lesson-screen" hidden aria-labelledby="lessonScreenTitle">
+            <div class="lesson-toolbar">
+                <button id="backFromLessons" class="text-button" type="button">← Levels</button>
+                <div>
+                    <p id="lessonStage" class="study-stage"></p>
+                    <h1 id="lessonScreenTitle">Level 1</h1>
+                    <p class="lesson-intro">한 차시 20단어 · 약 10분</p>
+                </div>
+            </div>
+            <div id="lessonGrid" class="lesson-grid" aria-live="polite"></div>
+        </section>
+
         <section id="bandListScreen" class="band-list-screen" hidden aria-labelledby="bandListTitle">
             <div class="band-list-toolbar">
                 <button id="backFromBandList" class="text-button" type="button">← Levels</button>
@@ -79,7 +100,7 @@
         </section>
         <section id="studyScreen" class="study-screen" hidden aria-labelledby="studyTitle">
             <div class="study-toolbar">
-                <button id="backToLevels" class="text-button" type="button">← Levels</button>
+                <button id="backToLevels" class="text-button" type="button">← 차시 선택</button>
                 <div>
                     <p id="studyStage" class="study-stage">Beginner</p>
                     <h1 id="studyTitle">Level 1</h1>
