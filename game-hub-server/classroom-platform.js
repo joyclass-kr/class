@@ -1287,6 +1287,20 @@ function createClassroomPlatform(options = {}) {
     const t = tp.rows[0];
     if (t) {
       const year = t.academic_year || new Date().getFullYear();
+      // teacher_user_id carries its own UNIQUE constraint separate from the
+      // (school_id, academic_year, grade, class_number) one the INSERT below
+      // targets, so if this teacher still owns a class row under a stale
+      // identity (last year's class, or a grade/class they were reassigned
+      // away from), the INSERT's ON CONFLICT wouldn't catch that -- it would
+      // throw a duplicate-key error instead of upserting. Release any such
+      // stale ownership first.
+      await pool.query(
+        `UPDATE classroom_classes
+         SET teacher_user_id = NULL, updated_at = NOW()
+         WHERE teacher_user_id = $1
+           AND NOT (school_id = $2 AND academic_year = $3 AND grade = $4 AND class_number = $5)`,
+        [user.id, t.school_id, year, t.grade, t.class_number]
+      );
       const clsRes = await pool.query(
         `INSERT INTO classroom_classes (school_id, academic_year, grade, class_number, teacher_user_id, teacher_name, join_code)
          VALUES ($1, $2, $3, $4, $5, $6, $7)
