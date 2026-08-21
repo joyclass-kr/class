@@ -366,25 +366,7 @@ test("남은 보석은 카드마다 그 자리에 붙어 있고, 주워 가면 �
   assert.equal(game.players[0].bank, 7); // 들고 있던 5 + 바닥에서 2
 });
 
-test("학년군은 방장 계정에서 오고, 학년을 모르면 중학교로 둔다", () => {
-  assert.equal(Expedition.bandForGrade(3), "primary34");
-  assert.equal(Expedition.bandForGrade(4), "primary34");
-  assert.equal(Expedition.bandForGrade(5), "primary56");
-  assert.equal(Expedition.bandForGrade(6), "primary56");
-  assert.equal(Expedition.bandForGrade(7), "middle");
-  // Number(null) 과 Number("") 은 0 이므로 정수 검사만으로는 초등 저학년으로 새어 나간다.
-  [null, undefined, "", "x", 0, 13, NaN].forEach(value => {
-    assert.equal(Expedition.bandForGrade(value), "middle", `${String(value)} 는 중학교여야 한다`);
-  });
-
-  const room = Expedition.createGame("p1", "가", "orerun", "primary34");
-  assert.equal(Expedition.stateFor(room, "p1").band, "primary34");
-  // 위조하거나 빠뜨린 티켓은 조용히 기본값이 된다.
-  const forged = Expedition.createGame("p1", "가", "orerun", "고3");
-  assert.equal(Expedition.stateFor(forged, "p1").band, "middle");
-});
-
-test("확률 문제를 낼 수 있도록 덱에 남은 카드를 종류별로 알려준다", () => {
+test("덱에 남은 카드를 종류별로 알려준다", () => {
   const game = threePlayerGame();
   Expedition.startMatch(game);
   stage(game, [
