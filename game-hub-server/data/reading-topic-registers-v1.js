@@ -805,8 +805,8 @@ module.exports = {
       ],
       "applications": [
         [
-          "내일 우산은 오랜 평균 대신 내일 예보로 정한다.",
-          "For tomorrow's umbrella, read the short forecast, not the long average."
+          "내일 우산이 필요한지는 오랜 평균이 아니라 내일 예보로 정한다.",
+          "Whether tomorrow needs an umbrella is decided by tomorrow's forecast, not the long-term average."
         ],
         [
           "도시의 계절 모습은 여러 해 기록을 살펴서 안다.",
@@ -839,8 +839,8 @@ module.exports = {
       ],
       "wrongApplications": [
         [
-          "내일 우산은 그곳의 30년 평균 비 양으로 정한다.",
-          "For tomorrow's umbrella, read the thirty-year rain average for the area."
+          "내일 우산이 필요한지를 그곳의 30년 평균 비 양으로 정한다.",
+          "Whether tomorrow needs an umbrella is decided by the area's thirty-year average rainfall."
         ],
         [
           "도시의 계절 모습은 지난달 기록만으로 다 안다.",
