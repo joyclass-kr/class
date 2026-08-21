@@ -1,7 +1,21 @@
 const crypto = require("crypto");
 
 const SNAPSHOT_VERSION = 1;
-const TRANSIENT_ROOM_KEYS = new Set(["clients", "drawrelayTimer", "expeditionTimer"]);
+// Node.js timeout handles contain circular internal references. They must never
+// be serialized with room state: doing so can abort snapshot persistence and
+// take down the shared real-time server during an active game.
+const TRANSIENT_ROOM_KEYS = new Set([
+  "clients",
+  "avalonTimer",
+  "blokusTimer",
+  "codenamesTimer",
+  "drawrelayTimer",
+  "expeditionTimer",
+  "honeycombTimer",
+  "lastcardTimer",
+  "loveletterTimer",
+  "rummikubTimer"
+]);
 
 function hashClientToken(value) {
   const token = String(value || "");
