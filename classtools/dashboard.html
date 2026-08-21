@@ -950,12 +950,11 @@
         }
 
         .bubble-card.revealed {
-            border-radius: 22px;
             width: 134px;
             height: 142px;
-            background: linear-gradient(135deg, #1e3c72 0%, #2a5298 100%);
-            border: 3px solid #ffe600;
-            box-shadow: 0 12px 30px rgba(255, 230, 0, 0.45);
+            background: none;
+            border: none;
+            box-shadow: none;
             animation: pop-bounce 0.45s ease-out forwards;
             cursor: default;
         }
@@ -967,8 +966,9 @@
         }
 
         .bubble-avatar {
-            font-size: 3.55rem;
+            font-size: 4.4rem;
             line-height: 1;
+            filter: drop-shadow(0 8px 14px rgba(0,0,0,0.55));
         }
 
         .bubble-name {
