@@ -1709,13 +1709,11 @@ wss.on("connection", socket => {
       }
       if (gameId === "expedition") {
         // 학년군은 방장 계정에서 온다. 아무도 화면에서 고를 수 없다.
-        const band = classroomPlatform.verifyLearnerBand(cleanToken(message.bandTicket, 2048));
         // 아바타는 클라이언트가 키만 보내고, 152개 정식 키에 없으면 빈 문자열이 된다.
         room.expedition = Expedition.createGame(
           playerId,
           cleanToken(message.name, 12) || "방장",
           cleanToken(message.theme, 20),
-          band || Expedition.DEFAULT_BAND,
           classroomPlatform.avatarUrl(cleanToken(message.avatarKey, 80))
         );
       }

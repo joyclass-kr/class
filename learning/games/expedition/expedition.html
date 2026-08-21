@@ -59,7 +59,6 @@ h1,h2,h3,p{margin-top:0}
 .roundTag span{color:#8d8168;font-size:10px;font-weight:800;letter-spacing:.14em}
 /* 남은 카드를 세는 것은 원작에서도 정당한 전략이다. 다만 세는 수고를 수학으로 대신한다. */
 .countBox{margin:-4px 0 14px;padding:9px 13px;border-radius:11px;background:#00000045;text-align:center;font-size:13px;color:#c4b79c}
-.countBox.locked{color:#8d8168}
 .countBox b{color:#ffe0a0;font-size:15px}
 .countBox .danger{color:#ff9c8a}
 .headline{text-align:center;font-weight:900;color:#ffe6b4;font-size:clamp(15px,2.4vw,19px);line-height:1.4}
@@ -77,9 +76,6 @@ h1,h2,h3,p{margin-top:0}
 .card.facedown{background:repeating-linear-gradient(48deg,#241a10 0 9px,#2f2416 9px 18px);border:1px solid #4a3d2a;box-shadow:inset 0 0 24px #000a;flex-shrink:0}
 .backMark{color:#5c4c31;font-size:34px;font-family:Georgia,serif}
 .moreAhead{align-self:center;flex-shrink:0;padding:0 10px;color:#5c5240;font-size:13px;font-weight:900}
-/* 탐사대가 서 있는 지점 표시 */
-.hereMark{position:relative;flex-shrink:0;width:2px;align-self:stretch;margin:0 10px;background:linear-gradient(180deg,transparent,var(--accent),transparent)}
-.hereMark span{position:absolute;top:-4px;left:50%;transform:translateX(-50%);white-space:nowrap;padding:2px 8px;border-radius:999px;background:var(--accent);color:#241704;font-size:10px;font-weight:900}
 
 
 
@@ -108,7 +104,6 @@ h1,h2,h3,p{margin-top:0}
 .partyHere{position:relative;flex-shrink:0;display:grid;place-items:center;padding:0 12px;align-self:stretch;border-left:2px dashed #6b5836;border-right:2px dashed #6b5836}
 .hereTag{position:absolute;top:2px;left:50%;transform:translateX(-50%);white-space:nowrap;padding:2px 9px;border-radius:999px;background:var(--accent);color:#241704;font-size:10px;font-weight:900}
 .partyHere .tokens{margin-top:14px;max-width:190px}
-.splitNote{margin-top:6px;font-size:13px;color:#b7a888}
 
 .card{position:relative}
 .onCard{position:absolute;left:0;right:0;bottom:8px;display:flex;gap:2px;justify-content:center;align-items:center}
@@ -179,8 +174,6 @@ h1,h2,h3,p{margin-top:0}
 .tent b{color:#ffe0a0;font-size:14px;line-height:1.1}
 .path{min-width:0}
 .zoneLabel{color:var(--accent);font-size:11px;font-weight:900;letter-spacing:.18em;margin-bottom:8px}
-.zoneNote{margin-top:8px;color:#8d8168;font-size:10px}
-.pathFoot{display:flex;align-items:center;gap:14px;margin-top:12px;padding:12px;border-radius:12px;background:#00000038;min-height:82px}
 
 .tokens{display:flex;gap:8px;flex-wrap:wrap;justify-content:center;min-height:70px;align-items:flex-end}
 #campTokens{display:grid;gap:4px;min-height:0}
@@ -198,10 +191,6 @@ h1,h2,h3,p{margin-top:0}
 .token .carry.banked{background:#12200f;color:#a8e0b4;border-color:#3f7a52}
 .token.caught{filter:grayscale(.6);opacity:.6}
 .token .carry{position:absolute;bottom:0;left:50%;transform:translateX(-50%);padding:1px 8px;border-radius:8px;background:#1a1206;color:#ffe0a0;font-size:12px;font-weight:900;border:1px solid var(--accent-soft);white-space:nowrap}
-.token.walk{animation:walkIn .45s ease-out}
-@keyframes walkIn{from{transform:translateX(-26px);opacity:.3}to{transform:none;opacity:1}}
-.token.flee{animation:flee .5s ease-in}
-@keyframes flee{from{transform:none}to{transform:translateX(24px) scale(.8);opacity:.35}}
 
 
 /* 보석이 실제로 옮겨 가야 나눗셈이 눈에 보인다. */

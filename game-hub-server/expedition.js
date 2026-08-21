@@ -48,25 +48,6 @@ const DECIDE_MS = 25000;
 const MIN_PLAYERS = 3;
 const MAX_PLAYERS = 8;
 
-
-// 2022 개정 교육과정은 성취기준을 학년군으로 준다. 5학년과 6학년을 갈라 놓을 근거가 없다.
-// 방 하나에 학년군 하나다. 방장 계정의 학년을 따르고, 학년을 모르면 가장 높은 군으로 둔다
-// (관리자·게스트가 쉬운 문제를 받아 민망한 것보다 낫다).
-const BANDS = Object.freeze(["primary34", "primary56", "middle"]);
-const DEFAULT_BAND = "middle";
-
-function bandForGrade(grade) {
-  const value = Number(grade);
-  // Number(null) 과 Number("") 은 0 이라, 정수 검사만으로는 "정보 없음" 이 초등 저학년으로 떨어진다.
-  if (!Number.isInteger(value) || value < 1 || value > 12) return DEFAULT_BAND;
-  if (value <= 4) return "primary34";
-  if (value <= 6) return "primary56";
-  return "middle";
-}
-
-function normalizeBand(value) {
-  return BANDS.includes(String(value)) ? String(value) : DEFAULT_BAND;
-}
 function randomInt(maximum) {
   return crypto.randomInt(maximum);
 }
@@ -127,11 +108,10 @@ function basePool() {
   return pool;
 }
 
-function createGame(hostId, hostName, theme = DEFAULT_THEME, hostBand = DEFAULT_BAND, hostAvatar = "") {
+function createGame(hostId, hostName, theme = DEFAULT_THEME, hostAvatar = "") {
   return {
     phase: "lobby",
     theme: normalizeTheme(theme),
-    band: normalizeBand(hostBand),
     players: [createPlayer(hostId, hostName || "방장", hostAvatar)],
     pool: basePool(),
     relicsLeft: RELIC_COUNT,
@@ -489,7 +469,6 @@ function stateFor(game, viewerId) {
     maxPlayers: MAX_PLAYERS,
     deckCount: game.deck.length,
     decideUntil: game.phase === "deciding" ? game.decideUntil : 0,
-    band: game.band,
     remaining: remainingCounts(game),
     revealed: game.revealed.map(card => ({ ...card })),
     hazardCounts: { ...game.hazardCounts },
@@ -522,10 +501,6 @@ function stateFor(game, viewerId) {
 
 module.exports = {
   THEMES,
-  BANDS,
-  DEFAULT_BAND,
-  bandForGrade,
-  normalizeBand,
   TREASURE_VALUES,
   RELIC_COUNT,
   relicValueAt,
