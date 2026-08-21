@@ -1029,7 +1029,7 @@
     <!-- Header / Banner Slogan & Clock -->
     <header class="dashboard-header">
         <div class="slogan-card" id="sloganCard">
-            <div class="slogan-text" id="sloganText" contenteditable="false">-</div>
+            <div class="slogan-text" id="sloganText" contenteditable="true">-</div>
         </div>
         <div class="clock-card">
             <div class="clock-time">
@@ -1129,7 +1129,6 @@
     <!-- Toolbar Footer -->
     <footer class="toolbar">
         <div class="toolbar-group">
-            <button class="tool-btn" id="toggleEditBtn">편집 모드 [OFF]</button>
             <button class="tool-btn" id="pickerModalBtn">🎲 1명 뽑기</button>
             <button class="tool-btn" id="multiPickerModalBtn" style="background: rgba(46, 196, 182, 0.18); border-color: var(--brand-light); color: #7ce4ff; font-weight: 800;">🎯 발표자 뽑기(다수)</button>
             <button class="tool-btn" id="timerModalBtn">⏱️ 집중 타이머</button>
@@ -1220,7 +1219,6 @@
     <script src="./avatar-assignment.js"></script>
     <script>
         // State & LocalStorage
-        let isEditMode = false;
         let sloganAlign = localStorage.getItem("sloganAlign") || "center";
         let sloganFontSize = parseInt(localStorage.getItem("sloganFontSize") || "42", 10);
         let schedules = [];
@@ -1243,7 +1241,6 @@
 
         // Elements
         const sloganText = document.getElementById("sloganText");
-        const toggleEditBtn = document.getElementById("toggleEditBtn");
         const resetBtn = document.getElementById("resetBtn");
         const alignLeftBtn = document.getElementById("alignLeftBtn");
         const alignCenterBtn = document.getElementById("alignCenterBtn");
@@ -1550,13 +1547,6 @@
             sloganText.style.fontSize = sloganFontSize + "px";
         }
         applySloganStyle();
-
-        toggleEditBtn.addEventListener("click", () => {
-            isEditMode = !isEditMode;
-            sloganText.contentEditable = isEditMode ? "true" : "false";
-            toggleEditBtn.textContent = `편집 모드 [${isEditMode ? 'ON' : 'OFF'}]`;
-            toggleEditBtn.classList.toggle("active", isEditMode);
-        });
 
         sloganText.addEventListener("blur", () => {
             syncDashboardSettingsToDB();
