@@ -85,12 +85,10 @@ function hazardName(game, index) {
   return themeOf(game).hazards[index] || `위험 ${index + 1}`;
 }
 
-function createPlayer(id, name, avatar) {
+function createPlayer(id, name) {
   return {
     id: String(id),
     name: String(name || "플레이어").trim() || "플레이어",
-    // 서버가 검증한 아바타 주소만 들어온다. 없으면 그려 둔 말로 떨어진다.
-    avatar: String(avatar || ""),
     bank: 0,
     carrying: 0,
     relics: 0,
@@ -108,11 +106,11 @@ function basePool() {
   return pool;
 }
 
-function createGame(hostId, hostName, theme = DEFAULT_THEME, hostAvatar = "") {
+function createGame(hostId, hostName, theme = DEFAULT_THEME) {
   return {
     phase: "lobby",
     theme: normalizeTheme(theme),
-    players: [createPlayer(hostId, hostName || "방장", hostAvatar)],
+    players: [createPlayer(hostId, hostName || "방장")],
     pool: basePool(),
     relicsLeft: RELIC_COUNT,
     relicsTaken: 0,
@@ -132,12 +130,12 @@ function createGame(hostId, hostName, theme = DEFAULT_THEME, hostAvatar = "") {
   };
 }
 
-function addPlayer(game, id, name, avatar) {
+function addPlayer(game, id, name) {
   const safeId = String(id);
   if (game.phase !== "lobby") return false;
   if (game.players.some(player => player.id === safeId)) return false;
   if (game.players.length >= MAX_PLAYERS) return false;
-  game.players.push(createPlayer(safeId, name, avatar));
+  game.players.push(createPlayer(safeId, name));
   game.lastAction = `${String(name || "플레이어").trim() || "플레이어"}님이 입장했습니다.`;
   game.actionNumber += 1;
   return true;
@@ -482,7 +480,6 @@ function stateFor(game, viewerId) {
     players: game.players.map(player => ({
       id: player.id,
       name: player.name,
-      avatar: player.avatar,
       bank: player.bank,
       carrying: player.carrying,
       relics: player.relics,

@@ -248,6 +248,40 @@ h1,h2,h3,p{margin-top:0}
   .trail{min-height:118px}
   .decisionButtons{grid-template-columns:1fr}
 }
+/* Cinematic risk and simultaneous-choice presentation. */
+body::after{content:"";position:fixed;inset:0;z-index:18;pointer-events:none;opacity:0;background:radial-gradient(circle at 50% 42%,transparent 38%,#6b0e0875 100%);transition:opacity .35s ease}
+body[data-risk="1"]::after{opacity:.16}
+body[data-risk="2"]::after{opacity:.3;animation:riskBreath 2.2s ease-in-out infinite}
+body[data-risk="3"]::after{opacity:.46;animation:riskBreath 1.25s ease-in-out infinite}
+body.impact .scene{animation:sceneImpact .46s ease-out}
+body.impact::after{animation:dangerFlash .55s ease-out}
+@keyframes riskBreath{50%{opacity:.56}}
+@keyframes sceneImpact{0%,100%{transform:none}18%{transform:translateX(-7px)}42%{transform:translateX(6px)}68%{transform:translateX(-3px)}}
+@keyframes dangerFlash{0%{opacity:.8;background:#a7191270}100%{opacity:0}}
+.decisionBox.danger{border-color:var(--danger);box-shadow:0 0 0 1px #d1503f55,0 0 34px #8c211b45}
+.goDeeper{background:linear-gradient(#ffc957,#b66e0e);color:#2a1601;border-color:#ffe09a;box-shadow:0 8px 22px #a65d1440}
+.turnBack{background:linear-gradient(#68bd83,#287042);color:#f1fff5;border-color:#9ee0b4;box-shadow:0 8px 22px #245d3940}
+.bigChoice:not(:disabled):active{transform:scale(.97)}
+.decisionBox.danger .goDeeper:not(:disabled){animation:darePulse 1.05s ease-in-out infinite}
+@keyframes darePulse{50%{box-shadow:0 0 0 5px #ffcc6655,0 8px 26px #a65d1470;transform:translateY(-2px)}}
+.showdown{width:min(760px,calc(100vw - 30px));border-width:2px;box-shadow:0 24px 90px #000e}
+.showdownTitle{flex:0 0 100%;text-align:center;color:#fff0c8;font-family:Georgia,"Malgun Gothic",serif;font-size:clamp(27px,5vw,42px);font-weight:900;letter-spacing:-.03em;animation:titlePunch .38s ease-out}
+.showdownSub{flex:0 0 100%;margin:-5px 0 5px;text-align:center;color:#bfb093;font-size:13px;font-weight:800}
+.showdownCard strong{display:block;font-size:24px;line-height:1;margin-bottom:7px}
+.showdownCard small{display:block;margin-top:4px;font-size:11px;opacity:.8}
+@keyframes titlePunch{from{opacity:0;transform:scale(.72)}70%{transform:scale(1.08)}to{opacity:1;transform:none}}
+.revealCard{width:min(270px,62vw);box-shadow:0 26px 80px #000e;animation-duration:1.05s}
+.revealCard.hazardRepeat{width:min(330px,72vw);animation-duration:1.65s,.38s;animation-iteration-count:1,4;box-shadow:0 0 0 5px #ffd8d0,0 30px 100px #8f160fd9}
+.revealCard.hazardRepeat .revealNote{font-size:18px;background:#2c0808db;padding:10px;border-radius:10px}
+.pressureStrip{display:flex;justify-content:center;gap:10px;flex-wrap:wrap;margin:11px 0 2px}
+.pressureChip{padding:7px 11px;border-radius:999px;background:#1b160f;border:1px solid var(--panel-edge);color:#d8c9ad;font-size:12px;font-weight:900}
+.pressureChip.stake{border-color:#c98c32;color:#ffe1a3}
+.pressureChip.danger{border-color:var(--danger);background:#351714;color:#ffd0c8}
+@media(prefers-reduced-motion:reduce){
+  body::after,.decisionBox.danger .goDeeper:not(:disabled){animation:none}
+  .showdownTitle,.showdownCard,.revealCard,.roundBanner{animation-duration:.01ms!important;animation-iteration-count:1!important}
+}
+
 </style>
 <script src="../../../assets/network/game-network.js?v=20260821"></script>
 <script src="../../../assets/network/multiplayer-lobby.js"></script>
@@ -459,6 +493,11 @@ function showGame(){$("lobbyScreen").classList.add("hidden");$("gameScreen").cla
 function showLobby(){$("gameScreen").classList.add("hidden");$("lobbyScreen").classList.remove("hidden")}
 function isHost(){return lobby?.snapshot().role==="host"}
 function myId(){return lobby?.snapshot().myId}
+// 아바타는 대기실이 참가자별로 실어 나른다. 게임 상태에는 넣지 않는다.
+function avatarOf(id){
+  const key=lobby?.snapshot().players?.[id]?.avatarKey;
+  return window.ClassroomMultiplayerLobby.avatarUrl(key);
+}
 
 function applyThemeSkin(themeId,inGame){
   document.body.classList.remove("theme-orerun","theme-tombdig","theme-voidrun");
@@ -493,17 +532,7 @@ function renderThemePicker(){
 
 const BGM_DIR="/learning/games/expedition/assets/sound";
 let currentTrack="";
-let myAvatarKey="";
 
-// 이 사이트에는 학생마다 아바타가 있다. 게임 말도 그 아바타여야 "쟤가 나" 가 바로 보인다.
-async function loadAvatar(){
-  try{
-    const res=await fetch("/api/student/profile",{credentials:"same-origin"});
-    if(!res.ok)return;
-    const data=await res.json();
-    myAvatarKey=data?.profile?.avatar?.key||"";
-  }catch(_){ /* 못 받으면 그려 둔 말로 간다 */ }
-}
 function setTrack(name){
   const audio=$("bgm");
   const src=`${BGM_DIR}/${name}.ogg`;
@@ -735,8 +764,9 @@ function tokenMarkup(player,index,decided){
     : `<span class="carry banked">${player.bank}</span>`;
   const tip=`${player.name} · 확정 ${player.bank}`
     +(player.inCave?` · 들고 있음 ${player.carrying}`:player.caught?" · 빈손으로 쫓겨남":" · 돌아옴");
-  const figure=player.avatar
-    ? `<span class="avatarRing" style="border-color:${colorOf(index)}"><img class="avatarImg" src="${escapeHtml(player.avatar)}" alt=""></span>`
+  const face=avatarOf(player.id);
+  const figure=face
+    ? `<span class="avatarRing" style="border-color:${colorOf(index)}"><img class="avatarImg" src="${escapeHtml(face)}" alt=""></span>`
     : meepleSvg(colorOf(index));
   return `<div class="${classes.join(" ")}" title="${escapeHtml(tip)}">`
     +figure
@@ -797,7 +827,7 @@ function tentMarkup(player,index){
     +`<path d="M22 3 41 31H3z" fill="${colorOf(index)}"/>`
     +`<path d="M22 3 30 31H14z" fill="#00000055"/>`
     +`<path d="M3 31h38" stroke="#241a08" stroke-width="2.5" stroke-linecap="round"/></svg>`
-    +(player.avatar?`<img class="tentAvatar" src="${escapeHtml(player.avatar)}" alt="">`:"")
+    +((face=>face?`<img class="tentAvatar" src="${escapeHtml(face)}" alt="">`:"")(avatarOf(player.id)))
     +`<span class="tentName">${escapeHtml(initialOf(player.name))}</span>`
     +`<span class="tentGems">${gemMarkup(player.bank)}</span>`
     +`<b>${player.bank}</b></div>`;
@@ -900,6 +930,187 @@ function renderDecision(){
   }
 }
 
+function funFlashCard(card,index){
+  const el=document.createElement('div');
+  el.className='revealCard';
+  let ms=950;
+  if(card.type==='treasure'){
+    const photo=TREASURE_PHOTOS[index%TREASURE_PHOTOS.length];
+    el.innerHTML=`<div class="revealPhoto"><img src="${photo}" alt=""></div><div class="revealType">${index+1}F &middot; ${escapeHtml(card.label||'')}</div><div class="revealValue">${card.value}</div><div class="revealNote">${escapeHtml(state.unit||'')}</div>`;
+    sfx.play('treasure');
+  }else if(card.type==='relic'){
+    const photo=RELIC_PHOTOS[index%RELIC_PHOTOS.length];
+    el.innerHTML=`<div class="revealPhoto"><img src="${photo}" alt=""></div><div class="revealType">${index+1}F &middot; ${escapeHtml(card.label||'')}</div><div class="revealValue">${card.value}</div><div class="revealNote">${escapeHtml(state.unit||'')}</div>`;
+    sfx.play('relic');
+  }else{
+    const prior=(state.revealed||[]).slice(0,-1).filter(c=>c.type==='hazard'&&c.key===card.key).length;
+    const repeat=prior>0;
+    const photo=HAZARD_PHOTOS[card.key]||HAZARD_PHOTOS.collapse;
+    const caught=(state.players||[]).filter(p=>p.inExpedition).length;
+    el.classList.add('hazard',repeat?'duplicate':'first-warning');
+    el.innerHTML=`<div class="revealPhoto"><img src="${photo}" alt=""></div><div class="revealType">${index+1}F &middot; ${escapeHtml(card.label||'')}</div><div class="revealValue">${repeat?'&#9760;':'!'}</div><div class="revealNote">${repeat?caught+'\uBA85 \uC804\uBA78':'\uACBD\uACE0 &middot; \uD55C \uC7A5 \uB354\uBA74 \uC804\uBA78'}</div>`;
+    ms=repeat?1500:1150;
+    sfx.play(repeat?'bust':'hazard');
+    document.body.classList.add('impact');
+    setTimeout(()=>document.body.classList.remove('impact'),560);
+    if(repeat&&navigator.vibrate) navigator.vibrate([90,45,140]);
+  }
+  flash(el,ms);
+}
+
+function funShowdown(before,now){
+  const returned=new Set((now.lastReturn?.names||[]));
+  const wasIn=(before.players||[]).filter(p=>p.inExpedition);
+  if(wasIn.length<2)return;
+  const leaving=wasIn.filter(p=>returned.has(p.name));
+  const stayCount=wasIn.length-leaving.length;
+  const leaveCount=leaving.length;
+  let title='\uC120\uD0DD\uC774 \uAC08\uB838\uB2E4!';
+  if(!leaveCount) title='\uC804\uC6D0 \uB3CC\uC9C4!';
+  else if(!stayCount) title='\uC804\uC6D0 \uADC0\uD658!';
+  else if(leaveCount===1) title='\uD63C\uC790 \uBE60\uC84C\uB2E4!';
+  const cards=wasIn.map(p=>{
+    const after=(now.players||[]).find(x=>x.id===p.id)||p;
+    const left=returned.has(p.name);
+    const gain=Math.max(0,(after.bank||0)-(p.bank||0));
+    const detail=left?`+${gain} ${escapeHtml(now.unit||'')}`:`${p.round||0} ${escapeHtml(now.unit||'')} \uAC78\uACE0 \uC804\uC9C4`;
+    return `<div class="choiceCard ${left?'back':'go'}"><strong>${left?'&#9978; \uADC0\uD658':'&#9889; \uACC4\uC18D'}</strong><small>${escapeHtml(p.name)}</small><small>${detail}</small></div>`;
+  }).join('');
+  const el=document.createElement('div');
+  el.className='showdown';
+  el.innerHTML=`<div class="showdownTitle titlePunch">${title}</div><div class="showdownSub">${stayCount} \uACC4\uC18D &middot; ${leaveCount} \uADC0\uD658</div><div class="choiceCards">${cards}</div>`;
+  flash(el,1100);
+}
+
+function funRenderDecision(){
+  const box=$('#decisionBox');
+  const deciding=state.phase==='deciding';
+  const me=state.players?.find(p=>p.id===myId);
+  const inside=state.players?.filter(p=>p.inExpedition)||[];
+  const warningKinds=Object.values(state.hazardCounts||{}).filter(n=>n===1).length;
+  const deadly=state.remaining?.deadly||0;
+  const stake=inside.reduce((sum,p)=>sum+(p.round||0),0)+(state.pathTreasure||0);
+  document.body.dataset.risk=warningKinds>=2?'3':warningKinds===1?'2':deciding?'1':'0';
+  box.classList.toggle('hidden',!deciding);
+  box.classList.toggle('danger',warningKinds>0);
+  renderClock();
+  if(!deciding)return;
+  let strip=box.querySelector('.pressureStrip');
+  if(!strip){
+    strip=document.createElement('div');
+    strip.className='pressureStrip';
+    box.querySelector('.decisionButtons')?.before(strip);
+  }
+  strip.innerHTML=`<span class="pressureChip">&#127890; \uC9C0\uAE08 ${stake} ${escapeHtml(state.unit||'')} \uAC78\uB9BC</span><span class="pressureChip dangerChip">&#9760; ${deadly?`\uB2E4\uC74C \uCE74\uB4DC \uC911 ${deadly}\uC7A5\uC740 \uC989\uC2DC \uC885\uB8CC`:'\uC544\uC9C1 \uCE58\uBA85\uC801 \uC704\uD5D8 \uC5C6\uC74C'}</span>`;
+  const go=$('#goBtn');
+  const back=$('#backBtn');
+  go.disabled=!me?.inExpedition||!!me?.choice;
+  back.disabled=!me?.inExpedition||!!me?.choice;
+  go.innerHTML=`<span class="decisionIcon">&#9889;</span><span><b>\uBC00\uC5B4\uBD99\uC778\uB2E4</b><small>${warningKinds?'\uC704\uD5D8\uC744 \uAC10\uC218\uD558\uACE0 \uB2E4\uC74C \uCE74\uB4DC \uACF5\uAC1C':'\uD55C \uC7A5 \uB354 \uB4A4\uC9D1\uB294\uB2E4'}</small></span>`;
+  back.innerHTML=`<span class="decisionIcon">&#9978;</span><span><b>\uC9C0\uAE08 \uCC59\uAE34\uB2E4</b><small>\uCD5C\uC18C ${me?.round||0} ${escapeHtml(state.unit||'')} \uC548\uC804\uD558\uAC8C \uD655\uC815</small></span>`;
+  if(me?.inExpedition&&!me.choice){
+    $('#decisionTitle').textContent=warningKinds?'\uBE60\uC9C8\uAE4C, \uB05D\uAE4C\uC9C0 \uBC84\uD2F8\uAE4C?':'\uCCAB \uBC30\uC9F1\uC744 \uBCF4\uC5EC\uC904 \uC2DC\uAC04';
+    $('#decisionNote').textContent=`${inside.filter(p=>!p.choice).length}\uBA85\uC758 \uC120\uD0DD\uC744 \uAE30\uB2E4\uB9AC\uB294 \uC911`;
+  }else if(!me?.inExpedition){
+    $('#decisionTitle').textContent='\uBC16\uC5D0\uC11C \uC9C0\uCF1C\uBCF4\uB294 \uC911\uC785\uB2C8\uB2E4.';
+    $('#decisionNote').textContent=`\uC544\uC9C1 ${inside.length}\uBA85\uC774 \uC548\uC5D0 \uC788\uC2B5\uB2C8\uB2E4.`;
+  }
+}
+
+function funReactToChange(before,now){
+  if(!before)return;
+  if(now.round!==before.round){
+    const el=document.createElement('div');
+    el.className='roundFlash';
+    el.innerHTML=`<b>ROUND ${now.round}</b><span>${escapeHtml(now.roundName||'')}</span>`;
+    flash(el,900);
+  }
+  const beforeLen=before.revealed?.length||0;
+  const nowLen=now.revealed?.length||0;
+  const didResolve=before.phase==='deciding'&&now.phase!=='deciding';
+  const revealNewCard=nowLen>beforeLen;
+  if(didResolve) funShowdown(before,now);
+  if(revealNewCard){
+    const delay=didResolve?1050:0;
+    setTimeout(()=>funFlashCard(now.revealed[nowLen-1],nowLen-1),delay);
+  }
+  popGains(before,now);
+  const mineBefore=before.players?.find(p=>p.id===myId);
+  const mineNow=now.players?.find(p=>p.id===myId);
+  if(mineBefore&&mineNow&&mineNow.bank>mineBefore.bank)sfx.play('bank');
+}
+
+const classicFlashCard=flashCard;
+const classicRenderDecision=renderDecision;
+const classicReactToChange=reactToChange;
+
+function cinematicFlashCard(card,index){
+  const repeat=card.kind==='hazard'&&state.revealed.slice(0,index)
+    .some(other=>other.kind==='hazard'&&other.hazard===card.hazard);
+  if(card.kind==='hazard'){
+    document.body.classList.add('impact');
+    setTimeout(()=>document.body.classList.remove('impact'),560);
+    if(repeat&&navigator.vibrate)navigator.vibrate([90,45,140]);
+  }
+  classicFlashCard(card,index);
+}
+
+function cinematicShowdown(before,now){
+  const returned=new Set(now.lastReturn?.names||[]);
+  const wasIn=before.players.filter(player=>player.inCave);
+  if(wasIn.length<2)return;
+  const leaving=wasIn.filter(player=>returned.has(player.name));
+  const stayCount=wasIn.length-leaving.length;
+  const leaveCount=leaving.length;
+  let title='\uC120\uD0DD\uC774 \uAC08\uB838\uB2E4!';
+  if(!leaveCount)title='\uC804\uC6D0 \uB3CC\uC9C4!';
+  else if(!stayCount)title='\uC804\uC6D0 \uADC0\uD658!';
+  else if(leaveCount===1)title='\uD63C\uC790 \uBE60\uC84C\uB2E4!';
+  const cards=wasIn.map((player,index)=>{
+    const after=now.players.find(item=>item.id===player.id)||player;
+    const left=returned.has(player.name);
+    const gain=Math.max(0,after.bank-player.bank);
+    const detail=left?`+${gain}${escapeHtml(now.unit)}`:`${player.carrying}${escapeHtml(now.unit)} \uAC78\uACE0 \uC804\uC9C4`;
+    return `<div class="showdownCard ${left?'leave':'stay'}" style="animation-delay:${index*70}ms"><strong>${left?'&#9978; \uADC0\uD658':'&#9889; \uACC4\uC18D'}</strong>${escapeHtml(player.name)}<small>${detail}</small></div>`;
+  }).join('');
+  sfx('showdown','click');
+  const box=document.createElement('div');
+  box.className='showdown';
+  box.innerHTML=`<div class="showdownTitle">${title}</div><div class="showdownSub">${stayCount} \uACC4\uC18D &middot; ${leaveCount} \uADC0\uD658</div>${cards}`;
+  flash(box,1150);
+}
+
+function cinematicRenderDecision(){
+  classicRenderDecision();
+  const box=$('decisionBox');
+  const deciding=state.phase==='deciding';
+  const me=state.players.find(player=>player.id===myId());
+  const warningKinds=(state.hazardCounts||[]).filter(count=>count===1).length;
+  const deadly=state.remaining?.deadly||0;
+  const stake=state.players.filter(player=>player.inCave)
+    .reduce((sum,player)=>sum+player.carrying,0)+(state.path?.gems||0);
+  document.body.dataset.risk=warningKinds>=2?'3':warningKinds===1?'2':deciding?'1':'0';
+  box.classList.toggle('danger',deciding&&warningKinds>0);
+  if(!deciding)return;
+  let strip=box.querySelector('.pressureStrip');
+  if(!strip){
+    strip=document.createElement('div');
+    strip.className='pressureStrip';
+    box.querySelector('.decisionButtons')?.before(strip);
+  }
+  strip.innerHTML=`<span class="pressureChip stake">&#127890; \uC9C0\uAE08 ${stake}${escapeHtml(state.unit)} \uAC78\uB9BC</span><span class="pressureChip danger">&#9760; ${deadly?`\uB2E4\uC74C \uCE74\uB4DC \uC911 ${deadly}\uC7A5\uC740 \uC989\uC2DC \uC885\uB8CC`:'\uC544\uC9C1 \uCE58\uBA85\uC801 \uC704\uD5D8 \uC5C6\uC74C'}</span>`;
+  $('continueBtn').innerHTML=`\uBC00\uC5B4\uBD99\uC778\uB2E4<small>${warningKinds?'\uC704\uD5D8\uC744 \uAC10\uC218\uD558\uACE0 \uD55C \uC7A5 \uB354':'\uD55C \uC7A5 \uB354 \uB4A4\uC9D1\uB294\uB2E4'}</small>`;
+  $('returnBtn').innerHTML=`\uC9C0\uAE08 \uCC59\uAE34\uB2E4<small>${me?.carrying||0}${escapeHtml(state.unit)} \uC548\uC804\uD558\uAC8C \uD655\uC815</small>`;
+  if(me?.inCave&&!state.myDecision)$('decisionTitle').textContent=warningKinds?'\uBE60\uC9C8\uAE4C, \uB05D\uAE4C\uC9C0 \uBC84\uD2F8\uAE4C?':'\uCCAB \uBC30\uC9F1\uC744 \uBCF4\uC5EC\uC904 \uC2DC\uAC04';
+}
+
+function cinematicReactToChange(before,now){classicReactToChange(before,now)}
+
+flashCard=cinematicFlashCard;
+showdown=cinematicShowdown;
+renderDecision=cinematicRenderDecision;
+reactToChange=cinematicReactToChange;
+
 function rankMarkup(){
   const sorted=[...state.players].sort((a,b)=>b.bank-a.bank);
   return sorted.map(player=>{
@@ -979,7 +1190,6 @@ function showAbort({title,message}){
 function init(){
   applyThemeSkin(selectedTheme);
   setTrack("lobby");
-  loadAvatar();
   lobby=ClassroomMultiplayerLobby.create({
     gameId:GAME_ID,
     getPlayerName:()=>/^[가-힣]{2,6}$/.test(savedName)?savedName:"",
@@ -995,7 +1205,7 @@ function init(){
       $("gameRoomCode").textContent=snapshot.roomCode||"----";
       renderThemePicker();
     },
-    getRoomRequestData:()=>({theme:selectedTheme,avatarKey:myAvatarKey}),
+    getRoomRequestData:()=>({theme:selectedTheme}),
     getLobbyPresentation:({count,role,canStart})=>({
       canStart,
       startText:role==="host"&&canStart?`START · ${count} PLAYERS`:"WAITING FOR PLAYERS",

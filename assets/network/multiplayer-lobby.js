@@ -27,8 +27,32 @@
         startButton: "startBtn"
     });
 
+    // 이 사이트에는 학생마다 아바타가 있다. 한 번만 받아 두고 모든 게임이 나눠 쓴다.
+    let avatarKey = null;
+    let avatarPromise = null;
+
+    function loadAvatarKey() {
+        if (avatarPromise) return avatarPromise;
+        avatarPromise = fetch("/api/student/profile", { credentials: "same-origin" })
+            .then(response => (response.ok ? response.json() : null))
+            .then(data => { avatarKey = data?.profile?.avatar?.key || ""; return avatarKey; })
+            // 게스트나 비로그인이면 아바타가 없다. 게임은 이름만으로 계속 돌아간다.
+            .catch(() => { avatarKey = ""; return ""; });
+        return avatarPromise;
+    }
+
+    function avatarUrlFor(key) {
+        // 서버가 최종 검증하지만, 화면에 이상한 주소가 박히지 않도록 모양만 걸러 둔다.
+        return /^[a-z0-9-]+[.]webp$/i.test(String(key || "")) ? "/assets/avatars/" + key : "";
+    }
+
     function safeName(value) {
         return String(value || "").trim() || "플레이어";
+    }
+
+    function playerFaceHtml(player) {
+        const url = avatarUrlFor(player?.avatarKey);
+        return url ? '<img class="mp-lobby-avatar" src="' + url + '" alt="">' : "";
     }
 
     function getElement(id) {
@@ -108,6 +132,13 @@
             return String(this.options.getPlayerName?.() || "").trim();
         }
 
+        _attachAvatar() {
+            loadAvatarKey().then(key => {
+                if (!key || !this.myId || !this.players[this.myId]) return;
+                this.updateLocalPlayer({ avatarKey: key });
+            });
+        }
+
         snapshot() {
             return {
                 role: this.role,
@@ -158,7 +189,10 @@
                 type,
                 gameId: this.gameId,
                 roomCode,
-                name: this.playerName
+                name: this.playerName,
+                // 아바타는 비동기로 늦게 오므로 방을 만드는 시점에는 대개 비어 있다.
+                // 실제 전달은 _attachAvatar 가 players 를 통해 하고, 여기서는 이미 받아 둔 경우만 얹는다.
+                ...(avatarKey ? { avatarKey } : {})
             };
         }
 
@@ -274,6 +308,7 @@
                 this.connected = true;
                 this.roomCode = String(message.roomCode || this.roomCode);
                 this.players = { [this.myId]: { name: this.playerName } };
+                this._attachAvatar();
                 if (this.elements.roomCode) this.elements.roomCode.textContent = this.roomCode;
                 if (this.elements.hostStatus) this.elements.hostStatus.textContent = "참가자를 기다리는 중입니다.";
                 this.render();
@@ -291,6 +326,7 @@
                 if (message.playerId != null) this.myId = String(message.playerId);
                 this.connected = true;
                 this.players = this.myId ? { [this.myId]: { name: this.playerName } } : {};
+                this._attachAvatar();
                 // Nearby Chromebooks should not play the same music as the host.
                 // Only signal after the server confirms a successful join.
                 window.dispatchEvent(new CustomEvent("classroommultiplayerjoined", {
@@ -417,7 +453,10 @@
                     chip.className = `mp-lobby-player${id === this.myId ? " me" : ""}`;
                     const label = this.options.formatPlayerName?.(this.players[id], id, this.snapshot())
                         || safeName(this.players[id]?.name);
+                    // 이름은 사용자 입력이므로 textContent 로 넣고, 얼굴은 그 앞에 따로 붙인다.
                     chip.textContent = `${label}${id === this.myId ? " (나)" : ""}`;
+                    const face = playerFaceHtml(this.players[id]);
+                    if (face) chip.insertAdjacentHTML("afterbegin", face);
                     fragment.appendChild(chip);
                 });
                 list.replaceChildren(fragment);
@@ -517,6 +556,8 @@
 
     window.ClassroomMultiplayerLobby = Object.freeze({
         create: options => new MultiplayerLobby(options),
+        // 게임 화면에서도 참가자 얼굴을 그린다. 키 모양을 각자 검사하지 않도록 여기서 내준다.
+        avatarUrl: avatarUrlFor,
         MESSAGE
     });
 })();
