@@ -911,9 +911,9 @@
                 loadedRosterStudents.forEach((student) => {
                     studentDeleteSelect.add(new Option(`${student.number}번 ${student.name}`, student.number));
                 });
-                studentDeleteSelect.disabled = Boolean(classroom.isReadOnly || classroom.teacherType === 'subject');
+                studentDeleteSelect.disabled = Boolean(classroom.isReadOnly || classroom.teacherType === '전담');
                 studentDeleteButton.disabled = true;
-                if (classroom.isReadOnly || classroom.teacherType === 'subject') {
+                if (classroom.isReadOnly || classroom.teacherType === '전담') {
                     numbersInput.disabled = true;
                     namesInput.disabled = true;
                     gendersInput.disabled = true;

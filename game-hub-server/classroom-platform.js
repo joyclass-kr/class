@@ -419,6 +419,11 @@ function createClassroomPlatform(options = {}) {
       )`,
       `CREATE UNIQUE INDEX IF NOT EXISTS classroom_classes_identity_idx
         ON classroom_classes (school_id, academic_year, grade, class_number)`,
+      // Reassigning/removing a teacher's homeroom clears the stale link
+      // (see the classroom_classes cleanup in PUT /school/teachers) rather
+      // than deleting the class row, so this column must allow NULL.
+      `ALTER TABLE classroom_classes
+        ALTER COLUMN teacher_user_id DROP NOT NULL`,
       `UPDATE classroom_teachers t
        SET academic_year = c.academic_year,
            grade = c.grade,
@@ -2843,7 +2848,7 @@ function createClassroomPlatform(options = {}) {
       [teacher.id]
     );
     const teacherInfo = teacherInfoResult.rows[0];
-    const isSubjectTeacher = teacherInfo?.teacher_type === 'subject';
+    const isSubjectTeacher = teacherInfo?.teacher_type === '전담';
 
     // Homeroom teachers are provisioned into classroom_classes on demand from
     // classroom_teachers.grade/class_number, so a freshly assigned teacher
@@ -2964,7 +2969,7 @@ function createClassroomPlatform(options = {}) {
       `SELECT teacher_type FROM classroom_teachers WHERE user_id = $1`,
       [teacher.id]
     );
-    if (teacherCheck.rows[0]?.teacher_type === 'subject') {
+    if (teacherCheck.rows[0]?.teacher_type === '전담') {
       throw new HttpError(403, "SUBJECT_TEACHER_READONLY", "전담 교사는 학생 명단을 직접 수정할 수 없습니다. 담임 교사가 등록한 명단이 자동 동기화됩니다.");
     }
     const assignmentResult = await pool.query(
@@ -3229,20 +3234,6 @@ function createClassroomPlatform(options = {}) {
 
   router.use("/reading", readingBank.router);
   router.use("/metacognition", metacognition.router);
-
-  router.use((error, req, res, next) => {
-    if (res.headersSent) return next(error);
-    if (error instanceof HttpError) {
-      if (error.retryAfterSeconds) res.setHeader("Retry-After", String(error.retryAfterSeconds));
-      return res.status(error.status).json({
-        error: error.code,
-        message: error.message,
-        ...(error.details ? { details: error.details } : {})
-      });
-    }
-    console.error("Classroom API error:", error);
-    return res.status(500).json({ error: "INTERNAL_ERROR", message: "The server could not complete the request." });
-  });
 
   // ----------------------------------------------------
   // Notice & Attendance Platform API Routes
@@ -5685,6 +5676,25 @@ function createClassroomPlatform(options = {}) {
     }
     res.json({ ok: true });
   }));
+
+  // Must be registered after every router.get/post/put/delete call above --
+  // Express only routes a thrown error to the error-handling middleware
+  // that comes AFTER the route that threw it, so any route added below
+  // this point would silently fall through to Express's default HTML
+  // error page instead of this JSON {error, message} shape.
+  router.use((error, req, res, next) => {
+    if (res.headersSent) return next(error);
+    if (error instanceof HttpError) {
+      if (error.retryAfterSeconds) res.setHeader("Retry-After", String(error.retryAfterSeconds));
+      return res.status(error.status).json({
+        error: error.code,
+        message: error.message,
+        ...(error.details ? { details: error.details } : {})
+      });
+    }
+    console.error("Classroom API error:", error);
+    return res.status(500).json({ error: "INTERNAL_ERROR", message: "The server could not complete the request." });
+  });
 
   return {
     router,

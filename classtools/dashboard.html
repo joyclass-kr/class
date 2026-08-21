@@ -1643,10 +1643,11 @@
                 const fetchUrl = classId ? `/api/teacher/class?classId=${classId}` : "/api/teacher/class";
                 const res = await fetch(fetchUrl);
                 const data = await res.json();
+                if (!res.ok) {
+                    console.error("/api/teacher/class failed:", res.status, data?.error, data?.message);
+                }
                 if (data?.classroom) {
-                    if (data.classroom.schoolName || data.classroom.locationName) {
-                        fetchRealtimeWeatherAndAirQuality(data.classroom.schoolName, data.classroom.locationName);
-                    }
+                    fetchRealtimeWeatherAndAirQuality(data.classroom.schoolName, data.classroom.locationName);
                     rosterStudents = data.classroom.students || [];
                     activeScheduleClassId = data.classroom.id;
                     canEditSchedules = !data.classroom.isReadOnly;
@@ -1657,11 +1658,14 @@
                     loadTodayEvents(data.classroom.grade);
                 } else {
                     rosterStudents = [];
-                    rosterLoadMessage = "담임 학급 정보를 불러오지 못했습니다. 학교 관리자에게 학급 배정을 확인해 주세요.";
+                    rosterLoadMessage = data?.message || "담임 학급 정보를 불러오지 못했습니다. 학교 관리자에게 학급 배정을 확인해 주세요.";
+                    fetchRealtimeWeatherAndAirQuality();
                 }
             } catch (err) {
+                console.error("/api/teacher/class request threw:", err);
                 rosterStudents = [];
                 rosterLoadMessage = "담임 학급 정보를 불러오지 못했습니다. 학교 관리자에게 학급 배정을 확인해 주세요.";
+                fetchRealtimeWeatherAndAirQuality();
             }
             renderChecklist();
             await loadSchedules(activeScheduleClassId);
@@ -2207,7 +2211,6 @@
                 console.error("날씨/미세먼지 API 호출 오류:", err);
             }
         }
-        fetchRealtimeWeatherAndAirQuality();
 
         // 8. Class123 Style 3D Spin Random Picker Modal
         const pickerModalBtn = document.getElementById("pickerModalBtn");
