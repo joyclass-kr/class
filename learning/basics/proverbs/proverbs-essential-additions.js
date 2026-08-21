@@ -63,5 +63,5 @@ window.PROVERB_BANKS.ko.push(...[
     ["손뼉도 마주쳐야 소리가 난다", "무슨 일이든 상대가 함께해야 이루어진다는 뜻입니다.", "두 사람 모두 화를 내서 다툼이 커졌어요.", "한쪽만의 행동이 아니라 두 사람이 서로 대응했기 때문에 갈등이 생겼어요."],
     ["우물가에서 숭늉 찾는다", "일의 순서를 무시하고 성급하게 결과부터 바란다는 뜻입니다.", "준비도 하지 않고 완성품부터 달라고 했어요.", "밥을 짓기도 전에 숭늉을 찾듯 시작 단계에서 마지막 결과를 재촉했어요."]
 ].map(([proverb, meaning, example, question]) => ({
-  proverb, meaning, example, question, literal: "", image: ""
+  proverb, meaning, example, question, literal: "", image: (typeof PROVERB_ILLUSTRATIONS !== 'undefined' && PROVERB_ILLUSTRATIONS[proverb]) ? PROVERB_ILLUSTRATIONS[proverb] : ""
 })));
