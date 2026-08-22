@@ -31,7 +31,7 @@ test("관용구 핵심 학습 은행은 선별된 완성형 자료다", () => {
 
 test("관용구 화면과 메인 메뉴가 내용별 차시 학습에 연결된다", () => {
   assert.match(menu, /href="learning\/basics\/idiomatic-expressions\/"/);
-  assert.match(menu, /<strong>관용구<\/strong>/);
+  assert.match(menu, /<strong>관용어<\/strong>/);
   assert.match(menu, /data-access-group="idiomatic-language"/);
   assert.match(menu, /<strong>관용 표현<\/strong>/);
   assert.match(menu, /data-content-paths="learning\/basics\/idiomatic-expressions\/\|learning\/basics\/proverbs\/\|learning\/basics\/classical-chinese-idioms\/"/);
