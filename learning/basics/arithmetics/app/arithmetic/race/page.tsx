@@ -1,43 +1,40 @@
 "use client";
 
 import { FormEvent, useEffect, useState } from "react";
+import { raceReadyWorksheets } from "../../../lib/arithmetic-worksheets";
 
-type JoinState = {
-  roomCode: string;
-  participantId: string;
-  participantToken: string;
-  race: { worksheetName: string; worksheetRoute: string; status: string };
-};
+type Race = { worksheetName: string; worksheetRoute: string; status: string };
+type JoinState = { roomCode: string; participantId: string; participantToken: string; hostToken?: string; race: Race };
+type Board = { participants: Array<{ id: string; name: string }>; race: Race };
 
 const PLAYER_NAME_KEY = "classPlayerName";
 
 function normalizedPlayerName(value: string | null) {
-  return String(value ?? "").replace(/[^가-힣]/g, "").slice(0, 6);
+  return String(value ?? "").trim().replace(/[^가-힣a-zA-Z0-9]/g, "").slice(0, 20);
 }
 
 export default function ArithmeticRaceJoinPage() {
   const [roomCode, setRoomCode] = useState("");
   const [name, setName] = useState("");
+  const [worksheetRoute, setWorksheetRoute] = useState(raceReadyWorksheets[0]?.route ?? "");
   const [joined, setJoined] = useState<JoinState | null>(null);
+  const [board, setBoard] = useState<Board | null>(null);
   const [error, setError] = useState("");
   const [loading, setLoading] = useState(false);
 
   useEffect(() => {
     const params = new URLSearchParams(window.location.search);
-    const incomingName = normalizedPlayerName(params.get("name"));
     const storedName = normalizedPlayerName(window.localStorage.getItem(PLAYER_NAME_KEY));
-    const resolvedName = /^[가-힣]{2,6}$/.test(incomingName) ? incomingName : storedName;
-    if (/^[가-힣]{2,6}$/.test(resolvedName)) {
-      window.localStorage.setItem(PLAYER_NAME_KEY, resolvedName);
-      window.setTimeout(() => setName(resolvedName), 0);
-    }
+    if (storedName) window.setTimeout(() => setName(storedName), 0);
+
     const room = params.get("room");
     const participantId = params.get("participant");
     const participantToken = params.get("participantToken");
+    const hostToken = params.get("hostToken") ?? undefined;
     if (!room || !participantId || !participantToken) return;
     window.setTimeout(() => {
       setRoomCode(room);
-      setJoined({ roomCode: room, participantId, participantToken, race: { worksheetName: "", worksheetRoute: "", status: "waiting" } });
+      setJoined({ roomCode: room, participantId, participantToken, hostToken, race: { worksheetName: "", worksheetRoute: "", status: "waiting" } });
     }, 0);
   }, []);
 
@@ -46,12 +43,18 @@ export default function ArithmeticRaceJoinPage() {
     let active = true;
     const check = async () => {
       try {
-        const query = new URLSearchParams({ room: joined.roomCode, participant: joined.participantId, participantToken: joined.participantToken });
+        const query = new URLSearchParams({ room: joined.roomCode });
+        if (joined.hostToken) query.set("hostToken", joined.hostToken);
+        else {
+          query.set("participant", joined.participantId);
+          query.set("participantToken", joined.participantToken);
+        }
         const response = await fetch(`/api/arithmetic-race?${query}`, { cache: "no-store" });
-        const data = await response.json() as { race?: JoinState["race"]; error?: string };
+        const data = await response.json() as { race?: Race; participants?: Board["participants"]; error?: string };
         if (!response.ok || !data.race) throw new Error(data.error || "방 정보를 불러오지 못했습니다.");
         if (!active) return;
         setJoined((current) => current ? { ...current, race: data.race! } : current);
+        if (joined.hostToken && data.participants) setBoard({ race: data.race, participants: data.participants });
         if (data.race.status === "running") {
           const params = new URLSearchParams({ race: joined.roomCode, participant: joined.participantId, participantToken: joined.participantToken });
           window.location.href = `${data.race.worksheetRoute}?${params}`;
@@ -65,24 +68,80 @@ export default function ArithmeticRaceJoinPage() {
     return () => { active = false; window.clearInterval(poll); };
   }, [joined]);
 
+  function requireName() {
+    const playerName = normalizedPlayerName(window.localStorage.getItem(PLAYER_NAME_KEY)) || name;
+    if (!playerName) {
+      setError("저장된 내 이름을 찾지 못했습니다. 프로필 이름을 먼저 확인하세요.");
+      return null;
+    }
+    return playerName;
+  }
+
+  function saveSession(next: JoinState) {
+    setJoined(next);
+    const params = new URLSearchParams({ room: next.roomCode, participant: next.participantId, participantToken: next.participantToken });
+    if (next.hostToken) params.set("hostToken", next.hostToken);
+    window.history.replaceState(null, "", `/arithmetic/race?${params}`);
+  }
+
   async function join(event: FormEvent) {
     event.preventDefault();
+    const playerName = requireName();
+    if (!playerName) return;
     setLoading(true);
     setError("");
     try {
       const response = await fetch("/api/arithmetic-race", {
         method: "POST",
         headers: { "content-type": "application/json" },
-        body: JSON.stringify({ action: "join", roomCode, name }),
+        body: JSON.stringify({ action: "join", roomCode, name: playerName }),
       });
-      const data = await response.json() as { participantId?: string; participantToken?: string; race?: JoinState["race"]; error?: string };
+      const data = await response.json() as { participantId?: string; participantToken?: string; race?: Race; error?: string };
       if (!response.ok || !data.participantId || !data.participantToken || !data.race) throw new Error(data.error || "입장하지 못했습니다.");
-      const next = { roomCode, participantId: data.participantId, participantToken: data.participantToken, race: data.race };
-      setJoined(next);
-      const params = new URLSearchParams({ room: roomCode, participant: data.participantId, participantToken: data.participantToken });
-      window.history.replaceState(null, "", `/arithmetic/race?${params}`);
+      saveSession({ roomCode, participantId: data.participantId, participantToken: data.participantToken, race: data.race });
     } catch (cause) {
       setError(cause instanceof Error ? cause.message : "입장하지 못했습니다.");
+    } finally {
+      setLoading(false);
+    }
+  }
+
+  async function createRoom(event: FormEvent) {
+    event.preventDefault();
+    const playerName = requireName();
+    if (!playerName) return;
+    setLoading(true);
+    setError("");
+    try {
+      const response = await fetch("/api/arithmetic-race", {
+        method: "POST",
+        headers: { "content-type": "application/json" },
+        body: JSON.stringify({ action: "create", worksheetRoute, name: playerName }),
+      });
+      const data = await response.json() as { roomCode?: string; hostToken?: string; participantId?: string; participantToken?: string; race?: Race; error?: string };
+      if (!response.ok || !data.roomCode || !data.hostToken || !data.participantId || !data.participantToken || !data.race) throw new Error(data.error || "방을 만들지 못했습니다.");
+      saveSession({ roomCode: data.roomCode, hostToken: data.hostToken, participantId: data.participantId, participantToken: data.participantToken, race: data.race });
+    } catch (cause) {
+      setError(cause instanceof Error ? cause.message : "방을 만들지 못했습니다.");
+    } finally {
+      setLoading(false);
+    }
+  }
+
+  async function startRace() {
+    if (!joined?.hostToken || !window.confirm("참가한 모두에게 문제를 시작할까요?")) return;
+    setLoading(true);
+    setError("");
+    try {
+      const response = await fetch("/api/arithmetic-race", {
+        method: "POST",
+        headers: { "content-type": "application/json" },
+        body: JSON.stringify({ action: "start", roomCode: joined.roomCode, hostToken: joined.hostToken }),
+      });
+      const data = await response.json() as { error?: string };
+      if (!response.ok) throw new Error(data.error || "시작하지 못했습니다.");
+    } catch (cause) {
+      setError(cause instanceof Error ? cause.message : "시작하지 못했습니다.");
     } finally {
       setLoading(false);
     }
@@ -91,23 +150,29 @@ export default function ArithmeticRaceJoinPage() {
   return (
     <main className="portal-page race-entry-page">
       <div className="race-entry-shell">
-        <header className="catalog-header"><a className="catalog-back" href="/arithmetic">← 연산</a><div><h1>순위 모드</h1></div></header>
+        <header className="catalog-header"><a className="catalog-back" href="/arithmetic">← 연산</a><div><p>친구들과 하는 연산 대결</p><h1>순위 모드</h1></div></header>
         {joined ? (
           <section className="race-waiting-card" aria-live="polite">
-            <span>방 {joined.roomCode}</span>
+            <span>방 코드</span><strong className="race-room-code">{joined.roomCode}</strong>
             <h2>{joined.race.worksheetName || "학습지 확인 중"}</h2>
-            <strong>교사가 시작할 때까지 기다리세요.</strong>
+            {joined.hostToken ? <><p>{board?.participants.length ?? 1}명 참가</p><button type="button" onClick={startRace} disabled={loading || !(board?.participants.length ?? 1)}>모두 시작</button><small>방을 만든 사람이 시작합니다.</small></> : <strong>방장이 시작하면 문제지로 바로 이동합니다.</strong>}
           </section>
         ) : (
-          <div className="race-entry-grid">
-            <form className="race-join-card" onSubmit={join}>
-              <h2>학생 입장</h2>
-              <label>방 번호<input value={roomCode} onChange={(event) => setRoomCode(event.target.value.replace(/[^0-9]/g, "").slice(0, 6))} inputMode="numeric" maxLength={6} required /></label>
-              <label>이름<input value={name} onChange={(event) => setName(event.target.value.slice(0, 20))} maxLength={20} required /></label>
-              <button type="submit" disabled={loading}>{loading ? "입장 중" : "입장"}</button>
-            </form>
-            <div className="race-teacher-actions"><a className="race-teacher-button" href="/arithmetic/race/teacher">교사용 페이지</a></div>
-          </div>
+          <>
+            <p className="race-entry-copy">내 이름 <strong>{name || "확인 중"}</strong> · 방을 만들거나 방 코드로 참가하세요.</p>
+            <div className="race-entry-grid race-boardgame-grid">
+              <form className="race-join-card race-create-card" onSubmit={createRoom}>
+                <span className="race-card-kicker">내가 방장</span><h2>방 만들기</h2>
+                <label>함께 풀 학습지<select value={worksheetRoute} onChange={(event) => setWorksheetRoute(event.target.value)}>{raceReadyWorksheets.map((worksheet) => <option value={worksheet.route} key={worksheet.route}>{worksheet.name}</option>)}</select></label>
+                <button type="submit" disabled={loading}>{loading ? "만드는 중" : "방 만들고 입장"}</button>
+              </form>
+              <form className="race-join-card" onSubmit={join}>
+                <span className="race-card-kicker">친구 방</span><h2>방 참가</h2>
+                <label>방 코드<input value={roomCode} onChange={(event) => setRoomCode(event.target.value.replace(/[^0-9]/g, "").slice(0, 6))} inputMode="numeric" maxLength={6} required /></label>
+                <button type="submit" disabled={loading}>{loading ? "입장 중" : "입장"}</button>
+              </form>
+            </div>
+          </>
         )}
         {error && <p className="race-form-error" role="alert">{error}</p>}
       </div>
