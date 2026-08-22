@@ -50,7 +50,7 @@ test("관용구 화면과 메인 메뉴가 내용별 차시 학습에 연결된�
   assert.match(app, /renderLessonList/);
   assert.match(app, /completedLessons/);
   assert.doesNotMatch(app, /BATCH_SIZE = 5/);
-  assert.match(app, /이 상황에 알맞은 관용구는/);
+  assert.match(app, /이 상황에 알맞은 관용어는/);
   assert.match(styles, /min-height:\s*48px/);
   assert.match(styles, /@media \(max-width: 520px\)/);
 });
