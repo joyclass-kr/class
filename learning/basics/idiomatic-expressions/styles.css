@@ -74,4 +74,23 @@ button:focus-visible, .back:focus-visible { outline: 3px solid #f1ad32; outline-
   .lesson-meta { grid-column:2; grid-row:2; justify-items:start; display:flex; }
   .lesson-copy em { white-space:normal; }
 }
-#illustration { display:block; width:100%; max-width:520px; height:260px; object-fit:contain; margin:0 auto 18px; border-radius:16px; border:1px solid rgba(80,61,42,.16); background:#fff; }
+#illustration {
+  display: block;
+  box-sizing: border-box;
+  width: min(100%, 720px) !important;
+  max-width: 100% !important;
+  height: auto;
+  max-height: 420px;
+  object-fit: contain;
+  margin: 0 auto 18px;
+  border-radius: 16px;
+  border: 1px solid rgba(80, 61, 42, .16);
+  background: #fff;
+}
+
+.study-card,
+.quiz {
+  min-width: 0;
+  overflow: hidden;
+}
+
