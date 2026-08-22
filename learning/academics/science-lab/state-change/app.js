@@ -1,0 +1,373 @@
+document.addEventListener('DOMContentLoaded', () => {
+    const temperatureRange = document.getElementById('temperatureRange');
+    const temperatureOutput = document.getElementById('temperatureOutput');
+    const predictionButtons = [...document.querySelectorAll('[data-prediction]')];
+    const checkButton = document.getElementById('checkStateBtn');
+    const resultEmpty = document.getElementById('resultEmpty');
+    const resultContent = document.getElementById('resultContent');
+    const resultTemp = document.getElementById('resultTemp');
+    const resultState = document.getElementById('resultState');
+    const predictionResult = document.getElementById('predictionResult');
+    const explanation = document.getElementById('elementaryExplanation');
+    const stageCaption = document.getElementById('stageCaption');
+    const beaker = document.getElementById('beaker');
+    const waterStopTop = document.getElementById('waterStopTop');
+    const waterStopBottom = document.getElementById('waterStopBottom');
+    const mercuryRect = document.getElementById('mercuryRect');
+    const waterRect = document.getElementById('waterRect');
+    const waterSurface = document.getElementById('waterSurface');
+    const iceClipRect = document.getElementById('iceClipRect');
+    const bubbleGroup = document.getElementById('bubbleGroup');
+    const particleGroup = document.getElementById('particleGroup');
+
+    let prediction = null;
+
+    const STATE_LABEL = { solid: '고체 (얼음)', liquid: '액체 (물)', gas: '기체 (수증기)' };
+
+    function stateAt(temp) {
+        if (temp < 0) return 'solid';
+        if (temp > 100) return 'gas';
+        return 'liquid';
+    }
+
+    // Particle-arrangement model: the actual teaching point behind states of
+    // matter. Solid/liquid have nearly the same (high) density, so they
+    // settle into a small, tightly-packed band at the *bottom* of the frame
+    // — same as how the real water/ice sits at the bottom of the beaker, not
+    // floating mid-air. Gas is far less dense, so the same particles spread
+    // through the *entire* frame, including the space that sat empty above
+    // the settled band — matching the "부피가 크게 늘어난다" quiz answer
+    // below with an actual size difference, not just a repositioning.
+    const PARTICLE_RADIUS = 6;
+    const FRAME_SETTLED = { x: 20, y: 128, width: 140, height: 34 };
+    const FRAME_GAS = { x: 6, y: 6, width: 168, height: 168 };
+    const boundsOf = frame => ({
+        minX: frame.x + PARTICLE_RADIUS,
+        maxX: frame.x + frame.width - PARTICLE_RADIUS,
+        minY: frame.y + PARTICLE_RADIUS,
+        maxY: frame.y + frame.height - PARTICLE_RADIUS,
+    });
+    const particleBasePositions = [];
+    let particleTimerIds = []; // one setTimeout id per particle, so switching
+    let particleModes = [];    // one mode per particle — only the particles
+                                // whose mode actually changes get reset below
+
+    const STATE_MOTION = {
+        // Grid spacing in the settled band works out to ~18 units against a
+        // 12-unit-wide dot. Solid is a fast, tiny jiggle — barely moves, so
+        // it reads as rigid/vibrating-in-place. Liquid needs to read as
+        // *flowing*, not just "solid but a bit looser": it moves almost as
+        // often as solid (not the slow, rare hops it had before, which just
+        // looked like a calmer solid) but travels much further each time and
+        // glides there smoothly, so neighbors visibly drift past each other.
+        // Gas drops the lattice and roams the *whole* frame independently of
+        // any "home" position.
+        solid: { amplitude: 1, minDelay: 200, maxDelay: 420, duration: .22, clampRadius: 1.4 },
+        liquid: { amplitude: 9, minDelay: 380, maxDelay: 760, duration: .85, clampRadius: 11 },
+        gas: { amplitude: 0, minDelay: 260, maxDelay: 600, duration: .5, clampRadius: 0 },
+    };
+
+    function initParticles() {
+        const bounds = boundsOf(FRAME_SETTLED);
+        const cols = 8;
+        const rows = 2;
+        const stepX = (bounds.maxX - bounds.minX) / (cols - 1);
+        const stepY = rows > 1 ? (bounds.maxY - bounds.minY) / (rows - 1) : 0;
+        for (let r = 0; r < rows; r += 1) {
+            for (let c = 0; c < cols; c += 1) {
+                particleBasePositions.push({
+                    x: bounds.minX + c * stepX,
+                    y: bounds.minY + r * stepY,
+                });
+            }
+        }
+        particleGroup.innerHTML = particleBasePositions
+            .map(p => `<circle cx="${p.x}" cy="${p.y}" r="${PARTICLE_RADIUS}" data-ox="0" data-oy="0"></circle>`)
+            .join('');
+        particleTimerIds = new Array(particleBasePositions.length).fill(null);
+        particleModes = new Array(particleBasePositions.length).fill(null);
+        // The frame itself is a fixed constant (see the markup) sized for
+        // gas's full extent — it never resizes. Ice, water and steam can all
+        // coexist at once (freezing/melting sit at 0℃, boiling/condensing at
+        // 100℃), so growing the box for a "medium" mixed state would have no
+        // single right size; instead the same box always holds all of it,
+        // and only which particles are assigned to the cramped settled
+        // corner vs. roaming the whole box changes.
+    }
+
+    function scheduleParticle(circle, base, mode, index) {
+        const params = STATE_MOTION[mode];
+        const bounds = boundsOf(mode === 'gas' ? FRAME_GAS : FRAME_SETTLED);
+        const move = () => {
+            let nx;
+            let ny;
+            if (mode === 'gas') {
+                const targetX = bounds.minX + Math.random() * (bounds.maxX - bounds.minX);
+                const targetY = bounds.minY + Math.random() * (bounds.maxY - bounds.minY);
+                nx = targetX - base.x;
+                ny = targetY - base.y;
+            } else {
+                const prevX = parseFloat(circle.getAttribute('data-ox') || '0');
+                const prevY = parseFloat(circle.getAttribute('data-oy') || '0');
+                // Clamp to the mode's own wander radius *and* to the frame
+                // bounds — a corner particle wandering its full radius must
+                // not be pushed outside the visible box.
+                const loX = Math.max(-params.clampRadius, bounds.minX - base.x);
+                const hiX = Math.min(params.clampRadius, bounds.maxX - base.x);
+                const loY = Math.max(-params.clampRadius, bounds.minY - base.y);
+                const hiY = Math.min(params.clampRadius, bounds.maxY - base.y);
+                nx = Math.max(loX, Math.min(hiX, prevX + (Math.random() - .5) * params.amplitude * 2));
+                ny = Math.max(loY, Math.min(hiY, prevY + (Math.random() - .5) * params.amplitude * 2));
+            }
+            circle.setAttribute('data-ox', String(nx));
+            circle.setAttribute('data-oy', String(ny));
+            circle.style.transition = `transform ${params.duration}s ease-in-out`;
+            circle.style.transform = `translate(${nx.toFixed(1)}px, ${ny.toFixed(1)}px)`;
+            particleTimerIds[index] = setTimeout(move, params.minDelay + Math.random() * (params.maxDelay - params.minDelay));
+        };
+        move();
+    }
+
+    // Which of the (16) particles show as gas vs. solid vs. liquid, driven
+    // directly by the same continuous iceFraction/boilFraction that drive
+    // the beaker's water level — not a single instantaneous switch. At
+    // exactly 0℃ or 100℃ (or anywhere mid-freeze/mid-boil) this naturally
+    // shows a real mix of both arrangements at once, matching how ice+water
+    // and water+steam genuinely coexist during the transition, instead of
+    // every dot flipping together the moment a threshold is crossed.
+    function particleModeFor(index, total, ice, boil) {
+        const gasCount = Math.round(boil * total);
+        if (index < gasCount) return 'gas';
+        const remaining = total - gasCount;
+        const solidCount = Math.round(ice * remaining);
+        return index < gasCount + solidCount ? 'solid' : 'liquid';
+    }
+
+    function updateParticles(ice, boil) {
+        const total = particleBasePositions.length;
+        [...particleGroup.children].forEach((circle, i) => {
+            const mode = particleModeFor(i, total, ice, boil);
+            if (mode === particleModes[i]) return;
+            particleModes[i] = mode;
+            if (particleTimerIds[i]) clearTimeout(particleTimerIds[i]);
+            circle.setAttribute('data-ox', '0');
+            circle.setAttribute('data-oy', '0');
+            scheduleParticle(circle, particleBasePositions[i], mode, i);
+        });
+    }
+
+    // A handful of bubble circles inside the clipped water area, created once
+    // so their rise animation stays continuous across slider moves — only
+    // whether they're visible (state-gas) changes.
+    function createBubbles() {
+        const bounds = { xMin: 40, xMax: 200, yMin: 235, yMax: 292 };
+        const count = 7;
+        bubbleGroup.innerHTML = Array.from({ length: count }, () => {
+            const cx = (bounds.xMin + Math.random() * (bounds.xMax - bounds.xMin)).toFixed(1);
+            const cy = (bounds.yMin + Math.random() * (bounds.yMax - bounds.yMin)).toFixed(1);
+            const r = (2 + Math.random() * 2.5).toFixed(1);
+            const delay = (Math.random() * 1.6).toFixed(2);
+            return `<circle cx="${cx}" cy="${cy}" r="${r}" style="--delay:${delay}s"></circle>`;
+        }).join('');
+    }
+
+    function syncControls() {
+        const temp = Number(temperatureRange.value);
+        temperatureOutput.textContent = `${temp}℃`;
+
+        // Mercury height maps across the slider's own -10..110 range, not a
+        // fixed 0..100 assumption, so the column reflects relative position
+        // even for the below-freezing and above-boiling ends.
+        const span = 110 - -10;
+        const mercuryHeight = 4 + ((temp - -10) / span) * 164;
+        mercuryRect.setAttribute('y', String(180 - mercuryHeight));
+        mercuryRect.setAttribute('height', String(mercuryHeight));
+
+        const warmth = Math.max(0, Math.min(1, temp / 100));
+        waterStopTop.setAttribute('stop-color', `rgb(${Math.round(110 + 70 * warmth)}, ${Math.round(200 - 15 * warmth)}, ${Math.round(235 - 25 * warmth)})`);
+        waterStopBottom.setAttribute('stop-color', `rgb(${Math.round(60 + 50 * warmth)}, ${Math.round(150 - 15 * warmth)}, ${Math.round(195 - 35 * warmth)})`);
+
+        const state = stateAt(temp);
+        beaker.classList.remove('state-solid', 'state-liquid', 'state-gas');
+        beaker.classList.add(`state-${state}`);
+
+        renderPhaseVisuals();
+        updateParticles(iceFraction, boilFraction);
+    }
+
+    // Temperature sets the *rate* of freezing/boiling, not how much has
+    // happened — -1℃ and -10℃ both end up fully frozen given enough time,
+    // -10℃ just gets there faster. Same for boiling: 101℃ and 110℃ both
+    // fully boil away eventually, 110℃ just does it sooner. iceFraction and
+    // boilFraction are persistent accumulators advanced over real elapsed
+    // time by tickPhaseChange(), not recomputed from the slider value.
+    const BEAKER_BOTTOM = 300;
+    const FULL_HEIGHT = 206;
+    let iceFraction = 0;
+    let boilFraction = 0;
+    let lastTickTime = Date.now();
+
+    // Rate constants (fraction per second, at 1℃ past the threshold) — sqrt
+    // of the distance past the threshold, so going from -1℃ to -10℃ (10x
+    // the distance) only makes freezing ~3x faster, not 10x: fast enough to
+    // clearly read as "quicker" without snapping shut instantly. At -1℃,
+    // rate = .1 * sqrt(1) = .1/s → ~10s to fully freeze. At -10℃, rate = .1 *
+    // sqrt(10) ≈ .316/s → ~3.2s. Boiling/condensing mirrors freezing/melting:
+    // above 100℃ the water boils away (faster the hotter it gets), and back
+    // below 100℃ it returns (faster the further below 100℃), the same way
+    // ice above 0℃ melts back. This is a simplified idealization — a real
+    // open beaker's steam wouldn't return — but the tool is for repeatedly
+    // dragging the slider back and forth, and a beaker left permanently
+    // empty after one trip past 100℃ makes it impossible to re-run at any
+    // other temperature, which defeats the tool's purpose.
+    const FREEZE_RATE_K = .1;
+    const MELT_RATE_K = .1;
+    const BOIL_RATE_K = .1;
+    const CONDENSE_RATE_K = .1;
+
+    // At exactly the melting point (0℃) or boiling point (100℃), the two
+    // phases are in dynamic equilibrium — not a fixed 50/50 split, but
+    // continuously trading back and forth (some ice forms while some melts,
+    // some liquid boils while some vapor condenses). A slow sine wave gives
+    // an oscillating target that the fraction smoothly chases at a bounded
+    // rate — never snapping, never settling flat — so parking exactly at
+    // 0℃ or 100℃ visibly keeps freezing and thawing rather than sitting
+    // static at whatever ratio it happened to arrive with.
+    const COEXIST_PERIOD_MS = 9000;
+    const COEXIST_BASE = .45;
+    const COEXIST_AMPLITUDE = .22;
+    const COEXIST_CHASE_RATE = .3;
+    function coexistTarget(now) {
+        return COEXIST_BASE + COEXIST_AMPLITUDE * Math.sin((now / COEXIST_PERIOD_MS) * 2 * Math.PI);
+    }
+    function chaseTarget(current, target, dt) {
+        const delta = target - current;
+        const maxStep = COEXIST_CHASE_RATE * dt;
+        return current + (Math.abs(delta) < maxStep ? delta : Math.sign(delta) * maxStep);
+    }
+
+    function renderPhaseVisuals() {
+        const waterHeight = FULL_HEIGHT * (1 - boilFraction);
+        const waterY = BEAKER_BOTTOM - waterHeight;
+        waterRect.setAttribute('y', String(waterY));
+        waterRect.setAttribute('height', String(waterHeight));
+        waterSurface.setAttribute('cy', String(waterY));
+        // Freezing starts at the surface and works down — the clip's top
+        // edge stays fixed at the water surface while its height grows.
+        iceClipRect.setAttribute('height', String(FULL_HEIGHT * iceFraction));
+    }
+
+    function tickPhaseChange() {
+        const now = Date.now();
+        // Cap dt so a backgrounded/throttled tab doesn't "catch up" with one
+        // huge jump the moment it's foregrounded again.
+        const dt = Math.min(1, (now - lastTickTime) / 1000);
+        lastTickTime = now;
+        const temp = Number(temperatureRange.value);
+
+        if (temp < 0) {
+            iceFraction = Math.min(1, iceFraction + FREEZE_RATE_K * Math.sqrt(-temp) * dt);
+        } else if (temp === 0) {
+            iceFraction = chaseTarget(iceFraction, coexistTarget(now), dt);
+        } else if (iceFraction > 0) {
+            iceFraction = Math.max(0, iceFraction - MELT_RATE_K * Math.sqrt(temp) * dt);
+        }
+
+        if (temp > 100) {
+            boilFraction = Math.min(1, boilFraction + BOIL_RATE_K * Math.sqrt(temp - 100) * dt);
+        } else if (temp === 100) {
+            boilFraction = chaseTarget(boilFraction, coexistTarget(now), dt);
+        } else if (boilFraction > 0) {
+            boilFraction = Math.max(0, boilFraction - CONDENSE_RATE_K * Math.sqrt(100 - temp) * dt);
+        }
+
+        renderPhaseVisuals();
+        updateParticles(iceFraction, boilFraction);
+        setTimeout(tickPhaseChange, 150);
+    }
+
+    function clearResult() {
+        resultEmpty.hidden = false;
+        resultContent.hidden = true;
+        stageCaption.textContent = '온도를 정해 물의 상태를 관찰하세요.';
+    }
+
+    function checkState() {
+        const temp = Number(temperatureRange.value);
+        const state = stateAt(temp);
+
+        resultTemp.textContent = `${temp}℃`;
+        resultState.textContent = STATE_LABEL[state];
+        resultEmpty.hidden = true;
+        resultContent.hidden = false;
+
+        predictionResult.textContent = !prediction
+            ? '다음에는 상태를 먼저 예상해 보세요.'
+            : prediction === state ? '예상이 맞았습니다.' : '예상과 다른 결과입니다.';
+
+        if (temp === 0) {
+            stageCaption.textContent = '0℃는 물의 어는점(녹는점)입니다. 얼음과 물이 함께 있을 수 있는 온도입니다.';
+            explanation.textContent = '이 온도에서는 얼음이 녹아 물이 되거나, 물이 얼어 얼음이 됩니다. 다 바뀔 때까지 온도는 0℃에 머무릅니다.';
+        } else if (temp === 100) {
+            stageCaption.textContent = '100℃는 물의 끓는점입니다. 물이 기체(수증기)로 바뀌기 시작합니다.';
+            explanation.textContent = '끓는 동안에는 계속 열을 가해도 온도가 100℃에 머무르고, 그 열은 물을 기체로 바꾸는 데 쓰입니다.';
+        } else if (state === 'solid') {
+            stageCaption.textContent = `${temp}℃에서 물은 고체인 얼음 상태입니다.`;
+            explanation.textContent = '0℃보다 낮은 온도에서 물은 단단한 얼음이 됩니다. 모양은 그릇을 따르지 않고 자기 모습을 유지합니다. 온도가 0℃보다 얼마나 낮은지는 어는 속도만 바꿀 뿐입니다 — -1℃든 -10℃든 결국 다 얼지만, -10℃일수록 더 빨리 얼어붙습니다.';
+        } else if (state === 'gas') {
+            stageCaption.textContent = `${temp}℃에서 물은 기체인 수증기 상태입니다.`;
+            explanation.textContent = '100℃보다 높은 온도에서 물은 기체가 되어 부피가 크게 늘어나고 눈에 잘 보이지 않을 만큼 퍼집니다. 온도가 100℃보다 얼마나 높은지는 끓는 속도만 바꿀 뿐입니다 — 101℃든 110℃든 결국 다 증발하지만, 110℃일수록 더 빨리 증발합니다.';
+        } else {
+            stageCaption.textContent = `${temp}℃에서 물은 액체 상태입니다.`;
+            explanation.textContent = '0℃와 100℃ 사이에서 물은 흐르는 액체이며, 담는 그릇에 따라 모양이 바뀝니다.';
+        }
+    }
+
+    temperatureRange.addEventListener('input', () => { syncControls(); clearResult(); });
+    predictionButtons.forEach(button => button.addEventListener('click', () => {
+        prediction = button.dataset.prediction;
+        predictionButtons.forEach(item => item.classList.toggle('selected', item === button));
+    }));
+    checkButton.addEventListener('click', checkState);
+
+    function shuffleQuizOptions(card) {
+        const optionGroup = card.querySelector('.quiz-options');
+        const options = Array.from(optionGroup.children);
+        for (let index = options.length - 1; index > 0; index -= 1) {
+            const randomIndex = Math.floor(Math.random() * (index + 1));
+            [options[index], options[randomIndex]] = [options[randomIndex], options[index]];
+        }
+        optionGroup.append(...options);
+    }
+
+    document.querySelectorAll('.quiz-card').forEach(card => {
+        shuffleQuizOptions(card);
+        const answerButton = card.querySelector('.answer-button');
+        const answerResult = card.querySelector('.answer-result');
+        const answerExplanation = card.querySelector('.answer-explanation');
+        answerButton.addEventListener('click', () => {
+            const selected = card.querySelector('input:checked');
+            if (!selected) {
+                delete card.dataset.state;
+                answerResult.textContent = '답을 먼저 선택하세요.';
+                return;
+            }
+            const correct = selected.value === card.dataset.answer;
+            card.dataset.state = correct ? 'correct' : 'incorrect';
+            answerResult.textContent = correct ? '맞았습니다.' : '다시 생각해 보세요.';
+            answerExplanation.hidden = !correct;
+            if (!correct) {
+                selected.checked = false;
+                selected.disabled = true;
+                answerResult.textContent = '다시 생각하고 다른 답을 골라보세요.';
+            }
+        });
+    });
+
+    initParticles();
+    createBubbles();
+    syncControls();
+    clearResult();
+    lastTickTime = Date.now();
+    setTimeout(tickPhaseChange, 150);
+});

@@ -1,0 +1,114 @@
+.prediction-buttons.three { grid-template-columns: repeat(3, 1fr); }
+
+.particle-model { display: flex; flex-direction: column; align-items: center; gap: 8px; width: min(180px, 34vw); }
+.particle-model-title { display: flex; align-items: center; gap: 6px; color: var(--muted); font-size: 12.5px; font-weight: 850; }
+.zoom-badge { padding: 2px 7px; border-radius: 999px; background: rgba(82, 199, 255, .12); color: var(--cyan); font-size: 10px; font-weight: 900; }
+.particle-svg { width: 100%; aspect-ratio: 1 / 1; display: block; }
+.particle-frame { fill: rgba(255, 255, 255, .03); stroke: rgba(151, 218, 211, .3); stroke-width: 2; stroke-dasharray: 5 4; }
+#particleGroup circle { fill: #8fd8ff; stroke: rgba(255, 255, 255, .55); stroke-width: 1; transform-box: fill-box; transform-origin: center; }
+.particle-note { margin: 0; color: #7c9b98; font-size: 10.5px; line-height: 1.45; text-align: center; }
+
+.beaker {
+    position: relative;
+    width: max(210px, min(42vw, 400px, calc(56vh * .75)));
+    aspect-ratio: 240 / 320;
+    filter: drop-shadow(0 16px 20px rgba(0, 0, 0, .22));
+}
+.beaker-svg { width: 100%; height: 100%; display: block; overflow: visible; }
+.beaker-glass { stroke: rgba(177, 226, 230, .78); stroke-width: 5; stroke-linejoin: round; }
+.beaker-rim { stroke: rgba(177, 226, 230, .82); stroke-width: 4; }
+.beaker-shine { pointer-events: none; }
+.water-surface { fill: rgba(190, 238, 250, .4); transition: cy .9s ease; }
+#waterRect { transition: y .9s ease, height .9s ease; }
+.tick { stroke: rgba(220, 246, 247, .5); stroke-width: 1.5; }
+.tick-label { fill: rgba(220, 246, 247, .72); font-size: 11px; font-weight: 700; text-anchor: end; }
+
+.ice-facet { stroke: rgba(255, 255, 255, .55); stroke-width: 1.2; }
+/* Ice doesn't swap in/out — it's always drawn full-size underneath, and
+   #iceClipRect's height (grown by app.js as temperature drops below 0) is
+   what actually reveals it, top edge fixed, growing downward from the
+   surface — the same freezing front direction as the real thing. */
+#iceClipRect { transition: height .9s ease; }
+
+@keyframes waterBob {
+    0%, 100% { transform: translateY(0) scaleY(1); }
+    50% { transform: translateY(1px) scaleY(.985); }
+}
+.beaker.state-liquid .water-surface { animation: waterBob 3.4s ease-in-out infinite; transform-origin: center; }
+
+/* Bubbles: SVG circles inside the clipped water area, only animated once
+   boiling (state-gas). transform-box:fill-box lets a plain translateY()
+   move each circle in its own local space regardless of its cx/cy. */
+#bubbleGroup circle {
+    fill: rgba(255, 255, 255, .6);
+    opacity: 0;
+    transform-box: fill-box;
+    transform-origin: center;
+}
+.beaker.state-gas #bubbleGroup circle { animation: bubbleRise 1.6s ease-in infinite; animation-delay: var(--delay); }
+
+@keyframes bubbleRise {
+    0% { transform: translateY(0) scale(.4); opacity: 0; }
+    15% { opacity: .8; }
+    90% { opacity: .3; }
+    100% { transform: translateY(-140px) scale(1); opacity: 0; }
+}
+
+/* Steam wisps drift up out of the open beaker top; only visible once boiling. */
+.steam-wisps {
+    position: absolute;
+    left: 50%;
+    top: -2%;
+    width: 40%;
+    height: 30%;
+    transform: translateX(-50%);
+    pointer-events: none;
+    opacity: 0;
+    transition: opacity .5s ease;
+}
+.beaker.state-gas .steam-wisps { opacity: 1; }
+.steam-wisps span {
+    position: absolute;
+    bottom: 0;
+    width: 14px;
+    height: 46px;
+    border-radius: 50%;
+    background: radial-gradient(circle, rgba(255, 255, 255, .5), transparent 70%);
+    filter: blur(2px);
+    animation: steamRise 2.4s ease-in infinite;
+}
+.steam-wisps span:nth-child(1) { left: 10%; animation-delay: 0s; }
+.steam-wisps span:nth-child(2) { left: 45%; animation-delay: .7s; }
+.steam-wisps span:nth-child(3) { left: 78%; animation-delay: 1.4s; }
+
+@keyframes steamRise {
+    0% { transform: translateY(0) scale(.7); opacity: 0; }
+    25% { opacity: .7; }
+    100% { transform: translateY(-90px) translateX(8px) scale(1.3); opacity: 0; }
+}
+
+.thermometer-wrap {
+    position: absolute;
+    top: 3%;
+    bottom: 16%;
+    left: 22%;
+    width: auto;
+    aspect-ratio: 50 / 240;
+    transform: rotate(-4deg);
+    transform-origin: bottom center;
+    filter: drop-shadow(0 4px 6px rgba(0, 0, 0, .25));
+}
+.therm-ticks line { stroke: rgba(255, 255, 255, .55); stroke-width: 1.5; }
+.thermometer-svg { width: 100%; height: 100%; display: block; overflow: visible; }
+.tube-outline { fill: rgba(255, 255, 255, .04); stroke: rgba(255, 255, 255, .5); stroke-width: 2.5; }
+.bulb-outline { fill: rgba(255, 255, 255, .04); stroke: rgba(255, 255, 255, .5); stroke-width: 2.5; }
+.bulb-fill { fill: var(--danger); }
+#mercuryRect { transition: y .25s ease, height .25s ease; }
+
+@media (max-width: 600px) {
+    .prediction-buttons.three { grid-template-columns: 1fr; }
+}
+
+@media (prefers-reduced-motion: reduce) {
+    #mercuryRect, #liquidLayer, #iceLayer, .beaker.state-liquid .water-surface, #bubbleGroup circle, .steam-wisps span, #particleGroup circle, .particle-frame { transition: none; animation: none; }
+}

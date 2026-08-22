@@ -1,0 +1,216 @@
+<!doctype html>
+<html lang="ko">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="theme-color" content="#07131c">
+    <title>과학 실험실</title>
+    <meta name="description" content="온도에 따라 물이 고체·액체·기체로 바뀌는 모습을 관찰하는 초등 과학 모의실험">
+    <link rel="stylesheet" as="style" crossorigin href="https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.9/dist/web/static/pretendard.css">
+    <link rel="stylesheet" href="styles.css?v=1">
+    <link rel="stylesheet" href="state-visual.css?v=6">
+    <link rel="stylesheet" href="quiz.css?v=1">
+</head>
+<body>
+    <main>
+        <header class="page-header">
+            <div class="title-row">
+                <a href="../">← 과학 실험실</a>
+                <h1>물의 상태 변화</h1>
+            </div>
+            <div class="grade-tags"><span>초등 5~6</span><span>화학</span></div>
+        </header>
+
+        <ol class="method-steps" aria-label="실험 방법">
+            <li>물의 온도를 정합니다.</li>
+            <li>이 온도에서 물이 어떤 상태일지 예상합니다.</li>
+            <li>온도계로 확인합니다.</li>
+            <li>어는점과 끓는점에서 무슨 일이 생기는지 관찰합니다.</li>
+        </ol>
+
+        <div class="experiment-layout">
+            <section class="panel control-panel" aria-labelledby="control-title">
+                <h2 id="control-title">실험 조건</h2>
+
+                <div class="range-heading">
+                    <label for="temperatureRange">물의 온도</label>
+                    <output id="temperatureOutput" for="temperatureRange">20℃</output>
+                </div>
+                <input id="temperatureRange" type="range" min="-10" max="110" step="1" value="20">
+                <div class="range-scale" aria-hidden="true"><span>-10℃</span><span>10</span><span>30</span><span>60</span><span>90</span><span>110℃</span></div>
+
+                <fieldset class="prediction-field">
+                    <legend>상태 예상</legend>
+                    <div class="prediction-buttons three">
+                        <button type="button" data-prediction="solid">고체 (얼음)</button>
+                        <button type="button" data-prediction="liquid">액체 (물)</button>
+                        <button type="button" data-prediction="gas">기체 (수증기)</button>
+                    </div>
+                </fieldset>
+
+                <button class="run-button" id="checkStateBtn" type="button">온도계로 확인하기</button>
+
+                <section class="result-box" aria-labelledby="result-title" aria-live="polite">
+                    <h3 id="result-title">관찰 결과</h3>
+                    <p id="resultEmpty">예상한 뒤 확인해 보세요.</p>
+                    <div id="resultContent" hidden>
+                        <div class="result-numbers">
+                            <article><span>현재 온도</span><strong id="resultTemp">20℃</strong></article>
+                            <article><span>물의 상태</span><strong id="resultState">액체</strong></article>
+                        </div>
+                        <p class="prediction-result" id="predictionResult"></p>
+                        <p class="explanation" id="elementaryExplanation"></p>
+                    </div>
+                </section>
+            </section>
+
+            <section class="panel beaker-stage" aria-label="물의 상태 관찰 화면">
+                <div class="stage-heading"><h2>관찰</h2><span>어는점 0℃ · 끓는점 100℃</span></div>
+                <div class="apparatus">
+                    <div class="particle-model" aria-label="물 입자 모형">
+                        <div class="particle-model-title">입자 배열 모형 <span class="zoom-badge">확대</span></div>
+                        <svg class="particle-svg" viewBox="0 0 180 180" aria-hidden="true">
+                            <rect class="particle-frame" x="6" y="6" width="168" height="168" rx="8"/>
+                            <g id="particleGroup"></g>
+                        </svg>
+                        <p class="particle-note">실제 물 분자는 눈에 안 보일 만큼 작아요 — 배열을 보여주기 위한 모형입니다</p>
+                    </div>
+                    <div class="beaker" id="beaker">
+                        <svg class="beaker-svg" viewBox="0 0 240 320" aria-hidden="true">
+                            <defs>
+                                <clipPath id="beakerClip"><path d="M22,20 L22,268 Q22,300 54,300 L186,300 Q218,300 218,268 L218,20 Z"/></clipPath>
+                                <linearGradient id="waterGrad" x1="0" y1="0" x2="0" y2="1">
+                                    <stop id="waterStopTop" offset="0%" stop-color="#6ec8eb" stop-opacity=".58"/>
+                                    <stop id="waterStopBottom" offset="100%" stop-color="#3c96c3" stop-opacity=".7"/>
+                                </linearGradient>
+                                <linearGradient id="iceGrad" x1="0" y1="0" x2="0" y2="1">
+                                    <stop offset="0%" stop-color="#f2fbff" stop-opacity=".92"/>
+                                    <stop offset="100%" stop-color="#bfe6f2" stop-opacity=".96"/>
+                                </linearGradient>
+                                <linearGradient id="glassShine" x1="0" y1="0" x2="1" y2="0">
+                                    <stop offset="0%" stop-color="#fff" stop-opacity="0"/>
+                                    <stop offset="16%" stop-color="#fff" stop-opacity=".32"/>
+                                    <stop offset="32%" stop-color="#fff" stop-opacity="0"/>
+                                </linearGradient>
+                                <clipPath id="iceClip"><rect id="iceClipRect" x="22" y="94" width="196" height="0"/></clipPath>
+                            </defs>
+                            <g clip-path="url(#beakerClip)">
+                                <g id="liquidLayer">
+                                    <rect id="waterRect" x="22" y="94" width="196" height="206" fill="url(#waterGrad)"/>
+                                    <ellipse id="waterSurface" class="water-surface" cx="120" cy="94" rx="98" ry="7"/>
+                                    <g id="bubbleGroup"></g>
+                                </g>
+                                <g id="iceLayer" clip-path="url(#iceClip)">
+                                    <rect x="22" y="94" width="196" height="206" fill="url(#iceGrad)"/>
+                                    <path class="ice-facet" d="M60,120 L96,220 M110,104 L140,260 M168,116 L150,240 M84,150 L180,180" fill="none"/>
+                                </g>
+                            </g>
+                            <path class="beaker-glass" fill="none" d="M22,20 L22,268 Q22,300 54,300 L186,300 Q218,300 218,268 L218,20"/>
+                            <ellipse class="beaker-rim" fill="none" cx="120" cy="20" rx="98" ry="9"/>
+                            <rect class="beaker-shine" x="36" y="30" width="30" height="246" fill="url(#glassShine)"/>
+                            <line class="tick" x1="198" y1="94" x2="218" y2="94"/>
+                            <text class="tick-label" x="194" y="90">100 mL</text>
+                            <line class="tick" x1="198" y1="197" x2="218" y2="197"/>
+                            <text class="tick-label" x="194" y="193">50</text>
+                        </svg>
+                        <div class="steam-wisps" id="steamWisps" aria-hidden="true">
+                            <span></span><span></span><span></span>
+                        </div>
+                        <div class="thermometer-wrap" aria-label="온도계">
+                            <svg class="thermometer-svg" viewBox="0 0 50 240" aria-hidden="true">
+                                <defs>
+                                    <clipPath id="tubeClip"><rect x="20" y="12" width="10" height="168" rx="5"/></clipPath>
+                                    <linearGradient id="mercuryGrad" x1="0" y1="1" x2="0" y2="0">
+                                        <stop offset="0%" stop-color="#ff7d7d"/>
+                                        <stop offset="100%" stop-color="#ffcf6f"/>
+                                    </linearGradient>
+                                </defs>
+                                <rect class="tube-outline" fill="none" x="20" y="12" width="10" height="192" rx="5"/>
+                                <g clip-path="url(#tubeClip)"><rect id="mercuryRect" x="20" width="10" fill="url(#mercuryGrad)"/></g>
+                                <circle class="bulb-outline" fill="none" cx="25" cy="198" r="13"/>
+                                <circle class="bulb-fill" cx="25" cy="198" r="9.5"/>
+                                <g class="therm-ticks">
+                                    <line x1="30" y1="180" x2="35" y2="180"/>
+                                    <line x1="30" y1="146.4" x2="35" y2="146.4"/>
+                                    <line x1="30" y1="112.8" x2="35" y2="112.8"/>
+                                    <line x1="30" y1="79.2" x2="35" y2="79.2"/>
+                                    <line x1="30" y1="45.6" x2="35" y2="45.6"/>
+                                    <line x1="30" y1="12" x2="35" y2="12"/>
+                                </g>
+                            </svg>
+                        </div>
+                    </div>
+                </div>
+                <p class="stage-caption" id="stageCaption">온도를 정해 물의 상태를 관찰하세요.</p>
+            </section>
+        </div>
+
+        <section class="panel meaning-panel">
+            <h2>실험 결과의 의미</h2>
+            <div class="meaning-body">
+                <p><strong>녹는점(어는점)</strong> 고체가 액체로, 액체가 고체로 바뀌는 온도로 물은 0℃입니다.</p>
+                <p><strong>끓는점</strong> 액체가 기체로 바뀌는 온도로 물은 100℃입니다.</p>
+                <p>상태가 바뀌어도 물(H₂O)이라는 사실은 그대로입니다 — 다른 물질로 변하는 것이 아닙니다.</p>
+            </div>
+        </section>
+
+        <details class="quiz-section" aria-labelledby="quiz-title">
+            <summary class="quiz-heading"><h2 id="quiz-title">확인 문제</h2><span>4문제</span></summary>
+            <div class="quiz-grid">
+                <article class="quiz-card" data-answer="b">
+                    <h3>물이 얼어 얼음이 되는 온도는?</h3>
+                    <div class="quiz-options">
+                        <label><input type="radio" name="q1" value="a"> -10℃</label>
+                        <label><input type="radio" name="q1" value="b"> 0℃</label>
+                        <label><input type="radio" name="q1" value="c"> 50℃</label>
+                        <label><input type="radio" name="q1" value="d"> 100℃</label>
+                    </div>
+                    <button class="answer-button" type="button">정답 확인</button>
+                    <p class="answer-result" aria-live="polite"></p>
+                    <p class="answer-explanation" hidden>물은 0℃에서 얼기 시작합니다. 이 온도를 어는점(녹는점)이라고 합니다.</p>
+                </article>
+
+                <article class="quiz-card" data-answer="d">
+                    <h3>물이 끓기 시작하는 온도는?</h3>
+                    <div class="quiz-options">
+                        <label><input type="radio" name="q2" value="a"> 0℃</label>
+                        <label><input type="radio" name="q2" value="b"> 50℃</label>
+                        <label><input type="radio" name="q2" value="c"> 90℃</label>
+                        <label><input type="radio" name="q2" value="d"> 100℃</label>
+                    </div>
+                    <button class="answer-button" type="button">정답 확인</button>
+                    <p class="answer-result" aria-live="polite"></p>
+                    <p class="answer-explanation" hidden>물은 100℃에서 끓기 시작합니다. 이 온도를 끓는점이라고 합니다.</p>
+                </article>
+
+                <article class="quiz-card" data-answer="c">
+                    <h3>얼음이 녹아 물이 되어도 변하지 않는 것은?</h3>
+                    <div class="quiz-options">
+                        <label><input type="radio" name="q3" value="a"> 온도</label>
+                        <label><input type="radio" name="q3" value="b"> 모양</label>
+                        <label><input type="radio" name="q3" value="c"> 물질의 종류</label>
+                        <label><input type="radio" name="q3" value="d"> 상태</label>
+                    </div>
+                    <button class="answer-button" type="button">정답 확인</button>
+                    <p class="answer-result" aria-live="polite"></p>
+                    <p class="answer-explanation" hidden>모양과 상태는 바뀌지만, 물(H₂O)이라는 물질의 종류는 바뀌지 않습니다.</p>
+                </article>
+
+                <article class="quiz-card" data-answer="a">
+                    <h3>물이 수증기(기체)가 되면 부피는 어떻게 되는가?</h3>
+                    <div class="quiz-options">
+                        <label><input type="radio" name="q4" value="a"> 크게 늘어난다.</label>
+                        <label><input type="radio" name="q4" value="b"> 줄어든다.</label>
+                        <label><input type="radio" name="q4" value="c"> 그대로다.</label>
+                        <label><input type="radio" name="q4" value="d"> 없어진다.</label>
+                    </div>
+                    <button class="answer-button" type="button">정답 확인</button>
+                    <p class="answer-result" aria-live="polite"></p>
+                    <p class="answer-explanation" hidden>기체가 된 물은 입자 사이 거리가 멀어져 부피가 크게 늘어납니다.</p>
+                </article>
+            </div>
+        </details>
+    </main>
+    <script src="app.js?v=13"></script>
+</body>
+</html>

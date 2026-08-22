@@ -3,60 +3,90 @@
     justify-items: center;
     gap: 8px;
     min-width: 112px;
+    max-width: 320px;
     color: var(--muted);
-    transition: opacity .35s ease;
+    transition: max-width .4s ease .3s, min-width .4s ease .3s;
+    overflow: hidden;
+}
+.salt-dose.poured {
+    max-width: 0;
+    min-width: 0;
 }
 
 .salt-dose strong { font-size: 13px; }
-.salt-dose output { color: var(--amber); font-size: 19px; font-weight: 950; }
 
-.salt-cup {
-    position: relative;
-    width: 92px;
-    height: 112px;
-    overflow: hidden;
-    border: 4px solid rgba(232, 245, 244, .62);
-    border-top: 0;
-    border-radius: 3px 3px 18px 18px;
-    background: rgba(255, 255, 255, .025);
+.salt-cup-svg {
+    width: max(130px, min(40vw, 260px, calc(30vh * .633)));
+    aspect-ratio: 100 / 158;
+    display: block;
+    transition: opacity .35s ease, transform .35s ease;
 }
+.paper-sheet { fill: #a99a72; }
+.paper-outline { stroke: rgba(40, 32, 16, .5); stroke-width: 2; }
+.paper-crease { stroke: rgba(40, 32, 16, .35); stroke-width: 1.2; stroke-dasharray: 2 2; }
+#saltCrystalGroup rect { transition: opacity .2s ease; }
 
-.salt-cup::before {
-    content: "";
-    position: absolute;
-    z-index: 2;
-    top: -3px;
-    left: -7px;
-    right: -7px;
-    height: 7px;
-    border: 3px solid rgba(232, 245, 244, .72);
-    border-radius: 999px;
-}
+.scale-body { fill: #26383d; stroke: rgba(255, 255, 255, .16); stroke-width: 1.5; }
+.scale-screen { fill: #061512; stroke: rgba(84, 230, 193, .3); stroke-width: 1; }
+.scale-readout { fill: var(--mint); font-size: 11px; font-weight: 950; font-family: 'Courier New', monospace; }
 
-.salt-pile {
-    --salt-level: 55%;
-    position: absolute;
-    left: 4px;
-    right: 4px;
-    bottom: 4px;
-    height: var(--salt-level);
-    border-radius: 45% 45% 12px 12px;
-    background:
-        radial-gradient(circle, #fff 0 1px, transparent 1.7px) 0 0 / 8px 8px,
-        linear-gradient(#f8f5e8, #d8cfb7);
-    box-shadow: inset 0 8px 12px rgba(255,255,255,.5);
-    transition: height .25s ease, opacity .35s ease, transform .35s ease;
-}
-
-.salt-dose.poured .salt-pile { opacity: 0; transform: translateY(26px); }
+.salt-dose.poured .salt-cup-svg { opacity: 0; transform: translateY(20px); }
 .salt-dose.poured strong { color: var(--mint); }
+
+.beaker {
+    position: relative;
+    width: max(210px, min(42vw, 400px, calc(56vh * .75)));
+    aspect-ratio: 240 / 320;
+    filter: drop-shadow(0 16px 20px rgba(0, 0, 0, .22));
+}
+.beaker-svg { width: 100%; height: 100%; display: block; overflow: visible; }
+.beaker-glass { stroke: rgba(177, 226, 230, .78); stroke-width: 5; stroke-linejoin: round; }
+.beaker-rim { stroke: rgba(177, 226, 230, .82); stroke-width: 4; }
+.beaker-shine { pointer-events: none; }
+.water-surface { fill: rgba(190, 238, 250, .4); }
+.tick { stroke: rgba(220, 246, 247, .5); stroke-width: 1.5; }
+.tick-label { fill: rgba(220, 246, 247, .72); font-size: 11px; font-weight: 700; text-anchor: end; }
+#sedimentGroup rect { transition: opacity .2s ease; }
+
+@keyframes waterBob {
+    0%, 100% { transform: translateY(0) scaleY(1); }
+    50% { transform: translateY(1px) scaleY(.985); }
+}
+@keyframes stirWobble {
+    0%, 100% { transform: translateX(0) scaleX(1); }
+    25% { transform: translateX(-3px) scaleX(1.03); }
+    50% { transform: translateX(0) scaleX(.97); }
+    75% { transform: translateX(3px) scaleX(1.03); }
+}
+.beaker.mixed .water-surface { animation: waterBob 3.4s ease-in-out infinite; transform-origin: center; }
+.beaker.stirring .water-surface { animation: stirWobble .6s ease-in-out infinite; transform-origin: center; }
+
+.particle { transition: opacity .4s ease, transform .4s ease, left 3.2s ease-out, top 3.2s ease-out; }
+.ion { font-size: 7px; letter-spacing: -.3px; }
+
+.thermometer-wrap {
+    position: absolute;
+    top: 3%;
+    bottom: 16%;
+    left: 22%;
+    width: auto;
+    aspect-ratio: 50 / 240;
+    transform: rotate(-4deg);
+    transform-origin: bottom center;
+    filter: drop-shadow(0 4px 6px rgba(0, 0, 0, .25));
+}
+.therm-ticks line { stroke: rgba(255, 255, 255, .55); stroke-width: 1.5; }
+.thermometer-svg { width: 100%; height: 100%; display: block; overflow: visible; }
+.tube-outline { fill: rgba(255, 255, 255, .04); stroke: rgba(255, 255, 255, .5); stroke-width: 2.5; }
+.bulb-outline { fill: rgba(255, 255, 255, .04); stroke: rgba(255, 255, 255, .5); stroke-width: 2.5; }
+.bulb-fill { fill: var(--danger); }
+#mercuryRect { transition: y .25s ease, height .25s ease; }
 
 @media (max-width: 600px) {
     .apparatus { gap: 24px; }
     .salt-dose { min-width: 82px; }
-    .salt-cup { width: 72px; height: 92px; }
 }
 
 @media (prefers-reduced-motion: reduce) {
-    .salt-dose, .salt-pile { transition: none; }
+    .salt-cup-svg, #mercuryRect, .particle, .beaker.mixed .water-surface { transition: none; animation: none; }
 }

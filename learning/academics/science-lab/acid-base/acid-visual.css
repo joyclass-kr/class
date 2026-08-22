@@ -1,0 +1,70 @@
+.solution-field { margin: 22px 0 14px; padding: 0; border: 0; }
+.solution-field legend { color: #dce9e8; font-size: 14px; font-weight: 850; }
+.solution-buttons { display: grid; grid-template-columns: repeat(3, 1fr); gap: 8px; margin-top: 9px; }
+.solution-buttons button { border: 1px solid var(--line); border-radius: 11px; background: #0a1c24; color: var(--muted); font-weight: 850; cursor: pointer; padding: 10px 4px; }
+.solution-buttons button.selected { border-color: var(--cyan); background: rgba(82, 199, 255, .12); color: var(--cyan); }
+
+.beaker {
+    position: relative;
+    width: max(210px, min(42vw, 400px, calc(56vh * .75)));
+    aspect-ratio: 240 / 320;
+    filter: drop-shadow(0 16px 20px rgba(0, 0, 0, .22));
+}
+.beaker-svg { width: 100%; height: 100%; display: block; overflow: visible; }
+.beaker-glass { stroke: rgba(177, 226, 230, .78); stroke-width: 5; stroke-linejoin: round; }
+.beaker-rim { stroke: rgba(177, 226, 230, .82); stroke-width: 4; }
+.beaker-shine { pointer-events: none; }
+#solutionRect { transition: fill .6s ease; }
+.solution-surface { fill: rgba(255, 255, 255, .3); transform-box: fill-box; transform-origin: center; }
+
+@keyframes solutionBob {
+    0%, 100% { transform: translateY(0) scaleY(1); }
+    50% { transform: translateY(1px) scaleY(.985); }
+}
+.beaker.has-solution .solution-surface { animation: solutionBob 3.6s ease-in-out infinite; }
+
+/* A quick outward pulse where the strip touches down, so the dip itself
+   reads as an event rather than the strip just silently changing colour. */
+@keyframes rippleEffect {
+    0% { transform: scale(1); opacity: .3; }
+    40% { transform: scale(1.18); opacity: .55; }
+    100% { transform: scale(1); opacity: .3; }
+}
+.solution-surface.rippling { animation: rippleEffect .7s ease-out; }
+
+/* Both strips sit on the left side of the beaker, well clear of the mL tick
+   labels the beaker used to have on the right (a past bug: the thermometer
+   collided with them) — this beaker has no tick marks at all now, since
+   volume isn't part of this experiment. top/bottom define height, left
+   positions each strip independently so they never overlap each other. */
+.litmus-wrap {
+    position: absolute;
+    top: 4%;
+    bottom: 22%;
+    width: auto;
+    aspect-ratio: 20 / 220;
+    filter: drop-shadow(0 4px 6px rgba(0, 0, 0, .22));
+}
+.litmus-red { left: 14%; }
+.litmus-blue { left: 30%; }
+/* Dipping moves the strip further down into the solution, then back up — the
+   color change (below) is timed to land partway through this motion. The
+   translateY is set inline by app.js (measureDip) on the inner .litmus-svg,
+   not the wrap div: a transform set directly on .litmus-wrap never took
+   visual effect in testing (confirmed with getBoundingClientRect — the div's
+   own box stayed still while an identical transform on its child svg moved
+   correctly), so the svg carries the motion and this transition. */
+.litmus-svg { width: 100%; height: 100%; display: block; overflow: visible; transition: transform .4s ease-in; }
+.litmus-wrap.dipping .litmus-svg { transition-timing-function: ease-out; }
+.litmus-outline { stroke: rgba(255, 255, 255, .4); stroke-width: 1.5; }
+/* The colour change spreads up from the wetted bottom edge like real
+   capillary action, instead of the whole strip flipping colour at once. */
+#redChangeClipRect, #blueChangeClipRect { transition: y .6s ease-out, height .6s ease-out; }
+
+@media (max-width: 600px) {
+    .solution-buttons { grid-template-columns: repeat(2, 1fr); }
+}
+
+@media (prefers-reduced-motion: reduce) {
+    #solutionRect, .litmus-svg, #redChangeClipRect, #blueChangeClipRect, .beaker.has-solution .solution-surface, .solution-surface.rippling { transition: none; animation: none; }
+}
