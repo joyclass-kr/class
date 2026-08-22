@@ -1,6 +1,7 @@
 "use strict";
 
 const bank = window.IDIOMATIC_EXPRESSION_BANK;
+const illustrations = window.IDIOMATIC_EXPRESSION_ILLUSTRATIONS || {};
 const LESSONS = [
   { title: "1차시 · 감정과 반응", copy: "걱정·긴장·놀람을 나타내는 표현" },
   { title: "2차시 · 생각하고 판단하기", copy: "고민·깨달음·판단을 나타내는 표현" },
@@ -63,6 +64,10 @@ function renderStudy() {
   byId("progress").textContent = LESSONS[lessonIndex].title + " · " + (studyPosition + 1) + " / " + BATCH_SIZE;
   byId("category").textContent = item.category;
   byId("expression").textContent = item.expression;
+  const illustration = byId("illustration");
+  illustration.src = illustrations[item.expression] || "";
+  illustration.alt = item.expression + " 삽화";
+  illustration.hidden = !illustration.src;
   byId("meaning").textContent = item.meaning;
   byId("example").textContent = "예: " + item.example;
   byId("previous").disabled = studyPosition === 0;
