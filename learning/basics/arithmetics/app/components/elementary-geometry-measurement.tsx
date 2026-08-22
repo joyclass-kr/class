@@ -12,8 +12,46 @@ function Label({ x, y, children }: { x: number; y: number; children: ReactNode }
   return <text x={x} y={y} textAnchor="middle" fontSize="13" fontWeight="700" fill={ink}>{children}</text>;
 }
 
+function OrthogonalDiagram({ problem }: { problem: GeometryMeasurementProblem }) {
+  const cells = problem.cells ?? [];
+  const cellWidth = problem.dimensions.cellWidth;
+  const cellHeight = problem.dimensions.cellHeight;
+  const occupied = new Set(cells.map(([x, y]) => `${x},${y}`));
+  const columns = Math.max(...cells.map(([x]) => x)) + 1;
+  const rows = Math.max(...cells.map(([, y]) => y)) + 1;
+  const scale = Math.min(180 / (columns * cellWidth), 128 / (rows * cellHeight));
+  const width = cellWidth * scale;
+  const height = cellHeight * scale;
+  const originX = (280 - columns * width) / 2;
+  const originY = (155 - rows * height) / 2 + 4;
+  const topCell = cells.find(([x, y]) => !occupied.has(`${x},${y - 1}`)) ?? cells[0];
+  const leftCell = cells.find(([x, y]) => !occupied.has(`${x - 1},${y}`)) ?? cells[0];
+  const topMeasureX = originX + topCell[0] * width;
+  const topMeasureY = originY + topCell[1] * height - 8;
+  const leftMeasureX = originX + leftCell[0] * width - 9;
+  const leftMeasureY = originY + leftCell[1] * height;
+  const edges = cells.flatMap(([x, y]) => {
+    const left = originX + x * width;
+    const top = originY + y * height;
+    return [
+      !occupied.has(`${x},${y - 1}`) && <line key={`${x}-${y}-t`} x1={left} y1={top} x2={left + width} y2={top} />,
+      !occupied.has(`${x + 1},${y}`) && <line key={`${x}-${y}-r`} x1={left + width} y1={top} x2={left + width} y2={top + height} />,
+      !occupied.has(`${x},${y + 1}`) && <line key={`${x}-${y}-b`} x1={left} y1={top + height} x2={left + width} y2={top + height} />,
+      !occupied.has(`${x - 1},${y}`) && <line key={`${x}-${y}-l`} x1={left} y1={top} x2={left} y2={top + height} />,
+    ].filter(Boolean);
+  });
+  return <svg viewBox="0 0 280 180" role="img" aria-label="회전하거나 뒤집은 여러 가지 직각 다각형">
+    {cells.map(([x, y]) => <rect key={`${x}-${y}`} x={originX + x * width} y={originY + y * height} width={width} height={height} fill={fill} />)}
+    <g stroke={ink} strokeWidth="2" strokeLinecap="round">{edges}</g>
+    <line x1={topMeasureX} y1={topMeasureY} x2={topMeasureX + width} y2={topMeasureY} stroke="#d05a44" strokeWidth="2" />
+    <Label x={topMeasureX + width / 2} y={topMeasureY - 4}>{cellWidth}cm</Label>
+    <line x1={leftMeasureX} y1={leftMeasureY} x2={leftMeasureX} y2={leftMeasureY + height} stroke="#315bb5" strokeWidth="2" />
+    <Label x={leftMeasureX - 13} y={leftMeasureY + height / 2 + 5}>{cellHeight}cm</Label>
+  </svg>;
+}
 function Diagram({ problem, plane }: { problem: GeometryMeasurementProblem; plane: boolean }) {
   const d = problem.dimensions;
+  if (problem.kind === "orthogonal") return <OrthogonalDiagram problem={problem} />;
   if (problem.kind === "l-shape") return <svg viewBox="0 0 280 180" role="img" aria-label="한 모서리를 잘라 낸 L자 도형"><path d="M45 25 H225 V85 H170 V155 H45 Z" fill={fill} stroke={ink} strokeWidth="2" /><Label x={135} y={174}>{d.width}cm</Label><Label x={24} y={94}>{d.height}cm</Label><Label x={198} y={78}>{d.cutWidth}cm</Label><Label x={247} y={121}>{d.cutHeight}cm</Label></svg>;
   if (problem.kind === "frame") return <svg viewBox="0 0 280 180" role="img" aria-label="가운데가 뚫린 직사각형 액자"><path d="M35 20 H245 V160 H35 Z M85 58 H195 V122 H85 Z" fill={fill} stroke={ink} strokeWidth="2" fillRule="evenodd" /><Label x={140} y={177}>{d.width}cm</Label><Label x={16} y={94}>{d.height}cm</Label><Label x={140} y={53}>{d.innerWidth}cm</Label><Label x={211} y={94}>{d.innerHeight}cm</Label></svg>;
   if (problem.kind === "u-shape") return <svg viewBox="0 0 280 180" role="img" aria-label="윗부분에 직사각형 홈이 파인 도형"><path d="M40 25 H105 V95 H175 V25 H240 V160 H40 Z" fill={fill} stroke={ink} strokeWidth="2" /><Label x={140} y={177}>{d.width}cm</Label><Label x={18} y={96}>{d.height}cm</Label><Label x={140} y={89}>{d.notchWidth}cm</Label><Label x={190} y={63}>{d.notchHeight}cm</Label></svg>;

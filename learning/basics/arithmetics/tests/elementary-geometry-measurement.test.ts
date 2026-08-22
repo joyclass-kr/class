@@ -4,7 +4,9 @@ import { createElementaryGeometryMeasurementSet, normalizeGeometryMeasurementAns
 
 test("plane measurement uses four composite figures", () => {
   const problems = createElementaryGeometryMeasurementSet("plane", 20260822);
-  assert.deepEqual(problems.map((problem) => problem.kind), ["l-shape", "frame", "u-shape", "house"]);
+  assert.equal(problems.length, 4);
+  assert.ok(problems.every((problem) => problem.kind === "orthogonal" && problem.cells && problem.cells.length >= 5));
+  assert.equal(new Set(problems.map((problem) => problem.id.split("-").slice(0, 2).join("-"))).size, 4);
   assert.ok(problems.every((problem) => problem.first > 0 && problem.second > 0));
 });
 

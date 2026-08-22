@@ -4,6 +4,7 @@ export type GeometryMeasurementProblem = {
   id: string;
   kind: string;
   dimensions: Record<string, number>;
+  cells?: [number, number][];
   first: number;
   second: number;
   firstLabel: "둘레" | "겉넓이";
@@ -24,32 +25,71 @@ function pick<T>(random: () => number, values: readonly T[]) {
   return values[Math.floor(random() * values.length)];
 }
 
+type Cell = readonly [number, number];
+
+const ORTHOGONAL_SHAPE_BANK: { name: string; cells: readonly Cell[] }[] = [
+  { name: "L", cells: [[0, 0], [0, 1], [0, 2], [1, 2], [2, 2]] },
+  { name: "T", cells: [[0, 0], [1, 0], [2, 0], [1, 1], [1, 2], [1, 3]] },
+  { name: "U", cells: [[0, 0], [0, 1], [0, 2], [1, 2], [2, 2], [2, 1], [2, 0]] },
+  { name: "H", cells: [[0, 0], [0, 1], [0, 2], [1, 1], [2, 0], [2, 1], [2, 2]] },
+  { name: "cross", cells: [[1, 0], [0, 1], [1, 1], [2, 1], [1, 2]] },
+  { name: "stairs", cells: [[0, 0], [0, 1], [1, 1], [0, 2], [1, 2], [2, 2]] },
+  { name: "zigzag", cells: [[0, 0], [1, 0], [1, 1], [2, 1], [2, 2], [3, 2]] },
+  { name: "C", cells: [[0, 0], [1, 0], [2, 0], [0, 1], [0, 2], [1, 2], [2, 2]] },
+  { name: "E", cells: [[0, 0], [1, 0], [2, 0], [0, 1], [0, 2], [1, 2], [2, 2], [0, 3], [0, 4], [1, 4], [2, 4]] },
+  { name: "frame", cells: [[0, 0], [1, 0], [2, 0], [0, 1], [2, 1], [0, 2], [1, 2], [2, 2]] },
+  { name: "double-notch", cells: [[0, 0], [2, 0], [3, 0], [0, 1], [1, 1], [2, 1], [3, 1], [0, 2], [1, 2], [3, 2]] },
+  { name: "tower", cells: [[1, 0], [0, 1], [1, 1], [2, 1], [0, 2], [1, 2], [2, 2], [1, 3]] },
+];
+
+function transformCells(cells: readonly Cell[], rotation: number, mirror: boolean): [number, number][] {
+  const transformed = cells.map(([sourceX, sourceY]) => {
+    let x = mirror ? -sourceX : sourceX;
+    let y = sourceY;
+    for (let turn = 0; turn < rotation; turn += 1) [x, y] = [-y, x];
+    return [x, y] as [number, number];
+  });
+  const minimumX = Math.min(...transformed.map(([x]) => x));
+  const minimumY = Math.min(...transformed.map(([, y]) => y));
+  return transformed.map(([x, y]) => [x - minimumX, y - minimumY]);
+}
+
+function orthogonalPerimeter(cells: readonly [number, number][], cellWidth: number, cellHeight: number) {
+  const occupied = new Set(cells.map(([x, y]) => `${x},${y}`));
+  return cells.reduce((sum, [x, y]) => sum
+    + (!occupied.has(`${x - 1},${y}`) ? cellHeight : 0)
+    + (!occupied.has(`${x + 1},${y}`) ? cellHeight : 0)
+    + (!occupied.has(`${x},${y - 1}`) ? cellWidth : 0)
+    + (!occupied.has(`${x},${y + 1}`) ? cellWidth : 0), 0);
+}
+
 export function createElementaryGeometryMeasurementSet(mode: GeometryMeasurementMode, seed: number): GeometryMeasurementProblem[] {
   const random = seededRandom(seed ^ (mode === "plane" ? 0x51a7 : 0x60b5));
   if (mode === "plane") {
-    const width = pick(random, [10, 12, 14]);
-    const height = pick(random, [8, 10, 12]);
-    const cutWidth = pick(random, [3, 4, 5]);
-    const cutHeight = pick(random, [3, 4]);
-    const frameWidth = pick(random, [12, 14, 16]);
-    const frameHeight = pick(random, [9, 10, 12]);
-    const innerWidth = frameWidth - pick(random, [4, 6]);
-    const innerHeight = frameHeight - pick(random, [4, 6]);
-    const uWidth = pick(random, [10, 12, 14]);
-    const uHeight = pick(random, [8, 10, 12]);
-    const notchWidth = pick(random, [3, 4, 5]);
-    const notchHeight = pick(random, [3, 4]);
-    const roofScale = pick(random, [1, 2]);
-    const houseWidth = 8 * roofScale;
-    const houseHeight = pick(random, [5, 6, 7]) * roofScale;
-    const roofHeight = 3 * roofScale;
-    const roofSide = 5 * roofScale;
-    return [
-      { id: `l-${seed}`, kind: "l-shape", dimensions: { width, height, cutWidth, cutHeight }, first: 2 * (width + height), second: width * height - cutWidth * cutHeight, firstLabel: "둘레", secondLabel: "넓이", firstUnit: "cm", secondUnit: "cm²" },
-      { id: `frame-${seed}`, kind: "frame", dimensions: { width: frameWidth, height: frameHeight, innerWidth, innerHeight }, first: 2 * (frameWidth + frameHeight + innerWidth + innerHeight), second: frameWidth * frameHeight - innerWidth * innerHeight, firstLabel: "둘레", secondLabel: "넓이", firstUnit: "cm", secondUnit: "cm²" },
-      { id: `u-${seed}`, kind: "u-shape", dimensions: { width: uWidth, height: uHeight, notchWidth, notchHeight }, first: 2 * (uWidth + uHeight) + 2 * notchHeight, second: uWidth * uHeight - notchWidth * notchHeight, firstLabel: "둘레", secondLabel: "넓이", firstUnit: "cm", secondUnit: "cm²" },
-      { id: `house-${seed}`, kind: "house", dimensions: { width: houseWidth, height: houseHeight, roofHeight, roofSide }, first: houseWidth + 2 * houseHeight + 2 * roofSide, second: houseWidth * houseHeight + houseWidth * roofHeight / 2, firstLabel: "둘레", secondLabel: "넓이", firstUnit: "cm", secondUnit: "cm²" },
-    ];
+    const shuffled = [...ORTHOGONAL_SHAPE_BANK];
+    for (let index = shuffled.length - 1; index > 0; index -= 1) {
+      const target = Math.floor(random() * (index + 1));
+      [shuffled[index], shuffled[target]] = [shuffled[target], shuffled[index]];
+    }
+    return shuffled.slice(0, 4).map((template, index) => {
+      const cellWidth = pick(random, [2, 3, 4, 5]);
+      const cellHeight = pick(random, [2, 3, 4]);
+      const rotation = Math.floor(random() * 4);
+      const mirror = random() < 0.5;
+      const cells = transformCells(template.cells, rotation, mirror);
+      return {
+        id: `orthogonal-${template.name}-${seed}-${index}`,
+        kind: "orthogonal",
+        dimensions: { cellWidth, cellHeight, rotation, mirror: mirror ? 1 : 0 },
+        cells,
+        first: orthogonalPerimeter(cells, cellWidth, cellHeight),
+        second: cells.length * cellWidth * cellHeight,
+        firstLabel: "둘레" as const,
+        secondLabel: "넓이" as const,
+        firstUnit: "cm" as const,
+        secondUnit: "cm²" as const,
+      };
+    });
   }
   const length = pick(random, [8, 10, 12]);
   const width = pick(random, [5, 6, 7]);
