@@ -6,9 +6,10 @@
     <meta name="theme-color" content="#07131c">
     <title>과학 실험실</title>
     <meta name="description" content="물의 온도에 따라 녹는 소금의 양을 비교하는 초등 과학 모의실험">
-    <link rel="stylesheet" href="styles.css">
-    <link rel="stylesheet" href="salt-visual.css">
-    <link rel="stylesheet" href="quiz.css">
+    <link rel="stylesheet" as="style" crossorigin href="https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.9/dist/web/static/pretendard.css">
+    <link rel="stylesheet" href="styles.css?v=12">
+    <link rel="stylesheet" href="salt-visual.css?v=17">
+    <link rel="stylesheet" href="quiz.css?v=11">
 </head>
 <body>
     <main>
@@ -20,28 +21,17 @@
             <div class="grade-tags"><span>초등 5~6</span><span>화학</span></div>
         </header>
 
-        <div class="experiment-layout">
-            <aside class="guide-column">
-                <section class="panel method">
-                    <h2>실험 방법</h2>
-                    <ol>
-                        <li>물 100g의 온도를 정합니다.</li>
-                        <li>넣을 소금의 양을 정합니다.</li>
-                        <li>결과를 예상하고 소금을 넣어 저어 봅니다.</li>
-                        <li>녹은 양과 바닥에 남은 양을 비교합니다.</li>
-                    </ol>
-                </section>
-                <section class="panel meaning">
-                    <h2>실험 결과의 의미</h2>
-                    <p><strong>용해</strong> 소금이 사라지는 것이 아니라 작은 입자로 물속에 고르게 퍼집니다.</p>
-                    <p><strong>용해도</strong> 일정한 온도에서 물 100g에 최대로 녹는 소금의 양입니다.</p>
-                    <p>소금은 물의 온도가 높아져도 녹는 양이 조금만 증가합니다.</p>
-                </section>
-            </aside>
+        <ol class="method-steps" aria-label="실험 방법">
+            <li>물 100 g의 온도를 정합니다.</li>
+            <li>넣을 소금의 양을 정합니다.</li>
+            <li>결과를 예상하고 소금을 넣어 저어 봅니다.</li>
+            <li>녹은 양과 바닥에 남은 양을 비교합니다.</li>
+        </ol>
 
+        <div class="experiment-layout">
             <section class="panel control-panel" aria-labelledby="control-title">
                 <h2 id="control-title">실험 조건</h2>
-                <p class="water-standard">물 100g</p>
+                <p class="water-standard">물 100 g</p>
 
                 <div class="range-heading">
                     <label for="temperatureRange">물의 온도</label>
@@ -52,10 +42,10 @@
 
                 <div class="range-heading amount-heading">
                     <label for="amountRange">넣는 소금</label>
-                    <output id="amountOutput" for="amountRange">37g</output>
+                    <output id="amountOutput" for="amountRange">37 g</output>
                 </div>
-                <input id="amountRange" type="range" min="33" max="39" step="0.5" value="37">
-                <div class="range-scale two-point" aria-hidden="true"><span id="amountMinLabel">33g</span><span id="amountMaxLabel">39g</span></div>
+                <input id="amountRange" type="range" min="33" max="39" step="1" value="37">
+                <div class="range-scale two-point" aria-hidden="true"><span id="amountMinLabel">33 g</span><span id="amountMaxLabel">39 g</span></div>
                 <p class="amount-guide" id="amountGuide">20℃에서 녹는 양의 근처만 조절합니다.</p>
 
                 <fieldset class="prediction-field">
@@ -73,8 +63,8 @@
                     <p id="resultEmpty">예상한 뒤 실험해 보세요.</p>
                     <div id="resultContent" hidden>
                         <div class="result-numbers">
-                            <article><span>녹은 소금</span><strong id="dissolvedValue">0g</strong></article>
-                            <article><span>남은 소금</span><strong id="remainingValue">0g</strong></article>
+                            <article><span>녹은 소금</span><strong id="dissolvedValue">0 g</strong></article>
+                            <article><span>남은 소금</span><strong id="remainingValue">0 g</strong></article>
                         </div>
                         <p class="prediction-result" id="predictionResult"></p>
                         <p class="explanation" id="elementaryExplanation"></p>
@@ -83,28 +73,97 @@
             </section>
 
             <section class="panel beaker-stage" aria-label="소금 용해 관찰 화면">
-                <div class="stage-heading"><h2>관찰</h2><span id="solubilityBadge">용해도 36g</span></div>
+                <div class="stage-heading"><h2>관찰</h2><span id="solubilityBadge">용해도 36 g</span></div>
                 <div class="apparatus">
                     <div class="salt-dose" id="saltDose" aria-label="넣을 소금의 양">
                         <strong>넣을 소금</strong>
-                        <div class="salt-cup"><span class="salt-pile" id="saltPile"></span></div>
-                        <output id="saltDoseValue">37g</output>
+                        <svg class="salt-cup-svg" viewBox="0 0 100 158" aria-hidden="true">
+                            <defs>
+                                <clipPath id="paperClip"><ellipse cx="50" cy="100" rx="33" ry="17"/></clipPath>
+                            </defs>
+                            <rect class="scale-body" x="14" y="112" width="72" height="34" rx="7"/>
+                            <rect class="scale-screen" x="24" y="122" width="52" height="16" rx="3"/>
+                            <text id="saltDoseValue" class="scale-readout" x="50" y="134" text-anchor="middle">37 g</text>
+                            <ellipse class="paper-sheet" cx="50" cy="100" rx="36" ry="19"/>
+                            <g clip-path="url(#paperClip)"><g id="saltCrystalGroup"></g></g>
+                            <path class="paper-crease" fill="none" d="M50,83 L50,117 M20,100 L80,100"/>
+                            <ellipse class="paper-outline" fill="none" cx="50" cy="100" rx="36" ry="19"/>
+                        </svg>
                     </div>
                     <div class="beaker" id="beaker">
-                        <div class="water" id="water">
-                            <div class="sediment" id="sediment"></div>
+                        <svg class="beaker-svg" viewBox="0 0 240 320" aria-hidden="true">
+                            <defs>
+                                <clipPath id="beakerClip"><path d="M22,20 L22,268 Q22,300 54,300 L186,300 Q218,300 218,268 L218,20 Z"/></clipPath>
+                                <linearGradient id="waterGrad" x1="0" y1="0" x2="0" y2="1">
+                                    <stop id="waterStopTop" offset="0%" stop-color="#6ec8eb" stop-opacity=".58"/>
+                                    <stop id="waterStopBottom" offset="100%" stop-color="#3c96c3" stop-opacity=".7"/>
+                                </linearGradient>
+                                <linearGradient id="glassShine" x1="0" y1="0" x2="1" y2="0">
+                                    <stop offset="0%" stop-color="#fff" stop-opacity="0"/>
+                                    <stop offset="16%" stop-color="#fff" stop-opacity=".32"/>
+                                    <stop offset="32%" stop-color="#fff" stop-opacity="0"/>
+                                </linearGradient>
+                            </defs>
+                            <g clip-path="url(#beakerClip)">
+                                <rect id="waterRect" x="22" y="94" width="196" height="206" fill="url(#waterGrad)"/>
+                                <ellipse id="waterSurface" class="water-surface" cx="120" cy="94" rx="98" ry="7"/>
+                                <g id="sedimentGroup"></g>
+                                <g id="dissolvingGroup"></g>
+                            </g>
+                            <path class="beaker-glass" fill="none" d="M22,20 L22,268 Q22,300 54,300 L186,300 Q218,300 218,268 L218,20"/>
+                            <ellipse class="beaker-rim" fill="none" cx="120" cy="20" rx="98" ry="9"/>
+                            <rect class="beaker-shine" x="36" y="30" width="30" height="246" fill="url(#glassShine)"/>
+                            <line class="tick" x1="198" y1="94" x2="218" y2="94"/>
+                            <text class="tick-label" x="194" y="90">100 mL</text>
+                            <line class="tick" x1="198" y1="197" x2="218" y2="197"/>
+                            <text class="tick-label" x="194" y="193">50</text>
+                        </svg>
+                        <div class="particles" id="particles" aria-hidden="true"></div>
+                        <div class="thermometer-wrap" aria-label="온도계">
+                        <svg class="thermometer-svg" viewBox="0 0 50 240" aria-hidden="true">
+                            <defs>
+                                <clipPath id="tubeClip"><rect x="20" y="12" width="10" height="168" rx="5"/></clipPath>
+                                <linearGradient id="mercuryGrad" x1="0" y1="1" x2="0" y2="0">
+                                    <stop offset="0%" stop-color="#ff7d7d"/>
+                                    <stop offset="100%" stop-color="#ffcf6f"/>
+                                </linearGradient>
+                            </defs>
+                            <rect class="tube-outline" fill="none" x="20" y="12" width="10" height="192" rx="5"/>
+                            <g clip-path="url(#tubeClip)"><rect id="mercuryRect" x="20" width="10" fill="url(#mercuryGrad)"/></g>
+                            <circle class="bulb-outline" fill="none" cx="25" cy="198" r="13"/>
+                            <circle class="bulb-fill" cx="25" cy="198" r="9.5"/>
+                            <g class="therm-ticks">
+                                <line x1="30" y1="180" x2="35" y2="180"/>
+                                <line x1="30" y1="146.4" x2="35" y2="146.4"/>
+                                <line x1="30" y1="112.8" x2="35" y2="112.8"/>
+                                <line x1="30" y1="79.2" x2="35" y2="79.2"/>
+                                <line x1="30" y1="45.6" x2="35" y2="45.6"/>
+                                <line x1="30" y1="12" x2="35" y2="12"/>
+                            </g>
+                        </svg>
                         </div>
-                        <span class="beaker-mark mark-100">100 mL</span>
-                        <span class="beaker-mark mark-50">50</span>
                     </div>
-                    <div class="thermometer" aria-hidden="true"><span id="thermometerFill"></span></div>
                 </div>
+                <p class="particle-legend" id="particleLegend" hidden>
+                    <span><span class="legend-dot sodium-ion"></span>나트륨 이온 (Na⁺)</span>
+                    <span><span class="legend-dot chloride-ion"></span>염화 이온 (Cl⁻)</span>
+                    <span class="legend-note">이온은 실제로는 눈에 안 보일 만큼 작아요 — 이해를 돕기 위해 확대해 그린 모형입니다</span>
+                </p>
                 <p class="stage-caption" id="stageCaption">온도와 소금의 양을 정하세요.</p>
             </section>
         </div>
 
-        <section class="quiz-section" aria-labelledby="quiz-title">
-            <div class="quiz-heading"><h2 id="quiz-title">확인 문제</h2><span>4문제</span></div>
+        <section class="panel meaning-panel">
+            <h2>실험 결과의 의미</h2>
+            <div class="meaning-body">
+                <p><strong>용해</strong> 소금이 사라지는 것이 아니라 작은 입자로 물속에 고르게 퍼집니다.</p>
+                <p><strong>용해도</strong> 일정한 온도에서 물 100 g에 최대로 녹는 소금의 양입니다.</p>
+                <p>소금은 물의 온도가 높아져도 녹는 양이 조금만 증가합니다.</p>
+            </div>
+        </section>
+
+        <details class="quiz-section" aria-labelledby="quiz-title">
+            <summary class="quiz-heading"><h2 id="quiz-title">확인 문제</h2><span>4문제</span></summary>
             <div class="quiz-grid">
                 <article class="quiz-card" data-answer="a">
                     <h3>소금이 모두 녹으면 어떻게 되는가?</h3>
@@ -116,20 +175,20 @@
                     </div>
                     <button class="answer-button" type="button">정답 확인</button>
                     <p class="answer-result" aria-live="polite"></p>
-                    <p class="answer-explanation" hidden>녹은 소금은 사라진 것이 아니라 눈에 보이지 않을 만큼 작은 입자로 물속에 고르게 퍼집니다.</p>
+                    <p class="answer-explanation" hidden>녹은 소금은 사라진 것이 아니라 눈에 보이지 않을 만큼 작은 입자(나트륨 이온과 염화 이온)로 물속에 고르게 퍼집니다. 이 이온들은 소금 알갱이 안에도 원래 있던 것이라, 물과 반응해서 새로운 물질이 생긴 게 아닙니다.</p>
                 </article>
 
                 <article class="quiz-card" data-answer="c">
-                    <h3>20℃의 물 100g에 소금이 최대 36g 녹는다. 소금 38g을 넣으면 바닥에 녹지 않고 남는 소금은 몇 g인가?</h3>
+                    <h3>20℃의 물 100 g에 소금이 최대 36 g 녹는다. 소금 38 g을 넣으면 바닥에 녹지 않고 남는 소금은 몇 g인가?</h3>
                     <div class="quiz-options">
-                        <label><input type="radio" name="q2" value="a"> 0g</label>
-                        <label><input type="radio" name="q2" value="b"> 38g</label>
-                        <label><input type="radio" name="q2" value="c"> 2g</label>
-                        <label><input type="radio" name="q2" value="d"> 36g</label>
+                        <label><input type="radio" name="q2" value="a"> 0 g</label>
+                        <label><input type="radio" name="q2" value="b"> 38 g</label>
+                        <label><input type="radio" name="q2" value="c"> 2 g</label>
+                        <label><input type="radio" name="q2" value="d"> 36 g</label>
                     </div>
                     <button class="answer-button" type="button">정답 확인</button>
                     <p class="answer-result" aria-live="polite"></p>
-                    <p class="answer-explanation" hidden>38g 중 36g이 녹으므로 38－36＝2g이 바닥에 남습니다.</p>
+                    <p class="answer-explanation" hidden>38 g 중 36 g이 녹으므로 38－36＝2 g이 바닥에 남습니다.</p>
                 </article>
 
                 <article class="quiz-card" data-answer="a">
@@ -142,7 +201,7 @@
                     </div>
                     <button class="answer-button" type="button">정답 확인</button>
                     <p class="answer-result" aria-live="polite"></p>
-                    <p class="answer-explanation" hidden>물 100g에 녹는 소금은 20℃에서 약 36g, 80℃에서 약 38.4g으로 조금 증가합니다.</p>
+                    <p class="answer-explanation" hidden>물 100 g에 녹는 소금은 20℃에서 약 36 g, 80℃에서 약 38.4 g으로 조금 증가합니다.</p>
                 </article>
 
                 <article class="quiz-card" data-answer="a">
@@ -158,8 +217,8 @@
                     <p class="answer-explanation" hidden>온도의 영향만 비교하려면 물의 양과 소금의 종류 등 다른 조건은 같게 해야 합니다.</p>
                 </article>
             </div>
-        </section>
+        </details>
     </main>
-    <script src="app.js"></script>
+    <script src="app.js?v=17"></script>
 </body>
 </html>
