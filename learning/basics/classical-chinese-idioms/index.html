@@ -3,14 +3,14 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <meta name="description" content="한자성어의 뜻, 유래, 출전과 복습 퀴즈를 제공하는 학습 도구">
+    <meta name="description" content="한자성어의 뜻, 유래, 출전과 복습 문제를 제공하는 학습 도구">
     <meta property="og:type" content="website">
     <meta property="og:locale" content="ko_KR">
     <meta property="og:title" content="한자성어 학습기">
-    <meta property="og:description" content="뜻, 유래, 출전, 퀴즈">
+    <meta property="og:description" content="뜻, 유래, 출전, 문제">
     <meta name="twitter:card" content="summary">
     <meta name="twitter:title" content="한자성어 학습기">
-    <meta name="twitter:description" content="뜻, 유래, 출전, 퀴즈">
+    <meta name="twitter:description" content="뜻, 유래, 출전, 문제">
     <title>한자성어</title>
     <link rel="stylesheet" href="styles.css">
     <link rel="stylesheet" href="lessons.css">
@@ -57,7 +57,7 @@
                     <button id="backToLessons" type="button">차시 목록</button>
                 </div>
                 <div class="lesson-heading"><span id="currentLessonNumber"></span><strong id="currentLessonTitle"></strong></div>
-                <button id="currentLessonQuiz" class="lesson-quiz-button" type="button">이 차시 퀴즈</button>
+                <button id="currentLessonQuiz" class="lesson-quiz-button" type="button">이 차시 문제</button>
             </div>
 
         <div class="progress-card" aria-label="전체 학습 현황">
@@ -78,7 +78,7 @@
                 <span aria-hidden="true">冊</span><b>학습</b>
             </button>
             <button class="mode-tab" type="button" data-view="game" aria-selected="false">
-                <span aria-hidden="true">問</span><b>퀴즈</b>
+                <span aria-hidden="true">問</span><b>문제</b>
             </button>
             <button class="mode-tab" type="button" data-view="library" aria-selected="false">
                 <span aria-hidden="true">目</span><b>전체 목록</b>
@@ -168,7 +168,7 @@
             <div id="gameIntro" class="game-intro">
                 <div class="section-heading centered-heading">
                     <div>
-                        <h2 id="gameHeading" class="visually-hidden">퀴즈</h2>
+                        <h2 id="gameHeading" class="visually-hidden">문제</h2>
                         <p>뜻·유래·삽화에 맞는 한자성어를 선택하세요.</p>
                     </div>
                 </div>
@@ -179,7 +179,7 @@
                     <button class="quiz-mode" type="button" data-quiz-mode="image" aria-pressed="false"><b>삽화</b><span>그림을 보고 선택</span></button>
                 </div>
                 <div class="best-score">최고 점수 <strong id="bestScore">0 / 10</strong></div>
-                <button id="startQuiz" class="primary-button" type="button">퀴즈 시작</button>
+                <button id="startQuiz" class="primary-button" type="button">문제 시작</button>
             </div>
 
             <div id="quizStage" class="quiz-stage" hidden>
@@ -209,7 +209,7 @@
             </div>
 
             <div id="quizResult" class="quiz-result" hidden>
-                <h2 id="resultTitle">퀴즈 결과</h2>
+                <h2 id="resultTitle">문제 결과</h2>
                 <strong id="resultScore">0 / 10</strong>
                 <p id="resultMessage"></p>
                 <ul id="resultMistakeList" class="result-mistake-list" aria-label="틀린 한자성어" hidden></ul>
@@ -245,3 +245,4 @@
     <div id="toast" class="toast" role="status" aria-live="polite"></div>
 </body>
 </html>
+

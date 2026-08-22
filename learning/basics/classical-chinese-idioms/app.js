@@ -507,7 +507,7 @@
         elements.resultScore.textContent = `${quizScore} / ${quiz.length}`;
 
         const mistakeIds = [...new Set(quizMistakes)];
-        elements.resultTitle.textContent = quizIsMistakeRetry ? "오답 다시 풀기 결과" : "퀴즈 결과";
+        elements.resultTitle.textContent = quizIsMistakeRetry ? "오답 다시 풀기 결과" : "문제 결과";
         elements.resultMessage.textContent = mistakeIds.length
             ? `오답 ${mistakeIds.length}개를 복습 목록에 추가했습니다.`
             : (quizIsMistakeRetry ? "틀렸던 문제를 모두 바로잡았습니다." : "오답이 없습니다.");
@@ -579,7 +579,7 @@ function renderLessonOverview() {
         elements.themeSelect.value = "전체";
         elements.currentLessonNumber.textContent = `${currentLessonIndex + 1}차시`;
         elements.currentLessonTitle.textContent = lesson.title;
-        elements.currentLessonQuiz.textContent = "이 차시 퀴즈";
+        elements.currentLessonQuiz.textContent = "이 차시 문제";
         document.body.classList.add("lesson-active");
         elements.lessonOverview.hidden = true;
         elements.learningShell.hidden = false;
@@ -693,7 +693,7 @@ function renderLessonOverview() {
     elements.currentLessonQuiz.addEventListener("click", () => {
         const gameVisible = !byId("gameView").hidden;
         switchView(gameVisible ? "learn" : "game");
-        elements.currentLessonQuiz.textContent = gameVisible ? "이 차시 퀴즈" : "성어 설명";
+        elements.currentLessonQuiz.textContent = gameVisible ? "이 차시 문제" : "성어 설명";
     });
     elements.themeSelect.addEventListener("change", () => {
         selectedTheme = elements.themeSelect.value;
@@ -774,3 +774,4 @@ function renderLessonOverview() {
 
     initialize();
 })();
+

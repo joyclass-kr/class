@@ -12,7 +12,7 @@
 </head>
 <body>
   <header class="hero">
-    <nav><a class="back" href="../../../">← 수업 도구</a><a href="#bank">감상 퀴즈</a><a href="#library">감상곡</a><a href="../korean-music/">국악</a></nav>
+    <nav><a class="back" href="../../../">← 수업 도구</a><a href="#bank">감상 문제</a><a href="#library">감상곡</a><a href="../korean-music/">국악</a></nav>
     <h1>클래식 음악 감상실</h1>
   </header>
 
@@ -26,7 +26,7 @@
 
     <section class="bank" id="bank">
       <div class="section-head">
-        <div><p class="section-tag">LISTENING QUIZ</p><h2>오늘의 감상 퀴즈</h2><p>먼저 제시곡을 듣고 귀로 답을 찾아보세요.</p></div>
+        <div><p class="section-tag">LISTENING QUIZ</p><h2>오늘의 감상 문제</h2><p>먼저 제시곡을 듣고 귀로 답을 찾아보세요.</p></div>
       </div>
       <div class="quiz-controls">
         <label>시대<select id="quiz-era"><option value="all">전 시대</option><option value="baroque">바로크</option><option value="classical">고전</option><option value="romantic">낭만</option><option value="modern">20세기</option></select></label>
@@ -35,7 +35,7 @@
         <button id="new-quiz" class="primary">새 문제 출제</button>
         <button id="retry-wrong" class="secondary">오답 다시 풀기</button>
       </div>
-      <div id="quiz-empty" class="quiz-empty">‘새 문제 출제’를 누르면 퀴즈가 시작됩니다.</div>
+      <div id="quiz-empty" class="quiz-empty">‘새 문제 출제’를 누르면 문제가 시작됩니다.</div>
       <form id="quiz-box"></form>
       <div class="quiz-actions" hidden><button id="check-answer" class="primary" type="button">채점하기</button><button id="next-quiz" class="secondary" type="button">다른 문제 풀기</button></div>
       <div id="result" aria-live="polite"></div>
@@ -60,3 +60,4 @@
   <script src="app.js"></script>
 </body>
 </html>
+
