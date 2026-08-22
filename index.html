@@ -257,6 +257,33 @@
             font-size: 20px;
         }
 
+        /* 이야기 책처럼 두 단계로 접히는 메뉴: 안쪽 갈래 버튼과 그 목록. */
+        .worksheet-group-options .worksheet-group {
+            flex: none;
+        }
+
+        .worksheet-container .worksheet-group-options .worksheet-group > summary {
+            min-height: 54px;
+            padding: 9px 12px;
+            border-width: 1px;
+            border-radius: 4px;
+        }
+
+        .worksheet-group-options .worksheet-group > .worksheet-group-options {
+            position: static;
+            width: 100%;
+            margin-top: 6px;
+            padding: 6px;
+            border-width: 1px;
+            background: rgba(0, 0, 0, 0.3);
+            box-shadow: none;
+        }
+
+        .worksheet-group > .is-subgroup-list {
+            max-height: min(78vh, 680px);
+            overflow-y: auto;
+        }
+
         .worksheet-container .worksheet-item.is-in-development {
             border-color: #b99864;
             background: linear-gradient(135deg, #5f4b35, #30271f);
@@ -586,6 +613,11 @@
             display: none;
         }
 
+        /* 공개 설정 모드에서도 갈래 버튼은 보여야 갈래별로 잠글 수 있다. */
+        body.content-access-editing .worksheet-group[open] > .is-subgroup-list {
+            display: grid;
+        }
+
 
         @media (max-width: 1180px) and (min-width: 761px) {
             .top-nav-bar {
@@ -630,6 +662,10 @@
                 width: 100%;
                 margin-top: 6px;
                 box-sizing: border-box;
+            }
+            .worksheet-group > .is-subgroup-list {
+                max-height: none;
+                overflow-y: visible;
             }
             .join-form { grid-template-columns: repeat(2, minmax(0, 1fr)); }
             .student-join-form .auth-button { grid-column: 1 / -1; }
@@ -813,29 +849,67 @@
                 <span class="worksheet-copy"><strong>인체의 구조</strong><small>(Human Body Structure)</small></span>
                 <span class="worksheet-arrow" aria-hidden="true"><svg viewBox="0 0 24 24"><path fill="#e53935" d="M12 21.35l-1.45-1.32C5.4 15.36 2 12.28 2 8.5 2 5.42 4.42 3 7.5 3c1.74 0 3.41.81 4.5 2.09C13.09 3.81 14.76 3 16.5 3 19.58 3 22 5.42 22 8.5c0 3.78-3.4 6.86-8.55 11.54L12 21.35z"/><path fill="#1e88e5" opacity="0.75" d="M12 5v14M8 8c4 2 4 6 8 8M16 8c-4 2-4 6-8 8"/><circle cx="12" cy="12" r="2" fill="#fff"/></svg></span>
             </a>
-            <details class="worksheet-group" data-access-group="classic-tales">
-                <summary aria-label="명작 동화 메뉴 열기"
-                         data-content-paths="learning/academics/classic-tales/world/talmud-tales/|learning/academics/classic-tales/world/aesop-tales/|learning/academics/classic-tales/world/parables-tales/|learning/academics/classic-tales/world/cinderella/">
-                    <span class="worksheet-copy"><strong>명작 동화</strong><small>(Classic Tales)</small></span>
+            <details class="worksheet-group" data-access-group="story-books">
+                <summary aria-label="이야기 책 메뉴 열기">
+                    <span class="worksheet-copy"><strong>이야기 책</strong><small>(Story Books)</small></span>
                     <span class="worksheet-arrow" aria-hidden="true" style="font-size:1.45rem;line-height:1">📖</span>
                 </summary>
-                <div class="worksheet-group-options" aria-label="명작 동화 선택">
-                    <a href="learning/academics/classic-tales/world/talmud-tales/" data-requires-player="true" data-access-parent="classic-tales">
-                        <span class="worksheet-copy"><strong>탈무드</strong><small>(Talmud)</small></span>
-                        <span class="worksheet-arrow" aria-hidden="true"><svg viewBox="0 0 24 24"><path fill="#8d6e63" d="M3 4.5C3 3.67 3.67 3 4.5 3H11v17H4.5A1.5 1.5 0 0 1 3 18.5v-14z"/><path fill="#a1887f" d="M21 4.5c0-.83-.67-1.5-1.5-1.5H13v17h6.5a1.5 1.5 0 0 0 1.5-1.5v-14z"/><path fill="#ffd54f" d="M12 3c1.2 1.7 1.2 3.3 0 5-1.2-1.7-1.2-3.3 0-5z"/><path fill="#fff8e1" d="M5.5 6.5h4v1.4h-4zm0 3h4v1.4h-4zm9 -3h4v1.4h-4zm0 3h4v1.4h-4z"/></svg></span>
-                    </a>
-                    <a href="learning/academics/classic-tales/world/aesop-tales/" data-requires-player="true" data-access-parent="classic-tales">
-                        <span class="worksheet-copy"><strong>이솝 이야기</strong><small>(Aesop's Fables)</small></span>
-                        <span class="worksheet-arrow" aria-hidden="true">🦊</span>
-                    </a>
-                    <a href="learning/academics/classic-tales/world/parables-tales/" data-requires-player="true" data-access-parent="classic-tales">
-                        <span class="worksheet-copy"><strong>예수님의 비유</strong><small>(Parables)</small></span>
-                        <span class="worksheet-arrow" aria-hidden="true">🌾</span>
-                    </a>
-                    <a href="learning/academics/classic-tales/world/cinderella/" data-requires-player="true" data-access-parent="classic-tales">
-                        <span class="worksheet-copy"><strong>신데렐라</strong><small>(Cinderella)</small></span>
-                        <span class="worksheet-arrow" aria-hidden="true">👠</span>
-                    </a>
+                <div class="worksheet-group-options is-subgroup-list" aria-label="이야기 책 갈래 선택">
+                    <details class="worksheet-group" data-access-group="korea-tales">
+                        <summary aria-label="한국 전래 동화 메뉴 열기"
+                                 data-content-paths="learning/academics/classic-tales/korea/samnyeon-gogae/">
+                            <span class="worksheet-copy"><strong>한국 전래 동화</strong><small>(Korean Folk Tales)</small></span>
+                            <span class="worksheet-arrow" aria-hidden="true">🏮</span>
+                        </summary>
+                        <div class="worksheet-group-options" aria-label="한국 전래 동화 선택">
+                            <a href="learning/academics/classic-tales/korea/samnyeon-gogae/" data-requires-player="true" data-access-parent="korea-tales">
+                                <span class="worksheet-copy"><strong>1권 · 삼년 고개</strong><small>(The Three-Year Hill)</small></span>
+                                <span class="worksheet-arrow" aria-hidden="true">⛰️</span>
+                            </a>
+                        </div>
+                    </details>
+                    <details class="worksheet-group" data-access-group="classic-tales">
+                        <summary aria-label="세계 명작 동화 메뉴 열기"
+                                 data-content-paths="learning/academics/classic-tales/world/talmud-tales/|learning/academics/classic-tales/world/aesop-tales/|learning/academics/classic-tales/world/parables-tales/|learning/academics/classic-tales/world/cinderella/|learning/academics/classic-tales/world/bluebird/">
+                            <span class="worksheet-copy"><strong>세계 명작 동화</strong><small>(World Classic Tales)</small></span>
+                            <span class="worksheet-arrow" aria-hidden="true">🏰</span>
+                        </summary>
+                        <div class="worksheet-group-options" aria-label="세계 명작 동화 선택">
+                            <a href="learning/academics/classic-tales/world/talmud-tales/" data-requires-player="true" data-access-parent="classic-tales">
+                                <span class="worksheet-copy"><strong>탈무드</strong><small>(Talmud)</small></span>
+                                <span class="worksheet-arrow" aria-hidden="true"><svg viewBox="0 0 24 24"><path fill="#8d6e63" d="M3 4.5C3 3.67 3.67 3 4.5 3H11v17H4.5A1.5 1.5 0 0 1 3 18.5v-14z"/><path fill="#a1887f" d="M21 4.5c0-.83-.67-1.5-1.5-1.5H13v17h6.5a1.5 1.5 0 0 0 1.5-1.5v-14z"/><path fill="#ffd54f" d="M12 3c1.2 1.7 1.2 3.3 0 5-1.2-1.7-1.2-3.3 0-5z"/><path fill="#fff8e1" d="M5.5 6.5h4v1.4h-4zm0 3h4v1.4h-4zm9 -3h4v1.4h-4zm0 3h4v1.4h-4z"/></svg></span>
+                            </a>
+                            <a href="learning/academics/classic-tales/world/aesop-tales/" data-requires-player="true" data-access-parent="classic-tales">
+                                <span class="worksheet-copy"><strong>이솝 이야기</strong><small>(Aesop's Fables)</small></span>
+                                <span class="worksheet-arrow" aria-hidden="true">🦊</span>
+                            </a>
+                            <a href="learning/academics/classic-tales/world/parables-tales/" data-requires-player="true" data-access-parent="classic-tales">
+                                <span class="worksheet-copy"><strong>예수님의 비유</strong><small>(Parables)</small></span>
+                                <span class="worksheet-arrow" aria-hidden="true">🌾</span>
+                            </a>
+                            <a href="learning/academics/classic-tales/world/cinderella/" data-requires-player="true" data-access-parent="classic-tales">
+                                <span class="worksheet-copy"><strong>신데렐라</strong><small>(Cinderella)</small></span>
+                                <span class="worksheet-arrow" aria-hidden="true">👠</span>
+                            </a>
+                            <a href="learning/academics/classic-tales/world/bluebird/" data-requires-player="true" data-access-parent="classic-tales">
+                                <span class="worksheet-copy"><strong>파랑새</strong><small>(The Blue Bird)</small></span>
+                                <span class="worksheet-arrow" aria-hidden="true">🐦</span>
+                            </a>
+                        </div>
+                    </details>
+                    <details class="worksheet-group" data-access-group="classic-novels">
+                        <summary aria-label="세계 명작 소설 메뉴 열기"
+                                 data-content-paths="learning/academics/classic-novels/world/treasure-island/">
+                            <span class="worksheet-copy"><strong>세계 명작 소설</strong><small>(World Classic Novels)</small></span>
+                            <span class="worksheet-arrow" aria-hidden="true">📚</span>
+                        </summary>
+                        <div class="worksheet-group-options" aria-label="세계 명작 소설 선택">
+                            <a href="learning/academics/classic-novels/world/treasure-island/" data-requires-player="true" data-access-parent="classic-novels">
+                                <span class="worksheet-copy"><strong>보물섬</strong><small>(Treasure Island)</small></span>
+                                <span class="worksheet-arrow" aria-hidden="true">🏴‍☠️</span>
+                            </a>
+                        </div>
+                    </details>
                 </div>
             </details>
             <a href="learning/academics/periodic-table/" data-requires-player="true">
@@ -973,6 +1047,28 @@
                     if (group.open && !group.contains(event.target)) group.removeAttribute('open');
                 });
             }, true);
+            // 메뉴가 펼쳐질 때 화면 오른쪽으로 삐져나가면 오른쪽 정렬로 바꾸고,
+            // 화면 아래로 잘리면 그만큼 페이지를 내려 준다.
+            worksheetGroups.forEach((group) => {
+                group.addEventListener('toggle', () => {
+                    if (!group.open) return;
+                    const panel = group.querySelector(':scope > .worksheet-group-options');
+                    if (!panel) return;
+                    panel.style.left = '';
+                    panel.style.right = '';
+                    const pageWidth = document.documentElement.clientWidth;
+                    if (panel.getBoundingClientRect().right > pageWidth - 8) {
+                        panel.style.left = 'auto';
+                        panel.style.right = '0';
+                    }
+                    const outerGroup = group.parentElement.closest('.worksheet-group') || group;
+                    const outerRect = outerGroup.querySelector(':scope > .worksheet-group-options').getBoundingClientRect();
+                    const overflow = outerRect.bottom - (window.innerHeight - 12);
+                    const room = Math.max(0, outerRect.top - 8);
+                    const shift = Math.min(overflow, room);
+                    if (shift > 0) window.scrollBy(0, shift);
+                });
+            });
             const playerLearningLinks = Array.from(document.querySelectorAll('[data-requires-player="true"]'));
             const accessGroupControls = Array.from(document.querySelectorAll('[data-content-paths]'));
             let openAccess = false;
