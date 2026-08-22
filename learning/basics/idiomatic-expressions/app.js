@@ -75,7 +75,7 @@ function renderStudy() {
   byId("meaning").textContent = item.meaning;
   byId("example").textContent = "예: " + item.example;
   byId("previous").disabled = studyPosition === 0;
-  byId("next").textContent = studyPosition === BATCH_SIZE - 1 ? "차시 확인 문제" : "다음 관용구";
+  byId("next").textContent = studyPosition === BATCH_SIZE - 1 ? "차시 확인 문제" : "다음 관용어";
 }
 
 function buildChoices(correctIndex) {
@@ -101,7 +101,7 @@ function renderQuiz() {
   const item = bank[itemIndex];
   currentChoices = buildChoices(itemIndex);
   byId("quizProgress").textContent = "확인 문제 " + (quizPosition + 1) + " / " + BATCH_SIZE;
-  byId("quizTitle").textContent = "이 상황에 알맞은 관용구는?";
+  byId("quizTitle").textContent = "이 상황에 알맞은 관용어는?";
   byId("question").textContent = item.question;
   byId("feedback").textContent = "";
   byId("nextQuestion").hidden = false;
@@ -201,7 +201,7 @@ byId("nextQuestion").addEventListener("click", () => {
 });
 
 if (!Array.isArray(bank) || bank.some((item) => !Number.isInteger(item.lesson))) {
-  throw new Error("관용구 학습 자료를 불러오지 못했습니다.");
+  throw new Error("관용어 학습 자료를 불러오지 못했습니다.");
 }
 
 function lessonItems(index) {
