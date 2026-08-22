@@ -8,18 +8,48 @@ function simplify(a: number, b: number) { const d = gcd(a, b); return `${a / d} 
 export function normalizeProportionAnswer(answer: string) { return answer.replace(/\s/g, "").replace(/:/g, ":").replace(/,/g, ","); }
 export function createGradeSixProportionSet(seed: number): ProportionProblem[] {
   const next = random(seed);
-  const a = integer(next, 2, 5), b = integer(next, 2, 6), c = integer(next, 2, 7);
-  const total = integer(next, 8, 16) * (a + b);
-  const left = total / (a + b) * a, right = total / (a + b) * b;
-  const x1 = integer(next, 2, 9), y1 = integer(next, 2, 9), scale1 = integer(next, 2, 8);
-  const x2 = integer(next, 2, 9), y2 = integer(next, 2, 9), scale2 = integer(next, 2, 8);
-  const p = integer(next, 2, 8), q = integer(next, 2, 8);
+  const pair = () => {
+    let first = integer(next, 3, 9);
+    let second = integer(next, 3, 9);
+    while (first === second || gcd(first, second) !== 1) {
+      first = integer(next, 3, 9);
+      second = integer(next, 3, 9);
+    }
+    return [first, second] as const;
+  };
+  const scalePair = () => {
+    const choices: Array<readonly [number, number]> = [[3, 4], [4, 5], [4, 7], [5, 7]];
+    return choices[Math.floor(next() * choices.length)];
+  };
+
+  const [ratioA, ratioB] = pair();
+  const [leftScale1, rightScale1] = scalePair();
+  const [ratioC, ratioD] = pair();
+  const [leftScale2, rightScale2] = scalePair();
+  const [ratioE, ratioF] = pair();
+  const [leftScale3, rightScale3] = scalePair();
+  const [allocationA, allocationB] = pair();
+  const allocationTotal = integer(next, 8, 16) * (allocationA + allocationB);
+  const allocationLeft = allocationTotal / (allocationA + allocationB) * allocationA;
+  const allocationRight = allocationTotal / (allocationA + allocationB) * allocationB;
+  const [differenceA, differenceB] = pair();
+  const smallPart = Math.min(differenceA, differenceB);
+  const largePart = Math.max(differenceA, differenceB);
+  const differenceUnit = integer(next, 4, 12);
+  const difference = (largePart - smallPart) * differenceUnit;
+  const smaller = smallPart * differenceUnit;
+  const larger = largePart * differenceUnit;
+  const tripleChoices: Array<readonly [number, number, number]> = [[2, 3, 5], [3, 4, 6], [3, 5, 7], [4, 5, 6]];
+  const [tripleA, tripleB, tripleC] = tripleChoices[Math.floor(next() * tripleChoices.length)];
+  const tripleUnit = integer(next, 5, 12);
+  const tripleTotal = (tripleA + tripleB + tripleC) * tripleUnit;
+
   return [
-    { id: "proportion-1", prompt: `가 : 나 = ${a} : ${b}, 가 : 다 = ${a} : ${c}일 때 가 : 나 : 다`, answer: `${a} : ${b} : ${c}`, guide: "세 수의 비" },
-    { id: "proportion-2", prompt: `${total}을 ${a} : ${b}로 비례배분`, answer: `${left}, ${right}`, guide: "앞, 뒤 순서" },
-    { id: "proportion-3", prompt: `${x1 * scale1} : ${y1 * scale1} = ${x1} : □`, answer: String(y1), guide: "빈칸에 들어갈 수" },
-    { id: "proportion-4", prompt: `□ : ${y2 * scale2} = ${x2} : ${y2}`, answer: String(x2 * scale2), guide: "빈칸에 들어갈 수" },
-    { id: "proportion-5", prompt: `${p * 10} : ${q * 10}을 가장 간단한 자연수의 비로`, answer: simplify(p * 10, q * 10), guide: "간단한 비" },
-    { id: "proportion-6", prompt: `${p * 3} : ${q * 3} = ${p} : ${q} 가 맞는지`, answer: "맞다", guide: "맞다 또는 아니다" },
+    { id: "proportion-1", prompt: `${ratioA * leftScale1} : ${ratioB * leftScale1} = □ : ${ratioB * rightScale1}`, answer: String(ratioA * rightScale1), guide: "빈칸에 들어갈 수" },
+    { id: "proportion-2", prompt: `${ratioC * leftScale2} : ${ratioD * leftScale2} = ${ratioC * rightScale2} : □`, answer: String(ratioD * rightScale2), guide: "빈칸에 들어갈 수" },
+    { id: "proportion-3", prompt: `□ : ${ratioF * leftScale3} = ${ratioE * rightScale3} : ${ratioF * rightScale3}`, answer: String(ratioE * leftScale3), guide: "빈칸에 들어갈 수" },
+    { id: "proportion-4", prompt: `${allocationTotal}을 ${allocationA} : ${allocationB}로 비례배분한 두 수`, answer: `${allocationLeft}, ${allocationRight}`, guide: "앞, 뒤 순서" },
+    { id: "proportion-5", prompt: `두 수의 비가 ${smallPart} : ${largePart}이고 차가 ${difference}일 때, 작은 수와 큰 수`, answer: `${smaller}, ${larger}`, guide: "작은 수, 큰 수 순서" },
+    { id: "proportion-6", prompt: `${tripleTotal}을 ${tripleA} : ${tripleB} : ${tripleC}으로 비례배분한 세 수`, answer: `${tripleA * tripleUnit}, ${tripleB * tripleUnit}, ${tripleC * tripleUnit}`, guide: "앞, 가운데, 뒤 순서" },
   ];
 }

@@ -3472,6 +3472,8 @@ html[data-race-mode="true"] body { padding-bottom: 72px; }
   font-weight: 850;
 }
 
+.grade-six-proportion-expression { grid-template-columns: minmax(0, 1fr) 116px; }
+
 .mixed-calculation-expression strong {
   min-width: 0;
   overflow-wrap: anywhere;
