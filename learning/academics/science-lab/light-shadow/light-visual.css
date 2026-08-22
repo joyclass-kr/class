@@ -1,0 +1,87 @@
+/* This experiment has no beaker, thermometer or volume markings — the
+   apparatus is an optical bench (lamp → object → screen), so everything
+   below is drawn for that setup specifically. Only the shared page chrome
+   (panels, method steps, quiz) comes from styles.css / quiz.css. */
+
+.shape-field { margin: 4px 0 16px; padding: 0; border: 0; }
+.shape-field legend { color: #dce9e8; font-size: 14px; font-weight: 850; }
+.shape-buttons { display: grid; grid-template-columns: repeat(3, 1fr); gap: 8px; margin-top: 9px; }
+.shape-buttons button { border: 1px solid var(--line); border-radius: 11px; background: #0a1c24; color: var(--muted); font-weight: 850; cursor: pointer; padding: 10px 4px; }
+.shape-buttons button.selected { border-color: var(--cyan); background: rgba(82, 199, 255, .12); color: var(--cyan); }
+
+/* Three-way prediction (커진다 / 작아진다 / 그대로) — styles.css only
+   defines the two-column default. */
+.prediction-buttons.three { grid-template-columns: repeat(3, 1fr); }
+
+/* Five labelled stops (20/30/40/50/60), not the six styles.css assumes. */
+.range-scale { grid-template-columns: repeat(5, 1fr); }
+
+.light-stage {
+    display: flex;
+    flex-direction: column;
+    min-width: 0;
+    border-color: rgba(255, 204, 102, .26);
+    box-shadow: 0 0 0 1px rgba(255, 204, 102, .04), 0 24px 48px -30px rgba(255, 204, 102, .34);
+    background-image:
+        radial-gradient(620px 420px at 30% 46%, rgba(255, 204, 102, .07), transparent 65%),
+        linear-gradient(rgba(109, 174, 181, .05) 1px, transparent 1px),
+        linear-gradient(90deg, rgba(109, 174, 181, .05) 1px, transparent 1px);
+    background-size: 100% 100%, 24px 24px, 24px 24px;
+}
+
+.stage-views { flex: 1; display: flex; align-items: center; justify-content: center; gap: 22px; padding: 14px 0 6px; }
+.side-view { flex: 1 1 auto; min-width: 0; max-width: 620px; }
+.front-view { flex: 0 0 auto; width: min(172px, 30%); display: flex; flex-direction: column; align-items: center; }
+.view-title { margin-bottom: 7px; color: var(--muted); font-size: 12.5px; font-weight: 850; text-align: center; }
+.side-svg { width: 100%; height: auto; display: block; }
+.front-svg { width: 100%; height: auto; display: block; }
+.front-note { margin: 7px 0 0; color: #84a4a1; font-size: 11px; line-height: 1.45; text-align: center; }
+
+.lamp-bulb { fill: #fff6d4; stroke: rgba(255, 209, 102, .9); stroke-width: 2; }
+/* The lamp keeps a gentle pulse so the light source never reads as a dead
+   dot — the rays below carry the main sense of motion. */
+@keyframes lampPulse {
+    0%, 100% { opacity: .85; transform: scale(1); }
+    50% { opacity: 1; transform: scale(1.07); }
+}
+.lamp-glow { transform-box: fill-box; transform-origin: center; animation: lampPulse 2.8s ease-in-out infinite; }
+
+/* Dashes crawl outward along every ray, so the straight-line travel of the
+   light is something you watch happen rather than just infer from a static
+   line. Blocked rays stop dead at the object, which is the whole point. */
+@keyframes rayFlow { to { stroke-dashoffset: -36; } }
+.ray, .ray-edge {
+    stroke-linecap: round;
+    stroke-dasharray: 11 7;
+    animation: rayFlow 1.5s linear infinite;
+    transition: x2 .18s linear, y2 .18s linear;
+}
+.ray { stroke: #ffe9a8; stroke-width: 1.6; opacity: .5; }
+.ray.blocked { stroke: #ffcf7a; opacity: .78; }
+.ray-edge { stroke: #ffd166; stroke-width: 2.4; opacity: .95; }
+
+.screen-face { stroke: rgba(210, 240, 246, .55); stroke-width: 1; }
+.screen-stand { fill: rgba(151, 218, 211, .45); }
+.shadow-side { fill: #07121a; opacity: .93; transition: y .18s linear, height .18s linear; }
+
+.object-card { fill: #24606f; stroke: rgba(190, 235, 242, .85); stroke-width: 1.6; transition: x .18s linear; }
+
+.stage-label { fill: var(--muted); font-size: 12px; font-weight: 850; }
+.label-chip { fill: #0d222b; opacity: .93; transition: x .18s linear; }
+.dim-line, .dim-tick { stroke: rgba(151, 218, 211, .5); stroke-width: 1.4; }
+.dim-line { stroke-dasharray: 4 4; }
+.dim-label { fill: #9cc7d4; font-size: 12px; font-weight: 850; }
+
+.front-screen { fill: rgba(238, 248, 251, .92); stroke: rgba(210, 240, 246, .5); stroke-width: 1.5; }
+#frontShadow > * { fill: #07121a; opacity: .93; transition: r .18s linear, x .18s linear, y .18s linear, width .18s linear, height .18s linear; }
+
+@media (max-width: 900px) {
+    .stage-views { flex-direction: column; gap: 16px; }
+    .side-view { max-width: 100%; width: 100%; }
+    .front-view { width: min(190px, 62%); }
+}
+
+@media (prefers-reduced-motion: reduce) {
+    .lamp-glow, .ray, .ray-edge { animation: none; }
+    .ray, .ray-edge, .shadow-side, .object-card, #frontShadow > * { transition: none; }
+}

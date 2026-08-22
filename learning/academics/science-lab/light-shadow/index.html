@@ -1,0 +1,216 @@
+<!doctype html>
+<html lang="ko">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="theme-color" content="#07131c">
+    <title>과학 실험실</title>
+    <meta name="description" content="빛이 곧게 나아가는 성질과 물체까지의 거리에 따라 그림자 크기가 달라지는 모습을 관찰하는 초등 과학 모의실험">
+    <link rel="stylesheet" as="style" crossorigin href="https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.9/dist/web/static/pretendard.css">
+    <link rel="stylesheet" href="styles.css?v=1">
+    <link rel="stylesheet" href="light-visual.css?v=2">
+    <link rel="stylesheet" href="quiz.css?v=1">
+</head>
+<body>
+    <main>
+        <header class="page-header">
+            <div class="title-row">
+                <a href="../">← 과학 실험실</a>
+                <h1>빛의 직진과 그림자</h1>
+            </div>
+            <div class="grade-tags"><span>초등 3~4</span><span>물리</span></div>
+        </header>
+
+        <ol class="method-steps" aria-label="실험 방법">
+            <li>빛을 가로막을 물체 모양을 고릅니다.</li>
+            <li>광원에서 물체까지의 거리를 정합니다.</li>
+            <li>그림자가 어떻게 될지 예상합니다.</li>
+            <li>스크린에 생긴 그림자를 확인합니다.</li>
+        </ol>
+
+        <div class="experiment-layout">
+            <section class="panel control-panel" aria-labelledby="control-title">
+                <h2 id="control-title">실험 조건</h2>
+                <p class="water-standard">기준: 광원에서 40 cm 떨어졌을 때와 비교</p>
+
+                <fieldset class="shape-field">
+                    <legend>물체 모양</legend>
+                    <div class="shape-buttons">
+                        <button type="button" data-shape="circle" class="selected">동그라미</button>
+                        <button type="button" data-shape="square">네모</button>
+                        <button type="button" data-shape="triangle">세모</button>
+                    </div>
+                </fieldset>
+
+                <div class="range-heading">
+                    <label for="distanceRange">광원에서 물체까지</label>
+                    <output id="distanceOutput" for="distanceRange">40 cm</output>
+                </div>
+                <input id="distanceRange" type="range" min="20" max="60" step="1" value="40">
+                <div class="range-scale" aria-hidden="true"><span>20 cm</span><span>30</span><span>40</span><span>50</span><span>60 cm</span></div>
+                <p class="amount-guide">스크린은 광원에서 80 cm 떨어진 자리에 고정되어 있습니다.</p>
+
+                <fieldset class="prediction-field">
+                    <legend>그림자 크기 예상</legend>
+                    <div class="prediction-buttons three">
+                        <button type="button" data-prediction="bigger">커진다</button>
+                        <button type="button" data-prediction="smaller">작아진다</button>
+                        <button type="button" data-prediction="same">그대로</button>
+                    </div>
+                </fieldset>
+
+                <button class="run-button" id="checkShadowBtn" type="button">그림자 크기 확인하기</button>
+
+                <section class="result-box" aria-labelledby="result-title" aria-live="polite">
+                    <h3 id="result-title">관찰 결과</h3>
+                    <p id="resultEmpty">거리를 정하고 예상한 뒤 확인해 보세요.</p>
+                    <div id="resultContent" hidden>
+                        <div class="result-numbers">
+                            <article><span>그림자 높이</span><strong id="resultShadow">24 cm</strong></article>
+                            <article><span>기준과 비교</span><strong id="resultRatio">1.0배</strong></article>
+                        </div>
+                        <p class="prediction-result" id="predictionResult"></p>
+                        <p class="explanation" id="elementaryExplanation"></p>
+                    </div>
+                </section>
+            </section>
+
+            <section class="panel light-stage" aria-label="빛과 그림자 관찰 화면">
+                <div class="stage-heading"><h2>관찰</h2><span id="distanceBadge">40 cm</span></div>
+
+                <div class="stage-views">
+                    <div class="side-view" aria-label="옆에서 본 모습">
+                        <div class="view-title">옆에서 본 모습</div>
+                        <svg class="side-svg" viewBox="0 0 480 320" aria-hidden="true">
+                            <defs>
+                                <radialGradient id="lampGlow">
+                                    <stop offset="0%" stop-color="#fff3c4" stop-opacity=".95"/>
+                                    <stop offset="55%" stop-color="#ffd166" stop-opacity=".35"/>
+                                    <stop offset="100%" stop-color="#ffd166" stop-opacity="0"/>
+                                </radialGradient>
+                                <linearGradient id="screenFace" x1="0" y1="0" x2="0" y2="1">
+                                    <stop offset="0%" stop-color="#eef8fb" stop-opacity=".95"/>
+                                    <stop offset="100%" stop-color="#cfe6ee" stop-opacity=".95"/>
+                                </linearGradient>
+                            </defs>
+
+                            <!-- screen (fixed): lit face first, shadow painted on top of it -->
+                            <rect class="screen-face" x="436" y="20" width="10" height="260" rx="3" fill="url(#screenFace)"/>
+                            <rect class="screen-stand" x="438" y="280" width="6" height="20"/>
+
+                            <!-- rays are created by app.js so blocked/unblocked state can be updated in place -->
+                            <g id="rayGroup"></g>
+                            <line id="edgeRayTop" class="ray-edge" x1="36" y1="150" x2="436" y2="90"/>
+                            <line id="edgeRayBottom" class="ray-edge" x1="36" y1="150" x2="436" y2="210"/>
+
+                            <rect id="shadowSide" class="shadow-side" x="436" y="90" width="10" height="120" rx="3"/>
+
+                            <!-- object: a flat card seen edge-on, so it reads as a vertical bar here -->
+                            <rect id="objectCard" class="object-card" x="236" y="120" width="8" height="60" rx="3"/>
+                            <!-- The light cone widens as the card moves right, so rays cross
+                                 the label's spot at larger distances — this chip sits behind
+                                 the text so it stays readable at every distance. -->
+                            <rect id="objectLabelChip" class="label-chip" x="222" y="92" width="36" height="17" rx="5"/>
+                            <text id="objectLabel" class="stage-label" x="240" y="104" text-anchor="middle">물체</text>
+
+                            <!-- lamp -->
+                            <circle class="lamp-glow" cx="36" cy="150" r="30" fill="url(#lampGlow)"/>
+                            <circle class="lamp-bulb" cx="36" cy="150" r="9"/>
+                            <text class="stage-label" x="36" y="192" text-anchor="middle">광원</text>
+                            <text class="stage-label" x="441" y="312" text-anchor="middle">스크린</text>
+
+                            <!-- distance dimension line -->
+                            <line id="dimLine" class="dim-line" x1="36" y1="265" x2="236" y2="265"/>
+                            <line class="dim-tick" x1="36" y1="258" x2="36" y2="272"/>
+                            <line id="dimTickEnd" class="dim-tick" x1="236" y1="258" x2="236" y2="272"/>
+                            <text id="dimLabel" class="dim-label" x="136" y="255" text-anchor="middle">40 cm</text>
+                        </svg>
+                    </div>
+
+                    <div class="front-view" aria-label="스크린을 앞에서 본 모습">
+                        <div class="view-title">스크린을 앞에서 본 모습</div>
+                        <svg class="front-svg" viewBox="0 0 180 180" aria-hidden="true">
+                            <rect class="front-screen" x="15" y="15" width="150" height="150" rx="6"/>
+                            <g id="frontShadow">
+                                <circle id="frontCircle" cx="90" cy="90" r="35"/>
+                                <rect id="frontSquare" x="55" y="55" width="70" height="70" hidden/>
+                                <polygon id="frontTriangle" points="90,55 125,125 55,125" hidden/>
+                            </g>
+                        </svg>
+                        <p class="front-note">그림자 모양은 물체 모양과 같습니다</p>
+                    </div>
+                </div>
+
+                <p class="stage-caption" id="stageCaption">거리를 정하고 그림자 크기를 확인해 보세요.</p>
+            </section>
+        </div>
+
+        <section class="panel meaning-panel">
+            <h2>실험 결과의 의미</h2>
+            <div class="meaning-body">
+                <p><strong>빛의 직진</strong> 빛은 휘지 않고 사방으로 곧게 나아갑니다.</p>
+                <p><strong>그림자</strong> 곧게 나아가던 빛이 물체에 막혀 뒤쪽에 생기는 어두운 부분입니다.</p>
+                <p><strong>크기 변화</strong> 물체가 광원에 가까울수록 빛을 더 넓게 가로막아 그림자가 커집니다.</p>
+            </div>
+        </section>
+
+        <details class="quiz-section" aria-labelledby="quiz-title">
+            <summary class="quiz-heading"><h2 id="quiz-title">확인 문제</h2><span>4문제</span></summary>
+            <div class="quiz-grid">
+                <article class="quiz-card" data-answer="b">
+                    <h3>빛은 어떻게 나아가는가?</h3>
+                    <div class="quiz-options">
+                        <label><input type="radio" name="q1" value="a"> 구불구불 휘어져 나아간다.</label>
+                        <label><input type="radio" name="q1" value="b"> 곧게 나아간다.</label>
+                        <label><input type="radio" name="q1" value="c"> 물체를 만나면 돌아서 지나간다.</label>
+                        <label><input type="radio" name="q1" value="d"> 위로만 나아간다.</label>
+                    </div>
+                    <button class="answer-button" type="button">정답 확인</button>
+                    <p class="answer-result" aria-live="polite"></p>
+                    <p class="answer-explanation" hidden>빛은 휘지 않고 곧게 나아갑니다. 이것을 빛의 직진이라고 합니다.</p>
+                </article>
+
+                <article class="quiz-card" data-answer="c">
+                    <h3>그림자가 생기는 까닭은 무엇인가?</h3>
+                    <div class="quiz-options">
+                        <label><input type="radio" name="q2" value="a"> 물체가 빛을 만들어 내기 때문이다.</label>
+                        <label><input type="radio" name="q2" value="b"> 물체가 빛을 모두 반사하기 때문이다.</label>
+                        <label><input type="radio" name="q2" value="c"> 곧게 나아가던 빛을 물체가 가로막기 때문이다.</label>
+                        <label><input type="radio" name="q2" value="d"> 스크린이 스스로 어두워지기 때문이다.</label>
+                    </div>
+                    <button class="answer-button" type="button">정답 확인</button>
+                    <p class="answer-result" aria-live="polite"></p>
+                    <p class="answer-explanation" hidden>빛이 곧게 나아가다가 물체에 막히면 물체 뒤쪽에 빛이 닿지 않는 어두운 부분이 생깁니다.</p>
+                </article>
+
+                <article class="quiz-card" data-answer="a">
+                    <h3>스크린은 그대로 두고 물체만 광원에 가까이 옮기면 그림자는?</h3>
+                    <div class="quiz-options">
+                        <label><input type="radio" name="q3" value="a"> 커진다.</label>
+                        <label><input type="radio" name="q3" value="b"> 작아진다.</label>
+                        <label><input type="radio" name="q3" value="c"> 변하지 않는다.</label>
+                        <label><input type="radio" name="q3" value="d"> 사라진다.</label>
+                    </div>
+                    <button class="answer-button" type="button">정답 확인</button>
+                    <p class="answer-result" aria-live="polite"></p>
+                    <p class="answer-explanation" hidden>물체가 광원에 가까울수록 퍼져 나가는 빛을 더 넓게 가로막게 되어 그림자가 커집니다.</p>
+                </article>
+
+                <article class="quiz-card" data-answer="b">
+                    <h3>동그란 물체로 만든 그림자의 모양은?</h3>
+                    <div class="quiz-options">
+                        <label><input type="radio" name="q4" value="a"> 네모 모양이다.</label>
+                        <label><input type="radio" name="q4" value="b"> 물체와 같은 동그란 모양이다.</label>
+                        <label><input type="radio" name="q4" value="c"> 세모 모양이다.</label>
+                        <label><input type="radio" name="q4" value="d"> 모양을 알 수 없다.</label>
+                    </div>
+                    <button class="answer-button" type="button">정답 확인</button>
+                    <p class="answer-result" aria-live="polite"></p>
+                    <p class="answer-explanation" hidden>빛이 곧게 나아가기 때문에 그림자 모양은 빛을 가로막은 물체의 모양과 같습니다.</p>
+                </article>
+            </div>
+        </details>
+    </main>
+    <script src="app.js?v=2"></script>
+</body>
+</html>
