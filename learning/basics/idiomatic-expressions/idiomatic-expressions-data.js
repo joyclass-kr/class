@@ -3,15 +3,19 @@
 // Lessons are intentionally balanced learning units, not raw category buckets.
 // Item numbers are 1-based so they match the curated bank below.
 const IDIOMATIC_EXPRESSION_LESSON_ITEM_INDEXES = [
-  [6, 7, 8, 19, 26, 30, 41, 53, 57, 58, 62],
-  [1, 9, 12, 18, 31, 32, 43, 44, 46, 69, 72],
-  [5, 14, 15, 16, 17, 36, 56, 60, 61, 68, 75],
-  [2, 3, 4, 25, 35, 38, 40, 42, 49, 50, 54],
-  [11, 21, 22, 34, 37, 39, 45, 47, 55, 59, 64],
-  [10, 13, 20, 24, 29, 33, 65, 67, 71, 74],
-  [23, 27, 28, 48, 51, 52, 63, 66, 70, 73]
+  [4, 6, 7, 8, 11, 19, 21, 26, 30, 34],
+  [41, 53, 57, 58, 62, 77, 78, 83, 87, 92],
+  [1, 9, 12, 18, 31, 32, 43, 44, 46, 69],
+  [72, 93, 94, 109, 14, 15, 16, 17, 36, 56],
+  [60, 61, 68, 75, 79, 85, 103, 2, 3, 25],
+  [35, 38, 40, 80, 90, 42, 49, 50, 54, 88],
+  [64, 91, 96, 99, 5, 22, 37, 39, 45, 63],
+  [47, 55, 59, 76, 81, 82, 95, 104, 107, 20],
+  [10, 13, 24, 29, 33, 65, 67, 71, 74, 108],
+  [23, 27, 28, 48, 51, 52, 66, 70, 73, 89],
+  [84, 86, 97, 98, 100, 101, 102, 105, 106, 110]
 ];
-const IDIOMATIC_EXPRESSION_LESSON_BY_ITEM_INDEX = Array(75);
+const IDIOMATIC_EXPRESSION_LESSON_BY_ITEM_INDEX = Array(110);
 IDIOMATIC_EXPRESSION_LESSON_ITEM_INDEXES.forEach((itemIndexes, lesson) => {
   itemIndexes.forEach((itemIndex) => {
     IDIOMATIC_EXPRESSION_LESSON_BY_ITEM_INDEX[itemIndex - 1] = lesson;
@@ -135,22 +139,8 @@ const IDIOMATIC_EXPRESSION_BANK = [
   meaning,
   example,
   question,
-  lesson: IDIOMATIC_EXPRESSION_LESSON_BY_ITEM_INDEX[index] ?? (category.startsWith("마음") ? 0 : category.startsWith("생각") ? 1 : category.startsWith("말") ? 2 : category.startsWith("관계") ? 3 : category.startsWith("태도") ? 4 : category.startsWith("평가") ? 5 : 6)
+  lesson: IDIOMATIC_EXPRESSION_LESSON_BY_ITEM_INDEX[index]
 }));
-
-const lessonCounters = new Map();
-for (const item of IDIOMATIC_EXPRESSION_BANK) {
-  const old = item.lesson;
-  const count = lessonCounters.get(old) || 0;
-  if (old === 0) item.lesson = count < 10 ? 0 : 1;
-  else if (old === 1) item.lesson = 2;
-  else if (old === 2) item.lesson = 3;
-  else if (old === 3) item.lesson = count < 8 ? 4 : 5;
-  else if (old === 4) item.lesson = count < 9 ? 6 : 7;
-  else if (old === 5) item.lesson = 8;
-  else if (old === 6) item.lesson = count < 9 ? 9 : 10;
-  lessonCounters.set(old, count + 1);
-}
 
 if (typeof window !== "undefined") window.IDIOMATIC_EXPRESSION_BANK = IDIOMATIC_EXPRESSION_BANK;
 if (typeof module !== "undefined") module.exports = IDIOMATIC_EXPRESSION_BANK;
