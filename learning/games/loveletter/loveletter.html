@@ -24,6 +24,37 @@
   .lobbyPlayerActions{justify-items:stretch}
   .lobbyPlayerActions>.primary{width:100%}
 }
+
+/* Active love-letter match: players and table share one viewport. */
+@media (min-width:700px){
+body:has(#gameScreen:not(.hidden)){height:100dvh;min-height:0;overflow:hidden;padding:8px}
+body:has(#gameScreen:not(.hidden)) .shell{height:calc(100dvh - 16px)}
+#gameScreen:not(.hidden){display:grid;grid-template-rows:auto minmax(0,1fr);height:100%}
+#gameScreen .gameHeader{grid-template-columns:auto 1fr auto auto;gap:8px;margin-bottom:8px;padding:7px 10px}
+#gameScreen .gameHeader .headerCenter h1{font-size:22px}
+#gameScreen .gameHeader .scoreGuide{font-size:11px}
+#gameScreen .gameHeader>.row{grid-column:auto!important;flex-wrap:nowrap!important}
+#gameScreen .roundBadge,#gameScreen .deckBadge{padding:6px 9px}
+#gameScreen .roundBadge strong,#gameScreen .deckBadge strong{font-size:18px}
+#gameScreen>section.panel{display:grid;grid-template-columns:210px minmax(0,1fr);gap:8px;min-height:0;margin:0;padding:8px;overflow:hidden}
+#gameScreen .playerGrid{grid-template-columns:1fr;align-content:start;gap:6px;min-height:0;margin:0;overflow:auto}
+#gameScreen .playerSeat{min-height:88px;padding:8px}
+#gameScreen .hearts{min-height:18px;margin:3px 0}
+#gameScreen .discardRow{min-height:35px}
+#gameScreen .discardCard{width:22px}
+#gameScreen .table{min-height:0;height:100%;padding:9px;overflow:auto}
+#gameScreen .tableCenter{grid-template-columns:72px minmax(0,1fr);gap:10px}
+#gameScreen .deckStack{width:58px}
+#gameScreen .deckCount{margin-top:8px}
+#gameScreen .actionLog{min-height:72px;padding:9px}
+#gameScreen .myArea{margin-top:8px;padding-top:8px}
+#gameScreen .turn-clock{margin-bottom:4px}
+#gameScreen .hand{height:min(230px,29dvh);min-height:0;margin:5px auto;gap:8px}
+#gameScreen .handCard{width:min(158px,42%)}
+#gameScreen .controls{margin-top:7px;padding:8px}
+#gameScreen .choiceRow{margin:5px 0}
+#gameScreen .playButton{margin-top:7px}
+}
 </style>
 <script src="../../../assets/network/game-network.js?v=20260821"></script>
 <script src="../../../assets/network/multiplayer-lobby.js"></script>

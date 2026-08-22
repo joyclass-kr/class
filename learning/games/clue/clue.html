@@ -4,7 +4,7 @@
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
 <title>저택 추리</title>
-<link rel="preload" as="image" href="/learning/games/clue/assets/images/board-v3.webp">
+<link rel="preload" as="image" href="/learning/games/clue/assets/images/board-v5.webp">
 <link rel="stylesheet" href="../../../assets/network/multiplayer-lobby.css">
 <style>
 :root{font-family:system-ui,-apple-system,"Segoe UI",sans-serif;color:#eef0f5;background:#10121a;--accent:#d9a441;--accent-soft:#8a662a;--panel:#1b1f2b;--panel-edge:#3a3f52;--danger:#c8544a;--safe:#3f9e6c}
@@ -84,7 +84,8 @@ h1,h2,h3,p{margin-top:0}
 
 .logLine{padding:9px 11px;border-radius:10px;background:#151a26;color:#c9cee0;font-size:13px;min-height:20px}
 .diceRow{display:flex;align-items:center;justify-content:center;gap:14px;padding:10px 0}
-.dieFace{width:52px;height:52px;border-radius:12px;border:2px solid var(--accent);background:#1a1d29;display:grid;place-items:center;font-size:26px;font-weight:950;color:#f3ddb0;transition:transform .08s}
+.dieFace{width:52px;height:52px;padding:8px;border-radius:12px;border:2px solid var(--accent);background:linear-gradient(145deg,#fff8e7,#d8c9a8);display:grid;grid-template-columns:repeat(3,1fr);grid-template-rows:repeat(3,1fr);gap:2px;box-shadow:inset 2px 2px 4px #fff9,inset -2px -2px 4px #75664a88,0 3px 7px #0007;transition:transform .08s}
+.diePip{width:8px;height:8px;place-self:center;border-radius:50%;background:#24180f;box-shadow:inset 1px 1px 1px #0008,0 1px 0 #fff8}
 .diceFaces{display:flex;gap:6px}
 .dieFace.rolling{animation:dieShake .12s linear infinite}
 @keyframes dieShake{0%{transform:rotate(-10deg) scale(1.08)}50%{transform:rotate(10deg) scale(.94)}100%{transform:rotate(-10deg) scale(1.08)}}
@@ -239,7 +240,7 @@ h1,h2,h3,p{margin-top:0}
         </div>
         <div class="panel turnPanel">
           <div id="turnBanner" class="turnBanner2">대국을 준비하는 중입니다.</div>
-          <div class="turnControls"><div class="diceRow"><div class="diceFaces" aria-label="주사위 두 개"><div id="dieFace1" class="dieFace">-</div><div id="dieFace2" class="dieFace">-</div></div><div id="turnTimer" class="turnTimer">--</div></div><div id="actionBar" class="actionBar"></div></div>
+          <div class="turnControls"><div class="diceRow"><div class="diceFaces" aria-label="주사위 두 개"><div id="dieFace1" class="dieFace" aria-label="Die not rolled"></div><div id="dieFace2" class="dieFace" aria-label="Die not rolled"></div></div><div id="turnTimer" class="turnTimer">--</div></div><div id="actionBar" class="actionBar"></div></div>
           <div id="logLine" class="logLine"></div>
         </div>
       </aside>
@@ -466,12 +467,12 @@ const CELL_ORIENTATION=CORRIDOR_MODEL.orientations;
 const CELL_ROOMS={
   g3_5:[0],g9_5:[1],g15_5:[2],
   g3_12:[3],g9_6:[4],g9_12:[4],g15_12:[5],
-  g3_13:[6],g9_13:[7],g15_13:[8]
+  g5_16:[6],g9_13:[7],g13_16:[8]
 };
 const ROOM_CELLS={
   0:["g3_5"],1:["g9_5"],2:["g15_5"],
   3:["g3_12"],4:["g9_6","g9_12"],5:["g15_12"],
-  6:["g3_13"],7:["g9_13"],8:["g15_13"]
+  6:["g5_16"],7:["g9_13"],8:["g13_16"]
 };
 const SECRET_PASSAGE_PAIRS={
   htL:"hbR",hbR:"htL",htR:"hbL",hbL:"htR",
@@ -525,13 +526,35 @@ async function loadMyAvatar(){
   myAvatarUrl="/assets/avatars/"+key+".webp";
 }
 
+const DIE_PIPS=Object.freeze({
+  1:[4],
+  2:[0,8],
+  3:[0,4,8],
+  4:[0,2,6,8],
+  5:[0,2,4,6,8],
+  6:[0,2,3,5,6,8]
+});
+function setDieFace(face,value){
+  face.replaceChildren();
+  const numeric=Number(value);
+  const positions=DIE_PIPS[numeric]||[];
+  face.dataset.value=positions.length?String(numeric):"";
+  face.setAttribute("aria-label",positions.length?("Die "+numeric):"Die not rolled");
+  positions.forEach(position=>{
+    const pip=document.createElement("span");
+    pip.className="diePip";
+    pip.style.gridColumn=String(position%3+1);
+    pip.style.gridRow=String(Math.floor(position/3)+1);
+    face.appendChild(pip);
+  });
+}
 function playDiceAnimation(){
   dieAnimating=true;
   const faces=[$("dieFace1"),$("dieFace2")];
   faces.forEach(face=>face.classList.add("rolling"));
   let ticks=0;
   const timer=setInterval(()=>{
-    faces.forEach(face=>{face.textContent=String(1+Math.floor(Math.random()*6))});
+    faces.forEach(face=>setDieFace(face,1+Math.floor(Math.random()*6)));
     ticks+=1;
     if(ticks>=9){
       clearInterval(timer);
@@ -581,7 +604,7 @@ function buildBoard(){
   const defs=[`<clipPath id="tokenClip" clipPathUnits="objectBoundingBox"><circle cx="0.5" cy="0.5" r="0.5"/></clipPath>`,
     `<clipPath id="boardClip"><rect x="0" y="0" width="380" height="380" rx="14"/></clipPath>`];
   const parts=[`<rect class="boardBg" x="0" y="0" width="380" height="380" rx="14"/>`,
-    `<image class="boardArt" href="/learning/games/clue/assets/images/board-v3.webp" x="0" y="0" width="380" height="380" preserveAspectRatio="xMidYMid meet" clip-path="url(#boardClip)"/>`];
+    `<image class="boardArt" href="/learning/games/clue/assets/images/board-v5.webp" x="0" y="0" width="380" height="380" preserveAspectRatio="xMidYMid meet" clip-path="url(#boardClip)"/>`];
   const cellSize=80,gap=50,margin=20;
   for(let i=0;i<9;i+=1){
     const [row,col]=ROOM_POS[i];
@@ -949,8 +972,8 @@ function renderGame(){
   const ended=gameState.phase==="gameEnd";
   if(!dieAnimating){
     const diceValues=Array.isArray(gameState.diceValues)?gameState.diceValues:["-","-"];
-    $("dieFace1").textContent=String(diceValues[0]??"-");
-    $("dieFace2").textContent=String(diceValues[1]??"-");
+    setDieFace($("dieFace1"),diceValues[0]);
+    setDieFace($("dieFace2"),diceValues[1]);
     const diceLabel=gameState.dice===null||gameState.dice===undefined?"주사위 결과 없음":`주사위 ${diceValues.join(" + ")} = ${gameState.dice}`;
     document.querySelector(".diceFaces").setAttribute("aria-label",diceLabel);
   }

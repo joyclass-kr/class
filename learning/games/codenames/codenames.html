@@ -84,6 +84,23 @@ h1,h2,h3,p{margin-top:0}
 .resultModal .outcome.blue{color:#a7c8ef}
 
 @media(max-width:600px){.teamPickGrid{grid-template-columns:1fr}}
+
+/* Active board: fit the complete turn surface inside one viewport. */
+@media (min-width:700px){
+body:has(#boardArea:not(.hidden)){height:100dvh;min-height:0;overflow:hidden;padding:8px}
+body:has(#boardArea:not(.hidden)) .shell{height:calc(100dvh - 16px)}
+body:has(#boardArea:not(.hidden)) #game{display:grid;grid-template-rows:auto minmax(0,1fr);height:100%}
+body:has(#boardArea:not(.hidden)) #game>.panel:first-child{margin-bottom:8px;padding:7px 10px}
+#boardArea:not(.hidden){min-height:0;margin:0;padding:8px;overflow:auto}
+#boardArea:not(.hidden) .turnBanner{padding:4px}
+#boardArea:not(.hidden) .turn-clock{margin-bottom:4px}
+#boardArea:not(.hidden) .scoreRow{margin:4px 0 6px}
+#boardArea:not(.hidden) .hintDisplay{padding:6px;margin-bottom:6px}
+#boardArea:not(.hidden) .hintForm{margin-bottom:6px}
+#boardArea:not(.hidden) .boardWrap{width:min(640px,calc(100dvh - 185px))}
+#boardArea:not(.hidden) .board{gap:6px}
+#boardArea:not(.hidden) .actionBar{margin-top:4px}
+}
 </style>
 <script src="../../../assets/network/game-network.js?v=20260821"></script>
 <script src="../../../assets/network/multiplayer-lobby.js"></script>

@@ -282,6 +282,29 @@ body.impact::after{animation:dangerFlash .55s ease-out}
   .showdownTitle,.showdownCard,.revealCard,.roundBanner{animation-duration:.01ms!important;animation-iteration-count:1!important}
 }
 
+
+/* Active expedition: compact the scene before allowing page-level scrolling. */
+@media (min-width:700px) and (max-height:900px){
+body:has(#gameScreen:not(.hidden)){height:100dvh;min-height:0;overflow:hidden;padding:8px}
+body:has(#gameScreen:not(.hidden)) .shell{height:calc(100dvh - 16px)}
+#gameScreen:not(.hidden){height:100%;overflow:hidden}
+#gameScreen .topbar{margin-bottom:6px}
+#gameScreen .scene{padding:10px}
+#gameScreen .sceneTop{gap:10px;margin-bottom:8px}
+#gameScreen .countBox{margin:-2px 0 7px;padding:6px 9px}
+#gameScreen .trail{min-height:150px;padding:8px}
+#gameScreen .card{width:94px;min-height:126px}
+#gameScreen .hazardTrack{margin-top:6px}
+#gameScreen .pack{gap:7px;margin-top:7px}
+#gameScreen .packSide{padding:8px 10px}
+#gameScreen .gemRow{min-height:18px;margin-top:4px}
+#gameScreen .packSide b{font-size:25px}
+#gameScreen .situation{margin-top:7px;padding:8px 10px;line-height:1.35}
+#gameScreen .decisionBox{margin-top:7px;padding:8px}
+#gameScreen .decisionButtons{gap:8px;margin-top:7px}
+#gameScreen .bigChoice{min-height:60px;padding:7px}
+#gameScreen .waitNote{margin-top:5px}
+}
 </style>
 <script src="../../../assets/network/game-network.js?v=20260821"></script>
 <script src="../../../assets/network/multiplayer-lobby.js"></script>

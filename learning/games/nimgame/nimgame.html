@@ -971,6 +971,12 @@ textarea,
     }
 }
 
+
+/* Use the top of Chromebook and iPad screens instead of reserving a centering gap. */
+@media (min-width:761px){
+body{align-items:flex-start;padding:8px}
+.app-shell{min-height:min(720px,calc(100dvh - 16px))}
+}
 </style>
 <link rel="stylesheet" href="../../../assets/network/multiplayer-lobby.css">
 <script src="../../../assets/network/game-network.js?v=20260821"></script>

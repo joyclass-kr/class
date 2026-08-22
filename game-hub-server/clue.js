@@ -100,12 +100,12 @@ const CELL_NEIGHBORS = CORRIDOR_MODEL.neighbors;
 const CELL_ROOMS = Object.freeze({
   g3_5: [0], g9_5: [1], g15_5: [2],
   g3_12: [3], g9_6: [4], g9_12: [4], g15_12: [5],
-  g3_13: [6], g9_13: [7], g15_13: [8]
+  g5_16: [6], g9_13: [7], g13_16: [8]
 });
 const ROOM_CELLS = Object.freeze({
   0: ["g3_5"], 1: ["g9_5"], 2: ["g15_5"],
   3: ["g3_12"], 4: ["g9_6", "g9_12"], 5: ["g15_12"],
-  6: ["g3_13"], 7: ["g9_13"], 8: ["g15_13"]
+  6: ["g5_16"], 7: ["g9_13"], 8: ["g13_16"]
 });
 const SECRET_PASSAGE_PAIRS = Object.freeze({
   htL: "hbR", hbR: "htL",

@@ -2399,7 +2399,7 @@ footer a {
 
 @media (max-width: 800px) {
     .hero-screen {
-        min-height: 810px;
+        min-height: 690px;
     }
 
     .episode-switcher {

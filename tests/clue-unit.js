@@ -23,13 +23,13 @@ for (const [entrance, exit] of Object.entries(Clue.SECRET_PASSAGE_PAIRS)) {
 const expectedRoomDoors={
   0:["g3_5"],1:["g9_5"],2:["g15_5"],
   3:["g3_12"],4:["g9_6","g9_12"],5:["g15_12"],
-  6:["g3_13"],7:["g9_13"],8:["g15_13"]
+  6:["g5_16"],7:["g9_13"],8:["g13_16"]
 };
 assert.deepEqual(Clue.ROOM_CELLS,expectedRoomDoors,"Only visible room openings may be entrances.");
 assert.deepEqual(Clue.CELL_ROOMS,{
   g3_5:[0],g9_5:[1],g15_5:[2],
   g3_12:[3],g9_6:[4],g9_12:[4],g15_12:[5],
-  g3_13:[6],g9_13:[7],g15_13:[8]
+  g5_16:[6],g9_13:[7],g13_16:[8]
 },"Each visible opening must connect to its nearest corridor lane.");
 Object.entries(Clue.ROOM_CELLS).forEach(([roomIndex,doorCells])=>{
   doorCells.forEach(cellId=>{
@@ -141,7 +141,7 @@ assert.equal(passageGame.players[0].cellId, "hbR", "비밀통로는 맞은편 �
 const htmlPath = path.resolve(__dirname, "..", "learning", "games", "clue", "clue.html");
 const html = fs.readFileSync(htmlPath, "utf8");
 assert.match(html, /CELL_ORIENTATION/, "가로·세로·교차 타일의 방향을 구분해 렌더링해야 합니다.");
-assert.match(html, /board-v3\.webp/, "새 #형 저택 보드 자산을 사용해야 합니다.");
+assert.match(html, /board-v5\.webp/, "새 #형 저택 보드 자산을 사용해야 합니다.");
 assert.match(html, /class="corridorTile"/, "복도 칸이 실제 타일로 렌더링되어야 합니다.");
 assert.match(html, /class="passageFrame"/, "8개 비밀통로를 계단형 입구로 렌더링해야 합니다.");
 assert.match(html, /타일을 한 칸씩 이동/, "한 칸 이동 규칙을 보드에 표시해야 합니다.");
@@ -160,7 +160,12 @@ assert.match(html,/@media\(max-width:819px\)/,"Portrait iPad layout must have a 
 assert.match(html,/calc\(100dvh - 112px\)/,"Landscape board size must be capped by viewport height.");
 assert.match(html,/calc\(100dvh - 300px\)/,"Portrait board size must leave room for turn controls.");
 
-const boardPath = path.resolve(__dirname, "..", "learning", "games", "clue", "assets", "images", "board-v3.webp");
+assert.match(html,/const DIE_PIPS=Object\.freeze/,"Dice faces must use pip layouts instead of numeric text.");
+assert.match(html,/className="diePip"/,"Dice pips must be rendered as circular marks.");
+assert.match(html,/setDieFace\(\$\("dieFace1"\),diceValues\[0\]\)/,"The first die result must render through the pip renderer.");
+assert.match(html,/setDieFace\(\$\("dieFace2"\),diceValues\[1\]\)/,"The second die result must render through the pip renderer.");
+
+const boardPath = path.resolve(__dirname, "..", "learning", "games", "clue", "assets", "images", "board-v5.webp");
 assert.ok(fs.existsSync(boardPath), "최적화한 보드 이미지가 있어야 합니다.");
 assert.ok(fs.statSync(boardPath).size < 600000, "보드 이미지는 태블릿 로딩을 위해 600KB보다 작아야 합니다.");
 

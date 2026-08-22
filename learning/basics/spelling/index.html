@@ -74,12 +74,9 @@
             </section>
 
             <section id="lobbyScreen" class="panel start-panel class-lobby hidden" aria-labelledby="classLobbyTitle">
-                <p class="mode-kicker">학급 단체전 · 순위 모드</p>
-                <h2 id="classLobbyTitle">학급 코드로 참가하세요</h2>
-                <p class="lead"><strong id="savedName"></strong> 님으로 참가합니다. 교사가 알려 준 숫자 4자리를 입력하세요.</p>
-
+                <h2 id="classLobbyTitle" class="sr-only">학급 참가</h2>
                 <div id="joinPane" class="join-pane">
-                    <label for="joinCode">학급 코드</label>
+                    <label for="joinCode"><strong id="savedName"></strong> 님 · 학급 코드 4자리</label>
                     <div class="join-row">
                         <input id="joinCode" class="room-code-input" inputmode="numeric" maxlength="4" autocomplete="one-time-code" placeholder="0000">
                         <button id="joinBtn" class="primary-button" type="button">학급 참가</button>
