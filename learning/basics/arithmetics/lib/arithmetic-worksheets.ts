@@ -161,6 +161,7 @@ const elementaryTitles: Record<string, string> = {
 
 // 자동 분류를 그만두고, 사용자가 지정하는 학습지만 하나씩 추가한다.
 const elementaryHorizontalMentalMathWorksheets = new Set<string>([
+  "3나눗셈③",
   "2덧셈뺄셈③",
   "3덧셈뺄셈②",
   "3보수뺄셈100",

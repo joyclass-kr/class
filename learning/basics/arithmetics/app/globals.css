@@ -1535,9 +1535,6 @@ html[data-race-mode="true"] body { padding-bottom: 72px; }
   padding: 4px 2px 6px;
 }
 
-.division-three-headings strong:nth-child(3) {
-  grid-column: span 2;
-}
 
 .division-three-columns {
   grid-template-columns: repeat(4, minmax(0, 1fr));
