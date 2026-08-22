@@ -334,7 +334,6 @@ body:has(#gameScreen:not(.hidden)) .shell{height:calc(100dvh - 16px)}
     <section id="hostPane" class="panel mp-lobby-card hidden">
       <div class="row spread">
         <div><div class="eyebrow">ROOM CODE</div><div id="roomCode" class="code">----</div></div>
-        <button id="copyBtn" class="secondary" type="button">COPY CODE</button>
       </div>
       <div id="hostStatus" class="mp-lobby-status">방을 만드는 중입니다.</div>
     </section>
@@ -1215,6 +1214,7 @@ function init(){
   setTrack("lobby");
   lobby=ClassroomMultiplayerLobby.create({
     gameId:GAME_ID,
+    initialMode:'guest',
     getPlayerName:()=>/^[가-힣]{2,6}$/.test(savedName)?savedName:"",
     allowedPlayerCounts:[3,4,5,6,7,8],
     maxPlayers:8,

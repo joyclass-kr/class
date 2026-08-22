@@ -37,7 +37,6 @@
           <div class="preview-arrow">→</div>
           <div class="preview-card word-card coral"><small>03 · 추측</small><strong>달을 보는<br>개구리</strong></div>
         </div>
-        <div class="hero-note">그림 릴레이 · 4–8 PLAYERS · 모두 동시에 진행</div>
       </article>
 
       <article class="paper-panel lobby-panel">
@@ -45,7 +44,7 @@
           <div><div class="eyebrow">CLASSROOM EDITION</div><h2>DRAW RELAY</h2></div>
           <span class="player-badge"><i></i>PLAYER · <span id="savedName">플레이어</span></span>
         </div>
-        <p class="lobby-sub">그림 릴레이 · 4–8 PLAYERS</p>
+        <p class="lobby-sub">그림 릴레이 · 4~8명</p>
 
         <div class="mp-lobby-tabs" role="tablist" aria-label="방 참여 방법">
           <button id="hostTab" class="mp-lobby-tab primary active" type="button" role="tab">CREATE ROOM</button>
@@ -55,7 +54,6 @@
         <section id="hostPane" class="mp-lobby-pane">
           <div class="room-row">
             <div><div class="eyebrow">ROOM CODE</div><div id="roomCode" class="mp-lobby-code">----</div></div>
-            <button id="copyBtn" class="secondary" type="button">COPY CODE</button>
           </div>
           <div id="hostStatus" class="mp-lobby-status">새 게임 방을 준비하고 있습니다.</div>
         </section>
@@ -545,6 +543,7 @@
 
     lobby = ClassroomMultiplayerLobby.create({
       gameId: GAME_ID,
+      initialMode: 'guest',
       getPlayerName: () => /^[가-힣]{2,6}$/.test(savedName) ? savedName : "",
       minPlayers: 4,
       maxPlayers: 8,

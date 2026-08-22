@@ -37,7 +37,6 @@
       <section id="hostPane" class="panel mp-lobby-card hidden">
         <div class="row spread">
           <div><div class="eyebrow">ROOM CODE</div><div id="roomCode" class="mp-lobby-room-code">----</div></div>
-          <button id="copyBtn" class="secondary" type="button">COPY CODE</button>
         </div>
         <div id="hostStatus" class="mp-lobby-status">방을 만드는 중입니다.</div>
       </section>
@@ -674,6 +673,7 @@
     setInterval(renderTurnClock, 250);
     lobby = ClassroomMultiplayerLobby.create({
       gameId: GAME_ID,
+      initialMode: 'guest',
       getPlayerName: () => /^[가-힣]{2,6}$/.test(savedName) ? savedName : "",
       allowedPlayerCounts: [2, 4],
       maxPlayers: 4,

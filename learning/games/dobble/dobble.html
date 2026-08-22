@@ -96,7 +96,7 @@ h1,h2,h3,p{margin-top:0}
   <section id="entry" class="hidden" data-multiplayer-lobby>
     <header class="panel">
       <h1 class="title">SPOT MATCH</h1>
-      <p class="subtitle">같은 그림 찾기 · 2~8 PLAYERS</p>
+      <p class="subtitle">같은 그림 찾기 · 2~8명</p>
       <p>PLAYER · <strong id="savedPlayerName">-</strong></p>
       <div class="entryActions">
         <button id="createTab" class="primary" type="button">CREATE ROOM</button>
@@ -109,7 +109,6 @@ h1,h2,h3,p{margin-top:0}
     <section id="createPane" class="panel entryPane hidden">
       <div class="row spread">
         <div><div class="eyebrow">ROOM CODE</div><div id="roomCode" class="code">----</div></div>
-        <button id="copyBtn" class="secondary" type="button">COPY CODE</button>
       </div>
       <div id="entryStatus" class="status">방을 만드는 중입니다.</div>
     </section>
@@ -458,6 +457,7 @@ function handleServerMessage(message) {
 function init() {
   lobby = ClassroomMultiplayerLobby.create({
     gameId: GAME_ID,
+    initialMode: 'guest',
     autoCreate: false,
     ids: {
       lobbyScreen: "entry",

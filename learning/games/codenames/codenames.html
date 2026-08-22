@@ -119,7 +119,7 @@ body:has(#boardArea:not(.hidden)) #game>.panel:first-child{margin-bottom:8px;pad
   <section id="entry" class="hidden" data-multiplayer-lobby>
     <header class="panel">
       <h1 class="title">CODE WORDS</h1>
-      <p class="subtitle">낱말 암호 · 4~5 PLAYERS · 2팀 (교사 관전 화면은 선택)</p>
+      <p class="subtitle">낱말 암호 · 4~5명 · 2팀</p>
       <p>PLAYER · <strong id="savedPlayerName">-</strong></p>
       <div class="entryActions">
         <button id="createTab" class="primary" type="button">CREATE ROOM</button>
@@ -132,7 +132,6 @@ body:has(#boardArea:not(.hidden)) #game>.panel:first-child{margin-bottom:8px;pad
     <section id="createPane" class="panel entryPane hidden">
       <div class="row spread">
         <div><div class="eyebrow">ROOM CODE</div><div id="roomCode" class="code">----</div></div>
-        <button id="copyBtn" class="secondary" type="button">COPY CODE</button>
       </div>
       <div id="entryStatus" class="status">방을 만드는 중입니다.</div>
     </section>
@@ -449,6 +448,7 @@ function init() {
   setInterval(renderTurnClock, 250);
   lobby = ClassroomMultiplayerLobby.create({
     gameId: GAME_ID,
+    initialMode: 'guest',
     autoCreate: false,
     ids: {
       lobbyScreen: "entry",

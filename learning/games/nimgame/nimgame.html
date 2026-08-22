@@ -997,7 +997,7 @@ body{align-items:flex-start;padding:8px}
     <section class="screen hidden mp-lobby-compact" id="lobby-screen" data-multiplayer-lobby>
         <div class="title-wrap">
             <h1 class="main-title">NIM &amp; COIN MATCH</h1>
-            <div class="subtitle">PLAYER · <strong id="savedName">-</strong> · TWO-PLAYER STRATEGY</div>
+            <div class="subtitle">PLAYER · <strong id="savedName">-</strong> · 2명</div>
         </div>
 
         <div class="status-strip">
@@ -1018,7 +1018,6 @@ body{align-items:flex-start;padding:8px}
                         <strong class="room-code-value" id="room-code-display">----</strong>
                     </div>
                     <div class="room-code-actions">
-                        <button class="small-btn" id="copy-code-btn" type="button">COPY CODE</button>
                         <button class="small-btn" id="new-code-btn" type="button">NEW CODE</button>
                     </div>
                 </div>
@@ -1260,6 +1259,7 @@ body{align-items:flex-start;padding:8px}
         $("new-code-btn").addEventListener("click", () => lobby?.setMode("host"));
         lobby = ClassroomMultiplayerLobby.create({
             gameId: GAME_ID,
+            initialMode: 'guest',
             ids: {
                 lobbyScreen: "lobby-screen",
                 hostTab: "host-tab",

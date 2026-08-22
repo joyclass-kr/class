@@ -288,6 +288,7 @@
         setInterval(renderTurnClock, 250);
         lobby = window.ClassroomMultiplayerLobby.create({
             gameId: GAME_ID,
+            initialMode: 'guest',
             getPlayerName: () => /^[가-힣]{2,6}$/.test(savedName) ? savedName : "",
             allowedPlayerCounts: [2,3,4],
             maxPlayers: 4,
