@@ -66,29 +66,39 @@ function orthogonalPerimeter(cells: readonly [number, number][], cellWidth: numb
 export function createElementaryGeometryMeasurementSet(mode: GeometryMeasurementMode, seed: number): GeometryMeasurementProblem[] {
   const random = seededRandom(seed ^ (mode === "plane" ? 0x51a7 : 0x60b5));
   if (mode === "plane") {
-    const shuffled = [...ORTHOGONAL_SHAPE_BANK];
+    const templates = ["l-shape", "frame", "u-shape", "c-shape"] as const;
+    const shuffled = [...templates];
     for (let index = shuffled.length - 1; index > 0; index -= 1) {
       const target = Math.floor(random() * (index + 1));
       [shuffled[index], shuffled[target]] = [shuffled[target], shuffled[index]];
     }
-    return shuffled.slice(0, 4).map((template, index) => {
-      const cellWidth = pick(random, [2, 3, 4, 5]);
-      const cellHeight = pick(random, [2, 3, 4]);
-      const rotation = Math.floor(random() * 4);
-      const mirror = random() < 0.5;
-      const cells = transformCells(template.cells, rotation, mirror);
-      return {
-        id: `orthogonal-${template.name}-${seed}-${index}`,
-        kind: "orthogonal",
-        dimensions: { cellWidth, cellHeight, rotation, mirror: mirror ? 1 : 0 },
-        cells,
-        first: orthogonalPerimeter(cells, cellWidth, cellHeight),
-        second: cells.length * cellWidth * cellHeight,
-        firstLabel: "둘레" as const,
-        secondLabel: "넓이" as const,
-        firstUnit: "cm" as const,
-        secondUnit: "cm²" as const,
-      };
+    return shuffled.map((kind, index) => {
+      if (kind === "l-shape") {
+        const width = pick(random, [12, 14, 16, 18]);
+        const height = pick(random, [9, 10, 12]);
+        const cutWidth = pick(random, [3, 4, 5, 6]);
+        const cutHeight = pick(random, [3, 4, 5]);
+        return { id: `l-shape-${seed}-${index}`, kind, dimensions: { width, height, cutWidth, cutHeight }, first: 2 * (width + height), second: width * height - cutWidth * cutHeight, firstLabel: "둘레" as const, secondLabel: "넓이" as const, firstUnit: "cm" as const, secondUnit: "cm²" as const };
+      }
+      if (kind === "frame") {
+        const width = pick(random, [14, 16, 18]);
+        const height = pick(random, [10, 12, 14]);
+        const innerWidth = pick(random, [4, 6, 8]);
+        const innerHeight = pick(random, [3, 4, 5, 6]);
+        return { id: `frame-${seed}-${index}`, kind, dimensions: { width, height, innerWidth, innerHeight }, first: 2 * (width + height + innerWidth + innerHeight), second: width * height - innerWidth * innerHeight, firstLabel: "둘레" as const, secondLabel: "넓이" as const, firstUnit: "cm" as const, secondUnit: "cm²" as const };
+      }
+      if (kind === "u-shape") {
+        const width = pick(random, [14, 16, 18]);
+        const height = pick(random, [10, 12, 14]);
+        const notchWidth = pick(random, [4, 6, 8]);
+        const notchHeight = pick(random, [3, 4, 5]);
+        return { id: `u-shape-${seed}-${index}`, kind, dimensions: { width, height, notchWidth, notchHeight }, first: 2 * (width + height) + 2 * notchHeight, second: width * height - notchWidth * notchHeight, firstLabel: "둘레" as const, secondLabel: "넓이" as const, firstUnit: "cm" as const, secondUnit: "cm²" as const };
+      }
+      const width = pick(random, [14, 16, 18]);
+      const height = pick(random, [10, 12, 14]);
+      const cutWidth = pick(random, [4, 5, 6]);
+      const cutHeight = pick(random, [3, 4, 5, 6]);
+      return { id: `c-shape-${seed}-${index}`, kind, dimensions: { width, height, cutWidth, cutHeight }, first: 2 * (width + height) + 2 * cutWidth, second: width * height - cutWidth * cutHeight, firstLabel: "둘레" as const, secondLabel: "넓이" as const, firstUnit: "cm" as const, secondUnit: "cm²" as const };
     });
   }
   const length = pick(random, [8, 10, 12]);
