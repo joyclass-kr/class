@@ -245,7 +245,7 @@
 
     function interactiveFromTarget(target) {
         if (!(target instanceof Element)) return null;
-        return target.closest("button, a[href], input[type='button'], input[type='submit'], [role='button'], [data-sfx]");
+        return target.closest("button, a[href], input[type='button'], input[type='submit'], [role='button'], summary, [data-sfx]");
     }
 
     function soundForElement(element) {

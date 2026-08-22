@@ -942,6 +942,12 @@
             const classboardLink = document.getElementById('classboardLink');
             const hubContent = document.getElementById('hubContent');
             const hubLinks = Array.from(hubContent.querySelectorAll('a[href]'));
+            const worksheetGroups = Array.from(document.querySelectorAll('.worksheet-group'));
+            document.addEventListener('click', (event) => {
+                worksheetGroups.forEach((group) => {
+                    if (group.open && !group.contains(event.target)) group.removeAttribute('open');
+                });
+            }, true);
             const playerLearningLinks = Array.from(document.querySelectorAll('[data-requires-player="true"]'));
             const accessGroupControls = Array.from(document.querySelectorAll('[data-content-paths]'));
             let openAccess = false;
