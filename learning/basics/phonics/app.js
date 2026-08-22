@@ -452,7 +452,7 @@
       return `<article class="stage-card ${stage.color}">
         <div class="stage-summary"><span class="stage-number">${String(stage.order).padStart(2, "0")}</span><div><p>${courseAreaFor(stage)} · STAGE ${stage.order}</p><h3>${escapeHtml(stage.title)}</h3><span>${escapeHtml(stage.subtitle)}</span></div><div class="stage-score"><b>${doneCount}/${lessons.length}</b><span>완료</span></div></div>
         <div class="mini-progress"><i style="width:${stagePercent}%"></i></div>
-        <div class="lesson-list">${lessons.map((lesson) => `<button type="button" data-lesson="${lesson.id}" class="${saved.done.includes(lesson.id) ? "done" : ""}"><span>${saved.done.includes(lesson.id) ? "✓" : lesson.stageOrder}</span><div><small>${escapeHtml(lesson.activityLabel)}</small><b>${escapeHtml(lesson.title)}</b></div><em>${Object.hasOwn(saved.soundScores, lesson.id) ? `${saved.soundScores[lesson.id]}/${lesson.questionCount}` : "시작 →"}</em></button>`).join("")}</div>
+        <div class="lesson-list">${lessons.map((lesson) => `<button type="button" data-lesson="${lesson.id}" class="${saved.done.includes(lesson.id) ? "done" : ""}"><span>${saved.done.includes(lesson.id) ? "✓" : lesson.stageOrder}</span><div><b>${escapeHtml(lesson.title)}</b></div>${Object.hasOwn(saved.soundScores, lesson.id) ? `<em>${saved.soundScores[lesson.id]}/${lesson.questionCount}</em>` : ""}</button>`).join("")}</div>
       </article>`;
     }).join("");
     $("stageList").querySelectorAll("[data-lesson]").forEach((button) => button.addEventListener("click", () => openLesson(button.dataset.lesson)));
