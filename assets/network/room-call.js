@@ -134,9 +134,14 @@
         }
 
         _syncPeers(snapshot) {
-            const active = !!(snapshot.connected || snapshot.started);
+            // Only run the call once a match is actually underway — offering it in the
+            // pre-game waiting room doesn't scale and isn't needed before players commit.
+            const active = !!snapshot.started;
             this.ui.bar.classList.toggle("hidden", !active);
-            if (!active) return;
+            if (!active) {
+                if (this.peers.size || this.micOn || this.camOn) this.teardown();
+                return;
+            }
             const myId = String(snapshot.myId ?? "");
             const ids = Object.keys(snapshot.players || {}).map(String).filter(id => id !== myId);
             for (const id of [...this.peers.keys()]) {
