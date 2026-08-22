@@ -38,6 +38,7 @@
             .room-call-tile__label{position:absolute;left:0;right:0;bottom:0;padding:2px 5px;font-size:10px;color:#e9edf3;background:linear-gradient(transparent,rgba(0,0,0,.72));white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
             .room-call-tile__avatar{position:absolute;inset:0;display:none;align-items:center;justify-content:center;font-size:26px;color:#7c8798}
             .room-call-tile--novideo .room-call-tile__avatar{display:flex}
+            .room-call-tile__avatar img{width:100%;height:100%;object-fit:cover}
             .room-call-tile--offline{opacity:.4}
             .room-call-controls{display:flex;gap:8px;padding:7px;background:rgba(10,13,18,.86);border:1px solid rgba(255,255,255,.14);backdrop-filter:blur(2px)}
             .room-call-btn{position:relative;width:38px;height:38px;border-radius:50%;border:1px solid rgba(255,255,255,.22);background:#2a323f;color:#eef2f7;font-size:16px;cursor:pointer;display:flex;align-items:center;justify-content:center;padding:0}
@@ -93,20 +94,42 @@
             this.ui = { bar, tiles, micBtn, camBtn, status, localTile };
         }
 
-        _makeTile(label, isLocal) {
+        _makeTile(label, isLocal, avatarUrl) {
             const root = el("div", "room-call-tile room-call-tile--novideo");
             const video = document.createElement("video");
             video.autoplay = true;
             video.playsInline = true;
             if (isLocal) video.muted = true;
             const avatar = el("div", "room-call-tile__avatar");
-            avatar.textContent = "🙂";
+            const avatarImg = document.createElement("img");
+            avatarImg.alt = "";
+            avatarImg.addEventListener("error", () => { avatarImg.style.display = "none"; });
+            const avatarEmoji = document.createElement("span");
+            avatarEmoji.textContent = "🙂";
+            avatar.appendChild(avatarImg);
+            avatar.appendChild(avatarEmoji);
             const labelEl = el("div", "room-call-tile__label");
             labelEl.textContent = label;
             root.appendChild(video);
             root.appendChild(avatar);
             root.appendChild(labelEl);
-            return { root, video, labelEl };
+            const tile = { root, video, labelEl, avatarImg, avatarEmoji };
+            this._setTileAvatar(tile, avatarUrl);
+            return tile;
+        }
+
+        // Mirrors the site's real student/teacher avatar when one is set (same source
+        // as the lobby player list); falls back to the generic emoji otherwise.
+        _setTileAvatar(tile, url) {
+            if (url) {
+                tile.avatarImg.src = url;
+                tile.avatarImg.style.display = "";
+                tile.avatarEmoji.style.display = "none";
+            } else {
+                tile.avatarImg.removeAttribute("src");
+                tile.avatarImg.style.display = "none";
+                tile.avatarEmoji.style.display = "";
+            }
         }
 
         _wireLobby() {
@@ -143,18 +166,23 @@
                 return;
             }
             const myId = String(snapshot.myId ?? "");
+            this._setTileAvatar(this.ui.localTile, this.lobby.playerAvatar?.(myId));
             const ids = Object.keys(snapshot.players || {}).map(String).filter(id => id !== myId);
             for (const id of [...this.peers.keys()]) {
                 if (!ids.includes(id)) this._closePeer(id);
             }
             for (const id of ids) {
-                if (this.peers.has(id)) continue;
+                if (this.peers.has(id)) {
+                    // Avatars can arrive after the tile is already up (loaded async).
+                    this._setTileAvatar(this.peers.get(id).tile, this.lobby.playerAvatar?.(id));
+                    continue;
+                }
                 const label = snapshot.players[id]?.name || "참가자";
-                this._openPeer(id, myId < id, label);
+                this._openPeer(id, myId < id, label, this.lobby.playerAvatar?.(id));
             }
         }
 
-        _openPeer(peerId, initiator, label) {
+        _openPeer(peerId, initiator, label, avatarUrl) {
             let pc;
             try {
                 pc = new RTCPeerConnection({ iceServers: ICE_SERVERS });
@@ -166,7 +194,7 @@
             if (this.localAudioTrack) audioTransceiver.sender.replaceTrack(this.localAudioTrack).catch(() => {});
             if (this.localVideoTrack) videoTransceiver.sender.replaceTrack(this.localVideoTrack).catch(() => {});
 
-            const tile = this._makeTile(label, false);
+            const tile = this._makeTile(label, false, avatarUrl);
             this.ui.tiles.appendChild(tile.root);
             const stream = new MediaStream();
             const peer = { pc, audioTransceiver, videoTransceiver, tile, stream };
@@ -215,7 +243,7 @@
             if (!data || !data.kind) return;
             let peer = this.peers.get(senderId);
             if (!peer && data.kind === "offer") {
-                this._openPeer(senderId, false, this.lobby.snapshot().players[senderId]?.name || "참가자");
+                this._openPeer(senderId, false, this.lobby.snapshot().players[senderId]?.name || "참가자", this.lobby.playerAvatar?.(senderId));
                 peer = this.peers.get(senderId);
             }
             if (!peer) return;
