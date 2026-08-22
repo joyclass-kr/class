@@ -5,10 +5,16 @@
     const layer = map?.querySelector(".anatomy-layer");
     if (!map || !layer) return;
 
+    const bodySvg = layer.querySelector("svg.body-model");
+    const viewBoxByFocus = {
+        body: "0 0 360 560",
+        heart: "9 21 322 455",
+        lung: "19 21 322 471"
+    };
+
     const viewButtons = [...map.querySelectorAll("[data-atlas-view]")];
     const layerButtons = [...map.querySelectorAll("[data-atlas-layer]")];
     const cameraButtons = [...map.querySelectorAll("[data-atlas-camera]")];
-    const freeExploreButton = map.querySelector("[data-atlas-mode='explore']");
     const hint = map.querySelector(".atlas-3d-hint");
     const feedback = document.getElementById("explorerFeedback");
     const feedbackTitle = document.getElementById("explorerFeedbackTitle");
@@ -27,8 +33,6 @@
         aorta: { title: "대동맥 · AORTA", text: "좌심실에서 나온 혈액이 온몸으로 퍼져 나갈 때 가장 먼저 지나는 우리 몸의 가장 큰 동맥입니다." },
         "tissue-exchange": { title: "모세혈관 · CAPILLARY BED", text: "가느다란 벽을 사이에 두고 세포에 산소와 영양소를 주며 이산화탄소와 노폐물을 받아옵니다." }
     };
-    let savedFeedback = null;
-
     map.dataset.layerSkin = "true";
     map.dataset.layerOrgans = "true";
     map.dataset.layerVessels = "true";
@@ -48,6 +52,7 @@
     function syncViewButtons() {
         const focus = map.dataset.focus || "body";
         viewButtons.forEach((button) => button.setAttribute("aria-pressed", String(button.dataset.atlasView === focus)));
+        bodySvg?.setAttribute("viewBox", viewBoxByFocus[focus] || viewBoxByFocus.body);
         applyCamera();
     }
 
@@ -62,35 +67,6 @@
         feedback.dataset.state = "explore";
         feedbackTitle.textContent = overview[0];
         feedbackText.textContent = overview[1];
-    }
-
-    function setFreeExplore(active) {
-        const next = Boolean(active);
-        map.classList.toggle("is-free-explore", next);
-        freeExploreButton?.setAttribute("aria-pressed", String(next));
-        document.getElementById("anatomyExplorer")?.classList.toggle("free-explore-active", next);
-        map.querySelectorAll(".anatomy-hotspot").forEach((button) => button.classList.remove("is-inspected"));
-
-        if (next) {
-            if (!savedFeedback && feedbackTitle && feedbackText && feedback) {
-                savedFeedback = {
-                    title: feedbackTitle.textContent,
-                    text: feedbackText.textContent,
-                    state: feedback.dataset.state
-                };
-            }
-            showExploreOverview();
-            announce("기관 살펴보기를 시작했습니다. 구조를 눌러 기능을 확인하세요.");
-            return;
-        }
-
-        if (savedFeedback && feedbackTitle && feedbackText && feedback) {
-            feedbackTitle.textContent = savedFeedback.title;
-            feedbackText.textContent = savedFeedback.text;
-            feedback.dataset.state = savedFeedback.state;
-        }
-        savedFeedback = null;
-        announce("혈액순환 경로 학습으로 돌아왔습니다.");
     }
 
     function announce(message) {
@@ -110,13 +86,9 @@
         button.addEventListener("click", () => {
             map.dataset.focus = button.dataset.atlasView;
             syncViewButtons();
-            if (map.classList.contains("is-free-explore")) showExploreOverview();
+            showExploreOverview();
             announce(`${button.textContent.trim()} 해부 보기로 전환했습니다.`);
         });
-    });
-
-    freeExploreButton?.addEventListener("click", () => {
-        setFreeExplore(!map.classList.contains("is-free-explore"));
     });
 
     layerButtons.forEach((button) => {
@@ -177,19 +149,16 @@
     map.addEventListener("pointercancel", stopRotation);
 
     map.addEventListener("click", (event) => {
-        if (!map.classList.contains("is-free-explore")) return;
         const hotspot = event.target.closest(".anatomy-hotspot");
         if (!hotspot) return;
-        event.preventDefault();
-        event.stopImmediatePropagation();
         const note = anatomyNotes[hotspot.dataset.target];
         if (!note || !feedbackTitle || !feedbackText || !feedback) return;
         map.querySelectorAll(".anatomy-hotspot").forEach((button) => button.classList.toggle("is-inspected", button === hotspot));
         feedback.dataset.state = "explore";
         feedbackTitle.textContent = note.title;
         feedbackText.textContent = note.text;
-        announce(`${note.title}. ${note.text}`);
-    }, true);
+        announce(note.title + ". " + note.text);
+    });
 
     map.addEventListener("wheel", (event) => {
         if (!event.ctrlKey && !event.metaKey) return;

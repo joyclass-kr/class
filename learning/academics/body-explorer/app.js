@@ -120,7 +120,6 @@
         explorerFeedback: document.getElementById("explorerFeedback"),
         explorerFeedbackTitle: document.getElementById("explorerFeedbackTitle"),
         explorerFeedbackText: document.getElementById("explorerFeedbackText"),
-        explorerNextButton: document.getElementById("explorerNextButton"),
         bloodCellMarker: document.getElementById("bloodCellMarker"),
         atlasStep: document.getElementById("atlasStep"),
         atlasFocus: document.getElementById("atlasFocus"),
@@ -411,15 +410,17 @@
             const node = document.createElement("li");
             node.className = "route-node";
             node.dataset.number = String(index + 1);
-            node.textContent = stage.shortLabel;
+            node.textContent = "?";
             elements.routeMap.append(node);
         });
     }
 
     function updateRouteMap() {
         [...elements.routeMap.children].forEach((node, index) => {
-            node.classList.toggle("passed", index < state.currentIndex || (index === state.currentIndex && state.stageSolved));
+            const revealed = index < state.currentIndex || (index === state.currentIndex && state.stageSolved);
+            node.classList.toggle("passed", revealed);
             node.classList.toggle("current", index === state.currentIndex && !state.stageSolved);
+            node.textContent = revealed ? stages[index].shortLabel : "?";
         });
         elements.routeMap.children[state.currentIndex]?.scrollIntoView({ inline: "center", block: "nearest", behavior: "smooth" });
     }
@@ -449,11 +450,10 @@
         "tissue-exchange": [207, 394]
     };
 
-    function setExplorerFeedback(stateName, title, message, showNext = false) {
+    function setExplorerFeedback(stateName, title, message) {
         elements.explorerFeedback.dataset.state = stateName;
         elements.explorerFeedbackTitle.textContent = title;
         elements.explorerFeedbackText.textContent = message;
-        elements.explorerNextButton.classList.toggle("hidden", !showNext);
     }
 
     function updateAnatomyMap(stage, arrived = false) {
@@ -486,67 +486,26 @@
 
         elements.anatomyMap.querySelectorAll(".anatomy-hotspot").forEach((button) => {
             const targetIndex = stages.findIndex((item) => item.target === button.dataset.target);
-            button.disabled = state.stageSolved || button.classList.contains("is-wrong");
+            button.disabled = false;
             button.classList.toggle("is-discovered", targetIndex < state.currentIndex || (arrived && targetIndex === state.currentIndex));
             button.classList.toggle("is-arrival", arrived && button.dataset.target === stage.target);
         });
     }
 
     function renderAnatomyExplorer(stage) {
-        elements.questionCard.classList.add("hidden");
         elements.simulationCard?.classList.add("hidden");
         elements.anatomyExplorer.classList.remove("hidden");
-        elements.explorerQuestion.textContent = stage.question;
-        elements.explorerNextButton.textContent = state.currentIndex === TOTAL_STAGES - 1 ? "탐험 결과 보기" : "혈구를 따라 계속 이동";
+        elements.explorerQuestion.textContent = stage.location + " · " + stage.mission;
         elements.anatomyMap.querySelectorAll(".anatomy-hotspot").forEach((button) => {
             button.disabled = false;
-            button.classList.remove("is-wrong", "is-arrival");
+            button.classList.remove("is-wrong", "is-arrival", "is-inspected");
         });
-        setExplorerFeedback("idle", "몸속 어디로 이동해야 할까요?", "기관 이름과 혈액의 방향을 관찰한 뒤 지도에서 직접 눌러 보세요.");
-        updateAnatomyMap(stage);
-        updateRouteMap();
-        elements.anatomyExplorer.focus?.({ preventScroll: true });
-        elements.announcer.textContent = `${stage.location}. ${stage.mission} ${stage.question}`;
-    }
-
-    function selectAnatomyTarget(button) {
-        if (state.stageSolved || button.disabled) return;
-        const stage = stages[state.currentIndex];
-        const isCorrect = button.dataset.target === stage.target;
-
-        if (!isCorrect) {
-            if (state.attempts === 0) {
-                state.missed.push({ stage, chosen: button.dataset.label });
-            }
-            state.attempts += 1;
-            button.disabled = true;
-            button.classList.add("is-wrong");
-            setExplorerFeedback("correcting", `${button.dataset.label}에서는 흐름이 이어지지 않아요`, stage.hint);
-            elements.announcer.textContent = `${elements.explorerFeedbackTitle.textContent}. ${stage.hint}`;
-            window.ClassGameSfx?.play("error");
-            return;
-        }
-
-        state.stageSolved = true;
-        if (state.attempts === 0) {
-            state.score += 1;
-            elements.currentScore.textContent = String(state.score);
-        }
-        reportClassStageCompletion();
-        revealFact(stage);
-        updateAnatomyMap(stage, true);
         setExplorerFeedback(
-            "success",
-            state.attempts === 0 ? "혈구가 정확한 위치에 도착했어요!" : "혈액의 흐름을 찾아냈어요!",
-            stage.explanation,
-            true
+            "idle",
+            "구조를 눌러 설명을 확인하세요",
+            "정답은 문제 카드의 선택지에서 제출해요. 지도는 근거를 찾는 데 활용하세요."
         );
-        elements.cellExplorer.classList.add("moving");
-        setTimeout(() => elements.cellExplorer.classList.remove("moving"), 320);
-        elements.announcer.textContent = `${elements.explorerFeedbackTitle.textContent} ${stage.explanation}`;
-        window.ClassGameSfx?.play("success");
-        updateRouteMap();
-        elements.explorerNextButton.focus({ preventScroll: true });
+        updateAnatomyMap(stage);
     }
 
     function hideFact() {
@@ -957,8 +916,8 @@
 
         if (isAnatomyExplorerStage(stage)) {
             renderAnatomyExplorer(stage);
-            document.dispatchEvent(new CustomEvent("body-explorer-stage-rendered", { detail: { stageId: stage.id, kind: stage.kind || "anatomy" } }));
-            return;
+        } else {
+            elements.anatomyExplorer?.classList.add("hidden");
         }
 
         if (isExperimentStage(stage)) {
@@ -968,7 +927,6 @@
         }
 
         elements.simulationCard?.classList.add("hidden");
-        elements.anatomyExplorer?.classList.add("hidden");
         elements.questionCard.classList.remove("hidden");
         elements.stageQuestion.textContent = stage.question;
 
@@ -1023,6 +981,10 @@
             if (choiceButton.dataset.choice === stage.answer) choiceButton.classList.add("is-correct");
         });
         revealFact(stage);
+        if (isAnatomyExplorerStage(stage)) {
+            updateAnatomyMap(stage, true);
+            setExplorerFeedback("success", stage.shortLabel + "의 역할을 확인했어요", stage.explanation);
+        }
         elements.feedback.className = "feedback";
         elements.feedbackTitle.textContent = state.attempts === 0 ? "정확한 경로예요!" : "근거를 찾아냈어요!";
         elements.feedbackText.textContent = stage.explanation;
@@ -1044,7 +1006,7 @@
         }
         state.currentIndex += 1;
         renderStage();
-        elements.scenePanel.scrollIntoView({ block: "start", behavior: "smooth" });
+        elements.questionCard.scrollIntoView({ block: "nearest", behavior: "smooth" });
     }
 
     function resultMessage(score) {
@@ -1189,10 +1151,6 @@
     elements.restartButton.addEventListener("click", startJourney);
     elements.resultModeButton.addEventListener("click", showModeScreen);
     elements.nextStageButton.addEventListener("click", goToNextStage);
-    elements.anatomyMap?.querySelectorAll(".anatomy-hotspot").forEach((button) => {
-        button.addEventListener("click", () => selectAnatomyTarget(button));
-    });
-    elements.explorerNextButton?.addEventListener("click", goToNextStage);
     elements.undoPathButton?.addEventListener("click", undoExperimentPath);
     elements.clearPathButton?.addEventListener("click", clearExperimentPath);
     elements.runSimulationButton?.addEventListener("click", runInteractiveExperiment);

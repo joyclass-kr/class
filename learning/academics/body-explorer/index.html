@@ -7,14 +7,14 @@
     <title>인체의 구조와 기능</title>
     <meta name="description" content="적혈구가 되어 온몸, 심장, 폐를 한 바퀴 돌며 혈액순환을 배우는 교실용 학습 시뮬레이션">
     <link rel="stylesheet" href="../../../assets/network/multiplayer-lobby.css">
-    <link rel="stylesheet" href="styles.css?v=20260723-3">
+    <link rel="stylesheet" href="styles.css?v=20260823-1">
     <link rel="stylesheet" href="gallery-room-background.css?v=20260723-1">
     <script src="../../../assets/network/game-network.js?v=20260821" defer></script>
     <script src="../../../assets/network/multiplayer-lobby.js" defer></script>
     <script src="../../../assets/sound/game-sfx.js" defer></script>
-    <script src="journey-data.js?v=20260723-4" defer></script>
-    <script src="app.js?v=20260723-5" defer></script>
-    <script src="atlas-3d.js" defer></script>
+    <script src="journey-data.js?v=20260822-1" defer></script>
+    <script src="app.js?v=20260823-1" defer></script>
+    <script src="atlas-3d.js?v=20260823-1" defer></script>
 </head>
 <body>
     <div class="anatomy-gallery-room" aria-hidden="true">
@@ -129,6 +129,7 @@
                     <ol id="routeMap" class="route-map"></ol>
                 </div>
 
+                <div class="journey-workspace">
                 <article id="scenePanel" class="scene-panel" data-scene="body">
                     <div class="scene-image" aria-hidden="true"></div>
                     <div class="scene-overlay" aria-hidden="true"></div>
@@ -144,24 +145,21 @@
                     </div>
                 </article>
 
-                <article id="anatomyExplorer" class="anatomy-explorer hidden" aria-labelledby="explorerQuestion" tabindex="-1">
+                <article id="anatomyExplorer" class="anatomy-explorer hidden" aria-labelledby="atlasTitle">
                     <div class="explorer-heading">
                         <div>
                             <div class="atlas-kicker"><span>CIRCULATORY ATLAS</span><i aria-hidden="true"></i><b id="atlasStep">ROUTE 01</b></div>
-                            <h2 id="explorerQuestion"></h2>
+                            <h2 id="atlasTitle">혈액순환 지도</h2>
+                            <p id="explorerQuestion" class="explorer-context"></p>
                             <p id="atlasFocus" class="atlas-focus">SYSTEMIC RETURN · 전신에서 심장으로</p>
                         </div>
-                        <p class="explorer-guide"><span aria-hidden="true">＋</span><b>기관 관찰</b> 모델의 레이어를 분리해 혈구의 다음 위치를 찾으세요.</p>
                     </div>
 
                     <div id="anatomyMap" class="anatomy-map" data-oxygen="low">
                         <div class="atlas-grid" aria-hidden="true"></div>
                         <div class="scan-beam" aria-hidden="true"></div>
-                        <div class="map-coordinate north" aria-hidden="true">A / SUPERIOR</div>
-                        <div class="map-coordinate south" aria-hidden="true">B / INFERIOR</div>
                         <div class="map-depth" aria-hidden="true"><i></i><i></i><i></i><i></i><i></i></div>
                         <div class="atlas-3d-toolbar" aria-label="3D 해부 뷰어 조작">
-                            <button class="atlas-free-toggle" type="button" data-atlas-mode="explore" aria-pressed="false"><i></i>기관 살펴보기</button>
                             <div class="atlas-view-switch" role="group" aria-label="해부 보기 전환">
                                 <button type="button" data-atlas-view="body" aria-pressed="true">전신</button>
                                 <button type="button" data-atlas-view="heart" aria-pressed="false">심장</button>
@@ -182,32 +180,62 @@
                         <div class="anatomy-layer">
                         <svg class="body-model" viewBox="0 0 360 560" role="img" aria-label="심장, 폐, 주요 혈관이 보이는 인체 순환계 지도">
                             <defs>
-                                <linearGradient id="bodySkin" x1="0" x2="1" y1="0" y2="1">
-                                    <stop offset="0" stop-color="#f8cdbd" stop-opacity=".84"/>
-                                    <stop offset="1" stop-color="#b96e75" stop-opacity=".42"/>
+                                <linearGradient id="bodySkin" x1="0.15" y1="0" x2="0.82" y2="1">
+                                    <stop offset="0" stop-color="#ffe3d2" stop-opacity=".94"/>
+                                    <stop offset=".4" stop-color="#f3ae9a" stop-opacity=".68"/>
+                                    <stop offset=".76" stop-color="#c17169" stop-opacity=".42"/>
+                                    <stop offset="1" stop-color="#7c4258" stop-opacity=".32"/>
                                 </linearGradient>
+                                <radialGradient id="skinSheen" cx="36%" cy="16%" r="60%">
+                                    <stop offset="0" stop-color="#fff8ef" stop-opacity=".5"/>
+                                    <stop offset="1" stop-color="#fff8ef" stop-opacity="0"/>
+                                </radialGradient>
                                 <radialGradient id="organGlow">
                                     <stop offset="0" stop-color="#fff2df" stop-opacity=".9"/>
-                                    <stop offset="1" stop-color="#f2868d" stop-opacity=".16"/>
+                                    <stop offset=".55" stop-color="#f9a08b" stop-opacity=".26"/>
+                                    <stop offset="1" stop-color="#f2868d" stop-opacity="0"/>
                                 </radialGradient>
-                                <linearGradient id="heartBlue" x1="0" y1="0" x2="1" y2="1">
-                                    <stop offset="0" stop-color="#73d7e8"/><stop offset="1" stop-color="#276eae"/>
+                                <linearGradient id="heartBlue" x1="0.08" y1="0" x2="0.9" y2="1">
+                                    <stop offset="0" stop-color="#d3f6ff"/>
+                                    <stop offset=".38" stop-color="#6fcdea"/>
+                                    <stop offset="1" stop-color="#1c5c8f"/>
                                 </linearGradient>
-                                <linearGradient id="heartRed" x1="0" y1="0" x2="1" y2="1">
-                                    <stop offset="0" stop-color="#ff8e8d"/><stop offset="1" stop-color="#b51f48"/>
+                                <linearGradient id="heartRed" x1="0.08" y1="0" x2="0.9" y2="1">
+                                    <stop offset="0" stop-color="#ffd3c9"/>
+                                    <stop offset=".38" stop-color="#f76d72"/>
+                                    <stop offset="1" stop-color="#8f1339"/>
                                 </linearGradient>
-                                <radialGradient id="lungTissue">
-                                    <stop offset="0" stop-color="#f8a9ad" stop-opacity=".7"/><stop offset="1" stop-color="#9c3658" stop-opacity=".48"/>
+                                <radialGradient id="lungTissue" cx="34%" cy="26%" r="80%">
+                                    <stop offset="0" stop-color="#ffd6d3" stop-opacity=".85"/>
+                                    <stop offset=".5" stop-color="#e88a97" stop-opacity=".62"/>
+                                    <stop offset="1" stop-color="#7c2c49" stop-opacity=".5"/>
                                 </radialGradient>
                                 <filter id="softGlow" x="-80%" y="-80%" width="260%" height="260%">
                                     <feGaussianBlur stdDeviation="7" result="blur"/>
                                     <feMerge><feMergeNode in="blur"/><feMergeNode in="SourceGraphic"/></feMerge>
                                 </filter>
+                                <filter id="fleshBevel" x="-50%" y="-50%" width="200%" height="200%">
+                                    <feGaussianBlur in="SourceAlpha" stdDeviation="3" result="reliefBlur"/>
+                                    <feSpecularLighting in="reliefBlur" surfaceScale="2.4" specularConstant=".55" specularExponent="16" lighting-color="#fff3ea" result="spec">
+                                        <fePointLight x="70" y="-90" z="150"/>
+                                    </feSpecularLighting>
+                                    <feComposite in="spec" in2="SourceAlpha" operator="in" result="specClip"/>
+                                    <feMerge>
+                                        <feMergeNode in="SourceGraphic"/>
+                                        <feMergeNode in="specClip"/>
+                                    </feMerge>
+                                </filter>
+                                <filter id="softShadow" x="-40%" y="-40%" width="180%" height="180%">
+                                    <feDropShadow dx="0" dy="3" stdDeviation="4" flood-color="#180313" flood-opacity=".4"/>
+                                </filter>
                             </defs>
                             <g class="atlas-view atlas-view-body">
                             <ellipse cx="180" cy="280" rx="140" ry="250" fill="url(#organGlow)" opacity=".28"/>
                             <circle class="body-head skin-structure" cx="180" cy="58" r="37" fill="url(#bodySkin)"/>
-                            <path class="body-silhouette skin-structure" d="M145 98 C117 112 104 151 101 197 L82 319 112 329 132 226 137 329 122 520 164 520 180 354 196 520 238 520 223 329 228 226 248 329 278 319 259 197 C256 151 243 112 215 98 Z"/>
+                            <path class="body-arm skin-structure" fill="url(#bodySkin)" d="M120 130 C104 138 92 158 88 184 C85 206 86 228 92 248 C95 258 100 266 106 272 L118 266 C114 248 111 228 112 208 C113 188 118 168 128 152 Z"/>
+                            <path class="body-arm skin-structure" fill="url(#bodySkin)" d="M240 130 C256 138 268 158 272 184 C275 206 274 228 268 248 C265 258 260 266 254 272 L242 266 C246 248 249 228 248 208 C247 188 242 168 232 152 Z"/>
+                            <path class="body-silhouette skin-structure" d="M158 96 C136 97 122 108 116 128 C110 148 112 168 122 182 C126 188 132 193 138 197 L133 260 C130 320 127 380 124 434 C122 462 121 490 125 520 L162 520 C165 470 169 420 175 372 C177 356 183 356 185 372 C191 420 195 470 198 520 L235 520 C239 490 238 462 236 434 C233 380 230 320 227 260 L222 197 C228 193 234 188 238 182 C248 168 250 148 244 128 C238 108 224 97 202 96 C188 93 172 93 158 96 Z"/>
+                            <ellipse class="skin-structure" cx="158" cy="150" rx="42" ry="115" fill="url(#skinSheen)" opacity=".8" transform="rotate(-6 158 150)"/>
                             <path class="lung lung-left" d="M171 137 C145 120 124 148 127 207 130 247 151 254 171 230 Z"/>
                             <path class="lung lung-right" d="M189 137 C215 120 236 148 233 207 230 247 209 254 189 230 Z"/>
                             <path class="airway" d="M180 99 L180 143 M180 140 L151 165 M180 140 L209 165"/>
@@ -265,9 +293,6 @@
                                 </g>
                                 <g class="diagram-labels">
                                     <text x="32" y="104">상대정맥</text><text x="24" y="386">하대정맥</text>
-                                    <text x="105" y="240">우심방</text><text x="111" y="347">우심실</text>
-                                    <text x="218" y="238">좌심방</text><text x="214" y="350">좌심실</text>
-                                    <text x="251" y="111">대동맥</text><text x="245" y="177">폐동맥</text>
                                 </g>
                                 <g class="anatomy-callout callout-valve"><path d="M154 288 L51 288"/><circle cx="154" cy="288" r="4"/><text x="26" y="282">판막</text><text x="26" y="300">역류 방지</text></g>
                             </g>
@@ -295,7 +320,7 @@
                             </g>
                         </svg>
 
-                        <div class="map-hotspots" aria-label="선택할 수 있는 순환계 위치">
+                        <div class="map-hotspots" aria-label="설명을 확인할 수 있는 순환계 구조">
                             <button type="button" class="anatomy-hotspot" data-target="body-return" data-label="대정맥" style="--x:38%;--y:66%"><span>대정맥</span></button>
                             <button type="button" class="anatomy-hotspot" data-target="right-atrium" data-label="우심방" style="--x:43%;--y:39%"><span>우심방</span></button>
                             <button type="button" class="anatomy-hotspot detail" data-target="tricuspid" data-label="삼첨판" style="--x:45%;--y:44%"><span>삼첨판</span></button>
@@ -308,22 +333,16 @@
                             <button type="button" class="anatomy-hotspot" data-target="tissue-exchange" data-label="온몸 모세혈관" style="--x:52%;--y:75%"><span>모세혈관</span></button>
                         </div>
                         </div>
-                        <div class="atlas-legend" aria-hidden="true">
-                            <span><i class="legend-low"></i>산소 적음</span>
-                            <span><i class="legend-rich"></i>산소 풍부</span>
-                            <span><i class="legend-route"></i>혈액 이동 경로</span>
-                        </div>
                         <div class="map-readout" aria-hidden="true"><span>LIVE</span><b id="mapReadout">O₂ LOW · CO₂ RETURN</b></div>
                     </div>
 
                     <div id="explorerFeedback" class="explorer-feedback" data-state="idle" aria-live="polite">
-                        <div><strong id="explorerFeedbackTitle">어디로 이동해야 할까요?</strong><p id="explorerFeedbackText">기관 이름과 혈액의 흐름을 함께 살펴보세요.</p></div>
-                        <button id="explorerNextButton" class="primary-button hidden" type="button">다음 위치 확인</button>
+                        <div><strong id="explorerFeedbackTitle">지도를 살펴보세요</strong><p id="explorerFeedbackText">구조 이름을 누르면 역할과 혈액의 흐름을 확인할 수 있어요.</p></div>
                     </div>
                 </article>
 
                 <article class="question-card">
-                    <p class="question-kicker">다음 경로를 선택하세요</p>
+                    <p class="question-kicker">이번 관문</p>
                     <h2 id="stageQuestion"></h2>
                     <div id="choiceList" class="choice-list"></div>
                     <div id="feedback" class="feedback hidden" aria-live="polite">
@@ -332,6 +351,7 @@
                         <button id="nextStageButton" class="primary-button hidden" type="button">다음 장소로 이동</button>
                     </div>
                 </article>
+                </div>
             </section>
 
             <section id="resultScreen" class="screen result-screen hidden" aria-labelledby="resultTitle">

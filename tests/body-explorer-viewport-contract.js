@@ -32,12 +32,13 @@ for (const [index, html] of pages.entries()) {
     assert.ok(/(?:풀이|실험) 뒤 핵심 정리/.test(html), `Episode ${index + 1} must label the fact as post-answer learning.`);
 }
 
-assert.ok(styles.includes("@media (min-width: 740px)"), "Tablet and larger viewports need the one-screen layout.");
+assert.ok(styles.includes("@media (min-width: 900px) and (min-height: 650px)"), "Landscape classroom devices need the one-screen layout.");
+assert.ok(styles.includes("@media (max-width: 899px)"), "Portrait tablets need a scrolling stacked layout.");
 assert.ok(styles.includes("height: 100dvh"), "The active journey must be bounded to the visible viewport.");
-assert.match(styles, /grid-template-columns:\s*minmax\(260px,[^)]+\)\s*minmax\(390px,[^)]+\)/, "The scene and question must share the viewport side by side.");
+assert.match(styles, /\.journey-workspace\s*\{[\s\S]*?grid-template-columns:\s*minmax\(0, 1\.12fr\)\s*minmax\(360px, \.88fr\)/, "The atlas and question workspace must share landscape viewports.");
 assert.ok(styles.includes("body.journey-active footer"), "Nonessential footer content must be removed during a journey.");
 assert.match(styles, /\.hero-facts,[\s\S]*?\.episode-shelf,[\s\S]*?#clearPathButton,[\s\S]*?display:\s*none !important;/, "Duplicate counts, episode navigation, and reset controls must stay out of the learning flow.");
-assert.match(styles, /\.feedback \{[\s\S]*?height:\s*134px/, "Feedback must use reserved height before and after disclosure.");
+assert.match(styles, /\.journey-workspace \.feedback,[\s\S]*?min-height:\s*118px/, "Feedback must reserve stable space in the question card.");
 assert.match(styles, /\.question-card \.feedback\.hidden \{[\s\S]*?display:\s*block !important/, "Hidden feedback must keep its reserved layout space.");
 assert.match(styles, /\.fact-card \{[\s\S]*?visibility:\s*hidden/, "Facts must be visually hidden before solving.");
 assert.match(styles, /\.fact-card\.is-revealed \{[\s\S]*?visibility:\s*visible/, "Facts must become visible after solving.");

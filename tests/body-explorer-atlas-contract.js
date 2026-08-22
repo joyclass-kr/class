@@ -21,10 +21,10 @@ const circulationData = read("journey-data.js");
 const circulationStyles = read("styles.css");
 
 assert.match(circulationHtml, /id="anatomyExplorer"/);
-assert.match(circulationHtml, /id="anatomyExplorer"[^>]*tabindex="-1"/);
+assert.match(circulationHtml, /id="anatomyExplorer"[^>]*aria-labelledby="atlasTitle"/);
 assert.match(circulationHtml, /id="anatomyMap"/);
-assert.match(circulationHtml, /src="atlas-3d\.js"/);
-assert.match(circulationHtml, /data-atlas-mode="explore"/);
+assert.match(circulationHtml, /src="atlas-3d\.js(?:\?[^"]+)?"/);
+assert.doesNotMatch(circulationHtml, /data-atlas-mode="explore"/);
 assert.match(circulationHtml, /data-atlas-view="body"/);
 assert.match(circulationHtml, /data-atlas-view="heart"/);
 assert.match(circulationHtml, /data-atlas-view="lung"/);
@@ -52,15 +52,18 @@ circulationTargets.forEach((target) => {
 });
 
 assert.match(circulationApp, /function renderAnatomyExplorer/);
-assert.match(circulationApp, /function selectAnatomyTarget/);
+assert.doesNotMatch(circulationApp, /function selectAnatomyTarget/);
 assert.match(circulationApp, /body-explorer-stage-rendered/);
-assert.match(circulationAtlas, /function setFreeExplore/);
+assert.match(circulationHtml, /class="journey-workspace"/);
+assert.match(circulationApp, /shuffledChoices\(stage\.choices\)/);
+assert.match(circulationAtlas, /event\.target\.closest\("\.anatomy-hotspot"\)/);
+assert.doesNotMatch(circulationAtlas, /function setFreeExplore/);
 assert.match(circulationAtlas, /pointerdown/);
 assert.match(circulationAtlas, /data-atlas-layer/);
 assert.match(circulationStyles, /@media \(max-width: (?:739|800)px\)/);
 assert.match(circulationStyles, /\.anatomy-map\s*\{[^}]*min-height:\s*390px/s);
-assert.match(circulationStyles, /\.anatomy-hotspot::before\s*\{[^}]*inset:\s*-9px/s);
-assert.match(circulationStyles, /min-height:\s*34px/);
+assert.match(circulationStyles, /\.anatomy-hotspot,\s*\n\.anatomy-hotspot\.detail\s*\{[^}]*width:\s*44px;[^}]*height:\s*44px/s);
+assert.match(circulationStyles, /\.atlas-3d-toolbar button,[\s\S]*?min-height:\s*44px/);
 assert.match(circulationStyles, /scroll-snap-type:\s*inline mandatory/);
 assert.match(circulationStyles, /data-target="tissue-exchange"\]\s*\{\s*left:\s*57%;\s*top:\s*60%;\s*\}/);
 
