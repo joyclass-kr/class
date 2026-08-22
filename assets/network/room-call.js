@@ -3,7 +3,19 @@
 
     const ICE_SERVERS = [
         { urls: "stun:stun.l.google.com:19302" },
-        { urls: "stun:stun1.l.google.com:19302" }
+        { urls: "stun:stun1.l.google.com:19302" },
+        // STUN alone fails whenever either side is behind a NAT that blocks direct
+        // UDP hole-punching (common on school/home networks) — this free public relay
+        // is the standard zero-signup TURN fallback for exactly that case.
+        {
+            urls: [
+                "turn:openrelay.metered.ca:80",
+                "turn:openrelay.metered.ca:443",
+                "turn:openrelay.metered.ca:443?transport=tcp"
+            ],
+            username: "openrelayproject",
+            credential: "openrelayproject"
+        }
     ];
 
     function el(tag, cls) {
