@@ -138,5 +138,19 @@ const IDIOMATIC_EXPRESSION_BANK = [
   lesson: IDIOMATIC_EXPRESSION_LESSON_BY_ITEM_INDEX[index] ?? (category.startsWith("마음") ? 0 : category.startsWith("생각") ? 1 : category.startsWith("말") ? 2 : category.startsWith("관계") ? 3 : category.startsWith("태도") ? 4 : category.startsWith("평가") ? 5 : 6)
 }));
 
+const lessonCounters = new Map();
+for (const item of IDIOMATIC_EXPRESSION_BANK) {
+  const old = item.lesson;
+  const count = lessonCounters.get(old) || 0;
+  if (old === 0) item.lesson = count < 10 ? 0 : 1;
+  else if (old === 1) item.lesson = 2;
+  else if (old === 2) item.lesson = 3;
+  else if (old === 3) item.lesson = count < 8 ? 4 : 5;
+  else if (old === 4) item.lesson = count < 9 ? 6 : 7;
+  else if (old === 5) item.lesson = 8;
+  else if (old === 6) item.lesson = count < 9 ? 9 : 10;
+  lessonCounters.set(old, count + 1);
+}
+
 if (typeof window !== "undefined") window.IDIOMATIC_EXPRESSION_BANK = IDIOMATIC_EXPRESSION_BANK;
 if (typeof module !== "undefined") module.exports = IDIOMATIC_EXPRESSION_BANK;

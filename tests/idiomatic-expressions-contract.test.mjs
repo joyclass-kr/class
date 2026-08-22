@@ -22,8 +22,8 @@ test("관용구 핵심 학습 은행은 선별된 완성형 자료다", () => {
     assert.ok(Number.isInteger(item.lesson), item.expression);
   }
   assert.deepEqual(
-    Array.from({ length: 7 }, (_, lesson) => data.filter((item) => item.lesson === lesson).length),
-    [20, 14, 14, 16, 18, 11, 17]
+    Array.from({ length: 11 }, (_, lesson) => data.filter((item) => item.lesson === lesson).length),
+    [10, 10, 14, 14, 8, 8, 9, 9, 11, 9, 8]
   );
   const expressions = data.map((item) => item.expression).join("\n");
   assert.doesNotMatch(expressions, /누워서 떡 먹기|가뭄에 콩 나듯|갈수록 태산|천 리 길도/);

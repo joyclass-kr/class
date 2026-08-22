@@ -8,10 +8,14 @@ const LESSONS = [
   { title: "3차시 · 말하고 듣기", copy: "대화·경청·의견에 쓰는 표현" },
   { title: "4차시 · 사람과 관계", copy: "도움·신뢰·협력에 쓰는 표현" },
   { title: "5차시 · 태도와 책임", copy: "결심·인내·책임에 쓰는 표현" },
-  { title: "6차시 · 관심과 평가", copy: "관심·평가·성과를 나타내는 표현" },
-  { title: "7차시 · 상황과 생활", copy: "시간·진행·생활에 쓰는 표현" }
+  { title: "6차시 · 태도와 책임 1", copy: "결심·인내·책임에 쓰는 표현" },
+  { title: "7차시 · 태도와 책임 2", copy: "생활 속 책임과 행동에 쓰는 표현" },
+  { title: "8차시 · 관심과 평가", copy: "관심·평가·성과를 나타내는 표현" },
+  { title: "9차시 · 상황과 생활 1", copy: "시간·진행·생활에 쓰는 표현" },
+  { title: "10차시 · 상황과 생활 2", copy: "제약·상태·생활에 쓰는 표현" },
+  { title: "11차시 · 마무리 표현", copy: "태도·평가·감정에 쓰는 표현" }
 ];
-const COMPLETION_KEY = "class-idiomatic-expression-lessons";
+const COMPLETION_KEY = "class-idiomatic-expression-lessons-v2";
 let completedLessons = new Set(JSON.parse(localStorage.getItem(COMPLETION_KEY) || "[]"));
 let lessonIndex=0; let BATCH_SIZE=0;
 let mode = "study";
