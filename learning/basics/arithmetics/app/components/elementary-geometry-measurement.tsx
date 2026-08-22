@@ -1,0 +1,80 @@
+"use client";
+
+import { useEffect, useMemo, useState, type ReactNode } from "react";
+import { createElementaryGeometryMeasurementSet, normalizeGeometryMeasurementAnswer, type GeometryMeasurementMode, type GeometryMeasurementProblem } from "../../lib/elementary-geometry-measurement";
+
+type Field = "first" | "second";
+type Answers = Record<string, Partial<Record<Field, string>>>;
+const ink = "#17233c";
+const fill = "#dce8f7";
+
+function Label({ x, y, children }: { x: number; y: number; children: ReactNode }) {
+  return <text x={x} y={y} textAnchor="middle" fontSize="13" fontWeight="700" fill={ink}>{children}</text>;
+}
+
+function Diagram({ problem, plane }: { problem: GeometryMeasurementProblem; plane: boolean }) {
+  const d = problem.dimensions;
+  if (problem.kind === "l-shape") return <svg viewBox="0 0 280 180" role="img" aria-label="한 모서리를 잘라 낸 L자 도형"><path d="M45 25 H225 V85 H170 V155 H45 Z" fill={fill} stroke={ink} strokeWidth="2" /><Label x={135} y={174}>{d.width}cm</Label><Label x={24} y={94}>{d.height}cm</Label><Label x={198} y={78}>{d.cutWidth}cm</Label><Label x={247} y={121}>{d.cutHeight}cm</Label></svg>;
+  if (problem.kind === "frame") return <svg viewBox="0 0 280 180" role="img" aria-label="가운데가 뚫린 직사각형 액자"><path d="M35 20 H245 V160 H35 Z M85 58 H195 V122 H85 Z" fill={fill} stroke={ink} strokeWidth="2" fillRule="evenodd" /><Label x={140} y={177}>{d.width}cm</Label><Label x={16} y={94}>{d.height}cm</Label><Label x={140} y={53}>{d.innerWidth}cm</Label><Label x={211} y={94}>{d.innerHeight}cm</Label></svg>;
+  if (problem.kind === "u-shape") return <svg viewBox="0 0 280 180" role="img" aria-label="윗부분에 직사각형 홈이 파인 도형"><path d="M40 25 H105 V95 H175 V25 H240 V160 H40 Z" fill={fill} stroke={ink} strokeWidth="2" /><Label x={140} y={177}>{d.width}cm</Label><Label x={18} y={96}>{d.height}cm</Label><Label x={140} y={89}>{d.notchWidth}cm</Label><Label x={190} y={63}>{d.notchHeight}cm</Label></svg>;
+  if (problem.kind === "house") return <svg viewBox="0 0 280 180" role="img" aria-label="직사각형과 삼각형을 붙인 집 모양"><path d="M55 72 L140 15 L225 72 V160 H55 Z" fill={fill} stroke={ink} strokeWidth="2" /><line x1="55" y1="72" x2="225" y2="72" stroke={ink} strokeDasharray="5 4" /><Label x={140} y={177}>{d.width}cm</Label><Label x={34} y={118}>{d.height}cm</Label><Label x={90} y={37}>{d.roofSide}cm</Label><Label x={154} y={50}>높이 {d.roofHeight}cm</Label></svg>;
+  if (problem.kind === "open-box") return <svg viewBox="0 0 280 180" role="img" aria-label="윗면이 열린 직육면체 상자"><path d="M55 55 L145 25 L225 65 L135 98 Z" fill="white" stroke={ink} strokeWidth="2" /><path d="M55 55 V125 L135 160 V98 Z" fill={fill} stroke={ink} strokeWidth="2" /><path d="M135 98 L225 65 V132 L135 160 Z" fill="#c8daf0" stroke={ink} strokeWidth="2" /><Label x={177} y={157}>{d.length}cm</Label><Label x={72} y={151}>{d.width}cm</Label><Label x={239} y={102}>{d.height}cm</Label></svg>;
+  if (problem.kind === "joined-cubes") return <svg viewBox="0 0 280 180" role="img" aria-label="정육면체 두 개를 한 면끼리 붙인 입체"><path d="M40 70 L90 45 L140 70 V130 L90 155 L40 130 Z" fill={fill} stroke={ink} strokeWidth="2" /><path d="M140 70 L190 45 L240 70 V130 L190 155 L140 130 Z" fill="#c8daf0" stroke={ink} strokeWidth="2" /><path d="M40 70 L90 95 L140 70 M90 95 V155 M140 70 L190 95 L240 70 M190 95 V155" fill="none" stroke={ink} strokeWidth="1.5" /><Label x={140} y={174}>한 모서리 {d.side}cm</Label></svg>;
+  if (problem.kind === "stacked-prisms") return <svg viewBox="0 0 280 180" role="img" aria-label="큰 직육면체 위에 작은 직육면체를 올린 입체"><path d="M35 92 L135 55 L235 92 V143 L135 176 L35 143 Z" fill={fill} stroke={ink} strokeWidth="2" /><path d="M85 54 L135 35 L185 54 V92 L135 110 L85 92 Z" fill="#c8daf0" stroke={ink} strokeWidth="2" /><Label x={188} y={164}>{d.baseLength}cm</Label><Label x={71} y={162}>{d.baseWidth}cm</Label><Label x={244} y={121}>{d.baseHeight}cm</Label><Label x={137} y={26}>{d.topLength}×{d.topWidth}×{d.topHeight}cm</Label></svg>;
+  if (!plane) return <svg viewBox="0 0 280 180" role="img" aria-label="한 모서리를 도려낸 정육면체"><path d="M50 55 L135 20 L225 58 V142 L135 175 L50 140 Z" fill={fill} stroke={ink} strokeWidth="2" /><path d="M135 20 V58 H175 V98 H225 M135 58 L95 75 V115 L50 132 M95 75 L135 92 L175 76" fill="none" stroke={ink} strokeWidth="2" /><Label x={87} y={174}>큰 모서리 {d.side}cm</Label><Label x={194} y={47}>도려낸 모서리 {d.removedSide}cm</Label></svg>;
+  return null;
+}
+
+export default function ElementaryGeometryMeasurement({ mode }: { mode: GeometryMeasurementMode }) {
+  const plane = mode === "plane";
+  const grade = plane ? "5학년" : "6학년";
+  const title = plane ? "다각형의 둘레와 넓이" : "직육면체의 겉넓이·부피";
+  const [seed, setSeed] = useState(plane ? 20260822 : 20260823);
+  const [answers, setAnswers] = useState<Answers>({});
+  const [results, setResults] = useState<Record<string, boolean>>({});
+  const [scale, setScale] = useState(0.6);
+  const [printOpen, setPrintOpen] = useState(false);
+  const problems = useMemo(() => createElementaryGeometryMeasurementSet(mode, seed), [mode, seed]);
+  const correct = Object.values(results).filter(Boolean).length;
+
+  useEffect(() => {
+    const fit = () => setScale(Math.min((innerWidth - 32) / 794, 1));
+    fit();
+    addEventListener("resize", fit);
+    return () => removeEventListener("resize", fit);
+  }, []);
+
+  const update = (id: string, field: Field, value: string) => {
+    setAnswers((now) => ({ ...now, [id]: { ...now[id], [field]: value.replace(/[^0-9.,-]/g, "").slice(0, 10) } }));
+    setResults((now) => { const next = { ...now }; delete next[`${id}-${field}`]; return next; });
+  };
+  const reset = () => { setAnswers({}); setResults({}); };
+  const fresh = () => {
+    if (Object.values(answers).some((answer) => Object.values(answer).some(Boolean)) && !confirm("답이 사라집니다. 새 문제를 만들까요?")) return;
+    setSeed((Date.now() ^ Math.floor(Math.random() * 0xffffffff)) >>> 0);
+    reset();
+  };
+  const check = () => setResults(Object.fromEntries(
+    problems.flatMap((problem) =>
+      (["first", "second"] as const).map((field) =>
+        [`${problem.id}-${field}`, normalizeGeometryMeasurementAnswer(answers[problem.id]?.[field] ?? "") === problem[field]],
+      ),
+    ),
+  ));
+  const print = (printMode: "worksheet" | "answers" | "both") => { setPrintOpen(false); document.documentElement.dataset.printMode = printMode; addEventListener("afterprint", () => delete document.documentElement.dataset.printMode, { once: true }); requestAnimationFrame(() => window.print()); };
+  const answerField = (problem: GeometryMeasurementProblem, field: Field, key: boolean) => {
+    const label = field === "first" ? problem.firstLabel : problem.secondLabel;
+    const unit = field === "first" ? problem.firstUnit : problem.secondUnit;
+    const resultId = `${problem.id}-${field}`;
+    return <div className="circle-equation"><span>{label}</span><strong>=</strong>{key ? <em className="circle-static-answer">{problem[field]}</em> : <input type="text" inputMode="decimal" value={answers[problem.id]?.[field] ?? ""} onChange={(event) => update(problem.id, field, event.target.value)} aria-label={`${label} 답`} />}<small>{unit}</small>{!key && resultId in results && <b className={results[resultId] ? "correct" : "wrong"}>{results[resultId] ? "맞음" : "틀림"}</b>}</div>;
+  };
+  const question = (problem: GeometryMeasurementProblem, index: number, key: boolean) => {
+    const firstResult = results[`${problem.id}-first`];
+    const secondResult = results[`${problem.id}-second`];
+    const graded = firstResult !== undefined && secondResult !== undefined;
+    return <article className={`circle-question geometry-measurement-question${graded ? firstResult && secondResult ? " is-correct" : " is-wrong" : ""}`} key={problem.id}><span className="circle-index">{index + 1}</span><Diagram problem={problem} plane={plane} /><div className="circle-answer-pair">{answerField(problem, "first", key)}{answerField(problem, "second", key)}</div></article>;
+  };
+  const sheet = (key: boolean) => <div className="a4-sheet counting-sheet circle-sheet geometry-measurement-sheet" style={{ transform: `scale(${scale})` }}><header className="counting-sheet-header"><div className="counting-sheet-title"><span>{grade}</span><strong>{title}{key ? " 정답" : ""}</strong></div><div className="counting-sheet-info"><span>이름 <i /></span><span>날짜 <i /></span><small>문제지 {seed}</small></div></header><p className="circle-guide">그림에 표시된 길이를 이용하여 {plane ? "도형의 둘레와 넓이" : "입체도형의 겉넓이와 부피"}를 구하세요.</p><div className="circle-grid">{problems.map((problem, index) => question(problem, index, key))}</div></div>;
+
+  return <main className="counting-page multiplication-page"><div className="counting-toolbar"><a className="counting-back" href="/arithmetic">← 연산</a><div className="counting-progress"><strong>{correct}<small>/8 정답</small></strong></div><div className="toolbar"><button className="button secondary" onClick={fresh}>새 문제</button><button className="button ghost" onClick={reset}>다시 풀기</button><div className="print-control"><button className="button ghost print-button" onClick={() => setPrintOpen(!printOpen)}>인쇄</button>{printOpen && <div className="print-menu"><button onClick={() => print("worksheet")}>문제지만 인쇄</button><button onClick={() => print("answers")}>답지만 인쇄</button><button onClick={() => print("both")}>문제지+답지 인쇄</button></div>}</div><button className="button primary" onClick={check}>전체 채점</button></div></div><div className="a4-stage counting-a4-stage worksheet-stage" style={{ width: 794 * scale, height: 1123 * scale }}>{sheet(false)}</div><div className="a4-stage counting-a4-stage answer-stage" style={{ width: 794 * scale, height: 1123 * scale }}>{sheet(true)}</div></main>;
+}

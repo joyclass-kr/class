@@ -84,8 +84,10 @@ const EXPECTED_METHODS: Record<MiddleCurriculumKind, string[]> = {
     "regular-polygon-angle", "regular-polygon-exterior", "polygon-diagonals", "sector-arc-area",
   ],
   "solid-geometry": [
-    "rectangular-prism-volume", "rectangular-prism-surface", "prism-volume", "pyramid-volume",
-    "cylinder-volume", "cylinder-surface", "cone-volume", "sphere-volume-surface",
+    "joined-prism-pyramid-volume", "open-pyramid-surface",
+    "drilled-prism-volume", "hollow-cylinder-volume",
+    "hollow-cylinder-surface", "open-cylinder-surface",
+    "joined-cylinder-cone-volume", "capsule-volume-surface",
   ],
   "triangle-quadrilateral": [
     "isosceles-angle", "triangle-exterior", "parallelogram-angle", "parallelogram-side",

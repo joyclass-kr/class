@@ -2,7 +2,99 @@
 
 import type { MiddleCurriculumVisual as Visual } from "../../lib/middle-curriculum-workouts";
 
-function GeometryVisual({ variant }: { variant: string }) {
+function SolidGeometryVisual({ variant, labels }: { variant: string; labels: string[] }) {
+  const [first = "", second = "", third = ""] = labels;
+  if (variant === "solid-prism-pyramid") {
+    return (
+      <svg viewBox="0 0 320 170" role="img" aria-label="각기둥과 각뿔을 붙인 입체">
+        <polygon className="curriculum-visual-plane" points="74,66 156,44 224,72 143,96" />
+        <path className="curriculum-visual-guide" d="M74 66V132L143 159V96M224 72V137L143 159M156 44V19M74 66L156 19L224 72M156 19L143 96" />
+        <path className="curriculum-visual-mark" d="M143 96L156 92V79" />
+        <g className="curriculum-visual-label">
+          <text x="95" y="154">{first}</text><text x="232" y="108">{second}</text><text x="163" y="35">{third}</text>
+        </g>
+      </svg>
+    );
+  }
+  if (variant === "solid-open-pyramid") {
+    return (
+      <svg viewBox="0 0 320 170" role="img" aria-label="밑면이 없는 사각뿔 모양 천막">
+        <path className="curriculum-visual-guide" d="M48 137L159 31L275 137M48 137L142 160L275 137M159 31L142 160" />
+        <path className="curriculum-visual-highlight" d="M48 137L142 160L275 137" />
+        <path className="curriculum-visual-guide" strokeDasharray="5 5" d="M159 31L164 145" />
+        <g className="curriculum-visual-label">
+          <text x="168" y="100">{second}</text><text x="164" y="162">{first}</text><text x="30" y="154">밑면 없음</text>
+        </g>
+      </svg>
+    );
+  }
+  if (variant === "solid-drilled-prism") {
+    return (
+      <svg viewBox="0 0 320 170" role="img" aria-label="원기둥 모양 구멍을 뚫은 각기둥">
+        <path className="curriculum-visual-guide" d="M45 51H215V139H45ZM85 25H255V113L215 139M45 51L85 25M215 51L255 25M215 139L255 113" />
+        <ellipse className="curriculum-visual-highlight" cx="150" cy="51" rx="31" ry="10" />
+        <ellipse className="curriculum-visual-guide" cx="190" cy="25" rx="31" ry="10" />
+        <path className="curriculum-visual-guide" strokeDasharray="5 5" d="M119 51L159 25M181 51L221 25" />
+        <g className="curriculum-visual-label">
+          <text x="92" y="158">{first}</text><text x="264" y="84">{second}</text><text x="150" y="45">r={third}</text>
+        </g>
+      </svg>
+    );
+  }
+  if (variant === "solid-hollow-cylinder") {
+    return (
+      <svg viewBox="0 0 320 170" role="img" aria-label="속이 빈 원기둥">
+        <ellipse className="curriculum-visual-plane" cx="151" cy="42" rx="75" ry="23" />
+        <ellipse className="curriculum-visual-guide" cx="151" cy="42" rx="35" ry="11" />
+        <path className="curriculum-visual-guide" d="M76 42V132M226 42V132M116 42V132M186 42V132" />
+        <path className="curriculum-visual-guide" d="M76 132A75 23 0 0 0 226 132M116 132A35 11 0 0 0 186 132" />
+        <path className="curriculum-visual-highlight" d="M151 42H226M151 42H186" />
+        <g className="curriculum-visual-label">
+          <text x="195" y="34">R={first}</text><text x="151" y="65">r={second}</text><text x="238" y="91">{third}</text>
+        </g>
+      </svg>
+    );
+  }
+  if (variant === "solid-open-cylinder") {
+    return (
+      <svg viewBox="0 0 320 170" role="img" aria-label="윗면이 없는 원기둥">
+        <ellipse className="curriculum-visual-guide" cx="150" cy="38" rx="72" ry="20" strokeDasharray="7 5" />
+        <path className="curriculum-visual-guide" d="M78 38V132M222 38V132M78 132A72 20 0 0 0 222 132" />
+        <path className="curriculum-visual-highlight" d="M78 132A72 20 0 0 1 222 132" />
+        <path className="curriculum-visual-highlight" d="M150 132H222" />
+        <g className="curriculum-visual-label">
+          <text x="161" y="124">r={first}</text><text x="233" y="91">{second}</text><text x="113" y="14">윗면 없음</text>
+        </g>
+      </svg>
+    );
+  }
+  if (variant === "solid-cylinder-cone") {
+    return (
+      <svg viewBox="0 0 320 170" role="img" aria-label="원기둥과 원뿔을 붙인 입체">
+        <ellipse className="curriculum-visual-plane" cx="151" cy="74" rx="68" ry="19" />
+        <path className="curriculum-visual-guide" d="M83 74V139M219 74V139M83 139A68 19 0 0 0 219 139M83 74L151 16L219 74" />
+        <path className="curriculum-visual-guide" strokeDasharray="5 5" d="M151 16V74" />
+        <path className="curriculum-visual-highlight" d="M151 74H219" />
+        <g className="curriculum-visual-label">
+          <text x="162" y="67">r={first}</text><text x="225" y="116">{second}</text><text x="159" y="41">{third}</text>
+        </g>
+      </svg>
+    );
+  }
+  return (
+    <svg viewBox="0 0 320 170" role="img" aria-label="원기둥과 반구 두 개로 만든 캡슐 모양 입체">
+      <path className="curriculum-visual-plane" d="M88 42H221A55 43 0 0 1 221 128H88A55 43 0 0 1 88 42Z" />
+      <path className="curriculum-visual-guide" d="M88 42A55 43 0 0 0 88 128M221 42A55 43 0 0 1 221 128" />
+      <path className="curriculum-visual-highlight" d="M88 85H221M221 85H274" />
+      <g className="curriculum-visual-label">
+        <text x="228" y="78">r={first}</text><text x="132" y="78">{second}</text>
+      </g>
+    </svg>
+  );
+}
+
+function GeometryVisual({ variant, labels = [] }: { variant: string; labels?: string[] }) {
+  if (variant.startsWith("solid-")) return <SolidGeometryVisual variant={variant} labels={labels} />;
   if (variant === "cube-skew") {
     return (
       <svg viewBox="0 0 260 130" role="img" aria-label="정육면체에서 두 직선의 위치 관계">
@@ -354,7 +446,7 @@ export default function MiddleCurriculumVisual({ visual }: { visual: Visual }) {
   return (
     <div className="middle-curriculum-visual">
       {visual.type === "geometry"
-        ? <GeometryVisual variant={visual.variant} />
+        ? <GeometryVisual variant={visual.variant} labels={visual.labels} />
         : <ChartVisual visual={visual} />}
     </div>
   );

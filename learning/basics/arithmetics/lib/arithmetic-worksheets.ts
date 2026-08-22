@@ -62,6 +62,7 @@ const readyRoutes: Record<string, string> = {
   "5분수②": "/arithmetic/grade-5-fraction-2",
   "5분수③": "/arithmetic/grade-5-fraction-3",
   "5소수": "/arithmetic/grade-5-decimals",
+  "5도형": "/arithmetic/grade-5-polygon-measurement",
   "6분수": "/arithmetic/grade-6-fraction",
   "6소수①": "/arithmetic/grade-6-decimals-1",
   "6소수②": "/arithmetic/grade-6-decimals-2",
@@ -69,7 +70,7 @@ const readyRoutes: Record<string, string> = {
   "6혼합계산": "/arithmetic/grade-6-mixed-calculation",
   "6비례식": "/arithmetic/grade-6-proportion",
   "6원": "/arithmetic/grade-6-circle",
-  "6원기둥": "/arithmetic/grade-6-cylinder",
+  "6직육면체": "/arithmetic/grade-6-box-measurement",
   "6쌓기나무": "/arithmetic/grade-6-stacked-cubes",
 };
 
@@ -78,8 +79,8 @@ const worksheetNames = [
   "2덧셈뺄셈①", "2덧셈뺄셈②", "2덧셈뺄셈③", "2묶어세기", "2구구단①", "2구구단②", "2구구단③", "2구구단④", "2구구단⑤", "2시계",
   "3덧셈뺄셈", "3덧셈뺄셈빈칸", "3보수뺄셈100", "3보수뺄셈1000", "3덧셈뺄셈②", "3나눗셈①", "3곱셈①", "3곱셈②", "3길이", "3시간①", "3시간②", "3곱셈③", "19단", "제곱수", "3나눗셈②", "3나눗셈③", "3분수①", "3분수②", "3무게,들이", "3분수③",
   "4숫자읽기", "4각도어림", "4곱셈", "4큰수곱셈", "4나눗셈", "4분수", "4소수", "단위변환",
-  "5혼합계산", "자연수분해", "프라임넘버", "5약수,배수", "5분수①", "5분수②", "5분수③", "5소수",
-  "6분수", "6소수①", "6소수②", "6소수③", "6혼합계산", "6비례식", "6원", "6원기둥", "6쌓기나무",
+  "5혼합계산", "자연수분해", "프라임넘버", "5약수,배수", "5분수①", "5분수②", "5분수③", "5소수", "5도형",
+  "6분수", "6소수①", "6소수②", "6소수③", "6혼합계산", "6비례식", "6원", "6직육면체", "6쌓기나무",
 ] as const;
 
 const explicitGrades: Record<string, string> = {
@@ -146,6 +147,7 @@ const elementaryTitles: Record<string, string> = {
   "5분수②": "대분수의 덧셈·뺄셈·곱셈",
   "5분수③": "분수의 크기 비교",
   "5소수": "소수의 곱셈",
+  "5도형": "다각형의 둘레와 넓이",
   "6분수": "분수의 사칙 계산",
   "6소수①": "자연수÷자연수를 소수로 나타내기",
   "6소수②": "소수의 곱셈·나눗셈과 반올림",
@@ -153,7 +155,7 @@ const elementaryTitles: Record<string, string> = {
   "6혼합계산": "분수·소수 혼합 계산",
   "6비례식": "비례식·비례배분",
   "6원": "원의 둘레와 넓이",
-  "6원기둥": "원기둥의 겉넓이와 부피",
+  "6직육면체": "직육면체의 겉넓이·부피",
   "6쌓기나무": "쌓기나무의 개수와 세 방향 모양",
 };
 

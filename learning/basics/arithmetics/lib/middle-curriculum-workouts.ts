@@ -121,14 +121,14 @@ const METHOD_PLANS: Record<MiddleCurriculumKind, string[]> = {
     "sector-arc-area",
   ],
   "solid-geometry": [
-    "rectangular-prism-volume",
-    "rectangular-prism-surface",
-    "prism-volume",
-    "pyramid-volume",
-    "cylinder-volume",
-    "cylinder-surface",
-    "cone-volume",
-    "sphere-volume-surface",
+    "joined-prism-pyramid-volume",
+    "open-pyramid-surface",
+    "drilled-prism-volume",
+    "hollow-cylinder-volume",
+    "hollow-cylinder-surface",
+    "open-cylinder-surface",
+    "joined-cylinder-cone-volume",
+    "capsule-volume-surface",
   ],
   "triangle-quadrilateral": [
     "isosceles-angle",
@@ -223,14 +223,14 @@ const METHOD_TITLES: Record<string, string> = {
   "regular-polygon-exterior": "정다각형의 한 외각",
   "polygon-diagonals": "다각형의 대각선",
   "sector-arc-area": "부채꼴의 호와 넓이",
-  "rectangular-prism-volume": "직육면체의 부피",
-  "rectangular-prism-surface": "직육면체의 겉넓이",
-  "prism-volume": "각기둥의 부피",
-  "pyramid-volume": "각뿔의 부피",
-  "cylinder-volume": "원기둥의 부피",
-  "cylinder-surface": "원기둥의 겉넓이",
-  "cone-volume": "원뿔의 부피",
-  "sphere-volume-surface": "구의 부피와 겉넓이",
+  "joined-prism-pyramid-volume": "각기둥과 각뿔을 붙인 입체",
+  "open-pyramid-surface": "밑면이 없는 각뿔",
+  "drilled-prism-volume": "원기둥 모양 구멍을 뚫은 각기둥",
+  "hollow-cylinder-volume": "속이 빈 원기둥의 부피",
+  "hollow-cylinder-surface": "속이 빈 원기둥의 겉넓이",
+  "open-cylinder-surface": "윗면이 없는 원기둥",
+  "joined-cylinder-cone-volume": "원기둥과 원뿔을 붙인 입체",
+  "capsule-volume-surface": "캡슐 모양 입체",
   "isosceles-angle": "이등변삼각형의 각",
   "triangle-exterior": "삼각형의 외각",
   "parallelogram-angle": "평행사변형의 각",
@@ -686,103 +686,126 @@ function buildPlaneGeometry(method: string, next: () => number, id: string) {
 }
 
 function buildSolidGeometry(method: string, next: () => number, id: string) {
-  const a = integer(next, 3, 8);
-  const b = integer(next, 3, 8);
-  let h = integer(next, 4, 10);
-  while (a * b * h === 2 * (a * b + b * h + h * a)) h += 1;
-  if (method === "rectangular-prism-volume") {
-    const answer = a * b * h;
-    return make(id, method, `\\text{가로 }${a},\\ \\text{세로 }${b},\\ \\text{높이 }${h}`, `${answer}`,
-      "직육면체의 부피는 가로×세로×높이이다.",
+  const geometry = (variant: string, labels: string[]): MiddleCurriculumVisual => ({ type: "geometry", variant, labels });
+  const cm2 = (value: number) => `${value}\\text{ cm}^2`;
+  const cm3 = (value: number) => `${value}\\text{ cm}^3`;
+  const piCm2 = (value: number) => `${piTerm(value)}\\text{ cm}^2`;
+  const piCm3 = (value: number) => `${piTerm(value)}\\text{ cm}^3`;
+  const side = integer(next, 3, 7);
+  const prismHeight = integer(next, 4, 9);
+
+  if (method === "joined-prism-pyramid-volume") {
+    const pyramidHeight = 3 * integer(next, 2, 4);
+    const prism = side ** 2 * prismHeight;
+    const pyramid = side ** 2 * pyramidHeight / 3;
+    return makeVisual(id, method, `\\text{공통 밑면은 한 변이 }${side}\\text{ cm인 정사각형}`, cm3(prism + pyramid),
+      "각기둥과 각뿔의 부피를 각각 구해 더하며, 맞붙인 면은 부피에 영향을 주지 않는다.",
       [
-        `${2 * (a * b + b * h + h * a)}`,
-        `${a + b + h}`,
-        `${a * b}`,
-        `${b * h}`,
-        `${h * a}`,
-        `${answer / 2}`,
-      ]);
+        cm3(side ** 2 * (prismHeight + pyramidHeight)),
+        cm3(prism),
+        cm3(pyramid),
+        cm3(prism + pyramid + side ** 2),
+        cm3(Math.abs(prism - pyramid)),
+        cm3(2 * (prism + pyramid)),
+      ],
+      "각기둥과 각뿔을 붙인 입체의 부피는?",
+      geometry("solid-prism-pyramid", [`${side} cm`, `${prismHeight} cm`, `${pyramidHeight} cm`]));
   }
-  if (method === "rectangular-prism-surface") {
-    const answer = 2 * (a * b + b * h + h * a);
-    return make(id, method, `\\text{가로 }${a},\\ \\text{세로 }${b},\\ \\text{높이 }${h}`, `${answer}`,
-      "서로 다른 세 면의 넓이를 더한 뒤 2배 한다.",
+  if (method === "open-pyramid-surface") {
+    const slantHeight = integer(next, Math.max(4, Math.ceil(side / 2) + 1), 10);
+    const lateralArea = 2 * side * slantHeight;
+    return makeVisual(id, method, `\\text{밑면의 한 변 }${side}\\text{ cm},\\quad \\text{옆면의 높이 }${slantHeight}\\text{ cm}`, cm2(lateralArea),
+      "밑면은 세지 않고 합동인 삼각형 네 개의 넓이만 더한다.",
+      [cm2(lateralArea + side ** 2), cm2(side * slantHeight / 2), cm2(4 * side * slantHeight)],
+      "바닥이 없는 정사각뿔 모양 천막에 필요한 천의 넓이는?",
+      geometry("solid-open-pyramid", [`${side} cm`, `${slantHeight} cm`]));
+  }
+  if (method === "drilled-prism-volume") {
+    const radius = integer(next, 2, 3);
+    const drilledSide = integer(next, 2 * radius + 2, 2 * radius + 5);
+    const prism = drilledSide ** 2 * prismHeight;
+    const hole = radius ** 2 * prismHeight;
+    const answer = `(${prism}-${hole}\\pi)\\text{ cm}^3`;
+    return makeVisual(id, method, `\\text{밑면 한 변 }${drilledSide}\\text{ cm},\\ r=${radius}\\text{ cm},\\ h=${prismHeight}\\text{ cm}`, answer,
+      "정사각기둥의 부피에서 관통한 원기둥의 부피를 뺀다.",
+      [`(${prism}+${hole}\\pi)\\text{ cm}^3`, `(${prism}-${radius ** 2}\\pi)\\text{ cm}^3`, cm3(prism), `(${prism}-${2 * hole}\\pi)\\text{ cm}^3`],
+      "원기둥 모양 구멍을 끝까지 뚫고 남은 입체의 부피는?",
+      geometry("solid-drilled-prism", [`${drilledSide} cm`, `${prismHeight} cm`, `${radius} cm`]));
+  }
+
+  const outer = integer(next, 5, 8);
+  const inner = integer(next, 2, outer - 2);
+  const height = integer(next, 5, 10);
+  if (method === "hollow-cylinder-volume") {
+    const answer = (outer ** 2 - inner ** 2) * height;
+    return makeVisual(id, method, `R=${outer}\\text{ cm},\\quad r=${inner}\\text{ cm},\\quad h=${height}\\text{ cm}`, piCm3(answer),
+      "바깥 원기둥의 부피에서 속의 원기둥 부피를 뺀다.",
+      [piCm3(outer ** 2 * height), piCm3((outer - inner) ** 2 * height), piCm3((outer ** 2 + inner ** 2) * height)],
+      "휴지심 모양 물체를 이루는 재료의 부피는?",
+      geometry("solid-hollow-cylinder", [`${outer} cm`, `${inner} cm`, `${height} cm`]));
+  }
+  if (method === "hollow-cylinder-surface") {
+    const answer = 2 * (outer + inner) * height + 2 * (outer ** 2 - inner ** 2);
+    return makeVisual(id, method, `R=${outer}\\text{ cm},\\quad r=${inner}\\text{ cm},\\quad h=${height}\\text{ cm}`, piCm2(answer),
+      "바깥 옆면, 안쪽 옆면, 위아래 고리 모양 면 두 개를 모두 더한다.",
       [
-        `${a * b * h}`,
-        `${a * b + b * h + h * a}`,
-        `${2 * (a + b + h)}`,
-        `${a * b}`,
-        `${b * h}`,
-        `${h * a}`,
-      ]);
+        piCm2(2 * outer ** 2 + 2 * outer * height),
+        piCm2(2 * (outer + inner) * height),
+        piCm2((outer ** 2 - inner ** 2) * height),
+        piCm2(2 * (outer + inner) * height + outer ** 2 - inner ** 2),
+        piCm2(2 * outer * height + 2 * (outer ** 2 - inner ** 2)),
+        piCm2(2 * inner * height + 2 * (outer ** 2 - inner ** 2)),
+        piCm2(answer + 2 * inner ** 2),
+      ],
+      "안쪽 면과 위아래 고리 모양 면까지 포함한 겉넓이는?",
+      geometry("solid-hollow-cylinder", [`${outer} cm`, `${inner} cm`, `${height} cm`]));
   }
-  if (method === "prism-volume") {
-    const base = a * b;
-    const answer = base * h;
-    return make(id, method, `\\text{밑넓이 }${base},\\quad \\text{높이 }${h}`, `${answer}`,
-      "각기둥의 부피는 밑넓이×높이이다.",
-      [`${base + h}`, `${base * h / 2}`, `${2 * base + h}`]);
-  }
-  if (method === "pyramid-volume") {
-    const base = 3 * a;
-    const height = 3 * integer(next, 2, 5);
-    const answer = (base * height) / 3;
-    return make(id, method, `\\text{밑넓이 }${base},\\quad \\text{높이 }${height}`, `${answer}`,
-      "각뿔의 부피는 밑넓이×높이÷3이다.",
-      [`${base * height}`, `${(base * height) / 2}`, `${base + height}`]);
-  }
+
   const radius = integer(next, 2, 6);
-  if (method === "cylinder-volume") {
-    const answer = radius * radius * h;
-    return make(id, method, `r=${radius},\\quad h=${h}`, piTerm(answer),
-      "원기둥의 부피는 πr²h이다.",
+  if (method === "open-cylinder-surface") {
+    const answer = radius ** 2 + 2 * radius * height;
+    return makeVisual(id, method, `r=${radius}\\text{ cm},\\quad h=${height}\\text{ cm}`, piCm2(answer),
+      "윗면은 제외하고 밑면 한 개와 옆면만 더한다.",
       [
-        piTerm(2 * radius * h),
-        piTerm(radius * radius + h),
-        piTerm(answer * 2),
-        piTerm(radius * radius),
-        piTerm(radius * h),
-        piTerm(answer / 2),
-      ]);
+        piCm2(2 * radius ** 2 + 2 * radius * height),
+        piCm2(2 * radius * height),
+        piCm2(radius ** 2 * height),
+        piCm2(radius ** 2),
+        piCm2(answer + 2 * radius),
+        piCm2(answer - radius),
+        piCm2(2 * answer),
+      ],
+      "윗면이 없는 원기둥 모양 통의 겉넓이는?",
+      geometry("solid-open-cylinder", [`${radius} cm`, `${height} cm`]));
   }
-  if (method === "cylinder-surface") {
-    const answer = 2 * radius * radius + 2 * radius * h;
-    return make(id, method, `r=${radius},\\quad h=${h}`, piTerm(answer),
-      "두 밑면 2πr²과 옆면 2πrh를 더한다.",
+  if (method === "joined-cylinder-cone-volume") {
+    const coneHeight = 3 * integer(next, 2, 5);
+    const cylinder = radius ** 2 * height;
+    const cone = radius ** 2 * coneHeight / 3;
+    return makeVisual(id, method, `r=${radius}\\text{ cm},\\quad h_1=${height}\\text{ cm},\\quad h_2=${coneHeight}\\text{ cm}`, piCm3(cylinder + cone),
+      "원기둥의 부피와 원뿔의 부피를 각각 구해 더한다.",
       [
-        piTerm(radius * radius + 2 * radius * h),
-        piTerm(2 * radius * h),
-        piTerm(radius * radius * h),
-        piTerm(2 * radius * radius),
-        piTerm(radius * radius),
-        piTerm(2 * radius * (radius + h) * 2),
-      ]);
+        piCm3(radius ** 2 * (height + coneHeight)),
+        piCm3(cylinder),
+        piCm3(cone),
+        piCm3(cylinder + cone + radius ** 2),
+        piCm3(Math.abs(cylinder - cone)),
+        piCm3(2 * (cylinder + cone)),
+      ],
+      "밑면이 같은 원기둥과 원뿔을 붙인 입체의 부피는?",
+      geometry("solid-cylinder-cone", [`${radius} cm`, `${height} cm`, `${coneHeight} cm`]));
   }
-  if (method === "cone-volume") {
-    const height = 3 * integer(next, 2, 6);
-    const answer = (radius * radius * height) / 3;
-    return make(id, method, `r=${radius},\\quad h=${height}`, piTerm(answer),
-      "원뿔의 부피는 πr²h÷3이다.",
-      [
-        piTerm(radius * radius * height),
-        piTerm(2 * radius * height),
-        piTerm(answer * 2),
-        piTerm(radius * radius),
-        piTerm(radius * height),
-        piTerm((radius * radius * height) / 2),
-      ]);
-  }
-  const sphereRadius = integer(next, 0, 1) === 0 ? 6 : 9;
-  const volumeCoefficient = (4 * sphereRadius ** 3) / 3;
-  const surfaceCoefficient = 4 * sphereRadius ** 2;
-  const answer = `(${piTerm(volumeCoefficient)},\\ ${piTerm(surfaceCoefficient)})`;
-  return make(id, method, `r=${sphereRadius},\\quad (\\text{부피},\\ \\text{겉넓이})`, answer,
-    "구의 부피는 4πr³/3, 겉넓이는 4πr²이다.",
-    [
-      `(${piTerm(surfaceCoefficient)},\\ ${piTerm(volumeCoefficient)})`,
-      `(${piTerm((4 * sphereRadius ** 2) / 3)},\\ ${piTerm(4 * sphereRadius ** 3)})`,
-      `(${piTerm(volumeCoefficient * 2)},\\ ${piTerm(surfaceCoefficient * 2)})`,
-    ]);
+
+  const capsuleRadius = integer(next, 0, 1) === 0 ? 3 : 6;
+  const capsuleLength = integer(next, 4, 10);
+  const volume = capsuleRadius ** 2 * capsuleLength + 4 * capsuleRadius ** 3 / 3;
+  const surface = 2 * capsuleRadius * capsuleLength + 4 * capsuleRadius ** 2;
+  const answer = `(${piCm3(volume)},\\ ${piCm2(surface)})`;
+  return makeVisual(id, method, `r=${capsuleRadius}\\text{ cm},\\quad h=${capsuleLength}\\text{ cm},\\quad (\\text{부피},\\ \\text{겉넓이})`, answer,
+    "두 반구는 하나의 구가 되며, 겉넓이에서는 원기둥의 두 밑면을 세지 않는다.",
+    [`(${piCm3(surface)},\\ ${piCm2(volume)})`, `(${piCm3(capsuleRadius ** 2 * capsuleLength)},\\ ${piCm2(surface)})`, `(${piCm3(volume)},\\ ${piCm2(2 * capsuleRadius * capsuleLength + 2 * capsuleRadius ** 2)})`],
+    "원기둥의 양쪽에 반구를 붙인 캡슐 모양 입체의 (부피, 겉넓이)는?",
+    geometry("solid-capsule", [`${capsuleRadius} cm`, `${capsuleLength} cm`]));
 }
 
 function buildTriangleQuadrilateral(method: string, next: () => number, id: string) {
