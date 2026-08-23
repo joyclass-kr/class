@@ -181,17 +181,24 @@
 
         .question-text {
             min-height: 105px;
-            margin-bottom: 23px;
-            padding: 5px 10px 0;
+            margin-bottom: 16px;
+            padding: 12px 14px;
+            color: #25180c;
+            border: 1px solid rgba(117, 77, 33, 0.46);
+            background:
+                linear-gradient(135deg, rgba(255, 248, 222, 0.86), rgba(247, 226, 175, 0.76)),
+                rgba(250, 233, 190, 0.72);
+            box-shadow:
+                inset 0 1px 0 rgba(255, 255, 244, 0.72),
+                0 2px 8px rgba(77, 43, 13, 0.13);
             white-space: pre-wrap;
             text-align: left;
             word-break: keep-all;
             font-family: Batang, '바탕', 'HY Batang', serif;
-            font-size: 17px;
+            font-size: clamp(16px, 1.7vw, 18px);
             font-weight: 600;
-            line-height: 1.8;
+            line-height: 1.75;
         }
-
         .options-container {
             width: min(430px, 100%);
             margin: 0 auto;
@@ -201,7 +208,7 @@
         }
 
         .quiz-btn {
-            min-height: 43px;
+            min-height: 44px;
             padding: 9px 12px;
             cursor: pointer;
             color: #fff4da;
@@ -209,14 +216,13 @@
             background:
                 linear-gradient(180deg, rgba(255,255,255,0.17), transparent),
                 #674019;
-            font-size: 14px;
+            font-size: 15px;
             font-weight: bold;
             box-shadow:
                 inset 0 1px 0 rgba(255,255,255,0.22),
                 0 3px 5px rgba(49,24,6,0.22);
             transition: transform 0.12s ease, background 0.15s ease, border-color 0.15s ease;
         }
-
         .quiz-btn:hover {
             border-color: #dfae53;
             background-color: #8b5b22;
