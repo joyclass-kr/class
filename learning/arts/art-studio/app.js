@@ -276,6 +276,19 @@
           this.redo();
         }
       });
+
+      document.querySelectorAll(".info-icon").forEach(button => {
+        button.addEventListener("click", event => {
+          event.stopPropagation();
+          const wrap = button.closest(".info-wrap");
+          const wasOpen = wrap.classList.contains("open");
+          document.querySelectorAll(".info-wrap.open").forEach(open => open.classList.remove("open"));
+          if (!wasOpen) wrap.classList.add("open");
+        });
+      });
+      document.addEventListener("click", () => {
+        document.querySelectorAll(".info-wrap.open").forEach(open => open.classList.remove("open"));
+      });
     }
 
     initColorWheel() {

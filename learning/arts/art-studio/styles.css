@@ -157,6 +157,63 @@ input[type="range"] {
   color: var(--ink);
 }
 
+.info-wrap {
+  position: relative;
+  display: inline-flex;
+  vertical-align: middle;
+}
+.info-icon {
+  width: 17px;
+  height: 17px;
+  border-radius: 50%;
+  border: 1px solid var(--panel-line);
+  background: #fff;
+  color: var(--muted);
+  font-size: 10px;
+  font-weight: 800;
+  line-height: 1;
+  padding: 0;
+  cursor: pointer;
+}
+.info-icon:hover, .info-icon:focus-visible { border-color: var(--accent); color: var(--accent-dark); }
+.info-tip {
+  position: absolute;
+  z-index: 5;
+  bottom: calc(100% + 8px);
+  left: 50%;
+  transform: translateX(-50%) translateY(4px);
+  width: max-content;
+  max-width: 200px;
+  padding: 8px 10px;
+  border-radius: 10px;
+  background: var(--ink);
+  color: #fff8ec;
+  font-size: 11px;
+  font-weight: 600;
+  line-height: 1.4;
+  text-align: left;
+  box-shadow: var(--shadow);
+  opacity: 0;
+  visibility: hidden;
+  pointer-events: none;
+  transition: opacity 0.12s ease, transform 0.12s ease;
+}
+.info-tip::after {
+  content: "";
+  position: absolute;
+  top: 100%;
+  left: 50%;
+  transform: translateX(-50%);
+  border: 5px solid transparent;
+  border-top-color: var(--ink);
+}
+.info-wrap:hover .info-tip,
+.info-wrap.open .info-tip {
+  opacity: 1;
+  visibility: visible;
+  transform: translateX(-50%) translateY(0);
+}
+
 .brush-rail {
   display: grid;
   grid-template-columns: repeat(3, 1fr);
@@ -231,15 +288,29 @@ input[type="range"] {
   margin-left: -10px;
   margin-top: -10px;
   border-radius: 50%;
-  border: 2px solid var(--active-cursor-color, #3a2a1a);
-  background: rgba(255, 255, 255, 0.15);
+  border: 1.5px solid rgba(0, 0, 0, 0.8);
+  background: rgba(128, 128, 128, 0.1);
   pointer-events: none;
-  box-shadow: 0 0 0 1px rgba(255, 255, 255, 0.8);
+  /* white ring then a second dark ring, so the outline stays visible no
+     matter how light or dark the canvas content under it is */
+  box-shadow: 0 0 0 1.5px rgba(255, 255, 255, 0.95), 0 0 0 3px rgba(0, 0, 0, 0.35);
+}
+.brush-cursor::after {
+  content: "";
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  width: 5px;
+  height: 5px;
+  margin: -2.5px 0 0 -2.5px;
+  border-radius: 50%;
+  background: var(--active-cursor-color, #3a2a1a);
+  box-shadow: 0 0 0 1px rgba(255, 255, 255, 0.9);
 }
 .brush-cursor.eraser-cursor {
   border-style: dashed;
-  background: rgba(255, 255, 255, 0.5);
 }
+.brush-cursor.eraser-cursor::after { display: none; }
 .brush-cursor.hidden { display: none; }
 
 .color-preview-row {

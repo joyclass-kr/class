@@ -39,13 +39,21 @@
         <h2>흩뿌림 <span id="scatterValue" class="value-pill">0</span></h2>
         <input id="scatterSlider" type="range" min="0" max="100" value="0">
 
-        <h2>손떨림 보정 <span id="stabilizeValue" class="value-pill">1</span></h2>
+        <h2>손떨림 보정 <span id="stabilizeValue" class="value-pill">1</span>
+          <span class="info-wrap">
+            <button type="button" class="info-icon" aria-label="손떨림 보정 설명 보기">?</button>
+            <span class="info-tip" role="tooltip">숫자가 클수록 선이 더 부드럽게 그려져요</span>
+          </span>
+        </h2>
         <input id="stabilizeSlider" type="range" min="0" max="6" value="1">
-        <p class="hint-text">숫자가 클수록 선이 더 부드럽게 그려져요</p>
 
         <label class="toggle-row">
           <input id="alphaLockToggle" type="checkbox">
           <span>칠한 곳 안에서만 칠하기</span>
+          <span class="info-wrap">
+            <button type="button" class="info-icon" aria-label="칠한 곳 안에서만 칠하기 설명 보기">?</button>
+            <span class="info-tip" role="tooltip">켜면 이미 칠한 그림 밖으로 색이 삐져나가지 않아요</span>
+          </span>
         </label>
         <p class="hint-text">켜면 이미 칠한 그림 밖으로 색이 삐져나가지 않아요</p>
       </section>
