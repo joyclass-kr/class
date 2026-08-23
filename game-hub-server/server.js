@@ -10,6 +10,7 @@ const LastCard = require("./lastcard");
 const Bomb77 = require("./bomb77");
 const Rummikub = require("./rummikub");
 const GemGuild = require("./gemguild");
+const CityChase = require("./citychase");
 const KingdomTrails = require("./kingdomtrails");
 const Blokus = require("./blokus");
 const Honeycomb = require("./honeycomb");
@@ -278,6 +279,7 @@ const MAX_ROOM_PLAYERS = {
   loveletter: 4,
   rummikub: 4,
   gemguild: 4,
+  citychase: 6,
   kingdomtrails: 4,
   blokus: 4,
   honeycomb: 6,
@@ -709,6 +711,20 @@ function gemGuildBroadcast(room) {
 
 function gemGuildError(socket, message) {
   safeSend(socket, { type: "GEMGUILD_ERROR", message });
+}
+
+function cityChaseBroadcast(room) {
+  if (!room?.citychase) return;
+  for (const [id, client] of room.clients) {
+    safeSend(client, {
+      type: "CITYCHASE_STATE",
+      state: CityChase.stateFor(room.citychase, id)
+    });
+  }
+}
+
+function cityChaseError(socket, message) {
+  safeSend(socket, { type: "CITYCHASE_ERROR", message });
 }
 
 function scheduleGemGuildTimeout(room) {
@@ -1747,6 +1763,7 @@ wss.on("connection", socket => {
         if (existingRoom.loveletter) loveLetterBroadcast(existingRoom);
         if (existingRoom.rummikub) rummikubBroadcast(existingRoom);
         if (existingRoom.gemguild) gemGuildBroadcast(existingRoom);
+        if (existingRoom.citychase) cityChaseBroadcast(existingRoom);
         if (existingRoom.kingdomtrails) kingdomTrailsBroadcast(existingRoom);
         if (existingRoom.blokus) blokusBroadcast(existingRoom);
         if (existingRoom.honeycomb) honeycombBroadcast(existingRoom);
@@ -1802,6 +1819,9 @@ wss.on("connection", socket => {
       }
       if (gameId === "gemguild") {
         room.gemguild = GemGuild.createGame(playerId, cleanToken(message.name, 12) || "방장");
+      }
+      if (gameId === "citychase") {
+        room.citychase = CityChase.createGame(playerId, cleanToken(message.name, 12) || "방장");
       }
       if (gameId === "kingdomtrails") {
         room.kingdomtrails = KingdomTrails.createGame(playerId, cleanToken(message.name, 12) || "방장");
@@ -1884,6 +1904,7 @@ wss.on("connection", socket => {
       if (room.loveletter) loveLetterBroadcast(room);
       if (room.rummikub) rummikubBroadcast(room);
       if (room.gemguild) gemGuildBroadcast(room);
+      if (room.citychase) cityChaseBroadcast(room);
       if (room.kingdomtrails) kingdomTrailsBroadcast(room);
       if (room.blokus) blokusBroadcast(room);
       if (room.honeycomb) honeycombBroadcast(room);
@@ -1940,6 +1961,7 @@ wss.on("connection", socket => {
         if (room.loveletter) loveLetterBroadcast(room);
         if (room.rummikub) rummikubBroadcast(room);
         if (room.gemguild) gemGuildBroadcast(room);
+        if (room.citychase) cityChaseBroadcast(room);
         if (room.kingdomtrails) kingdomTrailsBroadcast(room);
         if (room.blokus) blokusBroadcast(room);
         if (room.honeycomb) honeycombBroadcast(room);
@@ -2035,6 +2057,16 @@ wss.on("connection", socket => {
           return;
         }
         GemGuild.addPlayer(room.gemguild, playerId, cleanToken(message.name, 12) || `플레이어 ${room.gemguild.players.length + 1}`);
+      }
+      if (room.citychase) {
+        if (room.citychase.phase !== "lobby") {
+          room.clients.delete(playerId);
+          socket.meta.roomKey = null;
+          socket.meta.role = null;
+          safeSend(socket, { type: "ERROR", message: "이미 시작한 게임입니다." });
+          return;
+        }
+        CityChase.addPlayer(room.citychase, playerId, cleanToken(message.name, 12) || `플레이어 ${room.citychase.players.length + 1}`);
       }
       if (room.kingdomtrails) {
         if (room.kingdomtrails.phase !== "lobby") {
@@ -2298,6 +2330,7 @@ wss.on("connection", socket => {
       if (room.loveletter) loveLetterBroadcast(room);
       if (room.rummikub) rummikubBroadcast(room);
       if (room.gemguild) gemGuildBroadcast(room);
+      if (room.citychase) cityChaseBroadcast(room);
       if (room.kingdomtrails) kingdomTrailsBroadcast(room);
       if (room.blokus) blokusBroadcast(room);
       if (room.honeycomb) honeycombBroadcast(room);
@@ -3437,6 +3470,56 @@ wss.on("connection", socket => {
       return;
     }
 
+    if (type === "CITYCHASE_ACTION") {
+      const room = socket.meta.roomKey ? rooms.get(socket.meta.roomKey) : null;
+      const game = room?.citychase;
+      const action = cleanToken(message.action, 30);
+      if (!room || !game) {
+        cityChaseError(socket, "도둑잡기 방에 참가하지 않았습니다.");
+        return;
+      }
+
+      let result;
+      if (action === "START") {
+        result = playerId === room.hostId ? CityChase.startGame(game) : { ok: false, error: "방장만 게임을 시작할 수 있습니다." };
+      } else if (action === "PLACE_SECRETS") {
+        result = CityChase.placeSecrets(game, playerId, {
+          gems: Array.isArray(message.gems) ? message.gems.map(value => cleanToken(value, 30)) : [],
+          undercover: cleanToken(message.undercover, 30)
+        });
+      } else if (action === "ROLL") {
+        result = CityChase.roll(game, playerId);
+      } else if (action === "MOVE") {
+        result = CityChase.moveStep(game, playerId, cleanToken(message.nodeId, 30));
+      } else if (action === "HIDE") {
+        result = CityChase.hide(game, playerId);
+      } else if (action === "PLACE_TRICK") {
+        result = CityChase.placeTrick(game, playerId, cleanToken(message.nodeId, 30), cleanToken(message.nextNodeId, 30));
+      } else if (action === "PLACE_CHECK") {
+        result = CityChase.placeCheck(game, playerId, cleanToken(message.nodeId, 30));
+      } else if (action === "CHOOSE") {
+        result = CityChase.choosePending(game, playerId, cleanToken(message.choiceId, 30));
+      } else if (action === "NEW_GAME") {
+        if (playerId !== room.hostId) result = { ok: false, error: "방장만 새 게임을 시작할 수 있습니다." };
+        else if (game.phase !== "ended") result = { ok: false, error: "게임이 끝난 뒤 다시 시작할 수 있습니다." };
+        else {
+          CityChase.resetToLobby(game);
+          result = CityChase.startGame(game);
+        }
+      } else if (action === "RETURN_LOBBY") {
+        result = playerId === room.hostId ? CityChase.resetToLobby(game) : { ok: false, error: "방장만 대기실로 돌아갈 수 있습니다." };
+      } else {
+        result = { ok: false, error: "알 수 없는 행동입니다." };
+      }
+
+      if (!result.ok) {
+        cityChaseError(socket, result.error || "행동을 처리하지 못했습니다.");
+        return;
+      }
+      cityChaseBroadcast(room);
+      return;
+    }
+
     if (type === "GEMGUILD_ACTION") {
       const room = socket.meta.roomKey ? rooms.get(socket.meta.roomKey) : null;
       const game = room?.gemguild;
@@ -3835,6 +3918,13 @@ wss.on("connection", socket => {
           GemGuild.resetToLobby(currentRoom.gemguild, "플레이어가 나가 게임을 중단하고 대기실로 돌아왔습니다.");
         }
       }
+      if (currentRoom.citychase) {
+        const gameWasActive = currentRoom.citychase.phase !== "lobby";
+        CityChase.removePlayer(currentRoom.citychase, playerId);
+        if (gameWasActive) {
+          CityChase.resetToLobby(currentRoom.citychase, "플레이어가 나가 게임을 중단하고 대기실로 돌아왔습니다.");
+        }
+      }
       if (currentRoom.kingdomtrails) {
         const gameWasActive = currentRoom.kingdomtrails.phase !== "lobby";
         KingdomTrails.removePlayer(currentRoom.kingdomtrails, playerId);
@@ -3984,6 +4074,7 @@ wss.on("connection", socket => {
       if (currentRoom.loveletter) loveLetterBroadcast(currentRoom);
       if (currentRoom.rummikub) rummikubBroadcast(currentRoom);
       if (currentRoom.gemguild) gemGuildBroadcast(currentRoom);
+      if (currentRoom.citychase) cityChaseBroadcast(currentRoom);
       if (currentRoom.kingdomtrails) kingdomTrailsBroadcast(currentRoom);
       if (currentRoom.blokus) blokusBroadcast(currentRoom);
       if (currentRoom.honeycomb) honeycombBroadcast(currentRoom);

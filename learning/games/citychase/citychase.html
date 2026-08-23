@@ -1,0 +1,181 @@
+<!doctype html>
+<html lang="ko">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+  <meta name="theme-color" content="#d8e8dc">
+  <meta name="description" content="경찰팀과 도둑팀이 각자의 기기로 접속해 보석을 둘러싼 추격전을 벌이는 2~6인 실시간 보드게임">
+  <title>도둑잡기 · 시티 체이스</title>
+  <link rel="stylesheet" href="../../../assets/network/multiplayer-lobby.css">
+  <link rel="stylesheet" href="citychase.css?v=20260823">
+  <script src="../../../assets/network/game-network.js?v=20260821"></script>
+  <script src="../../../assets/network/multiplayer-lobby.js?v=20260821"></script>
+  <script src="citychase-data.js?v=20260823"></script>
+</head>
+<body>
+  <main>
+    <section id="missingScreen" class="lobbyShell hidden">
+      <div class="lobbyPanel">
+        <div class="eyebrow">PLAYER NAME REQUIRED</div>
+        <h1>이름을 먼저 정해주세요</h1>
+        <p>메인 화면에서 이름을 정한 뒤 다시 입장할 수 있습니다.</p>
+        <button class="primary" type="button" onclick="location.href='../../../'">메인 화면으로</button>
+      </div>
+    </section>
+
+    <section id="lobbyScreen" class="lobbyShell hidden">
+      <header class="lobbyPanel">
+        <div class="lobbyBrand">
+          <div class="brandMark" aria-hidden="true">♟</div>
+          <div>
+            <div class="eyebrow">LIVE TEAM CHASE · 2–6 PLAYERS</div>
+            <h1 class="lobbyTitle">도둑잡기</h1>
+            <p class="lobbyLead">보석을 훔쳐 달아날 것인가, 도시를 봉쇄해 모두 체포할 것인가.</p>
+          </div>
+        </div>
+        <p><strong id="savedName">-</strong>님이 각자의 기기로 참가합니다.</p>
+        <div class="mp-lobby-tabs">
+          <button id="hostTab" class="primary" type="button">방 만들기</button>
+          <button id="joinTab" class="secondary" type="button">방 참가</button>
+        </div>
+      </header>
+
+      <section id="hostPane" class="lobbyPanel mp-lobby-card hidden">
+        <div class="row spread">
+          <div><div class="eyebrow">ROOM CODE</div><div id="roomCode" class="code">----</div></div>
+          <span>이 번호를 친구들에게 알려주세요.</span>
+        </div>
+        <div id="hostStatus" class="mp-lobby-status">방을 만드는 중입니다.</div>
+      </section>
+
+      <section id="joinPane" class="lobbyPanel mp-lobby-card hidden">
+        <div class="mp-lobby-row">
+          <input id="joinCode" class="mp-lobby-code-input" inputmode="numeric" maxlength="4" autocomplete="one-time-code" placeholder="방 번호 4자리" aria-label="방 번호">
+          <button id="joinBtn" class="primary" type="button">참가</button>
+        </div>
+        <div id="joinStatus" class="mp-lobby-status">방장이 알려준 번호를 입력하세요.</div>
+      </section>
+
+      <section class="lobbyPanel">
+        <div class="row spread"><h2>참가자</h2><strong>2~6명</strong></div>
+        <div id="lobbyPlayers" class="mp-lobby-players"></div>
+        <p id="lobbyGuide" class="mp-lobby-guide">참가자를 기다리는 중입니다.</p>
+        <button id="startBtn" class="primary" type="button" disabled>참가자를 기다리는 중</button>
+        <div class="row" style="margin-top:10px">
+          <button id="rulesBtnLobby" class="secondary" type="button">게임 방법</button>
+          <button id="leaveBtnLobby" class="secondary" type="button">메인 화면</button>
+        </div>
+      </section>
+    </section>
+
+    <section id="gameScreen" class="gameShell hidden">
+      <header class="gameHeader">
+        <div class="miniBrand"><span class="miniBrandMark" aria-hidden="true">🚨</span><div><strong>도둑잡기</strong><small>CITY CHASE</small></div></div>
+        <div class="turnHeadline"><strong id="turnHeadline">게임 준비 중</strong><span id="turnSubline">잠시 기다려 주세요.</span></div>
+        <div class="headerMeta">
+          <div class="roomMini"><span>ROOM</span><strong id="gameRoomCode">----</strong></div>
+          <button id="rulesBtnGame" class="iconButton" type="button" aria-label="게임 방법">?</button>
+          <button id="leaveBtnGame" class="iconButton" type="button" aria-label="게임 나가기">×</button>
+        </div>
+      </header>
+
+      <div class="gameLayout">
+        <section class="boardPanel" aria-label="도시 게임판">
+          <div id="boardViewport" class="boardViewport">
+            <div id="boardStage" class="boardStage">
+              <canvas id="boardCanvas" class="boardCanvas" width="1000" height="640" aria-hidden="true"></canvas>
+              <div class="boardShade" aria-hidden="true"></div>
+              <div id="buildingsLayer"></div>
+              <div id="nodesLayer"></div>
+              <div id="cardsLayer" class="cardsLayer"></div>
+              <div id="piecesLayer" class="piecesLayer"></div>
+            </div>
+          </div>
+        </section>
+
+        <aside class="controlPanel" aria-label="내 정보와 행동">
+          <section id="identityCard" class="sideCard identityCard">
+            <div id="teamCrest" class="teamCrest">?</div>
+            <div><h2 id="teamTitle">팀 배정 전</h2><p id="teamMission">게임이 시작되면 역할이 정해집니다.</p></div>
+          </section>
+
+          <section class="progressRow" aria-label="승리 목표">
+            <div class="progressBox"><span>아지트의 보석</span><strong id="gemProgress">0 / 2</strong></div>
+            <div class="progressBox"><span>체포된 도둑</span><strong id="arrestProgress">0 / 3</strong></div>
+          </section>
+
+          <section id="setupCard" class="sideCard setupTools hidden">
+            <h3 id="setupTitle">비밀 물건 배치</h3>
+            <p id="setupGuide">경찰팀만 볼 수 있습니다. 서로 다른 건물에 보석 2개와 잠복경찰을 숨기세요.</p>
+            <div id="secretTabs" class="secretTabs">
+              <button class="secretTab active" type="button" data-secret="gem1">◆ 보석 1</button>
+              <button class="secretTab" type="button" data-secret="gem2">◆ 보석 2</button>
+              <button class="secretTab undercover" type="button" data-secret="undercover">♜ 잠복</button>
+            </div>
+            <div id="setupSummary" class="setupSummary"></div>
+            <button id="confirmSetupBtn" class="primary" type="button" disabled>배치 완료</button>
+          </section>
+
+          <section id="turnCard" class="sideCard turnCard hidden">
+            <h3 id="pawnTitle">도둑 1번 차례</h3>
+            <p id="turnMessage">주사위를 던져 이동하세요.</p>
+            <div class="dieLine">
+              <div id="dieFace" class="die">·</div>
+              <div class="dieMeta"><strong id="remainingText">주사위 대기</strong><span id="movementHint">내 차례가 오면 행동할 수 있습니다.</span></div>
+            </div>
+          </section>
+
+          <section id="actionCard" class="sideCard hidden">
+            <div id="actionStack" class="actionStack"></div>
+            <p id="actionHint" class="actionHint"></p>
+          </section>
+
+          <section id="intelCard" class="sideCard hidden">
+            <div class="row spread"><strong>팀 정보</strong><span id="cardCount"></span></div>
+            <div id="intelList" class="intelList"></div>
+          </section>
+
+          <section class="sideCard">
+            <div class="row spread"><strong>참가자</strong><span id="roundText">1라운드</span></div>
+            <div id="playerList" class="playerList"></div>
+          </section>
+        </aside>
+      </div>
+    </section>
+  </main>
+
+  <section id="rulesOverlay" class="overlay hidden" role="dialog" aria-modal="true" aria-labelledby="rulesTitle">
+    <div class="modal">
+      <div class="row spread"><div><div class="eyebrow">HOW TO PLAY</div><h2 id="rulesTitle">도둑잡기 게임 방법</h2></div><button id="closeRulesBtn" class="iconButton" type="button" aria-label="닫기">×</button></div>
+      <div class="rulesGrid">
+        <article class="ruleBox"><h3>🌸 도둑팀</h3><ul><li>7개 건물을 수색해 보석 2개를 찾습니다.</li><li>보석을 하나씩 아지트로 가져오면 안전하게 보관됩니다.</li><li>잠복경찰이 든 건물을 열면 즉시 체포됩니다.</li><li>속임수 카드로 경찰의 이동 방향을 바꿀 수 있습니다.</li></ul></article>
+        <article class="ruleBox"><h3>🟣 경찰팀</h3><ul><li>게임 시작 전 보석 2개와 잠복경찰을 서로 다른 건물에 숨깁니다.</li><li>경찰이 이동 중 도둑과 같은 칸을 지나면 체포합니다.</li><li>보석을 든 도둑에게 검문 카드를 사용할 수 있습니다.</li><li>도둑 3명을 모두 감옥에 보내면 승리합니다.</li></ul></article>
+        <article class="ruleBox"><h3>🎲 이동</h3><ul><li>도둑 1·2·3번, 경찰 1·2·3번 순서로 진행합니다.</li><li>주사위 수만큼 칸을 하나씩 직접 선택합니다.</li><li>한 차례 안에서 지나온 길을 되돌아갈 수 없습니다.</li><li>철도, 위치 이동, 일방통행과 특수 칸의 지시를 따릅니다.</li></ul></article>
+        <article class="ruleBox"><h3>🔓 감옥과 안전지대</h3><ul><li>체포된 도둑은 자기 차례에 1을 굴리면 탈출합니다.</li><li>경찰이 감옥에 없을 때 동료가 도착하면 구출할 수 있습니다.</li><li>아지트와 건물에는 경찰이 들어갈 수 없습니다.</li><li>도둑은 안전지대에서 최대 3차례까지 숨을 수 있습니다.</li></ul></article>
+      </div>
+      <button id="closeRulesBottomBtn" class="primary" type="button">확인</button>
+    </div>
+  </section>
+
+  <section id="resultOverlay" class="overlay hidden" role="dialog" aria-modal="true" aria-labelledby="resultTitle">
+    <div class="modal resultModal">
+      <div id="resultIcon" class="resultIcon">🏁</div>
+      <div class="eyebrow">GAME COMPLETE</div>
+      <h2 id="resultTitle">게임 종료</h2>
+      <p id="resultMessage"></p>
+      <div id="resultActions" class="row" style="justify-content:center"></div>
+    </div>
+  </section>
+
+  <section id="abortOverlay" class="overlay hidden" role="dialog" aria-modal="true">
+    <div class="modal">
+      <h2 id="abortTitle">게임 중단</h2>
+      <p id="abortMessage"></p>
+      <button id="reloadBtn" class="primary" type="button">처음부터</button>
+    </div>
+  </section>
+
+  <div id="toast" class="toast hidden" role="status" aria-live="polite"></div>
+  <script src="citychase.js?v=20260823"></script>
+</body>
+</html>
