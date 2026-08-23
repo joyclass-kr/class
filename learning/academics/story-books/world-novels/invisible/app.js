@@ -1,0 +1,1047 @@
+const BOOK_TITLE = "투명 인간";
+
+const CHAPTER_LABEL = n => `${n}장 · `;
+
+const CHAPTERS = [
+    {
+        num: 1,
+        title: "눈 오는 날의 손님",
+        emoji: "🧣",
+        art: ["story-01-a.png", "story-01-b.png"],
+        paras: [
+            `이월 어느 눈 오는 날이었습니다.`,
+            `영국 남쪽의 아이핑이라는 작은 마을에 손님이 하나 왔습니다.`,
+            `기차에서 내려 눈보라를 뚫고 걸어와, 마차 여관이라는 곳의 문을 열었습니다.`,
+            `여관 주인 홀 부인이 그 사람을 맞았습니다.`,
+            `그리고 놀랐습니다.`,
+            `그 손님은 온몸을 싸매고 있었습니다.`,
+            `챙이 넓은 모자를 눌러썼고, 목도리를 코까지 감았고, 큰 외투 깃을 세우고 있었습니다.`,
+            `얼굴에서 보이는 것은 파란 안경뿐이었습니다.`,
+            `그 안경도 알이 아주 컸습니다.`,
+            `그리고 이마와 뺨에 흰 붕대가 감겨 있었습니다.`,
+            `장갑도 끼고 있었습니다.`,
+            `"방 하나 주시오. 그리고 난롯불을 크게 피워 주시오."`,
+            `목소리가 이상했습니다.`,
+            `손님이 값을 물었습니다.`,
+            `홀 부인이 하루 얼마라고 말하자, 그 사람은 두말없이 금화를 꺼내 놓았습니다.`,
+            `그것도 이상했습니다.`,
+            `그 마을에 오는 손님 가운데 값을 깎지 않는 사람이 없었기 때문입니다.`,
+            `홀 부인은 그 사람을 응접실로 안내했습니다.`,
+            `그리고 음식을 가지러 나갔습니다.`,
+            `돌아와 보니 손님은 아직 모자와 외투를 벗지 않고 서 있었습니다.`,
+            `물이 뚝뚝 떨어지고 있었습니다.`,
+            `"젖으셨는데 벗으시지요. 말려 드리겠습니다."`,
+            `"이대로 있겠소."`,
+            `홀 부인은 그것을 이상하게 여겼습니다.`,
+            `그런데 겨울에 손님이 오는 일이 드물었습니다.`,
+            `그리고 그 사람이 돈을 미리 냈습니다.`,
+            `그래서 더 묻지 않았습니다.`,
+            `저녁을 가지고 다시 들어갔을 때, 손님은 목도리를 조금 내린 채 등을 돌리고 있었습니다.`,
+            `홀 부인은 그때 얼핏 무언가를 보았습니다.`,
+            `그런데 그것이 무엇인지 알 수 없었습니다.`,
+            `입이 있어야 할 자리가 이상했기 때문입니다.`,
+            `그날 밤 홀 부인은 남편에게 이렇게 말했습니다.`,
+            `"저 사람 사고를 크게 당한 모양이에요. 얼굴을 다쳤나 봐요."`,
+            `"그러겠지."`,
+            `"그러니까 아무 말도 하지 마세요. 저런 사람은 남이 쳐다보는 걸 제일 싫어해요."`,
+            `홀 부인은 좋은 사람이었습니다.`,
+            `그 겨울 아이핑 마을은 조용했습니다.`,
+            `밭에 일이 없어서 사람들이 다 집에 있었습니다.`,
+            `그러니 낯선 사람 하나가 오면 그 이야기가 온 마을에 퍼졌습니다.`,
+            `이튿날 아침에는 이미 다들 알고 있었습니다.`,
+            `마차 여관에 이상한 사람이 들었다는 것을요.`
+        ]
+    },
+    {
+        num: 2,
+        title: "유리병 상자",
+        emoji: "🧪",
+        art: ["story-02-a.png", "story-02-b.png"],
+        paras: [
+            `이튿날 손님의 짐이 도착했습니다.`,
+            `상자가 여럿이었습니다.`,
+            `그 안에는 유리병이 가득 들어 있었습니다.`,
+            `크고 작은 병, 색이 있는 병, 마개가 유리로 된 병.`,
+            `손님은 그것들을 응접실 상 위에 늘어놓았습니다.`,
+            `그리고 그 방을 실험실로 쓰기 시작했습니다.`,
+            `그때부터 그 여관에서는 이상한 냄새가 났습니다.`,
+            `그리고 밤에 유리 부딪치는 소리가 났습니다.`,
+            `쓴 냄새였습니다.`,
+            `코를 찌르는 것도 있고, 달착지근한 것도 있었습니다.`,
+            `홀 부인은 그 냄새 때문에 두통이 났습니다.`,
+            `손님은 창을 열지 않았습니다.`,
+            `커튼도 늘 쳐 놓았습니다.`,
+            `손님은 하루 종일 그 방에 있었습니다.`,
+            `밥은 문 앞에 놓아두면 안으로 들여갔습니다.`,
+            `누가 방에 들어가면 몹시 화를 냈습니다.`,
+            `"들어오지 말라고 하지 않았소!"`,
+            `한번은 홀 씨가 청소를 하러 들어갔다가 쫓겨났습니다.`,
+            `문이 쾅 닫혔습니다.`,
+            `마을 사람들은 그 손님 이야기를 많이 했습니다.`,
+            `"저 사람은 죄를 지어 숨어 있는 거야."`,
+            `"아니야, 얼굴에 큰 흉터가 있어서 그런 거지."`,
+            `"내가 보니까 얼굴이 아예 없더라고."`,
+            `그런 이야기가 술집에서 돌았습니다.`,
+            `마을의 의사 커스는 호기심이 많은 사람이었습니다.`,
+            `그는 무슨 핑계를 대고 그 방에 들어갔습니다.`,
+            `그리고 이야기를 나누다가, 손님이 무심코 소매에서 팔을 뺐습니다.`,
+            `커스는 그 소매를 보았습니다.`,
+            `소매가 비어 있었습니다.`,
+            `그런데 그 빈 소매가 움직였습니다.`,
+            `그리고 무언가가 커스의 코를 잡았습니다.`,
+            `커스는 그 방에서 뛰쳐나왔습니다.`,
+            `그리고 목사에게 달려가 이렇게 말했습니다.`,
+            `"저 사람은 팔이 없습니다. 그런데 팔이 있습니다."`,
+            `목사는 커스가 술을 마셨다고 생각했습니다.`,
+            `목사는 커스에게 이렇게 말했습니다.`,
+            `"자네가 잘못 본 걸세."`,
+            `"저는 그 소매에 손을 넣어 봤습니다."`,
+            `"그래서."`,
+            `"아무것도 없었습니다. 그런데 무언가가 제 손을 밀어냈습니다."`,
+            `목사는 그 말을 듣고 웃었습니다.`,
+            `그런데 그날 밤에는 문을 잠갔습니다.`
+        ]
+    },
+    {
+        num: 3,
+        title: "도둑",
+        emoji: "🪟",
+        art: ["story-03-a.png", "story-03-b.png"],
+        paras: [
+            `그 무렵 마을에 도난 사건이 있었습니다.`,
+            `목사관에 도둑이 든 것입니다.`,
+            `새벽에 목사와 그 아내가 아래층에서 나는 소리를 듣고 내려갔습니다.`,
+            `부엌 창이 열려 있었습니다.`,
+            `그리고 돈통이 비어 있었습니다.`,
+            `그런데 이상했습니다.`,
+            `방 안에 아무도 없었습니다.`,
+            `부엌 문은 안에서 잠겨 있었습니다.`,
+            `창은 열려 있었는데 그 창은 사람이 지나갈 수 없을 만큼 작았습니다.`,
+            `그리고 눈이 온 마당에 발자국이 하나도 없었습니다.`,
+            `목사가 촛불을 들고 부엌에 들어섰을 때, 바로 옆에서 재채기 소리가 났습니다.`,
+            `아주 가까운 데서였습니다.`,
+            `목사가 촛불을 돌렸습니다.`,
+            `아무도 없었습니다.`,
+            `그리고 촛불이 꺼졌습니다.`,
+            `그 뒤로 무언가가 문으로 나가는 소리가 났습니다.`,
+            `목사와 아내는 그날 밤 잠을 자지 못했습니다.`,
+            `같은 날 아침, 여관에서도 일이 있었습니다.`,
+            `홀 씨 부부가 응접실을 지나는데 문이 열려 있었습니다.`,
+            `손님은 없었습니다.`,
+            `두 사람은 안을 들여다보았습니다.`,
+            `침대 위에 옷이 흩어져 있었습니다.`,
+            `그때 방 안에서 무언가가 움직였습니다.`,
+            `침대 옆 의자가 저 혼자 일어섰습니다.`,
+            `그리고 두 사람 쪽으로 밀려왔습니다.`,
+            `그러고는 문이 쾅 닫히면서 두 사람을 밖으로 밀어냈습니다.`,
+            `홀 부인은 계단에 주저앉았습니다.`,
+            `"우리 집에 무슨 일이 있는 거예요."`,
+            `그런데 잠시 뒤 손님이 태연히 계단을 올라와 그 방에 들어갔습니다.`,
+            `언제 나갔다 왔는지 아무도 보지 못했습니다.`,
+            `홀 부인은 그날 하루 종일 손이 떨렸습니다.`,
+            `그리고 남편에게 말했습니다.`,
+            `"저 사람을 내보냅시다."`,
+            `"돈을 미리 냈는데."`,
+            `"돈이 문제가 아니에요."`,
+            `홀 씨는 아내의 말을 잘 듣는 사람이었습니다.`,
+            `그런데 그날은 미루었습니다.`,
+            `그것이 잘못이었습니다.`
+        ]
+    },
+    {
+        num: 4,
+        title: "밥값을 셈합시다",
+        emoji: "💰",
+        art: ["story-04-a.png", "story-04-b.png"],
+        paras: [
+            `그날 오후, 홀 부인이 마음을 먹었습니다.`,
+            `손님이 밥을 달라고 하자 이렇게 말했습니다.`,
+            `"밥값을 좀 셈해 주셔야겠습니다."`,
+            `"돈은 미리 드리지 않았소."`,
+            `"그건 다 되었습니다. 그리고 여쭐 것이 있습니다."`,
+            `"무엇이오."`,
+            `"오늘 새벽에 어떻게 방에 들어가셨습니까? 저희는 문을 열어 드린 적이 없는데요."`,
+            `손님이 잠깐 아무 말도 하지 않았습니다.`,
+            `홀 부인이 말을 이었습니다.`,
+            `"그리고 목사님 댁 일도 이야기가 돕니다. 손님께서 밝히지 않으시면 저희도 곤란합니다."`,
+            `여관 응접실에는 그때 사람이 여럿 있었습니다.`,
+            `홀 씨 부부, 대장장이, 그리고 마을 사람 둘.`,
+            `다들 무슨 일이 나기를 기다리고 있었습니다.`,
+            `그 방 공기가 팽팽했습니다.`,
+            `그때 손님이 말했습니다.`,
+            `"당신들은 아무것도 모르는군."`,
+            `"그러니까 말씀해 주십시오."`,
+            `"그럼 보여 주지."`,
+            `손님이 손을 들어 코를 잡았습니다.`,
+            `그리고 그 코를 떼어 냈습니다.`,
+            `상 위에 코가 하나 떨어졌습니다.`,
+            `밀랍으로 만든 가짜 코였습니다.`,
+            `그러고는 안경을 벗었습니다.`,
+            `그리고 목도리를 풀고, 붕대를 풀었습니다.`,
+            `홀 부인은 비명을 질렀습니다.`,
+            `그 자리에 아무것도 없었기 때문입니다.`,
+            `옷깃 위가 비어 있었습니다.`,
+            `머리가 있어야 할 자리에 뒤쪽 벽지가 그대로 보였습니다.`,
+            `사람들이 계단을 굴러떨어지듯 달아났습니다.`,
+            `술집에 있던 사람들도 뛰쳐나갔습니다.`,
+            `그날 아이핑 마을은 발칵 뒤집혔습니다.`,
+            `그날 저녁 마을 사람들은 술집에 모여 그 이야기만 했습니다.`,
+            `그런데 이야기를 하면 할수록 서로 말이 달랐습니다.`,
+            `누구는 머리가 아예 없었다고 하고, 누구는 있는데 안 보였다고 했습니다.`,
+            `누구는 냄새가 났다고 했습니다.`,
+            `사람은 놀라면 본 것을 제대로 기억하지 못합니다.`,
+            `그날 밤 아이핑에서 확실한 것은 하나뿐이었습니다.`,
+            `그 여관 손님이 사람 눈에 보이지 않는다는 것이었습니다.`
+        ]
+    },
+    {
+        num: 5,
+        title: "마을을 빠져나가다",
+        emoji: "🏃",
+        art: ["story-05-a.png", "story-05-b.png"],
+        paras: [
+            `마을 경관 보비 재퍼스가 왔습니다.`,
+            `"당신을 도난 혐의로 체포하겠소."`,
+            `"해 보시오."`,
+            `재퍼스가 다가가 그 팔을 잡으려고 했습니다.`,
+            `그런데 손님이 옷을 벗기 시작했습니다.`,
+            `외투를 벗고, 조끼를 벗고, 셔츠를 벗었습니다.`,
+            `벗을 때마다 그 사람이 조금씩 사라졌습니다.`,
+            `마지막에는 바지 한 벌만 방 안에 서 있었습니다.`,
+            `그리고 그것마저 바닥에 떨어졌습니다.`,
+            `방 안에 아무도 없게 되었습니다.`,
+            `그런데 목소리가 났습니다.`,
+            `"나는 여기 있소."`,
+            `사람들이 문 쪽으로 몰렸습니다.`,
+            `그 뒤에 벌어진 일은 아주 어수선했습니다.`,
+            `보이지 않는 사람이 사람들을 밀치고 나갔고, 사람들은 아무것이나 붙잡고 휘둘렀습니다.`,
+            `재퍼스는 계단에서 굴렀습니다.`,
+            `그리고 마당에서 무언가가 문을 밀치고 나가는 소리가 났습니다.`,
+            `그 뒤로 마을 길에서 발자국 소리가 났습니다.`,
+            `아무것도 보이지 않는데 소리만 났습니다.`,
+            `그리고 젖은 흙에 발자국이 찍히는 것이 보였습니다.`,
+            `사람들은 그것을 보고 더 무서워했습니다.`,
+            `그날부터 아이핑 사람들은 밤에 문을 잠갔습니다.`,
+            `그리고 방 안에 혼자 있어도 뒤를 돌아보았습니다.`
+        ]
+    },
+    {
+        num: 6,
+        title: "마블 씨",
+        emoji: "🎩",
+        art: ["story-06-a.png", "story-06-b.png"],
+        paras: [
+            `마을 밖 길에 부랑자가 하나 앉아 있었습니다.`,
+            `이름은 토머스 마블이었습니다.`,
+            `배가 나오고, 낡은 실크 모자를 쓰고 있었고, 구두를 고르고 있었습니다.`,
+            `누가 버린 구두 두 켤레를 놓고 어느 것이 나은지 보고 있었던 것입니다.`,
+            `그때 목소리가 났습니다.`,
+            `"그것도 구두라고 신소?"`,
+            `마블이 둘러보았습니다.`,
+            `아무도 없었습니다.`,
+            `"누구요?"`,
+            `"나는 보이지 않는 사람이오."`,
+            `마블은 웃으려다가 그만두었습니다.`,
+            `무언가가 그 어깨를 잡았기 때문입니다.`,
+            `"나는 도와줄 사람이 필요하오. 당신이 하시오."`,
+            `"저는······."`,
+            `"싫으면 그만두시오. 다만 나는 당신이 어디로 가든 따라갈 수 있소."`,
+            `마블은 그 말이 무슨 뜻인지 알아들었습니다.`,
+            `마블은 평생 남의 것을 조금씩 얻어 살아온 사람이었습니다.`,
+            `나쁜 사람은 아니었습니다.`,
+            `다만 겁이 많았고, 힘든 일을 오래 하지 못했습니다.`,
+            `그리고 실크 모자를 몹시 아꼈습니다.`,
+            `그것 하나만은 남에게 얻은 것이 아니었기 때문입니다.`,
+            `그날부터 마블은 그 사람의 심부름꾼이 되었습니다.`,
+            `옷과 돈과 책을 옮기는 일이었습니다.`,
+            `보이지 않는 사람은 아무것도 들고 다닐 수 없었습니다.`,
+            `물건은 보이기 때문입니다.`,
+            `밥도 그랬습니다.`,
+            `무언가를 먹으면 그것이 소화될 때까지 그 형체가 그대로 보였습니다.`,
+            `그래서 그 사람은 먹고 나서 여러 시간 동안 사람 앞에 나설 수 없었습니다.`,
+            `옷을 입을 수도 없었습니다.`,
+            `그러니 겨울에는 벌거벗고 다녀야 했습니다.`,
+            `비가 오면 몸의 윤곽이 드러났습니다.`,
+            `안개 속에서도 그랬습니다.`,
+            `길에 흙이 있으면 발자국이 남았습니다.`,
+            `개들은 그 사람의 냄새를 맡고 짖었습니다.`,
+            `보이지 않는 것이 얼마나 불편한 일인지, 그 사람은 그때 다 알고 있었습니다.`,
+            `마블은 밤에 잠을 자면서도 무서웠습니다.`,
+            `옆에 누가 있는지 볼 수가 없었기 때문입니다.`,
+            `숨소리가 들리면 거기 있는 것이고, 안 들리면 없는 것인데, 숨을 참으면 알 수가 없었습니다.`,
+            `마블은 밤마다 이런 생각을 했습니다.`,
+            `지금 저 사람이 나를 보고 있을까.`
+        ]
+    },
+    {
+        num: 7,
+        title: "마블의 도망",
+        emoji: "📚",
+        art: ["story-07-a.png", "story-07-b.png"],
+        paras: [
+            `마블은 그 사람이 무서웠습니다.`,
+            `그 사람은 화를 잘 냈고, 화가 나면 사람을 때렸습니다.`,
+            `마블은 그 손을 볼 수 없으므로 피할 수도 없었습니다.`,
+            `마블이 옮기는 짐 가운데 특히 무거운 것이 있었습니다.`,
+            `노트 세 권이었습니다.`,
+            `그 안에 그 사람이 몇 해 동안 연구한 것이 다 적혀 있었습니다.`,
+            `"그건 절대 놓치면 안 되오. 놓치면 당신을 죽이겠소."`,
+            `마블은 그 노트를 안고 다녔습니다.`,
+            `무거웠습니다.`,
+            `그런데 무거운 것보다 더 힘든 것이 있었습니다.`,
+            `그 노트를 안고 있으면 자기가 왜 이러고 있는지 자꾸 생각났기 때문입니다.`,
+            `어느 날 두 사람이 어느 마을을 지날 때였습니다.`,
+            `마블이 갑자기 달리기 시작했습니다.`,
+            `그리고 술집으로 뛰어들어 소리쳤습니다.`,
+            `"살려 주세요! 보이지 않는 사람이 저를 쫓아옵니다!"`,
+            `사람들이 웃었습니다.`,
+            `그런데 그때 문이 저 혼자 열렸습니다.`,
+            `술집 안이 조용해졌습니다.`,
+            `그 뒤에 벌어진 일도 어수선했습니다.`,
+            `사람들이 마블을 안으로 끌어들이고 문을 막았습니다.`,
+            `보이지 않는 사람은 창을 깨고 들어왔습니다.`,
+            `그 자리에 마침 마을 사람 하나가 총을 들고 있었습니다.`,
+            `그는 소리가 나는 쪽으로 총을 쏘았습니다.`,
+            `그리고 다섯 발을 다 쏘았습니다.`,
+            `한 발이 스쳤던 모양입니다.`,
+            `그 뒤로 소리가 나지 않았습니다.`,
+            `마블은 그 노트를 끝까지 놓지 않았습니다.`,
+            `그리고 그날 그것을 가지고 사라졌습니다.`,
+            `보이지 않는 사람은 팔을 다친 채 들판으로 달아났습니다.`,
+            `그리고 아무 집 창으로 들어갔습니다.`,
+            `그 집이 하필 켐프 박사의 집이었습니다.`,
+            `그 술집 사람들은 나중에 그날 일을 이렇게 말했습니다.`,
+            `무엇과 싸우는지 모르는 채로 싸웠다고요.`,
+            `의자를 던지고 몽둥이를 휘둘렀는데 대개 헛것을 쳤습니다.`,
+            `그러다 누가 맞으면 그것이 사람인지 저희끼리인지도 몰랐습니다.`,
+            `그날 다친 사람 가운데 절반은 저희끼리 부딪쳐 다친 것이었습니다.`
+        ]
+    },
+    {
+        num: 8,
+        title: "켐프 박사",
+        emoji: "🏡",
+        art: ["story-08-a.png", "story-08-b.png"],
+        paras: [
+            `켐프 박사는 젊은 학자였습니다.`,
+            `언덕 위 큰 집에서 혼자 살면서 연구를 했습니다.`,
+            `켐프는 젊은 나이에 이름이 알려진 사람이었습니다.`,
+            `학회에 들어가려고 애쓰고 있었고, 그 때문에 밤늦게까지 일했습니다.`,
+            `그 집에는 하녀 하나가 있을 뿐이었습니다.`,
+            `그날 밤 켐프는 서재에서 일하고 있었습니다.`,
+            `아래층에서 소리가 나서 내려갔더니 문이 열려 있었고, 계단에 핏자국이 있었습니다.`,
+            `그리고 침실 문고리에도 있었습니다.`,
+            `켐프가 침실 문을 열었습니다.`,
+            `침대보가 눌려 있었습니다. 누가 앉아 있는 것처럼요.`,
+            `"움직이지 마시오." 목소리가 났습니다. "나는 보이지 않는 사람이오."`,
+            `"압니다. 신문에서 읽었습니다."`,
+            `"나를 알아보겠소?"`,
+            `"목소리가 낯익습니다."`,
+            `"그리핀이오. 대학에서 같이 공부했던."`,
+            `켐프는 그 이름을 기억했습니다.`,
+            `머리가 아주 좋았고, 남과 어울리지 않았고, 백색증이 있어서 살갗과 머리가 하얗던 사람이었습니다.`,
+            `"그리핀······ 정말 자넨가."`,
+            `"팔을 좀 봐 주게. 총알이 스쳤네."`,
+            `켐프는 그 팔을 싸매 주었습니다.`,
+            `보이지 않는 팔에 붕대를 감는 일이었습니다.`,
+            `감고 나니 붕대만 공중에 떠 있었습니다.`,
+            `켐프는 음식을 가져다주었고, 옷과 가운을 내주었습니다.`,
+            `가운을 입자 그리핀의 형체가 드러났습니다.`,
+            `머리가 없는 사람이 앉아 있는 것 같았습니다.`,
+            `"자네 이야기를 다 듣고 싶네." 켐프가 말했습니다.`,
+            `"그러지."`,
+            `그리고 그리핀이 이야기를 시작했습니다.`,
+            `이야기를 듣기 전에 켐프는 한 가지를 물었습니다.`,
+            `"자네 그동안 어떻게 지냈나."`,
+            `그리핀은 그 물음에 대답하지 않았습니다.`,
+            `대신 이렇게 말했습니다.`,
+            `"켐프, 나는 육 년 동안 사람하고 제대로 말해 본 적이 없네."`,
+            `켐프는 그 말이 마음에 걸렸습니다.`,
+            `그런데 그때는 그것이 무슨 뜻인지 다 알지 못했습니다.`
+        ]
+    },
+    {
+        num: 9,
+        title: "그리핀의 이야기",
+        emoji: "💡",
+        art: ["story-09-a.png", "story-09-b.png"],
+        paras: [
+            `나는 대학을 나와 지방의 작은 학교에서 가르치고 있었네.`,
+            `가르치는 일은 끔찍했네.`,
+            `학생들은 아무것도 이해하지 못했고, 학장이라는 자는 내 연구를 훔치려고 했네.`,
+            `나는 밤마다 혼자 연구했네.`,
+            `빛에 관한 연구였네.`,
+            `물건이 눈에 보이는 것은 그 물건이 빛을 되쏘거나 삼키기 때문이네.`,
+            `유리는 거의 되쏘지 않으니까 거의 안 보이지.`,
+            `물속에 유리를 넣으면 아예 사라진 것처럼 보이네.`,
+            `나는 이렇게 생각했네.`,
+            `사람의 몸을 유리처럼 만들 수 있다면 어떨까.`,
+            `삼 년을 매달렸네.`,
+            `돈이 없어서 아버지의 돈에 손을 댔네.`,
+            `그 돈은 아버지 것이 아니었네. 남에게 맡아 둔 돈이었네.`,
+            `아버지는 그 일로 세상을 떠나셨네.`,
+            `나는 장례식에 갔는데, 그때도 머릿속으로는 실험 생각만 했네.`,
+            `그동안 나는 아무하고도 어울리지 않았네.`,
+            `다들 내 연구를 훔치려 한다고 생각했기 때문이네.`,
+            `지금 생각하면 그렇지 않았을 수도 있네.`,
+            `그런데 그때는 그렇게 보였네.`,
+            `혼자 오래 있으면 세상이 다 그렇게 보인다네.`,
+            `그러다 마침내 방법을 찾았네.`,
+            `약 두 가지와 어떤 기계를 써야 했네.`,
+            `먼저 고양이로 해 보았네. 잘되었네. 다만 눈만은 끝내 사라지지 않았네.`,
+            `그리고 어느 밤, 내가 마셨네.`,
+            `사흘 동안 죽는 줄 알았네.`,
+            `그런데 나흘째 아침에 거울을 보니 아무것도 없었네.`,
+            `나는 그때 세상에서 제일 강한 사람이 되었다고 생각했네.`,
+            `그런데 그날 저녁부터 문제가 시작되었네.`,
+            `집주인이 냄새 때문에 방에 올라왔네.`,
+            `나는 그 방에 불을 지르고 나왔네.`,
+            `내 연구 자취를 없애려고 그런 것이었네.`,
+            `그 집에는 다른 사람도 살고 있었네.`,
+            `켐프가 그 대목에서 물었습니다.`,
+            `"그 사람들은 어떻게 되었나."`,
+            `"모르네."`,
+            `"모른다고?"`,
+            `"나는 그때 급했네."`,
+            `켐프는 아무 말도 하지 않았습니다.`,
+            `그리핀은 이야기를 하면서 자꾸 자기가 얼마나 뛰어난지를 말했습니다.`,
+            `그리고 남들이 얼마나 어리석은지를 말했습니다.`,
+            `켐프는 그것을 들으면서 이런 생각을 했습니다.`,
+            `이 사람은 투명해지기 전부터 이미 사람들 사이에서 사라져 있었습니다.`,
+            `약이 한 일은 그것을 눈에 보이게 만든 것뿐이었습니다.`
+        ]
+    },
+    {
+        num: 10,
+        title: "보이지 않는다는 것",
+        emoji: "❄️",
+        art: ["story-10-a.png", "story-10-b.png"],
+        paras: [
+            `거리로 나선 첫날 이야기를 해 주겠네.`,
+            `일월이었네.`,
+            `나는 벌거벗고 런던 거리를 걸었네.`,
+            `그리고 십 분 만에 알았네.`,
+            `보이지 않는 것은 좋기만 한 것이 아니었네.`,
+            `우선 추웠네. 견딜 수 없이 추웠네.`,
+            `그리고 사람들이 나에게 부딪쳤네.`,
+            `내가 있는 줄 모르니까 그냥 걸어 들어오는 것이네.`,
+            `짐수레가 나를 칠 뻔했네.`,
+            `발이 얼고 베였네.`,
+            `그런데 발에서 나는 피는 보인다네.`,
+            `길에 붉은 발자국이 찍혔네.`,
+            `아이들이 그것을 보고 소리를 질렀네.`,
+            `"봐! 발자국이 저절로 생겨!"`,
+            `아이들이 나를 따라오기 시작했네.`,
+            `나는 뛰었네.`,
+            `개가 짖으며 쫓아왔네.`,
+            `그때 나는 마차 밑으로 들어갔네.`,
+            `말이 놀라 뛰었네.`,
+            `나는 진흙 속에 엎드려 있었네.`,
+            `그리고 진흙이 몸에 묻어 사람 모양이 되어 가는 것을 보았네.`,
+            `나는 그것을 씻어 낼 물도 없었네.`,
+            `눈이 오면 몸에 눈이 쌓여서 형체가 드러났네.`,
+            `안개가 끼면 물방울이 몸에 앉아 사람 모양이 되었네.`,
+            `그리고 밥을 먹으면 그 밥이 배 속에서 그대로 보였네.`,
+            `그래서 사람이 없는 데서 먹고 몇 시간을 숨어 있어야 했네.`,
+            `나는 사흘 만에 아무것도 먹지 못하고 어느 상점에 숨어들었네.`,
+            `그리고 그날 밤 그 상점 안에서 이런 생각을 했네.`,
+            `나는 이 세상에서 가장 자유로운 사람이 되었는데, 이 세상에서 가장 갇힌 사람이 되어 있었네.`,
+            `옷을 입을 수도 없고, 사람과 말을 할 수도 없고, 밥도 마음대로 못 먹네.`,
+            `그런데 그때 나는 이렇게 결론을 냈네.`,
+            `이것은 내가 잘못 생각한 것이 아니라, 세상이 나를 알아주지 않는 것이라고.`,
+            `켐프, 나는 그때 이렇게 마음을 먹었네.`,
+            `이 힘을 쓰려면 사람들이 나를 무서워하게 만들어야 한다고.`,
+            `켐프가 물었습니다.`,
+            `"그 힘으로 다른 일도 할 수 있지 않나. 사람을 돕는 일 말일세."`,
+            `그리핀은 그 말을 알아듣지 못하는 것 같았습니다.`,
+            `"돕는다고?"`,
+            `"그렇네."`,
+            `"켐프, 나는 삼 년 동안 굶으면서 이걸 만들었네. 그런데 왜 남을 돕나."`,
+            `켐프는 그 대답을 듣고 마음을 정하기 시작했습니다.`
+        ]
+    },
+    {
+        num: 11,
+        title: "공포의 통치",
+        emoji: "📢",
+        art: ["story-11-a.png", "story-11-b.png"],
+        paras: [
+            `그리핀은 이런 말을 했습니다.`,
+            `"켐프, 이제 시작할 걸세."`,
+            `"뭘 시작한다는 건가."`,
+            `"이 고장을 내 것으로 삼겠네. 첫해에는 한 사람을 골라 본보기로 삼겠네. 그러면 다들 시키는 대로 할 걸세."`,
+            `"그건 살인일세."`,
+            `"통치일세."`,
+            `켐프가 물었습니다.`,
+            `"몇 사람이나 죽일 생각인가."`,
+            `"필요한 만큼."`,
+            `"필요한 만큼이 몇인가."`,
+            `그리핀은 대답하지 않았습니다.`,
+            `그 사람도 셈해 보지 않았던 것입니다.`,
+            `켐프가 말했습니다.`,
+            `"그리핀, 자네는 지금 잘못 가고 있네."`,
+            `"자네가 나를 도와주게. 자네와 나 둘이면 되네."`,
+            `켐프는 그때 마음을 정했습니다.`,
+            `그리고 그리핀에게 좋게 말했습니다.`,
+            `"생각해 보겠네. 자네는 좀 쉬게."`,
+            `그리고 방을 나와 서재로 갔습니다.`,
+            `켐프는 종이에 이렇게 썼습니다.`,
+            `경찰서장 애디 대령에게 보내는 쪽지였습니다.`,
+            `그 안에 그리핀이 자기 집에 있다고 적었습니다.`,
+            `켐프는 그 쪽지를 하녀에게 들려 보냈습니다.`,
+            `여기서 한 가지를 짚어 두어야 합니다.`,
+            `그리핀은 켐프를 옛 친구로 여기고 찾아온 것이었습니다.`,
+            `그리고 켐프는 그 사람을 신고했습니다.`,
+            `그리핀은 나중에 그것을 배신이라고 불렀습니다.`,
+            `그 말이 틀린 것은 아닙니다.`,
+            `그런데 켐프에게는 다른 길이 없었습니다.`,
+            `그리핀이 하겠다고 한 것은 사람을 골라 죽이는 일이었기 때문입니다.`,
+            `켐프는 그날 밤 서재에서 오래 앉아 있었습니다.`,
+            `자기가 옳은 일을 하고 있다는 것을 알았습니다.`,
+            `그런데 마음이 편하지 않았습니다.`,
+            `옳은 일과 편한 마음이 늘 함께 오지는 않습니다.`,
+            `애디 대령이 도착했습니다.`,
+            `그리고 그때 아래층에서 유리 깨지는 소리가 났습니다.`
+        ]
+    },
+    {
+        num: 12,
+        title: "언덕 위",
+        emoji: "🌾",
+        art: ["story-12-a.png", "story-12-b.png"],
+        paras: [
+            `그리핀은 달아났습니다.`,
+            `그리고 그날 그 고장에 이런 종이가 나붙었습니다.`,
+            `"오늘부터 나는 이 고장의 주인이다. 첫날은 켐프의 날로 정한다."`,
+            `그리핀은 켐프를 노렸습니다.`,
+            `켐프는 그것을 알고 있었습니다.`,
+            `그리고 그것을 이용하기로 했습니다.`,
+            `켐프는 애디 대령과 함께 방법을 짰습니다.`,
+            `자기가 미끼가 되겠다는 것이었습니다.`,
+            `"그자는 나를 쫓아올 겁니다. 그러니 사람들을 길에 흩어 두고, 개를 풀고, 길에 유리 가루를 뿌리십시오."`,
+            `"유리 가루를요?"`,
+            `"그자는 맨발입니다. 신발을 신을 수 없으니까요."`,
+            `애디 대령이 물었습니다.`,
+            `"그런 방법을 쓰는 것이 옳습니까."`,
+            `켐프가 말했습니다.`,
+            `"저 사람은 오늘 사람을 죽이겠다고 써 붙였습니다."`,
+            `"압니다."`,
+            `"그러면 오늘 안에 멈춰야 합니다."`,
+            `그러고는 이렇게 덧붙였습니다.`,
+            `"다만 잡거든 살려 두십시오. 저 사람은 재판을 받아야 합니다."`,
+            `이튿날 아침, 그리핀이 켐프의 집 문을 도끼로 부수고 들어왔습니다.`,
+            `켐프는 뒷문으로 빠져나가 언덕을 달렸습니다.`,
+            `마을 쪽으로 달렸습니다.`,
+            `사람들이 있는 데로 가야 했기 때문입니다.`,
+            `등 뒤에서 발소리가 났습니다.`,
+            `아무것도 보이지 않는데 발소리만 따라왔습니다.`,
+            `켐프는 마을 큰길로 뛰어들었습니다.`,
+            `그리고 소리를 질렀습니다.`,
+            `"여기 있습니다! 도와주십시오!"`,
+            `그 순간 켐프가 넘어졌습니다.`,
+            `무언가가 목을 잡았습니다.`,
+            `사람들이 몰려왔습니다.`,
+            `일하던 사람들이 삽과 곡괭이를 들고 뛰어왔습니다.`,
+            `그다음에 일어난 일을 여기 자세히 적지는 않겠습니다.`,
+            `사람들이 그 자리를 둘러쌌습니다.`,
+            `그리고 조금 뒤에 켐프가 소리쳤습니다.`,
+            `"그만하십시오! 그만!"`,
+            `사람들이 물러섰습니다.`,
+            `그리고 그 자리에 사람이 하나 나타났습니다.`,
+            `젊은 남자였습니다.`,
+            `머리와 눈썹이 하얗고, 살갗이 아주 희었습니다.`,
+            `서른 살쯤 되어 보였습니다.`,
+            `그때까지 아무도 그리핀의 얼굴을 본 적이 없었습니다.`,
+            `사람들은 그 얼굴을 보고 아무 말도 하지 못했습니다.`,
+            `그저 젊은 사람의 얼굴이었기 때문입니다.`,
+            `한 사람이 웃옷을 벗어 덮어 주었습니다.`,
+            `그 뒤에 이야기가 하나 더 남아 있습니다.`,
+            `토머스 마블은 그 노트 세 권을 가지고 사라졌습니다.`,
+            `그리고 몇 해 뒤에 작은 여관을 하나 차렸습니다.`,
+            `밤에 손님이 다 가고 문을 잠그면, 마블은 그 노트를 꺼내 펴 놓고 들여다보았습니다.`,
+            `그 안에는 숫자와 기호가 빽빽했습니다.`,
+            `마블은 글을 겨우 읽는 사람이었습니다.`,
+            `그러니 그 내용을 알 리가 없었습니다.`,
+            `그래도 마블은 밤마다 그것을 폈습니다.`,
+            `그러고는 이렇게 중얼거렸습니다.`,
+            `"이 안에 다 들어 있는데."`,
+            `그리고 다시 덮어 넣었습니다.`
+        ]
+    }
+];
+/* ── 쪽 나누기 ─────────────────────────────────────────
+   그림이 있는 펼침면은 왼쪽 쪽에만 글이 들어가고,
+   그림이 없는 펼침면은 양쪽 쪽에 모두 글이 들어간다.
+   진짜 책이 그렇듯 문단 한가운데에서도 쪽을 넘긴다. 그래야 쪽마다 글이 고르게 찬다.
+   글자 수로 어림잡으면 대사가 많은 문단은 실제로 차지하는 줄이 훨씬 많아 어긋나므로,
+   보이지 않는 쪽을 하나 만들어 실제 높이를 재어 가며 나눈다. */
+
+function makeProbe() {
+    const book = document.getElementById('book');
+    const holder = document.createElement('div');
+    holder.style.cssText = 'position:absolute;inset:10px;visibility:hidden;pointer-events:none;z-index:-1;';
+    holder.innerHTML = '<div class="page page-story"><div class="story-page-left"></div><div class="story-page-right"></div></div>';
+    book.appendChild(holder);
+
+    // 따로 만든 상자에 재면 실제 쪽과 미묘하게 어긋난다.
+    // 그래서 진짜 쪽과 똑같은 칸을 하나 숨겨 두고 거기에 넣어 잰다.
+    // 칸이 넘치면 scrollHeight가 칸 높이에서 잘리므로, 안에 든 것들의 높이를 직접 더한다.
+    const col = holder.querySelector('.story-page-left');
+    const cs = getComputedStyle(col);
+    const measured = col.clientHeight - parseFloat(cs.paddingTop) - parseFloat(cs.paddingBottom);
+
+    const contentHeight = () => [...col.children].reduce((h, el) =>
+        h + el.getBoundingClientRect().height + parseFloat(getComputedStyle(el).marginBottom || 0), 0);
+
+    col.innerHTML = '<h2>제목</h2>';
+    const headHeight = contentHeight();
+    col.innerHTML = '';
+
+    return {
+        // 창이 아직 크기를 갖지 못한 채 열리면 잰 값이 0이 된다. 그때는 어림값으로 버틴다.
+        usable: measured > 40 ? measured : 620,
+        headHeight: headHeight > 0 ? headHeight : 45,
+        measure(html) {
+            col.innerHTML = html;
+            return contentHeight();
+        },
+        close() { book.removeChild(holder); }
+    };
+}
+
+let PROBE = null;   // 쪽을 나눌 때마다 새로 만든다
+
+// 문단을 쪽 넘길 수 있는 조각으로 나눈다. 문장 끝과 대사 줄바꿈이 자를 수 있는 자리다.
+// 낱말 뜻풀이처럼 태그로 묶인 부분 안에서는 자르지 않는다.
+function splitSegments(html) {
+    const tokens = html.split(/(<[^>]+>)/).filter(t => t !== '');
+    const segs = [];
+    let buf = '';
+    let depth = 0;
+    for (const tok of tokens) {
+        if (tok.startsWith('<')) {
+            buf += tok;
+            if (/^<br\s*\/?>$/i.test(tok)) {
+                if (depth === 0) { segs.push(buf); buf = ''; }
+            } else if (tok.startsWith('</')) {
+                depth = Math.max(0, depth - 1);
+            } else if (!tok.endsWith('/>')) {
+                depth++;
+            }
+            continue;
+        }
+        if (depth > 0) { buf += tok; continue; }
+        // 문장이 끝나고 빈칸이 오는 자리에서 자른다
+        const parts = tok.split(/(?<=[.!?"”][\s])/);
+        for (let i = 0; i < parts.length; i++) {
+            buf += parts[i];
+            if (i < parts.length - 1) { segs.push(buf); buf = ''; }
+        }
+    }
+    if (buf.trim() !== '') segs.push(buf);
+    return segs.length ? segs : [html];
+}
+
+const CHAPTER_SEGS = CHAPTERS.map(ch => {
+    const segs = [];
+    ch.paras.forEach((html, paraIdx) => {
+        splitSegments(html).forEach((piece, k) => {
+            segs.push({ paraIdx, html: piece, start: k === 0 });
+        });
+    });
+    return segs;
+});
+
+// 조각 묶음을 문단 단위로 다시 묶어 화면에 그릴 모양으로 만든다.
+// 앞 쪽에서 이어진 문단은 첫 줄을 들여쓰지 않는다.
+function runHtml(segs, a, b) {
+    let out = '';
+    let i = a;
+    while (i < b) {
+        const pi = segs[i].paraIdx;
+        let inner = '';
+        const contd = !segs[i].start;
+        let j = i;
+        while (j < b && segs[j].paraIdx === pi) { inner += segs[j].html; j++; }
+        out += `<p${contd ? ' class="cont"' : ''}>${inner}</p>`;
+        i = j;
+    }
+    return out;
+}
+
+function slotPlan(imgCount, textCount) {
+    const total = imgCount + textCount;
+    const slots = new Array(total).fill('text');
+    for (let k = 0; k < imgCount; k++) {
+        let pos = Math.min(Math.round((k * total) / imgCount), total - 1);
+        while (slots[pos] === 'img') pos = (pos + 1) % total;
+        slots[pos] = 'img';
+    }
+    return slots;
+}
+
+// 글을 쪽마다 같은 높이만큼 나눠 담는다. 마지막 쪽만 남은 만큼 담는다.
+// 장 제목이 붙는 첫 쪽은 제목까지 함께 얹어서 재야 한다.
+// 제목 높이를 따로 빼서 계산하면 실제로 나란히 놓였을 때의 높이와 조금씩 어긋난다.
+function fillPages(segs, pageCount, headHtml, usable) {
+    const pageHeight = (a, b, first) => PROBE.measure((first ? headHtml : '') + runHtml(segs, a, b));
+    const ranges = [];
+    let i = 0;
+    for (let p = 0; p < pageCount; p++) {
+        const rest = pageCount - p - 1;
+        if (rest === 0) { ranges.push([i, segs.length]); break; }
+        // 남은 글을 남은 쪽 수로 나눠 이번 쪽에 담을 양을 정한다.
+        // 매 쪽마다 다시 계산하므로, 한 쪽이 덜 차면 그만큼이 뒤쪽에 고르게 얹힌다.
+        const remainingH = pageHeight(i, segs.length, p === 0);
+        const room = Math.min(usable, remainingH / (rest + 1));
+        const maxTake = Math.max(1, segs.length - i - rest);
+        let take = 1;
+        let lo = 1, hi = maxTake;
+        while (lo <= hi) {
+            const mid = (lo + hi) >> 1;
+            if (pageHeight(i, i + mid, p === 0) <= room) { take = mid; lo = mid + 1; }
+            else { hi = mid - 1; }
+        }
+        ranges.push([i, i + take]);
+        i += take;
+    }
+    return ranges;
+}
+
+function paginateChapter(ch, chIndex) {
+    const segs = CHAPTER_SEGS[chIndex];
+    const arts = (ch.art && ch.art.length) ? ch.art : [];
+    const { usable, headHeight } = PROBE;
+    const headHtml = `<h2>${CHAPTER_LABEL(ch.num)}${ch.title}</h2>`;
+    const totalH = PROBE.measure(runHtml(segs, 0, segs.length));
+
+    // 필요한 글 쪽 수를 구하고, 그림 면(1쪽)과 글만 면(2쪽)으로 맞춘다.
+    // 쪽 수는 조각 수를 넘을 수 없다 — 빈 쪽이 생기면 안 되기 때문이다.
+    const maxSpreads = Math.max(arts.length, Math.ceil(segs.length / 2));
+    const needPages = Math.max(arts.length || 1, Math.ceil((totalH + headHeight) / usable));
+    let textSpreads = Math.max(arts.length ? 0 : 1, Math.ceil(Math.max(0, needPages - arts.length) / 2));
+
+    let slots = slotPlan(arts.length, textSpreads);
+    let ranges = null;
+    for (let guard = 0; guard < 8; guard++) {
+        slots = slotPlan(arts.length, textSpreads);
+        const pageCount = slots.reduce((n, kind) => n + (kind === 'img' ? 1 : 2), 0);
+        if (pageCount > segs.length && textSpreads > 0) { textSpreads--; continue; }
+        ranges = fillPages(segs, pageCount, headHtml, usable);
+        // 한 쪽이라도 넘치면 쪽을 늘려 다시 나눈다.
+        // 마지막 쪽만 보면 안 된다 — 첫 쪽에는 장 제목이 얹히므로 그쪽이 먼저 넘칠 수 있다.
+        const over = ranges.some(([a, b], n) =>
+            PROBE.measure((n === 0 ? headHtml : '') + runHtml(segs, a, b)) > usable);
+        if (!over || arts.length + textSpreads >= maxSpreads) break;
+        textSpreads++;
+    }
+    if (!ranges) {
+        slots = slotPlan(arts.length, textSpreads);
+        ranges = fillPages(segs, slots.reduce((n, kind) => n + (kind === 'img' ? 1 : 2), 0), headHtml, usable);
+    }
+
+    const spreads = [];
+    let pageIdx = 0;
+    let artIdx = 0;
+    slots.forEach((kind, s) => {
+        if (kind === 'img') {
+            spreads.push({
+                kind: 'chapter', ch, chIndex, first: s === 0,
+                art: arts[artIdx++], left: ranges[pageIdx++], right: null
+            });
+        } else {
+            const left = ranges[pageIdx++];
+            const right = ranges[pageIdx++];
+            spreads.push({ kind: 'chapter', ch, chIndex, first: s === 0, art: null, left, right });
+        }
+    });
+    return spreads;
+}
+/* ── 그리기 ───────────────────────────────────────── */
+
+function artFrame(src, emoji) {
+    return `
+        <div class="art-frame">
+            <img src="images/${src}" alt="" onerror="this.style.display='none'; this.nextElementSibling.style.display='flex';">
+            <div class="art-fallback" style="display:none">${emoji}</div>
+        </div>`;
+}
+
+function coverPage() {
+    return `
+        <div class="page page-cover">
+            <div class="story-page-left story-page-left-full">
+                ${artFrame('cover.png', '🧣')}
+            </div>
+            <div class="story-page-right">
+                <h1>투명 인간</h1>
+                <p class="cover-tag">H. G. 웰스 원작</p>
+                <p>눈보라 치는 겨울날, 온몸을 붕대와 목도리로 감싼 손님이 시골 여관에 듭니다. 붕대를 풀자 그 안에 아무것도 없었습니다.</p>
+                <p>아무도 자기를 볼 수 없게 되었을 때 사람이 무엇을 하는지에 대한 이야기입니다. 그리고 보이지 않는다는 것이 실제로는 얼마나 갇힌 일인지에 대한 이야기이기도 합니다.</p>
+            </div>
+        </div>`;
+}
+
+function tocPage(part) {
+    // 한 편으로 이어지는 이야기라 차례는 장 번호와 제목만 둔다.
+    // 줄거리 한 줄을 붙이면 차례가 두 펼침면으로 늘어나고, 앞으로 읽을 대목을 미리 알려 주는 셈도 된다.
+    const itemHtml = ch => `
+        <li>
+            <button type="button" data-goto="${ch.num}">
+                <span class="toc-num">${ch.num}</span>
+                <span><strong>${ch.title}</strong></span>
+            </button>
+        </li>`;
+    const extraItems = `
+        <li>
+            <button type="button" data-goto-kind="quiz">
+                <span class="toc-num">?</span>
+                <span><strong>이야기 문제</strong></span>
+            </button>
+        </li>`;
+    const group = TOC_GROUPS[part];
+    const half = Math.ceil(group.length / 2);
+    const last = part === TOC_GROUPS.length - 1;
+    return `
+        <div class="page page-toc">
+            <div class="story-page-left">
+                ${part === 0 ? '<h2>차례</h2>' : ''}
+                <ul class="toc-list">${group.slice(0, half).map(itemHtml).join('')}</ul>
+            </div>
+            <div class="story-page-right">
+                <ul class="toc-list">${group.slice(half).map(itemHtml).join('') + (last ? extraItems : '')}</ul>
+            </div>
+        </div>`;
+}
+
+// 한 펼침면에 담을 수 있는 차례 항목은 여덟 개까지다. 그보다 많으면 차례도 여러 쪽이 된다.
+const TOC_PER_SPREAD = 16;
+const TOC_GROUPS = [];
+for (let i = 0; i < CHAPTERS.length; i += TOC_PER_SPREAD) {
+    TOC_GROUPS.push(CHAPTERS.slice(i, i + TOC_PER_SPREAD));
+}
+
+function chapterSpreadPage(spread) {
+    const ch = spread.ch;
+    const segs = CHAPTER_SEGS[spread.chIndex];
+    const head = spread.first ? `<h2>${CHAPTER_LABEL(ch.num)}${ch.title}</h2>` : '';
+
+    if (spread.art) {
+        return `
+            <div class="page page-story">
+                <div class="story-page-left">
+                    ${head}
+                    ${runHtml(segs, spread.left[0], spread.left[1])}
+                </div>
+                <div class="story-page-right story-page-right-image">
+                    ${artFrame(spread.art, ch.emoji)}
+                </div>
+            </div>`;
+    }
+
+    return `
+        <div class="page page-story">
+            <div class="story-page-left">
+                ${head}
+                ${runHtml(segs, spread.left[0], spread.left[1])}
+            </div>
+            <div class="story-page-right story-page-right-text">
+                ${runHtml(segs, spread.right[0], spread.right[1])}
+            </div>
+        </div>`;
+}
+
+const QUIZ = [
+    { q: "여관에 온 손님의 차림새는 어떠했습니까?", choices: ["평범했다", "붕대와 목도리와 큰 안경으로 온몸을 감쌌다", "군복이었다"], answer: 1 },
+    { q: "손님의 짐 상자에 들어 있던 것은 무엇입니까?", choices: ["책", "유리병", "옷"], answer: 1 },
+    { q: "의사 커스가 보고 놀란 것은 무엇입니까?", choices: ["빈 소매가 움직인 것", "얼굴의 흉터", "이상한 약"], answer: 0 },
+    { q: "손님이 정체를 드러낸 방식은 무엇입니까?", choices: ["스스로 말했다", "붕대와 가짜 코를 벗어 보였다", "들켰다"], answer: 1 },
+    { q: "그가 사람들 앞에서 사라진 방법은 무엇입니까?", choices: ["약을 마셨다", "옷을 하나씩 벗었다", "불을 껐다"], answer: 1 },
+    { q: "토머스 마블이 그의 심부름꾼이 된 까닭은 무엇입니까?", choices: ["돈을 받아서", "어디로 가든 따라오겠다는 말에 겁을 먹어서", "친구라서"], answer: 1 },
+    { q: "보이지 않는 사람이 물건을 들고 다니지 못한 까닭은 무엇입니까?", choices: ["힘이 없어서", "물건은 그대로 보여서", "손이 없어서"], answer: 1 },
+    { q: "밥을 먹은 뒤 그가 사람 앞에 나서지 못한 까닭은 무엇입니까?", choices: ["배가 아파서", "먹은 것이 배 속에서 그대로 보여서", "잠이 와서"], answer: 1 },
+    { q: "그리핀이 투명해지는 연구를 한 분야는 무엇입니까?", choices: ["빛", "소리", "약초"], answer: 0 },
+    { q: "그리핀이 연구비를 마련한 방법은 무엇입니까?", choices: ["일해서", "아버지가 남에게 맡아 둔 돈에 손을 대서", "상을 받아서"], answer: 1 },
+    { q: "런던 거리로 처음 나섰을 때 그가 겪은 어려움이 아닌 것은 무엇입니까?", choices: ["추위", "사람들이 부딪치는 것", "말이 안 통하는 것"], answer: 2 },
+    { q: "발자국 때문에 들킨 까닭은 무엇입니까?", choices: ["발에서 나는 피는 보여서", "발이 커서", "소리가 나서"], answer: 0 },
+    { q: "그리핀이 켐프에게 하자고 한 것은 무엇입니까?", choices: ["연구를 함께 하자", "고장을 힘으로 다스리자", "함께 도망치자"], answer: 1 },
+    { q: "켐프가 한 일은 무엇입니까?", choices: ["함께했다", "경찰에 알렸다", "달아났다"], answer: 1 },
+    { q: "켐프가 길에 유리 가루를 뿌리자고 한 까닭은 무엇입니까?", choices: ["그가 맨발이라서", "소리가 나서", "미끄러지라고"], answer: 0 },
+    { q: "마지막에 사람들이 본 그리핀의 얼굴은 어떠했습니까?", choices: ["괴물 같았다", "그저 서른 살쯤 된 젊은 사람의 얼굴이었다", "노인이었다"], answer: 1 }
+];
+
+function quizPage() {
+    const items = QUIZ.map((item, i) => `
+        <div class="quiz-item" data-qindex="${i}">
+            <p class="quiz-question">${i + 1}. ${item.q}</p>
+            <div class="quiz-choices">
+                ${item.choices.map((c, ci) => `<button type="button" class="quiz-choice" data-choice="${ci}">${c}</button>`).join('')}
+            </div>
+        </div>`).join('');
+    return `
+        <div class="page page-quiz">
+            <h2>이야기 문제</h2>
+            <p class="quiz-intro-text" id="quizProgress">0 / 총 ${QUIZ.length}문항 완료</p>
+            <div class="quiz-list">${items}</div>
+        </div>`;
+}
+
+function endPage() {
+    return `
+        <div class="page page-end">
+            ${artFrame('end.png', '📓')}
+            <h2>투명 인간를 다 읽었습니다</h2>
+            <a class="home-btn" href="../../../../../">학습 허브로 돌아가기</a>
+        </div>`;
+}
+
+const TWO_PAGE_KINDS = new Set(['chapter', 'toc', 'cover']);
+
+let PAGES = [];
+let FOLIOS = [];
+
+function buildPages() {
+    PROBE = makeProbe();
+    PAGES = [
+        { kind: 'cover' },
+        ...TOC_GROUPS.map((_, i) => ({ kind: 'toc', part: i })),
+        ...CHAPTERS.flatMap(paginateChapter),
+        { kind: 'quiz' },
+        { kind: 'end' }
+    ];
+    PROBE.close();   // 쪽을 다 나눴으니 재는 데 쓰던 숨은 쪽은 치운다
+
+    let folioCounter = 0;
+    FOLIOS = PAGES.map(p => {
+        const width = TWO_PAGE_KINDS.has(p.kind) ? 2 : 1;
+        const start = folioCounter + 1;
+        folioCounter += width;
+        return { start, width };
+    });
+}
+
+buildPages();
+
+function renderPage(page) {
+    switch (page.kind) {
+        case 'cover': return coverPage();
+        case 'toc': return tocPage(page.part);
+        case 'chapter': return chapterSpreadPage(page);
+        case 'quiz': return quizPage();
+        case 'end': return endPage();
+        default: return '';
+    }
+}
+
+let current = 0;
+let animating = false;
+
+const spreadEl = document.getElementById('spread');
+const prevBtn = document.getElementById('prevBtn');
+const nextBtn = document.getElementById('nextBtn');
+const indicatorEl = document.getElementById('pageIndicator');
+const folioLeftEl = document.getElementById('folioLeft');
+const folioRightEl = document.getElementById('folioRight');
+
+function paint() {
+    spreadEl.innerHTML = renderPage(PAGES[current]);
+    prevBtn.disabled = current === 0;
+    nextBtn.disabled = current === PAGES.length - 1;
+    indicatorEl.textContent = `${current + 1} / ${PAGES.length}`;
+
+    const folio = FOLIOS[current];
+    folioLeftEl.classList.toggle('folio-center', folio.width === 1);
+    folioLeftEl.textContent = folio.start;
+    folioLeftEl.hidden = false;
+    if (folio.width === 2) {
+        folioRightEl.textContent = folio.start + 1;
+        folioRightEl.hidden = false;
+    } else {
+        folioRightEl.hidden = true;
+    }
+
+    spreadEl.querySelectorAll('[data-goto]').forEach(btn => {
+        btn.addEventListener('click', () => {
+            const num = Number(btn.dataset.goto);
+            const idx = PAGES.findIndex(p => p.kind === 'chapter' && p.first && p.ch.num === num);
+            if (idx >= 0) goTo(idx);
+        });
+    });
+    spreadEl.querySelectorAll('[data-goto-kind]').forEach(btn => {
+        btn.addEventListener('click', () => {
+            const idx = PAGES.findIndex(p => p.kind === btn.dataset.gotoKind);
+            if (idx >= 0) goTo(idx);
+        });
+    });
+
+    if (PAGES[current].kind === 'quiz') initQuiz();
+}
+
+function initQuiz() {
+    let answeredCount = 0;
+    const progressEl = document.getElementById('quizProgress');
+
+    spreadEl.querySelectorAll('.quiz-item').forEach(item => {
+        const qi = Number(item.dataset.qindex);
+        const q = QUIZ[qi];
+        item.querySelectorAll('.quiz-choice').forEach(btn => {
+            btn.addEventListener('click', () => {
+                if (item.classList.contains('graded')) return;
+                item.classList.add('graded');
+                const chosen = Number(btn.dataset.choice);
+                item.querySelectorAll('.quiz-choice').forEach(b => {
+                    const ci = Number(b.dataset.choice);
+                    if (ci === q.answer) b.classList.add('correct');
+                    else if (ci === chosen) b.classList.add('incorrect');
+                });
+                answeredCount++;
+                progressEl.textContent = `${answeredCount} / 총 ${QUIZ.length}문항 완료`;
+            });
+        });
+    });
+}
+
+function goTo(index) {
+    if (animating || index === current || index < 0 || index >= PAGES.length) return;
+    animating = true;
+    const dir = index > current ? 'flip-next' : 'flip-prev';
+    spreadEl.classList.add(dir);
+    setTimeout(() => {
+        current = index;
+        paint();
+    }, 230);
+    setTimeout(() => {
+        spreadEl.classList.remove('flip-next', 'flip-prev');
+        animating = false;
+    }, 480);
+}
+
+prevBtn.addEventListener('click', () => goTo(current - 1));
+nextBtn.addEventListener('click', () => goTo(current + 1));
+
+document.getElementById('tocLink').addEventListener('click', () => {
+    const idx = PAGES.findIndex(p => p.kind === 'toc');
+    if (idx >= 0) goTo(idx);
+});
+
+document.addEventListener('keydown', (e) => {
+    if (e.key === 'ArrowRight') goTo(current + 1);
+    if (e.key === 'ArrowLeft') goTo(current - 1);
+});
+
+paint();
+
+// 본문 글꼴은 늦게 내려온다. 글꼴이 바뀌면 한 줄에 들어가는 글자 수가 달라져서
+// 먼저 나눠 둔 쪽이 넘치게 된다. 그래서 글꼴을 다 받은 뒤에 한 번 다시 나눈다.
+if (document.fonts && document.fonts.status !== 'loaded') {
+    document.fonts.ready.then(() => {
+        const here = PAGES[current];
+        buildPages();
+        current = Math.min(current, PAGES.length - 1);
+        if (here && here.kind === 'chapter') {
+            const idx = PAGES.findIndex(p => p.kind === 'chapter' && p.first && p.ch.num === here.ch.num);
+            if (idx >= 0) current = idx;
+        }
+        paint();
+    });
+}
