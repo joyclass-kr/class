@@ -77,7 +77,7 @@ spectacles. The huntsman: a broad man in a green coat with a shoulder bag.
 | `images/05-snoring.png` | A cottage bedroom where a fat-bellied wolf sprawls snoring with the bedframe creaking, and outside a huntsman in a green coat pausing on the path with a hand cupped to his ear, comic. |
 | `images/05-snoring-2.png` | A huntsman peering through a cottage window at a sleeping wolf with a bulging belly, then quietly opening his shoulder bag and drawing out shears, tense and careful. |
 
-## 6장 · 배 속에서 나온 두 사람
+## 6장 · 벽장 문이 덜컹덜컹
 
 | 파일명 | 장면 |
 |---|---|
