@@ -57,23 +57,23 @@
   addEdge("r1", "p20", { kind: "rail" });
 
   addNode("hideout", 55, 65, { label: "도둑 아지트", safe: true, start: "thief", effect: "hideout" });
-  addNode("jail", 945, 590, { label: "경찰서·감옥", safe: true, start: "police", effect: "jail" });
+  addNode("jail", 945, 565, { label: "경찰 감옥", safe: true, start: "police", effect: "jail" });
   addEdge("hideout", "p0", { teams: ["thief"] });
   addEdge("jail", "p15");
 
   const buildings = [
-    { id: "market", name: "별밤 마트", icon: "▦", x: 300, y: 145, doorNode: "d1", color: "#f4b942", blurb: "밤에도 환한 동네 마트" },
-    { id: "air", name: "구름 항공", icon: "✦", x: 175, y: 345, doorNode: "d2", color: "#58a6d8", blurb: "도시를 잇는 작은 터미널" },
-    { id: "burger", name: "왕관 버거", icon: "≋", x: 370, y: 345, doorNode: "d3", color: "#ef765d", blurb: "왕관 모양 간판의 식당" },
-    { id: "electro", name: "번개 전자", icon: "ϟ", x: 815, y: 145, doorNode: "d4", color: "#7b6fd0", blurb: "빛나는 전자 상가" },
-    { id: "pizza", name: "달빛 피자", icon: "◒", x: 800, y: 350, doorNode: "d5", color: "#f08b4d", blurb: "둥근 화덕 피자 가게" },
-    { id: "snack", name: "골목 분식", icon: "♨", x: 690, y: 505, doorNode: "d6", color: "#e85c79", blurb: "김이 모락모락 나는 분식집" },
-    { id: "cafe", name: "초록 카페", icon: "♣", x: 285, y: 510, doorNode: "d7", color: "#55a96f", blurb: "공원 옆 조용한 카페" }
+    { id: "market", name: "별밤 마트", icon: "▦", x: 245, y: 135, doorNode: "d1", color: "#f4b942", blurb: "밤에도 환한 동네 마트" },
+    { id: "air", name: "구름 항공", icon: "✦", x: 200, y: 315, doorNode: "d2", color: "#58a6d8", blurb: "도시를 잇는 작은 터미널" },
+    { id: "burger", name: "왕관 버거", icon: "≋", x: 385, y: 315, doorNode: "d3", color: "#ef765d", blurb: "왕관 모양 간판의 식당" },
+    { id: "electro", name: "번개 전자", icon: "ϟ", x: 730, y: 115, doorNode: "d4", color: "#7b6fd0", blurb: "빛나는 전자 상가" },
+    { id: "pizza", name: "달빛 피자", icon: "◒", x: 832, y: 323, doorNode: "d5", color: "#f08b4d", blurb: "둥근 화덕 피자 가게" },
+    { id: "snack", name: "골목 분식", icon: "♨", x: 355, y: 510, doorNode: "d6", color: "#e85c79", blurb: "김이 모락모락 나는 분식집" },
+    { id: "cafe", name: "초록 카페", icon: "♣", x: 730, y: 518, doorNode: "d7", color: "#55a96f", blurb: "공원 옆 조용한 카페" }
   ];
 
   const doors = [
-    ["d1", 300, 190, "u1"], ["d2", 175, 400, "l0"], ["d3", 370, 400, "l2"],
-    ["d4", 815, 210, "c4"], ["d5", 800, 405, "l5"], ["d6", 690, 455, "l4"], ["d7", 285, 455, "l1"]
+    ["d1", 245, 185, "u1"], ["d2", 200, 360, "m1"], ["d3", 385, 360, "m2"],
+    ["d4", 730, 170, "c5"], ["d5", 832, 365, "m7"], ["d6", 355, 465, "l2"], ["d7", 730, 465, "l4"]
   ];
   doors.forEach(([id, x, y, link], index) => {
     addNode(id, x, y, { label: `${buildings[index].name} 수색`, building: buildings[index].id, safe: true, kind: "building" });

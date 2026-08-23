@@ -126,7 +126,7 @@ assert.match(html, /id="roomCode"/);
 assert.match(client, /allowedPlayerCounts:\s*\[2,\s*3,\s*4,\s*5,\s*6\]/);
 assert.match(client, /CITYCHASE_ACTION/);
 assert.match(css, /min-height:\s*44px/);
-assert.match(css, /city-board-v6\.png/, "명확한 아지트·감옥이 있는 정상 방향의 최종 배경을 사용해야 합니다.");
+assert.match(css, /city-board-v8\.png/, "축소된 아지트·감옥·상가 부지가 있는 정상 방향의 최종 배경을 사용해야 합니다.");
 assert.doesNotMatch(css, /transform:\s*rotate\(180deg\)/, "배경 전체를 뒤집어 캐릭터 방향을 바꾸면 안 됩니다.");
 assert.match(client, /도둑 아지트[\s\S]*경찰 감옥/, "두 시작 구역은 그림 추측이 아니라 실제 이름판으로 표시해야 합니다.");
 assert.match(css, /\.node::after\s*\{[^}]*inset:\s*-11px/s, "작은 보드 칸에도 44px 이상의 터치 영역이 필요합니다.");
