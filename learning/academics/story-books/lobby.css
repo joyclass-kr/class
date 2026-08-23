@@ -42,9 +42,9 @@ body::after {
     pointer-events: none;
 }
 
-body.shelf-korea::before { background-image: url('../../../assets/images/storybooks-korea.webp'); }
-body.shelf-world-tales::before { background-image: url('../../../assets/images/storybooks-world-tales.webp'); }
-body.shelf-world-novels::before { background-image: url('../../../assets/images/storybooks-world-novels.webp'); }
+body.shelf-korea::before { background-image: url('assets/images/korea.webp'); }
+body.shelf-world-tales::before { background-image: url('assets/images/world-tales.webp'); }
+body.shelf-world-novels::before { background-image: url('assets/images/world-novels.webp'); }
 
 body.shelf-world-novels::after { background: none; }
 
