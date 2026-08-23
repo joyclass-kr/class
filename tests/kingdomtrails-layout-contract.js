@@ -23,6 +23,9 @@ assert.match(css, /@media\(max-width:900px\)/);
 assert.match(css, /@media\(max-width:768px\) and \(orientation:portrait\)/);
 assert.match(css, /height:calc\(100dvh - 152px\)/);
 assert.match(css, /body:has\(\.game-screen:not\(\.hidden\)\)\{overflow:hidden\}/);
+assert.match(css, /#12221894/);
+assert.match(css, /#18271d66/);
+assert.doesNotMatch(css, /#122218d9|#18271db8/);
 assert.match(css, /\.board-panel\{height:690px;min-height:690px\}/);
 
 assert.match(client, /allowedPlayerCounts:\s*\[2, 3, 4\]/);
