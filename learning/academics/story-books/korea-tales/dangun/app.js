@@ -115,14 +115,14 @@ const CHAPTERS = [
                 ],
                 right: [
                     "'조금만 더. 조금만 더.'",
-                    "동굴 밖에서 계절이 바뀌는 소리가 들려왔어요."
+                    "동굴 입구의 빛줄기가 날마다 조금씩 자리를 옮겼어요."
                 ]
             },
             {
                 art: "10-woman.png",
                 emoji: "✨",
                 left: [
-                    "삼칠일, 그러니까 스무하루가 되던 날 아침이었어요.",
+                    "스무하루가 되던 날 아침이었어요. 백 일을 채우려면 아직 멀었는데 말이지요.",
                     "동굴 안이 눈이 부시도록 환해졌습니다."
                 ],
                 right: [
@@ -280,6 +280,21 @@ function quizPage() {
         </div>`;
 }
 
+function historyPage() {
+    return `
+        <div class="page page-history">
+            <h2>여기서부터는 진짜 역사</h2>
+            <p class="history-note">앞까지가 이야기였고, 여기부터는 기록에 남은 사실이에요.</p>
+            <hr>
+            <div class="history-body">
+                <p>고조선은 실제로 있었던 나라예요. 중국의 옛 책에도 조선이라는 이름이 나오고, 기원전 108년에 한나라의 공격을 받아 무너졌다는 기록이 남아 있답니다.</p>
+                <p>단군 이야기가 실린 가장 오래된 책은 삼국유사예요. 고려 때 일연 스님이 엮은 책이니, 나라가 섰다는 때로부터 아주 오랜 세월이 지난 뒤에 적힌 셈이지요.</p>
+                <p>곰과 호랑이는 정말 짐승이었을까요? 학자들은 곰을 섬기던 무리와 호랑이를 섬기던 무리로 봅니다. 곰을 섬기던 쪽이 하늘에서 왔다는 무리와 손을 잡은 일을, 곰이 사람이 된 이야기로 전한 것이라는 뜻이에요.</p>
+                <p>단군왕검이라는 이름에도 뜻이 있어요. 단군은 하늘에 제사 지내는 사람, 왕검은 무리를 이끄는 사람을 가리킨답니다. 그 무렵에는 제사를 맡은 이가 곧 우두머리였던 것이지요.</p>
+            </div>
+        </div>`;
+}
+
 function endPage() {
     return `
         <div class="page page-end">
@@ -293,6 +308,7 @@ const PAGES = [
     { kind: 'cover' },
     ...CHAPTERS.flatMap(chapter => chapter.beats.map((beat, i) => ({ kind: 'spread', chapter, beat, isFirst: i === 0 }))),
     { kind: 'reflection', chapter: CHAPTERS[CHAPTERS.length - 1] },
+    { kind: 'history' },
     { kind: 'quiz' },
     { kind: 'end' }
 ];
@@ -315,6 +331,8 @@ function renderPage(page) {
             return spreadPage(page.chapter, page.beat, page.isFirst);
         case 'reflection':
             return reflectionPage(page.chapter);
+        case 'history':
+            return historyPage();
         case 'quiz':
             return quizPage();
         case 'end':
