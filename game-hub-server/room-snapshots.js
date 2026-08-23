@@ -13,6 +13,7 @@ const TRANSIENT_ROOM_KEYS = new Set([
   "expeditionTimer",
   "honeycombTimer",
   "lastcardTimer",
+  "bomb77Timer",
   "loveletterTimer",
   "rummikubTimer",
   "gemguildTimer",

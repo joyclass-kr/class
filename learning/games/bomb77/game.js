@@ -1,0 +1,335 @@
+(() => {
+    "use strict";
+
+    const GAME_ID = "bomb77";
+    const NAME_KEY = "classPlayerName";
+    const SERVER_MESSAGE = Object.freeze({ STATE: "BOMB77_STATE", ERROR: "BOMB77_ERROR" });
+    const CARD_NAMES = { reverse: "방향 전환", hold: "합계 유지", half: "합계 절반", defuse: "완전 해제" };
+    const $ = id => document.getElementById(id);
+    const params = new URLSearchParams(location.search);
+    const previewName = params.get("name");
+    const savedName = String(localStorage.getItem(NAME_KEY) || previewName || "").trim();
+
+    let lobby = null;
+    let gameState = null;
+    let selectedCardId = null;
+    let actionPending = false;
+    let lastActionNumber = -1;
+    let toastTimer = null;
+    let audioContext = null;
+
+    function myId() { return lobby?.snapshot().myId || "preview-me"; }
+    function myTurn() { return gameState?.phase === "playing" && gameState.turnPlayerId === myId(); }
+    function playerById(id) { return gameState?.players.find(player => player.id === id) || null; }
+
+    function cardLabel(card) {
+        if (!card) return "카드";
+        if (card.kind === "number") return `${card.value > 0 ? "더하기 " : "빼기 "}${Math.abs(card.value)}`;
+        return CARD_NAMES[card.kind] || "장비";
+    }
+
+    function showToast(message) {
+        clearTimeout(toastTimer);
+        $("toast").textContent = message;
+        $("toast").classList.remove("hidden");
+        toastTimer = setTimeout(() => $("toast").classList.add("hidden"), 2600);
+    }
+
+    function tone(kind) {
+        try {
+            audioContext ||= new (window.AudioContext || window.webkitAudioContext)();
+            const now = audioContext.currentTime;
+            const oscillator = audioContext.createOscillator();
+            const gain = audioContext.createGain();
+            oscillator.connect(gain).connect(audioContext.destination);
+            oscillator.type = kind === "explosion" ? "sawtooth" : "square";
+            oscillator.frequency.setValueAtTime(kind === "explosion" ? 130 : 520, now);
+            oscillator.frequency.exponentialRampToValueAtTime(kind === "explosion" ? 42 : 760, now + (kind === "explosion" ? .45 : .12));
+            gain.gain.setValueAtTime(.0001, now);
+            gain.gain.exponentialRampToValueAtTime(kind === "explosion" ? .16 : .045, now + .015);
+            gain.gain.exponentialRampToValueAtTime(.0001, now + (kind === "explosion" ? .52 : .16));
+            oscillator.start(now);
+            oscillator.stop(now + (kind === "explosion" ? .55 : .18));
+        } catch (_) {}
+    }
+
+    function renderPlayers() {
+        const seats = gameState.players.map(player => {
+            const seat = document.createElement("article");
+            seat.className = "player-seat";
+            seat.classList.toggle("is-current", gameState.turnPlayerId === player.id);
+            seat.classList.toggle("is-out", player.eliminated);
+            const top = document.createElement("div");
+            top.className = "player-seat__top";
+            const face = lobby?.playerAvatar(player.id);
+            if (face) {
+                const image = document.createElement("img");
+                image.className = "mp-face";
+                image.src = face;
+                image.alt = "";
+                top.append(image);
+            }
+            const name = document.createElement("span");
+            name.className = "player-seat__name";
+            name.textContent = `${player.name}${player.id === myId() ? " · 나" : ""}`;
+            const status = document.createElement("span");
+            status.className = "player-seat__turn";
+            status.textContent = player.eliminated ? "OUT" : gameState.turnPlayerId === player.id ? "PLAY" : `${player.handCount}장`;
+            top.append(name, status);
+            const fuses = document.createElement("div");
+            fuses.className = "player-seat__fuses";
+            fuses.setAttribute("aria-label", `퓨즈 ${player.fuses}개`);
+            for (let index = 0; index < 3; index += 1) {
+                const fuse = document.createElement("span");
+                fuse.textContent = "●";
+                fuse.classList.toggle("off", index >= player.fuses);
+                fuses.append(fuse);
+            }
+            seat.append(top, fuses);
+            return seat;
+        });
+        $("playerSeats").replaceChildren(...seats);
+    }
+
+    function renderTable() {
+        const limit = gameState.limit || 77;
+        const total = gameState.total || 0;
+        const remaining = Math.max(0, limit - total);
+        const danger = Math.max(0, Math.min(100, total / limit * 100));
+        $("totalText").textContent = String(total);
+        $("deckText").textContent = String(gameState.deckCount || 0);
+        $("deckCount").textContent = String(gameState.deckCount || 0);
+        $("dangerLabel").textContent = total >= limit ? "폭발!" : `${remaining} 남음`;
+        $("dangerFill").style.setProperty("--danger", `${danger}%`);
+        $("totalCore").classList.toggle("is-danger", remaining <= 15);
+        $("totalCore").replaceChildren();
+        const coreLabel = document.createElement("small");
+        coreLabel.textContent = "COUNT";
+        const coreValue = document.createElement("strong");
+        coreValue.textContent = String(total);
+        const cardEffect = document.createElement("span");
+        cardEffect.textContent = gameState.lastCard ? cardLabel(gameState.lastCard) : "대기 중";
+        $("totalCore").append(coreLabel, coreValue, cardEffect);
+        $("lastCard").replaceChildren(gameState.lastCard ? window.Bomb77Cards.createCard(gameState.lastCard) : document.createTextNode("-"));
+        const current = playerById(gameState.turnPlayerId);
+        $("turnBanner").textContent = gameState.phase === "playing"
+            ? (myTurn() ? "내 차례입니다" : `${current?.name || "다음 플레이어"}님의 차례`)
+            : "작전이 종료되었습니다";
+        $("actionLog").textContent = gameState.lastAction || "서버 상태를 기다리고 있습니다.";
+        renderTurnClock();
+    }
+
+    function renderTurnClock() {
+        const clock = $("turnClock");
+        const deadline = gameState?.turnDeadline;
+        if (gameState?.phase !== "playing" || !deadline) {
+            clock.classList.add("hidden");
+            return;
+        }
+        clock.classList.remove("hidden");
+        const totalMs = (gameState.turnSeconds || 25) * 1000;
+        const remainingMs = Math.max(0, deadline - Date.now());
+        const remainingSeconds = Math.ceil(remainingMs / 1000);
+        $("turnSeconds").textContent = `${remainingSeconds}초`;
+        $("turnTimerBar").style.width = `${Math.max(0, Math.min(100, remainingMs / totalMs * 100))}%`;
+        clock.classList.toggle("urgent", remainingSeconds <= 5);
+    }
+
+    function selectCard(cardId) {
+        if (!myTurn() || actionPending) return;
+        selectedCardId = selectedCardId === cardId ? null : cardId;
+        renderHand();
+        renderControls();
+        tone("select");
+    }
+
+    function renderHand() {
+        const canAct = myTurn() && !actionPending;
+        const buttons = gameState.hand.map(card => {
+            const button = document.createElement("button");
+            button.type = "button";
+            button.className = "hand-option";
+            button.classList.toggle("is-selected", selectedCardId === card.id);
+            button.disabled = !canAct;
+            button.setAttribute("aria-label", `${cardLabel(card)} 카드 선택`);
+            button.append(window.Bomb77Cards.createCard(card));
+            button.addEventListener("click", () => selectCard(card.id));
+            return button;
+        });
+        $("hand").replaceChildren(...buttons);
+        $("handCount").textContent = `${gameState.hand.length}장`;
+    }
+
+    function renderControls() {
+        const card = gameState?.hand.find(item => item.id === selectedCardId) || null;
+        const canPlay = myTurn() && !actionPending && Boolean(card);
+        $("playButton").disabled = !canPlay;
+        $("playButton").textContent = card ? (canPlay ? `${cardLabel(card)} 카드 내기` : "처리 중...") : (myTurn() ? "카드를 선택하세요" : "차례를 기다리세요");
+    }
+
+    function renderFinish() {
+        const finished = gameState.phase === "finished";
+        $("finishPanel").classList.toggle("hidden", !finished);
+        $("hand").closest(".hand-zone").classList.toggle("hidden", finished);
+        if (!finished) return;
+        const winner = playerById(gameState.winnerId);
+        $("winnerTitle").textContent = gameState.winnerId === myId() ? "내가 해체 성공!" : `${winner?.name || "생존자"} 승리`;
+        $("winnerMessage").textContent = gameState.lastAction;
+        const actions = [];
+        if (lobby?.snapshot().role === "host") {
+            const again = document.createElement("button");
+            again.type = "button";
+            again.className = "primary-button";
+            again.textContent = "한 판 더";
+            again.addEventListener("click", () => lobby.sendServer({ type: "BOMB77_ACTION", action: "NEW_GAME" }));
+            const back = document.createElement("button");
+            back.type = "button";
+            back.className = "secondary-button";
+            back.textContent = "대기실로";
+            back.addEventListener("click", () => lobby.sendServer({ type: "BOMB77_ACTION", action: "RETURN_LOBBY" }));
+            actions.push(again, back);
+        } else {
+            const waiting = document.createElement("span");
+            waiting.textContent = "방장이 다음 게임을 준비할 때까지 기다려 주세요.";
+            actions.push(waiting);
+        }
+        $("finishActions").replaceChildren(...actions);
+    }
+
+    function renderGame() {
+        if (!gameState) return;
+        renderPlayers();
+        renderTable();
+        renderHand();
+        renderControls();
+        renderFinish();
+    }
+
+    function installState(state) {
+        const changed = state.actionNumber !== lastActionNumber;
+        const exploded = changed && state.lastActionKind === "explosion";
+        gameState = state;
+        actionPending = false;
+        if (changed) {
+            lastActionNumber = state.actionNumber;
+            selectedCardId = null;
+        }
+        if (state.phase === "lobby") {
+            if (lobby?.snapshot().started) {
+                $("gameScreen").classList.add("hidden");
+                $("lobbyScreen").classList.remove("hidden");
+                lobby.returnToLobby();
+            }
+            return;
+        }
+        $("lobbyScreen").classList.add("hidden");
+        $("gameScreen").classList.remove("hidden");
+        renderGame();
+        if (exploded) {
+            document.body.classList.remove("explosion-flash");
+            requestAnimationFrame(() => document.body.classList.add("explosion-flash"));
+            setTimeout(() => document.body.classList.remove("explosion-flash"), 620);
+            tone("explosion");
+        }
+    }
+
+    function handleServerMessage(message) {
+        if (message.type === SERVER_MESSAGE.STATE && message.state) {
+            installState(message.state);
+            return;
+        }
+        if (message.type === SERVER_MESSAGE.ERROR) {
+            actionPending = false;
+            renderControls();
+            showToast(message.message || "행동을 처리하지 못했습니다.");
+        }
+    }
+
+    function submitPlay() {
+        const card = gameState?.hand.find(item => item.id === selectedCardId);
+        if (!card || !myTurn() || actionPending) return;
+        actionPending = true;
+        renderControls();
+        if (!lobby.sendServer({ type: "BOMB77_ACTION", action: "PLAY", cardId: card.id })) {
+            actionPending = false;
+            renderControls();
+            showToast("서버에 행동을 보내지 못했습니다.");
+        }
+    }
+
+    function showRules() { $("rulesOverlay").classList.remove("hidden"); }
+    function hideRules() { $("rulesOverlay").classList.add("hidden"); }
+
+    function previewState() {
+        const now = Date.now();
+        return {
+            phase: "playing", round: 2, limit: 77, total: 43, direction: 1,
+            turnPlayerId: "preview-me", deckCount: 31, winnerId: null,
+            lastCard: { id: "preview-last", kind: "number", value: 8 },
+            lastAction: "77을 넘지 않도록 카드 한 장을 선택하세요.", lastActionKind: "number",
+            turnDeadline: now + 24000, turnSeconds: 25, actionNumber: 1,
+            players: [
+                { id: "preview-me", name: "김하늘", fuses: 3, eliminated: false, handCount: 5 },
+                { id: "preview-2", name: "이도윤", fuses: 2, eliminated: false, handCount: 5 },
+                { id: "preview-3", name: "박서아", fuses: 3, eliminated: false, handCount: 5 },
+                { id: "preview-4", name: "최지호", fuses: 1, eliminated: false, handCount: 5 }
+            ],
+            hand: [
+                { id: "preview-4a", kind: "number", value: 4 },
+                { id: "preview-9", kind: "number", value: 9 },
+                { id: "preview-minus", kind: "number", value: -5 },
+                { id: "preview-half", kind: "half", value: null },
+                { id: "preview-reverse", kind: "reverse", value: null }
+            ]
+        };
+    }
+
+    function init() {
+        setInterval(renderTurnClock, 250);
+        $("playButton").addEventListener("click", submitPlay);
+        $("closeRulesButton").addEventListener("click", hideRules);
+        $("rulesOverlay").addEventListener("click", event => { if (event.target === $("rulesOverlay")) hideRules(); });
+        $("reloadButton").addEventListener("click", () => location.reload());
+        document.querySelectorAll("[data-go-home]").forEach(button => button.addEventListener("click", () => location.href = "../../../index.html"));
+
+        if (params.get("preview") === "1") {
+            installState(previewState());
+            return;
+        }
+
+        lobby = window.ClassroomMultiplayerLobby.create({
+            gameId: GAME_ID,
+            initialMode: "guest",
+            getPlayerName: () => /^[가-힣]{2,6}$/.test(savedName) ? savedName : "",
+            allowedPlayerCounts: [2,3,4,5,6,7,8],
+            maxPlayers: 8,
+            rulesButtonIds: ["rulesBtnLobby", "rulesBtnGame"],
+            leaveButtonIds: ["leaveBtnLobby", "leaveBtnGame"],
+            onRules: showRules,
+            onLeave: () => location.href = "../../../index.html",
+            onNotice: showToast,
+            onInvalidStart: () => showToast("2명부터 8명까지 모여야 시작할 수 있습니다."),
+            onStateChange: snapshot => $("gameRoomCode").textContent = snapshot.roomCode || "----",
+            getLobbyPresentation: ({ count, role, canStart }) => ({
+                canStart,
+                startText: role === "host" && canStart ? `작전 시작 · ${count}명` : "플레이어 기다리는 중",
+                guideText: role === "host" ? `현재 ${count}명 · 2~8명일 때 시작 가능` : "방장이 게임을 시작할 때까지 기다리세요."
+            }),
+            createStartData: () => ({ serverAuthoritative: true }),
+            onStarted: () => {
+                $("lobbyScreen").classList.add("hidden");
+                $("gameScreen").classList.remove("hidden");
+                if (lobby.snapshot().role === "host") lobby.sendServer({ type: "BOMB77_ACTION", action: "START" });
+            },
+            onServerMessage: handleServerMessage,
+            onPlayerLeftDuringGame: () => showToast("플레이어가 나가 대기실로 돌아갑니다."),
+            onAbort: ({ title, message }) => {
+                $("abortTitle").textContent = title;
+                $("abortMessage").textContent = message;
+                $("abortOverlay").classList.remove("hidden");
+            }
+        }).mount();
+    }
+
+    window.addEventListener("DOMContentLoaded", init);
+})();

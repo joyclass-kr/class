@@ -7,6 +7,7 @@ const { spawn } = require("child_process");
 const { WebSocketServer, WebSocket } = require("ws");
 const LoveLetter = require("./loveletter");
 const LastCard = require("./lastcard");
+const Bomb77 = require("./bomb77");
 const Rummikub = require("./rummikub");
 const GemGuild = require("./gemguild");
 const KingdomTrails = require("./kingdomtrails");
@@ -273,6 +274,7 @@ const MAX_ROOM_PLAYERS = {
   connect6: 2,
   diamondgame: 3,
   lastcard: 4,
+  bomb77: 8,
   loveletter: 4,
   rummikub: 4,
   gemguild: 4,
@@ -631,6 +633,36 @@ function scheduleLastCardTimeout(room) {
     lastCardBroadcast(room);
   }, wait);
   room.lastcardTimer.unref?.();
+}
+
+function bomb77Broadcast(room) {
+  if (!room?.bomb77) return;
+  for (const [id, client] of room.clients) {
+    safeSend(client, {
+      type: "BOMB77_STATE",
+      state: Bomb77.stateFor(room.bomb77, id)
+    });
+  }
+  scheduleBomb77Timeout(room);
+}
+
+function bomb77Error(socket, message) {
+  safeSend(socket, { type: "BOMB77_ERROR", message });
+}
+
+function scheduleBomb77Timeout(room) {
+  clearTimeout(room?.bomb77Timer);
+  const game = room?.bomb77;
+  if (!game || game.phase !== "playing" || !game.turnDeadline) return;
+  const expectedAction = game.actionNumber;
+  const wait = Math.max(50, game.turnDeadline - Date.now());
+  room.bomb77Timer = setTimeout(() => {
+    if (rooms.get(roomKey(room.gameId, room.roomCode)) !== room) return;
+    if (game.phase !== "playing" || game.actionNumber !== expectedAction) return;
+    Bomb77.autoPlay(game);
+    bomb77Broadcast(room);
+  }, wait);
+  room.bomb77Timer.unref?.();
 }
 
 function rummikubBroadcast(room) {
@@ -1711,6 +1743,7 @@ wss.on("connection", socket => {
         safeSend(socket, { type: "ROOM_RESUMED", gameId, roomCode, playerId });
         if (existingRoom.avalon) avalonBroadcast(existingRoom);
         if (existingRoom.lastcard) lastCardBroadcast(existingRoom);
+        if (existingRoom.bomb77) bomb77Broadcast(existingRoom);
         if (existingRoom.loveletter) loveLetterBroadcast(existingRoom);
         if (existingRoom.rummikub) rummikubBroadcast(existingRoom);
         if (existingRoom.gemguild) gemGuildBroadcast(existingRoom);
@@ -1760,6 +1793,9 @@ wss.on("connection", socket => {
       }
       if (gameId === "lastcard") {
         room.lastcard = LastCard.createGame(playerId, cleanToken(message.name, 12) || "방장");
+      }
+      if (gameId === "bomb77") {
+        room.bomb77 = Bomb77.createGame(playerId, cleanToken(message.name, 12) || "방장");
       }
       if (gameId === "rummikub") {
         room.rummikub = Rummikub.createGame(playerId, cleanToken(message.name, 12) || "방장");
@@ -1844,6 +1880,7 @@ wss.on("connection", socket => {
       });
       if (room.avalon) avalonBroadcast(room);
       if (room.lastcard) lastCardBroadcast(room);
+      if (room.bomb77) bomb77Broadcast(room);
       if (room.loveletter) loveLetterBroadcast(room);
       if (room.rummikub) rummikubBroadcast(room);
       if (room.gemguild) gemGuildBroadcast(room);
@@ -1899,6 +1936,7 @@ wss.on("connection", socket => {
         safeSend(socket, { type: "ROOM_RESUMED", gameId, roomCode, playerId });
         if (room.avalon) avalonBroadcast(room);
         if (room.lastcard) lastCardBroadcast(room);
+        if (room.bomb77) bomb77Broadcast(room);
         if (room.loveletter) loveLetterBroadcast(room);
         if (room.rummikub) rummikubBroadcast(room);
         if (room.gemguild) gemGuildBroadcast(room);
@@ -1967,6 +2005,16 @@ wss.on("connection", socket => {
           return;
         }
         LastCard.addPlayer(room.lastcard, playerId, cleanToken(message.name, 12) || `플레이어 ${room.lastcard.players.length + 1}`);
+      }
+      if (room.bomb77) {
+        if (room.bomb77.phase !== "lobby") {
+          room.clients.delete(playerId);
+          socket.meta.roomKey = null;
+          socket.meta.role = null;
+          safeSend(socket, { type: "ERROR", message: "이미 시작한 게임입니다." });
+          return;
+        }
+        Bomb77.addPlayer(room.bomb77, playerId, cleanToken(message.name, 12) || `플레이어 ${room.bomb77.players.length + 1}`);
       }
       if (room.rummikub) {
         if (room.rummikub.phase !== "lobby") {
@@ -2246,6 +2294,7 @@ wss.on("connection", socket => {
       });
       if (room.avalon) avalonBroadcast(room);
       if (room.lastcard) lastCardBroadcast(room);
+      if (room.bomb77) bomb77Broadcast(room);
       if (room.loveletter) loveLetterBroadcast(room);
       if (room.rummikub) rummikubBroadcast(room);
       if (room.gemguild) gemGuildBroadcast(room);
@@ -3089,6 +3138,39 @@ wss.on("connection", socket => {
       return;
     }
 
+    if (type === "BOMB77_ACTION") {
+      const room = socket.meta.roomKey ? rooms.get(socket.meta.roomKey) : null;
+      const game = room?.bomb77;
+      const action = cleanToken(message.action, 30);
+      if (!room || !game) {
+        bomb77Error(socket, "77 폭탄 방에 참가하지 않았습니다.");
+        return;
+      }
+
+      let result = null;
+      if (action === "START") {
+        if (playerId !== room.hostId) result = { ok: false, error: "방장만 게임을 시작할 수 있습니다." };
+        else result = Bomb77.startMatch(game);
+      } else if (action === "PLAY") {
+        result = Bomb77.playCard(game, playerId, message);
+      } else if (action === "NEW_GAME") {
+        if (playerId !== room.hostId) result = { ok: false, error: "방장만 새 게임을 시작할 수 있습니다." };
+        else result = Bomb77.startMatch(game);
+      } else if (action === "RETURN_LOBBY") {
+        if (playerId !== room.hostId) result = { ok: false, error: "방장만 대기실로 돌아갈 수 있습니다." };
+        else result = Bomb77.resetToLobby(game);
+      } else {
+        result = { ok: false, error: "알 수 없는 행동입니다." };
+      }
+
+      if (!result.ok) {
+        bomb77Error(socket, result.error || "행동을 처리하지 못했습니다.");
+        return;
+      }
+      bomb77Broadcast(room);
+      return;
+    }
+
     if (type === "LOVELETTER_ACTION") {
       const room = socket.meta.roomKey ? rooms.get(socket.meta.roomKey) : null;
       const game = room?.loveletter;
@@ -3691,6 +3773,7 @@ wss.on("connection", socket => {
         clearTimeout(currentRoom.gemguildTimer);
         clearTimeout(currentRoom.kingdomtrailsTimer);
         clearTimeout(currentRoom.lastcardTimer);
+        clearTimeout(currentRoom.bomb77Timer);
         clearTimeout(currentRoom.codenamesTimer);
         clearTimeout(currentRoom.avalonTimer);
         for (const [id, client] of currentRoom.clients) {
@@ -3729,6 +3812,13 @@ wss.on("connection", socket => {
         LastCard.removePlayer(currentRoom.lastcard, playerId);
         if (gameWasActive) {
           LastCard.resetToLobby(currentRoom.lastcard, "플레이어가 나가 게임을 중단하고 대기실로 돌아왔습니다.");
+        }
+      }
+      if (currentRoom.bomb77) {
+        const gameWasActive = currentRoom.bomb77.phase !== "lobby";
+        Bomb77.removePlayer(currentRoom.bomb77, playerId);
+        if (gameWasActive) {
+          Bomb77.resetToLobby(currentRoom.bomb77, "플레이어가 나가 게임을 중단하고 대기실로 돌아왔습니다.");
         }
       }
       if (currentRoom.rummikub) {
@@ -3890,6 +3980,7 @@ wss.on("connection", socket => {
 
       if (currentRoom.avalon) avalonBroadcast(currentRoom);
       if (currentRoom.lastcard) lastCardBroadcast(currentRoom);
+      if (currentRoom.bomb77) bomb77Broadcast(currentRoom);
       if (currentRoom.loveletter) loveLetterBroadcast(currentRoom);
       if (currentRoom.rummikub) rummikubBroadcast(currentRoom);
       if (currentRoom.gemguild) gemGuildBroadcast(currentRoom);

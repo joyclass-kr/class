@@ -1,0 +1,135 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+    <meta name="theme-color" content="#10151c">
+    <meta name="description" content="77을 넘기지 않도록 숫자 카드를 내는 실시간 전략 카드 게임">
+    <title>77 폭탄</title>
+    <link rel="stylesheet" href="../../../assets/network/multiplayer-lobby.css">
+    <link rel="stylesheet" href="game.css">
+    <link rel="stylesheet" href="polish.css">
+    <link rel="stylesheet" href="../../../assets/device-game.css">
+    <script src="../../../assets/network/game-network.js?v=20260821"></script>
+    <script src="../../../assets/network/multiplayer-lobby.js"></script>
+    <script src="music.js" defer></script>
+    <script src="../../../assets/sound/music-control.js" defer></script>
+</head>
+<body>
+    <main class="game-shell">
+        <section id="missingScreen" class="screen-panel missing-screen hidden">
+            <p class="eyebrow">PLAYER NAME REQUIRED</p>
+            <h1>이름이 없습니다</h1>
+            <p>메인 화면에서 한글 이름을 먼저 저장해 주세요.</p>
+            <button class="primary-button" type="button" data-go-home>메인 화면으로</button>
+        </section>
+
+        <section id="lobbyScreen" class="mp-lobby-compact" data-multiplayer-lobby>
+            <header class="screen-panel lobby-header">
+                <div class="brand-lockup">
+                    <span class="brand-bomb" aria-hidden="true"><i></i></span>
+                    <div>
+                        <p class="eyebrow">ADD · RISK · SURVIVE</p>
+                        <h1><span>77</span> 폭탄</h1>
+                        <p class="subtitle">2~8명 실시간 숫자 카드 게임</p>
+                    </div>
+                </div>
+                <div class="lobby-entry">
+                    <p>PLAYER · <strong id="savedName">테스터</strong></p>
+                    <div class="mp-lobby-tabs">
+                        <button id="hostTab" class="primary-button" type="button">방 만들기</button>
+                        <button id="joinTab" class="secondary-button" type="button">참가하기</button>
+                    </div>
+                </div>
+            </header>
+
+            <section id="hostPane" class="screen-panel lobby-card hidden">
+                <div><p class="eyebrow">ROOM CODE</p><strong id="roomCode" class="room-code">----</strong></div>
+                <p id="hostStatus" class="mp-lobby-status">방을 만드는 중입니다.</p>
+            </section>
+
+            <section id="joinPane" class="screen-panel lobby-card hidden">
+                <div class="mp-lobby-row">
+                    <input id="joinCode" class="mp-lobby-code-input" inputmode="numeric" maxlength="4" placeholder="방 번호 4자리">
+                    <button id="joinBtn" class="primary-button" type="button">입장</button>
+                </div>
+                <p id="joinStatus" class="mp-lobby-status">방장이 알려준 번호를 입력하세요.</p>
+            </section>
+
+            <section class="screen-panel players-panel">
+                <div>
+                    <p class="eyebrow">PLAYERS</p>
+                    <div id="lobbyPlayers" class="mp-lobby-players"></div>
+                    <p id="lobbyGuide" class="mp-lobby-guide">2~8명이 모이면 시작할 수 있습니다.</p>
+                </div>
+                <div class="lobby-actions">
+                    <button id="startBtn" class="primary-button" type="button" disabled>플레이어 기다리는 중</button>
+                    <div class="button-row">
+                        <button id="rulesBtnLobby" class="secondary-button" type="button">게임 방법</button>
+                        <button id="leaveBtnLobby" class="secondary-button" type="button">메인 화면</button>
+                    </div>
+                </div>
+            </section>
+        </section>
+
+        <section id="gameScreen" class="hidden">
+            <header class="game-header">
+                <div class="mini-brand"><span class="brand-bomb" aria-hidden="true"><i></i></span><div><p>ROOM <b id="gameRoomCode">7712</b></p><h1><span>77</span> 폭탄</h1></div></div>
+                <div class="game-stats" aria-label="게임 상태">
+                    <div><small>현재 합계</small><strong id="totalText">43</strong></div>
+                    <div><small>폭발선</small><strong>77</strong></div>
+                    <div><small>남은 카드</small><strong id="deckText">31</strong></div>
+                </div>
+                <div class="button-row game-menu">
+                    <button id="rulesBtnGame" class="secondary-button" type="button">게임 방법</button>
+                    <button id="leaveBtnGame" class="secondary-button" type="button">나가기</button>
+                </div>
+            </header>
+
+            <section class="game-board">
+                <div id="playerSeats" class="player-seats" aria-label="플레이어 상태"></div>
+                <div class="table-zone">
+                    <div class="danger-meter" aria-label="77까지의 위험도">
+                        <div class="meter-heading"><span>안전</span><strong id="dangerLabel">34 남음</strong><span>폭발</span></div>
+                        <div class="meter-track"><div id="dangerFill" class="meter-fill" style="--danger:55.8%"></div><i class="checkpoint checkpoint-a">25</i><i class="checkpoint checkpoint-b">50</i></div>
+                    </div>
+                    <div class="reactor-row">
+                        <div class="deck-zone"><div class="card-back" aria-hidden="true"><span>77</span></div><small><b id="deckCount">31</b>장</small></div>
+                        <div id="totalCore" class="total-core"><small>COUNT</small><strong>43</strong><span>+8</span></div>
+                        <div id="lastCard" class="last-card" aria-label="마지막 카드"></div>
+                    </div>
+                    <div class="turn-panel">
+                        <div><strong id="turnBanner">내 차례입니다</strong><p id="actionLog">77을 넘지 않도록 카드 한 장을 선택하세요.</p></div>
+                        <div id="turnClock" class="turn-clock"><span id="turnSeconds">24초</span><div class="turn-track"><div id="turnTimerBar" class="turn-bar"></div></div></div>
+                    </div>
+                </div>
+
+                <section class="hand-zone" aria-labelledby="handTitle">
+                    <div class="hand-heading"><div><p class="eyebrow">YOUR HAND</p><h2 id="handTitle">내 카드</h2></div><span id="handCount">5장</span></div>
+                    <div id="hand" class="hand"></div>
+                    <button id="playButton" class="primary-button play-button" type="button" disabled>카드를 선택하세요</button>
+                </section>
+                <section id="finishPanel" class="finish-panel hidden" aria-live="polite"><p class="eyebrow">MISSION COMPLETE</p><h2 id="winnerTitle">마지막 생존자!</h2><p id="winnerMessage"></p><div id="finishActions" class="button-row"></div></section>
+            </section>
+        </section>
+    </main>
+
+    <section id="rulesOverlay" class="overlay hidden" role="dialog" aria-modal="true" aria-labelledby="rulesTitle">
+        <div class="modal">
+            <p class="eyebrow">HOW TO PLAY</p><h2 id="rulesTitle">77 폭탄 게임 방법</h2>
+            <ol>
+                <li>차례마다 손에서 카드 한 장을 내고 카드 효과만큼 합계를 바꿉니다.</li>
+                <li>합계가 <strong>77 이상</strong>이 되면 폭탄이 터지고 퓨즈 하나를 잃습니다.</li>
+                <li>숫자를 낮추거나 흐름을 바꾸는 장비 카드를 전략적으로 사용하세요.</li>
+                <li>퓨즈를 모두 잃은 플레이어는 탈락합니다. 마지막 생존자가 승리합니다.</li>
+            </ol>
+            <div class="rule-cards"><span><b>−10</b> 합계 낮추기</span><span><b>↺</b> 방향 전환</span><span><b>½</b> 합계 절반</span><span><b>0</b> 완전 해제</span></div>
+            <button id="closeRulesButton" class="primary-button" type="button">확인</button>
+        </div>
+    </section>
+    <section id="abortOverlay" class="overlay hidden" role="dialog" aria-modal="true"><div class="modal"><h2 id="abortTitle">게임 중단</h2><p id="abortMessage"></p><button id="reloadButton" class="primary-button" type="button">처음부터</button></div></section>
+    <div id="toast" class="toast hidden" role="status" aria-live="polite"></div>
+    <script src="cards.js"></script>
+    <script src="game.js"></script>
+</body>
+</html>
