@@ -84,12 +84,12 @@
       const isPolice = edge.kind === "police-lane";
       const accent = isRail ? "#8e5c23" : isThief ? "#c92f4f" : isPolice ? "#2362b7" : "#233d31";
       const inner = isRail ? "#efb75a" : isThief ? "#ee5e78" : isPolice ? "#5d9fe5" : "#fff8df";
-      ctx.globalAlpha = isRail || isThief || isPolice ? .7 : .3;
+      ctx.globalAlpha = isRail || isThief || isPolice ? .92 : .86;
       ctx.strokeStyle = accent;
-      ctx.lineWidth = isRail ? 9 : isThief || isPolice ? 8 : 5;
+      ctx.lineWidth = isRail ? 14 : isThief || isPolice ? 13 : 16;
       ctx.beginPath(); ctx.moveTo(a.x, a.y); ctx.lineTo(b.x, b.y); ctx.stroke();
       ctx.strokeStyle = inner;
-      ctx.lineWidth = isRail ? 4 : isThief || isPolice ? 4 : 2;
+      ctx.lineWidth = isRail ? 7 : isThief || isPolice ? 7 : 10;
       ctx.beginPath(); ctx.moveTo(a.x, a.y); ctx.lineTo(b.x, b.y); ctx.stroke();
       ctx.globalAlpha = 1;
       if (edge.oneWay) drawArrow(ctx, a, b, accent);
@@ -213,8 +213,8 @@
         const button = document.createElement("button");
         button.type = "button";
         const choice = state.pending && ["transfer", "rescue"].includes(state.pending.type) && state.pending.options.includes(pawn.id);
-        const offsetX = (index % 3 - Math.min(1, pawns.length - 1)) * 18;
-        const offsetY = Math.floor(index / 3) * 17 - (pawns.length > 3 ? 7 : 0);
+        const offsetX = (index % 3 - Math.min(1, pawns.length - 1)) * 27;
+        const offsetY = Math.floor(index / 3) * 25 - (pawns.length > 3 ? 11 : 0);
         button.className = `pawn ${pawn.team}${pawn.carryingGem ? " carrying" : ""}${pawn.status === "jailed" ? " jailed" : ""}${pawn.id === state.turnPawnId ? " current" : ""}${choice ? " choice" : ""}`;
         button.style.cssText = positionStyle(node.x + offsetX, node.y + offsetY);
         button.dataset.symbol = pawn.team === "police" ? "♜" : "♟";
