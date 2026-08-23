@@ -594,9 +594,12 @@ textarea,
 }
 
 
-/* Use the top of the viewport instead of centering the fixed-height activity. */
-@media (min-width:621px){
+/* Compact Chromebook and iPad landscapes start at the top; tall desktops balance the start screen. */
+@media (min-width:761px) and (max-width:900px), (min-width:761px) and (max-height:860px){
 body{align-items:flex-start;padding:8px}
+}
+@media (min-width:901px) and (min-height:861px){
+body{align-items:center;padding:18px}
 }
 </style>
 <script src="../../../assets/network/game-network.js?v=20260821"></script>
