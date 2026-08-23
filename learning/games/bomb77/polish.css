@@ -1,6 +1,6 @@
 body{
     background-image:
-        linear-gradient(145deg,rgba(16,24,33,.92),rgba(10,14,19,.96) 70%),
+        linear-gradient(145deg,rgba(16,24,33,.38),rgba(10,14,19,.58) 70%),
         url("/learning/games/bomb77/assets/images/bomb77-table.webp");
     background-position:center;
     background-size:cover;
