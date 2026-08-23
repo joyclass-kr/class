@@ -1,8 +1,8 @@
 # 제미나이 그림 프롬프트
 
-이 책은 하나의 이야기를 8개의 장(챕터)으로 나눠 담았고, 각 장마다 그림이
-**한 장**이에요. 그림이 펼침면 전체 폭을 가득 채우고, 그 아래에 이야기가
-왼쪽·오른쪽으로 나뉘어 들어갑니다.
+이 책은 하나의 이야기를 8개의 장(챕터)으로 나눠 담았고, 펼침면은 모두
+16개예요. 펼침면 하나에 그림이 한 장씩 들어갑니다.
+그림이 펼침면 전체 폭을 가득 채우고, 그 아래에 이야기가 왼쪽·오른쪽으로 나뉘어 들어갑니다.
 
 아래 프롬프트를 제미나이에 그대로 넣어서 생성한 뒤, 파일명을 정확히 맞춰서
 `images/` 폴더에 저장하면 자동으로 책에 나타납니다.
@@ -44,49 +44,57 @@ various robed traders with beards and bundles of goods.
 
 | 파일명 | 장면 |
 |---|---|
-| `images/01-port.png` | A bustling Arabian port at sunrise crowded with wooden dhows, porters carrying bales, and a young sailor stepping aboard with his bundle, minarets behind, golden and lively. |
+| `images/01-port.png` | A rich Baghdad house where a young man feasts with friends, then stands alone before an empty storeroom realising his fortune is gone, warm lamplight, sobering. |
+| `images/01-port-2.png` | A bustling Arabian port at sunrise crowded with wooden dhows and porters carrying bales, a young sailor aboard as the ship sails out into open turquoise sea, golden and lively. |
 
 ## 2장 · 섬이 아니었다
 
 | 파일명 | 장면 |
 |---|---|
-| `images/02-whale.png` | Sailors scattering as the grassy island beneath them heaves and reveals itself to be the back of an enormous whale sinking into the sea, a man clinging to a floating barrel, thrilling. |
+| `images/02-whale.png` | Sailors landing on a low grassy island, spreading laundry and lighting a cooking fire, their wooden dhow anchored nearby on a bright turquoise sea, cheerful. |
+| `images/02-whale-2.png` | Sailors tumbling as the grassy island heaves and reveals itself as the back of an enormous whale sinking into the sea, one man clinging to a floating barrel, thrilling. |
 
 ## 3장 · 거대한 새
 
 | 파일명 | 장면 |
 |---|---|
-| `images/03-roc.png` | A rocky island with a gigantic white egg, the sky darkening as a colossal white bird descends, a tiny man lashing himself to its leg with a turban cloth, awe-inspiring scale. |
+| `images/03-roc.png` | A castaway walking inland on a rocky island and stopping before a gigantic smooth white egg taller than a house, tiny beside it, awe-inspiring scale. |
+| `images/03-roc-2.png` | The sky darkening as a colossal white bird descends onto a giant egg, a tiny man lashing himself to its tree-thick leg with a turban cloth, dramatic and awesome. |
 
 ## 4장 · 보석 골짜기
 
 | 파일명 | 장면 |
 |---|---|
-| `images/04-valley.png` | A deep narrow canyon whose floor glitters with scattered gems, sheer cliffs rising impossibly high on both sides, a small figure standing amazed and then sitting to think, dramatic light. |
+| `images/04-valley.png` | A tiny man dangling from a colossal white bird high above ocean and islands, then untying himself in a deep narrow canyon with sheer cliffs, dramatic scale. |
+| `images/04-valley-2.png` | A canyon floor glittering with scattered diamonds where a man fills his hands with gems then stops, staring up at impossibly high cliffs with no way out, dramatic light. |
 
 ## 5장 · 고깃덩이를 타고
 
 | 파일명 | 장면 |
 |---|---|
-| `images/05-meat.png` | A gem-strewn canyon floor where a man ties himself to a huge slab of meat as a great eagle swoops down to seize it, gems sticking to the meat, inventive and exciting. |
+| `images/05-meat.png` | Huge slabs of meat thudding onto a gem-strewn canyon floor with diamonds sticking to them, great eagles swooping to carry them up to cliff-top nests, inventive. |
+| `images/05-meat-2.png` | A man lashing himself beneath a huge slab of meat with a turban as a great eagle seizes it and lifts him up past sheer canyon walls, exciting and vertiginous. |
 
 ## 6장 · 다시 바다로
 
 | 파일명 | 장면 |
 |---|---|
-| `images/06-sea.png` | A cliff top where astonished robed merchants crowd around a man untying himself from a slab of meat, and beside it a ship setting out again from a golden port, humorous and warm. |
+| `images/06-sea.png` | Astonished robed merchants crowding round a man untying himself from a slab of meat at a cliff-top eagle nest, gems spilling from his sack, humorous and warm. |
+| `images/06-sea-2.png` | A rich Baghdad courtyard where a merchant tells his tale to a crowd, and beside it the same man shouldering a bundle and boarding a ship again at a golden port. |
 
 ## 7장 · 어깨에 올라탄 노인
 
 | 파일명 | 장면 |
 |---|---|
-| `images/07-old-man.png` | A stream on a lush island where a wiry sailor carries a wizened old man on his shoulders, the old man's legs locked tight around his neck and grinning slyly, comic distress. |
+| `images/07-old-man.png` | A lush island stream where a shipwrecked sailor kneels to let a thin wizened old man climb onto his shoulders, green shade and clear water, kindly. |
+| `images/07-old-man-2.png` | A wiry sailor staggering through a green island as a wizened old man rides his shoulders with legs locked around his neck, grinning slyly and kicking his sides, comic distress. |
 
 ## 8장 · 마지막 항해
 
 | 파일명 | 장면 |
 |---|---|
-| `images/08-ending.png` | An island grove where a sailor offers a gourd of grape juice to the old man on his shoulders who then slumps asleep, and the sailor running free toward a ship on the shore, triumphant and funny. |
+| `images/08-ending.png` | A sunlit island vineyard where a burdened sailor fills a hollow gourd with grapes, then hands it to the old man on his shoulders who drinks it all and slumps, clever and funny. |
+| `images/08-ending-2.png` | A sailor running free along a shore toward a passing ship that stops for him, then lying on the deck looking at the sky as the coast slips away, triumphant and warm. |
 
 ## 사용 팁
 

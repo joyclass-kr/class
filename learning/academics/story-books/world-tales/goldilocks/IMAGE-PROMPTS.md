@@ -1,8 +1,8 @@
 # 제미나이 그림 프롬프트
 
-이 책은 하나의 이야기를 8개의 장(챕터)으로 나눠 담았고, 각 장마다 그림이
-**한 장**이에요. 그림이 펼침면 전체 폭을 가득 채우고, 그 아래에 이야기가
-왼쪽·오른쪽으로 나뉘어 들어갑니다.
+이 책은 하나의 이야기를 8개의 장(챕터)으로 나눠 담았고, 펼침면은 모두
+16개예요. 펼침면 하나에 그림이 한 장씩 들어갑니다.
+그림이 펼침면 전체 폭을 가득 채우고, 그 아래에 이야기가 왼쪽·오른쪽으로 나뉘어 들어갑니다.
 
 아래 프롬프트를 제미나이에 그대로 넣어서 생성한 뒤, 파일명을 정확히 맞춰서
 `images/` 폴더에 저장하면 자동으로 책에 나타납니다.
@@ -44,49 +44,57 @@ Bear: a small round bear cub with a bib, easily upset and very expressive.
 
 | 파일명 | 장면 |
 |---|---|
-| `images/01-porridge.png` | A cosy log cottage kitchen where three bowls of steaming porridge sit in three sizes and a small bear cub recoils with its tongue out, parent bears laughing, warm morning light. |
+| `images/01-porridge.png` | A cosy log cottage kitchen in a birch forest with three of everything in three sizes, a mother bear ladling steaming porridge into three bowls, warm morning light, charming. |
+| `images/01-porridge-2.png` | A bear cub recoiling with its tongue out from hot porridge while the parent bears laugh, then the three bears walking out into a sunny birch forest leaving the door ajar, funny. |
 
 ## 2장 · 문이 열려 있어
 
 | 파일명 | 장면 |
 |---|---|
-| `images/02-door.png` | A birch forest clearing where a small girl with golden curls pushes open the door of a log cottage and peeks inside, wildflowers and dappled light, curious and a little sneaky. |
+| `images/02-door.png` | A small girl with golden curls lost among endless birch trees, then spotting a log cottage roof through the trunks and running toward it, dappled light, curious. |
+| `images/02-door-2.png` | A girl with golden curls peering through a cottage window at steaming bowls, then pushing the door open and tiptoeing in, wildflowers by the step, a little sneaky and comic. |
 
 ## 3장 · 세 그릇의 죽
 
 | 파일명 | 장면 |
 |---|---|
-| `images/03-bowls.png` | A table with three porridge bowls in three sizes where a girl grimaces at the big one, frowns at the middle one, and beams while scraping the tiny one clean, comic sequence in one wide scene. |
+| `images/03-bowls.png` | A table with three porridge bowls in three sizes where a girl fans her burnt mouth after the big bowl and grimaces at the middle one, comic expressions, warm interior. |
+| `images/03-bowls-2.png` | A girl beaming as she scrapes the tiniest porridge bowl completely clean and pats her full tummy, the empty bowl left on the table, hilarious and warm. |
 
 ## 4장 · 세 개의 의자
 
 | 파일명 | 장면 |
 |---|---|
-| `images/04-chairs.png` | A cottage parlour with three chairs in three sizes where a girl swings her legs happily in the smallest one just as it splinters beneath her, splinters flying, hilariously comic. |
+| `images/04-chairs.png` | A cottage parlour with three chairs in three sizes by the hearth, a girl perched high on the huge hard chair with dangling feet, then sinking deep into the squashy middle one, comic. |
+| `images/04-chairs-2.png` | A girl swinging her legs happily in the smallest chair just as it splinters beneath her and she lands on the floor among the pieces, hilariously comic, dust puffing up. |
 
 ## 5장 · 세 개의 침대
 
 | 파일명 | 장면 |
 |---|---|
-| `images/05-beds.png` | A sunlit attic bedroom with three beds in three sizes, a small girl curled fast asleep in the tiniest one clutching a patchwork quilt, peaceful and sweet. |
+| `images/05-beds.png` | A sunlit attic bedroom with three beds in three sizes, a small girl lying on the huge one with her head propped uncomfortably high, patchwork quilts, cosy and funny. |
+| `images/05-beds-2.png` | A small girl curled fast asleep in the tiniest bed clutching a patchwork quilt, sunlight falling across the attic floor, peaceful and sweet. |
 
 ## 6장 · 돌아온 곰들
 
 | 파일명 | 장면 |
 |---|---|
-| `images/06-return.png` | Three bears of three sizes standing around their table staring at disturbed porridge bowls, the smallest bear holding up an empty bowl with a trembling lip, very funny and expressive. |
+| `images/06-return.png` | Three bears of three sizes returning to find their door wide open and spoons stuck in the porridge bowls, the father bear booming, very expressive and funny. |
+| `images/06-return-2.png` | A tiny bear cub holding up a completely empty bowl with a trembling lip and bursting into tears while the mother bear comforts it, very funny and touching. |
 
 ## 7장 · 부서진 의자
 
 | 파일명 | 장면 |
 |---|---|
-| `images/07-broken.png` | A cottage parlour where three bears discover a smashed little chair, the cub wailing over the pieces, and then all three creeping up a narrow staircase, comic suspense. |
+| `images/07-broken.png` | A cottage parlour where three bears find a squashed cushion, a sagging seat, and a smashed little chair with a broken leg, the cub wailing over the pieces, comic. |
+| `images/07-broken-2.png` | Three bears creeping up a narrow creaking staircase in single file, the cub clinging to the father bear, comic suspense, candlelit stairwell. |
 
 ## 8장 · 눈이 딱 마주쳐서
 
 | 파일명 | 장면 |
 |---|---|
-| `images/08-ending.png` | An attic bedroom where three astonished bears stare at a girl sitting bolt upright in the smallest bed, and in the same wide scene she leaps out the window and sprints into the birch forest, hilarious and lively. |
+| `images/08-ending.png` | An attic bedroom where three astonished bears crowd around the smallest bed, the cub pointing with a trembling paw at a sleeping girl with golden curls, hilarious. |
+| `images/08-ending-2.png` | A girl bolting upright in the smallest bed facing three bears, then leaping out the attic window and sprinting into the birch forest as the bears watch from the sill, hilarious and lively. |
 
 ## 사용 팁
 
