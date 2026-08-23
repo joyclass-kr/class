@@ -24,6 +24,41 @@ let toastTimer = null;
 let resizeTimer = null;
 const savedName = String(localStorage.getItem(NAME_KEY) || "").trim();
 
+const MUSIC_TRACKS = Object.freeze([
+  "/learning/games/kingdom-trails/assets/sound/kingdom-trails-01-table.ogg",
+  "/learning/games/kingdom-trails/assets/sound/kingdom-trails-02-stone-road.ogg",
+  "/learning/games/kingdom-trails/assets/sound/kingdom-trails-03-quiet-rampart.ogg"
+]);
+
+function playSound(name) {
+  const sounds = { rotate: "card", claim: "click", place: "stone", turn: "bell", score: "success", finish: "success" };
+  window.ClassGameSfx?.play(sounds[name] || "click");
+}
+
+function initMusic() {
+  const audio = $("bgm");
+  let trackIndex = Math.floor(Math.random() * MUSIC_TRACKS.length);
+  const loadTrack = () => {
+    audio.src = MUSIC_TRACKS[trackIndex];
+    audio.load();
+  };
+  loadTrack();
+  audio.addEventListener("ended", () => {
+    trackIndex = (trackIndex + 1) % MUSIC_TRACKS.length;
+    loadTrack();
+    audio.play().catch(() => {});
+  });
+  requestAnimationFrame(() => syncAudioControlDock(!$("gameScreen").classList.contains("hidden")));
+}
+
+function syncAudioControlDock(inGame) {
+  const control = document.querySelector(".unified-music-control");
+  if (!control) return;
+  if (inGame) {
+    if (control.parentElement !== $("topActions")) $("topActions").prepend(control);
+  } else if (control.parentElement !== document.body) document.body.appendChild(control);
+}
+
 function html(value) {
   return String(value ?? "").replace(/[&<>"']/g, character => ({
     "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;", "'": "&#39;"
@@ -42,10 +77,12 @@ function hideRules() { $("rulesOverlay").classList.add("hidden"); }
 function showLobby() {
   $("gameScreen").classList.add("hidden");
   $("lobbyScreen").classList.remove("hidden");
+  syncAudioControlDock(false);
 }
 function showGame() {
   $("lobbyScreen").classList.add("hidden");
   $("gameScreen").classList.remove("hidden");
+  syncAudioControlDock(true);
 }
 
 function myId() { return lobby?.snapshot()?.myId || gameState?.myId || ""; }
@@ -261,6 +298,7 @@ function renderBoard() {
     const position = point(cell.x, cell.y);
     const button = document.createElement("button");
     button.type = "button";
+    button.dataset.sfx = "none";
     button.className = "placement-cell";
     if (suggestion && cell.x === suggestion.x && cell.y === suggestion.y && selectedRotation === suggestion.rotation) button.classList.add("suggested");
     button.style.left = `${position.left}px`;
@@ -359,6 +397,7 @@ function placeAt(x, y) {
 }
 
 function installState(state) {
+  const previousState = gameState;
   const changed = state.revision !== lastRevision;
   gameState = state;
   actionPending = false;
@@ -372,6 +411,16 @@ function installState(state) {
     showLobby();
     if (state.lastAction) showToast(state.lastAction);
     return;
+  }
+  if (changed && previousState) {
+    const placedTile = (state.board?.length || 0) > (previousState.board?.length || 0);
+    const previousScore = (previousState.players || []).reduce((sum, player) => sum + player.score, 0);
+    const currentScore = (state.players || []).reduce((sum, player) => sum + player.score, 0);
+    if (previousState.phase !== "ended" && state.phase === "ended") playSound("finish");
+    else if (placedTile) {
+      playSound("place");
+      if (currentScore > previousScore) setTimeout(() => playSound("score"), 160);
+    } else if (previousState.activePlayerId !== state.activePlayerId && state.activePlayerId === myId()) playSound("turn");
   }
   renderGame();
 }
@@ -404,6 +453,7 @@ function showAbort({ title, message }) {
 
 function init() {
   setInterval(renderClock, 250);
+  initMusic();
   lobby = ClassroomMultiplayerLobby.create({
     gameId: GAME_ID,
     initialMode: "guest",
