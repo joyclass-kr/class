@@ -1,15 +1,12 @@
 # 제미나이 그림 프롬프트
 
-이 책은 하나의 이야기를 일곱 개의 장(챕터)으로 나눠 담았고, 각 장마다 그림이
-**한 장**이에요 — 그 장의 핵심 장면을 담은 큰 그림이 펼침면 전체를 가득 채우고,
-그 아래에 대사가 왼쪽·오른쪽으로 나뉘어 들어갑니다.
+이 책은 하나의 이야기를 7개의 장(챕터)으로 나눠 담았고, 각 장마다 그림이
+**한 장**이에요. 그림이 펼침면 전체 폭을 가득 채우고, 그 아래에 이야기가
+왼쪽·오른쪽으로 나뉘어 들어갑니다.
 
 아래 프롬프트를 제미나이에 그대로 넣어서 생성한 뒤, 파일명을 정확히 맞춰서
 `images/` 폴더에 저장하면 자동으로 책에 나타납니다.
 (그림이 없어도 책은 정상적으로 열리고, 이모지 자리표시자가 대신 보여요.)
-
-같은 인물(삼형제, 엄마 돼지, 늑대)이 책 전체에 계속 등장하니, 매번 생김새를 비슷하게
-유지하는 게 중요해요. 특히 삼형제는 옷 색으로 구분되게 해 주세요.
 
 권장 크기: **본문 그림은 가로 2 : 세로 1 비율**(가로로 아주 길쭉한 모양)로 만들어 주세요, PNG. 펼침면 전체 폭을 채우는 자리라 이렇게 길어야 잘리지 않아요. **표지(`cover.png`)는 세로 2 : 3 비율**, 마무리(`end.png`)는 가로 3 : 세로 2 정도면 됩니다.
 
@@ -21,73 +18,75 @@
 
 ```
 Children's picture book illustration, bright cheerful cartoon-animation style,
-bold clean outlines, saturated storybook colors, soft golden lighting, no text or
-letters in the image, sunny countryside meadow and woodland setting, expressive
-exaggerated character faces, dynamic staging.
+bold clean outlines, saturated storybook colors, bright meadow greens and warm
+brick reds, no text or letters in the image, a green hillside with three little
+houses of straw, sticks and brick, and a cosy brick kitchen with a fireplace,
+very expressive comic faces, wide panoramic composition, funny and never
+frightening; the wolf is drawn as scrawny and theatrical.
 ```
 
 ## 인물 설명 (일관성을 위해 매번 붙여 넣으세요)
 
 ```
-Three little pigs standing upright, round and cheerful: the eldest wears a blue
-cap and yellow overalls, the middle one wears a green vest, the youngest wears
-red overalls and a small tool belt. Mother Pig: a plump kindly pig in a floral
-apron and headscarf. The Wolf: a lanky grey-brown wolf standing upright in a
-tattered black coat, long snout, comically greedy grin, big bushy tail.
+The three pigs: the eldest plump and hasty in a red cap, the middle one lanky
+and lazy in a blue scarf, the youngest small and steady in dungarees with a
+trowel. Their mother: a round pig in an apron waving from a gate. The wolf: a
+scrawny grey wolf with a long snout, always out of breath, drawn as comically
+frustrated rather than scary.
 ```
 
 ## 표지 · 마무리
 
 | 파일명 | 장면 |
 |---|---|
-| `images/cover.png` (세로 2:3 비율) | A tall portrait-format cover: three cheerful little pigs standing proudly in front of a sturdy red brick house on a sunny hill, a straw house and a stick house visible smaller in the distance behind them, a wolf's tail just disappearing behind a tree, warm inviting storybook mood. |
+| `images/cover.png` (세로 2:3 비율) | A tall portrait-format cover: three little houses standing in a row on a green hillside — one of straw, one of sticks, one of brick — with three small pigs at their doors and a wolf's long shadow stretching up the slope, funny and inviting. |
 | `images/end.png` | A closed storybook resting under a starry night sky with soft golden sparkles rising from its pages, peaceful and warm closing scene. |
 
 ## 1장 · 집을 지어라
 
 | 파일명 | 장면 |
 |---|---|
-| `images/01-leaving.png` | A mother pig in a floral apron handing three small bundles to her three excited piglet sons outside a cozy farmhouse, the piglets grinning and waving, a sunny country road leading off toward distant woods. |
+| `images/01-leaving.png` | A green hillside where a mother pig in an apron waves from a gate as three young pigs set off in different directions with bundles, the eldest strutting, the middle yawning, the youngest carrying a trowel, sunny and lively. |
 
 ## 2장 · 짚으로 뚝딱
 
 | 파일명 | 장면 |
 |---|---|
-| `images/02-straw.png` | The eldest pig lounging lazily in front of a hastily built straw house, hands behind his head, whistling, loose straw blowing off the wobbly walls in the breeze, bright sunny meadow. |
+| `images/02-straw.png` | A sunny meadow where a plump pig lounges in the shade beside a lopsided straw house, another pig strolling past laughing, and far down the slope a small pig pushing a barrow of bricks, comic contrast. |
 
 ## 3장 · 나뭇가지로 대충
 
 | 파일명 | 장면 |
 |---|---|
-| `images/03-sticks.png` | The middle pig waving off his youngest brother's concern in front of a crooked house of loosely tied sticks, the little house visibly leaning, the youngest pig pointing at it with a worried expression, woodland edge. |
+| `images/03-sticks.png` | A hillside with a rickety stick house leaning slightly, its owner admiring it, while nearby a small pig lays bricks one by one with mortar, blistered hands, patient and determined. |
 
 ## 4장 · 벽돌을 한 장씩
 
 | 파일명 | 장면 |
 |---|---|
-| `images/04-bricks.png` | The youngest pig sweating as he carefully lays bricks with a trowel on a half-built brick house, while his two older brothers lean on the fence laughing and pointing at him, warm afternoon light. |
+| `images/04-bricks.png` | A finished brick cottage with a tiled roof, a straight chimney, shutters and a barred door, its small builder standing proudly in the yard while two brothers peer over the fence, warm and satisfying. |
 
 ## 5장 · 훅! 후!
 
 | 파일명 | 장면 |
 |---|---|
-| `images/05-blown-down.png` | The wolf puffing out his cheeks with tremendous force as a straw house explodes into flying straw, the eldest pig sprinting away in panic toward a stick house in the background, dramatic windswept night scene. |
+| `images/05-blown-down.png` | A night hillside where a straw house blows apart in a great gust from a wolf, and a stick house collapsing in the same wide scene, two pigs sprinting toward a distant brick cottage, dramatic and comic. |
 
 ## 6장 · 꿈쩍도 않는 집
 
 | 파일명 | 장면 |
 |---|---|
-| `images/06-brick-house.png` | The wolf red-faced and exhausted, bent over gasping in front of a solid brick house that has not moved an inch, three pig faces peeking smugly out of the window, moonlit night. |
+| `images/06-brick-house.png` | A brick cottage standing firm as a scrawny wolf puffs with all its might, cheeks ballooning, leaves swirling but not a tile moving, three pig faces at the window, hilariously comic. |
 
 ## 7장 · 굴뚝으로 내려온 늑대
 
 | 파일명 | 장면 |
 |---|---|
-| `images/07-chimney.png` | Cutaway view of the brick house: the wolf sliding down the chimney with a shocked expression toward a big bubbling cauldron in the fireplace below, the three pigs watching wide-eyed from the side, warm firelight, comedic energy. |
+| `images/07-chimney.png` | A brick cottage interior where a pot bubbles on the hearth as a wolf shoots back up the chimney clutching its rear, and outside the wolf sprinting over the hill, three pigs laughing together, funny and warm. |
 
 ## 사용 팁
 
 - 이미지가 준비되기 전에도 페이지는 이모지로 예쁘게 보여요. 준비되는 대로 하나씩 교체하면 됩니다.
-- 인물 생김새를 통일하려면 공통 스타일 지시문과 인물 설명을 매번 그대로 붙여넣는 게 중요해요.
+- 그림체를 통일하려면 공통 스타일 지시문을 매번 그대로 붙여넣는 게 중요해요.
 - 파일명이 정확히 일치해야 자동으로 표시됩니다 (대소문자 포함).
 - 이미지를 다 저장하고 나면 파일 형식은 신경 쓰지 마세요 — 용량을 줄이는 webp 변환은 Claude가 알아서 처리해줍니다.

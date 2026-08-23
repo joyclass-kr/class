@@ -1,0 +1,89 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="UTF-8">
+<title>글자 자리 채움 검사</title>
+<style>
+    body { font: 14px monospace; margin: 16px; }
+    iframe { position: fixed; left: -6000px; top: 0; border: 0; }
+    pre { white-space: pre-wrap; }
+</style>
+</head>
+<body>
+<h1>글자가 자리를 얼마나 채우고 있나</h1>
+<pre id="out">…</pre>
+<iframe id="frame"></iframe>
+<script>
+/* 펼침면 글상자가 쓸 수 있는 줄 수 대비 실제로 채운 줄 수를 잰다.
+ * 아이프레임을 1366x768로 만들어야 글씨 크기(vw 기준)가 실제와 같아진다. */
+const out = document.getElementById('out');
+const frame = document.getElementById('frame');
+
+function probe() {
+    const rows = [];
+    let colWidth = 0;
+    for (let i = 0; i < PAGES.length; i++) {
+        if (PAGES[i].kind !== 'spread') continue;
+        current = i;
+        paint();
+        for (const side of ['left', 'right']) {
+            const el = document.querySelector('.spread-text-' + side);
+            if (!el) continue;
+            const cs = getComputedStyle(el);
+            const pad = parseFloat(cs.paddingTop) + parseFloat(cs.paddingBottom);
+            const p = el.querySelector('p');
+            if (!p) continue;
+            const lh = parseFloat(getComputedStyle(p).lineHeight);
+            colWidth = el.clientWidth;   // 쪽을 넘기기 전에 재 둔다
+            // scrollHeight는 내용이 상자보다 작아도 상자 높이 밑으로 안 내려간다.
+            // 그래서 실제 글 높이는 문단들의 위아래 좌표로 직접 잰다.
+            const kids = [...el.children];
+            const top = Math.min(...kids.map(k => k.getBoundingClientRect().top));
+            const bottom = Math.max(...kids.map(k => k.getBoundingClientRect().bottom));
+            rows.push({
+                chars: el.innerText.replace(/\s/g, '').length,
+                filled: (bottom - top) / lh,
+                room: (el.clientHeight - pad) / lh
+            });
+        }
+    }
+    current = 0;
+    paint();
+    const n = rows.length;
+    const sum = (k) => rows.reduce((a, r) => a + r[k], 0);
+    return {
+        sides: n,
+        chars: Math.round(sum('chars') / n),
+        filled: +(sum('filled') / n).toFixed(1),
+        room: +(sum('room') / n).toFixed(1),
+        colWidth: Math.round(colWidth)
+    };
+}
+
+(async () => {
+    const slugs = await (await fetch('_books.json')).json();
+    frame.style.width = '1366px';
+    frame.style.height = '768px';
+    const lines = ['책'.padEnd(20) + '한쪽글자 채운줄 / 쓸수있는줄  여유'];
+    for (const slug of slugs) {
+        await new Promise(r => { frame.onload = r; frame.src = slug + '/'; });
+        await new Promise(r => setTimeout(r, 90));
+        try {
+            const s = frame.contentWindow.eval('(' + probe.toString() + ')()');
+            const spare = +(s.room - s.filled).toFixed(1);
+            lines.push(
+                slug.padEnd(20) +
+                String(s.chars).padStart(6) +
+                String(s.filled).padStart(8) + ' / ' + String(s.room).padStart(4) +
+                String(spare).padStart(7)
+            );
+        } catch (e) {
+            lines.push(slug.padEnd(20) + '  검사 실패: ' + e.message);
+        }
+        out.textContent = lines.join('\n');
+    }
+    out.textContent = lines.join('\n') + '\n\n=== 끝 ===';
+})();
+</script>
+</body>
+</html>

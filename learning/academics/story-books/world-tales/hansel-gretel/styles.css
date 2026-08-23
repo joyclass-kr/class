@@ -572,6 +572,23 @@ body {
     .spread-text { flex: 1 1 45%; }
 }
 
+/* 마지막 펼침면의 교훈 — 두 칸을 가로질러 한 줄로 놓는다.
+   오른쪽 칸에 밀어 넣으면 그 칸만 글이 넘쳐서 잘린다. */
+.spread-text > p.fable-moral {
+    grid-column: 1 / -1;
+    margin: 0;
+    padding: 6px clamp(10px, 2cqw, 28px) 7px;
+    border-top: 1px solid rgba(92, 58, 34, 0.25);
+    color: #6b4a1e;
+    font-family: inherit;
+    font-size: clamp(15px, 1.8vw, 18px);
+    font-weight: 500;
+    line-height: 1.65;
+    font-style: italic;
+    text-indent: 0;
+    text-align: center;
+}
+
 /* 마지막 펼침면은 교훈 한 줄이 더 붙으므로 그림칸을 그만큼만 낮춘다.
    그림은 잘라 채우기라 2:1로 그려도 그대로 쓸 수 있다. */
 .page-story.spread-final .spread-art {
