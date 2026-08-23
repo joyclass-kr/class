@@ -1,8 +1,8 @@
 # 제미나이 그림 프롬프트
 
-이 책은 하나의 이야기를 8개의 장(챕터)으로 나눠 담았고, 각 장마다 그림이
-**한 장**이에요. 그림이 펼침면 전체 폭을 가득 채우고, 그 아래에 이야기가
-왼쪽·오른쪽으로 나뉘어 들어갑니다.
+이 책은 하나의 이야기를 8개의 장(챕터)으로 나눠 담았고, 펼침면은 모두
+16개예요. 펼침면 하나에 그림이 한 장씩 들어갑니다.
+그림이 펼침면 전체 폭을 가득 채우고, 그 아래에 이야기가 왼쪽·오른쪽으로 나뉘어 들어갑니다.
 
 아래 프롬프트를 제미나이에 그대로 넣어서 생성한 뒤, 파일명을 정확히 맞춰서
 `images/` 폴더에 저장하면 자동으로 책에 나타납니다.
@@ -45,49 +45,57 @@ face.
 
 | 파일명 | 장면 |
 |---|---|
-| `images/01-forest.png` | A lush Indian forest glade where a golden stag with silver antlers leads a herd of deer to a stream, waiting for a small fawn at the back, dappled sunlight, peaceful and warm. |
+| `images/01-forest.png` | A lush Indian forest glade where a golden stag with silver antlers leads a large herd of deer to a stream, waiting for a small fawn at the back, dappled sunlight. |
+| `images/01-forest-2.png` | A peaceful Indian forest through the seasons with deer grazing, fawns playing and a golden stag watching from a high rock, warm golden light, serene. |
 
 ## 2장 · 사냥이 시작되다
 
 | 파일명 | 장면 |
 |---|---|
-| `images/02-hunt.png` | A forest edge in uproar as horns sound and hunters advance, deer scattering through ferns, a golden stag standing firm and looking back at his frightened herd, tense but not gory. |
+| `images/02-hunt.png` | A forest edge in uproar as horns sound and hunters on horseback advance, deer scattering through ferns, a golden stag rearing on a rock, tense but not gory. |
+| `images/02-hunt-2.png` | A quiet forest at dusk where a golden stag tends injured deer through the night, and then walks out alone at dawn toward a distant palace, solemn. |
 
 ## 3장 · 임금님 앞에서
 
 | 파일명 | 장면 |
 |---|---|
-| `images/03-king.png` | A carved stone palace courtyard where a golden stag walks calmly between rows of astonished guards toward a king rising from his throne, sunlight on the pillars, awe-struck stillness. |
+| `images/03-king.png` | A golden stag walking through villages and into a carved stone palace courtyard between rows of astonished guards, sunlight on pillars, awe-struck. |
+| `images/03-king-2.png` | A golden stag speaking calmly before a king who has risen from his throne in astonishment, courtiers holding their breath, morning light on stone. |
 
 ## 4장 · 이상한 약속
 
 | 파일명 | 장면 |
 |---|---|
-| `images/04-promise.png` | A palace hall where a king and a golden stag face each other in agreement, courtiers watching in silence, and beside it a quiet forest morning where deer stand together saying farewell, solemn and warm. |
+| `images/04-promise.png` | A palace hall where a king listens intently to a golden stag and slowly nods in agreement, courtiers watching in silence, solemn and warm. |
+| `images/04-promise-2.png` | A forest clearing where deer quietly agree and draw lots, and a hushed dawn where the whole herd stands silently to see one of them off, solemn and moving. |
 
 ## 5장 · 어린 어미 사슴
 
 | 파일명 | 장면 |
 |---|---|
-| `images/05-doe.png` | A quiet forest hollow at dawn where a slender doe heavy with fawn pleads with a golden stag, other deer looking away uneasily among the ferns, gentle and moving. |
+| `images/05-doe.png` | A quiet forest hollow at dawn where a slender doe heavy with fawn approaches a golden stag with lowered head, ferns all around, gentle and moving. |
+| `images/05-doe-2.png` | A golden stag asking the herd for a volunteer while every deer looks away, then blocking the doe's path as she starts to leave, tense and moving. |
 
 ## 6장 · 스스로 걸어간 길
 
 | 파일명 | 장면 |
 |---|---|
-| `images/06-walk.png` | A long forest path at sunrise where a golden stag walks away alone toward a distant palace, the whole herd standing motionless watching him go, long shadows, deeply moving. |
+| `images/06-walk.png` | A golden stag lifting his head in morning light to announce he will go, the herd surging in protest, an old deer stepping forward, deeply moving. |
+| `images/06-walk-2.png` | A long forest path at sunrise where a golden stag walks away alone toward a distant palace while the whole herd stands motionless watching, long shadows. |
 
 ## 7장 · 임금님의 물음
 
 | 파일명 | 장면 |
 |---|---|
-| `images/07-question.png` | A palace courtyard where a king stands face to face with a golden stag, one hand half raised, his expression breaking from authority into astonishment, morning light on stone. |
+| `images/07-question.png` | A palace courtyard where a barefoot king hurries out to face a golden stag standing calmly, guards astonished, morning light on stone. |
+| `images/07-question-2.png` | A king standing shaken before a golden stag in a hushed courtyard, courtiers bowing their heads, the king's eyes reddening, deeply moving. |
 
 ## 8장 · 숲이 열린 날
 
 | 파일명 | 장면 |
 |---|---|
-| `images/08-ending.png` | A palace courtyard where a king lays down his bow before a golden stag as courtiers look on, and beyond the gate a forest full of deer, birds and other animals in bright sunlight, joyful and generous. |
+| `images/08-ending.png` | A palace courtyard where a king lays down his bow before a golden stag, the bow clattering on stone, courtiers murmuring, generous and moving. |
+| `images/08-ending-2.png` | A king promising to protect all creatures as a golden stag bows deeply, then the stag returning to a forest where the whole herd rushes joyfully to meet him. |
 
 ## 사용 팁
 

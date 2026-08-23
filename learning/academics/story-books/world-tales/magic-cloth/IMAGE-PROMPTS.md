@@ -1,8 +1,8 @@
 # 제미나이 그림 프롬프트
 
-이 책은 하나의 이야기를 8개의 장(챕터)으로 나눠 담았고, 각 장마다 그림이
-**한 장**이에요. 그림이 펼침면 전체 폭을 가득 채우고, 그 아래에 이야기가
-왼쪽·오른쪽으로 나뉘어 들어갑니다.
+이 책은 하나의 이야기를 8개의 장(챕터)으로 나눠 담았고, 펼침면은 모두
+16개예요. 펼침면 하나에 그림이 한 장씩 들어갑니다.
+그림이 펼침면 전체 폭을 가득 채우고, 그 아래에 이야기가 왼쪽·오른쪽으로 나뉘어 들어갑니다.
 
 아래 프롬프트를 제미나이에 그대로 넣어서 생성한 뒤, 파일명을 정확히 맞춰서
 `images/` 폴더에 저장하면 자동으로 책에 나타납니다.
@@ -44,49 +44,57 @@ The innkeeper: a plump smiling man with restless eyes and a fine waistcoat.
 
 | 파일명 | 장면 |
 |---|---|
-| `images/01-leaving.png` | A village crossroads where three young brothers with bundles set off in three different directions while an old spectacled tailor waves from a cottage doorway, morning light, hopeful. |
+| `images/01-leaving.png` | A poor cottage where an old spectacled tailor with a tape measure speaks earnestly to his three sons, a single goat in the yard, morning light, warm and sober. |
+| `images/01-leaving-2.png` | A village crossroads where three young brothers with bundles embrace and then set off in three different directions while an old tailor waves from a cottage door, hopeful. |
 
 ## 2장 · 큰아들의 식탁보
 
 | 파일명 | 장면 |
 |---|---|
-| `images/02-cloth.png` | A forest clearing where a broad young carpenter spreads a white cloth on the ground and steaming dishes appear on it out of nowhere, his mouth open in delight, dappled sunlight. |
+| `images/02-cloth.png` | A carpenter's workshop where a master hands a plain white cloth to a broad young man with sawdust in his hair, tools and shavings around, warm light. |
+| `images/02-cloth-2.png` | A forest clearing where a broad young man spreads a white cloth on the grass and steaming dishes, bread and wine appear on it out of nowhere, dappled sunlight, delighted. |
 
 ## 3장 · 주막에서 생긴 일
 
 | 파일명 | 장면 |
 |---|---|
-| `images/03-inn.png` | A candlelit inn room at night where a plump innkeeper swaps a folded white cloth for an identical one while a young man sleeps, and next a cottage where the same cloth lies flat and empty, comic dismay. |
+| `images/03-inn.png` | An inn common room in uproar as a white cloth on a table fills with steaming dishes, guests gaping and a plump innkeeper staring with gleaming eyes, comic. |
+| `images/03-inn-2.png` | A candlelit inn room where an innkeeper swaps a folded cloth for an identical one beside a sleeping man, then a cottage yard where the cloth lies flat and empty, comic dismay. |
 
 ## 4장 · 둘째의 당나귀
 
 | 파일명 | 장면 |
 |---|---|
-| `images/04-donkey.png` | A stable yard where a wiry flour-dusted young man watches gold coins pour from a donkey's mouth into a straw-lined trough, and behind him an innkeeper peeking around the door post, comic greed. |
+| `images/04-donkey.png` | A mill yard where a miller hands a donkey's halter to a flour-dusted young man, and gold coins pouring from the donkey's mouth onto a spread cloth, astonishing. |
+| `images/04-donkey-2.png` | A young man showing off gold coins from a donkey in an inn yard while the innkeeper watches greedily, then a stable at night with donkeys being switched, comic. |
 
 ## 5장 · 막내의 자루
 
 | 파일명 | 장면 |
 |---|---|
-| `images/05-sack.png` | A woodturner's workshop where an old master hands a small quick lad a worn sack, wood shavings curling on the floor, and the lad setting out with the sack over his shoulder wearing a knowing grin. |
+| `images/05-sack.png` | A woodturner's workshop where an old master hands a worn sack to a small quick lad, wood shavings curling on the floor, warm and secretive. |
+| `images/05-sack-2.png` | A small quick lad shouldering a worn sack with a knowing grin and walking to a forest inn at sunset where a plump innkeeper greets him warmly, comic. |
 
 ## 6장 · 자루 속의 몽둥이
 
 | 파일명 | 장면 |
 |---|---|
-| `images/06-cudgel.png` | A dark inn room where a wooden cudgel leaps out of a sack and chases a startled innkeeper around the furniture while a grinning lad sits up in bed, chairs toppling, hilariously comic. |
+| `images/06-cudgel.png` | An inn table where a lad boasts about his sack while the innkeeper leans in with restless eyes, then the innkeeper creeping into a dark room at midnight, comic tension. |
+| `images/06-cudgel-2.png` | A dark inn room where a wooden cudgel leaps from a sack and chases a howling innkeeper around toppling furniture while a grinning lad sits up in bed, hilarious. |
 
 ## 7장 · 돌려받은 물건들
 
 | 파일명 | 장면 |
 |---|---|
-| `images/07-return.png` | An inn courtyard at dawn where a sheepish innkeeper leads out a donkey and holds out a white cloth to a young man who shoulders his sack, other guests peering from windows, comic relief. |
+| `images/07-return.png` | An inn yard at night where a cudgel chases an innkeeper who surrenders, guests watching from windows, then the innkeeper opening a storeroom, comic relief. |
+| `images/07-return-2.png` | A lad leading a donkey out of an inn gate at dawn with a cloth in his coat and a sack on his shoulder while the innkeeper bows repeatedly, comic and warm. |
 
 ## 8장 · 한 상 가득
 
 | 파일명 | 장면 |
 |---|---|
-| `images/08-ending.png` | A cottage yard packed with villagers feasting around a white cloth heaped with food, a donkey shedding gold coins nearby, an old tailor holding his three sons' hands, joyous celebration under evening lanterns. |
+| `images/08-ending.png` | A cottage yard where a lad arrives leading a donkey, his brothers rushing out amazed, then a white cloth spread on the ground heaped with food, joyous. |
+| `images/08-ending-2.png` | A cottage yard packed with villagers feasting around a laden white cloth, a donkey shedding gold, an old tailor holding his sons' hands, lanterns and joy. |
 
 ## 사용 팁
 

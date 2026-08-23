@@ -1,8 +1,8 @@
 # 제미나이 그림 프롬프트
 
-이 책은 하나의 이야기를 8개의 장(챕터)으로 나눠 담았고, 각 장마다 그림이
-**한 장**이에요. 그림이 펼침면 전체 폭을 가득 채우고, 그 아래에 이야기가
-왼쪽·오른쪽으로 나뉘어 들어갑니다.
+이 책은 하나의 이야기를 8개의 장(챕터)으로 나눠 담았고, 펼침면은 모두
+16개예요. 펼침면 하나에 그림이 한 장씩 들어갑니다.
+그림이 펼침면 전체 폭을 가득 채우고, 그 아래에 이야기가 왼쪽·오른쪽으로 나뉘어 들어갑니다.
 
 아래 프롬프트를 제미나이에 그대로 넣어서 생성한 뒤, 파일명을 정확히 맞춰서
 `images/` 폴더에 저장하면 자동으로 책에 나타납니다.
@@ -45,49 +45,57 @@ The two elder brothers: lazy, loud and always eating.
 
 | 파일명 | 장면 |
 |---|---|
-| `images/01-field.png` | A moonlit Russian wheat field where a scruffy young peasant sits wide awake among the stalks as a white-maned mare comes trotting through the grain, silver light, magical. |
+| `images/01-field.png` | A Russian farm at dawn where a father shows his three sons a trampled wheat field, the two elder ones yawning and the youngest scruffy and alert, warm light. |
+| `images/01-field-2.png` | A moonlit Russian wheat field where a scruffy young peasant sits wide awake among the stalks as a white-maned mare comes trotting through the grain, silver light. |
 
 ## 2장 · 조랑말을 얻다
 
 | 파일명 | 장면 |
 |---|---|
-| `images/02-pony.png` | A dawn field where a white mare presents two magnificent stallions and one small shaggy two-humped pony with long floppy ears to a delighted young peasant, comic contrast, golden light. |
+| `images/02-pony.png` | A moonlit field where a boy clings to the mane of a rearing white mare that gallops in circles, dust and grain flying, thrilling and comic. |
+| `images/02-pony-2.png` | A dawn field where a white mare presents two magnificent golden-maned stallions and one tiny shaggy two-humped pony with huge floppy ears, comic contrast. |
 
 ## 3장 · 궁궐로 가다
 
 | 파일명 | 장면 |
 |---|---|
-| `images/03-palace.png` | A bustling Russian market square before an onion-domed palace where a fat tsar in a fur hat marvels at two splendid horses, a scruffy boy on a tiny humpbacked pony trotting up behind, lively. |
+| `images/03-palace.png` | Two brothers leading golden-maned horses away at night, and a boy racing after them on a tiny humpbacked pony that flies over the steppe, exhilarating. |
+| `images/03-palace-2.png` | A bustling Russian market square before an onion-domed palace where a fat tsar in a fur hat marvels at two splendid horses that only a scruffy boy can calm, lively. |
 
 ## 4장 · 불새의 깃털
 
 | 파일명 | 장면 |
 |---|---|
-| `images/04-feather.png` | A dark birch forest path lit by a single blazing golden feather lying on the moss, a boy reaching for it while a small pony shakes its head in warning, dramatic light. |
+| `images/04-feather.png` | A dark birch forest path lit by a single blazing golden feather lying on the moss, a boy reaching for it while a small pony shakes its head in warning, dramatic. |
+| `images/04-feather-2.png` | A servant's room glowing bright from a single golden feather while other servants peer in astonished, then a tsar summoning the boy, warm and tense. |
 
 ## 5장 · 불새를 잡아라
 
 | 파일명 | 장면 |
 |---|---|
-| `images/05-firebird.png` | A mountain clearing at midnight where blazing firebirds descend onto scattered grain, one boy leaping to grab a bird while a small pony braces beside him, showers of sparks, thrilling. |
+| `images/05-firebird.png` | A tsar in a fur hat pointing sternly at a dismayed boy holding a glowing feather, then the boy slumped in a stable while a small pony pricks up its ears, comic. |
+| `images/05-firebird-2.png` | A mountain clearing at midnight where blazing firebirds descend onto scattered grain and wine, one boy leaping from behind a tree to seize a bird, showers of sparks. |
 
 ## 6장 · 이번엔 공주님
 
 | 파일명 | 장면 |
 |---|---|
-| `images/06-princess.png` | A silver tent on a moonlit seashore where a young woman in pale robes sings, a boy bowing awkwardly with his cap in hand and a small pony waiting on the sand, serene and lovely. |
+| `images/06-princess.png` | A tsar clapping over a caged firebird then giving a new order, and a boy on a tiny pony bounding over mountains and seas, exhilarating. |
+| `images/06-princess-2.png` | A silver tent on a moonlit seashore where a woman in pale robes sings, a boy bowing awkwardly with his cap in hand and a small pony waiting on the sand, lovely. |
 
 ## 7장 · 세 개의 가마솥
 
 | 파일명 | 장면 |
 |---|---|
-| `images/07-cauldrons.png` | A palace courtyard with three great cauldrons steaming, a boy poised to leap into one while a small pony blows a stream of frosty breath across the water, courtiers gasping, dramatic and comic. |
+| `images/07-cauldrons.png` | A palace hall where a moon princess coolly refuses an eager old tsar and proposes three cauldrons, courtiers murmuring, ornate and comic. |
+| `images/07-cauldrons-2.png` | A palace courtyard with three great steaming cauldrons, a boy poised to leap while a small pony blows frosty breath across the water, courtiers gasping. |
 
 ## 8장 · 다시 나온 이반
 
 | 파일명 | 장면 |
 |---|---|
-| `images/08-ending.png` | A palace courtyard where a transformed handsome young man steps from a cauldron to cheers, the tsar scrambling out of another cauldron flinging off his crown, the princess laughing and the little pony standing proudly, joyous. |
+| `images/08-ending.png` | A palace courtyard where a transformed handsome young man rises from a cauldron to gasps and cheers while an eager tsar flings off his robe, joyous and comic. |
+| `images/08-ending-2.png` | A tsar leaping out of a scalding cauldron flinging off his crown while everyone laughs, the princess joining the young man and the little pony standing proudly, joyous. |
 
 ## 사용 팁
 
