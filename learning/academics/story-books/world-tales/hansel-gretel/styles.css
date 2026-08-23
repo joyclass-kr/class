@@ -78,8 +78,8 @@ body {
 
 .book {
     position: relative;
-    width: min(1300px, 92vw, calc(90vh * 4 / 3));
-    aspect-ratio: 4 / 3;
+    width: min(1300px, 92vw, calc(90vh * 5 / 4));
+    aspect-ratio: 5 / 4;
     /* 글상자 글씨가 화면이 아니라 책 크기를 따라가게 한다 */
     container-type: inline-size;
 }
@@ -207,7 +207,8 @@ body {
 
 .spread-art {
     position: relative;
-    flex: 1 1 70%;
+    flex: 0 0 auto;
+    aspect-ratio: 2 / 1;
     min-height: 0;
     overflow: hidden;
 }
@@ -233,10 +234,11 @@ body {
 }
 
 .spread-text {
-    flex: 1 1 30%;
+    flex: 1 1 auto;
     min-height: 0;
     display: grid;
     grid-template-columns: 1fr 1fr;
+    grid-template-rows: minmax(0, 1fr) auto;
     border-top: 3px solid var(--wood);
 }
 
@@ -246,7 +248,7 @@ body {
     min-height: 0;
     overflow-y: auto;
     -webkit-overflow-scrolling: touch;
-    padding: clamp(10px, 2cqw, 28px);
+    padding: clamp(8px, 1.3cqw, 18px) clamp(10px, 2cqw, 28px);
     display: flex;
     flex-direction: column;
     justify-content: safe center;
@@ -257,7 +259,7 @@ body {
 }
 
 .spread-text p {
-    margin: 0 0 6px;
+    margin: 0 0 4px;
     font-size: clamp(15px, 1.8vw, 18px);
     font-weight: 500;
     line-height: 1.65;
@@ -566,6 +568,12 @@ body {
     .page-cover { grid-template-columns: 1fr; grid-template-rows: 45% 55%; }
     .page-toc { grid-template-columns: 1fr; grid-template-rows: 1fr 1fr; }
     .page-toc .story-page-left { border-right: none; border-bottom: 1px solid rgba(92, 58, 34, 0.22); }
-    .spread-art { flex-basis: 55%; }
-    .spread-text { flex-basis: 45%; }
+    .spread-art { flex: 1 1 55%; aspect-ratio: auto; }
+    .spread-text { flex: 1 1 45%; }
+}
+
+/* 마지막 펼침면은 교훈 한 줄이 더 붙으므로 그림칸을 그만큼만 낮춘다.
+   그림은 잘라 채우기라 2:1로 그려도 그대로 쓸 수 있다. */
+.page-story.spread-final .spread-art {
+    aspect-ratio: 2.3 / 1;
 }

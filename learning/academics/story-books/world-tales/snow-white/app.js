@@ -169,8 +169,9 @@ function spreadPage(chapter, beat, isFirst) {
     const badgeHtml = isFirst ? `<div class="spread-chapter-badge">${chapter.title}</div>` : '';
     const leftHtml = beat.left.map(p => `<p>${p}</p>`).join('');
     const rightHtml = beat.right.map(p => `<p>${p}</p>`).join('');
+    const moralHtml = '';
     return `
-        <div class="page page-story">
+        <div class="page page-story${moralHtml ? ' spread-final' : ''}">
             <div class="spread-art">
                 ${badgeHtml}
                 ${artFrame(beat.art, beat.emoji)}
@@ -178,6 +179,7 @@ function spreadPage(chapter, beat, isFirst) {
             <div class="spread-text">
                 <div class="spread-text-left">${leftHtml}</div>
                 <div class="spread-text-right">${rightHtml}</div>
+                ${moralHtml}
             </div>
         </div>`;
 }

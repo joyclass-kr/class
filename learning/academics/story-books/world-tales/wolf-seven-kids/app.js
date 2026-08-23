@@ -125,9 +125,8 @@ function coverPage() {
             <div class="story-page-right">
                 <h1>늑대와 일곱 마리 아기 염소</h1>
                 <p>늑대와 일곱 마리 아기 염소는 독일의 그림 형제가 1812년에 펴낸 어린이와 가정을 위한 이야기집에 실린 이야기예요.</p>
-                <p>그림 형제는 이야기를 지어낸 사람들이 아니에요. 형 야코프와 동생 빌헬름은 독일어와 옛 독일을 연구하던 학자였는데, 1806년 무렵부터 고향 주변을 다니며 사람들이 들려주는 옛이야기를 받아 적기 시작했지요. 주로 형이 이야기를 모으러 다니고, 글솜씨가 뛰어난 동생이 문장으로 다듬었답니다.</p>
-                <p>두 사람이 평생 모아 책에 담은 이야기는 이백 편이 넘어요. 들은 것을 그대로 옮겨 적기만 한 것이 아니라, 이야기 속에 살아 있는 독일 사람들의 마음과 지혜를 살려 아름다운 독일 말로 다시 써 낸 것이지요.</p>
-                <p>이 이야기는 빨간 모자와 마찬가지로 늑대가 다른 사람인 척 꾸며 아이들에게 다가가는 이야기예요. 목소리를 바꾸고, 발을 하얗게 칠하고, 속이는 방법이 하나씩 늘어나며 되풀이되는 구조가 이런 이야기의 특징이랍니다.</p>
+                <p>그림 형제는 이야기를 지어낸 사람들이 아니에요. 형 야코프와 동생 빌헬름은 독일어를 연구하던 학자였는데, 1806년 무렵부터 고향 주변을 다니며 사람들이 들려주는 옛이야기를 받아 적었답니다.</p>
+                <p>이 이야기는 빨간 모자처럼 늑대가 다른 사람인 척 꾸며 다가가는 이야기예요. 목소리를 바꾸고 발을 하얗게 칠하는 식으로 속이는 방법이 하나씩 늘어나는 짜임이 이런 옛이야기의 특징이랍니다.</p>
             </div>
         </div>`;
 }
@@ -170,8 +169,9 @@ function spreadPage(chapter, beat, isFirst) {
     const badgeHtml = isFirst ? `<div class="spread-chapter-badge">${chapter.title}</div>` : '';
     const leftHtml = beat.left.map(p => `<p>${p}</p>`).join('');
     const rightHtml = beat.right.map(p => `<p>${p}</p>`).join('');
+    const moralHtml = '';   // 이 책은 교훈 줄이 없다
     return `
-        <div class="page page-story">
+        <div class="page page-story${moralHtml ? ' spread-final' : ''}">
             <div class="spread-art">
                 ${badgeHtml}
                 ${artFrame(beat.art, beat.emoji)}
@@ -179,6 +179,7 @@ function spreadPage(chapter, beat, isFirst) {
             <div class="spread-text">
                 <div class="spread-text-left">${leftHtml}</div>
                 <div class="spread-text-right">${rightHtml}</div>
+                ${moralHtml}
             </div>
         </div>`;
 }

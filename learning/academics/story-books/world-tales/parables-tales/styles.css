@@ -135,7 +135,7 @@ body {
     display: flex;
     flex-direction: column;
     justify-content: center;
-    padding: clamp(16px, 3.4vw, 40px);
+    padding: clamp(14px, 2.4vw, 28px) clamp(16px, 3.4vw, 40px);
     overflow: hidden;
     color: var(--ink);
     min-height: 0;
@@ -224,10 +224,10 @@ body {
 }
 
 .page-story p {
-    margin: 0 0 10px;
+    margin: 0 0 7px;
     font-size: clamp(15px, 1.8vw, 18px);
     font-weight: 500;
-    line-height: 1.75;
+    line-height: 1.68;
     color: var(--ink);
     text-indent: 1em;
 }
@@ -339,15 +339,15 @@ body {
     margin: 0;
     padding: 0;
     display: grid;
-    gap: 10px;
+    gap: 4px;
 }
 
 .toc-list button {
     width: 100%;
     display: flex;
     align-items: center;
-    gap: 12px;
-    padding: 10px 14px;
+    gap: 10px;
+    padding: 5px 12px;
     border: 1px solid var(--parchment-shade);
     border-radius: 8px;
     background: #fffaf0;
