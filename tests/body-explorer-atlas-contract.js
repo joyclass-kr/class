@@ -60,7 +60,11 @@ assert.match(circulationAtlas, /event\.target\.closest\("\[data-inspect-target\]
 assert.match(circulationAtlas, /const inspectableStructures =/);
 assert.match(circulationAtlas, /dataset\.inspectTarget/);
 assert.match(circulationAtlas, /map\.addEventListener\("keydown"/);
+assert.match(circulationAtlas, /function bindInteractiveTargets/);
+assert.match(circulationAtlas, /event\.stopPropagation\(\)/);
 assert.match(circulationStyles, /\[data-inspect-target\]/);
+assert.match(circulationStyles, /\.map-hotspots\s*\{[^}]*z-index:\s*30;[^}]*pointer-events:\s*none/s);
+assert.match(circulationStyles, /\.map-hotspots \.anatomy-hotspot\s*\{[^}]*pointer-events:\s*auto;[^}]*touch-action:\s*manipulation/s);
 assert.doesNotMatch(circulationAtlas, /function setFreeExplore/);
 assert.match(circulationAtlas, /pointerdown/);
 assert.match(circulationAtlas, /data-atlas-layer/);

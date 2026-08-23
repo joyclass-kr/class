@@ -121,6 +121,32 @@
         announce(note.title + ". " + note.text);
     }
 
+    function bindInteractiveTargets() {
+        map.querySelectorAll(".anatomy-hotspot").forEach((button) => {
+            button.addEventListener("pointerdown", (event) => {
+                event.stopPropagation();
+                state.moved = false;
+            });
+            button.addEventListener("click", (event) => {
+                event.stopPropagation();
+                inspectStructure(button.dataset.target);
+            });
+        });
+
+        inspectableElements.forEach((element) => {
+            element.addEventListener("pointerdown", (event) => {
+                event.stopPropagation();
+                state.moved = false;
+            });
+            element.addEventListener("click", (event) => {
+                event.stopPropagation();
+                inspectStructure(element.dataset.inspectTarget);
+            });
+        });
+    }
+
+    bindInteractiveTargets();
+
     function resetCamera(announceChange = true) {
         state.rotateX = -2;
         state.rotateY = 0;

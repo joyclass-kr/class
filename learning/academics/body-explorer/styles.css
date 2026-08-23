@@ -3351,6 +3351,22 @@ body.journey-active .journey-screen:not(.hidden) {
     }
 }
 
+/* The hotspot layer owns labels; empty overlay space passes through to SVG structures. */
+.body-model {
+    z-index: 1;
+}
+
+.map-hotspots {
+    z-index: 30;
+    pointer-events: none;
+}
+
+.map-hotspots .anatomy-hotspot {
+    z-index: 1;
+    pointer-events: auto;
+    touch-action: manipulation;
+}
+
 /* Large atlas structures are direct touch, pointer, and keyboard targets. */
 .body-model [data-inspect-target] {
     cursor: pointer;
