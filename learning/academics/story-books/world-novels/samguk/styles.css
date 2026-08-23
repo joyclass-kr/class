@@ -196,7 +196,8 @@ body {
     overflow-y: auto;
     overflow-x: hidden;
     -webkit-overflow-scrolling: touch;
-    padding: clamp(16px, 3.4vw, 40px);
+    --page-pad: clamp(16px, 3.4vw, 40px);
+    padding: var(--page-pad);
 }
 
 .story-page-left {
@@ -207,17 +208,19 @@ body {
    그 아래 남는 자리를 글이 채운다. 옛날 명작 전집의 지면이 그랬다.
    그림 파일이 아직 없어도 자리는 그대로 잡아 둔다. */
 .story-art-top {
-    width: 100%;
+    /* 그림은 쪽 네 방향 가장자리까지 꽉 나간다.
+       가운데 접히는 선까지 간다. 진짜 책이 그렇게 한다. */
+    width: auto;
     aspect-ratio: 4 / 3;
     flex: none;
-    margin: 0 0 clamp(10px, 1.5vw, 16px);
+    margin: calc(-1 * var(--page-pad)) calc(-1 * var(--page-pad)) clamp(10px, 1.5vw, 16px);
 }
 
 .story-art-top .art-frame {
     width: 100%;
     height: 100%;
-    border-radius: 3px;
-    box-shadow: 0 6px 16px rgba(0, 0, 0, 0.16), inset 0 0 0 1px rgba(92, 58, 34, 0.25);
+    border-radius: 0;
+    box-shadow: none;
 }
 
 .page-story h2 {
@@ -404,11 +407,11 @@ body {
 
 .quiz-list {
     display: grid;
-    gap: 10px;
+    gap: 14px;
 }
 
 .quiz-item {
-    padding-bottom: 8px;
+    padding-bottom: 12px;
     border-bottom: 1px solid var(--parchment-shade);
 }
 
@@ -550,4 +553,11 @@ body {
 /* 앞 쪽에서 이어진 문단은 첫 줄을 들여쓰지 않는다 */
 .page-story p.cont {
     text-indent: 0;
+}
+
+/* 대화가 줄을 바꿀 때마다 한 칸 들여 쓴다.
+   text-indent는 문단 첫 줄에만 걸리므로, 줄 앞에 한 칸짜리 자리를 넣어 준다. */
+.page-story .ln {
+    display: inline-block;
+    width: 1em;
 }

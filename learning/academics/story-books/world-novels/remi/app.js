@@ -447,8 +447,12 @@ function makeProbe() {
     const cs = getComputedStyle(col);
     const measured = col.clientHeight - parseFloat(cs.paddingTop) - parseFloat(cs.paddingBottom);
 
-    const contentHeight = () => [...col.children].reduce((h, el) =>
-        h + el.getBoundingClientRect().height + parseFloat(getComputedStyle(el).marginBottom || 0), 0);
+    // 그림처럼 위쪽 여백이 음수인 것도 있으므로 위아래 여백을 다 셈한다.
+    const contentHeight = () => [...col.children].reduce((h, el) => {
+        const s = getComputedStyle(el);
+        return h + el.getBoundingClientRect().height
+            + (parseFloat(s.marginTop) || 0) + (parseFloat(s.marginBottom) || 0);
+    }, 0);
 
     col.innerHTML = '<h2>제목</h2>';
     const headHeight = contentHeight();
@@ -526,6 +530,11 @@ function runHtml(segs, a, b) {
         const contd = !segs[i].start;
         let j = i;
         while (j < b && segs[j].paraIdx === pi) { inner += segs[j].html; j++; }
+        // 대화는 줄을 바꿀 때마다 한 칸 들여 쓴다. 국어 표기 규칙이다.
+        // 첫 줄만 들여쓰는 text-indent로는 안 되므로 줄 앞에 한 칸짜리 자리를 넣는다.
+        // 쪽 끝에 걸린 <br>는 빈 줄만 만드니 떼어 낸다.
+        inner = inner.replace(/(<br\s*\/?>)+\s*$/i, '')
+            .replace(/<br\s*\/?>/gi, '<br><span class="ln"></span>');
         out += `<p${contd ? ' class="cont"' : ''}>${inner}</p>`;
         i = j;
     }
@@ -758,11 +767,9 @@ const QUIZ = [
 ];
 
 // 선지를 세로로 쌓으니 한 쪽에 열여섯 문항이 다 들어가지 않는다. 몇 개씩 나눠 싣는다.
-const QUIZ_PER_SPREAD = 3;
-const QUIZ_GROUPS = [];
-for (let i = 0; i < QUIZ.length; i += QUIZ_PER_SPREAD) {
-    QUIZ_GROUPS.push({ from: i, items: QUIZ.slice(i, i + QUIZ_PER_SPREAD) });
-}
+// 문제는 한 쪽에 다 넣고 스크롤해서 푼다.
+// 쪽을 쪼개 놓으면 쪽마다 절반이 비고, 답을 고르려고 여러 번 넘겨야 한다.
+const QUIZ_GROUPS = [{ from: 0, items: QUIZ }];
 
 // 쪽을 넘겼다 돌아와도 이미 푼 문항은 풀린 채로 있어야 한다.
 const QUIZ_PICKED = new Array(QUIZ.length).fill(null);
