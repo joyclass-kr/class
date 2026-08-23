@@ -20,7 +20,8 @@ def extract(slug, out=None):
     title = re.search(u'<title>(.*?)</title>', html).group(1)
     cover = js[js.index(u'function coverPage()'):js.index(u'function tocPage(')]
     intro = re.findall(u'<p>(.*?)</p>', cover, re.S)
-    emoji = re.search(u"artFrame\\('cover\\.png', '(.*?)'\\)", cover).group(1)
+    # webp로 바꾼 책도 있으므로 확장자를 가리지 않는다.
+    emoji = re.search(u"artFrame\\('cover\\.(?:png|webp)', '(.*?)'\\)", cover).group(1)
 
     quiz = []
     for m in re.finditer(u'\\{ q: "((?:[^"\\\\]|\\\\.)*)", choices: \\[(.*?)\\], answer: (\\d)', js):

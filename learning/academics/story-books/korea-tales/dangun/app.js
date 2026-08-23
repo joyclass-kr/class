@@ -131,10 +131,12 @@ const CHAPTERS = [
                 emoji: "✨",
                 left: [
                     "삼칠일, 그러니까 스무하루가 되던 날 아침이었어요.",
-                    "동굴 안이 환해졌습니다."
+                    "동굴 안이 눈이 부시도록 환해졌습니다.",
+                    "곰의 몸에서 검은 털이 눈처럼 흩날렸지요."
                 ],
                 right: [
-                    "곰이 있던 자리에 한 여인이 서 있었지요. 여인은 제 두 손을 한참이나 들여다보았어요.",
+                    "빛이 걷히자 그 자리에 한 여인이 서 있었어요.",
+                    "여인은 제 두 손을 한참이나 들여다보았습니다.",
                     "사람들은 그를 웅녀라 불렀답니다."
                 ]
             }
@@ -318,27 +320,11 @@ function endPage() {
         </div>`;
 }
 
-function historyPage() {
-    return `
-        <div class="page page-history">
-            <h2>여기서부터는 진짜 역사</h2>
-            <p class="history-note">앞까지가 이야기였고, 여기부터는 기록에 남은 사실이에요.</p>
-            <hr>
-            <div class="history-body">
-                <p>고조선은 실제로 있었던 나라예요. 중국의 오래된 책인 관자와 사기에 조선이라는 나라 이름이 나오고, 기원전 108년에 한나라와 싸우다 도읍 왕검성이 무너졌다는 기록도 남아 있답니다.</p>
-                <p>고조선 땅에서는 비파처럼 생긴 청동 칼과 별무늬 청동 거울, 고인돌이 아주 많이 나와요. 이런 것들이 한반도 북부와 만주 지역에서 함께 나오기 때문에 학자들은 그 일대를 고조선의 자리로 봅니다.</p>
-                <p>우리가 흔히 말하는 기원전 2333년이라는 연도는 삼국유사에 적혀 있는 것이 아니에요. 조선 시대에 동국통감을 쓰면서 계산해 낸 연도랍니다.</p>
-                <p>10월 3일 개천절은 하늘이 열린 날이라는 뜻이에요. 대한민국 정부가 1949년에 국경일로 정했지요.</p>
-            </div>
-        </div>`;
-}
-
 const PAGES = [
     { kind: 'cover' },
     { kind: 'toc' },
     ...CHAPTERS.flatMap(chapter => chapter.beats.map((beat, i) => ({ kind: 'spread', chapter, beat, isFirst: i === 0 }))),
     { kind: 'reflection', chapter: CHAPTERS[CHAPTERS.length - 1] },
-    { kind: 'history' },
     { kind: 'quiz' },
     { kind: 'end' }
 ];
@@ -363,8 +349,6 @@ function renderPage(page) {
             return spreadPage(page.chapter, page.beat, page.isFirst);
         case 'reflection':
             return reflectionPage(page.chapter);
-        case 'history':
-            return historyPage();
         case 'quiz':
             return quizPage();
         case 'end':
