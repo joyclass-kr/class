@@ -158,11 +158,16 @@
       button.dataset.tone = node.tone || "";
       button.dataset.kind = node.kind || "road";
       if (node.dense) button.dataset.dense = "true";
+      if (node.start) button.dataset.start = node.start;
       if (node.station) button.dataset.station = String(node.station);
       button.disabled = !targetClass || actionPending;
       button.title = node.label;
       button.setAttribute("aria-label", node.label);
-      button.textContent = node.station ? String(node.station) : node.kind === "building" ? "⌂" : node.effect ? "!" : "";
+      button.textContent = node.start === "thief"
+        ? "도둑 아지트"
+        : node.start === "police"
+          ? "경찰 감옥"
+          : node.station ? String(node.station) : node.kind === "building" ? "⌂" : node.effect ? "!" : "";
       button.addEventListener("click", () => handleNodeClick(node.id));
       fragment.appendChild(button);
     }

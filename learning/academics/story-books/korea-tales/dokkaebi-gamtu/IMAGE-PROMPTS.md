@@ -1,185 +1,268 @@
 # 제미나이 그림 프롬프트 — 도깨비 감투
 
-그림책 틀이에요. 한 펼침마다 위쪽에 큰 그림 하나가 통으로 들어가고, 아래쪽 띠에 글이 좌우로 나뉩니다.
-**열두 개의 펼침** + 표지 + 마지막 장 = 그림 **열네 장**.
+파랑새·삼년 고개와 같은 **그림책 틀**이에요. 한 펼침마다 위쪽에 큰 그림 하나가 통으로 들어가고,
+아래쪽 띠에 글이 좌우로 나뉘어 들어갑니다.
 
-## 비율 — 꼭 지켜주세요
+이야기는 **16개의 펼침**이고, 여기에 표지와 마지막 장을 더해 그림은 모두 **18장**입니다.
+
+프롬프트를 제미나이에 그대로 넣어 만든 뒤, 파일명을 정확히 맞춰 `images/` 폴더에 넣으면 자동으로 책에 나타납니다.
+(그림이 없어도 책은 정상적으로 열리고, 이모지 자리표시자가 대신 보여요.)
+
+## 비율이 그림마다 다릅니다 — 꼭 지켜주세요
 
 | 그림 | 실제 칸 비율 | 요청할 비율 |
 |---|---|---|
-| 본문 그림 12장 | 1.92 : 1 | **가로 16 : 세로 9** |
-| 표지 `cover.png` | 0.67 : 1 | **세로 2 : 3** |
+| 본문 그림 16장 | 1.92 : 1 | **가로 16 : 세로 9** |
+| 표지 `cover.png` | 0.67 : 1 | **세로 2 : 3** (세로로 긴 그림) |
 | 마지막 `end.png` | 1.76 : 1 | **가로 16 : 세로 9** |
 
-제미나이는 가로 그림을 1376×768(16:9)로 내보냅니다. 칸이 1.92:1이라 위아래가 3.5퍼센트쯤 잘리는데, 눈에 띄지 않는 정도라 그대로 쓰면 됩니다. 4:3으로 만들면 위아래가 삼십 퍼센트쯤 잘려나가니 그것만 피하세요. 인물을 가운데에 몰지 말고 좌우로 나눠 배치하세요.
+제미나이는 가로 그림을 1376×768(16:9)로 내보냅니다. 칸이 1.92:1이라 위아래가 3.5퍼센트쯤 잘리는데
+눈에 띄지 않는 정도예요. 4:3으로 만들면 위아래가 삼십 퍼센트쯤 잘려나가니 그것만 피하세요.
+인물을 가운데에 몰지 말고 좌우로 나눠 배치하면 훨씬 자연스럽습니다.
 
-## 이 책만의 요령
-
-**돌쇠가 보이지 않는 장면이 이 책의 핵심입니다.** 감투를 쓴 돌쇠는 그리지 말고, 그가 있다는 것을 다른 것으로 보여 주세요 — 허공에 떠 있는 떡, 저절로 열리는 문, 흙바닥의 발자국처럼요. 뒤로 갈수록 돌쇠의 표정이 즐거움에서 불안으로 바뀌어야 합니다.
-
-## 공통 스타일 지시문 (모든 프롬프트 앞에 붙이세요)
+## 공통 스타일 지시문 (모든 프롬프트 앞에 붙여서 쓰세요)
 
 ```
-Children's picture book illustration, cel-animation style with clean bold
-outlines and warm colors, similar to a classic Korean animated storybook.
-Setting is a Joseon-era village and its market: thatched cottages, an earthen
-yard, a busy market of straw-mat stalls with rice cakes, fruit and bolts of
-cloth, and a dim kitchen with a clay stove. Warm daylight for the market, deep
-amber firelight at night. Expressive faces, gentle humour early on turning
-uneasy later. No text or letters in the image.
+Children's picture book illustration, bright cheerful cel-animation style with
+clean bold outlines and flat vivid colors, similar to a classic Korean animated
+storybook. Traditional Korean rural village of the Joseon era: thatched-roof
+cottages, low stone walls, a pebbly stream with big flat boulders, a busy market
+of straw awnings and wooden stalls, a village schoolroom. Characters wear hanbok.
+Night scenes lit by warm firelight and cool blue moonlight. Big expressive faces,
+exaggerated comic gestures, lively motion. No text or letters in the image.
 ```
 
-## 인물 설명 (일관성을 위해 매번 붙이세요)
+## 인물 설명 (일관성을 위해 매번 붙여 넣으세요)
 
 ```
-Dolsoe: a thin hardworking man in his thirties, patched grey hanbok, a towel tied
-round his head, honest tired face. Early on he grins with mischief; by the middle
-his eyes have gone shifty and hollow. The magic hat: a small round black Korean
-gamtu, worn and slightly dented; from the ninth picture onward it has a bright
-red cloth patch stitched crookedly on one side. When Dolsoe wears it he is
-completely invisible - do not draw him at all, only the effects he causes.
-Market people: stallholders and shoppers in muted hanbok, increasingly nervous as
-the story goes on.
+Dolsoe: a wiry hardworking man in his thirties in a patched undyed hanbok with a
+cloth headband and straw sandals, a big open honest face that shows every feeling
+at once. When invisible he is drawn as an outline of empty space - objects float,
+dust puffs up, clothes and ropes move - but never as a transparent ghost.
+The dokkaebi: six Korean goblins, stocky and jolly, mossy blue-green or reddish
+skin, one or two knobby horns, big round eyes, snub noses, wild hair, wearing
+short ragged trousers and carrying knobbly clubs. They are funny, never scary.
+Give each one a running trait: the BIGGEST has one huge horn and sings terribly
+with his head thrown back; the HICCUPING one jolts upright every few seconds; the
+SMALLEST is knee-high and keeps dropping things. The others are background.
+The gamtu: a small round black horsehair cap.
+The red patch: a bright scarlet scrap of cloth sewn crookedly on the cap's side.
+The market people: a plump tteok seller behind a steaming tray, a cloth merchant,
+farm wives, children.
+The schoolmaster: a thin bearded old man in a wide black horsehair hat.
+The ox: a big cream-brown Korean ox with a rope halter.
 ```
 
 ---
 
-### `cover.png` — 표지 (세로 2:3)
+## 표지 — `cover.png` (세로 2:3)
+
+세로로 긴 표지. 달밤 개울가, 허공에 뜬 게와 도깨비 감투.
 
 ```
-Vertical portrait composition. A busy Korean market seen from above at midday,
-stalls and shoppers filling the lower two thirds. Floating in the empty air above
-the crowd, at head height, a single small bright red cloth patch - nothing else
-around it. Every face in the market is turned up toward it, mouths open. Warm
-daylight. Unsettling and irresistible.
+Vertical portrait composition. A moonlit stream at night with a crackling
+campfire on the pebbly bank. Around the fire nobody is visible - but a grilled
+crab hovers in mid-air being eaten, a gourd cup tips itself, and six small black
+horsehair caps float at head height in a ring around the flames, each with two
+faint dents where horns would be. In the lower foreground, peeking over a big flat
+boulder with only his eyes and fingertips showing, a wiry man in a headband stares
+with enormous round eyes. Warm orange firelight against deep blue night, sparks
+rising. Funny and eerie at once.
 ```
 
-## 본문 열두 장 (모두 가로 16:9)
+## 본문 16장 (모두 가로 16:9)
 
-### `01-poor.png` — 늘 가난한 돌쇠
-
-```
-Wide interior of a bare Korean room at evening. On the right, Dolsoe sits
-cross-legged on the floor in patched clothes, staring down at a single empty
-wooden bowl in front of him, chin in one hand, shoulders slumped. On the left,
-the open door shows a modest yard and a fading sky. Warm dim light, quiet and
-humble.
-```
-
-### `02-find.png` — 무너진 무덤가에서 주운 것
+### `01-poor.png` — 돌쇠가 빈 밥그릇한테 말을 건다
 
 ```
-Wide scene on a grassy hillside with an old collapsed grave mound overgrown with
-weeds. On the right, Dolsoe crouches with his A-frame carrier beside him, lifting
-a small dusty black hat out of the long grass with two fingers, head tilted in
-curiosity. Late afternoon light through pines, a slight stillness in the air.
+Wide panoramic scene. Evening inside a bare little thatched cottage. On the right
+a wiry man in a patched hanbok sits cross-legged at a low table holding up a
+completely empty brass rice bowl at eye level, talking to it, eyebrows raised as
+if waiting for an answer. On the left, through the open door, the darkening yard
+with his A-frame rack and hoe leaning by the wall, everything neat and swept. Warm
+low lamplight. Poor but not miserable - comic and companionable.
 ```
 
-### `03-vanish.png` — 거울에 비치지 않는 몸
+### `02-fire.png` — 모닥불은 타는데 둘레에 아무도 없다
 
 ```
-Wide interior of Dolsoe's room. On the right, an old bronze mirror on a low
-stand, and in it - nothing. The room reflects back empty. On the left, we see
-only the effects of an invisible man: the hat is gone from the floor, a sleeve of
-his jacket hangs impossibly in mid-air, one straw sandal lifted off the ground.
-Lamplight. Eerie and thrilling.
+Wide panoramic scene. A pebbly stream bank at night. On the right a campfire
+burns high and bright with a ring of stones around it - and absolutely nobody
+sitting there. On the left, at the edge of the firelight, the man has stopped
+dead on the path with one foot still lifted, both hands frozen halfway up, mouth
+a small round O. Deep blue night, orange light pooling on the empty stones. Very
+strange, very quiet.
 ```
 
-### `04-play.png` — 재미로 시작한 장난
+### `03-crab.png` — 게가 저 혼자 걸어가 불 위에 올라앉는다
 
 ```
-Wide scene in a neighbour's sunny yard. A laundry line jerks and swings with no
-one near it; a broom tips over on its own; a chicken flaps away from an empty
-patch of ground. On the right, a woman stands with a basin on her hip staring at
-the line, brow furrowed, hair lifting. No sign of Dolsoe at all. Bright and
-comic.
+Wide panoramic scene. Close along the ground at the fire's edge. On the left a
+crab walks briskly out of the shallow water and along the pebbles in a little
+trail of wet footprints, claws up, entirely by itself. On the right it has climbed
+onto a flat stone over the flames and settled down. Above the fire, another
+already-grilled crab hovers in mid-air with one leg snapped off and floating away.
+Firelight on wet stones, no people anywhere. Absurd and wonderful.
 ```
 
-### `05-market.png` — 허공에 떠오른 떡 하나
+### `04-appear.png` — 허공에서 뿔이 쑥, 도깨비가 통째로 나타난다
 
 ```
-Wide market scene at midday. In the centre, above a stall of white rice cakes, a
-single rice cake hovers in mid-air about chest height, tilted as if held. The
-stallholder has half risen from her stool, one hand out, mouth open. Two shoppers
-beside her have frozen mid-gesture. Busy market all around, ordinary and sunny -
-which makes the floating cake worse.
+Wide panoramic scene. The fire on the left. In the middle of the frame a
+dokkaebi is materialising out of thin air from the top down: one big knobby horn
+and a wild-haired head are already solid, the shoulders and one arm are half
+formed, the legs are still nothing at all. The visible hand holds a small black
+horsehair cap. On the right, behind a big boulder, the man's eyes and clenched
+fingertips show over the top, eyebrows shot up into his headband. Warm firelight,
+comic astonishment.
 ```
 
-### `06-bolder.png` — 점점 대담해지는 손
+### `05-party.png` — 도깨비 여섯이 나타나 노래하고 딸꾹질하고 게를 떨어뜨린다
 
 ```
-Wide market scene, wider and busier. Across the frame, several impossible things
-happen at once: a persimmon lifts off a pile, a bolt of blue cloth slides off a
-table and floats away, the lid of a coin box swings open by itself and coins rise
-out in a small stream. Stallholders lunge and grab at empty air from every
-direction. Chaotic and unnerving.
+Wide panoramic scene of joyful chaos. Six stocky green and reddish dokkaebi
+around the fire. On the left the biggest one, with one huge horn, sings with his
+head thrown back, mouth enormous, arms spread, obviously off-key. In the centre
+another jolts bolt upright mid-hiccup, cup flying out of his hand. On the right
+the smallest one, knee-high, fumbles a grilled crab leg that is already falling,
+while a neighbour throws both hands up in exasperation. Six little black caps
+tossed on a flat boulder in the foreground. Sparks, motion lines, huge grins.
 ```
 
-### `07-fear.png` — 귀신이 든다는 소문
+### `06-wrestle.png` — 감투를 벗어 던지고 씨름을 시작한다
 
 ```
-Wide market scene at dusk, stalls half packed up. Stallholders sit hunched on
-their mats with their arms wrapped around their goods, lanterns lit early, eyes
-darting. Two men stand back to back with sticks. An old woman ties a rope around
-her basket. Long blue shadows. On the far right, half hidden behind a post,
-Dolsoe stands visible for once, hat in hand, watching them - and his face is not
-happy.
+Wide panoramic scene. On the right two dokkaebi are locked together in a Korean
+wrestling grip, legs braced, dust billowing up around them, the others crowded
+around cheering with their fists in the air. On the left, in the foreground, six
+small black horsehair caps lie scattered on a wide flat boulder - and just at the
+very edge of that boulder, half hidden in shadow, a human hand is beginning to
+creep into frame. Firelight, dust, energy on one side and stillness on the other.
 ```
 
-### `08-hole.png` — 불티에 뚫린 구멍
+### `07-steal.png` — 감투를 품에 넣고 냅다 뛴다
 
 ```
-Wide interior of a dim kitchen at night. On the left, a clay stove with a low
-fire, a single spark arcing up. On the right, the black hat lying on the floor
-with a small scorched hole in its side and a thin curl of smoke rising. Dolsoe's
-hands rush into frame from the edge, patting at it frantically. Deep amber
-firelight, sharp shadows.
+Wide panoramic scene. On the left the man sprints away along the dark stream bank
+toward the viewer's left, one hand clamped over his chest where the cap is
+hidden, legs a blur, face lit with terror and glee at once. On the right, back at
+the fire, one dokkaebi stands scratching his head over the boulder where five
+caps now lie, while another points an accusing finger at him. Moonlit water, motion
+lines, a comic chase that hasn't started yet.
 ```
 
-### `09-patch.png` — 빨간 헝겊을 대고 기우다
+### `08-mirror.png` — 거울 앞에 섰는데 아무것도 비치지 않는다
 
 ```
-Wide interior scene by lamplight. In the centre, Dolsoe sits hunched over the hat
-on his knee, tongue between his teeth, pushing a needle through a bright red
-square of cloth, the stitches crooked and clumsy. An open sewing box beside him.
-His face is lit from below, tired and set. Warm dim light, quiet before
-disaster.
+Wide panoramic scene. Inside the cottage at night. On the right stands a small
+bronze mirror on a stand, reflecting only the empty wall and a corner of the
+quilt. On the left, in front of it, the man is invisible - but his position is
+unmistakable: the floor mat is dented, one straw sandal is tipped over
+mid-step, and his hat is floating at head height. A single raised bump in the
+air where his hand must be. Warm lamplight, hilarious and slightly spooky.
 ```
 
-### `10-spot.png` — 둥둥 떠다니는 빨간 점
+### `09-prank.png` — 빨랫줄을 건드리고 훈장님 갓을 눌러 본다
 
 ```
-Wide market scene at midday, from a low angle. Through the crowd, a small bright
-red patch of cloth glides along at head height, nothing attached to it. Along its
-path, one after another, people's heads turn and follow it - a boy pointing, a
-woman gripping her neighbour's sleeve, a man half standing. The red is the only
-strong colour in the frame. Tension building.
+Wide panoramic scene split into two gags. On the left, a laundry line in a yard
+jerks and swings wildly with no wind, wet clothes flapping, while a man beneath it
+stares straight up at the perfectly still sky, scratching his head. On the right,
+in a village schoolroom, a thin bearded schoolmaster's tall black hat has been
+shoved down over his eyes and he is bellowing with one arm raised, while four
+small boys sit bolt upright with their hands on their knees and identical
+expressions of total innocence. Bright daylight, comic outrage.
 ```
 
-### `11-caught.png` — 감투가 벗겨지는 순간
+### `10-cow.png` — 소가 저절로 온 동네를 뛰어다닌다
 
 ```
-Wide market scene, the moment of exposure. In the centre, a hand has closed on
-the red patch and yanked the black hat up into the air - and Dolsoe appears out
-of nothing beneath it, mid-stride, arms up, face stricken. All around, the crowd
-recoils in a ring, mouths open, some falling backward. Dust and dropped goods.
-Silence you can hear.
+Wide panoramic scene of full comic motion. A big cream-brown ox gallops down the
+village lane from right to left with its eyes rolling white, tail straight up,
+rope halter flying - and nobody on its back, though its back is visibly dented
+down in the middle and the loose rope is held up in mid-air. Behind it a whole
+crowd of villagers pours down the lane pointing and shouting, hats falling off,
+one woman with a water jar tipping over. Chickens exploding out of the way. Dust,
+motion lines, bright noon. The funniest picture in the book.
 ```
 
-### `12-burn.png` — 아궁이에 넣은 감투
+### `11-market.png` — 떡 하나가 공중으로 슥 떠오른다
 
 ```
-Wide interior scene of Dolsoe's kitchen at night. In the centre, Dolsoe crouches
-before the open stove mouth, having just pushed the black hat into the flames,
-watching it curl and blacken, the red patch the last thing to catch. His face is
-calm and clear for the first time in the book, firelight warm on it. Behind him,
-the room is bare again. Quietly hopeful.
+Wide panoramic scene. A busy market under straw awnings. On the right a plump
+tteok seller behind a steaming tray of rice cakes has half turned away to serve
+someone. On the left, above the tray, one single rice cake floats up into the air
+by itself, tilting slightly, steam trailing off it. A shopper nearby has stopped
+mid-bite and is staring at it with her eyes crossed. Bright colours, crowded
+stalls, one impossible detail.
 ```
 
-### `end.png` — 마지막 (가로 16:9)
+### `12-rumor.png` — 곳간은 차오르는데 마음은 무거워진다
 
 ```
-A quiet Korean village yard at sunrise, no people. A clay stove with cold grey
-ash and one small scrap of red cloth half burnt at the edge, a broom leaning
-against the wall, warm morning light across the swept earth. Calm and settled.
+Wide panoramic scene. On the left, inside a storehouse, bolts of cloth, fruit
+baskets and grain sacks are heaped to the beams - and the man sits on the floor in
+front of them with his arms around his knees, not looking at any of it, face
+heavy. On the right, out in the market at dusk, merchants sit hunched over their
+goods with their arms wrapped around them, lanterns lit, watching the dark
+suspiciously. Warm hoard on one side, worried faces on the other.
+```
+
+### `13-hole.png` — 불티가 튀어 구멍이 나고, 빨간 헝겊으로 기운다
+
+```
+Wide panoramic scene. A lamplit room at night. On the left a small charcoal
+brazier throws up a spray of orange sparks, and the black cap lying beside it has
+a scorched hole in its side with a thread of smoke curling up. On the right the
+man sits cross-legged squinting hard, tongue between his teeth, stitching a
+brilliant scarlet scrap of cloth over the hole with big crooked stitches. An open
+chest of rags beside him. Warm light, one shocking spot of red.
+```
+
+### `14-spot.png` — 허공에 빨간 점 하나가 둥둥 떠다닌다
+
+```
+Wide panoramic scene. The market in broad daylight. In the middle of the frame,
+floating at head height above the crowd with absolutely nothing around it, is a
+single bright scarlet patch of cloth, drifting steadily toward a rice cake stall
+on the right. On the left the whole market has turned to look at it - dozens of
+faces, pointing arms, one man standing on a barrel. Bright hard sunlight makes
+the red blaze. Tense and very funny.
+```
+
+### `15-caught.png` — 감투가 벗겨지고 돌쇠가 불쑥 나타난다
+
+```
+Wide panoramic scene. The market, the moment after. On the right a crowd has
+piled in and a hand has snatched the black cap up into the air. On the left, in
+the sudden gap in the crowd, the man has appeared out of nowhere, on his knees on
+the ground with his head bowed and his hands flat in front of him. Every single
+face around him has gone silent and still, mouths open. Bright noon, dust
+settling. No anger yet - just shock.
+```
+
+### `16-burn.png` — 감투를 태우고, 개울가의 도깨비를 다시 만난다
+
+```
+Wide panoramic scene split between two moments. On the left, a kitchen fire hole
+at night: the black cap is burning down to ash and the scarlet patch is the last
+bright thing left in the flames, while the man crouches watching it with his chin
+on his fists. On the right, the moonlit stream: one lone dokkaebi sits on a flat
+boulder gnawing a crab leg, and the man stands a little way off with his hands
+together, head slightly bowed. Behind them the other five dokkaebi are still
+playing around the fire. Warm orange on one side, cool blue on the other, peace on
+both.
+```
+
+---
+
+## 마지막 장 — `end.png` (가로 16:9)
+
+돌쇠가 지게를 지고 장터를 간다.
+
+```
+Wide scene in bright morning. The village lane. The man walks toward the market
+with a loaded A-frame rack on his back and a plain hat on his head, greeting the
+tteok seller who waves back from her stall. Ordinary people, ordinary light,
+nothing floating anywhere. Warm and unremarkable and completely earned.
 ```

@@ -569,3 +569,48 @@ body {
     .spread-art { flex-basis: 55%; }
     .spread-text { flex-basis: 45%; }
 }
+
+/* history page (건국 신화 books only) */
+.page-history {
+    align-items: center;
+    gap: 10px;
+    background: var(--parchment-shade);
+    overflow-y: auto;
+    justify-content: safe center;
+}
+
+.page-history h2 {
+    margin: 0;
+    font-size: clamp(19px, 2.6vw, 26px);
+    color: var(--ink);
+}
+
+.page-history .history-note {
+    margin: 0;
+    font-size: clamp(13px, 1.5vw, 15px);
+    color: var(--muted);
+    font-style: italic;
+}
+
+.page-history hr {
+    width: 72px;
+    max-width: 40%;
+    height: 0;
+    margin: 2px 0 4px;
+    border: 0;
+    border-top: 2px solid var(--moral-border);
+}
+
+.page-history .history-body {
+    max-width: 620px;
+    text-align: left;
+}
+
+.page-history .history-body p {
+    margin: 0 0 8px;
+    font-size: clamp(15px, 1.8vw, 18px);
+    line-height: 1.7;
+    color: var(--ink);
+}
+
+.page-history .history-body p:last-child { margin-bottom: 0; }

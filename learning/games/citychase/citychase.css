@@ -137,7 +137,7 @@ button:disabled { cursor: not-allowed; opacity: .36; box-shadow: none; }
   position: absolute;
   inset: 0;
   z-index: 0;
-  background: linear-gradient(90deg, #13342d22, transparent 8%, transparent 92%, #13342d22), url("assets/city-board-v5.png") center / 100% 100% no-repeat;
+  background: linear-gradient(90deg, #13342d22, transparent 8%, transparent 92%, #13342d22), url("assets/city-board-v6.png") center / 100% 100% no-repeat;
 }
 .boardCanvas { position: absolute; inset: 0; width: 100%; height: 100%; z-index: 0; filter: drop-shadow(0 1px 0 #fff8); }
 .boardShade { position: absolute; inset: 0; pointer-events: none; z-index: 1; box-shadow: inset 0 0 34px #0d2b2455, inset 0 0 0 4px #17372d99; }
@@ -208,6 +208,13 @@ button.building { cursor: pointer; }
 .node[data-tone="white"] { background: #fffdf5; }
 .node[data-station] { width: 34px; height: 34px; border-radius: 7px; background: #e88b2d; color: #fff; font-weight: 950; }
 .node[data-kind="building"] { width: 34px; height: 25px; border-radius: 7px; background: #f6d78a; }
+.node[data-start] { z-index: 6; width: 104px; height: 48px; padding: 3px 8px; border: 3px solid #fff8df; border-radius: 11px; color: #fff; font-size: 12px; font-weight: 950; line-height: 1.05; letter-spacing: -.02em; box-shadow: 0 0 0 3px #203238, 0 5px 0 #13252c99; }
+.node[data-start="thief"] { background: #8e2638; }
+.node[data-start="police"] { background: #24598b; }
+.node[data-start]::before { display: block; margin-bottom: 2px; font-size: 16px; line-height: 1; }
+.node[data-start="thief"]::before { content: "⌂"; }
+.node[data-start="police"]::before { content: "▦"; }
+.node[data-start]::after { inset: -6px; }
 .node.valid, .node.cardTarget, .node.pendingTarget {
   z-index: 7;
   width: 38px;
