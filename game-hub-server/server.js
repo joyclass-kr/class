@@ -223,11 +223,15 @@ const staticAssetOptions = {
 app.use("/assets/avatars", express.static(path.join(SITE_ROOT, "classtools", "assets", "avatars"), staticAssetOptions));
 app.use("/assets", express.static(path.join(SITE_ROOT, "assets"), staticAssetOptions));
 app.get("/favicon.ico", (_req, res) => {
-  res.setHeader("Cache-Control", "public, max-age=31536000, immutable");
+  res.setHeader("Cache-Control", "no-cache, must-revalidate");
   res.sendFile(path.join(SITE_ROOT, "favicon.ico"));
 });
-app.get("/favicon.png", (_req, res) => {
+app.get("/favicon-20260824.ico", (_req, res) => {
   res.setHeader("Cache-Control", "public, max-age=31536000, immutable");
+  res.sendFile(path.join(SITE_ROOT, "favicon-20260824.ico"));
+});
+app.get("/favicon.png", (_req, res) => {
+  res.setHeader("Cache-Control", "no-cache, must-revalidate");
   res.sendFile(path.join(SITE_ROOT, "favicon.png"));
 });
 app.use(
