@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>한국 전래 동화</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Gowun+Batang:wght@400;700&family=Noto+Serif+KR:wght@400;500;700&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="../lobby.css">
+</head>
+<body>
+    <div class="top-bar">
+        <a class="back-link" href="../../../../" aria-label="메인 화면으로 돌아가기">← 메인</a>
+    </div>
+
+    <h1>한국 전래 동화<span>KOREAN FOLK TALES</span></h1>
+
+    <div class="shelf">
+            <a class="book-card" href="samnyeon-gogae/">
+                <span class="book-cover" data-title="삼년 고개"><img src="samnyeon-gogae/images/cover.webp" alt="" loading="lazy"></span>
+                <span class="book-title"><b>1권</b>삼년 고개</span>
+            </a>
+            <a class="book-card" href="gotgam-horangi/">
+                <span class="book-cover" data-title="곶감과 호랑이"><img src="gotgam-horangi/images/cover.webp" alt="" loading="lazy"></span>
+                <span class="book-title"><b>2권</b>곶감과 호랑이</span>
+            </a>
+            <a class="book-card" href="uijoheun-hyeongje/">
+                <span class="book-cover" data-title="의좋은 형제"><img src="uijoheun-hyeongje/images/cover.webp" alt="" loading="lazy"></span>
+                <span class="book-title"><b>3권</b>의좋은 형제</span>
+            </a>
+            <a class="book-card" href="cheonggaeguri/">
+                <span class="book-cover" data-title="청개구리"><img src="cheonggaeguri/images/cover.webp" alt="" loading="lazy"></span>
+                <span class="book-title"><b>4권</b>청개구리</span>
+            </a>
+            <a class="book-card" href="tokki-jaepan/">
+                <span class="book-cover" data-title="토끼의 재판"><img src="tokki-jaepan/images/cover.webp" alt="" loading="lazy"></span>
+                <span class="book-title"><b>5권</b>토끼의 재판</span>
+            </a>
+            <a class="book-card" href="eunhye-kkachi/">
+                <span class="book-cover" data-title="은혜 갚은 까치"><img src="eunhye-kkachi/images/cover.webp" alt="" loading="lazy"></span>
+                <span class="book-title"><b>6권</b>은혜 갚은 까치</span>
+            </a>
+            <a class="book-card" href="yosul-hangari/">
+                <span class="book-cover" data-title="요술 항아리"><img src="yosul-hangari/images/cover.webp" alt="" loading="lazy"></span>
+                <span class="book-title"><b>7권</b>요술 항아리</span>
+            </a>
+    </div>
+
+    <script>
+        // 표지 그림 파일이 아직 없는 책은 제목을 표지 자리에 세운다.
+        document.querySelectorAll('.book-card img').forEach((img) => {
+            const mark = () => img.closest('.book-card').classList.add('no-cover');
+            img.addEventListener('error', mark);
+            if (img.complete && img.naturalWidth === 0) mark();
+        });
+    </script>
+</body>
+</html>

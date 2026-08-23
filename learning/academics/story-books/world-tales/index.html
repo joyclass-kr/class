@@ -1,0 +1,71 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>세계 명작 동화</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Gowun+Batang:wght@400;700&family=Noto+Serif+KR:wght@400;500;700&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="../lobby.css">
+</head>
+<body>
+    <div class="top-bar">
+        <a class="back-link" href="../../../../" aria-label="메인 화면으로 돌아가기">← 메인</a>
+    </div>
+
+    <h1>세계 명작 동화<span>WORLD CLASSIC TALES</span></h1>
+
+    <div class="shelf">
+            <a class="book-card" href="cinderella/">
+                <span class="book-cover" data-title="신데렐라"><img src="cinderella/images/cover.webp" alt="" loading="lazy"></span>
+                <span class="book-title">신데렐라</span>
+            </a>
+            <a class="book-card" href="snow-white/">
+                <span class="book-cover" data-title="백설공주"><img src="snow-white/images/cover.webp" alt="" loading="lazy"></span>
+                <span class="book-title">백설공주</span>
+            </a>
+            <a class="book-card" href="red-hood/">
+                <span class="book-cover" data-title="빨간 모자"><img src="red-hood/images/cover.webp" alt="" loading="lazy"></span>
+                <span class="book-title">빨간 모자</span>
+            </a>
+            <a class="book-card" href="three-pigs/">
+                <span class="book-cover" data-title="아기돼지 삼형제"><img src="three-pigs/images/cover.webp" alt="" loading="lazy"></span>
+                <span class="book-title">아기돼지 삼형제</span>
+            </a>
+            <a class="book-card" href="wolf-seven-kids/">
+                <span class="book-cover" data-title="늑대와 일곱 마리 아기 염소"><img src="wolf-seven-kids/images/cover.webp" alt="" loading="lazy"></span>
+                <span class="book-title">늑대와 일곱 마리 아기 염소</span>
+            </a>
+            <a class="book-card" href="hansel-gretel/">
+                <span class="book-cover" data-title="헨젤과 그레텔"><img src="hansel-gretel/images/cover.webp" alt="" loading="lazy"></span>
+                <span class="book-title">헨젤과 그레텔</span>
+            </a>
+            <a class="book-card" href="bluebird/">
+                <span class="book-cover" data-title="파랑새"><img src="bluebird/images/cover.webp" alt="" loading="lazy"></span>
+                <span class="book-title">파랑새</span>
+            </a>
+            <a class="book-card" href="aesop-tales/">
+                <span class="book-cover" data-title="이솝 이야기"><img src="aesop-tales/images/cover.webp" alt="" loading="lazy"></span>
+                <span class="book-title"><b>모음집</b>이솝 이야기</span>
+            </a>
+            <a class="book-card" href="talmud-tales/">
+                <span class="book-cover" data-title="탈무드"><img src="talmud-tales/images/cover.webp" alt="" loading="lazy"></span>
+                <span class="book-title"><b>모음집</b>탈무드</span>
+            </a>
+            <a class="book-card" href="parables-tales/">
+                <span class="book-cover" data-title="예수님의 비유"><img src="parables-tales/images/cover.webp" alt="" loading="lazy"></span>
+                <span class="book-title"><b>모음집</b>예수님의 비유</span>
+            </a>
+    </div>
+
+    <script>
+        // 표지 그림 파일이 아직 없는 책은 제목을 표지 자리에 세운다.
+        document.querySelectorAll('.book-card img').forEach((img) => {
+            const mark = () => img.closest('.book-card').classList.add('no-cover');
+            img.addEventListener('error', mark);
+            if (img.complete && img.naturalWidth === 0) mark();
+        });
+    </script>
+</body>
+</html>

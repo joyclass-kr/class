@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>명탐정 셜록 홈스</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Gowun+Batang:wght@400;700&family=Noto+Serif+KR:wght@400;500;600;700&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="styles.css">
+</head>
+<body>
+    <div class="top-bar">
+        <a class="back-link" href="../../../../../" aria-label="메인 화면으로 돌아가기">← 메인</a>
+        <button class="toc-link" id="tocLink" type="button" aria-label="차례로 이동">☰ 차례</button>
+    </div>
+
+    <div class="book-stage">
+        <div class="book" id="book">
+            <div class="book-spread" id="spread"></div>
+            <span class="folio folio-left" id="folioLeft"></span>
+            <span class="folio folio-right" id="folioRight"></span>
+
+            <button class="nav-btn nav-prev" id="prevBtn" type="button" aria-label="이전 페이지">‹</button>
+            <button class="nav-btn nav-next" id="nextBtn" type="button" aria-label="다음 페이지">›</button>
+        </div>
+
+        <div class="page-indicator" id="pageIndicator"></div>
+    </div>
+
+    <script src="app.js"></script>
+</body>
+</html>

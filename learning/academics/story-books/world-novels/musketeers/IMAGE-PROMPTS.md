@@ -1,0 +1,153 @@
+# 제미나이 그림 프롬프트 — 삼총사
+
+하나의 이야기를 열다섯 장으로 나눠 담았고, 장마다 그림이 두 장씩 들어갑니다.
+그림이 있는 펼침면은 오른쪽 쪽에 그림 한 장이 들어가고, 그림이 없는 펼침면은 양쪽 쪽에 글만 들어갑니다.
+아래 프롬프트를 제미나이에 넣어 생성한 뒤 파일명을 정확히 맞춰 `images/` 폴더에 넣으면 자동으로 책에 나타납니다.
+(그림이 없어도 책은 정상적으로 열리고, 이모지 자리표시자가 대신 보입니다.)
+
+권장 크기: **가로 4 : 세로 3** 비율, PNG.
+**단 표지(`cover.png`)만 예외 — 세로 2 : 3 비율입니다.** 표지 그림칸은 책을 펼쳤을 때 왼쪽 반쪽 전체를 채우는데,
+그 칸 자체가 세로로 긴 2:3 모양입니다. 4:3 가로 그림을 넣으면 양옆이 절반 가까이 잘려 나갑니다.
+
+## 공통 스타일 지시문 (모든 프롬프트 앞에 붙여서 쓰세요)
+
+```
+Classic children's literature illustration in the style of 1980s Korean
+illustrated classics: gouache and watercolor, bold clean outlines, rich
+saturated colors, realistic human proportions with expressive faces, France
+1625, wide-brimmed plumed hats, cloaks, rapiers, boots and lace collars,
+narrow Paris streets and candlelit rooms, energetic and dashing mood,
+sword fights shown as movement and stance, never with blood or injury,
+no text or letters in the image.
+```
+
+## 인물 설명 (일관성을 위해 매번 붙여 넣으세요)
+
+```
+D'Artagnan: a wiry, quick-eyed boy of eighteen with dark hair, sunburnt, in a
+shabby too-small doublet at first, later in a proper musketeer's uniform.
+Athos: a tall grave nobleman of about thirty, pale, beautifully composed, dark
+hair, always immaculate however poor.
+Porthos: a huge loud man with a curled moustache, gaudy clothes, a magnificent
+baldric across his chest.
+Aramis: a slim handsome young man with soft manners and downcast eyes, plainer
+dress than Porthos, always with a book or a letter near him.
+Monsieur de Treville: a lean weathered captain of about fifty with grey hair.
+Cardinal Richelieu: a thin composed man in scarlet robes with a pointed beard,
+never raising his voice.
+Milady: a beautiful fair-haired woman with pale blue eyes, elegant dark gowns.
+Rochefort: a tall dark-faced man with a scar at his temple, dressed in black.
+Constance: a young woman of twenty-five in a modest respectable dress.
+```
+
+## 표지 · 마무리
+
+| 파일명 | 장면 |
+|---|---|
+| `images/cover.png` (세로 2:3 비율) | A tall portrait-format cover: four men standing shoulder to shoulder in a narrow Paris street at dusk with their rapiers crossed high above them, plumed hats and cloaks, three seasoned musketeers and one much younger boy at the end of the line. |
+| `images/end.png` | Four hats laid side by side on a table beside four crossed rapiers and a folded letter, warm lamplight, an empty room. |
+
+## 1장 · 노란 말을 탄 소년
+
+| 파일명 | 장면 |
+|---|---|
+| `images/story-01-a.png` | A boy of eighteen riding a comically bony bright-yellow old horse along a country road, sitting very straight and proud, an old rapier at his side, French countryside in spring. |
+| `images/story-01-b.png` | An inn yard: the boy with his sword drawn facing a tall dark gentleman with a scar at his temple who only laughs from a window above, inn servants closing in behind the boy with sticks. |
+
+## 2장 · 총사대장 트레빌
+
+| 파일명 | 장면 |
+|---|---|
+| `images/story-02-a.png` | A crowded courtyard full of musketeers in plumed hats and blue cloaks talking and laughing, a small shabby country boy standing among them looking very out of place. |
+| `images/story-02-b.png` | A staircase landing: the boy colliding with a pale nobleman whose arm is bandaged, the nobleman's face tightening with pain but perfectly polite. |
+
+## 3장 · 하루에 세 번
+
+| 파일명 | 장면 |
+|---|---|
+| `images/story-03-a.png` | An empty lot behind a convent: three musketeers standing together and a young boy facing them, all realising at once that they have all made the same appointment. |
+| `images/story-03-b.png` | Four against five: a fast sword fight in the open ground, blue cloaks against red, movement and flying capes, the young boy ducking low under a bigger man's swing. |
+
+## 4장 · 하나는 모두를 위하여
+
+| 파일명 | 장면 |
+|---|---|
+| `images/story-04-a.png` | Four men at a tavern table with their hands and rapier hilts joined together over the middle of the table, a single candle, four very different faces. |
+| `images/story-04-b.png` | A cramped lodging doorway at night: a frightened middle-aged shopkeeper wringing his hat, telling his story to the young man, a single lamp between them. |
+
+## 5장 · 왕비의 심부름
+
+| 파일명 | 장면 |
+|---|---|
+| `images/story-05-a.png` | A dark Paris street: a young man driving off two attackers from a woman with his sword, the woman pressed against a wall clutching a bundle. |
+| `images/story-05-b.png` | A palace chamber: a queen seated alone with her face in her hands, one lady-in-waiting kneeling beside her, an empty jewel case open on the table. |
+
+## 6장 · 런던으로 가는 길
+
+| 파일명 | 장면 |
+|---|---|
+| `images/story-06-a.png` | An inn yard at dawn: three riders galloping out through the gate while the huge musketeer stays behind squaring up to a stranger, hand on hilt. |
+| `images/story-06-b.png` | A country road: a rider looking back over his shoulder at a distant inn where a fight is starting without him, forcing himself to ride on, dust rising. |
+
+## 7장 · 이틀 반
+
+| 파일명 | 장면 |
+|---|---|
+| `images/story-07-a.png` | A magnificent English study: a duke opening a glass case and stopping dead, the diamond ornament in his hands, two of the studs plainly missing. |
+| `images/story-07-b.png` | A locked workroom: a jeweller bent over his bench with tools and a lamp, working through the night, twelve diamond studs laid out before him. |
+
+## 8장 · 무도회의 밤
+
+| 파일명 | 장면 |
+|---|---|
+| `images/story-08-a.png` | A crowded ballroom: the queen entering pale but upright, the crowd parting, the diamond studs bright on her shoulder, the king starting toward her. |
+| `images/story-08-b.png` | The cardinal in scarlet standing very still holding a small open box with two diamond studs in it, his face giving nothing away, the king staring at him. |
+
+## 9장 · 밀라디
+
+| 파일명 | 장면 |
+|---|---|
+| `images/story-09-a.png` | A candlelit drawing room: a beautiful fair-haired woman turning sharply, her sleeve fallen from her shoulder, a young man across the room frozen at what he has seen. |
+| `images/story-09-b.png` | A quiet room afterwards: a pale nobleman with an untouched glass in his hand telling something very old and very heavy, the young man listening without moving. |
+
+## 10장 · 생제르베 요새의 아침
+
+| 파일명 | 장면 |
+|---|---|
+| `images/story-10-a.png` | A ruined bastion on a battlefield: four men calmly eating breakfast at a table laid on the parapet with a servant pouring wine, muskets propped in a row beside them. |
+| `images/story-10-b.png` | The same men a moment later: two still seated eating while the other two fire over the wall, and a boulder being levered off the parapet onto the slope below. |
+
+## 11장 · 백지 위임장
+
+| 파일명 | 장면 |
+|---|---|
+| `images/story-11-a.png` | A lonely inn at night: a man in a cloak pressed against the wall beside a lit window and a stovepipe, listening, snow or rain falling. |
+| `images/story-11-b.png` | A stopped carriage on a dark road: a cloaked man lowering the scarf from his face at the window, the woman inside recoiling in the seat, a folded paper in her hand. |
+
+## 12장 · 수도원의 밤
+
+| 파일명 | 장면 |
+|---|---|
+| `images/story-12-a.png` | A convent parlour at dusk: two women together at a window, one of them looking down at riders approaching the gate and recognising them with relief. |
+| `images/story-12-b.png` | The same room minutes later: four men in the doorway, one of them kneeling to hold a woman fallen against a chair, a nun standing back with her hands to her mouth. |
+
+## 13장 · 재판
+
+| 파일명 | 장면 |
+|---|---|
+| `images/story-13-a.png` | A bare riverside room at night: six men standing in a half circle around a seated woman, one lamp on the table, each face grave; a hooded man in red standing apart at the back. |
+| `images/story-13-b.png` | Dawn mist on a riverbank: four men walking away side by side without looking at each other, their long shadows behind them. |
+
+## 14장 · 추기경 앞에서
+
+| 파일명 | 장면 |
+|---|---|
+| `images/story-14-a.png` | A dim study with a single candle: the cardinal in scarlet seated reading a paper aloud, a young man standing before the desk with his hat in his hands, refusing to look away. |
+| `images/story-14-b.png` | Close on the desk: the cardinal holding a folded paper into the candle flame while sliding a freshly written commission across the table, the young man's hand not yet reaching for it. |
+
+## 15장 · 흩어지는 네 사람
+
+| 파일명 | 장면 |
+|---|---|
+| `images/story-15-a.png` | Four men around a table with a single sheet of paper in the middle, the eldest writing a name in the blank space while the other three watch. |
+| `images/story-15-b.png` | A courtyard of young recruits seen from a doorway, and a young captain in a musketeer's cloak watching them from the step, older now, one hand on the doorframe. |

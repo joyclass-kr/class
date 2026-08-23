@@ -1,0 +1,162 @@
+# 제미나이 그림 프롬프트 — 요술 항아리
+
+그림책 틀이에요. 한 펼침마다 위쪽에 큰 그림 하나가 통으로 들어가고, 아래쪽 띠에 글이 좌우로 나뉩니다.
+**열 개의 펼침** + 표지 + 마지막 장 = 그림 **열두 장**.
+
+## 비율 — 꼭 지켜주세요
+
+| 그림 | 실제 칸 비율 | 요청할 비율 |
+|---|---|---|
+| 본문 그림 10장 (`01`~`10`) | 1.92 : 1 | **가로 16 : 세로 9** |
+| 표지 `cover.png` | 0.67 : 1 | **세로 2 : 3** |
+| 마지막 `end.png` | 1.76 : 1 | **가로 16 : 세로 9** |
+
+제미나이는 가로 그림을 1376×768(16:9)로 내보냅니다. 칸이 1.92:1이라 위아래가 3.5퍼센트쯤 잘리는데, 눈에 띄지 않는 정도라 그대로 쓰면 됩니다. 4:3으로 만들면 위아래가 삼십 퍼센트쯤 잘려나가니 그것만 피하세요. 인물을 가운데에 몰지 말고 좌우로 나눠 배치하세요.
+
+## 공통 스타일 지시문 (모든 프롬프트 앞에 붙이세요)
+
+```
+Children's picture book illustration, bright cheerful cel-animation style with
+clean bold outlines and flat vivid colors, similar to a classic Korean animated
+storybook. Traditional Korean village of the Joseon era: thatched-roof and
+tiled-roof houses, earthen walls, rows of large brown onggi jars on a raised
+platform, ploughed fields, persimmon trees. Warm earth-tone palette with clay
+brown, straw yellow and grass green. Big expressive faces, exaggerated comic
+gestures. No text or letters in the image.
+```
+
+## 인물 설명 (일관성을 위해 매번 붙이세요)
+
+```
+The farmer: a lean man in his forties in patched off-white work hanbok with the
+trousers tied at the ankles, a towel around his head, sun-browned honest face.
+His wife: a cheerful woman in a faded blue and white hanbok with her hair in a
+bun and sleeves tied back. The rich man: a plump man in a fine dark blue silk
+durumagi and a black horsehair hat, thin moustache, greedy narrowed eyes and a
+permanently smug expression. The old father: a small round-faced elderly man with
+a white beard and topknot, plain grey hanbok, mild and slightly confused - drawn
+identically every time he multiplies. The jar: a large round dark-brown Korean
+onggi jar, wide-mouthed, waist-high.
+```
+
+---
+
+### `cover.png` — 표지 (세로 2:3)
+
+```
+Vertical portrait composition. A single large round dark-brown Korean onggi jar
+standing alone in the middle of a ploughed field at sunset, earth heaped around
+its base where it was just dug out. A stream of copper coins arcs up out of its
+open mouth and scatters into the air, catching the golden light. Distant
+thatched roofs and hills at the bottom. Warm and magical.
+```
+
+## 본문 열 장 (모두 가로 16:9)
+
+### `01-dig.png` — 밭에서 항아리를 파내다
+
+```
+Wide scene in a small ploughed field in spring. On the right, a farmer in patched
+work hanbok kneels in the freshly turned soil, hoe set aside, brushing dirt off
+the shoulder of a large brown onggi jar half buried in the ground, eyebrows up in
+surprise. On the left, low green hills and a few thatched roofs. Warm morning
+light, dark rich earth.
+```
+
+### `02-hoe.png` — 호미가 두 개
+
+```
+Wide scene in a modest Korean house yard. In the centre, the jar sits on the
+ground. The farmer holds one hoe in his right hand while staring down into the
+jar where a second identical hoe lies at the bottom, his mouth open and eyes wide
+in total bewilderment, free hand scratching his head. Simple wooden veranda and
+earthen wall behind. Comic.
+```
+
+### `03-coin.png` — 끝없이 나오는 엽전
+
+```
+Wide night scene inside a small Korean room lit by an oil lamp. The jar sits in
+the middle. The wife reaches in with both hands while copper coins spill over the
+rim and pile up across the floor in a growing heap. The farmer sits back on his
+heels laughing with his head thrown back, coins in his lap. Warm lamplight,
+joyful chaos.
+```
+
+### `04-rich.png` — 몰라보게 달라진 농부의 집
+
+```
+Wide village scene by day. On the right, the farmer's house now has a handsome
+tiled roof, a full storehouse and two oxen in the yard; the farmer and his wife
+stand smiling in fine clean hanbok. On the left, two village women on the path
+lean their heads together whispering behind their hands, glancing over. Bright
+sunny day, gossip in the air.
+```
+
+### `05-seize.png` — 항아리를 빼앗아 가는 부자
+
+```
+Wide scene in the farmer's yard. On the right, the plump rich man in dark blue
+silk clutches the large jar against his chest with both arms, already striding
+away, chin up and smug. On the left, the farmer and his wife reach after him,
+mouths open in protest, hands out. Two of the rich man's servants block their
+way. Dust kicked up, comic outrage.
+```
+
+### `06-gold.png` — 금붙이를 퍼내는 부자
+
+```
+Wide scene inside a fine Korean room with the paper door shut tight. The rich man
+kneels over the jar in the centre, both arms plunged inside, pulling out fistfuls
+of gold rings and ingots, face split by an enormous greedy grin, gold heaped high
+around him and spilling toward both edges of the frame. Lamplight, warm gold
+glow.
+```
+
+### `07-father.png` — 항아리에 빠지는 아버지
+
+```
+Wide scene in the same room. On the right, the rich man spins around with one arm
+raised, shouting, face startled. On the left, the small old father is tipping
+head-first over the rim of the jar, feet in the air, hat flying off, arms
+windmilling. Exaggerated comic motion lines. Gold scattered on the floor between
+them.
+```
+
+### `08-two.png` — 아버지가 둘
+
+```
+Wide scene in the same room. On the left, the rich man has just hauled one old
+father out and sits him on the floor, still holding his arm. On the right, a
+second identical old father is climbing out of the jar by himself, one leg over
+the rim, waving cheerfully. The rich man looks back and forth between the two,
+face frozen in horror. Perfect comic timing.
+```
+
+### `09-many.png` — 마당 가득한 아버지들
+
+```
+Wide scene in the courtyard of the rich man's house. Dozens of identical small
+old fathers in grey hanbok fill the yard from edge to edge, sitting, standing,
+waving, all with the same mild face, all with mouths open calling out. In the
+centre, the rich man clutches his own head with both hands, mouth open in a
+howl. Bright daylight, overwhelming and very funny.
+```
+
+### `10-ruined.png` — 텅 빈 곳간
+
+```
+Wide scene. On the left, an empty storehouse with its doors thrown open, bare
+shelves, one last rice sack being carried out. In the middle, the rich man in a
+plain worn hanbok stirs an enormous cauldron, sweating, surrounded by a queue of
+identical old fathers holding bowls. On the right, villagers peer over the wall,
+doubled over laughing. Sunny and comic.
+```
+
+### `end.png` — 마지막 (가로 16:9)
+
+```
+A quiet Korean village yard at sunset, no people. A row of ordinary brown onggi
+jars sits on a raised stone platform beside an earthen wall, persimmon branches
+above, warm orange light across the ground. Ordinary and peaceful.
+```

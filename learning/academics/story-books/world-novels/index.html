@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>세계 명작 소설</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Gowun+Batang:wght@400;700&family=Noto+Serif+KR:wght@400;500;700&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="../lobby.css">
+</head>
+<body>
+    <div class="top-bar">
+        <a class="back-link" href="../../../../" aria-label="메인 화면으로 돌아가기">← 메인</a>
+    </div>
+
+    <h1>세계 명작 소설<span>WORLD CLASSIC NOVELS</span></h1>
+
+    <div class="shelf">
+            <a class="book-card" href="treasure-island/">
+                <span class="book-cover" data-title="보물섬"><img src="treasure-island/images/cover.webp" alt="" loading="lazy"></span>
+                <span class="book-title">보물섬</span>
+            </a>
+            <a class="book-card" href="little-princess/">
+                <span class="book-cover" data-title="소공녀"><img src="little-princess/images/cover.webp" alt="" loading="lazy"></span>
+                <span class="book-title">소공녀</span>
+            </a>
+            <a class="book-card" href="anne-green-gables/">
+                <span class="book-cover" data-title="빨간 머리 앤"><img src="anne-green-gables/images/cover.webp" alt="" loading="lazy"></span>
+                <span class="book-title">빨간 머리 앤</span>
+            </a>
+            <a class="book-card" href="world-tour/">
+                <span class="book-cover" data-title="80일간의 세계 일주"><img src="world-tour/images/cover.webp" alt="" loading="lazy"></span>
+                <span class="book-title">80일간의 세계 일주</span>
+            </a>
+            <a class="book-card" href="musketeers/">
+                <span class="book-cover" data-title="삼총사"><img src="musketeers/images/cover.webp" alt="" loading="lazy"></span>
+                <span class="book-title">삼총사</span>
+            </a>
+            <a class="book-card" href="sherlock-holmes/">
+                <span class="book-cover" data-title="명탐정 셜록 홈스"><img src="sherlock-holmes/images/cover.webp" alt="" loading="lazy"></span>
+                <span class="book-title">명탐정 셜록 홈스</span>
+            </a>
+            <a class="book-card" href="jean-valjean/">
+                <span class="book-cover" data-title="장발장"><img src="jean-valjean/images/cover.webp" alt="" loading="lazy"></span>
+                <span class="book-title">장발장</span>
+            </a>
+            <a class="book-card" href="monte-cristo/">
+                <span class="book-cover" data-title="몽테크리스토 백작"><img src="monte-cristo/images/cover.webp" alt="" loading="lazy"></span>
+                <span class="book-title">몽테크리스토 백작</span>
+            </a>
+    </div>
+
+    <script>
+        // 표지 그림 파일이 아직 없는 책은 제목을 표지 자리에 세운다.
+        document.querySelectorAll('.book-card img').forEach((img) => {
+            const mark = () => img.closest('.book-card').classList.add('no-cover');
+            img.addEventListener('error', mark);
+            if (img.complete && img.naturalWidth === 0) mark();
+        });
+    </script>
+</body>
+</html>
