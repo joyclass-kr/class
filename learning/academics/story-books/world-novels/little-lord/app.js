@@ -1,0 +1,956 @@
+const BOOK_TITLE = "소공자";
+
+const CHAPTER_LABEL = n => `${n}장 · `;
+
+const CHAPTERS = [
+    {
+        num: 1,
+        title: "뉴욕의 골목",
+        emoji: "🏙️",
+        art: ["story-01-a.png", "story-01-b.png"],
+        paras: [
+            `세드릭은 뉴욕의 좁은 골목에 살았습니다.`,
+            `아버지는 영국 사람이었고 어머니는 미국 사람이었습니다. 세드릭이 아주 어릴 때 아버지가 병으로 세상을 떠났고, 그때부터 어머니와 둘이 살았습니다.`,
+            `집은 작았습니다. 방이 둘뿐이었고, 어머니는 바느질을 해서 살림을 꾸렸습니다.`,
+            `그래도 세드릭은 자기 집이 가난하다고 생각해 본 적이 없었습니다. 세드릭이 아는 세상에서는 다들 그렇게 살았기 때문입니다.`,
+            `세드릭은 일곱 살이었습니다. 금빛 곱슬머리에 눈이 크고 갈색이었으며, 등이 곧고 다리가 튼튼했습니다. 골목 사람들은 그 아이를 다 알았습니다.`,
+            `세드릭에게는 이상한 버릇이 하나 있었습니다. 어른을 만나면 어른처럼 이야기하는 것이었습니다. 그것도 아주 진지하게요.`,
+            `골목 끝에 홉스 씨의 식료품 가게가 있었습니다.`,
+            `홉스 씨는 몸집이 크고 목소리가 굵은 사람이었습니다. 하루 종일 가게 앞에 의자를 놓고 앉아 신문을 읽었습니다.`,
+            `세드릭은 날마다 그 옆의 상자 위에 앉았습니다. 두 사람은 세상 돌아가는 이야기를 나누었습니다.`,
+            `홉스 씨가 가장 싫어하는 것은 귀족이었습니다.`,
+            `"백작이니 후작이니 하는 것들 말이다." 홉스 씨가 신문을 흔들며 말했습니다. "그놈들은 일도 안 하고 남의 것을 뜯어먹고 산단다. 나는 그런 자들이 우리 가게에 오면 이 문턱을 못 넘게 할 거다."`,
+            `"백작이 여기 오면요?"<br>"오기만 해 봐라. 상자 위에도 못 앉게 하겠다."`,
+            `세드릭은 그 말을 진지하게 새겨들었습니다.`,
+            `골목에는 또 한 사람이 있었습니다. 길모퉁이에서 구두를 닦는 딕이었습니다. 열대여섯 살쯤 된 아이였는데, 세드릭은 그 아이를 아주 좋아했습니다.`,
+            `세드릭은 어머니를 사랑이라고 불렀습니다. 아버지가 어머니를 그렇게 부르는 것을 듣고 자기도 그렇게 부르기 시작한 것입니다.`,
+            `"사랑." 세드릭이 물었습니다. "우리는 왜 영국에 안 가요?"<br>"네 아버지의 아버님이 우리를 부르지 않으시니까." 어머니가 말했습니다.`,
+            `그것이 세드릭이 들은 유일한 대답이었습니다.`,
+            `세드릭이 모르는 것이 하나 있었습니다.`,
+            `아버지는 영국의 아주 오래된 집안의 셋째 아들이었습니다. 그 집안의 어른인 도린코트 백작은 미국이라는 나라를 몹시 싫어했고, 셋째 아들이 미국 여자와 결혼하자 아들과 인연을 끊었습니다.`,
+            `그리고 지금, 그 백작에게는 아들이 하나도 남아 있지 않았습니다.`
+        ]
+    },
+    {
+        num: 2,
+        title: "낯선 손님",
+        emoji: "📜",
+        art: ["story-02-a.png", "story-02-b.png"],
+        paras: [
+            `어느 날 오후, 골목에 마차 한 대가 들어왔습니다. 그런 마차가 그 골목에 들어오는 일은 없었습니다.`,
+            `마차에서 검은 옷을 입은 노신사가 내렸습니다. 손에는 서류 가방이 들려 있었습니다.`,
+            `그는 세드릭의 집 문을 두드렸습니다.`,
+            `"저는 해비셤이라고 합니다. 도린코트 백작님의 변호사입니다."`,
+            `어머니는 그를 안으로 들였습니다.`,
+            `해비셤 씨는 앉아서 이야기를 시작했습니다. 그리고 그 이야기는 길었습니다.`,
+            `도린코트 백작에게는 아들이 셋 있었습니다. 맏이와 둘째는 아버지의 자랑이었고 셋째는 미움을 샀습니다. 그런데 지난해에 맏이가 낙마 사고로 세상을 떠났고, 올해 둘째가 병으로 세상을 떠났습니다.`,
+            `"이제 백작님의 뒤를 이을 사람은 한 사람뿐입니다." 해비셤 씨가 말했습니다. "세드릭 에롤 도련님입니다."`,
+            `어머니는 아무 말도 하지 못했습니다.`,
+            `"도련님은 오늘부터 폰틀로이 경이십니다." 변호사가 말했습니다. "그리고 때가 되면 도린코트 백작이 되십니다."`,
+            `세드릭은 문간에 서서 그 말을 들었습니다. 무슨 말인지 하나도 알아듣지 못했습니다.`,
+            `"제가······ 뭐라고요?"`,
+            `해비셤 씨는 아이를 보았습니다. 그리고 조금 놀랐습니다. 그가 상상했던 아이와 아주 달랐기 때문입니다.`,
+            `그는 미국에서 자란 아이라면 버릇없고 거칠 것이라고 생각했습니다. 그런데 눈앞의 아이는 곧고 조용했으며, 어른을 똑바로 보고 이야기했습니다.`,
+            `"도련님의 할아버님께서 도련님을 영국으로 부르십니다." 해비셤 씨가 말했습니다. "성에서 사시게 될 겁니다."`,
+            `"저희 어머니도요?"`,
+            `해비셤 씨는 잠깐 말이 막혔습니다.`,
+            `백작이 내건 조건이 하나 있었습니다. 아이만 성으로 오고, 어머니는 성에서 떨어진 집에서 살아야 한다는 것이었습니다. 백작은 그 며느리를 한 번도 본 적이 없었지만, 만나 볼 생각도 없었습니다.`,
+            `그날 밤 어머니는 세드릭에게 아무 말도 하지 않았습니다.`,
+            `이튿날 아침에야 어머니가 말했습니다.<br>"세드릭, 우리는 영국에 갈 거란다. 다만 너는 할아버님 댁에서 살고, 나는 조금 떨어진 집에서 살게 될 거야."`,
+            `"왜요?"<br>"할아버님께서 그렇게 하기를 바라시니까."`,
+            `"저는 사랑이랑 같이 안 살면 싫어요."<br>"날마다 만날 수 있단다." 어머니가 말했습니다. "그리고 세드릭, 할아버님께 이 이야기를 여쭙지는 말아 다오. 그분은 나이가 많으시고 몸이 편찮으시단다."`,
+            `세드릭은 오래 생각하다가 고개를 끄덕였습니다.`
+        ]
+    },
+    {
+        num: 3,
+        title: "골목과의 작별",
+        emoji: "👟",
+        art: ["story-03-a.png", "story-03-b.png"],
+        paras: [
+            `세드릭은 그 소식을 홉스 씨에게 알려야 했습니다.`,
+            `그 일이 가장 어려웠습니다.`,
+            `세드릭은 가게로 가서 늘 앉던 상자 위에 앉았습니다. 그리고 한참 동안 아무 말도 하지 않았습니다.`,
+            `"오늘은 조용하구나." 홉스 씨가 말했습니다.`,
+            `"홉스 아저씨." 세드릭이 말했습니다. "아저씨는 백작을 아주 싫어하시죠?"<br>"아주 싫어하지."`,
+            `"만약에요······ 아저씨가 아는 사람이 백작이 되면 어떡하실 거예요?"`,
+            `"그런 일은 없다."<br>"있으면요?"`,
+            `홉스 씨가 신문을 내려놓았습니다.`,
+            `세드릭이 말했습니다.<br>"제가 백작이 된대요. 지금은 폰틀로이 경이고요. 나중에는 도린코트 백작이 된대요."`,
+            `홉스 씨는 한참을 아무 말도 하지 못했습니다. 그러고는 모자를 벗어 부채질을 했습니다.`,
+            `"몇 시에 떠나니."<br>"다음 주에요."`,
+            `그날 홉스 씨는 가게 문을 일찍 닫았습니다.`,
+            `며칠 뒤, 세드릭은 딕을 찾아갔습니다.`,
+            `딕은 길모퉁이에서 구두를 닦고 있었습니다. 세드릭은 딕에게 자기가 영국으로 간다고 말했습니다.`,
+            `"잘됐네." 딕이 말했습니다. 그러고는 솔질을 더 세게 했습니다.`,
+            `"딕, 소원이 있어?"<br>"소원?"<br>"응. 뭐든지."`,
+            `딕은 웃었습니다.<br>"솔이랑 약이나 새것으로 하나 있으면 좋겠다. 이건 다 닳았거든. 그리고 저기 저 모퉁이는 자리가 좋은데, 거기는 큰 애들이 차지하고 있어서 못 가."`,
+            `세드릭은 그 말을 잊지 않았습니다.`,
+            `떠나기 전날, 세드릭은 어머니와 함께 딕에게 새 구두닦이 도구 한 벌을 사 주었습니다.`,
+            `그리고 홉스 씨에게는 금시계를 하나 드렸습니다. 뚜껑 안쪽에 이렇게 새겼습니다.<br>"홉스 아저씨께. 이걸 보실 때마다 저를 생각해 주세요. 세드릭 올림."`,
+            `홉스 씨는 그 시계를 받아 들고 한참 동안 뚜껑만 여닫았습니다.`,
+            `배가 떠나던 날 아침, 부두에 두 사람이 나와 있었습니다. 몸집 큰 식료품상과 구두 닦는 아이였습니다.`,
+            `세드릭은 배가 항구를 나갈 때까지 손을 흔들었습니다.`
+        ]
+    },
+    {
+        num: 4,
+        title: "도린코트 성",
+        emoji: "🏰",
+        art: ["story-04-a.png", "story-04-b.png"],
+        paras: [
+            `배는 여러 날 만에 영국에 닿았습니다.`,
+            `기차를 타고 시골로 들어가자 창밖 풍경이 달라졌습니다. 나지막한 언덕과 초록 들판이 이어졌고, 오래된 나무가 서 있었습니다.`,
+            `"저건 다 누구 땅이에요?" 세드릭이 물었습니다.<br>"도련님 할아버님 것입니다." 해비셤 씨가 말했습니다.`,
+            `세드릭은 한참 동안 창밖을 보았습니다.`,
+            `"저기 저 집들도요?"<br>"그렇습니다."<br>"저 마을도요?"<br>"그렇습니다."`,
+            `역에 마차가 나와 있었습니다. 마차는 어머니를 먼저 어느 작은 집 앞에 내려 주었습니다.`,
+            `코트 로지라는 집이었습니다. 성에서 걸어서 이십 분쯤 걸리는 곳이었습니다.`,
+            `세드릭은 어머니를 꼭 안았습니다.`,
+            `"내일 아침에 올게요."<br>"그래."`,
+            `마차가 다시 달렸습니다. 큰 철문을 지나 오래된 나무들 사이의 길을 한참 달리자, 앞에 성이 나타났습니다.`,
+            `돌로 지은 커다란 건물이었습니다. 창이 아주 많았고, 담쟁이가 벽을 덮고 있었습니다.`,
+            `현관에 하인들이 줄지어 서 있었습니다.`,
+            `세드릭은 마차에서 내려 그 사람들을 하나하나 보았습니다. 그리고 인사를 했습니다.`,
+            `하인들은 서로 눈짓을 주고받았습니다. 이 집에 아이가 온 것이 아주 오랜만이었기 때문입니다.`,
+            `안내를 맡은 사람은 집사 토머스였습니다.`,
+            `"할아버님은 어디 계세요?" 세드릭이 물었습니다.<br>"서재에 계십니다."`,
+            `"지금 뵈러 가도 돼요?"<br>"······네."`,
+            `토머스는 나중에 부엌에서 이렇게 말했습니다.<br>"저 도련님은 겁이라는 걸 모르는 모양이야. 나는 저 방에 들어갈 때마다 다리가 후들거리는데."`,
+            `커다란 문이 열렸습니다.`,
+            `서재는 넓고 어두웠습니다. 벽이 온통 책이었고, 벽난로에 불이 타고 있었습니다.`,
+            `그 앞 큰 의자에 노인이 앉아 있었습니다.`,
+            `머리가 하얗고 코가 높고 눈썹이 짙었습니다. 한쪽 발을 발판에 올려놓고 있었는데, 그 발이 붕대에 감겨 있었습니다.`,
+            `옆에 커다란 개 한 마리가 엎드려 있다가 몸을 일으켰습니다.`
+        ]
+    },
+    {
+        num: 5,
+        title: "할아버지",
+        emoji: "🦮",
+        art: ["story-05-a.png", "story-05-b.png"],
+        paras: [
+            `도린코트 백작은 문 쪽을 보았습니다.`,
+            `그는 이 순간을 며칠 동안 생각해 왔습니다.`,
+            `그가 상상한 것은 이런 것이었습니다. 미국 골목에서 자란 아이, 버릇없고 촌스럽고 겁에 질려 우물쭈물하는 아이. 그는 그 아이를 보고 실망할 준비를 하고 있었습니다.`,
+            `문이 열렸습니다.`,
+            `아이가 걸어 들어왔습니다.`,
+            `등이 곧았고 얼굴이 밝았습니다. 금빛 머리가 어깨까지 내려와 있었고, 걸음에 망설임이 없었습니다.`,
+            `아이는 커다란 개를 보고도 놀라지 않았습니다. 오히려 손을 뻗어 머리를 쓰다듬었습니다.`,
+            `개는 꼬리를 흔들었습니다. 그 개가 낯선 사람에게 그러는 것을 백작은 처음 보았습니다.`,
+            `아이가 다가와 손을 내밀었습니다.`,
+            `"도린코트 백작님이시죠? 저는 세드릭이에요. 만나 뵙게 되어 기뻐요."`,
+            `백작은 그 손을 잡았습니다.`,
+            `"이 집이 마음에 드느냐."<br>"아주 마음에 들어요. 이렇게 큰 집은 처음 봐요. 성이라는 데서 살게 될 줄은 몰랐어요."`,
+            `아이는 벽난로 옆 의자에 앉았습니다. 그리고 백작의 발을 보았습니다.`,
+            `"많이 아프세요?"<br>"통풍이라는 병이다."<br>"많이 아픈 병이에요?"<br>"아주 아프지."`,
+            `"그러면 제 팔을 짚으세요." 세드릭이 말했습니다. "저는 힘이 아주 세거든요. 홉스 아저씨가 그러셨어요. 제 나이 애치고는 아주 튼튼하다고요."`,
+            `백작은 그 아이를 내려다보았습니다.`,
+            `그 성에서 그의 몸이 아픈지 안 아픈지를 물어본 사람은 몇 해 만에 처음이었습니다.`,
+            `저녁 식탁에서 백작은 아이를 지켜보았습니다.`,
+            `아이는 긴 식탁 저쪽 끝에 앉아 어른처럼 식사를 했습니다. 그리고 이야기를 했습니다. 뉴욕 이야기, 홉스 아저씨 이야기, 딕 이야기.`,
+            `"홉스 아저씨는 백작을 아주 싫어하세요." 세드릭이 말했습니다.`,
+            `백작이 포크를 놓았습니다.<br>"뭐라고?"`,
+            `"백작은 일도 안 하고 남의 것을 뜯어먹고 산다고 하셨어요. 그런데 제가 백작이 된다고 하니까 좀 당황하시더라고요." 세드릭이 진지하게 말했습니다. "그래서 제가 그랬어요. 저는 그런 백작은 안 되겠다고요."`,
+            `백작은 한참 동안 아무 말도 하지 않았습니다.`,
+            `그러고는 웃었습니다. 그가 웃는 것을 본 하인들은 그날 밤 잠을 설쳤습니다.`
+        ]
+    },
+    {
+        num: 6,
+        title: "날마다 가는 길",
+        emoji: "🌳",
+        art: ["story-06-a.png", "story-06-b.png"],
+        paras: [
+            `이튿날 아침, 세드릭은 아침을 먹자마자 나갈 채비를 했습니다.`,
+            `"어디 가느냐." 백작이 물었습니다.<br>"사랑을 만나러요."<br>"사랑이라니."<br>"저희 어머니요. 저는 어머니를 사랑이라고 불러요. 아버지가 그렇게 부르셨거든요."`,
+            `백작의 얼굴이 굳었습니다.`,
+            `"······가거라."`,
+            `그날부터 세드릭은 날마다 코트 로지에 갔습니다.`,
+            `가서 한 시간쯤 있다가 돌아왔습니다. 돌아오면 백작에게 그날 있었던 일을 다 이야기했습니다.`,
+            `"사랑이 그러는데, 여기 사람들은 참 친절하대요."<br>"······."<br>"그리고 할아버지가 저에게 잘해 주셔서 고맙다고 전해 달라고 하셨어요."`,
+            `백작은 대답하지 않았습니다.`,
+            `그는 그 며느리를 미워하기로 오래전에 정해 두었습니다. 아들을 자기에게서 빼앗아 간 여자라고 여겼기 때문입니다.`,
+            `그런데 그 여자에 대한 이야기가 날마다 이 방으로 들어왔습니다. 그것도 아주 좋은 이야기만요.`,
+            `백작은 세드릭에게 조랑말을 사 주었습니다.`,
+            `아이는 그것을 타고 성 둘레를 돌아다녔습니다. 마부 윌킨스가 따라다녔는데, 윌킨스는 부엌에 돌아와 이렇게 말했습니다.<br>"저 도련님은 겁이 없어. 처음 타는데도 무서워하는 기색이 하나도 없더라니까."`,
+            `백작은 아이에게 돈을 주기 시작했습니다.`,
+            `"쓰고 싶은 대로 쓰거라."`,
+            `세드릭은 그 돈으로 무엇을 할지 아주 진지하게 생각했습니다.`,
+            `며칠 뒤 세드릭이 말했습니다.<br>"할아버지, 부탁이 있어요."<br>"말해 보아라."`,
+            `"뉴욕에 딕이라는 친구가 있어요. 구두를 닦아요. 그런데 같이 하던 형이 딕 돈을 다 가지고 도망쳤대요. 그래서 지금 아주 어렵대요."`,
+            `"그래서?"<br>"돈을 좀 보내 주고 싶어요. 제 돈에서요."`,
+            `백작은 아이를 보았습니다.`,
+            `"얼마나."<br>"얼마면 될까요? 저는 잘 모르겠어요."`,
+            `백작은 해비셤 씨를 불러 그 일을 처리하게 했습니다.`,
+            `그리고 그 뒤로 아이가 무엇을 부탁할지 조금씩 궁금해지기 시작했습니다.`
+        ]
+    },
+    {
+        num: 7,
+        title: "언쇼 마을",
+        emoji: "🏚️",
+        art: ["story-07-a.png", "story-07-b.png"],
+        paras: [
+            `어느 날 세드릭은 조랑말을 타고 처음 가 보는 쪽으로 갔습니다.`,
+            `언덕을 넘자 마을이 하나 나왔습니다.`,
+            `그 마을은 지금까지 본 곳과 아주 달랐습니다.`,
+            `집들이 기울어져 있었고, 지붕에 구멍이 나 있었으며, 길에는 흙탕물이 고여 있었습니다. 문 앞에 아이들이 맨발로 서 있었습니다.`,
+            `"여기 이름이 뭐예요?" 세드릭이 물었습니다.<br>"언쇼입니다." 윌킨스가 말했습니다.`,
+            `"여기도 할아버지 땅이에요?"<br>"······그렇습니다."`,
+            `세드릭은 말에서 내려 마을을 걸었습니다.`,
+            `어느 집 앞에서 여자 하나가 아기를 안고 서 있었습니다. 아기가 기침을 했습니다.`,
+            `"안녕하세요." 세드릭이 인사를 했습니다.`,
+            `여자는 놀라서 아무 말도 하지 못했습니다.`,
+            `"저 지붕은 왜 저래요?"<br>"고칠 돈이 없어서요." 여자가 겨우 말했습니다. "비가 오면 안에서도 우산을 씁니다."`,
+            `세드릭은 그 마을을 오래 걸었습니다.`,
+            `성으로 돌아온 세드릭은 곧장 서재로 들어갔습니다.`,
+            `"할아버지."<br>"왔느냐."`,
+            `"언쇼라는 마을에 다녀왔어요."`,
+            `백작의 얼굴이 잠깐 달라졌습니다.`,
+            `"거기 사람들이 아주 어렵게 살아요." 세드릭이 말했습니다. "지붕에 구멍이 나서 비가 새고, 길에는 물이 고여 있어요. 아기가 기침을 하는데 약이 없대요."`,
+            `"그건 내가 알 바가 아니다."`,
+            `"그런데 그 땅이 할아버지 것이라고 하던데요."`,
+            `백작은 아이를 보았습니다.`,
+            `"그래서 뭘 어쩌란 말이냐."`,
+            `"저는 잘 모르겠어요." 세드릭이 말했습니다. "다만 저는 그 마을이 할아버지 것이라는 게 좀 부끄러웠어요."`,
+            `방 안이 아주 조용해졌습니다.`,
+            `세드릭은 자기가 무슨 말을 했는지 잘 몰랐습니다.`,
+            `"할아버지는 좋은 분이시잖아요." 아이가 말했습니다. "그러니까 그 마을을 아직 못 보셔서 그런 걸 거예요. 발이 아프셔서 못 나가시니까요."`,
+            `백작은 그날 밤 늦게까지 서재에 앉아 있었습니다.`
+        ]
+    },
+    {
+        num: 8,
+        title: "지붕이 고쳐지다",
+        emoji: "🔨",
+        art: ["story-08-a.png", "story-08-b.png"],
+        paras: [
+            `며칠 뒤 백작이 관리인 뉴익 씨를 불렀습니다.`,
+            `"언쇼 말이다." 백작이 말했습니다. "다 헐고 새로 짓게."`,
+            `뉴익 씨는 자기 귀를 의심했습니다.`,
+            `"백작님, 그 돈이 얼마나 드는지 아십니까?"<br>"알고 있네."`,
+            `"실례지만······ 어찌 된 일이십니까? 십 년 동안 제가 그 말씀을 몇 번이나 올렸는데요."<br>"그동안은 내가 듣지 않았지." 백작이 말했습니다. "이번에는 다른 사람이 말했네."`,
+            `그해 여름 언쇼에서 공사가 시작되었습니다.`,
+            `사람들은 그 소식을 믿지 못했습니다. 도린코트 백작은 소작료를 한 푼도 깎아 준 적이 없는 사람이었기 때문입니다.`,
+            `그런데 곧 소문이 돌았습니다. 그 어린 도련님 때문이라는 소문이었습니다.`,
+            `세드릭은 공사하는 곳에 날마다 갔습니다.`,
+            `일꾼들은 처음에는 어색해했지만 곧 그 아이를 반겼습니다. 세드릭은 못 박는 것을 구경하고, 물을 날라 주고, 사람들 이름을 다 외웠습니다.`,
+            `가을이 되자 언쇼는 다른 마을이 되었습니다. 지붕에 구멍이 없었고 길에 물이 고이지 않았습니다.`,
+            `그 뒤로도 세드릭은 부탁을 계속했습니다.`,
+            `한번은 절름발이인 힉스라는 아이를 만나고 와서, 그 아이가 병원에 가야 한다고 했습니다.`,
+            `한번은 마을 학교의 지붕이 낮아서 아이들이 답답해한다고 했습니다.`,
+            `한번은 어느 집 할머니가 겨울에 땔감이 없다고 했습니다.`,
+            `백작은 그때마다 투덜거렸습니다.`,
+            `"너는 내 재산을 다 쓸 셈이냐."<br>"할아버지가 쓰고 싶은 대로 쓰라고 하셨잖아요."<br>"내 돈 말이지, 내 땅을 통째로 말한 게 아니다."`,
+            `그러면서도 그는 다 들어주었습니다.`,
+            `그해 가을, 마을 사람들이 백작을 보는 눈이 달라졌습니다.`,
+            `백작은 그것을 알아차렸습니다. 그리고 그것이 싫지 않았습니다.`,
+            `평생 미움받는 데 익숙했던 사람이, 늙어서 처음으로 다른 것을 받아 본 것입니다.`
+        ]
+    },
+    {
+        num: 9,
+        title: "교회에서",
+        emoji: "⛪",
+        art: ["story-09-a.png", "story-09-b.png"],
+        paras: [
+            `어느 일요일 아침, 백작이 처음으로 교회에 나가겠다고 했습니다.`,
+            `여러 해 만의 일이었습니다.`,
+            `마차가 교회 앞에 서자 사람들이 몰려나왔습니다. 다들 그 어린 도련님을 보러 온 것이었습니다.`,
+            `백작은 지팡이를 짚고 내렸습니다. 세드릭이 옆에서 팔을 붙잡았습니다.`,
+            `두 사람은 도린코트 집안의 자리로 걸어갔습니다. 그 자리는 제단 옆의 높은 나무 칸이었습니다.`,
+            `앉고 나서 세드릭이 아래쪽을 내려다보다가 갑자기 몸을 내밀었습니다.`,
+            `저쪽 자리에 어머니가 앉아 있었습니다.`,
+            `세드릭이 손을 흔들었습니다. 어머니가 손가락을 입에 대고 웃었습니다.`,
+            `백작은 그쪽을 보았습니다.`,
+            `그가 그 며느리를 본 것은 그때가 처음이었습니다.`,
+            `젊고 조용한 여자였습니다. 검은 옷을 입고 있었고, 아이 쪽을 보는 눈이 아주 부드러웠습니다.`,
+            `백작은 곧 눈을 돌렸습니다.`,
+            `예배가 끝나고 나오는 길에 마을 사람들이 줄지어 인사를 했습니다.`,
+            `한 노인이 백작 앞에 모자를 벗었습니다.<br>"백작님, 언쇼 일은 고맙습니다. 저희 손자가 이제 마른 데서 잡니다."`,
+            `백작은 헛기침을 하고 지나갔습니다.`,
+            `마차에서 세드릭이 말했습니다.<br>"할아버지, 사람들이 할아버지를 좋아해요."<br>"······그러냐."`,
+            `"사랑이 그랬어요. 사람들이 백작님을 좋게 이야기하는 걸 요즘 자주 듣는대요."`,
+            `백작은 창밖을 보았습니다.`,
+            `그날 저녁 그는 해비셤 씨에게 물었습니다.`,
+            `"저 여자 말인데. 코트 로지 말이야."<br>"에롤 부인 말씀이십니까."<br>"그래. 어떤 사람인가."`,
+            `해비셤 씨는 잠깐 뜸을 들였습니다.`,
+            `"제가 뉴욕에서 처음 뵈었을 때, 그분은 아드님이 상속자가 된다는 말을 듣고 기뻐하지 않으셨습니다." 변호사가 말했습니다. "아이와 떨어져 살아야 한다는 조건 때문이었지요."`,
+            `"그런데 왜 승낙했나."<br>"아이에게 좋은 일이라고 하셨습니다."`,
+            `백작은 아무 말도 하지 않았습니다.`
+        ]
+    },
+    {
+        num: 10,
+        title: "낯선 여자",
+        emoji: "⚠️",
+        art: ["story-10-a.png", "story-10-b.png"],
+        paras: [
+            `그해 겨울, 성에 손님이 왔습니다.`,
+            `화려한 옷을 입은 여자였습니다. 손에 아이 하나를 데리고 있었습니다.`,
+            `그 여자는 서재로 들어와 백작 앞에 섰습니다.`,
+            `"저는 벤 도린코트의 아내입니다." 여자가 말했습니다. "그리고 이 아이가 그 사람의 아들입니다."`,
+            `벤은 백작의 맏아들이었습니다. 낙마 사고로 세상을 떠난 그 아들이었습니다.`,
+            `"거짓말이다." 백작이 말했습니다. "내 아들은 결혼한 적이 없다."`,
+            `"미국에서 했습니다." 여자가 종이를 하나 내밀었습니다. "여기 혼인 증서가 있습니다."`,
+            `백작은 그 종이를 받아 들었습니다. 손이 떨렸습니다.`,
+            `만약 그 말이 사실이라면, 맏아들의 아들이 상속자입니다. 셋째 아들의 아들인 세드릭이 아니라요.`,
+            `"이 아이가 폰틀로이 경입니다." 여자가 말했습니다. "저 미국 여자의 아들이 아니라요."`,
+            `그 소식은 며칠 만에 온 마을에 퍼졌습니다.`,
+            `사람들은 화를 냈습니다. 그 어린 도련님이 밀려난다는 것이 다들 마음에 들지 않았습니다.`,
+            `언쇼 사람들은 특히 그랬습니다. 지붕이 고쳐진 것이 누구 덕인지 그들은 알고 있었기 때문입니다.<br>"저 도련님이 아니었으면 우리는 아직도 비 맞고 잤을 거요." 한 사람이 말했습니다.`,
+            `세드릭은 그 이야기를 어머니에게서 들었습니다.`,
+            `"그럼 저는 이제 폰틀로이 경이 아니에요?"<br>"아마 그럴 거야."<br>"그럼 백작도 못 돼요?"<br>"못 될 거야."`,
+            `세드릭은 잠깐 생각했습니다.`,
+            `"그러면 사랑이랑 같이 살 수 있어요?"<br>"그렇겠지."`,
+            `"그럼 저는 괜찮아요." 세드릭이 말했습니다.`,
+            `그 말을 나중에 전해 들은 백작은 오래 아무 말도 하지 못했습니다.`,
+            `백작에게 가장 견디기 힘든 것은 재산 문제가 아니었습니다.`,
+            `그는 그 여자가 데려온 아이를 보았습니다. 버릇없고 시끄러운 아이였습니다. 백작을 무서워하지도 좋아하지도 않았습니다.`,
+            `그리고 그는 처음으로 알았습니다. 자기가 잃게 되는 것이 무엇인지를요.`,
+            `그것은 성도 아니고 땅도 아니었습니다. 저녁마다 서재 발판에 앉아 그날 있었던 일을 다 이야기해 주는 아이였습니다.`,
+        ]
+    },
+    {
+        num: 11,
+        title: "뉴욕에서 온 사람들",
+        emoji: "🖌️",
+        art: ["story-11-a.png", "story-11-b.png"],
+        paras: [
+            `그 무렵 뉴욕의 홉스 씨는 영국 신문을 구독하고 있었습니다.`,
+            `세드릭이 떠난 뒤로 그는 영국 소식을 하나도 놓치지 않았습니다. 그리고 백작이라는 것들에 대한 생각도 조금씩 달라져 있었습니다.`,
+            `가게 벽에는 세드릭이 보낸 편지가 붙어 있었습니다. 글씨가 삐뚤빼뚤했지만 홉스 씨는 그것을 손님들에게 자랑했습니다.`,
+            `어느 날 신문에 그 이야기가 실렸습니다.`,
+            `홉스 씨는 그 기사를 읽고 가게 문을 닫았습니다. 그리고 곧장 딕에게 갔습니다.`,
+            `딕은 그 무렵 새 도구로 일하며 형편이 나아져 있었습니다.`,
+            `"딕, 이걸 봐라."`,
+            `기사에는 그 여자의 이름과 이야기가 실려 있었습니다. 미니라는 이름이었습니다.`,
+            `딕이 그 기사를 읽다가 갑자기 일어섰습니다.`,
+            `"이 여자 내가 알아요."`,
+            `"뭐라고?"`,
+            `"제 형 벤의 아내예요." 딕이 말했습니다.`,
+            `딕에게는 벤이라는 형이 있었습니다. 몇 해 전 미니라는 여자와 결혼했다가, 그 여자가 아이를 데리고 달아나는 바람에 형이 서부로 떠났습니다.`,
+            `"그런데 왜 도린코트라는 이름을 써요?"<br>"그건 나도 모르지." 딕이 말했습니다. "다만 저 여자 얼굴은 확실해요. 사진도 있어요."`,
+            `홉스 씨는 그 자리에서 결정했습니다.`,
+            `"딕, 영국에 가자."`,
+            `두 사람은 배를 탔습니다. 딕은 형에게 전보를 쳐서 서부에서 곧장 오게 했습니다.`,
+            `홉스 씨는 뱃삯을 자기가 다 냈습니다. 가게를 며칠 닫는 것쯤은 아무것도 아니라고 했습니다.`,
+            `해비셤 씨는 그 무렵 뉴욕에서 그 여자의 뒤를 캐고 있었습니다.`,
+            `그는 어느 하숙집에서 그 여자를 기억하는 사람들을 찾아냈습니다. 다만 결정적인 증거가 없었습니다.`,
+            `그때 홉스 씨와 딕이 나타났습니다.`,
+            `그리고 며칠 뒤, 서부에서 벤이 도착했습니다.`,
+            `벤은 몇 해 동안 아들을 찾고 있었습니다. 그 아이가 영국의 성에 있다는 말을 듣고 그는 한참 동안 말을 잇지 못했습니다.`,
+        ]
+    },
+    {
+        num: 12,
+        title: "밝혀지다",
+        emoji: "📸",
+        art: ["story-12-a.png", "story-12-b.png"],
+        paras: [
+            `그 여자는 성 근처의 여관에 묵고 있었습니다.`,
+            `어느 날 오후, 여관 방문이 열렸습니다.`,
+            `해비셤 씨와 백작의 사람들, 그리고 그 뒤에 낯선 남자 하나가 서 있었습니다.`,
+            `여자가 그 남자를 보고 자리에서 일어섰습니다.`,
+            `"미니." 남자가 말했습니다.`,
+            `그 남자가 벤이었습니다. 딕의 형이었습니다.`,
+            `방 안이 조용해졌습니다.`,
+            `벤은 아이 쪽을 보았습니다.`,
+            `"저 애는 내 아들이오." 그가 말했습니다. "이름은 톰이고. 저 여자가 세 살 때 데리고 달아났소."`,
+            `해비셤 씨가 종이를 펼쳤습니다. 그 여자가 내밀었던 혼인 증서였습니다.`,
+            `"이 증서에 적힌 이름은 벤 도린코트가 아닙니다." 변호사가 말했습니다. "벤이라는 이름만 같을 뿐입니다. 성은 나중에 고쳐 쓴 흔적이 있습니다."`,
+            `여자는 아무 말도 하지 못했습니다.`,
+            `그날 저녁 그 여자는 그 마을을 떠났습니다.`,
+            `여자는 아무에게도 인사하지 않고 갔습니다. 여관 주인은 나중에 이렇게 말했습니다. 그 사람이 짐을 싸는 데 십 분도 걸리지 않았다고요.`,
+            `아이는 아버지가 데려갔습니다. 벤은 서부에서 목장을 하고 있었고, 아들을 데리고 그리로 돌아갔습니다.`,
+            `해비셤 씨가 성으로 돌아와 그 소식을 전했습니다.`,
+            `백작은 오래 아무 말도 하지 못했습니다.`,
+            `"그럼 그 아이가······."<br>"세드릭 도련님이 폰틀로이 경이십니다." 해비셤 씨가 말했습니다. "처음부터 그러셨습니다."`,
+            `백작은 창가로 갔습니다.`,
+            `그리고 한참 뒤에 말했습니다.<br>"해비셤. 자네에게 부탁이 하나 있네."`,
+            `"말씀하십시오."`,
+            `"코트 로지에 가 주게. 그리고 에롤 부인께······."`,
+            `그는 말을 멈추었습니다.`,
+            `"제가 가서 뭐라고 여쭐까요."`,
+            `"내가 잘못했다고 전해 주게." 백작이 말했습니다.`,
+            `해비셤 씨는 그 말을 듣고 오래 서 있었습니다. 사십 년 동안 그 사람 곁에서 일했지만 그런 말을 들은 것은 처음이었습니다.`,
+        ]
+    },
+    {
+        num: 13,
+        title: "성으로 오시오",
+        emoji: "🕯️",
+        art: ["story-13-a.png", "story-13-b.png"],
+        paras: [
+            `그날 밤 백작은 직접 마차를 불렀습니다.`,
+            `"어디로 모실까요?"<br>"코트 로지."`,
+            `하인들이 서로를 보았습니다. 백작이 그 집에 가는 일은 한 번도 없었습니다.`,
+            `마차가 그 작은 집 앞에 섰습니다.`,
+            `백작은 지팡이를 짚고 내렸습니다. 발이 아팠지만 부축은 받지 않았습니다.`,
+            `문이 열리고 에롤 부인이 나왔습니다.`,
+            `두 사람은 처음으로 마주 보았습니다.`,
+            `"들어오시겠습니까." 부인이 말했습니다.`,
+            `백작은 그 방으로 들어갔습니다. 작고 소박한 방이었습니다. 벽난로에 불이 타고 있었고, 탁자에 바느질감이 놓여 있었습니다.`,
+            `그는 앉아서 한참 동안 말을 꺼내지 못했습니다.`,
+            `"부인." 마침내 그가 말했습니다. "나는 부인을 한 번도 보지 않고 미워했소."`,
+            `"압니다."`,
+            `"그리고 부인에게서 아이를 떼어 놓았소."`,
+            `"그것도 압니다."`,
+            `백작은 지팡이 손잡이를 두 손으로 잡았습니다.`,
+            `"부인은 그때 왜 승낙했소."`,
+            `"그 아이에게 좋은 일이라고 생각했습니다." 부인이 말했습니다. "그리고 언젠가 백작님께서 그 아이를 아끼게 되시리라고 생각했습니다."`,
+            `"그걸 어떻게 알았소."`,
+            `"제 남편이 그렇게 말했으니까요." 부인이 말했습니다. "아버님은 겉으로만 그러시는 분이라고요."`,
+            `백작은 아들의 이름을 오래 입에 올리지 않았습니다. 그 이름이 이 방에서 나오자 그는 눈을 감았습니다.`,
+            `백작은 오래 아무 말도 하지 않았습니다.`,
+            `그러고는 자리에서 일어섰습니다.`,
+            `"성으로 오시오." 그가 말했습니다. "저 아이는 어머니가 있어야 하오. 그리고······ 나도 이제 혼자 있고 싶지 않소."`,
+            `부인이 그의 팔을 잡았습니다.`,
+            `이번에는 백작이 그 손을 뿌리치지 않았습니다.`,
+            `돌아가는 마차 안에서 그는 창밖만 보았습니다. 마부는 백작이 무언가 말하는 것을 들은 것 같다고 했지만, 무슨 말인지는 알아듣지 못했습니다.`,
+        ]
+    },
+    {
+        num: 14,
+        title: "여덟 번째 생일",
+        emoji: "🎉",
+        art: ["story-14-a.png", "story-14-b.png"],
+        paras: [
+            `세드릭의 여덟 번째 생일에 성에서 잔치가 열렸습니다.`,
+            `마당에 천막이 쳐졌고, 마을 사람들이 다 초대받았습니다. 소작인들, 일꾼들, 학교 아이들까지요.`,
+            `언쇼 사람들도 왔습니다. 그 마을은 이제 지붕이 반듯한 마을이 되어 있었습니다.`,
+            `아이들은 새 옷을 입고 왔습니다. 힉스도 왔습니다. 병원에 다녀온 뒤로 지팡이를 짚고 걸을 수 있게 되었기 때문입니다.`,
+            `백작은 현관 계단에 서서 사람들을 맞았습니다.`,
+            `그 곁에 세드릭이 서 있었고, 그 옆에 에롤 부인이 서 있었습니다.`,
+            `사람들은 그 세 사람을 보고 서로 수군거렸습니다. 몇 달 전만 해도 상상할 수 없던 모습이었기 때문입니다.`,
+            `그날 뉴욕에서 온 손님도 둘 있었습니다.`,
+            `홉스 씨와 딕이었습니다.`,
+            `홉스 씨는 새 옷을 입고 있었습니다. 그리고 아침부터 불편해서 어쩔 줄을 몰랐습니다.`,
+            `세드릭이 그를 백작에게 데려갔습니다.`,
+            `"할아버지, 이분이 홉스 아저씨예요."`,
+            `백작이 손을 내밀었습니다.`,
+            `홉스 씨는 그 손을 잡았습니다. 백작이라는 것들의 손을 잡는 날이 오리라고는 생각해 본 적이 없었습니다.`,
+            `"자네가 백작을 아주 싫어한다고 들었네." 백작이 말했습니다.`,
+            `홉스 씨는 얼굴이 새빨개졌습니다.`,
+            `"그건······ 잘 몰랐을 때 이야기입니다."`,
+            `백작이 웃었습니다.`,
+            `그날 저녁, 홉스 씨는 세드릭에게 말했습니다.`,
+            `"세드릭, 나는 뉴욕에 안 돌아가겠다."`,
+            `"정말요?"`,
+            `"저 아래 마을에 가게 자리가 하나 났더구나. 내가 하기로 했다." 홉스 씨가 말했습니다. "가게를 내면 네가 상자 위에 앉을 자리를 하나 만들어 두마."`,
+            `딕은 뉴욕으로 돌아갔습니다. 형과 함께 서부로 갈 생각이었습니다.`,
+            `떠나기 전날 딕이 세드릭에게 말했습니다.<br>"네가 그때 솔이랑 약을 사 줬잖아. 그게 시작이었어."<br>"그거 얼마 안 하는 건데."<br>"나한테는 아니었어." 딕이 말했습니다.`,
+            `"공부를 하고 싶어요." 딕이 말했습니다. "이제 돈이 좀 생겼거든요."`
+        ]
+    },
+    {
+        num: 15,
+        title: "서재의 불빛",
+        emoji: "📚",
+        art: ["story-15-a.png", "story-15-b.png"],
+        paras: [
+            `잔치가 끝나고 사람들이 다 돌아갔습니다.`,
+            `성이 조용해졌습니다.`,
+            `백작은 서재 의자에 앉아 있었습니다. 발이 아팠지만 그날은 견딜 만했습니다.`,
+            `세드릭이 들어와 그 옆 발판에 앉았습니다.`,
+            `개가 두 사람 사이에 엎드렸습니다.`,
+            `창밖에서 마지막 천막을 걷는 소리가 났습니다. 하인들이 접시를 나르는 소리도 멀리서 들려왔습니다.`,
+            `"할아버지." 세드릭이 말했습니다. "저는 오늘이 제일 좋은 날이었어요."`,
+            `"왜 그러냐."<br>"할아버지랑 사랑이랑 홉스 아저씨가 다 여기 있었잖아요. 저는 이 세 분이 한자리에 있는 걸 보는 게 소원이었어요."`,
+            `백작은 아이의 머리에 손을 얹었습니다.`,
+            `"세드릭." 그가 말했습니다. "너는 내가 좋은 사람이라고 생각하느냐."`,
+            `"네."`,
+            `"왜 그렇게 생각하느냐."`,
+            `세드릭은 잠깐 생각했습니다.`,
+            `"언쇼를 고쳐 주셨고, 힉스를 병원에 보내 주셨고, 학교 지붕도 올려 주셨잖아요."`,
+            `"그건 다 네가 하라고 해서 한 것이다."`,
+            `"그래도 하신 건 할아버지잖아요." 세드릭이 말했습니다. "하기 싫으면 안 하셨을 텐데요."`,
+            `백작은 오래 불을 보았습니다.`,
+            `그는 일흔 해를 살았습니다. 그동안 그를 좋은 사람이라고 말한 이는 아무도 없었습니다. 그리고 그 말이 맞았습니다.`,
+            `그런데 일곱 살짜리 하나가 그를 좋은 사람이라고 믿었고, 그는 그 믿음을 깨뜨리고 싶지 않아서 하나씩 하다 보니 여기까지 왔습니다.`,
+            `처음에는 그것이 우스운 일이라고 생각했습니다. 그러다 어느 날부터는 그 믿음이 맞기를 바라게 되었습니다.`,
+            `"세드릭." 그가 말했습니다.<br>"네."<br>"고맙다."`,
+            `아이는 그 말이 무슨 뜻인지 잘 몰랐습니다. 그래서 그냥 이렇게 대답했습니다.`,
+            `"저도요, 할아버지."`,
+            `벽난로에서 장작이 한 번 튀었습니다.`,
+            `창밖 저 아래 코트 로지에는 이제 불이 켜지지 않았습니다. 그 집 사람이 이 성으로 옮겨 왔기 때문입니다.`
+        ]
+    }
+];
+/* ── 쪽 나누기 ─────────────────────────────────────────
+   그림이 있는 펼침면은 왼쪽 쪽에만 글이 들어가고,
+   그림이 없는 펼침면은 양쪽 쪽에 모두 글이 들어간다.
+   진짜 책이 그렇듯 문단 한가운데에서도 쪽을 넘긴다. 그래야 쪽마다 글이 고르게 찬다.
+   글자 수로 어림잡으면 대사가 많은 문단은 실제로 차지하는 줄이 훨씬 많아 어긋나므로,
+   보이지 않는 쪽을 하나 만들어 실제 높이를 재어 가며 나눈다. */
+
+function makeProbe() {
+    const book = document.getElementById('book');
+    const holder = document.createElement('div');
+    holder.style.cssText = 'position:absolute;inset:10px;visibility:hidden;pointer-events:none;z-index:-1;';
+    holder.innerHTML = '<div class="page page-story"><div class="story-page-left"></div><div class="story-page-right"></div></div>';
+    book.appendChild(holder);
+
+    // 따로 만든 상자에 재면 실제 쪽과 미묘하게 어긋난다.
+    // 그래서 진짜 쪽과 똑같은 칸을 하나 숨겨 두고 거기에 넣어 잰다.
+    // 칸이 넘치면 scrollHeight가 칸 높이에서 잘리므로, 안에 든 것들의 높이를 직접 더한다.
+    const col = holder.querySelector('.story-page-left');
+    const cs = getComputedStyle(col);
+    const measured = col.clientHeight - parseFloat(cs.paddingTop) - parseFloat(cs.paddingBottom);
+
+    const contentHeight = () => [...col.children].reduce((h, el) =>
+        h + el.getBoundingClientRect().height + parseFloat(getComputedStyle(el).marginBottom || 0), 0);
+
+    col.innerHTML = '<h2>제목</h2>';
+    const headHeight = contentHeight();
+    col.innerHTML = '';
+
+    return {
+        // 창이 아직 크기를 갖지 못한 채 열리면 잰 값이 0이 된다. 그때는 어림값으로 버틴다.
+        usable: measured > 40 ? measured : 620,
+        headHeight: headHeight > 0 ? headHeight : 45,
+        measure(html) {
+            col.innerHTML = html;
+            return contentHeight();
+        },
+        close() { book.removeChild(holder); }
+    };
+}
+
+let PROBE = null;   // 쪽을 나눌 때마다 새로 만든다
+
+// 문단을 쪽 넘길 수 있는 조각으로 나눈다. 문장 끝과 대사 줄바꿈이 자를 수 있는 자리다.
+// 낱말 뜻풀이처럼 태그로 묶인 부분 안에서는 자르지 않는다.
+function splitSegments(html) {
+    const tokens = html.split(/(<[^>]+>)/).filter(t => t !== '');
+    const segs = [];
+    let buf = '';
+    let depth = 0;
+    for (const tok of tokens) {
+        if (tok.startsWith('<')) {
+            buf += tok;
+            if (/^<br\s*\/?>$/i.test(tok)) {
+                if (depth === 0) { segs.push(buf); buf = ''; }
+            } else if (tok.startsWith('</')) {
+                depth = Math.max(0, depth - 1);
+            } else if (!tok.endsWith('/>')) {
+                depth++;
+            }
+            continue;
+        }
+        if (depth > 0) { buf += tok; continue; }
+        // 문장이 끝나고 빈칸이 오는 자리에서 자른다
+        const parts = tok.split(/(?<=[.!?"”][\s])/);
+        for (let i = 0; i < parts.length; i++) {
+            buf += parts[i];
+            if (i < parts.length - 1) { segs.push(buf); buf = ''; }
+        }
+    }
+    if (buf.trim() !== '') segs.push(buf);
+    return segs.length ? segs : [html];
+}
+
+const CHAPTER_SEGS = CHAPTERS.map(ch => {
+    const segs = [];
+    ch.paras.forEach((html, paraIdx) => {
+        splitSegments(html).forEach((piece, k) => {
+            segs.push({ paraIdx, html: piece, start: k === 0 });
+        });
+    });
+    return segs;
+});
+
+// 조각 묶음을 문단 단위로 다시 묶어 화면에 그릴 모양으로 만든다.
+// 앞 쪽에서 이어진 문단은 첫 줄을 들여쓰지 않는다.
+function runHtml(segs, a, b) {
+    let out = '';
+    let i = a;
+    while (i < b) {
+        const pi = segs[i].paraIdx;
+        let inner = '';
+        const contd = !segs[i].start;
+        let j = i;
+        while (j < b && segs[j].paraIdx === pi) { inner += segs[j].html; j++; }
+        out += `<p${contd ? ' class="cont"' : ''}>${inner}</p>`;
+        i = j;
+    }
+    return out;
+}
+
+function slotPlan(imgCount, textCount) {
+    const total = imgCount + textCount;
+    const slots = new Array(total).fill('text');
+    for (let k = 0; k < imgCount; k++) {
+        let pos = Math.min(Math.round((k * total) / imgCount), total - 1);
+        while (slots[pos] === 'img') pos = (pos + 1) % total;
+        slots[pos] = 'img';
+    }
+    return slots;
+}
+
+// 글을 쪽마다 같은 높이만큼 나눠 담는다. 마지막 쪽만 남은 만큼 담는다.
+// 장 제목이 붙는 첫 쪽은 제목까지 함께 얹어서 재야 한다.
+// 제목 높이를 따로 빼서 계산하면 실제로 나란히 놓였을 때의 높이와 조금씩 어긋난다.
+function fillPages(segs, pageCount, headHtml, usable) {
+    const pageHeight = (a, b, first) => PROBE.measure((first ? headHtml : '') + runHtml(segs, a, b));
+    const ranges = [];
+    let i = 0;
+    for (let p = 0; p < pageCount; p++) {
+        const rest = pageCount - p - 1;
+        if (rest === 0) { ranges.push([i, segs.length]); break; }
+        // 남은 글을 남은 쪽 수로 나눠 이번 쪽에 담을 양을 정한다.
+        // 매 쪽마다 다시 계산하므로, 한 쪽이 덜 차면 그만큼이 뒤쪽에 고르게 얹힌다.
+        const remainingH = pageHeight(i, segs.length, p === 0);
+        const room = Math.min(usable, remainingH / (rest + 1));
+        const maxTake = Math.max(1, segs.length - i - rest);
+        let take = 1;
+        let lo = 1, hi = maxTake;
+        while (lo <= hi) {
+            const mid = (lo + hi) >> 1;
+            if (pageHeight(i, i + mid, p === 0) <= room) { take = mid; lo = mid + 1; }
+            else { hi = mid - 1; }
+        }
+        ranges.push([i, i + take]);
+        i += take;
+    }
+    return ranges;
+}
+
+function paginateChapter(ch, chIndex) {
+    const segs = CHAPTER_SEGS[chIndex];
+    const arts = (ch.art && ch.art.length) ? ch.art : [];
+    const { usable, headHeight } = PROBE;
+    const headHtml = `<h2>${CHAPTER_LABEL(ch.num)}${ch.title}</h2>`;
+    const totalH = PROBE.measure(runHtml(segs, 0, segs.length));
+
+    // 필요한 글 쪽 수를 구하고, 그림 면(1쪽)과 글만 면(2쪽)으로 맞춘다.
+    // 쪽 수는 조각 수를 넘을 수 없다 — 빈 쪽이 생기면 안 되기 때문이다.
+    const maxSpreads = Math.max(arts.length, Math.ceil(segs.length / 2));
+    const needPages = Math.max(arts.length || 1, Math.ceil((totalH + headHeight) / usable));
+    let textSpreads = Math.max(arts.length ? 0 : 1, Math.ceil(Math.max(0, needPages - arts.length) / 2));
+
+    let slots = slotPlan(arts.length, textSpreads);
+    let ranges = null;
+    for (let guard = 0; guard < 8; guard++) {
+        slots = slotPlan(arts.length, textSpreads);
+        const pageCount = slots.reduce((n, kind) => n + (kind === 'img' ? 1 : 2), 0);
+        if (pageCount > segs.length && textSpreads > 0) { textSpreads--; continue; }
+        ranges = fillPages(segs, pageCount, headHtml, usable);
+        // 한 쪽이라도 넘치면 쪽을 늘려 다시 나눈다.
+        // 마지막 쪽만 보면 안 된다 — 첫 쪽에는 장 제목이 얹히므로 그쪽이 먼저 넘칠 수 있다.
+        const over = ranges.some(([a, b], n) =>
+            PROBE.measure((n === 0 ? headHtml : '') + runHtml(segs, a, b)) > usable);
+        if (!over || arts.length + textSpreads >= maxSpreads) break;
+        textSpreads++;
+    }
+    if (!ranges) {
+        slots = slotPlan(arts.length, textSpreads);
+        ranges = fillPages(segs, slots.reduce((n, kind) => n + (kind === 'img' ? 1 : 2), 0), headHtml, usable);
+    }
+
+    const spreads = [];
+    let pageIdx = 0;
+    let artIdx = 0;
+    slots.forEach((kind, s) => {
+        if (kind === 'img') {
+            spreads.push({
+                kind: 'chapter', ch, chIndex, first: s === 0,
+                art: arts[artIdx++], left: ranges[pageIdx++], right: null
+            });
+        } else {
+            const left = ranges[pageIdx++];
+            const right = ranges[pageIdx++];
+            spreads.push({ kind: 'chapter', ch, chIndex, first: s === 0, art: null, left, right });
+        }
+    });
+    return spreads;
+}
+/* ── 그리기 ───────────────────────────────────────── */
+
+function artFrame(src, emoji) {
+    return `
+        <div class="art-frame">
+            <img src="images/${src}" alt="" onerror="this.style.display='none'; this.nextElementSibling.style.display='flex';">
+            <div class="art-fallback" style="display:none">${emoji}</div>
+        </div>`;
+}
+
+function coverPage() {
+    return `
+        <div class="page page-cover">
+            <div class="story-page-left story-page-left-full">
+                ${artFrame('cover.png', '🏰')}
+            </div>
+            <div class="story-page-right">
+                <h1>소공자</h1>
+                <p class="cover-tag">프랜시스 호지슨 버넷 원작</p>
+                <p>뉴욕 뒷골목에 사는 일곱 살 세드릭에게 어느 날 낯선 변호사가 찾아옵니다. 한 번도 본 적 없는 영국의 할아버지가 그를 부른다는 것이었습니다.</p>
+                <p>평생 남에게 미움만 받고 살아온 노인이, 자기를 좋은 사람이라고 믿는 아이 하나를 만나면서 어떻게 달라지는지에 대한 이야기입니다.</p>
+            </div>
+        </div>`;
+}
+
+function tocPage(part) {
+    // 한 편으로 이어지는 이야기라 차례는 장 번호와 제목만 둔다.
+    // 줄거리 한 줄을 붙이면 차례가 두 펼침면으로 늘어나고, 앞으로 읽을 대목을 미리 알려 주는 셈도 된다.
+    const itemHtml = ch => `
+        <li>
+            <button type="button" data-goto="${ch.num}">
+                <span class="toc-num">${ch.num}</span>
+                <span><strong>${ch.title}</strong></span>
+            </button>
+        </li>`;
+    const extraItems = `
+        <li>
+            <button type="button" data-goto-kind="quiz">
+                <span class="toc-num">?</span>
+                <span><strong>이야기 문제</strong></span>
+            </button>
+        </li>`;
+    const group = TOC_GROUPS[part];
+    const half = Math.ceil(group.length / 2);
+    const last = part === TOC_GROUPS.length - 1;
+    return `
+        <div class="page page-toc">
+            <div class="story-page-left">
+                ${part === 0 ? '<h2>차례</h2>' : ''}
+                <ul class="toc-list">${group.slice(0, half).map(itemHtml).join('')}</ul>
+            </div>
+            <div class="story-page-right">
+                <ul class="toc-list">${group.slice(half).map(itemHtml).join('') + (last ? extraItems : '')}</ul>
+            </div>
+        </div>`;
+}
+
+// 한 펼침면에 담을 수 있는 차례 항목은 여덟 개까지다. 그보다 많으면 차례도 여러 쪽이 된다.
+const TOC_PER_SPREAD = 16;
+const TOC_GROUPS = [];
+for (let i = 0; i < CHAPTERS.length; i += TOC_PER_SPREAD) {
+    TOC_GROUPS.push(CHAPTERS.slice(i, i + TOC_PER_SPREAD));
+}
+
+function chapterSpreadPage(spread) {
+    const ch = spread.ch;
+    const segs = CHAPTER_SEGS[spread.chIndex];
+    const head = spread.first ? `<h2>${CHAPTER_LABEL(ch.num)}${ch.title}</h2>` : '';
+
+    if (spread.art) {
+        return `
+            <div class="page page-story">
+                <div class="story-page-left">
+                    ${head}
+                    ${runHtml(segs, spread.left[0], spread.left[1])}
+                </div>
+                <div class="story-page-right story-page-right-image">
+                    ${artFrame(spread.art, ch.emoji)}
+                </div>
+            </div>`;
+    }
+
+    return `
+        <div class="page page-story">
+            <div class="story-page-left">
+                ${head}
+                ${runHtml(segs, spread.left[0], spread.left[1])}
+            </div>
+            <div class="story-page-right story-page-right-text">
+                ${runHtml(segs, spread.right[0], spread.right[1])}
+            </div>
+        </div>`;
+}
+
+const QUIZ = [
+    { q: "세드릭이 처음 살던 곳은 어디입니까?", choices: ["뉴욕의 좁은 골목", "런던의 큰 집", "시골 농장"], answer: 0 },
+    { q: "홉스 아저씨가 세상에서 가장 싫어한 것은 무엇입니까?", choices: ["장사꾼", "귀족", "신문"], answer: 1 },
+    { q: "변호사 해비셤 씨가 전한 소식은 무엇입니까?", choices: ["아버지가 살아 있다는 것", "재산을 빼앗긴다는 것", "세드릭이 상속자라는 것"], answer: 2 },
+    { q: "백작이 내건 조건은 무엇이었습니까?", choices: ["어머니는 따로 살아야 한다", "이름을 바꿔야 한다", "미국말을 쓰면 안 된다"], answer: 0 },
+    { q: "세드릭이 떠나기 전 홉스 아저씨에게 준 것은 무엇입니까?", choices: ["편지", "금시계", "사진"], answer: 1 },
+    { q: "세드릭이 어머니를 부르던 이름은 무엇입니까?", choices: ["사랑", "엄마", "부인"], answer: 0 },
+    { q: "성에서 처음 만났을 때 세드릭은 할아버지를 어떻게 대했습니까?", choices: ["무서워서 울었다", "겁내지 않고 먼저 손을 내밀었다", "말을 하지 않았다"], answer: 1 },
+    { q: "언쇼 마을의 형편은 어땠습니까?", choices: ["지붕에 구멍이 나 비가 샜다", "잘사는 마을이었다", "사람이 살지 않았다"], answer: 0 },
+    { q: "세드릭의 말을 듣고 백작이 한 일은 무엇입니까?", choices: ["소작료를 올렸다", "마을을 헐고 새로 지었다", "관리인을 바꿨다"], answer: 1 },
+    { q: "세드릭이 할아버지에게 처음 부탁한 것은 무엇입니까?", choices: ["딕에게 돈을 보내는 일", "조랑말을 사는 일", "어머니를 성으로 부르는 일"], answer: 0 },
+    { q: "성에 찾아온 여자가 주장한 것은 무엇입니까?", choices: ["백작의 딸이라는 것", "재산을 빌려줬다는 것", "자기 아들이 진짜 상속자라는 것"], answer: 2 },
+    { q: "그 소식을 듣고 세드릭이 가장 먼저 물은 것은 무엇입니까?", choices: ["재산은 어떻게 되느냐", "어머니와 살 수 있느냐", "성에 남을 수 있느냐"], answer: 1 },
+    { q: "그 여자의 정체를 알아본 사람은 누구입니까?", choices: ["딕", "해비셤 씨", "홉스 씨"], answer: 0 },
+    { q: "백작이 마침내 코트 로지를 찾아가 한 말은 무엇입니까?", choices: ["떠나 달라고 했다", "내가 잘못했다고 했다", "돈을 주겠다고 했다"], answer: 1 },
+    { q: "홉스 아저씨는 잔치 뒤에 어떻게 했습니까?", choices: ["뉴욕으로 돌아갔다", "성에서 일하게 되었다", "마을에 가게를 냈다"], answer: 2 },
+    { q: "세드릭이 할아버지를 좋은 사람이라고 여긴 까닭은 무엇입니까?", choices: ["돈이 많아서", "부탁한 일을 다 해 주셔서", "귀족이라서"], answer: 1 }
+];
+
+function quizPage() {
+    const items = QUIZ.map((item, i) => `
+        <div class="quiz-item" data-qindex="${i}">
+            <p class="quiz-question">${i + 1}. ${item.q}</p>
+            <div class="quiz-choices">
+                ${item.choices.map((c, ci) => `<button type="button" class="quiz-choice" data-choice="${ci}">${c}</button>`).join('')}
+            </div>
+        </div>`).join('');
+    return `
+        <div class="page page-quiz">
+            <h2>이야기 문제</h2>
+            <p class="quiz-intro-text" id="quizProgress">0 / 총 ${QUIZ.length}문항 완료</p>
+            <div class="quiz-list">${items}</div>
+        </div>`;
+}
+
+function endPage() {
+    return `
+        <div class="page page-end">
+            ${artFrame('end.png', '🕯️')}
+            <h2>소공자를 다 읽었습니다</h2>
+            <a class="home-btn" href="../../../../../">학습 허브로 돌아가기</a>
+        </div>`;
+}
+
+const TWO_PAGE_KINDS = new Set(['chapter', 'toc', 'cover']);
+
+let PAGES = [];
+let FOLIOS = [];
+
+function buildPages() {
+    PROBE = makeProbe();
+    PAGES = [
+        { kind: 'cover' },
+        ...TOC_GROUPS.map((_, i) => ({ kind: 'toc', part: i })),
+        ...CHAPTERS.flatMap(paginateChapter),
+        { kind: 'quiz' },
+        { kind: 'end' }
+    ];
+    PROBE.close();   // 쪽을 다 나눴으니 재는 데 쓰던 숨은 쪽은 치운다
+
+    let folioCounter = 0;
+    FOLIOS = PAGES.map(p => {
+        const width = TWO_PAGE_KINDS.has(p.kind) ? 2 : 1;
+        const start = folioCounter + 1;
+        folioCounter += width;
+        return { start, width };
+    });
+}
+
+buildPages();
+
+function renderPage(page) {
+    switch (page.kind) {
+        case 'cover': return coverPage();
+        case 'toc': return tocPage(page.part);
+        case 'chapter': return chapterSpreadPage(page);
+        case 'quiz': return quizPage();
+        case 'end': return endPage();
+        default: return '';
+    }
+}
+
+let current = 0;
+let animating = false;
+
+const spreadEl = document.getElementById('spread');
+const prevBtn = document.getElementById('prevBtn');
+const nextBtn = document.getElementById('nextBtn');
+const indicatorEl = document.getElementById('pageIndicator');
+const folioLeftEl = document.getElementById('folioLeft');
+const folioRightEl = document.getElementById('folioRight');
+
+function paint() {
+    spreadEl.innerHTML = renderPage(PAGES[current]);
+    prevBtn.disabled = current === 0;
+    nextBtn.disabled = current === PAGES.length - 1;
+    indicatorEl.textContent = `${current + 1} / ${PAGES.length}`;
+
+    const folio = FOLIOS[current];
+    folioLeftEl.classList.toggle('folio-center', folio.width === 1);
+    folioLeftEl.textContent = folio.start;
+    folioLeftEl.hidden = false;
+    if (folio.width === 2) {
+        folioRightEl.textContent = folio.start + 1;
+        folioRightEl.hidden = false;
+    } else {
+        folioRightEl.hidden = true;
+    }
+
+    spreadEl.querySelectorAll('[data-goto]').forEach(btn => {
+        btn.addEventListener('click', () => {
+            const num = Number(btn.dataset.goto);
+            const idx = PAGES.findIndex(p => p.kind === 'chapter' && p.first && p.ch.num === num);
+            if (idx >= 0) goTo(idx);
+        });
+    });
+    spreadEl.querySelectorAll('[data-goto-kind]').forEach(btn => {
+        btn.addEventListener('click', () => {
+            const idx = PAGES.findIndex(p => p.kind === btn.dataset.gotoKind);
+            if (idx >= 0) goTo(idx);
+        });
+    });
+
+    if (PAGES[current].kind === 'quiz') initQuiz();
+}
+
+function initQuiz() {
+    let answeredCount = 0;
+    const progressEl = document.getElementById('quizProgress');
+
+    spreadEl.querySelectorAll('.quiz-item').forEach(item => {
+        const qi = Number(item.dataset.qindex);
+        const q = QUIZ[qi];
+        item.querySelectorAll('.quiz-choice').forEach(btn => {
+            btn.addEventListener('click', () => {
+                if (item.classList.contains('graded')) return;
+                item.classList.add('graded');
+                const chosen = Number(btn.dataset.choice);
+                item.querySelectorAll('.quiz-choice').forEach(b => {
+                    const ci = Number(b.dataset.choice);
+                    if (ci === q.answer) b.classList.add('correct');
+                    else if (ci === chosen) b.classList.add('incorrect');
+                });
+                answeredCount++;
+                progressEl.textContent = `${answeredCount} / 총 ${QUIZ.length}문항 완료`;
+            });
+        });
+    });
+}
+
+function goTo(index) {
+    if (animating || index === current || index < 0 || index >= PAGES.length) return;
+    animating = true;
+    const dir = index > current ? 'flip-next' : 'flip-prev';
+    spreadEl.classList.add(dir);
+    setTimeout(() => {
+        current = index;
+        paint();
+    }, 230);
+    setTimeout(() => {
+        spreadEl.classList.remove('flip-next', 'flip-prev');
+        animating = false;
+    }, 480);
+}
+
+prevBtn.addEventListener('click', () => goTo(current - 1));
+nextBtn.addEventListener('click', () => goTo(current + 1));
+
+document.getElementById('tocLink').addEventListener('click', () => {
+    const idx = PAGES.findIndex(p => p.kind === 'toc');
+    if (idx >= 0) goTo(idx);
+});
+
+document.addEventListener('keydown', (e) => {
+    if (e.key === 'ArrowRight') goTo(current + 1);
+    if (e.key === 'ArrowLeft') goTo(current - 1);
+});
+
+paint();
+
+// 본문 글꼴은 늦게 내려온다. 글꼴이 바뀌면 한 줄에 들어가는 글자 수가 달라져서
+// 먼저 나눠 둔 쪽이 넘치게 된다. 그래서 글꼴을 다 받은 뒤에 한 번 다시 나눈다.
+if (document.fonts && document.fonts.status !== 'loaded') {
+    document.fonts.ready.then(() => {
+        const here = PAGES[current];
+        buildPages();
+        current = Math.min(current, PAGES.length - 1);
+        if (here && here.kind === 'chapter') {
+            const idx = PAGES.findIndex(p => p.kind === 'chapter' && p.first && p.ch.num === here.ch.num);
+            if (idx >= 0) current = idx;
+        }
+        paint();
+    });
+}

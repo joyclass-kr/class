@@ -1,0 +1,962 @@
+const BOOK_TITLE = "왕자와 거지";
+
+const CHAPTER_LABEL = n => `${n}장 · `;
+
+const CHAPTERS = [
+    {
+        num: 1,
+        title: "같은 날에 태어난 아이 둘",
+        emoji: "👶",
+        art: ["story-01-a.png", "story-01-b.png"],
+        paras: [
+            `사백 년쯤 전, 영국 런던에서 같은 날에 아이가 둘 태어났습니다.`,
+            `하나는 오팔 골목이라는 곳에서 태어났습니다. 그 골목은 좁고 더럽고 사람이 너무 많았습니다. 한 집에 여러 가족이 살았고, 계단에는 늘 누군가가 앉아 있었습니다.`,
+            `그 아이의 이름은 톰 캔티였습니다.`,
+            `톰의 아버지 존 캔티는 도둑이었고, 어머니는 구걸을 했습니다. 톰에게는 누나가 둘 있었습니다.`,
+            `톰의 아버지는 아이들에게 날마다 구걸해 오게 했고, 빈손으로 돌아오면 때렸습니다.`,
+            `캔티 집안은 그 아이가 태어난 것을 반가워하지 않았습니다. 먹여야 할 입이 하나 더 늘었기 때문입니다.`,
+            `같은 날, 다른 아이 하나가 태어났습니다.`,
+            `그 아이는 튜더 집안에서 태어났습니다. 아버지는 헨리 팔세였고, 그러니까 그 아이는 영국의 왕자였습니다.`,
+            `이름은 에드워드였습니다.`,
+            `온 영국이 그 아이가 태어난 것을 기뻐했습니다. 종이 울렸고 사람들이 거리로 나와 춤을 추었습니다. 여러 해 동안 아들을 기다린 끝에 얻은 왕자였기 때문입니다.`,
+            `그러나 두 아이 다 자기가 태어난 날에 무슨 일이 있었는지 몰랐습니다.`,
+            `톰은 골목에서 자랐습니다.`,
+            `배가 고픈 것은 늘 있는 일이었습니다. 매를 맞는 것도 그랬습니다. 다만 어머니는 아버지 몰래 자기 몫의 빵을 톰에게 나눠 주곤 했습니다.`,
+            `그 골목에 앤드루라는 늙은 신부가 살았습니다. 옛날에는 제법 지체 있는 사람이었는데 지금은 가난했습니다.`,
+            `그 신부가 톰에게 글을 가르쳐 주었습니다. 라틴어도 조금 가르쳤습니다.`,
+            `그리고 옛날이야기를 들려주었습니다. 왕과 왕자와 성에 대한 이야기였습니다.`,
+            `톰은 그 이야기를 들으며 자랐습니다.`,
+            `밤이면 짚 위에 누워 자기가 왕자인 상상을 했습니다. 그러다 아침에 눈을 뜨면 다시 오팔 골목이었습니다.`,
+            `톰은 골목 아이들에게 그 이야기를 들려주었습니다. 아이들은 톰을 우두머리로 삼았고, 톰이 왕 노릇을 하는 놀이를 했습니다.`,
+            `톰은 그 놀이를 하도 해서 말투가 조금 달라졌습니다. 골목 아이 같지 않게 말하게 된 것입니다.`,
+            `어른들은 그것을 보고 저 아이는 어딘가 다르다고 했습니다.`
+        ]
+    },
+    {
+        num: 2,
+        title: "궁전 문 앞에서",
+        emoji: "🏰",
+        art: ["story-02-a.png", "story-02-b.png"],
+        paras: [
+            `어느 날 톰은 걷다가 자기도 모르게 아주 멀리까지 갔습니다.`,
+            `그리고 커다란 문 앞에 이르렀습니다.`,
+            `쇠창살 너머로 넓은 마당이 보였습니다. 그 안에 아이가 하나 있었습니다.`,
+            `비단옷을 입고 있었고, 허리에 짧은 칼을 차고 있었습니다. 옆에 사람들이 여럿 서서 그 아이가 무엇을 하는지 지켜보고 있었습니다.`,
+            `톰은 창살에 얼굴을 대고 그 아이를 보았습니다.`,
+            `그 순간 병사 하나가 톰의 목덜미를 잡아 길바닥으로 던졌습니다.`,
+            `"거지 놈이 어딜."`,
+            `사람들이 웃었습니다.`,
+            `그때 마당 안에서 목소리가 났습니다.`,
+            `"어떻게 감히 저 아이에게 그런 짓을 하는가!"`,
+            `비단옷을 입은 아이가 창살 앞으로 뛰어왔습니다.`,
+            `"문을 열어라! 저 아이를 들여보내라!"`,
+            `사람들이 모자를 벗고 무릎을 꿇었습니다. 병사도 얼굴이 하얘져 뒤로 물러났습니다.`,
+            `그 아이가 웨일스 왕자 에드워드였습니다.`,
+            `톰은 궁전 안으로 들어갔습니다.`,
+            `왕자는 톰을 자기 방으로 데려가 먹을 것을 내주었습니다. 그리고 사람들을 다 내보냈습니다.`,
+            `"이름이 뭐냐?"<br>"톰 캔티라고 합니다."<br>"어디 사느냐?"<br>"오팔 골목에 삽니다."`,
+            `왕자는 톰에게 이것저것 물었습니다. 골목에서 무엇을 하며 노는지, 강에서 헤엄을 치는지, 진흙에서 뒹구는지.`,
+            `톰이 대답할 때마다 왕자의 눈이 커졌습니다.`,
+            `"진흙에서 뒹군다고?"<br>"네."<br>"아무도 뭐라고 하지 않고?"<br>"아무도 안 봅니다."`,
+            `"나는 그런 걸 한 번도 해 본 적이 없다." 왕자가 말했습니다. "나는 아침에 일어나서 밤에 잘 때까지 무엇을 할지 다 정해져 있다. 걸음걸이도 정해져 있고 웃는 것도 정해져 있다."`,
+            `그러다 두 아이는 문득 서로를 바라보았습니다.`,
+            `머리 색이 같았고, 눈 색이 같았고, 키가 같았고, 얼굴이 같았습니다.`,
+            `왕자가 자리에서 일어섰습니다.<br>"우리 옷을 바꿔 입어 보자."`
+        ]
+    },
+    {
+        num: 3,
+        title: "옷을 바꿔 입다",
+        emoji: "👕",
+        art: ["story-03-a.png", "story-03-b.png"],
+        paras: [
+            `두 아이는 옷을 바꿔 입고 거울 앞에 나란히 섰습니다.`,
+            `그리고 둘 다 아무 말도 하지 못했습니다.`,
+            `거울 속에는 아까와 똑같은 두 아이가 서 있었습니다. 다만 자리가 바뀌어 있었습니다.`,
+            `"이게 어떻게 된 일이냐." 왕자가 말했습니다. "네가 나고 내가 너로구나."`,
+            `그때 왕자가 톰의 손등에 난 자국을 보았습니다.`,
+            `"이건 뭐냐."<br>"아까 병사가······."<br>"뭐라고?"`,
+            `왕자의 얼굴이 붉어졌습니다.`,
+            `"내가 저놈을 그냥 두지 않겠다."`,
+            `왕자는 옷을 갈아입을 생각도 하지 않고 문을 박차고 나갔습니다.`,
+            `마당을 가로질러 문으로 뛰어가며 소리쳤습니다.<br>"문을 열어라! 그리고 저 병사를 잡아 오너라!"`,
+            `병사가 그 아이를 붙잡아 길바닥으로 내던졌습니다.`,
+            `"두 번은 못 봐준다, 이 거지 놈아."`,
+            `문이 닫혔습니다.`,
+            `사람들이 몰려들어 그 아이를 놀렸습니다.`,
+            `"나는 웨일스 왕자다!" 아이가 소리쳤습니다. "나에게 손을 대는 자는 반역죄로 다스릴 것이다!"`,
+            `사람들이 더 크게 웃었습니다.`,
+            `그날 저녁 궁전에서는 다른 일이 벌어지고 있었습니다.`,
+            `사람들이 방으로 들어와 비단옷을 입은 아이 앞에 무릎을 꿇었습니다.`,
+            `"저는 왕자가 아닙니다." 톰이 말했습니다. "저는 오팔 골목의 톰 캔티입니다. 제발 저를 내보내 주십시오."`,
+            `사람들의 얼굴이 굳었습니다.`,
+            `그 소식이 곧 왕에게 올라갔습니다.`,
+            `헨리 팔세는 병들어 누워 있었습니다. 그는 아들을 데려오게 했습니다.`,
+            `톰은 그 앞에 섰습니다. 무섭게 생긴 사람이었습니다. 몸이 아주 크고 얼굴이 부어 있었습니다.`,
+            `"네가 누구냐."<br>"톰 캔티입니다. 저는 오팔 골목에서······."`,
+            `왕은 한참 아무 말도 하지 않았습니다.`,
+            `그러고는 아주 조용히 말했습니다.<br>"내 아들이 병이 났구나."`,
+            `"내 아들은 왕자다. 그리고 앞으로 영국의 왕이 될 것이다. 이 아이가 무슨 말을 하든 아무도 거스르지 마라. 그리고 이 이야기가 밖으로 나가면 그 사람의 목이 달아날 줄 알아라."`,
+            `그날부터 톰 캔티는 궁전에 갇히게 되었습니다.`
+        ]
+    },
+    {
+        num: 4,
+        title: "존 캔티의 손",
+        emoji: "🌧️",
+        art: ["story-04-a.png", "story-04-b.png"],
+        paras: [
+            `한편 에드워드는 런던 거리를 헤매고 있었습니다.`,
+            `아무도 그의 말을 믿지 않았습니다. 오히려 왕자를 사칭한다며 돌을 던지는 사람도 있었습니다.`,
+            `밤이 되자 비가 왔습니다.`,
+            `그때 커다란 손이 그의 팔을 붙잡았습니다.`,
+            `"이 녀석, 어딜 싸돌아다니다 이제 오느냐. 오늘 얼마 벌었어."`,
+            `존 캔티였습니다. 톰의 아버지가 아들인 줄 알고 붙잡은 것입니다.`,
+            `"나는 당신 아들이 아니다." 에드워드가 말했습니다. "나는 웨일스 왕자다. 손을 놓아라."`,
+            `존 캔티는 몽둥이를 들었습니다.`,
+            `그날 밤 에드워드는 처음으로 매를 맞았습니다. 궁전에는 왕자 대신 매를 맞는 아이가 따로 있었기 때문에, 그는 그때까지 매가 어떤 것인지 몰랐습니다.`,
+            `그날 밤 에드워드는 오팔 골목의 그 방에서 잤습니다.`,
+            `짚 위였습니다. 그 방에는 여덟 사람이 함께 자고 있었습니다.`,
+            `그런데 톰의 어머니가 밤중에 촛불을 들고 그 아이를 살펴보았습니다.`,
+            `그녀는 아들의 버릇을 하나 알고 있었습니다. 자다가 갑자기 밝은 빛을 비추면 손을 들어 눈앞을 가리는 버릇이었습니다. 손바닥을 밖으로 해서요.`,
+            `그녀는 촛불을 아이 얼굴 앞에 갑자기 들이댔습니다.`,
+            `아이는 잠에서 깨어 눈을 찌푸렸습니다. 그러나 손은 올리지 않았습니다.`,
+            `그녀는 두 번을 더 해 보았습니다. 그때마다 마찬가지였습니다.`,
+            `그녀는 촛불을 내려놓고 그 자리에 주저앉았습니다.`,
+            `"내 아들이 아니야."`,
+            `그러나 그러면 자기 아들은 어디 있는지 알 수 없었습니다. 그녀는 밤새 울었습니다.`,
+            `이튿날 새벽, 소동이 났습니다.`,
+            `존 캔티가 길에서 사람 하나를 때렸는데 그 사람이 죽었다는 것이었습니다. 그것도 신부였습니다. 앤드루 신부였습니다.`,
+            `캔티 집안은 그길로 런던을 떠나야 했습니다.`,
+            `그 소동 틈에 에드워드는 달아났습니다.`,
+            `달아나면서 그는 뒤를 돌아보았습니다. 좁은 골목에 사람들이 가득 나와 있었습니다. 저 사람들이 다 자기 백성이라는 것을 그때 처음 생각했습니다.`,
+        ]
+    },
+    {
+        num: 5,
+        title: "마일스 헨든",
+        emoji: "🗡️",
+        art: ["story-05-a.png", "story-05-b.png"],
+        paras: [
+            `에드워드는 길드홀 근처에서 다시 사람들에게 둘러싸였습니다.`,
+            `누군가 그를 밀치고 누군가 옷자락을 잡아당겼습니다.`,
+            `그때 사람들 사이에서 검을 든 사내가 나섰습니다.`,
+            `"물러서라."`,
+            `키가 크고 볕에 그을린 사람이었습니다. 옷은 낡았지만 서 있는 자세가 반듯했습니다.`,
+            `"이 아이가 왕자든 아니든, 여럿이 하나를 괴롭히는 것은 사내가 할 짓이 아니다."`,
+            `사람들이 물러났습니다.`,
+            `그 사람이 마일스 헨든이었습니다.`,
+            `헨든은 켄트 지방의 헨든 홀이라는 집안의 둘째 아들이었습니다. 칠 년 전 집을 떠나 프랑스에서 전쟁을 하다가, 붙잡혀 감옥에서 여러 해를 살고 이제 막 영국에 돌아온 참이었습니다.`,
+            `헨든은 그 아이를 여관으로 데려갔습니다.`,
+            `그리고 밥을 시켜 주었습니다.`,
+            `아이가 자리에 앉으며 말했습니다.<br>"너는 내 목숨을 구했다. 소원을 하나 말해 보아라."`,
+            `헨든은 웃음이 나오려는 것을 참았습니다. 이 아이가 머리가 좀 상했다고 생각한 것입니다. 그래서 맞춰 주기로 했습니다.`,
+            `"그러면······ 저와 제 자손이 왕 앞에서 앉을 수 있게 해 주십시오."`,
+            `그것은 영국에서 아주 오래된 특권이었습니다.`,
+            `"그리하라." 아이가 말했습니다. "일어나 앉아라, 켄트의 마일스 헨든 경."`,
+            `헨든은 무릎을 꿇었다가 일어나 앉았습니다. 속으로는 웃으면서요.`,
+            `그날 밤 헨든은 그 아이가 잠든 것을 보았습니다.`,
+            `아이는 자리에 눕자마자 잠들었습니다. 며칠 동안 제대로 자지 못한 것이 분명했습니다.`,
+            `헨든은 담요를 덮어 주며 생각했습니다.`,
+            `이 아이가 누구든 나는 이 아이를 돌봐야겠다고요.`,
+            `그런데 밤중에 심부름꾼이 와서, 다리 아래에 젊은이 하나가 기다린다며 아이를 데려갔습니다.`,
+            `헨든이 돌아왔을 때 방은 비어 있었습니다.`,
+            `그 심부름꾼은 존 캔티의 사람이었습니다.`
+        ]
+    },
+    {
+        num: 6,
+        title: "왕이 된 톰",
+        emoji: "👑",
+        art: ["story-06-a.png", "story-06-b.png"],
+        paras: [
+            `궁전의 톰은 나날이 괴로웠습니다.`,
+            `아침에 일어나면 사람 열둘이 옷을 입혀 주었습니다. 셔츠 하나를 입는 데 여섯 사람의 손을 거쳤습니다.`,
+            `식사 때는 뒤에 사람이 서서 시중을 들었고, 코가 가려워도 긁으면 안 되었습니다.`,
+            `누가 무슨 말을 걸어도 무슨 말인지 몰랐습니다. 라틴어는 조금 알았지만 프랑스어는 몰랐습니다.`,
+            `톰은 몇 번이나 자기는 왕자가 아니라고 말했습니다. 그럴 때마다 사람들의 얼굴이 어두워졌습니다.`,
+            `그러다 어느 날 밤, 궁전에 종이 울렸습니다.`,
+            `헨리 팔세가 세상을 떠난 것이었습니다.`,
+            `그날 밤 사람들이 톰 앞에 무릎을 꿇고 이렇게 불렀습니다.<br>"국왕 폐하."`,
+            `톰은 그 말을 듣고 온몸이 떨렸습니다.`,
+            `그러나 곧 한 가지를 알아차렸습니다.`,
+            `자기가 말하면 사람들이 그대로 한다는 것이었습니다.`,
+            `며칠 뒤 재판이 열렸습니다. 왕이 그 자리에 나가게 되어 있었습니다.`,
+            `첫 번째 사람은 사내였습니다. 사람을 독으로 죽였다는 죄였습니다.`,
+            `"증거가 무엇인가?" 톰이 물었습니다.<br>"죽은 사람이 그자를 만나고 나서 죽었습니다."<br>"그것뿐인가?"<br>"······그것뿐입니다."`,
+            `그자에게 내려진 벌은 끓는 물에 넣는 것이었습니다.`,
+            `톰이 자리에서 일어섰습니다.`,
+            `"그 벌을 없애라." 톰이 말했습니다. "그런 벌은 이 나라에 다시 없게 하라."`,
+            `사람들이 술렁였습니다.`,
+            `두 번째 사람은 여자와 아이였습니다. 어머니와 딸이었는데, 마녀라는 죄였습니다.`,
+            `"무엇을 했다는 것인가?"<br>"양말을 벗으면 폭풍이 온다고 합니다."`,
+            `톰은 그 어머니를 보았습니다. 아이를 꼭 안고 있었습니다.`,
+            `"그러면 지금 양말을 벗어 보시오." 톰이 말했습니다.`,
+            `여자가 떨리는 손으로 양말을 벗었습니다. 아이도 벗었습니다.`,
+            `아무 일도 일어나지 않았습니다.`,
+            `"폭풍이 어디 있는가." 톰이 말했습니다. "이 사람들을 놓아주라."`,
+            `그날 이후 사람들은 새 왕이 아주 자비롭다고 말하기 시작했습니다.`,
+            `톰은 그 말을 들으며 이런 생각을 했습니다.`,
+            `내가 골목에서 굶어 봤기 때문에 저 사람들이 보이는 것이구나.`
+        ]
+    },
+    {
+        num: 7,
+        title: "도둑들의 굴",
+        emoji: "🔥",
+        art: ["story-07-a.png", "story-07-b.png"],
+        paras: [
+            `한편 에드워드는 존 캔티에게 다시 붙잡혀 런던 밖으로 끌려갔습니다.`,
+            `그곳에는 부랑자와 도둑 무리가 있었습니다. 낡은 헛간에 모여 불을 피우고 있었습니다.`,
+            `존 캔티는 이름을 바꾸고 그 무리에 들어갔습니다.`,
+            `그날 밤 에드워드는 그 사람들 이야기를 들었습니다.`,
+            `무리 가운데 요크셔에서 온 사람이 하나 있었습니다. 그는 자기 이야기를 했습니다.`,
+            `"나는 원래 농사꾼이었소. 땅을 부치고 아내와 아이들과 살았지." 그가 말했습니다. "그런데 흉년이 들어 굶게 되었고, 아내가 아파서 구걸을 나갔소. 그러다 붙잡혔소."`,
+            `"구걸을 하면 어떻게 되는데?"<br>"매를 맞고 귀에 표를 새기지. 두 번째로 붙잡히면 노예가 되고, 세 번째면 목숨을 잃소."`,
+            `"내 아내는 감옥에서 죽었고 아이들은 어디로 갔는지 모르오. 나는 여기 있소."`,
+            `그가 웃옷을 내려 등을 보였습니다. 사람들이 조용해졌습니다.`,
+            `에드워드는 그 등을 보았습니다.`,
+            `"그런 법이 있단 말이냐." 그가 말했습니다.<br>"있소, 꼬마 왕자님." 사내가 말했습니다.`,
+            `"내가 왕이 되면 그 법을 없애겠다."`,
+            `무리가 웃었습니다. 그러나 요크셔 사람은 웃지 않았습니다.`,
+            `그 뒤 며칠 동안 에드워드는 그 무리와 함께 다녔습니다.`,
+            `그는 여러 가지를 보았습니다. 사람들이 왜 도둑이 되었는지, 그 사람들에게도 예전에는 집이 있었다는 것을요.`,
+            `무리는 그를 데리고 구걸을 시키려 했습니다. 그가 거절하자 때리려 했습니다.`,
+            `그때 요크셔 사람이 막아섰습니다.`,
+            `"이 아이는 건드리지 마시오."`,
+            `그 사람의 도움으로 에드워드는 그 밤에 달아났습니다.`,
+            `요크셔 사람은 아무 말 없이 헛간 뒤쪽 널빤지를 들어 주었습니다. 그러고는 이렇게만 말했습니다.<br>"가시오, 꼬마 왕자님."`,
+            `달아나면서 에드워드는 이렇게 생각했습니다.`,
+            `나는 지금까지 이 나라를 궁전 창문으로만 보았구나.`,
+            `창문으로 보면 사람들은 다 손을 흔들고 웃고 있었습니다. 창문 밖으로 나와 보니 그렇지 않았습니다.`,
+        ]
+    },
+    {
+        num: 8,
+        title: "다시 만난 헨든",
+        emoji: "🤝",
+        art: ["story-08-a.png", "story-08-b.png"],
+        paras: [
+            `그 뒤로도 에드워드는 여러 일을 겪었습니다.`,
+            `어느 오두막에서 자기가 대천사라고 믿는 늙은 은자에게 붙잡혀 묶인 적도 있었습니다. 그 노인은 옛날 수도원이 헐리면서 갈 곳을 잃고 정신을 놓은 사람이었습니다.`,
+            `그때 헨든이 그를 찾아냈습니다.`,
+            `헨든은 그동안 온 나라를 뒤지고 다닌 참이었습니다.`,
+            `"아이가 있었소. 이만한 아이인데 자기를 왕자라고 하는."`,
+            `그렇게 물으면 사람들이 웃으며 길을 알려 주었습니다. 그런 아이는 눈에 띄었기 때문입니다.`,
+            `헨든은 그동안 밥을 굶고 잠을 설쳤습니다. 그러면서도 왜 그러고 있는지는 자기도 설명하지 못했습니다.`,
+            `두 사람은 다시 만나 함께 걸었습니다.`,
+            `"너는 왜 나를 계속 찾았느냐." 에드워드가 물었습니다.<br>"모르겠습니다." 헨든이 말했습니다. "그냥 그래야 할 것 같았습니다."`,
+            `그들은 켄트로 갔습니다. 헨든의 고향이었습니다.`,
+            `헨든 홀은 큰 집이었습니다.`,
+            `"저 집에서 내 아버지가 나를 기다리실 겁니다." 헨든이 말했습니다. "그리고 이디스라는 사람이 있습니다. 제가 떠날 때 혼인을 약속했지요."`,
+            `그런데 문을 열고 들어가자 낯선 사람이 앉아 있었습니다.`,
+            `동생 휴였습니다.`,
+            `"형님?" 휴가 말했습니다. "우리 형님은 칠 년 전에 전쟁에서 죽었소. 당신은 누구요."`,
+            `헨든의 아버지는 세상을 떠난 뒤였습니다. 형도 마찬가지였습니다. 휴가 그 집과 재산을 다 차지하고 있었습니다. 그리고 이디스와 결혼해 있었습니다.`,
+            `"이디스!" 헨든이 불렀습니다.`,
+            `이디스가 나왔습니다. 그녀는 헨든을 한참 보았습니다.`,
+            `그리고 이렇게 말했습니다.<br>"모르는 분입니다."`,
+            `헨든은 그 자리에 굳어 섰습니다.`,
+            `나중에 알고 보니, 휴가 이디스에게 이렇게 말해 두었던 것입니다. 만약 그를 안다고 하면 그를 죽이겠다고요.`,
+            `헨든과 에드워드는 그날 감옥에 갇혔습니다.`,
+            `휴는 두 사람을 좀도둑으로 몰았습니다. 마을 사람들은 헨든의 얼굴을 알아보지 못했습니다. 칠 년이 사람을 그만큼 바꿔 놓았기 때문입니다.`,
+        ]
+    },
+    {
+        num: 9,
+        title: "감옥에서 본 것",
+        emoji: "⛓️",
+        art: ["story-09-a.png", "story-09-b.png"],
+        paras: [
+            `그 감옥에서 에드워드는 자기 나라를 다시 보았습니다.`,
+            `같은 방에 노인 몇 사람이 있었습니다. 그들은 예전에 수도원에 있던 사람들이었습니다. 수도원이 헐리면서 갈 곳을 잃고 떠돌다 여기 들어왔습니다.`,
+            `여자 둘도 있었습니다. 두 사람은 조용하고 마음이 고왔습니다. 감옥 안에서도 아픈 사람을 돌봐 주었습니다.`,
+            `에드워드는 그 두 사람과 며칠을 함께 지냈습니다.`,
+            `그런데 어느 날 아침 간수가 와서 두 사람을 데려갔습니다.`,
+            `"어디로 데려가는가?"<br>"오늘이 그날이오."`,
+            `그날 마당에서 그 두 사람이 죽었습니다. 남들과 다른 방식으로 기도했다는 것이 죄였습니다.`,
+            `그 두 사람의 딸들이 마당에서 그것을 보았습니다.`,
+            `에드워드는 창살을 잡고 그것을 보았습니다.`,
+            `그 뒤로 그는 오랫동안 말을 하지 않았습니다.`,
+            `헨든은 그가 무슨 생각을 하는지 알 수 없었습니다.`,
+            `며칠 뒤, 에드워드가 헨든에게 말했습니다.`,
+            `"헨든."<br>"네."<br>"나는 지금까지 왕이 무엇을 하는 사람인지 몰랐다."`,
+            `"이 나라에는 잘못된 법이 아주 많다. 그런데 그 법을 만든 사람들은 그 법에 걸릴 일이 없는 사람들이다."`,
+            `헨든은 그 말을 듣고 처음으로 이 아이를 다시 보았습니다.`,
+            `그날부터 헨든은 이 아이가 정말로 왕자일지도 모른다고 생각하기 시작했습니다.`,
+            `헨든은 매를 맞는 벌을 받게 되었습니다. 휴가 그렇게 만들었습니다.`,
+            `형벌이 집행되던 날, 에드워드가 앞으로 뛰어나갔습니다.`,
+            `"저 사람을 때리지 마라! 내가 대신 맞겠다!"`,
+            `사람들이 그 아이를 붙잡아 끌어냈습니다.`,
+            `헨든은 그 광경을 보며 매를 맞았습니다.`,
+            `매를 맞으면서 헨든은 아프다는 생각이 들지 않았습니다. 그 아이가 붙잡힌 채 발버둥 치는 것만 보였습니다.`,
+            `그리고 끝나고 나서 이렇게 말했습니다.<br>"저 아이가 나를 위해 나섰다."`,
+            `그날 그는 진심으로 무릎을 꿇었습니다.`
+        ]
+    },
+    {
+        num: 10,
+        title: "대관식 날",
+        emoji: "🔔",
+        art: ["story-10-a.png", "story-10-b.png"],
+        paras: [
+            `두 사람이 풀려난 것은 대관식을 며칠 앞둔 때였습니다.`,
+            `런던은 온통 잔치 준비로 시끄러웠습니다.`,
+            `에드워드는 그 사람들 틈을 헤치고 웨스트민스터 사원으로 갔습니다. 헨든이 뒤를 따랐습니다.`,
+            `한편 궁전의 톰은 그날 아침 아주 우울했습니다.`,
+            `그는 이제 왕 노릇에 제법 익숙해져 있었습니다. 옷도 혼자 입을 줄 알게 되었고, 신하들의 이름도 외웠습니다.`,
+            `그런데 마음 한구석이 늘 무거웠습니다.`,
+            `며칠 전, 사람들 틈에서 어머니를 보았기 때문입니다.`,
+            `어머니가 사람들을 헤치고 나와 그의 손을 잡으려 했습니다. 병사들이 어머니를 밀쳐 냈습니다.`,
+            `그때 톰은 이렇게 말했습니다.<br>"나는 저 여인을 모른다."`,
+            `그 말을 하고 나서 톰은 그날 하루 종일 아무것도 먹지 못했습니다.`,
+            `대관식이 시작되었습니다.`,
+            `사원 안이 사람으로 가득 찼습니다. 노랫소리가 울렸습니다.`,
+            `캔터베리 대주교가 왕관을 들었습니다.`,
+            `그것을 톰의 머리 위로 가져가는 순간이었습니다.`,
+            `사원 안쪽에서 목소리가 났습니다.`,
+            `"그 왕관을 그 아이의 머리에 씌우는 것을 금한다! 나는 잉글랜드의 왕이다!"`,
+            `사람들이 돌아보았습니다.`,
+            `누더기를 걸친 아이 하나가 통로를 걸어오고 있었습니다.`,
+            `병사들이 그 아이를 붙잡으려 했습니다.`,
+            `그때 톰 캔티가 자리에서 일어섰습니다.`,
+            `"그 손을 놓아라!" 톰이 소리쳤습니다. "저분이 왕이시다!"`,
+            `사원 안이 조용해졌습니다.`,
+            `톰은 계단을 내려가 그 아이 앞에 무릎을 꿇었습니다.`,
+            `"폐하."`,
+            `그 자리에 있던 사람들 중에 그 순간을 잊은 사람은 아무도 없었습니다. 왕관을 눈앞에 두고 스스로 내려놓는 아이를 본 것은 그때가 처음이자 마지막이었습니다.`
+        ]
+    },
+    {
+        num: 11,
+        title: "옥새가 어디 있느냐",
+        emoji: "📜",
+        art: ["story-11-a.png", "story-11-b.png"],
+        paras: [
+            `그러나 그것으로 끝난 것은 아니었습니다.`,
+            `두 아이가 똑같이 생겼기 때문에, 누가 진짜인지 아무도 알 수 없었습니다.`,
+            `호민관 서머싯 공작이 앞으로 나섰습니다.`,
+            `"두 분 다 저 자리에 앉으실 수는 없습니다. 증거가 있어야 합니다."`,
+            `그가 누더기 차림의 아이에게 물었습니다.`,
+            `"폐하께서 왕자이시라면, 아무도 모르는 것을 하나 아셔야 합니다. 큰 옥새가 어디 있습니까?"`,
+            `옥새는 왕의 도장이었습니다. 그것이 있어야 나라의 문서가 효력을 가졌습니다.`,
+            `왕이 세상을 떠난 뒤 그 옥새가 사라져 몇 주째 찾지 못하고 있었습니다.`,
+            `에드워드는 눈을 감고 생각했습니다.`,
+            `그러다 이렇게 말했습니다.`,
+            `"내 방의 벽에 그림이 걸려 있다. 그 그림 뒤에 팔뚝이 들어갈 만한 구멍이 있다. 그 안에 있다."`,
+            `사람들이 뛰어갔습니다.`,
+            `그런데 한참 뒤에 돌아와 고개를 저었습니다.`,
+            `"없습니다."`,
+            `사원 안이 술렁였습니다.`,
+            `에드워드의 얼굴이 하얘졌습니다.`,
+            `그때 톰 캔티가 말했습니다.`,
+            `"잠깐만요."`,
+            `그는 에드워드에게 다가가 물었습니다.`,
+            `"폐하, 그 구멍 안에 넣어 두신 것이 어떻게 생긴 것입니까?"`,
+            `"둥글고 무겁고 두꺼운 쇳덩이 같은 것이다. 손잡이가 있고."`,
+            `"그날 저를 방에 두고 나가시면서, 옷을 갈아입으실 때 그것을 손에 들고 계시지 않았습니까?"`,
+            `에드워드가 눈을 크게 떴습니다.`,
+            `"그렇다. 그러고는······."`,
+            `"제가 그것을 찾아오겠습니다." 톰이 말했습니다. "그날 폐하께서는 그것을 아무 데나 놓으셨습니다. 그리고 저는 그것을 여러 날 동안 호두 까는 데 썼습니다."`,
+            `사원 안이 조용해졌다가, 곧 웃음이 터졌습니다.`,
+            `옥새는 톰이 말한 그 자리에 있었습니다. 갑옷을 넣어 두는 궤짝 안이었습니다.`,
+            `그날 에드워드 육세가 왕관을 썼습니다.`,
+            `대주교가 왕관을 씌우는 동안 톰 캔티는 뒤쪽에 서 있었습니다. 그는 아무도 모르게 자기 손등을 만졌습니다. 몇 주 전 병사에게 맞은 자국이 아직 남아 있었습니다.`,
+        ]
+    },
+    {
+        num: 12,
+        title: "왕 앞에 앉은 사람",
+        emoji: "🪑",
+        art: ["story-12-a.png", "story-12-b.png"],
+        paras: [
+            `며칠 뒤, 왕궁에서 큰 자리가 열렸습니다.`,
+            `그 자리에 마일스 헨든이 불려 왔습니다.`,
+            `헨든은 낡은 옷차림 그대로였습니다. 옷을 새로 살 돈이 없었기 때문입니다.`,
+            `화려한 방에 들어서자 다들 그를 쳐다보았습니다.`,
+            `헨든은 자기가 무슨 일로 불려 왔는지 몰랐습니다.`,
+            `그런데 방 안을 둘러보다가 빈 의자를 하나 보았습니다.`,
+            `헨든은 그 의자로 걸어가 털썩 주저앉았습니다.`,
+            `방 안이 얼어붙었습니다.`,
+            `왕 앞에서 앉는 것은 있을 수 없는 일이었습니다.`,
+            `사람들이 달려들어 그를 끌어내려 했습니다.`,
+            `그때 왕좌에서 목소리가 났습니다.`,
+            `"그를 두어라."`,
+            `헨든이 고개를 들었습니다.`,
+            `왕좌에 앉은 아이를 보고 그는 벌떡 일어섰습니다.`,
+            `며칠 동안 함께 길을 걷던 그 아이였습니다.`,
+            `"그는 앉을 권리가 있다." 왕이 말했습니다. "내가 그 권리를 주었다. 그리고 나는 약속을 지킨다."`,
+            `왕이 자리에서 일어나 걸어 내려왔습니다.`,
+            `"켄트의 마일스 헨든 경. 그대는 나를 지켰고, 나를 위해 매를 맞았다."`,
+            `그날 헨든은 백작이 되었습니다. 그리고 헨든 홀을 되찾았습니다.`,
+            `동생 휴는 벌을 받게 되었지만, 헨든이 나서서 그를 살려 주었습니다. 다만 다시는 영국에 발을 들이지 못하게 했습니다.`,
+            `이디스는 헨든 홀로 돌아왔습니다.`,
+            `헨든은 그 뒤로 오래 살았습니다. 그리고 어디를 가든 사람들에게 이 이야기를 했습니다. 사람들은 반쯤 믿고 반쯤 웃었습니다. 헨든은 개의치 않았습니다.`,
+        ]
+    },
+    {
+        num: 13,
+        title: "톰 캔티의 자리",
+        emoji: "🎓",
+        art: ["story-13-a.png", "story-13-b.png"],
+        paras: [
+            `왕은 톰 캔티를 불렀습니다.`,
+            `"너는 몇 주 동안 이 나라를 다스렸다." 왕이 말했습니다. "네가 무엇을 했는지 다 들었다."`,
+            `"저는 아무것도 모르고 한 것입니다."`,
+            `"끓는 물의 형벌을 없앤 것도 아무것도 모르고 한 것이냐."`,
+            `톰은 대답하지 못했습니다.`,
+            `"양말을 벗게 한 것도 아무것도 모르고 한 것이냐."`,
+            `"그건······ 그 사람들이 딱해서요."`,
+            `"그것이 아는 것이다." 왕이 말했습니다.`,
+            `왕은 톰에게 자리를 하나 주었습니다. 왕의 보살핌을 받는 아이라는 자리였습니다.`,
+            `그리고 특별한 옷을 입게 했습니다. 그 옷을 입은 사람은 나라 안 어디서든 존경을 받았습니다.`,
+            `그 자리에 있으면 왕궁에 드나들 수 있었고, 왕을 만나고 싶으면 언제든 만날 수 있었습니다. 그런 자리를 골목에서 자란 아이에게 준 것은 그 전에도 그 뒤에도 없던 일이었습니다.`,
+            `"그리고 한 가지 더." 왕이 말했습니다. "네 어머니를 모셔 오너라. 그분과 네 누이들이 살 곳을 마련해 주겠다."`,
+            `톰은 그 자리에서 울었습니다.`,
+            `몇 주 동안 왕 노릇을 하면서 그는 한 번도 울지 않았습니다. 그날 처음 울었습니다.`,
+            `며칠 뒤 톰은 어머니를 만났습니다.`,
+            `어머니는 아들을 알아보지 못할 뻔했습니다. 옷이 너무 좋았기 때문입니다.`,
+            `"어머니." 톰이 말했습니다. "그때 제가 모른다고 했지요."`,
+            `어머니는 아무 말도 하지 않고 아들을 안았습니다.`,
+            `존 캔티는 그 뒤로 소식이 끊겼습니다. 아무도 그를 다시 보지 못했습니다.`,
+            `톰은 아버지를 벌해 달라고 청하지 않았습니다. 왕이 그 까닭을 묻자 톰은 이렇게 대답했습니다.<br>"제 어머니가 슬퍼하실 겁니다."`,
+            `톰은 오래 살았습니다. 여든 살이 넘도록 살았고, 죽을 때까지 그 옷을 입었습니다.`,
+            `사람들은 길에서 그 옷을 입은 노인을 보면 길을 비켰습니다.`,
+            `그가 몇 주 동안 왕이었던 아이라는 것을 다들 알았기 때문입니다.`
+        ]
+    },
+    {
+        num: 14,
+        title: "왕이 된 뒤",
+        emoji: "⚖️",
+        art: ["story-14-a.png", "story-14-b.png"],
+        paras: [
+            `에드워드 육세는 짧게 다스렸습니다.`,
+            `여섯 해였습니다. 열여섯 살에 세상을 떠났습니다.`,
+            `몸이 약했습니다. 궁전 밖에서 지낸 그 몇 주가 몸을 상하게 했다고 말하는 사람도 있었습니다.`,
+            `그러나 그 여섯 해 동안 그는 자기가 거리에서 본 것을 잊지 않았습니다.`,
+            `누가 그에게 어떤 벌을 내리자고 하면, 그는 이렇게 물었습니다.`,
+            `"그 사람이 무엇을 했는가. 그리고 그 사람은 왜 그렇게 되었는가."`,
+            `신하들이 잘 모르겠다고 하면, 그는 자기가 아는 이야기를 했습니다.`,
+            `요크셔에서 농사를 짓다 굶어서 구걸을 나갔다가 등에 표를 새기게 된 사람 이야기, 수도원이 헐리는 바람에 갈 곳을 잃은 노인들 이야기, 남들과 다르게 기도했다는 이유로 마당에서 죽은 두 여인 이야기.`,
+            `신하들은 왕이 그런 것을 어떻게 아는지 이상하게 여겼습니다.`,
+            `가끔 왕이 너무 무르다고 말하는 사람도 있었습니다.`,
+            `그럴 때마다 왕은 이렇게 대답했습니다.`,
+            `"그대들이 저 사람들에 대해 무엇을 아는가. 나는 안다. 나는 저 사람들 틈에서 살아 보았다."`,
+            `신하들은 그 말을 왕의 이상한 버릇이라고 여겼습니다.`,
+            `어떤 신하는 왕이 어릴 때 병을 앓아 이상한 이야기를 지어내게 된 것이라고 수군거렸습니다. 왕은 그런 말을 들어도 바로잡지 않았습니다.`,
+            `다만 그것이 무슨 뜻인지 아는 사람이 셋 있었습니다.`,
+            `헨든 백작과 톰 캔티, 그리고 왕 자신이었습니다.`,
+            `에드워드가 세상을 떠난 뒤, 사람들은 그를 자비로운 왕이었다고 기록했습니다.`,
+            `그 시절은 사람의 목숨이 아주 가벼운 시절이었습니다. 사소한 죄로도 사람이 죽었습니다.`,
+            `그 시절에 자비로운 왕이었다는 말은 그냥 하는 말이 아니었습니다.`,
+            `에드워드가 없앤 법 가운데 몇 가지는 그 뒤로도 오래 남았습니다. 그것이 어디서 온 것인지 아는 사람은 없었습니다.`,
+        ]
+    },
+    {
+        num: 15,
+        title: "궁전 창문",
+        emoji: "🪟",
+        art: ["story-15-a.png", "story-15-b.png"],
+        paras: [
+            `여러 해가 지난 뒤의 일입니다.`,
+            `머리가 하얗게 센 톰 캔티가 강가를 걷고 있었습니다.`,
+            `그는 이제 아주 늙었습니다. 왕도, 헨든 백작도 세상을 떠난 지 오래였습니다.`,
+            `그는 걷다가 옛날 그 궁전 앞에 이르렀습니다.`,
+            `그 앞을 지날 때마다 그는 늘 걸음을 늦추었습니다. 여든 해를 살면서 하루도 빠뜨리지 않은 버릇이었습니다.`,
+            `쇠창살이 그대로 있었습니다.`,
+            `그 앞에 아이가 하나 서서 안을 들여다보고 있었습니다. 옷이 낡고 발이 맨발이었습니다.`,
+            `톰은 그 아이 곁에 섰습니다.`,
+            `"저 안이 궁금하냐?"<br>"네."`,
+            `"저 안에도 사람이 산단다." 톰이 말했습니다. "그리고 저 안에서 밖을 내다보는 사람도 있지."`,
+            `"거기 사는 사람들은 좋겠어요."<br>"글쎄다."`,
+            `톰은 그 아이에게 이야기를 하나 해 주었습니다.`,
+            `아주 오래전에 같은 날 태어난 아이 둘이 있었다는 이야기였습니다. 하나는 골목에서 태어났고 하나는 궁전에서 태어났는데, 어느 날 두 아이가 옷을 바꿔 입었다는 이야기요.`,
+            `아이는 눈을 크게 뜨고 들었습니다.`,
+            `이야기가 길어지는 동안 해가 기울었습니다. 강 위로 배가 몇 척 지나갔습니다.`,
+            `이야기가 끝나자 아이가 물었습니다.<br>"그거 진짜예요?"`,
+            `톰은 웃었습니다.`,
+            `"글쎄다." 그가 말했습니다. "다만 이건 알아 두렴. 창살 이쪽에 서 있느냐 저쪽에 서 있느냐는, 그 사람이 어떤 사람인가와는 아무 상관이 없단다."`,
+            `아이는 그 말을 잘 알아듣지 못한 얼굴이었습니다.`,
+            `"언젠가 알게 될 거다."`,
+            `톰은 지팡이를 짚고 다시 걷기 시작했습니다.`,
+            `아이는 한참 동안 그 뒷모습을 보다가, 다시 창살에 얼굴을 대고 안을 들여다보았습니다.`
+        ]
+    }
+];
+/* ── 쪽 나누기 ─────────────────────────────────────────
+   그림이 있는 펼침면은 왼쪽 쪽에만 글이 들어가고,
+   그림이 없는 펼침면은 양쪽 쪽에 모두 글이 들어간다.
+   진짜 책이 그렇듯 문단 한가운데에서도 쪽을 넘긴다. 그래야 쪽마다 글이 고르게 찬다.
+   글자 수로 어림잡으면 대사가 많은 문단은 실제로 차지하는 줄이 훨씬 많아 어긋나므로,
+   보이지 않는 쪽을 하나 만들어 실제 높이를 재어 가며 나눈다. */
+
+function makeProbe() {
+    const book = document.getElementById('book');
+    const holder = document.createElement('div');
+    holder.style.cssText = 'position:absolute;inset:10px;visibility:hidden;pointer-events:none;z-index:-1;';
+    holder.innerHTML = '<div class="page page-story"><div class="story-page-left"></div><div class="story-page-right"></div></div>';
+    book.appendChild(holder);
+
+    // 따로 만든 상자에 재면 실제 쪽과 미묘하게 어긋난다.
+    // 그래서 진짜 쪽과 똑같은 칸을 하나 숨겨 두고 거기에 넣어 잰다.
+    // 칸이 넘치면 scrollHeight가 칸 높이에서 잘리므로, 안에 든 것들의 높이를 직접 더한다.
+    const col = holder.querySelector('.story-page-left');
+    const cs = getComputedStyle(col);
+    const measured = col.clientHeight - parseFloat(cs.paddingTop) - parseFloat(cs.paddingBottom);
+
+    const contentHeight = () => [...col.children].reduce((h, el) =>
+        h + el.getBoundingClientRect().height + parseFloat(getComputedStyle(el).marginBottom || 0), 0);
+
+    col.innerHTML = '<h2>제목</h2>';
+    const headHeight = contentHeight();
+    col.innerHTML = '';
+
+    return {
+        // 창이 아직 크기를 갖지 못한 채 열리면 잰 값이 0이 된다. 그때는 어림값으로 버틴다.
+        usable: measured > 40 ? measured : 620,
+        headHeight: headHeight > 0 ? headHeight : 45,
+        measure(html) {
+            col.innerHTML = html;
+            return contentHeight();
+        },
+        close() { book.removeChild(holder); }
+    };
+}
+
+let PROBE = null;   // 쪽을 나눌 때마다 새로 만든다
+
+// 문단을 쪽 넘길 수 있는 조각으로 나눈다. 문장 끝과 대사 줄바꿈이 자를 수 있는 자리다.
+// 낱말 뜻풀이처럼 태그로 묶인 부분 안에서는 자르지 않는다.
+function splitSegments(html) {
+    const tokens = html.split(/(<[^>]+>)/).filter(t => t !== '');
+    const segs = [];
+    let buf = '';
+    let depth = 0;
+    for (const tok of tokens) {
+        if (tok.startsWith('<')) {
+            buf += tok;
+            if (/^<br\s*\/?>$/i.test(tok)) {
+                if (depth === 0) { segs.push(buf); buf = ''; }
+            } else if (tok.startsWith('</')) {
+                depth = Math.max(0, depth - 1);
+            } else if (!tok.endsWith('/>')) {
+                depth++;
+            }
+            continue;
+        }
+        if (depth > 0) { buf += tok; continue; }
+        // 문장이 끝나고 빈칸이 오는 자리에서 자른다
+        const parts = tok.split(/(?<=[.!?"”][\s])/);
+        for (let i = 0; i < parts.length; i++) {
+            buf += parts[i];
+            if (i < parts.length - 1) { segs.push(buf); buf = ''; }
+        }
+    }
+    if (buf.trim() !== '') segs.push(buf);
+    return segs.length ? segs : [html];
+}
+
+const CHAPTER_SEGS = CHAPTERS.map(ch => {
+    const segs = [];
+    ch.paras.forEach((html, paraIdx) => {
+        splitSegments(html).forEach((piece, k) => {
+            segs.push({ paraIdx, html: piece, start: k === 0 });
+        });
+    });
+    return segs;
+});
+
+// 조각 묶음을 문단 단위로 다시 묶어 화면에 그릴 모양으로 만든다.
+// 앞 쪽에서 이어진 문단은 첫 줄을 들여쓰지 않는다.
+function runHtml(segs, a, b) {
+    let out = '';
+    let i = a;
+    while (i < b) {
+        const pi = segs[i].paraIdx;
+        let inner = '';
+        const contd = !segs[i].start;
+        let j = i;
+        while (j < b && segs[j].paraIdx === pi) { inner += segs[j].html; j++; }
+        out += `<p${contd ? ' class="cont"' : ''}>${inner}</p>`;
+        i = j;
+    }
+    return out;
+}
+
+function slotPlan(imgCount, textCount) {
+    const total = imgCount + textCount;
+    const slots = new Array(total).fill('text');
+    for (let k = 0; k < imgCount; k++) {
+        let pos = Math.min(Math.round((k * total) / imgCount), total - 1);
+        while (slots[pos] === 'img') pos = (pos + 1) % total;
+        slots[pos] = 'img';
+    }
+    return slots;
+}
+
+// 글을 쪽마다 같은 높이만큼 나눠 담는다. 마지막 쪽만 남은 만큼 담는다.
+// 장 제목이 붙는 첫 쪽은 제목까지 함께 얹어서 재야 한다.
+// 제목 높이를 따로 빼서 계산하면 실제로 나란히 놓였을 때의 높이와 조금씩 어긋난다.
+function fillPages(segs, pageCount, headHtml, usable) {
+    const pageHeight = (a, b, first) => PROBE.measure((first ? headHtml : '') + runHtml(segs, a, b));
+    const ranges = [];
+    let i = 0;
+    for (let p = 0; p < pageCount; p++) {
+        const rest = pageCount - p - 1;
+        if (rest === 0) { ranges.push([i, segs.length]); break; }
+        // 남은 글을 남은 쪽 수로 나눠 이번 쪽에 담을 양을 정한다.
+        // 매 쪽마다 다시 계산하므로, 한 쪽이 덜 차면 그만큼이 뒤쪽에 고르게 얹힌다.
+        const remainingH = pageHeight(i, segs.length, p === 0);
+        const room = Math.min(usable, remainingH / (rest + 1));
+        const maxTake = Math.max(1, segs.length - i - rest);
+        let take = 1;
+        let lo = 1, hi = maxTake;
+        while (lo <= hi) {
+            const mid = (lo + hi) >> 1;
+            if (pageHeight(i, i + mid, p === 0) <= room) { take = mid; lo = mid + 1; }
+            else { hi = mid - 1; }
+        }
+        ranges.push([i, i + take]);
+        i += take;
+    }
+    return ranges;
+}
+
+function paginateChapter(ch, chIndex) {
+    const segs = CHAPTER_SEGS[chIndex];
+    const arts = (ch.art && ch.art.length) ? ch.art : [];
+    const { usable, headHeight } = PROBE;
+    const headHtml = `<h2>${CHAPTER_LABEL(ch.num)}${ch.title}</h2>`;
+    const totalH = PROBE.measure(runHtml(segs, 0, segs.length));
+
+    // 필요한 글 쪽 수를 구하고, 그림 면(1쪽)과 글만 면(2쪽)으로 맞춘다.
+    // 쪽 수는 조각 수를 넘을 수 없다 — 빈 쪽이 생기면 안 되기 때문이다.
+    const maxSpreads = Math.max(arts.length, Math.ceil(segs.length / 2));
+    const needPages = Math.max(arts.length || 1, Math.ceil((totalH + headHeight) / usable));
+    let textSpreads = Math.max(arts.length ? 0 : 1, Math.ceil(Math.max(0, needPages - arts.length) / 2));
+
+    let slots = slotPlan(arts.length, textSpreads);
+    let ranges = null;
+    for (let guard = 0; guard < 8; guard++) {
+        slots = slotPlan(arts.length, textSpreads);
+        const pageCount = slots.reduce((n, kind) => n + (kind === 'img' ? 1 : 2), 0);
+        if (pageCount > segs.length && textSpreads > 0) { textSpreads--; continue; }
+        ranges = fillPages(segs, pageCount, headHtml, usable);
+        // 한 쪽이라도 넘치면 쪽을 늘려 다시 나눈다.
+        // 마지막 쪽만 보면 안 된다 — 첫 쪽에는 장 제목이 얹히므로 그쪽이 먼저 넘칠 수 있다.
+        const over = ranges.some(([a, b], n) =>
+            PROBE.measure((n === 0 ? headHtml : '') + runHtml(segs, a, b)) > usable);
+        if (!over || arts.length + textSpreads >= maxSpreads) break;
+        textSpreads++;
+    }
+    if (!ranges) {
+        slots = slotPlan(arts.length, textSpreads);
+        ranges = fillPages(segs, slots.reduce((n, kind) => n + (kind === 'img' ? 1 : 2), 0), headHtml, usable);
+    }
+
+    const spreads = [];
+    let pageIdx = 0;
+    let artIdx = 0;
+    slots.forEach((kind, s) => {
+        if (kind === 'img') {
+            spreads.push({
+                kind: 'chapter', ch, chIndex, first: s === 0,
+                art: arts[artIdx++], left: ranges[pageIdx++], right: null
+            });
+        } else {
+            const left = ranges[pageIdx++];
+            const right = ranges[pageIdx++];
+            spreads.push({ kind: 'chapter', ch, chIndex, first: s === 0, art: null, left, right });
+        }
+    });
+    return spreads;
+}
+/* ── 그리기 ───────────────────────────────────────── */
+
+function artFrame(src, emoji) {
+    return `
+        <div class="art-frame">
+            <img src="images/${src}" alt="" onerror="this.style.display='none'; this.nextElementSibling.style.display='flex';">
+            <div class="art-fallback" style="display:none">${emoji}</div>
+        </div>`;
+}
+
+function coverPage() {
+    return `
+        <div class="page page-cover">
+            <div class="story-page-left story-page-left-full">
+                ${artFrame('cover.png', '👑')}
+            </div>
+            <div class="story-page-right">
+                <h1>왕자와 거지</h1>
+                <p class="cover-tag">마크 트웨인 원작</p>
+                <p>사백 년 전 런던에서 같은 날에 아이 둘이 태어났습니다. 하나는 좁은 골목에서, 하나는 궁전에서였습니다. 두 아이는 얼굴이 똑같이 생겼습니다.</p>
+                <p>어느 날 두 아이가 장난삼아 옷을 바꿔 입었고, 그 길로 서로의 자리에 갇혔습니다.</p>
+            </div>
+        </div>`;
+}
+
+function tocPage(part) {
+    // 한 편으로 이어지는 이야기라 차례는 장 번호와 제목만 둔다.
+    // 줄거리 한 줄을 붙이면 차례가 두 펼침면으로 늘어나고, 앞으로 읽을 대목을 미리 알려 주는 셈도 된다.
+    const itemHtml = ch => `
+        <li>
+            <button type="button" data-goto="${ch.num}">
+                <span class="toc-num">${ch.num}</span>
+                <span><strong>${ch.title}</strong></span>
+            </button>
+        </li>`;
+    const extraItems = `
+        <li>
+            <button type="button" data-goto-kind="quiz">
+                <span class="toc-num">?</span>
+                <span><strong>이야기 문제</strong></span>
+            </button>
+        </li>`;
+    const group = TOC_GROUPS[part];
+    const half = Math.ceil(group.length / 2);
+    const last = part === TOC_GROUPS.length - 1;
+    return `
+        <div class="page page-toc">
+            <div class="story-page-left">
+                ${part === 0 ? '<h2>차례</h2>' : ''}
+                <ul class="toc-list">${group.slice(0, half).map(itemHtml).join('')}</ul>
+            </div>
+            <div class="story-page-right">
+                <ul class="toc-list">${group.slice(half).map(itemHtml).join('') + (last ? extraItems : '')}</ul>
+            </div>
+        </div>`;
+}
+
+// 한 펼침면에 담을 수 있는 차례 항목은 여덟 개까지다. 그보다 많으면 차례도 여러 쪽이 된다.
+const TOC_PER_SPREAD = 16;
+const TOC_GROUPS = [];
+for (let i = 0; i < CHAPTERS.length; i += TOC_PER_SPREAD) {
+    TOC_GROUPS.push(CHAPTERS.slice(i, i + TOC_PER_SPREAD));
+}
+
+function chapterSpreadPage(spread) {
+    const ch = spread.ch;
+    const segs = CHAPTER_SEGS[spread.chIndex];
+    const head = spread.first ? `<h2>${CHAPTER_LABEL(ch.num)}${ch.title}</h2>` : '';
+
+    if (spread.art) {
+        return `
+            <div class="page page-story">
+                <div class="story-page-left">
+                    ${head}
+                    ${runHtml(segs, spread.left[0], spread.left[1])}
+                </div>
+                <div class="story-page-right story-page-right-image">
+                    ${artFrame(spread.art, ch.emoji)}
+                </div>
+            </div>`;
+    }
+
+    return `
+        <div class="page page-story">
+            <div class="story-page-left">
+                ${head}
+                ${runHtml(segs, spread.left[0], spread.left[1])}
+            </div>
+            <div class="story-page-right story-page-right-text">
+                ${runHtml(segs, spread.right[0], spread.right[1])}
+            </div>
+        </div>`;
+}
+
+const QUIZ = [
+    { q: "톰 캔티에게 글을 가르쳐 준 사람은 누구입니까?", choices: ["앤드루 신부", "아버지", "궁전의 학자"], answer: 0 },
+    { q: "두 아이가 서로 닮았다는 것을 언제 알았습니까?", choices: ["처음 만난 순간", "옷을 바꿔 입고 거울을 봤을 때", "재판정에서"], answer: 1 },
+    { q: "에드워드가 궁전 밖으로 나가게 된 까닭은 무엇입니까?", choices: ["병사를 혼내러 나갔다가", "산책을 나갔다가", "쫓겨나서"], answer: 0 },
+    { q: "톰의 어머니가 아들이 아니라는 것을 알아챈 방법은 무엇입니까?", choices: ["목소리", "손등의 흉터", "잘 때 빛을 가리는 버릇"], answer: 2 },
+    { q: "거리에서 에드워드를 구해 준 사람은 누구입니까?", choices: ["마일스 헨든", "존 캔티", "요크셔 농부"], answer: 0 },
+    { q: "에드워드가 헨든에게 준 권리는 무엇입니까?", choices: ["왕 앞에서 앉을 수 있는 권리", "땅을 갖는 권리", "세금을 안 내는 권리"], answer: 0 },
+    { q: "톰이 왕으로서 처음 없앤 벌은 무엇입니까?", choices: ["귀에 표를 새기는 벌", "끓는 물에 넣는 벌", "매를 때리는 벌"], answer: 1 },
+    { q: "마녀로 몰린 모녀에게 톰이 시킨 일은 무엇입니까?", choices: ["양말을 벗어 보게 했다", "주문을 외워 보게 했다", "돈을 내게 했다"], answer: 0 },
+    { q: "요크셔 농부가 도둑 무리에 들어간 까닭은 무엇입니까?", choices: ["도둑질이 좋아서", "굶어서 구걸하다 붙잡혀서", "군대를 피해서"], answer: 1 },
+    { q: "헨든이 고향에 돌아가서 알게 된 일은 무엇입니까?", choices: ["아버지가 재산을 남겼다", "동생이 모든 것을 차지했다", "집이 불탔다"], answer: 1 },
+    { q: "감옥에서 에드워드가 본 일은 무엇입니까?", choices: ["도둑들이 달아나는 일", "간수가 뇌물을 받는 일", "남과 다르게 기도했다고 사람이 죽는 일"], answer: 2 },
+    { q: "형벌을 받는 헨든 앞에서 에드워드가 한 일은 무엇입니까?", choices: ["자기가 대신 맞겠다고 나섰다", "달아났다", "눈을 감았다"], answer: 0 },
+    { q: "대관식에서 톰 캔티가 한 일은 무엇입니까?", choices: ["왕관을 썼다", "달아났다", "무릎을 꿇고 진짜 왕을 알렸다"], answer: 2 },
+    { q: "에드워드가 진짜 왕자임을 증명한 것은 무엇입니까?", choices: ["옥새가 있는 곳을 안 것", "글씨체", "얼굴의 점"], answer: 0 },
+    { q: "톰이 옥새를 무엇에 썼습니까?", choices: ["문진으로", "호두 까는 데", "문을 괴는 데"], answer: 1 },
+    { q: "왕이 된 뒤 에드워드가 달라진 점은 무엇입니까?", choices: ["벌을 더 무겁게 했다", "궁전을 새로 지었다", "벌을 내리기 전에 까닭을 물었다"], answer: 2 }
+];
+
+function quizPage() {
+    const items = QUIZ.map((item, i) => `
+        <div class="quiz-item" data-qindex="${i}">
+            <p class="quiz-question">${i + 1}. ${item.q}</p>
+            <div class="quiz-choices">
+                ${item.choices.map((c, ci) => `<button type="button" class="quiz-choice" data-choice="${ci}">${c}</button>`).join('')}
+            </div>
+        </div>`).join('');
+    return `
+        <div class="page page-quiz">
+            <h2>이야기 문제</h2>
+            <p class="quiz-intro-text" id="quizProgress">0 / 총 ${QUIZ.length}문항 완료</p>
+            <div class="quiz-list">${items}</div>
+        </div>`;
+}
+
+function endPage() {
+    return `
+        <div class="page page-end">
+            ${artFrame('end.png', '🪟')}
+            <h2>왕자와 거지를 다 읽었습니다</h2>
+            <a class="home-btn" href="../../../../../">학습 허브로 돌아가기</a>
+        </div>`;
+}
+
+const TWO_PAGE_KINDS = new Set(['chapter', 'toc', 'cover']);
+
+let PAGES = [];
+let FOLIOS = [];
+
+function buildPages() {
+    PROBE = makeProbe();
+    PAGES = [
+        { kind: 'cover' },
+        ...TOC_GROUPS.map((_, i) => ({ kind: 'toc', part: i })),
+        ...CHAPTERS.flatMap(paginateChapter),
+        { kind: 'quiz' },
+        { kind: 'end' }
+    ];
+    PROBE.close();   // 쪽을 다 나눴으니 재는 데 쓰던 숨은 쪽은 치운다
+
+    let folioCounter = 0;
+    FOLIOS = PAGES.map(p => {
+        const width = TWO_PAGE_KINDS.has(p.kind) ? 2 : 1;
+        const start = folioCounter + 1;
+        folioCounter += width;
+        return { start, width };
+    });
+}
+
+buildPages();
+
+function renderPage(page) {
+    switch (page.kind) {
+        case 'cover': return coverPage();
+        case 'toc': return tocPage(page.part);
+        case 'chapter': return chapterSpreadPage(page);
+        case 'quiz': return quizPage();
+        case 'end': return endPage();
+        default: return '';
+    }
+}
+
+let current = 0;
+let animating = false;
+
+const spreadEl = document.getElementById('spread');
+const prevBtn = document.getElementById('prevBtn');
+const nextBtn = document.getElementById('nextBtn');
+const indicatorEl = document.getElementById('pageIndicator');
+const folioLeftEl = document.getElementById('folioLeft');
+const folioRightEl = document.getElementById('folioRight');
+
+function paint() {
+    spreadEl.innerHTML = renderPage(PAGES[current]);
+    prevBtn.disabled = current === 0;
+    nextBtn.disabled = current === PAGES.length - 1;
+    indicatorEl.textContent = `${current + 1} / ${PAGES.length}`;
+
+    const folio = FOLIOS[current];
+    folioLeftEl.classList.toggle('folio-center', folio.width === 1);
+    folioLeftEl.textContent = folio.start;
+    folioLeftEl.hidden = false;
+    if (folio.width === 2) {
+        folioRightEl.textContent = folio.start + 1;
+        folioRightEl.hidden = false;
+    } else {
+        folioRightEl.hidden = true;
+    }
+
+    spreadEl.querySelectorAll('[data-goto]').forEach(btn => {
+        btn.addEventListener('click', () => {
+            const num = Number(btn.dataset.goto);
+            const idx = PAGES.findIndex(p => p.kind === 'chapter' && p.first && p.ch.num === num);
+            if (idx >= 0) goTo(idx);
+        });
+    });
+    spreadEl.querySelectorAll('[data-goto-kind]').forEach(btn => {
+        btn.addEventListener('click', () => {
+            const idx = PAGES.findIndex(p => p.kind === btn.dataset.gotoKind);
+            if (idx >= 0) goTo(idx);
+        });
+    });
+
+    if (PAGES[current].kind === 'quiz') initQuiz();
+}
+
+function initQuiz() {
+    let answeredCount = 0;
+    const progressEl = document.getElementById('quizProgress');
+
+    spreadEl.querySelectorAll('.quiz-item').forEach(item => {
+        const qi = Number(item.dataset.qindex);
+        const q = QUIZ[qi];
+        item.querySelectorAll('.quiz-choice').forEach(btn => {
+            btn.addEventListener('click', () => {
+                if (item.classList.contains('graded')) return;
+                item.classList.add('graded');
+                const chosen = Number(btn.dataset.choice);
+                item.querySelectorAll('.quiz-choice').forEach(b => {
+                    const ci = Number(b.dataset.choice);
+                    if (ci === q.answer) b.classList.add('correct');
+                    else if (ci === chosen) b.classList.add('incorrect');
+                });
+                answeredCount++;
+                progressEl.textContent = `${answeredCount} / 총 ${QUIZ.length}문항 완료`;
+            });
+        });
+    });
+}
+
+function goTo(index) {
+    if (animating || index === current || index < 0 || index >= PAGES.length) return;
+    animating = true;
+    const dir = index > current ? 'flip-next' : 'flip-prev';
+    spreadEl.classList.add(dir);
+    setTimeout(() => {
+        current = index;
+        paint();
+    }, 230);
+    setTimeout(() => {
+        spreadEl.classList.remove('flip-next', 'flip-prev');
+        animating = false;
+    }, 480);
+}
+
+prevBtn.addEventListener('click', () => goTo(current - 1));
+nextBtn.addEventListener('click', () => goTo(current + 1));
+
+document.getElementById('tocLink').addEventListener('click', () => {
+    const idx = PAGES.findIndex(p => p.kind === 'toc');
+    if (idx >= 0) goTo(idx);
+});
+
+document.addEventListener('keydown', (e) => {
+    if (e.key === 'ArrowRight') goTo(current + 1);
+    if (e.key === 'ArrowLeft') goTo(current - 1);
+});
+
+paint();
+
+// 본문 글꼴은 늦게 내려온다. 글꼴이 바뀌면 한 줄에 들어가는 글자 수가 달라져서
+// 먼저 나눠 둔 쪽이 넘치게 된다. 그래서 글꼴을 다 받은 뒤에 한 번 다시 나눈다.
+if (document.fonts && document.fonts.status !== 'loaded') {
+    document.fonts.ready.then(() => {
+        const here = PAGES[current];
+        buildPages();
+        current = Math.min(current, PAGES.length - 1);
+        if (here && here.kind === 'chapter') {
+            const idx = PAGES.findIndex(p => p.kind === 'chapter' && p.first && p.ch.num === here.ch.num);
+            if (idx >= 0) current = idx;
+        }
+        paint();
+    });
+}

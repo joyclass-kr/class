@@ -433,33 +433,40 @@ const CHAPTERS = [
    글자 수로 어림잡으면 대사가 많은 문단은 실제로 차지하는 줄이 훨씬 많아 어긋나므로,
    보이지 않는 쪽을 하나 만들어 실제 높이를 재어 가며 나눈다. */
 
-const PROBE = (() => {
+function makeProbe() {
     const book = document.getElementById('book');
     const holder = document.createElement('div');
     holder.style.cssText = 'position:absolute;inset:10px;visibility:hidden;pointer-events:none;z-index:-1;';
-    holder.innerHTML = '<div class="page page-story"><div class="story-page-left"><div class="probe-box"></div></div><div class="story-page-right"></div></div>';
+    holder.innerHTML = '<div class="page page-story"><div class="story-page-left"></div><div class="story-page-right"></div></div>';
     book.appendChild(holder);
 
+    // 따로 만든 상자에 재면 실제 쪽과 미묘하게 어긋난다.
+    // 그래서 진짜 쪽과 똑같은 칸을 하나 숨겨 두고 거기에 넣어 잰다.
+    // 칸이 넘치면 scrollHeight가 칸 높이에서 잘리므로, 안에 든 것들의 높이를 직접 더한다.
     const col = holder.querySelector('.story-page-left');
-    const box = holder.querySelector('.probe-box');
-    box.style.display = 'flow-root';   // 문단의 아래 여백이 밖으로 새지 않게 한다
-
     const cs = getComputedStyle(col);
-    const usable = col.clientHeight - parseFloat(cs.paddingTop) - parseFloat(cs.paddingBottom);
-    box.innerHTML = '<h2>제목</h2>';
-    const headHeight = box.getBoundingClientRect().height;
+    const measured = col.clientHeight - parseFloat(cs.paddingTop) - parseFloat(cs.paddingBottom);
+
+    const contentHeight = () => [...col.children].reduce((h, el) =>
+        h + el.getBoundingClientRect().height + parseFloat(getComputedStyle(el).marginBottom || 0), 0);
+
+    col.innerHTML = '<h2>제목</h2>';
+    const headHeight = contentHeight();
+    col.innerHTML = '';
 
     return {
         // 창이 아직 크기를 갖지 못한 채 열리면 잰 값이 0이 된다. 그때는 어림값으로 버틴다.
-        usable: usable > 40 ? usable : 620,
+        usable: measured > 40 ? measured : 620,
         headHeight: headHeight > 0 ? headHeight : 45,
         measure(html) {
-            box.innerHTML = html;
-            return box.getBoundingClientRect().height;
+            col.innerHTML = html;
+            return contentHeight();
         },
         close() { book.removeChild(holder); }
     };
-})();
+}
+
+let PROBE = null;   // 쪽을 나눌 때마다 새로 만든다
 
 // 문단을 쪽 넘길 수 있는 조각으로 나눈다. 문장 끝과 대사 줄바꿈이 자를 수 있는 자리다.
 // 낱말 뜻풀이처럼 태그로 묶인 부분 안에서는 자르지 않는다.
@@ -531,7 +538,10 @@ function slotPlan(imgCount, textCount) {
 }
 
 // 글을 쪽마다 같은 높이만큼 나눠 담는다. 마지막 쪽만 남은 만큼 담는다.
-function fillPages(segs, pageCount, headHeight, usable) {
+// 장 제목이 붙는 첫 쪽은 제목까지 함께 얹어서 재야 한다.
+// 제목 높이를 따로 빼서 계산하면 실제로 나란히 놓였을 때의 높이와 조금씩 어긋난다.
+function fillPages(segs, pageCount, headHtml, usable) {
+    const pageHeight = (a, b, first) => PROBE.measure((first ? headHtml : '') + runHtml(segs, a, b));
     const ranges = [];
     let i = 0;
     for (let p = 0; p < pageCount; p++) {
@@ -539,15 +549,14 @@ function fillPages(segs, pageCount, headHeight, usable) {
         if (rest === 0) { ranges.push([i, segs.length]); break; }
         // 남은 글을 남은 쪽 수로 나눠 이번 쪽에 담을 양을 정한다.
         // 매 쪽마다 다시 계산하므로, 한 쪽이 덜 차면 그만큼이 뒤쪽에 고르게 얹힌다.
-        const remainingH = PROBE.measure(runHtml(segs, i, segs.length)) + (p === 0 ? headHeight : 0);
-        const target = remainingH / (rest + 1);
-        const room = Math.min(usable, target) - (p === 0 ? headHeight : 0);
+        const remainingH = pageHeight(i, segs.length, p === 0);
+        const room = Math.min(usable, remainingH / (rest + 1));
         const maxTake = Math.max(1, segs.length - i - rest);
         let take = 1;
         let lo = 1, hi = maxTake;
         while (lo <= hi) {
             const mid = (lo + hi) >> 1;
-            if (PROBE.measure(runHtml(segs, i, i + mid)) <= room) { take = mid; lo = mid + 1; }
+            if (pageHeight(i, i + mid, p === 0) <= room) { take = mid; lo = mid + 1; }
             else { hi = mid - 1; }
         }
         ranges.push([i, i + take]);
@@ -560,6 +569,7 @@ function paginateChapter(ch, chIndex) {
     const segs = CHAPTER_SEGS[chIndex];
     const arts = (ch.art && ch.art.length) ? ch.art : [];
     const { usable, headHeight } = PROBE;
+    const headHtml = `<h2>${CHAPTER_LABEL(ch.num)}${ch.title}</h2>`;
     const totalH = PROBE.measure(runHtml(segs, 0, segs.length));
 
     // 필요한 글 쪽 수를 구하고, 그림 면(1쪽)과 글만 면(2쪽)으로 맞춘다.
@@ -574,15 +584,17 @@ function paginateChapter(ch, chIndex) {
         slots = slotPlan(arts.length, textSpreads);
         const pageCount = slots.reduce((n, kind) => n + (kind === 'img' ? 1 : 2), 0);
         if (pageCount > segs.length && textSpreads > 0) { textSpreads--; continue; }
-        ranges = fillPages(segs, pageCount, headHeight, usable);
-        // 마지막 쪽이 넘치면 쪽을 늘려 다시 나눈다
-        const lastH = PROBE.measure(runHtml(segs, ranges[ranges.length - 1][0], ranges[ranges.length - 1][1]));
-        if (lastH <= usable || arts.length + textSpreads >= maxSpreads) break;
+        ranges = fillPages(segs, pageCount, headHtml, usable);
+        // 한 쪽이라도 넘치면 쪽을 늘려 다시 나눈다.
+        // 마지막 쪽만 보면 안 된다 — 첫 쪽에는 장 제목이 얹히므로 그쪽이 먼저 넘칠 수 있다.
+        const over = ranges.some(([a, b], n) =>
+            PROBE.measure((n === 0 ? headHtml : '') + runHtml(segs, a, b)) > usable);
+        if (!over || arts.length + textSpreads >= maxSpreads) break;
         textSpreads++;
     }
     if (!ranges) {
         slots = slotPlan(arts.length, textSpreads);
-        ranges = fillPages(segs, slots.reduce((n, kind) => n + (kind === 'img' ? 1 : 2), 0), headHeight, usable);
+        ranges = fillPages(segs, slots.reduce((n, kind) => n + (kind === 'img' ? 1 : 2), 0), headHtml, usable);
     }
 
     const spreads = [];
@@ -740,25 +752,32 @@ function endPage() {
         </div>`;
 }
 
-const PAGES = [
-    { kind: 'cover' },
-    ...TOC_GROUPS.map((_, i) => ({ kind: 'toc', part: i })),
-    ...CHAPTERS.flatMap(paginateChapter),
-    { kind: 'quiz' },
-    { kind: 'end' }
-];
-
-PROBE.close();   // 쪽을 다 나눴으니 재는 데 쓰던 숨은 쪽은 치운다
-
 const TWO_PAGE_KINDS = new Set(['chapter', 'toc', 'cover']);
 
-let folioCounter = 0;
-const FOLIOS = PAGES.map(p => {
-    const width = TWO_PAGE_KINDS.has(p.kind) ? 2 : 1;
-    const start = folioCounter + 1;
-    folioCounter += width;
-    return { start, width };
-});
+let PAGES = [];
+let FOLIOS = [];
+
+function buildPages() {
+    PROBE = makeProbe();
+    PAGES = [
+        { kind: 'cover' },
+        ...TOC_GROUPS.map((_, i) => ({ kind: 'toc', part: i })),
+        ...CHAPTERS.flatMap(paginateChapter),
+        { kind: 'quiz' },
+        { kind: 'end' }
+    ];
+    PROBE.close();   // 쪽을 다 나눴으니 재는 데 쓰던 숨은 쪽은 치운다
+
+    let folioCounter = 0;
+    FOLIOS = PAGES.map(p => {
+        const width = TWO_PAGE_KINDS.has(p.kind) ? 2 : 1;
+        const start = folioCounter + 1;
+        folioCounter += width;
+        return { start, width };
+    });
+}
+
+buildPages();
 
 function renderPage(page) {
     switch (page.kind) {
@@ -868,3 +887,18 @@ document.addEventListener('keydown', (e) => {
 });
 
 paint();
+
+// 본문 글꼴은 늦게 내려온다. 글꼴이 바뀌면 한 줄에 들어가는 글자 수가 달라져서
+// 먼저 나눠 둔 쪽이 넘치게 된다. 그래서 글꼴을 다 받은 뒤에 한 번 다시 나눈다.
+if (document.fonts && document.fonts.status !== 'loaded') {
+    document.fonts.ready.then(() => {
+        const here = PAGES[current];
+        buildPages();
+        current = Math.min(current, PAGES.length - 1);
+        if (here && here.kind === 'chapter') {
+            const idx = PAGES.findIndex(p => p.kind === 'chapter' && p.first && p.ch.num === here.ch.num);
+            if (idx >= 0) current = idx;
+        }
+        paint();
+    });
+}
