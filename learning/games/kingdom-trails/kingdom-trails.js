@@ -25,9 +25,7 @@ let resizeTimer = null;
 const savedName = String(localStorage.getItem(NAME_KEY) || "").trim();
 
 const MUSIC_TRACKS = Object.freeze([
-  "/learning/games/kingdom-trails/assets/sound/kingdom-trails-01-table.ogg",
-  "/learning/games/kingdom-trails/assets/sound/kingdom-trails-02-stone-road.ogg",
-  "/learning/games/kingdom-trails/assets/sound/kingdom-trails-03-quiet-rampart.ogg"
+  "/learning/games/kingdom-trails/assets/sound/kingdom-trails-table.m4a"
 ]);
 
 function playSound(name) {
@@ -497,3 +495,4 @@ function init() {
 }
 
 window.addEventListener("DOMContentLoaded", init);
+
