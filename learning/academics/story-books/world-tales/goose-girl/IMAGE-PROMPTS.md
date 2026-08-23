@@ -1,8 +1,8 @@
 # 제미나이 그림 프롬프트
 
-이 책은 하나의 이야기를 8개의 장(챕터)으로 나눠 담았고, 각 장마다 그림이
-**한 장**이에요. 그림이 펼침면 전체 폭을 가득 채우고, 그 아래에 이야기가
-왼쪽·오른쪽으로 나뉘어 들어갑니다.
+이 책은 하나의 이야기를 8개의 장(챕터)으로 나눠 담았고, 펼침면은 모두
+16개예요. 펼침면 하나에 그림이 한 장씩 들어갑니다.
+그림이 펼침면 전체 폭을 가득 채우고, 그 아래에 이야기가 왼쪽·오른쪽으로 나뉘어 들어갑니다.
 
 아래 프롬프트를 제미나이에 그대로 넣어서 생성한 뒤, 파일명을 정확히 맞춰서
 `images/` 폴더에 저장하면 자동으로 책에 나타납니다.
@@ -45,49 +45,57 @@ kindly bearded man with sharp eyes.
 
 | 파일명 | 장면 |
 |---|---|
-| `images/01-departure.png` | A castle gate at dawn where a queen presses a handkerchief into her daughter's hands beside a white horse, a maid waiting with the baggage, morning mist and long shadows, tender farewell. |
+| `images/01-departure.png` | A castle courtyard before dawn where a queen packs a daughter's travelling chests and a white horse is led out, morning mist, lanterns, tender and solemn. |
+| `images/01-departure-2.png` | A castle gate where a queen presses an embroidered handkerchief into her daughter's hands, and the two riders crossing a hill as the castle disappears behind, long shadows, wistful. |
 
 ## 2장 · 냇가에서
 
 | 파일명 | 장면 |
 |---|---|
-| `images/02-stream.png` | A shady stream where a richly dressed girl kneels to drink while a white handkerchief slips from her bodice into the current, a maid standing on the bank with arms folded, tense and quiet. |
+| `images/02-stream.png` | A hot noon road beside a shady stream where a richly dressed girl asks for water and a maid stands with folded arms refusing, the girl then climbing down alone, quietly tense. |
+| `images/02-stream-2.png` | A stream where a white handkerchief slips from a kneeling girl's bodice and is carried away by the current, her hand reaching too late, a maid watching from the bank with a changing expression. |
 
 ## 3장 · 뒤바뀐 자리
 
 | 파일명 | 장면 |
 |---|---|
-| `images/03-swap.png` | A lonely roadside where a maid pulls on a fine blue gown and mounts a white horse while the true princess stands in a plain grey dress holding the reins, dust and pale sky, quietly cruel. |
+| `images/03-swap.png` | A lonely roadside where a maid demands a princess exchange clothes, the road empty in both directions, the princess lowering her head, stark and quietly cruel. |
+| `images/03-swap-2.png` | A dusty road where a maid in a fine blue gown rides a white horse while the true princess walks behind in grey, and a flag-decked castle appearing on the horizon at sunset, poignant. |
 
 ## 4장 · 거위를 치는 아이
 
 | 파일명 | 장면 |
 |---|---|
-| `images/04-geese.png` | A wide green meadow where a girl in a plain grey dress drives a flock of white geese with a freckled boy in a straw hat, a castle in the distance, bright open sky, gentle melancholy. |
+| `images/04-geese.png` | A castle courtyard where a prince hands down a maid in fine clothes while the true princess stands ignored behind, and an old king gesturing toward the goose yard, telling and sad. |
+| `images/04-geese-2.png` | A wide green meadow where a freckled boy in a straw hat and a girl in grey drive a flock of white geese, the castle small in the distance, open sky, gentle melancholy. |
 
 ## 5장 · 성문 위의 팔라다
 
 | 파일명 | 장면 |
 |---|---|
-| `images/05-falada.png` | A stone town gateway with a carved white horse's head mounted above the arch, a girl in grey pausing beneath it each morning with her geese flowing past her feet, soft golden light, poignant. |
+| `images/05-falada.png` | A castle stable where a maid in fine clothes speaks urgently to a prince about a white horse, and a girl in grey pressing coins into a gatekeeper's hand at a stone archway, moving. |
+| `images/05-falada-2.png` | A stone town gateway with a carved white horse's head mounted above where a girl in grey pauses each morning as geese stream past her feet, tears on her face, poignant and beautiful. |
 
 ## 6장 · 바람아 불어라
 
 | 파일명 | 장면 |
 |---|---|
-| `images/06-wind.png` | A breezy hilltop meadow where a girl's long golden hair streams loose as a boy chases his straw hat tumbling far across the grass, geese scattering, funny and lively. |
+| `images/06-wind.png` | A breezy hilltop meadow where a girl combs out long golden hair as a freckled boy reaches toward it, geese scattering, sunlit and lively. |
+| `images/06-wind-2.png` | A boy chasing his straw hat tumbling far over a hillside while the girl calmly finishes braiding her hair, and later the same boy complaining earnestly to an old king, funny and pivotal. |
 
 ## 7장 · 난로에게 한 이야기
 
 | 파일명 | 장면 |
 |---|---|
-| `images/07-stove.png` | A dim castle kitchen where a girl kneels and speaks into the open door of a great iron stove, firelight on her face, an old king listening just outside the doorway, hushed and moving. |
+| `images/07-stove.png` | A quiet castle room where an old king with sharp kind eyes questions a girl in grey who shakes her head, then gestures toward a great iron stove in the kitchen beyond, warm and clever. |
+| `images/07-stove-2.png` | A dim castle kitchen where a girl kneels before the open door of a great iron stove speaking into it, firelight on her wet face, an old king listening just outside the doorway, deeply moving. |
 
 ## 8장 · 제자리로
 
 | 파일명 | 장면 |
 |---|---|
-| `images/08-ending.png` | A grand castle banquet hall where a maid in fine clothes declares a judgment and then realises with horror, while the true princess is led to her seat in restored finery, courtiers astonished, warm resolution. |
+| `images/08-ending.png` | A grand banquet hall where a girl now in fine clothes is seated at the high table and a maid in silks answers a king's question loudly, courtiers falling silent around her, dramatic. |
+| `images/08-ending-2.png` | A banquet hall where a maid realises her own judgment and pales as the king nods, and a prince crossing to speak with the true princess who smiles for the first time, warm resolution. |
 
 ## 사용 팁
 

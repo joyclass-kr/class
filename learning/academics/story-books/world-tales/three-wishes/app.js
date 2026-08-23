@@ -12,7 +12,7 @@ const CHAPTERS = [
                     "그날도 나무꾼은 커다란 참나무에 도끼를 들었습니다."
                 ],
                 "right": [
-                    "그런데 나무 뒤에서 작은 빛이 나타났습니다.",
+                    "그런데 나무 뒤에서 작은 빛이 나타났습니다. 숲의 정령이었지요.",
                     "\"그 나무는 내 집이라오. 부디 살려 주시오.\"",
                     "나무꾼은 깜짝 놀라 도끼를 내려놓았습니다.",
                     "\"그러지요. 다른 나무를 베면 되니까요.\""
@@ -209,6 +209,7 @@ function spreadPage(chapter, beat, isFirst, isLast) {
     const badgeHtml = isFirst ? `<div class="spread-chapter-badge">${chapter.title}</div>` : '';
     const leftHtml = beat.left.map(p => `<p>${p}</p>`).join('');
     let rightHtml = beat.right.map(p => `<p>${p}</p>`).join('');
+    // 교훈은 오른쪽 칸이 아니라 두 칸 아래 제 자리에 놓는다. 칸 안에 밀어 넣으면 넘친다.
     const moralHtml = isLast && chapter.moral ? `<p class="fable-moral">${chapter.moral}</p>` : '';
     return `
         <div class="page page-story${moralHtml ? ' spread-final' : ''}">
