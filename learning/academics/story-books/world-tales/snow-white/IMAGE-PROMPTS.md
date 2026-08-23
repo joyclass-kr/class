@@ -1,8 +1,8 @@
 # 제미나이 그림 프롬프트
 
-이 책은 하나의 이야기를 7개의 장(챕터)으로 나눠 담았고, 각 장마다 그림이
-**한 장**이에요. 그림이 펼침면 전체 폭을 가득 채우고, 그 아래에 이야기가
-왼쪽·오른쪽으로 나뉘어 들어갑니다.
+이 책은 하나의 이야기를 7개의 장(챕터)으로 나눠 담았고, 펼침면은 모두
+14개예요. 펼침면 하나에 그림이 한 장씩 들어갑니다.
+그림이 펼침면 전체 폭을 가득 채우고, 그 아래에 이야기가 왼쪽·오른쪽으로 나뉘어 들어갑니다.
 
 아래 프롬프트를 제미나이에 그대로 넣어서 생성한 뒤, 파일명을 정확히 맞춰서
 `images/` 폴더에 저장하면 자동으로 책에 나타납니다.
@@ -47,43 +47,50 @@ man in a green riding coat.
 
 | 파일명 | 장면 |
 |---|---|
-| `images/01-mirror.png` | A cold marble castle chamber where a tall queen in a plum gown stares into a great ornate mirror whose surface glows with an answer, her knuckles white on the frame, dramatic and chilling but not scary. |
+| `images/01-mirror.png` | A castle window in winter where a queen sews as three drops of blood fall on the snowy sill, and beside it a cradle with a newborn, snow drifting past the glass, tender and quiet. |
+| `images/01-mirror-2.png` | A cold marble chamber where a tall queen in a plum gown stares into a great ornate mirror whose surface glows, her knuckles white on the frame, a young girl glimpsed in a sunlit corridor beyond, dramatic. |
 
 ## 2장 · 숲으로 간 공주
 
 | 파일명 | 장면 |
 |---|---|
-| `images/02-forest.png` | A deep winter forest at dusk where a huntsman kneels urging a girl to flee, and beyond them the same girl walking alone between huge dark trunks toward a distant glimmer of light, tense but tender. |
+| `images/02-forest.png` | A winter forest path where a huntsman leads a small girl deeper among great dark trunks as she stops to pick flowers, his face troubled, low grey light through the branches. |
+| `images/02-forest-2.png` | A deep dusk forest where a huntsman strides away leaving a small girl alone, and the same girl pushing through undergrowth toward a distant glimmer of light, lonely and hopeful. |
 
 ## 3장 · 일곱 난쟁이의 집
 
 | 파일명 | 장면 |
 |---|---|
-| `images/03-dwarfs.png` | A tiny cottage interior with seven little plates, seven cups and seven beds in a row, a girl asleep across the last two beds while seven bearded miners crowd in with lanterns, warm and comic. |
+| `images/03-dwarfs.png` | A tiny tidy cottage interior with seven little plates, cups and chairs at a table and seven small beds along the wall, a girl eating a little from each plate, warm lamplight, charming. |
+| `images/03-dwarfs-2.png` | Seven bearded miners crowding around a small bed with lanterns raised, astonished at the sleeping girl, their picks propped by the door, comic and warm. |
 
 ## 4장 · 빗과 허리끈
 
 | 파일명 | 장면 |
 |---|---|
-| `images/04-disguise.png` | A cottage doorway where a disguised pedlar woman offers a bright sash to a girl, and in the same wide scene seven dwarfs cutting the sash free as she revives, worried faces, dramatic but gentle. |
+| `images/04-disguise.png` | A cottage doorway where a disguised old pedlar woman with a basket ties a bright sash around a girl's waist, pulling it tight, forest light behind, tense but not frightening. |
+| `images/04-disguise-2.png` | Seven dwarfs cutting a sash free from a fallen girl in one half of the scene, and in the other a disguised woman holding out a comb at the door, worried faces, dramatic but gentle. |
 
 ## 5장 · 새빨간 사과
 
 | 파일명 | 장면 |
 |---|---|
-| `images/05-apple.png` | A cottage window where a disguised woman holds out a half-red half-white apple and bites the white side herself, the girl reaching for the red half, autumn light, suspenseful but not frightening. |
+| `images/05-apple.png` | A castle cellar where a queen paints one side of a red apple, and a cottage window where a disguised farm woman holds the apple out to a girl who shakes her head, autumn light, suspenseful. |
+| `images/05-apple-2.png` | A cottage window where a woman bites the white half of an apple to reassure a girl who then bites the red half and sinks down, and the queen walking away smiling, dramatic but not gruesome. |
 
 ## 6장 · 유리관 속의 공주
 
 | 파일명 | 장면 |
 |---|---|
-| `images/06-glass-coffin.png` | A hilltop clearing where seven dwarfs stand around a glass casket resting on a bed of flowers, birds perched on its edges, seasons hinted in the trees behind, quiet and beautiful. |
+| `images/06-glass-coffin.png` | A hilltop clearing where seven dwarfs set a glass casket among planted flowers, one kneeling beside it, others carrying blooms up the slope, soft evening light, quiet and beautiful. |
+| `images/06-glass-coffin-2.png` | A hilltop where seasons have turned, birds perched on a glass casket ringed with flowers, and a young man in a green riding coat dismounting to speak earnestly with seven dwarfs, wistful. |
 
 ## 7장 · 사과 조각이 튀어나오다
 
 | 파일명 | 장면 |
 |---|---|
-| `images/07-awake.png` | A hillside path where bearers stumble and a glass casket jolts, a piece of apple flying free as the girl inside opens her eyes, seven dwarfs racing up the slope cheering, joyous and bright. |
+| `images/07-awake.png` | A hillside path where bearers stumble and a glass casket jolts, a piece of apple flying free as the girl inside opens her eyes, seven dwarfs racing up cheering, joyous and bright. |
+| `images/07-awake-2.png` | A hilltop farewell where a girl hugs seven dwarfs before riding away, and a festive palace hall where the same seven sit at the feast, while far off a lone figure in plum walks into the distance, warm. |
 
 ## 사용 팁
 

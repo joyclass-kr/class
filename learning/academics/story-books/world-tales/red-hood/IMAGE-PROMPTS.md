@@ -1,8 +1,8 @@
 # 제미나이 그림 프롬프트
 
-이 책은 하나의 이야기를 7개의 장(챕터)으로 나눠 담았고, 각 장마다 그림이
-**한 장**이에요. 그림이 펼침면 전체 폭을 가득 채우고, 그 아래에 이야기가
-왼쪽·오른쪽으로 나뉘어 들어갑니다.
+이 책은 하나의 이야기를 7개의 장(챕터)으로 나눠 담았고, 펼침면은 모두
+14개예요. 펼침면 하나에 그림이 한 장씩 들어갑니다.
+그림이 펼침면 전체 폭을 가득 채우고, 그 아래에 이야기가 왼쪽·오른쪽으로 나뉘어 들어갑니다.
 
 아래 프롬프트를 제미나이에 그대로 넣어서 생성한 뒤, 파일명을 정확히 맞춰서
 `images/` 폴더에 저장하면 자동으로 책에 나타납니다.
@@ -46,43 +46,50 @@ spectacles. The huntsman: a broad man in a green coat with a shoulder bag.
 
 | 파일명 | 장면 |
 |---|---|
-| `images/01-errand.png` | A sunny village cottage doorway where a mother in an apron hands a covered basket to a small girl in a red hooded cape, a forest path curving away beyond the gate, warm and homely. |
+| `images/01-errand.png` | A sunny village cottage kitchen where a mother in an apron packs bread and milk into a covered basket while a small girl in a red hooded cape waits eagerly, warm morning light through the window. |
+| `images/01-errand-2.png` | A village gate where a mother waves after a small girl in red setting off down a lane, and the same lane winding toward a forest with a mill roof visible far beyond, cheerful morning. |
 
 ## 2장 · 숲에서 만난 늑대
 
 | 파일명 | 장면 |
 |---|---|
-| `images/02-wolf-meets.png` | A forest path where a lanky wolf leans down conversationally to a small girl in a red cape, one paw gesturing toward a sunlit meadow of wildflowers off the path, comic and sly. |
+| `images/02-wolf-meets.png` | A forest path where a lanky wolf leans down conversationally to a small girl in a red cape holding a basket, the girl answering openly, dappled sunlight, comic and sly. |
+| `images/02-wolf-meets-2.png` | A sunlit meadow off the path where a girl in red wanders deeper picking wildflowers, her basket set down in the grass, the empty path and a wolf's tail vanishing among the trees behind, pointed. |
 
 ## 3장 · 먼저 도착한 늑대
 
 | 파일명 | 장면 |
 |---|---|
-| `images/03-wolf-arrives.png` | A cottage interior where a wolf in a nightgown and cap pulls a quilt up to its chin in bed, an old woman peeking from a wardrobe crack behind, spectacles askew, hilariously comic. |
+| `images/03-wolf-arrives.png` | A cottage by a millwheel among three great oaks where a wolf knocks at the door, and inside an old woman in a nightcap scrambling into a wardrobe as the door swings open, comic panic. |
+| `images/03-wolf-arrives-2.png` | A cottage bedroom where a wolf in a nightgown and cap adjusts spectacles before a mirror, then lies in bed with the quilt to its chin and curtains half drawn, hilariously comic. |
 
 ## 4장 · 할머니, 왜 그렇게 커요?
 
 | 파일명 | 장면 |
 |---|---|
-| `images/04-questions.png` | A dim cottage bedroom where a small girl in red leans toward a bed occupied by a wolf in a nightcap, its ears and eyes comically huge, the quilt bulging, funny and theatrical. |
+| `images/04-questions.png` | A dim cottage bedroom seen from the doorway where a small girl with an armful of flowers approaches a bed occupied by a lumpy figure in a nightcap, half-drawn curtains, quietly eerie. |
+| `images/04-questions-2.png` | A cottage bedroom where a wolf in a nightcap throws off the quilt and rears up, ears and eyes and mouth comically huge, a small girl in red stumbling back, flowers scattering, funny and theatrical. |
 
 ## 5장 · 코를 고는 늑대
 
 | 파일명 | 장면 |
 |---|---|
-| `images/05-snoring.png` | A cottage bedroom where a fat-bellied wolf sprawls snoring on the bed, and outside the window a huntsman in a green coat peering in with raised eyebrows, comic and bright. |
+| `images/05-snoring.png` | A cottage bedroom where a fat-bellied wolf sprawls snoring with the bedframe creaking, and outside a huntsman in a green coat pausing on the path with a hand cupped to his ear, comic. |
+| `images/05-snoring-2.png` | A huntsman peering through a cottage window at a sleeping wolf with a bulging belly, then quietly opening his shoulder bag and drawing out shears, tense and careful. |
 
 ## 6장 · 배 속에서 나온 두 사람
 
 | 파일명 | 장면 |
 |---|---|
-| `images/06-rescue.png` | A cottage room where a girl and an old woman climb out unharmed while a huntsman kneels with shears, and the three then filling the sleeping wolf with round stones, comic teamwork. |
+| `images/06-rescue.png` | A cottage room where a huntsman kneels with shears as a girl in red climbs out unharmed, and a wardrobe door swinging open with a grandmother stepping out, everyone laughing in relief, warm. |
+| `images/06-rescue-2.png` | A cottage room where a girl and a huntsman fill a sleeping wolf's belly with round stones while a grandmother stitches it closed with needle and thread, all three grinning, very comic. |
 
 ## 7장 · 큰길로만
 
 | 파일명 | 장면 |
 |---|---|
-| `images/07-lesson.png` | A cottage yard where a stone-heavy wolf waddles away down the path, and inside a sunny kitchen a grandmother eating bread while a girl in red hangs her cape by the door, warm and reassuring. |
+| `images/07-lesson.png` | A cottage doorway where a stone-heavy wolf waddles unsteadily away down the path into the trees, and inside a sunny kitchen a grandmother eating bread with colour back in her cheeks, warm. |
+| `images/07-lesson-2.png` | A cottage bedside where a girl arranges wildflowers in a jar as her grandmother holds her hand, and the same girl walking home on the main road past a tempting meadow without leaving the path, warm and quietly proud. |
 
 ## 사용 팁
 

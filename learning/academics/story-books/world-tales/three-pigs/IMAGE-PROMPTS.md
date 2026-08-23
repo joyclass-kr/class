@@ -1,8 +1,8 @@
 # 제미나이 그림 프롬프트
 
-이 책은 하나의 이야기를 7개의 장(챕터)으로 나눠 담았고, 각 장마다 그림이
-**한 장**이에요. 그림이 펼침면 전체 폭을 가득 채우고, 그 아래에 이야기가
-왼쪽·오른쪽으로 나뉘어 들어갑니다.
+이 책은 하나의 이야기를 7개의 장(챕터)으로 나눠 담았고, 펼침면은 모두
+14개예요. 펼침면 하나에 그림이 한 장씩 들어갑니다.
+그림이 펼침면 전체 폭을 가득 채우고, 그 아래에 이야기가 왼쪽·오른쪽으로 나뉘어 들어갑니다.
 
 아래 프롬프트를 제미나이에 그대로 넣어서 생성한 뒤, 파일명을 정확히 맞춰서
 `images/` 폴더에 저장하면 자동으로 책에 나타납니다.
@@ -46,43 +46,50 @@ frustrated rather than scary.
 
 | 파일명 | 장면 |
 |---|---|
-| `images/01-leaving.png` | A green hillside where a mother pig in an apron waves from a gate as three young pigs set off in different directions with bundles, the eldest strutting, the middle yawning, the youngest carrying a trowel, sunny and lively. |
+| `images/01-leaving.png` | A small crowded cottage where a mother pig in an apron speaks earnestly to three grown young pigs, packing bundles for them, sunlight through the door, warm and homely. |
+| `images/01-leaving-2.png` | A green hillside where three roads fork and three young pigs part ways, two strutting off cheerfully while the smallest studies the wind direction with a hand raised, sunny and lively. |
 
 ## 2장 · 짚으로 뚝딱
 
 | 파일명 | 장면 |
 |---|---|
-| `images/02-straw.png` | A sunny meadow where a plump pig lounges in the shade beside a lopsided straw house, another pig strolling past laughing, and far down the slope a small pig pushing a barrow of bricks, comic contrast. |
+| `images/02-straw.png` | A meadow where a plump pig unloads straw bales from a cart and by evening lounges in the shade beside a lopsided straw hut whose walls sway in the breeze, comic and carefree. |
+| `images/02-straw-2.png` | A hillside where two pigs laugh together beside a straw hut while far below a small pig pushes a heavy barrow of bricks up the slope, sweating, warm afternoon light. |
 
 ## 3장 · 나뭇가지로 대충
 
 | 파일명 | 장면 |
 |---|---|
-| `images/03-sticks.png` | A hillside with a rickety stick house leaning slightly, its owner admiring it, while nearby a small pig lays bricks one by one with mortar, blistered hands, patient and determined. |
+| `images/03-sticks.png` | A woodland edge where a lanky pig lashes sticks into a leaning hut, a post visibly tilted and gaps in the roof showing sky, the pig cheerfully ignoring it, comic. |
+| `images/03-sticks-2.png` | A half-built brick cottage where a small pig lays bricks with mortar and checks the line with a string, blistered hands, two brothers strolling away laughing in the background. |
 
 ## 4장 · 벽돌을 한 장씩
 
 | 파일명 | 장면 |
 |---|---|
-| `images/04-bricks.png` | A finished brick cottage with a tiled roof, a straight chimney, shutters and a barred door, its small builder standing proudly in the yard while two brothers peer over the fence, warm and satisfying. |
+| `images/04-bricks.png` | A finished brick cottage with tiled roof, straight chimney, shutters and a barred door, its small builder sitting on the step at sunset with a broom beside him, warm and satisfying. |
+| `images/04-bricks-2.png` | Two pigs shaking their heads at a sturdy brick cottage, and a night scene where wind rattles a straw hut and a stick hut while the brick house stands silent with one lit window, telling contrast. |
 
 ## 5장 · 훅! 후!
 
 | 파일명 | 장면 |
 |---|---|
-| `images/05-blown-down.png` | A night hillside where a straw house blows apart in a great gust from a wolf, and a stick house collapsing in the same wide scene, two pigs sprinting toward a distant brick cottage, dramatic and comic. |
+| `images/05-blown-down.png` | A moonlit meadow where a scrawny wolf fills its lungs before a straw hut and blows it apart in a swirl of flying straw, a plump pig bolting out the far side, dramatic and comic. |
+| `images/05-blown-down-2.png` | A stick hut collapsing in a great gust as two pigs sprint out and away up a moonlit slope toward a distant brick cottage with a lit window, the wolf loping behind, thrilling. |
 
 ## 6장 · 꿈쩍도 않는 집
 
 | 파일명 | 장면 |
 |---|---|
-| `images/06-brick-house.png` | A brick cottage standing firm as a scrawny wolf puffs with all its might, cheeks ballooning, leaves swirling but not a tile moving, three pig faces at the window, hilariously comic. |
+| `images/06-brick-house.png` | A brick cottage interior where a small pig bars the door and closes shutters as two brothers tumble in panting, and outside a wolf drawing breath, cosy against threatening. |
+| `images/06-brick-house-2.png` | A brick cottage standing firm as a scrawny wolf puffs until its cheeks balloon and then slumps gasping, three pig faces grinning at the window, leaves swirling, hilariously comic. |
 
 ## 7장 · 굴뚝으로 내려온 늑대
 
 | 파일명 | 장면 |
 |---|---|
-| `images/07-chimney.png` | A brick cottage interior where a pot bubbles on the hearth as a wolf shoots back up the chimney clutching its rear, and outside the wolf sprinting over the hill, three pigs laughing together, funny and warm. |
+| `images/07-chimney.png` | A wolf climbing onto a tiled roof toward the chimney, and inside a brick kitchen a small pig heaping logs on the fire and swinging a great pot of water over the flames, comic suspense. |
+| `images/07-chimney-2.png` | A wolf shooting back up out of a chimney clutching its rear, tumbling down the roof and sprinting over the hill, while three pigs laugh together in a warm brick kitchen, funny and joyful. |
 
 ## 사용 팁
 

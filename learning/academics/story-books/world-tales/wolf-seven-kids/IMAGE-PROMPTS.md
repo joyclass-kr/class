@@ -1,8 +1,8 @@
 # 제미나이 그림 프롬프트
 
-이 책은 하나의 이야기를 7개의 장(챕터)으로 나눠 담았고, 각 장마다 그림이
-**한 장**이에요. 그림이 펼침면 전체 폭을 가득 채우고, 그 아래에 이야기가
-왼쪽·오른쪽으로 나뉘어 들어갑니다.
+이 책은 하나의 이야기를 7개의 장(챕터)으로 나눠 담았고, 펼침면은 모두
+14개예요. 펼침면 하나에 그림이 한 장씩 들어갑니다.
+그림이 펼침면 전체 폭을 가득 채우고, 그 아래에 이야기가 왼쪽·오른쪽으로 나뉘어 들어갑니다.
 
 아래 프롬프트를 제미나이에 그대로 넣어서 생성한 뒤, 파일명을 정확히 맞춰서
 `images/` 폴더에 저장하면 자동으로 책에 나타납니다.
@@ -46,43 +46,50 @@ comically vain. The miller: a floury man with a scoop.
 
 | 파일명 | 장면 |
 |---|---|
-| `images/01-warning.png` | A cosy cottage room where a mother goat in a headscarf with a basket gives careful instructions to seven little goat kids gathered around her, sunlight through the door, warm and tender. |
+| `images/01-warning.png` | A cosy cottage room where a mother goat in a headscarf with a basket gathers seven little goat kids around her to give instructions, morning sun through the door, warm and tender. |
+| `images/01-warning-2.png` | A cottage doorway where a mother goat sets off down a lane with her basket while seven kids crowd the window waving, and the room quiet behind them, warm and homely. |
 
 ## 2장 · 첫 번째 속임수
 
 | 파일명 | 장면 |
 |---|---|
-| `images/02-first-try.png` | A cottage door with seven kids pressed against it listening warily, and outside a wolf stamping in frustration, then swallowing a lump of chalk at a shop counter, comic and lively. |
+| `images/02-first-try.png` | A cottage door with seven kids pressed against it listening warily, one standing forward with a hoof raised, and a grey shape looming outside the window, tense but comic. |
+| `images/02-first-try-2.png` | A wolf stamping in frustration outside a cottage, then at a village shop counter swallowing a lump of chalk and clearing its throat, comic determination. |
 
 ## 3장 · 하얀 발과 고운 목소리
 
 | 파일명 | 장면 |
 |---|---|
-| `images/03-disguise.png` | A cottage window where a black paw rests on the sill and kids recoil, then a mill interior where a floury man dusts the wolf's paws white, and the paw returning snowy on the sill, comic sequence. |
+| `images/03-disguise.png` | A cottage window where a black paw rests on the sill and seven kids recoil shouting, one small kid pointing at it, sunlight showing the dark fur clearly, comic. |
+| `images/03-disguise-2.png` | A mill interior where a floury man dusts a wolf's paws white, and a cottage window where the same paw now snowy rests on the sill as kids reach to unbar the door, comic and ominous. |
 
 ## 4장 · 시계 속에 숨은 막내
 
 | 파일명 | 장면 |
 |---|---|
-| `images/04-hiding.png` | A cottage in comic uproar as kids dive under the table, into a cupboard and behind a broom while a wolf lumbers in, and a tiny kid hidden inside a grandfather clock case, funny not frightening. |
+| `images/04-hiding.png` | A cottage in comic uproar as six kids dive under a table, into a quilt, up a chimney, into a cupboard, behind a wardrobe and under a basin while a wolf lumbers in, funny not frightening. |
+| `images/04-hiding-2.png` | A tiny goat kid hidden inside a grandfather clock case peering through the crack, and outside under a tree a fat-bellied wolf sprawled asleep and snoring, comic relief. |
 
 ## 5장 · 엄마 염소가 돌아왔어요
 
 | 파일명 | 장면 |
 |---|---|
-| `images/05-mother-returns.png` | A wrecked cottage room where a mother goat stands stricken among overturned chairs, and a tiny kid pushing open the clock case door and running to her, emotional and warm. |
+| `images/05-mother-returns.png` | A wrecked cottage room with overturned chairs and a tipped basin where a mother goat stands stricken, her basket fallen from her hoof, late afternoon light, moving. |
+| `images/05-mother-returns-2.png` | A cottage where a tiny kid pushes open a clock case and runs into a mother goat's arms, and the same goat opening a sewing box to take out shears and thread, tender and resolute. |
 
 ## 6장 · 늑대의 배 속에서
 
 | 파일명 | 장면 |
 |---|---|
-| `images/06-rescue.png` | A meadow under a tree where a wolf sleeps with a lumpy belly, a mother goat kneeling with shears as six kids tumble out unharmed into her arms, joyful relief, gentle not gory. |
+| `images/06-rescue.png` | A meadow under a tree where a wolf sleeps with a lumpy heaving belly, a mother goat kneeling with shears while a tiny kid holds the cloth, six heads popping out one by one, joyful relief. |
+| `images/06-rescue-2.png` | Seven kids clinging to their mother in a meadow, then scattering to a stream to gather round stones in their aprons, the wolf still asleep under the tree behind, lively and warm. |
 
 ## 7장 · 우물가의 늑대
 
 | 파일명 | 장면 |
 |---|---|
-| `images/07-well.png` | A meadow well where a stone-bellied wolf leans over the rim and topples in with a splash, eight goats peeking from behind a tree laughing, bright daylight, comic and triumphant. |
+| `images/07-well.png` | A meadow where a mother goat stitches a sleeping wolf's belly closed while seven kids peek from behind a tree, and the wolf waking and staggering toward a stone well, comic. |
+| `images/07-well-2.png` | A meadow well where a stone-bellied wolf leans over the rim and topples in with a splash, eight goats bursting from behind a tree and dancing in a ring, bright and triumphant. |
 
 ## 사용 팁
 

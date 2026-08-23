@@ -1,8 +1,8 @@
 # 제미나이 그림 프롬프트
 
-이 책은 하나의 이야기를 7개의 장(챕터)으로 나눠 담았고, 각 장마다 그림이
-**한 장**이에요. 그림이 펼침면 전체 폭을 가득 채우고, 그 아래에 이야기가
-왼쪽·오른쪽으로 나뉘어 들어갑니다.
+이 책은 하나의 이야기를 7개의 장(챕터)으로 나눠 담았고, 펼침면은 모두
+14개예요. 펼침면 하나에 그림이 한 장씩 들어갑니다.
+그림이 펼침면 전체 폭을 가득 채우고, 그 아래에 이야기가 왼쪽·오른쪽으로 나뉘어 들어갑니다.
 
 아래 프롬프트를 제미나이에 그대로 넣어서 생성한 뒤, 파일명을 정확히 맞춰서
 `images/` 폴더에 저장하면 자동으로 책에 나타납니다.
@@ -47,43 +47,50 @@ the river.
 
 | 파일명 | 장면 |
 |---|---|
-| `images/01-pebbles.png` | A poor cottage at night where a boy slips out the door to gather white pebbles glowing in the moonlight, his sister watching anxiously from a window, worn furniture and an empty bread board inside. |
+| `images/01-pebbles.png` | A poor cottage bedroom at night where two children lie awake listening through a thin wall, an empty bread board on the table in the next room where two adults talk by a low fire, sombre. |
+| `images/01-pebbles-2.png` | A moonlit cottage yard where a boy crouches gathering white pebbles that shine like coins, his sister watching from a window, the door left ajar behind him, quietly hopeful. |
 
 ## 2장 · 다시 찾아온 길
 
 | 파일명 | 장면 |
 |---|---|
-| `images/02-back-home.png` | A deep forest at night where two children follow a line of white pebbles glowing under the moon between dark trunks, and at dawn arriving at their cottage door, hopeful and moving. |
+| `images/02-back-home.png` | A forest path where a boy lags behind dropping pebbles while adults walk ahead, and a clearing where two children doze by a small fire as the grown-ups disappear among the trees, poignant. |
+| `images/02-back-home-2.png` | A dark forest where two children follow a line of white pebbles glowing under a rising moon between huge trunks, and at dawn knocking at their cottage door, moving and hopeful. |
 
 ## 3장 · 새들이 먹어 버린 빵
 
 | 파일명 | 장면 |
 |---|---|
-| `images/03-breadcrumbs.png` | A forest path where a boy scatters breadcrumbs and small birds hop down to peck them up behind him, and later the same path bare and trackless with two lost children looking around, poignant. |
+| `images/03-breadcrumbs.png` | A cottage door with a heavy bolt drawn across it at night as a boy quietly tries the handle, and next morning the same boy slipping his bread ration into his pocket instead of eating, tense. |
+| `images/03-breadcrumbs-2.png` | A forest path where a boy scatters breadcrumbs as birds hop down behind him to peck them up, and later the same path bare under moonlight with two children searching the ground in vain, poignant. |
 
 ## 4장 · 과자로 만든 집
 
 | 파일명 | 장면 |
 |---|---|
-| `images/04-candy-house.png` | A forest clearing with a gingerbread cottage of biscuit walls, icing roof and barley-sugar windows, two children breaking off pieces to eat, a small hunched old woman opening the door with a wide smile, enticing and comic. |
+| `images/04-candy-house.png` | A deep forest where two footsore children follow a snow-white bird flitting from branch to branch, opening into a bright clearing with something strange glimpsed among the trees, wondrous. |
+| `images/04-candy-house-2.png` | A gingerbread cottage with biscuit walls, icing roof and barley-sugar windows where two children break off pieces to eat, a small hunched old woman with huge spectacles opening the door smiling, comic and enticing. |
 
 ## 5장 · 우리에 갇힌 헨젤
 
 | 파일명 | 장면 |
 |---|---|
-| `images/05-cage.png` | A cottage kitchen where a boy sits in a wooden pen holding out a thin chicken bone through the bars while a bespectacled old woman squints at it, his sister carrying a pot behind, comic rather than cruel. |
+| `images/05-cage.png` | A candy cottage yard at dawn where a bespectacled old woman shuts a boy into a wooden pen while his sister stands with a water pail, comic rather than cruel, morning mist. |
+| `images/05-cage-2.png` | A cottage yard where a boy in a wooden pen holds out a thin chicken bone through the bars while a bespectacled old woman squints and pinches it, his sister hiding a smile behind a pot, funny. |
 
 ## 6장 · 그레텔의 꾀
 
 | 파일명 | 장면 |
 |---|---|
-| `images/06-oven.png` | A cottage with a great brick oven where an old woman leans into the opening to demonstrate as a girl swings the iron door shut and drops the latch, her brother reaching through his pen bars, comic triumph. |
+| `images/06-oven.png` | A candy cottage kitchen with a great brick oven blazing, an old woman gesturing toward the opening while a girl hangs back with a wary look, firelight on both faces, tense but comic. |
+| `images/06-oven-2.png` | A kitchen where a girl swings an iron oven door shut and drops the latch, then races out to fling open a wooden pen as her brother tumbles free and they embrace, triumphant and warm. |
 
 ## 7장 · 집으로
 
 | 파일명 | 장면 |
 |---|---|
-| `images/07-home.png` | Two children crossing a wide river one at a time on the back of a white duck, pockets bulging with jewels, and beyond the far bank a woodcutter running from his cottage with open arms, warm and joyful. |
+| `images/07-home.png` | A candy cottage interior where two children fill their pockets from chests of pearls and jewels, and then walking away through the forest to the bank of a wide river with no bridge, hopeful. |
+| `images/07-home-2.png` | Two children crossing a wide river one at a time on the back of a white duck, and beyond the far bank a woodcutter running from his cottage door with open arms, warm and joyful. |
 
 ## 사용 팁
 
