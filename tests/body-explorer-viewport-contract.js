@@ -52,4 +52,15 @@ assert.ok(excretionStyles.includes(".excretion-live-visual"), "The excretion sim
 assert.ok(temperatureStyles.includes(".temperature-page .simulation-card"), "The temperature simulator must inherit the stable simulation panel layout.");
 assert.ok(temperatureStyles.includes(".temperature-live-visual"), "The temperature simulator must show the live thermoregulation model beside the controls.");
 
+assert.match(
+    styles,
+    /body\.journey-active \.journey-screen:not\(\.hidden\) \.journey-workspace > \.anatomy-explorer\s*\{[^}]*grid-column:\s*1 !important;[^}]*grid-row:\s*1 \/ 3 !important;/s,
+    "The atlas must override the legacy grid row instead of creating a blank implicit row."
+);
+assert.match(
+    styles,
+    /body\.journey-active \.journey-screen:not\(\.hidden\) \.journey-workspace > \.question-card\s*\{[^}]*grid-column:\s*2 !important;[^}]*grid-row:\s*2 !important;/s,
+    "The question card must not overlap the atlas."
+);
+
 console.log("body-explorer-viewport-contract: answer privacy and stable quiz/simulation viewport layout ok");

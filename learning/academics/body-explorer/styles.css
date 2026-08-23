@@ -3350,3 +3350,21 @@ body.journey-active .journey-screen:not(.hidden) {
         min-height: 96px;
     }
 }
+
+/* Regression guard: override the legacy direct-panel grid placement inside the workspace. */
+@media (min-width: 900px) and (min-height: 650px) {
+    body.journey-active .journey-screen:not(.hidden) .journey-workspace > .anatomy-explorer {
+        grid-column: 1 !important;
+        grid-row: 1 / 3 !important;
+    }
+
+    body.journey-active .journey-screen:not(.hidden) .journey-workspace > .scene-panel {
+        grid-column: 2 !important;
+        grid-row: 1 !important;
+    }
+
+    body.journey-active .journey-screen:not(.hidden) .journey-workspace > .question-card {
+        grid-column: 2 !important;
+        grid-row: 2 !important;
+    }
+}
