@@ -32,13 +32,28 @@ ones. Playful and funny, never scary. No text or letters in the image.
 
 ```
 Kim: a wiry cheerful farmer in his thirties, topknot, an old jacket with the
-sleeves rolled, red-cheeked from drink, plucky rather than brave. The dokkaebi:
-a big broad Korean goblin, twice Kim's height, blue-grey skin, one short stubby
-horn, wild bristly hair that sticks out in straw-like tufts, a wide grinning
-mouth with two blunt tusks, wearing only baggy patched trousers, carrying a
-knobbly club at his belt. He looks strong but goofy - eyebrows too high, eyes too
-round. The hair should faintly suggest the bristles of a worn-out broom. The
-broom: an old Korean broom of bound straw, the bristles worn down to a stub.
+sleeves rolled, red-cheeked from drink, plucky rather than brave.
+The dokkaebi (Korean goblins) - draw them EXACTLY like this every time:
+SMOOTH bare skin in a strong flat colour, NEVER furry, NEVER hairy, NEVER
+bristly, no shaggy fur anywhere on the body or legs. Round cartoon proportions,
+big friendly round eyes with thick eyebrows, a broad rounded nose, pointed
+elf-like ears, a wide grin with two small blunt tusks, and TWO curved ridged
+horns like a goat's (only babies have a single horn). Short tidy dark hair.
+The LEADER is bright tomato RED, heavy-set and barrel-bellied, wearing a
+leopard-print hide slung over one shoulder like a tunic, barefoot, carrying a
+golden club studded with blunt spikes.
+Another is grass GREEN with a small flower tucked behind one horn, dressed in a
+proper hanbok - pink jeogori, purple skirt, tiger-stripe vest - neat and
+homely.
+The smallest is a chubby SKY-BLUE baby with one little horn and a bib, always
+underfoot, always delighted.
+They are comic and warm, never frightening - closer to a noisy family than to
+monsters.
+The broom: an old Korean broom of bound straw, the bristles worn down to a stub.
+THIS book has only ONE dokkaebi and he is the exception: he was once a
+worn-out straw broom, so give him a single short horn and a few straw-
+coloured tufts standing up on top of his head - but his skin is still
+smooth blue, not furry, and he is built like the others.
 ```
 
 ---

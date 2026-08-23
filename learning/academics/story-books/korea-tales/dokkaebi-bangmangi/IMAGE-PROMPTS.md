@@ -40,12 +40,24 @@ comic expressions, heavy motion lines. Nobody is hurt. No text or letters.
 The younger brother: a lean cheerful young man in patched off-white hanbok with
 his hair in a topknot and a straw A-frame carrier on his back, an open honest
 face. The elder brother: a plumper man in a better blue-grey coat with a thin
-moustache and greedy narrow eyes, always leaning forward. The dokkaebi: Korean
-goblins, each with a single horn on the forehead, a knobbly green-brown face,
-round yellow eyes, wild hair, a bright patchwork jacket and bare feet, carrying
-a gnarled wooden club - loud, dancing, and cowardly. Draw them exactly the same
-every time. The hazelnuts: small round glossy brown nuts the size of a
-thumbnail.
+moustache and greedy narrow eyes, always leaning forward.
+The dokkaebi (Korean goblins) - draw them EXACTLY like this every time:
+SMOOTH bare skin in a strong flat colour, NEVER furry, NEVER hairy, NEVER
+bristly, no shaggy fur anywhere on the body or legs. Round cartoon proportions,
+big friendly round eyes with thick eyebrows, a broad rounded nose, pointed
+elf-like ears, a wide grin with two small blunt tusks, and TWO curved ridged
+horns like a goat's (only babies have a single horn). Short tidy dark hair.
+The LEADER is bright tomato RED, heavy-set and barrel-bellied, wearing a
+leopard-print hide slung over one shoulder like a tunic, barefoot, carrying a
+golden club studded with blunt spikes.
+Another is grass GREEN with a small flower tucked behind one horn, dressed in a
+proper hanbok - pink jeogori, purple skirt, tiger-stripe vest - neat and
+homely.
+The smallest is a chubby SKY-BLUE baby with one little horn and a bib, always
+underfoot, always delighted.
+They are comic and warm, never frightening - closer to a noisy family than to
+monsters.
+The hazelnuts: small round glossy brown nuts the size of a thumbnail.
 ```
 
 ---

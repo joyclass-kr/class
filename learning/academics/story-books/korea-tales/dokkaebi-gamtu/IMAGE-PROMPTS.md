@@ -39,9 +39,7 @@ Dolsoe: a wiry hardworking man in his thirties in a patched undyed hanbok with a
 cloth headband and straw sandals, a big open honest face that shows every feeling
 at once. When invisible he is drawn as an outline of empty space - objects float,
 dust puffs up, clothes and ropes move - but never as a transparent ghost.
-The dokkaebi: six Korean goblins, stocky and jolly, mossy blue-green or reddish
-skin, one or two knobby horns, big round eyes, snub noses, wild hair, wearing
-short ragged trousers and carrying knobbly clubs. They are funny, never scary.
+
 Give each one a running trait: the BIGGEST has one huge horn and sings terribly
 with his head thrown back; the HICCUPING one jolts upright every few seconds; the
 SMALLEST is knee-high and keeps dropping things. The others are background.
@@ -51,6 +49,25 @@ The market people: a plump tteok seller behind a steaming tray, a cloth merchant
 farm wives, children.
 The schoolmaster: a thin bearded old man in a wide black horsehair hat.
 The ox: a big cream-brown Korean ox with a rope halter.
+The dokkaebi (Korean goblins) - draw them EXACTLY like this every time:
+SMOOTH bare skin in a strong flat colour, NEVER furry, NEVER hairy, NEVER
+bristly, no shaggy fur anywhere on the body or legs. Round cartoon proportions,
+big friendly round eyes with thick eyebrows, a broad rounded nose, pointed
+elf-like ears, a wide grin with two small blunt tusks, and TWO curved ridged
+horns like a goat's (only babies have a single horn). Short tidy dark hair.
+The LEADER is bright tomato RED, heavy-set and barrel-bellied, wearing a
+leopard-print hide slung over one shoulder like a tunic, barefoot, carrying a
+golden club studded with blunt spikes.
+Another is grass GREEN with a small flower tucked behind one horn, dressed in a
+proper hanbok - pink jeogori, purple skirt, tiger-stripe vest - neat and
+homely.
+The smallest is a chubby SKY-BLUE baby with one little horn and a bib, always
+underfoot, always delighted.
+They are comic and warm, never frightening - closer to a noisy family than to
+monsters.
+In this book there are SIX of them around a campfire: the big red leader,
+a green one, a hiccuping one, the sky-blue baby, and two more in the same
+family style. Each wears a small black horsehair cap (gamtu) when hidden.
 ```
 
 ---

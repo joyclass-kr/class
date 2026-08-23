@@ -37,10 +37,23 @@ warm crinkled smile, a fist-sized lump under his right jaw, plain off-white
 hanbok, an A-frame carrier of firewood. He sings with his whole body - eyes shut,
 chest out, arms wide. The greedy old man: an elderly man with a narrow pinched
 face, thin beard, sharp suspicious eyes, a lump under his LEFT jaw, a slightly
-better coat. Sour where the other is warm. The goblins: stout blue-grey Korean
-goblins with one stubby horn each, bristly hair, wide grins and blunt tusks,
-carrying knobbly clubs. Different sizes, all delighted by music, comic rather
-than frightening.
+better coat. Sour where the other is warm.
+The dokkaebi (Korean goblins) - draw them EXACTLY like this every time:
+SMOOTH bare skin in a strong flat colour, NEVER furry, NEVER hairy, NEVER
+bristly, no shaggy fur anywhere on the body or legs. Round cartoon proportions,
+big friendly round eyes with thick eyebrows, a broad rounded nose, pointed
+elf-like ears, a wide grin with two small blunt tusks, and TWO curved ridged
+horns like a goat's (only babies have a single horn). Short tidy dark hair.
+The LEADER is bright tomato RED, heavy-set and barrel-bellied, wearing a
+leopard-print hide slung over one shoulder like a tunic, barefoot, carrying a
+golden club studded with blunt spikes.
+Another is grass GREEN with a small flower tucked behind one horn, dressed in a
+proper hanbok - pink jeogori, purple skirt, tiger-stripe vest - neat and
+homely.
+The smallest is a chubby SKY-BLUE baby with one little horn and a bib, always
+underfoot, always delighted.
+They are comic and warm, never frightening - closer to a noisy family than to
+monsters.
 ```
 
 ---
