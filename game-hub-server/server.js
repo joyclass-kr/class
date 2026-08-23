@@ -234,6 +234,10 @@ app.get("/favicon-20260824-v2.ico", (_req, res) => {
   res.setHeader("Cache-Control", "public, max-age=31536000, immutable");
   res.sendFile(path.join(SITE_ROOT, "favicon-20260824-v2.ico"));
 });
+app.get("/favicon-20260824-v3.ico", (_req, res) => {
+  res.setHeader("Cache-Control", "public, max-age=31536000, immutable");
+  res.sendFile(path.join(SITE_ROOT, "favicon-20260824-v3.ico"));
+});
 app.get("/favicon.png", (_req, res) => {
   res.setHeader("Cache-Control", "no-cache, must-revalidate");
   res.sendFile(path.join(SITE_ROOT, "favicon.png"));
