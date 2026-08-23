@@ -1,8 +1,8 @@
 # 제미나이 그림 프롬프트
 
-이 책은 하나의 이야기를 7개의 장(챕터)으로 나눠 담았고, 각 장마다 그림이
-**한 장**이에요. 그림이 펼침면 전체 폭을 가득 채우고, 그 아래에 이야기가
-왼쪽·오른쪽으로 나뉘어 들어갑니다.
+이 책은 하나의 이야기를 7개의 장(챕터)으로 나눠 담았고, 펼침면은 모두
+14개예요. 펼침면 하나에 그림이 한 장씩 들어갑니다.
+그림이 펼침면 전체 폭을 가득 채우고, 그 아래에 이야기가 왼쪽·오른쪽으로 나뉘어 들어갑니다.
 
 아래 프롬프트를 제미나이에 그대로 넣어서 생성한 뒤, 파일명을 정확히 맞춰서
 `images/` 폴더에 저장하면 자동으로 책에 나타납니다.
@@ -18,68 +18,77 @@
 
 ```
 Children's picture book illustration, bright cheerful cartoon-animation style,
-bold clean outlines, saturated storybook colors, soft golden lighting, no text or
-letters in the image, farmyard, pond and countryside setting through four seasons,
-expressive animal faces, wide panoramic composition, gentle and never cruel.
+bold clean outlines, saturated storybook colors, soft Danish farm light through
+four seasons, no text or letters in the image, a reedy farm pond and duck yard,
+open marshes, a peasant cottage interior, a frozen lake and a spring garden pond,
+expressive animal faces, wide panoramic composition, tender and never cruel.
 ```
 
 ## 인물 설명 (일관성을 위해 매번 붙여 넣으세요)
 
 ```
-The ugly duckling: a large fluffy grey-brown duckling with a long neck and big
-gentle eyes, later a graceful white swan. Mother duck: a plump brown duck with a
-kindly face. The other ducklings: small bright yellow ducklings, smug and
-teasing. The old farm woman: a stout woman in a headscarf and apron.
+The ugly duckling: a large grey gawky bird with an over-long neck and clumsy
+feet, growing whiter through the story. The mother duck: a round brown duck who
+tries to be fair. The yard ducks and hens: plump, smug, comically snooty. The old
+farm woman: a squinting woman in a headscarf with thick spectacles. The swans:
+tall serene white birds with wide wings.
 ```
 
 ## 표지 · 마무리
 
 | 파일명 | 장면 |
 |---|---|
-| `images/cover.png` (세로 2:3 비율) | A tall portrait-format cover: a small grey duckling standing alone at the edge of a reedy pond looking up at a graceful white swan gliding past in the distance, soft golden light on the water, gentle and hopeful mood. |
+| `images/cover.png` (세로 2:3 비율) | A tall portrait-format cover: a large grey gawky duckling standing alone at the edge of a reedy pond, its reflection in the still water showing a white swan, autumn light and drifting leaves, tender and beautiful. |
 | `images/end.png` | A closed storybook resting under a starry night sky with soft golden sparkles rising from its pages, peaceful and warm closing scene. |
 
 ## 1장 · 마지막에 깨어난 알
 
 | 파일명 | 장면 |
 |---|---|
-| `images/01-hatching.png` | A nest in tall grass where several bright yellow ducklings have just hatched around a mother duck, while one much larger grey duckling emerges from an oversized egg, warm spring morning light. |
+| `images/01-hatching.png` | A reedy pond bank in summer where a brown mother duck sits on a nest as fluffy yellow ducklings break out of their shells, one noticeably larger egg still whole beside them, warm and charming. |
+| `images/01-hatching-2.png` | A nest where a large grey gawky duckling with a long neck stumbles out of a broken shell beside five small yellow siblings, the mother duck tilting her head then drawing it close, tender. |
 
 ## 2장 · 미운 오리라고 불렀어요
 
 | 파일명 | 장면 |
 |---|---|
-| `images/02-teased.png` | A busy farmyard where yellow ducklings, hens and a turkey crowd around and jeer at a large grey duckling who shrinks back against a fence post, feathers ruffled, warm but lonely afternoon light. |
+| `images/02-teased.png` | A busy farm duck yard where plump ducks and hens crowd around a large grey duckling, pecking and jeering while its yellow siblings turn away, the mother duck looking weary, sad but not brutal. |
+| `images/02-teased-2.png` | A grey duckling huddled among reeds staring at its reflection with a tear falling, and at dusk squeezing under a farmyard fence into open fields, lonely and resolute. |
 
 ## 3장 · 혼자 떠난 길
 
 | 파일명 | 장면 |
 |---|---|
-| `images/03-leaving.png` | A lone grey duckling walking away down a country path away from a farm fence, tall reeds and wide empty fields stretching ahead, soft overcast light, quiet and wistful. |
+| `images/03-leaving.png` | A wide marshland at dawn where a grey duckling walks alone past wild ducks, and then flattening itself among reeds as gunshots crack and birds burst into the sky, tense but not gory. |
+| `images/03-leaving-2.png` | A storm-lashed field where a grey duckling squeezes under a cottage door, and inside a dim room with a squinting old woman, a smug cat and a hen looking the duckling up and down, comic and sad. |
 
 ## 4장 · 처음 본 하얀 새
 
 | 파일명 | 장면 |
 |---|---|
-| `images/04-swans.png` | A flock of brilliant white swans flying across an autumn sunset sky with necks outstretched, while far below a small grey duckling on a pond stares up in wonder, golden and rose light on the water. |
+| `images/04-swans.png` | An autumn lake at dusk where a grey duckling gazes up at a flock of great white swans crossing a golden sky with wide wings, its neck stretched high, awestruck and beautiful. |
+| `images/04-swans-2.png` | A darkening lake where a grey duckling spreads its weak wings and beats them a few times, only ripples spreading, the last light fading from the water, wistful and quiet. |
 
 ## 5장 · 길고 추운 겨울
 
 | 파일명 | 장면 |
 |---|---|
-| `images/05-winter.png` | A grey duckling stuck in the frozen edge of a pond at dawn as a farmer in a heavy coat breaks the ice with a stick to free it, snow-covered reeds and bare trees around, cold blue light with a warm figure. |
+| `images/05-winter.png` | A freezing lake where a grey duckling paddles in a shrinking patch of open water, then held fast in ice at dawn as a farmer approaches across the white expanse, stark and moving. |
+| `images/05-winter-2.png` | A farm kitchen where a rescued duckling thaws by the hearth, then panics as children reach for it, flapping into a milk pail and sending flour and milk flying, comic chaos, warm colours. |
 
 ## 6장 · 물에 비친 모습
 
 | 파일명 | 장면 |
 |---|---|
-| `images/06-reflection.png` | A young swan gazing down at its own reflection in still spring water with an astonished expression, the reflection showing a beautiful white swan, blossoms drifting on the surface, radiant morning light. |
+| `images/06-reflection.png` | A thawing spring lakeside where a large white-feathered bird spreads unexpectedly broad wings and lifts off the water for the first time, reeds and new green everywhere, exhilarating. |
+| `images/06-reflection-2.png` | A garden pond where a white bird lands among great swans and bows its head expecting rejection, then sees its own reflection — a graceful white swan — in the still water, moving and radiant. |
 
 ## 7장 · 백조가 되어
 
 | 파일명 | 장면 |
 |---|---|
-| `images/07-swan.png` | A young white swan being warmly welcomed by three older swans on a sunlit lake as children on the bank clap and point in delight, blossom trees and bright spring colors, joyful uplifting scene. |
+| `images/07-swan.png` | A sunlit garden pond where great white swans bow their necks in greeting to a newly grown swan, who stands overwhelmed with tears, all of them then gliding together, deeply warm. |
+| `images/07-swan-2.png` | A spring garden pond where children toss bread and point in delight at a new white swan among the others, the swan shyly tucking its head then spreading its wings wide in the sunlight, joyful. |
 
 ## 사용 팁
 

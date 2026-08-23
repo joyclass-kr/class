@@ -1,8 +1,8 @@
 # 제미나이 그림 프롬프트
 
-이 책은 하나의 이야기를 8개의 장(챕터)으로 나눠 담았고, 각 장마다 그림이
-**한 장**이에요. 그림이 펼침면 전체 폭을 가득 채우고, 그 아래에 이야기가
-왼쪽·오른쪽으로 나뉘어 들어갑니다.
+이 책은 하나의 이야기를 8개의 장(챕터)으로 나눠 담았고, 펼침면은 모두
+16개예요. 펼침면 하나에 그림이 한 장씩 들어갑니다.
+그림이 펼침면 전체 폭을 가득 채우고, 그 아래에 이야기가 왼쪽·오른쪽으로 나뉘어 들어갑니다.
 
 아래 프롬프트를 제미나이에 그대로 넣어서 생성한 뒤, 파일명을 정확히 맞춰서
 `images/` 폴더에 저장하면 자동으로 책에 나타납니다.
@@ -18,76 +18,87 @@
 
 ```
 Children's picture book illustration, bright cheerful cartoon-animation style,
-bold clean outlines, saturated storybook colors, soft golden lighting, no text or
-letters in the image, garden, pond and meadow seen from a tiny creature's scale
-so flowers and leaves loom large, expressive faces, wide panoramic composition.
+bold clean outlines, saturated storybook colors, luminous garden light seen from
+a tiny viewpoint, no text or letters in the image, a cottage windowsill, a lily
+pad and stream, a summer meadow with giant flowers, a field mouse's burrow and a
+sunlit land of flower people, expressive faces, wide panoramic composition,
+delicate and never frightening.
 ```
 
 ## 인물 설명 (일관성을 위해 매번 붙여 넣으세요)
 
 ```
-Thumbelina: a tiny girl no bigger than a thumb, light brown hair, a simple pale
-pink dress made from petals, bright curious eyes. The toad: a large green toad
-in a frilly bonnet, comically pushy. The field mouse: a plump grey mouse in an
-apron and spectacles. The mole: a stout black mole in a velvet waistcoat and
-dark glasses. The swallow: a sleek blue-black swallow. The flower prince: a tiny
-boy Thumbelina's size with translucent wings and a golden crown.
+Thumbelina: a girl the size of a thumb with fair hair and a dress made from a
+petal. The lonely woman: a kind older woman in an apron at a cottage window. The
+toad: a large warty green toad in a bonnet, comic rather than horrid. Her son:
+a slack-jawed young toad. The fish: silvery minnows with bright eyes. The
+swallow: a sleek dark bird with a white throat. The field mouse: a stout spectacled
+mouse in a shawl. The mole: a plump velvet-black mole in dark glasses. The flower
+prince: a small crowned figure with dragonfly wings.
 ```
 
 ## 표지 · 마무리
 
 | 파일명 | 장면 |
 |---|---|
-| `images/cover.png` (세로 2:3 비율) | A tall portrait-format cover: a tiny girl the size of a thumb sitting on a large tulip blossom in a moonlit garden, a walnut-shell bed and rose-petal blanket beside her, oversized leaves and dewdrops around, warm magical mood. |
+| `images/cover.png` (세로 2:3 비율) | A tall portrait-format cover: a girl no bigger than a thumb standing inside an open tulip blossom, dew drops the size of her head glittering on the petals, a vast green garden towering around her, delicate and enchanting. |
 | `images/end.png` | A closed storybook resting under a starry night sky with soft golden sparkles rising from its pages, peaceful and warm closing scene. |
 
 ## 1장 · 꽃 속에서 태어난 아이
 
 | 파일명 | 장면 |
 |---|---|
-| `images/01-flower.png` | A large tulip blossom opening on a windowsill to reveal a tiny girl sitting inside, a delighted woman leaning close with hands clasped, sunlight streaming through the window, warm cozy interior. |
+| `images/01-flower.png` | A cottage windowsill where a kind older woman plants a barley seed in a pot, and the next day a great tulip-like bud opening as she kisses it, sunlight through the panes, magical and warm. |
+| `images/01-flower-2.png` | A cottage room where a thumb-sized girl sits inside an open tulip, and a walnut-shell bed with a rose-petal quilt beside a plate of water with floating petals, tiny and enchanting. |
 
 ## 2장 · 두꺼비가 데려간 밤
 
 | 파일명 | 장면 |
 |---|---|
-| `images/02-toad.png` | A large green toad in a bonnet carrying a tiny sleeping girl in a walnut-shell bed across a moonlit pond, placing her on a broad lily pad surrounded by dark water, whimsical rather than scary. |
+| `images/02-toad.png` | A moonlit cottage window where a large warty toad in a bonnet lifts a walnut-shell bed with a sleeping tiny girl, and carries it down to a muddy stream where a slack-jawed young toad waits, comic. |
+| `images/02-toad-2.png` | A wide stream at sunrise where a tiny girl sits weeping alone on a floating lily pad surrounded by open water, silvery shapes moving beneath the surface, lonely and beautiful. |
 
 ## 3장 · 물고기들이 도와주었어요
 
 | 파일명 | 장면 |
 |---|---|
-| `images/03-fish.png` | Several fish gathered under a lily pad nibbling through its stem while a tiny girl stands on top holding on, the pad beginning to drift downstream, dappled underwater light and rippling surface. |
+| `images/03-fish.png` | An underwater view of silvery minnows gnawing through a lily pad stem while a tiny girl claps from above, the pad breaking free and drifting downstream, joyful and bright. |
+| `images/03-fish-2.png` | A lily pad skimming downstream pulled by a butterfly tethered with a ribbon belt, a tiny girl steering with wide eyes as green banks slide past in bright sunlight, delightful. |
 
 ## 4장 · 여름 들판의 하루
 
 | 파일명 | 장면 |
 |---|---|
-| `images/04-summer.png` | A tiny girl sleeping in a hammock of woven grass among towering wildflowers with butterflies and ladybugs around her, one half of the scene shifting into autumn with falling leaves and cooler colours. |
+| `images/04-summer.png` | A tree branch high above a meadow where a large beetle presents a tiny girl to a crowd of other beetles who inspect her with disapproval, comic snobbery, dappled leaf light. |
+| `images/04-summer-2.png` | A summer meadow where a tiny girl weaves a grass bed and drinks dew from a flower, and the same meadow in first snow with flakes bigger than she is, her shivering among bare stems, tender and stark. |
 
 ## 5장 · 들쥐 아주머니의 집
 
 | 파일명 | 장면 |
 |---|---|
-| `images/05-mouse.png` | A cosy underground burrow lined with stored grain, a plump field mouse in an apron gesturing warmly while a tiny girl sits on a thimble stool looking uncertain, warm lamplight and earthy tones. |
+| `images/05-mouse.png` | A cosy underground burrow lined with stored grain where a stout spectacled field mouse in a shawl welcomes a tiny shivering girl inside, lamplight and warmth, homely and kind. |
+| `images/05-mouse-2.png` | A burrow parlour where a plump velvet-black mole in dark glasses sits stiffly while a tiny girl sings, the field mouse beaming approval and the girl looking quietly trapped, warm lamplight. |
 
 ## 6장 · 다친 제비
 
 | 파일명 | 장면 |
 |---|---|
-| `images/06-swallow.png` | A tiny girl covering a weak swallow with dry grass in a dim underground passage, then the same swallow reviving with spread wings as spring light spills in from an opening above, tender and hopeful. |
+| `images/06-swallow.png` | A long dark underground tunnel where a mole nudges a fallen swallow aside with his foot, and later a tiny girl returning alone with an armful of hay to cover the bird, tender. |
+| `images/06-swallow-2.png` | A dark tunnel where a swallow opens its eyes under a heap of hay as a tiny girl kneels beside it with a water drop, soft glow, deeply tender. |
 
 ## 7장 · 제비의 등을 타고
 
 | 파일명 | 장면 |
 |---|---|
-| `images/07-flight.png` | A tiny girl riding on the back of a swallow high above patchwork fields and winding rivers, wind in her hair, wide sweeping sky with warm sunlight ahead, exhilarating sense of freedom. |
+| `images/07-flight.png` | A burrow entrance in early spring where a tiny girl steps out to look at the sun with a heavy heart, and a healthy swallow swooping down calling to her, hopeful. |
+| `images/07-flight-2.png` | A swallow soaring high with a tiny girl clinging to its back, fields shrinking below, then crossing forests and a wide blue sea toward a warm land of flowers, exhilarating. |
 
 ## 8장 · 꽃의 나라에서
 
 | 파일명 | 장면 |
 |---|---|
-| `images/08-prince.png` | A tiny girl meeting a tiny winged flower prince inside a large white blossom, other tiny flower people waving from surrounding blooms, a swallow perched nearby singing, radiant sunlit garden of the south. |
+| `images/08-prince.png` | A sunlit ruin of white pillars above a vast flower field where a tiny girl steps toward a great white blossom and finds inside it a small crowned figure with dragonfly wings, both staring, radiant. |
+| `images/08-prince-2.png` | A flower field where tiny people lean from every blossom applauding as a girl receives a pair of gossamer wings and flies for the first time, a swallow watching then winging north, joyous. |
 
 ## 사용 팁
 

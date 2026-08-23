@@ -1,8 +1,8 @@
 # 제미나이 그림 프롬프트
 
-이 책은 하나의 이야기를 8개의 장(챕터)으로 나눠 담았고, 각 장마다 그림이
-**한 장**이에요. 그림이 펼침면 전체 폭을 가득 채우고, 그 아래에 이야기가
-왼쪽·오른쪽으로 나뉘어 들어갑니다.
+이 책은 하나의 이야기를 8개의 장(챕터)으로 나눠 담았고, 펼침면은 모두
+16개예요. 펼침면 하나에 그림이 한 장씩 들어갑니다.
+그림이 펼침면 전체 폭을 가득 채우고, 그 아래에 이야기가 왼쪽·오른쪽으로 나뉘어 들어갑니다.
 
 아래 프롬프트를 제미나이에 그대로 넣어서 생성한 뒤, 파일명을 정확히 맞춰서
 `images/` 폴더에 저장하면 자동으로 책에 나타납니다.
@@ -18,76 +18,86 @@
 
 ```
 Children's picture book illustration, bright cheerful cartoon-animation style,
-bold clean outlines, saturated storybook colors, soft glowing light, no text or
-letters in the image, undersea palace and seaside kingdom setting, expressive
-faces, wide panoramic composition, gentle and never frightening.
+bold clean outlines, saturated storybook colors, luminous underwater blues and
+warm harbour golds, no text or letters in the image, a coral palace deep under
+the sea, a storm-tossed ship, a moonlit shore, a witch's dark grotto and a bright
+seaside kingdom, expressive faces, wide panoramic composition, beautiful and
+never frightening.
 ```
 
 ## 인물 설명 (일관성을 위해 매번 붙여 넣으세요)
 
 ```
-The little mermaid: a young mermaid with long red-gold hair, a shimmering
-blue-green tail, later a girl in a simple white dress with bare feet. The sea
-king: a bearded merman with a coral crown and trident. The sea witch: a stout
-purple-skinned woman with swirling hair in a shell cave — eccentric and
-theatrical rather than horrifying. The prince: a young man in a navy and gold
-coat.
+The little mermaid: a young mermaid with long pale hair, a silvery tail and a
+curious open face, later a barefoot girl in a simple gown. The sea king: a broad
+bearded merman with a crown of shells. The grandmother: an elderly mermaid with
+pearls in her hair. The five elder sisters: mermaids of different colours. The
+sea witch: a tall figure with drifting dark hair and octopus arms, drawn as
+strange and grand rather than horrid. The prince: a young man in a blue coat.
 ```
 
 ## 표지 · 마무리
 
 | 파일명 | 장면 |
 |---|---|
-| `images/cover.png` (세로 2:3 비율) | A tall portrait-format cover: a young mermaid with long flowing hair sitting on a rock just above the waves at dusk, gazing toward a distant lighted ship on the horizon, soft blue and rose sky, gentle wistful mood. |
+| `images/cover.png` (세로 2:3 비율) | A tall portrait-format cover: a young mermaid sitting on a rock at the surface of a moonlit sea gazing toward distant harbour lights, her tail catching the moonlight, coral towers glimmering deep below her, beautiful and wistful. |
 | `images/end.png` | A closed storybook resting under a starry night sky with soft golden sparkles rising from its pages, peaceful and warm closing scene. |
 
 ## 1장 · 바닷속 궁전
 
 | 파일명 | 장면 |
 |---|---|
-| `images/01-palace.png` | A magnificent undersea palace of coral and shell where a bearded sea king sits with six mermaid daughters, the youngest gazing up longingly toward the distant bright surface, glowing blue-green underwater light. |
+| `images/01-palace.png` | A coral palace deep under a luminous sea where a bearded sea king sits among six mermaid daughters and an elderly mermaid tells stories, fish drifting through the towers, magical and warm. |
+| `images/01-palace-2.png` | Elder mermaids returning to a coral palace with tales while the youngest listens enviously, and then the same young mermaid rising through blue water toward the shimmering surface, hopeful. |
 
 ## 2장 · 폭풍우 치던 밤
 
 | 파일명 | 장면 |
 |---|---|
-| `images/02-storm.png` | A ship breaking apart in a night storm with towering waves and lightning, a young mermaid diving through the water toward a falling prince, dramatic but not gruesome, deep blues and flashes of gold. |
+| `images/02-storm.png` | A festive ship at night with lanterns and music where a young prince stands at the rail, and the same ship moments later heaving in a rising storm with a mast splitting, dramatic. |
+| `images/02-storm-2.png` | A storm-tossed sea where a mermaid catches a sinking young man and holds his head above the waves through the night, dawn light beginning to break on the horizon, moving and heroic. |
 
 ## 3장 · 모래밭에 눕히고
 
 | 파일명 | 장면 |
 |---|---|
-| `images/03-rescue.png` | A mermaid hiding behind a rock at dawn watching as a young woman discovers the unconscious prince lying on the sand, soft pink morning light on calm water, tender and quiet. |
+| `images/03-rescue.png` | A white beach at sunrise where a mermaid lays a young man on the sand and then hides behind a rock as a girl runs down from a temple, the man waking and looking up at her, bittersweet. |
+| `images/03-rescue-2.png` | A coral palace where a listless young mermaid sits apart from her sisters, and then talking earnestly with her grandmother among sea flowers, resolve gathering in her face, quiet and moving. |
 
 ## 4장 · 바다 마녀를 찾아가다
 
 | 파일명 | 장면 |
 |---|---|
-| `images/04-witch.png` | A theatrical purple sea witch in a cave of glowing shells and bubbling pots leaning toward a young mermaid who nods solemnly, swirling green light, whimsical and eerie rather than scary. |
+| `images/04-witch.png` | A dark swirling trench at the edge of the sea where a young mermaid swims past skeletal corals into a grotto, a tall figure with drifting hair and octopus arms waiting inside, strange and grand. |
+| `images/04-witch-2.png` | A grotto lit by pale glowing anemones where a sea witch names her price as a young mermaid presses a hand to her own throat, hesitating and then nodding, tense and solemn. |
 
 ## 5장 · 목소리를 잃고
 
 | 파일명 | 장면 |
 |---|---|
-| `images/05-legs.png` | A young girl with bare feet standing unsteadily on a sunlit beach as a prince kneels to offer his hand, her mouth open but silent, sea foam around her ankles, warm hopeful morning light. |
+| `images/05-legs.png` | A dawn beach where a mermaid drinks a potion and collapses, waking with two legs on the sand, and a young prince approaching in wonder as she tries to stand, painful and beautiful. |
+| `images/05-legs-2.png` | A bright palace hall where a silent girl dances gracefully despite pain while a prince watches fondly, courtiers applauding, but his gaze drifting toward the window and the sea, wistful. |
 
 ## 6장 · 다른 나라의 공주
 
 | 파일명 | 장면 |
 |---|---|
-| `images/06-wedding.png` | A festive wedding celebration on a ship deck at night with lanterns and dancing, the prince smiling with his bride, while the silent girl stands apart at the railing looking out at the dark sea. |
+| `images/06-wedding.png` | A ship's deck where a prince speaks earnestly to a silent girl who presses her hands to her chest unable to answer, and a harbour crowded with welcoming crowds ahead, aching. |
+| `images/06-wedding-2.png` | A harbour where a prince recognises a princess with joy, and a great wedding feast on a ship at night where a silent girl stands smiling among the celebrations, alone in the crowd, deeply moving. |
 
 ## 7장 · 단검을 바다에 던지고
 
 | 파일명 | 장면 |
 |---|---|
-| `images/07-dagger.png` | A girl standing at a ship railing at dawn throwing a small dagger far out into the sea, her sisters visible in the water below with cropped hair, soft violet and gold sky, quiet and noble. |
+| `images/07-dagger.png` | A ship at midnight where five short-haired mermaids rise from the waves holding out a knife to their sister at the rail, moonlight on the water, urgent and sorrowful. |
+| `images/07-dagger-2.png` | A ship cabin where a girl stands over a sleeping couple and lowers the knife, then on deck flinging it far into the sea as the eastern sky turns red with sunrise, quiet and profound. |
 
 ## 8장 · 바람이 된 인어공주
 
 | 파일명 | 장면 |
 |---|---|
-| `images/08-air.png` | Sea foam rising into shimmering translucent figures of air in golden sunrise light above a calm ocean, the little mermaid among them looking peaceful and free, uplifting and luminous rather than sad. |
+| `images/08-air.png` | A sunrise sea where a girl dissolves into light and rises weightless above the waves, met by shimmering translucent air-spirits in the morning sky, luminous and hopeful. |
+| `images/08-air-2.png` | A ship at sunrise where a prince searches the deck and gazes out to sea as an unseen breeze stirs his hair, and above, translucent figures drifting up into a bright sky, tender and consoling. |
 
 ## 사용 팁
 
