@@ -4,7 +4,7 @@ const CHAPTERS = [
         title: "1장 · 윗자리는 누가",
         beats: [
             {
-                art: "01-feast.png",
+                art: "01-feast.webp",
                 emoji: "🍚",
                 left: [
                     "어느 날 여우와 사슴과 두꺼비가 한자리에 모였습니다.",
@@ -17,7 +17,7 @@ const CHAPTERS = [
                 ]
             },
             {
-                art: "02-rule.png",
+                art: "02-rule.webp",
                 emoji: "📜",
                 left: [
                     "\"법도대로 하면 되지요.\"",
@@ -31,7 +31,7 @@ const CHAPTERS = [
                 ]
             },
             {
-                art: "03-fox.png",
+                art: "03-fox.webp",
                 emoji: "🦊",
                 left: [
                     "여우가 먼저 나섰어요.",
@@ -50,7 +50,7 @@ const CHAPTERS = [
         title: "2장 · 나이 겨루기",
         beats: [
             {
-                art: "04-deer.png",
+                art: "04-deer.webp",
                 emoji: "🦌",
                 left: [
                     "사슴이 코웃음을 쳤어요.",
@@ -62,7 +62,7 @@ const CHAPTERS = [
                 ]
             },
             {
-                art: "05-quarrel.png",
+                art: "05-quarrel.webp",
                 emoji: "😤",
                 left: [
                     "\"허, 말도 안 되는 소리!\"",
@@ -73,7 +73,7 @@ const CHAPTERS = [
                 ]
             },
             {
-                art: "06-tears.png",
+                art: "06-tears.webp",
                 emoji: "😢",
                 left: [
                     "그때였습니다.",
@@ -92,7 +92,7 @@ const CHAPTERS = [
         title: "3장 · 두꺼비의 눈물",
         beats: [
             {
-                art: "07-why.png",
+                art: "07-why.webp",
                 emoji: "🌱",
                 left: [
                     "\"두 분 말씀을 듣자니 옛날 생각이 나서요.\"",
@@ -100,11 +100,11 @@ const CHAPTERS = [
                 ],
                 right: [
                     "\"제가 아주 어렸을 적에 나무 세 그루를 심었지요.\"",
-                    "여우와 노루가 서로를 쳐다보았습니다."
+                    "여우와 사슴이 서로를 쳐다보았습니다."
                 ]
             },
             {
-                art: "08-trees.png",
+                art: "08-trees.webp",
                 emoji: "🌳",
                 left: [
                     "\"첫 번째 나무는 하늘을 떠받치는 기둥이 되었고,\"",
@@ -120,7 +120,7 @@ const CHAPTERS = [
                 art: "09-shock.png",
                 emoji: "😲",
                 left: [
-                    "여우와 노루는 입을 딱 벌렸습니다. 하늘도 해도 달도 별도, 두꺼비가 나무를 심은 뒤에 생겼다는 말이었거든요."
+                    "여우와 사슴은 입을 딱 벌렸습니다. 하늘도 해도 달도 별도, 두꺼비가 나무를 심은 뒤에 생겼다는 말이었거든요."
                 ],
                 right: [
                     "\"그, 그렇다면…\"",
@@ -142,7 +142,7 @@ const CHAPTERS = [
                 ]
             }
         ],
-        moral: "자랑은 부풀리기 쉬워요. 여우도 노루도 두꺼비도 정말 그랬는지는 아무도 확인할 수 없었지요. 남보다 앞서려고 하는 말은 대개 그렇답니다.",
+        moral: "자랑은 부풀리기 쉬워요. 여우도 사슴도 두꺼비도 정말 그랬는지는 아무도 확인할 수 없었지요. 남보다 앞서려고 하는 말은 대개 그렇답니다.",
         question: "나를 크게 보이려고 사실보다 부풀려 말한 적이 있나요?"
     }
 ];
@@ -176,7 +176,7 @@ function coverPage() {
     return `
         <div class="page page-cover">
             <div class="story-page-left story-page-left-full">
-                ${artFrame('cover.png', '🐸')}
+                ${artFrame('cover.webp', '🐸')}
             </div>
             <div class="story-page-right">
                 <h1>나이 자랑</h1>
@@ -218,7 +218,7 @@ const QUIZ = [
     { q: "셋은 무엇 때문에 우물쭈물했나요?", choices: ["떡이 모자라서", "윗자리 때문에", "날이 저물어서"], answer: 1 },
     { q: "윗자리에는 누가 앉기로 했나요?", choices: ["힘이 가장 센 이", "달리기 빠른 이", "나이가 많은 이"], answer: 2 },
     { q: "여우는 언제 태어났다고 했나요?", choices: ["별을 세던 시절", "산이 생기기 전", "바다가 마른 때"], answer: 0 },
-    { q: "노루는 골짜기가 어떻게 생겼다고 했나요?", choices: ["비가 많이 와서", "바람이 깎아서", "자기 뿔로 긁어서"], answer: 2 },
+    { q: "사슴은 골짜기가 어떻게 생겼다고 했나요?", choices: ["비가 많이 와서", "바람이 깎아서", "자기 뿔로 긁어서"], answer: 2 },
     { q: "두꺼비는 왜 울었다고 했나요?", choices: ["옛 생각이 나서", "배가 고파서", "자리가 없어서"], answer: 0 },
     { q: "두꺼비가 심은 세 번째 나무는 무엇이 되었나요?", choices: ["하늘의 큰 기둥", "별 박는 망치 자루", "해를 매단 장대"], answer: 1 }
 ];

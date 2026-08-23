@@ -65,7 +65,7 @@ animals but seated and gesturing like people at a table.
 Vertical portrait composition. A low traditional Korean feast table seen from the
 side in a forest clearing, bowls of rice cakes on top. A plump toad sits alone at
 the head of the table in the upper part of the frame, one webbed foot raised, a
-single enormous tear on his cheek. Below him, a fox and a roe deer look up at him
+single enormous tear on his cheek. Below him, a fox and a sika deer look up at him
 with their mouths open. Warm autumn light through pines.
 ```
 
@@ -76,7 +76,7 @@ with their mouths open. Warm autumn light through pines.
 ```
 Wide forest clearing scene. In the centre, a low wooden Korean feast table on a
 straw mat, laden with white rice cakes and bowls of greens. Around it: the fox on
-the left and the roe deer on the right, both hovering awkwardly instead of
+the left and the sika deer on the right, both hovering awkwardly instead of
 sitting, glancing sideways at each other. The toad sits low near the bottom edge,
 already settled. Golden autumn light, red maple leaves.
 ```
@@ -86,7 +86,7 @@ already settled. Golden autumn light, red maple leaves.
 ```
 Wide clearing scene. On the left, the fox sits up very straight with one paw
 raised in a formal lecturing gesture, eyes closed, chin high, clearly quoting a
-rule. On the right, the roe deer nods gravely with his chin tucked. Between and
+rule. On the right, the sika deer nods gravely with his chin tucked. Between and
 below them, the toad simply blinks. The feast table sits untouched in the middle.
 ```
 
@@ -119,7 +119,7 @@ colors for the daydream, solid colors for the real scene.
 ### `05-quarrel.png` — 얼굴이 벌게지도록
 
 ```
-Wide clearing scene. The fox and the roe deer are nose to nose across the feast
+Wide clearing scene. The fox and the sika deer are nose to nose across the feast
 table, both leaning in, faces flushed red, mouths open shouting, one paw and one
 hoof jabbing at each other. Comic impact lines and flying spit between them. At
 the very bottom edge, the toad sits under the table, perfectly still, unnoticed.
@@ -130,7 +130,7 @@ the very bottom edge, the toad sits under the table, perfectly still, unnoticed.
 ```
 Wide clearing scene. On the right, the toad sits on the straw mat with two
 enormous cartoon tears fountaining from his eyes, mouth turned down, shoulders
-shaking. On the left, the fox and the roe deer have stopped mid-argument and both
+shaking. On the left, the fox and the sika deer have stopped mid-argument and both
 turned to stare, mouths still open, one paw still raised. Comic freeze-frame.
 ```
 
@@ -161,7 +161,7 @@ and magnificent.
 ### `09-shock.png` — 입을 딱 벌린 둘
 
 ```
-Wide clearing scene. On the left, the fox and the roe deer both sit frozen with
+Wide clearing scene. On the left, the fox and the sika deer both sit frozen with
 their jaws hanging wide open, eyes blank white circles, completely stunned. On
 the right, the toad blinks placidly, one tear still on his cheek. Both boasters
 are already shuffling backward off the mat. Comic dead silence.
@@ -172,7 +172,7 @@ are already shuffling backward off the mat. Comic dead silence.
 ```
 Wide clearing scene. At the head of the low feast table sits the toad, upright
 and content, one webbed foot reaching for a rice cake. Below and to either side,
-the fox and the roe deer sit in the lower seats, shoulders slumped, faces sour,
+the fox and the sika deer sit in the lower seats, shoulders slumped, faces sour,
 picking at their food. Warm golden light, red leaves drifting down. Wry and funny.
 ```
 
