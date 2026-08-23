@@ -72,77 +72,28 @@
     const canvas = $("boardCanvas");
     const ctx = canvas.getContext("2d");
     ctx.clearRect(0, 0, Board.WIDTH, Board.HEIGHT);
-
-    ctx.fillStyle = "#dcebdc";
-    ctx.fillRect(0, 0, Board.WIDTH, Board.HEIGHT);
-    ctx.fillStyle = "#c7e3c9";
-    ctx.fillRect(18, 18, 465, 292);
-    ctx.fillStyle = "#d7e8b9";
-    ctx.fillRect(517, 18, 465, 292);
-    ctx.fillStyle = "#bfe1d6";
-    ctx.fillRect(18, 330, 465, 292);
-    ctx.fillStyle = "#e2ddb7";
-    ctx.fillRect(517, 330, 465, 292);
-
-    ctx.fillStyle = "#8fbc83";
-    for (let x = 28; x < Board.WIDTH; x += 48) {
-      for (let y = 28; y < Board.HEIGHT; y += 53) {
-        if ((x + y) % 3) continue;
-        ctx.beginPath();
-        ctx.arc(x, y, 6, 0, Math.PI * 2);
-        ctx.fill();
-      }
-    }
-
-    const roadEdges = Board.EDGES.filter(edge => edge.kind !== "rail");
     ctx.lineCap = "round";
     ctx.lineJoin = "round";
-    for (const edge of roadEdges) {
+
+    for (const edge of Board.EDGES) {
       const a = nodeMeta(edge.a);
       const b = nodeMeta(edge.b);
       if (!a || !b) continue;
-      const teamColor = edge.kind === "thief-lane" ? "#d84f65" : edge.kind === "police-lane" ? "#426dc1" : "#284257";
-      ctx.strokeStyle = teamColor;
-      ctx.lineWidth = edge.kind === "roundabout" ? 31 : 30;
-      ctx.beginPath();
-      ctx.moveTo(a.x, a.y);
-      ctx.lineTo(b.x, b.y);
-      ctx.stroke();
-      ctx.strokeStyle = edge.kind === "thief-lane" ? "#f07887" : edge.kind === "police-lane" ? "#6ba5df" : "#f8f1db";
-      ctx.lineWidth = 21;
-      ctx.beginPath();
-      ctx.moveTo(a.x, a.y);
-      ctx.lineTo(b.x, b.y);
-      ctx.stroke();
-      if (edge.oneWay) drawArrow(ctx, a, b, teamColor);
-    }
-
-    for (const edge of Board.EDGES.filter(item => item.kind === "rail")) {
-      const a = nodeMeta(edge.a);
-      const b = nodeMeta(edge.b);
-      if (!a || !b) continue;
-      ctx.strokeStyle = "#815b30";
-      ctx.lineWidth = 22;
+      const isRail = edge.kind === "rail";
+      const isThief = edge.kind === "thief-lane";
+      const isPolice = edge.kind === "police-lane";
+      const accent = isRail ? "#8e5c23" : isThief ? "#c92f4f" : isPolice ? "#2362b7" : "#233d31";
+      const inner = isRail ? "#efb75a" : isThief ? "#ee5e78" : isPolice ? "#5d9fe5" : "#fff8df";
+      ctx.globalAlpha = isRail || isThief || isPolice ? .7 : .3;
+      ctx.strokeStyle = accent;
+      ctx.lineWidth = isRail ? 9 : isThief || isPolice ? 8 : 5;
       ctx.beginPath(); ctx.moveTo(a.x, a.y); ctx.lineTo(b.x, b.y); ctx.stroke();
-      ctx.strokeStyle = "#e7c37f";
-      ctx.lineWidth = 15;
+      ctx.strokeStyle = inner;
+      ctx.lineWidth = isRail ? 4 : isThief || isPolice ? 4 : 2;
       ctx.beginPath(); ctx.moveTo(a.x, a.y); ctx.lineTo(b.x, b.y); ctx.stroke();
-      ctx.strokeStyle = "#59616a";
-      ctx.lineWidth = 3;
-      ctx.beginPath(); ctx.moveTo(a.x - 5, a.y); ctx.lineTo(b.x - 5, b.y); ctx.stroke();
-      ctx.beginPath(); ctx.moveTo(a.x + 5, a.y); ctx.lineTo(b.x + 5, b.y); ctx.stroke();
+      ctx.globalAlpha = 1;
+      if (edge.oneWay) drawArrow(ctx, a, b, accent);
     }
-
-    ctx.fillStyle = "#173246";
-    ctx.font = "900 15px Malgun Gothic, sans-serif";
-    ctx.fillText("도시 중앙선", 518, 150);
-    ctx.fillStyle = "#ffffffaa";
-    ctx.fillRect(105, 275, 188, 63);
-    ctx.fillRect(705, 278, 200, 63);
-    ctx.fillStyle = "#284257";
-    ctx.font = "900 12px Malgun Gothic, sans-serif";
-    ctx.fillText("일방통행 회전 구역", 130, 304);
-    ctx.fillText("경찰·도둑 전용 차선", 736, 307);
   }
 
   function positionStyle(x, y) {
@@ -206,6 +157,7 @@
       button.style.cssText = positionStyle(node.x, node.y);
       button.dataset.tone = node.tone || "";
       button.dataset.kind = node.kind || "road";
+      if (node.dense) button.dataset.dense = "true";
       if (node.station) button.dataset.station = String(node.station);
       button.disabled = !targetClass || actionPending;
       button.title = node.label;

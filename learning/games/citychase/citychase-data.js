@@ -65,7 +65,7 @@
     { id: "market", name: "별밤 마트", icon: "▦", x: 165, y: 115, doorNode: "d1", color: "#f4b942", blurb: "밤에도 환한 동네 마트" },
     { id: "air", name: "구름 항공", icon: "✦", x: 355, y: 115, doorNode: "d2", color: "#58a6d8", blurb: "도시를 잇는 작은 터미널" },
     { id: "burger", name: "왕관 버거", icon: "≋", x: 645, y: 115, doorNode: "d3", color: "#ef765d", blurb: "왕관 모양 간판의 식당" },
-    { id: "electro", name: "번개 전자", icon: "ϟ", x: 835, y: 250, doorNode: "d4", color: "#7b6fd0", blurb: "빛나는 전자 상가" },
+    { id: "electro", name: "번개 전자", icon: "ϟ", x: 815, y: 155, doorNode: "d4", color: "#7b6fd0", blurb: "빛나는 전자 상가" },
     { id: "pizza", name: "달빛 피자", icon: "◒", x: 700, y: 385, doorNode: "d5", color: "#f08b4d", blurb: "둥근 화덕 피자 가게" },
     { id: "snack", name: "골목 분식", icon: "♨", x: 405, y: 385, doorNode: "d6", color: "#e85c79", blurb: "김이 모락모락 나는 분식집" },
     { id: "cafe", name: "초록 카페", icon: "♣", x: 175, y: 385, doorNode: "d7", color: "#55a96f", blurb: "공원 옆 조용한 카페" }
@@ -73,20 +73,20 @@
 
   const doors = [
     ["d1", 165, 165, "u0"], ["d2", 355, 165, "u2"], ["d3", 645, 165, "u3"],
-    ["d4", 835, 275, "m7"], ["d5", 700, 410, "l4"], ["d6", 405, 410, "l2"], ["d7", 175, 410, "l0"]
+    ["d4", 815, 210, "c4"], ["d5", 700, 410, "l4"], ["d6", 405, 410, "l2"], ["d7", 175, 410, "l0"]
   ];
   doors.forEach(([id, x, y, link], index) => {
     addNode(id, x, y, { label: `${buildings[index].name} 수색`, building: buildings[index].id, safe: true, kind: "building" });
     addEdge(id, link, { teams: ["thief"] });
   });
 
-  // 남서쪽 회전 구간은 원작의 원형 일방통행 구역을 재해석했다.
-  const circle = [[130, 245], [205, 225], [275, 260], [285, 335], [220, 375], [140, 355]];
+  // 전체판 사진 기준 우상단의 큰 원형 일방통행 구역.
+  const circle = [[715, 90], [810, 60], [900, 105], [920, 190], [835, 250], [735, 225]];
   circle.forEach(([x, y], index) => addNode(`c${index}`, x, y, { label: "원형 일방통행" }));
   addRoute(["c0", "c1", "c2", "c3", "c4", "c5", "c0"], { oneWay: true, kind: "roundabout" });
-  addEdge("p28", "c0");
-  addEdge("c3", "m1");
-  addEdge("c5", "p26");
+  addEdge("p7", "c0");
+  addEdge("c3", "p11");
+  addEdge("c5", "u4");
 
   // 서로 마주보는 두 전용 차선. 빨강은 도둑, 파랑은 경찰만 화살표 방향으로 쓸 수 있다.
   addNode("tLane1", 380, 260, { label: "도둑 전용로", lane: "thief" });
@@ -95,6 +95,27 @@
   addNode("pLane1", 620, 375, { label: "경찰 전용로", lane: "police" });
   addNode("pLane2", 620, 260, { label: "경찰 전용로", lane: "police" });
   addRoute(["l3", "pLane1", "m5", "pLane2", "u3"], { teams: ["police"], oneWay: true, kind: "police-lane" });
+
+  // 원작처럼 한 번의 이동에서 촘촘하게 칸을 세도록 일반 도로를 모두 두 칸으로 나눈다.
+  // 건물 출입구·아지트·감옥은 규칙상 한 번에 드나들어야 하므로 그대로 둔다.
+  const originalEdges = edges.splice(0, edges.length);
+  let denseIndex = 0;
+  for (const edge of originalEdges) {
+    const fixedEndpoint = [edge.a, edge.b].some(id => id === "hideout" || id === "jail" || id.startsWith("d"));
+    if (edge.kind === "rail" || fixedEndpoint) {
+      edges.push(edge);
+      continue;
+    }
+    const from = nodes[edge.a];
+    const to = nodes[edge.b];
+    const midpoint = `x${denseIndex++}`;
+    addNode(midpoint, Math.round((from.x + to.x) / 2), Math.round((from.y + to.y) / 2), {
+      label: edge.kind === "roundabout" ? "원형 일방통행" : "거리",
+      dense: true
+    });
+    addEdge(edge.a, midpoint, edge);
+    addEdge(midpoint, edge.b, edge);
+  }
 
   Object.assign(nodes.p3, { label: "도둑 위치 이동", effect: "thiefTeleport", tone: "red" });
   Object.assign(nodes.p8, { label: "도둑 위치 이동", effect: "thiefTeleport", tone: "red" });
