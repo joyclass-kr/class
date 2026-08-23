@@ -162,6 +162,23 @@ function artFrame(src, emoji) {
         </div>`;
 }
 
+function coverToc() {
+    const item = s => `
+        <button type="button" data-goto="${s.num}">
+            <span class="toc-num">${s.num}</span>
+            <span>${s.title.replace(/^\d+장 · /, '')}</span>
+        </button>`;
+    return `
+        <nav class="cover-toc">
+            <h2>차례</h2>
+            ${CHAPTERS.map(item).join('')}
+            <button type="button" data-goto-kind="quiz">
+                <span class="toc-num">❓</span>
+                <span>이야기 문제</span>
+            </button>
+        </nav>`;
+}
+
 function coverPage() {
     return `
         <div class="page page-cover">
@@ -173,40 +190,7 @@ function coverPage() {
                 <p>좁쌀 한 톨은 지은이가 없는 구전 설화예요. 좁쌀 한 톨로 부자 되기라는 이름으로도 전해진답니다.</p>
                 <p>작은 것이 점점 큰 것으로 바뀌어 가는 짜임을 누적담이라고 불러요. 같은 일이 되풀이되면서 조금씩 커지기 때문에, 듣는 사람이 다음에는 무엇이 나올지 저절로 기다리게 되지요. 세계 곳곳에 같은 짜임의 이야기가 있는데 일본의 볏짚 부자 이야기가 특히 닮았답니다.</p>
                 <p>좁쌀은 조라는 곡식의 알갱이예요. 쌀보다 훨씬 작아서 한 톨은 눈에 겨우 보일 정도지요. 하필 가장 작은 곡식을 고른 것은 시작이 작을수록 끝이 놀라워지기 때문이랍니다.</p>
-            </div>
-        </div>`;
-}
-
-function tocPage() {
-    const itemHtml = s => `
-        <li>
-            <button type="button" data-goto="${s.num}">
-                <span class="toc-num">${s.num}</span>
-                <span>
-                    <strong>${s.title.replace(/^\d+장 · /, '')}</strong>
-                </span>
-            </button>
-        </li>`;
-    const quizItemHtml = `
-        <li>
-            <button type="button" data-goto-kind="quiz">
-                <span class="toc-num">❓</span>
-                <span>
-                    <strong>이야기 문제</strong>
-                </span>
-            </button>
-        </li>`;
-    const half = Math.ceil(CHAPTERS.length / 2);
-    const leftItems = CHAPTERS.slice(0, half).map(itemHtml).join('');
-    const rightItems = CHAPTERS.slice(half).map(itemHtml).join('') + quizItemHtml;
-    return `
-        <div class="page page-toc">
-            <div class="story-page-left">
-                <h2>차례</h2>
-                <ul class="toc-list">${leftItems}</ul>
-            </div>
-            <div class="story-page-right">
-                <ul class="toc-list">${rightItems}</ul>
+                ${coverToc()}
             </div>
         </div>`;
 }
@@ -273,14 +257,13 @@ function endPage() {
 
 const PAGES = [
     { kind: 'cover' },
-    { kind: 'toc' },
     ...CHAPTERS.flatMap(chapter => chapter.beats.map((beat, i) => ({ kind: 'spread', chapter, beat, isFirst: i === 0 }))),
     { kind: 'reflection', chapter: CHAPTERS[CHAPTERS.length - 1] },
     { kind: 'quiz' },
     { kind: 'end' }
 ];
 
-const TWO_PAGE_KINDS = new Set(['spread', 'toc', 'cover']);
+const TWO_PAGE_KINDS = new Set(['spread', 'cover']);
 
 let folioCounter = 0;
 const FOLIOS = PAGES.map(p => {
@@ -294,8 +277,6 @@ function renderPage(page) {
     switch (page.kind) {
         case 'cover':
             return coverPage();
-        case 'toc':
-            return tocPage();
         case 'spread':
             return spreadPage(page.chapter, page.beat, page.isFirst);
         case 'reflection':
@@ -400,8 +381,9 @@ prevBtn.addEventListener('click', () => goTo(current - 1));
 nextBtn.addEventListener('click', () => goTo(current + 1));
 
 document.getElementById('tocLink').addEventListener('click', () => {
+    // 그림책은 차례가 표지에 붙어 있다.
     const idx = PAGES.findIndex(p => p.kind === 'toc');
-    if (idx >= 0) goTo(idx);
+    goTo(idx >= 0 ? idx : 0);
 });
 
 document.addEventListener('keydown', (e) => {

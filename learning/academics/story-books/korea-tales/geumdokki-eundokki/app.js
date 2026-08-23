@@ -161,6 +161,23 @@ function artFrame(src, emoji) {
         </div>`;
 }
 
+function coverToc() {
+    const item = s => `
+        <button type="button" data-goto="${s.num}">
+            <span class="toc-num">${s.num}</span>
+            <span>${s.title.replace(/^\d+장 · /, '')}</span>
+        </button>`;
+    return `
+        <nav class="cover-toc">
+            <h2>차례</h2>
+            ${CHAPTERS.map(item).join('')}
+            <button type="button" data-goto-kind="quiz">
+                <span class="toc-num">❓</span>
+                <span>이야기 문제</span>
+            </button>
+        </nav>`;
+}
+
 function coverPage() {
     return `
         <div class="page page-cover">
@@ -173,40 +190,7 @@ function coverPage() {
                 <p>이솝 우화에 실린 원래 제목은 나무꾼과 헤르메스예요. 헤르메스는 그리스 신화에 나오는 심부름꾼 신이고, 도끼를 빠뜨린 곳도 연못이 아니라 강가였답니다.</p>
                 <p>우리나라에는 1906년에 나온 초등소학이라는 교과서에 처음 실렸어요. 그때는 신도 산신령도 아니고 그냥 노인으로 나왔지요. 강가가 산속 연못이 되고 노인이 산신령이 된 것은 그 뒤에 우리말로 거듭 이야기되면서랍니다.</p>
                 <p>산신령은 우리 옛이야기에서 산을 지키는 신이에요. 흰 수염에 흰옷을 입고 나타나 사람을 시험하거나 도와주지요. 호랑이를 데리고 다니는 모습으로도 자주 그려진답니다.</p>
-            </div>
-        </div>`;
-}
-
-function tocPage() {
-    const itemHtml = s => `
-        <li>
-            <button type="button" data-goto="${s.num}">
-                <span class="toc-num">${s.num}</span>
-                <span>
-                    <strong>${s.title.replace(/^\d+장 · /, '')}</strong>
-                </span>
-            </button>
-        </li>`;
-    const quizItemHtml = `
-        <li>
-            <button type="button" data-goto-kind="quiz">
-                <span class="toc-num">❓</span>
-                <span>
-                    <strong>이야기 문제</strong>
-                </span>
-            </button>
-        </li>`;
-    const half = Math.ceil(CHAPTERS.length / 2);
-    const leftItems = CHAPTERS.slice(0, half).map(itemHtml).join('');
-    const rightItems = CHAPTERS.slice(half).map(itemHtml).join('') + quizItemHtml;
-    return `
-        <div class="page page-toc">
-            <div class="story-page-left">
-                <h2>차례</h2>
-                <ul class="toc-list">${leftItems}</ul>
-            </div>
-            <div class="story-page-right">
-                <ul class="toc-list">${rightItems}</ul>
+                ${coverToc()}
             </div>
         </div>`;
 }
@@ -244,7 +228,7 @@ const QUIZ = [
     { q: "나무꾼은 어느 도끼가 제 것이라고 했나요?", choices: ["금도끼", "은도끼", "쇠도끼"], answer: 2 },
     { q: "산신령은 나무꾼에게 무엇을 주었나요?", choices: ["도끼 셋을 모두", "금도끼 하나만", "쇠도끼만 도로"], answer: 0 },
     { q: "욕심쟁이는 어떻게 했나요?", choices: ["나무꾼의 금도끼를 훔쳤다", "일부러 도끼를 빠뜨렸다", "산신령을 찾아다녔다"], answer: 1 },
-    { q: "욕심쟁이는 금도끼를 보고 뭐라고 했나요?", choices: ["제 것이 아니라고 했다", "제 것이 맞다고 했다", "아무 말도 못 했다"], answer: 1 },
+    { q: "욕심쟁이는 산신령이 내민 도끼를 보고 뭐라고 했나요?", choices: ["제 것이 아니라고 했다", "제 것이 맞다고 했다", "아무 말도 못 했다"], answer: 1 },
     { q: "욕심쟁이는 어떻게 되었나요?", choices: ["금도끼를 얻어 갔다", "산신령에게 혼났다", "제 도끼마저 잃었다"], answer: 2 }
 ];
 
@@ -275,14 +259,13 @@ function endPage() {
 
 const PAGES = [
     { kind: 'cover' },
-    { kind: 'toc' },
     ...CHAPTERS.flatMap(chapter => chapter.beats.map((beat, i) => ({ kind: 'spread', chapter, beat, isFirst: i === 0 }))),
     { kind: 'reflection', chapter: CHAPTERS[CHAPTERS.length - 1] },
     { kind: 'quiz' },
     { kind: 'end' }
 ];
 
-const TWO_PAGE_KINDS = new Set(['spread', 'toc', 'cover']);
+const TWO_PAGE_KINDS = new Set(['spread', 'cover']);
 
 let folioCounter = 0;
 const FOLIOS = PAGES.map(p => {
@@ -296,8 +279,6 @@ function renderPage(page) {
     switch (page.kind) {
         case 'cover':
             return coverPage();
-        case 'toc':
-            return tocPage();
         case 'spread':
             return spreadPage(page.chapter, page.beat, page.isFirst);
         case 'reflection':
@@ -402,8 +383,9 @@ prevBtn.addEventListener('click', () => goTo(current - 1));
 nextBtn.addEventListener('click', () => goTo(current + 1));
 
 document.getElementById('tocLink').addEventListener('click', () => {
+    // 그림책은 차례가 표지에 붙어 있다.
     const idx = PAGES.findIndex(p => p.kind === 'toc');
-    if (idx >= 0) goTo(idx);
+    goTo(idx >= 0 ? idx : 0);
 });
 
 document.addEventListener('keydown', (e) => {

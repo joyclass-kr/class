@@ -179,6 +179,23 @@ function artFrame(src, emoji) {
         </div>`;
 }
 
+function coverToc() {
+    const item = s => `
+        <button type="button" data-goto="${s.num}">
+            <span class="toc-num">${s.num}</span>
+            <span>${s.title.replace(/^\d+장 · /, '')}</span>
+        </button>`;
+    return `
+        <nav class="cover-toc">
+            <h2>차례</h2>
+            ${CHAPTERS.map(item).join('')}
+            <button type="button" data-goto-kind="quiz">
+                <span class="toc-num">❓</span>
+                <span>이야기 문제</span>
+            </button>
+        </nav>`;
+}
+
 function coverPage() {
     return `
         <div class="page page-cover">
@@ -190,40 +207,7 @@ function coverPage() {
                 <p>이야기 주머니는 지은이가 없는 구전 설화예요. 이야기를 남에게 들려주지 않고 가두어 두면 어떻게 되는지를 다룬 이야기랍니다.</p>
                 <p>옛날에는 이야기가 곧 재산이었어요. 책이 귀하던 시절이라 이야기는 사람의 입에서 입으로만 옮겨 다녔지요. 그러니 듣기만 하고 남에게 들려주지 않는 사람은, 이야기가 흘러가는 길을 막는 사람이었던 셈이에요.</p>
                 <p>이 이야기가 재미있는 것은 이야기 자신이 등장인물이 된다는 점이에요. 갇혀 지낸 이야기들이 화를 내고 말을 주고받지요. 이야기에 대한 이야기라, 옛사람들이 이야기를 어떻게 여겼는지가 그대로 담겨 있답니다.</p>
-            </div>
-        </div>`;
-}
-
-function tocPage() {
-    const itemHtml = s => `
-        <li>
-            <button type="button" data-goto="${s.num}">
-                <span class="toc-num">${s.num}</span>
-                <span>
-                    <strong>${s.title.replace(/^\d+장 · /, '')}</strong>
-                </span>
-            </button>
-        </li>`;
-    const quizItemHtml = `
-        <li>
-            <button type="button" data-goto-kind="quiz">
-                <span class="toc-num">❓</span>
-                <span>
-                    <strong>이야기 문제</strong>
-                </span>
-            </button>
-        </li>`;
-    const half = Math.ceil(CHAPTERS.length / 2);
-    const leftItems = CHAPTERS.slice(0, half).map(itemHtml).join('');
-    const rightItems = CHAPTERS.slice(half).map(itemHtml).join('') + quizItemHtml;
-    return `
-        <div class="page page-toc">
-            <div class="story-page-left">
-                <h2>차례</h2>
-                <ul class="toc-list">${leftItems}</ul>
-            </div>
-            <div class="story-page-right">
-                <ul class="toc-list">${rightItems}</ul>
+                ${coverToc()}
             </div>
         </div>`;
 }
@@ -290,14 +274,13 @@ function endPage() {
 
 const PAGES = [
     { kind: 'cover' },
-    { kind: 'toc' },
     ...CHAPTERS.flatMap(chapter => chapter.beats.map((beat, i) => ({ kind: 'spread', chapter, beat, isFirst: i === 0 }))),
     { kind: 'reflection', chapter: CHAPTERS[CHAPTERS.length - 1] },
     { kind: 'quiz' },
     { kind: 'end' }
 ];
 
-const TWO_PAGE_KINDS = new Set(['spread', 'toc', 'cover']);
+const TWO_PAGE_KINDS = new Set(['spread', 'cover']);
 
 let folioCounter = 0;
 const FOLIOS = PAGES.map(p => {
@@ -311,8 +294,6 @@ function renderPage(page) {
     switch (page.kind) {
         case 'cover':
             return coverPage();
-        case 'toc':
-            return tocPage();
         case 'spread':
             return spreadPage(page.chapter, page.beat, page.isFirst);
         case 'reflection':
@@ -417,8 +398,9 @@ prevBtn.addEventListener('click', () => goTo(current - 1));
 nextBtn.addEventListener('click', () => goTo(current + 1));
 
 document.getElementById('tocLink').addEventListener('click', () => {
+    // 그림책은 차례가 표지에 붙어 있다.
     const idx = PAGES.findIndex(p => p.kind === 'toc');
-    if (idx >= 0) goTo(idx);
+    goTo(idx >= 0 ? idx : 0);
 });
 
 document.addEventListener('keydown', (e) => {

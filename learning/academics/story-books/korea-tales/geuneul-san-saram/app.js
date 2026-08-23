@@ -182,6 +182,23 @@ function artFrame(src, emoji) {
         </div>`;
 }
 
+function coverToc() {
+    const item = s => `
+        <button type="button" data-goto="${s.num}">
+            <span class="toc-num">${s.num}</span>
+            <span>${s.title.replace(/^\d+장 · /, '')}</span>
+        </button>`;
+    return `
+        <nav class="cover-toc">
+            <h2>차례</h2>
+            ${CHAPTERS.map(item).join('')}
+            <button type="button" data-goto-kind="quiz">
+                <span class="toc-num">❓</span>
+                <span>이야기 문제</span>
+            </button>
+        </nav>`;
+}
+
 function coverPage() {
     return `
         <div class="page page-cover">
@@ -193,40 +210,7 @@ function coverPage() {
                 <p>그늘을 산 사람은 지은이가 없는 구전 설화예요. 그늘처럼 아무도 값을 매기지 않던 것을 사고팔면 어떻게 되는지를 다룬 이야기랍니다.</p>
                 <p>마을 어귀의 큰 느티나무는 옛날 우리 마을마다 있던 것이에요. 정자나무라고 불렀지요. 여름이면 그 아래에 멍석을 깔고 사람들이 모여 쉬고, 이야기하고, 낮잠을 잤어요. 나무 한 그루가 마을의 사랑방 노릇을 한 셈이랍니다.</p>
                 <p>그늘은 원래 누구의 것도 아니에요. 값을 매길 수 없는 것에 값을 붙이려 한 사람이 도리어 곤란해진다는 것이 이 이야기의 뼈대지요. 세계 곳곳에 비슷한 이야기가 있는데, 대개 욕심 많은 쪽이 스스로 판 함정에 빠지는 결말이랍니다.</p>
-            </div>
-        </div>`;
-}
-
-function tocPage() {
-    const itemHtml = s => `
-        <li>
-            <button type="button" data-goto="${s.num}">
-                <span class="toc-num">${s.num}</span>
-                <span>
-                    <strong>${s.title.replace(/^\d+장 · /, '')}</strong>
-                </span>
-            </button>
-        </li>`;
-    const quizItemHtml = `
-        <li>
-            <button type="button" data-goto-kind="quiz">
-                <span class="toc-num">❓</span>
-                <span>
-                    <strong>이야기 문제</strong>
-                </span>
-            </button>
-        </li>`;
-    const half = Math.ceil(CHAPTERS.length / 2);
-    const leftItems = CHAPTERS.slice(0, half).map(itemHtml).join('');
-    const rightItems = CHAPTERS.slice(half).map(itemHtml).join('') + quizItemHtml;
-    return `
-        <div class="page page-toc">
-            <div class="story-page-left">
-                <h2>차례</h2>
-                <ul class="toc-list">${leftItems}</ul>
-            </div>
-            <div class="story-page-right">
-                <ul class="toc-list">${rightItems}</ul>
+                ${coverToc()}
             </div>
         </div>`;
 }
@@ -293,14 +277,13 @@ function endPage() {
 
 const PAGES = [
     { kind: 'cover' },
-    { kind: 'toc' },
     ...CHAPTERS.flatMap(chapter => chapter.beats.map((beat, i) => ({ kind: 'spread', chapter, beat, isFirst: i === 0 }))),
     { kind: 'reflection', chapter: CHAPTERS[CHAPTERS.length - 1] },
     { kind: 'quiz' },
     { kind: 'end' }
 ];
 
-const TWO_PAGE_KINDS = new Set(['spread', 'toc', 'cover']);
+const TWO_PAGE_KINDS = new Set(['spread', 'cover']);
 
 let folioCounter = 0;
 const FOLIOS = PAGES.map(p => {
@@ -314,8 +297,6 @@ function renderPage(page) {
     switch (page.kind) {
         case 'cover':
             return coverPage();
-        case 'toc':
-            return tocPage();
         case 'spread':
             return spreadPage(page.chapter, page.beat, page.isFirst);
         case 'reflection':
@@ -420,8 +401,9 @@ prevBtn.addEventListener('click', () => goTo(current - 1));
 nextBtn.addEventListener('click', () => goTo(current + 1));
 
 document.getElementById('tocLink').addEventListener('click', () => {
+    // 그림책은 차례가 표지에 붙어 있다.
     const idx = PAGES.findIndex(p => p.kind === 'toc');
-    if (idx >= 0) goTo(idx);
+    goTo(idx >= 0 ? idx : 0);
 });
 
 document.addEventListener('keydown', (e) => {

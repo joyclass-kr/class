@@ -165,6 +165,23 @@ function artFrame(src, emoji) {
         </div>`;
 }
 
+function coverToc() {
+    const item = s => `
+        <button type="button" data-goto="${s.num}">
+            <span class="toc-num">${s.num}</span>
+            <span>${s.title.replace(/^\d+장 · /, '')}</span>
+        </button>`;
+    return `
+        <nav class="cover-toc">
+            <h2>차례</h2>
+            ${CHAPTERS.map(item).join('')}
+            <button type="button" data-goto-kind="quiz">
+                <span class="toc-num">❓</span>
+                <span>이야기 문제</span>
+            </button>
+        </nav>`;
+}
+
 function coverPage() {
     return `
         <div class="page page-cover">
@@ -176,40 +193,7 @@ function coverPage() {
                 <p>청개구리는 지은이가 없는 구전 설화예요. 우리나라 곳곳에서 전해 내려왔고, 중국과 일본에도 이와 아주 닮은 이야기가 남아 있답니다.</p>
                 <p>이 이야기는 유래담에 속해요. 비 오는 날 개구리가 유난히 크게 우는 까닭을 이야기로 풀어낸 것이지요. 옛사람들은 자연에서 궁금한 일을 만나면 이렇게 이야기를 지어 설명하곤 했어요.</p>
                 <p>어른 말을 안 듣고 반대로만 하는 아이를 청개구리라고 부르는 말이 바로 이 이야기에서 나왔어요. 이야기 한 편이 만들어 낸 말이 국어사전에까지 오른 셈이지요.</p>
-            </div>
-        </div>`;
-}
-
-function tocPage() {
-    const itemHtml = s => `
-        <li>
-            <button type="button" data-goto="${s.num}">
-                <span class="toc-num">${s.num}</span>
-                <span>
-                    <strong>${s.title.replace(/^\d+장 · /, '')}</strong>
-                </span>
-            </button>
-        </li>`;
-    const quizItemHtml = `
-        <li>
-            <button type="button" data-goto-kind="quiz">
-                <span class="toc-num">❓</span>
-                <span>
-                    <strong>이야기 문제</strong>
-                </span>
-            </button>
-        </li>`;
-    const half = Math.ceil(CHAPTERS.length / 2);
-    const leftItems = CHAPTERS.slice(0, half).map(itemHtml).join('');
-    const rightItems = CHAPTERS.slice(half).map(itemHtml).join('') + quizItemHtml;
-    return `
-        <div class="page page-toc">
-            <div class="story-page-left">
-                <h2>차례</h2>
-                <ul class="toc-list">${leftItems}</ul>
-            </div>
-            <div class="story-page-right">
-                <ul class="toc-list">${rightItems}</ul>
+                ${coverToc()}
             </div>
         </div>`;
 }
@@ -243,7 +227,7 @@ function reflectionPage(chapter) {
 const QUIZ = [
     { q: "청개구리는 엄마 말을 어떻게 했나요?", choices: ["늘 잘 들었다", "늘 반대로 했다", "못 들은 척했다"], answer: 1 },
     { q: "엄마가 개굴개굴 울라고 하자 아들은 뭐라고 울었나요?", choices: ["개굴개굴", "꽥꽥꽥꽥", "굴개굴개"], answer: 2 },
-    { q: "엄마는 왜 개울가에 묻어 달라고 했나요?", choices: ["산에 묻을 줄 알고", "개울을 좋아해서", "산이 너무 멀어서"], answer: 0 },
+    { q: "엄마가 마지막에 반대로 말한 까닭은 무엇인가요?", choices: ["물소리를 좋아해서", "산에 묻을 줄 알고", "산이 너무 멀어서"], answer: 1 },
     { q: "청개구리는 엄마를 어디에 모셨나요?", choices: ["산속", "들판", "개울가"], answer: 2 },
     { q: "그날은 청개구리에게 어떤 날이었나요?", choices: ["처음 말을 따른 날", "처음 거짓말한 날", "처음 산에 간 날"], answer: 0 },
     { q: "비가 오면 청개구리는 왜 우나요?", choices: ["비를 싫어해서", "무덤이 걱정돼서", "배가 고파서"], answer: 1 }
@@ -276,14 +260,13 @@ function endPage() {
 
 const PAGES = [
     { kind: 'cover' },
-    { kind: 'toc' },
     ...CHAPTERS.flatMap(chapter => chapter.beats.map((beat, i) => ({ kind: 'spread', chapter, beat, isFirst: i === 0 }))),
     { kind: 'reflection', chapter: CHAPTERS[CHAPTERS.length - 1] },
     { kind: 'quiz' },
     { kind: 'end' }
 ];
 
-const TWO_PAGE_KINDS = new Set(['spread', 'toc', 'cover']);
+const TWO_PAGE_KINDS = new Set(['spread', 'cover']);
 
 let folioCounter = 0;
 const FOLIOS = PAGES.map(p => {
@@ -297,8 +280,6 @@ function renderPage(page) {
     switch (page.kind) {
         case 'cover':
             return coverPage();
-        case 'toc':
-            return tocPage();
         case 'spread':
             return spreadPage(page.chapter, page.beat, page.isFirst);
         case 'reflection':
@@ -403,8 +384,9 @@ prevBtn.addEventListener('click', () => goTo(current - 1));
 nextBtn.addEventListener('click', () => goTo(current + 1));
 
 document.getElementById('tocLink').addEventListener('click', () => {
+    // 그림책은 차례가 표지에 붙어 있다.
     const idx = PAGES.findIndex(p => p.kind === 'toc');
-    if (idx >= 0) goTo(idx);
+    goTo(idx >= 0 ? idx : 0);
 });
 
 document.addEventListener('keydown', (e) => {

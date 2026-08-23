@@ -185,6 +185,23 @@ function artFrame(src, emoji) {
         </div>`;
 }
 
+function coverToc() {
+    const item = s => `
+        <button type="button" data-goto="${s.num}">
+            <span class="toc-num">${s.num}</span>
+            <span>${s.title.replace(/^\d+장 · /, '')}</span>
+        </button>`;
+    return `
+        <nav class="cover-toc">
+            <h2>차례</h2>
+            ${CHAPTERS.map(item).join('')}
+            <button type="button" data-goto-kind="quiz">
+                <span class="toc-num">❓</span>
+                <span>이야기 문제</span>
+            </button>
+        </nav>`;
+}
+
 function coverPage() {
     return `
         <div class="page page-cover">
@@ -196,40 +213,7 @@ function coverPage() {
                 <p>은혜 갚은 두꺼비는 지은이가 없는 구전 설화예요. 사람이 거두어 준 짐승이 되갚는 이야기 갈래에 속한답니다.</p>
                 <p>옛날 우리 조상들은 두꺼비를 집을 지켜 주는 짐승으로 여겼어요. 부엌이나 마루 밑에 두꺼비가 들면 복이 든다고 해서 쫓지 않고 그냥 두었지요. 두꺼비가 은혜를 갚는 이야기가 여럿 전해지는 것도 그런 마음 때문이랍니다.</p>
                 <p>이야기에 나오는 지네는 실제 벌레보다 훨씬 크고 무서운 존재로 그려져요. 옛이야기에서 지네는 오래 묵어 이상한 힘을 얻은 짐승으로 자주 나오는데, 두꺼비와 지네가 서로 맞서는 짜임은 우리나라 여러 고장에서 똑같이 전한답니다.</p>
-            </div>
-        </div>`;
-}
-
-function tocPage() {
-    const itemHtml = s => `
-        <li>
-            <button type="button" data-goto="${s.num}">
-                <span class="toc-num">${s.num}</span>
-                <span>
-                    <strong>${s.title.replace(/^\d+장 · /, '')}</strong>
-                </span>
-            </button>
-        </li>`;
-    const quizItemHtml = `
-        <li>
-            <button type="button" data-goto-kind="quiz">
-                <span class="toc-num">❓</span>
-                <span>
-                    <strong>이야기 문제</strong>
-                </span>
-            </button>
-        </li>`;
-    const half = Math.ceil(CHAPTERS.length / 2);
-    const leftItems = CHAPTERS.slice(0, half).map(itemHtml).join('');
-    const rightItems = CHAPTERS.slice(half).map(itemHtml).join('') + quizItemHtml;
-    return `
-        <div class="page page-toc">
-            <div class="story-page-left">
-                <h2>차례</h2>
-                <ul class="toc-list">${leftItems}</ul>
-            </div>
-            <div class="story-page-right">
-                <ul class="toc-list">${rightItems}</ul>
+                ${coverToc()}
             </div>
         </div>`;
 }
@@ -263,7 +247,7 @@ function reflectionPage(chapter) {
 const QUIZ = [
     { q: "소녀는 두꺼비에게 무엇을 나눠 주었나요?", choices: ["남은 나물 반찬을", "자기 밥을 덜어서", "마당의 벌레들을"], answer: 1 },
     { q: "마을 사람들의 오랜 근심은 무엇이었나요?", choices: ["해마다 드는 가뭄", "산에서 오는 호랑이", "사당의 커다란 지네"], answer: 2 },
-    { q: "그해에 사당을 지키게 된 사람은 누구인가요?", choices: ["소녀", "촌장", "젊은 사냥꾼"], answer: 0 },
+    { q: "마을 사람들이 해마다 사당을 지킨 까닭은 무엇인가요?", choices: ["사당이 낡아서", "도둑이 자꾸 들어서", "지네가 성이 나면 큰일 나서"], answer: 2 },
     { q: "두꺼비는 어떻게 사당까지 따라갔나요?", choices: ["뒤를 몰래 따라서", "먼저 가서 기다려서", "치마 속에 숨어서"], answer: 2 },
     { q: "두꺼비와 지네는 무엇으로 겨루었나요?", choices: ["뿜어내는 빛으로", "큰 소리를 질러서", "서로 밀어붙여서"], answer: 0 },
     { q: "그 뒤로 마을은 어떻게 되었나요?", choices: ["사당을 새로 지었다", "밤을 지키지 않게 됐다", "두꺼비를 길렀다"], answer: 1 }
@@ -296,14 +280,13 @@ function endPage() {
 
 const PAGES = [
     { kind: 'cover' },
-    { kind: 'toc' },
     ...CHAPTERS.flatMap(chapter => chapter.beats.map((beat, i) => ({ kind: 'spread', chapter, beat, isFirst: i === 0 }))),
     { kind: 'reflection', chapter: CHAPTERS[CHAPTERS.length - 1] },
     { kind: 'quiz' },
     { kind: 'end' }
 ];
 
-const TWO_PAGE_KINDS = new Set(['spread', 'toc', 'cover']);
+const TWO_PAGE_KINDS = new Set(['spread', 'cover']);
 
 let folioCounter = 0;
 const FOLIOS = PAGES.map(p => {
@@ -317,8 +300,6 @@ function renderPage(page) {
     switch (page.kind) {
         case 'cover':
             return coverPage();
-        case 'toc':
-            return tocPage();
         case 'spread':
             return spreadPage(page.chapter, page.beat, page.isFirst);
         case 'reflection':
@@ -423,8 +404,9 @@ prevBtn.addEventListener('click', () => goTo(current - 1));
 nextBtn.addEventListener('click', () => goTo(current + 1));
 
 document.getElementById('tocLink').addEventListener('click', () => {
+    // 그림책은 차례가 표지에 붙어 있다.
     const idx = PAGES.findIndex(p => p.kind === 'toc');
-    if (idx >= 0) goTo(idx);
+    goTo(idx >= 0 ? idx : 0);
 });
 
 document.addEventListener('keydown', (e) => {

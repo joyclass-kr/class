@@ -354,10 +354,10 @@ body {
 }
 
 .page-cover .story-page-right p {
-    margin: 0 0 10px;
-    font-size: clamp(14px, 1.6vw, 16px);
+    margin: 0 0 6px;
+    font-size: clamp(13.5px, 1.55vw, 15.5px);
     font-weight: 500;
-    line-height: 1.7;
+    line-height: 1.56;
     color: var(--ink);
     text-indent: 1em;
 }
@@ -568,4 +568,53 @@ body {
     .page-toc .story-page-left { border-right: none; border-bottom: 1px solid rgba(92, 58, 34, 0.22); }
     .spread-art { flex-basis: 55%; }
     .spread-text { flex-basis: 45%; }
+}
+
+/* 그림책은 장이 서넛뿐이라 차례가 펼침 하나를 쓸 만큼이 못 된다.
+   표지 오른쪽 아래에 작은 칩으로 흘려 놓는다. 세로로 쌓으면 작은 창에서 넘친다. */
+.cover-toc {
+    margin-top: clamp(10px, 1.6vw, 18px);
+    padding-top: clamp(8px, 1.2vw, 12px);
+    border-top: 1px solid rgba(92, 58, 34, 0.16);
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    gap: 5px 6px;
+}
+
+.cover-toc h2 {
+    margin: 0 4px 0 0;
+    font-size: clamp(12px, 1.3vw, 13px);
+    font-weight: 700;
+    color: var(--muted);
+    letter-spacing: 0.06em;
+}
+
+.cover-toc button {
+    display: inline-flex;
+    align-items: center;
+    gap: 5px;
+    padding: 3px 9px 3px 4px;
+    background: rgba(255, 255, 255, 0.5);
+    border: 1px solid rgba(92, 58, 34, 0.14);
+    border-radius: 999px;
+    font: inherit;
+    font-size: clamp(11.5px, 1.25vw, 13px);
+    line-height: 1.4;
+    color: var(--ink);
+    cursor: pointer;
+    transition: background 0.15s, border-color 0.15s;
+}
+
+.cover-toc button:hover,
+.cover-toc button:focus-visible {
+    background: rgba(255, 255, 255, 0.92);
+    border-color: rgba(92, 58, 34, 0.34);
+}
+
+.cover-toc .toc-num {
+    flex: none;
+    width: 1.55em;
+    height: 1.55em;
+    font-size: 0.85em;
 }

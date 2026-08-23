@@ -234,6 +234,23 @@ function artFrame(src, emoji) {
         </div>`;
 }
 
+function coverToc() {
+    const item = s => `
+        <button type="button" data-goto="${s.num}">
+            <span class="toc-num">${s.num}</span>
+            <span>${s.title.replace(/^\d+장 · /, '')}</span>
+        </button>`;
+    return `
+        <nav class="cover-toc">
+            <h2>차례</h2>
+            ${CHAPTERS.map(item).join('')}
+            <button type="button" data-goto-kind="quiz">
+                <span class="toc-num">❓</span>
+                <span>이야기 문제</span>
+            </button>
+        </nav>`;
+}
+
 function coverPage() {
     return `
         <div class="page page-cover">
@@ -246,40 +263,7 @@ function coverPage() {
                 <p>하늘에서 내려온 사람이 날개옷을 잃고 땅에 머무는 이야기는 세계 곳곳에 있어요. 일본에는 하고로모, 유럽에는 백조 처녀 이야기가 있지요. 새 옷을 입고 하늘을 오간다는 생각이 널리 퍼져 있었던 것이랍니다.</p>
                 <p>옛이야기에는 이렇게 어떤 일의 까닭을 설명하며 끝나는 갈래가 있어요. 이 이야기는 수탉이 새벽마다 하늘을 보고 우는 까닭을 알려 주며 끝난답니다.</p>
                 <p>이 책은 널리 알려진 줄거리 가운데 앞부분을 고쳐 썼어요. 옛 이야기에서는 나무꾼이 날개옷을 감추지만, 이 책에서는 주운 옷을 곧바로 돌려줍니다.</p>
-            </div>
-        </div>`;
-}
-
-function tocPage() {
-    const itemHtml = s => `
-        <li>
-            <button type="button" data-goto="${s.num}">
-                <span class="toc-num">${s.num}</span>
-                <span>
-                    <strong>${s.title.replace(/^\d+장 · /, '')}</strong>
-                </span>
-            </button>
-        </li>`;
-    const quizItemHtml = `
-        <li>
-            <button type="button" data-goto-kind="quiz">
-                <span class="toc-num">❓</span>
-                <span>
-                    <strong>이야기 문제</strong>
-                </span>
-            </button>
-        </li>`;
-    const half = Math.ceil(CHAPTERS.length / 2);
-    const leftItems = CHAPTERS.slice(0, half).map(itemHtml).join('');
-    const rightItems = CHAPTERS.slice(half).map(itemHtml).join('') + quizItemHtml;
-    return `
-        <div class="page page-toc">
-            <div class="story-page-left">
-                <h2>차례</h2>
-                <ul class="toc-list">${leftItems}</ul>
-            </div>
-            <div class="story-page-right">
-                <ul class="toc-list">${rightItems}</ul>
+                ${coverToc()}
             </div>
         </div>`;
 }
@@ -313,7 +297,7 @@ function reflectionPage(chapter) {
 const QUIZ = [
     { q: "나무꾼이 숨겨 준 짐승은 무엇인가요?", choices: ["호랑이", "사슴", "노루"], answer: 1 },
     { q: "나무꾼이 가시덤불에서 주운 것은 무엇인가요?", choices: ["옥으로 만든 빗", "금빛 두레박", "날개옷 한 벌"], answer: 2 },
-    { q: "나무꾼은 주운 날개옷을 어떻게 했나요?", choices: ["곧바로 돌려주었다", "몰래 감추었다", "장에 내다 팔았다"], answer: 0 },
+    { q: "나무꾼은 주운 것을 어떻게 했나요?", choices: ["곧바로 돌려주었다", "몰래 감추었다", "장에 내다 팔았다"], answer: 0 },
     { q: "선녀는 왜 바로 하늘로 가지 못했나요?", choices: ["날개옷이 찢어져서", "길을 잊어버려서", "하늘 문이 닫혀서"], answer: 2 },
     { q: "나무꾼이 하늘로 올라갈 때 탄 것은 무엇인가요?", choices: ["하늘에서 내린 두레박", "구름으로 만든 배", "사슴의 등"], answer: 0 },
     { q: "나무꾼이 말에서 떨어진 까닭은 무엇인가요?", choices: ["졸다가 놓쳐서", "뜨거운 죽을 쏟아서", "고삐가 끊어져서"], answer: 1 }
@@ -346,14 +330,13 @@ function endPage() {
 
 const PAGES = [
     { kind: 'cover' },
-    { kind: 'toc' },
     ...CHAPTERS.flatMap(chapter => chapter.beats.map((beat, i) => ({ kind: 'spread', chapter, beat, isFirst: i === 0 }))),
     { kind: 'reflection', chapter: CHAPTERS[CHAPTERS.length - 1] },
     { kind: 'quiz' },
     { kind: 'end' }
 ];
 
-const TWO_PAGE_KINDS = new Set(['spread', 'toc', 'cover']);
+const TWO_PAGE_KINDS = new Set(['spread', 'cover']);
 
 let folioCounter = 0;
 const FOLIOS = PAGES.map(p => {
@@ -367,8 +350,6 @@ function renderPage(page) {
     switch (page.kind) {
         case 'cover':
             return coverPage();
-        case 'toc':
-            return tocPage();
         case 'spread':
             return spreadPage(page.chapter, page.beat, page.isFirst);
         case 'reflection':
@@ -473,8 +454,9 @@ prevBtn.addEventListener('click', () => goTo(current - 1));
 nextBtn.addEventListener('click', () => goTo(current + 1));
 
 document.getElementById('tocLink').addEventListener('click', () => {
+    // 그림책은 차례가 표지에 붙어 있다.
     const idx = PAGES.findIndex(p => p.kind === 'toc');
-    if (idx >= 0) goTo(idx);
+    goTo(idx >= 0 ? idx : 0);
 });
 
 document.addEventListener('keydown', (e) => {

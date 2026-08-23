@@ -158,6 +158,23 @@ function artFrame(src, emoji) {
         </div>`;
 }
 
+function coverToc() {
+    const item = s => `
+        <button type="button" data-goto="${s.num}">
+            <span class="toc-num">${s.num}</span>
+            <span>${s.title.replace(/^\d+장 · /, '')}</span>
+        </button>`;
+    return `
+        <nav class="cover-toc">
+            <h2>차례</h2>
+            ${CHAPTERS.map(item).join('')}
+            <button type="button" data-goto-kind="quiz">
+                <span class="toc-num">❓</span>
+                <span>이야기 문제</span>
+            </button>
+        </nav>`;
+}
+
 function coverPage() {
     return `
         <div class="page page-cover">
@@ -169,40 +186,7 @@ function coverPage() {
                 <p>두꺼비와 토끼와 호랑이는 지은이가 없는 구전 설화예요. 떡 내기라는 이름으로도 전해진답니다.</p>
                 <p>우리 옛이야기에는 셋이 겨루는 이야기가 유난히 많아요. 대개 가장 크고 힘센 쪽, 가장 빠른 쪽, 그리고 가장 작고 느린 쪽이 나오는데 이기는 것은 늘 마지막 하나지요. 듣는 아이가 자기를 어디에 놓고 들을지 생각해 보면 왜 그런 짜임이 되었는지 알 수 있답니다.</p>
                 <p>시루는 떡을 찌는 그릇이에요. 바닥에 구멍이 뚫려 있어서 솥 위에 얹고 김을 올려 떡을 쪄 냈지요. 잔칫날이나 고사를 지낼 때 쓰던 것이라 시루떡은 옛사람들에게 아주 귀한 음식이었답니다.</p>
-            </div>
-        </div>`;
-}
-
-function tocPage() {
-    const itemHtml = s => `
-        <li>
-            <button type="button" data-goto="${s.num}">
-                <span class="toc-num">${s.num}</span>
-                <span>
-                    <strong>${s.title.replace(/^\d+장 · /, '')}</strong>
-                </span>
-            </button>
-        </li>`;
-    const quizItemHtml = `
-        <li>
-            <button type="button" data-goto-kind="quiz">
-                <span class="toc-num">❓</span>
-                <span>
-                    <strong>이야기 문제</strong>
-                </span>
-            </button>
-        </li>`;
-    const half = Math.ceil(CHAPTERS.length / 2);
-    const leftItems = CHAPTERS.slice(0, half).map(itemHtml).join('');
-    const rightItems = CHAPTERS.slice(half).map(itemHtml).join('') + quizItemHtml;
-    return `
-        <div class="page page-toc">
-            <div class="story-page-left">
-                <h2>차례</h2>
-                <ul class="toc-list">${leftItems}</ul>
-            </div>
-            <div class="story-page-right">
-                <ul class="toc-list">${rightItems}</ul>
+                ${coverToc()}
             </div>
         </div>`;
 }
@@ -239,7 +223,7 @@ const QUIZ = [
     { q: "셋은 어떤 내기를 하기로 했나요?", choices: ["시루 굴려 잡기", "언덕 오르기", "물속 오래 참기"], answer: 0 },
     { q: "시루가 굴러갈 때 무슨 일이 있었나요?", choices: ["시루가 깨졌다", "길이 막혔다", "떡이 떨어졌다"], answer: 2 },
     { q: "언덕 아래에서 시루 안은 어땠나요?", choices: ["텅 비어 있었다", "떡이 가득했다", "물이 차 있었다"], answer: 0 },
-    { q: "두꺼비는 어떻게 떡을 먹었나요?", choices: ["시루에서 꺼내어서", "떨어진 것을 주워서", "몰래 감춰 두었다가"], answer: 1 }
+    { q: "떡을 차지한 쪽은 어떤 방법을 썼나요?", choices: ["시루에서 꺼내어서", "떨어진 것을 주워서", "몰래 감춰 두었다가"], answer: 1 }
 ];
 
 function quizPage() {
@@ -269,14 +253,13 @@ function endPage() {
 
 const PAGES = [
     { kind: 'cover' },
-    { kind: 'toc' },
     ...CHAPTERS.flatMap(chapter => chapter.beats.map((beat, i) => ({ kind: 'spread', chapter, beat, isFirst: i === 0 }))),
     { kind: 'reflection', chapter: CHAPTERS[CHAPTERS.length - 1] },
     { kind: 'quiz' },
     { kind: 'end' }
 ];
 
-const TWO_PAGE_KINDS = new Set(['spread', 'toc', 'cover']);
+const TWO_PAGE_KINDS = new Set(['spread', 'cover']);
 
 let folioCounter = 0;
 const FOLIOS = PAGES.map(p => {
@@ -290,8 +273,6 @@ function renderPage(page) {
     switch (page.kind) {
         case 'cover':
             return coverPage();
-        case 'toc':
-            return tocPage();
         case 'spread':
             return spreadPage(page.chapter, page.beat, page.isFirst);
         case 'reflection':
@@ -396,8 +377,9 @@ prevBtn.addEventListener('click', () => goTo(current - 1));
 nextBtn.addEventListener('click', () => goTo(current + 1));
 
 document.getElementById('tocLink').addEventListener('click', () => {
+    // 그림책은 차례가 표지에 붙어 있다.
     const idx = PAGES.findIndex(p => p.kind === 'toc');
-    if (idx >= 0) goTo(idx);
+    goTo(idx >= 0 ? idx : 0);
 });
 
 document.addEventListener('keydown', (e) => {

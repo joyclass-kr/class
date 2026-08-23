@@ -185,6 +185,23 @@ function artFrame(src, emoji) {
         </div>`;
 }
 
+function coverToc() {
+    const item = s => `
+        <button type="button" data-goto="${s.num}">
+            <span class="toc-num">${s.num}</span>
+            <span>${s.title.replace(/^\d+장 · /, '')}</span>
+        </button>`;
+    return `
+        <nav class="cover-toc">
+            <h2>차례</h2>
+            ${CHAPTERS.map(item).join('')}
+            <button type="button" data-goto-kind="quiz">
+                <span class="toc-num">❓</span>
+                <span>이야기 문제</span>
+            </button>
+        </nav>`;
+}
+
 function coverPage() {
     return `
         <div class="page page-cover">
@@ -196,40 +213,7 @@ function coverPage() {
                 <p>쥐의 사위 고르기는 지은이가 없는 구전 설화예요. 세상에서 가장 센 것을 찾아 차례로 물어 가는 짜임이라, 학자들은 이런 이야기를 연쇄담이라고 부른답니다.</p>
                 <p>이 이야기는 인도의 아주 오래된 이야기책에 실린 것이 중국과 일본, 우리나라까지 퍼진 것으로 봐요. 나라마다 등장하는 것이 조금씩 다른데, 마지막에 가장 센 것이 결국 쥐 자신이라는 결말만은 어디서나 똑같지요.</p>
                 <p>묻고 대답하는 차례가 해에서 구름, 구름에서 바람, 바람에서 돌부처로 이어지다가 다시 쥐로 돌아오는 것이 이 이야기의 재미예요. 한 바퀴 빙 돌아 제자리로 오는 짜임이라, 듣는 아이도 마지막에 가서야 웃게 된답니다.</p>
-            </div>
-        </div>`;
-}
-
-function tocPage() {
-    const itemHtml = s => `
-        <li>
-            <button type="button" data-goto="${s.num}">
-                <span class="toc-num">${s.num}</span>
-                <span>
-                    <strong>${s.title.replace(/^\d+장 · /, '')}</strong>
-                </span>
-            </button>
-        </li>`;
-    const quizItemHtml = `
-        <li>
-            <button type="button" data-goto-kind="quiz">
-                <span class="toc-num">❓</span>
-                <span>
-                    <strong>이야기 문제</strong>
-                </span>
-            </button>
-        </li>`;
-    const half = Math.ceil(CHAPTERS.length / 2);
-    const leftItems = CHAPTERS.slice(0, half).map(itemHtml).join('');
-    const rightItems = CHAPTERS.slice(half).map(itemHtml).join('') + quizItemHtml;
-    return `
-        <div class="page page-toc">
-            <div class="story-page-left">
-                <h2>차례</h2>
-                <ul class="toc-list">${leftItems}</ul>
-            </div>
-            <div class="story-page-right">
-                <ul class="toc-list">${rightItems}</ul>
+                ${coverToc()}
             </div>
         </div>`;
 }
@@ -262,10 +246,10 @@ function reflectionPage(chapter) {
 
 const QUIZ = [
     { q: "쥐 부부는 무엇을 하려고 길을 나섰나요?", choices: ["먹을 것을 구하려고", "딸의 사위를 찾으려고", "새집을 지으려고"], answer: 1 },
-    { q: "해는 누구를 더 세다고 했나요?", choices: ["바람", "돌부처", "구름"], answer: 2 },
-    { q: "구름은 누구를 더 세다고 했나요?", choices: ["바람", "해", "돌부처"], answer: 0 },
-    { q: "바람은 누구를 더 세다고 했나요?", choices: ["구름", "해", "돌부처"], answer: 2 },
-    { q: "돌부처가 무서워한 것은 무엇인가요?", choices: ["발밑을 파는 쥐", "세차게 부는 바람", "내리쬐는 햇볕"], answer: 0 },
+    { q: "아버지 쥐가 찾아간 차례로 맞는 것은 무엇인가요?", choices: ["바람 - 해 - 돌부처 - 구름", "해 - 구름 - 바람 - 돌부처", "구름 - 바람 - 해 - 돌부처"], answer: 1 },
+    { q: "해는 왜 저보다 센 것이 있다고 했나요?", choices: ["구름이 가리면 힘을 못 써서", "너무 멀리 떨어져 있어서", "낮에만 나올 수 있어서"], answer: 0 },
+    { q: "돌부처가 무서워한 것은 무엇인가요?", choices: ["세차게 부는 바람", "발밑을 파는 것", "내리쬐는 햇볕"], answer: 1 },
+    { q: "이 이야기가 말하려는 것은 무엇인가요?", choices: ["힘센 것이 무엇보다 훌륭하다", "먼 데 것이 언제나 더 낫다", "가까운 데 있는 것을 멀리서 찾았다"], answer: 2 },
     { q: "딸은 결국 누구와 혼인했나요?", choices: ["멀리 사는 해", "이웃집 총각 쥐", "산 위의 돌부처"], answer: 1 }
 ];
 
@@ -296,14 +280,13 @@ function endPage() {
 
 const PAGES = [
     { kind: 'cover' },
-    { kind: 'toc' },
     ...CHAPTERS.flatMap(chapter => chapter.beats.map((beat, i) => ({ kind: 'spread', chapter, beat, isFirst: i === 0 }))),
     { kind: 'reflection', chapter: CHAPTERS[CHAPTERS.length - 1] },
     { kind: 'quiz' },
     { kind: 'end' }
 ];
 
-const TWO_PAGE_KINDS = new Set(['spread', 'toc', 'cover']);
+const TWO_PAGE_KINDS = new Set(['spread', 'cover']);
 
 let folioCounter = 0;
 const FOLIOS = PAGES.map(p => {
@@ -317,8 +300,6 @@ function renderPage(page) {
     switch (page.kind) {
         case 'cover':
             return coverPage();
-        case 'toc':
-            return tocPage();
         case 'spread':
             return spreadPage(page.chapter, page.beat, page.isFirst);
         case 'reflection':
@@ -423,8 +404,9 @@ prevBtn.addEventListener('click', () => goTo(current - 1));
 nextBtn.addEventListener('click', () => goTo(current + 1));
 
 document.getElementById('tocLink').addEventListener('click', () => {
+    // 그림책은 차례가 표지에 붙어 있다.
     const idx = PAGES.findIndex(p => p.kind === 'toc');
-    if (idx >= 0) goTo(idx);
+    goTo(idx >= 0 ? idx : 0);
 });
 
 document.addEventListener('keydown', (e) => {

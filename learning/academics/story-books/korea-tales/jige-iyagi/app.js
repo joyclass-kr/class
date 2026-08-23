@@ -180,6 +180,23 @@ function artFrame(src, emoji) {
         </div>`;
 }
 
+function coverToc() {
+    const item = s => `
+        <button type="button" data-goto="${s.num}">
+            <span class="toc-num">${s.num}</span>
+            <span>${s.title.replace(/^\d+장 · /, '')}</span>
+        </button>`;
+    return `
+        <nav class="cover-toc">
+            <h2>차례</h2>
+            ${CHAPTERS.map(item).join('')}
+            <button type="button" data-goto-kind="quiz">
+                <span class="toc-num">❓</span>
+                <span>이야기 문제</span>
+            </button>
+        </nav>`;
+}
+
 function coverPage() {
     return `
         <div class="page page-cover">
@@ -191,40 +208,7 @@ function coverPage() {
                 <p>아버지를 내다버린 지게는 지은이가 없는 구전 설화예요. 흔히 고려장 이야기라는 이름으로 전해진답니다.</p>
                 <p>먼저 알아 둘 것이 있어요. 늙은 부모를 산에 두고 오는 풍습이 실제로 있었다는 기록은 어디에도 없어요. 학자들은 이 이야기가 실제 풍습이 아니라, 부모를 어떻게 모셔야 하는지를 가르치려고 지어낸 이야기로 봅니다. 그러니 옛날에 정말 그랬다고 오해하지 않아도 돼요.</p>
                 <p>지게는 등에 지고 짐을 나르던 우리나라 고유의 도구예요. 나무를 A자 모양으로 짜서 만들었지요. 이 이야기에서 지게는 짐을 나르는 물건이 아니라, 아들이 아버지에게 한 일을 그대로 되비추는 거울 노릇을 한답니다.</p>
-            </div>
-        </div>`;
-}
-
-function tocPage() {
-    const itemHtml = s => `
-        <li>
-            <button type="button" data-goto="${s.num}">
-                <span class="toc-num">${s.num}</span>
-                <span>
-                    <strong>${s.title.replace(/^\d+장 · /, '')}</strong>
-                </span>
-            </button>
-        </li>`;
-    const quizItemHtml = `
-        <li>
-            <button type="button" data-goto-kind="quiz">
-                <span class="toc-num">❓</span>
-                <span>
-                    <strong>이야기 문제</strong>
-                </span>
-            </button>
-        </li>`;
-    const half = Math.ceil(CHAPTERS.length / 2);
-    const leftItems = CHAPTERS.slice(0, half).map(itemHtml).join('');
-    const rightItems = CHAPTERS.slice(half).map(itemHtml).join('') + quizItemHtml;
-    return `
-        <div class="page page-toc">
-            <div class="story-page-left">
-                <h2>차례</h2>
-                <ul class="toc-list">${leftItems}</ul>
-            </div>
-            <div class="story-page-right">
-                <ul class="toc-list">${rightItems}</ul>
+                ${coverToc()}
             </div>
         </div>`;
 }
@@ -256,10 +240,10 @@ function reflectionPage(chapter) {
 }
 
 const QUIZ = [
-    { q: "아들은 아버지를 무엇에 지고 갔나요?", choices: ["수레", "지게", "가마"], answer: 1 },
+    { q: "그 고장에 떠돌던 말은 무엇이었나요?", choices: ["산에 가면 오래 산다는 말", "기력이 다한 노인은 산에 모신다는 말", "노인은 절에 보낸다는 말"], answer: 1 },
     { q: "산으로 갈 때 누가 함께 따라갔나요?", choices: ["이웃 사람", "집안의 하인", "어린 아들"], answer: 2 },
     { q: "돌아설 때 손자는 무엇을 챙겼나요?", choices: ["지게", "지팡이", "밥그릇"], answer: 0 },
-    { q: "손자는 지게를 왜 가져간다고 했나요?", choices: ["땔감을 지려고", "팔아 보려고", "나중에 쓰려고"], answer: 2 },
+    { q: "손자가 그것을 도로 챙긴 까닭은 무엇인가요?", choices: ["땔감을 지려고", "나중에 쓰려고", "팔아 보려고"], answer: 1 },
     { q: "그 말을 들은 아들은 어떻게 했나요?", choices: ["아버지를 도로 모셨다", "그냥 집에 돌아갔다", "손자를 꾸짖었다"], answer: 0 },
     { q: "그 뒤로 마을은 어떻게 되었나요?", choices: ["전보다 더 심해졌다", "그런 일이 없어졌다", "달라지지 않았다"], answer: 1 }
 ];
@@ -291,14 +275,13 @@ function endPage() {
 
 const PAGES = [
     { kind: 'cover' },
-    { kind: 'toc' },
     ...CHAPTERS.flatMap(chapter => chapter.beats.map((beat, i) => ({ kind: 'spread', chapter, beat, isFirst: i === 0 }))),
     { kind: 'reflection', chapter: CHAPTERS[CHAPTERS.length - 1] },
     { kind: 'quiz' },
     { kind: 'end' }
 ];
 
-const TWO_PAGE_KINDS = new Set(['spread', 'toc', 'cover']);
+const TWO_PAGE_KINDS = new Set(['spread', 'cover']);
 
 let folioCounter = 0;
 const FOLIOS = PAGES.map(p => {
@@ -312,8 +295,6 @@ function renderPage(page) {
     switch (page.kind) {
         case 'cover':
             return coverPage();
-        case 'toc':
-            return tocPage();
         case 'spread':
             return spreadPage(page.chapter, page.beat, page.isFirst);
         case 'reflection':
@@ -418,8 +399,9 @@ prevBtn.addEventListener('click', () => goTo(current - 1));
 nextBtn.addEventListener('click', () => goTo(current + 1));
 
 document.getElementById('tocLink').addEventListener('click', () => {
+    // 그림책은 차례가 표지에 붙어 있다.
     const idx = PAGES.findIndex(p => p.kind === 'toc');
-    if (idx >= 0) goTo(idx);
+    goTo(idx >= 0 ? idx : 0);
 });
 
 document.addEventListener('keydown', (e) => {

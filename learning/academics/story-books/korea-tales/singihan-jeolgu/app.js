@@ -160,6 +160,23 @@ function artFrame(src, emoji) {
         </div>`;
 }
 
+function coverToc() {
+    const item = s => `
+        <button type="button" data-goto="${s.num}">
+            <span class="toc-num">${s.num}</span>
+            <span>${s.title.replace(/^\d+장 · /, '')}</span>
+        </button>`;
+    return `
+        <nav class="cover-toc">
+            <h2>차례</h2>
+            ${CHAPTERS.map(item).join('')}
+            <button type="button" data-goto-kind="quiz">
+                <span class="toc-num">❓</span>
+                <span>이야기 문제</span>
+            </button>
+        </nav>`;
+}
+
 function coverPage() {
     return `
         <div class="page page-cover">
@@ -171,40 +188,7 @@ function coverPage() {
                 <p>신기한 절구는 지은이가 없는 구전 설화예요. 신기한 맷돌, 소금 나오는 맷돌이라는 이름으로도 전해진답니다.</p>
                 <p>이 이야기는 유래담이에요. 바닷물이 왜 짠지를 이야기로 설명하지요. 놀라운 것은 거의 같은 이야기가 아주 먼 나라에도 있다는 점이에요. 북유럽에는 그로티라는 맷돌 이야기가 있고, 일본에도 바닷속에서 소금을 갈아 내는 맷돌 이야기가 전해요. 서로 만난 적 없는 사람들이 같은 궁금증을 같은 방식으로 풀어낸 셈이지요.</p>
                 <p>절구는 곡식의 껍질을 벗기거나 떡을 치는 데 쓰던 도구예요. 통나무나 돌을 파서 만든 통에 곡식을 넣고 공이로 쿵쿵 찧었지요. 집집마다 하나씩 있던 살림살이라 옛이야기에도 자주 나온답니다.</p>
-            </div>
-        </div>`;
-}
-
-function tocPage() {
-    const itemHtml = s => `
-        <li>
-            <button type="button" data-goto="${s.num}">
-                <span class="toc-num">${s.num}</span>
-                <span>
-                    <strong>${s.title.replace(/^\d+장 · /, '')}</strong>
-                </span>
-            </button>
-        </li>`;
-    const quizItemHtml = `
-        <li>
-            <button type="button" data-goto-kind="quiz">
-                <span class="toc-num">❓</span>
-                <span>
-                    <strong>이야기 문제</strong>
-                </span>
-            </button>
-        </li>`;
-    const half = Math.ceil(CHAPTERS.length / 2);
-    const leftItems = CHAPTERS.slice(0, half).map(itemHtml).join('');
-    const rightItems = CHAPTERS.slice(half).map(itemHtml).join('') + quizItemHtml;
-    return `
-        <div class="page page-toc">
-            <div class="story-page-left">
-                <h2>차례</h2>
-                <ul class="toc-list">${leftItems}</ul>
-            </div>
-            <div class="story-page-right">
-                <ul class="toc-list">${rightItems}</ul>
+                ${coverToc()}
             </div>
         </div>`;
 }
@@ -240,7 +224,7 @@ const QUIZ = [
     { q: "절구에서 물건이 나오게 하는 말은 무엇이었나요?", choices: ["멈춰라", "돌아라", "나와라"], answer: 2 },
     { q: "도둑은 절구를 훔쳐 어디로 갔나요?", choices: ["배를 타고 바다로", "고개 너머 산속으로", "강 건너 이웃 마을로"], answer: 0 },
     { q: "도둑은 절구에게 무엇을 달라고 했나요?", choices: ["쌀", "금", "소금"], answer: 2 },
-    { q: "도둑이 소금을 멈추지 못한 까닭은 무엇인가요?", choices: ["멈추는 말을 몰라서", "절구가 고장 나서", "파도가 너무 세서"], answer: 0 },
+    { q: "도둑이 절구를 멈추지 못한 까닭은 무엇인가요?", choices: ["멈추는 말을 몰라서", "절구가 고장 나서", "파도가 너무 세서"], answer: 0 },
     { q: "바닷물이 짠 까닭은 무엇이라고 했나요?", choices: ["비가 짜게 내려서", "절구가 소금을 내서", "물고기가 많아서"], answer: 1 }
 ];
 
@@ -271,14 +255,13 @@ function endPage() {
 
 const PAGES = [
     { kind: 'cover' },
-    { kind: 'toc' },
     ...CHAPTERS.flatMap(chapter => chapter.beats.map((beat, i) => ({ kind: 'spread', chapter, beat, isFirst: i === 0 }))),
     { kind: 'reflection', chapter: CHAPTERS[CHAPTERS.length - 1] },
     { kind: 'quiz' },
     { kind: 'end' }
 ];
 
-const TWO_PAGE_KINDS = new Set(['spread', 'toc', 'cover']);
+const TWO_PAGE_KINDS = new Set(['spread', 'cover']);
 
 let folioCounter = 0;
 const FOLIOS = PAGES.map(p => {
@@ -292,8 +275,6 @@ function renderPage(page) {
     switch (page.kind) {
         case 'cover':
             return coverPage();
-        case 'toc':
-            return tocPage();
         case 'spread':
             return spreadPage(page.chapter, page.beat, page.isFirst);
         case 'reflection':
@@ -398,8 +379,9 @@ prevBtn.addEventListener('click', () => goTo(current - 1));
 nextBtn.addEventListener('click', () => goTo(current + 1));
 
 document.getElementById('tocLink').addEventListener('click', () => {
+    // 그림책은 차례가 표지에 붙어 있다.
     const idx = PAGES.findIndex(p => p.kind === 'toc');
-    if (idx >= 0) goTo(idx);
+    goTo(idx >= 0 ? idx : 0);
 });
 
 document.addEventListener('keydown', (e) => {

@@ -166,6 +166,23 @@ function artFrame(src, emoji) {
         </div>`;
 }
 
+function coverToc() {
+    const item = s => `
+        <button type="button" data-goto="${s.num}">
+            <span class="toc-num">${s.num}</span>
+            <span>${s.title.replace(/^\d+장 · /, '')}</span>
+        </button>`;
+    return `
+        <nav class="cover-toc">
+            <h2>차례</h2>
+            ${CHAPTERS.map(item).join('')}
+            <button type="button" data-goto-kind="quiz">
+                <span class="toc-num">❓</span>
+                <span>이야기 문제</span>
+            </button>
+        </nav>`;
+}
+
 function coverPage() {
     return `
         <div class="page page-cover">
@@ -178,40 +195,7 @@ function coverPage() {
                 <p>옛이야기 속 호랑이는 두 얼굴이에요. 산을 지키는 무서운 산신이기도 하고, 이 이야기처럼 어수룩하게 속는 웃음거리이기도 하지요. 뒤쪽을 바보 호랑이 이야기라고 부른답니다.</p>
                 <p>조선 시대에 호랑이는 실제로 마을까지 내려오던 짐승이라, 나라에서 호랑이 잡는 군대를 따로 두었어요. 가장 무서운 짐승을 이야기 속에서 마음껏 놀리는 것이 옛사람들에게는 큰 즐거움이었지요.</p>
                 <p>곶감은 감의 껍질을 벗겨 말린 것이에요. 과자도 냉장고도 없던 시절의 귀한 단맛이었지요.</p>
-            </div>
-        </div>`;
-}
-
-function tocPage() {
-    const itemHtml = s => `
-        <li>
-            <button type="button" data-goto="${s.num}">
-                <span class="toc-num">${s.num}</span>
-                <span>
-                    <strong>${s.title.replace(/^\d+장 · /, '')}</strong>
-                </span>
-            </button>
-        </li>`;
-    const quizItemHtml = `
-        <li>
-            <button type="button" data-goto-kind="quiz">
-                <span class="toc-num">❓</span>
-                <span>
-                    <strong>이야기 문제</strong>
-                </span>
-            </button>
-        </li>`;
-    const half = Math.ceil(CHAPTERS.length / 2);
-    const leftItems = CHAPTERS.slice(0, half).map(itemHtml).join('');
-    const rightItems = CHAPTERS.slice(half).map(itemHtml).join('') + quizItemHtml;
-    return `
-        <div class="page page-toc">
-            <div class="story-page-left">
-                <h2>차례</h2>
-                <ul class="toc-list">${leftItems}</ul>
-            </div>
-            <div class="story-page-right">
-                <ul class="toc-list">${rightItems}</ul>
+                ${coverToc()}
             </div>
         </div>`;
 }
@@ -246,7 +230,7 @@ const QUIZ = [
     { q: "호랑이는 왜 마을로 내려왔나요?", choices: ["길을 잃어서", "배가 고파서", "친구를 찾으려고"], answer: 1 },
     { q: "호랑이가 온다고 하자 아기는 어떻게 했나요?", choices: ["울음을 그쳤다", "잠이 들었다", "더 크게 울었다"], answer: 2 },
     { q: "아기가 울음을 그친 것은 무엇 때문이었나요?", choices: ["곶감", "호랑이", "자장가"], answer: 0 },
-    { q: "호랑이는 곶감을 무엇이라고 생각했나요?", choices: ["아주 힘센 사냥꾼", "마을에서 큰 짐승", "자기보다 무서운 놈"], answer: 2 },
+    { q: "호랑이는 아기를 그치게 한 것을 무엇이라 여겼나요?", choices: ["아주 힘센 사냥꾼", "마을에서 큰 짐승", "자기보다 무서운 놈"], answer: 2 },
     { q: "소도둑은 호랑이를 무엇으로 착각했나요?", choices: ["소", "말", "개"], answer: 0 },
     { q: "소도둑은 어떻게 호랑이 등에서 벗어났나요?", choices: ["개울로 뛰어들어서", "나뭇가지를 붙잡고", "호랑이를 때려서"], answer: 1 }
 ];
@@ -278,14 +262,13 @@ function endPage() {
 
 const PAGES = [
     { kind: 'cover' },
-    { kind: 'toc' },
     ...CHAPTERS.flatMap(chapter => chapter.beats.map((beat, i) => ({ kind: 'spread', chapter, beat, isFirst: i === 0 }))),
     { kind: 'reflection', chapter: CHAPTERS[CHAPTERS.length - 1] },
     { kind: 'quiz' },
     { kind: 'end' }
 ];
 
-const TWO_PAGE_KINDS = new Set(['spread', 'toc', 'cover']);
+const TWO_PAGE_KINDS = new Set(['spread', 'cover']);
 
 let folioCounter = 0;
 const FOLIOS = PAGES.map(p => {
@@ -299,8 +282,6 @@ function renderPage(page) {
     switch (page.kind) {
         case 'cover':
             return coverPage();
-        case 'toc':
-            return tocPage();
         case 'spread':
             return spreadPage(page.chapter, page.beat, page.isFirst);
         case 'reflection':
@@ -405,8 +386,9 @@ prevBtn.addEventListener('click', () => goTo(current - 1));
 nextBtn.addEventListener('click', () => goTo(current + 1));
 
 document.getElementById('tocLink').addEventListener('click', () => {
+    // 그림책은 차례가 표지에 붙어 있다.
     const idx = PAGES.findIndex(p => p.kind === 'toc');
-    if (idx >= 0) goTo(idx);
+    goTo(idx >= 0 ? idx : 0);
 });
 
 document.addEventListener('keydown', (e) => {
