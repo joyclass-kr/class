@@ -289,28 +289,16 @@ input[type="range"] {
   margin-top: -10px;
   border-radius: 50%;
   border: 1.5px solid rgba(0, 0, 0, 0.8);
-  background: rgba(128, 128, 128, 0.1);
-  pointer-events: none;
-  /* white ring then a second dark ring, so the outline stays visible no
-     matter how light or dark the canvas content under it is */
-  box-shadow: 0 0 0 1.5px rgba(255, 255, 255, 0.95), 0 0 0 3px rgba(0, 0, 0, 0.35);
-}
-.brush-cursor::after {
-  content: "";
-  position: absolute;
-  top: 50%;
-  left: 50%;
-  width: 5px;
-  height: 5px;
-  margin: -2.5px 0 0 -2.5px;
-  border-radius: 50%;
   background: var(--active-cursor-color, #3a2a1a);
-  box-shadow: 0 0 0 1px rgba(255, 255, 255, 0.9);
+  pointer-events: none;
+  /* the border stays dark no matter what color fills the inside, so the
+     circle is always visible even when the chosen color is white/pale */
+  box-shadow: 0 0 0 1.5px rgba(255, 255, 255, 0.95);
 }
 .brush-cursor.eraser-cursor {
   border-style: dashed;
+  background: rgba(255, 255, 255, 0.6);
 }
-.brush-cursor.eraser-cursor::after { display: none; }
 .brush-cursor.hidden { display: none; }
 
 .color-preview-row {
