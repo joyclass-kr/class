@@ -1,8 +1,8 @@
 # 제미나이 그림 프롬프트
 
-이 책은 하나의 이야기를 8개의 장(챕터)으로 나눠 담았고, 각 장마다 그림이
-**한 장**이에요. 그림이 펼침면 전체 폭을 가득 채우고, 그 아래에 이야기가
-왼쪽·오른쪽으로 나뉘어 들어갑니다.
+이 책은 하나의 이야기를 8개의 장(챕터)으로 나눠 담았고, 펼침면은 모두
+16개예요. 펼침면 하나에 그림이 한 장씩 들어갑니다.
+그림이 펼침면 전체 폭을 가득 채우고, 그 아래에 이야기가 왼쪽·오른쪽으로 나뉘어 들어갑니다.
 
 아래 프롬프트를 제미나이에 그대로 넣어서 생성한 뒤, 파일명을 정확히 맞춰서
 `images/` 폴더에 저장하면 자동으로 책에 나타납니다.
@@ -45,49 +45,57 @@ his chest.
 
 | 파일명 | 장면 |
 |---|---|
-| `images/01-ball.png` | A sunlit forest pond where a girl in a yellow gown reaches out in dismay as a golden ball splashes into the dark water, ripples spreading, trees reflected, vivid and lively. |
+| `images/01-ball.png` | A sunlit forest pond ringed with old lime trees where a girl in a yellow gown tosses a golden ball into the air, castle towers just visible beyond the trees, bright and inviting. |
+| `images/01-ball-2.png` | A girl in a yellow gown reaching out in dismay as a golden ball splashes into dark pond water, ripples spreading, then sitting on the bank in tears, vivid and lively. |
 
 ## 2장 · 연못에서 나온 목소리
 
 | 파일명 | 장면 |
 |---|---|
-| `images/02-frog.png` | A pond edge where a plump green frog surfaces and speaks to a weeping girl in a yellow gown, lily pads around him, comic and sweet. |
+| `images/02-frog.png` | A pond edge where a plump green frog surfaces among lily pads and speaks to a weeping girl in a yellow gown who recoils in surprise, comic and sweet. |
+| `images/02-frog-2.png` | A frog on a lily pad shaking its head as a girl in yellow kneels at the bank offering her crown and jewels, evening light on the water, funny and pointed. |
 
 ## 3장 · 가벼운 약속
 
 | 파일명 | 장면 |
 |---|---|
-| `images/03-promise.png` | A frog holding a golden ball in its mouth at the water's edge while a girl snatches it and runs off down a forest path without looking back, the frog left calling after her, funny and pointed. |
+| `images/03-promise.png` | A frog earnestly making its request at the water's edge while a girl in a yellow gown rolls her eyes and agrees carelessly, the deep forest pond behind them, comic. |
+| `images/03-promise-2.png` | A frog holding a golden ball in its mouth at the water's edge while a girl snatches it and runs off down a forest path without looking back, the frog calling after her. |
 
 ## 4장 · 문을 두드리는 소리
 
 | 파일명 | 장면 |
 |---|---|
-| `images/04-knock.png` | A grand dining hall with a family at table, and at the open door a small green frog sitting on the threshold while a girl in yellow slams the door shut in horror, hilarious contrast of scale. |
+| `images/04-knock.png` | A grand dining hall with a royal family at a long table, a girl in yellow freezing with a dropped spoon as knocking sounds come from the tall door, warm candlelight. |
+| `images/04-knock-2.png` | A small muddy green frog sitting on a palace threshold as a girl in yellow slams the tall door shut in horror and returns pale to the dinner table, hilarious contrast of scale. |
 
 ## 5장 · 임금님의 말
 
 | 파일명 | 장면 |
 |---|---|
-| `images/05-king.png` | A dining hall where a bearded king speaks gently but firmly to his daughter, other courtiers listening, the door standing open with a frog waiting beyond, dignified and warm. |
+| `images/05-king.png` | A dining hall where a girl in yellow reluctantly confesses to a bearded king seated at the head of the table, sisters and courtiers listening, dignified and warm. |
+| `images/05-king-2.png` | A bearded king speaking gently but firmly while his daughter looks at her feet, and then the girl reopening the tall door where a patient frog still waits, quiet and moving. |
 
 ## 6장 · 한 밥상에서
 
 | 파일명 | 장면 |
 |---|---|
 | `images/06-dinner.png` | A frog perched on a fine dinner plate eating happily while a girl in yellow leans as far away as her chair allows, the king hiding a smile behind his hand, very funny. |
+| `images/06-dinner-2.png` | A frog patting its full belly on the dinner table while a girl in yellow leaps up protesting and the king clears his throat, then the girl carrying the frog upstairs by one fingertip. |
 
 ## 7장 · 방문 앞에서
 
 | 파일명 | 장면 |
 |---|---|
-| `images/07-room.png` | A candlelit bedchamber where a small frog crouches alone on cold stone in the corner, and the girl in yellow finally kneeling to gather it gently into both hands, tender and quiet. |
+| `images/07-room.png` | A candlelit bedchamber where a girl in a nightgown lies in a soft canopied bed while a small frog crouches alone in a far corner on cold stone, quiet and tender. |
+| `images/07-room-2.png` | A girl kneeling with a candle to gather a shivering little frog gently into both hands and set it beside her pillow, warm candlelight, tender and quiet. |
 
 ## 8장 · 풀린 마법
 
 | 파일명 | 장면 |
 |---|---|
-| `images/08-ending.png` | A bedchamber filling with light as a frog transforms into a young prince, and outside a carriage where a stout servant's three iron bands snap and fall away from his chest, joyous and magical. |
+| `images/08-ending.png` | A bedchamber filling with brilliant light as a frog transforms into a young prince in fine clothes, the girl shielding her eyes then staring in wonder, joyous and magical. |
+| `images/08-ending-2.png` | A carriage drawn by eight white horses rolling from a palace gate, a stout servant at the back as three iron bands snap and fall from his chest, joyous and bright. |
 
 ## 사용 팁
 
