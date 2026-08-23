@@ -3351,6 +3351,26 @@ body.journey-active .journey-screen:not(.hidden) {
     }
 }
 
+/* Large atlas structures are direct touch, pointer, and keyboard targets. */
+.body-model [data-inspect-target] {
+    cursor: pointer;
+    outline: none;
+    pointer-events: all;
+    transition: opacity 160ms ease, filter 160ms ease;
+}
+
+.body-model [data-inspect-target]:hover,
+.body-model [data-inspect-target]:focus-visible,
+.body-model [data-inspect-target].is-inspected {
+    opacity: 1;
+    filter: drop-shadow(0 0 7px rgba(255, 218, 143, .9)) brightness(1.12);
+}
+
+.body-model [data-inspect-target]:focus-visible {
+    stroke: #ffe1a6;
+    stroke-width: max(3px, .65%);
+}
+
 /* Regression guard: override the legacy direct-panel grid placement inside the workspace. */
 @media (min-width: 900px) and (min-height: 650px) {
     body.journey-active .journey-screen:not(.hidden) .journey-workspace > .anatomy-explorer {

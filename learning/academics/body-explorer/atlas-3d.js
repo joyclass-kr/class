@@ -24,15 +24,47 @@
     const anatomyNotes = {
         "body-return": { title: "대정맥 · VENA CAVA", text: "온몸을 돌고 산소가 적어진 혈액을 심장의 우심방으로 되돌려 보내는 가장 큰 정맥입니다." },
         "right-atrium": { title: "우심방 · RIGHT ATRIUM", text: "대정맥에서 돌아온 혈액을 가장 먼저 받아 우심실 쪽으로 보내는 심장의 방입니다." },
+        "right-ventricle": { title: "우심실 · RIGHT VENTRICLE", text: "우심방에서 받은 산소가 적은 혈액을 폐동맥으로 밀어내 폐로 보냅니다." },
         tricuspid: { title: "삼첨판 · TRICUSPID VALVE", text: "우심방과 우심실 사이에서 열리고 닫히며 혈액이 뒤로 흐르는 것을 막습니다." },
         "pulmonary-artery": { title: "폐동맥 · PULMONARY ARTERY", text: "우심실에서 나온 산소가 적은 혈액을 폐로 운반합니다. 동맥이지만 산소가 적은 혈액이 흐릅니다." },
         alveoli: { title: "폐포 · ALVEOLI", text: "포도송이처럼 모인 작은 공기주머니입니다. 산소는 혈액으로, 이산화탄소는 폐포 안으로 이동합니다." },
         "pulmonary-vein": { title: "폐정맥 · PULMONARY VEIN", text: "폐에서 산소를 얻은 혈액을 좌심방으로 운반합니다. 정맥이지만 산소가 풍부한 혈액이 흐릅니다." },
+        "left-atrium": { title: "좌심방 · LEFT ATRIUM", text: "폐정맥을 통해 돌아온 산소가 풍부한 혈액을 받아 좌심실로 보냅니다." },
         mitral: { title: "이첨판 · MITRAL VALVE", text: "좌심방과 좌심실 사이의 판막으로, 강하게 수축할 때도 혈액의 역류를 막습니다." },
         "left-ventricle": { title: "좌심실 · LEFT VENTRICLE", text: "두꺼운 근육으로 강하게 수축해 산소가 풍부한 혈액을 대동맥과 온몸으로 밀어냅니다." },
         aorta: { title: "대동맥 · AORTA", text: "좌심실에서 나온 혈액이 온몸으로 퍼져 나갈 때 가장 먼저 지나는 우리 몸의 가장 큰 동맥입니다." },
         "tissue-exchange": { title: "모세혈관 · CAPILLARY BED", text: "가느다란 벽을 사이에 두고 세포에 산소와 영양소를 주며 이산화탄소와 노폐물을 받아옵니다." }
     };
+    const inspectableStructures = {
+        "body-return": [".atlas-view-body .vena-cava-path", ".atlas-view-heart .heart-vena", ".atlas-view-heart .diagram-labels text"],
+        "right-atrium": [".right-atrium-chamber"],
+        "right-ventricle": [".right-ventricle-chamber"],
+        tricuspid: [".tricuspid-valve", ".callout-valve"],
+        "pulmonary-artery": [".heart-pulmonary-artery", ".lung-artery-large"],
+        alveoli: [".alveoli-cluster"],
+        "pulmonary-vein": [".heart-pulmonary-vein", ".lung-vein-large"],
+        "left-atrium": [".left-atrium-chamber"],
+        mitral: [".mitral-valve"],
+        "left-ventricle": [".left-ventricle-chamber"],
+        aorta: [".atlas-view-body .aorta-path", ".heart-aorta"],
+        "tissue-exchange": [".tissue-capillary-path", ".capillary-beds"]
+    };
+    const inspectableElements = [];
+    const registeredStructures = new Set();
+
+    Object.entries(inspectableStructures).forEach(([target, selectors]) => {
+        selectors.forEach((selector) => {
+            layer.querySelectorAll(selector).forEach((element) => {
+                if (registeredStructures.has(element)) return;
+                registeredStructures.add(element);
+                element.dataset.inspectTarget = target;
+                element.setAttribute("tabindex", "0");
+                element.setAttribute("role", "button");
+                element.setAttribute("aria-label", `${anatomyNotes[target].title} 설명 보기`);
+                inspectableElements.push(element);
+            });
+        });
+    });
     map.dataset.layerSkin = "true";
     map.dataset.layerOrgans = "true";
     map.dataset.layerVessels = "true";
@@ -72,6 +104,21 @@
     function announce(message) {
         const announcer = document.getElementById("announcer");
         if (announcer) announcer.textContent = message;
+    }
+
+    function inspectStructure(target) {
+        const note = anatomyNotes[target];
+        if (!note || !feedbackTitle || !feedbackText || !feedback) return;
+        map.querySelectorAll(".anatomy-hotspot").forEach((button) => {
+            button.classList.toggle("is-inspected", button.dataset.target === target);
+        });
+        inspectableElements.forEach((element) => {
+            element.classList.toggle("is-inspected", element.dataset.inspectTarget === target);
+        });
+        feedback.dataset.state = "explore";
+        feedbackTitle.textContent = note.title;
+        feedbackText.textContent = note.text;
+        announce(note.title + ". " + note.text);
     }
 
     function resetCamera(announceChange = true) {
@@ -116,7 +163,10 @@
     });
 
     map.addEventListener("pointerdown", (event) => {
-        if (event.target.closest("button")) return;
+        if (event.target.closest("button, [data-inspect-target]")) {
+            state.moved = false;
+            return;
+        }
         state.dragging = true;
         state.moved = false;
         state.startX = event.clientX;
@@ -149,15 +199,16 @@
     map.addEventListener("pointercancel", stopRotation);
 
     map.addEventListener("click", (event) => {
-        const hotspot = event.target.closest(".anatomy-hotspot");
-        if (!hotspot) return;
-        const note = anatomyNotes[hotspot.dataset.target];
-        if (!note || !feedbackTitle || !feedbackText || !feedback) return;
-        map.querySelectorAll(".anatomy-hotspot").forEach((button) => button.classList.toggle("is-inspected", button === hotspot));
-        feedback.dataset.state = "explore";
-        feedbackTitle.textContent = note.title;
-        feedbackText.textContent = note.text;
-        announce(note.title + ". " + note.text);
+        const source = event.target.closest("[data-inspect-target], .anatomy-hotspot");
+        if (!source || state.moved) return;
+        inspectStructure(source.dataset.inspectTarget || source.dataset.target);
+    });
+
+    map.addEventListener("keydown", (event) => {
+        const source = event.target.closest("[data-inspect-target]");
+        if (!source || (event.key !== "Enter" && event.key !== " ")) return;
+        event.preventDefault();
+        inspectStructure(source.dataset.inspectTarget);
     });
 
     map.addEventListener("wheel", (event) => {
