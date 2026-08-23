@@ -1,8 +1,8 @@
 # 제미나이 그림 프롬프트
 
-이 책은 하나의 이야기를 8개의 장(챕터)으로 나눠 담았고, 각 장마다 그림이
-**한 장**이에요. 그림이 펼침면 전체 폭을 가득 채우고, 그 아래에 이야기가
-왼쪽·오른쪽으로 나뉘어 들어갑니다.
+이 책은 하나의 이야기를 8개의 장(챕터)으로 나눠 담았고, 펼침면은 모두
+16개예요. 펼침면 하나에 그림이 한 장씩 들어갑니다.
+그림이 펼침면 전체 폭을 가득 채우고, 그 아래에 이야기가 왼쪽·오른쪽으로 나뉘어 들어갑니다.
 
 아래 프롬프트를 제미나이에 그대로 넣어서 생성한 뒤, 파일명을 정확히 맞춰서
 `images/` 폴더에 저장하면 자동으로 책에 나타납니다.
@@ -44,49 +44,57 @@ various working people in aprons, ponchos and work clothes along the way.
 
 | 파일명 | 장면 |
 |---|---|
-| `images/01-letter.png` | A modest Italian kitchen where a worried father sits with unopened enquiries while a determined boy stands with his hand on the table, an old letter and a small photograph nearby, warm afternoon light. |
+| `images/01-letter.png` | A modest Italian kitchen where a father and son read a letter from far away, an old photograph on the table, warm afternoon light, tender. |
+| `images/01-letter-2.png` | A worried father sitting with unanswered letters at night while a determined boy stands with his hand on the table, lamplight, moving. |
 
 ## 2장 · 제노바 항구
 
 | 파일명 | 장면 |
 |---|---|
-| `images/02-harbor.png` | A crowded Genoa harbour at departure, a great steamship with smoke rising, families waving handkerchiefs, a boy at the railing waving back to his father on the quay, golden Mediterranean light. |
+| `images/02-harbor.png` | A crowded Genoa harbour at departure with a great steamship, smoke rising and families waving handkerchiefs on the quay, golden Mediterranean light. |
+| `images/02-harbor-2.png` | A boy at a ship's railing waving back to his father on a receding quay as the coastline shrinks and open ocean spreads ahead, moving. |
 
 ## 3장 · 바다를 건너
 
 | 파일명 | 장면 |
 |---|---|
-| `images/03-voyage.png` | A crowded steamship deck at night where a boy lies among bundles looking up at a brilliant field of stars over a dark ocean, other passengers sleeping nearby, quiet and moving. |
+| `images/03-voyage.png` | A crowded steamship deck where a boy sleeps among bundles, and at night lies looking up at a brilliant field of stars over a dark ocean, quiet and moving. |
+| `images/03-voyage-2.png` | Emigrant passengers sharing bread with a boy on a ship deck, then the whole deck crowding to the rail as a distant coastline appears, hopeful. |
 
 ## 4장 · 이미 떠난 뒤
 
 | 파일명 | 장면 |
 |---|---|
-| `images/04-moved.png` | A boy standing at the doorway of a shuttered city house as a neighbour points down the road, his shoulders sagging, dusty South American street with pastel buildings, late afternoon. |
+| `images/04-moved.png` | A boy stepping off a ship into a busy Buenos Aires street of pastel buildings, then knocking at a house door with a paper in his hand, hopeful. |
+| `images/04-moved-2.png` | A boy standing at a shuttered doorway as a stranger points north down a dusty street, his shoulders sagging then straightening, late afternoon light. |
 
 ## 5장 · 도와준 사람들
 
 | 파일명 | 장면 |
 |---|---|
-| `images/05-help.png` | A boy riding on the back of a loaded ox cart along a wide dusty plain road, a poncho-wearing driver offering him bread, endless pampas grass and big sky, warm and generous mood. |
+| `images/05-help.png` | A wide pampas road under a huge sky where a boy walks and is offered a ride by poncho-wearing travellers, cattle in the distance, warm and generous. |
+| `images/05-help-2.png` | A boy riding on a loaded ox cart eating shared bread, sleeping in a barn, and walking on with worn shoes across endless plains, warm and moving. |
 
 ## 6장 · 다시 어긋난 길
 
 | 파일명 | 장면 |
 |---|---|
-| `images/06-again.png` | A boy sitting on a roadside kerb with his head down and a small photograph in his hand, then standing up again with the bundle over his shoulder, long empty road stretching to distant hills, resilient. |
+| `images/06-again.png` | A boy slumping onto a kerb outside another empty house as a neighbour gestures far to the north, dusty street, deeply disheartening. |
+| `images/06-again-2.png` | A boy taking a small photograph from his pocket and looking at his smiling mother, then standing up with his bundle and setting off north, resilient. |
 
 ## 7장 · 마지막 길
 
 | 파일명 | 장면 |
 |---|---|
-| `images/07-final.png` | A footsore boy with worn shoes walking a dusty track toward a small cluster of adobe houses under mountains, a woman in the doorway raising her hand in recognition, hopeful golden dusk. |
+| `images/07-final.png` | A footsore boy with broken shoes crossing rivers and hills toward distant Andean mountains, dusty track, golden dusk, resilient. |
+| `images/07-final-2.png` | A small cluster of adobe houses under mountains where a woman hanging laundry stops and stares at an approaching ragged boy, hopeful golden dusk. |
 
 ## 8장 · 어머니의 방
 
 | 파일명 | 장면 |
 |---|---|
-| `images/08-reunion.png` | A simple sunlit room where a boy kneels beside a bed as a pale woman slowly opens her eyes and reaches for his face, a window open to mountains beyond, deeply tender reunion. |
+| `images/08-reunion.png` | A simple sunlit room where a boy kneels beside a bed holding the hand of a pale woman who lies very still, a window open to mountains, deeply tender. |
+| `images/08-reunion-2.png` | A pale woman opening her eyes and reaching for her son's face, and later mother and son standing together at a ship's rail heading home, radiant and moving. |
 
 ## 사용 팁
 

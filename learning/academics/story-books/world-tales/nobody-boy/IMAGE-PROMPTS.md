@@ -1,8 +1,8 @@
 # 제미나이 그림 프롬프트
 
-이 책은 하나의 이야기를 8개의 장(챕터)으로 나눠 담았고, 각 장마다 그림이
-**한 장**이에요. 그림이 펼침면 전체 폭을 가득 채우고, 그 아래에 이야기가
-왼쪽·오른쪽으로 나뉘어 들어갑니다.
+이 책은 하나의 이야기를 8개의 장(챕터)으로 나눠 담았고, 펼침면은 모두
+16개예요. 펼침면 하나에 그림이 한 장씩 들어갑니다.
+그림이 펼침면 전체 폭을 가득 채우고, 그 아래에 이야기가 왼쪽·오른쪽으로 나뉘어 들어갑니다.
 
 아래 프롬프트를 제미나이에 그대로 넣어서 생성한 뒤, 파일명을 정확히 맞춰서
 `images/` 폴더에 저장하면 자동으로 책에 나타납니다.
@@ -45,49 +45,57 @@ Mother Barberin: a kind round-faced village woman in an apron.
 
 | 파일명 | 장면 |
 |---|---|
-| `images/01-home.png` | A humble French cottage kitchen with a copper pot on the fire where a round-faced woman in an apron holds a small boy close, evening light through a small window, tender and warm. |
+| `images/01-home.png` | A humble French cottage kitchen with a copper pot on the fire where a round-faced woman in an apron tells stories to a small boy on her lap, evening light, tender. |
+| `images/01-home-2.png` | A woman in an apron holding a boy tightly in a firelit cottage kitchen, both faces stricken, warm light and long shadows, deeply tender. |
 
 ## 2장 · 비탈리스 할아버지
 
 | 파일명 | 장면 |
 |---|---|
-| `images/02-vitalis.png` | A village square where a dignified old street musician in a wide hat stands with three dogs and a monkey in a red jacket, speaking to a barefoot boy, villagers watching, warm afternoon. |
+| `images/02-vitalis.png` | A village square where a dignified old street musician in a wide hat arrives with three dogs and a monkey in a red jacket, villagers crowding round, warm afternoon. |
+| `images/02-vitalis-2.png` | An old musician speaking gently to a barefoot boy while a village woman wipes her eyes and nods, then the boy walking out of the village at dawn, moving. |
 
 ## 3장 · 길 위의 식구들
 
 | 파일명 | 장면 |
 |---|---|
-| `images/03-troupe.png` | A sunny village market square where a boy plays a small harp while a white poodle counts on its paws and a monkey in a red jacket doffs its cap, delighted children crowding round, lively and joyful. |
+| `images/03-troupe.png` | A sunny village market square where a white poodle counts on its paws and a monkey in a red jacket doffs its cap, delighted children crowding round, joyful. |
+| `images/03-troupe-2.png` | An old musician teaching a boy to play a small harp by a campfire and writing letters in the dust with a stick, dogs curled nearby, warm and tender. |
 
 ## 4장 · 눈보라 치던 밤
 
 | 파일명 | 장면 |
 |---|---|
-| `images/04-snow.png` | A snowbound forest hollow at night where an old man wraps his cloak around a boy while dogs press close for warmth, snow whirling, a faint glow of dawn beginning at the horizon, moving. |
+| `images/04-snow.png` | A snowbound forest at night where an old man and a boy struggle through whirling snow with dogs, distant wolf howls, dramatic but not frightening. |
+| `images/04-snow-2.png` | A snowy hollow where an old man wraps his cloak around a boy while dogs press close and a monkey burrows into his coat, dawn glow at the horizon, moving. |
 
 ## 5장 · 헤어짐
 
 | 파일명 | 장면 |
 |---|---|
-| `images/05-parting.png` | A cold city street at dawn where a boy kneels beside an old man wrapped in a cloak, a white poodle pressing against them both, pale winter light, deeply tender and quiet. |
+| `images/05-parting.png` | A cold city street before dawn where a boy and a frail old man huddle against a wall with their dogs, breath misting, pale winter light, tender and quiet. |
+| `images/05-parting-2.png` | A boy holding a white poodle and weeping beside a still old man wrapped in a cloak at dawn, the city waking around them, deeply moving but gentle. |
 
 ## 6장 · 물 위의 집
 
 | 파일명 | 장면 |
 |---|---|
-| `images/06-barge.png` | A canal barge with flower boxes drifting under willow trees where a boy plays a harp at the bow, a pale child smiling from a deck chair and a kind woman steering, golden afternoon light. |
+| `images/06-barge.png` | A canal barge with flower boxes moored under willow trees where a kind woman waves to a boy with a harp and a poodle, a pale child resting on deck, golden light. |
+| `images/06-barge-2.png` | A boy playing a harp at a barge bow as the canal slips past, a pale child smiling from a deck chair and a woman wiping her eyes, golden afternoon. |
 
 ## 7장 · 어두운 갱도
 
 | 파일명 | 장면 |
 |---|---|
-| `images/07-mine.png` | A dark flooded mine gallery lit by a single lamp where miners and a boy sit against the rock wall, the boy singing softly, and a faint pickaxe glow appearing far down the tunnel, hopeful. |
+| `images/07-mine.png` | A coal-mining village with smoking chimneys, and a boy descending into a deep dark gallery with a lamp among miners, water dripping, atmospheric. |
+| `images/07-mine-2.png` | A dark flooded mine gallery lit by one lamp where miners and a boy sit against the rock, the boy singing softly, a faint pickaxe glow far down the tunnel, hopeful. |
 
 ## 8장 · 찾아낸 가족
 
 | 파일명 | 장면 |
 |---|---|
-| `images/08-ending.png` | A bright garden gathering where a boy is embraced by a family while a village woman in an apron arrives at the gate and a white poodle bounds toward them, harp propped on a bench, joyful reunion. |
+| `images/08-ending.png` | A rescue crew breaking through into a mine gallery and miners emerging into blinding daylight to cheering villagers, then strangers approaching a boy, hopeful. |
+| `images/08-ending-2.png` | A bright garden gathering where a boy is embraced by his family, a village woman in an apron arriving at the gate and a white poodle bounding to meet her, joyful. |
 
 ## 사용 팁
 
