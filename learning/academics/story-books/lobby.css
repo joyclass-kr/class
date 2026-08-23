@@ -9,7 +9,7 @@
 
 * { box-sizing: border-box; }
 
-html { background: var(--panel-dark); }
+html { background: #0d0a12; }
 
 body {
     margin: 0;
@@ -22,78 +22,100 @@ body {
     font-family: "Noto Serif KR", Georgia, "Times New Roman", serif;
 }
 
+/* 갈래마다 다른 그림이 화면 전체에 깔린다. */
 body::before {
     content: "";
     position: fixed;
     inset: 0;
-    z-index: -1;
-    background: var(--panel-dark) url('../../../assets/images/indexbg.jpg') center / cover no-repeat;
+    z-index: -2;
+    background: #0d0a12 center / cover no-repeat;
     pointer-events: none;
 }
+
+/* 그림 위에 글씨가 얹히므로 위아래를 어둡게 눌러 준다. */
+body::after {
+    content: "";
+    position: fixed;
+    inset: 0;
+    z-index: -1;
+    background: linear-gradient(180deg, rgba(6, 4, 10, 0.78) 0%, rgba(6, 4, 10, 0.45) 26%, rgba(6, 4, 10, 0.72) 68%, rgba(6, 4, 10, 0.88) 100%);
+    pointer-events: none;
+}
+
+body.shelf-korea::before { background-image: url('../../../assets/images/storybooks-korea.webp'); }
+body.shelf-world-tales::before { background-image: url('../../../assets/images/storybooks-world-tales.webp'); }
+body.shelf-world-novels::before { background-image: url('../../../assets/images/storybooks-world-novels.webp'); }
 
 .top-bar {
     display: flex;
     justify-content: flex-start;
     max-width: 1080px;
-    margin: 0 auto 22px;
+    margin: 0 auto 18px;
 }
 
 .back-link {
-    padding: 9px 16px;
-    border: 2px solid var(--gold);
-    background: linear-gradient(135deg, var(--gold-dark), var(--panel));
-    color: #ffffff;
+    padding: 8px 15px;
+    border: 1px solid var(--gold);
+    border-radius: 3px;
+    background: rgba(12, 8, 6, 0.72);
+    color: #f6e7c8;
     text-decoration: none;
-    font-size: 15px;
+    font-size: 14px;
     font-weight: 700;
 }
 
 .back-link:hover,
 .back-link:focus-visible {
     border-color: #ffd18a;
-    background: linear-gradient(135deg, var(--gold-mid), var(--panel-dark));
+    background: rgba(184, 114, 31, 0.85);
+    color: #ffffff;
 }
 
 h1 {
-    margin: 0 0 6px;
+    margin: 0;
     color: #ffeec4;
     font-family: "Gowun Batang", "Noto Serif KR", serif;
-    font-size: 30px;
-    letter-spacing: 1px;
-    text-shadow: 0 2px 8px rgba(0, 0, 0, 0.85);
+    font-size: 32px;
+    letter-spacing: 2px;
+    text-shadow: 0 2px 12px rgba(0, 0, 0, 0.95), 0 0 30px rgba(0, 0, 0, 0.8);
 }
 
 h1 span {
     display: block;
-    color: var(--gold);
-    font-size: 14px;
+    margin-top: 4px;
+    color: rgba(215, 180, 122, 0.85);
+    font-size: 13px;
     font-weight: 400;
-    letter-spacing: 2px;
+    letter-spacing: 3px;
 }
 
 .shelf {
     display: grid;
-    grid-template-columns: repeat(auto-fill, minmax(148px, 1fr));
-    gap: 18px;
-    max-width: 1080px;
-    margin: 28px auto 0;
+    grid-template-columns: repeat(auto-fill, minmax(156px, 1fr));
+    gap: 20px;
+    max-width: 1060px;
+    margin: 34px auto 0;
 }
 
 .book-card {
     display: flex;
     flex-direction: column;
-    padding: 8px 8px 0;
-    border: 2px solid var(--gold);
-    background: linear-gradient(135deg, var(--gold-dark), var(--panel));
-    color: #ffffff;
+    padding: 7px 7px 0;
+    border: 1px solid rgba(215, 180, 122, 0.55);
+    border-radius: 3px;
+    background: rgba(14, 9, 7, 0.74);
+    color: #f6e7c8;
     text-decoration: none;
-    box-shadow: 0 6px 16px rgba(0, 0, 0, 0.6);
+    box-shadow: 0 10px 24px rgba(0, 0, 0, 0.55);
+    transition: transform 0.15s ease, border-color 0.15s ease, background 0.15s ease;
 }
 
 .book-card:hover,
 .book-card:focus-visible {
+    transform: translateY(-4px);
     border-color: #ffd18a;
-    background: linear-gradient(135deg, var(--gold-mid), var(--panel-dark));
+    background: rgba(40, 22, 8, 0.9);
+    color: #ffffff;
 }
 
 .book-cover {
@@ -101,8 +123,7 @@ h1 span {
     position: relative;
     aspect-ratio: 3 / 4;
     overflow: hidden;
-    background: var(--panel-darker);
-    box-shadow: inset 0 0 0 1px rgba(215, 180, 122, 0.4);
+    background: #120c14;
 }
 
 .book-cover img {
@@ -112,8 +133,13 @@ h1 span {
     object-fit: cover;
 }
 
-/* 표지 그림이 아직 없는 책은 제목을 표지 자리에 크게 세워 둔다. */
+/* 표지 그림이 아직 없는 책은 제목을 표지 자리에 세워 둔다. */
 .book-card.no-cover .book-cover img { display: none; }
+
+.book-card.no-cover .book-cover {
+    background: linear-gradient(160deg, #2a1a30, #120c14 60%);
+    box-shadow: inset 0 0 0 1px rgba(215, 180, 122, 0.28);
+}
 
 .book-card.no-cover .book-cover::after {
     content: attr(data-title);
@@ -123,7 +149,7 @@ h1 span {
     align-items: center;
     justify-content: center;
     padding: 14px;
-    color: var(--gold);
+    color: rgba(215, 180, 122, 0.9);
     font-family: "Gowun Batang", "Noto Serif KR", serif;
     font-size: 17px;
     line-height: 1.5;
@@ -132,7 +158,7 @@ h1 span {
 
 .book-title {
     display: block;
-    padding: 10px 4px 12px;
+    padding: 9px 4px 11px;
     font-size: 15px;
     font-weight: 700;
     line-height: 1.35;
@@ -140,8 +166,9 @@ h1 span {
 
 .book-title b {
     display: block;
-    color: var(--gold);
-    font-size: 12px;
+    margin-bottom: 2px;
+    color: rgba(215, 180, 122, 0.8);
+    font-size: 11px;
     font-weight: 400;
     letter-spacing: 1px;
 }
@@ -150,8 +177,9 @@ h1 span {
     body { padding: 14px 14px 40px; }
     h1 { font-size: 24px; }
     .shelf {
-        grid-template-columns: repeat(auto-fill, minmax(128px, 1fr));
-        gap: 12px;
+        grid-template-columns: repeat(auto-fill, minmax(132px, 1fr));
+        gap: 13px;
+        margin-top: 24px;
     }
     .book-title { font-size: 14px; }
 }
