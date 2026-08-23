@@ -7,7 +7,8 @@ const CHAPTERS = [
         num: 1,
         title: "소금을 진 당나귀",
         emoji: "🐴",
-        art: ["story-01-donkey.webp", "story-01-donkey-2.webp", "story-01-donkey-3.webp"],
+        art: ["story-01-donkey.webp", "story-01-donkey-3.webp", "story-01-donkey-2.webp"],
+        artTail: true,
         paras: [
             `모르드개 아저씨는 마을에서 제일가는 소금 장수였어요. 콧수염이 양옆으로 삐죽 솟은, 웃음이 헤픈 아저씨였지요.`,
             `그 무거운 소금 자루를 시장까지 날라 주는 건 언제나 회색 당나귀 초록이였답니다.`,
@@ -535,7 +536,8 @@ const CHAPTERS = [
         num: 11,
         title: "영리한 상인의 함정",
         emoji: "🕳️",
-        art: ["story-11-jar.webp", "story-11-jar-2.webp", "story-11-jar-3.webp"],
+        art: ["story-11-jar.webp", "story-11-jar-3.webp", "story-11-jar-2.webp"],
+        artTail: true,
         paras: [
             `엘르아살은 장이 설 때마다 이 마을 저 마을을 떠도는 상인이었어요.`,
             `천이며 그릇이며 없는 게 없었지요.`,
@@ -1003,11 +1005,16 @@ function runHtml(segs, a, b) {
     return out;
 }
 
+// 그림은 이야기 차례대로 그려져 있다. 첫 그림은 도입, 마지막 그림은 결말이다.
+// 그래서 첫 그림은 첫 펼침면에, 마지막 그림은 마지막 펼침면에 놓고
+// 그 사이를 고르게 벌린다. 가운데로 몰아 놓으면 그림과 글이 어긋난다.
 function slotPlan(imgCount, textCount) {
     const total = imgCount + textCount;
     const slots = new Array(total).fill('text');
+    if (imgCount <= 0) return slots;
+    if (imgCount === 1) { slots[0] = 'img'; return slots; }
     for (let k = 0; k < imgCount; k++) {
-        let pos = Math.min(Math.round((k * total) / imgCount), total - 1);
+        let pos = Math.round((k * (total - 1)) / (imgCount - 1));
         while (slots[pos] === 'img') pos = (pos + 1) % total;
         slots[pos] = 'img';
     }
@@ -1071,27 +1078,41 @@ function paginateChapter(ch, chIndex) {
 
     // 그림이 얹힌 쪽에도 그 아래에 글이 들어간다. 그래서 담을 수 있는 높이가 쪽마다 다르다.
     const underArt = Math.max(60, usable - artHeight);
+    // 마지막 쪽에는 '생각해봐요' 상자가 붙는다.
+    // 그 쪽이 그림 쪽이면 그림과 상자만으로 꽉 차므로 글은 아예 넣지 않는다.
+    // 글 쪽이면 상자 높이만큼만 덜어 낸다.
     const capsOf = slots => {
         const caps = [];
         slots.forEach(kind => { caps.push(usable); caps.push(kind === 'img' ? underArt : usable); });
-        // 마지막 쪽 아래에 '생각해봐요' 상자가 붙으므로 그만큼 글을 적게 담는다
-        caps[caps.length - 1] = Math.max(60, caps[caps.length - 1] - moralHeight);
+        const lastIsArt = slots[slots.length - 1] === 'img';
+        caps[caps.length - 1] = lastIsArt ? 0 : Math.max(60, usable - moralHeight);
         return caps;
     };
 
-    // 마지막 펼침면에는 상자가 들어가므로 그림을 얹지 않는다
+    // 마지막 쪽이 그림·상자만 쓰는 쪽이면 글은 그 앞 쪽까지만 나눈다.
+    const fill = (caps) => {
+        if (caps[caps.length - 1] > 0) return fillPages(segs, caps, headHtml);
+        const r = fillPages(segs, caps.slice(0, -1), headHtml);
+        r.push([segs.length, segs.length]);
+        return r;
+    };
+
+    // 마지막 그림은 결말 장면이라 마지막 펼침면에 그대로 둔다.
+    // 그 쪽에는 '생각해봐요' 상자도 함께 들어가므로 글은 넣지 않는다.
+    //
+    // 도입 그림이 따로 없고 그림 셋이 모두 이야기 중후반 장면인 편은
+    // artTail을 켜 둔다. 그러면 그림을 뒤쪽 펼침면에 몰아 놓는다.
+    // 그러지 않으면 도입 쪽에 한창 벌어지는 장면 그림이 붙어 버린다.
     const planOf = (n) => {
-        const sl = slotPlan(arts.length, Math.max(0, n - arts.length));
-        if (sl.length > 1 && sl[sl.length - 1] === 'img') {
-            const t = sl.lastIndexOf('text');
-            if (t >= 0) { sl[t] = 'img'; sl[sl.length - 1] = 'text'; }
-        }
+        if (!ch.artTail) return slotPlan(arts.length, Math.max(0, n - arts.length));
+        const sl = new Array(n).fill('text');
+        for (let k = 0; k < arts.length && k < n; k++) sl[n - arts.length + k] = 'img';
         return sl;
     };
 
     // 그림 한 장이 펼침면 하나를 쓴다. 거기서 시작해 글이 다 들어갈 때까지 펼침면을 늘린다.
     // 쪽 수는 조각 수를 넘을 수 없다 — 빈 쪽이 생기면 안 되기 때문이다.
-    const minSpreads = Math.max(arts.length + 1, 2);
+    const minSpreads = Math.max(arts.length, 2);
     const maxSpreads = Math.max(minSpreads, Math.floor(segs.length / 2));
     let spreadCount = minSpreads;
     while (spreadCount < maxSpreads) {
@@ -1102,7 +1123,7 @@ function paginateChapter(ch, chIndex) {
 
     let slots = planOf(spreadCount);
     let caps = capsOf(slots);
-    let ranges = fillPages(segs, caps, headHtml);
+    let ranges = fill(caps);
     for (let guard = 0; guard < 8; guard++) {
         // 한 쪽이라도 넘치면 펼침면을 늘려 다시 나눈다.
         // 마지막 쪽만 보면 안 된다 — 첫 쪽에는 장 제목이 얹히므로 그쪽이 먼저 넘칠 수 있다.
@@ -1117,7 +1138,7 @@ function paginateChapter(ch, chIndex) {
         spreadCount++;
         slots = planOf(spreadCount);
         caps = capsOf(slots);
-        ranges = fillPages(segs, caps, headHtml);
+        ranges = fill(caps);
     }
 
     const spreads = [];
@@ -1154,13 +1175,13 @@ function coverPage() {
     return `
         <div class="page page-cover">
             <div class="story-page-left story-page-left-full">
-                ${artFrame('cover.webp', '⚔️')}
+                ${artFrame('cover.webp', '📖')}
             </div>
             <div class="story-page-right">
-                <h1>삼국지</h1>
-                <p class="cover-tag">나관중 원작</p>
-                <p>천팔백 년 전 중국, 후한이 무너지고 백 년 가까이 천하가 셋으로 갈립니다. 유비와 조조와 손권, 그리고 그 곁의 수많은 사람들 이야기입니다.</p>
-                <p>우리가 읽는 것은 역사책이 아니라 육백 년 전에 지어진 소설입니다. 어디까지가 있었던 일이고 어디부터가 지어낸 것인지 갈리는 대목마다 밝혀 두었습니다.</p>
+                <h1>탈무드</h1>
+                <p>탈무드는 한 사람이 쓴 책이 아니에요. 유대인의 선생인 랍비들이 수백 년 동안 주고받은 토론을 받아 적어 모은 것이지요. 기원 후 2세기 무렵부터 정리하기 시작해 6세기쯤에 지금의 모습이 되었답니다.</p>
+                <p>분량이 어마어마해서 전체를 옮기면 수십 권이 돼요. 대부분은 법과 규칙을 두고 벌인 토론이고, 그 사이사이에 이야기와 비유가 끼어 있지요. 이 책에 담은 것은 그 이야기 부분이랍니다.</p>
+                <p>탈무드라는 말은 히브리어로 배움이라는 뜻이에요. 유대인들은 아이에게 정답을 바로 알려 주기보다 되묻는 방식으로 가르쳤어요. 탈무드의 이야기가 시원한 결론 대신 질문으로 끝나는 때가 많은 것도 그 때문이지요.</p>
             </div>
         </div>`;
 }
