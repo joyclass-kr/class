@@ -1,8 +1,8 @@
 # 제미나이 그림 프롬프트
 
-이 책은 하나의 이야기를 7개의 장(챕터)으로 나눠 담았고, 각 장마다 그림이
-**한 장**이에요. 그림이 펼침면 전체 폭을 가득 채우고, 그 아래에 이야기가
-왼쪽·오른쪽으로 나뉘어 들어갑니다.
+이 책은 하나의 이야기를 7개의 장(챕터)으로 나눠 담았고, 펼침면은 모두
+14개예요. 펼침면 하나에 그림이 한 장씩 들어갑니다.
+그림이 펼침면 전체 폭을 가득 채우고, 그 아래에 이야기가 왼쪽·오른쪽으로 나뉘어 들어갑니다.
 
 아래 프롬프트를 제미나이에 그대로 넣어서 생성한 뒤, 파일명을 정확히 맞춰서
 `images/` 폴더에 저장하면 자동으로 책에 나타납니다.
@@ -18,70 +18,78 @@
 
 ```
 Children's picture book illustration, bright cheerful cartoon-animation style,
-bold clean outlines, saturated storybook colors, soft golden lighting, no text or
-letters in the image, French countryside and castle setting, expressive
-exaggerated character faces, wide panoramic composition, dynamic staging.
+bold clean outlines, saturated storybook colors, warm French countryside light,
+no text or letters in the image, a mill and cottage, wheat fields and meadows, a
+river bank, a royal carriage road and an ogre's grand castle, very expressive
+comic faces, wide panoramic composition, funny and never frightening.
 ```
 
 ## 인물 설명 (일관성을 위해 매번 붙여 넣으세요)
 
 ```
-Puss: a clever orange tabby cat standing upright in tall brown boots, a red
-feathered hat, a small belt with a pouch, always looking pleased with himself.
-The youngest son: a thin young man about 18 in patched brown clothes, later in a
-fine blue and gold coat. The King: a plump jolly monarch in ermine robes. The
-Princess: a cheerful young woman in a yellow gown. The sorcerer: a tall thin man
-in a long green robe, comically vain rather than sinister.
+The cat: a lean tabby in tall red boots, a plumed hat and a small cloak, always
+one step ahead. The youngest son: a plain honest young man in a patched shirt,
+easily flustered. The king: a round jovial man in a gold-trimmed coat. The
+princess: a curious young woman with a lace collar. The ogre: an enormous man in
+a purple coat with a booming laugh, drawn as vain and gullible rather than
+frightening. Field workers in straw hats.
 ```
 
 ## 표지 · 마무리
 
 | 파일명 | 장면 |
 |---|---|
-| `images/cover.png` (세로 2:3 비율) | A tall portrait-format cover: a confident tabby cat wearing tall leather boots, a wide feathered hat and a belt, standing with paws on hips in a sunlit meadow, a distant castle on a hill behind him, warm inviting storybook mood. |
+| `images/cover.png` (세로 2:3 비율) | A tall portrait-format cover: a lean tabby cat in tall red leather boots and a plumed hat standing confidently on a country road with a sack over one shoulder, a castle on a distant hill behind, witty and inviting. |
 | `images/end.png` | A closed storybook resting under a starry night sky with soft golden sparkles rising from its pages, peaceful and warm closing scene. |
 
 ## 1장 · 남은 것은 고양이 한 마리
 
 | 파일명 | 장면 |
 |---|---|
-| `images/01-inherit.png` | Three brothers standing outside an old mill dividing an inheritance — the eldest beside the mill, the middle one holding a donkey, and the youngest looking glumly at a cat sitting at his feet, warm afternoon light. |
+| `images/01-inherit.png` | A mill yard where two brothers claim a mill and a donkey while the youngest sits dejected on a step with only a tabby cat beside him, warm afternoon light, quietly sad. |
+| `images/01-inherit-2.png` | A cottage room where a talking cat asks for a sack and boots, then pulls on tall red leather boots and admires itself in a mirror with a plumed hat, comic swagger. |
 
 ## 2장 · 임금님께 바친 선물
 
 | 파일명 | 장면 |
 |---|---|
-| `images/02-gift.png` | A booted cat bowing grandly before a plump king on his throne while presenting a plump rabbit from a sack, courtiers looking on amused, warm golden throne room. |
+| `images/02-gift.png` | A meadow where a booted cat lies in wait beside an open sack baited with carrots, and a palace hall where the same cat bows deeply before a puzzled king, comic and confident. |
+| `images/02-gift-2.png` | A palace corridor where a booted cat presents game birds to a delighted king again and again over months, and the cat listening at a doorway to servants gossiping, sly and comic. |
 
 ## 3장 · 강물에 빠진 후작님
 
 | 파일명 | 장면 |
 |---|---|
-| `images/03-river.png` | A cat waving frantically at a royal carriage on a riverside road while a young man stands chest-deep in the river looking bewildered, servants rushing to help, sunny riverbank scene, comic energy. |
+| `images/03-river.png` | A river bank where a young man bathes while his clothes lie on a rock, and a booted cat stuffing those clothes deep into the reeds as a royal carriage approaches on the road, comic scheming. |
+| `images/03-river-2.png` | A river bank where courtiers haul a young man from the water as a booted cat gestures dramatically, and the same man moments later dressed in fine borrowed clothes beside a royal carriage, funny. |
 
 ## 4장 · 이 밭은 누구 것이냐
 
 | 파일명 | 장면 |
 |---|---|
-| `images/04-fields.png` | A booted cat running ahead along a country road speaking urgently to farmers in a golden wheat field, while a royal carriage approaches in the distance, wide sunny panorama. |
+| `images/04-fields.png` | A royal carriage rolling along a country road with a blushing young man beside a princess, while ahead a booted cat instructs field workers in straw hats, wheat fields stretching away, comic. |
+| `images/04-fields-2.png` | A carriage passing field after field where workers straighten and answer in unison, the king leaning further out of the window each time in growing amazement, the young man shrinking in his seat, hilarious. |
 
 ## 5장 · 마법사의 성
 
 | 파일명 | 장면 |
 |---|---|
-| `images/05-castle.png` | A huge lion rearing up in a grand stone hall while a small booted cat watches with exaggerated admiration, tapestries and pillars around them, dramatic warm torchlight, comic tension. |
+| `images/05-castle.png` | A grand castle doorway where an enormous man in a purple coat looms over a small booted cat that bows politely, vast halls glimpsed behind, comic scale contrast. |
+| `images/05-castle-2.png` | A castle hall where a huge man transforms into a roaring lion as a booted cat leaps onto a cupboard with bristling fur, and then back to human as the cat calmly needles him, comic tension. |
 
 ## 6장 · 아주 작은 쥐
 
 | 파일명 | 장면 |
 |---|---|
-| `images/06-mouse.png` | A booted cat pouncing gleefully at the spot where a tiny mouse just appeared on a grand hall floor, the sorcerer gone, sunlight streaming through tall windows, triumphant comic moment. |
+| `images/06-mouse.png` | A castle hall where a giant shrinks down into a small mouse scurrying across the floorboards as a booted cat crouches with one paw raised, comic and decisive, no gore. |
+| `images/06-mouse-2.png` | A castle gate flung open by a booted cat welcoming a royal carriage, and a grand hall beyond with a feast already laid on a long table, the king marvelling, the young man quietly overwhelmed. |
 
 ## 7장 · 진짜 후작이 되다
 
 | 파일명 | 장면 |
 |---|---|
-| `images/07-wedding.png` | A joyful wedding celebration in a castle courtyard, the young man now in a fine blue and gold coat beside a smiling princess, the king raising a toast, and the booted cat lounging proudly on a velvet cushion in the foreground. |
+| `images/07-wedding.png` | A candlelit banquet corner where a princess and a plain young man talk quietly, she glancing at his work-worn hands with a knowing smile, the feast bustling behind them, warm and tender. |
+| `images/07-wedding-2.png` | A banquet hall where a young man stands to confess his true origins, the hall hushed then the king laughing warmly, and in a sunny window seat the cat pulling off its boots to nap, funny and warm. |
 
 ## 사용 팁
 
