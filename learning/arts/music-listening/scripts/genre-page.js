@@ -77,7 +77,7 @@ function renderEra(lineage=currentLineage,subgroup=currentSubgroup){
   if(data.integrated===true){
     const era=data.lineageStories[lineage]||data.lineageStories.all;
     const count=data.cards.filter(card=>lineage==='all'||card.lineage===lineage).length;
-    eraPanel.innerHTML=`<div class="years">${era.years}</div><div><h3>${era.name}<small>${era.english}</small></h3><p>${era.story}</p><p class="turn"><strong>음악적으로 듣기:</strong> ${era.sound}</p><p class="integrated-question"><strong>들으며 생각하기:</strong> ${era.question}</p><b class="integrated-count">대표곡 ${count}개</b></div>`;
+    eraPanel.innerHTML=`<div class="years">${era.years}</div><div><h3>${era.name}${era.english?`<small>${era.english}</small>`:'}</h3><p>${era.story}</p><p class="turn"><strong>음악적으로 듣기:</strong> ${era.sound}</p><p class="integrated-question"><strong>들으며 생각하기:</strong> ${era.question}</p><b class="integrated-count">대표곡 ${count}개</b></div>`;
     return;
   }
   if(data.integrated==='era'){
@@ -91,17 +91,17 @@ function renderEra(lineage=currentLineage,subgroup=currentSubgroup){
     const matchedYears=data.cards.filter(card=>!card.homage&&(lineage==='all'||card.lineage===lineage)&&(subgroup==='all'||card.subgroup===subgroup)).map(card=>Number.parseInt(card.years)).sort((a,b)=>a-b);
     const allYearsName=lineage==='all'?'팝 음악 전체':(guide?.title||'장르 전체').replace(/\s*\d+곡/,'').replace(' 비교 듣기','');
     const allYearsRange=subgroup==='all'?`${matchedYears[0]}–현재`:`${matchedYears[0]}–${matchedYears.at(-1)}`;
-    const era=allYears?{years:allYearsRange,name:allYearsName,english:'All Eras',story:description||'연도 제한 없이 이 장르의 시작부터 최근 흐름까지 대표곡을 한 번에 비교합니다.',turn:guide?.traits||'리듬 · 음색 · 보컬 · 제작 방식'}:data.eras[eraIndex];
+    const era=allYears?{years:allYearsRange,name:allYearsName,english:'',story:description||'연도 제한 없이 이 장르의 시작부터 최근 흐름까지 대표곡을 한 번에 비교합니다.',turn:guide?.traits||'리듬 · 음색 · 보컬 · 제작 방식'}:data.eras[eraIndex];
     const genreName=allYears?'':(subgroup!=='all'?(guide?.title||'세부 장르'):lineage!=='all'?(guide?.title||'장르'):'').replace(/\d+곡/,`${count}곡`);
     const question=(guide?.question||'이 시대의 악기, 리듬과 제작 방식이 이전 시대와 어떻게 달라졌는지 비교해 보세요.').replace(/(?:다섯|여섯|일곱|여덟|아홉|열|\d+) 곡에서/g,'선택된 곡들에서');
-    eraPanel.innerHTML=`<div class="years">${era.years}</div><div><h3>${era.name}<small>${era.english}</small></h3><p>${era.story}</p>${genreName?`<h4 class="context-title">${genreName}</h4>`:''}${description&&!allYears?`<p>${description}</p>`:''}<p class="turn"><strong>음악적으로 듣기:</strong> ${guide?.traits||era.turn}</p><p class="integrated-question"><strong>들으며 생각하기:</strong> ${question}</p><b class="integrated-count">대표곡 ${count}개</b></div>`;
+    eraPanel.innerHTML=`<div class="years">${era.years}</div><div><h3>${era.name}${era.english?`<small>${era.english}</small>`:'}</h3><p>${era.story}</p>${genreName?`<h4 class="context-title">${genreName}</h4>`:''}${description&&!allYears?`<p>${description}</p>`:''}<p class="turn"><strong>음악적으로 듣기:</strong> ${guide?.traits||era.turn}</p><p class="integrated-question"><strong>들으며 생각하기:</strong> ${question}</p><b class="integrated-count">대표곡 ${count}개</b></div>`;
     eraTabs.innerHTML=[{years:'전체 시대'},...data.eras].map((item,index)=>{const value=index===0?'all':index-1;return `<button class="${value===eraIndex?'active':''}" data-era-index="${value}">${item.years}</button>`}).join('');
     eraTabs.querySelectorAll('button').forEach(button=>button.addEventListener('click',()=>{eraIndex=button.dataset.eraIndex==='all'?'all':Number(button.dataset.eraIndex);if(eraIndex!=='all'){currentLineage='all';currentSubgroup=renderSubgroups('all')}renderEra();renderCards(currentLineage,currentSubgroup)}));
     return;
   }
   const era=data.eras[eraIndex];
   eraTabs.innerHTML=data.eras.map((item,index)=>`<button class="${index===eraIndex?'active':''}" data-era-index="${index}">${item.years}</button>`).join('');
-  eraPanel.innerHTML=`<div class="years">${era.years}</div><div><h3>${era.name}<small>${era.english}</small></h3><p>${era.story}</p><p class="turn"><strong>시대를 바꾼 소리:</strong> ${era.turn}</p></div>`;
+  eraPanel.innerHTML=`<div class="years">${era.years}</div><div><h3>${era.name}${era.english?`<small>${era.english}</small>`:'}</h3><p>${era.story}</p><p class="turn"><strong>시대를 바꾼 소리:</strong> ${era.turn}</p></div>`;
   eraTabs.querySelectorAll('button').forEach(button=>button.addEventListener('click',()=>{eraIndex=Number(button.dataset.eraIndex);renderEra()}));
 }
 
@@ -169,3 +169,4 @@ filters.querySelectorAll('button').forEach(button=>button.addEventListener('clic
 dialog.addEventListener('click',event=>{if(event.target===dialog||event.target.closest('.dialog-close'))dialog.close()});
 currentSubgroup=renderSubgroups(defaultLineage);
 renderEra(data.integrated?defaultLineage:undefined,currentSubgroup);renderCards(defaultLineage,currentSubgroup);
+

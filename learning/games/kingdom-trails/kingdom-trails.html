@@ -1,0 +1,171 @@
+<!doctype html>
+<html lang="ko">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+  <meta name="theme-color" content="#273f24">
+  <title>왕국의 길</title>
+  <link rel="stylesheet" href="../../../assets/network/multiplayer-lobby.css">
+  <link rel="stylesheet" href="kingdom-trails.css?v=20260823">
+  <script src="../../../assets/network/game-network.js?v=20260821"></script>
+  <script src="../../../assets/network/multiplayer-lobby.js?v=20260821"></script>
+</head>
+<body>
+  <main class="app-shell">
+    <section id="missingScreen" class="missing-screen hidden">
+      <div class="parchment-card compact-card">
+        <span class="kicker">PLAYER NAME REQUIRED</span>
+        <h1>이름을 먼저 정해 주세요</h1>
+        <p>메인 화면에서 이름을 저장한 뒤 왕국으로 들어올 수 있습니다.</p>
+        <button class="button primary" type="button" onclick="location.href='../../../'">메인 화면으로</button>
+      </div>
+    </section>
+
+    <section id="lobbyScreen" class="lobby-screen hidden">
+      <header class="lobby-heading parchment-card">
+        <div>
+          <span class="kicker">KINGDOM TRAILS</span>
+          <h1>왕국의 길</h1>
+          <p>타일을 돌려 길과 마을을 잇는 2~4인 공간 전략 게임</p>
+        </div>
+        <button id="rulesBtnLobby" class="button ghost" type="button">게임 방법</button>
+      </header>
+
+      <div class="lobby-grid">
+        <section class="parchment-card lobby-actions">
+          <div class="saved-player"><span>플레이어</span><strong id="savedName">-</strong></div>
+          <div class="mp-lobby-tabs">
+            <button id="hostTab" class="button primary" type="button">방 만들기</button>
+            <button id="joinTab" class="button secondary" type="button">방 참가</button>
+          </div>
+          <div id="hostPane" class="mp-lobby-card hidden">
+            <span class="kicker">ROOM CODE</span>
+            <div id="roomCode" class="room-code">----</div>
+            <div id="hostStatus" class="mp-lobby-status">방을 만드는 중입니다.</div>
+          </div>
+          <div id="joinPane" class="mp-lobby-card hidden">
+            <div class="join-row">
+              <input id="joinCode" class="code-input" inputmode="numeric" maxlength="4" aria-label="네 자리 방 번호" placeholder="방 번호 4자리">
+              <button id="joinBtn" class="button primary" type="button">참가</button>
+            </div>
+            <div id="joinStatus" class="mp-lobby-status">방장이 알려준 번호를 입력하세요.</div>
+          </div>
+        </section>
+
+        <section class="parchment-card players-card">
+          <div class="card-title-row"><h2>함께할 탐험가</h2><span>2~4명</span></div>
+          <div id="lobbyPlayers" class="mp-lobby-players"></div>
+          <p id="lobbyGuide" class="mp-lobby-guide">참가자를 기다리는 중입니다.</p>
+          <button id="startBtn" class="button primary start-button" type="button" disabled>플레이어를 기다리는 중</button>
+          <button id="leaveBtnLobby" class="button ghost" type="button">메인 화면</button>
+        </section>
+      </div>
+      <aside class="learning-strip" aria-label="학습 요소">
+        <strong>놀이 속 사고</strong><span>공간지각</span><span>패턴 연결</span><span>계획 수정</span><span>점수 전략</span>
+      </aside>
+    </section>
+
+    <section id="gameScreen" class="game-screen hidden">
+      <header class="game-topbar">
+        <div class="brand-lockup"><span class="crest" aria-hidden="true">♜</span><div><span class="kicker">KINGDOM TRAILS</span><strong>왕국의 길</strong></div></div>
+        <div class="turn-summary">
+          <span id="turnBadge" class="turn-badge">준비 중</span>
+          <strong id="turnTitle">왕국을 펼치는 중입니다</strong>
+          <span id="turnMessage">잠시만 기다려 주세요.</span>
+        </div>
+        <div id="turnClock" class="turn-clock hidden" aria-label="남은 시간">
+          <strong id="turnSeconds">40</strong><small>초</small>
+          <span class="clock-track"><i id="turnTimerBar"></i></span>
+        </div>
+        <div class="top-actions">
+          <span class="room-pill">방 <strong id="gameRoomCode">----</strong></span>
+          <button id="rulesBtnGame" class="icon-button" type="button" aria-label="게임 방법">?</button>
+          <button id="leaveBtnGame" class="icon-button" type="button" aria-label="메인 화면">⌂</button>
+        </div>
+      </header>
+
+      <section class="player-strip" id="playerStrip" aria-label="점수판"></section>
+
+      <div id="playArea" class="game-layout">
+        <aside class="turn-panel parchment-card">
+          <div class="panel-heading"><div><span class="kicker">CURRENT TILE</span><h2>이번 타일</h2></div><span id="deckCount" class="deck-count">0장</span></div>
+          <div id="currentTilePreview" class="tile-preview" aria-label="현재 타일"></div>
+          <button id="rotateBtn" class="button rotate-button" type="button"><span aria-hidden="true">↻</span> 타일 회전</button>
+
+          <div class="claim-section">
+            <div class="claim-heading"><strong>탐험가 배치</strong><span id="workerCount">5명 남음</span></div>
+            <div class="claim-options" role="group" aria-label="탐험가를 놓을 지형">
+              <button class="claim-button selected" data-claim="" type="button"><span>✓</span>놓지 않음</button>
+              <button class="claim-button" data-claim="road" type="button"><span>〰</span>길</button>
+              <button class="claim-button" data-claim="city" type="button"><span>▥</span>마을</button>
+              <button class="claim-button" data-claim="monastery" type="button"><span>♜</span>수도원</button>
+            </div>
+          </div>
+
+          <button id="hintBtn" class="button secondary hint-button" type="button">추천 자리 보기</button>
+          <p id="placementGuide" class="placement-guide">빛나는 빈칸을 눌러 타일을 놓으세요.</p>
+        </aside>
+
+        <section class="board-panel" aria-label="왕국 게임판">
+          <div class="board-toolbar">
+            <div><span id="boardTileCount">1</span>개 타일로 만든 왕국</div>
+            <div class="legend" aria-label="지형 범례"><span><i class="legend-road"></i>길</span><span><i class="legend-city"></i>마을</span><span><i class="legend-field"></i>들판</span></div>
+          </div>
+          <div id="boardViewport" class="board-viewport">
+            <div id="boardWorld" class="board-world"></div>
+          </div>
+        </section>
+
+        <aside class="info-panel">
+          <section class="parchment-card action-card">
+            <span class="kicker">LAST ACTION</span>
+            <p id="lastAction">게임을 준비하고 있습니다.</p>
+          </section>
+          <section class="parchment-card score-guide">
+            <h2>완성 점수</h2>
+            <div><span class="score-icon road-icon">〰</span><p><strong>이어진 길</strong><small>타일마다 1점</small></p></div>
+            <div><span class="score-icon city-icon">▥</span><p><strong>닫힌 마을</strong><small>타일마다 2점</small></p></div>
+            <div><span class="score-icon abbey-icon">♜</span><p><strong>둘러싼 수도원</strong><small>완성하면 9점</small></p></div>
+          </section>
+          <section class="parchment-card strategy-note">
+            <strong>생각해 보기</strong>
+            <p id="strategyTip">타일을 놓기 전에 네 변의 지형이 모두 맞는지 살펴보세요.</p>
+          </section>
+        </aside>
+      </div>
+
+      <section id="resultPanel" class="result-panel hidden">
+        <div class="result-card parchment-card">
+          <span class="result-crest">♛</span>
+          <span class="kicker">KINGDOM COMPLETE</span>
+          <h2 id="resultTitle">왕국이 완성됐습니다</h2>
+          <p id="resultMessage"></p>
+          <table><thead><tr><th>탐험가</th><th>완성 점수</th><th>남은 말</th></tr></thead><tbody id="scoreBody"></tbody></table>
+          <div id="resultActions" class="result-actions"></div>
+        </div>
+      </section>
+    </section>
+  </main>
+
+  <section id="rulesOverlay" class="overlay hidden" role="dialog" aria-modal="true" aria-labelledby="rulesTitle">
+    <div class="rules-modal parchment-card">
+      <div class="rules-heading"><div><span class="kicker">HOW TO PLAY</span><h2 id="rulesTitle">왕국의 길 게임 방법</h2></div><button id="closeRulesBtn" class="icon-button" type="button" aria-label="닫기">×</button></div>
+      <div class="rule-steps">
+        <article><span>1</span><div><strong>타일을 돌려요</strong><p>길은 길끼리, 마을은 마을끼리, 들판은 들판끼리 맞아야 합니다.</p></div></article>
+        <article><span>2</span><div><strong>빛나는 자리에 놓아요</strong><p>기존 왕국과 한 변 이상 맞닿는 빈칸을 선택합니다.</p></div></article>
+        <article><span>3</span><div><strong>탐험가를 보낼 수 있어요</strong><p>아직 주인이 없는 길·마을·수도원에 탐험가 한 명을 놓을 수 있습니다.</p></div></article>
+        <article><span>4</span><div><strong>영역을 닫아 점수를 얻어요</strong><p>길과 마을의 열린 끝을 모두 막거나 수도원 주변 8칸을 채우면 탐험가가 돌아옵니다.</p></div></article>
+      </div>
+      <div class="rules-footer"><strong>승리 조건</strong><p>모든 타일을 놓은 뒤 완성 영역과 미완성 영역의 점수를 합쳐 가장 높은 사람이 승리합니다.</p></div>
+      <button id="closeRulesBottomBtn" class="button primary" type="button">이해했어요</button>
+    </div>
+  </section>
+
+  <section id="abortOverlay" class="overlay hidden" role="dialog" aria-modal="true">
+    <div class="parchment-card abort-modal"><span class="result-crest">⚑</span><h2 id="abortTitle">게임이 중단됐습니다</h2><p id="abortMessage"></p><button id="reloadBtn" class="button primary" type="button">처음 화면으로</button></div>
+  </section>
+
+  <div id="toast" class="toast hidden" role="status" aria-live="polite"></div>
+  <script src="kingdom-trails.js?v=20260823"></script>
+</body>
+</html>
