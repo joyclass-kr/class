@@ -1,8 +1,8 @@
 # 제미나이 그림 프롬프트
 
-이 책은 하나의 이야기를 8개의 장(챕터)으로 나눠 담았고, 각 장마다 그림이
-**한 장**이에요. 그림이 펼침면 전체 폭을 가득 채우고, 그 아래에 이야기가
-왼쪽·오른쪽으로 나뉘어 들어갑니다.
+이 책은 하나의 이야기를 8개의 장(챕터)으로 나눠 담았고, 펼침면은 모두
+16개예요. 펼침면 하나에 그림이 한 장씩 들어갑니다.
+그림이 펼침면 전체 폭을 가득 채우고, 그 아래에 이야기가 왼쪽·오른쪽으로 나뉘어 들어갑니다.
 
 아래 프롬프트를 제미나이에 그대로 넣어서 생성한 뒤, 파일명을 정확히 맞춰서
 `images/` 폴더에 저장하면 자동으로 책에 나타납니다.
@@ -47,49 +47,57 @@ scholar's cap.
 
 | 파일명 | 장면 |
 |---|---|
-| `images/01-court.png` | A woodland clearing court where a crowned lion sits on a mossy throne surrounded by animals in medieval dress, one empty seat in the front row, an angry wolf standing to accuse, autumn light. |
+| `images/01-court.png` | A woodland clearing court where a crowned lion sits on a mossy throne surrounded by animals in medieval dress, one conspicuous empty seat in the front row, autumn light. |
+| `images/01-court-2.png` | An angry grey wolf in a dented helmet standing to accuse before a lion king in a woodland court, animals murmuring around, comic and lively. |
 
 ## 2장 · 쏟아지는 고발
 
 | 파일명 | 장면 |
 |---|---|
-| `images/02-accusations.png` | An uproarious animal court where a bear with a swollen nose and a cat with a bandaged tail both shout their complaints at once, other animals leaning in, the lion king frowning, comic chaos. |
+| `images/02-accusations.png` | An uproarious animal court where a bear with a swollen nose and a cat with a bandaged tail both shout complaints at once, animals leaning in, comic chaos. |
+| `images/02-accusations-2.png` | A lion king raising a paw for silence in a noisy woodland court full of hens, rabbits and moles all complaining at once, then a hush with nobody volunteering, comic. |
 
 ## 3장 · 곰이 다녀오다
 
 | 파일명 | 장면 |
 |---|---|
-| `images/03-bear.png` | A forest scene where a huge bear jams his head into a split tree trunk after honey while a fox quietly pulls out the wedge, bees swirling, the bear's legs kicking, hilariously comic. |
+| `images/03-bear.png` | A huge brown bear lumbering up to a fox's burrow at the foot of a hill where a lean red fox greets him with a wide friendly grin, autumn woods. |
+| `images/03-bear-2.png` | A bear jamming his head into a split tree trunk after honey while a fox quietly pulls out the wedge, the trunk snapping shut, bees swirling, hilarious. |
 
 ## 4장 · 고양이도 다녀오다
 
 | 파일명 | 장면 |
 |---|---|
-| `images/04-cat.png` | A barn doorway at dusk where a striped cat leaps in and is caught by a rope snare while a fox strolls away yawning with his paws behind his back, moonlit farmyard, very funny. |
+| `images/04-cat.png` | A bear returning with a more swollen nose, and a striped cat setting off confidently to a fox's burrow where the fox greets him warmly, comic. |
+| `images/04-cat-2.png` | A barn doorway at dusk where a striped cat is caught by a rope snare and a farmer runs out with a stick, while a fox strolls away yawning, very funny. |
 
 ## 5장 · 오소리의 설득
 
 | 파일명 | 장면 |
 |---|---|
-| `images/05-badger.png` | A cosy earth burrow entrance where a stout badger in a scholar's cap earnestly persuades a lounging fox, the fox's eyes glinting with a plan, warm evening woodland. |
+| `images/05-badger.png` | A stout badger in a scholar's cap volunteering in a woodland court, then arriving at a burrow where a lounging fox eyes him, warm evening woods. |
+| `images/05-badger-2.png` | A badger earnestly persuading a fox at a burrow entrance while the fox scratches his chin, then a sly glint in the fox's eye, comic and warm. |
 
 ## 6장 · 여우의 이야기
 
 | 파일명 | 장면 |
 |---|---|
-| `images/06-trial.png` | A fox standing before a lion king in a woodland court, one paw on his heart with an expression of injured innocence, the king leaning forward greedily at the word treasure, animals murmuring. |
+| `images/06-trial.png` | A fox arriving at a woodland court where a wolf bares his teeth and a bear glares, the fox standing calmly with a paw on his heart, comic tension. |
+| `images/06-trial-2.png` | A fox spinning a tale before a lion king who leans forward greedily at the word treasure while a wolf scoffs, animals murmuring, witty. |
 
 ## 7장 · 있지도 않은 보물
 
 | 파일명 | 장면 |
 |---|---|
-| `images/07-treasure.png` | A muddy swamp where a wolf and a bear flounder up to their chests searching for treasure, while far behind them a fox tiptoes away over a hill with a travelling staff, comic and bright. |
+| `images/07-treasure.png` | A fox describing a treasure map with a paw while the lion king listens greedily, then a wolf and a bear floundering chest-deep in a muddy swamp, comic. |
+| `images/07-treasure-2.png` | A fox with a pilgrim staff bowing to a lion king, then tossing the staff away and strolling whistling over a hill, autumn fields, wry and funny. |
 
 ## 8장 · 숲은 여전히
 
 | 파일명 | 장면 |
 |---|---|
-| `images/08-ending.png` | A woodland court at the end of day where animals avoid each other's eyes as a furious wolf demands action, the lion king coughing awkwardly, falling autumn leaves, wry and warm. |
+| `images/08-ending.png` | Animals searching a swamp until sunset and finding nothing, then a mud-covered wolf storming back to court in fury, comic and vivid. |
+| `images/08-ending-2.png` | A woodland court at day's end where animals avoid each other's eyes, the lion king coughing awkwardly and dismissing them, falling autumn leaves, wry and warm. |
 
 ## 사용 팁
 

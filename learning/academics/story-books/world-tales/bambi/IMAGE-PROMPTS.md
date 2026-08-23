@@ -1,8 +1,8 @@
 # 제미나이 그림 프롬프트
 
-이 책은 하나의 이야기를 8개의 장(챕터)으로 나눠 담았고, 각 장마다 그림이
-**한 장**이에요. 그림이 펼침면 전체 폭을 가득 채우고, 그 아래에 이야기가
-왼쪽·오른쪽으로 나뉘어 들어갑니다.
+이 책은 하나의 이야기를 8개의 장(챕터)으로 나눠 담았고, 펼침면은 모두
+16개예요. 펼침면 하나에 그림이 한 장씩 들어갑니다.
+그림이 펼침면 전체 폭을 가득 채우고, 그 아래에 이야기가 왼쪽·오른쪽으로 나뉘어 들어갑니다.
 
 아래 프롬프트를 제미나이에 그대로 넣어서 생성한 뒤, 파일명을 정확히 맞춰서
 `images/` 폴더에 저장하면 자동으로 책에 나타납니다.
@@ -45,49 +45,57 @@ antlers who appears and disappears without a sound.
 
 | 파일명 | 장면 |
 |---|---|
-| `images/01-birth.png` | A hidden forest thicket where a newborn spotted fawn wobbles on thin legs as its mother licks it clean, a plump hare and small birds peeking through the ferns, soft green light. |
+| `images/01-birth.png` | A hidden forest thicket of tall ferns where a newborn spotted fawn wobbles on thin legs while its mother licks it clean, soft green light, tender. |
+| `images/01-birth-2.png` | A plump hare, magpies and squirrels peeking through ferns at a newborn fawn nestled beside its mother, dappled sunlight, warm and charming. |
 
 ## 2장 · 넓은 풀밭
 
 | 파일명 | 장면 |
 |---|---|
-| `images/02-meadow.png` | A wide sunlit meadow bordered by dark trees where a fawn bounds out joyfully into the grass while its mother steps carefully behind, butterflies rising, exhilarating openness. |
+| `images/02-meadow.png` | A narrow forest path opening onto a vast sunlit meadow, a fawn gazing up at the huge sky while its mother blocks his way with her body, exhilarating. |
+| `images/02-meadow-2.png` | A doe standing tall at a treeline with ears turned and nose lifted while a fawn bounds heedlessly out into the grass, butterflies rising, joyful and anxious. |
 
 ## 3장 · 숲의 친구들
 
 | 파일명 | 장면 |
 |---|---|
-| `images/03-friends.png` | A meadow edge where two young fawns chase each other through tall grass while a hare, squirrels and a weaker fawn resting on the ground look on, summer flowers everywhere, joyful. |
+| `images/03-friends.png` | Two young fawns chasing each other through tall meadow grass that parts like waves, butterflies scattering, summer flowers everywhere, joyful. |
+| `images/03-friends-2.png` | A meadow edge where a hare sits bolt upright, squirrels chatter overhead and three fawns rest side by side in the grass, warm sunlight, tender. |
 
 ## 4장 · 늙은 사슴
 
 | 파일명 | 장면 |
 |---|---|
-| `images/04-old-stag.png` | A hushed forest clearing where a great grey-muzzled stag with wide antlers stands regarding a small fawn, mist between the trunks, awe-struck stillness. |
+| `images/04-old-stag.png` | A hushed meadow where a great grey-muzzled stag with wide antlers steps soundlessly out of the treeline, every animal turning to look, awe-struck stillness. |
+| `images/04-old-stag-2.png` | An old stag looking down at a small fawn who cannot meet his gaze, then vanishing silently between misty trunks, quietly majestic. |
 
 ## 5장 · 첫눈
 
 | 파일명 | 장면 |
 |---|---|
-| `images/05-winter.png` | A snow-covered forest where a fawn touches its nose to fresh snow in wonder, and deeper in the scene deer stripping bark from a tree in the blue winter dusk, beautiful and sober. |
+| `images/05-winter.png` | A snow-covered forest where a fawn touches its nose to fresh snow in wonder then bounds about leaving tracks, its mother watching, bright winter light. |
+| `images/05-winter-2.png` | Deer stripping bark from trees in deep snow at blue winter dusk, a doe nudging her share toward her fawn, beautiful and sober. |
 
 ## 6장 · 혼자 남은 날
 
 | 파일명 | 장면 |
 |---|---|
-| `images/06-alone.png` | A snowy forest where a young deer runs hard between dark trunks, and then stands alone in a wide empty clearing looking back, falling snow, quiet and poignant without any violence shown. |
+| `images/06-alone.png` | A doe suddenly alert at a snowy meadow edge, pushing her fawn toward the thicket as distant noise rises, the fawn bolting away, tense. |
+| `images/06-alone-2.png` | A young deer standing alone in a wide empty snowy clearing looking back, falling snow, quiet and poignant with no violence shown. |
 
 ## 7장 · 다시 봄
 
 | 파일명 | 장면 |
 |---|---|
-| `images/07-spring.png` | A spring meadow bright with new grass where a young stag with small antlers pauses at the treeline, ears turned and nose lifted to the wind, a doe waiting beyond, hopeful. |
+| `images/07-spring.png` | A spring meadow bright with new grass where a young stag with small antlers meets a grown doe, both taller than before, hopeful and warm. |
+| `images/07-spring-2.png` | A young stag pausing at a treeline with ears turned and nose lifted to the wind while a doe watches in surprise, spring meadow beyond, quietly moving. |
 
 ## 8장 · 숲을 걷는 법
 
 | 파일명 | 장면 |
 |---|---|
-| `images/08-ending.png` | A deep evening forest where an old stag leads a young one along a hidden path, and then walks away alone between the trunks as the young stag stands steady in the fading light, quietly majestic. |
+| `images/08-ending.png` | A deep evening forest where an old stag leads a young one along a hidden path between trunks, long slanting light, quietly majestic. |
+| `images/08-ending-2.png` | An old stag showing a young stag how to read the wind and the hidden ways, then walking away alone between the trunks as the young stag stands steady, moving. |
 
 ## 사용 팁
 
