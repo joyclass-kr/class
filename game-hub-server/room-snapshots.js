@@ -15,6 +15,7 @@ const TRANSIENT_ROOM_KEYS = new Set([
   "lastcardTimer",
   "loveletterTimer",
   "rummikubTimer",
+  "gemguildTimer",
   "kingdomtrailsTimer"
 ]);
 

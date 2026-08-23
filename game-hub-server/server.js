@@ -8,6 +8,7 @@ const { WebSocketServer, WebSocket } = require("ws");
 const LoveLetter = require("./loveletter");
 const LastCard = require("./lastcard");
 const Rummikub = require("./rummikub");
+const GemGuild = require("./gemguild");
 const KingdomTrails = require("./kingdomtrails");
 const Blokus = require("./blokus");
 const Honeycomb = require("./honeycomb");
@@ -274,6 +275,7 @@ const MAX_ROOM_PLAYERS = {
   lastcard: 4,
   loveletter: 4,
   rummikub: 4,
+  gemguild: 4,
   kingdomtrails: 4,
   blokus: 4,
   honeycomb: 6,
@@ -660,6 +662,36 @@ function scheduleRummikubTimeout(room) {
     rummikubBroadcast(room);
   }, wait);
   room.rummikubTimer.unref?.();
+}
+
+function gemGuildBroadcast(room) {
+  if (!room?.gemguild) return;
+  for (const [id, client] of room.clients) {
+    safeSend(client, {
+      type: "GEMGUILD_STATE",
+      state: GemGuild.stateFor(room.gemguild, id)
+    });
+  }
+  scheduleGemGuildTimeout(room);
+}
+
+function gemGuildError(socket, message) {
+  safeSend(socket, { type: "GEMGUILD_ERROR", message });
+}
+
+function scheduleGemGuildTimeout(room) {
+  clearTimeout(room?.gemguildTimer);
+  const game = room?.gemguild;
+  if (!game || game.phase !== "playing" || !game.turnDeadline) return;
+  const expectedRevision = game.revision;
+  const wait = Math.max(50, game.turnDeadline - Date.now());
+  room.gemguildTimer = setTimeout(() => {
+    if (rooms.get(roomKey(room.gameId, room.roomCode)) !== room) return;
+    if (game.phase !== "playing" || game.revision !== expectedRevision) return;
+    GemGuild.autoPlay(game);
+    gemGuildBroadcast(room);
+  }, wait);
+  room.gemguildTimer.unref?.();
 }
 
 function kingdomTrailsBroadcast(room) {
@@ -1681,6 +1713,7 @@ wss.on("connection", socket => {
         if (existingRoom.lastcard) lastCardBroadcast(existingRoom);
         if (existingRoom.loveletter) loveLetterBroadcast(existingRoom);
         if (existingRoom.rummikub) rummikubBroadcast(existingRoom);
+        if (existingRoom.gemguild) gemGuildBroadcast(existingRoom);
         if (existingRoom.kingdomtrails) kingdomTrailsBroadcast(existingRoom);
         if (existingRoom.blokus) blokusBroadcast(existingRoom);
         if (existingRoom.honeycomb) honeycombBroadcast(existingRoom);
@@ -1730,6 +1763,9 @@ wss.on("connection", socket => {
       }
       if (gameId === "rummikub") {
         room.rummikub = Rummikub.createGame(playerId, cleanToken(message.name, 12) || "방장");
+      }
+      if (gameId === "gemguild") {
+        room.gemguild = GemGuild.createGame(playerId, cleanToken(message.name, 12) || "방장");
       }
       if (gameId === "kingdomtrails") {
         room.kingdomtrails = KingdomTrails.createGame(playerId, cleanToken(message.name, 12) || "방장");
@@ -1810,6 +1846,7 @@ wss.on("connection", socket => {
       if (room.lastcard) lastCardBroadcast(room);
       if (room.loveletter) loveLetterBroadcast(room);
       if (room.rummikub) rummikubBroadcast(room);
+      if (room.gemguild) gemGuildBroadcast(room);
       if (room.kingdomtrails) kingdomTrailsBroadcast(room);
       if (room.blokus) blokusBroadcast(room);
       if (room.honeycomb) honeycombBroadcast(room);
@@ -1864,6 +1901,7 @@ wss.on("connection", socket => {
         if (room.lastcard) lastCardBroadcast(room);
         if (room.loveletter) loveLetterBroadcast(room);
         if (room.rummikub) rummikubBroadcast(room);
+        if (room.gemguild) gemGuildBroadcast(room);
         if (room.kingdomtrails) kingdomTrailsBroadcast(room);
         if (room.blokus) blokusBroadcast(room);
         if (room.honeycomb) honeycombBroadcast(room);
@@ -1939,6 +1977,16 @@ wss.on("connection", socket => {
           return;
         }
         Rummikub.addPlayer(room.rummikub, playerId, cleanToken(message.name, 12) || `플레이어 ${room.rummikub.players.length + 1}`);
+      }
+      if (room.gemguild) {
+        if (room.gemguild.phase !== "lobby") {
+          room.clients.delete(playerId);
+          socket.meta.roomKey = null;
+          socket.meta.role = null;
+          safeSend(socket, { type: "ERROR", message: "이미 시작한 게임입니다." });
+          return;
+        }
+        GemGuild.addPlayer(room.gemguild, playerId, cleanToken(message.name, 12) || `플레이어 ${room.gemguild.players.length + 1}`);
       }
       if (room.kingdomtrails) {
         if (room.kingdomtrails.phase !== "lobby") {
@@ -2200,6 +2248,7 @@ wss.on("connection", socket => {
       if (room.lastcard) lastCardBroadcast(room);
       if (room.loveletter) loveLetterBroadcast(room);
       if (room.rummikub) rummikubBroadcast(room);
+      if (room.gemguild) gemGuildBroadcast(room);
       if (room.kingdomtrails) kingdomTrailsBroadcast(room);
       if (room.blokus) blokusBroadcast(room);
       if (room.honeycomb) honeycombBroadcast(room);
@@ -3306,6 +3355,51 @@ wss.on("connection", socket => {
       return;
     }
 
+    if (type === "GEMGUILD_ACTION") {
+      const room = socket.meta.roomKey ? rooms.get(socket.meta.roomKey) : null;
+      const game = room?.gemguild;
+      const action = cleanToken(message.action, 30);
+      if (!room || !game) {
+        gemGuildError(socket, "보석 상단 방에 참가하지 않았습니다.");
+        return;
+      }
+
+      let result;
+      if (action === "START") {
+        result = playerId === room.hostId
+          ? GemGuild.startGame(game)
+          : { ok: false, error: "방장만 게임을 시작할 수 있습니다." };
+      } else if (action === "TAKE") {
+        result = GemGuild.takeGems(game, playerId, message.gems);
+      } else if (action === "RESERVE") {
+        result = GemGuild.reserveCard(game, playerId, cleanToken(message.cardId, 40), Number(message.tier));
+      } else if (action === "BUY") {
+        result = GemGuild.buyCard(game, playerId, cleanToken(message.cardId, 40));
+      } else if (action === "PASS") {
+        result = GemGuild.passTurn(game, playerId);
+      } else if (action === "NEW_GAME") {
+        if (playerId !== room.hostId) result = { ok: false, error: "방장만 새 게임을 시작할 수 있습니다." };
+        else if (game.phase !== "ended") result = { ok: false, error: "게임이 끝난 뒤 새 게임을 시작할 수 있습니다." };
+        else {
+          GemGuild.resetToLobby(game);
+          result = GemGuild.startGame(game);
+        }
+      } else if (action === "RETURN_LOBBY") {
+        result = playerId === room.hostId
+          ? GemGuild.resetToLobby(game)
+          : { ok: false, error: "방장만 대기실로 돌아갈 수 있습니다." };
+      } else {
+        result = { ok: false, error: "알 수 없는 행동입니다." };
+      }
+
+      if (!result.ok) {
+        gemGuildError(socket, result.error || "행동을 처리하지 못했습니다.");
+        return;
+      }
+      gemGuildBroadcast(room);
+      return;
+    }
+
     if (type === "KINGDOMTRAILS_ACTION") {
       const room = socket.meta.roomKey ? rooms.get(socket.meta.roomKey) : null;
       const game = room?.kingdomtrails;
@@ -3594,6 +3688,7 @@ wss.on("connection", socket => {
         clearTimeout(currentRoom.blokusTimer);
         clearTimeout(currentRoom.loveletterTimer);
         clearTimeout(currentRoom.rummikubTimer);
+        clearTimeout(currentRoom.gemguildTimer);
         clearTimeout(currentRoom.kingdomtrailsTimer);
         clearTimeout(currentRoom.lastcardTimer);
         clearTimeout(currentRoom.codenamesTimer);
@@ -3641,6 +3736,13 @@ wss.on("connection", socket => {
         Rummikub.removePlayer(currentRoom.rummikub, playerId);
         if (gameWasActive) {
           Rummikub.resetToLobby(currentRoom.rummikub, "플레이어가 나가 게임을 중단하고 대기실로 돌아왔습니다.");
+        }
+      }
+      if (currentRoom.gemguild) {
+        const gameWasActive = currentRoom.gemguild.phase !== "lobby";
+        GemGuild.removePlayer(currentRoom.gemguild, playerId);
+        if (gameWasActive) {
+          GemGuild.resetToLobby(currentRoom.gemguild, "플레이어가 나가 게임을 중단하고 대기실로 돌아왔습니다.");
         }
       }
       if (currentRoom.kingdomtrails) {
@@ -3790,6 +3892,7 @@ wss.on("connection", socket => {
       if (currentRoom.lastcard) lastCardBroadcast(currentRoom);
       if (currentRoom.loveletter) loveLetterBroadcast(currentRoom);
       if (currentRoom.rummikub) rummikubBroadcast(currentRoom);
+      if (currentRoom.gemguild) gemGuildBroadcast(currentRoom);
       if (currentRoom.kingdomtrails) kingdomTrailsBroadcast(currentRoom);
       if (currentRoom.blokus) blokusBroadcast(currentRoom);
       if (currentRoom.honeycomb) honeycombBroadcast(currentRoom);
