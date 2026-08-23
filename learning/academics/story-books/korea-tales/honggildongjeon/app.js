@@ -1,0 +1,701 @@
+const BOOK_TITLE = "홍길동전";
+
+const CHAPTER_LABEL = n => `${n}장 · `;
+
+const CHAPTERS = [
+    {
+        num: 1,
+        title: "아버지를 아버지라 부르지 못하고",
+        emoji: "🌙",
+        art: ["story-01-a.png", "story-01-b.png", "story-01-c.png"],
+        paras: [
+            `조선 세종 임금 때, 한양에 홍 판서라는 높은 벼슬아치가 살았습니다. 집안은 대대로 이름난 명문이었고 재산도 넉넉했습니다.`,
+            `홍 판서에게는 아들이 둘 있었습니다. 맏이 인형은 정실부인이 낳았고, 둘째 길동은 몸종이던 춘섬이 낳았습니다.`,
+            `길동은 나면서부터 남달랐습니다. 세 살에 글을 읽고 다섯 살에 문장을 지었습니다. 열 살이 되자 병서<span class="gloss">(군사를 부리고 싸움을 하는 법을 적은 책)</span>를 읽고 그 뜻을 다 헤아렸습니다.`,
+            `홍 판서는 그 아들을 볼 때마다 마음이 무거웠습니다. 재주가 아까웠지만 어찌할 도리가 없었습니다.`,
+            `조선의 법이 그러했습니다. 어머니가 종이면 그 자식은 서얼<span class="gloss">(양반 아버지와 신분이 낮은 어머니 사이에서 난 자식)</span>이 되었고, 서얼은 아무리 재주가 뛰어나도 과거를 볼 수 없었습니다.`,
+            `그뿐이 아니었습니다. 서얼은 제 아버지를 아버지라 부르지 못하고 대감이라 불러야 했고, 형을 형이라 부르지 못하고 나리라 불러야 했습니다.`,
+            `길동이 열한 살 되던 해 가을이었습니다. 달이 밝은 밤, 길동은 뜰에서 칼을 들고 몸을 놀리다가 그만 칼을 내려놓았습니다.`,
+            `마침 홍 판서가 뜰을 지나다 그 모습을 보았습니다.<br>"어찌하여 잠도 자지 않고 그러고 있느냐."`,
+            `길동이 무릎을 꿇었습니다.<br>"대감."<br>"말해 보아라."`,
+            `"소인은 하늘이 만물을 내실 때 사람을 가장 귀하게 여기신다 들었습니다. 그런데 소인에게는 그 귀함이 없는 듯합니다."`,
+            `"무슨 소리냐."<br>"아버지를 아버지라 부르지 못하고 형을 형이라 부르지 못하니, 소인이 어찌 사람이라 하겠습니까."`,
+            `홍 판서의 얼굴빛이 변했습니다. 한참 만에 목소리가 떨어졌습니다.<br>"양반 집안에 너 같은 자식이 어디 한둘이더냐. 다시 그런 말을 입에 담으면 그때는 용서치 않겠다."<br>길동은 고개를 숙였습니다. 그리고 그날 밤 내내 뜰에 앉아 있었습니다.`,
+            `그 뒤로 길동은 낮에는 아무 말이 없었고 밤에는 잠을 자지 않았습니다.`,
+            `길동은 방문을 걸어 잠그고 병서를 읽었습니다. 군사를 나누는 법, 진을 치는 법, 물길과 산길을 읽는 법을 익혔습니다.`,
+            `그것만이 아니었습니다. 길동은 어디서 구했는지 모를 오래된 책 몇 권을 손에 넣었습니다. 도술<span class="gloss">(마음과 기운을 부려 놀라운 일을 해내는 재주)</span>에 관한 책이었습니다.`,
+            `길동은 그 책을 밤새 읽고 뜰에서 익혔습니다. 처음에는 아무 일도 일어나지 않았습니다. 반년이 지나자 바람이 길동의 손짓을 따라 움직였습니다.`,
+            `한 해가 지나자 길동은 몸을 감출 수 있게 되었습니다. 두 해가 지나자 종이에 사람을 그려 오려 놓고 주문을 외우면, 그것이 일어나 걸어 다녔습니다.`,
+            `어느 날 밤, 홍 판서가 길동의 방 앞을 지나다 안에서 이상한 기척을 느꼈습니다. 문틈으로 들여다보니 방 안에 길동이 여럿 앉아 있었습니다.`,
+            `홍 판서는 그 자리에서 얼어붙었습니다.`,
+            `이튿날 홍 판서가 길동을 불렀습니다.<br>"어젯밤 네 방에서 본 것이 무엇이냐."<br>"…소인의 재주입니다."`,
+            `"그런 재주를 어디에 쓰려 하느냐."<br>길동은 한참 만에 대답했습니다.<br>"쓸 곳이 없어서 익혔습니다. 과거를 볼 수 없으니 재주를 쓸 자리가 없지 않습니까."`,
+            `홍 판서는 말문이 막혔습니다. 그러고는 무겁게 일렀습니다.<br>"그 재주를 다시는 남 앞에서 보이지 마라. 사람들이 알면 네 목숨이 위태롭다."`,
+            `길동은 대답하지 않았습니다.`,
+            `그때부터 홍 판서는 밤마다 잠을 설쳤습니다. 그 아들이 어떤 사람이 될 것인지 짐작이 가지 않았기 때문입니다.`
+        ]
+    },
+    {
+        num: 2,
+        title: "집을 떠나던 밤",
+        emoji: "🚪",
+        art: ["story-02-a.png", "story-02-b.png", "story-02-c.png"],
+        paras: [
+            `홍 판서에게는 초란이라는 첩이 있었습니다. 자식이 없어 늘 마음을 졸이던 사람이었습니다.`,
+            `초란은 길동이 자라는 것을 볼 때마다 불안했습니다. 저 아이가 훗날 이 집을 차지하면 제 자리가 없어질 것이라 여겼습니다.`,
+            `초란은 무당을 불러다 홍 판서에게 말을 넣게 했습니다.<br>"저 도련님의 상을 보니 장차 나라를 뒤집을 상입니다. 집안에 큰 화가 미칠 것입니다."`,
+            `홍 판서는 그 말을 믿지 않았습니다. 그러나 초란은 물러서지 않았습니다. 결국 초란은 사람을 사서 길동을 없애기로 했습니다.`,
+            `그믐밤이었습니다. 길동은 방에서 책을 읽고 있었습니다. 그런데 문득 촛불이 이상하게 흔들렸습니다.`,
+            `길동이 눈을 감고 기운을 살폈습니다. 지붕 위에 사람이 하나 엎드려 있었습니다.`,
+            `이윽고 문이 소리 없이 열리고 검은 그림자가 칼을 들고 들어섰습니다. 그림자가 이불을 향해 칼을 내리쳤습니다.`,
+            `그런데 이불 속에는 아무도 없었습니다. 자객이 놀라 돌아서는 순간, 방 안에 갑자기 짙은 안개가 피어올랐습니다.`,
+            `안개 속에서 길동의 목소리가 들려왔습니다.<br>"나는 그대와 원한이 없다. 누가 보냈느냐."`,
+            `자객은 칼을 놓고 무릎을 꿇었습니다. 그리고 초란의 이름을 댔습니다.`,
+            `길동은 그 자객을 놓아주었습니다.<br>"가라. 그리고 다시는 이런 일로 남의 집 담을 넘지 마라."`,
+            `그날 밤 길동은 아버지의 방 앞으로 갔습니다. 그러고는 마당에 엎드려 절을 올렸습니다.<br>"소인은 이제 이 집을 떠납니다."`,
+            `홍 판서가 문을 열고 나왔습니다. 마당에 아들이 엎드려 있었습니다.`,
+            `"어디로 가려느냐."<br>"모르겠습니다. 다만 이 집에 있으면 아무것도 되지 못합니다."`,
+            `홍 판서는 한참 동안 아들을 내려다보았습니다. 그러다 무겁게 입을 열었습니다.<br>"…내가 네 마음을 안다."`,
+            `"대감."<br>"오늘은 그리 부르지 마라."`,
+            `길동이 고개를 들었습니다.<br>"그러면 무어라 부릅니까."`,
+            `"…아버지라 불러라."`,
+            `길동은 그 자리에서 한동안 말을 잇지 못했습니다. 열여덟 해를 기다린 말이었습니다.`,
+            `"아버지."<br>"오냐."<br>"아버지."<br>"오냐, 오냐."`,
+            `홍 판서가 마루 아래로 내려와 아들의 어깨를 붙들었습니다. 두 사람은 그 자리에 한참을 서 있었습니다.`,
+            `안채에서 어머니 춘섬이 나왔습니다. 길동이 어머니께도 절을 올렸습니다.<br>"어머니, 불효를 용서하십시오."<br>춘섬은 아들의 옷섶에 노잣돈을 넣어 주며 말했습니다.<br>"어디에 있든 사람을 해치지 마라. 그것만 지켜라."`,
+            `길동은 대문을 나섰습니다. 뒤를 한 번도 돌아보지 않았습니다.`,
+            `새벽길에 안개가 자욱했습니다. 길동은 그 안개 속으로 걸어 들어갔습니다. 그때 길동의 나이 열여덟이었습니다.`
+        ]
+    },
+    {
+        num: 3,
+        title: "활빈당",
+        emoji: "🏳️",
+        art: ["story-03-a.png", "story-03-b.png", "story-03-c.png"],
+        paras: [
+            `길동은 여러 날을 걸어 깊은 산에 이르렀습니다. 골짜기 안쪽에 커다란 바위 문이 있고 그 너머에 마을이 있었습니다.`,
+            `도적들의 소굴이었습니다. 수백 명이 모여 살고 있었습니다.`,
+            `길동이 성큼 걸어 들어가자 도적들이 창을 겨누었습니다.<br>"웬 놈이냐."<br>"함께 지내러 왔소."`,
+            `도적들이 껄껄 웃었습니다.<br>"여기가 아무나 들어오는 데인 줄 아느냐. 우두머리가 없어 아직 사람도 못 들이는 참이다."`,
+            `"어찌하여 우두머리가 없소."<br>"저 돌을 드는 자를 우두머리로 삼기로 했는데, 여태 아무도 못 들었다."`,
+            `마당 한복판에 커다란 돌이 하나 놓여 있었습니다. 어른 여럿이 달라붙어야 겨우 움직이는 돌이었습니다.`,
+            `길동이 그 돌 앞으로 갔습니다. 도적들이 비웃었습니다.<br>"저 가는 팔로?"`,
+            `길동은 소매를 걷고 돌에 손을 걸었습니다. 그러고는 숨을 한 번 고르더니 돌을 번쩍 들어 올렸습니다.`,
+            `도적들이 입을 벌렸습니다. 길동은 그 돌을 들고 마당을 한 바퀴 돌고 나서 제자리에 내려놓았습니다.`,
+            `도적들이 일제히 무릎을 꿇었습니다.<br>"장군으로 모시겠습니다!"`,
+            `길동은 그날로 무리의 우두머리가 되었습니다. 그러나 첫날부터 한 가지를 못 박았습니다.`,
+            `"오늘부터 이 무리에는 규칙이 있다. 백성의 것에는 손끝 하나 대지 않는다. 그리고 사람을 죽이지 않는다."<br>도적들이 웅성거렸습니다.<br>"그럼 무엇을 먹고 삽니까."<br>"곧 알게 될 것이다."`,
+            `길동이 무리를 마당에 모아 놓고 물었습니다.<br>"이 나라에서 가장 배부른 자가 누구냐."`,
+            `"그야 벼슬아치들이지요."<br>"그 재물이 어디서 나왔느냐."<br>"…백성한테서 걷은 것이지요."`,
+            `"그러면 그것은 본디 누구 것이냐."<br>도적들이 서로를 돌아보았습니다. 아무도 대답하지 못했습니다.`,
+            `길동이 말했습니다.<br>"우리는 도적질을 하는 것이 아니다. 제자리로 돌려놓는 것이다."`,
+            `그러고는 무명천에 큰 글씨 석 자를 써서 깃발을 만들었습니다.<br>"오늘부터 우리 이름은 활빈당이다. 가난한 사람을 살린다는 뜻이다."`,
+            `활빈당은 곧 움직이기 시작했습니다. 다만 아무 데나 치지 않았습니다.`,
+            `길동은 먼저 사람을 풀어 고을을 살폈습니다. 백성의 곡식을 몇 곱절로 걷는 수령, 굶는 사람 앞에서 잔치를 벌이는 벼슬아치, 벼슬을 돈으로 산 자들의 이름을 적었습니다.`,
+            `그리고 그 집의 곳간만 열었습니다. 여는 것도 밤중이었고, 사람은 하나도 다치지 않았습니다.`,
+            `가져온 곡식과 돈은 그날로 그 고을의 가난한 집에 나누어 주었습니다. 문 앞에 놓고 소리 없이 물러났습니다.`,
+            `아침이면 마을에 이런 소문이 돌았습니다.<br>"간밤에 우리 집 앞에 쌀 두 섬이 놓여 있었네."<br>"우리 집도 그렇다네. 아무도 못 봤다는데."`,
+            `활빈당의 이름이 팔도에 퍼졌습니다. 백성들은 그 이름을 입에 올릴 때마다 웃었고, 벼슬아치들은 그 이름만 들어도 밤에 문단속을 했습니다.`,
+            `조정에서는 여러 번 군사를 풀었습니다. 그러나 활빈당이 어디에 있는지조차 알아내지 못했습니다.`
+        ]
+    },
+    {
+        num: 4,
+        title: "여덟 명의 길동",
+        emoji: "🎭",
+        art: ["story-04-a.png", "story-04-b.png", "story-04-c.png"],
+        paras: [
+            `그 무렵 함경 감사의 악명이 유난했습니다. 흉년에도 세금을 줄이지 않고, 못 내는 집의 솥까지 떼어 갔습니다.`,
+            `길동이 무리를 모았습니다.<br>"이번에는 함경도다."<br>도적들이 난색을 표했습니다.<br>"감영은 성이 높고 군사가 많습니다."`,
+            `"그러니 문을 열게 만들면 된다."`,
+            `약속한 날 밤, 활빈당 몇이 성 밖 남쪽 들판으로 나가 마른 풀더미에 불을 놓았습니다. 불길이 하늘로 치솟았습니다.`,
+            `성안에서 종이 울렸습니다.<br>"불이야! 남문 밖이다!"`,
+            `감사가 군사를 몰아 성 밖으로 나갔습니다. 성문이 활짝 열렸습니다.`,
+            `그 틈에 길동과 무리가 반대편 문으로 들어가 창고를 열었습니다. 곡식과 비단과 돈이 산더미처럼 쌓여 있었습니다.`,
+            `무리가 그것을 지고 나르는 동안 길동은 창고 벽에 붓으로 글을 썼습니다.<br>「이 물건은 활빈당 홍길동이 가져간다.」`,
+            `감사가 불을 끄고 돌아와 그 글씨를 보고 그 자리에서 주저앉았습니다.`,
+            `이튿날 함경도 여러 고을의 가난한 집 앞에 곡식 자루가 놓였습니다. 아무도 누가 놓았는지 보지 못했습니다.`,
+            `조정이 발칵 뒤집혔습니다. 임금이 신하들을 모아 놓고 호통을 쳤습니다.<br>"홍길동이라는 자가 대체 누구냐! 팔도를 제 집 마당처럼 드나드는 자가 어디 있단 말이냐!"`,
+            `그때 한 신하가 아뢰었습니다.<br>"전하, 그 이름은 전 판서 홍 아무개의 서자와 같다고 하옵니다."`,
+            `임금은 홍 판서와 그 맏아들 인형을 불러들였습니다.`,
+            `홍 판서는 늙고 병든 몸으로 엎드려 죄를 청했습니다.<br>"신의 자식이 저지른 일이옵니다. 신을 벌하여 주소서."`,
+            `임금은 홍 판서를 옥에 가두는 대신 인형에게 명을 내렸습니다.<br>"경상 감사로 나가 네 아우를 잡아 오너라. 잡지 못하면 네 아비가 대신 죄를 받을 것이다."`,
+            `인형은 경상도로 내려가 방을 붙였습니다. 관가의 방이 아니라 형이 아우에게 보내는 편지였습니다.`,
+            `「길동아. 네가 어떤 마음으로 그리하는지 형은 안다. 그러나 아버님께서 늙으셨다. 네가 오지 않으면 그분이 대신 벌을 받으신다. 형에게 오너라.」`,
+            `사흘 뒤, 길동이 제 발로 경상 감영에 들어왔습니다. 인형이 아우를 보고 눈물을 흘렸습니다.`,
+            `길동은 순순히 오라를 받았습니다. 함거<span class="gloss">(죄인을 가두어 실어 나르던 수레)</span>에 실려 한양으로 향했습니다.`,
+            `그런데 이상한 일이 벌어졌습니다.`,
+            `같은 날, 강원도에서도 길동이 잡혔다는 장계가 올라왔습니다. 전라도에서도, 충청도에서도, 황해도에서도 올라왔습니다.`,
+            `팔도에서 잡힌 홍길동이 모두 여덟 명이었습니다. 여덟 개의 함거가 같은 날 한양에 닿았습니다.`,
+            `대궐 마당에 여덟 명의 길동이 나란히 섰습니다. 얼굴도 키도 목소리도 똑같았습니다. 신하들이 넋을 잃고 바라보았습니다.`,
+            `임금이 물었습니다.<br>"누가 진짜 홍길동이냐."<br>여덟이 한꺼번에 대답했습니다.<br>"소인이옵니다."`
+        ]
+    },
+    {
+        num: 5,
+        title: "하루짜리 병조 판서",
+        emoji: "📜",
+        art: ["story-05-a.png", "story-05-b.png", "story-05-c.png"],
+        paras: [
+            `임금이 홍 판서를 불러들였습니다.<br>"경은 제 자식을 알아보겠는가."`,
+            `홍 판서가 여덟 앞을 하나하나 지나갔습니다. 늙은 눈으로 아무리 들여다보아도 가릴 수가 없었습니다.`,
+            `그러다 홍 판서가 마당 한가운데에서 걸음을 멈추었습니다. 그러고는 큰 소리로 말했습니다.`,
+            `"길동아. 네 어미가 너에게 무어라 하였느냐."`,
+            `여덟 가운데 일곱은 아무 대답이 없었습니다. 그런데 맨 끝의 하나가 조용히 대답했습니다.<br>"어디에 있든 사람을 해치지 말라 하셨습니다."`,
+            `홍 판서가 그 앞에 섰습니다.<br>"…길동아."<br>"아버지."`,
+            `그 순간 나머지 일곱이 한꺼번에 무너져 내렸습니다. 옷이 힘없이 주저앉고 그 안에서 마른 짚이 우수수 쏟아졌습니다.`,
+            `대궐 마당에 짚 더미 일곱이 남았습니다. 신하들이 비명을 지르며 물러섰습니다.`,
+            `임금이 자리에서 일어섰습니다.<br>"네가 진짜 홍길동이냐."<br>"그러하옵니다."`,
+            `"어찌하여 이런 짓을 하였느냐. 네 재주면 나라를 위해 쓸 수도 있었을 것이다."`,
+            `길동이 고개를 들었습니다.<br>"전하, 신은 재주를 쓰고 싶었사옵니다. 그런데 이 나라는 신에게 그 자리를 주지 않았습니다."`,
+            `"무슨 소리냐."<br>"신은 서얼이옵니다. 아무리 글을 읽어도 과거를 볼 수 없고, 아무리 병법을 익혀도 군사를 맡을 수 없습니다. 그러니 신이 재주를 쓸 곳은 산속밖에 없었사옵니다."`,
+            `대궐 마당이 조용해졌습니다. 신하들이 서로 눈치만 보았습니다.`,
+            `임금이 한참 만에 물었습니다.<br>"그러면 네가 바라는 것이 무엇이냐."`,
+            `"신에게 병조 판서<span class="gloss">(나라의 군사에 관한 일을 맡아보던 가장 높은 벼슬)</span> 벼슬을 내려 주십시오."`,
+            `신하들이 술렁였습니다.<br>"전하, 아니 되옵니다! 도적에게 판서라니요!"<br>"게다가 서얼이옵니다!"`,
+            `임금이 손을 들어 조용히 시켰습니다. 그러고는 길동에게 물었습니다.<br>"네가 그 벼슬을 받아 무엇을 하려느냐."`,
+            `"하루면 됩니다."<br>"하루라니."<br>"하루만 그 자리에 앉았다가 내놓겠습니다. 그러면 신은 원이 없습니다."`,
+            `임금은 오래 생각한 끝에 붓을 들었습니다. 병조 판서 홍길동이라 적힌 교지가 내려졌습니다.`,
+            `이튿날 길동은 사모관대<span class="gloss">(벼슬아치가 갖추어 입던 옷과 모자)</span>를 갖추고 대궐로 들어왔습니다. 문무백관이 늘어선 사이를 지나 자기 자리에 섰습니다.`,
+            `길동은 그 자리에 딱 반나절을 서 있었습니다. 아무 일도 하지 않고, 아무 명도 내리지 않았습니다.`,
+            `해가 기울자 길동은 관대를 벗어 곱게 개어 상 위에 올려놓았습니다. 그러고는 임금 앞에 나아가 절을 올렸습니다.`,
+            `"전하, 신은 이제 물러가옵니다."<br>"어찌 이리 서두르느냐."<br>"신이 이 자리를 바란 것은 벼슬이 탐나서가 아니었습니다. 서얼도 이 자리에 설 수 있다는 것을 한 번만 보이고 싶었을 뿐입니다."`,
+            `길동은 대궐 뜰로 내려섰습니다. 그러고는 하늘로 훌쩍 몸을 솟구쳐 구름 속으로 사라졌습니다. 문무백관이 하늘만 올려다보았습니다.`
+        ]
+    },
+    {
+        num: 6,
+        title: "율도국",
+        emoji: "🏝️",
+        art: ["story-06-a.png", "story-06-b.png", "story-06-c.png"],
+        paras: [
+            `길동은 산으로 돌아와 무리를 모았습니다.`,
+            `"우리는 이 땅에서 할 만큼 했다. 그러나 이 땅에서는 아무것도 바뀌지 않는다."`,
+            `"어찌하시렵니까."<br>"바다 건너로 간다."`,
+            `무리가 술렁였습니다.<br>"어디로 말입니까."<br>"율도국이라는 섬이 있다. 땅이 기름지고 사람이 적다고 들었다. 거기에 우리 나라를 세운다."`,
+            `길동은 그날부터 배를 짓게 했습니다. 활빈당이 모아 둔 재물이 모두 배와 곡식 씨앗과 연장으로 바뀌었습니다.`,
+            `배가 서른 척 지어졌습니다. 떠나기 전날 밤, 길동은 홀로 한양으로 갔습니다.`,
+            `아버지 홍 판서는 병이 깊어 자리에 누워 있었습니다. 길동이 머리맡에 앉았습니다.`,
+            `"아버지."<br>홍 판서가 눈을 떴습니다.<br>"…왔느냐."`,
+            `"멀리 갑니다. 다시 뵙기 어렵겠습니다."<br>"어디로 가느냐."<br>"사람을 신분으로 가르지 않는 곳으로 갑니다."`,
+            `홍 판서가 아들의 손을 잡았습니다.<br>"내가 너에게 못 해 준 것이 많다."<br>"아버지라 불러 주셨지 않습니까. 그것이면 되었습니다."`,
+            `길동은 어머니 춘섬을 모시고 나왔습니다. 형 인형도 대문 밖까지 나와 아우의 어깨를 붙들었습니다.<br>"몸조심해라."<br>"형님도요."`,
+            `사흘 뒤, 서른 척의 배가 돛을 올렸습니다. 배에는 활빈당 무리와 그 식구들, 그리고 함께 가겠다고 나선 백성 수천 명이 타고 있었습니다.`,
+            `여러 날 바다를 건넌 끝에 배들이 한 섬에 닿았습니다.`,
+            `땅이 넓고 기름졌습니다. 강이 흐르고 들이 펼쳐져 있었습니다. 사람들이 배에서 내려 흙을 한 줌씩 쥐어 보았습니다.`,
+            `그런데 그 섬에도 나라가 하나 있었습니다. 율도국이라는 작은 나라였습니다.`,
+            `그 나라 임금은 오랫동안 백성을 돌보지 않았습니다. 세금은 무겁고 벌은 가혹했습니다. 섬 사람들의 원망이 하늘에 닿아 있었습니다.`,
+            `길동이 군사를 이끌고 나아가자 성문마다 사람들이 스스로 문을 열었습니다. 싸움다운 싸움이 한 번도 없었습니다.`,
+            `율도국 임금은 성을 버리고 달아나려 했습니다. 길동은 그를 붙잡았으나 해치지 않았습니다.`,
+            `"그대를 죽이지 않겠소. 다만 이 나라를 내놓으시오."<br>임금은 그 자리에서 옥새를 내놓았습니다.`,
+            `길동은 그 임금과 그 식구를 배에 태워 뭍으로 보냈습니다. 노잣돈까지 넉넉히 실어 주었습니다.`,
+            `무리가 물었습니다.<br>"어찌하여 원수를 살려 보내십니까."<br>"우리가 무엇 때문에 여기까지 왔느냐. 사람을 함부로 하지 않으려고 오지 않았느냐."`,
+            `그해 가을, 길동은 율도국의 임금이 되었습니다.`,
+            `즉위하던 날, 길동은 신하들과 백성을 다 모아 놓고 첫 명을 내렸습니다.`,
+            `"오늘부터 이 나라에는 양반도 상놈도 없다. 적자도 서자도 없다. 사람은 다만 사람일 뿐이다."`
+        ]
+    },
+    {
+        num: 7,
+        title: "이름을 부르는 나라",
+        emoji: "🌅",
+        art: ["story-07-a.png", "story-07-b.png", "story-07-c.png"],
+        paras: [
+            `율도국의 법은 몇 가지 되지 않았습니다. 그러나 그 몇 가지가 아주 단단했습니다.`,
+            `첫째, 벼슬은 오직 재주와 사람됨으로만 뽑았습니다. 누구의 자식인지는 아예 묻지 않았습니다. 과거장에는 이름과 답안만 있었고 집안을 적는 칸이 없었습니다.`,
+            `둘째, 세금은 거둔 것을 백성이 볼 수 있는 곳에 적어 두게 했습니다. 어디에 얼마를 썼는지 누구나 읽을 수 있었습니다.`,
+            `셋째, 굶는 사람이 있으면 그 고을 수령이 먼저 곳간을 열게 했습니다. 열지 않은 수령은 벼슬을 잃었습니다.`,
+            `길동은 임금이 되고 나서도 밤이면 홀로 성 밖을 걸었습니다. 저잣거리에 앉아 사람들의 말을 들었습니다.`,
+            `한번은 한 노인이 길동을 알아보지 못하고 물었습니다.<br>"댁은 무슨 일을 하시오."<br>"…나랏일을 좀 봅니다."<br>"요새 나라가 살 만하오. 예전 임금 때는 아들이 셋 있어도 셋 다 지게꾼밖에 못 되었는데, 이제는 막내가 글을 배우러 다닌다오."`,
+            `길동은 그 말에 오래도록 대답하지 못했습니다.`,
+            `몇 해 뒤, 조선에서 사람이 왔습니다. 아버지 홍 판서가 세상을 떠났다는 소식이었습니다.`,
+            `길동은 상복을 입고 사흘을 곡했습니다. 그러고는 배를 타고 조선으로 건너가 아버지의 장례를 치렀습니다.`,
+            `장례를 마치고 길동은 어머니 춘섬을 모시고 율도국으로 돌아왔습니다. 형 인형에게는 이렇게 말했습니다.<br>"형님, 언제든 오십시오. 그곳에는 형님을 나리라 부를 사람이 없습니다."`,
+            `인형이 웃으며 아우의 등을 두드렸습니다.<br>"그런 나라가 정말 있단 말이냐."<br>"있습니다. 제가 만들었습니다."`,
+            `그 말을 하는 길동의 목소리가 조금 떨렸습니다.`,
+            `율도국은 오래도록 편안했습니다.`,
+            `길동은 삼십 년을 다스렸습니다. 그동안 섬에는 흉년이 몇 번 들었지만 굶어 죽은 사람은 없었습니다.`,
+            `길동에게는 아들이 여럿 있었습니다. 그런데 길동은 맏이에게 나라를 물려주지 않았습니다.`,
+            `대신 신하들을 모아 놓고 이렇게 말했습니다.<br>"다음 임금은 그대들이 뽑으시오. 내 자식이든 아니든 상관없소."`,
+            `신하들이 놀랐습니다.<br>"전하, 그런 법이 어디 있습니까."<br>"없으면 지금 만들면 되오."`,
+            `길동은 늘그막에 임금 자리를 내놓고 성 밖 작은 집으로 옮겨 갔습니다.`,
+            `그 집 마당에는 아이들이 자주 놀러 왔습니다. 길동은 아이들에게 글을 가르쳤습니다.`,
+            `한 아이가 물었습니다.<br>"할아버지, 조선이라는 데는 어떤 나라예요?"`,
+            `길동은 한참 만에 대답했습니다.<br>"내가 나고 자란 나라란다."<br>"거기는 좋아요?"<br>"산이 곱고 물이 맑지."`,
+            `"그런데 왜 떠나셨어요?"`,
+            `길동은 웃으며 아이의 머리를 쓰다듬었습니다.<br>"거기서는 내가 아버지를 아버지라 부르지 못했단다."`,
+            `아이가 눈을 동그랗게 떴습니다.<br>"그게 무슨 말이에요? 아버지를 아버지라고 부르지, 그럼 뭐라고 불러요?"`,
+            `길동은 그 물음에 대답하지 않았습니다. 다만 오래도록 아이의 얼굴을 들여다보았습니다.`,
+            `그 물음을 알아듣지 못하는 아이가 자라는 나라를 만들려고, 길동은 평생을 걸었던 것입니다.`
+        ]
+    }
+];
+
+function makeProbe() {
+    const book = document.getElementById('book');
+    const holder = document.createElement('div');
+    holder.style.cssText = 'position:absolute;inset:10px;visibility:hidden;pointer-events:none;z-index:-1;';
+    holder.innerHTML = '<div class="page page-story"><div class="story-page-left"></div><div class="story-page-right"></div></div>';
+    book.appendChild(holder);
+
+    // 따로 만든 상자에 재면 실제 쪽과 미묘하게 어긋난다.
+    // 그래서 진짜 쪽과 똑같은 칸을 하나 숨겨 두고 거기에 넣어 잰다.
+    // 칸이 넘치면 scrollHeight가 칸 높이에서 잘리므로, 안에 든 것들의 높이를 직접 더한다.
+    const col = holder.querySelector('.story-page-left');
+    const cs = getComputedStyle(col);
+    const measured = col.clientHeight - parseFloat(cs.paddingTop) - parseFloat(cs.paddingBottom);
+
+    const contentHeight = () => [...col.children].reduce((h, el) =>
+        h + el.getBoundingClientRect().height + parseFloat(getComputedStyle(el).marginBottom || 0), 0);
+
+    col.innerHTML = '<h2>제목</h2>';
+    const headHeight = contentHeight();
+    col.innerHTML = '';
+
+    return {
+        // 창이 아직 크기를 갖지 못한 채 열리면 잰 값이 0이 된다. 그때는 어림값으로 버틴다.
+        usable: measured > 40 ? measured : 620,
+        headHeight: headHeight > 0 ? headHeight : 45,
+        measure(html) {
+            col.innerHTML = html;
+            return contentHeight();
+        },
+        close() { book.removeChild(holder); }
+    };
+}
+
+let PROBE = null;   // 쪽을 나눌 때마다 새로 만든다
+
+// 문단을 쪽 넘길 수 있는 조각으로 나눈다. 문장 끝과 대사 줄바꿈이 자를 수 있는 자리다.
+// 낱말 뜻풀이처럼 태그로 묶인 부분 안에서는 자르지 않는다.
+function splitSegments(html) {
+    const tokens = html.split(/(<[^>]+>)/).filter(t => t !== '');
+    const segs = [];
+    let buf = '';
+    let depth = 0;
+    for (const tok of tokens) {
+        if (tok.startsWith('<')) {
+            buf += tok;
+            if (/^<br\s*\/?>$/i.test(tok)) {
+                if (depth === 0) { segs.push(buf); buf = ''; }
+            } else if (tok.startsWith('</')) {
+                depth = Math.max(0, depth - 1);
+            } else if (!tok.endsWith('/>')) {
+                depth++;
+            }
+            continue;
+        }
+        if (depth > 0) { buf += tok; continue; }
+        // 문장이 끝나고 빈칸이 오는 자리에서 자른다
+        const parts = tok.split(/(?<=[.!?"”][\s])/);
+        for (let i = 0; i < parts.length; i++) {
+            buf += parts[i];
+            if (i < parts.length - 1) { segs.push(buf); buf = ''; }
+        }
+    }
+    if (buf.trim() !== '') segs.push(buf);
+    return segs.length ? segs : [html];
+}
+
+const CHAPTER_SEGS = CHAPTERS.map(ch => {
+    const segs = [];
+    ch.paras.forEach((html, paraIdx) => {
+        splitSegments(html).forEach((piece, k) => {
+            segs.push({ paraIdx, html: piece, start: k === 0 });
+        });
+    });
+    return segs;
+});
+
+// 조각 묶음을 문단 단위로 다시 묶어 화면에 그릴 모양으로 만든다.
+// 앞 쪽에서 이어진 문단은 첫 줄을 들여쓰지 않는다.
+function runHtml(segs, a, b) {
+    let out = '';
+    let i = a;
+    while (i < b) {
+        const pi = segs[i].paraIdx;
+        let inner = '';
+        const contd = !segs[i].start;
+        let j = i;
+        while (j < b && segs[j].paraIdx === pi) { inner += segs[j].html; j++; }
+        out += `<p${contd ? ' class="cont"' : ''}>${inner}</p>`;
+        i = j;
+    }
+    return out;
+}
+
+function slotPlan(imgCount, textCount) {
+    const total = imgCount + textCount;
+    const slots = new Array(total).fill('text');
+    for (let k = 0; k < imgCount; k++) {
+        let pos = Math.min(Math.round((k * total) / imgCount), total - 1);
+        while (slots[pos] === 'img') pos = (pos + 1) % total;
+        slots[pos] = 'img';
+    }
+    return slots;
+}
+
+// 글을 쪽마다 같은 높이만큼 나눠 담는다. 마지막 쪽만 남은 만큼 담는다.
+// 장 제목이 붙는 첫 쪽은 제목까지 함께 얹어서 재야 한다.
+// 제목 높이를 따로 빼서 계산하면 실제로 나란히 놓였을 때의 높이와 조금씩 어긋난다.
+function fillPages(segs, pageCount, headHtml, usable) {
+    const pageHeight = (a, b, first) => PROBE.measure((first ? headHtml : '') + runHtml(segs, a, b));
+    const ranges = [];
+    let i = 0;
+    for (let p = 0; p < pageCount; p++) {
+        const rest = pageCount - p - 1;
+        if (rest === 0) { ranges.push([i, segs.length]); break; }
+        // 남은 글을 남은 쪽 수로 나눠 이번 쪽에 담을 양을 정한다.
+        // 매 쪽마다 다시 계산하므로, 한 쪽이 덜 차면 그만큼이 뒤쪽에 고르게 얹힌다.
+        const remainingH = pageHeight(i, segs.length, p === 0);
+        const room = Math.min(usable, remainingH / (rest + 1));
+        const maxTake = Math.max(1, segs.length - i - rest);
+        let take = 1;
+        let lo = 1, hi = maxTake;
+        while (lo <= hi) {
+            const mid = (lo + hi) >> 1;
+            if (pageHeight(i, i + mid, p === 0) <= room) { take = mid; lo = mid + 1; }
+            else { hi = mid - 1; }
+        }
+        ranges.push([i, i + take]);
+        i += take;
+    }
+    return ranges;
+}
+
+function paginateChapter(ch, chIndex) {
+    const segs = CHAPTER_SEGS[chIndex];
+    const arts = (ch.art && ch.art.length) ? ch.art : [];
+    const { usable, headHeight } = PROBE;
+    const headHtml = `<h2>${CHAPTER_LABEL(ch.num)}${ch.title}</h2>`;
+    const totalH = PROBE.measure(runHtml(segs, 0, segs.length));
+
+    // 필요한 글 쪽 수를 구하고, 그림 면(1쪽)과 글만 면(2쪽)으로 맞춘다.
+    // 쪽 수는 조각 수를 넘을 수 없다 — 빈 쪽이 생기면 안 되기 때문이다.
+    const maxSpreads = Math.max(arts.length, Math.ceil(segs.length / 2));
+    const needPages = Math.max(arts.length || 1, Math.ceil((totalH + headHeight) / usable));
+    let textSpreads = Math.max(arts.length ? 0 : 1, Math.ceil(Math.max(0, needPages - arts.length) / 2));
+
+    let slots = slotPlan(arts.length, textSpreads);
+    let ranges = null;
+    for (let guard = 0; guard < 8; guard++) {
+        slots = slotPlan(arts.length, textSpreads);
+        const pageCount = slots.reduce((n, kind) => n + (kind === 'img' ? 1 : 2), 0);
+        if (pageCount > segs.length && textSpreads > 0) { textSpreads--; continue; }
+        ranges = fillPages(segs, pageCount, headHtml, usable);
+        // 한 쪽이라도 넘치면 쪽을 늘려 다시 나눈다.
+        // 마지막 쪽만 보면 안 된다 — 첫 쪽에는 장 제목이 얹히므로 그쪽이 먼저 넘칠 수 있다.
+        const over = ranges.some(([a, b], n) =>
+            PROBE.measure((n === 0 ? headHtml : '') + runHtml(segs, a, b)) > usable);
+        if (!over || arts.length + textSpreads >= maxSpreads) break;
+        textSpreads++;
+    }
+    if (!ranges) {
+        slots = slotPlan(arts.length, textSpreads);
+        ranges = fillPages(segs, slots.reduce((n, kind) => n + (kind === 'img' ? 1 : 2), 0), headHtml, usable);
+    }
+
+    const spreads = [];
+    let pageIdx = 0;
+    let artIdx = 0;
+    slots.forEach((kind, s) => {
+        if (kind === 'img') {
+            spreads.push({
+                kind: 'chapter', ch, chIndex, first: s === 0,
+                art: arts[artIdx++], left: ranges[pageIdx++], right: null
+            });
+        } else {
+            const left = ranges[pageIdx++];
+            const right = ranges[pageIdx++];
+            spreads.push({ kind: 'chapter', ch, chIndex, first: s === 0, art: null, left, right });
+        }
+    });
+    return spreads;
+}
+/* ── 그리기 ───────────────────────────────────────── */
+
+function artFrame(src, emoji) {
+    return `
+        <div class="art-frame">
+            <img src="images/${src}" alt="" onerror="this.style.display='none'; this.nextElementSibling.style.display='flex';">
+            <div class="art-fallback" style="display:none">${emoji}</div>
+        </div>`;
+}
+
+function coverPage() {
+    return `
+        <div class="page page-cover">
+            <div class="story-page-left story-page-left-full">
+                ${artFrame('cover.png', '⚔️')}
+            </div>
+            <div class="story-page-right">
+                <h1>홍길동전</h1>
+                <p>홍길동전은 조선 중기의 문인 허균이 지었다고 전해지는 소설이에요. 우리나라에서 한글로 쓰인 최초의 소설로 꼽힌답니다.</p>
+                <p>허균은 1569년에 태어나 1618년에 세상을 떠났어요. 벼슬은 높이 올랐지만 신분으로 사람을 가르는 제도를 평생 못마땅해했고, 서얼 출신 벗들과 가까이 지낸 일로 벼슬에서 쫓겨나기도 했답니다.</p>
+                <p>서얼은 양반 아버지와 신분이 낮은 어머니 사이에서 난 자식을 가리키는 말이에요. 아무리 재주가 뛰어나도 높은 벼슬에 오를 수 없었고, 아버지를 아버지라 부르지 못하는 일도 흔했지요.</p>
+                <p>실록에는 연산군 때 홍길동이라는 도적이 잡혔다는 기록이 남아 있어요. 소설 속 인물과 같은 사람인지는 알 수 없지만, 그 이름이 오래 오르내린 것만은 분명하답니다.</p>
+            </div>
+        </div>`;
+}
+
+function tocPage(part) {
+    // 한 편으로 이어지는 이야기라 차례는 장 번호와 제목만 둔다.
+    // 줄거리 한 줄을 붙이면 차례가 두 펼침면으로 늘어나고, 앞으로 읽을 대목을 미리 알려 주는 셈도 된다.
+    const itemHtml = ch => `
+        <li>
+            <button type="button" data-goto="${ch.num}">
+                <span class="toc-num">${ch.num}</span>
+                <span><strong>${ch.title}</strong></span>
+            </button>
+        </li>`;
+    const extraItems = `
+        <li>
+            <button type="button" data-goto-kind="quiz">
+                <span class="toc-num">?</span>
+                <span><strong>이야기 문제</strong></span>
+            </button>
+        </li>`;
+    const group = TOC_GROUPS[part];
+    const half = Math.ceil(group.length / 2);
+    const last = part === TOC_GROUPS.length - 1;
+    return `
+        <div class="page page-toc">
+            <div class="story-page-left">
+                ${part === 0 ? '<h2>차례</h2>' : ''}
+                <ul class="toc-list">${group.slice(0, half).map(itemHtml).join('')}</ul>
+            </div>
+            <div class="story-page-right">
+                <ul class="toc-list">${group.slice(half).map(itemHtml).join('') + (last ? extraItems : '')}</ul>
+            </div>
+        </div>`;
+}
+
+// 한 펼침면에 담을 수 있는 차례 항목은 여덟 개까지다. 그보다 많으면 차례도 여러 쪽이 된다.
+const TOC_PER_SPREAD = 16;
+const TOC_GROUPS = [];
+for (let i = 0; i < CHAPTERS.length; i += TOC_PER_SPREAD) {
+    TOC_GROUPS.push(CHAPTERS.slice(i, i + TOC_PER_SPREAD));
+}
+
+function chapterSpreadPage(spread) {
+    const ch = spread.ch;
+    const segs = CHAPTER_SEGS[spread.chIndex];
+    const head = spread.first ? `<h2>${CHAPTER_LABEL(ch.num)}${ch.title}</h2>` : '';
+
+    if (spread.art) {
+        return `
+            <div class="page page-story">
+                <div class="story-page-left">
+                    ${head}
+                    ${runHtml(segs, spread.left[0], spread.left[1])}
+                </div>
+                <div class="story-page-right story-page-right-image">
+                    ${artFrame(spread.art, ch.emoji)}
+                </div>
+            </div>`;
+    }
+
+    return `
+        <div class="page page-story">
+            <div class="story-page-left">
+                ${head}
+                ${runHtml(segs, spread.left[0], spread.left[1])}
+            </div>
+            <div class="story-page-right story-page-right-text">
+                ${runHtml(segs, spread.right[0], spread.right[1])}
+            </div>
+        </div>`;
+}
+
+const QUIZ = [
+    { q: "길동이 아버지를 아버지라 부르지 못한 까닭은 무엇입니까?", choices: ["집을 일찍 떠나서", "서얼로 태어나서", "아버지가 금해서"], answer: 1 },
+    { q: "길동이 밤중에 익힌 것은 무엇입니까?", choices: ["그림과 글씨", "농사짓는 법", "병법과 도술"], answer: 2 },
+    { q: "길동을 해치려 한 사람은 누구입니까?", choices: ["아버지의 첩 초란", "맏형인 홍인형", "이웃집의 대감"], answer: 0 },
+    { q: "집을 떠나던 날 아버지가 길동에게 허락한 것은 무엇입니까?", choices: ["벼슬길에 나가는 것", "재산을 나누는 것", "아버지라 부르는 것"], answer: 2 },
+    { q: "길동이 도적 무리의 우두머리가 된 것은 무엇 덕분입니까?", choices: ["아무도 못 든 돌을 들어서", "글을 가장 잘 지어내서", "무리에서 나이가 많아서"], answer: 0 },
+    { q: "길동이 무리에게 지어 준 이름은 무엇입니까?", choices: ["의적단", "활빈당", "홍문당"], answer: 1 },
+    { q: "활빈당이 손대지 않기로 한 것은 무엇입니까?", choices: ["절의 재물", "백성의 재물", "관가의 곡식"], answer: 1 },
+    { q: "길동이 함경 감사의 창고를 열 때 쓴 방법은 무엇입니까?", choices: ["한밤중에 담을 넘어 몰래 들어갔다", "문지기에게 돈을 주고 문을 열게 했다", "성 밖에 불을 질러 사람을 빼돌렸다"], answer: 2 },
+    { q: "팔도에서 한꺼번에 잡힌 길동은 몇 명이었습니까?", choices: ["여덟 명", "세 명", "열두 명"], answer: 0 },
+    { q: "잡혀 온 여덟 길동은 어떻게 되었습니까?", choices: ["모두 달아나 버렸다", "하나만 남고 사라졌다", "짚 인형으로 변했다"], answer: 2 },
+    { q: "길동이 임금에게 청한 것은 무엇입니까?", choices: ["병조 판서 벼슬", "많은 재물", "죄를 용서받는 일"], answer: 0 },
+    { q: "길동은 벼슬을 받은 뒤 무엇을 했습니까?", choices: ["오래도록 나랏일을 했다", "하루 만에 내놓고 떠났다", "다시 도적이 되었다"], answer: 1 },
+    { q: "길동이 무리를 이끌고 간 곳은 어디입니까?", choices: ["북쪽의 깊은 산", "바다 건너 율도국", "남쪽의 큰 고을"], answer: 1 },
+    { q: "율도국에서 길동이 가장 먼저 없앤 것은 무엇입니까?", choices: ["백성의 무거운 세금", "나라를 지키던 군사", "신분을 가르는 법"], answer: 2 }
+];
+
+function quizPage() {
+    const items = QUIZ.map((item, i) => `
+        <div class="quiz-item" data-qindex="${i}">
+            <p class="quiz-question">${i + 1}. ${item.q}</p>
+            <div class="quiz-choices">
+                ${item.choices.map((c, ci) => `<button type="button" class="quiz-choice" data-choice="${ci}">${c}</button>`).join('')}
+            </div>
+        </div>`).join('');
+    return `
+        <div class="page page-quiz">
+            <h2>이야기 문제</h2>
+            <p class="quiz-intro-text" id="quizProgress">0 / 총 ${QUIZ.length}문항 완료</p>
+            <div class="quiz-list">${items}</div>
+        </div>`;
+}
+
+function endPage() {
+    return `
+        <div class="page page-end">
+            ${artFrame('end.png', '🏝️')}
+            <h2>홍길동전을 다 읽었습니다</h2>
+            <a class="home-btn" href="../../../../../">학습 허브로 돌아가기</a>
+        </div>`;
+}
+
+const TWO_PAGE_KINDS = new Set(['chapter', 'toc', 'cover']);
+
+let PAGES = [];
+let FOLIOS = [];
+
+function buildPages() {
+    PROBE = makeProbe();
+    PAGES = [
+        { kind: 'cover' },
+        ...TOC_GROUPS.map((_, i) => ({ kind: 'toc', part: i })),
+        ...CHAPTERS.flatMap(paginateChapter),
+        { kind: 'quiz' },
+        { kind: 'end' }
+    ];
+    PROBE.close();   // 쪽을 다 나눴으니 재는 데 쓰던 숨은 쪽은 치운다
+
+    let folioCounter = 0;
+    FOLIOS = PAGES.map(p => {
+        const width = TWO_PAGE_KINDS.has(p.kind) ? 2 : 1;
+        const start = folioCounter + 1;
+        folioCounter += width;
+        return { start, width };
+    });
+}
+
+buildPages();
+
+function renderPage(page) {
+    switch (page.kind) {
+        case 'cover': return coverPage();
+        case 'toc': return tocPage(page.part);
+        case 'chapter': return chapterSpreadPage(page);
+        case 'quiz': return quizPage();
+        case 'end': return endPage();
+        default: return '';
+    }
+}
+
+let current = 0;
+let animating = false;
+
+const spreadEl = document.getElementById('spread');
+const prevBtn = document.getElementById('prevBtn');
+const nextBtn = document.getElementById('nextBtn');
+const indicatorEl = document.getElementById('pageIndicator');
+const folioLeftEl = document.getElementById('folioLeft');
+const folioRightEl = document.getElementById('folioRight');
+
+function paint() {
+    spreadEl.innerHTML = renderPage(PAGES[current]);
+    prevBtn.disabled = current === 0;
+    nextBtn.disabled = current === PAGES.length - 1;
+    indicatorEl.textContent = `${current + 1} / ${PAGES.length}`;
+
+    const folio = FOLIOS[current];
+    folioLeftEl.classList.toggle('folio-center', folio.width === 1);
+    folioLeftEl.textContent = folio.start;
+    folioLeftEl.hidden = false;
+    if (folio.width === 2) {
+        folioRightEl.textContent = folio.start + 1;
+        folioRightEl.hidden = false;
+    } else {
+        folioRightEl.hidden = true;
+    }
+
+    spreadEl.querySelectorAll('[data-goto]').forEach(btn => {
+        btn.addEventListener('click', () => {
+            const num = Number(btn.dataset.goto);
+            const idx = PAGES.findIndex(p => p.kind === 'chapter' && p.first && p.ch.num === num);
+            if (idx >= 0) goTo(idx);
+        });
+    });
+    spreadEl.querySelectorAll('[data-goto-kind]').forEach(btn => {
+        btn.addEventListener('click', () => {
+            const idx = PAGES.findIndex(p => p.kind === btn.dataset.gotoKind);
+            if (idx >= 0) goTo(idx);
+        });
+    });
+
+    if (PAGES[current].kind === 'quiz') initQuiz();
+}
+
+function initQuiz() {
+    let answeredCount = 0;
+    const progressEl = document.getElementById('quizProgress');
+
+    spreadEl.querySelectorAll('.quiz-item').forEach(item => {
+        const qi = Number(item.dataset.qindex);
+        const q = QUIZ[qi];
+        item.querySelectorAll('.quiz-choice').forEach(btn => {
+            btn.addEventListener('click', () => {
+                if (item.classList.contains('graded')) return;
+                item.classList.add('graded');
+                const chosen = Number(btn.dataset.choice);
+                item.querySelectorAll('.quiz-choice').forEach(b => {
+                    const ci = Number(b.dataset.choice);
+                    if (ci === q.answer) b.classList.add('correct');
+                    else if (ci === chosen) b.classList.add('incorrect');
+                });
+                answeredCount++;
+                progressEl.textContent = `${answeredCount} / 총 ${QUIZ.length}문항 완료`;
+            });
+        });
+    });
+}
+
+function goTo(index) {
+    if (animating || index === current || index < 0 || index >= PAGES.length) return;
+    animating = true;
+    const dir = index > current ? 'flip-next' : 'flip-prev';
+    spreadEl.classList.add(dir);
+    setTimeout(() => {
+        current = index;
+        paint();
+    }, 230);
+    setTimeout(() => {
+        spreadEl.classList.remove('flip-next', 'flip-prev');
+        animating = false;
+    }, 480);
+}
+
+prevBtn.addEventListener('click', () => goTo(current - 1));
+nextBtn.addEventListener('click', () => goTo(current + 1));
+
+document.getElementById('tocLink').addEventListener('click', () => {
+    const idx = PAGES.findIndex(p => p.kind === 'toc');
+    if (idx >= 0) goTo(idx);
+});
+
+document.addEventListener('keydown', (e) => {
+    if (e.key === 'ArrowRight') goTo(current + 1);
+    if (e.key === 'ArrowLeft') goTo(current - 1);
+});
+
+paint();
+
+// 본문 글꼴은 늦게 내려온다. 글꼴이 바뀌면 한 줄에 들어가는 글자 수가 달라져서
+// 먼저 나눠 둔 쪽이 넘치게 된다. 그래서 글꼴을 다 받은 뒤에 한 번 다시 나눈다.
+if (document.fonts && document.fonts.status !== 'loaded') {
+    document.fonts.ready.then(() => {
+        const here = PAGES[current];
+        buildPages();
+        current = Math.min(current, PAGES.length - 1);
+        if (here && here.kind === 'chapter') {
+            const idx = PAGES.findIndex(p => p.kind === 'chapter' && p.first && p.ch.num === here.ch.num);
+            if (idx >= 0) current = idx;
+        }
+        paint();
+    });
+}

@@ -4,7 +4,7 @@ const CHAPTERS = [
         title: "1장 · 구덩이에 빠진 호랑이",
         beats: [
             {
-                art: "01-pit.png",
+                art: "01-pit.webp",
                 emoji: "🕳️",
                 left: [
                     "나그네가 산길을 걸어가고 있었습니다.",
@@ -13,12 +13,11 @@ const CHAPTERS = [
                 ],
                 right: [
                     "소리 나는 쪽으로 가 보니 커다란 구덩이가 있었어요.",
-                    "그 안에서 호랑이 한 마리가 껑충껑충 뛰고 있었지요.",
-                    "사냥꾼이 파 놓은 함정에 빠진 것이었어요."
+                    "그 안에서 호랑이 한 마리가 껑충껑충 뛰고 있었지요. 사냥꾼이 파 놓은 함정에 빠진 것이었어요."
                 ]
             },
             {
-                art: "02-beg.png",
+                art: "02-beg.webp",
                 emoji: "🙏",
                 left: [
                     "\"나그네님, 저를 좀 꺼내 주세요!\"",
@@ -31,7 +30,7 @@ const CHAPTERS = [
                 ]
             },
             {
-                art: "03-rescue.png",
+                art: "03-rescue.webp",
                 emoji: "🪵",
                 left: [
                     "나그네는 그만 마음이 약해졌어요.",
@@ -51,7 +50,7 @@ const CHAPTERS = [
         title: "2장 · 은혜를 잊은 호랑이",
         beats: [
             {
-                art: "04-betray.png",
+                art: "04-betray.webp",
                 emoji: "😾",
                 left: [
                     "\"어흥! 배가 고파 죽겠구나.\"",
@@ -64,7 +63,7 @@ const CHAPTERS = [
                 ]
             },
             {
-                art: "05-pine.png",
+                art: "05-pine.webp",
                 emoji: "🌲",
                 left: [
                     "\"이건 너무 억울하오. 누구에게든 물어봅시다.\"",
@@ -78,7 +77,7 @@ const CHAPTERS = [
                 ]
             },
             {
-                art: "06-cow.png",
+                art: "06-cow.webp",
                 emoji: "🐂",
                 left: [
                     "다음은 밭에서 일하던 소에게 물었습니다.",
@@ -97,7 +96,7 @@ const CHAPTERS = [
         title: "3장 · 토끼의 재판",
         beats: [
             {
-                art: "07-rabbit.png",
+                art: "07-rabbit.webp",
                 emoji: "🐰",
                 left: [
                     "\"이제 한 번 남았다. 어서 물어보아라.\"",
@@ -110,7 +109,7 @@ const CHAPTERS = [
                 ]
             },
             {
-                art: "08-confused.png",
+                art: "08-confused.webp",
                 emoji: "❓",
                 left: [
                     "\"답답하구나! 내가 저 구덩이에 빠져 있었단 말이다!\"",
@@ -123,7 +122,7 @@ const CHAPTERS = [
                 ]
             },
             {
-                art: "09-back-in.png",
+                art: "09-back-in.webp",
                 emoji: "🐯",
                 left: [
                     "\"도무지 그림이 안 그려집니다.\"",
@@ -136,7 +135,7 @@ const CHAPTERS = [
                 ]
             },
             {
-                art: "10-verdict.png",
+                art: "10-verdict.webp",
                 emoji: "⚖️",
                 left: [
                     "토끼는 얼른 걸쳐 놓은 나무를 치워 버렸습니다.",
@@ -167,7 +166,7 @@ function coverPage() {
     return `
         <div class="page page-cover">
             <div class="story-page-left story-page-left-full">
-                ${artFrame('cover.png', '🐰')}
+                ${artFrame('cover.webp', '🐰')}
             </div>
             <div class="story-page-right">
                 <h1>토끼의 재판</h1>
@@ -239,12 +238,12 @@ function reflectionPage(chapter) {
 }
 
 const QUIZ = [
-    { q: "호랑이는 어디에 빠져 있었나요?", choices: ["사냥꾼의 함정", "깊은 강물", "커다란 그물"], answer: 0 },
-    { q: "호랑이는 꺼내 주면 어떻게 하겠다고 했나요?", choices: ["은혜를 갚겠다", "산으로 가겠다", "선물을 주겠다"], answer: 0 },
+    { q: "호랑이는 어디에 빠져 있었나요?", choices: ["깊은 강물", "사냥꾼의 함정", "커다란 그물"], answer: 1 },
+    { q: "호랑이는 꺼내 주면 어떻게 하겠다고 했나요?", choices: ["산으로 가겠다", "선물을 주겠다", "은혜를 갚겠다"], answer: 2 },
     { q: "소나무는 왜 호랑이 편을 들었나요?", choices: ["사람이 베어 가서", "호랑이가 무서워서", "나그네가 미워서"], answer: 0 },
-    { q: "소는 왜 호랑이 편을 들었나요?", choices: ["사람이 부려먹어서", "호랑이와 친해서", "밭일이 힘들어서"], answer: 0 },
+    { q: "소는 왜 호랑이 편을 들었나요?", choices: ["호랑이와 친해서", "밭일이 힘들어서", "사람이 부려먹어서"], answer: 2 },
     { q: "토끼는 이야기를 듣고 어떻게 했나요?", choices: ["못 알아듣는 척했다", "크게 화를 냈다", "도망쳐 버렸다"], answer: 0 },
-    { q: "호랑이는 왜 구덩이로 다시 들어갔나요?", choices: ["직접 보여 주려고", "토끼를 잡으려고", "몰래 숨으려고"], answer: 0 }
+    { q: "호랑이는 왜 구덩이로 다시 들어갔나요?", choices: ["토끼를 잡으려고", "직접 보여 주려고", "몰래 숨으려고"], answer: 1 }
 ];
 
 function quizPage() {
@@ -266,7 +265,7 @@ function quizPage() {
 function endPage() {
     return `
         <div class="page page-end">
-            ${artFrame('end.png', '🌟')}
+            ${artFrame('end.webp', '🌟')}
             <h2>토끼의 재판 이야기를 다 읽었어요!</h2>
             <a class="home-btn" href="../../../../../">학습 허브로 돌아가기</a>
         </div>`;

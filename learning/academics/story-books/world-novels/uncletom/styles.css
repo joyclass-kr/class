@@ -205,6 +205,7 @@ body {
 .story-page-right-image {
     align-items: center;
     background: var(--parchment-shade);
+    padding: 0;
 }
 
 .story-page-right-image .story-media {
@@ -213,7 +214,13 @@ body {
     margin: 0;
 }
 
+/* 그림 파일은 가로 4:3이다. 액자를 쪽 높이에 맞춰 늘이면 좌우가 절반 넘게
+   잘려 나가므로, 액자도 4:3으로 잡고 위아래에 종이 여백을 남긴다. */
 .story-page-right-image .art-frame {
+    height: auto;
+    aspect-ratio: 4 / 3;
+    flex: none;
+    border-radius: 0;
     box-shadow: 0 8px 22px rgba(0, 0, 0, 0.18), inset 0 0 0 1px rgba(92, 58, 34, 0.25);
 }
 
@@ -463,6 +470,14 @@ body {
     text-align: center;
     gap: 10px;
     background: var(--parchment-shade);
+}
+
+/* 끝쪽 그림도 가로 4:3이다. 쪽 높이에 맞춰 늘이면 위아래가 잘린다. */
+.page-end .art-frame {
+    height: auto;
+    aspect-ratio: 4 / 3;
+    flex: none;
+    max-width: min(100%, 540px);
 }
 
 .page-end h2 { margin: 0; font-size: clamp(20px, 3vw, 30px); }

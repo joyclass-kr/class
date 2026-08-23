@@ -1,0 +1,162 @@
+# 제미나이 그림 프롬프트 — 망두석 재판
+
+그림책 틀이에요. 한 펼침마다 위쪽에 큰 그림 하나가 통으로 들어가고, 아래쪽 띠에 글이 좌우로 나뉩니다.
+**열 개의 펼침** + 표지 + 마지막 장 = 그림 **열두 장**.
+
+## 비율 — 꼭 지켜주세요
+
+| 그림 | 실제 칸 비율 | 요청할 비율 |
+|---|---|---|
+| 본문 그림 10장 (`01`~`10`) | 1.92 : 1 | **가로 16 : 세로 9** |
+| 표지 `cover.png` | 0.67 : 1 | **세로 2 : 3** |
+| 마지막 `end.png` | 1.76 : 1 | **가로 16 : 세로 9** |
+
+제미나이는 가로 그림을 1376×768(16:9)로 내보냅니다. 칸이 1.92:1이라 위아래가 3.5퍼센트쯤 잘리는데, 눈에 띄지 않는 정도라 그대로 쓰면 됩니다. 4:3으로 만들면 위아래가 삼십 퍼센트쯤 잘려나가니 그것만 피하세요. 인물을 가운데에 몰지 말고 좌우로 나눠 배치하세요.
+
+## 공통 스타일 지시문 (모든 프롬프트 앞에 붙이세요)
+
+```
+Children's picture book illustration, bright cheerful cel-animation style with
+clean bold outlines and flat vivid colors, similar to a classic Korean animated
+storybook. Setting is a Joseon-era county town: a tiled-roof government office
+(gwana) with a wide packed-earth courtyard, a raised wooden platform where the
+magistrate sits behind a low desk, plus a dusty country road with pine trees and
+a grave mound. Warm daylight, rich fabric colors for the silk. Big expressive
+faces, exaggerated comic gestures. Nobody is beaten or hurt. No text or letters.
+```
+
+## 인물 설명 (일관성을 위해 매번 붙이세요)
+
+```
+The silk merchant: a middle-aged man in worn brown hanbok with a cloth headband,
+a tall stack of colourful silk bolts on a wooden A-frame carrier, round anxious
+face. The magistrate: a dignified man in a dark blue official robe and a winged
+black official hat, long thin beard, a completely straight face throughout - the
+joke is that he never once looks like he is joking, until the very last picture
+where he allows himself a small knowing smile. The constables: two men in yellow
+tunics with black hats and staffs, permanently baffled. The stone post: a
+weathered grey granite pillar about the height of a man, carved with a simple
+rounded top - draw it exactly the same in every picture, completely inert.
+```
+
+---
+
+### `cover.png` — 표지 (세로 2:3)
+
+```
+Vertical portrait composition. A weathered grey stone post stands upright in the
+middle of a government office courtyard, bound around with thick rope, filling
+most of the tall frame. At the bottom, small in comparison, a magistrate in dark
+blue robes sits behind a low desk pointing sternly up at it. A ring of villagers'
+heads peeks in from the edges. Warm sunlight, absurd and intriguing.
+```
+
+## 본문 열 장 (모두 가로 16:9)
+
+### `01-merchant.png` — 망두석 그늘에서 잠들다
+
+```
+Wide summer country road scene at midday. On the right, a tall weathered grey
+stone post stands beside the road near a low grass grave mound, casting a narrow
+patch of shade. In that shade on the left, the silk merchant lies asleep with his
+head on his arm, mouth open, his A-frame carrier stacked with bright silk bolts
+propped beside him. Blazing sun, cicada-loud stillness.
+```
+
+### `02-gone.png` — 사라진 비단
+
+```
+Wide road scene. In the centre, the merchant is on his feet spinning around with
+both arms flung wide, mouth open in a wail, eyes streaming. The spot where his
+carrier stood is empty except for a flattened patch of grass. The stone post
+stands beside him, utterly indifferent. Empty road stretching to both edges, not
+a soul in sight.
+```
+
+### `03-court.png` — 관아에 아뢰다
+
+```
+Wide scene in a government office courtyard. On the right, the magistrate sits on
+a raised wooden platform behind a low desk in dark blue robes and winged hat,
+leaning forward with one hand raised in a question. On the left, the merchant
+kneels on the packed earth with both hands on the ground, head bowed, one hand
+lifted to point weakly back toward the road. Two constables stand at the sides.
+```
+
+### `04-arrest.png` — 돌을 잡아 오너라
+
+```
+Wide courtyard scene. On the right, the magistrate stands and points offstage
+with a straight arm, face absolutely serious, robes sweeping. On the left, the
+two constables stare at him with their jaws hanging open, one pointing at himself
+in disbelief, the other's hat sliding sideways. Huge comic contrast between the
+magistrate's calm and their panic.
+```
+
+### `05-drag.png` — 밧줄로 끌려오는 돌기둥
+
+```
+Wide scene on the road into town. In the centre, the two constables heave on
+thick ropes wrapped around the grey stone post, which is lying on a wooden sled,
+both men red-faced and straining. Along both sides of the road, villagers gather,
+pointing and laughing behind their hands, more running in from the edges of the
+frame. Dust and effort lines.
+```
+
+### `06-question.png` — 돌을 심문하는 원님
+
+```
+Wide courtyard scene. On the right, the magistrate leans over his desk and
+bellows at the stone post, one fist raised, beard bristling, absolutely furious.
+In the centre, the grey stone post stands roped upright, doing nothing at all. On
+the left and behind, a packed crowd of villagers presses in, all wide-eyed, some
+biting their lips. Peak absurdity, played completely straight.
+```
+
+### `07-laugh.png` — 터져 버린 웃음
+
+```
+Wide courtyard scene. The crowd fills most of the frame, every single person
+doubled over laughing, heads thrown back, hands slapping knees, hats falling off,
+tears flying. In the centre the stone post stands silent. On the right edge, the
+magistrate sits frozen mid-shout, staring at them. Explosive noise and motion.
+```
+
+### `08-fine.png` — 비단 한 필씩 바쳐라
+
+```
+Wide courtyard scene. On the right, the magistrate slams one palm down on his low
+desk, the desk jumping, his face thunderous. On the left, the crowd has gone dead
+silent and pale, mouths shut tight, several already backing away toward the gate
+with stiff frightened steps. The stone post stands unbothered in the middle.
+Comic reversal.
+```
+
+### `09-silk.png` — 산더미처럼 쌓인 비단
+
+```
+Wide courtyard scene in evening light. In the centre, a big heap of colourful
+rolled silk bolts piled on straw mats. On the left, the merchant kneels beside it
+holding one bolt up to the light, eyes wide, one arm shooting up as he shouts. On
+the right, the magistrate watches from his platform, expression unreadable. Warm
+orange light across the courtyard.
+```
+
+### `10-caught.png` — 무릎을 탁 친 사람들
+
+```
+Wide courtyard scene. On the left, the two constables take hold of a shifty-looking
+man in grey who hangs his head. In the centre-right, the magistrate finally allows
+a small knowing smile, one hand stroking his beard. Around them, villagers slap
+their own knees and foreheads in dawning realisation, several pointing at the
+stone post. Warm evening light, satisfying and funny.
+```
+
+### `end.png` — 마지막 (가로 16:9)
+
+```
+A quiet country road at sunset, no people. The weathered grey stone post stands
+back in its own place beside the grave mound, a loose length of rope coiled at
+its base, long shadows across the dirt road, pine trees behind. Warm orange
+light. Calm and a little wry.
+```

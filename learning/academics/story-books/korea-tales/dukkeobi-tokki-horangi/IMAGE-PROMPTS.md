@@ -1,0 +1,162 @@
+# 제미나이 그림 프롬프트 — 두꺼비와 토끼와 호랑이
+
+그림책 틀이에요. 한 펼침마다 위쪽에 큰 그림 하나가 통으로 들어가고, 아래쪽 띠에 글이 좌우로 나뉩니다.
+**열 개의 펼침** + 표지 + 마지막 장 = 그림 **열두 장**.
+
+## 비율 — 꼭 지켜주세요
+
+| 그림 | 실제 칸 비율 | 요청할 비율 |
+|---|---|---|
+| 본문 그림 10장 (`01`~`10`) | 1.92 : 1 | **가로 16 : 세로 9** |
+| 표지 `cover.png` | 0.67 : 1 | **세로 2 : 3** |
+| 마지막 `end.png` | 1.76 : 1 | **가로 16 : 세로 9** |
+
+제미나이는 가로 그림을 1376×768(16:9)로 내보냅니다. 칸이 1.92:1이라 위아래가 3.5퍼센트쯤 잘리는데, 눈에 띄지 않는 정도라 그대로 쓰면 됩니다. 4:3으로 만들면 위아래가 삼십 퍼센트쯤 잘려나가니 그것만 피하세요. 인물을 가운데에 몰지 말고 좌우로 나눠 배치하세요.
+
+## 공통 스타일 지시문 (모든 프롬프트 앞에 붙이세요)
+
+```
+Children's picture book illustration, bright cheerful cel-animation style with
+clean bold outlines and flat vivid colors, similar to a classic Korean animated
+storybook. Setting is a grassy Korean hillside in autumn: golden and green
+slopes, scattered rocks, red maple and yellow gingko, pine ridges and a thatched
+village far below. Warm autumn palette. Big expressive faces, exaggerated comic
+gestures, heavy motion lines. Nobody gets hurt - this is a pure comedy. No text
+or letters in the image.
+```
+
+## 인물 설명 (일관성을 위해 매번 붙이세요)
+
+```
+The tiger: a big orange-and-black striped Korean folk-painting tiger, round face,
+huge whiskers, loud and boastful, always taking up the most space in the frame.
+The rabbit: a slim grey-brown hare with very long ears and springy legs, quick and
+cocky, usually mid-motion. The toad: a plump brown-green toad with a wide flat
+mouth, heavy-lidded sleepy eyes that blink slowly, sitting low and still - his
+stillness next to the other two is the running joke. His belly grows visibly
+rounder in the last three pictures. The steamer: a wide round grey earthenware
+siru (Korean steaming pot) full of pale rice cakes.
+```
+
+---
+
+### `cover.png` — 표지 (세로 2:3)
+
+```
+Vertical portrait composition. A steep grassy autumn hillside seen from the side.
+Near the top, a round grey earthenware steamer tumbles down the slope with pale
+rice cakes flying out of it in an arc. Partway down, a plump toad sits calmly on
+the grass with one rice cake already in his mouth. Far below at the bottom, tiny
+tiger and rabbit figures sprint after the steamer. Warm gold and green.
+```
+
+## 본문 열 장 (모두 가로 16:9)
+
+### `01-cake.png` — 떡시루를 둘러싼 셋
+
+```
+Wide autumn hillside scene. In the centre, a round grey steamer heaped with pale
+rice cakes sits on the grass with steam curling up. Around it: on the left the
+big striped tiger leans in sniffing deeply, in the middle the hare rises on his
+back legs with both paws up in delight, on the right the plump toad sits low and
+still, blinking. Golden afternoon light.
+```
+
+### `02-argue.png` — 누가 다 먹을지 다투다
+
+```
+Wide hillside scene. On the left, the tiger slams one huge paw down on the grass,
+mouth open in a roar, chest puffed out. In the centre-right, the hare stands on
+tiptoe jabbing a paw toward the tiger, ears back, arguing right in his face. Dust
+puffs and comic impact lines between them. Far right at the edge, the toad sits
+watching, unmoved.
+```
+
+### `03-quiet.png` — 아무 말 없는 두꺼비
+
+```
+Wide hillside scene. On the left, the tiger and the hare have both turned to look
+over their shoulders, eyebrows raised in mid-question. On the right, the toad
+sits alone on a flat rock, small in the wide frame, blinking slowly with a
+completely blank expression, one webbed foot tucked under him. Lots of open grass
+between them. Comic timing through empty space.
+```
+
+### `04-idea.png` — 내기를 제안하는 두꺼비
+
+```
+Wide hillside scene. On the right, the toad has risen slightly and lifted one
+webbed foot in a small polite gesture, mouth open just a little, still calm. On
+the left, the tiger and the hare both lean in sharply toward him, ears and
+whiskers forward, wide-eyed and interested. The steamer sits between them at the
+crest of the slope.
+```
+
+### `05-agree.png` — 출발선에 선 둘
+
+```
+Wide hillside scene at the top of the slope. On the left, the tiger crouches in
+an exaggerated racing stance, haunches high, tail up, grinning with all his
+teeth. Next to him the hare stretches one long leg behind him, warming up, chin
+lifted confidently. On the right, the toad sits flat on the grass beside the
+steamer, completely relaxed. The long slope falls away below them.
+```
+
+### `06-roll.png` — 굴러가는 시루를 쫓아
+
+```
+Wide hillside scene full of motion. The round steamer bounces down the slope from
+upper right to lower left, drawn with heavy motion arcs and dust. Just behind it,
+the tiger and the hare tear downhill neck and neck, legs stretched flat out, both
+reaching forward with one paw, mouths open shouting. Grass and leaves fly up
+behind them.
+```
+
+### `07-scatter.png` — 언덕에 떨어지는 떡
+
+```
+Wide hillside scene. The steamer bounces away toward the bottom left, and along
+its whole path pale rice cakes have popped out and landed in the grass, scattered
+in a trail across the entire width of the frame. On the upper right, the toad
+plods slowly downhill, one webbed foot lifted mid-step, eyeing the nearest rice
+cake. Warm gold light.
+```
+
+### `08-eat.png` — 떡을 주워 먹는 두꺼비
+
+```
+Wide hillside scene. The toad sits square in the middle of the trail of scattered
+rice cakes, one held in both front feet and pressed into his wide mouth, cheeks
+bulging, eyes closed in bliss. Several more rice cakes are lined up beside him
+like a little collection. Far below at the very bottom edge, two tiny running
+figures. Sunny and satisfying.
+```
+
+### `09-empty.png` — 텅 빈 시루
+
+```
+Wide scene at the foot of the hill. In the centre, the tiger and the hare both
+grip opposite sides of the round steamer, having caught it together, and both
+stare down into it. The steamer is completely empty. Their faces have gone blank
+and slack, mouths hanging open, ears and whiskers drooping. A single dry crumb
+sits in the bottom. Dead silence, comic.
+```
+
+### `10-belly.png` — 배를 두드리는 두꺼비
+
+```
+Wide hillside scene. On the right, the toad reclines back on the grass with an
+enormously round belly, patting it with one webbed foot, eyes closed in a
+contented smile. On the left, the tiger and the hare have scrambled back up the
+slope and stand frozen mid-stride, pointing at him with mouths wide open in
+outrage. Empty steamer abandoned behind them. Very funny.
+```
+
+### `end.png` — 마지막 (가로 16:9)
+
+```
+A quiet grassy Korean hillside at sunset, no animals. An empty round grey
+earthenware steamer lies tipped on its side in the grass, a few crumbs scattered
+around it, red maple leaves drifting down, warm orange light across the slope.
+Peaceful and a little wry.
+```

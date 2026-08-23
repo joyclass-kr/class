@@ -4,7 +4,7 @@ const CHAPTERS = [
         title: "1장 · 나란히 지은 농사",
         beats: [
             {
-                art: "01-brothers.png",
+                art: "01-brothers.webp",
                 emoji: "👬",
                 left: [
                     "옛날 어느 마을에 형제가 살았습니다.",
@@ -18,7 +18,7 @@ const CHAPTERS = [
                 ]
             },
             {
-                art: "02-harvest.png",
+                art: "02-harvest.webp",
                 emoji: "🌾",
                 left: [
                     "가을이 왔어요. 누렇게 익은 벼를 베어 볏단을 쌓았습니다.",
@@ -27,12 +27,11 @@ const CHAPTERS = [
                 ],
                 right: [
                     "두 사람은 볏단을 하나하나 세어 가며 똑같이 나눴어요.",
-                    "형네 논에 한 무더기, 동생네 논에 한 무더기.",
-                    "높이까지 꼭 같았지요."
+                    "형네 논에 한 무더기, 동생네 논에 한 무더기. 높이까지 꼭 같았지요."
                 ]
             },
             {
-                art: "03-elder-thinks.png",
+                art: "03-elder-thinks.webp",
                 emoji: "🌙",
                 left: [
                     "그날 밤, 형은 잠이 오지 않았습니다.",
@@ -52,7 +51,7 @@ const CHAPTERS = [
         title: "2장 · 밤마다 오가는 볏단",
         beats: [
             {
-                art: "04-elder-carries.png",
+                art: "04-elder-carries.webp",
                 emoji: "🌾",
                 left: [
                     "형은 자기 볏단을 지게에 얹었어요.",
@@ -65,7 +64,7 @@ const CHAPTERS = [
                 ]
             },
             {
-                art: "05-younger-thinks.png",
+                art: "05-younger-thinks.webp",
                 emoji: "🤔",
                 left: [
                     "그런데 바로 그 밤, 동생도 잠이 오지 않았습니다.",
@@ -79,7 +78,7 @@ const CHAPTERS = [
                 ]
             },
             {
-                art: "06-younger-carries.png",
+                art: "06-younger-carries.webp",
                 emoji: "🌾",
                 left: [
                     "동생도 자기 볏단을 지게에 얹었어요.",
@@ -92,7 +91,7 @@ const CHAPTERS = [
                 ]
             },
             {
-                art: "07-morning.png",
+                art: "07-morning.webp",
                 emoji: "😮",
                 left: [
                     "이튿날 아침.",
@@ -112,11 +111,10 @@ const CHAPTERS = [
         title: "3장 · 달빛 아래에서",
         beats: [
             {
-                art: "08-again.png",
+                art: "08-again.webp",
                 emoji: "😵",
                 left: [
-                    "그날 밤에도 형은 볏단을 옮겼어요.",
-                    "동생도 볏단을 옮겼고요.",
+                    "그날 밤에도 형은 볏단을 옮겼어요. 동생도 볏단을 옮겼고요.",
                     "이튿날 아침, 볏단은 또 그대로였습니다."
                 ],
                 right: [
@@ -126,11 +124,10 @@ const CHAPTERS = [
                 ]
             },
             {
-                art: "09-meet.png",
+                art: "09-meet.webp",
                 emoji: "🌕",
                 left: [
-                    "사흘째 되는 밤.",
-                    "형이 지게를 지고 논둑길을 걸어갔어요.",
+                    "사흘째 되는 밤. 형이 지게를 지고 논둑길을 걸어갔어요.",
                     "저쪽에서도 누군가 지게를 지고 오고 있었지요."
                 ],
                 right: [
@@ -141,7 +138,7 @@ const CHAPTERS = [
                 ]
             },
             {
-                art: "10-laugh.png",
+                art: "10-laugh.webp",
                 emoji: "😄",
                 left: [
                     "그제야 두 사람은 모든 것을 알아차렸어요.",
@@ -172,7 +169,7 @@ function coverPage() {
     return `
         <div class="page page-cover">
             <div class="story-page-left story-page-left-full">
-                ${artFrame('cover.png', '👬')}
+                ${artFrame('cover.webp', '👬')}
             </div>
             <div class="story-page-right">
                 <h1>의좋은 형제</h1>
@@ -244,12 +241,12 @@ function reflectionPage(chapter) {
 }
 
 const QUIZ = [
-    { q: "두 형제의 논은 어떻게 있었나요?", choices: ["나란히 붙어 있었다", "멀리 떨어져 있었다", "산 너머에 있었다"], answer: 0 },
-    { q: "가을에 두 형제는 볼단을 어떻게 나눠나요?", choices: ["똑같이 나눠다", "형이 더 가졌다", "동생이 더 가졌다"], answer: 0 },
-    { q: "형은 왜 동생에게 볼단을 옮겼나요?", choices: ["살림을 새로 차려서", "농사를 못 지어서", "몸이 아파서"], answer: 0 },
-    { q: "동생은 왜 형에게 볼단을 옮겼나요?", choices: ["식구가 많아서", "논이 좁아서", "뺚이 있어서"], answer: 0 },
-    { q: "아침마다 볼단은 어떻게 되어 있었나요?", choices: ["그대로였다", "줄어 있었다", "없어졌다"], answer: 0 },
-    { q: "두 형제는 어디에서 마주치었나요?", choices: ["밤길 논뚝에서", "마을 장터에서", "서로의 집에서"], answer: 0 }
+    { q: "두 형제의 논은 어떻게 있었나요?", choices: ["멀리 떨어져 있었다", "나란히 붙어 있었다", "산 너머에 있었다"], answer: 1 },
+    { q: "가을에 두 형제는 볏단을 어떻게 나눴나요?", choices: ["형이 더 가졌다", "동생이 더 가졌다", "똑같이 나눴다"], answer: 2 },
+    { q: "형은 왜 동생에게 볏단을 옮겼나요?", choices: ["살림을 새로 차려서", "농사를 못 지어서", "몸이 아파서"], answer: 0 },
+    { q: "동생은 왜 형에게 볏단을 옮겼나요?", choices: ["논이 좁아서", "빚이 있어서", "식구가 많아서"], answer: 2 },
+    { q: "아침마다 볏단은 어떻게 되어 있었나요?", choices: ["그대로였다", "줄어 있었다", "없어졌다"], answer: 0 },
+    { q: "두 형제는 어디에서 마주쳤나요?", choices: ["마을 장터에서", "밤길 논둑에서", "서로의 집에서"], answer: 1 }
 ];
 
 function quizPage() {
@@ -271,7 +268,7 @@ function quizPage() {
 function endPage() {
     return `
         <div class="page page-end">
-            ${artFrame('end.png', '🌟')}
+            ${artFrame('end.webp', '🌟')}
             <h2>의좋은 형제 이야기를 다 읽었어요!</h2>
             <a class="home-btn" href="../../../../../">학습 허브로 돌아가기</a>
         </div>`;

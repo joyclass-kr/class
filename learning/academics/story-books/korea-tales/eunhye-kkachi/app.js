@@ -4,7 +4,7 @@ const CHAPTERS = [
         title: "1장 · 산길에서 만난 둥지",
         beats: [
             {
-                art: "01-road.png",
+                art: "01-road.webp",
                 emoji: "🏞️",
                 left: [
                     "한 선비가 과거를 보러 한양으로 가는 길이었습니다.",
@@ -17,7 +17,7 @@ const CHAPTERS = [
                 ]
             },
             {
-                art: "02-nest.png",
+                art: "02-nest.webp",
                 emoji: "🪺",
                 left: [
                     "그때 요란한 소리가 들렸어요.",
@@ -30,7 +30,7 @@ const CHAPTERS = [
                 ]
             },
             {
-                art: "03-arrow.png",
+                art: "03-arrow.webp",
                 emoji: "🏹",
                 left: [
                     "선비는 얼른 활을 당겼습니다.",
@@ -50,7 +50,7 @@ const CHAPTERS = [
         title: "2장 · 외딴집의 밤",
         beats: [
             {
-                art: "04-house.png",
+                art: "04-house.webp",
                 emoji: "🏚️",
                 left: [
                     "날이 캄캄해졌을 무렵, 저 멀리 불빛 하나가 보였어요.",
@@ -63,11 +63,10 @@ const CHAPTERS = [
                 ]
             },
             {
-                art: "05-coil.png",
+                art: "05-coil.webp",
                 emoji: "🐍",
                 left: [
-                    "한밤중이었어요.",
-                    "선비는 몸이 무거워 눈을 떴습니다.",
+                    "한밤중이었어요. 선비는 몸이 무거워 눈을 떴습니다.",
                     "그런데 숨을 쉴 수가 없었어요."
                 ],
                 right: [
@@ -76,7 +75,7 @@ const CHAPTERS = [
                 ]
             },
             {
-                art: "06-revenge.png",
+                art: "06-revenge.webp",
                 emoji: "😱",
                 left: [
                     "\"낮에 네가 화살로 쏜 구렁이를 기억하느냐.\"",
@@ -89,7 +88,7 @@ const CHAPTERS = [
                 ]
             },
             {
-                art: "07-bell.png",
+                art: "07-bell.webp",
                 emoji: "🔔",
                 left: [
                     "\"살려 주십시오. 저는 까치를 구했을 뿐입니다.\"",
@@ -107,7 +106,7 @@ const CHAPTERS = [
         title: "3장 · 종이 세 번 울리다",
         beats: [
             {
-                art: "08-ring.png",
+                art: "08-ring.webp",
                 emoji: "🌄",
                 left: [
                     "밤이 깊어 갔습니다.",
@@ -121,20 +120,19 @@ const CHAPTERS = [
                 ]
             },
             {
-                art: "09-temple.png",
+                art: "09-temple.webp",
                 emoji: "⛩️",
                 left: [
                     "날이 밝자 선비는 산 위 절로 달려갔습니다.",
                     "낡은 종 아래에 무언가 떨어져 있었어요."
                 ],
                 right: [
-                    "까치 두 마리였습니다.",
-                    "어제 그 까치들이었지요.",
+                    "까치 두 마리였습니다. 어제 그 까치들이었지요.",
                     "제 몸으로 종을 들이받아 세 번을 울린 것이었어요."
                 ]
             },
             {
-                art: "10-nest-home.png",
+                art: "10-nest-home.webp",
                 emoji: "🐦",
                 left: [
                     "선비는 까치들을 조심스럽게 품에 안았어요.",
@@ -142,8 +140,7 @@ const CHAPTERS = [
                     "둘 다 아직 숨이 붙어 있었지요."
                 ],
                 right: [
-                    "선비는 과거도 미루고 까치를 돌보았습니다.",
-                    "이레가 지나자 까치들은 다시 날아올랐어요.",
+                    "선비는 과거도 미루고 까치를 돌보았습니다. 이레가 지나자 까치들은 다시 날아올랐어요.",
                     "그 뒤로 까치는 선비의 집 마당에 둥지를 틀었답니다."
                 ]
             }
@@ -165,7 +162,7 @@ function coverPage() {
     return `
         <div class="page page-cover">
             <div class="story-page-left story-page-left-full">
-                ${artFrame('cover.png', '🐦')}
+                ${artFrame('cover.webp', '🐦')}
             </div>
             <div class="story-page-right">
                 <h1>은혜 갚은 까치</h1>
@@ -237,12 +234,12 @@ function reflectionPage(chapter) {
 }
 
 const QUIZ = [
-    { q: "선비는 어디로 가는 길이었나요?", choices: ["과거 보러 한양", "장사하러 시골", "친척집 잔치"], answer: 0 },
-    { q: "선비는 무엇으로 구렁이를 물리쳤나요?", choices: ["활", "돌", "낫"], answer: 0 },
+    { q: "선비는 어디로 가는 길이었나요?", choices: ["장사하러 시골", "과거 보러 한양", "친척집 잔치"], answer: 1 },
+    { q: "선비는 무엇으로 구렁이를 물리쳤나요?", choices: ["돌", "낫", "활"], answer: 2 },
     { q: "한밤중에 선비의 몸을 감은 것은 무엇이었나요?", choices: ["커다란 구렁이", "산속의 여인", "커다란 나무"], answer: 0 },
-    { q: "구렁이는 무슨 조건을 걸었나요?", choices: ["종이 세 번 울리기", "날 밝기 전 도망가기", "까치를 데려오기"], answer: 0 },
+    { q: "구렁이는 무슨 조건을 걸었나요?", choices: ["날 밝기 전 도망가기", "까치를 데려오기", "종이 세 번 울리기"], answer: 2 },
     { q: "종을 울린 것은 누구였나요?", choices: ["까치 두 마리", "절의 스님", "지나던 나그네"], answer: 0 },
-    { q: "선비는 떨어진 까치들을 어떻게 했나요?", choices: ["데려가 돌봤다", "그냥 두고 갔다", "둥지에 올렸다"], answer: 0 }
+    { q: "선비는 떨어진 까치들을 어떻게 했나요?", choices: ["그냥 두고 갔다", "데려가 돌봤다", "둥지에 올렸다"], answer: 1 }
 ];
 
 function quizPage() {
@@ -264,7 +261,7 @@ function quizPage() {
 function endPage() {
     return `
         <div class="page page-end">
-            ${artFrame('end.png', '🌟')}
+            ${artFrame('end.webp', '🌟')}
             <h2>은혜 갚은 까치 이야기를 다 읽었어요!</h2>
             <a class="home-btn" href="../../../../../">학습 허브로 돌아가기</a>
         </div>`;

@@ -1,0 +1,183 @@
+# 제미나이 그림 프롬프트 — 들쥐와 손톱
+
+그림책 틀이에요. 한 펼침마다 위쪽에 큰 그림 하나가 통으로 들어가고, 아래쪽 띠에 글이 좌우로 나뉩니다.
+**열두 개의 펼침** + 표지 + 마지막 장 = 그림 **열네 장**.
+
+## 비율 — 꼭 지켜주세요
+
+| 그림 | 실제 칸 비율 | 요청할 비율 |
+|---|---|---|
+| 본문 그림 12장 | 1.92 : 1 | **가로 16 : 세로 9** |
+| 표지 `cover.png` | 0.67 : 1 | **세로 2 : 3** |
+| 마지막 `end.png` | 1.76 : 1 | **가로 16 : 세로 9** |
+
+제미나이는 가로 그림을 1376×768(16:9)로 내보냅니다. 칸이 1.92:1이라 위아래가 3.5퍼센트쯤 잘리는데, 눈에 띄지 않는 정도라 그대로 쓰면 됩니다. 4:3으로 만들면 위아래가 삼십 퍼센트쯤 잘려나가니 그것만 피하세요. 인물을 가운데에 몰지 말고 좌우로 나눠 배치하세요.
+
+## 이 책만의 요령
+
+**가짜 덕구를 괴물처럼 그리지 마세요.** 진짜와 완전히 똑같이, 구별이 안 되게 그려야 합니다. 그것이 이 이야기의 무서움이에요. 다만 눈빛만은 미묘하게 다르게 — 가짜는 시선이 조금 얕고 태연합니다. 6번과 8번 장면에서는 **어느 쪽이 진짜인지 독자도 알 수 없게** 그려 주세요. 12번에서 쥐로 되돌아가는 장면만 확실하게 보여 주면 됩니다.
+
+## 공통 스타일 지시문 (모든 프롬프트 앞에 붙이세요)
+
+```
+Children's picture book illustration, cel-animation style with clean outlines and
+warm colors, similar to a classic Korean animated storybook. Setting is a
+Joseon-era village home: a thatched cottage with a wooden verandah, a swept
+earthen yard with a low wall and a mouse hole at its base, a kitchen, and a
+rainy village lane. Warm amber indoors, cool blue moonlight outdoors, grey for
+the rainy scenes. Uncanny rather than frightening - no horror, no gore. No text
+or letters in the image.
+```
+
+## 인물 설명 (일관성을 위해 매번 붙이세요)
+
+```
+Deokgu: a young man of about twenty in a plain off-white hanbok with his hair in
+a topknot, round easygoing face, slightly careless posture. The fake Deokgu: drawn
+absolutely identically - same face, same clothes, same hair. The ONLY difference
+is the eyes: the fake's gaze is a little flat and too calm. Never give the fake
+fangs, shadows or a sinister look. The family: an elderly mother in grey hanbok
+and a younger sister, both increasingly distressed. The field mouse: a small
+brown rat with a long tail. The cat: a lean yellow-and-white village cat with
+bright green eyes.
+```
+
+---
+
+### `cover.png` — 표지 (세로 2:3)
+
+```
+Vertical portrait composition. A moonlit Korean yard at night seen from low
+down. In the foreground at the bottom, a scattering of small pale nail clippings
+on the swept earth, drawn very close and sharp. Behind them, mid-frame, a small
+brown rat crouches over the clippings. Rising behind the rat and filling the
+upper half of the frame, a faint human silhouette is beginning to form out of
+pale mist. Uncanny and quiet.
+```
+
+## 본문 열두 장 (모두 가로 16:9)
+
+### `01-clip.png` — 마루에 걸터앉아 손톱을 깎다
+
+```
+Wide scene on a cottage verandah in the afternoon. On the right, Deokgu sits on
+the edge of the wooden floor clipping his nails with a small blade, one leg
+swinging, entirely careless. On the left, his elderly mother stands in the
+doorway with one hand raised, mid-scolding. Warm light, ordinary domestic
+moment.
+```
+
+### `02-toss.png` — 마당으로 훅 뿌려 버린 손톱
+
+```
+Wide scene in the yard. In the centre, Deokgu flicks his hand outward and a
+small spray of pale nail clippings arcs through the air toward the swept earth,
+drawn with fine motion lines. He is already turning away, not watching where they
+land. Late afternoon light, long shadows. Careless and small.
+```
+
+### `03-rat.png` — 담 밑에서 나온 들쥐
+
+```
+Wide night scene in the empty yard. On the left, a small brown rat has emerged
+from a hole at the base of the low earthen wall and creeps across the moonlit
+ground toward the pale clippings scattered in the centre. Everything else is
+still and dark. Cool blue moonlight, sharp little shadow behind the rat.
+```
+
+### `04-change.png` — 김이 피어오르고 두 발로 일어서다
+
+```
+Wide night scene in the yard, the transformation. In the centre, pale mist rises
+in a column from where the rat was, and inside it a human shape is forming -
+already standing on two legs, the last of the fur dissolving. The finished figure
+is unmistakably Deokgu, and he is smiling faintly. Moonlight, drifting mist. Eerie
+but not monstrous.
+```
+
+### `05-return.png` — 방 안에서 밥을 먹고 있는 나
+
+```
+Wide scene at the cottage door in the evening. On the left, Deokgu stands in the
+open doorway with one hand still on the frame, frozen, eyes wide. On the right,
+inside the lamplit room, an identical Deokgu sits at a low table with a spoon
+halfway to his mouth, looking calmly back at him. The family eats on around him.
+Warm light, cold shock.
+```
+
+### `06-family.png` — 나란히 세워 놓고 보아도
+
+```
+Wide scene in the yard at night. In the centre, two identical Deokgus stand side
+by side facing the viewer, exactly the same in every detail - same clothes, same
+posture, same face. Around them, the mother and sister circle with a lantern,
+peering desperately from face to face. Draw them so the reader genuinely cannot
+tell which is which. Lantern light, dread.
+```
+
+### `07-test.png` — 가짜가 더 술술 대답하고
+
+```
+Wide interior scene by lamplight. The family sits in a half circle firing
+questions. On the left, one Deokgu talks fluently with easy gestures, the family
+leaning toward him and nodding. On the right, the other Deokgu has his mouth
+half open, one hand raised, faltering. Nothing in the drawing says which is real.
+Amber light, sinking feeling.
+```
+
+### `08-out.png` — 닫히는 대문
+
+```
+Wide scene at the cottage gate at night. On the right, inside the yard, one
+Deokgu stands with the family behind him, one arm pointing outward, calm. On the
+left, outside, the other Deokgu has been pushed out and reaches back with both
+hands as the heavy wooden gate swings shut between them. Moonlight, one narrowing
+band of warm light from inside. Heartbreaking.
+```
+
+### `09-wander.png` — 처마 밑에 웅크린 밤
+
+```
+Wide rainy night scene in a village lane. In the centre, Deokgu sits hunched
+under the eaves of a shed with his arms around his knees, soaked, staring at
+nothing. Rain streaks down in long grey lines and pools in the lane. Distant
+lamplit windows he cannot go into. Cold greys and blues. Lonely.
+```
+
+### `10-cat.png` — 고양이를 데려가 보렴
+
+```
+Wide scene in a village lane the next day. On the right, a small elderly woman
+in a shawl holds out a lean yellow-and-white cat with both hands, speaking
+kindly. On the left, Deokgu takes it, looking down at the cat with dawning hope,
+still bedraggled. Grey morning light beginning to clear. Small kindness.
+```
+
+### `11-reveal.png` — 등을 세우고 달려든 고양이
+
+```
+Wide scene in the yard. On the left, the cat lands with its back arched and every
+hair on end, yowling, launched straight at one of the two identical figures. On
+the right, that figure staggers backward with both arms up, face finally
+cracking into panic. The family recoils behind. Dust, motion lines. The moment
+everything flips.
+```
+
+### `12-rat-again.png` — 담 밑 구멍으로 사라진 들쥐
+
+```
+Wide scene in the yard. On the right, a small brown rat scurries into the hole at
+the base of the wall, only its tail still showing, a scrap of pale mist trailing
+behind it. On the left, the family have thrown their arms around the real Deokgu,
+the mother's face buried in his shoulder. The cat sits washing one paw, entirely
+unimpressed. Warm daylight, relief.
+```
+
+### `end.png` — 마지막 (가로 16:9)
+
+```
+A quiet Korean cottage verandah in the morning, no people. A folded square of
+paper sits on the wooden floor beside a small blade, and beyond it the kitchen
+stove door stands open with a low fire inside. A cat dozes in a patch of
+sunlight. Warm and settled.
+```

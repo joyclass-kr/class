@@ -1,0 +1,432 @@
+const CHAPTERS = [
+    {
+        num: 1,
+        title: "1장 · 이상한 꿈",
+        beats: [
+            {
+                art: "01-dream.png",
+                emoji: "💭",
+                left: [
+                    "동해 바닷속에 멸치 한 마리가 살았습니다.",
+                    "몸집은 작아도 성질이 아주 급하고 으스대기를 좋아했지요."
+                ],
+                right: [
+                    "어느 날 밤, 멸치는 이상한 꿈을 꾸었어요.",
+                    "몸이 두둥실 하늘로 떠올랐다가,",
+                    "구름 속을 지나 다시 바다로 뚝 떨어지는 꿈이었지요."
+                ]
+            },
+            {
+                art: "02-wake.png",
+                emoji: "😵",
+                left: [
+                    "멸치는 벌떡 일어났어요.",
+                    "\"이거 보통 꿈이 아닌데?\""
+                ],
+                right: [
+                    "하늘까지 올라갔다 내려왔으니 아무래도 큰 꿈 같았습니다.",
+                    "\"혹시 내가 대단한 사람이 되려는 게 아닐까?\"",
+                    "멸치는 가슴이 두근거렸답니다."
+                ]
+            },
+            {
+                art: "03-send.png",
+                emoji: "🏃",
+                left: [
+                    "멸치는 옆에 있던 망둥이를 불렀어요.",
+                    "\"서해에 해몽 잘하는 넙치가 산다지?\""
+                ],
+                right: [
+                    "\"당장 가서 모셔 오너라.\"",
+                    "\"예? 서해까지요?\"",
+                    "망둥이는 울상이 되었지만 어쩔 수 없었지요."
+                ]
+            },
+            {
+                art: "04-journey.png",
+                emoji: "🌊",
+                left: [
+                    "망둥이는 밤낮으로 헤엄쳤어요.",
+                    "지느러미가 다 닳도록 물살을 갈랐습니다."
+                ],
+                right: [
+                    "몇 날 며칠 만에 겨우 넙치를 찾아 데려왔지요.",
+                    "돌아오는 길에 소문을 들은 메기와 병어와 꼴뚜기도 따라왔답니다.",
+                    "\"무슨 잔치라도 열리나?\""
+                ]
+            }
+        ]
+    },
+    {
+        num: 2,
+        title: "2장 · 해몽",
+        beats: [
+            {
+                art: "05-feast.png",
+                emoji: "🍽️",
+                left: [
+                    "멸치는 상다리가 휘어지게 상을 차렸어요.",
+                    "\"자, 어서 드시고 제 꿈을 풀어 주십시오.\""
+                ],
+                right: [
+                    "넙치는 헛기침을 하며 자리에 앉았습니다.",
+                    "옆에서 메기와 병어와 꼴뚜기가 목을 빼고 지켜보았지요."
+                ]
+            },
+            {
+                art: "06-tell.png",
+                emoji: "🗣️",
+                left: [
+                    "멸치가 꿈 이야기를 늘어놓았어요.",
+                    "\"몸이 두둥실 하늘로 떠올랐지요.\"",
+                    "\"구름 속을 지나 다시 바다로 뚝 떨어졌고요.\""
+                ],
+                right: [
+                    "\"어떻습니까? 대단한 꿈이지요?\"",
+                    "넙치는 눈을 지그시 감고 한참을 생각했습니다.",
+                    "모두가 숨을 죽였어요."
+                ]
+            },
+            {
+                art: "07-bad.png",
+                emoji: "😬",
+                left: [
+                    "넙치가 천천히 입을 열었어요.",
+                    "\"음… 그것은 그물에 걸려 올라가는 꿈이오.\""
+                ],
+                right: [
+                    "\"구름 속을 지난 것은 굽는 연기요,\"",
+                    "\"바다로 떨어진 것은 국그릇에 들어가는 것이지요.\"",
+                    "\"뭐, 뭐라고?!\""
+                ]
+            },
+            {
+                art: "08-slap.png",
+                emoji: "💥",
+                left: [
+                    "멸치는 눈이 뒤집혔어요.",
+                    "\"이런 고약한 놈이 있나!\"",
+                    "짝!"
+                ],
+                right: [
+                    "멸치의 꼬리가 넙치의 뺨을 후려쳤습니다. 넙치가 데굴데굴 굴렀지요.",
+                    "그 바람에 두 눈이 한쪽으로 쓸려 몰려 버렸답니다."
+                ]
+            }
+        ]
+    },
+    {
+        num: 3,
+        title: "3장 · 바다가 시끄러워진 날",
+        beats: [
+            {
+                art: "09-catfish.png",
+                emoji: "😂",
+                left: [
+                    "그 꼴을 본 메기가 참지 못하고 웃음을 터뜨렸어요.",
+                    "\"으하하하! 눈이 저게 뭐야!\""
+                ],
+                right: [
+                    "너무 크게 웃는 바람에 입이 양쪽으로 쭉 찢어지고 말았지요.",
+                    "\"어? 내 입이 왜 이래!\"",
+                    "메기의 입은 그때부터 옆으로 길쭉해졌답니다."
+                ]
+            },
+            {
+                art: "10-pomfret.png",
+                emoji: "🤐",
+                left: [
+                    "옆에 있던 병어는 웃음을 참으려고 입을 꼭 오므렸어요.",
+                    "\"읍! 우읍!\""
+                ],
+                right: [
+                    "얼마나 힘껏 오므렸는지 입이 도로 펴지지 않았습니다.",
+                    "병어의 입이 그렇게 작아진 것도 그날부터라고 해요."
+                ]
+            },
+            {
+                art: "11-squid.png",
+                emoji: "😱",
+                left: [
+                    "꼴뚜기는 큰일 났다 싶어 달아나려 했어요.",
+                    "그런데 너무 허둥댄 나머지 그만 넘어지고 말았지요."
+                ],
+                right: [
+                    "머리를 세게 부딪는 바람에 두 눈이 아래로 쭉 미끄러졌습니다.",
+                    "꼴뚜기 눈이 몸통 아래에 붙은 까닭이랍니다."
+                ]
+            },
+            {
+                art: "12-goby.png",
+                emoji: "🐠",
+                left: [
+                    "구석에서 이 난리를 다 지켜본 망둥이는 눈이 튀어나올 지경이었어요.",
+                    "\"내가 저 먼 데까지 넙치를 모시러 갔다가…\""
+                ],
+                right: [
+                    "놀라서 툭 불거진 망둥이의 눈도 그대로 굳어 버렸지요. 그날 하루 만에 바닷속 생김새가 이렇게 다 정해졌대요.",
+                    "꿈 하나 잘못 풀었다가 말이에요."
+                ]
+            }
+        ],
+        moral: "넙치는 본 대로 말했을 뿐인데 뺨을 맞았어요. 듣기 싫은 말을 해 준 사람에게 화를 내면, 다음부터는 아무도 사실을 말해 주지 않는답니다.",
+        question: "듣기 싫은 말을 해 준 사람에게 나는 어떻게 했나요?"
+    }
+];
+
+function artFrame(src, emoji) {
+    return `
+        <div class="art-frame">
+            <img src="images/${src}" alt="" onerror="this.style.display='none'; this.nextElementSibling.style.display='flex';">
+            <div class="art-fallback" style="display:none">${emoji}</div>
+        </div>`;
+}
+
+function coverPage() {
+    return `
+        <div class="page page-cover">
+            <div class="story-page-left story-page-left-full">
+                ${artFrame('cover.png', '🐟')}
+            </div>
+            <div class="story-page-right">
+                <h1>멸치의 꿈</h1>
+                <p>멸치의 꿈은 지은이가 없는 구전 설화예요. 바닷물고기들의 생김새가 왜 저러한지를 이야기로 풀어낸 유래담이랍니다.</p>
+                <p>넙치는 두 눈이 한쪽에 몰려 있고, 메기는 입이 옆으로 길게 찢어져 있고, 꼴뚜기는 눈이 몸통 아래쪽에 붙어 있어요. 병어는 입이 아주 작지요. 다들 실제로 그렇게 생겼답니다. 옛사람들은 그 생김새를 하나하나 이 이야기 한 편으로 다 설명해 냈어요.</p>
+                <p>꿈을 풀이하는 것을 해몽이라고 해요. 옛날에는 꿈에 뜻이 있다고 여겨 해몽을 아주 중요하게 여겼지요. 같은 꿈을 두고 좋게도 나쁘게도 풀 수 있다는 것이 이 이야기의 웃음이 시작되는 자리랍니다.</p>
+            </div>
+        </div>`;
+}
+
+function tocPage() {
+    const itemHtml = s => `
+        <li>
+            <button type="button" data-goto="${s.num}">
+                <span class="toc-num">${s.num}</span>
+                <span>
+                    <strong>${s.title.replace(/^\d+장 · /, '')}</strong>
+                </span>
+            </button>
+        </li>`;
+    const quizItemHtml = `
+        <li>
+            <button type="button" data-goto-kind="quiz">
+                <span class="toc-num">❓</span>
+                <span>
+                    <strong>이야기 문제</strong>
+                </span>
+            </button>
+        </li>`;
+    const half = Math.ceil(CHAPTERS.length / 2);
+    const leftItems = CHAPTERS.slice(0, half).map(itemHtml).join('');
+    const rightItems = CHAPTERS.slice(half).map(itemHtml).join('') + quizItemHtml;
+    return `
+        <div class="page page-toc">
+            <div class="story-page-left">
+                <h2>차례</h2>
+                <ul class="toc-list">${leftItems}</ul>
+            </div>
+            <div class="story-page-right">
+                <ul class="toc-list">${rightItems}</ul>
+            </div>
+        </div>`;
+}
+
+function spreadPage(chapter, beat, isFirst) {
+    const badgeHtml = isFirst ? `<div class="spread-chapter-badge">${chapter.title}</div>` : '';
+    const leftHtml = beat.left.map(p => `<p>${p}</p>`).join('');
+    const rightHtml = beat.right.map(p => `<p>${p}</p>`).join('');
+    return `
+        <div class="page page-story">
+            <div class="spread-art">
+                ${badgeHtml}
+                ${artFrame(beat.art, beat.emoji)}
+            </div>
+            <div class="spread-text">
+                <div class="spread-text-left">${leftHtml}</div>
+                <div class="spread-text-right">${rightHtml}</div>
+            </div>
+        </div>`;
+}
+
+function reflectionPage(chapter) {
+    return `
+        <div class="page page-reflection">
+            <h2>이야기를 다 읽고</h2>
+            <p class="reflection-moral">${chapter.moral}</p>
+            <p class="reflection-question">${chapter.question}</p>
+        </div>`;
+}
+
+const QUIZ = [
+    { q: "멸치가 꾼 꿈은 어떤 꿈이었나요?", choices: ["커다란 배를 삼키는 꿈", "하늘로 올라갔다 내려온 꿈", "용이 되어 날아가는 꿈"], answer: 1 },
+    { q: "해몽할 이를 데리러 간 것은 누구인가요?", choices: ["꼴뚜기", "병어", "망둥이"], answer: 2 },
+    { q: "넙치는 그 꿈을 어떻게 풀었나요?", choices: ["잡혀서 구워질 꿈이라고", "큰 벼슬을 할 꿈이라고", "오래 살 꿈이라고"], answer: 0 },
+    { q: "넙치가 뺨을 맞은 뒤 어떻게 되었나요?", choices: ["입이 아주 작아져 버렸다", "몸이 납작하게 눌렸다", "두 눈이 한쪽으로 몰렸다"], answer: 2 },
+    { q: "웃다가 입이 찢어진 것은 누구인가요?", choices: ["메기", "병어", "망둥이"], answer: 0 },
+    { q: "꼴뚜기는 왜 눈이 아래로 내려갔나요?", choices: ["멸치에게 맞아서", "놀라 달아나다가", "물살에 휩쓸려서"], answer: 1 }
+];
+
+function quizPage() {
+    const items = QUIZ.map((item, i) => `
+        <div class="quiz-item" data-qindex="${i}">
+            <p class="quiz-question">${i + 1}. ${item.q}</p>
+            <div class="quiz-choices">
+                ${item.choices.map((c, ci) => `<button type="button" class="quiz-choice" data-choice="${ci}">${c}</button>`).join('')}
+            </div>
+        </div>`).join('');
+    return `
+        <div class="page page-quiz">
+            <h2>이야기 문제</h2>
+            <p class="quiz-intro-text" id="quizProgress">0 / 총 ${QUIZ.length}문항 완료</p>
+            <div class="quiz-list">${items}</div>
+        </div>`;
+}
+
+function endPage() {
+    return `
+        <div class="page page-end">
+            ${artFrame('end.png', '🌟')}
+            <h2>멸치의 꿈 이야기를 다 읽었어요!</h2>
+            <a class="home-btn" href="../../../../../">학습 허브로 돌아가기</a>
+        </div>`;
+}
+
+const PAGES = [
+    { kind: 'cover' },
+    { kind: 'toc' },
+    ...CHAPTERS.flatMap(chapter => chapter.beats.map((beat, i) => ({ kind: 'spread', chapter, beat, isFirst: i === 0 }))),
+    { kind: 'reflection', chapter: CHAPTERS[CHAPTERS.length - 1] },
+    { kind: 'quiz' },
+    { kind: 'end' }
+];
+
+const TWO_PAGE_KINDS = new Set(['spread', 'toc', 'cover']);
+
+let folioCounter = 0;
+const FOLIOS = PAGES.map(p => {
+    const width = TWO_PAGE_KINDS.has(p.kind) ? 2 : 1;
+    const start = folioCounter + 1;
+    folioCounter += width;
+    return { start, width };
+});
+
+function renderPage(page) {
+    switch (page.kind) {
+        case 'cover':
+            return coverPage();
+        case 'toc':
+            return tocPage();
+        case 'spread':
+            return spreadPage(page.chapter, page.beat, page.isFirst);
+        case 'reflection':
+            return reflectionPage(page.chapter);
+        case 'quiz':
+            return quizPage();
+        case 'end':
+            return endPage();
+        default:
+            return '';
+    }
+}
+
+let current = 0;
+let animating = false;
+
+const spreadEl = document.getElementById('spread');
+const prevBtn = document.getElementById('prevBtn');
+const nextBtn = document.getElementById('nextBtn');
+const indicatorEl = document.getElementById('pageIndicator');
+const folioLeftEl = document.getElementById('folioLeft');
+const folioRightEl = document.getElementById('folioRight');
+
+function paint() {
+    spreadEl.innerHTML = renderPage(PAGES[current]);
+    prevBtn.disabled = current === 0;
+    nextBtn.disabled = current === PAGES.length - 1;
+    indicatorEl.textContent = `${current + 1} / ${PAGES.length}`;
+
+    const folio = FOLIOS[current];
+    folioLeftEl.classList.toggle('folio-center', folio.width === 1);
+    if (folio.width === 2) {
+        folioLeftEl.textContent = folio.start;
+        folioRightEl.textContent = folio.start + 1;
+        folioLeftEl.hidden = false;
+        folioRightEl.hidden = false;
+    } else {
+        folioLeftEl.textContent = folio.start;
+        folioLeftEl.hidden = false;
+        folioRightEl.hidden = true;
+    }
+
+    spreadEl.querySelectorAll('[data-goto]').forEach(btn => {
+        btn.addEventListener('click', () => {
+            const chapterNum = Number(btn.dataset.goto);
+            const idx = PAGES.findIndex(p => p.kind === 'spread' && p.chapter.num === chapterNum && p.isFirst);
+            if (idx >= 0) goTo(idx);
+        });
+    });
+    spreadEl.querySelectorAll('[data-goto-kind]').forEach(btn => {
+        btn.addEventListener('click', () => {
+            const idx = PAGES.findIndex(p => p.kind === btn.dataset.gotoKind);
+            if (idx >= 0) goTo(idx);
+        });
+    });
+
+    if (PAGES[current].kind === 'quiz') {
+        initQuiz();
+    }
+}
+
+function initQuiz() {
+    let answeredCount = 0;
+    const progressEl = document.getElementById('quizProgress');
+
+    spreadEl.querySelectorAll('.quiz-item').forEach(item => {
+        const qi = Number(item.dataset.qindex);
+        const q = QUIZ[qi];
+        item.querySelectorAll('.quiz-choice').forEach(btn => {
+            btn.addEventListener('click', () => {
+                if (item.classList.contains('graded')) return;
+                item.classList.add('graded');
+                const chosen = Number(btn.dataset.choice);
+                item.querySelectorAll('.quiz-choice').forEach(b => {
+                    const ci = Number(b.dataset.choice);
+                    if (ci === q.answer) b.classList.add('correct');
+                    else if (ci === chosen) b.classList.add('incorrect');
+                });
+                answeredCount++;
+                progressEl.textContent = `${answeredCount} / 총 ${QUIZ.length}문항 완료`;
+            });
+        });
+    });
+}
+
+function goTo(index) {
+    if (animating || index === current || index < 0 || index >= PAGES.length) return;
+    animating = true;
+    const dir = index > current ? 'flip-next' : 'flip-prev';
+    spreadEl.classList.add(dir);
+    setTimeout(() => {
+        current = index;
+        paint();
+    }, 230);
+    setTimeout(() => {
+        spreadEl.classList.remove('flip-next', 'flip-prev');
+        animating = false;
+    }, 480);
+}
+
+prevBtn.addEventListener('click', () => goTo(current - 1));
+nextBtn.addEventListener('click', () => goTo(current + 1));
+
+document.getElementById('tocLink').addEventListener('click', () => {
+    const idx = PAGES.findIndex(p => p.kind === 'toc');
+    if (idx >= 0) goTo(idx);
+});
+
+document.addEventListener('keydown', (e) => {
+    if (e.key === 'ArrowRight') goTo(current + 1);
+    if (e.key === 'ArrowLeft') goTo(current - 1);
+});
+
+paint();

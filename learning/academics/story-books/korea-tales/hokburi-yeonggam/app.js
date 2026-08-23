@@ -1,0 +1,434 @@
+const CHAPTERS = [
+    {
+        num: 1,
+        title: "1장 · 빈 오두막의 노래",
+        beats: [
+            {
+                art: "01-oldman.webp",
+                emoji: "👴",
+                left: [
+                    "옛날 어느 마을에 혹부리 영감이 살았습니다.",
+                    "턱 밑에 주먹만 한 혹이 하나 달려 있었지요."
+                ],
+                right: [
+                    "그래도 영감은 늘 싱글벙글했어요.",
+                    "노래를 어찌나 잘 부르는지, 밭에서 영감이 노래를 시작하면 온 마을 사람이 일손을 멈추고 들었답니다."
+                ]
+            },
+            {
+                art: "02-mountain.webp",
+                emoji: "🌄",
+                left: [
+                    "어느 날 영감은 나무를 하러 깊은 산에 들어갔어요.",
+                    "\"한 짐만 더, 한 짐만 더.\""
+                ],
+                right: [
+                    "그러다 그만 해가 넘어가 버렸습니다.",
+                    "산속이 순식간에 캄캄해졌지요.",
+                    "\"이거 큰일 났구먼.\""
+                ]
+            },
+            {
+                art: "03-hut.webp",
+                emoji: "🏚️",
+                left: [
+                    "다행히 골짜기에 낡은 빈 오두막이 있었어요.",
+                    "영감은 문을 열고 들어가 지게를 내려놓았습니다."
+                ],
+                right: [
+                    "그런데 어찌나 조용한지 오히려 무서웠어요.",
+                    "\"에라, 노래나 부르자.\"",
+                    "영감은 목청을 가다듬고 노래를 시작했지요."
+                ]
+            },
+            {
+                art: "04-dokkaebi.webp",
+                emoji: "👹",
+                left: [
+                    "노래가 두 곡, 세 곡 이어졌을 때였습니다.",
+                    "쿵. 쿵. 쿵."
+                ],
+                right: [
+                    "문이 벌컥 열리더니 도깨비들이 우르르 몰려들었어요.",
+                    "\"으악!\"",
+                    "영감은 노래를 뚝 멈추고 벽에 딱 붙었답니다."
+                ]
+            }
+        ]
+    },
+    {
+        num: 2,
+        title: "2장 · 혹에서 나오는 소리",
+        beats: [
+            {
+                art: "05-question.webp",
+                emoji: "❓",
+                left: [
+                    "도깨비 대장이 성큼 다가왔어요.",
+                    "\"방금 그 소리, 네가 낸 것이냐?\"",
+                    "\"예, 예… 그렇습니다만.\""
+                ],
+                right: [
+                    "\"그 좋은 소리가 대체 어디서 나오느냐?\"",
+                    "영감은 머리가 하얘졌습니다.",
+                    "무슨 말이라도 해야 할 것 같았지요."
+                ]
+            },
+            {
+                art: "06-lie.webp",
+                emoji: "😬",
+                left: [
+                    "영감의 손이 저도 모르게 턱으로 올라갔어요.",
+                    "\"이, 이 혹에서 나옵니다.\""
+                ],
+                right: [
+                    "말해 놓고 영감이 더 놀랐습니다.",
+                    "그런데 도깨비들의 눈이 일제히 반짝였어요.",
+                    "\"오호! 그 혹이 노래 주머니로구나!\""
+                ]
+            },
+            {
+                art: "07-trade.webp",
+                emoji: "💎",
+                left: [
+                    "\"그 혹을 우리에게 팔아라.\"",
+                    "\"예? 아니, 그건…\"",
+                    "\"값은 넉넉히 쳐주마!\""
+                ],
+                right: [
+                    "도깨비들이 방망이를 뚝딱뚝딱 두드리자 금은보화가 방 안에 쌓였어요.",
+                    "그러고는 영감의 턱에서 혹을 쏙 떼어 갔지요."
+                ]
+            },
+            {
+                art: "08-home.webp",
+                emoji: "🎉",
+                left: [
+                    "날이 밝자 영감은 산을 내려왔습니다.",
+                    "턱은 매끈하고 지게에는 보물이 가득했지요."
+                ],
+                right: [
+                    "\"아니, 자네 혹은 어디 갔나?\"",
+                    "\"허허, 도깨비한테 팔았지 뭔가.\"",
+                    "마을이 온통 그 이야기로 들썩였답니다."
+                ]
+            }
+        ]
+    },
+    {
+        num: 3,
+        title: "3장 · 혹 떼러 갔다 혹 붙여 온다",
+        beats: [
+            {
+                art: "09-greedy.webp",
+                emoji: "😏",
+                left: [
+                    "이웃 마을에도 혹부리 영감이 하나 살았어요.",
+                    "이 영감은 욕심이 아주 많았지요."
+                ],
+                right: [
+                    "소문을 듣자마자 한달음에 달려와 꼬치꼬치 캐물었습니다.",
+                    "\"어느 오두막인가? 노래는 무얼 불렀나?\"",
+                    "\"허허, 그게 그렇게 될 일이 아닐 텐데.\""
+                ]
+            },
+            {
+                art: "10-sing.webp",
+                emoji: "🎤",
+                left: [
+                    "그날 밤, 욕심쟁이 영감은 그 오두막에 앉아 있었어요.",
+                    "\"자, 부르자!\""
+                ],
+                right: [
+                    "목청껏 노래를 불렀지만 소리가 영 신통치 않았습니다.",
+                    "그래도 얼마 지나지 않아 쿵, 쿵, 쿵.",
+                    "도깨비들이 나타났지요."
+                ]
+            },
+            {
+                art: "11-angry.webp",
+                emoji: "😡",
+                left: [
+                    "\"이 소리도 혹에서 나옵니다! 사 가시오!\"",
+                    "욕심쟁이 영감이 턱을 쑥 내밀었어요."
+                ],
+                right: [
+                    "그러자 도깨비 대장의 얼굴이 험악해졌습니다.",
+                    "\"뭐라고? 지난번 그 혹은 아무 소리도 안 나던데!\"",
+                    "\"우리를 또 속이려 드는구나!\""
+                ]
+            },
+            {
+                art: "12-two.webp",
+                emoji: "😱",
+                left: [
+                    "\"그 가짜 혹, 도로 가져가라!\"",
+                    "도깨비가 지난번에 떼어 간 혹을 꺼내 턱 반대쪽에 척 붙였어요."
+                ],
+                right: [
+                    "욕심쟁이 영감은 혹을 둘이나 달고 터덜터덜 산을 내려왔답니다.",
+                    "혹 떼러 갔다 혹 붙여 온다는 말이 그래서 생겼대요."
+                ]
+            }
+        ],
+        moral: "첫 번째 영감은 노래가 좋아서 불렀고, 두 번째 영감은 보물이 탐나서 불렀어요. 같은 자리에서 같은 일을 해도 마음이 다르면 끝이 달라진답니다.",
+        question: "무언가를 할 때 나는 어떤 마음으로 시작하고 있나요?"
+    }
+];
+
+function artFrame(src, emoji) {
+    return `
+        <div class="art-frame">
+            <img src="images/${src}" alt="" onerror="this.style.display='none'; this.nextElementSibling.style.display='flex';">
+            <div class="art-fallback" style="display:none">${emoji}</div>
+        </div>`;
+}
+
+function coverPage() {
+    return `
+        <div class="page page-cover">
+            <div class="story-page-left story-page-left-full">
+                ${artFrame('cover.webp', '🎵')}
+            </div>
+            <div class="story-page-right">
+                <h1>혹부리 영감</h1>
+                <p>혹부리 영감은 지은이가 없는 구전 설화예요. 혹 떼러 갔다 혹 붙여 온다는 우리 속담이 바로 이 이야기에서 나왔답니다.</p>
+                <p>혹은 목이나 턱에 볼록하게 생기는 살덩이예요. 옛날에는 흔한 것이었고 아프지도 않았지만, 눈에 띄다 보니 놀림을 받기도 했지요. 이 이야기가 오래 사랑받은 데는, 누구나 하나쯤 감추고 싶은 것이 있다는 마음도 있었을 거예요.</p>
+                <p>일본에도 거의 같은 이야기가 있어요. 일제강점기에 교과서를 통해 퍼진 판본이 우리 이야기와 섞였다고 보는 학자도 있고, 두 나라에 각각 오래전부터 있었다고 보는 학자도 있답니다. 아직도 연구가 이어지는 문제예요.</p>
+            </div>
+        </div>`;
+}
+
+function tocPage() {
+    const itemHtml = s => `
+        <li>
+            <button type="button" data-goto="${s.num}">
+                <span class="toc-num">${s.num}</span>
+                <span>
+                    <strong>${s.title.replace(/^\d+장 · /, '')}</strong>
+                </span>
+            </button>
+        </li>`;
+    const quizItemHtml = `
+        <li>
+            <button type="button" data-goto-kind="quiz">
+                <span class="toc-num">❓</span>
+                <span>
+                    <strong>이야기 문제</strong>
+                </span>
+            </button>
+        </li>`;
+    const half = Math.ceil(CHAPTERS.length / 2);
+    const leftItems = CHAPTERS.slice(0, half).map(itemHtml).join('');
+    const rightItems = CHAPTERS.slice(half).map(itemHtml).join('') + quizItemHtml;
+    return `
+        <div class="page page-toc">
+            <div class="story-page-left">
+                <h2>차례</h2>
+                <ul class="toc-list">${leftItems}</ul>
+            </div>
+            <div class="story-page-right">
+                <ul class="toc-list">${rightItems}</ul>
+            </div>
+        </div>`;
+}
+
+function spreadPage(chapter, beat, isFirst) {
+    const badgeHtml = isFirst ? `<div class="spread-chapter-badge">${chapter.title}</div>` : '';
+    const leftHtml = beat.left.map(p => `<p>${p}</p>`).join('');
+    const rightHtml = beat.right.map(p => `<p>${p}</p>`).join('');
+    return `
+        <div class="page page-story">
+            <div class="spread-art">
+                ${badgeHtml}
+                ${artFrame(beat.art, beat.emoji)}
+            </div>
+            <div class="spread-text">
+                <div class="spread-text-left">${leftHtml}</div>
+                <div class="spread-text-right">${rightHtml}</div>
+            </div>
+        </div>`;
+}
+
+function reflectionPage(chapter) {
+    return `
+        <div class="page page-reflection">
+            <h2>이야기를 다 읽고</h2>
+            <p class="reflection-moral">${chapter.moral}</p>
+            <p class="reflection-question">${chapter.question}</p>
+        </div>`;
+}
+
+const QUIZ = [
+    { q: "혹부리 영감이 잘하는 것은 무엇이었나요?", choices: ["나무 다루기", "노래 부르기", "글씨 쓰기"], answer: 1 },
+    { q: "영감은 왜 빈 오두막에서 노래를 불렀나요?", choices: ["도깨비를 부르려고", "잠을 쫓아내려고", "무서움을 달래려고"], answer: 2 },
+    { q: "도깨비는 노랫소리가 어디서 난다고 믿었나요?", choices: ["영감의 혹에서", "오두막 마루에서", "뒷산 골짜기에서"], answer: 0 },
+    { q: "도깨비들은 영감에게 무엇을 주었나요?", choices: ["노래 책 한 권", "커다란 방망이", "보물과 자유"], answer: 2 },
+    { q: "욕심쟁이 영감은 왜 산으로 갔나요?", choices: ["혹을 떼려고", "노래를 배우려고", "나무를 하려고"], answer: 0 },
+    { q: "욕심쟁이 영감은 어떻게 되었나요?", choices: ["혹이 모두 없어졌다", "혹이 하나 더 붙었다", "보물을 얻어 왔다"], answer: 1 }
+];
+
+function quizPage() {
+    const items = QUIZ.map((item, i) => `
+        <div class="quiz-item" data-qindex="${i}">
+            <p class="quiz-question">${i + 1}. ${item.q}</p>
+            <div class="quiz-choices">
+                ${item.choices.map((c, ci) => `<button type="button" class="quiz-choice" data-choice="${ci}">${c}</button>`).join('')}
+            </div>
+        </div>`).join('');
+    return `
+        <div class="page page-quiz">
+            <h2>이야기 문제</h2>
+            <p class="quiz-intro-text" id="quizProgress">0 / 총 ${QUIZ.length}문항 완료</p>
+            <div class="quiz-list">${items}</div>
+        </div>`;
+}
+
+function endPage() {
+    return `
+        <div class="page page-end">
+            ${artFrame('end.webp', '🌟')}
+            <h2>혹부리 영감 이야기를 다 읽었어요!</h2>
+            <a class="home-btn" href="../../../../../">학습 허브로 돌아가기</a>
+        </div>`;
+}
+
+const PAGES = [
+    { kind: 'cover' },
+    { kind: 'toc' },
+    ...CHAPTERS.flatMap(chapter => chapter.beats.map((beat, i) => ({ kind: 'spread', chapter, beat, isFirst: i === 0 }))),
+    { kind: 'reflection', chapter: CHAPTERS[CHAPTERS.length - 1] },
+    { kind: 'quiz' },
+    { kind: 'end' }
+];
+
+const TWO_PAGE_KINDS = new Set(['spread', 'toc', 'cover']);
+
+let folioCounter = 0;
+const FOLIOS = PAGES.map(p => {
+    const width = TWO_PAGE_KINDS.has(p.kind) ? 2 : 1;
+    const start = folioCounter + 1;
+    folioCounter += width;
+    return { start, width };
+});
+
+function renderPage(page) {
+    switch (page.kind) {
+        case 'cover':
+            return coverPage();
+        case 'toc':
+            return tocPage();
+        case 'spread':
+            return spreadPage(page.chapter, page.beat, page.isFirst);
+        case 'reflection':
+            return reflectionPage(page.chapter);
+        case 'quiz':
+            return quizPage();
+        case 'end':
+            return endPage();
+        default:
+            return '';
+    }
+}
+
+let current = 0;
+let animating = false;
+
+const spreadEl = document.getElementById('spread');
+const prevBtn = document.getElementById('prevBtn');
+const nextBtn = document.getElementById('nextBtn');
+const indicatorEl = document.getElementById('pageIndicator');
+const folioLeftEl = document.getElementById('folioLeft');
+const folioRightEl = document.getElementById('folioRight');
+
+function paint() {
+    spreadEl.innerHTML = renderPage(PAGES[current]);
+    prevBtn.disabled = current === 0;
+    nextBtn.disabled = current === PAGES.length - 1;
+    indicatorEl.textContent = `${current + 1} / ${PAGES.length}`;
+
+    const folio = FOLIOS[current];
+    folioLeftEl.classList.toggle('folio-center', folio.width === 1);
+    if (folio.width === 2) {
+        folioLeftEl.textContent = folio.start;
+        folioRightEl.textContent = folio.start + 1;
+        folioLeftEl.hidden = false;
+        folioRightEl.hidden = false;
+    } else {
+        folioLeftEl.textContent = folio.start;
+        folioLeftEl.hidden = false;
+        folioRightEl.hidden = true;
+    }
+
+    spreadEl.querySelectorAll('[data-goto]').forEach(btn => {
+        btn.addEventListener('click', () => {
+            const chapterNum = Number(btn.dataset.goto);
+            const idx = PAGES.findIndex(p => p.kind === 'spread' && p.chapter.num === chapterNum && p.isFirst);
+            if (idx >= 0) goTo(idx);
+        });
+    });
+    spreadEl.querySelectorAll('[data-goto-kind]').forEach(btn => {
+        btn.addEventListener('click', () => {
+            const idx = PAGES.findIndex(p => p.kind === btn.dataset.gotoKind);
+            if (idx >= 0) goTo(idx);
+        });
+    });
+
+    if (PAGES[current].kind === 'quiz') {
+        initQuiz();
+    }
+}
+
+function initQuiz() {
+    let answeredCount = 0;
+    const progressEl = document.getElementById('quizProgress');
+
+    spreadEl.querySelectorAll('.quiz-item').forEach(item => {
+        const qi = Number(item.dataset.qindex);
+        const q = QUIZ[qi];
+        item.querySelectorAll('.quiz-choice').forEach(btn => {
+            btn.addEventListener('click', () => {
+                if (item.classList.contains('graded')) return;
+                item.classList.add('graded');
+                const chosen = Number(btn.dataset.choice);
+                item.querySelectorAll('.quiz-choice').forEach(b => {
+                    const ci = Number(b.dataset.choice);
+                    if (ci === q.answer) b.classList.add('correct');
+                    else if (ci === chosen) b.classList.add('incorrect');
+                });
+                answeredCount++;
+                progressEl.textContent = `${answeredCount} / 총 ${QUIZ.length}문항 완료`;
+            });
+        });
+    });
+}
+
+function goTo(index) {
+    if (animating || index === current || index < 0 || index >= PAGES.length) return;
+    animating = true;
+    const dir = index > current ? 'flip-next' : 'flip-prev';
+    spreadEl.classList.add(dir);
+    setTimeout(() => {
+        current = index;
+        paint();
+    }, 230);
+    setTimeout(() => {
+        spreadEl.classList.remove('flip-next', 'flip-prev');
+        animating = false;
+    }, 480);
+}
+
+prevBtn.addEventListener('click', () => goTo(current - 1));
+nextBtn.addEventListener('click', () => goTo(current + 1));
+
+document.getElementById('tocLink').addEventListener('click', () => {
+    const idx = PAGES.findIndex(p => p.kind === 'toc');
+    if (idx >= 0) goTo(idx);
+});
+
+document.addEventListener('keydown', (e) => {
+    if (e.key === 'ArrowRight') goTo(current + 1);
+    if (e.key === 'ArrowLeft') goTo(current - 1);
+});
+
+paint();

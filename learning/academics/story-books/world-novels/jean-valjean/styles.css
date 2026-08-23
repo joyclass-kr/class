@@ -189,7 +189,8 @@ body {
 .story-page-right {
     display: flex;
     flex-direction: column;
-    justify-content: safe center;
+    /* 글은 쪽 한가운데에 뜨지 않고 위에서부터 채워 내려간다. */
+    justify-content: flex-start;
     min-width: 0;
     min-height: 0;
     overflow-y: auto;
@@ -202,19 +203,21 @@ body {
     border-right: 1px solid rgba(92, 58, 34, 0.22);
 }
 
-.story-page-right-image {
-    align-items: center;
-    background: var(--parchment-shade);
-}
-
-.story-page-right-image .story-media {
+/* 그림은 쪽을 통째로 먹지 않는다. 쪽 위쪽에 가로로 꽉 차게 얹고,
+   그 아래 남는 자리를 글이 채운다. 옛날 명작 전집의 지면이 그랬다.
+   그림 파일이 아직 없어도 자리는 그대로 잡아 둔다. */
+.story-art-top {
     width: 100%;
-    max-width: 440px;
-    margin: 0;
+    aspect-ratio: 4 / 3;
+    flex: none;
+    margin: 0 0 clamp(10px, 1.5vw, 16px);
 }
 
-.story-page-right-image .art-frame {
-    box-shadow: 0 8px 22px rgba(0, 0, 0, 0.18), inset 0 0 0 1px rgba(92, 58, 34, 0.25);
+.story-art-top .art-frame {
+    width: 100%;
+    height: 100%;
+    border-radius: 3px;
+    box-shadow: 0 6px 16px rgba(0, 0, 0, 0.16), inset 0 0 0 1px rgba(92, 58, 34, 0.25);
 }
 
 .page-story h2 {
@@ -463,6 +466,14 @@ body {
     text-align: center;
     gap: 10px;
     background: var(--parchment-shade);
+}
+
+/* 끝쪽 그림도 가로 4:3이다. 쪽 높이에 맞춰 늘이면 위아래가 잘린다. */
+.page-end .art-frame {
+    height: auto;
+    aspect-ratio: 4 / 3;
+    flex: none;
+    max-width: min(100%, 540px);
 }
 
 .page-end h2 { margin: 0; font-size: clamp(20px, 3vw, 30px); }

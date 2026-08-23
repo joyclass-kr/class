@@ -1,0 +1,405 @@
+const CHAPTERS = [
+    {
+        num: 1,
+        title: "1장 · 세 딸을 키운 할머니",
+        beats: [
+            {
+                art: "01-daughters.png",
+                emoji: "👵",
+                left: [
+                    "옛날 어느 산골에 할머니가 딸 셋과 살았습니다.",
+                    "일찍 혼자가 된 할머니는 밤낮없이 일했어요."
+                ],
+                right: [
+                    "\"우리 딸들 배곯게는 안 한다.\"",
+                    "나물을 캐고 삯바느질을 하며 딸 셋을 키웠지요.",
+                    "손마디가 굵어지고 허리가 조금씩 굽어 갔답니다."
+                ]
+            },
+            {
+                art: "02-married.png",
+                emoji: "🎎",
+                left: [
+                    "세월이 흘러 딸들이 하나둘 시집을 갔어요.",
+                    "첫째는 고개 너머 큰 기와집으로,",
+                    "둘째는 강 건너 부잣집으로."
+                ],
+                right: [
+                    "막내는 산 아래 작은 초가집으로 갔지요.",
+                    "\"어머니, 몸조심하세요.\"",
+                    "\"오냐, 걱정 말거라.\""
+                ]
+            },
+            {
+                art: "03-alone.png",
+                emoji: "🏚️",
+                left: [
+                    "혼자 남은 할머니는 해가 갈수록 기운이 빠졌어요.",
+                    "이제는 나물 바구니도 무겁게 느껴졌습니다."
+                ],
+                right: [
+                    "어느 봄날, 할머니는 지팡이를 짚고 길을 나섰어요.",
+                    "\"딸들 얼굴이나 한번 보고 오자.\""
+                ]
+            }
+        ]
+    },
+    {
+        num: 2,
+        title: "2장 · 닫힌 문",
+        beats: [
+            {
+                art: "04-first.png",
+                emoji: "🚪",
+                left: [
+                    "먼저 첫째 딸네 대문을 두드렸어요.",
+                    "\"애기야, 어미다.\""
+                ],
+                right: [
+                    "안에서 부스럭거리는 소리가 나더니 이내 조용해졌습니다. 문은 끝내 열리지 않았어요.",
+                    "할머니는 한참을 서 있다가 돌아섰지요."
+                ]
+            },
+            {
+                art: "05-second.png",
+                emoji: "🌊",
+                left: [
+                    "강을 건너 둘째 딸네로 갔어요.",
+                    "마당에서 둘째가 할머니를 보았습니다."
+                ],
+                right: [
+                    "\"어머니, 지금은 집안이 바빠서요.\"",
+                    "\"다음에 오세요. 예?\"",
+                    "대문이 스르르 닫혔어요."
+                ]
+            },
+            {
+                art: "06-hill.png",
+                emoji: "⛰️",
+                left: [
+                    "해가 기울기 시작했어요.",
+                    "\"막내가 있지. 우리 막내가 있어.\"",
+                    "할머니는 지팡이에 몸을 기대고 언덕을 오르기 시작했습니다."
+                ],
+                right: [
+                    "산 아래 막내네 초가집 지붕이 저 멀리 보였어요.",
+                    "하지만 언덕은 자꾸만 높아 보였지요."
+                ]
+            }
+        ]
+    },
+    {
+        num: 3,
+        title: "3장 · 언덕에 핀 꽃",
+        beats: [
+            {
+                art: "07-rest.png",
+                emoji: "🌾",
+                left: [
+                    "언덕 중턱에서 할머니는 그만 주저앉고 말았어요.",
+                    "숨이 가빠 더는 걸을 수가 없었습니다."
+                ],
+                right: [
+                    "\"조금만… 조금만 쉬었다 가자.\"",
+                    "할머니는 막내네 지붕 쪽으로 고개를 돌린 채 눈을 감았어요.",
+                    "봄바람이 흰머리를 쓸고 지나갔지요."
+                ]
+            },
+            {
+                art: "08-search.png",
+                emoji: "🏃",
+                left: [
+                    "그 무렵 막내는 집 앞을 서성이고 있었어요.",
+                    "\"오늘따라 어머니 생각이 왜 이리 나지?\""
+                ],
+                right: [
+                    "막내는 앞치마를 벗어 던지고 언덕으로 뛰었습니다.",
+                    "\"어머니! 어머니!\""
+                ]
+            },
+            {
+                art: "09-found.png",
+                emoji: "🤲",
+                left: [
+                    "언덕 중턱에서 막내는 할머니를 찾아냈어요.",
+                    "\"어머니! 어머니, 저예요!\""
+                ],
+                right: [
+                    "할머니가 천천히 눈을 떴습니다.",
+                    "\"…우리 막내구나.\"",
+                    "막내는 할머니를 업고 한달음에 언덕을 내려갔어요."
+                ]
+            },
+            {
+                art: "10-flower.png",
+                emoji: "🌸",
+                left: [
+                    "그 뒤로 할머니는 막내네 아랫목에서 여러 해를 더 살았답니다."
+                ],
+                right: [
+                    "이듬해 봄, 할머니가 앉아 있던 그 언덕에 처음 보는 꽃이 피었어요. 줄기가 활처럼 굽어 고개를 폭 숙이고, 온몸에 흰 솜털이 난 꽃이었지요.",
+                    "사람들은 그 꽃을 할미꽃이라고 불렀답니다."
+                ]
+            }
+        ],
+        moral: "할머니는 세 딸을 똑같이 키웠지만, 언덕을 넘어와 준 것은 한 사람이었어요. 받은 것을 기억하는 마음은 저절로 생기지 않는답니다.",
+        question: "나를 키워 준 사람에게 오늘 무엇을 해 드릴 수 있을까요?"
+    }
+];
+
+function artFrame(src, emoji) {
+    return `
+        <div class="art-frame">
+            <img src="images/${src}" alt="" onerror="this.style.display='none'; this.nextElementSibling.style.display='flex';">
+            <div class="art-fallback" style="display:none">${emoji}</div>
+        </div>`;
+}
+
+function coverPage() {
+    return `
+        <div class="page page-cover">
+            <div class="story-page-left story-page-left-full">
+                ${artFrame('cover.png', '🌸')}
+            </div>
+            <div class="story-page-right">
+                <h1>할미꽃</h1>
+                <p>할미꽃은 지은이가 없는 구전 설화예요. 꽃 하나가 어떻게 그런 이름과 모습을 갖게 되었는지를 이야기로 풀어낸 유래담이랍니다.</p>
+                <p>할미꽃은 이른 봄 무덤가나 볕 잘 드는 언덕에 피는 우리나라 들꽃이에요. 줄기가 활처럼 굽어 꽃이 늘 땅을 내려다보고, 온몸에 흰 솜털이 촘촘히 나 있지요. 굽은 허리와 흰머리가 할머니를 닮았다고 해서 붙은 이름이랍니다.</p>
+                <p>옛이야기에는 이렇게 꽃과 새와 바위의 생김새를 설명하는 이야기가 아주 많아요. 왜 저렇게 생겼을까 하는 궁금증을, 옛사람들은 사람의 이야기로 풀어 냈던 것이지요.</p>
+            </div>
+        </div>`;
+}
+
+function tocPage() {
+    const itemHtml = s => `
+        <li>
+            <button type="button" data-goto="${s.num}">
+                <span class="toc-num">${s.num}</span>
+                <span>
+                    <strong>${s.title.replace(/^\d+장 · /, '')}</strong>
+                </span>
+            </button>
+        </li>`;
+    const quizItemHtml = `
+        <li>
+            <button type="button" data-goto-kind="quiz">
+                <span class="toc-num">❓</span>
+                <span>
+                    <strong>이야기 문제</strong>
+                </span>
+            </button>
+        </li>`;
+    const half = Math.ceil(CHAPTERS.length / 2);
+    const leftItems = CHAPTERS.slice(0, half).map(itemHtml).join('');
+    const rightItems = CHAPTERS.slice(half).map(itemHtml).join('') + quizItemHtml;
+    return `
+        <div class="page page-toc">
+            <div class="story-page-left">
+                <h2>차례</h2>
+                <ul class="toc-list">${leftItems}</ul>
+            </div>
+            <div class="story-page-right">
+                <ul class="toc-list">${rightItems}</ul>
+            </div>
+        </div>`;
+}
+
+function spreadPage(chapter, beat, isFirst) {
+    const badgeHtml = isFirst ? `<div class="spread-chapter-badge">${chapter.title}</div>` : '';
+    const leftHtml = beat.left.map(p => `<p>${p}</p>`).join('');
+    const rightHtml = beat.right.map(p => `<p>${p}</p>`).join('');
+    return `
+        <div class="page page-story">
+            <div class="spread-art">
+                ${badgeHtml}
+                ${artFrame(beat.art, beat.emoji)}
+            </div>
+            <div class="spread-text">
+                <div class="spread-text-left">${leftHtml}</div>
+                <div class="spread-text-right">${rightHtml}</div>
+            </div>
+        </div>`;
+}
+
+function reflectionPage(chapter) {
+    return `
+        <div class="page page-reflection">
+            <h2>이야기를 다 읽고</h2>
+            <p class="reflection-moral">${chapter.moral}</p>
+            <p class="reflection-question">${chapter.question}</p>
+        </div>`;
+}
+
+const QUIZ = [
+    { q: "할머니에게는 딸이 몇 있었나요?", choices: ["둘", "셋", "넷"], answer: 1 },
+    { q: "첫째 딸과 둘째 딸은 어떻게 했나요?", choices: ["반갑게 맞아 주었다", "멀리 배웅했다", "문을 열지 않았다"], answer: 2 },
+    { q: "할머니는 누구를 찾아 언덕을 넘었나요?", choices: ["막내딸", "첫째 딸", "옛 친구"], answer: 0 },
+    { q: "언덕에서 할머니는 어떻게 되었나요?", choices: ["길을 잘못 들었다", "다리를 다쳤다", "기운이 다해 앉았다"], answer: 2 },
+    { q: "할머니를 찾아낸 사람은 누구인가요?", choices: ["막내딸", "둘째 딸", "지나던 사람"], answer: 0 },
+    { q: "할미꽃은 어떤 모습인가요?", choices: ["하늘을 보고 있다", "고개를 숙이고 있다", "옆으로 누워 있다"], answer: 1 }
+];
+
+function quizPage() {
+    const items = QUIZ.map((item, i) => `
+        <div class="quiz-item" data-qindex="${i}">
+            <p class="quiz-question">${i + 1}. ${item.q}</p>
+            <div class="quiz-choices">
+                ${item.choices.map((c, ci) => `<button type="button" class="quiz-choice" data-choice="${ci}">${c}</button>`).join('')}
+            </div>
+        </div>`).join('');
+    return `
+        <div class="page page-quiz">
+            <h2>이야기 문제</h2>
+            <p class="quiz-intro-text" id="quizProgress">0 / 총 ${QUIZ.length}문항 완료</p>
+            <div class="quiz-list">${items}</div>
+        </div>`;
+}
+
+function endPage() {
+    return `
+        <div class="page page-end">
+            ${artFrame('end.png', '🌟')}
+            <h2>할미꽃 이야기를 다 읽었어요!</h2>
+            <a class="home-btn" href="../../../../../">학습 허브로 돌아가기</a>
+        </div>`;
+}
+
+const PAGES = [
+    { kind: 'cover' },
+    { kind: 'toc' },
+    ...CHAPTERS.flatMap(chapter => chapter.beats.map((beat, i) => ({ kind: 'spread', chapter, beat, isFirst: i === 0 }))),
+    { kind: 'reflection', chapter: CHAPTERS[CHAPTERS.length - 1] },
+    { kind: 'quiz' },
+    { kind: 'end' }
+];
+
+const TWO_PAGE_KINDS = new Set(['spread', 'toc', 'cover']);
+
+let folioCounter = 0;
+const FOLIOS = PAGES.map(p => {
+    const width = TWO_PAGE_KINDS.has(p.kind) ? 2 : 1;
+    const start = folioCounter + 1;
+    folioCounter += width;
+    return { start, width };
+});
+
+function renderPage(page) {
+    switch (page.kind) {
+        case 'cover':
+            return coverPage();
+        case 'toc':
+            return tocPage();
+        case 'spread':
+            return spreadPage(page.chapter, page.beat, page.isFirst);
+        case 'reflection':
+            return reflectionPage(page.chapter);
+        case 'quiz':
+            return quizPage();
+        case 'end':
+            return endPage();
+        default:
+            return '';
+    }
+}
+
+let current = 0;
+let animating = false;
+
+const spreadEl = document.getElementById('spread');
+const prevBtn = document.getElementById('prevBtn');
+const nextBtn = document.getElementById('nextBtn');
+const indicatorEl = document.getElementById('pageIndicator');
+const folioLeftEl = document.getElementById('folioLeft');
+const folioRightEl = document.getElementById('folioRight');
+
+function paint() {
+    spreadEl.innerHTML = renderPage(PAGES[current]);
+    prevBtn.disabled = current === 0;
+    nextBtn.disabled = current === PAGES.length - 1;
+    indicatorEl.textContent = `${current + 1} / ${PAGES.length}`;
+
+    const folio = FOLIOS[current];
+    folioLeftEl.classList.toggle('folio-center', folio.width === 1);
+    if (folio.width === 2) {
+        folioLeftEl.textContent = folio.start;
+        folioRightEl.textContent = folio.start + 1;
+        folioLeftEl.hidden = false;
+        folioRightEl.hidden = false;
+    } else {
+        folioLeftEl.textContent = folio.start;
+        folioLeftEl.hidden = false;
+        folioRightEl.hidden = true;
+    }
+
+    spreadEl.querySelectorAll('[data-goto]').forEach(btn => {
+        btn.addEventListener('click', () => {
+            const chapterNum = Number(btn.dataset.goto);
+            const idx = PAGES.findIndex(p => p.kind === 'spread' && p.chapter.num === chapterNum && p.isFirst);
+            if (idx >= 0) goTo(idx);
+        });
+    });
+    spreadEl.querySelectorAll('[data-goto-kind]').forEach(btn => {
+        btn.addEventListener('click', () => {
+            const idx = PAGES.findIndex(p => p.kind === btn.dataset.gotoKind);
+            if (idx >= 0) goTo(idx);
+        });
+    });
+
+    if (PAGES[current].kind === 'quiz') {
+        initQuiz();
+    }
+}
+
+function initQuiz() {
+    let answeredCount = 0;
+    const progressEl = document.getElementById('quizProgress');
+
+    spreadEl.querySelectorAll('.quiz-item').forEach(item => {
+        const qi = Number(item.dataset.qindex);
+        const q = QUIZ[qi];
+        item.querySelectorAll('.quiz-choice').forEach(btn => {
+            btn.addEventListener('click', () => {
+                if (item.classList.contains('graded')) return;
+                item.classList.add('graded');
+                const chosen = Number(btn.dataset.choice);
+                item.querySelectorAll('.quiz-choice').forEach(b => {
+                    const ci = Number(b.dataset.choice);
+                    if (ci === q.answer) b.classList.add('correct');
+                    else if (ci === chosen) b.classList.add('incorrect');
+                });
+                answeredCount++;
+                progressEl.textContent = `${answeredCount} / 총 ${QUIZ.length}문항 완료`;
+            });
+        });
+    });
+}
+
+function goTo(index) {
+    if (animating || index === current || index < 0 || index >= PAGES.length) return;
+    animating = true;
+    const dir = index > current ? 'flip-next' : 'flip-prev';
+    spreadEl.classList.add(dir);
+    setTimeout(() => {
+        current = index;
+        paint();
+    }, 230);
+    setTimeout(() => {
+        spreadEl.classList.remove('flip-next', 'flip-prev');
+        animating = false;
+    }, 480);
+}
+
+prevBtn.addEventListener('click', () => goTo(current - 1));
+nextBtn.addEventListener('click', () => goTo(current + 1));
+
+document.getElementById('tocLink').addEventListener('click', () => {
+    const idx = PAGES.findIndex(p => p.kind === 'toc');
+    if (idx >= 0) goTo(idx);
+});
+
+document.addEventListener('keydown', (e) => {
+    if (e.key === 'ArrowRight') goTo(current + 1);
+    if (e.key === 'ArrowLeft') goTo(current - 1);
+});
+
+paint();

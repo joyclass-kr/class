@@ -4,12 +4,11 @@ const CHAPTERS = [
         title: "1장 · 거꾸로만 하는 아이",
         beats: [
             {
-                art: "01-opposite.png",
+                art: "01-opposite.webp",
                 emoji: "🐸",
                 left: [
                     "옛날 개울가에 엄마 청개구리와 아들 청개구리가 살았습니다.",
-                    "그런데 이 아들이 아주 별났어요.",
-                    "엄마 말을 늘 거꾸로만 했거든요."
+                    "그런데 이 아들이 아주 별났어요. 엄마 말을 늘 거꾸로만 했거든요."
                 ],
                 right: [
                     "\"얘야, 오늘은 산에 가서 놀아라.\"",
@@ -19,7 +18,7 @@ const CHAPTERS = [
                 ]
             },
             {
-                art: "02-backwards.png",
+                art: "02-backwards.webp",
                 emoji: "🙃",
                 left: [
                     "앞으로 가라고 하면 뒤로 갔어요.",
@@ -33,7 +32,7 @@ const CHAPTERS = [
                 ]
             },
             {
-                art: "03-gulgae.png",
+                art: "03-gulgae.webp",
                 emoji: "🎵",
                 left: [
                     "\"울 때는 개굴개굴 우는 거란다.\"",
@@ -54,7 +53,7 @@ const CHAPTERS = [
         title: "2장 · 엄마의 마지막 부탁",
         beats: [
             {
-                art: "04-sigh.png",
+                art: "04-sigh.webp",
                 emoji: "😔",
                 left: [
                     "엄마는 밤마다 한숨을 쉬었어요.",
@@ -68,7 +67,7 @@ const CHAPTERS = [
                 ]
             },
             {
-                art: "05-sick.png",
+                art: "05-sick.webp",
                 emoji: "🛏️",
                 left: [
                     "그러던 어느 날, 엄마가 그만 자리에 눕고 말았어요.",
@@ -81,7 +80,7 @@ const CHAPTERS = [
                 ]
             },
             {
-                art: "06-plan.png",
+                art: "06-plan.webp",
                 emoji: "💭",
                 left: [
                     "엄마는 가만히 생각했어요.",
@@ -95,7 +94,7 @@ const CHAPTERS = [
                 ]
             },
             {
-                art: "07-last-words.png",
+                art: "07-last-words.webp",
                 emoji: "🌾",
                 left: [
                     "\"얘야, 잘 들으렴.\"",
@@ -114,7 +113,7 @@ const CHAPTERS = [
         title: "3장 · 비 오는 날",
         beats: [
             {
-                art: "08-regret.png",
+                art: "08-regret.webp",
                 emoji: "😢",
                 left: [
                     "청개구리는 그제야 목놓아 울었습니다.",
@@ -127,7 +126,7 @@ const CHAPTERS = [
                 ]
             },
             {
-                art: "09-grave.png",
+                art: "09-grave.webp",
                 emoji: "🪨",
                 left: [
                     "청개구리는 엄마를 개울가에 모셨어요.",
@@ -139,7 +138,7 @@ const CHAPTERS = [
                 ]
             },
             {
-                art: "10-rain.png",
+                art: "10-rain.webp",
                 emoji: "🌧️",
                 left: [
                     "그런데 며칠 뒤부터 비가 쏟아지기 시작했어요.",
@@ -170,7 +169,7 @@ function coverPage() {
     return `
         <div class="page page-cover">
             <div class="story-page-left story-page-left-full">
-                ${artFrame('cover.png', '🐸')}
+                ${artFrame('cover.webp', '🐸')}
             </div>
             <div class="story-page-right">
                 <h1>청개구리</h1>
@@ -242,12 +241,12 @@ function reflectionPage(chapter) {
 }
 
 const QUIZ = [
-    { q: "청개구리는 엄마 말을 어떻게 했나요?", choices: ["늘 반대로 했다", "늘 잘 들었다", "못 들은 척했다"], answer: 0 },
-    { q: "엄마가 개굴개굴 울라고 하자 아들은 뭐라고 울었나요?", choices: ["굴개굴개", "개굴개굴", "꽥꽥꽥꽥"], answer: 0 },
+    { q: "청개구리는 엄마 말을 어떻게 했나요?", choices: ["늘 잘 들었다", "늘 반대로 했다", "못 들은 척했다"], answer: 1 },
+    { q: "엄마가 개굴개굴 울라고 하자 아들은 뭐라고 울었나요?", choices: ["개굴개굴", "꽥꽥꽥꽥", "굴개굴개"], answer: 2 },
     { q: "엄마는 왜 개울가에 묻어 달라고 했나요?", choices: ["산에 묻을 줄 알고", "개울을 좋아해서", "산이 너무 멀어서"], answer: 0 },
-    { q: "청개구리는 엄마를 어디에 모셨나요?", choices: ["개울가", "산속", "들판"], answer: 0 },
+    { q: "청개구리는 엄마를 어디에 모셨나요?", choices: ["산속", "들판", "개울가"], answer: 2 },
     { q: "그날은 청개구리에게 어떤 날이었나요?", choices: ["처음 말을 따른 날", "처음 거짓말한 날", "처음 산에 간 날"], answer: 0 },
-    { q: "비가 오면 청개구리는 왜 우나요?", choices: ["무덤이 걱정돼서", "비를 싫어해서", "배가 고파서"], answer: 0 }
+    { q: "비가 오면 청개구리는 왜 우나요?", choices: ["비를 싫어해서", "무덤이 걱정돼서", "배가 고파서"], answer: 1 }
 ];
 
 function quizPage() {
@@ -269,7 +268,7 @@ function quizPage() {
 function endPage() {
     return `
         <div class="page page-end">
-            ${artFrame('end.png', '🌟')}
+            ${artFrame('end.webp', '🌟')}
             <h2>청개구리 이야기를 다 읽었어요!</h2>
             <a class="home-btn" href="../../../../../">학습 허브로 돌아가기</a>
         </div>`;

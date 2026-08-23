@@ -1,0 +1,478 @@
+const CHAPTERS = [
+    {
+        num: 1,
+        title: "1장 · 구지봉의 소리",
+        beats: [
+            {
+                art: "01-gugan.png",
+                emoji: "🏘️",
+                left: [
+                    "옛날 낙동강 아래쪽 땅에는 임금이 없었습니다.",
+                    "대신 아홉 우두머리가 저마다 마을을 이끌었지요."
+                ],
+                right: [
+                    "사람들은 그들을 아홉 간이라 불렀어요.",
+                    "다들 부지런했지만 뭉치지는 못했답니다.",
+                    "\"우리 마을이 제일이지.\""
+                ]
+            },
+            {
+                art: "02-voice.png",
+                emoji: "👂",
+                left: [
+                    "삼월 어느 날이었어요.",
+                    "구지봉이라는 봉우리에서 이상한 소리가 났습니다."
+                ],
+                right: [
+                    "사람은 보이지 않는데 소리만 들렸지요.",
+                    "\"여기에 사람이 있느냐?\"",
+                    "아홉 간이 헐레벌떡 봉우리로 올라갔어요."
+                ]
+            },
+            {
+                art: "03-song.png",
+                emoji: "🎶",
+                left: [
+                    "\"하늘이 나에게 이곳에 나라를 세우라 하셨다.\"",
+                    "\"흙을 파며 노래하고 춤을 추어라.\""
+                ],
+                right: [
+                    "\"어떤 노래를 부릅니까?\"",
+                    "소리가 노래를 일러 주었어요.",
+                    "\"거북아 거북아, 머리를 내어라—\""
+                ]
+            },
+            {
+                art: "04-dance.png",
+                emoji: "💃",
+                left: [
+                    "아홉 간과 이백 명 남짓한 사람들이 노래를 불렀어요.",
+                    "발을 구르고 손뼉을 쳤지요."
+                ],
+                right: [
+                    "\"거북아 거북아, 머리를 내어라!\"",
+                    "\"내놓지 않으면 구워서 먹으리!\"",
+                    "봉우리가 들썩들썩했답니다."
+                ]
+            },
+            {
+                art: "05-rope.png",
+                emoji: "🎁",
+                left: [
+                    "그러자 하늘에서 자줏빛 줄이 스르르 내려왔어요.",
+                    "줄 끝에는 붉은 보자기가 묶여 있었지요."
+                ],
+                right: [
+                    "보자기를 풀자 금빛 상자가 나왔습니다.",
+                    "사람들이 숨을 죽이고 뚜껑을 열었어요.",
+                    "\"…알이다!\""
+                ]
+            }
+        ]
+    },
+    {
+        num: 2,
+        title: "2장 · 황금 알 여섯",
+        beats: [
+            {
+                art: "06-eggs.png",
+                emoji: "🥚",
+                left: [
+                    "상자 안에는 황금빛 알이 여섯 개 들어 있었어요.",
+                    "저마다 해처럼 둥글었지요."
+                ],
+                right: [
+                    "아홉 간은 상자를 아진이라는 집에 모셔 두었습니다. 밤새 문 앞을 지켰어요.",
+                    "아무도 잠을 이루지 못했답니다."
+                ]
+            },
+            {
+                art: "07-hatch.png",
+                emoji: "👶",
+                left: [
+                    "열이틀이 지난 아침이었어요.",
+                    "뚜껑을 열자 사람들이 모두 얼어붙었습니다."
+                ],
+                right: [
+                    "알 여섯이 모두 깨어 사내아이 여섯이 앉아 있었지요.",
+                    "여섯이 한꺼번에 방긋 웃었어요.",
+                    "\"아이고, 이게 무슨 일이냐!\""
+                ]
+            },
+            {
+                art: "08-suro.png",
+                emoji: "👑",
+                left: [
+                    "가장 먼저 알을 깨고 나온 아이가 있었어요.",
+                    "사람들은 그 아이를 수로라 불렀습니다."
+                ],
+                right: [
+                    "수로는 열흘 만에 어른만큼 자랐지요.",
+                    "\"이 아이가 우리 임금이오.\"",
+                    "아홉 간이 한 사람도 빠짐없이 고개를 끄덕였어요."
+                ]
+            },
+            {
+                art: "09-six.png",
+                emoji: "🗺️",
+                left: [
+                    "나머지 다섯도 저마다 훌쩍 자랐습니다.",
+                    "수로가 다섯 형제를 불러 모았어요."
+                ],
+                right: [
+                    "\"나 혼자 다 다스릴 수는 없다.\"",
+                    "다섯은 각각 다른 골짜기로 떠났지요.",
+                    "그렇게 여섯 가야가 생겼답니다."
+                ]
+            }
+        ]
+    },
+    {
+        num: 3,
+        title: "3장 · 바다에서 온 배",
+        beats: [
+            {
+                art: "10-iron.png",
+                emoji: "⚒️",
+                left: [
+                    "수로가 다스리는 땅에서는 좋은 쇠가 났어요.",
+                    "골짜기마다 대장간 망치 소리가 울렸지요."
+                ],
+                right: [
+                    "땅땅. 땅땅.",
+                    "가야의 쇠는 바다 건너까지 팔려 나갔습니다.",
+                    "나루에는 배가 그득했답니다."
+                ]
+            },
+            {
+                art: "11-alone.png",
+                emoji: "🌙",
+                left: [
+                    "아홉 간이 수로에게 말했어요.",
+                    "\"저희 딸 가운데 한 사람을 왕비로 맞으시지요.\""
+                ],
+                right: [
+                    "수로는 고개를 저었습니다.",
+                    "\"내 짝은 하늘이 따로 보내 줄 것이오.\"",
+                    "그러고는 나루터만 자꾸 내다보았지요."
+                ]
+            },
+            {
+                art: "12-ship.png",
+                emoji: "⛵",
+                left: [
+                    "어느 날 붉은 돛을 단 배가 바다 저편에서 나타났어요.",
+                    "사람들이 나루로 우르르 몰려갔습니다."
+                ],
+                right: [
+                    "배에서 내린 이는 낯선 옷을 입은 젊은 여인이었지요.",
+                    "\"저는 아유타국에서 온 허황옥이라 합니다.\"",
+                    "\"꿈에 이곳으로 가라는 말을 들었습니다.\""
+                ]
+            },
+            {
+                art: "13-wedding.png",
+                emoji: "🎊",
+                left: [
+                    "수로가 언덕까지 마중을 나갔어요.",
+                    "둘은 그 자리에서 한참을 마주 보고 서 있었지요."
+                ],
+                right: [
+                    "그날 밤 온 가야에 불이 밝혀졌습니다. 북과 징 소리가 새벽까지 이어졌어요.",
+                    "허황옥은 배에 싣고 온 씨앗과 책도 함께 내렸답니다."
+                ]
+            },
+            {
+                art: "14-gaya.png",
+                emoji: "🌊",
+                left: [
+                    "가야는 바다로 열린 나라가 되었어요.",
+                    "쇠를 실은 배가 나가고 낯선 물건이 들어왔지요."
+                ],
+                right: [
+                    "\"우리는 아홉 마을이었소.\"",
+                    "수로가 나루를 내려다보며 말했습니다.",
+                    "\"이제는 바다까지가 우리 마당이오.\""
+                ]
+            }
+        ],
+        moral: "아홉 간은 저마다 제 마을이 제일이라 여기던 사람들이었어요. 그런데 함께 노래하고 함께 발을 구른 다음에야 나라가 생겼지요. 뭉치는 일은 늘 같이 무언가를 해 보는 데서 시작된답니다.",
+        question: "누군가와 처음으로 마음이 맞았던 순간은 언제였나요?"
+    }
+];
+
+function artFrame(src, emoji) {
+    return `
+        <div class="art-frame">
+            <img src="images/${src}" alt="" onerror="this.style.display='none'; this.nextElementSibling.style.display='flex';">
+            <div class="art-fallback" style="display:none">${emoji}</div>
+        </div>`;
+}
+
+function coverPage() {
+    return `
+        <div class="page page-cover">
+            <div class="story-page-left story-page-left-full">
+                ${artFrame('cover.png', '🐢')}
+            </div>
+            <div class="story-page-right">
+                <h1>김수로</h1>
+                <p>김수로 이야기는 삼국유사에 실린 가락국기라는 글에 전해져요. 가야를 연 첫 임금에 관한 이야기랍니다.</p>
+                <p>이야기 속에서 사람들이 부르는 노래를 구지가라고 해요. 거북아 거북아 머리를 내어라 하고 시작하는 아주 짧은 노래인데, 우리나라에 글로 남은 노래 가운데 가장 오래된 것에 속한답니다.</p>
+                <p>가야는 하나로 뭉친 나라가 아니라 여섯 나라가 나란히 있던 곳이에요. 그래서 알도 여섯 개가 나오는 것이지요.</p>
+                <p>수로왕의 왕비 허황옥은 아유타국에서 배를 타고 왔다고 적혀 있어요. 바다 건너에서 온 왕비 이야기는 우리 옛 기록에서 아주 드문 경우랍니다.</p>
+            </div>
+        </div>`;
+}
+
+function tocPage() {
+    const itemHtml = s => `
+        <li>
+            <button type="button" data-goto="${s.num}">
+                <span class="toc-num">${s.num}</span>
+                <span>
+                    <strong>${s.title.replace(/^\d+장 · /, '')}</strong>
+                </span>
+            </button>
+        </li>`;
+    const quizItemHtml = `
+        <li>
+            <button type="button" data-goto-kind="quiz">
+                <span class="toc-num">❓</span>
+                <span>
+                    <strong>이야기 문제</strong>
+                </span>
+            </button>
+        </li>`;
+    const half = Math.ceil(CHAPTERS.length / 2);
+    const leftItems = CHAPTERS.slice(0, half).map(itemHtml).join('');
+    const rightItems = CHAPTERS.slice(half).map(itemHtml).join('') + quizItemHtml;
+    return `
+        <div class="page page-toc">
+            <div class="story-page-left">
+                <h2>차례</h2>
+                <ul class="toc-list">${leftItems}</ul>
+            </div>
+            <div class="story-page-right">
+                <ul class="toc-list">${rightItems}</ul>
+            </div>
+        </div>`;
+}
+
+function spreadPage(chapter, beat, isFirst) {
+    const badgeHtml = isFirst ? `<div class="spread-chapter-badge">${chapter.title}</div>` : '';
+    const leftHtml = beat.left.map(p => `<p>${p}</p>`).join('');
+    const rightHtml = beat.right.map(p => `<p>${p}</p>`).join('');
+    return `
+        <div class="page page-story">
+            <div class="spread-art">
+                ${badgeHtml}
+                ${artFrame(beat.art, beat.emoji)}
+            </div>
+            <div class="spread-text">
+                <div class="spread-text-left">${leftHtml}</div>
+                <div class="spread-text-right">${rightHtml}</div>
+            </div>
+        </div>`;
+}
+
+function reflectionPage(chapter) {
+    return `
+        <div class="page page-reflection">
+            <h2>이야기를 다 읽고</h2>
+            <p class="reflection-moral">${chapter.moral}</p>
+            <p class="reflection-question">${chapter.question}</p>
+        </div>`;
+}
+
+const QUIZ = [
+    { q: "아홉 간이 소리를 들은 곳은 어디인가요?", choices: ["바닷가 나루", "구지봉", "깊은 동굴"], answer: 1 },
+    { q: "소리가 사람들에게 시킨 것은 무엇인가요?", choices: ["제사를 지내라고", "땅을 파라고", "노래하며 춤추라고"], answer: 2 },
+    { q: "붉은 보자기 속 금상자에 무엇이 들어 있었나요?", choices: ["황금 알 여섯 개", "금관 하나", "옥구슬 여섯 개"], answer: 0 },
+    { q: "가장 먼저 알에서 나온 아이의 이름은 무엇인가요?", choices: ["혁거세", "탈해", "수로"], answer: 2 },
+    { q: "나머지 다섯 아이는 어떻게 되었나요?", choices: ["다섯 가야의 임금이 되었다", "수로를 도와 신하가 되었다", "모두 하늘로 돌아갔다"], answer: 0 },
+    { q: "허황옥은 어디에서 왔나요?", choices: ["북쪽에 있던 부여", "바다 건너 아유타국", "서쪽에 있던 낙랑"], answer: 1 }
+];
+
+function quizPage() {
+    const items = QUIZ.map((item, i) => `
+        <div class="quiz-item" data-qindex="${i}">
+            <p class="quiz-question">${i + 1}. ${item.q}</p>
+            <div class="quiz-choices">
+                ${item.choices.map((c, ci) => `<button type="button" class="quiz-choice" data-choice="${ci}">${c}</button>`).join('')}
+            </div>
+        </div>`).join('');
+    return `
+        <div class="page page-quiz">
+            <h2>이야기 문제</h2>
+            <p class="quiz-intro-text" id="quizProgress">0 / 총 ${QUIZ.length}문항 완료</p>
+            <div class="quiz-list">${items}</div>
+        </div>`;
+}
+
+function endPage() {
+    return `
+        <div class="page page-end">
+            ${artFrame('end.png', '🌟')}
+            <h2>김수로 이야기를 다 읽었어요!</h2>
+            <a class="home-btn" href="../../../../../">학습 허브로 돌아가기</a>
+        </div>`;
+}
+
+function historyPage() {
+    return `
+        <div class="page page-history">
+            <h2>여기서부터는 진짜 역사</h2>
+            <p class="history-note">앞까지가 이야기였고, 여기부터는 기록에 남은 사실이에요.</p>
+            <hr>
+            <div class="history-body">
+                <p>가야는 실제로 있었던 나라들이에요. 낙동강 아래쪽에 여러 나라가 나란히 있었고, 그 가운데 김해에 있던 금관가야가 가장 먼저 힘을 얻었지요.</p>
+                <p>가야 땅에서는 좋은 철이 아주 많이 났어요. 가야 무덤에서는 철로 만든 갑옷과 말투구가 쏟아져 나오고, 덩이쇠라는 철덩어리도 무더기로 나온답니다. 가야는 그 철을 신라와 왜에 팔던 나라였어요.</p>
+                <p>김해에는 수로왕릉과 허황후릉이라 불리는 무덤이 지금도 남아 있어요. 김해 김씨와 김해 허씨는 이 두 사람을 조상으로 여긴답니다.</p>
+                <p>가야는 하나로 합치지 못한 채 신라에 차례로 넘어갔어요. 금관가야는 532년에, 대가야는 562년에 신라 땅이 되었지요.</p>
+            </div>
+        </div>`;
+}
+
+const PAGES = [
+    { kind: 'cover' },
+    { kind: 'toc' },
+    ...CHAPTERS.flatMap(chapter => chapter.beats.map((beat, i) => ({ kind: 'spread', chapter, beat, isFirst: i === 0 }))),
+    { kind: 'reflection', chapter: CHAPTERS[CHAPTERS.length - 1] },
+    { kind: 'history' },
+    { kind: 'quiz' },
+    { kind: 'end' }
+];
+
+const TWO_PAGE_KINDS = new Set(['spread', 'toc', 'cover']);
+
+let folioCounter = 0;
+const FOLIOS = PAGES.map(p => {
+    const width = TWO_PAGE_KINDS.has(p.kind) ? 2 : 1;
+    const start = folioCounter + 1;
+    folioCounter += width;
+    return { start, width };
+});
+
+function renderPage(page) {
+    switch (page.kind) {
+        case 'cover':
+            return coverPage();
+        case 'toc':
+            return tocPage();
+        case 'spread':
+            return spreadPage(page.chapter, page.beat, page.isFirst);
+        case 'reflection':
+            return reflectionPage(page.chapter);
+        case 'history':
+            return historyPage();
+        case 'quiz':
+            return quizPage();
+        case 'end':
+            return endPage();
+        default:
+            return '';
+    }
+}
+
+let current = 0;
+let animating = false;
+
+const spreadEl = document.getElementById('spread');
+const prevBtn = document.getElementById('prevBtn');
+const nextBtn = document.getElementById('nextBtn');
+const indicatorEl = document.getElementById('pageIndicator');
+const folioLeftEl = document.getElementById('folioLeft');
+const folioRightEl = document.getElementById('folioRight');
+
+function paint() {
+    spreadEl.innerHTML = renderPage(PAGES[current]);
+    prevBtn.disabled = current === 0;
+    nextBtn.disabled = current === PAGES.length - 1;
+    indicatorEl.textContent = `${current + 1} / ${PAGES.length}`;
+
+    const folio = FOLIOS[current];
+    folioLeftEl.classList.toggle('folio-center', folio.width === 1);
+    if (folio.width === 2) {
+        folioLeftEl.textContent = folio.start;
+        folioRightEl.textContent = folio.start + 1;
+        folioLeftEl.hidden = false;
+        folioRightEl.hidden = false;
+    } else {
+        folioLeftEl.textContent = folio.start;
+        folioLeftEl.hidden = false;
+        folioRightEl.hidden = true;
+    }
+
+    spreadEl.querySelectorAll('[data-goto]').forEach(btn => {
+        btn.addEventListener('click', () => {
+            const chapterNum = Number(btn.dataset.goto);
+            const idx = PAGES.findIndex(p => p.kind === 'spread' && p.chapter.num === chapterNum && p.isFirst);
+            if (idx >= 0) goTo(idx);
+        });
+    });
+    spreadEl.querySelectorAll('[data-goto-kind]').forEach(btn => {
+        btn.addEventListener('click', () => {
+            const idx = PAGES.findIndex(p => p.kind === btn.dataset.gotoKind);
+            if (idx >= 0) goTo(idx);
+        });
+    });
+
+    if (PAGES[current].kind === 'quiz') {
+        initQuiz();
+    }
+}
+
+function initQuiz() {
+    let answeredCount = 0;
+    const progressEl = document.getElementById('quizProgress');
+
+    spreadEl.querySelectorAll('.quiz-item').forEach(item => {
+        const qi = Number(item.dataset.qindex);
+        const q = QUIZ[qi];
+        item.querySelectorAll('.quiz-choice').forEach(btn => {
+            btn.addEventListener('click', () => {
+                if (item.classList.contains('graded')) return;
+                item.classList.add('graded');
+                const chosen = Number(btn.dataset.choice);
+                item.querySelectorAll('.quiz-choice').forEach(b => {
+                    const ci = Number(b.dataset.choice);
+                    if (ci === q.answer) b.classList.add('correct');
+                    else if (ci === chosen) b.classList.add('incorrect');
+                });
+                answeredCount++;
+                progressEl.textContent = `${answeredCount} / 총 ${QUIZ.length}문항 완료`;
+            });
+        });
+    });
+}
+
+function goTo(index) {
+    if (animating || index === current || index < 0 || index >= PAGES.length) return;
+    animating = true;
+    const dir = index > current ? 'flip-next' : 'flip-prev';
+    spreadEl.classList.add(dir);
+    setTimeout(() => {
+        current = index;
+        paint();
+    }, 230);
+    setTimeout(() => {
+        spreadEl.classList.remove('flip-next', 'flip-prev');
+        animating = false;
+    }, 480);
+}
+
+prevBtn.addEventListener('click', () => goTo(current - 1));
+nextBtn.addEventListener('click', () => goTo(current + 1));
+
+document.getElementById('tocLink').addEventListener('click', () => {
+    const idx = PAGES.findIndex(p => p.kind === 'toc');
+    if (idx >= 0) goTo(idx);
+});
+
+document.addEventListener('keydown', (e) => {
+    if (e.key === 'ArrowRight') goTo(current + 1);
+    if (e.key === 'ArrowLeft') goTo(current - 1);
+});
+
+paint();
