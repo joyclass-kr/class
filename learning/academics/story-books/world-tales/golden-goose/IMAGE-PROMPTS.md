@@ -1,8 +1,8 @@
 # 제미나이 그림 프롬프트
 
-이 책은 하나의 이야기를 8개의 장(챕터)으로 나눠 담았고, 각 장마다 그림이
-**한 장**이에요. 그림이 펼침면 전체 폭을 가득 채우고, 그 아래에 이야기가
-왼쪽·오른쪽으로 나뉘어 들어갑니다.
+이 책은 하나의 이야기를 8개의 장(챕터)으로 나눠 담았고, 펼침면은 모두
+16개예요. 펼침면 하나에 그림이 한 장씩 들어갑니다.
+그림이 펼침면 전체 폭을 가득 채우고, 그 아래에 이야기가 왼쪽·오른쪽으로 나뉘어 들어갑니다.
 
 아래 프롬프트를 제미나이에 그대로 넣어서 생성한 뒤, 파일명을 정확히 맞춰서
 `images/` 폴더에 저장하면 자동으로 책에 나타납니다.
@@ -45,49 +45,57 @@ stuck: three sisters, a priest and a baker, all comically flailing.
 
 | 파일명 | 장면 |
 |---|---|
-| `images/01-eldest.png` | A forest clearing where a proud young man waves away a small bearded old man sitting on a stump, then winces clutching his arm as his axe slips, comic consequence. |
+| `images/01-eldest.png` | A German cottage where a mother packs fine bread and wine for a tall proud son heading out with an axe while a patched-coat youngest brother watches, warm morning light. |
+| `images/01-eldest-2.png` | A forest clearing where a proud young man waves away a small bearded old man on a stump, then winces clutching his arm as his axe slips, comic consequence. |
 
 ## 2장 · 둘째도 마찬가지
 
 | 파일명 | 장면 |
 |---|---|
-| `images/02-second.png` | A forest path where a stout smug young man shoulders past a small old man without looking, and moments later hops on one foot clutching his toes, comic. |
+| `images/02-second.png` | A forest path where a stout smug young man with bread and wine brushes past a small bearded old man sitting on a stump without looking, comic. |
+| `images/02-second-2.png` | A young man hopping on one foot clutching his toes as a felled tree lies the wrong way, and then two brothers lying groaning in a cottage bed, comic. |
 
 ## 3장 · 막내가 나서다
 
 | 파일명 | 장면 |
 |---|---|
-| `images/03-share.png` | A sunny forest clearing where a patched-coat young man spreads a cloth and shares his meagre bread with a small bearded old man, the food transforming into a fine loaf and wine, warm and magical. |
+| `images/03-share.png` | A cottage where a mother hands a patched-coat youngest son a hard crust and sour beer while two brothers snigger from bed, and the son setting off cheerfully into a sunny forest. |
+| `images/03-share-2.png` | A sunny forest clearing where a patched-coat young man spreads a cloth to share with a small bearded old man, the hard crust becoming a fine loaf and the beer becoming wine, magical. |
 
 ## 4장 · 나무 밑동의 거위
 
 | 파일명 | 장면 |
 |---|---|
-| `images/04-goose.png` | A felled tree whose hollow stump reveals a goose with feathers of shining gold, a young man lifting it out in astonishment, the old man smiling from behind a trunk, magical. |
+| `images/04-goose.png` | An old man pointing to a gnarled tree while a young man swings his axe, the tree crashing down to reveal a hollow stump with something glittering inside, expectant. |
+| `images/04-goose-2.png` | A hollow stump revealing a goose with feathers of shining gold, a young man lifting it out in astonishment, then carrying it toward a village inn at dusk, magical. |
 
 ## 5장 · 손이 붙어 버렸다
 
 | 파일명 | 장면 |
 |---|---|
-| `images/05-stuck.png` | An inn room where three sisters are stuck one behind another to a golden goose, tugging and shrieking, the young man asleep in a chair unaware, hilariously comic. |
+| `images/05-stuck.png` | An inn room at night where a girl tugs helplessly at a golden goose with her hand stuck fast while her sister grabs her arm and sticks too, hilariously comic. |
+| `images/05-stuck-2.png` | Three sisters stuck one behind another to a golden goose flailing and shrieking all night, and in the morning being towed out the inn door by an oblivious young man, hilarious. |
 
 ## 6장 · 줄줄이 따라온 사람들
 
 | 파일명 | 장면 |
 |---|---|
-| `images/06-parade.png` | A village street with an absurd chain of people stuck together — a young man with a golden goose, three girls, a priest and a baker — all shuffling along while onlookers howl with laughter. |
+| `images/06-parade.png` | A village street with an absurd chain of people stuck together — a young man with a golden goose, three girls, a priest and a baker — shuffling along while onlookers howl with laughter. |
+| `images/06-parade-2.png` | A long absurd human chain tripping over each other on a country road behind a cheerful young man carrying a golden goose, dust and flailing arms, riotously funny. |
 
 ## 7장 · 웃지 않는 공주
 
 | 파일명 | 장면 |
 |---|---|
-| `images/07-princess.png` | A castle window where a solemn princess suddenly bursts into helpless laughter at the ridiculous human chain shuffling past below, courtiers astonished, joyous and bright. |
+| `images/07-princess.png` | A castle hall where jesters and acrobats perform desperately before a solemn unsmiling princess while the king sighs on his throne, comic and a little sad. |
+| `images/07-princess-2.png` | A castle window where a solemn princess suddenly bursts into helpless laughter at the ridiculous human chain shuffling past below, courtiers astonished, joyous and bright. |
 
 ## 8장 · 손이 떨어지던 날
 
 | 파일명 | 장면 |
 |---|---|
-| `images/08-ending.png` | A castle courtyard where the stuck people spring apart in relief, and a young man releases the golden goose toward the forest as the king and laughing princess look on, warm celebration. |
+| `images/08-ending.png` | A castle courtyard where the stuck people spring apart in relief and stare at their hands, then everyone bursting into laughter, the princess laughing at the window, joyous. |
+| `images/08-ending-2.png` | A young man releasing a golden goose toward a sunlit forest as it spreads shining wings, the king and laughing princess watching from a courtyard, warm celebration. |
 
 ## 사용 팁
 

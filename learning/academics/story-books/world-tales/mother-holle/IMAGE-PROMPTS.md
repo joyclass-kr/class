@@ -1,8 +1,8 @@
 # 제미나이 그림 프롬프트
 
-이 책은 하나의 이야기를 8개의 장(챕터)으로 나눠 담았고, 각 장마다 그림이
-**한 장**이에요. 그림이 펼침면 전체 폭을 가득 채우고, 그 아래에 이야기가
-왼쪽·오른쪽으로 나뉘어 들어갑니다.
+이 책은 하나의 이야기를 8개의 장(챕터)으로 나눠 담았고, 펼침면은 모두
+16개예요. 펼침면 하나에 그림이 한 장씩 들어갑니다.
+그림이 펼침면 전체 폭을 가득 채우고, 그 아래에 이야기가 왼쪽·오른쪽으로 나뉘어 들어갑니다.
 
 아래 프롬프트를 제미나이에 그대로 넣어서 생성한 뒤, 파일명을 정확히 맞춰서
 `images/` 폴더에 저장하면 자동으로 책에 나타납니다.
@@ -46,49 +46,57 @@ warm and grandmotherly, never witch-like.
 
 | 파일명 | 장면 |
 |---|---|
-| `images/01-well.png` | A farmyard beside a stone well where a plain-dressed girl spins thread, her spindle slipping from her fingers into the dark water, a sharp-faced woman watching from a doorway, warm afternoon. |
+| `images/01-well.png` | A German farmyard where a plain-dressed girl sweeps, draws water and spins by a stone well while a frilly-dressed girl lounges yawning in the doorway, warm afternoon light. |
+| `images/01-well-2.png` | A girl at a stone well watching her bloodied spindle slip from her fingers into dark water, then running pale-faced to a sharp-faced woman in a doorway, tense. |
 
 ## 2장 · 우물 속으로
 
 | 파일명 | 장면 |
 |---|---|
-| `images/02-fall.png` | A dark well shaft with a girl falling, and the same wide scene opening into a brilliant sunlit meadow where she lands unhurt among wildflowers, wondrous transition. |
+| `images/02-fall.png` | A sharp-faced woman scolding a girl at a farmhouse door, and the girl then standing on the rim of a dark stone well with her eyes shut, about to jump, dramatic. |
+| `images/02-fall-2.png` | A girl falling through a dark shaft into a brilliant sunlit meadow full of wildflowers, landing unhurt and getting up to walk, wondrous and bright. |
 
 ## 3장 · 빵을 꺼내 주세요
 
 | 파일명 | 장면 |
 |---|---|
-| `images/03-bread.png` | A meadow with a stone bread oven whose door stands open, golden loaves calling out, a girl scooping them onto a paddle with a warm smile, homely and charming. |
+| `images/03-bread.png` | A meadow with a stone bread oven whose door stands open, smoke curling out, a girl scooping golden loaves onto a paddle with reddened hands, homely and charming. |
+| `images/03-bread-2.png` | Golden loaves laid out neatly to cool beside a stone oven while a girl walks on down a sunlit meadow path, warm and satisfying. |
 
 ## 4장 · 사과를 흔들어 주세요
 
 | 파일명 | 장면 |
 |---|---|
-| `images/04-apples.png` | A meadow apple tree bowed almost to the ground under its fruit, a girl shaking the trunk as apples rain down, then stacking them neatly in a pile, bright and satisfying. |
+| `images/04-apples.png` | A meadow apple tree bowed almost to the ground under its fruit, a girl hugging the trunk and shaking hard as apples rain down on her, bright and lively. |
+| `images/04-apples-2.png` | A girl stacking apples neatly in the grass under a relieved apple tree that lifts its branches, then walking on eating one, a cottage visible far off, satisfying. |
 
 ## 5장 · 이불을 터는 할머니
 
 | 파일명 | 장면 |
 |---|---|
-| `images/05-holle.png` | A cottage doorway in a sky-meadow where a large kindly old woman with big teeth welcomes a girl, an enormous feather quilt over her arm, snowflakes drifting from it, warm and magical. |
+| `images/05-holle.png` | A cottage doorway in a sky-meadow where a large kindly old woman with big teeth welcomes a startled girl, an enormous feather quilt over her arm, warm and magical. |
+| `images/05-holle-2.png` | A cosy cottage interior with a laid table and a warm bed, and a girl shaking a giant feather quilt at a window as feathers become snow falling on a world far below, magical. |
 
 ## 6장 · 금빛 소나기
 
 | 파일명 | 장면 |
 |---|---|
-| `images/06-gold.png` | A great gateway where a girl steps through and a shower of gold pours over her, coating her from head to foot, and then standing beside the familiar farmyard well glittering, joyful. |
+| `images/06-gold.png` | A girl sweeping and polishing cheerfully in a cosy sky-cottage, then standing quietly at a window with a wistful face, warm light, tender. |
+| `images/06-gold-2.png` | A great gateway where a girl steps through and a shower of gold pours over her coating her head to foot, then standing glittering beside the familiar farmyard well, joyful. |
 
 ## 7장 · 나도 갈래
 
 | 파일명 | 장면 |
 |---|---|
-| `images/07-lazy.png` | A sunlit meadow where a frilly-dressed girl strolls past a smoking bread oven and a groaning apple tree with her nose in the air, both calling after her in vain, comic. |
+| `images/07-lazy.png` | A farmyard where a gold-covered girl amazes the household, and a frilly-dressed girl then pricking her own finger and hurling a spindle into the well, comic and pointed. |
+| `images/07-lazy-2.png` | A frilly-dressed girl strolling past a smoking bread oven holding her nose and past a groaning apple tree with her chin in the air, both calling in vain, comic. |
 
 ## 8장 · 문을 지나며
 
 | 파일명 | 장면 |
 |---|---|
-| `images/08-ending.png` | A great gateway where a girl steps through expecting gold but is drenched in black sticky pitch, standing dismayed by the farmyard well as her stepmother gapes, comic and pointed. |
+| `images/08-ending.png` | A frilly girl sleeping late and flicking a giant quilt half-heartedly while dishes pile up, an old woman watching quietly from the doorway, comic and pointed. |
+| `images/08-ending-2.png` | A great gateway where a girl steps through expecting gold but is drenched in black sticky pitch, standing dismayed by the farmyard well as a rooster crows, comic and pointed. |
 
 ## 사용 팁
 

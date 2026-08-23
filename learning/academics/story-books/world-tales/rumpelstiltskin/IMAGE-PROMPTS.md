@@ -1,8 +1,8 @@
 # 제미나이 그림 프롬프트
 
-이 책은 하나의 이야기를 8개의 장(챕터)으로 나눠 담았고, 각 장마다 그림이
-**한 장**이에요. 그림이 펼침면 전체 폭을 가득 채우고, 그 아래에 이야기가
-왼쪽·오른쪽으로 나뉘어 들어갑니다.
+이 책은 하나의 이야기를 8개의 장(챕터)으로 나눠 담았고, 펼침면은 모두
+16개예요. 펼침면 하나에 그림이 한 장씩 들어갑니다.
+그림이 펼침면 전체 폭을 가득 채우고, 그 아래에 이야기가 왼쪽·오른쪽으로 나뉘어 들어갑니다.
 
 아래 프롬프트를 제미나이에 그대로 넣어서 생성한 뒤, 파일명을 정확히 맞춰서
 `images/` 폴더에 저장하면 자동으로 책에 나타납니다.
@@ -46,48 +46,56 @@ drawn as comical and sly, never scary. A messenger: a lanky man with muddy boots
 | 파일명 | 장면 |
 |---|---|
 | `images/01-boast.png` | A castle audience hall where a floury-aproned miller gestures grandly while a young king leans forward with gleaming eyes, the miller's face already turning sheepish, comic. |
+| `images/01-boast-2.png` | A miller telling his pale daughter the news in a poor cottage, and the girl being led through a great castle gate that closes behind her, sombre and tense. |
 
 ## 2장 · 짚이 가득한 방
 
 | 파일명 | 장면 |
 |---|---|
-| `images/02-straw.png` | A stone store room piled to the ceiling with straw, a single spinning wheel in the middle and a weeping girl beside it, a tiny figure slipping in through the door crack, tense and eerie but not scary. |
+| `images/02-straw.png` | A stone store room piled to the ceiling with straw, a single spinning wheel in the middle and a weeping girl beside it, a locked door behind, tense and lonely. |
+| `images/02-straw-2.png` | A tiny man in a pointed cap and green coat slipping in through a door crack into a straw-filled room, tilting his head at a weeping girl, comic and curious. |
 
 ## 3장 · 작은 남자
 
 | 파일명 | 장면 |
 |---|---|
-| `images/03-little-man.png` | A tiny man in a pointed cap sitting at a spinning wheel, straw feeding in one side and glittering golden thread winding out the other, the girl watching wide-eyed, magical and funny. |
+| `images/03-little-man.png` | A tiny man in a pointed cap sitting at a spinning wheel, straw feeding in one side and glittering golden thread winding out the other, the girl watching wide-eyed, magical. |
+| `images/03-little-man-2.png` | Dawn light on a room stacked with glittering golden thread and no straw left, a girl asleep by the wheel and a king staring open-mouthed in the doorway, dazzling. |
 
 ## 4장 · 더 큰 방
 
 | 파일명 | 장면 |
 |---|---|
-| `images/04-bigger.png` | A much larger store room heaped with straw at dusk, the girl handing over a small ring to a tiny man who is already rolling up his sleeves at the wheel, resigned and comic. |
+| `images/04-bigger.png` | A much larger store room heaped with straw at dusk, a girl handing a small ring to a tiny man who is already rolling up his sleeves at the wheel, resigned and comic. |
+| `images/04-bigger-2.png` | A king running his hands through heaps of golden thread and grinning greedily, then a vast warehouse-sized hall filled with straw and a small figure alone in it, dramatic. |
 
 ## 5장 · 줄 것이 없어서
 
 | 파일명 | 장면 |
 |---|---|
-| `images/05-promise.png` | A vast straw-filled hall at night where a tiny man holds out his hand and the girl hesitates with her own hand half raised, torchlight throwing long shadows, heavy and quiet. |
+| `images/05-promise.png` | A vast straw-filled hall at night where a tiny man holds out his hand slyly and a girl hesitates with her own hand half raised, torchlight and long shadows, heavy and quiet. |
+| `images/05-promise-2.png` | A wedding celebration in a castle courtyard with banners and crowds, and later a queen holding a newborn baby in a sunlit nursery, joyful but with a shadow of worry. |
 
 ## 6장 · 찾아온 약속
 
 | 파일명 | 장면 |
 |---|---|
-| `images/06-baby.png` | A nursery at night where a queen clutches her baby as a tiny man stands on the windowsill holding up three fingers, moonlight and gauzy curtains, tense but gentle. |
+| `images/06-baby.png` | A nursery at night where a queen clutches her baby as a tiny man stands on the windowsill, moonlight and gauzy curtains, tense but gentle. |
+| `images/06-baby-2.png` | A tiny man holding up three fingers on a windowsill while a kneeling queen weeps with her baby, moonlit nursery, tense and moving. |
 
 ## 7장 · 온 나라의 이름
 
 | 파일명 | 장면 |
 |---|---|
 | `images/07-names.png` | A throne room where a queen reads from a long unrolled scroll of names while a tiny man shakes his head smugly, courtiers crowding the doorway, comic tension. |
+| `images/07-names-2.png` | A queen despairing over lists of odd names, and then a mud-booted messenger bursting into the throne room breathless as she leaps up, comic urgency. |
 
 ## 8장 · 숲속의 노래
 
 | 파일명 | 장면 |
 |---|---|
-| `images/08-ending.png` | A forest clearing at night where a tiny man capers around a bonfire singing, and in a lit palace room a queen calmly speaking his name as he leaps in shock, comic and triumphant. |
+| `images/08-ending.png` | A forest clearing at night where a tiny man capers on one leg around a bonfire singing, seen from behind a bush by a mud-booted messenger, comic and secretive. |
+| `images/08-ending-2.png` | A lit palace nursery where a calm queen names the tiny man who leaps in shock with his cap flying off, then dashes out the door, comic and triumphant. |
 
 ## 사용 팁
 

@@ -1,8 +1,8 @@
 # 제미나이 그림 프롬프트
 
-이 책은 하나의 이야기를 8개의 장(챕터)으로 나눠 담았고, 각 장마다 그림이
-**한 장**이에요. 그림이 펼침면 전체 폭을 가득 채우고, 그 아래에 이야기가
-왼쪽·오른쪽으로 나뉘어 들어갑니다.
+이 책은 하나의 이야기를 8개의 장(챕터)으로 나눠 담았고, 펼침면은 모두
+16개예요. 펼침면 하나에 그림이 한 장씩 들어갑니다.
+그림이 펼침면 전체 폭을 가득 채우고, 그 아래에 이야기가 왼쪽·오른쪽으로 나뉘어 들어갑니다.
 
 아래 프롬프트를 제미나이에 그대로 넣어서 생성한 뒤, 파일명을 정확히 맞춰서
 `images/` 폴더에 저장하면 자동으로 책에 나타납니다.
@@ -46,49 +46,57 @@ a copper-coloured gown who is bored of her tower.
 
 | 파일명 | 장면 |
 |---|---|
-| `images/01-witch.png` | A dusty country road beside a huge hollow tree where a bent old woman in a striped shawl beckons to a young soldier in a worn red coat, autumn light, curious and comic. |
+| `images/01-witch.png` | A dusty country road beside a huge hollow tree where a bent old woman in a striped shawl with a very long chin beckons to a young soldier in a worn red coat, autumn light. |
+| `images/01-witch-2.png` | An old woman pointing into the dark opening of a hollow tree while a soldier peers in with gleaming eyes, a coil of rope at their feet, curious and comic. |
 
 ## 2장 · 첫 번째 방
 
 | 파일명 | 장면 |
 |---|---|
-| `images/02-first-dog.png` | An underground chamber where a huge dog with teacup-sized eyes sits obediently on a spread apron beside an open chest of copper coins, a grinning soldier filling his pockets, warm and funny. |
+| `images/02-first-dog.png` | A soldier descending on a rope into a wide underground cavern with three doors, opening the first to face a huge dog with teacup-sized eyes staring at him, comic tension. |
+| `images/02-first-dog-2.png` | An underground chamber where a huge dog sits obediently on a spread apron wagging its tail beside an open chest of copper coins, a grinning soldier stuffing his pockets, warm and funny. |
 
 ## 3장 · 두 번째, 세 번째 방
 
 | 파일명 | 장면 |
 |---|---|
-| `images/03-more-dogs.png` | Two more underground chambers side by side, one dog with mill-wheel eyes over silver and one with tower-sized eyes over gold, a soldier gleefully swapping his loot, absurd scale and comedy. |
+| `images/03-more-dogs.png` | An underground chamber with a dog with mill-wheel eyes on an apron beside a chest of silver, a soldier gleefully dumping copper coins on the floor, absurd and comic. |
+| `images/03-more-dogs-2.png` | An underground chamber with a dog whose eyes are as big as towers sitting on an apron, a soldier filling every pocket with gold and pocketing a small battered tinderbox, dazzling. |
 
 ## 4장 · 노파와의 다툼
 
 | 파일명 | 장면 |
 |---|---|
-| `images/04-quarrel.png` | A roadside beside the hollow tree where a soldier holds up a battered tinderbox and a bent old woman clutches her shawl in fury, and then the soldier walking off toward a town, comic standoff. |
+| `images/04-quarrel.png` | A roadside beside a hollow tree where a soldier holds a battered tinderbox behind his back while a bent old woman reaches for it furiously, comic standoff. |
+| `images/04-quarrel-2.png` | A soldier walking away down a country road with heavy pockets while an old woman stamps her feet behind him, and ahead a busy town at sunset, comic and lively. |
 
 ## 5장 · 돈을 다 써 버리고
 
 | 파일명 | 장면 |
 |---|---|
-| `images/05-town.png` | A lively town street where a well-dressed soldier treats a crowd at an inn, and beside it the same man alone in a bare attic room with an empty purse, telling contrast. |
+| `images/05-town.png` | A lively town street where a well-dressed soldier treats a laughing crowd outside an inn and hands coins to the poor, golden light, generous and warm. |
+| `images/05-town-2.png` | A bare attic room where a soldier in shabby clothes sits alone with an empty purse and a stub of candle, digging a battered tinderbox out of his pack, quiet and telling. |
 
 ## 6장 · 통을 세 번 치면
 
 | 파일명 | 장면 |
 |---|---|
 | `images/06-summon.png` | A bare attic room where a soldier strikes a tinderbox and a huge dog with teacup eyes bursts through the door wagging its tail, candle flame flaring, comic and delightful. |
+| `images/06-summon-2.png` | A soldier in fine clothes at a laden table with three dogs of increasing size behind him, friends crowding back in, warm lamplight, funny and pointed. |
 
 ## 7장 · 밀가루 자국
 
 | 파일명 | 장면 |
 |---|---|
-| `images/07-flour.png` | A moonlit town where a huge dog carries a princess on its back across the rooftops, and by day a thin white trail of flour running along the cobbles to a door, clever and funny. |
+| `images/07-flour.png` | A moonlit town where a huge dog carries a sleeping princess on its back across the rooftops toward a lit attic window, magical and gentle. |
+| `images/07-flour-2.png` | A thin white trail of flour running along moonlit cobbles and up to an inn door, soldiers following it by daylight, clever and funny. |
 
 ## 8장 · 광장에서
 
 | 파일명 | 장면 |
 |---|---|
-| `images/08-ending.png` | A packed town square where a soldier strikes his tinderbox and three colossal goofy dogs appear at once, the crowd tumbling backwards laughing, banners and sunshine, joyous chaos. |
+| `images/08-ending.png` | A soldier at a barred prison window asking a small boy in the street for a favour, and the boy handing a battered tinderbox through the bars, hopeful and clever. |
+| `images/08-ending-2.png` | A packed town square where a soldier strikes his tinderbox and three colossal goofy dogs appear at once, the crowd tumbling backwards laughing, banners and sunshine, joyous chaos. |
 
 ## 사용 팁
 
