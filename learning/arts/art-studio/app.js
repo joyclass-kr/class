@@ -308,7 +308,7 @@
           let angle = Math.atan2(dy, dx) * 180 / Math.PI;
           if (angle < 0) angle += 360;
           const sat = Math.min(1, dist / radius);
-          const hex = hsvToHex(angle, sat, this.wheelValue ?? 1);
+          const hex = hsvToHex(angle, sat, 1);
           const rgb = hexToRgb(hex);
           image.data[idx] = rgb.r;
           image.data[idx + 1] = rgb.g;
@@ -328,7 +328,7 @@
         let angle = Math.atan2(dy, dx) * 180 / Math.PI;
         if (angle < 0) angle += 360;
         const sat = dist / radius;
-        const hex = hsvToHex(angle, sat, this.wheelValue ?? 1);
+        const hex = hsvToHex(angle, sat, 1);
         this.setColor(hex);
       };
       canvas.addEventListener("pointerdown", event => {
@@ -337,12 +337,6 @@
         const onMove = moveEvent => pick(moveEvent);
         canvas.addEventListener("pointermove", onMove);
         canvas.addEventListener("pointerup", () => canvas.removeEventListener("pointermove", onMove), { once: true });
-      });
-
-      this.wheelValue = 1;
-      $("valueSlider").addEventListener("input", e => {
-        this.wheelValue = Number(e.target.value) / 100;
-        this.initColorWheel();
       });
     }
 

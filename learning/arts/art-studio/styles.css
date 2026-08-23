@@ -177,13 +177,17 @@ input[type="range"] {
 }
 .info-icon:hover, .info-icon:focus-visible { border-color: var(--accent); color: var(--accent-dark); }
 .info-tip {
+  /* display:none (not opacity/visibility) so the hidden bubble takes up
+     no layout space - an invisible but still-positioned absolute box was
+     wide enough to push the panel into a horizontal scrollbar */
+  display: none;
   position: absolute;
   z-index: 5;
   bottom: calc(100% + 8px);
   left: 50%;
-  transform: translateX(-50%) translateY(4px);
+  transform: translateX(-50%);
   width: max-content;
-  max-width: 200px;
+  max-width: 160px;
   padding: 8px 10px;
   border-radius: 10px;
   background: var(--ink);
@@ -193,10 +197,7 @@ input[type="range"] {
   line-height: 1.4;
   text-align: left;
   box-shadow: var(--shadow);
-  opacity: 0;
-  visibility: hidden;
   pointer-events: none;
-  transition: opacity 0.12s ease, transform 0.12s ease;
 }
 .info-tip::after {
   content: "";
@@ -209,9 +210,7 @@ input[type="range"] {
 }
 .info-wrap:hover .info-tip,
 .info-wrap.open .info-tip {
-  opacity: 1;
-  visibility: visible;
-  transform: translateX(-50%) translateY(0);
+  display: block;
 }
 
 .brush-rail {
@@ -325,16 +324,6 @@ input[type="range"] {
   display: block;
   margin: 0 auto;
   box-shadow: 0 0 0 4px #fff, 0 0 0 5px var(--panel-line);
-}
-
-.wheel-value-label {
-  display: flex;
-  flex-direction: column;
-  gap: 4px;
-  font-size: 11px;
-  color: var(--muted);
-  font-weight: 700;
-  margin-top: 10px;
 }
 
 .swatch-grid {
