@@ -126,6 +126,8 @@ assert.match(html, /id="roomCode"/);
 assert.match(client, /allowedPlayerCounts:\s*\[2,\s*3,\s*4,\s*5,\s*6\]/);
 assert.match(client, /CITYCHASE_ACTION/);
 assert.match(css, /min-height:\s*44px/);
+assert.match(css, /city-board-v5\.png/, "이동 칸이 없는 정상 방향의 최종 배경을 사용해야 합니다.");
+assert.doesNotMatch(css, /transform:\s*rotate\(180deg\)/, "배경 전체를 뒤집어 캐릭터 방향을 바꾸면 안 됩니다.");
 assert.match(css, /\.node::after\s*\{[^}]*inset:\s*-11px/s, "작은 보드 칸에도 44px 이상의 터치 영역이 필요합니다.");
 assert.match(css, /@media\s*\(orientation:\s*portrait\),\s*\(max-width:\s*820px\)/);
 assert.match(server, /citychase:\s*6/);
