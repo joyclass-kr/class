@@ -1,8 +1,8 @@
 # 제미나이 그림 프롬프트
 
-이 책은 하나의 이야기를 8개의 장(챕터)으로 나눠 담았고, 각 장마다 그림이
-**한 장**이에요. 그림이 펼침면 전체 폭을 가득 채우고, 그 아래에 이야기가
-왼쪽·오른쪽으로 나뉘어 들어갑니다.
+이 책은 하나의 이야기를 8개의 장(챕터)으로 나눠 담았고, 펼침면은 모두
+16개예요. 펼침면 하나에 그림이 한 장씩 들어갑니다.
+그림이 펼침면 전체 폭을 가득 채우고, 그 아래에 이야기가 왼쪽·오른쪽으로 나뉘어 들어갑니다.
 
 아래 프롬프트를 제미나이에 그대로 넣어서 생성한 뒤, 파일명을 정확히 맞춰서
 `images/` 폴더에 저장하면 자동으로 책에 나타납니다.
@@ -46,48 +46,56 @@ waiting: a flock of identically dressed girls who move as one.
 | 파일명 | 장면 |
 |---|---|
 | `images/01-prince.png` | A modest castle garden where a young prince stands between a rose bush bearing one perfect bloom and a small nightingale on a branch, morning light, warm and hopeful. |
+| `images/01-prince-2.png` | A prince sealing a rose and a nightingale into two silver caskets, and a vast glittering palace where a bored princess yawns among her ladies, contrast. |
 
 ## 2장 · 시큰둥한 공주
 
 | 파일명 | 장면 |
 |---|---|
-| `images/02-gifts.png` | A glittering palace hall where a princess recoils in disappointment from an open silver casket holding a real rose, ladies in waiting fanning themselves, the emperor peering over, comic disdain. |
+| `images/02-gifts.png` | A glittering palace hall where a princess claps at an open silver casket holding a rose, then her face falling when told it is real, ladies in waiting fanning, comic. |
+| `images/02-gifts-2.png` | A nightingale singing beautifully from a silver casket while ladies listen enraptured but a princess turns away bored, ornate palace hall, comic disdain. |
 
 ## 3장 · 돼지치기가 되어
 
 | 파일명 | 장면 |
 |---|---|
-| `images/03-disguise.png` | A muddy castle back yard where a young man with soot-smudged cheeks in a rough smock is hired among grunting pigs, and a tiny attic room where he works by candlelight, cosy and comic. |
+| `images/03-disguise.png` | A young prince rubbing soot on his cheeks and pulling on a rough smock, then being hired at a palace back gate among grunting pigs, comic and clever. |
+| `images/03-disguise-2.png` | A muddy pig yard by day and a tiny attic room by candlelight where a soot-smudged young man moulds clay and carves tiny bells, cosy and comic. |
 
 ## 4장 · 노래하는 냄비
 
 | 파일명 | 장면 |
 |---|---|
-| `images/04-pot.png` | A small clay cooking pot ringed with tiny bells steaming on a fire, musical notes and wisps of vapour rising, a delighted swineherd holding his hand in the steam, magical and funny. |
+| `images/04-pot.png` | A small clay pot ringed with tiny bells steaming on a fire, musical notes rising, a swineherd holding his hand in the steam and seeing village kitchens, magical. |
+| `images/04-pot-2.png` | A lady in waiting hearing bell music over a wall and running to tell a princess who leaps up from her balcony chair in excitement, lively and comic. |
 
 ## 5장 · 열 번의 입맞춤
 
 | 파일명 | 장면 |
 |---|---|
-| `images/05-bargain.png` | A palace balcony where a blushing lady in waiting relays a message to an outraged princess who then hesitates, glancing back toward the pig yard, comic inner struggle. |
+| `images/05-bargain.png` | A lady in waiting bargaining across a pig-yard fence with a calm soot-smudged swineherd holding a belled pot, then walking back blushing furiously, comic. |
+| `images/05-bargain-2.png` | A princess slamming a door in outrage, then pacing and reopening it with a sly look while her ladies exchange alarmed glances, comic inner struggle. |
 
 ## 6장 · 시녀들의 담장
 
 | 파일명 | 장면 |
 |---|---|
-| `images/06-kisses.png` | A pig yard where a ring of ladies in waiting hold out their wide skirts to form a screen, a princess behind them with eyes squeezed shut, pigs looking on curiously, hilariously comic. |
+| `images/06-kisses.png` | A pig yard where a ring of ladies in waiting hold out their wide skirts as a screen while a princess squeezes her eyes shut, pigs looking on, hilariously comic. |
+| `images/06-kisses-2.png` | A princess gleefully boiling a belled pot in her chamber, holding her hand in the steam and laughing with her ladies at what she sees, warm and funny. |
 
 ## 7장 · 이번엔 딸랑이
 
 | 파일명 | 장면 |
 |---|---|
-| `images/07-rattle.png` | A swineherd holding up a spinning rattle that trails swirling ribbons of music, a princess reaching for it eagerly while ladies form their skirt-screen again, lively and funny. |
+| `images/07-rattle.png` | A swineherd spinning a rattle that trails swirling ribbons of dance music over a wall while a princess leans eagerly from a balcony, lively and funny. |
+| `images/07-rattle-2.png` | A princess hurrying down to the pig yard where ladies form their skirt-screen again and counting begins, pigs tilting their heads, comic. |
 
 ## 8장 · 성문 밖에서
 
 | 파일명 | 장면 |
 |---|---|
-| `images/08-ending.png` | A rainy road outside a castle gate where a bedraggled princess sits on her trunk, and a young man washes the soot from his face revealing a prince who looks down at her with rueful pity, dramatic sky. |
+| `images/08-ending.png` | An emperor with a slipping crown bursting into a pig yard in slippers as ladies scatter, leaving a princess and a swineherd exposed, hilariously dramatic. |
+| `images/08-ending-2.png` | A rainy road outside a castle gate where a bedraggled princess sits weeping while a young man washes soot from his face revealing a prince, dramatic sky. |
 
 ## 사용 팁
 

@@ -1,8 +1,8 @@
 # 제미나이 그림 프롬프트
 
-이 책은 하나의 이야기를 8개의 장(챕터)으로 나눠 담았고, 각 장마다 그림이
-**한 장**이에요. 그림이 펼침면 전체 폭을 가득 채우고, 그 아래에 이야기가
-왼쪽·오른쪽으로 나뉘어 들어갑니다.
+이 책은 하나의 이야기를 8개의 장(챕터)으로 나눠 담았고, 펼침면은 모두
+16개예요. 펼침면 하나에 그림이 한 장씩 들어갑니다.
+그림이 펼침면 전체 폭을 가득 채우고, 그 아래에 이야기가 왼쪽·오른쪽으로 나뉘어 들어갑니다.
 
 아래 프롬프트를 제미나이에 그대로 넣어서 생성한 뒤, 파일명을 정확히 맞춰서
 `images/` 폴더에 저장하면 자동으로 책에 나타납니다.
@@ -46,49 +46,57 @@ smile.
 
 | 파일명 | 장면 |
 |---|---|
-| `images/01-shoes.png` | A castle bedchamber at dawn with twelve beds in a row and twelve pairs of worn-through dancing shoes on the floor, a worried king in the doorway, morning light, puzzling. |
+| `images/01-shoes.png` | A castle bedchamber at dawn with twelve beds in a row and twelve pairs of worn-through dancing shoes on the floor, morning light, puzzling and charming. |
+| `images/01-shoes-2.png` | A worried king in a heavy crown questioning twelve princesses in pale gowns who all look innocently back at him, a pile of ruined shoes at their feet, comic tension. |
 
 ## 2장 · 임금님의 방
 
 | 파일명 | 장면 |
 |---|---|
-| `images/02-decree.png` | A castle hall where a herald reads a proclamation to a crowd, and beside it a young prince slumped fast asleep in a chair outside a bedroom door, comic failure. |
+| `images/02-decree.png` | A castle square where a herald reads a proclamation to a murmuring crowd while young princes step forward confidently, banners and sunlight, lively. |
+| `images/02-decree-2.png` | A princess offering a goblet to a confident prince outside a bedroom door, and the same prince slumped fast asleep in his chair by morning, comic failure. |
 
 ## 3장 · 길에서 만난 노파
 
 | 파일명 | 장면 |
 |---|---|
-| `images/03-cloak.png` | A country roadside where a weathered old soldier carries a bundle for a small bent old woman, who hands him a worn grey cloak in return, warm afternoon light, kindly. |
+| `images/03-cloak.png` | A country roadside where a weathered old soldier with a patched coat carries a heavy bundle for a small bent old woman, warm afternoon light, kindly. |
+| `images/03-cloak-2.png` | An old woman handing a worn grey cloak to an astonished soldier at a village gate, then the road empty behind him, magical and warm. |
 
 ## 4장 · 마시지 않은 술
 
 | 파일명 | 장면 |
 |---|---|
-| `images/04-wine.png` | A candlelit antechamber where a princess offers a goblet to an old soldier who pretends to drink while the wine trickles into his collar, comic and sly. |
+| `images/04-wine.png` | A castle hall where courtiers snigger at an old soldier volunteering before the king, and later a princess bringing him a goblet outside a bedroom door, candlelight. |
+| `images/04-wine-2.png` | An old soldier pretending to drink while wine trickles into his collar, then lying down snoring loudly as princesses peep out from a doorway, comic and sly. |
 
 ## 5장 · 침대 밑의 계단
 
 | 파일명 | 장면 |
 |---|---|
-| `images/05-trapdoor.png` | A bedchamber where a bed slides aside to reveal a glowing staircase descending into the earth, princesses in fine gowns filing down, a faint outline of a cloaked figure following, magical. |
+| `images/05-trapdoor.png` | A bedchamber where princesses dress in fine gowns and dancing shoes as a bed slides aside to reveal a glowing staircase descending into the earth, magical. |
+| `images/05-trapdoor-2.png` | A faint outline of a cloaked figure treading on a princess's hem on a glowing underground staircase, the youngest princess turning in alarm, magical and tense. |
 
 ## 6장 · 은과 금과 다이아몬드 숲
 
 | 파일명 | 장면 |
 |---|---|
-| `images/06-forests.png` | Three enchanted underground forests in one wide panorama — silver leaves, then gold, then diamond — with princesses walking through and a branch snapping behind them, dazzling. |
+| `images/06-forests.png` | An enchanted underground forest with leaves of pure silver chiming in a breeze, princesses walking through and a branch snapping behind them, dazzling. |
+| `images/06-forests-2.png` | Two enchanted forests side by side, one with golden leaves and one with diamond leaves blazing like stars, princesses passing through, dazzling and magical. |
 
 ## 7장 · 호수 건너 무도회장
 
 | 파일명 | 장면 |
 |---|---|
-| `images/07-ball.png` | An underground lake with twelve small boats crossing toward a brilliantly lit ballroom on the far shore, one boat riding noticeably low in the water, lanterns reflecting, enchanting. |
+| `images/07-ball.png` | An underground lake with twelve small boats crossing, one riding noticeably low in the water as its oarsman strains, lanterns reflecting, enchanting. |
+| `images/07-ball-2.png` | A brilliantly lit underground ballroom where twelve princesses dance all night with their partners, shoes wearing through, a faint cloaked figure watching from a corner. |
 
 ## 8장 · 세 개의 가지
 
 | 파일명 | 장면 |
 |---|---|
-| `images/08-ending.png` | A throne room where an old soldier holds up three branches of silver, gold and diamond leaves, the twelve princesses lowering their eyes and the king rising in astonishment, triumphant. |
+| `images/08-ending.png` | An old soldier slipping back to his bed and snoring as princesses return at dawn, and later standing before a frowning king in a throne room, tense and comic. |
+| `images/08-ending-2.png` | A throne room where an old soldier holds up three branches of silver, gold and diamond leaves, the twelve princesses lowering their eyes, the king rising in astonishment. |
 
 ## 사용 팁
 
