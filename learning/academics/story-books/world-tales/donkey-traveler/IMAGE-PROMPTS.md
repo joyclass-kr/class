@@ -1,8 +1,8 @@
 # 제미나이 그림 프롬프트
 
-이 책은 하나의 이야기를 7개의 장(챕터)으로 나눠 담았고, 각 장마다 그림이
-**한 장**이에요. 그림이 펼침면 전체 폭을 가득 채우고, 그 아래에 이야기가
-왼쪽·오른쪽으로 나뉘어 들어갑니다.
+이 책은 하나의 이야기를 8개의 장(챕터)으로 나눠 담았고, 펼침면은 모두
+16개예요. 펼침면 하나에 그림이 한 장씩 들어갑니다.
+그림이 펼침면 전체 폭을 가득 채우고, 그 아래에 이야기가 왼쪽·오른쪽으로 나뉘어 들어갑니다.
 
 아래 프롬프트를 제미나이에 그대로 넣어서 생성한 뒤, 파일명을 정확히 맞춰서
 `images/` 폴더에 저장하면 자동으로 책에 나타납니다.
@@ -43,43 +43,57 @@ old woman: a small bent woman in a shawl who knows about the trees.
 
 | 파일명 | 장면 |
 |---|---|
-| `images/01-trees.png` | A country lane between two fruit trees, one with red fruit and one with yellow, where a startled traveller clutches his head as his ears stretch long like a donkey's, comic alarm, sunny hillside. |
+| `images/01-trees.png` | A dusty country lane climbing a sunny hill between two heavily laden fruit trees, one red and one yellow, a hungry young traveller with a staff arriving, inviting. |
+| `images/01-trees-2.png` | A traveller happily eating red fruit under a tree, then clutching his head in comic alarm as his ears stretch long like a donkey's, sunny hillside. |
 
 ## 2장 · 당나귀가 되어
 
 | 파일명 | 장면 |
 |---|---|
-| `images/02-donkey.png` | A man mid-transformation into a donkey on a country road, and beside it the same donkey being cheerfully hitched to a merchant's cart, the donkey's eyes wide with human dismay, comic and lively. |
+| `images/02-donkey.png` | A man mid-transformation into a donkey on a country road, grey fur sprouting and limbs bending, then staring at his reflection in a puddle, comic dismay. |
+| `images/02-donkey-2.png` | A merchant delightedly slipping a halter onto a bewildered donkey and hitching it to a loaded cart on a country road, the donkey's eyes wide with human dismay, comic. |
 
 ## 3장 · 무거운 짐
 
 | 파일명 | 장면 |
 |---|---|
-| `images/03-labor.png` | A weary donkey hauling a heavily loaded cart up a dusty road under hot sun while a merchant walks alongside, and at night the same donkey lying in a stable yard looking up at stars, sympathetic. |
+| `images/03-labor.png` | A weary donkey hauling a heavily loaded cart up a dusty hill under hot sun while a merchant walks alongside with a switch, sympathetic and vivid. |
+| `images/03-labor-2.png` | A donkey lying on straw in a stable yard at night looking up at stars through a gap in the door, a memory of two fruit trees glowing faintly above, wistful. |
 
 ## 4장 · 다시 그 언덕으로
 
 | 파일명 | 장면 |
 |---|---|
-| `images/04-escape.png` | A donkey breaking free from a cart and galloping to a yellow-fruited tree, then transforming back into a delighted young man mid-stride, the merchant tumbling backwards in astonishment, comic action. |
+| `images/04-escape.png` | A donkey suddenly recognising two familiar fruit trees on a hillside and yanking its halter free as the merchant tumbles backwards, comic action. |
+| `images/04-escape-2.png` | A donkey shaking a yellow-fruited tree and eating, then transforming back into a delighted young man mid-stride as the merchant gapes, comic and joyful. |
 
 ## 5장 · 욕심 많은 주막 주인
 
 | 파일명 | 장면 |
 |---|---|
-| `images/05-innkeeper.png` | A plump innkeeper leaning across a tavern table with greedy gleaming eyes as a traveller tells his story, and beside it the same innkeeper at night stuffing red fruit into his mouth beneath a tree, comic greed. |
+| `images/05-innkeeper.png` | A tavern where a traveller tells his tale to laughing patrons while a plump innkeeper leans across the table with greedy gleaming eyes, warm lamplight. |
+| `images/05-innkeeper-2.png` | A plump innkeeper sneaking out at night with a lantern to a hillside and stuffing red fruit into his mouth beneath a tree, comic greed, moonlight. |
 
 ## 6장 · 히히힝
 
 | 파일명 | 장면 |
 |---|---|
-| `images/06-transform.png` | A tavern kitchen in uproar at dawn with a large donkey standing where the innkeeper should be, his wife shooing it out with a broom, patrons peering in astonished, very comic. |
+| `images/06-transform.png` | A tavern bedroom at dawn where a large donkey stands where the innkeeper should be, his wife shrieking and patrons peering round the door, very comic. |
+| `images/06-transform-2.png` | A wife shooing a donkey out of a tavern with a broom while it circles the yard helplessly, big tears rolling down its face, comic and touching. |
 
 ## 7장 · 나그네가 돌아오다
 
 | 파일명 | 장면 |
 |---|---|
-| `images/07-return.png` | A traveller holding out a yellow fruit to a donkey in a tavern yard, the donkey transforming back into a shaken innkeeper sitting on the ground, onlookers gasping and laughing, warm resolution. |
+| `images/07-return.png` | Villagers gossiping in a lane, and a traveller crouching before a tethered donkey in a tavern yard as it nods desperately, comic and sympathetic. |
+| `images/07-return-2.png` | A traveller holding out a yellow fruit to a donkey that transforms back into a shaken innkeeper sitting on the ground as his wife rushes to embrace him, warm. |
+
+## 8장 · 두 나무 아래에서
+
+| 파일명 | 장면 |
+|---|---|
+| `images/08-ending.png` | A tavern yard where a shamed innkeeper bows to a smiling traveller while neighbours gather round and laugh kindly, warm afternoon light. |
+| `images/08-ending-2.png` | A cheerful tavern feast, and next morning a traveller picking a few yellow fruits at the hillside trees before walking on down the road, warm and hopeful. |
 
 ## 사용 팁
 

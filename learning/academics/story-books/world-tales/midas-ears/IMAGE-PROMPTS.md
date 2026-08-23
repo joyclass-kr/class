@@ -1,8 +1,8 @@
 # 제미나이 그림 프롬프트
 
-이 책은 하나의 이야기를 8개의 장(챕터)으로 나눠 담았고, 각 장마다 그림이
-**한 장**이에요. 그림이 펼침면 전체 폭을 가득 채우고, 그 아래에 이야기가
-왼쪽·오른쪽으로 나뉘어 들어갑니다.
+이 책은 하나의 이야기를 8개의 장(챕터)으로 나눠 담았고, 펼침면은 모두
+16개예요. 펼침면 하나에 그림이 한 장씩 들어갑니다.
+그림이 펼침면 전체 폭을 가득 채우고, 그 아래에 이야기가 왼쪽·오른쪽으로 나뉘어 들어갑니다.
 
 아래 프롬프트를 제미나이에 그대로 넣어서 생성한 뒤, 파일명을 정확히 맞춰서
 `images/` 폴더에 저장하면 자동으로 책에 나타납니다.
@@ -45,49 +45,57 @@ The queen and courtiers in white Greek dress.
 
 | 파일명 | 장면 |
 |---|---|
-| `images/01-contest.png` | A sunlit Greek mountainside where a goat-legged piper and a golden-haired lyre player perform before a crowd of nymphs, animals and a seated king, olive trees and blue sky, festive. |
+| `images/01-contest.png` | A sunlit Greek mountainside where a goat-legged piper and a golden-haired lyre player prepare to perform before a crowd of nymphs, animals and a seated king, festive. |
+| `images/01-contest-2.png` | A goat-legged piper leaping and playing a lively reed pipe to a swaying crowd, then a golden-haired figure playing a lyre as everyone sits utterly still, contrast. |
 
 ## 2장 · 혼자 다른 대답
 
 | 파일명 | 장면 |
 |---|---|
-| `images/02-judgment.png` | A hushed mountain gathering where a plump king stands alone with his hand raised in objection while everyone else stares, the lyre player regarding him with a cool level gaze, comic tension. |
+| `images/02-judgment.png` | A mountain gathering where a mountain god raises the lyre player's hand while everyone nods, and a plump king suddenly leaping up in objection, comic. |
+| `images/02-judgment-2.png` | A hushed mountainside where a lyre player regards a stubborn king with a cool level gaze while the crowd stares, comic tension, warm light. |
 
 ## 3장 · 아침에 생긴 일
 
 | 파일명 | 장면 |
 |---|---|
-| `images/03-ears.png` | A palace bedchamber where a horrified king stares into a bronze mirror at his long furry donkey ears, and beside it the same king striding out wearing an enormous pointed cap, very comic. |
+| `images/03-ears.png` | A palace bedchamber where a horrified king stares into a bronze mirror at long furry donkey ears sprouting from his head, clapping his hands over his mouth, hilarious. |
+| `images/03-ears-2.png` | A king jamming on an enormous pointed cap and striding out of his chamber, wearing it at meals and even in bed while courtiers whisper, very comic. |
 
 ## 4장 · 이발사만은 알았다
 
 | 파일명 | 장면 |
 |---|---|
-| `images/04-barber.png` | A palace room where a barber lifts a king's enormous cap and freezes with wide eyes at the donkey ears beneath, scissors dangling from his hand, the king glaring sideways, hilarious. |
+| `images/04-barber.png` | A locked palace room where a barber lifts a king's enormous cap and freezes wide-eyed at the donkey ears beneath, scissors trembling in his hand, hilarious. |
+| `images/04-barber-2.png` | A trembling barber bowing repeatedly to a glaring king, then walking home down a sunlit street clutching his tools with sweat on his brow, comic. |
 
 ## 5장 · 참을 수 없는 말
 
 | 파일명 | 장면 |
 |---|---|
-| `images/05-itch.png` | A cramped village house where a gaunt barber tosses sleeplessly in bed with both hands clamped over his mouth, his worried wife watching, a candle guttering, comic misery. |
+| `images/05-itch.png` | A cramped village house where a gaunt barber tosses in bed with both hands clamped over his mouth while his worried wife leans over him, candle guttering, comic misery. |
+| `images/05-itch-2.png` | A gaunt barber refusing a friend's cup in a tavern with tight lips, then sitting hollow-eyed at his own table, months passing, comic and pitiable. |
 
 ## 6장 · 갈대밭 구덩이
 
 | 파일명 | 장면 |
 |---|---|
-| `images/06-hole.png` | A riverside reed bed at dusk where a barber kneels shouting into a hole he has dug in the earth, reeds towering around him, and then walking home light-footed, comic relief. |
+| `images/06-hole.png` | A barber with a spade hurrying to a riverside reed bed at dusk, checking that nobody is around and digging a deep hole in the earth, comic secrecy. |
+| `images/06-hole-2.png` | A barber shouting into a hole among towering reeds at dusk, then filling it in and walking home light-footed, comic relief, golden light. |
 
 ## 7장 · 바람이 지나가자
 
 | 파일명 | 장면 |
 |---|---|
-| `images/07-reeds.png` | A wide riverside marsh where tall reeds bend in the wind, travellers on the bank stopping to listen with astonished faces, the sound rippling across the whole valley, golden afternoon. |
+| `images/07-reeds.png` | A wide riverside marsh where tall reeds bend in the wind and travellers on the bank stop to listen with astonished faces, golden afternoon. |
+| `images/07-reeds-2.png` | Crowds gathering at a reed marsh as the wind repeats the secret, then market stalls buzzing and children singing it, a pale barber bolting his door, comic. |
 
 ## 8장 · 모자를 벗은 날
 
 | 파일명 | 장면 |
 |---|---|
-| `images/08-ending.png` | A palace courtyard where a king finally takes off his huge cap revealing donkey ears, the crowd bursting into laughter and the king laughing along with them, warm sunny relief. |
+| `images/08-ending.png` | A king sitting alone before a mirror with his cap removed, looking at his donkey ears, then rising with the cap in his hand, quiet and thoughtful. |
+| `images/08-ending-2.png` | A palace courtyard where a king walks out bareheaded showing his donkey ears, the crowd bursting into laughter and the king laughing along, warm sunny relief. |
 
 ## 사용 팁
 
