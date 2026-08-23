@@ -1,0 +1,984 @@
+const BOOK_TITLE = "솔로몬의 동굴";
+
+const CHAPTER_LABEL = n => `${n}장 · `;
+
+const CHAPTERS = [
+    {
+        num: 1,
+        title: "이 책을 읽기 전에",
+        emoji: "🗺️",
+        art: ["story-01-a.png", "story-01-b.png"],
+        paras: [
+            `이 소설은 백사십 년쯤 전에 나왔습니다.`,
+            `헨리 라이더 해거드라는 영국 사람이 썼습니다.`,
+            `그 사람은 젊을 때 여러 해 동안 남아프리카에서 일했습니다.`,
+            `그리고 그 땅을 잘 알았습니다.`,
+            `이 소설이 나오자 아주 크게 팔렸고, 그 뒤로 나온 수많은 모험 소설의 틀이 되었습니다.`,
+            `보물 지도를 보고, 사막을 건너고, 잃어버린 도시를 찾는 이야기 말입니다.`,
+            `지금 우리가 아는 그런 모험 이야기 대부분이 이 책에서 나왔다고 해도 지나치지 않습니다.`,
+            `그런데 이 책을 지금 그대로 읽을 수는 없습니다.`,
+            `까닭을 밝혀 두겠습니다.`,
+            `이 소설이 나온 백사십 년 전은 유럽 여러 나라가 아프리카를 나눠 가지던 때입니다.`,
+            `이 책이 나오기 바로 전해에 유럽 나라들이 베를린에 모여 아프리카를 어떻게 나눌지 의논했습니다.`,
+            `그 자리에 아프리카 사람은 한 명도 없었습니다.`,
+            `그리고 그 시절 유럽에서는 이런 생각이 널리 퍼져 있었습니다.`,
+            `유럽 사람이 더 앞서 있고, 다른 땅 사람들을 가르쳐 주어야 한다는 생각이었습니다.`,
+            `그것을 근거로 남의 땅을 가져갔습니다.`,
+            `이 소설에도 그 시선이 그대로 들어 있습니다.`,
+            `아프리카 사람들이 마술을 두려워하고, 백인이 하늘의 별을 안다고 놀라고, 백인의 말을 따르는 것으로 그려집니다.`,
+            `그리고 백인 셋이 그 나라의 왕위 다툼을 정리해 줍니다.`,
+            `그것이 그 시절 영국 독자가 좋아하던 이야기였습니다.`,
+            `이 책에서는 그 부분을 그대로 옮기지 않았습니다.`,
+            `줄거리는 살리되, 몇 가지를 바꾸었습니다.`,
+            `첫째, 움보파를 처음부터 이 이야기의 주인공 가운데 하나로 씁니다.`,
+            `원작에서 그는 짐꾼으로 따라가다가 나중에 정체가 밝혀지는 인물입니다.`,
+            `이 책에서는 그가 무엇을 하려고 이 길에 나섰는지를 그 사람 입으로 말하게 합니다.`,
+            `둘째, 그 나라의 일을 그 나라 사람이 정하게 씁니다.`,
+            `셋째, 원작에 나오는 비하하는 호칭은 한 번도 쓰지 않습니다.`,
+            `넷째, 원작에서 백인이 개기 일식을 이용해 신처럼 행세하는 대목이 있습니다.`,
+            `그 대목은 남기되, 그것이 속임수였다는 것을 이 책은 분명히 적어 둡니다.`,
+            `그리고 그 속임수를 부끄러워하는 대목을 넣었습니다.`,
+            `옛 모험 소설을 읽을 때는 그 재미와 그 시선을 함께 봐야 합니다.`,
+            `재미만 보면 시선까지 따라 들어옵니다.`
+        ]
+    },
+    {
+        num: 2,
+        title: "앨런 쿼터메인",
+        emoji: "🐘",
+        art: ["story-02-a.png", "story-02-b.png"],
+        paras: [
+            `이 이야기를 적는 사람은 앨런 쿼터메인입니다.`,
+            `나이는 쉰다섯이고, 아프리카 남쪽에서 삼십 년 가까이 사냥꾼으로 살았습니다.`,
+            `코끼리를 잡아 상아를 팔았습니다.`,
+            `그것이 그 시절 그 지방에서 돈을 버는 방법 가운데 하나였습니다.`,
+            `지금 생각하면 옳은 일이 아니었습니다.`,
+            `그 일 때문에 코끼리가 크게 줄었습니다.`,
+            `저는 이 글을 쓰면서 그것을 적어 둡니다.`,
+            `저는 총을 잘 쏩니다.`,
+            `그리고 겁이 아주 많습니다.`,
+            `이 두 가지가 함께 있는 것이 이상해 보일지 모르겠는데, 제 생각에는 그래서 제가 아직 살아 있습니다.`,
+            `저는 무모한 사람을 여럿 보았습니다.`,
+            `그 사람들은 대개 오래 못 갔습니다.`,
+            `천팔백팔십사 년, 저는 나탈로 가는 배에서 두 사람을 만났습니다.`,
+            `헨리 커티스 경과 존 굿 대령이었습니다.`,
+            `헨리 경은 키가 아주 크고 노란 수염을 길렀습니다.`,
+            `말수가 적었습니다.`,
+            `굿 대령은 해군에서 나온 사람이었습니다.`,
+            `키가 작고 통통했고, 늘 한쪽 눈에 외알 안경을 끼고 있었습니다.`,
+            `그리고 옷차림에 아주 신경을 썼습니다.`,
+            `이 사람은 나중에 이 이야기에서 여러 번 우스운 자리에 놓입니다.`,
+            `그런데 위험한 자리에서는 제일 침착했습니다.`,
+            `헨리 경이 저에게 이런 이야기를 했습니다.`,
+            `동생 조지가 이태 전에 북쪽으로 떠났다는 것이었습니다.`,
+            `솔로몬 왕의 광산을 찾으러 간다고 했습니다.`,
+            `그 뒤로 소식이 끊겼습니다.`,
+            `그리고 이렇게 말했습니다.`,
+            `"쿼터메인 씨, 제가 그 아이와 크게 다투고 헤어졌습니다."`,
+            `"돈 때문이었습니다."`,
+            `"그 아이가 그것 때문에 떠난 겁니다."`,
+            `"저는 그것을 바로잡아야 합니다."`,
+            `저는 그 말을 듣고 이 사람이 진짜라는 것을 알았습니다.`,
+            `보물을 찾으러 가는 사람은 많이 보았습니다.`,
+            `동생을 찾으러 가는 사람은 처음이었습니다.`
+        ]
+    },
+    {
+        num: 3,
+        title: "삼백 년 된 지도",
+        emoji: "📜",
+        art: ["story-03-a.png", "story-03-b.png"],
+        paras: [
+            `저에게 그 광산에 대한 것이 하나 있었습니다.`,
+            `여러 해 전에 어떤 사람이 제 사냥터에 걸어 들어온 적이 있습니다.`,
+            `호세 실베스트레라는 포르투갈 사람이었습니다.`,
+            `사막을 건너오다가 다 죽어 가는 상태였습니다.`,
+            `그 사람은 그날 밤에 세상을 떠났습니다.`,
+            `그리고 가지고 있던 것을 저에게 주었습니다.`,
+            `천 조각에 그린 지도였습니다.`,
+            `삼백 년 전에 그린 것이라고 했습니다.`,
+            `그 사람의 조상이 그 광산을 찾으러 갔다가 돌아오지 못하면서, 죽기 전에 자기 옷자락에 그린 것이라고요.`,
+            `그 지도에는 이렇게 적혀 있었습니다.`,
+            `사막을 건너고, 두 개의 큰 산을 지나, 솔로몬의 큰길을 따라가면 그 광산이 있다.`,
+            `그 두 산을 시바의 젖가슴이라고 불렀습니다.`,
+            `그리고 이런 줄이 있었습니다.`,
+            `"물이 없다. 물을 지고 가라."`,
+            `여기서 한 가지를 짚어 두겠습니다.`,
+            `솔로몬 왕의 광산이라는 이름은 그 지방 사람들이 붙인 것이 아닙니다.`,
+            `유럽 사람들이 그렇게 부른 것입니다.`,
+            `그 시절 유럽 사람들은 아프리카에서 아주 오래된 큰 돌 건축물을 여럿 보았습니다.`,
+            `지금 짐바브웨에 있는 큰 석조 유적 같은 것입니다.`,
+            `그런데 그것을 그 땅 사람들이 지었다고 믿지 않았습니다.`,
+            `그래서 성경에 나오는 솔로몬 왕이 지었다느니, 다른 데서 온 누가 지었다느니 했습니다.`,
+            `지금은 그것이 그 땅 사람들이 지은 것으로 밝혀졌습니다.`,
+            `그러니까 이 소설의 제목부터가 그 시절 사람들의 잘못된 생각에서 나온 것입니다.`,
+            `그것을 알고 읽으면 됩니다.`,
+            `헨리 경이 그 지도를 보고 말했습니다.`,
+            `"갑시다."`,
+            `저는 반대했습니다.`,
+            `"삼백 년 동안 아무도 못 돌아왔습니다."`,
+            `"그래서 안 가시겠습니까."`,
+            `저는 그때 이런 생각을 했습니다.`,
+            `저는 쉰다섯이고, 아들이 하나 있습니다.`,
+            `그 아이를 영국에서 공부시키고 있는데 돈이 많이 듭니다.`,
+            `헨리 경이 그 값을 대 주겠다고 했습니다.`,
+            `그래서 갔습니다.`,
+            `저는 이 글에서 그것을 숨기지 않겠습니다.`
+        ]
+    },
+    {
+        num: 4,
+        title: "움보파",
+        emoji: "🛡️",
+        art: ["story-04-a.png", "story-04-b.png"],
+        paras: [
+            `짐을 지고 갈 사람을 구하는데 한 사람이 찾아왔습니다.`,
+            `키가 아주 컸습니다.`,
+            `서른 살쯤이었고, 몸이 곧았습니다.`,
+            `이름을 움보파라고 했습니다.`,
+            `그런데 그 사람은 여느 짐꾼과 달랐습니다.`,
+            `삯 이야기를 하지 않았습니다.`,
+            `제가 물었습니다.`,
+            `"삯은 얼마를 원하시오."`,
+            `"필요 없습니다."`,
+            `"그럼 왜 가시려고 하오."`,
+            `그 사람이 말했습니다.`,
+            `"저는 북쪽으로 가야 합니다."`,
+            `"북쪽 어디요."`,
+            `"당신들이 가는 그 산 너머입니다."`,
+            `저는 그 대답이 이상했습니다.`,
+            `그 산 너머에 무엇이 있는지 우리도 모르고 있었기 때문입니다.`,
+            `제가 다시 물었습니다.`,
+            `"거기에 무엇이 있소."`,
+            `그 사람은 한참 아무 말도 하지 않았습니다.`,
+            `그러고는 이렇게 말했습니다.`,
+            `"제 아버지의 땅이 있습니다."`,
+            `그리고 그 사람이 이런 이야기를 했습니다.`,
+            `그 산 너머에 쿠쿠아나라는 나라가 있습니다.`,
+            `그 나라에 임금이 있었는데, 그 동생이 임금을 밀어내고 자리를 차지했습니다.`,
+            `그리고 임금의 어린 아들을 없애려고 했습니다.`,
+            `그 아이의 어머니가 아이를 데리고 산을 넘어 달아났습니다.`,
+            `그 어머니는 사막에서 세상을 떠났습니다.`,
+            `그 아이는 살아남아 남쪽 여러 곳을 떠돌며 자랐습니다.`,
+            `"그 아이가 저입니다."`,
+            `"저는 스무 해 넘게 그 산을 보면서 살았습니다."`,
+            `"그리고 이제 넘어가려고 합니다."`,
+            `제가 물었습니다.`,
+            `"우리와 함께 가면 삯도 없고 보물도 없소. 그래도 되겠소?"`,
+            `"저는 보물을 찾으러 가는 것이 아닙니다."`,
+            `그리고 이렇게 덧붙였습니다.`,
+            `"당신들은 그 광산을 찾으러 가시고, 저는 제 나라로 갑니다. 가는 길이 같으니 함께 가는 것입니다."`,
+            `"다만 한 가지는 미리 말씀드리겠습니다."`,
+            `"그 산을 넘고 나면, 그 땅의 일은 제 일입니다."`
+        ]
+    },
+    {
+        num: 5,
+        title: "사막",
+        emoji: "🏜️",
+        art: ["story-05-a.png", "story-05-b.png"],
+        paras: [
+            `우리 일행은 다섯이었습니다.`,
+            `저와 헨리 경과 굿 대령, 움보파, 그리고 벤트보겔이라는 사람이었습니다.`,
+            `벤트보겔은 그 지방에서 나고 자란 사람으로, 길 찾는 데 아주 밝았습니다.`,
+            `사막을 건너는 데 여러 날이 걸렸습니다.`,
+            `낮에는 걸을 수가 없었습니다.`,
+            `그래서 낮에는 그늘을 파고 누워 있다가 밤에 걸었습니다.`,
+            `물이 제일 큰 문제였습니다.`,
+            `사흘째 되는 날 물이 다 떨어졌습니다.`,
+            `그때 벤트보겔이 우리를 살렸습니다.`,
+            `그 사람이 이렇게 말했습니다.`,
+            `"저기에 물이 있습니다."`,
+            `"어떻게 아시오."`,
+            `"저 새들이 저쪽으로 갑니다. 저 새는 저녁에 물을 마십니다."`,
+            `우리는 그 방향으로 갔습니다.`,
+            `그리고 웅덩이를 하나 찾았습니다.`,
+            `그때 저는 이런 생각을 했습니다.`,
+            `우리에게는 지도가 있었고 나침반이 있었고 총이 있었습니다.`,
+            `그런데 그날 우리를 살린 것은 새가 어디로 가는지 아는 사람이었습니다.`,
+            `그 뒤에 산에 올랐습니다.`,
+            `그 두 산은 아주 높았고 꼭대기에 눈이 있었습니다.`,
+            `추위 때문에 우리는 크게 고생했습니다.`,
+            `사막에서 더위로 죽을 뻔했다가 며칠 만에 추위로 죽을 뻔한 것입니다.`,
+            `산 위의 어느 굴에서 우리는 앉아 있는 사람을 하나 발견했습니다.`,
+            `삼백 년 전에 그 자리에서 세상을 떠난 사람이었습니다.`,
+            `추운 데라 그대로 남아 있었습니다.`,
+            `그 지도를 그린 사람이었습니다.`,
+            `그 자리에서 벤트보겔도 세상을 떠났습니다.`,
+            `그날 밤 추위를 견디지 못한 것입니다.`,
+            `저는 이 글에서 그것을 적어 둡니다.`,
+            `그 사람이 없었으면 우리는 사막에서 다 죽었습니다.`,
+            `그리고 그 사람은 그 산을 넘지 못했습니다.`
+        ]
+    },
+    {
+        num: 6,
+        title: "솔로몬의 큰길",
+        emoji: "🛤️",
+        art: ["story-06-a.png", "story-06-b.png"],
+        paras: [
+            `산을 넘자 아래가 딴 세상이었습니다.`,
+            `푸른 땅이 펼쳐져 있었습니다.`,
+            `강이 흐르고, 숲이 있고, 멀리 밭이 보였습니다.`,
+            `그리고 산에서 그 땅으로 내려가는 길이 하나 있었습니다.`,
+            `돌로 포장한 큰길이었습니다.`,
+            `아주 넓고 곧았습니다.`,
+            `바위를 깎아 낸 데도 있었고, 골짜기 위로 다리를 놓은 데도 있었습니다.`,
+            `그것을 만든 지가 아주 오래된 것이 분명했습니다.`,
+            `굿 대령이 말했습니다.`,
+            `"누가 이런 것을 만들었을까."`,
+            `제가 말했습니다.`,
+            `"이 땅 사람들이 만들었겠지요."`,
+            `굿 대령이 놀랐습니다.`,
+            `"이만한 것을요?"`,
+            `저는 그 대답에 대해 나중에 여러 번 생각했습니다.`,
+            `우리는 그 길을 보고 놀라면서, 그것을 이 땅 사람이 만들었다고는 생각하지 않았습니다.`,
+            `그것이 우리가 배운 방식이었습니다.`,
+            `움보파가 그때 이렇게 말했습니다.`,
+            `"우리 조상들이 만들었습니다."`,
+            `"그 이야기가 우리 노래에 있습니다."`,
+            `굿 대령은 아무 말도 하지 않았습니다.`,
+            `그 길을 따라 내려가는데 사람들이 나타났습니다.`,
+            `창을 든 사람이 여럿이었습니다.`,
+            `쿠쿠아나 사람들이었습니다.`,
+            `그 사람들은 우리를 둘러쌌습니다.`,
+            `그리고 우두머리가 이렇게 말했습니다.`,
+            `"이 땅에 들어온 자는 살려 두지 않는다."`,
+            `그때 굿 대령이 아주 우스운 일을 했습니다.`,
+            `그 사람은 그날 아침에 면도를 하다가 말았습니다.`,
+            `그래서 얼굴 반쪽만 수염이 없었습니다.`,
+            `그리고 바지를 아직 안 입은 상태였습니다.`,
+            `그 차림으로 놀라서 외알 안경을 떨어뜨렸다가 도로 끼웠습니다.`,
+            `쿠쿠아나 사람들이 그것을 보고 웅성거렸습니다.`,
+            `우리는 그 틈에 이야기를 시작할 수 있었습니다.`,
+            `이 대목은 원작에서 아주 길게 웃음거리로 쓰였습니다.`,
+            `그런데 그 웃음의 방향이 이상합니다.`,
+            `원작은 그 사람들이 어리석어서 놀란 것처럼 씁니다.`,
+            `그런데 반쪽만 수염 난 사람이 바지도 안 입고 유리알을 눈에 끼우고 있으면, 누구라도 웅성거릴 것입니다.`
+        ]
+    },
+    {
+        num: 7,
+        title: "트왈라",
+        emoji: "👑",
+        art: ["story-07-a.png", "story-07-b.png"],
+        paras: [
+            `우리는 그 나라의 도읍으로 끌려갔습니다.`,
+            `아주 큰 도시였습니다.`,
+            `집이 수천 채였고, 길이 잘 나 있었고, 물길이 만들어져 있었습니다.`,
+            `그 나라의 왕은 트왈라라는 사람이었습니다.`,
+            `눈이 하나였습니다.`,
+            `그 사람이 형을 밀어내고 자리를 차지한 그 동생이었습니다.`,
+            `그 옆에 늙은 여자가 하나 있었습니다.`,
+            `가굴이라는 이였습니다.`,
+            `나이를 아무도 몰랐습니다.`,
+            `사람들이 그 여자를 트왈라보다 더 무서워했습니다.`,
+            `그 나라에는 아주 나쁜 제도가 하나 있었습니다.`,
+            `해마다 사람들을 모아 놓고, 가굴과 그 밑의 사람들이 그 사이를 다니면서 사람을 골라냈습니다.`,
+            `골라낸 사람을 그 자리에서 없앴습니다.`,
+            `나쁜 마음을 품은 자를 찾아내는 것이라고 했습니다.`,
+            `그런데 실제로는 그렇지 않았습니다.`,
+            `가굴이 골라내는 사람은 대개 힘이 있거나 사람들이 따르는 사람이었습니다.`,
+            `그러니까 그것은 마술이 아니라 정치였습니다.`,
+            `이 소설은 그것을 분명하게 적어 놓았습니다.`,
+            `그 점은 원작이 잘 쓴 대목입니다.`,
+            `우리가 그 도시에 온 지 며칠 뒤에 그 행사가 열렸습니다.`,
+            `우리는 그것을 보았습니다.`,
+            `그리고 그날 헨리 경이 처음으로 크게 화를 냈습니다.`,
+            `그 사람은 말이 아주 적은 사람이었습니다.`,
+            `그런데 그날 자리에서 일어서려고 했습니다.`,
+            `제가 붙잡았습니다.`,
+            `"지금 나서면 우리 넷이 다 죽습니다."`,
+            `헨리 경이 앉았습니다.`,
+            `그리고 그날 밤 저에게 이렇게 말했습니다.`,
+            `"쿼터메인 씨, 나는 오늘 아무것도 하지 않았습니다."`,
+            `"압니다."`,
+            `"그것을 평생 기억할 겁니다."`
+        ]
+    },
+    {
+        num: 8,
+        title: "속임수",
+        emoji: "🌑",
+        art: ["story-08-a.png", "story-08-b.png"],
+        paras: [
+            `그날 그 자리에서 한 아이가 골라졌습니다.`,
+            `그리고 그 아이를 감싸고 나선 여자가 있었습니다.`,
+            `우리는 그때 무언가를 해야 했습니다.`,
+            `그런데 우리에게는 힘이 없었습니다.`,
+            `총이 세 자루뿐이었고, 그 도시에 사람이 수만 명이었습니다.`,
+            `그때 굿 대령이 자기 수첩을 폈습니다.`,
+            `해군에서 쓰던 책력이었습니다.`,
+            `그 안에 그해의 개기 일식 날짜가 적혀 있었습니다.`,
+            `그리고 그날이 이틀 뒤였습니다.`,
+            `우리는 그것을 쓰기로 했습니다.`,
+            `저는 트왈라 앞에 나가 이렇게 말했습니다.`,
+            `"우리는 하늘에서 온 사람들이다. 우리가 해를 지우겠다."`,
+            `그리고 이틀 뒤 그렇게 되었습니다.`,
+            `한낮에 해가 사라졌습니다.`,
+            `그 도시가 뒤집혔습니다.`,
+            `사람들이 엎드렸습니다.`,
+            `우리는 그 틈에 그 아이와 그 어머니를 데리고 도시를 빠져나왔습니다.`,
+            `그리고 우리를 도우려는 사람들과 만났습니다.`,
+            `여기서 이 책이 원작과 다르게 적어 두는 것이 있습니다.`,
+            `이것은 속임수였습니다.`,
+            `우리는 하늘에서 온 사람이 아니었습니다.`,
+            `우리는 다만 그날 해가 가려진다는 것을 책에서 읽고 알고 있었을 뿐입니다.`,
+            `그것은 우리가 대단해서가 아니라 우리 쪽에 그런 책이 있었기 때문입니다.`,
+            `그리고 그 책은 여러 나라 사람이 오랫동안 하늘을 재서 만든 것입니다.`,
+            `그 가운데는 아랍 사람들이 만든 것도 있고, 이 대륙에서 만들어진 것도 있습니다.`,
+            `저는 그날 밤 잠을 못 잤습니다.`,
+            `그리고 움보파가 저에게 이렇게 말했습니다.`,
+            `"오늘 그 아이를 살린 것은 잘한 일입니다."`,
+            `"그런데 다시는 하늘에서 왔다고 하지 마십시오."`,
+            `"왜요."`,
+            `"오늘 당신 말을 믿은 사람들이, 내일은 다른 거짓말도 믿게 됩니다."`,
+            `저는 그 말에 아무 대답도 하지 못했습니다.`,
+            `그리고 그 뒤로 다시는 그런 말을 하지 않았습니다.`
+        ]
+    },
+    {
+        num: 9,
+        title: "이그노시",
+        emoji: "🐍",
+        art: ["story-09-a.png", "story-09-b.png"],
+        paras: [
+            `우리를 도운 것은 인파두스라는 늙은 장수였습니다.`,
+            `그 나라 군대의 우두머리 가운데 하나였습니다.`,
+            `그 사람은 트왈라를 오래 못마땅해하고 있었습니다.`,
+            `인파두스 앞에서 움보파가 옷을 벗었습니다.`,
+            `그 허리에 큰 뱀 모양의 문신이 있었습니다.`,
+            `그것이 그 나라 왕가의 표시였습니다.`,
+            `인파두스가 그 자리에 무릎을 꿇었습니다.`,
+            `"이그노시······."`,
+            `그것이 움보파의 본이름이었습니다.`,
+            `그날부터 그 사람은 이그노시로 불렸습니다.`,
+            `그리고 여기서 이 책이 원작과 크게 다릅니다.`,
+            `원작에서는 그 뒤의 일을 백인 셋이 이끕니다.`,
+            `싸움을 짜고, 군사를 나누고, 결정을 내립니다.`,
+            `이 책에서는 그렇게 쓰지 않았습니다.`,
+            `그날 밤 회의에서 이그노시가 이렇게 말했습니다.`,
+            `"여러분 셋에게 부탁드릴 것이 있습니다."`,
+            `"말하시오."`,
+            `"이 싸움은 제 나라 싸움입니다. 그러니 정하는 것은 저와 인파두스가 하겠습니다."`,
+            `"여러분은 손님으로 도와주십시오."`,
+            `헨리 경이 말했습니다.`,
+            `"그러겠소."`,
+            `이그노시는 사람들을 모았습니다.`,
+            `그리고 각 마을의 우두머리들을 하나씩 만났습니다.`,
+            `여러 밤이 걸렸습니다.`,
+            `그 사람들에게 이그노시가 한 말은 이랬습니다.`,
+            `"내가 왕가의 사람이라서 나를 따르라고 하지 않겠습니다."`,
+            `"내가 왕이 되면 무엇을 하겠는지를 말하겠습니다."`,
+            `그리고 세 가지를 말했습니다.`,
+            `첫째, 해마다 사람을 골라내는 일을 없애겠다.`,
+            `둘째, 다투는 일이 있으면 그 마을 사람들이 모여 정하게 하겠다.`,
+            `셋째, 나를 따르지 않은 사람에게 그것으로 벌을 주지 않겠다.`,
+            `그 셋째 조건 때문에 많은 사람이 마음을 정했습니다.`,
+            `싸움에서 지는 쪽에 서면 뒤가 없다는 것을 다들 알고 있었기 때문입니다.`
+        ]
+    },
+    {
+        num: 10,
+        title: "싸움",
+        emoji: "⚔️",
+        art: ["story-10-a.png", "story-10-b.png"],
+        paras: [
+            `싸움은 그 도시 앞의 넓은 들에서 벌어졌습니다.`,
+            `이그노시 쪽이 이만 명, 트왈라 쪽이 삼만 명이었습니다.`,
+            `이그노시 쪽이 적었습니다.`,
+            `그런데 이그노시가 자리를 잘 골랐습니다.`,
+            `양쪽이 언덕으로 막힌 좁은 데로 트왈라 군사를 끌어들인 것입니다.`,
+            `그러면 수가 많아도 한꺼번에 못 들어옵니다.`,
+            `그 좁은 데를 막는 일을 맡은 부대가 있었습니다.`,
+            `회색 부대라고 불렀습니다.`,
+            `그 나라에서 제일 오래된 부대였고, 다 나이 든 사람들이었습니다.`,
+            `그 부대는 그 자리에서 거의 다 쓰러졌습니다.`,
+            `그런데 그 시간을 벌어 주었습니다.`,
+            `헨리 경이 그 부대와 함께 있었습니다.`,
+            `그 사람은 그날 그 자리를 떠나지 않았습니다.`,
+            `저는 그 뒤에서 총을 쏘았습니다.`,
+            `이 대목에서 저는 이런 것을 알았습니다.`,
+            `총이 셋 있어도 그 싸움을 바꾸지 못했습니다.`,
+            `그 싸움을 이긴 것은 이그노시의 판단과 그 회색 부대였습니다.`,
+            `그날 저녁 트왈라와 이그노시가 마주 섰습니다.`,
+            `그 나라 법에 그런 것이 있었습니다.`,
+            `왕위를 다투는 두 사람이 직접 겨루는 것이었습니다.`,
+            `그리고 그날 그 자리에서 결판이 났습니다.`,
+            `이그노시가 왕이 되었습니다.`,
+            `그다음 날 이그노시가 한 첫 번째 일이 있습니다.`,
+            `해마다 사람을 골라내는 그 일을 없앤다고 알린 것입니다.`,
+            `그리고 두 번째로 한 일이 있습니다.`,
+            `트왈라 쪽에 섰던 사람들을 벌하지 않겠다고 알린 것입니다.`,
+            `인파두스가 그것을 걱정했습니다.`,
+            `"뒤가 위험합니다."`,
+            `이그노시가 말했습니다.`,
+            `"내가 약속하고 그것을 지키지 않으면, 다음에 내가 무슨 말을 해도 아무도 안 믿습니다."`,
+            `"나는 그 편이 더 위험하다고 봅니다."`
+        ]
+    },
+    {
+        num: 11,
+        title: "동굴",
+        emoji: "💎",
+        art: ["story-11-a.png", "story-11-b.png"],
+        paras: [
+            `이그노시는 우리에게 그 광산을 알려 주겠다고 했습니다.`,
+            `그 자리를 아는 것은 가굴뿐이었습니다.`,
+            `가굴은 싸움에서 붙잡혀 있었습니다.`,
+            `이그노시가 그 사람을 데려오게 했습니다.`,
+            `가굴은 우리를 산속으로 데려갔습니다.`,
+            `아주 오래된 굴이었습니다.`,
+            `안으로 들어가니 큰 방이 나왔고, 그 벽에 돌로 깎은 것들이 있었습니다.`,
+            `그리고 그 안쪽에 커다란 돌문이 있었습니다.`,
+            `가굴이 벽의 어느 자리를 눌렀습니다.`,
+            `그러자 그 돌문이 천천히 올라갔습니다.`,
+            `그 안이 보물방이었습니다.`,
+            `상아가 쌓여 있었고, 금이 담긴 궤가 있었고, 나무 상자 셋에 다이아몬드가 가득 들어 있었습니다.`,
+            `우리는 그것을 보고 한참 아무 말도 하지 못했습니다.`,
+            `그리고 주머니에 담기 시작했습니다.`,
+            `그때 가굴이 밖으로 빠져나갔습니다.`,
+            `그리고 그 벽의 자리를 눌렀습니다.`,
+            `돌문이 내려오기 시작했습니다.`,
+            `우리는 갇혔습니다.`,
+            `가굴도 그 문 아래에 깔렸습니다.`,
+            `자기가 나가려다가 늦은 것이었습니다.`,
+            `그 방에는 물도 없고 공기도 얼마 없었습니다.`,
+            `우리는 그 안에서 여러 시간을 보냈습니다.`,
+            `등불이 꺼졌습니다.`,
+            `그 어둠 속에서 저는 이런 생각을 했습니다.`,
+            `제 발 옆에 세상에서 제일 값나가는 것이 산더미로 있었습니다.`,
+            `그런데 그 가운데 물 한 모금과 바꿀 수 있는 것이 하나도 없었습니다.`,
+            `헨리 경이 어둠 속에서 이렇게 말했습니다.`,
+            `"쿼터메인 씨, 나는 동생을 못 찾았습니다."`,
+            `그러다 굿 대령이 바닥에서 바람이 들어오는 것을 느꼈습니다.`,
+            `우리는 손으로 그 자리를 팠습니다.`,
+            `옛날 광부들이 다니던 좁은 통로가 있었습니다.`,
+            `그리로 기어서 나왔습니다.`,
+            `하루가 넘게 걸렸습니다.`,
+            `밖으로 나왔을 때 우리가 가진 것은 주머니에 든 것뿐이었습니다.`,
+            `그리고 그것만으로도 평생 쓰고 남을 것이었습니다.`
+        ]
+    },
+    {
+        num: 12,
+        title: "돌아가는 길",
+        emoji: "🌄",
+        art: ["story-12-a.png", "story-12-b.png"],
+        paras: [
+            `우리는 그 나라를 떠났습니다.`,
+            `이그노시가 배웅을 나왔습니다.`,
+            `그리고 이렇게 말했습니다.`,
+            `"머무르시면 이 나라에서 자리를 드리겠습니다."`,
+            `헨리 경이 말했습니다.`,
+            `"고맙소. 그런데 이 나라 일은 이 나라 사람이 하는 것이 맞소."`,
+            `이그노시가 말했습니다.`,
+            `"그럼 한 가지만 약속해 주십시오."`,
+            `"무엇이오."`,
+            `"돌아가서 이 길을 아무에게도 알리지 마십시오."`,
+            `"왜요."`,
+            `"당신들 나라 사람들이 이 길을 알면, 여기 다이아몬드가 있다는 것도 알게 됩니다."`,
+            `"그러면 이 나라가 어떻게 되는지 저는 압니다."`,
+            `"제가 남쪽에서 스무 해를 살면서 그런 일을 여러 번 보았습니다."`,
+            `우리 셋은 그러겠다고 했습니다.`,
+            `그리고 그 약속을 지켰습니다.`,
+            `이 글에 그 길을 적지 않은 것도 그 때문입니다.`,
+            `돌아오는 길에 일이 하나 더 있었습니다.`,
+            `이그노시가 다른 길을 알려 주었습니다.`,
+            `사막을 건너지 않아도 되는 길이었습니다.`,
+            `그 길로 오다가 우리는 어느 오아시스에서 사람을 하나 만났습니다.`,
+            `다리를 다쳐서 여러 해 그 자리에 있던 사람이었습니다.`,
+            `헨리 경의 동생 조지였습니다.`,
+            `두 형제가 그 자리에서 만났습니다.`,
+            `헨리 경은 아무 말도 하지 못했습니다.`,
+            `그리고 한참 뒤에 이렇게 말했습니다.`,
+            `"내가 잘못했다."`,
+            `조지가 말했습니다.`,
+            `"형님, 그 이야기는 나중에 합시다. 저는 지금 이가 시려서 말을 못 하겠습니다."`,
+            `그 사람은 여러 해 만에 처음으로 웃었다고 합니다.`,
+            `우리는 넷이 되어 돌아왔습니다.`,
+            `여기서 이 기록을 마칩니다.`,
+            `한 가지만 덧붙이겠습니다.`,
+            `저는 이 길에서 다이아몬드를 얻었습니다.`,
+            `그런데 그것보다 오래 남은 것이 따로 있습니다.`,
+            `사막에서 새를 보고 물을 찾아낸 사람과, 그 좁은 자리를 막고 선 늙은 부대와, 이긴 다음 날 진 쪽을 벌하지 않겠다고 한 사람입니다.`,
+            `저는 그 셋을 아직 생각합니다.`
+        ]
+    }
+];
+/* ── 쪽 나누기 ─────────────────────────────────────────
+   그림이 있는 펼침면은 왼쪽 쪽에만 글이 들어가고,
+   그림이 없는 펼침면은 양쪽 쪽에 모두 글이 들어간다.
+   진짜 책이 그렇듯 문단 한가운데에서도 쪽을 넘긴다. 그래야 쪽마다 글이 고르게 찬다.
+   글자 수로 어림잡으면 대사가 많은 문단은 실제로 차지하는 줄이 훨씬 많아 어긋나므로,
+   보이지 않는 쪽을 하나 만들어 실제 높이를 재어 가며 나눈다. */
+
+function makeProbe() {
+    const book = document.getElementById('book');
+    const holder = document.createElement('div');
+    holder.style.cssText = 'position:absolute;inset:10px;visibility:hidden;pointer-events:none;z-index:-1;';
+    holder.innerHTML = '<div class="page page-story"><div class="story-page-left"></div><div class="story-page-right"></div></div>';
+    book.appendChild(holder);
+
+    // 따로 만든 상자에 재면 실제 쪽과 미묘하게 어긋난다.
+    // 그래서 진짜 쪽과 똑같은 칸을 하나 숨겨 두고 거기에 넣어 잰다.
+    // 칸이 넘치면 scrollHeight가 칸 높이에서 잘리므로, 안에 든 것들의 높이를 직접 더한다.
+    const col = holder.querySelector('.story-page-left');
+    const cs = getComputedStyle(col);
+    const measured = col.clientHeight - parseFloat(cs.paddingTop) - parseFloat(cs.paddingBottom);
+
+    const contentHeight = () => [...col.children].reduce((h, el) =>
+        h + el.getBoundingClientRect().height + parseFloat(getComputedStyle(el).marginBottom || 0), 0);
+
+    col.innerHTML = '<h2>제목</h2>';
+    const headHeight = contentHeight();
+    col.innerHTML = '';
+
+    return {
+        // 창이 아직 크기를 갖지 못한 채 열리면 잰 값이 0이 된다. 그때는 어림값으로 버틴다.
+        usable: measured > 40 ? measured : 620,
+        headHeight: headHeight > 0 ? headHeight : 45,
+        measure(html) {
+            col.innerHTML = html;
+            return contentHeight();
+        },
+        close() { book.removeChild(holder); }
+    };
+}
+
+let PROBE = null;   // 쪽을 나눌 때마다 새로 만든다
+
+// 문단을 쪽 넘길 수 있는 조각으로 나눈다. 문장 끝과 대사 줄바꿈이 자를 수 있는 자리다.
+// 낱말 뜻풀이처럼 태그로 묶인 부분 안에서는 자르지 않는다.
+function splitSegments(html) {
+    const tokens = html.split(/(<[^>]+>)/).filter(t => t !== '');
+    const segs = [];
+    let buf = '';
+    let depth = 0;
+    for (const tok of tokens) {
+        if (tok.startsWith('<')) {
+            buf += tok;
+            if (/^<br\s*\/?>$/i.test(tok)) {
+                if (depth === 0) { segs.push(buf); buf = ''; }
+            } else if (tok.startsWith('</')) {
+                depth = Math.max(0, depth - 1);
+            } else if (!tok.endsWith('/>')) {
+                depth++;
+            }
+            continue;
+        }
+        if (depth > 0) { buf += tok; continue; }
+        // 문장이 끝나고 빈칸이 오는 자리에서 자른다
+        const parts = tok.split(/(?<=[.!?"”][\s])/);
+        for (let i = 0; i < parts.length; i++) {
+            buf += parts[i];
+            if (i < parts.length - 1) { segs.push(buf); buf = ''; }
+        }
+    }
+    if (buf.trim() !== '') segs.push(buf);
+    return segs.length ? segs : [html];
+}
+
+const CHAPTER_SEGS = CHAPTERS.map(ch => {
+    const segs = [];
+    ch.paras.forEach((html, paraIdx) => {
+        splitSegments(html).forEach((piece, k) => {
+            segs.push({ paraIdx, html: piece, start: k === 0 });
+        });
+    });
+    return segs;
+});
+
+// 조각 묶음을 문단 단위로 다시 묶어 화면에 그릴 모양으로 만든다.
+// 앞 쪽에서 이어진 문단은 첫 줄을 들여쓰지 않는다.
+function runHtml(segs, a, b) {
+    let out = '';
+    let i = a;
+    while (i < b) {
+        const pi = segs[i].paraIdx;
+        let inner = '';
+        const contd = !segs[i].start;
+        let j = i;
+        while (j < b && segs[j].paraIdx === pi) { inner += segs[j].html; j++; }
+        out += `<p${contd ? ' class="cont"' : ''}>${inner}</p>`;
+        i = j;
+    }
+    return out;
+}
+
+function slotPlan(imgCount, textCount) {
+    const total = imgCount + textCount;
+    const slots = new Array(total).fill('text');
+    for (let k = 0; k < imgCount; k++) {
+        let pos = Math.min(Math.round((k * total) / imgCount), total - 1);
+        while (slots[pos] === 'img') pos = (pos + 1) % total;
+        slots[pos] = 'img';
+    }
+    return slots;
+}
+
+// 글을 쪽마다 같은 높이만큼 나눠 담는다. 마지막 쪽만 남은 만큼 담는다.
+// 장 제목이 붙는 첫 쪽은 제목까지 함께 얹어서 재야 한다.
+// 제목 높이를 따로 빼서 계산하면 실제로 나란히 놓였을 때의 높이와 조금씩 어긋난다.
+function fillPages(segs, pageCount, headHtml, usable) {
+    const pageHeight = (a, b, first) => PROBE.measure((first ? headHtml : '') + runHtml(segs, a, b));
+    const ranges = [];
+    let i = 0;
+    for (let p = 0; p < pageCount; p++) {
+        const rest = pageCount - p - 1;
+        if (rest === 0) { ranges.push([i, segs.length]); break; }
+        // 남은 글을 남은 쪽 수로 나눠 이번 쪽에 담을 양을 정한다.
+        // 매 쪽마다 다시 계산하므로, 한 쪽이 덜 차면 그만큼이 뒤쪽에 고르게 얹힌다.
+        const remainingH = pageHeight(i, segs.length, p === 0);
+        const room = Math.min(usable, remainingH / (rest + 1));
+        const maxTake = Math.max(1, segs.length - i - rest);
+        let take = 1;
+        let lo = 1, hi = maxTake;
+        while (lo <= hi) {
+            const mid = (lo + hi) >> 1;
+            if (pageHeight(i, i + mid, p === 0) <= room) { take = mid; lo = mid + 1; }
+            else { hi = mid - 1; }
+        }
+        ranges.push([i, i + take]);
+        i += take;
+    }
+    return ranges;
+}
+
+function paginateChapter(ch, chIndex) {
+    const segs = CHAPTER_SEGS[chIndex];
+    const arts = (ch.art && ch.art.length) ? ch.art : [];
+    const { usable, headHeight } = PROBE;
+    const headHtml = `<h2>${CHAPTER_LABEL(ch.num)}${ch.title}</h2>`;
+    const totalH = PROBE.measure(runHtml(segs, 0, segs.length));
+
+    // 필요한 글 쪽 수를 구하고, 그림 면(1쪽)과 글만 면(2쪽)으로 맞춘다.
+    // 쪽 수는 조각 수를 넘을 수 없다 — 빈 쪽이 생기면 안 되기 때문이다.
+    const maxSpreads = Math.max(arts.length, Math.ceil(segs.length / 2));
+    const needPages = Math.max(arts.length || 1, Math.ceil((totalH + headHeight) / usable));
+    let textSpreads = Math.max(arts.length ? 0 : 1, Math.ceil(Math.max(0, needPages - arts.length) / 2));
+
+    let slots = slotPlan(arts.length, textSpreads);
+    let ranges = null;
+    for (let guard = 0; guard < 8; guard++) {
+        slots = slotPlan(arts.length, textSpreads);
+        const pageCount = slots.reduce((n, kind) => n + (kind === 'img' ? 1 : 2), 0);
+        if (pageCount > segs.length && textSpreads > 0) { textSpreads--; continue; }
+        ranges = fillPages(segs, pageCount, headHtml, usable);
+        // 한 쪽이라도 넘치면 쪽을 늘려 다시 나눈다.
+        // 마지막 쪽만 보면 안 된다 — 첫 쪽에는 장 제목이 얹히므로 그쪽이 먼저 넘칠 수 있다.
+        const over = ranges.some(([a, b], n) =>
+            PROBE.measure((n === 0 ? headHtml : '') + runHtml(segs, a, b)) > usable);
+        if (!over || arts.length + textSpreads >= maxSpreads) break;
+        textSpreads++;
+    }
+    if (!ranges) {
+        slots = slotPlan(arts.length, textSpreads);
+        ranges = fillPages(segs, slots.reduce((n, kind) => n + (kind === 'img' ? 1 : 2), 0), headHtml, usable);
+    }
+
+    const spreads = [];
+    let pageIdx = 0;
+    let artIdx = 0;
+    slots.forEach((kind, s) => {
+        if (kind === 'img') {
+            spreads.push({
+                kind: 'chapter', ch, chIndex, first: s === 0,
+                art: arts[artIdx++], left: ranges[pageIdx++], right: null
+            });
+        } else {
+            const left = ranges[pageIdx++];
+            const right = ranges[pageIdx++];
+            spreads.push({ kind: 'chapter', ch, chIndex, first: s === 0, art: null, left, right });
+        }
+    });
+    return spreads;
+}
+/* ── 그리기 ───────────────────────────────────────── */
+
+function artFrame(src, emoji) {
+    return `
+        <div class="art-frame">
+            <img src="images/${src}" alt="" onerror="this.style.display='none'; this.nextElementSibling.style.display='flex';">
+            <div class="art-fallback" style="display:none">${emoji}</div>
+        </div>`;
+}
+
+function coverPage() {
+    return `
+        <div class="page page-cover">
+            <div class="story-page-left story-page-left-full">
+                ${artFrame('cover.png', '🗺️')}
+            </div>
+            <div class="story-page-right">
+                <h1>솔로몬의 동굴</h1>
+                <p class="cover-tag">헨리 라이더 해거드 원작</p>
+                <p>삼백 년 된 지도 한 장을 들고 사막을 건너고 눈 덮인 산을 넘습니다. 그 너머에 쿠쿠아나라는 나라가 있고, 그 나라에는 자기 자리를 되찾으러 가는 사람이 있습니다.</p>
+                <p>지금 우리가 아는 모험 이야기의 틀을 만든 책입니다. 그리고 그 시절의 시선이 그대로 들어 있는 책이기도 해서, 무엇을 어떻게 고쳐 옮겼는지 1장에 밝혀 두었습니다.</p>
+            </div>
+        </div>`;
+}
+
+function tocPage(part) {
+    // 한 편으로 이어지는 이야기라 차례는 장 번호와 제목만 둔다.
+    // 줄거리 한 줄을 붙이면 차례가 두 펼침면으로 늘어나고, 앞으로 읽을 대목을 미리 알려 주는 셈도 된다.
+    const itemHtml = ch => `
+        <li>
+            <button type="button" data-goto="${ch.num}">
+                <span class="toc-num">${ch.num}</span>
+                <span><strong>${ch.title}</strong></span>
+            </button>
+        </li>`;
+    const extraItems = `
+        <li>
+            <button type="button" data-goto-kind="quiz">
+                <span class="toc-num">?</span>
+                <span><strong>이야기 문제</strong></span>
+            </button>
+        </li>`;
+    const group = TOC_GROUPS[part];
+    const half = Math.ceil(group.length / 2);
+    const last = part === TOC_GROUPS.length - 1;
+    return `
+        <div class="page page-toc">
+            <div class="story-page-left">
+                ${part === 0 ? '<h2>차례</h2>' : ''}
+                <ul class="toc-list">${group.slice(0, half).map(itemHtml).join('')}</ul>
+            </div>
+            <div class="story-page-right">
+                <ul class="toc-list">${group.slice(half).map(itemHtml).join('') + (last ? extraItems : '')}</ul>
+            </div>
+        </div>`;
+}
+
+// 한 펼침면에 담을 수 있는 차례 항목은 여덟 개까지다. 그보다 많으면 차례도 여러 쪽이 된다.
+const TOC_PER_SPREAD = 16;
+const TOC_GROUPS = [];
+for (let i = 0; i < CHAPTERS.length; i += TOC_PER_SPREAD) {
+    TOC_GROUPS.push(CHAPTERS.slice(i, i + TOC_PER_SPREAD));
+}
+
+function chapterSpreadPage(spread) {
+    const ch = spread.ch;
+    const segs = CHAPTER_SEGS[spread.chIndex];
+    const head = spread.first ? `<h2>${CHAPTER_LABEL(ch.num)}${ch.title}</h2>` : '';
+
+    if (spread.art) {
+        return `
+            <div class="page page-story">
+                <div class="story-page-left">
+                    ${head}
+                    ${runHtml(segs, spread.left[0], spread.left[1])}
+                </div>
+                <div class="story-page-right story-page-right-image">
+                    ${artFrame(spread.art, ch.emoji)}
+                </div>
+            </div>`;
+    }
+
+    return `
+        <div class="page page-story">
+            <div class="story-page-left">
+                ${head}
+                ${runHtml(segs, spread.left[0], spread.left[1])}
+            </div>
+            <div class="story-page-right story-page-right-text">
+                ${runHtml(segs, spread.right[0], spread.right[1])}
+            </div>
+        </div>`;
+}
+
+const QUIZ = [
+    { q: "이 책이 원작에서 고쳐 옮긴 것이 아닌 것은 무엇입니까?", choices: ["움보파를 처음부터 주인공의 하나로 쓴 것", "그 나라 일을 그 나라 사람이 정하게 한 것", "보물을 없앤 것"], answer: 2 },
+    { q: "'솔로몬의 광산'이라는 이름은 어디서 나왔습니까?", choices: ["그 땅 사람들이 붙인 것", "아프리카의 큰 석조 유적을 그 땅 사람이 지었다고 믿지 않은 유럽 사람들이 붙인 것", "성경에 있는 것"], answer: 1 },
+    { q: "헨리 경이 그 길을 나선 까닭은 무엇입니까?", choices: ["보물", "다투고 헤어진 동생을 찾으려고", "명예"], answer: 1 },
+    { q: "쿼터메인이 함께 간 까닭을 무엇이라고 적었습니까?", choices: ["모험이 좋아서", "아들 공부 시킬 돈이 필요해서", "친구라서"], answer: 1 },
+    { q: "움보파가 삯을 받지 않겠다고 한 까닭은 무엇입니까?", choices: ["돈이 많아서", "그 산 너머가 자기 아버지의 땅이라서", "보물을 원해서"], answer: 1 },
+    { q: "사막에서 일행을 살린 것은 무엇입니까?", choices: ["지도", "나침반", "새가 어디로 가는지 아는 벤트보겔"], answer: 2 },
+    { q: "솔로몬의 큰길을 누가 만들었습니까?", choices: ["유럽 사람", "그 땅 사람들의 조상", "아무도 모른다"], answer: 1 },
+    { q: "가굴이 해마다 사람을 골라낸 진짜 목적은 무엇입니까?", choices: ["마술", "힘이 있거나 사람들이 따르는 사람을 없애는 정치", "제사"], answer: 1 },
+    { q: "일식을 이용한 일에 대해 이 책이 밝힌 것은 무엇입니까?", choices: ["신통력이었다", "책력을 보고 알았을 뿐인 속임수였다", "우연이었다"], answer: 1 },
+    { q: "움보파가 그 일에 대해 한 말은 무엇입니까?", choices: ["잘했다", "오늘 그 말을 믿은 사람들이 내일은 다른 거짓말도 믿게 된다", "다시 하라"], answer: 1 },
+    { q: "이그노시가 사람들을 모을 때 내세운 것은 무엇입니까?", choices: ["왕가의 핏줄", "왕이 되면 무엇을 하겠는지", "보물"], answer: 1 },
+    { q: "많은 사람이 마음을 정하게 만든 조건은 무엇입니까?", choices: ["상을 준다", "따르지 않은 사람에게 그것으로 벌을 주지 않겠다", "세금을 없앤다"], answer: 1 },
+    { q: "싸움을 이기게 한 것은 무엇입니까?", choices: ["백인들의 총 세 자루", "이그노시의 판단과 좁은 길목을 막은 회색 부대", "숫자"], answer: 1 },
+    { q: "보물방에 갇혔을 때 쿼터메인이 생각한 것은 무엇입니까?", choices: ["부자가 되겠다", "발 옆의 보물 가운데 물 한 모금과 바꿀 것이 하나도 없다", "돌아가고 싶다"], answer: 1 },
+    { q: "이그노시가 떠나는 일행에게 한 부탁은 무엇입니까?", choices: ["다시 오라", "이 길을 아무에게도 알리지 마라", "보물을 두고 가라"], answer: 1 },
+    { q: "쿼터메인이 다이아몬드보다 오래 남았다고 한 것은 무엇입니까?", choices: ["지도", "새를 보고 물을 찾은 사람, 길목을 막은 늙은 부대, 진 쪽을 벌하지 않은 사람", "동굴"], answer: 1 }
+];
+
+function quizPage() {
+    const items = QUIZ.map((item, i) => `
+        <div class="quiz-item" data-qindex="${i}">
+            <p class="quiz-question">${i + 1}. ${item.q}</p>
+            <div class="quiz-choices">
+                ${item.choices.map((c, ci) => `<button type="button" class="quiz-choice" data-choice="${ci}">${c}</button>`).join('')}
+            </div>
+        </div>`).join('');
+    return `
+        <div class="page page-quiz">
+            <h2>이야기 문제</h2>
+            <p class="quiz-intro-text" id="quizProgress">0 / 총 ${QUIZ.length}문항 완료</p>
+            <div class="quiz-list">${items}</div>
+        </div>`;
+}
+
+function endPage() {
+    return `
+        <div class="page page-end">
+            ${artFrame('end.png', '🌄')}
+            <h2>솔로몬의 동굴를 다 읽었습니다</h2>
+            <a class="home-btn" href="../../../../../">학습 허브로 돌아가기</a>
+        </div>`;
+}
+
+const TWO_PAGE_KINDS = new Set(['chapter', 'toc', 'cover']);
+
+let PAGES = [];
+let FOLIOS = [];
+
+function buildPages() {
+    PROBE = makeProbe();
+    PAGES = [
+        { kind: 'cover' },
+        ...TOC_GROUPS.map((_, i) => ({ kind: 'toc', part: i })),
+        ...CHAPTERS.flatMap(paginateChapter),
+        { kind: 'quiz' },
+        { kind: 'end' }
+    ];
+    PROBE.close();   // 쪽을 다 나눴으니 재는 데 쓰던 숨은 쪽은 치운다
+
+    let folioCounter = 0;
+    FOLIOS = PAGES.map(p => {
+        const width = TWO_PAGE_KINDS.has(p.kind) ? 2 : 1;
+        const start = folioCounter + 1;
+        folioCounter += width;
+        return { start, width };
+    });
+}
+
+buildPages();
+
+function renderPage(page) {
+    switch (page.kind) {
+        case 'cover': return coverPage();
+        case 'toc': return tocPage(page.part);
+        case 'chapter': return chapterSpreadPage(page);
+        case 'quiz': return quizPage();
+        case 'end': return endPage();
+        default: return '';
+    }
+}
+
+let current = 0;
+let animating = false;
+
+const spreadEl = document.getElementById('spread');
+const prevBtn = document.getElementById('prevBtn');
+const nextBtn = document.getElementById('nextBtn');
+const indicatorEl = document.getElementById('pageIndicator');
+const folioLeftEl = document.getElementById('folioLeft');
+const folioRightEl = document.getElementById('folioRight');
+
+function paint() {
+    spreadEl.innerHTML = renderPage(PAGES[current]);
+    prevBtn.disabled = current === 0;
+    nextBtn.disabled = current === PAGES.length - 1;
+    indicatorEl.textContent = `${current + 1} / ${PAGES.length}`;
+
+    const folio = FOLIOS[current];
+    folioLeftEl.classList.toggle('folio-center', folio.width === 1);
+    folioLeftEl.textContent = folio.start;
+    folioLeftEl.hidden = false;
+    if (folio.width === 2) {
+        folioRightEl.textContent = folio.start + 1;
+        folioRightEl.hidden = false;
+    } else {
+        folioRightEl.hidden = true;
+    }
+
+    spreadEl.querySelectorAll('[data-goto]').forEach(btn => {
+        btn.addEventListener('click', () => {
+            const num = Number(btn.dataset.goto);
+            const idx = PAGES.findIndex(p => p.kind === 'chapter' && p.first && p.ch.num === num);
+            if (idx >= 0) goTo(idx);
+        });
+    });
+    spreadEl.querySelectorAll('[data-goto-kind]').forEach(btn => {
+        btn.addEventListener('click', () => {
+            const idx = PAGES.findIndex(p => p.kind === btn.dataset.gotoKind);
+            if (idx >= 0) goTo(idx);
+        });
+    });
+
+    if (PAGES[current].kind === 'quiz') initQuiz();
+}
+
+function initQuiz() {
+    let answeredCount = 0;
+    const progressEl = document.getElementById('quizProgress');
+
+    spreadEl.querySelectorAll('.quiz-item').forEach(item => {
+        const qi = Number(item.dataset.qindex);
+        const q = QUIZ[qi];
+        item.querySelectorAll('.quiz-choice').forEach(btn => {
+            btn.addEventListener('click', () => {
+                if (item.classList.contains('graded')) return;
+                item.classList.add('graded');
+                const chosen = Number(btn.dataset.choice);
+                item.querySelectorAll('.quiz-choice').forEach(b => {
+                    const ci = Number(b.dataset.choice);
+                    if (ci === q.answer) b.classList.add('correct');
+                    else if (ci === chosen) b.classList.add('incorrect');
+                });
+                answeredCount++;
+                progressEl.textContent = `${answeredCount} / 총 ${QUIZ.length}문항 완료`;
+            });
+        });
+    });
+}
+
+function goTo(index) {
+    if (animating || index === current || index < 0 || index >= PAGES.length) return;
+    animating = true;
+    const dir = index > current ? 'flip-next' : 'flip-prev';
+    spreadEl.classList.add(dir);
+    setTimeout(() => {
+        current = index;
+        paint();
+    }, 230);
+    setTimeout(() => {
+        spreadEl.classList.remove('flip-next', 'flip-prev');
+        animating = false;
+    }, 480);
+}
+
+prevBtn.addEventListener('click', () => goTo(current - 1));
+nextBtn.addEventListener('click', () => goTo(current + 1));
+
+document.getElementById('tocLink').addEventListener('click', () => {
+    const idx = PAGES.findIndex(p => p.kind === 'toc');
+    if (idx >= 0) goTo(idx);
+});
+
+document.addEventListener('keydown', (e) => {
+    if (e.key === 'ArrowRight') goTo(current + 1);
+    if (e.key === 'ArrowLeft') goTo(current - 1);
+});
+
+paint();
+
+// 본문 글꼴은 늦게 내려온다. 글꼴이 바뀌면 한 줄에 들어가는 글자 수가 달라져서
+// 먼저 나눠 둔 쪽이 넘치게 된다. 그래서 글꼴을 다 받은 뒤에 한 번 다시 나눈다.
+if (document.fonts && document.fonts.status !== 'loaded') {
+    document.fonts.ready.then(() => {
+        const here = PAGES[current];
+        buildPages();
+        current = Math.min(current, PAGES.length - 1);
+        if (here && here.kind === 'chapter') {
+            const idx = PAGES.findIndex(p => p.kind === 'chapter' && p.first && p.ch.num === here.ch.num);
+            if (idx >= 0) current = idx;
+        }
+        paint();
+    });
+}
