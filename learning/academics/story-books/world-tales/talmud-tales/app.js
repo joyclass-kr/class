@@ -736,7 +736,9 @@ function fillPages(segs, caps, headHtml) {
 function paginateChapter(ch, chIndex) {
     const segs = CHAPTER_SEGS[chIndex];
     const arts = (ch.art && ch.art.length) ? ch.art : [];
-    const { usable, headHeight, artHeight, moralHeight } = PROBE;
+    const { usable, headHeight, artHeight } = PROBE;
+    // '생각해봐요' 상자는 글 길이에 따라 높이가 다르다. 이야기마다 실제로 재야 한다.
+    const moralHeight = PROBE.measure(moralHtml(ch));
     const headHtml = `<h2>${CHAPTER_LABEL(ch.num)}${ch.title}</h2>`;
     const totalH = PROBE.measure(runHtml(segs, 0, segs.length)) + moralHeight;
 
@@ -750,28 +752,43 @@ function paginateChapter(ch, chIndex) {
         return caps;
     };
 
+    // 마지막 펼침면에는 상자가 들어가므로 그림을 얹지 않는다
+    const planOf = (n) => {
+        const sl = slotPlan(arts.length, Math.max(0, n - arts.length));
+        if (sl.length > 1 && sl[sl.length - 1] === 'img') {
+            const t = sl.lastIndexOf('text');
+            if (t >= 0) { sl[t] = 'img'; sl[sl.length - 1] = 'text'; }
+        }
+        return sl;
+    };
+
     // 그림 한 장이 펼침면 하나를 쓴다. 거기서 시작해 글이 다 들어갈 때까지 펼침면을 늘린다.
     // 쪽 수는 조각 수를 넘을 수 없다 — 빈 쪽이 생기면 안 되기 때문이다.
-    const minSpreads = Math.max(arts.length, 1);
+    const minSpreads = Math.max(arts.length + 1, 2);
     const maxSpreads = Math.max(minSpreads, Math.floor(segs.length / 2));
     let spreadCount = minSpreads;
     while (spreadCount < maxSpreads) {
-        const caps = capsOf(slotPlan(arts.length, spreadCount - arts.length));
+        const caps = capsOf(planOf(spreadCount));
         if (caps.reduce((a, b) => a + b, 0) >= totalH + headHeight) break;
         spreadCount++;
     }
 
-    let slots = slotPlan(arts.length, Math.max(0, spreadCount - arts.length));
+    let slots = planOf(spreadCount);
     let caps = capsOf(slots);
     let ranges = fillPages(segs, caps, headHtml);
     for (let guard = 0; guard < 8; guard++) {
         // 한 쪽이라도 넘치면 펼침면을 늘려 다시 나눈다.
         // 마지막 쪽만 보면 안 된다 — 첫 쪽에는 장 제목이 얹히므로 그쪽이 먼저 넘칠 수 있다.
-        const over = ranges.some(([a, b], n) =>
-            PROBE.measure((n === 0 ? headHtml : '') + runHtml(segs, a, b)) > caps[n] + 1);
+        // 마지막 쪽에는 '생각해봐요' 상자까지 함께 들어간다. 넘치는지 볼 때도 같이 재야 한다.
+        const over = ranges.some(([a, b], n) => {
+            const head = n === 0 ? headHtml : '';
+            const tail = n === ranges.length - 1 ? moralHtml(ch) : '';
+            const room = n === ranges.length - 1 ? caps[n] + moralHeight : caps[n];
+            return PROBE.measure(head + runHtml(segs, a, b) + tail) > room + 1;
+        });
         if (!over || spreadCount >= maxSpreads) break;
         spreadCount++;
-        slots = slotPlan(arts.length, Math.max(0, spreadCount - arts.length));
+        slots = planOf(spreadCount);
         caps = capsOf(slots);
         ranges = fillPages(segs, caps, headHtml);
     }
