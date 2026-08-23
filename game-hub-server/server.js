@@ -8,6 +8,7 @@ const { WebSocketServer, WebSocket } = require("ws");
 const LoveLetter = require("./loveletter");
 const LastCard = require("./lastcard");
 const Rummikub = require("./rummikub");
+const KingdomTrails = require("./kingdomtrails");
 const Blokus = require("./blokus");
 const Honeycomb = require("./honeycomb");
 const DrawRelay = require("./drawrelay");
@@ -273,6 +274,7 @@ const MAX_ROOM_PLAYERS = {
   lastcard: 4,
   loveletter: 4,
   rummikub: 4,
+  kingdomtrails: 4,
   blokus: 4,
   honeycomb: 6,
   drawrelay: 8,
@@ -658,6 +660,36 @@ function scheduleRummikubTimeout(room) {
     rummikubBroadcast(room);
   }, wait);
   room.rummikubTimer.unref?.();
+}
+
+function kingdomTrailsBroadcast(room) {
+  if (!room?.kingdomtrails) return;
+  for (const [id, client] of room.clients) {
+    safeSend(client, {
+      type: "KINGDOMTRAILS_STATE",
+      state: KingdomTrails.stateFor(room.kingdomtrails, id)
+    });
+  }
+  scheduleKingdomTrailsTimeout(room);
+}
+
+function kingdomTrailsError(socket, message) {
+  safeSend(socket, { type: "KINGDOMTRAILS_ERROR", message });
+}
+
+function scheduleKingdomTrailsTimeout(room) {
+  clearTimeout(room?.kingdomtrailsTimer);
+  const game = room?.kingdomtrails;
+  if (!game || game.phase !== "playing" || !game.turnDeadline) return;
+  const expectedRevision = game.revision;
+  const wait = Math.max(50, game.turnDeadline - Date.now());
+  room.kingdomtrailsTimer = setTimeout(() => {
+    if (rooms.get(roomKey(room.gameId, room.roomCode)) !== room) return;
+    if (game.phase !== "playing" || game.revision !== expectedRevision) return;
+    KingdomTrails.autoPlace(game);
+    kingdomTrailsBroadcast(room);
+  }, wait);
+  room.kingdomtrailsTimer.unref?.();
 }
 
 function blokusBroadcast(room) {
@@ -1649,6 +1681,7 @@ wss.on("connection", socket => {
         if (existingRoom.lastcard) lastCardBroadcast(existingRoom);
         if (existingRoom.loveletter) loveLetterBroadcast(existingRoom);
         if (existingRoom.rummikub) rummikubBroadcast(existingRoom);
+        if (existingRoom.kingdomtrails) kingdomTrailsBroadcast(existingRoom);
         if (existingRoom.blokus) blokusBroadcast(existingRoom);
         if (existingRoom.honeycomb) honeycombBroadcast(existingRoom);
         if (existingRoom.drawrelay) drawRelayBroadcast(existingRoom);
@@ -1697,6 +1730,9 @@ wss.on("connection", socket => {
       }
       if (gameId === "rummikub") {
         room.rummikub = Rummikub.createGame(playerId, cleanToken(message.name, 12) || "방장");
+      }
+      if (gameId === "kingdomtrails") {
+        room.kingdomtrails = KingdomTrails.createGame(playerId, cleanToken(message.name, 12) || "방장");
       }
       if (gameId === "blokus") {
         room.blokus = Blokus.createGame(playerId, cleanToken(message.name, 12) || "방장");
@@ -1774,6 +1810,7 @@ wss.on("connection", socket => {
       if (room.lastcard) lastCardBroadcast(room);
       if (room.loveletter) loveLetterBroadcast(room);
       if (room.rummikub) rummikubBroadcast(room);
+      if (room.kingdomtrails) kingdomTrailsBroadcast(room);
       if (room.blokus) blokusBroadcast(room);
       if (room.honeycomb) honeycombBroadcast(room);
       if (room.drawrelay) drawRelayBroadcast(room);
@@ -1827,6 +1864,7 @@ wss.on("connection", socket => {
         if (room.lastcard) lastCardBroadcast(room);
         if (room.loveletter) loveLetterBroadcast(room);
         if (room.rummikub) rummikubBroadcast(room);
+        if (room.kingdomtrails) kingdomTrailsBroadcast(room);
         if (room.blokus) blokusBroadcast(room);
         if (room.honeycomb) honeycombBroadcast(room);
         if (room.drawrelay) drawRelayBroadcast(room);
@@ -1901,6 +1939,16 @@ wss.on("connection", socket => {
           return;
         }
         Rummikub.addPlayer(room.rummikub, playerId, cleanToken(message.name, 12) || `플레이어 ${room.rummikub.players.length + 1}`);
+      }
+      if (room.kingdomtrails) {
+        if (room.kingdomtrails.phase !== "lobby") {
+          room.clients.delete(playerId);
+          socket.meta.roomKey = null;
+          socket.meta.role = null;
+          safeSend(socket, { type: "ERROR", message: "이미 시작한 게임입니다." });
+          return;
+        }
+        KingdomTrails.addPlayer(room.kingdomtrails, playerId, cleanToken(message.name, 12) || `플레이어 ${room.kingdomtrails.players.length + 1}`);
       }
       if (room.blokus) {
         if (room.blokus.phase !== "lobby") {
@@ -2152,6 +2200,7 @@ wss.on("connection", socket => {
       if (room.lastcard) lastCardBroadcast(room);
       if (room.loveletter) loveLetterBroadcast(room);
       if (room.rummikub) rummikubBroadcast(room);
+      if (room.kingdomtrails) kingdomTrailsBroadcast(room);
       if (room.blokus) blokusBroadcast(room);
       if (room.honeycomb) honeycombBroadcast(room);
       if (room.drawrelay) drawRelayBroadcast(room);
@@ -3257,6 +3306,46 @@ wss.on("connection", socket => {
       return;
     }
 
+    if (type === "KINGDOMTRAILS_ACTION") {
+      const room = socket.meta.roomKey ? rooms.get(socket.meta.roomKey) : null;
+      const game = room?.kingdomtrails;
+      const action = cleanToken(message.action, 30);
+      if (!room || !game) {
+        kingdomTrailsError(socket, "왕국의 길 방에 참가하지 않았습니다.");
+        return;
+      }
+
+      let result;
+      if (action === "START") {
+        result = playerId === room.hostId
+          ? KingdomTrails.startGame(game)
+          : { ok: false, error: "방장만 게임을 시작할 수 있습니다." };
+      } else if (action === "PLACE") {
+        result = KingdomTrails.placeTile(game, playerId, {
+          x: message.x,
+          y: message.y,
+          rotation: message.rotation,
+          claim: cleanToken(message.claim, 16) || null
+        });
+      } else if (action === "NEW_GAME") {
+        if (playerId !== room.hostId) result = { ok: false, error: "방장만 새 게임을 시작할 수 있습니다." };
+        else if (game.phase !== "ended") result = { ok: false, error: "게임이 끝난 뒤 새 게임을 시작할 수 있습니다." };
+        else result = KingdomTrails.newGame(game);
+      } else if (action === "RETURN_LOBBY") {
+        result = playerId === room.hostId
+          ? KingdomTrails.resetToLobby(game)
+          : { ok: false, error: "방장만 대기실로 돌아갈 수 있습니다." };
+      } else {
+        result = { ok: false, error: "알 수 없는 행동입니다." };
+      }
+
+      if (!result.ok) {
+        kingdomTrailsError(socket, result.error || "행동을 처리하지 못했습니다.");
+        return;
+      }
+      kingdomTrailsBroadcast(room);
+      return;
+    }
     if (type === "RUMMIKUB_ACTION") {
       const room = socket.meta.roomKey ? rooms.get(socket.meta.roomKey) : null;
       const game = room?.rummikub;
@@ -3505,6 +3594,7 @@ wss.on("connection", socket => {
         clearTimeout(currentRoom.blokusTimer);
         clearTimeout(currentRoom.loveletterTimer);
         clearTimeout(currentRoom.rummikubTimer);
+        clearTimeout(currentRoom.kingdomtrailsTimer);
         clearTimeout(currentRoom.lastcardTimer);
         clearTimeout(currentRoom.codenamesTimer);
         clearTimeout(currentRoom.avalonTimer);
@@ -3551,6 +3641,13 @@ wss.on("connection", socket => {
         Rummikub.removePlayer(currentRoom.rummikub, playerId);
         if (gameWasActive) {
           Rummikub.resetToLobby(currentRoom.rummikub, "플레이어가 나가 게임을 중단하고 대기실로 돌아왔습니다.");
+        }
+      }
+      if (currentRoom.kingdomtrails) {
+        const gameWasActive = currentRoom.kingdomtrails.phase !== "lobby";
+        KingdomTrails.removePlayer(currentRoom.kingdomtrails, playerId);
+        if (gameWasActive) {
+          KingdomTrails.resetToLobby(currentRoom.kingdomtrails, "플레이어가 나가 게임을 중단하고 대기실로 돌아왔습니다.");
         }
       }
       if (currentRoom.blokus) {
@@ -3693,6 +3790,7 @@ wss.on("connection", socket => {
       if (currentRoom.lastcard) lastCardBroadcast(currentRoom);
       if (currentRoom.loveletter) loveLetterBroadcast(currentRoom);
       if (currentRoom.rummikub) rummikubBroadcast(currentRoom);
+      if (currentRoom.kingdomtrails) kingdomTrailsBroadcast(currentRoom);
       if (currentRoom.blokus) blokusBroadcast(currentRoom);
       if (currentRoom.honeycomb) honeycombBroadcast(currentRoom);
       if (currentRoom.drawrelay) drawRelayBroadcast(currentRoom);
