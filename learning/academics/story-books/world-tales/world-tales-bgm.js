@@ -3,7 +3,7 @@
 
     const TRACK_INDEX_KEY = "classWorldTalesBgmTrackIndex";
     const tracks = [
-        "assets/audio/the-quiet-library.ogg"
+        "../assets/audio/the-quiet-library.ogg"
     ];
     const audio = document.getElementById("bgm");
     if (!audio || !tracks.length) return;

@@ -46,6 +46,8 @@ body.shelf-korea::before { background-image: url('../../../assets/images/storybo
 body.shelf-world-tales::before { background-image: url('../../../assets/images/storybooks-world-tales.webp'); }
 body.shelf-world-novels::before { background-image: url('../../../assets/images/storybooks-world-novels.webp'); }
 
+body.shelf-world-novels::after { background: none; }
+
 .top-bar {
     display: flex;
     justify-content: flex-start;
