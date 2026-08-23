@@ -176,6 +176,7 @@
     constructor() {
       this.displayCanvas = $("mainCanvas");
       this.displayCtx = this.displayCanvas.getContext("2d");
+      this.brushCursorEl = $("brushCursor");
       this.scratchCanvas = document.createElement("canvas");
       this.scratchCanvas.width = CANVAS_W;
       this.scratchCanvas.height = CANVAS_H;
@@ -240,6 +241,7 @@
       $("sizeSlider").addEventListener("input", e => {
         this.baseSize = Number(e.target.value);
         $("sizeValue").textContent = this.baseSize;
+        this.refreshBrushCursor();
       });
       $("opacitySlider").addEventListener("input", e => {
         this.opacitySetting = Number(e.target.value) / 100;
@@ -343,6 +345,7 @@
       $("sizeSlider").max = String(Math.round(max * 1.4));
       $("sizeSlider").value = String(this.baseSize);
       $("sizeValue").textContent = this.baseSize;
+      this.refreshBrushCursor();
     }
 
     setColor(hex) {
@@ -351,11 +354,17 @@
       document.querySelectorAll(".swatch").forEach(button => {
         button.classList.toggle("active", button.style.getPropertyValue("--swatch-color").trim() === hex);
       });
+      this.refreshBrushCursor();
+    }
+
+    refreshBrushCursor() {
+      if (this.lastCursorEvent) this.updateBrushCursor(this.lastCursorEvent);
     }
 
     armEyedropper() {
       this.eyedropperArmed = true;
       this.displayCanvas.classList.add("eyedropper-mode");
+      this.hideBrushCursor();
     }
 
     pickColorAt(event) {
@@ -452,13 +461,36 @@
     bindCanvas() {
       const canvas = this.displayCanvas;
       canvas.addEventListener("pointerdown", e => this.beginStroke(e));
-      canvas.addEventListener("pointermove", e => this.moveStroke(e));
+      canvas.addEventListener("pointermove", e => { this.moveStroke(e); this.updateBrushCursor(e); });
       canvas.addEventListener("pointerup", e => this.endStroke(e));
       canvas.addEventListener("pointercancel", e => this.endStroke(e));
+      canvas.addEventListener("pointerenter", e => this.updateBrushCursor(e));
       canvas.addEventListener("pointerleave", e => {
         if (e.pointerType === "mouse") this.endStroke(e);
+        this.hideBrushCursor();
       });
       canvas.style.touchAction = "none";
+    }
+
+    updateBrushCursor(event) {
+      if (event.pointerType === "touch" || this.eyedropperArmed) { this.hideBrushCursor(); return; }
+      this.lastCursorEvent = event;
+      const rect = this.displayCanvas.getBoundingClientRect();
+      const cssSize = Math.max(6, this.baseSize * 2 * (rect.width / CANVAS_W));
+      const cursor = this.brushCursorEl;
+      cursor.style.width = `${cssSize}px`;
+      cursor.style.height = `${cssSize}px`;
+      cursor.style.marginLeft = `${-cssSize / 2}px`;
+      cursor.style.marginTop = `${-cssSize / 2}px`;
+      cursor.style.left = `${event.clientX - rect.left}px`;
+      cursor.style.top = `${event.clientY - rect.top}px`;
+      cursor.style.setProperty("--active-cursor-color", this.brushId === "eraser" ? "#8a5a2c" : this.color);
+      cursor.classList.toggle("eraser-cursor", this.brushId === "eraser");
+      cursor.classList.remove("hidden");
+    }
+
+    hideBrushCursor() {
+      this.brushCursorEl.classList.add("hidden");
     }
 
     canvasPoint(event) {
