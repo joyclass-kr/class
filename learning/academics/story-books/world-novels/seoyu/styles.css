@@ -401,11 +401,11 @@ body {
 
 .quiz-list {
     display: grid;
-    gap: 14px;
+    gap: 10px;
 }
 
 .quiz-item {
-    padding-bottom: 12px;
+    padding-bottom: 8px;
     border-bottom: 1px solid var(--parchment-shade);
 }
 
@@ -416,20 +416,22 @@ body {
     color: var(--ink);
 }
 
+/* 선지가 길어서 가로로 늘어놓으면 읽기 어렵다. 한 줄에 하나씩 쌓는다. */
 .quiz-choices {
-    display: flex;
-    flex-wrap: wrap;
-    gap: 8px;
+    display: grid;
+    gap: 6px;
 }
 
 .quiz-choice {
-    padding: 8px 14px;
+    padding: 7px 13px;
     border: 1px solid var(--parchment-shade);
-    border-radius: 999px;
+    border-radius: 10px;
     background: #fffaf0;
     color: var(--ink);
     font: inherit;
     font-size: clamp(12px, 1.5vw, 14px);
+    text-align: left;
+    line-height: 1.5;
     cursor: pointer;
 }
 

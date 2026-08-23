@@ -586,36 +586,56 @@ function chapterSpreadPage(spread) {
 }
 
 const QUIZ = [
-    { q: "마르코의 어머니가 아르헨티나로 간 까닭은 무엇입니까?", choices: ["여행", "집안 빚을 갚으려고 삯이 몇 배인 일자리를 얻어서", "친척을 만나러"], answer: 1 },
-    { q: "어머니의 편지가 끊긴 진짜 까닭은 무엇입니까?", choices: ["잊어서", "어머니가 세 번 옮겨 다녀 양쪽 편지가 다 닿지 않아서", "돈이 없어서"], answer: 1 },
-    { q: "마르코가 탄 배의 삼등실은 어떤 곳입니까?", choices: ["창이 없는 배 밑바닥", "갑판", "선실"], answer: 0 },
-    { q: "배를 타고 가는 데 걸린 날은 며칠입니까?", choices: ["이레", "스물일곱 날", "석 달"], answer: 1 },
-    { q: "그 시절 부에노스아이레스의 특징은 무엇입니까?", choices: ["사람이 적었다", "인구의 상당수가 이탈리아에서 온 사람들이었다", "이탈리아 사람이 없었다"], answer: 1 },
-    { q: "코르도바까지 기차 삯을 마련한 방법은 무엇입니까?", choices: ["빌렸다", "항구에서 짐 나르는 일을 했다", "얻었다"], answer: 1 },
-    { q: "투쿠만까지 마르코가 탄 것은 무엇입니까?", choices: ["기차", "소달구지 행렬", "배"], answer: 1 },
-    { q: "여행 내내 마르코가 되풀이해서 들은 말은 무엇입니까?", choices: ["돌아가라", "힘내라", "같이 가자"], answer: 0 },
-    { q: "어머니가 수술을 거부한 까닭으로 마르코가 짐작한 것은 무엇입니까?", choices: ["무서워서", "그 돈을 집으로 부치고 있어서", "의사를 못 믿어서"], answer: 1 },
-    { q: "집 주인이 말한 어머니의 상태는 무엇입니까?", choices: ["곧 나을 것이다", "식구들이 자기를 잊었다고 여겨 아무것도 하려 하지 않는다", "이미 떠났다"], answer: 1 },
-    { q: "마르코가 방문 앞에서 오래 서 있었던 까닭은 무엇입니까?", choices: ["숨이 차서", "어머니가 못 알아보실까 봐 무서워서", "잠겨 있어서"], answer: 1 },
-    { q: "어머니가 수술을 받겠다고 한 계기는 무엇입니까?", choices: ["의사가 설득해서", "마르코가 여기까지 온 것이 다 무엇이 되느냐고 물어서", "돈이 생겨서"], answer: 1 },
-    { q: "수술 뒤 의사가 한 말은 무엇입니까?", choices: ["운이 좋았다", "이분은 살고 싶어 하셨고 그것이 절반이다", "늦었다"], answer: 1 },
-    { q: "이 이야기가 실린 책의 제목은 무엇입니까?", choices: ["쿠오레", "피노키오", "삼총사"], answer: 0 },
-    { q: "원래 제목은 무엇입니까?", choices: ["엄마 찾아 삼만리", "아펜니노에서 안데스까지", "오월 이야기"], answer: 1 },
-    { q: "천팔백팔십 년부터 오십 년 동안 이탈리아를 떠난 사람은 몇 명입니까?", choices: ["백만 명", "천삼백만 명이 넘는다", "십만 명"], answer: 1 }
+    { q: "마르코의 어머니가 아르헨티나로 간 까닭은 무엇입니까?", choices: ["집안 빚을 갚으려고 삯이 몇 배인 일자리를 얻어서", "먼저 간 친척이 자리를 잡고 불렀기 때문에", "몸이 나빠져 따뜻한 데서 지내야 했기 때문에"], answer: 0 },
+    { q: "어머니의 편지가 끊긴 진짜 까닭은 무엇입니까?", choices: ["어머니가 식구들에게 화가 나서 끊어 버려서", "배가 가라앉아 편지가 함께 사라졌기 때문에", "어머니가 세 번 옮겨 다녀 편지가 서로 안 닿아서"], answer: 2 },
+    { q: "마르코가 탄 배의 삼등실은 어떤 곳입니까?", choices: ["돛대 옆의 좁은 갑판", "창이 없는 배 밑바닥", "짐칸 사이에 낸 작은 방"], answer: 1 },
+    { q: "배를 타고 가는 데 걸린 날은 며칠입니까?", choices: ["스물일곱 날", "아흐레쯤", "일흔 날 남짓"], answer: 0 },
+    { q: "그 시절 부에노스아이레스의 특징은 무엇입니까?", choices: ["사람이 적어 마을이 드문드문 떨어져 있었다", "유럽 사람은 들어가 살 수 없게 막혀 있었다", "인구의 상당수가 이탈리아에서 온 사람들이었다"], answer: 2 },
+    { q: "코르도바까지 기차 삯을 마련한 방법은 무엇입니까?", choices: ["아버지가 부쳐 준 돈을 받아서 냈다", "항구에서 며칠 짐 나르는 일을 했다", "배에서 만난 사람에게 빌려서 냈다"], answer: 1 },
+    { q: "투쿠만까지 마르코가 탄 것은 무엇입니까?", choices: ["강을 거슬러 오르는 작은 배", "짐을 나르는 소달구지 행렬", "북쪽으로 가는 밤 기차"], answer: 1 },
+    { q: "여행 내내 마르코가 되풀이해서 들은 말은 무엇입니까?", choices: ["여기서 일을 배워라", "곧 만나게 될 것이다", "그만두고 돌아가라"], answer: 2 },
+    { q: "어머니가 수술을 거부한 까닭으로 마르코가 짐작한 것은 무엇입니까?", choices: ["그 돈을 집으로 부치고 있었기 때문에", "수술이 무섭고 아프다고 들었기 때문에", "고향에 가서 받으려고 미루었기 때문에"], answer: 0 },
+    { q: "집 주인이 말한 어머니의 상태는 무엇입니까?", choices: ["곧 나을 것 같아 마음이 아주 편해 보인다", "고향으로 돌아가겠다고 날마다 채근한다", "식구들이 잊었다고 여겨 아무것도 하려 하지 않는다"], answer: 2 },
+    { q: "마르코가 방문 앞에서 오래 서 있었던 까닭은 무엇입니까?", choices: ["어머니가 못 알아보실까 봐 무서워서", "안에서 나는 소리를 들으려고 해서", "숨을 고르고 옷을 매만지느라고"], answer: 0 },
+    { q: "어머니가 수술을 받겠다고 한 계기는 무엇입니까?", choices: ["마르코가 여기까지 온 것이 다 무엇이 되느냐고 물어서", "집 주인이 값을 다 대 주겠다고 나섰기 때문에", "의사가 지금이 마지막이라고 힘주어 말해 주어서"], answer: 0 },
+    { q: "수술 뒤 의사가 한 말은 무엇입니까?", choices: ["이분은 살고 싶어 하셨고 그것이 절반이다", "이만한 수술을 견딘 사람은 처음 보았다", "약이 좋아서 이렇게 나은 것이 분명하다"], answer: 0 },
+    { q: "이 이야기가 실린 책의 제목은 무엇입니까?", choices: ["『신곡』", "『쿠오레』", "『피노키오』"], answer: 1 },
+    { q: "원래 제목은 무엇입니까?", choices: ["「제노바에서 살타까지」", "「아펜니노에서 안데스까지」", "「엄마를 찾아 떠난 아이」"], answer: 1 },
+    { q: "천팔백팔십 년부터 오십 년 동안 이탈리아를 떠난 사람은 몇 명입니까?", choices: ["백만 명이 채 안 된다", "삼십만 명쯤 된다", "천삼백만 명이 넘는다"], answer: 2 }
 ];
 
-function quizPage() {
-    const items = QUIZ.map((item, i) => `
-        <div class="quiz-item" data-qindex="${i}">
+// 선지를 세로로 쌓으니 한 쪽에 열여섯 문항이 다 들어가지 않는다. 몇 개씩 나눠 싣는다.
+const QUIZ_PER_SPREAD = 3;
+const QUIZ_GROUPS = [];
+for (let i = 0; i < QUIZ.length; i += QUIZ_PER_SPREAD) {
+    QUIZ_GROUPS.push({ from: i, items: QUIZ.slice(i, i + QUIZ_PER_SPREAD) });
+}
+
+// 쪽을 넘겼다 돌아와도 이미 푼 문항은 풀린 채로 있어야 한다.
+const QUIZ_PICKED = new Array(QUIZ.length).fill(null);
+
+function quizPage(part) {
+    const group = QUIZ_GROUPS[part];
+    const done = QUIZ_PICKED.filter(v => v !== null).length;
+    const items = group.items.map((item, k) => {
+        const i = group.from + k;
+        const picked = QUIZ_PICKED[i];
+        const graded = picked !== null;
+        const cls = ci => graded
+            ? (ci === item.answer ? ' correct' : (ci === picked ? ' incorrect' : ''))
+            : '';
+        return `
+        <div class="quiz-item${graded ? ' graded' : ''}" data-qindex="${i}">
             <p class="quiz-question">${i + 1}. ${item.q}</p>
             <div class="quiz-choices">
-                ${item.choices.map((c, ci) => `<button type="button" class="quiz-choice" data-choice="${ci}">${c}</button>`).join('')}
+                ${item.choices.map((c, ci) => `<button type="button" class="quiz-choice${cls(ci)}" data-choice="${ci}">${c}</button>`).join('')}
             </div>
-        </div>`).join('');
+        </div>`;
+    }).join('');
     return `
         <div class="page page-quiz">
-            <h2>이야기 문제</h2>
-            <p class="quiz-intro-text" id="quizProgress">0 / 총 ${QUIZ.length}문항 완료</p>
+            ${part === 0 ? '<h2>이야기 문제</h2>' : ''}
+            <p class="quiz-intro-text" id="quizProgress">${done} / 총 ${QUIZ.length}문항 완료</p>
             <div class="quiz-list">${items}</div>
         </div>`;
 }
@@ -640,7 +660,7 @@ function buildPages() {
         { kind: 'cover' },
         ...TOC_GROUPS.map((_, i) => ({ kind: 'toc', part: i })),
         ...CHAPTERS.flatMap(paginateChapter),
-        { kind: 'quiz' },
+        ...QUIZ_GROUPS.map((_, i) => ({ kind: 'quiz', part: i })),
         { kind: 'end' }
     ];
     PROBE.close();   // 쪽을 다 나눴으니 재는 데 쓰던 숨은 쪽은 치운다
@@ -661,7 +681,7 @@ function renderPage(page) {
         case 'cover': return coverPage();
         case 'toc': return tocPage(page.part);
         case 'chapter': return chapterSpreadPage(page);
-        case 'quiz': return quizPage();
+        case 'quiz': return quizPage(page.part);
         case 'end': return endPage();
         default: return '';
     }
@@ -712,7 +732,6 @@ function paint() {
 }
 
 function initQuiz() {
-    let answeredCount = 0;
     const progressEl = document.getElementById('quizProgress');
 
     spreadEl.querySelectorAll('.quiz-item').forEach(item => {
@@ -728,8 +747,9 @@ function initQuiz() {
                     if (ci === q.answer) b.classList.add('correct');
                     else if (ci === chosen) b.classList.add('incorrect');
                 });
-                answeredCount++;
-                progressEl.textContent = `${answeredCount} / 총 ${QUIZ.length}문항 완료`;
+                QUIZ_PICKED[qi] = chosen;
+                const done = QUIZ_PICKED.filter(v => v !== null).length;
+                progressEl.textContent = `${done} / 총 ${QUIZ.length}문항 완료`;
             });
         });
     });

@@ -597,36 +597,56 @@ function chapterSpreadPage(spread) {
 }
 
 const QUIZ = [
-    { q: "이 책이 원작에서 고쳐 옮긴 것이 아닌 것은 무엇입니까?", choices: ["움보파를 처음부터 주인공의 하나로 쓴 것", "그 나라 일을 그 나라 사람이 정하게 한 것", "보물을 없앤 것"], answer: 2 },
-    { q: "'솔로몬의 광산'이라는 이름은 어디서 나왔습니까?", choices: ["그 땅 사람들이 붙인 것", "아프리카의 큰 석조 유적을 그 땅 사람이 지었다고 믿지 않은 유럽 사람들이 붙인 것", "성경에 있는 것"], answer: 1 },
-    { q: "헨리 경이 그 길을 나선 까닭은 무엇입니까?", choices: ["보물", "다투고 헤어진 동생을 찾으려고", "명예"], answer: 1 },
-    { q: "쿼터메인이 함께 간 까닭을 무엇이라고 적었습니까?", choices: ["모험이 좋아서", "아들 공부 시킬 돈이 필요해서", "친구라서"], answer: 1 },
-    { q: "움보파가 삯을 받지 않겠다고 한 까닭은 무엇입니까?", choices: ["돈이 많아서", "그 산 너머가 자기 아버지의 땅이라서", "보물을 원해서"], answer: 1 },
-    { q: "사막에서 일행을 살린 것은 무엇입니까?", choices: ["지도", "나침반", "새가 어디로 가는지 아는 벤트보겔"], answer: 2 },
-    { q: "솔로몬의 큰길을 누가 만들었습니까?", choices: ["유럽 사람", "그 땅 사람들의 조상", "아무도 모른다"], answer: 1 },
-    { q: "가굴이 해마다 사람을 골라낸 진짜 목적은 무엇입니까?", choices: ["마술", "힘이 있거나 사람들이 따르는 사람을 없애는 정치", "제사"], answer: 1 },
-    { q: "일식을 이용한 일에 대해 이 책이 밝힌 것은 무엇입니까?", choices: ["신통력이었다", "책력을 보고 알았을 뿐인 속임수였다", "우연이었다"], answer: 1 },
-    { q: "움보파가 그 일에 대해 한 말은 무엇입니까?", choices: ["잘했다", "오늘 그 말을 믿은 사람들이 내일은 다른 거짓말도 믿게 된다", "다시 하라"], answer: 1 },
-    { q: "이그노시가 사람들을 모을 때 내세운 것은 무엇입니까?", choices: ["왕가의 핏줄", "왕이 되면 무엇을 하겠는지", "보물"], answer: 1 },
-    { q: "많은 사람이 마음을 정하게 만든 조건은 무엇입니까?", choices: ["상을 준다", "따르지 않은 사람에게 그것으로 벌을 주지 않겠다", "세금을 없앤다"], answer: 1 },
-    { q: "싸움을 이기게 한 것은 무엇입니까?", choices: ["백인들의 총 세 자루", "이그노시의 판단과 좁은 길목을 막은 회색 부대", "숫자"], answer: 1 },
-    { q: "보물방에 갇혔을 때 쿼터메인이 생각한 것은 무엇입니까?", choices: ["부자가 되겠다", "발 옆의 보물 가운데 물 한 모금과 바꿀 것이 하나도 없다", "돌아가고 싶다"], answer: 1 },
-    { q: "이그노시가 떠나는 일행에게 한 부탁은 무엇입니까?", choices: ["다시 오라", "이 길을 아무에게도 알리지 마라", "보물을 두고 가라"], answer: 1 },
-    { q: "쿼터메인이 다이아몬드보다 오래 남았다고 한 것은 무엇입니까?", choices: ["지도", "새를 보고 물을 찾은 사람, 길목을 막은 늙은 부대, 진 쪽을 벌하지 않은 사람", "동굴"], answer: 1 }
+    { q: "이 책이 원작에서 고쳐 옮긴 것이 아닌 것은 무엇입니까?", choices: ["동굴 속 보물을 아예 없애고 쓴 것", "움보파를 처음부터 주인공의 하나로 둔 것", "그 나라 일을 그 나라 사람이 정하게 한 것"], answer: 0 },
+    { q: "'솔로몬의 광산'이라는 이름은 어디서 나왔습니까?", choices: ["지도를 그린 포르투갈 사람이 자기 아들 이름을 붙인 데서", "쿠쿠아나 사람들이 조상 때부터 그렇게 불러 온 이름에서", "그 유적을 그 땅 사람이 지었다고 믿지 않은 유럽 사람들이"], answer: 2 },
+    { q: "헨리 경이 그 길을 나선 까닭은 무엇입니까?", choices: ["집안이 기울어 보물이 필요해서", "왕에게 그 땅을 살펴보라는 명을 받아서", "다투고 헤어진 동생을 찾으려고"], answer: 2 },
+    { q: "쿼터메인이 함께 간 까닭을 무엇이라고 적었습니까?", choices: ["젊을 때부터 그 광산을 찾아다녔기 때문에", "영국에 있는 아들 공부 시킬 돈이 필요해서", "코끼리가 줄어 사냥으로는 살 수 없게 되어서"], answer: 1 },
+    { q: "움보파가 삯을 받지 않겠다고 한 까닭은 무엇입니까?", choices: ["보물을 나눠 받기로 미리 정해 두어서", "쿼터메인에게 옛날에 신세를 진 일이 있어서", "그 산 너머가 자기 아버지의 땅이라서"], answer: 2 },
+    { q: "사막에서 일행을 살린 것은 무엇입니까?", choices: ["새가 어디로 가는지 아는 벤트보겔", "삼백 년 전에 그린 그 낡은 천 지도", "헨리 경이 챙겨 온 큰 물통 여러 개"], answer: 0 },
+    { q: "솔로몬의 큰길을 누가 만들었습니까?", choices: ["그 땅에 살던 사람들의 조상", "성경에 나오는 솔로몬 왕의 일꾼들", "옛날 이집트에서 건너온 사람들"], answer: 0 },
+    { q: "가굴이 해마다 사람을 골라낸 진짜 목적은 무엇입니까?", choices: ["가뭄이 들지 않게 하늘에 값을 치르는 제사", "정말로 나쁜 마음을 품은 자를 찾아내는 일", "힘이 있거나 사람들이 따르는 이를 없애는 정치"], answer: 2 },
+    { q: "일식을 이용한 일에 대해 이 책이 밝힌 것은 무엇입니까?", choices: ["정말로 하늘이 도운 놀라운 일이었다", "책력을 보고 알았을 뿐인 속임수였다", "일행도 몰랐던 뜻밖의 우연이었다"], answer: 1 },
+    { q: "움보파가 그 일에 대해 한 말은 무엇입니까?", choices: ["그런 재주가 있으면 앞으로도 여러 번 써야 한다", "그 덕분에 아이를 살렸으니 아주 잘한 일이다", "오늘 그 말을 믿은 사람은 내일 다른 거짓말도 믿는다"], answer: 2 },
+    { q: "이그노시가 사람들을 모을 때 내세운 것은 무엇입니까?", choices: ["왕이 되면 무엇을 하겠는지", "이기면 나눠 줄 보물이 있다는 것", "자기가 왕가의 핏줄이라는 것"], answer: 0 },
+    { q: "많은 사람이 마음을 정하게 만든 조건은 무엇입니까?", choices: ["따르지 않은 사람도 그 일로는 벌하지 않겠다", "먼저 따르는 사람에게 땅과 소를 나눠 주겠다", "다투는 일은 앞으로 왕이 직접 다 정하겠다"], answer: 0 },
+    { q: "싸움을 이기게 한 것은 무엇입니까?", choices: ["백인 세 사람이 가지고 간 총 세 자루", "이그노시의 판단과 길목을 막은 회색 부대", "트왈라 쪽보다 훨씬 많았던 군사의 수"], answer: 1 },
+    { q: "보물방에 갇혔을 때 쿼터메인이 생각한 것은 무엇입니까?", choices: ["어떻게든 이 돌문을 밀어 열 수 있을 것이다", "발 옆의 보물 가운데 물 한 모금과 바꿀 것이 없다", "이만한 것을 두고 죽는 것이 제일 억울하다"], answer: 1 },
+    { q: "이그노시가 떠나는 일행에게 한 부탁은 무엇입니까?", choices: ["보물을 두고 가고 몸만 나가라", "이 길을 아무에게도 알리지 마라", "해마다 한 번씩 다시 찾아와 달라"], answer: 1 },
+    { q: "쿼터메인이 다이아몬드보다 오래 남았다고 한 것은 무엇입니까?", choices: ["물을 찾은 사람과 길목을 막은 늙은 부대와 그 뒤의 일", "산 위 굴에 앉은 채로 남아 있던 그 사람의 모습", "삼백 년 된 지도와 그 지도를 그린 사람의 이름"], answer: 0 }
 ];
 
-function quizPage() {
-    const items = QUIZ.map((item, i) => `
-        <div class="quiz-item" data-qindex="${i}">
+// 선지를 세로로 쌓으니 한 쪽에 열여섯 문항이 다 들어가지 않는다. 몇 개씩 나눠 싣는다.
+const QUIZ_PER_SPREAD = 3;
+const QUIZ_GROUPS = [];
+for (let i = 0; i < QUIZ.length; i += QUIZ_PER_SPREAD) {
+    QUIZ_GROUPS.push({ from: i, items: QUIZ.slice(i, i + QUIZ_PER_SPREAD) });
+}
+
+// 쪽을 넘겼다 돌아와도 이미 푼 문항은 풀린 채로 있어야 한다.
+const QUIZ_PICKED = new Array(QUIZ.length).fill(null);
+
+function quizPage(part) {
+    const group = QUIZ_GROUPS[part];
+    const done = QUIZ_PICKED.filter(v => v !== null).length;
+    const items = group.items.map((item, k) => {
+        const i = group.from + k;
+        const picked = QUIZ_PICKED[i];
+        const graded = picked !== null;
+        const cls = ci => graded
+            ? (ci === item.answer ? ' correct' : (ci === picked ? ' incorrect' : ''))
+            : '';
+        return `
+        <div class="quiz-item${graded ? ' graded' : ''}" data-qindex="${i}">
             <p class="quiz-question">${i + 1}. ${item.q}</p>
             <div class="quiz-choices">
-                ${item.choices.map((c, ci) => `<button type="button" class="quiz-choice" data-choice="${ci}">${c}</button>`).join('')}
+                ${item.choices.map((c, ci) => `<button type="button" class="quiz-choice${cls(ci)}" data-choice="${ci}">${c}</button>`).join('')}
             </div>
-        </div>`).join('');
+        </div>`;
+    }).join('');
     return `
         <div class="page page-quiz">
-            <h2>이야기 문제</h2>
-            <p class="quiz-intro-text" id="quizProgress">0 / 총 ${QUIZ.length}문항 완료</p>
+            ${part === 0 ? '<h2>이야기 문제</h2>' : ''}
+            <p class="quiz-intro-text" id="quizProgress">${done} / 총 ${QUIZ.length}문항 완료</p>
             <div class="quiz-list">${items}</div>
         </div>`;
 }
@@ -651,7 +671,7 @@ function buildPages() {
         { kind: 'cover' },
         ...TOC_GROUPS.map((_, i) => ({ kind: 'toc', part: i })),
         ...CHAPTERS.flatMap(paginateChapter),
-        { kind: 'quiz' },
+        ...QUIZ_GROUPS.map((_, i) => ({ kind: 'quiz', part: i })),
         { kind: 'end' }
     ];
     PROBE.close();   // 쪽을 다 나눴으니 재는 데 쓰던 숨은 쪽은 치운다
@@ -672,7 +692,7 @@ function renderPage(page) {
         case 'cover': return coverPage();
         case 'toc': return tocPage(page.part);
         case 'chapter': return chapterSpreadPage(page);
-        case 'quiz': return quizPage();
+        case 'quiz': return quizPage(page.part);
         case 'end': return endPage();
         default: return '';
     }
@@ -723,7 +743,6 @@ function paint() {
 }
 
 function initQuiz() {
-    let answeredCount = 0;
     const progressEl = document.getElementById('quizProgress');
 
     spreadEl.querySelectorAll('.quiz-item').forEach(item => {
@@ -739,8 +758,9 @@ function initQuiz() {
                     if (ci === q.answer) b.classList.add('correct');
                     else if (ci === chosen) b.classList.add('incorrect');
                 });
-                answeredCount++;
-                progressEl.textContent = `${answeredCount} / 총 ${QUIZ.length}문항 완료`;
+                QUIZ_PICKED[qi] = chosen;
+                const done = QUIZ_PICKED.filter(v => v !== null).length;
+                progressEl.textContent = `${done} / 총 ${QUIZ.length}문항 완료`;
             });
         });
     });

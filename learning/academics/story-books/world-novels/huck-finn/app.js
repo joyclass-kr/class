@@ -723,18 +723,38 @@ const QUIZ = [
     { q: "짐이 헉에게 끝까지 숨겼던 것은 무엇입니까?", choices: ["돈을 숨긴 곳", "떠내려온 집의 죽은 사람이 헉의 아버지였다는 것", "자기 나이"], answer: 1 }
 ];
 
-function quizPage() {
-    const items = QUIZ.map((item, i) => `
-        <div class="quiz-item" data-qindex="${i}">
+// 선지를 세로로 쌓으니 한 쪽에 열여섯 문항이 다 들어가지 않는다. 몇 개씩 나눠 싣는다.
+const QUIZ_PER_SPREAD = 3;
+const QUIZ_GROUPS = [];
+for (let i = 0; i < QUIZ.length; i += QUIZ_PER_SPREAD) {
+    QUIZ_GROUPS.push({ from: i, items: QUIZ.slice(i, i + QUIZ_PER_SPREAD) });
+}
+
+// 쪽을 넘겼다 돌아와도 이미 푼 문항은 풀린 채로 있어야 한다.
+const QUIZ_PICKED = new Array(QUIZ.length).fill(null);
+
+function quizPage(part) {
+    const group = QUIZ_GROUPS[part];
+    const done = QUIZ_PICKED.filter(v => v !== null).length;
+    const items = group.items.map((item, k) => {
+        const i = group.from + k;
+        const picked = QUIZ_PICKED[i];
+        const graded = picked !== null;
+        const cls = ci => graded
+            ? (ci === item.answer ? ' correct' : (ci === picked ? ' incorrect' : ''))
+            : '';
+        return `
+        <div class="quiz-item${graded ? ' graded' : ''}" data-qindex="${i}">
             <p class="quiz-question">${i + 1}. ${item.q}</p>
             <div class="quiz-choices">
-                ${item.choices.map((c, ci) => `<button type="button" class="quiz-choice" data-choice="${ci}">${c}</button>`).join('')}
+                ${item.choices.map((c, ci) => `<button type="button" class="quiz-choice${cls(ci)}" data-choice="${ci}">${c}</button>`).join('')}
             </div>
-        </div>`).join('');
+        </div>`;
+    }).join('');
     return `
         <div class="page page-quiz">
-            <h2>이야기 문제</h2>
-            <p class="quiz-intro-text" id="quizProgress">0 / 총 ${QUIZ.length}문항 완료</p>
+            ${part === 0 ? '<h2>이야기 문제</h2>' : ''}
+            <p class="quiz-intro-text" id="quizProgress">${done} / 총 ${QUIZ.length}문항 완료</p>
             <div class="quiz-list">${items}</div>
         </div>`;
 }
@@ -759,7 +779,7 @@ function buildPages() {
         { kind: 'cover' },
         ...TOC_GROUPS.map((_, i) => ({ kind: 'toc', part: i })),
         ...CHAPTERS.flatMap(paginateChapter),
-        { kind: 'quiz' },
+        ...QUIZ_GROUPS.map((_, i) => ({ kind: 'quiz', part: i })),
         { kind: 'end' }
     ];
     PROBE.close();   // 쪽을 다 나눴으니 재는 데 쓰던 숨은 쪽은 치운다
@@ -780,7 +800,7 @@ function renderPage(page) {
         case 'cover': return coverPage();
         case 'toc': return tocPage(page.part);
         case 'chapter': return chapterSpreadPage(page);
-        case 'quiz': return quizPage();
+        case 'quiz': return quizPage(page.part);
         case 'end': return endPage();
         default: return '';
     }
@@ -831,7 +851,6 @@ function paint() {
 }
 
 function initQuiz() {
-    let answeredCount = 0;
     const progressEl = document.getElementById('quizProgress');
 
     spreadEl.querySelectorAll('.quiz-item').forEach(item => {
@@ -847,8 +866,9 @@ function initQuiz() {
                     if (ci === q.answer) b.classList.add('correct');
                     else if (ci === chosen) b.classList.add('incorrect');
                 });
-                answeredCount++;
-                progressEl.textContent = `${answeredCount} / 총 ${QUIZ.length}문항 완료`;
+                QUIZ_PICKED[qi] = chosen;
+                const done = QUIZ_PICKED.filter(v => v !== null).length;
+                progressEl.textContent = `${done} / 총 ${QUIZ.length}문항 완료`;
             });
         });
     });

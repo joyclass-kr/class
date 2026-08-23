@@ -598,36 +598,56 @@ function chapterSpreadPage(spread) {
 }
 
 const QUIZ = [
-    { q: "폼페이가 그대로 남은 까닭은 무엇입니까?", choices: ["돌로 지어서", "고운 화산재가 두껍게 덮여 공기가 통하지 않아서", "사람들이 지켜서"], answer: 1 },
-    { q: "발굴에서 나온 것이 아닌 것은 무엇입니까?", choices: ["화덕 안의 빵", "벽의 낙서와 선거 벽보", "황제의 무덤"], answer: 2 },
-    { q: "화산재 속 빈 구멍의 정체는 무엇입니까?", choices: ["물이 흐른 자리", "사람이 있던 자리", "나무뿌리"], answer: 1 },
-    { q: "니디아는 어떤 아이였습니까?", choices: ["부잣집 딸", "팔려 와 꽃을 팔던, 앞을 보지 못하는 아이", "사제"], answer: 1 },
-    { q: "아르바케스가 신탁을 내리는 방법은 무엇이었습니까?", choices: ["정말로 신이 말했다", "신상 뒤 통로에 사람을 숨겨 놓고 말하게 했다", "점을 쳤다"], answer: 1 },
-    { q: "베수비오가 화산으로 여겨지지 않은 까닭은 무엇입니까?", choices: ["아주 오랫동안 조용했기 때문", "산이 낮아서", "멀어서"], answer: 0 },
-    { q: "화산이 터지기 열일곱 해 전에 있었던 일은 무엇입니까?", choices: ["큰 지진", "홍수", "전쟁"], answer: 0 },
-    { q: "니디아가 약을 넣은 까닭은 무엇입니까?", choices: ["해치려고", "마음을 돌리는 약인 줄 알고", "돈을 받아서"], answer: 1 },
-    { q: "글라우쿠스가 죄를 뒤집어쓴 까닭은 무엇입니까?", choices: ["증거가 있어서", "약 때문에 정신이 흐려 그날 일을 기억하지 못해서", "자백해서"], answer: 1 },
-    { q: "올린투스의 말을 아무도 믿지 않은 까닭은 무엇입니까?", choices: ["거짓말쟁이라서", "새로운 신앙을 따른다는 이유로 이미 미움을 받고 있어서", "말을 못해서"], answer: 1 },
-    { q: "니디아가 지하실에 갇힌 사람을 찾아낸 방법은 무엇입니까?", choices: ["소리로", "냄새로", "누가 알려 줘서"], answer: 0 },
-    { q: "경기장에서 사자가 도로 우리로 들어간 까닭으로 이 책이 짚은 것은 무엇입니까?", choices: ["배가 불러서", "짐승은 화산 활동을 사람보다 먼저 느끼기 때문", "겁이 많아서"], answer: 1 },
-    { q: "그날 화산을 직접 보고 기록을 남긴 사람은 누구입니까?", choices: ["소플리니우스", "불워리턴", "황제"], answer: 0 },
-    { q: "그 어둠을 소플리니우스는 무엇에 빗댔습니까?", choices: ["밤", "불을 끈 방이 아니라 창이 없는 방의 어둠", "안개"], answer: 1 },
-    { q: "어둠 속에서 세 사람을 항구까지 이끈 것은 누구입니까?", choices: ["글라우쿠스", "이오네", "니디아"], answer: 2 },
-    { q: "이 책이 마지막에 덧붙인 것은 무엇입니까?", choices: ["사람을 살린 것은 그 도시에서 가장 아무것도 아니었던 사람이다", "화산은 무섭다", "부자가 되어야 한다"], answer: 0 }
+    { q: "폼페이가 그대로 남은 까닭은 무엇입니까?", choices: ["바닷물이 덮어서 공기와 닿지 않게 되었기 때문에", "그 지방이 아주 메말라 무엇이든 잘 썩지 않아서", "고운 화산재가 두껍게 덮여 공기가 통하지 않아서"], answer: 2 },
+    { q: "발굴에서 나온 것이 아닌 것은 무엇입니까?", choices: ["화덕 안에 그대로 있던 빵 여든한 덩이", "로마 황제가 묻힌 큰 무덤", "누구를 뽑아 달라고 적은 선거 벽보"], answer: 1 },
+    { q: "화산재 속 빈 구멍의 정체는 무엇입니까?", choices: ["사람이나 짐승이 있던 자리", "나중에 도굴꾼이 판 구멍", "물이 흘러 지나가던 자리"], answer: 0 },
+    { q: "니디아는 어떤 아이였습니까?", choices: ["팔려 와 꽃을 팔던 앞 못 보는 아이", "신전에서 심부름을 하던 사제의 딸", "글라우쿠스의 집에서 자란 먼 친척"], answer: 0 },
+    { q: "아르바케스가 신탁을 내리는 방법은 무엇이었습니까?", choices: ["신상 뒤 통로에 사람을 숨겨 놓고 말하게 했다", "잠에서 깨어난 뒤 꿈에서 본 것을 그대로 전했다", "별이 어떻게 움직이는지를 보고 헤아려 알아냈다"], answer: 0 },
+    { q: "베수비오가 화산으로 여겨지지 않은 까닭은 무엇입니까?", choices: ["아주 오랫동안 조용했기 때문에", "바다 쪽에서는 잘 보이지 않아서", "산꼭대기가 늘 눈에 덮여 있어서"], answer: 0 },
+    { q: "화산이 터지기 열일곱 해 전에 있었던 일은 무엇입니까?", choices: ["여러 해 이어진 심한 가뭄", "도시를 휩쓴 무서운 돌림병", "건물이 많이 무너진 큰 지진"], answer: 2 },
+    { q: "니디아가 약을 넣은 까닭은 무엇입니까?", choices: ["아르바케스가 시키는 대로 했기 때문에", "마음을 돌리는 약인 줄 알았기 때문에", "글라우쿠스를 벌주고 싶었기 때문에"], answer: 1 },
+    { q: "글라우쿠스가 죄를 뒤집어쓴 까닭은 무엇입니까?", choices: ["아페키데스와 전부터 크게 다투고 있어서", "약 때문에 정신이 흐려 그날 일을 기억하지 못해서", "그 자리에서 칼을 손에 들고 있었기 때문에"], answer: 1 },
+    { q: "올린투스의 말을 아무도 믿지 않은 까닭은 무엇입니까?", choices: ["전에도 거짓으로 남을 고발한 일이 있었기 때문에", "새로운 신앙을 따른다는 이유로 미움을 받고 있어서", "그 자리에 있지도 않았다는 것이 밝혀졌기 때문에"], answer: 1 },
+    { q: "니디아가 지하실에 갇힌 사람을 찾아낸 방법은 무엇입니까?", choices: ["집 사람에게 슬쩍 물어서 알아냈다", "아주 작은 소리를 듣고 찾아냈다", "문틈으로 새어 나온 빛을 보고 알았다"], answer: 1 },
+    { q: "경기장에서 사자가 도로 우리로 들어간 까닭으로 이 책이 짚은 것은 무엇입니까?", choices: ["글라우쿠스가 전에 그 사자를 길렀기 때문에", "며칠 굶기지 않아 배가 고프지 않았기 때문에", "짐승은 화산 활동을 사람보다 먼저 느끼기 때문에"], answer: 2 },
+    { q: "그날 화산을 직접 보고 기록을 남긴 사람은 누구입니까?", choices: ["발굴을 지휘한 학자 피오렐리", "이 소설을 지은 불워리턴", "바다 건너에서 본 소플리니우스"], answer: 2 },
+    { q: "그 어둠을 소플리니우스는 무엇에 빗댔습니까?", choices: ["눈을 감았을 때 보이는 것과 같은 어둠", "달도 별도 없는 겨울 들판의 밤 어둠", "불을 끈 방이 아니라 창이 없는 방의 어둠"], answer: 2 },
+    { q: "어둠 속에서 세 사람을 항구까지 이끈 것은 누구입니까?", choices: ["그 도시의 길을 발로 익힌 니디아", "등불을 들고 나선 글라우쿠스", "길을 잘 아는 항구의 뱃사람 하나"], answer: 0 },
+    { q: "이 책이 마지막에 덧붙인 것은 무엇입니까?", choices: ["사람을 살린 것은 그 도시에서 가장 아무것도 아니던 사람이다", "그날 살아남은 사람은 다들 미리 짐을 싸 둔 사람들이었다", "그 도시가 그렇게 된 것은 사람들이 신을 저버렸기 때문이다"], answer: 0 }
 ];
 
-function quizPage() {
-    const items = QUIZ.map((item, i) => `
-        <div class="quiz-item" data-qindex="${i}">
+// 선지를 세로로 쌓으니 한 쪽에 열여섯 문항이 다 들어가지 않는다. 몇 개씩 나눠 싣는다.
+const QUIZ_PER_SPREAD = 3;
+const QUIZ_GROUPS = [];
+for (let i = 0; i < QUIZ.length; i += QUIZ_PER_SPREAD) {
+    QUIZ_GROUPS.push({ from: i, items: QUIZ.slice(i, i + QUIZ_PER_SPREAD) });
+}
+
+// 쪽을 넘겼다 돌아와도 이미 푼 문항은 풀린 채로 있어야 한다.
+const QUIZ_PICKED = new Array(QUIZ.length).fill(null);
+
+function quizPage(part) {
+    const group = QUIZ_GROUPS[part];
+    const done = QUIZ_PICKED.filter(v => v !== null).length;
+    const items = group.items.map((item, k) => {
+        const i = group.from + k;
+        const picked = QUIZ_PICKED[i];
+        const graded = picked !== null;
+        const cls = ci => graded
+            ? (ci === item.answer ? ' correct' : (ci === picked ? ' incorrect' : ''))
+            : '';
+        return `
+        <div class="quiz-item${graded ? ' graded' : ''}" data-qindex="${i}">
             <p class="quiz-question">${i + 1}. ${item.q}</p>
             <div class="quiz-choices">
-                ${item.choices.map((c, ci) => `<button type="button" class="quiz-choice" data-choice="${ci}">${c}</button>`).join('')}
+                ${item.choices.map((c, ci) => `<button type="button" class="quiz-choice${cls(ci)}" data-choice="${ci}">${c}</button>`).join('')}
             </div>
-        </div>`).join('');
+        </div>`;
+    }).join('');
     return `
         <div class="page page-quiz">
-            <h2>이야기 문제</h2>
-            <p class="quiz-intro-text" id="quizProgress">0 / 총 ${QUIZ.length}문항 완료</p>
+            ${part === 0 ? '<h2>이야기 문제</h2>' : ''}
+            <p class="quiz-intro-text" id="quizProgress">${done} / 총 ${QUIZ.length}문항 완료</p>
             <div class="quiz-list">${items}</div>
         </div>`;
 }
@@ -652,7 +672,7 @@ function buildPages() {
         { kind: 'cover' },
         ...TOC_GROUPS.map((_, i) => ({ kind: 'toc', part: i })),
         ...CHAPTERS.flatMap(paginateChapter),
-        { kind: 'quiz' },
+        ...QUIZ_GROUPS.map((_, i) => ({ kind: 'quiz', part: i })),
         { kind: 'end' }
     ];
     PROBE.close();   // 쪽을 다 나눴으니 재는 데 쓰던 숨은 쪽은 치운다
@@ -673,7 +693,7 @@ function renderPage(page) {
         case 'cover': return coverPage();
         case 'toc': return tocPage(page.part);
         case 'chapter': return chapterSpreadPage(page);
-        case 'quiz': return quizPage();
+        case 'quiz': return quizPage(page.part);
         case 'end': return endPage();
         default: return '';
     }
@@ -724,7 +744,6 @@ function paint() {
 }
 
 function initQuiz() {
-    let answeredCount = 0;
     const progressEl = document.getElementById('quizProgress');
 
     spreadEl.querySelectorAll('.quiz-item').forEach(item => {
@@ -740,8 +759,9 @@ function initQuiz() {
                     if (ci === q.answer) b.classList.add('correct');
                     else if (ci === chosen) b.classList.add('incorrect');
                 });
-                answeredCount++;
-                progressEl.textContent = `${answeredCount} / 총 ${QUIZ.length}문항 완료`;
+                QUIZ_PICKED[qi] = chosen;
+                const done = QUIZ_PICKED.filter(v => v !== null).length;
+                progressEl.textContent = `${done} / 총 ${QUIZ.length}문항 완료`;
             });
         });
     });
