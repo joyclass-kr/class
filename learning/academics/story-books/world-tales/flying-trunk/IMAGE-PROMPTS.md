@@ -1,8 +1,8 @@
 # 제미나이 그림 프롬프트
 
-이 책은 하나의 이야기를 8개의 장(챕터)으로 나눠 담았고, 각 장마다 그림이
-**한 장**이에요. 그림이 펼침면 전체 폭을 가득 채우고, 그 아래에 이야기가
-왼쪽·오른쪽으로 나뉘어 들어갑니다.
+이 책은 하나의 이야기를 8개의 장(챕터)으로 나눠 담았고, 펼침면은 모두
+16개예요. 펼침면 하나에 그림이 한 장씩 들어갑니다.
+그림이 펼침면 전체 폭을 가득 채우고, 그 아래에 이야기가 왼쪽·오른쪽으로 나뉘어 들어갑니다.
 
 아래 프롬프트를 제미나이에 그대로 넣어서 생성한 뒤, 파일명을 정확히 맞춰서
 `images/` 폴더에 저장하면 자동으로 책에 나타납니다.
@@ -45,49 +45,57 @@ The townspeople: a lively crowd of market folk.
 
 | 파일명 | 장면 |
 |---|---|
-| `images/01-spend.png` | A grand house being emptied of furniture while a young man in a fine coat sits alone on the floor, and a battered leather trunk being carried in by a stooped friend, comic and rueful. |
+| `images/01-spend.png` | A grand merchant house where a cheerful young man in fine clothes treats a crowd of friends to a lavish feast, coins scattered on the table, warm and comic. |
+| `images/01-spend-2.png` | An emptied house where a young man sits alone on the bare floor while a stooped friend in spectacles carries in a battered leather trunk, rueful and comic. |
 
 ## 2장 · 가방이 날아올랐다
 
 | 파일명 | 장면 |
 |---|---|
-| `images/02-fly.png` | An old leather trunk shooting up out of a chimney into the night sky with a startled young man inside clutching the sides, the town shrinking below, exhilarating and funny. |
+| `images/02-fly.png` | An old leather trunk lifting off a bare floor with a startled young man inside, then shooting up out of a chimney into the night, exhilarating and funny. |
+| `images/02-fly-2.png` | A leather trunk soaring high above moonlit clouds with a delighted young man steering by leaning, tiny towns and rivers far below, stars all around, magical. |
 
 ## 3장 · 낯선 나라의 탑
 
 | 파일명 | 장면 |
 |---|---|
-| `images/03-tower.png` | A busy eastern city street of domes and awnings where a young man questions a market seller, a tall lone tower rising beyond the rooftops, colourful and lively. |
+| `images/03-tower.png` | A trunk landing in a wood beside a colourful eastern city of domes and awnings, a young man hiding it under leaves then walking into a busy spice market, lively. |
+| `images/03-tower-2.png` | A market seller pointing up at a tall lone tower rising above the rooftops while a young man listens with a gleam in his eye, colourful stalls around, intriguing. |
 
 ## 4장 · 창문으로 들어가다
 
 | 파일명 | 장면 |
 |---|---|
-| `images/04-window.png` | A tower bedroom at night where a young man steps in from the window with a trunk hovering behind him, a startled princess sitting up on a couch, moonlight and gauzy curtains, charming. |
+| `images/04-window.png` | A leather trunk rising to the top of a tall tower at night, a young man climbing in through a half-open window where a princess sleeps on a couch, moonlit and charming. |
+| `images/04-window-2.png` | A tower bedroom where a young man bows to a wide-eyed princess sitting up on her couch, a trunk resting by the window, warm lamplight, charming. |
 
 ## 5장 · 이야기를 들려주다
 
 | 파일명 | 장면 |
 |---|---|
-| `images/05-story.png` | A tower room where a young man acts out a story with sweeping gestures, kitchen objects magically sketched in the air around him, the princess laughing on the couch, warm lamplight. |
+| `images/05-story.png` | A tower room where a young man acts out a story with sweeping gestures, kitchen objects sketched magically in the air around him, a princess laughing on the couch, warm lamplight. |
+| `images/05-story-2.png` | A trunk arriving at a tower window night after night under different moons, a princess waiting eagerly at the sill each time, warm and romantic. |
 
 ## 6장 · 임금님 앞에서
 
 | 파일명 | 장면 |
 |---|---|
-| `images/06-parents.png` | A domed throne room where a young man tells a story with animated gestures, the queen dabbing her eyes and the king slapping his knee, courtiers delighted, festive. |
+| `images/06-parents.png` | A tower room where a princess happily tells her stout royal parents about a visitor while the king frowns and the queen looks curious, ornate robes, comic. |
+| `images/06-parents-2.png` | A domed throne room where a young man tells a story with animated gestures, the queen dabbing her eyes and the king slapping his knee, courtiers delighted, festive. |
 
 ## 7장 · 하늘에서 터진 불꽃
 
 | 파일명 | 장면 |
 |---|---|
-| `images/07-fireworks.png` | A night sky above a domed city bursting with fireworks launched from a flying trunk, crowds below cheering with upturned faces, spectacular and joyful. |
+| `images/07-fireworks.png` | A young man buying armfuls of fireworks at a lantern-lit market, then loading them into a trunk and rising into the night sky above a glowing city, festive. |
+| `images/07-fireworks-2.png` | A night sky above a domed city bursting with fireworks launched from a flying trunk, crowds below cheering with upturned faces, spectacular and joyful. |
 
 ## 8장 · 타 버린 가방
 
 | 파일명 | 장면 |
 |---|---|
-| `images/08-ending.png` | A forest clearing at dawn where only a heap of ash remains where the trunk stood, a young man staring at it, and far off a princess at a tower window scanning the empty sky, wistful. |
+| `images/08-ending.png` | A forest clearing at dawn where only a heap of grey ash remains where a trunk stood, a young man kneeling and sifting it with his hands, quiet and sad. |
+| `images/08-ending-2.png` | A wandering storyteller telling tales in a village square while glancing at the sky, and far away a princess at a tower window watching empty clouds, wistful. |
 
 ## 사용 팁
 

@@ -1,8 +1,8 @@
 # 제미나이 그림 프롬프트
 
-이 책은 하나의 이야기를 8개의 장(챕터)으로 나눠 담았고, 각 장마다 그림이
-**한 장**이에요. 그림이 펼침면 전체 폭을 가득 채우고, 그 아래에 이야기가
-왼쪽·오른쪽으로 나뉘어 들어갑니다.
+이 책은 하나의 이야기를 8개의 장(챕터)으로 나눠 담았고, 펼침면은 모두
+16개예요. 펼침면 하나에 그림이 한 장씩 들어갑니다.
+그림이 펼침면 전체 폭을 가득 채우고, 그 아래에 이야기가 왼쪽·오른쪽으로 나뉘어 들어갑니다.
 
 아래 프롬프트를 제미나이에 그대로 넣어서 생성한 뒤, 파일명을 정확히 맞춰서
 `images/` 폴더에 저장하면 자동으로 책에 나타납니다.
@@ -46,48 +46,56 @@ a round grandfather in a knitted vest.
 | 파일명 | 장면 |
 |---|---|
 | `images/01-small.png` | A sunlit forest floor where a very small fir tree stands among ferns while plump hares leap right over it, tall pines towering behind, warm green light, sweet and comic. |
+| `images/01-small-2.png` | A young fir tree through spring and summer, sunbeams and wind swirling around it while it looks up longingly at tall pines, seasons passing, wistful. |
 
 ## 2장 · 잘려 나간 나무들
 
 | 파일명 | 장면 |
 |---|---|
-| `images/02-felled.png` | An autumn forest where woodcutters drag away tall straight trunks, a small fir watching from between stumps, and a stork alighting nearby to speak, wistful and vivid. |
+| `images/02-felled.png` | An autumn forest where woodcutters drag away tall straight trunks and load them on carts, a small fir watching from between fresh stumps, vivid and wistful. |
+| `images/02-felled-2.png` | A stork perched by a small fir tree describing tall ship masts, with a dreamlike vision of a great sailing ship on the sea above them, adventurous and bright. |
 
 ## 3장 · 반짝이는 나무들
 
 | 파일명 | 장면 |
 |---|---|
-| `images/03-christmas.png` | A snowy forest where sparrows chatter to a small fir tree, and above them a vision of a warm parlour window glowing with a decorated tree full of candles and gilded apples, magical. |
+| `images/03-christmas.png` | A snowy forest where woodcutters carry off small young firs while sparrows chatter to a waiting fir tree, cold blue light, curious. |
+| `images/03-christmas-2.png` | A vision above a snowy forest of a warm parlour window glowing with a decorated tree full of candles and gilded apples, a small fir gazing up longingly, magical. |
 
 ## 4장 · 드디어 온 날
 
 | 파일명 | 장면 |
 |---|---|
-| `images/04-cut.png` | A snowy clearing where a small fir is lifted onto a cart, the forest receding behind as the cart rolls toward a village with chimney smoke, bittersweet and bright. |
+| `images/04-cut.png` | A snowy clearing at dawn where a woodcutter sizes up a young fir tree and swings his axe, the tree tipping over into deep snow, dramatic and bittersweet. |
+| `images/04-cut-2.png` | A cart carrying a fir tree away from a snowy forest toward a village with chimney smoke, then people carrying it in through a warm lit door, hopeful and bright. |
 
 ## 5장 · 가장 빛나던 저녁
 
 | 파일명 | 장면 |
 |---|---|
-| `images/05-decorated.png` | A warm parlour where a fir tree stands ablaze with candles, gilded apples and a great star, children rushing in clapping, family gathered, radiant and joyful. |
+| `images/05-decorated.png` | A warm parlour where people decorate a fir tree with gilded apples, paper flowers and sweets, setting a great star on top, cosy and expectant. |
+| `images/05-decorated-2.png` | A parlour where a fir tree blazes with candles as children in nightgowns rush in clapping and dance around it, family gathered, radiant and joyful. |
 
 ## 6장 · 다락방의 겨울
 
 | 파일명 | 장면 |
 |---|---|
-| `images/06-attic.png` | A dim dusty attic where a bare fir tree leans against boxes, a family of mice sitting attentively at its base, one shaft of light through a small window, quiet and tender. |
+| `images/06-attic.png` | Servants stripping decorations from a fir tree and dragging it up to a dim dusty attic to lean among boxes, one shaft of light from a small window, quiet and lonely. |
+| `images/06-attic-2.png` | A dim dusty attic where a bare fir tree drops needles and two mice sit attentively at its base looking up, tender and quiet. |
 
 ## 7장 · 뒤늦게 떠오른 것
 
 | 파일명 | 장면 |
 |---|---|
-| `images/07-memory.png` | An attic where a fir tree tells stories to gathered mice, and behind it a soft translucent memory of a sunlit summer forest with hares and warm light, gentle and moving. |
+| `images/07-memory.png` | An attic where a fir tree tells stories to gathered mice, and behind it a soft translucent memory of a sunlit summer forest with hares and dew, gentle and moving. |
+| `images/07-memory-2.png` | A fir tree alone in a dim attic gazing at snow falling past a small window, mice gone, dust motes in a beam of light, quiet and moving. |
 
 ## 8장 · 마당에 나온 날
 
 | 파일명 | 장면 |
 |---|---|
-| `images/08-ending.png` | A spring farmyard where a fir tree lies in the sun, its old star picked up by a child who pins it to her coat, green shoots pushing up through the earth nearby, quiet and hopeful. |
+| `images/08-ending.png` | An attic door opening onto spring light, a fir tree carried down and laid in a sunny farmyard where green shoots and a small sapling grow nearby, hopeful and warm. |
+| `images/08-ending-2.png` | A spring farmyard where a fir tree lies in the sun and a child pins its old star to her coat while children run and laugh, quiet and hopeful. |
 
 ## 사용 팁
 
