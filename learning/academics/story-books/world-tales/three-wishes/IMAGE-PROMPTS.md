@@ -1,7 +1,7 @@
 # 제미나이 그림 프롬프트
 
-이 책은 하나의 이야기를 7개의 장(챕터)으로 나눠 담았고, 펼침면은 모두
-7개예요. 펼침면 하나에 그림이 한 장씩 들어갑니다.
+이 책은 하나의 이야기를 8개의 장(챕터)으로 나눠 담았고, 펼침면은 모두
+16개예요. 펼침면 하나에 그림이 한 장씩 들어갑니다.
 그림이 펼침면 전체 폭을 가득 채우고, 그 아래에 이야기가 왼쪽·오른쪽으로 나뉘어 들어갑니다.
 
 아래 프롬프트를 제미나이에 그대로 넣어서 생성한 뒤, 파일명을 정확히 맞춰서
@@ -44,43 +44,57 @@ kindly amused expression.
 
 | 파일명 | 장면 |
 |---|---|
-| `images/01-spirit.png` | A forest clearing where a burly woodcutter lowers his axe in surprise as a small glowing leafy spirit appears from behind a great oak, shafts of green light through the branches, gentle wonder. |
+| `images/01-spirit.png` | A one-room cottage at a forest edge and a burly woodcutter raising his axe before a great oak deep in the woods, shafts of green light, warm and rustic. |
+| `images/01-spirit-2.png` | A small glowing spirit with leafy hair appearing from behind a great oak while a startled woodcutter lowers his axe and steps back, gentle wonder. |
 
 ## 2장 · 소원 세 가지
 
 | 파일명 | 장면 |
 |---|---|
-| `images/02-wishes.png` | A glowing forest spirit holding up three fingers before an astonished woodcutter, and the same man sprinting home down a woodland path with his axe forgotten behind him, comic energy. |
+| `images/02-wishes.png` | A glowing forest spirit holding up three fingers before an astonished woodcutter, then vanishing leaving only shafts of light in the trees, magical. |
+| `images/02-wishes-2.png` | A woodcutter abandoning his axe and sprinting home down a woodland path, then bursting through a cottage door as his wife drops her spoon, comic energy. |
 
 ## 3장 · 저녁 밥상 앞에서
 
 | 파일명 | 장면 |
 |---|---|
-| `images/03-table.png` | A cottage supper table with two thin bowls of gruel where a huge sausage suddenly drops onto a plate, the couple frozen mid-spoonful with enormous startled eyes, firelight, very funny. |
+| `images/03-table.png` | A cottage kitchen where an excited wife in a headscarf paces and gestures while her husband waves his hands calmingly, firelight, lively and comic. |
+| `images/03-table-2.png` | A cottage supper table with two thin bowls of gruel where a huge sausage suddenly drops onto a plate, the couple frozen mid-spoonful, very funny. |
 
 ## 4장 · 아내의 불호령
 
 | 파일명 | 장면 |
 |---|---|
-| `images/04-scold.png` | A cottage kitchen in full uproar, a red-faced wife jabbing her finger while her husband shouts back, the sausage sitting innocently on the table between them, pots rattling, riotously comic. |
+| `images/04-scold.png` | A cottage kitchen where a red-faced wife leaps up jabbing her finger while her husband shrinks back, a huge sausage sitting innocently between them, riotous. |
+| `images/04-scold-2.png` | A cottage kitchen in full uproar with pots rattling and a cat fleeing out the door as a couple shout at each other over a sausage, hilariously comic. |
 
 ## 5장 · 코에 붙은 소시지
 
 | 파일명 | 장면 |
 |---|---|
-| `images/05-nose.png` | A wife standing in the middle of the kitchen with a huge sausage stuck fast to the end of her nose, both hands tugging at it while her husband pulls too, chairs knocked over, hysterically comic. |
+| `images/05-nose.png` | A furious woodcutter shouting as a huge sausage leaps from the plate and sticks fast to his wife's nose, sudden silence in the kitchen, hysterically comic. |
+| `images/05-nose-2.png` | A wife with a huge sausage stuck to her nose tugging with both hands while her husband pulls too, chairs toppling and bowls rolling, hysterically comic. |
 
-## 6장 · 마지막 한 가지
-
-| 파일명 | 장면 |
-|---|---|
-| `images/06-last.png` | An exhausted couple slumped on the floor of their cottage, the wife cradling the sausage on her nose while the husband looks at her with a softening, thoughtful expression, warm quiet firelight. |
-
-## 7장 · 다시 죽 한 그릇
+## 6장 · 아무리 해도
 
 | 파일명 | 장면 |
 |---|---|
-| `images/07-ending.png` | A cottage table at night where a couple share a sausage cut in half, both laughing with their heads thrown back, the modest room glowing warm around them, deeply cosy and happy. |
+| `images/06-try.png` | A couple trying butter and cold water on a sausage stuck to a nose, the husband reaching for a knife and the wife shrieking, chaotic and funny. |
+| `images/06-try-2.png` | An exhausted couple slumped on a cottage floor, the wife cradling the sausage on her nose and sniffling while the husband stares at the fire, quiet and tender. |
+
+## 7장 · 마지막 한 가지
+
+| 파일명 | 장면 |
+|---|---|
+| `images/07-last.png` | A wife forcing a smile with a sausage on her nose while her husband gazes at her with a softening thoughtful expression, warm firelight, tender. |
+| `images/07-last-2.png` | A woodcutter shaking his head gently and standing up to speak a wish while his wife's eyes fill with tears, cosy firelit cottage, moving. |
+
+## 8장 · 다시 죽 한 그릇
+
+| 파일명 | 장면 |
+|---|---|
+| `images/08-ending.png` | A sausage dropping off a nose onto a plate as a wife joyfully feels her restored face, then pausing as she realises all the wishes are gone, comic and warm. |
+| `images/08-ending-2.png` | A cottage table at night where a couple share a sausage cut in half over two bowls of gruel, both laughing with heads thrown back, deeply cosy and happy. |
 
 ## 사용 팁
 

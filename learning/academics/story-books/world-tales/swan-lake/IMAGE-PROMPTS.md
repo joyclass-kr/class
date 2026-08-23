@@ -1,8 +1,8 @@
 # 제미나이 그림 프롬프트
 
-이 책은 하나의 이야기를 8개의 장(챕터)으로 나눠 담았고, 각 장마다 그림이
-**한 장**이에요. 그림이 펼침면 전체 폭을 가득 채우고, 그 아래에 이야기가
-왼쪽·오른쪽으로 나뉘어 들어갑니다.
+이 책은 하나의 이야기를 8개의 장(챕터)으로 나눠 담았고, 펼침면은 모두
+16개예요. 펼침면 하나에 그림이 한 장씩 들어갑니다.
+그림이 펼침면 전체 폭을 가득 채우고, 그 아래에 이야기가 왼쪽·오른쪽으로 나뉘어 들어갑니다.
 
 아래 프롬프트를 제미나이에 그대로 넣어서 생성한 뒤, 파일명을 정확히 맞춰서
 `images/` 폴더에 저장하면 자동으로 책에 나타납니다.
@@ -45,49 +45,57 @@ grand owl-like shape rather than a monster.
 
 | 파일명 | 장면 |
 |---|---|
-| `images/01-birthday.png` | A sunny castle courtyard birthday feast with garlands and dancing villagers, a young prince standing apart looking troubled as his mother speaks to him, warm festive colours. |
+| `images/01-birthday.png` | A sunny castle courtyard birthday feast with garlands, musicians and dancing villagers, a queen drawing her son aside at dusk, warm festive colours. |
+| `images/01-birthday-2.png` | A troubled young prince slipping away from a feast with a crossbow and walking into moonlit pine woods where a bright lake appears ahead, quiet and beautiful. |
 
 ## 2장 · 호수의 백조들
 
 | 파일명 | 장면 |
 |---|---|
-| `images/02-lake.png` | A moonlit forest lake where a flock of white swans glides, one stepping ashore and transforming into a girl in a white feathered dress as a startled prince lowers his crossbow, silver and magical. |
+| `images/02-lake.png` | A moonlit forest lake where a flock of white swans glides silently, a prince raising his crossbow among the pines, silver and magical. |
+| `images/02-lake-2.png` | A swan stepping ashore and transforming into a girl in a white feathered dress with a small crown as a startled prince drops his crossbow, magical. |
 
 ## 3장 · 오데트의 사연
 
 | 파일명 | 장면 |
 |---|---|
-| `images/03-odette.png` | A lakeside at night where a girl in white tells her story to a kneeling prince, other swans watching from the water, a dark winged shape faintly visible among the pines, tender and hushed. |
+| `images/03-odette.png` | A lakeside at night where a girl in white tells her story to a kneeling prince, other swans watching from the water, tender and hushed. |
+| `images/03-odette-2.png` | A prince clasping a swan-girl's hands at a moonlit lakeside while a vast dark winged shadow passes over the pines behind them, tender and ominous. |
 
 ## 4장 · 검은 옷의 아가씨
 
 | 파일명 | 장면 |
 |---|---|
-| `images/04-ball.png` | A grand candlelit ballroom where a girl in a black gown enters and every head turns, the prince rushing toward her with joy, an imposing dark-cloaked figure behind her, dramatic and glittering. |
+| `images/04-ball.png` | A grand candlelit ballroom where princesses curtsey in turn while a distracted prince watches the doorway and his mother frowns, glittering and festive. |
+| `images/04-ball-2.png` | A girl in a black gown entering a ballroom with a tall dark-cloaked figure behind her, a joyful prince rushing to dance with her, dramatic and glittering. |
 
 ## 5장 · 창밖의 백조
 
 | 파일명 | 장면 |
 |---|---|
-| `images/05-window.png` | A ballroom where a prince announces his betrothal to a girl in black while outside a tall window a white swan-girl presses against the glass in anguish, guests frozen mid-turn, powerful contrast. |
+| `images/05-window.png` | A hushed ballroom where a prince raises his hand and announces his betrothal to a girl in black while a dark-cloaked figure laughs behind them, dramatic. |
+| `images/05-window-2.png` | A white swan-girl pressing against a tall ballroom window in anguish as guests turn, the prince ashen-faced and the black-gowned girl gone, powerful contrast. |
 
 ## 6장 · 다시 호수로
 
 | 파일명 | 장면 |
 |---|---|
-| `images/06-return.png` | A young prince running through dark pines toward a moonlit lake where swan-girls gather, one sitting with bowed head at the water's edge, a vast dark winged shadow spreading above the trees. |
+| `images/06-return.png` | A prince running through dark pines toward a moonlit lake where swan-girls gather, one sitting with bowed head on a rock, urgent and moving. |
+| `images/06-return-2.png` | A swan-girl looking up in sorrow at a lakeside as wind stirs the water and a vast dark winged shape spreads above the trees, dramatic. |
 
 ## 7장 · 마주 선 밤
 
 | 파일명 | 장면 |
 |---|---|
-| `images/07-confront.png` | A storm-tossed lakeside where a prince and a swan-girl stand shoulder to shoulder facing a towering dark-winged figure that is beginning to break apart into feathers and mist, dawn light breaking. |
+| `images/07-confront.png` | A storm-tossed lakeside where a prince steps in front of a swan-girl to face a towering dark-winged figure, feathers and wind swirling, dramatic. |
+| `images/07-confront-2.png` | A prince and a swan-girl standing hand in hand with swans gathered around them as a dark-winged figure breaks apart into feathers and mist, dawn breaking. |
 
 ## 8장 · 아침 호수
 
 | 파일명 | 장면 |
 |---|---|
-| `images/08-ending.png` | A golden sunrise over a calm lake where feathers fall away from swans and young women walk ashore, a prince and a girl standing together at the water's edge, radiant and peaceful. |
+| `images/08-ending.png` | A golden sunrise over a calm lake where feathers fall away from swans and young women walk ashore embracing each other, radiant and joyful. |
+| `images/08-ending-2.png` | A prince and a girl standing together at a sunlit lake edge as mist clears and other young women set off home, distant castle bells, peaceful and radiant. |
 
 ## 사용 팁
 
