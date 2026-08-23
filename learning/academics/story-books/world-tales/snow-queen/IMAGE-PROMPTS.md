@@ -1,8 +1,8 @@
 # 제미나이 그림 프롬프트
 
-이 책은 하나의 이야기를 8개의 장(챕터)으로 나눠 담았고, 각 장마다 그림이
-**한 장**이에요. 그림이 펼침면 전체 폭을 가득 채우고, 그 아래에 이야기가
-왼쪽·오른쪽으로 나뉘어 들어갑니다.
+이 책은 하나의 이야기를 8개의 장(챕터)으로 나눠 담았고, 펼침면은 모두
+16개예요. 펼침면 하나에 그림이 한 장씩 들어갑니다.
+그림이 펼침면 전체 폭을 가득 채우고, 그 아래에 이야기가 왼쪽·오른쪽으로 나뉘어 들어갑니다.
 
 아래 프롬프트를 제미나이에 그대로 넣어서 생성한 뒤, 파일명을 정확히 맞춰서
 `images/` 폴더에 저장하면 자동으로 책에 나타납니다.
@@ -18,77 +18,86 @@
 
 ```
 Children's picture book illustration, bright cheerful cartoon-animation style,
-bold clean outlines, saturated storybook colors, strong contrast between icy
-blues and warm firelight, no text or letters in the image, northern European
-towns, forests and arctic landscapes, expressive faces, wide panoramic
-composition, gentle and never frightening.
+bold clean outlines, saturated storybook colors, warm rooftop-garden golds
+against icy blues and green auroras, no text or letters in the image, two attic
+windows joined by a rose box, a snowy town square, a summer garden, a robbers'
+hall, and a vast palace of ice, expressive faces, wide panoramic composition,
+beautiful and never frightening.
 ```
 
 ## 인물 설명 (일관성을 위해 매번 붙여 넣으세요)
 
 ```
-Gerda: a determined girl about 10 with brown braids, a red coat and boots, later
-barefoot. Kai: a boy the same age with light hair and a blue scarf, growing pale
-and cold-eyed after the mirror shard. The Snow Queen: a tall serene woman in a
-white-silver gown and ice crown, beautiful and remote rather than wicked. The
-robber girl: a wild-haired girl in furs with a cheeky grin. The reindeer: a
-sturdy brown reindeer with wide antlers.
+Gerda: a small girl with brown braids and a red cloak, stubborn and warm. Kai:
+a boy her age with fair hair, cheerful at first and cold-faced later. The
+grandmother: an old woman with spectacles who tells stories. The snow queen: a
+tall pale woman in white furs, drawn as remote and beautiful rather than wicked.
+The robber girl: a fierce dark-haired girl with a knife and a pet reindeer. The
+reindeer: a shaggy grey reindeer with kind eyes.
 ```
 
 ## 표지 · 마무리
 
 | 파일명 | 장면 |
 |---|---|
-| `images/cover.png` (세로 2:3 비율) | A tall portrait-format cover: a girl in a red coat walking alone across a vast snowfield toward a distant glittering ice palace under green auroras, her small footprints trailing behind, cold blues and greens with one warm red figure. |
+| `images/cover.png` (세로 2:3 비율) | A tall portrait-format cover: a girl in a red cloak and bare feet walking across a vast frozen plain toward a distant palace of ice, the northern lights arching green and violet above her, tiny and determined, beautiful and cold. |
 | `images/end.png` | A closed storybook resting under a starry night sky with soft golden sparkles rising from its pages, peaceful and warm closing scene. |
 
 ## 1장 · 창가의 장미
 
 | 파일명 | 장면 |
 |---|---|
-| `images/01-roses.png` | Two children leaning out of facing attic windows across a narrow gap between rooftops, tending a shared window box of red roses, warm summer light over a northern European town. |
+| `images/01-roses.png` | Two attic windows facing each other across a narrow gap joined by a window box of climbing roses, two children playing beneath, warm rooftop light over a huddled town, charming. |
+| `images/01-roses-2.png` | A cosy attic where a spectacled grandmother tells a story by the stove, and a snowflake at the frosted window growing into the shape of a tall pale woman in white furs, eerie but beautiful. |
 
 ## 2장 · 눈에 박힌 조각
 
 | 파일명 | 장면 |
 |---|---|
-| `images/02-shard.png` | Tiny glittering glass splinters drifting down over a snowy town, one catching a boy in the eye as he flinches, his expression turning cold while a girl beside him looks worried, chilly blue evening. |
+| `images/02-shard.png` | A shattering mirror scattering glittering dust across a wide sky, and a rooftop garden where a boy claps a hand to his eye as a girl peers at him anxiously, summer roses around, striking. |
+| `images/02-shard-2.png` | A rooftop garden where a boy kicks over a rose box sneering while a girl stands hurt beside it, and the same boy running off with older children into falling snow, sad and cold. |
 
 ## 3장 · 하얀 썰매
 
 | 파일명 | 장면 |
 |---|---|
-| `images/03-sleigh.png` | A white sleigh drawn by pale horses sweeping out of a snowy town square with a boy's small sled hitched behind, a serene woman in silver looking back at him, swirling snow and northern lights beginning. |
+| `images/03-sleigh.png` | A snowy town square where children hitch their sleds to passing carts, and a pure white sleigh sweeping in and out through the gate with one boy towed helplessly behind, thrilling. |
+| `images/03-sleigh-2.png` | A snowy plain where a tall pale woman in white furs steps from a sleigh and kisses a boy's forehead, frost spreading over him, the sleigh then racing north under a wide grey sky, beautiful and chilling. |
 
 ## 4장 · 게르다가 길을 나서다
 
 | 파일명 | 장면 |
 |---|---|
-| `images/04-journey.png` | A girl in a red coat pushing off from a riverbank in a small wooden boat holding out her red shoes over the water, willow branches and spring flowers along the shore, hopeful morning light. |
+| `images/04-journey.png` | A spring riverbank where a small girl in a red cloak throws her new red shoes into the water asking after her friend, and the shoes drifting back to her feet, hopeful and tender. |
+| `images/04-journey-2.png` | A boat drifting downriver to a garden full of flowers where an old woman welcomes a girl, and later a single rose blooming through the soil as the girl remembers with a start, dreamlike. |
 
 ## 5장 · 도둑 소녀
 
 | 파일명 | 장면 |
 |---|---|
-| `images/05-robber.png` | A wild-haired girl in furs sitting cross-legged in a firelit robber camp listening intently as a girl in a red coat tells her story, a reindeer tethered nearby, warm orange firelight against dark forest. |
+| `images/05-robber.png` | A dark forest road where robbers surround a carriage and a fierce dark-haired girl with a knife claims the small traveller for herself, torchlight and shadows, tense but not cruel. |
+| `images/05-robber-2.png` | A robbers' hall where a girl sleeps among caged doves and a tethered reindeer as another girl listens to her story, and at dawn cutting the reindeer's rope, warm and surprising. |
 
 ## 6장 · 북쪽 끝으로
 
 | 파일명 | 장면 |
 |---|---|
-| `images/06-reindeer.png` | A reindeer carrying a girl across an endless snowfield under vivid green auroras, then stopping at a ridge where a vast ice palace glitters in the distance, tiny figure against huge landscape. |
+| `images/06-reindeer.png` | A reindeer bounding away from a robbers' camp with a small girl on its back, a fierce girl waving a scarf behind, and then a vast treeless snowfield under dancing green and violet auroras, breathtaking. |
+| `images/06-reindeer-2.png` | A tiny turf hut on the tundra where a wise woman speaks to a reindeer and a small girl, and then the reindeer racing on toward a distant glimmering palace of ice, hopeful and vast. |
 
 ## 7장 · 얼음 궁전
 
 | 파일명 | 장면 |
 |---|---|
-| `images/07-ice-palace.png` | A vast hall of blue ice where a pale boy sits alone arranging flat ice pieces on a frozen floor, a girl in a thin dress running toward him with arms outstretched, cold blue with one warm point of light. |
+| `images/07-ice-palace.png` | A vast empty palace of ice with soundless halls where a small girl walks alone, and in the great hall a frozen lake with a pale boy sitting on it arranging shards of ice, stark and beautiful. |
+| `images/07-ice-palace-2.png` | A frozen hall where a girl throws her arms around a pale boy and her tears fall on his chest, ice melting and colour returning to his face as he blinks awake, deeply moving. |
 
 ## 8장 · 다시 여름
 
 | 파일명 | 장면 |
 |---|---|
-| `images/08-home.png` | Two children walking hand in hand out of a melting ice palace into a landscape turning green, and beyond them their familiar rooftop window box bursting with red roses in summer sunlight, joyful warmth. |
+| `images/08-home.png` | Two children riding a reindeer south as snow thins into green grass, meeting a taller robber girl on the road, all laughing together, spring light and relief. |
+| `images/08-home-2.png` | A familiar attic where a grandmother reads by the window as two grown-taller children sit down in their old chairs, the rose box blooming outside in full summer sun, warm and complete. |
 
 ## 사용 팁
 

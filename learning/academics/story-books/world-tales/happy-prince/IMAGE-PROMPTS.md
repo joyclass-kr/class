@@ -1,8 +1,8 @@
 # 제미나이 그림 프롬프트
 
-이 책은 하나의 이야기를 7개의 장(챕터)으로 나눠 담았고, 각 장마다 그림이
-**한 장**이에요. 그림이 펼침면 전체 폭을 가득 채우고, 그 아래에 이야기가
-왼쪽·오른쪽으로 나뉘어 들어갑니다.
+이 책은 하나의 이야기를 7개의 장(챕터)으로 나눠 담았고, 펼침면은 모두
+14개예요. 펼침면 하나에 그림이 한 장씩 들어갑니다.
+그림이 펼침면 전체 폭을 가득 채우고, 그 아래에 이야기가 왼쪽·오른쪽으로 나뉘어 들어갑니다.
 
 아래 프롬프트를 제미나이에 그대로 넣어서 생성한 뒤, 파일명을 정확히 맞춰서
 `images/` 폴더에 저장하면 자동으로 책에 나타납니다.
@@ -18,70 +18,79 @@
 
 ```
 Children's picture book illustration, bright cheerful cartoon-animation style,
-bold clean outlines, saturated storybook colors, warm lamplight against cool
-evening blues, no text or letters in the image, 19th-century European city of
-rooftops, bridges and narrow streets, expressive faces, wide panoramic
-composition, tender and never grim.
+bold clean outlines, saturated storybook colors, warm lamplight against cold blue
+city dusk, no text or letters in the image, a European city of rooftops and
+squares, a tall column with a gilded statue, poor attic rooms and grand houses,
+and a snowy street, expressive faces, wide panoramic composition, tender and
+never grim.
 ```
 
 ## 인물 설명 (일관성을 위해 매번 붙여 넣으세요)
 
 ```
-The Happy Prince: a tall statue of a young prince covered in gold leaf with two
-bright sapphire eyes and a ruby-set sword hilt, kind serene face. The swallow: a
-small sleek blue-black swallow with a white breast, cheerful and chatty. The
-seamstress: a tired young woman sewing by candlelight. The playwright: a thin
-young man at a desk. The match girl: a small girl with a tray of matches.
+The happy prince: a tall gilded statue of a young prince with sapphire eyes and
+a ruby on his sword hilt, growing plainer as the story goes. The swallow: a small
+sleek bird with a white throat and quick bright eyes. The seamstress: a tired
+woman sewing by candlelight. Her son: a small boy with a fever. The young writer:
+a thin man at a desk in a cold attic. The match girl: a small child in a thin
+dress. The mayor and councillors: pompous men in gold chains.
 ```
 
 ## 표지 · 마무리
 
 | 파일명 | 장면 |
 |---|---|
-| `images/cover.png` (세로 2:3 비율) | A tall portrait-format cover: a golden statue of a prince on a tall stone column overlooking a city of rooftops at dusk, a single small swallow perched on his shoulder, warm lamplight beginning in the windows below, gentle and moving. |
+| `images/cover.png` (세로 2:3 비율) | A tall portrait-format cover: a gilded statue of a young prince on a tall column above a wintry city at dusk, a small swallow perched on its shoulder, the sapphire eyes catching the last light, lamps coming on in the streets below, beautiful and moving. |
 | `images/end.png` | A closed storybook resting under a starry night sky with soft golden sparkles rising from its pages, peaceful and warm closing scene. |
 
 ## 1장 · 도시를 내려다보는 동상
 
 | 파일명 | 장면 |
 |---|---|
-| `images/01-statue.png` | A gilded statue of a young prince standing on a tall column above a busy city square at golden hour, townspeople passing below without looking up, rooftops stretching to the horizon. |
+| `images/01-statue.png` | A city square at dusk with a tall column bearing a gilded prince statue with sapphire eyes, townspeople below pointing up admiringly, lamps beginning to glow, beautiful and lofty. |
+| `images/01-statue-2.png` | A memory of a walled palace garden full of music, and the same prince now as a statue high on a column seeing narrow lamplit alleys of hardship below, a tear on his gilded cheek, moving. |
 
 ## 2장 · 하룻밤만 묵어가는 제비
 
 | 파일명 | 장면 |
 |---|---|
-| `images/02-swallow.png` | A small swallow settling between the feet of a golden statue at night, looking up in surprise as a tear runs down the statue's cheek, starry sky and quiet dark rooftops. |
+| `images/02-swallow.png` | A statue's stone feet where a small swallow settles for the night and a drop falls on it, the bird looking up in surprise at the weeping gilded face above, clear stars overhead, tender. |
+| `images/02-swallow-2.png` | A swallow perched on a statue looking down into an open attic window where a weary seamstress sews by candlelight and a feverish boy tosses on a bed, warm and sad. |
 
 ## 3장 · 첫 번째 심부름
 
 | 파일명 | 장면 |
 |---|---|
-| `images/03-ruby.png` | A swallow flying across dark rooftops carrying a glowing red ruby in its beak toward a small lit attic window where a tired woman sews beside a sleeping child, warm window glow in cold night. |
+| `images/03-ruby.png` | A swallow prising a ruby from a sword hilt and carrying it over moonlit rooftops into an attic window, laying it beside a thimble as the sleeping seamstress rests her head, gentle. |
+| `images/03-ruby-2.png` | A swallow fanning a feverish boy with its wings until he sleeps peacefully, then returning to the statue at dawn, warm morning light on the gilded face, tender. |
 
 ## 4장 · 파란 눈을 주다
 
 | 파일명 | 장면 |
 |---|---|
-| `images/04-sapphire.png` | A swallow gently prying a glowing blue sapphire from a statue's eye, and in the same wide scene delivering it to a thin young man writing by a guttering candle in a cold garret, tender blue and gold. |
+| `images/04-sapphire.png` | A cold attic where a thin young writer works by a guttering candle with no fire in the grate, seen from a statue's viewpoint across the rooftops, bleak but beautiful. |
+| `images/04-sapphire-2.png` | A swallow leaving a sapphire on a writer's desk, and the same attic next day warm with a lit fire, bread on the table and the young man writing eagerly, hopeful and warm. |
 
 ## 5장 · 제비의 눈이 되어
 
 | 파일명 | 장면 |
 |---|---|
-| `images/05-eyes.png` | A swallow perched on a statue's shoulder describing the city, with vignettes visible below — children laughing behind a bright window, other children huddled under a bridge — and gold leaf beginning to peel from the statue. |
+| `images/05-eyes.png` | A city square where a small match seller weeps over matches fallen in a gutter, and a swallow carrying a sapphire down to press it into her palm, her face lighting up, moving. |
+| `images/05-eyes-2.png` | A blind gilded statue with a swallow perched on its shoulder describing the city, and the bird peeling thin sheets of gold leaf from the statue to carry away, poignant and warm. |
 
 ## 6장 · 첫눈이 내리던 밤
 
 | 파일명 | 장면 |
 |---|---|
-| `images/06-snow.png` | Snow falling on a dulled grey statue as a small swallow settles at its feet with wings folded, soft white flakes and quiet blue night, tender and peaceful rather than grim. |
+| `images/06-snow.png` | Children in narrow streets eating bread and laughing as a swallow flits away, and the statue above now stripped to dull grey lead, passersby frowning up at it, bittersweet. |
+| `images/06-snow-2.png` | A statue in falling snow with a small swallow huddled at its feet, the bird reaching up to touch the gilded cheek one last time, quiet snowfall, deeply tender. |
 
 ## 7장 · 가장 귀한 것 둘
 
 | 파일명 | 장면 |
 |---|---|
-| `images/07-ending.png` | Workers lowering a dull grey statue from its column under a frowning official's direction, and beside a furnace an unmelted lead heart lying next to a small still swallow, soft respectful light. |
+| `images/07-ending.png` | A snowy square in morning light where a pompous mayor and councillors in gold chains stare up at a dull stripped statue with a small dead swallow at its feet, cold and ironic. |
+| `images/07-ending-2.png` | A foundry where a cracked lead heart refuses to melt and is tossed onto a rubbish heap beside a small dead swallow, and later children in bright warm clothes playing in the same street, quietly redemptive. |
 
 ## 사용 팁
 

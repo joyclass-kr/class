@@ -1,8 +1,8 @@
 # 제미나이 그림 프롬프트
 
-이 책은 하나의 이야기를 7개의 장(챕터)으로 나눠 담았고, 각 장마다 그림이
-**한 장**이에요. 그림이 펼침면 전체 폭을 가득 채우고, 그 아래에 이야기가
-왼쪽·오른쪽으로 나뉘어 들어갑니다.
+이 책은 하나의 이야기를 7개의 장(챕터)으로 나눠 담았고, 펼침면은 모두
+14개예요. 펼침면 하나에 그림이 한 장씩 들어갑니다.
+그림이 펼침면 전체 폭을 가득 채우고, 그 아래에 이야기가 왼쪽·오른쪽으로 나뉘어 들어갑니다.
 
 아래 프롬프트를 제미나이에 그대로 넣어서 생성한 뒤, 파일명을 정확히 맞춰서
 `images/` 폴더에 저장하면 자동으로 책에 나타납니다.
@@ -18,70 +18,78 @@
 
 ```
 Children's picture book illustration, bright cheerful cartoon-animation style,
-bold clean outlines, saturated storybook colors, warm golden lamplight, no text
-or letters in the image, Middle Eastern desert, market and courtyard house
-settings, expressive faces, wide panoramic composition, adventurous and never
+bold clean outlines, saturated storybook colors, warm desert gold and lamp-lit
+courtyards, no text or letters in the image, a rocky desert cliff, a treasure
+cave, a Middle Eastern town of flat roofs and courtyards, and rows of great oil
+jars, expressive comic faces, wide panoramic composition, adventurous and never
 gruesome.
 ```
 
 ## 인물 설명 (일관성을 위해 매번 붙여 넣으세요)
 
 ```
-Ali Baba: a modest woodcutter about 40 with a short beard, brown robe and
-turban. Morgiana: a quick-witted young servant woman in a green dress and gold
-earrings, always alert. The robber chief: a burly man with a black beard and red
-sash, comically fierce. Kasim: Ali Baba's plump greedy older brother in fine
-striped robes.
+Ali Baba: a wiry modest woodcutter with a short beard and a patched robe.
+Kasim: his plump older brother in fine silks, greedy and loud. Morgiana: a quick
+sharp-eyed young servant with her sleeves rolled up, the real hero. The robber
+captain: a tall man with a scar and a red sash, drawn as theatrical rather than
+frightening. The thirty-nine robbers: figures glimpsed in cloaks and turbans.
 ```
 
 ## 표지 · 마무리
 
 | 파일명 | 장면 |
 |---|---|
-| `images/cover.png` (세로 2:3 비율) | A tall portrait-format cover: a huge stone door standing ajar in a desert cliffside at dusk with golden treasure light spilling out, a small figure silhouetted at the entrance, palm trees and dunes around, warm and mysterious. |
+| `images/cover.png` (세로 2:3 비율) | A tall portrait-format cover: a great stone door standing half open in a desert cliff face with golden light and heaped treasure spilling from within, a single lamp on the sand before it and forty hoofprints leading away, mysterious and inviting. |
 | `images/end.png` | A closed storybook resting under a starry night sky with soft golden sparkles rising from its pages, peaceful and warm closing scene. |
 
 ## 1장 · 열려라 참깨
 
 | 파일명 | 장면 |
 |---|---|
-| `images/01-cave.png` | A man hiding among the branches of a tree watching a band of robbers on horseback before a great cliff face that is splitting open, dust and desert scrub, dramatic afternoon light. |
+| `images/01-cave.png` | A rocky desert hillside where a woodcutter with three donkeys scrambles up a tree as a great dust cloud and riders approach, tense and cinematic. |
+| `images/01-cave-2.png` | Forty masked riders dismounting before a sheer cliff as their captain raises a hand and the rock splits open revealing golden light, sacks carried inside, dramatic and magical. |
 
 ## 2장 · 보물이 가득한 동굴
 
 | 파일명 | 장면 |
 |---|---|
-| `images/02-treasure.png` | A cavern piled high with gold coins, jewelled cups and silk bales glowing in torchlight, a modest woodcutter carefully filling one small sack while looking around in awe, warm treasure glow. |
+| `images/02-treasure.png` | A cave interior blazing with heaped gold coins, rolls of silk and jewels where a modest woodcutter stands frozen in awe, sunlight spilling in from the open rock door behind, dazzling. |
+| `images/02-treasure-2.png` | A cave mouth where a woodcutter loads three sacks onto donkeys and covers them with firewood, and a modest home where his wife stares at spilled gold coins, warm lamplight. |
 
 ## 3장 · 형의 욕심
 
 | 파일명 | 장면 |
 |---|---|
-| `images/03-brother.png` | A plump man in fine robes frantically piling sacks of gold onto donkeys inside a treasure cave while gesturing at a sealed stone door, comic panic, torchlight and glittering heaps. |
+| `images/03-brother.png` | A wealthy courtyard where a woman examines a measuring bowl and finds a gold coin stuck to the wax on its base, and her plump husband storming off to confront his brother, comic greed. |
+| `images/03-brother-2.png` | A treasure cave where a plump man in silks frantically stuffs sacks with gold, then hammers on the sealed rock door shouting wrong words, panic on his face, comic and tense. |
 
 ## 4장 · 표시된 대문
 
 | 파일명 | 장면 |
 |---|---|
-| `images/04-chalk.png` | A narrow moonlit alley of courtyard houses where a young servant woman quietly chalks the same white mark on door after door, one robber already gone around the corner, clever and quiet mood. |
+| `images/04-chalk.png` | A desert road at night where a woodcutter leads laden donkeys home, and a courtyard where a quick-eyed young servant takes charge with her sleeves rolled up, calm and capable. |
+| `images/04-chalk-2.png` | A town alley at dawn where a young servant notices a chalk mark on her gate, then swiftly chalking the same mark on every door down the street, clever and lively. |
 
 ## 5장 · 기름 항아리
 
 | 파일명 | 장면 |
 |---|---|
-| `images/05-jars.png` | A moonlit courtyard lined with many huge clay jars, a young woman pausing mid-step with a lamp, her head tilted listening, one jar lid slightly ajar, tense and quiet. |
+| `images/05-jars.png` | A courtyard at dusk where a disguised oil merchant unloads thirty-nine enormous jars from mules while a kind householder welcomes him in, warm lamplight, quietly ominous. |
+| `images/05-jars-2.png` | A moonlit courtyard of huge jars where a young servant leans toward one and a whispered voice comes from inside, her eyes widening as she answers in a low tone, gripping. |
 
 ## 6장 · 모르지아나의 춤
 
 | 파일명 | 장면 |
 |---|---|
-| `images/06-dance.png` | A young woman dancing with a small dagger and tambourine before a seated dinner guest in a warm lamplit room, the guest's red robber sash slipping into view, guests watching, dramatic and lively. |
+| `images/06-dance.png` | A courtyard where a young servant pours steaming oil into row after row of jars and robbers come tumbling out hopping and yelping, scrambling over the wall, comic mayhem, no blood. |
+| `images/06-dance-2.png` | A lamplit dining room where a young servant dances with a dagger at her sash before a smiling guest, drums beating, family clapping, tension hidden under celebration. |
 
 ## 7장 · 정체가 드러나다
 
 | 파일명 | 장면 |
 |---|---|
-| `images/07-revealed.png` | A courtyard where townspeople and guards surround a startled bearded robber chief while a household gathers safely behind a young woman, lanterns and warm relief, no violence shown. |
+| `images/07-revealed.png` | A dining room where a young servant flings back a guest's robe revealing a hidden sword, the man leaping up to find neighbours blocking the doorway, dramatic and satisfying. |
+| `images/07-revealed-2.png` | A courtyard where a grateful householder takes a young servant's hands before the family, and later villagers receiving gold to dig a well and mend a road, warm and generous. |
 
 ## 사용 팁
 
