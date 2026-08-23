@@ -1,8 +1,8 @@
 # 제미나이 그림 프롬프트
 
-이 책은 하나의 이야기를 7개의 장(챕터)으로 나눠 담았고, 각 장마다 그림이
-**한 장**이에요. 그림이 펼침면 전체 폭을 가득 채우고, 그 아래에 이야기가
-왼쪽·오른쪽으로 나뉘어 들어갑니다.
+이 책은 하나의 이야기를 7개의 장(챕터)으로 나눠 담았고, 펼침면은 모두
+14개예요. 펼침면 하나에 그림이 한 장씩 들어갑니다.
+그림이 펼침면 전체 폭을 가득 채우고, 그 아래에 이야기가 왼쪽·오른쪽으로 나뉘어 들어갑니다.
 
 아래 프롬프트를 제미나이에 그대로 넣어서 생성한 뒤, 파일명을 정확히 맞춰서
 `images/` 폴더에 저장하면 자동으로 책에 나타납니다.
@@ -47,43 +47,50 @@ cushion.
 
 | 파일명 | 장면 |
 |---|---|
-| `images/story-01-chores.png` | A shabby kitchen with a great stone fireplace where a girl in a patched grey dress scrubs the floor at dawn, ashes on her sleeves, two overdressed stepsisters laughing in the doorway, warm firelight and cold morning through the window. |
+| `images/story-01-chores.png` | A modest parlour where a stepmother in stiff dark silk coldly instructs a girl to move out of her room, two stepsisters already carrying her things away, a black mourning ribbon on the door, subdued light. |
+| `images/story-01-chores-2.png` | A shabby kitchen with a great stone fireplace where a girl in a patched grey dress curls up on the hearth beside the ashes at night, a broom and water pail nearby, two stepsisters laughing in the doorway, warm firelight. |
 
 ## 2장 · 무도회 초대장
 
 | 파일명 | 장면 |
 |---|---|
-| `images/story-02-invite.png` | A cluttered bedroom where two stepsisters preen before a mirror while a girl in grey pins up their hair, and in the yard beyond a sack of beans and lentils spilled across the flagstones, comic and pointed. |
+| `images/story-02-invite.png` | A cluttered bedroom where two overdressed stepsisters preen before a mirror amid ribbons and fabric while a girl in grey patiently pins up their hair, a gold invitation propped on the dresser, comic and busy. |
+| `images/story-02-invite-2.png` | A cottage yard at dusk where a stepmother upends a sack of beans and lentils across the flagstones as a carriage waits at the gate, a girl in grey standing alone before the scattered heap, pointed and sad. |
 
 ## 3장 · 요정 대모의 마법
 
 | 파일명 | 장면 |
 |---|---|
-| `images/story-03-magic.png` | A moonlit cottage yard where a twinkling old woman in a lilac cloak sweeps her wand and a pumpkin swells into a glittering coach, mice rearing up as white horses, a girl in grey watching open-mouthed, magical and joyful. |
+| `images/story-03-magic.png` | A moonlit cottage yard where a weeping girl kneels over scattered beans and a round twinkling old woman in a lilac cloak appears behind her, soft light gathering at the wand tip, gentle and magical. |
+| `images/story-03-magic-2.png` | A cottage yard bursting with light as a pumpkin swells into a glittering coach, mice rearing up as white horses and a lizard straightening into a coachman, a girl in grey transforming into a pale-blue gown, joyous. |
 
 ## 4장 · 무도회의 밤
 
 | 파일명 | 장면 |
 |---|---|
-| `images/story-04-ball.png` | A brilliant palace ballroom where dancers freeze as a girl in a pale-blue gown enters, and in the same wide scene she flees down a great staircase at midnight leaving one glass slipper behind, clock striking, dramatic and beautiful. |
+| `images/story-04-ball.png` | A brilliant palace ballroom where the music stops and every head turns as a girl in a pale-blue gown enters at the top of the stairs, a young prince already crossing the floor toward her, chandeliers blazing. |
+| `images/story-04-ball-2.png` | A grand palace staircase at midnight where a girl flees down the steps leaving one glass slipper behind, the prince reaching after her, and beyond the gates a pumpkin rolling on the cobbles, dramatic and beautiful. |
 
 ## 5장 · 유리구두를 찾아서
 
 | 파일명 | 장면 |
 |---|---|
-| `images/story-05-search.png` | A village lane where a fussy chamberlain carries a glass slipper on a cushion from door to door, women queueing and squeezing their feet, and at the end of the lane a carriage halting before a shabby house, comic and lively. |
+| `images/story-05-search.png` | A palace staircase at dawn where a prince picks up a glass slipper, and a village lane where a fussy chamberlain carries it on a cushion from door to door as women crowd out to try it, lively and comic. |
+| `images/story-05-search-2.png` | A village street of weary queues where women contort their feet trying a glass slipper, and at the end of the lane a carriage halting before a shabby gate as the sun goes down, comic and expectant. |
 
 ## 6장 · 신데렐라의 발
 
 | 파일명 | 장면 |
 |---|---|
-| `images/story-06-fit.png` | A shabby parlour where two stepsisters strain to force their feet into a glass slipper, and then a girl in grey sitting quietly as it slides on perfectly while she produces its twin from her apron, astonished faces all round. |
+| `images/story-06-fit.png` | A shabby parlour where a lanky stepsister strains red-faced to force her toes into a glass slipper while the plump one waits her turn, a chamberlain holding the cushion with a weary expression, hilarious. |
+| `images/story-06-fit-2.png` | A shabby parlour hushed as a girl in grey with ash on her hands slides her foot into the glass slipper perfectly, then draws its twin from her apron, stepmother and stepsisters open-mouthed, quietly triumphant. |
 
 ## 7장 · 행복한 시작
 
 | 파일명 | 장면 |
 |---|---|
-| `images/story-07-wedding.png` | A palace doorway where a prince hurries down the steps to greet a girl stepping from a carriage, and a wide festive hall beyond where she draws her two shamefaced stepsisters into the celebration, warm and generous. |
+| `images/story-07-wedding.png` | A palace doorway where a prince hurries down the steps to greet a girl stepping from a carriage, spring flowers along the courtyard walls, both smiling as they walk in together, warm and hopeful. |
+| `images/story-07-wedding-2.png` | A festive palace hall full of villagers where a bride takes the hands of her two shamefaced stepsisters at the doorway and draws them inside, lanterns and music, warm and generous. |
 
 ## 사용 팁
 

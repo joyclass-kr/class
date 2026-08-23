@@ -11,9 +11,20 @@
  *   artStyle,                       // 제미나이 공통 스타일 지시문
  *   characters,                     // 인물 설명 (없으면 생략)
  *   chapters: [
+ *     // 한 장에 펼침면 하나
  *     { title: "1장 · ...", art: "01-xxx.png", emoji: "🐰",
- *       left: [...], right: [...], prompt: "그림 설명(영문)" }
+ *       left: [...], right: [...], prompt: "그림 설명(영문)" },
+ *     // 한 장에 펼침면 여럿 (그림도 그만큼 필요)
+ *     { title: "2장 · ...", emoji: "🐰", beats: [
+ *         { art: "02-xxx.png",   left: [...], right: [...], prompt: "..." },
+ *         { art: "02-xxx-2.png", left: [...], right: [...], prompt: "..." }
+ *     ] }
  *   ],
+ *
+ * 글 분량 기준 (재서 얻은 값):
+ *   글상자 한 칸은 7.6줄, 한 줄에 18자(공백 제외)까지 들어간다.
+ *   그러므로 left·right 각각 18자 이하 문단 6개가 알맞다.
+ *   check-lines 도구로 미리 걸러 낼 수 있다.
  *   moral,                          // 마지막 펼침면 끝에 붙는 한 줄
  *   quiz: [{ q, choices:[3], answer }]
  * }
@@ -79,10 +90,23 @@ book.quiz = book.quiz.map((item, qi) => {
 
 /* ---------------- app.js ---------------- */
 
+// 한 장은 펼침면 하나로도, 여럿으로도 만들 수 있다.
+// beats 배열을 주면 그대로 쓰고, 없으면 art/left/right 한 벌을 한 펼침면으로 본다.
+function beatsOf(c) {
+    const list = c.beats || [{ art: c.art, emoji: c.emoji, left: c.left, right: c.right, prompt: c.prompt }];
+    return list.map(b => ({
+        art: b.art,
+        emoji: b.emoji || c.emoji || book.emoji,
+        left: b.left,
+        right: b.right,
+        prompt: b.prompt
+    }));
+}
+
 const chaptersData = book.chapters.map((c, i) => ({
     num: i + 1,
     title: c.title,
-    beats: [{ art: c.art, emoji: c.emoji || book.emoji, left: c.left, right: c.right }],
+    beats: beatsOf(c).map(({ art, emoji, left, right }) => ({ art, emoji, left, right })),
     ...(i === book.chapters.length - 1 ? { moral: book.moral } : {})
 }));
 
@@ -381,9 +405,9 @@ fs.copyFileSync(styleSrc, path.join(dir, 'styles.css'));
 
 const prompts = `# 제미나이 그림 프롬프트
 
-이 책은 하나의 이야기를 ${book.chapters.length}개의 장(챕터)으로 나눠 담았고, 각 장마다 그림이
-**한 장**이에요. 그림이 펼침면 전체 폭을 가득 채우고, 그 아래에 이야기가
-왼쪽·오른쪽으로 나뉘어 들어갑니다.
+이 책은 하나의 이야기를 ${book.chapters.length}개의 장(챕터)으로 나눠 담았고, 펼침면은 모두
+${book.chapters.reduce((a, c) => a + beatsOf(c).length, 0)}개예요. 펼침면 하나에 그림이 한 장씩 들어갑니다.
+그림이 펼침면 전체 폭을 가득 채우고, 그 아래에 이야기가 왼쪽·오른쪽으로 나뉘어 들어갑니다.
 
 아래 프롬프트를 제미나이에 그대로 넣어서 생성한 뒤, 파일명을 정확히 맞춰서
 \`images/\` 폴더에 저장하면 자동으로 책에 나타납니다.
@@ -418,7 +442,7 @@ ${book.chapters.map(c => `## ${c.title}
 
 | 파일명 | 장면 |
 |---|---|
-| \`images/${c.art}\` | ${c.prompt} |
+${beatsOf(c).map(b => `| \`images/${b.art}\` | ${b.prompt} |`).join('\n')}
 `).join('\n')}
 ## 사용 팁
 
@@ -465,6 +489,8 @@ if (!list.includes(`href="${book.slug}/"`)) {
 
 /* ---------------- 결과 ---------------- */
 
-const chars = book.chapters.reduce((a, c) => a + c.left.join('').length + c.right.join('').length, 0);
+const chars = book.chapters.reduce(
+    (a, c) => a + beatsOf(c).reduce((s, b) => s + b.left.join('').length + b.right.join('').length, 0), 0);
 console.log(`✔ ${book.title} (${book.slug})`);
-console.log(`  장 ${book.chapters.length} · 본문 ${chars}자 · 그림 ${book.chapters.length + 2}장 · 문항 ${book.quiz.length}개`);
+const spreads = book.chapters.reduce((a, c) => a + beatsOf(c).length, 0);
+console.log(`  장 ${book.chapters.length} · 펼침면 ${spreads} · 본문 ${chars}자 · 그림 ${spreads + 2}장 · 문항 ${book.quiz.length}개`);
