@@ -425,8 +425,9 @@ const CHAPTERS = [
     }
 ];
 /* ── 쪽 나누기 ─────────────────────────────────────────
-   그림이 있는 펼침면은 왼쪽 쪽에만 글이 들어가고,
-   그림이 없는 펼침면은 양쪽 쪽에 모두 글이 들어간다.
+   그림은 쪽 위쪽에 가로로 꽉 차게 얹고 그 아래를 글로 채운다.
+   그러니 그림이 있는 펼침면에도 양쪽 쪽에 다 글이 들어간다.
+   다만 그림이 얹힌 쪽은 그림 높이만큼 글이 적게 들어간다.
    진짜 책이 그렇듯 문단 한가운데에서도 쪽을 넘긴다. 그래야 쪽마다 글이 고르게 찬다.
    글자 수로 어림잡으면 대사가 많은 문단은 실제로 차지하는 줄이 훨씬 많아 어긋나므로,
    보이지 않는 쪽을 하나 만들어 실제 높이를 재어 가며 나눈다. */
@@ -450,12 +451,18 @@ function makeProbe() {
 
     col.innerHTML = '<h2>제목</h2>';
     const headHeight = contentHeight();
+
+    // 그림이 얹힌 쪽은 그림 높이만큼 글이 적게 들어간다. 그 높이를 미리 재 둔다.
+    // 그림 파일이 없어도 자리는 같으므로, 파일이 뒤에 들어와도 쪽이 밀리지 않는다.
+    col.innerHTML = '<div class="story-art-top"><div class="art-frame"></div></div>';
+    const artHeight = contentHeight();
     col.innerHTML = '';
 
     return {
         // 창이 아직 크기를 갖지 못한 채 열리면 잰 값이 0이 된다. 그때는 어림값으로 버틴다.
         usable: measured > 40 ? measured : 620,
         headHeight: headHeight > 0 ? headHeight : 45,
+        artHeight: artHeight > 40 ? artHeight : 300,
         measure(html) {
             col.innerHTML = html;
             return contentHeight();
@@ -538,17 +545,23 @@ function slotPlan(imgCount, textCount) {
 // 글을 쪽마다 같은 높이만큼 나눠 담는다. 마지막 쪽만 남은 만큼 담는다.
 // 장 제목이 붙는 첫 쪽은 제목까지 함께 얹어서 재야 한다.
 // 제목 높이를 따로 빼서 계산하면 실제로 나란히 놓였을 때의 높이와 조금씩 어긋난다.
-function fillPages(segs, pageCount, headHtml, usable) {
+function fillPages(segs, caps, headHtml) {
     const pageHeight = (a, b, first) => PROBE.measure((first ? headHtml : '') + runHtml(segs, a, b));
     const ranges = [];
     let i = 0;
-    for (let p = 0; p < pageCount; p++) {
-        const rest = pageCount - p - 1;
+    for (let p = 0; p < caps.length; p++) {
+        const rest = caps.length - p - 1;
         if (rest === 0) { ranges.push([i, segs.length]); break; }
-        // 남은 글을 남은 쪽 수로 나눠 이번 쪽에 담을 양을 정한다.
-        // 매 쪽마다 다시 계산하므로, 한 쪽이 덜 차면 그만큼이 뒤쪽에 고르게 얹힌다.
+        // 남은 글을 남은 쪽들의 크기에 비례해 나눈다. 그래야 쪽마다 고르게 찬다.
+        // 꽉꽉 채워 넘기면 장의 마지막 펼침면이 거의 비어 버린다.
+        // 그림이 얹힌 쪽은 담을 수 있는 높이가 작으므로 그만큼 적게 가져간다.
         const remainingH = pageHeight(i, segs.length, p === 0);
-        const room = Math.min(usable, remainingH / (rest + 1));
+        let capSum = 0, capRest = 0;
+        for (let q = p; q < caps.length; q++) capSum += caps[q];
+        for (let q = p + 1; q < caps.length; q++) capRest += caps[q];
+        // 뒤쪽 쪽들에 남은 글이 다 안 들어가면 이번 쪽이 그만큼 더 가져가야 한다.
+        const share = remainingH * caps[p] / capSum;
+        const room = Math.min(caps[p], Math.max(remainingH - capRest, share));
         const maxTake = Math.max(1, segs.length - i - rest);
         let take = 1;
         let lo = 1, hi = maxTake;
@@ -560,55 +573,72 @@ function fillPages(segs, pageCount, headHtml, usable) {
         ranges.push([i, i + take]);
         i += take;
     }
+
+    // 조각 단위로 끊다 보면 마지막 쪽에 넘치는 만큼이 남을 수 있다.
+    // 뒤에서부터 훑어, 넘치는 쪽의 앞머리를 한 조각씩 앞 쪽으로 밀어 준다.
+    for (let p = caps.length - 1; p > 0; p--) {
+        while (ranges[p][1] - ranges[p][0] > 1 &&
+               pageHeight(ranges[p][0], ranges[p][1], false) > caps[p]) {
+            const prev = ranges[p - 1];
+            if (pageHeight(prev[0], prev[1] + 1, p - 1 === 0) > caps[p - 1]) break;
+            prev[1]++;
+            ranges[p][0]++;
+        }
+    }
     return ranges;
 }
 
 function paginateChapter(ch, chIndex) {
     const segs = CHAPTER_SEGS[chIndex];
     const arts = (ch.art && ch.art.length) ? ch.art : [];
-    const { usable, headHeight } = PROBE;
+    const { usable, headHeight, artHeight } = PROBE;
     const headHtml = `<h2>${CHAPTER_LABEL(ch.num)}${ch.title}</h2>`;
     const totalH = PROBE.measure(runHtml(segs, 0, segs.length));
 
-    // 필요한 글 쪽 수를 구하고, 그림 면(1쪽)과 글만 면(2쪽)으로 맞춘다.
-    // 쪽 수는 조각 수를 넘을 수 없다 — 빈 쪽이 생기면 안 되기 때문이다.
-    const maxSpreads = Math.max(arts.length, Math.ceil(segs.length / 2));
-    const needPages = Math.max(arts.length || 1, Math.ceil((totalH + headHeight) / usable));
-    let textSpreads = Math.max(arts.length ? 0 : 1, Math.ceil(Math.max(0, needPages - arts.length) / 2));
+    // 그림이 얹힌 쪽에도 그 아래에 글이 들어간다. 그래서 담을 수 있는 높이가 쪽마다 다르다.
+    const underArt = Math.max(60, usable - artHeight);
+    const capsOf = slots => {
+        const caps = [];
+        slots.forEach(kind => { caps.push(usable); caps.push(kind === 'img' ? underArt : usable); });
+        return caps;
+    };
 
-    let slots = slotPlan(arts.length, textSpreads);
-    let ranges = null;
+    // 그림 한 장이 펼침면 하나를 쓴다. 거기서 시작해 글이 다 들어갈 때까지 펼침면을 늘린다.
+    // 쪽 수는 조각 수를 넘을 수 없다 — 빈 쪽이 생기면 안 되기 때문이다.
+    const minSpreads = Math.max(arts.length, 1);
+    const maxSpreads = Math.max(minSpreads, Math.floor(segs.length / 2));
+    let spreadCount = minSpreads;
+    while (spreadCount < maxSpreads) {
+        const caps = capsOf(slotPlan(arts.length, spreadCount - arts.length));
+        if (caps.reduce((a, b) => a + b, 0) >= totalH + headHeight) break;
+        spreadCount++;
+    }
+
+    let slots = slotPlan(arts.length, Math.max(0, spreadCount - arts.length));
+    let caps = capsOf(slots);
+    let ranges = fillPages(segs, caps, headHtml);
     for (let guard = 0; guard < 8; guard++) {
-        slots = slotPlan(arts.length, textSpreads);
-        const pageCount = slots.reduce((n, kind) => n + (kind === 'img' ? 1 : 2), 0);
-        if (pageCount > segs.length && textSpreads > 0) { textSpreads--; continue; }
-        ranges = fillPages(segs, pageCount, headHtml, usable);
-        // 한 쪽이라도 넘치면 쪽을 늘려 다시 나눈다.
+        // 한 쪽이라도 넘치면 펼침면을 늘려 다시 나눈다.
         // 마지막 쪽만 보면 안 된다 — 첫 쪽에는 장 제목이 얹히므로 그쪽이 먼저 넘칠 수 있다.
         const over = ranges.some(([a, b], n) =>
-            PROBE.measure((n === 0 ? headHtml : '') + runHtml(segs, a, b)) > usable);
-        if (!over || arts.length + textSpreads >= maxSpreads) break;
-        textSpreads++;
-    }
-    if (!ranges) {
-        slots = slotPlan(arts.length, textSpreads);
-        ranges = fillPages(segs, slots.reduce((n, kind) => n + (kind === 'img' ? 1 : 2), 0), headHtml, usable);
+            PROBE.measure((n === 0 ? headHtml : '') + runHtml(segs, a, b)) > caps[n] + 1);
+        if (!over || spreadCount >= maxSpreads) break;
+        spreadCount++;
+        slots = slotPlan(arts.length, Math.max(0, spreadCount - arts.length));
+        caps = capsOf(slots);
+        ranges = fillPages(segs, caps, headHtml);
     }
 
     const spreads = [];
     let pageIdx = 0;
     let artIdx = 0;
     slots.forEach((kind, s) => {
-        if (kind === 'img') {
-            spreads.push({
-                kind: 'chapter', ch, chIndex, first: s === 0,
-                art: arts[artIdx++], left: ranges[pageIdx++], right: null
-            });
-        } else {
-            const left = ranges[pageIdx++];
-            const right = ranges[pageIdx++];
-            spreads.push({ kind: 'chapter', ch, chIndex, first: s === 0, art: null, left, right });
-        }
+        const left = ranges[pageIdx++];
+        const right = ranges[pageIdx++];
+        spreads.push({
+            kind: 'chapter', ch, chIndex, first: s === 0,
+            art: kind === 'img' ? arts[artIdx++] : null, left, right
+        });
     });
     return spreads;
 }
@@ -689,7 +719,8 @@ function chapterSpreadPage(spread) {
                     ${runHtml(segs, spread.left[0], spread.left[1])}
                 </div>
                 <div class="story-page-right story-page-right-image">
-                    ${artFrame(spread.art, ch.emoji)}
+                    <div class="story-art-top">${artFrame(spread.art, ch.emoji)}</div>
+                    ${runHtml(segs, spread.right[0], spread.right[1])}
                 </div>
             </div>`;
     }

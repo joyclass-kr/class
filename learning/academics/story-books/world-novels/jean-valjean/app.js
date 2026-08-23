@@ -497,14 +497,14 @@ function fillPages(segs, caps, headHtml) {
     for (let p = 0; p < caps.length; p++) {
         const rest = caps.length - p - 1;
         if (rest === 0) { ranges.push([i, segs.length]); break; }
-        // 남은 글을 남은 쪽들의 크기에 비례해 나눈다.
+        // 남은 글을 남은 쪽들의 크기에 비례해 나눈다. 그래야 쪽마다 고르게 찬다.
+        // 꽉꽉 채워 넘기면 장의 마지막 펼침면이 거의 비어 버린다.
         // 그림이 얹힌 쪽은 담을 수 있는 높이가 작으므로 그만큼 적게 가져간다.
         const remainingH = pageHeight(i, segs.length, p === 0);
         let capSum = 0, capRest = 0;
         for (let q = p; q < caps.length; q++) capSum += caps[q];
         for (let q = p + 1; q < caps.length; q++) capRest += caps[q];
         // 뒤쪽 쪽들에 남은 글이 다 안 들어가면 이번 쪽이 그만큼 더 가져가야 한다.
-        // 그러지 않으면 마지막 쪽에 몰려서 넘친다.
         const share = remainingH * caps[p] / capSum;
         const room = Math.min(caps[p], Math.max(remainingH - capRest, share));
         const maxTake = Math.max(1, segs.length - i - rest);
@@ -517,6 +517,18 @@ function fillPages(segs, caps, headHtml) {
         }
         ranges.push([i, i + take]);
         i += take;
+    }
+
+    // 조각 단위로 끊다 보면 마지막 쪽에 넘치는 만큼이 남을 수 있다.
+    // 뒤에서부터 훑어, 넘치는 쪽의 앞머리를 한 조각씩 앞 쪽으로 밀어 준다.
+    for (let p = caps.length - 1; p > 0; p--) {
+        while (ranges[p][1] - ranges[p][0] > 1 &&
+               pageHeight(ranges[p][0], ranges[p][1], false) > caps[p]) {
+            const prev = ranges[p - 1];
+            if (pageHeight(prev[0], prev[1] + 1, p - 1 === 0) > caps[p - 1]) break;
+            prev[1]++;
+            ranges[p][0]++;
+        }
     }
     return ranges;
 }
