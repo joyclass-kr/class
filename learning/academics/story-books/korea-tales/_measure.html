@@ -1,0 +1,89 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="UTF-8">
+<title>넘침 검사</title>
+<style>
+    body { font: 14px monospace; margin: 16px; }
+    iframe { position: fixed; left: -6000px; top: 0; border: 0; }
+    pre { white-space: pre-wrap; }
+</style>
+</head>
+<body>
+<h1>본문 넘침 검사</h1>
+<pre id="out">…</pre>
+<iframe id="frame"></iframe>
+<script>
+/* 책을 아이프레임에 띄우고, 아이프레임 자체를 1280×720 · 1920×1080 크기로 만든다.
+ * 글씨 크기가 vw(화면 너비)를 따라가기 때문에, 책 너비만 억지로 바꿔서는
+ * 실제 화면에서 보이는 크기와 달라져 헛measure가 된다. 아이프레임 크기를 바꾸면
+ * 그 안에서 vw·vh가 진짜로 바뀌므로 실제 화면과 똑같아진다. */
+const out = document.getElementById('out');
+const frame = document.getElementById('frame');
+
+const SIZES = [[1366, 768], [1920, 1080]];
+
+function load(slug) {
+    return new Promise((resolve) => {
+        frame.onload = () => resolve();
+        // 끝의 빗금이 꼭 있어야 한다. index.html을 붙이면 서버가 그걸 떼면서
+        // 주소가 한 칸 위로 올라가 책의 app.js를 못 찾는다.
+        frame.src = slug + '/';
+    });
+}
+
+// app.js의 PAGES·current·paint는 const/let이라 win.PAGES로는 닿지 않는다.
+// 아이프레임 안에서 eval로 돌려 그 안의 이름을 그대로 쓴다.
+function measureInside() {
+    const doc = document;
+    const bad = [];
+    for (let i = 0; i < PAGES.length; i++) {
+        current = i;
+        paint();
+        if (PAGES[i].kind === 'quiz') continue;   // 문항 쪽은 원래 스크롤이라 뺀다
+        doc.querySelectorAll('.book *').forEach(el => {
+            const over = el.scrollHeight - el.clientHeight;
+            if (over > 1 && getComputedStyle(el).overflowY !== 'visible') {
+                const ch = PAGES[i].chapter ? PAGES[i].chapter.title : PAGES[i].kind;
+                const side = el.className.indexOf('right') >= 0 ? '오른쪽'
+                    : el.className.indexOf('left') >= 0 ? '왼쪽' : el.className;
+                bad.push(ch + ' · ' + side + ' · ' + over + 'px');
+            }
+        });
+        doc.querySelectorAll('.spread-text-left, .spread-text-right').forEach(el => {
+            if (!el.textContent.trim()) bad.push('쪽' + i + ' ' + el.className + ' 빈칸');
+        });
+    }
+    current = 0;
+    paint();
+    const book = doc.querySelector('.book');
+    return { book: [book.clientWidth, book.clientHeight], bad };
+}
+
+const run = (win) => win.eval('(' + measureInside.toString() + ')()');
+
+(async () => {
+    const slugs = await (await fetch('_books.json')).json();
+    const lines = [];
+    for (const slug of slugs) {
+        const res = [];
+        for (const [w, h] of SIZES) {
+            frame.style.width = w + 'px';
+            frame.style.height = h + 'px';
+            await load(slug);
+            await new Promise(r => setTimeout(r, 100));
+            try {
+                const r = run(frame.contentWindow);
+                r.bad.forEach(s => res.push(`  [${w}×${h} 책${r.book[0]}] ${s}`));
+            } catch (e) {
+                res.push(`  [${w}×${h}] 검사 실패: ${e.message}`);
+            }
+        }
+        lines.push(res.length ? `✗ ${slug}\n${res.join('\n')}` : `✔ ${slug}`);
+        out.textContent = lines.join('\n');
+    }
+    out.textContent = lines.join('\n') + '\n\n=== 끝 ===';
+})();
+</script>
+</body>
+</html>

@@ -4,6 +4,20 @@
 > 제미나이가 가끔 영어를 써 넣습니다. 받은 그림에 글자가 보이면 그 장만 다시 만드세요.
 > 프롬프트 끝에 `Absolutely no text, no letters, no speech bubbles, no sound effects, no signage anywhere in the image.` 를 덧붙이면 잘 듣습니다.
 
+## 다시 만들 그림 — `03` `04` `08` (2026-08-24 검수)
+
+받은 여덟 장을 본문과 하나씩 대조한 결과입니다.
+
+| 그림 | 무엇이 어긋났나 |
+|---|---|
+| `03-fox` | **잔칫상이 사라졌다.** 1·2·5·6·7번에는 상이 있는데 3번만 빈 흙바닥이다. 같은 자리에서 이어지는 장면이라 상이 나타났다 사라졌다 한다. 별은 정확히 열 개로 잘 그려졌으니 그것만 그대로 살리면 된다 |
+| `04-deer` | 같은 문제. 상이 없다 |
+| `08-trees` | **배경이 통째로 다르다.** 가을 숲과 잔칫상이 아니라 대낮 풀밭이고, 여우와 사슴도 없다. 두꺼비가 상 앞에서 셋이 마주 앉아 하는 이야기인데 혼자 딴 데 가 있다. 말풍선 속 세 그루 나무는 본문 그대로라 아주 좋다 |
+
+아래 세 프롬프트는 이미 고쳐 두었습니다. 그대로 다시 돌리시면 됩니다.
+
+**사슴은 그림을 따랐습니다.** 인물 설명에는 노루(짧은 뿔, 점 없음)라고 적어 두었는데 제미나이는 여덟 장 모두 흰 점에 가지 뿔이 난 꽃사슴으로 그렸습니다. 여덟 장을 다시 만드느니 본문의 "노루"를 "사슴"으로 바꾸는 편이 낫다고 보아 그렇게 했고, 인물 설명도 그림에 맞추었습니다.
+
 
 그림책 틀이에요. 한 펼침마다 위쪽에 큰 그림 하나가 통으로 들어가고, 아래쪽 띠에 글이 좌우로 나뉩니다.
 **열 개의 펼침** + 표지 + 마지막 장 = 그림 **열두 장**.
@@ -36,8 +50,8 @@ head, clearly imaginary. No text or letters in the image.
 ```
 The fox: a slim red-orange fox sitting upright with a long bushy tail curled
 round, narrow clever eyes, stroking his chin whiskers, pompous and theatrical.
-The roe deer: a slender brown deer with short antlers and a white rump, chin
-lifted, snooty and superior. The toad: a plump brown-green toad with a wide flat
+The deer: a slender sika deer, tan coat with white spots along the back and
+branching antlers, chin lifted, snooty and superior. The toad: a plump brown-green toad with a wide flat
 mouth and heavy-lidded eyes, sitting low and still - the same toad character as
 in volume 11. He weeps enormous comic tears in the second half. All three are
 animals but seated and gesturing like people at a table.
@@ -79,21 +93,27 @@ below them, the toad simply blinks. The feast table sits untouched in the middle
 ### `03-fox.png` — 별을 세던 시절
 
 ```
-Wide clearing scene. On the left, the fox strikes a grand pose with one paw
-sweeping toward the sky, tail fanned out, boasting. Floating above him on the
-right, a soft glowing daydream image: a night sky containing only about ten large
-stars, with a tiny fox silhouette below counting them on his paws. The daydream
-is drawn in pale dreamy colors to read as imaginary.
+Wide clearing scene. The low wooden feast table stands in the middle of the frame
+on its straw mat, still laden with rice cakes and bowls - it must be visible, this
+is the same meal as the previous picture. On the left, the fox stands beside the
+table striking a grand pose with one paw sweeping toward the sky, tail fanned out,
+boasting. The deer waits on the right. The toad sits low at the near edge of the
+table. Floating above the fox, a soft glowing daydream image: a night sky
+containing exactly ten large stars, with a tiny fox silhouette below counting them
+on his paws. The daydream is drawn in pale dreamy colors to read as imaginary.
 ```
 
 ### `04-deer.png` — 뿔로 긁은 골짜기
 
 ```
-Wide clearing scene. On the right, the roe deer tosses his head back with a
-dismissive snort, one hoof lifted. Floating on the left, a glowing daydream
-image: a small round grassy hill where a much larger deer drags his antlers along
-the ground, carving deep grooves that become valleys. Pale dreamy colors for the
-daydream, solid colors for the real scene.
+Wide clearing scene. The low wooden feast table stands in the middle of the frame
+on its straw mat, still laden with rice cakes and bowls - it must be visible, this
+is the same meal as the previous picture. On the right, the deer tosses his head
+back with a dismissive snort, one hoof lifted. The fox scowls on the left, the
+toad sits low at the near edge of the table. Floating above the deer, a glowing
+daydream image: a small round grassy hill where a much larger deer drags his
+antlers along the ground, carving deep grooves that become valleys. Pale dreamy
+colors for the daydream, solid colors for the real scene.
 ```
 
 ### `05-quarrel.png` — 얼굴이 벌게지도록
@@ -129,9 +149,13 @@ curiosity. The feast table between them. Soft warm light, a hush after the shout
 Wide scene dominated by a huge glowing daydream image filling most of the frame:
 three enormous trees against a cosmic sky. The first has become a vast pillar
 holding up the sky, the second a long pole from which the sun and moon hang, the
-third the handle of a great hammer driving stars into the darkness. In the bottom
-corner, small and real, the toad speaks with one foot raised. Dreamy and
-magnificent.
+third the handle of a great hammer driving stars into the darkness. The real part of the scene, along the bottom of the
+frame, is still the autumn forest clearing: the low feast table on its straw mat,
+the toad speaking with one webbed foot raised, and the fox and the deer on either
+side of him listening open-mouthed. Do not move the toad anywhere else and do not
+change the season or the time of day - the daydream is cosmic, the ground beneath
+it is the same golden autumn clearing as every other picture in this book. Dreamy
+and magnificent.
 ```
 
 ### `09-shock.png` — 입을 딱 벌린 둘
