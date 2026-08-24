@@ -776,6 +776,11 @@ textarea,
 @media (min-width:621px){
 body{justify-content:flex-start;padding:8px}
 }
+
+/* On roomy screens, center only the waiting panel without moving the game controls. */
+@media (min-width:901px) and (min-height:861px){
+.start-screen{margin-block:auto}
+}
 </style>
 <script src="../../../assets/network/game-network.js?v=20260821"></script>
 <script src="../../../assets/network/finisher-api.js"></script>
