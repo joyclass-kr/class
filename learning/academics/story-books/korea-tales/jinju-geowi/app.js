@@ -28,7 +28,7 @@ const CHAPTERS = [
                 ]
             },
             {
-                art: "03-swallow.png",
+                art: "03-swallow.webp",
                 emoji: "🦢",
                 left: [
                     "주인이 진주를 다시 넣으려는 순간이었어요. 진주가 손끝에서 미끄러졌습니다.",
@@ -45,7 +45,7 @@ const CHAPTERS = [
         title: "2장 · 아무 말도 하지 않은 나그네",
         beats: [
             {
-                art: "04-accuse.png",
+                art: "04-accuse.webp",
                 emoji: "😨",
                 left: [
                     "\"어? 진주가 어디 갔지?\"",
@@ -57,7 +57,7 @@ const CHAPTERS = [
                 ]
             },
             {
-                art: "05-silent.png",
+                art: "05-silent.webp",
                 emoji: "🤐",
                 left: [
                     "\"내놓으시오. 그러면 없던 일로 하겠소.\"",
@@ -69,7 +69,7 @@ const CHAPTERS = [
                 ]
             },
             {
-                art: "06-tied.png",
+                art: "06-tied.webp",
                 emoji: "🪢",
                 left: [
                     "\"날이 밝는 대로 관아로 넘기겠소!\"",
@@ -87,7 +87,7 @@ const CHAPTERS = [
         title: "3장 · 아침에 반짝인 것",
         beats: [
             {
-                art: "07-night.png",
+                art: "07-night.webp",
                 emoji: "🌙",
                 left: [
                     "밤이 깊었어요.",
@@ -98,7 +98,7 @@ const CHAPTERS = [
                 ]
             },
             {
-                art: "08-morning.png",
+                art: "08-morning.webp",
                 emoji: "✨",
                 left: [
                     "이튿날 아침이었어요.",
