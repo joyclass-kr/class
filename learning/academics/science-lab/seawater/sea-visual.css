@@ -1,0 +1,65 @@
+/* Apparatus: a column of sea water cut open from the surface down to 1000 m. */
+
+.pick-field { margin: 4px 0 14px; padding: 0; border: 0; }
+.pick-field legend { color: #dce9e8; font-size: 14px; font-weight: 850; }
+.pick-buttons { display: grid; grid-template-columns: repeat(3, 1fr); gap: 8px; margin-top: 9px; }
+.pick-buttons button { display: flex; flex-direction: column; align-items: center; gap: 2px; padding: 10px 3px; border: 1px solid var(--line); border-radius: 11px; background: #0a1c24; color: var(--muted); font-weight: 850; font-size: 12.5px; cursor: pointer; }
+.pick-buttons button small { color: #6f8f8d; font-size: 9.5px; font-weight: 800; }
+.pick-buttons button.selected { border-color: var(--cyan); background: rgba(82, 199, 255, .12); color: var(--cyan); }
+.pick-buttons button.selected small { color: var(--cyan); }
+
+.prediction-buttons.three { grid-template-columns: repeat(3, 1fr); }
+.range-scale { grid-template-columns: repeat(3, 1fr); }
+.reset-button { width: 100%; margin-top: 8px; padding: 10px; border: 1px solid var(--line); border-radius: 12px; background: transparent; color: var(--muted); font-weight: 850; cursor: pointer; }
+.reset-button:hover { color: var(--ink); border-color: rgba(151, 218, 211, .45); }
+
+.sea-stage {
+    display: flex;
+    flex-direction: column;
+    min-width: 0;
+    border-color: rgba(110, 175, 220, .26);
+    box-shadow: 0 0 0 1px rgba(110, 175, 220, .04), 0 24px 48px -30px rgba(110, 175, 220, .34);
+    background-image:
+        radial-gradient(620px 420px at 50% 40%, rgba(110, 175, 220, .06), transparent 65%),
+        linear-gradient(rgba(109, 174, 181, .05) 1px, transparent 1px),
+        linear-gradient(90deg, rgba(109, 174, 181, .05) 1px, transparent 1px);
+    background-size: 100% 100%, 24px 24px, 24px 24px;
+}
+.stage-views { flex: 1; display: flex; flex-direction: column; gap: 6px; padding: 6px 0 2px; }
+.main-svg, .graph-svg { width: 100%; max-width: 560px; margin: 0 auto; height: auto; display: block; }
+
+.layer-mixed { fill: rgba(120, 195, 235, .34); }
+.layer-thermo { fill: rgba(80, 140, 195, .34); }
+.layer-deep { fill: rgba(40, 80, 130, .38); }
+.layer-line { stroke: rgba(214, 245, 250, .5); stroke-width: 1.2; stroke-dasharray: 4 3; }
+.sea-frame { fill: none; stroke: rgba(177, 226, 230, .6); stroke-width: 1.6; }
+.surface-line { stroke: rgba(214, 245, 250, .8); stroke-width: 2; }
+.wind-arrow { stroke: #ffd166; stroke-width: 2.2; fill: none; stroke-linecap: round; }
+.swirl { fill: none; stroke: rgba(230, 250, 255, .55); stroke-width: 1.6; }
+.sink-arrow { stroke: #7fd4f0; stroke-width: 2.6; fill: none; stroke-linecap: round; }
+.rise-arrow { stroke: #ffb86b; stroke-width: 2.6; fill: none; stroke-linecap: round; }
+.parcel { stroke: rgba(255, 255, 255, .5); stroke-width: 1.2; }
+
+.salt-seg { stroke: rgba(0, 0, 0, .25); stroke-width: .6; }
+.salt-text { font-size: 9.5px; font-weight: 800; }
+.depth-text { fill: #8fa8b0; font-size: 9px; font-weight: 800; }
+.layer-text { fill: #dfe9ed; font-size: 9.5px; font-weight: 900; }
+.part-label { fill: #b6d3d9; font-size: 10.5px; font-weight: 800; }
+.small-label { fill: #8fa8b0; font-size: 9.5px; font-weight: 800; }
+.read-text { fill: var(--mint); font-size: 14px; font-weight: 900; }
+.note-text { fill: #8fa8b0; font-size: 10px; font-weight: 800; }
+
+.axis { stroke: rgba(214, 245, 250, .6); stroke-width: 1.6; }
+.grid-line { stroke: rgba(151, 218, 211, .13); stroke-width: 1; }
+.axis-text { fill: #9cb6b4; font-size: 10px; font-weight: 800; }
+.axis-title { fill: #cfe6ee; font-size: 10.5px; font-weight: 900; }
+.trace { fill: none; stroke-width: 2.8; stroke: #ffd166; }
+.trace-dot { stroke: #fff; stroke-width: 1.3; }
+.band-line { stroke: rgba(84, 230, 193, .5); stroke-width: 1.3; stroke-dasharray: 5 4; }
+.band-text { fill: var(--mint); font-size: 10px; font-weight: 900; }
+
+.data-note { display: grid; gap: 3px; margin-top: 8px; padding-top: 8px; border-top: 1px solid var(--line); }
+.data-row { display: grid; grid-template-columns: 128px 1fr; gap: 10px; font-size: 11.5px; font-weight: 850; align-items: baseline; }
+.data-name { color: #b6d3d9; }
+.data-val { color: #cfe6ee; }
+.data-row.match .data-val { color: var(--mint); }
