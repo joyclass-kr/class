@@ -6,12 +6,16 @@
 
   let fallbackHref = "/";
   const LEGACY_LABEL = /^(?:[←‹◀🏠🏡🌌]\s*)?(?:(?:메인(?:\s*(?:페이지|화면))?|홈|학습\s*홈|기초학력(?:\s*목록)?|연산|학생\s*화면|교사\s*메인|교사\s*도구\s*홈|포털\s*(?:메인|홈)|우주\s*관찰\s*(?:메인|홈)|첫\s*화면|(?:게임\s*)?(?:로비|대기실)(?:\s*로)?(?:\s*돌아가기)?|RETURN\s+TO\s+(?:THE\s+)?LOBBY|BACK\s+TO\s+(?:THE\s+)?LOBBY)(?:\s*(?:으)?로)?(?:\s*돌아가기)?)$/i;
+  const BACK_LINK_LABEL = /^(?:←|‹|◀)\s*\S/;
+  const LEGACY_LINK_SELECTOR = "a.back, a.back-link, a.home, a.home-link, a.counting-back, a.catalog-back";
   const normalizeLabel = value => String(value || "").replace(/\s+/g, " ").trim();
 
   const isLegacyControl = control => {
     const textLabel = normalizeLabel(control.textContent);
     const ariaLabel = normalizeLabel(control.getAttribute("aria-label"));
-    return LEGACY_LABEL.test(textLabel) || LEGACY_LABEL.test(ariaLabel);
+    if (LEGACY_LABEL.test(textLabel) || LEGACY_LABEL.test(ariaLabel)) return true;
+    if (!(control instanceof HTMLAnchorElement)) return false;
+    return BACK_LINK_LABEL.test(textLabel) || control.matches(LEGACY_LINK_SELECTOR);
   };
 
   const hideLegacyControl = control => {
