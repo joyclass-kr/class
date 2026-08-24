@@ -373,6 +373,7 @@ for (const [route, file] of [
   ["/privacy", "privacy.html"],
   ["/student-privacy", "student-privacy.html"],
   ["/support", "support.html"],
+  ["/terms", "terms.html"],
 ]) {
   app.get(route, (_req, res) => res.sendFile(path.join(SITE_ROOT, file)));
 }
