@@ -948,7 +948,7 @@
         (() => {
             'use strict';
 
-            const APP_ORIGIN = 'https://songhwaplay.onrender.com';
+            const APP_ORIGIN = 'https://joyclass.kr';
             const KOREAN_NAME_PATTERN = /^[가-힣]{2,6}$/;
             const isLocal = ['localhost', '127.0.0.1', ''].includes(location.hostname) || location.protocol === 'file:';
             const isRenderApp = location.origin === APP_ORIGIN;
@@ -983,6 +983,7 @@
             const classboardLink = document.getElementById('classboardLink');
             const hubContent = document.getElementById('hubContent');
             const hubLinks = Array.from(hubContent.querySelectorAll('a[href]'));
+            const worksheetGroupSummaries = Array.from(hubContent.querySelectorAll('.worksheet-group > summary'));
             const worksheetGroups = Array.from(document.querySelectorAll('.worksheet-group'));
             document.addEventListener('click', (event) => {
                 worksheetGroups.forEach((group) => {
@@ -1322,6 +1323,14 @@
                     }
                     delete link.dataset.lockedHref;
                     link.removeAttribute('aria-disabled');
+                });
+                worksheetGroupSummaries.forEach((summary) => {
+                    summary.classList.toggle('is-class-locked', locked);
+                    if (locked) {
+                        summary.setAttribute('aria-disabled', 'true');
+                    } else if (summary.dataset.classLocked !== 'true') {
+                        summary.removeAttribute('aria-disabled');
+                    }
                 });
             }
 
@@ -1704,7 +1713,7 @@
                     return;
                 }
                 if (restrictedPreview && signedInArea.hidden && !currentPlayerName) {
-                    const link = event.target.closest('a');
+                    const link = event.target.closest('a, summary');
                     if (link && hubContent.contains(link)) {
                         event.preventDefault();
                         setStatus('접근이 제한되어 있습니다. 이 메뉴를 열려면 학교 Google Workspace 계정으로 로그인하세요.', true);
@@ -1713,7 +1722,7 @@
                     return;
                 }
                 if (!openAccess || isValidPlayerName(currentPlayerName)) return;
-                const link = event.target.closest('a');
+                const link = event.target.closest('a, summary');
                 if (link && hubContent.contains(link)) {
                     event.preventDefault();
                     setStatus('Enter a Korean player name before opening a game.', true);

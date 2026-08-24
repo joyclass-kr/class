@@ -7,7 +7,7 @@
   <meta name="description" content="경찰팀과 도둑팀이 각자의 기기로 접속해 보석을 둘러싼 추격전을 벌이는 2~6인 실시간 보드게임">
   <title>도둑잡기 · 시티 체이스</title>
   <link rel="stylesheet" href="../../../assets/network/multiplayer-lobby.css">
-  <link rel="stylesheet" href="citychase.css?v=20260824f">
+  <link rel="stylesheet" href="citychase.css?v=20260824l">
   <script src="../../../assets/network/game-network.js?v=20260821"></script>
   <script src="../../../assets/network/multiplayer-lobby.js?v=20260821"></script>
   <script src="citychase-data.js?v=20260824f"></script>
@@ -24,48 +24,72 @@
     </section>
 
     <section id="lobbyScreen" class="lobbyShell hidden">
-      <header class="lobbyPanel">
+      <header class="lobbyPanel lobbyTop">
         <div class="lobbyBrand">
           <div class="brandMark" aria-hidden="true">♟</div>
           <div>
-            <div class="eyebrow">LIVE TEAM CHASE · 2–6 PLAYERS</div>
             <h1 class="lobbyTitle">도둑잡기</h1>
-            <p class="lobbyLead">보석을 훔쳐 달아날 것인가, 도시를 봉쇄해 모두 체포할 것인가.</p>
+            <p class="lobbyLead">2–6명 · 각자의 기기로 참가</p>
           </div>
         </div>
-        <p><strong id="savedName">-</strong>님이 각자의 기기로 참가합니다.</p>
+        <p class="lobbyIdentity"><strong id="savedName">-</strong>님</p>
         <div class="mp-lobby-tabs">
           <button id="hostTab" class="primary" type="button">방 만들기</button>
           <button id="joinTab" class="secondary" type="button">방 참가</button>
         </div>
       </header>
 
-      <section id="hostPane" class="lobbyPanel mp-lobby-card hidden">
-        <div class="row spread">
-          <div><div class="eyebrow">ROOM CODE</div><div id="roomCode" class="code">----</div></div>
-          <span>이 번호를 친구들에게 알려주세요.</span>
-        </div>
-        <div id="hostStatus" class="mp-lobby-status">방을 만드는 중입니다.</div>
-      </section>
+      <div class="lobbyWorkspace">
+        <div class="lobbyConnect">
+          <section id="hostPane" class="lobbyPanel mp-lobby-card hidden">
+            <div class="row spread">
+              <div><div class="eyebrow">방 번호</div><div id="roomCode" class="code">----</div></div>
+              <span>친구에게 알려주세요.</span>
+            </div>
+            <div id="hostStatus" class="mp-lobby-status">방을 만드는 중입니다.</div>
+          </section>
 
-      <section id="joinPane" class="lobbyPanel mp-lobby-card hidden">
-        <div class="mp-lobby-row">
-          <input id="joinCode" class="mp-lobby-code-input" inputmode="numeric" maxlength="4" autocomplete="one-time-code" placeholder="방 번호 4자리" aria-label="방 번호">
-          <button id="joinBtn" class="primary" type="button">참가</button>
+          <section id="joinPane" class="lobbyPanel mp-lobby-card hidden">
+            <div class="mp-lobby-row">
+              <input id="joinCode" class="mp-lobby-code-input" inputmode="numeric" maxlength="4" autocomplete="one-time-code" placeholder="방 번호 4자리" aria-label="방 번호">
+              <button id="joinBtn" class="primary" type="button">참가</button>
+            </div>
+            <div id="joinStatus" class="mp-lobby-status">방장이 알려준 번호를 입력하세요.</div>
+          </section>
         </div>
-        <div id="joinStatus" class="mp-lobby-status">방장이 알려준 번호를 입력하세요.</div>
-      </section>
 
-      <section class="lobbyPanel">
-        <div class="row spread"><h2>참가자</h2><strong>2~6명</strong></div>
-        <div id="lobbyPlayers" class="mp-lobby-players"></div>
-        <p id="lobbyGuide" class="mp-lobby-guide">참가자를 기다리는 중입니다.</p>
-        <button id="startBtn" class="primary" type="button" disabled>참가자를 기다리는 중</button>
-        <div class="row" style="margin-top:10px">
-          <button id="rulesBtnLobby" class="secondary" type="button">게임 방법</button>
-          <button id="leaveBtnLobby" class="secondary" type="button">메인 화면</button>
-        </div>
-      </section>
+        <section id="teamSeatPanel" class="lobbyPanel teamSeatPanel hidden" aria-labelledby="teamSeatTitle">
+          <div class="teamSeatHeader">
+            <div>
+              <h2 id="teamSeatTitle">팀 자리 선택</h2>
+              <p>빈 슬롯을 눌러 내 아바타를 옮기세요.</p>
+            </div>
+            <button id="recommendSeatsBtn" class="secondary recommendSeatsBtn" type="button">무작위 추천</button>
+          </div>
+          <div class="teamSeatBoard">
+            <article class="teamSeatColumn police">
+              <div class="teamSeatTitle"><strong>경찰팀</strong><span id="policeSeatCount">0 / 0</span></div>
+              <div id="policeSeatSlots" class="teamSlots" aria-label="경찰팀 슬롯"></div>
+            </article>
+            <article class="teamSeatColumn thief">
+              <div class="teamSeatTitle"><strong>도둑팀</strong><span id="thiefSeatCount">0 / 0</span></div>
+              <div id="thiefSeatSlots" class="teamSlots" aria-label="도둑팀 슬롯"></div>
+            </article>
+          </div>
+          <p id="teamSeatGuide" class="teamSeatGuide">참가자가 모두 모이면 각자 팀 자리를 선택하세요.</p>
+        </section>
+
+        <section class="lobbyPanel playersPanel">
+          <div class="row spread"><h2>참가자</h2><strong>2~6명</strong></div>
+          <div id="lobbyPlayers" class="mp-lobby-players"></div>
+          <p id="lobbyGuide" class="mp-lobby-guide">참가자를 기다리는 중입니다.</p>
+          <button id="startBtn" class="primary startButton" type="button" disabled>참가자를 기다리는 중</button>
+          <div class="lobbySecondaryActions">
+            <button id="rulesBtnLobby" class="secondary" type="button">게임 방법</button>
+            <button id="leaveBtnLobby" class="secondary" type="button">메인 화면</button>
+          </div>
+        </section>
+      </div>
     </section>
 
     <section id="gameScreen" class="gameShell hidden">
@@ -176,6 +200,6 @@
   </section>
 
   <div id="toast" class="toast hidden" role="status" aria-live="polite"></div>
-  <script src="citychase.js?v=20260824f"></script>
+  <script src="citychase.js?v=20260824k"></script>
 </body>
 </html>

@@ -35,4 +35,10 @@ assert.match(
     "Nonogram's centered desktop start screen must remain bounded to the visible viewport.",
 );
 
+const hanoi = fs.readFileSync(path.join(root, "learning/games/hanoitower/hanoitower.html"), "utf8");
+assert.match(
+    hanoi,
+    /@media \(min-width:901px\) and \(min-height:861px\)\{\s*\.start-screen\{margin-block:auto\}/,
+    "Tower of Hanoi must center its waiting panel on roomy screens without moving the game controls.",
+);
 console.log("game-start-layout-contract: game start screens follow Chromebook, iPad, and PC alignment rules");

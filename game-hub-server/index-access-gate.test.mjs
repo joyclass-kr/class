@@ -35,13 +35,18 @@ assert.match(
 );
 assert.match(
     html,
-    /if \(!openAccess \|\| isValidPlayerName\(currentPlayerName\)\) return;\s*const link = event\.target\.closest\('a'\);\s*if \(link && hubContent\.contains\(link\)\) \{\s*event\.preventDefault\(\);\s*setStatus\('Enter a Korean player name before opening a game\.', true\);\s*guestNameInput\.focus\(\);/,
-    'Open access without a valid saved name must lock the hub.',
+    /if \(!openAccess \|\| isValidPlayerName\(currentPlayerName\)\) return;\s*const link = event\.target\.closest\('a, summary'\);\s*if \(link && hubContent\.contains\(link\)\) \{\s*event\.preventDefault\(\);\s*setStatus\('Enter a Korean player name before opening a game\.', true\);\s*guestNameInput\.focus\(\);/,
+    'Open access without a valid saved name must lock the hub, including submenu-opening buttons.',
 );
 assert.match(
     html,
     /const baseHref = link\.dataset\.baseHref\s*\|\| link\.dataset\.lockedHref\s*\|\| link\.getAttribute\(['"]href['"]\);/,
     'Player handoff links must preserve their destination while the hub is locked.',
+);
+assert.match(
+    html,
+    /worksheetGroupSummaries\.forEach\(\(summary\) => \{\s*summary\.classList\.toggle\('is-class-locked', locked\);\s*if \(locked\) \{\s*summary\.setAttribute\('aria-disabled', 'true'\);\s*\} else if \(summary\.dataset\.classLocked !== 'true'\) \{\s*summary\.removeAttribute\('aria-disabled'\);\s*\}\s*\}\);/,
+    'Locking the hub must also visually lock submenu-opening buttons, not just links.',
 );
 assert.match(
     html,
@@ -74,14 +79,40 @@ class FakeLink {
     }
 }
 
+class FakeSummary {
+    constructor() {
+        this.classes = new Set();
+        this.classList = { toggle: (name, force) => {
+            const on = force === undefined ? !this.classes.has(name) : Boolean(force);
+            if (on) this.classes.add(name); else this.classes.delete(name);
+        } };
+        this.attributes = new Map();
+        this.dataset = {};
+    }
+
+    hasAttribute(name) {
+        return this.attributes.has(name);
+    }
+
+    setAttribute(name, value) {
+        this.attributes.set(name, String(value));
+    }
+
+    removeAttribute(name) {
+        this.attributes.delete(name);
+    }
+}
+
 const functionStart = html.indexOf('function setHubLocked(locked)');
 const functionEnd = html.indexOf('async function api(', functionStart);
 assert.ok(functionStart >= 0 && functionEnd > functionStart, 'The player-link functions must be extractable.');
 const playerLinkFunctions = html.slice(functionStart, functionEnd);
 const voyageLink = new FakeLink('/learn/world-voyage/');
+const groupSummary = new FakeSummary();
 const createRuntime = new Function(
     'hubLinks',
     'playerLearningLinks',
+    'worksheetGroupSummaries',
     'window',
     'KOREAN_NAME_PATTERN',
     `
@@ -95,15 +126,18 @@ const createRuntime = new Function(
 const runtime = createRuntime(
     [voyageLink],
     [voyageLink],
-    { location: { href: 'https://songhwaplay.onrender.com/' } },
+    [groupSummary],
+    { location: { href: 'https://joyclass.kr/' } },
     /^[가-힣]{2,6}$/,
 );
 
 runtime.setHubLocked(true);
 assert.equal(voyageLink.hasAttribute('href'), false, 'The link must remain disabled during guest setup.');
+assert.equal(groupSummary.classes.has('is-class-locked'), true, 'A submenu-opening button must look locked while the hub is locked.');
 runtime.updatePlayerLearningLinks('아아');
 assert.equal(voyageLink.hasAttribute('href'), false, 'Adding the name must not unlock the link early.');
 runtime.setHubLocked(false);
+assert.equal(groupSummary.classes.has('is-class-locked'), false, 'Unlocking the hub must restore the submenu-opening button.');
 
 const restoredVoyageUrl = new URL(voyageLink.getAttribute('href'));
 assert.equal(restoredVoyageUrl.pathname, '/learn/world-voyage/');

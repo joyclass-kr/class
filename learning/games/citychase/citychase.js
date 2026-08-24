@@ -23,6 +23,18 @@
   function pawnById(id) { return state?.pawns.find(pawn => pawn.id === id) || null; }
   function playerById(id) { return state?.players.find(player => player.id === id) || null; }
   function buildingMeta(id) { return Board.BUILDINGS.find(building => building.id === id) || null; }
+  function avatarOf(playerId) {
+    const key = lobby?.snapshot().players?.[playerId]?.avatarKey;
+    return key ? window.ClassroomMultiplayerLobby.avatarUrl(key) : "";
+  }
+
+  function pawnControllers(pawnId) {
+    return state.players.filter(player => player.pawnIds.includes(pawnId));
+  }
+
+  function firstLetter(name) {
+    return Array.from(String(name || "?").trim())[0] || "?";
+  }
   function nodeMeta(id) { return Board.NODES[id] || null; }
 
   function escapeHtml(value) {
@@ -84,12 +96,12 @@
       const isPolice = edge.kind === "police-lane";
       const accent = isRail ? "#8e5c23" : isThief ? "#c92f4f" : isPolice ? "#2362b7" : "#233d31";
       const inner = isRail ? "#efb75a" : isThief ? "#ee5e78" : isPolice ? "#5d9fe5" : "#fff8df";
-      ctx.globalAlpha = isRail || isThief || isPolice ? .7 : .3;
+      ctx.globalAlpha = isRail || isThief || isPolice ? .92 : .86;
       ctx.strokeStyle = accent;
-      ctx.lineWidth = isRail ? 9 : isThief || isPolice ? 8 : 5;
+      ctx.lineWidth = isRail ? 14 : isThief || isPolice ? 13 : 16;
       ctx.beginPath(); ctx.moveTo(a.x, a.y); ctx.lineTo(b.x, b.y); ctx.stroke();
       ctx.strokeStyle = inner;
-      ctx.lineWidth = isRail ? 4 : isThief || isPolice ? 4 : 2;
+      ctx.lineWidth = isRail ? 7 : isThief || isPolice ? 7 : 10;
       ctx.beginPath(); ctx.moveTo(a.x, a.y); ctx.lineTo(b.x, b.y); ctx.stroke();
       ctx.globalAlpha = 1;
       if (edge.oneWay) drawArrow(ctx, a, b, accent);
@@ -100,8 +112,98 @@
     return `left:${(x / Board.WIDTH) * 100}%;top:${(y / Board.HEIGHT) * 100}%`;
   }
 
+  function contentLabel(content) {
+    return content === "gem" ? "보석" : content === "undercover" ? "잠복경찰" : content === "empty" ? "비어 있음" : "확인 전";
+  }
+
   function contentBadge(content) {
-    return content === "gem" ? "◆" : content === "undercover" ? "♜" : content === "empty" ? "✓" : "?";
+    if (content === "gem") {
+      return `<svg class="secretIcon gemIcon" viewBox="0 0 32 32" aria-hidden="true"><path d="M8 5h16l6 8-14 16L2 13z"/><path class="facet" d="m8 5 8 24 8-24M2 13h28M8 5l-6 8m22-8 6 8"/></svg>`;
+    }
+    if (content === "undercover") {
+      return `<svg class="secretIcon undercoverIcon" viewBox="0 0 32 32" aria-hidden="true"><path class="hat" d="M5 12h22l-4-7H9z"/><circle class="face" cx="16" cy="18" r="10"/><path class="glasses" d="M7 16h4l2 4h3l2-4h7M7 16l1 5h5l1-5m4 0 1 5h5l1-5"/><path class="smile" d="M13 24q3 2 6 0"/></svg>`;
+    }
+    if (content === "empty") {
+      return `<svg class="secretIcon emptyIcon" viewBox="0 0 32 32" aria-hidden="true"><circle cx="16" cy="16" r="13"/><path d="m9 16 5 5 9-11"/></svg>`;
+    }
+    return `<span class="secretUnknown" aria-hidden="true">?</span>`;
+  }
+
+  function pawnFaceMarkup(controllers) {
+    const faces = controllers.slice(0, 2).map(player => {
+      const url = avatarOf(player.id);
+      return url
+        ? `<img class="pawnAvatar" src="${escapeHtml(url)}" alt="">`
+        : `<span class="pawnInitial">${escapeHtml(firstLetter(player.name))}</span>`;
+    }).join("");
+    return `<span class="pawnFaces${controllers.length > 1 ? " shared" : ""}">${faces || '<span class="pawnInitial">?</span>'}</span>`;
+  }
+
+  function seatDuty(slot, teamSize) {
+    if (teamSize === 1) return "말 1·2·3 담당";
+    if (teamSize === 2) return slot === 1 ? "말 1 + 말 3 공동" : "말 2 + 말 3 공동";
+    return `말 ${slot} 담당`;
+  }
+
+  function seatAvatarMarkup(player) {
+    const url = avatarOf(player.id);
+    return url
+      ? `<img class="teamSeatAvatar" src="${escapeHtml(url)}" alt="">`
+      : `<span class="teamSeatInitial">${escapeHtml(firstLetter(player.name))}</span>`;
+  }
+
+  function chooseLobbySeat(team, slot, isMine) {
+    sendAction("CHOOSE_SEAT", isMine ? { team: "", slot: 0 } : { team, slot });
+  }
+
+  function renderSeatColumn(team, slotsId, countId) {
+    const limit = Number(state?.teamLimits?.[team]) || 0;
+    const members = state.players.filter(player => player.team === team);
+    $(countId).textContent = `${members.length} / ${limit}`;
+    const fragment = document.createDocumentFragment();
+    for (let slot = 1; slot <= 3; slot += 1) {
+      const occupant = members.find(player => player.seat === slot);
+      const active = slot <= limit;
+      const isMine = occupant?.id === myId();
+      const button = document.createElement("button");
+      button.type = "button";
+      button.className = `teamSeat ${team}${active ? "" : " locked"}${occupant ? " occupied" : " empty"}${isMine ? " mine" : ""}`;
+      button.disabled = !active || (!!occupant && !isMine) || actionPending;
+      if (!active) {
+        button.innerHTML = '<span class="teamSeatEmpty">현재 인원에서는 쉬는 슬롯</span>';
+        button.setAttribute("aria-label", `${team === "police" ? "경찰" : "도둑"}팀 ${slot}번 비활성 슬롯`);
+      } else if (occupant) {
+        button.innerHTML = `${seatAvatarMarkup(occupant)}<span class="teamSeatName">${escapeHtml(occupant.name)}${isMine ? " · 나" : ""}</span><span class="teamSeatDuty">${escapeHtml(seatDuty(slot, limit))}</span>`;
+        button.setAttribute("aria-label", `${occupant.name}, ${team === "police" ? "경찰" : "도둑"}팀 ${slot}번${isMine ? ", 다시 누르면 자리에서 나가기" : ""}`);
+      } else {
+        button.innerHTML = `<span class="teamSeatEmpty">${slot}번 · 빈 자리<br><small>${escapeHtml(seatDuty(slot, limit))}</small></span>`;
+        button.setAttribute("aria-label", `${team === "police" ? "경찰" : "도둑"}팀 ${slot}번 빈 자리 선택`);
+      }
+      if (active && (!occupant || isMine)) button.addEventListener("click", () => chooseLobbySeat(team, slot, isMine));
+      fragment.appendChild(button);
+    }
+    $(slotsId).replaceChildren(fragment);
+  }
+
+  function renderTeamSeats() {
+    if (!state || state.phase !== "lobby") return;
+    $("teamSeatPanel").classList.remove("hidden");
+    renderSeatColumn("police", "policeSeatSlots", "policeSeatCount");
+    renderSeatColumn("thief", "thiefSeatSlots", "thiefSeatCount");
+    const snapshot = lobby.snapshot();
+    const role = snapshot.role;
+    const unseated = state.players.filter(player => !player.team || !player.seat).length;
+    $("recommendSeatsBtn").hidden = role !== "host";
+    $("recommendSeatsBtn").disabled = actionPending || state.players.length < 2;
+    $("teamSeatGuide").classList.toggle("ready", !!state.lobbyReady);
+    $("teamSeatGuide").textContent = state.lobbyReady
+      ? "팀 배치 완료! 방장이 게임을 시작할 수 있습니다."
+      : state.players.length < 2
+        ? "2명 이상 모이면 경찰팀·도둑팀 슬롯이 열립니다."
+        : `${unseated}명이 아직 팀 자리를 고르지 않았습니다.`;
+    const canStart = role === "host" && !!state.lobbyReady;
+    $("startBtn").disabled = !canStart;
+    $("startBtn").textContent = canStart ? `게임 시작 · ${state.players.length}명` : role === "host" ? "팀 자리를 모두 채워주세요" : "방장이 게임을 시작합니다";
   }
 
   function renderBuildings() {
@@ -115,12 +217,12 @@
       button.className = "building";
       button.style.cssText = `${positionStyle(building.x, building.y)};--building:${building.color}`;
       button.disabled = !captainSetup;
-      button.setAttribute("aria-label", `${building.name}${knowledge.content === "hidden" ? "" : `, ${contentBadge(knowledge.content)}`}`);
+      button.setAttribute("aria-label", `${building.name}${knowledge.content === "hidden" ? "" : `, ${contentLabel(knowledge.content)}`}`);
       const selectedKey = Object.entries(setupSelection).find(([, value]) => value === building.id)?.[0];
       if (captainSetup) button.classList.add("setupTarget");
       if (selectedKey?.startsWith("gem")) button.classList.add("selectedGem");
       if (selectedKey === "undercover") button.classList.add("selectedUndercover");
-      button.innerHTML = `<span class="buildingIcon">${building.icon}</span><span class="buildingName">${escapeHtml(building.name)}</span><span class="buildingKnowledge">${selectedKey ? (selectedKey === "undercover" ? "♜" : "◆") : contentBadge(knowledge.content)}</span>`;
+      button.innerHTML = `<span class="buildingIcon">${building.icon}</span><span class="buildingName">${escapeHtml(building.name)}</span><span class="buildingKnowledge">${selectedKey ? contentBadge(selectedKey === "undercover" ? "undercover" : "gem") : contentBadge(knowledge.content)}</span>`;
       button.addEventListener("click", () => selectSetupBuilding(building.id));
       fragment.appendChild(button);
     }
@@ -213,13 +315,14 @@
         const button = document.createElement("button");
         button.type = "button";
         const choice = state.pending && ["transfer", "rescue"].includes(state.pending.type) && state.pending.options.includes(pawn.id);
-        const offsetX = (index % 3 - Math.min(1, pawns.length - 1)) * 18;
-        const offsetY = Math.floor(index / 3) * 17 - (pawns.length > 3 ? 7 : 0);
+        const offsetX = (index % 3 - Math.min(1, pawns.length - 1)) * 60;
+        const offsetY = Math.floor(index / 3) * 25 - (pawns.length > 3 ? 11 : 0);
         button.className = `pawn ${pawn.team}${pawn.carryingGem ? " carrying" : ""}${pawn.status === "jailed" ? " jailed" : ""}${pawn.id === state.turnPawnId ? " current" : ""}${choice ? " choice" : ""}`;
         button.style.cssText = positionStyle(node.x + offsetX, node.y + offsetY);
-        button.dataset.symbol = pawn.team === "police" ? "♜" : "♟";
-        button.innerHTML = `<span>${pawn.number}</span>`;
-        button.setAttribute("aria-label", `${pawn.team === "police" ? "경찰" : "도둑"} ${pawn.number}번${pawn.carryingGem ? ", 보석 소지" : ""}`);
+        const controllers = pawnControllers(pawn.id);
+        const names = controllers.map(player => player.name).join("·") || `${teamName(pawn.team)}팀`;
+        button.innerHTML = `<span class="pawnName">${escapeHtml(names)}</span>${pawnFaceMarkup(controllers)}<span class="pawnNumber">${pawn.number}</span>`;
+        button.setAttribute("aria-label", `${names}, ${pawn.team === "police" ? "경찰" : "도둑"} ${pawn.number}번${pawn.carryingGem ? ", 보석 소지" : ""}`);
         button.disabled = !choice || actionPending;
         if (choice) button.addEventListener("click", () => sendAction("CHOOSE", { choiceId: pawn.id }));
         fragment.appendChild(button);
@@ -293,7 +396,7 @@
       : state.myTeam === "police" ? "팀 대표의 선택이 끝나면 함께 위치를 확인할 수 있습니다." : "보석과 잠복경찰이 어디에 숨겨지는지는 도둑팀에게 보이지 않습니다.";
     document.querySelectorAll(".secretTab").forEach(button => button.classList.toggle("active", button.dataset.secret === activeSecret));
     $("setupSummary").innerHTML = canSetup
-      ? `<span>◆ 보석 1 · ${escapeHtml(selectedName("gem1"))}</span><span>◆ 보석 2 · ${escapeHtml(selectedName("gem2"))}</span><span>♜ 잠복경찰 · ${escapeHtml(selectedName("undercover"))}</span>`
+      ? `<span>${contentBadge("gem")} 보석 1 · ${escapeHtml(selectedName("gem1"))}</span><span>${contentBadge("gem")} 보석 2 · ${escapeHtml(selectedName("gem2"))}</span><span>${contentBadge("undercover")} 잠복경찰 · ${escapeHtml(selectedName("undercover"))}</span>`
       : "<span>비밀 배치가 끝날 때까지 잠시 기다려 주세요.</span>";
     const values = Object.values(setupSelection);
     $("confirmSetupBtn").disabled = !canSetup || values.some(value => !value) || new Set(values).size !== 3 || actionPending;
@@ -416,8 +519,8 @@
       const building = buildingMeta(knowledge.id);
       const item = document.createElement("div");
       item.className = "intelItem";
-      const label = knowledge.content === "gem" ? "보석 ◆" : knowledge.content === "undercover" ? "잠복경찰 ♜" : "비어 있음";
-      item.innerHTML = `<span>${building.icon} ${escapeHtml(building.name)}</span><strong>${label}</strong>`;
+      const label = contentLabel(knowledge.content);
+      item.innerHTML = `<span>${building.icon} ${escapeHtml(building.name)}</span><strong class="intelSecret">${contentBadge(knowledge.content)}${label}</strong>`;
       fragment.appendChild(item);
     }
     list.replaceChildren(fragment);
@@ -485,6 +588,7 @@
         $("lobbyScreen").classList.remove("hidden");
         lobby.returnToLobby();
       }
+      renderTeamSeats();
       return;
     }
     if (previousPhase !== "setup" && state.phase === "setup") {
@@ -502,12 +606,14 @@
     if (message.type === MESSAGE.ERROR) {
       actionPending = false;
       showToast(message.message || "행동을 처리하지 못했습니다.");
-      if (state) renderGame();
+      if (state?.phase === "lobby") renderTeamSeats();
+      else if (state) renderGame();
     }
   }
 
   function syncLobby(snapshot) {
     $("gameRoomCode").textContent = snapshot.roomCode || "----";
+    if (state?.phase === "lobby") renderTeamSeats();
   }
 
   function showAbort({ title, message }) {
@@ -524,17 +630,18 @@
       getPlayerName: () => /^[가-힣]{2,6}$/.test(savedName) ? savedName : "",
       allowedPlayerCounts: [2, 3, 4, 5, 6],
       maxPlayers: 6,
+      canStart: () => !!state?.lobbyReady,
       rulesButtonIds: ["rulesBtnLobby", "rulesBtnGame"],
       leaveButtonIds: ["leaveBtnLobby", "leaveBtnGame"],
       onRules: showRules,
       onLeave: () => location.href = "../../../",
       onNotice: showToast,
-      onInvalidStart: () => showToast("2~6명이 모여야 시작할 수 있습니다."),
+      onInvalidStart: () => showToast("모든 참가자가 경찰팀·도둑팀 슬롯을 먼저 선택해야 합니다."),
       onStateChange: syncLobby,
       getLobbyPresentation: ({ count, role, canStart }) => ({
-        canStart,
-        startText: role === "host" && canStart ? `게임 시작 · ${count}명` : "참가자를 기다리는 중",
-        guideText: role === "host" ? `현재 ${count}명 · 2~6명에서 시작 가능` : "방장이 게임을 시작할 때까지 기다리세요."
+        canStart: canStart && !!state?.lobbyReady,
+        startText: role === "host" && canStart && state?.lobbyReady ? `게임 시작 · ${count}명` : "팀 자리를 선택하세요",
+        guideText: role === "host" ? `현재 ${count}명 · 모두 팀 슬롯을 선택하면 시작 가능` : "빈 경찰팀·도둑팀 슬롯을 눌러 자리를 선택하세요."
       }),
       createStartData: () => ({ serverAuthoritative: true }),
       onStarted: () => {
@@ -545,6 +652,7 @@
       onAbort: showAbort
     }).mount();
 
+    $("recommendSeatsBtn").addEventListener("click", () => sendAction("RECOMMEND_SEATS"));
     document.querySelectorAll(".secretTab").forEach(button => button.addEventListener("click", () => {
       activeSecret = button.dataset.secret;
       renderSetup();

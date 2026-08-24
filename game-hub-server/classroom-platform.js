@@ -1382,6 +1382,16 @@ function createClassroomPlatform(options = {}) {
     return clean.length > 1 ? clean.replace(/\/+$/, "") : clean;
   }
 
+  function contentRootForStaticAsset(requestPath) {
+    const clean = normalizeContentPath(requestPath);
+    if (!clean) return "";
+    const assetMarkerIndex = clean.indexOf("/assets/");
+    if (assetMarkerIndex > 0) return clean.slice(0, assetMarkerIndex);
+    if (!/\.(?:css|js|mjs|json|map|png|jpe?g|webp|gif|svg|ico|avif|mp3|ogg|wav|m4a|aac|flac|mp4|webm|woff2?|ttf|otf|wasm)$/i.test(clean)) return "";
+    const finalSlashIndex = clean.lastIndexOf("/");
+    return finalSlashIndex > 0 ? clean.slice(0, finalSlashIndex) : "";
+  }
+
   const requireSiteAccess = asyncRoute(async (req, res, next) => {
     // mode and user are each resolved once per request and reused below --
     // this used to call getSiteAccessMode() and sessionUser() twice per
@@ -1417,12 +1427,17 @@ function createClassroomPlatform(options = {}) {
         // Both forms must be recognized or that redirect defeats this bypass.
         const isAlwaysAllowed = requestPath === "/classtools/profile.html" || requestPath === "/classtools/profile";
         if (classId && requestPath && !isAlwaysAllowed) {
+          const assetRootPath = contentRootForStaticAsset(requestPath);
           const enabled = await pool.query(
             `SELECT 1 FROM classroom_content_enabled
              WHERE class_id = $1
-               AND ($2 = content_path OR $2 LIKE content_path || '/%')
+               AND (
+                 $2 = content_path
+                 OR $2 LIKE content_path || '/%'
+                 OR ($3 <> '' AND (content_path = $3 OR content_path LIKE $3 || '/%'))
+               )
              LIMIT 1`,
-            [classId, requestPath]
+            [classId, requestPath, assetRootPath]
           );
           if (!enabled.rows[0]) return res.redirect(302, "/?content=locked");
         }

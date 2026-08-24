@@ -3501,7 +3501,11 @@ wss.on("connection", socket => {
       }
 
       let result;
-      if (action === "START") {
+      if (action === "CHOOSE_SEAT") {
+        result = CityChase.chooseSeat(game, playerId, cleanToken(message.team, 12), Number(message.slot));
+      } else if (action === "RECOMMEND_SEATS") {
+        result = playerId === room.hostId ? CityChase.recommendSeats(game) : { ok: false, error: "방장만 추천 배치를 사용할 수 있습니다." };
+      } else if (action === "START") {
         result = playerId === room.hostId ? CityChase.startGame(game) : { ok: false, error: "방장만 게임을 시작할 수 있습니다." };
       } else if (action === "PLACE_SECRETS") {
         result = CityChase.placeSecrets(game, playerId, {
