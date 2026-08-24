@@ -117,7 +117,7 @@ const CHAPTERS = [
                 ]
             },
             {
-                art: "09-shock.png",
+                art: "09-shock.webp",
                 emoji: "😲",
                 left: [
                     "여우와 사슴은 입을 딱 벌렸습니다. 하늘도 해도 달도 별도, 두꺼비가 나무를 심은 뒤에 생겼다는 말이었거든요."
@@ -129,7 +129,7 @@ const CHAPTERS = [
                 ]
             },
             {
-                art: "10-seat.png",
+                art: "10-seat.webp",
                 emoji: "🐸",
                 left: [
                     "두꺼비는 엉금엉금 윗자리로 올라갔어요.",
@@ -242,7 +242,7 @@ function quizPage() {
 function endPage() {
     return `
         <div class="page page-end">
-            ${artFrame('end.png', '🌟')}
+            ${artFrame('end.webp', '🌟')}
             <h2>나이 자랑 이야기를 다 읽었어요!</h2>
             <a class="home-btn" href="../../../../../">학습 허브로 돌아가기</a>
         </div>`;

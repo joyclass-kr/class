@@ -4,7 +4,7 @@ const CHAPTERS = [
         title: "1장 · 좁쌀 한 톨",
         beats: [
             {
-                art: "01-depart.png",
+                art: "01-depart.webp",
                 emoji: "🌾",
                 left: [
                     "옛날에 아주 가난한 소년이 살았습니다.",
@@ -17,7 +17,7 @@ const CHAPTERS = [
                 ]
             },
             {
-                art: "02-first.png",
+                art: "02-first.webp",
                 emoji: "🏠",
                 left: [
                     "해가 저물어 어느 집 문을 두드렸어요.",
@@ -31,7 +31,7 @@ const CHAPTERS = [
                 ]
             },
             {
-                art: "03-mouse.png",
+                art: "03-mouse.webp",
                 emoji: "🐭",
                 left: [
                     "이튿날 아침이었어요. 선반 위에 좁쌀이 없었습니다.",
@@ -49,7 +49,7 @@ const CHAPTERS = [
         title: "2장 · 쥐에서 말까지",
         beats: [
             {
-                art: "04-cat.png",
+                art: "04-cat.webp",
                 emoji: "🐱",
                 left: [
                     "다음 집에서도 소년은 똑같이 말했어요.",
@@ -63,7 +63,7 @@ const CHAPTERS = [
                 ]
             },
             {
-                art: "05-dog.png",
+                art: "05-dog.webp",
                 emoji: "🐕",
                 left: [
                     "그다음 집에서는 고양이를 맡겼습니다.",
@@ -77,7 +77,7 @@ const CHAPTERS = [
                 ]
             },
             {
-                art: "06-horse.png",
+                art: "06-horse.webp",
                 emoji: "🐴",
                 left: [
                     "이번에는 개를 맡겼어요. 주인은 개를 마구간 옆에 매어 두었지요.",
@@ -95,7 +95,7 @@ const CHAPTERS = [
         title: "3장 · 황소를 끌고",
         beats: [
             {
-                art: "07-ox.png",
+                art: "07-ox.webp",
                 emoji: "🐂",
                 left: [
                     "소년은 말을 끌고 또 길을 갔어요.",
@@ -108,7 +108,7 @@ const CHAPTERS = [
                 ]
             },
             {
-                art: "08-road.png",
+                art: "08-road.webp",
                 emoji: "🛤️",
                 left: [
                     "소년은 커다란 황소의 고삐를 잡고 길을 걸었습니다.",
@@ -121,7 +121,7 @@ const CHAPTERS = [
                 ]
             },
             {
-                art: "09-home.png",
+                art: "09-home.webp",
                 emoji: "🏡",
                 left: [
                     "마침내 소년이 집에 닿았어요.",
@@ -133,7 +133,7 @@ const CHAPTERS = [
                 ]
             },
             {
-                art: "10-millet.png",
+                art: "10-millet.webp",
                 emoji: "📜",
                 left: [
                     "소년은 품에서 종이를 꺼내 폈어요. 좁쌀을 쌌던 바로 그 종이였지요.",
@@ -179,7 +179,7 @@ function coverPage() {
     return `
         <div class="page page-cover">
             <div class="story-page-left story-page-left-full">
-                ${artFrame('cover.png', '🌾')}
+                ${artFrame('cover.webp', '🌾')}
             </div>
             <div class="story-page-right">
                 <h1>좁쌀 한 톨</h1>
