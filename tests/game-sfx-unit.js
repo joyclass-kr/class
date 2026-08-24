@@ -5,6 +5,7 @@ const vm = require("vm");
 
 const root = path.resolve(__dirname, "..");
 const sfxPath = path.join(root, "assets", "sound", "game-sfx.js");
+const sfxDir = path.join(root, "assets", "sound", "sfx");
 const musicControlPath = path.join(root, "assets", "sound", "music-control.js");
 const musicControlCssPath = path.join(root, "assets", "sound", "music-control.css");
 const hubPath = path.join(root, "index.html");
@@ -17,9 +18,21 @@ for (const filePath of [sfxPath, musicControlPath, musicControlCssPath, hubPath,
 
 const sfxSource = fs.readFileSync(sfxPath, "utf8");
 new vm.Script(sfxSource, { filename: sfxPath });
-for (const soundName of ["click", "bell", "card", "stone", "success", "error", "tick"]) {
-    assert.ok(sfxSource.includes(`${soundName}:`), `Missing synthesized ${soundName} sound.`);
+const sharedSoundNames = [
+    "click", "select", "back", "bell", "card", "stone", "success",
+    "error", "tick", "turn", "timeout", "reward", "victory", "defeat",
+];
+for (const soundName of sharedSoundNames) {
+    const filePath = path.join(sfxDir, `${soundName}.ogg`);
+    assert.ok(fs.existsSync(filePath), `Missing file-backed ${soundName} sound.`);
+    assert.ok(fs.statSync(filePath).size > 1_000, `${soundName}.ogg is unexpectedly small.`);
 }
+for (const soundName of ["click", "bell", "card", "stone", "success", "error", "tick"]) {
+    assert.ok(sfxSource.includes(`${soundName}:`), `Missing synthesized fallback for ${soundName}.`);
+}
+assert.ok(sfxSource.includes("const soundUrls"), "Shared effects should resolve OGG asset URLs.");
+assert.ok(sfxSource.includes("template.cloneNode()"), "Concurrent effects should use independent audio elements.");
+assert.ok(sfxSource.includes("playSynth(soundName)"), "File playback failures should retain synthesized fallbacks.");
 assert.ok(sfxSource.includes('latencyHint: "interactive"'), "Sound effects should request an interactive low-latency audio context.");
 assert.ok(sfxSource.includes('document.addEventListener("pointerdown"'), "Pointer feedback should begin on pointerdown.");
 assert.ok(sfxSource.includes('DEFAULT_VOLUME = 0.65;'), "Default SFX volume should be set to 65%.");
@@ -64,4 +77,4 @@ assert.ok(fruitBell.includes('state.sfxCue=makeSfxCue("flip"'), "Card sounds sho
 assert.ok(!fruitBell.includes("data:audio/wav;base64"), "Fruit Bell should not embed a large WAV data URL.");
 assert.ok(!fruitBell.includes("createOscillator"), "Fruit Bell should not synthesize its dedicated effects with oscillators.");
 
-console.log(`game-sfx-unit: ${gameLinks.length} local games share synthesized click effects; Fruit Bell keeps its original instant bell and card sound`);
+console.log(`game-sfx-unit: ${gameLinks.length} local games load file-backed shared effects with synthesized fallbacks`);

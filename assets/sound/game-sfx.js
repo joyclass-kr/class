@@ -8,11 +8,26 @@
     const SFX_VOLUME_KEY = "classSfxVolumeValue";
     const SFX_MUTED_KEY = "classSfxMuted";
     const DEFAULT_VOLUME = 0.65;
-    const SOUND_NAMES = new Set(["click", "bell", "card", "stone", "success", "error", "tick"]);
+    const SOUND_NAMES = new Set([
+        "click", "select", "back", "bell", "card", "stone", "success",
+        "error", "tick", "turn", "timeout", "reward", "victory", "defeat"
+    ]);
+    const SYNTH_FALLBACKS = Object.freeze({
+        select: "click", back: "click", turn: "bell", timeout: "error",
+        reward: "success", victory: "success", defeat: "error"
+    });
+    const scriptUrl = document.currentScript?.src || new URL("/assets/sound/game-sfx.js", window.location.href).href;
+    const soundUrls = Object.fromEntries([...SOUND_NAMES].map(name => [
+        name,
+        new URL(`sfx/${name}.ogg`, scriptUrl).href
+    ]));
 
     let context = null;
     let output = null;
     let noiseBuffer = null;
+    const fileTemplates = new Map();
+    const failedFiles = new Set();
+    const activeFiles = new Set();
     let muted = readStored(SFX_MUTED_KEY) === "1";
     let volume = readInitialVolume();
 
@@ -219,12 +234,38 @@
         tick: playTick
     };
 
+    function getFileTemplate(name) {
+        if (failedFiles.has(name) || typeof Audio === "undefined") return null;
+        if (!fileTemplates.has(name)) {
+            const audio = new Audio(soundUrls[name]);
+            audio.preload = "auto";
+            fileTemplates.set(name, audio);
+        }
+        return fileTemplates.get(name);
+    }
+
+    function playSynth(name) {
+        const ctx = ensureContext();
+        if (!ctx || !output) return false;
+        players[SYNTH_FALLBACKS[name] || name](ctx);
+        return true;
+    }
+
     function play(name = "click") {
         const soundName = SOUND_NAMES.has(name) ? name : "click";
         if (muted) return false;
-        const ctx = ensureContext();
-        if (!ctx || !output) return false;
-        players[soundName](ctx);
+        const template = getFileTemplate(soundName);
+        if (!template) return playSynth(soundName);
+        const audio = template.cloneNode();
+        audio.volume = volume;
+        activeFiles.add(audio);
+        const clear = () => activeFiles.delete(audio);
+        audio.addEventListener("ended", clear, { once: true });
+        audio.play().catch(() => {
+            clear();
+            failedFiles.add(soundName);
+            playSynth(soundName);
+        });
         return true;
     }
 
@@ -234,12 +275,17 @@
 
     function setMuted(nextMuted) {
         muted = Boolean(nextMuted);
+        if (muted) {
+            activeFiles.forEach(audio => audio.pause());
+            activeFiles.clear();
+        }
         updateOutputGain();
     }
 
     function setVolume(nextVolume) {
         const parsed = Number(nextVolume);
         if (Number.isFinite(parsed)) volume = Math.max(0, Math.min(1, parsed));
+        activeFiles.forEach(audio => { audio.volume = volume; });
         updateOutputGain();
     }
 
@@ -287,7 +333,10 @@
         setMuted,
         setVolume,
         isMuted: () => muted,
-        isSupported: () => Boolean(AudioContextClass)
+        isSupported: () => typeof Audio !== "undefined" || Boolean(AudioContextClass)
     };
+    const preloadFiles = () => SOUND_NAMES.forEach(getFileTemplate);
+    if (document.readyState === "complete") preloadFiles();
+    else window.addEventListener("load", preloadFiles, { once: true });
     window.dispatchEvent(new CustomEvent("classsfxready"));
 })();
