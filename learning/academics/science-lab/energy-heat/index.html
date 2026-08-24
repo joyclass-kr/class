@@ -1,0 +1,169 @@
+<!doctype html>
+<html lang="ko">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="theme-color" content="#07131c">
+    <title>과학 실험실</title>
+    <meta name="description" content="빗면을 내려오는 수레에서 위치 에너지가 운동 에너지와 열로 어떻게 나뉘는지, 전체 에너지가 언제나 일정한지 확인하는 고등학교 과학 모의실험">
+    <link rel="stylesheet" as="style" crossorigin href="https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.9/dist/web/static/pretendard.css">
+    <link rel="stylesheet" href="styles.css?v=1">
+    <link rel="stylesheet" href="energy-visual.css?v=1">
+    <link rel="stylesheet" href="quiz.css?v=1">
+</head>
+<body>
+    <main>
+        <header class="page-header">
+            <div class="title-row">
+                <a href="../">← 과학 실험실</a>
+                <h1>역학적 에너지와 열</h1>
+            </div>
+            <div class="grade-tags"><span>고등학교</span><span>물리</span></div>
+        </header>
+
+        <ol class="method-steps" aria-label="실험 방법">
+            <li>빗면의 높이와 기울기를 정합니다.</li>
+            <li>바닥의 마찰 계수를 정합니다.</li>
+            <li>수레를 놓아 미끄러뜨립니다.</li>
+            <li>에너지가 어떻게 나뉘는지 확인합니다.</li>
+        </ol>
+
+        <div class="experiment-layout">
+            <section class="panel control-panel" aria-labelledby="control-title">
+                <h2 id="control-title">실험 조건</h2>
+                <p class="water-standard">수레의 질량은 2 kg, 중력 가속도는 9.8 m/s²입니다</p>
+
+                <div class="range-heading">
+                    <label for="heightRange">빗면의 높이 h</label>
+                    <output id="heightOutput" for="heightRange">4.0 m</output>
+                </div>
+                <input id="heightRange" type="range" min="1" max="5" step="0.5" value="4">
+                <div class="range-scale" aria-hidden="true"><span>1m</span><span>3m</span><span>5m</span></div>
+
+                <div class="range-heading amount-heading">
+                    <label for="angleRange">빗면의 기울기 θ</label>
+                    <output id="angleOutput" for="angleRange">30°</output>
+                </div>
+                <input id="angleRange" type="range" min="20" max="60" step="5" value="30">
+                <div class="range-scale" aria-hidden="true"><span>20°</span><span>40°</span><span>60°</span></div>
+
+                <div class="range-heading amount-heading">
+                    <label for="frictionRange">마찰 계수 μ</label>
+                    <output id="frictionOutput" for="frictionRange">0.00</output>
+                </div>
+                <input id="frictionRange" type="range" min="0" max="0.9" step="0.05" value="0">
+                <div class="range-scale" aria-hidden="true"><span>0 (없음)</span><span>0.45</span><span>0.9</span></div>
+
+                <fieldset class="prediction-field">
+                    <legend>바닥에 닿을 때 열로 바뀐 에너지는?</legend>
+                    <div class="prediction-buttons three">
+                        <button type="button" data-prediction="little">거의 없다</button>
+                        <button type="button" data-prediction="half">절반쯤</button>
+                        <button type="button" data-prediction="most">대부분</button>
+                    </div>
+                </fieldset>
+
+                <button class="run-button" id="checkBtn" type="button">수레 놓기</button>
+                <button class="reset-button" id="resetBtn" type="button">처음으로</button>
+
+                <section class="result-box" aria-labelledby="result-title" aria-live="polite">
+                    <h3 id="result-title">관찰 결과</h3>
+                    <p id="resultEmpty">조건을 정하고 수레를 놓아 보세요.</p>
+                    <div id="resultContent" hidden>
+                        <div class="result-numbers">
+                            <article><span>바닥에서의 속력</span><strong id="valueA">-</strong></article>
+                            <article><span>열로 바뀐 비율</span><strong id="valueB">-</strong></article>
+                        </div>
+                        <p class="prediction-result" id="predictionResult"></p>
+                        <p class="explanation" id="elementaryExplanation"></p>
+                    </div>
+                </section>
+            </section>
+
+            <section class="panel ramp-stage" aria-label="관찰 화면">
+                <div class="stage-heading"><h2>관찰</h2><span id="stageBadge">-</span></div>
+
+                <div class="stage-views">
+                    <svg class="main-svg" viewBox="0 0 460 214" aria-hidden="true">
+                        <defs><clipPath id="rampClip"><rect x="20" y="16" width="420" height="184"/></clipPath></defs>
+                        <g id="mainGroup"></g>
+                    </svg>
+                    <svg class="graph-svg" viewBox="0 0 460 196" aria-hidden="true">
+                        <g id="graphGroup"></g>
+                    </svg>
+                </div>
+
+                <p class="stage-caption" id="stageCaption">세 에너지를 합한 높이는 어디에서나 똑같습니다.</p>
+                <div class="data-note" id="dataNote"></div>
+            </section>
+        </div>
+
+        <section class="panel meaning-panel">
+            <h2>실험 결과의 의미</h2>
+            <div class="meaning-body">
+                <p><strong>역학적 에너지 보존</strong> 마찰이 없으면 위치 에너지가 줄어든 만큼 운동 에너지가 늘어 둘의 합이 일정합니다.</p>
+                <p><strong>마찰이 있을 때</strong> 줄어든 위치 에너지의 일부가 열로 바뀝니다. 역학적 에너지는 보존되지 않지만, 열까지 더한 전체 에너지는 언제나 보존됩니다.</p>
+                <p><strong>미끄러지는 조건</strong> μ가 tan θ보다 크면 중력의 빗면 성분이 최대 마찰력을 이기지 못해 수레가 아예 움직이지 않습니다.</p>
+            </div>
+        </section>
+
+        <details class="quiz-section" aria-labelledby="quiz-title">
+            <summary class="quiz-heading"><h2 id="quiz-title">확인 문제</h2><span>4문제</span></summary>
+            <div class="quiz-grid">
+                <article class="quiz-card" data-answer="b">
+                    <h3>마찰이 없는 빗면을 내려올 때 역학적 에너지는?</h3>
+                    <div class="quiz-options">
+                        <label><input type="radio" name="q1" value="a"> 점점 줄어든다</label>
+                        <label><input type="radio" name="q1" value="b"> 일정하게 보존된다</label>
+                        <label><input type="radio" name="q1" value="c"> 점점 늘어난다</label>
+                        <label><input type="radio" name="q1" value="d"> 바닥에서 0이 된다</label>
+                    </div>
+                    <button class="answer-button" type="button">정답 확인</button>
+                    <p class="answer-result" aria-live="polite"></p>
+                    <p class="answer-explanation" hidden>위치 에너지가 줄어든 만큼 운동 에너지가 늘어납니다. 둘의 합인 역학적 에너지는 변하지 않습니다.</p>
+                </article>
+
+                <article class="quiz-card" data-answer="d">
+                    <h3>마찰이 있을 때 줄어든 역학적 에너지는?</h3>
+                    <div class="quiz-options">
+                        <label><input type="radio" name="q2" value="a"> 완전히 사라진다</label>
+                        <label><input type="radio" name="q2" value="b"> 위치 에너지로 되돌아간다</label>
+                        <label><input type="radio" name="q2" value="c"> 질량으로 바뀐다</label>
+                        <label><input type="radio" name="q2" value="d"> 열로 바뀌어 전체 에너지는 보존된다</label>
+                    </div>
+                    <button class="answer-button" type="button">정답 확인</button>
+                    <p class="answer-result" aria-live="polite"></p>
+                    <p class="answer-explanation" hidden>마찰력이 한 일만큼 열이 생깁니다. 역학적 에너지만 보면 줄었지만 열까지 더하면 전체는 그대로입니다.</p>
+                </article>
+
+                <article class="quiz-card" data-answer="a">
+                    <h3>수레가 아예 미끄러지지 않는 조건은?</h3>
+                    <div class="quiz-options">
+                        <label><input type="radio" name="q3" value="a"> μ가 tan θ보다 클 때</label>
+                        <label><input type="radio" name="q3" value="b"> μ가 0일 때</label>
+                        <label><input type="radio" name="q3" value="c"> 높이가 낮을 때</label>
+                        <label><input type="radio" name="q3" value="d"> 질량이 클 때</label>
+                    </div>
+                    <button class="answer-button" type="button">정답 확인</button>
+                    <p class="answer-result" aria-live="polite"></p>
+                    <p class="answer-explanation" hidden>빗면 방향으로 미는 힘은 mg sin θ, 최대 마찰력은 μmg cos θ입니다. μ cos θ가 sin θ보다 크면, 곧 μ가 tan θ보다 크면 움직이지 않습니다. 질량은 양쪽에 똑같이 들어 있어 상관없습니다.</p>
+                </article>
+
+                <article class="quiz-card" data-answer="c">
+                    <h3>마찰이 없을 때 바닥에서의 속력은 무엇으로 정해질까요?</h3>
+                    <div class="quiz-options">
+                        <label><input type="radio" name="q4" value="a"> 수레의 질량</label>
+                        <label><input type="radio" name="q4" value="b"> 빗면의 기울기</label>
+                        <label><input type="radio" name="q4" value="c"> 내려온 높이</label>
+                        <label><input type="radio" name="q4" value="d"> 빗면의 길이</label>
+                    </div>
+                    <button class="answer-button" type="button">정답 확인</button>
+                    <p class="answer-result" aria-live="polite"></p>
+                    <p class="answer-explanation" hidden>mgh = ½mv²에서 질량이 약분되어 v = √(2gh)가 됩니다. 높이만 같으면 기울기가 어떻든 바닥에서의 속력은 같습니다.</p>
+                </article>
+            </div>
+        </details>
+    </main>
+    <script src="app.js?v=4"></script>
+</body>
+</html>
