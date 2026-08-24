@@ -35,8 +35,8 @@ assert.match(
 );
 assert.match(
     html,
-    /if \(!openAccess \|\| isValidPlayerName\(currentPlayerName\)\) return;\s*const link = event\.target\.closest\('a'\);\s*if \(link && hubContent\.contains\(link\)\) \{\s*event\.preventDefault\(\);\s*setStatus\('Enter a Korean player name before opening a game\.', true\);\s*guestNameInput\.focus\(\);/,
-    'Open access without a valid saved name must lock the hub.',
+    /if \(!openAccess \|\| isValidPlayerName\(currentPlayerName\)\) return;\s*const link = event\.target\.closest\('a, summary'\);\s*if \(link && hubContent\.contains\(link\)\) \{\s*event\.preventDefault\(\);\s*setStatus\('Enter a Korean player name before opening a game\.', true\);\s*guestNameInput\.focus\(\);/,
+    'Open access without a valid saved name must lock the hub, including submenu-opening buttons.',
 );
 assert.match(
     html,
