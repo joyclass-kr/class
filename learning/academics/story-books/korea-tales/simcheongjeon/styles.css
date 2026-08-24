@@ -140,6 +140,11 @@ body {
     overflow: hidden;
     color: var(--ink);
     min-height: 0;
+    /* 한글은 기본값이면 낱말 가운데서도 줄이 넘어간다.
+       '먹지 못했습 / 니다'처럼 끊기지 않도록 띄어쓰기에서만 넘긴다. */
+    word-break: keep-all;
+    /* 다만 한 낱말이 칸보다 길면 그때는 끊는다. 안 그러면 칸 밖으로 샌다. */
+    overflow-wrap: break-word;
 }
 
 .page h1,
@@ -237,6 +242,7 @@ body {
     line-height: 1.75;
     color: var(--ink);
     text-indent: 1em;
+    text-align: justify;
 }
 
 .story-media {
@@ -281,6 +287,7 @@ body {
     font-weight: 500;
     color: #4a3009;
     text-indent: 0;
+    text-align: justify;
 }
 
 /* cover */
@@ -326,6 +333,7 @@ body {
     line-height: 1.7;
     color: var(--ink);
     text-indent: 1em;
+    text-align: justify;
 }
 
 /* toc */
