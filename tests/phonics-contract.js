@@ -23,16 +23,26 @@ assert.ok(data.lessons.every((lesson) => lesson.words.length >= 1), "Every lesso
 assert.ok(data.lessons.every((lesson) => lesson.blend.length >= 1), "Every lesson needs blending practice.");
 assert.ok(data.lessons.every((lesson) => lesson.dictation.length >= 1), "Every lesson needs dictation.");
 assert.ok(data.lessons.every((lesson) => lesson.sentence), "Every lesson needs a sentence.");
-for (const requiredConcept of ["wh /w/ · ph /f/", "묵음 kn·wr·mb", "ch의 다른 소리·묵음 gn·gh·t"]) {
-  assert.ok(data.lessons.some((lesson) => lesson.title === requiredConcept), `Missing required concept: ${requiredConcept}`);
+for (const requiredConcept of ["wh /w/", "ph /f/", "묵음 kn /n/ · wr /r/ · -mb /m/", "ch /sh, k/ · gn /n/ · gh /g/ · 묵음 t"]) {
+  assert.ok(data.lessons.some((lesson) => lesson.sourceTitle === requiredConcept), `Missing required concept: ${requiredConcept}`);
 }
-const dLesson = data.lessons.find((lesson) => lesson.title.startsWith("d /d/"));
+const whLesson = data.lessons.find((lesson) => lesson.sourceTitle === "wh /w/");
+const phLesson = data.lessons.find((lesson) => lesson.sourceTitle === "ph /f/");
+assert.equal(whLesson.order, 49, "wh needs a dedicated lesson instead of sharing two cards with ph.");
+assert.equal(phLesson.order, 50, "ph should remain a dedicated lesson at the original concept position.");
+assert.equal(whLesson.words.join(","), "what,when,where,which,why,whale,wheel,whistle");
+assert.equal(phLesson.words.join(","), "phone,photo,graph,dolphin,elephant,trophy,alphabet,sphere");
+assert.ok([...whLesson.words, ...phLesson.words].every((word) => data.wordBank[word]?.picture), "Every wh and ph answer needs a picture.");
+const silentLesson = data.lessons.find((lesson) => lesson.order === 98);
+assert.equal(silentLesson.title, "kn은 k, wr은 w, -mb는 끝 b가 소리 나지 않아요");
+assert.deepEqual(Array.from(silentLesson.focus), ["kn", "wr", "mb"]);
+const dLesson = data.lessons.find((lesson) => lesson.sourceTitle.startsWith("d /d/"));
 assert.equal(dLesson.words.length, 8, "The d sound-catcher lesson needs eight unique answers.");
 assert.equal(new Set(dLesson.words).size, 8, "Sound-catcher answers must not repeat.");
-const nLesson = data.lessons.find((lesson) => lesson.title.startsWith("n /n/"));
+const nLesson = data.lessons.find((lesson) => lesson.sourceTitle.startsWith("n /n/"));
 assert.equal(nLesson.words.length, 8, "The n lesson needs eight unique cumulative decodable words.");
 assert.equal(nLesson.words.slice(0, 3).join(","), "nap,in,pin", "The n lesson must contrast initial and final /n/.");
-const oLesson = data.lessons.find((lesson) => lesson.title.startsWith("o /ŏ/"));
+const oLesson = data.lessons.find((lesson) => lesson.sourceTitle.startsWith("o /ŏ/"));
 assert.equal(oLesson.words[0], "on", "The word on belongs after o has been introduced.");
 assert.equal(oLesson.words.length, 8, "The o lesson needs eight unique answers.");
 for (const lessonId of ["ufli-002", "ufli-003", "ufli-004", "ufli-006", "ufli-007", "ufli-008", "ufli-014", "ufli-015", "ufli-016", "ufli-017", "ufli-018"]) {
@@ -79,7 +89,7 @@ assert.doesNotMatch(appSource, /`\$\{button\.dataset\.letter\},/, "Letter button
 assert.match(appSource, /ph: "f"/, "The ph grapheme must reuse the local f phoneme sound.");
 assert.match(appSource, /kn: "n"/, "Silent-k words must reuse the local n phoneme sound.");
 assert.match(appSource, /quizState/, "Each lesson must include a mastery check.");
-assert.match(appSource, /const firstSoundGameRounds = \[/, "The first lesson needs sound-catcher rounds.");
+assert.match(appSource, /const soundPictures = \{/, "The listening activity needs its curated starter picture bank.");
 assert.match(appSource, /buildLessonSoundRounds/, "Picture-card lessons must use the shared sound-catcher engine.");
 assert.match(appSource, /english\.textContent = word;/, "Sound-catcher choices must show their English words before touch.");
 assert.match(html, /들은 단어를 고르세요\./, "The sound-game instruction should stay concise.");
@@ -92,7 +102,7 @@ assert.match(appSource, /touchesEdge && tail < size \* size \* 0\.12/, "Only sma
 assert.doesNotMatch(appSource, /hasSound\(answer, sound\)/, "Lesson answers must come from the curated lesson list, not a naive substring match.");
 assert.match(appSource, /split\("_"\)\.filter\(Boolean\)/, "Split VCe graphemes must reveal the vowel and final e separately.");
 
-const wLesson = data.lessons.find((lesson) => lesson.title.startsWith("w /w/"));
+const wLesson = data.lessons.find((lesson) => lesson.sourceTitle.startsWith("w /w/"));
 assert.equal(wLesson.words.join(","), "web,win,wag,swim,twin,swam,swell,twig", "The /w/ lesson must include decodable consonant-cluster positions, not only word-initial w.");
 assert.equal(wLesson.words.filter((word) => data.wordBank[word]?.picture).length, 8, "Every /w/ answer needs a picture card.");
 
@@ -151,10 +161,10 @@ assert.ok(phonemeFiles.length >= 60, "The phoneme audio set is incomplete.");
 for (const requiredSound of ["a.wav", "s.wav", "t.wav", "p.wav", "i.wav", "n.wav", "sh.wav", "a-e.wav"]) {
   assert.ok(fs.statSync(path.join(phonemeDir, requiredSound)).size > 1000, `Invalid phoneme audio: ${requiredSound}`);
 }
-const soundCatcherImage = path.join(phonicsDir, "assets", "images", "sound-catcher-s-a.png");
+const soundCatcherImage = path.join(phonicsDir, "assets", "images", "sound-catcher-s-a.webp");
 assert.ok(fs.existsSync(soundCatcherImage), "The sound-catcher picture sheet is missing.");
-assert.ok(fs.statSync(soundCatcherImage).size > 1000000, "The sound-catcher picture sheet is incomplete.");
-for (const atlas of ["alphabet-atlas-01.webp", "alphabet-atlas-02.webp", "alphabet-atlas-03.webp", "n-position-atlas.webp", "lesson-d-atlas.webp", "lesson-n-o-atlas.webp"]) {
+assert.ok(fs.statSync(soundCatcherImage).size > 50000, "The sound-catcher picture sheet is incomplete.");
+for (const atlas of ["alphabet-atlas-01.webp", "alphabet-atlas-02.webp", "alphabet-atlas-03.webp", "n-position-atlas.webp", "lesson-d-atlas.webp", "lesson-n-o-atlas.webp", "lesson-49-wh-atlas.webp", "lesson-27-43-corrections-atlas.webp", "phonics-corrections-atlas.webp", "phonics-audit-extra-atlas.webp"]) {
   const atlasPath = path.join(phonicsDir, "assets", "images", atlas);
   assert.ok(fs.existsSync(atlasPath), `Missing generated picture-card atlas: ${atlas}`);
   assert.ok(fs.statSync(atlasPath).size > 100000, `Incomplete picture-card atlas: ${atlas}`);

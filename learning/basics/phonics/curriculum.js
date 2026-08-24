@@ -10,8 +10,8 @@ p /p/|p|pan,pig,pop,pin,nap,cup,cap,rip
 f /f/|f|fan,fin,fun,fox,fish,frog,leaf,roof
 i /ĭ/|i|in,pin,sit,pig,fin,did,fish,milk
 n /n/: 처음과 끝|n|nap,in,pin,fan,man,pan,fin,tin
-CVC 연습: a, i|a,i|sat,pin,mat,map,tap,sit,man,pan
-비음화 a: an, am|an,am|fan,ham,ram,man,pan,jam,van,hand
+CVC 연습: a, i|a,i|sat,pin,mat,pig,tap,sit,fin,pan
+비음화 a: an, am|an,am|fan,ham,ram,man,pan,jam,clam,hand
 o /ŏ/: 처음과 가운데|o|on,not,top,pot,mop,mom,hot,pop
 d /d/: 처음과 끝|d|dad,did,dim,dip,dot,nod,sad,mad
 c /k/|c|cat,cap,cot,cup,cats,rock,lock,clock
@@ -27,7 +27,7 @@ h /h/|h|hat,hen,hot,ham,hand,hill,house,horse
 r /r/ 1|r|rat,red,run,ram,rip,rock,rug,roof
 r /r/ 2|r|rip,rock,rug,ram,frog,roof,red,drum
 l /l/ 1|l|leg,lip,log,leaf,milk,lock,clock,ball
-l /l/ 2|l|lamp,lock,luck,apple,leaf,milk,plum,blend
+l /l/ 2 · al|al,l|lamp,lock,luck,apple,leaf,milk,plum,pal
 w /w/: 처음과 자음군|w|web,win,wag,swim,twin,swam,swell,twig
 j /j/|j|jam,jet,jog,jump,jar,jeep,jelly,jacket
 y /y/|y|yam,yes,yet,yak,yoyo,yarn,yogurt,yellow
@@ -43,24 +43,24 @@ a·i·o 섞어 읽기|a,i,o|black,spin,clock,cat,pig,dog,stamp,fish
 짧은 u 복습|u|drum,plum,jump,sun,fun,cup,gum,rug
 짧은 e 복습|e|step,desk,blend,bed,hen,red,leg,web
 짧은 모음 전체 복습|a,e,i,o,u|cat,fish,frog,drum,step,black,spin,clock`],
-    ["digraphs", "3. 두 글자 한 소리", "42–53 · sh, th, ch, ph, ng, nk", "blue", `
+    ["digraphs", "3. 두 글자 한 소리", "42–53 · sh, th, ch, wh, ph, ng, nk", "blue", `
 FLSZ 끝 글자 겹치기|ff,ll,ss,zz|cliff,bell,mess,hill,ball,kiss,buzz,puff
--all, -oll, -ull, -ill|all,oll,ull,ill|ball,doll,bull,tall,roll,full,wall,hill
+-all, -oll, -ull|all,oll,ull|ball,doll,bull,tall,roll,full,wall,fall
 ck /k/|ck|duck,sock,rock,back,check,lock,clock,jacket
 sh /sh/|sh|fish,ship,shop,shell,dish,wish,brush,shut
 유성 th /ð/|th|this,that,then,them,mother,father,brother,feather
 무성 th /θ/|th|thin,bath,moth,thumb,three,thick,teeth,path
 ch /ch/|ch|chin,chip,lunch,bench,chick,much,rich,chop
-이중자 복습 1|ck,sh,th,ch|shell,check,thick,dish,moth,chin,ship,bath
-wh /w/ · ph /f/|wh,ph|whip,phone,graph,whale,photo,dolphin,elephant,trophy
+wh /w/|wh|what,when,where,which,why,whale,wheel,whistle
+ph /f/|ph|phone,photo,graph,dolphin,elephant,trophy,alphabet,sphere
 ng /ŋ/|ng|ring,king,song,wing,hang,long,sing,bang
 nk /ŋk/|nk|pink,sink,bank,ink,trunk,drink,wink,tank
-이중자 복습 2|wh,ph,ng,nk|whale,photo,trunk,phone,graph,ring,bank,whip`],
+이중자 전체 복습|ck,sh,th,ch,wh,ph,ng,nk|check,ship,thin,chin,whale,phone,ring,pink`],
     ["vce", "4. 매직 e와 부드러운 c·g", "54–62 · VCe, c /s/, g /j/", "gold", `
 a_e /ā/|a_e|cake,game,lake,gate,cape,wave,maze,vase
 i_e /ī/|i_e|bike,kite,five,nine,time,line,dive,smile
 o_e /ō/|o_e|home,nose,rose,bone,cone,rope,note,stone
-VCe 전체 복습|a_e,e_e,i_e,o_e,u_e|these,theme,complete,cake,bike,home,cube,stone
+VCe 복습 1 · e_e /ē/|e_e,a_e,i_e,o_e|these,theme,complete,cake,bike,home,stone,rose
 u_e /ū, yū/|u_e|cube,tube,mule,cute,flute,tune,huge,dune
 VCe 전체 복습|a_e,i_e,o_e,u_e|brave,smile,stone,cake,bike,home,cube,flute
 ce /s/|ce|race,ice,space,face,mice,place,nice,fence
@@ -71,65 +71,65 @@ VCe 예외와 복습|vce|have,give,come,love,done,none,some,live`],
 -ed|ed|jumped,filled,wanted,helped,played,painted,kicked,landed
 -ing|ing|jumping,resting,helping,running,singing,reading,painting,sleeping
 음절 나누기|syllable|sunset,rabbit,napkin,picnic,kitten,magnet,basket,insect
-합성어와 닫힌 두 음절|compound,closed|sunset,rabbit,catfish,backpack,bathtub,hotdog,football,cupcake
+합성어와 닫힌 두 음절|compound,closed|sunset,catfish,backpack,bathtub,rabbit,napkin,picnic,kitten
 열린 음절과 닫힌 음절|open,closed,n|no,robot,tulip,music,pilot,tiger,lemon,hotel`],
     ["endings", "6. 단어 끝 철자", "69–76 · tch, dge, y, -le", "pink", `
 tch /ch/|tch|catch,watch,match,patch,witch,hutch,fetch,stitch
 dge /j/|dge|badge,bridge,edge,fudge,judge,hedge,wedge,fridge
-tch·dge 복습|tch,dge|patch,fudge,edge,catch,badge,witch,bridge,judge
-긴 모음 VCC|ild,old,ind,olt,ost|child,cold,find,wild,old,gold,kind,most
+tch·dge 복습|tch,dge|patch,fudge,edge,catch,badge,witch,bridge,watch
+긴 모음 VCC|ild,old,ind,olt,ost|child,cold,find,wild,colt,gold,kind,most
 y /ī/|y|my,fly,cry,sky,try,shy,dry,why
 y /ē/|y|happy,sunny,baby,puppy,funny,city,candy,body
 -le 음절|le|table,little,puzzle,candle,apple,bottle,turtle,castle
 단어 끝 규칙 복습|tch,dge,y,le,ild|candle,puppy,witch,table,badge,child,happy,puzzle`],
     ["rcontrolled", "7. R이 바꾸는 모음", "77–83 · ar, or, er, ir, ur", "violet", `
 ar /ar/|ar|car,farm,star,park,arm,jar,card,shark
-or·ore /or/|or,ore|fork,corn,shore,horse,storm,porch,short,north
-ar·or·ore 복습|ar,or,ore|park,shark,storm,short,shore,star,corn,farm
+or·ore /or/|ore,or|fork,corn,shore,horse,storm,porch,snore,chore
+ar·or·ore 복습|ar,ore,or|park,shark,storm,short,shore,star,corn,farm
 er /er/|er|fern,herd,term,germ,clerk,perch,serve,verb
-ir·ur /er/|ir,ur|bird,girl,turn,shirt,skirt,first,nurse,purse
-/er/ 철자 선택|er,ir,ur,or|shirt,nurse,fern,bird,turn,clerk,purse,girl
+ir·ur /er/|ir,ur|bird,girl,turn,shirt,skirt,turtle,nurse,purse
+/er/ 철자 선택|er,ir,ur,or|fern,clerk,bird,shirt,turn,nurse,worm,world
 R 통제 모음 복습|ar,or,er,ir,ur|farm,storm,bird,shark,shore,fern,shirt,turn`],
     ["longteams", "8. 긴 모음 조합", "84–88 · ai, ee, oa, igh", "coral", `
-ai·ay /ā/|ai,ay|rain,train,play,snail,mail,chain,day,tray
+ai·ay /ā/|ai,ay|rain,train,play,snail,mail,gray,day,tray
 ee·ea·ey /ē/|ee,ea,ey|tree,feet,key,green,leaf,beach,monkey,honey
 oa·ow·oe /ō/|oa,ow,oe|boat,snow,toe,coach,road,goat,window,hoe
 ie·igh /ī/|ie,igh|pie,night,light,bright,tie,high,right,sigh
 긴 모음 조합 복습|ai,ee,ea,oa,igh|snail,green,coach,bright,train,beach,boat,night`],
     ["vowelteams", "9. 다른 모음 조합", "89–98 · oo, aw, oi, ow, 묵음", "blue", `
-u·oo /ʊ/|u,oo|put,book,foot,cook,look,wood,good,hook
-oo /ū/: n 누적 복습|oo,n|moon,food,noodle,spoon,room,boot,pool,zoo
+u·oo /ʊ/|u,oo|put,bull,full,book,foot,cook,wood,good
+oo /ū/|oo|moon,food,noodle,spoon,room,boot,pool,zoo
 ew·ui·ue /ū/|ew,ui,ue|chew,fruit,blue,screw,suit,glue,juice,clue
 모음 조합 복습 2|oo,ew,ui,ue|book,moon,chew,fruit,blue,screw,suit,food
-au·aw·augh /aw/|au,aw,augh|haul,saw,caught,yawn,paw,sauce,daughter,straw
-ea /ĕ/ · a /ŏ/|ea,a|head,bread,wash,dead,feather,weather,want,swan
+au·aw·augh /aw/|augh,au,aw|haul,saw,caught,yawn,paw,sauce,daughter,straw
+ea /ĕ/ · a /ŏ/|ea,a|head,bread,dead,feather,wash,want,swan,watch
 oi·oy /oi/|oi,oy|coin,boy,toy,point,oil,soil,joy,annoy
 ou·ow /ow/|ou,ow|out,cow,brown,cloud,house,mouse,down,owl
 모음 조합·이중모음 복습|oi,oy,ou,ow|point,joy,cloud,brown,coin,toy,out,cow
-묵음 kn·wr·mb|kn,wr,mb|knee,write,thumb,knife,wrist,lamb,comb,knock`],
+묵음 kn /n/ · wr /r/ · -mb /m/|kn,wr,mb|knee,write,thumb,knife,wrist,lamb,comb,knock`],
     ["affixes", "10. 접두사와 접미사", "99–106 · -s, -er, un-, re-, dis-", "green", `
-접미사 -s·-es|s,es|cats,boxes,wishes,dogs,foxes,roses,buses,classes
--er·-est|er,est|faster,fastest,smaller,bigger,biggest,hotter,taller,shortest
+접미사 -s·-es|es,s|cats,boxes,wishes,dogs,foxes,roses,maps,cups
+-er·-est|est,er|faster,fastest,smaller,bigger,biggest,hotter,tallest,shortest
 -ly|ly|slowly,quickly,kindly,softly,loudly,quietly,happily,sadly
--less·-ful|less,ful|helpful,careless,hopeful,fearless,useful,useless,colorful,painful
+-less·-ful|less,ful|helpful,careless,hopeful,fearless,useful,useless,colorful,harmless
 접두사 un-|un|unfair,unlock,unsafe,unhappy,untie,unwrap,unplug,uncover
-접두사 pre-·re-|pre,re|preview,redo,replay,restart,preheat,rebuild,reread,repaint
+접두사 pre-·re-|pre,re|preview,preheat,preschool,prepay,redo,replay,restart,rebuild
 접두사 dis-|dis|dislike,disconnect,dishonest,disagree,disappear,disobey,discolor,disorder
-접사 복습|un,pre,re,dis|unhappy,unlock,replay,restart,dislike,disagree,unwrap,rebuild`],
+접사 복습|un,pre,dis,re|unhappy,unlock,preview,preheat,replay,restart,dislike,disagree`],
     ["changes", "11. 접미사 철자 변화", "107–110 · 겹치기, e·y 변화", "gold", `
-자음 겹치기: -ed·-ing|ed,ing|hopped,running,planned,stopped,clapped,swimming,skipped,dragged
-자음 겹치기: -er·-est|er,est|bigger,biggest,hotter,faster,fastest,smaller,taller,shortest
+자음 겹치기: -ed·-ing|ed,ing|planned,clapped,skipped,dragged,running,swimming,hopping,stopping
+자음 겹치기: -er·-est|est,er|bigger,biggest,hotter,faster,fastest,smaller,tallest,shortest
 끝 e 빼기|drop-e|making,riding,hoped,baking,smiling,closing,using,waved
 y를 i로 바꾸기|y-to-i|cried,happier,happiest,tried,carried,dried,easier,busiest`],
     ["rare", "12. 드문 철자와 묵음", "111–118 · ough, c·g, gn·gh·silent t", "pink", `
-ar·or /er/|ar,or|dollar,doctor,collar,actor,sailor,mirror,motor,visitor
+ar·or /er/|ar,or|dollar,doctor,collar,actor,sailor,mirror,sugar,calendar
 air·are·ear /air/|air,are,ear|chair,care,bear,hair,pair,fair,square,pear
 ear /ear/|ear|hear,near,year,ear,dear,clear,gear,tear
-긴 a의 드문 철자|ei,eigh,ey,ea,aigh|vein,eight,they,sleigh,reindeer,grey,weigh,neighbor
+긴 a의 드문 철자|eigh,aigh,ei,ey,ea|vein,eight,they,sleigh,reindeer,grey,steak,straight
 긴 u의 드문 철자|ew,eu,ue,ou|few,feud,rescue,soup,neutral,fuel,statue,group
-ough /aw, ō/|ough|bought,thought,dough,brought,fought,sought,rough,though
+ough /aw, ō/|ough|bought,thought,dough,brought,fought,sought,doughnut,though
 신호 모음: c /s/ · g /j/|c,g|city,germ,giant,center,cell,giraffe,gym,gem
-ch의 다른 소리·묵음 gn·gh·t|ch,gn,gh,t|chef,school,gnome,listen,chorus,character,sign,light`],
+ch /sh, k/ · gn /n/ · gh /g/ · 묵음 t|ch,gn,gh,t|chef,school,gnome,listen,chorus,character,sign,ghost`],
     ["morphology", "13. 확장 접사", "119–128 · -tion, -ture, -ness, bi-", "violet", `
 -sion·-tion|sion,tion|vision,action,station,mission,nation,vacation,mansion,lotion
 -ture|ture|picture,nature,future,adventure,creature,furniture,capture,mixture
@@ -154,12 +154,14 @@ bi-·tri-·uni-|bi,tri,uni|bicycle,triangle,unicorn,binoculars,tricycle,uniform,
     ["assets/images/lesson-w-position-atlas.webp", "swim,twin,swam,swell,twig,wave", 3, 2],
     ["assets/images/lesson-42-flsz-atlas.webp", "cliff,bell,mess,buzz,puff,dress", 3, 2],
     ["assets/images/lesson-43-all-atlas.webp", "doll,bull,tall,roll,full,duck", 3, 2],
+    ["assets/images/lesson-27-43-corrections-atlas.webp", "pal,fall", 2, 1],
     ["assets/images/lesson-44-45-atlas.webp", "back,neck,check,shell,ship,shop", 3, 2],
     ["assets/images/lesson-45-sh-atlas.webp", "dish,wish,brush,shut,shark,shoe", 3, 2],
     ["assets/images/lesson-46-th-atlas.webp", "this,that,then,them,mother,father", 3, 2],
     ["assets/images/lesson-47-th-atlas.webp", "brother,feather,thin,bath,moth,thumb", 3, 2],
     ["assets/images/lesson-47-48-atlas.webp", "three,thick,teeth,path,chin,chip", 3, 2],
     ["assets/images/lesson-48-ch-atlas.webp", "lunch,bench,chick,much,rich,chop", 3, 2],
+    ["assets/images/lesson-49-wh-atlas.webp", "what,when,where,which,why,whale,wheel,whistle", 4, 2],
     ["assets/images/lesson-50-wh-ph-atlas.webp", "whip,phone,graph,whale,photo,dolphin", 3, 2],
     ["assets/images/lesson-50-ph-extra-atlas.webp", "elephant,trophy,alphabet,orphan,nephew,sphere", 3, 2],
     ["assets/images/lesson-51-ng-atlas.webp", "ring,king,song,wing,hang,long", 3, 2],
@@ -230,6 +232,8 @@ bi-·tri-·uni-|bi,tri,uni|bicycle,triangle,unicorn,binoculars,tricycle,uniform,
     ["assets/images/lesson-125-ment-atlas.webp", "payment,movement,enjoyment,excitement,agreement,improvement,amazement,treatment", 4, 2],
     ["assets/images/lesson-126-able-ible-atlas.webp", "readable,visible,possible,washable,edible,flexible,breakable,comfortable", 4, 2],
     ["assets/images/lesson-127-prefix-number-atlas.webp", "bicycle,triangle,unicorn,binoculars,tricycle,uniform,bilingual,tripod", 4, 2],
+    ["assets/images/phonics-corrections-atlas.webp", "harmless,preschool,prepay,world,doughnut,ghost", 3, 2],
+    ["assets/images/phonics-audit-extra-atlas.webp", "clam,colt,sugar,calendar,steak,straight", 3, 2],
     ["assets/images/lesson-f-b-atlas.webp", "leaf,roof,ball", 3, 1],
     ["assets/images/lesson-n-o-atlas.webp", "tin,pot,mop,mom", 2, 2],
     ["assets/images/lesson-d-atlas.webp", "dad,did,dim,dip,dot,nod,sad,mad", 4, 2],
@@ -240,7 +244,7 @@ bi-·tri-·uni-|bi,tri,uni|bicycle,triangle,unicorn,binoculars,tricycle,uniform,
   ].map(([file, words, columns, rows]) => ({ file, words: words.split(","), columns, rows }));
 
   const pictureFor = (word) => {
-    const pictureAliases = { am: "man" };
+    const pictureAliases = { am: "man", gray: "grey", hopping: "hopped", stopping: "stopped", tallest: "taller", snore: "sleeping", chore: "mop" };
     const lookupWord = pictureAliases[word] || word;
     for (const atlas of atlases) {
       const index = atlas.words.indexOf(lookupWord);
@@ -385,32 +389,46 @@ bi-·tri-·uni-|bi,tri,uni|bicycle,triangle,unicorn,binoculars,tricycle,uniform,
     webs: "거미줄들", bells: "종들", hands: "손들", rams: "숫양들", moms: "엄마들"
   });
 
+  Object.assign(koreanGlosses, {
+    what: "무엇", when: "언제", where: "어디", which: "어느 것", wheel: "바퀴", whistle: "호루라기",
+    pal: "친구", fall: "가을", harmless: "해가 없는", preschool: "유치원", prepay: "미리 지불하다",
+    world: "세계", doughnut: "도넛", ghost: "유령",
+    clam: "대합조개", colt: "망아지", sugar: "설탕", calendar: "달력", steak: "스테이크", straight: "곧은",
+    gray: "회색", hopping: "깡충 뛰는 중", stopping: "멈추는 중", tallest: "가장 키 큰", snore: "코를 골다", chore: "집안일"
+  });
+
   const childTitleFor = (title, order) => {
-    if (order === 57) return "a–e·i–e·o–e 복습";
+    if (order === 57) return "e–e 소리와 a–e·i–e·o–e 복습";
     if (order === 59) return "끝 e 긴 모음 전체 복습";
     const exact = {
+      "l /l/ 2 · al": "l 소리 2 · al 단어",
+      "wh /w/": "wh로 시작하는 /w/ 소리",
+      "ph /f/": "ph가 만드는 /f/ 소리",
+      "VCe 복습 1 · e_e /ē/": "e–e 소리와 긴 모음 복습",
+      "ough /aw, ō/": "ough의 /aw/·/ō/ 소리",
       "VC/CVC 합성": "소리를 이어 짧은 단어 읽기",
       "CVC 연습: a, i": "a·i가 들어간 짧은 단어 읽기",
       "비음화 a: an, am": "an·am 단어 읽기",
       "FLSZ 끝 글자 겹치기": "짧은 모음 뒤 끝 글자 겹치기",
-      "-all, -oll, -ull, -ill": "all·oll·ull·ill로 끝나는 단어",
+      "-all, -oll, -ull": "all·oll·ull로 끝나는 단어",
       "-s /s/": "끝 s가 또렷하게 나는 단어",
       "s /z/": "끝 s가 부드럽게 나는 단어",
       "VCe 전체 복습": "끝 e가 있는 긴 모음 복습",
       "VCe 예외와 복습": "끝 e 규칙과 예외 복습",
       "긴 모음 VCC": "자음 두 개 앞의 긴 모음",
-      "ce /s/": "e·i·y 앞의 c 소리",
+      "ce /s/": "끝 ce에서 c가 /s/로 나는 단어",
+      "ea /ĕ/ · a /ŏ/": "짧게 나는 ea와 w 뒤의 a",
       "g /j/: e, i, y 앞": "e·i·y 앞의 g 소리",
       "y /ī/": "한 음절 끝의 y 소리",
       "y /ē/": "두 음절 끝의 y 소리",
-      "/er/ 철자 선택": "같은 소리의 er·ir·ur 고르기",
-      "oo /ū/: n 누적 복습": "길게 나는 oo 소리",
-      "묵음 kn·wr·mb": "첫 글자가 소리 나지 않는 kn·wr·mb",
+      "/er/ 철자 선택": "같은 소리의 er·ir·ur·w+or 고르기",
+      "oo /ū/": "길게 나는 oo 소리",
+      "묵음 kn /n/ · wr /r/ · -mb /m/": "kn은 k, wr은 w, -mb는 끝 b가 소리 나지 않아요",
       "음절 나누기": "긴 단어를 음절로 나누어 읽기",
-      "합성어와 닫힌 두 음절": "두 짧은 단어를 이어 읽기",
+      "합성어와 닫힌 두 음절": "합성어와 닫힌 두 음절 단어 구별하기",
       "열린 음절과 닫힌 음절": "모음으로 끝나는 음절과 자음으로 끝나는 음절",
       "-es": "끝에 es가 붙은 단어",
-      "-ed": "지난 일을 나타내는 ed",
+      "-ed": "끝 ed의 세 가지 소리",
       "-ing": "하고 있는 일을 나타내는 ing",
       "접미사 -s·-es": "하나보다 많을 때 붙이는 s·es",
       "-er·-est": "비교할 때 붙이는 er·est",
@@ -429,7 +447,7 @@ bi-·tri-·uni-|bi,tri,uni|bicycle,triangle,unicorn,binoculars,tricycle,uniform,
       "-able·-ible": "할 수 있음을 나타내는 able·ible",
       "bi-·tri-·uni-": "숫자를 나타내는 bi·tri·uni",
       "신호 모음: c /s/ · g /j/": "e·i·y 앞에서 달라지는 c와 g",
-      "ch의 다른 소리·묵음 gn·gh·t": "달라지는 ch와 소리 나지 않는 글자"
+      "ch /sh, k/ · gn /n/ · gh /g/ · 묵음 t": "ch·gn·gh의 드문 소리와 묵음 t"
     };
     if (exact[title]) return exact[title];
     return title
@@ -513,7 +531,7 @@ bi-·tri-·uni-|bi,tri,uni|bicycle,triangle,unicorn,binoculars,tricycle,uniform,
   });
 
   window.PHONICS_CURRICULUM = {
-    version: 5,
+    version: 6,
     framework: "UFLI Foundations 공개 scope and sequence 기반",
     stages,
     lessons,
