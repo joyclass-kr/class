@@ -88,7 +88,7 @@ button:disabled { cursor: not-allowed; opacity: .38; box-shadow: none; transform
    the lobby screen itself needs no game-specific rules here. */
 .title { margin: 0; font-family: Georgia, "Times New Roman", serif; color: var(--ink); letter-spacing: .04em; }
 .subtitle { margin: 3px 0; color: var(--muted); }
-.code { font-size: 28px; font-weight: 950; letter-spacing: .16em; color: var(--ink); }
+.code { font-size: 28px; font-weight: 950; letter-spacing: .16em; color: var(--paper-strong); }
 .row { display: flex; align-items: center; gap: 9px; flex-wrap: wrap; }
 .row.spread { justify-content: space-between; }
 .missing-panel { width: min(650px, 100%); margin: 12vh auto 0; padding: 34px; text-align: center; }

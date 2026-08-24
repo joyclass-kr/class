@@ -46,7 +46,7 @@ button:disabled { cursor: not-allowed; opacity: .36; box-shadow: none; }
 .eyebrow { color: #4f6b5f; font-size: 11px; font-weight: 950; letter-spacing: .15em; }
 .row { display: flex; align-items: center; gap: 9px; flex-wrap: wrap; }
 .spread { justify-content: space-between; }
-.code { font: 950 29px/1 ui-monospace, Consolas, monospace; letter-spacing: .16em; }
+.code { font: 950 29px/1 ui-monospace, Consolas, monospace; letter-spacing: .16em; color: var(--cream); }
 
 .lobbyShell {
   position: relative;
