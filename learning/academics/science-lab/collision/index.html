@@ -1,0 +1,178 @@
+<!doctype html>
+<html lang="ko">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="theme-color" content="#07131c">
+    <title>과학 실험실</title>
+    <meta name="description" content="두 수레의 충돌에서 운동량이 언제나 보존되고 운동 에너지는 충돌의 종류에 따라 달라지는 것을 확인하는 고등학교 과학 모의실험">
+    <link rel="stylesheet" as="style" crossorigin href="https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.9/dist/web/static/pretendard.css">
+    <link rel="stylesheet" href="styles.css?v=1">
+    <link rel="stylesheet" href="collision-visual.css?v=1">
+    <link rel="stylesheet" href="quiz.css?v=1">
+</head>
+<body>
+    <main>
+        <header class="page-header">
+            <div class="title-row">
+                <a href="../">← 과학 실험실</a>
+                <h1>등가속도 운동·운동량 보존과 충돌</h1>
+            </div>
+            <div class="grade-tags"><span>고등학교</span><span>물리</span></div>
+        </header>
+
+        <ol class="method-steps" aria-label="실험 방법">
+            <li>충돌의 종류를 고릅니다.</li>
+            <li>두 수레의 질량과 처음 속도를 정합니다.</li>
+            <li>수레를 굴려 충돌시킵니다.</li>
+            <li>충돌 전후의 운동량과 운동 에너지를 견줍니다.</li>
+        </ol>
+
+        <div class="experiment-layout">
+            <section class="panel control-panel" aria-labelledby="control-title">
+                <h2 id="control-title">실험 조건</h2>
+                <p class="water-standard">마찰이 없는 수평 궤도에서 실험합니다</p>
+
+                <fieldset class="pick-field">
+                    <legend>충돌의 종류</legend>
+                    <div class="pick-buttons">
+                        <button type="button" data-kind="elastic">탄성 충돌<small>e = 1</small></button>
+                        <button type="button" data-kind="partial">비탄성 충돌<small>e = 0.5</small></button>
+                        <button type="button" data-kind="stick">완전비탄성<small>e = 0 · 붙어서 감</small></button>
+                    </div>
+                </fieldset>
+
+                <div class="range-heading">
+                    <label for="m1Range">수레 1의 질량</label>
+                    <output id="m1Output" for="m1Range">2 kg</output>
+                </div>
+                <input id="m1Range" type="range" min="1" max="5" step="1" value="2">
+                <div class="range-scale" aria-hidden="true"><span>1kg</span><span>3kg</span><span>5kg</span></div>
+
+                <div class="range-heading amount-heading">
+                    <label for="m2Range">수레 2의 질량</label>
+                    <output id="m2Output" for="m2Range">2 kg</output>
+                </div>
+                <input id="m2Range" type="range" min="1" max="5" step="1" value="2">
+                <div class="range-scale" aria-hidden="true"><span>1kg</span><span>3kg</span><span>5kg</span></div>
+
+                <div class="range-heading amount-heading">
+                    <label for="v1Range">수레 1의 처음 속도</label>
+                    <output id="v1Output" for="v1Range">3.0 m/s</output>
+                </div>
+                <input id="v1Range" type="range" min="1" max="5" step="0.5" value="3">
+                <div class="range-scale" aria-hidden="true"><span>1</span><span>3</span><span>5 m/s</span></div>
+
+                <fieldset class="prediction-field">
+                    <legend>충돌 뒤 수레 1은 어떻게 될까요?</legend>
+                    <div class="prediction-buttons three">
+                        <button type="button" data-prediction="forward">계속 앞으로</button>
+                        <button type="button" data-prediction="stop">그 자리에 선다</button>
+                        <button type="button" data-prediction="back">뒤로 튕긴다</button>
+                    </div>
+                </fieldset>
+
+                <button class="run-button" id="checkBtn" type="button">충돌시키기</button>
+                <button class="reset-button" id="resetBtn" type="button">처음으로</button>
+
+                <section class="result-box" aria-labelledby="result-title" aria-live="polite">
+                    <h3 id="result-title">관찰 결과</h3>
+                    <p id="resultEmpty">조건을 정하고 충돌시켜 보세요.</p>
+                    <div id="resultContent" hidden>
+                        <div class="result-numbers">
+                            <article><span>충돌 뒤 속도</span><strong id="valueA">-</strong></article>
+                            <article><span>운동 에너지</span><strong id="valueB">-</strong></article>
+                        </div>
+                        <p class="prediction-result" id="predictionResult"></p>
+                        <p class="explanation" id="elementaryExplanation"></p>
+                    </div>
+                </section>
+            </section>
+
+            <section class="panel collide-stage" aria-label="관찰 화면">
+                <div class="stage-heading"><h2>관찰</h2><span id="stageBadge">-</span></div>
+
+                <div class="stage-views">
+                    <svg class="main-svg" viewBox="0 0 460 214" aria-hidden="true">
+                        <defs><clipPath id="trackClip"><rect x="20" y="20" width="420" height="170"/></clipPath></defs>
+                        <g id="mainGroup"></g>
+                    </svg>
+                    <svg class="graph-svg" viewBox="0 0 460 196" aria-hidden="true">
+                        <g id="graphGroup"></g>
+                    </svg>
+                </div>
+
+                <p class="stage-caption" id="stageCaption">운동량의 합은 충돌 전후가 언제나 같습니다. 운동 에너지는 그렇지 않습니다.</p>
+                <div class="data-note" id="dataNote"></div>
+            </section>
+        </div>
+
+        <section class="panel meaning-panel">
+            <h2>실험 결과의 의미</h2>
+            <div class="meaning-body">
+                <p><strong>운동량 보존</strong> 외부에서 힘이 작용하지 않으면 충돌의 종류와 상관없이 운동량의 합은 항상 보존됩니다.</p>
+                <p><strong>운동 에너지</strong> 탄성 충돌에서만 운동 에너지가 보존됩니다. 그 밖의 충돌에서는 일부가 소리와 열, 변형으로 바뀝니다.</p>
+                <p><strong>반발 계수</strong> 충돌 뒤 멀어지는 속도를 충돌 전 가까워지는 속도로 나눈 값입니다. 1이면 탄성, 0이면 붙어서 함께 움직입니다.</p>
+            </div>
+        </section>
+
+        <details class="quiz-section" aria-labelledby="quiz-title">
+            <summary class="quiz-heading"><h2 id="quiz-title">확인 문제</h2><span>4문제</span></summary>
+            <div class="quiz-grid">
+                <article class="quiz-card" data-answer="c">
+                    <h3>완전비탄성 충돌에서 보존되는 것은?</h3>
+                    <div class="quiz-options">
+                        <label><input type="radio" name="q1" value="a"> 운동 에너지만</label>
+                        <label><input type="radio" name="q1" value="b"> 운동량과 운동 에너지 둘 다</label>
+                        <label><input type="radio" name="q1" value="c"> 운동량만</label>
+                        <label><input type="radio" name="q1" value="d"> 둘 다 보존되지 않는다</label>
+                    </div>
+                    <button class="answer-button" type="button">정답 확인</button>
+                    <p class="answer-result" aria-live="polite"></p>
+                    <p class="answer-explanation" hidden>운동량은 충돌의 종류와 상관없이 언제나 보존됩니다. 운동 에너지는 완전비탄성 충돌에서 가장 많이 줄어듭니다.</p>
+                </article>
+
+                <article class="quiz-card" data-answer="b">
+                    <h3>같은 질량의 두 수레가 탄성 충돌하면 (하나는 정지)?</h3>
+                    <div class="quiz-options">
+                        <label><input type="radio" name="q2" value="a"> 둘 다 함께 움직인다</label>
+                        <label><input type="radio" name="q2" value="b"> 속도를 서로 맞바꾼다</label>
+                        <label><input type="radio" name="q2" value="c"> 둘 다 멈춘다</label>
+                        <label><input type="radio" name="q2" value="d"> 둘 다 뒤로 간다</label>
+                    </div>
+                    <button class="answer-button" type="button">정답 확인</button>
+                    <p class="answer-result" aria-live="polite"></p>
+                    <p class="answer-explanation" hidden>질량이 같고 탄성 충돌이면 앞 수레가 멈추고 뒤 수레가 그 속도로 나아갑니다. 당구공에서 볼 수 있는 모습입니다.</p>
+                </article>
+
+                <article class="quiz-card" data-answer="d">
+                    <h3>가벼운 수레가 무거운 정지한 수레에 탄성 충돌하면?</h3>
+                    <div class="quiz-options">
+                        <label><input type="radio" name="q3" value="a"> 그대로 뚫고 지나간다</label>
+                        <label><input type="radio" name="q3" value="b"> 그 자리에 멈춘다</label>
+                        <label><input type="radio" name="q3" value="c"> 더 빨라진다</label>
+                        <label><input type="radio" name="q3" value="d"> 뒤로 튕겨 나온다</label>
+                    </div>
+                    <button class="answer-button" type="button">정답 확인</button>
+                    <p class="answer-result" aria-live="polite"></p>
+                    <p class="answer-explanation" hidden>m₁이 m₂보다 작으면 충돌 뒤 속도가 음수가 되어 되돌아옵니다. 벽에 공을 던지면 튕겨 나오는 것과 같은 까닭입니다.</p>
+                </article>
+
+                <article class="quiz-card" data-answer="a">
+                    <h3>충돌에서 줄어든 운동 에너지는 어디로 갔을까요?</h3>
+                    <div class="quiz-options">
+                        <label><input type="radio" name="q4" value="a"> 소리와 열, 변형으로 바뀌었다</label>
+                        <label><input type="radio" name="q4" value="b"> 그냥 사라졌다</label>
+                        <label><input type="radio" name="q4" value="c"> 운동량으로 바뀌었다</label>
+                        <label><input type="radio" name="q4" value="d"> 질량으로 바뀌었다</label>
+                    </div>
+                    <button class="answer-button" type="button">정답 확인</button>
+                    <p class="answer-result" aria-live="polite"></p>
+                    <p class="answer-explanation" hidden>에너지는 사라지지 않고 형태만 바뀝니다. 충돌 소리, 수레가 뜨거워지는 것, 찌그러지는 것 모두 에너지가 옮겨 간 결과입니다.</p>
+                </article>
+            </div>
+        </details>
+    </main>
+    <script src="app.js?v=2"></script>
+</body>
+</html>
