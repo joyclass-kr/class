@@ -60,6 +60,25 @@ for (const slug of slugs) {
     if (/[<>]/.test(p.replace(/<span class="gloss">|<\/span>|<br>/g, '')))
       bad(slug, '본문', `수상한 꺾쇠 ${where}: ${p.slice(0, 36)}`);
   };
+  // 문단을 덧대다 보면 같은 말을 두 번 하거나 말꼬리가 겹치기 쉽다.
+  // 눈으로 훑어서는 놓치니 여기서 잡는다.
+  const dupCheck = (arr, where) => {
+    const norm = p => p.replace(/\s|["'.,!?—…]/g, '');
+    for (let i = 0; i < arr.length; i++) {
+      const a = norm(arr[i]);
+      for (let j = i + 1; j < arr.length; j++) {
+        const b2 = norm(arr[j]);
+        const n = Math.min(a.length, b2.length, 12);
+        if (n >= 8 && (a.slice(0, n) === b2.slice(0, n) || a.slice(-n) === b2.slice(-n)))
+          bad(slug, '본문', `같은 말이 두 번 ${where}: ${arr[j].slice(0, 30)}`);
+      }
+      if (i + 1 < arr.length) {
+        const b2 = norm(arr[i + 1]);
+        if (a.length >= 8 && b2.length >= 8 && a.slice(-7) === b2.slice(-7))
+          bad(slug, '본문', `말꼬리가 잇달아 겹침 ${where}: ${arr[i + 1].slice(0, 30)}`);
+      }
+    }
+  };
   for (const c of CH) {
     if (!c.title) bad(slug, '본문', `장 제목 없음 (num=${c.num})`);
     for (const b of (c.beats || [])) {
@@ -70,6 +89,7 @@ for (const slug of slugs) {
         const arr = b[side] || [];
         if (!arr.length) bad(slug, '본문', `${side} 칸이 빔 (${b.art})`);
         arr.forEach(p => check(p, b.art + '/' + side));
+        dupCheck(arr, b.art + '/' + side);
       }
     }
     (c.paras || []).forEach(p => { nBeat++; check(p, `${c.num}장`); });

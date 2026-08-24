@@ -4,10 +4,13 @@
  *
  * 덧댈것.json 꼴 — 열쇠는 "칸번호+쪽", 값은 덧댈 문단들.
  *   {
- *     "2L":  ["뒤에 붙일 문단", "또 하나"],
- *     "5R^": ["앞에 끼울 문단"]          ← 열쇠 끝에 ^를 붙이면 맨 앞에 넣는다
+ *     "2L":    ["맨 뒤에 붙일 문단", "또 하나"],
+ *     "5R@0":  ["맨 앞에 끼울 문단"],
+ *     "7L@2":  ["둘째 문단 바로 뒤에 끼울 문단"]
  *   }
  * 칸번호는 tools-count.mjs가 왼쪽에 찍어 주는 번호다(1부터).
+ * @번호를 안 적으면 맨 뒤에 붙는다. 이야기 순서가 어긋나기 쉬우니
+ * 마무리 문단이 있는 쪽은 @로 자리를 꼭 정해 준다.
  *
  * 안전장치는 tools-refill.mjs와 같다. CHAPTERS 밖은 건드리지 않고,
  * 칸 수와 그림 이름이 달라지면 되돌리고, 문법이 깨져도 되돌린다. */
@@ -31,13 +34,17 @@ const beforeArts = beats.map(b => b.art);
 const patch = JSON.parse(fs.readFileSync(patchPath, 'utf8'));
 let added = 0;
 for (const key of Object.keys(patch)) {
-  const m = /^(\d+)([LR])(\^?)$/.exec(key);
+  const m = /^(\d+)([LR])(?:@(\d+))?$/.exec(key);
   if (!m) { console.error('열쇠가 이상하다: ' + key); process.exit(1); }
   const idx = Number(m[1]) - 1;
   if (!beats[idx]) { console.error('그런 칸이 없다: ' + key); process.exit(1); }
   const side = m[2] === 'L' ? 'left' : 'right';
+  const cur = beats[idx][side];
+  // @번호를 안 적으면 맨 뒤에 붙인다. 0이면 맨 앞, 2면 둘째 문단 뒤.
+  const at = m[3] === undefined ? cur.length : Number(m[3]);
+  if (at > cur.length) { console.error('그 자리가 없다: ' + key + ' (문단 ' + cur.length + '개)'); process.exit(1); }
   const lines = patch[key];
-  beats[idx][side] = m[3] ? lines.concat(beats[idx][side]) : beats[idx][side].concat(lines);
+  beats[idx][side] = cur.slice(0, at).concat(lines, cur.slice(at));
   added += lines.length;
 }
 
