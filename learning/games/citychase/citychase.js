@@ -113,7 +113,7 @@
   }
 
   function contentLabel(content) {
-    return content === "gem" ? "보석" : content === "undercover" ? "잠복경찰" : content === "empty" ? "비어 있음" : "확인 전";
+    return content === "gem" ? "보석" : content === "undercover" ? "경보 장치" : content === "empty" ? "비어 있음" : "확인 전";
   }
 
   function contentBadge(content) {
@@ -266,9 +266,9 @@
       button.title = node.label;
       button.setAttribute("aria-label", node.label);
       button.textContent = node.start === "thief"
-        ? "도둑 아지트"
+        ? "도둑팀 비밀기지"
         : node.start === "police"
-          ? "경찰 감옥"
+          ? "경찰팀 구금 구역"
           : node.station ? String(node.station) : node.kind === "building" ? "⌂" : node.effect ? "!" : "";
       button.addEventListener("click", () => handleNodeClick(node.id));
       fragment.appendChild(button);
@@ -285,7 +285,7 @@
       marker.className = "boardCard trick";
       marker.style.cssText = positionStyle(node.x, node.y);
       marker.textContent = "➜";
-      marker.title = `속임수 · ${nodeMeta(card.nextNodeId)?.label || "화살표"} 방향`;
+      marker.title = `방향 표지 · ${nodeMeta(card.nextNodeId)?.label || "화살표"} 방향`;
       fragment.appendChild(marker);
     }
     for (const card of state.checks) {
@@ -293,8 +293,8 @@
       const marker = document.createElement("div");
       marker.className = "boardCard check";
       marker.style.cssText = positionStyle(node.x, node.y);
-      marker.textContent = "검";
-      marker.title = "검문 카드";
+      marker.textContent = "차";
+      marker.title = "차단 표지";
       fragment.appendChild(marker);
     }
     layer.replaceChildren(fragment);
@@ -392,11 +392,11 @@
     $("confirmSetupBtn").classList.toggle("hidden", !canSetup);
     $("setupTitle").textContent = canSetup ? "비밀 물건 배치" : state.myTeam === "police" ? "경찰팀 대표가 배치 중" : "경찰팀이 비밀 배치 중";
     $("setupGuide").textContent = canSetup
-      ? "서로 다른 건물에 보석 2개와 잠복경찰을 숨기세요. 건물을 누르면 선택한 물건이 배치됩니다."
-      : state.myTeam === "police" ? "팀 대표의 선택이 끝나면 함께 위치를 확인할 수 있습니다." : "보석과 잠복경찰이 어디에 숨겨지는지는 도둑팀에게 보이지 않습니다.";
+      ? "서로 다른 장소에 보석 2개와 경보 장치를 배치하세요. 장소를 누르면 선택한 물건이 놓입니다."
+      : state.myTeam === "police" ? "팀 대표의 선택이 끝나면 함께 위치를 확인할 수 있습니다." : "보석과 경보 장치의 위치는 도둑팀에게 보이지 않습니다.";
     document.querySelectorAll(".secretTab").forEach(button => button.classList.toggle("active", button.dataset.secret === activeSecret));
     $("setupSummary").innerHTML = canSetup
-      ? `<span>${contentBadge("gem")} 보석 1 · ${escapeHtml(selectedName("gem1"))}</span><span>${contentBadge("gem")} 보석 2 · ${escapeHtml(selectedName("gem2"))}</span><span>${contentBadge("undercover")} 잠복경찰 · ${escapeHtml(selectedName("undercover"))}</span>`
+      ? `<span>${contentBadge("gem")} 보석 1 · ${escapeHtml(selectedName("gem1"))}</span><span>${contentBadge("gem")} 보석 2 · ${escapeHtml(selectedName("gem2"))}</span><span>${contentBadge("undercover")} 경보 장치 · ${escapeHtml(selectedName("undercover"))}</span>`
       : "<span>비밀 배치가 끝날 때까지 잠시 기다려 주세요.</span>";
     const values = Object.values(setupSelection);
     $("confirmSetupBtn").disabled = !canSetup || values.some(value => !value) || new Set(values).size !== 3 || actionPending;
@@ -428,7 +428,7 @@
     crest.className = `teamCrest ${team || ""}`;
     crest.textContent = team === "police" ? "♜" : team === "thief" ? "♟" : "?";
     $("teamTitle").textContent = teamName(team);
-    $("teamMission").textContent = team === "police" ? "도둑 3명을 모두 체포하세요." : team === "thief" ? "보석 2개를 아지트로 운반하세요." : "게임이 시작되면 역할이 정해집니다.";
+    $("teamMission").textContent = team === "police" ? "도둑말 3개를 모두 구금하세요." : team === "thief" ? "보석 2개를 비밀기지로 운반하세요." : "게임이 시작되면 역할이 정해집니다.";
   }
 
   function renderProgress() {
@@ -475,15 +475,15 @@
     let hint = "현재 플레이어의 행동을 기다리는 중입니다.";
     if (state.canAct) {
       if (placementMode) {
-        const text = placementMode === "trick-node" ? "속임수를 놓을 분홍 표시 칸을 선택하세요." : placementMode === "trick-direction" ? "경찰을 보낼 다음 칸을 선택하세요." : "검문을 놓을 파란 표시 칸을 선택하세요.";
+        const text = placementMode === "trick-node" ? "방향 표지를 놓을 분홍 칸을 선택하세요." : placementMode === "trick-direction" ? "경찰을 보낼 다음 칸을 선택하세요." : "차단 표지를 놓을 파란 칸을 선택하세요.";
         fragment.appendChild(makeAction("카드 배치 취소", "", cancelPlacement));
         hint = text;
       } else if (state.actions.roll) {
         const pawn = currentPawn();
         fragment.appendChild(makeAction(pawn.status === "jailed" ? "🎲 탈출 주사위" : "🎲 주사위 던지기", "roll", () => sendAction("ROLL")));
         if (state.actions.hide) fragment.appendChild(makeAction(`안전지대에서 숨기 (${pawn.hidingTurns}/3)`, "thief", () => sendAction("HIDE")));
-        if (state.actions.trick) fragment.appendChild(makeAction(`속임수 카드 · ${state.resources.thief.trickCards}장`, "thief", () => { placementMode = "trick-node"; renderActions(); renderBoardState(); }));
-        if (state.actions.check) fragment.appendChild(makeAction(`검문 카드 · ${state.resources.police.checkCards}장`, "police", () => { placementMode = "check"; renderActions(); renderBoardState(); }));
+        if (state.actions.trick) fragment.appendChild(makeAction(`방향 표지 · ${state.resources.thief.trickCards}개`, "thief", () => { placementMode = "trick-node"; renderActions(); renderBoardState(); }));
+        if (state.actions.check) fragment.appendChild(makeAction(`차단 표지 · ${state.resources.police.checkCards}개`, "police", () => { placementMode = "check"; renderActions(); renderBoardState(); }));
         hint = pawn.status === "jailed" ? "1이 나오면 즉시 탈출해 다시 이동합니다." : "주사위를 쓰는 대신 카드나 숨기를 선택할 수 있습니다.";
       } else if (state.turnMode === "moving") {
         hint = "말판에서 노란빛으로 강조된 다음 칸을 누르세요.";
@@ -505,7 +505,7 @@
     const team = state.myTeam;
     $("intelCard").classList.toggle("hidden", !team || state.phase === "lobby");
     if (!team) return;
-    $("cardCount").textContent = team === "thief" ? `속임수 ${state.resources.thief.trickCards}장` : `검문 ${state.resources.police.checkCards}장`;
+    $("cardCount").textContent = team === "thief" ? `방향 표지 ${state.resources.thief.trickCards}개` : `차단 표지 ${state.resources.police.checkCards}개`;
     const list = $("intelList");
     const fragment = document.createDocumentFragment();
     const knownBuildings = state.buildings.filter(building => building.known);

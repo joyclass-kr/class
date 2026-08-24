@@ -5,12 +5,12 @@
   <meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
   <meta name="theme-color" content="#d8e8dc">
   <meta name="description" content="경찰팀과 도둑팀이 각자의 기기로 접속해 보석을 둘러싼 추격전을 벌이는 2~6인 실시간 보드게임">
-  <title>도둑잡기 · 시티 체이스</title>
+  <title>시티 체이스 · 실시간 추격 보드게임</title>
   <link rel="stylesheet" href="../../../assets/network/multiplayer-lobby.css">
-  <link rel="stylesheet" href="citychase.css?v=20260824l">
+  <link rel="stylesheet" href="citychase.css?v=20260824m">
   <script src="../../../assets/network/game-network.js?v=20260821"></script>
   <script src="../../../assets/network/multiplayer-lobby.js?v=20260821"></script>
-  <script src="citychase-data.js?v=20260824f"></script>
+  <script src="citychase-data.js?v=20260824g"></script>
 </head>
 <body>
   <main>
@@ -28,7 +28,7 @@
         <div class="lobbyBrand">
           <div class="brandMark" aria-hidden="true">♟</div>
           <div>
-            <h1 class="lobbyTitle">도둑잡기</h1>
+            <h1 class="lobbyTitle">시티 체이스</h1>
             <p class="lobbyLead">2–6명 · 각자의 기기로 참가</p>
           </div>
         </div>
@@ -94,7 +94,7 @@
 
     <section id="gameScreen" class="gameShell hidden">
       <header class="gameHeader">
-        <div class="miniBrand"><span class="miniBrandMark" aria-hidden="true">🚨</span><div><strong>도둑잡기</strong><small>CITY CHASE</small></div></div>
+        <div class="miniBrand"><span class="miniBrandMark" aria-hidden="true">🚨</span><div><strong>시티 체이스</strong><small>GEM PURSUIT</small></div></div>
         <div class="turnHeadline"><strong id="turnHeadline">게임 준비 중</strong><span id="turnSubline">잠시 기다려 주세요.</span></div>
         <div class="headerMeta">
           <div class="roomMini"><span>ROOM</span><strong id="gameRoomCode">----</strong></div>
@@ -124,17 +124,17 @@
           </section>
 
           <section class="progressRow" aria-label="승리 목표">
-            <div class="progressBox"><span>아지트의 보석</span><strong id="gemProgress">0 / 2</strong></div>
+            <div class="progressBox"><span>비밀기지의 보석</span><strong id="gemProgress">0 / 2</strong></div>
             <div class="progressBox"><span>체포된 도둑</span><strong id="arrestProgress">0 / 3</strong></div>
           </section>
 
           <section id="setupCard" class="sideCard setupTools hidden">
             <h3 id="setupTitle">비밀 물건 배치</h3>
-            <p id="setupGuide">경찰팀만 볼 수 있습니다. 서로 다른 건물에 보석 2개와 잠복경찰을 숨기세요.</p>
+            <p id="setupGuide">경찰팀만 볼 수 있습니다. 서로 다른 장소에 보석 2개와 경보 장치를 배치하세요.</p>
             <div id="secretTabs" class="secretTabs">
               <button class="secretTab active" type="button" data-secret="gem1">◆ 보석 1</button>
               <button class="secretTab" type="button" data-secret="gem2">◆ 보석 2</button>
-              <button class="secretTab undercover" type="button" data-secret="undercover">♜ 잠복</button>
+              <button class="secretTab undercover" type="button" data-secret="undercover">♜ 경보</button>
             </div>
             <div id="setupSummary" class="setupSummary"></div>
             <button id="confirmSetupBtn" class="primary" type="button" disabled>배치 완료</button>
@@ -170,12 +170,12 @@
 
   <section id="rulesOverlay" class="overlay hidden" role="dialog" aria-modal="true" aria-labelledby="rulesTitle">
     <div class="modal">
-      <div class="row spread"><div><div class="eyebrow">HOW TO PLAY</div><h2 id="rulesTitle">도둑잡기 게임 방법</h2></div><button id="closeRulesBtn" class="iconButton" type="button" aria-label="닫기">×</button></div>
+      <div class="row spread"><div><div class="eyebrow">HOW TO PLAY</div><h2 id="rulesTitle">시티 체이스 게임 방법</h2></div><button id="closeRulesBtn" class="iconButton" type="button" aria-label="닫기">×</button></div>
       <div class="rulesGrid">
-        <article class="ruleBox"><h3>🌸 도둑팀</h3><ul><li>7개 건물을 수색해 보석 2개를 찾습니다.</li><li>보석을 하나씩 아지트로 가져오면 안전하게 보관됩니다.</li><li>잠복경찰이 든 건물을 열면 즉시 체포됩니다.</li><li>속임수 카드로 경찰의 이동 방향을 바꿀 수 있습니다.</li></ul></article>
-        <article class="ruleBox"><h3>🟣 경찰팀</h3><ul><li>게임 시작 전 보석 2개와 잠복경찰을 서로 다른 건물에 숨깁니다.</li><li>경찰이 이동 중 도둑과 같은 칸을 지나면 체포합니다.</li><li>보석을 든 도둑에게 검문 카드를 사용할 수 있습니다.</li><li>도둑 3명을 모두 감옥에 보내면 승리합니다.</li></ul></article>
-        <article class="ruleBox"><h3>🎲 이동</h3><ul><li>도둑 1·2·3번, 경찰 1·2·3번 순서로 진행합니다.</li><li>주사위 수만큼 칸을 하나씩 직접 선택합니다.</li><li>한 차례 안에서 지나온 길을 되돌아갈 수 없습니다.</li><li>철도, 위치 이동, 일방통행과 특수 칸의 지시를 따릅니다.</li></ul></article>
-        <article class="ruleBox"><h3>🔓 감옥과 안전지대</h3><ul><li>체포된 도둑은 자기 차례에 1을 굴리면 탈출합니다.</li><li>경찰이 감옥에 없을 때 동료가 도착하면 구출할 수 있습니다.</li><li>아지트와 건물에는 경찰이 들어갈 수 없습니다.</li><li>도둑은 안전지대에서 최대 3차례까지 숨을 수 있습니다.</li></ul></article>
+        <article class="ruleBox"><h3>🌸 도둑팀</h3><ul><li>도시의 일곱 장소를 조사해 숨겨진 보석을 찾으세요.</li><li>찾은 보석을 하나씩 비밀기지까지 운반하면 확보됩니다.</li><li>경보 장치를 발견한 말은 현장에서 붙잡힙니다.</li><li>방향 표지를 놓아 경찰의 다음 이동을 유도할 수 있습니다.</li></ul></article>
+        <article class="ruleBox"><h3>🟣 경찰팀</h3><ul><li>추격 전에 보석 두 개와 경보 장치를 서로 다른 장소에 배치하세요.</li><li>이동 경로에서 도둑말과 마주치면 그 말을 구금합니다.</li><li>차단 표지를 활용해 도둑팀의 진로를 막을 수 있습니다.</li><li>도둑말 세 개를 모두 구금하면 경찰팀이 승리합니다.</li></ul></article>
+        <article class="ruleBox"><h3>🎲 이동</h3><ul><li>도둑팀 세 말과 경찰팀 세 말이 번호 순서대로 번갈아 행동합니다.</li><li>주사위 결과만큼 이동하며 마지막 칸에서 행동을 마칩니다.</li><li>갈림길에 도착할 때마다 진행할 길을 직접 선택합니다.</li><li>현재 말을 담당하는 학생만 이동을 결정할 수 있습니다.</li></ul></article>
+        <article class="ruleBox"><h3>🔓 구금과 안전구역</h3><ul><li>구금된 도둑말은 자기 차례에 탈출 주사위를 시도합니다.</li><li>경찰말이 없을 때 동료가 구금 구역에 도착하면 함께 빠져나옵니다.</li><li>경찰말은 비밀기지와 수색 장소 안으로 들어갈 수 없습니다.</li><li>도둑말은 안전구역에서 최대 세 차례까지 모습을 감출 수 있습니다.</li></ul></article>
       </div>
       <button id="closeRulesBottomBtn" class="primary" type="button">확인</button>
     </div>
@@ -200,6 +200,6 @@
   </section>
 
   <div id="toast" class="toast hidden" role="status" aria-live="polite"></div>
-  <script src="citychase.js?v=20260824k"></script>
+  <script src="citychase.js?v=20260824m"></script>
 </body>
 </html>

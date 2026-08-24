@@ -83,7 +83,7 @@ CityChase.addPlayer(hideGame, "t", "도둑");
 assignSeats(hideGame);
 CityChase.startGame(hideGame);
 CityChase.placeSecrets(hideGame, "p", { gems: ["market", "air"], undercover: "burger" });
-assert.equal(CityChase.hide(hideGame, "t").ok, true, "아지트에서는 이동 대신 숨을 수 있어야 합니다.");
+assert.equal(CityChase.hide(hideGame, "t").ok, true, "비밀기지에서는 이동 대신 숨을 수 있어야 합니다.");
 assert.equal(hideGame.pawns.find(pawn => pawn.id === "thief-1").hidingTurns, 1);
 
 const rescueGame = CityChase.createGame("p", "경찰");
@@ -103,7 +103,7 @@ assert.equal(rescueGame.pending.type, "rescue");
 assert.equal(CityChase.choosePending(rescueGame, "t", "thief-2").ok, true);
 assert.equal(rescuer.position, "hideout");
 assert.equal(captive.position, "hideout");
-assert.equal(captive.status, "active", "동료가 감옥으로 들어와 구출하면 두 도둑 모두 아지트로 돌아와야 합니다.");
+assert.equal(captive.status, "active", "동료가 구금 구역으로 들어와 구출하면 두 도둑 모두 비밀기지로 돌아와야 합니다.");
 
 const cardGame = CityChase.createGame("p", "경찰");
 CityChase.addPlayer(cardGame, "t", "도둑");
@@ -149,7 +149,7 @@ runner.carryingGem = true;
 assert.equal(CityChase.roll(gemGame, "t", 1).ok, true);
 assert.equal(CityChase.moveStep(gemGame, "t", "hideout").ok, true);
 assert.equal(gemGame.phase, "ended");
-assert.equal(gemGame.winnerTeam, "thief", "보석 두 개를 아지트로 옮기면 도둑팀이 이겨야 합니다.");
+assert.equal(gemGame.winnerTeam, "thief", "보석 두 개를 비밀기지로 옮기면 도둑팀이 이겨야 합니다.");
 
 const html = fs.readFileSync(path.resolve(__dirname, "..", "learning", "games", "citychase", "citychase.html"), "utf8");
 const css = fs.readFileSync(path.resolve(__dirname, "..", "learning", "games", "citychase", "citychase.css"), "utf8");
@@ -160,9 +160,9 @@ assert.match(html, /id="roomCode"/);
 assert.match(client, /allowedPlayerCounts:\s*\[2,\s*3,\s*4,\s*5,\s*6\]/);
 assert.match(client, /CITYCHASE_ACTION/);
 assert.match(css, /min-height:\s*44px/);
-assert.match(css, /city-board-v8\.png/, "축소된 아지트·감옥·상가 부지가 있는 정상 방향의 최종 배경을 사용해야 합니다.");
+assert.match(css, /city-board-v8\.png/, "축소된 비밀기지·구금 구역·상가 부지가 있는 정상 방향의 최종 배경을 사용해야 합니다.");
 assert.doesNotMatch(css, /transform:\s*rotate\(180deg\)/, "배경 전체를 뒤집어 캐릭터 방향을 바꾸면 안 됩니다.");
-assert.match(client, /도둑 아지트[\s\S]*경찰 감옥/, "두 시작 구역은 그림 추측이 아니라 실제 이름판으로 표시해야 합니다.");
+assert.match(client, /도둑팀 비밀기지[\s\S]*경찰팀 구금 구역/, "두 시작 구역은 그림 추측이 아니라 실제 이름판으로 표시해야 합니다.");
 assert.match(css, /\.node::after\s*\{[^}]*inset:\s*-11px/s, "작은 보드 칸에도 44px 이상의 터치 영역이 필요합니다.");
 assert.match(client, /lineWidth = isRail \? 14/, "실제 이동 칸은 굵은 보드게임 경로로 연결되어야 합니다.");
 assert.match(css, /width: 54px;\s*\n\s*height: 54px;/, "플레이어 말은 배경 시민보다 확실히 크게 보여야 합니다.");
@@ -179,6 +179,9 @@ assert.match(css, /\.lobbyWorkspace \{ display: grid; grid-template-columns: min
 assert.match(css, /@media \(max-width: 900px\)[\s\S]*\.lobbyWorkspace \{ grid-template-columns: 1fr; \}/, "iPad 세로 화면에서는 대기 패널을 한 열로 배치해야 합니다.");
 assert.match(client, /function avatarOf\(playerId\)/, "학생 아바타는 멀티플레이 대기실 정보에서 가져와야 합니다.");
 assert.match(css, /lobby-city\.jpg/, "제공한 도심 그림을 대기실 전용 배경으로 사용해야 합니다.");
+assert.match(html, /시티 체이스/, "공개 제목은 독자적인 시티 체이스 명칭을 사용해야 합니다.");
+assert.doesNotMatch(html, /도둑잡기|잠복경찰|속임수 카드|검문 카드/, "공개 화면에 원작을 특정하는 명칭과 설명서식 용어가 남으면 안 됩니다.");
+assert.doesNotMatch(server, /도둑잡기|잠복경찰|속임수 카드|검문 카드/, "서버 안내 문구도 독자적인 용어를 사용해야 합니다.");
 assert.match(css, /\.lobbyShell::before[\s\S]*linear-gradient\(#eff8f058, #eff8f058\)[\s\S]*cover/s, "대기실 배경은 살짝 밝게 처리하고 화면 비율에 맞춰 채워야 합니다.");
 assert.match(client, /pawnName[\s\S]*pawnFaceMarkup\(controllers\)[\s\S]*pawnNumber/, "말에는 학생 이름·아바타·말 번호가 함께 보여야 합니다.");
 assert.match(html, /id="policeSeatSlots"[\s\S]*id="thiefSeatSlots"/, "대기실에는 경찰팀·도둑팀 슬롯이 모두 있어야 합니다.");

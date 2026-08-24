@@ -56,8 +56,8 @@
   addEdge("r1", "p19", { kind: "rail" });
   addEdge("r1", "p20", { kind: "rail" });
 
-  addNode("hideout", 55, 65, { label: "도둑 아지트", safe: true, start: "thief", effect: "hideout" });
-  addNode("jail", 945, 565, { label: "경찰 감옥", safe: true, start: "police", effect: "jail" });
+  addNode("hideout", 55, 65, { label: "도둑팀 비밀기지", safe: true, start: "thief", effect: "hideout" });
+  addNode("jail", 945, 565, { label: "경찰팀 구금 구역", safe: true, start: "police", effect: "jail" });
   addEdge("hideout", "p0", { teams: ["thief"] });
   addEdge("jail", "p15");
 
@@ -97,7 +97,7 @@
   addRoute(["l3", "pLane1", "m5", "pLane2", "u3"], { teams: ["police"], oneWay: true, kind: "police-lane" });
 
   // 원작처럼 한 번의 이동에서 촘촘하게 칸을 세도록 일반 도로를 모두 두 칸으로 나눈다.
-  // 건물 출입구·아지트·감옥은 규칙상 한 번에 드나들어야 하므로 그대로 둔다.
+  // 수색 장소·비밀기지·구금 구역은 규칙상 한 번에 드나들어야 하므로 그대로 둔다.
   const originalEdges = edges.splice(0, edges.length);
   let denseIndex = 0;
   for (const edge of originalEdges) {
