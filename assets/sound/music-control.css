@@ -9,145 +9,13 @@
 
 .unified-music-control {
     position: fixed;
-    top: 8px;
-    right: 8px;
-    z-index: 100000;
-    display: flex;
-    align-items: center;
-    gap: 4px;
-    width: max-content;
-    max-width: calc(100vw - 16px);
-    min-height: 52px;
-    padding: 3px 6px;
-    border: 1px solid #755022;
-    border-radius: 999px;
-    background: rgba(20, 13, 7, .9);
-    box-shadow: 0 3px 12px rgba(0, 0, 0, .48), inset 0 1px rgba(255, 224, 156, .1);
-    color: #ead49f;
-    backdrop-filter: blur(5px);
-}
-
-.unified-audio-group {
-    display: flex;
-    align-items: center;
-    gap: 2px;
-}
-
-.unified-audio-divider {
-    width: 1px;
-    height: 28px;
-    margin: 0 2px;
-    background: #67451f;
-}
-
-.unified-music-control .unified-audio-toggle {
-    appearance: none;
-    display: grid;
-    width: 44px;
-    min-width: 44px;
-    height: 44px;
-    min-height: 44px;
-    margin: 0;
-    padding: 0;
-    place-items: center;
-    border: 0;
-    border-radius: 50%;
-    background: radial-gradient(circle, #a77836 0 42%, #513418 45% 58%, transparent 60%);
-    box-shadow: none;
-    color: #ffe1a0;
-    font: 900 20px/1 Georgia, "Times New Roman", serif;
-    cursor: pointer;
-    touch-action: manipulation;
-}
-
-.unified-music-control .unified-audio-toggle.is-muted {
-    color: #df7b68;
-    filter: grayscale(.55) brightness(.72);
-}
-
-.unified-music-control .unified-audio-toggle:focus-visible,
-.unified-music-control .unified-audio-slider:focus-visible {
-    outline: 2px solid #fff0b7;
-    outline-offset: 0;
-}
-
-.unified-music-control .unified-audio-slider {
-    appearance: none;
-    -webkit-appearance: none;
-    width: 76px;
-    height: 44px;
-    min-height: 44px;
-    margin: 0;
-    padding: 0;
-    border: 0;
-    background: transparent;
-    cursor: pointer;
-    touch-action: pan-x;
-}
-
-.unified-music-control .unified-audio-slider::-webkit-slider-runnable-track {
-    height: 4px;
-    border: 1px solid #765022;
-    border-radius: 999px;
-    background: linear-gradient(90deg, #b97b2f, #e7a547);
-    box-shadow: inset 0 1px 2px rgba(0, 0, 0, .65);
-}
-
-.unified-music-control .unified-audio-slider::-webkit-slider-thumb {
-    appearance: none;
-    -webkit-appearance: none;
-    width: 18px;
-    height: 18px;
-    margin-top: -8px;
-    border: 1px solid #c69751;
-    border-radius: 50%;
-    background: radial-gradient(circle at 36% 30%, #e0b56d 0 10%, #8c602a 42%, #2b1b0d 100%);
-    box-shadow: 0 2px 5px rgba(0, 0, 0, .65);
-}
-
-.unified-music-control .unified-audio-slider::-moz-range-track {
-    height: 4px;
-    border: 1px solid #765022;
-    border-radius: 999px;
-    background: linear-gradient(90deg, #b97b2f, #e7a547);
-    box-shadow: inset 0 1px 2px rgba(0, 0, 0, .65);
-}
-
-.unified-music-control .unified-audio-slider::-moz-range-thumb {
-    width: 18px;
-    height: 18px;
-    border: 1px solid #c69751;
-    border-radius: 50%;
-    background: radial-gradient(circle at 36% 30%, #e0b56d 0 10%, #8c602a 42%, #2b1b0d 100%);
-    box-shadow: 0 2px 5px rgba(0, 0, 0, .65);
-}
-
-@media (max-width: 760px), (hover: none) and (pointer: coarse), (max-height: 520px) and (orientation: landscape) {
-    .unified-music-control {
-        top: 6px;
-        right: 6px;
-        max-width: calc(100vw - 12px);
-        padding: 2px 4px;
-    }
-
-    .unified-music-control .unified-audio-slider {
-        width: 62px;
-    }
-}
-
-/* Compact, collapsible sound panel */
-.unified-music-control {
     top: max(12px, env(safe-area-inset-top));
     right: max(12px, env(safe-area-inset-right));
+    z-index: 100000;
     display: block;
     width: 48px;
-    min-height: 48px;
-    padding: 0;
-    border: 0;
-    border-radius: 13px;
-    background: transparent;
-    box-shadow: none;
-    overflow: visible;
+    height: 48px;
+    color: #f4f4f5;
 }
 
 .unified-music-control .unified-audio-menu-toggle {
@@ -158,75 +26,163 @@
     height: 48px;
     margin: 0;
     padding: 0;
-    border: 1px solid rgba(255, 255, 255, .16);
+    border: 1px solid rgba(255, 255, 255, .18);
     border-radius: 13px;
-    background: rgba(54, 54, 58, .92);
+    background: rgba(54, 54, 58, .94);
     color: #f4f4f5;
-    box-shadow: 0 3px 12px rgba(0, 0, 0, .24);
+    box-shadow: 0 3px 12px rgba(0, 0, 0, .28);
     font: 20px/1 system-ui, sans-serif;
     cursor: pointer;
+    touch-action: manipulation;
     -webkit-tap-highlight-color: transparent;
     backdrop-filter: blur(8px);
 }
 
-.unified-music-control .unified-audio-menu-toggle:active { transform: scale(.95); }
-.unified-music-control .unified-audio-menu-toggle:focus-visible { outline: 3px solid #60a5fa; outline-offset: 3px; }
+.unified-music-control .unified-audio-menu-toggle:active {
+    transform: scale(.95);
+    background: rgba(72, 72, 77, .98);
+}
+
+.unified-music-control button:focus-visible,
+.unified-music-control input:focus-visible {
+    outline: 3px solid #60a5fa;
+    outline-offset: 3px;
+}
 
 .unified-music-control .unified-audio-panel {
     position: absolute;
     top: 56px;
     right: 0;
-    display: flex;
-    align-items: flex-start;
-    gap: 6px;
+    display: grid;
+    grid-template-columns: 48px 1px 48px;
+    align-items: start;
+    gap: 7px;
     width: max-content;
-    padding: 8px;
-    border: 1px solid #755022;
+    padding: 10px;
+    border: 1px solid rgba(255, 255, 255, .14);
     border-radius: 15px;
-    background: rgba(20, 13, 7, .94);
-    box-shadow: 0 8px 24px rgba(0, 0, 0, .48), inset 0 1px rgba(255, 224, 156, .1);
-    backdrop-filter: blur(8px);
+    background: rgba(35, 35, 38, .96);
+    box-shadow: 0 8px 24px rgba(0, 0, 0, .38);
+    backdrop-filter: blur(10px);
+    animation: unified-audio-open .14s ease-out;
 }
 
-.unified-music-control .unified-audio-panel[hidden] { display: none !important; }
+.unified-music-control .unified-audio-panel[hidden] {
+    display: none !important;
+}
 
 .unified-music-control .unified-audio-group {
     display: flex;
     flex-direction: column;
     align-items: center;
-    gap: 4px;
+    gap: 6px;
 }
 
 .unified-music-control .unified-audio-divider {
     width: 1px;
     height: 148px;
-    margin: 0 2px;
+    background: rgba(255, 255, 255, .14);
+}
+
+.unified-music-control .unified-audio-toggle {
+    appearance: none;
+    display: grid;
+    place-items: center;
+    width: 44px;
+    height: 44px;
+    margin: 0;
+    padding: 0;
+    border: 1px solid rgba(255, 255, 255, .12);
+    border-radius: 12px;
+    background: rgba(255, 255, 255, .08);
+    color: #f8d68b;
+    font: 800 20px/1 Georgia, "Times New Roman", serif;
+    cursor: pointer;
+    touch-action: manipulation;
+}
+
+.unified-music-control .unified-audio-toggle.is-muted {
+    color: #f08b7d;
+    background: rgba(240, 139, 125, .1);
 }
 
 .unified-music-control .unified-audio-slider {
+    appearance: none;
+    -webkit-appearance: none;
     width: 44px;
-    height: 96px;
-    min-height: 96px;
+    height: 98px;
+    min-height: 98px;
+    margin: 0;
+    padding: 0;
+    border: 0;
+    background: transparent;
+    cursor: pointer;
     writing-mode: vertical-lr;
     direction: rtl;
     touch-action: pan-y;
 }
 
 .unified-music-control .unified-audio-slider::-webkit-slider-runnable-track {
-    width: 4px;
+    width: 6px;
     height: 100%;
-    background: linear-gradient(0deg, #b97b2f, #e7a547);
+    border-radius: 999px;
+    background: linear-gradient(0deg, #9b6a2a, #efb85b);
+    box-shadow: inset 0 1px 2px rgba(0, 0, 0, .55);
 }
 
-.unified-music-control .unified-audio-slider::-webkit-slider-thumb { margin-top: 0; margin-left: -7px; }
-.unified-music-control .unified-audio-slider::-moz-range-track { width: 4px; height: 100%; }
+.unified-music-control .unified-audio-slider::-webkit-slider-thumb {
+    appearance: none;
+    -webkit-appearance: none;
+    width: 22px;
+    height: 22px;
+    margin-left: -8px;
+    border: 2px solid #dfb66e;
+    border-radius: 50%;
+    background: #4a3620;
+    box-shadow: 0 2px 6px rgba(0, 0, 0, .55);
+}
 
-@media (max-width: 760px), (hover: none) and (pointer: coarse), (max-height: 520px) and (orientation: landscape) {
+.unified-music-control .unified-audio-slider::-moz-range-track {
+    width: 6px;
+    height: 100%;
+    border-radius: 999px;
+    background: linear-gradient(0deg, #9b6a2a, #efb85b);
+}
+
+.unified-music-control .unified-audio-slider::-moz-range-thumb {
+    width: 18px;
+    height: 18px;
+    border: 2px solid #dfb66e;
+    border-radius: 50%;
+    background: #4a3620;
+}
+
+@keyframes unified-audio-open {
+    from { opacity: 0; transform: translateY(-4px) scale(.98); }
+    to { opacity: 1; transform: translateY(0) scale(1); }
+}
+
+@media (max-width: 760px), (hover: none) and (pointer: coarse) {
     .unified-music-control {
         top: max(8px, env(safe-area-inset-top));
         right: max(8px, env(safe-area-inset-right));
-        padding: 0;
     }
-    .unified-music-control .unified-audio-slider { width: 44px; height: 88px; }
-    .unified-music-control .unified-audio-divider { height: 140px; }
+
+    .unified-music-control .unified-audio-panel {
+        top: 54px;
+        padding: 8px;
+    }
+
+    .unified-music-control .unified-audio-slider {
+        height: 92px;
+        min-height: 92px;
+    }
+
+    .unified-music-control .unified-audio-divider {
+        height: 142px;
+    }
+}
+
+@media (prefers-reduced-motion: reduce) {
+    .unified-music-control .unified-audio-panel { animation: none; }
 }

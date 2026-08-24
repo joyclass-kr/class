@@ -44,9 +44,11 @@
         const stylesheet = document.createElement("link");
         stylesheet.rel = "stylesheet";
         stylesheet.dataset.classMusicStyle = "true";
-        stylesheet.href = currentScript
-            ? new URL("music-control.css", currentScript.src).href
-            : "../../assets/sound/music-control.css";
+        const stylesheetUrl = currentScript
+            ? new URL("music-control.css", currentScript.src)
+            : new URL("../../assets/sound/music-control.css", location.href);
+        stylesheetUrl.searchParams.set("v", "20260825-compact-vertical-1");
+        stylesheet.href = stylesheetUrl.href;
         document.head.appendChild(stylesheet);
     }
 
