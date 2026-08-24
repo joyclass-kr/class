@@ -78,11 +78,11 @@
             { id: "tuba", name: "튜바", tag: "LOW BRASS", engine: "guitar", stage: "brass", art: "assets/instruments/tuba-expressive.png", badge: "LOW BRASS", model: "TUBA", range: [26, 65], size: "전체 높이 약 100 cm", visualScale: .62, scalePercent: 56, expression: "호흡 압력", description: "낮은 금관의 공기 흐름과 어택을 다루는 튜바 화면이에요." }
         ],
         percussion: [
-            { id: "rock-kit", name: "Rock Kit", tag: "DRUM SET", engine: "drums", stage: "drums", art: "assets/instruments/drum-acoustic-kit.png", badge: "ACOUSTIC KIT", model: "ROCK", description: "실제 드럼세트의 각 부위를 직접 누르거나 패드로 연주해요." },
-            { id: "metal-kit", name: "Metal Kit", tag: "DRUM SET", engine: "drums", stage: "drums", art: "assets/instruments/drum-acoustic-kit.png", badge: "ACOUSTIC KIT", model: "METAL", description: "큰 킥과 많은 심벌을 중심으로 한 메탈 드럼세트 화면이에요." },
-            { id: "pop-kit", name: "Pop Kit", tag: "DRUM SET", engine: "drums", stage: "drums", art: "assets/instruments/drum-acoustic-kit.png", badge: "ACOUSTIC KIT", model: "POP", description: "정돈된 어택과 균형 잡힌 구성의 팝 드럼세트예요." },
-            { id: "jazz-kit", name: "Jazz Kit", tag: "DRUM SET", engine: "drums", stage: "drums", art: "assets/instruments/drum-acoustic-kit.png", badge: "ACOUSTIC KIT", model: "JAZZ", description: "라이드와 작은 셸 중심의 재즈 드럼세트 화면이에요." },
-            { id: "funk-kit", name: "Funk Kit", tag: "DRUM SET", engine: "drums", stage: "drums", art: "assets/instruments/drum-acoustic-kit.png", badge: "ACOUSTIC KIT", model: "FUNK", description: "타이트한 킥과 스네어 중심의 펑크 드럼세트 화면이에요." },
+            { id: "rock-kit", name: "Rock Kit", tag: "DRUM SET", engine: "drums", stage: "drums", art: "assets/instruments/drum-rock-kit.png", badge: "ACOUSTIC KIT", model: "ROCK", description: "큰 킥과 2개의 랙 탐을 갖춘 표준 5피스 락 세트예요." },
+            { id: "metal-kit", name: "Metal Kit", tag: "DRUM SET", engine: "drums", stage: "drums", art: "assets/instruments/drum-metal-kit.png", badge: "ACOUSTIC KIT", model: "METAL", description: "더블 킥·여러 탐·다수의 심벌을 갖춘 대형 메탈 세트예요." },
+            { id: "pop-kit", name: "Pop Kit", tag: "DRUM SET", engine: "drums", stage: "drums", art: "assets/instruments/drum-pop-kit.png", badge: "ACOUSTIC KIT", model: "POP", description: "구성이 단순하고 정돈된 소형 팝 세트예요." },
+            { id: "jazz-kit", name: "Jazz Kit", tag: "DRUM SET", engine: "drums", stage: "drums", art: "assets/instruments/drum-jazz-kit.png", badge: "ACOUSTIC KIT", model: "JAZZ", description: "작은 킥과 큰 라이드가 중심인 전통 재즈 세트예요." },
+            { id: "funk-kit", name: "Funk Kit", tag: "DRUM SET", engine: "drums", stage: "drums", art: "assets/instruments/drum-funk-kit.png", badge: "ACOUSTIC KIT", model: "FUNK", description: "얕은 셸과 낮은 심벌 배치의 타이트한 펑크 세트예요." },
             { id: "timpani", name: "팀파니", tag: "ORCHESTRAL", engine: "drums", stage: "timpani", art: "assets/instruments/timpani-bank.png", pitched: true, range: [38, 60], size: "4대 배치 너비 약 290 cm", visualScale: .94, scalePercent: 83, badge: "ORCHESTRAL PERCUSSION", model: "TIMPANI", description: "건반으로 교육용 반음계 음역을 연주하고 음높이·댐핑을 살펴봐요." },
             { id: "glockenspiel", name: "글로켄슈필", tag: "KEYBOARD PERC.", engine: "drums", stage: "metal", art: "assets/instruments/glockenspiel-concert.png", pitched: true, range: [77, 108], size: "본체 너비 약 80 cm", visualScale: .54, scalePercent: 23, badge: "MALLET PERCUSSION", model: "GLOCKENSPIEL", description: "금속 음판의 실제 음역만 건반으로 연주해요." },
             { id: "marimba", name: "마림바", tag: "KEYBOARD PERC.", engine: "drums", stage: "mallet", art: "assets/instruments/marimba-concert.png", pitched: true, range: [36, 96], size: "본체 너비 약 250 cm", visualScale: .9, scalePercent: 71, badge: "MALLET PERCUSSION", model: "MARIMBA", description: "넓은 목재 음판의 실제 음역만 건반으로 연주해요." },
@@ -159,10 +159,10 @@
     function cacheElements() {
         [
             "audioButton", "modelBadge", "instrumentName", "instrumentDescription", "guitarModeSwitch", "instrumentVisual", "familyEyebrow", "familyName", "modelChooser", "koreanRoomSwitch",
-            "visualFamily", "visualModel", "studioStage", "instrumentArtwork", "scaleGuide", "scaleBar", "scaleValue", "scaleNote", "classicalRender", "machineDeck", "malletRender", "kitHotspots", "stringCanvas", "pianoControls", "keyboardPatchControls", "stringControls", "classicalControls", "expressionLabel", "guitarFxControls", "drumControls", "drumSystemLabel", "drumSystemDescription", "drumResonanceLabel", "drumToneLabel", "sustainButton",
+            "visualFamily", "visualModel", "studioStage", "instrumentArtwork", "scaleGuide", "scaleBar", "scaleValue", "scaleNote", "classicalRender", "machineDeck", "malletRender", "stringCanvas", "pianoControls", "keyboardPatchControls", "stringControls", "classicalControls", "expressionLabel", "guitarFxControls", "drumControls", "drumSystemLabel", "drumSystemDescription", "drumResonanceLabel", "drumToneLabel", "sustainButton",
             "articulationButtons", "toneSlider", "toneOutput", "muteSlider", "muteOutput", "pickSlider", "pickOutput",
             "driveSlider", "driveOutput", "drumResonanceSlider", "drumResonanceOutput", "drumToneSlider", "drumToneOutput",
-            "inputHint", "noteReadout", "rangeLegend", "rangeReadout", "octaveControls", "octaveReadout", "octaveDown", "octaveUp", "keyboardViewport",
+            "noteReadout", "rangeLegend", "rangeReadout", "octaveControls", "octaveReadout", "octaveDown", "octaveUp", "keyboardViewport",
             "keyboard", "chordSurface", "chordPads", "drumPads", "toast"
         ].forEach(function (id) { elements[id] = document.getElementById(id); });
     }
@@ -683,48 +683,34 @@
         if (stage === "timpani") {
             elements.malletRender.classList.add("timpani");
             [["kick", "큰 팀파니"], ["lowtom", "작은 팀파니"]].forEach(function (entry) {
-                const button = document.createElement("button"); button.type = "button"; button.dataset.drum = entry[0]; button.setAttribute("aria-label", entry[1]);
-                button.addEventListener("pointerdown", function (event) { event.preventDefault(); triggerVisualDrum(entry[0], .82); }); elements.malletRender.appendChild(button);
+                const piece = document.createElement("span"); piece.dataset.drum = entry[0];
+                elements.malletRender.appendChild(piece);
             });
         }
         else if (stage === "samul") {
             elements.malletRender.classList.add("samul");
             [["snare", "장구"], ["kick", "북"], ["hightom", "소고"], ["hat", "꽹과리"], ["ride", "징"]].forEach(function (entry) {
-                const button = document.createElement("button"); button.type = "button"; button.dataset.drum = entry[0]; button.dataset.name = entry[1]; button.setAttribute("aria-label", entry[1]);
-                button.addEventListener("pointerdown", function (event) { event.preventDefault(); triggerVisualDrum(entry[0], .82); }); elements.malletRender.appendChild(button);
+                const piece = document.createElement("span"); piece.dataset.drum = entry[0]; piece.dataset.name = entry[1];
+                elements.malletRender.appendChild(piece);
             });
         } else {
             if (stage === "metal") elements.malletRender.classList.add("metal");
-            for (let index = 0; index < 13; index += 1) { const button = document.createElement("button"); const drum = DRUMS[index % DRUMS.length]; button.type = "button"; button.dataset.drum = drum.id; button.setAttribute("aria-label", "음판 " + (index + 1)); button.addEventListener("pointerdown", function (event) { event.preventDefault(); triggerVisualDrum(drum.id, .76); }); elements.malletRender.appendChild(button); }
+            for (let index = 0; index < 13; index += 1) { const piece = document.createElement("span"); piece.dataset.drum = DRUMS[index % DRUMS.length].id; elements.malletRender.appendChild(piece); }
         }
     }
 
-    function triggerVisualDrum(id, velocity) {
-        triggerDrumV2(id, velocity || .8);
-        document.querySelectorAll('[data-drum="' + id + '"]').forEach(function (item) {
-            item.classList.add("active");
-            window.setTimeout(function () { item.classList.remove("active"); }, 110);
-        });
-    }
-
     function renderMachine(stage) {
-        elements.machineDeck.className = "machine-deck" + (stage === "linn" ? " linn" : "");
-        elements.machineDeck.innerHTML = '<div class="machine-head"><b>CLASS RHYTHM</b><small>' + (stage === "linn" ? "12-BIT / 44" : "PATTERN 01") + '</small></div><div class="machine-pads"></div>';
+        const linn = stage === "linn";
+        elements.machineDeck.className = "machine-deck " + (linn ? "linn" : "rhythm-808");
+        elements.machineDeck.innerHTML = linn
+            ? '<div class="linn-head"><b>DIGITAL DRUM COMPUTER</b><i>120.0</i></div><div class="linn-screen">PATTERN 01 · 12 BIT</div><div class="machine-pads"></div><div class="linn-transport"><span>REW</span><span>STOP</span><span>PLAY</span><span>REC</span></div>'
+            : '<div class="machine-head"><b>ANALOG RHYTHM</b><small>PATTERN 01</small></div><div class="analog-knobs"><i></i><i></i><i></i><i></i><i></i><i></i></div><div class="machine-pads"></div><div class="step-row"></div>';
         const padBox = elements.machineDeck.querySelector(".machine-pads");
         DRUMS.forEach(function (drum) {
-            const button = document.createElement("button"); button.type = "button"; button.dataset.drum = drum.id; button.textContent = drum.name;
-            button.addEventListener("pointerdown", function (event) { event.preventDefault(); triggerVisualDrum(drum.id, .84); });
-            padBox.appendChild(button);
+            const pad = document.createElement("span"); pad.textContent = drum.name; padBox.appendChild(pad);
         });
-    }
-
-    function renderKitHotspots() {
-        elements.kitHotspots.innerHTML = "";
-        DRUMS.forEach(function (drum) {
-            const button = document.createElement("button"); button.type = "button"; button.dataset.drum = drum.id; button.setAttribute("aria-label", drum.name);
-            button.addEventListener("pointerdown", function (event) { event.preventDefault(); triggerVisualDrum(drum.id, .82); });
-            elements.kitHotspots.appendChild(button);
-        });
+        const stepRow = elements.machineDeck.querySelector(".step-row");
+        if (stepRow) for (let index = 0; index < 16; index += 1) stepRow.appendChild(document.createElement("i"));
     }
 
     function updateInstrumentStage(model) {
@@ -742,14 +728,13 @@
         elements.classicalRender.className = "classical-render hidden";
         elements.machineDeck.classList.add("hidden");
         elements.malletRender.classList.add("hidden");
-        elements.kitHotspots.classList.add("hidden");
         if (["classical", "wind", "brass"].includes(model.stage) && !model.art) {
             elements.classicalRender.className = "classical-render" + (model.stage === "wind" ? " render-wind" : model.stage === "brass" ? " render-wind render-brass" : "");
         } else if (model.stage === "machine" || model.stage === "linn") {
             renderMachine(model.stage); elements.machineDeck.classList.remove("hidden");
         } else if (["timpani", "mallet", "metal", "samul"].includes(model.stage) && !model.art) {
             renderMallet(model.stage); elements.malletRender.classList.remove("hidden");
-        } else if (model.stage === "drums") elements.kitHotspots.classList.remove("hidden");
+        }
     }
 
     function renderKeyboardPatchControls(model) {
@@ -777,9 +762,9 @@
         const mallet = model.stage === "mallet" || model.stage === "metal";
         const copy = model.stage === "timpani" ? ["TUNED MEMBRANE", "음높이와 헤드의 감쇠를 조절해요.", "댐핑", "말렛 경도"]
             : model.stage === "samul" ? ["KOREAN PERCUSSION", "장구·북·소고·꽹과리·징을 한 무대에서 연주해요.", "울림", "채 경도"]
-            : machine ? [model.stage === "linn" ? "12-BIT DRUM COMPUTER" : "ANALOG RHYTHM", "하드웨어 패드와 음색 회로를 다루는 화면이에요.", "디케이", "톤"]
-            : mallet ? ["KEYBOARD PERCUSSION", "음판을 직접 누르거나 패드로 연주해요.", "댐핑", "말렛 경도"]
-            : ["ACOUSTIC DRUM KIT", "실제 드럼세트의 각 부위를 직접 누를 수 있어요.", "공명", "밝기"];
+            : machine ? [model.stage === "linn" ? "12-BIT DRUM COMPUTER" : "ANALOG RHYTHM", "기기 구조를 살펴보고 아래 패드로 연주해요.", "디케이", "톤"]
+            : mallet ? ["KEYBOARD PERCUSSION", "음판 구조를 살펴보고 건반으로 연주해요.", "댐핑", "말렛 경도"]
+            : ["ACOUSTIC DRUM KIT", "세트 구성을 살펴보고 아래 패드로 연주해요.", "공명", "밝기"];
         elements.drumSystemLabel.textContent = copy[0];
         elements.drumSystemDescription.textContent = copy[1];
         elements.drumResonanceLabel.textContent = copy[2];
@@ -873,7 +858,7 @@
         state.pianoVoices.forEach(function (voice) { releasePianoVoice(voice, true); });
         if (state.stringNode) state.stringNode.port.postMessage({ type: "allOff" });
         if (state.drumNode) state.drumNode.port.postMessage({ type: "allOff" });
-        document.querySelectorAll(".key.active,.drum-pad.active,.kit-hotspots .active,.machine-pads .active").forEach(function (item) { item.classList.remove("active"); });
+        document.querySelectorAll(".key.active,.drum-pad.active").forEach(function (item) { item.classList.remove("active"); });
     }
 
     function pointerVelocity(event, key) {
@@ -1042,7 +1027,6 @@
         elements.drumPads.style.display = drums ? "grid" : "";
         elements.octaveControls.classList.toggle("hidden", drums || chords);
         elements.rangeLegend.classList.toggle("hidden", drums || chords);
-        elements.inputHint.textContent = drums ? "패드 또는 A–K 키로 연주" : chords ? "코드를 고른 뒤 스트로크" : pitchedPercussion ? "실제 음역의 건반으로 연주" : "화면 건반 또는 A–K 키로 연주";
     }
 
     function selectInstrument(instrument) {
@@ -1198,7 +1182,6 @@
         document.querySelectorAll(".fx-strip input,.classical-controls input").forEach(function (slider) {
             slider.addEventListener("input", function () { const output = slider.parentElement.querySelector("output"); if (output) output.textContent = slider.value; });
         });
-        renderKitHotspots();
         const context = canvas.getContext("2d");
         context.clearRect(0, 0, width, height);
         context.save();

@@ -11,9 +11,9 @@
     <link rel="preload" href="../music-studio/assets/piano/C4.ogg" as="fetch" type="audio/ogg" crossorigin>
     <link rel="preload" href="../music-studio/assets/piano/C5.ogg" as="fetch" type="audio/ogg" crossorigin>
     <link rel="preload" href="instrument-worklet-v2.js?v=20260824-fast-adsr" as="script">
-    <link rel="stylesheet" href="styles.css?v=20260825-instrument-rooms">
+    <link rel="stylesheet" href="styles.css?v=20260825-drum-rooms">
     <script src="instrument-core.js?v=20260824-physical-room" defer></script>
-    <script src="app.js?v=20260825-viola-render" defer></script>
+    <script src="app.js?v=20260825-drum-rooms" defer></script>
 </head>
 <body>
     <div class="room-glow" aria-hidden="true"></div>
@@ -50,7 +50,7 @@
 
             <section class="instrument-console" aria-labelledby="instrumentName">
                 <div class="console-head">
-                    <div>
+                    <div class="screen-reader-only">
                         <span id="modelBadge" class="model-badge">SAMPLED GRAND</span>
                         <h1 id="instrumentName">그랜드 피아노</h1>
                         <p id="instrumentDescription">화성학 연습실과 같은 피아노예요. 건반을 누르고 스페이스바로 서스테인을 사용해 보세요.</p>
@@ -72,8 +72,7 @@
                             <img id="instrumentArtwork" class="instrument-artwork hidden" src="" alt="">
                             <div id="classicalRender" class="classical-render hidden" aria-hidden="true"><i class="render-top"></i><i class="render-neck"></i><i class="render-body upper"></i><i class="render-body lower"></i><i class="render-detail"></i></div>
                             <div id="machineDeck" class="machine-deck hidden" aria-label="전자 드럼 머신"></div>
-                            <div id="malletRender" class="mallet-render hidden" aria-label="타악기 직접 연주"></div>
-                            <div id="kitHotspots" class="kit-hotspots hidden" aria-label="드럼세트 직접 연주"></div>
+                            <div id="malletRender" class="mallet-render hidden" aria-hidden="true"></div>
                             <canvas id="stringCanvas" width="720" height="180" aria-hidden="true"></canvas>
                             <div class="stage-shadow" aria-hidden="true"></div>
                         </div>
@@ -108,7 +107,7 @@
 
             <section id="playSurface" class="play-surface" aria-label="악기 연주 영역">
                 <div class="play-toolbar">
-                    <div><span id="inputHint">화면 건반 또는 A–K 키로 연주</span><small id="noteReadout" aria-live="polite">준비됨</small></div>
+                    <small id="noteReadout" class="screen-reader-only" aria-live="polite">준비됨</small>
                     <div id="rangeLegend" class="range-legend hidden"><i></i><span id="rangeReadout"></span></div>
                     <div id="octaveControls" class="octave-controls" aria-label="컴퓨터 키보드 옥타브">
                         <button id="octaveDown" type="button" aria-label="한 옥타브 내리기">−</button>

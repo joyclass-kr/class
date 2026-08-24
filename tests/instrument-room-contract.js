@@ -33,7 +33,7 @@ assert.match(app, /button\.addEventListener\("pointerdown", function \(event\) \
 assert.doesNotMatch(app, /const start = context\.currentTime \+ \.012/);
 assert.match(app, /if \(state\.stringNode\) \{[\s\S]*?sendNote\(state\.stringNode\)/);
 assert.match(app, /tag === "INPUT" && event\.target\.type !== "range"/);
-assert.match(html, /app\.js\?v=20260825-viola-render/);
+assert.match(html, /app\.js\?v=20260825-drum-rooms/);
 assert.match(app, /instrument-worklet-v2\.js\?v=20260824-fast-adsr/);
 assert.match(app, /start \+ \.00012/);
 assert.match(worklet, /sampleRate \* \.00012/);
