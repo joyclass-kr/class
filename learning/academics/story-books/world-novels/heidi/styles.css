@@ -536,6 +536,11 @@ body {
 }
 
 @media (max-width: 820px), (orientation: portrait) and (max-width: 1100px) {
+    /* 소설틀 표지도 세로에서는 위아래로 쌓는다. 두 칸으로 두면 글줄이
+       절반 폭이라 소개글이 갑절로 길어져 넘친다. */
+    .page-cover { grid-template-columns: 1fr; grid-template-rows: 30% 70%; }
+    .page-cover .story-page-left { border-right: none; border-bottom: 1px solid rgba(92, 58, 34, 0.22); }
+    .page-cover .story-page-right { padding: clamp(12px, 2.6cqh, 27px) clamp(14px, 3.4cqh, 36px); }
     .book { width: min(900px, 96vw, calc((100dvh - 46px) * 3 / 4)); aspect-ratio: 3 / 4; }
     .nav-prev { left: 6px; }
     .nav-next { right: 6px; }
