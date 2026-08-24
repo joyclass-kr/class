@@ -90,5 +90,7 @@ if (afterArts.join('|') !== beforeArts.join('|')) {
 let ch = 0, par = 0;
 for (const c of CH2) for (const b of (c.beats || [])) for (const k of ['left', 'right'])
   (b[k] || []).forEach(p => { ch += p.replace(/\s/g, '').length; par++; });
-console.log(slug + ': ' + changed + '칸 · 펼침당 ' + Math.round(ch / afterArts.length)
-  + '자 · 칸당 문단 ' + (par / afterArts.length / 2).toFixed(1) + '개');
+const perSide = Math.round(ch / afterArts.length / 2);
+const mark = perSide < 85 ? ' ← 모자람' : perSide > 100 ? ' ← 넘칠라' : ' 좋음';
+console.log(slug + ': ' + changed + '칸 · 한쪽 ' + perSide + '자(바라는 값 85~95)'
+  + ' · 한쪽 문단 ' + (par / afterArts.length / 2).toFixed(1) + '개' + mark);
