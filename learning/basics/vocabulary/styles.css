@@ -51,7 +51,7 @@ button:focus-visible, a:focus-visible { outline: 3px solid rgba(158, 65, 50, .32
     box-shadow: inset 0 0 0 3px rgba(255,255,255,.16);
 }
 main { width: min(1180px, calc(100% - 32px)); margin: 0 auto; padding: 16px 0 48px; }
-.level-screen { display: grid; grid-template-columns: minmax(0, 1fr) minmax(280px, .48fr); gap: 14px 20px; align-items: center; }
+.level-screen { display: grid; grid-template-columns: minmax(0, 1fr) minmax(280px, .48fr); gap: 14px 20px; align-items: start; }
 .dashboard-heading { display: grid; grid-template-columns: auto minmax(0, 1fr) auto; align-items: center; gap: 18px; min-width: 0; }
 .dashboard-heading h1 { margin: 0; font-size: 26px; line-height: 1.2; letter-spacing: -.8px; }
 .eyebrow, .study-stage { margin: 0 0 6px; color: var(--blue); font-size: 13px; font-weight: 900; letter-spacing: .4px; }
@@ -521,6 +521,7 @@ main { width: min(1180px, calc(100% - 32px)); margin: 0 auto; padding: 16px 0 48
 .spelling-actions button:disabled { opacity: .4; cursor: not-allowed; }
 
 body:has(#studyScreen:not([hidden])) main { padding-top: 8px; padding-bottom: 0; }
+body:has(#levelScreen:not([hidden])) main { padding-bottom: 14px; }
 
 .loading-state { position: fixed; inset: 0; z-index: 30; display: grid; place-content: center; justify-items: center; gap: 16px; background: #f6f0e3; }
 .loading-state[hidden] { display: none; }
@@ -543,10 +544,32 @@ body:has(#studyScreen:not([hidden])) main { padding-top: 8px; padding-bottom: 0;
     main { padding-top: 10px; }
     .study-toolbar { margin-bottom: 8px; }
     .flashcard { min-height: clamp(370px, 50dvh, 410px); }
-    .overall-card { padding: 18px; }
-    .stage-groups { gap: 12px; }
-    .level-button { min-height: 88px; padding: 11px 13px; }
-    .level-name { margin: 4px 0 7px; font-size: 18px; }
+    .level-screen { gap: 10px 20px; }
+    .overall-card { padding: 14px 18px; }
+    .overall-track { margin-top: 10px; }
+    .overall-card p { margin-top: 8px; }
+    .recommended-lesson { min-height: 56px; padding: 10px 16px; }
+    .all-words-button { min-height: 40px; padding: 8px 16px; }
+    .game-launch-grid { gap: 8px; }
+    .game-launch-card { min-height: 60px; padding: 12px 16px; }
+    .stage-groups { gap: 8px; margin-top: 0; }
+    .level-button { min-height: 76px; padding: 9px 12px; }
+    .level-name { margin: 3px 0 5px; font-size: 18px; }
+    .level-plan { margin-bottom: 5px; }
+    .level-count { margin-top: 4px; }
+}
+@media (min-width: 901px) and (max-height: 700px) {
+    body:has(#levelScreen:not([hidden])) main { padding-bottom: 10px; }
+    .level-screen { gap: 8px 20px; }
+    .overall-card { padding: 10px 16px; }
+    .overall-track { margin-top: 8px; }
+    .overall-card p { margin-top: 6px; }
+    .recommended-lesson { min-height: 48px; padding: 8px 14px; }
+    .all-words-button { min-height: 36px; padding: 7px 14px; }
+    .game-launch-card { min-height: 52px; padding: 10px 14px; }
+    .stage-groups { gap: 6px; }
+    .level-button { min-height: 64px; padding: 7px 11px; }
+    .level-name { margin: 2px 0 4px; font-size: 16px; }
 }
 
 @media (max-width: 620px) {
