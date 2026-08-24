@@ -1,0 +1,186 @@
+<!doctype html>
+<html lang="ko">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="theme-color" content="#07131c">
+    <title>과학 실험실</title>
+    <meta name="description" content="증발·응결·강수를 거치며 물이 돌고 도는 동안 물의 총량이 변하지 않음을 확인하는 초등 과학 모의실험">
+    <link rel="stylesheet" as="style" crossorigin href="https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.9/dist/web/static/pretendard.css">
+    <link rel="stylesheet" href="styles.css?v=1">
+    <link rel="stylesheet" href="cycle-visual.css?v=1">
+    <link rel="stylesheet" href="quiz.css?v=1">
+</head>
+<body>
+    <main>
+        <header class="page-header">
+            <div class="title-row">
+                <a href="../">← 과학 실험실</a>
+                <h1>물의 순환과 지표 변화</h1>
+            </div>
+            <div class="grade-tags"><span>초등 5~6</span><span>지구과학</span></div>
+        </header>
+
+        <ol class="method-steps" aria-label="실험 방법">
+            <li>햇빛의 세기와 기온을 정합니다.</li>
+            <li>물이 어디로 이동할지 예상합니다.</li>
+            <li>순환을 시작해 관찰합니다.</li>
+            <li>물의 총량이 어떻게 되는지 확인합니다.</li>
+        </ol>
+
+        <div class="experiment-layout">
+            <section class="panel control-panel" aria-labelledby="control-title">
+                <h2 id="control-title">실험 조건</h2>
+                <p class="water-standard">물은 사라지지 않고 모습만 바꿉니다</p>
+
+                <div class="range-heading">
+                    <label for="sunRange">햇빛의 세기</label>
+                    <output id="sunOutput" for="sunRange">6</output>
+                </div>
+                <input id="sunRange" type="range" min="1" max="10" step="1" value="6">
+                <div class="range-scale two-point" aria-hidden="true"><span>약함</span><span>강함</span></div>
+
+                <div class="range-heading amount-heading">
+                    <label for="tempRange">공기의 온도</label>
+                    <output id="tempOutput" for="tempRange">5</output>
+                </div>
+                <input id="tempRange" type="range" min="1" max="10" step="1" value="5">
+                <div class="range-scale two-point" aria-hidden="true"><span>차가움</span><span>따뜻함</span></div>
+                <p class="amount-guide">공기가 차가울수록 수증기가 잘 응결해 구름이 됩니다.</p>
+
+                <fieldset class="prediction-field">
+                    <legend>물의 총량 예상</legend>
+                    <div class="prediction-buttons three">
+                        <button type="button" data-prediction="less">줄어든다</button>
+                        <button type="button" data-prediction="same">변하지 않는다</button>
+                        <button type="button" data-prediction="more">늘어난다</button>
+                    </div>
+                </fieldset>
+
+                <button class="run-button" id="runBtn" type="button">순환 시작</button>
+                <button class="reset-button" id="resetBtn" type="button">처음으로</button>
+
+                <section class="result-box" aria-labelledby="result-title" aria-live="polite">
+                    <h3 id="result-title">관찰 결과</h3>
+                    <p id="resultEmpty">조건을 정하고 순환을 시작해 보세요.</p>
+                    <div id="resultContent" hidden>
+                        <div class="result-numbers">
+                            <article><span>물의 총량</span><strong id="resultTotal">1000</strong></article>
+                            <article><span>흐른 시간</span><strong id="resultTime">0일</strong></article>
+                        </div>
+                        <p class="prediction-result" id="predictionResult"></p>
+                        <p class="explanation" id="elementaryExplanation"></p>
+                    </div>
+                </section>
+            </section>
+
+            <section class="panel cycle-stage" aria-label="물의 순환 관찰 화면">
+                <div class="stage-heading"><h2>관찰</h2><span id="stageBadge">멈춤</span></div>
+
+                <div class="stage-views">
+                    <svg class="cycle-svg" viewBox="0 0 460 300" aria-hidden="true">
+                        <defs>
+                            <linearGradient id="seaGrad" x1="0" y1="0" x2="0" y2="1">
+                                <stop offset="0%" stop-color="#6ec8eb" stop-opacity=".75"/>
+                                <stop offset="100%" stop-color="#2f6f9c" stop-opacity=".9"/>
+                            </linearGradient>
+                            <linearGradient id="skyGrad" x1="0" y1="0" x2="0" y2="1">
+                                <stop offset="0%" stop-color="#16324a" stop-opacity=".5"/>
+                                <stop offset="100%" stop-color="#1d4a5e" stop-opacity=".2"/>
+                            </linearGradient>
+                        </defs>
+
+                        <rect class="sky" x="0" y="0" width="460" height="300" fill="url(#skyGrad)"/>
+
+                        <circle id="sunDisc" class="sun-disc" cx="60" cy="46" r="20"/>
+                        <g id="sunBeams"></g>
+
+                        <g id="cloudGroup"></g>
+                        <g id="rainGroup"></g>
+                        <g id="vaporGroup"></g>
+
+                        <!-- land on the left with a mountain, sea on the right -->
+                        <path class="land" d="M0,300 L0,215 L70,168 L150,206 L240,196 L240,300 Z"/>
+                        <path id="riverPath" class="river" d="M70,172 L104,214 L150,300" fill="none"/>
+                        <rect id="seaRect" class="sea" x="240" y="212" width="220" height="88" fill="url(#seaGrad)"/>
+                        <line id="seaSurface" class="sea-surface" x1="240" y1="212" x2="460" y2="212"/>
+
+                        <text class="stage-label" x="86" y="290">땅</text>
+                        <text class="stage-label" x="410" y="290">바다</text>
+                    </svg>
+                </div>
+
+                <div class="reservoir-bars" id="reservoirBars"></div>
+                <p class="stage-caption" id="stageCaption">햇빛과 기온을 정하고 순환을 시작해 보세요.</p>
+            </section>
+        </div>
+
+        <section class="panel meaning-panel">
+            <h2>실험 결과의 의미</h2>
+            <div class="meaning-body">
+                <p><strong>순환</strong> 바다와 땅의 물이 증발해 수증기가 되고, 응결해 구름이 되었다가 비로 내려 다시 돌아옵니다.</p>
+                <p><strong>총량 보존</strong> 모습은 바뀌어도 지구 전체 물의 양은 변하지 않습니다.</p>
+                <p><strong>지표 변화</strong> 흐르는 물은 땅을 깎고 옮겨 쌓아 지표의 모습을 바꿉니다.</p>
+            </div>
+        </section>
+
+        <details class="quiz-section" aria-labelledby="quiz-title">
+            <summary class="quiz-heading"><h2 id="quiz-title">확인 문제</h2><span>4문제</span></summary>
+            <div class="quiz-grid">
+                <article class="quiz-card" data-answer="c">
+                    <h3>물이 순환하는 동안 지구 전체 물의 양은?</h3>
+                    <div class="quiz-options">
+                        <label><input type="radio" name="q1" value="a"> 점점 줄어든다.</label>
+                        <label><input type="radio" name="q1" value="b"> 점점 늘어난다.</label>
+                        <label><input type="radio" name="q1" value="c"> 변하지 않는다.</label>
+                        <label><input type="radio" name="q1" value="d"> 비가 올 때만 늘어난다.</label>
+                    </div>
+                    <button class="answer-button" type="button">정답 확인</button>
+                    <p class="answer-result" aria-live="polite"></p>
+                    <p class="answer-explanation" hidden>물은 상태와 위치만 바뀔 뿐 없어지지 않으므로 전체 양은 변하지 않습니다.</p>
+                </article>
+
+                <article class="quiz-card" data-answer="a">
+                    <h3>바다의 물이 수증기로 변하는 현상은?</h3>
+                    <div class="quiz-options">
+                        <label><input type="radio" name="q2" value="a"> 증발</label>
+                        <label><input type="radio" name="q2" value="b"> 응결</label>
+                        <label><input type="radio" name="q2" value="c"> 강수</label>
+                        <label><input type="radio" name="q2" value="d"> 침식</label>
+                    </div>
+                    <button class="answer-button" type="button">정답 확인</button>
+                    <p class="answer-result" aria-live="polite"></p>
+                    <p class="answer-explanation" hidden>액체인 물이 기체인 수증기로 변하는 것을 증발이라고 합니다.</p>
+                </article>
+
+                <article class="quiz-card" data-answer="b">
+                    <h3>공기가 차가워지면 수증기는 어떻게 되는가?</h3>
+                    <div class="quiz-options">
+                        <label><input type="radio" name="q3" value="a"> 더 잘 증발한다.</label>
+                        <label><input type="radio" name="q3" value="b"> 응결해 구름이 잘 만들어진다.</label>
+                        <label><input type="radio" name="q3" value="c"> 그대로 사라진다.</label>
+                        <label><input type="radio" name="q3" value="d"> 얼음이 되어 땅에 쌓인다.</label>
+                    </div>
+                    <button class="answer-button" type="button">정답 확인</button>
+                    <p class="answer-result" aria-live="polite"></p>
+                    <p class="answer-explanation" hidden>차가운 공기에서는 수증기가 물방울로 응결해 구름이 잘 만들어집니다.</p>
+                </article>
+
+                <article class="quiz-card" data-answer="d">
+                    <h3>흐르는 물이 지표를 바꾸는 방식으로 알맞은 것은?</h3>
+                    <div class="quiz-options">
+                        <label><input type="radio" name="q4" value="a"> 땅을 단단하게 굳힌다.</label>
+                        <label><input type="radio" name="q4" value="b"> 지표를 전혀 바꾸지 않는다.</label>
+                        <label><input type="radio" name="q4" value="c"> 물이 땅속으로만 스며든다.</label>
+                        <label><input type="radio" name="q4" value="d"> 땅을 깎고 옮겨 다른 곳에 쌓는다.</label>
+                    </div>
+                    <button class="answer-button" type="button">정답 확인</button>
+                    <p class="answer-result" aria-live="polite"></p>
+                    <p class="answer-explanation" hidden>흐르는 물은 땅을 깎아(침식) 옮기고(운반) 낮은 곳에 쌓아(퇴적) 지표를 바꿉니다.</p>
+                </article>
+            </div>
+        </details>
+    </main>
+    <script src="app.js?v=1"></script>
+</body>
+</html>
