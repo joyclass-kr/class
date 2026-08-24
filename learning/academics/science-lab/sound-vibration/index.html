@@ -1,0 +1,204 @@
+<!doctype html>
+<html lang="ko">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="theme-color" content="#07131c">
+    <title>과학 실험실</title>
+    <meta name="description" content="물체의 떨림으로 소리가 생기고, 떨림의 크기와 빠르기가 소리의 크기와 높낮이를 정하는 모습을 관찰하는 초등 과학 모의실험">
+    <link rel="stylesheet" as="style" crossorigin href="https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.9/dist/web/static/pretendard.css">
+    <link rel="stylesheet" href="styles.css?v=1">
+    <link rel="stylesheet" href="sound-visual.css?v=2">
+    <link rel="stylesheet" href="quiz.css?v=1">
+</head>
+<body>
+    <main>
+        <header class="page-header">
+            <div class="title-row">
+                <a href="../">← 과학 실험실</a>
+                <h1>소리와 진동</h1>
+            </div>
+            <div class="grade-tags"><span>초등 3~4</span><span>물리</span></div>
+        </header>
+
+        <ol class="method-steps" aria-label="실험 방법">
+            <li>칠 음판을 고릅니다.</li>
+            <li>얼마나 세게 칠지 정합니다.</li>
+            <li>어떤 소리가 날지 예상합니다.</li>
+            <li>음판을 치고 떨림과 파형을 관찰합니다.</li>
+        </ol>
+
+        <div class="experiment-layout">
+            <section class="panel control-panel" aria-labelledby="control-title">
+                <h2 id="control-title">실험 조건</h2>
+                <p class="water-standard">기준: 가운데 음판 솔(392 Hz)과 비교</p>
+
+                <fieldset class="bar-field">
+                    <legend>칠 음판</legend>
+                    <div class="bar-buttons">
+                        <button type="button" data-bar="do">긴 음판<small>도</small></button>
+                        <button type="button" data-bar="sol" class="selected">가운데<small>솔</small></button>
+                        <button type="button" data-bar="hido">짧은 음판<small>높은 도</small></button>
+                    </div>
+                </fieldset>
+
+                <div class="range-heading">
+                    <label for="strengthRange">치는 세기</label>
+                    <output id="strengthOutput" for="strengthRange">5</output>
+                </div>
+                <input id="strengthRange" type="range" min="1" max="10" step="1" value="5">
+                <div class="range-scale two-point" aria-hidden="true"><span>약하게</span><span>세게</span></div>
+
+                <fieldset class="prediction-field">
+                    <legend>소리 높낮이 예상</legend>
+                    <div class="prediction-buttons three">
+                        <button type="button" data-prediction="higher">더 높은 소리</button>
+                        <button type="button" data-prediction="lower">더 낮은 소리</button>
+                        <button type="button" data-prediction="same">같은 소리</button>
+                    </div>
+                </fieldset>
+
+                <button class="run-button" id="strikeBtn" type="button">음판 치기</button>
+
+                <section class="result-box" aria-labelledby="result-title" aria-live="polite">
+                    <h3 id="result-title">관찰 결과</h3>
+                    <p id="resultEmpty">음판을 골라 예상한 뒤 쳐 보세요.</p>
+                    <div id="resultContent" hidden>
+                        <div class="result-numbers">
+                            <article><span>소리의 높낮이</span><strong id="resultPitch">392 Hz</strong></article>
+                            <article><span>소리의 크기</span><strong id="resultLoudness">진폭 5</strong></article>
+                        </div>
+                        <p class="prediction-result" id="predictionResult"></p>
+                        <p class="explanation" id="elementaryExplanation"></p>
+                    </div>
+                </section>
+            </section>
+
+            <section class="panel sound-stage" aria-label="소리와 떨림 관찰 화면">
+                <div class="stage-heading"><h2>관찰</h2><span id="barBadge">솔 · 392 Hz</span></div>
+
+                <div class="stage-views">
+                    <div class="bars-view" aria-label="음판이 떨리는 모습">
+                        <div class="view-title">음판의 떨림 <span class="slow-badge">느리게 표현</span></div>
+                        <svg class="bars-svg" viewBox="0 0 480 240" aria-hidden="true">
+                            <!-- Bar lengths follow L ∝ 1/√f, the real relation for a
+                                 transversely vibrating bar, so the shortest bar really is
+                                 the one with the highest pitch. Rows are 75 apart so the
+                                 raised mallet clears the bar above its target instead of
+                                 hovering ambiguously between two bars. -->
+                            <g id="barDo" class="bar-row">
+                                <rect class="bar" x="160" y="55" width="180" height="20" rx="5"/>
+                            </g>
+                            <text class="bar-label" x="150" y="70" text-anchor="end">도 262 Hz</text>
+
+                            <g id="barSol" class="bar-row">
+                                <rect class="bar" x="176" y="130" width="147" height="20" rx="5"/>
+                            </g>
+                            <text class="bar-label" x="166" y="145" text-anchor="end">솔 392 Hz</text>
+
+                            <g id="barHido" class="bar-row">
+                                <rect class="bar" x="186" y="205" width="127" height="20" rx="5"/>
+                            </g>
+                            <text class="bar-label" x="176" y="220" text-anchor="end">높은 도 523 Hz</text>
+
+                            <!-- Outer group carries the vertical placement (which bar we're
+                                 about to hit) as an SVG attribute; the inner group carries the
+                                 CSS strike animation. Keeping them on separate elements avoids
+                                 the CSS `transform` property overriding the attribute, which
+                                 would pin the mallet over the top bar no matter what. -->
+                            <g id="malletAnchor">
+                                <g id="mallet" class="mallet">
+                                    <line class="mallet-stick" x1="250" y1="10" x2="250" y2="28"/>
+                                    <circle class="mallet-head" cx="250" cy="34" r="9"/>
+                                </g>
+                            </g>
+                        </svg>
+                    </div>
+
+                    <div class="scope-view" aria-label="소리의 파형">
+                        <div class="view-title">소리의 파형 <span class="slow-badge">같은 시간 동안</span></div>
+                        <svg class="scope-svg" viewBox="0 0 420 170" aria-hidden="true">
+                            <rect class="scope-bg" x="4" y="4" width="412" height="152" rx="8"/>
+                            <line class="scope-axis" x1="10" y1="80" x2="410" y2="80"/>
+                            <path id="envelopeTop" class="scope-envelope" d=""/>
+                            <path id="envelopeBottom" class="scope-envelope" d=""/>
+                            <path id="wavePath" class="scope-wave" d=""/>
+                            <text class="scope-caption" x="210" y="167" text-anchor="middle">왼쪽이 먼저, 오른쪽이 지금</text>
+                        </svg>
+                        <p class="scope-note">위아래로 벌어진 정도 = 소리의 크기, 물결의 촘촘한 정도 = 소리의 높낮이</p>
+                    </div>
+                </div>
+
+                <p class="stage-caption" id="stageCaption">음판을 치면 떨림이 시작됩니다.</p>
+            </section>
+        </div>
+
+        <section class="panel meaning-panel">
+            <h2>실험 결과의 의미</h2>
+            <div class="meaning-body">
+                <p><strong>소리의 발생</strong> 물체가 떨릴 때 소리가 나고, 떨림이 멈추면 소리도 멈춥니다.</p>
+                <p><strong>소리의 크기</strong> 세게 칠수록 크게 떨려서 큰 소리가 납니다.</p>
+                <p><strong>소리의 높낮이</strong> 짧은 음판일수록 빠르게 떨려서 높은 소리가 납니다.</p>
+            </div>
+        </section>
+
+        <details class="quiz-section" aria-labelledby="quiz-title">
+            <summary class="quiz-heading"><h2 id="quiz-title">확인 문제</h2><span>4문제</span></summary>
+            <div class="quiz-grid">
+                <article class="quiz-card" data-answer="c">
+                    <h3>소리는 무엇 때문에 생기는가?</h3>
+                    <div class="quiz-options">
+                        <label><input type="radio" name="q1" value="a"> 물체의 색깔 때문이다.</label>
+                        <label><input type="radio" name="q1" value="b"> 물체의 무게 때문이다.</label>
+                        <label><input type="radio" name="q1" value="c"> 물체의 떨림(진동) 때문이다.</label>
+                        <label><input type="radio" name="q1" value="d"> 물체의 온도 때문이다.</label>
+                    </div>
+                    <button class="answer-button" type="button">정답 확인</button>
+                    <p class="answer-result" aria-live="polite"></p>
+                    <p class="answer-explanation" hidden>물체가 떨릴 때 소리가 납니다. 떨림을 멈추게 하면 소리도 멈춥니다.</p>
+                </article>
+
+                <article class="quiz-card" data-answer="a">
+                    <h3>같은 음판을 더 세게 치면 소리는 어떻게 되는가?</h3>
+                    <div class="quiz-options">
+                        <label><input type="radio" name="q2" value="a"> 더 큰 소리가 난다.</label>
+                        <label><input type="radio" name="q2" value="b"> 더 높은 소리가 난다.</label>
+                        <label><input type="radio" name="q2" value="c"> 더 낮은 소리가 난다.</label>
+                        <label><input type="radio" name="q2" value="d"> 아무 변화가 없다.</label>
+                    </div>
+                    <button class="answer-button" type="button">정답 확인</button>
+                    <p class="answer-result" aria-live="polite"></p>
+                    <p class="answer-explanation" hidden>세게 치면 떨림의 크기(진폭)가 커져서 더 큰 소리가 납니다. 높낮이는 변하지 않습니다.</p>
+                </article>
+
+                <article class="quiz-card" data-answer="b">
+                    <h3>짧은 음판을 치면 긴 음판보다 어떤 소리가 나는가?</h3>
+                    <div class="quiz-options">
+                        <label><input type="radio" name="q3" value="a"> 더 낮은 소리가 난다.</label>
+                        <label><input type="radio" name="q3" value="b"> 더 높은 소리가 난다.</label>
+                        <label><input type="radio" name="q3" value="c"> 더 큰 소리가 난다.</label>
+                        <label><input type="radio" name="q3" value="d"> 소리가 나지 않는다.</label>
+                    </div>
+                    <button class="answer-button" type="button">정답 확인</button>
+                    <p class="answer-result" aria-live="polite"></p>
+                    <p class="answer-explanation" hidden>짧은 음판일수록 더 빠르게 떨리고, 빠르게 떨릴수록 높은 소리가 납니다.</p>
+                </article>
+
+                <article class="quiz-card" data-answer="d">
+                    <h3>떨리고 있는 음판을 손으로 꽉 잡으면?</h3>
+                    <div class="quiz-options">
+                        <label><input type="radio" name="q4" value="a"> 소리가 더 커진다.</label>
+                        <label><input type="radio" name="q4" value="b"> 소리가 더 높아진다.</label>
+                        <label><input type="radio" name="q4" value="c"> 소리가 그대로 계속 난다.</label>
+                        <label><input type="radio" name="q4" value="d"> 떨림이 멈추면서 소리도 멈춘다.</label>
+                    </div>
+                    <button class="answer-button" type="button">정답 확인</button>
+                    <p class="answer-result" aria-live="polite"></p>
+                    <p class="answer-explanation" hidden>소리는 떨림 때문에 생기므로, 떨림을 멈추게 하면 소리도 곧바로 멈춥니다.</p>
+                </article>
+            </div>
+        </details>
+    </main>
+    <script src="app.js?v=4"></script>
+</body>
+</html>
