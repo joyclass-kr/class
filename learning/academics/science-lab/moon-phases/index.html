@@ -1,0 +1,185 @@
+<!doctype html>
+<html lang="ko">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="theme-color" content="#07131c">
+    <title>과학 실험실</title>
+    <meta name="description" content="달이 지구를 도는 위치에 따라 달의 모양이 달라지는 까닭을 관찰하는 초등 과학 모의실험">
+    <link rel="stylesheet" as="style" crossorigin href="https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.9/dist/web/static/pretendard.css">
+    <link rel="stylesheet" href="styles.css?v=1">
+    <link rel="stylesheet" href="moon-visual.css?v=2">
+    <link rel="stylesheet" href="quiz.css?v=1">
+</head>
+<body>
+    <main>
+        <header class="page-header">
+            <div class="title-row">
+                <a href="../">← 과학 실험실</a>
+                <h1>달의 모양 변화</h1>
+            </div>
+            <div class="grade-tags"><span>초등 5~6</span><span>지구과학</span></div>
+        </header>
+
+        <ol class="method-steps" aria-label="실험 방법">
+            <li>음력 날짜를 정해 달의 위치를 바꿉니다.</li>
+            <li>햇빛을 받는 쪽이 어디인지 확인합니다.</li>
+            <li>지구에서 보이는 달 모양을 예상합니다.</li>
+            <li>실제로 보이는 모양과 비교합니다.</li>
+        </ol>
+
+        <div class="experiment-layout">
+            <section class="panel control-panel" aria-labelledby="control-title">
+                <h2 id="control-title">실험 조건</h2>
+                <p class="water-standard">달은 스스로 빛을 내지 않고 햇빛을 반사합니다</p>
+
+                <div class="range-heading">
+                    <label for="dayRange">음력 날짜</label>
+                    <output id="dayOutput" for="dayRange">약 1일</output>
+                </div>
+                <input id="dayRange" type="range" min="0" max="295" step="1" value="74">
+                <div class="range-scale" aria-hidden="true"><span>삭</span><span>상현</span><span>보름</span><span>하현</span><span>삭</span></div>
+                <p class="amount-guide">달이 지구를 한 바퀴 도는 데 약 29.5일이 걸립니다.</p>
+
+                <fieldset class="prediction-field">
+                    <legend>보이는 모양 예상</legend>
+                    <div class="prediction-buttons three">
+                        <button type="button" data-prediction="right">오른쪽이 밝다</button>
+                        <button type="button" data-prediction="left">왼쪽이 밝다</button>
+                        <button type="button" data-prediction="full">거의 다 밝다</button>
+                    </div>
+                </fieldset>
+
+                <button class="run-button" id="checkBtn" type="button">달 모양 확인하기</button>
+
+                <section class="result-box" aria-labelledby="result-title" aria-live="polite">
+                    <h3 id="result-title">관찰 결과</h3>
+                    <p id="resultEmpty">날짜를 정하고 예상한 뒤 확인해 보세요.</p>
+                    <div id="resultContent" hidden>
+                        <div class="result-numbers">
+                            <article><span>달의 이름</span><strong id="resultName">삭</strong></article>
+                            <article><span>밝게 보이는 부분</span><strong id="resultLit">0%</strong></article>
+                        </div>
+                        <p class="prediction-result" id="predictionResult"></p>
+                        <p class="explanation" id="elementaryExplanation"></p>
+                    </div>
+                </section>
+            </section>
+
+            <section class="panel moon-stage" aria-label="달의 위치와 모양 관찰 화면">
+                <div class="stage-heading"><h2>관찰</h2><span id="phaseBadge">삭</span></div>
+
+                <div class="stage-views">
+                    <div class="orbit-view" aria-label="위에서 내려다본 모습">
+                        <div class="view-title">위에서 내려다본 모습</div>
+                        <svg class="orbit-svg" viewBox="0 0 480 300" aria-hidden="true">
+                            <g id="sunRays"></g>
+                            <circle class="sun" cx="36" cy="150" r="26"/>
+                            <text class="stage-label" x="36" y="196" text-anchor="middle">햇빛</text>
+
+                            <circle class="orbit-path" cx="286" cy="150" r="96" fill="none"/>
+
+                            <!-- The line of sight is drawn before Earth, its label and the
+                                 Moon so it passes behind them. Drawn last it struck through
+                                 the "지구" label and over the Moon at some orbital angles. -->
+                            <line id="sightLine" class="sight-line" x1="286" y1="150" x2="286" y2="150"/>
+
+                            <circle class="earth" cx="286" cy="150" r="21"/>
+                            <rect class="label-chip" x="268" y="185" width="36" height="17" rx="5"/>
+                            <text class="stage-label" x="286" y="197" text-anchor="middle">지구</text>
+
+                            <!-- The Moon's lit hemisphere is drawn as the half facing the Sun
+                                 at whatever orbital position it holds, which is the actual
+                                 reason its shape from Earth changes. -->
+                            <g id="moonMarker">
+                                <circle id="moonDark" class="moon-dark" cx="0" cy="0" r="15"/>
+                                <path id="moonLitHalf" class="moon-lit" d=""/>
+                                <circle id="moonRim" class="moon-rim" cx="0" cy="0" r="15" fill="none"/>
+                            </g>
+                        </svg>
+                    </div>
+
+                    <div class="phase-view" aria-label="지구에서 본 달">
+                        <div class="view-title">지구에서 본 달</div>
+                        <svg class="phase-svg" viewBox="0 0 180 180" aria-hidden="true">
+                            <circle class="phase-dark" cx="90" cy="90" r="62"/>
+                            <path id="phaseLit" class="phase-lit" d=""/>
+                            <circle class="phase-rim" cx="90" cy="90" r="62" fill="none"/>
+                        </svg>
+                        <p class="phase-note">어두운 부분도 달은 그대로 있습니다 — 햇빛을 못 받을 뿐입니다</p>
+                    </div>
+                </div>
+
+                <p class="stage-caption" id="stageCaption">날짜를 바꾸며 달의 위치와 모양을 관찰해 보세요.</p>
+            </section>
+        </div>
+
+        <section class="panel meaning-panel">
+            <h2>실험 결과의 의미</h2>
+            <div class="meaning-body">
+                <p><strong>달이 빛나는 까닭</strong> 달은 스스로 빛을 내지 않고 햇빛을 반사해 밝게 보입니다.</p>
+                <p><strong>모양이 바뀌는 까닭</strong> 달이 지구를 돌면서 햇빛 받는 쪽을 보는 각도가 달라지기 때문입니다.</p>
+                <p><strong>주기</strong> 삭에서 다음 삭까지 약 29.5일이 걸립니다.</p>
+            </div>
+        </section>
+
+        <details class="quiz-section" aria-labelledby="quiz-title">
+            <summary class="quiz-heading"><h2 id="quiz-title">확인 문제</h2><span>4문제</span></summary>
+            <div class="quiz-grid">
+                <article class="quiz-card" data-answer="c">
+                    <h3>달이 밝게 보이는 까닭은?</h3>
+                    <div class="quiz-options">
+                        <label><input type="radio" name="q1" value="a"> 달이 스스로 빛을 내기 때문이다.</label>
+                        <label><input type="radio" name="q1" value="b"> 지구가 빛을 보내주기 때문이다.</label>
+                        <label><input type="radio" name="q1" value="c"> 햇빛을 반사하기 때문이다.</label>
+                        <label><input type="radio" name="q1" value="d"> 달이 불타고 있기 때문이다.</label>
+                    </div>
+                    <button class="answer-button" type="button">정답 확인</button>
+                    <p class="answer-result" aria-live="polite"></p>
+                    <p class="answer-explanation" hidden>달은 스스로 빛을 내지 못하고 햇빛을 반사해서 밝게 보입니다.</p>
+                </article>
+
+                <article class="quiz-card" data-answer="b">
+                    <h3>달의 모양이 날마다 달라 보이는 까닭은?</h3>
+                    <div class="quiz-options">
+                        <label><input type="radio" name="q2" value="a"> 달의 크기가 실제로 변하기 때문이다.</label>
+                        <label><input type="radio" name="q2" value="b"> 달이 지구를 돌면서 보는 각도가 달라지기 때문이다.</label>
+                        <label><input type="radio" name="q2" value="c"> 구름이 달을 가리기 때문이다.</label>
+                        <label><input type="radio" name="q2" value="d"> 달이 깨졌다가 다시 붙기 때문이다.</label>
+                    </div>
+                    <button class="answer-button" type="button">정답 확인</button>
+                    <p class="answer-result" aria-live="polite"></p>
+                    <p class="answer-explanation" hidden>달의 절반은 늘 햇빛을 받지만, 달이 지구를 돌면서 그 밝은 쪽을 보는 각도가 달라져 모양이 달라 보입니다.</p>
+                </article>
+
+                <article class="quiz-card" data-answer="a">
+                    <h3>보름달일 때 태양·지구·달의 위치 관계는?</h3>
+                    <div class="quiz-options">
+                        <label><input type="radio" name="q3" value="a"> 지구가 태양과 달 사이에 있다.</label>
+                        <label><input type="radio" name="q3" value="b"> 달이 태양과 지구 사이에 있다.</label>
+                        <label><input type="radio" name="q3" value="c"> 태양이 지구와 달 사이에 있다.</label>
+                        <label><input type="radio" name="q3" value="d"> 셋이 직각으로 놓인다.</label>
+                    </div>
+                    <button class="answer-button" type="button">정답 확인</button>
+                    <p class="answer-result" aria-live="polite"></p>
+                    <p class="answer-explanation" hidden>달이 태양의 반대쪽에 있을 때, 햇빛 받는 면 전체가 지구를 향해 보름달로 보입니다.</p>
+                </article>
+
+                <article class="quiz-card" data-answer="d">
+                    <h3>달의 어두운 부분은 어떤 상태인가?</h3>
+                    <div class="quiz-options">
+                        <label><input type="radio" name="q4" value="a"> 그 부분이 사라진 것이다.</label>
+                        <label><input type="radio" name="q4" value="b"> 지구 그림자가 늘 덮고 있는 것이다.</label>
+                        <label><input type="radio" name="q4" value="c"> 구멍이 뚫린 것이다.</label>
+                        <label><input type="radio" name="q4" value="d"> 그대로 있지만 햇빛을 받지 못한 것이다.</label>
+                    </div>
+                    <button class="answer-button" type="button">정답 확인</button>
+                    <p class="answer-result" aria-live="polite"></p>
+                    <p class="answer-explanation" hidden>달은 언제나 둥근 공 모양 그대로이고, 햇빛을 받지 못한 부분이 어둡게 보일 뿐입니다.</p>
+                </article>
+            </div>
+        </details>
+    </main>
+    <script src="app.js?v=1"></script>
+</body>
+</html>
