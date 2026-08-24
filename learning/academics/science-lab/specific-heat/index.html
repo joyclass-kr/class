@@ -1,0 +1,180 @@
+<!doctype html>
+<html lang="ko">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="theme-color" content="#07131c">
+    <title>과학 실험실</title>
+    <meta name="description" content="같은 열을 주었을 때 물질에 따라 온도가 다르게 오르는 비열과 금속의 열팽창을 비교하는 중학교 과학 모의실험">
+    <link rel="stylesheet" as="style" crossorigin href="https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.9/dist/web/static/pretendard.css">
+    <link rel="stylesheet" href="styles.css?v=1">
+    <link rel="stylesheet" href="heat2-visual.css?v=2">
+    <link rel="stylesheet" href="quiz.css?v=1">
+</head>
+<body>
+    <main>
+        <header class="page-header">
+            <div class="title-row">
+                <a href="../">← 과학 실험실</a>
+                <h1>비열과 열팽창</h1>
+            </div>
+            <div class="grade-tags"><span>중학교</span><span>물리</span></div>
+        </header>
+
+        <ol class="method-steps" aria-label="실험 방법">
+            <li>같은 질량의 네 물질을 준비합니다.</li>
+            <li>같은 세기로 동시에 가열합니다.</li>
+            <li>어느 물질이 가장 빨리 뜨거워질지 예상합니다.</li>
+            <li>금속 막대의 열팽창도 비교합니다.</li>
+        </ol>
+
+        <div class="experiment-layout">
+            <section class="panel control-panel" aria-labelledby="control-title">
+                <h2 id="control-title">실험 조건</h2>
+
+                <div class="mode-switch" role="group" aria-label="실험 선택">
+                    <button type="button" class="mode selected" data-mode="heat">비열</button>
+                    <button type="button" class="mode" data-mode="expand">열팽창</button>
+                </div>
+
+                <div id="heatControls">
+                    <p class="water-standard">가열기 200 W · 시작 온도 20 ℃ · 네 물질 동시 가열</p>
+
+                    <div class="range-heading">
+                        <label for="massRange">각 물질의 질량</label>
+                        <output id="massOutput" for="massRange">200 g</output>
+                    </div>
+                    <input id="massRange" type="range" min="100" max="400" step="50" value="200">
+                    <div class="range-scale" aria-hidden="true"><span>100 g</span><span>250 g</span><span>400 g</span></div>
+
+                    <div class="range-heading amount-heading">
+                        <label for="timeRange">가열 시간</label>
+                        <output id="timeOutput" for="timeRange">0 초</output>
+                    </div>
+                    <input id="timeRange" type="range" min="0" max="60" step="1" value="0">
+                    <div class="range-scale" aria-hidden="true"><span>0초</span><span>30초</span><span>60초</span></div>
+
+                    <fieldset class="prediction-field">
+                        <legend>가장 빨리 뜨거워지는 물질 예상</legend>
+                        <div class="prediction-buttons">
+                            <button type="button" data-prediction="water">물</button>
+                            <button type="button" data-prediction="iron">철</button>
+                        </div>
+                    </fieldset>
+                </div>
+
+                <div id="expandControls" hidden>
+                    <p class="water-standard">막대 길이 1000 mm · 시작 온도 20 ℃</p>
+
+                    <div class="range-heading">
+                        <label for="deltaRange">온도 상승</label>
+                        <output id="deltaOutput" for="deltaRange">50 ℃</output>
+                    </div>
+                    <input id="deltaRange" type="range" min="0" max="100" step="5" value="50">
+                    <div class="range-scale" aria-hidden="true"><span>0℃</span><span>50℃</span><span>100℃</span></div>
+                    <p class="amount-guide">길이 변화는 실제로 아주 작아 화면에서는 확대해 그립니다.</p>
+                </div>
+
+                <button class="run-button" id="playBtn" type="button">가열 시작</button>
+                <button class="reset-button" id="resetBtn" type="button">처음으로</button>
+
+                <section class="result-box" aria-labelledby="result-title" aria-live="polite">
+                    <h3 id="result-title">관찰 결과</h3>
+                    <p id="resultEmpty">조건을 정하고 가열해 보세요.</p>
+                    <div id="resultContent" hidden>
+                        <div class="result-numbers">
+                            <article><span id="labelA">가장 뜨거운 물질</span><strong id="valueA">철</strong></article>
+                            <article><span id="labelB">가장 덜 오른 물질</span><strong id="valueB">물</strong></article>
+                        </div>
+                        <p class="prediction-result" id="predictionResult"></p>
+                        <p class="explanation" id="elementaryExplanation"></p>
+                    </div>
+                </section>
+            </section>
+
+            <section class="panel heat2-stage" aria-label="관찰 화면">
+                <div class="stage-heading"><h2>관찰</h2><span id="stageBadge">0 초</span></div>
+
+                <div class="stage-views">
+                    <svg class="main-svg" viewBox="0 0 460 250" aria-hidden="true">
+                        <g id="mainGroup"></g>
+                    </svg>
+                    <svg class="graph-svg" viewBox="0 0 460 190" aria-hidden="true">
+                        <g id="graphGroup"></g>
+                    </svg>
+                </div>
+
+                <p class="stage-caption" id="stageCaption">같은 열을 주어도 물질에 따라 온도가 다르게 오릅니다.</p>
+                <div class="data-note" id="dataNote"></div>
+            </section>
+        </div>
+
+        <section class="panel meaning-panel">
+            <h2>실험 결과의 의미</h2>
+            <div class="meaning-body">
+                <p><strong>비열</strong> 1 g의 온도를 1 ℃ 올리는 데 필요한 열량입니다. Q = c m ΔT</p>
+                <p><strong>비열이 클수록</strong> 같은 열을 주어도 온도가 천천히 오릅니다. 물은 비열이 매우 커서 잘 데워지지 않습니다.</p>
+                <p><strong>열팽창</strong> 온도가 오르면 길이가 늘어납니다. ΔL = α L₀ ΔT 로, 금속마다 팽창 정도가 다릅니다.</p>
+            </div>
+        </section>
+
+        <details class="quiz-section" aria-labelledby="quiz-title">
+            <summary class="quiz-heading"><h2 id="quiz-title">확인 문제</h2><span>4문제</span></summary>
+            <div class="quiz-grid">
+                <article class="quiz-card" data-answer="c">
+                    <h3>같은 질량에 같은 열을 주었을 때 온도가 가장 많이 오르는 것은?</h3>
+                    <div class="quiz-options">
+                        <label><input type="radio" name="q1" value="a"> 물 (비열 4.18)</label>
+                        <label><input type="radio" name="q1" value="b"> 식용유 (비열 2.00)</label>
+                        <label><input type="radio" name="q1" value="c"> 철 (비열 0.45)</label>
+                        <label><input type="radio" name="q1" value="d"> 모두 같다</label>
+                    </div>
+                    <button class="answer-button" type="button">정답 확인</button>
+                    <p class="answer-result" aria-live="polite"></p>
+                    <p class="answer-explanation" hidden>ΔT = Q / (c m) 이므로 비열이 가장 작은 철의 온도가 가장 많이 오릅니다.</p>
+                </article>
+
+                <article class="quiz-card" data-answer="b">
+                    <h3>바닷가에서 낮에 바닷물이 모래보다 덜 뜨거운 까닭은?</h3>
+                    <div class="quiz-options">
+                        <label><input type="radio" name="q2" value="a"> 바닷물이 햇빛을 받지 않기 때문</label>
+                        <label><input type="radio" name="q2" value="b"> 물의 비열이 모래보다 크기 때문</label>
+                        <label><input type="radio" name="q2" value="c"> 물이 모래보다 가볍기 때문</label>
+                        <label><input type="radio" name="q2" value="d"> 물이 열을 전혀 흡수하지 않기 때문</label>
+                    </div>
+                    <button class="answer-button" type="button">정답 확인</button>
+                    <p class="answer-result" aria-live="polite"></p>
+                    <p class="answer-explanation" hidden>물은 비열이 커서 같은 햇빛을 받아도 모래보다 온도가 천천히 오릅니다.</p>
+                </article>
+
+                <article class="quiz-card" data-answer="a">
+                    <h3>같은 물질의 질량을 2배로 하고 같은 열을 주면 온도 변화는?</h3>
+                    <div class="quiz-options">
+                        <label><input type="radio" name="q3" value="a"> 절반이 된다</label>
+                        <label><input type="radio" name="q3" value="b"> 2배가 된다</label>
+                        <label><input type="radio" name="q3" value="c"> 변하지 않는다</label>
+                        <label><input type="radio" name="q3" value="d"> 4배가 된다</label>
+                    </div>
+                    <button class="answer-button" type="button">정답 확인</button>
+                    <p class="answer-result" aria-live="polite"></p>
+                    <p class="answer-explanation" hidden>ΔT = Q / (c m) 에서 질량이 2배가 되면 온도 변화는 절반이 됩니다.</p>
+                </article>
+
+                <article class="quiz-card" data-answer="d">
+                    <h3>여름철 철교에 틈을 두는 까닭은?</h3>
+                    <div class="quiz-options">
+                        <label><input type="radio" name="q4" value="a"> 물이 빠지게 하려고</label>
+                        <label><input type="radio" name="q4" value="b"> 무게를 줄이려고</label>
+                        <label><input type="radio" name="q4" value="c"> 소리를 줄이려고</label>
+                        <label><input type="radio" name="q4" value="d"> 열팽창으로 늘어난 길이를 받아들이려고</label>
+                    </div>
+                    <button class="answer-button" type="button">정답 확인</button>
+                    <p class="answer-result" aria-live="polite"></p>
+                    <p class="answer-explanation" hidden>온도가 오르면 금속이 늘어나므로, 틈이 없으면 휘거나 부서질 수 있습니다.</p>
+                </article>
+            </div>
+        </details>
+    </main>
+    <script src="app.js?v=3"></script>
+</body>
+</html>
