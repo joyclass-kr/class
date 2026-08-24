@@ -1,0 +1,189 @@
+<!doctype html>
+<html lang="ko">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="theme-color" content="#07131c">
+    <title>과학 실험실</title>
+    <meta name="description" content="전구를 직렬·병렬로 연결해 밝기를 비교하고 전자석의 세기를 바꾸어 보는 초등 과학 모의실험">
+    <link rel="stylesheet" as="style" crossorigin href="https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.9/dist/web/static/pretendard.css">
+    <link rel="stylesheet" href="styles.css?v=1">
+    <link rel="stylesheet" href="circuit-visual.css?v=1">
+    <link rel="stylesheet" href="quiz.css?v=1">
+</head>
+<body>
+    <main>
+        <header class="page-header">
+            <div class="title-row">
+                <a href="../">← 과학 실험실</a>
+                <h1>전구 연결과 자석</h1>
+            </div>
+            <div class="grade-tags"><span>초등 5~6</span><span>물리</span></div>
+        </header>
+
+        <ol class="method-steps" aria-label="실험 방법">
+            <li>전구를 직렬로 연결할지 병렬로 연결할지 정합니다.</li>
+            <li>전구 수를 바꾸며 밝기를 비교합니다.</li>
+            <li>전구 하나를 빼면 어떻게 될지 확인합니다.</li>
+            <li>전자석의 세기를 바꾸어 봅니다.</li>
+        </ol>
+
+        <div class="experiment-layout">
+            <section class="panel control-panel" aria-labelledby="control-title">
+                <h2 id="control-title">실험 조건</h2>
+
+                <div class="mode-switch" role="group" aria-label="실험 선택">
+                    <button type="button" class="mode selected" data-mode="bulb">전구 연결</button>
+                    <button type="button" class="mode" data-mode="magnet">전자석</button>
+                </div>
+
+                <div id="bulbControls">
+                    <fieldset class="wiring-field">
+                        <legend>연결 방법</legend>
+                        <div class="wiring-buttons">
+                            <button type="button" data-wiring="series" class="selected">직렬연결</button>
+                            <button type="button" data-wiring="parallel">병렬연결</button>
+                        </div>
+                    </fieldset>
+
+                    <div class="range-heading">
+                        <label for="bulbRange">전구 수</label>
+                        <output id="bulbOutput" for="bulbRange">2개</output>
+                    </div>
+                    <input id="bulbRange" type="range" min="1" max="3" step="1" value="2">
+                    <div class="range-scale" aria-hidden="true"><span>1</span><span>2</span><span>3</span></div>
+
+                    <button type="button" class="toggle-button" id="removeBtn">전구 하나 빼기</button>
+
+                    <fieldset class="prediction-field">
+                        <legend>밝기 예상 (전구 1개일 때와 비교)</legend>
+                        <div class="prediction-buttons three">
+                            <button type="button" data-prediction="dimmer">어두워진다</button>
+                            <button type="button" data-prediction="same">그대로다</button>
+                            <button type="button" data-prediction="brighter">밝아진다</button>
+                        </div>
+                    </fieldset>
+                </div>
+
+                <div id="magnetControls" hidden>
+                    <div class="range-heading">
+                        <label for="batteryRange">전지 수</label>
+                        <output id="batteryOutput" for="batteryRange">1개</output>
+                    </div>
+                    <input id="batteryRange" type="range" min="1" max="3" step="1" value="1">
+                    <div class="range-scale" aria-hidden="true"><span>1</span><span>2</span><span>3</span></div>
+
+                    <div class="range-heading amount-heading">
+                        <label for="coilRange">코일 감은 수</label>
+                        <output id="coilOutput" for="coilRange">100번</output>
+                    </div>
+                    <input id="coilRange" type="range" min="50" max="200" step="50" value="100">
+                    <div class="range-scale" aria-hidden="true"><span>50</span><span>100</span><span>150</span><span>200</span></div>
+                    <p class="amount-guide">전자석의 세기는 전류와 코일 감은 수에 함께 비례합니다.</p>
+                </div>
+
+                <button class="run-button" id="checkBtn" type="button">결과 확인하기</button>
+
+                <section class="result-box" aria-labelledby="result-title" aria-live="polite">
+                    <h3 id="result-title">관찰 결과</h3>
+                    <p id="resultEmpty">조건을 정하고 확인해 보세요.</p>
+                    <div id="resultContent" hidden>
+                        <div class="result-numbers">
+                            <article><span id="resultLabelA">전구 하나의 밝기</span><strong id="resultA">100%</strong></article>
+                            <article><span id="resultLabelB">전체 전류</span><strong id="resultB">1.0배</strong></article>
+                        </div>
+                        <p class="prediction-result" id="predictionResult"></p>
+                        <p class="explanation" id="elementaryExplanation"></p>
+                    </div>
+                </section>
+            </section>
+
+            <section class="panel circuit-stage" aria-label="회로 관찰 화면">
+                <div class="stage-heading"><h2>관찰</h2><span id="stageBadge">직렬연결</span></div>
+
+                <div class="stage-views">
+                    <svg class="circuit-svg" viewBox="0 0 460 300" aria-hidden="true">
+                        <defs>
+                            <radialGradient id="bulbGlow">
+                                <stop offset="0%" stop-color="#fff3c4" stop-opacity=".95"/>
+                                <stop offset="60%" stop-color="#ffd166" stop-opacity=".35"/>
+                                <stop offset="100%" stop-color="#ffd166" stop-opacity="0"/>
+                            </radialGradient>
+                        </defs>
+                        <g id="circuitGroup"></g>
+                    </svg>
+                </div>
+
+                <p class="stage-caption" id="stageCaption">연결 방법과 전구 수를 바꾸며 밝기를 비교해 보세요.</p>
+            </section>
+        </div>
+
+        <section class="panel meaning-panel">
+            <h2>실험 결과의 의미</h2>
+            <div class="meaning-body">
+                <p><strong>직렬연결</strong> 전구가 한 줄로 이어져 전구가 많을수록 어두워지고, 하나만 빼도 모두 꺼집니다.</p>
+                <p><strong>병렬연결</strong> 전구마다 따로 길이 있어 밝기가 그대로이고, 하나를 빼도 나머지는 켜져 있습니다.</p>
+                <p><strong>전자석</strong> 전류가 셀수록, 코일을 많이 감을수록 더 강해집니다.</p>
+            </div>
+        </section>
+
+        <details class="quiz-section" aria-labelledby="quiz-title">
+            <summary class="quiz-heading"><h2 id="quiz-title">확인 문제</h2><span>4문제</span></summary>
+            <div class="quiz-grid">
+                <article class="quiz-card" data-answer="b">
+                    <h3>전구 두 개를 직렬로 연결하면 전구 한 개일 때와 비교해 밝기는?</h3>
+                    <div class="quiz-options">
+                        <label><input type="radio" name="q1" value="a"> 더 밝아진다.</label>
+                        <label><input type="radio" name="q1" value="b"> 더 어두워진다.</label>
+                        <label><input type="radio" name="q1" value="c"> 똑같다.</label>
+                        <label><input type="radio" name="q1" value="d"> 아예 켜지지 않는다.</label>
+                    </div>
+                    <button class="answer-button" type="button">정답 확인</button>
+                    <p class="answer-result" aria-live="polite"></p>
+                    <p class="answer-explanation" hidden>직렬로 연결하면 전류가 나뉘어 흐르기 어려워져 전구가 어두워집니다.</p>
+                </article>
+
+                <article class="quiz-card" data-answer="d">
+                    <h3>병렬로 연결한 전구 중 하나를 빼면 나머지 전구는?</h3>
+                    <div class="quiz-options">
+                        <label><input type="radio" name="q2" value="a"> 모두 꺼진다.</label>
+                        <label><input type="radio" name="q2" value="b"> 더 어두워진다.</label>
+                        <label><input type="radio" name="q2" value="c"> 깜빡인다.</label>
+                        <label><input type="radio" name="q2" value="d"> 그대로 켜져 있다.</label>
+                    </div>
+                    <button class="answer-button" type="button">정답 확인</button>
+                    <p class="answer-result" aria-live="polite"></p>
+                    <p class="answer-explanation" hidden>병렬연결은 전구마다 전류가 흐르는 길이 따로 있어 하나를 빼도 나머지는 그대로 켜져 있습니다.</p>
+                </article>
+
+                <article class="quiz-card" data-answer="a">
+                    <h3>직렬로 연결한 전구 중 하나를 빼면?</h3>
+                    <div class="quiz-options">
+                        <label><input type="radio" name="q3" value="a"> 모두 꺼진다.</label>
+                        <label><input type="radio" name="q3" value="b"> 나머지가 더 밝아진다.</label>
+                        <label><input type="radio" name="q3" value="c"> 변화가 없다.</label>
+                        <label><input type="radio" name="q3" value="d"> 전지가 터진다.</label>
+                    </div>
+                    <button class="answer-button" type="button">정답 확인</button>
+                    <p class="answer-result" aria-live="polite"></p>
+                    <p class="answer-explanation" hidden>직렬연결은 길이 하나뿐이라 한 곳이 끊어지면 전류가 흐르지 못해 모두 꺼집니다.</p>
+                </article>
+
+                <article class="quiz-card" data-answer="c">
+                    <h3>전자석을 더 세게 만들려면?</h3>
+                    <div class="quiz-options">
+                        <label><input type="radio" name="q4" value="a"> 코일을 더 적게 감는다.</label>
+                        <label><input type="radio" name="q4" value="b"> 전지를 뺀다.</label>
+                        <label><input type="radio" name="q4" value="c"> 전지를 늘리고 코일을 많이 감는다.</label>
+                        <label><input type="radio" name="q4" value="d"> 철심을 뺀다.</label>
+                    </div>
+                    <button class="answer-button" type="button">정답 확인</button>
+                    <p class="answer-result" aria-live="polite"></p>
+                    <p class="answer-explanation" hidden>전자석의 세기는 흐르는 전류와 코일을 감은 수에 함께 비례합니다.</p>
+                </article>
+            </div>
+        </details>
+    </main>
+    <script src="app.js?v=1"></script>
+</body>
+</html>
