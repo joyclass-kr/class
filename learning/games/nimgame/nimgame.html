@@ -1011,7 +1011,7 @@ body{align-items:center;padding:18px}
         <div class="room-access-panel" id="room-access-panel">
             <div class="room-tabs mp-lobby-tabs">
                 <button class="room-tab active" id="host-tab" type="button">CREATE ROOM</button>
-                <button class="room-tab" id="join-tab" type="button">JOIN ROOM</button>
+                <button class="room-tab" id="join-tab" type="button" aria-label="방 번호 입력 방식 선택" role="tab">방번호 입력</button>
             </div>
 
             <div class="room-pane" id="host-room-pane">
@@ -1032,7 +1032,7 @@ body{align-items:center;padding:18px}
                     <input class="room-code-input" id="join-code-input" maxlength="4"
                            inputmode="numeric" autocomplete="off" spellcheck="false"
                            placeholder="ROOM CODE · 4 DIGITS">
-                    <button class="primary-btn" id="join-room-btn" type="button">JOIN ROOM</button>
+                    <button class="primary-btn" id="join-room-btn" type="button" aria-label="입력한 방 번호로 참가">참가</button>
                 </div>
                 <div class="room-help">방장이 알려준 4자리 방 번호를 입력하세요.</div>
             </div>

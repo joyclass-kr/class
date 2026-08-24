@@ -136,7 +136,7 @@ input{width:100%;min-height:44px;border:1px solid #987d42;border-radius:8px;back
 <section id="lobby" class="screen hidden mp-lobby-compact" data-multiplayer-lobby>
   <div class="panel">
     <h1>FRUIT BELL</h1><div class="sub">과일 종 · 2~4명</div>
-    <div class="mp-lobby-tabs"><button id="hostTab" class="tab active" type="button">CREATE ROOM</button><button id="joinTab" class="tab" type="button">JOIN ROOM</button></div>
+    <div class="mp-lobby-tabs"><button id="hostTab" class="tab active" type="button">CREATE ROOM</button><button id="joinTab" class="tab" type="button" aria-label="방 번호 입력 방식 선택" role="tab">방번호 입력</button></div>
     <div class="mp-lobby-card">
       <div id="hostPane">
         <div class="mp-lobby-room-code" id="roomCode">----</div>
@@ -160,7 +160,7 @@ input{width:100%;min-height:44px;border:1px solid #987d42;border-radius:8px;back
         </div>
       </div>
       <div id="joinPane" class="hidden">
-        <div class="mp-lobby-row"><input id="joinCode" class="mp-lobby-code-input" inputmode="numeric" maxlength="4" placeholder="ROOM CODE · 4 DIGITS"><button id="joinBtn" class="primary" type="button">JOIN ROOM</button></div>
+        <div class="mp-lobby-row"><input id="joinCode" class="mp-lobby-code-input" inputmode="numeric" maxlength="4" placeholder="ROOM CODE · 4 DIGITS"><button id="joinBtn" class="primary" type="button" aria-label="입력한 방 번호로 참가">참가</button></div>
         <div class="mp-lobby-status" id="joinStatus">방장이 알려준 번호를 입력하세요.</div>
       </div>
     </div>

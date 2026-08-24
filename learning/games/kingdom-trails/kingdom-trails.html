@@ -38,7 +38,7 @@
           <div class="saved-player"><span>플레이어</span><strong id="savedName">-</strong></div>
           <div class="mp-lobby-tabs">
             <button id="hostTab" class="button primary" type="button">방 만들기</button>
-            <button id="joinTab" class="button secondary" type="button">방 참가</button>
+            <button id="joinTab" class="button secondary" type="button" aria-label="방 번호 입력 방식 선택" role="tab">방번호 입력</button>
           </div>
           <div id="hostPane" class="mp-lobby-card hidden">
             <span class="kicker">ROOM CODE</span>
@@ -48,7 +48,7 @@
           <div id="joinPane" class="mp-lobby-card hidden">
             <div class="join-row">
               <input id="joinCode" class="code-input" inputmode="numeric" maxlength="4" aria-label="네 자리 방 번호" placeholder="방 번호 4자리">
-              <button id="joinBtn" class="button primary" type="button">참가</button>
+              <button id="joinBtn" class="button primary" type="button" aria-label="입력한 방 번호로 참가">참가</button>
             </div>
             <div id="joinStatus" class="mp-lobby-status">방장이 알려준 번호를 입력하세요.</div>
           </div>

@@ -123,7 +123,7 @@ body:has(#boardArea:not(.hidden)) #game>.panel:first-child{margin-bottom:8px;pad
       <p>PLAYER · <strong id="savedPlayerName">-</strong></p>
       <div class="entryActions">
         <button id="createTab" class="primary" type="button">CREATE ROOM</button>
-        <button id="joinTab" class="secondary" type="button">JOIN ROOM</button>
+        <button id="joinTab" class="secondary" type="button" aria-label="방 번호 입력 방식 선택" role="tab">방번호 입력</button>
         <button id="rulesEntryBtn" class="secondary" type="button">HOW TO PLAY</button>
         <button id="leaveEntryBtn" class="secondary" type="button">메인 화면으로</button>
       </div>
@@ -139,7 +139,7 @@ body:has(#boardArea:not(.hidden)) #game>.panel:first-child{margin-bottom:8px;pad
     <section id="joinPane" class="panel entryPane hidden">
       <div class="row">
         <input id="joinCode" inputmode="numeric" maxlength="4" placeholder="ROOM CODE · 4 DIGITS">
-        <button id="joinBtn" class="primary" type="button">JOIN ROOM</button>
+        <button id="joinBtn" class="primary" type="button" aria-label="입력한 방 번호로 참가">참가</button>
       </div>
       <div class="status" id="joinStatusText">방장이 알려준 번호를 입력하세요.</div>
     </section>

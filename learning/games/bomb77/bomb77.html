@@ -38,7 +38,7 @@
                     <p>PLAYER · <strong id="savedName">테스터</strong></p>
                     <div class="mp-lobby-tabs">
                         <button id="hostTab" class="primary-button" type="button">방 만들기</button>
-                        <button id="joinTab" class="secondary-button" type="button">참가하기</button>
+                        <button id="joinTab" class="secondary-button" type="button" aria-label="방 번호 입력 방식 선택" role="tab">방번호 입력</button>
                     </div>
                 </div>
             </header>
@@ -51,7 +51,7 @@
             <section id="joinPane" class="screen-panel lobby-card hidden">
                 <div class="mp-lobby-row">
                     <input id="joinCode" class="mp-lobby-code-input" inputmode="numeric" maxlength="4" placeholder="방 번호 4자리">
-                    <button id="joinBtn" class="primary-button" type="button">입장</button>
+                    <button id="joinBtn" class="primary-button" type="button" aria-label="입력한 방 번호로 참가">참가</button>
                 </div>
                 <p id="joinStatus" class="mp-lobby-status">방장이 알려준 번호를 입력하세요.</p>
             </section>

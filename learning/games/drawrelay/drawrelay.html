@@ -48,7 +48,7 @@
 
         <div class="mp-lobby-tabs" role="tablist" aria-label="방 참여 방법">
           <button id="hostTab" class="mp-lobby-tab primary active" type="button" role="tab">CREATE ROOM</button>
-          <button id="joinTab" class="mp-lobby-tab secondary" type="button" role="tab">JOIN ROOM</button>
+          <button id="joinTab" class="mp-lobby-tab secondary" type="button" role="tab" aria-label="방 번호 입력 방식 선택" role="tab">방번호 입력</button>
         </div>
 
         <section id="hostPane" class="mp-lobby-pane">
@@ -62,7 +62,7 @@
           <label class="eyebrow" for="joinCode">ROOM CODE</label>
           <div class="mp-lobby-join-row">
             <input id="joinCode" class="mp-lobby-code-input" inputmode="numeric" maxlength="4" placeholder="4자리 번호" autocomplete="off">
-            <button id="joinBtn" class="primary" type="button">JOIN ROOM</button>
+            <button id="joinBtn" class="primary" type="button" aria-label="입력한 방 번호로 참가">참가</button>
           </div>
           <div id="joinStatus" class="mp-lobby-status">방장이 알려준 번호를 입력하세요.</div>
         </section>

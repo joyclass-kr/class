@@ -97,6 +97,24 @@
             if (this.mounted) return this;
             this.mounted = true;
             this.elements = Object.fromEntries(Object.entries(this.ids).map(([key, id]) => [key, getElement(id)]));
+            const { hostTab, joinTab, hostPane, joinPane, joinButton } = this.elements;
+            const tabList = hostTab?.parentElement === joinTab?.parentElement ? hostTab?.parentElement : null;
+            tabList?.setAttribute("role", "tablist");
+            tabList?.setAttribute("aria-label", "방 참여 방식");
+            if (hostTab) {
+                hostTab.setAttribute("role", "tab");
+                if (hostPane?.id) hostTab.setAttribute("aria-controls", hostPane.id);
+            }
+            if (joinTab) {
+                joinTab.textContent = "방번호 입력";
+                joinTab.setAttribute("aria-label", "방 번호 입력 방식 선택");
+                joinTab.setAttribute("role", "tab");
+                if (joinPane?.id) joinTab.setAttribute("aria-controls", joinPane.id);
+            }
+            if (joinButton) {
+                joinButton.textContent = "참가";
+                joinButton.setAttribute("aria-label", "입력한 방 번호로 참가");
+            }
 
             const name = this.playerName;
             if (!name) {
@@ -185,6 +203,8 @@
             const isHost = this.role === "host";
             this.elements.hostTab?.classList.toggle("active", isHost);
             this.elements.joinTab?.classList.toggle("active", !isHost);
+            this.elements.hostTab?.setAttribute("aria-selected", String(isHost));
+            this.elements.joinTab?.setAttribute("aria-selected", String(!isHost));
             this.elements.hostPane?.classList.toggle("hidden", !isHost);
             this.elements.joinPane?.classList.toggle("hidden", isHost);
             if (this.elements.playerList) this.elements.playerList.replaceChildren();
