@@ -1,0 +1,193 @@
+<!doctype html>
+<html lang="ko">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="theme-color" content="#07131c">
+    <title>과학 실험실</title>
+    <meta name="description" content="기질 농도와 온도, pH, 억제제를 바꾸며 효소의 반응 속도와 Vmax·Km이 어떻게 달라지는지 확인하는 고등학교 과학 모의실험">
+    <link rel="stylesheet" as="style" crossorigin href="https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.9/dist/web/static/pretendard.css">
+    <link rel="stylesheet" href="styles.css?v=5">
+    <link rel="stylesheet" href="enzyme-visual.css?v=5">
+    <link rel="stylesheet" href="quiz.css?v=5">
+</head>
+<body>
+    <main>
+        <header class="page-header">
+            <div class="title-row">
+                <a href="../">← 과학 실험실</a>
+                <h1>효소 반응과 조건</h1>
+            </div>
+            <div class="grade-tags"><span>고등학교</span><span>생명과학</span></div>
+        </header>
+
+        <ol class="method-steps" aria-label="실험 방법">
+            <li>효소를 고릅니다.</li>
+            <li>온도와 pH를 맞춥니다.</li>
+            <li>기질 농도를 바꾸며 속도를 잽니다.</li>
+            <li>억제제를 넣고 Vmax와 Km을 다시 읽습니다.</li>
+        </ol>
+
+        <div class="experiment-layout">
+            <section class="panel control-panel" aria-labelledby="control-title">
+                <h2 id="control-title">실험 조건</h2>
+                <p class="water-standard">속도는 효소 1 mg이 1분에 바꾸는 기질의 양입니다</p>
+
+                <fieldset class="pick-field">
+                    <legend>효소</legend>
+                    <div class="pick-buttons cols3">
+                        <button type="button" data-enzyme="pepsin">펩신<small>위 · pH 2</small></button>
+                        <button type="button" data-enzyme="trypsin">트립신<small>작은창자 · pH 8</small></button>
+                        <button type="button" data-enzyme="amylase">아밀레이스<small>침 · pH 7</small></button>
+                    </div>
+                </fieldset>
+
+                <fieldset class="pick-field">
+                    <legend>온도</legend>
+                    <div class="pick-buttons cols5">
+                        <button type="button" data-temp="10">10<small>℃</small></button>
+                        <button type="button" data-temp="30">30<small>℃</small></button>
+                        <button type="button" data-temp="37">37<small>℃</small></button>
+                        <button type="button" data-temp="50">50<small>℃</small></button>
+                        <button type="button" data-temp="70">70<small>℃</small></button>
+                    </div>
+                </fieldset>
+
+                <fieldset class="pick-field">
+                    <legend>pH</legend>
+                    <div class="pick-buttons cols4">
+                        <button type="button" data-ph="2">2<small>강한 산성</small></button>
+                        <button type="button" data-ph="4">4<small>산성</small></button>
+                        <button type="button" data-ph="7">7<small>중성</small></button>
+                        <button type="button" data-ph="8">8<small>약한 염기성</small></button>
+                    </div>
+                </fieldset>
+
+                <fieldset class="pick-field">
+                    <legend>억제제</legend>
+                    <div class="pick-buttons cols3">
+                        <button type="button" data-inhib="none">없음<small>순수한 효소</small></button>
+                        <button type="button" data-inhib="comp">경쟁적<small>활성 부위에 붙음</small></button>
+                        <button type="button" data-inhib="non">비경쟁적<small>다른 자리에 붙음</small></button>
+                    </div>
+                </fieldset>
+
+                <div class="range-heading">
+                    <label for="subRange">기질 농도</label>
+                    <output id="subOutput" for="subRange">4.0 mmol/L</output>
+                </div>
+                <input id="subRange" type="range" min="0" max="20" step="0.5" value="4">
+                <div class="range-scale" aria-hidden="true"><span>0</span><span>10</span><span>20</span></div>
+
+                <fieldset class="prediction-field">
+                    <legend>이 억제제를 넣으면 Vmax와 Km은?</legend>
+                    <div class="prediction-buttons three">
+                        <button type="button" data-prediction="p1">Km만 오른다</button>
+                        <button type="button" data-prediction="p2">Vmax만 내린다</button>
+                        <button type="button" data-prediction="p3">둘 다 그대로</button>
+                    </div>
+                </fieldset>
+
+                <button class="run-button" id="runBtn" type="button">기질 농도 훑기</button>
+                <button class="reset-button" id="freshBtn" type="button">새 효소로 바꾸기</button>
+
+                <section class="result-box" aria-labelledby="result-title" aria-live="polite">
+                    <h3 id="result-title">관찰 결과</h3>
+                    <p id="resultEmpty">조건을 바꾸며 속도를 재 보세요.</p>
+                    <div id="resultContent" hidden>
+                        <div class="result-numbers">
+                            <article><span>반응 속도</span><strong id="valueA">-</strong></article>
+                            <article><span>Vmax와 Km</span><strong id="valueB">-</strong></article>
+                        </div>
+                        <p class="prediction-result" id="predictionResult"></p>
+                        <p class="explanation" id="elementaryExplanation"></p>
+                    </div>
+                </section>
+            </section>
+
+            <section class="panel enzyme-stage" aria-label="관찰 화면">
+                <div class="stage-heading"><h2>관찰</h2><span id="stageBadge">-</span></div>
+
+                <div class="stage-views">
+                    <svg class="main-svg" viewBox="0 0 460 214" aria-hidden="true">
+                        <g id="mainGroup"></g>
+                    </svg>
+                    <svg class="graph-svg" viewBox="0 0 460 196" aria-hidden="true">
+                        <g id="graphGroup"></g>
+                    </svg>
+                </div>
+
+                <p class="stage-caption" id="stageCaption">효소는 반응이 끝나도 그대로 남아 다음 기질을 다시 붙잡습니다. 열에 익어 버리기 전까지는요.</p>
+                <div class="data-note" id="dataNote"></div>
+            </section>
+        </div>
+
+        <section class="panel meaning-panel">
+            <h2>실험 결과의 의미</h2>
+            <div class="meaning-body">
+                <p><strong>Vmax와 Km</strong> 기질을 아무리 넣어도 넘지 못하는 속도가 Vmax이고, 그 절반의 속도를 내는 기질 농도가 Km입니다. Km이 작을수록 기질을 꽉 붙잡는 효소입니다.</p>
+                <p><strong>억제제 두 가지</strong> 경쟁적 억제제는 활성 부위를 두고 기질과 다투므로 기질을 많이 넣으면 밀려납니다. 그래서 Km만 오르고 Vmax는 그대로입니다. 비경쟁적 억제제는 다른 자리에 붙어 효소 모양을 바꾸므로 기질을 아무리 넣어도 소용이 없고 Vmax가 내려갑니다.</p>
+                <p><strong>온도와 pH</strong> 온도가 오르면 처음에는 빨라지지만 어느 선을 넘으면 단백질이 풀려 버립니다. 이 변화는 되돌릴 수 없어서 온도를 다시 낮춰도 속도가 돌아오지 않습니다. pH는 벗어나도 되돌아오면 다시 일합니다.</p>
+            </div>
+        </section>
+
+        <details class="quiz-section" aria-labelledby="quiz-title">
+            <summary class="quiz-heading"><h2 id="quiz-title">확인 문제</h2><span>4문제</span></summary>
+            <div class="quiz-grid">
+                <article class="quiz-card" data-answer="b">
+                    <h3>경쟁적 억제제를 넣으면 Vmax와 Km은 어떻게 될까요?</h3>
+                    <div class="quiz-options">
+                        <label><input type="radio" name="q1" value="a"> Vmax가 내려가고 Km은 그대로</label>
+                        <label><input type="radio" name="q1" value="b"> Vmax는 그대로이고 Km이 올라감</label>
+                        <label><input type="radio" name="q1" value="c"> 둘 다 내려감</label>
+                        <label><input type="radio" name="q1" value="d"> 둘 다 올라감</label>
+                    </div>
+                    <button class="answer-button" type="button">정답 확인</button>
+                    <p class="answer-result" aria-live="polite"></p>
+                    <p class="answer-explanation" hidden>같은 활성 부위를 두고 다투므로 기질을 충분히 넣으면 억제제를 밀어냅니다. 최고 속도는 되찾지만 절반 속도에 이르는 데 기질이 더 필요하므로 Km이 올라갑니다.</p>
+                </article>
+
+                <article class="quiz-card" data-answer="c">
+                    <h3>70 ℃에 두었던 효소를 다시 37 ℃로 옮기면?</h3>
+                    <div class="quiz-options">
+                        <label><input type="radio" name="q2" value="a"> 곧바로 원래 속도로 돌아온다</label>
+                        <label><input type="radio" name="q2" value="b"> 절반쯤 돌아온다</label>
+                        <label><input type="radio" name="q2" value="c"> 거의 돌아오지 않는다</label>
+                        <label><input type="radio" name="q2" value="d"> 오히려 더 빨라진다</label>
+                    </div>
+                    <button class="answer-button" type="button">정답 확인</button>
+                    <p class="answer-result" aria-live="polite"></p>
+                    <p class="answer-explanation" hidden>높은 열에 단백질의 입체 구조가 풀리면 활성 부위 모양이 사라집니다. 삶은 달걀이 다시 날달걀이 되지 않는 것과 같습니다.</p>
+                </article>
+
+                <article class="quiz-card" data-answer="a">
+                    <h3>펩신을 pH 7인 곳에 두면 어떻게 될까요?</h3>
+                    <div class="quiz-options">
+                        <label><input type="radio" name="q3" value="a"> 거의 일하지 못한다</label>
+                        <label><input type="radio" name="q3" value="b"> 가장 빠르게 일한다</label>
+                        <label><input type="radio" name="q3" value="c"> 속도가 두 배가 된다</label>
+                        <label><input type="radio" name="q3" value="d"> Km이 0이 된다</label>
+                    </div>
+                    <button class="answer-button" type="button">정답 확인</button>
+                    <p class="answer-result" aria-live="polite"></p>
+                    <p class="answer-explanation" hidden>펩신은 위산 속 pH 2에서 가장 잘 일하도록 만들어진 효소입니다. 중성에서는 활성 부위 모양이 흐트러져 거의 멈춥니다.</p>
+                </article>
+
+                <article class="quiz-card" data-answer="d">
+                    <h3>Km이 작은 효소는 어떤 효소일까요?</h3>
+                    <div class="quiz-options">
+                        <label><input type="radio" name="q4" value="a"> 최고 속도가 빠른 효소</label>
+                        <label><input type="radio" name="q4" value="b"> 열에 강한 효소</label>
+                        <label><input type="radio" name="q4" value="c"> 억제제를 잘 막는 효소</label>
+                        <label><input type="radio" name="q4" value="d"> 기질이 적어도 잘 붙잡는 효소</label>
+                    </div>
+                    <button class="answer-button" type="button">정답 확인</button>
+                    <p class="answer-result" aria-live="polite"></p>
+                    <p class="answer-explanation" hidden>Km은 절반 속도를 내는 데 필요한 기질 농도입니다. 적은 기질로도 절반 속도에 이른다면 그만큼 기질과 잘 결합한다는 뜻이고, 최고 속도와는 별개입니다.</p>
+                </article>
+            </div>
+        </details>
+    </main>
+    <script src="app.js?v=5"></script>
+</body>
+</html>
