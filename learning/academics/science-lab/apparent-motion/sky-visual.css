@@ -1,0 +1,50 @@
+/* Apparatus: the northern sky seen from one spot, centred on Polaris. */
+
+.toggle-button { width: 100%; margin: 12px 0 4px; padding: 10px; border: 1px solid var(--line); border-radius: 12px; background: transparent; color: var(--muted); font-weight: 850; cursor: pointer; }
+.toggle-button.active { border-color: var(--amber); background: rgba(255, 204, 102, .1); color: var(--amber); }
+.reset-button { width: 100%; margin-top: 8px; padding: 10px; border: 1px solid var(--line); border-radius: 12px; background: transparent; color: var(--muted); font-weight: 850; cursor: pointer; }
+.reset-button:hover { color: var(--ink); border-color: rgba(151, 218, 211, .45); }
+.range-scale { grid-template-columns: repeat(4, 1fr); }
+
+.sky-stage {
+    display: flex;
+    flex-direction: column;
+    min-width: 0;
+    border-color: rgba(140, 160, 220, .26);
+    box-shadow: 0 0 0 1px rgba(140, 160, 220, .04), 0 24px 48px -30px rgba(140, 160, 220, .34);
+    background-image:
+        radial-gradient(620px 420px at 50% 35%, rgba(140, 160, 220, .08), transparent 65%),
+        linear-gradient(rgba(109, 174, 181, .05) 1px, transparent 1px),
+        linear-gradient(90deg, rgba(109, 174, 181, .05) 1px, transparent 1px);
+    background-size: 100% 100%, 24px 24px, 24px 24px;
+}
+.stage-views { flex: 1; display: flex; align-items: center; justify-content: center; padding: 6px 0 2px; }
+.sky-svg { width: 100%; max-width: 540px; height: auto; display: block; }
+
+.sky-edge { stroke: rgba(151, 218, 211, .28); stroke-width: 1.4; stroke-dasharray: 5 5; }
+.ground { fill: #2a3a30; }
+.dir-label { fill: rgba(220, 240, 235, .8); font-size: 12px; font-weight: 900; }
+.sky-note { fill: #6f8f8d; font-size: 10px; font-weight: 800; }
+
+.polaris { fill: #fff8d6; }
+.polaris-label { fill: #ffe9a8; font-size: 11px; font-weight: 900; }
+
+.star { fill: #dce9f5; }
+.star-bright { fill: #ffffff; }
+.const-line { stroke: rgba(150, 190, 235, .55); stroke-width: 1.3; fill: none; stroke-linejoin: round; }
+.const-name { fill: #9fc0e0; font-size: 11px; font-weight: 850; }
+/* Faint circles showing the path each constellation sweeps around Polaris. */
+.trail { stroke: rgba(151, 218, 211, .18); stroke-width: 1; fill: none; stroke-dasharray: 3 5; }
+
+.moon-body { fill: #f2efe0; stroke: rgba(255, 255, 255, .5); stroke-width: 1; }
+.moon-label { fill: #f2efe0; font-size: 11px; font-weight: 850; }
+.moon-gap { stroke: rgba(255, 204, 102, .7); stroke-width: 1.4; stroke-dasharray: 4 3; fill: none; }
+
+.rate-note { display: grid; gap: 4px; margin-top: 10px; padding-top: 10px; border-top: 1px solid var(--line); }
+.rate-row { display: grid; grid-template-columns: 92px 1fr; gap: 10px; font-size: 11.5px; font-weight: 850; align-items: baseline; }
+.rate-name { color: #b6d3d9; }
+.rate-value { color: #cfe6ee; }
+
+@media (prefers-reduced-motion: reduce) {
+    .sky-svg * { transition: none !important; }
+}

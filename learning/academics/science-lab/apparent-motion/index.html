@@ -1,0 +1,178 @@
+<!doctype html>
+<html lang="ko">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="theme-color" content="#07131c">
+    <title>과학 실험실</title>
+    <meta name="description" content="북쪽 하늘의 별이 북극성을 중심으로 도는 일주운동과 날짜에 따른 연주운동, 달의 이동을 관찰하는 중학교 과학 모의실험">
+    <link rel="stylesheet" as="style" crossorigin href="https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.9/dist/web/static/pretendard.css">
+    <link rel="stylesheet" href="styles.css?v=1">
+    <link rel="stylesheet" href="sky-visual.css?v=1">
+    <link rel="stylesheet" href="quiz.css?v=1">
+</head>
+<body>
+    <main>
+        <header class="page-header">
+            <div class="title-row">
+                <a href="../">← 과학 실험실</a>
+                <h1>달과 별의 겉보기 운동</h1>
+            </div>
+            <div class="grade-tags"><span>중학교</span><span>지구과학</span></div>
+        </header>
+
+        <ol class="method-steps" aria-label="실험 방법">
+            <li>북쪽 하늘의 별자리 위치를 기록합니다.</li>
+            <li>시간을 흘려보내며 어느 쪽으로 도는지 관찰합니다.</li>
+            <li>날짜를 바꾸어 같은 시각에 다시 관측합니다.</li>
+            <li>달의 위치가 별과 어떻게 달라지는지 비교합니다.</li>
+        </ol>
+
+        <div class="experiment-layout">
+            <section class="panel control-panel" aria-labelledby="control-title">
+                <h2 id="control-title">관측 조건</h2>
+                <p class="water-standard">관측 장소: 북쪽 하늘 · 기준 시각 오후 9시</p>
+
+                <div class="range-heading">
+                    <label for="hourRange">관측 시간</label>
+                    <output id="hourOutput" for="hourRange">0시간 뒤</output>
+                </div>
+                <input id="hourRange" type="range" min="0" max="12" step="0.5" value="0">
+                <div class="range-scale" aria-hidden="true"><span>0h</span><span>4h</span><span>8h</span><span>12h</span></div>
+
+                <div class="range-heading amount-heading">
+                    <label for="dayRange">관측 날짜</label>
+                    <output id="dayOutput" for="dayRange">0일 뒤</output>
+                </div>
+                <input id="dayRange" type="range" min="0" max="90" step="1" value="0">
+                <div class="range-scale" aria-hidden="true"><span>0일</span><span>30일</span><span>60일</span><span>90일</span></div>
+                <p class="amount-guide">날짜만 바꾸면 같은 시각(오후 9시)에 관측한 하늘입니다.</p>
+
+                <button type="button" class="toggle-button" id="moonBtn">달 함께 보기</button>
+
+                <fieldset class="prediction-field">
+                    <legend>별이 도는 방향 예상</legend>
+                    <div class="prediction-buttons">
+                        <button type="button" data-prediction="ccw">시계 반대 방향</button>
+                        <button type="button" data-prediction="cw">시계 방향</button>
+                    </div>
+                </fieldset>
+
+                <button class="run-button" id="playBtn" type="button">시간 흘려보내기</button>
+                <button class="reset-button" id="resetBtn" type="button">처음으로</button>
+
+                <section class="result-box" aria-labelledby="result-title" aria-live="polite">
+                    <h3 id="result-title">관찰 결과</h3>
+                    <p id="resultEmpty">시간을 흘려보내 별의 움직임을 관찰해 보세요.</p>
+                    <div id="resultContent" hidden>
+                        <div class="result-numbers">
+                            <article><span>별이 돈 각도</span><strong id="resultAngle">0°</strong></article>
+                            <article><span>달이 뜨는 시각</span><strong id="resultMoon">기준</strong></article>
+                        </div>
+                        <p class="prediction-result" id="predictionResult"></p>
+                        <p class="explanation" id="elementaryExplanation"></p>
+                    </div>
+                </section>
+            </section>
+
+            <section class="panel sky-stage" aria-label="북쪽 하늘 관찰 화면">
+                <div class="stage-heading"><h2>관찰</h2><span id="stageBadge">오후 9시</span></div>
+
+                <div class="stage-views">
+                    <svg class="sky-svg" viewBox="0 0 460 340" aria-hidden="true">
+                        <defs>
+                            <radialGradient id="skyGrad">
+                                <stop offset="0%" stop-color="#16233c"/>
+                                <stop offset="100%" stop-color="#0a1220"/>
+                            </radialGradient>
+                        </defs>
+                        <circle class="sky-dome" cx="230" cy="160" r="132" fill="url(#skyGrad)"/>
+                        <circle class="sky-edge" cx="230" cy="160" r="132" fill="none"/>
+
+                        <g id="trailGroup"></g>
+                        <g id="skyGroup"></g>
+                        <g id="moonGroup"></g>
+
+                        <circle class="polaris" cx="230" cy="160" r="5"/>
+                        <text class="polaris-label" x="238" y="156">북극성</text>
+
+                        <rect class="ground" x="0" y="300" width="460" height="40"/>
+                        <text class="dir-label" x="230" y="325" text-anchor="middle">북쪽</text>
+                        <text class="sky-note" x="230" y="20" text-anchor="middle">별자리 위치는 모식도입니다</text>
+                    </svg>
+                </div>
+
+                <p class="stage-caption" id="stageCaption">별은 북극성을 중심으로 원을 그리며 돕니다.</p>
+                <div class="rate-note" id="rateNote"></div>
+            </section>
+        </div>
+
+        <section class="panel meaning-panel">
+            <h2>실험 결과의 의미</h2>
+            <div class="meaning-body">
+                <p><strong>일주운동</strong> 지구의 자전 때문에 별이 북극성을 중심으로 1시간에 15°씩 시계 반대 방향으로 돕니다.</p>
+                <p><strong>연주운동</strong> 지구의 공전 때문에 같은 시각에 보이는 별이 하루에 약 1°씩(한 달에 약 30°) 옮겨 갑니다.</p>
+                <p><strong>달의 이동</strong> 달은 공전 때문에 별을 기준으로 하루에 약 13° 동쪽으로 움직여, 매일 약 50분씩 늦게 뜹니다.</p>
+            </div>
+        </section>
+
+        <details class="quiz-section" aria-labelledby="quiz-title">
+            <summary class="quiz-heading"><h2 id="quiz-title">확인 문제</h2><span>4문제</span></summary>
+            <div class="quiz-grid">
+                <article class="quiz-card" data-answer="b">
+                    <h3>북쪽 하늘의 별이 일주운동으로 1시간 동안 도는 각도는?</h3>
+                    <div class="quiz-options">
+                        <label><input type="radio" name="q1" value="a"> 1°</label>
+                        <label><input type="radio" name="q1" value="b"> 15°</label>
+                        <label><input type="radio" name="q1" value="c"> 30°</label>
+                        <label><input type="radio" name="q1" value="d"> 360°</label>
+                    </div>
+                    <button class="answer-button" type="button">정답 확인</button>
+                    <p class="answer-result" aria-live="polite"></p>
+                    <p class="answer-explanation" hidden>하루 24시간에 360°를 돌므로 1시간에 15°씩 회전합니다.</p>
+                </article>
+
+                <article class="quiz-card" data-answer="c">
+                    <h3>별의 일주운동이 나타나는 까닭은?</h3>
+                    <div class="quiz-options">
+                        <label><input type="radio" name="q2" value="a"> 별이 실제로 지구 둘레를 돌기 때문</label>
+                        <label><input type="radio" name="q2" value="b"> 지구가 태양 둘레를 공전하기 때문</label>
+                        <label><input type="radio" name="q2" value="c"> 지구가 자전하기 때문</label>
+                        <label><input type="radio" name="q2" value="d"> 달이 지구를 돌기 때문</label>
+                    </div>
+                    <button class="answer-button" type="button">정답 확인</button>
+                    <p class="answer-result" aria-live="polite"></p>
+                    <p class="answer-explanation" hidden>지구가 하루에 한 바퀴 자전하기 때문에 별이 반대 방향으로 도는 것처럼 보입니다.</p>
+                </article>
+
+                <article class="quiz-card" data-answer="a">
+                    <h3>같은 시각에 관측할 때 별자리는 한 달에 약 몇 도 이동하는가?</h3>
+                    <div class="quiz-options">
+                        <label><input type="radio" name="q3" value="a"> 약 30°</label>
+                        <label><input type="radio" name="q3" value="b"> 약 15°</label>
+                        <label><input type="radio" name="q3" value="c"> 약 90°</label>
+                        <label><input type="radio" name="q3" value="d"> 이동하지 않는다</label>
+                    </div>
+                    <button class="answer-button" type="button">정답 확인</button>
+                    <p class="answer-result" aria-live="polite"></p>
+                    <p class="answer-explanation" hidden>1년(약 12개월)에 360°를 이동하므로 한 달에 약 30°, 하루에 약 1°씩 옮겨 갑니다.</p>
+                </article>
+
+                <article class="quiz-card" data-answer="d">
+                    <h3>달이 매일 약 50분씩 늦게 뜨는 까닭은?</h3>
+                    <div class="quiz-options">
+                        <label><input type="radio" name="q4" value="a"> 달이 점점 멀어지기 때문</label>
+                        <label><input type="radio" name="q4" value="b"> 지구의 자전이 느려지기 때문</label>
+                        <label><input type="radio" name="q4" value="c"> 달의 크기가 변하기 때문</label>
+                        <label><input type="radio" name="q4" value="d"> 달이 공전하며 별을 기준으로 하루에 약 13°씩 동쪽으로 이동하기 때문</label>
+                    </div>
+                    <button class="answer-button" type="button">정답 확인</button>
+                    <p class="answer-result" aria-live="polite"></p>
+                    <p class="answer-explanation" hidden>달이 하루에 약 13° 동쪽으로 이동하므로, 지구가 그만큼 더 자전해야 달이 떠올라 약 50분 늦어집니다.</p>
+                </article>
+            </div>
+        </details>
+    </main>
+    <script src="app.js?v=3"></script>
+</body>
+</html>
