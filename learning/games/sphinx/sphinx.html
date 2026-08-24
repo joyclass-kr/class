@@ -658,7 +658,15 @@ body{align-items:center;padding:18px}
     }
 
     function getSavedPlayerName() {
-        const saved = normalizeKoreanName(localStorage.getItem("classPlayerName") || "");
+        const handedOff = normalizeKoreanName(new URLSearchParams(window.location.search).get("name") || "");
+        if (isValidKoreanName(handedOff)) return handedOff;
+
+        let saved = "";
+        try {
+            saved = normalizeKoreanName(localStorage.getItem("classPlayerName") || "");
+        } catch (error) {
+            // The home-page handoff still works when browser storage is unavailable.
+        }
         return isValidKoreanName(saved) ? saved : "";
     }
 
