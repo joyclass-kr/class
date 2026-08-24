@@ -24,13 +24,16 @@ test('keyboard library covers AP, EP, Hybrid, and Organ', () => {
   assert.match(app, /tag: "ORGAN"/);
 });
 
-test('percussion library includes playable kits and essential orchestral instruments', () => {
+test('percussion library includes dedicated kits and essential orchestral instruments', () => {
   for (const model of ['rock-kit', 'metal-kit', 'pop-kit', 'jazz-kit', 'funk-kit', 'timpani', 'glockenspiel', 'marimba', 'vibraphone', 'xylophone', 'orchestral-percussion', 'drum-808', 'linn-machine', 'samulnori']) {
     assert.match(app, new RegExp(`id: "${model}"`));
   }
-  assert.match(app, /renderKitHotspots/);
   assert.match(app, /renderMachine/);
-  assert.match(app, /triggerVisualDrum/);
+  assert.doesNotMatch(app, /renderKitHotspots|triggerVisualDrum|kitHotspots/);
+  assert.doesNotMatch(html, /kitHotspots|inputHint/);
+  for (const asset of ['drum-rock-kit.png', 'drum-metal-kit.png', 'drum-pop-kit.png', 'drum-jazz-kit.png', 'drum-funk-kit.png']) {
+    assert.match(app, new RegExp(asset.replace('.', '\\.')));
+  }
 });
 
 test('string and expressive families expose virtual-instrument presentation', () => {
@@ -44,7 +47,7 @@ test('string and expressive families expose virtual-instrument presentation', ()
 });
 
 test('project-bound instrument artwork exists', () => {
-  for (const asset of ['bass-p-style.png', 'bass-j-style.png', 'bass-active-five.png', 'bass-fretless.png', 'guitar-s-style.png', 'guitar-metal-seven.png', 'guitar-hollowbody-jazz.png', 'guitar-dreadnought.png', 'guitar-classical-nylon.png', 'drum-acoustic-kit.png', 'violin-expressive.png', 'viola-expressive.png', 'cello-expressive.png', 'double-bass-expressive.png', 'flute-expressive.png', 'oboe-expressive.png', 'clarinet-expressive.png', 'bassoon-expressive.png', 'alto-sax-expressive.png', 'trumpet-expressive.png', 'trombone-expressive.png', 'french-horn-expressive.png', 'tuba-expressive.png', 'timpani-bank.png', 'glockenspiel-concert.png', 'marimba-concert.png', 'vibraphone-concert.png', 'xylophone-concert.png', 'orchestral-percussion-station.png', 'korean-gayageum.png', 'korean-geomungo.png', 'korean-haegeum.png', 'korean-ajaeng.png', 'korean-daegeum.png', 'korean-hyangpiri.png', 'korean-taepyeongso.png', 'korean-samulnori-station.png']) {
+  for (const asset of ['bass-p-style.png', 'bass-j-style.png', 'bass-active-five.png', 'bass-fretless.png', 'guitar-s-style.png', 'guitar-metal-seven.png', 'guitar-hollowbody-jazz.png', 'guitar-dreadnought.png', 'guitar-classical-nylon.png', 'drum-rock-kit.png', 'drum-metal-kit.png', 'drum-pop-kit.png', 'drum-jazz-kit.png', 'drum-funk-kit.png', 'violin-expressive.png', 'viola-expressive.png', 'cello-expressive.png', 'double-bass-expressive.png', 'flute-expressive.png', 'oboe-expressive.png', 'clarinet-expressive.png', 'bassoon-expressive.png', 'alto-sax-expressive.png', 'trumpet-expressive.png', 'trombone-expressive.png', 'french-horn-expressive.png', 'tuba-expressive.png', 'timpani-bank.png', 'glockenspiel-concert.png', 'marimba-concert.png', 'vibraphone-concert.png', 'xylophone-concert.png', 'orchestral-percussion-station.png', 'korean-gayageum.png', 'korean-geomungo.png', 'korean-haegeum.png', 'korean-ajaeng.png', 'korean-daegeum.png', 'korean-hyangpiri.png', 'korean-taepyeongso.png', 'korean-samulnori-station.png']) {
     assert.equal(fs.existsSync(path.join(root, 'assets', 'instruments', asset)), true, asset);
   }
 });
