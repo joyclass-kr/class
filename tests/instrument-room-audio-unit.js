@@ -54,6 +54,8 @@ bass.port.onmessage({ data: {
 } });
 const bassAudio = render(bass, 1.4);
 const bassStart = peakAndRms(bassAudio.subarray(0, sampleRate * .18));
+const bassFirstMillisecond = peakAndRms(bassAudio.subarray(0, Math.ceil(sampleRate * .001)));
+assert.ok(bassFirstMillisecond.peak > .01);
 const bassTail = peakAndRms(bassAudio.subarray(sampleRate * .75));
 assert.ok(bassStart.peak > .06 && bassStart.peak < 1);
 assert.ok(bassStart.rms > .008);
@@ -68,6 +70,8 @@ const kickAudio = render(drums, 1.6);
 const kickStart = peakAndRms(kickAudio.subarray(0, sampleRate * .16));
 const kickTail = peakAndRms(kickAudio.subarray(sampleRate * 1.2));
 assert.ok(kickStart.peak > .08 && kickStart.peak < 1);
+const kickFirstMillisecond = peakAndRms(kickAudio.subarray(0, Math.ceil(sampleRate * .001)));
+assert.ok(kickFirstMillisecond.peak > .01);
 assert.ok(kickStart.rms > .008);
 assert.ok(kickTail.rms < kickStart.rms * .3);
 
