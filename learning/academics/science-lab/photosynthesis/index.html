@@ -1,0 +1,168 @@
+<!doctype html>
+<html lang="ko">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="theme-color" content="#07131c">
+    <title>과학 실험실</title>
+    <meta name="description" content="검정말이 내는 기포 수로 빛의 세기·이산화탄소·온도가 광합성량에 미치는 영향과 제한 요인을 찾는 중학교 과학 모의실험">
+    <link rel="stylesheet" as="style" crossorigin href="https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.9/dist/web/static/pretendard.css">
+    <link rel="stylesheet" href="styles.css?v=1">
+    <link rel="stylesheet" href="photo-visual.css?v=1">
+    <link rel="stylesheet" href="quiz.css?v=1">
+</head>
+<body>
+    <main>
+        <header class="page-header">
+            <div class="title-row">
+                <a href="../">← 과학 실험실</a>
+                <h1>광합성</h1>
+            </div>
+            <div class="grade-tags"><span>중학교</span><span>생명과학</span></div>
+        </header>
+
+        <ol class="method-steps" aria-label="실험 방법">
+            <li>검정말을 물이 든 시험관에 넣습니다.</li>
+            <li>빛의 세기·이산화탄소·온도를 정합니다.</li>
+            <li>1분 동안 나오는 기포 수를 셉니다.</li>
+            <li>무엇이 광합성을 제한하는지 찾습니다.</li>
+        </ol>
+
+        <div class="experiment-layout">
+            <section class="panel control-panel" aria-labelledby="control-title">
+                <h2 id="control-title">실험 조건</h2>
+                <p class="water-standard">광합성량은 1분 동안 나온 산소 기포 수로 잽니다</p>
+
+                <div class="range-heading">
+                    <label for="lightRange">빛의 세기</label>
+                    <output id="lightOutput" for="lightRange">60</output>
+                </div>
+                <input id="lightRange" type="range" min="0" max="100" step="5" value="60">
+                <div class="range-scale" aria-hidden="true"><span>0</span><span>50</span><span>100</span></div>
+
+                <div class="range-heading amount-heading">
+                    <label for="co2Range">이산화탄소 농도</label>
+                    <output id="co2Output" for="co2Range">50</output>
+                </div>
+                <input id="co2Range" type="range" min="0" max="100" step="5" value="50">
+                <div class="range-scale" aria-hidden="true"><span>0</span><span>50</span><span>100</span></div>
+
+                <div class="range-heading amount-heading">
+                    <label for="tempRange">온도</label>
+                    <output id="tempOutput" for="tempRange">30 ℃</output>
+                </div>
+                <input id="tempRange" type="range" min="0" max="50" step="1" value="30">
+                <div class="range-scale" aria-hidden="true"><span>0℃</span><span>25℃</span><span>50℃</span></div>
+
+                <fieldset class="prediction-field">
+                    <legend>지금 광합성을 제한하는 것은?</legend>
+                    <div class="prediction-buttons three">
+                        <button type="button" data-prediction="light">빛의 세기</button>
+                        <button type="button" data-prediction="co2">이산화탄소</button>
+                        <button type="button" data-prediction="temp">온도</button>
+                    </div>
+                </fieldset>
+
+                <button class="run-button" id="checkBtn" type="button">기포 수 세기</button>
+                <button class="reset-button" id="resetBtn" type="button">처음으로</button>
+
+                <section class="result-box" aria-labelledby="result-title" aria-live="polite">
+                    <h3 id="result-title">관찰 결과</h3>
+                    <p id="resultEmpty">조건을 정하고 기포 수를 세어 보세요.</p>
+                    <div id="resultContent" hidden>
+                        <div class="result-numbers">
+                            <article><span>광합성량</span><strong id="valueA">-</strong></article>
+                            <article><span>제한 요인</span><strong id="valueB">-</strong></article>
+                        </div>
+                        <p class="prediction-result" id="predictionResult"></p>
+                        <p class="explanation" id="elementaryExplanation"></p>
+                    </div>
+                </section>
+            </section>
+
+            <section class="panel photo-stage" aria-label="관찰 화면">
+                <div class="stage-heading"><h2>관찰</h2><span id="stageBadge">-</span></div>
+
+                <div class="stage-views">
+                    <svg class="main-svg" viewBox="0 0 460 214" aria-hidden="true">
+                        <g id="mainGroup"></g>
+                    </svg>
+                    <svg class="graph-svg" viewBox="0 0 460 196" aria-hidden="true">
+                        <g id="graphGroup"></g>
+                    </svg>
+                </div>
+
+                <p class="stage-caption" id="stageCaption">조건을 하나씩 바꾸며 기포 수가 어떻게 달라지는지 보세요.</p>
+                <div class="data-note" id="dataNote"></div>
+            </section>
+        </div>
+
+        <section class="panel meaning-panel">
+            <h2>실험 결과의 의미</h2>
+            <div class="meaning-body">
+                <p><strong>광합성</strong> 빛에너지로 이산화탄소와 물을 이용해 양분을 만들고 산소를 내놓습니다.</p>
+                <p><strong>제한 요인</strong> 여러 조건 가운데 가장 부족한 것이 광합성량을 결정합니다. 그것을 늘려야만 광합성이 늘어납니다.</p>
+                <p><strong>온도</strong> 광합성은 효소가 하는 일이라, 너무 높으면 효소가 망가져 오히려 급격히 줄어듭니다.</p>
+            </div>
+        </section>
+
+        <details class="quiz-section" aria-labelledby="quiz-title">
+            <summary class="quiz-heading"><h2 id="quiz-title">확인 문제</h2><span>4문제</span></summary>
+            <div class="quiz-grid">
+                <article class="quiz-card" data-answer="c">
+                    <h3>빛이 매우 약할 때 이산화탄소만 늘리면 광합성량은?</h3>
+                    <div class="quiz-options">
+                        <label><input type="radio" name="q1" value="a"> 크게 늘어난다</label>
+                        <label><input type="radio" name="q1" value="b"> 오히려 줄어든다</label>
+                        <label><input type="radio" name="q1" value="c"> 거의 늘어나지 않는다</label>
+                        <label><input type="radio" name="q1" value="d"> 두 배가 된다</label>
+                    </div>
+                    <button class="answer-button" type="button">정답 확인</button>
+                    <p class="answer-result" aria-live="polite"></p>
+                    <p class="answer-explanation" hidden>빛이 제한 요인일 때는 다른 조건을 늘려도 소용이 없습니다. 제한 요인인 빛을 늘려야 광합성량이 늘어납니다.</p>
+                </article>
+
+                <article class="quiz-card" data-answer="b">
+                    <h3>빛을 계속 세게 해도 광합성량이 더 늘지 않는 까닭은?</h3>
+                    <div class="quiz-options">
+                        <label><input type="radio" name="q2" value="a"> 빛이 식물을 태우기 때문</label>
+                        <label><input type="radio" name="q2" value="b"> 이산화탄소나 온도 같은 다른 요인이 제한하기 때문</label>
+                        <label><input type="radio" name="q2" value="c"> 물이 부족하기 때문</label>
+                        <label><input type="radio" name="q2" value="d"> 산소가 너무 많아지기 때문</label>
+                    </div>
+                    <button class="answer-button" type="button">정답 확인</button>
+                    <p class="answer-result" aria-live="polite"></p>
+                    <p class="answer-explanation" hidden>빛이 충분해지면 더 이상 빛이 제한 요인이 아니고, 이산화탄소나 온도가 광합성량을 결정하게 됩니다.</p>
+                </article>
+
+                <article class="quiz-card" data-answer="d">
+                    <h3>온도를 45 ℃ 이상으로 높이면 광합성량은?</h3>
+                    <div class="quiz-options">
+                        <label><input type="radio" name="q3" value="a"> 계속 늘어난다</label>
+                        <label><input type="radio" name="q3" value="b"> 변하지 않는다</label>
+                        <label><input type="radio" name="q3" value="c"> 조금씩 늘어난다</label>
+                        <label><input type="radio" name="q3" value="d"> 효소가 망가져 급격히 줄어든다</label>
+                    </div>
+                    <button class="answer-button" type="button">정답 확인</button>
+                    <p class="answer-result" aria-live="polite"></p>
+                    <p class="answer-explanation" hidden>광합성은 효소가 관여하는 반응이라 온도가 너무 높으면 효소가 변성되어 광합성량이 급격히 떨어집니다.</p>
+                </article>
+
+                <article class="quiz-card" data-answer="a">
+                    <h3>검정말에서 나오는 기포의 성분은?</h3>
+                    <div class="quiz-options">
+                        <label><input type="radio" name="q4" value="a"> 산소</label>
+                        <label><input type="radio" name="q4" value="b"> 이산화탄소</label>
+                        <label><input type="radio" name="q4" value="c"> 수소</label>
+                        <label><input type="radio" name="q4" value="d"> 질소</label>
+                    </div>
+                    <button class="answer-button" type="button">정답 확인</button>
+                    <p class="answer-result" aria-live="polite"></p>
+                    <p class="answer-explanation" hidden>광합성으로 만들어져 나오는 기체는 산소입니다. 그래서 기포 수로 광합성량을 잴 수 있습니다.</p>
+                </article>
+            </div>
+        </details>
+    </main>
+    <script src="app.js?v=1"></script>
+</body>
+</html>

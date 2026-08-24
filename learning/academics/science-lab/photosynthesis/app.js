@@ -1,0 +1,254 @@
+document.addEventListener('DOMContentLoaded', () => {
+    const predictionButtons = [...document.querySelectorAll('[data-prediction]')];
+    const lightRange = document.getElementById('lightRange');
+    const co2Range = document.getElementById('co2Range');
+    const tempRange = document.getElementById('tempRange');
+    const lightOutput = document.getElementById('lightOutput');
+    const co2Output = document.getElementById('co2Output');
+    const tempOutput = document.getElementById('tempOutput');
+    const checkBtn = document.getElementById('checkBtn');
+    const resetBtn = document.getElementById('resetBtn');
+    const resultEmpty = document.getElementById('resultEmpty');
+    const resultContent = document.getElementById('resultContent');
+    const valueA = document.getElementById('valueA');
+    const valueB = document.getElementById('valueB');
+    const predictionResult = document.getElementById('predictionResult');
+    const explanation = document.getElementById('elementaryExplanation');
+    const stageCaption = document.getElementById('stageCaption');
+    const stageBadge = document.getElementById('stageBadge');
+    const mainGroup = document.getElementById('mainGroup');
+    const graphGroup = document.getElementById('graphGroup');
+    const dataNote = document.getElementById('dataNote');
+
+    // Blackman's limiting-factor picture, which is what the textbook graph
+    // shows: the scarcest resource sets the ceiling, so raising anything else
+    // does nothing until that one is relieved.
+    const V_MAX = 100;          // bubbles per minute at full capacity
+    const K_LIGHT = 1.5;        // light saturates at 100/1.5 ≈ 67
+    const K_CO2 = 2.0;          // CO₂ saturates at 100/2.0 = 50
+    // Photosynthesis is enzyme-driven, so it climbs to an optimum and then
+    // falls away sharply as the enzymes denature.
+    const T_OPT = 32, T_RISE = 12, T_FALL = 7;
+    const GRAPH = { x0: 54, x1: 424, y0: 152, y1: 22 };
+
+    let prediction = null;
+
+    const light = () => Number(lightRange.value);
+    const co2 = () => Number(co2Range.value);
+    const temp = () => Number(tempRange.value);
+
+    const tempFactor = t => {
+        const w = t <= T_OPT ? T_RISE : T_FALL;
+        return Math.exp(-(((t - T_OPT) / w) ** 2));
+    };
+
+    function analyse(L = light(), C = co2(), T = temp()) {
+        const byLight = K_LIGHT * L;
+        const byCO2 = K_CO2 * C;
+        const cap = Math.min(byLight, byCO2, V_MAX);
+        const fT = tempFactor(T);
+        const rate = cap * fT;
+        // Which one is actually holding it back right now
+        let limiter;
+        if (byLight <= byCO2 && byLight < V_MAX) limiter = 'light';
+        else if (byCO2 < byLight && byCO2 < V_MAX) limiter = 'co2';
+        else limiter = 'none';
+        // Temperature outranks the others when it is what is really costing us
+        const tempCost = cap * (1 - fT);
+        const otherHeadroom = V_MAX - cap;
+        if (fT < 0.85 && tempCost >= otherHeadroom * 0.5) limiter = 'temp';
+        return { byLight, byCO2, cap, fT, rate, limiter };
+    }
+
+    const gx = v => GRAPH.x0 + (v / 100) * (GRAPH.x1 - GRAPH.x0);
+    const gy = v => GRAPH.y0 - (v / V_MAX) * (GRAPH.y0 - GRAPH.y1);
+    const LIMIT_NAME = { light: '빛의 세기', co2: '이산화탄소', temp: '온도', none: '없음 (최대)' };
+    const LIMIT_TONE = { light: '#ffd166', co2: '#7fd4f0', temp: '#ff9d6b', none: '#54e6c1' };
+
+    function renderMain() {
+        const a = analyse();
+        const TUBE = { x0: 176, x1: 244, top: 30, bottom: 186 };
+        const surface = 50;
+        let out = '';
+        // lamp on the left, its brightness tracking the light setting
+        const lit = light() / 100;
+        out += `<circle class="lamp-glow" cx="72" cy="96" r="30" fill="#ffd166" opacity="${(0.06 + 0.34 * lit).toFixed(2)}"/>`;
+        out += `<circle class="lamp-glow" cx="72" cy="96" r="17" fill="#fff3c4" opacity="${(0.15 + 0.75 * lit).toFixed(2)}"/>`;
+        out += `<rect class="lamp-body" x="58" y="118" width="28" height="34" rx="4"/>`;
+        for (let i = 0; i < 5; i += 1) {
+            const y = 62 + i * 17;
+            out += `<line class="lamp-ray" x1="104" y1="${y}" x2="${(104 + 26 * lit).toFixed(1)}" y2="${y}" opacity="${(0.15 + 0.75 * lit).toFixed(2)}"/>`;
+        }
+        out += `<text class="part-label" x="72" y="168" text-anchor="middle">빛 ${light()}</text>`;
+
+        out += `<rect class="tube" x="${TUBE.x0}" y="${surface}" width="${TUBE.x1 - TUBE.x0}" height="${TUBE.bottom - surface}" rx="6"/>`;
+        out += `<ellipse class="water-surface" cx="${(TUBE.x0 + TUBE.x1) / 2}" cy="${surface}" rx="${(TUBE.x1 - TUBE.x0) / 2 - 2}" ry="3.5"/>`;
+        // dissolved CO₂ shown at the concentration that was set
+        const dots = Math.round(co2() / 8);
+        for (let i = 0; i < dots; i += 1) {
+            const x = TUBE.x0 + 8 + ((i * 23) % (TUBE.x1 - TUBE.x0 - 16));
+            const y = surface + 14 + ((i * 31) % (TUBE.bottom - surface - 26));
+            out += `<circle class="co2-dot" cx="${x}" cy="${y}" r="2.6"/>`;
+        }
+        // the pondweed, pale when the enzymes are too hot to work
+        const pale = a.fT < 0.35;
+        out += `<path class="stem" d="M210,${TUBE.bottom - 8} L210,${surface + 22}"/>`;
+        for (let i = 0; i < 6; i += 1) {
+            const y = TUBE.bottom - 20 - i * 18, side = i % 2 === 0 ? -1 : 1;
+            out += `<ellipse class="leaf${pale ? ' pale' : ''}" cx="${210 + side * 13}" cy="${y}" rx="12" ry="5.5" transform="rotate(${side * 22} ${210 + side * 13} ${y})"/>`;
+        }
+        // bubbles: the rate they leave is the measurement
+        const bubbles = Math.min(14, Math.round(a.rate / 7));
+        for (let i = 0; i < bubbles; i += 1) {
+            const x = 206 + ((i * 13) % 18);
+            const dur = (2.6 - 1.5 * (a.rate / V_MAX)).toFixed(2);
+            const delay = ((i * 0.9) / Math.max(1, bubbles)).toFixed(2);
+            out += `<circle class="bubble" cx="${x}" cy="${TUBE.bottom - 26}" r="${(2.2 + (i % 3) * 0.7).toFixed(1)}">` +
+                   `<animate attributeName="cy" from="${TUBE.bottom - 26}" to="${surface + 4}" dur="${dur}s" begin="${delay}s" repeatCount="indefinite"/>` +
+                   `<animate attributeName="opacity" values="0;.9;.9;0" dur="${dur}s" begin="${delay}s" repeatCount="indefinite"/></circle>`;
+        }
+        // thermometer
+        const TX = 268, tf = Math.max(0, Math.min(1, temp() / 50));
+        out += `<rect class="therm-tube" x="${TX}" y="56" width="9" height="96" rx="4.5"/>`;
+        out += `<rect class="therm-fill" x="${TX + 2}" y="${(148 - 90 * tf).toFixed(1)}" width="5" height="${(90 * tf + 4).toFixed(1)}" rx="2.5"/>`;
+        out += `<text class="part-label" x="${TX + 15}" y="72">${temp()} ℃</text>`;
+
+        out += `<text class="count-text" x="330" y="66">${a.rate.toFixed(0)} 개/분</text>`;
+        out += `<text class="part-label" x="330" y="84">1분 동안 나온 기포</text>`;
+        out += `<text class="limit-badge" fill="${LIMIT_TONE[a.limiter]}" x="330" y="112">제한 요인: ${LIMIT_NAME[a.limiter]}</text>`;
+        out += `<text class="part-label" x="330" y="132">빛이 낼 수 있는 양 ${Math.min(V_MAX, a.byLight).toFixed(0)}</text>`;
+        out += `<text class="part-label" x="330" y="148">CO₂ 가 낼 수 있는 양 ${Math.min(V_MAX, a.byCO2).toFixed(0)}</text>`;
+        out += `<text class="part-label" x="330" y="164">온도 효율 ${(a.fT * 100).toFixed(0)}%</text>`;
+        mainGroup.innerHTML = out;
+        return a;
+    }
+
+    function renderGraph(a) {
+        let out = '';
+        for (let v = 0; v <= V_MAX; v += 25) {
+            out += `<line class="grid-line" x1="${GRAPH.x0}" y1="${gy(v).toFixed(1)}" x2="${GRAPH.x1}" y2="${gy(v).toFixed(1)}"/>`;
+            out += `<text class="axis-text" x="${GRAPH.x0 - 6}" y="${(gy(v) + 3).toFixed(1)}" text-anchor="end">${v}</text>`;
+        }
+        for (let L = 0; L <= 100; L += 25) {
+            out += `<text class="axis-text" x="${gx(L).toFixed(1)}" y="${GRAPH.y0 + 14}" text-anchor="middle">${L}</text>`;
+        }
+        out += `<line class="axis" x1="${GRAPH.x0}" y1="${GRAPH.y0}" x2="${GRAPH.x1}" y2="${GRAPH.y0}"/>`;
+        out += `<line class="axis" x1="${GRAPH.x0}" y1="${GRAPH.y0}" x2="${GRAPH.x0}" y2="${GRAPH.y1}"/>`;
+        out += `<text class="axis-title" x="${(GRAPH.x0 + GRAPH.x1) / 2}" y="${GRAPH.y0 + 30}" text-anchor="middle">빛의 세기</text>`;
+        out += `<text class="axis-title" x="${GRAPH.x0 - 32}" y="${GRAPH.y1 - 6}">광합성량 (기포/분)</text>`;
+
+        // Three CO₂ levels at the current temperature: they lie on top of one
+        // another while light is scarce, then split where CO₂ takes over.
+        [[25, '#4a7fd6'], [50, '#7fd4f0'], [100, '#a8ecff']].forEach(([c, col]) => {
+            const pts = [];
+            for (let L = 0; L <= 100; L += 1) pts.push(`${gx(L).toFixed(1)},${gy(analyse(L, c, temp()).rate).toFixed(1)}`);
+            const isCurrent = Math.abs(c - co2()) < 3;
+            out += `<path class="trace${isCurrent ? '' : ' dim'}" style="stroke:${col}" d="M${pts.join('L')}"/>`;
+            const endY = gy(analyse(100, c, temp()).rate);
+            out += `<text class="curve-tag" fill="${col}" opacity="${isCurrent ? 1 : .55}" x="${GRAPH.x1 - 4}" y="${(endY - 6).toFixed(1)}" text-anchor="end">CO₂ ${c}</text>`;
+        });
+        // where the current setting stops being light-limited
+        const knee = Math.min(analyse().byCO2, V_MAX) / K_LIGHT;
+        if (knee <= 100) {
+            out += `<line class="knee-line" x1="${gx(knee).toFixed(1)}" y1="${GRAPH.y1}" x2="${gx(knee).toFixed(1)}" y2="${GRAPH.y0}"/>`;
+            const flip = gx(knee) > (GRAPH.x0 + GRAPH.x1) / 2;
+            out += `<text class="knee-text" x="${(gx(knee) + (flip ? -5 : 5)).toFixed(1)}" y="${GRAPH.y1 + 10}"${flip ? ' text-anchor="end"' : ''}>여기부터 빛이 남습니다</text>`;
+        }
+        out += `<circle class="trace-dot" cx="${gx(light()).toFixed(1)}" cy="${gy(a.rate).toFixed(1)}" r="5" fill="#ffd166"/>`;
+        graphGroup.innerHTML = out;
+    }
+
+    function render() {
+        const a = renderMain();
+        renderGraph(a);
+        lightOutput.textContent = String(light());
+        co2Output.textContent = String(co2());
+        tempOutput.textContent = `${temp()} ℃`;
+        stageBadge.textContent = `${a.rate.toFixed(0)} 개/분 · ${LIMIT_NAME[a.limiter]}`;
+        dataNote.innerHTML =
+            `<div class="data-row"><span class="data-name">각 조건의 한계</span><span class="data-val">빛 ${Math.min(V_MAX, a.byLight).toFixed(0)} · CO₂ ${Math.min(V_MAX, a.byCO2).toFixed(0)} → 더 작은 쪽인 ${a.cap.toFixed(0)} 이 상한</span></div>` +
+            `<div class="data-row"><span class="data-name">온도 보정</span><span class="data-val">${temp()} ℃ 에서 효율 ${(a.fT * 100).toFixed(0)}% (가장 좋은 온도 ${T_OPT} ℃)</span></div>` +
+            `<div class="data-row match"><span class="data-name">광합성량</span><span class="data-val">${a.cap.toFixed(0)} × ${(a.fT * 100).toFixed(0)}% = ${a.rate.toFixed(0)} 개/분</span></div>`;
+        return a;
+    }
+
+    const clearResult = () => { resultEmpty.hidden = false; resultContent.hidden = true; };
+
+    function check() {
+        const a = analyse();
+        resultEmpty.hidden = true;
+        resultContent.hidden = false;
+        valueA.textContent = `${a.rate.toFixed(0)} 개/분`;
+        valueB.textContent = LIMIT_NAME[a.limiter];
+        predictionResult.textContent = !prediction
+            ? '다음에는 결과를 먼저 예상해 보세요.'
+            : prediction === a.limiter ? '예상이 맞았습니다.'
+            : a.limiter === 'none' ? '지금은 어느 것도 부족하지 않아 최대입니다.' : '예상과 다른 결과입니다.';
+        let s = `빛은 ${Math.min(V_MAX, a.byLight).toFixed(0)}, 이산화탄소는 ${Math.min(V_MAX, a.byCO2).toFixed(0)} 만큼을 낼 수 있어 더 작은 ${a.cap.toFixed(0)} 이 상한이 됩니다. `;
+        s += `여기에 ${temp()} ℃ 의 효소 효율 ${(a.fT * 100).toFixed(0)}% 를 곱해 ${a.rate.toFixed(0)} 개/분이 나옵니다. `;
+        if (a.limiter === 'light') s += `지금은 빛이 제한 요인이라, 이산화탄소를 늘려도 거의 변하지 않습니다. 빛을 세게 해야 늘어납니다.`;
+        else if (a.limiter === 'co2') s += `지금은 이산화탄소가 제한 요인이라, 빛을 더 세게 해도 늘지 않습니다. 이산화탄소를 늘려야 합니다.`;
+        else if (a.limiter === 'temp') s += `지금은 온도가 제한 요인입니다. ${temp() > T_OPT ? '너무 높아 효소가 제 기능을 못 합니다.' : '너무 낮아 효소가 느리게 작동합니다.'}`;
+        else s += `세 조건이 모두 넉넉해 광합성량이 최대에 이르렀습니다.`;
+        explanation.textContent = s;
+    }
+
+    [lightRange, co2Range, tempRange].forEach(el => el.addEventListener('input', () => {
+        render(); if (!resultContent.hidden) check();
+    }));
+    predictionButtons.forEach(button => button.addEventListener('click', () => {
+        prediction = button.dataset.prediction;
+        predictionButtons.forEach(item => item.classList.toggle('selected', item === button));
+    }));
+    checkBtn.addEventListener('click', check);
+    resetBtn.addEventListener('click', () => {
+        lightRange.value = '60'; co2Range.value = '50'; tempRange.value = '30';
+        clearResult();
+        stageCaption.textContent = '조건을 하나씩 바꾸며 기포 수가 어떻게 달라지는지 보세요.';
+        render();
+    });
+
+    function shuffleQuizOptions(card) {
+        const optionGroup = card.querySelector('.quiz-options');
+        const options = Array.from(optionGroup.children);
+        for (let index = options.length - 1; index > 0; index -= 1) {
+            const randomIndex = Math.floor(Math.random() * (index + 1));
+            [options[index], options[randomIndex]] = [options[randomIndex], options[index]];
+        }
+        optionGroup.append(...options);
+    }
+
+    document.querySelectorAll('.quiz-card').forEach(card => {
+        shuffleQuizOptions(card);
+        const answerButton = card.querySelector('.answer-button');
+        const answerResult = card.querySelector('.answer-result');
+        const answerExplanation = card.querySelector('.answer-explanation');
+        answerButton.addEventListener('click', () => {
+            const selected = card.querySelector('input:checked');
+            if (!selected) {
+                delete card.dataset.state;
+                answerResult.textContent = '답을 먼저 선택하세요.';
+                return;
+            }
+            const correct = selected.value === card.dataset.answer;
+            card.dataset.state = correct ? 'correct' : 'incorrect';
+            answerResult.textContent = correct ? '맞았습니다.' : '다시 생각해 보세요.';
+            answerExplanation.hidden = !correct;
+            if (!correct) {
+                selected.checked = false;
+                selected.disabled = true;
+                answerResult.textContent = '다시 생각하고 다른 답을 골라보세요.';
+            }
+        });
+    });
+
+    window.__photoModel = {
+        V_MAX, K_LIGHT, K_CO2, T_OPT, analyse, tempFactor,
+        setLight(v) { lightRange.value = String(v); lightRange.dispatchEvent(new Event('input')); },
+        setCO2(v) { co2Range.value = String(v); co2Range.dispatchEvent(new Event('input')); },
+        setTemp(v) { tempRange.value = String(v); tempRange.dispatchEvent(new Event('input')); },
+        light, co2, temp, render,
+    };
+
+    resetBtn.click();
+});
