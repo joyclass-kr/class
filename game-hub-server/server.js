@@ -220,7 +220,7 @@ const staticAssetOptions = {
   }
 };
 
-const SITE_BACK_SCRIPT_TAG = '<script src="/assets/site-back-navigation.js" defer></script>';
+const SITE_BACK_SCRIPT_TAG = '<script data-site-back-navigation="true" src="/assets/site-back-navigation.js?v=20260825-circle-1" defer></script>';
 
 function sendSiteHtml(req, res, filepath, next) {
   fs.readFile(filepath, "utf8", (error, htmlSource) => {
