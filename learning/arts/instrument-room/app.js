@@ -21,11 +21,17 @@
         { id: "snare", name: "스네어", family: "WIRE + SHELL", key: "S", code: "KeyS", color: "#ff9d66" },
         { id: "hat", name: "닫힌 하이햇", family: "METAL", key: "D", code: "KeyD", color: "#e5ff75" },
         { id: "openhat", name: "열린 하이햇", family: "METAL", key: "F", code: "KeyF", color: "#f7db80" },
-        { id: "lowtom", name: "로우 탐", family: "MEMBRANE", key: "G", code: "KeyG", color: "#7bb7ff" },
+        { id: "lowtom", name: "플로어 탐", family: "MEMBRANE", key: "G", code: "KeyG", color: "#7bb7ff" },
         { id: "hightom", name: "하이 탐", family: "MEMBRANE", key: "H", code: "KeyH", color: "#9c91ff" },
-        { id: "crash", name: "크래시", family: "METAL", key: "J", code: "KeyJ", color: "#ffcf5c" },
-        { id: "ride", name: "라이드", family: "METAL", key: "K", code: "KeyK", color: "#f09cff" }
+        { id: "midtom", name: "미드 탐", family: "MEMBRANE", key: "J", code: "KeyJ", color: "#77d4ff" },
+        { id: "crash", name: "크래시", family: "METAL", key: "K", code: "KeyK", color: "#ffcf5c" },
+        { id: "ride", name: "라이드", family: "METAL", key: "L", code: "KeyL", color: "#f09cff" }
     ];
+
+    function activeDrums() {
+        const extendedKit = state.currentModel && ["rock-kit", "metal-kit"].includes(state.currentModel.id);
+        return extendedKit ? DRUMS : DRUMS.filter(function (drum) { return drum.id !== "midtom"; });
+    }
     const INSTRUMENT_COPY = {
         piano: { name: "그랜드 피아노", badge: "SAMPLED GRAND", family: "ACOUSTIC", model: "88 GRAND", description: "화성학 연습실과 같은 피아노예요. 건반을 누르고 스페이스바로 서스테인을 사용해 보세요." },
         bass: { name: "모델링 베이스", badge: "DIGITAL WAVEGUIDE", family: "ELECTRIC BASS", model: "4 STRING", description: "현의 길이와 감쇠, 피킹 위치를 실시간으로 계산해요. A–K 키로도 연주할 수 있어요." },
@@ -78,11 +84,11 @@
             { id: "tuba", name: "튜바", tag: "LOW BRASS", engine: "guitar", stage: "brass", art: "assets/instruments/tuba-expressive.png", badge: "LOW BRASS", model: "TUBA", range: [26, 65], size: "전체 높이 약 100 cm", visualScale: .62, scalePercent: 56, expression: "호흡 압력", description: "낮은 금관의 공기 흐름과 어택을 다루는 튜바 화면이에요." }
         ],
         percussion: [
-            { id: "rock-kit", name: "Rock Kit", tag: "DRUM SET", engine: "drums", stage: "drums", art: "assets/instruments/drum-rock-kit.png", badge: "ACOUSTIC KIT", model: "ROCK", description: "큰 킥과 2개의 랙 탐을 갖춘 표준 5피스 락 세트예요." },
-            { id: "metal-kit", name: "Metal Kit", tag: "DRUM SET", engine: "drums", stage: "drums", art: "assets/instruments/drum-metal-kit.png", badge: "ACOUSTIC KIT", model: "METAL", description: "더블 킥·여러 탐·다수의 심벌을 갖춘 대형 메탈 세트예요." },
-            { id: "pop-kit", name: "Pop Kit", tag: "DRUM SET", engine: "drums", stage: "drums", art: "assets/instruments/drum-pop-kit.png", badge: "ACOUSTIC KIT", model: "POP", description: "구성이 단순하고 정돈된 소형 팝 세트예요." },
-            { id: "jazz-kit", name: "Jazz Kit", tag: "DRUM SET", engine: "drums", stage: "drums", art: "assets/instruments/drum-jazz-kit.png", badge: "ACOUSTIC KIT", model: "JAZZ", description: "작은 킥과 큰 라이드가 중심인 전통 재즈 세트예요." },
-            { id: "funk-kit", name: "Funk Kit", tag: "DRUM SET", engine: "drums", stage: "drums", art: "assets/instruments/drum-funk-kit.png", badge: "ACOUSTIC KIT", model: "FUNK", description: "얕은 셸과 낮은 심벌 배치의 타이트한 펑크 세트예요." },
+            { id: "rock-kit", name: "Rock Kit", tag: "DRUM SET", engine: "drums", stage: "drums", art: "assets/instruments/drum-rock-kit.webp", badge: "ACOUSTIC KIT", model: "ROCK", description: "큰 킥과 2개의 랙 탐을 갖춘 표준 5피스 락 세트예요." },
+            { id: "metal-kit", name: "Metal Kit", tag: "DRUM SET", engine: "drums", stage: "drums", art: "assets/instruments/drum-metal-kit.webp", badge: "ACOUSTIC KIT", model: "METAL", description: "단일 킥·더블 페달·여러 탐과 심벌을 갖춘 메탈 세트예요." },
+            { id: "pop-kit", name: "Pop Kit", tag: "DRUM SET", engine: "drums", stage: "drums", art: "assets/instruments/drum-pop-kit.webp", badge: "ACOUSTIC KIT", model: "POP", description: "구성이 단순하고 정돈된 소형 팝 세트예요." },
+            { id: "jazz-kit", name: "Jazz Kit", tag: "DRUM SET", engine: "drums", stage: "drums", art: "assets/instruments/drum-jazz-kit.webp", badge: "ACOUSTIC KIT", model: "JAZZ", description: "작은 킥과 큰 라이드가 중심인 전통 재즈 세트예요." },
+            { id: "funk-kit", name: "Funk Kit", tag: "DRUM SET", engine: "drums", stage: "drums", art: "assets/instruments/drum-funk-kit.webp", badge: "ACOUSTIC KIT", model: "FUNK", description: "얕은 셸과 낮은 심벌 배치의 타이트한 펑크 세트예요." },
             { id: "timpani", name: "팀파니", tag: "ORCHESTRAL", engine: "drums", stage: "timpani", art: "assets/instruments/timpani-bank.png", pitched: true, range: [38, 60], size: "4대 배치 너비 약 290 cm", visualScale: .94, scalePercent: 83, badge: "ORCHESTRAL PERCUSSION", model: "TIMPANI", description: "건반으로 교육용 반음계 음역을 연주하고 음높이·댐핑을 살펴봐요." },
             { id: "glockenspiel", name: "글로켄슈필", tag: "KEYBOARD PERC.", engine: "drums", stage: "metal", art: "assets/instruments/glockenspiel-concert.png", pitched: true, range: [77, 108], size: "본체 너비 약 80 cm", visualScale: .54, scalePercent: 23, badge: "MALLET PERCUSSION", model: "GLOCKENSPIEL", description: "금속 음판의 실제 음역만 건반으로 연주해요." },
             { id: "marimba", name: "마림바", tag: "KEYBOARD PERC.", engine: "drums", stage: "mallet", art: "assets/instruments/marimba-concert.png", pitched: true, range: [36, 96], size: "본체 너비 약 250 cm", visualScale: .9, scalePercent: 71, badge: "MALLET PERCUSSION", model: "MARIMBA", description: "넓은 목재 음판의 실제 음역만 건반으로 연주해요." },
@@ -385,7 +391,7 @@
         if (!context) return Promise.reject(new Error("AudioContext unavailable"));
         if (!context.audioWorklet || typeof window.AudioWorkletNode !== "function") return Promise.reject(new Error("AudioWorklet unavailable"));
         if (!state.workletModuleLoading) {
-            state.workletModuleLoading = context.audioWorklet.addModule("instrument-worklet-v2.js?v=20260824-fast-adsr");
+            state.workletModuleLoading = context.audioWorklet.addModule("instrument-worklet-v2.js?v=20260825-drum-map");
         }
         return state.workletModuleLoading;
     }
@@ -588,8 +594,8 @@
             const decay = (id === "hat" ? .11 : .72) * scale;
             metalModes(2950 + tone * 900, decay, velocity, now);
             noiseBurst(decay * .72, velocity * .65, 5200 + tone * 1800, now, id === "openhat" ? .05 : .01);
-        } else if (id === "lowtom" || id === "hightom") {
-            const base = id === "lowtom" ? 92 : 142;
+        } else if (id === "lowtom" || id === "midtom" || id === "hightom") {
+            const base = id === "lowtom" ? 92 : id === "midtom" ? 116 : 142;
             modalTone(base, .58 * scale, .58, velocity, now, 1.58);
             modalTone(base * 1.47, .31 * scale, .15, velocity, now, 1.12);
         } else {
@@ -609,7 +615,7 @@
         const source = createNoiseSource();
         const filter = context.createBiquadFilter();
         const gain = context.createGain();
-        const low = id === "kick" || id === "lowtom" || id === "hightom";
+        const low = id === "kick" || id === "lowtom" || id === "midtom" || id === "hightom";
         filter.type = low ? "lowpass" : "highpass";
         filter.frequency.value = low ? (id === "kick" ? 1250 : 1900) : 2400;
         gain.gain.setValueAtTime(.0001, start);
@@ -706,7 +712,7 @@
             ? '<div class="linn-head"><b>DIGITAL DRUM COMPUTER</b><i>120.0</i></div><div class="linn-screen">PATTERN 01 · 12 BIT</div><div class="machine-pads"></div><div class="linn-transport"><span>REW</span><span>STOP</span><span>PLAY</span><span>REC</span></div>'
             : '<div class="machine-head"><b>ANALOG RHYTHM</b><small>PATTERN 01</small></div><div class="analog-knobs"><i></i><i></i><i></i><i></i><i></i><i></i></div><div class="machine-pads"></div><div class="step-row"></div>';
         const padBox = elements.machineDeck.querySelector(".machine-pads");
-        DRUMS.forEach(function (drum) {
+        activeDrums().forEach(function (drum) {
             const pad = document.createElement("span"); pad.textContent = drum.name; padBox.appendChild(pad);
         });
         const stepRow = elements.machineDeck.querySelector(".step-row");
@@ -794,6 +800,7 @@
         updateInstrumentStage(model);
         renderKeyboardPatchControls(model);
         renderDrumControlCopy(model);
+        renderDrumPads();
         renderModelBrowser();
     }
 
@@ -982,7 +989,9 @@
 
     function renderDrumPads() {
         elements.drumPads.innerHTML = "";
-        DRUMS.forEach(function (drum) {
+        const drums = activeDrums();
+        elements.drumPads.classList.toggle("extended", drums.length === 9);
+        drums.forEach(function (drum) {
             const button = document.createElement("button");
             button.type = "button";
             button.className = "drum-pad";
@@ -1101,7 +1110,7 @@
             return;
         }
         if (state.instrument === "drums" && !isPitchedPercussion()) {
-            const drum = DRUMS.find(function (item) { return item.code === event.code; });
+            const drum = activeDrums().find(function (item) { return item.code === event.code; });
             if (!drum) return;
             event.preventDefault();
             triggerDrumV2(drum.id, .82);
