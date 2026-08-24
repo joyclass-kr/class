@@ -17,9 +17,9 @@
 
 | 그림 | 실제 칸 비율 | 요청할 비율 |
 |---|---|---|
-| 본문 그림 10장 | 1.92 : 1 | **가로 16 : 세로 9** |
+| 본문 그림 10장 | 2.14 : 1 | **가로 2 : 세로 1** |
 | 표지 `cover.png` | 0.67 : 1 | **세로 2 : 3** (세로로 긴 그림) |
-| 마지막 `end.png` | 1.76 : 1 | **가로 16 : 세로 9** |
+| 마지막 `end.png` | 2.14 : 1 | **가로 2 : 세로 1** |
 
 제미나이는 가로 그림을 1376×768(16:9)로 내보냅니다. 칸이 1.92:1이라 위아래가 3.5퍼센트쯤 잘리는데
 눈에 띄지 않는 정도예요. 4:3으로 만들면 위아래가 삼십 퍼센트쯤 잘려나가니 그것만 피하세요.
@@ -68,7 +68,7 @@ his hands on his knees, looking up. Pine trees frame both sides. Warm gold light
 against cool blue-green water. Awe-struck and magical.
 ```
 
-## 본문 10장 (모두 가로 16:9)
+## 본문 10장 (모두 가로 2:1)
 
 ### `01-woodcutter.png` — 가난한 나무꾼과 낡은 쇠도끼
 
@@ -171,7 +171,7 @@ glow is shrinking. Cold blue-grey light returning.
 
 ---
 
-## 마지막 장 — `end.png` (가로 16:9)
+## 마지막 장 — `end.png` (가로 2:1)
 
 나무꾼이 산으로 돌아간다.
 

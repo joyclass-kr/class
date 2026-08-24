@@ -12,11 +12,11 @@
 
 | 그림 | 실제 칸 비율 | 요청할 비율 |
 |---|---|---|
-| 본문 그림 16장 | 1.92 : 1 | **가로 16 : 세로 9** |
+| 본문 그림 16장 | 2.14 : 1 | **가로 2 : 세로 1** |
 | 표지 `cover.png` | 0.67 : 1 | **세로 2 : 3** |
-| 마지막 `end.png` | 1.76 : 1 | **가로 16 : 세로 9** |
+| 마지막 `end.png` | 2.14 : 1 | **가로 2 : 세로 1** |
 
-제미나이는 가로 그림을 1376×768(16:9)로 내보냅니다. 칸이 1.92:1이라 위아래가 3.5퍼센트쯤 잘리는데, 눈에 띄지 않는 정도라 그대로 쓰면 됩니다. 4:3으로 만들면 위아래가 삼십 퍼센트쯤 잘려나가니 그것만 피하세요. 인물을 가운데에 몰지 말고 좌우로 나눠 배치하세요.
+그림칸은 **2.14 : 1**이라 아주 길쭉합니다. 제미나이가 기본으로 내보내는 16:9는 위아래가 십육 퍼센트쯤 잘려 나가니, **가로 2 : 세로 1**로 만들어 달라고 적어 주세요. 그러면 잘리는 것이 육 퍼센트로 줄어듭니다. 4:3으로 만들면 삼십 퍼센트가 넘게 잘리니 그것만은 꼭 피하세요. 좌우로 넓은 그림이라 인물을 가운데에 몰지 말고 왼쪽과 오른쪽에 나눠 배치하세요.
 
 ## 이 책만의 요령
 
@@ -68,7 +68,7 @@ horseback. Above them, filling the upper third, an enormous northern sky of
 racing cloud and low gold light. Wide, strange and thrilling.
 ```
 
-## 본문 열여섯 장 (모두 가로 16:9)
+## 본문  장 (모두 가로 2:1)
 
 ### `01-yuhwa.png` — 하백의 딸 유화
 
@@ -224,7 +224,7 @@ bowed. Around them, the three old friends stand with their hands over their mout
 Warm firelight. Overwhelming.
 ```
 
-### `end.png` — 마지막 (가로 16:9)
+### `end.png` — 마지막 (가로 2:1)
 
 ```
 A steep green valley at dawn with no people. A new timber palisade on a ridge,

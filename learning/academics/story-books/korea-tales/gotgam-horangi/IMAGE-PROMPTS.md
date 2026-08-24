@@ -17,9 +17,9 @@
 
 | 그림 | 실제 칸 비율 | 요청할 비율 |
 |---|---|---|
-| 본문 그림 10장 (`01`~`10`) | 1.92 : 1 | **가로 16 : 세로 9** |
+| 본문 그림 10장 (`01`~`10`) | 2.14 : 1 | **가로 2 : 세로 1** |
 | 표지 `cover.png` | 0.67 : 1 | **세로 2 : 3** (세로로 긴 그림) |
-| 마지막 `end.png` | 1.76 : 1 | **가로 16 : 세로 9** |
+| 마지막 `end.png` | 2.14 : 1 | **가로 2 : 세로 1** |
 
 제미나이는 가로 그림을 1376×768(16:9)로 내보냅니다. 칸이 1.92:1이라 위아래가 3.5퍼센트쯤 잘리는데, 눈에 띄지 않는 정도라 그대로 쓰면 됩니다. 4:3으로 만들면 위아래가 삼십 퍼센트쯤 잘려나가니 그것만 피하세요. 인물을 가운데에 몰지 말고 좌우로 나눠 배치하면 훨씬 자연스러워요.
 
@@ -61,7 +61,7 @@ A single dried persimmon sits on the wall beside him, glowing faintly. Playful
 and mysterious.
 ```
 
-## 본문 열 장 (모두 가로 16:9)
+## 본문 열 장 (모두 가로 2:1)
 
 ### `01-hungry.png` — 굶주린 호랑이가 산을 내려온다
 
@@ -168,7 +168,7 @@ ground. A wide empty gap between them in the middle. Pink and gold morning sky,
 funny and energetic.
 ```
 
-## 마지막 — `end.png` (가로 16:9)
+## 마지막 — `end.png` (가로 2:1)
 
 ```
 A quiet Korean farmyard in the early morning, no people. A wooden tray of dried
