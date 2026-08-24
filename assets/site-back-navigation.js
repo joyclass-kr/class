@@ -4,14 +4,18 @@
   if (window.self !== window.top || document.querySelector("site-back-navigation")) return;
   if (["/", "/index.html"].includes(location.pathname)) return;
 
-  const LEGACY_LABEL = /^(?:[←‹◀🏠🏡🌌]\s*)?(?:(?:포털|교사|교사\s*도구|우주\s*관찰)\s*)?(?:메인|홈)(?:\s*화면)?(?:\s*으로)?$/;
-  const legacyControls = [...document.querySelectorAll("a, button")].filter(element => {
-    const label = String(element.textContent || "").replace(/\s+/g, " ").trim();
-    return LEGACY_LABEL.test(label);
-  });
-
   let fallbackHref = "/";
-  for (const control of legacyControls) {
+  const LEGACY_LABEL = /^(?:[←‹◀🏠🏡🌌]\s*)?(?:(?:메인(?:\s*(?:페이지|화면))?|홈|학습\s*홈|기초학력(?:\s*목록)?|연산|학생\s*화면|교사\s*메인|교사\s*도구\s*홈|포털\s*(?:메인|홈)|우주\s*관찰\s*(?:메인|홈)|첫\s*화면|(?:게임\s*)?(?:로비|대기실)(?:\s*로)?(?:\s*돌아가기)?|RETURN\s+TO\s+(?:THE\s+)?LOBBY|BACK\s+TO\s+(?:THE\s+)?LOBBY)(?:\s*(?:으)?로)?(?:\s*돌아가기)?)$/i;
+  const normalizeLabel = value => String(value || "").replace(/\s+/g, " ").trim();
+
+  const isLegacyControl = control => {
+    const textLabel = normalizeLabel(control.textContent);
+    const ariaLabel = normalizeLabel(control.getAttribute("aria-label"));
+    return LEGACY_LABEL.test(textLabel) || LEGACY_LABEL.test(ariaLabel);
+  };
+
+  const hideLegacyControl = control => {
+    if (control.dataset.siteBackLegacy === "true" || !isLegacyControl(control)) return;
     if (control instanceof HTMLAnchorElement && control.href) {
       try {
         const target = new URL(control.href, location.href);
@@ -21,7 +25,32 @@
     control.dataset.siteBackLegacy = "true";
     control.setAttribute("aria-hidden", "true");
     control.setAttribute("tabindex", "-1");
-  }
+  };
+
+  const hideLegacyControls = root => {
+    if (!(root instanceof Element)) return;
+    const containingControl = root.closest("a, button");
+    if (containingControl) hideLegacyControl(containingControl);
+    root.querySelectorAll("a, button").forEach(hideLegacyControl);
+  };
+
+  hideLegacyControls(document.documentElement);
+
+  const legacyObserver = new MutationObserver(mutations => {
+    for (const mutation of mutations) {
+      if (mutation.type === "attributes") hideLegacyControls(mutation.target);
+      mutation.addedNodes.forEach(node => {
+        if (node instanceof Element) hideLegacyControls(node);
+        else if (node.parentElement) hideLegacyControls(node.parentElement);
+      });
+    }
+  });
+  legacyObserver.observe(document.body, {
+    childList: true,
+    subtree: true,
+    attributes: true,
+    attributeFilter: ["aria-label"]
+  });
 
   const legacyStyle = document.createElement("style");
   legacyStyle.textContent = "[data-site-back-legacy]{display:none!important}";
