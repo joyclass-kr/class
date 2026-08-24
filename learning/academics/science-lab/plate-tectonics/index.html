@@ -1,0 +1,172 @@
+<!doctype html>
+<html lang="ko">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="theme-color" content="#07131c">
+    <title>과학 실험실</title>
+    <meta name="description" content="판 경계의 종류에 따라 판이 어떻게 움직이고 지진이 어느 깊이에서 일어나는지 확인하는 중학교 과학 모의실험">
+    <link rel="stylesheet" as="style" crossorigin href="https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.9/dist/web/static/pretendard.css">
+    <link rel="stylesheet" href="styles.css?v=1">
+    <link rel="stylesheet" href="plate-visual.css?v=1">
+    <link rel="stylesheet" href="quiz.css?v=1">
+</head>
+<body>
+    <main>
+        <header class="page-header">
+            <div class="title-row">
+                <a href="../">← 과학 실험실</a>
+                <h1>지진과 판의 이동</h1>
+            </div>
+            <div class="grade-tags"><span>중학교</span><span>지구과학</span></div>
+        </header>
+
+        <ol class="method-steps" aria-label="실험 방법">
+            <li>판 경계의 종류를 고릅니다.</li>
+            <li>판이 움직이는 빠르기를 정합니다.</li>
+            <li>시간을 보내며 판이 얼마나 움직이는지 봅니다.</li>
+            <li>지진이 어느 깊이에서 일어나는지 확인합니다.</li>
+        </ol>
+
+        <div class="experiment-layout">
+            <section class="panel control-panel" aria-labelledby="control-title">
+                <h2 id="control-title">실험 조건</h2>
+                <p class="water-standard">판은 1년에 몇 cm씩, 아주 오랫동안 움직입니다</p>
+
+                <fieldset class="pick-field">
+                    <legend>판 경계의 종류</legend>
+                    <div class="pick-buttons">
+                        <button type="button" data-kind="diverge">발산형 경계<small>해령 — 서로 멀어짐</small></button>
+                        <button type="button" data-kind="converge">수렴형 경계<small>해구 — 서로 가까워짐</small></button>
+                        <button type="button" data-kind="transform">보존형 경계<small>변환 단층 — 어긋남</small></button>
+                        <button type="button" data-kind="inside">판의 내부<small>경계가 아닌 곳</small></button>
+                    </div>
+                </fieldset>
+
+                <div class="range-heading">
+                    <label for="speedRange">판의 이동 속도</label>
+                    <output id="speedOutput" for="speedRange">5 cm/년</output>
+                </div>
+                <input id="speedRange" type="range" min="1" max="10" step="1" value="5">
+                <div class="range-scale" aria-hidden="true"><span>1</span><span>5</span><span>10</span></div>
+
+                <div class="range-heading amount-heading">
+                    <label for="timeRange">지난 시간</label>
+                    <output id="timeOutput" for="timeRange">0 만년</output>
+                </div>
+                <input id="timeRange" type="range" min="0" max="1000" step="10" value="0">
+                <div class="range-scale" aria-hidden="true"><span>0</span><span>500만년</span><span>1000만년</span></div>
+
+                <fieldset class="prediction-field">
+                    <legend>이곳의 지진은 어떨까요?</legend>
+                    <div class="prediction-buttons three">
+                        <button type="button" data-prediction="shallow">얕은 지진만</button>
+                        <button type="button" data-prediction="deep">깊은 지진까지</button>
+                        <button type="button" data-prediction="none">지진이 거의 없다</button>
+                    </div>
+                </fieldset>
+
+                <button class="run-button" id="checkBtn" type="button">시간 보내기</button>
+                <button class="reset-button" id="resetBtn" type="button">처음으로</button>
+
+                <section class="result-box" aria-labelledby="result-title" aria-live="polite">
+                    <h3 id="result-title">관찰 결과</h3>
+                    <p id="resultEmpty">경계를 고르고 시간을 보내 보세요.</p>
+                    <div id="resultContent" hidden>
+                        <div class="result-numbers">
+                            <article><span>움직인 거리</span><strong id="valueA">-</strong></article>
+                            <article><span>가장 깊은 지진</span><strong id="valueB">-</strong></article>
+                        </div>
+                        <p class="prediction-result" id="predictionResult"></p>
+                        <p class="explanation" id="elementaryExplanation"></p>
+                    </div>
+                </section>
+            </section>
+
+            <section class="panel plate-stage" aria-label="관찰 화면">
+                <div class="stage-heading"><h2>관찰</h2><span id="stageBadge">-</span></div>
+
+                <div class="stage-views">
+                    <svg class="main-svg" viewBox="0 0 460 214" aria-hidden="true">
+                        <defs><clipPath id="sectionClip"><rect x="30" y="26" width="400" height="166"/></clipPath></defs>
+                        <g id="mainGroup"></g>
+                    </svg>
+                    <svg class="graph-svg" viewBox="0 0 460 196" aria-hidden="true">
+                        <g id="graphGroup"></g>
+                    </svg>
+                </div>
+
+                <p class="stage-caption" id="stageCaption">지진이 일어난 곳에 점을 찍었습니다. 깊이가 어떻게 다른지 보세요.</p>
+                <div class="data-note" id="dataNote"></div>
+            </section>
+        </div>
+
+        <section class="panel meaning-panel">
+            <h2>실험 결과의 의미</h2>
+            <div class="meaning-body">
+                <p><strong>판 경계</strong> 지진과 화산은 판의 경계에 몰려 있습니다. 판 안쪽에서는 지진이 거의 일어나지 않습니다.</p>
+                <p><strong>수렴형 경계</strong> 한 판이 다른 판 아래로 비스듬히 들어가기 때문에, 들어간 판을 따라 깊은 곳에서도 지진이 일어납니다.</p>
+                <p><strong>발산형·보존형 경계</strong> 판이 서로 멀어지거나 어긋나기만 하므로 얕은 곳에서만 지진이 일어납니다.</p>
+            </div>
+        </section>
+
+        <details class="quiz-section" aria-labelledby="quiz-title">
+            <summary class="quiz-heading"><h2 id="quiz-title">확인 문제</h2><span>4문제</span></summary>
+            <div class="quiz-grid">
+                <article class="quiz-card" data-answer="c">
+                    <h3>깊은 곳에서도 지진이 일어나는 경계는?</h3>
+                    <div class="quiz-options">
+                        <label><input type="radio" name="q1" value="a"> 발산형 경계</label>
+                        <label><input type="radio" name="q1" value="b"> 보존형 경계</label>
+                        <label><input type="radio" name="q1" value="c"> 수렴형 경계</label>
+                        <label><input type="radio" name="q1" value="d"> 판의 내부</label>
+                    </div>
+                    <button class="answer-button" type="button">정답 확인</button>
+                    <p class="answer-result" aria-live="polite"></p>
+                    <p class="answer-explanation" hidden>수렴형 경계에서는 한 판이 다른 판 아래로 비스듬히 들어갑니다. 들어간 판을 따라 깊은 곳까지 지진이 일어납니다.</p>
+                </article>
+
+                <article class="quiz-card" data-answer="b">
+                    <h3>해령에서 새로 만들어진 바다 밑바닥은 멀어질수록?</h3>
+                    <div class="quiz-options">
+                        <label><input type="radio" name="q2" value="a"> 나이가 어려진다</label>
+                        <label><input type="radio" name="q2" value="b"> 나이가 많아진다</label>
+                        <label><input type="radio" name="q2" value="c"> 나이가 같다</label>
+                        <label><input type="radio" name="q2" value="d"> 나이를 알 수 없다</label>
+                    </div>
+                    <button class="answer-button" type="button">정답 확인</button>
+                    <p class="answer-result" aria-live="polite"></p>
+                    <p class="answer-explanation" hidden>해령에서 새 지각이 만들어져 양옆으로 밀려나므로, 멀리 있을수록 먼저 만들어진 오래된 지각입니다. 해령 양쪽이 좌우 대칭인 것도 이 때문입니다.</p>
+                </article>
+
+                <article class="quiz-card" data-answer="d">
+                    <h3>지진과 화산이 주로 일어나는 곳은?</h3>
+                    <div class="quiz-options">
+                        <label><input type="radio" name="q3" value="a"> 판의 한가운데</label>
+                        <label><input type="radio" name="q3" value="b"> 바다 한가운데면 어디든</label>
+                        <label><input type="radio" name="q3" value="c"> 높은 산이면 어디든</label>
+                        <label><input type="radio" name="q3" value="d"> 판과 판이 만나는 경계</label>
+                    </div>
+                    <button class="answer-button" type="button">정답 확인</button>
+                    <p class="answer-result" aria-live="polite"></p>
+                    <p class="answer-explanation" hidden>판이 서로 부딪치거나 벌어지거나 어긋나는 경계에 힘이 쌓입니다. 그래서 지진대와 화산대가 판 경계를 따라 띠 모양으로 이어집니다.</p>
+                </article>
+
+                <article class="quiz-card" data-answer="a">
+                    <h3>1년에 5 cm씩 움직이는 판은 100만 년 동안 얼마나 갈까요?</h3>
+                    <div class="quiz-options">
+                        <label><input type="radio" name="q4" value="a"> 50 km</label>
+                        <label><input type="radio" name="q4" value="b"> 5 km</label>
+                        <label><input type="radio" name="q4" value="c"> 500 km</label>
+                        <label><input type="radio" name="q4" value="d"> 5 m</label>
+                    </div>
+                    <button class="answer-button" type="button">정답 확인</button>
+                    <p class="answer-result" aria-live="polite"></p>
+                    <p class="answer-explanation" hidden>5 cm × 100만 = 500만 cm입니다. 100 cm가 1 m이고 1000 m가 1 km이므로 5만 m, 곧 50 km입니다.</p>
+                </article>
+            </div>
+        </details>
+    </main>
+    <script src="app.js?v=2"></script>
+</body>
+</html>
