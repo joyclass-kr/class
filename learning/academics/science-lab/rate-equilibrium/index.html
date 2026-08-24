@@ -1,0 +1,154 @@
+<!doctype html>
+<html lang="ko">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="theme-color" content="#07131c">
+    <title>과학 실험실</title>
+    <meta name="description" content="활성화 에너지와 온도로 반응 속도가 얼마나 달라지는지, 이산화 질소 평형이 온도와 압력에 따라 어느 쪽으로 이동하는지 확인하는 고등학교 과학 모의실험">
+    <link rel="stylesheet" as="style" crossorigin href="https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.9/dist/web/static/pretendard.css">
+    <link rel="stylesheet" href="styles.css?v=1">
+    <link rel="stylesheet" href="rate-visual.css?v=1">
+    <link rel="stylesheet" href="quiz.css?v=1">
+</head>
+<body>
+    <main>
+        <header class="page-header">
+            <div class="title-row">
+                <a href="../">← 과학 실험실</a>
+                <h1>반응 열·속도·평형</h1>
+            </div>
+            <div class="grade-tags"><span>고등학교</span><span>화학</span></div>
+        </header>
+
+        <ol class="method-steps" aria-label="실험 방법">
+            <li>속도와 평형 가운데 하나를 고릅니다.</li>
+            <li>온도와 촉매 조건을 정합니다.</li>
+            <li>활성화 에너지와 반응열을 확인합니다.</li>
+            <li>평형이 어느 쪽으로 이동하는지 봅니다.</li>
+        </ol>
+
+        <div class="experiment-layout">
+            <section class="panel control-panel" aria-labelledby="control-title">
+                <h2 id="control-title">실험 조건</h2>
+                <p class="water-standard" id="methodHint">기준은 25 ℃, 촉매 없음입니다</p>
+
+                <fieldset class="mode-field">
+                    <legend>무엇을 볼까요</legend>
+                    <div class="mode-buttons">
+                        <button type="button" data-mode="rate">반응 속도<small>활성화 에너지와 온도</small></button>
+                        <button type="button" data-mode="eq">화학 평형<small>2NO₂ ⇌ N₂O₄</small></button>
+                    </div>
+                </fieldset>
+
+                <div id="controlArea"></div>
+
+                <fieldset class="prediction-field">
+                    <legend id="predictionLegend">어떻게 될까요?</legend>
+                    <div class="prediction-buttons three" id="predictionArea"></div>
+                </fieldset>
+
+                <button class="run-button" id="checkBtn" type="button">결과 보기</button>
+                <button class="reset-button" id="resetBtn" type="button">처음으로</button>
+
+                <section class="result-box" aria-labelledby="result-title" aria-live="polite">
+                    <h3 id="result-title">관찰 결과</h3>
+                    <p id="resultEmpty">조건을 정하고 결과를 확인해 보세요.</p>
+                    <div id="resultContent" hidden>
+                        <div class="result-numbers">
+                            <article><span id="labelA">값</span><strong id="valueA">-</strong></article>
+                            <article><span id="labelB">값</span><strong id="valueB">-</strong></article>
+                        </div>
+                        <p class="prediction-result" id="predictionResult"></p>
+                        <p class="explanation" id="elementaryExplanation"></p>
+                    </div>
+                </section>
+            </section>
+
+            <section class="panel rate-stage" aria-label="관찰 화면">
+                <div class="stage-heading"><h2>관찰</h2><span id="stageBadge">-</span></div>
+
+                <div class="stage-views">
+                    <svg class="main-svg" viewBox="0 0 460 214" aria-hidden="true">
+                        <defs><clipPath id="stageClip"><rect x="20" y="14" width="420" height="186"/></clipPath></defs>
+                        <g id="mainGroup"></g>
+                    </svg>
+                    <svg class="graph-svg" viewBox="0 0 460 196" aria-hidden="true">
+                        <g id="graphGroup"></g>
+                    </svg>
+                </div>
+
+                <p class="stage-caption" id="stageCaption">촉매는 활성화 에너지만 낮출 뿐 반응열은 바꾸지 못합니다.</p>
+                <div class="data-note" id="dataNote"></div>
+            </section>
+        </div>
+
+        <section class="panel meaning-panel">
+            <h2>실험 결과의 의미</h2>
+            <div class="meaning-body">
+                <p><strong>활성화 에너지</strong> 반응이 일어나려면 넘어야 하는 언덕입니다. 온도를 올리면 이 언덕을 넘을 수 있는 분자가 급격히 늘어 속도가 크게 빨라집니다.</p>
+                <p><strong>촉매</strong> 더 낮은 언덕의 다른 길을 열어 줍니다. 반응물과 생성물의 에너지는 그대로이므로 반응열은 달라지지 않습니다.</p>
+                <p><strong>르샤틀리에 원리</strong> 평형에 변화를 주면 그 변화를 줄이는 쪽으로 이동합니다. 온도를 올리면 흡열 쪽으로, 압력을 올리면 기체 몰수가 적은 쪽으로 이동합니다.</p>
+            </div>
+        </section>
+
+        <details class="quiz-section" aria-labelledby="quiz-title">
+            <summary class="quiz-heading"><h2 id="quiz-title">확인 문제</h2><span>4문제</span></summary>
+            <div class="quiz-grid">
+                <article class="quiz-card" data-answer="b">
+                    <h3>촉매를 넣으면 달라지는 것은?</h3>
+                    <div class="quiz-options">
+                        <label><input type="radio" name="q1" value="a"> 반응열</label>
+                        <label><input type="radio" name="q1" value="b"> 활성화 에너지</label>
+                        <label><input type="radio" name="q1" value="c"> 반응물의 에너지</label>
+                        <label><input type="radio" name="q1" value="d"> 생성물의 에너지</label>
+                    </div>
+                    <button class="answer-button" type="button">정답 확인</button>
+                    <p class="answer-result" aria-live="polite"></p>
+                    <p class="answer-explanation" hidden>촉매는 활성화 에너지가 더 낮은 다른 경로를 열어 줍니다. 반응물과 생성물의 에너지는 그대로이므로 반응열 ΔH는 변하지 않습니다.</p>
+                </article>
+
+                <article class="quiz-card" data-answer="c">
+                    <h3>2NO₂ ⇌ N₂O₄ (발열)에서 온도를 올리면?</h3>
+                    <div class="quiz-options">
+                        <label><input type="radio" name="q2" value="a"> 무색이 진해진다</label>
+                        <label><input type="radio" name="q2" value="b"> 색이 변하지 않는다</label>
+                        <label><input type="radio" name="q2" value="c"> 갈색이 진해진다</label>
+                        <label><input type="radio" name="q2" value="d"> 반응이 멈춘다</label>
+                    </div>
+                    <button class="answer-button" type="button">정답 확인</button>
+                    <p class="answer-result" aria-live="polite"></p>
+                    <p class="answer-explanation" hidden>정반응이 발열이므로 온도를 올리면 흡열인 역반응 쪽으로 이동합니다. 갈색인 NO₂가 늘어 색이 진해집니다.</p>
+                </article>
+
+                <article class="quiz-card" data-answer="a">
+                    <h3>2NO₂ ⇌ N₂O₄ 에서 부피를 줄여 압력을 높이면?</h3>
+                    <div class="quiz-options">
+                        <label><input type="radio" name="q3" value="a"> 기체 몰수가 적은 N₂O₄ 쪽으로 이동한다</label>
+                        <label><input type="radio" name="q3" value="b"> NO₂ 쪽으로 이동한다</label>
+                        <label><input type="radio" name="q3" value="c"> 이동하지 않는다</label>
+                        <label><input type="radio" name="q3" value="d"> 평형 상수가 커진다</label>
+                    </div>
+                    <button class="answer-button" type="button">정답 확인</button>
+                    <p class="answer-result" aria-live="polite"></p>
+                    <p class="answer-explanation" hidden>압력을 높이면 압력을 낮추는 쪽, 곧 기체 몰수가 적은 쪽으로 이동합니다. 2몰이 1몰이 되는 N₂O₄ 쪽입니다. 평형 상수는 온도만이 바꿉니다.</p>
+                </article>
+
+                <article class="quiz-card" data-answer="d">
+                    <h3>온도를 10 ℃ 올렸을 때 반응이 훨씬 빨라지는 까닭은?</h3>
+                    <div class="quiz-options">
+                        <label><input type="radio" name="q4" value="a"> 분자 수가 늘어서</label>
+                        <label><input type="radio" name="q4" value="b"> 활성화 에너지가 낮아져서</label>
+                        <label><input type="radio" name="q4" value="c"> 반응열이 커져서</label>
+                        <label><input type="radio" name="q4" value="d"> 활성화 에너지를 넘는 분자의 비율이 급격히 늘어서</label>
+                    </div>
+                    <button class="answer-button" type="button">정답 확인</button>
+                    <p class="answer-result" aria-live="polite"></p>
+                    <p class="answer-explanation" hidden>온도가 오르면 분자의 에너지 분포가 넓어져 활성화 에너지를 넘는 분자의 비율이 지수적으로 늘어납니다. 활성화 에너지 자체는 그대로입니다.</p>
+                </article>
+            </div>
+        </details>
+    </main>
+    <script src="app.js?v=3"></script>
+</body>
+</html>
