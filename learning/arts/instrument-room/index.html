@@ -11,9 +11,9 @@
     <link rel="preload" href="../music-studio/assets/piano/C4.ogg" as="fetch" type="audio/ogg" crossorigin>
     <link rel="preload" href="../music-studio/assets/piano/C5.ogg" as="fetch" type="audio/ogg" crossorigin>
     <link rel="preload" href="instrument-worklet-v2.js?v=20260824-fast-adsr" as="script">
-    <link rel="stylesheet" href="styles.css?v=20260824-virtual-instruments">
+    <link rel="stylesheet" href="styles.css?v=20260825-instrument-rooms">
     <script src="instrument-core.js?v=20260824-physical-room" defer></script>
-    <script src="app.js?v=20260824-virtual-instruments" defer></script>
+    <script src="app.js?v=20260825-instrument-rooms" defer></script>
 </head>
 <body>
     <div class="room-glow" aria-hidden="true"></div>
@@ -30,13 +30,21 @@
         <main>
             <nav class="instrument-tabs" aria-label="악기 대분류 선택">
                 <button class="active" type="button" data-family="keyboard" aria-selected="true"><span aria-hidden="true">♬</span><b>건반</b><small>KEYS</small></button>
+                <button type="button" data-family="guitar" aria-selected="false"><span aria-hidden="true">⌁</span><b>기타</b><small>GUITAR</small></button>
+                <button type="button" data-family="bass" aria-selected="false"><span aria-hidden="true">≋</span><b>베이스</b><small>BASS</small></button>
+                <button type="button" data-family="drums" aria-selected="false"><span aria-hidden="true">◉</span><b>드럼</b><small>DRUMS</small></button>
                 <button type="button" data-family="strings" aria-selected="false"><span aria-hidden="true">◒</span><b>현악</b><small>STRINGS</small></button>
                 <button type="button" data-family="woodwind" aria-selected="false"><span aria-hidden="true">◌</span><b>목관</b><small>WOODWIND</small></button>
                 <button type="button" data-family="brass" aria-selected="false"><span aria-hidden="true">◖</span><b>금관</b><small>BRASS</small></button>
                 <button type="button" data-family="percussion" aria-selected="false"><span aria-hidden="true">✦</span><b>타악</b><small>PERCUSSION</small></button>
+                <button type="button" data-family="korean" aria-selected="false"><span aria-hidden="true">한</span><b>국악</b><small>KOREAN</small></button>
             </nav>
             <section class="model-browser" aria-label="악기 모델 선택">
                 <div class="browser-title"><span id="familyEyebrow">KEYBOARD</span><b id="familyName">건반악기</b></div>
+                <div id="koreanRoomSwitch" class="korean-room-switch hidden" role="tablist" aria-label="국악방 선택">
+                    <button class="active" type="button" data-korean-room="melody" role="tab" aria-selected="true">선율악기방</button>
+                    <button type="button" data-korean-room="percussion" role="tab" aria-selected="false">타악기방</button>
+                </div>
                 <div id="modelChooser" class="model-chooser" role="list"></div>
             </section>
 
@@ -59,7 +67,7 @@
                         <div class="studio-stage" id="studioStage">
                             <div id="scaleGuide" class="scale-guide hidden" aria-label="실제 악기 크기 안내">
                                 <span>실제 외형 기준</span><div class="scale-track"><i id="scaleBar"></i></div><b id="scaleValue"></b>
-                                <small id="scaleNote">같은 분류 안에서 상대 크기를 비교해요</small>
+                                <small id="scaleNote">모든 방에서 같은 기준 눈금으로 비교해요</small>
                             </div>
                             <img id="instrumentArtwork" class="instrument-artwork hidden" src="" alt="">
                             <div id="classicalRender" class="classical-render hidden" aria-hidden="true"><i class="render-top"></i><i class="render-neck"></i><i class="render-body upper"></i><i class="render-body lower"></i><i class="render-detail"></i></div>

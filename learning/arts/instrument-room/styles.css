@@ -156,11 +156,15 @@ input[type="range"] { width: 100%; height: 20px; margin: 0; accent-color: var(--
 }
 
 /* Virtual instrument workspace */
-.instrument-tabs { grid-template-columns: repeat(5, 1fr); }
+.instrument-tabs { grid-template-columns: repeat(9, minmax(92px, 1fr)); overflow-x: auto; padding-bottom: 2px; scrollbar-width: thin; scrollbar-color: #3d514c transparent; }
 .model-browser { min-height: 68px; display: grid; grid-template-columns: 120px minmax(0, 1fr); align-items: center; gap: 10px; padding: 8px 10px; border: 1px solid var(--line); border-radius: 14px; background: linear-gradient(180deg, #10191c, #0b1214); overflow: hidden; }
+.model-browser.korean-open { grid-template-columns: 120px auto minmax(0,1fr); }
 .browser-title { min-width: 0; display: grid; padding-left: 4px; }
 .browser-title span { color: var(--accent); font-size: 8px; font-weight: 900; letter-spacing: .16em; }
 .browser-title b { margin-top: 3px; font-size: 13px; }
+.korean-room-switch { display: grid; grid-template-columns: 1fr 1fr; gap: 5px; padding: 4px; border: 1px solid rgba(229,255,117,.24); border-radius: 10px; background: #091012; }
+.korean-room-switch button { min-width: 92px; min-height: 44px; padding: 5px 9px; border: 0; border-radius: 7px; background: transparent; color: #8b9995; font-size: 10px; font-weight: 900; cursor: pointer; touch-action: manipulation; }
+.korean-room-switch button.active { background: var(--accent-2); color: #1b2008; box-shadow: 0 0 16px rgba(229,255,117,.13); }
 .model-chooser { display: flex; gap: 7px; overflow-x: auto; padding: 2px 1px 4px; scrollbar-width: thin; scrollbar-color: #3d514c transparent; }
 .model-chooser button { flex: 0 0 auto; min-width: 118px; min-height: 48px; padding: 6px 11px; border: 1px solid var(--line); border-radius: 10px; display: grid; align-content: center; gap: 2px; background: #151f22; text-align: left; cursor: pointer; }
 .model-chooser button span { color: #71817d; font-size: 8px; font-weight: 900; letter-spacing: .08em; }
@@ -208,6 +212,8 @@ input[type="range"] { width: 100%; height: 20px; margin: 0; accent-color: var(--
 .stage-classical[data-model="cello"] .instrument-artwork { transform: scale(var(--object-scale, 1)); transform-origin: 50% 55%; }
 .stage-wind .instrument-artwork { inset: 38px 4% 12px; width: 92%; height: calc(100% - 50px); object-fit: contain; mix-blend-mode: screen; transform: scale(var(--object-scale, 1)); }
 .stage-brass .instrument-artwork { inset: 34px 5% 10px; width: 90%; height: calc(100% - 44px); object-fit: contain; mix-blend-mode: screen; transform: scale(var(--object-scale, 1)); }
+.stage-korean-string .instrument-artwork, .stage-korean-wind .instrument-artwork { inset: 24px 5% 8px; width: 90%; height: calc(100% - 32px); object-fit: contain; mix-blend-mode: screen; transform: scale(var(--object-scale, 1)); }
+.stage-korean-string .studio-stage, .stage-korean-wind .studio-stage, .stage-samul .studio-stage { background: radial-gradient(ellipse at 50% 80%, rgba(229,255,117,.09), transparent 47%), linear-gradient(180deg,rgba(111,76,38,.12),transparent 72%); }
 .stage-ep .studio-stage::before, .stage-hybrid .studio-stage::before, .stage-organ .studio-stage::before { content: ""; position: absolute; z-index: 2; left: 50%; top: 50%; width: min(74%, 520px); height: 112px; transform: translate(-50%,-42%) perspective(500px) rotateX(8deg); border: 5px solid #14191a; border-radius: 13px; background: linear-gradient(180deg,#4a3a2e 0 28%,#111719 29% 72%,#080a0b 73%); box-shadow: 0 22px 28px rgba(0,0,0,.65), inset 0 2px rgba(255,255,255,.08); }
 .stage-ep .studio-stage::after, .stage-hybrid .studio-stage::after, .stage-organ .studio-stage::after { content: ""; position: absolute; z-index: 3; left: 21%; right: 21%; top: 51%; height: 38px; background: repeating-linear-gradient(90deg,#eee9df 0 15px,#777 15px 16px); border: 4px solid #111; }
 .stage-hybrid .studio-stage::before { background: linear-gradient(145deg,#30383b,#111618 62%,#243d39); box-shadow: 0 22px 28px rgba(0,0,0,.65), 0 0 34px rgba(142,240,198,.12); }
@@ -258,12 +264,15 @@ input[type="range"] { width: 100%; height: 20px; margin: 0; accent-color: var(--
 
 @media (max-width: 860px) {
     .model-browser { grid-template-columns: 96px minmax(0,1fr); }
+    .model-browser.korean-open { grid-template-columns: 96px auto minmax(0,1fr); }
     .console-body { grid-template-columns: minmax(0,1fr) 278px; }
     .instrument-tabs button { text-align: center; }
     .instrument-tabs button > span { display: none; }
 }
 @media (orientation: portrait), (max-width: 700px) {
     .model-browser { grid-template-columns: 1fr; gap: 4px; }.browser-title { display: none; }
+    .model-browser.korean-open { grid-template-columns: auto minmax(0,1fr); }
+    .korean-room-switch button { min-width: 86px; }
     .console-body { grid-template-columns: 1fr; }.instrument-visual { min-height: 262px; }
     .control-panel { max-height: 240px; }
     .fx-strip { grid-template-columns: repeat(3,1fr); }

@@ -34,7 +34,8 @@
     };
 
     const FAMILY_COPY = {
-        keyboard: ["KEYBOARD", "건반악기"], strings: ["STRINGS", "현악기"], woodwind: ["WOODWIND", "목관악기"], brass: ["BRASS", "금관악기"], percussion: ["PERCUSSION", "타악기"]
+        keyboard: ["KEYBOARD", "건반방"], guitar: ["GUITAR", "기타방"], bass: ["BASS", "베이스방"], drums: ["DRUMS", "드럼방"],
+        strings: ["STRINGS", "현악방"], woodwind: ["WOODWIND", "목관방"], brass: ["BRASS", "금관방"], percussion: ["PERCUSSION", "타악방"], korean: ["KOREAN", "국악방"]
     };
     const MODEL_LIBRARY = {
         keyboard: [
@@ -64,17 +65,17 @@
             { id: "cello", name: "첼로", tag: "BOWED STRING", engine: "guitar", stage: "classical", art: "assets/instruments/cello-expressive.png", badge: "EXPRESSIVE STRING", model: "CELLO", range: [36, 84], size: "전체 높이 약 121 cm", visualScale: .78, scalePercent: 67, expression: "보우 압력", description: "활의 압력과 속도, 비브라토를 중심으로 설계한 첼로 화면이에요." }
         ],
         woodwind: [
-            { id: "flute", name: "플루트", tag: "AIR JET", engine: "guitar", stage: "wind", art: "assets/instruments/flute-expressive.png", badge: "EXPRESSIVE WOODWIND", model: "CONCERT FLUTE", range: [60, 98], size: "전체 길이 약 67 cm", visualScale: .6, scalePercent: 50, expression: "호흡 압력", description: "호흡과 레가토, 비브라토를 중심으로 연주하는 목관 화면이에요." },
-            { id: "oboe", name: "오보에", tag: "DOUBLE REED", engine: "guitar", stage: "wind", art: "assets/instruments/oboe-expressive.png", badge: "DOUBLE REED", model: "OBOE", range: [58, 93], size: "전체 길이 약 65 cm", visualScale: .59, scalePercent: 49, expression: "호흡 압력", description: "더블 리드의 압력과 밝기를 다루는 표현형 화면이에요." },
-            { id: "clarinet", name: "클라리넷", tag: "SINGLE REED", engine: "guitar", stage: "wind", art: "assets/instruments/clarinet-expressive.png", badge: "SINGLE REED", model: "CLARINET", range: [50, 94], size: "전체 길이 약 66 cm", visualScale: .6, scalePercent: 49, expression: "호흡 압력", description: "호흡과 레가토 전환을 중심으로 한 클라리넷 화면이에요." },
-            { id: "bassoon", name: "바순", tag: "DOUBLE REED", engine: "guitar", stage: "wind", art: "assets/instruments/bassoon-expressive.png", badge: "LOW WOODWIND", model: "BASSOON", range: [34, 76], size: "전체 높이 약 134 cm", visualScale: 1, scalePercent: 100, expression: "호흡 압력", description: "낮은 음역과 더블 리드 반응을 다루는 바순 화면이에요." },
-            { id: "saxophone", name: "알토 색소폰", tag: "SINGLE REED", engine: "guitar", stage: "wind", art: "assets/instruments/alto-sax-expressive.png", badge: "EXPRESSIVE REED", model: "ALTO SAX", range: [49, 80], size: "전체 높이 약 65 cm", visualScale: .62, scalePercent: 49, expression: "호흡 압력", description: "호흡, 벤드, 비브라토가 전면에 놓인 색소폰 화면이에요." }
+            { id: "flute", name: "플루트", tag: "AIR JET", engine: "guitar", stage: "wind", art: "assets/instruments/flute-expressive.png", badge: "EXPRESSIVE WOODWIND", model: "CONCERT FLUTE", range: [60, 98], size: "전체 길이 약 67 cm", visualScale: .46, scalePercent: 37, expression: "호흡 압력", description: "호흡과 레가토, 비브라토를 중심으로 연주하는 목관 화면이에요." },
+            { id: "oboe", name: "오보에", tag: "DOUBLE REED", engine: "guitar", stage: "wind", art: "assets/instruments/oboe-expressive.png", badge: "DOUBLE REED", model: "OBOE", range: [58, 93], size: "전체 길이 약 65 cm", visualScale: .45, scalePercent: 36, expression: "호흡 압력", description: "더블 리드의 압력과 밝기를 다루는 표현형 화면이에요." },
+            { id: "clarinet", name: "클라리넷", tag: "SINGLE REED", engine: "guitar", stage: "wind", art: "assets/instruments/clarinet-expressive.png", badge: "SINGLE REED", model: "CLARINET", range: [50, 94], size: "전체 길이 약 66 cm", visualScale: .46, scalePercent: 37, expression: "호흡 압력", description: "호흡과 레가토 전환을 중심으로 한 클라리넷 화면이에요." },
+            { id: "bassoon", name: "바순", tag: "DOUBLE REED", engine: "guitar", stage: "wind", art: "assets/instruments/bassoon-expressive.png", badge: "LOW WOODWIND", model: "BASSOON", range: [34, 76], size: "전체 높이 약 134 cm", visualScale: .78, scalePercent: 74, expression: "호흡 압력", description: "낮은 음역과 더블 리드 반응을 다루는 바순 화면이에요." },
+            { id: "saxophone", name: "알토 색소폰", tag: "SINGLE REED", engine: "guitar", stage: "wind", art: "assets/instruments/alto-sax-expressive.png", badge: "EXPRESSIVE REED", model: "ALTO SAX", range: [49, 80], size: "전체 높이 약 65 cm", visualScale: .46, scalePercent: 36, expression: "호흡 압력", description: "호흡, 벤드, 비브라토가 전면에 놓인 색소폰 화면이에요." }
         ],
         brass: [
-            { id: "trumpet", name: "트럼펫", tag: "HIGH BRASS", engine: "guitar", stage: "brass", art: "assets/instruments/trumpet-expressive.png", badge: "EXPRESSIVE BRASS", model: "TRUMPET", range: [54, 86], size: "외형 길이 약 48 cm", visualScale: .5, scalePercent: 42, expression: "호흡 압력", description: "호흡 압력과 립 텐션을 중심으로 한 트럼펫 화면이에요." },
-            { id: "trombone", name: "트롬본", tag: "SLIDE BRASS", engine: "guitar", stage: "brass", art: "assets/instruments/trombone-expressive.png", badge: "SLIDE BRASS", model: "TENOR TROMBONE", range: [40, 70], size: "슬라이드 닫힘 약 114 cm", visualScale: 1, scalePercent: 100, expression: "립 텐션", description: "슬라이드와 립 텐션을 표현하는 트롬본 화면이에요." },
-            { id: "french-horn", name: "호른", tag: "ORCHESTRAL BRASS", engine: "guitar", stage: "brass", art: "assets/instruments/french-horn-expressive.png", badge: "ORCHESTRAL BRASS", model: "FRENCH HORN", range: [35, 77], size: "벨 포함 너비 약 58 cm", visualScale: .58, scalePercent: 51, expression: "호흡 압력", description: "부드러운 어택부터 포르테까지 연속적으로 다루는 호른 화면이에요." },
-            { id: "tuba", name: "튜바", tag: "LOW BRASS", engine: "guitar", stage: "brass", art: "assets/instruments/tuba-expressive.png", badge: "LOW BRASS", model: "TUBA", range: [26, 65], size: "전체 높이 약 100 cm", visualScale: .88, scalePercent: 88, expression: "호흡 압력", description: "낮은 금관의 공기 흐름과 어택을 다루는 튜바 화면이에요." }
+            { id: "trumpet", name: "트럼펫", tag: "HIGH BRASS", engine: "guitar", stage: "brass", art: "assets/instruments/trumpet-expressive.png", badge: "EXPRESSIVE BRASS", model: "TRUMPET", range: [54, 86], size: "외형 길이 약 48 cm", visualScale: .38, scalePercent: 27, expression: "호흡 압력", description: "호흡 압력과 립 텐션을 중심으로 한 트럼펫 화면이에요." },
+            { id: "trombone", name: "트롬본", tag: "SLIDE BRASS", engine: "guitar", stage: "brass", art: "assets/instruments/trombone-expressive.png", badge: "SLIDE BRASS", model: "TENOR TROMBONE", range: [40, 70], size: "슬라이드 닫힘 약 114 cm", visualScale: .7, scalePercent: 63, expression: "립 텐션", description: "슬라이드와 립 텐션을 표현하는 트롬본 화면이에요." },
+            { id: "french-horn", name: "호른", tag: "ORCHESTRAL BRASS", engine: "guitar", stage: "brass", art: "assets/instruments/french-horn-expressive.png", badge: "ORCHESTRAL BRASS", model: "FRENCH HORN", range: [35, 77], size: "벨 포함 너비 약 58 cm", visualScale: .42, scalePercent: 32, expression: "호흡 압력", description: "부드러운 어택부터 포르테까지 연속적으로 다루는 호른 화면이에요." },
+            { id: "tuba", name: "튜바", tag: "LOW BRASS", engine: "guitar", stage: "brass", art: "assets/instruments/tuba-expressive.png", badge: "LOW BRASS", model: "TUBA", range: [26, 65], size: "전체 높이 약 100 cm", visualScale: .62, scalePercent: 56, expression: "호흡 압력", description: "낮은 금관의 공기 흐름과 어택을 다루는 튜바 화면이에요." }
         ],
         percussion: [
             { id: "rock-kit", name: "Rock Kit", tag: "DRUM SET", engine: "drums", stage: "drums", art: "assets/instruments/drum-acoustic-kit.png", badge: "ACOUSTIC KIT", model: "ROCK", description: "실제 드럼세트의 각 부위를 직접 누르거나 패드로 연주해요." },
@@ -93,6 +94,23 @@
             { id: "samulnori", name: "사물놀이", tag: "KOREAN PERC.", engine: "drums", stage: "samul", badge: "KOREAN PERCUSSION", model: "SAMULNORI", description: "장구·북·소고·꽹과리·징을 한 무대에서 고르는 화면이에요." }
         ]
     };
+    const mixedStrings = MODEL_LIBRARY.strings.slice();
+    const mixedPercussion = MODEL_LIBRARY.percussion.slice();
+    MODEL_LIBRARY.guitar = mixedStrings.filter(function (model) { return Boolean(model.guitar); });
+    MODEL_LIBRARY.bass = mixedStrings.filter(function (model) { return model.engine === "bass" || model.id === "upright-bass"; });
+    MODEL_LIBRARY.strings = mixedStrings.filter(function (model) { return ["violin", "viola", "cello"].includes(model.id); });
+    MODEL_LIBRARY.drums = mixedPercussion.filter(function (model) { return ["drums", "machine", "linn"].includes(model.stage); });
+    MODEL_LIBRARY.percussion = mixedPercussion.filter(function (model) { return !["drums", "machine", "linn", "samul"].includes(model.stage); });
+    MODEL_LIBRARY.korean = [
+        { id: "gayageum", room: "melody", name: "가야금", tag: "PLUCKED STRING", engine: "guitar", stage: "korean-string", art: "assets/instruments/korean-gayageum.png", expressive: true, range: [48, 84], size: "전체 길이 약 160 cm", visualScale: .9, scalePercent: 89, badge: "KOREAN STRING", model: "12-STRING GAYAGEUM", expression: "농현 깊이", description: "열두 현과 안족의 구조를 보며 농현과 뜯는 위치를 다루는 국악 선율악기예요." },
+        { id: "geomungo", room: "melody", name: "거문고", tag: "PLUCKED STRING", engine: "guitar", stage: "korean-string", art: "assets/instruments/korean-geomungo.png", expressive: true, range: [36, 72], size: "전체 길이 약 162 cm", visualScale: .92, scalePercent: 90, badge: "KOREAN STRING", model: "6-STRING GEOMUNGO", expression: "술대 강도", description: "여섯 현과 괘, 술대의 관계가 보이는 거문고 연주 화면이에요." },
+        { id: "haegeum", room: "melody", name: "해금", tag: "BOWED STRING", engine: "guitar", stage: "korean-string", art: "assets/instruments/korean-haegeum.png", expressive: true, range: [55, 96], size: "전체 높이 약 70 cm", visualScale: .58, scalePercent: 39, badge: "KOREAN BOWED STRING", model: "2-STRING HAEGEUM", expression: "활 압력", description: "두 현 사이를 지나는 활과 연속적인 음정 표현을 중심으로 한 해금 화면이에요." },
+        { id: "ajaeng", room: "melody", name: "아쟁", tag: "BOWED ZITHER", engine: "guitar", stage: "korean-string", art: "assets/instruments/korean-ajaeng.png", expressive: true, range: [36, 72], size: "전체 길이 약 160 cm", visualScale: .96, scalePercent: 89, badge: "KOREAN BOWED STRING", model: "AJAENG", expression: "활 압력", description: "굵은 현과 개나리 활의 거친 저음을 표현하는 아쟁 화면이에요." },
+        { id: "daegeum", room: "melody", name: "대금", tag: "TRANSVERSE FLUTE", engine: "guitar", stage: "korean-wind", art: "assets/instruments/korean-daegeum.png", expressive: true, range: [50, 86], size: "전체 길이 약 80 cm", visualScale: .68, scalePercent: 44, badge: "KOREAN WIND", model: "DAEGEUM", expression: "호흡 압력", description: "청공의 떨림과 호흡을 다루는 대표적인 가로 부는 국악 관악기예요." },
+        { id: "hyangpiri", room: "melody", name: "향피리", tag: "DOUBLE REED", engine: "guitar", stage: "korean-wind", art: "assets/instruments/korean-hyangpiri.png", expressive: true, range: [60, 84], size: "전체 길이 약 27 cm", visualScale: .4, scalePercent: 15, badge: "KOREAN DOUBLE REED", model: "HYANGPIRI", expression: "호흡 압력", description: "짧고 굵은 대나무 관과 겹서의 강한 소리를 표현하는 향피리 화면이에요." },
+        { id: "taepyeongso", room: "melody", name: "태평소", tag: "DOUBLE REED HORN", engine: "guitar", stage: "korean-wind", art: "assets/instruments/korean-taepyeongso.png", expressive: true, range: [55, 84], size: "전체 길이 약 40 cm", visualScale: .48, scalePercent: 22, badge: "KOREAN SHAWM", model: "TAEPYEONGSO", expression: "호흡 압력", description: "나무 관과 금속 나팔이 결합된 강렬한 태평소 화면이에요." },
+        { id: "samulnori", room: "percussion", name: "사물놀이 스테이션", tag: "SAMULNORI", engine: "drums", stage: "samul", art: "assets/instruments/korean-samulnori-station.png", size: "전체 배치 너비 약 260 cm", visualScale: .96, scalePercent: 100, badge: "KOREAN PERCUSSION", model: "JANGGU · BUK · SOGO · KKWAENGGWARI · JING", description: "장구·북·소고·꽹과리·징을 한 국악 타악기방에서 연주해요." }
+    ];
     const state = {
         instrument: "piano",
         guitarMode: "keyboard",
@@ -116,6 +134,7 @@
         stringNode: null,
         family: "keyboard",
         modelId: "concert-grand",
+        koreanRoom: "melody",
         stringLoading: null,
         stringUnavailable: false,
         workletModuleLoading: null,
@@ -139,7 +158,7 @@
 
     function cacheElements() {
         [
-            "audioButton", "modelBadge", "instrumentName", "instrumentDescription", "guitarModeSwitch", "instrumentVisual", "familyEyebrow", "familyName", "modelChooser",
+            "audioButton", "modelBadge", "instrumentName", "instrumentDescription", "guitarModeSwitch", "instrumentVisual", "familyEyebrow", "familyName", "modelChooser", "koreanRoomSwitch",
             "visualFamily", "visualModel", "studioStage", "instrumentArtwork", "scaleGuide", "scaleBar", "scaleValue", "scaleNote", "classicalRender", "machineDeck", "malletRender", "kitHotspots", "stringCanvas", "pianoControls", "keyboardPatchControls", "stringControls", "classicalControls", "expressionLabel", "guitarFxControls", "drumControls", "drumSystemLabel", "drumSystemDescription", "drumResonanceLabel", "drumToneLabel", "sustainButton",
             "articulationButtons", "toneSlider", "toneOutput", "muteSlider", "muteOutput", "pickSlider", "pickOutput",
             "driveSlider", "driveOutput", "drumResonanceSlider", "drumResonanceOutput", "drumToneSlider", "drumToneOutput",
@@ -630,17 +649,24 @@
             state.pianoVoices.forEach(function (voice) { if (voice.held) releasePianoVoice(voice, false); });
         }
     }
-    function selectedModel() {
+    function visibleModels() {
         const models = MODEL_LIBRARY[state.family] || [];
+        return state.family === "korean" ? models.filter(function (model) { return model.room === state.koreanRoom; }) : models;
+    }
+
+    function selectedModel() {
+        const models = visibleModels();
         return models.find(function (model) { return model.id === state.modelId; }) || models[0];
     }
 
     function renderModelBrowser() {
         const familyCopy = FAMILY_COPY[state.family];
         elements.familyEyebrow.textContent = familyCopy[0];
-        elements.familyName.textContent = familyCopy[1];
+        elements.familyName.textContent = state.family === "korean" ? (state.koreanRoom === "melody" ? "국악 선율악기방" : "국악 타악기방") : familyCopy[1];
+        elements.koreanRoomSwitch.classList.toggle("hidden", state.family !== "korean");
+        elements.koreanRoomSwitch.parentElement.classList.toggle("korean-open", state.family === "korean");
         elements.modelChooser.innerHTML = "";
-        MODEL_LIBRARY[state.family].forEach(function (model) {
+        visibleModels().forEach(function (model) {
             const button = document.createElement("button");
             button.type = "button";
             button.setAttribute("role", "listitem");
@@ -761,7 +787,7 @@
     }
 
     function selectModel(modelId) {
-        const model = MODEL_LIBRARY[state.family].find(function (item) { return item.id === modelId; });
+        const model = visibleModels().find(function (item) { return item.id === modelId; });
         if (!model) return;
         state.currentModel = model;
         if (!model.guitar) state.guitarMode = "keyboard";
@@ -770,9 +796,9 @@
         elements.modelBadge.textContent = model.badge;
         elements.instrumentName.textContent = model.name;
         elements.instrumentDescription.textContent = model.description;
-        elements.visualFamily.textContent = FAMILY_COPY[state.family][0];
+        elements.visualFamily.textContent = state.family === "korean" ? "KOREAN · " + state.koreanRoom.toUpperCase() : FAMILY_COPY[state.family][0];
         elements.visualModel.textContent = model.model;
-        const expressive = model.stage === "classical" || model.stage === "wind" || model.stage === "brass";
+        const expressive = Boolean(model.expressive) || model.stage === "classical" || model.stage === "wind" || model.stage === "brass";
         elements.pianoControls.classList.toggle("hidden", model.engine !== "piano");
         elements.stringControls.classList.toggle("hidden", expressive || model.engine !== "bass" && model.engine !== "guitar");
         elements.classicalControls.classList.toggle("hidden", !expressive);
@@ -789,10 +815,24 @@
     function selectFamily(family) {
         if (!MODEL_LIBRARY[family]) return;
         state.family = family;
-        state.modelId = MODEL_LIBRARY[family][0].id;
+        state.modelId = visibleModels()[0].id;
         document.querySelectorAll("[data-family]").forEach(function (button) {
             const active = button.dataset.family === family; button.classList.toggle("active", active); button.setAttribute("aria-selected", String(active));
         });
+        renderModelBrowser();
+        selectModel(state.modelId);
+    }
+
+    function selectKoreanRoom(room) {
+        if (!['melody', 'percussion'].includes(room)) return;
+        allNotesOff();
+        state.koreanRoom = room;
+        document.querySelectorAll("[data-korean-room]").forEach(function (button) {
+            const active = button.dataset.koreanRoom === room;
+            button.classList.toggle("active", active);
+            button.setAttribute("aria-selected", String(active));
+        });
+        state.modelId = visibleModels()[0].id;
         renderModelBrowser();
         selectModel(state.modelId);
     }
@@ -1126,6 +1166,9 @@
         });
         document.querySelectorAll("[data-family]").forEach(function (button) {
             button.addEventListener("click", function () { selectFamily(button.dataset.family); });
+        });
+        document.querySelectorAll("[data-korean-room]").forEach(function (button) {
+            button.addEventListener("click", function () { selectKoreanRoom(button.dataset.koreanRoom); });
         });
         document.querySelectorAll("[data-guitar-mode]").forEach(function (button) {
             button.addEventListener("click", function () { setGuitarMode(button.dataset.guitarMode); });
