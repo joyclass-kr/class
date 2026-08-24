@@ -29,7 +29,7 @@
     ];
 
     function activeDrums() {
-        const extendedKit = state.currentModel && ["rock-kit", "metal-kit"].includes(state.currentModel.id);
+        const extendedKit = state.currentModel && ["rock-kit", "metal-kit", "pop-kit"].includes(state.currentModel.id);
         return extendedKit ? DRUMS : DRUMS.filter(function (drum) { return drum.id !== "midtom"; });
     }
     const INSTRUMENT_COPY = {
@@ -86,7 +86,7 @@
         percussion: [
             { id: "rock-kit", name: "Rock Kit", tag: "DRUM SET", engine: "drums", stage: "drums", art: "assets/instruments/drum-rock-kit.webp", badge: "ACOUSTIC KIT", model: "ROCK", description: "큰 킥과 2개의 랙 탐을 갖춘 표준 5피스 락 세트예요." },
             { id: "metal-kit", name: "Metal Kit", tag: "DRUM SET", engine: "drums", stage: "drums", art: "assets/instruments/drum-metal-kit.webp", badge: "ACOUSTIC KIT", model: "METAL", description: "단일 킥·더블 페달·여러 탐과 심벌을 갖춘 메탈 세트예요." },
-            { id: "pop-kit", name: "Pop Kit", tag: "DRUM SET", engine: "drums", stage: "drums", art: "assets/instruments/drum-pop-kit.webp", badge: "ACOUSTIC KIT", model: "POP", description: "구성이 단순하고 정돈된 소형 팝 세트예요." },
+            { id: "pop-kit", name: "Pop Kit", tag: "DRUM SET", engine: "drums", stage: "drums", art: "assets/instruments/drum-pop-kit.webp", badge: "ACOUSTIC KIT", model: "POP", description: "2개의 랙 탐과 1개의 플로어 탐을 갖춘 표준 5피스 팝 세트예요." },
             { id: "jazz-kit", name: "Jazz Kit", tag: "DRUM SET", engine: "drums", stage: "drums", art: "assets/instruments/drum-jazz-kit.webp", badge: "ACOUSTIC KIT", model: "JAZZ", description: "작은 킥과 큰 라이드가 중심인 전통 재즈 세트예요." },
             { id: "funk-kit", name: "Funk Kit", tag: "DRUM SET", engine: "drums", stage: "drums", art: "assets/instruments/drum-funk-kit.webp", badge: "ACOUSTIC KIT", model: "FUNK", description: "얕은 셸과 낮은 심벌 배치의 타이트한 펑크 세트예요." },
             { id: "timpani", name: "팀파니", tag: "ORCHESTRAL", engine: "drums", stage: "timpani", art: "assets/instruments/timpani-bank.png", pitched: true, range: [38, 60], size: "4대 배치 너비 약 290 cm", visualScale: .94, scalePercent: 83, badge: "ORCHESTRAL PERCUSSION", model: "TIMPANI", description: "건반으로 교육용 반음계 음역을 연주하고 음높이·댐핑을 살펴봐요." },

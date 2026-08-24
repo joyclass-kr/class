@@ -2,6 +2,8 @@
 (() => {
   const CANVAS_W = 1000;
   const CANVAS_H = 700;
+  const MIN_VIEW_W = 200;
+  const MIN_VIEW_H = 150;
   const MAX_LAYERS = 3;
   const SNAPSHOT_INTERVAL = 20;
   const MIN_POINT_GAP = 1.4;
@@ -204,9 +206,15 @@
       this.lastMovePoint = null;
       this.alphaLock = false;
       this.eyedropperArmed = false;
+      this.playerName = String(localStorage.getItem("classPlayerName") || "").trim();
+
+      this.canvasFrameEl = $("canvasFrame");
+      this.viewW = CANVAS_W;
+      this.viewH = CANVAS_H;
 
       this.bindUI();
       this.bindCanvas();
+      this.bindResizeHandles();
       this.renderLayerPanel();
       this.updateHistoryButtons();
       this.composite();
@@ -479,6 +487,42 @@
       canvas.style.touchAction = "none";
     }
 
+    bindResizeHandles() {
+      document.querySelectorAll(".resize-handle").forEach(handle => {
+        const dir = handle.dataset.dir;
+        handle.addEventListener("pointerdown", event => {
+          event.preventDefault();
+          event.stopPropagation();
+          try { handle.setPointerCapture(event.pointerId); } catch { /* no active pointer to capture */ }
+          const startX = event.clientX;
+          const startY = event.clientY;
+          const startViewW = this.viewW;
+          const startViewH = this.viewH;
+          const frameRect = this.canvasFrameEl.getBoundingClientRect();
+          const scale = frameRect.width / startViewW;
+
+          const onMove = moveEvent => {
+            const nextW = dir.includes("e") ? startViewW + (moveEvent.clientX - startX) / scale : startViewW;
+            const nextH = dir.includes("s") ? startViewH + (moveEvent.clientY - startY) / scale : startViewH;
+            this.setViewSize(nextW, nextH);
+          };
+          const onUp = () => {
+            window.removeEventListener("pointermove", onMove);
+            window.removeEventListener("pointerup", onUp);
+          };
+          window.addEventListener("pointermove", onMove);
+          window.addEventListener("pointerup", onUp, { once: true });
+        });
+      });
+    }
+
+    setViewSize(w, h) {
+      this.viewW = Math.max(MIN_VIEW_W, Math.min(CANVAS_W, Math.round(w)));
+      this.viewH = Math.max(MIN_VIEW_H, Math.min(CANVAS_H, Math.round(h)));
+      this.canvasFrameEl.style.setProperty("--view-w", this.viewW);
+      this.canvasFrameEl.style.setProperty("--view-h", this.viewH);
+    }
+
     updateBrushCursor(event) {
       if (event.pointerType === "touch" || this.eyedropperArmed) { this.hideBrushCursor(); return; }
       this.lastCursorEvent = event;
@@ -734,12 +778,26 @@
 
     // ---------- Save ----------
     savePng() {
+      const titleInput = $("drawingTitle");
+      if (!titleInput.value.trim()) {
+        titleInput.focus();
+        titleInput.classList.remove("shake-warning");
+        void titleInput.offsetWidth;
+        titleInput.classList.add("shake-warning");
+        return;
+      }
       this.composite();
+      const fileSafe = (value, fallback) => {
+        const cleaned = String(value || "").trim().replace(/[\\/:*?"<>|]/g, "");
+        return cleaned.slice(0, 20) || fallback;
+      };
+      const name = fileSafe(this.playerName, "이름없음");
+      const title = fileSafe(titleInput.value, "제목없음");
       this.displayCanvas.toBlob(blob => {
         const url = URL.createObjectURL(blob);
         const link = document.createElement("a");
         link.href = url;
-        link.download = `내그림-${Date.now()}.png`;
+        link.download = `${name}${title}.png`;
         document.body.appendChild(link);
         link.click();
         link.remove();

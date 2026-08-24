@@ -17,9 +17,9 @@ test("site pages receive one shared icon-only back control", () => {
   assert.match(server, /"\/classboard"/);
 
   assert.match(navigation, /aria-label="뒤로 가기"/);
-  assert.match(navigation, /width: 48px/);
-  assert.match(navigation, /height: 48px/);
-  assert.match(navigation, /border-radius: 13px/);
+  assert.match(navigation, /width: 44px/);
+  assert.match(navigation, /height: 44px/);
+  assert.match(navigation, /border-radius: 50%/);
   assert.doesNotMatch(navigation, />\s*메인\s*</);
 });
 

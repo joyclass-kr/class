@@ -13,7 +13,10 @@
 <div class="app-shell">
   <header class="topbar">
     <a class="back-link" href="../../../" aria-label="메인 화면으로 돌아가기"><span aria-hidden="true">←</span> 메인</a>
-    <h1 class="brand">그림 그리기<small>Art Studio</small></h1>
+    <h1 class="brand">그림 그리기</h1>
+    <div class="title-field">
+      <input id="drawingTitle" type="text" maxlength="20" placeholder="그림 제목" autocomplete="off">
+    </div>
     <div class="topbar-actions">
       <button id="undoBtn" class="icon-btn" type="button" title="되돌리기" disabled>↶</button>
       <button id="redoBtn" class="icon-btn" type="button" title="다시하기" disabled>↷</button>
@@ -59,9 +62,14 @@
     </aside>
 
     <section class="canvas-stage">
-      <div class="canvas-frame">
-        <canvas id="mainCanvas" width="1000" height="700" aria-label="그림 캔버스"></canvas>
-        <div id="brushCursor" class="brush-cursor hidden" aria-hidden="true"></div>
+      <div class="canvas-max" id="canvasMax">
+        <div class="canvas-frame" id="canvasFrame">
+          <canvas id="mainCanvas" width="1000" height="700" aria-label="그림 캔버스"></canvas>
+          <div id="brushCursor" class="brush-cursor hidden" aria-hidden="true"></div>
+          <div class="resize-handle handle-e" data-dir="e" title="가로 크기 조절" aria-hidden="true"></div>
+          <div class="resize-handle handle-s" data-dir="s" title="세로 크기 조절" aria-hidden="true"></div>
+          <div class="resize-handle handle-se" data-dir="se" title="크기 조절" aria-hidden="true"></div>
+        </div>
       </div>
     </section>
 

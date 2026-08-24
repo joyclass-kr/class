@@ -36,6 +36,7 @@ test('percussion library includes dedicated kits and essential orchestral instru
   }
   assert.match(app, /id: "midtom"/);
   assert.match(app, /function activeDrums/);
+  assert.match(app, /\["rock-kit", "metal-kit", "pop-kit"\]\.includes/);
   assert.match(css, /\.drum-pads\.extended/);
 });
 

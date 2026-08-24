@@ -18,8 +18,17 @@
     return BACK_LINK_LABEL.test(textLabel) || control.matches(LEGACY_LINK_SELECTOR);
   };
 
+  const shouldReserveBackSpace = control => {
+    const container = control.closest("header, nav, .topbar, .top-bar, .toolbar, .app-header, .page-header");
+    if (!container) return false;
+    const rect = control.getBoundingClientRect();
+    const containerRect = container.getBoundingClientRect();
+    return rect.width > 0 && rect.top < 88 && rect.left < 104 && rect.left <= containerRect.left + 48;
+  };
+
   const hideLegacyControl = control => {
     if (control.dataset.siteBackLegacy === "true" || !isLegacyControl(control)) return;
+    if (shouldReserveBackSpace(control)) control.dataset.siteBackSpacer = "true";
     if (control instanceof HTMLAnchorElement && control.href) {
       try {
         const target = new URL(control.href, location.href);
@@ -57,7 +66,7 @@
   });
 
   const legacyStyle = document.createElement("style");
-  legacyStyle.textContent = "[data-site-back-legacy]{display:none!important}";
+  legacyStyle.textContent = "[data-site-back-legacy]{display:none!important}[data-site-back-spacer]{display:inline-block!important;visibility:hidden!important;pointer-events:none!important;width:44px!important;min-width:44px!important;height:44px!important;margin:0!important;padding:0!important;flex:0 0 44px!important}";
   document.head.append(legacyStyle);
 
   const host = document.createElement("site-back-navigation");
@@ -66,21 +75,21 @@
     <style>
       :host {
         position: fixed;
-        top: max(12px, env(safe-area-inset-top));
-        left: max(12px, env(safe-area-inset-left));
+        top: max(6px, env(safe-area-inset-top));
+        left: max(6px, env(safe-area-inset-left));
         z-index: 2147483647;
-        width: 48px;
-        height: 48px;
+        width: 44px;
+        height: 44px;
       }
       button {
         display: grid;
         place-items: center;
-        width: 48px;
-        height: 48px;
-        margin: 0;
+        width: 36px;
+        height: 36px;
+        margin: 4px;
         padding: 0;
         border: 1px solid rgba(255, 255, 255, .16);
-        border-radius: 13px;
+        border-radius: 50%;
         background: rgba(54, 54, 58, .92);
         color: #f4f4f5;
         box-shadow: 0 3px 12px rgba(0, 0, 0, .24);
@@ -90,7 +99,7 @@
       }
       button:active { transform: scale(.95); background: rgba(72, 72, 77, .96); }
       button:focus-visible { outline: 3px solid #60a5fa; outline-offset: 3px; }
-      svg { width: 24px; height: 24px; fill: none; stroke: currentColor; stroke-width: 2.2; stroke-linecap: round; stroke-linejoin: round; }
+      svg { width: 20px; height: 20px; fill: none; stroke: currentColor; stroke-width: 2.2; stroke-linecap: round; stroke-linejoin: round; }
     </style>
     <button type="button" aria-label="뒤로 가기" title="뒤로 가기">
       <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M15 18l-6-6 6-6"/><path d="M9 12h10"/></svg>

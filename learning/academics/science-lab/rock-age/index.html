@@ -1,0 +1,187 @@
+<!doctype html>
+<html lang="ko">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="theme-color" content="#07131c">
+    <title>과학 실험실</title>
+    <meta name="description" content="반감기로 모원소와 딸원소의 비를 재어 절대 연령을 구하고, 지층 단면의 상대 연령과 맞춰 보는 고등학교 과학 모의실험">
+    <link rel="stylesheet" as="style" crossorigin href="https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.9/dist/web/static/pretendard.css">
+    <link rel="stylesheet" href="styles.css?v=1">
+    <link rel="stylesheet" href="rock-visual.css?v=1">
+    <link rel="stylesheet" href="quiz.css?v=1">
+</head>
+<body>
+    <main>
+        <header class="page-header">
+            <div class="title-row">
+                <a href="../">← 과학 실험실</a>
+                <h1>지질 구조와 절대 연령</h1>
+            </div>
+            <div class="grade-tags"><span>고등학교</span><span>지구과학</span></div>
+        </header>
+
+        <ol class="method-steps" aria-label="실험 방법">
+            <li>쓸 방사성 동위 원소를 고릅니다.</li>
+            <li>반감기가 몇 번 지났는지 봅니다.</li>
+            <li>지층 단면에서 조사할 곳을 고릅니다.</li>
+            <li>상대 연령과 절대 연령을 맞춰 봅니다.</li>
+        </ol>
+
+        <div class="experiment-layout">
+            <section class="panel control-panel" aria-labelledby="control-title">
+                <h2 id="control-title">실험 조건</h2>
+                <p class="water-standard" id="unitNote">암석이 굳을 때 딸원소는 0이었다고 봅니다</p>
+
+                <fieldset class="mode-field">
+                    <legend>관찰 대상</legend>
+                    <div class="mode-buttons">
+                        <button type="button" data-mode="decay">반감기<small>모원소가 줄어드는 법</small></button>
+                        <button type="button" data-mode="strata">지층 단면<small>상대와 절대 연령</small></button>
+                    </div>
+                </fieldset>
+
+                <fieldset class="pick-field">
+                    <legend>방사성 동위 원소</legend>
+                    <div class="pick-buttons cols3">
+                        <button type="button" data-iso="c14">¹⁴C<small>반감기 5730년</small></button>
+                        <button type="button" data-iso="k40">⁴⁰K<small>12.5억 년</small></button>
+                        <button type="button" data-iso="u238">²³⁸U<small>44.7억 년</small></button>
+                    </div>
+                </fieldset>
+
+                <div id="decayControls">
+                    <div class="range-heading">
+                        <label for="hlRange">지난 반감기</label>
+                        <output id="hlOutput" for="hlRange">2.00번</output>
+                    </div>
+                    <input id="hlRange" type="range" min="0" max="8" step="0.25" value="2">
+                    <div class="range-scale" aria-hidden="true"><span>0번</span><span>4번</span><span>8번</span></div>
+                </div>
+
+                <div id="strataControls" hidden>
+                    <fieldset class="pick-field">
+                        <legend>조사할 곳</legend>
+                        <div class="pick-buttons cols3">
+                            <button type="button" data-target="ash">화산재층<small>맨 위</small></button>
+                            <button type="button" data-target="D">지층 D<small>부정합 위</small></button>
+                            <button type="button" data-target="dyke">관입암<small>뚫고 올라온 것</small></button>
+                            <button type="button" data-target="fault">단층<small>지층을 끊음</small></button>
+                            <button type="button" data-target="C">지층 C<small>부정합 아래</small></button>
+                            <button type="button" data-target="A">지층 A<small>맨 아래</small></button>
+                        </div>
+                    </fieldset>
+                </div>
+
+                <fieldset class="prediction-field">
+                    <legend id="predictionLegend">지금 남아 있는 모원소는?</legend>
+                    <div class="prediction-buttons three">
+                        <button type="button" data-prediction="p1">절반 이상</button>
+                        <button type="button" data-prediction="p2">절반 이하</button>
+                        <button type="button" data-prediction="p3">거의 없음</button>
+                    </div>
+                </fieldset>
+
+                <button class="run-button" id="runBtn" type="button">시간 흘려보내기</button>
+                <button class="reset-button" id="resetBtn" type="button">처음으로</button>
+
+                <section class="result-box" aria-labelledby="result-title" aria-live="polite">
+                    <h3 id="result-title">관찰 결과</h3>
+                    <p id="resultEmpty">동위 원소를 고르고 관찰해 보세요.</p>
+                    <div id="resultContent" hidden>
+                        <div class="result-numbers">
+                            <article><span id="labelA">남은 모원소</span><strong id="valueA">-</strong></article>
+                            <article><span id="labelB">지난 시간</span><strong id="valueB">-</strong></article>
+                        </div>
+                        <p class="prediction-result" id="predictionResult"></p>
+                        <p class="explanation" id="elementaryExplanation"></p>
+                    </div>
+                </section>
+            </section>
+
+            <section class="panel rock-stage" aria-label="관찰 화면">
+                <div class="stage-heading"><h2>관찰</h2><span id="stageBadge">-</span></div>
+
+                <div class="stage-views">
+                    <svg class="main-svg" viewBox="0 0 460 214" aria-hidden="true">
+                        <g id="mainGroup"></g>
+                    </svg>
+                    <svg class="graph-svg" viewBox="0 0 460 196" aria-hidden="true">
+                        <g id="graphGroup"></g>
+                    </svg>
+                </div>
+
+                <p class="stage-caption" id="stageCaption">반감기가 한 번 지날 때마다 남은 모원소는 절반이 됩니다. 줄어든 만큼이 딸원소로 바뀌어 쌓입니다.</p>
+                <div class="data-note" id="dataNote"></div>
+            </section>
+        </div>
+
+        <section class="panel meaning-panel">
+            <h2>실험 결과의 의미</h2>
+            <div class="meaning-body">
+                <p><strong>반감기</strong> 방사성 원소가 절반으로 줄어드는 데 걸리는 시간입니다. 온도나 압력을 아무리 바꿔도 달라지지 않기 때문에, 이것이 믿을 만한 시계가 됩니다. 모원소와 딸원소의 비만 재면 몇 번의 반감기가 지났는지 알 수 있습니다.</p>
+                <p><strong>쓸 수 있는 범위</strong> 반감기보다 훨씬 짧은 시간이 지났다면 딸원소가 너무 적어 재기 어렵고, 반감기의 열 배가 넘게 지났다면 모원소가 거의 남지 않아 역시 재기 어렵습니다. 그래서 젊은 것에는 ¹⁴C를, 오래된 암석에는 ⁴⁰K나 ²³⁸U를 씁니다.</p>
+                <p><strong>상대 연령의 한계</strong> 누중·관입·부정합으로 앞뒤 순서는 알 수 있지만, 서로 만나지 않는 두 구조의 순서는 알 수 없고 몇 년 전인지는 더더욱 알 수 없습니다. 절대 연령이 있어야 비로소 순서에 숫자가 붙습니다.</p>
+            </div>
+        </section>
+
+        <details class="quiz-section" aria-labelledby="quiz-title">
+            <summary class="quiz-heading"><h2 id="quiz-title">확인 문제</h2><span>4문제</span></summary>
+            <div class="quiz-grid">
+                <article class="quiz-card" data-answer="c">
+                    <h3>반감기가 3번 지나면 처음 모원소의 얼마가 남을까요?</h3>
+                    <div class="quiz-options">
+                        <label><input type="radio" name="q1" value="a"> 1/3</label>
+                        <label><input type="radio" name="q1" value="b"> 1/6</label>
+                        <label><input type="radio" name="q1" value="c"> 1/8</label>
+                        <label><input type="radio" name="q1" value="d"> 0</label>
+                    </div>
+                    <button class="answer-button" type="button">정답 확인</button>
+                    <p class="answer-result" aria-live="polite"></p>
+                    <p class="answer-explanation" hidden>절반의 절반의 절반이므로 1/2 × 1/2 × 1/2 = 1/8입니다. 몇 번을 지나도 완전히 0이 되지는 않습니다.</p>
+                </article>
+
+                <article class="quiz-card" data-answer="b">
+                    <h3>모원소와 딸원소의 양이 같아졌다면 몇 번의 반감기가 지난 것일까요?</h3>
+                    <div class="quiz-options">
+                        <label><input type="radio" name="q2" value="a"> 아직 지나지 않음</label>
+                        <label><input type="radio" name="q2" value="b"> 1번</label>
+                        <label><input type="radio" name="q2" value="c"> 2번</label>
+                        <label><input type="radio" name="q2" value="d"> 알 수 없음</label>
+                    </div>
+                    <button class="answer-button" type="button">정답 확인</button>
+                    <p class="answer-result" aria-live="polite"></p>
+                    <p class="answer-explanation" hidden>반감기가 한 번 지나면 모원소가 절반으로 줄고, 줄어든 절반이 딸원소가 되어 둘의 양이 같아집니다.</p>
+                </article>
+
+                <article class="quiz-card" data-answer="a">
+                    <h3>2억 년 된 암석의 나이를 ¹⁴C로 잴 수 없는 까닭은?</h3>
+                    <div class="quiz-options">
+                        <label><input type="radio" name="q3" value="a"> 반감기가 너무 짧아 모원소가 남아 있지 않아서</label>
+                        <label><input type="radio" name="q3" value="b"> 반감기가 너무 길어서</label>
+                        <label><input type="radio" name="q3" value="c"> 암석에는 탄소가 없어서</label>
+                        <label><input type="radio" name="q3" value="d"> 딸원소가 너무 많아서</label>
+                    </div>
+                    <button class="answer-button" type="button">정답 확인</button>
+                    <p class="answer-result" aria-live="polite"></p>
+                    <p class="answer-explanation" hidden>¹⁴C의 반감기는 5730년입니다. 2억 년이면 반감기가 3만 번 넘게 지난 셈이라 모원소가 하나도 남지 않아 잴 것이 없습니다.</p>
+                </article>
+
+                <article class="quiz-card" data-answer="d">
+                    <h3>서로 만나지 않는 단층과 관입암의 선후를 알려면?</h3>
+                    <div class="quiz-options">
+                        <label><input type="radio" name="q4" value="a"> 누중의 법칙을 쓴다</label>
+                        <label><input type="radio" name="q4" value="b"> 더 큰 쪽이 오래된 것이다</label>
+                        <label><input type="radio" name="q4" value="c"> 더 아래 있는 쪽이 오래된 것이다</label>
+                        <label><input type="radio" name="q4" value="d"> 절대 연령을 재어 비교한다</label>
+                    </div>
+                    <button class="answer-button" type="button">정답 확인</button>
+                    <p class="answer-result" aria-live="polite"></p>
+                    <p class="answer-explanation" hidden>상대 연령은 서로 자르거나 얹혀 있을 때만 순서를 말해 줍니다. 만나지 않는 두 구조는 방사성 동위 원소로 각각의 나이를 재어야 비교할 수 있습니다.</p>
+                </article>
+            </div>
+        </details>
+    </main>
+    <script src="app.js?v=1"></script>
+</body>
+</html>

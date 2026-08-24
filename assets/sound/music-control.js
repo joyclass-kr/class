@@ -23,9 +23,11 @@
     if (!document.querySelector("script[data-site-back-navigation]")) {
         const backScript = document.createElement("script");
         backScript.dataset.siteBackNavigation = "true";
-        backScript.src = currentScript
-            ? new URL("../site-back-navigation.js", currentScript.src).href
-            : "/assets/site-back-navigation.js";
+        const backScriptUrl = currentScript
+            ? new URL("../site-back-navigation.js", currentScript.src)
+            : new URL("/assets/site-back-navigation.js", location.href);
+        backScriptUrl.searchParams.set("v", "20260825-circle-1");
+        backScript.src = backScriptUrl.href;
         document.head.appendChild(backScript);
     }
     if (!window.ClassGameSfx && !document.querySelector("script[data-class-game-sfx]")) {

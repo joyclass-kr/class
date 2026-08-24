@@ -52,18 +52,40 @@ html, body {
 .back-link:hover { color: var(--accent-dark); }
 
 .brand {
-  flex: 1;
   margin: 0;
   font-size: 20px;
-  display: flex;
-  align-items: baseline;
-  gap: 8px;
+  white-space: nowrap;
 }
-.brand small {
-  font-size: 12px;
+
+.title-field {
+  flex: 1;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  min-width: 0;
+}
+.title-field input {
+  flex: 1;
+  min-width: 0;
+  max-width: 260px;
+  height: 36px;
+  padding: 0 12px;
+  border-radius: 10px;
+  border: 1px solid var(--panel-line);
+  background: #fff;
+  color: var(--ink);
+  font-size: 14px;
   font-weight: 700;
-  color: var(--muted);
-  letter-spacing: 0.08em;
+}
+.title-field input:focus { outline: 2px solid var(--accent); outline-offset: 1px; }
+.title-field input.shake-warning {
+  border-color: #e53935;
+  animation: title-shake 0.3s ease;
+}
+@keyframes title-shake {
+  0%, 100% { transform: translateX(0); }
+  25% { transform: translateX(-4px); }
+  75% { transform: translateX(4px); }
 }
 
 .topbar-actions { display: flex; gap: 8px; align-items: center; }
@@ -249,34 +271,87 @@ input[type="range"] {
 
 .canvas-stage {
   display: flex;
-  align-items: center;
+  align-items: flex-start;
   justify-content: center;
   min-width: 0;
 }
 
-.canvas-frame {
+/* Fixed reference box at the paper's maximum size (1000x700) - this box
+   itself never changes size. Shrinking the canvas only shrinks .canvas-frame
+   inside it, so growing back is always possible up to this same maximum. */
+.canvas-max {
   position: relative;
-  width: 100%;
-  max-width: 1000px;
+  width: min(100%, 1000px);
   aspect-ratio: 1000 / 700;
-  border-radius: 18px;
   padding: 10px;
+  box-sizing: border-box;
   background: var(--panel);
   border: 1px solid var(--panel-line);
+  border-radius: 18px;
   box-shadow: var(--shadow);
 }
 
-#mainCanvas {
-  width: 100%;
-  height: 100%;
-  display: block;
+/* The visible/drawable crop, sized as a percentage of the max box's
+   content area so it stays responsive. --view-w/--view-h are buffer-pixel
+   dimensions (1-1000 / 1-700) set from JS. */
+.canvas-frame {
+  position: relative;
+  overflow: hidden;
+  width: calc(var(--view-w, 1000) / 1000 * 100%);
+  height: calc(var(--view-h, 700) / 700 * 100%);
   border-radius: 10px;
+  box-shadow: inset 0 0 0 1px #eee0c8;
+}
+
+#mainCanvas {
+  /* Always rendered at full 1000x700 buffer scale - .canvas-frame's
+     overflow:hidden crops away whatever is past the current view size. */
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: calc(100% * (1000 / var(--view-w, 1000)));
+  height: calc(100% * (700 / var(--view-h, 700)));
+  display: block;
   background: #fffdf6;
   touch-action: none;
   cursor: none;
-  box-shadow: inset 0 0 0 1px #eee0c8;
 }
 #mainCanvas.eyedropper-mode { cursor: copy; }
+
+.resize-handle {
+  position: absolute;
+  background: var(--accent);
+  border: 2px solid #fff;
+  box-shadow: 0 1px 4px rgba(0, 0, 0, 0.3);
+  touch-action: none;
+  z-index: 4;
+}
+.handle-e {
+  top: 50%;
+  right: -8px;
+  width: 16px;
+  height: 40px;
+  margin-top: -20px;
+  border-radius: 8px;
+  cursor: ew-resize;
+}
+.handle-s {
+  left: 50%;
+  bottom: -8px;
+  width: 40px;
+  height: 16px;
+  margin-left: -20px;
+  border-radius: 8px;
+  cursor: ns-resize;
+}
+.handle-se {
+  right: -9px;
+  bottom: -9px;
+  width: 18px;
+  height: 18px;
+  border-radius: 50%;
+  cursor: nwse-resize;
+}
 
 .brush-cursor {
   position: absolute;
@@ -376,6 +451,7 @@ input[type="range"] {
 
 @media (max-width: 560px) {
   .app-shell { padding: 10px; }
-  .brand span, .brand small { display: inline; }
   .topbar { flex-wrap: wrap; }
+  .title-field { order: 3; flex-basis: 100%; }
+  .title-field input { max-width: none; }
 }

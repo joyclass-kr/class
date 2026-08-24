@@ -242,6 +242,8 @@ body {
     line-height: 1.75;
     color: var(--ink);
     text-indent: 1em;
+    /* keep-all 이라 줄 끝이 들쭉날쭉해진다. 양쪽으로 맞춘다. */
+    text-align: justify;
 }
 
 .story-media {
@@ -331,6 +333,7 @@ body {
     line-height: 1.7;
     color: var(--ink);
     text-indent: 1em;
+    text-align: justify;
 }
 
 /* toc */
