@@ -1,0 +1,218 @@
+document.addEventListener('DOMContentLoaded', () => {
+    const mediumButtons = [...document.querySelectorAll('[data-medium]')];
+    const dirButtons = [...document.querySelectorAll('[data-dir]')];
+    const predictionButtons = [...document.querySelectorAll('[data-prediction]')];
+    const angleRange = document.getElementById('angleRange');
+    const angleOutput = document.getElementById('angleOutput');
+    const checkBtn = document.getElementById('checkBtn');
+    const resultEmpty = document.getElementById('resultEmpty');
+    const resultContent = document.getElementById('resultContent');
+    const resultReflect = document.getElementById('resultReflect');
+    const resultRefract = document.getElementById('resultRefract');
+    const predictionResult = document.getElementById('predictionResult');
+    const explanation = document.getElementById('elementaryExplanation');
+    const stageCaption = document.getElementById('stageCaption');
+    const stageBadge = document.getElementById('stageBadge');
+    const criticalNote = document.getElementById('criticalNote');
+    const rayGroup = document.getElementById('rayGroup');
+    const arcGroup = document.getElementById('arcGroup');
+    const mediumZone = document.getElementById('mediumZone');
+    const mediumLabel = document.getElementById('mediumLabel');
+
+    const MEDIA = {
+        water:   { name: '물',         n: 1.33, fill: 'rgba(110,200,235,.16)' },
+        glass:   { name: '유리',       n: 1.50, fill: 'rgba(180,210,235,.20)' },
+        diamond: { name: '다이아몬드', n: 2.42, fill: 'rgba(200,220,255,.26)' },
+    };
+    const N_AIR = 1.00;
+
+    const P = { x: 230, y: 180 };     // where the ray meets the boundary
+    const L = 130;                    // drawn ray length
+    const ARC_R = 36;
+
+    let medium = 'water';
+    let dir = 'in';                   // 'in' = air → medium, 'out' = medium → air
+    let prediction = null;
+
+    const rad = d => (d * Math.PI) / 180;
+    const deg = r => (r * 180) / Math.PI;
+
+    // Ray endpoints run to the edge of the drawing, so a label hung off one
+    // can fall outside the canvas — at 0° incidence the refracted ray points
+    // straight down and its caption landed below the bottom edge. These keep
+    // every caption on screen without moving the rays themselves.
+    const LABEL_W = 58;
+    const clampLabelX = x => Math.max(6, Math.min(460 - LABEL_W, x));
+    const clampLabelY = y => Math.max(16, Math.min(312, y));
+
+    // Snell's law. n1 is whichever medium the light starts in, so flipping the
+    // direction swaps them — and only the dense-to-rare case can go total.
+    function solve() {
+        const theta1 = Number(angleRange.value);
+        const nMed = MEDIA[medium].n;
+        const n1 = dir === 'in' ? N_AIR : nMed;
+        const n2 = dir === 'in' ? nMed : N_AIR;
+        const sinT2 = (n1 * Math.sin(rad(theta1))) / n2;
+        const total = sinT2 > 1;                       // no real refracted ray
+        const theta2 = total ? null : deg(Math.asin(sinT2));
+        const critical = n1 > n2 ? deg(Math.asin(n2 / n1)) : null;
+        return { theta1, theta2, reflect: theta1, n1, n2, total, critical };
+    }
+
+    function arcPath(startDeg, endDeg, sgn, side) {
+        // sweep an arc around the hit point between the normal and a ray
+        const pts = [];
+        const steps = 18;
+        for (let i = 0; i <= steps; i += 1) {
+            const a = rad(startDeg + ((endDeg - startDeg) * i) / steps);
+            pts.push([
+                (P.x + side * ARC_R * Math.sin(a)).toFixed(2),
+                (P.y + sgn * ARC_R * Math.cos(a)).toFixed(2),
+            ]);
+        }
+        return `M${pts.map(p => p.join(',')).join('L')}`;
+    }
+
+    function render() {
+        const s = solve();
+        const m = MEDIA[medium];
+        // The medium always occupies the lower half; only where the light
+        // starts changes, so "incoming" points up or down accordingly.
+        const inSgn = dir === 'in' ? -1 : 1;   // side the incident ray comes from
+        const outSgn = -inSgn;                 // side the refracted ray leaves to
+
+        mediumZone.setAttribute('fill', m.fill);
+        mediumLabel.textContent = `${m.name} (n = ${m.n.toFixed(2)})`;
+        angleOutput.textContent = `${s.theta1}°`;
+        stageBadge.textContent = dir === 'in' ? `공기 → ${m.name}` : `${m.name} → 공기`;
+
+        const sinI = Math.sin(rad(s.theta1)), cosI = Math.cos(rad(s.theta1));
+        const start = { x: P.x - L * sinI, y: P.y + inSgn * L * cosI };
+        const refl = { x: P.x + L * sinI, y: P.y + inSgn * L * cosI };
+
+        let out = '';
+        // incident ray, drawn from its origin toward the boundary
+        out += `<path class="ray incident" d="M${start.x.toFixed(1)},${start.y.toFixed(1)} L${P.x},${P.y}"/>`;
+        out += `<text class="ray-label incident" x="${clampLabelX(start.x - 4).toFixed(1)}" y="${clampLabelY(start.y + (inSgn < 0 ? -6 : 14)).toFixed(1)}">입사 광선</text>`;
+        // reflected ray, drawn away from the boundary on the same side
+        out += `<path class="ray reflected" d="M${P.x},${P.y} L${refl.x.toFixed(1)},${refl.y.toFixed(1)}"/>`;
+        out += `<text class="ray-label reflected" x="${clampLabelX(refl.x - 26).toFixed(1)}" y="${clampLabelY(refl.y + (inSgn < 0 ? -6 : 14)).toFixed(1)}">반사 광선</text>`;
+
+        if (!s.total) {
+            const sinT = Math.sin(rad(s.theta2)), cosT = Math.cos(rad(s.theta2));
+            const refr = { x: P.x + L * sinT, y: P.y + outSgn * L * cosT };
+            out += `<path class="ray refracted" d="M${P.x},${P.y} L${refr.x.toFixed(1)},${refr.y.toFixed(1)}"/>`;
+            out += `<text class="ray-label refracted" x="${clampLabelX(refr.x - 20).toFixed(1)}" y="${clampLabelY(refr.y + (outSgn < 0 ? -6 : 16)).toFixed(1)}">굴절 광선</text>`;
+        }
+        rayGroup.innerHTML = out;
+
+        // angle arcs, measured from the normal
+        let arcs = '';
+        arcs += `<path class="angle-arc incident" d="${arcPath(0, s.theta1, inSgn, -1)}"/>`;
+        arcs += `<text class="angle-text" fill="#ffd166" x="${(P.x - ARC_R * Math.sin(rad(s.theta1 / 2)) - 30).toFixed(1)}" y="${(P.y + inSgn * (ARC_R + 8) * Math.cos(rad(s.theta1 / 2))).toFixed(1)}">${s.theta1}°</text>`;
+        arcs += `<path class="angle-arc reflected" d="${arcPath(0, s.theta1, inSgn, 1)}"/>`;
+        if (!s.total) {
+            arcs += `<path class="angle-arc refracted" d="${arcPath(0, s.theta2, outSgn, 1)}"/>`;
+            arcs += `<text class="angle-text" fill="#a4f0a4" x="${(P.x + ARC_R * Math.sin(rad(s.theta2 / 2)) + 8).toFixed(1)}" y="${(P.y + outSgn * (ARC_R + 10) * Math.cos(rad(s.theta2 / 2))).toFixed(1)}">${s.theta2.toFixed(1)}°</text>`;
+        }
+        arcGroup.innerHTML = arcs;
+
+        criticalNote.textContent = s.critical === null
+            ? ''
+            : s.total
+                ? `임계각 ${s.critical.toFixed(1)}° 보다 크게 입사해 전반사가 일어납니다.`
+                : `이 방향의 임계각은 ${s.critical.toFixed(1)}° 입니다. 그보다 크게 입사하면 전반사가 일어납니다.`;
+    }
+
+    function clearResult() { resultEmpty.hidden = false; resultContent.hidden = true; }
+
+    function check() {
+        const s = solve();
+        const m = MEDIA[medium];
+        resultEmpty.hidden = true;
+        resultContent.hidden = false;
+        resultReflect.textContent = `${s.reflect}°`;
+        resultRefract.textContent = s.total ? '없음 (전반사)' : `${s.theta2.toFixed(1)}°`;
+
+        const actual = s.total ? 'none' : s.theta2 < s.theta1 ? 'smaller' : s.theta2 > s.theta1 ? 'larger' : 'smaller';
+        predictionResult.textContent = !prediction
+            ? '다음에는 결과를 먼저 예상해 보세요.'
+            : prediction === actual ? '예상이 맞았습니다.'
+            : (s.theta1 === 0 ? '입사각이 0°이면 꺾이지 않고 그대로 지나갑니다.' : '예상과 다른 결과입니다.');
+
+        if (s.total) {
+            stageCaption.textContent = `입사각 ${s.theta1}°는 임계각 ${s.critical.toFixed(1)}°보다 커서 빛이 모두 반사됩니다.`;
+            explanation.textContent = `굴절률이 큰 ${m.name}(n=${m.n})에서 공기(n=1.00)로 나갈 때, sin θ₂ = n₁ sin θ₁ / n₂ 가 1을 넘어 굴절 광선이 존재할 수 없습니다. 그래서 빛이 전부 되돌아오는 전반사가 일어납니다.`;
+        } else if (s.theta1 === 0) {
+            stageCaption.textContent = '수직으로 입사하면 꺾이지 않고 그대로 지나갑니다.';
+            explanation.textContent = '입사각이 0°이면 sin θ₁ = 0 이므로 굴절각도 0°가 되어 빛이 꺾이지 않습니다. 반사각도 0°입니다.';
+        } else if (dir === 'in') {
+            stageCaption.textContent = `공기에서 ${m.name}(으)로 들어가며 ${s.theta1}° → ${s.theta2.toFixed(1)}°로 법선 쪽으로 꺾였습니다.`;
+            explanation.textContent = `1.00 × sin ${s.theta1}° = ${m.n} × sin ${s.theta2.toFixed(1)}° 가 성립합니다. 굴절률이 큰 매질에서는 빛이 느려져 법선 쪽으로 꺾이므로 굴절각이 입사각보다 작습니다. 반사각은 언제나 입사각과 같은 ${s.reflect}°입니다.`;
+        } else {
+            stageCaption.textContent = `${m.name}에서 공기로 나가며 ${s.theta1}° → ${s.theta2.toFixed(1)}°로 법선에서 멀어졌습니다.`;
+            explanation.textContent = `${m.n} × sin ${s.theta1}° = 1.00 × sin ${s.theta2.toFixed(1)}° 가 성립합니다. 굴절률이 작은 매질로 나가면 법선에서 멀어지므로 굴절각이 입사각보다 큽니다. 임계각 ${s.critical.toFixed(1)}°를 넘으면 전반사가 일어납니다.`;
+        }
+    }
+
+    mediumButtons.forEach(button => button.addEventListener('click', () => {
+        medium = button.dataset.medium;
+        mediumButtons.forEach(item => item.classList.toggle('selected', item === button));
+        render(); clearResult();
+    }));
+    dirButtons.forEach(button => button.addEventListener('click', () => {
+        dir = button.dataset.dir;
+        dirButtons.forEach(item => item.classList.toggle('selected', item === button));
+        render(); clearResult();
+    }));
+    angleRange.addEventListener('input', () => { render(); clearResult(); });
+    predictionButtons.forEach(button => button.addEventListener('click', () => {
+        prediction = button.dataset.prediction;
+        predictionButtons.forEach(item => item.classList.toggle('selected', item === button));
+    }));
+    checkBtn.addEventListener('click', check);
+
+    function shuffleQuizOptions(card) {
+        const optionGroup = card.querySelector('.quiz-options');
+        const options = Array.from(optionGroup.children);
+        for (let index = options.length - 1; index > 0; index -= 1) {
+            const randomIndex = Math.floor(Math.random() * (index + 1));
+            [options[index], options[randomIndex]] = [options[randomIndex], options[index]];
+        }
+        optionGroup.append(...options);
+    }
+
+    document.querySelectorAll('.quiz-card').forEach(card => {
+        shuffleQuizOptions(card);
+        const answerButton = card.querySelector('.answer-button');
+        const answerResult = card.querySelector('.answer-result');
+        const answerExplanation = card.querySelector('.answer-explanation');
+        answerButton.addEventListener('click', () => {
+            const selected = card.querySelector('input:checked');
+            if (!selected) {
+                delete card.dataset.state;
+                answerResult.textContent = '답을 먼저 선택하세요.';
+                return;
+            }
+            const correct = selected.value === card.dataset.answer;
+            card.dataset.state = correct ? 'correct' : 'incorrect';
+            answerResult.textContent = correct ? '맞았습니다.' : '다시 생각해 보세요.';
+            answerExplanation.hidden = !correct;
+            if (!correct) {
+                selected.checked = false;
+                selected.disabled = true;
+                answerResult.textContent = '다시 생각하고 다른 답을 골라보세요.';
+            }
+        });
+    });
+
+    window.__rayModel = {
+        MEDIA, N_AIR, P, L, solve,
+        setAngle(a) { angleRange.value = String(a); render(); },
+        setMedium(m) { document.querySelector(`[data-medium="${m}"]`).click(); },
+        setDir(d) { document.querySelector(`[data-dir="${d}"]`).click(); },
+    };
+
+    render();
+    clearResult();
+});

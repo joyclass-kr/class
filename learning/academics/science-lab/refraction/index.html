@@ -1,0 +1,178 @@
+<!doctype html>
+<html lang="ko">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="theme-color" content="#07131c">
+    <title>과학 실험실</title>
+    <meta name="description" content="입사각과 매질을 바꾸며 빛의 반사 법칙과 굴절 법칙, 전반사를 확인하는 중학교 과학 모의실험">
+    <link rel="stylesheet" as="style" crossorigin href="https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.9/dist/web/static/pretendard.css">
+    <link rel="stylesheet" href="styles.css?v=1">
+    <link rel="stylesheet" href="ray-visual.css?v=1">
+    <link rel="stylesheet" href="quiz.css?v=1">
+</head>
+<body>
+    <main>
+        <header class="page-header">
+            <div class="title-row">
+                <a href="../">← 과학 실험실</a>
+                <h1>빛의 반사와 굴절</h1>
+            </div>
+            <div class="grade-tags"><span>중학교</span><span>물리</span></div>
+        </header>
+
+        <ol class="method-steps" aria-label="실험 방법">
+            <li>매질과 빛이 나아가는 방향을 정합니다.</li>
+            <li>입사각을 바꿉니다.</li>
+            <li>반사각과 굴절각을 예상합니다.</li>
+            <li>전반사가 일어나는 조건을 찾습니다.</li>
+        </ol>
+
+        <div class="experiment-layout">
+            <section class="panel control-panel" aria-labelledby="control-title">
+                <h2 id="control-title">실험 조건</h2>
+                <p class="water-standard">공기의 굴절률은 1.00으로 봅니다</p>
+
+                <fieldset class="medium-field">
+                    <legend>아래쪽 매질</legend>
+                    <div class="medium-buttons">
+                        <button type="button" data-medium="water" class="selected">물 <small>1.33</small></button>
+                        <button type="button" data-medium="glass">유리 <small>1.50</small></button>
+                        <button type="button" data-medium="diamond">다이아몬드 <small>2.42</small></button>
+                    </div>
+                </fieldset>
+
+                <fieldset class="dir-field">
+                    <legend>빛이 나아가는 방향</legend>
+                    <div class="dir-buttons">
+                        <button type="button" data-dir="in" class="selected">공기 → 매질</button>
+                        <button type="button" data-dir="out">매질 → 공기</button>
+                    </div>
+                </fieldset>
+
+                <div class="range-heading">
+                    <label for="angleRange">입사각</label>
+                    <output id="angleOutput" for="angleRange">40°</output>
+                </div>
+                <input id="angleRange" type="range" min="0" max="85" step="1" value="40">
+                <div class="range-scale" aria-hidden="true"><span>0°</span><span>30°</span><span>60°</span><span>85°</span></div>
+
+                <fieldset class="prediction-field">
+                    <legend>굴절각 예상 (입사각과 비교)</legend>
+                    <div class="prediction-buttons three">
+                        <button type="button" data-prediction="smaller">더 작다</button>
+                        <button type="button" data-prediction="larger">더 크다</button>
+                        <button type="button" data-prediction="none">굴절하지 않는다</button>
+                    </div>
+                </fieldset>
+
+                <button class="run-button" id="checkBtn" type="button">각도 확인하기</button>
+
+                <section class="result-box" aria-labelledby="result-title" aria-live="polite">
+                    <h3 id="result-title">관찰 결과</h3>
+                    <p id="resultEmpty">조건을 정하고 확인해 보세요.</p>
+                    <div id="resultContent" hidden>
+                        <div class="result-numbers">
+                            <article><span>반사각</span><strong id="resultReflect">40°</strong></article>
+                            <article><span>굴절각</span><strong id="resultRefract">28.9°</strong></article>
+                        </div>
+                        <p class="prediction-result" id="predictionResult"></p>
+                        <p class="explanation" id="elementaryExplanation"></p>
+                    </div>
+                </section>
+            </section>
+
+            <section class="panel ray-stage" aria-label="빛의 경로 관찰 화면">
+                <div class="stage-heading"><h2>관찰</h2><span id="stageBadge">공기 → 물</span></div>
+
+                <div class="stage-views">
+                    <svg class="ray-svg" viewBox="0 0 460 320" aria-hidden="true">
+                        <rect class="air-zone" x="0" y="0" width="460" height="180"/>
+                        <rect id="mediumZone" class="medium-zone" x="0" y="180" width="460" height="140"/>
+                        <line class="boundary" x1="0" y1="180" x2="460" y2="180"/>
+                        <line class="normal" x1="230" y1="46" x2="230" y2="314"/>
+                        <text class="axis-note" x="236" y="58">법선</text>
+
+                        <g id="arcGroup"></g>
+                        <g id="rayGroup"></g>
+                        <circle class="hit-point" cx="230" cy="180" r="3.5"/>
+
+                        <text id="airLabel" class="zone-label" x="14" y="26">공기 (n = 1.00)</text>
+                        <text id="mediumLabel" class="zone-label" x="14" y="306">물 (n = 1.33)</text>
+                    </svg>
+                </div>
+
+                <p class="stage-caption" id="stageCaption">입사각을 바꾸며 반사각과 굴절각을 비교해 보세요.</p>
+                <p class="critical-note" id="criticalNote"></p>
+            </section>
+        </div>
+
+        <section class="panel meaning-panel">
+            <h2>실험 결과의 의미</h2>
+            <div class="meaning-body">
+                <p><strong>반사 법칙</strong> 반사각은 언제나 입사각과 같습니다.</p>
+                <p><strong>굴절 법칙</strong> n₁ sin θ₁ = n₂ sin θ₂ 로, 굴절률이 큰 매질로 들어가면 법선 쪽으로 꺾입니다.</p>
+                <p><strong>전반사</strong> 굴절률이 큰 매질에서 작은 매질로 갈 때, 임계각보다 크게 입사하면 굴절 없이 모두 반사됩니다.</p>
+            </div>
+        </section>
+
+        <details class="quiz-section" aria-labelledby="quiz-title">
+            <summary class="quiz-heading"><h2 id="quiz-title">확인 문제</h2><span>4문제</span></summary>
+            <div class="quiz-grid">
+                <article class="quiz-card" data-answer="c">
+                    <h3>빛이 거울에 30°로 입사하면 반사각은?</h3>
+                    <div class="quiz-options">
+                        <label><input type="radio" name="q1" value="a"> 15°</label>
+                        <label><input type="radio" name="q1" value="b"> 60°</label>
+                        <label><input type="radio" name="q1" value="c"> 30°</label>
+                        <label><input type="radio" name="q1" value="d"> 90°</label>
+                    </div>
+                    <button class="answer-button" type="button">정답 확인</button>
+                    <p class="answer-result" aria-live="polite"></p>
+                    <p class="answer-explanation" hidden>반사 법칙에 따라 반사각은 입사각과 항상 같습니다.</p>
+                </article>
+
+                <article class="quiz-card" data-answer="a">
+                    <h3>빛이 공기에서 물로 비스듬히 들어갈 때 굴절각은 입사각보다?</h3>
+                    <div class="quiz-options">
+                        <label><input type="radio" name="q2" value="a"> 작다 (법선 쪽으로 꺾인다)</label>
+                        <label><input type="radio" name="q2" value="b"> 크다 (법선에서 멀어진다)</label>
+                        <label><input type="radio" name="q2" value="c"> 항상 같다</label>
+                        <label><input type="radio" name="q2" value="d"> 항상 90°가 된다</label>
+                    </div>
+                    <button class="answer-button" type="button">정답 확인</button>
+                    <p class="answer-result" aria-live="polite"></p>
+                    <p class="answer-explanation" hidden>굴절률이 큰 매질로 들어가면 빛이 느려지면서 법선 쪽으로 꺾여 굴절각이 입사각보다 작아집니다.</p>
+                </article>
+
+                <article class="quiz-card" data-answer="d">
+                    <h3>전반사가 일어나는 조건으로 옳은 것은?</h3>
+                    <div class="quiz-options">
+                        <label><input type="radio" name="q3" value="a"> 공기에서 물로 들어갈 때</label>
+                        <label><input type="radio" name="q3" value="b"> 입사각이 0°일 때</label>
+                        <label><input type="radio" name="q3" value="c"> 두 매질의 굴절률이 같을 때</label>
+                        <label><input type="radio" name="q3" value="d"> 굴절률이 큰 매질에서 작은 매질로, 임계각보다 크게 입사할 때</label>
+                    </div>
+                    <button class="answer-button" type="button">정답 확인</button>
+                    <p class="answer-result" aria-live="polite"></p>
+                    <p class="answer-explanation" hidden>전반사는 굴절률이 큰 쪽에서 작은 쪽으로 갈 때, 임계각보다 큰 각으로 입사해야 일어납니다.</p>
+                </article>
+
+                <article class="quiz-card" data-answer="b">
+                    <h3>굴절률이 클수록 임계각은 어떻게 되는가?</h3>
+                    <div class="quiz-options">
+                        <label><input type="radio" name="q4" value="a"> 커진다</label>
+                        <label><input type="radio" name="q4" value="b"> 작아진다</label>
+                        <label><input type="radio" name="q4" value="c"> 변하지 않는다</label>
+                        <label><input type="radio" name="q4" value="d"> 항상 45°이다</label>
+                    </div>
+                    <button class="answer-button" type="button">정답 확인</button>
+                    <p class="answer-result" aria-live="polite"></p>
+                    <p class="answer-explanation" hidden>임계각은 sin θc = n₂/n₁ 이므로 n₁이 클수록 작아집니다. 다이아몬드가 물보다 임계각이 훨씬 작습니다.</p>
+                </article>
+            </div>
+        </details>
+    </main>
+    <script src="app.js?v=2"></script>
+</body>
+</html>
