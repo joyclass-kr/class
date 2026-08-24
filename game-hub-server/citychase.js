@@ -51,7 +51,7 @@ function addPlayer(game, id, name) {
   if (game.phase !== "lobby") return { ok: false, error: "이미 시작한 게임입니다." };
   const safeId = String(id);
   if (game.players.some(player => player.id === safeId)) return { ok: true };
-  if (game.players.length >= MAX_PLAYERS) return { ok: false, error: "시티 체이스는 최대 6명까지 참여할 수 있습니다." };
+  if (game.players.length >= MAX_PLAYERS) return { ok: false, error: "경찰과 도둑은 최대 6명까지 참여할 수 있습니다." };
   game.players.push(createPlayer(safeId, name || `플레이어 ${game.players.length + 1}`));
   game.revision += 1;
   return { ok: true };

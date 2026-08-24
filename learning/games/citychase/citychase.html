@@ -5,7 +5,7 @@
   <meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
   <meta name="theme-color" content="#d8e8dc">
   <meta name="description" content="경찰팀과 도둑팀이 각자의 기기로 접속해 보석을 둘러싼 추격전을 벌이는 2~6인 실시간 보드게임">
-  <title>시티 체이스 · 실시간 추격 보드게임</title>
+  <title>경찰과 도둑 (Cops and Robbers) · 실시간 추격 보드게임</title>
   <link rel="stylesheet" href="../../../assets/network/multiplayer-lobby.css">
   <link rel="stylesheet" href="citychase.css?v=20260824m">
   <script src="../../../assets/network/game-network.js?v=20260821"></script>
@@ -28,8 +28,8 @@
         <div class="lobbyBrand">
           <div class="brandMark" aria-hidden="true">♟</div>
           <div>
-            <h1 class="lobbyTitle">시티 체이스</h1>
-            <p class="lobbyLead">2–6명 · 각자의 기기로 참가</p>
+            <h1 class="lobbyTitle">경찰과 도둑</h1>
+            <p class="lobbyLead">(Cops and Robbers) · 2–6명 · 각자의 기기로 참가</p>
           </div>
         </div>
         <p class="lobbyIdentity"><strong id="savedName">-</strong>님</p>
@@ -94,7 +94,7 @@
 
     <section id="gameScreen" class="gameShell hidden">
       <header class="gameHeader">
-        <div class="miniBrand"><span class="miniBrandMark" aria-hidden="true">🚨</span><div><strong>시티 체이스</strong><small>GEM PURSUIT</small></div></div>
+        <div class="miniBrand"><span class="miniBrandMark" aria-hidden="true">🚨</span><div><strong>경찰과 도둑</strong><small>COPS AND ROBBERS</small></div></div>
         <div class="turnHeadline"><strong id="turnHeadline">게임 준비 중</strong><span id="turnSubline">잠시 기다려 주세요.</span></div>
         <div class="headerMeta">
           <div class="roomMini"><span>ROOM</span><strong id="gameRoomCode">----</strong></div>
@@ -170,7 +170,7 @@
 
   <section id="rulesOverlay" class="overlay hidden" role="dialog" aria-modal="true" aria-labelledby="rulesTitle">
     <div class="modal">
-      <div class="row spread"><div><div class="eyebrow">HOW TO PLAY</div><h2 id="rulesTitle">시티 체이스 게임 방법</h2></div><button id="closeRulesBtn" class="iconButton" type="button" aria-label="닫기">×</button></div>
+      <div class="row spread"><div><div class="eyebrow">HOW TO PLAY</div><h2 id="rulesTitle">경찰과 도둑 게임 방법</h2></div><button id="closeRulesBtn" class="iconButton" type="button" aria-label="닫기">×</button></div>
       <div class="rulesGrid">
         <article class="ruleBox"><h3>🌸 도둑팀</h3><ul><li>도시의 일곱 장소를 조사해 숨겨진 보석을 찾으세요.</li><li>찾은 보석을 하나씩 비밀기지까지 운반하면 확보됩니다.</li><li>경보 장치를 발견한 말은 현장에서 붙잡힙니다.</li><li>방향 표지를 놓아 경찰의 다음 이동을 유도할 수 있습니다.</li></ul></article>
         <article class="ruleBox"><h3>🟣 경찰팀</h3><ul><li>추격 전에 보석 두 개와 경보 장치를 서로 다른 장소에 배치하세요.</li><li>이동 경로에서 도둑말과 마주치면 그 말을 구금합니다.</li><li>차단 표지를 활용해 도둑팀의 진로를 막을 수 있습니다.</li><li>도둑말 세 개를 모두 구금하면 경찰팀이 승리합니다.</li></ul></article>

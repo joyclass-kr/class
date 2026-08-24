@@ -3524,7 +3524,7 @@ wss.on("connection", socket => {
       const game = room?.citychase;
       const action = cleanToken(message.action, 30);
       if (!room || !game) {
-        cityChaseError(socket, "시티 체이스 방에 참가하지 않았습니다.");
+        cityChaseError(socket, "경찰과 도둑 방에 참가하지 않았습니다.");
         return;
       }
 

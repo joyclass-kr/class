@@ -179,7 +179,8 @@ assert.match(css, /\.lobbyWorkspace \{ display: grid; grid-template-columns: min
 assert.match(css, /@media \(max-width: 900px\)[\s\S]*\.lobbyWorkspace \{ grid-template-columns: 1fr; \}/, "iPad 세로 화면에서는 대기 패널을 한 열로 배치해야 합니다.");
 assert.match(client, /function avatarOf\(playerId\)/, "학생 아바타는 멀티플레이 대기실 정보에서 가져와야 합니다.");
 assert.match(css, /lobby-city\.jpg/, "제공한 도심 그림을 대기실 전용 배경으로 사용해야 합니다.");
-assert.match(html, /시티 체이스/, "공개 제목은 독자적인 시티 체이스 명칭을 사용해야 합니다.");
+assert.match(html, /경찰과 도둑/, "공개 제목은 한국어 이름인 경찰과 도둑을 사용해야 합니다.");
+assert.match(html, /COPS AND ROBBERS/i, "공개 제목은 영어 이름을 함께 병기해야 합니다.");
 assert.doesNotMatch(html, /도둑잡기|잠복경찰|속임수 카드|검문 카드/, "공개 화면에 원작을 특정하는 명칭과 설명서식 용어가 남으면 안 됩니다.");
 assert.doesNotMatch(server, /도둑잡기|잠복경찰|속임수 카드|검문 카드/, "서버 안내 문구도 독자적인 용어를 사용해야 합니다.");
 assert.match(css, /\.lobbyShell::before[\s\S]*linear-gradient\(#eff8f058, #eff8f058\)[\s\S]*cover/s, "대기실 배경은 살짝 밝게 처리하고 화면 비율에 맞춰 채워야 합니다.");
