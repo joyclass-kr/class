@@ -1,0 +1,17 @@
+diff --git a/learning/arts/instrument-room/app.js b/learning/arts/instrument-room/app.js
+--- a/learning/arts/instrument-room/app.js
++++ b/learning/arts/instrument-room/app.js
+@@ -32,2 +32,2 @@
+-        const extendedKit = state.currentModel && ["rock-kit", "metal-kit"].includes(state.currentModel.id);
++        const extendedKit = state.currentModel && ["rock-kit", "metal-kit", "pop-kit"].includes(state.currentModel.id);
+         return extendedKit ? DRUMS : DRUMS.filter(function (drum) { return drum.id !== "midtom"; });
+@@ -89,1 +89,1 @@
+-            { id: "pop-kit", name: "Pop Kit", tag: "DRUM SET", engine: "drums", stage: "drums", art: "assets/instruments/drum-pop-kit.webp", badge: "ACOUSTIC KIT", model: "POP", description: "구성이 단순하고 정돈된 소형 팝 세트예요." },
++            { id: "pop-kit", name: "Pop Kit", tag: "DRUM SET", engine: "drums", stage: "drums", art: "assets/instruments/drum-pop-kit.webp", badge: "ACOUSTIC KIT", model: "POP", description: "2개의 랙 탐과 1개의 플로어 탐을 갖춘 표준 5피스 팝 세트예요." },
+diff --git a/tests/instrument-room-contract.test.js b/tests/instrument-room-contract.test.js
+--- a/tests/instrument-room-contract.test.js
++++ b/tests/instrument-room-contract.test.js
+@@ -38,2 +38,3 @@
+   assert.match(app, /function activeDrums/);
++  assert.match(app, /\["rock-kit", "metal-kit", "pop-kit"\]\.includes/);
+   assert.match(css, /\.drum-pads\.extended/);
