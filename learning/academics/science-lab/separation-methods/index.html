@@ -1,0 +1,168 @@
+<!doctype html>
+<html lang="ko">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="theme-color" content="#07131c">
+    <title>과학 실험실</title>
+    <meta name="description" content="거름·증류·크로마토그래피로 혼합물을 나누며 알갱이 크기, 끓는점 차이, 이동 속도 차이를 확인하는 중학교 과학 모의실험">
+    <link rel="stylesheet" as="style" crossorigin href="https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.9/dist/web/static/pretendard.css">
+    <link rel="stylesheet" href="styles.css?v=1">
+    <link rel="stylesheet" href="separation-visual.css?v=1">
+    <link rel="stylesheet" href="quiz.css?v=1">
+</head>
+<body>
+    <main>
+        <header class="page-header">
+            <div class="title-row">
+                <a href="../">← 과학 실험실</a>
+                <h1>거름·증류·크로마토그래피</h1>
+            </div>
+            <div class="grade-tags"><span>중학교</span><span>화학</span></div>
+        </header>
+
+        <ol class="method-steps" aria-label="실험 방법">
+            <li>분리 방법을 고릅니다.</li>
+            <li>나눌 혼합물을 고릅니다.</li>
+            <li>실험을 시작해 끝까지 지켜봅니다.</li>
+            <li>무엇이 어디로 갔는지 확인합니다.</li>
+        </ol>
+
+        <div class="experiment-layout">
+            <section class="panel control-panel" aria-labelledby="control-title">
+                <h2 id="control-title">실험 조건</h2>
+                <p class="water-standard" id="methodHint">거름은 알갱이 크기 차이로 나눕니다</p>
+
+                <fieldset class="mode-field">
+                    <legend>분리 방법</legend>
+                    <div class="mode-buttons">
+                        <button type="button" data-mode="filter">거름<small>알갱이 크기</small></button>
+                        <button type="button" data-mode="distill">증류<small>끓는점</small></button>
+                        <button type="button" data-mode="chroma">크로마토그래피<small>이동 속도</small></button>
+                    </div>
+                </fieldset>
+
+                <fieldset class="mix-field">
+                    <legend>혼합물</legend>
+                    <div class="mix-buttons" id="mixButtons"></div>
+                </fieldset>
+
+                <div class="range-heading">
+                    <label for="progressRange">실험 진행</label>
+                    <output id="progressOutput" for="progressRange">0 %</output>
+                </div>
+                <input id="progressRange" type="range" min="0" max="100" step="1" value="0">
+                <div class="range-scale" aria-hidden="true"><span>시작</span><span>절반</span><span>끝</span></div>
+
+                <fieldset class="prediction-field">
+                    <legend>이 방법으로 나눌 수 있을까요?</legend>
+                    <div class="prediction-buttons three">
+                        <button type="button" data-prediction="full">완전히 나뉜다</button>
+                        <button type="button" data-prediction="partial">일부만 나뉜다</button>
+                        <button type="button" data-prediction="none">나뉘지 않는다</button>
+                    </div>
+                </fieldset>
+
+                <button class="run-button" id="checkBtn" type="button">분리 시작</button>
+                <button class="reset-button" id="resetBtn" type="button">처음으로</button>
+
+                <section class="result-box" aria-labelledby="result-title" aria-live="polite">
+                    <h3 id="result-title">관찰 결과</h3>
+                    <p id="resultEmpty">방법과 혼합물을 고르고 분리를 시작해 보세요.</p>
+                    <div id="resultContent" hidden>
+                        <div class="result-numbers">
+                            <article><span>분리 결과</span><strong id="valueA">-</strong></article>
+                            <article><span>나뉜 물질</span><strong id="valueB">-</strong></article>
+                        </div>
+                        <p class="prediction-result" id="predictionResult"></p>
+                        <p class="explanation" id="elementaryExplanation"></p>
+                    </div>
+                </section>
+            </section>
+
+            <section class="panel sep-stage" aria-label="관찰 화면">
+                <div class="stage-heading"><h2>관찰</h2><span id="stageBadge">-</span></div>
+
+                <div class="stage-views">
+                    <svg class="main-svg" viewBox="0 0 460 214" aria-hidden="true">
+                        <g id="mainGroup"></g>
+                    </svg>
+                    <svg class="graph-svg" viewBox="0 0 460 196" aria-hidden="true">
+                        <g id="graphGroup"></g>
+                    </svg>
+                </div>
+
+                <p class="stage-caption" id="stageCaption">무엇이 걸러지고 무엇이 그대로 빠져나가는지 보세요.</p>
+                <div class="data-note" id="dataNote"></div>
+            </section>
+        </div>
+
+        <section class="panel meaning-panel">
+            <h2>실험 결과의 의미</h2>
+            <div class="meaning-body">
+                <p><strong>거름</strong> 거름종이 구멍보다 큰 알갱이만 걸러집니다. 물에 녹은 물질은 알갱이가 너무 작아 그대로 빠져나갑니다.</p>
+                <p><strong>증류</strong> 끓는점이 낮은 물질이 먼저 끓어 나옵니다. 끓는 동안에는 온도가 오르지 않고 일정하게 유지됩니다.</p>
+                <p><strong>크로마토그래피</strong> 성분마다 이동하는 빠르기가 달라 서로 다른 높이에 멈춥니다. 이동 거리의 비를 Rf 값이라고 합니다.</p>
+            </div>
+        </section>
+
+        <details class="quiz-section" aria-labelledby="quiz-title">
+            <summary class="quiz-heading"><h2 id="quiz-title">확인 문제</h2><span>4문제</span></summary>
+            <div class="quiz-grid">
+                <article class="quiz-card" data-answer="c">
+                    <h3>소금물을 거름종이로 거르면 어떻게 될까요?</h3>
+                    <div class="quiz-options">
+                        <label><input type="radio" name="q1" value="a"> 소금만 걸러진다</label>
+                        <label><input type="radio" name="q1" value="b"> 물만 걸러진다</label>
+                        <label><input type="radio" name="q1" value="c"> 소금물이 그대로 빠져나간다</label>
+                        <label><input type="radio" name="q1" value="d"> 아무것도 통과하지 못한다</label>
+                    </div>
+                    <button class="answer-button" type="button">정답 확인</button>
+                    <p class="answer-result" aria-live="polite"></p>
+                    <p class="answer-explanation" hidden>녹아 있는 소금은 알갱이가 거름종이 구멍보다 훨씬 작아 물과 함께 그대로 빠져나갑니다. 거름으로는 나눌 수 없습니다.</p>
+                </article>
+
+                <article class="quiz-card" data-answer="a">
+                    <h3>물과 에탄올 혼합물을 증류하면 무엇이 먼저 나올까요?</h3>
+                    <div class="quiz-options">
+                        <label><input type="radio" name="q2" value="a"> 끓는점이 낮은 에탄올</label>
+                        <label><input type="radio" name="q2" value="b"> 끓는점이 높은 물</label>
+                        <label><input type="radio" name="q2" value="c"> 둘이 같이 나온다</label>
+                        <label><input type="radio" name="q2" value="d"> 아무것도 나오지 않는다</label>
+                    </div>
+                    <button class="answer-button" type="button">정답 확인</button>
+                    <p class="answer-result" aria-live="polite"></p>
+                    <p class="answer-explanation" hidden>에탄올의 끓는점은 78 ℃, 물은 100 ℃입니다. 끓는점이 낮은 에탄올이 먼저 끓어 나옵니다.</p>
+                </article>
+
+                <article class="quiz-card" data-answer="b">
+                    <h3>증류하는 동안 물질이 끓고 있을 때 온도는?</h3>
+                    <div class="quiz-options">
+                        <label><input type="radio" name="q3" value="a"> 계속 올라간다</label>
+                        <label><input type="radio" name="q3" value="b"> 일정하게 유지된다</label>
+                        <label><input type="radio" name="q3" value="c"> 점점 내려간다</label>
+                        <label><input type="radio" name="q3" value="d"> 오르내리기를 반복한다</label>
+                    </div>
+                    <button class="answer-button" type="button">정답 확인</button>
+                    <p class="answer-result" aria-live="polite"></p>
+                    <p class="answer-explanation" hidden>끓는 동안 넣어 준 열은 모두 상태를 바꾸는 데 쓰입니다. 그래서 그 물질이 다 끓어 나갈 때까지 온도가 일정합니다.</p>
+                </article>
+
+                <article class="quiz-card" data-answer="d">
+                    <h3>크로마토그래피에서 가장 높이 올라간 성분은?</h3>
+                    <div class="quiz-options">
+                        <label><input type="radio" name="q4" value="a"> 가장 무거운 성분</label>
+                        <label><input type="radio" name="q4" value="b"> 가장 진한 색의 성분</label>
+                        <label><input type="radio" name="q4" value="c"> 가장 많이 들어 있는 성분</label>
+                        <label><input type="radio" name="q4" value="d"> 이동 속도가 가장 빠른 성분</label>
+                    </div>
+                    <button class="answer-button" type="button">정답 확인</button>
+                    <p class="answer-result" aria-live="polite"></p>
+                    <p class="answer-explanation" hidden>용매를 따라 이동하는 빠르기가 성분마다 다릅니다. 빠르게 이동하는 성분일수록 높이 올라가고 Rf 값이 큽니다.</p>
+                </article>
+            </div>
+        </details>
+    </main>
+    <script src="app.js?v=3"></script>
+</body>
+</html>
