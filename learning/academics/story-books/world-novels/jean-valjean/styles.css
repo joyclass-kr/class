@@ -232,7 +232,7 @@ body {
 
 .page-story p {
     margin: 0 0 10px;
-    font-size: clamp(15px, 2.605cqh, 27px);
+    font-size: clamp(14px, 2.315cqh, 24px);
     font-weight: 500;
     line-height: 1.75;
     color: var(--ink);
