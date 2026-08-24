@@ -1,0 +1,201 @@
+<!doctype html>
+<html lang="ko">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="theme-color" content="#07131c">
+    <title>과학 실험실</title>
+    <meta name="description" content="빛 세기와 이산화 탄소 농도, 온도를 바꾸며 잎의 순광합성과 광보상점을 재고, 포도당 한 분자가 만드는 ATP를 결산하는 고등학교 과학 모의실험">
+    <link rel="stylesheet" as="style" crossorigin href="https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.9/dist/web/static/pretendard.css">
+    <link rel="stylesheet" href="styles.css?v=4">
+    <link rel="stylesheet" href="metabolism-visual.css?v=4">
+    <link rel="stylesheet" href="quiz.css?v=4">
+</head>
+<body>
+    <main>
+        <header class="page-header">
+            <div class="title-row">
+                <a href="../">← 과학 실험실</a>
+                <h1>광합성과 세포 호흡</h1>
+            </div>
+            <div class="grade-tags"><span>고등학교</span><span>생명과학</span></div>
+        </header>
+
+        <ol class="method-steps" aria-label="실험 방법">
+            <li>관찰할 대상을 고릅니다.</li>
+            <li>빛과 이산화 탄소, 온도를 바꿉니다.</li>
+            <li>기체가 드나드는 방향과 빠르기를 봅니다.</li>
+            <li>포도당 한 분자의 ATP를 결산합니다.</li>
+        </ol>
+
+        <div class="experiment-layout">
+            <section class="panel control-panel" aria-labelledby="control-title">
+                <h2 id="control-title">실험 조건</h2>
+                <p class="water-standard">기체 속도는 잎 넓이 1 m²가 1초에 주고받는 CO₂ 양입니다</p>
+
+                <fieldset class="mode-field">
+                    <legend>관찰 대상</legend>
+                    <div class="mode-buttons">
+                        <button type="button" data-mode="leaf">잎의 기체 교환<small>광합성 − 호흡</small></button>
+                        <button type="button" data-mode="atp">포도당의 ATP 결산<small>세포 호흡</small></button>
+                    </div>
+                </fieldset>
+
+                <div id="leafControls">
+                    <fieldset class="pick-field">
+                        <legend>이산화 탄소 농도</legend>
+                        <div class="pick-buttons cols3">
+                            <button type="button" data-co2="200">200<small>ppm</small></button>
+                            <button type="button" data-co2="400">400<small>ppm · 대기</small></button>
+                            <button type="button" data-co2="800">800<small>ppm</small></button>
+                        </div>
+                    </fieldset>
+
+                    <fieldset class="pick-field">
+                        <legend>온도</legend>
+                        <div class="pick-buttons cols4">
+                            <button type="button" data-temp="10">10<small>℃</small></button>
+                            <button type="button" data-temp="20">20<small>℃</small></button>
+                            <button type="button" data-temp="30">30<small>℃</small></button>
+                            <button type="button" data-temp="40">40<small>℃</small></button>
+                        </div>
+                    </fieldset>
+
+                    <div class="range-heading">
+                        <label for="lightRange">빛 세기</label>
+                        <output id="lightOutput" for="lightRange">600 μmol/m²/s</output>
+                    </div>
+                    <input id="lightRange" type="range" min="0" max="2000" step="25" value="600">
+                    <div class="range-scale" aria-hidden="true"><span>깜깜함</span><span>흐린 날</span><span>한여름 볕</span></div>
+                </div>
+
+                <div id="atpControls" hidden>
+                    <fieldset class="pick-field">
+                        <legend>산소</legend>
+                        <div class="pick-buttons cols2">
+                            <button type="button" data-o2="yes">있음<small>산소 호흡</small></button>
+                            <button type="button" data-o2="no">없음<small>젖산 발효</small></button>
+                        </div>
+                    </fieldset>
+
+                    <fieldset class="pick-field">
+                        <legend>세포질 NADH 셔틀</legend>
+                        <div class="pick-buttons cols2">
+                            <button type="button" data-shuttle="malate">말산·아스파르트산<small>NADH로 전달</small></button>
+                            <button type="button" data-shuttle="g3p">글리세롤 인산<small>FADH₂로 전달</small></button>
+                        </div>
+                    </fieldset>
+                </div>
+
+                <fieldset class="prediction-field">
+                    <legend id="predictionLegend">여기서 빛을 더 세게 하면 광합성은?</legend>
+                    <div class="prediction-buttons three">
+                        <button type="button" data-prediction="p1">크게 는다</button>
+                        <button type="button" data-prediction="p2">조금 는다</button>
+                        <button type="button" data-prediction="p3">거의 그대로</button>
+                    </div>
+                </fieldset>
+
+                <button class="run-button" id="runBtn" type="button">하루 재현</button>
+                <button class="reset-button" id="resetBtn" type="button">처음으로</button>
+
+                <section class="result-box" aria-labelledby="result-title" aria-live="polite">
+                    <h3 id="result-title">관찰 결과</h3>
+                    <p id="resultEmpty">조건을 바꾸며 관찰해 보세요.</p>
+                    <div id="resultContent" hidden>
+                        <div class="result-numbers">
+                            <article><span id="labelA">순광합성 속도</span><strong id="valueA">-</strong></article>
+                            <article><span id="labelB">광보상점</span><strong id="valueB">-</strong></article>
+                        </div>
+                        <p class="prediction-result" id="predictionResult"></p>
+                        <p class="explanation" id="elementaryExplanation"></p>
+                    </div>
+                </section>
+            </section>
+
+            <section class="panel metabolism-stage" aria-label="관찰 화면">
+                <div class="stage-heading"><h2>관찰</h2><span id="stageBadge">-</span></div>
+
+                <div class="stage-views">
+                    <svg class="main-svg" viewBox="0 0 460 214" aria-hidden="true">
+                        <g id="mainGroup"></g>
+                    </svg>
+                    <svg class="graph-svg" viewBox="0 0 460 196" aria-hidden="true">
+                        <g id="graphGroup"></g>
+                    </svg>
+                </div>
+
+                <p class="stage-caption" id="stageCaption">잎은 빛을 받는 동안에도 쉬지 않고 호흡합니다. 눈에 보이는 기체 출입은 둘의 차이입니다.</p>
+                <div class="data-note" id="dataNote"></div>
+            </section>
+        </div>
+
+        <section class="panel meaning-panel">
+            <h2>실험 결과의 의미</h2>
+            <div class="meaning-body">
+                <p><strong>광보상점</strong> 총광합성량과 호흡량이 같아지는 빛 세기입니다. 이보다 어두우면 잎은 오히려 이산화 탄소를 내놓습니다. 온도가 높으면 호흡이 빨라져 광보상점도 올라갑니다.</p>
+                <p><strong>제한 요인</strong> 어두울 때는 이산화 탄소를 아무리 늘려도 소용이 없고, 빛이 충분할 때라야 이산화 탄소나 온도가 속도를 좌우합니다. 가장 모자란 것 하나가 전체를 붙잡습니다.</p>
+                <p><strong>ATP 결산</strong> 포도당 한 분자를 산소로 끝까지 분해하면 ATP 30~32개가 나오지만, 산소가 없어 발효로 그치면 2개뿐입니다. 나머지 에너지는 젖산 속에 그대로 갇혀 있습니다.</p>
+            </div>
+        </section>
+
+        <details class="quiz-section" aria-labelledby="quiz-title">
+            <summary class="quiz-heading"><h2 id="quiz-title">확인 문제</h2><span>4문제</span></summary>
+            <div class="quiz-grid">
+                <article class="quiz-card" data-answer="c">
+                    <h3>아주 어두운 곳에서 이산화 탄소 농도만 두 배로 높이면 광합성 속도는?</h3>
+                    <div class="quiz-options">
+                        <label><input type="radio" name="q1" value="a"> 두 배가 된다</label>
+                        <label><input type="radio" name="q1" value="b"> 네 배가 된다</label>
+                        <label><input type="radio" name="q1" value="c"> 거의 변하지 않는다</label>
+                        <label><input type="radio" name="q1" value="d"> 절반으로 준다</label>
+                    </div>
+                    <button class="answer-button" type="button">정답 확인</button>
+                    <p class="answer-result" aria-live="polite"></p>
+                    <p class="answer-explanation" hidden>어두운 곳에서는 빛이 제한 요인입니다. 재료가 아무리 많아도 빛이 모자라면 속도는 그대로입니다.</p>
+                </article>
+
+                <article class="quiz-card" data-answer="b">
+                    <h3>광보상점에서 잎을 보면?</h3>
+                    <div class="quiz-options">
+                        <label><input type="radio" name="q2" value="a"> 광합성만 일어난다</label>
+                        <label><input type="radio" name="q2" value="b"> 겉보기 기체 출입이 0이다</label>
+                        <label><input type="radio" name="q2" value="c"> 호흡이 멈춘다</label>
+                        <label><input type="radio" name="q2" value="d"> 광합성이 가장 빠르다</label>
+                    </div>
+                    <button class="answer-button" type="button">정답 확인</button>
+                    <p class="answer-result" aria-live="polite"></p>
+                    <p class="answer-explanation" hidden>두 과정이 모두 일어나지만 크기가 같아 서로 상쇄됩니다. 밖에서 재면 드나드는 기체가 없는 것처럼 보입니다.</p>
+                </article>
+
+                <article class="quiz-card" data-answer="d">
+                    <h3>포도당 한 분자를 산소로 호흡하면 ATP가 대략 몇 개 만들어질까요?</h3>
+                    <div class="quiz-options">
+                        <label><input type="radio" name="q3" value="a"> 2개</label>
+                        <label><input type="radio" name="q3" value="b"> 4개</label>
+                        <label><input type="radio" name="q3" value="c"> 12개</label>
+                        <label><input type="radio" name="q3" value="d"> 30~32개</label>
+                    </div>
+                    <button class="answer-button" type="button">정답 확인</button>
+                    <p class="answer-result" aria-live="polite"></p>
+                    <p class="answer-explanation" hidden>기질 수준 인산화로 4개, 전자전달계에서 26~28개가 만들어집니다. 세포질의 NADH를 어느 셔틀로 들여보내느냐에 따라 30개나 32개가 됩니다.</p>
+                </article>
+
+                <article class="quiz-card" data-answer="a">
+                    <h3>발효가 ATP를 아주 조금밖에 못 만드는 까닭은?</h3>
+                    <div class="quiz-options">
+                        <label><input type="radio" name="q4" value="a"> 포도당이 끝까지 분해되지 않아 에너지가 젖산에 남아서</label>
+                        <label><input type="radio" name="q4" value="b"> 해당 과정이 일어나지 않아서</label>
+                        <label><input type="radio" name="q4" value="c"> 포도당을 절반만 써서</label>
+                        <label><input type="radio" name="q4" value="d"> ATP가 곧바로 분해되어서</label>
+                    </div>
+                    <button class="answer-button" type="button">정답 확인</button>
+                    <p class="answer-result" aria-live="polite"></p>
+                    <p class="answer-explanation" hidden>발효에서도 해당 과정은 그대로 일어납니다. 다만 산소가 없어 전자전달계를 돌리지 못하므로 피루브산을 젖산으로 바꿔 NADH만 되살릴 뿐이고, 에너지 대부분은 젖산 속에 그대로 남습니다.</p>
+                </article>
+            </div>
+        </details>
+    </main>
+    <script src="app.js?v=4"></script>
+</body>
+</html>
