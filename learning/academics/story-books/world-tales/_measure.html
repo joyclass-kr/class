@@ -20,15 +20,20 @@
  * 그 안에서 vw·vh가 진짜로 바뀌므로 실제 화면과 똑같아진다. */
 const out = document.getElementById('out');
 const frame = document.getElementById('frame');
+const STAMP = Date.now();   // 브라우저가 옛 styles.css를 재쓰지 않게 한다
 
-const SIZES = [[1280, 720], [1366, 768], [1920, 1080]];
+// 실제 기기의 '보이는 칸' 크기다. 화면 해상도가 아니라 브라우저 껍데기를 뺀 값이다.
+//  크롬북 1366×768 → 1366×620 · 크롬북 1920×1080 → 1920×932
+//  아이패드 10.2 가로 → 1080×730 · 아이패드 에어 가로 → 1180×744
+//  아이패드 프로 12.9 가로 → 1366×944 · 아이패드 에어 세로 → 820×1104
+const SIZES = [[1366, 620], [1920, 932], [1080, 730], [1180, 744], [1366, 944], [820, 1104]];
 
 function load(slug) {
     return new Promise((resolve) => {
         frame.onload = () => resolve();
         // 끝의 빗금이 꼭 있어야 한다. index.html을 붙이면 서버가 그걸 떼면서
         // 주소가 한 칸 위로 올라가 책의 app.js를 못 찾는다.
-        frame.src = slug + '/';
+        frame.src = slug + '/?t=' + STAMP;
     });
 }
 

@@ -18,6 +18,7 @@
  * 아이프레임을 1366x768로 만들어야 글씨 크기(vw 기준)가 실제와 같아진다. */
 const out = document.getElementById('out');
 const frame = document.getElementById('frame');
+const STAMP = Date.now();   // 브라우저가 옛 styles.css를 재쓰지 않게 한다
 
 function probe() {
     const rows = [];
@@ -66,7 +67,7 @@ function probe() {
     frame.style.height = '768px';
     const lines = ['책'.padEnd(20) + '한쪽글자 채운줄 / 쓸수있는줄  여유'];
     for (const slug of slugs) {
-        await new Promise(r => { frame.onload = r; frame.src = slug + '/'; });
+        await new Promise(r => { frame.onload = r; frame.src = slug + '/?t=' + STAMP; });
         await new Promise(r => setTimeout(r, 90));
         try {
             const s = frame.contentWindow.eval('(' + probe.toString() + ')()');
