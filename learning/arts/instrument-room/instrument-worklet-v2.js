@@ -23,7 +23,7 @@ class ModalStringVoice {
         this.released = false;
         this.releaseGain = 1;
         this.age = 0;
-        this.attackSamples = Math.max(12, Math.round(sampleRate * (this.model === "bass" ? .0028 : .0016)));
+        this.attackSamples = Math.max(1, Math.round(sampleRate * .00012));
         this.transientLevel = this.getTransientLevel();
         this.transientDecay = Math.exp(-1 / (sampleRate * this.getTransientTime()));
         this.noisePrevious = 0;
@@ -253,7 +253,7 @@ class ModalDrumVoice {
         const noise = highpass * this.noiseEnvelope;
         this.noiseEnvelope *= this.noiseDecay;
         this.age += 1;
-        const attack = Math.min(1, this.age / Math.max(1, sampleRate * .0008));
+        const attack = Math.min(1, this.age / Math.max(1, sampleRate * .0001));
         return (sum + noise) * attack;
     }
 

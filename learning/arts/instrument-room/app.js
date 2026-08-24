@@ -301,7 +301,7 @@
         if (!context) return Promise.reject(new Error("AudioContext unavailable"));
         if (!context.audioWorklet || typeof window.AudioWorkletNode !== "function") return Promise.reject(new Error("AudioWorklet unavailable"));
         if (!state.workletModuleLoading) {
-            state.workletModuleLoading = context.audioWorklet.addModule("instrument-worklet-v2.js?v=20260824-instant-onset");
+            state.workletModuleLoading = context.audioWorklet.addModule("instrument-worklet-v2.js?v=20260824-fast-adsr");
         }
         return state.workletModuleLoading;
     }
@@ -386,7 +386,7 @@
         filter.type = "lowpass";
         filter.frequency.value = model === "bass" ? 1900 : 3600;
         output.gain.setValueAtTime(.0001, start);
-        output.gain.exponentialRampToValueAtTime(velocity * .24, start + .003);
+        output.gain.exponentialRampToValueAtTime(velocity * .24, start + .00012);
         output.gain.exponentialRampToValueAtTime(.0001, start + (model === "bass" ? 2.4 : 1.35));
         oscillator.connect(filter); overtone.connect(filter); filter.connect(output); connectToMix(output, .04);
         oscillator.start(start); overtone.start(start); oscillator.stop(start + 2.5); overtone.stop(start + 2.5);
@@ -403,7 +403,7 @@
         filter.frequency.value = (model === "bass" ? 950 : 2100) + core.midiToFrequency(midi) * 2.2;
         filter.Q.value = model === "bass" ? .72 : 1.05;
         gain.gain.setValueAtTime(.0001, start);
-        gain.gain.exponentialRampToValueAtTime(Math.max(.008, velocity * (model === "bass" ? .052 : .044)), start + .0004);
+        gain.gain.exponentialRampToValueAtTime(Math.max(.008, velocity * (model === "bass" ? .052 : .044)), start + .00012);
         gain.gain.exponentialRampToValueAtTime(.0001, start + (model === "bass" ? .016 : .012));
         source.connect(filter).connect(gain).connect(state.masterGain);
         source.start(start, Math.random() * Math.max(.01, state.noiseBuffer.duration - .04), .024);
@@ -529,7 +529,7 @@
         filter.type = low ? "lowpass" : "highpass";
         filter.frequency.value = low ? (id === "kick" ? 1250 : 1900) : 2400;
         gain.gain.setValueAtTime(.0001, start);
-        gain.gain.exponentialRampToValueAtTime(Math.max(.01, velocity * (low ? .065 : .052)), start + .00025);
+        gain.gain.exponentialRampToValueAtTime(Math.max(.01, velocity * (low ? .065 : .052)), start + .0001);
         gain.gain.exponentialRampToValueAtTime(.0001, start + (low ? .014 : .009));
         source.connect(filter).connect(gain).connect(state.masterGain);
         source.start(start, Math.random() * Math.max(.01, state.noiseBuffer.duration - .03), .02);
