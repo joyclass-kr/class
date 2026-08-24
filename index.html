@@ -1293,6 +1293,21 @@
                 return KOREAN_NAME_PATTERN.test(String(value || ''));
             }
 
+            function clearPlayerIdentity() {
+                currentPlayerName = '';
+                localStorage.removeItem('classPlayerName');
+                updatePlayerLearningLinks('');
+            }
+
+            function setPlayerIdentity(value, membership = null) {
+                const playerName = normalizePlayerName(value);
+                if (!isValidPlayerName(playerName)) return '';
+                currentPlayerName = playerName;
+                localStorage.setItem('classPlayerName', playerName);
+                updatePlayerLearningLinks(playerName, membership);
+                return playerName;
+            }
+
             function setHubLocked(locked) {
                 hubLinks.forEach((link) => {
                     link.classList.toggle('is-class-locked', locked);
@@ -1523,6 +1538,7 @@
                 signedInArea.hidden = false;
                 hubContent.hidden = false;
                 setHubLocked(false);
+                clearPlayerIdentity();
 
                 const profileList = document.getElementById('profileList');
                 profileList.innerHTML = '';
@@ -1544,6 +1560,7 @@
                     btn.href = '/admin/';
                     btn.innerHTML = `<span class="profile-title">🛠️ ${state.user.name}</span><span class="profile-desc">관리자 · 사이트 전체 관리 계정</span>`;
                     profileList.appendChild(btn);
+                    setPlayerIdentity(state.user?.name || state.user?.displayName);
                 }
 
                 // 2. School Admin (Principal / Vice Principal) or Teacher
@@ -1562,12 +1579,7 @@
                     isTeacherSignedIn = true;
                     restrictedPreview = false;
                     await loadClassContentAccess().catch((error) => console.error('loadClassContentAccess failed', error));
-                    const playerName = normalizePlayerName(teacherProfileData.name);
-                    if (isValidPlayerName(playerName)) {
-                        currentPlayerName = playerName;
-                        localStorage.setItem('classPlayerName', playerName);
-                        updatePlayerLearningLinks(playerName);
-                    }
+                    setPlayerIdentity(teacherProfileData.name);
                 }
 
                 // 3. Student
@@ -1583,12 +1595,7 @@
                     btn.innerHTML = `<span class="profile-title">🎓 ${studentName}</span><span class="profile-desc">${schoolLabel} ${gradeClassLabel}학생 계정</span>`;
                     profileList.appendChild(btn);
 
-                    const studentPlayerName = studentName;
-                    if (isValidPlayerName(studentPlayerName)) {
-                        currentPlayerName = studentPlayerName;
-                        localStorage.setItem('classPlayerName', studentPlayerName);
-                        updatePlayerLearningLinks(studentPlayerName);
-                    }
+                    setPlayerIdentity(studentName, m);
                     setHubLocked(false);
                     await loadClassContentAccess().catch((error) => console.error('loadClassContentAccess failed', error));
                 }
@@ -1616,9 +1623,7 @@
                         <span class="profile-desc" style="display:block; font-size:13px; color:rgba(255,255,255,0.7); margin-top:4px;">게스트 플레이어 모드가 활성화되었습니다</span>
                     `;
                     profileList.appendChild(card);
-                    currentPlayerName = guestName;
-                    localStorage.setItem('classPlayerName', guestName);
-                    updatePlayerLearningLinks(guestName);
+                    setPlayerIdentity(guestName);
                     setHubLocked(false);
                 }
 
