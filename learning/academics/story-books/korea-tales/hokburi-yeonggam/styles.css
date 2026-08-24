@@ -33,7 +33,7 @@ body {
     display: flex;
     align-items: center;
     justify-content: center;
-    padding: 20px;
+    padding: 10px;
 }
 
 .top-bar {
@@ -72,16 +72,16 @@ body {
     display: flex;
     flex-direction: column;
     align-items: center;
-    gap: 14px;
+    gap: 8px;
     width: 100%;
 }
 
 .book {
     position: relative;
-    width: min(1300px, 92vw, calc(90vh * 4 / 3));
+    width: min(1300px, 96vw, calc((100dvh - 46px) * 4 / 3));
     aspect-ratio: 4 / 3;
     /* 글상자 글씨가 화면이 아니라 책 크기를 따라가게 한다 */
-    container-type: inline-size;
+    container-type: size;
 }
 
 .book-spread {
@@ -137,7 +137,7 @@ body {
     display: flex;
     flex-direction: column;
     justify-content: center;
-    padding: clamp(16px, 3.4vw, 40px);
+    padding: clamp(16px, 5.789cqh, 60px);
     overflow: hidden;
     color: var(--ink);
     min-height: 0;
@@ -174,7 +174,7 @@ body {
     display: flex;
     align-items: center;
     justify-content: center;
-    font-size: clamp(48px, 9vw, 96px);
+    font-size: clamp(48px, 13.893cqh, 144px);
     background:
         radial-gradient(circle at 30% 30%, rgba(215, 171, 95, 0.5), transparent 60%),
         linear-gradient(160deg, #e8cf9c, #c9a25f);
@@ -190,7 +190,7 @@ body {
     overflow-y: auto;
     overflow-x: hidden;
     -webkit-overflow-scrolling: touch;
-    padding: clamp(16px, 3.4vw, 40px);
+    padding: clamp(16px, 5.789cqh, 60px);
 }
 
 .story-page-left {
@@ -207,7 +207,9 @@ body {
 
 .spread-art {
     position: relative;
-    flex: 1 1 70%;
+    /* 그림 62.5% / 글 37.5%. flex-basis로 잡아야 한다.
+       aspect-ratio로 적으면 flex-basis에 밀려 안 먹힌다. */
+    flex: 0 0 62.5%;
     min-height: 0;
     overflow: hidden;
 }
@@ -227,13 +229,13 @@ body {
     border-radius: 999px;
     background: rgba(27, 15, 16, 0.72);
     color: var(--gold-bright);
-    font-size: clamp(11px, 1.3vw, 13px);
+    font-size: clamp(11px, 1.881cqh, 20px);
     font-weight: 700;
     backdrop-filter: blur(3px);
 }
 
 .spread-text {
-    flex: 1 1 30%;
+    flex: 1 1 auto;
     min-height: 0;
     display: grid;
     grid-template-columns: 1fr 1fr;
@@ -246,7 +248,7 @@ body {
     min-height: 0;
     overflow-y: auto;
     -webkit-overflow-scrolling: touch;
-    padding: clamp(8px, 1.3cqw, 26px);
+    padding: clamp(6px, 1.0cqw, 14px) clamp(10px, 2cqw, 28px);
     display: flex;
     flex-direction: column;
     justify-content: safe center;
@@ -257,8 +259,8 @@ body {
 }
 
 .spread-text p {
-    margin: 0 0 6px;
-    font-size: clamp(15px, 1.8vw, 18px);
+    margin: 0 0 4px;
+    font-size: clamp(15px, 2.605cqh, 27px);
     font-weight: 500;
     line-height: 1.65;
     color: var(--ink);
@@ -277,12 +279,12 @@ body {
 
 .page-reflection h2 {
     margin: 0;
-    font-size: clamp(20px, 3vw, 30px);
+    font-size: clamp(20px, 4.342cqh, 45px);
 }
 
 .page-reflection .reflection-moral {
     max-width: 560px;
-    font-size: clamp(15px, 1.9vw, 19px);
+    font-size: clamp(15px, 2.605cqh, 27px);
     line-height: 1.75;
     color: var(--ink);
 }
@@ -291,7 +293,7 @@ body {
     max-width: 520px;
     font-style: italic;
     color: var(--muted);
-    font-size: clamp(14px, 1.6vw, 16px);
+    font-size: clamp(14px, 2.315cqh, 24px);
 }
 
 .moral-box {
@@ -311,7 +313,7 @@ body {
 
 .moral-box p {
     margin: 0;
-    font-size: clamp(14px, 1.6vw, 16px);
+    font-size: clamp(14px, 2.315cqh, 24px);
     font-weight: 500;
     color: #4a3009;
     text-indent: 0;
@@ -338,14 +340,14 @@ body {
 
 .page-cover h1 {
     margin: 0 0 2px;
-    font-size: clamp(24px, 3.8vw, 38px);
+    font-size: clamp(24px, 5.499cqh, 57px);
     color: var(--ink);
 }
 
 .page-cover .cover-tag {
     margin: 0 0 6px;
     color: var(--muted);
-    font-size: clamp(12px, 1.6vw, 15px);
+    font-size: clamp(12px, 2.171cqh, 23px);
     text-indent: 0;
 }
 
@@ -355,7 +357,7 @@ body {
 
 .page-cover .story-page-right p {
     margin: 0 0 6px;
-    font-size: clamp(13.5px, 1.55vw, 15.5px);
+    font-size: clamp(13.5px, 2.243cqh, 23px);
     font-weight: 500;
     line-height: 1.56;
     color: var(--ink);
@@ -372,7 +374,7 @@ body {
 
 .page-toc h2 {
     margin: 0 0 16px;
-    font-size: clamp(18px, 2.6vw, 26px);
+    font-size: clamp(18px, 3.763cqh, 39px);
 }
 
 .toc-list {
@@ -431,13 +433,13 @@ body {
 
 .page-quiz h2 {
     margin: 0 0 2px;
-    font-size: clamp(19px, 2.8vw, 27px);
+    font-size: clamp(19px, 3.907cqh, 41px);
 }
 
 .quiz-intro-text {
     margin: 0 0 4px;
     color: var(--muted);
-    font-size: clamp(13px, 1.6vw, 15px);
+    font-size: clamp(13px, 2.171cqh, 23px);
 }
 
 .quiz-list {
@@ -453,7 +455,7 @@ body {
 .quiz-question {
     margin: 0 0 8px;
     font-weight: 700;
-    font-size: clamp(14px, 1.7vw, 16px);
+    font-size: clamp(14px, 2.315cqh, 24px);
     color: var(--ink);
 }
 
@@ -470,7 +472,7 @@ body {
     background: #fffaf0;
     color: var(--ink);
     font: inherit;
-    font-size: clamp(12px, 1.5vw, 14px);
+    font-size: clamp(12px, 2.026cqh, 21px);
     cursor: pointer;
 }
 
@@ -504,7 +506,7 @@ body {
     background: var(--parchment-shade);
 }
 
-.page-end h2 { margin: 0; font-size: clamp(20px, 3vw, 30px); }
+.page-end h2 { margin: 0; font-size: clamp(20px, 4.342cqh, 45px); }
 .page-end p { margin: 0; color: var(--muted); font-size: 13px; }
 
 .home-btn {
@@ -559,15 +561,23 @@ body {
     letter-spacing: 0.06em;
 }
 
-@media (max-width: 820px) {
-    .book { width: min(560px, 92vw, calc(90vh * 3 / 4)); aspect-ratio: 3 / 4; }
+@media (max-width: 820px), (orientation: portrait) and (max-width: 1100px) {
+    /* 세로에서는 소개글이 길어진다. 그림칸을 조금 줄이고 표지 여백을
+       좁혀 글자리를 넓힌다. */
+    .page-cover .story-page-right { padding: clamp(12px, 2.6cqh, 27px) clamp(14px, 3.4cqh, 36px); }
+    .cover-toc { margin-top: clamp(6px, 1.3cqh, 14px); padding-top: clamp(5px, 1cqh, 10px); }
+    .book { width: min(900px, 96vw, calc((100dvh - 46px) * 3 / 4)); aspect-ratio: 3 / 4; }
     .nav-prev { left: 6px; }
     .nav-next { right: 6px; }
-    .page-cover { grid-template-columns: 1fr; grid-template-rows: 45% 55%; }
+    .page-cover { grid-template-columns: 1fr; grid-template-rows: 26% 74%; }
     .page-toc { grid-template-columns: 1fr; grid-template-rows: 1fr 1fr; }
     .page-toc .story-page-left { border-right: none; border-bottom: 1px solid rgba(92, 58, 34, 0.22); }
-    .spread-art { flex-basis: 55%; }
-    .spread-text { flex-basis: 45%; }
+    /* 세로 화면은 한 쪽만 보이므로 두 칸을 나란히 두면 글줄이 너무 짧아진다.
+       위아래로 쌓고, 그림을 줄여 글자리를 넓힌다. */
+    .spread-art { flex: 0 0 35%; aspect-ratio: auto; }
+    .spread-text { flex: 1 1 62%; display: flex; flex-direction: column; }
+    .spread-text-left, .spread-text-right { flex: 0 1 auto; }
+    .spread-text-left { border-right: none; border-bottom: 1px solid rgba(92, 58, 34, 0.22); }
 }
 
 /* history page (건국 신화 books only) */
@@ -581,13 +591,13 @@ body {
 
 .page-history h2 {
     margin: 0;
-    font-size: clamp(19px, 2.6vw, 26px);
+    font-size: clamp(19px, 3.763cqh, 39px);
     color: var(--ink);
 }
 
 .page-history .history-note {
     margin: 0;
-    font-size: clamp(13px, 1.5vw, 15px);
+    font-size: clamp(13px, 2.171cqh, 23px);
     color: var(--muted);
     font-style: italic;
 }
@@ -608,7 +618,7 @@ body {
 
 .page-history .history-body p {
     margin: 0 0 8px;
-    font-size: clamp(15px, 1.8vw, 18px);
+    font-size: clamp(15px, 2.605cqh, 27px);
     line-height: 1.7;
     color: var(--ink);
 }
@@ -618,8 +628,8 @@ body {
 /* 그림책은 장이 서넛뿐이라 차례가 펼침 하나를 쓸 만큼이 못 된다.
    표지 오른쪽 아래에 작은 칩으로 흘려 놓는다. 세로로 쌓으면 작은 창에서 넘친다. */
 .cover-toc {
-    margin-top: clamp(10px, 1.6vw, 18px);
-    padding-top: clamp(8px, 1.2vw, 12px);
+    margin-top: clamp(10px, 2.605cqh, 27px);
+    padding-top: clamp(8px, 1.737cqh, 18px);
     border-top: 1px solid rgba(92, 58, 34, 0.16);
     display: flex;
     flex-wrap: wrap;
@@ -629,7 +639,7 @@ body {
 
 .cover-toc h2 {
     margin: 0 4px 0 0;
-    font-size: clamp(12px, 1.3vw, 13px);
+    font-size: clamp(12px, 1.881cqh, 20px);
     font-weight: 700;
     color: var(--muted);
     letter-spacing: 0.06em;
@@ -644,7 +654,7 @@ body {
     border: 1px solid rgba(92, 58, 34, 0.14);
     border-radius: 999px;
     font: inherit;
-    font-size: clamp(11.5px, 1.25vw, 13px);
+    font-size: clamp(11.5px, 1.881cqh, 20px);
     line-height: 1.4;
     color: var(--ink);
     cursor: pointer;
