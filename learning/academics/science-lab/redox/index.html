@@ -1,0 +1,154 @@
+<!doctype html>
+<html lang="ko">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="theme-color" content="#07131c">
+    <title>과학 실험실</title>
+    <meta name="description" content="두 금속의 표준 환원 전위로 전지의 기전력을 구하고, 패러데이 법칙으로 전기 분해에서 석출되는 양을 계산하는 고등학교 과학 모의실험">
+    <link rel="stylesheet" as="style" crossorigin href="https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.9/dist/web/static/pretendard.css">
+    <link rel="stylesheet" href="styles.css?v=1">
+    <link rel="stylesheet" href="redox-visual.css?v=1">
+    <link rel="stylesheet" href="quiz.css?v=1">
+</head>
+<body>
+    <main>
+        <header class="page-header">
+            <div class="title-row">
+                <a href="../">← 과학 실험실</a>
+                <h1>산화·환원과 전기 분해</h1>
+            </div>
+            <div class="grade-tags"><span>고등학교</span><span>화학</span></div>
+        </header>
+
+        <ol class="method-steps" aria-label="실험 방법">
+            <li>전지와 전기 분해 가운데 하나를 고릅니다.</li>
+            <li>두 금속을 골라 전지를 꾸밉니다.</li>
+            <li>어느 쪽이 산화되는지 확인합니다.</li>
+            <li>전류와 시간으로 석출량을 계산합니다.</li>
+        </ol>
+
+        <div class="experiment-layout">
+            <section class="panel control-panel" aria-labelledby="control-title">
+                <h2 id="control-title">실험 조건</h2>
+                <p class="water-standard" id="methodHint">표준 환원 전위가 낮은 금속이 산화됩니다</p>
+
+                <fieldset class="mode-field">
+                    <legend>무엇을 볼까요</legend>
+                    <div class="mode-buttons">
+                        <button type="button" data-mode="cell">화학 전지<small>이온화 경향과 기전력</small></button>
+                        <button type="button" data-mode="elec">전기 분해<small>패러데이 법칙</small></button>
+                    </div>
+                </fieldset>
+
+                <div id="controlArea"></div>
+
+                <fieldset class="prediction-field">
+                    <legend id="predictionLegend">어떻게 될까요?</legend>
+                    <div class="prediction-buttons three" id="predictionArea"></div>
+                </fieldset>
+
+                <button class="run-button" id="checkBtn" type="button">결과 보기</button>
+                <button class="reset-button" id="resetBtn" type="button">처음으로</button>
+
+                <section class="result-box" aria-labelledby="result-title" aria-live="polite">
+                    <h3 id="result-title">관찰 결과</h3>
+                    <p id="resultEmpty">조건을 정하고 결과를 확인해 보세요.</p>
+                    <div id="resultContent" hidden>
+                        <div class="result-numbers">
+                            <article><span id="labelA">값</span><strong id="valueA">-</strong></article>
+                            <article><span id="labelB">값</span><strong id="valueB">-</strong></article>
+                        </div>
+                        <p class="prediction-result" id="predictionResult"></p>
+                        <p class="explanation" id="elementaryExplanation"></p>
+                    </div>
+                </section>
+            </section>
+
+            <section class="panel redox-stage" aria-label="관찰 화면">
+                <div class="stage-heading"><h2>관찰</h2><span id="stageBadge">-</span></div>
+
+                <div class="stage-views">
+                    <svg class="main-svg" viewBox="0 0 460 214" aria-hidden="true">
+                        <defs><clipPath id="cellClip"><rect x="20" y="14" width="420" height="186"/></clipPath></defs>
+                        <g id="mainGroup"></g>
+                    </svg>
+                    <svg class="graph-svg" viewBox="0 0 460 196" aria-hidden="true">
+                        <g id="graphGroup"></g>
+                    </svg>
+                </div>
+
+                <p class="stage-caption" id="stageCaption">전자는 산화되는 쪽에서 환원되는 쪽으로 흐릅니다.</p>
+                <div class="data-note" id="dataNote"></div>
+            </section>
+        </div>
+
+        <section class="panel meaning-panel">
+            <h2>실험 결과의 의미</h2>
+            <div class="meaning-body">
+                <p><strong>이온화 경향</strong> 표준 환원 전위가 낮을수록 전자를 잃기 쉽습니다. 두 금속을 이으면 낮은 쪽이 산화되어 (−)극이 됩니다.</p>
+                <p><strong>기전력</strong> 두 금속의 표준 환원 전위 차이가 그대로 전지의 기전력입니다. 같은 금속끼리는 차이가 0이라 전류가 흐르지 않습니다.</p>
+                <p><strong>패러데이 법칙</strong> 흐른 전기량이 전자의 몰수를 정합니다. 전자 1몰마다 석출되는 물질의 양은 이온의 전하수로 나눈 만큼입니다.</p>
+            </div>
+        </section>
+
+        <details class="quiz-section" aria-labelledby="quiz-title">
+            <summary class="quiz-heading"><h2 id="quiz-title">확인 문제</h2><span>4문제</span></summary>
+            <div class="quiz-grid">
+                <article class="quiz-card" data-answer="a">
+                    <h3>아연과 구리로 만든 전지에서 산화되는 것은?</h3>
+                    <div class="quiz-options">
+                        <label><input type="radio" name="q1" value="a"> 아연 (표준 환원 전위가 더 낮다)</label>
+                        <label><input type="radio" name="q1" value="b"> 구리 (표준 환원 전위가 더 높다)</label>
+                        <label><input type="radio" name="q1" value="c"> 둘 다 산화된다</label>
+                        <label><input type="radio" name="q1" value="d"> 둘 다 환원된다</label>
+                    </div>
+                    <button class="answer-button" type="button">정답 확인</button>
+                    <p class="answer-result" aria-live="polite"></p>
+                    <p class="answer-explanation" hidden>아연의 표준 환원 전위는 −0.76 V, 구리는 +0.34 V입니다. 낮은 쪽인 아연이 전자를 내놓고 산화되어 (−)극이 됩니다.</p>
+                </article>
+
+                <article class="quiz-card" data-answer="c">
+                    <h3>아연−구리 전지의 기전력은?</h3>
+                    <div class="quiz-options">
+                        <label><input type="radio" name="q2" value="a"> 0.34 V</label>
+                        <label><input type="radio" name="q2" value="b"> 0.76 V</label>
+                        <label><input type="radio" name="q2" value="c"> 1.10 V</label>
+                        <label><input type="radio" name="q2" value="d"> 0.42 V</label>
+                    </div>
+                    <button class="answer-button" type="button">정답 확인</button>
+                    <p class="answer-result" aria-live="polite"></p>
+                    <p class="answer-explanation" hidden>E°전지 = E°(환원되는 쪽) − E°(산화되는 쪽) = 0.34 − (−0.76) = 1.10 V입니다.</p>
+                </article>
+
+                <article class="quiz-card" data-answer="b">
+                    <h3>같은 전기량을 흘렸을 때 은이 구리보다 많은 몰수가 석출되는 까닭은?</h3>
+                    <div class="quiz-options">
+                        <label><input type="radio" name="q3" value="a"> 은이 더 무거워서</label>
+                        <label><input type="radio" name="q3" value="b"> 은 이온은 +1가라 전자 1개만 필요해서</label>
+                        <label><input type="radio" name="q3" value="c"> 은이 더 잘 녹아서</label>
+                        <label><input type="radio" name="q3" value="d"> 은의 전위가 높아서</label>
+                    </div>
+                    <button class="answer-button" type="button">정답 확인</button>
+                    <p class="answer-result" aria-live="polite"></p>
+                    <p class="answer-explanation" hidden>Ag⁺ + e⁻ → Ag 는 전자 1개, Cu²⁺ + 2e⁻ → Cu 는 전자 2개가 필요합니다. 같은 전자 몰수라면 은이 두 배 많은 몰수로 석출됩니다.</p>
+                </article>
+
+                <article class="quiz-card" data-answer="d">
+                    <h3>물을 전기 분해하면 수소와 산소의 부피비는?</h3>
+                    <div class="quiz-options">
+                        <label><input type="radio" name="q4" value="a"> 1 : 1</label>
+                        <label><input type="radio" name="q4" value="b"> 1 : 2</label>
+                        <label><input type="radio" name="q4" value="c"> 3 : 1</label>
+                        <label><input type="radio" name="q4" value="d"> 2 : 1</label>
+                    </div>
+                    <button class="answer-button" type="button">정답 확인</button>
+                    <p class="answer-result" aria-live="polite"></p>
+                    <p class="answer-explanation" hidden>2H₂O → 2H₂ + O₂ 이므로 부피비는 2 : 1입니다. 전자 4몰마다 수소 2몰, 산소 1몰이 나옵니다.</p>
+                </article>
+            </div>
+        </details>
+    </main>
+    <script src="app.js?v=3"></script>
+</body>
+</html>
