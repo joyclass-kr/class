@@ -80,6 +80,10 @@ body {
     position: relative;
     width: min(1300px, 92vw, calc(90vh * 4 / 3));
     aspect-ratio: 4 / 3;
+    /* 글씨와 여백을 화면이 아니라 '책 너비'에 맞춰 키운다.
+       vw로 잡으면 창이 커질 때 책만 커지고 글씨는 상한에 걸려 멈춰서
+       쪽마다 아래쪽이 휑하게 빈다. */
+    container-type: inline-size;
 }
 
 .book-spread {
@@ -135,7 +139,7 @@ body {
     display: flex;
     flex-direction: column;
     justify-content: center;
-    padding: clamp(16px, 3.4vw, 40px);
+    padding: clamp(16px, 4.34cqw, 56px);
     overflow: hidden;
     color: var(--ink);
     min-height: 0;
@@ -172,7 +176,7 @@ body {
     display: flex;
     align-items: center;
     justify-content: center;
-    font-size: clamp(48px, 9vw, 96px);
+    font-size: clamp(48px, 10.42cqw, 136px);
     background:
         radial-gradient(circle at 30% 30%, rgba(215, 171, 95, 0.5), transparent 60%),
         linear-gradient(160deg, #e8cf9c, #c9a25f);
@@ -196,7 +200,7 @@ body {
     overflow-y: auto;
     overflow-x: hidden;
     -webkit-overflow-scrolling: touch;
-    --page-pad: clamp(16px, 3.4vw, 40px);
+    --page-pad: clamp(16px, 4.34cqw, 56px);
     padding: var(--page-pad);
 }
 
@@ -213,7 +217,7 @@ body {
     width: auto;
     aspect-ratio: 4 / 3;
     flex: none;
-    margin: calc(-1 * var(--page-pad)) calc(-1 * var(--page-pad)) clamp(10px, 1.5vw, 16px);
+    margin: calc(-1 * var(--page-pad)) calc(-1 * var(--page-pad)) clamp(10px, 1.74cqw, 23px);
 }
 
 .story-art-top .art-frame {
@@ -225,13 +229,13 @@ body {
 
 .page-story h2 {
     margin: 2px 0 10px;
-    font-size: clamp(18px, 2.4vw, 26px);
+    font-size: clamp(18px, 2.82cqw, 37px);
     line-height: 1.25;
 }
 
 .page-story p {
     margin: 0 0 10px;
-    font-size: clamp(15px, 1.8vw, 18px);
+    font-size: clamp(15px, 1.95cqw, 25px);
     font-weight: 500;
     line-height: 1.75;
     color: var(--ink);
@@ -282,7 +286,7 @@ body {
 
 .moral-box p {
     margin: 0;
-    font-size: clamp(14px, 1.6vw, 16px);
+    font-size: clamp(14px, 1.74cqw, 23px);
     font-weight: 500;
     color: #4a3009;
     text-indent: 0;
@@ -309,14 +313,14 @@ body {
 
 .page-cover h1 {
     margin: 0 0 2px;
-    font-size: clamp(24px, 3.8vw, 38px);
+    font-size: clamp(24px, 4.13cqw, 54px);
     color: var(--ink);
 }
 
 .page-cover .cover-tag {
     margin: 0 0 6px;
     color: var(--muted);
-    font-size: clamp(12px, 1.6vw, 15px);
+    font-size: clamp(12px, 1.63cqw, 21px);
     text-indent: 0;
 }
 
@@ -326,7 +330,7 @@ body {
 
 .page-cover .story-page-right p {
     margin: 0 0 10px;
-    font-size: clamp(14px, 1.6vw, 16px);
+    font-size: clamp(14px, 1.74cqw, 23px);
     font-weight: 500;
     line-height: 1.7;
     color: var(--ink);
@@ -343,7 +347,7 @@ body {
 
 .page-toc h2 {
     margin: 0 0 16px;
-    font-size: clamp(18px, 2.6vw, 26px);
+    font-size: clamp(18px, 2.82cqw, 37px);
 }
 
 .toc-list {
@@ -402,13 +406,13 @@ body {
 
 .page-quiz h2 {
     margin: 0 0 2px;
-    font-size: clamp(19px, 2.8vw, 27px);
+    font-size: clamp(19px, 2.93cqw, 38px);
 }
 
 .quiz-intro-text {
     margin: 0 0 4px;
     color: var(--muted);
-    font-size: clamp(13px, 1.6vw, 15px);
+    font-size: clamp(13px, 1.63cqw, 21px);
 }
 
 .quiz-list {
@@ -424,7 +428,7 @@ body {
 .quiz-question {
     margin: 0 0 8px;
     font-weight: 700;
-    font-size: clamp(14px, 1.7vw, 16px);
+    font-size: clamp(14px, 1.74cqw, 23px);
     color: var(--ink);
 }
 
@@ -441,7 +445,7 @@ body {
     background: #fffaf0;
     color: var(--ink);
     font: inherit;
-    font-size: clamp(12px, 1.5vw, 14px);
+    font-size: clamp(12px, 1.52cqw, 20px);
     text-align: left;
     line-height: 1.5;
     cursor: pointer;
@@ -485,7 +489,7 @@ body {
     max-width: min(100%, 540px);
 }
 
-.page-end h2 { margin: 0; font-size: clamp(20px, 3vw, 30px); }
+.page-end h2 { margin: 0; font-size: clamp(20px, 3.26cqw, 42px); }
 .page-end p { margin: 0; color: var(--muted); font-size: 13px; }
 
 .home-btn {

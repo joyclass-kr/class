@@ -5,9 +5,8 @@
 <title>쪽 짜임 점검</title>
 <style>
     body { font: 13px/1.6 monospace; margin: 16px; }
-    iframe { position: fixed; left: -6000px; top: 0; border: 0; width: 1366px; height: 768px; }
+    iframe { position: fixed; left: -6000px; top: 0; border: 0; }
     pre { white-space: pre-wrap; }
-    .bad { color: #c00; font-weight: 700; }
 </style>
 </head>
 <body>
@@ -17,8 +16,12 @@
 <script>
 /* 소설틀로 만든 책(탈무드·비유)을 열어, 이야기마다
  * 펼침면 수 · 쪽마다 찬 정도 · 그림 자리 · 넘침을 한눈에 본다.
- * 넘침 검사(_measure.html)는 넘치는 것만 보지만, 이건 남는 것도 본다. */
+ * 넘침 검사(_measure.html)는 넘치는 것만 보지만, 이건 남는 것도 본다.
+ *
+ * 화면 크기를 바꿔 가며 보는 것이 중요하다. 글씨가 책 크기를 따라
+ * 커지지 않으면 큰 화면에서 쪽 아래가 휑하게 빈다. 그것을 여기서 잡는다. */
 const BOOKS = ['talmud-tales', 'parables-tales'];
+const SIZES = [[1366, 768], [1400, 900], [1920, 1080]];
 const out = document.getElementById('out');
 const frame = document.getElementById('frame');
 
@@ -49,32 +52,40 @@ function inspect() {
         if (!cur) continue;
         cur.spreads.push({
             fill: cols,
-            art: !!p.querySelector('.story-art-top img'),
+            art: !!p.querySelector('.story-art-top'),
             box: !!p.querySelector('.moral-box')
         });
     }
     current = 0;
     paint();
-    return rows;
+    const pp = document.querySelector('.page-story p');
+    return { rows, book: document.querySelector('.book').clientWidth,
+             font: pp ? getComputedStyle(pp).fontSize : '-' };
 }
 
 (async () => {
     const lines = [];
-    for (const slug of BOOKS) {
-        await load(slug);
-        await new Promise(r => setTimeout(r, 300));
-        const rows = frame.contentWindow.eval('(' + inspect.toString() + ')()');
-        const all = rows.flatMap(r => r.spreads.flatMap(s => s.fill));
-        const avg = Math.round(all.reduce((a, b) => a + b, 0) / all.length);
-        lines.push(`\n████ ${slug} — 펼침면 ${rows.reduce((a, r) => a + r.spreads.length, 0)}개 · 평균 ${avg}% · 넘침 ${all.filter(x => x > 100).length}`);
-        for (const r of rows) {
-            const fills = r.spreads.flatMap(s => s.fill);
-            const min = Math.min(...fills);
-            const shape = r.spreads.map(s => (s.art ? '▣' : '▢') + (s.box ? '*' : '')).join('');
-            const mark = (min < 60 || fills.some(x => x > 100)) ? ' ←' : '';
-            lines.push(`  ${r.title.padEnd(28)} ${r.spreads.length}펼침 ${shape.padEnd(8)} ${fills.join(',')}%${mark}`);
+    for (const [w, h] of SIZES) {
+        frame.style.width = w + 'px';
+        frame.style.height = h + 'px';
+        for (const slug of BOOKS) {
+            await load(slug);
+            await new Promise(r => setTimeout(r, 350));
+            const res = frame.contentWindow.eval('(' + inspect.toString() + ')()');
+            const rows = res.rows;
+            const all = rows.flatMap(r => r.spreads.flatMap(s => s.fill));
+            const avg = Math.round(all.reduce((a, b) => a + b, 0) / all.length);
+            const spreads = rows.reduce((a, r) => a + r.spreads.length, 0);
+            lines.push(`\n████ ${w}×${h} · ${slug} — 책폭 ${res.book}px 글씨 ${res.font}`);
+            lines.push(`     펼침면 ${spreads}개 · 평균 ${avg}% · 넘침 ${all.filter(x => x > 100).length} · 60%미만 ${all.filter(x => x < 60).length}`);
+            for (const r of rows) {
+                const fills = r.spreads.flatMap(s => s.fill);
+                const shape = r.spreads.map(s => (s.art ? '▣' : '▢') + (s.box ? '*' : '')).join('');
+                const mark = (Math.min(...fills) < 60 || fills.some(x => x > 100)) ? ' ←' : '';
+                lines.push(`  ${r.title.padEnd(26)} ${r.spreads.length}펼침 ${shape.padEnd(9)} ${fills.join(',')}%${mark}`);
+            }
+            out.textContent = lines.join('\n');
         }
-        out.textContent = lines.join('\n');
     }
     out.textContent = lines.join('\n') + '\n\n▣=그림쪽 ▢=글쪽 *=생각해봐요\n=== 끝 ===';
 })();
