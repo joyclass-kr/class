@@ -135,6 +135,14 @@ h1,h2,h3,p{margin-top:0}
 .cardChip{display:flex;flex-direction:column;align-items:center;gap:5px;width:92px;font-weight:800;font-size:11.5px;color:#dfe3ee;text-align:center}
 .cardChip img{width:100%;aspect-ratio:3/4;object-fit:cover;border-radius:9px;border:2px solid var(--accent-soft);box-shadow:0 5px 14px #0007;background:#141824}
 .cardChip span{overflow:hidden;text-overflow:ellipsis;white-space:nowrap;max-width:100%}
+.cardZoomBtn{padding:0;border:0;background:transparent;cursor:zoom-in}
+.cardZoomBtn:hover,.cardZoomBtn:focus-visible{transform:translateY(-2px);filter:brightness(1.08)}
+.cardZoomBtn:focus-visible{outline:3px solid var(--accent);outline-offset:3px}
+.cardPreviewOverlay{z-index:45}
+.cardPreviewModal{width:min(360px,100%);padding:16px;text-align:center;overflow:visible}
+.cardPreviewImage{display:block;width:min(280px,72vw);max-height:68vh;margin:0 auto;aspect-ratio:3/4;object-fit:contain;border-radius:14px;border:2px solid var(--accent);box-shadow:0 18px 44px #000c;background:#10131c}
+.cardPreviewTitle{margin:12px 0 10px;font-size:17px;color:#fff4dc}
+.cardPreviewClose{width:100%}
 .miniBtn{min-height:auto;padding:4px 11px;font-size:11.5px}
 
 .notebookGrid{display:grid;grid-template-columns:repeat(3,1fr);gap:14px}
@@ -294,6 +302,14 @@ h1,h2,h3,p{margin-top:0}
   });
 })();
 </script>
+
+<section id="cardPreviewOverlay" class="overlay cardPreviewOverlay hidden" role="dialog" aria-modal="true" aria-labelledby="cardPreviewTitle">
+  <div class="modal cardPreviewModal">
+    <img id="cardPreviewImage" class="cardPreviewImage" alt="">
+    <h2 id="cardPreviewTitle" class="cardPreviewTitle"></h2>
+    <button id="closeCardPreviewBtn" class="primary cardPreviewClose" type="button">닫기</button>
+  </div>
+</section>
 
 <section id="rulesOverlay" class="overlay hidden" role="dialog" aria-modal="true">
   <div class="modal">
@@ -463,6 +479,22 @@ const CORRIDOR_CELLS=CORRIDOR_MODEL.cells;
 const CELL_COORDS=CORRIDOR_MODEL.coords;
 const CELL_NEIGHBORS=CORRIDOR_MODEL.neighbors;
 const CELL_ORIENTATION=CORRIDOR_MODEL.orientations;
+const CORRIDOR_RENDER_SHIFT=Object.freeze({
+  horizontalRows:Object.freeze({5:4.6,6:4.6,12:-5.6,13:-5.6}),
+  verticalColumns:Object.freeze({5:5.2,6:5.2,12:-7,13:-7}),
+  portals:Object.freeze({htL:[0,4.6],htR:[0,4.6],hbL:[0,-5.6],hbR:[0,-5.6],vlT:[5.2,0],vlB:[5.2,0],vrT:[-7,0],vrB:[-7,0]})
+});
+function corridorRenderPosition(cellId,pos,orientation){
+  const gridMatch=/^g(\d+)_(\d+)$/.exec(cellId);
+  if(!gridMatch){
+    const portalShift=CORRIDOR_RENDER_SHIFT.portals[cellId]||[0,0];
+    return [pos[0]+portalShift[0],pos[1]+portalShift[1]];
+  }
+  const column=Number(gridMatch[1]),row=Number(gridMatch[2]);
+  const xShift=orientation==="v"||orientation==="x"?(CORRIDOR_RENDER_SHIFT.verticalColumns[column]||0):0;
+  const yShift=orientation==="h"||orientation==="x"?(CORRIDOR_RENDER_SHIFT.horizontalRows[row]||0):0;
+  return [pos[0]+xShift,pos[1]+yShift];
+}
 const CELL_ROOMS={
   g3_5:[0],g9_5:[1],g15_5:[2],
   g3_12:[3],g9_6:[4],g9_12:[4],g15_12:[5],
@@ -621,11 +653,12 @@ function buildBoard(){
     const kind=isPassage?"passage":isDoor?"door":"plain";
     const shade=cellIndex%2?" shade":"";
     const orientation=CELL_ORIENTATION[cellId]||"h";
+    const renderPos=corridorRenderPosition(cellId,pos,orientation);
     const tileLength=17.2;
     const tileThickness=12.4;
     const tileWidth=isPassage?20:orientation==="v"||orientation==="x"?tileThickness:tileLength;
     const tileHeight=isPassage?20:orientation==="h"||orientation==="x"?tileThickness:tileLength;
-    parts.push(`<g class="cellGroup ${kind}${shade}" data-cell="${cellId}" transform="translate(${pos[0]},${pos[1]})">`);
+    parts.push(`<g class="cellGroup ${kind}${shade}" data-cell="${cellId}" transform="translate(${renderPos[0]},${renderPos[1]})">`);
     if(isPassage)parts.push(`<title>비밀통로 · ${SECRET_PASSAGE_PAIRS[cellId]} 맞은편 출구로 이동</title>`);
     parts.push(`<rect class="corridorTile" x="${-tileWidth/2}" y="${-tileHeight/2}" width="${tileWidth}" height="${tileHeight}" rx="1.5"/>`);
     parts.push(`<rect class="cellHit" x="-9.3" y="-9.3" width="18.6" height="18.6" rx="3"/>`);
@@ -853,15 +886,16 @@ function renderPending(){
   }
 }
 
-function cardChip(id,hidden){
+function cardChip(id,hidden,zoomable=false){
   const src=hidden?CARDBACK_IMG:cardImage(id);
   const label=hidden?"":cardLabel(id);
+  if(zoomable)return `<button type="button" class="cardChip cardZoomBtn" data-card="${id}" aria-label="${label} 크게 보기"><img src="${src}" alt="${cardName(id)}"><span>${label}</span></button>`;
   return `<span class="cardChip"><img src="${src}" alt="${hidden?"":cardName(id)}" ><span>${label}</span></span>`;
 }
 
 function renderHand(){
   if(!gameState){$("handRow").innerHTML="";return}
-  $("handRow").innerHTML=(gameState.hand||[]).map(id=>cardChip(id,handHidden)).join("")||'<span class="logLine">카드가 없습니다.</span>';
+  $("handRow").innerHTML=(gameState.hand||[]).map(id=>cardChip(id,handHidden,!handHidden)).join("")||'<span class="logLine">카드가 없습니다.</span>';
   if($("handToggleBtn"))$("handToggleBtn").textContent=handHidden?"카드 보기":"카드 가리기";
   (gameState.hand||[]).forEach(id=>{notebook[id]=2});
 }
@@ -869,6 +903,19 @@ function renderHand(){
 function toggleHandVisibility(){
   handHidden=!handHidden;
   renderHand();
+}
+
+function openCardPreview(id){
+  if(handHidden||!gameState||!(gameState.hand||[]).includes(id))return;
+  $("cardPreviewImage").src=cardImage(id);
+  $("cardPreviewImage").alt=cardName(id);
+  $("cardPreviewTitle").textContent=cardLabel(id);
+  $("cardPreviewOverlay").classList.remove("hidden");
+  $("closeCardPreviewBtn").focus();
+}
+
+function closeCardPreview(){
+  $("cardPreviewOverlay").classList.add("hidden");
 }
 
 function notebookCell(id){
@@ -1070,6 +1117,13 @@ async function init(){
   setInterval(updateTurnTimer,500);
 
   $("handToggleBtn").addEventListener("click",toggleHandVisibility);
+  $("handRow").addEventListener("click",event=>{
+    const button=event.target.closest(".cardZoomBtn");
+    if(button)openCardPreview(Number(button.dataset.card));
+  });
+  $("closeCardPreviewBtn").addEventListener("click",closeCardPreview);
+  $("cardPreviewOverlay").addEventListener("click",event=>{if(event.target===$("cardPreviewOverlay"))closeCardPreview()});
+  document.addEventListener("keydown",event=>{if(event.key==="Escape")closeCardPreview()});
   $("closeRulesBtn").addEventListener("click",hideRules);
   $("rulesOverlay").addEventListener("click",event=>{if(event.target===$("rulesOverlay"))hideRules()});
   $("closeRevealBtn").addEventListener("click",()=>$("revealOverlay").classList.add("hidden"));

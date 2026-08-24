@@ -141,6 +141,8 @@ assert.equal(passageGame.players[0].cellId, "hbR", "비밀통로는 맞은편 �
 const htmlPath = path.resolve(__dirname, "..", "learning", "games", "clue", "clue.html");
 const html = fs.readFileSync(htmlPath, "utf8");
 assert.match(html, /CELL_ORIENTATION/, "가로·세로·교차 타일의 방향을 구분해 렌더링해야 합니다.");
+assert.match(html, /CORRIDOR_RENDER_SHIFT/, "맵 그림에 맞춘 복도별 화면 좌표 보정값이 있어야 합니다.");
+assert.match(html, /corridorRenderPosition\(cellId,pos,orientation\)/, "이동 그래프와 별도로 보정된 화면 좌표를 사용해야 합니다.");
 assert.match(html, /board-v5\.webp/, "새 #형 저택 보드 자산을 사용해야 합니다.");
 assert.match(html, /class="corridorTile"/, "복도 칸이 실제 타일로 렌더링되어야 합니다.");
 assert.match(html, /class="passageFrame"/, "8개 비밀통로를 계단형 입구로 렌더링해야 합니다.");
@@ -164,6 +166,11 @@ assert.match(html,/const DIE_PIPS=Object\.freeze/,"Dice faces must use pip layou
 assert.match(html,/className="diePip"/,"Dice pips must be rendered as circular marks.");
 assert.match(html,/setDieFace\(\$\("dieFace1"\),diceValues\[0\]\)/,"The first die result must render through the pip renderer.");
 assert.match(html,/setDieFace\(\$\("dieFace2"\),diceValues\[1\]\)/,"The second die result must render through the pip renderer.");
+
+assert.match(html,/id="cardPreviewOverlay"/,"손패 카드를 확대하는 모달이 있어야 합니다.");
+assert.match(html,/class="cardChip cardZoomBtn"/,"공개된 손패 카드는 클릭 가능한 확대 버튼이어야 합니다.");
+assert.match(html,/if\(handHidden\|\|!gameState/,"가려진 손패는 확대할 수 없어야 합니다.");
+assert.match(html,/openCardPreview\(Number\(button\.dataset\.card\)\)/,"선택한 손패 카드만 확대해야 합니다.");
 
 const boardPath = path.resolve(__dirname, "..", "learning", "games", "clue", "assets", "images", "board-v5.webp");
 assert.ok(fs.existsSync(boardPath), "최적화한 보드 이미지가 있어야 합니다.");
