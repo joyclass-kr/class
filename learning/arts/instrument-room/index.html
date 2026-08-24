@@ -57,6 +57,10 @@
                     <div class="instrument-visual stage-piano" id="instrumentVisual">
                         <div class="visual-label"><span id="visualFamily">ACOUSTIC</span><b id="visualModel">88 GRAND</b></div>
                         <div class="studio-stage" id="studioStage">
+                            <div id="scaleGuide" class="scale-guide hidden" aria-label="실제 악기 크기 안내">
+                                <span>실제 외형 기준</span><div class="scale-track"><i id="scaleBar"></i></div><b id="scaleValue"></b>
+                                <small id="scaleNote">같은 분류 안에서 상대 크기를 비교해요</small>
+                            </div>
                             <img id="instrumentArtwork" class="instrument-artwork hidden" src="" alt="">
                             <div id="classicalRender" class="classical-render hidden" aria-hidden="true"><i class="render-top"></i><i class="render-neck"></i><i class="render-body upper"></i><i class="render-body lower"></i><i class="render-detail"></i></div>
                             <div id="machineDeck" class="machine-deck hidden" aria-label="전자 드럼 머신"></div>
@@ -97,6 +101,7 @@
             <section id="playSurface" class="play-surface" aria-label="악기 연주 영역">
                 <div class="play-toolbar">
                     <div><span id="inputHint">화면 건반 또는 A–K 키로 연주</span><small id="noteReadout" aria-live="polite">준비됨</small></div>
+                    <div id="rangeLegend" class="range-legend hidden"><i></i><span id="rangeReadout"></span></div>
                     <div id="octaveControls" class="octave-controls" aria-label="컴퓨터 키보드 옥타브">
                         <button id="octaveDown" type="button" aria-label="한 옥타브 내리기">−</button>
                         <span>키보드 옥타브 <b id="octaveReadout">4</b></span>

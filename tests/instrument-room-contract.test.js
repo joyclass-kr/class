@@ -25,7 +25,7 @@ test('keyboard library covers AP, EP, Hybrid, and Organ', () => {
 });
 
 test('percussion library includes playable kits and essential orchestral instruments', () => {
-  for (const model of ['rock-kit', 'metal-kit', 'pop-kit', 'jazz-kit', 'funk-kit', 'timpani', 'glockenspiel', 'marimba', 'vibraphone', 'xylophone', 'drum-808', 'linn-machine', 'samulnori']) {
+  for (const model of ['rock-kit', 'metal-kit', 'pop-kit', 'jazz-kit', 'funk-kit', 'timpani', 'glockenspiel', 'marimba', 'vibraphone', 'xylophone', 'orchestral-percussion', 'drum-808', 'linn-machine', 'samulnori']) {
     assert.match(app, new RegExp(`id: "${model}"`));
   }
   assert.match(app, /renderKitHotspots/);
@@ -44,11 +44,34 @@ test('string and expressive families expose virtual-instrument presentation', ()
 });
 
 test('project-bound instrument artwork exists', () => {
-  for (const asset of ['bass-p-style.png', 'bass-j-style.png', 'bass-active-five.png', 'bass-fretless.png', 'guitar-s-style.png', 'guitar-metal-seven.png', 'guitar-hollowbody-jazz.png', 'guitar-dreadnought.png', 'guitar-classical-nylon.png', 'drum-acoustic-kit.png', 'violin-expressive.png', 'cello-expressive.png', 'double-bass-expressive.png', 'flute-expressive.png', 'trumpet-expressive.png']) {
+  for (const asset of ['bass-p-style.png', 'bass-j-style.png', 'bass-active-five.png', 'bass-fretless.png', 'guitar-s-style.png', 'guitar-metal-seven.png', 'guitar-hollowbody-jazz.png', 'guitar-dreadnought.png', 'guitar-classical-nylon.png', 'drum-acoustic-kit.png', 'violin-expressive.png', 'cello-expressive.png', 'double-bass-expressive.png', 'flute-expressive.png', 'oboe-expressive.png', 'clarinet-expressive.png', 'bassoon-expressive.png', 'alto-sax-expressive.png', 'trumpet-expressive.png', 'trombone-expressive.png', 'french-horn-expressive.png', 'tuba-expressive.png', 'timpani-bank.png', 'glockenspiel-concert.png', 'marimba-concert.png', 'vibraphone-concert.png', 'xylophone-concert.png', 'orchestral-percussion-station.png']) {
     assert.equal(fs.existsSync(path.join(root, 'assets', 'instruments', asset)), true, asset);
   }
 });
 
 test('range controls keep computer-keyboard performance available', () => {
   assert.match(app, /event\.target\.type !== "range"/);
+});
+
+test('shows actual-size guidance and keeps related instruments at different visual scales', () => {
+  assert.match(html, /id="scaleGuide"/);
+  assert.match(html, /id="scaleValue"/);
+  assert.match(css, /--object-scale/);
+  assert.match(app, /전체 높이 약 180 cm/);
+  assert.match(app, /전체 길이 약 59 cm/);
+  assert.match(app, /외형 길이 약 48 cm/);
+  assert.match(app, /슬라이드 닫힘 약 114 cm/);
+});
+
+test('renders a full keyboard and disables notes outside each model range', () => {
+  assert.match(app, /DISPLAY_RANGE = \{ start: 21, end: 108 \}/);
+  assert.match(app, /key\.disabled = unavailable/);
+  assert.match(app, /isPitchPlayable/);
+  assert.match(app, /pitched: true, range:/);
+  assert.match(html, /id="rangeLegend"/);
+  assert.match(css, /\.key\.unavailable/);
+});
+
+test('browser app source is syntactically valid', () => {
+  assert.doesNotThrow(() => new Function(app));
 });
