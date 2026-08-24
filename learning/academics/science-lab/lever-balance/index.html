@@ -1,0 +1,185 @@
+<!doctype html>
+<html lang="ko">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="theme-color" content="#07131c">
+    <title>과학 실험실</title>
+    <meta name="description" content="용수철저울로 무게를 재고, 무게와 거리로 지레의 수평을 맞추어 보는 초등 과학 모의실험">
+    <link rel="stylesheet" as="style" crossorigin href="https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.9/dist/web/static/pretendard.css">
+    <link rel="stylesheet" href="styles.css?v=1">
+    <link rel="stylesheet" href="lever-visual.css?v=1">
+    <link rel="stylesheet" href="quiz.css?v=1">
+</head>
+<body>
+    <main>
+        <header class="page-header">
+            <div class="title-row">
+                <a href="../">← 과학 실험실</a>
+                <h1>용수철저울과 지레</h1>
+            </div>
+            <div class="grade-tags"><span>초등 5~6</span><span>물리</span></div>
+        </header>
+
+        <ol class="method-steps" aria-label="실험 방법">
+            <li>왼쪽에 걸 추의 개수를 정합니다.</li>
+            <li>오른쪽 추의 개수와 거리를 정합니다.</li>
+            <li>어느 쪽으로 기울지 예상합니다.</li>
+            <li>수평이 되는 조건을 찾아봅니다.</li>
+        </ol>
+
+        <div class="experiment-layout">
+            <section class="panel control-panel" aria-labelledby="control-title">
+                <h2 id="control-title">실험 조건</h2>
+                <p class="water-standard">추 1개 = 100 g · 왼쪽은 받침점에서 20 cm 고정</p>
+
+                <div class="range-heading">
+                    <label for="leftCountRange">왼쪽 추 개수</label>
+                    <output id="leftCountOutput" for="leftCountRange">2개 (200 g)</output>
+                </div>
+                <input id="leftCountRange" type="range" min="1" max="5" step="1" value="2">
+                <div class="range-scale" aria-hidden="true"><span>1</span><span>2</span><span>3</span><span>4</span><span>5</span></div>
+
+                <div class="range-heading amount-heading">
+                    <label for="rightCountRange">오른쪽 추 개수</label>
+                    <output id="rightCountOutput" for="rightCountRange">2개 (200 g)</output>
+                </div>
+                <input id="rightCountRange" type="range" min="1" max="5" step="1" value="2">
+                <div class="range-scale" aria-hidden="true"><span>1</span><span>2</span><span>3</span><span>4</span><span>5</span></div>
+
+                <div class="range-heading amount-heading">
+                    <label for="rightDistRange">오른쪽 거리</label>
+                    <output id="rightDistOutput" for="rightDistRange">20 cm</output>
+                </div>
+                <input id="rightDistRange" type="range" min="10" max="50" step="1" value="20">
+                <div class="range-scale" aria-hidden="true"><span>10 cm</span><span>20</span><span>30</span><span>40</span><span>50 cm</span></div>
+
+                <fieldset class="prediction-field">
+                    <legend>결과 예상</legend>
+                    <div class="prediction-buttons three">
+                        <button type="button" data-prediction="left">왼쪽이 내려감</button>
+                        <button type="button" data-prediction="right">오른쪽이 내려감</button>
+                        <button type="button" data-prediction="level">수평</button>
+                    </div>
+                </fieldset>
+
+                <button class="run-button" id="checkBtn" type="button">수평인지 확인하기</button>
+
+                <section class="result-box" aria-labelledby="result-title" aria-live="polite">
+                    <h3 id="result-title">관찰 결과</h3>
+                    <p id="resultEmpty">조건을 정하고 예상한 뒤 확인해 보세요.</p>
+                    <div id="resultContent" hidden>
+                        <div class="result-numbers">
+                            <article><span>왼쪽 무게×거리</span><strong id="resultLeft">4000</strong></article>
+                            <article><span>오른쪽 무게×거리</span><strong id="resultRight">4000</strong></article>
+                        </div>
+                        <p class="prediction-result" id="predictionResult"></p>
+                        <p class="explanation" id="elementaryExplanation"></p>
+                    </div>
+                </section>
+            </section>
+
+            <section class="panel lever-stage" aria-label="지레 관찰 화면">
+                <div class="stage-heading"><h2>관찰</h2><span id="balanceBadge">수평</span></div>
+
+                <div class="stage-views">
+                    <svg class="lever-svg" viewBox="0 0 480 380" aria-hidden="true">
+                        <defs>
+                            <linearGradient id="beamGrad" x1="0" y1="0" x2="0" y2="1">
+                                <stop offset="0%" stop-color="#8fd4e2"/>
+                                <stop offset="100%" stop-color="#4d97ab"/>
+                            </linearGradient>
+                        </defs>
+
+                        <!-- Everything that is attached to the beam lives in this group and
+                             rotates with it, so a hanger can never visually detach from the
+                             beam no matter what angle it settles at. -->
+                        <g id="beamGroup">
+                            <rect class="beam" x="60" y="146" width="360" height="8" rx="4" fill="url(#beamGrad)"/>
+                            <g id="beamTicks"></g>
+                            <!-- Hanger contents are counter-rotated inside these groups so the
+                                 loads keep hanging straight down under gravity even when the
+                                 beam is tilted. -->
+                            <g id="leftHanger"></g>
+                            <g id="rightHanger"></g>
+                        </g>
+
+                        <polygon class="fulcrum" points="240,150 213,224 267,224"/>
+                        <rect class="fulcrum-base" x="196" y="224" width="88" height="11" rx="4"/>
+                        <text class="stage-label" x="240" y="252" text-anchor="middle">받침점</text>
+                    </svg>
+                </div>
+
+                <p class="stage-caption" id="stageCaption">추의 개수와 거리를 바꾸며 수평이 되는 조건을 찾아보세요.</p>
+            </section>
+        </div>
+
+        <section class="panel meaning-panel">
+            <h2>실험 결과의 의미</h2>
+            <div class="meaning-body">
+                <p><strong>수평 조건</strong> 양쪽의 <em>무게 × 받침점까지의 거리</em>가 같으면 수평이 됩니다.</p>
+                <p><strong>거리의 힘</strong> 가벼운 추도 멀리 걸면 무거운 추와 균형을 이룰 수 있습니다.</p>
+                <p><strong>용수철저울</strong> 매단 무게에 정비례해 용수철이 늘어나므로 늘어난 길이로 무게를 알 수 있습니다.</p>
+            </div>
+        </section>
+
+        <details class="quiz-section" aria-labelledby="quiz-title">
+            <summary class="quiz-heading"><h2 id="quiz-title">확인 문제</h2><span>4문제</span></summary>
+            <div class="quiz-grid">
+                <article class="quiz-card" data-answer="c">
+                    <h3>지레가 수평을 이루는 조건은?</h3>
+                    <div class="quiz-options">
+                        <label><input type="radio" name="q1" value="a"> 양쪽 추의 개수만 같으면 된다.</label>
+                        <label><input type="radio" name="q1" value="b"> 양쪽 거리만 같으면 된다.</label>
+                        <label><input type="radio" name="q1" value="c"> 양쪽의 무게×거리가 같아야 한다.</label>
+                        <label><input type="radio" name="q1" value="d"> 무게가 무거운 쪽이 항상 올라간다.</label>
+                    </div>
+                    <button class="answer-button" type="button">정답 확인</button>
+                    <p class="answer-result" aria-live="polite"></p>
+                    <p class="answer-explanation" hidden>수평은 양쪽의 무게와 거리를 곱한 값이 서로 같을 때 이루어집니다.</p>
+                </article>
+
+                <article class="quiz-card" data-answer="b">
+                    <h3>왼쪽에 200 g을 20 cm에 걸었다. 오른쪽 100 g을 어디에 걸어야 수평이 되는가?</h3>
+                    <div class="quiz-options">
+                        <label><input type="radio" name="q2" value="a"> 20 cm</label>
+                        <label><input type="radio" name="q2" value="b"> 40 cm</label>
+                        <label><input type="radio" name="q2" value="c"> 10 cm</label>
+                        <label><input type="radio" name="q2" value="d"> 어디에 걸어도 안 된다.</label>
+                    </div>
+                    <button class="answer-button" type="button">정답 확인</button>
+                    <p class="answer-result" aria-live="polite"></p>
+                    <p class="answer-explanation" hidden>200×20 = 4000이므로 100×거리 = 4000, 즉 거리는 40 cm여야 합니다.</p>
+                </article>
+
+                <article class="quiz-card" data-answer="a">
+                    <h3>용수철저울에 매단 추를 2배로 늘리면 용수철이 늘어난 길이는?</h3>
+                    <div class="quiz-options">
+                        <label><input type="radio" name="q3" value="a"> 2배로 늘어난다.</label>
+                        <label><input type="radio" name="q3" value="b"> 그대로이다.</label>
+                        <label><input type="radio" name="q3" value="c"> 절반으로 줄어든다.</label>
+                        <label><input type="radio" name="q3" value="d"> 4배로 늘어난다.</label>
+                    </div>
+                    <button class="answer-button" type="button">정답 확인</button>
+                    <p class="answer-result" aria-live="polite"></p>
+                    <p class="answer-explanation" hidden>용수철이 늘어난 길이는 매단 무게에 정비례합니다. 무게가 2배면 늘어난 길이도 2배입니다.</p>
+                </article>
+
+                <article class="quiz-card" data-answer="d">
+                    <h3>같은 무게의 추를 양쪽에 걸었는데 오른쪽이 내려갔다. 왜 그런가?</h3>
+                    <div class="quiz-options">
+                        <label><input type="radio" name="q4" value="a"> 오른쪽 추가 더 가볍기 때문이다.</label>
+                        <label><input type="radio" name="q4" value="b"> 받침점이 없기 때문이다.</label>
+                        <label><input type="radio" name="q4" value="c"> 무게는 기울기와 관계가 없기 때문이다.</label>
+                        <label><input type="radio" name="q4" value="d"> 오른쪽 추가 받침점에서 더 멀리 있기 때문이다.</label>
+                    </div>
+                    <button class="answer-button" type="button">정답 확인</button>
+                    <p class="answer-result" aria-live="polite"></p>
+                    <p class="answer-explanation" hidden>무게가 같다면 받침점에서 더 멀리 있는 쪽의 무게×거리가 커져서 그쪽이 내려갑니다.</p>
+                </article>
+            </div>
+        </details>
+    </main>
+    <script src="app.js?v=1"></script>
+</body>
+</html>
