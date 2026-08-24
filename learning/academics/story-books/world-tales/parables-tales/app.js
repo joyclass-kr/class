@@ -874,6 +874,28 @@ function fillPages(segs, caps, headHtml) {
             ranges[p][0]++;
         }
     }
+
+    // 그래도 마지막 쪽이 넘치면, 고르게 나누기를 포기하고 앞에서부터 꽉꽉 채운다.
+    // 앞 쪽마다 몇십 px씩 남긴 것이 뒤로 밀려 쌓인 탓이다.
+    // 쪽을 하나 더 늘려 절반 빈 쪽 두 장을 만드는 것보다 이쪽이 낫다.
+    const last = caps.length - 1;
+    if (pageHeight(ranges[last][0], ranges[last][1], last === 0) > caps[last]) {
+        const packed = [];
+        let k = 0;
+        for (let p = 0; p < caps.length; p++) {
+            if (p === caps.length - 1) { packed.push([k, segs.length]); break; }
+            const maxTake = Math.max(1, segs.length - k - (caps.length - p - 1));
+            let take = 1, lo = 1, hi = maxTake;
+            while (lo <= hi) {
+                const mid = (lo + hi) >> 1;
+                if (pageHeight(k, k + mid, p === 0) <= caps[p]) { take = mid; lo = mid + 1; }
+                else { hi = mid - 1; }
+            }
+            packed.push([k, k + take]);
+            k += take;
+        }
+        if (pageHeight(packed[last][0], packed[last][1], last === 0) <= caps[last]) return packed;
+    }
     return ranges;
 }
 
@@ -913,17 +935,30 @@ function paginateChapter(ch, chIndex) {
     // 도입 그림이 따로 없고 그림 셋이 모두 이야기 중후반 장면인 편은
     // artTail을 켜 둔다. 그러면 그림을 뒤쪽 펼침면에 몰아 놓는다.
     // 그러지 않으면 도입 쪽에 한창 벌어지는 장면 그림이 붙어 버린다.
+    // 상자가 그림 아래 남는 자리에 들어가야 마지막 펼침면에 그림을 둘 수 있다.
+    // 글이 긴 상자는 안 들어가므로, 그럴 때는 마지막을 글 쪽으로 돌린다.
+    // 그러지 않으면 아무리 펼침면을 늘려도 마지막 쪽이 계속 넘친다.
+    const boxUnderArt = moralHeight <= underArt - 4;
     const planOf = (n) => {
-        if (!ch.artTail) return slotPlan(arts.length, Math.max(0, n - arts.length));
-        const sl = new Array(n).fill('text');
-        for (let k = 0; k < arts.length && k < n; k++) sl[n - arts.length + k] = 'img';
+        let sl;
+        if (ch.artTail) {
+            sl = new Array(n).fill('text');
+            for (let k = 0; k < arts.length && k < n; k++) sl[n - arts.length + k] = 'img';
+        } else {
+            sl = slotPlan(arts.length, Math.max(0, n - arts.length));
+        }
+        if (!boxUnderArt && sl.length > 1 && sl[sl.length - 1] === 'img') {
+            const t = sl.lastIndexOf('text');
+            if (t >= 0) { sl[t] = 'img'; sl[sl.length - 1] = 'text'; }
+        }
         return sl;
     };
 
     // 그림 한 장이 펼침면 하나를 쓴다. 거기서 시작해 글이 다 들어갈 때까지 펼침면을 늘린다.
     // 쪽 수는 조각 수를 넘을 수 없다 — 빈 쪽이 생기면 안 되기 때문이다.
     const minSpreads = Math.max(arts.length, 2);
-    const maxSpreads = Math.max(minSpreads, Math.floor(segs.length / 2));
+    // 쪽 수가 걷잡을 수 없이 늘지 않게 위를 막아 둔다.
+    const maxSpreads = Math.max(minSpreads, Math.min(Math.floor(segs.length / 2), arts.length + 4));
     let spreadCount = minSpreads;
     while (spreadCount < maxSpreads) {
         const caps = capsOf(planOf(spreadCount));
@@ -931,24 +966,37 @@ function paginateChapter(ch, chIndex) {
         spreadCount++;
     }
 
+    // 한 쪽이라도 넘치는지 실제로 재 본다.
+    // 첫 쪽에는 장 제목이, 마지막 쪽에는 '생각해봐요' 상자가 함께 들어간다.
+    // 마지막 쪽이 그림 쪽이면 그림 아래 남는 자리에 상자가 들어가야 한다.
+    const overflows = (sl, cp, rg) => rg.some(([a, b], n) => {
+        const head = n === 0 ? headHtml : '';
+        const last = n === rg.length - 1;
+        const tail = last ? moralHtml(ch) : '';
+        const room = last ? (sl[sl.length - 1] === 'img' ? underArt : usable) : cp[n];
+        return PROBE.measure(head + runHtml(segs, a, b) + tail) > room + 1;
+    });
+
     let slots = planOf(spreadCount);
     let caps = capsOf(slots);
     let ranges = fill(caps);
     for (let guard = 0; guard < 8; guard++) {
-        // 한 쪽이라도 넘치면 펼침면을 늘려 다시 나눈다.
-        // 마지막 쪽만 보면 안 된다 — 첫 쪽에는 장 제목이 얹히므로 그쪽이 먼저 넘칠 수 있다.
-        // 마지막 쪽에는 '생각해봐요' 상자까지 함께 들어간다. 넘치는지 볼 때도 같이 재야 한다.
-        const over = ranges.some(([a, b], n) => {
-            const head = n === 0 ? headHtml : '';
-            const tail = n === ranges.length - 1 ? moralHtml(ch) : '';
-            const room = n === ranges.length - 1 ? caps[n] + moralHeight : caps[n];
-            return PROBE.measure(head + runHtml(segs, a, b) + tail) > room + 1;
-        });
-        if (!over || spreadCount >= maxSpreads) break;
+        if (!overflows(slots, caps, ranges) || spreadCount >= maxSpreads) break;
         spreadCount++;
         slots = planOf(spreadCount);
         caps = capsOf(slots);
         ranges = fill(caps);
+    }
+
+    // 글 높이를 한 칸에 몰아 재면 실제로 나눠 담을 때보다 넉넉하게 나온다.
+    // 그래서 어림으로 잡은 쪽 수가 한둘 남을 때가 있다. 줄여 보고 다 들어가면 줄인다.
+    // 빈 자리가 많은 쪽이 여러 장 생기는 것보다 꽉 찬 쪽이 낫다.
+    while (spreadCount > minSpreads) {
+        const sl2 = planOf(spreadCount - 1);
+        const cp2 = capsOf(sl2);
+        const rg2 = fill(cp2);
+        if (overflows(sl2, cp2, rg2)) break;
+        spreadCount--; slots = sl2; caps = cp2; ranges = rg2;
     }
 
     const spreads = [];
@@ -1015,8 +1063,9 @@ function tocPage(part) {
             </button>
         </li>`;
     const group = TOC_GROUPS[part];
-    const half = Math.ceil(group.length / 2);
     const last = part === TOC_GROUPS.length - 1;
+    // '이야기 문제' 줄까지 셈해서 좌우를 고르게 나눈다
+    const half = Math.ceil((group.length + (last ? 1 : 0)) / 2);
     return `
         <div class="page page-toc">
             <div class="story-page-left">
@@ -1029,8 +1078,9 @@ function tocPage(part) {
         </div>`;
 }
 
-// 한 펼침면에 담을 수 있는 차례 항목은 여덟 개까지다. 그보다 많으면 차례도 여러 쪽이 된다.
-const TOC_PER_SPREAD = 16;
+// 차례는 한 펼침면에 다 담는 것을 먼저 노린다. 마지막 '이야기 문제' 한 줄 때문에
+// 거의 빈 펼침면이 하나 더 생기면 보기 흉하다. 한 칸에 아홉 줄까지는 들어간다.
+const TOC_PER_SPREAD = 18;
 const TOC_GROUPS = [];
 for (let i = 0; i < CHAPTERS.length; i += TOC_PER_SPREAD) {
     TOC_GROUPS.push(CHAPTERS.slice(i, i + TOC_PER_SPREAD));

@@ -1,0 +1,83 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="UTF-8">
+<title>쪽 짜임 점검</title>
+<style>
+    body { font: 13px/1.6 monospace; margin: 16px; }
+    iframe { position: fixed; left: -6000px; top: 0; border: 0; width: 1366px; height: 768px; }
+    pre { white-space: pre-wrap; }
+    .bad { color: #c00; font-weight: 700; }
+</style>
+</head>
+<body>
+<h1>쪽 짜임 점검 — 이야기마다 몇 펼침면을 쓰고 얼마나 찼나</h1>
+<pre id="out">…</pre>
+<iframe id="frame"></iframe>
+<script>
+/* 소설틀로 만든 책(탈무드·비유)을 열어, 이야기마다
+ * 펼침면 수 · 쪽마다 찬 정도 · 그림 자리 · 넘침을 한눈에 본다.
+ * 넘침 검사(_measure.html)는 넘치는 것만 보지만, 이건 남는 것도 본다. */
+const BOOKS = ['talmud-tales', 'parables-tales'];
+const out = document.getElementById('out');
+const frame = document.getElementById('frame');
+
+function load(slug) {
+    return new Promise(r => { frame.onload = () => r(); frame.src = slug + '/'; });
+}
+
+function inspect() {
+    const rows = [];
+    let cur = null;
+    for (let i = 0; i < PAGES.length; i++) {
+        current = i;
+        paint();
+        const p = document.querySelector('.page-story');
+        if (!p) continue;
+        const cols = [...p.querySelectorAll('.story-page-left, .story-page-right')].map(col => {
+            const cs = getComputedStyle(col);
+            const room = col.clientHeight - parseFloat(cs.paddingTop) - parseFloat(cs.paddingBottom);
+            const used = [...col.children].reduce((a, el) => {
+                const s = getComputedStyle(el);
+                return a + el.getBoundingClientRect().height
+                    + (parseFloat(s.marginTop) || 0) + (parseFloat(s.marginBottom) || 0);
+            }, 0);
+            return Math.round(used / room * 100);
+        });
+        const head = p.querySelector('h2');
+        if (head) { cur = { title: head.textContent, spreads: [] }; rows.push(cur); }
+        if (!cur) continue;
+        cur.spreads.push({
+            fill: cols,
+            art: !!p.querySelector('.story-art-top img'),
+            box: !!p.querySelector('.moral-box')
+        });
+    }
+    current = 0;
+    paint();
+    return rows;
+}
+
+(async () => {
+    const lines = [];
+    for (const slug of BOOKS) {
+        await load(slug);
+        await new Promise(r => setTimeout(r, 300));
+        const rows = frame.contentWindow.eval('(' + inspect.toString() + ')()');
+        const all = rows.flatMap(r => r.spreads.flatMap(s => s.fill));
+        const avg = Math.round(all.reduce((a, b) => a + b, 0) / all.length);
+        lines.push(`\n████ ${slug} — 펼침면 ${rows.reduce((a, r) => a + r.spreads.length, 0)}개 · 평균 ${avg}% · 넘침 ${all.filter(x => x > 100).length}`);
+        for (const r of rows) {
+            const fills = r.spreads.flatMap(s => s.fill);
+            const min = Math.min(...fills);
+            const shape = r.spreads.map(s => (s.art ? '▣' : '▢') + (s.box ? '*' : '')).join('');
+            const mark = (min < 60 || fills.some(x => x > 100)) ? ' ←' : '';
+            lines.push(`  ${r.title.padEnd(28)} ${r.spreads.length}펼침 ${shape.padEnd(8)} ${fills.join(',')}%${mark}`);
+        }
+        out.textContent = lines.join('\n');
+    }
+    out.textContent = lines.join('\n') + '\n\n▣=그림쪽 ▢=글쪽 *=생각해봐요\n=== 끝 ===';
+})();
+</script>
+</body>
+</html>
