@@ -44,13 +44,14 @@ test('string and expressive families expose virtual-instrument presentation', ()
 });
 
 test('project-bound instrument artwork exists', () => {
-  for (const asset of ['bass-p-style.png', 'bass-j-style.png', 'bass-active-five.png', 'bass-fretless.png', 'guitar-s-style.png', 'guitar-metal-seven.png', 'guitar-hollowbody-jazz.png', 'guitar-dreadnought.png', 'guitar-classical-nylon.png', 'drum-acoustic-kit.png', 'violin-expressive.png', 'cello-expressive.png', 'double-bass-expressive.png', 'flute-expressive.png', 'oboe-expressive.png', 'clarinet-expressive.png', 'bassoon-expressive.png', 'alto-sax-expressive.png', 'trumpet-expressive.png', 'trombone-expressive.png', 'french-horn-expressive.png', 'tuba-expressive.png', 'timpani-bank.png', 'glockenspiel-concert.png', 'marimba-concert.png', 'vibraphone-concert.png', 'xylophone-concert.png', 'orchestral-percussion-station.png', 'korean-gayageum.png', 'korean-geomungo.png', 'korean-haegeum.png', 'korean-ajaeng.png', 'korean-daegeum.png', 'korean-hyangpiri.png', 'korean-taepyeongso.png', 'korean-samulnori-station.png']) {
+  for (const asset of ['bass-p-style.png', 'bass-j-style.png', 'bass-active-five.png', 'bass-fretless.png', 'guitar-s-style.png', 'guitar-metal-seven.png', 'guitar-hollowbody-jazz.png', 'guitar-dreadnought.png', 'guitar-classical-nylon.png', 'drum-acoustic-kit.png', 'violin-expressive.png', 'viola-expressive.png', 'cello-expressive.png', 'double-bass-expressive.png', 'flute-expressive.png', 'oboe-expressive.png', 'clarinet-expressive.png', 'bassoon-expressive.png', 'alto-sax-expressive.png', 'trumpet-expressive.png', 'trombone-expressive.png', 'french-horn-expressive.png', 'tuba-expressive.png', 'timpani-bank.png', 'glockenspiel-concert.png', 'marimba-concert.png', 'vibraphone-concert.png', 'xylophone-concert.png', 'orchestral-percussion-station.png', 'korean-gayageum.png', 'korean-geomungo.png', 'korean-haegeum.png', 'korean-ajaeng.png', 'korean-daegeum.png', 'korean-hyangpiri.png', 'korean-taepyeongso.png', 'korean-samulnori-station.png']) {
     assert.equal(fs.existsSync(path.join(root, 'assets', 'instruments', asset)), true, asset);
   }
 });
 
 test('range controls keep computer-keyboard performance available', () => {
   assert.match(app, /event\.target\.type !== "range"/);
+  assert.match(app, /id: "viola"[\s\S]*?viola-expressive\.png/);
 });
 
 test('shows actual-size guidance and keeps related instruments at different visual scales', () => {
