@@ -1,0 +1,178 @@
+<!doctype html>
+<html lang="ko">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="theme-color" content="#07131c">
+    <title>과학 실험실</title>
+    <meta name="description" content="나무 상자를 밀며 미는 힘과 마찰력의 평형, 알짜힘과 가속도, 속력-시간 그래프를 확인하는 중학교 과학 모의실험">
+    <link rel="stylesheet" as="style" crossorigin href="https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.9/dist/web/static/pretendard.css">
+    <link rel="stylesheet" href="styles.css?v=1">
+    <link rel="stylesheet" href="force-visual.css?v=2">
+    <link rel="stylesheet" href="quiz.css?v=1">
+</head>
+<body>
+    <main>
+        <header class="page-header">
+            <div class="title-row">
+                <a href="../">← 과학 실험실</a>
+                <h1>속력과 힘의 평형</h1>
+            </div>
+            <div class="grade-tags"><span>중학교</span><span>물리</span></div>
+        </header>
+
+        <ol class="method-steps" aria-label="실험 방법">
+            <li>바닥의 종류와 상자의 질량을 고릅니다.</li>
+            <li>미는 힘과 처음 속력을 정합니다.</li>
+            <li>상자를 밀며 속력이 어떻게 변하는지 봅니다.</li>
+            <li>힘이 평형일 때의 운동을 확인합니다.</li>
+        </ol>
+
+        <div class="experiment-layout">
+            <section class="panel control-panel" aria-labelledby="control-title">
+                <h2 id="control-title">실험 조건</h2>
+                <p class="water-standard">무게는 1 kg마다 10 N으로 계산합니다</p>
+
+                <fieldset class="floor-field">
+                    <legend>바닥의 종류</legend>
+                    <div class="floor-buttons">
+                        <button type="button" data-floor="ice">얼음<small>매우 미끄럽다</small></button>
+                        <button type="button" data-floor="wood">나무<small>보통</small></button>
+                        <button type="button" data-floor="rubber">고무 매트<small>잘 안 미끄럽다</small></button>
+                    </div>
+                </fieldset>
+
+                <div class="range-heading">
+                    <label for="forceRange">미는 힘</label>
+                    <output id="forceOutput" for="forceRange">8 N</output>
+                </div>
+                <input id="forceRange" type="range" min="0" max="20" step="1" value="8">
+                <div class="range-scale" aria-hidden="true"><span>0</span><span>10</span><span>20</span></div>
+
+                <div class="range-heading amount-heading">
+                    <label for="massRange">상자의 질량</label>
+                    <output id="massOutput" for="massRange">4 kg</output>
+                </div>
+                <input id="massRange" type="range" min="2" max="10" step="1" value="4">
+                <div class="range-scale" aria-hidden="true"><span>2</span><span>6</span><span>10</span></div>
+
+                <div class="range-heading amount-heading">
+                    <label for="startRange">처음 속력</label>
+                    <output id="startOutput" for="startRange">0.0 m/s</output>
+                </div>
+                <input id="startRange" type="range" min="0" max="6" step="0.5" value="0">
+                <div class="range-scale" aria-hidden="true"><span>0</span><span>3</span><span>6</span></div>
+
+                <fieldset class="prediction-field">
+                    <legend>상자는 어떻게 움직일까요?</legend>
+                    <div class="prediction-buttons four">
+                        <button type="button" data-prediction="rest">그대로 멈춰 있다</button>
+                        <button type="button" data-prediction="constant">같은 속력으로 간다</button>
+                        <button type="button" data-prediction="faster">점점 빨라진다</button>
+                        <button type="button" data-prediction="slower">점점 느려진다</button>
+                    </div>
+                </fieldset>
+
+                <button class="run-button" id="checkBtn" type="button">밀어 보기</button>
+                <button class="reset-button" id="resetBtn" type="button">처음으로</button>
+
+                <section class="result-box" aria-labelledby="result-title" aria-live="polite">
+                    <h3 id="result-title">관찰 결과</h3>
+                    <p id="resultEmpty">조건을 정하고 상자를 밀어 보세요.</p>
+                    <div id="resultContent" hidden>
+                        <div class="result-numbers">
+                            <article><span>알짜힘</span><strong id="valueA">-</strong></article>
+                            <article><span>운동</span><strong id="valueB">-</strong></article>
+                        </div>
+                        <p class="prediction-result" id="predictionResult"></p>
+                        <p class="explanation" id="elementaryExplanation"></p>
+                    </div>
+                </section>
+            </section>
+
+            <section class="panel force-stage" aria-label="관찰 화면">
+                <div class="stage-heading"><h2>관찰</h2><span id="stageBadge">-</span></div>
+
+                <div class="stage-views">
+                    <svg class="main-svg" viewBox="0 0 460 214" aria-hidden="true">
+                        <g id="mainGroup"></g>
+                    </svg>
+                    <svg class="graph-svg" viewBox="0 0 460 196" aria-hidden="true">
+                        <g id="graphGroup"></g>
+                    </svg>
+                </div>
+
+                <p class="stage-caption" id="stageCaption">미는 힘과 마찰력의 길이를 견주어 보세요. 길이가 같으면 힘이 평형입니다.</p>
+                <div class="data-note" id="dataNote"></div>
+            </section>
+        </div>
+
+        <section class="panel meaning-panel">
+            <h2>실험 결과의 의미</h2>
+            <div class="meaning-body">
+                <p><strong>힘의 평형</strong> 알짜힘이 0이면 멈춰 있던 것은 계속 멈춰 있고, 움직이던 것은 같은 속력으로 계속 갑니다.</p>
+                <p><strong>마찰력</strong> 멈춰 있을 때의 마찰력은 미는 힘만큼만 생깁니다. 미는 힘이 최대 마찰력을 넘어야 움직이기 시작합니다.</p>
+                <p><strong>알짜힘과 가속도</strong> 알짜힘이 0이 아니면 속력이 변합니다. 같은 힘이라도 무거울수록 속력이 천천히 변합니다.</p>
+            </div>
+        </section>
+
+        <details class="quiz-section" aria-labelledby="quiz-title">
+            <summary class="quiz-heading"><h2 id="quiz-title">확인 문제</h2><span>4문제</span></summary>
+            <div class="quiz-grid">
+                <article class="quiz-card" data-answer="c">
+                    <h3>달리던 상자에 작용하는 힘이 평형이 되면?</h3>
+                    <div class="quiz-options">
+                        <label><input type="radio" name="q1" value="a"> 곧바로 멈춘다</label>
+                        <label><input type="radio" name="q1" value="b"> 점점 빨라진다</label>
+                        <label><input type="radio" name="q1" value="c"> 같은 속력으로 계속 간다</label>
+                        <label><input type="radio" name="q1" value="d"> 뒤로 되돌아간다</label>
+                    </div>
+                    <button class="answer-button" type="button">정답 확인</button>
+                    <p class="answer-result" aria-live="polite"></p>
+                    <p class="answer-explanation" hidden>알짜힘이 0이면 속력이 변하지 않습니다. 멈춰 있으면 계속 멈춰 있고, 움직이고 있으면 같은 속력으로 계속 움직입니다.</p>
+                </article>
+
+                <article class="quiz-card" data-answer="b">
+                    <h3>멈춰 있는 상자를 5 N으로 밀었는데 움직이지 않았습니다. 이때 마찰력은?</h3>
+                    <div class="quiz-options">
+                        <label><input type="radio" name="q2" value="a"> 0 N</label>
+                        <label><input type="radio" name="q2" value="b"> 5 N</label>
+                        <label><input type="radio" name="q2" value="c"> 10 N</label>
+                        <label><input type="radio" name="q2" value="d"> 알 수 없다</label>
+                    </div>
+                    <button class="answer-button" type="button">정답 확인</button>
+                    <p class="answer-result" aria-live="polite"></p>
+                    <p class="answer-explanation" hidden>움직이지 않았다는 것은 알짜힘이 0이라는 뜻입니다. 그래서 마찰력은 미는 힘과 같은 5 N입니다.</p>
+                </article>
+
+                <article class="quiz-card" data-answer="d">
+                    <h3>같은 힘으로 밀 때 질량이 2배인 상자의 가속도는?</h3>
+                    <div class="quiz-options">
+                        <label><input type="radio" name="q3" value="a"> 2배가 된다</label>
+                        <label><input type="radio" name="q3" value="b"> 그대로이다</label>
+                        <label><input type="radio" name="q3" value="c"> 4배가 된다</label>
+                        <label><input type="radio" name="q3" value="d"> 절반보다 작아진다</label>
+                    </div>
+                    <button class="answer-button" type="button">정답 확인</button>
+                    <p class="answer-result" aria-live="polite"></p>
+                    <p class="answer-explanation" hidden>질량이 2배가 되면 무게도 2배가 되어 마찰력까지 커집니다. 그래서 가속도는 절반보다도 더 작아집니다.</p>
+                </article>
+
+                <article class="quiz-card" data-answer="a">
+                    <h3>속력-시간 그래프가 가로로 평평한 직선이면 어떤 운동일까요?</h3>
+                    <div class="quiz-options">
+                        <label><input type="radio" name="q4" value="a"> 등속 운동</label>
+                        <label><input type="radio" name="q4" value="b"> 점점 빨라지는 운동</label>
+                        <label><input type="radio" name="q4" value="c"> 점점 느려지는 운동</label>
+                        <label><input type="radio" name="q4" value="d"> 정지</label>
+                    </div>
+                    <button class="answer-button" type="button">정답 확인</button>
+                    <p class="answer-result" aria-live="polite"></p>
+                    <p class="answer-explanation" hidden>속력이 변하지 않으므로 그래프가 평평합니다. 이때 알짜힘은 0이고 등속 운동을 합니다.</p>
+                </article>
+            </div>
+        </details>
+    </main>
+    <script src="app.js?v=7"></script>
+</body>
+</html>
