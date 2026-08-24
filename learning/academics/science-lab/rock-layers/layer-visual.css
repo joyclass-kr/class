@@ -1,0 +1,45 @@
+/* Apparatus: a water tank that sediment is poured into, building up layers. */
+
+.mix-field { margin: 4px 0 14px; padding: 0; border: 0; }
+.mix-field legend { color: #dce9e8; font-size: 14px; font-weight: 850; }
+.mix-buttons { display: grid; gap: 8px; margin-top: 9px; }
+.mix-buttons button { padding: 10px 12px; border: 1px solid var(--line); border-radius: 11px; background: #0a1c24; color: var(--muted); font-weight: 850; cursor: pointer; text-align: left; }
+.mix-buttons button.selected { border-color: var(--cyan); background: rgba(82, 199, 255, .12); color: var(--cyan); }
+
+.toggle-button { width: 100%; margin-bottom: 4px; padding: 10px; border: 1px solid var(--line); border-radius: 12px; background: transparent; color: var(--muted); font-weight: 850; cursor: pointer; }
+.toggle-button.active { border-color: var(--amber); background: rgba(255, 204, 102, .1); color: var(--amber); }
+.reset-button { width: 100%; margin-top: 8px; padding: 10px; border: 1px solid var(--line); border-radius: 12px; background: transparent; color: var(--muted); font-weight: 850; cursor: pointer; }
+.reset-button:hover { color: var(--ink); border-color: rgba(151, 218, 211, .45); }
+
+.layer-stage {
+    display: flex;
+    flex-direction: column;
+    min-width: 0;
+    border-color: rgba(200, 169, 122, .26);
+    box-shadow: 0 0 0 1px rgba(200, 169, 122, .04), 0 24px 48px -30px rgba(200, 169, 122, .34);
+    background-image:
+        radial-gradient(620px 420px at 50% 40%, rgba(200, 169, 122, .07), transparent 65%),
+        linear-gradient(rgba(109, 174, 181, .05) 1px, transparent 1px),
+        linear-gradient(90deg, rgba(109, 174, 181, .05) 1px, transparent 1px);
+    background-size: 100% 100%, 24px 24px, 24px 24px;
+}
+.stage-views { flex: 1; display: flex; align-items: center; justify-content: center; padding: 8px 0 2px; }
+.layer-svg { width: 100%; max-width: 560px; height: auto; display: block; }
+
+.tank { stroke: rgba(177, 226, 230, .78); stroke-width: 4; stroke-linejoin: round; }
+.tank-water { fill: rgba(110, 200, 235, .13); }
+.sub-layer { stroke: rgba(0, 0, 0, .22); stroke-width: .6; }
+.layer-divider { stroke: rgba(255, 255, 255, .38); stroke-width: 1.2; stroke-dasharray: 5 4; }
+.layer-tag { fill: #e8f3f6; font-size: 11px; font-weight: 900; }
+.layer-age { fill: #b6d3d9; font-size: 10px; font-weight: 800; }
+.fossil { fill: #f0e2b8; stroke: #7a6236; stroke-width: 1; }
+.falling { opacity: .95; }
+.ruler-line { stroke: rgba(151, 218, 211, .3); stroke-width: 1; stroke-dasharray: 3 3; }
+
+.speed-note { display: grid; gap: 4px; margin-top: 10px; padding-top: 10px; border-top: 1px solid var(--line); }
+.speed-row { display: grid; grid-template-columns: 62px 1fr 96px; gap: 8px; align-items: center; font-size: 11.5px; font-weight: 850; }
+.speed-name { color: #b6d3d9; }
+.speed-track { height: 8px; border-radius: 999px; background: rgba(255, 255, 255, .06); overflow: hidden; }
+.speed-fill { height: 100%; border-radius: 999px; }
+.speed-value { color: #cfe6ee; text-align: right; font-variant-numeric: tabular-nums; }
+.speed-caption { margin: 6px 0 0; color: #7c9b98; font-size: 10.5px; line-height: 1.45; }
