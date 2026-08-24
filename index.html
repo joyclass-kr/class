@@ -983,6 +983,7 @@
             const classboardLink = document.getElementById('classboardLink');
             const hubContent = document.getElementById('hubContent');
             const hubLinks = Array.from(hubContent.querySelectorAll('a[href]'));
+            const worksheetGroupSummaries = Array.from(hubContent.querySelectorAll('.worksheet-group > summary'));
             const worksheetGroups = Array.from(document.querySelectorAll('.worksheet-group'));
             document.addEventListener('click', (event) => {
                 worksheetGroups.forEach((group) => {
@@ -1307,6 +1308,14 @@
                     }
                     delete link.dataset.lockedHref;
                     link.removeAttribute('aria-disabled');
+                });
+                worksheetGroupSummaries.forEach((summary) => {
+                    summary.classList.toggle('is-class-locked', locked);
+                    if (locked) {
+                        summary.setAttribute('aria-disabled', 'true');
+                    } else if (summary.dataset.classLocked !== 'true') {
+                        summary.removeAttribute('aria-disabled');
+                    }
                 });
             }
 
