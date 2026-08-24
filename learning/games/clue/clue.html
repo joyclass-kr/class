@@ -621,8 +621,10 @@ function buildBoard(){
     const kind=isPassage?"passage":isDoor?"door":"plain";
     const shade=cellIndex%2?" shade":"";
     const orientation=CELL_ORIENTATION[cellId]||"h";
-    const tileWidth=isPassage?20:17.2;
-    const tileHeight=isPassage?20:17.2;
+    const tileLength=17.2;
+    const tileThickness=12.4;
+    const tileWidth=isPassage?20:orientation==="v"||orientation==="x"?tileThickness:tileLength;
+    const tileHeight=isPassage?20:orientation==="h"||orientation==="x"?tileThickness:tileLength;
     parts.push(`<g class="cellGroup ${kind}${shade}" data-cell="${cellId}" transform="translate(${pos[0]},${pos[1]})">`);
     if(isPassage)parts.push(`<title>비밀통로 · ${SECRET_PASSAGE_PAIRS[cellId]} 맞은편 출구로 이동</title>`);
     parts.push(`<rect class="corridorTile" x="${-tileWidth/2}" y="${-tileHeight/2}" width="${tileWidth}" height="${tileHeight}" rx="1.5"/>`);
