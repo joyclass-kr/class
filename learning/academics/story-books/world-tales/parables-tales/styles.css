@@ -492,7 +492,8 @@ body {
     height: auto;
     aspect-ratio: 4 / 3;
     flex: none;
-    max-width: min(100%, 540px);
+    /* 책이 작을 때는 그림도 같이 줄어들어야 밑의 단추까지 들어간다. */
+    max-width: min(100%, 540px, 68cqh);
 }
 
 .page-end h2 { margin: 0; font-size: clamp(20px, 4.342cqh, 45px); }
@@ -553,6 +554,11 @@ body {
 /* 세로로 세운 태블릿과 손전화는 한 쪽씩 본다. 아이패드를 세로로 들면
    화면이 길어서, 가로 기준(820px)만으로는 큰 아이패드를 놓친다. */
 @media (max-width: 820px), (orientation: portrait) and (max-width: 1100px) {
+    /* 소설틀 표지도 세로에서는 위아래로 쌓는다. 두 칸으로 두면 글줄이
+       절반 폭이라 소개글이 갑절로 길어져 넘친다. */
+    .page-cover { grid-template-columns: 1fr; grid-template-rows: 30% 70%; }
+    .page-cover .story-page-left { border-right: none; border-bottom: 1px solid rgba(92, 58, 34, 0.22); }
+    .page-cover .story-page-right { padding: clamp(12px, 2.6cqh, 27px) clamp(14px, 3.4cqh, 36px); }
     .book { width: min(900px, 96vw, calc((100dvh - 46px) * 3 / 4)); aspect-ratio: 3 / 4; }
     .nav-prev { left: 6px; }
     .nav-next { right: 6px; }
