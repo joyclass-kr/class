@@ -51,7 +51,7 @@ function addPlayer(game, id, name) {
   if (game.phase !== "lobby") return { ok: false, error: "이미 시작한 게임입니다." };
   const safeId = String(id);
   if (game.players.some(player => player.id === safeId)) return { ok: true };
-  if (game.players.length >= MAX_PLAYERS) return { ok: false, error: "도둑잡기는 최대 6명까지 참여할 수 있습니다." };
+  if (game.players.length >= MAX_PLAYERS) return { ok: false, error: "시티 체이스는 최대 6명까지 참여할 수 있습니다." };
   game.players.push(createPlayer(safeId, name || `플레이어 ${game.players.length + 1}`));
   game.revision += 1;
   return { ok: true };
@@ -215,7 +215,7 @@ function startGame(game) {
   assignTeamsAndPawns(game);
   resetRound(game);
   game.phase = "setup";
-  game.lastAction = "경찰팀이 보석 2개와 잠복경찰을 숨기는 중입니다.";
+  game.lastAction = "경찰팀이 보석 2개와 경보 장치를 배치하는 중입니다.";
   game.revision += 1;
   return { ok: true };
 }
@@ -249,7 +249,7 @@ function placeSecrets(game, playerId, placements) {
   const selected = [...gemBuildings, undercover];
   const validIds = new Set(Board.BUILDINGS.map(building => building.id));
   if (gemBuildings.length !== 2 || !undercover || selected.some(id => !validIds.has(id)) || new Set(selected).size !== 3) {
-    return { ok: false, error: "서로 다른 건물 3곳에 보석 2개와 잠복경찰을 배치하세요." };
+    return { ok: false, error: "서로 다른 장소 3곳에 보석 2개와 경보 장치를 배치하세요." };
   }
   for (const building of game.buildings) {
     building.content = gemBuildings.includes(building.id) ? "gem" : building.id === undercover ? "undercover" : null;
@@ -354,7 +354,7 @@ function captureThief(game, thief, message) {
   if (thief.carryingGem) {
     thief.carryingGem = false;
     rehideGem(game);
-    message += " 가지고 있던 보석은 경찰이 다시 숨겼습니다.";
+    message += " 가지고 있던 보석은 경찰팀이 다시 배치했습니다.";
   }
   game.lastAction = message;
   return checkPoliceVictory(game);
@@ -381,10 +381,10 @@ function resolveLanding(game, pawn, options = {}) {
       pawn.carryingGem = false;
       game.resources.thief.securedGems += 1;
       if (game.resources.thief.securedGems >= 2) {
-        finishWinner(game, "thief", "보석 2개를 모두 아지트로 옮겼습니다. 도둑팀 승리!");
+        finishWinner(game, "thief", "보석 2개를 모두 비밀기지로 옮겼습니다. 도둑팀 승리!");
         return;
       }
-      advanceTurn(game, `도둑 ${pawn.number}번이 보석을 아지트에 보관했습니다.`);
+      advanceTurn(game, `도둑 ${pawn.number}번이 보석을 비밀기지에 보관했습니다.`);
       return;
     }
   }
@@ -416,7 +416,7 @@ function resolveLanding(game, pawn, options = {}) {
       return;
     }
     if (content === "undercover") {
-      if (!captureThief(game, pawn, `${name}에 잠복경찰이 있었습니다. 도둑 ${pawn.number}번이 체포되었습니다.`)) advanceTurn(game);
+      if (!captureThief(game, pawn, `${name}에서 경보 장치가 작동했습니다. 도둑 ${pawn.number}번이 체포되었습니다.`)) advanceTurn(game);
       return;
     }
     advanceTurn(game, `${name}은 비어 있었습니다.`);
@@ -441,7 +441,7 @@ function resolveLanding(game, pawn, options = {}) {
   }
   if (node.effect === "reset") {
     pawn.position = pawn.team === "thief" ? "hideout" : "jail";
-    advanceTurn(game, `${node.label}. ${pawn.team === "thief" ? "아지트" : "경찰서"}로 돌아갑니다.`);
+    advanceTurn(game, `${node.label}. ${pawn.team === "thief" ? "비밀기지" : "경찰 본부"}로 돌아갑니다.`);
     return;
   }
   if (node.effect === "reveal") {
@@ -474,7 +474,7 @@ function resolveLanding(game, pawn, options = {}) {
   if (node.effect === "dropGem" && pawn.team === "thief" && pawn.carryingGem) {
     pawn.carryingGem = false;
     rehideGem(game);
-    advanceTurn(game, "보석을 떨어뜨렸습니다. 경찰팀이 보석을 다시 숨겼습니다.");
+    advanceTurn(game, "보석을 떨어뜨렸습니다. 경찰팀이 보석을 다시 배치했습니다.");
     return;
   }
   advanceTurn(game, `${node.label} 칸의 처리가 끝났습니다.`);
@@ -486,7 +486,7 @@ function roll(game, playerId, suppliedRoll) {
   const die = typeof suppliedRoll === "number" ? Math.max(1, Math.min(6, Math.floor(suppliedRoll))) : randomIndex(6) + 1;
   if (pawn.status === "jailed") {
     if (die !== 1) {
-      advanceTurn(game, `도둑 ${pawn.number}번의 탈출 주사위는 ${die}. 1이 아니어서 감옥에 남습니다.`);
+      advanceTurn(game, `도둑 ${pawn.number}번의 탈출 주사위는 ${die}. 1이 아니어서 구금 구역에 남습니다.`);
       game.revision += 1;
       return { ok: true, die };
     }
@@ -529,7 +529,7 @@ function moveStep(game, playerId, targetNodeId) {
     if (checkIndex >= 0) {
       game.checks.splice(checkIndex, 1);
       game.remaining = 0;
-      game.lastAction = `검문 카드에 걸려 도둑 ${pawn.number}번이 멈췄습니다.`;
+      game.lastAction = `차단 표지에 걸려 도둑 ${pawn.number}번이 멈췄습니다.`;
     }
   }
 
@@ -538,7 +538,7 @@ function moveStep(game, playerId, targetNodeId) {
     if (trickIndex >= 0) {
       const [trick] = game.tricks.splice(trickIndex, 1);
       pawn.forcedNext = trick.nextNodeId;
-      game.lastAction = "속임수 카드에 걸렸습니다. 화살표 방향으로만 이동합니다.";
+      game.lastAction = "방향 표지에 걸렸습니다. 화살표 방향으로만 이동합니다.";
     }
     const caught = game.pawns.find(candidate => candidate.team === "thief" && candidate.status === "active" && candidate.position === target && !Board.NODES[target]?.safe);
     if (caught) {
@@ -560,7 +560,7 @@ function hide(game, playerId) {
   const { pawn, error } = validateActor(game, playerId, ["awaiting_roll"]);
   if (error) return { ok: false, error };
   const node = Board.NODES[pawn.position];
-  if (pawn.team !== "thief" || pawn.status !== "active" || !node?.safe) return { ok: false, error: "도둑이 아지트나 건물 안에 있을 때만 숨을 수 있습니다." };
+  if (pawn.team !== "thief" || pawn.status !== "active" || !node?.safe) return { ok: false, error: "도둑말이 비밀기지나 수색 장소 안에 있을 때만 숨을 수 있습니다." };
   if (pawn.hidingTurns >= 3) return { ok: false, error: "같은 안전지대에서는 최대 3차례까지만 숨을 수 있습니다." };
   pawn.hidingTurns += 1;
   advanceTurn(game, `도둑 ${pawn.number}번이 안전지대에서 숨었습니다. (${pawn.hidingTurns}/3)`);
@@ -575,15 +575,15 @@ function occupied(game, nodeId) {
 function placeTrick(game, playerId, nodeId, nextNodeId) {
   const { pawn, error } = validateActor(game, playerId, ["awaiting_roll"]);
   if (error) return { ok: false, error };
-  if (pawn.team !== "thief") return { ok: false, error: "속임수 카드는 도둑팀만 사용할 수 있습니다." };
-  if (game.resources.thief.trickCards <= 0) return { ok: false, error: "남은 속임수 카드가 없습니다." };
+  if (pawn.team !== "thief") return { ok: false, error: "방향 표지는 도둑팀만 사용할 수 있습니다." };
+  if (game.resources.thief.trickCards <= 0) return { ok: false, error: "남은 방향 표지가 없습니다." };
   const node = Board.NODES[String(nodeId)];
-  if (!node?.trickSlot || occupied(game, node.id) || game.tricks.some(card => card.nodeId === node.id) || game.checks.some(card => card.nodeId === node.id)) return { ok: false, error: "속임수 표시가 있고 비어 있는 칸을 선택하세요." };
+  if (!node?.trickSlot || occupied(game, node.id) || game.tricks.some(card => card.nodeId === node.id) || game.checks.some(card => card.nodeId === node.id)) return { ok: false, error: "분홍 방향 표시가 있고 비어 있는 칸을 선택하세요." };
   const next = String(nextNodeId || "");
   if (!Board.neighbors(node.id, "police").some(item => item.id === next)) return { ok: false, error: "경찰이 실제로 갈 수 있는 화살표 방향을 선택하세요." };
   game.tricks.push({ nodeId: node.id, nextNodeId: next });
   game.resources.thief.trickCards -= 1;
-  advanceTurn(game, `도둑팀이 속임수 카드를 설치했습니다. 남은 카드 ${game.resources.thief.trickCards}장.`);
+  advanceTurn(game, `도둑팀이 방향 표지를 설치했습니다. 남은 표지 ${game.resources.thief.trickCards}개.`);
   game.revision += 1;
   return { ok: true };
 }
@@ -591,13 +591,13 @@ function placeTrick(game, playerId, nodeId, nextNodeId) {
 function placeCheck(game, playerId, nodeId) {
   const { pawn, error } = validateActor(game, playerId, ["awaiting_roll"]);
   if (error) return { ok: false, error };
-  if (pawn.team !== "police") return { ok: false, error: "검문 카드는 경찰팀만 사용할 수 있습니다." };
-  if (game.resources.police.checkCards <= 0) return { ok: false, error: "남은 검문 카드가 없습니다." };
+  if (pawn.team !== "police") return { ok: false, error: "차단 표지는 경찰팀만 사용할 수 있습니다." };
+  if (game.resources.police.checkCards <= 0) return { ok: false, error: "남은 차단 표지가 없습니다." };
   const node = Board.NODES[String(nodeId)];
-  if (!node?.inspectionSlot || occupied(game, node.id) || game.tricks.some(card => card.nodeId === node.id) || game.checks.some(card => card.nodeId === node.id)) return { ok: false, error: "검문 표시가 있고 비어 있는 칸을 선택하세요." };
+  if (!node?.inspectionSlot || occupied(game, node.id) || game.tricks.some(card => card.nodeId === node.id) || game.checks.some(card => card.nodeId === node.id)) return { ok: false, error: "파란 차단 표시가 있고 비어 있는 칸을 선택하세요." };
   game.checks.push({ nodeId: node.id });
   game.resources.police.checkCards -= 1;
-  advanceTurn(game, `경찰팀이 검문 카드를 설치했습니다. 남은 카드 ${game.resources.police.checkCards}장.`);
+  advanceTurn(game, `경찰팀이 차단 표지를 설치했습니다. 남은 표지 ${game.resources.police.checkCards}개.`);
   game.revision += 1;
   return { ok: true };
 }
@@ -622,7 +622,7 @@ function choosePending(game, playerId, choiceId) {
     target.position = "hideout";
     pawn.position = "hideout";
     pawn.hidingTurns = 0;
-    advanceTurn(game, `도둑 ${pawn.number}번이 도둑 ${target.number}번을 구출해 함께 아지트로 돌아왔습니다.`);
+    advanceTurn(game, `도둑 ${pawn.number}번이 도둑 ${target.number}번을 구출해 함께 비밀기지로 돌아왔습니다.`);
   } else return { ok: false, error: "처리할 수 없는 선택입니다." };
   game.revision += 1;
   return { ok: true };
