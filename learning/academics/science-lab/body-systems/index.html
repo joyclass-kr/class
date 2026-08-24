@@ -1,0 +1,164 @@
+<!doctype html>
+<html lang="ko">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="theme-color" content="#07131c">
+    <title>과학 실험실</title>
+    <meta name="description" content="앉아 있을 때와 달릴 때 호흡·순환·소화·배설 기관이 어떻게 함께 달라지는지 실제 수치로 확인하는 중학교 과학 모의실험">
+    <link rel="stylesheet" as="style" crossorigin href="https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.9/dist/web/static/pretendard.css">
+    <link rel="stylesheet" href="styles.css?v=1">
+    <link rel="stylesheet" href="body-visual.css?v=1">
+    <link rel="stylesheet" href="quiz.css?v=1">
+</head>
+<body>
+    <main>
+        <header class="page-header">
+            <div class="title-row">
+                <a href="../">← 과학 실험실</a>
+                <h1>소화·순환·호흡·배설</h1>
+            </div>
+            <div class="grade-tags"><span>중학교</span><span>생명과학</span></div>
+        </header>
+
+        <ol class="method-steps" aria-label="실험 방법">
+            <li>몸이 하는 일을 고릅니다.</li>
+            <li>심장과 폐가 뛰는 빠르기를 지켜봅니다.</li>
+            <li>얼마 동안 계속할지 정합니다.</li>
+            <li>네 기관의 값이 어떻게 함께 달라지는지 견줍니다.</li>
+        </ol>
+
+        <div class="experiment-layout">
+            <section class="panel control-panel" aria-labelledby="control-title">
+                <h2 id="control-title">실험 조건</h2>
+                <p class="water-standard">네 기관은 따로 일하지 않고 산소 하나로 이어져 있습니다</p>
+
+                <fieldset class="act-field">
+                    <legend>몸이 하는 일</legend>
+                    <div class="act-buttons">
+                        <button type="button" data-act="rest">앉아 있기<small>기준</small></button>
+                        <button type="button" data-act="water">물 마시고 쉬기<small>500 mL</small></button>
+                        <button type="button" data-act="walk">걷기<small>보통 빠르기</small></button>
+                        <button type="button" data-act="run">달리기<small>숨이 찰 만큼</small></button>
+                    </div>
+                </fieldset>
+
+                <div class="range-heading">
+                    <label for="timeRange">계속하는 시간</label>
+                    <output id="timeOutput" for="timeRange">10 분</output>
+                </div>
+                <input id="timeRange" type="range" min="1" max="30" step="1" value="10">
+                <div class="range-scale" aria-hidden="true"><span>1분</span><span>15분</span><span>30분</span></div>
+
+                <fieldset class="prediction-field">
+                    <legend>오줌 양은 앉아 있을 때보다 어떨까요?</legend>
+                    <div class="prediction-buttons three">
+                        <button type="button" data-prediction="more">늘어난다</button>
+                        <button type="button" data-prediction="same">그대로다</button>
+                        <button type="button" data-prediction="less">줄어든다</button>
+                    </div>
+                </fieldset>
+
+                <button class="run-button" id="checkBtn" type="button">결과 보기</button>
+                <button class="reset-button" id="resetBtn" type="button">처음으로</button>
+
+                <section class="result-box" aria-labelledby="result-title" aria-live="polite">
+                    <h3 id="result-title">관찰 결과</h3>
+                    <p id="resultEmpty">몸이 하는 일을 고르고 결과를 확인해 보세요.</p>
+                    <div id="resultContent" hidden>
+                        <div class="result-numbers">
+                            <article><span>산소 소비량</span><strong id="valueA">-</strong></article>
+                            <article><span>오줌 양</span><strong id="valueB">-</strong></article>
+                        </div>
+                        <p class="prediction-result" id="predictionResult"></p>
+                        <p class="explanation" id="elementaryExplanation"></p>
+                    </div>
+                </section>
+            </section>
+
+            <section class="panel body-stage" aria-label="관찰 화면">
+                <div class="stage-heading"><h2>관찰</h2><span id="stageBadge">-</span></div>
+
+                <div class="stage-views">
+                    <svg class="main-svg" viewBox="0 0 460 214" aria-hidden="true">
+                        <g id="mainGroup"></g>
+                    </svg>
+                    <svg class="graph-svg" viewBox="0 0 460 196" aria-hidden="true">
+                        <g id="graphGroup"></g>
+                    </svg>
+                </div>
+
+                <p class="stage-caption" id="stageCaption">심장과 폐는 실제 빠르기로 뜁니다. 활동을 바꾸면 눈에 띄게 빨라집니다.</p>
+                <div class="data-note" id="dataNote"></div>
+            </section>
+        </div>
+
+        <section class="panel meaning-panel">
+            <h2>실험 결과의 의미</h2>
+            <div class="meaning-body">
+                <p><strong>네 기관은 한 팀</strong> 소화는 양분을, 호흡은 산소를 들여오고, 순환이 그것을 온몸에 나르며, 배설이 찌꺼기를 내보냅니다.</p>
+                <p><strong>산소 소비량 = 심박출량 × 뽑아 쓴 양</strong> 운동할 때는 심장이 더 많이 보내고, 세포도 더 많이 뽑아 씁니다. 두 가지가 함께 늘어납니다.</p>
+                <p><strong>피는 필요한 곳으로</strong> 달릴 때는 근육으로 피가 몰려 콩팥으로 가는 피가 줄어듭니다. 그래서 오줌 양도 줄어듭니다.</p>
+            </div>
+        </section>
+
+        <details class="quiz-section" aria-labelledby="quiz-title">
+            <summary class="quiz-heading"><h2 id="quiz-title">확인 문제</h2><span>4문제</span></summary>
+            <div class="quiz-grid">
+                <article class="quiz-card" data-answer="c">
+                    <h3>달릴 때 오줌 양이 줄어드는 까닭은?</h3>
+                    <div class="quiz-options">
+                        <label><input type="radio" name="q1" value="a"> 콩팥이 쉬기 때문</label>
+                        <label><input type="radio" name="q1" value="b"> 물을 적게 마셔서</label>
+                        <label><input type="radio" name="q1" value="c"> 피가 근육으로 몰려 콩팥으로 덜 가기 때문</label>
+                        <label><input type="radio" name="q1" value="d"> 오줌이 땀으로 바뀌기 때문</label>
+                    </div>
+                    <button class="answer-button" type="button">정답 확인</button>
+                    <p class="answer-result" aria-live="polite"></p>
+                    <p class="answer-explanation" hidden>운동할 때는 근육에 산소를 더 보내야 해서 피가 근육 쪽으로 몰립니다. 콩팥으로 가는 피가 줄면 걸러지는 양도 줄어 오줌이 적어집니다.</p>
+                </article>
+
+                <article class="quiz-card" data-answer="b">
+                    <h3>심박출량은 무엇으로 구할까요?</h3>
+                    <div class="quiz-options">
+                        <label><input type="radio" name="q2" value="a"> 심장 박동수 + 1회 박출량</label>
+                        <label><input type="radio" name="q2" value="b"> 심장 박동수 × 1회 박출량</label>
+                        <label><input type="radio" name="q2" value="c"> 호흡수 × 1회 호흡량</label>
+                        <label><input type="radio" name="q2" value="d"> 심장 박동수 ÷ 1회 박출량</label>
+                    </div>
+                    <button class="answer-button" type="button">정답 확인</button>
+                    <p class="answer-result" aria-live="polite"></p>
+                    <p class="answer-explanation" hidden>1분 동안 심장이 내보내는 피의 양이므로, 한 번에 내보내는 양에 1분 동안의 박동수를 곱합니다.</p>
+                </article>
+
+                <article class="quiz-card" data-answer="a">
+                    <h3>건강한 사람의 오줌에서 포도당이 나오지 않는 까닭은?</h3>
+                    <div class="quiz-options">
+                        <label><input type="radio" name="q3" value="a"> 걸러진 뒤 전부 다시 흡수되기 때문</label>
+                        <label><input type="radio" name="q3" value="b"> 아예 걸러지지 않기 때문</label>
+                        <label><input type="radio" name="q3" value="c"> 콩팥에서 분해되기 때문</label>
+                        <label><input type="radio" name="q3" value="d"> 땀으로 빠져나가기 때문</label>
+                    </div>
+                    <button class="answer-button" type="button">정답 확인</button>
+                    <p class="answer-result" aria-live="polite"></p>
+                    <p class="answer-explanation" hidden>포도당은 사구체에서 걸러지지만 세뇨관에서 100 % 다시 흡수됩니다. 몸에 꼭 필요한 양분이라 버리지 않습니다.</p>
+                </article>
+
+                <article class="quiz-card" data-answer="d">
+                    <h3>소화·순환·호흡·배설 기관의 관계로 알맞은 것은?</h3>
+                    <div class="quiz-options">
+                        <label><input type="radio" name="q4" value="a"> 서로 상관없이 따로 일한다</label>
+                        <label><input type="radio" name="q4" value="b"> 호흡 기관만 산소를 온몸에 나른다</label>
+                        <label><input type="radio" name="q4" value="c"> 소화 기관이 찌꺼기를 오줌으로 내보낸다</label>
+                        <label><input type="radio" name="q4" value="d"> 순환 기관이 양분과 산소를 온몸에 나른다</label>
+                    </div>
+                    <button class="answer-button" type="button">정답 확인</button>
+                    <p class="answer-result" aria-live="polite"></p>
+                    <p class="answer-explanation" hidden>소화 기관이 흡수한 양분과 호흡 기관이 들여온 산소를 순환 기관인 혈액이 온몸의 세포로 나릅니다. 생긴 찌꺼기는 배설 기관이 내보냅니다.</p>
+                </article>
+            </div>
+        </details>
+    </main>
+    <script src="app.js?v=4"></script>
+</body>
+</html>
