@@ -85,6 +85,12 @@
             this.started = false;
             this.mounted = false;
             this._boundBeforeUnload = () => this.destroy();
+            this._boundSiteBack = event => {
+                if (!this.started) return;
+                event.preventDefault();
+                this.destroy();
+                location.reload();
+            };
         }
 
         mount() {
@@ -118,13 +124,19 @@
                 getElement(id)?.addEventListener("click", () => this.options.onRules?.());
             });
             (this.options.leaveButtonIds || []).forEach(id => {
-                getElement(id)?.addEventListener("click", () => {
+                const leaveButton = getElement(id);
+                if (!leaveButton) return;
+                leaveButton.dataset.siteBackLegacy = "true";
+                leaveButton.setAttribute("aria-hidden", "true");
+                leaveButton.setAttribute("tabindex", "-1");
+                leaveButton.addEventListener("click", () => {
                     this.destroy();
                     if (typeof this.options.onLeave === "function") this.options.onLeave();
                     else location.reload();
                 });
             });
             window.addEventListener("beforeunload", this._boundBeforeUnload);
+            window.addEventListener("sitebackrequest", this._boundSiteBack);
             this.setMode(this.options.initialMode === "guest" ? "guest" : "host");
             return this;
         }
@@ -572,6 +584,7 @@
             this._notifyGuestLeft();
             this._closeTransport();
             window.removeEventListener("beforeunload", this._boundBeforeUnload);
+            window.removeEventListener("sitebackrequest", this._boundSiteBack);
         }
     }
 

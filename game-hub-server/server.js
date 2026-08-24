@@ -220,6 +220,25 @@ const staticAssetOptions = {
   }
 };
 
+const SITE_BACK_SCRIPT_TAG = '<script src="/assets/site-back-navigation.js" defer></script>';
+
+function sendSiteHtml(req, res, filepath, next) {
+  fs.readFile(filepath, "utf8", (error, htmlSource) => {
+    if (error) return next(error);
+
+    const html = htmlSource.includes("/assets/site-back-navigation.js")
+      ? htmlSource
+      : /<\/head>/i.test(htmlSource)
+        ? htmlSource.replace(/<\/head>/i, `  ${SITE_BACK_SCRIPT_TAG}\n</head>`)
+        : `${SITE_BACK_SCRIPT_TAG}\n${htmlSource}`;
+
+    res.setHeader("Cache-Control", "no-cache");
+    res.type("html");
+    if (req.method === "HEAD") return res.end();
+    res.send(html);
+  });
+}
+
 app.use("/assets/avatars", express.static(path.join(SITE_ROOT, "classtools", "assets", "avatars"), staticAssetOptions));
 app.use("/assets", express.static(path.join(SITE_ROOT, "assets"), staticAssetOptions));
 app.get("/favicon.ico", (_req, res) => {
@@ -375,10 +394,10 @@ for (const [route, file] of [
   ["/support", "support.html"],
   ["/terms", "terms.html"],
 ]) {
-  app.get(route, (_req, res) => res.sendFile(path.join(SITE_ROOT, file)));
+  app.get(route, (req, res, next) => sendSiteHtml(req, res, path.join(SITE_ROOT, file), next));
 }
 
-const CLEAN_HTML_ROOTS = ["/admin", "/schooladmin", "/classtools", "/learning", "/notice", "/teacher"];
+const CLEAN_HTML_ROOTS = ["/admin", "/classboard", "/schooladmin", "/classtools", "/learning", "/notice", "/teacher"];
 app.use((req, res, next) => {
   if (req.method !== "GET" && req.method !== "HEAD") return next();
 
@@ -412,12 +431,21 @@ app.use((req, res, next) => {
     }
   }
 
-  if (path.extname(pathname) || pathname.endsWith("/")) return next();
+  if (pathname.endsWith("/")) {
+    const indexCandidate = path.resolve(SITE_ROOT, `.${pathname}index.html`);
+    if (!indexCandidate.startsWith(`${SITE_ROOT}${path.sep}`)) return res.sendStatus(400);
+    return fs.stat(indexCandidate, (error, stats) => {
+      if (error || !stats.isFile()) return next();
+      sendSiteHtml(req, res, indexCandidate, next);
+    });
+  }
+
+  if (path.extname(pathname)) return next();
   const candidate = path.resolve(SITE_ROOT, `.${pathname}.html`);
   if (!candidate.startsWith(`${SITE_ROOT}${path.sep}`)) return res.sendStatus(400);
   fs.stat(candidate, (error, stats) => {
     if (error || !stats.isFile()) return next();
-    res.sendFile(candidate);
+    sendSiteHtml(req, res, candidate, next);
   });
 });
 
