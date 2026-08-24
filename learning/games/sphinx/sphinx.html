@@ -5,6 +5,14 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
     <title>스핑크스 수수께끼</title>
     <style>
+        @font-face {
+            font-family: "Sphinx KoPubWorld Batang";
+            src: url("/learning/games/sphinx/assets/fonts/kopub-world/KoPubWorld-Batang-Medium.woff2") format("woff2");
+            font-style: normal;
+            font-weight: 500;
+            font-display: swap;
+        }
+
         * {
             box-sizing: border-box;
         }
@@ -188,9 +196,10 @@
             white-space: pre-wrap;
             text-align: left;
             word-break: keep-all;
-            font-family: Batang, '바탕', 'HY Batang', serif;
+            font-family: "Sphinx KoPubWorld Batang", "Noto Serif KR", Batang, serif;
             font-size: clamp(15px, 1.6vw, 17px);
             font-weight: 700;
+            font-synthesis: weight;
             line-height: 1.75;
         }
 
