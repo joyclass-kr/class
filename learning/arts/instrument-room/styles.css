@@ -128,6 +128,7 @@ input[type="range"] { width: 100%; height: 20px; margin: 0; accent-color: var(--
 .strum-controls button:active { background: var(--accent-2); color: #182000; }
 
 .drum-pads { min-height: 224px; padding: 10px; grid-template-columns: repeat(4, 1fr); gap: 8px; }
+.drum-pads.extended { grid-template-columns: repeat(5, 1fr); }
 .drum-pad { min-height: 98px; border: 1px solid var(--pad-color, var(--line)); border-radius: 14px; padding: 12px; display: grid; align-content: space-between; text-align: left; background: radial-gradient(circle at 70% 20%, color-mix(in srgb, var(--pad-color) 18%, transparent), transparent 52%), #131c1f; cursor: pointer; touch-action: manipulation; }
 .drum-pad span { color: var(--pad-color); font-size: 10px; font-weight: 900; letter-spacing: .1em; }.drum-pad b { font-size: 15px; }.drum-pad small { color: var(--muted); font-size: 9px; }
 .drum-pad.active { transform: scale(.97); background: color-mix(in srgb, var(--pad-color) 24%, #101719); box-shadow: 0 0 22px color-mix(in srgb, var(--pad-color) 36%, transparent); }
@@ -142,6 +143,7 @@ input[type="range"] { width: 100%; height: 20px; margin: 0; accent-color: var(--
     .instrument-tabs button > span { display: none; }
     .instrument-tabs button { grid-template-columns: 1fr; }
     .drum-pads { grid-template-columns: repeat(4, minmax(135px, 1fr)); overflow-x: auto; }
+    .drum-pads.extended { grid-template-columns: repeat(5, minmax(118px, 1fr)); }
 }
 
 @media (orientation: portrait), (max-width: 700px) {
@@ -277,6 +279,7 @@ input[type="range"] { width: 100%; height: 20px; margin: 0; accent-color: var(--
     .korean-room-switch button { min-width: 86px; }
     .console-body { grid-template-columns: 1fr; }.instrument-visual { min-height: 262px; }
     .control-panel { max-height: 240px; }
+    .drum-pads.extended { grid-template-columns: repeat(3, 1fr); overflow-x: visible; }
     .fx-strip { grid-template-columns: repeat(3,1fr); }
 }
 @media (max-width: 520px) {
@@ -298,6 +301,7 @@ input[type="range"] { width: 100%; height: 20px; margin: 0; accent-color: var(--
     .control-set label { min-height: 42px; }.articulation-buttons { grid-column: auto; }.play-toolbar { padding-left: 10px; }
     .chord-pads { grid-template-columns: repeat(3, 1fr); }
     .drum-pads { grid-template-columns: repeat(2, 1fr); }.drum-pad { min-height: 88px; }
+    .drum-pads.extended { grid-template-columns: repeat(2, 1fr); }
 }
 
 .keyboard-patch-controls { display: grid; gap: 7px; padding-top: 7px; border-top: 1px solid var(--line); }

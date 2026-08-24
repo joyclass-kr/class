@@ -167,6 +167,7 @@ const DRUM_MODELS = {
     kick: { family: "membrane", base: 48, ratios: [1, 1.59, 2.14, 2.30, 2.65, 2.92, 3.16], levels: [1, .28, .17, .12, .08, .055, .035], decays: [1.15, .62, .42, .35, .28, .23, .18], sweep: .34, noise: .012 },
     snare: { family: "snare", base: 182, ratios: [1, 1.36, 1.83, 2.31, 2.74, 3.42, 4.18], levels: [.42, .28, .19, .13, .1, .07, .04], decays: [.52, .39, .31, .25, .21, .17, .13], noise: .48 },
     lowtom: { family: "membrane", base: 91, ratios: [1, 1.50, 1.98, 2.42, 2.79, 3.23, 3.61], levels: [1, .35, .2, .13, .09, .06, .035], decays: [.92, .58, .43, .34, .27, .22, .18], sweep: .13, noise: .018 },
+    midtom: { family: "membrane", base: 115, ratios: [1, 1.49, 1.97, 2.41, 2.78, 3.21, 3.60], levels: [1, .35, .2, .13, .09, .06, .035], decays: [.82, .53, .4, .32, .25, .2, .16], sweep: .115, noise: .019 },
     hightom: { family: "membrane", base: 139, ratios: [1, 1.48, 1.96, 2.39, 2.76, 3.19, 3.58], levels: [1, .34, .19, .13, .085, .055, .035], decays: [.72, .47, .36, .29, .23, .19, .15], sweep: .1, noise: .02 }
 };
 
