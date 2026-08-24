@@ -23,6 +23,18 @@
   function pawnById(id) { return state?.pawns.find(pawn => pawn.id === id) || null; }
   function playerById(id) { return state?.players.find(player => player.id === id) || null; }
   function buildingMeta(id) { return Board.BUILDINGS.find(building => building.id === id) || null; }
+  function avatarOf(playerId) {
+    const key = lobby?.snapshot().players?.[playerId]?.avatarKey;
+    return key ? window.ClassroomMultiplayerLobby.avatarUrl(key) : "";
+  }
+
+  function pawnControllers(pawnId) {
+    return state.players.filter(player => player.pawnIds.includes(pawnId));
+  }
+
+  function firstLetter(name) {
+    return Array.from(String(name || "?").trim())[0] || "?";
+  }
   function nodeMeta(id) { return Board.NODES[id] || null; }
 
   function escapeHtml(value) {
@@ -100,8 +112,31 @@
     return `left:${(x / Board.WIDTH) * 100}%;top:${(y / Board.HEIGHT) * 100}%`;
   }
 
+  function contentLabel(content) {
+    return content === "gem" ? "보석" : content === "undercover" ? "잠복경찰" : content === "empty" ? "비어 있음" : "확인 전";
+  }
+
   function contentBadge(content) {
-    return content === "gem" ? "◆" : content === "undercover" ? "♜" : content === "empty" ? "✓" : "?";
+    if (content === "gem") {
+      return `<svg class="secretIcon gemIcon" viewBox="0 0 32 32" aria-hidden="true"><path d="M8 5h16l6 8-14 16L2 13z"/><path class="facet" d="m8 5 8 24 8-24M2 13h28M8 5l-6 8m22-8 6 8"/></svg>`;
+    }
+    if (content === "undercover") {
+      return `<svg class="secretIcon undercoverIcon" viewBox="0 0 32 32" aria-hidden="true"><path class="hat" d="M5 12h22l-4-7H9z"/><circle class="face" cx="16" cy="18" r="10"/><path class="glasses" d="M7 16h4l2 4h3l2-4h7M7 16l1 5h5l1-5m4 0 1 5h5l1-5"/><path class="smile" d="M13 24q3 2 6 0"/></svg>`;
+    }
+    if (content === "empty") {
+      return `<svg class="secretIcon emptyIcon" viewBox="0 0 32 32" aria-hidden="true"><circle cx="16" cy="16" r="13"/><path d="m9 16 5 5 9-11"/></svg>`;
+    }
+    return `<span class="secretUnknown" aria-hidden="true">?</span>`;
+  }
+
+  function pawnFaceMarkup(controllers) {
+    const faces = controllers.slice(0, 2).map(player => {
+      const url = avatarOf(player.id);
+      return url
+        ? `<img class="pawnAvatar" src="${escapeHtml(url)}" alt="">`
+        : `<span class="pawnInitial">${escapeHtml(firstLetter(player.name))}</span>`;
+    }).join("");
+    return `<span class="pawnFaces${controllers.length > 1 ? " shared" : ""}">${faces || '<span class="pawnInitial">?</span>'}</span>`;
   }
 
   function renderBuildings() {
@@ -115,12 +150,12 @@
       button.className = "building";
       button.style.cssText = `${positionStyle(building.x, building.y)};--building:${building.color}`;
       button.disabled = !captainSetup;
-      button.setAttribute("aria-label", `${building.name}${knowledge.content === "hidden" ? "" : `, ${contentBadge(knowledge.content)}`}`);
+      button.setAttribute("aria-label", `${building.name}${knowledge.content === "hidden" ? "" : `, ${contentLabel(knowledge.content)}`}`);
       const selectedKey = Object.entries(setupSelection).find(([, value]) => value === building.id)?.[0];
       if (captainSetup) button.classList.add("setupTarget");
       if (selectedKey?.startsWith("gem")) button.classList.add("selectedGem");
       if (selectedKey === "undercover") button.classList.add("selectedUndercover");
-      button.innerHTML = `<span class="buildingIcon">${building.icon}</span><span class="buildingName">${escapeHtml(building.name)}</span><span class="buildingKnowledge">${selectedKey ? (selectedKey === "undercover" ? "♜" : "◆") : contentBadge(knowledge.content)}</span>`;
+      button.innerHTML = `<span class="buildingIcon">${building.icon}</span><span class="buildingName">${escapeHtml(building.name)}</span><span class="buildingKnowledge">${selectedKey ? contentBadge(selectedKey === "undercover" ? "undercover" : "gem") : contentBadge(knowledge.content)}</span>`;
       button.addEventListener("click", () => selectSetupBuilding(building.id));
       fragment.appendChild(button);
     }
@@ -213,13 +248,14 @@
         const button = document.createElement("button");
         button.type = "button";
         const choice = state.pending && ["transfer", "rescue"].includes(state.pending.type) && state.pending.options.includes(pawn.id);
-        const offsetX = (index % 3 - Math.min(1, pawns.length - 1)) * 27;
+        const offsetX = (index % 3 - Math.min(1, pawns.length - 1)) * 60;
         const offsetY = Math.floor(index / 3) * 25 - (pawns.length > 3 ? 11 : 0);
         button.className = `pawn ${pawn.team}${pawn.carryingGem ? " carrying" : ""}${pawn.status === "jailed" ? " jailed" : ""}${pawn.id === state.turnPawnId ? " current" : ""}${choice ? " choice" : ""}`;
         button.style.cssText = positionStyle(node.x + offsetX, node.y + offsetY);
-        button.dataset.symbol = pawn.team === "police" ? "♜" : "♟";
-        button.innerHTML = `<span>${pawn.number}</span>`;
-        button.setAttribute("aria-label", `${pawn.team === "police" ? "경찰" : "도둑"} ${pawn.number}번${pawn.carryingGem ? ", 보석 소지" : ""}`);
+        const controllers = pawnControllers(pawn.id);
+        const names = controllers.map(player => player.name).join("·") || `${teamName(pawn.team)}팀`;
+        button.innerHTML = `<span class="pawnName">${escapeHtml(names)}</span>${pawnFaceMarkup(controllers)}<span class="pawnNumber">${pawn.number}</span>`;
+        button.setAttribute("aria-label", `${names}, ${pawn.team === "police" ? "경찰" : "도둑"} ${pawn.number}번${pawn.carryingGem ? ", 보석 소지" : ""}`);
         button.disabled = !choice || actionPending;
         if (choice) button.addEventListener("click", () => sendAction("CHOOSE", { choiceId: pawn.id }));
         fragment.appendChild(button);
@@ -293,7 +329,7 @@
       : state.myTeam === "police" ? "팀 대표의 선택이 끝나면 함께 위치를 확인할 수 있습니다." : "보석과 잠복경찰이 어디에 숨겨지는지는 도둑팀에게 보이지 않습니다.";
     document.querySelectorAll(".secretTab").forEach(button => button.classList.toggle("active", button.dataset.secret === activeSecret));
     $("setupSummary").innerHTML = canSetup
-      ? `<span>◆ 보석 1 · ${escapeHtml(selectedName("gem1"))}</span><span>◆ 보석 2 · ${escapeHtml(selectedName("gem2"))}</span><span>♜ 잠복경찰 · ${escapeHtml(selectedName("undercover"))}</span>`
+      ? `<span>${contentBadge("gem")} 보석 1 · ${escapeHtml(selectedName("gem1"))}</span><span>${contentBadge("gem")} 보석 2 · ${escapeHtml(selectedName("gem2"))}</span><span>${contentBadge("undercover")} 잠복경찰 · ${escapeHtml(selectedName("undercover"))}</span>`
       : "<span>비밀 배치가 끝날 때까지 잠시 기다려 주세요.</span>";
     const values = Object.values(setupSelection);
     $("confirmSetupBtn").disabled = !canSetup || values.some(value => !value) || new Set(values).size !== 3 || actionPending;
@@ -416,8 +452,8 @@
       const building = buildingMeta(knowledge.id);
       const item = document.createElement("div");
       item.className = "intelItem";
-      const label = knowledge.content === "gem" ? "보석 ◆" : knowledge.content === "undercover" ? "잠복경찰 ♜" : "비어 있음";
-      item.innerHTML = `<span>${building.icon} ${escapeHtml(building.name)}</span><strong>${label}</strong>`;
+      const label = contentLabel(knowledge.content);
+      item.innerHTML = `<span>${building.icon} ${escapeHtml(building.name)}</span><strong class="intelSecret">${contentBadge(knowledge.content)}${label}</strong>`;
       fragment.appendChild(item);
     }
     list.replaceChildren(fragment);

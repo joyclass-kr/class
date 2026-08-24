@@ -143,6 +143,14 @@ assert.match(html, /class="lobbyWorkspace"/, "대기 화면은 접속과 참가�
 assert.match(css, /\.lobbyTop \{ display: grid; grid-template-columns: auto auto minmax\(260px, 1fr\)/, "대기 화면의 주요 행동은 첫 화면에 보여야 합니다.");
 assert.match(css, /\.lobbyWorkspace \{ display: grid; grid-template-columns: minmax\(280px, \.85fr\) minmax\(400px, 1\.15fr\)/, "Chromebook 가로 화면에서는 접속과 참가자 패널을 나란히 보여야 합니다.");
 assert.match(css, /@media \(max-width: 900px\)[\s\S]*\.lobbyWorkspace \{ grid-template-columns: 1fr; \}/, "iPad 세로 화면에서는 대기 패널을 한 열로 배치해야 합니다.");
+assert.match(client, /function avatarOf\(playerId\)/, "학생 아바타는 멀티플레이 대기실 정보에서 가져와야 합니다.");
+assert.match(client, /pawnName[\s\S]*pawnFaceMarkup\(controllers\)[\s\S]*pawnNumber/, "말에는 학생 이름·아바타·말 번호가 함께 보여야 합니다.");
+assert.match(css, /--police: #2374cc/, "경찰 말은 명확한 파란색이어야 합니다.");
+assert.match(css, /--thief: #e9475f/, "도둑 말은 명확한 빨간색이어야 합니다.");
+assert.match(client, /class="secretIcon gemIcon"/, "보석은 문자 기호 대신 선명한 SVG 배지를 사용해야 합니다.");
+assert.match(client, /class="secretIcon undercoverIcon"/, "잠복경찰은 문자 기호 대신 선명한 SVG 배지를 사용해야 합니다.");
+assert.match(css, /\.pawn:disabled \{ opacity: 1; \}/, "대기 중인 플레이어 말도 흐려지지 않아야 합니다.");
+assert.match(css, /\.pawn\.carrying::after[\s\S]*clip-path: polygon/, "말이 든 보석도 선명한 다면체 배지로 보여야 합니다.");
 assert.match(server, /citychase:\s*6/);
 assert.match(server, /CITYCHASE_ACTION/);
 assert.match(server, /CityChase\.stateFor/);
