@@ -464,26 +464,18 @@ body {
     color: #b71c1c;
 }
 
-/* end page */
-.page-end {
-    align-items: center;
+/* 읽고 나서 — 장과 같은 모양으로 흐른다. 그림은 오른쪽 위에 얹힌다.
+   학습 허브로 가는 길은 마지막 쪽 끝에 한 번만 둔다. */
+.after-home {
+    margin-top: 16px;
     text-align: center;
-    gap: 10px;
-    background: var(--parchment-shade);
+    text-indent: 0;
 }
 
-/* 끝쪽 그림도 가로 4:3이다. 쪽 높이에 맞춰 늘이면 위아래가 잘린다. */
-.page-end .art-frame {
-    height: auto;
-    aspect-ratio: 4 / 3;
-    flex: none;
-    max-width: min(100%, 540px);
-}
-
-.page-end h2 { margin: 0; font-size: clamp(20px, 4.342cqh, 45px); }
-.page-end p { margin: 0; color: var(--muted); font-size: 13px; }
+.after-home .home-btn { margin-top: 0; }
 
 .home-btn {
+    display: inline-block;
     margin-top: 10px;
     padding: 10px 22px;
     border-radius: 999px;
