@@ -1,0 +1,177 @@
+<!doctype html>
+<html lang="ko">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="theme-color" content="#07131c">
+    <title>과학 실험실</title>
+    <meta name="description" content="염산에 수산화나트륨을 넣으며 pH와 온도 변화로 중화 반응과 중화점을 확인하는 중학교 과학 모의실험">
+    <link rel="stylesheet" as="style" crossorigin href="https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.9/dist/web/static/pretendard.css">
+    <link rel="stylesheet" href="styles.css?v=1">
+    <link rel="stylesheet" href="neut-visual.css?v=1">
+    <link rel="stylesheet" href="quiz.css?v=1">
+</head>
+<body>
+    <main>
+        <header class="page-header">
+            <div class="title-row">
+                <a href="../">← 과학 실험실</a>
+                <h1>산·염기의 성질과 중화</h1>
+            </div>
+            <div class="grade-tags"><span>중학교</span><span>화학</span></div>
+        </header>
+
+        <ol class="method-steps" aria-label="실험 방법">
+            <li>묽은 염산에 지시약을 넣습니다.</li>
+            <li>수산화나트륨 수용액을 조금씩 넣습니다.</li>
+            <li>색과 온도가 언제 가장 크게 변하는지 관찰합니다.</li>
+            <li>중화점에서 두 이온의 수를 비교합니다.</li>
+        </ol>
+
+        <div class="experiment-layout">
+            <section class="panel control-panel" aria-labelledby="control-title">
+                <h2 id="control-title">실험 조건</h2>
+                <p class="water-standard">묽은 염산 50 mL · 시작 온도 20 ℃</p>
+
+                <div class="range-heading">
+                    <label for="acidConcRange">염산의 농도</label>
+                    <output id="acidConcOutput" for="acidConcRange">0.50 mol/L</output>
+                </div>
+                <input id="acidConcRange" type="range" min="0.1" max="1" step="0.1" value="0.5">
+                <div class="range-scale" aria-hidden="true"><span>0.1</span><span>0.5</span><span>1.0</span></div>
+
+                <div class="range-heading amount-heading">
+                    <label for="baseConcRange">수산화나트륨 농도</label>
+                    <output id="baseConcOutput" for="baseConcRange">0.50 mol/L</output>
+                </div>
+                <input id="baseConcRange" type="range" min="0.1" max="1" step="0.1" value="0.5">
+                <div class="range-scale" aria-hidden="true"><span>0.1</span><span>0.5</span><span>1.0</span></div>
+
+                <div class="range-heading amount-heading">
+                    <label for="volRange">넣은 수산화나트륨</label>
+                    <output id="volOutput" for="volRange">0 mL</output>
+                </div>
+                <input id="volRange" type="range" min="0" max="120" step="1" value="0">
+                <div class="range-scale" aria-hidden="true"><span>0 mL</span><span>60 mL</span><span>120 mL</span></div>
+
+                <fieldset class="ind-field">
+                    <legend>지시약</legend>
+                    <div class="ind-buttons">
+                        <button type="button" data-ind="btb" class="selected">BTB</button>
+                        <button type="button" data-ind="phen">페놀프탈레인</button>
+                        <button type="button" data-ind="litmus">리트머스</button>
+                    </div>
+                </fieldset>
+
+                <fieldset class="prediction-field">
+                    <legend>온도가 가장 높아지는 때</legend>
+                    <div class="prediction-buttons three">
+                        <button type="button" data-prediction="before">중화점 전</button>
+                        <button type="button" data-prediction="at">중화점</button>
+                        <button type="button" data-prediction="after">중화점 후</button>
+                    </div>
+                </fieldset>
+
+                <button class="run-button" id="playBtn" type="button">한 방울씩 넣기</button>
+                <button class="reset-button" id="resetBtn" type="button">처음으로</button>
+
+                <section class="result-box" aria-labelledby="result-title" aria-live="polite">
+                    <h3 id="result-title">관찰 결과</h3>
+                    <p id="resultEmpty">수산화나트륨을 넣어 보세요.</p>
+                    <div id="resultContent" hidden>
+                        <div class="result-numbers">
+                            <article><span>용액의 pH</span><strong id="valueA">-</strong></article>
+                            <article><span>중화점</span><strong id="valueB">-</strong></article>
+                        </div>
+                        <p class="prediction-result" id="predictionResult"></p>
+                        <p class="explanation" id="elementaryExplanation"></p>
+                    </div>
+                </section>
+            </section>
+
+            <section class="panel neut-stage" aria-label="관찰 화면">
+                <div class="stage-heading"><h2>관찰</h2><span id="stageBadge">0 mL</span></div>
+
+                <div class="stage-views">
+                    <svg class="beaker-svg" viewBox="0 0 460 190" aria-hidden="true">
+                        <g id="beakerGroup"></g>
+                    </svg>
+                    <svg class="graph-svg" viewBox="0 0 460 214" aria-hidden="true">
+                        <g id="graphGroup"></g>
+                    </svg>
+                </div>
+
+                <p class="stage-caption" id="stageCaption">수산화나트륨을 넣으며 색과 온도 변화를 살펴보세요.</p>
+                <div class="data-note" id="dataNote"></div>
+            </section>
+        </div>
+
+        <section class="panel meaning-panel">
+            <h2>실험 결과의 의미</h2>
+            <div class="meaning-body">
+                <p><strong>중화 반응</strong> 산의 H⁺ 과 염기의 OH⁻ 가 1 : 1 로 만나 물이 됩니다. H⁺ + OH⁻ → H₂O</p>
+                <p><strong>중화점</strong> 두 이온의 수가 같아지는 지점으로, pH 가 7 이 되고 온도가 가장 높습니다.</p>
+                <p><strong>발열</strong> 중화 반응은 열을 내므로, 물이 가장 많이 만들어지는 중화점에서 온도가 최고가 됩니다.</p>
+            </div>
+        </section>
+
+        <details class="quiz-section" aria-labelledby="quiz-title">
+            <summary class="quiz-heading"><h2 id="quiz-title">확인 문제</h2><span>4문제</span></summary>
+            <div class="quiz-grid">
+                <article class="quiz-card" data-answer="c">
+                    <h3>중화 반응에서 실제로 결합하는 두 이온은?</h3>
+                    <div class="quiz-options">
+                        <label><input type="radio" name="q1" value="a"> Na⁺ 와 Cl⁻</label>
+                        <label><input type="radio" name="q1" value="b"> Na⁺ 와 OH⁻</label>
+                        <label><input type="radio" name="q1" value="c"> H⁺ 와 OH⁻</label>
+                        <label><input type="radio" name="q1" value="d"> H⁺ 와 Cl⁻</label>
+                    </div>
+                    <button class="answer-button" type="button">정답 확인</button>
+                    <p class="answer-result" aria-live="polite"></p>
+                    <p class="answer-explanation" hidden>H⁺ 과 OH⁻ 가 1 : 1 로 결합해 물이 됩니다. Na⁺ 과 Cl⁻ 은 반응하지 않고 그대로 남아 구경꾼 이온이라고 합니다.</p>
+                </article>
+
+                <article class="quiz-card" data-answer="b">
+                    <h3>중화점에서 용액의 온도는?</h3>
+                    <div class="quiz-options">
+                        <label><input type="radio" name="q2" value="a"> 가장 낮다</label>
+                        <label><input type="radio" name="q2" value="b"> 가장 높다</label>
+                        <label><input type="radio" name="q2" value="c"> 처음과 같다</label>
+                        <label><input type="radio" name="q2" value="d"> 계속 올라간다</label>
+                    </div>
+                    <button class="answer-button" type="button">정답 확인</button>
+                    <p class="answer-result" aria-live="polite"></p>
+                    <p class="answer-explanation" hidden>중화 반응은 열을 내는 반응이고 중화점까지 물이 가장 많이 만들어지므로, 그 지점에서 온도가 가장 높습니다.</p>
+                </article>
+
+                <article class="quiz-card" data-answer="a">
+                    <h3>0.5 mol/L 염산 50 mL 를 0.5 mol/L 수산화나트륨으로 중화하려면?</h3>
+                    <div class="quiz-options">
+                        <label><input type="radio" name="q3" value="a"> 50 mL</label>
+                        <label><input type="radio" name="q3" value="b"> 25 mL</label>
+                        <label><input type="radio" name="q3" value="c"> 100 mL</label>
+                        <label><input type="radio" name="q3" value="d"> 농도가 같으면 중화되지 않는다</label>
+                    </div>
+                    <button class="answer-button" type="button">정답 확인</button>
+                    <p class="answer-result" aria-live="polite"></p>
+                    <p class="answer-explanation" hidden>H⁺ 의 몰수 0.5 × 0.050 = 0.025 mol 과 같아지려면 OH⁻ 도 0.025 mol 이 필요하므로 같은 농도에서는 같은 부피인 50 mL 가 필요합니다.</p>
+                </article>
+
+                <article class="quiz-card" data-answer="d">
+                    <h3>중화점을 지나 염기를 더 넣으면 용액은?</h3>
+                    <div class="quiz-options">
+                        <label><input type="radio" name="q4" value="a"> 계속 중성이다</label>
+                        <label><input type="radio" name="q4" value="b"> 다시 산성이 된다</label>
+                        <label><input type="radio" name="q4" value="c"> 아무 변화가 없다</label>
+                        <label><input type="radio" name="q4" value="d"> 염기성이 되고 온도는 낮아진다</label>
+                    </div>
+                    <button class="answer-button" type="button">정답 확인</button>
+                    <p class="answer-result" aria-live="polite"></p>
+                    <p class="answer-explanation" hidden>남는 OH⁻ 때문에 염기성이 되고, 더는 물이 만들어지지 않는데 부피만 늘어나므로 온도는 오히려 내려갑니다.</p>
+                </article>
+            </div>
+        </details>
+    </main>
+    <script src="app.js?v=1"></script>
+</body>
+</html>
