@@ -4,7 +4,7 @@ const CHAPTERS = [
         title: "1장 · 떡은 누가 다 먹지",
         beats: [
             {
-                art: "01-cake.png",
+                art: "01-cake.webp",
                 emoji: "🍡",
                 left: [
                     "어느 가을날, 호랑이와 토끼와 두꺼비가 한자리에 모였습니다. 김이 모락모락 나는 떡시루가 놓여 있었지요."
@@ -16,7 +16,7 @@ const CHAPTERS = [
                 ]
             },
             {
-                art: "02-argue.png",
+                art: "02-argue.webp",
                 emoji: "😤",
                 left: [
                     "그런데 문제가 생겼어요.",
@@ -30,7 +30,7 @@ const CHAPTERS = [
                 ]
             },
             {
-                art: "03-quiet.png",
+                art: "03-quiet.webp",
                 emoji: "🐸",
                 left: [
                     "호랑이와 토끼가 한참을 옥신각신했어요. 그동안 두꺼비는 한마디도 하지 않았지요.",
@@ -48,7 +48,7 @@ const CHAPTERS = [
         title: "2장 · 시루를 굴리자",
         beats: [
             {
-                art: "04-idea.png",
+                art: "04-idea.webp",
                 emoji: "💡",
                 left: [
                     "그러다 두꺼비가 슬며시 입을 열었어요.",
@@ -61,7 +61,7 @@ const CHAPTERS = [
                 ]
             },
             {
-                art: "05-agree.png",
+                art: "05-agree.webp",
                 emoji: "😁",
                 left: [
                     "호랑이가 껄껄 웃었습니다.",
@@ -73,7 +73,7 @@ const CHAPTERS = [
                 ]
             },
             {
-                art: "06-roll.png",
+                art: "06-roll.webp",
                 emoji: "🏃",
                 left: [
                     "\"하나, 둘, 셋!\"",
@@ -92,7 +92,7 @@ const CHAPTERS = [
         title: "3장 · 언덕에 흩어진 떡",
         beats: [
             {
-                art: "07-scatter.png",
+                art: "07-scatter.webp",
                 emoji: "🍘",
                 left: [
                     "두꺼비는 엉금엉금 걸었어요. 서두르는 기색이라고는 조금도 없었지요."
@@ -103,7 +103,7 @@ const CHAPTERS = [
                 ]
             },
             {
-                art: "08-eat.png",
+                art: "08-eat.webp",
                 emoji: "😋",
                 left: [
                     "두꺼비는 떨어진 떡을 하나씩 주워 먹었습니다.",
@@ -115,7 +115,7 @@ const CHAPTERS = [
                 ]
             },
             {
-                art: "09-empty.png",
+                art: "09-empty.webp",
                 emoji: "😳",
                 left: [
                     "언덕 아래에서는 호랑이와 토끼가 동시에 시루를 붙잡았어요.",
@@ -128,7 +128,7 @@ const CHAPTERS = [
                 ]
             },
             {
-                art: "10-belly.png",
+                art: "10-belly.webp",
                 emoji: "🐸",
                 left: [
                     "둘은 부랴부랴 언덕을 다시 올라갔어요. 두꺼비가 볼록한 배를 두드리며 앉아 있었지요.",
@@ -174,7 +174,7 @@ function coverPage() {
     return `
         <div class="page page-cover">
             <div class="story-page-left story-page-left-full">
-                ${artFrame('cover.png', '🐸')}
+                ${artFrame('cover.webp', '🐸')}
             </div>
             <div class="story-page-right">
                 <h1>두꺼비와 토끼와 호랑이</h1>
@@ -240,7 +240,7 @@ function quizPage() {
 function endPage() {
     return `
         <div class="page page-end">
-            ${artFrame('end.png', '🌟')}
+            ${artFrame('end.webp', '🌟')}
             <h2>두꺼비와 토끼와 호랑이 이야기를 다 읽었어요!</h2>
             <a class="home-btn" href="../../../../../">학습 허브로 돌아가기</a>
         </div>`;

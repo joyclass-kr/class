@@ -4,7 +4,7 @@ const CHAPTERS = [
         title: "1장 · 굴러떨어진 진주",
         beats: [
             {
-                art: "01-guest.png",
+                art: "01-guest.webp",
                 emoji: "🏯",
                 left: [
                     "날이 저물 무렵, 한 나그네가 큰 기와집 앞에 닿았습니다.",
@@ -168,7 +168,7 @@ function coverPage() {
     return `
         <div class="page page-cover">
             <div class="story-page-left story-page-left-full">
-                ${artFrame('cover.png', '🦢')}
+                ${artFrame('cover.webp', '🦢')}
             </div>
             <div class="story-page-right">
                 <h1>진주를 삼킨 거위</h1>

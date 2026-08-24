@@ -4,7 +4,7 @@ const CHAPTERS = [
         title: "1장 · 참새를 잡아 드릴게요",
         beats: [
             {
-                art: "01-caught.png",
+                art: "01-caught.webp",
                 emoji: "🐯",
                 left: [
                     "깊은 산속, 배고픈 호랑이가 어슬렁거리고 있었어요.",
@@ -17,7 +17,7 @@ const CHAPTERS = [
                 ]
             },
             {
-                art: "02-sparrow.png",
+                art: "02-sparrow.webp",
                 emoji: "🐦",
                 left: [
                     "\"호랑이님, 저는 살도 없고 질겨서 맛이 없어요.\"",
@@ -31,7 +31,7 @@ const CHAPTERS = [
                 ]
             },
             {
-                art: "03-fire.png",
+                art: "03-fire.webp",
                 emoji: "🔥",
                 left: [
                     "\"눈을 꼭 감고 입을 크게 벌리세요.\"",
@@ -45,7 +45,7 @@ const CHAPTERS = [
                 ]
             },
             {
-                art: "04-burn.png",
+                art: "04-burn.webp",
                 emoji: "💨",
                 left: [
                     "화르륵!",
@@ -65,7 +65,7 @@ const CHAPTERS = [
         title: "2장 · 이건 산속 떡이랍니다",
         beats: [
             {
-                art: "05-again.png",
+                art: "05-again.webp",
                 emoji: "😾",
                 left: [
                     "며칠 뒤, 두 녀석이 또 마주쳤어요.",
@@ -79,7 +79,7 @@ const CHAPTERS = [
                 ]
             },
             {
-                art: "06-stones.png",
+                art: "06-stones.webp",
                 emoji: "🍡",
                 left: [
                     "\"마침 잘됐어요. 오늘은 떡을 대접하려던 참이거든요.\"",
@@ -92,7 +92,7 @@ const CHAPTERS = [
                 ]
             },
             {
-                art: "07-hot.png",
+                art: "07-hot.webp",
                 emoji: "🥵",
                 left: [
                     "\"다 익으면 하나씩 드세요. 저는 꿀을 가져올게요.\"",
@@ -111,7 +111,7 @@ const CHAPTERS = [
         title: "3장 · 꼬리로 물고기를",
         beats: [
             {
-                art: "08-winter.png",
+                art: "08-winter.webp",
                 emoji: "❄️",
                 left: [
                     "겨울이 왔어요.",
@@ -125,7 +125,7 @@ const CHAPTERS = [
                 ]
             },
             {
-                art: "09-tail.png",
+                art: "09-tail.webp",
                 emoji: "🎣",
                 left: [
                     "\"얼음 구멍에 꼬리를 담그고 가만히 계세요.\"",
@@ -138,7 +138,7 @@ const CHAPTERS = [
                 ]
             },
             {
-                art: "10-escape.png",
+                art: "10-escape.webp",
                 emoji: "🏃",
                 left: [
                     "날이 밝았어요. 꼬리가 얼음에 꽝꽝 붙어 꼼짝도 하지 않았지요.",
@@ -185,7 +185,7 @@ function coverPage() {
     return `
         <div class="page page-cover">
             <div class="story-page-left story-page-left-full">
-                ${artFrame('cover.png', '🐇')}
+                ${artFrame('cover.webp', '🐇')}
             </div>
             <div class="story-page-right">
                 <h1>호랑이를 속인 토끼</h1>
@@ -251,7 +251,7 @@ function quizPage() {
 function endPage() {
     return `
         <div class="page page-end">
-            ${artFrame('end.png', '🌟')}
+            ${artFrame('end.webp', '🌟')}
             <h2>호랑이를 속인 토끼 이야기를 다 읽었어요!</h2>
             <a class="home-btn" href="../../../../../">학습 허브로 돌아가기</a>
         </div>`;

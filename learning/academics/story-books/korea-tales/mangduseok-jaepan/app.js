@@ -4,7 +4,7 @@ const CHAPTERS = [
         title: "1장 · 사라진 비단",
         beats: [
             {
-                art: "01-merchant.png",
+                art: "01-merchant.webp",
                 emoji: "🧵",
                 left: [
                     "한여름이었어요.",
@@ -17,7 +17,7 @@ const CHAPTERS = [
                 ]
             },
             {
-                art: "02-gone.png",
+                art: "02-gone.webp",
                 emoji: "😱",
                 left: [
                     "얼마나 잤을까요. 눈을 뜬 장수는 벌떡 일어났어요.",
@@ -29,7 +29,7 @@ const CHAPTERS = [
                 ]
             },
             {
-                art: "03-court.png",
+                art: "03-court.webp",
                 emoji: "🏛️",
                 left: [
                     "장수는 곧장 관아로 달려갔습니다.",
@@ -49,7 +49,7 @@ const CHAPTERS = [
         title: "2장 · 돌을 잡아 오너라",
         beats: [
             {
-                art: "04-arrest.png",
+                art: "04-arrest.webp",
                 emoji: "😳",
                 left: [
                     "원님은 잠시 생각하더니 큰 소리로 명했어요.",
@@ -62,7 +62,7 @@ const CHAPTERS = [
                 ]
             },
             {
-                art: "05-drag.png",
+                art: "05-drag.webp",
                 emoji: "🪢",
                 left: [
                     "포졸들이 밧줄로 돌기둥을 칭칭 감아 관아로 끌고 왔어요.",
@@ -74,7 +74,7 @@ const CHAPTERS = [
                 ]
             },
             {
-                art: "06-question.png",
+                art: "06-question.webp",
                 emoji: "🗿",
                 left: [
                     "원님이 돌기둥을 노려보며 호통쳤어요.",
@@ -94,7 +94,7 @@ const CHAPTERS = [
         title: "3장 · 웃음의 값",
         beats: [
             {
-                art: "07-laugh.png",
+                art: "07-laugh.webp",
                 emoji: "😂",
                 left: [
                     "그 순간이었습니다.",
@@ -107,7 +107,7 @@ const CHAPTERS = [
                 ]
             },
             {
-                art: "08-fine.png",
+                art: "08-fine.webp",
                 emoji: "😠",
                 left: [
                     "원님이 상을 탁 내리쳤어요.",
@@ -119,7 +119,7 @@ const CHAPTERS = [
                 ]
             },
             {
-                art: "09-silk.png",
+                art: "09-silk.webp",
                 emoji: "🧶",
                 left: [
                     "저녁이 되자 마당에 비단이 수북이 쌓였어요. 원님이 비단 장수를 불렀습니다.",
@@ -131,7 +131,7 @@ const CHAPTERS = [
                 ]
             },
             {
-                art: "10-caught.png",
+                art: "10-caught.webp",
                 emoji: "⚖️",
                 left: [
                     "그 비단을 바친 사람이 곧 도둑이었습니다. 포졸들이 그를 붙잡자 원님이 빙그레 웃었어요.",
@@ -177,7 +177,7 @@ function coverPage() {
     return `
         <div class="page page-cover">
             <div class="story-page-left story-page-left-full">
-                ${artFrame('cover.png', '⚖️')}
+                ${artFrame('cover.webp', '⚖️')}
             </div>
             <div class="story-page-right">
                 <h1>망두석 재판</h1>
@@ -243,7 +243,7 @@ function quizPage() {
 function endPage() {
     return `
         <div class="page page-end">
-            ${artFrame('end.png', '🌟')}
+            ${artFrame('end.webp', '🌟')}
             <h2>망두석 재판 이야기를 다 읽었어요!</h2>
             <a class="home-btn" href="../../../../../">학습 허브로 돌아가기</a>
         </div>`;
