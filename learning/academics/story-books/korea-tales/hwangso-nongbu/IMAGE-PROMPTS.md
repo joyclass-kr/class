@@ -4,6 +4,12 @@
 > 제미나이가 가끔 영어를 써 넣습니다. 받은 그림에 글자가 보이면 그 장만 다시 만드세요.
 > 프롬프트 끝에 `Absolutely no text, no letters, no speech bubbles, no sound effects, no signage anywhere in the image.` 를 덧붙이면 잘 듣습니다.
 
+## 다시 만들 그림 — `04-become` 한 장
+
+받은 그림 안에 **「MOOO?!」라는 영어 말풍선**이 박혀 있습니다. 우리말 그림책에 영어가 들어간 셈이라 그 한 장만 다시 만들어 주세요. 그림 자체는 아주 좋습니다 — 반쯤 소가 된 몸에 바지만 사람 것이 남아 있고 노인이 팔짱을 낀 채 지켜보는 구도 그대로면 됩니다.
+
+아래 `04-become` 프롬프트에 글자 금지 문장을 맨 앞으로 옮겨 두었습니다. 문단 끝에 묻어 두면 잘 안 듣습니다.
+
 
 그림책 틀이에요. 한 펼침마다 위쪽에 큰 그림 하나가 통으로 들어가고, 아래쪽 띠에 글이 좌우로 나뉩니다.
 **열 개의 펼침** + 표지 + 마지막 장 = 그림 **열두 장**.
@@ -90,11 +96,16 @@ Dappled green light.
 ### `04-become.png` — 탈을 쓰자 황소가 되다
 
 ```
+ABSOLUTELY NO TEXT ANYWHERE IN THIS IMAGE. No speech bubbles, no letters, no
+sound effects, no "moo", no writing of any kind. This is a Korean picture book.
+
 Wide scene under the same tree, mid-transformation and very comic. In the centre,
 the farmer has the ox mask pressed to his face; his hands are already turning
 into hooves, brown fur sweeping up his arms, his hanbok bursting at the seams,
-one leg still human. Motion lines and puffs of smoke. On the right, the elder
-watches calmly with his arms folded.
+one leg still human. He is bellowing with his mouth wide open, but draw the sound
+only through his face and posture - never as written letters. Motion lines and
+puffs of smoke. On the right, the elder watches calmly with his arms folded,
+wearing a Korean gat or a plain topknot, not a conical straw hat.
 ```
 
 ### `05-sold.png` — 장터에서 팔리는 황소
