@@ -16,7 +16,7 @@ const CHAPTERS = [
                 ]
             },
             {
-                art: "02-pearl.png",
+                art: "02-pearl.webp",
                 emoji: "🫧",
                 left: [
                     "주인이 비단 주머니에서 무언가를 꺼냈어요. 손바닥 위에서 하얗게 빛나는 진주였습니다.",
