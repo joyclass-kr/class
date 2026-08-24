@@ -80,6 +80,12 @@ body {
     position: relative;
     width: min(1300px, 92vw, calc(90vh * 4 / 3));
     aspect-ratio: 4 / 3;
+    /* 글씨와 여백을 화면이 아니라 '책 높이'에 맞춰 키운다.
+       vw로 잡으면 창이 커질 때 책만 커지고 글씨는 상한에 걸려 멈춰서
+       쪽마다 아래쪽이 휑하게 빈다(1920에서 절반이 비었다).
+       폭이 아니라 높이를 기준 삼는 까닭은, 틀마다 책 폭은 달라도
+       높이는 90vh로 모두 같기 때문이다. 그래야 어느 책을 펴도 글씨가 같다. */
+    container-type: size;
 }
 
 .book-spread {
@@ -135,7 +141,7 @@ body {
     display: flex;
     flex-direction: column;
     justify-content: center;
-    padding: clamp(16px, 3.4vw, 40px);
+    padding: clamp(16px, 5.789cqh, 60px);
     overflow: hidden;
     color: var(--ink);
     min-height: 0;
@@ -172,7 +178,7 @@ body {
     display: flex;
     align-items: center;
     justify-content: center;
-    font-size: clamp(48px, 9vw, 96px);
+    font-size: clamp(48px, 13.893cqh, 144px);
     background:
         radial-gradient(circle at 30% 30%, rgba(215, 171, 95, 0.5), transparent 60%),
         linear-gradient(160deg, #e8cf9c, #c9a25f);
@@ -196,7 +202,7 @@ body {
     overflow-y: auto;
     overflow-x: hidden;
     -webkit-overflow-scrolling: touch;
-    --page-pad: clamp(16px, 3.4vw, 40px);
+    --page-pad: clamp(16px, 5.789cqh, 60px);
     padding: var(--page-pad);
 }
 
@@ -213,7 +219,7 @@ body {
     width: auto;
     aspect-ratio: 4 / 3;
     flex: none;
-    margin: calc(-1 * var(--page-pad)) calc(-1 * var(--page-pad)) clamp(10px, 1.5vw, 16px);
+    margin: calc(-1 * var(--page-pad)) calc(-1 * var(--page-pad)) clamp(10px, 2.315cqh, 24px);
 }
 
 .story-art-top .art-frame {
@@ -225,13 +231,13 @@ body {
 
 .page-story h2 {
     margin: 2px 0 10px;
-    font-size: clamp(18px, 2.4vw, 26px);
+    font-size: clamp(18px, 3.763cqh, 39px);
     line-height: 1.25;
 }
 
 .page-story p {
     margin: 0 0 10px;
-    font-size: clamp(15px, 1.8vw, 18px);
+    font-size: clamp(15px, 2.605cqh, 27px);
     font-weight: 500;
     line-height: 1.75;
     color: var(--ink);
@@ -282,7 +288,7 @@ body {
 
 .moral-box p {
     margin: 0;
-    font-size: clamp(14px, 1.6vw, 16px);
+    font-size: clamp(14px, 2.315cqh, 24px);
     font-weight: 500;
     color: #4a3009;
     text-indent: 0;
@@ -309,14 +315,14 @@ body {
 
 .page-cover h1 {
     margin: 0 0 2px;
-    font-size: clamp(24px, 3.8vw, 38px);
+    font-size: clamp(24px, 5.499cqh, 57px);
     color: var(--ink);
 }
 
 .page-cover .cover-tag {
     margin: 0 0 6px;
     color: var(--muted);
-    font-size: clamp(12px, 1.6vw, 15px);
+    font-size: clamp(12px, 2.171cqh, 23px);
     text-indent: 0;
 }
 
@@ -326,7 +332,7 @@ body {
 
 .page-cover .story-page-right p {
     margin: 0 0 10px;
-    font-size: clamp(14px, 1.6vw, 16px);
+    font-size: clamp(14px, 2.315cqh, 24px);
     font-weight: 500;
     line-height: 1.7;
     color: var(--ink);
@@ -343,7 +349,7 @@ body {
 
 .page-toc h2 {
     margin: 0 0 16px;
-    font-size: clamp(18px, 2.6vw, 26px);
+    font-size: clamp(18px, 3.763cqh, 39px);
 }
 
 .toc-list {
@@ -351,7 +357,9 @@ body {
     margin: 0;
     padding: 0;
     display: grid;
-    gap: 10px;
+    /* 아홉 줄까지 한 칸에 담아야 차례가 두 펼침면으로 넘어가지 않는다.
+       작은 화면에서 몇 px이 모자라 넘치므로 줄 사이를 책 높이에 맞춰 잡는다. */
+    gap: clamp(6px, 1.16cqh, 12px);
 }
 
 .toc-list button {
@@ -359,7 +367,7 @@ body {
     display: flex;
     align-items: center;
     gap: 12px;
-    padding: 10px 14px;
+    padding: clamp(6px, 1.16cqh, 12px) 14px;
     border: 1px solid var(--parchment-shade);
     border-radius: 8px;
     background: #fffaf0;
@@ -402,13 +410,13 @@ body {
 
 .page-quiz h2 {
     margin: 0 0 2px;
-    font-size: clamp(19px, 2.8vw, 27px);
+    font-size: clamp(19px, 3.907cqh, 41px);
 }
 
 .quiz-intro-text {
     margin: 0 0 4px;
     color: var(--muted);
-    font-size: clamp(13px, 1.6vw, 15px);
+    font-size: clamp(13px, 2.171cqh, 23px);
 }
 
 .quiz-list {
@@ -424,7 +432,7 @@ body {
 .quiz-question {
     margin: 0 0 8px;
     font-weight: 700;
-    font-size: clamp(14px, 1.7vw, 16px);
+    font-size: clamp(14px, 2.315cqh, 24px);
     color: var(--ink);
 }
 
@@ -441,7 +449,7 @@ body {
     background: #fffaf0;
     color: var(--ink);
     font: inherit;
-    font-size: clamp(12px, 1.5vw, 14px);
+    font-size: clamp(12px, 2.026cqh, 21px);
     text-align: left;
     line-height: 1.5;
     cursor: pointer;
@@ -485,7 +493,7 @@ body {
     max-width: min(100%, 540px);
 }
 
-.page-end h2 { margin: 0; font-size: clamp(20px, 3vw, 30px); }
+.page-end h2 { margin: 0; font-size: clamp(20px, 4.342cqh, 45px); }
 .page-end p { margin: 0; color: var(--muted); font-size: 13px; }
 
 .home-btn {
