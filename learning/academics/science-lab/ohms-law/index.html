@@ -1,0 +1,178 @@
+<!doctype html>
+<html lang="ko">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="theme-color" content="#07131c">
+    <title>과학 실험실</title>
+    <meta name="description" content="전압과 저항을 바꾸며 옴의 법칙과 저항의 직렬·병렬 연결을 확인하는 중학교 과학 모의실험">
+    <link rel="stylesheet" as="style" crossorigin href="https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.9/dist/web/static/pretendard.css">
+    <link rel="stylesheet" href="styles.css?v=1">
+    <link rel="stylesheet" href="ohm-visual.css?v=1">
+    <link rel="stylesheet" href="quiz.css?v=1">
+</head>
+<body>
+    <main>
+        <header class="page-header">
+            <div class="title-row">
+                <a href="../">← 과학 실험실</a>
+                <h1>전류·전압·저항</h1>
+            </div>
+            <div class="grade-tags"><span>중학교</span><span>물리</span></div>
+        </header>
+
+        <ol class="method-steps" aria-label="실험 방법">
+            <li>저항 두 개의 연결 방법을 정합니다.</li>
+            <li>전압과 저항값을 바꿉니다.</li>
+            <li>전류가 어떻게 될지 예상합니다.</li>
+            <li>전압-전류 그래프의 기울기를 확인합니다.</li>
+        </ol>
+
+        <div class="experiment-layout">
+            <section class="panel control-panel" aria-labelledby="control-title">
+                <h2 id="control-title">실험 조건</h2>
+                <p class="water-standard">전선의 저항은 없다고 봅니다</p>
+
+                <fieldset class="wiring-field">
+                    <legend>저항 연결 방법</legend>
+                    <div class="wiring-buttons">
+                        <button type="button" data-wiring="series" class="selected">직렬연결</button>
+                        <button type="button" data-wiring="parallel">병렬연결</button>
+                    </div>
+                </fieldset>
+
+                <div class="range-heading">
+                    <label for="voltRange">전압</label>
+                    <output id="voltOutput" for="voltRange">6.0 V</output>
+                </div>
+                <input id="voltRange" type="range" min="1.5" max="12" step="0.5" value="6">
+                <div class="range-scale" aria-hidden="true"><span>1.5 V</span><span>6 V</span><span>12 V</span></div>
+
+                <div class="range-heading amount-heading">
+                    <label for="r1Range">저항 R₁</label>
+                    <output id="r1Output" for="r1Range">10 Ω</output>
+                </div>
+                <input id="r1Range" type="range" min="5" max="50" step="5" value="10">
+
+                <div class="range-heading amount-heading">
+                    <label for="r2Range">저항 R₂</label>
+                    <output id="r2Output" for="r2Range">20 Ω</output>
+                </div>
+                <input id="r2Range" type="range" min="5" max="50" step="5" value="20">
+
+                <fieldset class="prediction-field">
+                    <legend>합성 저항 예상 (R₁ 하나일 때와 비교)</legend>
+                    <div class="prediction-buttons three">
+                        <button type="button" data-prediction="bigger">커진다</button>
+                        <button type="button" data-prediction="smaller">작아진다</button>
+                        <button type="button" data-prediction="same">같다</button>
+                    </div>
+                </fieldset>
+
+                <button class="run-button" id="checkBtn" type="button">전류 측정하기</button>
+
+                <section class="result-box" aria-labelledby="result-title" aria-live="polite">
+                    <h3 id="result-title">관찰 결과</h3>
+                    <p id="resultEmpty">조건을 정하고 측정해 보세요.</p>
+                    <div id="resultContent" hidden>
+                        <div class="result-numbers">
+                            <article><span>합성 저항</span><strong id="resultR">30 Ω</strong></article>
+                            <article><span>전체 전류</span><strong id="resultI">0.20 A</strong></article>
+                        </div>
+                        <p class="prediction-result" id="predictionResult"></p>
+                        <p class="explanation" id="elementaryExplanation"></p>
+                    </div>
+                </section>
+            </section>
+
+            <section class="panel ohm-stage" aria-label="회로와 그래프 관찰 화면">
+                <div class="stage-heading"><h2>관찰</h2><span id="stageBadge">직렬연결</span></div>
+
+                <div class="stage-views">
+                    <div class="circuit-view">
+                        <div class="view-title">회로</div>
+                        <svg class="circuit-svg" viewBox="0 0 460 220" aria-hidden="true">
+                            <g id="circuitGroup"></g>
+                        </svg>
+                    </div>
+                    <div class="graph-view">
+                        <div class="view-title">전압–전류 그래프</div>
+                        <svg class="graph-svg" viewBox="0 0 460 210" aria-hidden="true">
+                            <g id="graphGroup"></g>
+                        </svg>
+                    </div>
+                </div>
+
+                <p class="stage-caption" id="stageCaption">전압을 바꾸면 전류가 어떻게 변하는지 그래프에서 확인해 보세요.</p>
+            </section>
+        </div>
+
+        <section class="panel meaning-panel">
+            <h2>실험 결과의 의미</h2>
+            <div class="meaning-body">
+                <p><strong>옴의 법칙</strong> 전류는 전압에 비례하고 저항에 반비례합니다. I = V / R</p>
+                <p><strong>직렬연결</strong> 합성 저항은 R₁ + R₂ 로 커지고, 두 저항에 같은 전류가 흐릅니다.</p>
+                <p><strong>병렬연결</strong> 합성 저항은 각 저항보다 작아지고, 두 저항에 같은 전압이 걸립니다.</p>
+            </div>
+        </section>
+
+        <details class="quiz-section" aria-labelledby="quiz-title">
+            <summary class="quiz-heading"><h2 id="quiz-title">확인 문제</h2><span>4문제</span></summary>
+            <div class="quiz-grid">
+                <article class="quiz-card" data-answer="b">
+                    <h3>12 V 전원에 4 Ω 저항을 연결하면 흐르는 전류는?</h3>
+                    <div class="quiz-options">
+                        <label><input type="radio" name="q1" value="a"> 48 A</label>
+                        <label><input type="radio" name="q1" value="b"> 3 A</label>
+                        <label><input type="radio" name="q1" value="c"> 0.33 A</label>
+                        <label><input type="radio" name="q1" value="d"> 8 A</label>
+                    </div>
+                    <button class="answer-button" type="button">정답 확인</button>
+                    <p class="answer-result" aria-live="polite"></p>
+                    <p class="answer-explanation" hidden>I = V / R = 12 / 4 = 3 A 입니다.</p>
+                </article>
+
+                <article class="quiz-card" data-answer="a">
+                    <h3>10 Ω과 20 Ω을 직렬로 연결하면 합성 저항은?</h3>
+                    <div class="quiz-options">
+                        <label><input type="radio" name="q2" value="a"> 30 Ω</label>
+                        <label><input type="radio" name="q2" value="b"> 6.7 Ω</label>
+                        <label><input type="radio" name="q2" value="c"> 15 Ω</label>
+                        <label><input type="radio" name="q2" value="d"> 200 Ω</label>
+                    </div>
+                    <button class="answer-button" type="button">정답 확인</button>
+                    <p class="answer-result" aria-live="polite"></p>
+                    <p class="answer-explanation" hidden>직렬연결의 합성 저항은 각 저항의 합입니다. 10 + 20 = 30 Ω.</p>
+                </article>
+
+                <article class="quiz-card" data-answer="c">
+                    <h3>저항을 병렬로 연결하면 합성 저항은?</h3>
+                    <div class="quiz-options">
+                        <label><input type="radio" name="q3" value="a"> 두 저항의 합이 된다.</label>
+                        <label><input type="radio" name="q3" value="b"> 두 저항의 평균이 된다.</label>
+                        <label><input type="radio" name="q3" value="c"> 각각의 저항보다 작아진다.</label>
+                        <label><input type="radio" name="q3" value="d"> 변하지 않는다.</label>
+                    </div>
+                    <button class="answer-button" type="button">정답 확인</button>
+                    <p class="answer-result" aria-live="polite"></p>
+                    <p class="answer-explanation" hidden>병렬연결은 전류가 흐를 길이 늘어나므로 합성 저항이 각각의 저항보다 작아집니다.</p>
+                </article>
+
+                <article class="quiz-card" data-answer="d">
+                    <h3>전압–전류 그래프에서 기울기가 나타내는 것은?</h3>
+                    <div class="quiz-options">
+                        <label><input type="radio" name="q4" value="a"> 저항의 크기</label>
+                        <label><input type="radio" name="q4" value="b"> 전력</label>
+                        <label><input type="radio" name="q4" value="c"> 전하량</label>
+                        <label><input type="radio" name="q4" value="d"> 저항의 역수 (1/R)</label>
+                    </div>
+                    <button class="answer-button" type="button">정답 확인</button>
+                    <p class="answer-result" aria-live="polite"></p>
+                    <p class="answer-explanation" hidden>I = V/R 이므로 가로축이 전압, 세로축이 전류일 때 기울기는 1/R 입니다. 저항이 클수록 그래프가 완만해집니다.</p>
+                </article>
+            </div>
+        </details>
+    </main>
+    <script src="app.js?v=2"></script>
+</body>
+</html>
