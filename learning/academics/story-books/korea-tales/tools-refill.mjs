@@ -41,7 +41,8 @@ for (const c of CH) for (const b of (c.beats || [])) {
 const missing = [...byArt.keys()].filter(a => !beforeArts.includes(a));
 if (missing.length) { console.error('그 책에 없는 그림 이름:', missing.join(', ')); process.exit(1); }
 
-const q = s => '"' + s.replace(/\/g, '\\').replace(/"/g, '\\"') + '"';
+const BS = String.fromCharCode(92);
+const q = s => '"' + s.split(BS).join(BS + BS).split('"').join(BS + '"') + '"';
 const arr = (a, ind) => a.length
   ? '[\n' + a.map(x => ind + '    ' + q(x)).join(',\n') + '\n' + ind + ']'
   : '[]';
@@ -49,44 +50,45 @@ const arr = (a, ind) => a.length
 let out = '[\n';
 CH.forEach((c, ci) => {
   out += '    {\n';
-  out += `        num: ${c.num},\n`;
-  out += `        title: ${q(c.title)},\n`;
+  out += '        num: ' + c.num + ',\n';
+  out += '        title: ' + q(c.title) + ',\n';
   if (c.beats) {
     out += '        beats: [\n';
     c.beats.forEach((b, bi) => {
       out += '            {\n';
-      out += `                art: ${q(b.art)},\n`;
-      out += `                emoji: ${q(b.emoji)},\n`;
-      out += `                left: ${arr(b.left || [], '                ')},\n`;
-      out += `                right: ${arr(b.right || [], '                ')}\n`;
+      out += '                art: ' + q(b.art) + ',\n';
+      out += '                emoji: ' + q(b.emoji) + ',\n';
+      out += '                left: ' + arr(b.left || [], '                ') + ',\n';
+      out += '                right: ' + arr(b.right || [], '                ') + '\n';
       out += '            }' + (bi < c.beats.length - 1 ? ',' : '') + '\n';
     });
     out += '        ]';
   }
-  if (c.moral !== undefined) out += `,\n        moral: ${q(c.moral)}`;
-  if (c.question !== undefined) out += `,\n        question: ${q(c.question)}`;
+  if (c.moral !== undefined) out += ',\n        moral: ' + q(c.moral);
+  if (c.question !== undefined) out += ',\n        question: ' + q(c.question);
   out += '\n    }' + (ci < CH.length - 1 ? ',' : '') + '\n';
 });
 out += '];';
 
 fs.writeFileSync(appPath, head + out + tail, 'utf8');
 try {
-  execSync(`node --check "${appPath}"`, { stdio: 'pipe' });
+  execSync('node --check "' + appPath + '"', { stdio: 'pipe' });
 } catch (e) {
   fs.writeFileSync(appPath, backup, 'utf8');
-  console.error('문법이 깨져서 되돌렸다:', e.message);
+  console.error('문법이 깨져서 되돌렸다');
   process.exit(1);
 }
-// 칸 수와 이름이 그대로인지 다시 읽어 본다
 const s2 = fs.readFileSync(appPath, 'utf8');
 const CH2 = eval('(' + s2.slice(s2.indexOf('[', s2.indexOf('const CHAPTERS')), s2.indexOf('\n];') + 2) + ')');
 const afterArts = [];
 for (const c of CH2) for (const b of (c.beats || [])) afterArts.push(b.art);
 if (afterArts.join('|') !== beforeArts.join('|')) {
   fs.writeFileSync(appPath, backup, 'utf8');
-  console.error('칸이 어긋나서 되돌렸다'); process.exit(1);
+  console.error('칸이 어긋나서 되돌렸다');
+  process.exit(1);
 }
 let ch = 0, par = 0;
 for (const c of CH2) for (const b of (c.beats || [])) for (const k of ['left', 'right'])
   (b[k] || []).forEach(p => { ch += p.replace(/\s/g, '').length; par++; });
-console.log(`${slug}: ${changed}칸 갈아 끼움 · 펼침당 ${Math.round(ch / afterArts.length)}자 · 칸당 문단 ${(par / afterArts.length / 2).toFixed(1)}개`);
+console.log(slug + ': ' + changed + '칸 · 펼침당 ' + Math.round(ch / afterArts.length)
+  + '자 · 칸당 문단 ' + (par / afterArts.length / 2).toFixed(1) + '개');
