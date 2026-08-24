@@ -139,6 +139,73 @@
     return `<span class="pawnFaces${controllers.length > 1 ? " shared" : ""}">${faces || '<span class="pawnInitial">?</span>'}</span>`;
   }
 
+  function seatDuty(slot, teamSize) {
+    if (teamSize === 1) return "말 1·2·3 담당";
+    if (teamSize === 2) return slot === 1 ? "말 1 + 말 3 공동" : "말 2 + 말 3 공동";
+    return `말 ${slot} 담당`;
+  }
+
+  function seatAvatarMarkup(player) {
+    const url = avatarOf(player.id);
+    return url
+      ? `<img class="teamSeatAvatar" src="${escapeHtml(url)}" alt="">`
+      : `<span class="teamSeatInitial">${escapeHtml(firstLetter(player.name))}</span>`;
+  }
+
+  function chooseLobbySeat(team, slot, isMine) {
+    sendAction("CHOOSE_SEAT", isMine ? { team: "", slot: 0 } : { team, slot });
+  }
+
+  function renderSeatColumn(team, slotsId, countId) {
+    const limit = Number(state?.teamLimits?.[team]) || 0;
+    const members = state.players.filter(player => player.team === team);
+    $(countId).textContent = `${members.length} / ${limit}`;
+    const fragment = document.createDocumentFragment();
+    for (let slot = 1; slot <= 3; slot += 1) {
+      const occupant = members.find(player => player.seat === slot);
+      const active = slot <= limit;
+      const isMine = occupant?.id === myId();
+      const button = document.createElement("button");
+      button.type = "button";
+      button.className = `teamSeat ${team}${active ? "" : " locked"}${occupant ? " occupied" : " empty"}${isMine ? " mine" : ""}`;
+      button.disabled = !active || (!!occupant && !isMine) || actionPending;
+      if (!active) {
+        button.innerHTML = '<span class="teamSeatEmpty">현재 인원에서는 쉬는 슬롯</span>';
+        button.setAttribute("aria-label", `${team === "police" ? "경찰" : "도둑"}팀 ${slot}번 비활성 슬롯`);
+      } else if (occupant) {
+        button.innerHTML = `${seatAvatarMarkup(occupant)}<span class="teamSeatName">${escapeHtml(occupant.name)}${isMine ? " · 나" : ""}</span><span class="teamSeatDuty">${escapeHtml(seatDuty(slot, limit))}</span>`;
+        button.setAttribute("aria-label", `${occupant.name}, ${team === "police" ? "경찰" : "도둑"}팀 ${slot}번${isMine ? ", 다시 누르면 자리에서 나가기" : ""}`);
+      } else {
+        button.innerHTML = `<span class="teamSeatEmpty">${slot}번 · 빈 자리<br><small>${escapeHtml(seatDuty(slot, limit))}</small></span>`;
+        button.setAttribute("aria-label", `${team === "police" ? "경찰" : "도둑"}팀 ${slot}번 빈 자리 선택`);
+      }
+      if (active && (!occupant || isMine)) button.addEventListener("click", () => chooseLobbySeat(team, slot, isMine));
+      fragment.appendChild(button);
+    }
+    $(slotsId).replaceChildren(fragment);
+  }
+
+  function renderTeamSeats() {
+    if (!state || state.phase !== "lobby") return;
+    $("teamSeatPanel").classList.remove("hidden");
+    renderSeatColumn("police", "policeSeatSlots", "policeSeatCount");
+    renderSeatColumn("thief", "thiefSeatSlots", "thiefSeatCount");
+    const snapshot = lobby.snapshot();
+    const role = snapshot.role;
+    const unseated = state.players.filter(player => !player.team || !player.seat).length;
+    $("recommendSeatsBtn").hidden = role !== "host";
+    $("recommendSeatsBtn").disabled = actionPending || state.players.length < 2;
+    $("teamSeatGuide").classList.toggle("ready", !!state.lobbyReady);
+    $("teamSeatGuide").textContent = state.lobbyReady
+      ? "팀 배치 완료! 방장이 게임을 시작할 수 있습니다."
+      : state.players.length < 2
+        ? "2명 이상 모이면 경찰팀·도둑팀 슬롯이 열립니다."
+        : `${unseated}명이 아직 팀 자리를 고르지 않았습니다.`;
+    const canStart = role === "host" && !!state.lobbyReady;
+    $("startBtn").disabled = !canStart;
+    $("startBtn").textContent = canStart ? `게임 시작 · ${state.players.length}명` : role === "host" ? "팀 자리를 모두 채워주세요" : "방장이 게임을 시작합니다";
+  }
+
   function renderBuildings() {
     const layer = $("buildingsLayer");
     const fragment = document.createDocumentFragment();
@@ -521,6 +588,7 @@
         $("lobbyScreen").classList.remove("hidden");
         lobby.returnToLobby();
       }
+      renderTeamSeats();
       return;
     }
     if (previousPhase !== "setup" && state.phase === "setup") {
@@ -538,12 +606,14 @@
     if (message.type === MESSAGE.ERROR) {
       actionPending = false;
       showToast(message.message || "행동을 처리하지 못했습니다.");
-      if (state) renderGame();
+      if (state?.phase === "lobby") renderTeamSeats();
+      else if (state) renderGame();
     }
   }
 
   function syncLobby(snapshot) {
     $("gameRoomCode").textContent = snapshot.roomCode || "----";
+    if (state?.phase === "lobby") renderTeamSeats();
   }
 
   function showAbort({ title, message }) {
@@ -560,17 +630,18 @@
       getPlayerName: () => /^[가-힣]{2,6}$/.test(savedName) ? savedName : "",
       allowedPlayerCounts: [2, 3, 4, 5, 6],
       maxPlayers: 6,
+      canStart: () => !!state?.lobbyReady,
       rulesButtonIds: ["rulesBtnLobby", "rulesBtnGame"],
       leaveButtonIds: ["leaveBtnLobby", "leaveBtnGame"],
       onRules: showRules,
       onLeave: () => location.href = "../../../",
       onNotice: showToast,
-      onInvalidStart: () => showToast("2~6명이 모여야 시작할 수 있습니다."),
+      onInvalidStart: () => showToast("모든 참가자가 경찰팀·도둑팀 슬롯을 먼저 선택해야 합니다."),
       onStateChange: syncLobby,
       getLobbyPresentation: ({ count, role, canStart }) => ({
-        canStart,
-        startText: role === "host" && canStart ? `게임 시작 · ${count}명` : "참가자를 기다리는 중",
-        guideText: role === "host" ? `현재 ${count}명 · 2~6명에서 시작 가능` : "방장이 게임을 시작할 때까지 기다리세요."
+        canStart: canStart && !!state?.lobbyReady,
+        startText: role === "host" && canStart && state?.lobbyReady ? `게임 시작 · ${count}명` : "팀 자리를 선택하세요",
+        guideText: role === "host" ? `현재 ${count}명 · 모두 팀 슬롯을 선택하면 시작 가능` : "빈 경찰팀·도둑팀 슬롯을 눌러 자리를 선택하세요."
       }),
       createStartData: () => ({ serverAuthoritative: true }),
       onStarted: () => {
@@ -581,6 +652,7 @@
       onAbort: showAbort
     }).mount();
 
+    $("recommendSeatsBtn").addEventListener("click", () => sendAction("RECOMMEND_SEATS"));
     document.querySelectorAll(".secretTab").forEach(button => button.addEventListener("click", () => {
       activeSecret = button.dataset.secret;
       renderSetup();

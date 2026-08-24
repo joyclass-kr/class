@@ -85,6 +85,14 @@ async function run() {
     await host.waitFor(message => message.type === "PLAYER_JOINED", "참가자 입장 알림");
     await guest.waitFor(message => message.type === "CITYCHASE_STATE" && message.state.players.length === 2, "2인 대기 상태");
 
+    host.send({ type: "CITYCHASE_ACTION", action: "CHOOSE_SEAT", team: "police", slot: 1 });
+    await host.waitFor(message => message.type === "CITYCHASE_STATE" && message.state.players.some(player => player.id === hostConnected.playerId && player.team === "police"), "경찰 슬롯 선택");
+    guest.send({ type: "CITYCHASE_ACTION", action: "CHOOSE_SEAT", team: "thief", slot: 1 });
+    const readyLobby = await host.waitFor(message => message.type === "CITYCHASE_STATE" && message.state.lobbyReady, "팀 슬롯 준비 완료");
+    await guest.waitFor(message => message.type === "CITYCHASE_STATE" && message.state.lobbyReady, "참가자 팀 슬롯 준비 완료");
+    assert.equal(readyLobby.state.teamLimits.police, 1);
+    assert.equal(readyLobby.state.teamLimits.thief, 1);
+
     host.send({ type: "CITYCHASE_ACTION", action: "START" });
     const hostSetup = await host.waitFor(message => message.type === "CITYCHASE_STATE" && message.state.phase === "setup", "경찰 배치 화면");
     const guestSetup = await guest.waitFor(message => message.type === "CITYCHASE_STATE" && message.state.phase === "setup", "도둑 대기 화면");

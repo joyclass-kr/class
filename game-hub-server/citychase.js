@@ -14,7 +14,7 @@ function cleanName(value, fallback = "플레이어") {
 }
 
 function createPlayer(id, name) {
-  return { id: String(id), name: cleanName(name), team: null, pawnIds: [] };
+  return { id: String(id), name: cleanName(name), team: null, seat: null, pawnIds: [] };
 }
 
 function initialBuildings() {
@@ -60,7 +60,98 @@ function addPlayer(game, id, name) {
 function removePlayer(game, id) {
   const safeId = String(id);
   game.players = game.players.filter(player => player.id !== safeId);
+  normalizeLobbySeats(game);
   game.revision += 1;
+}
+
+function requiredTeamCounts(playerCount) {
+  const count = Number(playerCount) || 0;
+  const police = ({ 2: 1, 3: 1, 4: 2, 5: 2, 6: 3 })[count] || 0;
+  return { police, thief: count ? count - police : 0 };
+}
+
+function normalizeLobbySeats(game) {
+  const limits = requiredTeamCounts(game.players.length);
+  for (const team of ["police", "thief"]) {
+    const used = new Set();
+    game.players.filter(player => player.team === team).forEach(player => {
+      const valid = Number.isInteger(player.seat) && player.seat >= 1 && player.seat <= limits[team] && !used.has(player.seat);
+      if (valid) used.add(player.seat);
+      else {
+        player.team = null;
+        player.seat = null;
+        player.pawnIds = [];
+      }
+    });
+  }
+  game.players.filter(player => !["police", "thief"].includes(player.team)).forEach(player => {
+    player.team = null;
+    player.seat = null;
+    player.pawnIds = [];
+  });
+}
+
+function lobbyReady(game) {
+  if (game.players.length < MIN_PLAYERS || game.players.length > MAX_PLAYERS) return false;
+  const limits = requiredTeamCounts(game.players.length);
+  for (const team of ["police", "thief"]) {
+    const players = game.players.filter(player => player.team === team);
+    if (players.length !== limits[team]) return false;
+    const seats = players.map(player => player.seat);
+    if (seats.some(seat => !Number.isInteger(seat) || seat < 1 || seat > limits[team])) return false;
+    if (new Set(seats).size !== seats.length) return false;
+  }
+  return game.players.every(player => player.team === "police" || player.team === "thief");
+}
+
+function chooseSeat(game, playerId, team, slot) {
+  if (game.phase !== "lobby") return { ok: false, error: "대기실에서만 팀 자리를 고를 수 있습니다." };
+  const player = playerById(game, playerId);
+  if (!player) return { ok: false, error: "참가자를 찾을 수 없습니다." };
+  const safeTeam = String(team || "");
+  const safeSlot = Number(slot);
+  if (!['police', 'thief'].includes(safeTeam)) {
+    player.team = null;
+    player.seat = null;
+    player.pawnIds = [];
+    game.lastAction = `${player.name}님이 팀 자리에서 나왔습니다.`;
+    game.revision += 1;
+    return { ok: true };
+  }
+  const limits = requiredTeamCounts(game.players.length);
+  if (!Number.isInteger(safeSlot) || safeSlot < 1 || safeSlot > limits[safeTeam]) return { ok: false, error: "현재 인원에서 사용할 수 없는 팀 자리입니다." };
+  const occupied = game.players.find(candidate => candidate.id !== player.id && candidate.team === safeTeam && candidate.seat === safeSlot);
+  if (occupied) return { ok: false, error: `${occupied.name}님이 사용 중인 자리입니다.` };
+  if (player.team === safeTeam && player.seat === safeSlot) {
+    player.team = null;
+    player.seat = null;
+    game.lastAction = `${player.name}님이 팀 자리에서 나왔습니다.`;
+  } else {
+    player.team = safeTeam;
+    player.seat = safeSlot;
+    game.lastAction = `${player.name}님이 ${safeTeam === "police" ? "경찰팀" : "도둑팀"} ${safeSlot}번 자리를 선택했습니다.`;
+  }
+  player.pawnIds = [];
+  game.revision += 1;
+  return { ok: true };
+}
+
+function recommendSeats(game, suppliedRandom) {
+  if (game.phase !== "lobby") return { ok: false, error: "대기실에서만 추천 배치를 사용할 수 있습니다." };
+  const shuffled = [...game.players];
+  for (let index = shuffled.length - 1; index > 0; index -= 1) {
+    const target = randomIndex(index + 1, suppliedRandom);
+    [shuffled[index], shuffled[target]] = [shuffled[target], shuffled[index]];
+  }
+  const limits = requiredTeamCounts(shuffled.length);
+  shuffled.forEach((player, index) => {
+    player.team = index < limits.police ? "police" : "thief";
+    player.seat = index < limits.police ? index + 1 : index - limits.police + 1;
+    player.pawnIds = [];
+  });
+  game.lastAction = "팀 자리를 무작위로 추천 배치했습니다. 각자 빈 자리를 눌러 바꿀 수 있습니다.";
+  game.revision += 1;
+  return { ok: true };
 }
 
 function controllersFor(teamPlayers, pawnIndex) {
@@ -70,13 +161,9 @@ function controllersFor(teamPlayers, pawnIndex) {
 }
 
 function assignTeamsAndPawns(game) {
-  const policeCount = ({ 2: 1, 3: 1, 4: 2, 5: 2, 6: 3 })[game.players.length];
-  const policePlayers = game.players.slice(0, policeCount);
-  const thiefPlayers = game.players.slice(policeCount);
-  game.players.forEach((player, index) => {
-    player.team = index < policeCount ? "police" : "thief";
-    player.pawnIds = [];
-  });
+  const policePlayers = game.players.filter(player => player.team === "police").sort((a, b) => a.seat - b.seat);
+  const thiefPlayers = game.players.filter(player => player.team === "thief").sort((a, b) => a.seat - b.seat);
+  game.players.forEach(player => { player.pawnIds = []; });
   game.pawns = [];
   for (const team of ["thief", "police"]) {
     const teamPlayers = team === "thief" ? thiefPlayers : policePlayers;
@@ -123,6 +210,7 @@ function resetRound(game) {
 
 function startGame(game) {
   if (game.phase !== "lobby") return { ok: false, error: "이미 시작한 게임입니다." };
+  if (!lobbyReady(game)) return { ok: false, error: "모든 참가자가 인원수에 맞는 경찰팀·도둑팀 슬롯을 선택해야 합니다." };
   if (game.players.length < MIN_PLAYERS || game.players.length > MAX_PLAYERS) return { ok: false, error: "게임 시작에는 2~6명이 필요합니다." };
   assignTeamsAndPawns(game);
   resetRound(game);
@@ -542,7 +630,8 @@ function choosePending(game, playerId, choiceId) {
 
 function resetToLobby(game, message = "대기실로 돌아왔습니다.") {
   game.phase = "lobby";
-  game.players.forEach(player => { player.team = null; player.pawnIds = []; });
+  game.players.forEach(player => { player.pawnIds = []; });
+  normalizeLobbySeats(game);
   game.pawns = [];
   game.buildings = initialBuildings();
   game.tricks = [];
@@ -594,7 +683,9 @@ function stateFor(game, playerId) {
   const canHide = canAct && game.turnMode === "awaiting_roll" && pawn.team === "thief" && pawn.status === "active" && !!safeNode?.safe && pawn.hidingTurns < 3;
   return {
     phase: game.phase,
-    players: game.players.map(player => ({ id: player.id, name: player.name, team: player.team, pawnIds: [...player.pawnIds] })),
+    players: game.players.map(player => ({ id: player.id, name: player.name, team: player.team, seat: player.seat, pawnIds: [...player.pawnIds] })),
+    teamLimits: requiredTeamCounts(game.players.length),
+    lobbyReady: lobbyReady(game),
     myTeam: me?.team || null,
     policeCaptainId: game.policeCaptainId,
     pawns: game.pawns.map(publicPawn),
@@ -633,12 +724,16 @@ function stateFor(game, playerId) {
 module.exports = {
   BOARD: Board,
   CHECK_CARD_COUNT,
+  recommendSeats,
+  requiredTeamCounts,
   MAX_PLAYERS,
   MIN_PLAYERS,
   PAWN_ORDER,
   TRICK_CARD_COUNT,
   addPlayer,
   autoPlaceSecrets,
+  chooseSeat,
+  lobbyReady,
   availableNeighbors,
   choosePending,
   createGame,

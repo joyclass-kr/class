@@ -10,10 +10,22 @@ assert.equal(CityChase.BOARD.BUILDINGS.length, 7, "수색 건물은 7곳이어�
 assert.equal(CityChase.TRICK_CARD_COUNT, 9);
 assert.equal(CityChase.CHECK_CARD_COUNT, 6);
 
+function assignSeats(game) {
+  const limits = CityChase.requiredTeamCounts(game.players.length);
+  game.players.forEach((player, index) => {
+    const team = index < limits.police ? "police" : "thief";
+    const slot = index < limits.police ? index + 1 : index - limits.police + 1;
+    assert.equal(CityChase.chooseSeat(game, player.id, team, slot).ok, true);
+  });
+  assert.equal(CityChase.lobbyReady(game), true);
+}
+
 const expectedPoliceCounts = { 2: 1, 3: 1, 4: 2, 5: 2, 6: 3 };
 for (let count = 2; count <= 6; count += 1) {
   const teamGame = CityChase.createGame("player-1", "1번");
   for (let index = 2; index <= count; index += 1) CityChase.addPlayer(teamGame, `player-${index}`, `${index}번`);
+  assert.equal(CityChase.startGame(teamGame).ok, false, "참가순서만으로 팀을 자동 배정하면 안 됩니다.");
+  assignSeats(teamGame);
   assert.equal(CityChase.startGame(teamGame).ok, true);
   assert.equal(teamGame.players.filter(player => player.team === "police").length, expectedPoliceCounts[count]);
   assert.equal(teamGame.players.filter(player => player.team === "thief").length, count - expectedPoliceCounts[count]);
@@ -21,8 +33,25 @@ for (let count = 2; count <= 6; count += 1) {
   assert.ok(teamGame.players.every(player => player.pawnIds.length >= 1), `${count}인 게임에서 모든 참가자가 말을 맡아야 합니다.`);
 }
 
+const leavingGame = CityChase.createGame("p1", "하나");
+CityChase.addPlayer(leavingGame, "p2", "두리");
+CityChase.addPlayer(leavingGame, "p3", "세나");
+CityChase.addPlayer(leavingGame, "p4", "네모");
+assignSeats(leavingGame);
+CityChase.removePlayer(leavingGame, "p4");
+assert.equal(leavingGame.players.find(player => player.id === "p2").team, null, "인원 감소로 닫힌 슬롯에 참가자가 남으면 안 됩니다.");
+assert.equal(CityChase.lobbyReady(leavingGame), false, "인원 변동 뒤에는 필요한 슬롯을 다시 선택해야 합니다.");
+
 const game = CityChase.createGame("police", "경찰 대표");
 CityChase.addPlayer(game, "thief", "도둑 대표");
+assert.equal(CityChase.chooseSeat(game, "police", "police", 1).ok, true);
+assert.equal(CityChase.chooseSeat(game, "thief", "police", 1).ok, false, "다른 학생의 슬롯으로 이동할 수 없어야 합니다.");
+assert.equal(CityChase.chooseSeat(game, "thief", "thief", 1).ok, true);
+assert.equal(CityChase.stateFor(game, "police").lobbyReady, true);
+assert.deepEqual(CityChase.stateFor(game, "police").teamLimits, { police: 1, thief: 1 });
+assert.equal(CityChase.chooseSeat(game, "thief", "thief", 1).ok, true, "자기 슬롯을 다시 누르면 자리에서 나올 수 있어야 합니다.");
+assert.equal(CityChase.lobbyReady(game), false);
+assert.equal(CityChase.chooseSeat(game, "thief", "thief", 1).ok, true);
 assert.equal(CityChase.startGame(game).ok, true);
 assert.equal(game.phase, "setup");
 assert.deepEqual(game.players.map(player => player.team), ["police", "thief"]);
@@ -51,6 +80,7 @@ assert.equal(CityChase.currentPawn(game).id, "thief-2", "정확한 칸 수를 �
 
 const hideGame = CityChase.createGame("p", "경찰");
 CityChase.addPlayer(hideGame, "t", "도둑");
+assignSeats(hideGame);
 CityChase.startGame(hideGame);
 CityChase.placeSecrets(hideGame, "p", { gems: ["market", "air"], undercover: "burger" });
 assert.equal(CityChase.hide(hideGame, "t").ok, true, "아지트에서는 이동 대신 숨을 수 있어야 합니다.");
@@ -58,6 +88,7 @@ assert.equal(hideGame.pawns.find(pawn => pawn.id === "thief-1").hidingTurns, 1);
 
 const rescueGame = CityChase.createGame("p", "경찰");
 CityChase.addPlayer(rescueGame, "t", "도둑");
+assignSeats(rescueGame);
 CityChase.startGame(rescueGame);
 CityChase.placeSecrets(rescueGame, "p", { gems: ["market", "air"], undercover: "burger" });
 rescueGame.pawns.filter(pawn => pawn.team === "police").forEach((pawn, index) => { pawn.position = `p${10 + index}`; });
@@ -76,6 +107,7 @@ assert.equal(captive.status, "active", "동료가 감옥으로 들어와 구출�
 
 const cardGame = CityChase.createGame("p", "경찰");
 CityChase.addPlayer(cardGame, "t", "도둑");
+assignSeats(cardGame);
 CityChase.startGame(cardGame);
 CityChase.placeSecrets(cardGame, "p", { gems: ["market", "air"], undercover: "burger" });
 const trickNext = CityChase.BOARD.neighbors("p1", "police")[0].id;
@@ -88,6 +120,7 @@ assert.equal(cardGame.resources.police.checkCards, 5);
 
 const captureGame = CityChase.createGame("p", "경찰");
 CityChase.addPlayer(captureGame, "t", "도둑");
+assignSeats(captureGame);
 CityChase.startGame(captureGame);
 CityChase.placeSecrets(captureGame, "p", { gems: ["market", "air"], undercover: "burger" });
 const captureTarget = CityChase.BOARD.neighbors("p0", "police").find(item => item.id !== "hideout").id;
@@ -106,6 +139,7 @@ assert.equal(captureGame.winnerTeam, "police", "도둑 세 명을 모두 체포�
 
 const gemGame = CityChase.createGame("p", "경찰");
 CityChase.addPlayer(gemGame, "t", "도둑");
+assignSeats(gemGame);
 CityChase.startGame(gemGame);
 CityChase.placeSecrets(gemGame, "p", { gems: ["market", "air"], undercover: "burger" });
 gemGame.resources.thief.securedGems = 1;
@@ -145,6 +179,11 @@ assert.match(css, /\.lobbyWorkspace \{ display: grid; grid-template-columns: min
 assert.match(css, /@media \(max-width: 900px\)[\s\S]*\.lobbyWorkspace \{ grid-template-columns: 1fr; \}/, "iPad 세로 화면에서는 대기 패널을 한 열로 배치해야 합니다.");
 assert.match(client, /function avatarOf\(playerId\)/, "학생 아바타는 멀티플레이 대기실 정보에서 가져와야 합니다.");
 assert.match(client, /pawnName[\s\S]*pawnFaceMarkup\(controllers\)[\s\S]*pawnNumber/, "말에는 학생 이름·아바타·말 번호가 함께 보여야 합니다.");
+assert.match(html, /id="policeSeatSlots"[\s\S]*id="thiefSeatSlots"/, "대기실에는 경찰팀·도둑팀 슬롯이 모두 있어야 합니다.");
+assert.match(client, /sendAction\("CHOOSE_SEAT"/, "학생은 빈 슬롯을 눌러 자기 팀 자리를 선택해야 합니다.");
+assert.match(client, /canStart:\s*\(\)\s*=>\s*!!state\?\.lobbyReady/, "공용 시작 버튼도 팀 슬롯 완료 상태를 확인해야 합니다.");
+assert.match(client, /말 1 \+ 말 3 공동[\s\S]*말 2 \+ 말 3 공동/, "2인 팀은 세 번째 말을 공동으로 맡는다고 안내해야 합니다.");
+assert.match(server, /action === "CHOOSE_SEAT"/, "팀 슬롯 선택은 서버 권한 상태로 동기화해야 합니다.");
 assert.match(css, /--police: #2374cc/, "경찰 말은 명확한 파란색이어야 합니다.");
 assert.match(css, /--thief: #e9475f/, "도둑 말은 명확한 빨간색이어야 합니다.");
 assert.match(client, /class="secretIcon gemIcon"/, "보석은 문자 기호 대신 선명한 SVG 배지를 사용해야 합니다.");
