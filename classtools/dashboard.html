@@ -349,11 +349,24 @@
         .period-col-center {
             display: flex;
             align-items: center;
-            justify-content: flex-start;
-            gap: 8px;
-            text-align: center;
+            justify-content: center;
+            text-align: left;
             white-space: nowrap;
             min-width: 0;
+        }
+
+        .period-subject-copy {
+            display: flex;
+            flex-direction: column;
+            align-items: flex-start;
+            gap: 1px;
+            min-width: 0;
+        }
+
+        .period-subject-row {
+            display: flex;
+            align-items: center;
+            gap: 6px;
         }
 
         .period-col-right {
@@ -383,30 +396,26 @@
             flex-shrink: 0;
         }
 
-        .period-place-badge {
-            font-size: 0.78rem;
+        .period-subject-icon {
+            width: 30px;
+            height: 30px;
+            display: grid;
+            place-items: center;
+            flex: 0 0 30px;
+            font-family: "Segoe UI Emoji", "Apple Color Emoji", "Noto Color Emoji", sans-serif;
+            font-size: 23px;
+            line-height: 1;
+            filter: drop-shadow(0 1px 1px rgba(0, 0, 0, 0.65));
+        }
+
+        .period-place {
+            font-size: 0.75rem;
             font-weight: 700;
-            padding: 2px 7px;
-            border-radius: 12px;
             white-space: nowrap;
-            flex-shrink: 0;
-            transition: all 0.2s ease;
         }
 
-        /* 일반 교실일 때: 불빛 없는 차분한 그레이/다크 톤 */
-        .period-place-badge.default {
-            background: rgba(255, 255, 255, 0.05);
-            border: 1px solid rgba(255, 255, 255, 0.12);
-            color: rgba(255, 255, 255, 0.55);
-        }
-
-        /* 교실이 아닌 특별실/이동 수업일 때: 눈이 편안하고 세련된 민트톤 뱃지 */
-        .period-place-badge.highlight {
-            background: rgba(46, 196, 182, 0.16);
-            border: 1px solid rgba(46, 196, 182, 0.45);
-            color: #7ce4ff;
-            font-weight: 800;
-        }
+        .period-place.default { color: rgba(255, 255, 255, 0.55); }
+        .period-place.highlight { color: #7ce4ff; font-weight: 800; }
 
         .prep-input {
             width: 100%;
@@ -1322,6 +1331,32 @@
             }
         }
 
+
+        function getSubjectIcon(subject = "") {
+            const icons = [
+                { name: "수학", icon: "🧮" },
+                { name: "국어", icon: "📖" },
+                { name: "독서", icon: "📚" },
+                { name: "영어", icon: "🔤" },
+                { name: "미술", icon: "🎨" },
+                { name: "과학", icon: "🧪" },
+                { name: "체육", icon: "⚽" },
+                { name: "국악", icon: "🥁" },
+                { name: "음악", icon: "🎵" },
+                { name: "사회", icon: "🌏" },
+                { name: "중국어", icon: "🏮" },
+                { name: "컴퓨터", icon: "💻" },
+                { name: "자치", icon: "🗣️" },
+                { name: "창체", icon: "✨" },
+                { name: "도덕", icon: "💗" },
+                { name: "실과", icon: "🛠️" },
+                { name: "동아리", icon: "👥" },
+                { name: "자율", icon: "🧭" }
+            ];
+            const match = icons.find(({ name }) => subject.includes(name));
+            return '<span class="period-subject-icon" aria-hidden="true">' + (match?.icon || "📘") + '</span>';
+        }
+
         function renderTimetable(dayName, now = new Date()) {
             const listEl = document.getElementById("timetableList");
             if (!listEl) return;
@@ -1349,11 +1384,7 @@
                 let placeTag = '';
                 if (item.place) {
                     const isNormalClassroom = (item.place === '교실' || item.place === '우리교실');
-                    if (isNormalClassroom) {
-                        placeTag = `<span class="period-place-badge default">📍 교실</span>`;
-                    } else {
-                        placeTag = `<span class="period-place-badge highlight">📍 ${item.place}</span>`;
-                    }
+                    placeTag = `<span class="period-place ${isNormalClassroom ? 'default' : 'highlight'}">${item.place}</span>`;
                 }
                 const prepVal = savedPreps[item.p] || "";
                 const hasVal = prepVal.trim().length > 0;
@@ -1369,8 +1400,13 @@
                         </div>
                     </div>
                     <div class="period-col-center">
-                        <span class="period-subject">${item.sub || "과목"}</span>
-                        ${placeTag}
+                        <div class="period-subject-copy">
+                            <div class="period-subject-row">
+                                <span class="period-subject">${item.sub || "과목"}</span>
+                                ${getSubjectIcon(item.sub)}
+                            </div>
+                            ${placeTag}
+                        </div>
                     </div>
                     <div class="period-col-right">
                         ${prepBadge}
