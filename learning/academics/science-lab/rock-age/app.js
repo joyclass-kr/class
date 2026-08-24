@@ -5,22 +5,26 @@
    and then have to survive every relative-dating rule the picture shows, so
    the two halves of the page cannot disagree. */
 
+// fullRo and daughterRo carry the 로/으로 form, which depends on how the
+// numeral or letter is read aloud: 사십 ends in ㅂ, so 칼륨-40 takes 으로.
 const ISO = {
-    c14: { name: '¹⁴C', full: '탄소-14', half: 5730, daughter: '¹⁴N', use: '나무·뼈·조개껍데기' },
-    k40: { name: '⁴⁰K', full: '칼륨-40', half: 1.25e9, daughter: '⁴⁰Ar', use: '화산암·변성암' },
-    u238: { name: '²³⁸U', full: '우라늄-238', half: 4.47e9, daughter: '²⁰⁶Pb', use: '아주 오래된 암석' },
+    c14: { name: '¹⁴C', full: '탄소-14', fullRo: '탄소-14로', half: 5730, daughter: '¹⁴N', daughterRo: '¹⁴N으로', use: '나무·뼈·조개껍데기' },
+    k40: { name: '⁴⁰K', full: '칼륨-40', fullRo: '칼륨-40으로', half: 1.25e9, daughter: '⁴⁰Ar', daughterRo: '⁴⁰Ar로', use: '화산암·변성암' },
+    u238: { name: '²³⁸U', full: '우라늄-238', fullRo: '우라늄-238로', half: 4.47e9, daughter: '²⁰⁶Pb', daughterRo: '²⁰⁶Pb로', use: '아주 오래된 암석' },
 };
 // Outside these fractions there is either too little daughter or too little
 // parent left to measure, which is what limits each isotope's usable range.
 const MIN_FRAC = 0.001, MAX_FRAC = 0.999;
 
+// topic holds the name with its 은/는, which for the lettered beds follows the
+// Korean reading of the letter: 에이·씨·디 all end in a vowel, so 는.
 const TARGETS = {
-    ash: { name: '화산재층', age: 1.2e4, why: '맨 위에 덮여 있으므로 무엇보다 젊습니다' },
-    D: { name: '지층 D', age: 4.0e7, why: '부정합면 위에 쌓였으므로 아래 것들보다 모두 젊습니다' },
-    dyke: { name: '관입암', age: 1.8e8, why: '지층 C를 뚫었으니 C보다 젊고, 부정합면에서 끊겼으니 D보다 오래되었습니다' },
-    fault: { name: '단층', age: 3.0e8, why: '지층 C까지 끊었으니 C보다 젊고, 부정합면에서 끊겼으니 D보다 오래되었습니다' },
-    C: { name: '지층 C', age: 4.0e8, why: '누중의 법칙에 따라 아래의 A·B보다 젊습니다' },
-    A: { name: '지층 A', age: 1.2e9, why: '맨 아래에 있으므로 이 단면에서 가장 오래되었습니다' },
+    ash: { name: '화산재층', topic: '화산재층은', age: 1.2e4, why: '맨 위에 덮여 있으므로 무엇보다 젊습니다' },
+    D: { name: '지층 D', topic: '지층 D는', age: 4.0e7, why: '부정합면 위에 쌓였으므로 아래 것들보다 모두 젊습니다' },
+    dyke: { name: '관입암', topic: '관입암은', age: 1.8e8, why: '지층 C를 뚫었으니 C보다 젊고, 부정합면에서 끊겼으니 D보다 오래되었습니다' },
+    fault: { name: '단층', topic: '단층은', age: 3.0e8, why: '지층 C까지 끊었으니 C보다 젊고, 부정합면에서 끊겼으니 D보다 오래되었습니다' },
+    C: { name: '지층 C', topic: '지층 C는', age: 4.0e8, why: '누중의 법칙에 따라 아래의 A·B보다 젊습니다' },
+    A: { name: '지층 A', topic: '지층 A는', age: 1.2e9, why: '맨 아래에 있으므로 이 단면에서 가장 오래되었습니다' },
 };
 const HIDDEN_B = 8.0e8;   // 지층 B, drawn but not offered as a target
 
@@ -42,11 +46,19 @@ function koYears(y) {
     const man = Math.floor((y - eok * 1e8) / 1e4);
     const rest = y - eok * 1e8 - man * 1e4;
     const parts = [];
-    if (eok) parts.push(`${eok.toLocaleString('ko-KR')}억`);
-    if (man) parts.push(`${man.toLocaleString('ko-KR')}만`);
-    if (rest) parts.push(`${rest.toLocaleString('ko-KR')}`);
+    if (eok) parts.push(`${eok}억`);
+    if (man) parts.push(`${man}만`);
+    if (rest) parts.push(`${rest}`);
     const s = parts.join(' ');
     return /[만억]$/.test(s) ? `${s} 년` : `${s}년`;
+}
+
+// A range boundary is an order-of-magnitude statement, so "124억 5723만 356년"
+// claims a precision it does not have.
+function koYearsRough(y) {
+    if (y <= 0) return '0년';
+    const mag = Math.pow(10, Math.floor(Math.log10(y)) - 1);
+    return koYears(Math.round(y / mag) * mag);
 }
 
 function iso() { return ISO[state.iso]; }
@@ -318,7 +330,7 @@ function updateReadout() {
         const rows = [
             ['상대 연령 근거', a.target.why, false],
             ['반감기 몇 번', a.halves < 0.001 ? '0.001번 미만' : `${fmt(a.halves, 3)}번`, a.state === 'ok'],
-            [`${iso().name}로 잴 수 있는 범위`, `${koYears(a.window[0])} ~ ${koYears(a.window[1])}`, false],
+            [`${iso().name}로 잴 수 있는 범위`, `${koYearsRough(a.window[0])} ~ ${koYearsRough(a.window[1])}`, false],
             ['오래된 차례', ORDERED.slice().reverse().map(k => TARGETS[k].name).join(' → '), false],
             ['지층 B', `${koYears(HIDDEN_B)} · A와 C 사이`, false],
             ['단층과 관입암', '서로 만나지 않아 상대 연령만으로는 순서를 알 수 없음', false],
@@ -348,20 +360,25 @@ function explain(a) {
     }
 
     if (state.mode === 'decay') {
-        let s = `${iso().full}의 반감기는 ${koYears(iso().half)}입니다. 반감기가 ${fmt(state.hl, 2)}번 지났으므로 남은 모원소는 2를 ${fmt(state.hl, 2)}번 나눈 만큼, 곧 ${fmt(a.frac * 100, 2)}%입니다. `;
-        s += `사라진 것이 아니라 ${fmt(a.daughter * 100, 2)}%가 ${iso().daughter}로 바뀌어 암석 속에 그대로 남아 있고, 그래서 둘의 비를 재면 지난 시간을 알 수 있습니다. `;
-        s += `지금 딸원소는 모원소의 ${a.frac > 0 ? `${fmt(a.ratio, 2)}배` : '헤아릴 수 없을 만큼 여러 배'}이고, 실제로 흐른 시간은 ${koYears(a.years)}입니다. `;
+        let s = `${iso().full}의 반감기는 ${koYears(iso().half)}입니다. `;
+        if (state.hl === 0) {
+            s += `아직 시간이 흐르지 않아 모원소가 처음 그대로 100% 남아 있고 딸원소는 하나도 없습니다. 이제부터 반감기가 한 번 지날 때마다 남은 양이 절반씩 됩니다. `;
+        } else {
+            s += `반감기가 ${fmt(state.hl, 2)}번 지났으므로 남은 모원소는 처음 양의 ½을 ${fmt(state.hl, 2)}제곱한 만큼, 곧 ${fmt(a.frac * 100, 2)}%입니다. `;
+            s += `사라진 것이 아니라 ${fmt(a.daughter * 100, 2)}%가 ${iso().daughterRo} 바뀌어 암석 속에 그대로 남아 있고, 그래서 둘의 비를 재면 지난 시간을 알 수 있습니다. `;
+            s += `지금 딸원소는 모원소의 ${fmt(a.ratio, 2)}배이고, 실제로 흐른 시간은 ${koYears(a.years)}입니다. `;
+        }
         s += `여기서 중요한 것은 반감기가 온도나 압력에 아무런 영향을 받지 않는다는 점입니다. 그래서 땅속 깊이 묻혔던 암석도 같은 시계로 잴 수 있습니다.`;
         $('elementaryExplanation').textContent = s;
     } else {
-        let s = `${a.target.name}은 ${a.target.why}. `;
+        let s = `${a.target.topic} ${a.target.why}. `;
         if (a.state === 'ok') {
-            s += `${iso().full}로 재면 모원소가 ${fmt(a.frac * 100, 1)}% 남아 있으니 반감기가 ${fmt(a.halves, 2)}번 지난 셈이고, 나이는 ${koYears(a.age)}입니다. `;
+            s += `${iso().fullRo} 재면 모원소가 ${fmt(a.frac * 100, 1)}% 남아 있으니 반감기가 ${fmt(a.halves, 2)}번 지난 셈이고, 나이는 ${koYears(a.age)}입니다. `;
         } else if (a.state === 'old') {
-            s += `그런데 ${iso().full}로는 잴 수 없습니다. 반감기가 ${koYears(iso().half)}뿐이라 ${koYears(a.age)} 동안 반감기가 ${a.halves > 1000 ? Math.round(a.halves).toLocaleString('ko-KR') : fmt(a.halves, 1)}번이나 지났고, 모원소가 하나도 남지 않아 잴 것이 없습니다. `;
+            s += `그런데 ${iso().fullRo}는 잴 수 없습니다. 반감기가 ${koYears(iso().half)}뿐이라 ${koYears(a.age)} 동안 반감기가 ${a.halves > 1000 ? Math.round(a.halves).toLocaleString('ko-KR') : fmt(a.halves, 1)}번이나 지났고, 모원소가 하나도 남지 않아 잴 것이 없습니다. `;
             s += `이럴 때는 반감기가 훨씬 긴 ⁴⁰K나 ²³⁸U를 씁니다. `;
         } else {
-            s += `그런데 ${iso().full}로는 잴 수 없습니다. 반감기가 ${koYears(iso().half)}이나 되는데 겨우 ${koYears(a.age)}밖에 지나지 않아, 딸원소가 잴 수 있을 만큼 쌓이지 않았습니다. `;
+            s += `그런데 ${iso().fullRo}는 잴 수 없습니다. 반감기가 ${koYears(iso().half)}이나 되는데 겨우 ${koYears(a.age)}밖에 지나지 않아, 딸원소가 잴 수 있을 만큼 쌓이지 않았습니다. `;
             s += `이렇게 젊은 것에는 반감기가 짧은 ¹⁴C를 씁니다. `;
         }
         s += `이 단면에서 오래된 것부터 늘어놓으면 ${ORDERED.slice().reverse().map(k => TARGETS[k].name).join(', ')} 차례입니다. 다만 단층과 관입암은 서로 자르지도 얹히지도 않아 상대 연령만으로는 순서를 정할 수 없고, 각각의 절대 연령을 재고 나서야 단층이 ${koYears(TARGETS.fault.age)}, 관입암이 ${koYears(TARGETS.dyke.age)}으로 단층이 더 오래되었음을 알게 됩니다.`;
