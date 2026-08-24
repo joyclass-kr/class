@@ -14,12 +14,20 @@
     const PLAYBACK_TIME_KEY = "classMusicPlaybackTime";
     const PLAYBACK_POSITIONS_KEY = "classMusicPlaybackPositions";
     const DEFAULT_MUSIC_VOLUME = 0.3;
-    const DEFAULT_SFX_VOLUME = 0.6;
+    const DEFAULT_SFX_VOLUME = 0.65;
     const DEFAULT_MUSIC_MUTED = true;
     const DEFAULT_MUSIC_LEVEL = Math.max(1, Math.round(DEFAULT_MUSIC_VOLUME * 5));
     const DEFAULT_SFX_LEVEL = Math.max(1, Math.round(DEFAULT_SFX_VOLUME * 5));
 
     const currentScript = document.currentScript;
+    if (!document.querySelector("script[data-site-back-navigation]")) {
+        const backScript = document.createElement("script");
+        backScript.dataset.siteBackNavigation = "true";
+        backScript.src = currentScript
+            ? new URL("../site-back-navigation.js", currentScript.src).href
+            : "/assets/site-back-navigation.js";
+        document.head.appendChild(backScript);
+    }
     if (!window.ClassGameSfx && !document.querySelector("script[data-class-game-sfx]")) {
         const sfxScript = document.createElement("script");
         sfxScript.dataset.classGameSfx = "true";
@@ -124,18 +132,39 @@
     control.setAttribute("role", "group");
     control.setAttribute("aria-label", "소리 조절");
     control.innerHTML = `
-        <div class="unified-audio-group">
-            <button class="unified-audio-toggle" id="musicMuteBtn" type="button" aria-label="음악 음소거" data-sfx="none">♪</button>
-            <input class="unified-audio-slider" id="musicVolumeSlider" type="range" min="0" max="1" step="0.01" aria-label="음악 음량" data-sfx="none">
-        </div>
-        <div class="unified-audio-divider"></div>
-        <div class="unified-audio-group">
-            <button class="unified-audio-toggle" id="sfxMuteBtn" type="button" aria-label="효과음 음소거" data-sfx="none">✦</button>
-            <input class="unified-audio-slider" id="sfxVolumeSlider" type="range" min="0" max="1" step="0.01" aria-label="효과음 음량" data-sfx="none">
+        <button class="unified-audio-menu-toggle" type="button" aria-label="소리 조절 열기" aria-expanded="false" data-sfx="none">🔊</button>
+        <div class="unified-audio-panel" aria-label="소리 조절 패널" hidden>
+            <div class="unified-audio-group">
+                <button class="unified-audio-toggle" id="musicMuteBtn" type="button" aria-label="음악 음소거" data-sfx="none">♪</button>
+                <input class="unified-audio-slider" id="musicVolumeSlider" type="range" min="0" max="1" step="0.01" aria-label="음악 음량" data-sfx="none">
+            </div>
+            <div class="unified-audio-divider"></div>
+            <div class="unified-audio-group">
+                <button class="unified-audio-toggle" id="sfxMuteBtn" type="button" aria-label="효과음 음소거" data-sfx="none">✦</button>
+                <input class="unified-audio-slider" id="sfxVolumeSlider" type="range" min="0" max="1" step="0.01" aria-label="효과음 음량" data-sfx="none">
+            </div>
         </div>`;
 
     document.body.appendChild(control);
     document.body.classList.add("class-music-ready");
+
+    const menuToggle = control.querySelector(".unified-audio-menu-toggle");
+    const audioPanel = control.querySelector(".unified-audio-panel");
+    const setPanelOpen = open => {
+        audioPanel.hidden = !open;
+        menuToggle.setAttribute("aria-expanded", String(open));
+        menuToggle.setAttribute("aria-label", open ? "소리 조절 닫기" : "소리 조절 열기");
+    };
+    menuToggle.addEventListener("click", () => setPanelOpen(audioPanel.hidden));
+    document.addEventListener("pointerdown", event => {
+        if (!audioPanel.hidden && !control.contains(event.target)) setPanelOpen(false);
+    });
+    document.addEventListener("keydown", event => {
+        if (event.key === "Escape" && !audioPanel.hidden) {
+            setPanelOpen(false);
+            menuToggle.focus();
+        }
+    });
 
     const musicMuteBtn = control.querySelector("#musicMuteBtn");
     const musicVolumeSlider = control.querySelector("#musicVolumeSlider");
@@ -212,6 +241,7 @@
     }
 
     function render() {
+        menuToggle.textContent = musicMuted && sfxMuted ? "🔇" : "🔊";
         renderSlider(musicMuteBtn, musicVolumeSlider, "음악", "♪", musicVolume, musicMuted);
         renderSlider(sfxMuteBtn, sfxVolumeSlider, "효과음", "✦", sfxVolume, sfxMuted);
     }

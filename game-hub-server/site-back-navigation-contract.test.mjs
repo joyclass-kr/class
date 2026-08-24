@@ -1,0 +1,52 @@
+import assert from "node:assert/strict";
+import fs from "node:fs";
+import path from "node:path";
+import test from "node:test";
+import { fileURLToPath } from "node:url";
+
+const root = path.resolve(path.dirname(fileURLToPath(import.meta.url)), "..");
+const read = relativePath => fs.readFileSync(path.join(root, relativePath), "utf8");
+
+test("site pages receive one shared icon-only back control", () => {
+  const server = read("game-hub-server/server.js");
+  const navigation = read("assets/site-back-navigation.js");
+
+  assert.match(server, /SITE_BACK_SCRIPT_TAG[\s\S]*site-back-navigation\.js/);
+  assert.match(server, /sendSiteHtml\(req, res, indexCandidate, next\)/);
+  assert.match(server, /sendSiteHtml\(req, res, candidate, next\)/);
+  assert.match(server, /"\/classboard"/);
+
+  assert.match(navigation, /aria-label="뒤로 가기"/);
+  assert.match(navigation, /width: 48px/);
+  assert.match(navigation, /height: 48px/);
+  assert.match(navigation, /border-radius: 13px/);
+  assert.doesNotMatch(navigation, />\s*메인\s*</);
+});
+
+test("back control climbs from an active game to its lobby first", () => {
+  const navigation = read("assets/site-back-navigation.js");
+  const lobby = read("assets/network/multiplayer-lobby.js");
+
+  assert.match(navigation, /new CustomEvent\("sitebackrequest"/);
+  assert.match(lobby, /if \(!this\.started\) return;[\s\S]*event\.preventDefault\(\);[\s\S]*location\.reload\(\)/);
+  assert.match(lobby, /leaveButton\.dataset\.siteBackLegacy = "true"/);
+});
+
+test("sound controls collapse into a top-right speaker with vertical sliders", () => {
+  const control = read("assets/sound/music-control.js");
+  const styles = read("assets/sound/music-control.css");
+
+  assert.match(control, /unified-audio-menu-toggle/);
+  assert.match(control, /unified-audio-panel[^>]*hidden/);
+  assert.match(styles, /right: max\(12px, env\(safe-area-inset-right\)\)/);
+  assert.match(styles, /writing-mode: vertical-lr/);
+  assert.match(styles, /\.unified-audio-panel\[hidden\]/);
+});
+
+test("space activities no longer link to the retired space hub", () => {
+  for (const activity of ["solar-system", "constellations", "earth-moon"]) {
+    const html = read(`learning/academics/space/${activity}/index.html`);
+    assert.doesNotMatch(html, /우주 관찰 메인/);
+    assert.doesNotMatch(html, /space-home-btn/);
+  }
+});
