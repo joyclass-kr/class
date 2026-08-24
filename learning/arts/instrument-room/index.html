@@ -11,9 +11,9 @@
     <link rel="preload" href="../music-studio/assets/piano/C4.ogg" as="fetch" type="audio/ogg" crossorigin>
     <link rel="preload" href="../music-studio/assets/piano/C5.ogg" as="fetch" type="audio/ogg" crossorigin>
     <link rel="preload" href="instrument-worklet-v2.js?v=20260824-fast-adsr" as="script">
-    <link rel="stylesheet" href="styles.css?v=20260824-physical-room">
+    <link rel="stylesheet" href="styles.css?v=20260824-virtual-instruments">
     <script src="instrument-core.js?v=20260824-physical-room" defer></script>
-    <script src="app.js?v=20260824-fast-adsr" defer></script>
+    <script src="app.js?v=20260824-virtual-instruments" defer></script>
 </head>
 <body>
     <div class="room-glow" aria-hidden="true"></div>
@@ -28,12 +28,17 @@
         </header>
 
         <main>
-            <nav class="instrument-tabs" aria-label="연주할 악기 선택">
-                <button class="active" type="button" data-instrument="piano" aria-selected="true"><span aria-hidden="true">♬</span><b>피아노</b><small>Grand</small></button>
-                <button type="button" data-instrument="bass" aria-selected="false"><span aria-hidden="true">●</span><b>베이스</b><small>4 String</small></button>
-                <button type="button" data-instrument="guitar" aria-selected="false"><span aria-hidden="true">◇</span><b>기타</b><small>6 String</small></button>
-                <button type="button" data-instrument="drums" aria-selected="false"><span aria-hidden="true">✦</span><b>드럼</b><small>Acoustic</small></button>
+            <nav class="instrument-tabs" aria-label="악기 대분류 선택">
+                <button class="active" type="button" data-family="keyboard" aria-selected="true"><span aria-hidden="true">♬</span><b>건반</b><small>KEYS</small></button>
+                <button type="button" data-family="strings" aria-selected="false"><span aria-hidden="true">◒</span><b>현악</b><small>STRINGS</small></button>
+                <button type="button" data-family="woodwind" aria-selected="false"><span aria-hidden="true">◌</span><b>목관</b><small>WOODWIND</small></button>
+                <button type="button" data-family="brass" aria-selected="false"><span aria-hidden="true">◖</span><b>금관</b><small>BRASS</small></button>
+                <button type="button" data-family="percussion" aria-selected="false"><span aria-hidden="true">✦</span><b>타악</b><small>PERCUSSION</small></button>
             </nav>
+            <section class="model-browser" aria-label="악기 모델 선택">
+                <div class="browser-title"><span id="familyEyebrow">KEYBOARD</span><b id="familyName">건반악기</b></div>
+                <div id="modelChooser" class="model-chooser" role="list"></div>
+            </section>
 
             <section class="instrument-console" aria-labelledby="instrumentName">
                 <div class="console-head">
@@ -49,15 +54,23 @@
                 </div>
 
                 <div class="console-body">
-                    <div class="instrument-visual" id="instrumentVisual" aria-hidden="true">
+                    <div class="instrument-visual stage-piano" id="instrumentVisual">
                         <div class="visual-label"><span id="visualFamily">ACOUSTIC</span><b id="visualModel">88 GRAND</b></div>
-                        <canvas id="stringCanvas" width="720" height="180"></canvas>
-                        <div class="speaker-ring"><i></i><i></i><i></i></div>
-                        <div class="signal-meter"><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i></div>
+                        <div class="studio-stage" id="studioStage">
+                            <img id="instrumentArtwork" class="instrument-artwork hidden" src="" alt="">
+                            <div id="classicalRender" class="classical-render hidden" aria-hidden="true"><i class="render-top"></i><i class="render-neck"></i><i class="render-body upper"></i><i class="render-body lower"></i><i class="render-detail"></i></div>
+                            <div id="machineDeck" class="machine-deck hidden" aria-label="전자 드럼 머신"></div>
+                            <div id="malletRender" class="mallet-render hidden" aria-label="타악기 직접 연주"></div>
+                            <div id="kitHotspots" class="kit-hotspots hidden" aria-label="드럼세트 직접 연주"></div>
+                            <canvas id="stringCanvas" width="720" height="180" aria-hidden="true"></canvas>
+                            <div class="stage-shadow" aria-hidden="true"></div>
+                        </div>
+                        <div class="performance-rail" aria-hidden="true"><span>EXPRESSION</span><div class="dynamic-envelope"><i></i></div><div class="signal-meter"><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i></div></div>
                     </div>
 
                     <aside class="control-panel" aria-label="악기 설정">
                         <div id="pianoControls" class="control-set">
+                            <div id="keyboardPatchControls" class="keyboard-patch-controls hidden"></div>
                             <button id="sustainButton" class="sustain-button" type="button" aria-pressed="false"><span>서스테인</span><b>SPACE</b></button>
                             <p>길게 누르거나 고정해서 사용할 수 있어요.</p>
                         </div>
@@ -67,11 +80,15 @@
                             <label><span>뮤트 <output id="muteOutput">10</output></span><input id="muteSlider" type="range" min="0" max="82" value="10"></label>
                             <label><span>피킹 위치 <output id="pickOutput">28</output></span><input id="pickSlider" type="range" min="8" max="90" value="28"></label>
                             <label><span>드라이브 <output id="driveOutput">8</output></span><input id="driveSlider" type="range" min="0" max="65" value="8"></label>
+                            <div id="guitarFxControls" class="fx-strip hidden"><label><span>디스토션 <output>0</output></span><input type="range" min="0" max="100" value="0"></label><label><span>딜레이 <output>18</output></span><input type="range" min="0" max="100" value="18"></label><label><span>리버브 <output>12</output></span><input type="range" min="0" max="100" value="12"></label></div>
+                        </div>
+                        <div id="classicalControls" class="control-set classical-controls hidden">
+                            <div class="expression-tabs"><button class="active" type="button">표현</button><button type="button">주법</button><button type="button">음색</button></div><label><span>다이내믹 <output>72</output></span><input type="range" min="0" max="127" value="72"></label><label><span id="expressionLabel">보우 압력</span><input type="range" min="0" max="100" value="48"></label><div class="expression-actions"><button type="button">비브라토</button><button type="button">레가토</button></div>
                         </div>
                         <div id="drumControls" class="control-set hidden">
-                            <div class="kit-readout"><span>MODAL KIT</span><b>막과 금속의 공명을 계산해 소리를 만들어요.</b></div>
-                            <label><span>공명 <output id="drumResonanceOutput">58</output></span><input id="drumResonanceSlider" type="range" min="20" max="90" value="58"></label>
-                            <label><span>밝기 <output id="drumToneOutput">62</output></span><input id="drumToneSlider" type="range" min="20" max="95" value="62"></label>
+                            <div class="kit-readout"><span id="drumSystemLabel">MODAL KIT</span><b id="drumSystemDescription">막과 금속의 공명을 계산해 소리를 만들어요.</b></div>
+                            <label><span><i id="drumResonanceLabel">공명</i> <output id="drumResonanceOutput">58</output></span><input id="drumResonanceSlider" type="range" min="20" max="90" value="58"></label>
+                            <label><span><i id="drumToneLabel">밝기</i> <output id="drumToneOutput">62</output></span><input id="drumToneSlider" type="range" min="20" max="95" value="62"></label>
                         </div>
                     </aside>
                 </div>
