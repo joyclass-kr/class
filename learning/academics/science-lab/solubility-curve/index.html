@@ -1,0 +1,175 @@
+<!doctype html>
+<html lang="ko">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="theme-color" content="#07131c">
+    <title>과학 실험실</title>
+    <meta name="description" content="용해도 곡선을 읽어 포화 여부와 냉각할 때 석출되는 양을 계산하는 중학교 과학 모의실험">
+    <link rel="stylesheet" as="style" crossorigin href="https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.9/dist/web/static/pretendard.css">
+    <link rel="stylesheet" href="styles.css?v=1">
+    <link rel="stylesheet" href="curve-visual.css?v=1">
+    <link rel="stylesheet" href="quiz.css?v=1">
+</head>
+<body>
+    <main>
+        <header class="page-header">
+            <div class="title-row">
+                <a href="../">← 과학 실험실</a>
+                <h1>용해도 곡선 읽기</h1>
+            </div>
+            <div class="grade-tags"><span>중학교</span><span>화학</span></div>
+        </header>
+
+        <ol class="method-steps" aria-label="실험 방법">
+            <li>물 100 g에 넣을 용질과 양을 정합니다.</li>
+            <li>온도를 정하고 다 녹는지 확인합니다.</li>
+            <li>용해도 곡선에서 그 온도의 용해도를 읽습니다.</li>
+            <li>식혔을 때 몇 g이 석출되는지 구합니다.</li>
+        </ol>
+
+        <div class="experiment-layout">
+            <section class="panel control-panel" aria-labelledby="control-title">
+                <h2 id="control-title">실험 조건</h2>
+                <p class="water-standard">물 100 g 기준 · 용해도는 물 100 g에 녹는 최대 g수</p>
+
+                <fieldset class="solute-field">
+                    <legend>용질</legend>
+                    <div class="solute-buttons">
+                        <button type="button" data-solute="kno3" class="selected">질산칼륨</button>
+                        <button type="button" data-solute="kcl">염화칼륨</button>
+                        <button type="button" data-solute="nacl">염화나트륨</button>
+                    </div>
+                </fieldset>
+
+                <div class="range-heading">
+                    <label for="addedRange">넣은 양</label>
+                    <output id="addedOutput" for="addedRange">100 g</output>
+                </div>
+                <input id="addedRange" type="range" min="0" max="260" step="5" value="100">
+                <div class="range-scale" aria-hidden="true"><span>0 g</span><span>130 g</span><span>260 g</span></div>
+
+                <div class="range-heading amount-heading">
+                    <label for="tempRange">온도</label>
+                    <output id="tempOutput" for="tempRange">60 ℃</output>
+                </div>
+                <input id="tempRange" type="range" min="0" max="100" step="5" value="60">
+                <div class="range-scale" aria-hidden="true"><span>0℃</span><span>50℃</span><span>100℃</span></div>
+
+                <div class="range-heading amount-heading">
+                    <label for="coolRange">식힌 뒤 온도</label>
+                    <output id="coolOutput" for="coolRange">20 ℃</output>
+                </div>
+                <input id="coolRange" type="range" min="0" max="100" step="5" value="20">
+                <div class="range-scale" aria-hidden="true"><span>0℃</span><span>50℃</span><span>100℃</span></div>
+
+                <fieldset class="prediction-field">
+                    <legend>지금 온도에서</legend>
+                    <div class="prediction-buttons">
+                        <button type="button" data-prediction="all">모두 녹는다</button>
+                        <button type="button" data-prediction="left">녹지 않고 남는다</button>
+                    </div>
+                </fieldset>
+
+                <button class="run-button" id="checkBtn" type="button">결과 확인하기</button>
+
+                <section class="result-box" aria-labelledby="result-title" aria-live="polite">
+                    <h3 id="result-title">관찰 결과</h3>
+                    <p id="resultEmpty">조건을 정하고 확인해 보세요.</p>
+                    <div id="resultContent" hidden>
+                        <div class="result-numbers">
+                            <article><span>녹지 않고 남는 양</span><strong id="valueA">-</strong></article>
+                            <article><span>식히면 석출되는 양</span><strong id="valueB">-</strong></article>
+                        </div>
+                        <p class="prediction-result" id="predictionResult"></p>
+                        <p class="explanation" id="elementaryExplanation"></p>
+                    </div>
+                </section>
+            </section>
+
+            <section class="panel curve-stage" aria-label="관찰 화면">
+                <div class="stage-heading"><h2>관찰</h2><span id="stageBadge">-</span></div>
+
+                <div class="stage-views">
+                    <svg class="beaker-svg" viewBox="0 0 460 168" aria-hidden="true">
+                        <g id="beakerGroup"></g>
+                    </svg>
+                    <svg class="graph-svg" viewBox="0 0 460 238" aria-hidden="true">
+                        <g id="graphGroup"></g>
+                    </svg>
+                </div>
+
+                <p class="stage-caption" id="stageCaption">용해도 곡선에서 그 온도의 용해도를 읽어 보세요.</p>
+                <div class="data-note" id="dataNote"></div>
+            </section>
+        </div>
+
+        <section class="panel meaning-panel">
+            <h2>실험 결과의 의미</h2>
+            <div class="meaning-body">
+                <p><strong>용해도</strong> 어떤 온도에서 물 100 g에 녹을 수 있는 용질의 최대 g수입니다.</p>
+                <p><strong>포화 용액</strong> 그 온도에서 녹을 수 있는 최대량이 녹아 있는 용액입니다. 더 넣으면 녹지 않고 가라앉습니다.</p>
+                <p><strong>석출</strong> 식히면 용해도가 줄어드는 만큼 녹아 있던 용질이 결정으로 나옵니다. 곡선이 가파른 물질일수록 많이 석출됩니다.</p>
+            </div>
+        </section>
+
+        <details class="quiz-section" aria-labelledby="quiz-title">
+            <summary class="quiz-heading"><h2 id="quiz-title">확인 문제</h2><span>4문제</span></summary>
+            <div class="quiz-grid">
+                <article class="quiz-card" data-answer="b">
+                    <h3>용해도의 뜻으로 옳은 것은?</h3>
+                    <div class="quiz-options">
+                        <label><input type="radio" name="q1" value="a"> 용액 100 g에 녹아 있는 용질의 g수</label>
+                        <label><input type="radio" name="q1" value="b"> 어떤 온도에서 물 100 g에 녹을 수 있는 최대 g수</label>
+                        <label><input type="radio" name="q1" value="c"> 물에 녹는 데 걸리는 시간</label>
+                        <label><input type="radio" name="q1" value="d"> 용질이 녹는 온도</label>
+                    </div>
+                    <button class="answer-button" type="button">정답 확인</button>
+                    <p class="answer-result" aria-live="polite"></p>
+                    <p class="answer-explanation" hidden>용해도는 일정한 온도에서 물 100 g에 녹을 수 있는 용질의 최대 g수입니다.</p>
+                </article>
+
+                <article class="quiz-card" data-answer="c">
+                    <h3>60 ℃ 물 100 g에 질산칼륨을 녹여 포화시킨 뒤 20 ℃로 식히면?</h3>
+                    <div class="quiz-options">
+                        <label><input type="radio" name="q2" value="a"> 아무 변화가 없다</label>
+                        <label><input type="radio" name="q2" value="b"> 더 많이 녹는다</label>
+                        <label><input type="radio" name="q2" value="c"> 용해도 차이만큼 결정이 석출된다</label>
+                        <label><input type="radio" name="q2" value="d"> 물이 모두 증발한다</label>
+                    </div>
+                    <button class="answer-button" type="button">정답 확인</button>
+                    <p class="answer-result" aria-live="polite"></p>
+                    <p class="answer-explanation" hidden>식히면 용해도가 줄어들므로 그 차이만큼 녹아 있던 용질이 결정으로 나옵니다.</p>
+                </article>
+
+                <article class="quiz-card" data-answer="a">
+                    <h3>온도를 높여도 녹는 양이 거의 변하지 않는 물질은?</h3>
+                    <div class="quiz-options">
+                        <label><input type="radio" name="q3" value="a"> 염화나트륨</label>
+                        <label><input type="radio" name="q3" value="b"> 질산칼륨</label>
+                        <label><input type="radio" name="q3" value="c"> 모든 고체가 크게 변한다</label>
+                        <label><input type="radio" name="q3" value="d"> 어떤 물질도 변하지 않는다</label>
+                    </div>
+                    <button class="answer-button" type="button">정답 확인</button>
+                    <p class="answer-result" aria-live="polite"></p>
+                    <p class="answer-explanation" hidden>염화나트륨은 용해도 곡선이 거의 평평해서 온도를 높여도 녹는 양이 크게 늘지 않습니다.</p>
+                </article>
+
+                <article class="quiz-card" data-answer="d">
+                    <h3>재결정으로 물질을 분리하기에 가장 알맞은 것은?</h3>
+                    <div class="quiz-options">
+                        <label><input type="radio" name="q4" value="a"> 용해도 곡선이 평평한 물질</label>
+                        <label><input type="radio" name="q4" value="b"> 물에 녹지 않는 물질</label>
+                        <label><input type="radio" name="q4" value="c"> 온도와 관계없이 잘 녹는 물질</label>
+                        <label><input type="radio" name="q4" value="d"> 온도에 따라 용해도 차이가 큰 물질</label>
+                    </div>
+                    <button class="answer-button" type="button">정답 확인</button>
+                    <p class="answer-result" aria-live="polite"></p>
+                    <p class="answer-explanation" hidden>온도에 따른 용해도 차이가 클수록 식혔을 때 많이 석출되므로 재결정으로 분리하기 좋습니다.</p>
+                </article>
+            </div>
+        </details>
+    </main>
+    <script src="app.js?v=2"></script>
+</body>
+</html>
