@@ -8,6 +8,9 @@ const html = fs.readFileSync(fruitBellPath, "utf8");
 
 assert.ok(html.includes('id="flipBtn" class="flip" data-sfx="none"'));
 assert.ok(html.includes('playFruitSfx("bell");'));
+assert.ok(html.includes('bell:["/learning/games/fruitbell/assets/sound/sfx/bell-hit-01.ogg"]'));
+assert.ok(html.includes('penaltyBell:["/learning/games/fruitbell/assets/sound/sfx/bell-hit-02.ogg"]'));
+assert.ok(html.includes('playFruitSfx("penaltyBell"'));
 assert.ok(html.includes('state.sfxCue=makeSfxCue("flip"'));
 assert.ok(html.includes('state.sfxCue=makeSfxCue("bell-result"'));
 assert.ok(html.includes("consumeSfxCue(state.sfxCue);"));
