@@ -1,0 +1,177 @@
+<!doctype html>
+<html lang="ko">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="theme-color" content="#07131c">
+    <title>과학 실험실</title>
+    <meta name="description" content="막대를 한쪽 끝에서 가열해 물질에 따라 열이 전달되는 빠르기를 비교하는 초등 과학 모의실험">
+    <link rel="stylesheet" as="style" crossorigin href="https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.9/dist/web/static/pretendard.css">
+    <link rel="stylesheet" href="styles.css?v=1">
+    <link rel="stylesheet" href="heat-visual.css?v=1">
+    <link rel="stylesheet" href="quiz.css?v=1">
+</head>
+<body>
+    <main>
+        <header class="page-header">
+            <div class="title-row">
+                <a href="../">← 과학 실험실</a>
+                <h1>온도 측정과 열의 이동</h1>
+            </div>
+            <div class="grade-tags"><span>초등 5~6</span><span>물리</span></div>
+        </header>
+
+        <ol class="method-steps" aria-label="실험 방법">
+            <li>막대의 물질을 고릅니다.</li>
+            <li>철 막대와 비교해 열이 얼마나 빨리 전달될지 예상합니다.</li>
+            <li>왼쪽 끝을 가열합니다.</li>
+            <li>구슬이 떨어지는 순서와 온도 변화를 관찰합니다.</li>
+        </ol>
+
+        <div class="experiment-layout">
+            <section class="panel control-panel" aria-labelledby="control-title">
+                <h2 id="control-title">실험 조건</h2>
+                <p class="water-standard">기준: 철 막대와 비교 · 구슬은 60 ℃에서 떨어짐</p>
+
+                <fieldset class="material-field">
+                    <legend>막대의 물질</legend>
+                    <div class="material-buttons">
+                        <button type="button" data-material="copper">구리</button>
+                        <button type="button" data-material="aluminum">알루미늄</button>
+                        <button type="button" data-material="iron" class="selected">철</button>
+                        <button type="button" data-material="glass">유리</button>
+                    </div>
+                </fieldset>
+
+                <fieldset class="prediction-field">
+                    <legend>열 전달 빠르기 예상</legend>
+                    <div class="prediction-buttons three">
+                        <button type="button" data-prediction="faster">더 빠르다</button>
+                        <button type="button" data-prediction="slower">더 느리다</button>
+                        <button type="button" data-prediction="same">비슷하다</button>
+                    </div>
+                </fieldset>
+
+                <button class="run-button" id="heatBtn" type="button">가열 시작</button>
+                <button class="reset-button" id="resetBtn" type="button">처음으로</button>
+
+                <section class="result-box" aria-labelledby="result-title" aria-live="polite">
+                    <h3 id="result-title">관찰 결과</h3>
+                    <p id="resultEmpty">물질을 고르고 가열해 보세요.</p>
+                    <div id="resultContent" hidden>
+                        <div class="result-numbers">
+                            <article><span>끝부분 온도</span><strong id="resultEndTemp">20 ℃</strong></article>
+                            <article><span>떨어진 구슬</span><strong id="resultBeads">0개</strong></article>
+                        </div>
+                        <p class="prediction-result" id="predictionResult"></p>
+                        <p class="explanation" id="elementaryExplanation"></p>
+                    </div>
+                </section>
+            </section>
+
+            <section class="panel heat-stage" aria-label="열의 이동 관찰 화면">
+                <div class="stage-heading"><h2>관찰</h2><span id="materialBadge">철 · 가열 전</span></div>
+
+                <div class="stage-views">
+                    <svg class="heat-svg" viewBox="0 0 480 300" aria-hidden="true">
+                        <defs>
+                            <linearGradient id="rodGrad" x1="0" y1="0" x2="1" y2="0">
+                                <!-- stops are rewritten every frame from the simulated
+                                     temperature profile, so the colour along the rod is the
+                                     solution of the heat equation, not a decorative sweep -->
+                            </linearGradient>
+                        </defs>
+
+                        <text class="axis-label" x="60" y="34" text-anchor="middle">0 cm</text>
+                        <text class="axis-label" x="240" y="34" text-anchor="middle">15 cm</text>
+                        <text class="axis-label" x="420" y="34" text-anchor="middle">30 cm</text>
+
+                        <g id="probeGroup"></g>
+
+                        <rect class="rod" x="60" y="120" width="360" height="26" rx="6" fill="url(#rodGrad)"/>
+                        <rect class="rod-outline" x="60" y="120" width="360" height="26" rx="6" fill="none"/>
+
+                        <g id="beadGroup"></g>
+
+                        <g id="flame" class="flame" hidden>
+                            <path class="flame-outer" d="M52,196 C36,178 40,162 52,150 C64,162 68,178 52,196 Z"/>
+                            <path class="flame-inner" d="M52,190 C44,178 46,168 52,160 C58,168 60,178 52,190 Z"/>
+                        </g>
+                        <rect class="burner" x="34" y="196" width="36" height="9" rx="3"/>
+                        <text class="stage-label" x="52" y="222" text-anchor="middle">알코올램프</text>
+                    </svg>
+                </div>
+
+                <p class="stage-caption" id="stageCaption">물질을 고르고 가열을 시작해 보세요.</p>
+            </section>
+        </div>
+
+        <section class="panel meaning-panel">
+            <h2>실험 결과의 의미</h2>
+            <div class="meaning-body">
+                <p><strong>전도</strong> 고체에서 열은 온도가 높은 곳에서 낮은 곳으로 물질을 따라 이동합니다.</p>
+                <p><strong>물질에 따른 차이</strong> 구리·알루미늄 같은 금속은 열을 빠르게, 유리는 매우 느리게 전달합니다.</p>
+                <p><strong>순서</strong> 가열한 곳에서 가까운 쪽부터 차례로 뜨거워집니다.</p>
+            </div>
+        </section>
+
+        <details class="quiz-section" aria-labelledby="quiz-title">
+            <summary class="quiz-heading"><h2 id="quiz-title">확인 문제</h2><span>4문제</span></summary>
+            <div class="quiz-grid">
+                <article class="quiz-card" data-answer="b">
+                    <h3>고체에서 열은 어느 쪽으로 이동하는가?</h3>
+                    <div class="quiz-options">
+                        <label><input type="radio" name="q1" value="a"> 온도가 낮은 곳에서 높은 곳으로</label>
+                        <label><input type="radio" name="q1" value="b"> 온도가 높은 곳에서 낮은 곳으로</label>
+                        <label><input type="radio" name="q1" value="c"> 항상 위쪽으로만</label>
+                        <label><input type="radio" name="q1" value="d"> 이동하지 않는다</label>
+                    </div>
+                    <button class="answer-button" type="button">정답 확인</button>
+                    <p class="answer-result" aria-live="polite"></p>
+                    <p class="answer-explanation" hidden>열은 온도가 높은 곳에서 낮은 곳으로 이동합니다.</p>
+                </article>
+
+                <article class="quiz-card" data-answer="a">
+                    <h3>막대의 한쪽 끝을 가열하면 구슬은 어떤 순서로 떨어지는가?</h3>
+                    <div class="quiz-options">
+                        <label><input type="radio" name="q2" value="a"> 가열한 곳에서 가까운 것부터</label>
+                        <label><input type="radio" name="q2" value="b"> 가열한 곳에서 먼 것부터</label>
+                        <label><input type="radio" name="q2" value="c"> 모두 동시에</label>
+                        <label><input type="radio" name="q2" value="d"> 아무 순서 없이</label>
+                    </div>
+                    <button class="answer-button" type="button">정답 확인</button>
+                    <p class="answer-result" aria-live="polite"></p>
+                    <p class="answer-explanation" hidden>열이 가까운 곳부터 차례로 전달되므로 가까운 구슬부터 떨어집니다.</p>
+                </article>
+
+                <article class="quiz-card" data-answer="d">
+                    <h3>같은 조건에서 열이 가장 느리게 전달되는 것은?</h3>
+                    <div class="quiz-options">
+                        <label><input type="radio" name="q3" value="a"> 구리</label>
+                        <label><input type="radio" name="q3" value="b"> 알루미늄</label>
+                        <label><input type="radio" name="q3" value="c"> 철</label>
+                        <label><input type="radio" name="q3" value="d"> 유리</label>
+                    </div>
+                    <button class="answer-button" type="button">정답 확인</button>
+                    <p class="answer-result" aria-live="polite"></p>
+                    <p class="answer-explanation" hidden>금속은 열을 잘 전달하지만 유리는 열을 훨씬 느리게 전달합니다.</p>
+                </article>
+
+                <article class="quiz-card" data-answer="c">
+                    <h3>냄비 손잡이를 플라스틱이나 나무로 만드는 까닭은?</h3>
+                    <div class="quiz-options">
+                        <label><input type="radio" name="q4" value="a"> 더 가볍게 만들려고</label>
+                        <label><input type="radio" name="q4" value="b"> 더 예쁘게 보이려고</label>
+                        <label><input type="radio" name="q4" value="c"> 열이 잘 전달되지 않아 손이 뜨겁지 않게 하려고</label>
+                        <label><input type="radio" name="q4" value="d"> 열을 더 빨리 전달하려고</label>
+                    </div>
+                    <button class="answer-button" type="button">정답 확인</button>
+                    <p class="answer-result" aria-live="polite"></p>
+                    <p class="answer-explanation" hidden>플라스틱과 나무는 열을 잘 전달하지 않아 손잡이로 알맞습니다.</p>
+                </article>
+            </div>
+        </details>
+    </main>
+    <script src="app.js?v=4"></script>
+</body>
+</html>
