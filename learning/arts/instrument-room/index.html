@@ -1,0 +1,105 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+    <meta name="theme-color" content="#0b1114">
+    <title>디지털 악기실</title>
+    <meta name="description" content="피아노와 물리 모델링 베이스, 기타, 드럼을 바로 연주하는 디지털 악기실">
+    <link rel="preload" href="../music-studio/assets/piano/C2.ogg" as="fetch" type="audio/ogg" crossorigin>
+    <link rel="preload" href="../music-studio/assets/piano/C3.ogg" as="fetch" type="audio/ogg" crossorigin>
+    <link rel="preload" href="../music-studio/assets/piano/C4.ogg" as="fetch" type="audio/ogg" crossorigin>
+    <link rel="preload" href="../music-studio/assets/piano/C5.ogg" as="fetch" type="audio/ogg" crossorigin>
+    <link rel="preload" href="instrument-worklet-v2.js?v=20260824-instant-onset" as="script">
+    <link rel="stylesheet" href="styles.css?v=20260824-physical-room">
+    <script src="instrument-core.js?v=20260824-physical-room" defer></script>
+    <script src="app.js?v=20260824-instant-onset" defer></script>
+</head>
+<body>
+    <div class="room-glow" aria-hidden="true"></div>
+    <div class="app-shell">
+        <header class="topbar">
+            <a class="back-link" href="../../../" aria-label="메인 화면으로 돌아가기">← <span>메인</span></a>
+            <div class="room-title">
+                <span class="level-bars" aria-hidden="true"><i></i><i></i><i></i><i></i></span>
+                <span><b>디지털 악기실</b><small>LOCAL PHYSICAL INSTRUMENTS</small></span>
+            </div>
+            <button id="audioButton" class="audio-button" type="button"><span aria-hidden="true">●</span> 소리 켜기</button>
+        </header>
+
+        <main>
+            <nav class="instrument-tabs" aria-label="연주할 악기 선택">
+                <button class="active" type="button" data-instrument="piano" aria-selected="true"><span aria-hidden="true">♬</span><b>피아노</b><small>Grand</small></button>
+                <button type="button" data-instrument="bass" aria-selected="false"><span aria-hidden="true">●</span><b>베이스</b><small>4 String</small></button>
+                <button type="button" data-instrument="guitar" aria-selected="false"><span aria-hidden="true">◇</span><b>기타</b><small>6 String</small></button>
+                <button type="button" data-instrument="drums" aria-selected="false"><span aria-hidden="true">✦</span><b>드럼</b><small>Acoustic</small></button>
+            </nav>
+
+            <section class="instrument-console" aria-labelledby="instrumentName">
+                <div class="console-head">
+                    <div>
+                        <span id="modelBadge" class="model-badge">SAMPLED GRAND</span>
+                        <h1 id="instrumentName">그랜드 피아노</h1>
+                        <p id="instrumentDescription">화성학 연습실과 같은 피아노예요. 건반을 누르고 스페이스바로 서스테인을 사용해 보세요.</p>
+                    </div>
+                    <div id="guitarModeSwitch" class="mode-switch hidden" role="group" aria-label="기타 입력 방식">
+                        <button class="active" type="button" data-guitar-mode="keyboard">건반</button>
+                        <button type="button" data-guitar-mode="chords">코드패드</button>
+                    </div>
+                </div>
+
+                <div class="console-body">
+                    <div class="instrument-visual" id="instrumentVisual" aria-hidden="true">
+                        <div class="visual-label"><span id="visualFamily">ACOUSTIC</span><b id="visualModel">88 GRAND</b></div>
+                        <canvas id="stringCanvas" width="720" height="180"></canvas>
+                        <div class="speaker-ring"><i></i><i></i><i></i></div>
+                        <div class="signal-meter"><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i></div>
+                    </div>
+
+                    <aside class="control-panel" aria-label="악기 설정">
+                        <div id="pianoControls" class="control-set">
+                            <button id="sustainButton" class="sustain-button" type="button" aria-pressed="false"><span>서스테인</span><b>SPACE</b></button>
+                            <p>길게 누르거나 고정해서 사용할 수 있어요.</p>
+                        </div>
+                        <div id="stringControls" class="control-set hidden">
+                            <div id="articulationButtons" class="articulation-buttons" aria-label="주법 선택"></div>
+                            <label><span>톤 <output id="toneOutput">64</output></span><input id="toneSlider" type="range" min="10" max="95" value="64"></label>
+                            <label><span>뮤트 <output id="muteOutput">10</output></span><input id="muteSlider" type="range" min="0" max="82" value="10"></label>
+                            <label><span>피킹 위치 <output id="pickOutput">28</output></span><input id="pickSlider" type="range" min="8" max="90" value="28"></label>
+                            <label><span>드라이브 <output id="driveOutput">8</output></span><input id="driveSlider" type="range" min="0" max="65" value="8"></label>
+                        </div>
+                        <div id="drumControls" class="control-set hidden">
+                            <div class="kit-readout"><span>MODAL KIT</span><b>막과 금속의 공명을 계산해 소리를 만들어요.</b></div>
+                            <label><span>공명 <output id="drumResonanceOutput">58</output></span><input id="drumResonanceSlider" type="range" min="20" max="90" value="58"></label>
+                            <label><span>밝기 <output id="drumToneOutput">62</output></span><input id="drumToneSlider" type="range" min="20" max="95" value="62"></label>
+                        </div>
+                    </aside>
+                </div>
+            </section>
+
+            <section id="playSurface" class="play-surface" aria-label="악기 연주 영역">
+                <div class="play-toolbar">
+                    <div><span id="inputHint">화면 건반 또는 A–K 키로 연주</span><small id="noteReadout" aria-live="polite">준비됨</small></div>
+                    <div id="octaveControls" class="octave-controls" aria-label="컴퓨터 키보드 옥타브">
+                        <button id="octaveDown" type="button" aria-label="한 옥타브 내리기">−</button>
+                        <span>키보드 옥타브 <b id="octaveReadout">4</b></span>
+                        <button id="octaveUp" type="button" aria-label="한 옥타브 올리기">＋</button>
+                    </div>
+                </div>
+                <div id="keyboardViewport" class="keyboard-viewport">
+                    <div id="keyboard" class="keyboard" role="group" aria-label="연주 건반"></div>
+                </div>
+                <div id="chordSurface" class="chord-surface hidden">
+                    <div id="chordPads" class="chord-pads" role="group" aria-label="기타 코드 선택"></div>
+                    <div class="strum-controls">
+                        <button type="button" data-strum="down"><span aria-hidden="true">↓</span><b>다운 스트로크</b></button>
+                        <button type="button" data-strum="up"><span aria-hidden="true">↑</span><b>업 스트로크</b></button>
+                    </div>
+                </div>
+                <div id="drumPads" class="drum-pads hidden" role="group" aria-label="드럼 패드"></div>
+            </section>
+        </main>
+    </div>
+    <div id="toast" class="toast" role="status" aria-live="polite"></div>
+</body>
+</html>
