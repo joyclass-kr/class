@@ -229,7 +229,7 @@ body {
     border-radius: 999px;
     background: rgba(27, 15, 16, 0.72);
     color: var(--gold-bright);
-    font-size: clamp(11px, 1.881cqh, 20px);
+    font-size: clamp(13px, 2.605cqh, 27px);
     font-weight: 700;
     backdrop-filter: blur(3px);
 }
@@ -260,7 +260,7 @@ body {
 
 .spread-text p {
     margin: 0 0 4px;
-    font-size: clamp(15px, 2.605cqh, 27px);
+    font-size: clamp(14px, 2.315cqh, 24px);
     font-weight: 500;
     line-height: 1.65;
     color: var(--ink);
@@ -284,7 +284,7 @@ body {
 
 .page-reflection .reflection-moral {
     max-width: 560px;
-    font-size: clamp(15px, 2.605cqh, 27px);
+    font-size: clamp(14px, 2.315cqh, 24px);
     line-height: 1.75;
     color: var(--ink);
 }
@@ -357,7 +357,7 @@ body {
 
 .page-cover .story-page-right p {
     margin: 0 0 6px;
-    font-size: clamp(13.5px, 2.243cqh, 23px);
+    font-size: clamp(14px, 2.315cqh, 24px);
     font-weight: 500;
     line-height: 1.56;
     color: var(--ink);
