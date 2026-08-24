@@ -1,0 +1,154 @@
+<!doctype html>
+<html lang="ko">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="theme-color" content="#07131c">
+    <title>과학 실험실</title>
+    <meta name="description" content="두 파동의 경로차로 보강 간섭과 상쇄 간섭을 확인하고 줄에 생기는 정상파의 마디와 배, 고유 진동수를 알아보는 고등학교 과학 모의실험">
+    <link rel="stylesheet" as="style" crossorigin href="https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.9/dist/web/static/pretendard.css">
+    <link rel="stylesheet" href="styles.css?v=1">
+    <link rel="stylesheet" href="wave-visual.css?v=1">
+    <link rel="stylesheet" href="quiz.css?v=1">
+</head>
+<body>
+    <main>
+        <header class="page-header">
+            <div class="title-row">
+                <a href="../">← 과학 실험실</a>
+                <h1>파동의 간섭과 정상파</h1>
+            </div>
+            <div class="grade-tags"><span>고등학교</span><span>물리</span></div>
+        </header>
+
+        <ol class="method-steps" aria-label="실험 방법">
+            <li>간섭과 정상파 가운데 하나를 고릅니다.</li>
+            <li>두 파동의 경로차를 바꿔 봅니다.</li>
+            <li>줄의 길이와 진동 모드를 정합니다.</li>
+            <li>마디와 배의 개수, 고유 진동수를 확인합니다.</li>
+        </ol>
+
+        <div class="experiment-layout">
+            <section class="panel control-panel" aria-labelledby="control-title">
+                <h2 id="control-title">실험 조건</h2>
+                <p class="water-standard" id="methodHint">두 파동이 겹치면 변위끼리 그대로 더해집니다</p>
+
+                <fieldset class="mode-field">
+                    <legend>무엇을 볼까요</legend>
+                    <div class="mode-buttons">
+                        <button type="button" data-mode="superpose">간섭<small>경로차와 중첩</small></button>
+                        <button type="button" data-mode="standing">정상파<small>마디와 배</small></button>
+                    </div>
+                </fieldset>
+
+                <div id="controlArea"></div>
+
+                <fieldset class="prediction-field">
+                    <legend id="predictionLegend">어떻게 될까요?</legend>
+                    <div class="prediction-buttons three" id="predictionArea"></div>
+                </fieldset>
+
+                <button class="run-button" id="checkBtn" type="button">결과 보기</button>
+                <button class="reset-button" id="resetBtn" type="button">처음으로</button>
+
+                <section class="result-box" aria-labelledby="result-title" aria-live="polite">
+                    <h3 id="result-title">관찰 결과</h3>
+                    <p id="resultEmpty">조건을 정하고 결과를 확인해 보세요.</p>
+                    <div id="resultContent" hidden>
+                        <div class="result-numbers">
+                            <article><span id="labelA">값</span><strong id="valueA">-</strong></article>
+                            <article><span id="labelB">값</span><strong id="valueB">-</strong></article>
+                        </div>
+                        <p class="prediction-result" id="predictionResult"></p>
+                        <p class="explanation" id="elementaryExplanation"></p>
+                    </div>
+                </section>
+            </section>
+
+            <section class="panel wave-stage" aria-label="관찰 화면">
+                <div class="stage-heading"><h2>관찰</h2><span id="stageBadge">-</span></div>
+
+                <div class="stage-views">
+                    <svg class="main-svg" viewBox="0 0 460 214" aria-hidden="true">
+                        <defs><clipPath id="waveClip"><rect x="40" y="14" width="392" height="186"/></clipPath></defs>
+                        <g id="mainGroup"></g>
+                    </svg>
+                    <svg class="graph-svg" viewBox="0 0 460 196" aria-hidden="true">
+                        <g id="graphGroup"></g>
+                    </svg>
+                </div>
+
+                <p class="stage-caption" id="stageCaption">위의 두 파동을 세로로 더한 것이 아래 파동입니다.</p>
+                <div class="data-note" id="dataNote"></div>
+            </section>
+        </div>
+
+        <section class="panel meaning-panel">
+            <h2>실험 결과의 의미</h2>
+            <div class="meaning-body">
+                <p><strong>중첩 원리</strong> 두 파동이 겹치는 곳의 변위는 각 파동의 변위를 그대로 더한 값입니다. 겹친 뒤에도 각 파동은 원래대로 지나갑니다.</p>
+                <p><strong>보강과 상쇄</strong> 경로차가 파장의 정수배이면 마루와 마루가 겹쳐 보강되고, 반파장의 홀수배이면 마루와 골이 겹쳐 상쇄됩니다.</p>
+                <p><strong>정상파</strong> 양 끝이 고정된 줄에서는 길이가 반파장의 정수배일 때만 정상파가 생깁니다. 그래서 고유 진동수가 띄엄띄엄 정해집니다.</p>
+            </div>
+        </section>
+
+        <details class="quiz-section" aria-labelledby="quiz-title">
+            <summary class="quiz-heading"><h2 id="quiz-title">확인 문제</h2><span>4문제</span></summary>
+            <div class="quiz-grid">
+                <article class="quiz-card" data-answer="c">
+                    <h3>경로차가 파장의 정확히 1.5배일 때 두 파동은?</h3>
+                    <div class="quiz-options">
+                        <label><input type="radio" name="q1" value="a"> 보강 간섭한다</label>
+                        <label><input type="radio" name="q1" value="b"> 진폭이 2배가 된다</label>
+                        <label><input type="radio" name="q1" value="c"> 상쇄 간섭해 진폭이 0이 된다</label>
+                        <label><input type="radio" name="q1" value="d"> 아무 일도 일어나지 않는다</label>
+                    </div>
+                    <button class="answer-button" type="button">정답 확인</button>
+                    <p class="answer-result" aria-live="polite"></p>
+                    <p class="answer-explanation" hidden>경로차가 반파장의 홀수배(0.5λ, 1.5λ, 2.5λ …)이면 한 파동의 마루에 다른 파동의 골이 겹쳐 완전히 상쇄됩니다.</p>
+                </article>
+
+                <article class="quiz-card" data-answer="b">
+                    <h3>양 끝이 고정된 길이 L인 줄의 기본 진동에서 파장은?</h3>
+                    <div class="quiz-options">
+                        <label><input type="radio" name="q2" value="a"> L</label>
+                        <label><input type="radio" name="q2" value="b"> 2L</label>
+                        <label><input type="radio" name="q2" value="c"> L/2</label>
+                        <label><input type="radio" name="q2" value="d"> 4L</label>
+                    </div>
+                    <button class="answer-button" type="button">정답 확인</button>
+                    <p class="answer-result" aria-live="polite"></p>
+                    <p class="answer-explanation" hidden>기본 진동은 양 끝이 마디이고 가운데가 배 하나입니다. 줄 전체가 반파장이므로 파장은 2L입니다.</p>
+                </article>
+
+                <article class="quiz-card" data-answer="a">
+                    <h3>정상파에서 마디는 어떤 곳일까요?</h3>
+                    <div class="quiz-options">
+                        <label><input type="radio" name="q3" value="a"> 항상 진폭이 0이라 움직이지 않는 곳</label>
+                        <label><input type="radio" name="q3" value="b"> 가장 크게 흔들리는 곳</label>
+                        <label><input type="radio" name="q3" value="c"> 파동이 사라지는 곳</label>
+                        <label><input type="radio" name="q3" value="d"> 줄이 끊어지는 곳</label>
+                    </div>
+                    <button class="answer-button" type="button">정답 확인</button>
+                    <p class="answer-result" aria-live="polite"></p>
+                    <p class="answer-explanation" hidden>마디에서는 두 파동이 언제나 상쇄되어 변위가 0입니다. 반대로 배에서는 항상 보강되어 가장 크게 흔들립니다.</p>
+                </article>
+
+                <article class="quiz-card" data-answer="d">
+                    <h3>줄의 길이를 그대로 두고 3배 진동으로 바꾸면 진동수는?</h3>
+                    <div class="quiz-options">
+                        <label><input type="radio" name="q4" value="a"> 그대로이다</label>
+                        <label><input type="radio" name="q4" value="b"> 3분의 1이 된다</label>
+                        <label><input type="radio" name="q4" value="c"> 2배가 된다</label>
+                        <label><input type="radio" name="q4" value="d"> 3배가 된다</label>
+                    </div>
+                    <button class="answer-button" type="button">정답 확인</button>
+                    <p class="answer-result" aria-live="polite"></p>
+                    <p class="answer-explanation" hidden>고유 진동수는 f = nv/(2L)이라 n에 비례합니다. 줄과 속력이 그대로면 3배 진동의 진동수는 기본 진동수의 3배입니다.</p>
+                </article>
+            </div>
+        </details>
+    </main>
+    <script src="app.js?v=3"></script>
+</body>
+</html>
