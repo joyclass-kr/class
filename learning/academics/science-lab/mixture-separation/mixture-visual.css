@@ -1,0 +1,52 @@
+/* Apparatus: a mixing bowl and labelled trays for what has been separated. */
+
+.tool-list { display: grid; gap: 8px; margin: 4px 0 18px; }
+.tool { display: flex; flex-direction: column; align-items: flex-start; gap: 2px; padding: 11px 14px; border: 1px solid var(--line); border-radius: 12px; background: #0a1c24; cursor: pointer; text-align: left; }
+.tool-name { color: #dce9e8; font-size: 14px; font-weight: 900; }
+.tool-hint { color: var(--muted); font-size: 11.5px; font-weight: 800; }
+.tool:hover { border-color: rgba(151, 218, 211, .5); }
+.tool:disabled { opacity: .4; cursor: not-allowed; }
+
+.range-scale { grid-template-columns: repeat(4, 1fr); }
+.reset-button { width: 100%; margin-top: 14px; padding: 10px; border: 1px solid var(--line); border-radius: 12px; background: transparent; color: var(--muted); font-weight: 850; cursor: pointer; }
+.reset-button:hover { color: var(--ink); border-color: rgba(151, 218, 211, .45); }
+
+.mixture-stage {
+    display: flex;
+    flex-direction: column;
+    min-width: 0;
+    border-color: rgba(120, 190, 220, .26);
+    box-shadow: 0 0 0 1px rgba(120, 190, 220, .04), 0 24px 48px -30px rgba(120, 190, 220, .34);
+    background-image:
+        radial-gradient(620px 420px at 40% 40%, rgba(120, 190, 220, .07), transparent 65%),
+        linear-gradient(rgba(109, 174, 181, .05) 1px, transparent 1px),
+        linear-gradient(90deg, rgba(109, 174, 181, .05) 1px, transparent 1px);
+    background-size: 100% 100%, 24px 24px, 24px 24px;
+}
+.stage-views { flex: 1; display: flex; align-items: center; justify-content: center; padding: 8px 0 2px; }
+.mixture-svg { width: 100%; max-width: 560px; height: auto; display: block; }
+
+.bowl { stroke: rgba(177, 226, 230, .78); stroke-width: 4; stroke-linejoin: round; }
+.tray-title { fill: var(--muted); font-size: 12.5px; font-weight: 850; }
+.tray-box { fill: rgba(255, 255, 255, .03); stroke: rgba(151, 218, 211, .28); stroke-width: 1.2; stroke-dasharray: 4 4; }
+.tray-label { fill: #cfe6ee; font-size: 11.5px; font-weight: 850; }
+.tray-method { fill: #7c9b98; font-size: 10.5px; font-weight: 800; }
+/* Grains ease into their tray rather than teleporting, so it stays visible
+   which tool moved which substance. */
+.grain { transition: transform .5s cubic-bezier(.3, .7, .4, 1); }
+
+.scale-note { margin: 4px auto 0; max-width: 520px; color: #7c9b98; font-size: 10.5px; line-height: 1.45; text-align: center; }
+
+.property-table { display: grid; gap: 4px; margin-top: 12px; padding-top: 12px; border-top: 1px solid var(--line); }
+.property-row { display: grid; grid-template-columns: 1.2fr 1fr 1fr 1fr; gap: 6px; align-items: center; font-size: 11.5px; }
+.property-row.head { color: #7c9b98; font-weight: 850; }
+.property-row span { color: #c3d8d6; }
+.property-row .swatch { display: inline-block; width: 10px; height: 10px; border-radius: 50%; margin-right: 6px; vertical-align: -1px; }
+.property-row.separated { opacity: .42; }
+
+@media (max-width: 600px) {
+    .property-row { grid-template-columns: 1.3fr 1fr 1fr 1fr; font-size: 10.5px; }
+}
+@media (prefers-reduced-motion: reduce) {
+    .grain { transition: none; }
+}
