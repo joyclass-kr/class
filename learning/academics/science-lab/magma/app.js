@@ -12,10 +12,12 @@ const H_FLOW = 1.0;    // m, thickness of the lava sheet
 const SLOPE = 3;       // degrees
 const R_BUBBLE = 0.01; // m, a coalesced bubble
 
+// Each magma only exists as a liquid over its own range; below tMin it has
+// frozen solid, so the dial is limited to temperatures that are really magma.
 const KINDS = {
-    basalt: { name: '현무암질', si: 50, colour: '#7fd4f0', rock: '현무암', where: '하와이·아이슬란드' },
-    andesite: { name: '안산암질', si: 60, colour: '#ffd166', rock: '안산암', where: '일본·안데스' },
-    rhyolite: { name: '유문암질', si: 70, colour: '#ff8a8a', rock: '유문암', where: '옐로스톤·백두산' },
+    basalt: { name: '현무암질', si: 50, colour: '#7fd4f0', rock: '현무암', where: '하와이·아이슬란드', tMin: 1000, tMax: 1250 },
+    andesite: { name: '안산암질', si: 60, colour: '#ffd166', rock: '안산암', where: '일본·안데스', tMin: 900, tMax: 1150 },
+    rhyolite: { name: '유문암질', si: 70, colour: '#ff8a8a', rock: '유문암', where: '옐로스톤·백두산', tMin: 700, tMax: 950 },
 };
 
 // Typical measured slopes, and how wide each edifice gets. The drawing is
@@ -76,6 +78,16 @@ function koSpeed(v) {
     if (v >= 1 / 86400) return `${fmt(v * 86400, 2)} m/일`;
     return `${fmt(v * 86400 * 365, 3)} m/년`;
 }
+// 로 after a vowel or ㄹ, 으로 after any other final consonant: m/일로 but
+// m/분으로. The 's' in m/s is read 초, so it takes 로 too.
+function ro(s) {
+    const last = s[s.length - 1];
+    if (last === 's') return `${s}로`;
+    const code = last.charCodeAt(0);
+    if (code < 0xac00 || code > 0xd7a3) return `${s}로`;
+    const jong = (code - 0xac00) % 28;
+    return s + (jong === 0 || jong === 8 ? '로' : '으로');
+}
 function koTime(s) {
     if (s < 60) return `${fmt(s, 0)}초`;
     if (s < 3600) return `${fmt(s / 60, 1)}분`;
@@ -114,8 +126,8 @@ function drawVolcano(g) {
         const grow = state.running ? Math.min(1, state.blast) : 1;
         for (let i = 0; i < 14; i += 1) {
             const t = i / 13;
-            const y = apexY - t * (apexY - 24) * grow;
-            const spread = (10 + t * 62 * power) * grow;
+            const y = apexY - t * (apexY - 34) * grow;
+            const spread = (8 + t * 42 * power) * grow;
             const wob = Math.sin(state.phase * 1.4 + i * 0.8) * 4 * power;
             g.appendChild(el('circle', {
                 cx: APEX_X + wob, cy: y, r: Math.max(3, spread * 0.55),
@@ -171,7 +183,7 @@ function drawVolcano(g) {
     g.appendChild(el('text', { x: 22, y: 42, class: 'small-label' }, `${a.kind.name} · ${state.temp} ℃ · 물 ${state.water}%`));
     g.appendChild(el('text', { x: 438, y: 26, 'text-anchor': 'end', class: 'hot-text' }, S.name));
     g.appendChild(el('text', { x: 438, y: 42, 'text-anchor': 'end', class: 'small-label' },
-        style === 'p1' ? '조용히 흘러넘침' : (style === 'p2' ? '중간쯤 분출' : '크게 폭발'));
+        style === 'p1' ? '조용히 흘러넘침' : (style === 'p2' ? '중간쯤 분출' : '크게 폭발')));
     g.appendChild(el('text', { x: 22, y: 206, class: 'small-label' }, '마그마 방'));
 }
 
@@ -199,10 +211,12 @@ function drawGraph(g) {
         g.appendChild(el('text', { x: x1 - 2, y: Y(le) - 4, 'text-anchor': 'end', class: 'tiny-label' }, `${label} 정도`));
     });
 
+    // Each curve is drawn only over the range where that magma is still liquid,
+    // so the picture never suggests a temperature the melt could not have.
     Object.entries(KINDS).forEach(([k, K]) => {
         let d = '';
         for (let i = 0; i <= 120; i += 1) {
-            const t = 700 + (i / 120) * 600;
+            const t = K.tMin + (i / 120) * (K.tMax - K.tMin);
             d += `${i ? 'L' : 'M'} ${fmt(X(t), 2)} ${fmt(Y(logEta(K.si, t, state.water)), 2)} `;
         }
         g.appendChild(el('path', { d, class: `eta-line ${k}`, style: k === state.kind ? '' : 'opacity:.4' }));
@@ -261,7 +275,7 @@ function explain(a) {
     }
 
     let s = `SiO₂ ${a.kind.si}%인 ${a.kind.name} 마그마가 ${state.temp} ℃이고 물이 ${state.water}% 녹아 있으면 점성은 ${koEta(a.logEta)}입니다. `;
-    s += `이 값이면 두께 1 m짜리 용암이 3° 비탈을 ${koSpeed(a.flow)}로 흐릅니다. `;
+    s += `이 값이면 두께 1 m짜리 용암이 3° 비탈을 ${ro(koSpeed(a.flow))} 흐릅니다. `;
     s += `같은 마그마에서 지름 2 cm짜리 기포가 1 m 떠오르는 데는 ${koTime(a.riseTime)}이 걸립니다. `;
     if (a.retention < 0.2) {
         s += `기포가 이렇게 쉽게 빠져나가므로 가스가 미처 쌓이지 못하고, 마그마는 터지지 않고 그대로 흘러넘칩니다. `;
@@ -303,8 +317,21 @@ function markSelected(sel, attr, value) {
     document.querySelectorAll(sel).forEach(b => b.classList.toggle('selected', b.dataset[attr] === String(value)));
 }
 
+function applyTempRange() {
+    const K = KINDS[state.kind];
+    const r = $('tempRange');
+    r.min = String(K.tMin); r.max = String(K.tMax);
+    state.temp = clamp(state.temp, K.tMin, K.tMax);
+    r.value = String(state.temp);
+    $('tempOutput').textContent = `${state.temp} ℃`;
+    $('tempLo').textContent = `${K.tMin} ℃`;
+    $('tempMid').textContent = `${(K.tMin + K.tMax) / 2} ℃`;
+    $('tempHi').textContent = `${K.tMax} ℃`;
+}
+
 document.querySelectorAll('[data-kind]').forEach(b => b.addEventListener('click', () => {
-    state.kind = b.dataset.kind; markSelected('[data-kind]', 'kind', state.kind); render();
+    state.kind = b.dataset.kind; markSelected('[data-kind]', 'kind', state.kind);
+    applyTempRange(); render();
 }));
 document.querySelectorAll('[data-water]').forEach(b => b.addEventListener('click', () => {
     state.water = Number(b.dataset.water); markSelected('[data-water]', 'water', state.water); render();
@@ -326,11 +353,11 @@ $('runBtn').addEventListener('click', () => {
 $('resetBtn').addEventListener('click', () => {
     state.kind = 'basalt'; state.water = 0.5; state.temp = 1200;
     state.prediction = null; state.checked = false; state.running = false; state.blast = 0;
-    $('tempRange').value = '1200'; $('tempOutput').textContent = '1200 ℃';
     $('runBtn').textContent = '분출시키기';
     document.querySelectorAll('[data-prediction]').forEach(x => x.classList.remove('selected'));
     $('resultEmpty').hidden = false; $('resultContent').hidden = true;
     markSelected('[data-kind]', 'kind', 'basalt'); markSelected('[data-water]', 'water', 0.5);
+    applyTempRange();
     render();
 });
 
@@ -349,6 +376,7 @@ document.querySelectorAll('.quiz-card').forEach(card => {
 
 markSelected('[data-kind]', 'kind', state.kind);
 markSelected('[data-water]', 'water', state.water);
+applyTempRange();
 render();
 requestAnimationFrame(frame);
 

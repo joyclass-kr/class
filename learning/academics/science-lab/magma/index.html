@@ -7,9 +7,9 @@
     <title>과학 실험실</title>
     <meta name="description" content="이산화 규소 함량과 온도, 물 함량을 바꾸며 마그마의 점성을 재고 용암이 흐르는 속도와 분출 형태, 화산의 모양이 어떻게 달라지는지 확인하는 고등학교 과학 모의실험">
     <link rel="stylesheet" as="style" crossorigin href="https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.9/dist/web/static/pretendard.css">
-    <link rel="stylesheet" href="styles.css?v=1">
-    <link rel="stylesheet" href="magma-visual.css?v=1">
-    <link rel="stylesheet" href="quiz.css?v=1">
+    <link rel="stylesheet" href="styles.css?v=5">
+    <link rel="stylesheet" href="magma-visual.css?v=5">
+    <link rel="stylesheet" href="quiz.css?v=5">
 </head>
 <body>
     <main>
@@ -55,8 +55,9 @@
                     <label for="tempRange">마그마의 온도</label>
                     <output id="tempOutput" for="tempRange">1200 ℃</output>
                 </div>
-                <input id="tempRange" type="range" min="700" max="1300" step="25" value="1200">
-                <div class="range-scale" aria-hidden="true"><span>700 ℃</span><span>1000 ℃</span><span>1300 ℃</span></div>
+                <input id="tempRange" type="range" min="1000" max="1250" step="25" value="1200">
+                <div class="range-scale" aria-hidden="true"><span id="tempLo">1000 ℃</span><span id="tempMid">1125 ℃</span><span id="tempHi">1250 ℃</span></div>
+                <p class="range-note" id="rangeNote">마그마마다 액체로 있을 수 있는 온도가 다릅니다</p>
 
                 <fieldset class="prediction-field">
                     <legend>이 마그마는 어떻게 분출할까요?</legend>
@@ -167,6 +168,6 @@
             </div>
         </details>
     </main>
-    <script src="app.js?v=1"></script>
+    <script src="app.js?v=5"></script>
 </body>
 </html>
