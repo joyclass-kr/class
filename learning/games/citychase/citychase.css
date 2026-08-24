@@ -48,7 +48,24 @@ button:disabled { cursor: not-allowed; opacity: .36; box-shadow: none; }
 .spread { justify-content: space-between; }
 .code { font: 950 29px/1 ui-monospace, Consolas, monospace; letter-spacing: .16em; }
 
-.lobbyShell { width: min(960px, calc(100% - 24px)); min-height: 100dvh; margin: 0 auto; padding: 12px 0; align-content: center; }
+.lobbyShell {
+  position: relative;
+  isolation: isolate;
+  width: min(960px, calc(100% - 24px));
+  min-height: 100dvh;
+  margin: 0 auto;
+  padding: 12px 0;
+  align-content: center;
+}
+.lobbyShell::before {
+  content: "";
+  position: fixed;
+  z-index: -1;
+  inset: 0;
+  background: linear-gradient(#eff8f058, #eff8f058), url("assets/lobby-city.jpg") center / cover no-repeat;
+  filter: saturate(.88) contrast(.97) brightness(1.02);
+  pointer-events: none;
+}
 .lobbyPanel {
   margin: 0;
   padding: 14px;

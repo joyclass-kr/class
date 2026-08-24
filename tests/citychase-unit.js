@@ -178,6 +178,8 @@ assert.match(css, /\.lobbyTop \{ display: grid; grid-template-columns: auto auto
 assert.match(css, /\.lobbyWorkspace \{ display: grid; grid-template-columns: minmax\(280px, \.85fr\) minmax\(400px, 1\.15fr\)/, "Chromebook 가로 화면에서는 접속과 참가자 패널을 나란히 보여야 합니다.");
 assert.match(css, /@media \(max-width: 900px\)[\s\S]*\.lobbyWorkspace \{ grid-template-columns: 1fr; \}/, "iPad 세로 화면에서는 대기 패널을 한 열로 배치해야 합니다.");
 assert.match(client, /function avatarOf\(playerId\)/, "학생 아바타는 멀티플레이 대기실 정보에서 가져와야 합니다.");
+assert.match(css, /lobby-city\.jpg/, "제공한 도심 그림을 대기실 전용 배경으로 사용해야 합니다.");
+assert.match(css, /\.lobbyShell::before[\s\S]*linear-gradient\(#eff8f058, #eff8f058\)[\s\S]*cover/s, "대기실 배경은 살짝 밝게 처리하고 화면 비율에 맞춰 채워야 합니다.");
 assert.match(client, /pawnName[\s\S]*pawnFaceMarkup\(controllers\)[\s\S]*pawnNumber/, "말에는 학생 이름·아바타·말 번호가 함께 보여야 합니다.");
 assert.match(html, /id="policeSeatSlots"[\s\S]*id="thiefSeatSlots"/, "대기실에는 경찰팀·도둑팀 슬롯이 모두 있어야 합니다.");
 assert.match(client, /sendAction\("CHOOSE_SEAT"/, "학생은 빈 슬롯을 눌러 자기 팀 자리를 선택해야 합니다.");
