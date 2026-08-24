@@ -793,7 +793,13 @@
       };
       const name = fileSafe(this.playerName, "이름없음");
       const title = fileSafe(titleInput.value, "제목없음");
-      this.displayCanvas.toBlob(blob => {
+      const exportCanvas = document.createElement("canvas");
+      exportCanvas.width = this.viewW;
+      exportCanvas.height = this.viewH;
+      exportCanvas.getContext("2d").drawImage(
+        this.displayCanvas, 0, 0, this.viewW, this.viewH, 0, 0, this.viewW, this.viewH
+      );
+      exportCanvas.toBlob(blob => {
         const url = URL.createObjectURL(blob);
         const link = document.createElement("a");
         link.href = url;
