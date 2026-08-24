@@ -95,7 +95,7 @@ const createRuntime = new Function(
 const runtime = createRuntime(
     [voyageLink],
     [voyageLink],
-    { location: { href: 'https://songhwaplay.onrender.com/' } },
+    { location: { href: 'https://joyclass.kr/' } },
     /^[가-힣]{2,6}$/,
 );
 
