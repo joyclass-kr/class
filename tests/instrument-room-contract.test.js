@@ -25,6 +25,24 @@ test('keyboard library covers AP, EP, Hybrid, and Organ', () => {
   assert.match(app, /tag: "ORGAN"/);
 });
 
+test('keyboard and electronic machines use non-interactive premium artwork', () => {
+  for (const asset of [
+    'keyboard-concert-grand.webp', 'keyboard-upright-piano.webp',
+    'keyboard-tine-ep.webp', 'keyboard-reed-ep.webp',
+    'keyboard-pop-grand-fm.webp', 'keyboard-grand-tine-duo.webp',
+    'keyboard-ballad-digital.webp', 'keyboard-tonewheel-organ.webp',
+    'keyboard-pipe-organ.webp', 'drum-808-machine.webp',
+    'drum-linn-machine.webp'
+  ]) {
+    assert.match(app, new RegExp(asset.replace('.', '\\.')));
+    assert.equal(fs.existsSync(path.join(root, 'assets', 'instruments', asset)), true, asset);
+  }
+  assert.match(app, /model\.art \? " has-artwork"/);
+  assert.match(app, /\(model\.stage === "machine" \|\| model\.stage === "linn"\) && !model\.art/);
+  assert.match(css, /\.instrument-visual\.has-artwork \.studio-stage::before/);
+  assert.match(css, /pointer-events: none/);
+});
+
 test('percussion library includes dedicated kits and essential orchestral instruments', () => {
   for (const model of ['rock-kit', 'metal-kit', 'pop-kit', 'jazz-kit', 'funk-kit', 'timpani', 'glockenspiel', 'marimba', 'vibraphone', 'xylophone', 'orchestral-percussion', 'drum-808', 'linn-machine', 'samulnori']) {
     assert.match(app, new RegExp(`id: "${model}"`));
