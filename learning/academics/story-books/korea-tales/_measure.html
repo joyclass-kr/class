@@ -21,14 +21,15 @@
 const out = document.getElementById('out');
 const frame = document.getElementById('frame');
 
-const SIZES = [[1366, 768], [1920, 1080]];
+const SIZES = [[1366, 768], [1920, 1080], [810, 1080], [768, 1024], [1024, 768]];
 
 function load(slug) {
     return new Promise((resolve) => {
         frame.onload = () => resolve();
         // 끝의 빗금이 꼭 있어야 한다. index.html을 붙이면 서버가 그걸 떼면서
         // 주소가 한 칸 위로 올라가 책의 app.js를 못 찾는다.
-        frame.src = slug + '/';
+        Promise.all(['app.js','styles.css'].map(f=>fetch(slug+'/'+f,{cache:'reload'}).catch(()=>{})))
+            .then(() => { frame.src = slug + '/?t=' + Date.now(); });
     });
 }
 

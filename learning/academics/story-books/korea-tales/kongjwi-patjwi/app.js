@@ -7,7 +7,7 @@ const CHAPTERS = [
         num: 1,
         title: "새어머니와 검은 소",
         emoji: "🐂",
-        art: ["story-01-a.png", "story-01-b.png", "story-01-c.png"],
+        art: ["story-01-a.webp", "story-01-b.webp", "story-01-c.webp"],
         paras: [
             `옛날 전라도 전주 고을에 최만춘이라는 사람이 살았습니다. 늦게 얻은 딸이 하나 있었는데 이름을 콩쥐라 하였습니다.`,
             `콩쥐가 태어난 지 백일 만에 어머니가 세상을 떠났습니다. 아버지는 딸을 업고 다니며 젖동냥을 하여 길렀습니다.`,
@@ -39,7 +39,7 @@ const CHAPTERS = [
         num: 2,
         title: "밑 빠진 독과 참새 떼",
         emoji: "🐸",
-        art: ["story-02-a.png", "story-02-b.png", "story-02-c.png"],
+        art: ["story-02-a.webp", "story-02-b.webp", "story-02-c.webp"],
         paras: [
             `그해 가을, 마을 큰집에서 잔치가 열렸습니다. 온 마을 사람이 초대를 받았습니다.`,
             `배 씨는 팥쥐에게 새 옷을 입히고 머리를 곱게 땋아 주었습니다. 콩쥐는 부엌에 서서 그 모습을 보고 있었습니다.`,
@@ -71,7 +71,7 @@ const CHAPTERS = [
         num: 3,
         title: "잃어버린 꽃신",
         emoji: "👟",
-        art: ["story-03-a.png", "story-03-b.png", "story-03-c.png"],
+        art: ["story-03-a.webp", "story-03-b.webp", "story-03-c.webp"],
         paras: [
             `일은 다 끝났지만 콩쥐에게는 입고 갈 옷이 없었습니다. 저고리는 소매가 해지고 치마는 무릎이 나가 있었습니다.`,
             `콩쥐가 우물가에서 얼굴을 씻고 있는데, 물 위에 무언가가 비쳤습니다. 돌아보니 하늘에서 무엇이 내려오고 있었습니다.`,
@@ -103,7 +103,7 @@ const CHAPTERS = [
         num: 4,
         title: "감사 댁과 연못",
         emoji: "💧",
-        art: ["story-04-a.png", "story-04-b.png", "story-04-c.png"],
+        art: ["story-04-a.webp", "story-04-b.webp", "story-04-c.webp"],
         paras: [
             `콩쥐는 감사 댁으로 가게 되었습니다. 아버지 최만춘은 딸의 손을 잡고 한참을 놓지 못했습니다.`,
             `"내가 못난 아비였구나. 네가 그리 고생하는 줄을 여태 몰랐다."<br>"아닙니다, 아버지."`,
@@ -135,7 +135,7 @@ const CHAPTERS = [
         num: 5,
         title: "붉은 연꽃",
         emoji: "🪷",
-        art: ["story-05-a.png", "story-05-b.png", "story-05-c.png"],
+        art: ["story-05-a.webp", "story-05-b.webp", "story-05-c.webp"],
         paras: [
             `감사가 한양에서 돌아왔습니다.`,
             `방문을 열자 부인이 이불을 뒤집어쓰고 누워 있었습니다.<br>"부인, 어디 편찮으시오?"<br>"…얼굴에 종기가 나서 뵐 수가 없습니다."`,
@@ -167,7 +167,7 @@ const CHAPTERS = [
         num: 6,
         title: "연못을 치다",
         emoji: "⚖️",
-        art: ["story-06-a.png", "story-06-b.png", "story-06-c.png"],
+        art: ["story-06-a.webp", "story-06-b.webp", "story-06-c.webp"],
         paras: [
             `이튿날 새벽, 감사는 하인들을 모두 불러 모았습니다.<br>"뒤뜰 연못의 물을 다 퍼내라."`,
             `두레박과 물통이 총동원되었습니다. 반나절이 지나자 연못 바닥이 드러났습니다.`,
@@ -396,8 +396,10 @@ function paginateChapter(ch, chIndex) {
     for (let guard = 0; guard < 8; guard++) {
         // 한 쪽이라도 넘치면 펼침면을 늘려 다시 나눈다.
         // 마지막 쪽만 보면 안 된다 — 첫 쪽에는 장 제목이 얹히므로 그쪽이 먼저 넘칠 수 있다.
+        // 여유를 1px이나 두면 안 된다. 0.8px만 넘쳐도 그 칸에 스크롤 막대가 생기고,
+        // 막대가 칸을 15px 좁히면 글이 다시 길어져 넘침이 32px로 불어난다.
         const over = ranges.some(([a, b], n) =>
-            PROBE.measure((n === 0 ? headHtml : '') + runHtml(segs, a, b)) > caps[n] + 1);
+            PROBE.measure((n === 0 ? headHtml : '') + runHtml(segs, a, b)) > caps[n] + 0.25);
         if (!over || spreadCount >= maxSpreads) break;
         spreadCount++;
         slots = slotPlan(arts.length, Math.max(0, spreadCount - arts.length));
@@ -432,12 +434,12 @@ function coverPage() {
     return `
         <div class="page page-cover">
             <div class="story-page-left story-page-left-full">
-                ${artFrame('cover.png', '👟')}
+                ${artFrame('cover.webp', '👟')}
             </div>
             <div class="story-page-right">
                 <h1>콩쥐 팥쥐</h1>
                 <p>콩쥐 팥쥐는 지은이가 알려지지 않은 조선 후기 소설이에요. 전라도 전주 지방을 무대로 삼고 있답니다.</p>
-                <p>이 이야기는 세계 곳곳에 퍼져 있는 신데렐라형 이야기 가운데 하나예요. 유럽의 신데렐라, 중국의 섭한, 베트남의 떰과 깜이 모두 같은 갈래지요. 잃어버린 신 한 짝으로 사람을 찾아낸다는 대목이 똑같이 나온답니다.</p>
+                <p>이 이야기는 세계 곳곳에 퍼져 있는 신데렐라형 이야기 가운데 하나예요. 잃어버린 신 한 짝으로 사람을 찾아낸다는 대목이 똑같이 나온답니다.</p>
                 <p>그 가운데 가장 오래된 것은 중국 당나라 때 책 유양잡조에 실린 섭한 이야기예요. 천이백 년쯤 전에 적힌 글이니 유럽의 신데렐라보다 팔백 년이나 앞선 셈이지요.</p>
                 <p>콩쥐를 돕는 것은 요정이 아니라 검은 소와 두꺼비와 참새 떼예요. 우리 옛이야기에서는 도움이 하늘에서 내려오지 않고 늘 논밭에서 걸어 나온답니다.</p>
             </div>
@@ -566,7 +568,7 @@ function quizPage(part) {
 function endPage() {
     return `
         <div class="page page-end">
-            ${artFrame('end.png', '🌸')}
+            ${artFrame('end.webp', '🌸')}
             <h2>콩쥐 팥쥐를 다 읽었습니다</h2>
             <a class="home-btn" href="../../../../../">학습 허브로 돌아가기</a>
         </div>`;

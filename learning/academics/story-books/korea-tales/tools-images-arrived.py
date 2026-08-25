@@ -14,14 +14,28 @@
 """
 import io, os, re, struct, subprocess, sys
 
+# 윈도 콘솔이 cp949라 줄표(—) 같은 글자에서 죽는다. 나가는 글을 utf-8로 돌려 둔다.
+try:
+    sys.stdout.reconfigure(encoding='utf-8', errors='replace')
+except Exception:
+    pass
+
 BOOKS = os.path.dirname(os.path.abspath(__file__))
 FFMPEG = (r'C:\Users\A\AppData\Local\Microsoft\WinGet\Packages'
           r'\Gyan.FFmpeg.Shared_Microsoft.Winget.Source_8wekyb3d8bbwe'
           r'\ffmpeg-8.1.2-full_build-shared\bin\ffmpeg.exe')
 
 # 틀이 요구하는 비율. 벗어나면 object-fit이 잘라 낸다.
+# 동화틀과 소설틀은 그림칸 모양이 다르다. 재서 확인한 값이다.
+#   동화틀 펼침면 그림칸  471x220 = 2.14:1   (.spread-art, flex 62.5%)
+#   소설틀 쪽 위 그림칸   471x353 = 1.33:1   (.story-art-top)
+# 소설틀 그림에 동화틀 값을 대면 멀쩡한 그림 열아홉 장이 잘못됐다고 나온다.
 WANT = {'cover': (0.667, 0.10), 'end': (1.78, 0.18)}
-SPREAD = (1.78, 0.18)
+# 동화틀 그림은 대부분 1.79:1(16:9)로 나와 있다. 2.14:1 틀에서 위아래가 16% 잘리지만,
+# 잘라 놓고 보니 하늘과 앞쪽 땅만 줄어들 뿐 얼굴도 구도도 멀쩡해서 그대로 두기로 했다
+# (2026-08-24). 그래서 허용 폭을 0.40으로 넓혀 둔다. 이보다 더 벗어나면 진짜 문제다.
+SPREAD_PIC = (2.14, 0.40)     # 동화틀
+SPREAD_NOVEL = (1.33, 0.12)   # 소설틀
 
 
 def is_real_webp(p):
@@ -69,7 +83,8 @@ for slug in targets:
     d = os.path.join(BOOKS, slug, 'images')
     if not os.path.isdir(d):
         continue
-    for name in sorted(os.listdir(d)):
+    names = sorted(os.listdir(d))
+    for name in names:
         p = os.path.join(d, name)
         if name.endswith('.webp') and not is_real_webp(p):
             before = os.path.getsize(p)
@@ -84,7 +99,16 @@ for slug in targets:
             wh = size_of(p)
             if wh and wh[1]:
                 stem = os.path.splitext(name)[0]
-                want, tol = WANT.get(stem, SPREAD)
+                # 소설틀 책은 그림 이름이 story-로 시작한다. 그 책은 표지 말고
+                # 마지막 쪽까지 그림칸이 1.33:1이라, end에도 소설틀 값을 써야 한다.
+                novel = any(f.startswith('story-') for f in names)
+                base = SPREAD_NOVEL if novel else SPREAD_PIC
+                if stem == 'cover':
+                    want, tol = WANT['cover']
+                elif stem == 'end':
+                    want, tol = base if novel else WANT['end']
+                else:
+                    want, tol = base
                 got = wh[0] / float(wh[1])
                 if abs(got - want) > tol:
                     ratio_warn.append(u'%s/%s %dx%d = %.2f:1 (바라는 %.2f:1)'
