@@ -344,6 +344,86 @@ const CHAPTER_SEGS = CHAPTERS.map(ch => {
     return segs;
 });
 
+// 읽고 나서 — 책마다 내용이 다르다. 장과 같은 방식으로 재서 나눈다.
+const AFTERWORD = {
+    title: '읽고 나서',
+    emoji: '🪔',
+    art: [],
+    paras: [
+        `이 책의 제목은 『아라비안나이트』입니다. 아라비아의 밤이라는 뜻입니다. 그런데 원래 제목은 『천 하고도 하룻밤』입니다. 우리말로는 『천일야화』라고도 합니다.`,
+        `왜 천 하룻밤인지는 첫 장에 나옵니다. 셰에라자드가 밤마다 이야기를 하나씩 하고, 다음 이야기가 궁금해서 왕이 그날의 처형을 미룹니다. 그것이 천 하룻밤 이어집니다.`,
+        `그러니 이 책은 이야기 안에 이야기가 든 책입니다. 그리고 그 틀 자체가 이 책의 뜻입니다. 이야기가 사람을 살린 것입니다.`,
+        `이 책에는 지은이가 없습니다. 여러 나라와 여러 시대의 이야기가 몇백 년에 걸쳐 모여든 것입니다.`,
+        `인도에서 온 이야기가 있고, 페르시아에서 온 이야기가 있고, 아라비아와 이집트에서 붙은 이야기가 있습니다. 그러니 이것은 한 나라의 책이 아니라 오래된 길 위에서 모인 책입니다.`,
+        `그 길이 바로 비단길입니다. 물건만 오간 것이 아니라 이야기도 함께 오갔습니다. 낙타를 몰고 몇 달을 가는 동안 밤마다 할 일이 이야기밖에 없었기 때문입니다.`,
+        `제일 오래된 조각은 천이백 년쯤 전 것으로 헤아려집니다. 그리고 오백 년 전쯤에 지금과 비슷한 모양으로 묶였습니다.`,
+        `유럽에 알려진 것은 삼백 년쯤 전입니다. 프랑스의 앙투안 갈랑이라는 사람이 아랍 원고를 프랑스말로 옮기면서부터입니다.`,
+        `그런데 여기에 재미있는 사실이 있습니다. 여러분이 잘 아는 알라딘과 알리바바 이야기는 아랍 원고에 없었습니다.`,
+        `갈랑이 시리아에서 온 한 이야기꾼에게 들은 것을 적어 넣은 것입니다. 그 사람의 이름은 한나 디아브라고 전합니다. 그러니 이 책에서 제일 유명한 두 이야기는 나중에 들어온 것입니다.`,
+        `한나 디아브라는 그 사람의 일기가 나중에 발견되었습니다. 그 안에 갈랑을 만난 이야기가 적혀 있습니다. 그러니 알라딘을 지은 사람의 이름이 이제는 남아 있는 셈입니다.`,
+        `알라딘 이야기의 배경이 중국으로 되어 있는 것도 그 때문입니다. 아라비아 사람들에게 중국은 아주 먼 나라, 무슨 일이든 일어날 수 있는 나라였습니다.`,
+        `먼 나라를 배경으로 삼으면 이야기가 자유로워집니다. 그 나라 사정을 아는 사람이 없기 때문입니다. 이야기꾼들이 오래 써 온 방법입니다.`,
+        `여기 실린 것은 널리 알려진 이야기들을 골라 옮긴 것입니다. 원작은 아주 방대해서 다 옮기면 여러 권이 됩니다.`,
+        `이제 다시 볼 대목을 짚어 봅시다.`,
+        `첫째, 첫 장의 틀을 다시 읽어 보십시오. 왕은 아내에게 배신당한 뒤로 여자를 믿지 못하게 되었습니다. 그래서 날마다 하나씩 맞아들이고 이튿날 없앱니다.`,
+        `셰에라자드는 스스로 그 자리에 들어갑니다. 아버지가 말리는데도 갑니다. 그리고 무기를 하나도 들고 가지 않습니다. 이야기 말고는 아무것도 없이 갑니다.`,
+        `그리고 동생 두냐자드를 함께 데려갑니다. 밤마다 동생이 언니에게 이야기를 해 달라고 조르는 것으로 시작하기 위해서입니다. 그것까지 미리 짜 두었던 것입니다.`,
+        `그러니 셰에라자드가 한 일은 이야기를 아는 것만이 아니었습니다. 그 이야기를 어떻게 시작하고 어디서 끊을지를 짠 것입니다.`,
+        `그러니 이 책의 주인공은 알라딘도 신드바드도 아닙니다. 셰에라자드입니다. 그 사람이 천 하룻밤 동안 하는 일이 이 책 전체입니다.`,
+        `둘째, 이야기가 끊기는 자리를 세어 보십시오. 셰에라자드는 늘 날이 밝기 직전에 이야기를 멈춥니다. 제일 궁금한 데서 멈춥니다.`,
+        `그것이 그 사람이 살아남는 방법이었습니다. 그리고 이야기를 만드는 사람들이 지금도 쓰는 방법이기도 합니다. 연속극이 늘 그렇게 끝나는 것을 떠올려 보십시오.`,
+        `천 하룻밤이면 세 해가 조금 못 됩니다. 그동안 셰에라자드는 하룻밤도 거르지 않았습니다. 그러니 이 사람은 이야기를 아주 많이 아는 사람이었습니다.`,
+        `셋째, 항아리 속의 마신을 다시 보십시오. 어부가 항아리를 건져 올려 뚜껑을 엽니다. 그 안에서 나온 마신이 어부를 죽이겠다고 합니다.`,
+        `구해 준 사람을 죽이겠다는 것입니다. 왜냐고 물으니 답이 나옵니다. 처음 백 년 동안은 꺼내 주는 사람에게 큰 상을 주겠다고 마음먹었는데, 아무도 오지 않아서 마음이 바뀌었다는 것입니다.`,
+        `그 대목은 웃기면서 무섭습니다. 오래 기다린 마음이 어떻게 되는지를 아주 짧게 보여 줍니다.`,
+        `그리고 어부가 그 마신을 이기는 방법을 보십시오. 힘으로 이기지 않습니다. 꾀로 이깁니다. 이 책의 이야기들은 대개 그렇게 풀립니다.`,
+        `어부는 마신에게 되묻습니다. 그렇게 큰 몸이 이 작은 항아리에 어떻게 들어갔느냐고요. 마신이 보여 주려고 다시 들어갑니다. 그러자 어부가 뚜껑을 닫습니다.`,
+        `그리고 이번에는 어부가 조건을 겁니다. 힘이 센 쪽이 항아리 안에 있으면 힘없는 쪽이 셈을 하게 됩니다.`,
+        `넷째, 알라딘을 다시 읽어 보십시오. 알라딘은 처음에 게으르고 아무것도 하지 않는 아이로 나옵니다. 어머니가 실을 자아 겨우 먹고삽니다.`,
+        `그런 아이가 램프를 얻습니다. 그런데 이 이야기는 램프를 얻고 끝나지 않습니다. 램프를 빼앗기고 나서가 이야기의 절반입니다.`,
+        `그리고 램프를 되찾는 것은 마술이 아니라 알라딘 자신의 꾀입니다. 그 사이에 그 사람이 달라진 것입니다.`,
+        `처음에 램프를 얻을 때 알라딘은 아무것도 몰랐습니다. 마술사가 시키는 대로 굴에 들어갔을 뿐입니다. 그런데 램프를 빼앗기고 나서는 스스로 셈을 합니다.`,
+        `다섯째, 알리바바를 다시 보십시오. 이 이야기에서 실제로 일을 해내는 사람은 알리바바가 아닙니다. 하녀 마르자나입니다.`,
+        `도둑들이 항아리에 숨은 것을 알아채는 것도, 그것을 처리하는 것도 그 사람입니다. 알리바바는 대부분 겁을 먹고 있습니다.`,
+        `그러니 이 책에는 낮은 자리에 있는 사람이 이야기를 푸는 대목이 여럿 있습니다. 셰에라자드도, 마르자나도, 어부도 그렇습니다.`,
+        `그리고 이 이야기들에는 값을 치르는 대목이 늘 따라옵니다. 마르자나는 마지막에 자유를 얻습니다. 그것이 그 사람이 받은 상이었습니다.`,
+        `알리바바가 마르자나를 며느리로 삼는 것으로 끝나는 판도 있습니다. 이야기가 여럿이라 결말도 여럿입니다.`,
+        `그 시절 사정도 알아 두면 좋습니다. 이 이야기들이 모인 곳은 바그다드와 카이로 같은 도시입니다. 천 년쯤 전 그 도시들은 세계에서 가장 큰 도시였습니다.`,
+        `바그다드에는 지혜의 집이라는 곳이 있었습니다. 여러 나라 책을 모아 아랍말로 옮기던 곳입니다. 그리스와 인도와 페르시아의 학문이 거기서 이어졌습니다.`,
+        `우리가 쓰는 숫자를 아라비아 숫자라고 부르는 것도 그 때문입니다. 본디 인도에서 나온 것을 아라비아 사람들이 다듬어 유럽에 전한 것입니다.`,
+        `그리고 그 도시들은 장사의 중심이었습니다. 신드바드가 배를 타고 나가는 이야기는 그냥 지어낸 것이 아닙니다. 실제로 그 시절 아라비아 상인들이 인도와 중국까지 배를 타고 다녔습니다.`,
+        `그 뱃길에서 들은 이야기들이 신드바드 이야기가 되었습니다. 로크 새도, 바다의 노인도, 그런 소문에서 왔을 것입니다.`,
+        `신드바드가 일곱 번 배를 타는 것도 눈여겨볼 만합니다. 그때마다 다 잃고 돌아오는데, 얼마 지나면 또 나갑니다. 그 사람은 왜 자꾸 나갔을까요.`,
+        `이야기 안에는 신드바드가 둘 나옵니다. 배를 타는 신드바드와 짐을 나르는 신드바드입니다. 두 사람이 마주 앉아 이야기를 주고받는 것이 그 이야기의 틀입니다.`,
+        `그러니 이 책은 옛 세계 지도이기도 합니다. 어디까지 가 보았고 무엇을 들었는지가 이야기로 남은 것입니다.`,
+        `다만 이 책을 읽을 때 알아 둘 것이 있습니다. 원작에는 아이가 읽기에 맞지 않는 대목이 아주 많습니다. 잔인한 대목도 있고 어른의 이야기도 많습니다.`,
+        `여기서는 그런 대목을 옮기지 않았습니다. 그리고 첫 장의 틀에 나오는 왕이 하던 일도 짧게만 적어 두었습니다.`,
+        `그리고 유럽 사람들이 이 책을 옮기면서 아라비아를 신비하고 야릇한 곳으로만 그리는 버릇이 생겼습니다. 실제 그 땅과 사람들과는 다른 그림입니다. 그것도 알아 두는 것이 좋습니다.`,
+        `이 책이 붙들고 있는 것은 두 가지입니다.`,
+        `하나는 이야기가 무엇을 할 수 있느냐는 것입니다. 이 책의 틀 자체가 그 답입니다. 셰에라자드는 이야기로 자기 목숨을 지키고, 다음 사람들의 목숨도 지킵니다.`,
+        `그리고 천 하룻밤이 지났을 때 왕이 달라져 있습니다. 이야기를 천 개 넘게 들은 사람이 그 전과 같을 수는 없었던 것입니다.`,
+        `다른 하나는 사람이 무엇으로 곤경을 벗어나느냐는 것입니다. 이 책의 이야기들에서 힘으로 이기는 경우는 드뭅니다. 대개 꾀와 말로 풉니다.`,
+        `그것이 이 책이 오래 사랑받은 까닭 가운데 하나일 것입니다. 힘이 없는 사람도 이길 수 있는 이야기이기 때문입니다.`,
+        `이 책이 유럽에 전해진 뒤 수많은 작가들이 그 영향을 받았습니다. 이야기 안에 이야기를 넣는 방식도 여기서 배운 사람이 많습니다.`,
+        `그리고 알라딘의 램프, 열려라 참깨, 하늘을 나는 양탄자 같은 것은 이제 온 세계 사람이 아는 말이 되었습니다.`,
+        `언젠가 이 책을 다시 읽게 되거든, 이번에는 셰에라자드가 어느 자리에서 이야기를 멈추는지 세어 보십시오. 그 자리를 고르는 솜씨가 이 책의 진짜 재주입니다.`,
+        `마지막으로 생각해 볼 것을 남겨 둡니다. 답은 적어 두지 않겠습니다.`,
+        `셰에라자드가 스스로 그 자리에 들어간 것은 잘한 일이었을까요? 그 사람은 자기 목숨을 걸었습니다. 다른 방법은 없었을까요?`,
+        `항아리 속의 마신이 마음을 바꾼 것을 우리는 어떻게 보아야 할까요? 오래 기다리다 마음이 바뀌는 것은 그 마신만의 일일까요?`,
+        `그리고 알라딘이 램프를 얻지 못했다면 어떻게 되었을까요. 이 이야기는 요행으로 시작해서 스스로 끝냅니다. 그 둘 가운데 무엇이 더 중요할까요. 이 물음은 어른이 되어 다시 읽어도 답하기가 쉽지 않습니다.`
+    ]
+};
+
+const AFTER_SEGS = (() => {
+    const segs = [];
+    AFTERWORD.paras.forEach((html, paraIdx) => {
+        splitSegments(html).forEach((piece, k) => {
+            segs.push({ paraIdx, html: piece, start: k === 0 });
+        });
+    });
+    return segs;
+})();
+
 // 조각 묶음을 문단 단위로 다시 묶어 화면에 그릴 모양으로 만든다.
 // 앞 쪽에서 이어진 문단은 첫 줄을 들여쓰지 않는다.
 function runHtml(segs, a, b) {
@@ -625,16 +705,100 @@ function quizPage(part) {
         </div>`;
 }
 
-function endPage() {
+/* 읽고 나서 — 장과 같은 방식으로 쪽을 나눈다. 그림은 오른쪽 위에 얹힌다. */
+const AFTER_FOOT = `<p class="after-home"><a class="home-btn" href="../../../../../">학습 허브로 돌아가기</a></p>`;
+
+function paginateAfterword() {
+    const segs = AFTER_SEGS;
+    const arts = AFTERWORD.art || [];
+    const { usable, headHeight, artHeight } = PROBE;
+    const headHtml = `<h2>${AFTERWORD.title}</h2>`;
+    const totalH = PROBE.measure(runHtml(segs, 0, segs.length));
+
+    const underArt = Math.max(60, usable - artHeight);
+
+    // 맨 끝에는 학습 허브로 가는 단추가 붙는다. 그 높이를 미리 빼 두지 않으면
+    // 마지막 쪽만 넘친다.
+    const footH = PROBE.measure(AFTER_FOOT);
+
+    const capsOf = slots => {
+        const caps = [];
+        slots.forEach(kind => { caps.push(usable); caps.push(kind === 'img' ? underArt : usable); });
+        caps[caps.length - 1] = Math.max(60, caps[caps.length - 1] - footH);
+        return caps;
+    };
+
+    const minSpreads = Math.max(arts.length, 1);
+    const maxSpreads = Math.max(minSpreads, Math.floor(segs.length / 2));
+    let spreadCount = minSpreads;
+    while (spreadCount < maxSpreads) {
+        const caps = capsOf(slotPlan(arts.length, spreadCount - arts.length));
+        if (caps.reduce((a, b) => a + b, 0) >= totalH + headHeight) break;
+        spreadCount++;
+    }
+
+    let slots = slotPlan(arts.length, Math.max(0, spreadCount - arts.length));
+    let caps = capsOf(slots);
+    let ranges = fillPages(segs, caps, headHtml);
+    for (let guard = 0; guard < 8; guard++) {
+        const over = ranges.some(([a, b], n) =>
+            PROBE.measure((n === 0 ? headHtml : '') + runHtml(segs, a, b)) > caps[n] + 1);
+        if (!over || spreadCount >= maxSpreads) break;
+        spreadCount++;
+        slots = slotPlan(arts.length, Math.max(0, spreadCount - arts.length));
+        caps = capsOf(slots);
+        ranges = fillPages(segs, caps, headHtml);
+    }
+
+    const spreads = [];
+    let pageIdx = 0;
+    let artIdx = 0;
+    slots.forEach((kind, s) => {
+        const left = ranges[pageIdx++];
+        const right = ranges[pageIdx++];
+        spreads.push({
+            kind: 'after', first: s === 0, last: s === slots.length - 1,
+            art: kind === 'img' ? arts[artIdx++] : null, left, right
+        });
+    });
+    return spreads;
+}
+
+function afterSpreadPage(spread) {
+    const segs = AFTER_SEGS;
+    const head = spread.first ? `<h2>${AFTERWORD.title}</h2>` : '';
+    // 학습 허브로 돌아가는 길은 맨 끝에 한 번만 둔다.
+    const foot = spread.last ? AFTER_FOOT : '';
+
+    if (spread.art) {
+        return `
+            <div class="page page-story page-after">
+                <div class="story-page-left">
+                    ${head}
+                    ${runHtml(segs, spread.left[0], spread.left[1])}
+                </div>
+                <div class="story-page-right story-page-right-image">
+                    <div class="story-art-top">${artFrame(spread.art, AFTERWORD.emoji)}</div>
+                    ${runHtml(segs, spread.right[0], spread.right[1])}
+                    ${foot}
+                </div>
+            </div>`;
+    }
+
     return `
-        <div class="page page-end">
-            ${artFrame('end.png', '📖')}
-            <h2>아라비안나이트를 다 읽었습니다</h2>
-            <a class="home-btn" href="../../../../../">학습 허브로 돌아가기</a>
+        <div class="page page-story page-after">
+            <div class="story-page-left">
+                ${head}
+                ${runHtml(segs, spread.left[0], spread.left[1])}
+            </div>
+            <div class="story-page-right story-page-right-text">
+                ${runHtml(segs, spread.right[0], spread.right[1])}
+                ${foot}
+            </div>
         </div>`;
 }
 
-const TWO_PAGE_KINDS = new Set(['chapter', 'toc', 'cover']);
+const TWO_PAGE_KINDS = new Set(['chapter', 'toc', 'cover', 'after']);
 
 let PAGES = [];
 let FOLIOS = [];
@@ -646,7 +810,7 @@ function buildPages() {
         ...TOC_GROUPS.map((_, i) => ({ kind: 'toc', part: i })),
         ...CHAPTERS.flatMap(paginateChapter),
         ...QUIZ_GROUPS.map((_, i) => ({ kind: 'quiz', part: i })),
-        { kind: 'end' }
+        ...paginateAfterword()
     ];
     PROBE.close();   // 쪽을 다 나눴으니 재는 데 쓰던 숨은 쪽은 치운다
 
@@ -667,7 +831,7 @@ function renderPage(page) {
         case 'toc': return tocPage(page.part);
         case 'chapter': return chapterSpreadPage(page);
         case 'quiz': return quizPage(page.part);
-        case 'end': return endPage();
+        case 'after': return afterSpreadPage(page);
         default: return '';
     }
 }

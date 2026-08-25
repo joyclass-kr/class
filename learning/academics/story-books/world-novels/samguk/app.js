@@ -540,6 +540,80 @@ const CHAPTER_SEGS = CHAPTERS.map(ch => {
     return segs;
 });
 
+// 읽고 나서 — 책마다 내용이 다르다. 장과 같은 방식으로 재서 나눈다.
+const AFTERWORD = {
+    title: '읽고 나서',
+    emoji: '🏯',
+    art: [],
+    paras: [
+        `이 책의 원래 제목은 『삼국지연의』입니다. 연의라는 말이 붙어 있는 것이 중요합니다. 사실을 이야기로 풀어 놓았다는 뜻입니다.`,
+        `그러니 이 책은 역사책이 아닙니다. 역사책은 따로 있습니다. 진수라는 사람이 천칠백 년쯤 전에 쓴 『삼국지』가 그것입니다.`,
+        `그리고 우리가 읽는 이 이야기는 그 역사책을 바탕으로, 그 뒤 천 년 넘게 사람들이 붙이고 다듬은 이야기입니다.`,
+        `송나라 때 이미 저잣거리에서 이 이야기를 들려주는 사람들이 있었습니다. 그 이야기꾼들이 관우가 나오면 손뼉을 치고 유비가 지면 눈물을 흘리는 손님들 앞에서 이야기를 다듬었습니다.`,
+        `그것을 육백 년쯤 전에 나관중이라는 사람이 한 권으로 묶었습니다. 그리고 삼백 년 전쯤에 모종강이라는 사람이 다시 손질했습니다. 지금 우리가 읽는 것은 대개 그 손질본입니다.`,
+        `그러니 이 이야기에는 지은이가 여럿입니다. 나관중 한 사람의 책이 아닙니다.`,
+        `이야기가 그렇게 만들어지면 사람들이 좋아하는 대목만 남습니다. 그래서 이 책은 재미있습니다. 천 년 동안 재미없는 대목이 떨어져 나간 것입니다.`,
+        `여기 실린 것은 그 가운데 줄기를 골라 옮긴 것입니다. 원작은 백이십 회짜리이고, 우리말로 옮기면 열 권이 넘습니다.`,
+        `이제 다시 볼 대목을 짚어 봅시다.`,
+        `첫째, 첫 문장을 다시 떠올려 보십시오. 천하의 대세는 나뉜 지 오래면 반드시 합하고 합한 지 오래면 반드시 나뉜다는 말입니다.`,
+        `이 한 문장이 이 책 전체를 미리 말해 줍니다. 그리고 마지막 회에서 그 말이 다시 나옵니다. 시작과 끝이 같은 말로 묶여 있는 것입니다.`,
+        `그 말은 이 책이 지어진 뒤에 붙은 것입니다. 모종강이 손질하면서 넣었습니다. 그런데 이제는 이 책을 떠올리면 제일 먼저 나오는 문장이 되었습니다.`,
+        `둘째, 복숭아밭의 맹세를 다시 보십시오. 세 사람이 형제가 되기로 맹세합니다. 한날한시에 태어나지는 못했으나 한날한시에 죽기를 바란다고요.`,
+        `그런데 이 맹세는 지켜지지 않습니다. 셋은 따로 죽습니다. 그리고 그 맹세 때문에 유비가 나라를 위태롭게 하는 결정을 내리기도 합니다.`,
+        `이릉 싸움이 그것입니다. 유비는 관우의 원수를 갚겠다고 대군을 이끌고 나갔다가 크게 집니다. 제갈량이 말렸는데도 갔습니다.`,
+        `그러니 이 책은 의리를 아름답게 그리면서 동시에 그 값도 적어 둡니다. 그것을 함께 읽어야 합니다.`,
+        `셋째, 세 번 찾아가는 대목을 다시 읽어 보십시오. 유비가 제갈량을 얻으려고 초가집을 세 번 찾아갑니다. 두 번은 만나지도 못합니다.`,
+        `그때 유비의 나이가 마흔일곱이고 제갈량은 스물일곱이었습니다. 스무 살 아래인 사람을 세 번 찾아간 것입니다. 그리고 눈길에 서서 기다립니다.`,
+        `이 대목이 왜 오래 남았는지 생각해 보십시오. 사람을 얻는 데 무엇이 드는지를 보여 주는 자리입니다.`,
+        `그리고 제갈량은 그 초가집에서 천하가 셋으로 나뉠 것을 미리 그려 보입니다. 그 그림대로 뒤의 일이 흘러갑니다. 그 대목을 융중대라고 부릅니다.`,
+        `넷째, 적벽을 다시 보십시오. 이 책에서 제일 큰 싸움입니다. 조조의 대군을 손권과 유비가 손을 잡고 막습니다.`,
+        `그런데 이 대목의 화려한 장면들은 대부분 지어낸 것입니다. 제갈량이 바람을 부른다든지, 화살 십만 개를 빌린다든지 하는 것 말입니다.`,
+        `역사책에는 그런 이야기가 없습니다. 실제로 그 싸움을 이끈 것은 주유였습니다. 그런데 이야기에서는 제갈량이 앞에 나오고 주유는 그를 시기하는 사람이 됩니다.`,
+        `왜 그렇게 되었는지 생각해 볼 만합니다. 이야기를 다듬은 사람들이 유비 쪽 편이었기 때문입니다.`,
+        `유비가 한나라 황실의 핏줄이라는 것이 그 까닭입니다. 그러니 유비 쪽이 정통이고 조조 쪽이 빼앗은 쪽이라고 여긴 것입니다. 역사를 보는 눈이 이야기를 그렇게 만들었습니다.`,
+        `인물도 다시 보아야 할 사람이 있습니다.`,
+        `조조를 나쁜 사람으로만 읽으면 이 책의 절반을 놓칩니다. 실제 역사에서 조조는 아주 뛰어난 사람이었습니다. 나라를 다스리는 솜씨가 좋았고, 시도 잘 썼습니다.`,
+        `그의 시는 지금도 중국 문학에서 높이 칩니다. 그리고 그는 사람을 쓸 때 출신을 따지지 않았습니다. 능력만 보고 썼습니다.`,
+        `그런데 이 이야기에서는 의심 많고 잔인한 사람으로 나옵니다. 나관중과 그 뒤 사람들이 유비를 정통으로 여겼기 때문입니다.`,
+        `그러니 조조가 나오는 대목을 읽을 때는 한 번 더 생각해 보십시오. 이 이야기가 그 사람에게 공평한가 하고요.`,
+        `제갈량도 다시 볼 만합니다. 이 이야기에서 그는 거의 신선처럼 나옵니다. 바람을 부르고 앞일을 다 압니다.`,
+        `실제 제갈량은 그런 사람이 아니었습니다. 정치와 살림에 아주 밝은 사람이었습니다. 촉 땅을 다스리며 물길을 놓고 세금을 고르게 하고 법을 세웠습니다.`,
+        `그리고 여섯 번 북벌에 나섰다가 다 이루지 못하고 오장원에서 세상을 떠납니다. 이 이야기에서 제일 슬픈 대목입니다.`,
+        `오장원에서 그가 남긴 글이 전합니다. 몸을 다 바치고 죽은 뒤에야 그만두겠다는 말입니다. 그 말이 지금까지도 인용됩니다.`,
+        `관우도 짚어 둘 만합니다. 그는 나중에 신으로 모셔집니다. 중국과 우리나라에도 관우를 모신 사당이 있습니다.`,
+        `장사하는 사람들이 그를 특히 모셨습니다. 약속을 지키는 사람의 본보기로 여겼기 때문입니다. 조조에게 잡혀 있으면서도 유비에게 돌아간 그 일이 그 까닭입니다.`,
+        `다만 관우에게는 흠도 있습니다. 자만이 그것입니다. 형주를 잃는 것도 그 자만에서 시작됩니다. 이 책은 그것도 감추지 않습니다.`,
+        `부하의 말을 듣지 않고, 손권 쪽을 얕보고, 뒤를 비워 둡니다. 이 책에서 제일 잘난 사람들이 그렇게 무너집니다.`,
+        `그 시절 사정도 알아 두면 좋습니다. 이 이야기의 배경은 천팔백 년쯤 전 중국입니다. 사백 년을 이어 온 한나라가 무너지던 때입니다.`,
+        `그때 중국의 사람 수가 오천만 명쯤이었는데, 그 뒤 몇십 년 사이에 크게 줄었다는 기록이 있습니다. 싸움과 굶주림과 돌림병 때문입니다.`,
+        `그러니 이 이야기의 화려한 싸움들 뒤에는 그런 일이 있었습니다. 이 책은 영웅들을 앞에 놓느라 그 이야기를 많이 하지 않습니다.`,
+        `그리고 이 이야기가 우리나라에 들어온 지도 오래되었습니다. 조선 시대에 이미 널리 읽혔습니다. 그때 사람들이 손으로 베껴 돌려 읽었습니다.`,
+        `우리말에 남은 흔적도 많습니다. 도원결의, 삼고초려, 읍참마속, 계륵 같은 말이 다 여기서 나왔습니다.`,
+        `이 이야기가 붙들고 있는 것은 두 가지입니다.`,
+        `하나는 이기는 것과 옳은 것이 같으냐는 것입니다. 이 이야기에서 마지막에 천하를 얻는 것은 유비도 조조도 손권도 아닙니다. 사마씨 집안입니다.`,
+        `세 나라가 다 무너지고 그것을 지켜보던 집안이 가져갑니다. 그러니 이 이야기는 옳은 쪽이 이긴다고 말하지 않습니다.`,
+        `다른 하나는 사람을 얻는 것이 무엇이냐는 것입니다. 유비에게는 땅도 군사도 없었습니다. 있는 것은 사람뿐이었습니다.`,
+        `그리고 그 사람들이 유비를 떠나지 않습니다. 조조에게는 더 좋은 조건이 있었는데도 그렇습니다. 이 이야기가 천 년 넘게 사랑받은 까닭이 거기 있을 것입니다.`,
+        `다만 이 책을 읽을 때 조심할 것이 있습니다. 싸움을 멋있게 그린 대목이 많습니다. 그런데 싸움은 멋있는 것이 아닙니다.`,
+        `여기서는 잔인한 대목을 옮기지 않았습니다. 원작에는 사람이 어떻게 되었는지를 자세히 적은 데가 많습니다.`,
+        `언젠가 이 이야기를 다시 읽게 되거든, 이번에는 조조만 따라가며 읽어 보십시오. 그 사람이 하는 말과 실제로 하는 일을 나란히 놓아 보면, 이 이야기가 그 사람을 어떻게 다루는지가 보입니다.`,
+        `마지막으로 생각해 볼 것을 남겨 둡니다. 답은 적어 두지 않겠습니다.`,
+        `유비가 관우의 원수를 갚겠다고 나선 것은 옳았을까요? 사람 하나를 위해 나라를 걸었습니다. 제갈량은 그것을 말렸습니다.`,
+        `제갈량이 여섯 번 북벌에 나선 것은 어떻게 보아야 할까요? 이길 수 없다는 것을 그 사람도 알고 있었을지 모릅니다.`,
+        `그리고 이 이야기가 조조에게 공평했을까요. 이야기를 만드는 사람이 한쪽 편을 들면 무슨 일이 생기는지 생각해 보십시오. 이 물음은 어른이 되어 다시 읽어도 답하기가 쉽지 않습니다.`
+    ]
+};
+
+const AFTER_SEGS = (() => {
+    const segs = [];
+    AFTERWORD.paras.forEach((html, paraIdx) => {
+        splitSegments(html).forEach((piece, k) => {
+            segs.push({ paraIdx, html: piece, start: k === 0 });
+        });
+    });
+    return segs;
+})();
+
 // 조각 묶음을 문단 단위로 다시 묶어 화면에 그릴 모양으로 만든다.
 // 앞 쪽에서 이어진 문단은 첫 줄을 들여쓰지 않는다.
 function runHtml(segs, a, b) {
@@ -821,16 +895,100 @@ function quizPage(part) {
         </div>`;
 }
 
-function endPage() {
+/* 읽고 나서 — 장과 같은 방식으로 쪽을 나눈다. 그림은 오른쪽 위에 얹힌다. */
+const AFTER_FOOT = `<p class="after-home"><a class="home-btn" href="../../../../../">학습 허브로 돌아가기</a></p>`;
+
+function paginateAfterword() {
+    const segs = AFTER_SEGS;
+    const arts = AFTERWORD.art || [];
+    const { usable, headHeight, artHeight } = PROBE;
+    const headHtml = `<h2>${AFTERWORD.title}</h2>`;
+    const totalH = PROBE.measure(runHtml(segs, 0, segs.length));
+
+    const underArt = Math.max(60, usable - artHeight);
+
+    // 맨 끝에는 학습 허브로 가는 단추가 붙는다. 그 높이를 미리 빼 두지 않으면
+    // 마지막 쪽만 넘친다.
+    const footH = PROBE.measure(AFTER_FOOT);
+
+    const capsOf = slots => {
+        const caps = [];
+        slots.forEach(kind => { caps.push(usable); caps.push(kind === 'img' ? underArt : usable); });
+        caps[caps.length - 1] = Math.max(60, caps[caps.length - 1] - footH);
+        return caps;
+    };
+
+    const minSpreads = Math.max(arts.length, 1);
+    const maxSpreads = Math.max(minSpreads, Math.floor(segs.length / 2));
+    let spreadCount = minSpreads;
+    while (spreadCount < maxSpreads) {
+        const caps = capsOf(slotPlan(arts.length, spreadCount - arts.length));
+        if (caps.reduce((a, b) => a + b, 0) >= totalH + headHeight) break;
+        spreadCount++;
+    }
+
+    let slots = slotPlan(arts.length, Math.max(0, spreadCount - arts.length));
+    let caps = capsOf(slots);
+    let ranges = fillPages(segs, caps, headHtml);
+    for (let guard = 0; guard < 8; guard++) {
+        const over = ranges.some(([a, b], n) =>
+            PROBE.measure((n === 0 ? headHtml : '') + runHtml(segs, a, b)) > caps[n] + 1);
+        if (!over || spreadCount >= maxSpreads) break;
+        spreadCount++;
+        slots = slotPlan(arts.length, Math.max(0, spreadCount - arts.length));
+        caps = capsOf(slots);
+        ranges = fillPages(segs, caps, headHtml);
+    }
+
+    const spreads = [];
+    let pageIdx = 0;
+    let artIdx = 0;
+    slots.forEach((kind, s) => {
+        const left = ranges[pageIdx++];
+        const right = ranges[pageIdx++];
+        spreads.push({
+            kind: 'after', first: s === 0, last: s === slots.length - 1,
+            art: kind === 'img' ? arts[artIdx++] : null, left, right
+        });
+    });
+    return spreads;
+}
+
+function afterSpreadPage(spread) {
+    const segs = AFTER_SEGS;
+    const head = spread.first ? `<h2>${AFTERWORD.title}</h2>` : '';
+    // 학습 허브로 돌아가는 길은 맨 끝에 한 번만 둔다.
+    const foot = spread.last ? AFTER_FOOT : '';
+
+    if (spread.art) {
+        return `
+            <div class="page page-story page-after">
+                <div class="story-page-left">
+                    ${head}
+                    ${runHtml(segs, spread.left[0], spread.left[1])}
+                </div>
+                <div class="story-page-right story-page-right-image">
+                    <div class="story-art-top">${artFrame(spread.art, AFTERWORD.emoji)}</div>
+                    ${runHtml(segs, spread.right[0], spread.right[1])}
+                    ${foot}
+                </div>
+            </div>`;
+    }
+
     return `
-        <div class="page page-end">
-            ${artFrame('end.png', '📖')}
-            <h2>삼국지를 다 읽었습니다</h2>
-            <a class="home-btn" href="../../../../../">학습 허브로 돌아가기</a>
+        <div class="page page-story page-after">
+            <div class="story-page-left">
+                ${head}
+                ${runHtml(segs, spread.left[0], spread.left[1])}
+            </div>
+            <div class="story-page-right story-page-right-text">
+                ${runHtml(segs, spread.right[0], spread.right[1])}
+                ${foot}
+            </div>
         </div>`;
 }
 
-const TWO_PAGE_KINDS = new Set(['chapter', 'toc', 'cover']);
+const TWO_PAGE_KINDS = new Set(['chapter', 'toc', 'cover', 'after']);
 
 let PAGES = [];
 let FOLIOS = [];
@@ -842,7 +1000,7 @@ function buildPages() {
         ...TOC_GROUPS.map((_, i) => ({ kind: 'toc', part: i })),
         ...CHAPTERS.flatMap(paginateChapter),
         ...QUIZ_GROUPS.map((_, i) => ({ kind: 'quiz', part: i })),
-        { kind: 'end' }
+        ...paginateAfterword()
     ];
     PROBE.close();   // 쪽을 다 나눴으니 재는 데 쓰던 숨은 쪽은 치운다
 
@@ -863,7 +1021,7 @@ function renderPage(page) {
         case 'toc': return tocPage(page.part);
         case 'chapter': return chapterSpreadPage(page);
         case 'quiz': return quizPage(page.part);
-        case 'end': return endPage();
+        case 'after': return afterSpreadPage(page);
         default: return '';
     }
 }
