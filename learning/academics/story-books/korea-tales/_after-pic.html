@@ -6,7 +6,9 @@
    그래서 scrollHeight - clientHeight 로 재야 한다.
    BOOKS 는 ?b=콩쥐,팥쥐 처럼 주소로 넘긴다. 없으면 _books-pic.json 을 읽는다. */
 const out = document.getElementById('out'), frame = document.getElementById('frame');
-const SIZES = [[1366, 768], [1280, 720], [1920, 1080], [810, 1080], [768, 1024], [1024, 768]];
+// 1366x620 은 창에 도구 막대가 붙은 낮은 가로 화면이다. 여기서만 글씨가
+// clamp 의 아래 끝(14px)에 걸려 제 몫보다 커진다. 작은 가로가 오히려 빡빡하다.
+const SIZES = [[1366, 768], [1366, 620], [1280, 720], [1920, 1080], [810, 1080], [768, 1024], [1024, 768]];
 
 function probe() {
     const r = [];
