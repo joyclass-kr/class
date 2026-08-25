@@ -1,0 +1,169 @@
+<!doctype html>
+<html lang="ko">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="theme-color" content="#07131c">
+    <title>과학 실험실</title>
+    <meta name="description" content="위도에 따른 전향력을 재고, 바람대가 만드는 에크만 수송과 아열대 환류가 어떻게 생기는지 확인하는 고등학교 과학 모의실험">
+    <link rel="stylesheet" as="style" crossorigin href="https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.9/dist/web/static/pretendard.css">
+    <link rel="stylesheet" href="styles.css?v=4">
+    <link rel="stylesheet" href="ocean-visual.css?v=4">
+    <link rel="stylesheet" href="quiz.css?v=4">
+</head>
+<body>
+    <main>
+        <header class="page-header">
+            <div class="title-row">
+                <a href="../">← 과학 실험실</a>
+                <h1>대기 대순환과 해수의 순환</h1>
+            </div>
+            <div class="grade-tags"><span>고등학교</span><span>지구과학</span></div>
+        </header>
+
+        <ol class="method-steps" aria-label="실험 방법">
+            <li>반구와 위도를 고릅니다.</li>
+            <li>그 위도의 바람대를 확인합니다.</li>
+            <li>바람이 밀어내는 바닷물의 방향을 봅니다.</li>
+            <li>위도별로 물이 어디에 쌓이는지 살핍니다.</li>
+        </ol>
+
+        <div class="experiment-layout">
+            <section class="panel control-panel" aria-labelledby="control-title">
+                <h2 id="control-title">실험 조건</h2>
+                <p class="water-standard">바람은 그 위도에 실제로 부는 탁월풍으로 놓습니다</p>
+
+                <fieldset class="pick-field">
+                    <legend>반구</legend>
+                    <div class="pick-buttons cols2">
+                        <button type="button" data-hemi="N">북반구<small>오른쪽으로 휨</small></button>
+                        <button type="button" data-hemi="S">남반구<small>왼쪽으로 휨</small></button>
+                    </div>
+                </fieldset>
+
+                <div class="range-heading">
+                    <label for="latRange">위도</label>
+                    <output id="latOutput" for="latRange">35°N</output>
+                </div>
+                <input id="latRange" type="range" min="5" max="75" step="1" value="35">
+                <div class="range-scale" aria-hidden="true"><span>5°</span><span>40°</span><span>75°</span></div>
+
+                <div class="range-heading">
+                    <label for="windRange">풍속</label>
+                    <output id="windOutput" for="windRange">10 m/s</output>
+                </div>
+                <input id="windRange" type="range" min="2" max="20" step="1" value="10">
+                <div class="range-scale" aria-hidden="true"><span>2</span><span>11</span><span>20</span></div>
+
+                <fieldset class="prediction-field">
+                    <legend>이 위도에서 관성 주기는?</legend>
+                    <div class="prediction-buttons three">
+                        <button type="button" data-prediction="p1">하루보다 짧다</button>
+                        <button type="button" data-prediction="p2">하루쯤</button>
+                        <button type="button" data-prediction="p3">하루보다 길다</button>
+                    </div>
+                </fieldset>
+
+                <button class="run-button" id="runBtn" type="button">물덩이 놓아 보기</button>
+                <button class="reset-button" id="resetBtn" type="button">처음으로</button>
+
+                <section class="result-box" aria-labelledby="result-title" aria-live="polite">
+                    <h3 id="result-title">관찰 결과</h3>
+                    <p id="resultEmpty">위도를 고르고 물덩이를 놓아 보세요.</p>
+                    <div id="resultContent" hidden>
+                        <div class="result-numbers">
+                            <article><span>전향 매개 변수</span><strong id="valueA">-</strong></article>
+                            <article><span>관성 주기</span><strong id="valueB">-</strong></article>
+                        </div>
+                        <p class="prediction-result" id="predictionResult"></p>
+                        <p class="explanation" id="elementaryExplanation"></p>
+                    </div>
+                </section>
+            </section>
+
+            <section class="panel ocean-stage" aria-label="관찰 화면">
+                <div class="stage-heading"><h2>관찰</h2><span id="stageBadge">-</span></div>
+
+                <div class="stage-views">
+                    <svg class="main-svg" viewBox="0 0 460 214" aria-hidden="true">
+                        <g id="mainGroup"></g>
+                    </svg>
+                    <svg class="graph-svg" viewBox="0 0 460 196" aria-hidden="true">
+                        <g id="graphGroup"></g>
+                    </svg>
+                </div>
+
+                <p class="stage-caption" id="stageCaption">전향력은 지구가 도는 탓에 나타나는 것이라, 움직이는 물체에만 작용하고 속력에 비례합니다. 멈춰 있는 물에는 아무 일도 하지 않습니다.</p>
+                <div class="data-note" id="dataNote"></div>
+            </section>
+        </div>
+
+        <section class="panel meaning-panel">
+            <h2>실험 결과의 의미</h2>
+            <div class="meaning-body">
+                <p><strong>에크만 나선</strong> 바람이 끄는 것은 맨 위층뿐이고, 그 층이 아래층을 끌면서 층마다 조금씩 더 휩니다. 그래서 표층은 바람의 45°, 층 전체를 더한 수송은 정확히 90° 옆으로 흐릅니다. 북반구는 오른쪽, 남반구는 왼쪽입니다.</p>
+                <p><strong>물이 쌓이는 곳</strong> 무역풍대는 물을 극 쪽으로, 편서풍대는 적도 쪽으로 밀어냅니다. 두 흐름이 위도 30° 부근에서 마주쳐 물이 쌓이고, 높아진 수면이 만드는 흐름이 아열대 환류입니다. 위도 60° 부근에서는 반대로 갈라져 아래에서 물이 솟아오릅니다.</p>
+                <p><strong>위도에 따라 달라지는 것</strong> 전향력은 위도의 사인에 비례하므로 적도에서 0이고 극에서 가장 큽니다. 그래서 적도 부근에서는 에크만 이론이 통하지 않고, 대신 관성 주기는 아주 길어집니다.</p>
+            </div>
+        </section>
+
+        <details class="quiz-section" aria-labelledby="quiz-title">
+            <summary class="quiz-heading"><h2 id="quiz-title">확인 문제</h2><span>4문제</span></summary>
+            <div class="quiz-grid">
+                <article class="quiz-card" data-answer="c">
+                    <h3>북반구에서 바람이 불 때 층 전체를 더한 바닷물의 수송 방향은?</h3>
+                    <div class="quiz-options">
+                        <label><input type="radio" name="q1" value="a"> 바람과 같은 방향</label>
+                        <label><input type="radio" name="q1" value="b"> 바람의 오른쪽 45°</label>
+                        <label><input type="radio" name="q1" value="c"> 바람의 오른쪽 90°</label>
+                        <label><input type="radio" name="q1" value="d"> 바람의 반대 방향</label>
+                    </div>
+                    <button class="answer-button" type="button">정답 확인</button>
+                    <p class="answer-result" aria-live="polite"></p>
+                    <p class="answer-explanation" hidden>표층만 보면 45°이지만, 깊이마다 조금씩 더 휘어진 흐름을 모두 더하면 정확히 90°가 됩니다. 남반구에서는 왼쪽 90°입니다.</p>
+                </article>
+
+                <article class="quiz-card" data-answer="b">
+                    <h3>아열대 환류의 한가운데에서 해수면이 주위보다 높은 까닭은?</h3>
+                    <div class="quiz-options">
+                        <label><input type="radio" name="q2" value="a"> 그곳에 비가 많이 내려서</label>
+                        <label><input type="radio" name="q2" value="b"> 무역풍과 편서풍이 물을 서로 마주 밀어 쌓아서</label>
+                        <label><input type="radio" name="q2" value="c"> 바닷물이 그곳에서 얼어서</label>
+                        <label><input type="radio" name="q2" value="d"> 해저 지형이 솟아 있어서</label>
+                    </div>
+                    <button class="answer-button" type="button">정답 확인</button>
+                    <p class="answer-result" aria-live="polite"></p>
+                    <p class="answer-explanation" hidden>무역풍대의 에크만 수송은 극 쪽으로, 편서풍대의 수송은 적도 쪽으로 향합니다. 위도 30° 부근에서 두 흐름이 마주쳐 물이 모이므로 해수면이 볼록해집니다.</p>
+                </article>
+
+                <article class="quiz-card" data-answer="a">
+                    <h3>적도 부근에서 전향력은 어떻게 될까요?</h3>
+                    <div class="quiz-options">
+                        <label><input type="radio" name="q3" value="a"> 0에 가까워진다</label>
+                        <label><input type="radio" name="q3" value="b"> 가장 커진다</label>
+                        <label><input type="radio" name="q3" value="c"> 방향이 반대가 된다</label>
+                        <label><input type="radio" name="q3" value="d"> 위도와 상관없이 일정하다</label>
+                    </div>
+                    <button class="answer-button" type="button">정답 확인</button>
+                    <p class="answer-result" aria-live="polite"></p>
+                    <p class="answer-explanation" hidden>전향 매개 변수는 위도의 사인에 비례합니다. 적도에서는 사인이 0이므로 전향력도 사라지고, 그래서 적도 부근에서는 에크만 수송을 그대로 적용할 수 없습니다.</p>
+                </article>
+
+                <article class="quiz-card" data-answer="d">
+                    <h3>전향력이 정지해 있는 물에는 작용하지 않는 까닭은?</h3>
+                    <div class="quiz-options">
+                        <label><input type="radio" name="q4" value="a"> 물이 무거워서</label>
+                        <label><input type="radio" name="q4" value="b"> 마찰이 막아서</label>
+                        <label><input type="radio" name="q4" value="c"> 수압이 눌러서</label>
+                        <label><input type="radio" name="q4" value="d"> 전향력의 크기가 속력에 비례해서</label>
+                    </div>
+                    <button class="answer-button" type="button">정답 확인</button>
+                    <p class="answer-result" aria-live="polite"></p>
+                    <p class="answer-explanation" hidden>전향력의 크기는 전향 매개 변수에 속력을 곱한 값입니다. 속력이 0이면 전향력도 0이므로, 움직이기 시작한 뒤에야 휘어집니다.</p>
+                </article>
+            </div>
+        </details>
+    </main>
+    <script src="app.js?v=4"></script>
+</body>
+</html>
