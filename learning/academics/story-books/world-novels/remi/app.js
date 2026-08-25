@@ -516,6 +516,67 @@ const CHAPTER_SEGS = CHAPTERS.map(ch => {
     return segs;
 });
 
+// 읽고 나서 — 책마다 내용이 다르다. 장과 같은 방식으로 재서 나눈다.
+const AFTERWORD = {
+    title: '읽고 나서',
+    emoji: '🎻',
+    art: [],
+    paras: [
+        `이 책의 원래 제목은 『가족 없이』입니다. 프랑스말로 두 낱말입니다. 우리나라에서는 『집 없는 아이』나 『엄마 찾아 삼만리』라는 제목으로도 알려졌습니다.`,
+        `다 읽은 지금, 그 제목을 다시 보십시오. 이 책은 가족을 잃은 아이 이야기가 아닙니다. 처음부터 없었던 아이가 가족을 만들어 가는 이야기입니다.`,
+        `쓴 사람은 프랑스의 엑토르 말로입니다. 법을 공부하다 그만두고 글을 쓴 사람인데, 평생에 소설을 예순 권 넘게 냈습니다. 그 가운데 지금까지 읽히는 것은 거의 이 책 하나입니다.`,
+        `말로는 이 책을 자기 딸에게 주려고 썼다고 합니다. 책 머리에 딸의 이름을 적어 두었습니다.`,
+        `딸이 자라서 읽을 수 있도록 쓴 것입니다. 그래서 이 책에는 어려운 말이 거의 없습니다.`,
+        `책은 천팔백칠십팔 년에 나왔습니다. 나오자마자 프랑스에서 상을 받았고, 그 뒤로 프랑스 학교에서 오래 읽혔습니다.`,
+        `원작은 여기 실린 것보다 훨씬 깁니다. 레미가 프랑스를 걸어 다니며 지나는 고장이 하나하나 적혀 있습니다. 그 시절 아이들에게 프랑스 지리를 가르치려는 뜻도 있었습니다.`,
+        `실제로 이 책은 오래도록 프랑스 학교에서 교재처럼 쓰였습니다. 이야기를 따라가다 보면 프랑스의 여러 고장과 그 고장에서 무엇을 하고 사는지를 알게 되기 때문입니다.`,
+        `여기서는 레미가 만나고 잃는 사람들을 따라가는 줄기만 골라 실었습니다.`,
+        `이제 다시 볼 대목을 짚어 봅시다.`,
+        `첫째, 첫 장을 다시 읽어 보십시오. 레미는 자기가 주워 온 아이라는 것을 여덟 살에 알게 됩니다. 그때까지 어머니라고 부르던 사람이 어머니가 아니었습니다.`,
+        `그런데 그 사실을 알고도 레미는 그 사람을 계속 어머니라고 부릅니다. 이 책에서 가족이라는 말이 무슨 뜻인지가 그 첫 장에 이미 나옵니다.`,
+        `바르브랭 아주머니는 레미를 여덟 해 동안 길렀습니다. 낳아 준 사람이 아니었는데도 그랬습니다. 그리고 남편이 돌아와 레미를 넘길 때 그 사람은 끝까지 반대합니다.`,
+        `둘째, 비탈리스를 다시 보십시오. 처음에는 아이를 사서 부리는 사람처럼 보입니다. 실제로 돈을 주고 데려간 것도 맞습니다.`,
+        `그런데 그 사람은 레미에게 글과 셈과 음악을 가르칩니다. 길에서 가르칩니다. 학교에 못 가는 아이에게 그 사람이 학교였습니다.`,
+        `그리고 비탈리스에게는 숨긴 것이 있었습니다. 젊을 때 이름난 노래꾼이었다는 것입니다. 목소리를 잃고 나서 이름을 버리고 떠돌이가 된 것이었습니다.`,
+        `그 사람이 그것을 끝까지 말하지 않은 까닭도 생각해 볼 만합니다. 이 책은 그것도 설명하지 않습니다.`,
+        `다만 비탈리스가 레미에게 노래를 가르치는 대목에서 그 사람의 옛 솜씨가 잠깐 비칩니다. 아는 사람이 보면 알아볼 자리를 하나 남겨 둔 것입니다.`,
+        `셋째, 눈 속의 밤을 다시 읽어 보십시오. 이 책에서 제일 추운 대목입니다. 그 밤에 잃은 것을 이 책은 담담하게 적어 둡니다. 울리려고 적은 것이 아니라 그런 일이 있었다고 적은 것입니다.`,
+        `넷째, 탄광 대목을 세어 보십시오. 레미는 광부가 됩니다. 그때 레미의 나이가 열둘쯤입니다. 그 시절 프랑스 탄광에는 그런 아이가 아주 많았습니다.`,
+        `아이를 쓴 까닭은 갱도가 낮았기 때문입니다. 어른이 서지 못하는 자리를 아이는 지나갈 수 있었습니다. 그리고 삯이 어른의 삼분의 일이었습니다.`,
+        `탄광에 물이 차는 대목도 지어낸 것이 아닙니다. 그 시절 실제로 자주 일어나던 사고입니다. 말로는 신문에 난 사고 기록을 보고 그 대목을 적었습니다.`,
+        `물이 차오르는 갱도에 갇혀 여러 날을 버틴 사람들 이야기가 그 시절 신문에 여러 번 났습니다. 살아 나온 사람도 있었고 못 나온 사람도 있었습니다.`,
+        `인물도 다시 보아야 할 사람이 있습니다.`,
+        `마티아를 그냥 곁에 있는 아이로 읽으면 절반만 읽은 것이 됩니다. 마티아는 레미보다 더 험한 데를 지나온 아이입니다. 그런데 이 책에서 제일 밝습니다.`,
+        `그리고 마티아는 셈이 빠릅니다. 레미가 못 하는 것을 그 아이가 합니다. 두 아이가 함께 다니는 대목이 이 책에서 제일 좋은 자리입니다.`,
+        `둘이 돈을 모으는 대목이 있습니다. 소 한 마리를 사서 바르브랭 아주머니에게 주려는 것입니다. 그 돈을 모으는 데 여러 달이 걸립니다.`,
+        `아클랭 씨네 가족도 다시 볼 만합니다. 화원을 하던 그 집은 우박 한 번에 다 잃습니다. 그리고 흩어집니다. 아무도 잘못한 것이 없는데 그렇게 됩니다.`,
+        `그 시절에는 그런 일이 흔했습니다. 농사를 짓다 한 해를 망치면 빚을 못 갚고, 빚을 못 갚으면 감옥에 갔습니다. 아이들은 친척 집으로 흩어졌습니다.`,
+        `그 시절 사정도 알아 두면 좋습니다. 이 이야기의 배경은 백오십 년쯤 전 프랑스입니다. 그때 프랑스에는 떠돌아다니며 재주를 보이고 돈을 받는 사람이 많았습니다.`,
+        `짐승을 데리고 다니며 재주를 보이는 것도 그 가운데 하나였습니다. 개나 원숭이를 가르쳐 다녔습니다. 비탈리스가 하던 일이 그것입니다.`,
+        `그리고 아이를 데려다 그런 일을 시키는 것이 그 시절에는 죄가 아니었습니다. 부모가 아이를 남에게 넘기고 돈을 받는 일이 있었습니다. 이 책의 첫 장이 바로 그 장면입니다.`,
+        `이 책이 붙들고 있는 물음은 두 가지입니다.`,
+        `하나는 가족이 무엇으로 되느냐는 것입니다. 레미는 이 이야기에서 여러 번 가족을 얻고 여러 번 잃습니다. 낳아 준 사람도 나중에 찾습니다.`,
+        `그런데 이 책이 제일 공들여 적은 것은 낳아 준 사람을 찾는 대목이 아닙니다. 길에서 만난 사람들과 지낸 날들입니다. 그러니 이 책의 답은 이미 나와 있습니다.`,
+        `다른 하나는 아이가 어디까지 견딜 수 있느냐는 것입니다. 레미는 굶고 걷고 갇히고 물에 잠깁니다. 그런데 이 책은 그것을 견뎌 내면 훌륭한 사람이 된다고 말하지 않습니다. 그냥 그런 일이 있었다고 적습니다.`,
+        `책이 나온 뒤 프랑스에서 오래 읽혔습니다. 우리나라와 일본에서도 여러 번 만화영화로 만들어졌습니다. 다만 그때 제목이 어머니를 찾는 이야기로 바뀌면서, 원래 이야기와는 다른 것이 되기도 했습니다.`,
+        `언젠가 이 책을 다시 읽게 되거든, 이번에는 카피와 개들만 따라가며 읽어 보십시오. 이 책에서 짐승들이 하는 일이 사람 몫만큼 큽니다.`,
+        `마지막으로 생각해 볼 것을 남겨 둡니다. 답은 적어 두지 않겠습니다.`,
+        `비탈리스가 레미를 사 간 것을 우리는 어떻게 보아야 할까요? 그 사람이 아니었으면 레미는 시설로 보내졌을 것입니다. 그렇다고 사람을 사고파는 일이 옳아지지는 않습니다.`,
+        `레미가 낳아 준 어머니를 찾은 것이 이 이야기의 끝일까요? 이 책은 거기서 끝나지 않고 한 장을 더 붙여 둡니다. 그 마지막 장에 누가 나오는지를 보십시오.`,
+        `그리고 마티아는 레미가 부자가 된 뒤에 어떻게 되었을까요. 이 물음은 어른이 되어 다시 읽어도 답하기가 쉽지 않습니다.`
+    ]
+};
+
+const AFTER_SEGS = (() => {
+    const segs = [];
+    AFTERWORD.paras.forEach((html, paraIdx) => {
+        splitSegments(html).forEach((piece, k) => {
+            segs.push({ paraIdx, html: piece, start: k === 0 });
+        });
+    });
+    return segs;
+})();
+
 // 조각 묶음을 문단 단위로 다시 묶어 화면에 그릴 모양으로 만든다.
 // 앞 쪽에서 이어진 문단은 첫 줄을 들여쓰지 않는다.
 function runHtml(segs, a, b) {
@@ -797,16 +858,100 @@ function quizPage(part) {
         </div>`;
 }
 
-function endPage() {
+/* 읽고 나서 — 장과 같은 방식으로 쪽을 나눈다. 그림은 오른쪽 위에 얹힌다. */
+const AFTER_FOOT = `<p class="after-home"><a class="home-btn" href="../../../../../">학습 허브로 돌아가기</a></p>`;
+
+function paginateAfterword() {
+    const segs = AFTER_SEGS;
+    const arts = AFTERWORD.art || [];
+    const { usable, headHeight, artHeight } = PROBE;
+    const headHtml = `<h2>${AFTERWORD.title}</h2>`;
+    const totalH = PROBE.measure(runHtml(segs, 0, segs.length));
+
+    const underArt = Math.max(60, usable - artHeight);
+
+    // 맨 끝에는 학습 허브로 가는 단추가 붙는다. 그 높이를 미리 빼 두지 않으면
+    // 마지막 쪽만 넘친다.
+    const footH = PROBE.measure(AFTER_FOOT);
+
+    const capsOf = slots => {
+        const caps = [];
+        slots.forEach(kind => { caps.push(usable); caps.push(kind === 'img' ? underArt : usable); });
+        caps[caps.length - 1] = Math.max(60, caps[caps.length - 1] - footH);
+        return caps;
+    };
+
+    const minSpreads = Math.max(arts.length, 1);
+    const maxSpreads = Math.max(minSpreads, Math.floor(segs.length / 2));
+    let spreadCount = minSpreads;
+    while (spreadCount < maxSpreads) {
+        const caps = capsOf(slotPlan(arts.length, spreadCount - arts.length));
+        if (caps.reduce((a, b) => a + b, 0) >= totalH + headHeight) break;
+        spreadCount++;
+    }
+
+    let slots = slotPlan(arts.length, Math.max(0, spreadCount - arts.length));
+    let caps = capsOf(slots);
+    let ranges = fillPages(segs, caps, headHtml);
+    for (let guard = 0; guard < 8; guard++) {
+        const over = ranges.some(([a, b], n) =>
+            PROBE.measure((n === 0 ? headHtml : '') + runHtml(segs, a, b)) > caps[n] + 1);
+        if (!over || spreadCount >= maxSpreads) break;
+        spreadCount++;
+        slots = slotPlan(arts.length, Math.max(0, spreadCount - arts.length));
+        caps = capsOf(slots);
+        ranges = fillPages(segs, caps, headHtml);
+    }
+
+    const spreads = [];
+    let pageIdx = 0;
+    let artIdx = 0;
+    slots.forEach((kind, s) => {
+        const left = ranges[pageIdx++];
+        const right = ranges[pageIdx++];
+        spreads.push({
+            kind: 'after', first: s === 0, last: s === slots.length - 1,
+            art: kind === 'img' ? arts[artIdx++] : null, left, right
+        });
+    });
+    return spreads;
+}
+
+function afterSpreadPage(spread) {
+    const segs = AFTER_SEGS;
+    const head = spread.first ? `<h2>${AFTERWORD.title}</h2>` : '';
+    // 학습 허브로 돌아가는 길은 맨 끝에 한 번만 둔다.
+    const foot = spread.last ? AFTER_FOOT : '';
+
+    if (spread.art) {
+        return `
+            <div class="page page-story page-after">
+                <div class="story-page-left">
+                    ${head}
+                    ${runHtml(segs, spread.left[0], spread.left[1])}
+                </div>
+                <div class="story-page-right story-page-right-image">
+                    <div class="story-art-top">${artFrame(spread.art, AFTERWORD.emoji)}</div>
+                    ${runHtml(segs, spread.right[0], spread.right[1])}
+                    ${foot}
+                </div>
+            </div>`;
+    }
+
     return `
-        <div class="page page-end">
-            ${artFrame('end.png', '🎻')}
-            <h2>집없는 소년를 다 읽었습니다</h2>
-            <a class="home-btn" href="../../../../../">학습 허브로 돌아가기</a>
+        <div class="page page-story page-after">
+            <div class="story-page-left">
+                ${head}
+                ${runHtml(segs, spread.left[0], spread.left[1])}
+            </div>
+            <div class="story-page-right story-page-right-text">
+                ${runHtml(segs, spread.right[0], spread.right[1])}
+                ${foot}
+            </div>
         </div>`;
 }
 
-const TWO_PAGE_KINDS = new Set(['chapter', 'toc', 'cover']);
+const TWO_PAGE_KINDS = new Set(['chapter', 'toc', 'cover', 'after']);
 
 let PAGES = [];
 let FOLIOS = [];
@@ -818,7 +963,7 @@ function buildPages() {
         ...TOC_GROUPS.map((_, i) => ({ kind: 'toc', part: i })),
         ...CHAPTERS.flatMap(paginateChapter),
         ...QUIZ_GROUPS.map((_, i) => ({ kind: 'quiz', part: i })),
-        { kind: 'end' }
+        ...paginateAfterword()
     ];
     PROBE.close();   // 쪽을 다 나눴으니 재는 데 쓰던 숨은 쪽은 치운다
 
@@ -839,7 +984,7 @@ function renderPage(page) {
         case 'toc': return tocPage(page.part);
         case 'chapter': return chapterSpreadPage(page);
         case 'quiz': return quizPage(page.part);
-        case 'end': return endPage();
+        case 'after': return afterSpreadPage(page);
         default: return '';
     }
 }

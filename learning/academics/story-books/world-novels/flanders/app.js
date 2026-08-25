@@ -447,6 +447,75 @@ const CHAPTER_SEGS = CHAPTERS.map(ch => {
     return segs;
 });
 
+// 읽고 나서 — 책마다 내용이 다르다. 장과 같은 방식으로 재서 나눈다.
+const AFTERWORD = {
+    title: '읽고 나서',
+    emoji: '🐕',
+    art: [],
+    paras: [
+        `이 책의 제목은 『플랜더스의 개』입니다. 사람 이름이 아니라 개 이름도 아니고, 땅 이름과 개라는 말이 붙어 있는 제목입니다. 플랜더스는 지금의 벨기에 북쪽 지방을 가리키는 옛 이름입니다.`,
+        `쓴 사람은 영국의 위다입니다. 본디 이름은 마리 루이즈 드 라 라메인데, 어릴 때 자기 이름을 제대로 발음하지 못해 루이자를 위다라고 부른 데서 온 붓 이름입니다.`,
+        `위다는 벨기에를 여행하다 이 이야기를 썼습니다. 안트베르펜 성당에서 루벤스의 그림을 보고, 그 앞에서 이야기가 떠올랐다고 합니다.`,
+        `위다는 평생 결혼하지 않고 개를 여러 마리 기르며 살았습니다. 한때는 서른 마리가 넘었다고 합니다. 그러다 재산을 다 쓰고 가난하게 세상을 떠났습니다.`,
+        `책은 천팔백칠십이 년에 나왔습니다. 그런데 벨기에에서는 오래도록 거의 알려지지 않았습니다. 영국에서도 크게 읽히지 않았습니다.`,
+        `벨기에 사람들은 이 이야기를 자기네 이야기로 여기지 않았습니다. 영국 사람이 남의 나라를 배경으로 쓴 슬픈 이야기라고 보았기 때문입니다.`,
+        `이 이야기가 크게 알려진 곳은 뜻밖에도 일본과 우리나라입니다. 그림책과 만화영화로 여러 번 만들어지면서 그렇게 되었습니다. 안트베르펜 사람들이 그것을 나중에 알고 놀랐다고 합니다.`,
+        `지금은 그 성당 앞에 네로와 파트라슈를 새긴 돌이 놓여 있습니다. 일본과 우리나라에서 온 사람들이 하도 찾아와서 만들어 놓은 것입니다.`,
+        `왜 이 이야기가 그 두 나라에서 크게 읽혔는지를 두고 여러 말이 있습니다. 참고 견디다 끝내 갚음을 받지 못하는 이야기가 마음에 닿았다는 말도 있습니다.`,
+        `원작은 여기 실린 것보다 조금 더 깁니다. 마을 사람들 이야기와 계절이 도는 대목이 더 들어 있습니다. 여기서는 네로와 파트라슈를 따라가는 줄기만 골라 실었습니다.`,
+        `이제 다시 볼 대목을 짚어 봅시다.`,
+        `첫째, 파트라슈를 처음 만나는 대목을 다시 읽어 보십시오. 파트라슈는 길가에 쓰러져 있었습니다. 짐수레를 끌다가 쓰러졌고, 주인은 죽은 줄 알고 두고 갔습니다.`,
+        `그 개를 일으켜 세운 것은 아무것도 가진 것이 없는 노인과 아이였습니다. 그 시절 벨기에에서 개는 수레를 끄는 짐승이었습니다. 소나 말을 살 수 없는 사람들이 개에게 수레를 매었습니다.`,
+        `벨기에에서는 그 일이 백 년 전까지 이어졌습니다. 우유통을 실은 개 수레가 새벽 길에 줄지어 다녔습니다. 지금은 법으로 금지되어 있습니다.`,
+        `둘째, 파트라슈가 그 뒤에 무엇을 했는지 세어 보십시오. 파트라슈는 그 집에서 다시 수레를 끕니다. 아무도 시키지 않았는데 스스로 끕니다.`,
+        `그것이 이 이야기의 방식입니다. 이 이야기에는 갚는 장면이 여럿 나오는데, 갚아야 한다고 말하는 사람은 하나도 없습니다.`,
+        `할아버지도 그렇습니다. 네로를 데려다 기른 것을 한 번도 생색내지 않습니다. 그리고 자기가 오래 못 살 것을 알고도 말하지 않습니다.`,
+        `셋째, 가려진 그림을 다시 보십시오. 안트베르펜 성당에 루벤스의 그림이 걸려 있는데, 천으로 덮여 있습니다. 보려면 돈을 내야 했습니다.`,
+        `네로는 그 돈이 없습니다. 그림을 그리고 싶어 하는 아이가 그림을 볼 수 없습니다. 이 이야기가 조용히 적어 놓은 셈이 그것입니다.`,
+        `그 시절 성당의 그림에 천을 덮어 둔 것은 그림을 지키려는 뜻도 있었습니다. 볕에 색이 바래기 때문입니다. 다만 그것을 걷고 보려면 돈을 내야 했습니다.`,
+        `넷째, 방앗간 불을 다시 읽어 보십시오. 마을 사람들이 네로를 의심합니다. 증거는 아무것도 없습니다. 다만 네로가 가난하고, 방앗간 주인과 사이가 나빴다는 것뿐입니다.`,
+        `그러고 나서 아무도 그 아이에게 일을 주지 않습니다. 우유를 나르던 일도 끊깁니다. 이 이야기에서 네로를 죽음으로 밀어 넣은 것은 추위가 아니라 그 의심입니다.`,
+        `의심을 처음 입 밖에 낸 사람은 하나였습니다. 그런데 그 말이 마을을 한 바퀴 돌자 다들 그렇게 여기게 되었습니다. 아무도 확인해 보지 않았습니다.`,
+        `불이 난 밤에 네로가 어디 있었는지 물어본 사람도 없었습니다. 묻기만 했어도 풀릴 일이었습니다.`,
+        `인물도 다시 보아야 할 사람이 있습니다.`,
+        `알로아의 아버지를 나쁜 사람으로만 읽으면 절반만 읽은 것이 됩니다. 그 사람은 딸이 가난한 아이와 어울리는 것을 막았습니다. 그 시절 그런 아버지가 대부분이었습니다.`,
+        `그 사람은 마을에서 제일 잘사는 사람이었습니다. 방앗간을 하고 있었으니 마을 사람들이 다 그 집에 곡식을 맡겼습니다. 그 사람의 말이 곧 마을의 말이 되는 자리였습니다.`,
+        `그리고 그 사람은 마지막에 뉘우칩니다. 그런데 이미 늦었습니다. 이 이야기는 뉘우침이 늦게 오는 것을 그대로 적어 둡니다.`,
+        `마을 사람들도 그렇습니다. 아주 나쁜 사람은 하나도 없습니다. 다들 조금씩 등을 돌렸을 뿐입니다. 그런데 아이 하나가 갈 데가 없어졌습니다.`,
+        `그 시절 사정도 알아 두면 좋습니다. 이 이야기의 배경은 백오십 년쯤 전 벨기에의 시골 마을입니다. 그림 대회에 나가 상을 받는 것이 가난한 아이가 화가가 될 수 있는 거의 유일한 길이었습니다.`,
+        `그림을 배우려면 스승에게 돈을 내야 했기 때문입니다. 네로에게는 그 돈이 없었습니다. 그래서 대회에 건 것입니다.`,
+        `그 대회의 상은 여섯 해 동안 그림을 배울 돈이었습니다. 그러니 네로에게는 그것이 한 번뿐인 기회였습니다. 그림도 종이도 물감도 없이 그린 그림을 들고 나간 것이었습니다.`,
+        `루벤스라는 화가도 실제 사람입니다. 사백 년 전 안트베르펜에서 살았고, 그 도시에서 가장 유명한 사람입니다. 이 이야기에 나오는 그림도 실제로 그 성당에 걸려 있습니다.`,
+        `두 폭짜리 큰 그림입니다. 사람 키의 서너 배가 되는 크기입니다. 네로가 그 앞에 서서 올려다보는 대목을 읽을 때 그 크기를 떠올려 보십시오.`,
+        `지금은 그 그림을 누구나 볼 수 있습니다. 천도 덮여 있지 않습니다. 다만 이 이야기가 나온 때에는 그렇지 않았습니다.`,
+        `이 이야기가 붙들고 있는 물음은 두 가지입니다.`,
+        `하나는 착하게 사는 것으로 충분하냐는 것입니다. 네로는 아무 잘못도 하지 않았습니다. 그런데 아무것도 얻지 못하고 끝납니다. 이 이야기는 착한 사람이 잘된다고 말하지 않습니다.`,
+        `어린이 책이 대개 그렇게 끝나지 않는다는 것을 생각하면 이것은 드문 일입니다. 위다는 그 약속을 하지 않았습니다.`,
+        `다른 하나는 마을이 무엇을 해야 하느냐는 것입니다. 이 마을 사람들은 하나하나 보면 다들 평범합니다. 그런데 그 평범한 사람들이 모여서 아이 하나를 밀어냈습니다.`,
+        `그 가운데 하나쯤은 다르게 굴 수 있었습니다. 문을 열어 주거나 일을 주거나 한마디만 해도 되었습니다. 그런데 아무도 하지 않았습니다.`,
+        `이 이야기의 결말을 두고 지금도 말이 많습니다. 너무 슬프다는 것입니다. 실제로 일본에서 만든 만화영화가 나왔을 때, 결말을 바꾸어 달라는 요구가 많았다고 합니다.`,
+        `그런데 위다는 그렇게 끝내야 한다고 여겼습니다. 이 이야기가 겨눈 것이 마을 사람들이었기 때문입니다. 네로가 살아났다면 그 사람들이 한 일이 흐려졌을 것입니다.`,
+        `다만 그 마지막 밤에 네로가 본 것은 적어 둘 만합니다. 그 아이는 평생 보고 싶어 하던 그림을 마지막에 봅니다. 달빛이 들어와 천을 걷은 것처럼 보이게 한 것입니다.`,
+        `그러니 이 이야기는 아무것도 얻지 못하고 끝나는 이야기가 아닙니다. 딱 하나를 얻고 끝나는 이야기입니다.`,
+        `그리고 그 하나를 얻는 데 그 아이의 한평생이 들었습니다. 그것을 어떻게 세어야 할지는 읽는 사람에게 달려 있습니다.`,
+        `언젠가 이 이야기를 다시 읽게 되거든, 이번에는 파트라슈만 따라가며 읽어 보십시오. 그 개는 처음부터 끝까지 한 번도 네로를 떠나지 않습니다. 마지막에도 그렇습니다.`,
+        `마지막으로 생각해 볼 것을 남겨 둡니다. 답은 적어 두지 않겠습니다.`,
+        `마을 사람들 가운데 누가 제일 잘못했을까요? 불을 낸 사람도 아니고 거짓말을 한 사람도 없습니다. 그런데 아이 하나가 죽었습니다.`,
+        `네로가 대회에서 상을 받았다면 어떻게 되었을까요? 이 이야기는 상을 다른 아이에게 줍니다. 그런데 그 뒤에 심사위원 하나가 네로의 그림을 다시 찾습니다. 조금만 빨랐으면 되는 일이었습니다.`,
+        `그리고 이 이야기를 슬프게 끝낸 것은 옳았을까요. 이 물음은 어른이 되어 다시 읽어도 답하기가 쉽지 않습니다.`
+    ]
+};
+
+const AFTER_SEGS = (() => {
+    const segs = [];
+    AFTERWORD.paras.forEach((html, paraIdx) => {
+        splitSegments(html).forEach((piece, k) => {
+            segs.push({ paraIdx, html: piece, start: k === 0 });
+        });
+    });
+    return segs;
+})();
+
 // 조각 묶음을 문단 단위로 다시 묶어 화면에 그릴 모양으로 만든다.
 // 앞 쪽에서 이어진 문단은 첫 줄을 들여쓰지 않는다.
 function runHtml(segs, a, b) {
@@ -728,16 +797,100 @@ function quizPage(part) {
         </div>`;
 }
 
-function endPage() {
+/* 읽고 나서 — 장과 같은 방식으로 쪽을 나눈다. 그림은 오른쪽 위에 얹힌다. */
+const AFTER_FOOT = `<p class="after-home"><a class="home-btn" href="../../../../../">학습 허브로 돌아가기</a></p>`;
+
+function paginateAfterword() {
+    const segs = AFTER_SEGS;
+    const arts = AFTERWORD.art || [];
+    const { usable, headHeight, artHeight } = PROBE;
+    const headHtml = `<h2>${AFTERWORD.title}</h2>`;
+    const totalH = PROBE.measure(runHtml(segs, 0, segs.length));
+
+    const underArt = Math.max(60, usable - artHeight);
+
+    // 맨 끝에는 학습 허브로 가는 단추가 붙는다. 그 높이를 미리 빼 두지 않으면
+    // 마지막 쪽만 넘친다.
+    const footH = PROBE.measure(AFTER_FOOT);
+
+    const capsOf = slots => {
+        const caps = [];
+        slots.forEach(kind => { caps.push(usable); caps.push(kind === 'img' ? underArt : usable); });
+        caps[caps.length - 1] = Math.max(60, caps[caps.length - 1] - footH);
+        return caps;
+    };
+
+    const minSpreads = Math.max(arts.length, 1);
+    const maxSpreads = Math.max(minSpreads, Math.floor(segs.length / 2));
+    let spreadCount = minSpreads;
+    while (spreadCount < maxSpreads) {
+        const caps = capsOf(slotPlan(arts.length, spreadCount - arts.length));
+        if (caps.reduce((a, b) => a + b, 0) >= totalH + headHeight) break;
+        spreadCount++;
+    }
+
+    let slots = slotPlan(arts.length, Math.max(0, spreadCount - arts.length));
+    let caps = capsOf(slots);
+    let ranges = fillPages(segs, caps, headHtml);
+    for (let guard = 0; guard < 8; guard++) {
+        const over = ranges.some(([a, b], n) =>
+            PROBE.measure((n === 0 ? headHtml : '') + runHtml(segs, a, b)) > caps[n] + 1);
+        if (!over || spreadCount >= maxSpreads) break;
+        spreadCount++;
+        slots = slotPlan(arts.length, Math.max(0, spreadCount - arts.length));
+        caps = capsOf(slots);
+        ranges = fillPages(segs, caps, headHtml);
+    }
+
+    const spreads = [];
+    let pageIdx = 0;
+    let artIdx = 0;
+    slots.forEach((kind, s) => {
+        const left = ranges[pageIdx++];
+        const right = ranges[pageIdx++];
+        spreads.push({
+            kind: 'after', first: s === 0, last: s === slots.length - 1,
+            art: kind === 'img' ? arts[artIdx++] : null, left, right
+        });
+    });
+    return spreads;
+}
+
+function afterSpreadPage(spread) {
+    const segs = AFTER_SEGS;
+    const head = spread.first ? `<h2>${AFTERWORD.title}</h2>` : '';
+    // 학습 허브로 돌아가는 길은 맨 끝에 한 번만 둔다.
+    const foot = spread.last ? AFTER_FOOT : '';
+
+    if (spread.art) {
+        return `
+            <div class="page page-story page-after">
+                <div class="story-page-left">
+                    ${head}
+                    ${runHtml(segs, spread.left[0], spread.left[1])}
+                </div>
+                <div class="story-page-right story-page-right-image">
+                    <div class="story-art-top">${artFrame(spread.art, AFTERWORD.emoji)}</div>
+                    ${runHtml(segs, spread.right[0], spread.right[1])}
+                    ${foot}
+                </div>
+            </div>`;
+    }
+
     return `
-        <div class="page page-end">
-            ${artFrame('end.png', '⛪')}
-            <h2>플랜더스의 개를 다 읽었습니다</h2>
-            <a class="home-btn" href="../../../../../">학습 허브로 돌아가기</a>
+        <div class="page page-story page-after">
+            <div class="story-page-left">
+                ${head}
+                ${runHtml(segs, spread.left[0], spread.left[1])}
+            </div>
+            <div class="story-page-right story-page-right-text">
+                ${runHtml(segs, spread.right[0], spread.right[1])}
+                ${foot}
+            </div>
         </div>`;
 }
 
-const TWO_PAGE_KINDS = new Set(['chapter', 'toc', 'cover']);
+const TWO_PAGE_KINDS = new Set(['chapter', 'toc', 'cover', 'after']);
 
 let PAGES = [];
 let FOLIOS = [];
@@ -749,7 +902,7 @@ function buildPages() {
         ...TOC_GROUPS.map((_, i) => ({ kind: 'toc', part: i })),
         ...CHAPTERS.flatMap(paginateChapter),
         ...QUIZ_GROUPS.map((_, i) => ({ kind: 'quiz', part: i })),
-        { kind: 'end' }
+        ...paginateAfterword()
     ];
     PROBE.close();   // 쪽을 다 나눴으니 재는 데 쓰던 숨은 쪽은 치운다
 
@@ -770,7 +923,7 @@ function renderPage(page) {
         case 'toc': return tocPage(page.part);
         case 'chapter': return chapterSpreadPage(page);
         case 'quiz': return quizPage(page.part);
-        case 'end': return endPage();
+        case 'after': return afterSpreadPage(page);
         default: return '';
     }
 }
