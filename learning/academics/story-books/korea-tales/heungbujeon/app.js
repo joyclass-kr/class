@@ -7,7 +7,7 @@ const CHAPTERS = [
         num: 1,
         title: "쫓겨난 아우",
         emoji: "🏚️",
-        art: ["story-01-a.png", "story-01-b.png", "story-01-c.png"],
+        art: ["story-01-a.webp", "story-01-b.webp", "story-01-c.webp"],
         paras: [
             `옛날 전라도 어느 고을에 형제가 살았습니다. 형은 놀부요 아우는 흥부였습니다.`,
             `한배에서 났는데도 두 사람은 물과 불처럼 달랐습니다. 흥부는 마음이 여려서 남의 일에 먼저 소매를 걷었고, 놀부는 제 것 아니면 눈길도 주지 않았습니다.`,
@@ -39,7 +39,7 @@ const CHAPTERS = [
         num: 2,
         title: "처마 밑의 제비",
         emoji: "🪹",
-        art: ["story-02-a.png", "story-02-b.png", "story-02-c.png"],
+        art: ["story-02-a.webp", "story-02-b.png", "story-02-c.png"],
         paras: [
             `이듬해 봄이 왔습니다. 흥부네 오두막 처마 밑에 제비 한 쌍이 날아들었습니다.`,
             `아이들이 손뼉을 쳤습니다.<br>"아버지, 제비가 우리 집에 집을 지어요!"<br>"그렇구나. 우리 집이 마음에 들었나 보다."`,
@@ -436,7 +436,7 @@ function coverPage() {
     return `
         <div class="page page-cover">
             <div class="story-page-left story-page-left-full">
-                ${artFrame('cover.png', '🐦')}
+                ${artFrame('cover.webp', '🐦')}
             </div>
             <div class="story-page-right">
                 <h1>흥부전</h1>

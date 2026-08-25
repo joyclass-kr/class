@@ -211,7 +211,7 @@ const CHAPTERS = [
                 ]
             },
             {
-                art: "12-sky.png",
+                art: "12-sky.webp",
                 emoji: "🌞",
                 left: [
                     "오누이가 동아줄을 타고 올라가자 호랑이도 두 손을 모으고 빌었어요.",
@@ -331,7 +331,7 @@ function quizPage() {
 function endPage() {
     return `
         <div class="page page-end">
-            ${artFrame('end.png', '🌟')}
+            ${artFrame('end.webp', '🌟')}
             <h2>해와 달이 된 오누이 이야기를 다 읽었어요!</h2>
             <a class="home-btn" href="../../../../../">학습 허브로 돌아가기</a>
         </div>`;
