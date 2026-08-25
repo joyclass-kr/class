@@ -6,7 +6,7 @@
 const out=document.getElementById('out'), frame=document.getElementById('frame');
 const BOOKS=['chunhyangjeon','heungbujeon','honggildongjeon','kongjwi-patjwi','onggojipjeon','simcheongjeon','tokkijeon'];
 function probe(){
-  let ch=0,par=0,pages=0,filled=0,room=0;
+  let ch=0,par=0,pages=0,filled=0,room=0,artCh=0,artPar=0,artPages=0,artFilled=0;
   for(let i=0;i<PAGES.length;i++){
     if(PAGES[i].kind!=='chapter') continue;
     current=i; paint();
@@ -15,32 +15,38 @@ function probe(){
       if(!el) continue;
       const ps=[...el.querySelectorAll('p')];
       if(!ps.length) continue;
-      pages++;
-      ps.forEach(p=>{ch+=p.innerText.replace(/\s/g,'').length;par++;});
+      // 그림이 얹힌 쪽은 따로 센다. 그림이 칸을 채우니 같이 세면 찬 것처럼 보인다.
+      const hasArt = !!el.querySelector('.story-art-top');
+      if(hasArt) artPages++; else pages++;
+      ps.forEach(p=>{const n=p.innerText.replace(/\s/g,'').length;
+        if(hasArt){artCh+=n;artPar++;} else {ch+=n;par++;}});
       // 글이 칸을 몇 줄 채웠는지. 넘침이 아니라 채움을 본다.
       const cs=getComputedStyle(el), lh=parseFloat(getComputedStyle(ps[0]).lineHeight);
-      const kids=[...el.children];
-      const top=Math.min.apply(null,kids.map(x=>x.getBoundingClientRect().top));
-      const bot=Math.max.apply(null,kids.map(x=>x.getBoundingClientRect().bottom));
-      filled+=(bot-top)/lh;
-      room+=(el.clientHeight-parseFloat(cs.paddingTop)-parseFloat(cs.paddingBottom))/lh;
+      // 글만 잰다. 그림 덩어리는 빼고 p들의 위아래 좌표만 본다.
+      const top=Math.min.apply(null,ps.map(x=>x.getBoundingClientRect().top));
+      const bot=Math.max.apply(null,ps.map(x=>x.getBoundingClientRect().bottom));
+      const r=(el.clientHeight-parseFloat(cs.paddingTop)-parseFloat(cs.paddingBottom))/lh;
+      if(hasArt){artFilled+=(bot-top)/lh;} else {filled+=(bot-top)/lh; room+=r;}
     }
   }
   current=0;paint();
-  return {ch,par,pages,filled,room};
+  return {ch,par,pages,filled,room,artCh,artPar,artPages,artFilled};
 }
 (async()=>{
   frame.style.width='1366px';frame.style.height='768px';
-  const lines=['한쪽글자 한쪽문단  채운줄/쓸수있는줄  쪽수  책'];
+  const lines=['     글쪽:  글자  줄/쓸수있는줄  찬율    그림쪽: 글자   줄   쪽수  책'];
   for(const b of BOOKS){
     await Promise.all(['app.js','styles.css'].map(f=>fetch(b+'/'+f,{cache:'reload'}).catch(()=>{})));
     await new Promise(r=>{frame.onload=r;frame.src=b+'/?t='+Date.now();});
     await new Promise(r=>setTimeout(r,120));
     try{
       const s=frame.contentWindow.eval('('+probe.toString()+')()');
-      lines.push(String(Math.round(s.ch/s.pages)).padStart(6)+'자'+String((s.par/s.pages).toFixed(1)).padStart(7)+'개'
-        +String((s.filled/s.pages).toFixed(1)).padStart(9)+' /'+String((s.room/s.pages).toFixed(1)).padStart(5)
-        +String(s.pages).padStart(6)+'  '+b);
+      const rm=s.room/s.pages, fl=s.filled/s.pages;
+      lines.push(String(Math.round(s.ch/s.pages)).padStart(11)+'자'+String(fl.toFixed(1)).padStart(6)
+        +' /'+String(rm.toFixed(1)).padStart(5)+String(Math.round(fl/rm*100)).padStart(6)+'%'
+        +String(s.artPages?Math.round(s.artCh/s.artPages):0).padStart(14)+'자'
+        +String(s.artPages?(s.artFilled/s.artPages).toFixed(1):'-').padStart(6)
+        +String(s.pages+s.artPages).padStart(7)+'  '+b);
     }catch(e){lines.push('  실패 '+b+' '+e.message);}
     out.textContent=lines.join('\n');
   }
