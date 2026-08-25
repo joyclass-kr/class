@@ -2,6 +2,8 @@ document.addEventListener('DOMContentLoaded', () => {
     const shapeButtons = [...document.querySelectorAll('[data-shape]')];
     const predictionButtons = [...document.querySelectorAll('[data-prediction]')];
     const distanceRange = document.getElementById('distanceRange');
+    const graphGroup = document.getElementById('graphGroup');
+    const dataNote = document.getElementById('dataNote');
     const distanceOutput = document.getElementById('distanceOutput');
     const distanceBadge = document.getElementById('distanceBadge');
     const checkButton = document.getElementById('checkShadowBtn');
@@ -125,6 +127,73 @@ document.addEventListener('DOMContentLoaded', () => {
         frontCircle.style.display = selectedShape === 'circle' ? '' : 'none';
         frontSquare.style.display = selectedShape === 'square' ? '' : 'none';
         frontTriangle.style.display = selectedShape === 'triangle' ? '' : 'none';
+
+        renderGraph(distance, m, shadowHalf);
+        renderData(distance, m);
+    }
+
+    /* ------------------------------------------------- graph and readings */
+    const GRAPH = { x0: 52, x1: 428, y0: 140, y1: 24 };
+    const D_MIN = Number(distanceRange.min), D_MAX = Number(distanceRange.max);
+    const SHADOW_MAX = CARD_HEIGHT_CM * magnification(D_MIN);   // biggest shadow in range
+    const gx = d => GRAPH.x0 + ((d - D_MIN) / (D_MAX - D_MIN)) * (GRAPH.x1 - GRAPH.x0);
+    const gy = cm => GRAPH.y0 - (cm / SHADOW_MAX) * (GRAPH.y0 - GRAPH.y1);
+
+    function renderGraph(distance) {
+        const shadowCm = CARD_HEIGHT_CM * magnification(distance);
+        let out = '';
+        for (let k = 0; k <= 4; k += 1) {
+            const cm = (SHADOW_MAX * k) / 4;
+            const y = gy(cm);
+            out += `<line class="grid-line" x1="${GRAPH.x0}" y1="${y.toFixed(1)}" x2="${GRAPH.x1}" y2="${y.toFixed(1)}"/>`;
+            out += `<text class="axis-text" x="${GRAPH.x0 - 6}" y="${(y + 3).toFixed(1)}" text-anchor="end">${cm.toFixed(0)}</text>`;
+        }
+        for (let d = D_MIN; d <= D_MAX; d += 10) {
+            out += `<text class="axis-text" x="${gx(d).toFixed(1)}" y="${GRAPH.y0 + 16}" text-anchor="middle">${d}</text>`;
+        }
+        out += `<line class="axis" x1="${GRAPH.x0}" y1="${GRAPH.y0}" x2="${GRAPH.x1}" y2="${GRAPH.y0}"/>`;
+        out += `<line class="axis" x1="${GRAPH.x0}" y1="${GRAPH.y0}" x2="${GRAPH.x0}" y2="${GRAPH.y1}"/>`;
+        out += `<text class="axis-title" x="${(GRAPH.x0 + GRAPH.x1) / 2}" y="${GRAPH.y0 + 32}" text-anchor="middle">광원에서 물체까지의 거리 (cm)</text>`;
+        out += `<text class="axis-title" x="${GRAPH.x0}" y="${GRAPH.y1 - 8}">그림자 높이 (cm)</text>`;
+
+        // The curve is 1/d, so it falls steeply near the lamp and flattens out
+        // far away — that shape is the whole lesson.
+        const pts = [];
+        for (let d = D_MIN; d <= D_MAX; d += 0.5) {
+            pts.push(`${gx(d).toFixed(1)},${gy(CARD_HEIGHT_CM * magnification(d)).toFixed(1)}`);
+        }
+        out += `<path class="curve" d="M${pts.join('L')}"/>`;
+
+        // the object's own height, for comparison
+        const objY = gy(CARD_HEIGHT_CM);
+        out += `<line class="ref-line" x1="${GRAPH.x0}" y1="${objY.toFixed(1)}" x2="${GRAPH.x1}" y2="${objY.toFixed(1)}"/>`;
+        out += `<text class="ref-text" x="${GRAPH.x1 - 4}" y="${(objY - 5).toFixed(1)}" text-anchor="end">물체 자체의 높이 ${CARD_HEIGHT_CM.toFixed(0)} cm</text>`;
+
+        const px = gx(distance), py = gy(shadowCm);
+        out += `<line class="op-guide" x1="${px.toFixed(1)}" y1="${GRAPH.y0}" x2="${px.toFixed(1)}" y2="${py.toFixed(1)}"/>`;
+        out += `<line class="op-guide" x1="${GRAPH.x0}" y1="${py.toFixed(1)}" x2="${px.toFixed(1)}" y2="${py.toFixed(1)}"/>`;
+        out += `<circle class="op-point" cx="${px.toFixed(1)}" cy="${py.toFixed(1)}" r="5"/>`;
+        const flip = px > (GRAPH.x0 + GRAPH.x1) / 2;
+        out += `<text class="op-text" x="${(px + (flip ? -9 : 9)).toFixed(1)}" y="${Math.max(GRAPH.y1 + 10, py - 9).toFixed(1)}"` +
+               `${flip ? ' text-anchor="end"' : ''}>${distance} cm에서 ${shadowCm.toFixed(1)} cm</text>`;
+        graphGroup.innerHTML = out;
+    }
+
+    function renderData(distance, m) {
+        const shadowCm = CARD_HEIGHT_CM * magnification(distance);
+        const gap = SCREEN_DIST_CM - distance;
+        const ratio = m / magnification(REFERENCE_CM);
+        const same = Math.abs(ratio - 1) < 1e-9;
+        dataNote.innerHTML =
+            `<div class="data-row"><span class="data-name">광원에서 물체까지</span><span class="data-val">${distance} cm</span></div>` +
+            `<div class="data-row"><span class="data-name">물체에서 스크린까지</span><span class="data-val">${gap.toFixed(0)} cm</span></div>` +
+            `<div class="data-row"><span class="data-name">광원에서 스크린까지</span><span class="data-val">${SCREEN_DIST_CM.toFixed(0)} cm</span></div>` +
+            `<div class="data-row"><span class="data-name">물체의 높이</span><span class="data-val">${CARD_HEIGHT_CM.toFixed(0)} cm</span></div>` +
+            `<div class="data-row"><span class="data-name">몇 배로 커지나</span><span class="data-val">${SCREEN_DIST_CM.toFixed(0)} ÷ ${distance} = ${m.toFixed(2)}배</span></div>` +
+            // 반올림한 배율을 다시 곱해 보이면 아이가 검산할 때 값이 어긋납니다.
+            // 나누기를 그대로 남겨 두면 손으로 따라가도 딱 맞습니다.
+            `<div class="data-row"><span class="data-name">그림자 높이</span><span class="data-val">${CARD_HEIGHT_CM.toFixed(0)} × ${SCREEN_DIST_CM.toFixed(0)} ÷ ${distance} = ${shadowCm.toFixed(1)} cm</span></div>` +
+            `<div class="data-row${same ? ' match' : ''}"><span class="data-name">기준 ${REFERENCE_CM} cm와 견주면</span><span class="data-val">${ratio.toFixed(2)}배</span></div>`;
     }
 
     function clearResult() {
