@@ -241,6 +241,14 @@ function sendSiteHtml(req, res, filepath, next) {
 
 app.use("/assets/avatars", express.static(path.join(SITE_ROOT, "classtools", "assets", "avatars"), staticAssetOptions));
 app.use("/assets", express.static(path.join(SITE_ROOT, "assets"), staticAssetOptions));
+app.get("/robots.txt", (_req, res) => {
+  res.setHeader("Cache-Control", "no-cache, must-revalidate");
+  res.type("text/plain").sendFile(path.join(SITE_ROOT, "robots.txt"));
+});
+app.get("/sitemap.xml", (_req, res) => {
+  res.setHeader("Cache-Control", "no-cache, must-revalidate");
+  res.type("application/xml").sendFile(path.join(SITE_ROOT, "sitemap.xml"));
+});
 app.get("/favicon.ico", (_req, res) => {
   res.setHeader("Cache-Control", "no-cache, must-revalidate");
   res.sendFile(path.join(SITE_ROOT, "favicon.ico"));
