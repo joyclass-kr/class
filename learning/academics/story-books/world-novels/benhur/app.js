@@ -481,6 +481,81 @@ const CHAPTER_SEGS = CHAPTERS.map(ch => {
     return segs;
 });
 
+// 읽고 나서 — 책마다 내용이 다르다. 장과 같은 방식으로 재서 나눈다.
+const AFTERWORD = {
+    title: '읽고 나서',
+    emoji: '🐎',
+    art: [],
+    paras: [
+        `이 책의 원래 제목은 『벤허, 그리스도 이야기』입니다. 제목이 둘로 되어 있습니다. 한 사람의 이름과, 그 사람이 살던 시대에 함께 살던 다른 사람 이야기입니다.`,
+        `그러니 다 읽은 지금 알 수 있습니다. 이 책은 두 이야기를 나란히 놓고 가끔씩만 만나게 하는 책입니다. 벤허의 길과 그 사람의 길이 네 번쯤 스칩니다.`,
+        `쓴 사람은 미국의 루 월리스입니다. 소설가가 아니라 군인이었습니다. 남북 전쟁 때 북군의 장군이었고, 뒤에는 뉴멕시코의 지사도 지냈습니다.`,
+        `그가 이 책을 쓰게 된 사연이 남아 있습니다. 기차에서 어떤 사람과 종교 이야기를 하다가, 자기가 아는 것이 너무 없다는 것을 깨달았다고 합니다.`,
+        `그래서 그는 몇 해 동안 자료를 읽었습니다. 로마의 역사, 유대 땅의 지리, 배와 전차와 옷차림까지 찾아 읽었습니다. 그러고 나서 이 소설을 썼습니다.`,
+        `쓰는 데 일곱 해가 걸렸습니다. 낮에는 관리 일을 하고 밤에 썼습니다. 뉴멕시코 지사 관저의 방에서 마지막 장을 썼다고 전합니다.`,
+        `책은 천팔백팔십 년에 나왔습니다. 처음에는 잘 팔리지 않다가 몇 해 지나 크게 퍼졌습니다. 그리고 그 뒤 수십 년 동안 미국에서 성경 다음으로 많이 팔린 책이 되었습니다.`,
+        `원작은 아주 두껍습니다. 여기서는 벤허가 어떻게 무너지고 어떻게 다시 서는지를 따라가는 줄기만 골라 실었습니다.`,
+        `이제 다시 볼 대목을 짚어 봅시다.`,
+        `첫째, 떨어진 기와를 다시 읽어 보십시오. 이 이야기 전체를 뒤집는 것이 기와 한 장입니다. 벤허가 지붕에서 몸을 내밀다가 기와를 건드렸고, 그것이 아래를 지나던 로마 총독에게 떨어집니다.`,
+        `일부러 그런 것이 아니었습니다. 그런데 그 하나로 집안이 무너집니다. 어머니와 누이는 끌려가고 벤허는 배에 실려 갑니다.`,
+        `재판도 없었습니다. 그 시절 다스리는 쪽에 밉보이면 그렇게 되었습니다. 집도 재산도 그날로 몰수되었습니다.`,
+        `그리고 그것을 그렇게 만든 사람이 메살라입니다. 어릴 적 친구였습니다. 그 사람이 한마디만 달리 했어도 되는 일이었습니다.`,
+        `둘째, 나사렛의 우물을 다시 보십시오. 끌려가던 벤허가 목이 말라 쓰러집니다. 병사들이 물을 주지 못하게 합니다.`,
+        `그때 마을의 젊은 목수가 나와 물을 떠 줍니다. 병사들이 그것을 막지 못합니다. 이 책은 그 사람의 이름을 그 자리에서 말하지 않습니다.`,
+        `이름 없이 지나가는 그 대목이 이 책의 방식입니다. 나중에 벤허가 그 사람을 다시 만났을 때에야 누구였는지가 이어집니다.`,
+        `그 장면이 벤허를 살립니다. 몸을 살린 것이 아니라 마음을 살립니다. 그 뒤 세 해 동안 노를 저으면서 벤허가 붙들고 있던 것이 그 물 한 모금이었습니다.`,
+        `셋째, 노 젓는 자리를 세어 보십시오. 로마의 전함은 사람이 노를 저어 움직였습니다. 벤허가 앉은 자리는 육십 번 자리였습니다.`,
+        `그 자리에 앉은 사람은 이름이 없어집니다. 번호로 불립니다. 그리고 배가 가라앉으면 사슬에 묶인 채 함께 가라앉습니다.`,
+        `그런 데서 세 해를 살아남았다는 것이 무슨 뜻인지 생각해 보십시오. 이 책은 그 세 해를 길게 적지 않습니다. 짧게 적고 넘어갑니다.`,
+        `다만 벤허가 그 세 해 동안 무엇으로 버텼는지는 적어 둡니다. 어머니와 누이가 어딘가 살아 있을 것이라는 생각 하나였습니다.`,
+        `넷째, 전차 경주를 다시 읽어 보십시오. 이 책에서 제일 유명한 대목입니다. 그리고 이 대목 때문에 이 책이 지금까지 남았다고 해도 지나치지 않습니다.`,
+        `말 네 마리가 끄는 수레를 몰고 타원형 경기장을 일곱 바퀴 돕니다. 굽이를 도는 자리가 제일 위험합니다. 바퀴가 부딪히면 뒤집힙니다.`,
+        `그 시절 로마에서 전차 경주는 지금의 큰 경기와 같았습니다. 경기장에 수만 명이 들어갔고, 이긴 사람은 큰 부자가 되었습니다. 죽는 사람도 많았습니다.`,
+        `경기장 바닥에 모래를 두껍게 깔았습니다. 넘어졌을 때 조금이라도 덜 다치라는 것이었습니다. 그래도 일곱 바퀴를 도는 동안 수레가 여럿 부서졌습니다.`,
+        `그 경주에서 벤허가 무엇을 하고 무엇을 하지 않는지 다시 보십시오. 그는 이깁니다. 그런데 이기고 나서 그가 바라던 것이 채워지지 않습니다.`,
+        `인물도 다시 보아야 할 사람이 있습니다.`,
+        `메살라를 그냥 나쁜 친구로 읽으면 놓치는 것이 있습니다. 그 사람은 로마에서 공부하고 돌아온 사람입니다. 로마 사람이 세상에서 제일 낫다고 배우고 온 것입니다.`,
+        `그러니 그 사람이 벤허를 버린 것은 미워서가 아니라, 자기가 있어야 할 자리를 골랐기 때문입니다. 그 시절 다스리는 쪽에 서면 그렇게 되는 사람이 많았습니다.`,
+        `아리우스 제독도 다시 볼 만합니다. 그 사람은 벤허를 배에서 구하고 아들로 삼습니다. 로마 사람이 유대 사람을 아들로 삼은 것입니다.`,
+        `그런데 그 사람이 벤허를 눈여겨본 까닭은 그 얼굴이 노 젓는 사람 같지 않았기 때문입니다. 눈을 마주 보았기 때문입니다. 사람을 알아보는 눈이 있었던 것입니다.`,
+        `그리고 그 사람은 벤허에게 자기 이름을 줍니다. 로마 시민의 이름을 받는다는 것은 그 시절 아주 큰일이었습니다. 벤허가 뒤에 로마 안에서 움직일 수 있었던 것도 그 이름 덕분입니다.`,
+        `발타사르도 짚어 둘 만합니다. 그 사람은 아기가 태어날 때 별을 따라간 세 사람 가운데 하나입니다. 그리고 이 책에서 아주 늙은 사람으로 다시 나옵니다.`,
+        `그 사람은 벤허에게 자꾸 다른 이야기를 합니다. 벤허가 찾는 왕은 나라를 세우는 왕이 아닐 것이라고요. 벤허는 그 말을 오래 알아듣지 못합니다.`,
+        `그 시절 사정도 알아 두면 좋습니다. 이 이야기의 배경은 이천 년 전 유대 땅입니다. 그때 그 땅은 로마가 다스리고 있었습니다.`,
+        `유대 사람들은 그것을 견디지 못했습니다. 그래서 여러 번 일어섰다가 여러 번 무너졌습니다. 그리고 언젠가 자기들을 구할 왕이 온다고 믿고 있었습니다.`,
+        `벤허가 사람을 모으고 훈련시키는 것도 그 때문입니다. 그는 그 왕이 오면 함께 싸울 군대를 만들려고 했습니다.`,
+        `그런데 그가 만난 사람은 군대를 만들지 않았습니다. 이 책의 매듭이 거기입니다.`,
+        `벤허가 모은 사람들도 흩어집니다. 싸울 일이 없어졌기 때문입니다. 그 사람들이 무엇을 느꼈을지는 이 책에 적혀 있지 않습니다.`,
+        `그리고 문둥이 골짜기도 알아 두어야 합니다. 그 시절에는 그 병에 걸리면 도시 밖으로 내보냈습니다. 가족과도 만나지 못했습니다. 벤허의 어머니와 누이가 있던 자리가 거기입니다.`,
+        `그 병이 무엇 때문에 생기는지 그때는 몰랐습니다. 그래서 벌을 받은 것이라고 여기는 사람도 많았습니다. 그것이 그 사람들을 두 번 아프게 했습니다.`,
+        `골짜기에 물과 먹을 것을 놓아 두고 가는 사람이 있었습니다. 가까이 가지는 못하고 멀리서 놓고만 갔습니다. 그러니 그 사람들은 산 채로 이 세상 밖에 있는 셈이었습니다.`,
+        `이 책이 붙들고 있는 것은 두 가지입니다.`,
+        `하나는 갚는 것이 사람을 어디까지 데려가느냐는 것입니다. 벤허는 여덟 해 동안 오직 갚을 생각으로 삽니다. 그리고 갚습니다.`,
+        `그런데 갚고 나서도 어머니와 누이는 돌아오지 않았습니다. 갚는 것으로는 잃은 것이 돌아오지 않는다는 것을 이 책은 조용히 적어 둡니다.`,
+        `다른 하나는 사람이 무엇으로 달라지느냐는 것입니다. 이 책에서 벤허를 달라지게 하는 것은 이기는 일이 아닙니다. 우물가에서 물을 받은 일과, 마지막에 본 것입니다.`,
+        `이 책은 종교 이야기이기도 합니다. 다만 설교하듯 적지 않습니다. 그 사람은 이 책에서 몇 번밖에 나오지 않고, 얼굴도 자세히 적지 않습니다.`,
+        `월리스는 그렇게 쓴 까닭을 밝힌 적이 있습니다. 자기가 그 얼굴을 그릴 자격이 없다고 여겼다는 것입니다.`,
+        `그리고 흥미로운 것은 이 책을 쓰기 전에 월리스가 딱히 믿는 사람이 아니었다는 점입니다. 자료를 찾아 읽다가 스스로 믿게 되었다고 그는 적었습니다.`,
+        `이 책은 나온 뒤 연극으로 만들어졌습니다. 무대에서 진짜 말을 달리게 했습니다. 바닥을 돌게 만들어서 말이 제자리에서 달리게 한 것입니다. 그 연극을 이천만 명이 보았다고 합니다.`,
+        `그리고 영화로도 여러 번 만들어졌습니다. 육십오 년쯤 전에 나온 영화는 상을 열한 개나 받았습니다. 전차 경주 장면을 찍는 데만 몇 달이 걸렸습니다.`,
+        `언젠가 이 책을 다시 읽게 되거든, 이번에는 물이 나오는 대목만 세어 보십시오. 우물가의 물, 바다의 물, 그리고 마지막의 비입니다. 이 책은 중요한 자리마다 물을 놓아 두었습니다.`,
+        `마지막으로 생각해 볼 것을 남겨 둡니다. 답은 적어 두지 않겠습니다.`,
+        `메살라가 그날 다르게 말했다면 어떻게 되었을까요? 두 사람은 어릴 때 형제처럼 지냈습니다. 사람을 그렇게 갈라 놓는 것은 무엇일까요?`,
+        `벤허가 전차 경주에서 이긴 것은 그에게 무엇을 주었을까요? 그는 이기고 나서 오히려 허전해합니다.`,
+        `그리고 여덟 해를 갚는 데 쓴 것을 우리는 어떻게 세어야 할까요. 그 여덟 해에 그가 하지 못한 다른 일들이 있었을 것입니다. 이 물음은 어른이 되어 다시 읽어도 답하기가 쉽지 않습니다.`
+    ]
+};
+
+const AFTER_SEGS = (() => {
+    const segs = [];
+    AFTERWORD.paras.forEach((html, paraIdx) => {
+        splitSegments(html).forEach((piece, k) => {
+            segs.push({ paraIdx, html: piece, start: k === 0 });
+        });
+    });
+    return segs;
+})();
+
 // 조각 묶음을 문단 단위로 다시 묶어 화면에 그릴 모양으로 만든다.
 // 앞 쪽에서 이어진 문단은 첫 줄을 들여쓰지 않는다.
 function runHtml(segs, a, b) {
@@ -762,16 +837,100 @@ function quizPage(part) {
         </div>`;
 }
 
-function endPage() {
+/* 읽고 나서 — 장과 같은 방식으로 쪽을 나눈다. 그림은 오른쪽 위에 얹힌다. */
+const AFTER_FOOT = `<p class="after-home"><a class="home-btn" href="../../../../../">학습 허브로 돌아가기</a></p>`;
+
+function paginateAfterword() {
+    const segs = AFTER_SEGS;
+    const arts = AFTERWORD.art || [];
+    const { usable, headHeight, artHeight } = PROBE;
+    const headHtml = `<h2>${AFTERWORD.title}</h2>`;
+    const totalH = PROBE.measure(runHtml(segs, 0, segs.length));
+
+    const underArt = Math.max(60, usable - artHeight);
+
+    // 맨 끝에는 학습 허브로 가는 단추가 붙는다. 그 높이를 미리 빼 두지 않으면
+    // 마지막 쪽만 넘친다.
+    const footH = PROBE.measure(AFTER_FOOT);
+
+    const capsOf = slots => {
+        const caps = [];
+        slots.forEach(kind => { caps.push(usable); caps.push(kind === 'img' ? underArt : usable); });
+        caps[caps.length - 1] = Math.max(60, caps[caps.length - 1] - footH);
+        return caps;
+    };
+
+    const minSpreads = Math.max(arts.length, 1);
+    const maxSpreads = Math.max(minSpreads, Math.floor(segs.length / 2));
+    let spreadCount = minSpreads;
+    while (spreadCount < maxSpreads) {
+        const caps = capsOf(slotPlan(arts.length, spreadCount - arts.length));
+        if (caps.reduce((a, b) => a + b, 0) >= totalH + headHeight) break;
+        spreadCount++;
+    }
+
+    let slots = slotPlan(arts.length, Math.max(0, spreadCount - arts.length));
+    let caps = capsOf(slots);
+    let ranges = fillPages(segs, caps, headHtml);
+    for (let guard = 0; guard < 8; guard++) {
+        const over = ranges.some(([a, b], n) =>
+            PROBE.measure((n === 0 ? headHtml : '') + runHtml(segs, a, b)) > caps[n] + 1);
+        if (!over || spreadCount >= maxSpreads) break;
+        spreadCount++;
+        slots = slotPlan(arts.length, Math.max(0, spreadCount - arts.length));
+        caps = capsOf(slots);
+        ranges = fillPages(segs, caps, headHtml);
+    }
+
+    const spreads = [];
+    let pageIdx = 0;
+    let artIdx = 0;
+    slots.forEach((kind, s) => {
+        const left = ranges[pageIdx++];
+        const right = ranges[pageIdx++];
+        spreads.push({
+            kind: 'after', first: s === 0, last: s === slots.length - 1,
+            art: kind === 'img' ? arts[artIdx++] : null, left, right
+        });
+    });
+    return spreads;
+}
+
+function afterSpreadPage(spread) {
+    const segs = AFTER_SEGS;
+    const head = spread.first ? `<h2>${AFTERWORD.title}</h2>` : '';
+    // 학습 허브로 돌아가는 길은 맨 끝에 한 번만 둔다.
+    const foot = spread.last ? AFTER_FOOT : '';
+
+    if (spread.art) {
+        return `
+            <div class="page page-story page-after">
+                <div class="story-page-left">
+                    ${head}
+                    ${runHtml(segs, spread.left[0], spread.left[1])}
+                </div>
+                <div class="story-page-right story-page-right-image">
+                    <div class="story-art-top">${artFrame(spread.art, AFTERWORD.emoji)}</div>
+                    ${runHtml(segs, spread.right[0], spread.right[1])}
+                    ${foot}
+                </div>
+            </div>`;
+    }
+
     return `
-        <div class="page page-end">
-            ${artFrame('end.png', '🌅')}
-            <h2>벤허를 다 읽었습니다</h2>
-            <a class="home-btn" href="../../../../../">학습 허브로 돌아가기</a>
+        <div class="page page-story page-after">
+            <div class="story-page-left">
+                ${head}
+                ${runHtml(segs, spread.left[0], spread.left[1])}
+            </div>
+            <div class="story-page-right story-page-right-text">
+                ${runHtml(segs, spread.right[0], spread.right[1])}
+                ${foot}
+            </div>
         </div>`;
 }
 
-const TWO_PAGE_KINDS = new Set(['chapter', 'toc', 'cover']);
+const TWO_PAGE_KINDS = new Set(['chapter', 'toc', 'cover', 'after']);
 
 let PAGES = [];
 let FOLIOS = [];
@@ -783,7 +942,7 @@ function buildPages() {
         ...TOC_GROUPS.map((_, i) => ({ kind: 'toc', part: i })),
         ...CHAPTERS.flatMap(paginateChapter),
         ...QUIZ_GROUPS.map((_, i) => ({ kind: 'quiz', part: i })),
-        { kind: 'end' }
+        ...paginateAfterword()
     ];
     PROBE.close();   // 쪽을 다 나눴으니 재는 데 쓰던 숨은 쪽은 치운다
 
@@ -804,7 +963,7 @@ function renderPage(page) {
         case 'toc': return tocPage(page.part);
         case 'chapter': return chapterSpreadPage(page);
         case 'quiz': return quizPage(page.part);
-        case 'end': return endPage();
+        case 'after': return afterSpreadPage(page);
         default: return '';
     }
 }
