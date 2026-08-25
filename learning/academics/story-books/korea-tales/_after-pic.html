@@ -1,0 +1,53 @@
+<!DOCTYPE html><html lang="ko"><head><meta charset="UTF-8"><title>읽고 나서 넘침</title>
+<style>body{font:13px monospace;margin:16px}iframe{position:fixed;left:-6000px;top:0;border:0}pre{white-space:pre-wrap}</style></head>
+<body><pre id="out">…</pre><iframe id="frame"></iframe><script>
+/* 동화틀 「읽고 나서」 칸이 넘치는지 재고, 얼마나 찼는지도 함께 낸다.
+   .after-col 은 overflow-y:auto 라 넘쳐도 안 터지고 스크롤이 생긴다.
+   그래서 scrollHeight - clientHeight 로 재야 한다.
+   BOOKS 는 ?b=콩쥐,팥쥐 처럼 주소로 넘긴다. 없으면 _books-pic.json 을 읽는다. */
+const out = document.getElementById('out'), frame = document.getElementById('frame');
+const SIZES = [[1366, 768], [1280, 720], [1920, 1080], [810, 1080], [768, 1024], [1024, 768]];
+
+function probe() {
+    const r = [];
+    const i = PAGES.findIndex(p => p.kind === 'after');
+    if (i < 0) return ['읽고나서없음'];
+    current = i; paint();
+    document.querySelectorAll('.page-after .after-col').forEach((el, k) => {
+        const ov = el.scrollHeight - el.clientHeight;
+        const ps = [...el.querySelectorAll('p,h2')];
+        const top = Math.min.apply(null, ps.map(x => x.getBoundingClientRect().top));
+        const bot = Math.max.apply(null, ps.map(x => x.getBoundingClientRect().bottom));
+        const cs = getComputedStyle(el);
+        const usable = el.getBoundingClientRect().height - parseFloat(cs.paddingTop) - parseFloat(cs.paddingBottom);
+        const art = el.querySelector('.after-art');
+        const avail = usable - (art ? art.getBoundingClientRect().height : 0);
+        r.push((k ? '오' : '왼') + Math.round((bot - top) / avail * 100) + (ov > 1 ? '↑' + Math.round(ov) : ''));
+    });
+    current = 0; paint();
+    return r;
+}
+
+(async () => {
+    const q = new URLSearchParams(location.search).get('b');
+    const BOOKS = q ? q.split(',') : await fetch('_books-pic.json').then(r => r.json());
+    const lines = [];
+    for (const b of BOOKS) {
+        const cells = []; let bad = false;
+        for (const [w, h] of SIZES) {
+            frame.style.width = w + 'px'; frame.style.height = h + 'px';
+            await Promise.all(['app.js', 'styles.css'].map(f => fetch(b + '/' + f, { cache: 'reload' }).catch(() => {})));
+            await new Promise(r => { frame.onload = r; frame.src = b + '/?t=' + Date.now(); });
+            await new Promise(r => setTimeout(r, 130));
+            try {
+                const v = frame.contentWindow.eval('(' + probe.toString() + ')()');
+                if (v.join('').includes('↑')) bad = true;
+                cells.push(v.join('/'));
+            } catch (e) { bad = true; cells.push('실패'); }
+        }
+        lines.push((bad ? '✗ ' : '✔ ') + b.padEnd(24) + cells.join('  '));
+        out.textContent = lines.join('\n');
+    }
+    out.textContent = lines.join('\n') + '\n\n=== 끝 ===';
+})();
+</script></body></html>

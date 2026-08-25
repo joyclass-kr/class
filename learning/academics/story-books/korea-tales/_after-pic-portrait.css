@@ -1,0 +1,14 @@
+.page-after { display: flex; flex-direction: column; }
+    .after-col { flex: 0 1 auto; }
+    .after-col-left { border-right: none; border-bottom: 1px solid rgba(92, 58, 34, 0.22); }
+    /* 세로에서는 글이 위아래로 쌓이므로 그림이 자리를 늘리면 윗칸이 밀린다.
+       높이는 고정하고 너비만 칸 끝까지 채운다. */
+    .after-art {
+        flex: 0 0 auto;
+        aspect-ratio: auto;
+        height: 18cqh;
+        width: calc(100% + var(--after-pad-x) * 2);
+        min-height: 0;
+        align-self: stretch;
+        margin: calc(-1 * var(--after-pad-y)) calc(-1 * var(--after-pad-x)) 6px;
+    }

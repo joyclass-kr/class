@@ -316,15 +316,56 @@ function endPage() {
         </div>`;
 }
 
+/* 읽고 나서 — 세계명작 트랙과 같은 형식이다. 동화틀은 쪽을 재서 나누지 않으므로
+   펼침면마다 왼쪽·오른쪽 글을 손으로 나누어 둔다. */
+const AFTERWORD = {
+    title: '읽고 나서',
+    emoji: '🐚',
+    spreads: [
+        {
+            art: 'end.png',
+            left: [
+                "우렁이나 조개에서 사람이 나와 살림을 해 주는 이야기는 우리나라 곳곳에 전해 옵니다. 일본에도 학이나 조개가 사람이 되는 비슷한 이야기가 있습니다.",
+                "그런 이야기에는 늘 지켜야 할 약속이 하나 붙습니다. 들여다보지 말라거나 며칠만 기다리라는 것입니다. 그리고 그 약속은 늘 깨집니다.",
+                "다시 보면 총각이 놓친 것은 사흘이라는 날수가 아닙니다. 상대가 한 부탁이었습니다.",
+                "아끼는 마음이 클수록 조급해지기 쉽습니다. 그런데 기다려 달라는 말을 들어주는 것도 아끼는 일입니다."
+            ],
+            right: [
+                "약속을 어긴 쪽이 벌을 받는 이야기가 아니라, 어긴 뒤에 무엇을 잃는지를 보여 주는 이야기입니다.",
+                "총각은 왜 사흘을 못 기다렸을까요? 답은 적어 두지 않겠습니다."
+            ]
+        }
+    ]
+};
+
+function afterPage(spread, isFirst) {
+    const head = isFirst ? `<h2>${AFTERWORD.title}</h2>` : '';
+    // 그림은 오른쪽 위 모서리에 꽉 붙인다. 글은 그 아래로 이어진다.
+    const art = spread.art ? `<div class="after-art">${artFrame(spread.art, AFTERWORD.emoji)}</div>` : '';
+    const col = (ps) => ps.map(t => `<p>${t}</p>`).join('');
+    return `
+        <div class="page page-after">
+            <div class="after-col after-col-left">
+                ${head}
+                ${col(spread.left)}
+            </div>
+            <div class="after-col after-col-right${spread.art ? ' after-col-image' : ''}">
+                ${art}
+                ${col(spread.right)}
+            </div>
+        </div>`;
+}
+
 const PAGES = [
     { kind: 'cover' },
     ...CHAPTERS.flatMap(chapter => chapter.beats.map((beat, i) => ({ kind: 'spread', chapter, beat, isFirst: i === 0 }))),
     { kind: 'reflection', chapter: CHAPTERS[CHAPTERS.length - 1] },
     { kind: 'quiz' },
+    ...AFTERWORD.spreads.map((spread, i) => ({ kind: 'after', spread, isFirst: i === 0 })),
     { kind: 'end' }
 ];
 
-const TWO_PAGE_KINDS = new Set(['spread', 'cover']);
+const TWO_PAGE_KINDS = new Set(['spread', 'cover', 'after']);
 
 let folioCounter = 0;
 const FOLIOS = PAGES.map(p => {
@@ -342,6 +383,8 @@ function renderPage(page) {
             return spreadPage(page.chapter, page.beat, page.isFirst);
         case 'reflection':
             return reflectionPage(page.chapter);
+        case 'after':
+            return afterPage(page.spread, page.isFirst);
         case 'quiz':
             return quizPage();
         case 'end':

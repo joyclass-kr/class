@@ -388,16 +388,57 @@ function historyPage() {
         </div>`;
 }
 
+/* 읽고 나서 — 세계명작 트랙과 같은 형식이다. 동화틀은 쪽을 재서 나누지 않으므로
+   펼침면마다 왼쪽·오른쪽 글을 손으로 나누어 둔다. */
+const AFTERWORD = {
+    title: '읽고 나서',
+    emoji: '🏹',
+    spreads: [
+        {
+            art: 'end.png',
+            left: [
+                "주몽 이야기는 고구려를 세운 사람의 이야기라 여러 곳에 적혀 있습니다. 『삼국사기』와 『삼국유사』에도 있고, 광개토대왕비에도 새겨져 있습니다. 돌에 새겨진 기록이 남아 있는 셈입니다.",
+                "주몽이라는 말 자체가 활을 잘 쏘는 사람이라는 뜻이라고 전해 옵니다. 이름이 곧 재주였던 것이지요.",
+                "다시 보면 주몽은 마구간으로 쫓겨났을 때 억울해하지 않았습니다. 대신 말을 살폈습니다. 가장 낮은 자리에 있는 동안 가장 좋은 말을 알아본 것입니다.",
+                "좋은 말에는 일부러 먹이를 적게 주어 여위게 하고, 나쁜 말은 살을 찌웠습니다. 그래서 왕이 고르고 남은 것을 얻었지요."
+            ],
+            right: [
+                "부러진 칼 반쪽을 아내에게 남긴 대목도 눈여겨볼 만합니다. 아들이 자란 뒤 아버지를 찾는 표시가 되었습니다.",
+                "주몽은 어디에 있느냐보다 무엇을 보느냐가 다음 자리를 만든다는 것을 알았을까요? 답은 적어 두지 않겠습니다."
+            ]
+        }
+    ]
+};
+
+function afterPage(spread, isFirst) {
+    const head = isFirst ? `<h2>${AFTERWORD.title}</h2>` : '';
+    // 그림은 오른쪽 위 모서리에 꽉 붙인다. 글은 그 아래로 이어진다.
+    const art = spread.art ? `<div class="after-art">${artFrame(spread.art, AFTERWORD.emoji)}</div>` : '';
+    const col = (ps) => ps.map(t => `<p>${t}</p>`).join('');
+    return `
+        <div class="page page-after">
+            <div class="after-col after-col-left">
+                ${head}
+                ${col(spread.left)}
+            </div>
+            <div class="after-col after-col-right${spread.art ? ' after-col-image' : ''}">
+                ${art}
+                ${col(spread.right)}
+            </div>
+        </div>`;
+}
+
 const PAGES = [
     { kind: 'cover' },
     ...CHAPTERS.flatMap(chapter => chapter.beats.map((beat, i) => ({ kind: 'spread', chapter, beat, isFirst: i === 0 }))),
     { kind: 'reflection', chapter: CHAPTERS[CHAPTERS.length - 1] },
     { kind: 'history' },
     { kind: 'quiz' },
+    ...AFTERWORD.spreads.map((spread, i) => ({ kind: 'after', spread, isFirst: i === 0 })),
     { kind: 'end' }
 ];
 
-const TWO_PAGE_KINDS = new Set(['spread', 'cover']);
+const TWO_PAGE_KINDS = new Set(['spread', 'cover', 'after']);
 
 let folioCounter = 0;
 const FOLIOS = PAGES.map(p => {
@@ -417,6 +458,8 @@ function renderPage(page) {
             return reflectionPage(page.chapter);
         case 'history':
             return historyPage();
+        case 'after':
+            return afterPage(page.spread, page.isFirst);
         case 'quiz':
             return quizPage();
         case 'end':
