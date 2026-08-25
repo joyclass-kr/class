@@ -12,10 +12,18 @@
         { semitones: 12, label: "완전8도" }
     ];
     const SCALES = {
-        C: { label: "다장조", root: 60, names: ["C", "D", "E", "F", "G", "A", "B"] },
-        G: { label: "사장조", root: 55, names: ["G", "A", "B", "C", "D", "E", "F♯"] },
-        D: { label: "라장조", root: 50, names: ["D", "E", "F♯", "G", "A", "B", "C♯"] },
-        F: { label: "바장조", root: 53, names: ["F", "G", "A", "B♭", "C", "D", "E"] }
+        C:  { label: "C 장조",  root: 48, names: ["C", "D", "E", "F", "G", "A", "B"] },
+        Db: { label: "D♭ 장조", root: 49, names: ["D♭", "E♭", "F", "G♭", "A♭", "B♭", "C"] },
+        D:  { label: "D 장조",  root: 50, names: ["D", "E", "F♯", "G", "A", "B", "C♯"] },
+        Eb: { label: "E♭ 장조", root: 51, names: ["E♭", "F", "G", "A♭", "B♭", "C", "D"] },
+        E:  { label: "E 장조",  root: 52, names: ["E", "F♯", "G♯", "A", "B", "C♯", "D♯"] },
+        F:  { label: "F 장조",  root: 53, names: ["F", "G", "A", "B♭", "C", "D", "E"] },
+        Gb: { label: "G♭ 장조", root: 54, names: ["G♭", "A♭", "B♭", "C♭", "D♭", "E♭", "F"] },
+        G:  { label: "G 장조",  root: 55, names: ["G", "A", "B", "C", "D", "E", "F♯"] },
+        Ab: { label: "A♭ 장조", root: 56, names: ["A♭", "B♭", "C", "D♭", "E♭", "F", "G"] },
+        A:  { label: "A 장조",  root: 57, names: ["A", "B", "C♯", "D", "E", "F♯", "G♯"] },
+        Bb: { label: "B♭ 장조", root: 58, names: ["B♭", "C", "D", "E♭", "F", "G", "A"] },
+        B:  { label: "B 장조",  root: 59, names: ["B", "C♯", "D♯", "E", "F♯", "G♯", "A♯"] }
     };
     const SCALE_OFFSETS = [0, 2, 4, 5, 7, 9, 11];
     const ROMANS = ["I", "ii", "iii", "IV", "V", "vi", "vii°"];
@@ -52,9 +60,9 @@
     function saveProgress() { try { localStorage.setItem(STORE_KEY, JSON.stringify(state.progress)); } catch (error) { /* optional */ } }
 
     function makeNoteQuestion() {
-        const scaleIndex = Math.floor(Math.random() * 7);
-        const midi = 60 + SCALE_OFFSETS[scaleIndex];
-        return { prompt: "한 음을 듣고 음이름을 고르세요.", answer: NATURAL_NAMES[scaleIndex], choices: choicesAround(NATURAL_NAMES[scaleIndex], NATURAL_NAMES, 4), groups: [[midi]], explain: "이 음은 " + NATURAL_NAMES[scaleIndex] + "입니다." };
+        const midi = 48 + Math.floor(Math.random() * 12);
+        const answer = pitchName(midi);
+        return { prompt: "한 음을 듣고 12개 음 중 음이름을 고르세요.", answer: answer, choices: choicesAround(answer, PITCH_NAMES, 4), groups: [[midi]], explain: "이 음은 " + answer + "입니다." };
     }
     function makeToneDistanceQuestion() {
         const distance = Math.random() < .5 ? 1 : 2;
@@ -75,12 +83,15 @@
     }
     function makeMinorScaleQuestion() {
         const variants = [
-            { name: "자연단음계", degree: "7번째", answer: "G", offsets: [0,2,3,5,7,8,10,12] },
-            { name: "화성단음계", degree: "7번째", answer: "G♯", offsets: [0,2,3,5,7,8,11,12] },
-            { name: "가락단음계(상행)", degree: "6번째", answer: "F♯", offsets: [0,2,3,5,7,9,11,12] }
+            { name: "자연단음계", degree: "7번째", target: 10, offsets: [0,2,3,5,7,8,10,12] },
+            { name: "화성단음계", degree: "7번째", target: 11, offsets: [0,2,3,5,7,8,11,12] },
+            { name: "가락단음계(상행)", degree: "6번째", target: 9, offsets: [0,2,3,5,7,9,11,12] }
         ];
+        const tonic = 48 + Math.floor(Math.random() * 12);
         const variant = pick(variants);
-        return { prompt: "가단조 " + variant.name + "의 " + variant.degree + " 음은?", answer: variant.answer, choices: choicesAround(variant.answer, ["F", "F♯", "G", "G♯"], 4), groups: variant.offsets.map(function (offset) { return [57 + offset]; }), beat: .28, explain: variant.name + "에서는 답이 " + variant.answer + "입니다." };
+        const answer = pitchName(tonic + variant.target);
+        const keyLabel = pitchName(tonic) + " 단조";
+        return { prompt: keyLabel + " " + variant.name + "의 " + variant.degree + " 음은?", answer: answer, choices: choicesAround(answer, PITCH_NAMES, 4), groups: variant.offsets.map(function (offset) { return [tonic + offset]; }), beat: .28, explain: keyLabel + " " + variant.name + "의 답은 " + answer + "입니다." };
     }
     function makeChordQualityQuestion() {
         const types = [
@@ -92,13 +103,15 @@
         return { prompt: "화음을 듣고 3화음의 종류를 고르세요.", answer: type.label, choices: types.map(function (item) { return item.label; }), groups: [type.offsets.map(function (offset) { return root + offset; })], explain: type.label + "의 구성 간격이 들렸습니다." };
     }
     function makeInversionQuestion() {
+        const root = 48 + Math.floor(Math.random() * 12);
+        const rootName = pitchName(root);
         const options = [
-            { label: "기본위치", notes: [48,52,55], bass: "근음 C" },
-            { label: "제1전위", notes: [52,55,60], bass: "3음 E" },
-            { label: "제2전위", notes: [55,60,64], bass: "5음 G" }
+            { label: "기본위치", notes: [root, root + 4, root + 7], bass: "근음 " + rootName },
+            { label: "제1전위", notes: [root + 4, root + 7, root + 12], bass: "3음 " + pitchName(root + 4) },
+            { label: "제2전위", notes: [root + 7, root + 12, root + 16], bass: "5음 " + pitchName(root + 7) }
         ];
         const target = pick(options);
-        return { prompt: "C 장3화음의 전위형을 듣고 고르세요.", answer: target.label, choices: options.map(function (item) { return item.label; }), groups: [target.notes], explain: "가장 낮은 음이 " + target.bass + "이므로 " + target.label + "입니다." };
+        return { prompt: rootName + " 장3화음의 전위형을 듣고 고르세요.", answer: target.label, choices: options.map(function (item) { return item.label; }), groups: [target.notes], explain: "가장 낮은 음이 " + target.bass + "이므로 " + target.label + "입니다." };
     }
     function triadForScale(scale, degree) {
         const degreeOffsets = [degree, (degree + 2) % 7, (degree + 4) % 7];
@@ -117,13 +130,13 @@
         return { prompt: scale.label + "의 " + ROMANS[degree] + " 화음은 무엇일까요?", answer: answer, choices: choicesAround(answer, pool, 4), groups: [triadForScale(scale, degree)], explain: ROMANS[degree] + "은 " + answer + "화음입니다." };
     }
     function makeFunctionQuestion() {
-        const scale = SCALES.C;
+        const scale = pick(Object.values(SCALES));
         const degree = Math.floor(Math.random() * 7);
         const answer = FUNCTION_BY_DEGREE[degree];
-        return { prompt: "다장조의 " + ROMANS[degree] + " 화음은 어떤 기능일까요?", answer: answer, choices: ["토닉", "서브도미넌트", "도미넌트"], groups: [triadForScale(scale, degree)], explain: ROMANS[degree] + "은 " + answer + " 기능입니다." };
+        return { prompt: scale.label + "의 " + ROMANS[degree] + " 화음은 어떤 기능일까요?", answer: answer, choices: ["토닉", "서브도미넌트", "도미넌트"], groups: [triadForScale(scale, degree)], explain: scale.label + "에서 " + ROMANS[degree] + "은 " + answer + " 기능입니다." };
     }
     function makeProgressionQuestion() {
-        const scale = SCALES.C;
+        const scale = pick(Object.values(SCALES));
         const progressions = [
             { label: "I–IV–V–I", degrees: [0,3,4,0] },
             { label: "I–V–vi–IV", degrees: [0,4,5,3] },
@@ -131,7 +144,7 @@
             { label: "I–vi–ii–V", degrees: [0,5,1,4] }
         ];
         const target = pick(progressions);
-        return { prompt: "코드 진행을 듣고 로마숫자 순서를 고르세요.", answer: target.label, choices: progressions.map(function (item) { return item.label; }), groups: target.degrees.map(function (degree) { return triadForScale(scale, degree); }), beat: .72, explain: "들린 진행은 " + target.label + "입니다." };
+        return { prompt: scale.label + "의 코드 진행을 듣고 로마숫자 순서를 고르세요.", answer: target.label, choices: progressions.map(function (item) { return item.label; }), groups: target.degrees.map(function (degree) { return triadForScale(scale, degree); }), beat: .72, explain: scale.label + "에서 들린 진행은 " + target.label + "입니다." };
     }
 
     function cacheElements() {

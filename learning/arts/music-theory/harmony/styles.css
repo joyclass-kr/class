@@ -150,3 +150,6 @@ button:focus-visible, a:focus-visible { outline: 3px solid #fff; outline-offset:
 .course-heading { padding: 20px; }
 .piano-heading { padding-bottom: 4px; }
 .feedback { min-height: 18px; }
+
+.practice-topline > div { display: none !important; }
+.practice-topline { justify-content: flex-end; }
