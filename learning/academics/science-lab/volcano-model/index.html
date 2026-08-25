@@ -1,0 +1,164 @@
+<!doctype html>
+<html lang="ko">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="theme-color" content="#07131c">
+    <title>과학 실험실</title>
+    <meta name="description" content="식초와 베이킹 소다로 화산 모형을 분출시켜 보고, 진짜 화산에서 나오는 기체·액체·고체 세 가지 분출물을 알아보는 초등 과학 모의실험">
+    <link rel="stylesheet" as="style" crossorigin href="https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.9/dist/web/static/pretendard.css">
+    <link rel="stylesheet" href="styles.css?v=1">
+    <link rel="stylesheet" href="volcano-visual.css?v=1">
+    <link rel="stylesheet" href="quiz.css?v=1">
+</head>
+<body>
+    <main>
+        <header class="page-header">
+            <div class="title-row">
+                <a href="../">← 과학 실험실</a>
+                <h1>화산 분출 모형과 분출물</h1>
+            </div>
+            <div class="grade-tags"><span>초등 3~4</span><span>지구과학</span></div>
+        </header>
+
+        <ol class="method-steps" aria-label="실험 방법">
+            <li>병에 식초를 붓습니다.</li>
+            <li>베이킹 소다를 넣습니다.</li>
+            <li>거품이 넘치는 것을 봅니다.</li>
+            <li>진짜 화산에서 나오는 것과 견줍니다.</li>
+        </ol>
+
+        <div class="experiment-layout">
+            <section class="panel control-panel" aria-labelledby="control-title">
+                <h2 id="control-title">실험 조건</h2>
+                <p class="water-standard">식초와 소다가 만나면 이산화 탄소 거품이 생깁니다</p>
+
+                <fieldset class="pick-field">
+                    <legend>식초를 얼마나 부을까요</legend>
+                    <div class="pick-buttons cols3">
+                        <button type="button" data-vin="20">20 mL<small>작은 컵</small></button>
+                        <button type="button" data-vin="50">50 mL<small>보통</small></button>
+                        <button type="button" data-vin="100">100 mL<small>많이</small></button>
+                    </div>
+                </fieldset>
+
+                <div class="range-heading">
+                    <label for="sodaRange">베이킹 소다</label>
+                    <output id="sodaOutput" for="sodaRange">3.5 g</output>
+                </div>
+                <input id="sodaRange" type="range" min="0.5" max="10" step="0.5" value="3.5">
+                <div class="range-scale" aria-hidden="true"><span>0.5 g</span><span>5 g</span><span>10 g</span></div>
+
+                <fieldset class="prediction-field">
+                    <legend>거품이 다 나오고 나면 무엇이 남을까요?</legend>
+                    <div class="prediction-buttons three">
+                        <button type="button" data-prediction="p1">소다가 남는다</button>
+                        <button type="button" data-prediction="p2">식초가 남는다</button>
+                        <button type="button" data-prediction="p3">둘 다 딱 맞다</button>
+                    </div>
+                </fieldset>
+
+                <button class="run-button" id="runBtn" type="button">소다 넣기</button>
+                <button class="reset-button" id="resetBtn" type="button">처음으로</button>
+
+                <section class="result-box" aria-labelledby="result-title" aria-live="polite">
+                    <h3 id="result-title">관찰 결과</h3>
+                    <p id="resultEmpty">식초와 소다를 정하고 넣어 보세요.</p>
+                    <div id="resultContent" hidden>
+                        <div class="result-numbers">
+                            <article><span>생긴 거품</span><strong id="valueA">-</strong></article>
+                            <article><span>남는 것</span><strong id="valueB">-</strong></article>
+                        </div>
+                        <p class="prediction-result" id="predictionResult"></p>
+                        <p class="explanation" id="elementaryExplanation"></p>
+                    </div>
+                </section>
+            </section>
+
+            <section class="panel volcano-stage" aria-label="관찰 화면">
+                <div class="stage-heading"><h2>관찰</h2><span id="stageBadge">-</span></div>
+
+                <div class="stage-views">
+                    <svg class="main-svg" viewBox="0 0 460 214" aria-hidden="true">
+                        <defs><clipPath id="coneClip"><rect x="0" y="0" width="460" height="214"/></clipPath></defs>
+                        <g id="mainGroup"></g>
+                    </svg>
+                    <svg class="graph-svg" viewBox="0 0 460 196" aria-hidden="true">
+                        <g id="graphGroup"></g>
+                    </svg>
+                </div>
+
+                <p class="stage-caption" id="stageCaption">모형에서 나오는 거품은 진짜 화산의 화산 가스와 용암을 흉내 낸 것입니다. 진짜 화산은 훨씬 뜨겁고 훨씬 위험합니다.</p>
+                <div class="data-note" id="dataNote"></div>
+            </section>
+        </div>
+
+        <section class="panel meaning-panel">
+            <h2>실험 결과의 의미</h2>
+            <div class="meaning-body">
+                <p><strong>화산에서 나오는 세 가지</strong> 화산이 터지면 기체와 액체와 고체가 한꺼번에 나옵니다. 기체는 화산 가스이고, 액체는 뜨겁게 녹아 흐르는 용암입니다. 고체는 잘게 부서진 화산재와 크고 작은 암석 조각입니다.</p>
+                <p><strong>둘 중 모자란 쪽이 정합니다</strong> 식초가 다 없어지면 소다를 아무리 더 넣어도 거품은 더 나오지 않습니다. 반대로 소다가 다 없어져도 마찬가지입니다. 거품의 양은 둘 중 먼저 바닥나는 쪽이 정합니다.</p>
+                <p><strong>모형은 흉내입니다</strong> 이 모형의 거품은 차갑고, 진짜 용암은 1000 ℃가 넘습니다. 모형은 어떤 모습으로 터지는지 보여 줄 뿐이지 진짜 화산과 같은 것은 아닙니다.</p>
+            </div>
+        </section>
+
+        <details class="quiz-section" aria-labelledby="quiz-title">
+            <summary class="quiz-heading"><h2 id="quiz-title">확인 문제</h2><span>4문제</span></summary>
+            <div class="quiz-grid">
+                <article class="quiz-card" data-answer="c">
+                    <h3>화산에서 나오는 액체 상태의 분출물은?</h3>
+                    <div class="quiz-options">
+                        <label><input type="radio" name="q1" value="a"> 화산재</label>
+                        <label><input type="radio" name="q1" value="b"> 화산 가스</label>
+                        <label><input type="radio" name="q1" value="c"> 용암</label>
+                        <label><input type="radio" name="q1" value="d"> 암석 조각</label>
+                    </div>
+                    <button class="answer-button" type="button">정답 확인</button>
+                    <p class="answer-result" aria-live="polite"></p>
+                    <p class="answer-explanation" hidden>용암은 땅속의 뜨거운 물질이 녹아 흐르는 것으로 액체입니다. 화산재와 암석 조각은 고체이고, 화산 가스는 기체입니다.</p>
+                </article>
+
+                <article class="quiz-card" data-answer="b">
+                    <h3>식초가 다 없어졌는데 소다를 더 넣으면?</h3>
+                    <div class="quiz-options">
+                        <label><input type="radio" name="q2" value="a"> 거품이 두 배로 나온다</label>
+                        <label><input type="radio" name="q2" value="b"> 거품이 더 나오지 않는다</label>
+                        <label><input type="radio" name="q2" value="c"> 거품이 줄어든다</label>
+                        <label><input type="radio" name="q2" value="d"> 소다가 녹아 없어진다</label>
+                    </div>
+                    <button class="answer-button" type="button">정답 확인</button>
+                    <p class="answer-result" aria-live="polite"></p>
+                    <p class="answer-explanation" hidden>거품은 식초와 소다가 만나야 생깁니다. 식초가 다 없어지면 소다는 만날 상대가 없어 그대로 바닥에 남습니다.</p>
+                </article>
+
+                <article class="quiz-card" data-answer="a">
+                    <h3>모형에서 나오는 거품은 무엇일까요?</h3>
+                    <div class="quiz-options">
+                        <label><input type="radio" name="q3" value="a"> 이산화 탄소라는 기체</label>
+                        <label><input type="radio" name="q3" value="b"> 뜨거운 용암</label>
+                        <label><input type="radio" name="q3" value="c"> 녹은 돌</label>
+                        <label><input type="radio" name="q3" value="d"> 수증기</label>
+                    </div>
+                    <button class="answer-button" type="button">정답 확인</button>
+                    <p class="answer-result" aria-live="polite"></p>
+                    <p class="answer-explanation" hidden>식초와 소다가 만나면 이산화 탄소가 생깁니다. 그 기체가 거품을 밀어 올려 넘치게 합니다. 진짜 화산의 화산 가스를 흉내 낸 것입니다.</p>
+                </article>
+
+                <article class="quiz-card" data-answer="d">
+                    <h3>이 모형과 진짜 화산의 가장 큰 차이는?</h3>
+                    <div class="quiz-options">
+                        <label><input type="radio" name="q4" value="a"> 모형은 소리가 안 난다</label>
+                        <label><input type="radio" name="q4" value="b"> 모형은 색깔이 다르다</label>
+                        <label><input type="radio" name="q4" value="c"> 모형은 크기가 작다</label>
+                        <label><input type="radio" name="q4" value="d"> 진짜 용암은 1000 ℃가 넘게 뜨겁다</label>
+                    </div>
+                    <button class="answer-button" type="button">정답 확인</button>
+                    <p class="answer-result" aria-live="polite"></p>
+                    <p class="answer-explanation" hidden>모형의 거품은 만져도 차갑지만 진짜 용암은 1000 ℃가 넘습니다. 모형은 터지는 모습을 보여 줄 뿐이고 뜨거움까지 흉내 내지는 못합니다.</p>
+                </article>
+            </div>
+        </details>
+    </main>
+    <script src="app.js?v=1"></script>
+</body>
+</html>
