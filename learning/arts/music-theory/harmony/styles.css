@@ -145,3 +145,8 @@ button:focus-visible, a:focus-visible { outline: 3px solid #fff; outline-offset:
 .piano-key span { bottom: 10px; color: #273342; font-size: 10px; text-shadow: 0 1px 0 #fff; }
 .piano-key.black span { color: #dbe2e9; text-shadow: 0 1px 1px #000; }
 .piano-key.active { background: linear-gradient(#e7bd68,#a66d25); }
+
+.course-heading > p, .course-heading > span, .card-label, .brand small, .piano-heading p:last-child { display: none !important; }
+.course-heading { padding: 20px; }
+.piano-heading { padding-bottom: 4px; }
+.feedback { min-height: 18px; }
