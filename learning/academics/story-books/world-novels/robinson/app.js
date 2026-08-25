@@ -475,6 +475,53 @@ const CHAPTER_SEGS = CHAPTERS.map(ch => {
     return segs;
 });
 
+// 읽고 나서 — 책마다 내용이 다르다. 장과 같은 방식으로 재서 나눈다.
+const AFTERWORD = {
+    title: '읽고 나서',
+    emoji: '⛵',
+    art: [],
+    paras: [
+        `이 책의 원래 제목은 아주 깁니다. 『요크의 뱃사람 로빈슨 크루소의 생애와 이상하고 놀라운 모험』입니다. 그 시절 책은 제목에 줄거리를 다 적어 두는 것이 보통이었습니다.`,
+        `그리고 그 긴 제목 아래에 이런 말이 붙어 있었습니다. 본인이 직접 쓴 글이라고요. 지어낸 이야기가 아니라 실제로 있었던 일을 그 사람이 적은 것처럼 내놓은 것입니다.`,
+        `쓴 사람은 영국의 대니얼 디포입니다. 이 책을 낼 때 그는 예순에 가까웠습니다. 그전에는 장사를 하다 망하고, 글을 쓰다 감옥에 갇히기도 했습니다. 이 책은 그가 늦게 시작한 소설의 첫 권이었습니다.`,
+        `책은 천칠백십구 년에 나왔습니다. 삼백 년이 넘은 책입니다. 사람들이 흔히 영어로 쓴 첫 소설이라고 부르는 책이기도 합니다.`,
+        `이 이야기에는 바탕이 된 실제 사람이 있습니다. 알렉산더 셀커크라는 스코틀랜드 뱃사람입니다. 선장과 다투다 남태평양의 무인도에 내려졌고, 거기서 네 해 넘게 혼자 살다 구조되었습니다.`,
+        `그 사람 이야기가 신문에 실려 영국에서 널리 읽혔습니다. 디포는 그것을 읽고 이 책을 썼습니다. 다만 넉 해를 스물여덟 해로 늘렸고, 섬도 다른 바다로 옮겼습니다.`,
+        `원작은 여기 실린 것보다 훨씬 깁니다. 로빈슨이 무엇을 어떻게 만들었는지가 아주 자세히 적혀 있습니다. 항아리 하나를 굽는 데도 여러 쪽이 들어갑니다. 여기서는 그 가운데 이야기를 밀고 가는 대목만 골라 실었습니다.`,
+        `이제 다시 볼 대목을 짚어 봅시다.`,
+        `첫째, 장부를 다시 읽어 보십시오. 로빈슨은 섬에 닿고 얼마 지나지 않아 종이를 펴고 두 칸을 그립니다. 한쪽에는 나쁜 것을 적고 다른 쪽에는 좋은 것을 적습니다. 배가 부서졌다, 그런데 나는 살았다. 혼자다, 그런데 굶어 죽지는 않았다.`,
+        `그 장부가 이 책에서 제일 중요한 대목입니다. 그 종이를 쓰고 나서 로빈슨은 달라집니다. 그 전까지는 울기만 하던 사람이었습니다.`,
+        `둘째, 날짜를 세는 대목을 보십시오. 로빈슨은 나무 기둥에 날마다 금을 하나씩 긋습니다. 아무도 없는 섬에서 날짜를 세는 것은 아무 쓸모가 없습니다. 그런데 그는 그것을 스물여덟 해 동안 합니다.`,
+        `쓸모가 없는데도 하는 것, 그것이 사람이 무너지지 않는 방법입니다. 이 책은 그것을 설명하지 않고 그냥 보여 줍니다.`,
+        `셋째, 모래밭의 발자국을 다시 떠올려 보십시오. 이 책에서 제일 유명한 대목입니다. 십오 년 넘게 혼자 살던 사람이 발자국 하나를 봅니다. 그리고 그날부터 무서워서 잠을 못 잡니다.`,
+        `그전까지 그가 바란 것은 사람이었습니다. 그런데 사람의 자취를 보자 무서워집니다. 사람이 그리운 것과 사람이 무서운 것이 같은 마음이라는 것을 이 대목이 보여 줍니다.`,
+        `넷째, 프라이데이에게 말을 가르치는 대목을 보십시오. 로빈슨이 제일 먼저 가르친 말은 주인이라는 말이었습니다. 자기를 그렇게 부르라고 한 것입니다.`,
+        `이 대목은 그냥 넘기지 말아야 합니다. 로빈슨은 프라이데이를 살렸습니다. 그런데 살린 사람을 부리는 사람으로 삼았습니다. 그 시절 유럽 사람들이 다른 땅 사람들을 어떻게 보았는지가 여기에 그대로 나옵니다.`,
+        `이 책이 나온 때는 영국이 배를 타고 세계로 나가던 무렵입니다. 로빈슨이 처음 배를 탄 것도 장사를 하려던 것이었고, 노예로 팔려 가기 전에 하려던 일도 사람을 사고파는 일이었습니다. 그것을 이 책은 나쁜 일로 적지 않습니다.`,
+        `그러니 이 책은 두 가지로 읽어야 합니다. 하나는 아무것도 없는 데서 살아 낸 사람의 이야기입니다. 다른 하나는 그 시절 유럽 사람이 세상을 어떻게 보았는지를 그대로 담아 놓은 기록입니다.`,
+        `이 책이 붙들고 있는 물음은 두 가지입니다.`,
+        `하나는 사람에게 무엇이 있어야 하느냐는 것입니다. 로빈슨은 배에서 총과 연장과 씨앗을 가져옵니다. 그런데 그가 제일 오래 아쉬워한 것은 그것이 아니었습니다. 말을 나눌 사람이었습니다. 그는 앵무새에게 자기 이름을 가르쳐 놓고 그 소리를 듣습니다.`,
+        `다른 하나는 돌아갈 곳이 있느냐는 것입니다. 로빈슨이 집을 나선 것은 아버지의 말을 듣지 않아서였습니다. 아버지는 평범하게 살라고 했습니다. 로빈슨은 스물여덟 해 동안 그 말을 되뇝니다.`,
+        `그런데 이 책은 그 뉘우침으로 끝나지 않습니다. 돌아온 로빈슨은 얼마 지나지 않아 다시 배를 탑니다. 그 사람은 끝내 그렇게 생긴 사람이었습니다.`,
+        `책이 나오자 아주 잘 팔렸습니다. 그해에만 네 번을 다시 찍었습니다. 그 뒤로 무인도에서 혼자 살아남는 이야기를 통틀어 가리키는 말까지 생겼습니다.`,
+        `언젠가 이 책을 다시 읽게 되거든, 이번에는 프라이데이 쪽에서 읽어 보십시오. 그 사람에게는 원래 이름이 있었을 것입니다. 이 책에는 그 이름이 한 번도 나오지 않습니다.`,
+        `마지막으로 생각해 볼 것을 남겨 둡니다. 답은 적어 두지 않겠습니다.`,
+        `로빈슨이 프라이데이를 만난 날을 따서 이름을 붙인 것은 어떻게 보아야 할까요? 살려 준 사람에게 이름을 지어 주는 것과 이름을 빼앗는 것은 무엇이 다를까요?`,
+        `스물여덟 해 동안 로빈슨을 버티게 한 것은 무엇이었을까요? 장부였을까요, 날짜 금이었을까요, 아니면 다른 것이었을까요.`,
+        `그리고 여러분이 그 섬에 닿았다면 제일 먼저 무엇을 했겠습니까. 이 물음은 어른이 되어 다시 읽어도 답하기가 쉽지 않습니다.`
+    ]
+};
+
+const AFTER_SEGS = (() => {
+    const segs = [];
+    AFTERWORD.paras.forEach((html, paraIdx) => {
+        splitSegments(html).forEach((piece, k) => {
+            segs.push({ paraIdx, html: piece, start: k === 0 });
+        });
+    });
+    return segs;
+})();
+
 // 조각 묶음을 문단 단위로 다시 묶어 화면에 그릴 모양으로 만든다.
 // 앞 쪽에서 이어진 문단은 첫 줄을 들여쓰지 않는다.
 function runHtml(segs, a, b) {
@@ -756,16 +803,100 @@ function quizPage(part) {
         </div>`;
 }
 
-function endPage() {
+/* 읽고 나서 — 장과 같은 방식으로 쪽을 나눈다. 그림은 오른쪽 위에 얹힌다. */
+const AFTER_FOOT = `<p class="after-home"><a class="home-btn" href="../../../../../">학습 허브로 돌아가기</a></p>`;
+
+function paginateAfterword() {
+    const segs = AFTER_SEGS;
+    const arts = AFTERWORD.art || [];
+    const { usable, headHeight, artHeight } = PROBE;
+    const headHtml = `<h2>${AFTERWORD.title}</h2>`;
+    const totalH = PROBE.measure(runHtml(segs, 0, segs.length));
+
+    const underArt = Math.max(60, usable - artHeight);
+
+    // 맨 끝에는 학습 허브로 가는 단추가 붙는다. 그 높이를 미리 빼 두지 않으면
+    // 마지막 쪽만 넘친다.
+    const footH = PROBE.measure(AFTER_FOOT);
+
+    const capsOf = slots => {
+        const caps = [];
+        slots.forEach(kind => { caps.push(usable); caps.push(kind === 'img' ? underArt : usable); });
+        caps[caps.length - 1] = Math.max(60, caps[caps.length - 1] - footH);
+        return caps;
+    };
+
+    const minSpreads = Math.max(arts.length, 1);
+    const maxSpreads = Math.max(minSpreads, Math.floor(segs.length / 2));
+    let spreadCount = minSpreads;
+    while (spreadCount < maxSpreads) {
+        const caps = capsOf(slotPlan(arts.length, spreadCount - arts.length));
+        if (caps.reduce((a, b) => a + b, 0) >= totalH + headHeight) break;
+        spreadCount++;
+    }
+
+    let slots = slotPlan(arts.length, Math.max(0, spreadCount - arts.length));
+    let caps = capsOf(slots);
+    let ranges = fillPages(segs, caps, headHtml);
+    for (let guard = 0; guard < 8; guard++) {
+        const over = ranges.some(([a, b], n) =>
+            PROBE.measure((n === 0 ? headHtml : '') + runHtml(segs, a, b)) > caps[n] + 1);
+        if (!over || spreadCount >= maxSpreads) break;
+        spreadCount++;
+        slots = slotPlan(arts.length, Math.max(0, spreadCount - arts.length));
+        caps = capsOf(slots);
+        ranges = fillPages(segs, caps, headHtml);
+    }
+
+    const spreads = [];
+    let pageIdx = 0;
+    let artIdx = 0;
+    slots.forEach((kind, s) => {
+        const left = ranges[pageIdx++];
+        const right = ranges[pageIdx++];
+        spreads.push({
+            kind: 'after', first: s === 0, last: s === slots.length - 1,
+            art: kind === 'img' ? arts[artIdx++] : null, left, right
+        });
+    });
+    return spreads;
+}
+
+function afterSpreadPage(spread) {
+    const segs = AFTER_SEGS;
+    const head = spread.first ? `<h2>${AFTERWORD.title}</h2>` : '';
+    // 학습 허브로 돌아가는 길은 맨 끝에 한 번만 둔다.
+    const foot = spread.last ? AFTER_FOOT : '';
+
+    if (spread.art) {
+        return `
+            <div class="page page-story page-after">
+                <div class="story-page-left">
+                    ${head}
+                    ${runHtml(segs, spread.left[0], spread.left[1])}
+                </div>
+                <div class="story-page-right story-page-right-image">
+                    <div class="story-art-top">${artFrame(spread.art, AFTERWORD.emoji)}</div>
+                    ${runHtml(segs, spread.right[0], spread.right[1])}
+                    ${foot}
+                </div>
+            </div>`;
+    }
+
     return `
-        <div class="page page-end">
-            ${artFrame('end.png', '⛵')}
-            <h2>로빈슨 크루소를 다 읽었습니다</h2>
-            <a class="home-btn" href="../../../../../">학습 허브로 돌아가기</a>
+        <div class="page page-story page-after">
+            <div class="story-page-left">
+                ${head}
+                ${runHtml(segs, spread.left[0], spread.left[1])}
+            </div>
+            <div class="story-page-right story-page-right-text">
+                ${runHtml(segs, spread.right[0], spread.right[1])}
+                ${foot}
+            </div>
         </div>`;
 }
 
-const TWO_PAGE_KINDS = new Set(['chapter', 'toc', 'cover']);
+const TWO_PAGE_KINDS = new Set(['chapter', 'toc', 'cover', 'after']);
 
 let PAGES = [];
 let FOLIOS = [];
@@ -777,7 +908,7 @@ function buildPages() {
         ...TOC_GROUPS.map((_, i) => ({ kind: 'toc', part: i })),
         ...CHAPTERS.flatMap(paginateChapter),
         ...QUIZ_GROUPS.map((_, i) => ({ kind: 'quiz', part: i })),
-        { kind: 'end' }
+        ...paginateAfterword()
     ];
     PROBE.close();   // 쪽을 다 나눴으니 재는 데 쓰던 숨은 쪽은 치운다
 
@@ -798,7 +929,7 @@ function renderPage(page) {
         case 'toc': return tocPage(page.part);
         case 'chapter': return chapterSpreadPage(page);
         case 'quiz': return quizPage(page.part);
-        case 'end': return endPage();
+        case 'after': return afterSpreadPage(page);
         default: return '';
     }
 }

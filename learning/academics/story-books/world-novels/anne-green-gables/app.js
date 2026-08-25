@@ -521,6 +521,54 @@ const CHAPTER_SEGS = CHAPTERS.map(ch => {
     return segs;
 });
 
+// 읽고 나서 — 책마다 내용이 다르다. 장과 같은 방식으로 재서 나눈다.
+const AFTERWORD = {
+    title: '읽고 나서',
+    emoji: '🌿',
+    art: [],
+    paras: [
+        `이 책의 원래 제목은 『초록 지붕 집의 앤』입니다. 사람 이름만 있는 제목이 아니라 집 이름이 함께 붙어 있는 제목입니다.`,
+        `그러니 다 읽은 지금, 그 제목을 다시 읽어 보십시오. 앤에게 필요했던 것이 무엇이었는지가 제목에 이미 적혀 있습니다. 앤은 열한 살까지 이름은 있었지만 집이 없었습니다. 이 책은 아이 하나가 집을 얻는 이야기입니다.`,
+        `쓴 사람은 캐나다의 루시 모드 몽고메리입니다. 이 책을 쓸 무렵 그는 프린스에드워드섬의 작은 마을에서 할머니와 살고 있었습니다. 우체국 일을 도우면서 밤에 글을 썼습니다.`,
+        `그 사람도 어릴 때 어머니를 잃었습니다. 아버지는 멀리 떠났고, 그는 조부모 손에서 자랐습니다. 그러니 앤의 자리를 지어낸 것이 아니라 아는 자리에서 가져온 것입니다.`,
+        `책은 천구백팔 년에 나왔습니다. 그전에 출판사 다섯 곳에서 거절당했습니다. 몽고메리는 원고를 모자 상자에 넣어 두고 두 해 동안 잊고 지냈다고 합니다. 그러다 다시 꺼내 보냈고, 그해에 책이 되었습니다.`,
+        `원작은 여기 실린 것보다 훨씬 깁니다. 앤이 초록 지붕 집에서 보낸 다섯 해가 하루하루 적혀 있습니다. 여기서는 앤이 자라는 데 꼭 필요한 대목만 골라 실었습니다. 그래서 원작에 있는 잔재미 나는 사건이 여럿 빠졌습니다.`,
+        `앤의 이야기는 이 책 한 권으로 끝나지 않습니다. 몽고메리는 앤이 학교 선생이 되고, 결혼을 하고, 아이를 키우고, 그 아이들이 자라 전쟁에 나가는 데까지 여덟 권을 더 썼습니다.`,
+        `이제 다시 볼 대목을 짚어 봅시다.`,
+        `첫째, 첫 장의 역을 다시 떠올려 보십시오. 매슈는 남자아이를 데리러 갔습니다. 농사를 도울 아이가 필요했기 때문입니다. 그런데 역에 앉아 있던 것은 여자아이였습니다. 사람을 잘못 받아 온 것으로 시작하는 이야기입니다. 그 잘못이 이 집에서 제일 잘된 일이 됩니다.`,
+        `둘째, 앤이 말하는 양을 세어 보십시오. 처음 마차를 타고 오는 길에 앤은 쉬지 않고 말합니다. 매슈는 한마디도 하지 않고 듣습니다. 그것이 이 둘 사이가 되는 방식이었습니다. 매슈는 이 책에서 말수가 제일 적은 사람인데, 앤을 제일 먼저 알아본 사람이기도 합니다.`,
+        `셋째, 마릴라가 앤을 부르는 말을 따라가 보십시오. 처음에는 그 아이라고 합니다. 그러다 앤이 되고, 나중에는 우리 앤이 됩니다. 마릴라는 좋아한다는 말을 끝까지 잘 하지 못하는 사람입니다. 그래서 그 사람의 마음은 부르는 말에서 읽어야 합니다.`,
+        `넷째, 석판이 부러진 날을 다시 보십시오. 앤은 그날 길버트를 오래 미워하기로 정합니다. 다섯 해를 미워합니다. 그런데 그 다섯 해 동안 앤이 제일 열심히 공부한 까닭도 길버트였습니다. 미움이 사람을 밀고 가기도 한다는 것을 이 책은 웃으면서 보여 줍니다.`,
+        `인물도 다시 보아야 할 사람이 있습니다.`,
+        `마릴라를 무뚝뚝한 사람으로만 읽으면 절반만 읽은 것이 됩니다. 마릴라는 평생 자기 이야기를 한 적이 없는 사람입니다. 젊을 때 좋아하던 사람이 있었다는 것도 이 책 끝에 가서야 한 줄 나옵니다. 그 한 줄을 읽고 나면 마릴라가 앤에게 왜 그렇게 엄했는지가 달리 보입니다.`,
+        `린드 아주머니도 그렇습니다. 남의 일에 참견하고 함부로 말합니다. 그런데 마을에 무슨 일이 나면 제일 먼저 달려오는 사람도 그 사람입니다. 사람이 한 가지로만 되어 있지 않다는 것을 이 책은 여러 인물로 보여 줍니다.`,
+        `그 시절 사정도 알아 두면 좋습니다. 앤 같은 아이는 그때 아주 많았습니다. 부모를 잃은 아이를 농가에서 데려다 일을 시키는 일이 흔했습니다. 데려가는 쪽도 아이가 필요해서가 아니라 일손이 필요해서 데려갔습니다.`,
+        `매슈가 남자아이를 데려오려 한 것도 그래서입니다. 그러니 앤이 초록 지붕 집에 남게 된 것은 그 시절 셈으로 보면 이상한 일이었습니다. 이 책은 그 이상한 일이 어떻게 일어났는지를 열다섯 장에 걸쳐 적어 놓은 것입니다.`,
+        `여자아이가 학교를 마치고 상급 학교에 가는 것도 그때는 드물었습니다. 앤이 여왕 학원에 가고 장학금을 받는 대목은 그 시절에는 여간해서 없는 일이었습니다.`,
+        `이 책이 붙들고 있는 물음은 두 가지입니다.`,
+        `하나는 사람이 어디까지 달라질 수 있느냐는 것입니다. 앤은 달라집니다. 그런데 이 책에서 더 크게 달라지는 사람은 마릴라입니다. 예순이 다 된 사람이 달라진 것입니다. 아이가 어른을 바꾸는 이야기이기도 합니다.`,
+        `다른 하나는 무엇을 가지고 살 것이냐는 것입니다. 앤에게는 아무것도 없었습니다. 옷도 돈도 가족도 없었습니다. 그런데 앤은 그것을 모자란 것으로 세지 않고 지어내는 힘으로 메웠습니다. 길에 이름을 붙이고 나무에 이름을 붙였습니다.`,
+        `그것을 헛된 짓이라고 하는 사람도 있습니다. 마릴라가 처음에 그랬습니다. 그런데 이 책은 그 힘이 앤을 살렸다고 말합니다.`,
+        `마지막 장의 굽어진 길도 다시 읽어 볼 만합니다. 앤은 대학에 갈 길을 놓고 초록 지붕 집에 남습니다. 원하던 것을 놓은 것입니다. 그런데 그것을 잃었다고 적지 않습니다. 길이 굽어졌을 뿐 없어진 것은 아니라고 적습니다.`,
+        `책이 나오자 아주 잘 팔렸습니다. 첫해에만 여러 번 다시 찍었습니다. 지금은 몽고메리가 살던 프린스에드워드섬에 해마다 사람들이 찾아옵니다. 초록 지붕 집이 실제로 있는 것처럼 되어 버린 것입니다.`,
+        `언젠가 이 책을 다시 읽게 되거든, 이번에는 매슈만 따라가며 읽어 보십시오. 매슈가 하는 말은 다 세어도 몇 마디 되지 않습니다. 그런데 그 몇 마디가 다 중요한 자리에 있습니다.`,
+        `마지막으로 생각해 볼 것을 남겨 둡니다. 답은 적어 두지 않겠습니다.`,
+        `매슈와 마릴라가 앤을 돌려보냈다면 어떻게 되었을까요? 그 집은 조용하고 편했을 것입니다. 조용하고 편한 것과 시끄럽고 힘든 것 가운데 무엇이 나은지, 이 책을 읽고 나서 답해 보십시오.`,
+        `앤이 길버트를 다섯 해 동안 미워한 것은 잘한 일이었을까요? 그 미움이 앤을 공부하게 만들었습니다. 그런데 그 다섯 해 동안 앤은 친구 하나를 잃고 있었습니다. 어느 쪽이 더 컸을까요?`,
+        `그리고 앤이 대학에 갔다면 어땠을까요? 이 책은 남는 쪽을 택합니다. 그것이 옳은 선택이었는지는 적어 두지 않았습니다. 이 물음은 어른이 되어 다시 읽어도 답하기가 쉽지 않습니다.`
+    ]
+};
+
+const AFTER_SEGS = (() => {
+    const segs = [];
+    AFTERWORD.paras.forEach((html, paraIdx) => {
+        splitSegments(html).forEach((piece, k) => {
+            segs.push({ paraIdx, html: piece, start: k === 0 });
+        });
+    });
+    return segs;
+})();
+
 // 조각 묶음을 문단 단위로 다시 묶어 화면에 그릴 모양으로 만든다.
 // 앞 쪽에서 이어진 문단은 첫 줄을 들여쓰지 않는다.
 function runHtml(segs, a, b) {
@@ -802,16 +850,100 @@ function quizPage(part) {
         </div>`;
 }
 
-function endPage() {
+/* 읽고 나서 — 장과 같은 방식으로 쪽을 나눈다. 그림은 오른쪽 위에 얹힌다. */
+const AFTER_FOOT = `<p class="after-home"><a class="home-btn" href="../../../../../">학습 허브로 돌아가기</a></p>`;
+
+function paginateAfterword() {
+    const segs = AFTER_SEGS;
+    const arts = AFTERWORD.art || [];
+    const { usable, headHeight, artHeight } = PROBE;
+    const headHtml = `<h2>${AFTERWORD.title}</h2>`;
+    const totalH = PROBE.measure(runHtml(segs, 0, segs.length));
+
+    const underArt = Math.max(60, usable - artHeight);
+
+    // 맨 끝에는 학습 허브로 가는 단추가 붙는다. 그 높이를 미리 빼 두지 않으면
+    // 마지막 쪽만 넘친다.
+    const footH = PROBE.measure(AFTER_FOOT);
+
+    const capsOf = slots => {
+        const caps = [];
+        slots.forEach(kind => { caps.push(usable); caps.push(kind === 'img' ? underArt : usable); });
+        caps[caps.length - 1] = Math.max(60, caps[caps.length - 1] - footH);
+        return caps;
+    };
+
+    const minSpreads = Math.max(arts.length, 1);
+    const maxSpreads = Math.max(minSpreads, Math.floor(segs.length / 2));
+    let spreadCount = minSpreads;
+    while (spreadCount < maxSpreads) {
+        const caps = capsOf(slotPlan(arts.length, spreadCount - arts.length));
+        if (caps.reduce((a, b) => a + b, 0) >= totalH + headHeight) break;
+        spreadCount++;
+    }
+
+    let slots = slotPlan(arts.length, Math.max(0, spreadCount - arts.length));
+    let caps = capsOf(slots);
+    let ranges = fillPages(segs, caps, headHtml);
+    for (let guard = 0; guard < 8; guard++) {
+        const over = ranges.some(([a, b], n) =>
+            PROBE.measure((n === 0 ? headHtml : '') + runHtml(segs, a, b)) > caps[n] + 1);
+        if (!over || spreadCount >= maxSpreads) break;
+        spreadCount++;
+        slots = slotPlan(arts.length, Math.max(0, spreadCount - arts.length));
+        caps = capsOf(slots);
+        ranges = fillPages(segs, caps, headHtml);
+    }
+
+    const spreads = [];
+    let pageIdx = 0;
+    let artIdx = 0;
+    slots.forEach((kind, s) => {
+        const left = ranges[pageIdx++];
+        const right = ranges[pageIdx++];
+        spreads.push({
+            kind: 'after', first: s === 0, last: s === slots.length - 1,
+            art: kind === 'img' ? arts[artIdx++] : null, left, right
+        });
+    });
+    return spreads;
+}
+
+function afterSpreadPage(spread) {
+    const segs = AFTER_SEGS;
+    const head = spread.first ? `<h2>${AFTERWORD.title}</h2>` : '';
+    // 학습 허브로 돌아가는 길은 맨 끝에 한 번만 둔다.
+    const foot = spread.last ? AFTER_FOOT : '';
+
+    if (spread.art) {
+        return `
+            <div class="page page-story page-after">
+                <div class="story-page-left">
+                    ${head}
+                    ${runHtml(segs, spread.left[0], spread.left[1])}
+                </div>
+                <div class="story-page-right story-page-right-image">
+                    <div class="story-art-top">${artFrame(spread.art, AFTERWORD.emoji)}</div>
+                    ${runHtml(segs, spread.right[0], spread.right[1])}
+                    ${foot}
+                </div>
+            </div>`;
+    }
+
     return `
-        <div class="page page-end">
-            ${artFrame('end.png', '🌿')}
-            <h2>빨간 머리 앤을 다 읽었습니다</h2>
-            <a class="home-btn" href="../../../../../">학습 허브로 돌아가기</a>
+        <div class="page page-story page-after">
+            <div class="story-page-left">
+                ${head}
+                ${runHtml(segs, spread.left[0], spread.left[1])}
+            </div>
+            <div class="story-page-right story-page-right-text">
+                ${runHtml(segs, spread.right[0], spread.right[1])}
+                ${foot}
+            </div>
         </div>`;
 }
 
-const TWO_PAGE_KINDS = new Set(['chapter', 'toc', 'cover']);
+const TWO_PAGE_KINDS = new Set(['chapter', 'toc', 'cover', 'after']);
 
 let PAGES = [];
 let FOLIOS = [];
@@ -823,7 +955,7 @@ function buildPages() {
         ...TOC_GROUPS.map((_, i) => ({ kind: 'toc', part: i })),
         ...CHAPTERS.flatMap(paginateChapter),
         ...QUIZ_GROUPS.map((_, i) => ({ kind: 'quiz', part: i })),
-        { kind: 'end' }
+        ...paginateAfterword()
     ];
     PROBE.close();   // 쪽을 다 나눴으니 재는 데 쓰던 숨은 쪽은 치운다
 
@@ -844,7 +976,7 @@ function renderPage(page) {
         case 'toc': return tocPage(page.part);
         case 'chapter': return chapterSpreadPage(page);
         case 'quiz': return quizPage(page.part);
-        case 'end': return endPage();
+        case 'after': return afterSpreadPage(page);
         default: return '';
     }
 }

@@ -445,6 +445,55 @@ const CHAPTER_SEGS = CHAPTERS.map(ch => {
     return segs;
 });
 
+// 읽고 나서 — 책마다 내용이 다르다. 장과 같은 방식으로 재서 나눈다.
+const AFTERWORD = {
+    title: '읽고 나서',
+    emoji: '🏝️',
+    art: [],
+    paras: [
+        `이 책의 제목은 『보물섬』입니다. 섬 이름이 제목입니다. 그런데 다 읽고 나면 알게 됩니다. 이 이야기에서 제일 중요한 것은 섬이 아니라 그 섬으로 가는 배 안에서 벌어진 일이었습니다.`,
+        `쓴 사람은 스코틀랜드의 로버트 루이스 스티븐슨입니다. 그는 몸이 아주 약한 사람이었습니다. 어릴 때부터 폐가 나빠 침대에 누워 지내는 날이 많았고, 그래서 창밖을 보며 이야기를 지어내는 버릇이 있었습니다.`,
+        `이 책이 시작된 자리도 그렇습니다. 어느 비 오는 날, 그는 의붓아들과 함께 방에서 지도를 하나 그렸습니다. 섬을 그리고 만을 그리고 봉우리를 그렸습니다. 그러다 한 자리에 붉은 표를 하고 보물이라고 적었습니다.`,
+        `그러고 나서 그 지도를 들여다보다가 이야기가 떠올랐다고 합니다. 그러니 이 책은 이야기가 먼저 있고 지도를 그린 것이 아니라, 지도가 먼저 있고 이야기가 따라온 것입니다.`,
+        `책은 천팔백팔십삼 년에 나왔습니다. 처음에는 어린이 잡지에 여러 번 나누어 실렸습니다. 그때 붙인 제목은 『바다 요리사』였습니다. 롱 존 실버를 가리키는 제목이었습니다.`,
+        `원작은 여기 실린 것보다 깁니다. 배에서 보낸 날들과 섬을 헤매는 대목이 더 자세히 적혀 있습니다. 여기서는 짐이 무엇을 보고 무엇을 하는지를 따라가는 줄기만 골라 실었습니다.`,
+        `이제 다시 볼 대목을 짚어 봅시다.`,
+        `첫째, 사과 통을 다시 떠올려 보십시오. 짐은 사과를 꺼내려고 통 안에 들어갔다가 잠이 듭니다. 그러다 바로 그 옆에서 반란을 꾸미는 이야기를 다 듣게 됩니다. 이 배의 운명이 사과 하나에 걸려 있었던 셈입니다.`,
+        `그리고 그것을 들은 사람이 열두 살짜리 심부름꾼이었다는 것이 중요합니다. 어른들은 아무도 몰랐습니다. 이 책에서 제일 중요한 것을 늘 짐이 먼저 압니다.`,
+        `둘째, 짐이 배를 몰래 빠져나가는 대목을 세어 보십시오. 짐은 이 이야기에서 세 번 무리를 벗어납니다. 섬에 몰래 내리고, 밤에 작은 배를 타고 나가고, 혼자 적진으로 걸어 들어갑니다. 세 번 다 아무에게도 말하지 않고 갑니다.`,
+        `그때마다 큰일이 납니다. 그런데 그때마다 그 덕분에 살아납니다. 스티븐슨은 짐이 옳게 굴어서 이기게 만들지 않았습니다.`,
+        `셋째, 벤 건을 다시 보십시오. 삼 년을 혼자 섬에 있던 사람입니다. 처음 나올 때는 우스운 사람처럼 보입니다. 치즈 이야기만 합니다. 그런데 이 이야기의 결말을 쥐고 있는 사람이 그 사람이었습니다.`,
+        `넷째, 보물 구덩이를 다시 읽어 보십시오. 지도를 따라 파 보니 구덩이는 이미 비어 있었습니다. 이야기 내내 쫓아온 것이 그 자리에 없었던 것입니다. 모험 이야기에서 이런 결말은 드뭅니다.`,
+        `인물은 한 사람을 오래 볼 만합니다.`,
+        `롱 존 실버는 이야기 속 악당 가운데 가장 유명한 사람 축에 듭니다. 그 까닭은 그가 나쁘기만 하지 않기 때문입니다. 실버는 짐을 여러 번 살립니다. 마지막에는 짐을 감싸기까지 합니다.`,
+        `그러면서도 필요하면 사람을 버립니다. 편도 여러 번 바꿉니다. 실버가 무서운 것은 사납기 때문이 아니라, 그가 언제나 자기에게 이로운 쪽을 아주 빨리 셈해 내기 때문입니다.`,
+        `그런데 짐은 그 사람을 끝까지 미워하지 못합니다. 그것이 이 책을 어른이 읽어도 재미있게 만드는 자리입니다.`,
+        `스티븐슨은 실버를 만들 때 아는 사람 하나를 떠올렸다고 합니다. 다리를 잃고 목발을 짚고 다니는데도 누구보다 활기차던 시인 친구였습니다. 그 사람의 기운을 가져다 악당에게 붙인 것입니다.`,
+        `그 시절 사정도 알아 두면 좋습니다. 이 이야기에 나오는 해적은 지어낸 것이 아닙니다. 천칠백 년대 초에 실제로 카리브해에 그런 무리가 있었습니다. 다만 그 무렵은 이미 해적의 시대가 끝난 뒤였습니다.`,
+        `이야기 속 플린트 선장도 실제 해적들을 섞어 만든 사람입니다. 보물을 섬에 묻었다는 이야기는 그 시절부터 뱃사람들 사이에 돌던 소문이었습니다. 실제로 묻은 사람은 거의 없었습니다.`,
+        `그런데 이 책이 나온 뒤로는 달라졌습니다. 지금 우리가 떠올리는 해적의 모습은 대부분 이 책에서 왔습니다. 보물 지도, 붉은 표시, 검은 딱지, 어깨 위의 앵무새, 목발 짚은 선장. 다 이 책에서 나온 것입니다.`,
+        `이 책이 붙들고 있는 물음은 두 가지입니다.`,
+        `하나는 아이가 언제 어른이 되느냐는 것입니다. 짐은 이 여행에서 사람이 죽는 것을 봅니다. 자기 손으로 사람을 죽이기도 합니다. 돌아온 짐은 떠날 때의 짐이 아닙니다. 마지막 장에서 그는 다시는 그 섬으로 돌아가지 않겠다고 적습니다.`,
+        `다른 하나는 사람을 어떻게 보아야 하느냐는 것입니다. 실버는 좋은 사람일까요 나쁜 사람일까요. 이 책은 답을 적지 않습니다. 다만 짐이 그 사람을 미워하지 못했다는 것만 적어 둡니다.`,
+        `책이 나오자 아이들만 읽은 것이 아니었습니다. 그때 영국 총리가 이 책을 밤새 읽느라 잠을 못 잤다는 이야기가 남아 있습니다. 스티븐슨은 이 책으로 처음 이름을 얻었습니다.`,
+        `언젠가 이 책을 다시 읽게 되거든, 이번에는 실버가 하는 말만 이어 붙여 읽어 보십시오. 그 사람이 누구에게 무슨 말을 하는지 보면, 그 말이 매번 상대에 따라 달라진다는 것을 알게 됩니다.`,
+        `마지막으로 생각해 볼 것을 남겨 둡니다. 답은 적어 두지 않겠습니다.`,
+        `짐이 어른들에게 말하지 않고 혼자 나선 것은 잘한 일이었을까요? 그 덕분에 살아난 사람이 여럿입니다. 그런데 짐이 잘못되었다면 아무도 몰랐을 것입니다.`,
+        `실버를 마지막에 달아나게 둔 것은 옳았을까요? 그 사람은 벌을 받지 않고 사라집니다. 스티븐슨이 왜 그렇게 끝냈을지 생각해 보십시오.`,
+        `그리고 보물이 이미 파헤쳐진 뒤였다는 것을 짐이 처음부터 알았다면, 그 배를 탔을까요. 이 물음은 어른이 되어 다시 읽어도 답하기가 쉽지 않습니다.`
+    ]
+};
+
+const AFTER_SEGS = (() => {
+    const segs = [];
+    AFTERWORD.paras.forEach((html, paraIdx) => {
+        splitSegments(html).forEach((piece, k) => {
+            segs.push({ paraIdx, html: piece, start: k === 0 });
+        });
+    });
+    return segs;
+})();
+
 // 조각 묶음을 문단 단위로 다시 묶어 화면에 그릴 모양으로 만든다.
 // 앞 쪽에서 이어진 문단은 첫 줄을 들여쓰지 않는다.
 function runHtml(segs, a, b) {
@@ -725,16 +774,100 @@ function quizPage(part) {
         </div>`;
 }
 
-function endPage() {
+/* 읽고 나서 — 장과 같은 방식으로 쪽을 나눈다. 그림은 오른쪽 위에 얹힌다. */
+const AFTER_FOOT = `<p class="after-home"><a class="home-btn" href="../../../../../">학습 허브로 돌아가기</a></p>`;
+
+function paginateAfterword() {
+    const segs = AFTER_SEGS;
+    const arts = AFTERWORD.art || [];
+    const { usable, headHeight, artHeight } = PROBE;
+    const headHtml = `<h2>${AFTERWORD.title}</h2>`;
+    const totalH = PROBE.measure(runHtml(segs, 0, segs.length));
+
+    const underArt = Math.max(60, usable - artHeight);
+
+    // 맨 끝에는 학습 허브로 가는 단추가 붙는다. 그 높이를 미리 빼 두지 않으면
+    // 마지막 쪽만 넘친다.
+    const footH = PROBE.measure(AFTER_FOOT);
+
+    const capsOf = slots => {
+        const caps = [];
+        slots.forEach(kind => { caps.push(usable); caps.push(kind === 'img' ? underArt : usable); });
+        caps[caps.length - 1] = Math.max(60, caps[caps.length - 1] - footH);
+        return caps;
+    };
+
+    const minSpreads = Math.max(arts.length, 1);
+    const maxSpreads = Math.max(minSpreads, Math.floor(segs.length / 2));
+    let spreadCount = minSpreads;
+    while (spreadCount < maxSpreads) {
+        const caps = capsOf(slotPlan(arts.length, spreadCount - arts.length));
+        if (caps.reduce((a, b) => a + b, 0) >= totalH + headHeight) break;
+        spreadCount++;
+    }
+
+    let slots = slotPlan(arts.length, Math.max(0, spreadCount - arts.length));
+    let caps = capsOf(slots);
+    let ranges = fillPages(segs, caps, headHtml);
+    for (let guard = 0; guard < 8; guard++) {
+        const over = ranges.some(([a, b], n) =>
+            PROBE.measure((n === 0 ? headHtml : '') + runHtml(segs, a, b)) > caps[n] + 1);
+        if (!over || spreadCount >= maxSpreads) break;
+        spreadCount++;
+        slots = slotPlan(arts.length, Math.max(0, spreadCount - arts.length));
+        caps = capsOf(slots);
+        ranges = fillPages(segs, caps, headHtml);
+    }
+
+    const spreads = [];
+    let pageIdx = 0;
+    let artIdx = 0;
+    slots.forEach((kind, s) => {
+        const left = ranges[pageIdx++];
+        const right = ranges[pageIdx++];
+        spreads.push({
+            kind: 'after', first: s === 0, last: s === slots.length - 1,
+            art: kind === 'img' ? arts[artIdx++] : null, left, right
+        });
+    });
+    return spreads;
+}
+
+function afterSpreadPage(spread) {
+    const segs = AFTER_SEGS;
+    const head = spread.first ? `<h2>${AFTERWORD.title}</h2>` : '';
+    // 학습 허브로 돌아가는 길은 맨 끝에 한 번만 둔다.
+    const foot = spread.last ? AFTER_FOOT : '';
+
+    if (spread.art) {
+        return `
+            <div class="page page-story page-after">
+                <div class="story-page-left">
+                    ${head}
+                    ${runHtml(segs, spread.left[0], spread.left[1])}
+                </div>
+                <div class="story-page-right story-page-right-image">
+                    <div class="story-art-top">${artFrame(spread.art, AFTERWORD.emoji)}</div>
+                    ${runHtml(segs, spread.right[0], spread.right[1])}
+                    ${foot}
+                </div>
+            </div>`;
+    }
+
     return `
-        <div class="page page-end">
-            ${artFrame('end.png', '🧭')}
-            <h2>보물섬을 다 읽었습니다</h2>
-            <a class="home-btn" href="../../../../../">학습 허브로 돌아가기</a>
+        <div class="page page-story page-after">
+            <div class="story-page-left">
+                ${head}
+                ${runHtml(segs, spread.left[0], spread.left[1])}
+            </div>
+            <div class="story-page-right story-page-right-text">
+                ${runHtml(segs, spread.right[0], spread.right[1])}
+                ${foot}
+            </div>
         </div>`;
 }
 
-const TWO_PAGE_KINDS = new Set(['chapter', 'toc', 'cover']);
+const TWO_PAGE_KINDS = new Set(['chapter', 'toc', 'cover', 'after']);
 
 let PAGES = [];
 let FOLIOS = [];
@@ -746,7 +879,7 @@ function buildPages() {
         ...TOC_GROUPS.map((_, i) => ({ kind: 'toc', part: i })),
         ...CHAPTERS.flatMap(paginateChapter),
         ...QUIZ_GROUPS.map((_, i) => ({ kind: 'quiz', part: i })),
-        { kind: 'end' }
+        ...paginateAfterword()
     ];
     PROBE.close();   // 쪽을 다 나눴으니 재는 데 쓰던 숨은 쪽은 치운다
 
@@ -767,7 +900,7 @@ function renderPage(page) {
         case 'toc': return tocPage(page.part);
         case 'chapter': return chapterSpreadPage(page);
         case 'quiz': return quizPage(page.part);
-        case 'end': return endPage();
+        case 'after': return afterSpreadPage(page);
         default: return '';
     }
 }

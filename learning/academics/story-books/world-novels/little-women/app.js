@@ -534,6 +534,57 @@ const CHAPTER_SEGS = CHAPTERS.map(ch => {
     return segs;
 });
 
+// 읽고 나서 — 책마다 내용이 다르다. 장과 같은 방식으로 재서 나눈다.
+const AFTERWORD = {
+    title: '읽고 나서',
+    emoji: '🕰️',
+    art: [],
+    paras: [
+        `이 책의 원래 제목은 『작은 아씨들』입니다. 작다는 말이 두 번 걸립니다. 아이라서 작고, 가진 것이 없어서 작습니다. 그런데 다 읽고 나면 그 제목이 놀리는 말이 아니라는 것을 알게 됩니다.`,
+        `쓴 사람은 미국의 루이자 메이 올컷입니다. 이 책에 나오는 네 자매는 지어낸 사람들이 아닙니다. 올컷에게는 언니 하나와 동생 둘이 있었고, 이 책의 조가 바로 올컷 자신입니다.`,
+        `메그는 큰언니 애나, 베스는 동생 리지, 에이미는 막내 메이를 옮겨 놓은 것입니다. 이름까지 비슷하게 지었습니다.`,
+        `올컷의 집은 정말로 가난했습니다. 아버지는 학교를 세웠다가 문을 닫고, 새로운 생각을 좇느라 돈을 벌지 못했습니다. 올컷은 열다섯 살 때부터 삯바느질을 하고 남의 집 일을 하며 돈을 벌었습니다.`,
+        `그러니 이 책에서 조가 글을 팔아 집에 돈을 보내는 대목은 지어낸 것이 아닙니다. 올컷이 실제로 그렇게 살았습니다.`,
+        `책은 천팔백육십팔 년에 나왔습니다. 처음에는 출판사에서 여자아이들이 읽을 이야기를 하나 써 보라고 부탁했고, 올컷은 그런 것을 쓰고 싶지 않다고 했습니다. 그러다 마지못해 여섯 주 만에 써 낸 것이 이 책입니다.`,
+        `그런데 그 책이 그의 평생에서 제일 크게 팔린 책이 되었습니다. 그 돈으로 그는 집안의 빚을 다 갚았습니다.`,
+        `원작은 두 권입니다. 여기서는 그 두 권을 한 줄기로 이어 실었습니다. 원작에는 네 자매가 벌이는 자잘한 일들이 훨씬 많이 들어 있습니다.`,
+        `이제 다시 볼 대목을 짚어 봅시다.`,
+        `첫째, 첫 장의 성탄절 아침을 다시 읽어 보십시오. 네 자매는 아침밥을 이웃에게 다 내줍니다. 그러고는 빵 한 조각씩으로 그날을 납니다. 이 책은 그 장면을 착한 일이라고 칭찬하지 않습니다. 배가 고팠다고만 적습니다.`,
+        `둘째, 타 버린 원고를 다시 보십시오. 에이미가 조의 원고를 불에 넣습니다. 조가 몇 해를 쓴 것이었습니다. 그다음 날 에이미는 얼음이 깨진 강에 빠집니다. 조는 그때 뒤에서 보고 있었습니다.`,
+        `그 대목에서 조가 무엇을 느꼈는지가 이 책에서 제일 정직한 자리입니다. 올컷은 조를 착한 사람으로 그리지 않았습니다. 조는 화를 잘 내고 오래 미워하는 사람입니다.`,
+        `셋째, 조가 머리카락을 자르는 대목을 보십시오. 아버지가 아프다는 전보가 오자 조는 머리를 잘라 팝니다. 그러고는 아무렇지 않은 척합니다. 그런데 그날 밤 혼자 웁니다.`,
+        `그 시절 여자에게 긴 머리는 그냥 머리가 아니었습니다. 그것을 판다는 것이 무슨 뜻인지 자매들은 다 알았습니다.`,
+        `넷째, 조가 로리에게 한 대답을 다시 읽어 보십시오. 이 책에서 사람들이 제일 많이 다투는 대목입니다. 로리는 좋은 사람이고 조를 오래 좋아했습니다. 그런데 조는 아니라고 합니다.`,
+        `출판사에서는 조를 로리와 맺어 달라고 했습니다. 독자들도 그것을 바랐습니다. 올컷은 끝까지 듣지 않았습니다. 조를 아무와도 맺어 주지 않으려 했다가, 그것도 안 된다고 해서 나이 많은 선생을 붙여 준 것입니다.`,
+        `인물도 다시 보아야 할 사람이 있습니다.`,
+        `베스를 조용하고 착한 아이로만 읽으면 절반만 읽은 것이 됩니다. 베스는 집 밖으로 나가지 못하는 아이였습니다. 사람 앞에 서면 말을 못 했습니다. 그런 아이가 병든 이웃집에 혼자 간 것이 이 이야기의 갈림길이 됩니다.`,
+        `그리고 베스는 자기가 오래 살지 못할 것을 알고 있었습니다. 그것을 언니에게 먼저 말하는 대목이 있습니다. 그 대목을 읽고 나면 앞에 나온 베스의 조용함이 달리 보입니다.`,
+        `에이미도 그렇습니다. 어릴 때는 얄밉게 굴지만, 자라면서 이 네 사람 가운데 자기가 무엇을 원하는지 제일 또렷하게 아는 사람이 됩니다.`,
+        `그 시절 사정도 알아 두면 좋습니다. 이 이야기의 배경은 미국이 남북으로 갈려 싸우던 때입니다. 아버지가 집에 없는 까닭이 그것입니다. 목사로 종군해 나가 있었습니다.`,
+        `그 전쟁에 나간 사람이 삼백만 명이 넘었고, 예순만 명 넘게 돌아오지 못했습니다. 그 시절 미국의 집마다 이 책의 마치 씨네 같은 자리가 있었습니다.`,
+        `여자가 글을 써서 돈을 버는 것도 그때는 드문 일이었습니다. 여자 이름으로 책을 내면 잘 팔리지 않아서 남자 이름을 빌려 쓰는 사람도 많았습니다. 조가 처음 글을 팔 때 이름을 숨긴 것은 그 때문입니다.`,
+        `이 책이 붙들고 있는 물음은 두 가지입니다.`,
+        `하나는 가난이 사람을 어떻게 하느냐는 것입니다. 이 집은 끝까지 가난합니다. 그런데 이 책은 가난을 딱한 것으로만 그리지 않고, 그렇다고 가난해도 괜찮다고 하지도 않습니다. 메그가 가난 때문에 부끄러워하는 대목을 그대로 적어 둡니다.`,
+        `다른 하나는 여자가 무엇이 될 수 있느냐는 것입니다. 조는 글을 쓰고 싶어 합니다. 그 시절에는 그것이 여자가 할 일이 아니었습니다. 이 책은 그것을 여러 번 정면으로 말합니다.`,
+        `책이 나오자 편지가 쏟아졌습니다. 대부분 조와 로리를 맺어 달라는 편지였습니다. 올컷은 일기에 이렇게 적었습니다. 여자아이가 결혼하지 않고 사는 이야기는 왜 안 되느냐고요.`,
+        `언젠가 이 책을 다시 읽게 되거든, 이번에는 메그만 따라가며 읽어 보십시오. 메그는 네 자매 가운데 제일 조용히 지나가는 사람입니다. 그런데 제일 먼저 어른의 자리로 들어가는 사람이기도 합니다.`,
+        `마지막으로 생각해 볼 것을 남겨 둡니다. 답은 적어 두지 않겠습니다.`,
+        `성탄절 아침밥을 이웃에게 내준 것은 잘한 일이었을까요? 그날 네 자매도 배가 고팠습니다. 자기가 모자란데 남을 주는 것을 우리는 어떻게 보아야 할까요?`,
+        `조가 로리를 받아들이지 않은 것은 옳았을까요? 좋은 사람이라는 것과 함께 살 사람이라는 것은 같은 말일까요?`,
+        `그리고 에이미가 원고를 태운 일을 조는 용서했을까요? 이 책은 화해했다고 적어 두지만, 그 원고는 돌아오지 않았습니다. 이 물음은 어른이 되어 다시 읽어도 답하기가 쉽지 않습니다.`
+    ]
+};
+
+const AFTER_SEGS = (() => {
+    const segs = [];
+    AFTERWORD.paras.forEach((html, paraIdx) => {
+        splitSegments(html).forEach((piece, k) => {
+            segs.push({ paraIdx, html: piece, start: k === 0 });
+        });
+    });
+    return segs;
+})();
+
 // 조각 묶음을 문단 단위로 다시 묶어 화면에 그릴 모양으로 만든다.
 // 앞 쪽에서 이어진 문단은 첫 줄을 들여쓰지 않는다.
 function runHtml(segs, a, b) {
@@ -815,16 +866,100 @@ function quizPage(part) {
         </div>`;
 }
 
-function endPage() {
+/* 읽고 나서 — 장과 같은 방식으로 쪽을 나눈다. 그림은 오른쪽 위에 얹힌다. */
+const AFTER_FOOT = `<p class="after-home"><a class="home-btn" href="../../../../../">학습 허브로 돌아가기</a></p>`;
+
+function paginateAfterword() {
+    const segs = AFTER_SEGS;
+    const arts = AFTERWORD.art || [];
+    const { usable, headHeight, artHeight } = PROBE;
+    const headHtml = `<h2>${AFTERWORD.title}</h2>`;
+    const totalH = PROBE.measure(runHtml(segs, 0, segs.length));
+
+    const underArt = Math.max(60, usable - artHeight);
+
+    // 맨 끝에는 학습 허브로 가는 단추가 붙는다. 그 높이를 미리 빼 두지 않으면
+    // 마지막 쪽만 넘친다.
+    const footH = PROBE.measure(AFTER_FOOT);
+
+    const capsOf = slots => {
+        const caps = [];
+        slots.forEach(kind => { caps.push(usable); caps.push(kind === 'img' ? underArt : usable); });
+        caps[caps.length - 1] = Math.max(60, caps[caps.length - 1] - footH);
+        return caps;
+    };
+
+    const minSpreads = Math.max(arts.length, 1);
+    const maxSpreads = Math.max(minSpreads, Math.floor(segs.length / 2));
+    let spreadCount = minSpreads;
+    while (spreadCount < maxSpreads) {
+        const caps = capsOf(slotPlan(arts.length, spreadCount - arts.length));
+        if (caps.reduce((a, b) => a + b, 0) >= totalH + headHeight) break;
+        spreadCount++;
+    }
+
+    let slots = slotPlan(arts.length, Math.max(0, spreadCount - arts.length));
+    let caps = capsOf(slots);
+    let ranges = fillPages(segs, caps, headHtml);
+    for (let guard = 0; guard < 8; guard++) {
+        const over = ranges.some(([a, b], n) =>
+            PROBE.measure((n === 0 ? headHtml : '') + runHtml(segs, a, b)) > caps[n] + 1);
+        if (!over || spreadCount >= maxSpreads) break;
+        spreadCount++;
+        slots = slotPlan(arts.length, Math.max(0, spreadCount - arts.length));
+        caps = capsOf(slots);
+        ranges = fillPages(segs, caps, headHtml);
+    }
+
+    const spreads = [];
+    let pageIdx = 0;
+    let artIdx = 0;
+    slots.forEach((kind, s) => {
+        const left = ranges[pageIdx++];
+        const right = ranges[pageIdx++];
+        spreads.push({
+            kind: 'after', first: s === 0, last: s === slots.length - 1,
+            art: kind === 'img' ? arts[artIdx++] : null, left, right
+        });
+    });
+    return spreads;
+}
+
+function afterSpreadPage(spread) {
+    const segs = AFTER_SEGS;
+    const head = spread.first ? `<h2>${AFTERWORD.title}</h2>` : '';
+    // 학습 허브로 돌아가는 길은 맨 끝에 한 번만 둔다.
+    const foot = spread.last ? AFTER_FOOT : '';
+
+    if (spread.art) {
+        return `
+            <div class="page page-story page-after">
+                <div class="story-page-left">
+                    ${head}
+                    ${runHtml(segs, spread.left[0], spread.left[1])}
+                </div>
+                <div class="story-page-right story-page-right-image">
+                    <div class="story-art-top">${artFrame(spread.art, AFTERWORD.emoji)}</div>
+                    ${runHtml(segs, spread.right[0], spread.right[1])}
+                    ${foot}
+                </div>
+            </div>`;
+    }
+
     return `
-        <div class="page page-end">
-            ${artFrame('end.png', '🍎')}
-            <h2>작은 아씨들을 다 읽었습니다</h2>
-            <a class="home-btn" href="../../../../../">학습 허브로 돌아가기</a>
+        <div class="page page-story page-after">
+            <div class="story-page-left">
+                ${head}
+                ${runHtml(segs, spread.left[0], spread.left[1])}
+            </div>
+            <div class="story-page-right story-page-right-text">
+                ${runHtml(segs, spread.right[0], spread.right[1])}
+                ${foot}
+            </div>
         </div>`;
 }
 
-const TWO_PAGE_KINDS = new Set(['chapter', 'toc', 'cover']);
+const TWO_PAGE_KINDS = new Set(['chapter', 'toc', 'cover', 'after']);
 
 let PAGES = [];
 let FOLIOS = [];
@@ -836,7 +971,7 @@ function buildPages() {
         ...TOC_GROUPS.map((_, i) => ({ kind: 'toc', part: i })),
         ...CHAPTERS.flatMap(paginateChapter),
         ...QUIZ_GROUPS.map((_, i) => ({ kind: 'quiz', part: i })),
-        { kind: 'end' }
+        ...paginateAfterword()
     ];
     PROBE.close();   // 쪽을 다 나눴으니 재는 데 쓰던 숨은 쪽은 치운다
 
@@ -857,7 +992,7 @@ function renderPage(page) {
         case 'toc': return tocPage(page.part);
         case 'chapter': return chapterSpreadPage(page);
         case 'quiz': return quizPage(page.part);
-        case 'end': return endPage();
+        case 'after': return afterSpreadPage(page);
         default: return '';
     }
 }
