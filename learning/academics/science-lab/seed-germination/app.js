@@ -1,5 +1,7 @@
 document.addEventListener('DOMContentLoaded', () => {
     const conditionButtons = [...document.querySelectorAll('[data-cond]')];
+    const graphGroup = document.getElementById('graphGroup');
+    const dataNote = document.getElementById('dataNote');
     const predictionButtons = [...document.querySelectorAll('[data-prediction]')];
     const growButton = document.getElementById('growBtn');
     const resetButton = document.getElementById('resetBtn');
@@ -153,7 +155,65 @@ document.addEventListener('DOMContentLoaded', () => {
         dayBadge.textContent = `${Math.round(progress * TOTAL_DAYS)}일째`;
     }
 
-    function render() { renderEnvironment(); renderPlant(); }
+    function render() { renderEnvironment(); renderPlant(); renderCompare(); renderData(); }
+
+    /* ------------------------------- 조건을 하나씩 뺐을 때를 견주는 표 */
+    /* 대조 실험의 결과를 한자리에 모아 놓은 것입니다. 물·온도·공기 가운데
+       하나만 빠져도 싹이 트지 않지만, 빛은 빠져도 싹이 틉니다 — 그 한 줄이
+       이 실험에서 가장 놀라운 대목이라 따로 표시합니다. */
+    const CASES = [
+        { key: null,    name: '모두 갖춤' },
+        { key: 'water', name: '물만 빼면' },
+        { key: 'warm',  name: '온도만 낮추면' },
+        { key: 'air',   name: '공기만 막으면' },
+        { key: 'light', name: '빛만 없애면' },
+    ];
+    const wouldGerminate = key => {
+        const c = { water: true, warm: true, air: true, light: true };
+        if (key) c[key] = false;
+        return c.water && c.warm && c.air;
+    };
+    // which row matches what is set right now
+    function currentCase() {
+        const off = ['water', 'warm', 'air', 'light'].filter(k => !conditions[k]);
+        if (off.length === 0) return null;
+        return off.length === 1 ? off[0] : 'other';
+    }
+
+    function renderCompare() {
+        const now = currentCase();
+        const X0 = 20, W = 420, TOP = 30, H = 26, GAP = 3;
+        let out = `<text class="cmp-title" x="${X0}" y="18">조건을 하나씩 빼 보면</text>`;
+        CASES.forEach((c, i) => {
+            const y = TOP + i * (H + GAP);
+            const isNow = (c.key === null && now === null) || (c.key !== null && c.key === now);
+            out += `<rect class="cmp-row${isNow ? ' now' : ''}" x="${X0}" y="${y}" width="${W}" height="${H}" rx="7"/>`;
+            out += `<text class="cmp-label" x="${X0 + 12}" y="${y + 17}">${c.name}</text>`;
+            const ok = wouldGerminate(c.key);
+            out += `<text class="${ok ? 'cmp-yes' : 'cmp-no'}" x="${X0 + 150}" y="${y + 17}">${ok ? '싹이 틉니다' : '싹이 트지 않습니다'}</text>`;
+            if (c.key === 'light') {
+                out += `<text class="cmp-surprise" x="${X0 + W - 12}" y="${y + 17}" text-anchor="end">빛은 없어도 싹은 틉니다</text>`;
+            } else if (c.key === null) {
+                out += `<text class="cmp-note" x="${X0 + W - 12}" y="${y + 17}" text-anchor="end">기준</text>`;
+            }
+        });
+        out += `<text class="cmp-note" x="${X0}" y="${TOP + CASES.length * (H + GAP) + 14}">한 번에 한 가지만 바꾸고 나머지는 똑같이 두어야 무엇 때문인지 알 수 있습니다.</text>`;
+        graphGroup.innerHTML = out;
+    }
+
+    function renderData() {
+        const need = ['water', 'warm', 'air'];
+        const missing = need.filter(k => !conditions[k]).map(k => COND_LABELS[k].name);
+        const days = (progress * TOTAL_DAYS).toFixed(1);
+        dataNote.innerHTML =
+            ['water', 'warm', 'air', 'light'].map(k =>
+                `<div class="data-row"><span class="data-name">${COND_LABELS[k].name}</span>` +
+                `<span class="data-val">${conditions[k] ? COND_LABELS[k].on : COND_LABELS[k].off}</span></div>`).join('') +
+            `<div class="data-row"><span class="data-name">싹트는 데 필요한 것</span><span class="data-val">물 · 알맞은 온도 · 공기 (빛은 필요 없음)</span></div>` +
+            `<div class="data-row${germinates() ? ' match' : ''}"><span class="data-name">지금 모자란 것</span>` +
+            `<span class="data-val">${missing.length ? missing.join(' · ') : '없음 — 세 가지가 다 갖추어졌습니다'}</span></div>` +
+            `<div class="data-row"><span class="data-name">지난 날수</span><span class="data-val">${germinates() ? `${days}일째 · ${stageName(progress)}` : '변화 없음'}</span></div>`;
+    }
 
     function frame(now) {
         const t = now / 1000;
