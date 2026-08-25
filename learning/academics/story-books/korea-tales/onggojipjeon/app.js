@@ -560,16 +560,134 @@ function quizPage(part) {
         </div>`;
 }
 
-function endPage() {
+/* 읽고 나서 — 장과 같은 방식으로 쪽을 나눈다. 그림은 오른쪽 위에 얹힌다. */
+const AFTERWORD = {
+    title: '읽고 나서',
+    emoji: '🌾',
+    art: ['end.png'],
+    paras: [
+        `이 이야기는 조금 특별한 자리에 있습니다. 판소리로 부르던 이야기였는데 지금은 소리가 전하지 않습니다.`,
+        `판소리는 원래 열두 마당이었다고 합니다. 그 가운데 지금까지 소리로 남은 것은 다섯입니다. 춘향가, 심청가, 흥보가, 수궁가, 적벽가. 나머지 일곱은 부르는 사람이 끊겨 가락이 사라졌습니다. 「옹고집타령」이 그 일곱 가운데 하나입니다.`,
+        `그래서 우리는 이 이야기를 노래로는 들을 수 없고 글로만 읽습니다. 어느 대목에서 소리꾼이 목청을 높였는지, 어느 대목에서 사람들이 웃었는지는 이제 알 수 없습니다.`,
+        `진짜와 가짜가 나타나 서로 자기가 진짜라고 다투는 이야기는 우리나라에 여럿 있습니다. 손톱을 아무 데나 버렸더니 쥐가 그것을 먹고 사람으로 변해 주인 자리를 차지했다는 이야기가 가장 널리 알려져 있습니다. 옹고집 이야기는 그 틀에 절과 스님을 얹은 것입니다.`,
+        `짚으로 사람을 만들었다는 것도 지어낸 말이 아닙니다. 옛날에는 짚으로 사람 모양을 만들어 액운을 대신 지고 가게 하는 풍습이 있었습니다. 정월에 그것을 만들어 길에 버리곤 했습니다. 이 이야기에 짚 인형이 나오는 것은 그 풍습을 알고 있던 사람들에게는 아주 익숙한 그림이었습니다.`,
+        `그런데 이 이야기는 그 짚 인형을 아주 다르게 씁니다. 액운을 대신 지고 가는 것이 아니라 주인 자리를 대신 차지합니다. 그리고 더 놀라운 것은, 그 가짜가 진짜보다 살림을 잘하고 사람 대접도 잘한다는 것입니다.`,
+        `거기가 이 이야기의 핵심입니다. 가짜가 더 나았습니다. 식구들이 가짜를 고른 것은 눈이 어두워서가 아닙니다. 그편이 함께 살기에 나았기 때문입니다. 옹고집이 쫓겨난 진짜 까닭은 얼굴이 같은 자가 나타나서가 아니라, 그가 없어도 되는 사람이었기 때문입니다.`,
+        `관가에서 진짜를 가려내는 대목도 다시 볼 만합니다. 족보를 외게 하고 집안 내력을 묻습니다. 그런데 짚으로 만든 쪽이 더 잘 외웁니다. 나를 나이게 하는 것이 무엇인지 묻는 대목입니다. 아는 것으로도, 생김새로도 가려지지 않았습니다.`,
+        `옹고집이 저지른 일 가운데 이야기가 가장 무겁게 다룬 것은 재물을 아낀 것이 아닙니다. 문 앞에 온 사람을 그냥 돌려보낸 것입니다. 노모를 찬 방에 둔 것이고, 종에게 새참을 주지 않은 것입니다. 인색함이 아니라 남을 사람으로 여기지 않은 것을 벌한 이야기입니다.`,
+        `이 이야기가 불교 이야기의 옷을 입고 있는 것도 그래서입니다. 절에서 온 스님을 문전박대하는 데서 일이 시작되고, 절의 스님이 벌을 거두는 데서 끝납니다. 조선 시대에 절은 스님을 낮추어 보는 세상에서 겨우 버티고 있었습니다. 이런 이야기는 그런 자리에서 나옵니다.`,
+        `벌을 주는 방식도 눈여겨보십시오. 때리지 않았습니다. 가두지도 않았습니다. 제 집에서 제 발로 걸어 나가게 만들고, 밖에서 남의 문 앞에 서 보게 했습니다. 제가 남에게 한 일을 그대로 당하게 한 것입니다.`,
+        `마지막에 옹고집이 짚단을 세워 두고 스승이라 부른 대목이 이 이야기의 끝맺음입니다. 가짜였던 것을 스승이라 부르는 사람이 되었다면, 그 사람은 정말로 달라진 것입니다.`,
+        `마지막으로 생각해 볼 것을 남겨 둡니다. 답은 적어 두지 않겠습니다.`,
+        `식구들이 가짜를 고른 것은 잘못한 일일까요? 진짜를 알아보지 못한 셈입니다. 그런데 가짜 쪽이 더 잘해 주었습니다. 함께 사는 사람을 고를 때 무엇이 더 중요한지 말해 보십시오.`,
+        `옹고집이 달라진 것은 뉘우쳐서일까요, 무서워서일까요? 빌어먹고 다니는 동안 겪은 일 때문에 달라졌다면, 그것도 뉘우친 것이라고 할 수 있을까요.`,
+        `스님은 옹고집을 벌할 권한이 있었을까요? 문전박대를 당한 것은 사실이지만, 남의 집을 통째로 빼앗고 사람을 길바닥에 내앉힌 것도 사실입니다. 벌이 잘못보다 커도 되는지 생각해 보십시오.`
+    ]
+};
+
+const AFTER_SEGS = (() => {
+    const segs = [];
+    AFTERWORD.paras.forEach((html, paraIdx) => {
+        splitSegments(html).forEach((piece, k) => {
+            segs.push({ paraIdx, html: piece, start: k === 0 });
+        });
+    });
+    return segs;
+})();
+
+const AFTER_FOOT = `<p class="after-home"><a class="home-btn" href="../../../../../">학습 허브로 돌아가기</a></p>`;
+
+function paginateAfterword() {
+    const segs = AFTER_SEGS;
+    const arts = AFTERWORD.art || [];
+    const { usable, headHeight, artHeight } = PROBE;
+    const headHtml = `<h2>${AFTERWORD.title}</h2>`;
+    const totalH = PROBE.measure(runHtml(segs, 0, segs.length));
+
+    const underArt = Math.max(60, usable - artHeight);
+
+    // 맨 끝에는 학습 허브로 가는 단추가 붙는다. 그 높이를 미리 빼 두지 않으면
+    // 마지막 쪽만 넘친다.
+    const footH = PROBE.measure(AFTER_FOOT);
+
+    const capsOf = slots => {
+        const caps = [];
+        slots.forEach(kind => { caps.push(usable); caps.push(kind === 'img' ? underArt : usable); });
+        caps[caps.length - 1] = Math.max(60, caps[caps.length - 1] - footH);
+        return caps;
+    };
+
+    const minSpreads = Math.max(arts.length, 1);
+    const maxSpreads = Math.max(minSpreads, Math.floor(segs.length / 2));
+    let spreadCount = minSpreads;
+    while (spreadCount < maxSpreads) {
+        const caps = capsOf(slotPlan(arts.length, spreadCount - arts.length));
+        if (caps.reduce((a, b) => a + b, 0) >= totalH + headHeight) break;
+        spreadCount++;
+    }
+
+    let slots = slotPlan(arts.length, Math.max(0, spreadCount - arts.length));
+    let caps = capsOf(slots);
+    let ranges = fillPages(segs, caps, headHtml);
+    for (let guard = 0; guard < 8; guard++) {
+        const over = ranges.some(([a, b], n) =>
+            PROBE.measure((n === 0 ? headHtml : '') + runHtml(segs, a, b)) > caps[n] + 0.25);
+        if (!over || spreadCount >= maxSpreads) break;
+        spreadCount++;
+        slots = slotPlan(arts.length, Math.max(0, spreadCount - arts.length));
+        caps = capsOf(slots);
+        ranges = fillPages(segs, caps, headHtml);
+    }
+
+    const spreads = [];
+    let pageIdx = 0;
+    let artIdx = 0;
+    slots.forEach((kind, s) => {
+        const left = ranges[pageIdx++];
+        const right = ranges[pageIdx++];
+        spreads.push({
+            kind: 'after', first: s === 0, last: s === slots.length - 1,
+            art: kind === 'img' ? arts[artIdx++] : null, left, right
+        });
+    });
+    return spreads;
+}
+
+function afterSpreadPage(spread) {
+    const segs = AFTER_SEGS;
+    const head = spread.first ? `<h2>${AFTERWORD.title}</h2>` : '';
+    // 학습 허브로 돌아가는 길은 맨 끝에 한 번만 둔다.
+    const foot = spread.last ? AFTER_FOOT : '';
+
+    if (spread.art) {
+        return `
+            <div class="page page-story page-after">
+                <div class="story-page-left">
+                    ${head}
+                    ${runHtml(segs, spread.left[0], spread.left[1])}
+                </div>
+                <div class="story-page-right story-page-right-image">
+                    <div class="story-art-top">${artFrame(spread.art, AFTERWORD.emoji)}</div>
+                    ${runHtml(segs, spread.right[0], spread.right[1])}
+                    ${foot}
+                </div>
+            </div>`;
+    }
+
     return `
-        <div class="page page-end">
-            ${artFrame('end.png', '📿')}
-            <h2>옹고집전을 다 읽었습니다</h2>
-            <a class="home-btn" href="../../../../../">학습 허브로 돌아가기</a>
+        <div class="page page-story page-after">
+            <div class="story-page-left">
+                ${head}
+                ${runHtml(segs, spread.left[0], spread.left[1])}
+            </div>
+            <div class="story-page-right story-page-right-text">
+                ${runHtml(segs, spread.right[0], spread.right[1])}
+                ${foot}
+            </div>
         </div>`;
 }
 
-const TWO_PAGE_KINDS = new Set(['chapter', 'toc', 'cover']);
+const TWO_PAGE_KINDS = new Set(['chapter', 'toc', 'cover', 'after']);
 
 let PAGES = [];
 let FOLIOS = [];
@@ -581,7 +699,7 @@ function buildPages() {
         ...TOC_GROUPS.map((_, i) => ({ kind: 'toc', part: i })),
         ...CHAPTERS.flatMap(paginateChapter),
         ...QUIZ_GROUPS.map((_, i) => ({ kind: 'quiz', part: i })),
-        { kind: 'end' }
+        ...paginateAfterword()
     ];
     PROBE.close();   // 쪽을 다 나눴으니 재는 데 쓰던 숨은 쪽은 치운다
 
@@ -602,7 +720,7 @@ function renderPage(page) {
         case 'toc': return tocPage(page.part);
         case 'chapter': return chapterSpreadPage(page);
         case 'quiz': return quizPage(page.part);
-        case 'end': return endPage();
+        case 'after': return afterSpreadPage(page);
         default: return '';
     }
 }

@@ -29,7 +29,7 @@ const CHAPTERS = [
             "놀부가 나왔습니다. 흥부를 보더니 인상부터 찌푸렸습니다.<br>\"네가 어인 일이냐.\" 대문을 반만 열어 놓은 채였습니다.",
             "흥부가 무릎을 꿇었습니다.<br>\"형님, 아이들이 사흘을 굶었습니다. 쌀 한 되만 꾸어 주십시오. 가을에 품을 팔아서라도 갚겠습니다.\" 땅바닥에 이마가 닿도록 숙였습니다.",
             "놀부의 눈이 가늘어졌습니다.<br>\"쌀? 우리 집에 쌀이 어디 있느냐. 있어도 너 줄 쌀은 없다.\"<br>그러고는 문을 닫으려 했습니다. 흥부는 문틈에 손을 넣었습니다.",
-            "그때 부엌에서 형수가 나왔습니다. 손에는 밥주걱이 들려 있었습니다. 방금 뜬 밥알이 주걱에 하얗게 붙어 있었습니다. 김이 모락모락 오르고 있었습니다. 형수의 손목에 은가락지가 끼워져 있었습니다.",
+            "그때 부엌에서 형수가 나왔습니다. 손에는 밥주걱이 들려 있었습니다. 방금 뜬 밥알이 주걱에 하얗게 붙어 있었습니다. 김이 모락모락 오르고 있었습니다. 형수의 손가락에는 은가락지가 두 개나 끼워져 있었습니다.",
             "\"형수님, 한 되만…….\"<br>말이 끝나기도 전이었습니다. 철썩! 주걱이 흥부의 뺨을 후려쳤습니다. 소리가 어찌나 큰지 담 밖까지 들렸습니다.",
             "흥부는 얼굴을 감쌌습니다. 그런데 손바닥에 무언가 붙어 있었습니다. 볼이 금세 벌겋게 부어올랐습니다. 주걱에서 떨어진 밥알이었습니다.<br>흥부는 그 밥알을 손바닥에서 조심조심 떼어 품에 넣었습니다. 그러고는 반대쪽 뺨을 내밀었습니다.<br>\"형수님, 이쪽도 한 번만 때려 주십시오.\""
         ]
@@ -561,16 +561,134 @@ function quizPage(part) {
         </div>`;
 }
 
-function endPage() {
+/* 읽고 나서 — 장과 같은 방식으로 쪽을 나눈다. 그림은 오른쪽 위에 얹힌다. */
+const AFTERWORD = {
+    title: '읽고 나서',
+    emoji: '🐦',
+    art: ['end.png'],
+    paras: [
+        `이 이야기도 노래가 먼저였습니다. 판소리 「흥보가」를 글로 옮긴 것이 『흥부전』입니다. 지금도 판소리로 부르는 다섯 마당 가운데 하나입니다.`,
+        `「흥보가」에서 가장 이름난 대목이 박을 켜는 대목입니다. 톱질하는 소리에 맞춰 부르기 때문에 「박타령」이라고 따로 부르기도 합니다. 슬근슬근 톱질하세 하는 그 소리입니다. 이 책에서 박을 켜는 대목이 유난히 길고 되풀이가 많은 것은 노래였던 흔적입니다.`,
+        `형제가 하나는 착하고 하나는 못됐다가 결국 뒤집히는 이야기는 우리나라에만 있는 것이 아닙니다. 신라 사람 방이 이야기가 중국 책에 실려 전하는데, 형제가 나오고 씨앗이 나오고 금은보화가 나옵니다. 몽골에도 비슷한 이야기가 있습니다. 아주 오래되고 널리 퍼진 이야기 틀입니다.`,
+        `박은 지어낸 물건이 아닙니다. 옛날에는 마당가에 박을 심어 열매를 켜서 바가지를 만들었습니다. 가난한 집이면 어디나 있던 것입니다. 이 이야기가 하필 박에서 보물이 나오게 한 것은, 가장 흔하고 값없는 것에서 뜻밖의 것이 나오게 하려던 것입니다.`,
+        `제비가 은혜를 갚는 대목도 흔한 틀입니다. 다친 짐승을 살려 주었더니 갚으러 오는 이야기는 세계 어디에나 있습니다. 다만 여기서는 갚는 방법이 씨앗 하나입니다. 갚기는 갚되 당장 손에 쥐여 주지 않고, 심고 기르고 켜야 얻게 만든 것입니다.`,
+        `놀부가 제비 다리를 일부러 부러뜨린 대목은 이 이야기에서 가장 서늘한 자리입니다. 흥부가 한 일을 그대로 흉내 냈는데 결과가 반대입니다. 같은 일을 했는데 왜 달랐는지, 그 답이 이 이야기 전체입니다.`,
+        `원래 이야기에서 놀부의 박에서는 더 많은 것이 나옵니다. 빚쟁이와 상여꾼과 무당과 사당패가 줄줄이 나와 재물을 뜯어 갑니다. 하나가 나올 때마다 놀부가 남은 것을 헐어 갚고, 그러고도 다음 박을 켭니다. 그만두지 못하는 것이 이 사람의 병입니다.`,
+        `이 이야기는 돈 이야기이기도 합니다. 놀부는 논밭을 물려받았고 흥부는 빈손으로 나갔습니다. 흥부가 게을러서 가난한 것이 아닙니다. 새벽에 나가 별을 보고 돌아왔는데도 가난했습니다. 부지런하면 잘살게 된다는 말이 언제나 맞는 말은 아니라는 것을 이 이야기가 조용히 보여 줍니다.`,
+        `이 이야기가 만들어지던 조선 후기는 그런 일이 실제로 흔하던 때였습니다. 맏이가 재산을 다 받고 아우들은 빈손으로 나가는 집이 늘었습니다. 흥부 같은 사람이 마을마다 있었습니다. 그런 사람들이 이 이야기를 들으며 웃었습니다.`,
+        `형수가 주걱으로 뺨을 친 대목을 다시 보십시오. 흥부가 반대쪽 뺨을 내민 것은 착해서가 아닙니다. 뺨에 붙은 밥알 때문입니다. 한 대 더 맞으면 밥알이 하나 더 붙기 때문입니다. 웃긴 대목인데 웃고 나면 마음이 좋지 않습니다. 판소리는 이런 자리를 잘 만듭니다.`,
+        `끝에서 놀부를 죽이지 않은 것도 눈여겨볼 만합니다. 벌은 받았지만 목숨은 붙어 있고, 흥부가 그를 거두어들입니다. 옛이야기가 못된 사람을 다루는 방식은 대개 둘입니다. 아주 없애 버리거나, 빈털터리로 만들어 다시 시작하게 하거나. 이 이야기는 뒤쪽을 골랐습니다.`,
+        `다만 이 결말을 두고는 예부터 말이 많았습니다. 놀부가 정말 뉘우친 것인지, 아니면 가진 것이 없어져서 어쩔 수 없이 고개를 숙인 것인지는 이야기가 밝혀 주지 않습니다.`,
+        `마지막으로 생각해 볼 것을 남겨 둡니다. 답은 적어 두지 않겠습니다.`,
+        `흥부가 제비를 고쳐 준 것은 갚음을 바라서가 아니었습니다. 그런데 갚음을 받았습니다. 만약 아무 일도 일어나지 않았다면, 흥부가 한 일은 헛일이 되는 것일까요.`,
+        `놀부가 벌을 받은 까닭은 무엇일까요? 제비 다리를 부러뜨려서일까요, 아우를 내쫓아서일까요, 아니면 갚음을 바라고 흉내 냈기 때문일까요. 셋 가운데 어느 것이 가장 큰 잘못인지 정해 보십시오.`,
+        `흥부가 부자가 되지 않았어도 이 이야기가 남았을까요? 착한 사람이 반드시 잘살게 된다고 이야기가 말해 주면 마음이 놓입니다. 그러나 정말 그런지는 다른 문제입니다. 이야기가 우리에게 그렇게 말해 주는 까닭이 무엇일지 생각해 보십시오.`
+    ]
+};
+
+const AFTER_SEGS = (() => {
+    const segs = [];
+    AFTERWORD.paras.forEach((html, paraIdx) => {
+        splitSegments(html).forEach((piece, k) => {
+            segs.push({ paraIdx, html: piece, start: k === 0 });
+        });
+    });
+    return segs;
+})();
+
+const AFTER_FOOT = `<p class="after-home"><a class="home-btn" href="../../../../../">학습 허브로 돌아가기</a></p>`;
+
+function paginateAfterword() {
+    const segs = AFTER_SEGS;
+    const arts = AFTERWORD.art || [];
+    const { usable, headHeight, artHeight } = PROBE;
+    const headHtml = `<h2>${AFTERWORD.title}</h2>`;
+    const totalH = PROBE.measure(runHtml(segs, 0, segs.length));
+
+    const underArt = Math.max(60, usable - artHeight);
+
+    // 맨 끝에는 학습 허브로 가는 단추가 붙는다. 그 높이를 미리 빼 두지 않으면
+    // 마지막 쪽만 넘친다.
+    const footH = PROBE.measure(AFTER_FOOT);
+
+    const capsOf = slots => {
+        const caps = [];
+        slots.forEach(kind => { caps.push(usable); caps.push(kind === 'img' ? underArt : usable); });
+        caps[caps.length - 1] = Math.max(60, caps[caps.length - 1] - footH);
+        return caps;
+    };
+
+    const minSpreads = Math.max(arts.length, 1);
+    const maxSpreads = Math.max(minSpreads, Math.floor(segs.length / 2));
+    let spreadCount = minSpreads;
+    while (spreadCount < maxSpreads) {
+        const caps = capsOf(slotPlan(arts.length, spreadCount - arts.length));
+        if (caps.reduce((a, b) => a + b, 0) >= totalH + headHeight) break;
+        spreadCount++;
+    }
+
+    let slots = slotPlan(arts.length, Math.max(0, spreadCount - arts.length));
+    let caps = capsOf(slots);
+    let ranges = fillPages(segs, caps, headHtml);
+    for (let guard = 0; guard < 8; guard++) {
+        const over = ranges.some(([a, b], n) =>
+            PROBE.measure((n === 0 ? headHtml : '') + runHtml(segs, a, b)) > caps[n] + 0.25);
+        if (!over || spreadCount >= maxSpreads) break;
+        spreadCount++;
+        slots = slotPlan(arts.length, Math.max(0, spreadCount - arts.length));
+        caps = capsOf(slots);
+        ranges = fillPages(segs, caps, headHtml);
+    }
+
+    const spreads = [];
+    let pageIdx = 0;
+    let artIdx = 0;
+    slots.forEach((kind, s) => {
+        const left = ranges[pageIdx++];
+        const right = ranges[pageIdx++];
+        spreads.push({
+            kind: 'after', first: s === 0, last: s === slots.length - 1,
+            art: kind === 'img' ? arts[artIdx++] : null, left, right
+        });
+    });
+    return spreads;
+}
+
+function afterSpreadPage(spread) {
+    const segs = AFTER_SEGS;
+    const head = spread.first ? `<h2>${AFTERWORD.title}</h2>` : '';
+    // 학습 허브로 돌아가는 길은 맨 끝에 한 번만 둔다.
+    const foot = spread.last ? AFTER_FOOT : '';
+
+    if (spread.art) {
+        return `
+            <div class="page page-story page-after">
+                <div class="story-page-left">
+                    ${head}
+                    ${runHtml(segs, spread.left[0], spread.left[1])}
+                </div>
+                <div class="story-page-right story-page-right-image">
+                    <div class="story-art-top">${artFrame(spread.art, AFTERWORD.emoji)}</div>
+                    ${runHtml(segs, spread.right[0], spread.right[1])}
+                    ${foot}
+                </div>
+            </div>`;
+    }
+
     return `
-        <div class="page page-end">
-            ${artFrame('end.png', '🎃')}
-            <h2>흥부전을 다 읽었습니다</h2>
-            <a class="home-btn" href="../../../../../">학습 허브로 돌아가기</a>
+        <div class="page page-story page-after">
+            <div class="story-page-left">
+                ${head}
+                ${runHtml(segs, spread.left[0], spread.left[1])}
+            </div>
+            <div class="story-page-right story-page-right-text">
+                ${runHtml(segs, spread.right[0], spread.right[1])}
+                ${foot}
+            </div>
         </div>`;
 }
 
-const TWO_PAGE_KINDS = new Set(['chapter', 'toc', 'cover']);
+const TWO_PAGE_KINDS = new Set(['chapter', 'toc', 'cover', 'after']);
 
 let PAGES = [];
 let FOLIOS = [];
@@ -582,7 +700,7 @@ function buildPages() {
         ...TOC_GROUPS.map((_, i) => ({ kind: 'toc', part: i })),
         ...CHAPTERS.flatMap(paginateChapter),
         ...QUIZ_GROUPS.map((_, i) => ({ kind: 'quiz', part: i })),
-        { kind: 'end' }
+        ...paginateAfterword()
     ];
     PROBE.close();   // 쪽을 다 나눴으니 재는 데 쓰던 숨은 쪽은 치운다
 
@@ -603,7 +721,7 @@ function renderPage(page) {
         case 'toc': return tocPage(page.part);
         case 'chapter': return chapterSpreadPage(page);
         case 'quiz': return quizPage(page.part);
-        case 'end': return endPage();
+        case 'after': return afterSpreadPage(page);
         default: return '';
     }
 }

@@ -559,16 +559,134 @@ function quizPage(part) {
         </div>`;
 }
 
-function endPage() {
+/* 읽고 나서 — 장과 같은 방식으로 쪽을 나눈다. 그림은 오른쪽 위에 얹힌다. */
+const AFTERWORD = {
+    title: '읽고 나서',
+    emoji: '🌺',
+    art: ['end.png'],
+    paras: [
+        `이 이야기를 읽으면서 어디서 들어 본 것 같다고 느꼈다면 맞습니다. 어머니를 여읜 딸, 새로 온 어머니와 그 딸, 궂은일, 잃어버린 신 한 짝, 그 신으로 사람을 찾는 일. 신데렐라와 뼈대가 같습니다.`,
+        `이런 뼈대의 이야기는 세계에 수백 가지가 있습니다. 학자들이 하나하나 모아 세어 보았더니 대륙마다 나왔습니다. 서로 만난 적 없는 곳에서 같은 이야기가 나온 것이 아니라, 아주 오래전부터 사람에서 사람으로 건너다닌 이야기로 봅니다.`,
+        `글로 적힌 것 가운데 가장 오래된 것은 우리가 아는 유럽 신데렐라가 아닙니다. 천이백 년쯤 전 중국 책에 실린 「섭한」이라는 이야기입니다. 계모에게 시달리던 딸이 물고기의 도움을 받고, 잔치에 갔다가 신 한 짝을 잃고, 그 신으로 짝을 만납니다. 유럽에 신데렐라가 적히기 팔백 년쯤 전입니다.`,
+        `우리 이야기가 그 이야기들과 뚜렷하게 다른 데가 한 군데 있습니다. 결혼에서 끝나지 않는다는 것입니다. 서양 신데렐라는 신발이 맞고 나면 행복하게 살았다는 말로 끝납니다. 콩쥐 팥쥐는 거기가 절반입니다. 사 장부터가 진짜입니다.`,
+        `원래 전해 오는 이야기에서 뒷부분은 훨씬 험합니다. 팥쥐가 콩쥐를 연못에 빠뜨려 죽이고 그 자리에 대신 앉습니다. 콩쥐는 연꽃으로, 구슬로 모습을 바꾸어 가며 자기가 여기 있다고 알립니다. 마지막에 팥쥐가 받는 벌은 여기 옮겨 적기 어려울 만큼 끔찍합니다.`,
+        `요즘 나오는 콩쥐 팥쥐 책이 대개 신발 대목에서 끝나는 것은 그 때문입니다. 이 책은 뒷부분을 살리되 벌 주는 대목은 덜어 냈습니다. 이야기의 절반을 통째로 버리는 것도 아깝고, 그 벌을 아이들 책에 그대로 옮기는 것도 옳지 않다고 보았기 때문입니다.`,
+        `콩쥐를 도운 것이 무엇이었는지 한번 세어 보십시오. 검은 소, 두꺼비, 참새 떼, 그리고 선녀입니다. 요정 대모도 마법 지팡이도 없습니다. 밭 갈던 소와 마당의 두꺼비와 처마의 참새입니다. 옛사람들이 날마다 보던 것들이 그대로 돕는 편이 된 것입니다.`,
+        `밑 빠진 독 대목은 특히 눈여겨볼 만합니다. 두꺼비가 한 일은 물을 길어 준 것이 아닙니다. 제 몸으로 구멍을 막았을 뿐입니다. 콩쥐는 그대로 제 힘으로 물을 길어 부었습니다. 도움이란 대신 해 주는 것이 아니라 할 수 있게 해 주는 것이라는 말을, 이 대목이 말없이 하고 있습니다.`,
+        `신 한 짝으로 사람을 찾는다는 것도 생각해 보면 이상한 일입니다. 발 크기가 같은 사람은 얼마든지 있습니다. 그런데도 이런 이야기가 세계 곳곳에 있는 까닭은, 신이란 것이 본래 그 사람이 어디를 어떻게 걸어왔는지를 담은 물건이기 때문일 것입니다.`,
+        `팥쥐도 다시 보아야 할 사람입니다. 이 아이가 태어날 때부터 못됐던 것은 아닙니다. 어머니가 시키는 대로 했고, 어머니가 하는 것을 보고 배웠습니다. 마지막에 무너져 앉은 사람이 팥쥐가 아니라 배 씨였던 것도 그래서입니다.`,
+        `아버지 이야기도 빼놓을 수 없습니다. 이 사람은 아무 잘못도 하지 않았습니다. 다만 집에 없었습니다. 장에 다니느라 딸의 종아리를 한 번도 보지 못했습니다. 나쁜 일이 벌어지는 데 나쁜 사람만 필요한 것은 아니라는 것을 이 사람이 보여 줍니다.`,
+        `마지막 쪽에서 콩쥐가 복이 많다는 말을 부끄러워한 대목을 기억하십시오. 이 이야기가 끝내 하고 싶었던 말이 거기 있습니다.`,
+        `마지막으로 생각해 볼 것을 남겨 둡니다. 답은 적어 두지 않겠습니다.`,
+        `콩쥐가 도움을 받은 것은 착해서였을까요, 운이 좋아서였을까요? 콩쥐 자신은 언젠가 밟지 않고 비켜 간 것들이었다고 했습니다. 그렇다면 착한 것과 운이 좋은 것은 다른 일일까요, 같은 일일까요.`,
+        `원래 이야기에서 팥쥐가 받은 벌은 목숨을 잃는 것이었습니다. 이 책은 그 대목을 덜어 냈습니다. 벌을 덜어 낸 이야기와 벌이 남아 있는 이야기 가운데 어느 쪽이 더 나은지, 그리고 그렇게 생각하는 까닭이 무엇인지 말해 보십시오.`,
+        `배 씨는 왜 콩쥐를 미워했을까요? 콩쥐가 배 씨에게 잘못한 일은 하나도 없습니다. 아무 잘못도 하지 않은 사람을 미워하게 되는 일이 어떻게 생기는지, 이 물음에는 이야기가 답해 주지 않습니다.`
+    ]
+};
+
+const AFTER_SEGS = (() => {
+    const segs = [];
+    AFTERWORD.paras.forEach((html, paraIdx) => {
+        splitSegments(html).forEach((piece, k) => {
+            segs.push({ paraIdx, html: piece, start: k === 0 });
+        });
+    });
+    return segs;
+})();
+
+const AFTER_FOOT = `<p class="after-home"><a class="home-btn" href="../../../../../">학습 허브로 돌아가기</a></p>`;
+
+function paginateAfterword() {
+    const segs = AFTER_SEGS;
+    const arts = AFTERWORD.art || [];
+    const { usable, headHeight, artHeight } = PROBE;
+    const headHtml = `<h2>${AFTERWORD.title}</h2>`;
+    const totalH = PROBE.measure(runHtml(segs, 0, segs.length));
+
+    const underArt = Math.max(60, usable - artHeight);
+
+    // 맨 끝에는 학습 허브로 가는 단추가 붙는다. 그 높이를 미리 빼 두지 않으면
+    // 마지막 쪽만 넘친다.
+    const footH = PROBE.measure(AFTER_FOOT);
+
+    const capsOf = slots => {
+        const caps = [];
+        slots.forEach(kind => { caps.push(usable); caps.push(kind === 'img' ? underArt : usable); });
+        caps[caps.length - 1] = Math.max(60, caps[caps.length - 1] - footH);
+        return caps;
+    };
+
+    const minSpreads = Math.max(arts.length, 1);
+    const maxSpreads = Math.max(minSpreads, Math.floor(segs.length / 2));
+    let spreadCount = minSpreads;
+    while (spreadCount < maxSpreads) {
+        const caps = capsOf(slotPlan(arts.length, spreadCount - arts.length));
+        if (caps.reduce((a, b) => a + b, 0) >= totalH + headHeight) break;
+        spreadCount++;
+    }
+
+    let slots = slotPlan(arts.length, Math.max(0, spreadCount - arts.length));
+    let caps = capsOf(slots);
+    let ranges = fillPages(segs, caps, headHtml);
+    for (let guard = 0; guard < 8; guard++) {
+        const over = ranges.some(([a, b], n) =>
+            PROBE.measure((n === 0 ? headHtml : '') + runHtml(segs, a, b)) > caps[n] + 0.25);
+        if (!over || spreadCount >= maxSpreads) break;
+        spreadCount++;
+        slots = slotPlan(arts.length, Math.max(0, spreadCount - arts.length));
+        caps = capsOf(slots);
+        ranges = fillPages(segs, caps, headHtml);
+    }
+
+    const spreads = [];
+    let pageIdx = 0;
+    let artIdx = 0;
+    slots.forEach((kind, s) => {
+        const left = ranges[pageIdx++];
+        const right = ranges[pageIdx++];
+        spreads.push({
+            kind: 'after', first: s === 0, last: s === slots.length - 1,
+            art: kind === 'img' ? arts[artIdx++] : null, left, right
+        });
+    });
+    return spreads;
+}
+
+function afterSpreadPage(spread) {
+    const segs = AFTER_SEGS;
+    const head = spread.first ? `<h2>${AFTERWORD.title}</h2>` : '';
+    // 학습 허브로 돌아가는 길은 맨 끝에 한 번만 둔다.
+    const foot = spread.last ? AFTER_FOOT : '';
+
+    if (spread.art) {
+        return `
+            <div class="page page-story page-after">
+                <div class="story-page-left">
+                    ${head}
+                    ${runHtml(segs, spread.left[0], spread.left[1])}
+                </div>
+                <div class="story-page-right story-page-right-image">
+                    <div class="story-art-top">${artFrame(spread.art, AFTERWORD.emoji)}</div>
+                    ${runHtml(segs, spread.right[0], spread.right[1])}
+                    ${foot}
+                </div>
+            </div>`;
+    }
+
     return `
-        <div class="page page-end">
-            ${artFrame('end.webp', '🌸')}
-            <h2>콩쥐 팥쥐를 다 읽었습니다</h2>
-            <a class="home-btn" href="../../../../../">학습 허브로 돌아가기</a>
+        <div class="page page-story page-after">
+            <div class="story-page-left">
+                ${head}
+                ${runHtml(segs, spread.left[0], spread.left[1])}
+            </div>
+            <div class="story-page-right story-page-right-text">
+                ${runHtml(segs, spread.right[0], spread.right[1])}
+                ${foot}
+            </div>
         </div>`;
 }
 
-const TWO_PAGE_KINDS = new Set(['chapter', 'toc', 'cover']);
+const TWO_PAGE_KINDS = new Set(['chapter', 'toc', 'cover', 'after']);
 
 let PAGES = [];
 let FOLIOS = [];
@@ -580,7 +698,7 @@ function buildPages() {
         ...TOC_GROUPS.map((_, i) => ({ kind: 'toc', part: i })),
         ...CHAPTERS.flatMap(paginateChapter),
         ...QUIZ_GROUPS.map((_, i) => ({ kind: 'quiz', part: i })),
-        { kind: 'end' }
+        ...paginateAfterword()
     ];
     PROBE.close();   // 쪽을 다 나눴으니 재는 데 쓰던 숨은 쪽은 치운다
 
@@ -601,7 +719,7 @@ function renderPage(page) {
         case 'toc': return tocPage(page.part);
         case 'chapter': return chapterSpreadPage(page);
         case 'quiz': return quizPage(page.part);
-        case 'end': return endPage();
+        case 'after': return afterSpreadPage(page);
         default: return '';
     }
 }

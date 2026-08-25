@@ -599,16 +599,141 @@ function quizPage(part) {
         </div>`;
 }
 
-function endPage() {
+/* 읽고 나서 — 장과 같은 방식으로 쪽을 나눈다. 그림은 오른쪽 위에 얹힌다. */
+const AFTERWORD = {
+    title: '읽고 나서',
+    emoji: '👁️',
+    art: ['end.png'],
+    paras: [
+        `이 이야기는 책이기 전에 노래였습니다. 소리꾼 한 사람이 북 치는 사람 하나만 데리고 서너 시간을 내리 부르는 「심청가」가 먼저 있었고, 그것을 글로 옮겨 적은 것이 지금 읽은 『심청전』입니다.`,
+        `판소리로 지금까지 남아 전하는 것은 다섯 마당입니다. 춘향가, 심청가, 흥보가, 수궁가, 적벽가. 이 가운데 세 마당이 이 서가에 소설로 들어와 있습니다. 춘향전, 심청전, 그리고 흥부전입니다. 수궁가는 토끼전이 되었으니 넷인 셈입니다.`,
+        `그래서 이 이야기에는 지은이가 없습니다. 한 사람이 앉아서 지어낸 것이 아니라, 소리꾼들이 부르고 또 부르면서 조금씩 고쳐 온 것이기 때문입니다. 사람들이 울던 대목은 더 늘었고, 지루해하던 대목은 저절로 줄었습니다.`,
+        `그러다 보니 책마다 내용이 다릅니다. 옛날에 서울에서 찍어 팔던 것과 전주에서 찍어 팔던 것을 견주어 보면 길이부터 세 배 가까이 차이가 납니다. 어느 쪽이 진짜인지 따질 수가 없습니다. 둘 다 진짜입니다.`,
+        `이 책에도 덜어 낸 대목이 있습니다. 원래 이야기에는 심청이 떠난 뒤에 뺑덕 어멈이라는 사람이 나옵니다. 심 봉사에게 붙어살면서 딸이 남기고 간 재물을 야금야금 축내고, 맹인 잔치를 찾아가는 길에서는 그마저 챙겨 달아나 버립니다. 심 봉사가 빈털터리로 대궐에 닿게 만드는 대목입니다.`,
+        `이 이야기의 뿌리로 흔히 세 가지를 꼽습니다. 『삼국사기』에 실린 효녀 지은 이야기는 가난한 딸이 제 몸을 남의 집에 팔아 어머니를 봉양한 이야기입니다. 『삼국유사』의 거타지 이야기에는 사람을 제물로 바치는 바다가 나옵니다. 전라도 관음사에 전해 오는 원홍장 이야기는 눈먼 아버지를 둔 딸이 뱃사람들에게 팔려 가는 이야기입니다.`,
+        `사람을 제물로 바다에 바치는 이야기는 우리나라에만 있는 것이 아닙니다. 배를 타고 먼바다로 나가야 먹고사는 곳이면 어디든 비슷한 이야기가 있습니다. 그만큼 바다가 무서웠다는 뜻입니다.`,
+        `그런데 심청은 그런 이야기들과 한 군데가 다릅니다. 끌려간 것이 아니라 제 발로 갔습니다. 값을 매기고 흥정을 한 것도 심청 자신입니다. 제물이 된 사람이 아니라 제 몸을 팔기로 정한 사람입니다. 이 한 가지 차이 때문에 이야기가 완전히 달라집니다.`,
+        `공양미 삼백 석이라는 셈도 한 번 짚어 볼 만합니다. 삼백 석은 어른 백 사람이 한 해를 먹고도 남을 쌀입니다. 동냥으로 딸을 키운 집에서 마련할 수 있는 양이 아닙니다. 애초에 갚을 수 없는 값이었습니다.`,
+        `그것이 이 이야기의 급소입니다. 심 봉사는 눈이 보이지 않으니 쌀 삼백 석이 마당에 쌓이면 얼마나 되는지를 볼 수 없었습니다. 보았다면 그 자리에서 스님을 붙들었을 것입니다. 약속을 한 것이 아니라, 얼마나 큰 약속인지 모른 채 고개를 끄덕인 것입니다.`,
+        `삼 장을 다시 펴 보십시오. 심청이 아버지에게 장 승상 댁 수양딸로 간다고 둘러대는 대목이 있습니다. 이 책에서 심청이 하는 유일한 거짓말입니다. 효도한 딸이 아버지를 속이고 떠난 것입니다. 이야기가 그 거짓말을 나무라지 않는 까닭도 생각해 볼 만합니다.`,
+        `장 승상 댁 부인이 삼백 석을 대신 내주겠다고 했을 때 심청이 그 길을 마다한 것도 그렇습니다. 돈만 놓고 보면 받는 편이 낫습니다. 심청이 마다한 것은 값을 치르지 않고 얻은 것이 아버지의 눈이 되어서는 안 된다고 여겼기 때문입니다.`,
+        `인당수는 지어낸 곳이 아닙니다. 서해 백령도 앞바다의 물살 센 자리를 그렇게 불렀다고 전해 옵니다. 지금도 백령도에는 심청을 기리는 집이 서 있고, 맞은편 황해도 땅에 심청이 나고 자란 마을이 있었다는 말도 함께 전해 옵니다.`,
+        `심청이 다시 나온 자리가 하필 연꽃인 것에도 까닭이 있습니다. 연꽃은 맑은 물에서 피지 않습니다. 진창에 뿌리를 박고 그 위로 깨끗한 꽃을 밀어 올립니다. 이 이야기를 지어 온 사람들이 절과 가까웠던 것을 생각하면, 연꽃을 고른 것은 우연이 아닙니다.`,
+        `마지막 장에서 심 봉사가 눈을 뜬 것은 약을 먹어서가 아닙니다. 쌀 삼백 석을 절에 바쳐서도 아닙니다. 쌀은 벌써 오래전에 들어갔는데 눈은 그대로였습니다. 눈이 떠진 것은 딸의 목소리를 들은 그 자리에서였습니다.`,
+        `그리고 그날 눈을 뜬 사람은 심 봉사만이 아니었습니다. 잔치에 왔던 사람도, 늦게 와서 문밖에 서 있던 사람도 다 떴습니다. 한 사람의 일로 끝내지 않은 것입니다. 옛이야기가 좋은 일을 마무리하는 방식이 대개 이렇습니다.`,
+        `이 이야기를 효도 이야기로만 읽으면 절반만 읽은 것이 됩니다. 효도 이야기라면 심청이 죽는 데서 끝나야 합니다. 그런데 이야기는 거기서 끝나지 않고 심청을 기어이 되살려 냅니다. 딸을 죽여 놓고는 못 견딘 것입니다.`,
+        `심 봉사도 다시 보아야 할 사람입니다. 이 사람은 딸을 팔아 눈을 뜬 아버지입니다. 그것을 알고 나서 이 사람이 어떻게 살았을지 생각해 보면, 마지막 쪽에서 그가 한 말이 달리 들립니다. 제 눈을 뜨게 한 것이 아니라 눈을 뜨고 싶게 만든 것이라고 했지요.`,
+        `오늘 이 이야기를 읽으면서 마음이 불편했다면 그것이 맞습니다. 아버지를 위해 딸이 목숨을 내놓는 것을 우리는 더 이상 아름답다고 하지 않습니다. 옛사람들이 아름답게 여긴 것을 오늘 사람이 그대로 따라 여길 필요는 없습니다. 이야기는 남고 값매김은 바뀝니다.`,
+        `마지막으로 생각해 볼 것을 남겨 둡니다. 답은 적어 두지 않겠습니다.`,
+        `심청이 제 몸을 판 것은 잘한 일이었을까요? 아버지 눈은 떠졌습니다. 그러나 아버지가 그것을 바랐을 리는 없습니다. 누군가를 위한 일인데 그 사람이 바라지 않는 일이라면, 그것은 누구를 위한 일일까요.`,
+        `심 봉사가 삼백 석의 크기를 알았더라면 어땠을까요? 이 이야기는 눈이 보이지 않아서 생긴 일입니다. 몰라서 한 약속의 값을 딸이 치른 셈인데, 그렇다면 잘못은 누구에게 있을까요.`,
+        `몽운사 스님은 왜 하필 삼백 석이라고 했을까요? 서른 석이라고 했다면 심청은 팔려 가지 않았을 것입니다. 스님이 그 값을 부를 때 무슨 생각을 했을지, 이 물음에는 이야기가 끝내 답해 주지 않습니다.`
+    ]
+};
+
+const AFTER_SEGS = (() => {
+    const segs = [];
+    AFTERWORD.paras.forEach((html, paraIdx) => {
+        splitSegments(html).forEach((piece, k) => {
+            segs.push({ paraIdx, html: piece, start: k === 0 });
+        });
+    });
+    return segs;
+})();
+
+const AFTER_FOOT = `<p class="after-home"><a class="home-btn" href="../../../../../">학습 허브로 돌아가기</a></p>`;
+
+function paginateAfterword() {
+    const segs = AFTER_SEGS;
+    const arts = AFTERWORD.art || [];
+    const { usable, headHeight, artHeight } = PROBE;
+    const headHtml = `<h2>${AFTERWORD.title}</h2>`;
+    const totalH = PROBE.measure(runHtml(segs, 0, segs.length));
+
+    const underArt = Math.max(60, usable - artHeight);
+
+    // 맨 끝에는 학습 허브로 가는 단추가 붙는다. 그 높이를 미리 빼 두지 않으면
+    // 마지막 쪽만 넘친다.
+    const footH = PROBE.measure(AFTER_FOOT);
+
+    const capsOf = slots => {
+        const caps = [];
+        slots.forEach(kind => { caps.push(usable); caps.push(kind === 'img' ? underArt : usable); });
+        caps[caps.length - 1] = Math.max(60, caps[caps.length - 1] - footH);
+        return caps;
+    };
+
+    const minSpreads = Math.max(arts.length, 1);
+    const maxSpreads = Math.max(minSpreads, Math.floor(segs.length / 2));
+    let spreadCount = minSpreads;
+    while (spreadCount < maxSpreads) {
+        const caps = capsOf(slotPlan(arts.length, spreadCount - arts.length));
+        if (caps.reduce((a, b) => a + b, 0) >= totalH + headHeight) break;
+        spreadCount++;
+    }
+
+    let slots = slotPlan(arts.length, Math.max(0, spreadCount - arts.length));
+    let caps = capsOf(slots);
+    let ranges = fillPages(segs, caps, headHtml);
+    for (let guard = 0; guard < 8; guard++) {
+        const over = ranges.some(([a, b], n) =>
+            PROBE.measure((n === 0 ? headHtml : '') + runHtml(segs, a, b)) > caps[n] + 0.25);
+        if (!over || spreadCount >= maxSpreads) break;
+        spreadCount++;
+        slots = slotPlan(arts.length, Math.max(0, spreadCount - arts.length));
+        caps = capsOf(slots);
+        ranges = fillPages(segs, caps, headHtml);
+    }
+
+    const spreads = [];
+    let pageIdx = 0;
+    let artIdx = 0;
+    slots.forEach((kind, s) => {
+        const left = ranges[pageIdx++];
+        const right = ranges[pageIdx++];
+        spreads.push({
+            kind: 'after', first: s === 0, last: s === slots.length - 1,
+            art: kind === 'img' ? arts[artIdx++] : null, left, right
+        });
+    });
+    return spreads;
+}
+
+function afterSpreadPage(spread) {
+    const segs = AFTER_SEGS;
+    const head = spread.first ? `<h2>${AFTERWORD.title}</h2>` : '';
+    // 학습 허브로 돌아가는 길은 맨 끝에 한 번만 둔다.
+    const foot = spread.last ? AFTER_FOOT : '';
+
+    if (spread.art) {
+        return `
+            <div class="page page-story page-after">
+                <div class="story-page-left">
+                    ${head}
+                    ${runHtml(segs, spread.left[0], spread.left[1])}
+                </div>
+                <div class="story-page-right story-page-right-image">
+                    <div class="story-art-top">${artFrame(spread.art, AFTERWORD.emoji)}</div>
+                    ${runHtml(segs, spread.right[0], spread.right[1])}
+                    ${foot}
+                </div>
+            </div>`;
+    }
+
     return `
-        <div class="page page-end">
-            ${artFrame('end.png', '👁️')}
-            <h2>효녀 심청을 다 읽었습니다</h2>
-            <a class="home-btn" href="../../../../../">학습 허브로 돌아가기</a>
+        <div class="page page-story page-after">
+            <div class="story-page-left">
+                ${head}
+                ${runHtml(segs, spread.left[0], spread.left[1])}
+            </div>
+            <div class="story-page-right story-page-right-text">
+                ${runHtml(segs, spread.right[0], spread.right[1])}
+                ${foot}
+            </div>
         </div>`;
 }
 
-const TWO_PAGE_KINDS = new Set(['chapter', 'toc', 'cover']);
+const TWO_PAGE_KINDS = new Set(['chapter', 'toc', 'cover', 'after']);
 
 let PAGES = [];
 let FOLIOS = [];
@@ -620,7 +745,7 @@ function buildPages() {
         ...TOC_GROUPS.map((_, i) => ({ kind: 'toc', part: i })),
         ...CHAPTERS.flatMap(paginateChapter),
         ...QUIZ_GROUPS.map((_, i) => ({ kind: 'quiz', part: i })),
-        { kind: 'end' }
+        ...paginateAfterword()
     ];
     PROBE.close();   // 쪽을 다 나눴으니 재는 데 쓰던 숨은 쪽은 치운다
 
@@ -641,7 +766,7 @@ function renderPage(page) {
         case 'toc': return tocPage(page.part);
         case 'chapter': return chapterSpreadPage(page);
         case 'quiz': return quizPage(page.part);
-        case 'end': return endPage();
+        case 'after': return afterSpreadPage(page);
         default: return '';
     }
 }

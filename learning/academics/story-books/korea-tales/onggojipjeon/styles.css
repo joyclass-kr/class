@@ -575,3 +575,13 @@ body {
     display: inline-block;
     width: 1em;
 }
+
+/* 읽고 나서 — 장과 같은 모양으로 흐른다. 그림은 오른쪽 위에 얹힌다.
+   학습 허브로 가는 길은 마지막 쪽 끝에 한 번만 둔다. */
+.after-home {
+    margin-top: 16px;
+    text-align: center;
+    text-indent: 0;
+}
+
+.after-home .home-btn { margin-top: 0; }

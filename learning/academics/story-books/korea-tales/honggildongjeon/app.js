@@ -592,16 +592,136 @@ function quizPage(part) {
         </div>`;
 }
 
-function endPage() {
+/* 읽고 나서 — 장과 같은 방식으로 쪽을 나눈다. 그림은 오른쪽 위에 얹힌다. */
+const AFTERWORD = {
+    title: '읽고 나서',
+    emoji: '🗡️',
+    art: ['end.png'],
+    paras: [
+        `이 책은 앞의 다른 전래 이야기들과 크게 다른 점이 하나 있습니다. 지은이가 있습니다.`,
+        `허균이 지었다고 전해 옵니다. 조선 중기 사람으로, 천오백육십구 년에 나서 천육백십팔 년에 죽었습니다. 다만 허균이 지었다는 것도 본인이 남긴 말은 아닙니다. 뒷사람 이식이 자기 문집에 허균이 홍길동전을 지었다고 적어 둔 것이 가장 큰 근거입니다. 그래서 요즘은 정말 허균이 지었는지 다시 따져 보는 학자들도 있습니다.`,
+        `허균은 이름난 집안에서 태어나 벼슬도 높이 올랐습니다. 그런데 서얼로 태어나 벼슬길이 막힌 사람들과 가까이 지냈습니다. 백성 가운데 두려운 것은 가만히 참는 사람이 아니라 참지 않는 사람이라는 뜻의 글도 남겼습니다. 끝내는 역모를 꾀했다는 죄로 붙잡혀 죽었습니다.`,
+        `그러니 이 책은 옛이야기가 아니라 주장에 가깝습니다. 누가 부르다 보니 생긴 이야기가 아니라, 한 사람이 하고 싶은 말이 있어서 지은 이야기입니다.`,
+        `홍길동이라는 이름은 지어낸 것도 아닙니다. 『조선왕조실록』 연산군 때 기록에 홍길동이라는 도적을 잡았다는 대목이 나옵니다. 실제로 있던 도적의 이름을 빌려 온 것입니다. 다만 실록 속의 홍길동이 이 책의 홍길동처럼 살았다는 기록은 없습니다.`,
+        `이 책이 겨눈 것은 첫 장 제목 그대로입니다. 아버지를 아버지라 부르지 못하는 것. 이것은 이야기를 위해 지어낸 설움이 아니라 그 시절의 법이었습니다.`,
+        `양반이 첩에게서 얻은 아들을 서자라 했습니다. 그 아들은 아버지를 아버지라, 형을 형이라 부를 수 없었고, 제사에서도 뒷줄에 섰습니다. 무엇보다 과거를 볼 수 없었습니다. 아무리 글을 잘해도 벼슬을 할 수 없었다는 뜻입니다. 나라의 법전에 그렇게 적혀 있었습니다.`,
+        `그러니 길동이 집을 나간 것은 성질이 사나워서가 아닙니다. 그 집에 있는 한 아무것도 될 수 없었기 때문입니다. 이 책에서 길동이 얻으려 한 것을 끝까지 따라가 보면 재물도 벼슬도 아니라는 것을 알 수 있습니다. 이름입니다.`,
+        `오 장을 다시 보십시오. 임금이 병조 판서를 내렸을 때 길동은 그 자리를 하루만 지키고 내놓습니다. 벼슬이 탐나서 조른 것이 아니었기 때문입니다. 서얼도 그 자리에 앉을 수 있다는 것을 한 번 보여 주면 그것으로 끝난 일이었습니다.`,
+        `활빈당이라는 이름도 뜻을 새겨 볼 만합니다. 가난한 사람을 살리는 무리라는 뜻입니다. 길동이 무리에게 못 박은 것은 딱 하나, 백성의 것에는 손대지 않는다는 것이었습니다. 도적인데 도적질을 가려서 한 셈입니다.`,
+        `율도국은 이 책의 마지막 대목이자 가장 논란이 많은 대목입니다. 길동은 조선을 고치지 못하고 바다 건너로 갑니다. 나라를 뒤엎지 않고 새 나라를 따로 세운 것입니다.`,
+        `이것을 두고 두 가지로 읽습니다. 하나는 끝까지 밀지 못하고 물러선 것이라는 읽기입니다. 다른 하나는 그 시절에 임금을 갈아 치우는 이야기를 적었다가는 책도 지은이도 남아나지 못했으리라는 읽기입니다. 어느 쪽인지는 정하기 어렵습니다.`,
+        `도술도 한번 세어 보십시오. 길동이 쓰는 재주는 대개 몸을 여럿으로 늘리고, 안개를 부르고, 짚으로 사람을 만드는 것입니다. 누구를 해치는 재주가 아닙니다. 잡히지 않는 재주이고 숨는 재주입니다. 잡히지 않아야만 살 수 있는 사람의 재주입니다.`,
+        `이 책이 나온 지 사백 년이 지났습니다. 서얼을 가르던 법은 갑오년 무렵에 없어졌습니다. 길동이 하루짜리 판서 자리를 받아 내고 바다를 건넌 지 아주 오래 걸린 셈입니다.`,
+        `마지막으로 생각해 볼 것을 남겨 둡니다. 답은 적어 두지 않겠습니다.`,
+        `길동이 바다를 건너간 것은 옳은 선택이었을까요? 남아서 싸우는 길도 있었습니다. 고칠 수 없는 곳을 떠나는 것과 남아서 버티는 것 가운데 무엇이 더 어려운 일인지 말해 보십시오.`,
+        `활빈당은 도적입니다. 나쁜 관리의 것만 빼앗았다고 해도 남의 것을 빼앗은 것은 사실입니다. 좋은 일에 쓸 것이면 빼앗아도 되는지, 그 선을 어디에 그어야 하는지 생각해 보십시오.`,
+        `홍 판서는 아들을 사랑했지만 끝내 아들이라 부르게 하지 않았습니다. 법이 무서웠기 때문입니다. 이 아버지를 어떻게 보아야 할까요. 잘못한 사람일까요, 아니면 이 사람도 그 법에 갇힌 사람일까요.`
+    ]
+};
+
+const AFTER_SEGS = (() => {
+    const segs = [];
+    AFTERWORD.paras.forEach((html, paraIdx) => {
+        splitSegments(html).forEach((piece, k) => {
+            segs.push({ paraIdx, html: piece, start: k === 0 });
+        });
+    });
+    return segs;
+})();
+
+const AFTER_FOOT = `<p class="after-home"><a class="home-btn" href="../../../../../">학습 허브로 돌아가기</a></p>`;
+
+function paginateAfterword() {
+    const segs = AFTER_SEGS;
+    const arts = AFTERWORD.art || [];
+    const { usable, headHeight, artHeight } = PROBE;
+    const headHtml = `<h2>${AFTERWORD.title}</h2>`;
+    const totalH = PROBE.measure(runHtml(segs, 0, segs.length));
+
+    const underArt = Math.max(60, usable - artHeight);
+
+    // 맨 끝에는 학습 허브로 가는 단추가 붙는다. 그 높이를 미리 빼 두지 않으면
+    // 마지막 쪽만 넘친다.
+    const footH = PROBE.measure(AFTER_FOOT);
+
+    const capsOf = slots => {
+        const caps = [];
+        slots.forEach(kind => { caps.push(usable); caps.push(kind === 'img' ? underArt : usable); });
+        caps[caps.length - 1] = Math.max(60, caps[caps.length - 1] - footH);
+        return caps;
+    };
+
+    const minSpreads = Math.max(arts.length, 1);
+    const maxSpreads = Math.max(minSpreads, Math.floor(segs.length / 2));
+    let spreadCount = minSpreads;
+    while (spreadCount < maxSpreads) {
+        const caps = capsOf(slotPlan(arts.length, spreadCount - arts.length));
+        if (caps.reduce((a, b) => a + b, 0) >= totalH + headHeight) break;
+        spreadCount++;
+    }
+
+    let slots = slotPlan(arts.length, Math.max(0, spreadCount - arts.length));
+    let caps = capsOf(slots);
+    let ranges = fillPages(segs, caps, headHtml);
+    for (let guard = 0; guard < 8; guard++) {
+        const over = ranges.some(([a, b], n) =>
+            PROBE.measure((n === 0 ? headHtml : '') + runHtml(segs, a, b)) > caps[n] + 0.25);
+        if (!over || spreadCount >= maxSpreads) break;
+        spreadCount++;
+        slots = slotPlan(arts.length, Math.max(0, spreadCount - arts.length));
+        caps = capsOf(slots);
+        ranges = fillPages(segs, caps, headHtml);
+    }
+
+    const spreads = [];
+    let pageIdx = 0;
+    let artIdx = 0;
+    slots.forEach((kind, s) => {
+        const left = ranges[pageIdx++];
+        const right = ranges[pageIdx++];
+        spreads.push({
+            kind: 'after', first: s === 0, last: s === slots.length - 1,
+            art: kind === 'img' ? arts[artIdx++] : null, left, right
+        });
+    });
+    return spreads;
+}
+
+function afterSpreadPage(spread) {
+    const segs = AFTER_SEGS;
+    const head = spread.first ? `<h2>${AFTERWORD.title}</h2>` : '';
+    // 학습 허브로 돌아가는 길은 맨 끝에 한 번만 둔다.
+    const foot = spread.last ? AFTER_FOOT : '';
+
+    if (spread.art) {
+        return `
+            <div class="page page-story page-after">
+                <div class="story-page-left">
+                    ${head}
+                    ${runHtml(segs, spread.left[0], spread.left[1])}
+                </div>
+                <div class="story-page-right story-page-right-image">
+                    <div class="story-art-top">${artFrame(spread.art, AFTERWORD.emoji)}</div>
+                    ${runHtml(segs, spread.right[0], spread.right[1])}
+                    ${foot}
+                </div>
+            </div>`;
+    }
+
     return `
-        <div class="page page-end">
-            ${artFrame('end.png', '🏝️')}
-            <h2>홍길동전을 다 읽었습니다</h2>
-            <a class="home-btn" href="../../../../../">학습 허브로 돌아가기</a>
+        <div class="page page-story page-after">
+            <div class="story-page-left">
+                ${head}
+                ${runHtml(segs, spread.left[0], spread.left[1])}
+            </div>
+            <div class="story-page-right story-page-right-text">
+                ${runHtml(segs, spread.right[0], spread.right[1])}
+                ${foot}
+            </div>
         </div>`;
 }
 
-const TWO_PAGE_KINDS = new Set(['chapter', 'toc', 'cover']);
+const TWO_PAGE_KINDS = new Set(['chapter', 'toc', 'cover', 'after']);
 
 let PAGES = [];
 let FOLIOS = [];
@@ -613,7 +733,7 @@ function buildPages() {
         ...TOC_GROUPS.map((_, i) => ({ kind: 'toc', part: i })),
         ...CHAPTERS.flatMap(paginateChapter),
         ...QUIZ_GROUPS.map((_, i) => ({ kind: 'quiz', part: i })),
-        { kind: 'end' }
+        ...paginateAfterword()
     ];
     PROBE.close();   // 쪽을 다 나눴으니 재는 데 쓰던 숨은 쪽은 치운다
 
@@ -634,7 +754,7 @@ function renderPage(page) {
         case 'toc': return tocPage(page.part);
         case 'chapter': return chapterSpreadPage(page);
         case 'quiz': return quizPage(page.part);
-        case 'end': return endPage();
+        case 'after': return afterSpreadPage(page);
         default: return '';
     }
 }

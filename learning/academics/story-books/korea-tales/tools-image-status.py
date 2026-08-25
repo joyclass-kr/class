@@ -6,7 +6,13 @@
 app.js가 실제로 부르는 파일 이름을 기준으로 센다. png든 webp든 이름만 같으면
 있는 것으로 친다 (webp로 바꾼 뒤에도 그대로 통하도록).
 """
-import io, os, re
+import io, os, re, sys
+
+# 윈도 콘솔은 cp949라 —, · 같은 글자에서 죽는다. utf-8로 바꿔 둔다.
+try:
+    sys.stdout.reconfigure(encoding='utf-8', errors='replace')
+except Exception:
+    pass
 
 BOOKS = os.path.dirname(os.path.abspath(__file__))
 rows, need_all, have_all = [], 0, 0

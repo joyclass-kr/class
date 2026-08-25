@@ -580,16 +580,136 @@ function quizPage(part) {
         </div>`;
 }
 
-function endPage() {
+/* 읽고 나서 — 장과 같은 방식으로 쪽을 나눈다. 그림은 오른쪽 위에 얹힌다. */
+const AFTERWORD = {
+    title: '읽고 나서',
+    emoji: '🌸',
+    art: ['end.png'],
+    paras: [
+        `먼저 이 이야기가 어디서 왔는지부터입니다. 『춘향전』은 판소리 「춘향가」를 글로 옮긴 것입니다. 소리꾼 한 사람이 북 치는 사람만 데리고 여덟 시간을 부르기도 하는 긴 노래였습니다.`,
+        `지은이는 없습니다. 한 사람이 앉아서 지은 것이 아니라 여럿이 부르고 고치며 만들어 온 이야기이기 때문입니다. 그래서 남아 있는 책이 백 가지가 넘고, 그 백 가지가 저마다 조금씩 다릅니다. 어떤 책에서는 춘향이 양반의 딸이고, 어떤 책에서는 끝까지 기생의 딸입니다.`,
+        `우리나라 옛이야기 가운데 가장 많이 읽히고 가장 많이 불린 이야기가 이것입니다. 조선 후기에 이 이야기를 모르는 사람은 거의 없었습니다.`,
+        `이 이야기의 뿌리에는 신분이 있습니다. 춘향은 퇴기 월매의 딸입니다. 어머니가 기생이면 딸도 기생 명부에 이름이 오르던 시절이었습니다. 그래서 이몽룡과 아무리 마음이 맞아도 정식으로 혼인할 수가 없었습니다.`,
+        `이 대목을 잘 보아야 삼 장의 이별이 이해됩니다. 이몽룡이 춘향을 데려가지 못한 것은 마음이 식어서가 아닙니다. 데려갈 자리가 없었기 때문입니다. 양반집 아들이 기생의 딸을 서울로 데려가는 일은 그 시절 법도 안에서는 있을 수 없는 일이었습니다.`,
+        `그러니 춘향이 변학도에게 맞선 것도 사랑 하나만은 아닙니다. 기생 명부에 이름이 있으면 사또가 부르면 가야 했습니다. 춘향은 그 명부를 부정한 것입니다. 나는 그런 사람이 아니라고 말한 셈입니다. 매를 맞은 까닭이 거기에 있습니다.`,
+        `변학도를 그냥 나쁜 사또로만 읽으면 아깝습니다. 이 사람은 법을 어긴 것이 없습니다. 그 시절 법으로는 사또가 관기를 부를 수 있었습니다. 법대로 했는데 사람이 부서진 것입니다. 이야기가 정말 겨눈 것은 변학도 한 사람이 아니라 그런 법이었습니다.`,
+        `칠 장에서 이몽룡이 잔칫상에서 읊은 시는 실제로 널리 알려진 시입니다. 금 술잔의 좋은 술은 천 사람의 피요, 옥쟁반의 좋은 안주는 만백성의 기름이라는 구절입니다. 촛농이 떨어질 때 백성의 눈물이 떨어지고, 노랫소리 높은 곳에 원망 소리 높다는 말이 뒤에 이어집니다.`,
+        `그 자리에 있던 사람들이 슬금슬금 빠져나간 것도 그래서입니다. 무슨 뜻인지 알아들었기 때문입니다.`,
+        `암행어사는 지어낸 벼슬이 아닙니다. 임금이 몰래 보내는 관리로, 조선 시대에 실제로 있던 제도입니다. 마패는 말을 빌리는 표였고, 함께 지니고 다니는 유척이라는 자로 고을에서 쓰는 되와 자가 제대로 된 것인지 재어 보았습니다. 세금을 속여 걷는 것을 잡아내려는 것이었습니다.`,
+        `남원에 가면 광한루가 실제로 서 있습니다. 조선 초에 지은 누각인데, 이 이야기 때문에 유명해졌습니다. 그 옆에는 춘향을 모신 사당도 있고 해마다 춘향제도 열립니다. 이야기 속 사람인데 제사를 받는 셈입니다.`,
+        `춘향이 실제로 있었던 사람인지는 아무도 모릅니다. 남원에 얼굴이 몹시 못생긴 처녀가 사또 아들을 사모하다 죽었고 그 넋을 달래려고 이야기를 지었다는 말도 전해 옵니다. 그러나 그것도 이야기입니다. 확인할 길이 없습니다.`,
+        `이 이야기가 그토록 오래 사랑받은 까닭 가운데 하나는 뒤집기입니다. 제일 낮은 자리에 있던 사람이 제일 높은 자리에 있던 사람을 이깁니다. 그것도 힘으로가 아니라 버티기로 이깁니다. 듣는 사람들이 대개 낮은 자리에 있었으니 그 대목에서 속이 시원했을 것입니다.`,
+        `다시 읽게 되거든 이번에는 월매만 따라가며 읽어 보십시오. 딸을 기생으로 만들지 않으려고 애쓴 사람입니다. 이몽룡이 떠날 때 가장 크게 화를 낸 사람도, 옥바라지를 한 사람도, 거지꼴로 돌아온 사위를 보고 주저앉은 사람도 월매입니다. 이 이야기에서 제일 고생한 사람은 어쩌면 이 사람입니다.`,
+        `마지막으로 생각해 볼 것을 남겨 둡니다. 답은 적어 두지 않겠습니다.`,
+        `이몽룡이 끝내 돌아오지 않았다면 춘향이 한 일은 무엇이 되었을까요? 이야기는 돌아오게 만들어 주었지만, 돌아오지 않았을 수도 있습니다. 그때도 춘향의 버팀은 옳은 일이었을까요.`,
+        `이몽룡이 거지 차림으로 나타나 춘향을 떠본 대목은 어떻습니까? 죽기 하루 전인 사람을 시험한 것입니다. 어사인 것을 미리 밝혔다면 무엇이 달라졌을지, 그리고 그가 왜 굳이 떠보았을지 생각해 보십시오.`,
+        `춘향이 기생의 딸이 아니라 양반의 딸이었다면 이 이야기가 남았을까요? 매를 맞을 일도, 옥에 갇힐 일도 없었을 것입니다. 이야기가 되려면 누군가 그 자리에 있어야 했다는 것이 무슨 뜻인지 생각해 볼 만합니다.`
+    ]
+};
+
+const AFTER_SEGS = (() => {
+    const segs = [];
+    AFTERWORD.paras.forEach((html, paraIdx) => {
+        splitSegments(html).forEach((piece, k) => {
+            segs.push({ paraIdx, html: piece, start: k === 0 });
+        });
+    });
+    return segs;
+})();
+
+const AFTER_FOOT = `<p class="after-home"><a class="home-btn" href="../../../../../">학습 허브로 돌아가기</a></p>`;
+
+function paginateAfterword() {
+    const segs = AFTER_SEGS;
+    const arts = AFTERWORD.art || [];
+    const { usable, headHeight, artHeight } = PROBE;
+    const headHtml = `<h2>${AFTERWORD.title}</h2>`;
+    const totalH = PROBE.measure(runHtml(segs, 0, segs.length));
+
+    const underArt = Math.max(60, usable - artHeight);
+
+    // 맨 끝에는 학습 허브로 가는 단추가 붙는다. 그 높이를 미리 빼 두지 않으면
+    // 마지막 쪽만 넘친다.
+    const footH = PROBE.measure(AFTER_FOOT);
+
+    const capsOf = slots => {
+        const caps = [];
+        slots.forEach(kind => { caps.push(usable); caps.push(kind === 'img' ? underArt : usable); });
+        caps[caps.length - 1] = Math.max(60, caps[caps.length - 1] - footH);
+        return caps;
+    };
+
+    const minSpreads = Math.max(arts.length, 1);
+    const maxSpreads = Math.max(minSpreads, Math.floor(segs.length / 2));
+    let spreadCount = minSpreads;
+    while (spreadCount < maxSpreads) {
+        const caps = capsOf(slotPlan(arts.length, spreadCount - arts.length));
+        if (caps.reduce((a, b) => a + b, 0) >= totalH + headHeight) break;
+        spreadCount++;
+    }
+
+    let slots = slotPlan(arts.length, Math.max(0, spreadCount - arts.length));
+    let caps = capsOf(slots);
+    let ranges = fillPages(segs, caps, headHtml);
+    for (let guard = 0; guard < 8; guard++) {
+        const over = ranges.some(([a, b], n) =>
+            PROBE.measure((n === 0 ? headHtml : '') + runHtml(segs, a, b)) > caps[n] + 0.25);
+        if (!over || spreadCount >= maxSpreads) break;
+        spreadCount++;
+        slots = slotPlan(arts.length, Math.max(0, spreadCount - arts.length));
+        caps = capsOf(slots);
+        ranges = fillPages(segs, caps, headHtml);
+    }
+
+    const spreads = [];
+    let pageIdx = 0;
+    let artIdx = 0;
+    slots.forEach((kind, s) => {
+        const left = ranges[pageIdx++];
+        const right = ranges[pageIdx++];
+        spreads.push({
+            kind: 'after', first: s === 0, last: s === slots.length - 1,
+            art: kind === 'img' ? arts[artIdx++] : null, left, right
+        });
+    });
+    return spreads;
+}
+
+function afterSpreadPage(spread) {
+    const segs = AFTER_SEGS;
+    const head = spread.first ? `<h2>${AFTERWORD.title}</h2>` : '';
+    // 학습 허브로 돌아가는 길은 맨 끝에 한 번만 둔다.
+    const foot = spread.last ? AFTER_FOOT : '';
+
+    if (spread.art) {
+        return `
+            <div class="page page-story page-after">
+                <div class="story-page-left">
+                    ${head}
+                    ${runHtml(segs, spread.left[0], spread.left[1])}
+                </div>
+                <div class="story-page-right story-page-right-image">
+                    <div class="story-art-top">${artFrame(spread.art, AFTERWORD.emoji)}</div>
+                    ${runHtml(segs, spread.right[0], spread.right[1])}
+                    ${foot}
+                </div>
+            </div>`;
+    }
+
     return `
-        <div class="page page-end">
-            ${artFrame('end.png', '⚖️')}
-            <h2>춘향전을 다 읽었습니다</h2>
-            <a class="home-btn" href="../../../../../">학습 허브로 돌아가기</a>
+        <div class="page page-story page-after">
+            <div class="story-page-left">
+                ${head}
+                ${runHtml(segs, spread.left[0], spread.left[1])}
+            </div>
+            <div class="story-page-right story-page-right-text">
+                ${runHtml(segs, spread.right[0], spread.right[1])}
+                ${foot}
+            </div>
         </div>`;
 }
 
-const TWO_PAGE_KINDS = new Set(['chapter', 'toc', 'cover']);
+const TWO_PAGE_KINDS = new Set(['chapter', 'toc', 'cover', 'after']);
 
 let PAGES = [];
 let FOLIOS = [];
@@ -601,7 +721,7 @@ function buildPages() {
         ...TOC_GROUPS.map((_, i) => ({ kind: 'toc', part: i })),
         ...CHAPTERS.flatMap(paginateChapter),
         ...QUIZ_GROUPS.map((_, i) => ({ kind: 'quiz', part: i })),
-        { kind: 'end' }
+        ...paginateAfterword()
     ];
     PROBE.close();   // 쪽을 다 나눴으니 재는 데 쓰던 숨은 쪽은 치운다
 
@@ -622,7 +742,7 @@ function renderPage(page) {
         case 'toc': return tocPage(page.part);
         case 'chapter': return chapterSpreadPage(page);
         case 'quiz': return quizPage(page.part);
-        case 'end': return endPage();
+        case 'after': return afterSpreadPage(page);
         default: return '';
     }
 }
