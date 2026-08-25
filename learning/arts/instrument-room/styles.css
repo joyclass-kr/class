@@ -220,6 +220,7 @@ input[type="range"] { width: 100%; height: 20px; margin: 0; accent-color: var(--
 .stage-organ .studio-stage::before { height: 150px; background: linear-gradient(145deg,#7a5734,#251b13 64%,#0c0d0d); }
 .stage-organ .studio-stage::after { top: 43%; box-shadow: 0 43px 0 -1px #111, 0 44px 0 3px #d9d3c6; }
 .stage-organ .studio-stage { background-image: linear-gradient(180deg,transparent,rgba(0,0,0,.2)); }
+.instrument-visual.has-artwork .studio-stage::before, .instrument-visual.has-artwork .studio-stage::after { content: none; display: none; }
 .classical-render .render-body { left: 50%; transform: translateX(-50%); background: radial-gradient(circle at 34% 25%, #f1ba66, var(--wood) 45%, #7a3a12); box-shadow: inset 0 0 0 3px rgba(62,25,7,.55); }
 .classical-render .upper { top: 94px; width: 82px; height: 61px; border-radius: 49% 49% 36% 36%; }
 .classical-render .lower { top: 137px; width: 118px; height: 76px; border-radius: 37% 37% 49% 49%; }
