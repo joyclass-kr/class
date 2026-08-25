@@ -1,5 +1,7 @@
 document.addEventListener('DOMContentLoaded', () => {
     const solutionButtons = [...document.querySelectorAll('[data-solution]')];
+    const graphGroup = document.getElementById('graphGroup');
+    const dataNote = document.getElementById('dataNote');
     const predictionButtons = [...document.querySelectorAll('[data-prediction]')];
     const dipButton = document.getElementById('dipButton');
     const resultEmpty = document.getElementById('resultEmpty');
@@ -114,7 +116,53 @@ document.addEventListener('DOMContentLoaded', () => {
         solutionStopBottom.setAttribute('stop-opacity', data.bottomOpacity);
         solutionBadge.textContent = `${data.label} (${data.appearance})`;
         beaker.classList.add('has-solution');
+        renderBand();
+        renderData();
         clearResult();
+    }
+
+    /* --------------------------------- 산성·중성·염기성 분류 띠와 표 */
+    /* 초등 6학년에서 배우는 것은 pH 숫자가 아니라 지시약으로 무리를 나누는
+       일입니다. 그래서 눈금이 아니라 세 칸에 용액을 늘어놓고, 지금 고른 것을
+       도드라지게 합니다. */
+    const ZONES = [
+        { type: 'acid',    name: '산성',   hint: '푸른 리트머스 → 붉게', fill: 'rgba(235,120,110,.22)', text: '#ff9d8a' },
+        { type: 'neutral', name: '중성',   hint: '두 종이 모두 그대로',   fill: 'rgba(200,190,175,.18)', text: '#cfe6ee' },
+        { type: 'base',    name: '염기성', hint: '붉은 리트머스 → 푸르게', fill: 'rgba(110,150,230,.22)', text: '#8fb8f5' },
+    ];
+
+    function renderBand() {
+        const X0 = 18, W = 424, TOP = 30, H = 96;
+        const zoneW = W / ZONES.length;
+        let out = `<text class="band-title" x="${X0}" y="18">지시약으로 나누어 본 여섯 가지 용액</text>`;
+        ZONES.forEach((z, i) => {
+            const x = X0 + i * zoneW;
+            out += `<rect class="zone-band" x="${x}" y="${TOP}" width="${zoneW - 4}" height="${H}" rx="9" fill="${z.fill}"/>`;
+            out += `<text class="zone-name" style="fill:${z.text}" x="${x + (zoneW - 4) / 2}" y="${TOP + 18}" text-anchor="middle">${z.name}</text>`;
+            out += `<text class="zone-hint" x="${x + (zoneW - 4) / 2}" y="${TOP + 32}" text-anchor="middle">${z.hint}</text>`;
+
+            const members = Object.entries(SOLUTIONS).filter(([, d]) => d.type === z.type);
+            members.forEach(([key, d], k) => {
+                const cy = TOP + 44 + k * 24;
+                const isNow = key === selectedSolution;
+                out += `<rect class="sol-chip${isNow ? ' now' : ''}" x="${x + 14}" y="${cy}" width="${zoneW - 32}" height="20" rx="7"/>`;
+                out += `<text class="sol-name${isNow ? ' now' : ''}" x="${x + (zoneW - 4) / 2}" y="${cy + 14}" text-anchor="middle">${d.label}</text>`;
+            });
+        });
+        out += `<text class="band-note" x="${X0}" y="${TOP + H + 18}">겉보기 색이나 투명한 정도로는 나눌 수 없습니다 — 식초와 소금물은 둘 다 무색투명하지만 무리가 다릅니다.</text>`;
+        graphGroup.innerHTML = out;
+    }
+
+    function renderData() {
+        const d = SOLUTIONS[selectedSolution];
+        const acid = d.type === 'acid', base = d.type === 'base';
+        dataNote.innerHTML =
+            `<div class="data-row"><span class="data-name">고른 용액</span><span class="data-val">${d.label}</span></div>` +
+            `<div class="data-row"><span class="data-name">겉보기</span><span class="data-val">${d.appearance}</span></div>` +
+            `<div class="data-row"><span class="data-name">푸른 리트머스 종이</span><span class="data-val">${acid ? '붉게 바뀝니다' : '그대로입니다'}</span></div>` +
+            `<div class="data-row"><span class="data-name">붉은 리트머스 종이</span><span class="data-val">${base ? '푸르게 바뀝니다' : '그대로입니다'}</span></div>` +
+            `<div class="data-row match"><span class="data-name">어느 무리인가</span><span class="data-val">${TYPE_LABEL[d.type]}</span></div>` +
+            `<div class="data-row"><span class="data-name">같은 무리의 용액</span><span class="data-val">${Object.values(SOLUTIONS).filter(x => x.type === d.type).map(x => x.label).join(' · ')}</span></div>`;
     }
 
     function clearResult() {
