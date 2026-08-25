@@ -158,8 +158,8 @@ input[type="range"] { width: 100%; height: 20px; margin: 0; accent-color: var(--
 .browser-title { min-width: 0; display: grid; padding-left: 4px; }
 .browser-title span { color: var(--accent); font-size: 8px; font-weight: 900; letter-spacing: .16em; }
 .browser-title b { margin-top: 3px; font-size: 13px; }
-.korean-room-switch { display: grid; grid-template-columns: 1fr 1fr; gap: 5px; padding: 4px; border: 1px solid rgba(229,255,117,.24); border-radius: 10px; background: #091012; }
-.korean-room-switch button { min-width: 92px; min-height: 44px; padding: 5px 9px; border: 0; border-radius: 7px; background: transparent; color: #8b9995; font-size: 10px; font-weight: 900; cursor: pointer; touch-action: manipulation; }
+.korean-room-switch { display: grid; grid-template-columns: repeat(3, 1fr); gap: 5px; padding: 4px; border: 1px solid rgba(229,255,117,.24); border-radius: 10px; background: #091012; }
+.korean-room-switch button { min-width: 84px; min-height: 44px; padding: 5px 9px; border: 0; border-radius: 7px; background: transparent; color: #8b9995; font-size: 10px; font-weight: 900; cursor: pointer; touch-action: manipulation; }
 .korean-room-switch button.active { background: var(--accent-2); color: #1b2008; box-shadow: 0 0 16px rgba(229,255,117,.13); }
 .model-chooser { display: flex; gap: 7px; overflow-x: auto; padding: 2px 1px 4px; scrollbar-width: thin; scrollbar-color: #3d514c transparent; }
 .model-chooser button { flex: 0 0 auto; min-width: 118px; min-height: 48px; padding: 6px 11px; border: 1px solid var(--line); border-radius: 10px; display: grid; align-content: center; gap: 2px; background: #151f22; text-align: left; cursor: pointer; }
@@ -175,6 +175,24 @@ input[type="range"] { width: 100%; height: 20px; margin: 0; accent-color: var(--
 .studio-stage::after { content: ""; position: absolute; z-index: -1; inset: 0; background: linear-gradient(90deg, transparent, rgba(142,240,198,.025), transparent); }
 .visual-label { z-index: 8; top: 14px; }
 .instrument-artwork { position: absolute; z-index: 2; inset: 24px 2.5% 8px; width: 95%; height: calc(100% - 32px); object-fit: contain; transform: scale(var(--object-scale, 1)); transform-origin: 50% 54%; filter: drop-shadow(0 18px 20px rgba(0,0,0,.5)); user-select: none; pointer-events: none; }
+.instrument-artwork.active { animation: instrument-flash .24s ease-out; }
+.instrument-layers { position: absolute; z-index: 3; inset: 38px 3% 8px; display: grid; gap: 5px 8px; align-items: stretch; pointer-events: none; }
+.instrument-layers[data-layout="samul"] { grid-template-columns: repeat(5, minmax(0, 1fr)); }
+.instrument-layers[data-layout="ritual"] { grid-template-columns: repeat(3, minmax(0, 1fr)); }
+.instrument-layers[data-layout="daechwita"] { grid-template-columns: repeat(3, minmax(0, 1fr)); grid-template-rows: repeat(2, minmax(0, 1fr)); }
+.instrument-layer { position: relative; min-width: 0; min-height: 0; display: grid; grid-template-rows: minmax(0, 1fr) 20px; place-items: center; border-radius: 12px; transition: background .12s, transform .12s; }
+.instrument-layer img { width: 100%; height: 100%; object-fit: contain; transform: scale(var(--part-scale, 1)); filter: drop-shadow(0 10px 12px rgba(0,0,0,.48)); transition: filter .1s, transform .1s; }
+.instrument-layer span { align-self: end; padding: 2px 7px; border-radius: 999px; background: rgba(5,10,11,.7); color: #aab8b4; font-size: 9px; font-weight: 900; white-space: nowrap; }
+.instrument-layer.active { background: radial-gradient(circle, rgba(142,240,198,.2), transparent 70%); transform: translateY(-2px); }
+.instrument-layer.active img { filter: brightness(1.35) saturate(1.2) drop-shadow(0 0 9px #8ef0c6) drop-shadow(0 0 20px rgba(142,240,198,.85)); animation: instrument-flash .24s ease-out; }
+.instrument-layers[data-layout="daechwita"] .instrument-layer[data-part="nabal"] { grid-column: span 2; }
+.instrument-layers[data-layout="orchestral"] { grid-template-columns: repeat(5, minmax(0, 1fr)); }
+.instrument-layers.tone-markers { z-index: 4; inset: 18% 20% 14%; grid-template-columns: repeat(8, 1fr); grid-template-rows: repeat(2, 1fr); gap: 8% 1%; }
+.tone-marker { align-self: center; justify-self: center; width: 72%; height: 62%; border-radius: 45%; opacity: 0; background: rgba(142,240,198,.52); filter: blur(7px); transition: opacity .08s; }
+.tone-marker.active { opacity: 1; box-shadow: 0 0 16px 7px rgba(142,240,198,.88); animation: tone-flash .26s ease-out; }
+.instrument-layers[data-layout="pyeongyeong"] .tone-marker { width: 62%; height: 74%; border-radius: 16% 42% 24% 16%; clip-path: polygon(0 0,100% 0,100% 38%,48% 38%,48% 100%,0 100%); }
+@keyframes tone-flash { 0% { opacity: .35; transform: scale(.86); } 45% { opacity: 1; transform: scale(1.08); } 100% { opacity: .12; transform: scale(1); } }
+@keyframes instrument-flash { 0% { transform: scale(.97); } 45% { transform: scale(1.045); } 100% { transform: scale(1); } }
 .stage-bass .instrument-artwork, .stage-guitar .instrument-artwork { mix-blend-mode: screen; }
 .stage-drums .instrument-artwork { inset: 0 2%; width: 96%; height: 100%; object-fit: contain; mix-blend-mode: normal; transform: scale(var(--object-scale, 1)); }
 .stage-orchestral .instrument-artwork, .stage-timpani .instrument-artwork, .stage-mallet .instrument-artwork, .stage-metal .instrument-artwork { inset: 4px 7% 0; width: 86%; height: 100%; object-fit: contain; mix-blend-mode: screen; transform: scale(var(--object-scale, 1)); }

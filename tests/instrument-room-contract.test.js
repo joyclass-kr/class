@@ -46,7 +46,7 @@ test('keyboard and electronic machines use non-interactive premium artwork', () 
     assert.match(app, new RegExp(asset.replace('.', '\\.')));
     assert.equal(fs.existsSync(path.join(root, 'assets', 'instruments', asset)), true, asset);
   }
-  assert.match(app, /model\.art \? " has-artwork"/);
+  assert.match(app, /model\.art \|\| hasLayers/);
   assert.match(app, /\(model\.stage === "machine" \|\| model\.stage === "linn"\) && !model\.art/);
   assert.match(css, /\.instrument-visual\.has-artwork \.studio-stage::before/);
   assert.match(css, /pointer-events: none/);
@@ -116,13 +116,34 @@ test('browser app source is syntactically valid', () => {
   assert.doesNotThrow(() => new Function(app));
 });
 
-test('separates Korean melody and percussion subrooms', () => {
-  assert.match(html, /data-korean-room="melody"/);
-  assert.match(html, /data-korean-room="percussion"/);
-  assert.match(app, /room: "melody"/);
-  assert.match(app, /room: "percussion"/);
-  assert.match(app, /function selectKoreanRoom/);
-  for (const model of ['gayageum', 'geomungo', 'haegeum', 'ajaeng', 'daegeum', 'hyangpiri', 'taepyeongso', 'samulnori']) {
-    assert.match(app, new RegExp(`id: "${model}"`));
+test('separates Korean melody, folk, and court instrument rooms', () => {
+  for (const room of ['melody', 'folk', 'court']) {
+    assert.match(html, new RegExp('data-korean-room="' + room + '"'));
+    assert.match(app, new RegExp('room: "' + room + '"'));
   }
+  assert.match(app, /function selectKoreanRoom/);
+  for (const model of ['gayageum', 'geomungo', 'haegeum', 'ajaeng', 'daegeum', 'hyangpiri', 'taepyeongso', 'samulnori', 'pyeonjong', 'pyeongyeong', 'ritual-signals', 'daechwita-station']) {
+    assert.match(app, new RegExp('id: "' + model + '"'));
+  }
+});
+
+test('renders grouped percussion as independent glowing artwork layers', () => {
+  assert.match(html, /id="instrumentLayers"/);
+  assert.match(app, /function renderInstrumentLayers/);
+  assert.match(app, /function pulseInstrumentPart/);
+  assert.match(app, /toneMarkers: true/);
+  assert.match(app, /drum\.sound \|\| drum\.id/);
+  assert.match(css, /\.instrument-layer\.active/);
+  assert.match(css, /\.tone-marker\.active/);
+  for (const asset of [
+    'orchestral-snare.webp', 'orchestral-bass-drum.webp',
+    'orchestral-suspended-cymbal.webp', 'orchestral-tamtam.webp',
+    'orchestral-triangle.webp', 'korean-janggu.webp', 'korean-buk.webp',
+    'korean-sogo.webp', 'korean-kkwaenggwari.webp', 'korean-jing.webp',
+    'korean-pyeonjong.webp', 'korean-pyeongyeong.webp'
+  ]) {
+    assert.match(app, new RegExp(asset.replace('.', '\\.')));
+    assert.equal(fs.existsSync(path.join(root, 'assets', 'instruments', asset)), true, asset);
+  }
+  assert.doesNotMatch(app, /art: "assets\/instruments\/orchestral-percussion-station\.png"/);
 });
