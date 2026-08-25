@@ -6,13 +6,13 @@ All files in `sfx/` are derived from CC0 assets and optimized as mono 48 kHz Ogg
 
 - Source: https://kenney.nl/assets/interface-sounds
 - License: CC0 1.0
-- Used originals: `click_001.ogg`, `select_003.ogg`, `back_001.ogg`, `error_003.ogg`, `error_005.ogg`, `tick_004.ogg`, `question_002.ogg`
+- Used originals: `select_001.ogg`, `select_003.ogg`, `back_003.ogg`, `error_003.ogg`, `error_005.ogg`, `tick_004.ogg`, `question_002.ogg`
 
 ## Kenney Casino Audio
 
 - Source: https://kenney.nl/assets/casino-audio
 - License: CC0 1.0
-- Used originals: `chips-collide-2.ogg`, `chips-stack-3.ogg`
+- Used originals: `chip-lay-1.ogg`, `chips-handle-5.ogg`
 
 ## Kenney Music Jingles
 
@@ -28,7 +28,7 @@ All files in `sfx/` are derived from CC0 assets and optimized as mono 48 kHz Ogg
 
 ## Processing
 
-- Loudness normalized by sound role
+- Decoded mean levels matched within 1.9 dB across the shared pack
 - 48 kHz mono
-- Ogg Vorbis quality 4
+- Ogg Vorbis quality 5
 - Existing Web Audio recipes remain only as loading-failure fallbacks
