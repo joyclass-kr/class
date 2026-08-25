@@ -409,7 +409,7 @@ const AFTERWORD = {
             ],
             right: [
                 "마지막 하나로 나무꾼은 큰 집도 금덩이도 고르지 않습니다. 아내의 코를 고르지요.",
-                "세 번을 다 쓰고 남은 것이 없는데, 두 사람은 왜 웃었을까요? 답은 적어 두지 않겠습니다."
+                "세 번을 다 쓰고 남은 것이 없는데, 두 사람은 왜 웃었을까요?"
             ]
         }
     ]
@@ -429,6 +429,7 @@ function afterPage(spread, isFirst) {
             <div class="after-col after-col-right${spread.art ? ' after-col-image' : ''}">
                 ${art}
                 ${col(spread.right)}
+                <p class="after-home"><a class="home-btn" href="../../../../../">학습 허브로 돌아가기</a></p>
             </div>
         </div>`;
 }
@@ -515,14 +516,6 @@ function quizPage() {
         </div>`;
 }
 
-function endPage() {
-    return `
-        <div class="page page-end">
-            ${artFrame('end.png', '🌟')}
-            <h2>요술 소시지를 다 읽었어요!</h2>
-            <a class="home-btn" href="../../../../../">학습 허브로 돌아가기</a>
-        </div>`;
-}
 
 const PAGES = [
     { kind: 'cover' },
@@ -533,8 +526,7 @@ const PAGES = [
         isLast: ci === CHAPTERS.length - 1 && i === chapter.beats.length - 1
     }))),
     { kind: 'quiz' },
-    ...AFTERWORD.spreads.map((spread, i) => ({ kind: 'after', spread, isFirst: i === 0 })),
-    { kind: 'end' }
+    ...AFTERWORD.spreads.map((spread, i) => ({ kind: 'after', spread, isFirst: i === 0 }))
 ];
 
 const TWO_PAGE_KINDS = new Set(['spread', 'toc', 'cover', 'after']);
@@ -559,8 +551,6 @@ function renderPage(page) {
             return afterPage(page.spread, page.isFirst);
         case 'quiz':
             return quizPage();
-        case 'end':
-            return endPage();
         default:
             return '';
     }

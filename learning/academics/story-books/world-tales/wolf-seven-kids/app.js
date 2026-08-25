@@ -361,14 +361,14 @@ const AFTERWORD = {
         {
             art: 'end.png',
             left: [
-                "이 이야기를 책에 적은 사람은 독일의 그림 형제입니다. 두 사람은 이야기를 지어내지 않았습니다. 마을을 돌며 할머니들이 들려주는 이야기를 받아 적었지요.",
+                "이 이야기를 책에 적은 사람은 독일의 그림 형제입니다. 지어낸 것이 아니라 마을을 돌며 할머니들이 들려주는 이야기를 받아 적었지요.",
                 "늑대는 세 번 찾아왔습니다. 그때마다 들킨 데를 고쳐 왔지요. 목소리가 걸걸해서 들키자 분필을 삼켰고, 발이 까매서 들키자 밀가루를 묻혔습니다.",
-                "속이는 쪽이 들킬 때마다 더 그럴듯해진 것입니다. 아기 염소들이 문을 연 것은 조심하지 않아서가 아니었습니다. 확인할 것을 다 확인했는데도 속은 것이지요.",
+                "속이는 쪽이 들킬 때마다 더 그럴듯해진 것입니다. 아기 염소들은 확인할 것을 다 확인했는데도 속았지요.",
                 "그런 늑대도 마지막에는 우물에 빠졌습니다. 누가 민 것이 아닙니다. 제 배가 무거워 스스로 넘어갔지요."
             ],
             right: [
                 "살아남은 것은 막내였습니다. 제일 작아서 시계 속에 들어갈 수 있었지요. 옛이야기에서는 이렇게 가장 약한 쪽이 살아남는 일이 자주 있습니다.",
-                "그럼 아기 염소들은 무엇을 더 확인했어야 할까요? 답은 적어 두지 않겠습니다."
+                "그럼 아기 염소들은 무엇을 더 확인했어야 할까요?"
             ]
         }
     ]
@@ -388,6 +388,7 @@ function afterPage(spread, isFirst) {
             <div class="after-col after-col-right${spread.art ? ' after-col-image' : ''}">
                 ${art}
                 ${col(spread.right)}
+                <p class="after-home"><a class="home-btn" href="../../../../../">학습 허브로 돌아가기</a></p>
             </div>
         </div>`;
 }
@@ -474,14 +475,6 @@ function quizPage() {
         </div>`;
 }
 
-function endPage() {
-    return `
-        <div class="page page-end">
-            ${artFrame('end.png', '🌟')}
-            <h2>늑대와 일곱 마리 아기 염소를 다 읽었어요!</h2>
-            <a class="home-btn" href="../../../../../">학습 허브로 돌아가기</a>
-        </div>`;
-}
 
 const PAGES = [
     { kind: 'cover' },
@@ -492,8 +485,7 @@ const PAGES = [
         isLast: ci === CHAPTERS.length - 1 && i === chapter.beats.length - 1
     }))),
     { kind: 'quiz' },
-    ...AFTERWORD.spreads.map((spread, i) => ({ kind: 'after', spread, isFirst: i === 0 })),
-    { kind: 'end' }
+    ...AFTERWORD.spreads.map((spread, i) => ({ kind: 'after', spread, isFirst: i === 0 }))
 ];
 
 const TWO_PAGE_KINDS = new Set(['spread', 'toc', 'cover', 'after']);
@@ -518,8 +510,6 @@ function renderPage(page) {
             return afterPage(page.spread, page.isFirst);
         case 'quiz':
             return quizPage();
-        case 'end':
-            return endPage();
         default:
             return '';
     }

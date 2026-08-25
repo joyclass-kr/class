@@ -479,12 +479,14 @@ body {
 }
 
 /* 그림은 쪽 오른쪽 위 모서리에 딱 붙인다. 칸 안쪽 여백만큼 밖으로 끌어낸다.
-   글을 뺀 나머지 자리는 그림이 다 차지한다. 아래에 빈 자리를 남기지 않는다. */
+   비율은 3:2로 못 박는다. 마무리 그림을 그 비율로 그리기 때문이다.
+   칸을 채우겠다고 늘리면 그림이 좌우로 잘려 나간다. */
 .after-art {
-    flex: 1 1 auto;
+    flex: 0 0 auto;
+    aspect-ratio: 3 / 2;
     width: calc(100% + var(--after-pad-x));
     margin: calc(-1 * var(--after-pad-y)) calc(-1 * var(--after-pad-x)) clamp(8px, 1.8cqh, 18px) 0;
-    min-height: 26%;
+    min-height: 0;
     overflow: hidden;
 }
 
@@ -510,6 +512,16 @@ body {
 }
 
 .page-after p:last-child { margin-bottom: 0; }
+
+/* 읽고 나서가 마지막 쪽이므로 학습 허브로 가는 단추가 여기 붙는다. */
+.after-home {
+    margin: clamp(8px, 1.6cqh, 16px) 0 0;
+    text-align: center;
+    text-indent: 0;
+}
+
+.after-home .home-btn { margin-top: 0; }
+
 
 /* quiz */
 .page-quiz {
@@ -672,9 +684,9 @@ body {
     /* 세로 화면은 한 쪽만 보이므로 두 칸을 나란히 두면 글줄이 너무 짧아진다.
        위아래로 쌓고, 그림을 조금 줄여 글자리를 넓힌다. */
     .spread-art { flex: 0 0 35%; aspect-ratio: auto; }
-    /* 가로용 마지막-장 규칙이 이 블록보다 아래에 있어서, 같은 세기로는 밀린다.
-       .book을 앞에 붙여 세기를 한 단 올린다. */
-    .book .page-story.spread-final .spread-art { flex-basis: 30%; }
+    /* 세로에서도 마지막 펼침면 그림칸 비율이 앞쪽과 같아야 한다.
+       가로용 규칙이 이 블록보다 아래에 있어 .book을 앞에 붙여 세기를 올린다. */
+    .book .page-story.spread-final .spread-art { flex-basis: 35%; }
     .spread-text { flex: 1 1 55%; display: flex; flex-direction: column; }
     .spread-text-left, .spread-text-right { flex: 0 1 auto; }
     .spread-text-left { border-right: none; border-bottom: 1px solid rgba(92, 58, 34, 0.22); }
@@ -684,14 +696,16 @@ body {
     .after-col-left { border-right: none; border-bottom: 1px solid rgba(92, 58, 34, 0.22); }
     /* 세로에서는 글이 위아래로 쌓이므로 그림이 자리를 늘리면 윗칸이 밀린다.
        높이는 고정하고 너비만 칸 끝까지 채운다. */
+    /* 세로에서도 비율은 3:2 그대로다. 대신 너비를 줄여 칸 안에 들어가게 한다.
+       오른쪽 끝에는 그대로 붙인다. */
     .after-art {
         flex: 0 0 auto;
-        aspect-ratio: auto;
-        height: 18cqh;
-        width: calc(100% + var(--after-pad-x) * 2);
+        aspect-ratio: 3 / 2;
+        height: auto;
+        width: calc(46% + var(--after-pad-x));
         min-height: 0;
-        align-self: stretch;
-        margin: calc(-1 * var(--after-pad-y)) calc(-1 * var(--after-pad-x)) 6px;
+        align-self: flex-end;
+        margin: 0 calc(-1 * var(--after-pad-x)) 6px 0;
     }
 
 }
@@ -701,7 +715,9 @@ body {
 .spread-text > p.fable-moral {
     grid-column: 1 / -1;
     margin: 0;
-    padding: 6px clamp(10px, 2cqw, 28px) 7px;
+    /* 그림칸을 앞쪽과 같은 비율로 맞추면서 글칸이 좁아졌다. 교훈 줄 위아래
+       여백을 줄여 그만큼을 글에 돌려준다. */
+    padding: 2px clamp(10px, 2cqw, 28px) 3px;
     border-top: 1px solid rgba(92, 58, 34, 0.25);
     color: #6b4a1e;
     font-family: inherit;
@@ -713,10 +729,9 @@ body {
     text-align: center;
 }
 
-/* 마지막 펼침면은 교훈 한 줄이 더 붙으므로 그림칸을 그만큼만 낮춘다.
-   그림은 잘라 채우기라 2:1로 그려도 그대로 쓸 수 있다. */
+/* 마지막 펼침면도 그림칸 비율이 앞쪽과 똑같아야 한다. 넘길 때 그림틀이 튀면
+   안 되고, 그림을 2:1 하나로 만들어 어느 쪽에나 쓸 수 있어야 하기 때문이다.
+   교훈 줄은 글칸 안에서 자리를 잡는다. */
 .page-story.spread-final .spread-art {
-    /* 그림칸 높이를 flex로 잡으므로 여기서도 flex로 낮춘다.
-       aspect-ratio로 적어 두면 flex-basis에 밀려 먹히지 않는다. */
-    flex-basis: 54.3%;
+    flex-basis: 62.5%;
 }

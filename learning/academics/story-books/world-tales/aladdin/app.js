@@ -298,14 +298,14 @@ const CHAPTERS = [
                 "emoji": "✨",
                 "left": [
                     "마법사는 먼 사막에 남겨졌습니다.",
-                    "그 뒤로 다시는 돌아오지 못했지요. 알라딘은 램프를 궤짝 깊이 넣어 두었습니다.",
+                    "알라딘은 램프를 궤짝 깊이 넣어 두었습니다.",
                     "\"이젠 쓸 일이 없겠지요.\"",
                     "공주가 물었습니다.",
                     "\"정말 안 쓰실 거예요?\""
                 ],
                 "right": [
                     "\"꼭 필요할 때만요.\"",
-                    "알라딘은 궁전 문을 늘 열어 두었지요. 어려운 사람이 언제든 찾아오게 말입니다. 곡식을 나누고 무너진 집도 고쳐 주었지요.",
+                    "알라딘은 궁전 문을 늘 열어 두었지요. 곡식을 나누고 무너진 집도 고쳐 주었습니다.",
                     "사람들은 그 이름을 오래 기억했습니다. 램프 때문이 아니라요."
                 ]
             }
@@ -407,7 +407,7 @@ const AFTERWORD = {
             ],
             right: [
                 "알라딘은 공주를 처음 본 뒤 어머니에게 부탁합니다. 제 입으로 나서지 못하고요. 그때는 아직 아무것도 아니었으니까요.",
-                "마지막에 알라딘은 램프를 궤짝 깊이 넣어 둡니다. 왜 그랬을까요? 답은 적어 두지 않겠습니다."
+                "마지막에 알라딘은 램프를 궤짝 깊이 넣어 둡니다. 왜 그랬을까요?"
             ]
         }
     ]
@@ -427,6 +427,7 @@ function afterPage(spread, isFirst) {
             <div class="after-col after-col-right${spread.art ? ' after-col-image' : ''}">
                 ${art}
                 ${col(spread.right)}
+                <p class="after-home"><a class="home-btn" href="../../../../../">학습 허브로 돌아가기</a></p>
             </div>
         </div>`;
 }
@@ -513,14 +514,6 @@ function quizPage() {
         </div>`;
 }
 
-function endPage() {
-    return `
-        <div class="page page-end">
-            ${artFrame('end.png', '🌟')}
-            <h2>알라딘과 요술 램프를 다 읽었어요!</h2>
-            <a class="home-btn" href="../../../../../">학습 허브로 돌아가기</a>
-        </div>`;
-}
 
 const PAGES = [
     { kind: 'cover' },
@@ -531,8 +524,7 @@ const PAGES = [
         isLast: ci === CHAPTERS.length - 1 && i === chapter.beats.length - 1
     }))),
     { kind: 'quiz' },
-    ...AFTERWORD.spreads.map((spread, i) => ({ kind: 'after', spread, isFirst: i === 0 })),
-    { kind: 'end' }
+    ...AFTERWORD.spreads.map((spread, i) => ({ kind: 'after', spread, isFirst: i === 0 }))
 ];
 
 const TWO_PAGE_KINDS = new Set(['spread', 'toc', 'cover', 'after']);
@@ -557,8 +549,6 @@ function renderPage(page) {
             return afterPage(page.spread, page.isFirst);
         case 'quiz':
             return quizPage();
-        case 'end':
-            return endPage();
         default:
             return '';
     }

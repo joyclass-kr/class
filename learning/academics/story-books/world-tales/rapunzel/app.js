@@ -272,13 +272,13 @@ const CHAPTERS = [
                 "art": "08-ending-2.png",
                 "emoji": "💗",
                 "left": [
-                    "라푼젤은 노래를 멈추고 그쪽을 보았습니다. 낯익은 걸음걸이였지요. 라푼젤은 숨을 멈추었습니다.",
+                    "라푼젤은 노래를 멈추고 그쪽을 보았습니다. 낯익은 걸음걸이였지요.",
                     "가까이 다가온 사람은 왕자였습니다. 옷은 다 해지고 눈은 앞을 보지 못했지요. 라푼젤은 달려가 그를 끌어안았습니다.",
                     "라푼젤의 뜨거운 눈물이 왕자의 두 눈 위로 떨어졌습니다."
                 ],
                 "right": [
                     "그러자 놀라운 일이 벌어졌지요. 흐릿하던 앞이 조금씩 환해졌습니다. 왕자는 오랜만에 라푼젤의 얼굴을 보았지요.",
-                    "두 사람은 손을 잡고 그 들판을 걸어 나왔습니다. 뒤에 흙집과 나물밭이 그대로 남았지요.",
+                    "두 사람은 손을 잡고 그 들판을 걸어 나왔습니다.",
                     "그 뒤로 오래오래 함께 살았지요."
                 ]
             }
@@ -380,7 +380,7 @@ const AFTERWORD = {
             ],
             right: [
                 "라푼첼이 왕자와 말을 트게 된 것은 노래 때문입니다. 심심해서 부른 노래가 탑 밖으로 나간 것이지요.",
-                "마녀는 라푼첼을 지키려던 것일까요, 가두려던 것일까요? 답은 적어 두지 않겠습니다."
+                "마녀는 라푼첼을 지키려던 것일까요, 가두려던 것일까요?"
             ]
         }
     ]
@@ -400,6 +400,7 @@ function afterPage(spread, isFirst) {
             <div class="after-col after-col-right${spread.art ? ' after-col-image' : ''}">
                 ${art}
                 ${col(spread.right)}
+                <p class="after-home"><a class="home-btn" href="../../../../../">학습 허브로 돌아가기</a></p>
             </div>
         </div>`;
 }
@@ -486,14 +487,6 @@ function quizPage() {
         </div>`;
 }
 
-function endPage() {
-    return `
-        <div class="page page-end">
-            ${artFrame('end.png', '🌟')}
-            <h2>라푼젤를 다 읽었어요!</h2>
-            <a class="home-btn" href="../../../../../">학습 허브로 돌아가기</a>
-        </div>`;
-}
 
 const PAGES = [
     { kind: 'cover' },
@@ -504,8 +497,7 @@ const PAGES = [
         isLast: ci === CHAPTERS.length - 1 && i === chapter.beats.length - 1
     }))),
     { kind: 'quiz' },
-    ...AFTERWORD.spreads.map((spread, i) => ({ kind: 'after', spread, isFirst: i === 0 })),
-    { kind: 'end' }
+    ...AFTERWORD.spreads.map((spread, i) => ({ kind: 'after', spread, isFirst: i === 0 }))
 ];
 
 const TWO_PAGE_KINDS = new Set(['spread', 'toc', 'cover', 'after']);
@@ -530,8 +522,6 @@ function renderPage(page) {
             return afterPage(page.spread, page.isFirst);
         case 'quiz':
             return quizPage();
-        case 'end':
-            return endPage();
         default:
             return '';
     }

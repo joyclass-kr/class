@@ -1362,14 +1362,6 @@ function quizPage(part) {
         </div>`;
 }
 
-function endPage() {
-    return `
-        <div class="page page-end">
-            ${artFrame('end.webp', '📖')}
-            <h2>열일곱 가지 이야기를 모두 읽었어요!</h2>
-            <a class="home-btn" href="../../../../../">학습 허브로 돌아가기</a>
-        </div>`;
-}
 
 /* 읽고 나서 — 장과 같은 방식으로 쪽을 나눈다. 그림은 첫 펼침면 오른쪽 위에 얹힌다.
    끝 쪽을 그대로 두므로 학습 허브로 가는 단추는 여기 붙이지 않는다. */
@@ -1391,7 +1383,6 @@ const AFTERWORD = {
         `많이 가진 쪽이 이기는 것이 아니라 무엇으로 채울지 아는 쪽이 이긴다는 이야기입니다. 탈무드에는 이런 이야기가 많습니다.`,
         `탈무드를 읽는 유대 사람들은 혼자 읽지 않습니다. 둘씩 마주 앉아 서로 묻고 따지며 읽지요. 그 방식을 하브루타라고 합니다.`,
         `묻는 사람이 있어야 읽기가 끝난다고 여기는 것입니다. 그러니 이 책도 누군가와 함께 읽으면 더 좋겠습니다.`,
-        `마지막으로 생각해 볼 것을 남겨 둡니다. 답은 적어 두지 않겠습니다.`,
         `당나귀는 두 번째에 어떻게 했어야 할까요? 물에 빠져 보기 전에는 소금인지 솜인지 알 수 없었는데 말입니다.`,
         `그리고 여러분에게는 세 친구 가운데 어느 친구가 있습니까? 아쉬울 때 찾아갈 사람과 평소에 가까이 지내는 사람이 같은 사람입니까?`
     ]
@@ -1407,6 +1398,8 @@ const AFTER_SEGS = (() => {
     return segs;
 })();
 
+const AFTER_FOOT = `<p class="after-home"><a class="home-btn" href="../../../../../">학습 허브로 돌아가기</a></p>`;
+
 function paginateAfterword() {
     const segs = AFTER_SEGS;
     const arts = AFTERWORD.art || [];
@@ -1415,9 +1408,14 @@ function paginateAfterword() {
     const totalH = PROBE.measure(runHtml(segs, 0, segs.length));
     const underArt = Math.max(60, usable - artHeight);
 
+    // 맨 끝 쪽에는 학습 허브로 가는 단추가 붙는다. 그 높이를 미리 빼 두지 않으면
+    // 마지막 쪽만 넘친다.
+    const footH = PROBE.measure(AFTER_FOOT);
+
     const capsOf = slots => {
         const caps = [];
         slots.forEach(kind => { caps.push(usable); caps.push(kind === 'img' ? underArt : usable); });
+        caps[caps.length - 1] = Math.max(60, caps[caps.length - 1] - footH);
         return caps;
     };
 
@@ -1450,7 +1448,7 @@ function paginateAfterword() {
         const left = ranges[pageIdx++];
         const right = ranges[pageIdx++];
         spreads.push({
-            kind: 'after', first: s === 0,
+            kind: 'after', first: s === 0, last: s === slots.length - 1,
             art: kind === 'img' ? arts[artIdx++] : null, left, right
         });
     });
@@ -1483,6 +1481,7 @@ function afterSpreadPage(spread) {
             </div>
             <div class="story-page-right story-page-right-text">
                 ${runHtml(segs, spread.right[0], spread.right[1])}
+            ${spread.last ? AFTER_FOOT : ''}
             </div>
         </div>`;
 }
@@ -1499,8 +1498,7 @@ function buildPages() {
         ...TOC_GROUPS.map((_, i) => ({ kind: 'toc', part: i })),
         ...CHAPTERS.flatMap(paginateChapter),
         ...QUIZ_GROUPS.map((_, i) => ({ kind: 'quiz', part: i })),
-        ...paginateAfterword(),
-        { kind: 'end' }
+        ...paginateAfterword()
     ];
     PROBE.close();   // 쪽을 다 나눴으니 재는 데 쓰던 숨은 쪽은 치운다
 
@@ -1522,7 +1520,6 @@ function renderPage(page) {
         case 'chapter': return chapterSpreadPage(page);
         case 'quiz': return quizPage(page.part);
         case 'after': return afterSpreadPage(page);
-        case 'end': return endPage();
         default: return '';
     }
 }

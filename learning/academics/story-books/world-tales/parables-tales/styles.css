@@ -513,6 +513,16 @@ body {
 .page-end h2 { margin: 0; font-size: clamp(20px, 4.342cqh, 45px); }
 .page-end p { margin: 0; color: var(--muted); font-size: 13px; }
 
+
+/* 읽고 나서가 마지막 쪽이므로 학습 허브로 가는 단추가 여기 붙는다. */
+.after-home {
+    margin: clamp(8px, 1.6cqh, 16px) 0 0;
+    text-align: center;
+    text-indent: 0;
+}
+
+.after-home .home-btn { margin-top: 0; }
+
 .home-btn {
     margin-top: 10px;
     padding: 10px 22px;

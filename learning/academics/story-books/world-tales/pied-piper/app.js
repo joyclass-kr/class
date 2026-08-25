@@ -264,7 +264,7 @@ const CHAPTERS = [
                 "left": [
                     "사나이가 말없이 자루를 내밀었습니다. 시장이 그 자리에서 금화 천 닢을 세어 담았지요. 손이 덜덜 떨렸습니다.",
                     "\"진작 이럴 것을.\"",
-                    "사나이는 자루를 받아 어깨에 멨지요. 그러고는 아이들을 모두 돌려보냈습니다. 아이들이 부모에게 우르르 달려갔지요."
+                    "사나이는 자루를 받아 어깨에 멨지요. 그러고는 아이들을 모두 돌려보냈습니다."
                 ],
                 "right": [
                     "언덕이 금세 울음바다가 됐습니다. 사나이는 조용히 돌아섰지요.",
@@ -369,7 +369,7 @@ const AFTERWORD = {
             ],
             right: [
                 "뒤처진 아이가 따라왔을 때 사나이는 무릎을 굽힙니다. 거기서 마음이 바뀌지요. 값을 받으러 온 사람도 사람이었던 것입니다.",
-                "시장은 어디서부터 잘못한 것일까요? 답은 적어 두지 않겠습니다."
+                "시장은 어디서부터 잘못한 것일까요?"
             ]
         }
     ]
@@ -389,6 +389,7 @@ function afterPage(spread, isFirst) {
             <div class="after-col after-col-right${spread.art ? ' after-col-image' : ''}">
                 ${art}
                 ${col(spread.right)}
+                <p class="after-home"><a class="home-btn" href="../../../../../">학습 허브로 돌아가기</a></p>
             </div>
         </div>`;
 }
@@ -475,14 +476,6 @@ function quizPage() {
         </div>`;
 }
 
-function endPage() {
-    return `
-        <div class="page page-end">
-            ${artFrame('end.png', '🌟')}
-            <h2>피리 부는 사나이를 다 읽었어요!</h2>
-            <a class="home-btn" href="../../../../../">학습 허브로 돌아가기</a>
-        </div>`;
-}
 
 const PAGES = [
     { kind: 'cover' },
@@ -493,8 +486,7 @@ const PAGES = [
         isLast: ci === CHAPTERS.length - 1 && i === chapter.beats.length - 1
     }))),
     { kind: 'quiz' },
-    ...AFTERWORD.spreads.map((spread, i) => ({ kind: 'after', spread, isFirst: i === 0 })),
-    { kind: 'end' }
+    ...AFTERWORD.spreads.map((spread, i) => ({ kind: 'after', spread, isFirst: i === 0 }))
 ];
 
 const TWO_PAGE_KINDS = new Set(['spread', 'toc', 'cover', 'after']);
@@ -519,8 +511,6 @@ function renderPage(page) {
             return afterPage(page.spread, page.isFirst);
         case 'quiz':
             return quizPage();
-        case 'end':
-            return endPage();
         default:
             return '';
     }
