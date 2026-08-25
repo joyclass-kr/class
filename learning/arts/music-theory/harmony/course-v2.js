@@ -18,17 +18,17 @@ const LESSONS = {
   },
   2: {
     title: "높은음자리표", english: "Treble Clef / G Clef",
-    terms: [["높은음자리표", "Treble Clef"], ["사음자리표", "G Clef"], ["가운데 도", "Middle C"]],
+    terms: [["높은음자리표", "Treble Clef"], ["사음자리표", "G Clef"], ["가운데 C", "Middle C"]],
     sections: [
-      { title: "높은음자리표는 제2선의 G를 가리켜요", body: "높은음자리표(Treble Clef)는 기호의 둥근 부분이 오선의 제2선을 감쌉니다. 그래서 G Clef라고도 부릅니다. 제2선이 G라는 기준을 잡으면 아래 칸은 F, 위 칸은 A처럼 나머지 음도 순서대로 찾을 수 있습니다.", visual: "treble", caption: "기호가 감싸는 제2선 = G4" },
-      { title: "가운데 C에서 출발해 G까지 올라가 보세요", body: "가운데 C(Middle C, C4)는 높은음자리표 오선 바로 아래의 덧줄에 놓입니다. C–D–E–F–G를 차례로 따라가면 G가 제2선에 도착합니다. 이 관계를 악보와 건반에서 함께 확인하면 음표 위치를 통째로 외울 필요가 없습니다.", visual: "middleC", caption: "C4에서 한 자리씩 올라가 제2선 G4에 도착합니다.", audio: [[60], [62], [64], [65], [67]] }
+      { title: "높은음자리표는 제2선의 G를 가리켜요", body: "높은음자리표(Treble Clef)는 기호의 둥근 부분이 오선의 제2선을 감쌉니다. 그래서 G Clef라고도 부릅니다. 제2선이 G라는 기준을 잡으면 아래 칸은 F, 위 칸은 A처럼 나머지 음도 순서대로 찾을 수 있습니다.", visual: "treble", caption: "기호가 감싸는 제2선 = G" },
+      { title: "가운데 C에서 출발해 G까지 올라가 보세요", body: "가운데 C(Middle C)는 높은음자리표 오선 바로 아래의 덧줄에 놓입니다. C–D–E–F–G를 차례로 따라가면 G가 제2선에 도착합니다. 이 관계를 악보와 건반에서 함께 확인하면 음표 위치를 통째로 외울 필요가 없습니다.", visual: "middleC", caption: "가운데 C에서 한 자리씩 올라가 제2선 G에 도착합니다.", audio: [[60], [62], [64], [65], [67]] }
     ], quiz: "treble"
   },
   3: {
     title: "낮은음자리표", english: "Bass Clef / F Clef",
     terms: [["낮은음자리표", "Bass Clef"], ["바음자리표", "F Clef"], ["큰보표", "Grand Staff"]],
     sections: [
-      { title: "두 점 사이의 제4선이 F예요", body: "낮은음자리표(Bass Clef)의 두 점은 제4선을 사이에 둡니다. 그 선의 음이 F이므로 F Clef라고도 부릅니다. 첼로·베이스·피아노 왼손처럼 낮은 음역을 읽을 때 주로 사용합니다.", visual: "bass", caption: "두 점 사이 제4선 = F3" },
+      { title: "두 점 사이의 제4선이 F예요", body: "낮은음자리표(Bass Clef)의 두 점은 제4선을 사이에 둡니다. 그 선의 음이 F이므로 F Clef라고도 부릅니다. 첼로·베이스·피아노 왼손처럼 낮은 음역을 읽을 때 주로 사용합니다.", visual: "bass", caption: "두 점 사이 제4선 = F" },
       { title: "두 음자리표는 가운데 C를 사이에 두고 이어져요", body: "높은음자리표와 낮은음자리표는 서로 다른 체계가 아닙니다. 피아노 악보의 큰보표(Grand Staff)에서는 가운데 C를 중심으로 위쪽은 높은음자리표, 아래쪽은 낮은음자리표가 이어집니다.", visual: "grandStaff", caption: "가운데 C는 두 오선을 연결하는 기준점입니다.", audio: [[48], [60], [72]] }
     ], quiz: "bass"
   },
@@ -211,10 +211,10 @@ function visualMarkup(type) {
   if (keyboardVisuals[type]) return keyboardMarkup(...keyboardVisuals[type]);
   if (type === "staffGuide") return staffMarkup("treble", [64,65,67,69,71], ["제1선 E","제1칸 F","제2선 G","제2칸 A","제3선 B"]);
   if (type === "staffSteps") return staffMarkup("treble", [60,62,64,65,67,69,71,72], ["C","D","E","F","G","A","B","C"]);
-  if (type === "treble") return staffMarkup("treble", [67], ["제2선 G4"]);
-  if (type === "middleC") return staffMarkup("treble", [60,62,64,65,67], ["C4","D4","E4","F4","G4"]);
-  if (type === "bass") return staffMarkup("bass", [53], ["제4선 F3"]);
-  if (type === "grandStaff") return `<div class="staff-stack">${staffMarkup("treble",[60],["C4"])}${staffMarkup("bass",[60],["C4"])}</div>`;
+  if (type === "treble") return staffMarkup("treble", [67], ["제2선 G"]);
+  if (type === "middleC") return staffMarkup("treble", [60,62,64,65,67], ["C","D","E","F","G"]);
+  if (type === "bass") return staffMarkup("bass", [53], ["제4선 F"]);
+  if (type === "grandStaff") return `<div class="staff-stack">${staffMarkup("treble",[60],["가운데 C"])}${staffMarkup("bass",[60],["가운데 C"])}</div>`;
   if (type === "ledger") return staffMarkup("treble", [57,59,60,62,64], ["A3","B3","C4","D4","E4"]);
   if (type === "natural") return staffMarkup("treble", [66,65], ["F♯","F♮"]);
   if (type === "readingOrder") return relation([["① 음자리표",1],["② 선·칸"],["③ 변화표"],["④ 건반"]]);
@@ -243,16 +243,16 @@ const FIXED_QUIZZES = {
   treble: [
     ["높은음자리표의 다른 이름은?",["G Clef","F Clef","C Clef","Bass Clef"],"G Clef"],
     ["높은음자리표 제2선의 음이름은?",["F","G","A","B"],"G"],
-    ["가운데 C의 표준 표기는?",["C3","C4","C5","D4"],"C4"],
+    ["높은음자리표 오선 바로 아래 덧줄의 기준음은?",["가운데 C","G","F","A"],"가운데 C"],
     ["높은음자리표는 주로 어느 음역을 적나요?",["높은 음역","낮은 음역","리듬만","조표만"],"높은 음역"],
-    ["C4에서 G4까지 음이름은 몇 단계인가요?",["3","4","5","7"],"5"]
+    ["가운데 C에서 제2선 G까지 음이름은 몇 단계인가요?",["3","4","5","7"],"5"]
   ],
   bass: [
     ["낮은음자리표의 다른 이름은?",["F Clef","G Clef","C Clef","Treble Clef"],"F Clef"],
     ["낮은음자리표 두 점 사이의 선은?",["제2선","제3선","제4선","제5선"],"제4선"],
-    ["낮은음자리표 제4선의 음은?",["D3","E3","F3","G3"],"F3"],
+    ["낮은음자리표 제4선의 음은?",["D","E","F","G"],"F"],
     ["피아노에서 낮은음자리표는 주로 어느 손인가요?",["왼손","오른손","양손 불가","페달"],"왼손"],
-    ["두 오선을 연결하는 기준음은?",["C4","F3","G4","A4"],"C4"]
+    ["두 오선을 연결하는 기준음은?",["가운데 C","F","G","A"],"가운데 C"]
   ],
   ledger: [
     ["오선 밖의 음을 적는 짧은 선은?",["덧줄","마디선","세로줄","꼬리"],"덧줄"],

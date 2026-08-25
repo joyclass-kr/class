@@ -27,11 +27,13 @@ button:focus-visible, a:focus-visible, summary:focus-visible { outline: 3px soli
 
 .topbar { min-height: 56px; display: flex; align-items: center; justify-content: space-between; padding: 6px clamp(16px,3vw,32px); border-bottom: 1px solid rgba(255,255,255,.1); background: rgba(10,18,31,.96); }
 .back-link, .text-button { min-height: 44px; display: inline-flex; align-items: center; padding: 0 8px; border: 0; color: var(--muted); background: transparent; text-decoration: none; font-weight: 800; cursor: pointer; }
-.course-shell { width: min(1040px,calc(100% - 32px)); margin: 20px auto 48px; }
+.course-shell { width: min(1040px,calc(100% - 32px)); margin: 12px auto 48px; }
 
 .dashboard-heading { display: flex; align-items: center; justify-content: space-between; gap: 20px; margin-bottom: 18px; }
 .dashboard-heading h1 { margin: 0; font-size: 24px; }
 .dashboard-heading p { margin: 0; color: var(--muted); font-size: 14px; }
+.dashboard-progress { display: flex; align-items: center; gap: 12px; }
+.dashboard-progress .text-button { min-height: 44px; padding-inline: 6px; font-size: 12px; }
 .unit-list { display: grid; gap: 18px; }
 .unit-block { padding: 18px; border: 1px solid var(--line); border-radius: 14px; background: rgba(22,34,56,.88); box-shadow: 0 14px 30px rgba(0,0,0,.18); }
 .unit-heading { display: flex; align-items: baseline; gap: 10px; margin-bottom: 12px; }
@@ -72,11 +74,11 @@ button:focus-visible, a:focus-visible, summary:focus-visible { outline: 3px soli
 .term-item span { display: block; margin-top: 2px; color: var(--paper-muted); font-size: 11px; }
 
 .staff-stack { display: grid; gap: 18px; }
-.staff-row { position: relative; height: 108px; padding-left: 42px; }
-.staff-lines { position: absolute; left: 42px; right: 0; top: 16px; height: 49px; background: repeating-linear-gradient(to bottom,#222 0,#222 1px,transparent 1px,transparent 12px); }
+.staff-row { position: relative; height: 108px; padding-left: 0; }
+.staff-lines { position: absolute; left: 18px; right: 0; top: 16px; height: 49px; background: repeating-linear-gradient(to bottom,#222 0,#222 1px,transparent 1px,transparent 12px); }
 .clef { position: absolute; left: 1px; top: 4px; z-index: 2; width: 40px; color: #141414; font-family: "Noto Music","Segoe UI Symbol",serif; line-height: 1; text-align: center; }
 .clef.treble { font-size: 61px; }
-.clef.bass { top: 15px; font-size: 43px; }
+.clef.bass { top: 6px; font-size: 43px; }
 .note-mark { position: absolute; z-index: 3; width: 14px; height: 10px; border-radius: 50%; background: #161616; transform: translate(-50%,-50%) rotate(-13deg); }
 .note-mark::after { content: ""; position: absolute; right: 0; bottom: 4px; width: 1px; height: 31px; background: #161616; transform: rotate(13deg); transform-origin: bottom; }
 .note-mark.highlight { background: #b97819; box-shadow: 0 0 0 4px rgba(216,170,74,.22); }

@@ -3,6 +3,7 @@ document.addEventListener('DOMContentLoaded', () => {
     const waterBtn = document.getElementById('waterBtn');
     const sieveBtn = document.getElementById('sieveBtn');
     const meshRange = document.getElementById('meshRange');
+    const graphGroup = document.getElementById('graphGroup');
     const meshOutput = document.getElementById('meshOutput');
     const resetBtn = document.getElementById('resetBtn');
     const resultEmpty = document.getElementById('resultEmpty');
@@ -121,6 +122,46 @@ document.addEventListener('DOMContentLoaded', () => {
                        `<span><i class="swatch" style="background:${s.color}"></i>${s.name}</span>` +
                        `<span>${s.mm} mm</span><span>${s.magnetic ? '붙음' : '안 붙음'}</span><span>${water}</span></div>`;
             }).join('');
+
+        renderSizes();
+    }
+
+    /* ------------------------------- 알갱이 크기와 체 구멍을 견주는 그림 */
+    /* 가장 작은 철가루(0.3 mm)와 가장 큰 콩(8 mm)은 27배 차이라, 곧이곧대로
+       그리면 작은 것들이 점이 되어 버립니다. 그래서 가로축을 로그로 잡고 그
+       사실을 아래에 적어 둡니다. 체 구멍 선은 슬라이더 값을 그대로 씁니다. */
+    const SZ = { x0: 96, x1: 400, top: 34, h: 17, gap: 6 };
+    const MM_MIN = 0.2, MM_MAX = 12;
+    const sxOf = mm => SZ.x0 + (Math.log(mm / MM_MIN) / Math.log(MM_MAX / MM_MIN)) * (SZ.x1 - SZ.x0);
+
+    function renderSizes() {
+        const mesh = Number(meshRange.value);
+        let out = `<text class="size-title" x="20" y="18">알갱이 크기와 체 구멍</text>`;
+
+        SUBSTANCES.forEach((s, i) => {
+            const y = SZ.top + i * (SZ.h + SZ.gap);
+            const done = isSeparated(s.id);
+            out += `<rect class="size-track" x="${SZ.x0}" y="${y}" width="${SZ.x1 - SZ.x0}" height="${SZ.h}" rx="5"/>`;
+            out += `<rect class="size-bar" x="${SZ.x0}" y="${y + 3}" width="${(sxOf(s.mm) - SZ.x0).toFixed(1)}" height="${SZ.h - 6}" rx="4" fill="${s.color}" opacity="${done ? .45 : .95}"/>`;
+            out += `<text class="size-name" x="${SZ.x0 - 8}" y="${y + 13}" text-anchor="end">${s.name}</text>`;
+            out += `<text class="size-mm" x="${(sxOf(s.mm) + 6).toFixed(1)}" y="${y + 13}">${s.mm} mm</text>`;
+            if (done) out += `<text class="size-done" x="${SZ.x1 + 6}" y="${y + 13}">분리됨</text>`;
+        });
+
+        const bottom = SZ.top + SUBSTANCES.length * (SZ.h + SZ.gap);
+        out += `<line class="size-axis" x1="${SZ.x0}" y1="${bottom}" x2="${SZ.x1}" y2="${bottom}"/>`;
+        for (const mm of [0.2, 1, 4, 12]) {
+            out += `<text class="size-tick" x="${sxOf(mm).toFixed(1)}" y="${bottom + 12}" text-anchor="middle">${mm}</text>`;
+        }
+        out += `<text class="size-tick" x="${SZ.x1 + 6}" y="${bottom + 12}">mm</text>`;
+
+        // where the sieve cuts: anything to the left of the line falls through
+        const mx = sxOf(mesh);
+        out += `<line class="mesh-line" x1="${mx.toFixed(1)}" y1="${SZ.top - 8}" x2="${mx.toFixed(1)}" y2="${bottom}"/>`;
+        const flip = mx > (SZ.x0 + SZ.x1) / 2;
+        out += `<text class="mesh-text" x="${(mx + (flip ? -6 : 6)).toFixed(1)}" y="${SZ.top - 12}"${flip ? ' text-anchor="end"' : ''}>체 구멍 ${mesh} mm</text>`;
+        out += `<text class="size-note" x="20" y="${bottom + 28}">왼쪽이 구멍보다 작아 빠져나가고, 오른쪽은 체에 남습니다. 가로 눈금은 27배 차이를 담으려고 촘촘해집니다.</text>`;
+        graphGroup.innerHTML = out;
     }
 
     function showResult(text) {
@@ -205,7 +246,7 @@ document.addEventListener('DOMContentLoaded', () => {
             });
     });
 
-    meshRange.addEventListener('input', () => { meshOutput.textContent = `${meshRange.value} mm`; });
+    meshRange.addEventListener('input', () => { meshOutput.textContent = `${meshRange.value} mm`; renderSizes(); });
 
     resetBtn.addEventListener('click', () => {
         separated = [];
