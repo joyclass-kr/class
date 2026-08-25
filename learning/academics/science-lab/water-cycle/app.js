@@ -165,7 +165,10 @@ document.addEventListener('DOMContentLoaded', () => {
 
         const rows = [
             { key: 'sea', name: '바다', color: '#4aa3d0' },
-            { key: 'vapor', name: '수증기', color: '#a8d8ee' },
+            // 구름(#d8e6ee)과 거의 같은 옅은 파랑이었습니다. 두 선이 아래 칸에
+            // 나란히 놓이게 되면서 구별이 안 돼, 눈에 안 보이는 수증기 쪽을
+            // 뚜렷이 다른 보라로 바꿉니다.
+            { key: 'vapor', name: '수증기', color: '#9d8fe0' },
             { key: 'cloud', name: '구름', color: '#d8e6ee' },
             { key: 'land', name: '땅의 물', color: '#6fbf73' },
         ];
