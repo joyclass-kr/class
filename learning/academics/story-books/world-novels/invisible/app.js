@@ -369,6 +369,79 @@ const CHAPTER_SEGS = CHAPTERS.map(ch => {
     return segs;
 });
 
+// 읽고 나서 — 책마다 내용이 다르다. 장과 같은 방식으로 재서 나눈다.
+const AFTERWORD = {
+    title: '읽고 나서',
+    emoji: '🕶️',
+    art: [],
+    paras: [
+        `이 책의 제목은 『투명 인간』입니다. 원래 제목은 『보이지 않는 사람』입니다. 그런데 다 읽고 나면 알게 됩니다. 이 이야기가 묻는 것은 보이지 않으면 사람이 무엇을 하게 되느냐는 것입니다.`,
+        `쓴 사람은 영국의 허버트 조지 웰스입니다. 『타임머신』을 쓴 사람과 같은 사람입니다. 그 책이 나오고 두 해 뒤에 이 책이 나왔습니다.`,
+        `웰스는 과학을 배운 사람입니다. 그래서 이 책에도 그리핀이 어떻게 몸을 보이지 않게 했는지가 설명되어 있습니다.`,
+        `빛이 물체를 지나갈 때 꺾이는 정도를 굴절률이라고 하는데, 몸의 굴절률을 공기와 같게 만들면 빛이 그냥 지나간다는 것입니다.`,
+        `실제로 되는 이야기는 아닙니다. 다만 그 시절 사람들이 알던 것 위에서 그럴듯하게 지어낸 것입니다. 그것이 공상 과학 이야기가 하는 일입니다.`,
+        `다만 이 셈에는 웰스 자신이 알고도 넘긴 구멍이 있습니다. 눈이 투명하면 빛이 그냥 지나가니 아무것도 보이지 않아야 합니다. 그리핀은 앞을 잘 봅니다.`,
+        `책은 천팔백구십칠 년에 나왔습니다. 웰스가 서른한 살 때입니다.`,
+        `그 무렵 몇 해 사이에 그는 시간 여행 이야기, 사람을 짐승으로 만드는 이야기, 투명 인간 이야기, 화성인이 쳐들어오는 이야기를 잇달아 냈습니다. 지금 우리가 아는 공상 과학의 밑그림이 그 몇 해에 다 나왔습니다.`,
+        `이제 다시 볼 대목을 짚어 봅시다.`,
+        `첫째, 첫 장을 다시 읽어 보십시오. 이 책은 그리핀 쪽에서 시작하지 않습니다. 눈 오는 날 시골 여관에 온 이상한 손님 이야기로 시작합니다.`,
+        `얼굴을 붕대로 다 감고, 검은 안경을 쓰고, 장갑을 끼고, 방에서 나오지 않습니다. 마을 사람들이 수군거립니다.`,
+        `그러니 앞의 여러 장은 추리 이야기처럼 읽힙니다. 저 사람은 누구이고 왜 저러는가 하는 것입니다. 그리핀 자신이 이야기를 시작하는 것은 아홉째 장에서입니다.`,
+        `그러니 이 책은 절반쯤 지나서야 주인공이 말을 시작합니다. 그 전까지는 마을 사람들의 눈으로만 보입니다.`,
+        `웰스가 그렇게 짠 데는 까닭이 있습니다. 보이지 않는 사람을 밖에서 먼저 보여 주는 것입니다. 그러면 그 사람이 얼마나 이상하게 보이는지가 그대로 드러납니다.`,
+        `둘째, 밥값 대목을 다시 보십시오. 이 책의 앞부분은 뜻밖에 웃깁니다. 여관 주인이 밀린 방값을 받으러 오고, 그리핀이 화를 내다가 붕대를 벗어 던집니다.`,
+        `그리고 마을이 뒤집힙니다. 목 없는 사람이 서 있는 것처럼 보였기 때문입니다. 웰스는 이 대목을 소동극처럼 적어 두었습니다.`,
+        `그런데 그 웃음이 뒤로 갈수록 사라집니다. 같은 사람이 같은 힘을 가지고 있는데, 앞에서는 웃기고 뒤에서는 무섭습니다.`,
+        `그 사이에 달라진 것은 하나입니다. 그 사람이 무엇을 하려는지를 우리가 알게 된 것입니다.`,
+        `셋째, 보이지 않는 것의 불편함을 세어 보십시오. 웰스는 그것을 아주 꼼꼼히 적었습니다.`,
+        `옷을 입으면 옷이 보이니 벗고 다녀야 합니다. 그러니 겨울에 얼어 죽을 판입니다. 눈이 오면 몸에 눈이 쌓여 모양이 드러납니다. 진흙길을 걸으면 발자국이 남습니다.`,
+        `먹은 음식은 소화될 때까지 공중에 떠 있는 것처럼 보입니다. 그래서 먹고 나면 한동안 숨어 있어야 합니다.`,
+        `그리고 눈꺼풀도 투명하니 빛이 그대로 들어옵니다. 잠들기가 어렵습니다. 개는 냄새로 그를 알아봅니다.`,
+        `그리고 다치면 그 자리가 보입니다. 피가 흐르면 공중에 붉은 줄이 생깁니다. 그러니 싸움에 지면 곧바로 드러납니다.`,
+        `그러니 이 책이 보여 주는 것은 굉장한 능력이 아니라 아주 불편한 처지입니다. 그것이 이 책의 재미난 데입니다.`,
+        `넷째, 그리핀이 켐프에게 털어놓는 대목을 다시 읽어 보십시오. 그는 왜 그렇게 했는지를 이야기합니다.`,
+        `가난한 학생이었고, 아무도 그의 연구를 알아주지 않았고, 지도 교수가 그의 생각을 가로챌까 봐 숨겼습니다. 그리고 연구비가 떨어져 아버지의 돈을 훔쳤습니다.`,
+        `그 돈이 아버지의 것이 아니었습니다. 남에게 갚아야 할 돈이었습니다. 그래서 아버지가 세상을 떠납니다. 그리핀은 장례에 갔다가 아무 느낌이 없었다고 적습니다.`,
+        `그러니 그리핀은 보이지 않게 되어서 나빠진 것이 아닙니다. 그 전부터 그런 사람이었습니다. 보이지 않게 된 것은 마지막 빗장이 풀린 것뿐입니다.`,
+        `다섯째, 공포의 통치를 다시 보십시오. 그리핀은 켐프에게 자기 계획을 말합니다. 사람들을 무섭게 만들어 다스리겠다는 것입니다.`,
+        `혼자서 그렇게 하겠다고 합니다. 사람 하나가 온 나라를 무섭게 만들 수 있다고 여긴 것입니다. 그 생각이 어디서 나왔는지 세어 보십시오.`,
+        `그것은 그가 아무에게도 이해받지 못했다고 여긴 데서 나옵니다. 그러니 이 책은 외톨이가 힘을 얻으면 어떻게 되는지를 보여 주는 이야기이기도 합니다.`,
+        `인물도 다시 보아야 할 사람이 있습니다.`,
+        `켐프 박사를 다시 보십시오. 그는 그리핀의 옛 동창입니다. 그리고 그리핀의 이야기를 끝까지 들어 줍니다.`,
+        `그런데 듣고 나서 경찰에 알립니다. 그리핀은 그것을 배신이라고 여깁니다. 그리고 켐프를 첫 번째 목표로 삼습니다.`,
+        `켐프가 한 일을 우리는 어떻게 보아야 할까요. 그것은 친구를 넘긴 일이면서 동시에 사람들을 지킨 일이었습니다. 이 책은 그것을 갈라 놓지 않습니다.`,
+        `마블 씨도 짚어 둘 만합니다. 그리핀이 처음에 부려 먹은 떠돌이입니다. 겁이 많고 꾀가 없어 보이는 사람인데, 그가 그리핀의 공책을 들고 달아납니다.`,
+        `그리고 마지막 장에 그 사람이 다시 나옵니다. 그 공책을 아직도 가지고 있습니다. 읽지도 못하는 글자를 밤마다 들여다봅니다.`,
+        `웰스가 그 대목을 마지막에 놓은 것을 생각해 보십시오. 이야기가 끝나도 그 앎은 사라지지 않았다는 것입니다.`,
+        `그 시절 사정도 알아 두면 좋습니다. 이 책이 나온 때는 과학이 아주 빨리 나아가던 무렵입니다. 사람들이 과학을 크게 믿었습니다.`,
+        `그리고 그 무렵 눈에 보이지 않는 것들이 잇달아 발견되었습니다. 병을 옮기는 아주 작은 것들, 몸을 뚫고 지나가는 빛 같은 것입니다.`,
+        `이 책이 나오기 두 해 전에 엑스선이 발견되었습니다. 사람 몸을 뚫고 지나가 뼈를 찍는 빛입니다. 그러니 보이지 않는 것에 대한 이야기가 그 무렵 아주 그럴듯하게 들렸습니다.`,
+        `이 책이 붙들고 있는 것은 두 가지입니다.`,
+        `하나는 아무도 보지 않으면 사람이 어떻게 되느냐는 것입니다. 이 물음은 아주 오래된 물음입니다. 이천사백 년 전 그리스의 어떤 책에도 비슷한 이야기가 나옵니다.`,
+        `끼면 보이지 않게 되는 반지를 얻은 사람이 어떻게 되는가 하는 이야기입니다. 웰스는 그 오래된 물음을 과학 이야기로 다시 물은 셈입니다.`,
+        `다른 하나는 아는 것을 혼자 가지면 어떻게 되느냐는 것입니다. 그리핀은 자기 연구를 아무에게도 말하지 않았습니다. 뺏길까 봐서였습니다.`,
+        `그래서 아무도 그를 말려 주지 못했습니다. 함께 하는 사람이 하나만 있었어도 달라졌을 것입니다. 학문이 여럿이 함께 하는 일인 까닭이 그것입니다.`,
+        `연구는 남에게 보이고 확인받아야 학문이 됩니다. 혼자 가지고 있으면 그것이 맞는지도 알 수 없습니다. 그리핀은 그 절차를 다 건너뛰었습니다.`,
+        `이 책이 나온 뒤로 투명 인간 이야기가 수없이 만들어졌습니다. 영화로도 여러 번 나왔습니다.`,
+        `그런데 대부분 그 능력을 신나는 것으로 그립니다. 웰스의 원작은 그렇지 않습니다. 이 책의 투명 인간은 춥고 배고프고 잠을 못 잡니다.`,
+        `언젠가 이 책을 다시 읽게 되거든, 이번에는 그리핀이 왜 그렇게 되었는지만 따라가며 읽어 보십시오. 아홉째 장부터 열째 장까지에 그 사람의 한평생이 다 있습니다.`,
+        `마지막으로 생각해 볼 것을 남겨 둡니다. 답은 적어 두지 않겠습니다.`,
+        `켐프가 경찰에 알린 것은 옳은 일이었을까요? 그는 친구의 이야기를 듣고 그렇게 했습니다.`,
+        `그리핀이 자기 연구를 처음부터 밝혔다면 어떻게 되었을까요? 뺏겼을 수도 있고, 함께 다듬었을 수도 있습니다.`,
+        `그리고 여러분이 보이지 않게 된다면 제일 먼저 무엇을 하겠습니까. 그 답을 솔직하게 적어 보는 것이 이 책을 읽는 방법입니다. 이 물음은 어른이 되어 다시 읽어도 답하기가 쉽지 않습니다.`
+    ]
+};
+
+const AFTER_SEGS = (() => {
+    const segs = [];
+    AFTERWORD.paras.forEach((html, paraIdx) => {
+        splitSegments(html).forEach((piece, k) => {
+            segs.push({ paraIdx, html: piece, start: k === 0 });
+        });
+    });
+    return segs;
+})();
+
 // 조각 묶음을 문단 단위로 다시 묶어 화면에 그릴 모양으로 만든다.
 // 앞 쪽에서 이어진 문단은 첫 줄을 들여쓰지 않는다.
 function runHtml(segs, a, b) {
@@ -650,16 +723,100 @@ function quizPage(part) {
         </div>`;
 }
 
-function endPage() {
+/* 읽고 나서 — 장과 같은 방식으로 쪽을 나눈다. 그림은 오른쪽 위에 얹힌다. */
+const AFTER_FOOT = `<p class="after-home"><a class="home-btn" href="../../../../../">학습 허브로 돌아가기</a></p>`;
+
+function paginateAfterword() {
+    const segs = AFTER_SEGS;
+    const arts = AFTERWORD.art || [];
+    const { usable, headHeight, artHeight } = PROBE;
+    const headHtml = `<h2>${AFTERWORD.title}</h2>`;
+    const totalH = PROBE.measure(runHtml(segs, 0, segs.length));
+
+    const underArt = Math.max(60, usable - artHeight);
+
+    // 맨 끝에는 학습 허브로 가는 단추가 붙는다. 그 높이를 미리 빼 두지 않으면
+    // 마지막 쪽만 넘친다.
+    const footH = PROBE.measure(AFTER_FOOT);
+
+    const capsOf = slots => {
+        const caps = [];
+        slots.forEach(kind => { caps.push(usable); caps.push(kind === 'img' ? underArt : usable); });
+        caps[caps.length - 1] = Math.max(60, caps[caps.length - 1] - footH);
+        return caps;
+    };
+
+    const minSpreads = Math.max(arts.length, 1);
+    const maxSpreads = Math.max(minSpreads, Math.floor(segs.length / 2));
+    let spreadCount = minSpreads;
+    while (spreadCount < maxSpreads) {
+        const caps = capsOf(slotPlan(arts.length, spreadCount - arts.length));
+        if (caps.reduce((a, b) => a + b, 0) >= totalH + headHeight) break;
+        spreadCount++;
+    }
+
+    let slots = slotPlan(arts.length, Math.max(0, spreadCount - arts.length));
+    let caps = capsOf(slots);
+    let ranges = fillPages(segs, caps, headHtml);
+    for (let guard = 0; guard < 8; guard++) {
+        const over = ranges.some(([a, b], n) =>
+            PROBE.measure((n === 0 ? headHtml : '') + runHtml(segs, a, b)) > caps[n] + 1);
+        if (!over || spreadCount >= maxSpreads) break;
+        spreadCount++;
+        slots = slotPlan(arts.length, Math.max(0, spreadCount - arts.length));
+        caps = capsOf(slots);
+        ranges = fillPages(segs, caps, headHtml);
+    }
+
+    const spreads = [];
+    let pageIdx = 0;
+    let artIdx = 0;
+    slots.forEach((kind, s) => {
+        const left = ranges[pageIdx++];
+        const right = ranges[pageIdx++];
+        spreads.push({
+            kind: 'after', first: s === 0, last: s === slots.length - 1,
+            art: kind === 'img' ? arts[artIdx++] : null, left, right
+        });
+    });
+    return spreads;
+}
+
+function afterSpreadPage(spread) {
+    const segs = AFTER_SEGS;
+    const head = spread.first ? `<h2>${AFTERWORD.title}</h2>` : '';
+    // 학습 허브로 돌아가는 길은 맨 끝에 한 번만 둔다.
+    const foot = spread.last ? AFTER_FOOT : '';
+
+    if (spread.art) {
+        return `
+            <div class="page page-story page-after">
+                <div class="story-page-left">
+                    ${head}
+                    ${runHtml(segs, spread.left[0], spread.left[1])}
+                </div>
+                <div class="story-page-right story-page-right-image">
+                    <div class="story-art-top">${artFrame(spread.art, AFTERWORD.emoji)}</div>
+                    ${runHtml(segs, spread.right[0], spread.right[1])}
+                    ${foot}
+                </div>
+            </div>`;
+    }
+
     return `
-        <div class="page page-end">
-            ${artFrame('end.png', '📓')}
-            <h2>투명 인간를 다 읽었습니다</h2>
-            <a class="home-btn" href="../../../../../">학습 허브로 돌아가기</a>
+        <div class="page page-story page-after">
+            <div class="story-page-left">
+                ${head}
+                ${runHtml(segs, spread.left[0], spread.left[1])}
+            </div>
+            <div class="story-page-right story-page-right-text">
+                ${runHtml(segs, spread.right[0], spread.right[1])}
+                ${foot}
+            </div>
         </div>`;
 }
 
-const TWO_PAGE_KINDS = new Set(['chapter', 'toc', 'cover']);
+const TWO_PAGE_KINDS = new Set(['chapter', 'toc', 'cover', 'after']);
 
 let PAGES = [];
 let FOLIOS = [];
@@ -671,7 +828,7 @@ function buildPages() {
         ...TOC_GROUPS.map((_, i) => ({ kind: 'toc', part: i })),
         ...CHAPTERS.flatMap(paginateChapter),
         ...QUIZ_GROUPS.map((_, i) => ({ kind: 'quiz', part: i })),
-        { kind: 'end' }
+        ...paginateAfterword()
     ];
     PROBE.close();   // 쪽을 다 나눴으니 재는 데 쓰던 숨은 쪽은 치운다
 
@@ -692,7 +849,7 @@ function renderPage(page) {
         case 'toc': return tocPage(page.part);
         case 'chapter': return chapterSpreadPage(page);
         case 'quiz': return quizPage(page.part);
-        case 'end': return endPage();
+        case 'after': return afterSpreadPage(page);
         default: return '';
     }
 }
