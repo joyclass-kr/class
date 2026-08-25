@@ -1,5 +1,7 @@
 document.addEventListener('DOMContentLoaded', () => {
     const temperatureRange = document.getElementById('temperatureRange');
+    const graphGroup = document.getElementById('graphGroup');
+    const dataNote = document.getElementById('dataNote');
     const temperatureOutput = document.getElementById('temperatureOutput');
     const predictionButtons = [...document.querySelectorAll('[data-prediction]')];
     const checkButton = document.getElementById('checkStateBtn');
@@ -193,6 +195,81 @@ document.addEventListener('DOMContentLoaded', () => {
 
         renderPhaseVisuals();
         updateParticles(iceFraction, boilFraction);
+        renderHeatCurve(temp);
+        renderData(temp, state);
+    }
+
+    /* ---------------------------------------------- 가열 곡선과 측정값 표 */
+    /* 얼음 100 g을 일정한 세기(100 J/초)로 데울 때의 온도 변화입니다. 마디의
+       길이는 실제 열량에서 그대로 나옵니다 — 녹는 데 33,400 J, 끓는 데
+       226,000 J이 들기 때문에 끓는 구간이 압도적으로 길고, 그것이 이 그래프가
+       보여 주려는 사실입니다. */
+    const MASS_G = 100, POWER_W = 100;
+    const C_ICE = 2.1, C_WATER = 4.2, C_STEAM = 2.0;   // J/(g·℃)
+    const L_MELT = 334, L_BOIL = 2260;                 // J/g
+    const T_LO = -10, T_HI = 110;
+    const minutes = joules => joules / POWER_W / 60;
+    const T1 = minutes(MASS_G * C_ICE * 10);
+    const T2 = T1 + minutes(MASS_G * L_MELT);
+    const T3 = T2 + minutes(MASS_G * C_WATER * 100);
+    const T4 = T3 + minutes(MASS_G * L_BOIL);
+    const T5 = T4 + minutes(MASS_G * C_STEAM * 10);
+
+    // when a given temperature is first reached
+    function timeAt(temp) {
+        if (temp <= 0) return minutes(MASS_G * C_ICE * (temp - T_LO));
+        if (temp <= 100) return T2 + minutes(MASS_G * C_WATER * temp);
+        return T4 + minutes(MASS_G * C_STEAM * (temp - 100));
+    }
+
+    const G = { x0: 46, x1: 428, y0: 148, y1: 26 };
+    const gx = t => G.x0 + (t / T5) * (G.x1 - G.x0);
+    const gy = c => G.y0 - ((c - T_LO) / (T_HI - T_LO)) * (G.y0 - G.y1);
+
+    function renderHeatCurve(temp) {
+        let out = '';
+        for (const c of [0, 50, 100]) {
+            const y = gy(c);
+            out += `<line class="grid-line" x1="${G.x0}" y1="${y.toFixed(1)}" x2="${G.x1}" y2="${y.toFixed(1)}"/>`;
+            out += `<text class="axis-text" x="${G.x0 - 6}" y="${(y + 3).toFixed(1)}" text-anchor="end">${c}</text>`;
+        }
+        for (const t of [0, 10, 20, 30, 40, 50]) {
+            out += `<text class="axis-text" x="${gx(t).toFixed(1)}" y="${G.y0 + 15}" text-anchor="middle">${t}</text>`;
+        }
+        out += `<line class="axis" x1="${G.x0}" y1="${G.y0}" x2="${G.x1}" y2="${G.y0}"/>`;
+        out += `<line class="axis" x1="${G.x0}" y1="${G.y0}" x2="${G.x0}" y2="${G.y1}"/>`;
+        out += `<text class="axis-title" x="${(G.x0 + G.x1) / 2}" y="${G.y0 + 32}" text-anchor="middle">데운 시간 (분) — 얼음 100 g을 일정한 세기로</text>`;
+        out += `<text class="axis-title" x="${G.x0}" y="${G.y1 - 8}">온도 (℃)</text>`;
+
+        const pts = [[0, T_LO], [T1, 0], [T2, 0], [T3, 100], [T4, 100], [T5, T_HI]]
+            .map(([t, c]) => `${gx(t).toFixed(1)},${gy(c).toFixed(1)}`);
+        out += `<path class="heat-curve" d="M${pts.join('L')}"/>`;
+
+        // the two places where heat goes in but the temperature does not move
+        out += `<line class="flat-mark" x1="${gx(T1).toFixed(1)}" y1="${gy(0).toFixed(1)}" x2="${gx(T2).toFixed(1)}" y2="${gy(0).toFixed(1)}"/>`;
+        out += `<line class="flat-mark" x1="${gx(T3).toFixed(1)}" y1="${gy(100).toFixed(1)}" x2="${gx(T4).toFixed(1)}" y2="${gy(100).toFixed(1)}"/>`;
+        out += `<text class="flat-text" x="${gx((T1 + T2) / 2).toFixed(1)}" y="${(gy(0) - 15).toFixed(1)}" text-anchor="middle">얼음이 녹는 동안</text>`;
+        out += `<text class="flat-text" x="${gx((T3 + T4) / 2).toFixed(1)}" y="${(gy(100) - 8).toFixed(1)}" text-anchor="middle">물이 끓는 동안 — 온도가 그대로입니다</text>`;
+
+        const px = gx(timeAt(temp)), py = gy(temp);
+        out += `<line class="op-guide" x1="${G.x0}" y1="${py.toFixed(1)}" x2="${px.toFixed(1)}" y2="${py.toFixed(1)}"/>`;
+        out += `<circle class="op-point" cx="${px.toFixed(1)}" cy="${py.toFixed(1)}" r="5"/>`;
+        const flip = px > (G.x0 + G.x1) / 2;
+        out += `<text class="op-text" x="${(px + (flip ? -9 : 9)).toFixed(1)}" y="${Math.max(G.y1 + 10, py - 9).toFixed(1)}"` +
+               `${flip ? ' text-anchor="end"' : ''}>지금 ${temp}℃</text>`;
+        graphGroup.innerHTML = out;
+    }
+
+    function renderData(temp, state) {
+        const meltMin = T2 - T1, boilMin = T4 - T3;
+        dataNote.innerHTML =
+            `<div class="data-row"><span class="data-name">지금 온도</span><span class="data-val">${temp}℃</span></div>` +
+            `<div class="data-row match"><span class="data-name">지금 상태</span><span class="data-val">${STATE_LABEL[state]}</span></div>` +
+            `<div class="data-row"><span class="data-name">녹는점 · 어는점</span><span class="data-val">0℃ — 얼음과 물이 함께 있는 온도</span></div>` +
+            `<div class="data-row"><span class="data-name">끓는점</span><span class="data-val">100℃ — 물과 수증기가 함께 있는 온도</span></div>` +
+            `<div class="data-row"><span class="data-name">얼음이 다 녹는 데</span><span class="data-val">${meltMin.toFixed(1)}분 (온도는 0℃ 그대로)</span></div>` +
+            `<div class="data-row"><span class="data-name">물이 다 끓는 데</span><span class="data-val">${boilMin.toFixed(1)}분 (온도는 100℃ 그대로)</span></div>` +
+            `<div class="data-row"><span class="data-name">둘을 견주면</span><span class="data-val">끓는 데 ${(boilMin / meltMin).toFixed(1)}배 더 오래 걸립니다</span></div>`;
     }
 
     // Temperature sets the *rate* of freezing/boiling, not how much has
