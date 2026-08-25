@@ -473,6 +473,70 @@ const CHAPTER_SEGS = CHAPTERS.map(ch => {
     return segs;
 });
 
+// 읽고 나서 — 책마다 내용이 다르다. 장과 같은 방식으로 재서 나눈다.
+const AFTERWORD = {
+    title: '읽고 나서',
+    emoji: '🥣',
+    art: [],
+    paras: [
+        `이 책의 원래 제목은 『올리버 트위스트, 또는 구빈원 소년의 여정』입니다. 구빈원이라는 말이 제목에 붙어 있습니다. 갈 데 없는 가난한 사람을 모아 두던 나라 시설을 가리키는 말입니다.`,
+        `쓴 사람은 영국의 찰스 디킨스입니다. 이 책을 쓸 때 그는 스물다섯 살이었습니다. 그런데 그때 이미 그는 그 세상을 잘 알고 있었습니다.`,
+        `디킨스는 열두 살에 학교를 그만두었습니다. 아버지가 빚 때문에 감옥에 갇혔기 때문입니다. 그 시절 영국에는 빚을 못 갚으면 가두는 감옥이 있었습니다. 그는 그때부터 공장에서 구두약 병에 딱지를 붙이는 일을 했습니다.`,
+        `하루 열 시간씩 일했고, 삯은 주에 여섯 실링이었습니다. 그 일을 한 것이 몇 달이었는데, 그는 평생 그 이야기를 거의 하지 않았습니다. 아내에게도 말하지 않았다고 합니다.`,
+        `그러니 올리버가 겪는 일을 지어낸 것으로만 읽으면 안 됩니다. 디킨스는 그 자리를 안에서 본 사람이었습니다.`,
+        `그 공장은 강가에 있었고 쥐가 나왔다고 합니다. 디킨스는 창가에 앉아 일했는데, 지나가는 사람들이 자기가 일하는 것을 들여다보는 것이 제일 견디기 어려웠다고 나중에 적었습니다.`,
+        `책은 천팔백삼십칠 년부터 잡지에 나누어 실렸습니다. 한 달에 한 대목씩 나갔고, 이 년 가까이 이어졌습니다.`,
+        `그 시절 영국에서는 소설을 그렇게 읽었습니다. 책 한 권을 살 돈이 없는 사람도 잡지 한 권은 살 수 있었기 때문입니다. 여럿이 모여 한 사람이 소리 내어 읽는 일도 흔했습니다. 글을 모르는 사람도 그렇게 들었습니다.`,
+        `그러니 디킨스는 한 달에 한 번씩 사람들의 반응을 보면서 이야기를 이어 갔습니다. 어떤 인물이 인기가 있으면 더 나오게 하고, 반응이 없으면 줄였습니다. 지금 우리가 보는 연속극과 비슷한 방식이었습니다.`,
+        `원작은 여기 실린 것보다 훨씬 깁니다. 런던 뒷골목 사람들의 이야기가 훨씬 자세히 들어 있습니다. 여기서는 올리버가 어디서 와서 어디로 가는지를 따라가는 줄기만 골라 실었습니다.`,
+        `이제 다시 볼 대목을 짚어 봅시다.`,
+        `첫째, 죽 그릇 대목을 다시 읽어 보십시오. 올리버가 그릇을 들고 가서 조금만 더 달라고 합니다. 그것으로 온 구빈원이 뒤집힙니다. 아이 하나가 배가 고프다고 말한 것뿐인데 그렇습니다.`,
+        `이 장면은 지금도 영국에서 가장 널리 알려진 소설 장면 가운데 하나입니다. 그 시절 사람들이 놀란 것은 아이가 굶는다는 것이 아니었습니다. 그것은 다들 알고 있었습니다. 놀란 것은 그것이 책에 적혔다는 것이었습니다.`,
+        `그전까지 소설의 주인공은 대개 좋은 집안 사람이었습니다. 구빈원에서 태어난 아이를 주인공으로 삼은 책은 없었습니다. 디킨스가 처음 그렇게 했습니다.`,
+        `그리고 그 아이에게 나쁜 말을 하나도 시키지 않았습니다. 구빈원에서 자란 아이가 반듯한 말을 쓰는 것이 이상하다는 지적이 그때도 있었습니다. 디킨스는 일부러 그렇게 했습니다. 그래야 읽는 사람이 그 아이 편에 선다고 여겼기 때문입니다.`,
+        `둘째, 올리버의 이름을 세어 보십시오. 올리버라는 이름은 구빈원 관리가 지어 준 것입니다. 그 사람은 들어오는 아이들에게 알파벳 차례로 이름을 붙였습니다. 앞에 티 자로 시작한 아이가 있었으니 다음은 유 자였습니다.`,
+        `그러니 올리버 트위스트라는 이름은 아무 뜻도 없는 이름입니다. 이 책의 마지막에 가서야 그 아이에게 원래 이름이 있었다는 것이 밝혀집니다. 이 책의 첫 장 제목과 마지막 장 제목이 이름에 관한 것인 까닭이 그것입니다.`,
+        `이름을 받는 것으로 시작해서 이름을 되찾는 것으로 끝나는 이야기입니다. 그 사이에 이 아이는 여러 번 다른 이름으로 불립니다. 도둑들 사이에서도 그렇습니다.`,
+        `셋째, 손수건 놀이를 다시 보십시오. 올리버는 그것이 놀이인 줄 알았습니다. 주머니에서 손수건을 빼내는 연습을 하는 것이 재미있는 놀이라고 여겼습니다.`,
+        `페이긴은 아이들에게 그것을 놀이로 가르쳤습니다. 그래야 아이들이 즐겁게 배우기 때문입니다. 이 대목은 웃기게 적혀 있는데 웃을 자리가 아닙니다.`,
+        `그 아이들은 잡히면 감옥에 갑니다. 그 시절 영국에서는 손수건 하나를 훔쳐도 배에 실려 아주 먼 땅으로 보내졌습니다. 페이긴은 아무 위험도 지지 않고 아이들만 그 위험을 졌습니다.`,
+        `그 시절 영국 법에는 사형에 처할 수 있는 죄가 이백 가지가 넘던 때도 있었습니다. 이 책이 나올 무렵에는 많이 줄었지만, 아이가 감옥에 가는 것은 여전히 흔한 일이었습니다.`,
+        `넷째, 낸시를 다시 읽어 보십시오. 낸시는 이 책에서 제일 어려운 인물입니다. 도둑 무리에 속해 있고, 올리버를 다시 잡아 오는 데도 손을 보탰습니다.`,
+        `그런데 그 사람이 마지막에 올리버를 위해 나섭니다. 그러고도 자기가 그 무리를 떠나지는 못합니다. 떠나라고 하는 사람에게 그 사람은 이제 늦었다고 답합니다.`,
+        `낸시가 왜 그 자리를 못 떠났는지를 이 책은 설명하지 않습니다. 다만 그런 사람이 있다는 것만 적어 둡니다. 디킨스는 이 사람 때문에 욕을 많이 먹었습니다. 그런 여자를 책에 넣었다는 이유였습니다.`,
+        `디킨스는 나중에 사람들 앞에서 자기 책을 소리 내어 읽어 주는 자리를 자주 가졌습니다. 그 가운데 낸시가 나오는 대목을 제일 자주 읽었습니다. 읽고 나면 그는 늘 기진맥진했다고 합니다.`,
+        `의사가 그만두라고 말렸는데도 계속했습니다. 그리고 그 일을 하다 몸이 상해 쉰여덟에 세상을 떠났습니다.`,
+        `그 시절 사정도 알아 두면 좋습니다. 이 책이 나오기 세 해 전에 영국에서 구빈법이라는 것이 바뀌었습니다. 가난한 사람을 돕되 그 자리를 아주 괴롭게 만들자는 것이었습니다.`,
+        `그래야 사람들이 게으름을 부리지 않는다는 셈이었습니다. 그래서 구빈원에서는 가족을 갈라 놓고, 일을 시키고, 밥을 적게 주었습니다. 올리버가 죽 한 그릇으로 하루를 나는 것이 그 법 때문입니다.`,
+        `디킨스가 이 책을 쓴 것은 그 법을 겨눈 것이었습니다. 이 책이 나오고 나서 영국에서 구빈원을 두고 말이 많아졌습니다. 소설 한 권이 그렇게 한 것입니다.`,
+        `디킨스는 그 뒤로도 여러 책에서 같은 일을 했습니다. 학교를 겨눈 책도 쓰고, 재판이 얼마나 느린지를 겨눈 책도 썼습니다. 그때마다 영국에서 그 이야기가 새로 시작되었습니다.`,
+        `그 시절 런던에는 갈 데 없는 아이가 몇만 명 있었습니다. 그 아이들이 살아가는 길은 몇 가지 없었습니다. 페이긴 같은 사람이 있었던 것도 지어낸 것이 아닙니다.`,
+        `실제로 아이들을 모아 도둑질을 시키던 사람이 런던에 있었습니다. 아이케이 솔로몬이라는 사람인데, 디킨스가 그 사람을 알고 있었습니다. 그 시절 신문에 크게 났던 사람입니다.`,
+        `다만 이 책에는 지금 읽기에 불편한 데가 있습니다. 페이긴을 그릴 때 디킨스는 그 사람의 유대인이라는 점을 자꾸 붙여 적었습니다. 나중에 그것을 지적받고 디킨스는 뒤에 나온 판에서 그 표현을 여럿 고쳤습니다. 여기서는 그런 대목을 옮기지 않았습니다.`,
+        `이 책이 붙들고 있는 물음은 두 가지입니다.`,
+        `하나는 사람이 자란 자리에 따라 정해지느냐는 것입니다. 이 책은 그렇지 않다고 말합니다. 올리버는 도둑 소굴에서도 도둑이 되지 않습니다.`,
+        `그런데 그 점 때문에 이 책은 지금도 흠을 잡힙니다. 올리버가 착한 것이 타고난 것처럼 적혀 있기 때문입니다. 같은 자리에서 자란 다른 아이들은 다 도둑이 되었는데 왜 올리버만 아닌지, 이 책은 답하지 않습니다.`,
+        `다른 하나는 누가 아이를 지키느냐는 것입니다. 이 책에 나오는 어른들은 대부분 아이를 이용합니다. 구빈원 관리도, 장의사도, 페이긴도 그렇습니다. 올리버를 지킨 사람은 아무 상관없는 노신사 하나와, 도둑 무리에 속한 여자 하나였습니다.`,
+        `둘 다 그 아이와 아무 사이도 아니었습니다. 지켜야 할 자리에 있던 사람들은 하나도 지키지 않았습니다. 이 책이 조용히 적어 놓은 셈이 그것입니다.`,
+        `책이 나오자 아주 잘 팔렸습니다. 디킨스는 그 뒤로 평생 사람들이 기다리는 작가였습니다. 그가 세상을 떠났을 때 영국 사람들이 크게 슬퍼했고, 왕들이 묻히는 자리에 묻혔습니다.`,
+        `언젠가 이 책을 다시 읽게 되거든, 이번에는 낸시만 따라가며 읽어 보십시오. 그 사람이 나오는 대목만 이어 붙여도 이야기 하나가 됩니다. 그리고 그 이야기가 이 책에서 제일 슬픕니다.`,
+        `마지막으로 생각해 볼 것을 남겨 둡니다. 답은 적어 두지 않겠습니다.`,
+        `올리버가 죽을 더 달라고 한 것은 잘한 일이었을까요? 그 한마디로 그 아이는 쫓겨납니다. 잘못한 것이 없는데 벌을 받는 자리를 우리는 어떻게 보아야 할까요?`,
+        `페이긴 밑에 있던 다른 아이들은 어떻게 되었을까요? 이 책은 그 아이들의 뒷이야기를 적어 두지 않습니다. 올리버만 구해지고 끝납니다.`,
+        `그리고 낸시가 그 자리를 떠날 수 있었을까요. 갈 데가 없는 사람에게 떠나라고 하는 것은 무슨 뜻일까요. 이 물음은 어른이 되어 다시 읽어도 답하기가 쉽지 않습니다.`
+    ]
+};
+
+const AFTER_SEGS = (() => {
+    const segs = [];
+    AFTERWORD.paras.forEach((html, paraIdx) => {
+        splitSegments(html).forEach((piece, k) => {
+            segs.push({ paraIdx, html: piece, start: k === 0 });
+        });
+    });
+    return segs;
+})();
+
 // 조각 묶음을 문단 단위로 다시 묶어 화면에 그릴 모양으로 만든다.
 // 앞 쪽에서 이어진 문단은 첫 줄을 들여쓰지 않는다.
 function runHtml(segs, a, b) {
@@ -754,16 +818,100 @@ function quizPage(part) {
         </div>`;
 }
 
-function endPage() {
+/* 읽고 나서 — 장과 같은 방식으로 쪽을 나눈다. 그림은 오른쪽 위에 얹힌다. */
+const AFTER_FOOT = `<p class="after-home"><a class="home-btn" href="../../../../../">학습 허브로 돌아가기</a></p>`;
+
+function paginateAfterword() {
+    const segs = AFTER_SEGS;
+    const arts = AFTERWORD.art || [];
+    const { usable, headHeight, artHeight } = PROBE;
+    const headHtml = `<h2>${AFTERWORD.title}</h2>`;
+    const totalH = PROBE.measure(runHtml(segs, 0, segs.length));
+
+    const underArt = Math.max(60, usable - artHeight);
+
+    // 맨 끝에는 학습 허브로 가는 단추가 붙는다. 그 높이를 미리 빼 두지 않으면
+    // 마지막 쪽만 넘친다.
+    const footH = PROBE.measure(AFTER_FOOT);
+
+    const capsOf = slots => {
+        const caps = [];
+        slots.forEach(kind => { caps.push(usable); caps.push(kind === 'img' ? underArt : usable); });
+        caps[caps.length - 1] = Math.max(60, caps[caps.length - 1] - footH);
+        return caps;
+    };
+
+    const minSpreads = Math.max(arts.length, 1);
+    const maxSpreads = Math.max(minSpreads, Math.floor(segs.length / 2));
+    let spreadCount = minSpreads;
+    while (spreadCount < maxSpreads) {
+        const caps = capsOf(slotPlan(arts.length, spreadCount - arts.length));
+        if (caps.reduce((a, b) => a + b, 0) >= totalH + headHeight) break;
+        spreadCount++;
+    }
+
+    let slots = slotPlan(arts.length, Math.max(0, spreadCount - arts.length));
+    let caps = capsOf(slots);
+    let ranges = fillPages(segs, caps, headHtml);
+    for (let guard = 0; guard < 8; guard++) {
+        const over = ranges.some(([a, b], n) =>
+            PROBE.measure((n === 0 ? headHtml : '') + runHtml(segs, a, b)) > caps[n] + 1);
+        if (!over || spreadCount >= maxSpreads) break;
+        spreadCount++;
+        slots = slotPlan(arts.length, Math.max(0, spreadCount - arts.length));
+        caps = capsOf(slots);
+        ranges = fillPages(segs, caps, headHtml);
+    }
+
+    const spreads = [];
+    let pageIdx = 0;
+    let artIdx = 0;
+    slots.forEach((kind, s) => {
+        const left = ranges[pageIdx++];
+        const right = ranges[pageIdx++];
+        spreads.push({
+            kind: 'after', first: s === 0, last: s === slots.length - 1,
+            art: kind === 'img' ? arts[artIdx++] : null, left, right
+        });
+    });
+    return spreads;
+}
+
+function afterSpreadPage(spread) {
+    const segs = AFTER_SEGS;
+    const head = spread.first ? `<h2>${AFTERWORD.title}</h2>` : '';
+    // 학습 허브로 돌아가는 길은 맨 끝에 한 번만 둔다.
+    const foot = spread.last ? AFTER_FOOT : '';
+
+    if (spread.art) {
+        return `
+            <div class="page page-story page-after">
+                <div class="story-page-left">
+                    ${head}
+                    ${runHtml(segs, spread.left[0], spread.left[1])}
+                </div>
+                <div class="story-page-right story-page-right-image">
+                    <div class="story-art-top">${artFrame(spread.art, AFTERWORD.emoji)}</div>
+                    ${runHtml(segs, spread.right[0], spread.right[1])}
+                    ${foot}
+                </div>
+            </div>`;
+    }
+
     return `
-        <div class="page page-end">
-            ${artFrame('end.png', '📜')}
-            <h2>올리버 트위스트를 다 읽었습니다</h2>
-            <a class="home-btn" href="../../../../../">학습 허브로 돌아가기</a>
+        <div class="page page-story page-after">
+            <div class="story-page-left">
+                ${head}
+                ${runHtml(segs, spread.left[0], spread.left[1])}
+            </div>
+            <div class="story-page-right story-page-right-text">
+                ${runHtml(segs, spread.right[0], spread.right[1])}
+                ${foot}
+            </div>
         </div>`;
 }
 
-const TWO_PAGE_KINDS = new Set(['chapter', 'toc', 'cover']);
+const TWO_PAGE_KINDS = new Set(['chapter', 'toc', 'cover', 'after']);
 
 let PAGES = [];
 let FOLIOS = [];
@@ -775,7 +923,7 @@ function buildPages() {
         ...TOC_GROUPS.map((_, i) => ({ kind: 'toc', part: i })),
         ...CHAPTERS.flatMap(paginateChapter),
         ...QUIZ_GROUPS.map((_, i) => ({ kind: 'quiz', part: i })),
-        { kind: 'end' }
+        ...paginateAfterword()
     ];
     PROBE.close();   // 쪽을 다 나눴으니 재는 데 쓰던 숨은 쪽은 치운다
 
@@ -796,7 +944,7 @@ function renderPage(page) {
         case 'toc': return tocPage(page.part);
         case 'chapter': return chapterSpreadPage(page);
         case 'quiz': return quizPage(page.part);
-        case 'end': return endPage();
+        case 'after': return afterSpreadPage(page);
         default: return '';
     }
 }

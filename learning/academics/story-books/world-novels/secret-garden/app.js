@@ -467,6 +467,62 @@ const CHAPTER_SEGS = CHAPTERS.map(ch => {
     return segs;
 });
 
+// 읽고 나서 — 책마다 내용이 다르다. 장과 같은 방식으로 재서 나눈다.
+const AFTERWORD = {
+    title: '읽고 나서',
+    emoji: '🌱',
+    art: [],
+    paras: [
+        `이 책의 제목은 『비밀의 화원』입니다. 그런데 다 읽고 나면 알게 됩니다. 담을 두르고 문을 잠근 것은 정원만이 아니었습니다. 이 집에 있는 사람들이 다 그렇게 살고 있었습니다.`,
+        `쓴 사람은 영국에서 태어나 미국에서 산 프랜시스 호지슨 버넷입니다. 『소공자』와 『소공녀』를 쓴 사람과 같은 사람입니다. 세 권을 다 읽어 보면 같은 것이 눈에 들어옵니다. 셋 다 갑자기 혼자가 된 아이 이야기입니다.`,
+        `버넷은 어릴 때 아버지를 잃고 집안이 기울어 미국으로 옮겨 갔습니다. 그리고 열여섯 살부터 글을 써서 돈을 벌었습니다. 어른이 되어서는 아들 하나를 병으로 잃었습니다.`,
+        `이 책을 쓸 무렵 그는 영국의 어느 집에 세 들어 살고 있었는데, 그 집에 담을 두른 오래된 정원이 있었습니다. 그는 거기서 장미를 가꾸며 여러 해를 보냈습니다. 이 책의 정원은 그 정원입니다.`,
+        `그 집을 떠나던 날 버넷은 그 정원의 장미를 한 송이 꺾어 가지고 나왔다고 합니다. 그러고 나서 이 책을 썼습니다.`,
+        `책은 천구백십일 년에 나왔습니다. 그때는 『소공자』만큼 알려지지 않았습니다. 이 책이 크게 읽히기 시작한 것은 버넷이 세상을 떠나고 한참 뒤입니다.`,
+        `원작은 여기 실린 것보다 깁니다. 정원에서 무엇을 어떻게 가꾸는지가 훨씬 자세히 적혀 있습니다. 여기서는 세 아이가 어떻게 달라지는지를 따라가는 줄기만 골라 실었습니다.`,
+        `이제 다시 볼 대목을 짚어 봅시다.`,
+        `첫째, 첫 장을 다시 읽어 보십시오. 인도에서 병이 돌아 온 집 사람이 다 죽거나 달아나고, 메리 혼자 남습니다. 그런데 아무도 그 아이를 찾지 않습니다. 며칠이 지나서야 사람이 와서 아이가 있는 것을 알아챕니다.`,
+        `그 대목에서 메리에 대해 적어 둔 말이 있습니다. 아무도 그 아이를 좋아하지 않았고, 그 아이도 아무도 좋아하지 않았다는 것입니다. 어린이 책의 주인공을 이렇게 시작하는 경우는 드뭅니다.`,
+        `둘째, 메리의 얼굴빛을 따라가 보십시오. 처음에 메리는 누렇고 마르고 늘 찡그린 아이로 적혀 있습니다. 그런데 황야를 걷고 흙을 파면서 조금씩 달라집니다.`,
+        `이 책은 그것을 한 번에 말하지 않고, 마사나 벤 웨더스태프의 입을 빌려 흘립니다. 살이 좀 붙었다는 말, 얼굴빛이 좋아졌다는 말이 여기저기 나옵니다.`,
+        `셋째, 콜린을 다시 보십시오. 콜린은 자기가 곧 죽을 것이라고 믿고 있습니다. 등에 혹이 생길 것이라고도 믿습니다. 그런데 아무도 그것을 살펴본 적이 없었습니다.`,
+        `메리가 등을 들여다보고 아무것도 없다고 말해 주는 대목이 이 책에서 제일 크게 달라지는 자리입니다. 열 해 동안 아무도 하지 않던 말이었습니다. 어른들은 다들 그 아이를 달래기만 했습니다.`,
+        `콜린에게 필요했던 것은 위로가 아니라 사실이었습니다. 이 책은 그것을 아이의 입으로 말하게 합니다. 어른들은 끝까지 그 말을 못 합니다.`,
+        `넷째, 정원의 열쇠와 문을 세어 보십시오. 열쇠를 찾는 데 한 장이 들고, 문을 찾는 데 또 한 장이 듭니다. 열쇠가 있어도 문을 모르면 못 들어갑니다.`,
+        `그것을 알려 주는 것이 울새입니다. 이 책에서 사람이 아닌 것들이 하는 일이 큽니다. 울새, 황야의 바람, 씨앗, 그리고 디콘이 데리고 다니는 짐승들입니다.`,
+        `인물도 다시 보아야 할 사람이 있습니다.`,
+        `디콘을 그냥 착한 아이로 읽으면 절반만 읽은 것이 됩니다. 디콘의 집은 아주 가난합니다. 아이가 열둘이고 아버지가 없습니다. 디콘은 학교도 제대로 못 다닙니다.`,
+        `그런데 이 책에서 제일 여유로운 사람이 그 아이입니다. 아무것도 가진 것이 없는데 그렇습니다. 버넷은 그것을 설명하지 않고 그냥 보여 줍니다.`,
+        `디콘은 황야를 자기 집처럼 알고 다닙니다. 여우와 까마귀와 어린 양을 데리고 다니고, 짐승들이 그 아이를 무서워하지 않습니다. 그것이 그 아이가 가진 전부인데, 이 책에서는 그것이 제일 큰 것입니다.`,
+        `마사와 그 어머니도 다시 볼 만합니다. 이 집에서 아이들에게 바른말을 하는 어른은 그 두 사람뿐입니다. 마사는 하녀인데 메리에게 옷을 혼자 입으라고 합니다. 그전까지 메리는 옷도 혼자 입어 본 적이 없었습니다.`,
+        `크레이븐 씨도 그렇습니다. 그 사람을 나쁜 아버지로 읽으면 놓치는 것이 있습니다. 그 사람은 아내를 잃고 정원 문을 잠근 사람입니다. 아들을 보지 않은 것은 미워서가 아니라 볼 때마다 아내가 떠올랐기 때문입니다.`,
+        `그 시절 사정도 알아 두면 좋습니다. 이 이야기의 배경은 영국 요크셔의 황야입니다. 나무가 거의 없고 히스라는 낮은 풀이 덮인 벌판입니다. 봄이 오면 그 벌판이 보랏빛이 됩니다.`,
+        `그리고 이 책이 나온 때는 영국 사람들이 아이를 기르는 법을 다시 생각하기 시작하던 무렵입니다. 그전까지 아픈 아이는 방 안에 두고 바람을 쐬지 못하게 했습니다. 콜린이 열 해 동안 방에 있었던 까닭이 그것입니다.`,
+        `그런데 그 무렵 의사들이 반대로 말하기 시작했습니다. 바깥바람과 볕이 아이에게 좋다는 것이었습니다. 이 책은 그 새 생각을 이야기로 옮겨 놓은 것이기도 합니다.`,
+        `메리가 인도에서 온 것도 그 시절 영국 사정입니다. 인도는 그때 영국이 다스리던 땅이었고, 그리로 건너가 사는 영국 사람이 많았습니다. 이 책에서 메리가 인도 하인들을 부리던 말투로 마사에게 말하는 대목이 있는데, 그 시절 그런 아이가 실제로 있었습니다.`,
+        `이 책이 붙들고 있는 물음은 두 가지입니다.`,
+        `하나는 사람이 무엇으로 낫느냐는 것입니다. 이 책에는 의사도 나오고 약도 나옵니다. 그런데 콜린을 일으킨 것은 그것이 아니었습니다. 흙을 파고 씨를 심고 봄이 오는 것을 지켜본 것이었습니다.`,
+        `다른 하나는 사람도 가꾸어야 하느냐는 것입니다. 이 책은 정원과 아이를 나란히 놓습니다. 열 해 동안 손대지 않은 정원과 열 해 동안 방에 있던 아이가 같은 봄에 살아납니다.`,
+        `그러니 이 책의 제목이 가리키는 것은 담 안의 땅만이 아닙니다. 문을 잠가 둔 곳은 그 집 사람들의 마음이었습니다.`,
+        `책이 나오고 한참 뒤부터 크게 읽히기 시작했습니다. 지금은 영어로 쓴 어린이 책 가운데 가장 널리 읽히는 축에 듭니다. 요크셔에는 이 책의 정원을 본떠 만든 곳도 여럿 있습니다.`,
+        `언젠가 이 책을 다시 읽게 되거든, 이번에는 계절만 따라가며 읽어 보십시오. 메리가 온 것은 겨울이고, 정원을 찾은 것은 이른 봄이고, 콜린이 걷는 것은 여름입니다. 이 책은 계절이 이야기를 밀고 갑니다.`,
+        `마지막으로 생각해 볼 것을 남겨 둡니다. 답은 적어 두지 않겠습니다.`,
+        `메리가 처음에 못된 아이로 나오는 것을 버넷은 왜 그렇게 적었을까요? 처음부터 착한 아이였으면 이 이야기는 어떻게 달라졌을까요?`,
+        `콜린이 정말로 몸이 아팠던 것일까요, 아니면 아프다고 믿었던 것일까요? 이 책은 그 둘을 갈라 놓지 않습니다.`,
+        `그리고 크레이븐 씨가 열 해 동안 아들을 보지 않은 것을 우리는 어떻게 보아야 할까요. 이 물음은 어른이 되어 다시 읽어도 답하기가 쉽지 않습니다.`
+    ]
+};
+
+const AFTER_SEGS = (() => {
+    const segs = [];
+    AFTERWORD.paras.forEach((html, paraIdx) => {
+        splitSegments(html).forEach((piece, k) => {
+            segs.push({ paraIdx, html: piece, start: k === 0 });
+        });
+    });
+    return segs;
+})();
+
 // 조각 묶음을 문단 단위로 다시 묶어 화면에 그릴 모양으로 만든다.
 // 앞 쪽에서 이어진 문단은 첫 줄을 들여쓰지 않는다.
 function runHtml(segs, a, b) {
@@ -748,16 +804,100 @@ function quizPage(part) {
         </div>`;
 }
 
-function endPage() {
+/* 읽고 나서 — 장과 같은 방식으로 쪽을 나눈다. 그림은 오른쪽 위에 얹힌다. */
+const AFTER_FOOT = `<p class="after-home"><a class="home-btn" href="../../../../../">학습 허브로 돌아가기</a></p>`;
+
+function paginateAfterword() {
+    const segs = AFTER_SEGS;
+    const arts = AFTERWORD.art || [];
+    const { usable, headHeight, artHeight } = PROBE;
+    const headHtml = `<h2>${AFTERWORD.title}</h2>`;
+    const totalH = PROBE.measure(runHtml(segs, 0, segs.length));
+
+    const underArt = Math.max(60, usable - artHeight);
+
+    // 맨 끝에는 학습 허브로 가는 단추가 붙는다. 그 높이를 미리 빼 두지 않으면
+    // 마지막 쪽만 넘친다.
+    const footH = PROBE.measure(AFTER_FOOT);
+
+    const capsOf = slots => {
+        const caps = [];
+        slots.forEach(kind => { caps.push(usable); caps.push(kind === 'img' ? underArt : usable); });
+        caps[caps.length - 1] = Math.max(60, caps[caps.length - 1] - footH);
+        return caps;
+    };
+
+    const minSpreads = Math.max(arts.length, 1);
+    const maxSpreads = Math.max(minSpreads, Math.floor(segs.length / 2));
+    let spreadCount = minSpreads;
+    while (spreadCount < maxSpreads) {
+        const caps = capsOf(slotPlan(arts.length, spreadCount - arts.length));
+        if (caps.reduce((a, b) => a + b, 0) >= totalH + headHeight) break;
+        spreadCount++;
+    }
+
+    let slots = slotPlan(arts.length, Math.max(0, spreadCount - arts.length));
+    let caps = capsOf(slots);
+    let ranges = fillPages(segs, caps, headHtml);
+    for (let guard = 0; guard < 8; guard++) {
+        const over = ranges.some(([a, b], n) =>
+            PROBE.measure((n === 0 ? headHtml : '') + runHtml(segs, a, b)) > caps[n] + 1);
+        if (!over || spreadCount >= maxSpreads) break;
+        spreadCount++;
+        slots = slotPlan(arts.length, Math.max(0, spreadCount - arts.length));
+        caps = capsOf(slots);
+        ranges = fillPages(segs, caps, headHtml);
+    }
+
+    const spreads = [];
+    let pageIdx = 0;
+    let artIdx = 0;
+    slots.forEach((kind, s) => {
+        const left = ranges[pageIdx++];
+        const right = ranges[pageIdx++];
+        spreads.push({
+            kind: 'after', first: s === 0, last: s === slots.length - 1,
+            art: kind === 'img' ? arts[artIdx++] : null, left, right
+        });
+    });
+    return spreads;
+}
+
+function afterSpreadPage(spread) {
+    const segs = AFTER_SEGS;
+    const head = spread.first ? `<h2>${AFTERWORD.title}</h2>` : '';
+    // 학습 허브로 돌아가는 길은 맨 끝에 한 번만 둔다.
+    const foot = spread.last ? AFTER_FOOT : '';
+
+    if (spread.art) {
+        return `
+            <div class="page page-story page-after">
+                <div class="story-page-left">
+                    ${head}
+                    ${runHtml(segs, spread.left[0], spread.left[1])}
+                </div>
+                <div class="story-page-right story-page-right-image">
+                    <div class="story-art-top">${artFrame(spread.art, AFTERWORD.emoji)}</div>
+                    ${runHtml(segs, spread.right[0], spread.right[1])}
+                    ${foot}
+                </div>
+            </div>`;
+    }
+
     return `
-        <div class="page page-end">
-            ${artFrame('end.png', '🌹')}
-            <h2>비밀의 화원을 다 읽었습니다</h2>
-            <a class="home-btn" href="../../../../../">학습 허브로 돌아가기</a>
+        <div class="page page-story page-after">
+            <div class="story-page-left">
+                ${head}
+                ${runHtml(segs, spread.left[0], spread.left[1])}
+            </div>
+            <div class="story-page-right story-page-right-text">
+                ${runHtml(segs, spread.right[0], spread.right[1])}
+                ${foot}
+            </div>
         </div>`;
 }
 
-const TWO_PAGE_KINDS = new Set(['chapter', 'toc', 'cover']);
+const TWO_PAGE_KINDS = new Set(['chapter', 'toc', 'cover', 'after']);
 
 let PAGES = [];
 let FOLIOS = [];
@@ -769,7 +909,7 @@ function buildPages() {
         ...TOC_GROUPS.map((_, i) => ({ kind: 'toc', part: i })),
         ...CHAPTERS.flatMap(paginateChapter),
         ...QUIZ_GROUPS.map((_, i) => ({ kind: 'quiz', part: i })),
-        { kind: 'end' }
+        ...paginateAfterword()
     ];
     PROBE.close();   // 쪽을 다 나눴으니 재는 데 쓰던 숨은 쪽은 치운다
 
@@ -790,7 +930,7 @@ function renderPage(page) {
         case 'toc': return tocPage(page.part);
         case 'chapter': return chapterSpreadPage(page);
         case 'quiz': return quizPage(page.part);
-        case 'end': return endPage();
+        case 'after': return afterSpreadPage(page);
         default: return '';
     }
 }
