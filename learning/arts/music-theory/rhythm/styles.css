@@ -145,3 +145,6 @@ button:focus-visible, a:focus-visible { outline: 3px solid #fff; outline-offset:
 .course-heading { padding: 20px; }
 .practice-topline { justify-content: flex-end; }
 .feedback:empty { display: none; }
+
+.topbar { grid-template-columns: 1fr auto; min-height: 56px; }
+.course-nav { padding-top: 4px; }
