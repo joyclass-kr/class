@@ -126,3 +126,17 @@ button:focus-visible, a:focus-visible { outline: 3px solid #fff; outline-offset:
     .rhythm-step { min-height: 48px; font-size: 11px; }
 }
 @media (prefers-reduced-motion: reduce) { *, *::before, *::after { transition: none !important; scroll-behavior: auto !important; } }
+
+
+.drum-console { margin-top: 18px; padding: 12px; border: 1px solid #596067; border-radius: 4px; background: linear-gradient(145deg,#2d3132,#17191a 62%,#0d0f10); box-shadow: inset 0 1px 0 rgba(255,255,255,.18), 0 8px 18px rgba(0,0,0,.38); font-family: "Courier New", monospace; }
+.drum-console-topline, .drum-screen, .drum-transport { display: flex; align-items: center; justify-content: space-between; }
+.drum-console-topline { padding: 2px 2px 9px; color: #a9b0ae; font-size: 9px; letter-spacing: .15em; }
+.drum-console-topline strong { color: #f0a16f; font-size: 15px; font-weight: 500; letter-spacing: .08em; }
+.drum-screen { min-height: 28px; padding: 6px 9px; border: 1px solid #8d624f; color: #db8d65; background: #1b100c; font-size: 9px; letter-spacing: .08em; box-shadow: inset 0 0 12px rgba(255,111,55,.08); }
+.drum-screen b { color: #c9a391; font-weight: 500; }
+.drum-pads { display: grid; grid-template-columns: repeat(4,1fr); gap: 6px; margin: 10px 0; }
+.drum-pads span { min-height: 42px; display: grid; place-items: center; border: 1px solid #858783; border-radius: 5px; color: #f3f0e9; background: linear-gradient(150deg,#8b8b85 0%,#62635f 48%,#3f403e 100%); box-shadow: inset 0 1px 0 rgba(255,255,255,.45), inset 0 -3px 0 rgba(0,0,0,.28), 0 2px 2px rgba(0,0,0,.45); font-size: 9px; font-weight: 700; letter-spacing: .04em; }
+.drum-pads span:nth-child(3n) { background: linear-gradient(150deg,#9a958a,#625d56 55%,#3e3b38); }
+.drum-transport { gap: 7px; }
+.drum-transport span { flex: 1; min-height: 28px; display: grid; place-items: center; border: 1px solid #687075; color: #d7dad6; background: #202426; font-size: 9px; font-weight: 700; box-shadow: inset 0 1px 0 rgba(255,255,255,.08); }
+@media (max-width: 600px) { .drum-pads span { min-height: 38px; font-size: 8px; } .drum-screen b { display: none; } }
