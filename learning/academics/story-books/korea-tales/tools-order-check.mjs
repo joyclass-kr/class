@@ -45,6 +45,32 @@ for (const b of books) {
           console.log(`[같은 주어 잇달림] ${where}\n    ${cur}\n  → ${nxt}`);
           continue;
         }
+        // 4) 쉼표로 끊긴 대사 사이에 딴 문장이 끼어들었다
+        //    '내가 온다고 해도 안 그치던 아기가,' / 호랑이는 발밑만 보았어요 / '곶감이라니까 뚝 그쳤어.'
+        //    — 가운데 문장이 두 도막 난 말을 갈라놓았다
+        if (isQuote(cur) && /[,]["'”]?\s*$/.test(cur) && !isQuote(nxt)) {
+          hits++;
+          console.log(`[대사가 갈림] ${where}
+    ${cur}
+  → ${nxt}`);
+          continue;
+        }
+        // 5) 이어지는 두 대사가 거의 같은 말이다
+        if (isQuote(cur) && isQuote(nxt)) {
+          const A = cur.replace(/[^가-힣]/g, ''), B = nxt.replace(/[^가-힣]/g, '');
+          if (A.length >= 5 && B.length >= 5) {
+            const short = A.length < B.length ? A : B, long = A.length < B.length ? B : A;
+            let same = 0;
+            for (const c of new Set(short)) if (long.includes(c)) same++;
+            if (same / new Set(short).size > 0.85) {
+              hits++;
+              console.log(`[대사가 겹침] ${where}
+    ${cur}
+  → ${nxt}`);
+              continue;
+            }
+          }
+        }
         // 3) 다 되었다는 말이 그것을 쓰는 말보다 뒤에 온다
         if (/(완성되었|다 되었|만들어졌)/.test(nxt) && /(쓰고|입고|들고|얹고|썼|입었)/.test(cur)) {
           hits++;
