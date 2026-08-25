@@ -444,6 +444,70 @@ const CHAPTER_SEGS = CHAPTERS.map(ch => {
     return segs;
 });
 
+// 읽고 나서 — 책마다 내용이 다르다. 장과 같은 방식으로 재서 나눈다.
+const AFTERWORD = {
+    title: '읽고 나서',
+    emoji: '👑',
+    art: [],
+    paras: [
+        `이 책의 제목은 『왕자와 거지』입니다. 두 사람을 나란히 놓은 제목입니다. 그런데 다 읽고 나면 알게 됩니다. 이 이야기가 보여 주려던 것은 두 사람이 얼마나 다른가가 아니라 얼마나 같은가였습니다.`,
+        `쓴 사람은 미국의 마크 트웨인입니다. 『톰 소여의 모험』과 『허클베리 핀의 모험』을 쓴 사람과 같은 사람입니다.`,
+        `그런데 이 책은 그 두 권과 아주 다릅니다. 미국이 아니라 영국이 배경이고, 그것도 사백오십 년 전 영국입니다. 트웨인은 이 책을 쓰려고 그 시절 영국 기록을 여러 해 동안 읽었습니다.`,
+        `그래서 이 책에는 그 시절 옷과 음식과 법이 꽤 정확하게 적혀 있습니다. 트웨인은 소설 뒤에 자기가 어디서 그것을 가져왔는지 주를 달아 두기까지 했습니다.`,
+        `트웨인은 이 책을 자기가 쓴 것 가운데 제일 아낀다고 했습니다. 다른 책들은 웃기려고 쓴 것이 많은데 이 책은 그렇지 않다는 것이었습니다.`,
+        `책은 천팔백팔십일 년에 나왔습니다. 트웨인이 마흔여섯 살 때입니다.`,
+        `그 무렵 트웨인은 미국에서 제일 웃기는 작가로 통했습니다. 그런 사람이 갑자기 사백 년 전 영국 이야기를 내놓자 사람들이 어리둥절해했습니다.`,
+        `이 이야기에 나오는 에드워드 왕자는 실제 사람입니다. 헨리 팔세의 아들 에드워드 육세입니다. 아홉 살에 왕이 되었고 열다섯에 병으로 세상을 떠났습니다.`,
+        `톰 캔티는 지어낸 사람입니다. 그러니 이 책은 실제 왕 하나에 지어낸 아이 하나를 붙여 만든 이야기입니다.`,
+        `에드워드 육세는 아버지 헨리 팔세와 아주 다른 왕이었습니다. 아버지는 무서운 왕으로 남았고, 아들은 짧게 다스리고 일찍 세상을 떠났습니다.`,
+        `원작은 여기 실린 것보다 깁니다. 왕자가 떠도는 동안 만나는 사람들이 훨씬 많습니다. 여기서는 두 아이가 바뀌고 되돌아오는 줄기만 골라 실었습니다.`,
+        `이제 다시 볼 대목을 짚어 봅시다.`,
+        `첫째, 옷을 바꿔 입는 대목을 다시 읽어 보십시오. 두 아이는 거울 앞에 나란히 섭니다. 그리고 놀랍니다. 얼굴이 똑같았기 때문입니다.`,
+        `그런데 얼굴이 같은 것보다 더 중요한 것이 있습니다. 옷을 바꿔 입자 아무도 알아보지 못했다는 것입니다. 궁전 사람들도 못 알아보고 거리 사람들도 못 알아봤습니다.`,
+        `사람을 알아보는 것이 얼굴이 아니라 옷이었던 것입니다. 이 이야기 전체가 그 한 가지를 보여 줍니다.`,
+        `왕자가 아무리 자기가 왕자라고 외쳐도 아무도 믿지 않습니다. 옷이 아니라고 말하고 있었기 때문입니다. 사람들은 눈앞의 사람보다 그 사람이 걸친 것을 믿었습니다.`,
+        `둘째, 왕자가 밖에서 본 것을 세어 보십시오. 굶는 사람, 매를 맞는 사람, 죄 없이 갇힌 사람, 그리고 아주 작은 죄로 목숨을 잃는 사람입니다.`,
+        `그 시절 영국에서는 사형에 처하는 죄가 아주 많았습니다. 그러니 왕자가 본 것은 지어낸 것이 아닙니다. 트웨인은 그 시절 재판 기록을 읽고 그 대목들을 적었습니다.`,
+        `양 한 마리를 훔쳐 목숨을 잃은 사람 이야기가 그 시절 기록에 실제로 남아 있습니다. 트웨인은 그런 기록을 여럿 모아 두었다가 이 책에 넣었습니다.`,
+        `셋째, 톰이 궁전에서 하는 일을 다시 보십시오. 톰은 처음에 겁을 먹습니다. 그런데 며칠 지나자 재판 자리에 앉아 사람들의 사정을 듣기 시작합니다.`,
+        `그리고 톰은 몇 사람을 살립니다. 법을 몰라서 살립니다. 그 시절 법으로는 죽여야 하는데, 톰이 보기에는 그럴 일이 아니었기 때문입니다.`,
+        `그러니 이 책에서 좋은 판결을 내리는 사람은 법을 배운 사람이 아니라 그 자리를 겪어 본 아이였습니다.`,
+        `톰은 뒷골목에서 자랐습니다. 그러니 굶은 사람이 왜 훔치는지, 매를 맞은 사람이 왜 도망치는지를 압니다. 궁전에서 자란 사람은 그것을 배울 데가 없었습니다.`,
+        `넷째, 옥새 대목을 다시 읽어 보십시오. 나라의 도장을 잃어버려 대관식을 못 할 판입니다. 온 궁전이 그것을 찾습니다.`,
+        `그런데 톰은 그것을 가지고 있었습니다. 그것이 무엇인지 몰라서 호두를 깨는 데 썼습니다. 이 대목이 이 책에서 제일 웃기고 제일 뼈아픈 자리입니다.`,
+        `인물도 다시 보아야 할 사람이 있습니다.`,
+        `마일스 헨든을 그냥 도와주는 사람으로 읽으면 절반만 읽은 것이 됩니다. 그 사람은 왕자의 말을 하나도 믿지 않습니다. 미친 아이라고 여깁니다.`,
+        `그런데도 곁을 지킵니다. 대신 매를 맞기까지 합니다. 믿지 않으면서 지키는 것이 믿고 지키는 것보다 어렵습니다.`,
+        `그리고 마일스 헨든에게는 자기 사정도 있었습니다. 여러 해 만에 고향에 돌아왔는데 형이 재산을 다 차지하고 그를 내쫓습니다. 자기도 잃은 사람이 남을 지킨 것입니다.`,
+        `존 캔티도 다시 볼 만합니다. 톰의 아버지인데 아이를 때리고 구걸을 시킵니다. 그런데 이 책은 그 사람도 가난 때문에 그렇게 되었다고 슬쩍 적어 둡니다.`,
+        `그 시절 사정도 알아 두면 좋습니다. 이 이야기의 배경은 천오백사십칠 년 영국입니다. 헨리 팔세가 세상을 떠나고 아들이 왕이 되던 해입니다.`,
+        `그때 런던에는 사람이 팔만 명쯤 살았습니다. 지금 우리나라의 작은 도시만 한 규모입니다. 그런데 그 안에 궁전과 거지가 몇 걸음 거리에 있었습니다.`,
+        `그리고 그 시절에는 왕이 하는 일이 아주 컸습니다. 사람의 목숨을 살리고 죽이는 것을 한마디로 정했습니다. 그러니 왕이 무엇을 아느냐가 사람들의 삶을 갈랐습니다.`,
+        `이 책이 붙들고 있는 물음은 두 가지입니다.`,
+        `하나는 사람이 자리에 따라 달라 보이느냐는 것입니다. 이 책은 그렇다고 말합니다. 같은 아이가 옷 하나로 왕이 되고 거지가 됩니다.`,
+        `다른 하나는 다스리는 사람이 무엇을 알아야 하느냐는 것입니다. 에드워드는 궁전에서 자란 아이입니다. 밖에 나가 몇 달을 굶고 맞아 본 뒤에야 자기 나라가 어떤 곳인지 압니다.`,
+        `이 책은 마지막에 그 왕이 어떻게 다스렸는지 한 줄로 적습니다. 그가 내린 벌이 그 시절 다른 왕들보다 훨씬 가벼웠다고요. 실제 에드워드 육세도 그랬다고 전합니다.`,
+        `다만 그 왕은 열다섯에 세상을 떠납니다. 그러니 이 이야기가 남긴 것은 오래가지 못했습니다. 트웨인은 그것도 적어 두었습니다.`,
+        `그러니 이 책의 마지막은 밝기만 하지 않습니다. 왕이 무엇을 알게 되었든 그 왕은 곧 없어졌습니다. 그다음에 온 것은 다시 예전 같은 다스림이었습니다.`,
+        `책이 나오자 잘 팔렸습니다. 그런데 트웨인의 다른 책들만큼 알려지지는 않았습니다. 지금은 연극과 영화로 여러 번 만들어졌습니다.`,
+        `언젠가 이 책을 다시 읽게 되거든, 이번에는 톰만 따라가며 읽어 보십시오. 톰은 왕 노릇을 하면서 점점 그 자리가 편해집니다. 그리고 그것을 스스로 무서워합니다.`,
+        `마지막으로 생각해 볼 것을 남겨 둡니다. 답은 적어 두지 않겠습니다.`,
+        `톰이 왕 노릇을 계속했다면 어떻게 되었을까요? 톰은 가난한 사람의 사정을 아는 아이였습니다. 그런데 왕이 될 자격은 없었습니다. 아는 것과 자격 가운데 무엇이 먼저일까요?`,
+        `마일스 헨든이 왕자를 믿지 않으면서도 지킨 것을 우리는 어떻게 보아야 할까요?`,
+        `그리고 왕자가 밖에 나가 보지 않았다면 어떤 왕이 되었을까요. 이 물음은 어른이 되어 다시 읽어도 답하기가 쉽지 않습니다.`
+    ]
+};
+
+const AFTER_SEGS = (() => {
+    const segs = [];
+    AFTERWORD.paras.forEach((html, paraIdx) => {
+        splitSegments(html).forEach((piece, k) => {
+            segs.push({ paraIdx, html: piece, start: k === 0 });
+        });
+    });
+    return segs;
+})();
+
 // 조각 묶음을 문단 단위로 다시 묶어 화면에 그릴 모양으로 만든다.
 // 앞 쪽에서 이어진 문단은 첫 줄을 들여쓰지 않는다.
 function runHtml(segs, a, b) {
@@ -725,16 +789,100 @@ function quizPage(part) {
         </div>`;
 }
 
-function endPage() {
+/* 읽고 나서 — 장과 같은 방식으로 쪽을 나눈다. 그림은 오른쪽 위에 얹힌다. */
+const AFTER_FOOT = `<p class="after-home"><a class="home-btn" href="../../../../../">학습 허브로 돌아가기</a></p>`;
+
+function paginateAfterword() {
+    const segs = AFTER_SEGS;
+    const arts = AFTERWORD.art || [];
+    const { usable, headHeight, artHeight } = PROBE;
+    const headHtml = `<h2>${AFTERWORD.title}</h2>`;
+    const totalH = PROBE.measure(runHtml(segs, 0, segs.length));
+
+    const underArt = Math.max(60, usable - artHeight);
+
+    // 맨 끝에는 학습 허브로 가는 단추가 붙는다. 그 높이를 미리 빼 두지 않으면
+    // 마지막 쪽만 넘친다.
+    const footH = PROBE.measure(AFTER_FOOT);
+
+    const capsOf = slots => {
+        const caps = [];
+        slots.forEach(kind => { caps.push(usable); caps.push(kind === 'img' ? underArt : usable); });
+        caps[caps.length - 1] = Math.max(60, caps[caps.length - 1] - footH);
+        return caps;
+    };
+
+    const minSpreads = Math.max(arts.length, 1);
+    const maxSpreads = Math.max(minSpreads, Math.floor(segs.length / 2));
+    let spreadCount = minSpreads;
+    while (spreadCount < maxSpreads) {
+        const caps = capsOf(slotPlan(arts.length, spreadCount - arts.length));
+        if (caps.reduce((a, b) => a + b, 0) >= totalH + headHeight) break;
+        spreadCount++;
+    }
+
+    let slots = slotPlan(arts.length, Math.max(0, spreadCount - arts.length));
+    let caps = capsOf(slots);
+    let ranges = fillPages(segs, caps, headHtml);
+    for (let guard = 0; guard < 8; guard++) {
+        const over = ranges.some(([a, b], n) =>
+            PROBE.measure((n === 0 ? headHtml : '') + runHtml(segs, a, b)) > caps[n] + 1);
+        if (!over || spreadCount >= maxSpreads) break;
+        spreadCount++;
+        slots = slotPlan(arts.length, Math.max(0, spreadCount - arts.length));
+        caps = capsOf(slots);
+        ranges = fillPages(segs, caps, headHtml);
+    }
+
+    const spreads = [];
+    let pageIdx = 0;
+    let artIdx = 0;
+    slots.forEach((kind, s) => {
+        const left = ranges[pageIdx++];
+        const right = ranges[pageIdx++];
+        spreads.push({
+            kind: 'after', first: s === 0, last: s === slots.length - 1,
+            art: kind === 'img' ? arts[artIdx++] : null, left, right
+        });
+    });
+    return spreads;
+}
+
+function afterSpreadPage(spread) {
+    const segs = AFTER_SEGS;
+    const head = spread.first ? `<h2>${AFTERWORD.title}</h2>` : '';
+    // 학습 허브로 돌아가는 길은 맨 끝에 한 번만 둔다.
+    const foot = spread.last ? AFTER_FOOT : '';
+
+    if (spread.art) {
+        return `
+            <div class="page page-story page-after">
+                <div class="story-page-left">
+                    ${head}
+                    ${runHtml(segs, spread.left[0], spread.left[1])}
+                </div>
+                <div class="story-page-right story-page-right-image">
+                    <div class="story-art-top">${artFrame(spread.art, AFTERWORD.emoji)}</div>
+                    ${runHtml(segs, spread.right[0], spread.right[1])}
+                    ${foot}
+                </div>
+            </div>`;
+    }
+
     return `
-        <div class="page page-end">
-            ${artFrame('end.png', '🪟')}
-            <h2>왕자와 거지를 다 읽었습니다</h2>
-            <a class="home-btn" href="../../../../../">학습 허브로 돌아가기</a>
+        <div class="page page-story page-after">
+            <div class="story-page-left">
+                ${head}
+                ${runHtml(segs, spread.left[0], spread.left[1])}
+            </div>
+            <div class="story-page-right story-page-right-text">
+                ${runHtml(segs, spread.right[0], spread.right[1])}
+                ${foot}
+            </div>
         </div>`;
 }
 
-const TWO_PAGE_KINDS = new Set(['chapter', 'toc', 'cover']);
+const TWO_PAGE_KINDS = new Set(['chapter', 'toc', 'cover', 'after']);
 
 let PAGES = [];
 let FOLIOS = [];
@@ -746,7 +894,7 @@ function buildPages() {
         ...TOC_GROUPS.map((_, i) => ({ kind: 'toc', part: i })),
         ...CHAPTERS.flatMap(paginateChapter),
         ...QUIZ_GROUPS.map((_, i) => ({ kind: 'quiz', part: i })),
-        { kind: 'end' }
+        ...paginateAfterword()
     ];
     PROBE.close();   // 쪽을 다 나눴으니 재는 데 쓰던 숨은 쪽은 치운다
 
@@ -767,7 +915,7 @@ function renderPage(page) {
         case 'toc': return tocPage(page.part);
         case 'chapter': return chapterSpreadPage(page);
         case 'quiz': return quizPage(page.part);
-        case 'end': return endPage();
+        case 'after': return afterSpreadPage(page);
         default: return '';
     }
 }
