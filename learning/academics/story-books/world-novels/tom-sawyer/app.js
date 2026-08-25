@@ -550,6 +550,83 @@ const CHAPTER_SEGS = CHAPTERS.map(ch => {
     return segs;
 });
 
+// 읽고 나서 — 책마다 내용이 다르다. 장과 같은 방식으로 재서 나눈다.
+const AFTERWORD = {
+    title: '읽고 나서',
+    emoji: '🪵',
+    art: [],
+    paras: [
+        `이 책의 제목은 『톰 소여의 모험』입니다. 모험이라는 말이 붙어 있는데, 이 책의 앞부분에는 모험이라고 할 만한 것이 별로 없습니다.`,
+        `울타리를 칠하고 학교에서 혼나고 주일학교에서 상을 타려고 잔꾀를 부립니다. 그러다 한밤중의 묘지에서 이야기가 확 바뀝니다.`,
+        `쓴 사람은 미국의 마크 트웨인입니다. 본디 이름은 새뮤얼 클레먼스이고, 마크 트웨인은 뱃사람들이 물 깊이를 잴 때 쓰던 말에서 가져온 붓 이름입니다.`,
+        `이 책의 배경인 세인트피터즈버그라는 마을은 트웨인이 자란 미주리주 해니벌을 옮겨 놓은 것입니다. 미시시피강가의 작은 마을이었습니다.`,
+        `그리고 톰에게도 바탕이 된 사람이 있습니다. 트웨인은 톰이 자기와 친구 셋을 섞어 만든 아이라고 적어 두었습니다.`,
+        `헉의 모델은 톰 블랭큰십이라는 실제 아이입니다. 술꾼의 아들이었고 마을 어머니들이 다들 싫어했습니다. 그리고 트웨인은 그 아이가 마을에서 제일 자유로운 아이였다고 적었습니다.`,
+        `트웨인은 그 아이를 아주 오래 기억했습니다. 그리고 여덟 해 뒤에 그 아이를 주인공으로 삼아 책을 한 권 더 씁니다. 그것이 이 책의 진짜 뒷이야기입니다.`,
+        `책은 천팔백칠십육 년에 나왔습니다. 트웨인이 마흔한 살 때입니다.`,
+        `그런데 이 책은 처음에 어른을 위해 쓴 것이었습니다. 어릴 때를 돌아보는 어른의 책으로 생각했는데, 출판사와 아내가 아이 책으로 내자고 해서 그렇게 되었습니다.`,
+        `그래서 이 책에는 두 가지 목소리가 섞여 있습니다. 아이가 겪는 일을 적는 목소리와, 그것을 멀리서 웃으며 보는 어른의 목소리입니다.`,
+        `그래서 이 책에는 아이가 못 알아들을 농담이 여럿 들어 있습니다. 주일학교의 교장이 손님 앞에서 잘난 척하는 대목 같은 것이 그렇습니다.`,
+        `이제 다시 볼 대목을 짚어 봅시다.`,
+        `첫째, 울타리 칠하기를 다시 읽어 보십시오. 이 책에서 제일 유명한 장면입니다. 톰은 벌로 울타리를 칠하게 되었는데, 그것을 아주 재미있는 일처럼 굽니다.`,
+        `그러자 지나가던 아이들이 자기도 하겠다고 조릅니다. 그리고 그 차례를 사려고 물건까지 줍니다. 톰은 손 하나 대지 않고 울타리를 다 칠하고 물건도 잔뜩 얻습니다.`,
+        `그 대목 끝에 트웨인이 한 줄 적어 둡니다. 일과 놀이의 차이는 하지 않아도 되느냐 해야 하느냐에 있을 뿐이라고요.`,
+        `그 한 줄이 이 책이 어른의 책이기도 한 까닭입니다. 그리고 톰은 그 방법을 마지막 장에서 헉에게 다시 씁니다.`,
+        `갖기 어려운 것으로 만들면 갖고 싶어집니다. 톰은 그것을 열두 살에 알아냈습니다. 그리고 그 방법으로 헉을 붙잡아 둡니다.`,
+        `둘째, 묘지에서 본 것을 다시 보십시오. 두 아이가 그날 밤 본 것 때문에 이 책의 절반이 무거워집니다. 열두 살짜리가 지고 있기에는 무거운 것이었습니다.`,
+        `그리고 두 아이는 아무에게도 말하지 않기로 피로 맹세합니다. 그 맹세를 어기면 그 자리에서 쓰러져 죽는다고 서로 믿었습니다.`,
+        `그리고 그 종이를 판자 밑에 묻습니다. 종이는 물에 지워지니까 판자에 피로 써야 한다고 헉이 일러 줍니다. 헉은 그런 것을 아주 많이 알고 있었습니다.`,
+        `셋째, 법정 대목을 다시 읽어 보십시오. 톰은 그 맹세를 깹니다. 헉에게도 말하지 않고 혼자 변호인을 찾아갑니다.`,
+        `그러니 톰이 법정에서 일어선 것은 용기가 아니라 그 이상입니다. 자기가 죽을 것이라고 믿으면서 한 것입니다. 그리고 사람 죽인 사람이 그 방에 앉아 있었습니다.`,
+        `그 사람은 증인으로 나와 있었습니다. 그러니 톰이 이름을 대는 순간 그 사람과 눈이 마주치게 되어 있었습니다.`,
+        `넷째, 동굴 대목을 다시 보십시오. 톰과 베키가 사흘을 갇힙니다. 그 안에서 톰이 하는 일을 세어 보십시오.`,
+        `촛불을 아끼고, 물이 떨어지는 자리를 찾고, 연줄을 갈림길마다 묶어 두고 한 갈래씩 들어가 봅니다. 그리고 흉터 조를 본 것을 베키에게 말하지 않습니다.`,
+        `그것을 혼자 지고 있는 것이 그 사흘 동안 톰이 한 제일 어려운 일이었습니다. 말하면 베키가 한 걸음도 못 걷게 되기 때문입니다.`,
+        `그 대신 톰은 저쪽에 사람이 다녀간 흔적이 있으니 길이 있을 것이라고 말합니다. 아주 틀린 말도 아니었습니다. 흉터 조가 드나들던 길이 실제로 있었으니까요.`,
+        `인물도 다시 보아야 할 사람이 있습니다.`,
+        `폴리 이모를 그냥 잔소리하는 어른으로 읽으면 놓치는 것이 있습니다. 그 사람은 죽은 언니의 아이를 맡아 기르는 사람입니다.`,
+        `그리고 톰을 때리고 나서 늘 자기가 더 아파합니다. 이 책은 그 사람이 혼자 있을 때 어떤지를 몇 번 보여 줍니다. 톰이 없어졌을 때 우는 대목이 그렇습니다.`,
+        `머프 포터도 다시 볼 만합니다. 그 사람은 자기가 하지 않은 일을 자기가 했다고 믿습니다. 취하면 기억이 나지 않는 사람이었기 때문입니다.`,
+        `그러니 그 사람은 아니라고 말할 수도 없는 자리에 있었습니다. 이 책에서 제일 딱한 자리입니다.`,
+        `흉터 조도 짚어 둘 만합니다. 이 책은 그 사람이 왜 그렇게 되었는지를 한 줄로 알려 줍니다. 오 년 전에 부랑자라고 몰려 매를 맞은 일입니다.`,
+        `그것이 그 사람을 옳게 만들지는 않습니다. 다만 트웨인은 까닭 없는 악당을 만들지 않았습니다.`,
+        `그리고 마지막에 톰이 그 사람의 무덤 앞에서 느낀 것을 다시 보십시오. 무서움이 아니라 딱한 마음이었습니다. 자기도 그 동굴에서 사흘을 있었기 때문입니다.`,
+        `그 시절 사정도 알아 두면 좋습니다. 이 이야기의 배경은 백팔십 년쯤 전 미국 미주리주입니다. 미시시피강을 증기선이 오르내리던 때입니다.`,
+        `그 시절 시골 학교는 한 교실에 여러 나이의 아이가 앉았고, 석판에 글씨를 쓰고 지우며 배웠습니다. 종이가 비쌌기 때문입니다. 매도 흔했습니다.`,
+        `미신도 아주 많았습니다. 이 책에는 사마귀를 없애는 방법이 여러 가지 나옵니다. 죽은 고양이를 쓰는 법, 썩은 나무 웅덩이의 물을 쓰는 법 같은 것입니다.`,
+        `그것을 트웨인이 지어낸 것이 아닙니다. 그 시절 아이들이 실제로 주고받던 것을 적어 놓은 것입니다.`,
+        `그리고 이 책에는 노예 제도가 있는 마을이 그대로 나옵니다. 트웨인이 자란 해니벌도 그런 마을이었습니다. 이 책에서는 그것이 배경으로만 지나갑니다.`,
+        `그것을 정면으로 다룬 것이 여덟 해 뒤에 나온 『허클베리 핀의 모험』입니다. 그 책에서 헉과 짐이 뗏목을 타고 강을 내려갑니다.`,
+        `그러니 이 두 권을 이어 읽으면 좋습니다. 같은 마을에서 시작해서 아주 다른 데로 갑니다.`,
+        `이 책이 붙들고 있는 것은 두 가지입니다.`,
+        `하나는 아이가 언제 어른의 일을 만나느냐는 것입니다. 톰은 놀이로 시작해서 사람이 죽는 것을 보고, 법정에 서고, 사흘을 굶습니다. 그 사이에 톰이 달라집니다.`,
+        `다만 이 책은 그것을 크게 말하지 않습니다. 마지막 장에서 트웨인이 한 줄 적어 둡니다. 이 이야기는 소년의 이야기라 여기서 멈추어야 한다고요.`,
+        `다른 하나는 마을이 사람을 어떻게 보느냐는 것입니다. 톰은 하루아침에 마을에서 제일 유명한 아이가 됩니다. 그 전까지는 커서 뭐가 될지 모르겠다는 소리를 듣던 아이였습니다.`,
+        `그리고 마지막 장의 헉을 보십시오. 만이천 달러가 생겼는데 헉은 그것이 좋지 않습니다. 돈이 생기니 사람들이 그 아이를 집에 넣고 학교에 보내려 합니다.`,
+        `이 책은 그것을 웃기게 적어 놓았습니다. 그런데 웃고 나면 남는 것이 있습니다. 다들 그렇게 산다는 말이 답이 되지 않는 사람도 있다는 것입니다.`,
+        `헉은 그것을 아주 정확하게 말합니다. 나는 다들이 아니라고요. 열세 살짜리가 한 말치고는 오래 남는 말입니다.`,
+        `책이 나오자 처음에는 크게 팔리지 않았습니다. 그러다 몇 해 지나 널리 읽혔고, 지금은 미국 어린이 책의 고전으로 꼽힙니다.`,
+        `트웨인의 고향 해니벌에는 지금 톰 소여의 집이라는 곳이 있습니다. 그리고 해마다 울타리 칠하기 대회가 열립니다. 이 책에 나온 그 울타리를 흉내 낸 것입니다.`,
+        `동굴도 실제로 있습니다. 마크 트웨인 동굴이라고 부르는데, 사람들이 구경하러 갑니다. 트웨인도 어릴 때 그 안에서 길을 잃을 뻔한 적이 있다고 적었습니다.`,
+        `그 동굴에는 실제로 벽에 그을음으로 쓴 이름이 가득합니다. 백 년도 더 된 이름이 아직 남아 있습니다. 이 책에 나오는 그대로입니다.`,
+        `언젠가 이 책을 다시 읽게 되거든, 이번에는 폴리 이모만 따라가며 읽어 보십시오. 그 사람이 톰이 없을 때 하는 말과 톰 앞에서 하는 말을 나란히 놓아 보십시오.`,
+        `마지막으로 생각해 볼 것을 남겨 둡니다. 답은 적어 두지 않겠습니다.`,
+        `톰이 법정에서 일어선 것과 그 전까지 입을 다물고 있던 것 가운데, 어느 쪽이 더 그 아이다웠을까요?`,
+        `톰이 마지막에 헉을 도둑단으로 꾀어 붙잡아 둔 것은 잘한 일이었을까요? 헉을 위한 일이었을까요, 톰을 위한 일이었을까요?`,
+        `그리고 헉이 견디지 못한 것은 무엇이었을까요. 잘 먹고 잘 자는 집이었는데도 그랬습니다. 이 물음은 어른이 되어 다시 읽어도 답하기가 쉽지 않습니다.`
+    ]
+};
+
+const AFTER_SEGS = (() => {
+    const segs = [];
+    AFTERWORD.paras.forEach((html, paraIdx) => {
+        splitSegments(html).forEach((piece, k) => {
+            segs.push({ paraIdx, html: piece, start: k === 0 });
+        });
+    });
+    return segs;
+})();
+
 // 조각 묶음을 문단 단위로 다시 묶어 화면에 그릴 모양으로 만든다.
 // 앞 쪽에서 이어진 문단은 첫 줄을 들여쓰지 않는다.
 function runHtml(segs, a, b) {
@@ -831,16 +908,100 @@ function quizPage(part) {
         </div>`;
 }
 
-function endPage() {
+/* 읽고 나서 — 장과 같은 방식으로 쪽을 나눈다. 그림은 오른쪽 위에 얹힌다. */
+const AFTER_FOOT = `<p class="after-home"><a class="home-btn" href="../../../../../">학습 허브로 돌아가기</a></p>`;
+
+function paginateAfterword() {
+    const segs = AFTER_SEGS;
+    const arts = AFTERWORD.art || [];
+    const { usable, headHeight, artHeight } = PROBE;
+    const headHtml = `<h2>${AFTERWORD.title}</h2>`;
+    const totalH = PROBE.measure(runHtml(segs, 0, segs.length));
+
+    const underArt = Math.max(60, usable - artHeight);
+
+    // 맨 끝에는 학습 허브로 가는 단추가 붙는다. 그 높이를 미리 빼 두지 않으면
+    // 마지막 쪽만 넘친다.
+    const footH = PROBE.measure(AFTER_FOOT);
+
+    const capsOf = slots => {
+        const caps = [];
+        slots.forEach(kind => { caps.push(usable); caps.push(kind === 'img' ? underArt : usable); });
+        caps[caps.length - 1] = Math.max(60, caps[caps.length - 1] - footH);
+        return caps;
+    };
+
+    const minSpreads = Math.max(arts.length, 1);
+    const maxSpreads = Math.max(minSpreads, Math.floor(segs.length / 2));
+    let spreadCount = minSpreads;
+    while (spreadCount < maxSpreads) {
+        const caps = capsOf(slotPlan(arts.length, spreadCount - arts.length));
+        if (caps.reduce((a, b) => a + b, 0) >= totalH + headHeight) break;
+        spreadCount++;
+    }
+
+    let slots = slotPlan(arts.length, Math.max(0, spreadCount - arts.length));
+    let caps = capsOf(slots);
+    let ranges = fillPages(segs, caps, headHtml);
+    for (let guard = 0; guard < 8; guard++) {
+        const over = ranges.some(([a, b], n) =>
+            PROBE.measure((n === 0 ? headHtml : '') + runHtml(segs, a, b)) > caps[n] + 1);
+        if (!over || spreadCount >= maxSpreads) break;
+        spreadCount++;
+        slots = slotPlan(arts.length, Math.max(0, spreadCount - arts.length));
+        caps = capsOf(slots);
+        ranges = fillPages(segs, caps, headHtml);
+    }
+
+    const spreads = [];
+    let pageIdx = 0;
+    let artIdx = 0;
+    slots.forEach((kind, s) => {
+        const left = ranges[pageIdx++];
+        const right = ranges[pageIdx++];
+        spreads.push({
+            kind: 'after', first: s === 0, last: s === slots.length - 1,
+            art: kind === 'img' ? arts[artIdx++] : null, left, right
+        });
+    });
+    return spreads;
+}
+
+function afterSpreadPage(spread) {
+    const segs = AFTER_SEGS;
+    const head = spread.first ? `<h2>${AFTERWORD.title}</h2>` : '';
+    // 학습 허브로 돌아가는 길은 맨 끝에 한 번만 둔다.
+    const foot = spread.last ? AFTER_FOOT : '';
+
+    if (spread.art) {
+        return `
+            <div class="page page-story page-after">
+                <div class="story-page-left">
+                    ${head}
+                    ${runHtml(segs, spread.left[0], spread.left[1])}
+                </div>
+                <div class="story-page-right story-page-right-image">
+                    <div class="story-art-top">${artFrame(spread.art, AFTERWORD.emoji)}</div>
+                    ${runHtml(segs, spread.right[0], spread.right[1])}
+                    ${foot}
+                </div>
+            </div>`;
+    }
+
     return `
-        <div class="page page-end">
-            ${artFrame('end.png', '🪁')}
-            <h2>톰 소여의 모험을 다 읽었습니다</h2>
-            <a class="home-btn" href="../../../../../">학습 허브로 돌아가기</a>
+        <div class="page page-story page-after">
+            <div class="story-page-left">
+                ${head}
+                ${runHtml(segs, spread.left[0], spread.left[1])}
+            </div>
+            <div class="story-page-right story-page-right-text">
+                ${runHtml(segs, spread.right[0], spread.right[1])}
+                ${foot}
+            </div>
         </div>`;
 }
 
-const TWO_PAGE_KINDS = new Set(['chapter', 'toc', 'cover']);
+const TWO_PAGE_KINDS = new Set(['chapter', 'toc', 'cover', 'after']);
 
 let PAGES = [];
 let FOLIOS = [];
@@ -852,7 +1013,7 @@ function buildPages() {
         ...TOC_GROUPS.map((_, i) => ({ kind: 'toc', part: i })),
         ...CHAPTERS.flatMap(paginateChapter),
         ...QUIZ_GROUPS.map((_, i) => ({ kind: 'quiz', part: i })),
-        { kind: 'end' }
+        ...paginateAfterword()
     ];
     PROBE.close();   // 쪽을 다 나눴으니 재는 데 쓰던 숨은 쪽은 치운다
 
@@ -873,7 +1034,7 @@ function renderPage(page) {
         case 'toc': return tocPage(page.part);
         case 'chapter': return chapterSpreadPage(page);
         case 'quiz': return quizPage(page.part);
-        case 'end': return endPage();
+        case 'after': return afterSpreadPage(page);
         default: return '';
     }
 }
