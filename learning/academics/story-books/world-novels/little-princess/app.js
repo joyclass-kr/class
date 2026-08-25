@@ -527,6 +527,72 @@ const CHAPTER_SEGS = CHAPTERS.map(ch => {
     return segs;
 });
 
+// 읽고 나서 — 책마다 내용이 다르다. 장과 같은 방식으로 재서 나눈다.
+const AFTERWORD = {
+    title: '읽고 나서',
+    emoji: '👑',
+    art: [],
+    paras: [
+        `이 책의 원래 제목은 『소공녀 세라』입니다. 영어로는 작은 공주라는 뜻입니다. 그런데 세라는 공주가 아닙니다. 아버지가 부자였을 뿐입니다.`,
+        `그러니 다 읽은 지금, 그 제목이 언제 나오는지를 다시 보십시오. 세라가 다락방으로 쫓겨나 하녀 노릇을 하게 된 뒤에도 그 아이는 스스로를 공주라고 여깁니다. 이 책의 제목은 부자였던 때가 아니라 다 잃은 때를 가리키는 제목입니다.`,
+        `쓴 사람은 프랜시스 호지슨 버넷입니다. 『소공자』와 『비밀의 화원』을 쓴 사람과 같은 사람입니다.`,
+        `이 이야기는 원래 짧은 것이었습니다. 잡지에 실린 짧은 이야기를 나중에 버넷이 연극으로 만들었고, 그 연극에 넣은 대목을 더해 책으로 다시 낸 것이 지금 우리가 읽는 『소공녀』입니다.`,
+        `그래서 이 책에는 무대에 어울리는 대목이 여럿 있습니다. 하룻밤 사이에 다락방이 바뀌어 있는 장면 같은 것이 그렇습니다.`,
+        `연극으로 올렸을 때 그 장면에서 사람들이 소리를 질렀다고 합니다. 막이 오르면 헐벗은 다락방이 등불과 이불과 음식으로 가득 차 있었기 때문입니다.`,
+        `책은 천구백오 년에 나왔습니다. 그러니 배경은 백이십 년쯤 전 런던입니다.`,
+        `버넷은 『소공자』로 이미 크게 이름을 얻은 뒤였습니다. 그 책이 얼마나 인기가 있었던지, 남자아이에게 그 책 주인공처럼 벨벳 옷을 입히는 것이 한동안 유행이 되었을 정도입니다.`,
+        `원작은 여기 실린 것보다 깁니다. 세라가 아이들에게 들려주는 이야기가 훨씬 많이 들어 있습니다. 여기서는 세라가 오르내리는 자리를 따라가는 줄기만 골라 실었습니다.`,
+        `이제 다시 볼 대목을 짚어 봅시다.`,
+        `첫째, 열한 번째 생일을 다시 읽어 보십시오. 그날 아침까지 세라는 그 학교에서 제일 좋은 방을 쓰고 제일 좋은 옷을 입었습니다. 그날 오후에 다 없어집니다.`,
+        `그런데 그날 세라가 잃은 것은 돈만이 아니었습니다. 그때까지 세라에게 잘해 주던 사람들이 하루 만에 달라집니다. 아이들도 선생도 그렇습니다. 이 책에서 제일 차가운 대목입니다.`,
+        `그날 세라가 입고 있던 것은 검은 옷이었습니다. 아버지가 세상을 떠났다는 소식이 온 날이기도 했기 때문입니다. 그러니 세라는 그날 아버지와 집과 친구를 한꺼번에 잃었습니다.`,
+        `둘째, 민친 선생을 다시 보십시오. 그 사람은 세라가 부자일 때도 세라를 좋아하지 않았습니다. 다만 참고 있었을 뿐입니다. 세라가 무엇을 알고 무엇을 할 줄 아는지가 그 사람에게는 늘 거슬렸습니다.`,
+        `그러니 그 사람이 달라진 것이 아닙니다. 참을 까닭이 없어졌을 뿐입니다. 이 책은 그것을 아주 정확하게 적어 둡니다.`,
+        `어른이 아이를 미워하는 마음을 이렇게 자세히 적은 어린이 책은 드뭅니다. 버넷은 그 마음을 감추지 않고 그대로 적었습니다.`,
+        `셋째, 빵 네 개 대목을 다시 읽어 보십시오. 세라는 나흘을 굶은 참이었습니다. 길에서 돈을 주워 빵을 여섯 개 삽니다. 그리고 자기보다 더 굶은 아이에게 다섯 개를 줍니다.`,
+        `이 대목은 착한 일로만 읽으면 밋밋해집니다. 세라 자신도 배가 고팠습니다. 그리고 다 준 것이 아니라 하나를 남겼습니다. 버넷은 세라를 성인으로 만들지 않았습니다.`,
+        `그리고 그 빵집 아주머니가 그것을 창 너머로 보고 있었습니다. 나중에 그 아주머니가 굶는 아이에게 빵을 나누어 주기 시작합니다. 이 책에서 한 사람이 다른 사람을 바꾸는 자리가 거기입니다.`,
+        `그러니 이 책에는 세라를 도운 사람만 나오는 것이 아닙니다. 세라를 보고 달라진 사람도 나옵니다. 그 아주머니는 세라에게 아무 빚도 없는 사람이었습니다.`,
+        `넷째, 다락방 대목을 세어 보십시오. 세라는 그 방에서 여러 가지를 지어냅니다. 벽난로에 불이 있다고 하고, 식탁에 음식이 있다고 합니다. 그 방에 실제로 있는 것은 아무것도 없습니다.`,
+        `그것이 헛된 짓일까요. 이 책은 그렇지 않다고 말합니다. 상상하는 힘이 그 아이를 굶주림 속에서 버티게 했습니다. 그리고 그 힘이 무너지는 대목도 이 책에는 있습니다. 세라도 여러 번 무너집니다.`,
+        `제일 크게 무너지는 대목은 인형 에밀리에게 화를 내는 자리입니다. 왜 아무 말도 하지 않느냐고 다그칩니다. 인형이 대답할 리 없다는 것을 세라도 알고 있었습니다.`,
+        `그러고 나서 세라는 곧 인형에게 사과합니다. 그 방에서 말을 걸 수 있는 것이 그 인형뿐이었기 때문입니다.`,
+        `인물도 다시 보아야 할 사람이 있습니다.`,
+        `베키를 그냥 곁에 있는 아이로 읽으면 절반만 읽은 것이 됩니다. 베키는 열네 살짜리 부엌 하녀입니다. 세라가 부자일 때부터 그 집에 있었고, 세라가 다 잃은 뒤에도 그 집에 있습니다.`,
+        `다른 것이 있다면 세라에게는 다시 부자가 되는 날이 오고 베키에게는 오지 않는다는 것입니다. 이 책은 마지막에 베키를 세라와 함께 데려갑니다. 그런데 그것은 세라가 그렇게 해 주었기 때문입니다.`,
+        `그러니 이 책에는 답하지 않은 자리가 하나 있습니다. 세라를 만나지 못한 베키들은 어떻게 되었을까요.`,
+        `버넷은 그 물음에 답하지 않습니다. 다만 베키를 잊지 않고 마지막까지 데려간 것만은 적어 둡니다. 그 시절 이야기에서 하녀가 마지막 장까지 이름이 불리는 일은 드물었습니다.`,
+        `그 시절 사정도 알아 두면 좋습니다. 이 이야기의 배경은 영국이 인도를 다스리던 때입니다. 세라의 아버지가 인도에 있고 다이아몬드 광산에 돈을 넣은 것이 그 시절 실제 사정입니다.`,
+        `그리고 세라 같은 아이들이 실제로 있었습니다. 인도에 나가 사는 영국 사람들은 아이를 본국의 학교에 보내 기숙시켰습니다. 부모와 몇 해씩 떨어져 지냈습니다.`,
+        `그 시절 여자아이들의 학교에서 가르치는 것도 정해져 있었습니다. 프랑스말, 춤, 음악, 바느질이었습니다. 세라가 프랑스말을 이미 할 줄 아는 대목에서 민친 선생이 화를 내는 까닭이 그것입니다. 가르칠 것이 없어진 것입니다.`,
+        `부엌 하녀가 몇 살부터 일했는지도 알아 두면 좋습니다. 열두어 살이면 일을 시작했습니다. 새벽 다섯 시에 일어나 밤까지 일했고, 다락방에서 잤습니다. 베키가 있던 자리가 그 자리입니다.`,
+        `그 시절 런던의 좋은 집에는 하인이 여럿 있었습니다. 부엌 하녀는 그 가운데 제일 아래였습니다. 위로 요리사가 있고 그 위로 집사가 있었습니다. 베키에게 말을 거는 사람은 그 집에 세라뿐이었습니다.`,
+        `이 책이 붙들고 있는 물음은 두 가지입니다.`,
+        `하나는 사람의 값이 무엇으로 정해지느냐는 것입니다. 세라는 하루 만에 부자에서 하녀가 됩니다. 그 아이 자체는 아무것도 달라지지 않았습니다. 그런데 둘레 사람들이 다 달라집니다.`,
+        `다른 하나는 어려울 때 무엇을 붙들고 있느냐는 것입니다. 세라가 붙든 것은 자기가 어떻게 굴 것인지였습니다. 남이 나를 어떻게 대하든 나는 이렇게 굴겠다고 정해 놓은 것입니다. 그것을 이 책은 공주라고 부릅니다.`,
+        `세라의 아버지가 어릴 때 그렇게 불러 주었기 때문입니다. 그러니 그 말은 세라가 지어낸 말이 아니라 물려받은 말입니다. 아버지가 남긴 것 가운데 마지막까지 남은 것이 그 말 한마디였습니다.`,
+        `그러니 이 책에서 공주라는 말은 신분을 가리키는 말이 아닙니다. 굶고 있어도 남에게 빵을 나눌 수 있는 사람을 가리키는 말입니다.`,
+        `이 이야기의 결말을 두고 아쉬워하는 사람도 있습니다. 세라는 결국 돈을 되찾습니다. 그러니 상상하는 힘으로 버틴 이야기가 아니라 돈으로 풀린 이야기가 아니냐는 것입니다. 그 말도 일리가 있습니다.`,
+        `다만 이 책이 공들여 적어 놓은 것은 되찾은 뒤가 아니라 잃고 있던 동안입니다. 그 동안이 이 책의 열 장이 넘습니다.`,
+        `그리고 되찾은 뒤의 이야기는 한 장으로 끝납니다. 버넷이 어디에 무게를 두었는지가 쪽수에 나와 있습니다.`,
+        `언젠가 이 책을 다시 읽게 되거든, 이번에는 베키만 따라가며 읽어 보십시오. 베키가 나오는 대목은 많지 않습니다. 그런데 그 몇 대목이 이 책에서 제일 조용하게 무겁습니다.`,
+        `마지막으로 생각해 볼 것을 남겨 둡니다. 답은 적어 두지 않겠습니다.`,
+        `세라가 다락방에서 지어낸 것들은 헛된 짓이었을까요? 벽난로에 불이 있다고 여긴다고 방이 따뜻해지지는 않습니다. 그런데 세라는 그것으로 버텼습니다.`,
+        `민친 선생을 우리는 어떻게 보아야 할까요? 그 사람은 학교를 꾸려 가야 하는 사람이었습니다. 돈을 안 내는 학생을 그냥 두기 어려웠을 것입니다. 그런데 그 사람이 한 일은 그것만이 아니었습니다.`,
+        `그리고 세라가 부자로 돌아가지 않았다면 이 이야기는 어떻게 끝나야 했을까요. 이 물음은 어른이 되어 다시 읽어도 답하기가 쉽지 않습니다.`
+    ]
+};
+
+const AFTER_SEGS = (() => {
+    const segs = [];
+    AFTERWORD.paras.forEach((html, paraIdx) => {
+        splitSegments(html).forEach((piece, k) => {
+            segs.push({ paraIdx, html: piece, start: k === 0 });
+        });
+    });
+    return segs;
+})();
+
 // 조각 묶음을 문단 단위로 다시 묶어 화면에 그릴 모양으로 만든다.
 // 앞 쪽에서 이어진 문단은 첫 줄을 들여쓰지 않는다.
 function runHtml(segs, a, b) {
@@ -808,16 +874,100 @@ function quizPage(part) {
         </div>`;
 }
 
-function endPage() {
+/* 읽고 나서 — 장과 같은 방식으로 쪽을 나눈다. 그림은 오른쪽 위에 얹힌다. */
+const AFTER_FOOT = `<p class="after-home"><a class="home-btn" href="../../../../../">학습 허브로 돌아가기</a></p>`;
+
+function paginateAfterword() {
+    const segs = AFTER_SEGS;
+    const arts = AFTERWORD.art || [];
+    const { usable, headHeight, artHeight } = PROBE;
+    const headHtml = `<h2>${AFTERWORD.title}</h2>`;
+    const totalH = PROBE.measure(runHtml(segs, 0, segs.length));
+
+    const underArt = Math.max(60, usable - artHeight);
+
+    // 맨 끝에는 학습 허브로 가는 단추가 붙는다. 그 높이를 미리 빼 두지 않으면
+    // 마지막 쪽만 넘친다.
+    const footH = PROBE.measure(AFTER_FOOT);
+
+    const capsOf = slots => {
+        const caps = [];
+        slots.forEach(kind => { caps.push(usable); caps.push(kind === 'img' ? underArt : usable); });
+        caps[caps.length - 1] = Math.max(60, caps[caps.length - 1] - footH);
+        return caps;
+    };
+
+    const minSpreads = Math.max(arts.length, 1);
+    const maxSpreads = Math.max(minSpreads, Math.floor(segs.length / 2));
+    let spreadCount = minSpreads;
+    while (spreadCount < maxSpreads) {
+        const caps = capsOf(slotPlan(arts.length, spreadCount - arts.length));
+        if (caps.reduce((a, b) => a + b, 0) >= totalH + headHeight) break;
+        spreadCount++;
+    }
+
+    let slots = slotPlan(arts.length, Math.max(0, spreadCount - arts.length));
+    let caps = capsOf(slots);
+    let ranges = fillPages(segs, caps, headHtml);
+    for (let guard = 0; guard < 8; guard++) {
+        const over = ranges.some(([a, b], n) =>
+            PROBE.measure((n === 0 ? headHtml : '') + runHtml(segs, a, b)) > caps[n] + 1);
+        if (!over || spreadCount >= maxSpreads) break;
+        spreadCount++;
+        slots = slotPlan(arts.length, Math.max(0, spreadCount - arts.length));
+        caps = capsOf(slots);
+        ranges = fillPages(segs, caps, headHtml);
+    }
+
+    const spreads = [];
+    let pageIdx = 0;
+    let artIdx = 0;
+    slots.forEach((kind, s) => {
+        const left = ranges[pageIdx++];
+        const right = ranges[pageIdx++];
+        spreads.push({
+            kind: 'after', first: s === 0, last: s === slots.length - 1,
+            art: kind === 'img' ? arts[artIdx++] : null, left, right
+        });
+    });
+    return spreads;
+}
+
+function afterSpreadPage(spread) {
+    const segs = AFTER_SEGS;
+    const head = spread.first ? `<h2>${AFTERWORD.title}</h2>` : '';
+    // 학습 허브로 돌아가는 길은 맨 끝에 한 번만 둔다.
+    const foot = spread.last ? AFTER_FOOT : '';
+
+    if (spread.art) {
+        return `
+            <div class="page page-story page-after">
+                <div class="story-page-left">
+                    ${head}
+                    ${runHtml(segs, spread.left[0], spread.left[1])}
+                </div>
+                <div class="story-page-right story-page-right-image">
+                    <div class="story-art-top">${artFrame(spread.art, AFTERWORD.emoji)}</div>
+                    ${runHtml(segs, spread.right[0], spread.right[1])}
+                    ${foot}
+                </div>
+            </div>`;
+    }
+
     return `
-        <div class="page page-end">
-            ${artFrame('end.png', '🕯️')}
-            <h2>소공녀를 다 읽었습니다</h2>
-            <a class="home-btn" href="../../../../../">학습 허브로 돌아가기</a>
+        <div class="page page-story page-after">
+            <div class="story-page-left">
+                ${head}
+                ${runHtml(segs, spread.left[0], spread.left[1])}
+            </div>
+            <div class="story-page-right story-page-right-text">
+                ${runHtml(segs, spread.right[0], spread.right[1])}
+                ${foot}
+            </div>
         </div>`;
 }
 
-const TWO_PAGE_KINDS = new Set(['chapter', 'toc', 'cover']);
+const TWO_PAGE_KINDS = new Set(['chapter', 'toc', 'cover', 'after']);
 
 let PAGES = [];
 let FOLIOS = [];
@@ -829,7 +979,7 @@ function buildPages() {
         ...TOC_GROUPS.map((_, i) => ({ kind: 'toc', part: i })),
         ...CHAPTERS.flatMap(paginateChapter),
         ...QUIZ_GROUPS.map((_, i) => ({ kind: 'quiz', part: i })),
-        { kind: 'end' }
+        ...paginateAfterword()
     ];
     PROBE.close();   // 쪽을 다 나눴으니 재는 데 쓰던 숨은 쪽은 치운다
 
@@ -850,7 +1000,7 @@ function renderPage(page) {
         case 'toc': return tocPage(page.part);
         case 'chapter': return chapterSpreadPage(page);
         case 'quiz': return quizPage(page.part);
-        case 'end': return endPage();
+        case 'after': return afterSpreadPage(page);
         default: return '';
     }
 }
