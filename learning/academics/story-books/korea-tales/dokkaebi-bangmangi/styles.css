@@ -602,11 +602,13 @@ body {
 /* 그림은 쪽 오른쪽 위 모서리에 딱 붙인다. 칸 안쪽 여백만큼 밖으로 끌어낸다.
    글을 뺀 나머지 자리는 그림이 다 차지한다. 아래에 빈 자리를 남기지 않는다. */
 .after-art {
-    /* 칸을 채우려고 늘이지 않는다. 그림 비율이 칸을 정한다. */
-    flex: 0 0 auto;
+    /* 그림은 쪽 가장자리까지 꽉 나간다. 가운데 접히는 선까지 간다.
+       좌우 **양쪽**에 음수 여백을 주어야 한다. 한쪽만 주면 반대쪽에 틈이 남는다.
+       칸을 채우려고 늘이지는 않는다. 비율은 3 : 2 그대로다. */
+    flex: none;
+    width: auto;
     aspect-ratio: 3 / 2;
-    width: calc(100% + var(--after-pad-x));
-    margin: calc(-1 * var(--after-pad-y)) calc(-1 * var(--after-pad-x)) clamp(8px, 1.8cqh, 18px) 0;
+    margin: calc(-1 * var(--after-pad-y)) calc(-1 * var(--after-pad-x)) clamp(8px, 1.8cqh, 18px);
     overflow: hidden;
 }
 
@@ -660,14 +662,14 @@ body {
     /* 세로에서는 글이 위아래로 쌓이므로 그림이 자리를 늘리면 윗칸이 밀린다.
        높이는 고정하고 너비만 칸 끝까지 채운다. */
     .after-art {
-        /* 세로에서는 너비를 늘이지 않는다. 높이만 줄이고 비율은 그대로 둔다. */
-        flex: 0 0 auto;
-        aspect-ratio: 3 / 2;
+        /* 세로에서는 칸이 위아래로 쌓여 낮다. 3 : 2 그대로 두면 글자리가 없다.
+           너비는 가장자리까지 내보내고 높이만 띠처럼 줄인다. 위아래가 조금 잘린다. */
+        flex: none;
+        aspect-ratio: auto;
         height: 17cqh;
         width: auto;
-        max-width: 100%;
-        align-self: center;
-        margin: 0 0 6px;
+        align-self: stretch;
+        margin: calc(-1 * var(--after-pad-y)) calc(-1 * var(--after-pad-x)) 6px;
     }
     /* 세로 화면은 책이 길어 글씨가 커진다(2.315cqh). 그러면 「읽고 나서」가 넘친다.
        뒷이야기 쪽만 조금 줄인다. 가로 화면과 본문은 그대로 둔다. */
