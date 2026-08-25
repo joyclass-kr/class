@@ -1,0 +1,180 @@
+<!doctype html>
+<html lang="ko">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="theme-color" content="#07131c">
+    <title>과학 실험실</title>
+    <meta name="description" content="접안렌즈와 대물렌즈를 바꿔 배율을 정하고, 초점을 맞춰 양파 표피와 기공 같은 세포를 관찰하는 초등 과학 모의실험">
+    <link rel="stylesheet" as="style" crossorigin href="https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.9/dist/web/static/pretendard.css">
+    <link rel="stylesheet" href="styles.css?v=2">
+    <link rel="stylesheet" href="scope-visual.css?v=2">
+    <link rel="stylesheet" href="quiz.css?v=2">
+</head>
+<body>
+    <main>
+        <header class="page-header">
+            <div class="title-row">
+                <a href="../">← 과학 실험실</a>
+                <h1>현미경과 세포 관찰</h1>
+            </div>
+            <div class="grade-tags"><span>초등 5~6</span><span>생명과학</span></div>
+        </header>
+
+        <ol class="method-steps" aria-label="실험 방법">
+            <li>관찰할 것을 재물대에 올립니다.</li>
+            <li>낮은 배율부터 렌즈를 고릅니다.</li>
+            <li>조절 나사를 돌려 초점을 맞춥니다.</li>
+            <li>배율을 올리며 무엇이 달라지는지 봅니다.</li>
+        </ol>
+
+        <div class="experiment-layout">
+            <section class="panel control-panel" aria-labelledby="control-title">
+                <h2 id="control-title">실험 조건</h2>
+                <p class="water-standard">배율은 접안렌즈와 대물렌즈의 배율을 곱한 값입니다</p>
+
+                <fieldset class="pick-field">
+                    <legend>무엇을 볼까요</legend>
+                    <div class="pick-buttons cols4">
+                        <button type="button" data-spec="onion">양파 표피<small>0.35 mm</small></button>
+                        <button type="button" data-spec="cheek">입안 상피<small>0.06 mm</small></button>
+                        <button type="button" data-spec="stoma">잎의 기공<small>0.02 mm</small></button>
+                        <button type="button" data-spec="para">짚신벌레<small>0.2 mm</small></button>
+                    </div>
+                </fieldset>
+
+                <fieldset class="pick-field">
+                    <legend>접안렌즈</legend>
+                    <div class="pick-buttons cols2">
+                        <button type="button" data-eye="10">10배</button>
+                        <button type="button" data-eye="15">15배</button>
+                    </div>
+                </fieldset>
+
+                <fieldset class="pick-field">
+                    <legend>대물렌즈</legend>
+                    <div class="pick-buttons cols3">
+                        <button type="button" data-obj="4">4배<small>가장 낮게</small></button>
+                        <button type="button" data-obj="10">10배<small>보통</small></button>
+                        <button type="button" data-obj="40">40배<small>가장 높게</small></button>
+                    </div>
+                </fieldset>
+
+                <fieldset class="prediction-field">
+                    <legend>이 배율에서 이것이 보일까요?</legend>
+                    <div class="prediction-buttons three">
+                        <button type="button" data-prediction="p1">잘 보인다</button>
+                        <button type="button" data-prediction="p2">겨우 보인다</button>
+                        <button type="button" data-prediction="p3">너무 작아 안 보인다</button>
+                    </div>
+                </fieldset>
+
+                <button class="run-button" id="runBtn" type="button">초점 맞추기</button>
+                <button class="reset-button" id="resetBtn" type="button">처음으로</button>
+
+                <section class="result-box" aria-labelledby="result-title" aria-live="polite">
+                    <h3 id="result-title">관찰 결과</h3>
+                    <p id="resultEmpty">렌즈를 고르고 초점을 맞춰 보세요.</p>
+                    <div id="resultContent" hidden>
+                        <div class="result-numbers">
+                            <article><span>배율</span><strong id="valueA">-</strong></article>
+                            <article><span>보이는 범위</span><strong id="valueB">-</strong></article>
+                        </div>
+                        <p class="prediction-result" id="predictionResult"></p>
+                        <p class="explanation" id="elementaryExplanation"></p>
+                    </div>
+                </section>
+            </section>
+
+            <section class="panel scope-stage" aria-label="관찰 화면">
+                <div class="stage-heading"><h2>관찰</h2><span id="stageBadge">-</span></div>
+
+                <div class="stage-views">
+                    <svg class="main-svg" viewBox="0 0 460 214" aria-hidden="true">
+                        <defs>
+                            <filter id="blurFilter" x="-20%" y="-20%" width="140%" height="140%">
+                                <feGaussianBlur id="blurNode" in="SourceGraphic" stdDeviation="0"/>
+                            </filter>
+                            <clipPath id="fieldClip"><circle cx="342" cy="106" r="76"/></clipPath>
+                        </defs>
+                        <g id="mainGroup"></g>
+                    </svg>
+                    <svg class="graph-svg" viewBox="0 0 460 196" aria-hidden="true">
+                        <g id="graphGroup"></g>
+                    </svg>
+                </div>
+
+                <p class="stage-caption" id="stageCaption">배율을 올리면 크게 보이는 대신 보이는 범위가 좁아지고 어두워집니다. 그래서 늘 낮은 배율부터 찾습니다.</p>
+                <div class="data-note" id="dataNote"></div>
+            </section>
+        </div>
+
+        <section class="panel meaning-panel">
+            <h2>실험 결과의 의미</h2>
+            <div class="meaning-body">
+                <p><strong>배율은 곱셈입니다</strong> 접안렌즈가 10배이고 대물렌즈가 40배라면 10 × 40 = 400배로 보입니다. 0.02 mm짜리 기공도 400배로 보면 8 mm가 되어 눈으로 알아볼 수 있습니다.</p>
+                <p><strong>크게 볼수록 좁게 보입니다</strong> 배율을 올리면 보이는 범위가 그만큼 좁아집니다. 대물렌즈를 4배에서 40배로 바꾸면 보이는 범위가 10분의 1로 줄어듭니다. 그래서 낮은 배율로 먼저 찾아 가운데에 놓은 다음 배율을 올려야 합니다.</p>
+                <p><strong>크게 볼수록 어두워집니다</strong> 같은 빛을 더 넓게 펼쳐 보는 셈이라 배율이 높을수록 어두워집니다. 배율이 10배가 되면 밝기는 100분의 1이 되므로, 높은 배율에서는 조리개를 열어 빛을 더 들여야 합니다.</p>
+            </div>
+        </section>
+
+        <details class="quiz-section" aria-labelledby="quiz-title">
+            <summary class="quiz-heading"><h2 id="quiz-title">확인 문제</h2><span>4문제</span></summary>
+            <div class="quiz-grid">
+                <article class="quiz-card" data-answer="c">
+                    <h3>접안렌즈 15배, 대물렌즈 40배로 보면 몇 배일까요?</h3>
+                    <div class="quiz-options">
+                        <label><input type="radio" name="q1" value="a"> 55배</label>
+                        <label><input type="radio" name="q1" value="b"> 155배</label>
+                        <label><input type="radio" name="q1" value="c"> 600배</label>
+                        <label><input type="radio" name="q1" value="d"> 400배</label>
+                    </div>
+                    <button class="answer-button" type="button">정답 확인</button>
+                    <p class="answer-result" aria-live="polite"></p>
+                    <p class="answer-explanation" hidden>배율은 두 렌즈의 배율을 더하는 것이 아니라 곱합니다. 15 × 40 = 600배입니다.</p>
+                </article>
+
+                <article class="quiz-card" data-answer="b">
+                    <h3>현미경으로 볼 때 왜 낮은 배율부터 시작할까요?</h3>
+                    <div class="quiz-options">
+                        <label><input type="radio" name="q2" value="a"> 렌즈가 깨지지 않게 하려고</label>
+                        <label><input type="radio" name="q2" value="b"> 넓게 보여서 찾기 쉬워서</label>
+                        <label><input type="radio" name="q2" value="c"> 더 밝게 보여서만</label>
+                        <label><input type="radio" name="q2" value="d"> 순서에 규칙이 없다</label>
+                    </div>
+                    <button class="answer-button" type="button">정답 확인</button>
+                    <p class="answer-result" aria-live="polite"></p>
+                    <p class="answer-explanation" hidden>높은 배율에서는 보이는 범위가 아주 좁아 찾으려는 것이 화면 밖에 있기 쉽습니다. 낮은 배율로 넓게 보며 찾아 가운데에 두고 배율을 올려야 합니다.</p>
+                </article>
+
+                <article class="quiz-card" data-answer="a">
+                    <h3>배율을 올렸더니 화면이 어두워졌습니다. 어떻게 할까요?</h3>
+                    <div class="quiz-options">
+                        <label><input type="radio" name="q3" value="a"> 조리개를 열어 빛을 더 들인다</label>
+                        <label><input type="radio" name="q3" value="b"> 배율을 더 올린다</label>
+                        <label><input type="radio" name="q3" value="c"> 표본을 두껍게 만든다</label>
+                        <label><input type="radio" name="q3" value="d"> 접안렌즈를 뺀다</label>
+                    </div>
+                    <button class="answer-button" type="button">정답 확인</button>
+                    <p class="answer-result" aria-live="polite"></p>
+                    <p class="answer-explanation" hidden>배율이 높아지면 같은 빛이 더 넓게 퍼져 어두워집니다. 조리개를 열거나 빛을 더 모아 주어야 잘 보입니다.</p>
+                </article>
+
+                <article class="quiz-card" data-answer="d">
+                    <h3>양파 표피 세포가 벽돌을 쌓은 것처럼 보이는 까닭은?</h3>
+                    <div class="quiz-options">
+                        <label><input type="radio" name="q4" value="a"> 세포가 움직이지 않아서</label>
+                        <label><input type="radio" name="q4" value="b"> 물을 많이 머금어서</label>
+                        <label><input type="radio" name="q4" value="c"> 색깔이 없어서</label>
+                        <label><input type="radio" name="q4" value="d"> 식물 세포에는 단단한 세포벽이 있어서</label>
+                    </div>
+                    <button class="answer-button" type="button">정답 확인</button>
+                    <p class="answer-result" aria-live="polite"></p>
+                    <p class="answer-explanation" hidden>식물 세포는 세포막 바깥에 단단한 세포벽이 있어 모양이 반듯하게 유지됩니다. 그래서 벽돌을 나란히 쌓은 것처럼 보입니다. 세포벽이 없는 입안 상피 세포는 둥글고 제각각입니다.</p>
+                </article>
+            </div>
+        </details>
+    </main>
+    <script src="app.js?v=2"></script>
+</body>
+</html>

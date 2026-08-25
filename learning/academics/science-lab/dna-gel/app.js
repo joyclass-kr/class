@@ -36,6 +36,7 @@ function rawTravel(bp, min) { return mobility(bp) * RATE * min; }
 function travel(bp, min) { return Math.min(LANE, rawTravel(bp, min)); }
 function piled(bp, min) { return rawTravel(bp, min) > LANE + 1e-9; }
 
+// check-controls: cut none,both — both are resolved here, before SITES is read.
 function cutSites() {
     if (state.cut === 'none') return [];
     const s = state.cut === 'both' ? [...SITES.eco, ...SITES.hind] : SITES[state.cut];
