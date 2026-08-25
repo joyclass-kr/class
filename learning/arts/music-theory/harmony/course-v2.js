@@ -323,7 +323,7 @@ function generatedQuiz(type) {
     const [distance, answer] = spec;
     const root = roots[index];
     const top = root + distance;
-    let prompt = `${NOTE_NAMES[root % 12]}에서 ${NOTE_NAMES[top % 12]}까지의 음정을 듣고 고르세요.`;
+    let prompt = "두 음의 거리를 듣고 음정을 고르세요.";
     let choices = optionSet(answer, allNames);
     if (type === "intervalNumber") {
       prompt = `${NOTE_NAMES[root % 12]}부터 ${NOTE_NAMES[top % 12]}까지 음이름을 포함해 세면 몇 도인가요?`;
@@ -394,6 +394,7 @@ function leaveLesson() {
 function renderQuestion() {
   const q = state.questions[state.index];
   state.current = q;
+  state.mistakes = 0;
   state.seen.add(q.key);
   state.locked = false;
   els.roundCounter.textContent = `${state.index + 1} / 5`;
@@ -408,20 +409,31 @@ function renderQuestion() {
 }
 function chooseAnswer(choice) {
   if (state.locked) return;
-  state.locked = true;
   const correct = choice === state.current.answer;
-  if (correct) state.score += 1;
+  const selected = [...els.answerChoices.querySelectorAll("button")].find(button => button.dataset.answer === choice);
+  if (!correct) {
+    state.mistakes += 1;
+    if (selected) {
+      selected.disabled = true;
+      selected.classList.add("wrong");
+    }
+    els.feedback.textContent = "아니에요. 다른 답을 다시 생각해 보세요.";
+    els.feedback.className = "feedback wrong";
+    return;
+  }
+  state.locked = true;
+  if (state.mistakes === 0) state.score += 1;
   els.answerChoices.querySelectorAll("button").forEach(button => {
     button.disabled = true;
-    if (button.dataset.answer === state.current.answer) button.classList.add("correct");
-    else if (button.dataset.answer === choice) button.classList.add("wrong");
+    if (button.dataset.answer === choice) button.classList.add("correct");
   });
   els.scoreText.textContent = `정답 ${state.score}`;
-  els.feedback.textContent = correct ? "맞았습니다." : `정답은 ${state.current.answer}입니다.`;
-  els.feedback.className = `feedback ${correct ? "correct" : "wrong"}`;
+  els.feedback.textContent = state.mistakes === 0 ? "맞았습니다." : "이번에는 맞았습니다. 다음 문제로 넘어가세요.";
+  els.feedback.className = "feedback correct";
   els.nextButton.textContent = state.index === 4 ? "결과 보기" : "다음 문제";
   els.nextButton.hidden = false;
 }
+
 function nextQuestion() {
   if (!state.locked) return;
   if (state.index < 4) {

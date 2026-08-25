@@ -41,4 +41,8 @@ assert.match(css, /\.comparison-table/);
 assert.match(css, /@media \(max-width: 900px\)/);
 assert.match(css, /min-height: 44px/);
 
+assert.doesNotMatch(js, /정답은/, "오답 직후 정답을 공개하면 안 됩니다.");
+assert.match(js, /다른 답을 다시 생각해 보세요/);
+assert.doesNotMatch(js, /제2선 G4|제4선 F3|가운데 C\\(Middle C, C4\\)/);
+
 console.log("harmony course v2 contract: ok");
