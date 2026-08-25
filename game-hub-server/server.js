@@ -265,6 +265,10 @@ app.get("/favicon-20260824-v6.ico", (_req, res) => {
   res.setHeader("Cache-Control", "public, max-age=31536000, immutable");
   res.sendFile(path.join(SITE_ROOT, "favicon-20260824-v6.ico"));
 });
+app.get("/naverc953171c2ff3a730580e7ed2be00700d.html", (_req, res) => {
+  res.setHeader("Cache-Control", "no-cache, must-revalidate");
+  res.type("text/plain").send("naver-site-verification: naverc953171c2ff3a730580e7ed2be00700d.html\n");
+});
 app.get("/favicon.png", (_req, res) => {
   res.setHeader("Cache-Control", "no-cache, must-revalidate");
   res.sendFile(path.join(SITE_ROOT, "favicon.png"));
