@@ -301,11 +301,33 @@ document.addEventListener('DOMContentLoaded', () => {
         else { rafId = null; lastT = null; }
     }
 
+    const RES_NAME = { sea: '바다', vapor: '수증기', cloud: '구름', land: '땅의 물' };
+    // 받침이 있으면 '이', 없으면 '가'. 구름이·물이 vs 바다가·수증기가.
+    const iga = w => { const c = w.slice(-1).charCodeAt(0);
+        const j = (c < 0xac00 || c > 0xd7a3) ? 0 : (c - 0xac00) % 28;
+        return `${w}${j > 0 ? '이' : '가'}`; };
+
     function updateExplanation() {
         const sun = Number(sunRange.value), temp = Number(tempRange.value);
-        const strong = sun >= 7, cool = temp <= 4;
-        let s = `햇빛이 ${strong ? '강해 증발이 활발하고' : '약해 증발이 느리고'}, 공기가 ${cool ? '차가워 수증기가 잘 응결해 구름이 많이 만들어집니다.' : '따뜻해 수증기가 잘 응결하지 않아 공기 중에 오래 머무릅니다.'}`;
-        s += ' 어느 쪽이든 바다·수증기·구름·땅에 나뉜 양만 달라질 뿐, 물의 총량은 그대로입니다.';
+        /* 슬라이더가 1~10이므로 마디도 셋이어야 합니다. 예전에는 둘로만 갈라
+           한가운데인 5가 '따뜻해' 쪽으로 떨어졌습니다. */
+        const band = v => (v <= 3 ? 0 : v <= 7 ? 1 : 2);
+        const sunWord = ['약해 증발이 느리고', '보통이라 증발이 꾸준하고', '강해 증발이 활발하고'][band(sun)];
+        const tempWord = ['차가워 수증기가 금세 응결해 구름이 잘 만들어집니다',
+                          '알맞아 증발과 응결이 비슷하게 일어납니다',
+                          '따뜻해 수증기가 잘 응결하지 않습니다'][band(temp)];
+        let s = `햇빛이 ${sunWord}, 공기가 ${tempWord}. `;
+
+        /* 늘 같은 말만 하지 않고, 지금 화면에 찍힌 값에서 무엇이 늘고 줄었는지
+           읽어 씁니다. 그래야 막대·그래프와 설명이 어긋나지 않습니다. */
+        const moved = Object.keys(RES_NAME).map(k => ({ k, d: R[k] - INITIAL[k] }));
+        const up = moved.reduce((a, b) => (b.d > a.d ? b : a));
+        const down = moved.reduce((a, b) => (b.d < a.d ? b : a));
+        if (days >= 1 && up.d >= 1) {
+            s += `${Math.round(days)}일 동안 ${iga(RES_NAME[down.k])} ${Math.round(-down.d)}만큼 줄고 ` +
+                 `${iga(RES_NAME[up.k])} ${Math.round(up.d)}만큼 늘었습니다. `;
+        }
+        s += '옮겨 다니기만 할 뿐, 물의 총량은 그대로입니다.';
         explanation.textContent = s;
     }
 
