@@ -7,6 +7,7 @@ const root = path.join(__dirname, '..', 'learning', 'arts', 'instrument-room');
 const html = fs.readFileSync(path.join(root, 'index.html'), 'utf8');
 const css = fs.readFileSync(path.join(root, 'styles.css'), 'utf8');
 const app = fs.readFileSync(path.join(root, 'app.js'), 'utf8');
+const worklet = fs.readFileSync(path.join(root, 'instrument-worklet-v2.js'), 'utf8');
 
 test('uses dedicated rooms for the nine primary instrument groups', () => {
   for (const family of ['keyboard', 'guitar', 'bass', 'drums', 'strings', 'woodwind', 'brass', 'percussion', 'korean']) {
@@ -35,8 +36,12 @@ test('percussion library includes dedicated kits and essential orchestral instru
     assert.match(app, new RegExp(asset.replace('.', '\\.')));
   }
   assert.match(app, /id: "midtom"/);
+  assert.match(app, /id: "subtom"/);
   assert.match(app, /function activeDrums/);
-  assert.match(app, /\["rock-kit", "metal-kit", "pop-kit"\]\.includes/);
+  assert.match(app, /"jazz-kit": \["kick", "snare", "hat", "openhat", "hightom", "lowtom", "crash", "ride"\]/);
+  assert.match(app, /"metal-kit": \["kick", "snare", "hat", "openhat", "hightom", "midtom", "lowtom", "subtom", "crash", "ride"\]/);
+  assert.match(app, /drums\.length >= 9/);
+  assert.match(worklet, /subtom: \{ family: "membrane", base: 72/);
   assert.match(css, /\.drum-pads\.extended/);
 });
 
