@@ -1,0 +1,23 @@
+<!DOCTYPE html><html lang="ko"><head><meta charset="UTF-8"><title>소설틀 넘침</title>
+<style>body{font:14px monospace;margin:16px}iframe{position:fixed;left:-6000px;top:0;border:0}pre{white-space:pre-wrap}</style></head>
+<body><pre id="out">…</pre><iframe id="frame"></iframe><script>
+const out=document.getElementById('out'),frame=document.getElementById('frame');
+const BOOKS=['chunhyangjeon','heungbujeon','honggildongjeon','kongjwi-patjwi','onggojipjeon','simcheongjeon','tokkijeon'];
+const SIZES=[[1366,768],[1920,1080],[810,1080],[768,1024],[1024,768]];
+function probe(){const bad=[];
+ for(let i=0;i<PAGES.length;i++){ if(PAGES[i].kind==='quiz') continue; current=i; paint();
+  document.querySelectorAll('.book *').forEach(el=>{const o=el.scrollHeight-el.clientHeight;
+   if(o>1&&getComputedStyle(el).overflowY!=='visible') bad.push(i+' '+(el.className||el.tagName)+' '+o+'px');});}
+ current=0;paint();return bad;}
+(async()=>{const lines=[];
+ for(const b of BOOKS){const res=[];
+  for(const [w,h] of SIZES){frame.style.width=w+'px';frame.style.height=h+'px';
+   await Promise.all(['app.js','styles.css'].map(f=>fetch(b+'/'+f,{cache:'reload'}).catch(()=>{})));
+   await new Promise(r=>{frame.onload=r;frame.src=b+'/?t='+Date.now();});
+   await new Promise(r=>setTimeout(r,120));
+   try{const v=frame.contentWindow.eval('('+probe.toString()+')()');v.forEach(x=>res.push('  ['+w+'x'+h+'] '+x));}
+   catch(e){res.push('  실패 '+e.message);}}
+  lines.push((res.length?'✗ ':'✔ ')+b+(res.length?'\n'+res.join('\n'):''));
+  out.textContent=lines.join('\n');}
+ out.textContent=lines.join('\n')+'\n\n=== 끝 ===';})();
+</script></body></html>
