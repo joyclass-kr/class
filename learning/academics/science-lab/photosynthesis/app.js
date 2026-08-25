@@ -29,6 +29,10 @@ document.addEventListener('DOMContentLoaded', () => {
     // Photosynthesis is enzyme-driven, so it climbs to an optimum and then
     // falls away sharply as the enzymes denature.
     const T_OPT = 32, T_RISE = 12, T_FALL = 7;
+    /* 숫자 뒤 조사는 그 수를 읽은 끝소리를 따릅니다.
+       영 일 이 삼 사 오 육 칠 팔 구 — 0·1·3·6·7·8만 받침이 있습니다. */
+    const DIGIT_JONG = { '0': 21, '1': 8, '2': 0, '3': 16, '4': 0, '5': 0, '6': 1, '7': 8, '8': 8, '9': 0 };
+    const iga = n => `${n}${DIGIT_JONG[String(n).replace(/[^0-9]/g, '').slice(-1)] > 0 ? '이' : '가'}`;
     const GRAPH = { x0: 54, x1: 424, y0: 152, y1: 22 };
 
     let prediction = null;
@@ -117,7 +121,7 @@ document.addEventListener('DOMContentLoaded', () => {
         out += `<text class="part-label" x="330" y="84">1분 동안 나온 기포</text>`;
         out += `<text class="limit-badge" fill="${LIMIT_TONE[a.limiter]}" x="330" y="112">제한 요인: ${LIMIT_NAME[a.limiter]}</text>`;
         out += `<text class="part-label" x="330" y="132">빛이 낼 수 있는 양 ${Math.min(V_MAX, a.byLight).toFixed(0)}</text>`;
-        out += `<text class="part-label" x="330" y="148">CO₂ 가 낼 수 있는 양 ${Math.min(V_MAX, a.byCO2).toFixed(0)}</text>`;
+        out += `<text class="part-label" x="330" y="148">CO₂가 낼 수 있는 양 ${Math.min(V_MAX, a.byCO2).toFixed(0)}</text>`;
         out += `<text class="part-label" x="330" y="164">온도 효율 ${(a.fT * 100).toFixed(0)}%</text>`;
         mainGroup.innerHTML = out;
         return a;
@@ -135,17 +139,35 @@ document.addEventListener('DOMContentLoaded', () => {
         out += `<line class="axis" x1="${GRAPH.x0}" y1="${GRAPH.y0}" x2="${GRAPH.x1}" y2="${GRAPH.y0}"/>`;
         out += `<line class="axis" x1="${GRAPH.x0}" y1="${GRAPH.y0}" x2="${GRAPH.x0}" y2="${GRAPH.y1}"/>`;
         out += `<text class="axis-title" x="${(GRAPH.x0 + GRAPH.x1) / 2}" y="${GRAPH.y0 + 30}" text-anchor="middle">빛의 세기</text>`;
-        out += `<text class="axis-title" x="${GRAPH.x0 - 32}" y="${GRAPH.y1 - 6}">광합성량 (기포/분)</text>`;
+        out += `<text class="axis-title" x="${GRAPH.x0}" y="${GRAPH.y1 - 6}">광합성량 (기포/분)</text>`;
 
         // Three CO₂ levels at the current temperature: they lie on top of one
         // another while light is scarce, then split where CO₂ takes over.
-        [[25, '#4a7fd6'], [50, '#7fd4f0'], [100, '#a8ecff']].forEach(([c, col]) => {
+        const tags = [[25, '#4a7fd6'], [50, '#7fd4f0'], [100, '#a8ecff']].map(([c, col]) => {
             const pts = [];
             for (let L = 0; L <= 100; L += 1) pts.push(`${gx(L).toFixed(1)},${gy(analyse(L, c, temp()).rate).toFixed(1)}`);
             const isCurrent = Math.abs(c - co2()) < 3;
             out += `<path class="trace${isCurrent ? '' : ' dim'}" style="stroke:${col}" d="M${pts.join('L')}"/>`;
-            const endY = gy(analyse(100, c, temp()).rate);
-            out += `<text class="curve-tag" fill="${col}" opacity="${isCurrent ? 1 : .55}" x="${GRAPH.x1 - 4}" y="${(endY - 6).toFixed(1)}" text-anchor="end">CO₂ ${c}</text>`;
+            return { c, col, isCurrent, y: gy(analyse(100, c, temp()).rate) - 6 };
+        });
+        /* When the temperature caps every curve at the same rate the three
+           curves finish at one height and their tags print on top of each
+           other. Fan them apart, keeping their order, then slide the whole set
+           back inside the plot if the fanning pushed it past the floor. */
+        const GAP = 14;
+        tags.sort((p, q) => p.y - q.y);
+        for (let i = 1; i < tags.length; i += 1) {
+            if (tags[i].y - tags[i - 1].y < GAP) tags[i].y = tags[i - 1].y + GAP;
+        }
+        // Slide the whole fanned block to fit, rather than clamping each tag —
+        // clamping individually would pile them back onto one line at the top.
+        const lo = GRAPH.y1 + 10, hi = GRAPH.y0 - 2;
+        let shift = 0;
+        if (tags[0].y < lo) shift = lo - tags[0].y;
+        if (tags[tags.length - 1].y + shift > hi) shift = hi - tags[tags.length - 1].y;
+        tags.forEach(t => {
+            out += `<text class="curve-tag" fill="${t.col}" opacity="${t.isCurrent ? 1 : .55}" ` +
+                   `x="${GRAPH.x1 - 4}" y="${(t.y + shift).toFixed(1)}" text-anchor="end">CO₂ ${t.c}</text>`;
         });
         // where the current setting stops being light-limited
         const knee = Math.min(analyse().byCO2, V_MAX) / K_LIGHT;
@@ -166,7 +188,7 @@ document.addEventListener('DOMContentLoaded', () => {
         tempOutput.textContent = `${temp()} ℃`;
         stageBadge.textContent = `${a.rate.toFixed(0)} 개/분 · ${LIMIT_NAME[a.limiter]}`;
         dataNote.innerHTML =
-            `<div class="data-row"><span class="data-name">각 조건의 한계</span><span class="data-val">빛 ${Math.min(V_MAX, a.byLight).toFixed(0)} · CO₂ ${Math.min(V_MAX, a.byCO2).toFixed(0)} → 더 작은 쪽인 ${a.cap.toFixed(0)} 이 상한</span></div>` +
+            `<div class="data-row"><span class="data-name">각 조건의 한계</span><span class="data-val">빛 ${Math.min(V_MAX, a.byLight).toFixed(0)} · CO₂ ${Math.min(V_MAX, a.byCO2).toFixed(0)} → 더 작은 쪽인 ${iga(a.cap.toFixed(0))} 상한</span></div>` +
             `<div class="data-row"><span class="data-name">온도 보정</span><span class="data-val">${temp()} ℃ 에서 효율 ${(a.fT * 100).toFixed(0)}% (가장 좋은 온도 ${T_OPT} ℃)</span></div>` +
             `<div class="data-row match"><span class="data-name">광합성량</span><span class="data-val">${a.cap.toFixed(0)} × ${(a.fT * 100).toFixed(0)}% = ${a.rate.toFixed(0)} 개/분</span></div>`;
         return a;
@@ -184,8 +206,8 @@ document.addEventListener('DOMContentLoaded', () => {
             ? '다음에는 결과를 먼저 예상해 보세요.'
             : prediction === a.limiter ? '예상이 맞았습니다.'
             : a.limiter === 'none' ? '지금은 어느 것도 부족하지 않아 최대입니다.' : '예상과 다른 결과입니다.';
-        let s = `빛은 ${Math.min(V_MAX, a.byLight).toFixed(0)}, 이산화탄소는 ${Math.min(V_MAX, a.byCO2).toFixed(0)} 만큼을 낼 수 있어 더 작은 ${a.cap.toFixed(0)} 이 상한이 됩니다. `;
-        s += `여기에 ${temp()} ℃ 의 효소 효율 ${(a.fT * 100).toFixed(0)}% 를 곱해 ${a.rate.toFixed(0)} 개/분이 나옵니다. `;
+        let s = `빛은 ${Math.min(V_MAX, a.byLight).toFixed(0)}, 이산화탄소는 ${Math.min(V_MAX, a.byCO2).toFixed(0)} 만큼을 낼 수 있어 더 작은 ${a.cap.toFixed(0)}이 상한이 됩니다. `;
+        s += `여기에 ${temp()} ℃ 의 효소 효율 ${(a.fT * 100).toFixed(0)}%를 곱해 ${a.rate.toFixed(0)} 개/분이 나옵니다. `;
         if (a.limiter === 'light') s += `지금은 빛이 제한 요인이라, 이산화탄소를 늘려도 거의 변하지 않습니다. 빛을 세게 해야 늘어납니다.`;
         else if (a.limiter === 'co2') s += `지금은 이산화탄소가 제한 요인이라, 빛을 더 세게 해도 늘지 않습니다. 이산화탄소를 늘려야 합니다.`;
         else if (a.limiter === 'temp') s += `지금은 온도가 제한 요인입니다. ${temp() > T_OPT ? '너무 높아 효소가 제 기능을 못 합니다.' : '너무 낮아 효소가 느리게 작동합니다.'}`;

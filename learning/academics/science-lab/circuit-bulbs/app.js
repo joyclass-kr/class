@@ -227,7 +227,12 @@ document.addEventListener('DOMContentLoaded', () => {
             explanation.textContent = '직렬연결은 전류가 흐르는 길이 하나뿐이라, 한 곳이 끊어지면 전체 회로가 끊겨 모두 꺼집니다.';
         } else if (wiring === 'series') {
             stageCaption.textContent = `직렬로 ${n}개를 연결하니 전구 하나의 밝기가 ${Math.round(a.brightnessEach * 100)}%입니다.`;
-            explanation.textContent = `직렬연결에서는 전구가 늘어날수록 전류가 줄어들어 밝기가 ${n}×${n}분의 1로 어두워집니다.`;
+            // 밝기는 전류의 제곱을 따라가지만, 초등 과정에서는 "줄어든 만큼 다시
+            // 한 번 더 줄어든다"로 풀어 씁니다.
+            explanation.textContent = n === 1
+                ? '전구가 하나뿐이라 전지의 힘을 그대로 받습니다. 이때의 밝기를 100%로 삼고 다른 경우와 견주어 봅니다.'
+                : `직렬연결은 전류가 흐르는 길이 하나뿐이라, 전구를 ${n}개 이으면 전류가 ${n}분의 1로 줄어듭니다. ` +
+                  `밝기는 전류가 줄어든 만큼 한 번 더 줄어들어 ${n * n}분의 1, 곧 ${Math.round(a.brightnessEach * 100)}%가 됩니다.`;
         } else if (removed) {
             stageCaption.textContent = `병렬연결에서 하나를 빼도 나머지 ${a.lit}개는 그대로 켜져 있습니다.`;
             explanation.textContent = '병렬연결은 전구마다 전류가 흐르는 길이 따로 있어, 하나를 빼도 나머지 밝기가 변하지 않습니다.';

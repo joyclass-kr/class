@@ -107,7 +107,7 @@ document.addEventListener('DOMContentLoaded', () => {
         let out = `<g clip-path="url(#rampClip)">${body}</g>`;
         out += `<text class="part-label" x="20" y="20">h ${a.h} m · θ ${a.deg}° · μ ${a.mu.toFixed(2)} · 빗면 길이 ${a.slope.toFixed(2)} m</text>`;
         if (a.stuck) {
-            out += `<text class="warn-text" x="20" y="196">μ ${a.mu.toFixed(2)} 가 tan ${a.deg}° = ${a.tan.toFixed(2)} 보다 커서 수레가 미끄러지지 않습니다</text>`;
+            out += `<text class="warn-text" x="20" y="196">μ ${a.mu.toFixed(2)}가 tan ${a.deg}° = ${a.tan.toFixed(2)}보다 커서 수레가 미끄러지지 않습니다</text>`;
         } else {
             out += `<text class="read-text" x="20" y="196">지금 속력 ${st.v.toFixed(2)} m/s · 위치 ${st.pe.toFixed(1)} J · 운동 ${st.ke.toFixed(1)} J · 열 ${st.heat.toFixed(1)} J</text>`;
         }
@@ -218,20 +218,20 @@ document.addEventListener('DOMContentLoaded', () => {
         if (a.stuck) {
             explanation.textContent =
                 `빗면 방향으로 미는 힘은 mg sin θ = ${(MASS * G * a.sin).toFixed(2)} N 인데, 최대 마찰력은 μmg cos θ = ${(a.mu * MASS * G * a.cos).toFixed(2)} N 입니다. ` +
-                `미는 힘이 더 작으므로 수레는 아예 움직이지 않습니다. μ ${a.mu.toFixed(2)} 가 tan ${a.deg}° = ${a.tan.toFixed(2)} 보다 클 때가 그런 경우입니다. ` +
+                `미는 힘이 더 작으므로 수레는 아예 움직이지 않습니다. μ ${a.mu.toFixed(2)}가 tan ${a.deg}° = ${a.tan.toFixed(2)}보다 클 때가 그런 경우입니다. ` +
                 `질량은 양쪽 식에 똑같이 들어 있어 아무리 무거워도 결과가 달라지지 않습니다. ` +
-                `에너지는 ${a.total.toFixed(1)} J 이 그대로 위치 에너지로 남아 있습니다.`;
+                `에너지는 ${a.total.toFixed(1)} J이 그대로 위치 에너지로 남아 있습니다.`;
             return;
         }
         const free = analyse(a.h, a.deg, 0);
         let s = `처음 가진 에너지는 mgh = ${MASS}×${G}×${a.h} = ${a.total.toFixed(1)} J 입니다. `;
-        s += `빗면을 ${a.slope.toFixed(2)} m 내려오는 동안 마찰력이 한 일만큼 열이 생기는데, 그 비율은 μ/tan θ = ${(a.lostFrac * 100).toFixed(1)}% 로 ${a.heat.toFixed(1)} J 입니다. `;
-        s += `남은 ${a.ke.toFixed(1)} J 이 운동 에너지가 되어 바닥에서 ${a.speed.toFixed(2)} m/s 로 달립니다. `;
+        s += `빗면을 ${a.slope.toFixed(2)} m 내려오는 동안 마찰력이 한 일만큼 열이 생기는데, 그 비율은 μ/tan θ = ${(a.lostFrac * 100).toFixed(1)}%로 ${a.heat.toFixed(1)} J 입니다. `;
+        s += `남은 ${a.ke.toFixed(1)} J이 운동 에너지가 되어 바닥에서 ${a.speed.toFixed(2)} m/s로 달립니다. `;
         s += a.mu > 0
             ? `마찰이 없었다면 ${free.speed.toFixed(2)} m/s 였을 텐데 ${((1 - a.speed / free.speed) * 100).toFixed(0)}% 느려졌습니다. `
             : `마찰이 없어 위치 에너지가 남김없이 운동 에너지로 바뀌었습니다. `;
         s += `역학적 에너지만 보면 줄었지만 열까지 더하면 ${a.total.toFixed(1)} J 그대로입니다. 에너지는 없어지지 않고 형태만 바뀝니다. `;
-        s += `높이가 같으면 기울기를 바꿔도 마찰이 없는 한 바닥에서의 속력은 늘 ${free.speed.toFixed(2)} m/s 로 같습니다.`;
+        s += `높이가 같으면 기울기를 바꿔도 마찰이 없는 한 바닥에서의 속력은 늘 ${free.speed.toFixed(2)} m/s로 같습니다.`;
         explanation.textContent = s;
     }
 

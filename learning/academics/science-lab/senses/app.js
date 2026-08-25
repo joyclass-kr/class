@@ -31,7 +31,7 @@ const $ = id => document.getElementById(id);
 const svgNS = 'http://www.w3.org/2000/svg';
 const clamp = (v, a, b) => Math.max(a, Math.min(b, v));
 const fmt = (v, d) => v.toFixed(d).replace('-', '−');
-// 눈으로, 귀로 — 으로 after a final consonant, except ㄹ which takes 로.
+// 눈으로, 귀로 — 으로 after a final consonant, except ㄹ which takes로.
 function ro(w) {
     const c = w.charCodeAt(w.length - 1);
     if (c < 0xac00 || c > 0xd7a3) return `${w}로`;

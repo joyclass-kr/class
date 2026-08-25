@@ -30,6 +30,14 @@ document.addEventListener('DOMContentLoaded', () => {
     const PX_PER_MM = FIELD.w / FIELD.mm;
     const GRAPH = { x0: 66, x1: 424, y0: 150, y1: 28 };
 
+    /* 숫자 뒤의 조사는 그 수를 소리 내어 읽은 끝소리를 따릅니다.
+       영 일 이 삼 사 오 육 칠 팔 구 — 굳기 1·3·6·7은 받침이 있어 '과/을',
+       4와 6.5는 받침이 없어 '와/를'입니다. */
+    const DIGIT_JONG = { '0': 21, '1': 8, '2': 0, '3': 16, '4': 0, '5': 0, '6': 1, '7': 8, '8': 8, '9': 0 };
+    const numJong = n => DIGIT_JONG[String(n).replace(/[^0-9]/g, '').slice(-1)] ?? 0;
+    const wa = n => `${n}${numJong(n) > 0 ? '과' : '와'}`;
+    const eulNum = n => `${n}${numJong(n) > 0 ? '을' : '를'}`;
+
     const MINERALS = {
         talc: { name: '활석', h: 1, streak: '흰색', sc: '#f0f2f0', magnetic: false, acid: false, colour: '#cfd8d0' },
         calcite: { name: '방해석', h: 3, streak: '흰색', sc: '#f2eee2', magnetic: false, acid: true, colour: '#e6e0cc' },
@@ -186,7 +194,7 @@ document.addEventListener('DOMContentLoaded', () => {
         out += `<text class="part-label" x="300" y="160">묽은 염산 반응</text>`;
         out += `<text class="note-text" x="300" y="176">A ${a.A.acid ? '거품이 난다' : '반응 없음'} · B ${a.B.acid ? '거품이 난다' : '반응 없음'}</text>`;
 
-        out += `<text class="part-label" x="20" y="24">굳기 ${a.A.h} 와 ${a.B.h} 를 견줍니다</text>`;
+        out += `<text class="part-label" x="20" y="24">굳기 ${wa(a.A.h)} ${eulNum(a.B.h)} 견줍니다</text>`;
         out += `<text class="note-text" x="20" y="200">${a.tellApart ? `이 둘은 ${a.tellApart}(으)로 구별할 수 있습니다` : '이 둘은 주어진 방법으로는 구별되지 않습니다'}</text>`;
         mainGroup.innerHTML = out;
     }
@@ -351,7 +359,7 @@ document.addEventListener('DOMContentLoaded', () => {
                             : `같은 광물이라 구별할 것이 없습니다.`;
             } else {
                 const hard = a.verdict === 'a' ? a.A : a.B, soft = a.verdict === 'a' ? a.B : a.A;
-                s += `굳기가 ${a.gap} 만큼 큰 ${hard.name}이 ${soft.name}에 흠집을 냅니다. 반대로는 흠집이 나지 않습니다. `;
+                s += `굳기가 ${a.gap}만큼 큰 ${hard.name}이 ${soft.name}에 흠집을 냅니다. 반대로는 흠집이 나지 않습니다. `;
                 s += `굳기가 다르면 이렇게 긁어 보는 것만으로도 어느 쪽이 단단한지 알 수 있습니다.`;
             }
             explanation.textContent = s;

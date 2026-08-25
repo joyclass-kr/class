@@ -33,6 +33,10 @@ document.addEventListener('DOMContentLoaded', () => {
     const G = 9.8;
     const P0 = 100, V0 = 50;          // kPa at mL, the reference state
 
+    /* 숫자 뒤 조사는 그 수를 읽은 끝소리를 따릅니다. 영 일 이 삼 사 오 육 칠 팔 구 —
+       1.00은 '영'으로 끝나 받침이 있어 '과', 0.92는 '이'로 끝나 '와'입니다. */
+    const DIGIT_JONG = { '0': 21, '1': 8, '2': 0, '3': 16, '4': 0, '5': 0, '6': 1, '7': 8, '8': 8, '9': 0 };
+    const wa = n => `${n}${DIGIT_JONG[String(n).replace(/[^0-9]/g, '').slice(-1)] > 0 ? '과' : '와'}`;
     const TANK = { x0: 110, x1: 330, surface: 88, bottom: 228 };
     const GRAPH = { x0: 54, x1: 428, y0: 142, y1: 20 };
 
@@ -109,10 +113,14 @@ document.addEventListener('DOMContentLoaded', () => {
         const upLen = b.buoyN * scale, dnLen = b.weightN * scale;
         out += `<line class="force-arrow force-up" x1="${ax}" y1="${base}" x2="${ax}" y2="${(base - upLen).toFixed(1)}"/>`;
         out += `<path class="force-arrow force-up" d="M${ax - 5},${(base - upLen + 7).toFixed(1)} L${ax},${(base - upLen).toFixed(1)} L${ax + 5},${(base - upLen + 7).toFixed(1)}" fill="none"/>`;
-        out += `<text class="force-text" fill="#54e6c1" x="${ax + 9}" y="${(base - upLen + 4).toFixed(1)}">부력 ${b.buoyN.toFixed(2)} N</text>`;
+        // With small forces both arrows are short and the two labels land on top
+        // of each other, so each is held clear of the mid-line.
+        const upTextY = Math.min(base - upLen + 4, base - 6);
+        const dnTextY = Math.max(base + dnLen + 4, base + 18);
+        out += `<text class="force-text" fill="#54e6c1" x="${ax + 9}" y="${upTextY.toFixed(1)}">부력 ${b.buoyN.toFixed(2)} N</text>`;
         out += `<line class="force-arrow force-down" x1="${ax}" y1="${base}" x2="${ax}" y2="${(base + dnLen).toFixed(1)}"/>`;
         out += `<path class="force-arrow force-down" d="M${ax - 5},${(base + dnLen - 7).toFixed(1)} L${ax},${(base + dnLen).toFixed(1)} L${ax + 5},${(base + dnLen - 7).toFixed(1)}" fill="none"/>`;
-        out += `<text class="force-text" fill="#ff8a8a" x="${ax + 9}" y="${(base + dnLen + 4).toFixed(1)}">무게 ${b.weightN.toFixed(2)} N</text>`;
+        out += `<text class="force-text" fill="#ff8a8a" x="${ax + 9}" y="${dnTextY.toFixed(1)}">무게 ${b.weightN.toFixed(2)} N</text>`;
         if (b.state === 'sink' && b.normalN > 0) {
             out += `<text class="force-text" fill="#c79bff" x="${ax - 84}" y="${base + 34}">바닥이 ${b.normalN.toFixed(2)} N 받침</text>`;
         } else if (b.state === 'neutral') {
@@ -129,12 +137,12 @@ document.addEventListener('DOMContentLoaded', () => {
             g += `<text class="axis-text" x="${GRAPH.x0 - 6}" y="${y + 3}" text-anchor="end">${(k * 100 / 3).toFixed(0)}</text>`;
         }
         for (let r = 0; r <= rhoMax; r += 0.5) {
-            g += `<text class="axis-text" x="${gx(r, 0, rhoMax)}" y="${GRAPH.y0 + 14}" text-anchor="middle">${r.toFixed(1)}</text>`;
+            g += `<text class="axis-text" x="${gx(r, 0, rhoMax)}" y="${GRAPH.y0 + 16}" text-anchor="middle">${r.toFixed(1)}</text>`;
         }
         g += `<line class="axis" x1="${GRAPH.x0}" y1="${GRAPH.y0}" x2="${GRAPH.x1}" y2="${GRAPH.y0}"/>`;
         g += `<line class="axis" x1="${GRAPH.x0}" y1="${GRAPH.y0}" x2="${GRAPH.x0}" y2="${GRAPH.y1}"/>`;
-        g += `<text class="axis-title" x="${(GRAPH.x0 + GRAPH.x1) / 2}" y="${GRAPH.y0 + 30}" text-anchor="middle">물체의 밀도 (g/cm³)</text>`;
-        g += `<text class="axis-title" x="${GRAPH.x0 - 32}" y="${GRAPH.y1 - 4}">잠긴 비율 (%)</text>`;
+        g += `<text class="axis-title" x="${(GRAPH.x0 + GRAPH.x1) / 2}" y="${GRAPH.y0 + 32}" text-anchor="middle">물체의 밀도 (g/cm³)</text>`;
+        g += `<text class="axis-title" x="${GRAPH.x0}" y="${GRAPH.y1 - 4}">잠긴 비율 (%)</text>`;
         // submerged fraction against object density: rises to 100% at the
         // fluid's density and stays there once it sinks
         const pts = [];
@@ -145,7 +153,7 @@ document.addEventListener('DOMContentLoaded', () => {
         }
         g += `<path class="curve" d="M${pts.join('L')}"/>`;
         g += `<line class="float-line" x1="${gx(b.rhoFl, 0, rhoMax)}" y1="${GRAPH.y0}" x2="${gx(b.rhoFl, 0, rhoMax)}" y2="${GRAPH.y1}"/>`;
-        g += `<text class="axis-text" x="${gx(b.rhoFl, 0, rhoMax) + 4}" y="${GRAPH.y1 + 10}" fill="#54e6c1">${f.name} ${b.rhoFl.toFixed(2)}</text>`;
+        g += `<text class="axis-text" x="${gx(b.rhoFl, 0, rhoMax) + 4}" y="${GRAPH.y0 - 6}" fill="#54e6c1">${f.name} ${b.rhoFl.toFixed(2)}</text>`;
         const px = gx(Math.min(rhoMax, b.rhoObj), 0, rhoMax), py = gy(b.frac * 100, 100);
         g += `<line class="op-guide" x1="${px}" y1="${GRAPH.y0}" x2="${px}" y2="${py.toFixed(1)}"/>`;
         g += `<circle class="op-point" cx="${px}" cy="${py.toFixed(1)}" r="5"/>`;
@@ -199,7 +207,7 @@ document.addEventListener('DOMContentLoaded', () => {
         g += `<line class="axis" x1="${GRAPH.x0}" y1="${GRAPH.y0}" x2="${GRAPH.x1}" y2="${GRAPH.y0}"/>`;
         g += `<line class="axis" x1="${GRAPH.x0}" y1="${GRAPH.y0}" x2="${GRAPH.x0}" y2="${GRAPH.y1}"/>`;
         g += `<text class="axis-title" x="${(GRAPH.x0 + GRAPH.x1) / 2}" y="${GRAPH.y0 + 30}" text-anchor="middle">부피 (mL)</text>`;
-        g += `<text class="axis-title" x="${GRAPH.x0 - 30}" y="${GRAPH.y1 - 4}">압력 (kPa)</text>`;
+        g += `<text class="axis-title" x="${GRAPH.x0}" y="${GRAPH.y1 - 4}">압력 (kPa)</text>`;
         const pts = [];
         for (let k = 0; k <= 120; k += 1) {
             const vv = 10 + (44 * k) / 120;
@@ -245,10 +253,10 @@ document.addEventListener('DOMContentLoaded', () => {
                     : prediction === b.state ? '예상이 맞았습니다.' : '예상과 다른 결과입니다.';
             }
             explanation.textContent = b.state === 'float'
-                ? `물체의 밀도 ${b.rhoObj.toFixed(2)} 가 ${f.name}의 밀도 ${f.rho.toFixed(2)} 보다 작아 뜹니다. 뜬 물체는 부력과 무게가 같아지는 깊이까지만 잠기므로, 잠긴 비율이 두 밀도의 비인 ${b.rhoObj.toFixed(2)} ÷ ${f.rho.toFixed(2)} = ${(b.frac * 100).toFixed(0)} % 가 됩니다. 부력 ${b.buoyN.toFixed(3)} N 과 무게 ${b.weightN.toFixed(3)} N 이 정확히 같습니다.`
+                ? `물체의 밀도 ${b.rhoObj.toFixed(2)}가 ${f.name}의 밀도 ${f.rho.toFixed(2)}보다 작아 뜹니다. 뜬 물체는 부력과 무게가 같아지는 깊이까지만 잠기므로, 잠긴 비율이 두 밀도의 비인 ${b.rhoObj.toFixed(2)} ÷ ${f.rho.toFixed(2)} = ${(b.frac * 100).toFixed(0)} %가 됩니다. 부력 ${b.buoyN.toFixed(3)} N과 무게 ${b.weightN.toFixed(3)} N이 정확히 같습니다.`
                 : b.state === 'neutral'
-                ? `물체의 밀도가 ${f.name}의 밀도 ${f.rho.toFixed(2)} 와 정확히 같습니다. 완전히 잠긴 상태에서 부력 ${b.buoyN.toFixed(3)} N 과 무게 ${b.weightN.toFixed(3)} N 이 같아지므로, 바닥에 닿지 않고 액체 속 어디에서든 그대로 머무릅니다. 이것을 중성 부력이라고 합니다.`
-                : `물체의 밀도 ${b.rhoObj.toFixed(2)} 가 ${f.name}의 밀도 ${f.rho.toFixed(2)} 보다 커서 가라앉습니다. 완전히 잠겨도 부력은 ${b.buoyN.toFixed(3)} N 뿐이어서 무게 ${b.weightN.toFixed(3)} N 을 못 이기고, 나머지 ${b.normalN.toFixed(3)} N 은 바닥이 받쳐 줍니다.`;
+                ? `물체의 밀도가 ${f.name}의 밀도 ${wa(f.rho.toFixed(2))} 정확히 같습니다. 완전히 잠긴 상태에서 부력 ${b.buoyN.toFixed(3)} N과 무게 ${b.weightN.toFixed(3)} N이 같아지므로, 바닥에 닿지 않고 액체 속 어디에서든 그대로 머무릅니다. 이것을 중성 부력이라고 합니다.`
+                : `물체의 밀도 ${b.rhoObj.toFixed(2)}가 ${f.name}의 밀도 ${f.rho.toFixed(2)}보다 커서 가라앉습니다. 완전히 잠겨도 부력은 ${b.buoyN.toFixed(3)} N 뿐이어서 무게 ${b.weightN.toFixed(3)} N을 못 이기고, 나머지 ${b.normalN.toFixed(3)} N은 바닥이 받쳐 줍니다.`;
         } else {
             const v = gasVol(), p = pressureOf(v);
             labelA.textContent = '기체의 압력';
@@ -256,7 +264,7 @@ document.addEventListener('DOMContentLoaded', () => {
             valueA.textContent = `${p.toFixed(0)} kPa`;
             valueB.textContent = `${(p * v).toFixed(0)}`;
             predictionResult.textContent = '부피를 줄이면 압력이 그만큼 커집니다.';
-            explanation.textContent = `온도가 일정하면 P V 가 일정합니다. 부피를 기준 ${V0} mL 의 ${(v / V0).toFixed(2)}배인 ${v} mL 로 줄이면 압력은 ${(p / P0).toFixed(2)}배인 ${p.toFixed(0)} kPa 이 됩니다. 입자 수는 그대로인데 공간이 좁아져 벽에 부딪히는 횟수가 늘어난 것입니다.`;
+            explanation.textContent = `온도가 일정하면 P V가 일정합니다. 부피를 기준 ${V0} mL 의 ${(v / V0).toFixed(2)}배인 ${v} mL로 줄이면 압력은 ${(p / P0).toFixed(2)}배인 ${p.toFixed(0)} kPa이 됩니다. 입자 수는 그대로인데 공간이 좁아져 벽에 부딪히는 횟수가 늘어난 것입니다.`;
         }
     }
 

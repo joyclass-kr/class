@@ -188,7 +188,7 @@ document.addEventListener('DOMContentLoaded', () => {
         out += `<line class="axis" x1="${GRAPH.x0}" y1="${GRAPH.y0}" x2="${GRAPH.x1}" y2="${GRAPH.y0}"/>`;
         out += `<line class="axis" x1="${GRAPH.x0}" y1="${GRAPH.y0}" x2="${GRAPH.x0}" y2="${GRAPH.y1}"/>`;
         out += `<text class="axis-title" x="${((GRAPH.x0 + GRAPH.x1) / 2).toFixed(1)}" y="${GRAPH.y0 + 30}" text-anchor="middle">시간 (초)</text>`;
-        out += `<text class="axis-title" x="${GRAPH.x0 - 32}" y="${GRAPH.y1 - 6}">속력 (m/s)</text>`;
+        out += `<text class="axis-title" x="${GRAPH.x0}" y="${GRAPH.y1 - 6}">속력 (m/s)</text>`;
 
         if (a.v0 > 0) {
             out += `<line class="start-line" x1="${GRAPH.x0}" y1="${gy(a.v0).toFixed(1)}" x2="${GRAPH.x1}" y2="${gy(a.v0).toFixed(1)}"/>`;
@@ -270,13 +270,13 @@ document.addEventListener('DOMContentLoaded', () => {
             : prediction === a.motion ? '예상이 맞았습니다.' : '예상과 다른 결과입니다.';
         let s = `${a.floorName} 바닥에서 최대 마찰력은 ${a.mu} × ${a.weight} N = ${fmt(a.fMax)} N 입니다. `;
         if (a.motion === 'rest') {
-            s += `미는 힘 ${a.F} N 은 이보다 크지 않아 상자가 움직이지 않습니다. 이때 마찰력은 미는 힘과 똑같은 ${fmt(a.friction)} N 만 생겨 알짜힘이 0 이 됩니다.`;
+            s += `미는 힘 ${a.F} N은 이보다 크지 않아 상자가 움직이지 않습니다. 이때 마찰력은 미는 힘과 똑같은 ${fmt(a.friction)} N 만 생겨 알짜힘이 0이 됩니다.`;
         } else {
-            s += `미는 힘 ${a.F} N 에서 마찰력 ${fmt(a.fMax)} N 을 빼면 알짜힘은 ${fmt(a.net)} N, 가속도는 ${fmt(a.net)} ÷ ${a.m} = ${a.accel.toFixed(2)} m/s² 입니다. `;
-            if (a.motion === 'constant') s += `알짜힘이 0 이라 처음 속력 ${fmt(a.v0)} m/s 를 그대로 지키며 ${st.x.toFixed(1)} m 를 갔습니다. 힘이 평형이어도 멈추지 않는다는 점이 중요합니다.`;
-            else if (a.motion === 'faster') s += `${a.endTime.toFixed(1)} 초 만에 ${st.x.toFixed(1)} m 를 지나며 속력이 ${fmt(a.v0)} m/s 에서 ${st.v.toFixed(1)} m/s 로 커졌습니다.`;
+            s += `미는 힘 ${a.F} N 에서 마찰력 ${fmt(a.fMax)} N을 빼면 알짜힘은 ${fmt(a.net)} N, 가속도는 ${fmt(a.net)} ÷ ${a.m} = ${a.accel.toFixed(2)} m/s² 입니다. `;
+            if (a.motion === 'constant') s += `알짜힘이 0 이라 처음 속력 ${fmt(a.v0)} m/s를 그대로 지키며 ${st.x.toFixed(1)} m를 갔습니다. 힘이 평형이어도 멈추지 않는다는 점이 중요합니다.`;
+            else if (a.motion === 'faster') s += `${a.endTime.toFixed(1)} 초 만에 ${st.x.toFixed(1)} m를 지나며 속력이 ${fmt(a.v0)} m/s 에서 ${st.v.toFixed(1)} m/s로 커졌습니다.`;
             else if (a.reachedEnd) s += `느려지기는 했지만 멈추기 전에 ${st.x.toFixed(1)} m 끝에 닿았습니다.`;
-            else s += `${a.endTime.toFixed(1)} 초 뒤 ${st.x.toFixed(1)} m 를 가고 멈췄습니다.`;
+            else s += `${a.endTime.toFixed(1)} 초 뒤 ${st.x.toFixed(1)} m를 가고 멈췄습니다.`;
         }
         explanation.textContent = s;
     }

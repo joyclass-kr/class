@@ -156,9 +156,9 @@ document.addEventListener('DOMContentLoaded', () => {
         }
         // nothing extra when the metals match: the reading below already says so,
         // and a second message here lands on the salt bridge label
-        out += `<text class="part-label" x="20" y="18">${a.A.sym} (${a.A.E.toFixed(2)} V) 와 ${a.B.sym} (${a.B.E.toFixed(2)} V)</text>`;
+        out += `<text class="part-label" x="20" y="18">${a.A.sym} (${a.A.E.toFixed(2)} V)와 ${a.B.sym} (${a.B.E.toFixed(2)} V)</text>`;
         out += `<text class="read-text" x="20" y="209">${a.same ? '전위 차이가 0 이라 전류가 흐르지 않습니다'
-            : `${a.anode.sym} 이 산화되어 (−)극 · 기전력 ${a.emf.toFixed(2)} V`}</text>`;
+            : `${a.anode.sym}이 산화되어 (−)극 · 기전력 ${a.emf.toFixed(2)} V`}</text>`;
         mainGroup.innerHTML = out;
     }
 
@@ -204,7 +204,7 @@ document.addEventListener('DOMContentLoaded', () => {
         } else {
             out += `<text class="note-text" x="316" y="112">${a.b.out} ${a.molOut.toFixed(4)} mol</text>`;
             out += `<text class="note-text" x="316" y="130">${a.b.sym}${a.b.n === 1 ? '⁺' : '²⁺'} + ${a.b.n}e⁻ → ${a.b.sym}</text>`;
-            out += `<text class="read-text" x="20" y="209">${a.b.out} ${a.mass.toFixed(3)} g 이 (−)극에 석출됩니다</text>`;
+            out += `<text class="read-text" x="20" y="209">${a.b.out} ${a.mass.toFixed(3)} g이 (−)극에 석출됩니다</text>`;
         }
         mainGroup.innerHTML = out;
     }
@@ -266,7 +266,7 @@ document.addEventListener('DOMContentLoaded', () => {
         out += `<line class="axis" x1="${GRAPH.x0}" y1="${GRAPH.y0}" x2="${GRAPH.x1}" y2="${GRAPH.y0}"/>`;
         out += `<line class="axis" x1="${GRAPH.x0}" y1="${GRAPH.y0}" x2="${GRAPH.x0}" y2="${GRAPH.y1}"/>`;
         out += `<text class="axis-title" x="${((GRAPH.x0 + GRAPH.x1) / 2).toFixed(1)}" y="${GRAPH.y0 + 32}" text-anchor="middle">같은 전기량으로 얻는 질량 (g)</text>`;
-        out += `<text class="axis-title" x="22" y="20">전자 ${a.eMol.toFixed(4)} mol 이 흘렀을 때</text>`;
+        out += `<text class="axis-title" x="22" y="20">전자 ${a.eMol.toFixed(4)} mol이 흘렀을 때</text>`;
         rows.forEach(([name, mass, colour], i) => {
             const y = GRAPH.y1 + 26 + i * 30;
             out += `<text class="axis-text" x="${GRAPH.x0 - 6}" y="${(y + 4).toFixed(1)}" text-anchor="end">${name}</text>`;
@@ -322,7 +322,7 @@ document.addEventListener('DOMContentLoaded', () => {
             predictionResult.textContent = !state.prediction ? '다음에는 결과를 먼저 예상해 보세요.'
                 : state.prediction === a.verdict ? '예상이 맞았습니다.' : '예상과 다른 결과입니다.';
             explanation.textContent = a.same
-                ? `두 쪽 모두 ${a.A.name}이라 표준 환원 전위가 ${a.A.E.toFixed(2)} V 로 같습니다. 전위 차이가 0 이므로 어느 쪽도 상대에게 전자를 내주지 않고 전류도 흐르지 않습니다. 전지가 되려면 서로 다른 금속이어야 합니다.`
+                ? `두 쪽 모두 ${a.A.name}이라 표준 환원 전위가 ${a.A.E.toFixed(2)} V로 같습니다. 전위 차이가 0 이므로 어느 쪽도 상대에게 전자를 내주지 않고 전류도 흐르지 않습니다. 전지가 되려면 서로 다른 금속이어야 합니다.`
                 : `${a.anode.name}의 표준 환원 전위는 ${a.anode.E.toFixed(2)} V, ${a.cathode.name}은 ${a.cathode.E.toFixed(2)} V 입니다. ` +
                   `낮은 쪽인 ${a.anode.name}이 전자를 내놓고 산화되어 (−)극이 되고, ${a.cathode.name}쪽에서는 이온이 전자를 받아 환원됩니다. ` +
                   `기전력은 두 전위의 차이인 ${a.cathode.E.toFixed(2)} − (${a.anode.E.toFixed(2)}) = ${a.emf.toFixed(2)} V 입니다. ` +
@@ -334,17 +334,17 @@ document.addEventListener('DOMContentLoaded', () => {
         valueB.textContent = a.b.gas ? `H₂ ${a.h2L.toFixed(2)} L` : `${a.mass.toFixed(3)} g`;
         predictionResult.textContent = !state.prediction ? '다음에는 결과를 먼저 예상해 보세요.'
             : state.prediction === a.verdict ? '예상이 맞았습니다.' : '예상과 다른 결과입니다.';
-        let s = `${a.I} A 로 ${a.mins} 분, 곧 ${a.seconds.toLocaleString()} 초 동안 흘렸으므로 전기량은 ${a.charge.toFixed(0)} C 입니다. `;
-        s += `이를 패러데이 상수 96485 로 나누면 전자 ${a.eMol.toFixed(4)} mol 이 흐른 셈입니다. `;
+        let s = `${a.I} A로 ${a.mins} 분, 곧 ${a.seconds.toLocaleString()} 초 동안 흘렸으므로 전기량은 ${a.charge.toFixed(0)} C 입니다. `;
+        s += `이를 패러데이 상수 96485로 나누면 전자 ${a.eMol.toFixed(4)} mol이 흐른 셈입니다. `;
         if (a.b.gas) {
             s += `2H₂O → 2H₂ + O₂ 에서 전자 4몰마다 수소 2몰과 산소 1몰이 나옵니다. ` +
                  `따라서 수소는 ${a.eMol.toFixed(4)} ÷ 2 = ${a.h2.toFixed(4)} mol, 산소는 ${a.eMol.toFixed(4)} ÷ 4 = ${a.o2.toFixed(4)} mol 이고, ` +
-                 `부피로는 ${a.h2L.toFixed(2)} L 와 ${a.o2L.toFixed(2)} L 로 언제나 2 : 1 입니다. `;
+                 `부피로는 ${a.h2L.toFixed(2)} L와 ${a.o2L.toFixed(2)} L로 언제나 2 : 1 입니다. `;
         } else {
             s += `${a.b.sym}${a.b.n === 1 ? '⁺' : '²⁺'} 이온이 ${a.b.n} 개의 전자를 받아야 금속이 되므로 ` +
-                 `${a.b.out}은 ${a.eMol.toFixed(4)} ÷ ${a.b.n} = ${a.molOut.toFixed(4)} mol, 질량으로는 ${a.mass.toFixed(3)} g 이 석출됩니다. `;
+                 `${a.b.out}은 ${a.eMol.toFixed(4)} ÷ ${a.b.n} = ${a.molOut.toFixed(4)} mol, 질량으로는 ${a.mass.toFixed(3)} g이 석출됩니다. `;
             const other = analyseElec(a.bathKey === 'ag' ? 'cu' : 'ag', a.I, a.mins);
-            s += `같은 전기량이라도 ${other.b.out}은 ${other.molOut.toFixed(4)} mol 로 몰수가 다릅니다. 이온이 받아야 하는 전자 수가 다르기 때문입니다. `;
+            s += `같은 전기량이라도 ${other.b.out}은 ${other.molOut.toFixed(4)} mol로 몰수가 다릅니다. 이온이 받아야 하는 전자 수가 다르기 때문입니다. `;
         }
         s += `전기량이 두 배가 되면 나오는 양도 정확히 두 배가 됩니다.`;
         explanation.textContent = s;

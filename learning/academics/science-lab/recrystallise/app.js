@@ -255,18 +255,18 @@ document.addEventListener('DOMContentLoaded', () => {
             : prediction === a.verdict ? '예상이 맞았습니다.' : '예상과 다른 결과입니다.';
         const other = analyse(a.key === 'kno3' ? 'nacl' : 'kno3', a.w, a.T1, a.T2, a.imp);
         let s = `${a.T1} ℃ 물 ${a.w} g 에는 ${a.S.name}이 ${a.dissolved.toFixed(1)} g 까지 녹습니다. `;
-        s += `${a.T2} ℃ 로 식히면 ${a.canHold.toFixed(1)} g 만 녹아 있을 수 있으므로 차이인 ${a.crystals.toFixed(1)} g 이 결정으로 나옵니다. `;
+        s += `${a.T2} ℃로 식히면 ${a.canHold.toFixed(1)} g 만 녹아 있을 수 있으므로 차이인 ${a.crystals.toFixed(1)} g이 결정으로 나옵니다. `;
         if (a.impOut < 1e-9) {
-            s += `불순물 ${a.imp} g 은 이 물에 ${a.impCanHold.toFixed(1)} g 까지 녹을 수 있어 식힌 뒤에도 전부 녹은 채 남습니다. ` +
+            s += `불순물 ${a.imp} g은 이 물에 ${a.impCanHold.toFixed(1)} g 까지 녹을 수 있어 식힌 뒤에도 전부 녹은 채 남습니다. ` +
                  `그래서 걸러 낸 결정은 100% 순수합니다. 이것이 재결정으로 물질을 정제하는 원리입니다. `;
         } else {
-            s += `그런데 불순물 ${a.imp} g 은 이 물에 ${a.impCanHold.toFixed(1)} g 까지밖에 녹지 못해 ${a.impOut.toFixed(1)} g 이 함께 석출됩니다. ` +
-                 `결정의 순도는 ${a.purity.toFixed(1)}% 로 떨어집니다. 물을 더 쓰면 불순물이 다 녹아 남아 순도가 올라갑니다. `;
+            s += `그런데 불순물 ${a.imp} g은 이 물에 ${a.impCanHold.toFixed(1)} g 까지밖에 녹지 못해 ${a.impOut.toFixed(1)} g이 함께 석출됩니다. ` +
+                 `결정의 순도는 ${a.purity.toFixed(1)}%로 떨어집니다. 물을 더 쓰면 불순물이 다 녹아 남아 순도가 올라갑니다. `;
         }
         s += a.key === 'kno3'
             ? `질산 칼륨은 온도에 따라 용해도가 크게 달라져 식히는 것만으로 많은 양을 얻을 수 있습니다. 같은 조건에서 염화 나트륨은 ${other.crystals.toFixed(1)} g 밖에 나오지 않습니다.`
-            : `염화 나트륨은 ${a.T1} ℃ 와 ${a.T2} ℃ 의 용해도가 ${a.s1.toFixed(1)} 과 ${a.s2.toFixed(1)} 로 거의 같아 식혀도 ${a.crystals.toFixed(1)} g 밖에 나오지 않습니다. ` +
-              `같은 조건의 질산 칼륨은 ${other.crystals.toFixed(1)} g 이 나옵니다. 그래서 염화 나트륨은 재결정으로 정제하기 어렵고, 바닷물에서는 물을 증발시켜 얻습니다.`;
+            : `염화 나트륨은 ${a.T1} ℃와 ${a.T2} ℃ 의 용해도가 ${a.s1.toFixed(1)}과 ${a.s2.toFixed(1)}로 거의 같아 식혀도 ${a.crystals.toFixed(1)} g 밖에 나오지 않습니다. ` +
+              `같은 조건의 질산 칼륨은 ${other.crystals.toFixed(1)} g이 나옵니다. 그래서 염화 나트륨은 재결정으로 정제하기 어렵고, 바닷물에서는 물을 증발시켜 얻습니다.`;
         explanation.textContent = s;
     }
 

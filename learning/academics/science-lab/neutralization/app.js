@@ -106,9 +106,20 @@ document.addEventListener('DOMContentLoaded', () => {
         // leftover ions: only the excess species remains in solution
         const excess = Math.abs(a.nH - a.nOH);
         const dots = Math.min(10, Math.round(excess / (0.05 * 0.05) * 2));
-        for (let i = 0; i < dots; i += 1) {
-            const x = BX.x0 + 16 + ((i * 43) % (BX.x1 - BX.x0 - 32));
-            const y = surface + 12 + ((i * 27) % Math.max(10, level - 24));
+        /* Laid out on a grid rather than by modular arithmetic: the old spacing
+           wrapped onto itself in a shallow beaker and printed ions on top of
+           each other. If the liquid is too shallow for every ion to have its own
+           row, fewer are drawn rather than overlapping ones. */
+        const boxW = (BX.x1 - BX.x0) - 30;
+        const cols = 3;
+        const availH = Math.max(16, level - 22);
+        const maxRows = Math.max(1, Math.floor(availH / 15));
+        const shown = Math.min(dots, cols * maxRows);
+        const rows = Math.max(1, Math.ceil(shown / cols));
+        const stepY = Math.min(18, availH / rows);
+        for (let i = 0; i < shown; i += 1) {
+            const x = BX.x0 + 15 + (boxW * ((i % cols) + 0.5)) / cols;
+            const y = surface + 10 + stepY * (Math.floor(i / cols) + 0.5);
             const isH = a.state === 'acid';
             out += `<circle class="${isH ? 'ion-h' : 'ion-oh'}" cx="${x}" cy="${y}" r="6.5"/>`;
             out += `<text class="ion-label" x="${x}" y="${y + 3}" text-anchor="middle">${isH ? 'H⁺' : 'OH⁻'}</text>`;
@@ -138,7 +149,7 @@ document.addEventListener('DOMContentLoaded', () => {
         out += `<line class="axis" x1="${GRAPH.x0}" y1="${GRAPH.y0}" x2="${GRAPH.x1}" y2="${GRAPH.y0}"/>`;
         out += `<line class="axis" x1="${GRAPH.x0}" y1="${GRAPH.y0}" x2="${GRAPH.x0}" y2="${GRAPH.y1}"/>`;
         out += `<text class="axis-title" fill="#cfe6ee" x="${(GRAPH.x0 + GRAPH.x1) / 2}" y="${GRAPH.y0 + 30}" text-anchor="middle">넣은 수산화나트륨 (mL)</text>`;
-        out += `<text class="axis-title" fill="#c79bff" x="${GRAPH.x0 - 30}" y="${GRAPH.y1 - 8}">pH</text>`;
+        out += `<text class="axis-title" fill="#c79bff" x="${GRAPH.x0}" y="${GRAPH.y1 - 8}">pH</text>`;
         out += `<text class="axis-title" fill="#ff9d6b" x="${GRAPH.x1 + 4}" y="${GRAPH.y1 - 8}" text-anchor="end">온도 (점선)</text>`;
 
         // temperature is drawn on its own scale so both fit the same panel
@@ -183,7 +194,7 @@ document.addEventListener('DOMContentLoaded', () => {
             `<div class="data-row"><span class="data-name">H⁺ 의 몰수</span><span class="data-val">${acidC().toFixed(2)} × 0.050 L = ${a.nH.toFixed(4)} mol</span></div>` +
             `<div class="data-row"><span class="data-name">OH⁻ 의 몰수</span><span class="data-val">${baseC().toFixed(2)} × ${(addedML() / 1000).toFixed(3)} L = ${a.nOH.toFixed(4)} mol</span></div>` +
             `<div class="data-row${a.state === 'neutral' ? ' match' : ''}"><span class="data-name">지금 상태</span>` +
-            `<span class="data-val">${a.state === 'neutral' ? '두 몰수가 같아 중화점' : a.state === 'acid' ? `H⁺ 이 ${(a.nH - a.nOH).toFixed(4)} mol 남아 산성` : `OH⁻ 이 ${(a.nOH - a.nH).toFixed(4)} mol 남아 염기성`}</span></div>`;
+            `<span class="data-val">${a.state === 'neutral' ? '두 몰수가 같아 중화점' : a.state === 'acid' ? `수소 이온(H⁺)이 ${(a.nH - a.nOH).toFixed(4)} mol 남아 산성` : `수산화 이온(OH⁻)이 ${(a.nOH - a.nH).toFixed(4)} mol 남아 염기성`}</span></div>`;
     }
 
     const clearResult = () => { resultEmpty.hidden = false; resultContent.hidden = true; };
@@ -199,9 +210,9 @@ document.addEventListener('DOMContentLoaded', () => {
             : prediction === 'at' ? '예상이 맞았습니다.' : '예상과 다른 결과입니다. 온도는 중화점에서 가장 높습니다.';
         const peak = analyse(a.eqML).temp;
         explanation.textContent =
-            `H⁺ ${a.nH.toFixed(4)} mol 과 OH⁻ ${a.nOH.toFixed(4)} mol 이 1 : 1 로 만나 물이 됩니다. ` +
-            `두 몰수가 같아지는 ${a.eqML.toFixed(1)} mL 가 중화점이고 이때 pH 가 7 이 됩니다. ` +
-            `중화 반응은 열을 내므로 물이 가장 많이 만들어지는 중화점에서 온도가 ${peak.toFixed(2)} ℃ 로 가장 높고, ` +
+            `H⁺ ${a.nH.toFixed(4)} mol과 OH⁻ ${a.nOH.toFixed(4)} mol이 1 : 1로 만나 물이 됩니다. ` +
+            `두 몰수가 같아지는 ${a.eqML.toFixed(1)} mL가 중화점이고 이때 pH가 7이 됩니다. ` +
+            `중화 반응은 열을 내므로 물이 가장 많이 만들어지는 중화점에서 온도가 ${peak.toFixed(2)} ℃로 가장 높고, ` +
             `그 뒤로는 물이 더 만들어지지 않는데 부피만 늘어나 오히려 온도가 내려갑니다.`;
     }
 

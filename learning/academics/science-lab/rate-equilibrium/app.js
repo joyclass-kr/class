@@ -185,7 +185,7 @@ document.addEventListener('DOMContentLoaded', () => {
         out += `<text class="note-text" x="240" y="64">평형 상수 K = ${a.K.toFixed(1)}</text>`;
         out += `<text class="note-text" x="240" y="82">[NO₂] = ${a.no2.toFixed(4)} M (갈색)</text>`;
         out += `<text class="note-text" x="240" y="100">[N₂O₄] = ${a.n2o4.toFixed(4)} M (무색)</text>`;
-        out += `<text class="note-text" x="240" y="118">질소의 ${(a.fracN2O4 * 100).toFixed(1)}% 가 N₂O₄ 로</text>`;
+        out += `<text class="note-text" x="240" y="118">질소의 ${(a.fracN2O4 * 100).toFixed(1)}%가 N₂O₄ 로</text>`;
         out += `<text class="note-text" x="240" y="136">기준 [NO₂] = ${a.ref.no2.toFixed(4)} M</text>`;
         const tone = a.verdict === 'darker' ? '#c8703c' : a.verdict === 'lighter' ? '#7fd4f0' : '#54e6c1';
         out += `<text class="verdict-text" fill="${tone}" x="240" y="162">기준의 ${a.ratio.toFixed(2)}배 — ${EQ_WORD[a.verdict]}</text>`;
@@ -245,7 +245,7 @@ document.addEventListener('DOMContentLoaded', () => {
         const gy = f => GRAPH.y0 - f * (GRAPH.y0 - GRAPH.y1);
         let out = frame([0, 25, 50, 75, 100].map(T => [T, gx(T)]),
                         [0, 0.25, 0.5, 0.75, 1].map(f => [`${(f * 100).toFixed(0)}%`, gy(f)]),
-                        '온도 (℃)', 'N₂O₄ 로 있는 질소의 비율');
+                        '온도 (℃)', 'N₂O₄로 있는 질소의 비율');
         [[0.5, 'rgba(255,209,102,.3)'], [1.0, '#ffd166'], [2.0, 'rgba(255,209,102,.3)']].forEach(([V, col]) => {
             const pts = [];
             for (let T = 0; T <= 100; T += 1) pts.push(`${gx(T).toFixed(1)},${gy(analyseEq(T, V).fracN2O4).toFixed(1)}`);
@@ -274,7 +274,7 @@ document.addEventListener('DOMContentLoaded', () => {
             ? `${fmtRate(a.rel >= 1 ? a.rel : 1 / a.rel)}배 ${a.rel >= 1 ? '빠름' : '느림'}`
             : `K ${a.K.toFixed(1)} · ${EQ_WORD[a.verdict]}`;
         dataNote.innerHTML = a.kind === 'rate'
-            ? `<div class="data-row"><span class="data-name">활성화 에너지</span><span class="data-val">${a.peak} kJ/mol ${a.cat === 'on' ? '(촉매가 50 → 30 으로 낮춤)' : ''}</span></div>` +
+            ? `<div class="data-row"><span class="data-name">활성화 에너지</span><span class="data-val">${a.peak} kJ/mol ${a.cat === 'on' ? '(촉매가 50 → 30으로 낮춤)' : ''}</span></div>` +
               `<div class="data-row"><span class="data-name">반응열</span><span class="data-val">ΔH = ${a.dh > 0 ? '+' : ''}${a.dh} kJ/mol — 촉매를 넣어도 그대로</span></div>` +
               `<div class="data-row"><span class="data-name">온도</span><span class="data-val">${a.T} ℃ = ${a.K.toFixed(1)} K</span></div>` +
               `<div class="data-row"><span class="data-name">상대 속도</span><span class="data-val">exp(Ea₀/RT₀ − Ea/RT) = ${fmtRate(a.rel)}배</span></div>` +
@@ -305,7 +305,7 @@ document.addEventListener('DOMContentLoaded', () => {
             s += `여기서 온도만 10 ℃ 올리면 ${fmtRate(hotter.rel / a.rel)}배 더 빨라집니다. ` +
                  `온도가 활성화 에너지를 넘는 분자의 비율을 지수적으로 바꾸기 때문입니다. `;
             s += a.cat === 'on'
-                ? `촉매가 언덕을 50 kJ 에서 30 kJ 로 낮춰 ${fmtRate(analyseRate(a.T, 'on', a.heat).rel / analyseRate(a.T, 'off', a.heat).rel)}배 빨라졌습니다. `
+                ? `촉매가 언덕을 50 kJ 에서 30 kJ로 낮춰 ${fmtRate(analyseRate(a.T, 'on', a.heat).rel / analyseRate(a.T, 'off', a.heat).rel)}배 빨라졌습니다. `
                 : `촉매를 넣으면 같은 온도에서 ${fmtRate(analyseRate(a.T, 'on', a.heat).rel / a.rel)}배 빨라집니다. `;
             s += `다만 촉매는 언덕의 높이만 낮출 뿐 반응물과 생성물의 에너지는 건드리지 않으므로, 반응열은 ${a.dh > 0 ? '+' : ''}${a.dh} kJ/mol 그대로입니다.`;
             explanation.textContent = s;
@@ -317,14 +317,14 @@ document.addEventListener('DOMContentLoaded', () => {
         predictionResult.textContent = !state.prediction ? '다음에는 결과를 먼저 예상해 보세요.'
             : state.prediction === a.verdict ? '예상이 맞았습니다.' : '예상과 다른 결과입니다.';
         let s = `${a.T} ℃ 에서 평형 상수는 ${a.K.toFixed(1)} 입니다. `;
-        s += a.T > 25 ? `정반응이 발열이므로 온도를 올리면 흡열인 역반응 쪽으로 밀려 K가 25 ℃ 의 ${K_REF} 보다 작아졌습니다. `
-            : a.T < 25 ? `정반응이 발열이므로 온도를 내리면 정반응 쪽으로 밀려 K가 25 ℃ 의 ${K_REF} 보다 커졌습니다. `
+        s += a.T > 25 ? `정반응이 발열이므로 온도를 올리면 흡열인 역반응 쪽으로 밀려 K가 25 ℃ 의 ${K_REF}보다 작아졌습니다. `
+            : a.T < 25 ? `정반응이 발열이므로 온도를 내리면 정반응 쪽으로 밀려 K가 25 ℃ 의 ${K_REF}보다 커졌습니다. `
             : `기준 온도이므로 K는 ${K_REF} 그대로입니다. `;
-        s += `이 K 로 풀면 [NO₂] = ${a.no2.toFixed(4)} M, [N₂O₄] = ${a.n2o4.toFixed(4)} M 이고 질소의 ${(a.fracN2O4 * 100).toFixed(1)}% 가 N₂O₄ 로 있습니다. `;
+        s += `이 K로 풀면 [NO₂] = ${a.no2.toFixed(4)} M, [N₂O₄] = ${a.n2o4.toFixed(4)} M 이고 질소의 ${(a.fracN2O4 * 100).toFixed(1)}%가 N₂O₄로 있습니다. `;
         if (Math.abs(a.V - 1) > 1e-9) {
             const sameT = analyseEq(a.T, 1.0);
-            s += `부피를 ${a.V.toFixed(1)} L 로 바꾸면 기체 몰수가 적은 N₂O₄ 쪽 비율이 ${(sameT.fracN2O4 * 100).toFixed(1)}% 에서 ` +
-                 `${(a.fracN2O4 * 100).toFixed(1)}% 로 ${a.V < 1 ? '늘어납니다' : '줄어듭니다'}. `;
+            s += `부피를 ${a.V.toFixed(1)} L로 바꾸면 기체 몰수가 적은 N₂O₄ 쪽 비율이 ${(sameT.fracN2O4 * 100).toFixed(1)}% 에서 ` +
+                 `${(a.fracN2O4 * 100).toFixed(1)}%로 ${a.V < 1 ? '늘어납니다' : '줄어듭니다'}. `;
             if (a.V > 1) s += `그런데 색은 농도로 정해지므로, NO₂ 비율이 늘어도 전체가 묽어져 갈색은 오히려 옅어집니다. 이동 방향과 색이 반대로 가는 것이 이 실험의 함정입니다. `;
         }
         s += `색은 [NO₂] 로 정해지는데 기준의 ${a.ratio.toFixed(2)}배이므로 ${EQ_WORD[a.verdict]}.`;
@@ -345,7 +345,7 @@ document.addEventListener('DOMContentLoaded', () => {
         buildPrediction();
         stageCaption.textContent = state.mode === 'rate'
             ? '촉매는 활성화 에너지만 낮출 뿐 반응열은 바꾸지 못합니다.'
-            : '갈색 NO₂ 와 무색 N₂O₄ 의 비율이 조건에 따라 달라집니다.';
+            : '갈색 NO₂와 무색 N₂O₄ 의 비율이 조건에 따라 달라집니다.';
         changed();
     }));
     checkBtn.addEventListener('click', check);

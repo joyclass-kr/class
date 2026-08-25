@@ -205,7 +205,7 @@ document.addEventListener('DOMContentLoaded', () => {
         stageBadge.textContent = `${a.place.label} · 밀도 ${a.rho.toFixed(2)}`;
         dataNote.innerHTML =
             `<div class="data-row"><span class="data-name">밀도</span><span class="data-val">${RHO0} × (1 − 0.00017×(${a.T}−10) + 0.00076×(${a.S}−35)) = ${a.rho.toFixed(2)} kg/m³</span></div>` +
-            `<div class="data-row"><span class="data-name">평균과 비교</span><span class="data-val">평균 ${MEAN_RHO} kg/m³ 보다 ${(a.rho - MEAN_RHO).toFixed(2)} 만큼 ${a.rho >= MEAN_RHO ? '큽니다' : '작습니다'}</span></div>` +
+            `<div class="data-row"><span class="data-name">평균과 비교</span><span class="data-val">평균 ${MEAN_RHO} kg/m³보다 ${(a.rho - MEAN_RHO).toFixed(2)}만큼 ${a.rho >= MEAN_RHO ? '큽니다' : '작습니다'}</span></div>` +
             `<div class="data-row"><span class="data-name">혼합층</span><span class="data-val">바람 ${a.W} 단계 → 20 + 8×${a.W} = ${a.mixed} m</span></div>` +
             `<div class="data-row"><span class="data-name">염화 나트륨</span><span class="data-val">${a.S} g × 77.7% = ${a.grams[0].toFixed(2)} g — 염분이 달라도 비율은 그대로</span></div>` +
             `<div class="data-row match"><span class="data-name">결과</span><span class="data-val">${VERDICT[a.verdict]}</span></div>`;

@@ -79,7 +79,7 @@ function koSpeed(v) {
     return `${fmt(v * 86400 * 365, 3)} m/년`;
 }
 // 로 after a vowel or ㄹ, 으로 after any other final consonant: m/일로 but
-// m/분으로. The 's' in m/s is read 초, so it takes 로 too.
+// m/분으로. The 's' in m/s is read 초, so it takes로 too.
 function ro(s) {
     const last = s[s.length - 1];
     if (last === 's') return `${s}로`;

@@ -269,7 +269,7 @@ document.addEventListener('DOMContentLoaded', () => {
         out += `<line class="axis" x1="${GRAPH.x0}" y1="${GRAPH.y0}" x2="${GRAPH.x1}" y2="${GRAPH.y0}"/>`;
         out += `<line class="axis" x1="${GRAPH.x0}" y1="${GRAPH.y0}" x2="${GRAPH.x0}" y2="${GRAPH.y1}"/>`;
         out += `<text class="axis-title" x="${((GRAPH.x0 + GRAPH.x1) / 2).toFixed(1)}" y="${GRAPH.y0 + 32}" text-anchor="middle">등압선 간격 (km)</text>`;
-        out += `<text class="axis-title" x="${GRAPH.x0 - 44}" y="${GRAPH.y1 - 10}">바람 (m/s)</text>`;
+        out += `<text class="axis-title" x="${GRAPH.x0}" y="${GRAPH.y1 - 10}">바람 (m/s)</text>`;
         [[20, '센 바람'], [10, '약한 바람']].forEach(([v, name]) => {
             out += `<line class="pass-line" x1="${GRAPH.x0}" y1="${gy(v).toFixed(1)}" x2="${GRAPH.x1}" y2="${gy(v).toFixed(1)}"/>`;
             out += `<text class="pass-text" x="${GRAPH.x1 - 4}" y="${(gy(v) - 4).toFixed(1)}" text-anchor="end">${name} ${v} m/s</text>`;
@@ -297,7 +297,7 @@ document.addEventListener('DOMContentLoaded', () => {
         out += `<line class="axis" x1="${GRAPH.x0}" y1="${GRAPH.y0}" x2="${GRAPH.x1}" y2="${GRAPH.y0}"/>`;
         out += `<line class="axis" x1="${GRAPH.x0}" y1="${GRAPH.y0}" x2="${GRAPH.x0}" y2="${GRAPH.y1}"/>`;
         out += `<text class="axis-title" x="${((GRAPH.x0 + GRAPH.x1) / 2).toFixed(1)}" y="${GRAPH.y0 + 32}" text-anchor="middle">시각 (시)</text>`;
-        out += `<text class="axis-title" x="${GRAPH.x0 - 44}" y="${GRAPH.y1 - 10}">기온 (℃)</text>`;
+        out += `<text class="axis-title" x="${GRAPH.x0}" y="${GRAPH.y1 - 10}">기온 (℃)</text>`;
         out += `<line class="pass-line" x1="${gx(PASS_H).toFixed(1)}" y1="${GRAPH.y1}" x2="${gx(PASS_H).toFixed(1)}" y2="${GRAPH.y0}"/>`;
         out += `<text class="pass-text" x="${(gx(PASS_H) + 5).toFixed(1)}" y="${GRAPH.y1 + 10}">전선 통과</text>`;
         out += `<text class="band-text" x="${(gx(Math.max(0, a.rain[0])) + 4).toFixed(1)}" y="${GRAPH.y0 - 6}">비 ${a.rainHours.toFixed(1)}시간</text>`;
@@ -349,7 +349,7 @@ document.addEventListener('DOMContentLoaded', () => {
             explanation.textContent =
                 `${a.spacing} km 마다 ${DP_HPA} hPa 씩 차이가 나므로 1 m 당 기압 차이는 ${a.gradient.toExponential(2)} Pa 입니다. ` +
                 `이 힘이 공기를 밀어 ${a.v.toFixed(1)} m/s, 시속 ${a.kmh.toFixed(0)} km 의 바람이 붑니다. ${STRENGTH[a.strength]}고 할 수 있습니다. ` +
-                `같은 기압 차이라도 간격이 ${other.spacing} km 라면 ${other.v.toFixed(1)} m/s 로 ${other.v > a.v ? '더 세집니다' : '약해집니다'}. ` +
+                `같은 기압 차이라도 간격이 ${other.spacing} km 라면 ${other.v.toFixed(1)} m/s로 ${other.v > a.v ? '더 세집니다' : '약해집니다'}. ` +
                 `등압선이 촘촘할수록 바람이 세다는 뜻입니다. ` +
                 (a.low
                     ? `북반구 저기압에서는 바람이 시계 반대 방향으로 안쪽으로 불어 들어오고, 모인 공기가 위로 올라가 구름이 생깁니다.`
@@ -363,13 +363,13 @@ document.addEventListener('DOMContentLoaded', () => {
             : state.prediction === a.verdict ? '예상이 맞았습니다.' : '예상과 다른 결과입니다.';
         const other = analyseFront(a.key === 'cold' ? 'warm' : 'cold');
         explanation.textContent =
-            `${a.f.label}의 전선면은 기울기가 1/${Math.round(1 / a.f.slope)} 로 ${a.f.steep}. ` +
+            `${a.f.label}의 전선면은 기울기가 1/${Math.round(1 / a.f.slope)}로 ${a.f.steep}. ` +
             `${a.f.how}. ` +
-            `비가 내리는 구역의 폭이 ${a.f.rainKm} km 이고 시속 ${a.f.speed} km 로 움직이므로 ${a.rainHours.toFixed(1)}시간 동안 비가 옵니다. ` +
+            `비가 내리는 구역의 폭이 ${a.f.rainKm} km 이고 시속 ${a.f.speed} km로 움직이므로 ${a.rainHours.toFixed(1)}시간 동안 비가 옵니다. ` +
             `${other.f.label}은 ${other.rainHours.toFixed(1)}시간이니 ${a.rainHours > other.rainHours ? '훨씬 오래' : '훨씬 짧게'} 옵니다. ` +
             (a.change === 0
                 ? `어느 공기도 밀려나지 않아 기온은 ${a.f.before} ℃ 그대로입니다. 우리나라 장마가 이런 전선입니다.`
-                : `지나간 뒤에는 ${a.change > 0 ? '따뜻한' : '찬'} 공기가 들어와 기온이 ${a.f.before} ℃ 에서 ${a.f.after} ℃ 로 ${a.change > 0 ? '올라갑니다' : '떨어집니다'}.`);
+                : `지나간 뒤에는 ${a.change > 0 ? '따뜻한' : '찬'} 공기가 들어와 기온이 ${a.f.before} ℃ 에서 ${a.f.after} ℃로 ${a.change > 0 ? '올라갑니다' : '떨어집니다'}.`);
     }
 
     function changed() {

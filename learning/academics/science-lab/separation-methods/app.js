@@ -34,7 +34,7 @@ document.addEventListener('DOMContentLoaded', () => {
     const eul = w => w + (batchim(w) ? '을' : '를');
     const wa = w => w + (batchim(w) ? '과' : '와');
     // 로/으로 after a number depends on how its last digit is read aloud:
-    // 영·삼·육·칠 end in a consonant, and 일·팔 end in ㄹ which takes 로.
+    // 영·삼·육·칠 end in a consonant, and 일·팔 end in ㄹ which takes로.
     const ro = s => s + ('0367'.includes(s[s.length - 1]) ? '으로' : '로');
 
     const MIXTURES = {
@@ -54,7 +54,7 @@ document.addEventListener('DOMContentLoaded', () => {
             { id: 'saltWater', label: '소금물', hint: '물만 끓어 나감',
               parts: [{ n: '물', bp: 100, frac: 0.9, colour: '#7fd4f0' }],
               residue: { n: '소금', pure: true, colour: '#e6ecf0' } },
-            { id: 'waterEthanol', label: '물 + 에탄올', hint: '끓는점 78 ℃ 와 100 ℃',
+            { id: 'waterEthanol', label: '물 + 에탄올', hint: '끓는점 78 ℃와 100 ℃',
               parts: [{ n: '에탄올', bp: 78, frac: 0.4, colour: '#b8a6f0' },
                       { n: '물', bp: 100, frac: 0.6, colour: '#7fd4f0' }],
               residue: null },
@@ -72,7 +72,7 @@ document.addEventListener('DOMContentLoaded', () => {
                       { n: '잔토필', rf: 0.72, colour: '#ffe066' },
                       { n: '엽록소 a', rf: 0.55, colour: '#51cf66' },
                       { n: '엽록소 b', rf: 0.41, colour: '#2f9e44' }] },
-            { id: 'foodDye', label: '식용 색소', hint: 'Rf 가 비슷한 것이 있음',
+            { id: 'foodDye', label: '식용 색소', hint: 'Rf가 비슷한 것이 있음',
               parts: [{ n: '황색 4호', rf: 0.74, colour: '#ffd43b' },
                       { n: '적색 40호', rf: 0.57, colour: '#ff6b6b' },
                       { n: '적색 3호', rf: 0.53, colour: '#f06595' }] },
@@ -93,7 +93,11 @@ document.addEventListener('DOMContentLoaded', () => {
     let running = false, frameId = 0, lastStamp = 0;
 
     const mixture = () => MIXTURES[mode].find(m => m.id === mixId) || MIXTURES[mode][0];
-    const progress = () => Number(progressRange.value) / 100;
+    /* The slider only steps in whole percent, so a run's sub-percent increments
+       were being rounded straight back to where they started and the animation
+       never moved. The run keeps its own clock and the slider just follows. */
+    let animP = null;
+    const progress = () => (animP === null ? Number(progressRange.value) : animP) / 100;
 
     // How long one full run takes, so the clock and the picture agree.
     function schedule(mix) {
@@ -487,10 +491,11 @@ document.addEventListener('DOMContentLoaded', () => {
     /* ----------------------------------------------------------- the run */
     function tick(dt) {
         const step = (dt / runSeconds()) * 100;
-        const next = Math.min(100, Number(progressRange.value) + step);
-        progressRange.value = String(next);
+        const from = animP === null ? Number(progressRange.value) : animP;
+        animP = Math.min(100, from + step);
+        progressRange.value = String(Math.round(animP));   // the slider follows loosely
         render();
-        return next >= 100;
+        return animP >= 100;
     }
 
     function stopRun() { running = false; if (frameId) cancelAnimationFrame(frameId); frameId = 0; }
@@ -505,6 +510,7 @@ document.addEventListener('DOMContentLoaded', () => {
     function startRun() {
         stopRun();
         progressRange.value = '0';
+        animP = 0;
         running = true;
         lastStamp = performance.now();
         render();
@@ -549,16 +555,17 @@ document.addEventListener('DOMContentLoaded', () => {
         valueB.textContent = `${a.mix.parts.length}가지 색소`;
         const top = a.sorted[0], bottom = a.sorted[a.sorted.length - 1];
         let s = `${eun(top.n)} Rf ${ro(top.rf.toFixed(2))} 가장 빠르게 올라갔고, ${eun(bottom.n)} Rf ${ro(bottom.rf.toFixed(2))} 가장 느리게 올라갔습니다. `;
-        s += `Rf 는 성분이 간 거리를 용매가 간 거리로 나눈 값이라, 용매가 얼마나 올라갔든 같은 값이 나옵니다. `;
+        s += `Rf는 성분이 간 거리를 용매가 간 거리로 나눈 값이라, 용매가 얼마나 올라갔든 같은 값이 나옵니다. `;
         s += a.verdict === 'partial'
             ? `그런데 Rf 차이가 ${a.closest.toFixed(2)} 밖에 안 되는 성분이 있어 두 점이 겹쳐 보입니다. 완전히 나누려면 다른 용매를 써야 합니다.`
-            : `Rf 가 충분히 달라 ${a.mix.parts.length}가지 색소가 모두 따로 떨어졌습니다.`;
+            : `Rf가 충분히 달라 ${a.mix.parts.length}가지 색소가 모두 따로 떨어졌습니다.`;
         explanation.textContent = s;
     }
 
     function settingsChanged() {
         stopRun();
         progressRange.value = '0';
+        animP = null;                       // otherwise a finished run's clock would stick
         resultEmpty.hidden = false;
         resultContent.hidden = true;
         render();
@@ -566,6 +573,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
     progressRange.addEventListener('input', () => {
         stopRun();
+        animP = null;                       // dragging takes over from playback
         render();
         if (Number(progressRange.value) >= 100) finish();
     });
@@ -634,7 +642,7 @@ document.addEventListener('DOMContentLoaded', () => {
         setMix(id) { mixId = id; renderMixButtons(); settingsChanged(); },
         setProgress(v) { stopRun(); progressRange.value = String(v); progressRange.dispatchEvent(new Event('input')); },
         runToEnd(dt = 1 / 60, cap = 20000) {
-            stopRun(); progressRange.value = '0';
+            stopRun(); progressRange.value = '0'; animP = 0;
             let steps = 0;
             while (!tick(dt) && steps < cap) steps += 1;
             finish();

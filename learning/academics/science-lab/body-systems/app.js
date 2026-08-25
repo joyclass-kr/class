@@ -189,11 +189,11 @@ document.addEventListener('DOMContentLoaded', () => {
         s += a.key === 'rest' || a.key === 'water'
             ? `이것이 견주어 볼 기준입니다. `
             : `앉아 있을 때의 ${fmt(a.d.vo2 / base.d.vo2, 1)}배입니다. `;
-        s += `이만큼을 나르려고 심장은 1분에 ${a.d.hr}번 뛰며 ${fmt(a.co)} L 를 내보내고, 폐는 ${a.d.rr}번 숨 쉬며 ${fmt(a.ve)} L 의 공기를 움직입니다. `;
+        s += `이만큼을 나르려고 심장은 1분에 ${a.d.hr}번 뛰며 ${fmt(a.co)} L를 내보내고, 폐는 ${a.d.rr}번 숨 쉬며 ${fmt(a.ve)} L 의 공기를 움직입니다. `;
         if (a.key === 'run') {
             s += `이때 심박출량은 ${fmt(a.co / base.co, 1)}배밖에 늘지 않았는데 산소 소비량은 ${fmt(a.d.vo2 / base.d.vo2, 1)}배가 되었습니다. ` +
-                 `세포가 피 1 L 에서 뽑아 쓰는 산소가 ${fmt(base.avDiff, 0)} mL 에서 ${fmt(a.avDiff, 0)} mL 로 늘었기 때문입니다. `;
-            s += `숨을 아주 많이 쉬어서 내쉰 숨의 산소가 오히려 ${fmt(base.feO2 * 100, 1)} % 에서 ${fmt(a.feO2 * 100, 1)} % 로 높아졌습니다. `;
+                 `세포가 피 1 L 에서 뽑아 쓰는 산소가 ${fmt(base.avDiff, 0)} mL 에서 ${fmt(a.avDiff, 0)} mL로 늘었기 때문입니다. `;
+            s += `숨을 아주 많이 쉬어서 내쉰 숨의 산소가 오히려 ${fmt(base.feO2 * 100, 1)} % 에서 ${fmt(a.feO2 * 100, 1)} %로 높아졌습니다. `;
         }
         if (a.verdict === 'less') s += `피가 근육으로 몰려 콩팥으로 가는 피가 줄었습니다. 사구체 여과량이 ${base.d.gfr} 에서 ${a.d.gfr} mL/분으로 줄어 오줌도 ${fmt(a.d.urine, 1)} mL/분으로 적어졌습니다.`;
         else if (a.verdict === 'more') s += `물을 마셔 몸속 물이 많아지자 콩팥이 물을 덜 되찾아 오줌이 ${fmt(a.d.urine, 1)} mL/분으로 늘었습니다. 몸속 물의 양을 콩팥이 조절합니다.`;

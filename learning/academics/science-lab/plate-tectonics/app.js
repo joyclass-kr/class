@@ -180,7 +180,7 @@ document.addEventListener('DOMContentLoaded', () => {
         out += `<line class="axis" x1="${GRAPH.x0}" y1="${GRAPH.y1}" x2="${GRAPH.x1}" y2="${GRAPH.y1}"/>`;
         out += `<line class="axis" x1="${GRAPH.x0}" y1="${GRAPH.y1}" x2="${GRAPH.x0}" y2="${GRAPH.y0}"/>`;
         out += `<text class="axis-title" x="${((GRAPH.x0 + GRAPH.x1) / 2).toFixed(1)}" y="${GRAPH.y0 + 32}" text-anchor="middle">경계로부터의 거리 (km)</text>`;
-        out += `<text class="axis-title" x="${GRAPH.x0 - 40}" y="${GRAPH.y1 - 10}">깊이 (km)</text>`;
+        out += `<text class="axis-title" x="${GRAPH.x0}" y="${GRAPH.y1 - 10}">깊이 (km)</text>`;
 
         [[SHALLOW, '얕은 지진'], [MIDDLE, '중간 깊이']].forEach(([km, name]) => {
             out += `<line class="zone-line" x1="${GRAPH.x0}" y1="${gy(km).toFixed(1)}" x2="${GRAPH.x1}" y2="${gy(km).toFixed(1)}"/>`;
@@ -227,18 +227,18 @@ document.addEventListener('DOMContentLoaded', () => {
         valueB.textContent = `${a.deepest.toFixed(0)} km`;
         predictionResult.textContent = !prediction ? '다음에는 결과를 먼저 예상해 보세요.'
             : prediction === a.verdict ? '예상이 맞았습니다.' : '예상과 다른 결과입니다.';
-        let s = `${a.v} cm씩 ${(a.t * 1e4).toLocaleString()}년 동안 움직이면 한쪽 판이 ${a.dist.toFixed(0)} km 를 갑니다. `;
+        let s = `${a.v} cm씩 ${(a.t * 1e4).toLocaleString()}년 동안 움직이면 한쪽 판이 ${a.dist.toFixed(0)} km를 갑니다. `;
         if (a.k === 'diverge') {
             s += `해령에서 새 지각이 계속 만들어져 양쪽으로 ${a.dist.toFixed(0)} km 씩, 모두 ${a.total.toFixed(0)} km 넓어졌습니다. ` +
                  `해령에서 멀수록 오래된 지각이고, 양쪽이 좌우 대칭입니다. ` +
-                 `판이 벌어지기만 하므로 지진은 ${a.deepest.toFixed(0)} km 보다 깊은 곳에서는 일어나지 않습니다.`;
+                 `판이 벌어지기만 하므로 지진은 ${a.deepest.toFixed(0)} km보다 깊은 곳에서는 일어나지 않습니다.`;
         } else if (a.k === 'converge') {
             s += `두 판을 합쳐 ${a.total.toFixed(0)} km 만큼의 판이 해구에서 맨틀 속으로 들어갔습니다. ` +
                  `들어간 판이 45도로 비스듬히 내려가기 때문에, 해구에서 멀어질수록 지진이 점점 깊어져 ${a.deepest.toFixed(0)} km 까지 이릅니다. ` +
                  `이렇게 비스듬히 줄지어 나타나는 지진대가 판이 내려가고 있다는 증거입니다.`;
         } else if (a.k === 'transform') {
-            s += `두 판이 서로 어긋나기만 해 모두 ${a.total.toFixed(0)} km 가 밀려났습니다. ` +
-                 `새 지각이 생기지도, 사라지지도 않습니다. 어긋나는 힘은 얕은 곳에 쌓이므로 지진도 ${a.deepest.toFixed(0)} km 보다 얕은 곳에서만 일어납니다.`;
+            s += `두 판이 서로 어긋나기만 해 모두 ${a.total.toFixed(0)} km가 밀려났습니다. ` +
+                 `새 지각이 생기지도, 사라지지도 않습니다. 어긋나는 힘은 얕은 곳에 쌓이므로 지진도 ${a.deepest.toFixed(0)} km보다 얕은 곳에서만 일어납니다.`;
         } else {
             s += `하지만 이곳은 판의 한가운데라 부딪치거나 벌어지는 곳이 없습니다. ` +
                  `힘이 쌓이지 않으니 지진이 ${a.pts.length}개밖에 없고 그마저도 아주 얕습니다. 지진은 판의 경계에 몰려 있습니다.`;

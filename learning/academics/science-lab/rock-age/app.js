@@ -6,12 +6,20 @@
    the two halves of the page cannot disagree. */
 
 const ISO = {
-    c14: { name: '¹⁴C', full: '탄소-14', half: 5730, daughter: '¹⁴N', use: '나무·뼈·조개껍데기' },
-    k40: { name: '⁴⁰K', full: '칼륨-40', half: 1.25e9, daughter: '⁴⁰Ar', use: '화산암·변성암' },
-    u238: { name: '²³⁸U', full: '우라늄-238', half: 4.47e9, daughter: '²⁰⁶Pb', use: '아주 오래된 암석' },
+    c14: { name: '¹⁴C', full: '탄소-14', half: 5730, daughter: '¹⁴N', dfull: '질소-14', use: '나무·뼈·조개껍데기' },
+    k40: { name: '⁴⁰K', full: '칼륨-40', half: 1.25e9, daughter: '⁴⁰Ar', dfull: '아르곤-40', use: '화산암·변성암' },
+    u238: { name: '²³⁸U', full: '우라늄-238', half: 4.47e9, daughter: '²⁰⁶Pb', dfull: '납-206', use: '아주 오래된 암석' },
 };
 // Outside these fractions there is either too little daughter or too little
 // parent left to measure, which is what limits each isotope's usable range.
+/* 기호가 아니라 우리말 이름을 읽으므로, 이름 끝 숫자의 소리로 조사를 고릅니다.
+   질소-14는 '사'로 끝나 받침이 없어 '로', 아르곤-40과 납-206은 받침이 있어 '으로'. */
+const DIGIT_JONG = { '0': 21, '1': 8, '2': 0, '3': 16, '4': 0, '5': 0, '6': 1, '7': 8, '8': 8, '9': 0 };
+const ro = w => {
+    const d = String(w).replace(/[^0-9]/g, '').slice(-1);
+    const j = d === '' ? 0 : DIGIT_JONG[d];
+    return `${w}${j === 0 || j === 8 ? '로' : '으로'}`;
+};
 const MIN_FRAC = 0.001, MAX_FRAC = 0.999;
 
 const TARGETS = {
@@ -349,7 +357,7 @@ function explain(a) {
 
     if (state.mode === 'decay') {
         let s = `${iso().full}의 반감기는 ${koYears(iso().half)}입니다. 반감기가 ${fmt(state.hl, 2)}번 지났으므로 남은 모원소는 2를 ${fmt(state.hl, 2)}번 나눈 만큼, 곧 ${fmt(a.frac * 100, 2)}%입니다. `;
-        s += `사라진 것이 아니라 ${fmt(a.daughter * 100, 2)}%가 ${iso().daughter}로 바뀌어 암석 속에 그대로 남아 있고, 그래서 둘의 비를 재면 지난 시간을 알 수 있습니다. `;
+        s += `사라진 것이 아니라 ${fmt(a.daughter * 100, 2)}%가 ${ro(iso().dfull)}(${iso().daughter}) 바뀌어 암석 속에 그대로 남아 있고, 그래서 둘의 비를 재면 지난 시간을 알 수 있습니다. `;
         s += `지금 딸원소는 모원소의 ${a.frac > 0 ? `${fmt(a.ratio, 2)}배` : '헤아릴 수 없을 만큼 여러 배'}이고, 실제로 흐른 시간은 ${koYears(a.years)}입니다. `;
         s += `여기서 중요한 것은 반감기가 온도나 압력에 아무런 영향을 받지 않는다는 점입니다. 그래서 땅속 깊이 묻혔던 암석도 같은 시계로 잴 수 있습니다.`;
         $('elementaryExplanation').textContent = s;
