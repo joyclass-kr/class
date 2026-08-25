@@ -341,14 +341,6 @@ function quizPage() {
         </div>`;
 }
 
-function endPage() {
-    return `
-        <div class="page page-end">
-            ${artFrame('end.webp', '🌟')}
-            <h2>빨간 부채 파란 부채 이야기를 다 읽었어요!</h2>
-            <a class="home-btn" href="../../../../../">학습 허브로 돌아가기</a>
-        </div>`;
-}
 
 /* 읽고 나서 — 세계명작 트랙과 같은 형식이다. 동화틀은 쪽을 재서 나누지 않으므로
    펼침면마다 왼쪽·오른쪽 글을 손으로 나누어 둔다. */
@@ -357,14 +349,14 @@ const AFTERWORD = {
     emoji: '🪭',
     spreads: [
         {
+            art: 'end.webp',
             left: [
                 "코가 늘었다 줄었다 하는 이야기는 우리나라에도 있고 일본에도 있습니다. 물건 하나로 몸이 바뀌는 이야기는 듣기에 재미있어 널리 퍼졌습니다.",
-                "그런데 이런 이야기의 끝은 대개 같습니다. 그 물건을 얻은 사람은 오래 가지고 있지 못합니다. 물건이 사람을 시험하기 때문입니다."
+                "그런데 이런 이야기의 끝은 대개 같습니다. 그 물건을 얻은 사람은 오래 가지고 있지 못합니다. 물건이 사람을 시험하기 때문입니다.",
+                "김 첨지가 부채를 처음 얻은 자리도 다시 보십시오. 그것도 제 힘으로 만든 것이 아니었습니다."
             ],
             right: [
-                "김 첨지가 부채를 처음 얻은 자리도 다시 보십시오. 그것도 제 힘으로 만든 것이 아니었습니다.",
                 "부자는 집을 주고 부채를 얻었고 김 첨지는 부채를 주고 집을 얻었습니다. 그런데 둘 다 남은 것이 없었습니다. 제 힘으로 얻지 않은 것은 손에 오래 머물지 않습니다.",
-                "부채를 아예 만나지 않았다면 김 첨지는 어떻게 살았을까요?",
                 "내가 가진 것 가운데 내 힘으로 얻은 것은 무엇인가요?"
             ]
         }
@@ -373,6 +365,9 @@ const AFTERWORD = {
 
 function afterPage(spread, isFirst) {
     const head = isFirst ? `<h2>${AFTERWORD.title}</h2>` : '';
+    // 그림은 오른쪽 칸 맨 위 모서리에 꽉 붙인다. 학습 허브로 가는 길은 그 칸 맨 아래에 둔다.
+    const art = spread.art ? `<div class="after-art">${artFrame(spread.art, AFTERWORD.emoji)}</div>` : '';
+    const foot = spread.last ? `<p class="after-home"><a class="home-btn" href="../../../../../">학습 허브로 돌아가기</a></p>` : '';
     const col = (ps) => ps.map(t => `<p>${t}</p>`).join('');
     return `
         <div class="page page-after">
@@ -380,8 +375,10 @@ function afterPage(spread, isFirst) {
                 ${head}
                 ${col(spread.left)}
             </div>
-            <div class="after-col after-col-right">
+            <div class="after-col after-col-right${spread.art ? ' after-col-image' : ''}">
+                ${art}
                 ${col(spread.right)}
+                ${foot}
             </div>
         </div>`;
 }
@@ -390,8 +387,7 @@ const PAGES = [
     { kind: 'cover' },
     ...CHAPTERS.flatMap(chapter => chapter.beats.map((beat, i) => ({ kind: 'spread', chapter, beat, isFirst: i === 0 }))),
     { kind: 'quiz' },
-    ...AFTERWORD.spreads.map((spread, i) => ({ kind: 'after', spread, isFirst: i === 0 })),
-    { kind: 'end' }
+    ...AFTERWORD.spreads.map((spread, i) => ({ kind: 'after', spread, isFirst: i === 0, last: i === AFTERWORD.spreads.length - 1 })),
 ];
 
 const TWO_PAGE_KINDS = new Set(['spread', 'cover', 'after']);
@@ -411,11 +407,9 @@ function renderPage(page) {
         case 'spread':
             return spreadPage(page.chapter, page.beat, page.isFirst);
         case 'after':
-            return afterPage(page.spread, page.isFirst);
+            return afterPage({ ...page.spread, last: page.last }, page.isFirst);
         case 'quiz':
             return quizPage();
-        case 'end':
-            return endPage();
         default:
             return '';
     }

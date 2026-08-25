@@ -357,14 +357,6 @@ function quizPage() {
         </div>`;
 }
 
-function endPage() {
-    return `
-        <div class="page page-end">
-            ${artFrame('end.png', '🌟')}
-            <h2>바보 온달과 평강 공주 이야기를 다 읽었어요!</h2>
-            <a class="home-btn" href="../../../../../">학습 허브로 돌아가기</a>
-        </div>`;
-}
 
 /* 읽고 나서 — 세계명작 트랙과 같은 형식이다. 동화틀은 쪽을 재서 나누지 않으므로
    펼침면마다 왼쪽·오른쪽 글을 손으로 나누어 둔다. */
@@ -373,6 +365,7 @@ const AFTERWORD = {
     emoji: '🐎',
     spreads: [
         {
+            art: 'end.png',
             left: [
                 "온달은 지어낸 사람이 아닙니다. 『삼국사기』 열전에 이름이 올라 있는 고구려 장수입니다. 평강 공주도 그 기록에 함께 나옵니다.",
                 "충청북도 단양에는 온달산성이라 불리는 옛 성이 남아 있습니다. 온달이 신라와 싸우던 자리로 전해지는 곳입니다.",
@@ -380,7 +373,6 @@ const AFTERWORD = {
             ],
             right: [
                 "공주가 고른 것은 잘난 사람이 아니라 여윈 말과 놀림받던 사람이었습니다. 둘 다 원래 나쁘지 않았는데 아무도 먹여 주지 않았을 뿐입니다. 사람도 말도 알아봐 주는 이를 만나야 제 모습이 나옵니다.",
-                "공주는 온달을 왜 골랐을까요?",
                 "누군가 나를 알아봐 준 적이 있나요? 나는 누구를 알아봐 줄 수 있을까요?"
             ]
         }
@@ -389,6 +381,9 @@ const AFTERWORD = {
 
 function afterPage(spread, isFirst) {
     const head = isFirst ? `<h2>${AFTERWORD.title}</h2>` : '';
+    // 그림은 오른쪽 칸 맨 위 모서리에 꽉 붙인다. 학습 허브로 가는 길은 그 칸 맨 아래에 둔다.
+    const art = spread.art ? `<div class="after-art">${artFrame(spread.art, AFTERWORD.emoji)}</div>` : '';
+    const foot = spread.last ? `<p class="after-home"><a class="home-btn" href="../../../../../">학습 허브로 돌아가기</a></p>` : '';
     const col = (ps) => ps.map(t => `<p>${t}</p>`).join('');
     return `
         <div class="page page-after">
@@ -396,8 +391,10 @@ function afterPage(spread, isFirst) {
                 ${head}
                 ${col(spread.left)}
             </div>
-            <div class="after-col after-col-right">
+            <div class="after-col after-col-right${spread.art ? ' after-col-image' : ''}">
+                ${art}
                 ${col(spread.right)}
+                ${foot}
             </div>
         </div>`;
 }
@@ -406,8 +403,7 @@ const PAGES = [
     { kind: 'cover' },
     ...CHAPTERS.flatMap(chapter => chapter.beats.map((beat, i) => ({ kind: 'spread', chapter, beat, isFirst: i === 0 }))),
     { kind: 'quiz' },
-    ...AFTERWORD.spreads.map((spread, i) => ({ kind: 'after', spread, isFirst: i === 0 })),
-    { kind: 'end' }
+    ...AFTERWORD.spreads.map((spread, i) => ({ kind: 'after', spread, isFirst: i === 0, last: i === AFTERWORD.spreads.length - 1 })),
 ];
 
 const TWO_PAGE_KINDS = new Set(['spread', 'cover', 'after']);
@@ -427,11 +423,9 @@ function renderPage(page) {
         case 'spread':
             return spreadPage(page.chapter, page.beat, page.isFirst);
         case 'after':
-            return afterPage(page.spread, page.isFirst);
+            return afterPage({ ...page.spread, last: page.last }, page.isFirst);
         case 'quiz':
             return quizPage();
-        case 'end':
-            return endPage();
         default:
             return '';
     }

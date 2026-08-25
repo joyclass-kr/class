@@ -330,14 +330,6 @@ function quizPage() {
         </div>`;
 }
 
-function endPage() {
-    return `
-        <div class="page page-end">
-            ${artFrame('end.png', '🌟')}
-            <h2>김수로 이야기를 다 읽었어요!</h2>
-            <a class="home-btn" href="../../../../../">학습 허브로 돌아가기</a>
-        </div>`;
-}
 
 function historyPage() {
     return `
@@ -361,15 +353,15 @@ const AFTERWORD = {
     emoji: '🥚',
     spreads: [
         {
+            art: 'end.png',
             left: [
                 "김수로 이야기는 『삼국유사』에 실려 전합니다. 가야를 세운 첫 임금 이야기입니다. 신라의 박혁거세, 고구려의 주몽과 나란히 놓이는 자리이지요.",
                 "여기에도 알이 나옵니다. 다만 하나가 아니라 여섯입니다. 여섯 알에서 나온 여섯이 각각 여섯 가야의 임금이 되었다고 합니다.",
-                "그 노래가 「구지가」라는 이름으로 지금까지 전합니다. 우리나라에 남아 있는 가장 오래된 노래 가운데 하나입니다."
+                "그 노래가 「구지가」라는 이름으로 지금까지 전합니다. 우리나라에 남아 있는 가장 오래된 노래 가운데 하나입니다.",
+                "김수로의 왕비가 멀리 바다 건너에서 왔다는 이야기도 함께 전해 옵니다. 그 시절 가야가 바다로 넓게 오갔다는 흔적이기도 합니다."
             ],
             right: [
-                "김수로의 왕비가 멀리 바다 건너에서 왔다는 이야기도 함께 전해 옵니다. 그 시절 가야가 바다로 넓게 오갔다는 흔적이기도 합니다.",
                 "아홉 간은 저마다 제 마을이 제일이라 여기던 사람들이었습니다. 그런데 함께 노래하고 함께 발을 구른 다음에야 나라가 생겼습니다. 뭉치는 일은 늘 같이 무언가를 해 보는 데서 시작됩니다.",
-                "아홉 간은 왜 저마다 임금이 되려 하지 않았을까요?",
                 "누군가와 처음으로 마음이 맞았던 순간은 언제였나요?"
             ]
         }
@@ -378,6 +370,9 @@ const AFTERWORD = {
 
 function afterPage(spread, isFirst) {
     const head = isFirst ? `<h2>${AFTERWORD.title}</h2>` : '';
+    // 그림은 오른쪽 칸 맨 위 모서리에 꽉 붙인다. 학습 허브로 가는 길은 그 칸 맨 아래에 둔다.
+    const art = spread.art ? `<div class="after-art">${artFrame(spread.art, AFTERWORD.emoji)}</div>` : '';
+    const foot = spread.last ? `<p class="after-home"><a class="home-btn" href="../../../../../">학습 허브로 돌아가기</a></p>` : '';
     const col = (ps) => ps.map(t => `<p>${t}</p>`).join('');
     return `
         <div class="page page-after">
@@ -385,8 +380,10 @@ function afterPage(spread, isFirst) {
                 ${head}
                 ${col(spread.left)}
             </div>
-            <div class="after-col after-col-right">
+            <div class="after-col after-col-right${spread.art ? ' after-col-image' : ''}">
+                ${art}
                 ${col(spread.right)}
+                ${foot}
             </div>
         </div>`;
 }
@@ -396,8 +393,7 @@ const PAGES = [
     ...CHAPTERS.flatMap(chapter => chapter.beats.map((beat, i) => ({ kind: 'spread', chapter, beat, isFirst: i === 0 }))),
     { kind: 'history' },
     { kind: 'quiz' },
-    ...AFTERWORD.spreads.map((spread, i) => ({ kind: 'after', spread, isFirst: i === 0 })),
-    { kind: 'end' }
+    ...AFTERWORD.spreads.map((spread, i) => ({ kind: 'after', spread, isFirst: i === 0, last: i === AFTERWORD.spreads.length - 1 })),
 ];
 
 const TWO_PAGE_KINDS = new Set(['spread', 'cover', 'after']);
@@ -419,11 +415,9 @@ function renderPage(page) {
         case 'history':
             return historyPage();
         case 'after':
-            return afterPage(page.spread, page.isFirst);
+            return afterPage({ ...page.spread, last: page.last }, page.isFirst);
         case 'quiz':
             return quizPage();
-        case 'end':
-            return endPage();
         default:
             return '';
     }

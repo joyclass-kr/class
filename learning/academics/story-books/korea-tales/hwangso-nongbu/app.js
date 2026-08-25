@@ -281,14 +281,6 @@ function quizPage() {
         </div>`;
 }
 
-function endPage() {
-    return `
-        <div class="page page-end">
-            ${artFrame('end.webp', '🌟')}
-            <h2>황소가 된 농부 이야기를 다 읽었어요!</h2>
-            <a class="home-btn" href="../../../../../">학습 허브로 돌아가기</a>
-        </div>`;
-}
 
 /* 읽고 나서 — 세계명작 트랙과 같은 형식이다. 동화틀은 쪽을 재서 나누지 않으므로
    펼침면마다 왼쪽·오른쪽 글을 손으로 나누어 둔다. */
@@ -297,16 +289,16 @@ const AFTERWORD = {
     emoji: '🐂',
     spreads: [
         {
+            art: 'end.webp',
             left: [
                 "사람이 짐승으로 바뀌었다가 되돌아오는 이야기는 아주 오래된 틀입니다. 그리스에도 있고 중국에도 있습니다. 대개 벌로 바뀌었다가 무언가를 깨닫고 돌아옵니다.",
                 "우리 이야기에서 하필 소가 된 데는 까닭이 있습니다. 소는 그 시절 가장 고되게 일하던 것이었습니다. 일하기 싫어한 사람을 가장 일 많이 하는 것으로 만든 것이지요.",
-                "다시 보면 농부는 게으른 사람이라기보다 일이 무엇인지 몰랐던 사람입니다. 소가 되고 나서야 자기 밭을 갈던 것이 어떤 일이었는지 알게 됩니다."
+                "다시 보면 농부는 게으른 사람이라기보다 일이 무엇인지 몰랐던 사람입니다. 소가 되고 나서야 자기 밭을 갈던 것이 어떤 일이었는지 알게 됩니다.",
+                "그래서 마지막에 밭으로 달려간 것은 벌이 무서워서가 아닙니다. 그동안 남이 대신 해 주던 일을 처음으로 제 일로 본 것입니다."
             ],
             right: [
-                "그래서 마지막에 밭으로 달려간 것은 벌이 무서워서가 아닙니다. 그동안 남이 대신 해 주던 일을 처음으로 제 일로 본 것입니다.",
                 "소가 흘린 눈물 이야기도 눈여겨볼 만합니다. 사람이던 시절에는 한 번도 울지 않던 사람입니다.",
                 "일을 피하려다 더 힘든 일을 만나기도 합니다. 농부는 평생 일하지 않으려다 도리어 소가 되어 죽도록 일했습니다.",
-                "농부가 소가 되지 않았다면 달라졌을까요?",
                 "하기 싫어 미뤄 두었다가 더 힘들어진 일이 있나요?"
             ]
         }
@@ -315,6 +307,9 @@ const AFTERWORD = {
 
 function afterPage(spread, isFirst) {
     const head = isFirst ? `<h2>${AFTERWORD.title}</h2>` : '';
+    // 그림은 오른쪽 칸 맨 위 모서리에 꽉 붙인다. 학습 허브로 가는 길은 그 칸 맨 아래에 둔다.
+    const art = spread.art ? `<div class="after-art">${artFrame(spread.art, AFTERWORD.emoji)}</div>` : '';
+    const foot = spread.last ? `<p class="after-home"><a class="home-btn" href="../../../../../">학습 허브로 돌아가기</a></p>` : '';
     const col = (ps) => ps.map(t => `<p>${t}</p>`).join('');
     return `
         <div class="page page-after">
@@ -322,8 +317,10 @@ function afterPage(spread, isFirst) {
                 ${head}
                 ${col(spread.left)}
             </div>
-            <div class="after-col after-col-right">
+            <div class="after-col after-col-right${spread.art ? ' after-col-image' : ''}">
+                ${art}
                 ${col(spread.right)}
+                ${foot}
             </div>
         </div>`;
 }
@@ -332,8 +329,7 @@ const PAGES = [
     { kind: 'cover' },
     ...CHAPTERS.flatMap(chapter => chapter.beats.map((beat, i) => ({ kind: 'spread', chapter, beat, isFirst: i === 0 }))),
     { kind: 'quiz' },
-    ...AFTERWORD.spreads.map((spread, i) => ({ kind: 'after', spread, isFirst: i === 0 })),
-    { kind: 'end' }
+    ...AFTERWORD.spreads.map((spread, i) => ({ kind: 'after', spread, isFirst: i === 0, last: i === AFTERWORD.spreads.length - 1 })),
 ];
 
 const TWO_PAGE_KINDS = new Set(['spread', 'cover', 'after']);
@@ -353,11 +349,9 @@ function renderPage(page) {
         case 'spread':
             return spreadPage(page.chapter, page.beat, page.isFirst);
         case 'after':
-            return afterPage(page.spread, page.isFirst);
+            return afterPage({ ...page.spread, last: page.last }, page.isFirst);
         case 'quiz':
             return quizPage();
-        case 'end':
-            return endPage();
         default:
             return '';
     }

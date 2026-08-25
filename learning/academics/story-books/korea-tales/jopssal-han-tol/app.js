@@ -266,14 +266,6 @@ function quizPage() {
         </div>`;
 }
 
-function endPage() {
-    return `
-        <div class="page page-end">
-            ${artFrame('end.webp', '🌟')}
-            <h2>좁쌀 한 톨 이야기를 다 읽었어요!</h2>
-            <a class="home-btn" href="../../../../../">학습 허브로 돌아가기</a>
-        </div>`;
-}
 
 /* 읽고 나서 — 세계명작 트랙과 같은 형식이다. 동화틀은 쪽을 재서 나누지 않으므로
    펼침면마다 왼쪽·오른쪽 글을 손으로 나누어 둔다. */
@@ -282,15 +274,15 @@ const AFTERWORD = {
     emoji: '🐮',
     spreads: [
         {
+            art: 'end.webp',
             left: [
                 "작은 것을 바꾸고 또 바꿔 큰 것을 얻는 이야기를 누적담이라고 합니다. 같은 일이 조금씩 커지며 되풀이되는 이야기라는 뜻입니다.",
                 "이런 이야기는 듣기에 재미있어서 세계 곳곳에 있습니다. 짚 한 오라기로 시작해 부자가 되는 일본 이야기도 있고, 물물교환이 이어지는 서양 이야기도 있습니다.",
-                "다만 제 것이 없어졌다는 것을 또박또박 말했습니다. 그러면 듣는 쪽이 미안해서 더 큰 것을 내주었지요."
+                "다만 제 것이 없어졌다는 것을 또박또박 말했습니다. 그러면 듣는 쪽이 미안해서 더 큰 것을 내주었지요.",
+                "그러니 소년을 키운 것은 좁쌀이 아니라 그것을 끝까지 제 것으로 여긴 마음입니다."
             ],
             right: [
-                "그러니 소년을 키운 것은 좁쌀이 아니라 그것을 끝까지 제 것으로 여긴 마음입니다.",
                 "작다고 함부로 여기지 않는 마음이 좁쌀 한 톨을 황소로 만들었습니다. 소년은 한 번도 억지를 부리지 않았습니다. 그저 제 것을 끝까지 소중히 여겼을 뿐입니다.",
-                "어른들은 왜 좁쌀 한 톨 값보다 큰 것을 내주었을까요?",
                 "지금 내 손에 있는 작은 것 가운데 소중히 여겨야 할 것은 무엇일까요?"
             ]
         }
@@ -299,6 +291,9 @@ const AFTERWORD = {
 
 function afterPage(spread, isFirst) {
     const head = isFirst ? `<h2>${AFTERWORD.title}</h2>` : '';
+    // 그림은 오른쪽 칸 맨 위 모서리에 꽉 붙인다. 학습 허브로 가는 길은 그 칸 맨 아래에 둔다.
+    const art = spread.art ? `<div class="after-art">${artFrame(spread.art, AFTERWORD.emoji)}</div>` : '';
+    const foot = spread.last ? `<p class="after-home"><a class="home-btn" href="../../../../../">학습 허브로 돌아가기</a></p>` : '';
     const col = (ps) => ps.map(t => `<p>${t}</p>`).join('');
     return `
         <div class="page page-after">
@@ -306,8 +301,10 @@ function afterPage(spread, isFirst) {
                 ${head}
                 ${col(spread.left)}
             </div>
-            <div class="after-col after-col-right">
+            <div class="after-col after-col-right${spread.art ? ' after-col-image' : ''}">
+                ${art}
                 ${col(spread.right)}
+                ${foot}
             </div>
         </div>`;
 }
@@ -316,8 +313,7 @@ const PAGES = [
     { kind: 'cover' },
     ...CHAPTERS.flatMap(chapter => chapter.beats.map((beat, i) => ({ kind: 'spread', chapter, beat, isFirst: i === 0 }))),
     { kind: 'quiz' },
-    ...AFTERWORD.spreads.map((spread, i) => ({ kind: 'after', spread, isFirst: i === 0 })),
-    { kind: 'end' }
+    ...AFTERWORD.spreads.map((spread, i) => ({ kind: 'after', spread, isFirst: i === 0, last: i === AFTERWORD.spreads.length - 1 })),
 ];
 
 const TWO_PAGE_KINDS = new Set(['spread', 'cover', 'after']);
@@ -337,11 +333,9 @@ function renderPage(page) {
         case 'spread':
             return spreadPage(page.chapter, page.beat, page.isFirst);
         case 'after':
-            return afterPage(page.spread, page.isFirst);
+            return afterPage({ ...page.spread, last: page.last }, page.isFirst);
         case 'quiz':
             return quizPage();
-        case 'end':
-            return endPage();
         default:
             return '';
     }

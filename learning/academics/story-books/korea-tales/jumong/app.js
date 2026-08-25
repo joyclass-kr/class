@@ -356,14 +356,6 @@ function quizPage() {
         </div>`;
 }
 
-function endPage() {
-    return `
-        <div class="page page-end">
-            ${artFrame('end.png', '🌟')}
-            <h2>주몽 이야기를 다 읽었어요!</h2>
-            <a class="home-btn" href="../../../../../">학습 허브로 돌아가기</a>
-        </div>`;
-}
 
 function historyPage() {
     return `
@@ -387,15 +379,15 @@ const AFTERWORD = {
     emoji: '🏹',
     spreads: [
         {
+            art: 'end.png',
             left: [
                 "주몽 이야기는 고구려를 세운 사람의 이야기라 여러 곳에 적혀 있습니다. 『삼국사기』와 『삼국유사』에도 있고, 광개토대왕비에도 새겨져 있습니다. 돌에 새겨진 기록이 남아 있는 셈입니다.",
                 "주몽이라는 말 자체가 활을 잘 쏘는 사람이라는 뜻이라고 전해 옵니다. 이름이 곧 재주였던 것이지요.",
-                "좋은 말에는 일부러 먹이를 적게 주어 여위게 하고, 나쁜 말은 살을 찌웠습니다. 그래서 왕이 고르고 남은 것을 얻었지요."
+                "좋은 말에는 일부러 먹이를 적게 주어 여위게 하고, 나쁜 말은 살을 찌웠습니다. 그래서 왕이 고르고 남은 것을 얻었지요.",
+                "부러진 칼 반쪽을 아내에게 남긴 대목도 눈여겨볼 만합니다. 아들이 자란 뒤 아버지를 찾는 표시가 되었습니다."
             ],
             right: [
-                "부러진 칼 반쪽을 아내에게 남긴 대목도 눈여겨볼 만합니다. 아들이 자란 뒤 아버지를 찾는 표시가 되었습니다.",
                 "주몽은 마구간으로 쫓겨났을 때 불평 대신 말을 살폈습니다. 가장 낮은 자리에 있는 동안 가장 좋은 말을 알아본 것입니다. 어디에 있느냐보다 그곳에서 무엇을 보고 있느냐가 다음 자리를 만듭니다.",
-                "주몽은 어디에 있느냐보다 무엇을 보느냐가 다음 자리를 만든다는 것을 알았을까요?",
                 "하기 싫은 일을 맡았을 때 그 안에서 배울 만한 것은 무엇이 있을까요?"
             ]
         }
@@ -404,6 +396,9 @@ const AFTERWORD = {
 
 function afterPage(spread, isFirst) {
     const head = isFirst ? `<h2>${AFTERWORD.title}</h2>` : '';
+    // 그림은 오른쪽 칸 맨 위 모서리에 꽉 붙인다. 학습 허브로 가는 길은 그 칸 맨 아래에 둔다.
+    const art = spread.art ? `<div class="after-art">${artFrame(spread.art, AFTERWORD.emoji)}</div>` : '';
+    const foot = spread.last ? `<p class="after-home"><a class="home-btn" href="../../../../../">학습 허브로 돌아가기</a></p>` : '';
     const col = (ps) => ps.map(t => `<p>${t}</p>`).join('');
     return `
         <div class="page page-after">
@@ -411,8 +406,10 @@ function afterPage(spread, isFirst) {
                 ${head}
                 ${col(spread.left)}
             </div>
-            <div class="after-col after-col-right">
+            <div class="after-col after-col-right${spread.art ? ' after-col-image' : ''}">
+                ${art}
                 ${col(spread.right)}
+                ${foot}
             </div>
         </div>`;
 }
@@ -422,8 +419,7 @@ const PAGES = [
     ...CHAPTERS.flatMap(chapter => chapter.beats.map((beat, i) => ({ kind: 'spread', chapter, beat, isFirst: i === 0 }))),
     { kind: 'history' },
     { kind: 'quiz' },
-    ...AFTERWORD.spreads.map((spread, i) => ({ kind: 'after', spread, isFirst: i === 0 })),
-    { kind: 'end' }
+    ...AFTERWORD.spreads.map((spread, i) => ({ kind: 'after', spread, isFirst: i === 0, last: i === AFTERWORD.spreads.length - 1 })),
 ];
 
 const TWO_PAGE_KINDS = new Set(['spread', 'cover', 'after']);
@@ -445,11 +441,9 @@ function renderPage(page) {
         case 'history':
             return historyPage();
         case 'after':
-            return afterPage(page.spread, page.isFirst);
+            return afterPage({ ...page.spread, last: page.last }, page.isFirst);
         case 'quiz':
             return quizPage();
-        case 'end':
-            return endPage();
         default:
             return '';
     }

@@ -268,14 +268,6 @@ function quizPage() {
         </div>`;
 }
 
-function endPage() {
-    return `
-        <div class="page page-end">
-            ${artFrame('end.webp', '🌟')}
-            <h2>밤에 찾아온 도깨비 이야기를 다 읽었어요!</h2>
-            <a class="home-btn" href="../../../../../">학습 허브로 돌아가기</a>
-        </div>`;
-}
 
 /* 읽고 나서 — 세계명작 트랙과 같은 형식이다. 동화틀은 쪽을 재서 나누지 않으므로
    펼침면마다 왼쪽·오른쪽 글을 손으로 나누어 둔다. */
@@ -284,16 +276,16 @@ const AFTERWORD = {
     emoji: '🧹',
     spreads: [
         {
+            art: 'end.webp',
             left: [
                 "우리 도깨비는 서양 귀신과 다릅니다. 죽은 사람이 되는 것이 아니라 오래 쓴 물건이 됩니다. 빗자루, 절굿공이, 부지깽이, 헌 신발처럼 사람 손을 오래 탄 것들이지요.",
                 "그래서 도깨비는 무섭기만 한 것이 아닙니다. 씨름을 걸고, 메밀묵을 좋아하고, 돈을 갚으러 오기도 합니다. 사람과 아주 가까운 자리에 있는 것입니다.",
-                "다시 보면 이 이야기에서 정말 무서운 것은 도깨비가 아니라 어둠입니다. 날이 밝고 나서 그 자리에 남아 있던 것을 보십시오. 밤에 본 것과 아침에 본 것이 같은 물건이었습니다."
+                "다시 보면 이 이야기에서 정말 무서운 것은 도깨비가 아니라 어둠입니다. 날이 밝고 나서 그 자리에 남아 있던 것을 보십시오. 밤에 본 것과 아침에 본 것이 같은 물건이었습니다.",
+                "밤에는 눈이 잘 보이지 않으니 머리가 대신 그림을 그립니다. 그 그림은 대개 우리가 무서워하는 것을 닮습니다. 옛사람들이 도깨비를 그렇게 자주 만난 데는 그런 까닭도 있었을 것입니다."
             ],
             right: [
-                "밤에는 눈이 잘 보이지 않으니 머리가 대신 그림을 그립니다. 그 그림은 대개 우리가 무서워하는 것을 닮습니다. 옛사람들이 도깨비를 그렇게 자주 만난 데는 그런 까닭도 있었을 것입니다.",
                 "도깨비에게 씨름을 걸리면 왼쪽 다리를 걸어 넘기라는 말이 전해 옵니다. 도깨비는 오른쪽 다리가 없다는 것입니다. 이런 세세한 말이 붙어 다닌다는 것은 사람들이 그만큼 자주 이야기했다는 뜻입니다.",
                 "밤에는 낡은 빗자루도 뿔 달린 도깨비로 보입니다. 어두울 때 본 것은 날이 밝은 뒤에 다시 보면 달라 보이는 법입니다.",
-                "여러분이 밤에 무섭게 본 것 가운데 아침에 다시 본 것이 있나요?",
                 "무섭게 느껴졌던 것이 알고 보니 아무것도 아니었던 적이 있나요?"
             ]
         }
@@ -302,6 +294,9 @@ const AFTERWORD = {
 
 function afterPage(spread, isFirst) {
     const head = isFirst ? `<h2>${AFTERWORD.title}</h2>` : '';
+    // 그림은 오른쪽 칸 맨 위 모서리에 꽉 붙인다. 학습 허브로 가는 길은 그 칸 맨 아래에 둔다.
+    const art = spread.art ? `<div class="after-art">${artFrame(spread.art, AFTERWORD.emoji)}</div>` : '';
+    const foot = spread.last ? `<p class="after-home"><a class="home-btn" href="../../../../../">학습 허브로 돌아가기</a></p>` : '';
     const col = (ps) => ps.map(t => `<p>${t}</p>`).join('');
     return `
         <div class="page page-after">
@@ -309,8 +304,10 @@ function afterPage(spread, isFirst) {
                 ${head}
                 ${col(spread.left)}
             </div>
-            <div class="after-col after-col-right">
+            <div class="after-col after-col-right${spread.art ? ' after-col-image' : ''}">
+                ${art}
                 ${col(spread.right)}
+                ${foot}
             </div>
         </div>`;
 }
@@ -319,8 +316,7 @@ const PAGES = [
     { kind: 'cover' },
     ...CHAPTERS.flatMap(chapter => chapter.beats.map((beat, i) => ({ kind: 'spread', chapter, beat, isFirst: i === 0 }))),
     { kind: 'quiz' },
-    ...AFTERWORD.spreads.map((spread, i) => ({ kind: 'after', spread, isFirst: i === 0 })),
-    { kind: 'end' }
+    ...AFTERWORD.spreads.map((spread, i) => ({ kind: 'after', spread, isFirst: i === 0, last: i === AFTERWORD.spreads.length - 1 })),
 ];
 
 const TWO_PAGE_KINDS = new Set(['spread', 'cover', 'after']);
@@ -340,11 +336,9 @@ function renderPage(page) {
         case 'spread':
             return spreadPage(page.chapter, page.beat, page.isFirst);
         case 'after':
-            return afterPage(page.spread, page.isFirst);
+            return afterPage({ ...page.spread, last: page.last }, page.isFirst);
         case 'quiz':
             return quizPage();
-        case 'end':
-            return endPage();
         default:
             return '';
     }

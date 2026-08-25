@@ -327,14 +327,6 @@ function quizPage() {
         </div>`;
 }
 
-function endPage() {
-    return `
-        <div class="page page-end">
-            ${artFrame('end.png', '🌟')}
-            <h2>박혁거세 이야기를 다 읽었어요!</h2>
-            <a class="home-btn" href="../../../../../">학습 허브로 돌아가기</a>
-        </div>`;
-}
 
 function historyPage() {
     return `
@@ -358,16 +350,16 @@ const AFTERWORD = {
     emoji: '🥚',
     spreads: [
         {
+            art: 'end.png',
             left: [
                 "이 이야기는 『삼국사기』와 『삼국유사』에 함께 실려 전합니다. 신라를 세운 첫 임금 이야기라 나라에서 펴낸 역사책에도 들어간 것이지요.",
                 "알에서 사람이 나오는 이야기는 우리 옛 건국 이야기에 유난히 많습니다. 북쪽의 주몽도, 남쪽의 김수로도, 바다를 건너온 석탈해도 그렇습니다. 알은 하늘에서 내려왔다는 뜻으로 쓰인 표시였습니다.",
-                "다시 보면 이상한 것이 하나 있습니다. 알에서 나온 아이를 임금으로 삼자고 정한 것은 하늘이 아니라 여섯 촌장입니다. 하늘이 내려보냈다고 적어 두었지만, 고른 것은 사람이었지요."
+                "다시 보면 이상한 것이 하나 있습니다. 알에서 나온 아이를 임금으로 삼자고 정한 것은 하늘이 아니라 여섯 촌장입니다. 하늘이 내려보냈다고 적어 두었지만, 고른 것은 사람이었지요.",
+                "혁거세라는 이름은 세상을 밝힌다는 뜻입니다. 나라 이름 신라도 그물처럼 사방을 아우른다는 뜻으로 풀이합니다. 이름부터가 여럿을 하나로 묶겠다는 말이었던 셈입니다."
             ],
             right: [
-                "혁거세라는 이름은 세상을 밝힌다는 뜻입니다. 나라 이름 신라도 그물처럼 사방을 아우른다는 뜻으로 풀이합니다. 이름부터가 여럿을 하나로 묶겠다는 말이었던 셈입니다.",
                 "경주에 가면 혁거세가 나왔다는 우물 나정 자리가 남아 있습니다. 우물은 옛사람들에게 땅속과 하늘이 만나는 자리였습니다.",
                 "여섯 촌장은 저마다 제 마을이 제일이라 여길 수도 있었습니다. 그러나 하나로 묶이는 쪽을 먼저 바랐습니다. 나라가 선 것은 알에서 아이가 나왔기 때문이 아니라 사람들이 함께하기로 마음먹었기 때문입니다.",
-                "여섯 촌장은 왜 제 마을에서 임금을 뽑지 않고 알에서 나온 아이를 세웠을까요?",
                 "여러분은 여럿이 힘을 모아 무언가를 해낸 적이 있나요?"
             ]
         }
@@ -376,6 +368,9 @@ const AFTERWORD = {
 
 function afterPage(spread, isFirst) {
     const head = isFirst ? `<h2>${AFTERWORD.title}</h2>` : '';
+    // 그림은 오른쪽 칸 맨 위 모서리에 꽉 붙인다. 학습 허브로 가는 길은 그 칸 맨 아래에 둔다.
+    const art = spread.art ? `<div class="after-art">${artFrame(spread.art, AFTERWORD.emoji)}</div>` : '';
+    const foot = spread.last ? `<p class="after-home"><a class="home-btn" href="../../../../../">학습 허브로 돌아가기</a></p>` : '';
     const col = (ps) => ps.map(t => `<p>${t}</p>`).join('');
     return `
         <div class="page page-after">
@@ -383,8 +378,10 @@ function afterPage(spread, isFirst) {
                 ${head}
                 ${col(spread.left)}
             </div>
-            <div class="after-col after-col-right">
+            <div class="after-col after-col-right${spread.art ? ' after-col-image' : ''}">
+                ${art}
                 ${col(spread.right)}
+                ${foot}
             </div>
         </div>`;
 }
@@ -394,8 +391,7 @@ const PAGES = [
     ...CHAPTERS.flatMap(chapter => chapter.beats.map((beat, i) => ({ kind: 'spread', chapter, beat, isFirst: i === 0 }))),
     { kind: 'history' },
     { kind: 'quiz' },
-    ...AFTERWORD.spreads.map((spread, i) => ({ kind: 'after', spread, isFirst: i === 0 })),
-    { kind: 'end' }
+    ...AFTERWORD.spreads.map((spread, i) => ({ kind: 'after', spread, isFirst: i === 0, last: i === AFTERWORD.spreads.length - 1 })),
 ];
 
 const TWO_PAGE_KINDS = new Set(['spread', 'cover', 'after']);
@@ -417,11 +413,9 @@ function renderPage(page) {
         case 'history':
             return historyPage();
         case 'after':
-            return afterPage(page.spread, page.isFirst);
+            return afterPage({ ...page.spread, last: page.last }, page.isFirst);
         case 'quiz':
             return quizPage();
-        case 'end':
-            return endPage();
         default:
             return '';
     }

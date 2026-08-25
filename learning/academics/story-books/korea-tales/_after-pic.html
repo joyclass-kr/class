@@ -10,8 +10,10 @@ const SIZES = [[1366, 768], [1280, 720], [1920, 1080], [810, 1080], [768, 1024],
 
 function probe() {
     const r = [];
-    const i = PAGES.findIndex(p => p.kind === 'after');
-    if (i < 0) return ['읽고나서없음'];
+    // 읽고 나서가 두 펼침면인 책이 있다. 첫 쪽만 보면 뒤쪽 넘침을 놓친다.
+    const idx = PAGES.map((p, i) => p.kind === 'after' ? i : -1).filter(i => i >= 0);
+    if (!idx.length) return ['읽고나서없음'];
+    idx.forEach((i, s) => {
     current = i; paint();
     document.querySelectorAll('.page-after .after-col').forEach((el, k) => {
         const ov = el.scrollHeight - el.clientHeight;
@@ -22,7 +24,13 @@ function probe() {
         const usable = el.getBoundingClientRect().height - parseFloat(cs.paddingTop) - parseFloat(cs.paddingBottom);
         const art = el.querySelector('.after-art');
         const avail = usable - (art ? art.getBoundingClientRect().height : 0);
-        r.push((k ? '오' : '왼') + Math.round((bot - top) / avail * 100) + (ov > 1 ? '↑' + Math.round(ov) : ''));
+        // 넘칠 때는 자리 표시만 찍으면 안 된다. 쪽번호를 잘못 세어 엉뚱한 데를 고치기 쉽다.
+        // 그 칸 첫 문장 앞머리를 함께 찍어 어디인지 눈으로 알아보게 한다.
+        const head = ov > 1 ? '「' + (ps[ps.length - 1].textContent || '').slice(0, 14) + '…」' : '';
+        r.push((idx.length > 1 ? (s + 1) : '') + (k ? '오' : '왼')
+            + Math.round((bot - top) / avail * 100)
+            + (ov > 1 ? '↑' + Math.round(ov) + head : ''));
+    });
     });
     current = 0; paint();
     return r;

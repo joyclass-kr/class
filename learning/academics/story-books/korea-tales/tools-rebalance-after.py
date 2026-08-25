@@ -17,6 +17,7 @@ sys.stdout.reconfigure(encoding='utf-8', errors='replace')
 BOOKS = os.path.dirname(os.path.abspath(__file__))
 STR = r'"((?:[^"\\]|\\.)*)"'
 PARA_COST = 45
+ART_COST = 300      # 그림 + 학습 허브 단추가 오른쪽 칸에서 먹는 자리
 
 
 def esc(s):
@@ -41,9 +42,12 @@ def one(slug):
     paras = left + right
 
     # 자를 자리를 하나씩 다 넣어 보고 두 칸 차이가 가장 작은 데를 고른다.
-    # 제목이 왼쪽에만 있으므로 왼쪽에 제목 한 줄 값을 얹어 셈한다.
+    # 제목이 왼쪽에만 있으므로 왼쪽에 제목 한 줄 값을 얹는다.
+    # 오른쪽에는 그림과 학습 허브 단추가 있으므로 그만큼 값을 얹는다.
+    # 300은 실제로 재어 잡은 값이다 — 그림이 있는 칸은 없는 칸의 사 할쯤만 글이 든다.
+    art = ART_COST if "art: '" in block else 0
     best = min(range(1, len(paras)),
-               key=lambda k: abs((cost(paras[:k]) + 50) - cost(paras[k:])))
+               key=lambda k: abs((cost(paras[:k]) + 50) - (cost(paras[k:]) + art)))
     L, R = paras[:best], paras[best:]
 
     new = block
@@ -55,7 +59,7 @@ def one(slug):
                  new, count=1, flags=re.S)
     s = s.replace(block, new)
     io.open(p, 'wb').write((s.replace('\n', '\r\n') if crlf else s).encode('utf-8'))
-    return len(L), cost(L) + 50, len(R), cost(R)
+    return len(L), cost(L) + 50, len(R), cost(R) + art
 
 
 def main():

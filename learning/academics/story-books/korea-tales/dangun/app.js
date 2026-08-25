@@ -340,14 +340,6 @@ function historyPage() {
         </div>`;
 }
 
-function endPage() {
-    return `
-        <div class="page page-end">
-            ${artFrame('end.png', '🌟')}
-            <h2>단군 이야기를 다 읽었어요!</h2>
-            <a class="home-btn" href="../../../../../">학습 허브로 돌아가기</a>
-        </div>`;
-}
 
 /* 읽고 나서 — 세계명작 트랙과 같은 형식이다. 동화틀은 쪽을 재서 나누지 않으므로
    펼침면마다 왼쪽·오른쪽 글을 손으로 나누어 둔다. */
@@ -356,14 +348,15 @@ const AFTERWORD = {
     emoji: '🐻',
     spreads: [
         {
+            art: 'end.png',
             left: [
                 "단군 이야기가 글로 처음 적힌 것은 팔백 년쯤 전입니다. 일연 스님이 『삼국유사』에 적었고 비슷한 무렵 이승휴도 적었습니다. 그전까지는 입에서 입으로만 전해 온 것이지요.",
                 "곰과 호랑이가 먹은 것을 이 책에서는 쑥과 마늘이라 했습니다. 그런데 그 시절 이 땅에 마늘이 있었는지를 두고는 말이 갈립니다. 원래 글자를 달래나 다른 매운 풀로 읽어야 한다는 학자들도 있습니다.",
-                "다시 보면 곰은 아무 재주도 부리지 않았습니다. 그저 굴에 남아 있었을 뿐입니다. 이 이야기가 상을 준 것은 힘이나 재주가 아니라 견디는 일이었습니다."
+                "다시 보면 곰은 아무 재주도 부리지 않았습니다. 그저 굴에 남아 있었을 뿐입니다. 이 이야기가 상을 준 것은 힘이나 재주가 아니라 견디는 일이었습니다.",
+                "환웅이 데려온 셋도 눈여겨볼 만합니다. 바람과 비와 구름을 맡은 신하들이지요. 셋 다 농사에 필요한 것입니다. 하늘에서 내려온 이가 가장 먼저 챙긴 것이 농사였던 셈입니다.",
+                "고조선을 세웠다는 그날을 기려 시월 삼일을 개천절로 삼았습니다. 하늘이 열린 날이라는 뜻입니다."
             ],
             right: [
-                "환웅이 데려온 셋도 눈여겨볼 만합니다. 바람과 비와 구름을 맡은 신하들이지요. 셋 다 농사에 필요한 것입니다. 하늘에서 내려온 이가 가장 먼저 챙긴 것이 농사였던 셈입니다.",
-                "고조선을 세웠다는 그날을 기려 시월 삼일을 개천절로 삼았습니다. 하늘이 열린 날이라는 뜻입니다.",
                 "호랑이는 왜 굴을 뛰쳐나갔을까요? 하루만 더 참으면 되는 날도 있었을 텐데요.",
                 "호랑이는 첫날 가장 자신 있어 했고 곰은 아무 말 없이 앉아 있었습니다. 끝까지 남는 쪽은 큰소리치던 쪽이 아니라 조용히 견디던 쪽인 경우가 많습니다.",
                 "당장은 재미없어도 오래 해 볼 만한 일이 나에게도 있을까요?"
@@ -374,6 +367,9 @@ const AFTERWORD = {
 
 function afterPage(spread, isFirst) {
     const head = isFirst ? `<h2>${AFTERWORD.title}</h2>` : '';
+    // 그림은 오른쪽 칸 맨 위 모서리에 꽉 붙인다. 학습 허브로 가는 길은 그 칸 맨 아래에 둔다.
+    const art = spread.art ? `<div class="after-art">${artFrame(spread.art, AFTERWORD.emoji)}</div>` : '';
+    const foot = spread.last ? `<p class="after-home"><a class="home-btn" href="../../../../../">학습 허브로 돌아가기</a></p>` : '';
     const col = (ps) => ps.map(t => `<p>${t}</p>`).join('');
     return `
         <div class="page page-after">
@@ -381,8 +377,10 @@ function afterPage(spread, isFirst) {
                 ${head}
                 ${col(spread.left)}
             </div>
-            <div class="after-col after-col-right">
+            <div class="after-col after-col-right${spread.art ? ' after-col-image' : ''}">
+                ${art}
                 ${col(spread.right)}
+                ${foot}
             </div>
         </div>`;
 }
@@ -392,8 +390,7 @@ const PAGES = [
     ...CHAPTERS.flatMap(chapter => chapter.beats.map((beat, i) => ({ kind: 'spread', chapter, beat, isFirst: i === 0 }))),
     { kind: 'history' },
     { kind: 'quiz' },
-    ...AFTERWORD.spreads.map((spread, i) => ({ kind: 'after', spread, isFirst: i === 0 })),
-    { kind: 'end' }
+    ...AFTERWORD.spreads.map((spread, i) => ({ kind: 'after', spread, isFirst: i === 0, last: i === AFTERWORD.spreads.length - 1 })),
 ];
 
 const TWO_PAGE_KINDS = new Set(['spread', 'cover', 'after']);
@@ -415,11 +412,9 @@ function renderPage(page) {
         case 'history':
             return historyPage();
         case 'after':
-            return afterPage(page.spread, page.isFirst);
+            return afterPage({ ...page.spread, last: page.last }, page.isFirst);
         case 'quiz':
             return quizPage();
-        case 'end':
-            return endPage();
         default:
             return '';
     }

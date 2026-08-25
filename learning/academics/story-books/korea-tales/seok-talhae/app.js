@@ -326,14 +326,6 @@ function quizPage() {
         </div>`;
 }
 
-function endPage() {
-    return `
-        <div class="page page-end">
-            ${artFrame('end.png', '🌟')}
-            <h2>석탈해 이야기를 다 읽었어요!</h2>
-            <a class="home-btn" href="../../../../../">학습 허브로 돌아가기</a>
-        </div>`;
-}
 
 function historyPage() {
     return `
@@ -357,15 +349,15 @@ const AFTERWORD = {
     emoji: '⛵',
     spreads: [
         {
+            art: 'end.png',
             left: [
                 "석탈해도 『삼국유사』에 실린 사람입니다. 신라의 네 번째 임금이 되었는데, 신라 임금 가운데 박씨도 김씨도 아닌 석씨의 첫 사람입니다.",
                 "이 사람은 알에서 나와 궤에 담겨 바다를 떠왔다고 합니다. 밖에서 온 사람이 임금이 되는 이야기가 우리 옛 기록에 남아 있는 것이지요.",
-                "다시 보면 탈해가 호공의 집을 얻은 방법은 꾀입니다. 숫돌과 숯을 몰래 묻어 두고 대장장이 집안이라 우겼지요. 좋은 방법이라 하기는 어렵습니다."
+                "다시 보면 탈해가 호공의 집을 얻은 방법은 꾀입니다. 숫돌과 숯을 몰래 묻어 두고 대장장이 집안이라 우겼지요. 좋은 방법이라 하기는 어렵습니다.",
+                "호공은 뒷날 탈해를 돕는 신하가 됩니다. 집을 빼앗길 뻔했던 사람이 그렇게 되었습니다."
             ],
             right: [
-                "호공은 뒷날 탈해를 돕는 신하가 됩니다. 집을 빼앗길 뻔했던 사람이 그렇게 되었습니다.",
                 "탈해는 꾀로 집을 얻었지만 그것을 갖지는 않았습니다. 이겨 놓고 돌려주었기 때문에 집 한 채 대신 사람 하나를 얻었습니다. 이기는 것보다 이긴 다음에 무엇을 하느냐가 더 오래 남습니다.",
-                "탈해가 집을 그대로 가졌다면 어떻게 되었을까요?",
                 "다투어 이겨 본 적이 있나요? 그다음에는 어떻게 했나요?"
             ]
         }
@@ -374,6 +366,9 @@ const AFTERWORD = {
 
 function afterPage(spread, isFirst) {
     const head = isFirst ? `<h2>${AFTERWORD.title}</h2>` : '';
+    // 그림은 오른쪽 칸 맨 위 모서리에 꽉 붙인다. 학습 허브로 가는 길은 그 칸 맨 아래에 둔다.
+    const art = spread.art ? `<div class="after-art">${artFrame(spread.art, AFTERWORD.emoji)}</div>` : '';
+    const foot = spread.last ? `<p class="after-home"><a class="home-btn" href="../../../../../">학습 허브로 돌아가기</a></p>` : '';
     const col = (ps) => ps.map(t => `<p>${t}</p>`).join('');
     return `
         <div class="page page-after">
@@ -381,8 +376,10 @@ function afterPage(spread, isFirst) {
                 ${head}
                 ${col(spread.left)}
             </div>
-            <div class="after-col after-col-right">
+            <div class="after-col after-col-right${spread.art ? ' after-col-image' : ''}">
+                ${art}
                 ${col(spread.right)}
+                ${foot}
             </div>
         </div>`;
 }
@@ -392,8 +389,7 @@ const PAGES = [
     ...CHAPTERS.flatMap(chapter => chapter.beats.map((beat, i) => ({ kind: 'spread', chapter, beat, isFirst: i === 0 }))),
     { kind: 'history' },
     { kind: 'quiz' },
-    ...AFTERWORD.spreads.map((spread, i) => ({ kind: 'after', spread, isFirst: i === 0 })),
-    { kind: 'end' }
+    ...AFTERWORD.spreads.map((spread, i) => ({ kind: 'after', spread, isFirst: i === 0, last: i === AFTERWORD.spreads.length - 1 })),
 ];
 
 const TWO_PAGE_KINDS = new Set(['spread', 'cover', 'after']);
@@ -415,11 +411,9 @@ function renderPage(page) {
         case 'history':
             return historyPage();
         case 'after':
-            return afterPage(page.spread, page.isFirst);
+            return afterPage({ ...page.spread, last: page.last }, page.isFirst);
         case 'quiz':
             return quizPage();
-        case 'end':
-            return endPage();
         default:
             return '';
     }

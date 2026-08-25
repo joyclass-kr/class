@@ -332,14 +332,6 @@ function quizPage() {
         </div>`;
 }
 
-function endPage() {
-    return `
-        <div class="page page-end">
-            ${artFrame('end.png', '🌟')}
-            <h2>자린고비 이야기를 다 읽었어요!</h2>
-            <a class="home-btn" href="../../../../../">학습 허브로 돌아가기</a>
-        </div>`;
-}
 
 /* 읽고 나서 — 세계명작 트랙과 같은 형식이다. 동화틀은 쪽을 재서 나누지 않으므로
    펼침면마다 왼쪽·오른쪽 글을 손으로 나누어 둔다. */
@@ -348,15 +340,15 @@ const AFTERWORD = {
     emoji: '🐟',
     spreads: [
         {
+            art: 'end.png',
             left: [
                 "자린고비는 한 사람의 이름이 아니라 지독한 구두쇠를 가리키던 말입니다. 충청도 쪽에서 나온 말로 전해 오는데, 어디서 왔는지는 말이 여러 가지입니다.",
                 "굴비를 천장에 매달아 두고 쳐다보며 밥을 먹었다는 대목은 이 이야기에서 가장 이름난 자리입니다. 너무 여러 번 봤다고 나무라는 대목까지가 한 짝입니다.",
-                "다시 보면 이야기는 자린고비를 웃음거리로만 두지 않습니다. 흉년이 들었을 때 곳간을 여는 데까지 데려갑니다."
+                "다시 보면 이야기는 자린고비를 웃음거리로만 두지 않습니다. 흉년이 들었을 때 곳간을 여는 데까지 데려갑니다.",
+                "그때 나온 쌀은 하늘에서 떨어진 것이 아닙니다. 굴비를 매달아 놓고 아끼던 그 세월이 쌓인 것입니다."
             ],
             right: [
-                "그때 나온 쌀은 하늘에서 떨어진 것이 아닙니다. 굴비를 매달아 놓고 아끼던 그 세월이 쌓인 것입니다.",
                 "자린고비는 아끼는 것이 목적인 사람이 아니었습니다. 아낀 것을 언제 써야 하는지 알고 있던 사람이었습니다. 무엇을 아끼느냐보다 무엇을 위해 아끼느냐가 그 사람을 말해 줍니다.",
-                "자린고비는 처음부터 그날을 생각하고 아꼈을까요?",
                 "나는 무엇을 아끼고 있나요? 그것을 언제 쓰려고 아끼는 걸까요?"
             ]
         }
@@ -365,6 +357,9 @@ const AFTERWORD = {
 
 function afterPage(spread, isFirst) {
     const head = isFirst ? `<h2>${AFTERWORD.title}</h2>` : '';
+    // 그림은 오른쪽 칸 맨 위 모서리에 꽉 붙인다. 학습 허브로 가는 길은 그 칸 맨 아래에 둔다.
+    const art = spread.art ? `<div class="after-art">${artFrame(spread.art, AFTERWORD.emoji)}</div>` : '';
+    const foot = spread.last ? `<p class="after-home"><a class="home-btn" href="../../../../../">학습 허브로 돌아가기</a></p>` : '';
     const col = (ps) => ps.map(t => `<p>${t}</p>`).join('');
     return `
         <div class="page page-after">
@@ -372,8 +367,10 @@ function afterPage(spread, isFirst) {
                 ${head}
                 ${col(spread.left)}
             </div>
-            <div class="after-col after-col-right">
+            <div class="after-col after-col-right${spread.art ? ' after-col-image' : ''}">
+                ${art}
                 ${col(spread.right)}
+                ${foot}
             </div>
         </div>`;
 }
@@ -382,8 +379,7 @@ const PAGES = [
     { kind: 'cover' },
     ...CHAPTERS.flatMap(chapter => chapter.beats.map((beat, i) => ({ kind: 'spread', chapter, beat, isFirst: i === 0 }))),
     { kind: 'quiz' },
-    ...AFTERWORD.spreads.map((spread, i) => ({ kind: 'after', spread, isFirst: i === 0 })),
-    { kind: 'end' }
+    ...AFTERWORD.spreads.map((spread, i) => ({ kind: 'after', spread, isFirst: i === 0, last: i === AFTERWORD.spreads.length - 1 })),
 ];
 
 const TWO_PAGE_KINDS = new Set(['spread', 'cover', 'after']);
@@ -403,11 +399,9 @@ function renderPage(page) {
         case 'spread':
             return spreadPage(page.chapter, page.beat, page.isFirst);
         case 'after':
-            return afterPage(page.spread, page.isFirst);
+            return afterPage({ ...page.spread, last: page.last }, page.isFirst);
         case 'quiz':
             return quizPage();
-        case 'end':
-            return endPage();
         default:
             return '';
     }
