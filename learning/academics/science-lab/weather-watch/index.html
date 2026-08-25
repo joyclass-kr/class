@@ -1,0 +1,163 @@
+<!doctype html>
+<html lang="ko">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="theme-color" content="#07131c">
+    <title>과학 실험실</title>
+    <meta name="description" content="하루 동안 기온이 어떻게 오르내리는지 재고, 바닷가에서 바람의 방향이 왜 낮과 밤에 바뀌는지 확인하는 초등 과학 모의실험">
+    <link rel="stylesheet" as="style" crossorigin href="https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.9/dist/web/static/pretendard.css">
+    <link rel="stylesheet" href="styles.css?v=2">
+    <link rel="stylesheet" href="watch-visual.css?v=2">
+    <link rel="stylesheet" href="quiz.css?v=2">
+</head>
+<body>
+    <main>
+        <header class="page-header">
+            <div class="title-row">
+                <a href="../">← 과학 실험실</a>
+                <h1>기온·바람·구름 관측</h1>
+            </div>
+            <div class="grade-tags"><span>초등 5~6</span><span>지구과학</span></div>
+        </header>
+
+        <ol class="method-steps" aria-label="실험 방법">
+            <li>하늘에 구름이 얼마나 있는지 봅니다.</li>
+            <li>시각을 옮기며 기온을 잽니다.</li>
+            <li>땅과 바다의 기온을 견줍니다.</li>
+            <li>바람이 어느 쪽에서 부는지 봅니다.</li>
+        </ol>
+
+        <div class="experiment-layout">
+            <section class="panel control-panel" aria-labelledby="control-title">
+                <h2 id="control-title">실험 조건</h2>
+                <p class="water-standard">기온은 백엽상 안, 땅에서 1.5 m 높이의 그늘에서 잽니다</p>
+
+                <fieldset class="pick-field">
+                    <legend>하늘 상태</legend>
+                    <div class="pick-buttons cols3">
+                        <button type="button" data-sky="clear">맑음<small>구름 0~2</small></button>
+                        <button type="button" data-sky="part">구름 조금<small>구름 3~7</small></button>
+                        <button type="button" data-sky="cloud">흐림<small>구름 8~10</small></button>
+                    </div>
+                </fieldset>
+
+                <div class="range-heading">
+                    <label for="timeRange">시각</label>
+                    <output id="timeOutput" for="timeRange">14시</output>
+                </div>
+                <input id="timeRange" type="range" min="0" max="24" step="0.5" value="14">
+                <div class="range-scale" aria-hidden="true"><span>0시</span><span>12시</span><span>24시</span></div>
+
+                <fieldset class="prediction-field">
+                    <legend>지금 바닷가에는 바람이 어느 쪽에서 불까요?</legend>
+                    <div class="prediction-buttons three">
+                        <button type="button" data-prediction="p1">바다에서 육지로</button>
+                        <button type="button" data-prediction="p2">육지에서 바다로</button>
+                        <button type="button" data-prediction="p3">거의 안 분다</button>
+                    </div>
+                </fieldset>
+
+                <button class="run-button" id="runBtn" type="button">하루 지켜보기</button>
+                <button class="reset-button" id="resetBtn" type="button">처음으로</button>
+
+                <section class="result-box" aria-labelledby="result-title" aria-live="polite">
+                    <h3 id="result-title">관찰 결과</h3>
+                    <p id="resultEmpty">하늘 상태를 고르고 하루를 지켜보세요.</p>
+                    <div id="resultContent" hidden>
+                        <div class="result-numbers">
+                            <article><span>땅의 기온</span><strong id="valueA">-</strong></article>
+                            <article><span>부는 바람</span><strong id="valueB">-</strong></article>
+                        </div>
+                        <p class="prediction-result" id="predictionResult"></p>
+                        <p class="explanation" id="elementaryExplanation"></p>
+                    </div>
+                </section>
+            </section>
+
+            <section class="panel watch-stage" aria-label="관찰 화면">
+                <div class="stage-heading"><h2>관찰</h2><span id="stageBadge">-</span></div>
+
+                <div class="stage-views">
+                    <svg class="main-svg" viewBox="0 0 460 214" aria-hidden="true">
+                        <g id="mainGroup"></g>
+                    </svg>
+                    <svg class="graph-svg" viewBox="0 0 460 196" aria-hidden="true">
+                        <g id="graphGroup"></g>
+                    </svg>
+                </div>
+
+                <p class="stage-caption" id="stageCaption">땅은 빨리 데워지고 빨리 식지만 바다는 아주 천천히 바뀝니다. 바람의 방향이 하루에 두 번 뒤집히는 것은 이 차이 때문입니다.</p>
+                <div class="data-note" id="dataNote"></div>
+            </section>
+        </div>
+
+        <section class="panel meaning-panel">
+            <h2>실험 결과의 의미</h2>
+            <div class="meaning-body">
+                <p><strong>기온이 가장 높은 때는 낮 12시가 아닙니다</strong> 해는 12시에 가장 높이 뜨지만, 그 뒤로도 한동안 들어오는 햇빛이 나가는 열보다 많습니다. 그래서 기온은 오후 2시쯤에 가장 높고, 가장 낮은 때는 밤새 식은 끝인 해 뜨기 직전입니다.</p>
+                <p><strong>구름은 이불입니다</strong> 구름이 많으면 낮에는 햇빛을 가려 덜 뜨거워지고 밤에는 열이 빠져나가는 것을 막아 덜 식습니다. 그래서 흐린 날은 하루 동안의 기온 차가 훨씬 작습니다.</p>
+                <p><strong>바닷바람과 뭍바람</strong> 낮에는 땅이 바다보다 빨리 뜨거워집니다. 뜨거워진 땅 위의 공기가 올라가면 그 자리를 메우러 바다에서 바람이 불어옵니다. 밤에는 반대로 땅이 더 빨리 식으므로 바람이 육지에서 바다로 붑니다.</p>
+            </div>
+        </section>
+
+        <details class="quiz-section" aria-labelledby="quiz-title">
+            <summary class="quiz-heading"><h2 id="quiz-title">확인 문제</h2><span>4문제</span></summary>
+            <div class="quiz-grid">
+                <article class="quiz-card" data-answer="c">
+                    <h3>하루 중 기온이 가장 높은 때는 언제일까요?</h3>
+                    <div class="quiz-options">
+                        <label><input type="radio" name="q1" value="a"> 낮 12시</label>
+                        <label><input type="radio" name="q1" value="b"> 해 뜨자마자</label>
+                        <label><input type="radio" name="q1" value="c"> 오후 2시쯤</label>
+                        <label><input type="radio" name="q1" value="d"> 해 지기 직전</label>
+                    </div>
+                    <button class="answer-button" type="button">정답 확인</button>
+                    <p class="answer-result" aria-live="polite"></p>
+                    <p class="answer-explanation" hidden>해는 12시에 가장 높지만 그 뒤로도 한동안 들어오는 햇빛이 빠져나가는 열보다 많습니다. 땅이 계속 데워지므로 기온은 오후 2시쯤에 가장 높아집니다.</p>
+                </article>
+
+                <article class="quiz-card" data-answer="a">
+                    <h3>흐린 날의 하루 기온 차가 작은 까닭은?</h3>
+                    <div class="quiz-options">
+                        <label><input type="radio" name="q2" value="a"> 구름이 낮에는 햇빛을 가리고 밤에는 열을 붙잡아서</label>
+                        <label><input type="radio" name="q2" value="b"> 구름이 차가워서</label>
+                        <label><input type="radio" name="q2" value="c"> 흐린 날은 바람이 안 불어서</label>
+                        <label><input type="radio" name="q2" value="d"> 해가 늦게 떠서</label>
+                    </div>
+                    <button class="answer-button" type="button">정답 확인</button>
+                    <p class="answer-result" aria-live="polite"></p>
+                    <p class="answer-explanation" hidden>구름은 이불처럼 두 방향으로 작용합니다. 낮에는 햇빛을 막아 덜 데워지게 하고 밤에는 열이 달아나는 것을 막아 덜 식게 합니다. 그래서 가장 높은 기온과 가장 낮은 기온의 차이가 줄어듭니다.</p>
+                </article>
+
+                <article class="quiz-card" data-answer="b">
+                    <h3>맑은 날 낮에 바닷가에서 부는 바람은?</h3>
+                    <div class="quiz-options">
+                        <label><input type="radio" name="q3" value="a"> 육지에서 바다로</label>
+                        <label><input type="radio" name="q3" value="b"> 바다에서 육지로</label>
+                        <label><input type="radio" name="q3" value="c"> 하늘에서 아래로</label>
+                        <label><input type="radio" name="q3" value="d"> 낮에는 바람이 없다</label>
+                    </div>
+                    <button class="answer-button" type="button">정답 확인</button>
+                    <p class="answer-result" aria-live="polite"></p>
+                    <p class="answer-explanation" hidden>낮에는 땅이 바다보다 빨리 뜨거워집니다. 더워진 공기가 위로 올라가면 그 빈자리를 메우러 바다 쪽 공기가 밀려오므로 바닷바람이 붑니다.</p>
+                </article>
+
+                <article class="quiz-card" data-answer="d">
+                    <h3>바다의 기온이 하루 내내 거의 그대로인 까닭은?</h3>
+                    <div class="quiz-options">
+                        <label><input type="radio" name="q4" value="a"> 바다에는 햇빛이 닿지 않아서</label>
+                        <label><input type="radio" name="q4" value="b"> 바닷물이 짜서</label>
+                        <label><input type="radio" name="q4" value="c"> 바다가 넓어서</label>
+                        <label><input type="radio" name="q4" value="d"> 물은 땅보다 데우기도 식히기도 훨씬 어려워서</label>
+                    </div>
+                    <button class="answer-button" type="button">정답 확인</button>
+                    <p class="answer-result" aria-live="polite"></p>
+                    <p class="answer-explanation" hidden>같은 햇빛을 받아도 물은 흙이나 모래보다 훨씬 천천히 데워지고 천천히 식습니다. 그래서 바다의 온도는 하루 동안 거의 변하지 않고, 그 차이가 바람을 만듭니다.</p>
+                </article>
+            </div>
+        </details>
+    </main>
+    <script src="app.js?v=2"></script>
+</body>
+</html>
