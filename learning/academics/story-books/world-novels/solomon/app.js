@@ -362,6 +362,69 @@ const CHAPTER_SEGS = CHAPTERS.map(ch => {
     return segs;
 });
 
+// 읽고 나서 — 책마다 내용이 다르다. 장과 같은 방식으로 재서 나눈다.
+const AFTERWORD = {
+    title: '읽고 나서',
+    emoji: '💎',
+    art: [],
+    paras: [
+        `이 책의 제목은 『솔로몬 왕의 보물』입니다. 솔로몬은 삼천 년쯤 전 이스라엘의 왕입니다. 아주 지혜롭고 아주 부자였다고 전하는 사람입니다.`,
+        `그 왕의 보물이 아프리카 어딘가에 묻혀 있다는 이야기가 오래전부터 유럽에 돌았습니다. 이 책은 그 소문 위에 지은 이야기입니다.`,
+        `쓴 사람은 영국의 헨리 라이더 해거드입니다. 열아홉 살에 남아프리카로 건너가 여러 해를 살았습니다. 그러니 그가 적은 아프리카의 풍경은 본 것을 적은 것입니다.`,
+        `이 책이 나온 사연도 재미있습니다. 그가 형과 내기를 했다고 합니다. 『보물섬』만큼 재미있는 책을 쓸 수 있다는 것이었습니다.`,
+        `그리고 여섯 주 만에 이 책을 써 냈습니다. 천팔백팔십오 년에 나왔고, 나오자마자 크게 팔렸습니다.`,
+        `그때 출판사가 붙인 광고 문구가 남아 있습니다. 세상에서 가장 놀라운 책이라고요. 그 시절 영국 사람들이 이런 이야기를 아주 좋아했습니다.`,
+        `이제 다시 볼 대목을 짚어 봅시다.`,
+        `첫째, 이 이야기를 누가 들려주는지 보십시오. 앨런 쿼터메인이라는 사냥꾼이 자기가 겪은 일을 적는 형식입니다.`,
+        `그리고 그 사람은 자기가 겁이 많다고 여러 번 말합니다. 영웅답게 굴지 않습니다. 그것이 이 책을 읽기 편하게 만듭니다.`,
+        `둘째, 삼백 년 된 지도를 다시 보십시오. 옛날 포르투갈 사람이 죽어 가면서 옷자락에 그린 지도입니다. 그것을 후손이 대대로 물려받았습니다.`,
+        `이런 장치가 그 시절 모험 소설에 자주 나옵니다. 『보물섬』도 그렇습니다. 오래된 지도가 하나 나오고 그것을 따라가는 것입니다.`,
+        `셋째, 사막을 건너는 대목을 다시 읽어 보십시오. 물이 떨어져 죽을 뻔합니다. 그리고 지도에 적힌 대로 웅덩이를 찾아냅니다.`,
+        `그다음에 산을 넘습니다. 눈 덮인 산입니다. 아프리카에 눈이 있느냐고 여길 수도 있는데, 높은 산에는 있습니다. 킬리만자로가 그렇습니다.`,
+        `넷째, 일식 대목을 다시 보십시오. 이 책에서 제일 유명한 장면입니다. 세 사람이 붙잡혀 죽게 되었을 때, 쿼터메인이 해를 가리겠다고 말합니다.`,
+        `그리고 정말로 해가 가려집니다. 달력을 보고 그날 일식이 있다는 것을 알고 있었기 때문입니다.`,
+        `그러니 그것은 마술이 아니라 아는 것입니다. 아는 사람이 모르는 사람 앞에서 신처럼 보이는 자리입니다.`,
+        `그런데 이 대목은 지금 읽으면 불편하기도 합니다. 유럽에서 온 사람이 아프리카 사람들을 속이는 이야기이기 때문입니다.`,
+        `인물도 다시 보아야 할 사람이 있습니다.`,
+        `움보파를 그냥 짐꾼으로 읽으면 절반만 읽은 것이 됩니다. 그 사람은 처음부터 자기 정체를 숨기고 따라옵니다.`,
+        `그리고 산을 넘고 나서 밝힙니다. 자기가 그 나라의 쫓겨난 왕자라는 것을요. 그러니 이 여행에는 처음부터 목적이 둘이었습니다. 보물을 찾는 것과 나라를 되찾는 것입니다.`,
+        `그리고 이 책은 마지막에 그 사람을 왕으로 세웁니다. 그 시절 영국 소설에서 아프리카 사람이 그렇게 그려지는 일은 드물었습니다.`,
+        `가굴도 짚어 둘 만합니다. 아주 늙은 여자인데 나라의 비밀을 다 알고 있습니다. 그리고 마지막에 동굴에서 무슨 일이 벌어지는지도 그 사람이 압니다.`,
+        `그 시절 사정도 알아 두면 좋습니다. 이 책이 나온 때는 유럽 나라들이 아프리카를 나누어 가지던 무렵입니다. 그것을 아프리카 쟁탈이라고 부릅니다.`,
+        `몇십 년 사이에 아프리카 대륙의 거의 전부가 유럽 나라들의 땅으로 갈렸습니다. 그 땅에 살던 사람들의 뜻은 묻지 않았습니다.`,
+        `그러니 이 책 같은 이야기가 왜 그때 그렇게 인기가 있었는지 생각해 볼 만합니다. 유럽 사람이 아프리카에 들어가 보물을 찾고 왕을 세우는 이야기입니다.`,
+        `그 시절 영국 사람들은 그런 이야기를 읽으면서 자기들이 하는 일을 모험으로 여겼습니다. 실제로 일어나고 있던 일은 그것과 아주 달랐습니다.`,
+        `그리고 이 책에는 지금 읽기에 불편한 표현이 원작에 여럿 있습니다. 아프리카 사람들을 부르는 말이나 그리는 방식이 그렇습니다. 여기서는 그런 대목을 옮기지 않았습니다.`,
+        `다만 해거드는 그 시절 사람치고는 나은 데도 있었습니다. 아프리카 사람을 어리석게만 그리지 않았고, 움보파를 왕으로 세웠고, 쿼터메인의 입으로 아프리카 사람이 영국 사람보다 못하지 않다고 말하게 하기도 했습니다.`,
+        `그러니 이 책은 두 가지를 다 알고 읽어야 합니다. 재미있는 모험 이야기라는 것, 그리고 그 재미가 그 시절 어떤 일 위에 서 있었는가 하는 것입니다.`,
+        `이 책이 붙들고 있는 것은 두 가지입니다.`,
+        `하나는 무엇을 찾으러 갔느냐는 것입니다. 이 세 사람이 떠난 까닭은 저마다 다릅니다. 한 사람은 잃어버린 동생을 찾으러 가고, 한 사람은 심심해서 가고, 쿼터메인은 돈 때문에 갑니다.`,
+        `그리고 결국 다 얻습니다. 그런데 이 책은 마지막에 그것을 크게 기뻐하지 않습니다. 동굴에서 겪은 일 때문입니다.`,
+        `다른 하나는 아는 것이 무엇이냐는 것입니다. 일식 대목이 그것을 보여 줍니다. 아는 사람이 모르는 사람 앞에서 힘을 갖습니다.`,
+        `그런데 이 책은 그것을 자랑스럽게만 적지 않습니다. 쿼터메인 자신이 그것을 속임수라고 부릅니다.`,
+        `이 책이 나온 뒤 이런 종류의 이야기가 아주 많이 만들어졌습니다. 잃어버린 세계를 찾아가는 이야기, 고대 유적에서 보물을 찾는 이야기 같은 것입니다.`,
+        `지금 우리가 아는 모험 영화들의 뿌리가 대개 여기에 있습니다. 낡은 지도, 험한 여정, 숨겨진 방, 그리고 무너지는 동굴 같은 것 말입니다.`,
+        `그리고 이 책의 앨런 쿼터메인은 그 뒤로 여러 권에 더 나옵니다. 해거드가 그 사람을 주인공으로 열 권 넘게 썼습니다.`,
+        `언젠가 이 책을 다시 읽게 되거든, 이번에는 움보파만 따라가며 읽어 보십시오. 그 사람이 언제부터 알고 있었는지, 그리고 왜 말하지 않았는지를 세어 보십시오.`,
+        `그리고 그 사람이 마지막에 세 사람에게 한 말도 다시 보십시오. 자기 나라에 다시는 백인이 들어오지 못하게 하겠다는 말입니다.`,
+        `그 말을 해거드가 왜 넣었는지 생각해 볼 만합니다. 이 책의 제일 마지막에 그 말이 있습니다.`,
+        `마지막으로 생각해 볼 것을 남겨 둡니다. 답은 적어 두지 않겠습니다.`,
+        `쿼터메인이 일식으로 사람들을 속인 것은 옳은 일이었을까요? 그렇게 하지 않았으면 세 사람이 죽었을 것입니다. 그런데 그것은 속임수였습니다.`,
+        `움보파가 자기 정체를 처음부터 말하지 않은 것을 우리는 어떻게 보아야 할까요? 그 사람은 세 사람을 이용한 셈이기도 합니다.`,
+        `그리고 그 나라에 다시는 백인이 들어오지 못하게 하겠다는 말은 무슨 뜻이었을까요. 이 물음은 어른이 되어 다시 읽어도 답하기가 쉽지 않습니다.`
+    ]
+};
+
+const AFTER_SEGS = (() => {
+    const segs = [];
+    AFTERWORD.paras.forEach((html, paraIdx) => {
+        splitSegments(html).forEach((piece, k) => {
+            segs.push({ paraIdx, html: piece, start: k === 0 });
+        });
+    });
+    return segs;
+})();
+
 // 조각 묶음을 문단 단위로 다시 묶어 화면에 그릴 모양으로 만든다.
 // 앞 쪽에서 이어진 문단은 첫 줄을 들여쓰지 않는다.
 function runHtml(segs, a, b) {
@@ -643,16 +706,100 @@ function quizPage(part) {
         </div>`;
 }
 
-function endPage() {
+/* 읽고 나서 — 장과 같은 방식으로 쪽을 나눈다. 그림은 오른쪽 위에 얹힌다. */
+const AFTER_FOOT = `<p class="after-home"><a class="home-btn" href="../../../../../">학습 허브로 돌아가기</a></p>`;
+
+function paginateAfterword() {
+    const segs = AFTER_SEGS;
+    const arts = AFTERWORD.art || [];
+    const { usable, headHeight, artHeight } = PROBE;
+    const headHtml = `<h2>${AFTERWORD.title}</h2>`;
+    const totalH = PROBE.measure(runHtml(segs, 0, segs.length));
+
+    const underArt = Math.max(60, usable - artHeight);
+
+    // 맨 끝에는 학습 허브로 가는 단추가 붙는다. 그 높이를 미리 빼 두지 않으면
+    // 마지막 쪽만 넘친다.
+    const footH = PROBE.measure(AFTER_FOOT);
+
+    const capsOf = slots => {
+        const caps = [];
+        slots.forEach(kind => { caps.push(usable); caps.push(kind === 'img' ? underArt : usable); });
+        caps[caps.length - 1] = Math.max(60, caps[caps.length - 1] - footH);
+        return caps;
+    };
+
+    const minSpreads = Math.max(arts.length, 1);
+    const maxSpreads = Math.max(minSpreads, Math.floor(segs.length / 2));
+    let spreadCount = minSpreads;
+    while (spreadCount < maxSpreads) {
+        const caps = capsOf(slotPlan(arts.length, spreadCount - arts.length));
+        if (caps.reduce((a, b) => a + b, 0) >= totalH + headHeight) break;
+        spreadCount++;
+    }
+
+    let slots = slotPlan(arts.length, Math.max(0, spreadCount - arts.length));
+    let caps = capsOf(slots);
+    let ranges = fillPages(segs, caps, headHtml);
+    for (let guard = 0; guard < 8; guard++) {
+        const over = ranges.some(([a, b], n) =>
+            PROBE.measure((n === 0 ? headHtml : '') + runHtml(segs, a, b)) > caps[n] + 1);
+        if (!over || spreadCount >= maxSpreads) break;
+        spreadCount++;
+        slots = slotPlan(arts.length, Math.max(0, spreadCount - arts.length));
+        caps = capsOf(slots);
+        ranges = fillPages(segs, caps, headHtml);
+    }
+
+    const spreads = [];
+    let pageIdx = 0;
+    let artIdx = 0;
+    slots.forEach((kind, s) => {
+        const left = ranges[pageIdx++];
+        const right = ranges[pageIdx++];
+        spreads.push({
+            kind: 'after', first: s === 0, last: s === slots.length - 1,
+            art: kind === 'img' ? arts[artIdx++] : null, left, right
+        });
+    });
+    return spreads;
+}
+
+function afterSpreadPage(spread) {
+    const segs = AFTER_SEGS;
+    const head = spread.first ? `<h2>${AFTERWORD.title}</h2>` : '';
+    // 학습 허브로 돌아가는 길은 맨 끝에 한 번만 둔다.
+    const foot = spread.last ? AFTER_FOOT : '';
+
+    if (spread.art) {
+        return `
+            <div class="page page-story page-after">
+                <div class="story-page-left">
+                    ${head}
+                    ${runHtml(segs, spread.left[0], spread.left[1])}
+                </div>
+                <div class="story-page-right story-page-right-image">
+                    <div class="story-art-top">${artFrame(spread.art, AFTERWORD.emoji)}</div>
+                    ${runHtml(segs, spread.right[0], spread.right[1])}
+                    ${foot}
+                </div>
+            </div>`;
+    }
+
     return `
-        <div class="page page-end">
-            ${artFrame('end.png', '🌄')}
-            <h2>솔로몬의 동굴를 다 읽었습니다</h2>
-            <a class="home-btn" href="../../../../../">학습 허브로 돌아가기</a>
+        <div class="page page-story page-after">
+            <div class="story-page-left">
+                ${head}
+                ${runHtml(segs, spread.left[0], spread.left[1])}
+            </div>
+            <div class="story-page-right story-page-right-text">
+                ${runHtml(segs, spread.right[0], spread.right[1])}
+                ${foot}
+            </div>
         </div>`;
 }
 
-const TWO_PAGE_KINDS = new Set(['chapter', 'toc', 'cover']);
+const TWO_PAGE_KINDS = new Set(['chapter', 'toc', 'cover', 'after']);
 
 let PAGES = [];
 let FOLIOS = [];
@@ -664,7 +811,7 @@ function buildPages() {
         ...TOC_GROUPS.map((_, i) => ({ kind: 'toc', part: i })),
         ...CHAPTERS.flatMap(paginateChapter),
         ...QUIZ_GROUPS.map((_, i) => ({ kind: 'quiz', part: i })),
-        { kind: 'end' }
+        ...paginateAfterword()
     ];
     PROBE.close();   // 쪽을 다 나눴으니 재는 데 쓰던 숨은 쪽은 치운다
 
@@ -685,7 +832,7 @@ function renderPage(page) {
         case 'toc': return tocPage(page.part);
         case 'chapter': return chapterSpreadPage(page);
         case 'quiz': return quizPage(page.part);
-        case 'end': return endPage();
+        case 'after': return afterSpreadPage(page);
         default: return '';
     }
 }

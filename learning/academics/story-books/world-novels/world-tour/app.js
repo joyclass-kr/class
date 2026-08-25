@@ -538,6 +538,87 @@ const CHAPTER_SEGS = CHAPTERS.map(ch => {
     return segs;
 });
 
+// 읽고 나서 — 책마다 내용이 다르다. 장과 같은 방식으로 재서 나눈다.
+const AFTERWORD = {
+    title: '읽고 나서',
+    emoji: '🧭',
+    art: [],
+    paras: [
+        `이 책의 제목은 『팔십 일간의 세계 일주』입니다. 날수가 제목에 들어 있습니다. 그러니 이 책은 처음부터 시계를 걸어 놓고 시작하는 이야기입니다.`,
+        `쓴 사람은 프랑스의 쥘 베른입니다. 법을 공부하다 그만두고 글을 쓴 사람인데, 지금은 공상 과학 소설의 아버지 가운데 하나로 불립니다.`,
+        `그는 달에 사람을 보내는 이야기도 쓰고, 바다 밑을 다니는 배 이야기도 쓰고, 땅속으로 들어가는 이야기도 썼습니다. 그런데 이 책에는 그런 것이 하나도 나오지 않습니다.`,
+        `이 책에 나오는 배와 기차와 썰매는 다 그 시절에 실제로 있던 것입니다. 그것이 이 책이 다른 점입니다. 없는 것을 지어내지 않고 있는 것만으로 이야기를 만들었습니다.`,
+        `베른은 자료를 아주 꼼꼼히 모으는 사람이었습니다. 신문과 여행기와 시간표를 오려 상자에 넣어 두고 썼습니다. 그렇게 모아 둔 쪽지가 이만 장이 넘었다고 합니다.`,
+        `책은 천팔백칠십삼 년에 나왔습니다. 그 전 해에 신문에 나누어 실렸습니다.`,
+        `그런데 그때 재미있는 일이 있었습니다. 신문에 실리는 동안 사람들이 정말로 그 여행이 되는지 안 되는지를 놓고 내기를 걸었습니다. 신문사에는 편지가 쏟아졌습니다.`,
+        `그리고 결말이 나오기 전에 영국과 미국의 여러 신문사가 그 뒷이야기를 사겠다고 나섰습니다. 이야기 하나가 그렇게 된 것입니다.`,
+        `어떤 미국 회사는 포그를 자기네 배와 기차로 돌려 달라며 큰돈을 주겠다고 했습니다. 베른은 거절했습니다. 지금으로 치면 광고를 넣어 달라는 부탁이었습니다.`,
+        `그러니 이 책이 얼마나 시의에 맞았는지 알 수 있습니다. 세상이 정말로 그 무렵 좁아지고 있었기 때문입니다.`,
+        `그 무렵 파리에서 지구를 도는 일정표가 여행사 광고로 나돌기도 했습니다. 베른이 그것을 보고 이 이야기를 떠올렸다는 말도 있습니다.`,
+        `이제 다시 볼 대목을 짚어 봅시다.`,
+        `첫째, 첫 장의 걸음 수를 다시 읽어 보십시오. 포그는 집에서 클럽까지 오백칠십다섯 걸음을 걷습니다. 비가 오나 눈이 오나 같습니다.`,
+        `그런 사람이 왜 세계를 도는 내기에 재산의 절반을 걸었을까요. 이 책은 그 까닭을 설명하지 않습니다. 다만 그 사람이 셈이 맞는다고 여겼다는 것만 적어 둡니다.`,
+        `그리고 포그는 그 셈이 맞는지를 여행 내내 확인합니다. 수첩에 날마다 적고, 벌었는지 잃었는지를 셉니다. 그 사람에게는 그것이 여행의 전부였습니다.`,
+        `둘째, 팔십 일이라는 셈이 어디서 나왔는지 세어 보십시오. 신문 기사에서 나왔습니다. 런던에서 수에즈까지 이레, 수에즈에서 봄베이까지 열사흘 하는 식으로 더한 것입니다.`,
+        `그런데 그 셈에 두 가지 잘못이 있었습니다. 하나는 인도의 철도가 아직 다 이어지지 않았다는 것입니다. 그것 때문에 팔십 킬로미터를 코끼리를 타고 갑니다.`,
+        `신문이 앞질러 적어 놓은 것이었습니다. 곧 이어질 예정이니 이어진 것으로 친 셈입니다. 지금도 그런 기사가 있습니다.`,
+        `다른 하나는 더 큰 것입니다. 그 셈에는 동쪽으로 도는 동안 하루가 생긴다는 것이 들어 있지 않았습니다. 그것이 마지막 장의 반전입니다.`,
+        `그리고 그 반전을 아무도 눈치채지 못하게 해 둔 것이 이 책의 솜씨입니다. 다시 읽어 보면 앞에 실마리가 몇 군데 놓여 있습니다.`,
+        `셋째, 아우다 부인을 구하는 대목을 다시 보십시오. 포그는 시계를 꺼내 보고 우리에게 열두 시간이 있다고 말합니다. 그러고는 구하자고 합니다.`,
+        `그것이 이 책에서 그 사람이 처음으로 시간표에 없는 일을 하는 자리입니다. 그리고 그 뒤로 그런 일이 두 번 더 있습니다.`,
+        `파스파르투를 찾을 때까지 여행을 끝내지 않겠다고 한 것이 두 번째이고, 눈벌판으로 병사들을 데리고 나간 것이 세 번째입니다.`,
+        `그때마다 그는 시계를 꺼내지 않습니다. 이 책은 그것을 한 줄도 설명하지 않고 그냥 그렇게 적어 둡니다.`,
+        `그러니 이 책은 시계 같은 사람이 시계를 내려놓는 이야기입니다. 그리고 그때마다 시간을 잃습니다. 마지막에 오 분이 모자란 것도 그 때문입니다.`,
+        `그런데 그 세 번이 없었으면 이 책은 그냥 시간표 이야기가 됩니다. 잃은 시간이 이 이야기를 만든 셈입니다.`,
+        `넷째, 마지막 장의 하루를 다시 읽어 보십시오. 포그는 날짜를 하루도 틀리지 않게 셌습니다. 그런데 런던의 달력과 하루가 어긋나 있었습니다.`,
+        `동쪽으로 돌면 해가 조금씩 일찍 뜹니다. 하루에 몇 분씩 앞당겨지고, 그것이 한 바퀴 쌓이면 꼭 하루가 됩니다.`,
+        `지금은 그것 때문에 태평양 한가운데에 날짜변경선이라는 줄을 그어 두었습니다. 그 줄을 넘으면 날짜를 하루 더하거나 뺍니다.`,
+        `그 줄이 정해진 것은 이 책이 나오고 열한 해 뒤입니다. 세계의 시간을 어떻게 맞출지 정하는 회의가 워싱턴에서 열렸습니다. 그 전까지는 나라마다 마을마다 시간이 조금씩 달랐습니다.`,
+        `그런데 이 책이 나온 때에는 그런 줄이 없었습니다. 그러니 이 책의 반전은 그 시절 사람들에게 지금보다 훨씬 놀라운 것이었습니다.`,
+        `인물도 다시 보아야 할 사람이 있습니다.`,
+        `픽스를 그냥 나쁜 사람으로 읽으면 놓치는 것이 있습니다. 그 사람은 자기 돈으로 뱃삯을 내며 지구를 한 바퀴 따라 돕니다. 그것도 자기가 옳다고 믿어서 그럽니다.`,
+        `그리고 그 믿음이 처음부터 끝까지 틀렸습니다. 이 책이 그 사람으로 보여 주는 것이 있습니다. 한번 그렇게 보이기 시작하면 무엇을 보아도 그 증거가 된다는 것입니다.`,
+        `포그가 돈을 잘 쓰는 것도 픽스에게는 훔친 돈이라는 증거였습니다. 실제로는 이기려고 쓴 것이었습니다.`,
+        `그리고 픽스는 리버풀에서 마침내 영장을 씁니다. 그 순간이 그 사람이 제일 확신에 차 있던 순간이었습니다. 그런데 그때가 바로 틀린 것이 드러나기 직전이었습니다.`,
+        `파스파르투도 다시 볼 만합니다. 그 사람은 조용한 자리를 찾아 그 집에 들어갔습니다. 그리고 들어간 그날 세계 일주를 떠납니다.`,
+        `그리고 이 책의 큰일들을 대개 그 사람이 저지르거나 그 사람이 풉니다. 사원에 신을 신고 들어간 것도, 장작더미에 누운 것도, 달리는 기차 밑으로 기어든 것도 그 사람입니다.`,
+        `그 사람의 이름 파스파르투는 프랑스말로 어디든 통한다는 뜻입니다. 어느 자물쇠에나 맞는 열쇠를 가리키는 말이기도 합니다. 베른이 이름을 그렇게 붙여 둔 것입니다.`,
+        `아우다 부인도 짚어 둘 만합니다. 그 사람은 구해진 뒤에 짐처럼 다뤄지지 않습니다. 배 위에서 바다를 보고, 태풍 속에서 갑판에 서 있고, 마지막에는 먼저 말을 꺼냅니다.`,
+        `그 시절 소설에서 여자가 먼저 결혼 이야기를 꺼내는 일은 드물었습니다. 그리고 그 말이 이 책의 매듭을 풉니다. 그 말이 없었으면 하루가 남은 것도 몰랐을 테니까요.`,
+        `그 시절 사정도 알아 두면 좋습니다. 이 이야기의 배경은 천팔백칠십이 년입니다. 그 무렵 세상이 갑자기 좁아졌습니다.`,
+        `수에즈 운하가 뚫린 것이 삼 년 전이었습니다. 그전에는 유럽에서 인도로 가려면 아프리카를 빙 돌아야 했습니다. 그 물길로 뱃길이 절반으로 줄었습니다.`,
+        `미국을 가로지르는 철길이 이어진 것은 사 년 전입니다. 그전에는 미국 동쪽에서 서쪽까지 몇 달이 걸렸습니다. 그것이 이레로 줄었습니다.`,
+        `인도를 가로지르는 철길도 그 무렵 놓이고 있었습니다. 다만 이 책에 나오는 대로 아직 다 이어지지 않은 데가 있었습니다.`,
+        `그리고 바다 밑에 전보줄이 깔렸습니다. 그래서 런던에서 인도로 소식을 보내는 데 며칠이면 되었습니다. 픽스가 영장을 기다리는 대목이 그것입니다.`,
+        `그러니 이 책은 그 무렵 세상이 얼마나 빨리 달라지고 있었는지를 그대로 적어 놓은 기록이기도 합니다. 팔십 일이라는 셈은 그해에야 나올 수 있는 셈이었습니다.`,
+        `몇 해만 앞섰어도 그 셈은 나오지 않았습니다. 그리고 몇 해만 뒤였으면 더 짧아졌을 것입니다. 그러니 이 이야기는 딱 그해의 이야기입니다.`,
+        `이 책이 나온 뒤 실제로 그 여행을 해 본 사람들이 있습니다. 십육 년 뒤에 미국의 넬리 블라이라는 기자가 혼자 떠나 일흔두 날 만에 돌아왔습니다.`,
+        `그 사람은 가방 하나만 들고 갔습니다. 이 책의 포그처럼요. 그리고 가는 길에 프랑스에 들러 쥘 베른을 만나기까지 했습니다.`,
+        `그 사람이 그렇게 빨리 돈 것은 이 책이 나온 뒤 십육 년 사이에 배와 기차가 더 빨라졌기 때문입니다. 세상은 그 뒤로도 계속 좁아졌습니다. 지금은 비행기로 하루면 지구 반대편에 갑니다.`,
+        `이 책이 붙들고 있는 것은 두 가지입니다.`,
+        `하나는 세계를 도는 것과 세계를 보는 것이 다르다는 것입니다. 포그는 지구를 한 바퀴 돌면서 창밖을 거의 보지 않습니다. 그에게 여행은 셈이었습니다.`,
+        `그런데 이 책은 그 사람을 나무라지 않습니다. 대신 그 셈이 어긋나는 자리마다 사람을 하나씩 붙여 놓습니다. 아우다 부인, 파스파르투, 그리고 마지막에는 픽스까지요.`,
+        `다른 하나는 무엇을 얻었느냐는 것입니다. 포그는 이만 파운드를 걸어 이만 파운드를 땄습니다. 그런데 쓴 돈이 그보다 많습니다. 셈으로는 밑진 여행입니다.`,
+        `이 책의 마지막 문장이 그것을 짚습니다. 지구를 한 바퀴 돌아 얻은 것이 무엇이었는지를요.`,
+        `세계를 한 바퀴 도는 데 든 것과 얻은 것을 나란히 적어 보면 셈이 맞지 않습니다. 그런데 이 책은 그 셈이 맞지 않는 것을 아무렇지 않게 적습니다.`,
+        `언젠가 이 책을 다시 읽게 되거든, 이번에는 포그가 시계를 꺼내는 자리를 세어 보십시오. 그 사람이 언제 시계를 보고 언제 보지 않는지가 이 책의 속이야기입니다.`,
+        `마지막으로 생각해 볼 것을 남겨 둡니다. 답은 적어 두지 않겠습니다.`,
+        `포그가 파스파르투를 구하러 간 것은 잘한 일이었을까요? 그 열두 시간이 없었으면 그는 넉넉히 이겼을 것입니다.`,
+        `픽스가 마지막까지 포그를 쫓은 것을 우리는 어떻게 보아야 할까요? 그 사람은 자기 일을 한 것입니다. 그런데 그 일이 틀린 것이었습니다.`,
+        `그리고 하루를 벌지 못했다면 이 이야기는 어떻게 끝났을까요. 그때 포그에게는 아우다 부인이 남아 있었습니다. 이 물음은 어른이 되어 다시 읽어도 답하기가 쉽지 않습니다.`
+    ]
+};
+
+const AFTER_SEGS = (() => {
+    const segs = [];
+    AFTERWORD.paras.forEach((html, paraIdx) => {
+        splitSegments(html).forEach((piece, k) => {
+            segs.push({ paraIdx, html: piece, start: k === 0 });
+        });
+    });
+    return segs;
+})();
+
 // 조각 묶음을 문단 단위로 다시 묶어 화면에 그릴 모양으로 만든다.
 // 앞 쪽에서 이어진 문단은 첫 줄을 들여쓰지 않는다.
 function runHtml(segs, a, b) {
@@ -819,16 +900,100 @@ function quizPage(part) {
         </div>`;
 }
 
-function endPage() {
+/* 읽고 나서 — 장과 같은 방식으로 쪽을 나눈다. 그림은 오른쪽 위에 얹힌다. */
+const AFTER_FOOT = `<p class="after-home"><a class="home-btn" href="../../../../../">학습 허브로 돌아가기</a></p>`;
+
+function paginateAfterword() {
+    const segs = AFTER_SEGS;
+    const arts = AFTERWORD.art || [];
+    const { usable, headHeight, artHeight } = PROBE;
+    const headHtml = `<h2>${AFTERWORD.title}</h2>`;
+    const totalH = PROBE.measure(runHtml(segs, 0, segs.length));
+
+    const underArt = Math.max(60, usable - artHeight);
+
+    // 맨 끝에는 학습 허브로 가는 단추가 붙는다. 그 높이를 미리 빼 두지 않으면
+    // 마지막 쪽만 넘친다.
+    const footH = PROBE.measure(AFTER_FOOT);
+
+    const capsOf = slots => {
+        const caps = [];
+        slots.forEach(kind => { caps.push(usable); caps.push(kind === 'img' ? underArt : usable); });
+        caps[caps.length - 1] = Math.max(60, caps[caps.length - 1] - footH);
+        return caps;
+    };
+
+    const minSpreads = Math.max(arts.length, 1);
+    const maxSpreads = Math.max(minSpreads, Math.floor(segs.length / 2));
+    let spreadCount = minSpreads;
+    while (spreadCount < maxSpreads) {
+        const caps = capsOf(slotPlan(arts.length, spreadCount - arts.length));
+        if (caps.reduce((a, b) => a + b, 0) >= totalH + headHeight) break;
+        spreadCount++;
+    }
+
+    let slots = slotPlan(arts.length, Math.max(0, spreadCount - arts.length));
+    let caps = capsOf(slots);
+    let ranges = fillPages(segs, caps, headHtml);
+    for (let guard = 0; guard < 8; guard++) {
+        const over = ranges.some(([a, b], n) =>
+            PROBE.measure((n === 0 ? headHtml : '') + runHtml(segs, a, b)) > caps[n] + 1);
+        if (!over || spreadCount >= maxSpreads) break;
+        spreadCount++;
+        slots = slotPlan(arts.length, Math.max(0, spreadCount - arts.length));
+        caps = capsOf(slots);
+        ranges = fillPages(segs, caps, headHtml);
+    }
+
+    const spreads = [];
+    let pageIdx = 0;
+    let artIdx = 0;
+    slots.forEach((kind, s) => {
+        const left = ranges[pageIdx++];
+        const right = ranges[pageIdx++];
+        spreads.push({
+            kind: 'after', first: s === 0, last: s === slots.length - 1,
+            art: kind === 'img' ? arts[artIdx++] : null, left, right
+        });
+    });
+    return spreads;
+}
+
+function afterSpreadPage(spread) {
+    const segs = AFTER_SEGS;
+    const head = spread.first ? `<h2>${AFTERWORD.title}</h2>` : '';
+    // 학습 허브로 돌아가는 길은 맨 끝에 한 번만 둔다.
+    const foot = spread.last ? AFTER_FOOT : '';
+
+    if (spread.art) {
+        return `
+            <div class="page page-story page-after">
+                <div class="story-page-left">
+                    ${head}
+                    ${runHtml(segs, spread.left[0], spread.left[1])}
+                </div>
+                <div class="story-page-right story-page-right-image">
+                    <div class="story-art-top">${artFrame(spread.art, AFTERWORD.emoji)}</div>
+                    ${runHtml(segs, spread.right[0], spread.right[1])}
+                    ${foot}
+                </div>
+            </div>`;
+    }
+
     return `
-        <div class="page page-end">
-            ${artFrame('end.png', '🧳')}
-            <h2>80일간의 세계 일주를 다 읽었습니다</h2>
-            <a class="home-btn" href="../../../../../">학습 허브로 돌아가기</a>
+        <div class="page page-story page-after">
+            <div class="story-page-left">
+                ${head}
+                ${runHtml(segs, spread.left[0], spread.left[1])}
+            </div>
+            <div class="story-page-right story-page-right-text">
+                ${runHtml(segs, spread.right[0], spread.right[1])}
+                ${foot}
+            </div>
         </div>`;
 }
 
-const TWO_PAGE_KINDS = new Set(['chapter', 'toc', 'cover']);
+const TWO_PAGE_KINDS = new Set(['chapter', 'toc', 'cover', 'after']);
 
 let PAGES = [];
 let FOLIOS = [];
@@ -840,7 +1005,7 @@ function buildPages() {
         ...TOC_GROUPS.map((_, i) => ({ kind: 'toc', part: i })),
         ...CHAPTERS.flatMap(paginateChapter),
         ...QUIZ_GROUPS.map((_, i) => ({ kind: 'quiz', part: i })),
-        { kind: 'end' }
+        ...paginateAfterword()
     ];
     PROBE.close();   // 쪽을 다 나눴으니 재는 데 쓰던 숨은 쪽은 치운다
 
@@ -861,7 +1026,7 @@ function renderPage(page) {
         case 'toc': return tocPage(page.part);
         case 'chapter': return chapterSpreadPage(page);
         case 'quiz': return quizPage(page.part);
-        case 'end': return endPage();
+        case 'after': return afterSpreadPage(page);
         default: return '';
     }
 }
