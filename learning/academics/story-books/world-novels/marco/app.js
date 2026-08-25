@@ -418,6 +418,70 @@ const CHAPTER_SEGS = CHAPTERS.map(ch => {
     return segs;
 });
 
+// 읽고 나서 — 책마다 내용이 다르다. 장과 같은 방식으로 재서 나눈다.
+const AFTERWORD = {
+    title: '읽고 나서',
+    emoji: '🚢',
+    art: [],
+    paras: [
+        `이 이야기의 원래 제목은 『아펜니노 산맥에서 안데스 산맥까지』입니다. 이탈리아의 산에서 남아메리카의 산까지라는 뜻입니다.`,
+        `우리나라에서는 흔히 『엄마 찾아 삼만리』로 알려져 있습니다. 만화영화 제목에서 온 이름입니다.`,
+        `그런데 이것은 한 권짜리 책이 아닙니다. 『쿠오레』라는 책 안에 들어 있는 짧은 이야기 하나입니다.`,
+        `『쿠오레』는 이탈리아말로 마음이라는 뜻입니다. 어느 초등학교 삼학년 아이가 한 해 동안 쓴 일기 형식으로 되어 있습니다.`,
+        `그 일기 사이사이에 선생님이 달마다 하나씩 들려주는 이야기가 들어 있습니다. 그것을 이달의 이야기라고 부릅니다. 마르코 이야기는 그 가운데 오월 이야기입니다.`,
+        `쓴 사람은 이탈리아의 에드몬도 데 아미치스입니다. 군인이었다가 글을 쓰는 사람이 되었습니다. 그리고 여행기를 많이 썼습니다.`,
+        `『쿠오레』는 천팔백팔십육 년에 나왔습니다. 그리고 이탈리아에서 오래도록 학교에서 읽혔습니다. 우리나라에도 일찍 들어와 여러 번 나왔습니다.`,
+        `이제 다시 볼 대목을 짚어 봅시다.`,
+        `첫째, 어머니가 왜 떠났는지를 다시 보십시오. 집이 빚을 졌기 때문입니다. 그래서 어머니가 아르헨티나로 일하러 갑니다.`,
+        `그러니 이 이야기는 아이가 어머니를 찾아가는 이야기이기 전에, 어머니가 아이를 두고 떠나야 했던 이야기입니다. 그 순서를 놓치면 안 됩니다.`,
+        `둘째, 마르코가 배를 타고 가는 스물일곱 날을 세어 보십시오. 이탈리아 제노바에서 아르헨티나 부에노스아이레스까지입니다.`,
+        `그 시절 그 뱃길은 한 달 가까이 걸렸습니다. 그리고 마르코가 탄 자리는 배의 제일 아래층입니다. 삯이 제일 싼 자리였습니다.`,
+        `셋째, 마르코가 그 나라에서 걸은 길을 다시 보십시오. 부에노스아이레스에 닿았는데 어머니가 없습니다. 다른 도시로 옮겨 갔다는 것입니다.`,
+        `그래서 코르도바로 가고, 거기서 또 투쿠만으로 가고, 다시 살타로 갑니다. 갈수록 북쪽이고 갈수록 사람이 없는 곳입니다.`,
+        `그 길이 실제로 얼마나 되는지 헤아려 보십시오. 부에노스아이레스에서 투쿠만까지만 해도 천 킬로미터가 넘습니다. 열세 살짜리가 걸어서 갑니다.`,
+        `넷째, 그 길에서 마르코가 만나는 사람들을 세어 보십시오. 짐을 나눠 지어 주는 사람, 소달구지에 태워 주는 사람, 밥을 먹여 주는 사람이 나옵니다.`,
+        `다들 가난한 사람들입니다. 마르코를 돕는 사람 가운데 부자는 없습니다. 이 이야기는 그것을 따로 말하지 않고 그냥 그렇게 적어 둡니다.`,
+        `다섯째, 마지막 장을 다시 읽어 보십시오. 어머니는 병들어 누워 있었고 수술을 받으려 하지 않았습니다. 살 마음이 없었기 때문입니다.`,
+        `그런데 마르코가 나타나자 수술을 받겠다고 합니다. 그러니 마르코가 그 먼 길을 걸어간 것이 헛일이 아니었습니다. 정확히 그때 닿아야 했던 것입니다.`,
+        `인물도 짚어 둘 만합니다.`,
+        `이 이야기의 어머니는 나오는 대목이 아주 적습니다. 편지 몇 장과 마지막 장뿐입니다. 그런데 그 사람이 이 이야기 전체를 끌고 갑니다.`,
+        `그리고 그 사람이 왜 편지를 끊었는지도 생각해 볼 만합니다. 병이 들어 쓸 수 없었던 것입니다. 그러니 침묵이 이 이야기를 시작하게 한 셈입니다.`,
+        `마르코를 그냥 착한 아이로 읽으면 놓치는 것이 있습니다. 그 아이는 여러 번 그만두고 싶어 합니다. 울고, 주저앉고, 돌아갈까 생각합니다.`,
+        `그것을 이 이야기는 감추지 않습니다. 그리고 그때마다 다시 일어서는 것을 적습니다. 한 번도 흔들리지 않는 아이보다 그 편이 오래 남습니다.`,
+        `그 시절 사정도 알아 두면 좋습니다. 이 이야기의 배경은 백사십 년쯤 전입니다. 그때 이탈리아는 아주 가난했습니다.`,
+        `그래서 사람들이 배를 타고 떠났습니다. 그 시절부터 오십 년 사이에 이탈리아를 떠난 사람이 천사백만 명이 넘습니다.`,
+        `미국으로도 가고, 아르헨티나와 브라질로도 갔습니다. 지금 아르헨티나 사람들 가운데 이탈리아에서 온 조상을 둔 사람이 아주 많은 것도 그 때문입니다.`,
+        `그리고 떠난 사람들이 다 성공한 것도 아닙니다. 이 이야기의 어머니처럼 남의 집에서 일하다 병드는 사람도 많았습니다. 소식이 끊기는 일도 흔했습니다.`,
+        `그러니 이 이야기는 그 시절 이탈리아 집집마다 있던 이야기입니다. 데 아미치스는 그것을 알고 이 이야기를 넣은 것입니다.`,
+        `『쿠오레』라는 책 자체도 그런 뜻으로 쓰였습니다. 그때 이탈리아는 여러 나라로 갈려 있다가 막 하나로 합쳐진 참이었습니다.`,
+        `그러니 이탈리아 사람이라는 것이 무엇인지를 아이들에게 가르쳐야 했습니다. 그래서 이 책에는 여러 고장에서 온 아이들이 한 교실에 앉아 있습니다.`,
+        `그리고 그 이달의 이야기들도 저마다 다른 고장의 아이들 이야기입니다. 롬바르디아, 사르데냐, 피렌체, 그리고 아펜니노에서 안데스까지입니다.`,
+        `이 이야기가 붙들고 있는 것은 두 가지입니다.`,
+        `하나는 사람이 어디까지 갈 수 있느냐는 것입니다. 마르코는 지구 반대편까지 갑니다. 열세 살이고 돈도 없고 말도 통하지 않습니다.`,
+        `그런데 이 이야기는 그것을 대단한 일로만 그리지 않습니다. 그 길에서 그 아이가 얼마나 지치고 무서웠는지를 함께 적습니다.`,
+        `다른 하나는 가난이 가족을 어떻게 하느냐는 것입니다. 이 이야기의 모든 일은 빚 하나에서 시작됩니다. 그 빚 때문에 어머니가 떠나고 아이가 그 뒤를 쫓습니다.`,
+        `그러니 이 이야기가 감동적일수록 그 뒤의 것을 함께 보아야 합니다. 마르코가 그렇게 걷지 않아도 되는 세상이 나은 세상입니다.`,
+        `이 이야기는 나중에 일본에서 만화영화로 만들어져 아주 널리 알려졌습니다. 우리나라에서도 그것으로 본 사람이 많습니다.`,
+        `만화영화는 짧은 이야기 하나를 오십 편이 넘는 긴 이야기로 늘렸습니다. 그래서 원작에 없는 사람과 일이 많이 들어갔습니다.`,
+        `그러니 원작을 읽어 보면 뜻밖에 짧다고 느낄 것입니다. 몇십 쪽밖에 되지 않습니다. 그 짧은 이야기가 그렇게 오래 남은 것입니다.`,
+        `언젠가 이 이야기를 다시 읽게 되거든, 이번에는 마르코를 도운 사람들만 세어 보십시오. 그 사람들이 어떤 사람들이었는지를 보면 이 이야기가 달리 보입니다.`,
+        `마지막으로 생각해 볼 것을 남겨 둡니다. 답은 적어 두지 않겠습니다.`,
+        `어머니가 떠난 것을 우리는 어떻게 보아야 할까요? 그 사람은 가족을 위해 떠났습니다. 그런데 그 때문에 가족이 흩어졌습니다.`,
+        `마르코가 그 길을 떠나겠다고 했을 때 아버지가 막았어야 했을까요? 열세 살짜리가 지구 반대편으로 가겠다는 것이었습니다.`,
+        `그리고 마르코가 조금만 늦었다면 어떻게 되었을까요. 이 이야기는 그것을 적어 두지 않았습니다. 이 물음은 어른이 되어 다시 읽어도 답하기가 쉽지 않습니다.`
+    ]
+};
+
+const AFTER_SEGS = (() => {
+    const segs = [];
+    AFTERWORD.paras.forEach((html, paraIdx) => {
+        splitSegments(html).forEach((piece, k) => {
+            segs.push({ paraIdx, html: piece, start: k === 0 });
+        });
+    });
+    return segs;
+})();
+
 // 조각 묶음을 문단 단위로 다시 묶어 화면에 그릴 모양으로 만든다.
 // 앞 쪽에서 이어진 문단은 첫 줄을 들여쓰지 않는다.
 function runHtml(segs, a, b) {
@@ -699,16 +763,100 @@ function quizPage(part) {
         </div>`;
 }
 
-function endPage() {
+/* 읽고 나서 — 장과 같은 방식으로 쪽을 나눈다. 그림은 오른쪽 위에 얹힌다. */
+const AFTER_FOOT = `<p class="after-home"><a class="home-btn" href="../../../../../">학습 허브로 돌아가기</a></p>`;
+
+function paginateAfterword() {
+    const segs = AFTER_SEGS;
+    const arts = AFTERWORD.art || [];
+    const { usable, headHeight, artHeight } = PROBE;
+    const headHtml = `<h2>${AFTERWORD.title}</h2>`;
+    const totalH = PROBE.measure(runHtml(segs, 0, segs.length));
+
+    const underArt = Math.max(60, usable - artHeight);
+
+    // 맨 끝에는 학습 허브로 가는 단추가 붙는다. 그 높이를 미리 빼 두지 않으면
+    // 마지막 쪽만 넘친다.
+    const footH = PROBE.measure(AFTER_FOOT);
+
+    const capsOf = slots => {
+        const caps = [];
+        slots.forEach(kind => { caps.push(usable); caps.push(kind === 'img' ? underArt : usable); });
+        caps[caps.length - 1] = Math.max(60, caps[caps.length - 1] - footH);
+        return caps;
+    };
+
+    const minSpreads = Math.max(arts.length, 1);
+    const maxSpreads = Math.max(minSpreads, Math.floor(segs.length / 2));
+    let spreadCount = minSpreads;
+    while (spreadCount < maxSpreads) {
+        const caps = capsOf(slotPlan(arts.length, spreadCount - arts.length));
+        if (caps.reduce((a, b) => a + b, 0) >= totalH + headHeight) break;
+        spreadCount++;
+    }
+
+    let slots = slotPlan(arts.length, Math.max(0, spreadCount - arts.length));
+    let caps = capsOf(slots);
+    let ranges = fillPages(segs, caps, headHtml);
+    for (let guard = 0; guard < 8; guard++) {
+        const over = ranges.some(([a, b], n) =>
+            PROBE.measure((n === 0 ? headHtml : '') + runHtml(segs, a, b)) > caps[n] + 1);
+        if (!over || spreadCount >= maxSpreads) break;
+        spreadCount++;
+        slots = slotPlan(arts.length, Math.max(0, spreadCount - arts.length));
+        caps = capsOf(slots);
+        ranges = fillPages(segs, caps, headHtml);
+    }
+
+    const spreads = [];
+    let pageIdx = 0;
+    let artIdx = 0;
+    slots.forEach((kind, s) => {
+        const left = ranges[pageIdx++];
+        const right = ranges[pageIdx++];
+        spreads.push({
+            kind: 'after', first: s === 0, last: s === slots.length - 1,
+            art: kind === 'img' ? arts[artIdx++] : null, left, right
+        });
+    });
+    return spreads;
+}
+
+function afterSpreadPage(spread) {
+    const segs = AFTER_SEGS;
+    const head = spread.first ? `<h2>${AFTERWORD.title}</h2>` : '';
+    // 학습 허브로 돌아가는 길은 맨 끝에 한 번만 둔다.
+    const foot = spread.last ? AFTER_FOOT : '';
+
+    if (spread.art) {
+        return `
+            <div class="page page-story page-after">
+                <div class="story-page-left">
+                    ${head}
+                    ${runHtml(segs, spread.left[0], spread.left[1])}
+                </div>
+                <div class="story-page-right story-page-right-image">
+                    <div class="story-art-top">${artFrame(spread.art, AFTERWORD.emoji)}</div>
+                    ${runHtml(segs, spread.right[0], spread.right[1])}
+                    ${foot}
+                </div>
+            </div>`;
+    }
+
     return `
-        <div class="page page-end">
-            ${artFrame('end.png', '🏡')}
-            <h2>엄마 찾아 삼만리를 다 읽었습니다</h2>
-            <a class="home-btn" href="../../../../../">학습 허브로 돌아가기</a>
+        <div class="page page-story page-after">
+            <div class="story-page-left">
+                ${head}
+                ${runHtml(segs, spread.left[0], spread.left[1])}
+            </div>
+            <div class="story-page-right story-page-right-text">
+                ${runHtml(segs, spread.right[0], spread.right[1])}
+                ${foot}
+            </div>
         </div>`;
 }
 
-const TWO_PAGE_KINDS = new Set(['chapter', 'toc', 'cover']);
+const TWO_PAGE_KINDS = new Set(['chapter', 'toc', 'cover', 'after']);
 
 let PAGES = [];
 let FOLIOS = [];
@@ -720,7 +868,7 @@ function buildPages() {
         ...TOC_GROUPS.map((_, i) => ({ kind: 'toc', part: i })),
         ...CHAPTERS.flatMap(paginateChapter),
         ...QUIZ_GROUPS.map((_, i) => ({ kind: 'quiz', part: i })),
-        { kind: 'end' }
+        ...paginateAfterword()
     ];
     PROBE.close();   // 쪽을 다 나눴으니 재는 데 쓰던 숨은 쪽은 치운다
 
@@ -741,7 +889,7 @@ function renderPage(page) {
         case 'toc': return tocPage(page.part);
         case 'chapter': return chapterSpreadPage(page);
         case 'quiz': return quizPage(page.part);
-        case 'end': return endPage();
+        case 'after': return afterSpreadPage(page);
         default: return '';
     }
 }
