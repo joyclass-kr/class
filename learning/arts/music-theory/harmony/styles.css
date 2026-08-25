@@ -167,3 +167,16 @@ button:focus-visible, a:focus-visible { outline: 3px solid #fff; outline-offset:
 .course-nav { padding-top: 4px; }
 
 .feedback:empty { display: none; }
+
+.course-shell { grid-template-columns: 1fr; width: min(980px,calc(100% - 32px)); }
+.course-nav { position: static; top: auto; padding: 0; border-radius: 14px; }
+.course-nav summary { min-height: 56px; display: grid; grid-template-columns: auto 1fr auto; align-items: center; gap: 14px; padding: 8px 16px; cursor: pointer; list-style: none; }
+.course-nav summary::-webkit-details-marker { display: none; }
+.course-nav summary span { color: var(--accent); font-size: 12px; font-weight: 900; }
+.course-nav summary strong { font-size: 15px; }
+.course-nav summary::after { content: "+"; color: var(--muted); font-size: 22px; }
+.course-nav[open] summary { border-bottom: 1px solid var(--line); }
+.course-nav[open] summary::after { content: "−"; }
+.course-nav .stage-list { grid-template-columns: repeat(2,minmax(0,1fr)); max-height: min(52vh,460px); padding: 10px; }
+.lesson-heading { display: none !important; }
+@media (max-width: 600px) { .course-shell { width: min(100% - 24px,760px); } .course-nav .stage-list { grid-template-columns: 1fr; } }
