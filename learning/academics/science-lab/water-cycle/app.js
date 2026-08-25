@@ -77,16 +77,25 @@ document.addEventListener('DOMContentLoaded', () => {
     /* 흐른 자취를 남겨 둡니다. 막대는 지금 이 순간만 보여 주지만, 물이
        어디로 옮겨 갔는지와 그러면서도 총량이 그대로인지는 시간을 따라
        그려야 보입니다. */
-    const HISTORY_EVERY = 0.5;          // 기록 간격(모의 날짜)
+    const HISTORY_EVERY = 0.5;          // 처음의 기록 간격(모의 날짜)
     const HISTORY_MAX = 400;
     let history = [{ d: 0, ...INITIAL }];
+    let historyEvery = HISTORY_EVERY;
+    /* 오래된 기록을 버리면 첫날치가 사라져 그래프 왼쪽이 빈 채로 남습니다.
+       버리는 대신 하나 걸러 하나씩 솎아 내고 기록 간격을 두 배로 늘립니다.
+       그러면 개수는 묶여 있으면서도 그래프는 언제나 0일부터 지금까지를
+       덮습니다. */
     const recordHistory = () => {
         const last = history[history.length - 1];
-        if (days - last.d < HISTORY_EVERY) return;
+        if (days - last.d < historyEvery) return;
         history.push({ d: days, ...R });
-        if (history.length > HISTORY_MAX) history.shift();
+        if (history.length > HISTORY_MAX) {
+            const end = history.length - 1;
+            history = history.filter((_, i) => i % 2 === 0 || i === end);
+            historyEvery *= 2;
+        }
     };
-    const resetHistory = () => { history = [{ d: 0, ...INITIAL }]; };
+    const resetHistory = () => { history = [{ d: 0, ...INITIAL }]; historyEvery = HISTORY_EVERY; };
 
     function advanceSim(simDays) {
         const steps = Math.round(simDays / DT);
