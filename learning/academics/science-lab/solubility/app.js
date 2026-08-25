@@ -1,5 +1,7 @@
 document.addEventListener('DOMContentLoaded', () => {
     const temperatureRange = document.getElementById('temperatureRange');
+    const graphGroup = document.getElementById('graphGroup');
+    const dataNote = document.getElementById('dataNote');
     const amountRange = document.getElementById('amountRange');
     const temperatureOutput = document.getElementById('temperatureOutput');
     const amountOutput = document.getElementById('amountOutput');
@@ -209,6 +211,71 @@ document.addEventListener('DOMContentLoaded', () => {
         amountMaxLabel.textContent = `${grams(upper)} g`;
         amountGuide.textContent = `${temperatureRange.value}℃에서 녹는 양의 근처만 조절합니다.`;
         solubilityBadge.textContent = `용해도 ${grams(maximum)} g`;
+        renderCurve();
+        renderData();
+    }
+
+    /* ------------------------------------------- 용해도 곡선과 측정값 표 */
+    /* 곡선은 위의 points 표를 그대로 씁니다. 0℃에서 35.7 g, 100℃에서 39.8 g —
+       온도를 100도나 올려도 4.1 g밖에 더 녹지 않는다는 것이 이 실험에서
+       보여 주려는 사실입니다. */
+    const G = { x0: 52, x1: 424, y0: 140, y1: 26 };
+    const S_LO = 34, S_HI = 41;
+    const gx = t => G.x0 + (t / 100) * (G.x1 - G.x0);
+    const gy = g => G.y0 - ((g - S_LO) / (S_HI - S_LO)) * (G.y0 - G.y1);
+
+    function renderCurve() {
+        const temperature = Number(temperatureRange.value);
+        const amount = Number(amountRange.value);
+        const maximum = solubilityAt(temperature);
+        let out = '';
+        for (let g = S_LO; g <= S_HI; g += 1) {
+            const y = gy(g);
+            out += `<line class="grid-line" x1="${G.x0}" y1="${y.toFixed(1)}" x2="${G.x1}" y2="${y.toFixed(1)}"/>`;
+            out += `<text class="axis-text" x="${G.x0 - 6}" y="${(y + 3).toFixed(1)}" text-anchor="end">${g}</text>`;
+        }
+        for (const t of [0, 20, 40, 60, 80, 100]) {
+            out += `<text class="axis-text" x="${gx(t).toFixed(1)}" y="${G.y0 + 15}" text-anchor="middle">${t}</text>`;
+        }
+        out += `<line class="axis" x1="${G.x0}" y1="${G.y0}" x2="${G.x1}" y2="${G.y0}"/>`;
+        out += `<line class="axis" x1="${G.x0}" y1="${G.y0}" x2="${G.x0}" y2="${G.y1}"/>`;
+        out += `<text class="axis-title" x="${(G.x0 + G.x1) / 2}" y="${G.y0 + 32}" text-anchor="middle">물의 온도 (℃)</text>`;
+        out += `<text class="axis-title" x="${G.x0}" y="${G.y1 - 8}">물 100 g에 녹는 소금 (g)</text>`;
+
+        out += `<path class="sol-curve" d="M${points.map(([t, g]) => `${gx(t).toFixed(1)},${gy(g).toFixed(1)}`).join('L')}"/>`;
+        points.forEach(([t, g]) => {
+            out += `<circle class="sol-dot" cx="${gx(t).toFixed(1)}" cy="${gy(g).toFixed(1)}" r="3"/>`;
+        });
+
+        // how much was put in, so the gap to the curve is the leftover
+        const putY = gy(Math.min(S_HI, Math.max(S_LO, amount)));
+        out += `<line class="put-line" x1="${G.x0}" y1="${putY.toFixed(1)}" x2="${G.x1}" y2="${putY.toFixed(1)}"/>`;
+        out += `<text class="put-text" x="${G.x1 - 4}" y="${(putY - 5).toFixed(1)}" text-anchor="end">넣은 소금 ${grams(amount)} g</text>`;
+
+        const px = gx(temperature), py = gy(maximum);
+        out += `<line class="op-guide" x1="${px.toFixed(1)}" y1="${G.y0}" x2="${px.toFixed(1)}" y2="${py.toFixed(1)}"/>`;
+        out += `<circle class="op-point" cx="${px.toFixed(1)}" cy="${py.toFixed(1)}" r="5"/>`;
+        const flip = px > (G.x0 + G.x1) / 2;
+        out += `<text class="op-text" x="${(px + (flip ? -9 : 9)).toFixed(1)}" y="${Math.min(G.y0 - 4, py + 16).toFixed(1)}"` +
+               `${flip ? ' text-anchor="end"' : ''}>${temperature}℃에서 ${grams(maximum)} g까지</text>`;
+        graphGroup.innerHTML = out;
+    }
+
+    function renderData() {
+        const temperature = Number(temperatureRange.value);
+        const amount = Number(amountRange.value);
+        const maximum = solubilityAt(temperature);
+        const dissolved = Math.min(amount, maximum);
+        const remaining = Math.max(0, amount - maximum);
+        const cold = points[0][1], hot = points[points.length - 1][1];
+        dataNote.innerHTML =
+            `<div class="data-row"><span class="data-name">물의 양</span><span class="data-val">100 g</span></div>` +
+            `<div class="data-row"><span class="data-name">물의 온도</span><span class="data-val">${temperature}℃</span></div>` +
+            `<div class="data-row"><span class="data-name">이 온도에서 녹는 양</span><span class="data-val">${grams(maximum)} g</span></div>` +
+            `<div class="data-row"><span class="data-name">넣은 소금</span><span class="data-val">${grams(amount)} g</span></div>` +
+            `<div class="data-row${remaining < .05 ? ' match' : ''}"><span class="data-name">녹은 소금</span><span class="data-val">${grams(dissolved)} g</span></div>` +
+            `<div class="data-row"><span class="data-name">바닥에 남는 소금</span><span class="data-val">${remaining < .05 ? '없음' : `${grams(amount)} − ${grams(maximum)} = ${grams(remaining)} g`}</span></div>` +
+            `<div class="data-row"><span class="data-name">0℃와 100℃ 차이</span><span class="data-val">${grams(cold)} g → ${grams(hot)} g, ${grams(hot - cold)} g만 더 녹습니다</span></div>`;
     }
 
     function clearResult() {
