@@ -287,10 +287,13 @@
             }
             key.addEventListener("pointerdown", function (event) {
                 event.preventDefault();
+                if (key.setPointerCapture) key.setPointerCapture(event.pointerId);
                 piano.playMidi(midi, { duration: .8 }).catch(function () { showToast("소리를 재생할 수 없어요."); });
                 elements.pianoReadout.textContent = pitchName(midi) + " 음을 연주했어요.";
                 key.classList.add("active");
-                window.setTimeout(function () { key.classList.remove("active"); }, 420);
+            });
+            ["pointerup", "pointercancel", "lostpointercapture"].forEach(function (eventName) {
+                key.addEventListener(eventName, function () { key.classList.remove("active"); });
             });
             elements.piano.appendChild(key);
         }

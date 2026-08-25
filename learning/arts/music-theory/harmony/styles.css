@@ -157,3 +157,8 @@ button:focus-visible, a:focus-visible { outline: 3px solid #fff; outline-offset:
 .piano-heading { display: none !important; }
 .piano { pointer-events: auto; touch-action: none; }
 .piano-key { cursor: pointer; }
+
+.piano-key { transition: transform 70ms ease, background 90ms ease, box-shadow 70ms ease; transform-origin: top center; }
+.piano-key.white.active { transform: translateY(4px); background: linear-gradient(105deg,#ffe7a3,#d6a742 58%,#9b6a18); box-shadow: inset 2px 2px 5px rgba(86,52,0,.28), inset -1px 0 0 rgba(255,255,255,.25), 0 1px 1px rgba(0,0,0,.48); }
+.piano-key.black.active { transform: translate(-50%,3px); background: linear-gradient(105deg,#d49a36,#70440d 58%,#211404); box-shadow: inset 2px 2px 4px rgba(0,0,0,.5), 0 1px 1px rgba(0,0,0,.55); }
+.piano-key.active span { color: #271701; text-shadow: 0 1px 0 rgba(255,255,255,.35); }
