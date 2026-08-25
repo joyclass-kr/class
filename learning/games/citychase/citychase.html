@@ -7,7 +7,7 @@
   <meta name="description" content="경찰팀과 도둑팀이 각자의 기기로 접속해 보석을 둘러싼 추격전을 벌이는 2~6인 실시간 보드게임">
   <title>경찰과 도둑 (Cops and Robbers) · 실시간 추격 보드게임</title>
   <link rel="stylesheet" href="../../../assets/network/multiplayer-lobby.css">
-  <link rel="stylesheet" href="citychase.css?v=20260824m">
+  <link rel="stylesheet" href="citychase.css?v=20260825a">
   <script src="../../../assets/sound/music-control.js?v=20260825-compact-vertical-1" defer></script>
   <script src="../../../assets/network/game-network.js?v=20260821"></script>
   <script src="../../../assets/network/multiplayer-lobby.js?v=20260821"></script>
@@ -24,18 +24,18 @@
       </div>
     </section>
 
-    <section id="lobbyScreen" class="lobbyShell hidden">
+    <section id="lobbyScreen" class="lobbyShell hidden" data-multiplayer-lobby>
       <header class="lobbyPanel lobbyTop">
         <div class="lobbyBrand">
           <div class="brandMark" aria-hidden="true">♟</div>
           <div>
             <h1 class="lobbyTitle">경찰과 도둑</h1>
-            <p class="lobbyLead">(Cops and Robbers) · 2–6명 · 각자의 기기로 참가</p>
+            <p class="lobbyLead">(Cops and Robbers) · 2–6명</p>
           </div>
         </div>
         <p class="lobbyIdentity"><strong id="savedName">-</strong>님</p>
-        <div class="mp-lobby-tabs">
-          <button id="hostTab" class="primary" type="button">방 만들기</button>
+        <div class="mp-lobby-tabs" role="tablist" aria-label="방 참여 방법">
+          <button id="hostTab" class="primary" type="button" role="tab">방 만들기</button>
           <button id="joinTab" class="secondary" type="button" aria-label="방 번호 입력 방식 선택" role="tab">방번호 입력</button>
         </div>
       </header>
