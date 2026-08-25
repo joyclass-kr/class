@@ -573,6 +573,8 @@ body {
     .page-cover { grid-template-columns: 1fr; grid-template-rows: 30% 70%; }
     .page-cover .story-page-left { border-right: none; border-bottom: 1px solid rgba(92, 58, 34, 0.22); }
     .page-cover .story-page-right { padding: clamp(12px, 2.6cqh, 27px) clamp(14px, 3.4cqh, 36px); }
+    /* 표지 소개글이 네 문단이라 세로 화면에서 조금 넘친다. 줄 사이만 좁힌다. */
+    .page-cover .story-page-right p { line-height: 1.55; margin-bottom: 8px; }
     .book { width: min(900px, 96vw, calc((100dvh - 46px) * 3 / 4)); aspect-ratio: 3 / 4; }
     .nav-prev { left: 6px; }
     .nav-next { right: 6px; }
