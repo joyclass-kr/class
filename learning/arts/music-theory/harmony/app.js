@@ -43,6 +43,108 @@
         { id: 10, title: "7화음과 코드 진행", short: "7화음 · 진행", summary: "주요 7화음과 기본 진행을 연결해 들어요.", concept: "화음은 기능의 순서로 문장을 만들어요", body: "3화음 위에 3도를 하나 더 쌓으면 7화음이 됩니다. 여러 화음의 기능이 이어지면 익숙한 코드 진행이 만들어집니다.", points: ["V7은 I로 강하게 해결", "I–IV–V–I는 기본 기능 진행", "ii–V–I는 준비·긴장·해결"], make: makeProgressionQuestion }
     ];
 
+    const CHAPTERS = {
+        1: {
+            paragraphs: [
+                "피아노의 한 옥타브에는 서로 다른 음이 12개 있습니다. 흰건반 7개와 검은건반 5개를 모두 지나면 같은 이름의 음이 한 옥타브 높은 자리에서 다시 시작됩니다.",
+                "C·D·E·F·G·A·B는 높이가 달라져도 바뀌지 않는 음이름입니다. 도·레·미·파·솔·라·시는 조 안에서 맡은 순서를 나타내는 계이름이므로 둘을 구별해야 합니다.",
+                "높은음자리표에서 가운데 도(C4)는 오선 아래의 덧줄에 놓입니다. 그다음 레는 덧줄과 첫째 줄 사이, 미는 첫째 줄에 놓이며 음이 한 칸씩 올라갈 때마다 선과 칸을 번갈아 사용합니다."
+            ],
+            notationTitle: "가운데 도에서 높은 도까지",
+            notationBody: "악보의 음이 한 자리씩 올라갈 때 건반도 오른쪽으로 이동합니다. 먼저 음이름을 눈으로 따라간 뒤 예시를 들어 보세요.",
+            notes: [60,62,64,65,67,69,71,72], labels: ["도 C","레 D","미 E","파 F","솔 G","라 A","시 B","도 C"]
+        },
+        2: {
+            paragraphs: [
+                "반음은 서양 음악에서 음높이를 재는 가장 작은 기본 거리입니다. 흰건반과 검은건반의 색과 관계없이 바로 옆 건반까지가 반음입니다.",
+                "온음은 반음 두 개를 합친 거리입니다. E와 F, B와 C 사이에는 검은건반이 없지만 두 음은 바로 이웃하므로 반음입니다.",
+                "샵(♯)은 원래 음을 반음 올리고, 플랫(♭)은 반음 내립니다. 같은 건반도 C♯과 D♭처럼 서로 다른 이름으로 적을 수 있습니다."
+            ],
+            notationTitle: "반음 두 개가 온음이 됩니다",
+            notationBody: "C–C♯은 반음, C♯–D도 반음이며 C–D 전체는 온음입니다.",
+            notes: [60,61,62], labels: ["C","C♯","D"]
+        },
+        3: {
+            paragraphs: [
+                "음정은 두 음 사이의 거리입니다. 먼저 처음 음과 끝 음의 음이름을 모두 세어 몇 도인지 정하고, 그다음 실제 반음 수로 장·단·완전의 성질을 정합니다.",
+                "1·4·5·8도는 완전 계열이고 2·3·6·7도는 장·단 계열입니다. 예를 들어 C–E는 음이름을 C·D·E로 세므로 3도이고, 네 반음 거리이므로 장3도입니다.",
+                "같은 도수라도 반음 수가 달라지면 성질이 달라집니다. C–E♭은 세 음이름을 사용하지만 세 반음이므로 단3도입니다."
+            ],
+            notationTitle: "C를 기준으로 듣는 장3도와 완전5도",
+            notationBody: "C–E는 장3도, C–G는 완전5도입니다. 기준음을 기억한 뒤 두 거리를 비교해 보세요.",
+            notes: [60,64,60,67], labels: ["C","E","C","G"]
+        },
+        4: {
+            paragraphs: [
+                "장음계는 온–온–반–온–온–온–반의 간격으로 이루어집니다. 시작음이 바뀌어도 이 간격은 그대로 유지되어야 합니다.",
+                "C 장음계는 검은건반 없이 이 간격을 만족합니다. 다른 음에서 시작하면 샵이나 플랫을 사용해 같은 배열을 만듭니다.",
+                "조표는 매번 임시표를 쓰지 않도록 곡 전체에 적용되는 샵과 플랫을 높은음자리표 옆에 미리 적은 것입니다."
+            ],
+            notationTitle: "C 장음계의 여덟 음",
+            notationBody: "E–F와 B–C 사이가 반음이고 나머지는 온음입니다.",
+            notes: [60,62,64,65,67,69,71,72], labels: ["C","D","E","F","G","A","B","C"]
+        },
+        5: {
+            paragraphs: [
+                "자연단음계는 장음계의 6번째 음에서 시작한 것과 같은 음 배열을 가집니다. A 자연단음계는 흰건반만 사용합니다.",
+                "화성단음계는 자연단음계의 7음을 반음 올려 으뜸음으로 강하게 이끌리게 합니다. 이때 6음과 7음 사이에는 증2도의 독특한 간격이 생깁니다.",
+                "가락단음계는 상행할 때 6음과 7음을 올려 선율을 부드럽게 하고, 전통적으로 하행할 때는 자연단음계 형태로 돌아옵니다."
+            ],
+            notationTitle: "A 자연단음계와 화성단음계",
+            notationBody: "마지막 G가 G♯으로 바뀔 때 A로 해결되려는 힘을 들어 보세요.",
+            notes: [57,59,60,62,64,65,68,69], labels: ["A","B","C","D","E","F","G♯","A"]
+        },
+        6: {
+            paragraphs: [
+                "3화음은 한 음을 건너뛰며 3도씩 쌓은 세 음의 화음입니다. 가장 아래의 근음, 가운데 3음, 위의 5음으로 구성됩니다.",
+                "장3화음은 근음에서 3음까지 장3도, 3음에서 5음까지 단3도입니다. 단3화음은 이 순서가 반대로 놓입니다.",
+                "감3화음은 단3도 두 개, 증3화음은 장3도 두 개를 쌓습니다. 화음 이름을 외우기보다 각 음 사이의 반음 수를 확인하면 어떤 조에서도 만들 수 있습니다."
+            ],
+            notationTitle: "C 장3화음의 구성음",
+            notationBody: "C·E·G를 차례로 들은 뒤 동시에 울리는 장3화음도 들어 보세요.",
+            notes: [60,64,67], labels: ["근음 C","3음 E","5음 G"], chord: true
+        },
+        7: {
+            paragraphs: [
+                "전위는 화음의 구성음을 바꾸는 것이 아니라 가장 낮은 음, 즉 베이스만 바꾸는 방법입니다.",
+                "근음이 아래에 있으면 기본위치, 3음이 아래에 있으면 제1전위, 5음이 아래에 있으면 제2전위입니다. 어떤 전위에서도 음의 이름은 같습니다.",
+                "전위를 사용하면 베이스가 가까운 음으로 움직여 코드 진행이 매끄러워집니다. 소리의 안정감은 유지되지만 무게 중심과 색채가 달라집니다."
+            ],
+            notationTitle: "C 장3화음의 세 가지 자리",
+            notationBody: "C–E–G, E–G–C, G–C–E의 가장 낮은 음을 비교해 보세요.",
+            notes: [60,64,67,64,67,72,67,72,76], labels: ["C","E","G","E","G","C","G","C","E"]
+        },
+        8: {
+            paragraphs: [
+                "다이어토닉 코드는 한 음계에 포함된 음만 사용해 만든 화음입니다. 장음계의 각 음을 근음으로 삼고 음계 안에서 3도씩 쌓습니다.",
+                "장조에서는 I·IV·V가 장3화음, ii·iii·vi가 단3화음, vii°가 감3화음이 됩니다. 이 배열은 12개 장조에서 모두 같습니다.",
+                "로마숫자는 조가 바뀌어도 화음의 위치와 기능을 한눈에 보여 줍니다. 그래서 C 장조의 G와 D 장조의 A를 모두 V라고 부를 수 있습니다."
+            ],
+            notationTitle: "C 장조의 I–IV–V–I",
+            notationBody: "C, F, G, C의 근음 움직임을 들으며 로마숫자와 실제 음을 연결하세요.",
+            notes: [60,65,67,72], labels: ["I","IV","V","I"]
+        },
+        9: {
+            paragraphs: [
+                "기능화성은 코드를 이름이 아니라 음악 안에서 맡는 역할로 이해합니다. 토닉은 안정, 서브도미넌트는 출발, 도미넌트는 긴장을 만듭니다.",
+                "도미넌트의 3음은 으뜸음 바로 아래의 이끔음이어서 반음 위로 해결되려 합니다. 이 움직임이 V–I 종지를 강하게 들리게 합니다.",
+                "종지는 문장의 마침표와 같습니다. V–I는 완전한 마침, IV–I는 부드러운 마침, V에서 멈추면 다음 구절을 기다리게 하는 반종지가 됩니다."
+            ],
+            notationTitle: "긴장에서 안정으로: V–I",
+            notationBody: "G 화음의 긴장이 C 화음으로 해결되는 방향을 들어 보세요.",
+            notes: [67,71,74,60,64,67], labels: ["G","B","D","C","E","G"], progression: [[67,71,74],[60,64,67]]
+        },
+        10: {
+            paragraphs: [
+                "7화음은 3화음 위에 3도를 하나 더 쌓아 네 음으로 만든 화음입니다. 추가된 7음은 화음의 긴장과 색채를 더 분명하게 만듭니다.",
+                "장조의 V7은 장3화음에 단7도가 더해진 도미넌트7화음입니다. 3음은 위로, 7음은 아래로 반음 진행하며 I로 해결되는 경향이 강합니다.",
+                "코드 진행을 들을 때 개별 코드 이름만 좇지 말고 토닉–준비–도미넌트–토닉의 큰 흐름을 먼저 들으면 조가 바뀌어도 구조를 알아볼 수 있습니다."
+            ],
+            notationTitle: "ii–V7–I의 해결",
+            notationBody: "준비, 긴장, 해결의 세 단계가 어떻게 한 문장을 만드는지 들어 보세요.",
+            notes: [62,65,69,67,71,74,77,60,64,67,71], labels: ["D","F","A","G","B","D","F","C","E","G","B"], progression: [[62,65,69],[67,71,74,77],[60,64,67,71]]
+        }
+    };
     const elements = {};
     const state = { stageId: 1, round: 1, correct: 0, answered: false, showingResult: false, question: null, progress: loadProgress() };
 
@@ -148,10 +250,48 @@
     }
 
     function cacheElements() {
-        ["courseNav","courseCurrent","stageList","stageKicker","stageTitle","stageSummary","stageStatus","conceptTitle","conceptBody","lessonPoints","questionTitle","roundCounter","questionPrompt","listenButton","answerChoices","feedback","nextButton","piano","pianoReadout","resetProgress","toast"].forEach(function (id) { elements[id] = $(id); });
+        ["courseNav","courseCurrent","stageList","stageKicker","stageTitle","stageSummary","stageStatus","conceptTitle","conceptBody","notationTitle","notationBody","theoryListen","staffNotes","staffLabels","lessonPoints","questionTitle","roundCounter","questionPrompt","listenButton","answerChoices","feedback","nextButton","piano","pianoReadout","resetProgress","toast"].forEach(function (id) { elements[id] = $(id); });
     }
     function currentStage() { return stages.find(function (stage) { return stage.id === state.stageId; }); }
 
+    function staffPosition(midi) {
+        const stepByPitch = [0,0,1,1,2,3,3,4,4,5,5,6];
+        const octave = Math.floor((midi - 60) / 12);
+        const pitchClass = ((midi % 12) + 12) % 12;
+        return 84 - (octave * 7 + stepByPitch[pitchClass]) * 6;
+    }
+
+    function renderTheory(stage) {
+        const chapter = CHAPTERS[stage.id];
+        elements.conceptTitle.textContent = stage.concept;
+        elements.conceptBody.innerHTML = chapter.paragraphs.map(function (paragraph) { return "<p>" + paragraph + "</p>"; }).join("");
+        elements.notationTitle.textContent = chapter.notationTitle;
+        elements.notationBody.textContent = chapter.notationBody;
+        elements.lessonPoints.innerHTML = stage.points.map(function (point) { return "<li>" + point + "</li>"; }).join("");
+        elements.staffNotes.innerHTML = "";
+        elements.staffLabels.innerHTML = "";
+        chapter.notes.forEach(function (midi, index) {
+            const note = document.createElement("span");
+            note.className = "staff-note" + (staffPosition(midi) >= 84 ? " ledger" : "");
+            note.style.left = (10 + index * (80 / Math.max(1, chapter.notes.length - 1))) + "%";
+            note.style.top = staffPosition(midi) + "px";
+            note.setAttribute("aria-hidden", "true");
+            elements.staffNotes.appendChild(note);
+            const label = document.createElement("span");
+            label.textContent = chapter.labels[index] || pitchName(midi);
+            elements.staffLabels.appendChild(label);
+        });
+    }
+
+    function playTheoryExample() {
+        const chapter = CHAPTERS[state.stageId];
+        const playback = chapter.progression
+            ? piano.playSequence(chapter.progression, .85)
+            : chapter.chord
+                ? piano.playNotes(chapter.notes, { duration: 1.4 })
+                : piano.playSequence(chapter.notes.map(function (midi) { return [midi]; }), .42);
+        playback.catch(function () { showToast("예시 소리를 재생할 수 없어요."); });
+    }
     function renderStages() {
         elements.stageList.innerHTML = "";
         stages.forEach(function (stage) {
@@ -173,9 +313,7 @@
         elements.stageKicker.textContent = stage.id + "단계";
         elements.stageTitle.textContent = stage.title;
         elements.stageSummary.textContent = stage.summary;
-        elements.conceptTitle.textContent = stage.concept;
-        elements.conceptBody.textContent = stage.body;
-        elements.lessonPoints.innerHTML = stage.points.map(function (point) { return "<li>" + point + "</li>"; }).join("");
+        renderTheory(stage);
         elements.stageStatus.textContent = complete ? "완료" : "학습 전";
         elements.stageStatus.classList.toggle("complete", complete);
         renderQuestion();
@@ -309,6 +447,7 @@
     }
 
     function bindEvents() {
+        elements.theoryListen.addEventListener("click", playTheoryExample);
         elements.listenButton.addEventListener("click", playQuestion);
         elements.nextButton.addEventListener("click", nextQuestion);
         elements.resetProgress.addEventListener("click", function () {

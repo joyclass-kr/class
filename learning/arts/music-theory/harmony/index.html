@@ -8,9 +8,9 @@
     <meta name="description" content="음과 음정부터 코드 진행까지 순서대로 배우는 화성학 과정">
     <link rel="preload" href="assets/piano/C3.ogg" as="fetch" type="audio/ogg" crossorigin>
     <link rel="preload" href="assets/piano/C4.ogg" as="fetch" type="audio/ogg" crossorigin>
-    <link rel="stylesheet" href="styles.css?v=20260826-book1">
-    <script src="piano-engine.js?v=20260826-book1" defer></script>
-    <script src="app.js?v=20260826-book1" defer></script>
+    <link rel="stylesheet" href="styles.css?v=20260826-book2">
+    <script src="piano-engine.js?v=20260826-book2" defer></script>
+    <script src="app.js?v=20260826-book2" defer></script>
 </head>
 <body>
     <header class="topbar">
@@ -35,14 +35,34 @@
             </header>
 
             <div class="lesson-grid">
-                <article class="concept-card">
-                    <p class="card-label">이번 단계 핵심</p>
-                    <h3 id="conceptTitle">음이름은 건반에서 반복돼요</h3>
-                    <p id="conceptBody"></p>
-                    <ul id="lessonPoints" class="lesson-points"></ul>
+                <article class="theory-book">
+                    <header class="chapter-title">
+                        <h2 id="conceptTitle">음이름은 건반에서 반복돼요</h2>
+                    </header>
+                    <div id="conceptBody" class="theory-prose"></div>
+                    <section class="notation-lesson" aria-labelledby="notationTitle">
+                        <div class="notation-copy">
+                            <h3 id="notationTitle">오선에서 음을 읽어 봅시다</h3>
+                            <p id="notationBody"></p>
+                            <button id="theoryListen" class="theory-listen" type="button">♪ 예시 듣기</button>
+                        </div>
+                        <div class="score-sheet" aria-label="악보 예시">
+                            <div class="staff">
+                                <i></i><i></i><i></i><i></i><i></i>
+                                <span class="treble-clef" aria-hidden="true">𝄞</span>
+                                <div id="staffNotes" class="staff-notes"></div>
+                            </div>
+                            <div id="staffLabels" class="staff-labels" aria-hidden="true"></div>
+                        </div>
+                    </section>
+                    <section class="chapter-summary">
+                        <h3>기억할 내용</h3>
+                        <ul id="lessonPoints" class="lesson-points"></ul>
+                    </section>
                 </article>
 
-                <article class="practice-card">
+                <details id="practicePanel" class="practice-card">
+                    <summary>학습 확인 문제 5개</summary>
                     <div class="practice-topline">
                         <div>
                             <p class="card-label">5문제 연습</p>
@@ -55,7 +75,7 @@
                     <div id="answerChoices" class="answer-choices" role="group" aria-label="정답 선택"></div>
                     <p id="feedback" class="feedback" aria-live="polite"></p>
                     <button id="nextButton" class="next-button" type="button" hidden>다음 문제</button>
-                </article>
+                </details>
             </div>
 
             <article class="piano-card">

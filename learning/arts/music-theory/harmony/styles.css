@@ -180,3 +180,40 @@ button:focus-visible, a:focus-visible { outline: 3px solid #fff; outline-offset:
 .course-nav .stage-list { grid-template-columns: repeat(2,minmax(0,1fr)); max-height: min(52vh,460px); padding: 10px; }
 .lesson-heading { display: none !important; }
 @media (max-width: 600px) { .course-shell { width: min(100% - 24px,760px); } .course-nav .stage-list { grid-template-columns: 1fr; } }
+
+.lesson-grid { grid-template-columns: 1fr; gap: 16px; }
+.theory-book { padding: clamp(24px,4vw,44px); border-radius: 8px; color: #20242a; background: #f4f0e6; box-shadow: 0 18px 38px rgba(0,0,0,.28); }
+.chapter-title { max-width: 760px; margin: 0 auto 20px; padding-bottom: 16px; border-bottom: 2px solid #20242a; }
+.chapter-title h2 { margin: 0; font-family: Georgia,"Noto Serif KR",serif; font-size: clamp(27px,3vw,38px); line-height: 1.25; }
+.theory-prose { max-width: 760px; margin: 0 auto; font-family: Georgia,"Noto Serif KR",serif; font-size: 17px; line-height: 1.85; word-break: keep-all; }
+.theory-prose p { margin: 0 0 15px; }
+.notation-lesson { max-width: 860px; display: grid; grid-template-columns: minmax(240px,.8fr) minmax(420px,1.2fr); align-items: center; gap: 28px; margin: 32px auto; padding: 26px 0; border-top: 1px solid #b9b2a5; border-bottom: 1px solid #b9b2a5; }
+.notation-copy h3, .chapter-summary h3 { margin: 0 0 10px; color: #1b2028; font-family: Georgia,"Noto Serif KR",serif; font-size: 21px; }
+.notation-copy p { margin: 0 0 16px; color: #4d5156; line-height: 1.7; }
+.theory-listen { min-height: 44px; padding: 9px 18px; border: 1px solid #273b58; border-radius: 7px; color: #fff; background: #263b59; font-weight: 900; cursor: pointer; }
+.score-sheet { min-width: 0; padding: 16px 14px 10px; border: 1px solid #c3bcaf; background: #fffefa; box-shadow: 0 5px 12px rgba(49,42,32,.12); }
+.staff { position: relative; height: 112px; margin-left: 30px; }
+.staff > i { position: absolute; left: 0; right: 0; height: 1px; background: #292929; }
+.staff > i:nth-child(1) { top: 24px; }
+.staff > i:nth-child(2) { top: 36px; }
+.staff > i:nth-child(3) { top: 48px; }
+.staff > i:nth-child(4) { top: 60px; }
+.staff > i:nth-child(5) { top: 72px; }
+.treble-clef { position: absolute; left: -27px; top: 10px; z-index: 2; color: #181818; font-family: "Noto Music","Segoe UI Symbol",serif; font-size: 62px; line-height: 1; }
+.staff-notes { position: absolute; inset: 0; }
+.staff-note { position: absolute; width: 14px; height: 10px; border-radius: 50%; background: #151515; transform: translate(-50%,-50%) rotate(-14deg); }
+.staff-note::after { content: ""; position: absolute; right: 0; bottom: 4px; width: 1px; height: 34px; background: #151515; transform: rotate(14deg); transform-origin: bottom; }
+.staff-note.ledger::before { content: ""; position: absolute; left: -5px; top: 4px; width: 24px; height: 1px; background: #151515; transform: rotate(14deg); }
+.staff-labels { display: grid; grid-auto-flow: column; grid-auto-columns: 1fr; margin: -6px 0 0 30px; color: #555; font-size: 10px; text-align: center; }
+.chapter-summary { max-width: 760px; margin: 0 auto; }
+.theory-book .lesson-points { margin-top: 8px; color: #31363c; }
+.practice-card { min-height: 0; padding: 0; border-radius: 12px; }
+.practice-card > summary { min-height: 58px; display: flex; align-items: center; justify-content: space-between; padding: 8px 20px; cursor: pointer; list-style: none; font-weight: 900; }
+.practice-card > summary::-webkit-details-marker { display: none; }
+.practice-card > summary::after { content: "+"; color: var(--accent); font-size: 22px; }
+.practice-card[open] > summary { border-bottom: 1px solid var(--line); }
+.practice-card[open] > summary::after { content: "−"; }
+.practice-card > :not(summary) { margin-left: 22px; margin-right: 22px; }
+.practice-card[open] { padding-bottom: 22px; }
+.practice-card .practice-topline { margin-top: 18px; }
+@media (max-width: 760px) { .theory-book { padding: 22px 18px; } .notation-lesson { grid-template-columns: 1fr; gap: 16px; } .score-sheet { overflow-x: auto; } .staff { min-width: 480px; } .staff-labels { min-width: 480px; } .theory-prose { font-size: 16px; } }
