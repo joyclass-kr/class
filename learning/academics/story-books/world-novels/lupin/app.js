@@ -292,6 +292,73 @@ const CHAPTER_SEGS = CHAPTERS.map(ch => {
     return segs;
 });
 
+// 읽고 나서 — 책마다 내용이 다르다. 장과 같은 방식으로 재서 나눈다.
+const AFTERWORD = {
+    title: '읽고 나서',
+    emoji: '🎩',
+    art: [],
+    paras: [
+        `이 책에 실린 것은 한 편의 긴 이야기가 아니라 여러 편의 짧은 이야기입니다. 뤼팽 이야기는 원래 그렇게 나왔습니다. 잡지에 한 편씩 실린 것을 나중에 묶은 것입니다.`,
+        `쓴 사람은 프랑스의 모리스 르블랑입니다. 그는 원래 진지한 소설을 쓰고 싶어 했습니다. 그런데 그 소설들이 팔리지 않았습니다.`,
+        `그러다 어느 잡지사에서 부탁을 받았습니다. 영국에 셜록 홈스가 있으니 프랑스에도 그런 인물을 하나 만들어 달라는 것이었습니다.`,
+        `르블랑은 탐정 대신 도둑을 만들었습니다. 그것이 아르센 뤼팽입니다. 천구백오 년의 일입니다.`,
+        `그리고 그 뒤로 평생 뤼팽 이야기를 쓰게 됩니다. 스무 권이 넘습니다. 진지한 소설을 쓰고 싶어 하던 사람이 도둑 이야기로 이름을 얻은 것입니다.`,
+        `말년에 그는 뤼팽이 자기를 따라다닌다고 여겼다고 합니다. 자기 뒤에 늘 그 사람이 서 있는 것 같다고요.`,
+        `만든 사람이 만든 것에 눌리는 일이 이따금 있습니다. 코넌 도일도 홈스에게 그랬습니다. 두 사람 다 그 인물을 죽이려 해 보았습니다.`,
+        `여기 실린 것은 그 가운데 널리 알려진 몇 편을 골라 옮긴 것입니다.`,
+        `이제 다시 볼 대목을 짚어 봅시다.`,
+        `첫째, 첫 이야기를 다시 읽어 보십시오. 대서양을 건너는 배 안에 뤼팽이 타고 있다는 전보가 옵니다. 그런데 이름 말고는 아무것도 모릅니다.`,
+        `그러니 배 안의 사람들이 서로를 의심하기 시작합니다. 저 사람이 뤼팽인가, 이 사람이 뤼팽인가 하고요. 그 며칠이 이 이야기의 전부입니다.`,
+        `그리고 마지막에 뤼팽이 누구였는지가 밝혀집니다. 다시 읽어 보면 앞에 실마리가 놓여 있습니다.`,
+        `둘째, 감옥에서 성을 터는 이야기를 다시 보십시오. 뤼팽은 감옥에 갇혀 있습니다. 그런데 그 사이에 어느 성의 물건이 통째로 없어집니다.`,
+        `갇힌 사람이 어떻게 그렇게 했는지가 이 이야기의 수수께끼입니다. 답은 그가 갇히기 전에 다 해 두었다는 것입니다.`,
+        `그러니 뤼팽의 방식이 여기 다 나옵니다. 그는 물건을 훔치는 사람이 아니라 판을 짜 두는 사람입니다.`,
+        `셋째, 뤼팽이 훔치는 대상을 세어 보십시오. 그는 가난한 사람의 것을 훔치지 않습니다. 부자와 귀족과 나쁜 짓으로 모은 재산을 노립니다.`,
+        `그리고 이따금 훔친 것을 돌려주기도 합니다. 사연을 알고 나서 그렇게 합니다. 그래서 그를 신사 도둑이라고 부릅니다.`,
+        `그런데 그것을 그대로 믿으면 안 됩니다. 그는 도둑입니다. 남의 것을 가져갑니다. 이야기가 그를 좋게 그릴 뿐입니다.`,
+        `넷째, 뤼팽이 변장하는 대목을 세어 보십시오. 이 이야기들에서 뤼팽은 늘 다른 사람으로 나타납니다.`,
+        `늙은 신사가 되고, 경찰이 되고, 러시아 왕자가 되고, 심지어 자기를 쫓는 형사가 되기도 합니다. 그리고 아무도 알아보지 못합니다.`,
+        `그러니 뤼팽에게는 진짜 얼굴이 없습니다. 이 이야기들이 끝날 때까지 그 사람의 본모습이 어떤지는 나오지 않습니다.`,
+        `다섯째, 숄메스 선생이 나오는 이야기를 다시 보십시오. 영국에서 온 이름난 탐정입니다.`,
+        `그 이름을 보면 알 수 있습니다. 셜록 홈스를 가져다 이름의 글자를 뒤섞어 놓은 것입니다. 처음에는 이름을 그대로 썼다가, 코넌 도일 쪽에서 항의를 받고 바꾸었습니다.`,
+        `그리고 그 대결에서 뤼팽이 이깁니다. 프랑스 잡지에 실리는 이야기였으니 당연한 셈입니다.`,
+        `다만 르블랑은 숄메스를 우습게 그리지 않았습니다. 아주 뛰어난 사람으로 그려 놓고, 그 사람을 이기게 만들었습니다. 그래야 이긴 것이 값이 나가기 때문입니다.`,
+        `그리고 한 번은 숄메스가 이깁니다. 물건을 되찾아 갑니다. 다만 뤼팽은 그 자리에서 달아납니다.`,
+        `인물도 짚어 둘 만합니다.`,
+        `가니마르 형사를 다시 보십시오. 뤼팽을 평생 쫓는 사람입니다. 그리고 여러 번 놓칩니다.`,
+        `그런데 두 사람 사이가 그냥 쫓고 쫓기는 사이가 아닙니다. 뤼팽이 먼저 그를 부르기도 하고, 도와주기도 합니다.`,
+        `그리고 뤼팽은 가니마르에게 잡히는 것을 오히려 좋아하는 것처럼 굽니다. 잡히지 않으면 이야기가 되지 않기 때문입니다.`,
+        `그 시절 사정도 알아 두면 좋습니다. 이 이야기들의 배경은 백이십 년쯤 전 프랑스입니다. 파리가 아주 화려하던 시절입니다.`,
+        `그때 파리에는 큰 부자들이 있었고, 성과 저택에 값나가는 물건이 가득했습니다. 그리고 그 재산이 어디서 온 것인지를 사람들이 궁금해하던 때이기도 합니다.`,
+        `그러니 부자의 것을 훔치는 도둑이 인기가 있었던 것도 그런 사정과 이어집니다. 사람들은 뤼팽 편을 들었습니다.`,
+        `그리고 그 무렵은 신문과 잡지가 아주 많이 팔리던 때입니다. 소설을 한 편씩 실어 사람들을 붙잡아 두었습니다. 셜록 홈스도 뤼팽도 그렇게 나왔습니다.`,
+        `이 이야기들이 붙들고 있는 것은 두 가지입니다.`,
+        `하나는 도둑을 왜 좋아하게 되느냐는 것입니다. 뤼팽은 법을 어깁니다. 그런데 읽는 사람은 그가 잡히지 않기를 바랍니다.`,
+        `그 까닭은 그가 이기는 상대에 있습니다. 잘난 척하는 부자, 나쁜 짓으로 모은 재산, 그리고 어리숙한 경찰입니다. 사람들이 밉게 여기던 것들입니다.`,
+        `다른 하나는 아는 것과 보이는 것이 다르다는 것입니다. 뤼팽의 재주는 손재주가 아닙니다. 사람이 무엇을 믿는지를 아는 것입니다.`,
+        `그래서 그는 대개 물건을 훔치기 전에 사람들이 엉뚱한 데를 보게 만들어 둡니다. 그것이 이 이야기들이 늘 쓰는 방법입니다.`,
+        `다만 이 이야기들을 읽을 때 알아 둘 것이 있습니다. 이것은 재미있게 지어낸 이야기입니다. 실제로 도둑질을 그렇게 멋있게 하는 사람은 없습니다.`,
+        `그리고 실제 도둑질은 누군가의 것을 빼앗는 일입니다. 이야기에서는 그 사람이 밉게 그려지니 마음이 편할 뿐입니다.`,
+        `뤼팽은 그 뒤로 프랑스에서 아주 사랑받는 인물이 되었습니다. 영화와 만화와 연속극으로 끝없이 만들어졌습니다.`,
+        `일본에서는 뤼팽의 손자라는 설정으로 만화가 만들어져 크게 알려지기도 했습니다. 그러니 백이십 년 전 잡지에 실린 인물이 아직도 살아 있는 셈입니다.`,
+        `언젠가 이 이야기들을 다시 읽게 되거든, 이번에는 뤼팽이 언제 처음 나타나는지를 찾아보십시오. 대개 앞쪽에 이미 나와 있습니다. 다른 이름으로요.`,
+        `마지막으로 생각해 볼 것을 남겨 둡니다. 답은 적어 두지 않겠습니다.`,
+        `뤼팽이 부자의 것만 훔친다는 것이 그 사람을 옳게 만들까요? 훔치는 것은 훔치는 것입니다.`,
+        `가니마르는 왜 평생 그를 쫓았을까요? 잡는 것이 목적이었을까요, 아니면 다른 것이 있었을까요?`,
+        `그리고 우리가 도둑 이야기를 재미있게 읽는 까닭은 무엇일까요. 이 물음은 어른이 되어 다시 읽어도 답하기가 쉽지 않습니다.`
+    ]
+};
+
+const AFTER_SEGS = (() => {
+    const segs = [];
+    AFTERWORD.paras.forEach((html, paraIdx) => {
+        splitSegments(html).forEach((piece, k) => {
+            segs.push({ paraIdx, html: piece, start: k === 0 });
+        });
+    });
+    return segs;
+})();
+
 // 조각 묶음을 문단 단위로 다시 묶어 화면에 그릴 모양으로 만든다.
 // 앞 쪽에서 이어진 문단은 첫 줄을 들여쓰지 않는다.
 function runHtml(segs, a, b) {
@@ -573,16 +640,100 @@ function quizPage(part) {
         </div>`;
 }
 
-function endPage() {
+/* 읽고 나서 — 장과 같은 방식으로 쪽을 나눈다. 그림은 오른쪽 위에 얹힌다. */
+const AFTER_FOOT = `<p class="after-home"><a class="home-btn" href="../../../../../">학습 허브로 돌아가기</a></p>`;
+
+function paginateAfterword() {
+    const segs = AFTER_SEGS;
+    const arts = AFTERWORD.art || [];
+    const { usable, headHeight, artHeight } = PROBE;
+    const headHtml = `<h2>${AFTERWORD.title}</h2>`;
+    const totalH = PROBE.measure(runHtml(segs, 0, segs.length));
+
+    const underArt = Math.max(60, usable - artHeight);
+
+    // 맨 끝에는 학습 허브로 가는 단추가 붙는다. 그 높이를 미리 빼 두지 않으면
+    // 마지막 쪽만 넘친다.
+    const footH = PROBE.measure(AFTER_FOOT);
+
+    const capsOf = slots => {
+        const caps = [];
+        slots.forEach(kind => { caps.push(usable); caps.push(kind === 'img' ? underArt : usable); });
+        caps[caps.length - 1] = Math.max(60, caps[caps.length - 1] - footH);
+        return caps;
+    };
+
+    const minSpreads = Math.max(arts.length, 1);
+    const maxSpreads = Math.max(minSpreads, Math.floor(segs.length / 2));
+    let spreadCount = minSpreads;
+    while (spreadCount < maxSpreads) {
+        const caps = capsOf(slotPlan(arts.length, spreadCount - arts.length));
+        if (caps.reduce((a, b) => a + b, 0) >= totalH + headHeight) break;
+        spreadCount++;
+    }
+
+    let slots = slotPlan(arts.length, Math.max(0, spreadCount - arts.length));
+    let caps = capsOf(slots);
+    let ranges = fillPages(segs, caps, headHtml);
+    for (let guard = 0; guard < 8; guard++) {
+        const over = ranges.some(([a, b], n) =>
+            PROBE.measure((n === 0 ? headHtml : '') + runHtml(segs, a, b)) > caps[n] + 1);
+        if (!over || spreadCount >= maxSpreads) break;
+        spreadCount++;
+        slots = slotPlan(arts.length, Math.max(0, spreadCount - arts.length));
+        caps = capsOf(slots);
+        ranges = fillPages(segs, caps, headHtml);
+    }
+
+    const spreads = [];
+    let pageIdx = 0;
+    let artIdx = 0;
+    slots.forEach((kind, s) => {
+        const left = ranges[pageIdx++];
+        const right = ranges[pageIdx++];
+        spreads.push({
+            kind: 'after', first: s === 0, last: s === slots.length - 1,
+            art: kind === 'img' ? arts[artIdx++] : null, left, right
+        });
+    });
+    return spreads;
+}
+
+function afterSpreadPage(spread) {
+    const segs = AFTER_SEGS;
+    const head = spread.first ? `<h2>${AFTERWORD.title}</h2>` : '';
+    // 학습 허브로 돌아가는 길은 맨 끝에 한 번만 둔다.
+    const foot = spread.last ? AFTER_FOOT : '';
+
+    if (spread.art) {
+        return `
+            <div class="page page-story page-after">
+                <div class="story-page-left">
+                    ${head}
+                    ${runHtml(segs, spread.left[0], spread.left[1])}
+                </div>
+                <div class="story-page-right story-page-right-image">
+                    <div class="story-art-top">${artFrame(spread.art, AFTERWORD.emoji)}</div>
+                    ${runHtml(segs, spread.right[0], spread.right[1])}
+                    ${foot}
+                </div>
+            </div>`;
+    }
+
     return `
-        <div class="page page-end">
-            ${artFrame('end.png', '🕵️')}
-            <h2>괴도 뤼팽를 다 읽었습니다</h2>
-            <a class="home-btn" href="../../../../../">학습 허브로 돌아가기</a>
+        <div class="page page-story page-after">
+            <div class="story-page-left">
+                ${head}
+                ${runHtml(segs, spread.left[0], spread.left[1])}
+            </div>
+            <div class="story-page-right story-page-right-text">
+                ${runHtml(segs, spread.right[0], spread.right[1])}
+                ${foot}
+            </div>
         </div>`;
 }
 
-const TWO_PAGE_KINDS = new Set(['chapter', 'toc', 'cover']);
+const TWO_PAGE_KINDS = new Set(['chapter', 'toc', 'cover', 'after']);
 
 let PAGES = [];
 let FOLIOS = [];
@@ -594,7 +745,7 @@ function buildPages() {
         ...TOC_GROUPS.map((_, i) => ({ kind: 'toc', part: i })),
         ...CHAPTERS.flatMap(paginateChapter),
         ...QUIZ_GROUPS.map((_, i) => ({ kind: 'quiz', part: i })),
-        { kind: 'end' }
+        ...paginateAfterword()
     ];
     PROBE.close();   // 쪽을 다 나눴으니 재는 데 쓰던 숨은 쪽은 치운다
 
@@ -615,7 +766,7 @@ function renderPage(page) {
         case 'toc': return tocPage(page.part);
         case 'chapter': return chapterSpreadPage(page);
         case 'quiz': return quizPage(page.part);
-        case 'end': return endPage();
+        case 'after': return afterSpreadPage(page);
         default: return '';
     }
 }

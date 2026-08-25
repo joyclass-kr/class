@@ -419,6 +419,70 @@ const CHAPTER_SEGS = CHAPTERS.map(ch => {
     return segs;
 });
 
+// 읽고 나서 — 책마다 내용이 다르다. 장과 같은 방식으로 재서 나눈다.
+const AFTERWORD = {
+    title: '읽고 나서',
+    emoji: '🏹',
+    art: [],
+    paras: [
+        `이 책의 제목은 『모히칸족의 마지막 사람』입니다. 마지막이라는 말이 제목에 있습니다. 그러니 이 책은 처음부터 무엇이 끝나는 이야기인지를 알려 주고 시작합니다.`,
+        `쓴 사람은 미국의 제임스 페니모어 쿠퍼입니다. 이 책은 그가 쓴 다섯 권짜리 이야기 가운데 하나입니다. 매사냥꾼이라는 사람이 젊을 때부터 늙을 때까지 나오는 이야기입니다.`,
+        `책은 천팔백이십육 년에 나왔습니다. 이백 년 전 책입니다. 그리고 미국에서 크게 읽힌 첫 소설 가운데 하나입니다.`,
+        `그때까지 미국 사람들은 대개 영국 소설을 읽었습니다. 미국을 배경으로 미국 이야기를 쓴 사람이 드물었습니다. 쿠퍼가 그것을 했습니다.`,
+        `이야기의 배경은 그보다 칠십 년쯤 전입니다. 영국과 프랑스가 북아메리카 땅을 두고 싸우던 때입니다. 그것을 프렌치 인디언 전쟁이라고 부릅니다.`,
+        `그 싸움에 원주민 부족들이 양쪽으로 갈려 참여했습니다. 어느 쪽에 서느냐로 부족의 앞날이 갈렸습니다.`,
+        `이제 다시 볼 대목을 짚어 봅시다.`,
+        `첫째, 제목이 가리키는 사람이 누구인지 다시 세어 보십시오. 칭가치국인지 웅카스인지 헷갈립니다.`,
+        `이 책의 마지막을 보면 알 수 있습니다. 아들이 먼저 갔기 때문에, 남은 사람이 마지막 사람이 됩니다. 그리고 그 사람이 마지막이라는 것은 그 뒤가 없다는 뜻입니다.`,
+        `그러니 이 책의 제목은 사람 하나를 가리키는 것이 아니라 한 부족이 끊긴다는 뜻입니다.`,
+        `둘째, 매사냥꾼을 다시 보십시오. 그는 백인인데 원주민들 사이에서 자랐습니다. 그래서 양쪽 말을 다 하고 양쪽 방식을 다 압니다.`,
+        `그런데 그는 자기가 어느 쪽에도 온전히 속하지 않는다는 것을 여러 번 말합니다. 자기는 피가 섞이지 않은 백인이라고 굳이 말하기도 합니다.`,
+        `그 말이 여러 번 나오는 것을 눈여겨보십시오. 그렇게 자꾸 말해야 한다는 것 자체가 그 사람의 자리를 보여 줍니다.`,
+        `셋째, 마과를 다시 보십시오. 이 이야기의 반대편에 선 사람입니다. 그런데 그 사람이 왜 그렇게 되었는지도 이 책에 나옵니다.`,
+        `그는 부족에서 쫓겨난 사람입니다. 그리고 백인 지휘관에게 매를 맞은 일이 있습니다. 사람들 앞에서요.`,
+        `그러니 이 책에는 매를 맞은 것 때문에 오래 벼른 사람이 나옵니다. 그런 인물이 여러 이야기에 나오는 까닭도 생각해 볼 만합니다.`,
+        `넷째, 마지막 장을 다시 읽어 보십시오. 델라웨어 사람들이 웅카스를 보내며 노래를 부릅니다. 그리고 칭가치국이 아무 말도 하지 않습니다.`,
+        `그 자리에서 매사냥꾼이 칭가치국의 손을 잡습니다. 그리고 자기가 곁에 있겠다고 합니다. 백인과 원주민이 손을 잡은 채로 이 책이 끝납니다.`,
+        `쿠퍼가 그렇게 끝낸 것을 생각해 보십시오. 그리고 그 뒤에 실제로 일어난 일도 함께 생각해 보십시오.`,
+        `인물도 다시 보아야 할 사람이 있습니다.`,
+        `코라라는 인물을 다시 보십시오. 이 책에서 제일 씩씩한 사람입니다. 위험한 자리에서 나서고, 겁을 내지 않고, 스스로 판단합니다.`,
+        `그리고 이 책은 그 사람에게 어머니 쪽 피가 섞여 있다는 것을 알려 줍니다. 그 시절 미국에서 그것은 큰일이었습니다.`,
+        `그러니 코라와 웅카스가 서로를 알아보는 대목이 이 책에서 조용히 중요한 자리입니다. 그리고 이 책은 그 둘을 마지막에 나란히 눕힙니다.`,
+        `쿠퍼가 그 둘을 살려 두지 않은 것을 두고 지금도 말이 많습니다. 그 시절 독자들이 그 결말을 받아들이지 못했을 것이라는 이야기도 있습니다.`,
+        `그 시절 사정도 알아 두면 좋습니다. 모히칸이라는 부족은 실제로 있었습니다. 지금 미국 동북쪽 허드슨강 유역에 살던 사람들입니다.`,
+        `그리고 이 책의 제목처럼 다 사라진 것은 아닙니다. 지금도 그 후손들이 살고 있습니다. 다만 살던 땅에서 여러 번 쫓겨나 아주 멀리 옮겨 갔습니다.`,
+        `그러니 이 책의 제목은 사실과 다릅니다. 사라졌다고 적는 것과 쫓겨났다고 적는 것은 아주 다릅니다.`,
+        `쿠퍼가 이 책을 쓸 무렵 미국에서는 원주민을 서쪽으로 몰아내는 일이 한창이었습니다. 이 책이 나오고 네 해 뒤에 그것을 아예 법으로 만들었습니다.`,
+        `그 뒤 몇 해 사이에 동남부의 여러 부족이 걸어서 서쪽으로 옮겨졌습니다. 만 명 넘게 길에서 목숨을 잃었습니다. 그것을 눈물의 길이라고 부릅니다.`,
+        `그러니 이 책이 사라지는 부족을 슬프게 그리고 있던 그 무렵에, 실제로는 그 사람들을 몰아내고 있었던 것입니다.`,
+        `그것이 이 책을 읽을 때 알아 두어야 할 것입니다. 이 책은 원주민을 딱하게 여깁니다. 그런데 딱하게 여기는 것과 그 사람들의 자리를 지키는 것은 다른 일입니다.`,
+        `그리고 이 책이 원주민을 그리는 방식에도 문제가 있습니다. 좋은 원주민과 나쁜 원주민을 갈라 놓고, 좋은 쪽은 사라질 운명인 것처럼 그립니다.`,
+        `그렇게 그리면 사라지는 것이 자연스러운 일처럼 됩니다. 실제로는 사람들이 그렇게 만든 것이었습니다. 이 점을 여러 학자들이 오래 지적해 왔습니다.`,
+        `이 책이 붙들고 있는 것은 두 가지입니다.`,
+        `하나는 두 세계 사이에 선 사람이 어떻게 되느냐는 것입니다. 매사냥꾼도 코라도 그런 사람입니다. 어느 쪽에도 온전히 속하지 못합니다.`,
+        `다른 하나는 무엇이 끝나는가 하는 것입니다. 이 책은 사람 하나가 죽는 것으로 끝나지 않습니다. 한 줄기가 끊기는 것으로 끝납니다.`,
+        `마지막 장에서 늙은 추장 타메눈드가 하는 말이 그것입니다. 자기가 너무 오래 살아서 이런 것을 보게 되었다는 말입니다.`,
+        `그 한마디가 이 책에서 제일 무겁습니다.`,
+        `이 책은 나온 뒤 유럽에서도 크게 읽혔습니다. 그리고 미국에 대한 그림을 유럽 사람들에게 만들어 주었습니다. 숲과 강과 원주민과 사냥꾼이 있는 땅이라는 그림입니다.`,
+        `영화로도 여러 번 만들어졌습니다. 그때마다 조금씩 다르게 만들어졌습니다. 코라를 살려 두는 판도 있습니다.`,
+        `언젠가 이 책을 다시 읽게 되거든, 이번에는 마과가 하는 말만 이어 붙여 읽어 보십시오. 그 사람이 무엇을 잃었고 무엇을 되찾으려 하는지가 그 말들에 있습니다.`,
+        `마지막으로 생각해 볼 것을 남겨 둡니다. 답은 적어 두지 않겠습니다.`,
+        `매사냥꾼이 자꾸 자기가 백인이라고 말하는 까닭은 무엇이었을까요? 아무도 묻지 않는데 그렇게 말합니다.`,
+        `마과를 우리는 어떻게 보아야 할까요? 그 사람이 한 일은 옳지 않습니다. 그런데 그렇게 되기까지 있었던 일도 옳지 않았습니다.`,
+        `그리고 이 책의 제목을 우리는 어떻게 읽어야 할까요. 마지막이라고 적는 것이 그 사람들에게 무엇을 하는 일인지 생각해 보십시오. 이 물음은 어른이 되어 다시 읽어도 답하기가 쉽지 않습니다.`
+    ]
+};
+
+const AFTER_SEGS = (() => {
+    const segs = [];
+    AFTERWORD.paras.forEach((html, paraIdx) => {
+        splitSegments(html).forEach((piece, k) => {
+            segs.push({ paraIdx, html: piece, start: k === 0 });
+        });
+    });
+    return segs;
+})();
+
 // 조각 묶음을 문단 단위로 다시 묶어 화면에 그릴 모양으로 만든다.
 // 앞 쪽에서 이어진 문단은 첫 줄을 들여쓰지 않는다.
 function runHtml(segs, a, b) {
@@ -700,16 +764,100 @@ function quizPage(part) {
         </div>`;
 }
 
-function endPage() {
+/* 읽고 나서 — 장과 같은 방식으로 쪽을 나눈다. 그림은 오른쪽 위에 얹힌다. */
+const AFTER_FOOT = `<p class="after-home"><a class="home-btn" href="../../../../../">학습 허브로 돌아가기</a></p>`;
+
+function paginateAfterword() {
+    const segs = AFTER_SEGS;
+    const arts = AFTERWORD.art || [];
+    const { usable, headHeight, artHeight } = PROBE;
+    const headHtml = `<h2>${AFTERWORD.title}</h2>`;
+    const totalH = PROBE.measure(runHtml(segs, 0, segs.length));
+
+    const underArt = Math.max(60, usable - artHeight);
+
+    // 맨 끝에는 학습 허브로 가는 단추가 붙는다. 그 높이를 미리 빼 두지 않으면
+    // 마지막 쪽만 넘친다.
+    const footH = PROBE.measure(AFTER_FOOT);
+
+    const capsOf = slots => {
+        const caps = [];
+        slots.forEach(kind => { caps.push(usable); caps.push(kind === 'img' ? underArt : usable); });
+        caps[caps.length - 1] = Math.max(60, caps[caps.length - 1] - footH);
+        return caps;
+    };
+
+    const minSpreads = Math.max(arts.length, 1);
+    const maxSpreads = Math.max(minSpreads, Math.floor(segs.length / 2));
+    let spreadCount = minSpreads;
+    while (spreadCount < maxSpreads) {
+        const caps = capsOf(slotPlan(arts.length, spreadCount - arts.length));
+        if (caps.reduce((a, b) => a + b, 0) >= totalH + headHeight) break;
+        spreadCount++;
+    }
+
+    let slots = slotPlan(arts.length, Math.max(0, spreadCount - arts.length));
+    let caps = capsOf(slots);
+    let ranges = fillPages(segs, caps, headHtml);
+    for (let guard = 0; guard < 8; guard++) {
+        const over = ranges.some(([a, b], n) =>
+            PROBE.measure((n === 0 ? headHtml : '') + runHtml(segs, a, b)) > caps[n] + 1);
+        if (!over || spreadCount >= maxSpreads) break;
+        spreadCount++;
+        slots = slotPlan(arts.length, Math.max(0, spreadCount - arts.length));
+        caps = capsOf(slots);
+        ranges = fillPages(segs, caps, headHtml);
+    }
+
+    const spreads = [];
+    let pageIdx = 0;
+    let artIdx = 0;
+    slots.forEach((kind, s) => {
+        const left = ranges[pageIdx++];
+        const right = ranges[pageIdx++];
+        spreads.push({
+            kind: 'after', first: s === 0, last: s === slots.length - 1,
+            art: kind === 'img' ? arts[artIdx++] : null, left, right
+        });
+    });
+    return spreads;
+}
+
+function afterSpreadPage(spread) {
+    const segs = AFTER_SEGS;
+    const head = spread.first ? `<h2>${AFTERWORD.title}</h2>` : '';
+    // 학습 허브로 돌아가는 길은 맨 끝에 한 번만 둔다.
+    const foot = spread.last ? AFTER_FOOT : '';
+
+    if (spread.art) {
+        return `
+            <div class="page page-story page-after">
+                <div class="story-page-left">
+                    ${head}
+                    ${runHtml(segs, spread.left[0], spread.left[1])}
+                </div>
+                <div class="story-page-right story-page-right-image">
+                    <div class="story-art-top">${artFrame(spread.art, AFTERWORD.emoji)}</div>
+                    ${runHtml(segs, spread.right[0], spread.right[1])}
+                    ${foot}
+                </div>
+            </div>`;
+    }
+
     return `
-        <div class="page page-end">
-            ${artFrame('end.png', '📖')}
-            <h2>모히컨 족의 최후를 다 읽었습니다</h2>
-            <a class="home-btn" href="../../../../../">학습 허브로 돌아가기</a>
+        <div class="page page-story page-after">
+            <div class="story-page-left">
+                ${head}
+                ${runHtml(segs, spread.left[0], spread.left[1])}
+            </div>
+            <div class="story-page-right story-page-right-text">
+                ${runHtml(segs, spread.right[0], spread.right[1])}
+                ${foot}
+            </div>
         </div>`;
 }
 
-const TWO_PAGE_KINDS = new Set(['chapter', 'toc', 'cover']);
+const TWO_PAGE_KINDS = new Set(['chapter', 'toc', 'cover', 'after']);
 
 let PAGES = [];
 let FOLIOS = [];
@@ -721,7 +869,7 @@ function buildPages() {
         ...TOC_GROUPS.map((_, i) => ({ kind: 'toc', part: i })),
         ...CHAPTERS.flatMap(paginateChapter),
         ...QUIZ_GROUPS.map((_, i) => ({ kind: 'quiz', part: i })),
-        { kind: 'end' }
+        ...paginateAfterword()
     ];
     PROBE.close();   // 쪽을 다 나눴으니 재는 데 쓰던 숨은 쪽은 치운다
 
@@ -742,7 +890,7 @@ function renderPage(page) {
         case 'toc': return tocPage(page.part);
         case 'chapter': return chapterSpreadPage(page);
         case 'quiz': return quizPage(page.part);
-        case 'end': return endPage();
+        case 'after': return afterSpreadPage(page);
         default: return '';
     }
 }
