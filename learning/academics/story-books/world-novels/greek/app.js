@@ -461,6 +461,80 @@ const CHAPTER_SEGS = CHAPTERS.map(ch => {
     return segs;
 });
 
+// 읽고 나서 — 책마다 내용이 다르다. 장과 같은 방식으로 재서 나눈다.
+const AFTERWORD = {
+    title: '읽고 나서',
+    emoji: '🏛️',
+    art: [],
+    paras: [
+        `이 책에 실린 것은 한 사람이 지어낸 이야기가 아닙니다. 삼천 년쯤 전 그리스 사람들이 서로 주고받으며 전하던 이야기들입니다.`,
+        `그러니 이 이야기들에는 지은이가 없습니다. 처음에는 글로 적힌 것도 아니었습니다. 노래로 외워 전하다가 나중에 글로 옮긴 것입니다.`,
+        `지금 우리가 아는 형태로 남은 데는 몇 사람의 공이 큽니다. 호메로스가 트로이 이야기를 노래로 엮었고, 헤시오도스가 신들의 계보를 정리했고, 로마 사람 오비디우스가 여러 이야기를 한 권에 모았습니다.`,
+        `그리스 극작가들도 큰 몫을 했습니다. 이천오백 년 전 아테네에서는 해마다 연극 잔치가 열렸고, 그 무대에 이 이야기들이 올랐습니다. 사람들이 만 명 넘게 앉아서 보았습니다.`,
+        `여기 실린 것은 그 가운데 널리 알려진 것들을 골라 옮긴 것입니다. 그리스 신화는 다 모으면 아주 방대합니다.`,
+        `신들만 해도 큰 신이 열둘이고, 그 아래로 헤아릴 수 없이 많습니다. 강마다 신이 있고 샘마다 요정이 있었습니다.`,
+        `그리고 이 이야기들에는 여러 판이 있습니다. 같은 이야기라도 지방마다 조금씩 달랐고, 전하는 사람마다 달랐습니다. 그러니 다른 책에서 조금 다르게 읽더라도 이상한 일이 아닙니다.`,
+        `이제 다시 볼 대목을 짚어 봅시다.`,
+        `첫째, 프로메테우스를 다시 읽어 보십시오. 그는 신인데 사람 편을 듭니다. 그리고 불을 훔쳐다 줍니다.`,
+        `불은 그냥 불이 아닙니다. 불이 있으면 밤에 볼 수 있고, 익혀 먹을 수 있고, 쇠를 다룰 수 있습니다. 사람이 사람답게 사는 것이 거기서 시작됩니다.`,
+        `그러니 이 이야기는 사람이 어떻게 지금처럼 되었는지를 설명하는 이야기입니다. 신화가 하는 일 가운데 하나가 그것입니다. 왜 이렇게 되어 있는지를 이야기로 답해 주는 것입니다.`,
+        `계절이 왜 바뀌는지, 메아리가 왜 생기는지, 거미가 왜 줄을 치는지가 다 이야기로 되어 있습니다. 지금은 다른 방법으로 답하지만, 그때는 그것이 답이었습니다.`,
+        `둘째, 판도라의 항아리를 다시 보십시오. 흔히 상자라고 하는데, 원래는 항아리입니다. 옛 글을 옮기는 과정에서 낱말이 바뀐 것입니다.`,
+        `그 안에서 온갖 나쁜 것이 쏟아져 나오고 마지막에 하나가 남습니다. 희망입니다. 그런데 그 대목을 두고 이천 년 넘게 말이 갈렸습니다.`,
+        `희망이 남은 것이 다행이라는 쪽도 있고, 희망도 사람을 괴롭히는 것 가운데 하나였는데 그것만 못 나온 것이라는 쪽도 있습니다. 옛 글은 그것을 갈라 놓지 않았습니다.`,
+        `판도라라는 이름의 뜻도 알아 둘 만합니다. 모든 선물을 받은 사람이라는 뜻입니다. 신들이 저마다 하나씩 주었기 때문입니다.`,
+        `셋째, 이카로스를 다시 읽어 보십시오. 아버지가 만든 날개를 달고 날다가 해에 너무 가까이 가서 밀랍이 녹아 떨어집니다.`,
+        `그런데 아버지가 한 말을 다시 보십시오. 너무 높이 날지도 말고 너무 낮게 날지도 말라고 했습니다. 낮게 날면 바닷물에 깃이 젖기 때문입니다.`,
+        `그러니 이 이야기는 높이 날지 말라는 이야기가 아닙니다. 가운데로 가라는 이야기입니다. 그리스 사람들은 그 가운데를 아주 중요하게 여겼습니다.`,
+        `무엇이든 지나치지 말라는 말이 델포이 신전 벽에 새겨져 있었습니다. 그 옆에 또 하나 새겨져 있던 말이 너 자신을 알라는 말입니다.`,
+        `넷째, 뒤를 돌아본 사람을 다시 보십시오. 오르페우스는 아내를 데리러 저승까지 갑니다. 노래로 저승의 왕을 움직입니다.`,
+        `그리고 조건이 붙습니다. 밖에 나갈 때까지 뒤를 돌아보지 말라는 것입니다. 그는 거의 다 나와서 돌아봅니다.`,
+        `왜 돌아보았을까요. 이 이야기는 그것을 설명하지 않습니다. 그런데 사람이면 다 압니다. 뒤에 따라오는지 확인하고 싶은 마음 말입니다.`,
+        `그리고 그 이야기에는 뒷맛이 하나 더 있습니다. 오르페우스는 노래로 저승의 왕까지 움직인 사람입니다. 그런데 자기 마음 하나를 움직이지 못했습니다.`,
+        `다섯째, 미다스를 다시 읽어 보십시오. 손에 닿는 것이 다 금이 되게 해 달라고 빕니다. 그리고 그대로 됩니다.`,
+        `그런데 그러면 밥도 못 먹고 물도 못 마십니다. 이 이야기는 소원이 이루어지는 것이 늘 좋은 일은 아니라는 것을 아주 간단하게 보여 줍니다.`,
+        `미다스 이야기는 뒤가 하나 더 있습니다. 그 왕은 나중에 음악 겨루기에서 엉뚱한 쪽 손을 들어 주었다가 귀가 당나귀 귀가 됩니다. 그 이야기는 우리나라 옛이야기에도 비슷한 것이 있습니다.`,
+        `인물도 다시 보아야 할 자리가 있습니다.`,
+        `그리스 신들은 우리가 흔히 생각하는 신과 다릅니다. 질투하고 화내고 싸우고 속입니다. 사람보다 나은 데가 힘밖에 없는 경우도 많습니다.`,
+        `그래서 이 이야기들이 재미있는 것입니다. 신들이 사람처럼 굴기 때문에 이야기가 됩니다. 완벽한 존재만 나오면 이야기가 되지 않습니다.`,
+        `그런데 그 점 때문에 옛날부터 불평하는 사람도 있었습니다. 이천사백 년 전에 이미 어떤 철학자가 신을 그렇게 그리면 안 된다고 했습니다.`,
+        `아라크네 이야기도 다시 볼 만합니다. 베를 잘 짜는 사람이 여신과 겨루어 이깁니다. 그리고 벌을 받습니다. 이기고도 벌을 받는 것입니다.`,
+        `그것을 두고 여신이 옹졸했다고 읽을 수도 있고, 사람이 넘지 말아야 할 선을 넘었다고 읽을 수도 있습니다. 그리스 사람들은 그 선을 아주 중요하게 여겼습니다.`,
+        `그 선을 넘는 것을 가리키는 말이 따로 있었습니다. 그리고 그것이 그리스 비극에서 사람이 무너지는 거의 모든 까닭입니다.`,
+        `그런데 이 이야기들에서 그 선은 늘 나중에야 드러납니다. 넘기 전에는 어디까지가 선인지 아무도 모릅니다. 그것이 그리스 비극이 무서운 까닭입니다.`,
+        `그 시절 사정도 알아 두면 좋습니다. 그리스 사람들에게 이 이야기들은 옛날이야기가 아니라 믿음이었습니다. 신전을 짓고 제사를 지냈습니다.`,
+        `그리고 이 이야기들에 나오는 곳은 대부분 실제 있는 곳입니다. 올림포스산도 있고 델포이도 있습니다. 트로이도 실제로 있었습니다. 백오십 년쯤 전에 그 자리가 발굴되었습니다.`,
+        `그러니 트로이 전쟁도 아주 없던 일은 아닐 것입니다. 다만 신들이 편을 갈라 싸웠다는 대목은 이야기로 붙은 것입니다.`,
+        `이 이야기들이 지금까지 남은 까닭도 생각해 볼 만합니다. 로마 사람들이 그리스 신들을 그대로 받아들여 이름만 바꾸어 썼습니다. 제우스가 유피테르가 되고 아프로디테가 베누스가 되는 식입니다.`,
+        `그리고 로마를 거쳐 유럽 전체로 퍼졌습니다. 그림과 조각과 연극과 음악에 이 이야기들이 수없이 쓰였습니다.`,
+        `지금도 우리가 쓰는 말에 그 흔적이 있습니다. 아킬레스건, 판도라의 상자, 미다스의 손, 나르시시즘 같은 말이 다 여기서 나왔습니다.`,
+        `별 이름도 그렇습니다. 행성 이름은 대부분 로마 신들의 이름입니다. 밤하늘의 별자리에도 이 이야기들이 붙어 있습니다.`,
+        `큰곰자리, 오리온자리, 카시오페이아자리가 다 이 이야기들에서 왔습니다. 삼천 년 전 사람들이 하늘을 보며 붙인 이름을 우리가 아직도 쓰고 있는 것입니다.`,
+        `이 이야기들이 붙들고 있는 것은 두 가지입니다.`,
+        `하나는 사람이 어디까지 할 수 있느냐는 것입니다. 이 이야기들에는 넘으면 안 되는 선이 늘 있습니다. 그리고 사람은 늘 그 선을 넘습니다.`,
+        `다른 하나는 정해진 것을 피할 수 있느냐는 것입니다. 그리스 이야기에는 예언이 자주 나옵니다. 그리고 그것을 피하려고 한 일이 오히려 그 예언을 이루는 경우가 많습니다.`,
+        `오이디푸스 이야기가 그 본보기입니다. 여기에는 싣지 않았지만, 그리스 비극 가운데 가장 유명한 이야기입니다. 예언을 피하려고 한 일이 하나하나 그 예언에 다가가는 걸음이 됩니다.`,
+        `다만 이 이야기들을 읽을 때 조심할 것이 있습니다. 삼천 년 전 사람들이 만든 이야기라 지금 보기에 옳지 않은 대목이 많습니다.`,
+        `신들이 사람을 함부로 대하는 대목, 여자를 다루는 방식, 이긴 쪽이 진 쪽에게 하는 일 같은 것입니다. 여기서는 그런 대목을 자세히 옮기지 않았습니다.`,
+        `그러니 이 이야기들은 본받을 이야기로 읽으면 안 됩니다. 그 시절 사람들이 세상을 어떻게 보았는지를 알려 주는 이야기로 읽어야 합니다.`,
+        `언젠가 이 이야기들을 다시 읽게 되거든, 이번에는 벌을 받는 사람들만 모아 읽어 보십시오. 무엇을 해서 벌을 받는지 세어 보면, 그 시절 사람들이 무엇을 제일 겁냈는지가 보입니다.`,
+        `마지막으로 생각해 볼 것을 남겨 둡니다. 답은 적어 두지 않겠습니다.`,
+        `프로메테우스는 벌을 받아야 했을까요? 그는 규칙을 어겼습니다. 그런데 그 덕분에 사람이 살게 되었습니다.`,
+        `판도라가 항아리를 열지 않았다면 세상은 어땠을까요? 그리고 그 항아리를 그 자리에 놓아 둔 것은 누구였을까요?`,
+        `그리고 오르페우스가 뒤를 돌아보지 않았다면 이 이야기가 삼천 년을 살아남았을까요. 이 물음은 어른이 되어 다시 읽어도 답하기가 쉽지 않습니다.`
+    ]
+};
+
+const AFTER_SEGS = (() => {
+    const segs = [];
+    AFTERWORD.paras.forEach((html, paraIdx) => {
+        splitSegments(html).forEach((piece, k) => {
+            segs.push({ paraIdx, html: piece, start: k === 0 });
+        });
+    });
+    return segs;
+})();
+
 // 조각 묶음을 문단 단위로 다시 묶어 화면에 그릴 모양으로 만든다.
 // 앞 쪽에서 이어진 문단은 첫 줄을 들여쓰지 않는다.
 function runHtml(segs, a, b) {
@@ -742,16 +816,100 @@ function quizPage(part) {
         </div>`;
 }
 
-function endPage() {
+/* 읽고 나서 — 장과 같은 방식으로 쪽을 나눈다. 그림은 오른쪽 위에 얹힌다. */
+const AFTER_FOOT = `<p class="after-home"><a class="home-btn" href="../../../../../">학습 허브로 돌아가기</a></p>`;
+
+function paginateAfterword() {
+    const segs = AFTER_SEGS;
+    const arts = AFTERWORD.art || [];
+    const { usable, headHeight, artHeight } = PROBE;
+    const headHtml = `<h2>${AFTERWORD.title}</h2>`;
+    const totalH = PROBE.measure(runHtml(segs, 0, segs.length));
+
+    const underArt = Math.max(60, usable - artHeight);
+
+    // 맨 끝에는 학습 허브로 가는 단추가 붙는다. 그 높이를 미리 빼 두지 않으면
+    // 마지막 쪽만 넘친다.
+    const footH = PROBE.measure(AFTER_FOOT);
+
+    const capsOf = slots => {
+        const caps = [];
+        slots.forEach(kind => { caps.push(usable); caps.push(kind === 'img' ? underArt : usable); });
+        caps[caps.length - 1] = Math.max(60, caps[caps.length - 1] - footH);
+        return caps;
+    };
+
+    const minSpreads = Math.max(arts.length, 1);
+    const maxSpreads = Math.max(minSpreads, Math.floor(segs.length / 2));
+    let spreadCount = minSpreads;
+    while (spreadCount < maxSpreads) {
+        const caps = capsOf(slotPlan(arts.length, spreadCount - arts.length));
+        if (caps.reduce((a, b) => a + b, 0) >= totalH + headHeight) break;
+        spreadCount++;
+    }
+
+    let slots = slotPlan(arts.length, Math.max(0, spreadCount - arts.length));
+    let caps = capsOf(slots);
+    let ranges = fillPages(segs, caps, headHtml);
+    for (let guard = 0; guard < 8; guard++) {
+        const over = ranges.some(([a, b], n) =>
+            PROBE.measure((n === 0 ? headHtml : '') + runHtml(segs, a, b)) > caps[n] + 1);
+        if (!over || spreadCount >= maxSpreads) break;
+        spreadCount++;
+        slots = slotPlan(arts.length, Math.max(0, spreadCount - arts.length));
+        caps = capsOf(slots);
+        ranges = fillPages(segs, caps, headHtml);
+    }
+
+    const spreads = [];
+    let pageIdx = 0;
+    let artIdx = 0;
+    slots.forEach((kind, s) => {
+        const left = ranges[pageIdx++];
+        const right = ranges[pageIdx++];
+        spreads.push({
+            kind: 'after', first: s === 0, last: s === slots.length - 1,
+            art: kind === 'img' ? arts[artIdx++] : null, left, right
+        });
+    });
+    return spreads;
+}
+
+function afterSpreadPage(spread) {
+    const segs = AFTER_SEGS;
+    const head = spread.first ? `<h2>${AFTERWORD.title}</h2>` : '';
+    // 학습 허브로 돌아가는 길은 맨 끝에 한 번만 둔다.
+    const foot = spread.last ? AFTER_FOOT : '';
+
+    if (spread.art) {
+        return `
+            <div class="page page-story page-after">
+                <div class="story-page-left">
+                    ${head}
+                    ${runHtml(segs, spread.left[0], spread.left[1])}
+                </div>
+                <div class="story-page-right story-page-right-image">
+                    <div class="story-art-top">${artFrame(spread.art, AFTERWORD.emoji)}</div>
+                    ${runHtml(segs, spread.right[0], spread.right[1])}
+                    ${foot}
+                </div>
+            </div>`;
+    }
+
     return `
-        <div class="page page-end">
-            ${artFrame('end.png', '🐴')}
-            <h2>그리스 신화를 다 읽었습니다</h2>
-            <a class="home-btn" href="../../../../../">학습 허브로 돌아가기</a>
+        <div class="page page-story page-after">
+            <div class="story-page-left">
+                ${head}
+                ${runHtml(segs, spread.left[0], spread.left[1])}
+            </div>
+            <div class="story-page-right story-page-right-text">
+                ${runHtml(segs, spread.right[0], spread.right[1])}
+                ${foot}
+            </div>
         </div>`;
 }
 
-const TWO_PAGE_KINDS = new Set(['chapter', 'toc', 'cover']);
+const TWO_PAGE_KINDS = new Set(['chapter', 'toc', 'cover', 'after']);
 
 let PAGES = [];
 let FOLIOS = [];
@@ -763,7 +921,7 @@ function buildPages() {
         ...TOC_GROUPS.map((_, i) => ({ kind: 'toc', part: i })),
         ...CHAPTERS.flatMap(paginateChapter),
         ...QUIZ_GROUPS.map((_, i) => ({ kind: 'quiz', part: i })),
-        { kind: 'end' }
+        ...paginateAfterword()
     ];
     PROBE.close();   // 쪽을 다 나눴으니 재는 데 쓰던 숨은 쪽은 치운다
 
@@ -784,7 +942,7 @@ function renderPage(page) {
         case 'toc': return tocPage(page.part);
         case 'chapter': return chapterSpreadPage(page);
         case 'quiz': return quizPage(page.part);
-        case 'end': return endPage();
+        case 'after': return afterSpreadPage(page);
         default: return '';
     }
 }

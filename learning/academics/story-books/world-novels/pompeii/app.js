@@ -415,6 +415,85 @@ const CHAPTER_SEGS = CHAPTERS.map(ch => {
     return segs;
 });
 
+// 읽고 나서 — 책마다 내용이 다르다. 장과 같은 방식으로 재서 나눈다.
+const AFTERWORD = {
+    title: '읽고 나서',
+    emoji: '🌋',
+    art: [],
+    paras: [
+        `이 책의 제목은 『폼페이 최후의 날』입니다. 마지막 날이라는 말이 제목입니다. 그러니 이 책은 처음부터 끝을 알려 주고 시작합니다.`,
+        `쓴 사람은 영국의 에드워드 불워리턴입니다. 소설도 쓰고 정치도 한 사람인데, 지금은 이 책 하나로 기억됩니다.`,
+        `그 사람이 남긴 것이 또 하나 있습니다. 어두운 밤 폭풍우 치는 밤이었다는 문장으로 소설을 시작한 것이 그 사람입니다. 지금은 뻔한 첫 문장의 본보기처럼 놀림감이 되었습니다.`,
+        `그는 이탈리아를 여행하다 폼페이 유적을 보고 이 이야기를 썼습니다. 그 무렵 폼페이를 파내는 일이 한창이었습니다.`,
+        `그가 본 것 가운데 사람 모양으로 굳은 자리가 있었습니다. 그것을 보고 이야기를 지어야겠다고 마음먹었다고 합니다.`,
+        `책은 천팔백삼십사 년에 나왔습니다. 나오자마자 유럽에서 크게 읽혔고, 폼페이를 보러 가는 사람이 부쩍 늘었습니다.`,
+        `먼저 폼페이가 어떤 곳이었는지 알아 둡시다. 이탈리아 남쪽 바닷가에 있던 로마의 도시입니다. 사람이 만 명에서 이만 명쯤 살았습니다.`,
+        `로마에서 배로 하루 거리에 있었고, 로마의 부자들이 여름을 나러 오던 곳이었습니다. 그래서 좋은 집이 많았습니다. 바닷가 도시라 장사도 잘되었습니다.`,
+        `그 도시 뒤에 베수비오라는 산이 있었습니다. 폼페이 사람들은 그것이 화산인 줄 몰랐습니다. 그 산이 마지막으로 터진 것이 그보다 훨씬 오래전이었기 때문입니다.`,
+        `산 비탈에 포도밭이 있었고 사람들은 그 흙이 좋다고 여겼습니다. 화산재가 쌓인 땅이라 실제로 기름졌습니다. 그러니 그 산이 준 것을 먹고 살다가 그 산에 묻힌 셈입니다.`,
+        `그 일이 있은 것은 천구백사십육 년 전, 서기 칠십구 년 팔월입니다. 산이 터지고 재와 돌이 쏟아져 도시가 통째로 묻혔습니다.`,
+        `그리고 천육백 년 넘게 아무도 그 자리를 몰랐습니다. 우물을 파던 사람이 우연히 벽을 찾아내면서 다시 세상에 나왔습니다.`,
+        `그러니 폼페이는 무너진 도시가 아니라 덮인 도시입니다. 그래서 안의 것이 거의 그대로 남았습니다. 지붕 아래 있던 물건이 이천 년 뒤에 그 자리에서 나왔습니다.`,
+        `그런데 묻힌 방식이 특이했습니다. 뜨거운 재가 사람을 덮고 그대로 굳었습니다. 세월이 흐르며 안의 몸은 삭아 없어지고 재 껍질만 남았습니다.`,
+        `그러니 땅속에 사람 모양의 빈 자리가 남은 것입니다. 나중에 사람들이 그 빈 자리에 석고를 부어 굳혔습니다. 그러자 그날 그 사람이 어떤 자세로 있었는지가 그대로 나왔습니다.`,
+        `지금 폼페이에 가면 그 석고상들을 볼 수 있습니다. 웅크린 사람, 얼굴을 가린 사람, 개도 있습니다. 이 책의 첫 장이 그 이야기로 시작하는 까닭이 그것입니다.`,
+        `그 방법을 생각해 낸 사람은 백육십 년쯤 전 폼페이 발굴을 맡았던 피오렐리라는 사람입니다. 그 전까지는 그 빈 자리를 그냥 부수며 파 나갔습니다.`,
+        `원작은 여기 실린 것보다 훨씬 깁니다. 로마 사람들의 살림과 잔치와 종교가 아주 자세히 적혀 있습니다. 여기서는 니디아와 글라우쿠스를 따라가는 줄기만 골라 실었습니다.`,
+        `이제 다시 볼 대목을 짚어 봅시다.`,
+        `첫째, 니디아를 다시 보십시오. 이 이야기에서 제일 중요한 사람은 니디아입니다. 눈이 보이지 않는 꽃 파는 아이입니다.`,
+        `그리고 그 아이는 노예입니다. 사고팔리는 사람이었습니다. 그 도시에서 가장 낮은 자리에 있던 사람이 이 이야기의 마지막을 쥡니다.`,
+        `둘째, 어둠 속의 길을 다시 읽어 보십시오. 산이 터지고 재가 하늘을 덮자 낮인데도 아무것도 보이지 않게 됩니다. 온 도시 사람이 앞을 못 보게 된 것입니다.`,
+        `그때 니디아만 달랐습니다. 그 아이는 원래 보지 않고 다니던 아이였습니다. 손끝과 발끝으로 길을 아는 아이였습니다.`,
+        `눈이 보이는 사람은 어둠 속에서 아무것도 못 합니다. 익힌 적이 없기 때문입니다. 니디아는 그 도시의 길을 발로 외우고 있었습니다. 꽃을 팔러 날마다 돌아다녔기 때문입니다.`,
+        `그래서 니디아가 앞장서서 사람들을 바닷가까지 데려갑니다. 이 이야기 전체가 그 한 장면을 위해 짜여 있습니다.`,
+        `불워리턴은 그 장면을 먼저 떠올리고 나머지를 뒤에 붙였다고 합니다. 그러니 앞의 여러 장은 그 하루를 위한 준비인 셈입니다.`,
+        `이 대목이 왜 좋은 이야기인지 생각해 보십시오. 모자란 것으로만 여겨지던 것이 그날 하루만은 제일 필요한 것이 되었습니다. 그런데 그것은 니디아가 그동안 살아온 방식이었습니다.`,
+        `셋째, 경기장 대목을 다시 보십시오. 산이 터진 그날 도시 사람들은 경기장에 모여 있었습니다. 만 명 도시에 이만 명이 들어가는 경기장이 있었습니다.`,
+        `그러니 그 도시에서 그 자리에 가지 않는 사람은 눈에 띄었습니다. 무슨 일이 있느냐고 사람들이 물었습니다. 그 시절 도시가 어떻게 돌아갔는지가 그 한 가지로 짐작이 됩니다.`,
+        `그 안에서 무슨 일이 벌어졌는지는 여기에 적지 않습니다. 이 책도 그날은 그것이 끝나기 전에 산이 터진다고만 적어 둡니다.`,
+        `넷째, 마지막 장을 다시 읽어 보십시오. 살아남은 사람들이 배를 타고 떠납니다. 그런데 그 배에 니디아는 타고 있지 않습니다.`,
+        `이 이야기는 니디아가 마지막에 무엇을 했는지 길게 적지 않습니다. 짧게 적고 넘어갑니다. 그 짧음이 오히려 오래 남습니다.`,
+        `이 책에서 제일 좋은 대목은 대개 짧습니다. 반대로 잔치와 옷차림을 적은 대목은 아주 깁니다. 백구십 년 전 독자들은 그런 것을 읽고 싶어 했습니다.`,
+        `인물도 다시 보아야 할 사람이 있습니다.`,
+        `아르바케스를 그냥 나쁜 사람으로 읽으면 놓치는 것이 있습니다. 그 사람은 이집트에서 온 신관입니다. 로마 사람들 사이에서 늘 겉도는 사람이었습니다.`,
+        `그리고 그 사람은 아는 것이 많았습니다. 별을 읽고 약을 다루었습니다. 그 앎을 사람을 속이는 데 쓴 것이 그 사람의 잘못이었습니다.`,
+        `그 사람은 별과 약을 아는 것을 신의 힘인 것처럼 보이게 했습니다. 아는 것을 감추면 힘이 되기 때문입니다. 지금도 그런 일이 있습니다.`,
+        `이오네도 다시 볼 만합니다. 그 사람은 이 책에서 제일 아름다운 사람으로 나오는데, 아름답다는 것 말고 하는 일이 많지 않습니다. 그 시절 소설이 여자를 그리는 방식이 그랬습니다.`,
+        `그래서 니디아가 더 눈에 띕니다. 니디아는 아무도 눈여겨보지 않는 아이인데, 이야기를 실제로 움직이는 것은 그 아이입니다.`,
+        `그 시절 사정도 알아 두면 좋습니다. 로마의 도시에는 목욕탕과 광장과 극장이 있었습니다. 폼페이에도 다 있었습니다. 물길을 놓아 집집마다 물이 들어오게 해 두기도 했습니다.`,
+        `지금 폼페이에 가면 그 물길과 길바닥과 빵집이 그대로 남아 있습니다. 화덕 안에 빵이 그대로 있는 것도 나왔습니다. 그날 굽던 빵입니다.`,
+        `벽에 사람들이 낙서한 것도 그대로 있습니다. 누구를 좋아한다는 말, 누구를 뽑아 달라는 말, 여기서 술을 마셨다는 말입니다. 이천 년 전 사람들이 우리와 크게 다르지 않았다는 것을 그 낙서가 알려 줍니다.`,
+        `학교에서 배운 글씨를 벽에 연습한 자국도 있고, 셈을 적어 둔 것도 있습니다. 빵값과 술값을 적어 둔 벽도 나왔습니다. 그날 아침까지 사람들이 무엇을 하고 있었는지가 그대로 남은 것입니다.`,
+        `노예 제도도 알아 두어야 합니다. 로마에서는 사람의 삼분의 일쯤이 노예였습니다. 니디아처럼 어릴 때 팔려 온 아이도 많았습니다.`,
+        `싸움에서 진 나라 사람들이 그렇게 끌려왔습니다. 폼페이의 집집마다 그런 사람이 있었습니다. 지금 남아 있는 집들의 작은 방들이 그 사람들이 자던 자리입니다.`,
+        `이 책이 붙들고 있는 물음은 두 가지입니다.`,
+        `하나는 모자란 것이 무엇이냐는 것입니다. 니디아는 눈이 보이지 않습니다. 도시 사람들은 그것을 딱하게 여깁니다. 그런데 어둠이 오자 그 도시에서 앞을 볼 수 있는 사람은 그 아이뿐이었습니다.`,
+        `다른 하나는 도시가 무엇으로 무너지느냐는 것입니다. 이 책은 산 때문에 무너졌다고만 적지 않습니다. 앞의 여러 장에 걸쳐 그 도시가 어떤 곳이었는지를 보여 줍니다.`,
+        `다만 이 책이 그렇게 적은 데는 그 시절 영국 사람들의 생각도 섞여 있습니다. 로마가 방탕해서 벌을 받았다는 식으로 읽히기도 합니다. 지금 학자들은 그렇게 보지 않습니다. 화산은 벌을 주지 않습니다.`,
+        `땅속에서 마그마가 올라와 압력이 차면 터집니다. 그 도시에 어떤 사람들이 살았는지와는 아무 상관이 없습니다. 그것을 아는 것이 지금 우리가 그때 사람들보다 나은 점입니다.`,
+        `그러니 이 책은 두 가지로 읽어야 합니다. 하나는 실제로 있었던 일의 기록이고, 다른 하나는 백구십 년 전 영국 사람이 그 일을 어떻게 보았는가 하는 기록입니다.`,
+        `그날 폼페이에서 죽은 사람이 이천 명쯤으로 헤아려집니다. 나머지는 달아났습니다. 그러니 도시가 통째로 없어진 것은 아니었습니다. 다만 그 도시로 돌아간 사람은 없었습니다.`,
+        `재가 몇 미터씩 쌓여 도시가 통째로 사라졌기 때문입니다. 그 위에 나무가 자라고 밭이 되었습니다. 그 밭을 갈던 사람들은 발밑에 도시가 있는 줄 몰랐습니다.`,
+        `그리고 베수비오는 그 뒤로도 여러 번 터졌습니다. 지금도 살아 있는 화산입니다. 그 산 둘레에 지금 삼백만 명이 살고 있습니다.`,
+        `그래서 이탈리아에서는 그 산을 늘 지켜보고 있습니다. 땅이 조금만 흔들려도 기록이 남습니다. 폼페이 사람들이 갖지 못했던 것을 지금 사람들은 갖고 있는 셈입니다.`,
+        `언젠가 이 책을 다시 읽게 되거든, 이번에는 니디아만 따라가며 읽어 보십시오. 그 아이가 나오는 대목만 이어 붙여도 이야기 하나가 됩니다.`,
+        `마지막으로 생각해 볼 것을 남겨 둡니다. 답은 적어 두지 않겠습니다.`,
+        `니디아가 마지막에 한 선택을 우리는 어떻게 보아야 할까요? 그 아이는 살 수 있었습니다.`,
+        `폼페이 사람들은 그 산이 위험한 줄 몰랐습니다. 모르고 살던 것을 그 사람들의 잘못이라고 할 수 있을까요?`,
+        `그리고 그 석고상들을 사람들에게 보여 주는 것은 옳은 일일까요. 그것은 그날 죽은 사람의 마지막 모습입니다. 이 물음은 어른이 되어 다시 읽어도 답하기가 쉽지 않습니다.`
+    ]
+};
+
+const AFTER_SEGS = (() => {
+    const segs = [];
+    AFTERWORD.paras.forEach((html, paraIdx) => {
+        splitSegments(html).forEach((piece, k) => {
+            segs.push({ paraIdx, html: piece, start: k === 0 });
+        });
+    });
+    return segs;
+})();
+
 // 조각 묶음을 문단 단위로 다시 묶어 화면에 그릴 모양으로 만든다.
 // 앞 쪽에서 이어진 문단은 첫 줄을 들여쓰지 않는다.
 function runHtml(segs, a, b) {
@@ -696,16 +775,100 @@ function quizPage(part) {
         </div>`;
 }
 
-function endPage() {
+/* 읽고 나서 — 장과 같은 방식으로 쪽을 나눈다. 그림은 오른쪽 위에 얹힌다. */
+const AFTER_FOOT = `<p class="after-home"><a class="home-btn" href="../../../../../">학습 허브로 돌아가기</a></p>`;
+
+function paginateAfterword() {
+    const segs = AFTER_SEGS;
+    const arts = AFTERWORD.art || [];
+    const { usable, headHeight, artHeight } = PROBE;
+    const headHtml = `<h2>${AFTERWORD.title}</h2>`;
+    const totalH = PROBE.measure(runHtml(segs, 0, segs.length));
+
+    const underArt = Math.max(60, usable - artHeight);
+
+    // 맨 끝에는 학습 허브로 가는 단추가 붙는다. 그 높이를 미리 빼 두지 않으면
+    // 마지막 쪽만 넘친다.
+    const footH = PROBE.measure(AFTER_FOOT);
+
+    const capsOf = slots => {
+        const caps = [];
+        slots.forEach(kind => { caps.push(usable); caps.push(kind === 'img' ? underArt : usable); });
+        caps[caps.length - 1] = Math.max(60, caps[caps.length - 1] - footH);
+        return caps;
+    };
+
+    const minSpreads = Math.max(arts.length, 1);
+    const maxSpreads = Math.max(minSpreads, Math.floor(segs.length / 2));
+    let spreadCount = minSpreads;
+    while (spreadCount < maxSpreads) {
+        const caps = capsOf(slotPlan(arts.length, spreadCount - arts.length));
+        if (caps.reduce((a, b) => a + b, 0) >= totalH + headHeight) break;
+        spreadCount++;
+    }
+
+    let slots = slotPlan(arts.length, Math.max(0, spreadCount - arts.length));
+    let caps = capsOf(slots);
+    let ranges = fillPages(segs, caps, headHtml);
+    for (let guard = 0; guard < 8; guard++) {
+        const over = ranges.some(([a, b], n) =>
+            PROBE.measure((n === 0 ? headHtml : '') + runHtml(segs, a, b)) > caps[n] + 1);
+        if (!over || spreadCount >= maxSpreads) break;
+        spreadCount++;
+        slots = slotPlan(arts.length, Math.max(0, spreadCount - arts.length));
+        caps = capsOf(slots);
+        ranges = fillPages(segs, caps, headHtml);
+    }
+
+    const spreads = [];
+    let pageIdx = 0;
+    let artIdx = 0;
+    slots.forEach((kind, s) => {
+        const left = ranges[pageIdx++];
+        const right = ranges[pageIdx++];
+        spreads.push({
+            kind: 'after', first: s === 0, last: s === slots.length - 1,
+            art: kind === 'img' ? arts[artIdx++] : null, left, right
+        });
+    });
+    return spreads;
+}
+
+function afterSpreadPage(spread) {
+    const segs = AFTER_SEGS;
+    const head = spread.first ? `<h2>${AFTERWORD.title}</h2>` : '';
+    // 학습 허브로 돌아가는 길은 맨 끝에 한 번만 둔다.
+    const foot = spread.last ? AFTER_FOOT : '';
+
+    if (spread.art) {
+        return `
+            <div class="page page-story page-after">
+                <div class="story-page-left">
+                    ${head}
+                    ${runHtml(segs, spread.left[0], spread.left[1])}
+                </div>
+                <div class="story-page-right story-page-right-image">
+                    <div class="story-art-top">${artFrame(spread.art, AFTERWORD.emoji)}</div>
+                    ${runHtml(segs, spread.right[0], spread.right[1])}
+                    ${foot}
+                </div>
+            </div>`;
+    }
+
     return `
-        <div class="page page-end">
-            ${artFrame('end.png', '🏺')}
-            <h2>폼페이 최후의 날를 다 읽었습니다</h2>
-            <a class="home-btn" href="../../../../../">학습 허브로 돌아가기</a>
+        <div class="page page-story page-after">
+            <div class="story-page-left">
+                ${head}
+                ${runHtml(segs, spread.left[0], spread.left[1])}
+            </div>
+            <div class="story-page-right story-page-right-text">
+                ${runHtml(segs, spread.right[0], spread.right[1])}
+                ${foot}
+            </div>
         </div>`;
 }
 
-const TWO_PAGE_KINDS = new Set(['chapter', 'toc', 'cover']);
+const TWO_PAGE_KINDS = new Set(['chapter', 'toc', 'cover', 'after']);
 
 let PAGES = [];
 let FOLIOS = [];
@@ -717,7 +880,7 @@ function buildPages() {
         ...TOC_GROUPS.map((_, i) => ({ kind: 'toc', part: i })),
         ...CHAPTERS.flatMap(paginateChapter),
         ...QUIZ_GROUPS.map((_, i) => ({ kind: 'quiz', part: i })),
-        { kind: 'end' }
+        ...paginateAfterword()
     ];
     PROBE.close();   // 쪽을 다 나눴으니 재는 데 쓰던 숨은 쪽은 치운다
 
@@ -738,7 +901,7 @@ function renderPage(page) {
         case 'toc': return tocPage(page.part);
         case 'chapter': return chapterSpreadPage(page);
         case 'quiz': return quizPage(page.part);
-        case 'end': return endPage();
+        case 'after': return afterSpreadPage(page);
         default: return '';
     }
 }
