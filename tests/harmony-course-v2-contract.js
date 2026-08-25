@@ -49,6 +49,15 @@ for (let id = 1; id <= 16; id += 1) {
 }
 assert.match(guides, /기준선, 기본 음이름, 변화표, 건반 위치/);
 assert.match(guides, /C\(1\)–D\(2\)–E\(3\)/);
+assert.match(js, /octavus/);
+assert.match(js, /octaveOriginMarkup/);
+assert.match(js, /registerBoundaryMarkup/);
+assert.match(guides, /라틴어 octavus/);
+assert.match(guides, /HARMONY_DEEP_DIVES/);
+assert.match(js, /왜 이렇게 배우나요\?/);
+assert.match(js, /악보와 건반에 적용해 보기/);
+assert.match(css, /\.octave-origin/);
+assert.match(css, /\.worked-card-grid/);
 
 assert.match(css, /\.staff-lines/);
 assert.match(css, /\.keyboard-visual/);

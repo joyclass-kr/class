@@ -119,6 +119,26 @@ button:focus-visible, a:focus-visible, summary:focus-visible { outline: 3px soli
 .comparison-table th { background: #ece6da; }
 .comparison-table td strong { color: #8a621a; }
 
+.octave-origin { display: grid; gap: 16px; }
+.origin-note { display: flex; align-items: baseline; justify-content: center; gap: 10px; padding-bottom: 10px; border-bottom: 1px solid #cfc6b6; }
+.origin-note strong { color: #775315; font: 700 22px/1 Georgia,serif; }
+.origin-note span { color: #65605a; font-size: 12px; }
+.octave-count-row { display: grid; grid-template-columns: repeat(8,minmax(38px,1fr)); gap: 5px; }
+.octave-count-note { display: grid; place-items: center; min-height: 62px; border: 1px solid #c9c0b0; background: #f5f0e6; }
+.octave-count-note b { color: #93681c; font-size: 11px; }
+.octave-count-note span { font: 700 20px/1 Georgia,serif; }
+.octave-count-note.edge { border-color: #b27b1d; background: #f3d996; }
+.octave-measures { display: grid; grid-template-columns: 1fr 1fr; gap: 8px; }
+.octave-measures p { display: grid; gap: 4px; margin: 0; padding: 10px 12px; border-left: 3px solid #d4a43d; background: #f5f1e8; }
+.octave-measures b { font-size: 12px; }
+.octave-measures span { color: #5d6268; font-size: 11px; line-height: 1.5; }
+.register-boundary { display: grid; gap: 18px; }
+.register-run { display: grid; grid-template-columns: repeat(6,1fr); align-items: stretch; border: 1px solid #bfb6a7; }
+.register-run span, .register-run strong { display: grid; place-items: center; min-height: 64px; border-right: 1px solid #d5cec1; font-size: 14px; }
+.register-run strong { color: #6d490d; background: #f0d48f; }
+.register-run > :last-child { border-right: 0; }
+.register-rule { display: flex; justify-content: center; gap: 12px; color: #5c6269; font-size: 12px; }
+.register-rule b { color: #795515; }
 .interval-count-visual .count-result { display: grid; grid-template-columns: auto 1fr auto; align-items: center; gap: 10px; color: #74551f; font-size: 11px; text-align: center; }
 .interval-count-visual .count-result b { padding: 7px 10px; border-top: 2px solid #b98226; }
 .notation-map { display: grid; grid-template-columns: minmax(150px,.9fr) auto minmax(190px,1.1fr); align-items: center; gap: 12px; }
@@ -136,7 +156,15 @@ button:focus-visible, a:focus-visible, summary:focus-visible { outline: 3px soli
 .lesson-guide { padding: 30px 0 34px; border-bottom: 1px solid var(--paper-line); }
 .lesson-guide > header h2 { margin: 0 0 10px; font-family: Georgia,"Noto Serif KR",serif; font-size: 21px; }
 .lesson-guide > header p, .guide-columns p, .guide-caution p, .self-check p { margin: 0; color: #454b53; font-family: Georgia,"Noto Serif KR",serif; font-size: 15px; line-height: 1.75; word-break: keep-all; }
-.guide-columns { display: grid; grid-template-columns: 1fr 1fr; gap: 28px; margin-top: 22px; }
+.guide-principle { margin-top: 22px; padding: 18px 20px; border-left: 4px solid #b98424; background: #eee8dc; }
+.guide-principle h3, .worked-examples h3 { margin: 0 0 8px; font-size: 15px; }
+.guide-principle p, .worked-card p, .guide-bridge p { margin: 0; color: #454b53; font-family: Georgia,"Noto Serif KR",serif; font-size: 14px; line-height: 1.75; word-break: keep-all; }
+.worked-examples { margin-top: 24px; }
+.worked-card-grid { display: grid; grid-template-columns: repeat(2,minmax(0,1fr)); gap: 10px; }
+.worked-card { min-width: 0; padding: 14px 15px; border: 1px solid #cbc3b5; background: #fffdfa; }
+.worked-card strong { display: block; margin-bottom: 6px; color: #744f12; font-size: 13px; }
+.guide-bridge { display: grid; grid-template-columns: 130px 1fr; gap: 14px; align-items: start; margin-top: 18px; padding-top: 16px; border-top: 1px solid #cbc3b5; }
+.guide-bridge strong { color: #795515; font-size: 13px; }.guide-columns { display: grid; grid-template-columns: 1fr 1fr; gap: 28px; margin-top: 22px; }
 .guide-columns h3, .guide-caution h3 { margin: 0 0 9px; font-size: 15px; }
 .guide-columns ol { margin: 0; padding-left: 22px; color: #3f454c; font-family: Georgia,"Noto Serif KR",serif; font-size: 15px; line-height: 1.8; }
 .guide-caution { margin-top: 22px; padding-top: 18px; border-top: 1px solid #d5cec1; }
@@ -199,6 +227,12 @@ button:focus-visible, a:focus-visible, summary:focus-visible { outline: 3px soli
     .term-summary { padding: 22px 18px; }
     .term-list { grid-template-columns: 1fr; }
     .answer-choices { grid-template-columns: 1fr; }
+    .worked-card-grid { grid-template-columns: 1fr; }
+    .guide-bridge { grid-template-columns: 1fr; gap: 5px; }
+    .octave-count-row { grid-template-columns: repeat(4,1fr); }
+    .octave-measures { grid-template-columns: 1fr; }
+    .register-run { grid-template-columns: repeat(3,1fr); }
+    .register-rule { display: grid; gap: 4px; }
     .perfect-score-grid { grid-template-columns: 1fr; }
     .self-check { grid-template-columns: 1fr; gap: 6px; }
     .visual-board { overflow-x: auto; }

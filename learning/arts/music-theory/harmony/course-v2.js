@@ -52,7 +52,7 @@ const LESSONS = {
     title: "옥타브와 음역 번호", english: "Octave Registers",
     terms: [["옥타브", "Octave"], ["음역", "Register"], ["과학적 음높이 표기", "Scientific Pitch Notation"]],
     sections: [
-      { title: "C에서 다음 C까지가 한 옥타브예요", body: "같은 음이름이 다시 나타날 때까지의 거리를 옥타브(Octave)라고 합니다. 건반에서는 C부터 오른쪽의 다음 C까지 흰건반 일곱 개와 검은건반 다섯 개, 모두 열두 반음이 들어 있습니다.", visual: "octave", caption: "C3에서 C4까지 = 1옥타브 = 12반음", audio: [[48], [60]] },
+      { title: "옥타브는 ‘여덟 번째’라는 뜻에서 왔어요", body: "옥타브(Octave)는 라틴어 옥타부스(octavus, ‘여덟 번째’)에서 온 말입니다. C를 1로 시작해 C–D–E–F–G–A–B–다음 C를 양끝 모두 포함해 세면 다음 C가 여덟 번째 자리에 옵니다. 그래서 이 음정을 8도, 즉 옥타브라고 부릅니다. 음이름 자리는 8개이지만 건반의 실제 이동 거리는 12반음입니다.", visual: "octave", caption: "C(1)–D(2)–E(3)–F(4)–G(5)–A(6)–B(7)–C(8) = 옥타브 · 실제 거리 12반음", audio: [[48], [60]] },
       { title: "C가 나올 때마다 옥타브 번호가 바뀌어요", body: "과학적 음높이 표기(Scientific Pitch Notation)는 음이름 뒤에 숫자를 붙입니다. B3 다음 반음은 C4이고, C4부터 B4까지 같은 번호를 씁니다. 그래서 가운데 C는 C4입니다.", visual: "registers", caption: "… B3 | C4 D4 … B4 | C5 …" }
     ], quiz: "octave"
   },
@@ -199,6 +199,14 @@ function comparison(headers, rows) {
 function relation(nodes) {
   return `<div class="interval-family">${nodes.map((node,index) => `${index ? '<span class="interval-arrow">→</span>' : ""}<span class="interval-node${node[1] ? " primary" : ""}">${node[0]}</span>`).join("")}</div>`;
 }
+function octaveOriginMarkup() {
+  const notes = ["C","D","E","F","G","A","B","C"];
+  return `<div class="octave-origin"><div class="origin-note"><strong>octavus</strong><span>라틴어 · 여덟 번째</span></div><div class="octave-count-row">${notes.map((note,index) => `<div class="octave-count-note${index === 0 || index === 7 ? " edge" : ""}"><b>${index + 1}</b><span>${note}</span></div>`).join("")}</div><div class="octave-measures"><p><b>음이름으로 세기</b><span>양끝을 포함한 여덟 자리 → 8도(Octave)</span></p><p><b>건반으로 재기</b><span>이웃 건반 사이 열두 칸 → 12반음</span></p></div></div>`;
+}
+
+function registerBoundaryMarkup() {
+  return `<div class="register-boundary"><div class="register-run"><span>B3</span><strong>C4</strong><span>D4</span><span>…</span><span>B4</span><strong>C5</strong></div><div class="register-rule"><b>C에서 번호 변경</b><span>B3 다음은 C4 · B4 다음은 C5</span></div></div>`;
+}
 function intervalCountStaffMarkup() {
   return `<div class="interval-count-visual">${staffMarkup("treble", [60,62,64], ["① C","② D","③ E"])}<div class="count-result"><span>C</span><b>세 자리를 모두 세어 3도</b><span>E</span></div></div>`;
 }
@@ -220,12 +228,14 @@ function perfectExamplesMarkup() {
 function visualMarkup(type) {
   const keyboardVisuals = {
     whiteNames: [["C","D","E","F","G","A","B"],"names","고정 음이름"], findC: [["C"],"names","두 검은건반 묶음 왼쪽"],
-    middleCKeyboard: [["C"],"names","가운데 C"], octave: [["C",7],"names","C3 → C4 · 12반음"],
-    registers: [["C"],"names","C3 | C4 | C5"], semitone: [["C","C♯"],"accidentals","반음 1칸"],
+    middleCKeyboard: [["C"],"names","가운데 C"],
+    semitone: [["C","C♯"],"accidentals","반음 1칸"],
     wholeTone: [["C","C♯","D"],"accidentals","반음 2칸 = 온음"], accidentals: [["C♯"],"accidentals","C♯과 D♭은 같은 건반"],
     enharmonic: [["C♯"],"accidentals","C♯ = D♭"], notationKeyboard: [["G♯"],"accidentals","G♯4"],
     thirdCompare: [["C","E"],"names","C–E 4반음 / C–E♭ 3반음"]
   };
+  if (type === "octave") return octaveOriginMarkup();
+  if (type === "registers") return registerBoundaryMarkup();
   if (type === "notationKeyboard") return notationMapMarkup();
   if (keyboardVisuals[type]) return keyboardMarkup(...keyboardVisuals[type]);
   if (type === "staffGuide") return staffMarkup("none", [64,65,67,69,71], ["제1선","제1칸","제2선","제2칸","제3선"]);
@@ -385,7 +395,8 @@ function questionSet(type) {
 function guideMarkup(lessonId) {
   const guide = window.HarmonyLessonGuides?.[lessonId];
   if (!guide) return "";
-  return `<section class="lesson-guide"><header><h2>${guide.title}</h2><p>${guide.intro}</p></header><div class="guide-columns"><div><h3>읽는 순서</h3><ol>${guide.steps.map(step => `<li>${step}</li>`).join("")}</ol></div><div><h3>계산 예시</h3><p>${guide.worked}</p></div></div><div class="guide-caution"><h3>헷갈리기 쉬운 점</h3><p>${guide.caution}</p></div><div class="self-check"><strong>스스로 확인</strong><p>${guide.check}</p></div></section>`;
+  const deepDive = guide.why ? `<div class="guide-principle"><h3>왜 이렇게 배우나요?</h3><p>${guide.why}</p></div><div class="worked-examples"><h3>악보와 건반에 적용해 보기</h3><div class="worked-card-grid">${guide.examples.map(example => `<article class="worked-card"><strong>${example[0]}</strong><p>${example[1]}</p></article>`).join("")}</div></div><div class="guide-bridge"><strong>다음 개념과 연결</strong><p>${guide.bridge}</p></div>` : "";
+  return `<section class="lesson-guide"><header><h2>${guide.title}</h2><p>${guide.intro}</p></header>${deepDive}<div class="guide-columns"><div><h3>읽는 순서</h3><ol>${guide.steps.map(step => `<li>${step}</li>`).join("")}</ol></div><div><h3>계산 예시</h3><p>${guide.worked}</p></div></div><div class="guide-caution"><h3>헷갈리기 쉬운 점</h3><p>${guide.caution}</p></div><div class="self-check"><strong>스스로 확인</strong><p>${guide.check}</p></div></section>`;
 }
 
 function renderDashboard() {
