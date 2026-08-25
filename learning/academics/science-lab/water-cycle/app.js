@@ -6,6 +6,8 @@ document.addEventListener('DOMContentLoaded', () => {
     const predictionButtons = [...document.querySelectorAll('[data-prediction]')];
     const runBtn = document.getElementById('runBtn');
     const resetBtn = document.getElementById('resetBtn');
+    const graphGroup = document.getElementById('graphGroup');
+    const dataNote = document.getElementById('dataNote');
     const resultEmpty = document.getElementById('resultEmpty');
     const resultContent = document.getElementById('resultContent');
     const resultTotal = document.getElementById('resultTotal');
@@ -72,10 +74,24 @@ document.addEventListener('DOMContentLoaded', () => {
         return { evap, cond, precip, runoff };
     }
 
+    /* 흐른 자취를 남겨 둡니다. 막대는 지금 이 순간만 보여 주지만, 물이
+       어디로 옮겨 갔는지와 그러면서도 총량이 그대로인지는 시간을 따라
+       그려야 보입니다. */
+    const HISTORY_EVERY = 0.5;          // 기록 간격(모의 날짜)
+    const HISTORY_MAX = 400;
+    let history = [{ d: 0, ...INITIAL }];
+    const recordHistory = () => {
+        const last = history[history.length - 1];
+        if (days - last.d < HISTORY_EVERY) return;
+        history.push({ d: days, ...R });
+        if (history.length > HISTORY_MAX) history.shift();
+    };
+    const resetHistory = () => { history = [{ d: 0, ...INITIAL }]; };
+
     function advanceSim(simDays) {
         const steps = Math.round(simDays / DT);
         let last = null;
-        for (let i = 0; i < steps; i += 1) last = step();
+        for (let i = 0; i < steps; i += 1) { last = step(); recordHistory(); }
         return last;
     }
 
@@ -165,6 +181,71 @@ document.addEventListener('DOMContentLoaded', () => {
         resultTotal.textContent = `${Math.round(total())}`;
         resultTime.textContent = `${Math.round(days)}일`;
         stageBadge.textContent = running ? `${Math.round(days)}일째 순환 중` : '멈춤';
+
+        renderTrend(rows);
+        renderData(rows);
+    }
+
+    const G = { x0: 46, x1: 402, y0: 146, y1: 26 };
+    const SCALE_MAX = 1000;
+    const tx = (d, span) => G.x0 + (span > 0 ? d / span : 0) * (G.x1 - G.x0);
+    const ty = v => G.y0 - (v / SCALE_MAX) * (G.y0 - G.y1);
+
+    function renderTrend(rows) {
+        const span = Math.max(1, history[history.length - 1].d);
+        let out = '';
+        for (const v of [0, 250, 500, 750, 1000]) {
+            const y = ty(v);
+            out += `<line class="grid-line" x1="${G.x0}" y1="${y.toFixed(1)}" x2="${G.x1}" y2="${y.toFixed(1)}"/>`;
+            out += `<text class="axis-text" x="${G.x0 - 6}" y="${(y + 3).toFixed(1)}" text-anchor="end">${v}</text>`;
+        }
+        for (let k = 0; k <= 4; k += 1) {
+            const d = (span * k) / 4;
+            out += `<text class="axis-text" x="${tx(d, span).toFixed(1)}" y="${G.y0 + 15}" text-anchor="middle">${d.toFixed(0)}</text>`;
+        }
+        out += `<line class="axis" x1="${G.x0}" y1="${G.y0}" x2="${G.x1}" y2="${G.y0}"/>`;
+        out += `<line class="axis" x1="${G.x0}" y1="${G.y0}" x2="${G.x0}" y2="${G.y1}"/>`;
+        out += `<text class="axis-title" x="${(G.x0 + G.x1) / 2}" y="${G.y0 + 32}" text-anchor="middle">흐른 날수 (일)</text>`;
+        out += `<text class="axis-title" x="${G.x0}" y="${G.y1 - 8}">물의 양</text>`;
+
+        if (history.length < 2) {
+            out += `<text class="trend-empty" x="${(G.x0 + G.x1) / 2}" y="${(G.y0 + G.y1) / 2}" text-anchor="middle">순환을 시작하면 물이 어디로 옮겨 가는지 그려집니다.</text>`;
+            graphGroup.innerHTML = out;
+            return;
+        }
+
+        // the four stores, then the total on top of them
+        rows.forEach(r => {
+            const pts = history.map(h => `${tx(h.d, span).toFixed(1)},${ty(h[r.key]).toFixed(1)}`);
+            out += `<path class="trend" style="stroke:${r.color}" d="M${pts.join('L')}"/>`;
+        });
+        const totals = history.map(h => `${tx(h.d, span).toFixed(1)},${ty(h.sea + h.vapor + h.cloud + h.land).toFixed(1)}`);
+        out += `<path class="trend-total" d="M${totals.join('L')}"/>`;
+
+        // labels at the right-hand end, fanned so they never sit on each other
+        const tags = rows.map(r => ({ name: r.name, color: r.color, y: ty(R[r.key]) }))
+            .concat([{ name: '전체', color: '#54e6c1', y: ty(total()) }])
+            .sort((a, b) => a.y - b.y);
+        for (let i = 1; i < tags.length; i += 1) {
+            if (tags[i].y - tags[i - 1].y < 12) tags[i].y = tags[i - 1].y + 12;
+        }
+        const spill = tags[tags.length - 1].y - (G.y0 - 2);
+        if (spill > 0) tags.forEach(t => { t.y -= spill; });
+        tags.forEach(t => {
+            out += `<text class="trend-tag" style="fill:${t.color}" x="${G.x1 + 6}" y="${t.y.toFixed(1)}">${t.name}</text>`;
+        });
+        graphGroup.innerHTML = out;
+    }
+
+    function renderData(rows) {
+        const drift = total() - TOTAL;
+        dataNote.innerHTML =
+            rows.map(r =>
+                `<div class="data-row"><span class="data-name">${r.name}</span>` +
+                `<span class="data-val">${Math.round(R[r.key])} (처음 ${INITIAL[r.key]})</span></div>`).join('') +
+            `<div class="data-row match"><span class="data-name">네 곳을 더하면</span>` +
+            `<span class="data-val">${Math.round(total())} — 처음과 ${Math.abs(drift) < 0.5 ? '똑같습니다' : `${drift.toFixed(1)} 다릅니다`}</span></div>` +
+            `<div class="data-row"><span class="data-name">흐른 날수</span><span class="data-val">${days.toFixed(1)}일</span></div>`;
     }
 
     function frame(now) {
@@ -207,6 +288,7 @@ document.addEventListener('DOMContentLoaded', () => {
         running = false;
         R = { ...INITIAL };
         days = 0;
+        resetHistory();
         if (rafId !== null) { cancelAnimationFrame(rafId); rafId = null; lastT = null; }
         runBtn.textContent = '순환 시작';
         resultEmpty.hidden = false;
