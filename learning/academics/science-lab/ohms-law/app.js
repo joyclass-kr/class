@@ -102,7 +102,7 @@ document.addEventListener('DOMContentLoaded', () => {
             });
             out += batterySymbol(70, 125);
             out += meterSymbol(408, 117, `${a.I.toFixed(2)} A`);
-            out += `<text class="comp-sub" x="230" y="212" text-anchor="middle">두 저항에 같은 전압이 걸립니다</text>`;
+            out += `<text class="comp-sub" x="230" y="16" text-anchor="middle">두 저항에 같은 전압이 걸립니다</text>`;
         }
         circuitGroup.innerHTML = out;
     }
@@ -125,23 +125,31 @@ document.addEventListener('DOMContentLoaded', () => {
         out += `<line class="axis" x1="${GRAPH.x0}" y1="${GRAPH.y0}" x2="${GRAPH.x1}" y2="${GRAPH.y0}"/>`;
         out += `<line class="axis" x1="${GRAPH.x0}" y1="${GRAPH.y0}" x2="${GRAPH.x0}" y2="${GRAPH.y1}"/>`;
         out += `<text class="axis-title" x="${(GRAPH.x0 + GRAPH.x1) / 2}" y="${GRAPH.y0 + 31}" text-anchor="middle">전압 (V)</text>`;
-        out += `<text class="axis-title" x="${GRAPH.x0 - 40}" y="${GRAPH.y1 + 2}">전류 (A)</text>`;
-
-        // R1 alone, for comparison with the combined resistance
-        out += `<path class="iv-line ghost" d="M${gx(0)},${gy(0, iMax)} L${gx(V_MAX)},${gy(V_MAX / R1(), iMax)}"/>`;
-        out += `<text class="axis-text" x="${GRAPH.x1 - 4}" y="${gy(V_MAX / R1(), iMax) - 6}" text-anchor="end">R₁만</text>`;
-        // the combined resistance: I = V/R is a straight line through the origin
-        out += `<path class="iv-line" d="M${gx(0)},${gy(0, iMax)} L${gx(V_MAX)},${gy(iAtMax, iMax)}"/>`;
+        out += `<text class="axis-title" x="${GRAPH.x0}" y="${GRAPH.y1 + 2}">전류 (A)</text>`;
 
         const px = gx(V()), py = gy(a.I, iMax);
-        out += `<line class="op-guide" x1="${px}" y1="${GRAPH.y0}" x2="${px}" y2="${py.toFixed(1)}"/>`;
-        out += `<line class="op-guide" x1="${GRAPH.x0}" y1="${py.toFixed(1)}" x2="${px}" y2="${py.toFixed(1)}"/>`;
-        out += `<circle class="op-point" cx="${px}" cy="${py.toFixed(1)}" r="5"/>`;
         // At high voltage the point sits near the right edge, where a label
         // hung to its right runs off the canvas — flip it inward there, and
         // keep it clear of the top edge when the current is large.
         const flip = px > (GRAPH.x0 + GRAPH.x1) / 2;
         const labelY = Math.max(GRAPH.y1 - 6, py - 8);
+
+        // R1 alone, for comparison with the combined resistance
+        const r1Y = gy(V_MAX / R1(), iMax);
+        // Both this label and the operating-point label hang off the right edge,
+        // so when the two lines run close together drop this one below its line
+        // rather than letting the two sit on top of each other.
+        const r1LabelY = (flip && Math.abs((r1Y - 6) - labelY) < 15)
+            ? Math.min(GRAPH.y0 - 4, r1Y + 15)
+            : r1Y - 6;
+        out += `<path class="iv-line ghost" d="M${gx(0)},${gy(0, iMax)} L${gx(V_MAX)},${r1Y}"/>`;
+        out += `<text class="axis-text" x="${GRAPH.x1 - 4}" y="${r1LabelY.toFixed(1)}" text-anchor="end">R₁만</text>`;
+        // the combined resistance: I = V/R is a straight line through the origin
+        out += `<path class="iv-line" d="M${gx(0)},${gy(0, iMax)} L${gx(V_MAX)},${gy(iAtMax, iMax)}"/>`;
+
+        out += `<line class="op-guide" x1="${px}" y1="${GRAPH.y0}" x2="${px}" y2="${py.toFixed(1)}"/>`;
+        out += `<line class="op-guide" x1="${GRAPH.x0}" y1="${py.toFixed(1)}" x2="${px}" y2="${py.toFixed(1)}"/>`;
+        out += `<circle class="op-point" cx="${px}" cy="${py.toFixed(1)}" r="5"/>`;
         out += `<text class="op-text" x="${(px + (flip ? -9 : 9)).toFixed(1)}" y="${labelY.toFixed(1)}"` +
                `${flip ? ' text-anchor="end"' : ''}>${V().toFixed(1)} V, ${a.I.toFixed(2)} A</text>`;
         graphGroup.innerHTML = out;
@@ -172,10 +180,10 @@ document.addEventListener('DOMContentLoaded', () => {
 
         if (wiring === 'series') {
             stageCaption.textContent = `직렬이라 합성 저항이 ${R1()} + ${R2()} = ${a.R.toFixed(0)} Ω 이고, 전류는 ${a.I.toFixed(2)} A 입니다.`;
-            explanation.textContent = `직렬연결에서는 전류가 흐를 길이 하나뿐이라 두 저항에 같은 ${a.I.toFixed(2)} A 가 흐르고, 전압은 저항에 비례해 ${a.v1.toFixed(2)} V 와 ${a.v2.toFixed(2)} V 로 나뉩니다. 두 전압을 더하면 전원 전압 ${V().toFixed(1)} V 가 됩니다.`;
+            explanation.textContent = `직렬연결에서는 전류가 흐를 길이 하나뿐이라 두 저항에 같은 ${a.I.toFixed(2)} A가 흐르고, 전압은 저항에 비례해 ${a.v1.toFixed(2)} V와 ${a.v2.toFixed(2)} V로 나뉩니다. 두 전압을 더하면 전원 전압 ${V().toFixed(1)} V가 됩니다.`;
         } else {
             stageCaption.textContent = `병렬이라 합성 저항이 ${a.R.toFixed(1)} Ω 으로 각 저항보다 작고, 전류는 ${a.I.toFixed(2)} A 입니다.`;
-            explanation.textContent = `병렬연결에서는 두 저항에 같은 ${V().toFixed(1)} V 가 걸리고, 전류는 ${a.i1.toFixed(2)} A 와 ${a.i2.toFixed(2)} A 로 나뉘어 흐른 뒤 합쳐집니다. 길이 늘어난 셈이므로 합성 저항은 가장 작은 저항보다도 작아집니다.`;
+            explanation.textContent = `병렬연결에서는 두 저항에 같은 ${V().toFixed(1)} V가 걸리고, 전류는 ${a.i1.toFixed(2)} A와 ${a.i2.toFixed(2)} A로 나뉘어 흐른 뒤 합쳐집니다. 길이 늘어난 셈이므로 합성 저항은 가장 작은 저항보다도 작아집니다.`;
         }
     }
 

@@ -135,7 +135,7 @@ document.addEventListener('DOMContentLoaded', () => {
         g += `<line class="axis" x1="${GRAPH.x0}" y1="${GRAPH.y0}" x2="${GRAPH.x1}" y2="${GRAPH.y0}"/>`;
         g += `<line class="axis" x1="${GRAPH.x0}" y1="${GRAPH.y0}" x2="${GRAPH.x0}" y2="${GRAPH.y1}"/>`;
         g += `<text class="axis-title" x="${(GRAPH.x0 + GRAPH.x1) / 2}" y="${GRAPH.y0 + 30}" text-anchor="middle">넣은 마그네슘 (g)</text>`;
-        g += `<text class="axis-title" x="${GRAPH.x0 - 32}" y="${GRAPH.y1 - 6}">산화마그네슘 (g)</text>`;
+        g += `<text class="axis-title" x="${GRAPH.x0}" y="${GRAPH.y1 - 6}">산화마그네슘 (g)</text>`;
         const pts = [];
         for (let v = 0; v <= MAX_G; v += 0.25) pts.push(`${gx(v, MAX_G).toFixed(1)},${gy(react(v, ox()).product, 0, yMax).toFixed(1)}`);
         g += `<path class="trace" style="stroke:#54e6c1" d="M${pts.join('L')}"/>`;
@@ -186,7 +186,7 @@ document.addEventListener('DOMContentLoaded', () => {
         g += `<line class="axis" x1="${GRAPH.x0}" y1="${GRAPH.y0}" x2="${GRAPH.x1}" y2="${GRAPH.y0}"/>`;
         g += `<line class="axis" x1="${GRAPH.x0}" y1="${GRAPH.y0}" x2="${GRAPH.x0}" y2="${GRAPH.y1}"/>`;
         g += `<text class="axis-title" x="${(GRAPH.x0 + GRAPH.x1) / 2}" y="${GRAPH.y0 + 30}" text-anchor="middle">시간 (초)</text>`;
-        g += `<text class="axis-title" x="${GRAPH.x0 - 32}" y="${GRAPH.y1 - 6}">온도 (℃)</text>`;
+        g += `<text class="axis-title" x="${GRAPH.x0}" y="${GRAPH.y1 - 6}">온도 (℃)</text>`;
         g += `<line class="base-line" x1="${GRAPH.x0}" y1="${gy(T0, lo, hi).toFixed(1)}" x2="${GRAPH.x1}" y2="${gy(T0, lo, hi).toFixed(1)}"/>`;
         g += `<text class="axis-text" x="${GRAPH.x1 - 4}" y="${(gy(T0, lo, hi) - 5).toFixed(1)}" text-anchor="end">시작 온도 ${T0} ℃</text>`;
         Object.entries(REACTIONS).forEach(([key, rr]) => {
@@ -226,10 +226,10 @@ document.addEventListener('DOMContentLoaded', () => {
                 : prediction === 'same' ? '예상이 맞았습니다.' : '예상과 다른 결과입니다. 전체 질량은 변하지 않습니다.';
             explanation.textContent =
                 `마그네슘과 산소는 언제나 ${R_MG} : ${R_OX} 의 질량비로 반응합니다. ` +
-                (a.limiting === 'mg' ? `산소가 넉넉해 마그네슘 ${a.mgUsed.toFixed(1)} g 이 모두 반응하고 산소 ${a.oxLeft.toFixed(1)} g 이 남습니다. `
-                : a.limiting === 'ox' ? `산소 ${a.oxUsed.toFixed(1)} g 이 먼저 다 쓰여 마그네슘 ${a.mgLeft.toFixed(1)} g 이 남습니다. `
+                (a.limiting === 'mg' ? `산소가 넉넉해 마그네슘 ${a.mgUsed.toFixed(1)} g이 모두 반응하고 산소 ${a.oxLeft.toFixed(1)} g이 남습니다. `
+                : a.limiting === 'ox' ? `산소 ${a.oxUsed.toFixed(1)} g이 먼저 다 쓰여 마그네슘 ${a.mgLeft.toFixed(1)} g이 남습니다. `
                 : a.limiting === 'exact' ? `두 물질이 꼭 맞는 비율이라 남는 것 없이 모두 반응합니다. ` : `한쪽이 없어 반응이 일어나지 않습니다. `) +
-                `반응 전 ${a.before.toFixed(1)} g 과 반응 후 ${a.after.toFixed(1)} g 이 같아 저울은 수평을 유지합니다. 원자가 새로 생기거나 사라지지 않기 때문입니다.`;
+                `반응 전 ${a.before.toFixed(1)} g과 반응 후 ${a.after.toFixed(1)} g이 같아 저울은 수평을 유지합니다. 원자가 새로 생기거나 사라지지 않기 때문입니다.`;
         } else {
             const r = REACTIONS[rxn], t = elapsed(), temp = tempAt(t);
             labelA.textContent = '지금 온도';
@@ -238,7 +238,7 @@ document.addEventListener('DOMContentLoaded', () => {
             valueB.textContent = r.kind;
             predictionResult.textContent = `${r.kind} 반응이므로 주위 온도가 ${r.delta > 0 ? '올라갑니다' : '내려갑니다'}.`;
             explanation.textContent =
-                `${r.name} 은 ${r.kind} 반응입니다. 반응이 진행되면서 온도가 ${T0} ℃ 에서 ${temp.toFixed(1)} ℃ 로 ` +
+                `${r.name}은 ${r.kind} 반응입니다. 반응이 진행되면서 온도가 ${T0} ℃ 에서 ${temp.toFixed(1)} ℃로 ` +
                 `${r.delta > 0 ? '올라갑니다' : '내려갑니다'}. ` +
                 `${r.delta > 0 ? '반응물이 가지고 있던 에너지 일부가 열로 빠져나와 주위를 데웁니다.' : '반응이 진행되려면 에너지가 필요해 주위에서 열을 빼앗아 가므로 주위가 차가워집니다.'}`;
         }

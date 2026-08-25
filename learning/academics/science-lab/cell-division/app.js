@@ -292,7 +292,7 @@ document.addEventListener('DOMContentLoaded', () => {
         if (a.chromPer === a.twoN * 2) {
             s += `지금은 염색 분체가 갈라진 직후라 각각이 독립된 염색체가 되어 수가 잠시 ${a.twoN * 2}개로 늘었습니다. 세포가 아직 나뉘지 않았기 때문입니다. `;
         }
-        s += `전체 DNA는 ${fmt(a.s.dna)} × ${a.s.cells} = ${fmt(a.totalDNA)} 로, 복제한 뒤로는 나누어 가질 뿐 늘지도 줄지도 않습니다. `;
+        s += `전체 DNA는 ${fmt(a.s.dna)} × ${a.s.cells} = ${fmt(a.totalDNA)}로, 복제한 뒤로는 나누어 가질 뿐 늘지도 줄지도 않습니다. `;
         s += a.k === 'mitosis'
             ? `끝나면 어버이와 똑같은 2n = ${a.twoN} 인 딸세포 2개가 생깁니다. 몸이 자라거나 상처가 아물 때 쓰이는 분열입니다.`
             : `끝나면 n = ${a.twoN / 2} 인 생식세포 4개가 생깁니다. 상동 염색체 ${a.pairs}쌍이 각각 무작위로 갈라지므로 조합만 따져도 2^${a.pairs} = ${a.combos}가지가 나오고, 교차까지 더하면 훨씬 다양해집니다. 사람은 23쌍이라 8,388,608가지입니다.`;

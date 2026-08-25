@@ -300,7 +300,7 @@ document.addEventListener('DOMContentLoaded', () => {
             predictionResult.textContent = !state.prediction ? '다음에는 결과를 먼저 예상해 보세요.'
                 : state.prediction === a.verdict ? '예상이 맞았습니다.' : '예상과 다른 결과입니다.';
             let s = `경로차가 ${a.ratio}λ 이므로 위상차는 ${(a.ratio * 360).toFixed(0)}° 입니다. `;
-            s += `두 파동을 더하면 합성 진폭이 2A×|cos(${(a.ratio * 180).toFixed(0)}°)| = ${a.amp.toFixed(2)}A 가 됩니다. `;
+            s += `두 파동을 더하면 합성 진폭이 2A×|cos(${(a.ratio * 180).toFixed(0)}°)| = ${a.amp.toFixed(2)}A가 됩니다. `;
             if (a.verdict === 'constructive') s += `마루와 마루가 딱 겹쳐 진폭이 한 파동의 2배가 되었습니다. 경로차가 파장의 정수배일 때 일어나는 보강 간섭입니다.`;
             else if (a.verdict === 'destructive') s += `한 파동의 마루에 다른 파동의 골이 겹쳐 완전히 사라졌습니다. 경로차가 반파장의 홀수배일 때 일어나는 상쇄 간섭입니다. 파동이 없어진 것이 아니라 서로 지운 것입니다.`;
             else s += `완전히 겹치지도, 완전히 어긋나지도 않아 진폭이 그 사이입니다. 가장 가까운 ${a.nearest}λ 로 옮기면 ${a.nearest % 1 === 0 ? '보강' : '상쇄'} 간섭이 됩니다.`;
@@ -319,7 +319,7 @@ document.addEventListener('DOMContentLoaded', () => {
             `진동수는 v/λ = ${a.v}÷${a.lambda.toFixed(2)} = ${a.freq.toFixed(0)} Hz 입니다. ` +
             `기본 진동수 ${a.base.toFixed(0)} Hz 의 정확히 ${a.n}배로, 고유 진동수는 이렇게 띄엄띄엄한 값만 가질 수 있습니다. ` +
             `마디는 ${a.nodes}개로 언제나 배보다 하나 많고, 마디에서는 두 파동이 늘 상쇄되어 줄이 전혀 움직이지 않습니다. ` +
-            `줄을 ${twice.L.toFixed(1)} m 로 바꾸면 같은 모드의 진동수가 ${twice.freq.toFixed(0)} Hz 로 ${twice.freq < a.freq ? '낮아집니다' : '높아집니다'}.`;
+            `줄을 ${twice.L.toFixed(1)} m로 바꾸면 같은 모드의 진동수가 ${twice.freq.toFixed(0)} Hz로 ${twice.freq < a.freq ? '낮아집니다' : '높아집니다'}.`;
     }
 
     function changed() {

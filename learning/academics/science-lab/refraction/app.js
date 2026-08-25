@@ -93,10 +93,17 @@ document.addEventListener('DOMContentLoaded', () => {
         let out = '';
         // incident ray, drawn from its origin toward the boundary
         out += `<path class="ray incident" d="M${start.x.toFixed(1)},${start.y.toFixed(1)} L${P.x},${P.y}"/>`;
-        out += `<text class="ray-label incident" x="${clampLabelX(start.x - 4).toFixed(1)}" y="${clampLabelY(start.y + (inSgn < 0 ? -6 : 14)).toFixed(1)}">입사 광선</text>`;
+        /* Near normal incidence the incident and reflected rays lie almost on
+           top of each other — that is the physics, not a drawing fault — so the
+           two labels are pushed to opposite sides of the ray instead of being
+           left to print over one another. */
+        const nearNormal = Math.abs(refl.x - start.x) < LABEL_W + 20;
+        const incX = nearNormal ? start.x - LABEL_W - 10 : start.x - 4;
+        const reflX = nearNormal ? refl.x + 10 : refl.x - 26;
+        out += `<text class="ray-label incident" x="${clampLabelX(incX).toFixed(1)}" y="${clampLabelY(start.y + (inSgn < 0 ? -6 : 14)).toFixed(1)}">입사 광선</text>`;
         // reflected ray, drawn away from the boundary on the same side
         out += `<path class="ray reflected" d="M${P.x},${P.y} L${refl.x.toFixed(1)},${refl.y.toFixed(1)}"/>`;
-        out += `<text class="ray-label reflected" x="${clampLabelX(refl.x - 26).toFixed(1)}" y="${clampLabelY(refl.y + (inSgn < 0 ? -6 : 14)).toFixed(1)}">반사 광선</text>`;
+        out += `<text class="ray-label reflected" x="${clampLabelX(reflX).toFixed(1)}" y="${clampLabelY(refl.y + (inSgn < 0 ? -6 : 14)).toFixed(1)}">반사 광선</text>`;
 
         if (!s.total) {
             const sinT = Math.sin(rad(s.theta2)), cosT = Math.cos(rad(s.theta2));
@@ -120,7 +127,7 @@ document.addEventListener('DOMContentLoaded', () => {
         criticalNote.textContent = s.critical === null
             ? ''
             : s.total
-                ? `임계각 ${s.critical.toFixed(1)}° 보다 크게 입사해 전반사가 일어납니다.`
+                ? `임계각 ${s.critical.toFixed(1)}°보다 크게 입사해 전반사가 일어납니다.`
                 : `이 방향의 임계각은 ${s.critical.toFixed(1)}° 입니다. 그보다 크게 입사하면 전반사가 일어납니다.`;
     }
 
@@ -142,16 +149,16 @@ document.addEventListener('DOMContentLoaded', () => {
 
         if (s.total) {
             stageCaption.textContent = `입사각 ${s.theta1}°는 임계각 ${s.critical.toFixed(1)}°보다 커서 빛이 모두 반사됩니다.`;
-            explanation.textContent = `굴절률이 큰 ${m.name}(n=${m.n})에서 공기(n=1.00)로 나갈 때, sin θ₂ = n₁ sin θ₁ / n₂ 가 1을 넘어 굴절 광선이 존재할 수 없습니다. 그래서 빛이 전부 되돌아오는 전반사가 일어납니다.`;
+            explanation.textContent = `굴절률이 큰 ${m.name}(n=${m.n})에서 공기(n=1.00)로 나갈 때, sin θ₂ = n₁ sin θ₁ / n₂가 1을 넘어 굴절 광선이 존재할 수 없습니다. 그래서 빛이 전부 되돌아오는 전반사가 일어납니다.`;
         } else if (s.theta1 === 0) {
             stageCaption.textContent = '수직으로 입사하면 꺾이지 않고 그대로 지나갑니다.';
             explanation.textContent = '입사각이 0°이면 sin θ₁ = 0 이므로 굴절각도 0°가 되어 빛이 꺾이지 않습니다. 반사각도 0°입니다.';
         } else if (dir === 'in') {
             stageCaption.textContent = `공기에서 ${m.name}(으)로 들어가며 ${s.theta1}° → ${s.theta2.toFixed(1)}°로 법선 쪽으로 꺾였습니다.`;
-            explanation.textContent = `1.00 × sin ${s.theta1}° = ${m.n} × sin ${s.theta2.toFixed(1)}° 가 성립합니다. 굴절률이 큰 매질에서는 빛이 느려져 법선 쪽으로 꺾이므로 굴절각이 입사각보다 작습니다. 반사각은 언제나 입사각과 같은 ${s.reflect}°입니다.`;
+            explanation.textContent = `1.00 × sin ${s.theta1}° = ${m.n} × sin ${s.theta2.toFixed(1)}°가 성립합니다. 굴절률이 큰 매질에서는 빛이 느려져 법선 쪽으로 꺾이므로 굴절각이 입사각보다 작습니다. 반사각은 언제나 입사각과 같은 ${s.reflect}°입니다.`;
         } else {
             stageCaption.textContent = `${m.name}에서 공기로 나가며 ${s.theta1}° → ${s.theta2.toFixed(1)}°로 법선에서 멀어졌습니다.`;
-            explanation.textContent = `${m.n} × sin ${s.theta1}° = 1.00 × sin ${s.theta2.toFixed(1)}° 가 성립합니다. 굴절률이 작은 매질로 나가면 법선에서 멀어지므로 굴절각이 입사각보다 큽니다. 임계각 ${s.critical.toFixed(1)}°를 넘으면 전반사가 일어납니다.`;
+            explanation.textContent = `${m.n} × sin ${s.theta1}° = 1.00 × sin ${s.theta2.toFixed(1)}°가 성립합니다. 굴절률이 작은 매질로 나가면 법선에서 멀어지므로 굴절각이 입사각보다 큽니다. 임계각 ${s.critical.toFixed(1)}°를 넘으면 전반사가 일어납니다.`;
         }
     }
 

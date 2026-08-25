@@ -481,16 +481,16 @@ document.addEventListener('DOMContentLoaded', () => {
         if (state.vessel === 'sealed') {
             s = `밀폐 용기에서는 드나드는 기체가 없어 저울 눈금이 ${a.totalBefore.toFixed(2)} g 그대로입니다. ` +
                 (a.mat.burnsAway
-                    ? `나무가 타서 생긴 기체 ${a.gasEnd.toFixed(2)} g 이 용기 안에 그대로 남아 있기 때문입니다.`
+                    ? `나무가 타서 생긴 기체 ${a.gasEnd.toFixed(2)} g이 용기 안에 그대로 남아 있기 때문입니다.`
                     : `강철솜이 결합한 산소 ${a.oxygenTotal.toFixed(2)} g 도 원래 용기 안의 공기에서 온 것이기 때문입니다.`) +
-                ` 반응 전 ${a.totalBefore.toFixed(2)} g, 반응 후 ${a.totalAfter.toFixed(2)} g 으로 질량은 보존됩니다.`;
+                ` 반응 전 ${a.totalBefore.toFixed(2)} g, 반응 후 ${a.totalAfter.toFixed(2)} g으로 질량은 보존됩니다.`;
         } else if (a.mat.burnsAway) {
-            s = `열린 그릇에서는 타서 생긴 기체 ${a.gasEnd.toFixed(2)} g 이 날아가 버립니다. ` +
+            s = `열린 그릇에서는 타서 생긴 기체 ${a.gasEnd.toFixed(2)} g이 날아가 버립니다. ` +
                 `그래서 저울에는 재 ${a.solidEnd.toFixed(2)} g 만 남아 줄어든 것처럼 보입니다. ` +
                 `하지만 날아간 기체까지 세면 ${a.totalBefore.toFixed(2)} g 그대로입니다.`;
         } else {
-            s = `열린 그릇에서는 공기 중의 산소 ${a.oxygenTotal.toFixed(2)} g 이 철과 결합해 들어옵니다. ` +
-                `그래서 ${a.m.toFixed(2)} g 이던 강철솜이 ${a.solidEnd.toFixed(2)} g 으로 늘어납니다. ` +
+            s = `열린 그릇에서는 공기 중의 산소 ${a.oxygenTotal.toFixed(2)} g이 철과 결합해 들어옵니다. ` +
+                `그래서 ${a.m.toFixed(2)} g 이던 강철솜이 ${a.solidEnd.toFixed(2)} g으로 늘어납니다. ` +
                 `타면 가벼워질 것 같지만, 금속은 산소가 붙기 때문에 오히려 무거워집니다.`;
         }
         explanation.textContent = s;

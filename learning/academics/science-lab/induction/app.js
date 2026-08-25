@@ -173,7 +173,7 @@ document.addEventListener('DOMContentLoaded', () => {
         let out = `<g clip-path="url(#railClip)">${body}</g>`;
         out += `<text class="part-label" x="20" y="20">기전력 ${a.emf} V · 내부 저항 ${a.r} Ω · 외부 저항 ${a.R} Ω</text>`;
         out += `<text class="read-text" x="20" y="192">외부 소비 전력 ${a.pExt.toFixed(2)} W (최대 가능 ${a.best.toFixed(2)} W)</text>`;
-        out += `<text class="note-text" x="20" y="208">내부에서 ${a.pInt.toFixed(2)} W 가 열로 버려집니다 · 효율 ${a.efficiency.toFixed(0)}%</text>`;
+        out += `<text class="note-text" x="20" y="208">내부에서 ${a.pInt.toFixed(2)} W가 열로 버려집니다 · 효율 ${a.efficiency.toFixed(0)}%</text>`;
         mainGroup.innerHTML = out;
     }
 
@@ -274,12 +274,12 @@ document.addEventListener('DOMContentLoaded', () => {
             valueB.textContent = `${a.current.toFixed(3)} A`;
             predictionResult.textContent = !state.prediction ? '다음에는 결과를 먼저 예상해 보세요.'
                 : state.prediction === a.verdict ? '예상이 맞았습니다.' : '예상과 다른 결과입니다.';
-            let s = `길이 ${a.L} m 인 도선이 ${a.B} T 의 자기장 속을 ${a.v} m/s 로 지나므로 ε = BLv = ${a.emf.toFixed(2)} V 입니다. `;
+            let s = `길이 ${a.L} m 인 도선이 ${a.B} T 의 자기장 속을 ${a.v} m/s로 지나므로 ε = BLv = ${a.emf.toFixed(2)} V 입니다. `;
             if (a.v === 0) {
                 s = `도선이 멈춰 있으면 자기장이 변하지 않습니다. 자기장이 아무리 세도 ε = BLv = 0 이므로 전류가 흐르지 않습니다. 유도 전류를 만드는 것은 자기장이 아니라 자기장의 변화입니다.`;
             } else {
-                s += `${a.R} Ω 회로에 I = ε/R = ${a.current.toFixed(3)} A 가 흐르고, 이 전류가 자기장 속에서 F = BIL = ${a.force.toFixed(3)} N 의 힘을 받습니다. `;
-                s += `이 힘은 렌츠 법칙에 따라 언제나 운동을 방해하는 쪽입니다. 도선을 계속 밀려면 이 힘을 이겨야 하고, 그때 한 일 Fv = ${(a.force * a.v).toFixed(3)} W 가 그대로 전기 에너지 εI = ${a.power.toFixed(3)} W 가 됩니다. `;
+                s += `${a.R} Ω 회로에 I = ε/R = ${a.current.toFixed(3)} A가 흐르고, 이 전류가 자기장 속에서 F = BIL = ${a.force.toFixed(3)} N 의 힘을 받습니다. `;
+                s += `이 힘은 렌츠 법칙에 따라 언제나 운동을 방해하는 쪽입니다. 도선을 계속 밀려면 이 힘을 이겨야 하고, 그때 한 일 Fv = ${(a.force * a.v).toFixed(3)} W가 그대로 전기 에너지 εI = ${a.power.toFixed(3)} W가 됩니다. `;
                 s += `속력을 2배로 하면 기전력도 2배가 되지만, 전력은 ε²/R 이라 4배가 됩니다.`;
             }
             explanation.textContent = s;
@@ -290,12 +290,12 @@ document.addEventListener('DOMContentLoaded', () => {
         valueB.textContent = `${a.terminal.toFixed(2)} V`;
         predictionResult.textContent = !state.prediction ? '다음에는 결과를 먼저 예상해 보세요.'
             : state.prediction === a.verdict ? '예상이 맞았습니다.' : '예상과 다른 결과입니다.';
-        let s = `I = ε/(R+r) = ${a.emf}÷(${a.R}+${a.r}) = ${a.current.toFixed(3)} A 가 흐릅니다. `;
-        s += `내부 저항에서 ${(a.current * a.r).toFixed(2)} V 가 걸려 단자 전압은 ${a.emf} − ${(a.current * a.r).toFixed(2)} = ${a.terminal.toFixed(2)} V 로 기전력보다 낮습니다. `;
+        let s = `I = ε/(R+r) = ${a.emf}÷(${a.R}+${a.r}) = ${a.current.toFixed(3)} A가 흐릅니다. `;
+        s += `내부 저항에서 ${(a.current * a.r).toFixed(2)} V가 걸려 단자 전압은 ${a.emf} − ${(a.current * a.r).toFixed(2)} = ${a.terminal.toFixed(2)} V로 기전력보다 낮습니다. `;
         s += `외부에서 쓰는 전력은 I²R = ${a.pExt.toFixed(2)} W 이고, 이 전지가 낼 수 있는 최대값은 R = r = ${a.r} Ω 일 때의 ${a.best.toFixed(2)} W 입니다. `;
-        if (a.verdict === 'peak') s += `지금이 바로 그 최대점입니다. R을 키우든 줄이든 전력은 떨어집니다. 대신 효율은 ${a.efficiency.toFixed(0)}% 로 절반뿐입니다.`;
+        if (a.verdict === 'peak') s += `지금이 바로 그 최대점입니다. R을 키우든 줄이든 전력은 떨어집니다. 대신 효율은 ${a.efficiency.toFixed(0)}%로 절반뿐입니다.`;
         else if (a.verdict === 'up') s += `지금 R이 r보다 작아 전류는 크지만 R에 걸리는 전압이 낮습니다. R을 키우면 전력이 더 올라갑니다.`;
-        else s += `지금 R이 r보다 커서 전압은 높지만 전류가 작습니다. R을 더 키우면 전력은 오히려 떨어집니다. 다만 효율은 ${a.efficiency.toFixed(0)}% 로 높아집니다.`;
+        else s += `지금 R이 r보다 커서 전압은 높지만 전류가 작습니다. R을 더 키우면 전력은 오히려 떨어집니다. 다만 효율은 ${a.efficiency.toFixed(0)}%로 높아집니다.`;
         explanation.textContent = s;
     }
 

@@ -452,14 +452,20 @@ document.addEventListener('DOMContentLoaded', () => {
     canvas.addEventListener('click', selectPredictedEpicenter);
     window.addEventListener('resize', setCanvasSize);
 
+    /* This page lays its choices out in a <fieldset> with a <legend>, not in a
+       .quiz-options div, so only the labels are shuffled and the legend is left
+       where it is. Re-appending a node moves it, which puts the labels back
+       after the legend in their new order. */
     function shuffleQuizOptions(card) {
-        const optionGroup = card.querySelector('.quiz-options');
-        const options = Array.from(optionGroup.children);
+        const optionGroup = card.querySelector('.quiz-options') || card.querySelector('fieldset');
+        if (!optionGroup) return;
+        const options = Array.from(optionGroup.querySelectorAll(':scope > label'));
+        if (options.length < 2) return;
         for (let index = options.length - 1; index > 0; index -= 1) {
             const randomIndex = Math.floor(Math.random() * (index + 1));
             [options[index], options[randomIndex]] = [options[randomIndex], options[index]];
         }
-        optionGroup.append(...options);
+        options.forEach(option => optionGroup.append(option));
     }
 
     document.querySelectorAll('.quiz-card').forEach(card => {

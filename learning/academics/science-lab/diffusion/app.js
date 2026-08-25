@@ -42,6 +42,9 @@ document.addEventListener('DOMContentLoaded', () => {
     const MOLAR_VOL_ML = 22400;         // at STP
     const SURFACE = { lump: 1, chip: 3, powder: 8 };
     const GRAIN_NAME = { lump: '큰 덩어리', chip: '작은 조각', powder: '가루' };
+    // 조사는 앞말의 받침에 따라 갈립니다. 받침이 없거나 ㄹ이면 '로', 그 밖에는 '으로'.
+    const jong = w => { const c = String(w).trim().slice(-1).charCodeAt(0); return (c < 0xac00 || c > 0xd7a3) ? -1 : (c - 0xac00) % 28; };
+    const ro = w => w + (jong(w) <= 0 || jong(w) === 8 ? '로' : '으로');
     const RATE_K = 0.012;
 
     const TUBE = { x0: 50, x1: 410, y: 66, h: 34 };
@@ -146,7 +149,7 @@ document.addEventListener('DOMContentLoaded', () => {
         g += `<line class="axis" x1="${GRAPH.x0}" y1="${GRAPH.y0}" x2="${GRAPH.x1}" y2="${GRAPH.y0}"/>`;
         g += `<line class="axis" x1="${GRAPH.x0}" y1="${GRAPH.y0}" x2="${GRAPH.x0}" y2="${GRAPH.y1}"/>`;
         g += `<text class="axis-title" x="${(GRAPH.x0 + GRAPH.x1) / 2}" y="${GRAPH.y0 + 30}" text-anchor="middle">시간 (초)</text>`;
-        g += `<text class="axis-title" x="${GRAPH.x0 - 30}" y="${GRAPH.y1 - 4}">이동 거리 (cm)</text>`;
+        g += `<text class="axis-title" x="${GRAPH.x0}" y="${GRAPH.y1 - 4}">이동 거리 (cm)</text>`;
         [[NH3, '#78dcbe'], [HCL, '#ffbe78']].forEach(([gas, col]) => {
             const pts = [];
             for (let k = 0; k <= 80; k += 1) {
@@ -221,7 +224,7 @@ document.addEventListener('DOMContentLoaded', () => {
         g += `<line class="axis" x1="${GRAPH.x0}" y1="${GRAPH.y0}" x2="${GRAPH.x1}" y2="${GRAPH.y0}"/>`;
         g += `<line class="axis" x1="${GRAPH.x0}" y1="${GRAPH.y0}" x2="${GRAPH.x0}" y2="${GRAPH.y1}"/>`;
         g += `<text class="axis-title" x="${(GRAPH.x0 + GRAPH.x1) / 2}" y="${GRAPH.y0 + 30}" text-anchor="middle">시간 (초)</text>`;
-        g += `<text class="axis-title" x="${GRAPH.x0 - 30}" y="${GRAPH.y1 - 4}">기체 부피 (mL)</text>`;
+        g += `<text class="axis-title" x="${GRAPH.x0}" y="${GRAPH.y1 - 4}">기체 부피 (mL)</text>`;
         g += `<line class="limit-line" x1="${GRAPH.x0}" y1="${gy(g0.vMax, vScale).toFixed(1)}" x2="${GRAPH.x1}" y2="${gy(g0.vMax, vScale).toFixed(1)}"/>`;
         g += `<text class="axis-text" x="${GRAPH.x1 - 4}" y="${(gy(g0.vMax, vScale) - 5).toFixed(1)}" text-anchor="end" fill="#ffcc66">최대 ${g0.vMax.toFixed(0)} mL</text>`;
         // all three surface areas share the same ceiling and differ only in rate
@@ -280,9 +283,9 @@ document.addEventListener('DOMContentLoaded', () => {
             valueB.textContent = `${g0.vMax.toFixed(1)} mL`;
             predictionResult.textContent = `한계 반응물은 ${g0.limiting === 'acid' ? '염산' : '탄산칼슘'}입니다.`;
             explanation.textContent =
-                `CaCO₃ + 2HCl → CaCl₂ + H₂O + CO₂ 에서 탄산칼슘 ${g0.nCaCO3.toFixed(4)} mol 과 염산 ${g0.nHCl.toFixed(4)} mol 중 ` +
-                `${g0.limiting === 'acid' ? '염산이 부족해 CO₂ 가 ' + g0.nCO2.toFixed(5) + ' mol 까지만' : '탄산칼슘이 먼저 다 써서 CO₂ 가 ' + g0.nCO2.toFixed(5) + ' mol 까지만'} 생깁니다. ` +
-                `${GRAIN_NAME[grain]}로 만들면 표면적이 ${SURFACE[grain]}배가 되어 반응이 그만큼 빨라지지만, 최대 부피 ${g0.vMax.toFixed(1)} mL 는 달라지지 않습니다.`;
+                `CaCO₃ + 2HCl → CaCl₂ + H₂O + CO₂ 에서 탄산칼슘 ${g0.nCaCO3.toFixed(4)} mol과 염산 ${g0.nHCl.toFixed(4)} mol 중 ` +
+                `${g0.limiting === 'acid' ? '염산이 부족해 CO₂가 ' + g0.nCO2.toFixed(5) + ' mol 까지만' : '탄산칼슘이 먼저 다 써서 CO₂가 ' + g0.nCO2.toFixed(5) + ' mol 까지만'} 생깁니다. ` +
+                `${ro(GRAIN_NAME[grain])} 만들면 표면적이 ${SURFACE[grain]}배가 되어 반응이 그만큼 빨라지지만, 최대 부피 ${g0.vMax.toFixed(1)} mL는 달라지지 않습니다.`;
         }
     }
 

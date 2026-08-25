@@ -197,11 +197,11 @@ document.addEventListener('DOMContentLoaded', () => {
         predictionResult.textContent = !prediction ? '다음에는 결과를 먼저 예상해 보세요.'
             : prediction === a.verdict ? '예상이 맞았습니다.' : '예상과 다른 결과입니다.';
         let s = `자극은 감각 기관 → 감각 신경 → ${a.p.centre} → 운동 신경 → 반응 기관 순서로 전달됩니다. `;
-        s += `${a.L.toFixed(1)} m 를 ${a.n.speed} m/s 로 지나는 데 ${(a.conduction * 1000).toFixed(0)} ms, ` +
-             `시냅스 ${a.p.synapses}곳에서 ${(a.synapse * 1000).toFixed(0)} ms, 근육이 움직이는 데 ${(a.muscle * 1000).toFixed(0)} ms 가 걸립니다. `;
+        s += `${a.L.toFixed(1)} m를 ${a.n.speed} m/s로 지나는 데 ${(a.conduction * 1000).toFixed(0)} ms, ` +
+             `시냅스 ${a.p.synapses}곳에서 ${(a.synapse * 1000).toFixed(0)} ms, 근육이 움직이는 데 ${(a.muscle * 1000).toFixed(0)} ms가 걸립니다. `;
         if (a.brain > 0) {
             const knee = analyse('knee', nerveKey, length());
-            s += `여기에 대뇌가 판단하는 ${(a.brain * 1000).toFixed(0)} ms 가 더해져 모두 ${(a.total * 1000).toFixed(0)} ms 입니다. ` +
+            s += `여기에 대뇌가 판단하는 ${(a.brain * 1000).toFixed(0)} ms가 더해져 모두 ${(a.total * 1000).toFixed(0)} ms 입니다. ` +
                  `같은 조건의 무릎 반사는 ${(knee.total * 1000).toFixed(0)} ms 이니 약 ${(a.total / knee.total).toFixed(1)}배 느립니다. `;
         } else {
             const con = analyse('conscious', nerveKey, length());

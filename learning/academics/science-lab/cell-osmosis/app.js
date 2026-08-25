@@ -156,12 +156,14 @@ document.addEventListener('DOMContentLoaded', () => {
             out += `<text class="axis-text" x="${GRAPH.x0 - 6}" y="${(gy(v) + 3).toFixed(1)}" text-anchor="end">${(v * 100).toFixed(0)}</text>`;
         }
         for (const c of [0.2, 0.6, 1.0, 1.4, 2.0]) {
-            out += `<text class="axis-text" x="${gx(c).toFixed(1)}" y="${GRAPH.y0 + 14}" text-anchor="middle">${c.toFixed(1)}</text>`;
+            // clear of the y-axis "0", which sits just above the corner
+            out += `<text class="axis-text" x="${gx(c).toFixed(1)}" y="${GRAPH.y0 + 16}" text-anchor="middle">${c.toFixed(1)}</text>`;
         }
         out += `<line class="axis" x1="${GRAPH.x0}" y1="${GRAPH.y0}" x2="${GRAPH.x1}" y2="${GRAPH.y0}"/>`;
         out += `<line class="axis" x1="${GRAPH.x0}" y1="${GRAPH.y0}" x2="${GRAPH.x0}" y2="${GRAPH.y1}"/>`;
-        out += `<text class="axis-title" x="${(GRAPH.x0 + GRAPH.x1) / 2}" y="${GRAPH.y0 + 30}" text-anchor="middle">바깥 용액의 농도</text>`;
-        out += `<text class="axis-title" x="${GRAPH.x0 - 34}" y="${GRAPH.y1 - 6}">최종 부피 (%)</text>`;
+        out += `<text class="axis-title" x="${(GRAPH.x0 + GRAPH.x1) / 2}" y="${GRAPH.y0 + 32}" text-anchor="middle">바깥 용액의 농도</text>`;
+        // starts at the plot edge, not over the tick numbers
+        out += `<text class="axis-title" x="${GRAPH.x0}" y="${GRAPH.y1 - 6}">최종 부피 (%)</text>`;
         out += `<line class="iso-line" x1="${gx(1).toFixed(1)}" y1="${GRAPH.y1}" x2="${gx(1).toFixed(1)}" y2="${GRAPH.y0}"/>`;
         out += `<text class="zone-text" fill="#54e6c1" x="${(gx(1) + 4).toFixed(1)}" y="${GRAPH.y1 + 10}">등장액</text>`;
         out += `<line class="burst-line" x1="${GRAPH.x0}" y1="${gy(BURST_V).toFixed(1)}" x2="${GRAPH.x1}" y2="${gy(BURST_V).toFixed(1)}"/>`;
@@ -188,7 +190,7 @@ document.addEventListener('DOMContentLoaded', () => {
         const dir = conc() < 0.98 ? '세포 안으로' : conc() > 1.02 ? '세포 밖으로' : '양쪽이 균형';
         dataNote.innerHTML =
             `<div class="data-row"><span class="data-name">농도 비교</span><span class="data-val">바깥 ${conc().toFixed(2)} vs 세포 속 1.00 → 물이 ${dir}</span></div>` +
-            `<div class="data-row"><span class="data-name">최종 부피</span><span class="data-val">1.00 ÷ ${conc().toFixed(2)} = ${((C_IN0 * V0) / conc()).toFixed(2)}${cell === 'plant' && (C_IN0 * V0) / conc() > 1 ? ' → 세포벽이 1.00 으로 제한' : ''}</span></div>` +
+            `<div class="data-row"><span class="data-name">최종 부피</span><span class="data-val">1.00 ÷ ${conc().toFixed(2)} = ${((C_IN0 * V0) / conc()).toFixed(2)}${cell === 'plant' && (C_IN0 * V0) / conc() > 1 ? ' → 세포벽이 1.00으로 제한' : ''}</span></div>` +
             `<div class="data-row${s.burst ? '' : ' match'}"><span class="data-name">지금 상태</span><span class="data-val">부피 ${(s.v * 100).toFixed(0)}% · ${s.label}</span></div>`;
         return s;
     }
@@ -210,12 +212,12 @@ document.addEventListener('DOMContentLoaded', () => {
         s2 += c < 0.98 ? '물이 세포 안으로 들어옵니다. ' : c > 1.02 ? '물이 세포 밖으로 빠져나갑니다. ' : '물의 출입이 균형을 이룹니다. ';
         if (cell === 'animal') {
             s2 += s.burst
-                ? `동물세포는 세포벽이 없어 부피가 ${(BURST_V * 100).toFixed(0)}% 를 넘자 터졌습니다. 이것을 용혈이라고 합니다.`
+                ? `동물세포는 세포벽이 없어 부피가 ${(BURST_V * 100).toFixed(0)}%를 넘자 터졌습니다. 이것을 용혈이라고 합니다.`
                 : `동물세포는 세포벽이 없어 부피가 ${(s.v * 100).toFixed(0)}% 까지 그대로 변합니다.`;
         } else {
             s2 += s.v < 0.98
                 ? `식물세포는 세포질이 줄어들어도 세포벽은 그대로여서, 세포막이 세포벽에서 떨어지는 원형질 분리가 일어납니다.`
-                : `식물세포는 단단한 세포벽이 있어 물이 들어와도 100% 를 넘지 못하고 팽팽해질 뿐 터지지 않습니다.`;
+                : `식물세포는 단단한 세포벽이 있어 물이 들어와도 100%를 넘지 못하고 팽팽해질 뿐 터지지 않습니다.`;
         }
         explanation.textContent = s2;
     }

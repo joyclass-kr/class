@@ -60,8 +60,8 @@ function eun(w) {
     return w + (jong ? '은' : '는');
 }
 // Numbers are read aloud, so the particle follows the last digit's sound:
-// 0·1·3·6·7·8 end in a consonant, and of those only 0·3·6 take 으로 because
-// ㄹ (일·칠·팔) takes plain 로.
+// 0·1·3·6·7·8 end in a consonant, and of those only 0·3·6 take으로 because
+// ㄹ (일·칠·팔) takes plain로.
 const JONG = '013678';
 const EUIRO = '036';
 const lastCh = s => s[s.length - 1];

@@ -116,7 +116,7 @@ document.addEventListener('DOMContentLoaded', () => {
             body += `<circle class="flash" cx="${px(s.x1 + CART_M).toFixed(1)}" cy="${TRACK_Y - CART_H / 2}" r="${r.toFixed(1)}" opacity="${(s.flash / 0.35).toFixed(2)}"/>`;
         }
         let out = `<g clip-path="url(#trackClip)">${body}</g>`;
-        out += `<text class="part-label" x="20" y="20">${KIND_NAME[a.kind]} (e = ${a.e}) · ${a.m1} kg 이 ${a.v1} m/s 로 ${a.m2} kg 을 칩니다</text>`;
+        out += `<text class="part-label" x="20" y="20">${KIND_NAME[a.kind]} (e = ${a.e}) · ${a.m1} kg이 ${a.v1} m/s로 ${a.m2} kg을 칩니다</text>`;
         const tone = s.hit ? '#54e6c1' : '#ffd166';
         out += `<text class="phase-text" fill="${tone}" x="20" y="176">${s.hit ? '충돌 뒤' : '충돌 전'} · ${s.t.toFixed(2)} 초</text>`;
         out += `<text class="read-text" x="20" y="196">수레 1 ${s.v1.toFixed(2)} m/s · 수레 2 ${s.v2.toFixed(2)} m/s</text>`;
@@ -148,7 +148,7 @@ document.addEventListener('DOMContentLoaded', () => {
         const kLine = GRAPH.x0 + (a.kBefore / kMax) * (GRAPH.x1 - GRAPH.x0);
         out += `<line class="keep-line" x1="${kLine.toFixed(1)}" y1="128" x2="${kLine.toFixed(1)}" y2="182"/>`;
         if (a.lost > 1e-9) {
-            out += `<text class="lost-text" x="${GRAPH.x1}" y="126" text-anchor="end">${a.lost.toFixed(2)} J (${a.lostPct.toFixed(0)}%) 이 소리·열로</text>`;
+            out += `<text class="lost-text" x="${GRAPH.x1}" y="126" text-anchor="end">${a.lost.toFixed(2)} J (${a.lostPct.toFixed(0)}%)이 소리·열로</text>`;
         } else {
             out += `<text class="keep-text" x="${GRAPH.x1}" y="126" text-anchor="end">줄어든 에너지가 없습니다</text>`;
         }
@@ -211,22 +211,22 @@ document.addEventListener('DOMContentLoaded', () => {
         predictionResult.textContent = !prediction ? '다음에는 결과를 먼저 예상해 보세요.'
             : prediction === a.verdict ? '예상이 맞았습니다.' : '예상과 다른 결과입니다.';
         let s = `충돌 전 운동량은 ${a.m1}×${a.v1.toFixed(1)} = ${a.pBefore.toFixed(2)} kg·m/s 입니다. `;
-        s += `충돌 뒤 ${a.m1}×${sn(a.after1)} + ${a.m2}×${sn(a.after2)} = ${a.pAfter.toFixed(2)} kg·m/s 로 정확히 같습니다. `;
+        s += `충돌 뒤 ${a.m1}×${sn(a.after1)} + ${a.m2}×${sn(a.after2)} = ${a.pAfter.toFixed(2)} kg·m/s로 정확히 같습니다. `;
         s += `충돌의 종류와 상관없이 운동량은 언제나 보존됩니다. `;
         if (a.lost > 1e-9) {
-            s += `반면 운동 에너지는 ${a.kBefore.toFixed(2)} J 에서 ${a.kAfter.toFixed(2)} J 로 ${a.lostPct.toFixed(0)}% 줄었습니다. ` +
-                 `줄어든 ${a.lost.toFixed(2)} J 은 충돌 소리와 열, 수레의 변형으로 바뀐 것이지 사라진 것이 아닙니다. `;
+            s += `반면 운동 에너지는 ${a.kBefore.toFixed(2)} J 에서 ${a.kAfter.toFixed(2)} J로 ${a.lostPct.toFixed(0)}% 줄었습니다. ` +
+                 `줄어든 ${a.lost.toFixed(2)} J은 충돌 소리와 열, 수레의 변형으로 바뀐 것이지 사라진 것이 아닙니다. `;
         } else {
             s += `탄성 충돌이라 운동 에너지도 ${a.kBefore.toFixed(2)} J 그대로 보존되었습니다. `;
         }
         if (a.verdict === 'back') {
-            s += `수레 1의 질량 ${a.m1} kg 이 e×m₂ = ${(a.e * a.m2).toFixed(1)} kg 보다 작아 충돌 뒤 속도가 음수가 되었습니다. 그래서 뒤로 튕겨 나옵니다.`;
+            s += `수레 1의 질량 ${a.m1} kg이 e×m₂ = ${(a.e * a.m2).toFixed(1)} kg보다 작아 충돌 뒤 속도가 음수가 되었습니다. 그래서 뒤로 튕겨 나옵니다.`;
         } else if (a.verdict === 'stop') {
-            s += `수레 1의 질량이 e×m₂ = ${(a.e * a.m2).toFixed(1)} kg 과 같아 충돌 뒤 속도가 정확히 0 이 되었습니다. 가진 운동량을 모두 넘겨주고 그 자리에 섭니다.`;
+            s += `수레 1의 질량이 e×m₂ = ${(a.e * a.m2).toFixed(1)} kg과 같아 충돌 뒤 속도가 정확히 0이 되었습니다. 가진 운동량을 모두 넘겨주고 그 자리에 섭니다.`;
         } else if (a.kind === 'stick') {
-            s += `완전비탄성이라 두 수레가 붙어 ${a.after1.toFixed(2)} m/s 로 함께 갑니다. 이때 운동 에너지가 가장 많이 줄어듭니다.`;
+            s += `완전비탄성이라 두 수레가 붙어 ${a.after1.toFixed(2)} m/s로 함께 갑니다. 이때 운동 에너지가 가장 많이 줄어듭니다.`;
         } else {
-            s += `수레 1의 질량이 e×m₂ = ${(a.e * a.m2).toFixed(1)} kg 보다 커서 충돌 뒤에도 앞으로 나아갑니다.`;
+            s += `수레 1의 질량이 e×m₂ = ${(a.e * a.m2).toFixed(1)} kg보다 커서 충돌 뒤에도 앞으로 나아갑니다.`;
         }
         explanation.textContent = s;
     }

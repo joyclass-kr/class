@@ -119,9 +119,12 @@ document.addEventListener('DOMContentLoaded', () => {
         frontSquare.setAttribute('height', String(s * 2));
         frontTriangle.setAttribute('points',
             `${FRONT_CENTER},${FRONT_CENTER - s} ${FRONT_CENTER + s},${FRONT_CENTER + s} ${FRONT_CENTER - s},${FRONT_CENTER + s}`);
-        frontCircle.hidden = selectedShape !== 'circle';
-        frontSquare.hidden = selectedShape !== 'square';
-        frontTriangle.hidden = selectedShape !== 'triangle';
+        // These are SVG elements, and the `hidden` attribute has no effect on
+        // them — all three shapes stayed drawn on top of one another. Display is
+        // set outright instead.
+        frontCircle.style.display = selectedShape === 'circle' ? '' : 'none';
+        frontSquare.style.display = selectedShape === 'square' ? '' : 'none';
+        frontTriangle.style.display = selectedShape === 'triangle' ? '' : 'none';
     }
 
     function clearResult() {

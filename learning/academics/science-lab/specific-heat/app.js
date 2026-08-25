@@ -141,7 +141,7 @@ document.addEventListener('DOMContentLoaded', () => {
         g += `<line class="axis" x1="${GRAPH.x0}" y1="${GRAPH.y0}" x2="${GRAPH.x1}" y2="${GRAPH.y0}"/>`;
         g += `<line class="axis" x1="${GRAPH.x0}" y1="${GRAPH.y0}" x2="${GRAPH.x0}" y2="${GRAPH.y1}"/>`;
         g += `<text class="axis-title" x="${(GRAPH.x0 + GRAPH.x1) / 2}" y="${GRAPH.y0 + 30}" text-anchor="middle">가열 시간 (초)</text>`;
-        g += `<text class="axis-title" x="${GRAPH.x0 - 30}" y="${GRAPH.y1 - 4}">온도 (℃)</text>`;
+        g += `<text class="axis-title" x="${GRAPH.x0}" y="${GRAPH.y1 - 4}">온도 (℃)</text>`;
         if (tMax > 100) {
             g += `<line class="boil-line" x1="${GRAPH.x0}" y1="${gy(100, tMax)}" x2="${GRAPH.x1}" y2="${gy(100, tMax)}"/>`;
             // label sits inside the plot: placed past x1 it ran off the canvas
@@ -204,7 +204,7 @@ document.addEventListener('DOMContentLoaded', () => {
         g += `<line class="axis" x1="${GRAPH.x0}" y1="${GRAPH.y0}" x2="${GRAPH.x1}" y2="${GRAPH.y0}"/>`;
         g += `<line class="axis" x1="${GRAPH.x0}" y1="${GRAPH.y0}" x2="${GRAPH.x0}" y2="${GRAPH.y1}"/>`;
         g += `<text class="axis-title" x="${(GRAPH.x0 + GRAPH.x1) / 2}" y="${GRAPH.y0 + 30}" text-anchor="middle">온도 상승 (℃)</text>`;
-        g += `<text class="axis-title" x="${GRAPH.x0 - 30}" y="${GRAPH.y1 - 4}">늘어난 길이 (mm)</text>`;
+        g += `<text class="axis-title" x="${GRAPH.x0}" y="${GRAPH.y1 - 4}">늘어난 길이 (mm)</text>`;
         METALS.forEach(mt => {
             g += `<path class="t-line" style="stroke:${mt.color}" d="M${gx(0, 100)},${gy(0, dlMax)} L${gx(100, 100)},${gy(expansionMM(mt, 100), dlMax).toFixed(1)}"/>`;
             g += `<circle class="t-dot" cx="${gx(dT, 100).toFixed(1)}" cy="${gy(expansionMM(mt, dT), dlMax).toFixed(1)}" r="4" fill="${mt.color}"/>`;

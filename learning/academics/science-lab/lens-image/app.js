@@ -201,9 +201,9 @@ document.addEventListener('DOMContentLoaded', () => {
         valueB.textContent = a.parallel ? '—' : `${Math.abs(a.m).toFixed(2)}배`;
         predictionResult.textContent = !prediction ? '다음에는 결과를 먼저 예상해 보세요.'
             : prediction === a.kind ? '예상이 맞았습니다.' : '예상과 다른 결과입니다.';
-        let s = `1/${a.a} + 1/b = 1/${sf(a.f)} 을 풀면 b = ${a.a}×${sf(a.f)} ÷ (${a.a}−${sf(a.f)}) = ${a.b.toFixed(2)} cm 입니다. `;
+        let s = `1/${a.a} + 1/b = 1/${sf(a.f)}을 풀면 b = ${a.a}×${sf(a.f)} ÷ (${a.a}−${sf(a.f)}) = ${a.b.toFixed(2)} cm 입니다. `;
         if (a.parallel) {
-            s = `물체를 초점에 정확히 놓았습니다. 1/b = 1/${sf(a.f)} − 1/${a.a} = 0 이 되어 b가 무한대입니다. ` +
+            s = `물체를 초점에 정확히 놓았습니다. 1/b = 1/${sf(a.f)} − 1/${a.a} = 0이 되어 b가 무한대입니다. ` +
                 `렌즈를 지난 세 광선이 서로 나란해져 어디에서도 만나지 않으므로 상이 생기지 않습니다. ` +
                 `물체를 조금만 더 멀리 옮기면 아주 먼 곳에 큰 실상이 생깁니다.`;
         } else if (a.kind === 'real') {

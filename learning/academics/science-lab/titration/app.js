@@ -24,6 +24,13 @@ document.addEventListener('DOMContentLoaded', () => {
     const KA = 1.8e-5, KB = 1.8e-5, KW = 1e-14;
     const DROP = 0.1;                // mL, about two drops from the burette
     const CX = 111;
+    /* 숫자 뒤 조사는 그 수를 읽은 끝소리를 따릅니다. 영 일 이 삼 사 오 육 칠 팔 구 —
+       받침이 없거나 ㄹ(일·칠·팔)이면 '로', 그 밖에는 '으로'입니다. */
+    const DIGIT_JONG = { '0': 21, '1': 8, '2': 0, '3': 16, '4': 0, '5': 0, '6': 1, '7': 8, '8': 8, '9': 0 };
+    const ro = n => {
+        const j = DIGIT_JONG[String(n).replace(/[^0-9]/g, '').slice(-1)] ?? 0;
+        return `${n}${j === 0 || j === 8 ? '로' : '으로'}`;
+    };
     const GRAPH = { x0: 66, x1: 424, y0: 160, y1: 30 };
 
     const CASES = {
@@ -155,7 +162,7 @@ document.addEventListener('DOMContentLoaded', () => {
         out += `<text class="note-text" x="248" y="146">지금 상태 ${shown}</text>`;
         out += `<text class="verdict-text" fill="${a.indOk ? '#54e6c1' : '#ff9d6b'}" x="248" y="170">` +
                `${a.indOk ? '이 적정에 알맞은 지시약입니다' : '이 적정에는 알맞지 않습니다'}</text>`;
-        out += `<text class="note-text" x="20" y="206">한두 방울(${DROP} mL) 사이에 pH가 ${a.jumpLo.toFixed(1)} → ${a.jumpHi.toFixed(1)} 로 뜁니다</text>`;
+        out += `<text class="note-text" x="20" y="206">한두 방울(${DROP} mL) 사이에 pH가 ${a.jumpLo.toFixed(1)} → ${ro(a.jumpHi.toFixed(1))} 뜁니다</text>`;
         mainGroup.innerHTML = out;
     }
 
@@ -260,9 +267,9 @@ document.addEventListener('DOMContentLoaded', () => {
         if (a.k === 'ss') {
             s += `강산과 강염기가 만나 중성 염만 남으므로 당량점의 pH는 정확히 7 입니다. `;
         } else if (a.k === 'ws') {
-            s += `당량점에서는 아세트산 이온만 남습니다. 이 이온이 물과 반응해 OH⁻ 를 내놓기 때문에 pH가 ${a.eqPH.toFixed(2)} 로 7보다 큽니다. `;
+            s += `당량점에서는 아세트산 이온만 남습니다. 이 이온이 물과 반응해 수산화 이온(OH⁻)을 내놓기 때문에 pH가 ${ro(a.eqPH.toFixed(2))} 7보다 큽니다. `;
         } else {
-            s += `당량점에서는 암모늄 이온만 남습니다. 이 이온이 물과 반응해 H⁺ 를 내놓기 때문에 pH가 ${a.eqPH.toFixed(2)} 로 7보다 작습니다. `;
+            s += `당량점에서는 암모늄 이온만 남습니다. 이 이온이 물과 반응해 수소 이온(H⁺)을 내놓기 때문에 pH가 ${ro(a.eqPH.toFixed(2))} 7보다 작습니다. `;
         }
         s += `당량점 앞뒤로 ${DROP} mL, 곧 한두 방울 차이에 pH가 ${a.jumpLo.toFixed(1)} 에서 ${a.jumpHi.toFixed(1)} 까지 뜁니다. `;
         s += `지시약은 변색 범위가 이 급변 구간 안에 들어와야 합니다. `;

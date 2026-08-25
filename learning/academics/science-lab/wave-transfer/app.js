@@ -144,11 +144,12 @@ document.addEventListener('DOMContentLoaded', () => {
         // one wavelength measured off against that ruler
         const fits = a.lambdaPx <= X1 - X0;
         const spanEnd = fits ? X0 + a.lambdaPx : X1;
-        out += `<line class="span-arrow" x1="${X0}" y1="152" x2="${spanEnd.toFixed(1)}" y2="152"/>`;
-        out += `<line class="span-arrow" x1="${X0}" y1="146" x2="${X0}" y2="158"/>`;
-        if (fits) out += `<line class="span-arrow" x1="${spanEnd.toFixed(1)}" y1="146" x2="${spanEnd.toFixed(1)}" y2="158"/>`;
+        // dropped clear of the ruler numbers, which sit just above
+        out += `<line class="span-arrow" x1="${X0}" y1="158" x2="${spanEnd.toFixed(1)}" y2="158"/>`;
+        out += `<line class="span-arrow" x1="${X0}" y1="152" x2="${X0}" y2="164"/>`;
+        if (fits) out += `<line class="span-arrow" x1="${spanEnd.toFixed(1)}" y1="152" x2="${spanEnd.toFixed(1)}" y2="164"/>`;
         const spanText = fits ? `파장 ${a.lambda.toFixed(1)} cm` : `파장 ${a.lambda.toFixed(1)} cm — 화면보다 깁니다`;
-        out += `<text class="span-text" x="${((X0 + spanEnd) / 2).toFixed(1)}" y="147" text-anchor="middle">${spanText}</text>`;
+        out += `<text class="span-text" x="${((X0 + spanEnd) / 2).toFixed(1)}" y="153" text-anchor="middle">${spanText}</text>`;
 
         out += `<text class="read-text" x="${X0}" y="178">v = ${a.f.toFixed(2)} Hz × ${a.lambda.toFixed(1)} cm = ${a.v.toFixed(0)} cm/s</text>`;
         out += `<text class="note-text" x="${X0}" y="196">진폭을 ${amp().toFixed(1)} cm로 바꿔도 파장과 속력은 그대로입니다.</text>`;
@@ -174,7 +175,7 @@ document.addEventListener('DOMContentLoaded', () => {
         out += `<line class="axis" x1="${GRAPH.x0}" y1="${GRAPH.y0}" x2="${GRAPH.x1}" y2="${GRAPH.y0}"/>`;
         out += `<line class="axis" x1="${GRAPH.x0}" y1="${GRAPH.y0}" x2="${GRAPH.x0}" y2="${GRAPH.y1}"/>`;
         out += `<text class="axis-title" x="${((GRAPH.x0 + GRAPH.x1) / 2).toFixed(1)}" y="${GRAPH.y0 + 30}" text-anchor="middle">진동수 (Hz)</text>`;
-        out += `<text class="axis-title" x="${GRAPH.x0 - 32}" y="${GRAPH.y1 - 6}">파장 (cm)</text>`;
+        out += `<text class="axis-title" x="${GRAPH.x0}" y="${GRAPH.y1 - 6}">파장 (cm)</text>`;
 
         out += `<line class="ref-line" x1="${GRAPH.x0}" y1="${gy(REF_LAMBDA).toFixed(1)}" x2="${GRAPH.x1}" y2="${gy(REF_LAMBDA).toFixed(1)}"/>`;
         out += `<text class="ref-text" x="${GRAPH.x1 - 4}" y="${(gy(REF_LAMBDA) - 5).toFixed(1)}" text-anchor="end">기준 ${REF_LAMBDA} cm</text>`;
@@ -225,10 +226,10 @@ document.addEventListener('DOMContentLoaded', () => {
         predictionResult.textContent = !prediction
             ? '다음에는 결과를 먼저 예상해 보세요.'
             : prediction === a.verdict ? '예상이 맞았습니다.' : '예상과 다른 결과입니다.';
-        let s = `${a.v} cm/s 로 달리는 파동을 ${a.f.toFixed(2)} Hz 로 흔들었으므로 파장은 ${a.v} ÷ ${a.f.toFixed(2)} = ${a.lambda.toFixed(1)} cm 입니다. `;
+        let s = `${a.v} cm/s로 달리는 파동을 ${a.f.toFixed(2)} Hz로 흔들었으므로 파장은 ${a.v} ÷ ${a.f.toFixed(2)} = ${a.lambda.toFixed(1)} cm 입니다. `;
         s += `${VERDICT[a.verdict]}는 결과입니다. `;
-        if (a.verdict === 'same') s += `기준과 진동수나 팽팽함이 달라도 v ÷ f 가 같으면 파장은 같습니다. `;
-        s += `흔드는 진폭을 ${amp().toFixed(1)} cm 로 바꿔도 파장과 속력은 달라지지 않습니다. `;
+        if (a.verdict === 'same') s += `기준과 진동수나 팽팽함이 달라도 v ÷ f가 같으면 파장은 같습니다. `;
+        s += `흔드는 진폭을 ${amp().toFixed(1)} cm로 바꿔도 파장과 속력은 달라지지 않습니다. `;
         s += mode === 'transverse'
             ? `줄 위의 빨간 점은 위아래로만 진동하고 오른쪽으로 옮겨 가지 않습니다. 이동하는 것은 에너지입니다.`
             : `용수철의 빨간 고리는 앞뒤로만 진동하고 제자리를 지킵니다. 빽빽한 곳과 성긴 곳이 오른쪽으로 옮겨 갑니다.`;
