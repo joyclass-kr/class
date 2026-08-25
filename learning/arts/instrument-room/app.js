@@ -12,7 +12,9 @@
     const COMPUTER_KEYS = [
         ["KeyA", 0, "A"], ["KeyW", 1, "W"], ["KeyS", 2, "S"], ["KeyE", 3, "E"],
         ["KeyD", 4, "D"], ["KeyF", 5, "F"], ["KeyT", 6, "T"], ["KeyG", 7, "G"],
-        ["KeyY", 8, "Y"], ["KeyH", 9, "H"], ["KeyU", 10, "U"], ["KeyJ", 11, "J"], ["KeyK", 12, "K"]
+        ["KeyY", 8, "Y"], ["KeyH", 9, "H"], ["KeyU", 10, "U"], ["KeyJ", 11, "J"],
+        ["KeyK", 12, "K"], ["KeyO", 13, "O"], ["KeyL", 14, "L"], ["KeyP", 15, "P"],
+        ["Semicolon", 16, ";"], ["Quote", 17, "'"]
     ];
     const DISPLAY_RANGE = { start: 21, end: 108 };
 
@@ -145,7 +147,7 @@
             ], description: "오케스트라 타악기를 개별 레이어로 배치해, 연주되는 악기만 빛으로 확인해요." },
             { id: "drum-808", name: "808 Machine", tag: "ELECTRONIC", engine: "drums", stage: "machine", art: "assets/instruments/drum-808-machine.webp", badge: "ANALOG RHYTHM", model: "808 STYLE", description: "고전 아날로그 리듬 머신을 닮은 전용 하드웨어 화면이에요." },
             { id: "linn-machine", name: "Linn Machine", tag: "ELECTRONIC", engine: "drums", stage: "linn", art: "assets/instruments/drum-linn-machine.webp", badge: "DIGITAL DRUM COMPUTER", model: "LINN STYLE", description: "초기 디지털 드럼 컴퓨터의 패드와 표시창을 재구성했어요." },
-            { id: "samulnori", name: "사물놀이", tag: "KOREAN PERC.", engine: "drums", stage: "samul", badge: "KOREAN PERCUSSION", model: "SAMULNORI", description: "장구·북·소고·꽹과리·징을 한 무대에서 고르는 화면이에요." }
+            { id: "samulnori", name: "사물놀이", tag: "KOREAN PERC.", engine: "drums", stage: "samul", badge: "KOREAN PERCUSSION", model: "사물놀이", description: "장구·북·소고·꽹과리·징을 한 무대에서 고르는 화면이에요." }
         ]
     };
     const mixedStrings = MODEL_LIBRARY.strings.slice();
@@ -156,14 +158,14 @@
     MODEL_LIBRARY.drums = mixedPercussion.filter(function (model) { return ["drums", "machine", "linn"].includes(model.stage); });
     MODEL_LIBRARY.percussion = mixedPercussion.filter(function (model) { return !["drums", "machine", "linn", "samul"].includes(model.stage); });
     MODEL_LIBRARY.korean = [
-        { id: "gayageum", room: "melody", name: "가야금", tag: "PLUCKED STRING", engine: "guitar", stage: "korean-string", art: "assets/instruments/korean-gayageum.png", expressive: true, range: [48, 84], size: "전체 길이 약 160 cm", visualScale: .9, scalePercent: 89, badge: "KOREAN STRING", model: "12-STRING GAYAGEUM", expression: "농현 깊이", description: "열두 현과 안족의 구조를 보며 농현과 뜯는 위치를 다루는 국악 선율악기예요." },
-        { id: "geomungo", room: "melody", name: "거문고", tag: "PLUCKED STRING", engine: "guitar", stage: "korean-string", art: "assets/instruments/korean-geomungo.png", expressive: true, range: [36, 72], size: "전체 길이 약 162 cm", visualScale: .92, scalePercent: 90, badge: "KOREAN STRING", model: "6-STRING GEOMUNGO", expression: "술대 강도", description: "여섯 현과 괘, 술대의 관계가 보이는 거문고 연주 화면이에요." },
-        { id: "haegeum", room: "melody", name: "해금", tag: "BOWED STRING", engine: "guitar", stage: "korean-string", art: "assets/instruments/korean-haegeum.png", expressive: true, range: [55, 96], size: "전체 높이 약 70 cm", visualScale: .58, scalePercent: 39, badge: "KOREAN BOWED STRING", model: "2-STRING HAEGEUM", expression: "활 압력", description: "두 현 사이를 지나는 활과 연속적인 음정 표현을 중심으로 한 해금 화면이에요." },
-        { id: "ajaeng", room: "melody", name: "아쟁", tag: "BOWED ZITHER", engine: "guitar", stage: "korean-string", art: "assets/instruments/korean-ajaeng.png", expressive: true, range: [36, 72], size: "전체 길이 약 160 cm", visualScale: .96, scalePercent: 89, badge: "KOREAN BOWED STRING", model: "AJAENG", expression: "활 압력", description: "굵은 현과 개나리 활의 거친 저음을 표현하는 아쟁 화면이에요." },
-        { id: "daegeum", room: "melody", name: "대금", tag: "TRANSVERSE FLUTE", engine: "guitar", stage: "korean-wind", art: "assets/instruments/korean-daegeum.png", expressive: true, range: [50, 86], size: "전체 길이 약 80 cm", visualScale: .68, scalePercent: 44, badge: "KOREAN WIND", model: "DAEGEUM", expression: "호흡 압력", description: "청공의 떨림과 호흡을 다루는 대표적인 가로 부는 국악 관악기예요." },
-        { id: "hyangpiri", room: "melody", name: "향피리", tag: "DOUBLE REED", engine: "guitar", stage: "korean-wind", art: "assets/instruments/korean-hyangpiri.png", expressive: true, range: [60, 84], size: "전체 길이 약 27 cm", visualScale: .4, scalePercent: 15, badge: "KOREAN DOUBLE REED", model: "HYANGPIRI", expression: "호흡 압력", description: "짧고 굵은 대나무 관과 겹서의 강한 소리를 표현하는 향피리 화면이에요." },
-        { id: "taepyeongso", room: "melody", name: "태평소", tag: "DOUBLE REED HORN", engine: "guitar", stage: "korean-wind", art: "assets/instruments/korean-taepyeongso.webp", expressive: true, range: [55, 84], size: "전체 길이 약 40 cm", visualScale: .48, scalePercent: 22, badge: "KOREAN SHAWM", model: "TAEPYEONGSO", expression: "호흡 압력", description: "나무 관과 금속 나팔이 결합된 강렬한 태평소 화면이에요." },
-        { id: "samulnori", room: "folk", name: "사물놀이 스테이션", tag: "FOLK PERCUSSION", engine: "drums", stage: "korean-station", station: "samul", size: "전체 배치 너비 약 260 cm", scalePercent: 100, badge: "KOREAN PERCUSSION", model: "JANGGU · BUK · SOGO · KKWAENGGWARI · JING", parts: [
+        { id: "gayageum", room: "melody", name: "가야금", tag: "PLUCKED STRING", engine: "guitar", stage: "korean-string", art: "assets/instruments/korean-gayageum.png", expressive: true, range: [48, 84], size: "전체 길이 약 160 cm", visualScale: .9, scalePercent: 89, badge: "KOREAN STRING", model: "12현 가야금", expression: "농현 깊이", description: "열두 현과 안족의 구조를 보며 농현과 뜯는 위치를 다루는 국악 선율악기예요." },
+        { id: "geomungo", room: "melody", name: "거문고", tag: "PLUCKED STRING", engine: "guitar", stage: "korean-string", art: "assets/instruments/korean-geomungo.png", expressive: true, range: [36, 72], size: "전체 길이 약 162 cm", visualScale: .92, scalePercent: 90, badge: "KOREAN STRING", model: "6현 거문고", expression: "술대 강도", description: "여섯 현과 괘, 술대의 관계가 보이는 거문고 연주 화면이에요." },
+        { id: "haegeum", room: "melody", name: "해금", tag: "BOWED STRING", engine: "guitar", stage: "korean-string", art: "assets/instruments/korean-haegeum.png", expressive: true, range: [55, 96], size: "전체 높이 약 70 cm", visualScale: .58, scalePercent: 39, badge: "KOREAN BOWED STRING", model: "2현 해금", expression: "활 압력", description: "두 현 사이를 지나는 활과 연속적인 음정 표현을 중심으로 한 해금 화면이에요." },
+        { id: "ajaeng", room: "melody", name: "아쟁", tag: "BOWED ZITHER", engine: "guitar", stage: "korean-string", art: "assets/instruments/korean-ajaeng.png", expressive: true, range: [36, 72], size: "전체 길이 약 160 cm", visualScale: .96, scalePercent: 89, badge: "KOREAN BOWED STRING", model: "아쟁", expression: "활 압력", description: "굵은 현과 개나리 활의 거친 저음을 표현하는 아쟁 화면이에요." },
+        { id: "daegeum", room: "melody", name: "대금", tag: "TRANSVERSE FLUTE", engine: "guitar", stage: "korean-wind", art: "assets/instruments/korean-daegeum.png", expressive: true, range: [50, 86], size: "전체 길이 약 80 cm", visualScale: .68, scalePercent: 44, badge: "KOREAN WIND", model: "대금", expression: "호흡 압력", description: "청공의 떨림과 호흡을 다루는 대표적인 가로 부는 국악 관악기예요." },
+        { id: "hyangpiri", room: "melody", name: "향피리", tag: "DOUBLE REED", engine: "guitar", stage: "korean-wind", art: "assets/instruments/korean-hyangpiri.png", expressive: true, range: [60, 84], size: "전체 길이 약 27 cm", visualScale: .4, scalePercent: 15, badge: "KOREAN DOUBLE REED", model: "향피리", expression: "호흡 압력", description: "짧고 굵은 대나무 관과 겹서의 강한 소리를 표현하는 향피리 화면이에요." },
+        { id: "taepyeongso", room: "melody", name: "태평소", tag: "DOUBLE REED HORN", engine: "guitar", stage: "korean-wind", art: "assets/instruments/korean-taepyeongso.webp", expressive: true, range: [55, 84], size: "전체 길이 약 40 cm", visualScale: .48, scalePercent: 22, badge: "KOREAN SHAWM", model: "태평소", expression: "호흡 압력", description: "나무 관과 금속 나팔이 결합된 강렬한 태평소 화면이에요." },
+        { id: "samulnori", room: "folk", name: "사물놀이 스테이션", tag: "FOLK PERCUSSION", engine: "drums", stage: "korean-station", station: "samul", size: "전체 배치 너비 약 260 cm", scalePercent: 100, badge: "KOREAN PERCUSSION", model: "장구 · 북 · 소고 · 꽹과리 · 징", parts: [
             { id: "janggu", name: "장구", art: "assets/instruments/korean-janggu.webp", scale: 1.05 },
             { id: "buk", name: "북", art: "assets/instruments/korean-buk.webp", scale: 1 },
             { id: "sogo", name: "소고", art: "assets/instruments/korean-sogo.webp", scale: .72 },
@@ -172,12 +174,12 @@
         ], description: "풍물과 사물놀이의 다섯 타악기를 한 편성으로 보고, 울리는 악기만 밝게 확인해요." },
         { id: "pyeonjong", room: "court", name: "편종", tag: "COURT BELL CHIME", engine: "drums", stage: "metal", art: "assets/instruments/korean-pyeonjong.webp", pitched: true, toneMarkers: true, range: [60, 75], size: "전체 너비 약 210 cm", visualScale: .92, scalePercent: 82, badge: "COURT PERCUSSION", model: "16 BRONZE BELLS", description: "두 단의 열여섯 청동 종을 건반으로 연주하고, 울린 종을 빛으로 확인해요." },
         { id: "pyeongyeong", room: "court", name: "편경", tag: "COURT STONE CHIME", engine: "drums", stage: "metal", art: "assets/instruments/korean-pyeongyeong.webp", pitched: true, toneMarkers: true, range: [60, 75], size: "전체 너비 약 210 cm", visualScale: .92, scalePercent: 82, badge: "COURT PERCUSSION", model: "16 STONE CHIMES", description: "열여섯 경돌은 정면 크기가 같고 두께가 다릅니다. 두꺼울수록 높은음이 나며, 울린 경돌만 빛나요." },
-        { id: "ritual-signals", room: "court", name: "박·축·어 스테이션", tag: "RITUAL SIGNALS", engine: "drums", stage: "korean-station", station: "ritual", size: "제례악 지휘·신호 악기 구성", scalePercent: 70, badge: "COURT SIGNALS", model: "BAK · CHUK · EO", parts: [
+        { id: "ritual-signals", room: "court", name: "의식 신호 악기", tag: "박 · 축 · 어", engine: "drums", stage: "korean-station", station: "ritual", size: "제례악 지휘·신호 악기 구성", scalePercent: 70, badge: "COURT SIGNALS", model: "박 · 축 · 어", parts: [
             { id: "bak", name: "박", art: "assets/instruments/korean-bak.webp", scale: .82 },
             { id: "chuk", name: "축", art: "assets/instruments/korean-chuk.webp", scale: .95 },
             { id: "eo", name: "어", art: "assets/instruments/korean-eo.webp", scale: 1.08 }
         ], description: "음악의 시작과 마침을 알리는 박·축·어를 묶고, 연주된 악기를 형광 표시해요." },
-        { id: "daechwita-station", room: "court", name: "대취타 스테이션", tag: "ROYAL PROCESSION", engine: "drums", stage: "korean-station", station: "daechwita", size: "행진 편성 기준", scalePercent: 100, badge: "DAECHWITA", model: "NABAL · NAGAK · YONGGO · JABARA · JING · TAEPYEONGSO", parts: [
+        { id: "daechwita-station", room: "court", name: "대취타 스테이션", tag: "ROYAL PROCESSION", engine: "drums", stage: "korean-station", station: "daechwita", size: "행진 편성 기준", scalePercent: 100, badge: "DAECHWITA", model: "나발 · 나각 · 용고 · 자바라 · 징 · 태평소", parts: [
             { id: "nabal", name: "나발", art: "assets/instruments/korean-nabal.webp", scale: 1.12 },
             { id: "nagak", name: "나각", art: "assets/instruments/korean-nagak.webp", scale: .82 },
             { id: "yonggo", name: "용고", art: "assets/instruments/korean-yonggo.webp", scale: 1 },
@@ -227,7 +229,12 @@
         pressedCodes: new Map(),
         visualEnergy: 0,
         visualPitch: 0,
-        toastTimer: 0
+        toastTimer: 0,
+        detailOpen: false,
+        detailId: null,
+        detailParentId: null,
+        detailTab: "overview",
+        detailReturnFocus: null
     };
     const elements = {};
 
@@ -238,7 +245,7 @@
             "articulationButtons", "toneSlider", "toneOutput", "muteSlider", "muteOutput", "pickSlider", "pickOutput",
             "driveSlider", "driveOutput", "drumResonanceSlider", "drumResonanceOutput", "drumToneSlider", "drumToneOutput",
             "noteReadout", "rangeLegend", "rangeReadout", "octaveControls", "octaveReadout", "octaveDown", "octaveUp", "keyboardViewport",
-            "keyboard", "chordSurface", "chordPads", "drumPads", "toast"
+            "keyboard", "chordSurface", "chordPads", "drumPads", "toast", "instrumentInfoButton", "instrumentDetailModal", "instrumentDetailDialog", "detailFamily", "detailTitle", "detailSubtitle", "detailPrevious", "detailNext", "detailClose", "detailArtworkFrame", "detailArtwork", "detailArtworkLayers", "detailArtworkFallback", "detailPartPicker", "detailFacts", "detailTabs", "detailArticle", "detailSectionEyebrow", "detailSectionTitle", "detailSectionBody", "detailSourceList"
         ].forEach(function (id) { elements[id] = document.getElementById(id); });
     }
 
@@ -724,6 +731,216 @@
             state.pianoVoices.forEach(function (voice) { if (voice.held) releasePianoVoice(voice, false); });
         }
     }
+
+    const DETAIL_TABS = {
+        overview: ["AT A GLANCE", "한눈에 보는 악기"],
+        mechanism: ["HOW IT WORKS", "구조와 소리의 원리"],
+        technique: ["HOW TO PLAY", "연주법과 표현"],
+        role: ["IN THE MUSIC", "음악 속 역할"],
+        history: ["CONTEXT", "역사와 다른 악기 비교"]
+    };
+
+    function instrumentDetails() {
+        return window.INSTRUMENT_DETAILS || {};
+    }
+
+    function modelById(modelId) {
+        const families = Object.keys(MODEL_LIBRARY);
+        for (let index = 0; index < families.length; index += 1) {
+            const model = MODEL_LIBRARY[families[index]].find(function (item) { return item.id === modelId; });
+            if (model) return model;
+        }
+        return null;
+    }
+
+    function detailParentModel() {
+        return modelById(state.detailParentId) || state.currentModel;
+    }
+
+    function renderDetailArtwork(entry, parent) {
+        elements.detailArtwork.classList.add("hidden");
+        elements.detailArtwork.removeAttribute("src");
+        elements.detailArtworkLayers.innerHTML = "";
+        elements.detailArtworkLayers.className = "detail-artwork-layers hidden";
+        elements.detailArtworkFallback.classList.add("hidden");
+
+        if (parent && parent.id === state.detailId && Array.isArray(parent.parts)) {
+            elements.detailArtworkLayers.classList.remove("hidden");
+            elements.detailArtworkLayers.dataset.layout = parent.station || "";
+            const columns = parent.station === "daechwita" ? 3 : Math.min(5, parent.parts.length);
+            elements.detailArtworkLayers.style.setProperty("--detail-part-count", String(columns));
+            parent.parts.forEach(function (part) {
+                const image = document.createElement("img");
+                image.src = part.art;
+                image.alt = "";
+                elements.detailArtworkLayers.appendChild(image);
+            });
+            return;
+        }
+
+        let art = entry.art;
+        if (!art && parent) {
+            if (parent.id === state.detailId) art = parent.art;
+            else if (Array.isArray(parent.parts)) {
+                const part = parent.parts.find(function (item) { return item.id === state.detailId; });
+                if (part) art = part.art;
+            }
+        }
+        if (art) {
+            elements.detailArtwork.src = art;
+            elements.detailArtwork.alt = entry.name + " 악기 모습";
+            elements.detailArtwork.classList.remove("hidden");
+            return;
+        }
+        elements.detailArtworkFallback.querySelector("b").textContent = entry.name;
+        elements.detailArtworkFallback.classList.remove("hidden");
+    }
+
+    function renderDetailPartPicker(parent) {
+        const parts = parent && Array.isArray(parent.parts) ? parent.parts : [];
+        elements.detailPartPicker.innerHTML = "";
+        elements.detailPartPicker.classList.toggle("hidden", !parts.length);
+        if (!parts.length) return;
+        [{ id: parent.id, name: "전체 구성" }].concat(parts).forEach(function (part) {
+            const button = document.createElement("button");
+            button.type = "button";
+            button.setAttribute("role", "listitem");
+            button.textContent = part.name;
+            button.classList.toggle("active", part.id === state.detailId);
+            button.addEventListener("click", function () {
+                state.detailId = part.id;
+                state.detailTab = "overview";
+                renderInstrumentDetail();
+            });
+            elements.detailPartPicker.appendChild(button);
+        });
+    }
+
+    function renderInstrumentDetail() {
+        const entry = instrumentDetails()[state.detailId];
+        const parent = detailParentModel();
+        if (!entry || !parent) return;
+        elements.detailFamily.textContent = entry.family;
+        elements.detailTitle.textContent = entry.name;
+        elements.detailSubtitle.textContent = entry.subtitle;
+        renderDetailArtwork(entry, parent);
+        renderDetailPartPicker(parent);
+
+        const facts = [];
+        if (state.detailId === parent.id && parent.size) facts.push(["실제 크기", parent.size]);
+        if (state.detailId === parent.id && Array.isArray(parent.range)) {
+            facts.push(["연주 음역", core.noteLabel(parent.range[0]) + " – " + core.noteLabel(parent.range[1])]);
+        }
+        entry.facts.forEach(function (fact) { facts.push(fact); });
+        elements.detailFacts.innerHTML = "";
+        facts.slice(0, 6).forEach(function (fact) {
+            const box = document.createElement("div");
+            const term = document.createElement("dt");
+            const value = document.createElement("dd");
+            term.textContent = fact[0];
+            value.textContent = fact[1];
+            box.append(term, value);
+            elements.detailFacts.appendChild(box);
+        });
+
+        document.querySelectorAll("[data-detail-tab]").forEach(function (button) {
+            const active = button.dataset.detailTab === state.detailTab;
+            button.classList.toggle("active", active);
+            button.setAttribute("aria-selected", String(active));
+            button.tabIndex = active ? 0 : -1;
+        });
+        const tabCopy = DETAIL_TABS[state.detailTab] || DETAIL_TABS.overview;
+        elements.detailSectionEyebrow.textContent = tabCopy[0];
+        elements.detailSectionTitle.textContent = tabCopy[1];
+        elements.detailSectionBody.innerHTML = "";
+        String(entry.sections[state.detailTab] || entry.sections.overview).split(/\n\s*\n/).forEach(function (paragraph) {
+            const item = document.createElement("p");
+            item.textContent = paragraph;
+            elements.detailSectionBody.appendChild(item);
+        });
+        elements.detailSourceList.innerHTML = "";
+        entry.sources.forEach(function (source) {
+            const item = document.createElement("li");
+            const link = document.createElement("a");
+            link.href = source.url;
+            link.target = "_blank";
+            link.rel = "noopener noreferrer";
+            link.textContent = source.label;
+            item.appendChild(link);
+            elements.detailSourceList.appendChild(item);
+        });
+        elements.detailArticle.scrollTop = 0;
+    }
+
+    function openInstrumentDetail(detailId) {
+        if (!state.currentModel) return;
+        const id = detailId || state.currentModel.id;
+        if (!instrumentDetails()[id]) {
+            showToast("이 악기의 설명을 준비하고 있어요.");
+            return;
+        }
+        state.detailReturnFocus = document.activeElement;
+        state.detailParentId = state.currentModel.id;
+        state.detailId = id;
+        state.detailTab = "overview";
+        state.detailOpen = true;
+        renderInstrumentDetail();
+        elements.instrumentDetailModal.classList.remove("hidden");
+        elements.instrumentDetailModal.setAttribute("aria-hidden", "false");
+        document.body.classList.add("detail-open");
+        window.requestAnimationFrame(function () { elements.instrumentDetailDialog.focus(); });
+    }
+
+    function closeInstrumentDetail() {
+        if (!state.detailOpen) return;
+        state.detailOpen = false;
+        elements.instrumentDetailModal.classList.add("hidden");
+        elements.instrumentDetailModal.setAttribute("aria-hidden", "true");
+        document.body.classList.remove("detail-open");
+        const returnTarget = state.detailReturnFocus;
+        state.detailReturnFocus = null;
+        if (returnTarget && typeof returnTarget.focus === "function") returnTarget.focus();
+    }
+
+    function moveInstrumentDetail(direction) {
+        const models = visibleModels();
+        const currentIndex = Math.max(0, models.findIndex(function (model) { return model.id === state.detailParentId; }));
+        const nextIndex = (currentIndex + direction + models.length) % models.length;
+        const model = models[nextIndex];
+        selectModel(model.id);
+        state.detailParentId = model.id;
+        state.detailId = model.id;
+        state.detailTab = "overview";
+        renderInstrumentDetail();
+    }
+
+    function handleDetailKeydown(event) {
+        if (!state.detailOpen) return;
+        if (event.key === "Escape") {
+            event.preventDefault();
+            event.stopPropagation();
+            closeInstrumentDetail();
+            return;
+        }
+        if (event.key !== "Tab") return;
+        const focusable = Array.from(elements.instrumentDetailDialog.querySelectorAll("button:not([disabled]),a[href],[tabindex]:not([tabindex=\"-1\"])"))
+            .filter(function (node) { return node.offsetParent !== null; });
+        if (!focusable.length) {
+            event.preventDefault();
+            elements.instrumentDetailDialog.focus();
+            return;
+        }
+        const first = focusable[0];
+        const last = focusable[focusable.length - 1];
+        if (event.shiftKey && document.activeElement === first) {
+            event.preventDefault();
+            last.focus();
+        } else if (!event.shiftKey && document.activeElement === last) {
+            event.preventDefault();
+            first.focus();
+        }
+    }
+
     function visibleModels() {
         const models = MODEL_LIBRARY[state.family] || [];
         return state.family === "korean" ? models.filter(function (model) { return model.room === state.koreanRoom; }) : models;
@@ -910,6 +1127,7 @@
         elements.modelBadge.textContent = model.badge;
         elements.instrumentName.textContent = model.name;
         elements.instrumentDescription.textContent = model.description;
+        elements.instrumentInfoButton.setAttribute("aria-label", model.name + " 자세한 설명 열기");
         elements.visualFamily.textContent = state.family === "korean" ? "KOREAN · " + state.koreanRoom.toUpperCase() : FAMILY_COPY[state.family][0];
         elements.visualModel.textContent = model.model;
         const expressive = Boolean(model.expressive) || model.stage === "classical" || model.stage === "wind" || model.stage === "brass";
@@ -1225,6 +1443,7 @@
     }
 
     function handleComputerKeyDown(event) {
+        if (state.detailOpen) return;
         if (event.repeat || event.ctrlKey || event.metaKey || event.altKey) return;
         const tag = event.target && event.target.tagName;
         const textEntry = tag === "TEXTAREA" || tag === "SELECT" || (tag === "INPUT" && event.target.type !== "range");
@@ -1273,6 +1492,17 @@
     }
 
     function bindEvents() {
+        elements.instrumentInfoButton.addEventListener("click", function () { openInstrumentDetail(); });
+        document.querySelectorAll("[data-detail-close]").forEach(function (button) { button.addEventListener("click", closeInstrumentDetail); });
+        elements.detailPrevious.addEventListener("click", function () { moveInstrumentDetail(-1); });
+        elements.detailNext.addEventListener("click", function () { moveInstrumentDetail(1); });
+        document.querySelectorAll("[data-detail-tab]").forEach(function (button) {
+            button.addEventListener("click", function () {
+                state.detailTab = button.dataset.detailTab;
+                renderInstrumentDetail();
+            });
+        });
+        document.addEventListener("keydown", handleDetailKeydown, true);
         elements.audioButton.addEventListener("click", function () {
             ensureAudio();
             elements.audioButton.textContent = "준비 중…";
@@ -1357,7 +1587,7 @@
         renderChordPads();
         renderDrumPads();
         bindEvents();
-        selectFamily("keyboard");
+        selectFamily("korean");
         animateVisual();
     }
 

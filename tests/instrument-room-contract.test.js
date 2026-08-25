@@ -8,11 +8,25 @@ const html = fs.readFileSync(path.join(root, 'index.html'), 'utf8');
 const css = fs.readFileSync(path.join(root, 'styles.css'), 'utf8');
 const app = fs.readFileSync(path.join(root, 'app.js'), 'utf8');
 const worklet = fs.readFileSync(path.join(root, 'instrument-worklet-v2.js'), 'utf8');
+const detailSource = fs.readFileSync(path.join(root, 'instrument-details.js'), 'utf8');
+const detailContext = { window: {} };
+require('node:vm').createContext(detailContext);
+require('node:vm').runInContext(detailSource, detailContext);
+const instrumentDetails = detailContext.window.INSTRUMENT_DETAILS;
 
 test('uses dedicated rooms for the nine primary instrument groups', () => {
   for (const family of ['keyboard', 'guitar', 'bass', 'drums', 'strings', 'woodwind', 'brass', 'percussion', 'korean']) {
     assert.match(html, new RegExp(`data-family="${family}"`));
   }
+});
+
+test('orders instrument families from Korean traditions to keyboard instruments', () => {
+  const order = ['korean', 'strings', 'woodwind', 'brass', 'percussion', 'drums', 'bass', 'guitar', 'keyboard'];
+  const positions = order.map((family) => html.indexOf('data-family="' + family + '"'));
+  assert.equal(positions.every((position) => position >= 0), true);
+  assert.deepEqual([...positions].sort((a, b) => a - b), positions);
+  assert.match(html, /class="active"[^>]*data-family="korean"[^>]*aria-selected="true"/);
+  assert.match(app, /selectFamily\("korean"\)/);
 });
 
 test('keeps the instrument header compact and hides normal audio status', () => {
@@ -105,11 +119,58 @@ test('shows actual-size guidance and keeps related instruments at different visu
 
 test('renders a full keyboard and disables notes outside each model range', () => {
   assert.match(app, /DISPLAY_RANGE = \{ start: 21, end: 108 \}/);
+  assert.match(app, /\["KeyO", 13, "O"\]/);
+  assert.match(app, /\["KeyP", 15, "P"\]/);
+  assert.match(app, /\["Semicolon", 16, ";"\]/);
+  assert.match(app, /\["Quote", 17, "'"\]/);
   assert.match(app, /key\.disabled = unavailable/);
   assert.match(app, /isPitchPlayable/);
   assert.match(app, /pitched: true, range:/);
   assert.match(html, /id="rangeLegend"/);
   assert.match(css, /\.key\.unavailable/);
+});
+
+test('offers a centered accessible encyclopedia dialog without triggering performance', () => {
+  assert.match(html, /instrument-details\.js[^>]*defer/);
+  assert.ok(html.indexOf('instrument-details.js') < html.indexOf('app.js'));
+  assert.match(html, /id="instrumentInfoButton"[^>]*aria-haspopup="dialog"/);
+  assert.match(html, /id="instrumentDetailDialog"[^>]*role="dialog"[^>]*aria-modal="true"/);
+  assert.match(html, /data-detail-tab="overview"/);
+  assert.match(html, /data-detail-tab="history"/);
+  assert.match(app, /function openInstrumentDetail/);
+  assert.match(app, /function closeInstrumentDetail/);
+  assert.match(app, /function handleDetailKeydown/);
+  assert.match(app, /if \(state\.detailOpen\) return;/);
+  assert.match(css, /\.instrument-detail-dialog/);
+  assert.match(css, /min-height: 44px/);
+});
+
+test('provides complete long-form guides for every model and grouped instrument', () => {
+  const required = [
+    'concert-grand', 'upright-piano', 'tine-ep', 'reed-ep', 'pop-grand-fm', 'grand-tine-duo',
+    'ballad-digital', 'tonewheel-organ', 'pipe-organ', 'p-bass', 'j-bass', 'active-bass',
+    'fretless-bass', 'upright-bass', 's-style', 'metal-seven', 'hollow-jazz', 'dreadnought',
+    'classical-guitar', 'violin', 'viola', 'cello', 'flute', 'oboe', 'clarinet', 'bassoon',
+    'saxophone', 'trumpet', 'trombone', 'french-horn', 'tuba', 'rock-kit', 'metal-kit',
+    'pop-kit', 'jazz-kit', 'funk-kit', 'drum-808', 'linn-machine', 'timpani', 'glockenspiel',
+    'marimba', 'vibraphone', 'xylophone', 'orchestral-percussion', 'orchestral-snare',
+    'orchestral-bass-drum', 'orchestral-suspended-cymbal', 'orchestral-tamtam',
+    'orchestral-triangle', 'gayageum', 'geomungo', 'haegeum', 'ajaeng', 'daegeum',
+    'hyangpiri', 'taepyeongso', 'samulnori', 'janggu', 'buk', 'sogo', 'kkwaenggwari',
+    'jing', 'pyeonjong', 'pyeongyeong', 'ritual-signals', 'bak', 'chuk', 'eo',
+    'daechwita-station', 'nabal', 'nagak', 'yonggo', 'jabara'
+  ];
+  assert.equal(Object.keys(instrumentDetails).length, required.length);
+  for (const id of required) {
+    const entry = instrumentDetails[id];
+    assert.ok(entry, id);
+    assert.equal(entry.facts.length >= 3, true, id + ' facts');
+    assert.equal(entry.sources.length >= 1, true, id + ' sources');
+    for (const section of ['overview', 'mechanism', 'technique', 'role', 'history']) {
+      assert.equal(typeof entry.sections[section], 'string', id + ' ' + section);
+      assert.equal(entry.sections[section].length >= 45, true, id + ' ' + section + ' depth');
+    }
+  }
 });
 
 test('browser app source is syntactically valid', () => {
@@ -122,6 +183,10 @@ test('separates Korean melody, folk, and court instrument rooms', () => {
     assert.match(app, new RegExp('room: "' + room + '"'));
   }
   assert.match(app, /function selectKoreanRoom/);
+  assert.match(app, /model: "장구 · 북 · 소고 · 꽹과리 · 징"/);
+  assert.match(app, /model: "박 · 축 · 어"/);
+  assert.match(app, /model: "나발 · 나각 · 용고 · 자바라 · 징 · 태평소"/);
+  assert.doesNotMatch(app, /model: "(?:SAMULNORI|JANGGU|BAK · CHUK|NABAL · NAGAK|AJAENG|DAEGEUM|HYANGPIRI|TAEPYEONGSO)"/);
   for (const model of ['gayageum', 'geomungo', 'haegeum', 'ajaeng', 'daegeum', 'hyangpiri', 'taepyeongso', 'samulnori', 'pyeonjong', 'pyeongyeong', 'ritual-signals', 'daechwita-station']) {
     assert.match(app, new RegExp('id: "' + model + '"'));
   }
