@@ -15,6 +15,15 @@ test('uses dedicated rooms for the nine primary instrument groups', () => {
   }
 });
 
+test('keeps the instrument header compact and hides normal audio status', () => {
+  assert.doesNotMatch(html, /LOCAL PHYSICAL INSTRUMENTS|level-bars/);
+  assert.doesNotMatch(app, /소리 준비됨/);
+  assert.match(html, /id="audioButton"[^>]*>소리 켜기<\/button>/);
+  assert.match(css, /\.topbar \{ height: 50px;/);
+  assert.match(app, /audioButton\.classList\.add\("hidden"\)/);
+  assert.match(app, /audioButton\.classList\.remove\("hidden"\)/);
+});
+
 test('keyboard library covers AP, EP, Hybrid, and Organ', () => {
   for (const model of ['concert-grand', 'tine-ep', 'pop-grand-fm', 'tonewheel-organ']) {
     assert.match(app, new RegExp(`id: "${model}"`));
@@ -23,6 +32,24 @@ test('keyboard library covers AP, EP, Hybrid, and Organ', () => {
   assert.match(app, /EP · ELECTRIC/);
   assert.match(app, /tag: "HYBRID"/);
   assert.match(app, /tag: "ORGAN"/);
+});
+
+test('keyboard and electronic machines use non-interactive premium artwork', () => {
+  for (const asset of [
+    'keyboard-concert-grand.webp', 'keyboard-upright-piano.webp',
+    'keyboard-tine-ep.webp', 'keyboard-reed-ep.webp',
+    'keyboard-pop-grand-fm.webp', 'keyboard-grand-tine-duo.webp',
+    'keyboard-ballad-digital.webp', 'keyboard-tonewheel-organ.webp',
+    'keyboard-pipe-organ.webp', 'drum-808-machine.webp',
+    'drum-linn-machine.webp'
+  ]) {
+    assert.match(app, new RegExp(asset.replace('.', '\\.')));
+    assert.equal(fs.existsSync(path.join(root, 'assets', 'instruments', asset)), true, asset);
+  }
+  assert.match(app, /model\.art \? " has-artwork"/);
+  assert.match(app, /\(model\.stage === "machine" \|\| model\.stage === "linn"\) && !model\.art/);
+  assert.match(css, /\.instrument-visual\.has-artwork \.studio-stage::before/);
+  assert.match(css, /pointer-events: none/);
 });
 
 test('percussion library includes dedicated kits and essential orchestral instruments', () => {
@@ -56,7 +83,7 @@ test('string and expressive families expose virtual-instrument presentation', ()
 });
 
 test('project-bound instrument artwork exists', () => {
-  for (const asset of ['bass-p-style.png', 'bass-j-style.png', 'bass-active-five.png', 'bass-fretless.png', 'guitar-s-style.png', 'guitar-metal-seven.png', 'guitar-hollowbody-jazz.png', 'guitar-dreadnought.png', 'guitar-classical-nylon.png', 'drum-rock-kit.webp', 'drum-metal-kit.webp', 'drum-pop-kit.webp', 'drum-jazz-kit.webp', 'drum-funk-kit.webp', 'violin-expressive.png', 'viola-expressive.png', 'cello-expressive.png', 'double-bass-expressive.png', 'flute-expressive.png', 'oboe-expressive.png', 'clarinet-expressive.png', 'bassoon-expressive.png', 'alto-sax-expressive.png', 'trumpet-expressive.png', 'trombone-expressive.png', 'french-horn-expressive.png', 'tuba-expressive.png', 'timpani-bank.png', 'glockenspiel-concert.png', 'marimba-concert.png', 'vibraphone-concert.png', 'xylophone-concert.png', 'orchestral-percussion-station.png', 'korean-gayageum.png', 'korean-geomungo.png', 'korean-haegeum.png', 'korean-ajaeng.png', 'korean-daegeum.png', 'korean-hyangpiri.png', 'korean-taepyeongso.png', 'korean-samulnori-station.png']) {
+  for (const asset of ['bass-p-style.png', 'bass-j-style.png', 'bass-active-five.png', 'bass-fretless.png', 'guitar-s-style.png', 'guitar-metal-seven.png', 'guitar-hollowbody-jazz.png', 'guitar-dreadnought.png', 'guitar-classical-nylon.png', 'drum-rock-kit.webp', 'drum-metal-kit.webp', 'drum-pop-kit.webp', 'drum-jazz-kit.webp', 'drum-funk-kit.webp', 'violin-expressive.png', 'viola-expressive.png', 'cello-expressive.png', 'double-bass-expressive.png', 'flute-expressive.png', 'oboe-expressive.png', 'clarinet-expressive.png', 'bassoon-expressive.png', 'alto-sax-expressive.png', 'trumpet-expressive.png', 'trombone-expressive.png', 'french-horn-expressive.png', 'tuba-expressive.png', 'timpani-bank.png', 'glockenspiel-concert.png', 'marimba-concert.png', 'vibraphone-concert.png', 'xylophone-compact-concert.webp', 'orchestral-percussion-station.png', 'korean-gayageum.png', 'korean-geomungo.png', 'korean-haegeum.png', 'korean-ajaeng.png', 'korean-daegeum.png', 'korean-hyangpiri.png', 'korean-taepyeongso.png', 'korean-samulnori-station.png']) {
     assert.equal(fs.existsSync(path.join(root, 'assets', 'instruments', asset)), true, asset);
   }
 });

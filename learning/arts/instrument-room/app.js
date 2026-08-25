@@ -56,15 +56,15 @@
     };
     const MODEL_LIBRARY = {
         keyboard: [
-            { id: "concert-grand", name: "콘서트 그랜드", tag: "AP · ACOUSTIC", engine: "piano", stage: "piano", badge: "SAMPLED GRAND", model: "88 GRAND", description: "화성학 연습실과 같은 빠른 반응의 그랜드 피아노예요." },
-            { id: "upright-piano", name: "업라이트 피아노", tag: "AP · ACOUSTIC", engine: "piano", stage: "piano", badge: "UPRIGHT PIANO", model: "STUDIO UPRIGHT", description: "가정과 연습실에서 익숙한 업라이트 피아노 화면이에요." },
-            { id: "tine-ep", name: "Tine EP", tag: "EP · ELECTRIC", engine: "piano", stage: "ep", badge: "TINE ELECTRIC PIANO", model: "TINE 73", description: "금속 타인과 픽업의 반응을 다루는 대표적인 일렉트릭 피아노예요." },
-            { id: "reed-ep", name: "Reed EP", tag: "EP · ELECTRIC", engine: "piano", stage: "ep", badge: "REED ELECTRIC PIANO", model: "REED 64", description: "리드의 거친 어택과 따뜻한 중음을 가진 일렉트릭 피아노예요." },
-            { id: "pop-grand-fm", name: "Pop Grand + FM", tag: "HYBRID", engine: "piano", stage: "hybrid", badge: "AP + FM EP LAYER", model: "POP GRAND + FM", description: "밝은 그랜드 어택 위에 FM 일렉트릭 피아노를 겹친 팝 발라드 톤이에요." },
-            { id: "grand-tine-duo", name: "Grand + Tine", tag: "HYBRID", engine: "piano", stage: "hybrid", badge: "AP + TINE EP LAYER", model: "GRAND + TINE", description: "어쿠스틱 그랜드와 타인 EP를 함께 연주하는 넓은 레이어 톤이에요." },
-            { id: "ballad-digital", name: "Ballad + Digital EP", tag: "HYBRID", engine: "piano", stage: "hybrid", badge: "AP + DIGITAL EP", model: "BALLAD DUO", description: "부드러운 발라드 그랜드 뒤에 디지털 EP의 선명함을 더한 톤이에요." },
-            { id: "tonewheel-organ", name: "Tonewheel Organ", tag: "ORGAN", engine: "piano", stage: "organ", badge: "TONEWHEEL ORGAN", model: "DRAWBAR B3 STYLE", description: "드로바와 로터리 스피커가 중심인 톤휠 오르간 화면이에요." },
-            { id: "pipe-organ", name: "Pipe Organ", tag: "ORGAN", engine: "piano", stage: "organ", badge: "PIPE ORGAN", model: "CHURCH PIPE", description: "스톱과 매뉴얼을 중심으로 정리한 파이프 오르간 화면이에요." }
+            { id: "concert-grand", name: "콘서트 그랜드", tag: "AP · ACOUSTIC", engine: "piano", stage: "piano", art: "assets/instruments/keyboard-concert-grand.webp", badge: "SAMPLED GRAND", model: "88 GRAND", description: "화성학 연습실과 같은 빠른 반응의 그랜드 피아노예요." },
+            { id: "upright-piano", name: "업라이트 피아노", tag: "AP · ACOUSTIC", engine: "piano", stage: "piano", art: "assets/instruments/keyboard-upright-piano.webp", badge: "UPRIGHT PIANO", model: "STUDIO UPRIGHT", description: "가정과 연습실에서 익숙한 업라이트 피아노 화면이에요." },
+            { id: "tine-ep", name: "Tine EP", tag: "EP · ELECTRIC", engine: "piano", stage: "ep", art: "assets/instruments/keyboard-tine-ep.webp", badge: "TINE ELECTRIC PIANO", model: "TINE 73", description: "금속 타인과 픽업의 반응을 다루는 대표적인 일렉트릭 피아노예요." },
+            { id: "reed-ep", name: "Reed EP", tag: "EP · ELECTRIC", engine: "piano", stage: "ep", art: "assets/instruments/keyboard-reed-ep.webp", badge: "REED ELECTRIC PIANO", model: "REED 64", description: "리드의 거친 어택과 따뜻한 중음을 가진 일렉트릭 피아노예요." },
+            { id: "pop-grand-fm", name: "Pop Grand + FM", tag: "HYBRID", engine: "piano", stage: "hybrid", art: "assets/instruments/keyboard-pop-grand-fm.webp", badge: "AP + FM EP LAYER", model: "POP GRAND + FM", description: "밝은 그랜드 어택 위에 FM 일렉트릭 피아노를 겹친 팝 발라드 톤이에요." },
+            { id: "grand-tine-duo", name: "Grand + Tine", tag: "HYBRID", engine: "piano", stage: "hybrid", art: "assets/instruments/keyboard-grand-tine-duo.webp", badge: "AP + TINE EP LAYER", model: "GRAND + TINE", description: "어쿠스틱 그랜드와 타인 EP를 함께 연주하는 넓은 레이어 톤이에요." },
+            { id: "ballad-digital", name: "Ballad + Digital EP", tag: "HYBRID", engine: "piano", stage: "hybrid", art: "assets/instruments/keyboard-ballad-digital.webp", badge: "AP + DIGITAL EP", model: "BALLAD DUO", description: "부드러운 발라드 그랜드 뒤에 디지털 EP의 선명함을 더한 톤이에요." },
+            { id: "tonewheel-organ", name: "Tonewheel Organ", tag: "ORGAN", engine: "piano", stage: "organ", art: "assets/instruments/keyboard-tonewheel-organ.webp", badge: "TONEWHEEL ORGAN", model: "DRAWBAR B3 STYLE", description: "드로바와 로터리 스피커가 중심인 톤휠 오르간 화면이에요." },
+            { id: "pipe-organ", name: "Pipe Organ", tag: "ORGAN", engine: "piano", stage: "organ", art: "assets/instruments/keyboard-pipe-organ.webp", badge: "PIPE ORGAN", model: "CHURCH PIPE", description: "스톱과 매뉴얼을 중심으로 정리한 파이프 오르간 화면이에요." }
         ],
         strings: [
             { id: "p-bass", name: "P-Style 4", tag: "ELECTRIC BASS", engine: "bass", stage: "bass", art: "assets/instruments/bass-p-style.png", badge: "PASSIVE SPLIT COIL", model: "P-STYLE 4", range: [28, 67], size: "전체 길이 약 116 cm", visualScale: .82, scalePercent: 64, description: "굵고 단단한 기본음을 내는 클래식 4현 패시브 베이스예요." },
@@ -104,10 +104,10 @@
             { id: "glockenspiel", name: "글로켄슈필", tag: "KEYBOARD PERC.", engine: "drums", stage: "metal", art: "assets/instruments/glockenspiel-concert.png", pitched: true, range: [77, 108], size: "본체 너비 약 80 cm", visualScale: .54, scalePercent: 23, badge: "MALLET PERCUSSION", model: "GLOCKENSPIEL", description: "금속 음판의 실제 음역만 건반으로 연주해요." },
             { id: "marimba", name: "마림바", tag: "KEYBOARD PERC.", engine: "drums", stage: "mallet", art: "assets/instruments/marimba-concert.png", pitched: true, range: [36, 96], size: "본체 너비 약 250 cm", visualScale: .9, scalePercent: 71, badge: "MALLET PERCUSSION", model: "MARIMBA", description: "넓은 목재 음판의 실제 음역만 건반으로 연주해요." },
             { id: "vibraphone", name: "비브라폰", tag: "KEYBOARD PERC.", engine: "drums", stage: "metal", art: "assets/instruments/vibraphone-concert.png", pitched: true, range: [53, 89], size: "본체 너비 약 140 cm", visualScale: .72, scalePercent: 40, badge: "MALLET PERCUSSION", model: "VIBRAPHONE", description: "금속 음판과 모터·댐퍼를 살피며 실제 음역을 건반으로 연주해요." },
-            { id: "xylophone", name: "실로폰", tag: "KEYBOARD PERC.", engine: "drums", stage: "mallet", art: "assets/instruments/xylophone-concert.png", pitched: true, range: [65, 108], size: "본체 너비 약 140 cm", visualScale: .72, scalePercent: 40, badge: "MALLET PERCUSSION", model: "XYLOPHONE", description: "짧고 선명한 목재 음판의 실제 음역만 건반으로 연주해요." },
+            { id: "xylophone", name: "실로폰", tag: "KEYBOARD PERC.", engine: "drums", stage: "mallet", art: "assets/instruments/xylophone-compact-concert.webp", pitched: true, range: [65, 108], size: "본체 너비 약 140 cm", visualScale: .72, scalePercent: 40, badge: "MALLET PERCUSSION", model: "XYLOPHONE", description: "짧고 선명한 목재 음판의 실제 음역만 건반으로 연주해요." },
             { id: "orchestral-percussion", name: "오케스트라 타악 스테이션", tag: "ORCHESTRAL", engine: "drums", stage: "orchestral", art: "assets/instruments/orchestral-percussion-station.png", size: "전체 배치 너비 약 350 cm", visualScale: 1, scalePercent: 100, badge: "ORCHESTRAL PERCUSSION", model: "CONCERT STATION", description: "스네어드럼·베이스드럼·심벌·탐탐·트라이앵글을 한 화면에 묶었어요." },
-            { id: "drum-808", name: "808 Machine", tag: "ELECTRONIC", engine: "drums", stage: "machine", badge: "ANALOG RHYTHM", model: "808 STYLE", description: "고전 아날로그 리듬 머신을 닮은 전용 하드웨어 화면이에요." },
-            { id: "linn-machine", name: "Linn Machine", tag: "ELECTRONIC", engine: "drums", stage: "linn", badge: "DIGITAL DRUM COMPUTER", model: "LINN STYLE", description: "초기 디지털 드럼 컴퓨터의 패드와 표시창을 재구성했어요." },
+            { id: "drum-808", name: "808 Machine", tag: "ELECTRONIC", engine: "drums", stage: "machine", art: "assets/instruments/drum-808-machine.webp", badge: "ANALOG RHYTHM", model: "808 STYLE", description: "고전 아날로그 리듬 머신을 닮은 전용 하드웨어 화면이에요." },
+            { id: "linn-machine", name: "Linn Machine", tag: "ELECTRONIC", engine: "drums", stage: "linn", art: "assets/instruments/drum-linn-machine.webp", badge: "DIGITAL DRUM COMPUTER", model: "LINN STYLE", description: "초기 디지털 드럼 컴퓨터의 패드와 표시창을 재구성했어요." },
             { id: "samulnori", name: "사물놀이", tag: "KOREAN PERC.", engine: "drums", stage: "samul", badge: "KOREAN PERCUSSION", model: "SAMULNORI", description: "장구·북·소고·꽹과리·징을 한 무대에서 고르는 화면이에요." }
         ]
     };
@@ -246,7 +246,7 @@
             state.compressor.connect(state.masterLowShelf).connect(state.masterPresence).connect(state.limiter).connect(state.masterGain).connect(context.destination);
         }
         if (state.audioContext.state === "suspended") state.audioContext.resume();
-        elements.audioButton.classList.add("ready");
+        elements.audioButton.classList.add("hidden");
         return state.audioContext;
     }
 
@@ -731,7 +731,7 @@
     }
 
     function updateInstrumentStage(model) {
-        elements.instrumentVisual.className = "instrument-visual stage-" + model.stage;
+        elements.instrumentVisual.className = "instrument-visual stage-" + model.stage + (model.art ? " has-artwork" : "");
         elements.instrumentVisual.dataset.model = model.id;
         elements.instrumentVisual.style.setProperty("--object-scale", String(model.visualScale || 1));
         elements.instrumentArtwork.classList.toggle("hidden", !model.art);
@@ -747,7 +747,7 @@
         elements.malletRender.classList.add("hidden");
         if (["classical", "wind", "brass"].includes(model.stage) && !model.art) {
             elements.classicalRender.className = "classical-render" + (model.stage === "wind" ? " render-wind" : model.stage === "brass" ? " render-wind render-brass" : "");
-        } else if (model.stage === "machine" || model.stage === "linn") {
+        } else if ((model.stage === "machine" || model.stage === "linn") && !model.art) {
             renderMachine(model.stage); elements.machineDeck.classList.remove("hidden");
         } else if (["timpani", "mallet", "metal", "samul"].includes(model.stage) && !model.art) {
             renderMallet(model.stage); elements.malletRender.classList.remove("hidden");
@@ -1163,10 +1163,12 @@
             elements.audioButton.textContent = "준비 중…";
             const tasks = [loadPianoSamples(), ensureStringEngine(), ensureDrumEngine()];
             Promise.all(tasks).then(function () {
-                elements.audioButton.innerHTML = '<span aria-hidden="true">●</span> 소리 준비됨';
-                elements.audioButton.classList.add("ready");
+                elements.audioButton.classList.add("hidden");
                 showToast("소리가 준비됐어요.");
-            }).catch(function () { elements.audioButton.textContent = "소리 다시 켜기"; });
+            }).catch(function () {
+                elements.audioButton.textContent = "소리 다시 켜기";
+                elements.audioButton.classList.remove("hidden");
+            });
         });
         document.querySelectorAll("[data-family]").forEach(function (button) {
             button.addEventListener("click", function () { selectFamily(button.dataset.family); });
