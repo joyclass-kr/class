@@ -1371,7 +1371,123 @@ function endPage() {
         </div>`;
 }
 
-const TWO_PAGE_KINDS = new Set(['chapter', 'toc', 'cover']);
+/* 읽고 나서 — 장과 같은 방식으로 쪽을 나눈다. 그림은 첫 펼침면 오른쪽 위에 얹힌다.
+   끝 쪽을 그대로 두므로 학습 허브로 가는 단추는 여기 붙이지 않는다. */
+const AFTERWORD = {
+    title: '읽고 나서',
+    emoji: '📜',
+    art: ['end.webp'],
+    paras: [
+        `탈무드는 한 사람이 지은 책이 아닙니다. 유대 사람들이 천오백 년이 넘도록 주고받은 물음과 대답을 모아 놓은 것입니다. 스승이 묻고 제자가 답하고, 또 다른 스승이 거기에 토를 달았지요.`,
+        `그래서 탈무드에는 결론이 하나로 딱 떨어지지 않는 대목이 많습니다. 두 사람의 생각이 갈리면 둘 다 적어 두었거든요. 어느 쪽이 옳은지는 읽는 사람이 정하라는 뜻입니다.`,
+        `여기 실린 이야기들도 그렇습니다. 답을 알려 주는 이야기보다 무엇을 묻고 있는지 알려 주는 이야기가 더 많습니다.`,
+        `소금을 진 당나귀를 다시 보십시오. 당나귀는 물에 빠져 짐이 가벼워진 것을 배웠습니다. 그래서 다음에도 그렇게 했지요. 그런데 이번 짐은 소금이 아니라 솜이었습니다.`,
+        `배운 것이 틀린 것은 아니었습니다. 다만 그 배움이 통하는 자리가 따로 있었을 뿐입니다. 이 이야기가 어려운 까닭이 그것입니다.`,
+        `세 친구 이야기도 다시 보십시오. 가장 가까이 지낸 친구가 가장 먼저 등을 돌립니다. 그리고 가장 소홀히 여긴 친구가 끝까지 따라오지요. 누가 정말 친구인지는 아쉬울 때 드러난다는 이야기입니다.`,
+        `한 다리로 서서 배우겠다던 손님 이야기는 탈무드에서 가장 널리 알려진 대목입니다. 두 스승이 같은 손님을 맞았는데 한 사람은 내쫓고 한 사람은 답을 해 주었지요.`,
+        `내쫓은 스승이 나쁜 사람은 아닙니다. 그 물음이 무례하다고 여긴 것이지요. 다만 답을 해 준 쪽이 사람 하나를 더 얻었습니다.`,
+        `이것 또한 지나가리라는 말도 여기서 나왔습니다. 좋은 날에도 궂은날에도 똑같이 쓰이는 말이지요. 슬픔을 달래는 말이면서 기쁨에 취하지 말라는 말이기도 합니다.`,
+        `방을 가득 채운 촛불 이야기는 셈에 관한 것입니다. 방을 채우려고 값비싼 것을 사 모은 형들과, 초 한 자루로 채운 막내가 나오지요.`,
+        `많이 가진 쪽이 이기는 것이 아니라 무엇으로 채울지 아는 쪽이 이긴다는 이야기입니다. 탈무드에는 이런 이야기가 많습니다.`,
+        `탈무드를 읽는 유대 사람들은 혼자 읽지 않습니다. 둘씩 마주 앉아 서로 묻고 따지며 읽지요. 그 방식을 하브루타라고 합니다.`,
+        `묻는 사람이 있어야 읽기가 끝난다고 여기는 것입니다. 그러니 이 책도 누군가와 함께 읽으면 더 좋겠습니다.`,
+        `마지막으로 생각해 볼 것을 남겨 둡니다. 답은 적어 두지 않겠습니다.`,
+        `당나귀는 두 번째에 어떻게 했어야 할까요? 물에 빠져 보기 전에는 소금인지 솜인지 알 수 없었는데 말입니다.`,
+        `그리고 여러분에게는 세 친구 가운데 어느 친구가 있습니까? 아쉬울 때 찾아갈 사람과 평소에 가까이 지내는 사람이 같은 사람입니까?`
+    ]
+};
+
+const AFTER_SEGS = (() => {
+    const segs = [];
+    AFTERWORD.paras.forEach((html, paraIdx) => {
+        splitSegments(html).forEach((piece, k) => {
+            segs.push({ paraIdx, html: piece, start: k === 0 });
+        });
+    });
+    return segs;
+})();
+
+function paginateAfterword() {
+    const segs = AFTER_SEGS;
+    const arts = AFTERWORD.art || [];
+    const { usable, headHeight, artHeight } = PROBE;
+    const headHtml = `<h2>${AFTERWORD.title}</h2>`;
+    const totalH = PROBE.measure(runHtml(segs, 0, segs.length));
+    const underArt = Math.max(60, usable - artHeight);
+
+    const capsOf = slots => {
+        const caps = [];
+        slots.forEach(kind => { caps.push(usable); caps.push(kind === 'img' ? underArt : usable); });
+        return caps;
+    };
+
+    const minSpreads = Math.max(arts.length, 1);
+    const maxSpreads = Math.max(minSpreads, Math.floor(segs.length / 2));
+    let spreadCount = minSpreads;
+    while (spreadCount < maxSpreads) {
+        const caps = capsOf(slotPlan(arts.length, spreadCount - arts.length));
+        if (caps.reduce((a, b) => a + b, 0) >= totalH + headHeight) break;
+        spreadCount++;
+    }
+
+    let slots = slotPlan(arts.length, Math.max(0, spreadCount - arts.length));
+    let caps = capsOf(slots);
+    let ranges = fillPages(segs, caps, headHtml);
+    for (let guard = 0; guard < 8; guard++) {
+        const over = ranges.some(([a, b], n) =>
+            PROBE.measure((n === 0 ? headHtml : '') + runHtml(segs, a, b)) > caps[n] + 0.25);
+        if (!over || spreadCount >= maxSpreads) break;
+        spreadCount++;
+        slots = slotPlan(arts.length, Math.max(0, spreadCount - arts.length));
+        caps = capsOf(slots);
+        ranges = fillPages(segs, caps, headHtml);
+    }
+
+    const spreads = [];
+    let pageIdx = 0;
+    let artIdx = 0;
+    slots.forEach((kind, s) => {
+        const left = ranges[pageIdx++];
+        const right = ranges[pageIdx++];
+        spreads.push({
+            kind: 'after', first: s === 0,
+            art: kind === 'img' ? arts[artIdx++] : null, left, right
+        });
+    });
+    return spreads;
+}
+
+function afterSpreadPage(spread) {
+    const segs = AFTER_SEGS;
+    const head = spread.first ? `<h2>${AFTERWORD.title}</h2>` : '';
+
+    if (spread.art) {
+        return `
+            <div class="page page-story page-after">
+                <div class="story-page-left">
+                    ${head}
+                    ${runHtml(segs, spread.left[0], spread.left[1])}
+                </div>
+                <div class="story-page-right story-page-right-image">
+                    <div class="story-art-top">${artFrame(spread.art, AFTERWORD.emoji)}</div>
+                    ${runHtml(segs, spread.right[0], spread.right[1])}
+                </div>
+            </div>`;
+    }
+
+    return `
+        <div class="page page-story page-after">
+            <div class="story-page-left">
+                ${head}
+                ${runHtml(segs, spread.left[0], spread.left[1])}
+            </div>
+            <div class="story-page-right story-page-right-text">
+                ${runHtml(segs, spread.right[0], spread.right[1])}
+            </div>
+        </div>`;
+}
+
+const TWO_PAGE_KINDS = new Set(['chapter', 'toc', 'cover', 'after']);
 
 let PAGES = [];
 let FOLIOS = [];
@@ -1383,6 +1499,7 @@ function buildPages() {
         ...TOC_GROUPS.map((_, i) => ({ kind: 'toc', part: i })),
         ...CHAPTERS.flatMap(paginateChapter),
         ...QUIZ_GROUPS.map((_, i) => ({ kind: 'quiz', part: i })),
+        ...paginateAfterword(),
         { kind: 'end' }
     ];
     PROBE.close();   // 쪽을 다 나눴으니 재는 데 쓰던 숨은 쪽은 치운다
@@ -1404,6 +1521,7 @@ function renderPage(page) {
         case 'toc': return tocPage(page.part);
         case 'chapter': return chapterSpreadPage(page);
         case 'quiz': return quizPage(page.part);
+        case 'after': return afterSpreadPage(page);
         case 'end': return endPage();
         default: return '';
     }

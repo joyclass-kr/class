@@ -80,7 +80,7 @@ function measureInside() {
 const run = (win) => win.eval('(' + measureInside.toString() + ')()');
 
 (async () => {
-    const slugs = await (await fetch('_books_fix.json')).json();
+    const slugs = await (await fetch('_books.json')).json();
     const lines = [];
     for (const slug of slugs) {
         const res = [];
