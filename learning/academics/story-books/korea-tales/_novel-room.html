@@ -1,0 +1,82 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="UTF-8">
+<title>소설틀 장별 여유 재기</title>
+<style>
+    body { font: 13px monospace; margin: 16px; }
+    iframe { position: fixed; left: -6000px; top: 0; border: 0; }
+    pre { white-space: pre; }
+</style>
+</head>
+<body>
+<h1>장마다 얼마나 더 넣을 수 있나</h1>
+<pre id="out">…</pre>
+<iframe id="frame"></iframe>
+<script>
+/* 소설틀 찬율은 쪽나눔이 내놓는 결과라 겉으로만 봐서는 못 맞춘다.
+ * 그러나 장마다 담을 수 있는 높이는 정해져 있다.
+ *
+ *   담을 수 있는 높이 = Σ(쪽마다 caps)   ← 그림 얹힌 쪽은 그림 높이만큼 작다
+ *   지금 글 높이      = PROBE.measure(장 전체)
+ *
+ * 이 둘을 알면 "한 펼침면 더 늘리지 않고 얼마나 더 넣을 수 있는지"가 나온다.
+ * 목표를 93%로 잡으면 넘칠 걱정 없이 꽉 찬다. */
+const out = document.getElementById('out');
+const frame = document.getElementById('frame');
+const BOOKS = ['chunhyangjeon', 'heungbujeon', 'honggildongjeon', 'kongjwi-patjwi',
+               'onggojipjeon', 'simcheongjeon', 'tokkijeon'];
+const TARGET = 0.93;
+
+function probe() {
+    const TARGET = 0.93;   // 아이프레임 안에서 도는 함수라 바깥 값을 못 본다
+    PROBE = makeProbe();
+    const { usable, headHeight, artHeight } = PROBE;
+    const underArt = Math.max(60, usable - artHeight);
+    const rows = [];
+    let chars = 0, height = 0;
+    CHAPTERS.forEach((ch, ci) => {
+        const segs = CHAPTER_SEGS[ci];
+        const arts = (ch.art && ch.art.length) ? ch.art : [];
+        const totalH = PROBE.measure(runHtml(segs, 0, segs.length));
+        const pages = PAGES.filter(p => p.kind === 'chapter' && p.chIndex === ci).length;
+        const spreads = pages;                       // chapter 쪽 하나가 펼침면 하나다
+        const slots = slotPlan(arts.length, Math.max(0, spreads - arts.length));
+        let cap = 0;
+        slots.forEach(k => { cap += usable; cap += (k === 'img' ? underArt : usable); });
+        const now = totalH / cap;
+        const room = cap * TARGET - totalH - headHeight;
+        const n = (ch.paras || []).join('').replace(/<[^>]*>/g, '').replace(/\s/g, '').length;
+        chars += n; height += totalH;
+        rows.push({ num: ch.num, totalH, cap, now, room, n });
+    });
+    PROBE.close();
+    const perPx = chars / height;                    // 1px 이 몇 글자인가
+    return { rows, perPx };
+}
+
+(async () => {
+    frame.style.width = '1366px';
+    frame.style.height = '768px';
+    const lines = [];
+    for (const b of BOOKS) {
+        await Promise.all(['app.js', 'styles.css'].map(f => fetch(b + '/' + f, { cache: 'reload' }).catch(() => {})));
+        await new Promise(r => { frame.onload = r; frame.src = b + '/?t=' + Date.now(); });
+        await new Promise(r => setTimeout(r, 120));
+        try {
+            const s = frame.contentWindow.eval('(' + probe.toString() + ')()');
+            let add = 0;
+            const per = s.rows.map(r => {
+                const c = Math.max(0, Math.round(r.room * s.perPx));
+                add += c;
+                return `${r.num}장 ${Math.round(r.now * 100)}%${c ? ' +' + c + '자' : ' 참'}`;
+            });
+            lines.push(b.padEnd(17) + '더 넣을 수 있는 글  +' + String(add).padStart(5) + '자   ' + per.join(' · '));
+        } catch (e) { lines.push(b.padEnd(17) + '실패 ' + e.message); }
+        out.textContent = lines.join('\n');
+    }
+    out.textContent = lines.join('\n') + '\n\n=== 끝 ===';
+})();
+</script>
+</body>
+</html>
