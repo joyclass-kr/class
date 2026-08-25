@@ -23,7 +23,47 @@ document.addEventListener('DOMContentLoaded', () => {
     const vaporGroup = document.getElementById('vaporGroup');
     const seaRect = document.getElementById('seaRect');
     const seaSurface = document.getElementById('seaSurface');
-    const riverPath = document.getElementById('riverPath');
+    const riverCourse = document.getElementById('riverCourse');
+    const riverBody = document.getElementById('riverBody');
+    const riverFlow = document.getElementById('riverFlow');
+
+    /* 강은 산에서 시작해 바다로 갑니다. 예전에는 화면 바닥으로 빠져 바다에
+       닿지 않았고, 선 하나로 그려 상류와 하류의 굵기가 같았습니다. 이제
+       가운데 선을 따라 좌우로 벌린 면으로 그리고, 아래로 갈수록 넓힙니다. */
+    const COURSE = [[72, 174], [92, 196], [112, 212], [140, 228], [175, 240], [210, 247], [243, 250]];
+
+    function renderRiver() {
+        // 땅에 고인 물이 많을수록 강 전체가 굵어집니다
+        const scale = Math.max(0.55, Math.min(1.9, R.land / 45));
+        const half = i => {
+            const t = i / (COURSE.length - 1);          // 0 상류 → 1 하류
+            return (0.9 + 4.4 * t * t) * scale;          // 하류로 갈수록 빠르게 넓어짐
+        };
+        const left = [], right = [];
+        COURSE.forEach(([x, y], i) => {
+            const [px, py] = COURSE[Math.max(0, i - 1)];
+            const [nx, ny] = COURSE[Math.min(COURSE.length - 1, i + 1)];
+            const dx = nx - px, dy = ny - py;
+            const len = Math.hypot(dx, dy) || 1;
+            const ox = (-dy / len) * half(i), oy = (dx / len) * half(i);
+            left.push(`${(x + ox).toFixed(1)},${(y + oy).toFixed(1)}`);
+            right.unshift(`${(x - ox).toFixed(1)},${(y - oy).toFixed(1)}`);
+        });
+        riverBody.setAttribute('d', `M${left.join('L')}L${right.join('L')}Z`);
+
+        // 물이 실제로 흐르는 것이 보이도록, 가운데 선을 따라 물방울을 흘려보냅니다
+        const drops = Math.max(3, Math.round(4 + scale * 3));
+        let out = '';
+        for (let i = 0; i < drops; i += 1) {
+            const delay = (i * (2.8 / drops)).toFixed(2);
+            const r = (1.1 + (i % 3) * 0.5) * Math.min(1.4, scale);
+            out += `<circle class="river-drop" r="${r.toFixed(1)}">` +
+                   `<animateMotion dur="2.8s" begin="-${delay}s" repeatCount="indefinite">` +
+                   `<mpath href="#riverCourse"/></animateMotion></circle>`;
+        }
+        riverFlow.innerHTML = out;
+    }
+
     const reservoirBars = document.getElementById('reservoirBars');
 
     // Four reservoirs holding a fixed amount of water between them. Every flow
@@ -136,8 +176,7 @@ document.addEventListener('DOMContentLoaded', () => {
         seaSurface.setAttribute('y1', seaTop.toFixed(1));
         seaSurface.setAttribute('y2', seaTop.toFixed(1));
 
-        // the river swells with the water sitting on land
-        riverPath.setAttribute('stroke-width', Math.max(1.5, Math.min(11, R.land / 9)).toFixed(1));
+        renderRiver();
 
         // cloud grows with the condensed water it holds
         const s = Math.max(0.35, Math.min(2.1, R.cloud / 55));

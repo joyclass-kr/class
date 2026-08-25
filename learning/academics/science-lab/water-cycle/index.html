@@ -8,7 +8,7 @@
     <meta name="description" content="증발·응결·강수를 거치며 물이 돌고 도는 동안 물의 총량이 변하지 않음을 확인하는 초등 과학 모의실험">
     <link rel="stylesheet" as="style" crossorigin href="https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.9/dist/web/static/pretendard.css">
     <link rel="stylesheet" href="styles.css?v=1">
-    <link rel="stylesheet" href="cycle-visual.css?v=3">
+    <link rel="stylesheet" href="cycle-visual.css?v=4">
     <link rel="stylesheet" href="quiz.css?v=1">
 </head>
 <body>
@@ -101,7 +101,9 @@
 
                         <!-- land on the left with a mountain, sea on the right -->
                         <path class="land" d="M0,300 L0,215 L70,168 L150,206 L240,196 L240,300 Z"/>
-                        <path id="riverPath" class="river" d="M70,172 L104,214 L150,300" fill="none"/>
+                        <path id="riverCourse" d="M72,174 L92,196 L112,212 L140,228 L175,240 L210,247 L243,250" fill="none" stroke="none"/>
+                        <path id="riverBody" class="river"/>
+                        <g id="riverFlow"></g>
                         <rect id="seaRect" class="sea" x="240" y="212" width="220" height="88" fill="url(#seaGrad)"/>
                         <line id="seaSurface" class="sea-surface" x1="240" y1="212" x2="460" y2="212"/>
 
@@ -186,6 +188,6 @@
             </div>
         </details>
     </main>
-    <script src="app.js?v=13"></script>
+    <script src="app.js?v=14"></script>
 </body>
 </html>
