@@ -473,6 +473,76 @@ const CHAPTER_SEGS = CHAPTERS.map(ch => {
     return segs;
 });
 
+// 읽고 나서 — 책마다 내용이 다르다. 장과 같은 방식으로 재서 나눈다.
+const AFTERWORD = {
+    title: '읽고 나서',
+    emoji: '🐺',
+    art: [],
+    paras: [
+        `이 책의 제목은 『정글북』입니다. 정글에 관한 책이라는 뜻입니다. 그런데 원래 이 책은 모글리 이야기만 있는 책이 아니었습니다.`,
+        `원작에는 물개 이야기, 몽구스 이야기, 코끼리 이야기도 함께 들어 있습니다. 여기서는 모글리를 따라가는 대목만 골라 이어 실었습니다.`,
+        `쓴 사람은 영국의 러디어드 키플링입니다. 인도의 봄베이에서 태어났습니다. 인도에서 나고 자란 영국 사람입니다.`,
+        `다섯 살 때 영국으로 보내져 남의 집에서 여섯 해를 지냈습니다. 그 집에서 몹시 시달렸다고 나중에 적었습니다. 그리고 열여섯에 다시 인도로 돌아가 신문사에서 일했습니다.`,
+        `그러니 키플링은 두 곳에 다 속하면서 두 곳 어디에도 온전히 속하지 못한 사람이었습니다. 모글리가 늑대 무리에도 사람 마을에도 온전히 속하지 못하는 것과 닮았습니다.`,
+        `책은 천팔백구십사 년과 이듬해에 두 권으로 나왔습니다. 키플링이 미국 버몬트에 살던 때에 썼습니다. 인도에서 멀리 떨어진 눈 덮인 곳에서 정글 이야기를 쓴 것입니다.`,
+        `그 집 서재의 창밖으로는 눈밭이 보였다고 합니다. 정글을 쓰기에 이보다 어울리지 않는 자리는 없었을 것입니다. 그런데 어릴 때 본 것은 그렇게 오래 남습니다.`,
+        `키플링은 나중에 노벨 문학상을 받았습니다. 마흔한 살에 받았는데, 지금까지도 그 상을 받은 가장 젊은 작가입니다.`,
+        `이제 다시 볼 대목을 짚어 봅시다.`,
+        `첫째, 회의 바위 대목을 다시 읽어 보십시오. 늑대 무리가 모여 새끼를 받아들일지 정합니다. 규칙에 따라 두 마리가 편을 들면 받아 준다고 되어 있었습니다.`,
+        `곰 발루가 편을 들고, 표범 바기라가 값을 치릅니다. 갓 잡은 소 한 마리를 내놓습니다. 그러니 모글리는 처음부터 값이 매겨진 채 무리에 들어온 것입니다.`,
+        `그 값이 나중에 모글리를 쫓아내는 데 쓰입니다. 늑대들은 그 아이가 사 온 아이라는 것을 잊지 않았습니다.`,
+        `발루가 편을 든 까닭도 눈여겨볼 만합니다. 그는 새끼들에게 정글의 법을 가르치는 선생입니다. 가르칠 것이 있으면 받아 줄 만하다고 여긴 것입니다.`,
+        `둘째, 정글의 법을 세어 보십시오. 이 책에는 규칙이 아주 많이 나옵니다. 사냥할 때 지킬 것, 물 마실 때 지킬 것, 다른 무리를 만났을 때 할 말이 정해져 있습니다.`,
+        `그리고 그 법에는 까닭이 다 있습니다. 목마름의 휴전이 그 본보기입니다. 가뭄이 들면 물가에서는 아무도 사냥하지 않기로 되어 있습니다. 물이 하나뿐일 때 거기서 싸우면 다 죽기 때문입니다.`,
+        `키플링은 정글을 무법천지로 그리지 않았습니다. 오히려 법이 아주 촘촘한 곳으로 그렸습니다. 법이 없는 것은 반다르로그, 곧 원숭이들뿐입니다.`,
+        `그래서 원숭이들은 정글의 법에 들어 있지도 않습니다. 없는 것으로 치는 것입니다. 그것이 정글에서 가장 무거운 벌이었습니다.`,
+        `셋째, 원숭이들을 다시 보십시오. 원숭이들은 왁자지껄하고 흉내를 잘 냅니다. 그런데 아무것도 끝까지 하지 못하고 지도자도 없고 기억도 못 합니다.`,
+        `정글의 다른 짐승들은 원숭이들을 아예 상대하지 않습니다. 이름조차 부르지 않습니다. 키플링이 원숭이들을 그렇게 그린 데는 그가 겨눈 것이 따로 있었습니다.`,
+        `말만 많고 하는 일이 없는 사람들을 겨눈 것이라고 흔히 봅니다. 다만 그 겨눔이 어디로 향했는지는 조심해서 읽어야 합니다.`,
+        `넷째, 붉은 꽃 대목을 다시 읽어 보십시오. 붉은 꽃은 불입니다. 정글의 짐승들은 불을 무서워해서 이름조차 제대로 부르지 못합니다.`,
+        `모글리는 마을에서 불을 가져옵니다. 그리고 그것으로 시어 칸을 물리칩니다. 짐승들 사이에서 사람만 할 수 있는 일이 그것이었습니다.`,
+        `그 순간 모글리는 자기가 늑대가 아니라는 것을 증명한 셈입니다. 이기고도 무리에서 멀어지는 자리입니다.`,
+        `그리고 그 불을 가지러 마을에 들어간 것도 모글리에게는 처음이었습니다. 사람을 처음 가까이서 본 것입니다. 그 하룻밤이 뒤의 여러 장을 만듭니다.`,
+        `인물도 다시 보아야 할 사람이 있습니다.`,
+        `발루와 바기라는 둘 다 모글리를 가르치는데 방식이 다릅니다. 발루는 법을 외우게 하고 때립니다. 바기라는 그것을 나무라면서도 아이를 지킵니다.`,
+        `바기라에게는 사연이 있습니다. 그는 사람 손에 길러진 적이 있습니다. 우리에 갇혀 있다가 스스로 자물쇠를 열고 나왔습니다. 그래서 사람을 압니다.`,
+        `그 대목이 짧게 한 번 나오는데, 바기라가 왜 모글리에게 그렇게 마음을 쓰는지가 거기에 있습니다.`,
+        `카아도 다시 볼 만합니다. 아주 큰 뱀인데, 이 책에서 제일 오래 산 짐승입니다. 그래서 아무도 모르는 것을 압니다. 다만 그 도움에는 늘 값이 따릅니다.`,
+        `카아가 원숭이들에게서 모글리를 되찾아 오는 대목이 이 책에서 제일 무섭습니다. 그 뱀은 싸우지 않고 이깁니다. 몸을 천천히 흔들기만 합니다.`,
+        `시어 칸은 다리를 절름거리는 호랑이입니다. 그래서 빠른 짐승을 못 잡고 소를 노립니다. 소를 노리니 사람과 부딪칩니다. 그 절름발이가 이 이야기 전체를 움직입니다.`,
+        `다리를 저는 호랑이는 실제로 사람을 노리게 됩니다. 빠른 짐승을 못 잡기 때문입니다. 인도에서 사람을 해친 호랑이들이 대개 그런 호랑이였습니다.`,
+        `그 시절 사정도 알아 두면 좋습니다. 이 이야기의 배경은 백삼십 년쯤 전 인도 중부입니다. 그때 인도는 영국이 다스리던 땅이었습니다.`,
+        `정글 가까이 있는 마을에서 호랑이가 소를 물어 가는 일이 실제로 흔했습니다. 그리고 늑대에게 길러졌다는 아이 이야기도 인도에서 여러 번 신문에 났습니다.`,
+        `그런 이야기가 실제인지는 지금도 확실하지 않습니다. 다만 키플링은 그 이야기들을 알고 있었습니다.`,
+        `이 책을 읽을 때 알아 두어야 할 것이 하나 있습니다. 키플링은 영국이 인도를 다스리는 것을 옳은 일이라고 여긴 사람입니다. 그런 글도 여럿 썼습니다.`,
+        `그 생각은 지금 보면 잘못된 것입니다. 다른 나라를 다스리면서 그것을 그 나라를 위한 일이라고 말하는 것은 옳지 않습니다.`,
+        `그러니 키플링은 두 가지를 다 알고 읽어야 하는 작가입니다. 이야기를 짓는 솜씨는 뛰어났고, 세상을 보는 눈에는 큰 잘못이 있었습니다.`,
+        `이 책 자체에도 그 그림자가 있습니다. 법을 지키는 무리와 법이 없는 원숭이를 갈라 놓은 방식이 그렇습니다. 그것을 사람에게 옮기면 위험한 생각이 됩니다.`,
+        `이 책이 붙들고 있는 것은 두 가지입니다.`,
+        `하나는 어디에 속하느냐는 것입니다. 모글리는 늑대들 사이에서는 사람이고 사람들 사이에서는 늑대입니다. 두 번 쫓겨납니다.`,
+        `그리고 이 책은 마지막까지 그것을 풀어 주지 않습니다. 모글리가 어디에 속하는지 정해 주지 않습니다. 다만 봄이 오자 그 아이가 스스로 정하게 합니다.`,
+        `다른 하나는 규칙이 무엇을 위한 것이냐는 것입니다. 정글의 법은 모두가 살아남기 위한 것입니다. 지키지 않으면 다 죽기 때문에 지킵니다.`,
+        `그런데 그 법이 모글리를 쫓아내는 데도 쓰입니다. 법이 사람을 지키기도 하고 밀어내기도 한다는 것을 이 책은 함께 보여 줍니다.`,
+        `책이 나오자 아이들이 아주 좋아했습니다. 그리고 나중에 소년단 활동에도 쓰였습니다. 어린 대원들을 늑대 새끼라고 부르고 발루와 바기라라는 이름을 쓰는 것이 여기서 왔습니다.`,
+        `만화영화로도 여러 번 만들어졌습니다. 다만 만화영화의 정글은 원작보다 훨씬 밝고 노래가 많습니다. 원작의 정글은 훨씬 무섭고 규칙이 딱딱합니다.`,
+        `언젠가 이 책을 다시 읽게 되거든, 이번에는 바기라만 따라가며 읽어 보십시오. 그 표범이 무엇을 알고 있는지, 그리고 왜 늘 조금 슬픈지가 보입니다.`,
+        `마지막으로 생각해 볼 것을 남겨 둡니다. 답은 적어 두지 않겠습니다.`,
+        `늑대들이 모글리를 쫓아낸 것은 옳았을까요? 그 아이는 무리를 여러 번 살렸습니다. 그런데 무리는 그 아이가 사람이라는 것을 끝내 잊지 않았습니다.`,
+        `모글리가 마을에서도 쫓겨난 까닭은 무엇이었을까요? 마을 사람들은 그 아이를 무서워했습니다. 다른 데서 온 사람을 무서워하는 마음을 우리는 어떻게 보아야 할까요?`,
+        `그리고 정글의 법에 없는 일이 생기면 어떻게 해야 할까요. 모글리 같은 아이는 그 법에 적혀 있지 않았습니다. 이 물음은 어른이 되어 다시 읽어도 답하기가 쉽지 않습니다.`
+    ]
+};
+
+const AFTER_SEGS = (() => {
+    const segs = [];
+    AFTERWORD.paras.forEach((html, paraIdx) => {
+        splitSegments(html).forEach((piece, k) => {
+            segs.push({ paraIdx, html: piece, start: k === 0 });
+        });
+    });
+    return segs;
+})();
+
 // 조각 묶음을 문단 단위로 다시 묶어 화면에 그릴 모양으로 만든다.
 // 앞 쪽에서 이어진 문단은 첫 줄을 들여쓰지 않는다.
 function runHtml(segs, a, b) {
@@ -754,16 +824,100 @@ function quizPage(part) {
         </div>`;
 }
 
-function endPage() {
+/* 읽고 나서 — 장과 같은 방식으로 쪽을 나눈다. 그림은 오른쪽 위에 얹힌다. */
+const AFTER_FOOT = `<p class="after-home"><a class="home-btn" href="../../../../../">학습 허브로 돌아가기</a></p>`;
+
+function paginateAfterword() {
+    const segs = AFTER_SEGS;
+    const arts = AFTERWORD.art || [];
+    const { usable, headHeight, artHeight } = PROBE;
+    const headHtml = `<h2>${AFTERWORD.title}</h2>`;
+    const totalH = PROBE.measure(runHtml(segs, 0, segs.length));
+
+    const underArt = Math.max(60, usable - artHeight);
+
+    // 맨 끝에는 학습 허브로 가는 단추가 붙는다. 그 높이를 미리 빼 두지 않으면
+    // 마지막 쪽만 넘친다.
+    const footH = PROBE.measure(AFTER_FOOT);
+
+    const capsOf = slots => {
+        const caps = [];
+        slots.forEach(kind => { caps.push(usable); caps.push(kind === 'img' ? underArt : usable); });
+        caps[caps.length - 1] = Math.max(60, caps[caps.length - 1] - footH);
+        return caps;
+    };
+
+    const minSpreads = Math.max(arts.length, 1);
+    const maxSpreads = Math.max(minSpreads, Math.floor(segs.length / 2));
+    let spreadCount = minSpreads;
+    while (spreadCount < maxSpreads) {
+        const caps = capsOf(slotPlan(arts.length, spreadCount - arts.length));
+        if (caps.reduce((a, b) => a + b, 0) >= totalH + headHeight) break;
+        spreadCount++;
+    }
+
+    let slots = slotPlan(arts.length, Math.max(0, spreadCount - arts.length));
+    let caps = capsOf(slots);
+    let ranges = fillPages(segs, caps, headHtml);
+    for (let guard = 0; guard < 8; guard++) {
+        const over = ranges.some(([a, b], n) =>
+            PROBE.measure((n === 0 ? headHtml : '') + runHtml(segs, a, b)) > caps[n] + 1);
+        if (!over || spreadCount >= maxSpreads) break;
+        spreadCount++;
+        slots = slotPlan(arts.length, Math.max(0, spreadCount - arts.length));
+        caps = capsOf(slots);
+        ranges = fillPages(segs, caps, headHtml);
+    }
+
+    const spreads = [];
+    let pageIdx = 0;
+    let artIdx = 0;
+    slots.forEach((kind, s) => {
+        const left = ranges[pageIdx++];
+        const right = ranges[pageIdx++];
+        spreads.push({
+            kind: 'after', first: s === 0, last: s === slots.length - 1,
+            art: kind === 'img' ? arts[artIdx++] : null, left, right
+        });
+    });
+    return spreads;
+}
+
+function afterSpreadPage(spread) {
+    const segs = AFTER_SEGS;
+    const head = spread.first ? `<h2>${AFTERWORD.title}</h2>` : '';
+    // 학습 허브로 돌아가는 길은 맨 끝에 한 번만 둔다.
+    const foot = spread.last ? AFTER_FOOT : '';
+
+    if (spread.art) {
+        return `
+            <div class="page page-story page-after">
+                <div class="story-page-left">
+                    ${head}
+                    ${runHtml(segs, spread.left[0], spread.left[1])}
+                </div>
+                <div class="story-page-right story-page-right-image">
+                    <div class="story-art-top">${artFrame(spread.art, AFTERWORD.emoji)}</div>
+                    ${runHtml(segs, spread.right[0], spread.right[1])}
+                    ${foot}
+                </div>
+            </div>`;
+    }
+
     return `
-        <div class="page page-end">
-            ${artFrame('end.png', '🌸')}
-            <h2>정글북를 다 읽었습니다</h2>
-            <a class="home-btn" href="../../../../../">학습 허브로 돌아가기</a>
+        <div class="page page-story page-after">
+            <div class="story-page-left">
+                ${head}
+                ${runHtml(segs, spread.left[0], spread.left[1])}
+            </div>
+            <div class="story-page-right story-page-right-text">
+                ${runHtml(segs, spread.right[0], spread.right[1])}
+                ${foot}
+            </div>
         </div>`;
 }
 
-const TWO_PAGE_KINDS = new Set(['chapter', 'toc', 'cover']);
+const TWO_PAGE_KINDS = new Set(['chapter', 'toc', 'cover', 'after']);
 
 let PAGES = [];
 let FOLIOS = [];
@@ -775,7 +929,7 @@ function buildPages() {
         ...TOC_GROUPS.map((_, i) => ({ kind: 'toc', part: i })),
         ...CHAPTERS.flatMap(paginateChapter),
         ...QUIZ_GROUPS.map((_, i) => ({ kind: 'quiz', part: i })),
-        { kind: 'end' }
+        ...paginateAfterword()
     ];
     PROBE.close();   // 쪽을 다 나눴으니 재는 데 쓰던 숨은 쪽은 치운다
 
@@ -796,7 +950,7 @@ function renderPage(page) {
         case 'toc': return tocPage(page.part);
         case 'chapter': return chapterSpreadPage(page);
         case 'quiz': return quizPage(page.part);
-        case 'end': return endPage();
+        case 'after': return afterSpreadPage(page);
         default: return '';
     }
 }
