@@ -34,15 +34,15 @@ const LESSONS = {
   },
   4: {
     title: "덧줄과 가운데 C", english: "Ledger Lines & Middle C",
-    terms: [["덧줄", "Ledger Line"], ["가운데 C", "Middle C"], ["음역", "Register"]],
+    terms: [["덧줄", "Ledger Line"], ["가운데 C", "Middle C"]],
     sections: [
       { title: "오선 밖의 음은 짧은 덧줄로 확장해요", body: "다섯 줄보다 높거나 낮은 음을 적을 때는 필요한 자리만큼 짧은 덧줄(Ledger Line)을 더합니다. 덧줄도 오선과 똑같이 선과 칸을 번갈아 세며, 음표를 중심으로 필요한 만큼만 그립니다.", visual: "ledger", caption: "덧줄도 선–칸–선의 규칙을 그대로 따릅니다." },
-      { title: "가운데 C는 표준 번호 C4예요", body: "가운데 C는 음자리표와 건반을 연결하는 가장 중요한 기준음입니다. 국제식 옥타브 표기에서는 C4라고 씁니다. ‘도’라는 계이름과 혼동하지 말고, 여기서는 고정된 음이름 C와 옥타브 번호 4로 읽습니다.", visual: "middleCKeyboard", caption: "가운데 C = C4. ‘도’라고 고정하지 않습니다.", audio: [[60]] }
+      { title: "가운데 C는 두 음자리표를 잇는 기준음이에요", body: "가운데 C는 높은음자리표와 낮은음자리표 사이를 연결하는 기준음입니다. 높은음자리표에서는 오선 아래 덧줄에, 낮은음자리표에서는 오선 위 덧줄에 놓입니다. 지금은 숫자를 붙이지 않고 가운데 C라는 이름과 자리만 익힙니다.", visual: "middleCKeyboard", caption: "두 음자리표 사이의 가운데 C", audio: [[60]] }
     ], quiz: "ledger"
   },
   5: {
     title: "고정 음이름과 건반", english: "Pitch Names & Keyboard",
-    terms: [["음이름", "Pitch Name"], ["흰건반", "White Key"], ["옥타브", "Octave"]],
+    terms: [["음이름", "Pitch Name"], ["흰건반", "White Key"], ["건반 무늬", "Keyboard Pattern"]],
     sections: [
       { title: "흰건반의 고정 음이름은 C·D·E·F·G·A·B예요", body: "영문 음이름(Pitch Name)은 조성이 바뀌어도 같은 건반을 가리킵니다. C 다음은 D, E, F, G, A, B이며 그 뒤에 다시 C가 옵니다. 도·레·미는 이동도법에서는 조성에 따라 가리키는 음이 달라질 수 있으므로 여기서는 C와 도를 같은 뜻으로 고정하지 않습니다.", visual: "whiteNames", caption: "고정 음이름 C–D–E–F–G–A–B" },
       { title: "검은건반 두 개의 바로 왼쪽에서 C를 찾으세요", body: "건반의 검은 키는 두 개와 세 개가 반복됩니다. 두 개 묶음 바로 왼쪽 흰건반은 항상 C입니다. 이 모양을 기준으로 나머지 음이름을 찾으면 건반 전체를 외우지 않아도 됩니다.", visual: "findC", caption: "두 검은건반 묶음 왼쪽 = C", audio: [[48], [60], [72]] }
@@ -84,8 +84,8 @@ const LESSONS = {
     title: "악보와 건반 연결", english: "Notation to Keyboard",
     terms: [["음높이", "Pitch"], ["임시표", "Accidental"], ["건반 위치", "Keyboard Position"]],
     sections: [
-      { title: "음자리표·음표 자리·변화표 순서로 읽으세요", body: "먼저 음자리표로 기준선을 찾고, 음표 머리의 선·칸 위치로 기본 음이름을 정합니다. 마지막으로 음표 앞의 변화표를 적용합니다. 예를 들어 높은음자리표 제2선에 샵이 붙으면 G♯입니다.", visual: "readingOrder", caption: "음자리표 → 자리 → 변화표 → 건반" },
-      { title: "같은 음을 눈·귀·손으로 세 번 확인해요", body: "악보의 음을 눈으로 읽고, 건반에서 위치를 찾은 뒤, 소리를 들어 확인하세요. 세 감각을 함께 연결해야 음표가 단순한 암기 기호가 아니라 실제 소리로 기억됩니다.", visual: "notationKeyboard", caption: "표기 G♯4와 건반 G♯4를 연결합니다.", audio: [[68]] }
+      { title: "악보의 G♯을 건반에서 찾는 순서", body: "첫째, 높은음자리표의 제2선을 찾아 기본 음이름 G를 확인합니다. 둘째, 음표 앞의 샵(♯)을 보고 G에서 반음 올라가야 한다는 뜻을 적용합니다. 셋째, 건반에서 G 흰건반을 찾고 바로 오른쪽 검은건반을 누릅니다. 이렇게 음자리표 → 음표 자리 → 변화표 → 건반 순서로 읽으면 G♯을 정확히 찾을 수 있습니다.", visual: "readingOrder", caption: "제2선 G에 ♯을 적용하면 G 오른쪽 검은건반 G♯입니다." },
+      { title: "악보와 건반에서 같은 G♯을 확인하세요", body: "왼쪽 악보에서는 제2선 G와 그 앞의 ♯을 함께 읽습니다. 오른쪽 건반에서는 G와 A 사이의 검은건반을 찾습니다. 두 표시는 모양이 다르지만 같은 높이의 G♯을 가리킵니다. 예시 듣기를 누른 뒤 화면 아래 실제 건반에서도 같은 G♯을 눌러 소리를 비교하세요.", visual: "notationKeyboard", caption: "악보 G♯ → G 오른쪽 검은건반 → 같은 소리", audio: [[68]] }
     ], quiz: "notation"
   },
   11: {
@@ -93,14 +93,14 @@ const LESSONS = {
     terms: [["음정", "Interval"], ["도수", "Interval Number"], ["성질", "Interval Quality"]],
     sections: [
       { title: "음정은 두 음 사이의 거리예요", body: "음정(Interval)은 두 음의 높이 차이입니다. 이름은 ‘몇 도인가’를 나타내는 도수(Number)와 ‘어떤 종류인가’를 나타내는 성질(Quality)의 두 부분으로 구성됩니다. 예를 들어 장3도는 Major Third입니다.", visual: "intervalParts", caption: "장(Major) + 3도(Third)" },
-      { title: "도수는 처음 음과 끝 음을 모두 포함해 세요", body: "C에서 E까지는 C(1)–D(2)–E(3)로 세므로 3도입니다. 건반을 누른 횟수나 중간 음의 개수가 아니라 음이름 철자의 개수를 셉니다. C–F는 4도, C–G는 5도입니다.", visual: "numberCount", caption: "C–E = 세 음이름 = 3도", audio: [[60], [64]] }
+      { title: "C–E는 오선의 세 자리를 모두 세어 3도예요", body: "아래 C를 1로 시작하고, 그다음 자리 D를 2, 끝 음 E를 3으로 셉니다. 실제로 소리 나는 음은 C와 E 두 개뿐이어도 도수를 셀 때는 사이에 있는 D의 자리까지 포함합니다. 따라서 C–E는 2도가 아니라 3도입니다. 오선에서 C·D·E 세 음표의 위치를 손가락으로 짚으며 1·2·3을 확인하세요.", visual: "numberCount", caption: "C(1)–D(2)–E(3): 세 자리를 포함하므로 3도", audio: [[60], [64]] }
     ], quiz: "intervalNumber"
   },
   12: {
     title: "반음 수로 거리 재기", english: "Measuring Intervals",
     terms: [["반음 수", "Semitone Count"], ["동음", "Unison"], ["옥타브", "Octave"]],
     sections: [
-      { title: "같은 도수라도 반음 수가 다를 수 있어요", body: "C–E와 C–E♭은 모두 C부터 E까지 세 음이름을 사용하므로 3도입니다. 그러나 C–E는 4반음, C–E♭은 3반음입니다. 이 반음 수의 차이가 장3도와 단3도를 구분합니다.", visual: "thirdCompare", caption: "C–E = 4반음, C–E♭ = 3반음", audio: [[60,64], [60,63]] },
+      { title: "같은 도수라도 반음 수가 다를 수 있어요", body: "C–E와 C–E♭은 모두 C부터 E까지 세 음이름을 사용하므로 3도입니다. 그러나 C–E는 4반음, C–E♭은 3반음입니다. 이 반음 수의 차이가 장3도와 단3도를 구분합니다.", visual: "thirdCompare", caption: "C–E = 4반음, C–E♭ = 3반음", audio: [[60,64], [60,63]], audioLabels: ["장3도", "단3도"] },
       { title: "도수와 반음 수를 따로 계산하세요", body: "첫째, 음이름을 포함해 세어 도수를 정합니다. 둘째, 건반에서 실제 반음 수를 셉니다. 두 결과를 함께 보면 음정의 정확한 이름을 결정할 수 있습니다.", visual: "semitoneRuler", caption: "음이름 개수 + 반음 수 = 정확한 음정" }
     ], quiz: "semitoneCount"
   },
@@ -108,7 +108,7 @@ const LESSONS = {
     title: "완전음정", english: "Perfect Intervals",
     terms: [["완전1도", "Perfect Unison, P1"], ["완전4도", "Perfect Fourth, P4"], ["완전5도", "Perfect Fifth, P5"], ["완전8도", "Perfect Octave, P8"]],
     sections: [
-      { title: "1·4·5·8도는 완전 계열이에요", body: "기본 음정에서 1도·4도·5도·8도는 완전(Perfect) 계열입니다. C를 기준으로 C–C는 완전1도, C–F는 완전4도, C–G는 완전5도, C–높은 C는 완전8도입니다.", visual: "perfectFamily", caption: "P1 · P4 · P5 · P8", audio: [[60,60], [60,65], [60,67], [60,72]] },
+      { title: "완전1·4·5·8도를 악보와 소리로 비교하세요", body: "C를 아래 기준음으로 고정해 두고 끝 음만 바꾸어 비교합니다. C–C는 같은 자리라 완전1도(P1, 0반음), C–F는 네 음이름을 세어 완전4도(P4, 5반음), C–G는 다섯 음이름을 세어 완전5도(P5, 7반음), C–높은 C는 여덟 음이름을 세어 완전8도(P8, 12반음)입니다. 아래 네 악보와 네 버튼을 하나씩 대응해 들으세요.", visual: "perfectFamily", caption: "각 악보 아래의 도수·반음 수를 확인한 뒤 같은 이름의 버튼으로 듣습니다.", audio: [[60,60], [60,65], [60,67], [60,72]], audioLabels: ["완전1도", "완전4도", "완전5도", "완전8도"] },
       { title: "완전 계열은 장·단으로 나뉘지 않아요", body: "완전음정은 반음 넓어지면 증(Augmented), 반음 좁아지면 감(Diminished)이 됩니다. ‘장4도’나 ‘단5도’라고 부르지 않습니다. 이 계열 구분은 뒤의 변화 관계를 이해하는 기준입니다.", visual: "perfectRelation", caption: "감 ← 완전 → 증" }
     ], quiz: "perfect"
   },
@@ -116,7 +116,7 @@ const LESSONS = {
     title: "장음정과 단음정", english: "Major & Minor Intervals",
     terms: [["장음정", "Major Interval"], ["단음정", "Minor Interval"], ["2·3·6·7도", "Major/Minor Family"]],
     sections: [
-      { title: "2·3·6·7도는 장·단 계열이에요", body: "2도·3도·6도·7도는 장(Major)과 단(Minor)으로 나뉩니다. 장음정에서 반음 하나 좁아지면 같은 도수의 단음정이 됩니다. C–E는 장3도, C–E♭은 단3도입니다.", visual: "majorMinorFamily", caption: "장 − 반음 = 단", audio: [[60,64], [60,63]] },
+      { title: "2·3·6·7도는 장·단 계열이에요", body: "2도·3도·6도·7도는 장(Major)과 단(Minor)으로 나뉩니다. 장음정에서 반음 하나 좁아지면 같은 도수의 단음정이 됩니다. C–E는 장3도, C–E♭은 단3도입니다.", visual: "majorMinorFamily", caption: "장 − 반음 = 단", audio: [[60,64], [60,63]], audioLabels: ["장3도", "단3도"] },
       { title: "도수는 그대로, 반음 수만 달라져요", body: "E가 E♭으로 바뀌어도 C부터 E까지의 철자는 여전히 세 개이므로 3도입니다. 달라진 것은 반음 수와 성질입니다. 변화표가 붙었다고 도수를 다시 세지 않는 점이 중요합니다.", visual: "majorMinorTable", caption: "장2/단2, 장3/단3, 장6/단6, 장7/단7" }
     ], quiz: "majorMinor"
   },
@@ -125,14 +125,14 @@ const LESSONS = {
     terms: [["증음정", "Augmented Interval"], ["감음정", "Diminished Interval"], ["겹증·겹감", "Doubly Augmented/Diminished"]],
     sections: [
       { title: "기준 음정보다 반음 넓거나 좁은 관계예요", body: "완전음정이나 장음정보다 반음 넓어지면 증(Augmented)이 됩니다. 완전음정이나 단음정보다 반음 좁아지면 감(Diminished)이 됩니다. 먼저 도수를 고정한 뒤 두 음 중 하나를 변화시켜 성질의 이동을 관찰하세요.", visual: "qualityFlow", caption: "감–완전–증 / 감–단–장–증" },
-      { title: "같은 소리라도 철자가 다르면 음정 이름도 달라져요", body: "C–F♯과 C–G♭은 피아노에서 같은 소리지만, C–F♯은 네 음이름을 세므로 증4도이고 C–G♭은 다섯 음이름을 세므로 감5도입니다. 이명동음과 음정 철자가 만나는 대표 사례입니다.", visual: "tritone", caption: "C–F♯ = 증4도, C–G♭ = 감5도", audio: [[60,66], [60,66]] }
+      { title: "같은 소리라도 철자가 다르면 음정 이름도 달라져요", body: "C–F♯과 C–G♭은 피아노에서 같은 소리지만, C–F♯은 네 음이름을 세므로 증4도이고 C–G♭은 다섯 음이름을 세므로 감5도입니다. 이명동음과 음정 철자가 만나는 대표 사례입니다.", visual: "tritone", caption: "C–F♯ = 증4도, C–G♭ = 감5도", audio: [[60,66], [60,66]], audioLabels: ["증4도 표기", "감5도 표기"] }
     ], quiz: "quality"
   },
   16: {
     title: "음정의 전위와 종합", english: "Interval Inversion & Review",
     terms: [["전위", "Inversion"], ["보수 음정", "Complementary Interval"], ["협화·불협화", "Consonance/Dissonance"]],
     sections: [
-      { title: "한 음을 옥타브 옮기면 두 음의 자리가 뒤집혀요", body: "C–E의 아래 C를 한 옥타브 올리면 E–C가 됩니다. 이를 음정의 전위(Inversion)라고 합니다. 원래 도수와 전위된 도수의 합은 9가 됩니다. 3도는 6도, 4도는 5도가 됩니다.", visual: "inversion", caption: "1↔8, 2↔7, 3↔6, 4↔5", audio: [[60,64], [64,72]] },
+      { title: "한 음을 옥타브 옮기면 두 음의 자리가 뒤집혀요", body: "C–E의 아래 C를 한 옥타브 올리면 E–C가 됩니다. 이를 음정의 전위(Inversion)라고 합니다. 원래 도수와 전위된 도수의 합은 9가 됩니다. 3도는 6도, 4도는 5도가 됩니다.", visual: "inversion", caption: "1↔8, 2↔7, 3↔6, 4↔5", audio: [[60,64], [64,72]], audioLabels: ["원래 장3도", "전위된 단6도"] },
       { title: "전위하면 장과 단, 증과 감이 서로 바뀌어요", body: "완전은 전위해도 완전이며, 장은 단으로, 단은 장으로 바뀝니다. 증은 감으로, 감은 증으로 바뀝니다. 도수 합 9와 성질 변환을 함께 사용하면 복잡한 음정도 검산할 수 있습니다.", visual: "inversionTable", caption: "완전↔완전 · 장↔단 · 증↔감" }
     ], quiz: "review"
   }
@@ -176,7 +176,7 @@ function keyboardMarkup(active = [], mode = "names", bracket = "") {
   return `<div class="keyboard-visual"><div class="white-keys">${whites}</div>${blacks}</div>${bracket ? `<div class="keyboard-bracket">${bracket}</div>` : ""}`;
 }
 function staffMarkup(kind = "treble", notes = [], labels = []) {
-  const clef = kind === "bass" ? "𝄢" : "𝄞";
+  const clef = kind === "bass" ? "𝄢" : kind === "treble" ? "𝄞" : "";
   const positions = notes.length ? notes : [48,53,57,60,64];
   const marks = positions.map((midi,index) => {
     const x = 15 + index * (72 / Math.max(1,positions.length - 1));
@@ -199,30 +199,49 @@ function comparison(headers, rows) {
 function relation(nodes) {
   return `<div class="interval-family">${nodes.map((node,index) => `${index ? '<span class="interval-arrow">→</span>' : ""}<span class="interval-node${node[1] ? " primary" : ""}">${node[0]}</span>`).join("")}</div>`;
 }
+function intervalCountStaffMarkup() {
+  return `<div class="interval-count-visual">${staffMarkup("treble", [60,62,64], ["① C","② D","③ E"])}<div class="count-result"><span>C</span><b>세 자리를 모두 세어 3도</b><span>E</span></div></div>`;
+}
+
+function notationMapMarkup() {
+  return `<div class="notation-map"><div class="notation-source"><strong>악보의 G♯</strong><div class="notation-staff">${staffMarkup("treble", [68], ["G♯"])}<span class="accidental-mark">♯</span></div></div><div class="notation-connector"><span>반음 올림</span><b>→</b></div><div class="notation-target"><strong>건반의 G♯</strong>${keyboardMarkup(["G♯"], "accidentals", "G 오른쪽의 검은건반")}</div></div>`;
+}
+
+function perfectExamplesMarkup() {
+  const examples = [
+    ["완전1도 · P1", [60,60], "C–C · 0반음"],
+    ["완전4도 · P4", [60,65], "C–F · 5반음"],
+    ["완전5도 · P5", [60,67], "C–G · 7반음"],
+    ["완전8도 · P8", [60,72], "C–높은 C · 12반음"]
+  ];
+  return `<div class="perfect-score-grid">${examples.map(example => `<div class="perfect-score"><strong>${example[0]}</strong>${staffMarkup("treble", example[1], ["C", example[2].split(" · ")[0].split("–")[1]])}<small>${example[2]}</small></div>`).join("")}</div>`;
+}
+
 function visualMarkup(type) {
   const keyboardVisuals = {
     whiteNames: [["C","D","E","F","G","A","B"],"names","고정 음이름"], findC: [["C"],"names","두 검은건반 묶음 왼쪽"],
-    middleCKeyboard: [["C"],"names","가운데 C = C4"], octave: [["C",7],"names","C3 → C4 · 12반음"],
+    middleCKeyboard: [["C"],"names","가운데 C"], octave: [["C",7],"names","C3 → C4 · 12반음"],
     registers: [["C"],"names","C3 | C4 | C5"], semitone: [["C","C♯"],"accidentals","반음 1칸"],
     wholeTone: [["C","C♯","D"],"accidentals","반음 2칸 = 온음"], accidentals: [["C♯"],"accidentals","C♯과 D♭은 같은 건반"],
     enharmonic: [["C♯"],"accidentals","C♯ = D♭"], notationKeyboard: [["G♯"],"accidentals","G♯4"],
     thirdCompare: [["C","E"],"names","C–E 4반음 / C–E♭ 3반음"]
   };
+  if (type === "notationKeyboard") return notationMapMarkup();
   if (keyboardVisuals[type]) return keyboardMarkup(...keyboardVisuals[type]);
-  if (type === "staffGuide") return staffMarkup("treble", [64,65,67,69,71], ["제1선 E","제1칸 F","제2선 G","제2칸 A","제3선 B"]);
-  if (type === "staffSteps") return staffMarkup("treble", [60,62,64,65,67,69,71,72], ["C","D","E","F","G","A","B","C"]);
+  if (type === "staffGuide") return staffMarkup("none", [64,65,67,69,71], ["제1선","제1칸","제2선","제2칸","제3선"]);
+  if (type === "staffSteps") return staffMarkup("none", [60,62,64,65,67,69,71,72], ["1","2","3","4","5","6","7","8"]);
   if (type === "treble") return staffMarkup("treble", [67], ["제2선 G"]);
   if (type === "middleC") return staffMarkup("treble", [60,62,64,65,67], ["C","D","E","F","G"]);
   if (type === "bass") return staffMarkup("bass", [53], ["제4선 F"]);
   if (type === "grandStaff") return `<div class="staff-stack">${staffMarkup("treble",[60],["가운데 C"])}${staffMarkup("bass",[60],["가운데 C"])}</div>`;
-  if (type === "ledger") return staffMarkup("treble", [57,59,60,62,64], ["A3","B3","C4","D4","E4"]);
+  if (type === "ledger") return staffMarkup("treble", [57,59,60,62,64], ["A","B","가운데 C","D","E"]);
   if (type === "natural") return staffMarkup("treble", [66,65], ["F♯","F♮"]);
-  if (type === "readingOrder") return relation([["① 음자리표",1],["② 선·칸"],["③ 변화표"],["④ 건반"]]);
+  if (type === "readingOrder") return notationMapMarkup();
   if (type === "enharmonicTable") return comparison(["건반","올려 읽기","내려 읽기"], [["검은건반","C♯","D♭"],["검은건반","D♯","E♭"],["검은건반","F♯","G♭"]]);
   if (type === "intervalParts") return comparison(["성질 Quality","도수 Number","완성된 이름"], [["장 Major","3도 Third","<strong>장3도 Major Third</strong>"]]);
-  if (type === "numberCount") return stepStrip([["C","1"],["D","2"],["E","3"]],[0,2]);
+  if (type === "numberCount") return intervalCountStaffMarkup();
   if (type === "semitoneRuler") return stepStrip([["C","0"],["C♯","1"],["D","2"],["D♯","3"],["E","4"],["F","5"],["F♯","6"],["G","7"]],[0,4,7]);
-  if (type === "perfectFamily") return comparison(["음정","철자","반음"], [["P1","C–C","0"],["P4","C–F","5"],["P5","C–G","7"],["P8","C–C","12"]]);
+  if (type === "perfectFamily") return perfectExamplesMarkup();
   if (type === "perfectRelation") return relation([["감 Diminished"],["완전 Perfect",1],["증 Augmented"]]);
   if (type === "majorMinorFamily") return relation([["감 Diminished"],["단 Minor"],["장 Major",1],["증 Augmented"]]);
   if (type === "majorMinorTable") return comparison(["도수","단 Minor","장 Major"], [["2도","1반음","2반음"],["3도","3반음","4반음"],["6도","8반음","9반음"],["7도","10반음","11반음"]]);
@@ -258,7 +277,7 @@ const FIXED_QUIZZES = {
     ["오선 밖의 음을 적는 짧은 선은?",["덧줄","마디선","세로줄","꼬리"],"덧줄"],
     ["덧줄의 영어 명칭은?",["Ledger Line","Bar Line","Staff Line","Bass Line"],"Ledger Line"],
     ["가운데 C는 높은음자리표 어디에 놓이나요?",["오선 아래 덧줄","제2선","제4칸","오선 위 덧줄"],"오선 아래 덧줄"],
-    ["Middle C의 표기는?",["C4","C3","B3","D4"],"C4"],
+    ["가운데 C의 역할은?",["두 음자리표를 잇는 기준음","가장 높은 음","박자를 세는 음","검은건반 이름"],"두 음자리표를 잇는 기준음"],
     ["덧줄에서도 위치를 세는 규칙은?",["선과 칸을 번갈아 셈","선만 셈","칸만 셈","무작위"],"선과 칸을 번갈아 셈"]
   ],
   whiteNames: [
@@ -301,22 +320,47 @@ const FIXED_QUIZZES = {
     ["높은음자리표 제2선에 ♯이 붙으면?",["G♯","F♯","A♭","G♭"],"G♯"],
     ["음표 머리가 알려 주는 것은?",["선·칸 위치","템포","음색","손가락 번호"],"선·칸 위치"],
     ["임시표의 영어 명칭은?",["Accidental","Interval","Register","Ledger"],"Accidental"],
-    ["악보 학습에서 함께 연결할 세 감각은?",["눈·귀·손","눈·코·발","귀·코·입","손·발·코"],"눈·귀·손"]
+    ["높은음자리표 제2선의 G에 ♭이 붙으면 건반에서 어디로 이동하나요?",["G의 바로 왼쪽 검은건반","G의 바로 오른쪽 검은건반","A 흰건반","F 흰건반"],"G의 바로 왼쪽 검은건반"]
   ]
 };
 
 function shuffled(array) { return [...array].sort(() => Math.random() - .5); }
 function optionSet(answer, pool) { return shuffled([answer, ...shuffled(pool.filter(x => x !== answer)).slice(0,3)]); }
 function generatedQuiz(type) {
+  if (type === "perfect") {
+    return shuffled([
+      { prompt:"같은 C 두 음을 들었습니다. 이 음정은?", choices:shuffled(["완전1도","완전4도","완전5도","완전8도"]), answer:"완전1도", audio:[[60],[60]], key:"perfect-p1" },
+      { prompt:"C–F를 듣고 음정을 고르세요.", choices:shuffled(["완전4도","완전1도","완전5도","완전8도"]), answer:"완전4도", audio:[[60],[65]], key:"perfect-p4" },
+      { prompt:"D–A를 듣고 음정을 고르세요.", choices:shuffled(["완전5도","완전4도","완전8도","장6도"]), answer:"완전5도", audio:[[62],[69]], key:"perfect-p5" },
+      { prompt:"F–높은 F를 듣고 음정을 고르세요.", choices:shuffled(["완전8도","완전5도","완전4도","장7도"]), answer:"완전8도", audio:[[65],[77]], key:"perfect-p8" },
+      { prompt:"완전5도는 건반에서 몇 반음인가요?", choices:shuffled(["7반음","5반음","6반음","12반음"]), answer:"7반음", audio:null, key:"perfect-semitones" }
+    ]);
+  }
+  if (type === "quality") {
+    return shuffled([
+      { prompt:"C–F♯은 음이름을 네 개 세고 거리는 6반음입니다. 음정 이름은?", choices:shuffled(["증4도","감5도","완전4도","장4도"]), answer:"증4도", audio:[[60],[66]], key:"quality-aug4" },
+      { prompt:"C–G♭은 음이름을 다섯 개 세고 거리는 6반음입니다. 음정 이름은?", choices:shuffled(["감5도","증4도","완전5도","단5도"]), answer:"감5도", audio:[[60],[66]], key:"quality-dim5" },
+      { prompt:"D–F♯은 세 음이름과 4반음입니다. 음정 이름은?", choices:shuffled(["장3도","단3도","완전3도","증2도"]), answer:"장3도", audio:[[62],[66]], key:"quality-major3" },
+      { prompt:"E–G는 세 음이름과 3반음입니다. 음정 이름은?", choices:shuffled(["단3도","장3도","감3도","완전3도"]), answer:"단3도", audio:[[64],[67]], key:"quality-minor3" },
+      { prompt:"F–C는 다섯 음이름과 7반음입니다. 음정 이름은?", choices:shuffled(["완전5도","감5도","증4도","장5도"]), answer:"완전5도", audio:[[65],[72]], key:"quality-perfect5" }
+    ]);
+  }
+  if (type === "intervalNumber") {
+    return shuffled([
+      { prompt:"C–D는 처음과 끝을 포함해 몇 도인가요?", choices:shuffled(["2도","3도","4도","5도"]), answer:"2도", audio:[[60],[62]], key:"number-c-d" },
+      { prompt:"D–F는 처음과 끝을 포함해 몇 도인가요?", choices:shuffled(["3도","2도","4도","5도"]), answer:"3도", audio:[[62],[65]], key:"number-d-f" },
+      { prompt:"E–A는 처음과 끝을 포함해 몇 도인가요?", choices:shuffled(["4도","3도","5도","6도"]), answer:"4도", audio:[[64],[69]], key:"number-e-a" },
+      { prompt:"F–C는 처음과 끝을 포함해 몇 도인가요?", choices:shuffled(["5도","4도","6도","7도"]), answer:"5도", audio:[[65],[72]], key:"number-f-c" },
+      { prompt:"G–E는 처음과 끝을 포함해 몇 도인가요?", choices:shuffled(["6도","5도","7도","8도"]), answer:"6도", audio:[[67],[76]], key:"number-g-e" }
+    ]);
+  }
   const roots = shuffled([48,49,50,51,52,53,54,55,56,57,58,59]).slice(0,5);
   const intervalMap = { 0:"완전1도",1:"단2도",2:"장2도",3:"단3도",4:"장3도",5:"완전4도",6:"증4도",7:"완전5도",8:"단6도",9:"장6도",10:"단7도",11:"장7도",12:"완전8도" };
   const allNames = Object.values(intervalMap);
   const specs = {
     intervalNumber: [[2,"2도"],[4,"3도"],[5,"4도"],[7,"5도"],[9,"6도"]],
     semitoneCount: [[1,"1반음"],[3,"3반음"],[4,"4반음"],[7,"7반음"],[12,"12반음"]],
-    perfect: [[0,"완전1도"],[5,"완전4도"],[7,"완전5도"],[12,"완전8도"],[5,"완전4도"]],
     majorMinor: [[1,"단2도"],[2,"장2도"],[3,"단3도"],[4,"장3도"],[9,"장6도"]],
-    quality: [[6,"증4도"],[6,"감5도"],[4,"장3도"],[3,"단3도"],[7,"완전5도"]],
     review: [[2,"장2도"],[3,"단3도"],[5,"완전4도"],[7,"완전5도"],[11,"장7도"]]
   }[type] || [[2,"장2도"],[4,"장3도"],[5,"완전4도"],[7,"완전5도"],[12,"완전8도"]];
   return specs.map((spec,index) => {
@@ -325,10 +369,7 @@ function generatedQuiz(type) {
     const top = root + distance;
     let prompt = "두 음의 거리를 듣고 음정을 고르세요.";
     let choices = optionSet(answer, allNames);
-    if (type === "intervalNumber") {
-      prompt = `${NOTE_NAMES[root % 12]}부터 ${NOTE_NAMES[top % 12]}까지 음이름을 포함해 세면 몇 도인가요?`;
-      choices = optionSet(answer,["1도","2도","3도","4도","5도","6도","7도","8도"]);
-    }
+
     if (type === "semitoneCount") {
       prompt = `${NOTE_NAMES[root % 12]}에서 ${NOTE_NAMES[top % 12]}까지는 몇 반음인가요?`;
       choices = optionSet(answer,["1반음","2반음","3반음","4반음","5반음","7반음","12반음"]);
@@ -341,6 +382,12 @@ function questionSet(type) {
   if (fixed) return shuffled(fixed).map((q,index) => ({ prompt:q[0], choices:shuffled(q[1]), answer:q[2], audio:null, key:`${type}-${index}` }));
   return shuffled(generatedQuiz(type));
 }
+function guideMarkup(lessonId) {
+  const guide = window.HarmonyLessonGuides?.[lessonId];
+  if (!guide) return "";
+  return `<section class="lesson-guide"><header><h2>${guide.title}</h2><p>${guide.intro}</p></header><div class="guide-columns"><div><h3>읽는 순서</h3><ol>${guide.steps.map(step => `<li>${step}</li>`).join("")}</ol></div><div><h3>계산 예시</h3><p>${guide.worked}</p></div></div><div class="guide-caution"><h3>헷갈리기 쉬운 점</h3><p>${guide.caution}</p></div><div class="self-check"><strong>스스로 확인</strong><p>${guide.check}</p></div></section>`;
+}
+
 function renderDashboard() {
   els.progressText.textContent = `완료 ${state.completed.size} / 16`;
   els.unitList.innerHTML = UNITS.map(unit => `
@@ -355,14 +402,27 @@ function renderDashboard() {
     </section>`).join("");
   els.unitList.querySelectorAll("[data-lesson]").forEach(button => button.addEventListener("click", () => openLesson(Number(button.dataset.lesson))));
 }
+function audioControls(section, sectionIndex) {
+  if (!section.audio) return "";
+  if (Array.isArray(section.audioLabels) && section.audioLabels.length === section.audio.length) {
+    return `<div class="example-controls">${section.audioLabels.map((label, groupIndex) => `<button class="example-button" type="button" data-audio="${sectionIndex}" data-audio-group="${groupIndex}">♪ ${label}</button>`).join("")}</div>`;
+  }
+  return `<button class="example-button" type="button" data-audio="${sectionIndex}">♪ 예시 듣기</button>`;
+}
+
 function renderLessonSections(lesson) {
   els.lessonSections.innerHTML = lesson.sections.map((section,index) => `
     <section class="lesson-section">
-      <div class="section-copy"><span class="section-step">개념 ${index + 1}</span><h2>${section.title}</h2><p>${section.body}</p>${section.audio ? `<button class="example-button" type="button" data-audio="${index}">♪ 예시 듣기</button>` : ""}</div>
+      <div class="section-copy"><span class="section-step">개념 ${index + 1}</span><h2>${section.title}</h2><p>${section.body}</p>${audioControls(section,index)}</div>
       <div class="visual-board">${visualMarkup(section.visual)}<p class="visual-caption">${section.caption}</p></div>
-    </section>`).join("");
-  els.lessonSections.querySelectorAll("[data-audio]").forEach(button => button.addEventListener("click", () => playGroups(lesson.sections[Number(button.dataset.audio)].audio)));
+    </section>`).join("") + guideMarkup(state.lesson);
+  els.lessonSections.querySelectorAll("[data-audio]").forEach(button => button.addEventListener("click", () => {
+    const section = lesson.sections[Number(button.dataset.audio)];
+    const groupIndex = button.dataset.audioGroup;
+    playGroups(groupIndex === undefined ? section.audio : [section.audio[Number(groupIndex)]]);
+  }));
 }
+
 function openLesson(id) {
   const lesson = LESSONS[id];
   const unit = unitForLesson(id);
