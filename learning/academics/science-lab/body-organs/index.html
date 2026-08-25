@@ -1,0 +1,166 @@
+<!doctype html>
+<html lang="ko">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="theme-color" content="#07131c">
+    <title>과학 실험실</title>
+    <meta name="description" content="음식과 공기와 피가 몸속 기관을 어떤 차례로 지나가는지 따라가 보고, 쉴 때와 달릴 때 심장과 폐가 하는 일이 얼마나 달라지는지 확인하는 초등 과학 모의실험">
+    <link rel="stylesheet" as="style" crossorigin href="https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.9/dist/web/static/pretendard.css">
+    <link rel="stylesheet" href="styles.css?v=3">
+    <link rel="stylesheet" href="organ-visual.css?v=3">
+    <link rel="stylesheet" href="quiz.css?v=3">
+</head>
+<body>
+    <main>
+        <header class="page-header">
+            <div class="title-row">
+                <a href="../">← 과학 실험실</a>
+                <h1>우리 몸의 기관</h1>
+            </div>
+            <div class="grade-tags"><span>초등 5~6</span><span>생명과학</span></div>
+        </header>
+
+        <ol class="method-steps" aria-label="실험 방법">
+            <li>따라가 볼 기관계를 고릅니다.</li>
+            <li>지나가는 차례를 봅니다.</li>
+            <li>쉴 때와 달릴 때를 견줍니다.</li>
+            <li>1분에 하는 일이 얼마나 달라지는지 잽니다.</li>
+        </ol>
+
+        <div class="experiment-layout">
+            <section class="panel control-panel" aria-labelledby="control-title">
+                <h2 id="control-title">실험 조건</h2>
+                <p class="water-standard">몸무게 40 kg인 어린이를 기준으로 삼았습니다</p>
+
+                <fieldset class="pick-field">
+                    <legend>무엇을 따라가 볼까요</legend>
+                    <div class="pick-buttons cols4">
+                        <button type="button" data-sys="dig">소화<small>음식이 가는 길</small></button>
+                        <button type="button" data-sys="resp">호흡<small>공기가 가는 길</small></button>
+                        <button type="button" data-sys="circ">순환<small>피가 도는 길</small></button>
+                        <button type="button" data-sys="excr">배설<small>찌꺼기가 가는 길</small></button>
+                    </div>
+                </fieldset>
+
+                <fieldset class="pick-field">
+                    <legend>지금 무엇을 하고 있나요</legend>
+                    <div class="pick-buttons cols3">
+                        <button type="button" data-act="rest">쉴 때<small>앉아 있음</small></button>
+                        <button type="button" data-act="walk">걸을 때<small>천천히</small></button>
+                        <button type="button" data-act="run">달릴 때<small>힘껏</small></button>
+                    </div>
+                </fieldset>
+
+                <fieldset class="prediction-field">
+                    <legend>쉴 때와 견주면 이 기관계가 하는 일은?</legend>
+                    <div class="prediction-buttons three">
+                        <button type="button" data-prediction="p1">거의 같다</button>
+                        <button type="button" data-prediction="p2">2배쯤</button>
+                        <button type="button" data-prediction="p3">4배쯤</button>
+                    </div>
+                </fieldset>
+
+                <button class="run-button" id="runBtn" type="button">따라가 보기</button>
+                <button class="reset-button" id="resetBtn" type="button">처음으로</button>
+
+                <section class="result-box" aria-labelledby="result-title" aria-live="polite">
+                    <h3 id="result-title">관찰 결과</h3>
+                    <p id="resultEmpty">기관계를 고르고 따라가 보세요.</p>
+                    <div id="resultContent" hidden>
+                        <div class="result-numbers">
+                            <article><span id="labelA">1분에 하는 일</span><strong id="valueA">-</strong></article>
+                            <article><span>쉴 때와 견주면</span><strong id="valueB">-</strong></article>
+                        </div>
+                        <p class="prediction-result" id="predictionResult"></p>
+                        <p class="explanation" id="elementaryExplanation"></p>
+                    </div>
+                </section>
+            </section>
+
+            <section class="panel organ-stage" aria-label="관찰 화면">
+                <div class="stage-heading"><h2>관찰</h2><span id="stageBadge">-</span></div>
+
+                <div class="stage-views">
+                    <svg class="main-svg" viewBox="0 0 460 214" aria-hidden="true">
+                        <g id="mainGroup"></g>
+                    </svg>
+                    <svg class="graph-svg" viewBox="0 0 460 196" aria-hidden="true">
+                        <g id="graphGroup"></g>
+                    </svg>
+                </div>
+
+                <p class="stage-caption" id="stageCaption">기관들은 저마다 따로 일하지 않고 하나로 이어져 있습니다. 그래서 달리면 심장만이 아니라 폐도 함께 빨라집니다.</p>
+                <div class="data-note" id="dataNote"></div>
+            </section>
+        </div>
+
+        <section class="panel meaning-panel">
+            <h2>실험 결과의 의미</h2>
+            <div class="meaning-body">
+                <p><strong>기관계는 이어져 있습니다</strong> 소화 기관이 얻은 영양소와 호흡 기관이 들인 산소는 모두 피에 실려 온몸으로 갑니다. 그래서 순환 기관이 멈추면 다른 기관이 아무리 열심히 일해도 소용이 없습니다.</p>
+                <p><strong>몸은 필요한 만큼 일합니다</strong> 달리면 근육이 산소를 많이 쓰므로 심장이 더 자주, 더 세게 뛰고 숨도 더 깊고 빨라집니다. 반대로 소화와 배설은 달린다고 빨라지지 않습니다. 급한 일부터 하는 셈입니다.</p>
+                <p><strong>콩팥은 되돌려 줍니다</strong> 콩팥은 하루에 피를 180 L나 거르지만 오줌은 1.5 L밖에 나오지 않습니다. 거른 것의 99%를 다시 몸으로 돌려보내기 때문입니다. 버릴 것만 골라 버리는 아주 꼼꼼한 거름망입니다.</p>
+            </div>
+        </section>
+
+        <details class="quiz-section" aria-labelledby="quiz-title">
+            <summary class="quiz-heading"><h2 id="quiz-title">확인 문제</h2><span>4문제</span></summary>
+            <div class="quiz-grid">
+                <article class="quiz-card" data-answer="c">
+                    <h3>음식이 지나가는 차례로 맞는 것은?</h3>
+                    <div class="quiz-options">
+                        <label><input type="radio" name="q1" value="a"> 입 → 위 → 식도 → 작은창자</label>
+                        <label><input type="radio" name="q1" value="b"> 입 → 식도 → 큰창자 → 작은창자</label>
+                        <label><input type="radio" name="q1" value="c"> 입 → 식도 → 위 → 작은창자 → 큰창자</label>
+                        <label><input type="radio" name="q1" value="d"> 입 → 기관 → 위 → 큰창자</label>
+                    </div>
+                    <button class="answer-button" type="button">정답 확인</button>
+                    <p class="answer-result" aria-live="polite"></p>
+                    <p class="answer-explanation" hidden>입에서 씹은 음식은 식도를 지나 위로 가고, 작은창자에서 영양소를 흡수한 뒤 큰창자에서 물을 흡수합니다. 기관은 공기가 지나는 길이라 음식과는 상관이 없습니다.</p>
+                </article>
+
+                <article class="quiz-card" data-answer="b">
+                    <h3>달릴 때 심장이 빨리 뛰는 까닭은?</h3>
+                    <div class="quiz-options">
+                        <label><input type="radio" name="q2" value="a"> 몸이 더워져서</label>
+                        <label><input type="radio" name="q2" value="b"> 근육에 산소와 영양소를 더 빨리 보내야 해서</label>
+                        <label><input type="radio" name="q2" value="c"> 피가 늘어나서</label>
+                        <label><input type="radio" name="q2" value="d"> 숨을 참아서</label>
+                    </div>
+                    <button class="answer-button" type="button">정답 확인</button>
+                    <p class="answer-result" aria-live="polite"></p>
+                    <p class="answer-explanation" hidden>달리는 근육은 산소를 훨씬 많이 씁니다. 그 산소를 실어 나르는 것이 피이므로 심장이 더 자주 뛰어 피를 더 많이 보내야 합니다.</p>
+                </article>
+
+                <article class="quiz-card" data-answer="a">
+                    <h3>콩팥이 하루에 피를 180 L나 거르는데 오줌은 1.5 L뿐인 까닭은?</h3>
+                    <div class="quiz-options">
+                        <label><input type="radio" name="q3" value="a"> 거른 것의 대부분을 다시 몸으로 돌려보내서</label>
+                        <label><input type="radio" name="q3" value="b"> 피가 180 L나 되어서</label>
+                        <label><input type="radio" name="q3" value="c"> 오줌이 방광에 계속 쌓여서</label>
+                        <label><input type="radio" name="q3" value="d"> 콩팥이 물을 만들어서</label>
+                    </div>
+                    <button class="answer-button" type="button">정답 확인</button>
+                    <p class="answer-result" aria-live="polite"></p>
+                    <p class="answer-explanation" hidden>콩팥은 일단 많이 거른 다음 몸에 필요한 물과 영양소를 도로 흡수합니다. 그래서 걸러 낸 양의 99%가 다시 몸으로 돌아가고 버릴 것만 오줌이 됩니다.</p>
+                </article>
+
+                <article class="quiz-card" data-answer="d">
+                    <h3>달릴 때 소화는 어떻게 될까요?</h3>
+                    <div class="quiz-options">
+                        <label><input type="radio" name="q4" value="a"> 심장처럼 4배 빨라진다</label>
+                        <label><input type="radio" name="q4" value="b"> 2배 빨라진다</label>
+                        <label><input type="radio" name="q4" value="c"> 완전히 멈춘다</label>
+                        <label><input type="radio" name="q4" value="d"> 빨라지지 않는다</label>
+                    </div>
+                    <button class="answer-button" type="button">정답 확인</button>
+                    <p class="answer-result" aria-live="polite"></p>
+                    <p class="answer-explanation" hidden>달릴 때 몸은 급한 일부터 합니다. 근육에 산소를 보내는 일이 급하므로 심장과 폐가 빨라지고, 소화는 급하지 않아 그대로이거나 오히려 느려집니다. 밥을 먹고 바로 달리면 배가 아픈 것도 이 때문입니다.</p>
+                </article>
+            </div>
+        </details>
+    </main>
+    <script src="app.js?v=3"></script>
+</body>
+</html>
