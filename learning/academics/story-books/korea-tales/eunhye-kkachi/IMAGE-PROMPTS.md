@@ -132,24 +132,45 @@ sliver of moon. The scholar stares out at it, hopeless. Strong depth between the
 near room and the distant temple.
 ```
 
-### `08-ring.png` — 새벽에 울린 종
+### `08-ring.png` — 종이 울리던 순간
+
+> **이 그림은 다시 그려야 합니다.** 본문이 바뀌었습니다.
+> 구렁이는 종이 울릴 리 없다고 여기고, 날이 밝으면 선비를 잡아먹고 하늘로 오를
+> 셈으로 종 아래에 와 있습니다. 하늘만 올려다보는데 등 뒤에서 종이 울립니다.
+> **이 책에서 가장 웃긴 자리입니다.** 무섭게 그리지 마세요.
 
 ```
-Wide night-to-dawn mountain scene, viewed from outside. High on the slope, the
-old temple bell swings, sound rings drawn as expanding pale arcs in the air. Two
+Wide dawn scene at an old mountain temple bell pavilion. The great bronze bell
+hangs under its tiled roof, sound drawn as expanding pale golden arcs. Two
 magpies fly hard at the bell, wings beating, small and determined against the
-huge bronze. The sky at the right edge is just beginning to turn pale grey-pink.
-Dramatic and moving, no injury shown.
+huge bronze.
+In front of the bell, alone, a large pale serpent sits coiled up, no one else
+around — it came up the mountain by itself to watch, certain nothing could ring.
+It has just whipped its head around toward the bell and is comically appalled:
+eyes huge and round, mouth hanging open, tongue out sideways, sweat drops flying
+off its head, tail tip curled up in shock. Flustered, not menacing. No fangs,
+no blood, nobody being squeezed.
+The sky at the right edge is turning pale grey-pink.
 ```
 
-### `09-temple.png` — 종 아래의 까치들
+### `09-temple.png` — 혼자 오르는 용과 종 아래의 까치들
+
+> **이 그림은 다시 그려야 합니다.** 본문에 용이 들어갔습니다.
+> 용은 **혼자** 올라갑니다. 곁에 다른 용이 있으면 안 됩니다.
+> 크게 그리면 아래 까치가 묻히니 하늘 쪽에 알맞게 넣어 주세요.
 
 ```
 Wide scene at the old mountain temple at dawn. On the right, the great bronze
-bell hangs under its tiled roof. Below it on the stone platform lie two magpies,
-wings folded, eyes closed as if asleep. On the left, the scholar has just run up
-the steps and stops short, both hands going to his mouth. Soft pink dawn light,
-mist in the valley. Sad and tender, never grim.
+bell hangs under its tiled roof; below it on the stone platform lie two magpies,
+wings folded, eyes closed as if asleep, and the young scholar kneels beside them
+with both hands going to his mouth.
+Rising through the clouds in the upper left, a single white Korean dragon climbs
+away into the pink dawn sky, alone. Draw the dragon comically distraught rather
+than grand: eyes squeezed shut, mouth open in a wail, two fat cartoon tears
+flying off, its short front legs stamping the empty air. There is no second
+dragon anywhere in the picture.
+Soft pink dawn light, mist in the valley. Sad and tender and a little funny,
+never grim. No injury shown.
 ```
 
 ### `10-nest-home.png` — 되살아난 까치
