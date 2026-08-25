@@ -51,7 +51,7 @@ button:disabled { cursor: not-allowed; opacity: .36; box-shadow: none; }
 .lobbyShell {
   position: relative;
   isolation: isolate;
-  width: min(960px, calc(100% - 24px));
+  width: min(860px, calc(100% - 24px));
   min-height: 100dvh;
   margin: 0 auto;
   padding: 12px 0;
@@ -62,8 +62,8 @@ button:disabled { cursor: not-allowed; opacity: .36; box-shadow: none; }
   position: fixed;
   z-index: -1;
   inset: 0;
-  background: linear-gradient(#eff8f058, #eff8f058), url("assets/lobby-city.jpg") center / cover no-repeat;
-  filter: saturate(.88) contrast(.97) brightness(1.02);
+  background: linear-gradient(#eff8f0a8, #eff8f0a8), url("assets/lobby-city.jpg") center / cover no-repeat;
+  filter: saturate(.82) contrast(.95) brightness(1.03);
   pointer-events: none;
 }
 .lobbyPanel {
@@ -74,7 +74,7 @@ button:disabled { cursor: not-allowed; opacity: .36; box-shadow: none; }
   background: #fffdf5;
   box-shadow: var(--shadow), 0 5px 0 #78917f;
 }
-.lobbyTop { display: grid; grid-template-columns: auto auto minmax(260px, 1fr); align-items: center; gap: 14px; }
+.lobbyTop { display: grid; grid-template-columns: minmax(0, 1fr) auto minmax(230px, 320px); align-items: center; gap: 10px; }
 .lobbyBrand { display: flex; align-items: center; gap: 10px; }
 .brandMark {
   display: grid;
@@ -93,8 +93,8 @@ button:disabled { cursor: not-allowed; opacity: .36; box-shadow: none; }
 .lobbyLead { margin: 0; color: #52645b; font-size: 12px; font-weight: 800; }
 .lobbyIdentity { margin: 0; text-align: center; white-space: nowrap; }
 .mp-lobby-tabs { display: grid; grid-template-columns: 1fr 1fr; gap: 8px; margin: 0; }
-.lobbyWorkspace { display: grid; grid-template-columns: minmax(280px, .85fr) minmax(400px, 1.15fr); gap: 10px; margin-top: 10px; }
-.lobbyConnect { min-width: 0; }
+.lobbyWorkspace { display: grid; grid-template-columns: minmax(240px, .72fr) minmax(360px, 1.28fr); gap: 8px; margin-top: 8px; }
+.lobbyConnect { min-width: 0; align-self: start; }
 .teamSeatPanel { grid-column: 1 / -1; padding: 11px 13px; }
 .teamSeatHeader,
 .teamSeatTitle { display: flex; align-items: center; justify-content: space-between; gap: 10px; }
@@ -148,7 +148,7 @@ button:disabled { cursor: not-allowed; opacity: .36; box-shadow: none; }
 .teamSeatEmpty { grid-column: 1 / -1; place-self: center; font-size: 13px; font-weight: 900; }
 .teamSeatGuide { margin: 8px 0 0; color: #52645b; font-size: 12px; font-weight: 850; text-align: center; }
 .teamSeatGuide.ready { color: #17633a; }
-.mp-lobby-card { min-height: 100%; }
+.mp-lobby-card { min-height: 0; margin: 0; }
 .playersPanel h2 { margin: 0; font-size: 19px; }
 .mp-lobby-players { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 7px; margin: 10px 0; }
 .mp-lobby-player { min-height: 48px; border-width: 2px !important; }
