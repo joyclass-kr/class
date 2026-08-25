@@ -6,19 +6,37 @@ All files in `sfx/` are derived from CC0 assets and optimized as mono 48 kHz Ogg
 
 - Source: https://kenney.nl/assets/interface-sounds
 - License: CC0 1.0
-- Used originals: `select_001.ogg`, `select_003.ogg`, `back_003.ogg`, `error_003.ogg`, `error_005.ogg`, `tick_004.ogg`, `question_002.ogg`
+- Used originals: `toggle_004.ogg`, `select_003.ogg`, `back_003.ogg`, `error_003.ogg`, `error_005.ogg`, `tick_004.ogg`, `question_002.ogg`
 
 ## Kenney Casino Audio
 
 - Source: https://kenney.nl/assets/casino-audio
 - License: CC0 1.0
-- Used originals: `chip-lay-1.ogg`, `chips-handle-5.ogg`
+- Used originals: `chip-lay-1.ogg`
 
 ## Kenney Music Jingles
 
 - Source: https://kenney.nl/assets/music-jingles
 - License: CC0 1.0
-- Used originals: `jingles_STEEL08.ogg`, `jingles_HIT03.ogg`
+- Used originals: `jingles_STEEL08.ogg`
+
+## UI Sound Effects by Robin Lamb
+
+- Source: https://opengameart.org/content/ui-sound-effects-button-clicks-user-feedback-notifications
+- License: CC0 1.0
+- Used original: `chimes.ogg`
+
+## Win Jingle by Fupi
+
+- Source: https://opengameart.org/node/114596
+- License: CC0 1.0
+- Used original: `winfretless.ogg`
+
+## Lose Game Short Music Clip by Robin Lamb
+
+- Source: https://opengameart.org/content/lose-game-short-music-clip
+- License: CC0 1.0
+- Used original: `losegamemusic.ogg`
 
 ## 100 CC0 SFX by rubberduck
 
@@ -28,7 +46,7 @@ All files in `sfx/` are derived from CC0 assets and optimized as mono 48 kHz Ogg
 
 ## Processing
 
-- Decoded mean levels matched within 1.9 dB across the shared pack
+- Perceived levels balanced by sound duration, density, and role
 - 48 kHz mono
 - Ogg Vorbis quality 5
 - Existing Web Audio recipes remain only as loading-failure fallbacks
