@@ -537,6 +537,62 @@ const CHAPTER_SEGS = CHAPTERS.map(ch => {
     return segs;
 });
 
+// 읽고 나서 — 책마다 내용이 다르다. 장과 같은 방식으로 재서 나눈다.
+const AFTERWORD = {
+    title: '읽고 나서',
+    emoji: '🛶',
+    art: [],
+    paras: [
+        `이 책의 제목은 『허클베리 핀의 모험』입니다. 그런데 이 책은 모험 이야기가 아닙니다. 다 읽고 나면 알게 됩니다. 이것은 열세 살짜리가 자기가 배운 것이 틀렸다는 것을 알아 가는 이야기입니다.`,
+        `쓴 사람은 미국의 마크 트웨인입니다. 본디 이름은 새뮤얼 클레먼스이고, 마크 트웨인은 붓 이름입니다. 뱃사람들이 물 깊이를 잴 때 쓰던 말에서 가져왔습니다. 두 길이라는 뜻입니다.`,
+        `그는 미시시피강가에서 자랐고, 젊을 때는 그 강에서 증기선을 몰았습니다. 이 책에 강이 그렇게 자세히 나오는 까닭이 그것입니다. 물살과 여울과 안개를 아는 사람이 쓴 글입니다.`,
+        `이 책은 『톰 소여의 모험』이 나오고 여덟 해 뒤인 천팔백팔십사 년에 나왔습니다. 톰 소여의 뒷이야기처럼 시작하지만, 읽어 보면 아주 다른 책입니다.`,
+        `제일 크게 다른 것은 말하는 사람입니다. 톰 소여는 밖에서 지켜보는 사람이 들려주는 이야기입니다. 이 책은 헉이 자기 입으로 합니다. 그래서 문장이 반듯하지 않습니다. 배운 적 없는 아이의 말투 그대로입니다.`,
+        `그 시절 그것은 아주 새로운 일이었습니다. 책이라면 반듯한 말로 써야 한다고 여기던 때였습니다. 트웨인은 그것을 깨고 길거리에서 쓰는 말로 책 한 권을 썼습니다.`,
+        `그리고 그 말투가 사람마다 다릅니다. 트웨인은 책 머리에 일곱 가지 말투를 가려 썼다고 적어 두었습니다. 미주리 시골말, 흑인들이 쓰던 말, 강 아래쪽 말이 다 다르게 적혀 있습니다. 여기서는 그것을 다 옮기지 못했습니다.`,
+        `원작은 여기 실린 것보다 훨씬 깁니다. 뗏목을 타고 내려가며 만나는 사람들 이야기가 훨씬 많습니다. 여기서는 헉과 짐 사이에 무슨 일이 있었는지를 따라가는 줄기만 골라 실었습니다.`,
+        `이제 다시 볼 대목을 짚어 봅시다.`,
+        `첫째, 안개 속 대목을 다시 읽어 보십시오. 헉은 짐에게 거짓말을 합니다. 아무 일도 없었고 네가 꿈을 꾼 것이라고요. 짐은 그 말을 믿고 한참 이야기를 하다가, 나뭇잎과 쓰레기가 뗏목에 쌓인 것을 봅니다.`,
+        `그리고 짐이 말합니다. 자기는 헉을 찾느라 목이 쉬었는데, 헉은 그것을 놀림거리로 삼았다고요. 헉은 그 뒤 십오 분 만에 가서 사과합니다. 그 시절 백인 아이가 흑인 어른에게 사과하는 일은 없는 일이었습니다.`,
+        `그 대목을 헉은 이렇게 적습니다. 그러고 나서 후회하지 않았다고요. 이 짧은 한 줄이 이 책 전체에서 제일 중요한 자리입니다.`,
+        `둘째, 사십 달러 대목을 세어 보십시오. 헉은 짐이 도망 노예라는 것을 알립니다. 그러면 상을 받습니다. 알리지 않으면 자기가 죄를 짓는 것이라고 배웠습니다.`,
+        `헉은 편지를 씁니다. 짐이 어디 있는지 적은 편지입니다. 그리고 한참 들여다보다가 그 편지를 찢습니다. 그러면서 이렇게 말합니다. 그렇다면 나는 지옥에 가겠다고요.`,
+        `그 말을 오해하면 안 됩니다. 헉은 자기가 옳은 일을 하고 있다고 생각하지 않습니다. 자기가 나쁜 짓을 하는 줄 알면서 합니다. 자기가 배운 것을 다 어기면서도 짐을 못 넘기는 것입니다.`,
+        `그래서 이 대목이 무거운 것입니다. 헉은 옳은 것을 알아서 그렇게 한 것이 아니라, 사람을 알아서 그렇게 했습니다.`,
+        `셋째, 왕과 공작을 다시 보십시오. 두 사람은 사기꾼입니다. 헉과 짐의 뗏목에 올라타 여러 마을에서 사람들을 속입니다. 이 대목은 웃깁니다. 그런데 웃고 나면 뒷맛이 씁니다.`,
+        `그 두 사람에게 속는 마을 사람들은 다들 착한 사람들입니다. 죽은 사람의 딸들을 울리며 돈을 뜯는 대목에서는 헉도 견디지 못합니다. 이 책은 강을 따라 내려가며 그 시절 미국의 마을들을 하나씩 보여 줍니다.`,
+        `그 마을들은 다들 서로 닮았습니다. 사람들은 남의 말을 그대로 믿고, 몰려다니고, 재미난 구경거리가 생기면 다 나옵니다. 트웨인은 그것을 웃기게 적어 놓았는데, 웃기게 적을수록 더 무섭습니다.`,
+        `넷째, 마지막 대목을 다시 읽어 보십시오. 톰 소여가 나타나 짐을 구하는 놀이를 벌입니다. 책에서 읽은 대로 하겠다며 몇 주를 끕니다. 짐은 그동안 광에 갇혀 있습니다.`,
+        `그런데 톰은 알고 있었습니다. 짐은 이미 자유의 몸이었습니다. 주인이 세상을 떠나며 풀어 주었기 때문입니다. 톰은 그것을 알면서 놀이를 벌인 것입니다.`,
+        `그 대목에서 두 아이가 갈립니다. 톰에게 짐은 놀이의 재료였습니다. 헉에게는 사람이었습니다. 두 아이가 같은 마을에서 자랐는데 그렇게 갈립니다.`,
+        `이 마지막 대목을 두고 지금도 말이 많습니다. 앞의 열몇 장이 그렇게 무거운데 끝이 놀이로 끝나기 때문입니다. 트웨인이 왜 그렇게 끝냈는지는 아무도 모릅니다.`,
+        `그 시절 사정도 알아 두면 좋습니다. 이 이야기의 배경은 노예 제도가 아직 있던 때입니다. 사람을 사고팔았고, 도망친 사람을 잡으면 상을 주었습니다. 미주리에서 짐 같은 사람의 값이 팔백 달러쯤이었습니다.`,
+        `그때 어른 하루 품삯이 일 달러가 안 되었습니다. 그러니 사람 하나가 이태치 삯이었던 셈입니다. 헉이 찢은 편지 한 장이 그만한 돈이었습니다.`,
+        `그리고 짐이 강을 따라 남쪽으로 내려가는 것이 왜 큰일인지도 알아 두어야 합니다. 자유는 북쪽에 있었습니다. 뗏목은 남쪽으로 흐릅니다. 두 사람은 갈수록 자유에서 멀어지고 있었습니다.`,
+        `이 책이 붙들고 있는 물음은 두 가지입니다.`,
+        `하나는 배운 것이 틀렸을 때 어떻게 하느냐는 것입니다. 헉은 학교도 교회도 마을 어른들도 다 같은 것을 가르치는 곳에서 자랐습니다. 그 모두가 틀렸다는 것을 열세 살짜리가 혼자 알아냅니다. 그것도 말로 알아낸 것이 아니라 몸으로 알아냅니다.`,
+        `다른 하나는 사람을 사람으로 보는 것이 언제 되느냐는 것입니다. 헉이 짐을 사람으로 보게 되는 것은 함께 뗏목을 타고 여러 날을 지낸 뒤입니다. 곁에 오래 있어야 보이는 것이 있다고 이 책은 말합니다.`,
+        `책이 나오자 여러 도서관에서 금지했습니다. 말이 상스럽고 아이가 읽기에 나쁘다는 것이었습니다. 트웨인은 그 소식을 듣고 오히려 좋아했습니다. 덕분에 더 팔릴 것이라고요.`,
+        `지금은 미국 소설 가운데 가장 중요한 책의 하나로 꼽힙니다. 어떤 작가는 미국 문학이 다 이 책에서 나왔다고까지 말했습니다.`,
+        `다만 이 책에는 지금 읽기에 불편한 말이 그대로 들어 있습니다. 흑인을 부르는 그 시절의 말이 이백 번 넘게 나옵니다. 트웨인은 그 시절 사람들이 실제로 쓰던 말을 그대로 적었습니다. 여기서는 그 말을 옮기지 않았습니다.`,
+        `언젠가 이 책을 다시 읽게 되거든, 이번에는 짐이 하는 말만 이어 붙여 읽어 보십시오. 짐은 딸 이야기를 두 번 합니다. 그 두 번을 이어 읽으면 짐이 어떤 사람인지가 다 나옵니다.`,
+        `마지막으로 생각해 볼 것을 남겨 둡니다. 답은 적어 두지 않겠습니다.`,
+        `헉이 편지를 찢은 것은 옳은 일이었을까요? 헉 자신은 나쁜 짓이라고 여겼습니다. 자기가 나쁘다고 여기면서 한 일을 우리는 어떻게 세어야 할까요?`,
+        `톰이 벌인 마지막 놀이를 헉은 왜 말리지 않았을까요? 헉은 톰보다 짐을 훨씬 잘 아는 사람이었습니다. 그런데 톰이 하자는 대로 했습니다.`,
+        `그리고 마지막에 헉이 서쪽으로 가겠다고 한 까닭은 무엇이었을까요. 이 물음은 어른이 되어 다시 읽어도 답하기가 쉽지 않습니다.`
+    ]
+};
+
+const AFTER_SEGS = (() => {
+    const segs = [];
+    AFTERWORD.paras.forEach((html, paraIdx) => {
+        splitSegments(html).forEach((piece, k) => {
+            segs.push({ paraIdx, html: piece, start: k === 0 });
+        });
+    });
+    return segs;
+})();
+
 // 조각 묶음을 문단 단위로 다시 묶어 화면에 그릴 모양으로 만든다.
 // 앞 쪽에서 이어진 문단은 첫 줄을 들여쓰지 않는다.
 function runHtml(segs, a, b) {
@@ -818,16 +874,100 @@ function quizPage(part) {
         </div>`;
 }
 
-function endPage() {
+/* 읽고 나서 — 장과 같은 방식으로 쪽을 나눈다. 그림은 오른쪽 위에 얹힌다. */
+const AFTER_FOOT = `<p class="after-home"><a class="home-btn" href="../../../../../">학습 허브로 돌아가기</a></p>`;
+
+function paginateAfterword() {
+    const segs = AFTER_SEGS;
+    const arts = AFTERWORD.art || [];
+    const { usable, headHeight, artHeight } = PROBE;
+    const headHtml = `<h2>${AFTERWORD.title}</h2>`;
+    const totalH = PROBE.measure(runHtml(segs, 0, segs.length));
+
+    const underArt = Math.max(60, usable - artHeight);
+
+    // 맨 끝에는 학습 허브로 가는 단추가 붙는다. 그 높이를 미리 빼 두지 않으면
+    // 마지막 쪽만 넘친다.
+    const footH = PROBE.measure(AFTER_FOOT);
+
+    const capsOf = slots => {
+        const caps = [];
+        slots.forEach(kind => { caps.push(usable); caps.push(kind === 'img' ? underArt : usable); });
+        caps[caps.length - 1] = Math.max(60, caps[caps.length - 1] - footH);
+        return caps;
+    };
+
+    const minSpreads = Math.max(arts.length, 1);
+    const maxSpreads = Math.max(minSpreads, Math.floor(segs.length / 2));
+    let spreadCount = minSpreads;
+    while (spreadCount < maxSpreads) {
+        const caps = capsOf(slotPlan(arts.length, spreadCount - arts.length));
+        if (caps.reduce((a, b) => a + b, 0) >= totalH + headHeight) break;
+        spreadCount++;
+    }
+
+    let slots = slotPlan(arts.length, Math.max(0, spreadCount - arts.length));
+    let caps = capsOf(slots);
+    let ranges = fillPages(segs, caps, headHtml);
+    for (let guard = 0; guard < 8; guard++) {
+        const over = ranges.some(([a, b], n) =>
+            PROBE.measure((n === 0 ? headHtml : '') + runHtml(segs, a, b)) > caps[n] + 1);
+        if (!over || spreadCount >= maxSpreads) break;
+        spreadCount++;
+        slots = slotPlan(arts.length, Math.max(0, spreadCount - arts.length));
+        caps = capsOf(slots);
+        ranges = fillPages(segs, caps, headHtml);
+    }
+
+    const spreads = [];
+    let pageIdx = 0;
+    let artIdx = 0;
+    slots.forEach((kind, s) => {
+        const left = ranges[pageIdx++];
+        const right = ranges[pageIdx++];
+        spreads.push({
+            kind: 'after', first: s === 0, last: s === slots.length - 1,
+            art: kind === 'img' ? arts[artIdx++] : null, left, right
+        });
+    });
+    return spreads;
+}
+
+function afterSpreadPage(spread) {
+    const segs = AFTER_SEGS;
+    const head = spread.first ? `<h2>${AFTERWORD.title}</h2>` : '';
+    // 학습 허브로 돌아가는 길은 맨 끝에 한 번만 둔다.
+    const foot = spread.last ? AFTER_FOOT : '';
+
+    if (spread.art) {
+        return `
+            <div class="page page-story page-after">
+                <div class="story-page-left">
+                    ${head}
+                    ${runHtml(segs, spread.left[0], spread.left[1])}
+                </div>
+                <div class="story-page-right story-page-right-image">
+                    <div class="story-art-top">${artFrame(spread.art, AFTERWORD.emoji)}</div>
+                    ${runHtml(segs, spread.right[0], spread.right[1])}
+                    ${foot}
+                </div>
+            </div>`;
+    }
+
     return `
-        <div class="page page-end">
-            ${artFrame('end.png', '🌅')}
-            <h2>허클베리 핀의 모험을 다 읽었습니다</h2>
-            <a class="home-btn" href="../../../../../">학습 허브로 돌아가기</a>
+        <div class="page page-story page-after">
+            <div class="story-page-left">
+                ${head}
+                ${runHtml(segs, spread.left[0], spread.left[1])}
+            </div>
+            <div class="story-page-right story-page-right-text">
+                ${runHtml(segs, spread.right[0], spread.right[1])}
+                ${foot}
+            </div>
         </div>`;
 }
 
-const TWO_PAGE_KINDS = new Set(['chapter', 'toc', 'cover']);
+const TWO_PAGE_KINDS = new Set(['chapter', 'toc', 'cover', 'after']);
 
 let PAGES = [];
 let FOLIOS = [];
@@ -839,7 +979,7 @@ function buildPages() {
         ...TOC_GROUPS.map((_, i) => ({ kind: 'toc', part: i })),
         ...CHAPTERS.flatMap(paginateChapter),
         ...QUIZ_GROUPS.map((_, i) => ({ kind: 'quiz', part: i })),
-        { kind: 'end' }
+        ...paginateAfterword()
     ];
     PROBE.close();   // 쪽을 다 나눴으니 재는 데 쓰던 숨은 쪽은 치운다
 
@@ -860,7 +1000,7 @@ function renderPage(page) {
         case 'toc': return tocPage(page.part);
         case 'chapter': return chapterSpreadPage(page);
         case 'quiz': return quizPage(page.part);
-        case 'end': return endPage();
+        case 'after': return afterSpreadPage(page);
         default: return '';
     }
 }
