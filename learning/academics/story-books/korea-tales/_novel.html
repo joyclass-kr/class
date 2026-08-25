@@ -1,0 +1,49 @@
+<!DOCTYPE html><html lang="ko"><head><meta charset="UTF-8"><title>소설틀 분량 검사</title>
+<style>body{font:14px monospace;margin:16px}iframe{position:fixed;left:-6000px;top:0;border:0}pre{white-space:pre-wrap}</style>
+</head><body><h1>소설틀 한쪽 글자 수</h1><pre id="out">…</pre><iframe id="frame"></iframe>
+<script>
+/* 소설틀은 열 때마다 재서 쪽을 나눈다. 그러니 실제로 나뉜 쪽수를 세어야 맞다. */
+const out=document.getElementById('out'), frame=document.getElementById('frame');
+const BOOKS=['chunhyangjeon','heungbujeon','honggildongjeon','kongjwi-patjwi','onggojipjeon','simcheongjeon','tokkijeon'];
+function probe(){
+  let ch=0,par=0,pages=0,filled=0,room=0;
+  for(let i=0;i<PAGES.length;i++){
+    if(PAGES[i].kind!=='chapter') continue;
+    current=i; paint();
+    for(const side of ['left','right']){
+      const el=document.querySelector('.story-page-'+side);
+      if(!el) continue;
+      const ps=[...el.querySelectorAll('p')];
+      if(!ps.length) continue;
+      pages++;
+      ps.forEach(p=>{ch+=p.innerText.replace(/\s/g,'').length;par++;});
+      // 글이 칸을 몇 줄 채웠는지. 넘침이 아니라 채움을 본다.
+      const cs=getComputedStyle(el), lh=parseFloat(getComputedStyle(ps[0]).lineHeight);
+      const kids=[...el.children];
+      const top=Math.min.apply(null,kids.map(x=>x.getBoundingClientRect().top));
+      const bot=Math.max.apply(null,kids.map(x=>x.getBoundingClientRect().bottom));
+      filled+=(bot-top)/lh;
+      room+=(el.clientHeight-parseFloat(cs.paddingTop)-parseFloat(cs.paddingBottom))/lh;
+    }
+  }
+  current=0;paint();
+  return {ch,par,pages,filled,room};
+}
+(async()=>{
+  frame.style.width='1366px';frame.style.height='768px';
+  const lines=['한쪽글자 한쪽문단  채운줄/쓸수있는줄  쪽수  책'];
+  for(const b of BOOKS){
+    await Promise.all(['app.js','styles.css'].map(f=>fetch(b+'/'+f,{cache:'reload'}).catch(()=>{})));
+    await new Promise(r=>{frame.onload=r;frame.src=b+'/?t='+Date.now();});
+    await new Promise(r=>setTimeout(r,120));
+    try{
+      const s=frame.contentWindow.eval('('+probe.toString()+')()');
+      lines.push(String(Math.round(s.ch/s.pages)).padStart(6)+'자'+String((s.par/s.pages).toFixed(1)).padStart(7)+'개'
+        +String((s.filled/s.pages).toFixed(1)).padStart(9)+' /'+String((s.room/s.pages).toFixed(1)).padStart(5)
+        +String(s.pages).padStart(6)+'  '+b);
+    }catch(e){lines.push('  실패 '+b+' '+e.message);}
+    out.textContent=lines.join('\n');
+  }
+  out.textContent=lines.join('\n')+'\n\n=== 끝 ===';
+})();
+</script></body></html>
