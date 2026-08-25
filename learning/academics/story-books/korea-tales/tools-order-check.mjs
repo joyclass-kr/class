@@ -28,6 +28,18 @@ for (const b of books) {
   beats.forEach((beat, n) => {
     for (const side of ['left', 'right']) {
       const a = beat[side] || [];
+      // 6) 한쪽 안에서 한 문단이 다른 문단에 통째로 들어 있다
+      //    "환웅이 늘 하던 말이었지요." 가 "그것이 환웅이 늘 하던 말이었지요. …" 안에 들어 있는 꼴
+      const norm = a.map(x => x.replace(/[^가-힣]/g, ''));
+      for (let x = 0; x < a.length; x++) for (let y = 0; y < a.length; y++) {
+        if (x === y) continue;
+        if (norm[x].length >= 8 && norm[y].length > norm[x].length && norm[y].includes(norm[x])) {
+          hits++;
+          console.log(`[한 문단이 다른 문단에 들어 있음] ${b} 칸${n + 1}${side === 'left' ? 'L' : 'R'}
+    ${a[x]}
+  ⊂ ${a[y]}`);
+        }
+      }
       for (let k = 0; k + 1 < a.length; k++) {
         const cur = a[k], nxt = a[k + 1];
         const where = `${b} 칸${n + 1}${side === 'left' ? 'L' : 'R'} @${k + 1}`;
