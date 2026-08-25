@@ -1,0 +1,168 @@
+<!doctype html>
+<html lang="ko">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="theme-color" content="#07131c">
+    <title>과학 실험실</title>
+    <meta name="description" content="같은 크기의 여러 재료를 저울에 올려 무게를 견주고 물에 넣어 뜨는지 가라앉는지 확인하는 초등 과학 모의실험">
+    <link rel="stylesheet" as="style" crossorigin href="https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.9/dist/web/static/pretendard.css">
+    <link rel="stylesheet" href="styles.css?v=3">
+    <link rel="stylesheet" href="weight-visual.css?v=3">
+    <link rel="stylesheet" href="quiz.css?v=3">
+</head>
+<body>
+    <main>
+        <header class="page-header">
+            <div class="title-row">
+                <a href="../">← 과학 실험실</a>
+                <h1>물체의 무게 비교</h1>
+            </div>
+            <div class="grade-tags"><span>초등 5~6</span><span>물리</span></div>
+        </header>
+
+        <ol class="method-steps" aria-label="실험 방법">
+            <li>무엇으로 만든 덩어리인지 고릅니다.</li>
+            <li>덩어리의 크기를 고릅니다.</li>
+            <li>저울에 올려 나무 덩어리와 견줍니다.</li>
+            <li>물에 넣어 뜨는지 가라앉는지 봅니다.</li>
+        </ol>
+
+        <div class="experiment-layout">
+            <section class="panel control-panel" aria-labelledby="control-title">
+                <h2 id="control-title">실험 조건</h2>
+                <p class="water-standard">저울 오른쪽에는 늘 4 cm짜리 나무 덩어리가 올라가 있습니다</p>
+
+                <fieldset class="pick-field">
+                    <legend>무엇으로 만들었나요</legend>
+                    <div class="pick-buttons cols5">
+                        <button type="button" data-mat="cork">코르크<small>병마개</small></button>
+                        <button type="button" data-mat="wood">나무<small>나무토막</small></button>
+                        <button type="button" data-mat="plastic">플라스틱<small>블록</small></button>
+                        <button type="button" data-mat="alu">알루미늄<small>음료수 캔</small></button>
+                        <button type="button" data-mat="iron">철<small>못</small></button>
+                    </div>
+                </fieldset>
+
+                <fieldset class="pick-field">
+                    <legend>덩어리의 크기</legend>
+                    <div class="pick-buttons cols4">
+                        <button type="button" data-size="1">1 cm<small>주사위보다 작음</small></button>
+                        <button type="button" data-size="2">2 cm<small>주사위만 함</small></button>
+                        <button type="button" data-size="3">3 cm<small>지우개만 함</small></button>
+                        <button type="button" data-size="4">4 cm<small>사과보다 작음</small></button>
+                    </div>
+                </fieldset>
+
+                <fieldset class="prediction-field">
+                    <legend>이 덩어리를 물에 넣으면?</legend>
+                    <div class="prediction-buttons three">
+                        <button type="button" data-prediction="p1">뜬다</button>
+                        <button type="button" data-prediction="p2">아슬아슬하게 뜬다</button>
+                        <button type="button" data-prediction="p3">가라앉는다</button>
+                    </div>
+                </fieldset>
+
+                <button class="run-button" id="runBtn" type="button">저울에 올리고 물에 넣기</button>
+                <button class="reset-button" id="resetBtn" type="button">처음으로</button>
+
+                <section class="result-box" aria-labelledby="result-title" aria-live="polite">
+                    <h3 id="result-title">관찰 결과</h3>
+                    <p id="resultEmpty">재료와 크기를 골라 보세요.</p>
+                    <div id="resultContent" hidden>
+                        <div class="result-numbers">
+                            <article><span>덩어리의 무게</span><strong id="valueA">-</strong></article>
+                            <article><span>1 cm짜리 하나의 무게</span><strong id="valueB">-</strong></article>
+                        </div>
+                        <p class="prediction-result" id="predictionResult"></p>
+                        <p class="explanation" id="elementaryExplanation"></p>
+                    </div>
+                </section>
+            </section>
+
+            <section class="panel weight-stage" aria-label="관찰 화면">
+                <div class="stage-heading"><h2>관찰</h2><span id="stageBadge">-</span></div>
+
+                <div class="stage-views">
+                    <svg class="main-svg" viewBox="0 0 460 214" aria-hidden="true">
+                        <g id="mainGroup"></g>
+                    </svg>
+                    <svg class="graph-svg" viewBox="0 0 460 196" aria-hidden="true">
+                        <g id="graphGroup"></g>
+                    </svg>
+                </div>
+
+                <p class="stage-caption" id="stageCaption">덩어리를 크게 만들면 무거워집니다. 그런데 물에 뜨는지 가라앉는지는 크기와 상관이 없습니다.</p>
+                <div class="data-note" id="dataNote"></div>
+            </section>
+        </div>
+
+        <section class="panel meaning-panel">
+            <h2>실험 결과의 의미</h2>
+            <div class="meaning-body">
+                <p><strong>같은 크기라도 무게가 다릅니다</strong> 똑같이 생긴 덩어리라도 무엇으로 만들었느냐에 따라 무게가 아주 다릅니다. 코르크 덩어리는 손에 얹은 줄도 모를 만큼 가볍고, 같은 크기의 철 덩어리는 서른 배가 넘게 무겁습니다.</p>
+                <p><strong>한 변이 2배면 무게는 8배</strong> 덩어리의 한 변을 2배로 늘리면 가로·세로·높이가 모두 2배가 되므로 속을 채운 양은 2 × 2 × 2 = 8배가 됩니다. 그래서 무게도 8배가 됩니다. 3배로 늘리면 27배입니다.</p>
+                <p><strong>뜨고 가라앉는 것은 크기와 상관없습니다</strong> 아무리 큰 통나무도 뜨고, 아주 작은 쇠못도 가라앉습니다. 뜨느냐 가라앉느냐는 크기가 아니라 같은 크기일 때 물보다 무거운지 가벼운지가 정합니다.</p>
+            </div>
+        </section>
+
+        <details class="quiz-section" aria-labelledby="quiz-title">
+            <summary class="quiz-heading"><h2 id="quiz-title">확인 문제</h2><span>4문제</span></summary>
+            <div class="quiz-grid">
+                <article class="quiz-card" data-answer="c">
+                    <h3>한 변이 1 cm인 덩어리를 한 변 2 cm로 키우면 무게는?</h3>
+                    <div class="quiz-options">
+                        <label><input type="radio" name="q1" value="a"> 2배</label>
+                        <label><input type="radio" name="q1" value="b"> 4배</label>
+                        <label><input type="radio" name="q1" value="c"> 8배</label>
+                        <label><input type="radio" name="q1" value="d"> 그대로</label>
+                    </div>
+                    <button class="answer-button" type="button">정답 확인</button>
+                    <p class="answer-result" aria-live="polite"></p>
+                    <p class="answer-explanation" hidden>가로도 2배, 세로도 2배, 높이도 2배가 됩니다. 2 × 2 × 2 = 8이므로 속이 8배로 늘어나 무게도 8배가 됩니다.</p>
+                </article>
+
+                <article class="quiz-card" data-answer="b">
+                    <h3>아주 커다란 통나무를 물에 넣으면 어떻게 될까요?</h3>
+                    <div class="quiz-options">
+                        <label><input type="radio" name="q2" value="a"> 너무 무거워서 가라앉는다</label>
+                        <label><input type="radio" name="q2" value="b"> 아무리 커도 뜬다</label>
+                        <label><input type="radio" name="q2" value="c"> 반쯤 가라앉다가 멈춘 뒤 곧 가라앉는다</label>
+                        <label><input type="radio" name="q2" value="d"> 알 수 없다</label>
+                    </div>
+                    <button class="answer-button" type="button">정답 확인</button>
+                    <p class="answer-result" aria-live="polite"></p>
+                    <p class="answer-explanation" hidden>뜨고 가라앉는 것은 크기와 상관없습니다. 나무는 같은 크기의 물보다 가벼우므로 통나무만큼 커도 뜹니다.</p>
+                </article>
+
+                <article class="quiz-card" data-answer="a">
+                    <h3>아주 작은 쇠못을 물에 넣으면?</h3>
+                    <div class="quiz-options">
+                        <label><input type="radio" name="q3" value="a"> 작아도 가라앉는다</label>
+                        <label><input type="radio" name="q3" value="b"> 가벼워서 뜬다</label>
+                        <label><input type="radio" name="q3" value="c"> 물 가운데 멈춰 있는다</label>
+                        <label><input type="radio" name="q3" value="d"> 녹아 없어진다</label>
+                    </div>
+                    <button class="answer-button" type="button">정답 확인</button>
+                    <p class="answer-result" aria-live="polite"></p>
+                    <p class="answer-explanation" hidden>쇠는 같은 크기의 물보다 훨씬 무겁습니다. 못이 아무리 작아도 그 점은 달라지지 않으므로 가라앉습니다.</p>
+                </article>
+
+                <article class="quiz-card" data-answer="d">
+                    <h3>나무 덩어리가 물에 뜰 때 절반쯤 잠기는 까닭은?</h3>
+                    <div class="quiz-options">
+                        <label><input type="radio" name="q4" value="a"> 나무가 물을 빨아들여서</label>
+                        <label><input type="radio" name="q4" value="b"> 물이 밀어 올리는 힘이 없어서</label>
+                        <label><input type="radio" name="q4" value="c"> 나무가 물보다 무거워서</label>
+                        <label><input type="radio" name="q4" value="d"> 같은 크기일 때 나무가 물의 절반쯤 무게라서</label>
+                    </div>
+                    <button class="answer-button" type="button">정답 확인</button>
+                    <p class="answer-result" aria-live="polite"></p>
+                    <p class="answer-explanation" hidden>물에 뜬 물체는 자기 무게만큼의 물을 밀어냅니다. 나무는 같은 크기의 물의 절반쯤 무게이므로 절반만 잠기면 자기 무게만큼의 물을 밀어내게 되어 거기서 멈춥니다.</p>
+                </article>
+            </div>
+        </details>
+    </main>
+    <script src="app.js?v=3"></script>
+</body>
+</html>
