@@ -186,55 +186,86 @@ document.addEventListener('DOMContentLoaded', () => {
         renderData(rows);
     }
 
-    const G = { x0: 46, x1: 402, y0: 146, y1: 26 };
-    const SCALE_MAX = 1000;
-    const tx = (d, span) => G.x0 + (span > 0 ? d / span : 0) * (G.x1 - G.x0);
-    const ty = v => G.y0 - (v / SCALE_MAX) * (G.y0 - G.y1);
+    /* 바다가 850을 쥐고 있어 한 눈금에 다 그리면 나머지 셋이 바닥에 눌려
+       움직임이 보이지 않습니다. 그래서 칸을 둘로 나눕니다 — 위는 0~1000으로
+       전체와 바다를, 아래는 눈금을 키워 공기와 땅의 물을 봅니다. 아래 칸이
+       확대된 것이라는 사실은 제목에 적어 둡니다. */
+    const AX = { x0: 52, x1: 396 };
+    const TOP = { y0: 130, y1: 34, max: 1000 };
+    const BOT = { y0: 268, y1: 176 };
+    const tx = (d, span) => AX.x0 + (span > 0 ? d / span : 0) * (AX.x1 - AX.x0);
+    const tyTop = v => TOP.y0 - (v / TOP.max) * (TOP.y0 - TOP.y1);
+    const tyBot = (v, max) => BOT.y0 - (v / max) * (BOT.y0 - BOT.y1);
 
-    function renderTrend(rows) {
-        const span = Math.max(1, history[history.length - 1].d);
-        let out = '';
-        for (const v of [0, 250, 500, 750, 1000]) {
-            const y = ty(v);
-            out += `<line class="grid-line" x1="${G.x0}" y1="${y.toFixed(1)}" x2="${G.x1}" y2="${y.toFixed(1)}"/>`;
-            out += `<text class="axis-text" x="${G.x0 - 6}" y="${(y + 3).toFixed(1)}" text-anchor="end">${v}</text>`;
+    const SMALL = ['vapor', 'cloud', 'land'];
+    function smallMax() {
+        let m = 0;
+        for (const h of history) for (const k of SMALL) m = Math.max(m, h[k]);
+        return Math.max(100, Math.ceil(m / 50) * 50);
+    }
+
+    function axisFrame(out, box, ticks, span, title, yLabel) {
+        for (const v of ticks) {
+            const y = box.ty(v);
+            out.push(`<line class="grid-line" x1="${AX.x0}" y1="${y.toFixed(1)}" x2="${AX.x1}" y2="${y.toFixed(1)}"/>`);
+            out.push(`<text class="axis-text" x="${AX.x0 - 6}" y="${(y + 3).toFixed(1)}" text-anchor="end">${v}</text>`);
         }
         for (let k = 0; k <= 4; k += 1) {
             const d = (span * k) / 4;
-            out += `<text class="axis-text" x="${tx(d, span).toFixed(1)}" y="${G.y0 + 15}" text-anchor="middle">${d.toFixed(0)}</text>`;
+            out.push(`<text class="axis-text" x="${tx(d, span).toFixed(1)}" y="${box.y0 + 15}" text-anchor="middle">${d.toFixed(0)}</text>`);
         }
-        out += `<line class="axis" x1="${G.x0}" y1="${G.y0}" x2="${G.x1}" y2="${G.y0}"/>`;
-        out += `<line class="axis" x1="${G.x0}" y1="${G.y0}" x2="${G.x0}" y2="${G.y1}"/>`;
-        out += `<text class="axis-title" x="${(G.x0 + G.x1) / 2}" y="${G.y0 + 32}" text-anchor="middle">흐른 날수 (일)</text>`;
-        out += `<text class="axis-title" x="${G.x0}" y="${G.y1 - 8}">물의 양</text>`;
+        out.push(`<line class="axis" x1="${AX.x0}" y1="${box.y0}" x2="${AX.x1}" y2="${box.y0}"/>`);
+        out.push(`<line class="axis" x1="${AX.x0}" y1="${box.y0}" x2="${AX.x0}" y2="${box.y1}"/>`);
+        out.push(`<text class="axis-title" x="${AX.x0}" y="${box.y1 - 8}">${title}</text>`);
+        if (yLabel) out.push(`<text class="axis-title" x="${(AX.x0 + AX.x1) / 2}" y="${box.y0 + 31}" text-anchor="middle">${yLabel}</text>`);
+    }
 
-        if (history.length < 2) {
-            out += `<text class="trend-empty" x="${(G.x0 + G.x1) / 2}" y="${(G.y0 + G.y1) / 2}" text-anchor="middle">순환을 시작하면 물이 어디로 옮겨 가는지 그려집니다.</text>`;
-            graphGroup.innerHTML = out;
-            return;
-        }
-
-        // the four stores, then the total on top of them
-        rows.forEach(r => {
-            const pts = history.map(h => `${tx(h.d, span).toFixed(1)},${ty(h[r.key]).toFixed(1)}`);
-            out += `<path class="trend" style="stroke:${r.color}" d="M${pts.join('L')}"/>`;
-        });
-        const totals = history.map(h => `${tx(h.d, span).toFixed(1)},${ty(h.sea + h.vapor + h.cloud + h.land).toFixed(1)}`);
-        out += `<path class="trend-total" d="M${totals.join('L')}"/>`;
-
-        // labels at the right-hand end, fanned so they never sit on each other
-        const tags = rows.map(r => ({ name: r.name, color: r.color, y: ty(R[r.key]) }))
-            .concat([{ name: '전체', color: '#54e6c1', y: ty(total()) }])
-            .sort((a, b) => a.y - b.y);
+    // right-hand end labels, fanned so they never sit on one another
+    function endTags(out, tags, box) {
+        tags.sort((a, b) => a.y - b.y);
         for (let i = 1; i < tags.length; i += 1) {
             if (tags[i].y - tags[i - 1].y < 12) tags[i].y = tags[i - 1].y + 12;
         }
-        const spill = tags[tags.length - 1].y - (G.y0 - 2);
+        const spill = tags[tags.length - 1].y - (box.y0 - 2);
         if (spill > 0) tags.forEach(t => { t.y -= spill; });
-        tags.forEach(t => {
-            out += `<text class="trend-tag" style="fill:${t.color}" x="${G.x1 + 6}" y="${t.y.toFixed(1)}">${t.name}</text>`;
+        tags.forEach(t => out.push(
+            `<text class="trend-tag" style="fill:${t.color}" x="${AX.x1 + 6}" y="${t.y.toFixed(1)}">${t.name}</text>`));
+    }
+
+    function renderTrend(rows) {
+        const span = Math.max(1, history[history.length - 1].d);
+        const byKey = Object.fromEntries(rows.map(r => [r.key, r]));
+        const out = [];
+
+        axisFrame(out, { ...TOP, ty: tyTop }, [0, 500, 1000], span, '전체와 바다의 물의 양');
+        const bMax = smallMax();
+        axisFrame(out, { ...BOT, ty: v => tyBot(v, bMax) }, [0, bMax / 2, bMax], span,
+            '공기와 땅의 물 — 눈금을 크게 키운 것', '흐른 날수 (일)');
+
+        if (history.length < 2) {
+            out.push(`<text class="trend-empty" x="${(AX.x0 + AX.x1) / 2}" y="${((TOP.y0 + TOP.y1) / 2).toFixed(0)}" text-anchor="middle">순환을 시작하면 물이 어디로 옮겨 가는지 그려집니다.</text>`);
+            graphGroup.innerHTML = out.join('');
+            return;
+        }
+
+        // upper: the total holding flat while the sea barely stirs
+        const seaPts = history.map(h => `${tx(h.d, span).toFixed(1)},${tyTop(h.sea).toFixed(1)}`);
+        out.push(`<path class="trend" style="stroke:${byKey.sea.color}" d="M${seaPts.join('L')}"/>`);
+        const totalPts = history.map(h => `${tx(h.d, span).toFixed(1)},${tyTop(h.sea + h.vapor + h.cloud + h.land).toFixed(1)}`);
+        out.push(`<path class="trend-total" d="M${totalPts.join('L')}"/>`);
+        endTags(out, [
+            { name: '전체', color: '#54e6c1', y: tyTop(total()) },
+            { name: byKey.sea.name, color: byKey.sea.color, y: tyTop(R.sea) },
+        ], TOP);
+
+        // lower: the three that actually move
+        SMALL.forEach(key => {
+            const pts = history.map(h => `${tx(h.d, span).toFixed(1)},${tyBot(h[key], bMax).toFixed(1)}`);
+            out.push(`<path class="trend" style="stroke:${byKey[key].color}" d="M${pts.join('L')}"/>`);
         });
-        graphGroup.innerHTML = out;
+        endTags(out, SMALL.map(key => ({ name: byKey[key].name, color: byKey[key].color, y: tyBot(R[key], bMax) })), BOT);
+
+        graphGroup.innerHTML = out.join('');
     }
 
     function renderData(rows) {
