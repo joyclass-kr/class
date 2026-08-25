@@ -66,6 +66,7 @@ input{width:100%;min-height:44px;border:1px solid #987d42;border-radius:8px;back
 .target-btn{min-height:44px;border:1px solid #8e7540;border-radius:8px;background:#193b38;color:#c6d5cf;font-weight:900}
 .target-btn.active{background:#f0cf73;color:#20322f;box-shadow:0 0 0 2px rgba(240,207,115,.2)}
 .mode-help{text-align:center;color:#b9cbc4;font-size:12px;line-height:1.45;margin-top:8px}
+.team-picker{margin-top:10px}.team-picker-board{display:grid;grid-template-columns:1fr 1fr;gap:10px}.team-picker-column{padding:9px;border:2px solid;border-radius:11px;background:rgba(0,0,0,.18)}.team-picker-column.a{border-color:#74b7ef;background:rgba(70,132,194,.14)}.team-picker-column.b{border-color:#ef8585;background:rgba(215,92,92,.13)}.team-picker-heading{display:flex;justify-content:space-between;align-items:center;gap:8px;margin-bottom:7px;font-weight:1000}.team-picker-column.a .team-picker-heading{color:#cce9ff}.team-picker-column.b .team-picker-heading{color:#ffe0dc}.team-picker-slots{display:grid;grid-template-columns:1fr 1fr;gap:7px}.team-picker-slot{min-height:48px;padding:6px 8px;border:1px dashed rgba(255,255,255,.42);border-radius:9px;background:rgba(5,19,19,.6);color:#d9e7e2;font-size:13px;font-weight:900;line-height:1.25}.team-picker-slot.mine{border-style:solid;border-color:#ffe376;box-shadow:0 0 0 2px rgba(255,227,118,.18);color:#fff1a6}.team-picker-slot:disabled{cursor:not-allowed;opacity:.72}.team-picker-guide{margin:8px 0 0;text-align:center;color:#cbdad5;font-size:12px;line-height:1.4}@media(max-width:520px){.team-picker-board{grid-template-columns:1fr}.team-picker-slots{grid-template-columns:1fr 1fr}}
 .team-scoreboard{display:grid;grid-template-columns:1fr 1fr;gap:12px;margin-bottom:10px}
 .team-score{padding:12px;border-radius:12px;text-align:center;font-weight:1000;border:2px solid}
 .team-score.team-a{background:rgba(70,132,194,.18);border-color:#74b7ef;color:#cce9ff}
@@ -76,6 +77,7 @@ input{width:100%;min-height:44px;border:1px solid #987d42;border-radius:8px;back
 .team-tag{display:inline-block;margin-left:4px;padding:1px 5px;border-radius:7px;font-size:10px}
 .team-tag.a{background:#397ca9;color:#fff}
 .team-tag.b{background:#a84646;color:#fff}
+.card-total{display:inline-flex;align-items:center;justify-content:center;gap:8px;white-space:nowrap}.card-stack{--stack-depth:0;position:relative;display:inline-block;width:34px;height:27px;flex:0 0 34px;filter:drop-shadow(0 3px 2px rgba(0,0,0,.32))}.card-stack::before,.card-stack::after,.card-stack>i{content:"";position:absolute;width:25px;height:18px;left:4px;border:1px solid #d8c894;border-radius:3px;background:repeating-linear-gradient(135deg,#8c3037 0 4px,#6e2028 4px 8px);transform-origin:center}.card-stack::before{bottom:1px;transform:translate(calc(var(--stack-depth)*-1px),calc(var(--stack-depth)*-1px)) rotate(-6deg);opacity:calc(.35 + var(--stack-depth)*.08)}.card-stack::after{bottom:3px;transform:translate(calc(var(--stack-depth)*.55px),calc(var(--stack-depth)*-.7px)) rotate(5deg);opacity:calc(.45 + var(--stack-depth)*.07)}.card-stack>i{bottom:5px;background:linear-gradient(145deg,#fffdf4,#e9dfc3);border-color:#f6e8b4;box-shadow:inset 0 0 0 2px #8c3037}.team-score strong.card-total{display:inline-flex}.score .card-total{margin-left:5px;gap:4px}.score .card-stack{transform:scale(.76);transform-origin:center}
 
 
 .saved-name-hidden{display:none!important}
@@ -164,7 +166,7 @@ input{width:100%;min-height:44px;border:1px solid #987d42;border-radius:8px;back
         <div class="mp-lobby-status" id="joinStatus">방장이 알려준 번호를 입력하세요.</div>
       </div>
     </div>
-    <div class="mp-lobby-card"><div class="mp-lobby-status" id="lobbyGuide">참가 가능 인원: 2~4명</div><div class="mp-lobby-player-list" id="lobbyPlayers"></div></div>
+    <div class="mp-lobby-card"><div class="mp-lobby-status" id="lobbyGuide">참가 가능 인원: 2~4명</div><div class="mp-lobby-player-list" id="lobbyPlayers"></div><div id="teamPicker" class="team-picker hidden" aria-label="2 대 2 팀 선택"><div class="team-picker-board"><section class="team-picker-column a"><div class="team-picker-heading"><span>파랑팀</span><span id="teamACount">0 / 2</span></div><div id="teamASlots" class="team-picker-slots"></div></section><section class="team-picker-column b"><div class="team-picker-heading"><span>빨강팀</span><span id="teamBCount">0 / 2</span></div><div id="teamBSlots" class="team-picker-slots"></div></section></div><p id="teamPickerGuide" class="team-picker-guide">원하는 팀의 빈 자리를 누르세요.</p></div></div>
     <div class="mp-lobby-actions"><button id="startBtn" class="primary" type="button" disabled>WAITING FOR PLAYERS</button><button id="rulesBtnLobby" class="small" type="button">HOW TO PLAY</button></div>
 
     <div class="music-control">
@@ -411,6 +413,8 @@ window.addEventListener("classsfxready",()=>{
 
 function setGameMode(mode){
  if(myRole!=="host"||started)return;
+ const nextMode=mode==="team"?"team":"individual";
+ if(nextMode!==gameMode)Object.values(players).forEach(player=>{player.fruitTeam=""});
  applyGameMode(mode);
  lobby?.publishLobbyState()
 }
@@ -419,8 +423,9 @@ function applyGameMode(mode){
  $("soloModeBtn").classList.toggle("active",gameMode==="individual");
  $("teamModeBtn").classList.toggle("active",gameMode==="team");
  $("modeHelp").textContent=gameMode==="team"
-    ?"4명 전용입니다. 입장 순서대로 1·3번은 파랑팀, 2·4번은 빨강팀이 됩니다."
+    ?"4명 전용입니다. 각자 원하는 팀의 빈 자리를 선택하세요."
     :"2~4명이 각자 획득한 카드 수로 대결합니다.";
+ renderTeamPicker();
 }
 function normalizedBellTarget(value){
  const target=Number(value);
@@ -445,10 +450,32 @@ function applyBellTarget(target){
  $("bellTargetLabel").textContent=targetText;
  $("ruleTargetText").textContent=targetText;
 }
-function buildTeams(order){
- const teams={};
- order.forEach((id,index)=>teams[id]=index%2===0?"A":"B");
- return teams;
+function buildTeams(order){const teams={};order.forEach(id=>teams[id]=players[id]?.fruitTeam);return teams}
+function fruitTeamMembers(team){return Object.keys(players).filter(id=>players[id]?.fruitTeam===team)}
+function validFruitTeams(roomPlayers=players){const values=Object.values(roomPlayers);return values.filter(player=>player.fruitTeam==="A").length===2&&values.filter(player=>player.fruitTeam==="B").length===2}
+function chooseFruitTeam(team){
+ if(started||gameMode!=="team"||!myId)return;
+ const requested=players[myId]?.fruitTeam===team?"":team;
+ if(myRole==="host")assignFruitTeam(myId,requested);else send({type:"TEAM_SELECT_REQ",team:requested});
+}
+function assignFruitTeam(playerId,team){
+ if(myRole!=="host"||started||gameMode!=="team"||!players[playerId])return;
+ const requested=team==="A"||team==="B"?team:"";
+ if(requested&&players[playerId].fruitTeam!==requested&&fruitTeamMembers(requested).length>=2)return;
+ players[playerId].fruitTeam=requested;lobby?.publishLobbyState();
+}
+function renderFruitTeamSlots(team,elementId){
+ const members=fruitTeamMembers(team).slice(0,2),slots=[];
+ members.forEach(id=>{const mine=id===myId;slots.push(`<button class="team-picker-slot occupied${mine?" mine":""}" type="button" ${mine?`onclick="chooseFruitTeam('${team}')"`:"disabled"}>${cleanName(players[id]?.name)}${mine?"<br><small>나 · 다시 눌러 취소</small>":""}</button>`)});
+ for(let i=members.length;i<2;i++)slots.push(`<button class="team-picker-slot empty" type="button" onclick="chooseFruitTeam('${team}')">빈 자리<br><small>선택하기</small></button>`);
+ $(elementId).innerHTML=slots.join("");
+}
+function renderTeamPicker(){
+ const picker=$("teamPicker"),list=$("lobbyPlayers");if(!picker||!list)return;
+ const teamMode=gameMode==="team"&&!started;picker.classList.toggle("hidden",!teamMode);list.classList.toggle("hidden",teamMode);if(!teamMode)return;
+ const a=fruitTeamMembers("A").length,b=fruitTeamMembers("B").length;$("teamACount").textContent=`${a} / 2`;$("teamBCount").textContent=`${b} / 2`;
+ renderFruitTeamSlots("A","teamASlots");renderFruitTeamSlots("B","teamBSlots");
+ const mine=players[myId]?.fruitTeam;$("teamPickerGuide").textContent=validFruitTeams()?"팀 구성이 완료되었습니다. 방장이 게임을 시작할 수 있습니다.":mine?`${mine==="A"?"파랑":"빨강"}팀을 선택했습니다. 다른 팀의 빈 자리를 누르면 바뀝니다.`:"원하는 팀의 빈 자리를 누르세요.";
 }
 function teamTotal(team){
  return state.order
@@ -457,23 +484,25 @@ function teamTotal(team){
 }
 
 function currentPlayerName(){return getSavedPlayerName()}
-function syncLobbyState(snapshot){myId=snapshot.myId;myRole=snapshot.role;players=snapshot.players;started=snapshot.started}
+function syncLobbyState(snapshot){myId=snapshot.myId;myRole=snapshot.role;players=snapshot.players;started=snapshot.started;renderTeamPicker()}
 function send(payload){return lobby?.send(payload)||false}
 function broadcast(payload){return lobby?.broadcast(payload)||false}
 function handleGame(sender,data){
  if(!data)return;
- if(data.type==="FLIP_REQ"&&myRole==="host")hostFlip(sender)
+ if(data.type==="TEAM_SELECT_REQ"&&myRole==="host")assignFruitTeam(sender,data.team)
+ else if(data.type==="FLIP_REQ"&&myRole==="host")hostFlip(sender)
  else if(data.type==="BELL_REQ"&&myRole==="host")hostBell(sender)
  else if(data.type==="STATE"){state=data.state;players=data.players;renderGame();startClientTimer()}
  else if(data.type==="END"){state=data.state;players=data.players;renderGame();showEnd(data.winners,data.winningTeam)}
 }
-function canStartFruitBell({count,players:roomPlayers}){const namesValid=Object.values(roomPlayers).every(p=>isValidName(p.name));return namesValid&&(gameMode==="team"?count===4:count>=2&&count<=4)}
+function canStartFruitBell({count,players:roomPlayers}){const namesValid=Object.values(roomPlayers).every(p=>isValidName(p.name));return namesValid&&(gameMode==="team"?count===4&&validFruitTeams(roomPlayers):count>=2&&count<=4)}
 function fruitBellLobbyPresentation({count,role,canStart,players:roomPlayers}){
- if(role!=="host")return{canStart:false,startText:"WAITING FOR HOST",guideText:`현재 ${count}명 접속 · ${gameMode==="team"?"2 대 2 팀전":"개인전"}`};
+ if(role!=="host")return{canStart:false,startText:"WAITING FOR HOST",guideText:gameMode==="team"?(validFruitTeams(roomPlayers)?"2 대 2 팀 구성이 완료되었습니다.":`현재 ${count}/4명 · 팀을 선택하세요.`):`현재 ${count}명 접속 · 개인전`};
  const hostValid=isValidName(currentPlayerName()),allNamesValid=Object.values(roomPlayers).every(p=>isValidName(p.name));
  if(!hostValid)return{canStart:false,startText:"한글 이름 입력",guideText:"한글 이름을 2~6자로 입력하세요.",warning:true};
  if(!allNamesValid)return{canStart:false,startText:"이름 입력 대기",guideText:"모든 참가자가 이름을 입력해야 합니다.",warning:true};
  if(gameMode==="team"&&count<4)return{canStart:false,startText:`WAITING FOR PLAYERS · ${count}/4`,guideText:"2 대 2 팀전은 4명이 필요합니다."};
+ if(gameMode==="team"&&!validFruitTeams(roomPlayers))return{canStart:false,startText:"팀 선택을 완료해 주세요",guideText:"파랑팀과 빨강팀에 2명씩 들어가야 합니다."};
  if(gameMode!=="team"&&count<2)return{canStart:false,startText:"WAITING FOR PLAYERS",guideText:"한 명이 더 들어오면 개인전을 시작할 수 있습니다."};
  return{canStart,startText:`START GAME · ${count} PLAYERS`,guideText:gameMode==="team"?"2 대 2 팀전 준비가 완료되었습니다.":"개인전 준비가 완료되었습니다."}
 }
@@ -495,7 +524,7 @@ function createFruitBellStartData(){
  const order=Object.keys(players).slice(0,4),deck=makeDeck(),decks={},faceUp={},faceUpPiles={},scores={},wonCards={};
  order.forEach(id=>{decks[id]=[];faceUp[id]=null;faceUpPiles[id]=[];scores[id]=0;wonCards[id]=[]});
  deck.forEach((c,i)=>decks[order[i%order.length]].push(c));
- state={turn:0,order,scores,decks,faceUp,faceUpPiles,wonCards,penaltyPot:[],locked:false,ended:false,turnDeadline:Date.now()+4000,gameMode,bellTarget,teams:buildTeams(order)};
+ state={turn:0,order,scores,decks,faceUp,faceUpPiles,wonCards,penaltyPot:[],locked:false,ended:false,turnDeadline:Date.now()+4000,gameMode,bellTarget,teams:gameMode==="team"?buildTeams(order):{}};
  return{state,gameMode,bellTarget}
 }
 function startFruitBellGame(data){state=data?.state;if(!state)return;applyGameMode(data.gameMode||state.gameMode);applyBellTarget(data.bellTarget||state.bellTarget);showGame();renderGame();playFruitSfx("start",{gain:.75});startClientTimer();if(myRole==="host")scheduleHostTurnTimer()}
@@ -689,6 +718,10 @@ function endMatch(){
  }
  broadcast({type:"END",state,players,winners,winningTeam});renderGame();showEnd(winners,winningTeam);
 }
+function cardStackMarkup(count){
+ const cards=Math.max(0,Number(count)||0),depth=Math.min(8,Math.ceil(cards/3));
+ return `<span class="card-total">${cards}장<span class="card-stack" style="--stack-depth:${depth}" aria-hidden="true"><i></i></span></span>`;
+}
 function fruitSVG(type){
  if(type==="strawberry")return `<svg class="fruit" viewBox="0 0 100 100"><path d="M50 22C27 12 14 31 21 54c7 25 29 39 29 39s22-14 29-39C86 31 73 12 50 22z" fill="#e74b4b" stroke="#a62424" stroke-width="4"/><path d="M34 22c5-10 12-14 16-14 4 0 11 4 16 14-6-2-11 0-16 4-5-4-10-6-16-4z" fill="#4fa45a"/></svg>`;
  if(type==="banana")return `<svg class="fruit" viewBox="0 0 100 100"><path d="M22 28c10 34 38 53 65 35-21 1-39-13-50-40z" fill="#f5cf48" stroke="#b68d17" stroke-width="5"/></svg>`;
@@ -701,14 +734,14 @@ function renderGame(){
  $("teamScoreboard").classList.toggle("hidden",!teamMode);
  if(teamMode){
    $("teamScoreboard").innerHTML=
-     `<div class="team-score team-a">파랑팀<strong>${teamTotal("A")}장</strong></div>`+
-     `<div class="team-score team-b">빨강팀<strong>${teamTotal("B")}장</strong></div>`;
+     `<div class="team-score team-a">파랑팀<strong>${cardStackMarkup(teamTotal("A"))}</strong></div>`+
+     `<div class="team-score team-b">빨강팀<strong>${cardStackMarkup(teamTotal("B"))}</strong></div>`;
  }
  $("scoreboard").innerHTML=state.order.map(id=>{
    const team=state.teams?.[id];
    const teamClass=teamMode?(team==="A"?"team-a":"team-b"):"";
    const tag=teamMode?`<span class="team-tag ${team==="A"?"a":"b"}">${team==="A"?"파랑":"빨강"}</span>`:"";
-   const personalScore=teamMode?"":` 카드 ${state.scores[id]||0}장`;
+   const personalScore=teamMode?"":cardStackMarkup(state.scores[id]||0);
    return `<div class="score ${id===myId?"me":""} ${teamClass}">${cleanName(players[id]?.name)} ${tag}${personalScore}</div>`;
  }).join("");
  const noticeText=state.notice?.text||"";
