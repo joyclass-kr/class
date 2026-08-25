@@ -510,6 +510,66 @@ const CHAPTER_SEGS = CHAPTERS.map(ch => {
     return segs;
 });
 
+// 읽고 나서 — 책마다 내용이 다르다. 장과 같은 방식으로 재서 나눈다.
+const AFTERWORD = {
+    title: '읽고 나서',
+    emoji: '🎩',
+    art: [],
+    paras: [
+        `이 책의 원래 제목은 『폰틀로이 어린 경』입니다. 경이라는 말은 영국에서 귀족을 부르는 말입니다. 그러니 제목이 이미 이 이야기의 뼈대를 말해 줍니다. 아이 하나가 어느 날 갑자기 귀족이 됩니다.`,
+        `쓴 사람은 프랜시스 호지슨 버넷입니다. 『소공녀』와 『비밀의 화원』을 쓴 사람과 같은 사람입니다. 이 책이 그 셋 가운데 제일 먼저 나왔습니다.`,
+        `버넷은 영국에서 태어나 열여섯 살에 미국으로 건너간 사람입니다. 그러니 이 책에 나오는 두 나라를 다 아는 사람이 썼습니다. 뉴욕 뒷골목도 알고 영국 귀족의 성도 알았습니다.`,
+        `이 책의 세드릭에게는 바탕이 된 아이가 있습니다. 버넷의 둘째 아들 비비언입니다. 어머니에게 스스럼없이 말을 걸고 누구에게나 다정하던 아이였다고 합니다.`,
+        `책은 천팔백팔십육 년에 나왔습니다. 그리고 크게 유행했습니다. 얼마나 유행했느냐 하면, 남자아이들에게 세드릭처럼 벨벳 옷을 입히고 머리를 길게 기르는 것이 한동안 흔한 일이 되었습니다.`,
+        `그 때문에 고생한 아이가 아주 많았습니다. 나중에 어른이 된 사람들이 그 옷 이야기를 원망하듯 회고한 글이 여럿 남아 있습니다. 버넷의 아들 비비언도 평생 그 소리를 들었습니다.`,
+        `원작은 여기 실린 것보다 깁니다. 언쇼 마을 사람들 이야기가 더 자세히 들어 있습니다. 여기서는 세드릭과 할아버지 사이에 무슨 일이 있었는지를 따라가는 줄기만 골라 실었습니다.`,
+        `이제 다시 볼 대목을 짚어 봅시다.`,
+        `첫째, 첫 장의 골목을 다시 읽어 보십시오. 세드릭은 뉴욕의 가난한 골목에서 자랐습니다. 식료품 가게 주인 홉스 씨와 구두닦이 딕이 그 아이의 친구였습니다.`,
+        `그런데 이 책에서 그 골목이 비참하게 그려지지 않습니다. 세드릭은 그 골목을 좋아했습니다. 나중에 성에 가서도 그 사람들을 계속 이야기합니다.`,
+        `둘째, 세드릭이 할아버지에게 하는 말을 세어 보십시오. 백작은 무섭고 사나운 노인입니다. 마을 사람들이 다 미워합니다.`,
+        `그런데 세드릭은 그것을 모릅니다. 그래서 할아버지가 좋은 사람인 줄 압니다. 그 아이가 하는 말을 들어 보면 다 그렇습니다. 할아버지는 인자하시니까요, 할아버지는 도와주실 테니까요.`,
+        `그러면 백작은 그 말을 부정하지 못합니다. 부정하면 그 아이 앞에서 자기가 무너지기 때문입니다. 그래서 결국 그렇게 해 버립니다.`,
+        `그러니 이 이야기에서 백작을 바꾼 것은 설득이 아닙니다. 그 아이가 이미 그렇게 믿고 있었던 것입니다. 사람은 남이 자기를 어떻게 보는지에 따라 달라지기도 합니다.`,
+        `셋째, 지붕이 고쳐지는 대목을 다시 보십시오. 언쇼 마을의 집들은 비가 새고 있었습니다. 백작이 손을 놓고 있었기 때문입니다.`,
+        `세드릭은 그것을 보고 할아버지에게 말합니다. 고쳐 주실 거지요, 하고요. 그리고 지붕이 고쳐집니다. 이 책에서 좋은 일은 다 그런 식으로 일어납니다.`,
+        `넷째, 낯선 여자가 나타나는 대목을 다시 읽어 보십시오. 자기 아들이 진짜 상속자라고 주장하는 사람이 나타납니다. 세드릭은 하루아침에 아무것도 아니게 됩니다.`,
+        `그때 백작이 어떻게 하는지를 보십시오. 그리고 홉스 씨와 딕이 어떻게 하는지도 보십시오. 이 이야기의 매듭은 뉴욕 골목 사람들이 풉니다.`,
+        `인물도 다시 보아야 할 사람이 있습니다.`,
+        `백작을 그냥 심술궂은 노인으로 읽으면 절반만 읽은 것이 됩니다. 그 사람은 아들 셋을 두었는데, 제일 아끼던 막내가 미국 여자와 결혼하겠다고 하자 인연을 끊었습니다.`,
+        `그리고 그 아들이 미국에서 세상을 떠났습니다. 화해할 기회가 없어진 것입니다. 그 사람이 사나워진 데는 그 일이 있습니다. 이 책은 그것을 크게 말하지 않고 몇 줄로 흘립니다.`,
+        `세드릭의 어머니도 다시 볼 만합니다. 백작은 그 사람을 미워해서 성에 들이지 않고 따로 살게 합니다. 그런데 그 사람은 아들에게 할아버지 흉을 한 번도 보지 않습니다.`,
+        `그래서 세드릭이 할아버지를 좋은 사람으로 알고 있었던 것입니다. 그러니 이 이야기를 실제로 움직인 사람은 그 어머니입니다.`,
+        `홉스 씨도 짚어 둘 만합니다. 그 사람은 영국 귀족을 아주 싫어합니다. 미국 사람이 왕과 귀족을 어떻게 보았는지가 그 사람 입으로 나옵니다.`,
+        `그런데 그 사람이 마지막에 영국으로 건너와 눌러앉습니다. 자기가 그렇게 욕하던 나라에 말입니다. 버넷이 그 대목에 웃음을 하나 심어 둔 것입니다.`,
+        `그 시절 사정도 알아 두면 좋습니다. 이 책이 나온 때는 영국의 귀족들이 땅과 마을을 소유하던 시절입니다. 마을 사람들은 그 땅을 빌려 농사를 짓고 삯을 냈습니다.`,
+        `그러니 그 땅 주인이 어떤 사람이냐에 따라 마을 사람 수백 명의 삶이 갈렸습니다. 지붕을 고쳐 주느냐 마느냐가 그 사람 한마디에 달려 있었습니다.`,
+        `그리고 그 무렵 미국에는 영국에서 건너간 사람이 아주 많았습니다. 반대로 미국에서 돈을 번 사람이 영국 귀족과 사돈을 맺는 일도 흔했습니다. 두 나라 사이가 그렇게 얽혀 있던 때입니다.`,
+        `이 책이 붙들고 있는 물음은 두 가지입니다.`,
+        `하나는 사람을 무엇이 바꾸느냐는 것입니다. 이 책은 아이 하나가 어른을 바꾼다고 말합니다. 그것도 나무라거나 가르쳐서가 아니라, 그 사람을 이미 좋은 사람으로 여겨서 바꿉니다.`,
+        `다만 이 대목은 조심해서 읽어야 합니다. 세상 모든 나쁜 사람이 그렇게 바뀌지는 않습니다. 이 책은 좋은 쪽을 그려 보인 이야기이지 세상이 원래 그렇다는 이야기가 아닙니다.`,
+        `다른 하나는 신분이 사람을 정하느냐는 것입니다. 세드릭은 귀족이 되고도 골목 친구들을 그대로 대합니다. 백작이 그것을 못마땅해하는 대목이 여러 번 나옵니다.`,
+        `그런데 이 책은 세드릭 쪽 손을 들어 줍니다. 신분이 달라져도 사람을 대하는 법은 달라지지 않아도 된다는 것입니다.`,
+        `책이 나오자 아주 크게 팔렸습니다. 버넷은 이 책으로 큰돈을 벌었습니다. 그리고 연극으로도 만들었는데, 그 무렵 여자가 연극 대본을 써서 무대에 올리는 일은 드물었습니다.`,
+        `이 책 덕분에 버넷은 작가의 권리를 두고 소송을 걸어 이기기도 했습니다. 남이 허락 없이 이 이야기를 연극으로 만들어 올렸기 때문입니다. 그 판결이 그 뒤 작가들의 권리를 지키는 데 보탬이 되었습니다.`,
+        `언젠가 이 책을 다시 읽게 되거든, 이번에는 백작만 따라가며 읽어 보십시오. 그 사람이 나오는 대목마다 무엇이 조금씩 달라지는지를 세어 보면 재미있습니다.`,
+        `처음에는 아이를 시험하듯 대하고, 다음에는 아이 말을 들어 주고, 나중에는 아이가 볼까 봐 자기 행동을 고칩니다.`,
+        `마지막으로 생각해 볼 것을 남겨 둡니다. 답은 적어 두지 않겠습니다.`,
+        `세드릭의 어머니가 할아버지 흉을 보지 않은 것은 잘한 일이었을까요? 그 사람은 미움받은 쪽이었습니다. 미워할 만한 사람을 아이에게 미워하지 않게 하는 것이 옳은 일일까요?`,
+        `백작이 달라진 것은 진짜였을까요? 아이가 보고 있어서 그런 것이라면, 아이가 없을 때는 어떨까요?`,
+        `그리고 세드릭이 상속자가 아니었다면 이 이야기는 어떻게 끝나야 했을까요. 이 물음은 어른이 되어 다시 읽어도 답하기가 쉽지 않습니다.`
+    ]
+};
+
+const AFTER_SEGS = (() => {
+    const segs = [];
+    AFTERWORD.paras.forEach((html, paraIdx) => {
+        splitSegments(html).forEach((piece, k) => {
+            segs.push({ paraIdx, html: piece, start: k === 0 });
+        });
+    });
+    return segs;
+})();
+
 // 조각 묶음을 문단 단위로 다시 묶어 화면에 그릴 모양으로 만든다.
 // 앞 쪽에서 이어진 문단은 첫 줄을 들여쓰지 않는다.
 function runHtml(segs, a, b) {
@@ -791,16 +851,100 @@ function quizPage(part) {
         </div>`;
 }
 
-function endPage() {
+/* 읽고 나서 — 장과 같은 방식으로 쪽을 나눈다. 그림은 오른쪽 위에 얹힌다. */
+const AFTER_FOOT = `<p class="after-home"><a class="home-btn" href="../../../../../">학습 허브로 돌아가기</a></p>`;
+
+function paginateAfterword() {
+    const segs = AFTER_SEGS;
+    const arts = AFTERWORD.art || [];
+    const { usable, headHeight, artHeight } = PROBE;
+    const headHtml = `<h2>${AFTERWORD.title}</h2>`;
+    const totalH = PROBE.measure(runHtml(segs, 0, segs.length));
+
+    const underArt = Math.max(60, usable - artHeight);
+
+    // 맨 끝에는 학습 허브로 가는 단추가 붙는다. 그 높이를 미리 빼 두지 않으면
+    // 마지막 쪽만 넘친다.
+    const footH = PROBE.measure(AFTER_FOOT);
+
+    const capsOf = slots => {
+        const caps = [];
+        slots.forEach(kind => { caps.push(usable); caps.push(kind === 'img' ? underArt : usable); });
+        caps[caps.length - 1] = Math.max(60, caps[caps.length - 1] - footH);
+        return caps;
+    };
+
+    const minSpreads = Math.max(arts.length, 1);
+    const maxSpreads = Math.max(minSpreads, Math.floor(segs.length / 2));
+    let spreadCount = minSpreads;
+    while (spreadCount < maxSpreads) {
+        const caps = capsOf(slotPlan(arts.length, spreadCount - arts.length));
+        if (caps.reduce((a, b) => a + b, 0) >= totalH + headHeight) break;
+        spreadCount++;
+    }
+
+    let slots = slotPlan(arts.length, Math.max(0, spreadCount - arts.length));
+    let caps = capsOf(slots);
+    let ranges = fillPages(segs, caps, headHtml);
+    for (let guard = 0; guard < 8; guard++) {
+        const over = ranges.some(([a, b], n) =>
+            PROBE.measure((n === 0 ? headHtml : '') + runHtml(segs, a, b)) > caps[n] + 1);
+        if (!over || spreadCount >= maxSpreads) break;
+        spreadCount++;
+        slots = slotPlan(arts.length, Math.max(0, spreadCount - arts.length));
+        caps = capsOf(slots);
+        ranges = fillPages(segs, caps, headHtml);
+    }
+
+    const spreads = [];
+    let pageIdx = 0;
+    let artIdx = 0;
+    slots.forEach((kind, s) => {
+        const left = ranges[pageIdx++];
+        const right = ranges[pageIdx++];
+        spreads.push({
+            kind: 'after', first: s === 0, last: s === slots.length - 1,
+            art: kind === 'img' ? arts[artIdx++] : null, left, right
+        });
+    });
+    return spreads;
+}
+
+function afterSpreadPage(spread) {
+    const segs = AFTER_SEGS;
+    const head = spread.first ? `<h2>${AFTERWORD.title}</h2>` : '';
+    // 학습 허브로 돌아가는 길은 맨 끝에 한 번만 둔다.
+    const foot = spread.last ? AFTER_FOOT : '';
+
+    if (spread.art) {
+        return `
+            <div class="page page-story page-after">
+                <div class="story-page-left">
+                    ${head}
+                    ${runHtml(segs, spread.left[0], spread.left[1])}
+                </div>
+                <div class="story-page-right story-page-right-image">
+                    <div class="story-art-top">${artFrame(spread.art, AFTERWORD.emoji)}</div>
+                    ${runHtml(segs, spread.right[0], spread.right[1])}
+                    ${foot}
+                </div>
+            </div>`;
+    }
+
     return `
-        <div class="page page-end">
-            ${artFrame('end.png', '🕯️')}
-            <h2>소공자를 다 읽었습니다</h2>
-            <a class="home-btn" href="../../../../../">학습 허브로 돌아가기</a>
+        <div class="page page-story page-after">
+            <div class="story-page-left">
+                ${head}
+                ${runHtml(segs, spread.left[0], spread.left[1])}
+            </div>
+            <div class="story-page-right story-page-right-text">
+                ${runHtml(segs, spread.right[0], spread.right[1])}
+                ${foot}
+            </div>
         </div>`;
 }
 
-const TWO_PAGE_KINDS = new Set(['chapter', 'toc', 'cover']);
+const TWO_PAGE_KINDS = new Set(['chapter', 'toc', 'cover', 'after']);
 
 let PAGES = [];
 let FOLIOS = [];
@@ -812,7 +956,7 @@ function buildPages() {
         ...TOC_GROUPS.map((_, i) => ({ kind: 'toc', part: i })),
         ...CHAPTERS.flatMap(paginateChapter),
         ...QUIZ_GROUPS.map((_, i) => ({ kind: 'quiz', part: i })),
-        { kind: 'end' }
+        ...paginateAfterword()
     ];
     PROBE.close();   // 쪽을 다 나눴으니 재는 데 쓰던 숨은 쪽은 치운다
 
@@ -833,7 +977,7 @@ function renderPage(page) {
         case 'toc': return tocPage(page.part);
         case 'chapter': return chapterSpreadPage(page);
         case 'quiz': return quizPage(page.part);
-        case 'end': return endPage();
+        case 'after': return afterSpreadPage(page);
         default: return '';
     }
 }
