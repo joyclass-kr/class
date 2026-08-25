@@ -6,7 +6,7 @@ All files in `sfx/` are derived from CC0 assets and optimized as mono 48 kHz Ogg
 
 - Source: https://kenney.nl/assets/interface-sounds
 - License: CC0 1.0
-- Used originals: `toggle_004.ogg`, `select_003.ogg`, `back_003.ogg`, `error_003.ogg`, `error_005.ogg`, `tick_004.ogg`, `question_002.ogg`
+- Used originals: `select_003.ogg`, `back_003.ogg`, `error_003.ogg`, `error_005.ogg`, `tick_004.ogg`, `question_002.ogg`
 
 ## Kenney Casino Audio
 

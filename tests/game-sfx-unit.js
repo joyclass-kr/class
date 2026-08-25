@@ -19,7 +19,7 @@ for (const filePath of [sfxPath, musicControlPath, musicControlCssPath, hubPath,
 const sfxSource = fs.readFileSync(sfxPath, "utf8");
 new vm.Script(sfxSource, { filename: sfxPath });
 const sharedSoundNames = [
-    "click", "select", "back", "bell", "card", "stone", "success",
+    "select", "back", "bell", "card", "stone", "success",
     "error", "tick", "turn", "timeout", "reward", "victory", "defeat",
 ];
 for (const soundName of sharedSoundNames) {
@@ -33,6 +33,7 @@ for (const soundName of ["click", "bell", "card", "stone", "success", "error", "
 assert.ok(sfxSource.includes("const soundUrls"), "Shared effects should resolve OGG asset URLs.");
 assert.ok(sfxSource.includes("template.cloneNode()"), "Concurrent effects should use independent audio elements.");
 assert.ok(sfxSource.includes("playSynth(soundName)"), "File playback failures should retain synthesized fallbacks.");
+assert.ok(sfxSource.includes('soundName === "click"'), "The established low-latency synthesized click should remain in use.");
 assert.ok(sfxSource.includes('latencyHint: "interactive"'), "Sound effects should request an interactive low-latency audio context.");
 assert.ok(sfxSource.includes('document.addEventListener("pointerdown"'), "Pointer feedback should begin on pointerdown.");
 assert.ok(sfxSource.includes('DEFAULT_VOLUME = 0.65;'), "Default SFX volume should be set to 65%.");
@@ -77,4 +78,4 @@ assert.ok(fruitBell.includes('state.sfxCue=makeSfxCue("flip"'), "Card sounds sho
 assert.ok(!fruitBell.includes("data:audio/wav;base64"), "Fruit Bell should not embed a large WAV data URL.");
 assert.ok(!fruitBell.includes("createOscillator"), "Fruit Bell should not synthesize its dedicated effects with oscillators.");
 
-console.log(`game-sfx-unit: ${gameLinks.length} local games load file-backed shared effects with synthesized fallbacks`);
+console.log(`game-sfx-unit: ${gameLinks.length} local games keep the established click and load file-backed semantic effects`);

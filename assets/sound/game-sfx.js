@@ -17,7 +17,8 @@
         reward: "success", victory: "success", defeat: "error"
     });
     const scriptUrl = document.currentScript?.src || new URL("/assets/sound/game-sfx.js", window.location.href).href;
-    const soundUrls = Object.fromEntries([...SOUND_NAMES].map(name => [
+    const FILE_SOUND_NAMES = new Set([...SOUND_NAMES].filter(name => name !== "click"));
+    const soundUrls = Object.fromEntries([...FILE_SOUND_NAMES].map(name => [
         name,
         new URL(`sfx/${name}.ogg`, scriptUrl).href
     ]));
@@ -254,6 +255,7 @@
     function play(name = "click") {
         const soundName = SOUND_NAMES.has(name) ? name : "click";
         if (muted) return false;
+        if (soundName === "click") return playSynth(soundName);
         const template = getFileTemplate(soundName);
         if (!template) return playSynth(soundName);
         const audio = template.cloneNode();
@@ -335,7 +337,7 @@
         isMuted: () => muted,
         isSupported: () => typeof Audio !== "undefined" || Boolean(AudioContextClass)
     };
-    const preloadFiles = () => SOUND_NAMES.forEach(getFileTemplate);
+    const preloadFiles = () => FILE_SOUND_NAMES.forEach(getFileTemplate);
     if (document.readyState === "complete") preloadFiles();
     else window.addEventListener("load", preloadFiles, { once: true });
     window.dispatchEvent(new CustomEvent("classsfxready"));
