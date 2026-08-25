@@ -34,7 +34,10 @@ const SIZES = ALL
     ? [[1366, 620], [1920, 932], [1080, 730], [1180, 744], [1366, 944], [820, 1104]]
     : [[1366, 620], [820, 1104]];
 
-function load(slug) {
+async function load(slug) {
+    // index.html에만 물음표를 붙이면 app.js는 옛것이 그대로 쓰인다. 먼저 새로 받아 둔다.
+    await fetch(slug + '/app.js', { cache: 'reload' });
+    await fetch(slug + '/styles.css', { cache: 'reload' });
     return new Promise((resolve) => {
         let done = false;
         const go = () => { if (!done) { done = true; resolve(); } };
@@ -61,7 +64,7 @@ function measureInside() {
                 const ch = PAGES[i].chapter ? PAGES[i].chapter.title : PAGES[i].kind;
                 const side = el.className.indexOf('right') >= 0 ? '오른쪽'
                     : el.className.indexOf('left') >= 0 ? '왼쪽' : el.className;
-                bad.push(ch + ' · ' + side + ' · ' + over + 'px');
+                bad.push('쪽' + i + ' ' + ch + ' · ' + side + ' · ' + over + 'px · ' + el.textContent.trim().slice(0, 18));
             }
         });
         doc.querySelectorAll('.spread-text-left, .spread-text-right').forEach(el => {
