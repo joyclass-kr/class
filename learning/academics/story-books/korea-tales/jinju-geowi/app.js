@@ -152,7 +152,7 @@ const CHAPTERS = [
                 ]
             },
             {
-                art: "09-untie.png",
+                art: "09-untie.webp",
                 emoji: "🙇",
                 left: [
                     "주인이 맨발로 뛰어나와 밧줄을 풀었어요.",
@@ -169,7 +169,7 @@ const CHAPTERS = [
                 ]
             },
             {
-                art: "10-answer.png",
+                art: "10-answer.webp",
                 emoji: "🕊️",
                 left: [
                     "나그네가 마당의 거위를 가만히 바라보았어요.",
@@ -286,7 +286,7 @@ function quizPage() {
 function endPage() {
     return `
         <div class="page page-end">
-            ${artFrame('end.png', '🌟')}
+            ${artFrame('end.webp', '🌟')}
             <h2>진주를 삼킨 거위 이야기를 다 읽었어요!</h2>
             <a class="home-btn" href="../../../../../">학습 허브로 돌아가기</a>
         </div>`;

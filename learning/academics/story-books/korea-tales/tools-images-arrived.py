@@ -14,6 +14,12 @@
 """
 import io, os, re, struct, subprocess, sys
 
+# 윈도 콘솔이 cp949라 줄표(—) 같은 글자에서 죽는다. 나가는 글을 utf-8로 돌려 둔다.
+try:
+    sys.stdout.reconfigure(encoding='utf-8', errors='replace')
+except Exception:
+    pass
+
 BOOKS = os.path.dirname(os.path.abspath(__file__))
 FFMPEG = (r'C:\Users\A\AppData\Local\Microsoft\WinGet\Packages'
           r'\Gyan.FFmpeg.Shared_Microsoft.Winget.Source_8wekyb3d8bbwe'

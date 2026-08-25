@@ -4,7 +4,7 @@ const CHAPTERS = [
         title: "1장 · 세상에서 가장 센 사위",
         beats: [
             {
-                art: "01-family.png",
+                art: "01-family.webp",
                 emoji: "🐭",
                 left: [
                     "옛날 어느 부잣집 곳간 밑에 쥐 부부가 살았습니다. 곳간에는 쌀이 그득해서 먹을 걱정이 없었지요. 부부에게는 눈이 초롱초롱한 딸이 하나 있었습니다.",
@@ -20,7 +20,7 @@ const CHAPTERS = [
                 ]
             },
             {
-                art: "02-decide.png",
+                art: "02-decide.webp",
                 emoji: "💭",
                 left: [
                     "딸이 시집갈 나이가 되자 부부는 큰 고민에 빠졌습니다. 이 마을 저 마을에서 중매가 들어왔지만 하나도 마음에 차지 않았거든요.",
@@ -38,7 +38,7 @@ const CHAPTERS = [
                 ]
             },
             {
-                art: "03-sun.png",
+                art: "03-sun.webp",
                 emoji: "☀️",
                 left: [
                     "부부가 가장 먼저 찾아간 것은 해였습니다. 아무리 생각해도 온 세상을 환하게 비추는 해보다 센 이는 없을 것 같았거든요.",
@@ -55,7 +55,7 @@ const CHAPTERS = [
                 ]
             },
             {
-                art: "04-sunanswer.png",
+                art: "04-sunanswer.webp",
                 emoji: "☁️",
                 left: [
                     "\"구름일세.\"",
@@ -77,7 +77,7 @@ const CHAPTERS = [
         title: "2장 · 묻고 또 묻고",
         beats: [
             {
-                art: "05-cloud.png",
+                art: "05-cloud.webp",
                 emoji: "☁️",
                 left: [
                     "부부는 더 높은 산에 올라 구름을 만났습니다. 숨이 턱까지 차오르고 발바닥은 부르텄지요. 그래도 딸 생각을 하니 저절로 힘이 났어요.",
@@ -93,7 +93,7 @@ const CHAPTERS = [
                 ]
             },
             {
-                art: "06-wind.png",
+                art: "06-wind.webp",
                 emoji: "🌬️",
                 left: [
                     "부부는 너른 들판으로 내려가 바람을 불렀습니다. 부르기가 무섭게 억새가 눕도록 바람이 몰려왔지요. 쥐 부부는 날아가지 않으려고 풀뿌리를 꽉 붙잡았어요.",
@@ -109,7 +109,7 @@ const CHAPTERS = [
                 ]
             },
             {
-                art: "07-windanswer.png",
+                art: "07-windanswer.webp",
                 emoji: "🗿",
                 left: [
                     "\"저 고갯마루의 돌부처라네.\"",
@@ -126,7 +126,7 @@ const CHAPTERS = [
                 ]
             },
             {
-                art: "08-buddha.png",
+                art: "08-buddha.webp",
                 emoji: "🙏",
                 left: [
                     "고갯마루에는 커다란 돌부처가 우뚝 서 있었습니다. 올려다보니 목이 다 아플 만큼 높았지요.",
@@ -148,7 +148,7 @@ const CHAPTERS = [
         title: "3장 · 제자리로 돌아온 답",
         beats: [
             {
-                art: "09-answer.png",
+                art: "09-answer.webp",
                 emoji: "😲",
                 left: [
                     "\"대체 그게 무엇입니까?\"",
@@ -163,7 +163,7 @@ const CHAPTERS = [
                 ]
             },
             {
-                art: "10-explain.png",
+                art: "10-explain.webp",
                 emoji: "🕳️",
                 left: [
                     "\"쥐가 내 발밑을 파고들면 나는 그대로 쓰러지고 만다네.\"",
@@ -178,7 +178,7 @@ const CHAPTERS = [
                 ]
             },
             {
-                art: "11-realize.png",
+                art: "11-realize.webp",
                 emoji: "💡",
                 left: [
                     "집으로 돌아오는 길이었습니다. 해가 뉘엿뉘엿 지고 산 그림자가 길게 늘어져 있었지요. 부부는 한참을 말없이 걸었어요.",
@@ -194,7 +194,7 @@ const CHAPTERS = [
                 ]
             },
             {
-                art: "12-wedding.png",
+                art: "12-wedding.webp",
                 emoji: "🎊",
                 left: [
                     "며칠 뒤, 곳간 밑에서 조촐한 혼례가 열렸습니다. 신랑은 이웃집 총각 쥐였어요. 부지런하고 마음씨 곧기로 소문난 총각이었지요.",
@@ -243,7 +243,7 @@ function coverPage() {
     return `
         <div class="page page-cover">
             <div class="story-page-left story-page-left-full">
-                ${artFrame('cover.png', '🐭')}
+                ${artFrame('cover.webp', '🐭')}
             </div>
             <div class="story-page-right">
                 <h1>쥐의 사위 고르기</h1>
@@ -309,7 +309,7 @@ function quizPage() {
 function endPage() {
     return `
         <div class="page page-end">
-            ${artFrame('end.png', '🌟')}
+            ${artFrame('end.webp', '🌟')}
             <h2>쥐의 사위 고르기 이야기를 다 읽었어요!</h2>
             <a class="home-btn" href="../../../../../">학습 허브로 돌아가기</a>
         </div>`;

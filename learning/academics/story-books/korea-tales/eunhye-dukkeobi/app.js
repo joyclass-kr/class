@@ -4,7 +4,7 @@ const CHAPTERS = [
         title: "1장 · 부뚜막의 손님",
         beats: [
             {
-                art: "01-girl.png",
+                art: "01-girl.webp",
                 emoji: "🍚",
                 left: [
                     "옛날 어느 마을에 가난한 소녀가 살았습니다. 부모를 일찍 여의고 남의 집 부엌일을 하며 지냈지요.",
@@ -20,7 +20,7 @@ const CHAPTERS = [
                 ]
             },
             {
-                art: "02-toad.png",
+                art: "02-toad.webp",
                 emoji: "🐸",
                 left: [
                     "어느 날 저녁이었습니다. 부뚜막 구석에서 무언가 꿈틀했어요.",
@@ -38,7 +38,7 @@ const CHAPTERS = [
                 ]
             },
             {
-                art: "03-share.png",
+                art: "03-share.webp",
                 emoji: "🤲",
                 left: [
                     "소녀는 자기 밥그릇에서 밥알을 조금 덜어 부뚜막에 놓아 주었어요. 그러잖아도 모자란 밥이었지요.",
@@ -55,7 +55,7 @@ const CHAPTERS = [
                 ]
             },
             {
-                art: "04-grow.png",
+                art: "04-grow.webp",
                 emoji: "📏",
                 left: [
                     "달이 가고 해가 갔습니다. 두꺼비는 밥을 먹을수록 무럭무럭 자랐어요.",
@@ -78,7 +78,7 @@ const CHAPTERS = [
         title: "2장 · 사당에서의 하룻밤",
         beats: [
             {
-                art: "05-shrine.png",
+                art: "05-shrine.webp",
                 emoji: "⛩️",
                 left: [
                     "그 마을에는 오랜 근심이 하나 있었어요. 뒷산 사당에 커다란 지네가 산다는 것이었지요.",
@@ -94,7 +94,7 @@ const CHAPTERS = [
                 ]
             },
             {
-                art: "06-chosen.png",
+                art: "06-chosen.webp",
                 emoji: "😰",
                 left: [
                     "그해에 뽑힌 사람은 바로 소녀였습니다. 부모도 없고 편들어 줄 사람도 없었으니까요.",
@@ -111,7 +111,7 @@ const CHAPTERS = [
                 ]
             },
             {
-                art: "07-hidden.png",
+                art: "07-hidden.webp",
                 emoji: "🫥",
                 left: [
                     "낡은 사당 안은 어둡고 조용했습니다. 문틈으로 바람이 휘휘 들어왔지요.",
@@ -128,7 +128,7 @@ const CHAPTERS = [
                 ]
             },
             {
-                art: "08-centipede.png",
+                art: "08-centipede.webp",
                 emoji: "😱",
                 left: [
                     "한밤중이었습니다.",
@@ -150,7 +150,7 @@ const CHAPTERS = [
         title: "3장 · 두 빛이 맞부딪히다",
         beats: [
             {
-                art: "09-glow.png",
+                art: "09-glow.webp",
                 emoji: "✨",
                 left: [
                     "그때 치마폭이 들썩하더니 두꺼비가 훌쩍 뛰어나왔어요. 그러고는 소녀 앞을 딱 가로막고 섰지요.",
@@ -166,7 +166,7 @@ const CHAPTERS = [
                 ]
             },
             {
-                art: "10-retreat.png",
+                art: "10-retreat.webp",
                 emoji: "🌀",
                 left: [
                     "얼마나 지났을까요. 노란빛이 한 뼘, 또 한 뼘 밀고 올라갔습니다.",
@@ -182,7 +182,7 @@ const CHAPTERS = [
                 ]
             },
             {
-                art: "11-morning.png",
+                art: "11-morning.webp",
                 emoji: "🌅",
                 left: [
                     "날이 밝자 마을 사람들이 조심조심 사당으로 올라왔어요. 발소리를 죽이며 문 앞까지 다가갔지요.",
@@ -200,7 +200,7 @@ const CHAPTERS = [
                 ]
             },
             {
-                art: "12-recover.png",
+                art: "12-recover.webp",
                 emoji: "🌿",
                 left: [
                     "소녀는 두꺼비를 집으로 데려가 정성껏 돌보았어요. 밤새 물수건을 갈아 주고 밥알을 입에 대 주었지요.",
@@ -251,7 +251,7 @@ function coverPage() {
     return `
         <div class="page page-cover">
             <div class="story-page-left story-page-left-full">
-                ${artFrame('cover.png', '🐸')}
+                ${artFrame('cover.webp', '🐸')}
             </div>
             <div class="story-page-right">
                 <h1>은혜 갚은 두꺼비</h1>
@@ -317,7 +317,7 @@ function quizPage() {
 function endPage() {
     return `
         <div class="page page-end">
-            ${artFrame('end.png', '🌟')}
+            ${artFrame('end.webp', '🌟')}
             <h2>은혜 갚은 두꺼비 이야기를 다 읽었어요!</h2>
             <a class="home-btn" href="../../../../../">학습 허브로 돌아가기</a>
         </div>`;

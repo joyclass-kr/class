@@ -4,7 +4,7 @@ const CHAPTERS = [
         title: "1장 · 세 딸을 키운 할머니",
         beats: [
             {
-                art: "01-daughters.png",
+                art: "01-daughters.webp",
                 emoji: "👵",
                 left: [
                     "옛날 어느 산골에 할머니가 딸 셋과 살았습니다. 일찍 혼자가 된 할머니는 밤낮없이 일했어요.",
@@ -19,7 +19,7 @@ const CHAPTERS = [
                 ]
             },
             {
-                art: "02-married.png",
+                art: "02-married.webp",
                 emoji: "🎎",
                 left: [
                     "세월이 흘러 딸들이 하나둘 시집을 갔습니다.",
@@ -36,7 +36,7 @@ const CHAPTERS = [
                 ]
             },
             {
-                art: "03-alone.png",
+                art: "03-alone.webp",
                 emoji: "🏚️",
                 left: [
                     "혼자 남은 할머니는 해가 갈수록 기운이 빠졌습니다. 이제는 가벼운 나물 바구니도 무겁게 느껴졌어요.",
@@ -58,7 +58,7 @@ const CHAPTERS = [
         title: "2장 · 닫힌 문",
         beats: [
             {
-                art: "04-first.png",
+                art: "04-first.webp",
                 emoji: "🚪",
                 left: [
                     "할머니는 먼저 고개를 넘어 첫째 딸네 대문을 두드렸습니다. 손이 떨려 잘 두드려지지도 않았어요.",
@@ -74,7 +74,7 @@ const CHAPTERS = [
                 ]
             },
             {
-                art: "05-second.png",
+                art: "05-second.webp",
                 emoji: "🌊",
                 left: [
                     "할머니는 나룻배를 얻어 타고 강을 건너 둘째 딸네로 갔습니다. 뱃삯이 없어 사공에게 나물을 대신 주었지요.",
@@ -90,7 +90,7 @@ const CHAPTERS = [
                 ]
             },
             {
-                art: "06-hill.png",
+                art: "06-hill.webp",
                 emoji: "⛰️",
                 left: [
                     "해가 기울기 시작했습니다. 산그늘이 길게 내려앉았어요.",
@@ -112,7 +112,7 @@ const CHAPTERS = [
         title: "3장 · 언덕에 핀 꽃",
         beats: [
             {
-                art: "07-rest.png",
+                art: "07-rest.webp",
                 emoji: "🌾",
                 left: [
                     "언덕 중턱에서 할머니는 그만 주저앉고 말았습니다. 숨이 가빠 더는 한 걸음도 걸을 수가 없었어요.",
@@ -128,7 +128,7 @@ const CHAPTERS = [
                 ]
             },
             {
-                art: "08-search.png",
+                art: "08-search.webp",
                 emoji: "🏃",
                 left: [
                     "그 무렵 막내는 집 앞을 서성이고 있었어요. 아침부터 마음이 이상하게 어지러웠거든요.",
@@ -144,7 +144,7 @@ const CHAPTERS = [
                 ]
             },
             {
-                art: "09-found.png",
+                art: "09-found.webp",
                 emoji: "🤲",
                 left: [
                     "언덕 중턱에서 막내는 마침내 할머니를 찾아냈습니다. 지팡이가 옆에 툭 떨어져 있었어요.",
@@ -160,7 +160,7 @@ const CHAPTERS = [
                 ]
             },
             {
-                art: "10-flower.png",
+                art: "10-flower.webp",
                 emoji: "🌸",
                 left: [
                     "그 뒤로 할머니는 막내네 아랫목에서 여러 해를 더 살았습니다. 막내는 어머니가 좋아하는 나물을 철마다 무쳐 드렸지요.",
@@ -210,7 +210,7 @@ function coverPage() {
     return `
         <div class="page page-cover">
             <div class="story-page-left story-page-left-full">
-                ${artFrame('cover.png', '🌸')}
+                ${artFrame('cover.webp', '🌸')}
             </div>
             <div class="story-page-right">
                 <h1>할미꽃</h1>
@@ -276,7 +276,7 @@ function quizPage() {
 function endPage() {
     return `
         <div class="page page-end">
-            ${artFrame('end.png', '🌟')}
+            ${artFrame('end.webp', '🌟')}
             <h2>할미꽃 이야기를 다 읽었어요!</h2>
             <a class="home-btn" href="../../../../../">학습 허브로 돌아가기</a>
         </div>`;

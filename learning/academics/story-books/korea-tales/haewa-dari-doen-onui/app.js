@@ -4,7 +4,7 @@ const CHAPTERS = [
         title: "1장 · 떡 하나 주면 안 잡아먹지",
         beats: [
             {
-                art: "01-family.png",
+                art: "01-family.webp",
                 emoji: "🏠",
                 left: [
                     "옛날 깊은 산 밑에 오누이가 어머니와 함께 살았습니다. 아버지는 일찍 여의고 셋이서 오순도순 지냈지요.",
@@ -21,7 +21,7 @@ const CHAPTERS = [
                 ]
             },
             {
-                art: "02-tiger.png",
+                art: "02-tiger.webp",
                 emoji: "🐯",
                 left: [
                     "어머니는 하루 종일 일하고 품삯으로 받은 떡을 광주리에 이고 돌아왔어요. 집에서 기다릴 아이들 생각에 걸음이 빨라졌지요.",
@@ -38,7 +38,7 @@ const CHAPTERS = [
                 ]
             },
             {
-                art: "03-pass.png",
+                art: "03-pass.webp",
                 emoji: "🍡",
                 left: [
                     "어머니는 얼른 떡 하나를 던져 주고 달아났어요. 뒤도 돌아보지 않고 고개를 넘었지요.",
@@ -55,7 +55,7 @@ const CHAPTERS = [
                 ]
             },
             {
-                art: "04-empty.png",
+                art: "04-empty.webp",
                 emoji: "🌫️",
                 left: [
                     "마지막 고개에 이르자 광주리가 텅 비었습니다. 어머니는 광주리를 뒤집어 보이며 사정했지요.",
@@ -80,7 +80,7 @@ const CHAPTERS = [
         title: "2장 · 어머니 목소리",
         beats: [
             {
-                art: "05-knock.png",
+                art: "05-knock.webp",
                 emoji: "🚪",
                 left: [
                     "그때 밖에서 문 두드리는 소리가 났습니다.",
@@ -98,7 +98,7 @@ const CHAPTERS = [
                 ]
             },
             {
-                art: "06-hand.png",
+                art: "06-hand.webp",
                 emoji: "🐾",
                 left: [
                     "\"고개를 넘느라 목이 쉬었단다. 어서 열어라.\"",
@@ -116,7 +116,7 @@ const CHAPTERS = [
                 ]
             },
             {
-                art: "07-escape.png",
+                art: "07-escape.webp",
                 emoji: "🏃",
                 left: [
                     "\"바, 밥부터 지을게요! 조금만 기다리세요!\"",
@@ -135,7 +135,7 @@ const CHAPTERS = [
                 ]
             },
             {
-                art: "08-well.png",
+                art: "08-well.webp",
                 emoji: "💧",
                 left: [
                     "한참 뒤 호랑이가 문을 부수고 들어왔어요. 그런데 방은 텅 비어 있었지요.",
@@ -159,7 +159,7 @@ const CHAPTERS = [
         title: "3장 · 하늘에서 내려온 동아줄",
         beats: [
             {
-                art: "09-laugh.png",
+                art: "09-laugh.webp",
                 emoji: "😬",
                 left: [
                     "호랑이가 바가지로 우물물을 푸기 시작했어요. 한 바가지, 두 바가지.",
@@ -176,7 +176,7 @@ const CHAPTERS = [
                 ]
             },
             {
-                art: "10-climb.png",
+                art: "10-climb.webp",
                 emoji: "🪓",
                 left: [
                     "오빠가 얼른 둘러댔어요.",
@@ -194,7 +194,7 @@ const CHAPTERS = [
                 ]
             },
             {
-                art: "11-rope.png",
+                art: "11-rope.webp",
                 emoji: "🪢",
                 left: [
                     "호랑이가 도끼를 들고 나무를 쿵쿵 찍으며 올라왔어요. 한 발 한 발 가까워졌지요.",
@@ -262,7 +262,7 @@ function coverPage() {
     return `
         <div class="page page-cover">
             <div class="story-page-left story-page-left-full">
-                ${artFrame('cover.png', '🌙')}
+                ${artFrame('cover.webp', '🌙')}
             </div>
             <div class="story-page-right">
                 <h1>해와 달이 된 오누이</h1>

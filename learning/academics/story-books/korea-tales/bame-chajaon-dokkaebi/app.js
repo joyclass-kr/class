@@ -4,7 +4,7 @@ const CHAPTERS = [
         title: "1장 · 개울가의 사내",
         beats: [
             {
-                art: "01-nightroad.png",
+                art: "01-nightroad.webp",
                 emoji: "🌙",
                 left: [
                     "김 서방이 밤늦게 집으로 돌아가는 길이었습니다. 주막에서 한잔 걸친 터라 걸음이 어찌나 흥겨운지 몰랐지요. 어깨까지 들썩였답니다.",
@@ -22,7 +22,7 @@ const CHAPTERS = [
                 ]
             },
             {
-                art: "02-challenge.png",
+                art: "02-challenge.webp",
                 emoji: "👹",
                 left: [
                     "한 발짝 다가가 본 김 서방은 그만 걸음을 멈췄습니다. 사내는 키가 김 서방의 두 배는 되어 보였거든요.",
@@ -39,7 +39,7 @@ const CHAPTERS = [
                 ]
             },
             {
-                art: "03-grip.png",
+                art: "03-grip.webp",
                 emoji: "💪",
                 left: [
                     "\"싫다면 밤새 이 다리를 못 지나간다.\"",
@@ -61,7 +61,7 @@ const CHAPTERS = [
         title: "2장 · 왼다리를 걸어라",
         beats: [
             {
-                art: "04-wrestle.png",
+                art: "04-wrestle.webp",
                 emoji: "🤼",
                 left: [
                     "밀고, 당기고, 또 밀고.",
@@ -79,7 +79,7 @@ const CHAPTERS = [
                 ]
             },
             {
-                art: "05-remember.png",
+                art: "05-remember.webp",
                 emoji: "💡",
                 left: [
                     "그때였어요. 김 서방의 머릿속에 어릴 적 할아버지에게 들은 말이 번쩍 떠올랐습니다.",
@@ -94,7 +94,7 @@ const CHAPTERS = [
                 ]
             },
             {
-                art: "06-throw.png",
+                art: "06-throw.webp",
                 emoji: "💥",
                 left: [
                     "\"이얍!\"",
@@ -116,7 +116,7 @@ const CHAPTERS = [
         title: "3장 · 아침에 남은 것",
         beats: [
             {
-                art: "07-tied.png",
+                art: "07-tied.webp",
                 emoji: "🪢",
                 left: [
                     "김 서방은 도깨비를 개울가 버드나무에 꽁꽁 묶었습니다. 몇 겹으로, 아주 단단히 감았지요. 매듭까지 두 번씩 야무지게 지었어요.",
@@ -130,7 +130,7 @@ const CHAPTERS = [
                 ]
             },
             {
-                art: "08-boast.png",
+                art: "08-boast.webp",
                 emoji: "😤",
                 left: [
                     "이튿날 아침이었어요. 김 서방은 마을 한복판에 서서 목청을 한껏 높였습니다.",
@@ -147,7 +147,7 @@ const CHAPTERS = [
                 ]
             },
             {
-                art: "09-broom.png",
+                art: "09-broom.webp",
                 emoji: "🧹",
                 left: [
                     "개울가 버드나무 앞에 다다랐을 때였습니다. 허리띠는 김 서방이 묶어 놓은 그대로 나무를 칭칭 감고 있었어요. 두 번 지은 매듭도 그대로였지요.",
@@ -163,7 +163,7 @@ const CHAPTERS = [
                 ]
             },
             {
-                art: "10-laugh.png",
+                art: "10-laugh.webp",
                 emoji: "😂",
                 left: [
                     "\"으하하하!\"",
@@ -213,7 +213,7 @@ function coverPage() {
     return `
         <div class="page page-cover">
             <div class="story-page-left story-page-left-full">
-                ${artFrame('cover.png', '👹')}
+                ${artFrame('cover.webp', '👹')}
             </div>
             <div class="story-page-right">
                 <h1>밤에 찾아온 도깨비</h1>
@@ -279,7 +279,7 @@ function quizPage() {
 function endPage() {
     return `
         <div class="page page-end">
-            ${artFrame('end.png', '🌟')}
+            ${artFrame('end.webp', '🌟')}
             <h2>밤에 찾아온 도깨비 이야기를 다 읽었어요!</h2>
             <a class="home-btn" href="../../../../../">학습 허브로 돌아가기</a>
         </div>`;

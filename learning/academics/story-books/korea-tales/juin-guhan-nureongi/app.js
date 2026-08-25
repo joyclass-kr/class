@@ -4,7 +4,7 @@ const CHAPTERS = [
         title: "1장 · 장에서 돌아오는 밤",
         beats: [
             {
-                art: "01-pair.png",
+                art: "01-pair.webp",
                 emoji: "🐕",
                 left: [
                     "옛날 오수라는 고을에 김 서방이 살았습니다. 곁에는 늘 누렁이가 붙어 있었지요.",
@@ -21,7 +21,7 @@ const CHAPTERS = [
                 ]
             },
             {
-                art: "02-tavern.png",
+                art: "02-tavern.webp",
                 emoji: "🍶",
                 left: [
                     "그날은 장에 다녀오는 길이었습니다. 주막 앞을 지나다 아는 사람을 만났지요.",
@@ -38,7 +38,7 @@ const CHAPTERS = [
                 ]
             },
             {
-                art: "03-asleep.png",
+                art: "03-asleep.webp",
                 emoji: "😴",
                 left: [
                     "들판을 반쯤 건넜을 때였습니다. 김 서방이 갑자기 걸음을 멈추었어요.",
@@ -61,7 +61,7 @@ const CHAPTERS = [
         title: "2장 · 들불이 번지다",
         beats: [
             {
-                art: "04-fire.png",
+                art: "04-fire.webp",
                 emoji: "🔥",
                 left: [
                     "한밤중이었습니다. 저 멀리 들판 끝에서 붉은 빛이 일렁이기 시작했어요.",
@@ -76,7 +76,7 @@ const CHAPTERS = [
                 ]
             },
             {
-                art: "05-wake.png",
+                art: "05-wake.webp",
                 emoji: "😰",
                 left: [
                     "\"컹! 컹! 컹컹컹!\"",
@@ -94,7 +94,7 @@ const CHAPTERS = [
                 ]
             },
             {
-                art: "06-stream.png",
+                art: "06-stream.webp",
                 emoji: "💧",
                 left: [
                     "누렁이는 몸을 홱 돌려 달리기 시작했습니다. 들판 저쪽 개울로요.",
@@ -117,7 +117,7 @@ const CHAPTERS = [
         title: "3장 · 오수라는 이름",
         beats: [
             {
-                art: "07-roll.png",
+                art: "07-roll.webp",
                 emoji: "🌀",
                 left: [
                     "누렁이는 주인 둘레의 마른 풀밭에 몸을 굴렸어요.",
@@ -135,7 +135,7 @@ const CHAPTERS = [
                 ]
             },
             {
-                art: "08-stop.png",
+                art: "08-stop.webp",
                 emoji: "🛡️",
                 left: [
                     "불길이 마침내 그 자리까지 닿았습니다. 풀을 삼키며 무섭게 달려들었지요.",
@@ -151,7 +151,7 @@ const CHAPTERS = [
                 ]
             },
             {
-                art: "09-dawn.png",
+                art: "09-dawn.webp",
                 emoji: "🌄",
                 left: [
                     "새벽에 눈을 뜬 김 서방은 벌떡 일어났습니다. 들판이 온통 까맣게 타 있었거든요.",
@@ -168,7 +168,7 @@ const CHAPTERS = [
                 ]
             },
             {
-                art: "10-tree.png",
+                art: "10-tree.webp",
                 emoji: "🌳",
                 left: [
                     "김 서방은 누렁이를 들쳐 업고 집으로 내달렸어요. 눈물이 앞을 가려 몇 번이나 넘어졌지요.",
@@ -218,7 +218,7 @@ function coverPage() {
     return `
         <div class="page page-cover">
             <div class="story-page-left story-page-left-full">
-                ${artFrame('cover.png', '🔥')}
+                ${artFrame('cover.webp', '🔥')}
             </div>
             <div class="story-page-right">
                 <h1>주인을 구한 누렁이</h1>
@@ -284,7 +284,7 @@ function quizPage() {
 function endPage() {
     return `
         <div class="page page-end">
-            ${artFrame('end.png', '🌟')}
+            ${artFrame('end.webp', '🌟')}
             <h2>주인을 구한 누렁이 이야기를 다 읽었어요!</h2>
             <a class="home-btn" href="../../../../../">학습 허브로 돌아가기</a>
         </div>`;

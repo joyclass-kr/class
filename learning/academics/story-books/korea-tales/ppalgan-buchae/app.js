@@ -4,7 +4,7 @@ const CHAPTERS = [
         title: "1장 · 산에서 주운 부채",
         beats: [
             {
-                art: "01-nap.png",
+                art: "01-nap.webp",
                 emoji: "😴",
                 left: [
                     "김 첨지는 일하기보다 낮잠 자기를 좋아하는 사람이었습니다. 지게를 지고 산에 올라가서는 나무는 안 하고 그늘부터 찾았지요.",
@@ -20,7 +20,7 @@ const CHAPTERS = [
                 ]
             },
             {
-                art: "02-red.png",
+                art: "02-red.webp",
                 emoji: "🪭",
                 left: [
                     "마침 덥던 참이라 김 첨지는 빨간 부채를 집어 얼굴에 부쳤어요. 바람이 제법 시원했지요.",
@@ -38,7 +38,7 @@ const CHAPTERS = [
                 ]
             },
             {
-                art: "03-blue.png",
+                art: "03-blue.webp",
                 emoji: "😱",
                 left: [
                     "\"으악! 이게 무슨 일이야!\"",
@@ -54,7 +54,7 @@ const CHAPTERS = [
                 ]
             },
             {
-                art: "04-feast.png",
+                art: "04-feast.webp",
                 emoji: "🎊",
                 left: [
                     "마침 마을 부잣집에서 큰 잔치가 열렸어요. 대문 밖까지 고기 냄새가 진동했지요.",
@@ -77,7 +77,7 @@ const CHAPTERS = [
         title: "2장 · 집과 바꾼 부채",
         beats: [
             {
-                art: "05-nose.png",
+                art: "05-nose.webp",
                 emoji: "😲",
                 left: [
                     "영감의 코가 쑥쑥 자라기 시작했습니다.",
@@ -94,7 +94,7 @@ const CHAPTERS = [
                 ]
             },
             {
-                art: "06-cure.png",
+                art: "06-cure.webp",
                 emoji: "🩺",
                 left: [
                     "온 집안이 발칵 뒤집힌 채 사흘이 지났어요. 영감의 코는 여전히 마당까지 뻗어 있었지요.",
@@ -110,7 +110,7 @@ const CHAPTERS = [
                 ]
             },
             {
-                art: "07-trade.png",
+                art: "07-trade.webp",
                 emoji: "🏯",
                 left: [
                     "\"여보게, 그 부채를 나에게 파시오.\"",
@@ -128,7 +128,7 @@ const CHAPTERS = [
                 ]
             },
             {
-                art: "08-moveout.png",
+                art: "08-moveout.webp",
                 emoji: "🧳",
                 left: [
                     "그날로 영감네 식구가 짐을 싸서 집을 나섰습니다.",
@@ -151,7 +151,7 @@ const CHAPTERS = [
         title: "3장 · 웬 지진이냐",
         beats: [
             {
-                art: "09-play.png",
+                art: "09-play.webp",
                 emoji: "🪭",
                 left: [
                     "빈 집 마당에 자리를 깔고 앉은 영감은 신이 났어요. 이제 이 부채로 무엇이든 할 수 있을 것 같았지요.",
@@ -168,7 +168,7 @@ const CHAPTERS = [
                 ]
             },
             {
-                art: "10-sky.png",
+                art: "10-sky.webp",
                 emoji: "☁️",
                 left: [
                     "코가 지붕을 넘고, 나무를 넘고, 마침내 구름까지 뚫고 올라갔어요.",
@@ -185,7 +185,7 @@ const CHAPTERS = [
                 ]
             },
             {
-                art: "11-emperor.png",
+                art: "11-emperor.webp",
                 emoji: "🍚",
                 left: [
                     "그때 옥황상제는 한창 밥을 드시는 중이었습니다. 수라상에 좋아하는 나물이 잔뜩 올라와 있었지요.",
@@ -202,7 +202,7 @@ const CHAPTERS = [
                 ]
             },
             {
-                art: "12-pillar.png",
+                art: "12-pillar.webp",
                 emoji: "😡",
                 left: [
                     "밖으로 나가 보니 구름을 뚫고 웬 벌건 기둥이 하나 불쑥 솟아 있었어요. 끝이 뭉툭한 것이 아무래도 이상했지요.",
@@ -218,7 +218,7 @@ const CHAPTERS = [
                 ]
             },
             {
-                art: "13-tied.png",
+                art: "13-tied.webp",
                 emoji: "🪢",
                 left: [
                     "그 아래 마당에서는 영감이 펄쩍펄쩍 뛰고 있었어요. 코가 조여 오는 통에 눈물이 다 났지요.",
@@ -235,7 +235,7 @@ const CHAPTERS = [
                 ]
             },
             {
-                art: "14-fall.png",
+                art: "14-fall.webp",
                 emoji: "💫",
                 left: [
                     "하늘 신하들이 밧줄을 풀어 주자 영감은 데굴데굴 굴러떨어졌어요.",
@@ -286,7 +286,7 @@ function coverPage() {
     return `
         <div class="page page-cover">
             <div class="story-page-left story-page-left-full">
-                ${artFrame('cover.png', '🪭')}
+                ${artFrame('cover.webp', '🪭')}
             </div>
             <div class="story-page-right">
                 <h1>빨간 부채 파란 부채</h1>
@@ -352,7 +352,7 @@ function quizPage() {
 function endPage() {
     return `
         <div class="page page-end">
-            ${artFrame('end.png', '🌟')}
+            ${artFrame('end.webp', '🌟')}
             <h2>빨간 부채 파란 부채 이야기를 다 읽었어요!</h2>
             <a class="home-btn" href="../../../../../">학습 허브로 돌아가기</a>
         </div>`;

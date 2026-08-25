@@ -4,7 +4,7 @@ const CHAPTERS = [
         title: "1장 · 개울가의 밤",
         beats: [
             {
-                art: "01-poor.png",
+                art: "01-poor.webp",
                 emoji: "🥣",
                 left: [
                     "옛날 어느 마을에 돌쇠라는 사람이 살았습니다. 부지런하기로는 마을에서 첫손에 꼽혔지요.",
@@ -21,7 +21,7 @@ const CHAPTERS = [
                 ]
             },
             {
-                art: "02-fire.png",
+                art: "02-fire.webp",
                 emoji: "🔥",
                 left: [
                     "어느 여름밤이었어요.",
@@ -38,7 +38,7 @@ const CHAPTERS = [
                 ]
             },
             {
-                art: "03-crab.png",
+                art: "03-crab.webp",
                 emoji: "🦀",
                 left: [
                     "그때 개울에서 게 한 마리가 저 혼자 걸어 나왔어요.",
@@ -56,7 +56,7 @@ const CHAPTERS = [
                 ]
             },
             {
-                art: "04-appear.png",
+                art: "04-appear.webp",
                 emoji: "👺",
                 left: [
                     "돌쇠는 바위 뒤에 납작 엎드렸습니다.",
@@ -74,7 +74,7 @@ const CHAPTERS = [
                 ]
             },
             {
-                art: "05-party.png",
+                art: "05-party.webp",
                 emoji: "🎶",
                 left: [
                     "여기저기서 감투가 벗겨지더니 도깨비 여섯이 우르르 나타났어요.",
@@ -97,7 +97,7 @@ const CHAPTERS = [
         title: "2장 · 보이지 않는 사람",
         beats: [
             {
-                art: "06-wrestle.png",
+                art: "06-wrestle.webp",
                 emoji: "🤼",
                 left: [
                     "\"자, 이제 씨름이다!\"",
@@ -115,7 +115,7 @@ const CHAPTERS = [
                 ]
             },
             {
-                art: "07-steal.png",
+                art: "07-steal.webp",
                 emoji: "🫣",
                 left: [
                     "돌쇠의 손이 슬금슬금 올라갔어요. 손끝이 감투에 닿았습니다.",
@@ -132,7 +132,7 @@ const CHAPTERS = [
                 ]
             },
             {
-                art: "08-mirror.png",
+                art: "08-mirror.webp",
                 emoji: "😳",
                 left: [
                     "집에 온 돌쇠는 숨을 몰아쉬며 감투를 써 보았어요. 그러고는 거울 앞에 섰지요.",
@@ -148,7 +148,7 @@ const CHAPTERS = [
                 ]
             },
             {
-                art: "09-prank.png",
+                art: "09-prank.webp",
                 emoji: "😄",
                 left: [
                     "처음에는 그저 재미났어요.",
@@ -167,7 +167,7 @@ const CHAPTERS = [
                 ]
             },
             {
-                art: "10-cow.png",
+                art: "10-cow.webp",
                 emoji: "🐮",
                 left: [
                     "제일 신났던 것은 김 영감네 소였어요. 돌쇠가 소 등에 훌쩍 올라타자 소가 깜짝 놀랐지요.",
@@ -184,7 +184,7 @@ const CHAPTERS = [
                 ]
             },
             {
-                art: "11-market.png",
+                art: "11-market.webp",
                 emoji: "🍡",
                 left: [
                     "며칠 뒤, 돌쇠는 감투를 쓰고 장터에 갔어요. 떡판 앞에서 그만 걸음이 멈췄습니다.",
@@ -207,7 +207,7 @@ const CHAPTERS = [
         title: "3장 · 둥둥 떠다니는 빨간 점",
         beats: [
             {
-                art: "12-rumor.png",
+                art: "12-rumor.webp",
                 emoji: "😰",
                 left: [
                     "한 번이 두 번이 되고, 두 번이 열 번이 되었어요.",
@@ -225,7 +225,7 @@ const CHAPTERS = [
                 ]
             },
             {
-                art: "13-hole.png",
+                art: "13-hole.webp",
                 emoji: "🧵",
                 left: [
                     "그러던 어느 밤이었어요. 화롯가에 벗어 둔 감투에 불티가 톡 튀었습니다. 얼른 껐지만 옆구리에 구멍이 났지요.",
@@ -240,7 +240,7 @@ const CHAPTERS = [
                 ]
             },
             {
-                art: "14-spot.png",
+                art: "14-spot.webp",
                 emoji: "🔴",
                 left: [
                     "이튿날 장터 사람들이 웅성거렸어요.",
@@ -259,7 +259,7 @@ const CHAPTERS = [
                 ]
             },
             {
-                art: "15-caught.png",
+                art: "15-caught.webp",
                 emoji: "🙌",
                 left: [
                     "사람들이 우르르 달려들어 감투를 덥석 낚아챘어요.",
@@ -277,7 +277,7 @@ const CHAPTERS = [
                 ]
             },
             {
-                art: "16-burn.png",
+                art: "16-burn.webp",
                 emoji: "🔥",
                 left: [
                     "그날 밤 돌쇠는 감투를 아궁이에 넣었어요. 빨간 헝겊이 제일 마지막까지 타올랐지요.",
@@ -328,7 +328,7 @@ function coverPage() {
     return `
         <div class="page page-cover">
             <div class="story-page-left story-page-left-full">
-                ${artFrame('cover.png', '🎩')}
+                ${artFrame('cover.webp', '🎩')}
             </div>
             <div class="story-page-right">
                 <h1>도깨비 감투</h1>
@@ -397,7 +397,7 @@ function quizPage() {
 function endPage() {
     return `
         <div class="page page-end">
-            ${artFrame('end.png', '🌟')}
+            ${artFrame('end.webp', '🌟')}
             <h2>도깨비 감투 이야기를 다 읽었어요!</h2>
             <a class="home-btn" href="../../../../../">학습 허브로 돌아가기</a>
         </div>`;

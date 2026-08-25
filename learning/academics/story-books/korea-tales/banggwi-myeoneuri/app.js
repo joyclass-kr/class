@@ -4,7 +4,7 @@ const CHAPTERS = [
         title: "1장 · 노래진 얼굴",
         beats: [
             {
-                art: "01-bride.png",
+                art: "01-bride.webp",
                 emoji: "👰",
                 left: [
                     "옛날 어느 집에 새 며느리가 들어왔습니다. 얼굴도 곱고 부지런한 데다 손끝까지 야무졌지요.",
@@ -20,7 +20,7 @@ const CHAPTERS = [
                 ]
             },
             {
-                art: "02-ask.png",
+                art: "02-ask.webp",
                 emoji: "😰",
                 left: [
                     "며느리는 한참을 우물쭈물하기만 했습니다. 차마 입이 떨어지지 않는 모양이었어요.",
@@ -36,7 +36,7 @@ const CHAPTERS = [
                 ]
             },
             {
-                art: "03-permit.png",
+                art: "03-permit.webp",
                 emoji: "😅",
                 left: [
                     "\"허허, 그게 무슨 대수라고.\"",
@@ -54,7 +54,7 @@ const CHAPTERS = [
                 ]
             },
             {
-                art: "04-brace.png",
+                art: "04-brace.webp",
                 emoji: "😬",
                 left: [
                     "식구들은 반신반의하면서도 하나씩 붙들었습니다. 며느리가 하도 진지하게 말하니 안 붙잡을 수도 없었지요.",
@@ -75,7 +75,7 @@ const CHAPTERS = [
         title: "2장 · 뿌우웅",
         beats: [
             {
-                art: "05-boom.png",
+                art: "05-boom.webp",
                 emoji: "💨",
                 left: [
                     "뿌우우우웅—!",
@@ -91,7 +91,7 @@ const CHAPTERS = [
                 ]
             },
             {
-                art: "06-fly.png",
+                art: "06-fly.webp",
                 emoji: "🌪️",
                 left: [
                     "시어머니는 문고리를 잡은 채 문짝과 함께 마당으로 날아갔습니다. 남편은 솥뚜껑을 붙들고 지붕 위까지 올라갔지요.",
@@ -106,7 +106,7 @@ const CHAPTERS = [
                 ]
             },
             {
-                art: "07-send.png",
+                art: "07-send.webp",
                 emoji: "😔",
                 left: [
                     "시아버지가 흙투성이가 된 채 겨우 일어나 앉았어요. 상투가 다 풀어져 머리가 산발이었지요.",
@@ -122,7 +122,7 @@ const CHAPTERS = [
                 ]
             },
             {
-                art: "08-road.png",
+                art: "08-road.webp",
                 emoji: "🛤️",
                 left: [
                     "한참을 걷는데 길가가 몹시 소란스러웠습니다. 무슨 일인가 싶어 고개를 들어 보았지요.",
@@ -144,7 +144,7 @@ const CHAPTERS = [
         title: "3장 · 배나무 아래에서",
         beats: [
             {
-                art: "09-offer.png",
+                art: "09-offer.webp",
                 emoji: "🍐",
                 left: [
                     "그 모습을 한참 보던 며느리가 조심스레 다가갔어요. 남편이 소매를 붙잡았지만 며느리는 그냥 걸어 나갔지요.",
@@ -159,7 +159,7 @@ const CHAPTERS = [
                 ]
             },
             {
-                art: "10-aim.png",
+                art: "10-aim.webp",
                 emoji: "😤",
                 left: [
                     "며느리는 배나무 앞에 등을 돌리고 섰습니다. 치맛자락을 단단히 여미면서요.",
@@ -175,7 +175,7 @@ const CHAPTERS = [
                 ]
             },
             {
-                art: "11-pears.png",
+                art: "11-pears.webp",
                 emoji: "💥",
                 left: [
                     "뿌우우우웅—!",
@@ -191,7 +191,7 @@ const CHAPTERS = [
                 ]
             },
             {
-                art: "12-home.png",
+                art: "12-home.webp",
                 emoji: "🏡",
                 left: [
                     "장수들은 약속대로 배와 엽전을 한 아름 안겨 주었습니다. 며느리 혼자서는 들지도 못할 만큼이었지요.",
@@ -241,7 +241,7 @@ function coverPage() {
     return `
         <div class="page page-cover">
             <div class="story-page-left story-page-left-full">
-                ${artFrame('cover.png', '💨')}
+                ${artFrame('cover.webp', '💨')}
             </div>
             <div class="story-page-right">
                 <h1>방귀쟁이 며느리</h1>
@@ -307,7 +307,7 @@ function quizPage() {
 function endPage() {
     return `
         <div class="page page-end">
-            ${artFrame('end.png', '🌟')}
+            ${artFrame('end.webp', '🌟')}
             <h2>방귀쟁이 며느리 이야기를 다 읽었어요!</h2>
             <a class="home-btn" href="../../../../../">학습 허브로 돌아가기</a>
         </div>`;

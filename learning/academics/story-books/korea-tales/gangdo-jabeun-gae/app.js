@@ -4,7 +4,7 @@ const CHAPTERS = [
         title: "1장 · 장에서 돌아오는 길",
         beats: [
             {
-                art: "01-dog.png",
+                art: "01-dog.webp",
                 emoji: "🐕",
                 left: [
                     "옛날에 봇짐을 지고 이 장 저 장 떠도는 장수가 하나 있었습니다.",
@@ -20,7 +20,7 @@ const CHAPTERS = [
                 ]
             },
             {
-                art: "02-market.png",
+                art: "02-market.webp",
                 emoji: "💰",
                 left: [
                     "그날은 장이 아주 잘됐어요. 해가 지기도 전에 봇짐이 텅 비도록 물건이 다 팔렸지요.",
@@ -36,7 +36,7 @@ const CHAPTERS = [
                 ]
             },
             {
-                art: "03-inn.png",
+                art: "03-inn.webp",
                 emoji: "🍲",
                 left: [
                     "해가 저물어 장수는 길가 주막에 들었습니다. 마루에 앉으니 다리가 저릿저릿했지요.",
@@ -58,7 +58,7 @@ const CHAPTERS = [
         title: "2장 · 안개 낀 고갯길",
         beats: [
             {
-                art: "04-dawn.png",
+                art: "04-dawn.webp",
                 emoji: "🌫️",
                 left: [
                     "이튿날 새벽, 장수는 남들보다 일찍 길을 나섰습니다. 고갯길에는 안개가 자욱하게 깔려 있었지요.",
@@ -74,7 +74,7 @@ const CHAPTERS = [
                 ]
             },
             {
-                art: "05-robbed.png",
+                art: "05-robbed.webp",
                 emoji: "😱",
                 left: [
                     "고갯마루에 이르렀을 때였습니다.",
@@ -90,7 +90,7 @@ const CHAPTERS = [
                 ]
             },
             {
-                art: "06-lost.png",
+                art: "06-lost.webp",
                 emoji: "😞",
                 left: [
                     "장수는 벌떡 일어나 숲으로 뛰어들었어요. 하지만 안개가 워낙 짙어 이내 방향을 잃고 말았습니다.",
@@ -111,7 +111,7 @@ const CHAPTERS = [
         title: "3장 · 바둑이가 달렸다",
         beats: [
             {
-                art: "07-scent.png",
+                art: "07-scent.webp",
                 emoji: "👃",
                 left: [
                     "그때 바둑이가 갑자기 귀를 쫑긋 세웠습니다. 무언가를 찾아낸 모양이었어요.",
@@ -127,7 +127,7 @@ const CHAPTERS = [
                 ]
             },
             {
-                art: "08-chase.png",
+                art: "08-chase.webp",
                 emoji: "🌲",
                 left: [
                     "바둑이는 나무 사이를 가로질러 달렸어요.",
@@ -142,7 +142,7 @@ const CHAPTERS = [
                 ]
             },
             {
-                art: "09-bark.png",
+                art: "09-bark.webp",
                 emoji: "🗣️",
                 left: [
                     "\"컹! 컹! 컹컹컹!\"",
@@ -158,7 +158,7 @@ const CHAPTERS = [
                 ]
             },
             {
-                art: "10-return.png",
+                art: "10-return.webp",
                 emoji: "🍖",
                 left: [
                     "사내는 그 자리에서 붙잡혔어요. 돈주머니는 한 푼도 축나지 않고 고스란히 돌아왔지요.",
@@ -207,7 +207,7 @@ function coverPage() {
     return `
         <div class="page page-cover">
             <div class="story-page-left story-page-left-full">
-                ${artFrame('cover.png', '🐕')}
+                ${artFrame('cover.webp', '🐕')}
             </div>
             <div class="story-page-right">
                 <h1>강도를 잡은 개</h1>
@@ -273,7 +273,7 @@ function quizPage() {
 function endPage() {
     return `
         <div class="page page-end">
-            ${artFrame('end.png', '🌟')}
+            ${artFrame('end.webp', '🌟')}
             <h2>강도를 잡은 개 이야기를 다 읽었어요!</h2>
             <a class="home-btn" href="../../../../../">학습 허브로 돌아가기</a>
         </div>`;
