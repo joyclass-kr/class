@@ -511,6 +511,79 @@ const CHAPTER_SEGS = CHAPTERS.map(ch => {
     return segs;
 });
 
+// 읽고 나서 — 책마다 내용이 다르다. 장과 같은 방식으로 재서 나눈다.
+const AFTERWORD = {
+    title: '읽고 나서',
+    emoji: '🛡️',
+    art: [],
+    paras: [
+        `이 책의 원래 제목은 『재기 넘치는 시골 귀족 라만차의 돈키호테』입니다. 돈이라는 말은 스페인에서 귀족 남자를 부를 때 이름 앞에 붙이는 말입니다.`,
+        `그런데 그 이름은 그 사람이 스스로 지어 붙인 것입니다. 본디 이름은 알론소 키하노입니다. 이 책의 마지막 장 제목이 그 이름인 까닭이 그것입니다.`,
+        `쓴 사람은 스페인의 미겔 데 세르반테스입니다. 그의 삶 자체가 소설 같습니다.`,
+        `젊을 때 해전에 나갔다가 왼손을 못 쓰게 되었습니다. 그리고 돌아오는 길에 해적에게 붙잡혀 알제리에서 다섯 해를 노예로 지냈습니다. 네 번 도망치려다 네 번 다 잡혔습니다.`,
+        `겨우 몸값을 치르고 풀려나 스페인에 돌아왔는데, 세금 걷는 일을 하다가 셈이 안 맞아 감옥에 갇히기도 했습니다.`,
+        `그 감옥에서 이 이야기가 시작되었다고 합니다. 그가 쉰일곱에 이 책의 첫 권을 냈습니다.`,
+        `그러니 이 책은 실패한 사람이 쓴 책입니다. 군인으로도 관리로도 잘되지 못했고, 그 전에 쓴 소설과 희곡도 별로 팔리지 않았습니다. 쉰일곱에 처음으로 성공한 것입니다.`,
+        `책은 천육백오 년에 첫 권이 나오고 열 해 뒤에 둘째 권이 나왔습니다. 사백이십 년 전 책입니다. 그리고 흔히 근대 소설의 첫 권으로 꼽힙니다.`,
+        `그 사이에 이상한 일이 있었습니다. 첫 권이 크게 인기를 얻자, 다른 사람이 멋대로 뒷이야기를 지어 내 버린 것입니다.`,
+        `세르반테스는 화가 나서 자기 둘째 권 안에 그 이야기를 끌어들입니다. 돈키호테가 가짜 책 이야기를 듣고 화를 내는 대목이 나옵니다. 자기 책 안에서 가짜와 싸운 것입니다.`,
+        `그리고 마지막에 돈키호테를 죽입니다. 다른 사람이 또 뒷이야기를 지어 내지 못하게 하려던 것이라고 세르반테스가 적어 두었습니다. 자기가 만든 사람을 지키려고 그렇게 한 것입니다.`,
+        `원작은 두 권을 합치면 아주 두껍습니다. 우리말로 옮기면 천 쪽이 넘습니다. 여기서는 널리 알려진 대목들을 골라 이어 실었습니다.`,
+        `이제 다시 볼 대목을 짚어 봅시다.`,
+        `첫째, 첫 장을 다시 읽어 보십시오. 이 사람이 이렇게 된 까닭은 책을 너무 많이 읽어서입니다. 기사 이야기책을 밤새 읽다가 정신이 그리로 넘어간 것입니다.`,
+        `그 시절 스페인에는 기사 이야기책이 아주 많이 팔렸습니다. 지금으로 치면 판타지 소설 같은 것입니다. 어른들이 그것을 걱정하기도 했습니다.`,
+        `그러니 이 책은 처음에 그런 책들을 놀리려고 시작한 것입니다. 세르반테스 자신이 그렇게 적어 두었습니다.`,
+        `그런데 쓰다 보니 놀리려던 인물이 점점 살아났습니다. 둘째 권에 오면 세르반테스가 그 사람을 놀리지 않습니다. 오히려 감싸는 쪽으로 기웁니다.`,
+        `둘째, 풍차 대목을 다시 보십시오. 이 책에서 제일 유명한 장면입니다. 돈키호테는 풍차를 거인으로 보고 달려듭니다.`,
+        `그런데 산초가 미리 말해 줍니다. 저것은 풍차라고요. 그러니 돈키호테는 모르고 달려든 것이 아닙니다. 듣고도 달려든 것입니다.`,
+        `그것이 이 인물의 핵심입니다. 그는 세상이 어떻게 생겼는지를 모르는 것이 아니라, 세상이 그래서는 안 된다고 여기는 사람입니다.`,
+        `셋째, 산초를 다시 보십시오. 산초는 셈이 밝고 배가 고프면 먹어야 하고 위험하면 도망치는 사람입니다. 돈키호테와 정반대입니다.`,
+        `그런데 이야기가 이어질수록 둘이 서로 물듭니다. 산초는 조금씩 돈키호테처럼 말하기 시작하고, 돈키호테는 조금씩 산초처럼 셈을 하기 시작합니다.`,
+        `둘째 권에서 산초가 섬의 통치를 맡는 대목이 있습니다. 놀리려고 맡긴 자리였습니다. 그런데 산초가 뜻밖에 잘합니다.`,
+        `어려운 재판을 몇 건 지혜롭게 풀고, 법도 몇 가지 만듭니다. 그러고는 스스로 그 자리를 그만두고 나옵니다. 이것은 내 자리가 아니라면서요.`,
+        `넷째, 마지막 장을 다시 읽어 보십시오. 돈키호테는 마침내 정신을 차립니다. 자기가 알론소 키하노라는 것을 알고, 기사 이야기책이 다 헛것이었다고 말합니다.`,
+        `그리고 곧 세상을 떠납니다. 정신을 차린 것이 그 사람을 살린 것이 아니라 끝낸 것입니다.`,
+        `그 자리에서 산초가 웁니다. 그리고 이렇게 말합니다. 다시 나가자고, 또 모험을 하자고요. 처음에는 억지로 끌려다니던 사람이 마지막에는 붙잡는 사람이 됩니다.`,
+        `인물도 다시 보아야 할 자리가 있습니다.`,
+        `둘시네아는 이 책에서 한 번도 나오지 않습니다. 돈키호테가 마음에 두고 섬기는 귀부인인데, 실은 이웃 마을의 농사짓는 여자입니다. 그리고 그 사람은 돈키호테를 알지도 못합니다.`,
+        `그러니 이 책에서 가장 아름다운 것은 있지도 않은 것입니다. 세르반테스는 그것을 놀리면서 동시에 아깝게 여깁니다.`,
+        `둘시네아를 한 번도 나오게 하지 않은 것이 이 책의 솜씨입니다. 나왔다면 그 순간 이야기가 끝났을 것입니다.`,
+        `돈키호테를 미친 사람으로만 읽으면 절반만 읽은 것이 됩니다. 그는 기사 이야기 말고 다른 이야기가 나오면 아주 조리 있게 말합니다. 사람들이 그 말을 듣고 놀라는 대목이 여럿 있습니다.`,
+        `그리고 그가 하는 일을 보십시오. 매 맞는 아이를 구하려 하고, 끌려가는 죄수를 풀어 주려 하고, 약한 쪽을 편듭니다. 방법이 어긋날 뿐 겨냥은 늘 그쪽입니다.`,
+        `다만 이 책은 그 결과도 정직하게 적습니다. 돈키호테가 구해 준 아이는 그가 떠난 뒤 더 맞습니다. 풀려난 죄수들은 그에게 돌을 던집니다.`,
+        `그러니 이 책은 착한 마음이 좋은 결과를 낳는다고 말하지 않습니다.`,
+        `그 시절 사정도 알아 두면 좋습니다. 이 책이 나온 무렵 스페인은 큰 나라였다가 기울기 시작하던 참이었습니다. 배를 타고 세계로 나가 얻은 것이 많았는데 그것이 흩어지고 있었습니다.`,
+        `기사라는 것도 이미 옛것이 되어 있었습니다. 갑옷 입고 싸우던 시대가 총이 나오면서 끝났기 때문입니다. 돈키호테가 입은 갑옷은 증조부가 쓰던 것을 창고에서 꺼낸 것입니다.`,
+        `그러니 이 인물은 이미 끝난 시대를 혼자 살고 있는 사람입니다. 그것이 이 이야기를 웃기게도 하고 슬프게도 만듭니다.`,
+        `그리고 둘째 권에는 재미있는 장치가 있습니다. 돈키호테와 산초가 만나는 사람들이 이미 첫 권을 읽은 사람들입니다. 그래서 두 사람을 알아봅니다.`,
+        `그러니 둘째 권의 돈키호테는 유명인입니다. 공작 부부가 그를 성으로 불러 일부러 놀리기까지 합니다. 사백 년 전 소설에 이런 장치가 들어 있는 것입니다.`,
+        `이 책이 붙들고 있는 것은 두 가지입니다.`,
+        `하나는 무엇이 진짜냐는 것입니다. 돈키호테가 보는 세상은 가짜입니다. 그런데 이 책은 그가 보는 세상을 자꾸 아름답게 그려 놓습니다.`,
+        `다른 하나는 남을 놀리는 것에 관한 것입니다. 이 책을 읽다 보면 처음에는 돈키호테를 놀리는 사람들과 함께 웃게 됩니다. 그러다 어느 순간부터 그 사람들이 더 불편해집니다.`,
+        `특히 둘째 권의 공작 부부가 그렇습니다. 심심해서 남을 놀리는 사람들입니다. 세르반테스는 그것을 아주 오래 적어 놓았습니다.`,
+        `이 책이 근대 소설의 첫 권으로 꼽히는 까닭도 거기 있습니다. 그 전의 이야기들은 영웅이 나와서 좋은 일을 하고 끝났습니다. 이 책은 사람 하나가 틀리고 우습고 딱한 채로 나옵니다.`,
+        `그런 사람을 주인공으로 삼은 것이 그때는 새로운 일이었습니다.`,
+        `그리고 이 책에는 지은이가 자기 이야기 안에 들어와 말을 거는 대목도 있습니다. 이 이야기는 아랍 사람이 쓴 원고를 자기가 옮긴 것이라고 능청을 떱니다. 사백 년 전 책에 그런 장난이 들어 있는 것입니다.`,
+        `지금 스페인에서는 이 책이 국민의 책으로 통합니다. 해마다 사람들이 모여 이 책을 처음부터 끝까지 소리 내어 읽는 행사도 있습니다. 이틀이 걸립니다.`,
+        `그리고 라만차 지방에는 돈키호테가 다녔다는 길을 따라 걷는 코스가 있습니다. 풍차도 여러 대 남아 있습니다. 지어낸 사람의 발자국을 따라 걷는 길입니다.`,
+        `언젠가 이 책을 다시 읽게 되거든, 이번에는 산초만 따라가며 읽어 보십시오. 산초가 처음에 하는 말과 마지막에 하는 말을 나란히 놓아 보면, 이 책이 실제로 누구의 이야기인지가 달리 보입니다.`,
+        `마지막으로 생각해 볼 것을 남겨 둡니다. 답은 적어 두지 않겠습니다.`,
+        `돈키호테가 마지막에 정신을 차린 것은 좋은 일이었을까요? 그는 제정신으로 돌아와 세상을 떠납니다.`,
+        `산초는 왜 끝까지 따라다녔을까요? 섬을 준다는 약속 때문이었을까요, 아니면 다른 것이었을까요?`,
+        `그리고 여러분이 만난 사람 가운데 풍차를 거인으로 보는 사람이 있었을까요. 그 사람을 우리는 어떻게 대해야 할까요. 이 물음은 어른이 되어 다시 읽어도 답하기가 쉽지 않습니다.`
+    ]
+};
+
+const AFTER_SEGS = (() => {
+    const segs = [];
+    AFTERWORD.paras.forEach((html, paraIdx) => {
+        splitSegments(html).forEach((piece, k) => {
+            segs.push({ paraIdx, html: piece, start: k === 0 });
+        });
+    });
+    return segs;
+})();
+
 // 조각 묶음을 문단 단위로 다시 묶어 화면에 그릴 모양으로 만든다.
 // 앞 쪽에서 이어진 문단은 첫 줄을 들여쓰지 않는다.
 function runHtml(segs, a, b) {
@@ -792,16 +865,100 @@ function quizPage(part) {
         </div>`;
 }
 
-function endPage() {
+/* 읽고 나서 — 장과 같은 방식으로 쪽을 나눈다. 그림은 오른쪽 위에 얹힌다. */
+const AFTER_FOOT = `<p class="after-home"><a class="home-btn" href="../../../../../">학습 허브로 돌아가기</a></p>`;
+
+function paginateAfterword() {
+    const segs = AFTER_SEGS;
+    const arts = AFTERWORD.art || [];
+    const { usable, headHeight, artHeight } = PROBE;
+    const headHtml = `<h2>${AFTERWORD.title}</h2>`;
+    const totalH = PROBE.measure(runHtml(segs, 0, segs.length));
+
+    const underArt = Math.max(60, usable - artHeight);
+
+    // 맨 끝에는 학습 허브로 가는 단추가 붙는다. 그 높이를 미리 빼 두지 않으면
+    // 마지막 쪽만 넘친다.
+    const footH = PROBE.measure(AFTER_FOOT);
+
+    const capsOf = slots => {
+        const caps = [];
+        slots.forEach(kind => { caps.push(usable); caps.push(kind === 'img' ? underArt : usable); });
+        caps[caps.length - 1] = Math.max(60, caps[caps.length - 1] - footH);
+        return caps;
+    };
+
+    const minSpreads = Math.max(arts.length, 1);
+    const maxSpreads = Math.max(minSpreads, Math.floor(segs.length / 2));
+    let spreadCount = minSpreads;
+    while (spreadCount < maxSpreads) {
+        const caps = capsOf(slotPlan(arts.length, spreadCount - arts.length));
+        if (caps.reduce((a, b) => a + b, 0) >= totalH + headHeight) break;
+        spreadCount++;
+    }
+
+    let slots = slotPlan(arts.length, Math.max(0, spreadCount - arts.length));
+    let caps = capsOf(slots);
+    let ranges = fillPages(segs, caps, headHtml);
+    for (let guard = 0; guard < 8; guard++) {
+        const over = ranges.some(([a, b], n) =>
+            PROBE.measure((n === 0 ? headHtml : '') + runHtml(segs, a, b)) > caps[n] + 1);
+        if (!over || spreadCount >= maxSpreads) break;
+        spreadCount++;
+        slots = slotPlan(arts.length, Math.max(0, spreadCount - arts.length));
+        caps = capsOf(slots);
+        ranges = fillPages(segs, caps, headHtml);
+    }
+
+    const spreads = [];
+    let pageIdx = 0;
+    let artIdx = 0;
+    slots.forEach((kind, s) => {
+        const left = ranges[pageIdx++];
+        const right = ranges[pageIdx++];
+        spreads.push({
+            kind: 'after', first: s === 0, last: s === slots.length - 1,
+            art: kind === 'img' ? arts[artIdx++] : null, left, right
+        });
+    });
+    return spreads;
+}
+
+function afterSpreadPage(spread) {
+    const segs = AFTER_SEGS;
+    const head = spread.first ? `<h2>${AFTERWORD.title}</h2>` : '';
+    // 학습 허브로 돌아가는 길은 맨 끝에 한 번만 둔다.
+    const foot = spread.last ? AFTER_FOOT : '';
+
+    if (spread.art) {
+        return `
+            <div class="page page-story page-after">
+                <div class="story-page-left">
+                    ${head}
+                    ${runHtml(segs, spread.left[0], spread.left[1])}
+                </div>
+                <div class="story-page-right story-page-right-image">
+                    <div class="story-art-top">${artFrame(spread.art, AFTERWORD.emoji)}</div>
+                    ${runHtml(segs, spread.right[0], spread.right[1])}
+                    ${foot}
+                </div>
+            </div>`;
+    }
+
     return `
-        <div class="page page-end">
-            ${artFrame('end.png', '🕊️')}
-            <h2>돈키호테를 다 읽었습니다</h2>
-            <a class="home-btn" href="../../../../../">학습 허브로 돌아가기</a>
+        <div class="page page-story page-after">
+            <div class="story-page-left">
+                ${head}
+                ${runHtml(segs, spread.left[0], spread.left[1])}
+            </div>
+            <div class="story-page-right story-page-right-text">
+                ${runHtml(segs, spread.right[0], spread.right[1])}
+                ${foot}
+            </div>
         </div>`;
 }
 
-const TWO_PAGE_KINDS = new Set(['chapter', 'toc', 'cover']);
+const TWO_PAGE_KINDS = new Set(['chapter', 'toc', 'cover', 'after']);
 
 let PAGES = [];
 let FOLIOS = [];
@@ -813,7 +970,7 @@ function buildPages() {
         ...TOC_GROUPS.map((_, i) => ({ kind: 'toc', part: i })),
         ...CHAPTERS.flatMap(paginateChapter),
         ...QUIZ_GROUPS.map((_, i) => ({ kind: 'quiz', part: i })),
-        { kind: 'end' }
+        ...paginateAfterword()
     ];
     PROBE.close();   // 쪽을 다 나눴으니 재는 데 쓰던 숨은 쪽은 치운다
 
@@ -834,7 +991,7 @@ function renderPage(page) {
         case 'toc': return tocPage(page.part);
         case 'chapter': return chapterSpreadPage(page);
         case 'quiz': return quizPage(page.part);
-        case 'end': return endPage();
+        case 'after': return afterSpreadPage(page);
         default: return '';
     }
 }
