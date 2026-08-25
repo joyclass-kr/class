@@ -58,8 +58,10 @@ for (const relativePath of gameLinks) {
 
 const fruitBell = fs.readFileSync(fruitBellPath, "utf8");
 assert.ok(fruitBell.includes('id="bellBtn" class="bell" type="button" data-sfx="none"'), "The bell should not also play a generic click.");
-assert.ok(fruitBell.includes('id="flipBtn" class="flip" data-sfx="card"'), "Card flips should use the card effect.");
-assert.ok(fruitBell.includes("playBrightBell();"), "Fruit Bell should retain its original dedicated bell sound.");
-assert.ok(!/queueMicrotask\(playBrightBell\)/.test(fruitBell), "The bell effect should not be deferred to a microtask.");
+assert.ok(fruitBell.includes('id="flipBtn" class="flip" data-sfx="none"'), "Fruit Bell should avoid the synthesized shared card effect.");
+assert.ok(fruitBell.includes('playFruitSfx("bell");'), "Fruit Bell should play its recorded bell variants immediately.");
+assert.ok(fruitBell.includes('state.sfxCue=makeSfxCue("flip"'), "Card sounds should follow the authoritative flip state.");
+assert.ok(!fruitBell.includes("data:audio/wav;base64"), "Fruit Bell should not embed a large WAV data URL.");
+assert.ok(!fruitBell.includes("createOscillator"), "Fruit Bell should not synthesize its dedicated effects with oscillators.");
 
 console.log(`game-sfx-unit: ${gameLinks.length} local games share synthesized click effects; Fruit Bell keeps its original instant bell and card sound`);

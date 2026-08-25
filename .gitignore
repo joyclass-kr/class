@@ -18,6 +18,7 @@ __pycache__/
 /outputs/
 /tmp/
 /scratch/
+/.tmp-audio-source/
 /inspect_review_pdf.py
 /make_pdf_previews.py
 
