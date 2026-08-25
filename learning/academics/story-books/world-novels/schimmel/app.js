@@ -394,6 +394,71 @@ const CHAPTER_SEGS = CHAPTERS.map(ch => {
     return segs;
 });
 
+// 읽고 나서 — 책마다 내용이 다르다. 장과 같은 방식으로 재서 나눈다.
+const AFTERWORD = {
+    title: '읽고 나서',
+    emoji: '🌊',
+    art: [],
+    paras: [
+        `이 책의 원래 제목은 『백마의 기사』입니다. 독일말로 시멜라이터라고 합니다. 시멜은 흰말이고 라이터는 말 탄 사람입니다.`,
+        `쓴 사람은 독일의 테오도어 슈토름입니다. 북해 바닷가의 후줌이라는 작은 도시에서 나고 자랐습니다. 그리고 그 도시에서 판사로 일했습니다.`,
+        `이 이야기의 배경도 그 고장입니다. 슐레스비히라고 하는데, 독일 북쪽 끝 바닷가입니다. 지금은 덴마크와 맞닿아 있습니다.`,
+        `그 땅을 알아 두어야 이 이야기가 제대로 읽힙니다. 그 고장은 바다보다 낮습니다. 그래서 흙으로 둑을 쌓아 바닷물을 막고 그 안에서 삽니다.`,
+        `그 둑을 제방이라고 합니다. 제방이 무너지면 마을이 통째로 물에 잠깁니다. 그러니 그 고장 사람들에게 제방은 목숨입니다.`,
+        `그리고 실제로 그런 일이 여러 번 있었습니다. 몇백 년 전 그 바닷가에서 큰 물난리로 몇만 명이 목숨을 잃은 기록이 남아 있습니다.`,
+        `슈토름은 이 소설을 쓸 때 이미 병이 깊었습니다. 예순아홉이었고, 이것이 그의 마지막 작품입니다. 다 쓰고 몇 달 뒤에 세상을 떠났습니다.`,
+        `책은 천팔백팔십팔 년에 나왔습니다. 독일 문학에서 아주 높이 치는 작품입니다.`,
+        `이제 다시 볼 대목을 짚어 봅시다.`,
+        `첫째, 이 이야기의 틀을 다시 보십시오. 이야기 안에 이야기가 들어 있습니다. 어떤 사람이 잡지에서 읽은 이야기를 옮기고, 그 안에서 학교 선생이 손님들에게 옛이야기를 들려줍니다.`,
+        `그러니 우리가 읽는 것은 남에게 들은 이야기를 또 남에게 들은 이야기입니다. 슈토름이 그렇게 짠 데는 까닭이 있습니다.`,
+        `그렇게 하면 이것이 정말 있었던 일인지 아닌지를 흐려 놓을 수 있습니다. 백마가 밤에 제방 위를 달린다는 이야기를 곧이곧대로 적지 않으면서도 남길 수 있는 것입니다.`,
+        `그리고 이야기를 들려주는 선생이 중간에 이렇게 말합니다. 여기 계신 분들 가운데는 다르게 아는 분도 있을 것이라고요.`,
+        `둘째, 하우케 하이엔이 어떤 사람인지 세어 보십시오. 그는 제방 감독관의 아들이 아닙니다. 가난한 집 아들입니다. 그런데 셈을 아주 잘합니다.`,
+        `혼자 책을 구해 읽고, 얼음 위에서 물살을 보고, 제방의 모양을 눈으로 재어 봅니다. 그리고 지금 제방이 잘못 만들어졌다는 것을 알아냅니다.`,
+        `셋째, 그가 알아낸 것을 다시 보십시오. 그때까지의 제방은 바다 쪽이 가팔랐습니다. 하우케는 그것을 완만하게 눕히면 파도가 타고 올라가면서 힘이 빠진다고 보았습니다.`,
+        `그것은 실제로 맞는 셈입니다. 지금 세계 어디에서나 제방을 그렇게 만듭니다. 그러니 하우케가 본 것은 옳았습니다.`,
+        `그런데 마을 사람들이 반대합니다. 새 제방을 쌓으려면 일이 늘고 돈이 들기 때문입니다. 그리고 지금까지 이 제방으로 잘 살아왔다고 말합니다.`,
+        `넷째, 이음매를 다시 읽어 보십시오. 새 제방과 옛 제방이 만나는 자리가 있습니다. 그 자리가 약합니다. 하우케는 그것을 알고 있었습니다.`,
+        `그런데 고치지 못합니다. 사람들이 또 반대할 것이고, 자기 몸도 성치 않았기 때문입니다. 그 미룬 하루가 마지막 밤을 만듭니다.`,
+        `그러니 이 이야기는 아는 사람이 알면서 미룬 이야기이기도 합니다. 그것이 이 책을 무섭게 만듭니다.`,
+        `인물도 다시 보아야 할 사람이 있습니다.`,
+        `하우케를 그냥 앞서간 사람으로 읽으면 절반만 읽은 것이 됩니다. 그 사람에게는 흠도 있습니다. 남의 말을 듣지 않고, 사람을 얕보고, 혼자 다 하려고 합니다.`,
+        `고양이 대목이 그 본보기입니다. 그 일 하나로 온 마을이 그를 다르게 보기 시작합니다. 그리고 그 소문이 끝까지 따라다닙니다.`,
+        `엘케도 다시 볼 만합니다. 그 사람이 없었으면 하우케는 감독관이 되지 못했습니다. 아버지가 남긴 재산이 그 사람 것이었기 때문입니다.`,
+        `그리고 엘케는 셈을 아는 사람입니다. 아버지의 장부를 대신 맡아 보던 사람이었습니다. 그 시절 여자가 그런 일을 하는 것은 드물었습니다.`,
+        `올레 페터스도 짚어 둘 만합니다. 하우케를 미워하는 사람인데, 그 사람 나름의 까닭이 있습니다. 엘케를 두고 밀렸고, 자리도 밀렸습니다.`,
+        `그리고 그 사람이 하는 말이 늘 틀린 것도 아닙니다. 새 제방에 돈이 많이 든다는 것은 사실이었습니다.`,
+        `그 시절 사정도 알아 두면 좋습니다. 이 이야기의 배경은 이백오십 년쯤 전입니다. 그 고장에서는 제방 감독관을 뽑고, 마을 사람들이 흙을 져 나르는 일을 나누어 맡았습니다.`,
+        `제방 일에 나가지 않으면 벌을 받았습니다. 그러니 제방을 새로 쌓는다는 것은 온 마을 사람이 몇 해를 더 일한다는 뜻이었습니다.`,
+        `그리고 그 고장에는 오래된 미신이 있었습니다. 제방을 쌓을 때 살아 있는 것을 그 안에 묻어야 무너지지 않는다는 것입니다. 이 이야기에도 그 대목이 나옵니다.`,
+        `하우케는 그것을 막습니다. 그리고 그 일로 사람들이 또 그를 미워합니다. 옳은 것을 하는데 미움을 받는 자리가 이 책에는 여럿 있습니다.`,
+        `이 책이 붙들고 있는 것은 두 가지입니다.`,
+        `하나는 새로운 것을 아는 사람이 어떻게 되느냐는 것입니다. 하우케는 옳았습니다. 그리고 이겼습니다. 새 제방은 무너지지 않았습니다.`,
+        `무너진 것은 옛 제방과 이음매였습니다. 그러니 그 사람의 셈은 마지막까지 맞았습니다. 그런데 그 사람은 살아남지 못합니다.`,
+        `다른 하나는 마을이 사람을 어떻게 만드느냐는 것입니다. 하우케를 유령으로 만든 것은 마을 사람들입니다. 살아 있을 때 미워하고, 죽은 뒤에 이야기로 만들었습니다.`,
+        `그런데 그 이야기가 그 사람을 남겼습니다. 백마를 탄 사람이 제방 위를 달린다는 이야기 덕분에 그 이름이 이백 년을 살아남은 것입니다.`,
+        `이 이야기의 첫 장을 다시 보십시오. 폭풍우 치는 밤에 제방 위에서 무엇인가를 보았다는 사람으로 시작합니다. 그리고 마지막에 그것이 무엇이었는지가 나옵니다.`,
+        `슈토름은 그 밤 이야기를 굳이 지우지 않았습니다. 옛이야기를 옛이야기대로 두면서, 그 안에 사람 하나의 삶을 넣어 둔 것입니다.`,
+        `이 책은 독일에서 지금도 학교에서 읽힙니다. 그리고 후줌에는 슈토름의 집이 남아 있습니다. 바닷가에 제방도 그대로 있습니다.`,
+        `그 고장에서는 지금도 제방을 지키는 일이 큽니다. 다만 이제는 흙만 쓰지 않습니다. 하우케가 알아낸 완만한 모양에 돌과 다른 것을 덧대어 쌓습니다.`,
+        `언젠가 이 책을 다시 읽게 되거든, 이번에는 마을 사람들이 하는 말만 모아 읽어 보십시오. 그 말들이 어떻게 소문이 되고 어떻게 옛이야기가 되는지가 보입니다.`,
+        `마지막으로 생각해 볼 것을 남겨 둡니다. 답은 적어 두지 않겠습니다.`,
+        `하우케가 이음매를 고치지 못한 것을 우리는 어떻게 보아야 할까요? 그 사람은 알고 있었습니다. 아는데 못 하는 자리가 그 사람에게 있었습니다.`,
+        `마을 사람들이 새 제방을 반대한 것은 잘못이었을까요? 그 사람들에게는 그 일이 몇 해치 노동이었습니다.`,
+        `그리고 마지막 밤에 하우케가 한 것을 우리는 무엇이라고 불러야 할까요. 이 물음은 어른이 되어 다시 읽어도 답하기가 쉽지 않습니다.`
+    ]
+};
+
+const AFTER_SEGS = (() => {
+    const segs = [];
+    AFTERWORD.paras.forEach((html, paraIdx) => {
+        splitSegments(html).forEach((piece, k) => {
+            segs.push({ paraIdx, html: piece, start: k === 0 });
+        });
+    });
+    return segs;
+})();
+
 // 조각 묶음을 문단 단위로 다시 묶어 화면에 그릴 모양으로 만든다.
 // 앞 쪽에서 이어진 문단은 첫 줄을 들여쓰지 않는다.
 function runHtml(segs, a, b) {
@@ -675,16 +740,100 @@ function quizPage(part) {
         </div>`;
 }
 
-function endPage() {
+/* 읽고 나서 — 장과 같은 방식으로 쪽을 나눈다. 그림은 오른쪽 위에 얹힌다. */
+const AFTER_FOOT = `<p class="after-home"><a class="home-btn" href="../../../../../">학습 허브로 돌아가기</a></p>`;
+
+function paginateAfterword() {
+    const segs = AFTER_SEGS;
+    const arts = AFTERWORD.art || [];
+    const { usable, headHeight, artHeight } = PROBE;
+    const headHtml = `<h2>${AFTERWORD.title}</h2>`;
+    const totalH = PROBE.measure(runHtml(segs, 0, segs.length));
+
+    const underArt = Math.max(60, usable - artHeight);
+
+    // 맨 끝에는 학습 허브로 가는 단추가 붙는다. 그 높이를 미리 빼 두지 않으면
+    // 마지막 쪽만 넘친다.
+    const footH = PROBE.measure(AFTER_FOOT);
+
+    const capsOf = slots => {
+        const caps = [];
+        slots.forEach(kind => { caps.push(usable); caps.push(kind === 'img' ? underArt : usable); });
+        caps[caps.length - 1] = Math.max(60, caps[caps.length - 1] - footH);
+        return caps;
+    };
+
+    const minSpreads = Math.max(arts.length, 1);
+    const maxSpreads = Math.max(minSpreads, Math.floor(segs.length / 2));
+    let spreadCount = minSpreads;
+    while (spreadCount < maxSpreads) {
+        const caps = capsOf(slotPlan(arts.length, spreadCount - arts.length));
+        if (caps.reduce((a, b) => a + b, 0) >= totalH + headHeight) break;
+        spreadCount++;
+    }
+
+    let slots = slotPlan(arts.length, Math.max(0, spreadCount - arts.length));
+    let caps = capsOf(slots);
+    let ranges = fillPages(segs, caps, headHtml);
+    for (let guard = 0; guard < 8; guard++) {
+        const over = ranges.some(([a, b], n) =>
+            PROBE.measure((n === 0 ? headHtml : '') + runHtml(segs, a, b)) > caps[n] + 1);
+        if (!over || spreadCount >= maxSpreads) break;
+        spreadCount++;
+        slots = slotPlan(arts.length, Math.max(0, spreadCount - arts.length));
+        caps = capsOf(slots);
+        ranges = fillPages(segs, caps, headHtml);
+    }
+
+    const spreads = [];
+    let pageIdx = 0;
+    let artIdx = 0;
+    slots.forEach((kind, s) => {
+        const left = ranges[pageIdx++];
+        const right = ranges[pageIdx++];
+        spreads.push({
+            kind: 'after', first: s === 0, last: s === slots.length - 1,
+            art: kind === 'img' ? arts[artIdx++] : null, left, right
+        });
+    });
+    return spreads;
+}
+
+function afterSpreadPage(spread) {
+    const segs = AFTER_SEGS;
+    const head = spread.first ? `<h2>${AFTERWORD.title}</h2>` : '';
+    // 학습 허브로 돌아가는 길은 맨 끝에 한 번만 둔다.
+    const foot = spread.last ? AFTER_FOOT : '';
+
+    if (spread.art) {
+        return `
+            <div class="page page-story page-after">
+                <div class="story-page-left">
+                    ${head}
+                    ${runHtml(segs, spread.left[0], spread.left[1])}
+                </div>
+                <div class="story-page-right story-page-right-image">
+                    <div class="story-art-top">${artFrame(spread.art, AFTERWORD.emoji)}</div>
+                    ${runHtml(segs, spread.right[0], spread.right[1])}
+                    ${foot}
+                </div>
+            </div>`;
+    }
+
     return `
-        <div class="page page-end">
-            ${artFrame('end.png', '🕯️')}
-            <h2>백마의 기수를 다 읽었습니다</h2>
-            <a class="home-btn" href="../../../../../">학습 허브로 돌아가기</a>
+        <div class="page page-story page-after">
+            <div class="story-page-left">
+                ${head}
+                ${runHtml(segs, spread.left[0], spread.left[1])}
+            </div>
+            <div class="story-page-right story-page-right-text">
+                ${runHtml(segs, spread.right[0], spread.right[1])}
+                ${foot}
+            </div>
         </div>`;
 }
 
-const TWO_PAGE_KINDS = new Set(['chapter', 'toc', 'cover']);
+const TWO_PAGE_KINDS = new Set(['chapter', 'toc', 'cover', 'after']);
 
 let PAGES = [];
 let FOLIOS = [];
@@ -696,7 +845,7 @@ function buildPages() {
         ...TOC_GROUPS.map((_, i) => ({ kind: 'toc', part: i })),
         ...CHAPTERS.flatMap(paginateChapter),
         ...QUIZ_GROUPS.map((_, i) => ({ kind: 'quiz', part: i })),
-        { kind: 'end' }
+        ...paginateAfterword()
     ];
     PROBE.close();   // 쪽을 다 나눴으니 재는 데 쓰던 숨은 쪽은 치운다
 
@@ -717,7 +866,7 @@ function renderPage(page) {
         case 'toc': return tocPage(page.part);
         case 'chapter': return chapterSpreadPage(page);
         case 'quiz': return quizPage(page.part);
-        case 'end': return endPage();
+        case 'after': return afterSpreadPage(page);
         default: return '';
     }
 }
