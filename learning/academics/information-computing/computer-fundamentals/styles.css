@@ -29,7 +29,7 @@ body {
     min-height: 100vh;
     background:
         linear-gradient(rgba(246, 226, 187, 0.91), rgba(246, 226, 187, 0.95)),
-        url("../../../assets/images/indexbg.jpg") center / cover fixed;
+        url("../../../../assets/images/indexbg.jpg") center / cover fixed;
     color: var(--ink);
     font-family: Pretendard, "Noto Sans KR", "Malgun Gothic", sans-serif;
 }
