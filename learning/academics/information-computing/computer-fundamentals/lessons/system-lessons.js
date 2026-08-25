@@ -436,7 +436,7 @@
     }
 
     function renderLesson() {
-        document.title = `${lesson.title} | 컴퓨터 기초`;
+        document.title = `${lesson.title} | 컴퓨터 원리와 활용`;
         document.getElementById("lessonMeta").textContent = `${lesson.number}차시`;
         document.getElementById("lessonTitle").innerHTML = `${lesson.title} <small>${lesson.english}</small>`;
         document.getElementById("conceptTitle").textContent = lesson.conceptTitle;

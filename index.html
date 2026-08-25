@@ -791,23 +791,26 @@
             </a>
         </div>
     </section>
-
-    <section class="hub-section worksheet-section" aria-labelledby="information-computing-title">
-        <h2 id="information-computing-title" class="section-title">정보·컴퓨터</h2>
-        <div class="worksheet-container">
-            <a href="learning/academics/computer-literacy/">
-                <span class="worksheet-copy"><strong>컴퓨터 기초</strong><small>(Computer Basics)</small></span>
-                <span class="worksheet-arrow" aria-hidden="true" style="font-size:1.45rem;line-height:1">💻</span>
-            </a>
-            <a href="learning/basics/typing/">
-                <span class="worksheet-copy"><strong>타자</strong><small>(Typing)</small></span>
-                <span class="worksheet-arrow" aria-hidden="true" style="font-size:1.45rem;line-height:1">⌨️</span>
-            </a>
-        </div>
-    </section>
     <section class="hub-section worksheet-section" aria-labelledby="exploration-title">
         <h2 id="exploration-title" class="section-title">탐구학습</h2>
         <div class="worksheet-container">
+            <details class="worksheet-group" data-access-group="information-computing">
+                <summary aria-label="정보·컴퓨터 메뉴 열기"
+                         data-content-paths="learning/academics/information-computing/computer-fundamentals/|learning/academics/information-computing/typing/">
+                    <span class="worksheet-copy"><strong>정보·컴퓨터</strong><small>(Information &amp; Computing)</small></span>
+                    <span class="worksheet-arrow" aria-hidden="true" style="font-size:1.45rem;line-height:1">💻</span>
+                </summary>
+                <div class="worksheet-group-options" aria-label="정보·컴퓨터 선택">
+                    <a href="learning/academics/information-computing/computer-fundamentals/" data-access-parent="information-computing">
+                        <span class="worksheet-copy"><strong>컴퓨터 원리와 활용</strong><small>(Computer Fundamentals)</small></span>
+                        <span class="worksheet-arrow" aria-hidden="true" style="font-size:1.45rem;line-height:1">🖥️</span>
+                    </a>
+                    <a href="learning/academics/information-computing/typing/" data-access-parent="information-computing">
+                        <span class="worksheet-copy"><strong>타자</strong><small>(Typing)</small></span>
+                        <span class="worksheet-arrow" aria-hidden="true" style="font-size:1.45rem;line-height:1">⌨️</span>
+                    </a>
+                </div>
+            </details>
             <a id="hanguksaLearningLink"
                href="/hanguksa">
                 <span class="worksheet-copy"><strong>한능검(기본) 기출</strong><small>(Korean History Basics)</small></span>
