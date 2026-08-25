@@ -280,14 +280,6 @@ function spreadPage(chapter, beat, isFirst) {
         </div>`;
 }
 
-function reflectionPage(chapter) {
-    return `
-        <div class="page page-reflection">
-            <h2>이야기를 다 읽고</h2>
-            <p class="reflection-moral">${chapter.moral}</p>
-            <p class="reflection-question">${chapter.question}</p>
-        </div>`;
-}
 
 const QUIZ = [
     { q: "첫째가 익혀 온 재주는 무엇인가요?", choices: ["아주 멀리 보는 눈", "아주 멀리 듣는 귀", "아주 빨리 뛰는 발"], answer: 1 },
@@ -330,16 +322,15 @@ const AFTERWORD = {
     emoji: '🎯',
     spreads: [
         {
-            art: 'end.png',
             left: [
                 "저마다 다른 재주를 지닌 형제가 힘을 모아 일을 해내는 이야기는 세계 곳곳에 있습니다. 재주가 셋인 것도, 마지막 재주가 가장 시시해 보이는 것도 자주 겹칩니다.",
-                "그런 이야기에서 일이 되는 방식은 늘 같습니다. 셋 가운데 하나만 빠져도 되지 않습니다. 순서도 바꿀 수 없습니다.",
-                "다시 보면 형들은 셋째의 재주를 듣고 웃었습니다. 무엇이든 잘 받는 재주라니 별것 아니게 들렸을 것입니다.",
-                "그런데 그날 아이를 받아 낸 것은 그 웃음거리였던 재주였습니다. 앞의 둘이 아무리 잘해도 받을 사람이 없으면 헛일이었지요."
+                "그런 이야기에서 일이 되는 방식은 늘 같습니다. 셋 가운데 하나만 빠져도 되지 않습니다. 순서도 바꿀 수 없습니다."
             ],
             right: [
-                "쓸모없어 보이는 재주는 아직 쓰일 자리를 만나지 못한 것일 뿐입니다.",
-                "형들은 그날 이후 셋째를 어떻게 보았을까요? 답은 적어 두지 않겠습니다."
+                "셋째의 재주는 무엇이든 잘 받는 것이었습니다. 활을 쏘거나 힘을 쓰는 재주에 견주면 내세울 것이 없어 보입니다. 앞의 둘이 아무리 잘해도 받을 사람이 없으면 헛일인데도 그렇습니다.",
+                "형들은 셋째의 재주를 듣고 웃었습니다. 그런데 그날 아이를 받아 낸 것은 그 웃음거리였던 재주였습니다. 쓸모없어 보이는 재주는 아직 쓰일 자리를 만나지 못한 것일 뿐입니다.",
+                "형들은 그날 이후 셋째를 어떻게 보았을까요?",
+                "남들이 대수롭지 않게 여기는, 내가 잘하는 일은 무엇인가요?"
             ]
         }
     ]
@@ -347,8 +338,6 @@ const AFTERWORD = {
 
 function afterPage(spread, isFirst) {
     const head = isFirst ? `<h2>${AFTERWORD.title}</h2>` : '';
-    // 그림은 오른쪽 위 모서리에 꽉 붙인다. 글은 그 아래로 이어진다.
-    const art = spread.art ? `<div class="after-art">${artFrame(spread.art, AFTERWORD.emoji)}</div>` : '';
     const col = (ps) => ps.map(t => `<p>${t}</p>`).join('');
     return `
         <div class="page page-after">
@@ -356,8 +345,7 @@ function afterPage(spread, isFirst) {
                 ${head}
                 ${col(spread.left)}
             </div>
-            <div class="after-col after-col-right${spread.art ? ' after-col-image' : ''}">
-                ${art}
+            <div class="after-col after-col-right">
                 ${col(spread.right)}
             </div>
         </div>`;
@@ -366,7 +354,6 @@ function afterPage(spread, isFirst) {
 const PAGES = [
     { kind: 'cover' },
     ...CHAPTERS.flatMap(chapter => chapter.beats.map((beat, i) => ({ kind: 'spread', chapter, beat, isFirst: i === 0 }))),
-    { kind: 'reflection', chapter: CHAPTERS[CHAPTERS.length - 1] },
     { kind: 'quiz' },
     ...AFTERWORD.spreads.map((spread, i) => ({ kind: 'after', spread, isFirst: i === 0 })),
     { kind: 'end' }
@@ -388,8 +375,6 @@ function renderPage(page) {
             return coverPage();
         case 'spread':
             return spreadPage(page.chapter, page.beat, page.isFirst);
-        case 'reflection':
-            return reflectionPage(page.chapter);
         case 'after':
             return afterPage(page.spread, page.isFirst);
         case 'quiz':

@@ -261,14 +261,6 @@ function spreadPage(chapter, beat, isFirst) {
         </div>`;
 }
 
-function reflectionPage(chapter) {
-    return `
-        <div class="page page-reflection">
-            <h2>이야기를 다 읽고</h2>
-            <p class="reflection-moral">${chapter.moral}</p>
-            <p class="reflection-question">${chapter.question}</p>
-        </div>`;
-}
 
 const QUIZ = [
     { q: "나무꾼은 절구를 누구에게 받았나요?", choices: ["이웃 부자", "산속의 노인", "마을 원님"], answer: 1 },
@@ -311,16 +303,15 @@ const AFTERWORD = {
     emoji: '🧂',
     spreads: [
         {
-            art: 'end.webp',
             left: [
                 "바닷물이 왜 짠지를 풀어 주는 이야기입니다. 같은 이야기가 북유럽에도 있습니다. 그쪽에서는 맷돌이 나오고 바다 밑에서 지금도 소금을 갈고 있다고 합니다.",
-                "서로 멀리 떨어진 곳에서 같은 이야기가 나온 것이 아니라, 아주 오래전부터 사람에게서 사람에게로 건너다닌 것으로 봅니다.",
-                "다시 보면 도둑이 배운 것은 절반뿐이었습니다. 나오게 하는 말은 알았지만 멈추는 말은 몰랐습니다.",
-                "쓰는 법을 다 알지 못하면서 손에 넣기만 하면 그 물건이 도리어 사람을 삼킵니다. 도둑을 삼킨 것은 바다가 아니라 소금이었습니다."
+                "서로 멀리 떨어진 곳에서 같은 이야기가 나온 것이 아니라, 아주 오래전부터 사람에게서 사람에게로 건너다닌 것으로 봅니다."
             ],
             right: [
                 "나무꾼은 절구를 얻고 나서 먼저 이웃에게 쌀을 나누었습니다. 같은 물건을 두고 두 사람이 처음 한 일이 달랐습니다.",
-                "도둑이 멈추는 말을 알았다면 어땠을까요? 답은 적어 두지 않겠습니다."
+                "쓰는 법을 다 알지 못하면서 손에 넣기만 하면 그 물건이 도리어 나를 삼킵니다. 도둑은 나오게 하는 말만 알았을 뿐 멈추는 말은 몰랐습니다.",
+                "도둑이 멈추는 말을 알았다면 어땠을까요?",
+                "잘 모르는 것을 서둘러 손에 넣으려다 곤란해진 적이 있나요?"
             ]
         }
     ]
@@ -328,8 +319,6 @@ const AFTERWORD = {
 
 function afterPage(spread, isFirst) {
     const head = isFirst ? `<h2>${AFTERWORD.title}</h2>` : '';
-    // 그림은 오른쪽 위 모서리에 꽉 붙인다. 글은 그 아래로 이어진다.
-    const art = spread.art ? `<div class="after-art">${artFrame(spread.art, AFTERWORD.emoji)}</div>` : '';
     const col = (ps) => ps.map(t => `<p>${t}</p>`).join('');
     return `
         <div class="page page-after">
@@ -337,8 +326,7 @@ function afterPage(spread, isFirst) {
                 ${head}
                 ${col(spread.left)}
             </div>
-            <div class="after-col after-col-right${spread.art ? ' after-col-image' : ''}">
-                ${art}
+            <div class="after-col after-col-right">
                 ${col(spread.right)}
             </div>
         </div>`;
@@ -347,7 +335,6 @@ function afterPage(spread, isFirst) {
 const PAGES = [
     { kind: 'cover' },
     ...CHAPTERS.flatMap(chapter => chapter.beats.map((beat, i) => ({ kind: 'spread', chapter, beat, isFirst: i === 0 }))),
-    { kind: 'reflection', chapter: CHAPTERS[CHAPTERS.length - 1] },
     { kind: 'quiz' },
     ...AFTERWORD.spreads.map((spread, i) => ({ kind: 'after', spread, isFirst: i === 0 })),
     { kind: 'end' }
@@ -369,8 +356,6 @@ function renderPage(page) {
             return coverPage();
         case 'spread':
             return spreadPage(page.chapter, page.beat, page.isFirst);
-        case 'reflection':
-            return reflectionPage(page.chapter);
         case 'after':
             return afterPage(page.spread, page.isFirst);
         case 'quiz':

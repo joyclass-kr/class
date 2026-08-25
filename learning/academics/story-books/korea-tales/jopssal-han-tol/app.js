@@ -240,14 +240,6 @@ function spreadPage(chapter, beat, isFirst) {
         </div>`;
 }
 
-function reflectionPage(chapter) {
-    return `
-        <div class="page page-reflection">
-            <h2>이야기를 다 읽고</h2>
-            <p class="reflection-moral">${chapter.moral}</p>
-            <p class="reflection-question">${chapter.question}</p>
-        </div>`;
-}
 
 const QUIZ = [
     { q: "소년이 길을 떠날 때 가진 것은 무엇인가요?", choices: ["엽전 한 닢", "좁쌀 한 톨", "떡 한 조각"], answer: 1 },
@@ -290,16 +282,16 @@ const AFTERWORD = {
     emoji: '🐮',
     spreads: [
         {
-            art: 'end.webp',
             left: [
                 "작은 것을 바꾸고 또 바꿔 큰 것을 얻는 이야기를 누적담이라고 합니다. 같은 일이 조금씩 커지며 되풀이되는 이야기라는 뜻입니다.",
                 "이런 이야기는 듣기에 재미있어서 세계 곳곳에 있습니다. 짚 한 오라기로 시작해 부자가 되는 일본 이야기도 있고, 물물교환이 이어지는 서양 이야기도 있습니다.",
-                "다시 보면 소년은 한 번도 억지를 부리지 않았습니다. 좁쌀을 쥐가 먹었을 때도, 고양이가 달아났을 때도 소리를 지르지 않았습니다.",
                 "다만 제 것이 없어졌다는 것을 또박또박 말했습니다. 그러면 듣는 쪽이 미안해서 더 큰 것을 내주었지요."
             ],
             right: [
                 "그러니 소년을 키운 것은 좁쌀이 아니라 그것을 끝까지 제 것으로 여긴 마음입니다.",
-                "어른들은 왜 좁쌀 한 톨 값보다 큰 것을 내주었을까요? 답은 적어 두지 않겠습니다."
+                "작다고 함부로 여기지 않는 마음이 좁쌀 한 톨을 황소로 만들었습니다. 소년은 한 번도 억지를 부리지 않았습니다. 그저 제 것을 끝까지 소중히 여겼을 뿐입니다.",
+                "어른들은 왜 좁쌀 한 톨 값보다 큰 것을 내주었을까요?",
+                "지금 내 손에 있는 작은 것 가운데 소중히 여겨야 할 것은 무엇일까요?"
             ]
         }
     ]
@@ -307,8 +299,6 @@ const AFTERWORD = {
 
 function afterPage(spread, isFirst) {
     const head = isFirst ? `<h2>${AFTERWORD.title}</h2>` : '';
-    // 그림은 오른쪽 위 모서리에 꽉 붙인다. 글은 그 아래로 이어진다.
-    const art = spread.art ? `<div class="after-art">${artFrame(spread.art, AFTERWORD.emoji)}</div>` : '';
     const col = (ps) => ps.map(t => `<p>${t}</p>`).join('');
     return `
         <div class="page page-after">
@@ -316,8 +306,7 @@ function afterPage(spread, isFirst) {
                 ${head}
                 ${col(spread.left)}
             </div>
-            <div class="after-col after-col-right${spread.art ? ' after-col-image' : ''}">
-                ${art}
+            <div class="after-col after-col-right">
                 ${col(spread.right)}
             </div>
         </div>`;
@@ -326,7 +315,6 @@ function afterPage(spread, isFirst) {
 const PAGES = [
     { kind: 'cover' },
     ...CHAPTERS.flatMap(chapter => chapter.beats.map((beat, i) => ({ kind: 'spread', chapter, beat, isFirst: i === 0 }))),
-    { kind: 'reflection', chapter: CHAPTERS[CHAPTERS.length - 1] },
     { kind: 'quiz' },
     ...AFTERWORD.spreads.map((spread, i) => ({ kind: 'after', spread, isFirst: i === 0 })),
     { kind: 'end' }
@@ -348,8 +336,6 @@ function renderPage(page) {
             return coverPage();
         case 'spread':
             return spreadPage(page.chapter, page.beat, page.isFirst);
-        case 'reflection':
-            return reflectionPage(page.chapter);
         case 'after':
             return afterPage(page.spread, page.isFirst);
         case 'quiz':

@@ -281,14 +281,6 @@ function spreadPage(chapter, beat, isFirst) {
         </div>`;
 }
 
-function reflectionPage(chapter) {
-    return `
-        <div class="page page-reflection">
-            <h2>이야기를 다 읽고</h2>
-            <p class="reflection-moral">${chapter.moral}</p>
-            <p class="reflection-question">${chapter.question}</p>
-        </div>`;
-}
 
 const QUIZ = [
     { q: "사신이 낸 첫 번째 문제는 무엇인가요?", choices: ["물로 불을 지피기", "재로 새끼줄 꼬기", "모래로 밥을 짓기"], answer: 1 },
@@ -331,16 +323,16 @@ const AFTERWORD = {
     emoji: '🧠',
     spreads: [
         {
-            art: 'end.png',
             left: [
                 "어려운 문제를 아이가 푸는 이야기는 세계 곳곳에 있습니다. 어른들이 다 막힌 자리에서 아이 하나가 답을 내는 틀입니다.",
                 "그런 이야기에서 아이가 쓰는 것은 힘도 아니고 학식도 아닙니다. 문제를 낸 사람이 정해 놓은 틀 밖에서 보는 것입니다.",
-                "다시 보면 재로 새끼를 꼬라는 문제는 풀 수 없는 문제입니다. 재는 손에 잡히지 않으니까요. 소년은 그 순서를 뒤집었습니다.",
-                "새끼를 먼저 꼬고 나서 태운 것입니다. 문제는 그대로인데 하는 차례를 바꾼 것이지요."
+                "다시 보면 재로 새끼를 꼬라는 문제는 풀 수 없는 문제입니다. 재는 손에 잡히지 않으니까요. 소년은 그 순서를 뒤집었습니다."
             ],
             right: [
-                "안 된다고 여기는 순간 길이 막히고, 다른 쪽에서 보는 순간 길이 열립니다. 이 이야기가 되풀이해 보여 주는 것이 그것입니다.",
-                "어른들은 왜 그 순서를 생각하지 못했을까요? 답은 적어 두지 않겠습니다."
+                "새끼를 먼저 꼬고 나서 태운 것입니다. 문제는 그대로인데 하는 차례를 바꾼 것이지요.",
+                "소년이 푼 세 문제는 힘으로도 재주로도 되지 않는 것이었습니다. 다만 다르게 생각했을 뿐입니다. 안 된다고 여기는 순간 길이 막히고, 다른 쪽에서 보는 순간 길이 열립니다.",
+                "어른들은 왜 그 순서를 생각하지 못했을까요?",
+                "안 된다고 여겼던 일을 다른 방법으로 풀어 본 적이 있나요?"
             ]
         }
     ]
@@ -348,8 +340,6 @@ const AFTERWORD = {
 
 function afterPage(spread, isFirst) {
     const head = isFirst ? `<h2>${AFTERWORD.title}</h2>` : '';
-    // 그림은 오른쪽 위 모서리에 꽉 붙인다. 글은 그 아래로 이어진다.
-    const art = spread.art ? `<div class="after-art">${artFrame(spread.art, AFTERWORD.emoji)}</div>` : '';
     const col = (ps) => ps.map(t => `<p>${t}</p>`).join('');
     return `
         <div class="page page-after">
@@ -357,8 +347,7 @@ function afterPage(spread, isFirst) {
                 ${head}
                 ${col(spread.left)}
             </div>
-            <div class="after-col after-col-right${spread.art ? ' after-col-image' : ''}">
-                ${art}
+            <div class="after-col after-col-right">
                 ${col(spread.right)}
             </div>
         </div>`;
@@ -367,7 +356,6 @@ function afterPage(spread, isFirst) {
 const PAGES = [
     { kind: 'cover' },
     ...CHAPTERS.flatMap(chapter => chapter.beats.map((beat, i) => ({ kind: 'spread', chapter, beat, isFirst: i === 0 }))),
-    { kind: 'reflection', chapter: CHAPTERS[CHAPTERS.length - 1] },
     { kind: 'quiz' },
     ...AFTERWORD.spreads.map((spread, i) => ({ kind: 'after', spread, isFirst: i === 0 })),
     { kind: 'end' }
@@ -389,8 +377,6 @@ function renderPage(page) {
             return coverPage();
         case 'spread':
             return spreadPage(page.chapter, page.beat, page.isFirst);
-        case 'reflection':
-            return reflectionPage(page.chapter);
         case 'after':
             return afterPage(page.spread, page.isFirst);
         case 'quiz':

@@ -281,14 +281,6 @@ function spreadPage(chapter, beat, isFirst) {
         </div>`;
 }
 
-function reflectionPage(chapter) {
-    return `
-        <div class="page page-reflection">
-            <h2>이야기를 다 읽고</h2>
-            <p class="reflection-moral">${chapter.moral}</p>
-            <p class="reflection-question">${chapter.question}</p>
-        </div>`;
-}
 
 const QUIZ = [
     { q: "혹부리 영감이 잘하는 것은 무엇이었나요?", choices: ["나무 다루기", "노래 부르기", "글씨 쓰기"], answer: 1 },
@@ -331,16 +323,16 @@ const AFTERWORD = {
     emoji: '🎵',
     spreads: [
         {
-            art: 'end.webp',
             left: [
                 "이 이야기는 우리나라에도 있고 일본에도 있습니다. 일본 쪽에서는 도깨비 자리에 오니라는 것이 나옵니다. 어느 쪽이 먼저인지는 아직 밝혀지지 않았습니다.",
                 "우리 도깨비는 노래와 춤을 좋아합니다. 씨름도 좋아하고 메밀묵도 좋아합니다. 무섭기만 한 것이 아니라 사람과 어울리기를 좋아하는 것들이지요.",
-                "다시 보면 첫 번째 영감은 도깨비를 만나러 간 것이 아닙니다. 비를 피하러 들어갔다가 무서워서 노래를 부른 것입니다.",
-                "두 번째 영감은 반대입니다. 노래를 부르러 간 것이 아니라 혹을 떼러 갔습니다. 같은 자리에서 같은 노래를 불렀는데 끝이 갈린 데는 그 차이가 있습니다."
+                "다시 보면 첫 번째 영감은 도깨비를 만나러 간 것이 아닙니다. 비를 피하러 들어갔다가 무서워서 노래를 부른 것입니다."
             ],
             right: [
                 "도깨비들이 화가 난 것도 노래가 나빠서가 아닙니다. 속았다는 것을 알았기 때문입니다.",
-                "첫 번째 영감이 정말로 혹에서 노래가 나온다고 여겼을까요? 답은 적어 두지 않겠습니다."
+                "첫 번째 영감은 노래가 좋아서 불렀고 두 번째 영감은 보물이 탐나서 불렀습니다. 같은 자리에서 같은 일을 해도 마음이 다르면 끝이 달라집니다.",
+                "첫 번째 영감이 정말로 혹에서 노래가 나온다고 여겼을까요?",
+                "무언가를 할 때 나는 어떤 마음으로 시작하고 있나요?"
             ]
         }
     ]
@@ -348,8 +340,6 @@ const AFTERWORD = {
 
 function afterPage(spread, isFirst) {
     const head = isFirst ? `<h2>${AFTERWORD.title}</h2>` : '';
-    // 그림은 오른쪽 위 모서리에 꽉 붙인다. 글은 그 아래로 이어진다.
-    const art = spread.art ? `<div class="after-art">${artFrame(spread.art, AFTERWORD.emoji)}</div>` : '';
     const col = (ps) => ps.map(t => `<p>${t}</p>`).join('');
     return `
         <div class="page page-after">
@@ -357,8 +347,7 @@ function afterPage(spread, isFirst) {
                 ${head}
                 ${col(spread.left)}
             </div>
-            <div class="after-col after-col-right${spread.art ? ' after-col-image' : ''}">
-                ${art}
+            <div class="after-col after-col-right">
                 ${col(spread.right)}
             </div>
         </div>`;
@@ -367,7 +356,6 @@ function afterPage(spread, isFirst) {
 const PAGES = [
     { kind: 'cover' },
     ...CHAPTERS.flatMap(chapter => chapter.beats.map((beat, i) => ({ kind: 'spread', chapter, beat, isFirst: i === 0 }))),
-    { kind: 'reflection', chapter: CHAPTERS[CHAPTERS.length - 1] },
     { kind: 'quiz' },
     ...AFTERWORD.spreads.map((spread, i) => ({ kind: 'after', spread, isFirst: i === 0 })),
     { kind: 'end' }
@@ -389,8 +377,6 @@ function renderPage(page) {
             return coverPage();
         case 'spread':
             return spreadPage(page.chapter, page.beat, page.isFirst);
-        case 'reflection':
-            return reflectionPage(page.chapter);
         case 'after':
             return afterPage(page.spread, page.isFirst);
         case 'quiz':

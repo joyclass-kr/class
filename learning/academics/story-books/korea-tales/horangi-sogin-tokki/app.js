@@ -249,14 +249,6 @@ function spreadPage(chapter, beat, isFirst) {
         </div>`;
 }
 
-function reflectionPage(chapter) {
-    return `
-        <div class="page page-reflection">
-            <h2>이야기를 다 읽고</h2>
-            <p class="reflection-moral">${chapter.moral}</p>
-            <p class="reflection-question">${chapter.question}</p>
-        </div>`;
-}
 
 const QUIZ = [
     { q: "토끼는 호랑이에게 무엇이 맛있다고 했나요?", choices: ["물고기 찜", "참새 구이", "산나물 국"], answer: 1 },
@@ -299,16 +291,17 @@ const AFTERWORD = {
     emoji: '🐰',
     spreads: [
         {
-            art: 'end.webp',
             left: [
                 "작고 약한 것이 크고 센 것을 꾀로 이기는 이야기는 세계 어디에나 있습니다. 우리에게는 그 자리가 대개 토끼입니다. 토끼전의 토끼도 같은 토끼이지요.",
                 "그런데 이 이야기의 토끼는 한 번도 거짓말을 지어내지 않습니다. 참새를 잡아 준다고 하고, 물고기를 잡아 준다고 합니다. 다 호랑이가 원하던 것입니다.",
-                "다시 보면 호랑이가 속은 까닭은 토끼가 똑똑해서가 아닙니다. 배가 고팠기 때문입니다. 듣고 싶은 말이 있는 쪽은 그 말을 그냥 믿어 버립니다.",
-                "그래서 이 이야기가 겨눈 것은 토끼의 꾀가 아니라 호랑이의 마음입니다. 급하고 바라는 것이 있을 때 사람은 확인을 건너뜁니다."
+                "다시 보면 호랑이가 속은 까닭은 토끼가 똑똑해서가 아닙니다. 배가 고팠기 때문입니다. 듣고 싶은 말이 있는 쪽은 그 말을 그냥 믿어 버립니다."
             ],
             right: [
+                "그래서 이 이야기가 겨눈 것은 토끼의 꾀가 아니라 호랑이의 마음입니다. 급하고 바라는 것이 있을 때 사람은 확인을 건너뜁니다.",
                 "마지막에 호랑이가 토끼를 피해 다녔다는 대목도 웃어넘길 것이 아닙니다. 힘으로는 이길 수 있는데도 피한 것입니다.",
-                "호랑이는 무엇을 한 번만 물어보았으면 되었을까요? 답은 적어 두지 않겠습니다."
+                "힘이 세다고 늘 이기는 것은 아닙니다. 토끼는 한 번도 힘으로 맞서지 않았습니다. 그저 호랑이가 듣고 싶어 하는 말을 했을 뿐입니다.",
+                "호랑이는 무엇을 한 번만 물어보았으면 되었을까요?",
+                "누군가 달콤한 말로 다가올 때 무엇을 먼저 살펴봐야 할까요?"
             ]
         }
     ]
@@ -316,8 +309,6 @@ const AFTERWORD = {
 
 function afterPage(spread, isFirst) {
     const head = isFirst ? `<h2>${AFTERWORD.title}</h2>` : '';
-    // 그림은 오른쪽 위 모서리에 꽉 붙인다. 글은 그 아래로 이어진다.
-    const art = spread.art ? `<div class="after-art">${artFrame(spread.art, AFTERWORD.emoji)}</div>` : '';
     const col = (ps) => ps.map(t => `<p>${t}</p>`).join('');
     return `
         <div class="page page-after">
@@ -325,8 +316,7 @@ function afterPage(spread, isFirst) {
                 ${head}
                 ${col(spread.left)}
             </div>
-            <div class="after-col after-col-right${spread.art ? ' after-col-image' : ''}">
-                ${art}
+            <div class="after-col after-col-right">
                 ${col(spread.right)}
             </div>
         </div>`;
@@ -335,7 +325,6 @@ function afterPage(spread, isFirst) {
 const PAGES = [
     { kind: 'cover' },
     ...CHAPTERS.flatMap(chapter => chapter.beats.map((beat, i) => ({ kind: 'spread', chapter, beat, isFirst: i === 0 }))),
-    { kind: 'reflection', chapter: CHAPTERS[CHAPTERS.length - 1] },
     { kind: 'quiz' },
     ...AFTERWORD.spreads.map((spread, i) => ({ kind: 'after', spread, isFirst: i === 0 })),
     { kind: 'end' }
@@ -357,8 +346,6 @@ function renderPage(page) {
             return coverPage();
         case 'spread':
             return spreadPage(page.chapter, page.beat, page.isFirst);
-        case 'reflection':
-            return reflectionPage(page.chapter);
         case 'after':
             return afterPage(page.spread, page.isFirst);
         case 'quiz':

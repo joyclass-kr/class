@@ -358,14 +358,6 @@ function spreadPage(chapter, beat, isFirst) {
         </div>`;
 }
 
-function reflectionPage(chapter) {
-    return `
-        <div class="page page-reflection">
-            <h2>이야기를 다 읽고</h2>
-            <p class="reflection-moral">${chapter.moral}</p>
-            <p class="reflection-question">${chapter.question}</p>
-        </div>`;
-}
 
 const QUIZ = [
     { q: "돌쇠가 개울가에서 처음 본 이상한 것은 무엇인가요?", choices: ["개울물이 거꾸로 흘러 올라갔다", "게가 저 혼자 불 위로 걸어갔다", "커다란 돌이 저 혼자 굴러다녔다"], answer: 1 },
@@ -410,16 +402,16 @@ const AFTERWORD = {
     emoji: '🎩',
     spreads: [
         {
-            art: 'end.webp',
             left: [
                 "몸이 보이지 않게 해 주는 물건 이야기는 세계 어디에나 있습니다. 그리스에는 쓰면 안 보이는 투구가 있고, 서양 옛이야기에는 망토가 나옵니다. 우리에게는 감투였지요.",
                 "그런데 그런 이야기의 끝은 대개 비슷합니다. 안 보이는 힘을 얻은 사람은 오래 버티지 못합니다. 그 힘이 사람을 시험하기 때문입니다.",
-                "다시 보면 돌쇠를 붙잡은 것은 감투에 난 구멍이 아니었습니다. 구멍이 나기 훨씬 전부터 돌쇠는 밤에 잠을 못 잤습니다. 곳간이 차오를수록 마음이 무거워졌지요.",
-                "아무도 보지 않는다는 것은 사실이 아니었습니다. 돌쇠 자신이 보고 있었으니까요. 이야기가 감투에 하필 빨간 헝겊을 대게 한 것은 그 마음을 눈에 보이게 만든 것입니다."
+                "이야기가 감투에 하필 빨간 헝겊을 대게 한 것도 그래서입니다. 눈에 보이지 않던 것을 눈에 보이게 만든 것이지요."
             ],
             right: [
                 "감투는 원래 벼슬아치가 쓰던 것입니다. 감투를 쓴다는 말이 지금도 자리를 얻는다는 뜻으로 쓰이지요. 그런 물건이 남의 것을 훔치는 데 쓰였다는 것도 눈여겨볼 만합니다.",
-                "만약 감투에 구멍이 끝까지 나지 않았다면 돌쇠는 어떻게 되었을까요? 답은 적어 두지 않겠습니다."
+                "돌쇠를 붙잡은 것은 빨간 헝겊이 아니었습니다. 아무도 보지 않는다고 여기는 동안에도 돌쇠 자신은 다 보고 있었습니다. 그래서 곳간이 차오를수록 마음이 무거워졌습니다.",
+                "만약 감투에 구멍이 끝까지 나지 않았다면 돌쇠는 어떻게 되었을까요?",
+                "아무도 보지 않을 때 나는 어떤 사람인가요?"
             ]
         }
     ]
@@ -427,8 +419,6 @@ const AFTERWORD = {
 
 function afterPage(spread, isFirst) {
     const head = isFirst ? `<h2>${AFTERWORD.title}</h2>` : '';
-    // 그림은 오른쪽 위 모서리에 꽉 붙인다. 글은 그 아래로 이어진다.
-    const art = spread.art ? `<div class="after-art">${artFrame(spread.art, AFTERWORD.emoji)}</div>` : '';
     const col = (ps) => ps.map(t => `<p>${t}</p>`).join('');
     return `
         <div class="page page-after">
@@ -436,8 +426,7 @@ function afterPage(spread, isFirst) {
                 ${head}
                 ${col(spread.left)}
             </div>
-            <div class="after-col after-col-right${spread.art ? ' after-col-image' : ''}">
-                ${art}
+            <div class="after-col after-col-right">
                 ${col(spread.right)}
             </div>
         </div>`;
@@ -446,7 +435,6 @@ function afterPage(spread, isFirst) {
 const PAGES = [
     { kind: 'cover' },
     ...CHAPTERS.flatMap(chapter => chapter.beats.map((beat, i) => ({ kind: 'spread', chapter, beat, isFirst: i === 0 }))),
-    { kind: 'reflection', chapter: CHAPTERS[CHAPTERS.length - 1] },
     { kind: 'quiz' },
     ...AFTERWORD.spreads.map((spread, i) => ({ kind: 'after', spread, isFirst: i === 0 })),
     { kind: 'end' }
@@ -468,8 +456,6 @@ function renderPage(page) {
             return coverPage();
         case 'spread':
             return spreadPage(page.chapter, page.beat, page.isFirst);
-        case 'reflection':
-            return reflectionPage(page.chapter);
         case 'after':
             return afterPage(page.spread, page.isFirst);
         case 'quiz':

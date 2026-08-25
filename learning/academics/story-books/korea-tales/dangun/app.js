@@ -299,14 +299,6 @@ function spreadPage(chapter, beat, isFirst) {
         </div>`;
 }
 
-function reflectionPage(chapter) {
-    return `
-        <div class="page page-reflection">
-            <h2>이야기를 다 읽고</h2>
-            <p class="reflection-moral">${chapter.moral}</p>
-            <p class="reflection-question">${chapter.question}</p>
-        </div>`;
-}
 
 const QUIZ = [
     { q: "환웅이 하늘에서 데리고 내려온 이들은 누구인가요?", choices: ["곰과 호랑이와 사슴을 맡은 이", "바람과 비와 구름을 맡은 이", "해와 달과 별을 맡은 이"], answer: 1 },
@@ -364,16 +356,17 @@ const AFTERWORD = {
     emoji: '🐻',
     spreads: [
         {
-            art: 'end.png',
             left: [
                 "단군 이야기가 글로 처음 적힌 것은 팔백 년쯤 전입니다. 일연 스님이 『삼국유사』에 적었고 비슷한 무렵 이승휴도 적었습니다. 그전까지는 입에서 입으로만 전해 온 것이지요.",
                 "곰과 호랑이가 먹은 것을 이 책에서는 쑥과 마늘이라 했습니다. 그런데 그 시절 이 땅에 마늘이 있었는지를 두고는 말이 갈립니다. 원래 글자를 달래나 다른 매운 풀로 읽어야 한다는 학자들도 있습니다.",
-                "다시 보면 곰은 아무 재주도 부리지 않았습니다. 그저 굴에 남아 있었을 뿐입니다. 이 이야기가 상을 준 것은 힘이나 재주가 아니라 견디는 일이었습니다.",
-                "환웅이 데려온 셋도 눈여겨볼 만합니다. 바람과 비와 구름을 맡은 신하들이지요. 셋 다 농사에 필요한 것입니다. 하늘에서 내려온 이가 가장 먼저 챙긴 것이 농사였던 셈입니다."
+                "다시 보면 곰은 아무 재주도 부리지 않았습니다. 그저 굴에 남아 있었을 뿐입니다. 이 이야기가 상을 준 것은 힘이나 재주가 아니라 견디는 일이었습니다."
             ],
             right: [
+                "환웅이 데려온 셋도 눈여겨볼 만합니다. 바람과 비와 구름을 맡은 신하들이지요. 셋 다 농사에 필요한 것입니다. 하늘에서 내려온 이가 가장 먼저 챙긴 것이 농사였던 셈입니다.",
                 "고조선을 세웠다는 그날을 기려 시월 삼일을 개천절로 삼았습니다. 하늘이 열린 날이라는 뜻입니다.",
-                "호랑이는 왜 굴을 뛰쳐나갔을까요? 하루만 더 참으면 되는 날도 있었을 텐데요. 답은 적어 두지 않겠습니다."
+                "호랑이는 왜 굴을 뛰쳐나갔을까요? 하루만 더 참으면 되는 날도 있었을 텐데요.",
+                "호랑이는 첫날 가장 자신 있어 했고 곰은 아무 말 없이 앉아 있었습니다. 끝까지 남는 쪽은 큰소리치던 쪽이 아니라 조용히 견디던 쪽인 경우가 많습니다.",
+                "당장은 재미없어도 오래 해 볼 만한 일이 나에게도 있을까요?"
             ]
         }
     ]
@@ -381,8 +374,6 @@ const AFTERWORD = {
 
 function afterPage(spread, isFirst) {
     const head = isFirst ? `<h2>${AFTERWORD.title}</h2>` : '';
-    // 그림은 오른쪽 위 모서리에 꽉 붙인다. 글은 그 아래로 이어진다.
-    const art = spread.art ? `<div class="after-art">${artFrame(spread.art, AFTERWORD.emoji)}</div>` : '';
     const col = (ps) => ps.map(t => `<p>${t}</p>`).join('');
     return `
         <div class="page page-after">
@@ -390,8 +381,7 @@ function afterPage(spread, isFirst) {
                 ${head}
                 ${col(spread.left)}
             </div>
-            <div class="after-col after-col-right${spread.art ? ' after-col-image' : ''}">
-                ${art}
+            <div class="after-col after-col-right">
                 ${col(spread.right)}
             </div>
         </div>`;
@@ -400,7 +390,6 @@ function afterPage(spread, isFirst) {
 const PAGES = [
     { kind: 'cover' },
     ...CHAPTERS.flatMap(chapter => chapter.beats.map((beat, i) => ({ kind: 'spread', chapter, beat, isFirst: i === 0 }))),
-    { kind: 'reflection', chapter: CHAPTERS[CHAPTERS.length - 1] },
     { kind: 'history' },
     { kind: 'quiz' },
     ...AFTERWORD.spreads.map((spread, i) => ({ kind: 'after', spread, isFirst: i === 0 })),
@@ -423,8 +412,6 @@ function renderPage(page) {
             return coverPage();
         case 'spread':
             return spreadPage(page.chapter, page.beat, page.isFirst);
-        case 'reflection':
-            return reflectionPage(page.chapter);
         case 'history':
             return historyPage();
         case 'after':

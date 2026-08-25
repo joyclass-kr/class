@@ -345,14 +345,6 @@ function spreadPage(chapter, beat, isFirst) {
         </div>`;
 }
 
-function reflectionPage(chapter) {
-    return `
-        <div class="page page-reflection">
-            <h2>이야기를 다 읽고</h2>
-            <p class="reflection-moral">${chapter.moral}</p>
-            <p class="reflection-question">${chapter.question}</p>
-        </div>`;
-}
 
 const QUIZ = [
     { q: "임금님의 귀는 어떻게 되었나요?", choices: ["토끼 귀처럼 뾰족해졌다", "당나귀 귀처럼 길어졌다", "아예 들리지 않게 됐다"], answer: 1 },
@@ -395,16 +387,17 @@ const AFTERWORD = {
     emoji: '🎋',
     spreads: [
         {
-            art: 'end.png',
             left: [
                 "이 이야기의 뿌리는 아주 멉니다. 그리스에는 임금 미다스가 당나귀 귀를 얻었다는 이야기가 있는데, 거기서도 이발사가 구덩이에 대고 소리치고 갈대가 그 말을 옮깁니다.",
                 "그 이야기가 여러 나라를 건너 우리 땅에 오면서 갈대가 대나무로 바뀌었습니다. 우리 쪽 기록은 『삼국유사』에 있습니다. 신라 경문왕 이야기로 실려 있지요.",
-                "다시 보면 임금이 두려워한 것은 귀가 아니라 소문이었습니다. 그래서 대나무를 베었습니다. 그랬더니 산수유가 대신 소리를 냈습니다.",
-                "감추려 한 것이 아니라 감추려 한 일 자체가 소문을 키웠습니다. 소리를 없애려고 벤 것이 소리를 한 번 더 낸 셈이지요."
+                "다시 보면 임금이 두려워한 것은 귀가 아니라 소문이었습니다. 그래서 대나무를 베었습니다. 그랬더니 산수유가 대신 소리를 냈습니다."
             ],
             right: [
+                "감추려 한 것이 아니라 감추려 한 일 자체가 소문을 키웠습니다. 소리를 없애려고 벤 것이 소리를 한 번 더 낸 셈이지요.",
                 "마지막에 임금이 스스로 밝히자 아무 일도 아니게 되었습니다. 그 순간 소문이 갈 곳을 잃은 것입니다.",
-                "이발사는 왜 그 말을 참지 못했을까요? 답은 적어 두지 않겠습니다."
+                "임금은 대나무를 베어 소리를 없애려 했지만 소리는 산수유에서 다시 났습니다. 감추려 할수록 커지던 일이 인정하는 순간 아무것도 아닌 일이 되었습니다.",
+                "이발사는 왜 그 말을 참지 못했을까요?",
+                "남에게 감추고 싶은 것이 있나요? 그것을 그냥 인정하면 어떻게 될까요?"
             ]
         }
     ]
@@ -412,8 +405,6 @@ const AFTERWORD = {
 
 function afterPage(spread, isFirst) {
     const head = isFirst ? `<h2>${AFTERWORD.title}</h2>` : '';
-    // 그림은 오른쪽 위 모서리에 꽉 붙인다. 글은 그 아래로 이어진다.
-    const art = spread.art ? `<div class="after-art">${artFrame(spread.art, AFTERWORD.emoji)}</div>` : '';
     const col = (ps) => ps.map(t => `<p>${t}</p>`).join('');
     return `
         <div class="page page-after">
@@ -421,8 +412,7 @@ function afterPage(spread, isFirst) {
                 ${head}
                 ${col(spread.left)}
             </div>
-            <div class="after-col after-col-right${spread.art ? ' after-col-image' : ''}">
-                ${art}
+            <div class="after-col after-col-right">
                 ${col(spread.right)}
             </div>
         </div>`;
@@ -431,7 +421,6 @@ function afterPage(spread, isFirst) {
 const PAGES = [
     { kind: 'cover' },
     ...CHAPTERS.flatMap(chapter => chapter.beats.map((beat, i) => ({ kind: 'spread', chapter, beat, isFirst: i === 0 }))),
-    { kind: 'reflection', chapter: CHAPTERS[CHAPTERS.length - 1] },
     { kind: 'quiz' },
     ...AFTERWORD.spreads.map((spread, i) => ({ kind: 'after', spread, isFirst: i === 0 })),
     { kind: 'end' }
@@ -453,8 +442,6 @@ function renderPage(page) {
             return coverPage();
         case 'spread':
             return spreadPage(page.chapter, page.beat, page.isFirst);
-        case 'reflection':
-            return reflectionPage(page.chapter);
         case 'after':
             return afterPage(page.spread, page.isFirst);
         case 'quiz':

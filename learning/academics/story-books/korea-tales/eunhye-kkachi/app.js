@@ -246,14 +246,6 @@ function spreadPage(chapter, beat, isFirst) {
         </div>`;
 }
 
-function reflectionPage(chapter) {
-    return `
-        <div class="page page-reflection">
-            <h2>이야기를 다 읽고</h2>
-            <p class="reflection-moral">${chapter.moral}</p>
-            <p class="reflection-question">${chapter.question}</p>
-        </div>`;
-}
 
 const QUIZ = [
     { q: "선비는 어디로 가는 길이었나요?", choices: ["장사하러 시골", "과거 보러 한양", "친척집 잔치"], answer: 1 },
@@ -296,16 +288,16 @@ const AFTERWORD = {
     emoji: '🔔',
     spreads: [
         {
-            art: 'end.webp',
             left: [
                 "이 이야기는 강원도 원주 치악산에 얽혀 전해 옵니다. 산 이름이 원래는 붉을 적 자를 쓴 적악산이었는데, 이 일이 있고 나서 꿩 치 자를 쓴 치악산이 되었다고 합니다.",
                 "그래서 이 이야기는 책마다 새가 다릅니다. 까치인 판본도 있고 꿩인 판본도 있습니다. 산 이름을 따라가면 꿩 쪽이 먼저였을 것입니다.",
-                "다시 보면 선비는 갚음을 바라고 활을 쏜 것이 아닙니다. 지나가다 보았을 뿐입니다. 그런데 그날 밤 목숨을 건진 것은 선비였습니다.",
-                "그리고 종을 울린 새들도 갚음을 셈한 것이 아닙니다. 셈을 했다면 그 방법을 고르지 않았을 것입니다."
+                "종을 울린 새들도 갚음을 셈하지 않았습니다. 셈을 했다면 그 방법을 고르지 않았을 것입니다."
             ],
             right: [
                 "산에 이름을 남긴 이야기입니다. 옛사람들은 이렇게 이야기를 땅에 붙여 두었습니다. 그러면 그 땅이 있는 한 이야기도 남습니다.",
-                "구렁이는 남편을 잃은 쪽이었습니다. 그 원망은 잘못된 것일까요? 답은 적어 두지 않겠습니다."
+                "베푼 마음은 어디로든 돌아옵니다. 선비는 아무 대가도 바라지 않고 까치를 구했는데, 그날 밤 목숨을 구한 것은 선비였습니다.",
+                "구렁이는 남편을 잃은 쪽이었습니다. 그 원망은 잘못된 것일까요?",
+                "누군가에게 아무 대가 없이 도움을 준 적이 있나요?"
             ]
         }
     ]
@@ -313,8 +305,6 @@ const AFTERWORD = {
 
 function afterPage(spread, isFirst) {
     const head = isFirst ? `<h2>${AFTERWORD.title}</h2>` : '';
-    // 그림은 오른쪽 위 모서리에 꽉 붙인다. 글은 그 아래로 이어진다.
-    const art = spread.art ? `<div class="after-art">${artFrame(spread.art, AFTERWORD.emoji)}</div>` : '';
     const col = (ps) => ps.map(t => `<p>${t}</p>`).join('');
     return `
         <div class="page page-after">
@@ -322,8 +312,7 @@ function afterPage(spread, isFirst) {
                 ${head}
                 ${col(spread.left)}
             </div>
-            <div class="after-col after-col-right${spread.art ? ' after-col-image' : ''}">
-                ${art}
+            <div class="after-col after-col-right">
                 ${col(spread.right)}
             </div>
         </div>`;
@@ -332,7 +321,6 @@ function afterPage(spread, isFirst) {
 const PAGES = [
     { kind: 'cover' },
     ...CHAPTERS.flatMap(chapter => chapter.beats.map((beat, i) => ({ kind: 'spread', chapter, beat, isFirst: i === 0 }))),
-    { kind: 'reflection', chapter: CHAPTERS[CHAPTERS.length - 1] },
     { kind: 'quiz' },
     ...AFTERWORD.spreads.map((spread, i) => ({ kind: 'after', spread, isFirst: i === 0 })),
     { kind: 'end' }
@@ -354,8 +342,6 @@ function renderPage(page) {
             return coverPage();
         case 'spread':
             return spreadPage(page.chapter, page.beat, page.isFirst);
-        case 'reflection':
-            return reflectionPage(page.chapter);
         case 'after':
             return afterPage(page.spread, page.isFirst);
         case 'quiz':

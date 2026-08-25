@@ -277,14 +277,6 @@ function spreadPage(chapter, beat, isFirst) {
         </div>`;
 }
 
-function reflectionPage(chapter) {
-    return `
-        <div class="page page-reflection">
-            <h2>이야기를 다 읽고</h2>
-            <p class="reflection-moral">${chapter.moral}</p>
-            <p class="reflection-question">${chapter.question}</p>
-        </div>`;
-}
 
 const QUIZ = [
     { q: "할머니가 낳은 아이는 어떤 모습이었나요?", choices: ["조그만 두꺼비", "커다란 구렁이", "몸이 반쪽인 아이"], answer: 1 },
@@ -329,16 +321,16 @@ const AFTERWORD = {
     emoji: '🐍',
     spreads: [
         {
-            art: 'end.png',
             left: [
                 "흉하게 생긴 신랑이 알고 보니 아주 귀한 사람이었다는 이야기는 세계 곳곳에 있습니다. 서양의 미녀와 야수도 같은 갈래이고, 더 거슬러 가면 그리스의 옛이야기까지 닿습니다.",
                 "그런 이야기들의 뒷부분도 서로 닮았습니다. 신부가 금기를 어겨 신랑을 잃고, 먼 길을 떠나 되찾아 옵니다. 잃는 쪽도 되찾는 쪽도 신부입니다.",
-                "다시 보면 셋째 딸이 한 일은 대단한 것이 아닙니다. 언니들이 침을 뱉을 때 구렁덩덩 신선비라고 불러 준 것뿐입니다.",
-                "그런데 그 한마디로 뒤가 갈렸습니다. 같은 것을 보고도 무어라 부르느냐에 따라 그다음이 달라진 것이지요."
+                "신부가 어긴 금기는 허물을 태우지 말라는 것이었습니다. 허물은 벗어 놓은 껍질인데 옛사람들은 그것을 함부로 하면 안 되는 것으로 여겼습니다."
             ],
             right: [
                 "허물을 태운 것이 언니들이었다는 것도 눈여겨볼 만합니다. 흉하다고 한 쪽이 끝내 그것을 없애려 했습니다.",
-                "셋째 딸은 정말 무섭지 않았을까요? 답은 적어 두지 않겠습니다."
+                "언니들은 허물이 흉하다고 침을 뱉었고 셋째는 그것을 구렁덩덩 신선비라고 불러 주었습니다. 같은 것을 보고도 무어라 부르느냐에 따라 그 뒤가 달라졌습니다. 부르는 말에는 그런 힘이 있습니다.",
+                "셋째 딸은 정말 무섭지 않았을까요?",
+                "남이 흉하다고 한 것을 나는 다르게 본 적이 있나요?"
             ]
         }
     ]
@@ -346,8 +338,6 @@ const AFTERWORD = {
 
 function afterPage(spread, isFirst) {
     const head = isFirst ? `<h2>${AFTERWORD.title}</h2>` : '';
-    // 그림은 오른쪽 위 모서리에 꽉 붙인다. 글은 그 아래로 이어진다.
-    const art = spread.art ? `<div class="after-art">${artFrame(spread.art, AFTERWORD.emoji)}</div>` : '';
     const col = (ps) => ps.map(t => `<p>${t}</p>`).join('');
     return `
         <div class="page page-after">
@@ -355,8 +345,7 @@ function afterPage(spread, isFirst) {
                 ${head}
                 ${col(spread.left)}
             </div>
-            <div class="after-col after-col-right${spread.art ? ' after-col-image' : ''}">
-                ${art}
+            <div class="after-col after-col-right">
                 ${col(spread.right)}
             </div>
         </div>`;
@@ -365,7 +354,6 @@ function afterPage(spread, isFirst) {
 const PAGES = [
     { kind: 'cover' },
     ...CHAPTERS.flatMap(chapter => chapter.beats.map((beat, i) => ({ kind: 'spread', chapter, beat, isFirst: i === 0 }))),
-    { kind: 'reflection', chapter: CHAPTERS[CHAPTERS.length - 1] },
     { kind: 'quiz' },
     ...AFTERWORD.spreads.map((spread, i) => ({ kind: 'after', spread, isFirst: i === 0 })),
     { kind: 'end' }
@@ -387,8 +375,6 @@ function renderPage(page) {
             return coverPage();
         case 'spread':
             return spreadPage(page.chapter, page.beat, page.isFirst);
-        case 'reflection':
-            return reflectionPage(page.chapter);
         case 'after':
             return afterPage(page.spread, page.isFirst);
         case 'quiz':

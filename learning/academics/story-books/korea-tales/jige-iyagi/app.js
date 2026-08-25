@@ -275,14 +275,6 @@ function spreadPage(chapter, beat, isFirst) {
         </div>`;
 }
 
-function reflectionPage(chapter) {
-    return `
-        <div class="page page-reflection">
-            <h2>이야기를 다 읽고</h2>
-            <p class="reflection-moral">${chapter.moral}</p>
-            <p class="reflection-question">${chapter.question}</p>
-        </div>`;
-}
 
 const QUIZ = [
     { q: "그 고장에 떠돌던 말은 무엇이었나요?", choices: ["산에 가면 오래 산다는 말", "늙은 부모는 산에 모신다는 말", "노인은 절에 보낸다는 말"], answer: 1 },
@@ -325,16 +317,15 @@ const AFTERWORD = {
     emoji: '🎒',
     spreads: [
         {
-            art: 'end.png',
             left: [
                 "늙은 부모를 산에 버리는 이야기는 우리나라에도 있고 일본과 중국에도 있습니다. 아주 널리 퍼진 이야기 틀입니다.",
                 "그런 이야기들의 끝은 대개 같습니다. 버리러 간 사람이 무언가를 보고 되돌아옵니다. 버리는 이야기가 아니라 되돌아오는 이야기인 것이지요.",
-                "다시 보면 아이는 나쁜 말을 한 것이 아닙니다. 본 대로 말했을 뿐입니다. 아버지가 하는 일을 그대로 배워 두려던 것입니다.",
-                "그날 아들을 세운 것은 꾸중이 아니었습니다. 제 아이의 한마디였습니다. 어른이 하는 일은 그대로 아이에게 옮겨 갑니다."
+                "지게를 도로 가져오라고 한 아이의 말이 이 이야기에서 가장 무서운 대목입니다."
             ],
             right: [
-                "지게를 도로 가져오라고 한 아이의 말이 이 이야기에서 가장 무서운 대목입니다.",
-                "아들은 그 지게를 어떻게 했을까요? 답은 적어 두지 않겠습니다."
+                "아이는 나쁜 말을 한 것이 아니라 본 대로 말했을 뿐입니다. 어른이 하는 일은 그대로 아이에게 옮겨 갑니다. 그날 아들을 되돌려 세운 것은 꾸중이 아니라 제 아이의 한마디였습니다.",
+                "아들은 그 지게를 어떻게 했을까요?",
+                "내가 하는 행동을 누군가 보고 그대로 따라 한다면 어떤 모습일까요?"
             ]
         }
     ]
@@ -342,8 +333,6 @@ const AFTERWORD = {
 
 function afterPage(spread, isFirst) {
     const head = isFirst ? `<h2>${AFTERWORD.title}</h2>` : '';
-    // 그림은 오른쪽 위 모서리에 꽉 붙인다. 글은 그 아래로 이어진다.
-    const art = spread.art ? `<div class="after-art">${artFrame(spread.art, AFTERWORD.emoji)}</div>` : '';
     const col = (ps) => ps.map(t => `<p>${t}</p>`).join('');
     return `
         <div class="page page-after">
@@ -351,8 +340,7 @@ function afterPage(spread, isFirst) {
                 ${head}
                 ${col(spread.left)}
             </div>
-            <div class="after-col after-col-right${spread.art ? ' after-col-image' : ''}">
-                ${art}
+            <div class="after-col after-col-right">
                 ${col(spread.right)}
             </div>
         </div>`;
@@ -361,7 +349,6 @@ function afterPage(spread, isFirst) {
 const PAGES = [
     { kind: 'cover' },
     ...CHAPTERS.flatMap(chapter => chapter.beats.map((beat, i) => ({ kind: 'spread', chapter, beat, isFirst: i === 0 }))),
-    { kind: 'reflection', chapter: CHAPTERS[CHAPTERS.length - 1] },
     { kind: 'quiz' },
     ...AFTERWORD.spreads.map((spread, i) => ({ kind: 'after', spread, isFirst: i === 0 })),
     { kind: 'end' }
@@ -383,8 +370,6 @@ function renderPage(page) {
             return coverPage();
         case 'spread':
             return spreadPage(page.chapter, page.beat, page.isFirst);
-        case 'reflection':
-            return reflectionPage(page.chapter);
         case 'after':
             return afterPage(page.spread, page.isFirst);
         case 'quiz':

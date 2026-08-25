@@ -239,14 +239,6 @@ function spreadPage(chapter, beat, isFirst) {
         </div>`;
 }
 
-function reflectionPage(chapter) {
-    return `
-        <div class="page page-reflection">
-            <h2>이야기를 다 읽고</h2>
-            <p class="reflection-moral">${chapter.moral}</p>
-            <p class="reflection-question">${chapter.question}</p>
-        </div>`;
-}
 
 const QUIZ = [
     { q: "할머니에게는 딸이 몇 있었나요?", choices: ["둘", "셋", "넷"], answer: 1 },
@@ -289,16 +281,16 @@ const AFTERWORD = {
     emoji: '🌸',
     spreads: [
         {
-            art: 'end.webp',
             left: [
                 "할미꽃은 실제로 있는 꽃입니다. 이른 봄에 피는데 꽃이 아래로 폭 숙여 고개를 들지 않습니다. 꽃이 지고 나면 흰 털이 부수수 남습니다.",
                 "그 모습이 허리 굽은 할머니의 흰머리 같다고 하여 할미꽃이라 불렀습니다. 이 이야기는 그 이름과 그 모양을 함께 풀어 주는 이야기입니다.",
-                "다시 보면 할머니는 세 딸을 똑같이 키웠습니다. 그런데 언덕을 넘어와 준 것은 한 사람이었습니다.",
                 "이야기는 두 딸을 나무라지 않습니다. 다만 할머니가 어느 집 문 앞까지 갔다가 돌아섰는지를 조용히 적어 둘 뿐입니다."
             ],
             right: [
                 "무덤가에 피는 꽃이라는 말도 함께 전해 옵니다. 그래서 이 꽃을 보면 이 이야기가 따라옵니다.",
-                "두 딸은 왜 어머니를 들이지 않았을까요? 답은 적어 두지 않겠습니다."
+                "할머니는 세 딸을 똑같이 키웠지만 언덕을 넘어와 준 것은 한 사람이었습니다. 받은 것을 기억하는 마음은 저절로 생기지 않습니다.",
+                "두 딸은 왜 어머니를 들이지 않았을까요?",
+                "나를 키워 준 사람에게 오늘 무엇을 해 드릴 수 있을까요?"
             ]
         }
     ]
@@ -306,8 +298,6 @@ const AFTERWORD = {
 
 function afterPage(spread, isFirst) {
     const head = isFirst ? `<h2>${AFTERWORD.title}</h2>` : '';
-    // 그림은 오른쪽 위 모서리에 꽉 붙인다. 글은 그 아래로 이어진다.
-    const art = spread.art ? `<div class="after-art">${artFrame(spread.art, AFTERWORD.emoji)}</div>` : '';
     const col = (ps) => ps.map(t => `<p>${t}</p>`).join('');
     return `
         <div class="page page-after">
@@ -315,8 +305,7 @@ function afterPage(spread, isFirst) {
                 ${head}
                 ${col(spread.left)}
             </div>
-            <div class="after-col after-col-right${spread.art ? ' after-col-image' : ''}">
-                ${art}
+            <div class="after-col after-col-right">
                 ${col(spread.right)}
             </div>
         </div>`;
@@ -325,7 +314,6 @@ function afterPage(spread, isFirst) {
 const PAGES = [
     { kind: 'cover' },
     ...CHAPTERS.flatMap(chapter => chapter.beats.map((beat, i) => ({ kind: 'spread', chapter, beat, isFirst: i === 0 }))),
-    { kind: 'reflection', chapter: CHAPTERS[CHAPTERS.length - 1] },
     { kind: 'quiz' },
     ...AFTERWORD.spreads.map((spread, i) => ({ kind: 'after', spread, isFirst: i === 0 })),
     { kind: 'end' }
@@ -347,8 +335,6 @@ function renderPage(page) {
             return coverPage();
         case 'spread':
             return spreadPage(page.chapter, page.beat, page.isFirst);
-        case 'reflection':
-            return reflectionPage(page.chapter);
         case 'after':
             return afterPage(page.spread, page.isFirst);
         case 'quiz':

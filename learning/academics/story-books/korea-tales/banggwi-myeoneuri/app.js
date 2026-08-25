@@ -270,14 +270,6 @@ function spreadPage(chapter, beat, isFirst) {
         </div>`;
 }
 
-function reflectionPage(chapter) {
-    return `
-        <div class="page page-reflection">
-            <h2>이야기를 다 읽고</h2>
-            <p class="reflection-moral">${chapter.moral}</p>
-            <p class="reflection-question">${chapter.question}</p>
-        </div>`;
-}
 
 const QUIZ = [
     { q: "며느리의 얼굴이 노래진 까닭은 무엇인가요?", choices: ["밥을 못 먹어서", "방귀를 참아서", "잠을 못 자서"], answer: 1 },
@@ -320,16 +312,17 @@ const AFTERWORD = {
     emoji: '🍐',
     spreads: [
         {
-            art: 'end.webp',
             left: [
                 "이런 이야기를 소화라고 합니다. 웃기려고 지은 이야기라는 뜻입니다. 우리 옛이야기에는 교훈을 주려는 것 못지않게 그저 웃자고 만든 것이 많습니다.",
                 "그런데 웃자고 만든 이야기가 오히려 그 시절을 잘 보여 줄 때가 있습니다. 이 이야기가 그렇습니다. 며느리가 시집에서 방귀조차 마음대로 뀔 수 없었다는 것부터가 그 시절 이야기입니다.",
-                "다시 보면 며느리는 아무 잘못도 하지 않았습니다. 참느라 얼굴이 노래질 때까지 참았습니다. 흠이 된 것은 방귀가 아니라 참으라고 한 쪽이었습니다.",
-                "그리고 그 방귀는 밖에 나가자마자 쓸모가 생겼습니다. 같은 재주가 안에서는 내쫓길 까닭이었다가 밖에서는 값을 받는 재주가 된 것이지요."
+                "다시 보면 며느리는 아무 잘못도 하지 않았습니다. 참느라 얼굴이 노래질 때까지 참았습니다. 흠이 된 것은 방귀가 아니라 참으라고 한 쪽이었습니다."
             ],
             right: [
+                "그리고 그 방귀는 밖에 나가자마자 쓸모가 생겼습니다. 같은 재주가 안에서는 내쫓길 까닭이었다가 밖에서는 값을 받는 재주가 된 것이지요.",
                 "옛이야기에서 며느리는 대개 시달리는 쪽으로 나옵니다. 그런데 이 이야기에서는 며느리가 판을 뒤집습니다. 듣는 사람 가운데 며느리가 많았기 때문일 것입니다.",
-                "시집 식구들은 며느리를 다시 데려오면서 무슨 생각을 했을까요? 답은 적어 두지 않겠습니다."
+                "식구들이 흠이라 여겨 내보내려 한 것이, 밖에 나가 보니 누구도 못 하는 재주였습니다. 남과 다른 것을 흠으로 볼지 재주로 볼지는 보는 사람에게 달렸습니다.",
+                "시집 식구들은 며느리를 다시 데려오면서 무슨 생각을 했을까요?",
+                "남과 달라서 감추고 싶었던 것이 있나요? 그것이 쓸모 있는 자리는 어디일까요?"
             ]
         }
     ]
@@ -337,8 +330,6 @@ const AFTERWORD = {
 
 function afterPage(spread, isFirst) {
     const head = isFirst ? `<h2>${AFTERWORD.title}</h2>` : '';
-    // 그림은 오른쪽 위 모서리에 꽉 붙인다. 글은 그 아래로 이어진다.
-    const art = spread.art ? `<div class="after-art">${artFrame(spread.art, AFTERWORD.emoji)}</div>` : '';
     const col = (ps) => ps.map(t => `<p>${t}</p>`).join('');
     return `
         <div class="page page-after">
@@ -346,8 +337,7 @@ function afterPage(spread, isFirst) {
                 ${head}
                 ${col(spread.left)}
             </div>
-            <div class="after-col after-col-right${spread.art ? ' after-col-image' : ''}">
-                ${art}
+            <div class="after-col after-col-right">
                 ${col(spread.right)}
             </div>
         </div>`;
@@ -356,7 +346,6 @@ function afterPage(spread, isFirst) {
 const PAGES = [
     { kind: 'cover' },
     ...CHAPTERS.flatMap(chapter => chapter.beats.map((beat, i) => ({ kind: 'spread', chapter, beat, isFirst: i === 0 }))),
-    { kind: 'reflection', chapter: CHAPTERS[CHAPTERS.length - 1] },
     { kind: 'quiz' },
     ...AFTERWORD.spreads.map((spread, i) => ({ kind: 'after', spread, isFirst: i === 0 })),
     { kind: 'end' }
@@ -378,8 +367,6 @@ function renderPage(page) {
             return coverPage();
         case 'spread':
             return spreadPage(page.chapter, page.beat, page.isFirst);
-        case 'reflection':
-            return reflectionPage(page.chapter);
         case 'after':
             return afterPage(page.spread, page.isFirst);
         case 'quiz':

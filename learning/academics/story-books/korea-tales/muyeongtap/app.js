@@ -308,14 +308,6 @@ function spreadPage(chapter, beat, isFirst) {
         </div>`;
 }
 
-function reflectionPage(chapter) {
-    return `
-        <div class="page page-reflection">
-            <h2>이야기를 다 읽고</h2>
-            <p class="reflection-moral">${chapter.moral}</p>
-            <p class="reflection-question">${chapter.question}</p>
-        </div>`;
-}
 
 const QUIZ = [
     { q: "아사달은 무엇을 하는 사람인가요?", choices: ["나무를 깎는 목수", "돌을 다듬는 석수", "그림을 그리는 화가"], answer: 1 },
@@ -358,16 +350,15 @@ const AFTERWORD = {
     emoji: '🗼',
     spreads: [
         {
-            art: 'end.png',
             left: [
                 "무영탑은 그림자 없는 탑이라는 뜻입니다. 경주 불국사에 실제로 서 있는 석가탑을 그렇게 부릅니다. 신라 때 세운 탑이고 지금도 그 자리에 있습니다.",
-                "탑을 세운 이가 백제 땅에서 온 아사달이라는 사람이었고 그 아내가 아사녀였다는 이야기가 전해 옵니다. 다만 이 이야기가 옛 기록에 그대로 실려 있는 것은 아닙니다.",
-                "다시 보면 아사녀가 못가에서 몇 해를 기다린 것은 탑을 보려는 것이 아니었습니다. 탑이 비치면 일이 끝나고 남편이 나온다고 들었기 때문입니다.",
-                "그러니 기다림이 향한 곳은 처음부터 탑이 아니라 사람이었습니다."
+                "탑을 세운 이가 백제 땅에서 온 아사달이라는 사람이었고 그 아내가 아사녀였다는 이야기가 전해 옵니다. 다만 이 이야기가 옛 기록에 그대로 실려 있는 것은 아닙니다."
             ],
             right: [
                 "불국사 앞에는 지금도 영지라는 못이 있습니다. 이야기가 땅에 붙어 남은 자리입니다.",
-                "아사달은 탑을 다 세우고 무엇을 얻었을까요? 답은 적어 두지 않겠습니다."
+                "아사녀가 못가에서 본 것은 탑이 아니었습니다. 몇 해를 기다린 끝에 물에 비친 것은 결국 사람이었습니다. 기다림이 향하는 곳은 늘 물건이 아니라 사람입니다.",
+                "아사달은 탑을 다 세우고 무엇을 얻었을까요?",
+                "내가 오래 기다려 본 것은 무엇인가요?"
             ]
         }
     ]
@@ -375,8 +366,6 @@ const AFTERWORD = {
 
 function afterPage(spread, isFirst) {
     const head = isFirst ? `<h2>${AFTERWORD.title}</h2>` : '';
-    // 그림은 오른쪽 위 모서리에 꽉 붙인다. 글은 그 아래로 이어진다.
-    const art = spread.art ? `<div class="after-art">${artFrame(spread.art, AFTERWORD.emoji)}</div>` : '';
     const col = (ps) => ps.map(t => `<p>${t}</p>`).join('');
     return `
         <div class="page page-after">
@@ -384,8 +373,7 @@ function afterPage(spread, isFirst) {
                 ${head}
                 ${col(spread.left)}
             </div>
-            <div class="after-col after-col-right${spread.art ? ' after-col-image' : ''}">
-                ${art}
+            <div class="after-col after-col-right">
                 ${col(spread.right)}
             </div>
         </div>`;
@@ -394,7 +382,6 @@ function afterPage(spread, isFirst) {
 const PAGES = [
     { kind: 'cover' },
     ...CHAPTERS.flatMap(chapter => chapter.beats.map((beat, i) => ({ kind: 'spread', chapter, beat, isFirst: i === 0 }))),
-    { kind: 'reflection', chapter: CHAPTERS[CHAPTERS.length - 1] },
     { kind: 'quiz' },
     ...AFTERWORD.spreads.map((spread, i) => ({ kind: 'after', spread, isFirst: i === 0 })),
     { kind: 'end' }
@@ -416,8 +403,6 @@ function renderPage(page) {
             return coverPage();
         case 'spread':
             return spreadPage(page.chapter, page.beat, page.isFirst);
-        case 'reflection':
-            return reflectionPage(page.chapter);
         case 'after':
             return afterPage(page.spread, page.isFirst);
         case 'quiz':

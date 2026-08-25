@@ -278,14 +278,6 @@ function spreadPage(chapter, beat, isFirst) {
         </div>`;
 }
 
-function reflectionPage(chapter) {
-    return `
-        <div class="page page-reflection">
-            <h2>이야기를 다 읽고</h2>
-            <p class="reflection-moral">${chapter.moral}</p>
-            <p class="reflection-question">${chapter.question}</p>
-        </div>`;
-}
 
 const QUIZ = [
     { q: "반쪽이가 반쪽으로 태어난 까닭은 무엇인가요?", choices: ["하늘에서 벌을 내렸기 때문에", "어머니가 잉어를 다 못 먹어서", "형들이 몹시 시샘을 해서"], answer: 1 },
@@ -330,16 +322,16 @@ const AFTERWORD = {
     emoji: '💪',
     spreads: [
         {
-            art: 'end.png',
             left: [
                 "반쪽이는 우리 옛이야기 가운데서도 유난히 눈에 띄는 주인공입니다. 몸이 남과 다른 사람이 힘도 세고 꾀도 밝은 주인공으로 나오는 이야기는 흔치 않기 때문입니다.",
                 "이야기는 반쪽이를 한 번도 불쌍하게 그리지 않습니다. 형들이 놀려도, 사람들이 손가락질해도 반쪽이는 주눅 들지 않습니다. 호랑이를 잡아 오는 것도 반쪽이입니다.",
-                "다시 보면 이 이야기에서 잘못한 사람은 김 부자 하나입니다. 호랑이를 잡아 오면 딸을 주겠다고 먼저 말한 사람이 그 사람입니다. 잡아 오자 말을 바꾼 것도 그 사람이고요.",
-                "약속을 사람의 생김새로 물리는 것은 처음부터 약속이 아니었다는 뜻입니다. 반쪽이가 신부를 업고 나온 것은 빼앗은 것이 아니라 받기로 한 것을 받은 것이지요."
+                "다시 보면 이 이야기에서 잘못한 사람은 김 부자 하나입니다. 호랑이를 잡아 오면 딸을 주겠다고 먼저 말한 사람이 그 사람입니다. 잡아 오자 말을 바꾼 것도 그 사람이고요."
             ],
             right: [
                 "몸이 반쪽인 채로 태어난 아이가 씩씩하게 살아가는 이야기를 옛사람들이 지어 전했다는 것은 그 자체로 눈여겨볼 만한 일입니다.",
-                "김 부자는 왜 약속을 지키지 않았을까요? 무엇이 그렇게 부끄러웠을까요. 답은 적어 두지 않겠습니다."
+                "김 부자는 왜 약속을 지키지 않았을까요? 무엇이 그렇게 부끄러웠을까요.",
+                "김 부자는 호랑이를 잡은 사람을 찾다가, 막상 잡아 오자 그 사람의 생김새를 보았습니다. 약속을 지킬지 말지를 생김새로 정하는 것은 처음부터 약속이 아니었다는 뜻입니다.",
+                "겉모습만 보고 누군가를 잘못 판단한 적이 있나요?"
             ]
         }
     ]
@@ -347,8 +339,6 @@ const AFTERWORD = {
 
 function afterPage(spread, isFirst) {
     const head = isFirst ? `<h2>${AFTERWORD.title}</h2>` : '';
-    // 그림은 오른쪽 위 모서리에 꽉 붙인다. 글은 그 아래로 이어진다.
-    const art = spread.art ? `<div class="after-art">${artFrame(spread.art, AFTERWORD.emoji)}</div>` : '';
     const col = (ps) => ps.map(t => `<p>${t}</p>`).join('');
     return `
         <div class="page page-after">
@@ -356,8 +346,7 @@ function afterPage(spread, isFirst) {
                 ${head}
                 ${col(spread.left)}
             </div>
-            <div class="after-col after-col-right${spread.art ? ' after-col-image' : ''}">
-                ${art}
+            <div class="after-col after-col-right">
                 ${col(spread.right)}
             </div>
         </div>`;
@@ -366,7 +355,6 @@ function afterPage(spread, isFirst) {
 const PAGES = [
     { kind: 'cover' },
     ...CHAPTERS.flatMap(chapter => chapter.beats.map((beat, i) => ({ kind: 'spread', chapter, beat, isFirst: i === 0 }))),
-    { kind: 'reflection', chapter: CHAPTERS[CHAPTERS.length - 1] },
     { kind: 'quiz' },
     ...AFTERWORD.spreads.map((spread, i) => ({ kind: 'after', spread, isFirst: i === 0 })),
     { kind: 'end' }
@@ -388,8 +376,6 @@ function renderPage(page) {
             return coverPage();
         case 'spread':
             return spreadPage(page.chapter, page.beat, page.isFirst);
-        case 'reflection':
-            return reflectionPage(page.chapter);
         case 'after':
             return afterPage(page.spread, page.isFirst);
         case 'quiz':

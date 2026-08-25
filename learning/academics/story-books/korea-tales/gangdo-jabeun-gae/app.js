@@ -236,14 +236,6 @@ function spreadPage(chapter, beat, isFirst) {
         </div>`;
 }
 
-function reflectionPage(chapter) {
-    return `
-        <div class="page page-reflection">
-            <h2>이야기를 다 읽고</h2>
-            <p class="reflection-moral">${chapter.moral}</p>
-            <p class="reflection-question">${chapter.question}</p>
-        </div>`;
-}
 
 const QUIZ = [
     { q: "장수는 바둑이를 어떻게 만났나요?", choices: ["장에서 사 와서", "눈 오는 날 주워서", "이웃이 주어서"], answer: 1 },
@@ -286,16 +278,16 @@ const AFTERWORD = {
     emoji: '🐕',
     spreads: [
         {
-            art: 'end.webp',
             left: [
                 "주인을 구한 개 이야기는 우리나라에 아주 많습니다. 그런 개를 의로운 개라 하여 의견이라 불렀고, 무덤을 만들어 주고 비석까지 세운 곳도 있습니다.",
                 "전라북도 임실에는 오수라는 곳이 있는데, 마을 이름 자체가 개를 기린 데서 왔다고 전해 옵니다. 그곳에는 지금도 개를 기리는 비석이 서 있습니다.",
-                "다시 보면 이 이야기의 시작은 개가 아니라 사람입니다. 눈 오는 날 길가에서 떨던 개를 장수가 데려온 그 대목이 없으면 뒤가 다 없습니다.",
                 "그때 장수는 무엇을 바라고 데려온 것이 아닙니다. 그러니 이 이야기는 갚음을 받은 이야기가 아니라, 그날의 일이 어디까지 갔는지를 보여 주는 이야기입니다."
             ],
             right: [
                 "말을 못 하는 짐승이 사람을 구하는 이야기가 이토록 많이 남은 것은, 사람들이 그 곁을 오래 지켜보았다는 뜻이기도 합니다.",
-                "바둑이는 자기가 무엇을 하고 있는지 알았을까요? 답은 적어 두지 않겠습니다."
+                "바둑이는 눈 오는 날 길가에서 구해진 개였습니다. 그때 장수가 그냥 지나쳤다면 이날의 일도 없었을 것입니다. 베푼 마음은 잊고 지내도 어딘가에 남아 있습니다.",
+                "바둑이는 자기가 무엇을 하고 있는지 알았을까요?",
+                "내가 무심코 베푼 친절이 누군가에게 크게 남은 적이 있을까요?"
             ]
         }
     ]
@@ -303,8 +295,6 @@ const AFTERWORD = {
 
 function afterPage(spread, isFirst) {
     const head = isFirst ? `<h2>${AFTERWORD.title}</h2>` : '';
-    // 그림은 오른쪽 위 모서리에 꽉 붙인다. 글은 그 아래로 이어진다.
-    const art = spread.art ? `<div class="after-art">${artFrame(spread.art, AFTERWORD.emoji)}</div>` : '';
     const col = (ps) => ps.map(t => `<p>${t}</p>`).join('');
     return `
         <div class="page page-after">
@@ -312,8 +302,7 @@ function afterPage(spread, isFirst) {
                 ${head}
                 ${col(spread.left)}
             </div>
-            <div class="after-col after-col-right${spread.art ? ' after-col-image' : ''}">
-                ${art}
+            <div class="after-col after-col-right">
                 ${col(spread.right)}
             </div>
         </div>`;
@@ -322,7 +311,6 @@ function afterPage(spread, isFirst) {
 const PAGES = [
     { kind: 'cover' },
     ...CHAPTERS.flatMap(chapter => chapter.beats.map((beat, i) => ({ kind: 'spread', chapter, beat, isFirst: i === 0 }))),
-    { kind: 'reflection', chapter: CHAPTERS[CHAPTERS.length - 1] },
     { kind: 'quiz' },
     ...AFTERWORD.spreads.map((spread, i) => ({ kind: 'after', spread, isFirst: i === 0 })),
     { kind: 'end' }
@@ -344,8 +332,6 @@ function renderPage(page) {
             return coverPage();
         case 'spread':
             return spreadPage(page.chapter, page.beat, page.isFirst);
-        case 'reflection':
-            return reflectionPage(page.chapter);
         case 'after':
             return afterPage(page.spread, page.isFirst);
         case 'quiz':

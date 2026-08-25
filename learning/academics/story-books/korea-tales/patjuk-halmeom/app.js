@@ -350,14 +350,6 @@ function spreadPage(chapter, beat, isFirst) {
         </div>`;
 }
 
-function reflectionPage(chapter) {
-    return `
-        <div class="page page-reflection">
-            <h2>이야기를 다 읽고</h2>
-            <p class="reflection-moral">${chapter.moral}</p>
-            <p class="reflection-question">${chapter.question}</p>
-        </div>`;
-}
 
 const QUIZ = [
     { q: "할멈은 호랑이에게 무엇을 쑤어 주겠다고 했나요?", choices: ["떡국", "팥죽", "수제비"], answer: 1 },
@@ -400,16 +392,16 @@ const AFTERWORD = {
     emoji: '🌰',
     spreads: [
         {
-            art: 'end.png',
             left: [
                 "이 이야기의 도우미들을 한번 세어 보십시오. 밤, 자라, 개똥, 송곳, 멍석, 지게. 하나같이 부엌과 마당에 있던 것들입니다.",
                 "칼을 든 장수도 없고 도술을 부리는 신선도 없습니다. 할머니가 날마다 쓰던 살림살이가 그대로 도우미가 된 것이지요.",
-                "다시 보면 그 가운데 혼자서 호랑이를 어쩔 수 있는 것은 하나도 없습니다. 밤 한 알이 무엇을 하겠습니까.",
-                "그런데 저마다 제가 있던 자리에서 할 수 있는 일을 하나씩 하자 호랑이가 물러갔습니다. 밤은 화로에, 자라는 물동이에, 멍석은 마당에 있었습니다."
+                "다시 보면 그 가운데 혼자서 호랑이를 어쩔 수 있는 것은 하나도 없습니다. 밤 한 알이 무엇을 하겠습니까."
             ],
             right: [
                 "큰일이 큰 힘으로만 되는 것은 아닙니다. 저마다의 작은 몫이 차례로 놓이면 됩니다.",
-                "만약 하나라도 빠졌다면 어떻게 되었을까요? 답은 적어 두지 않겠습니다."
+                "밤도 자라도 개똥도 혼자서는 호랑이를 어쩌지 못했습니다. 그런데 저마다 제가 있던 자리에서 할 수 있는 일을 하나씩 하자 호랑이가 물러갔습니다. 큰일은 큰 힘이 아니라 여럿의 작은 몫으로 되는 일이 많습니다.",
+                "만약 하나라도 빠졌다면 어떻게 되었을까요?",
+                "여럿이 힘을 모아 해낸 일에서 내 몫은 무엇이었나요?"
             ]
         }
     ]
@@ -417,8 +409,6 @@ const AFTERWORD = {
 
 function afterPage(spread, isFirst) {
     const head = isFirst ? `<h2>${AFTERWORD.title}</h2>` : '';
-    // 그림은 오른쪽 위 모서리에 꽉 붙인다. 글은 그 아래로 이어진다.
-    const art = spread.art ? `<div class="after-art">${artFrame(spread.art, AFTERWORD.emoji)}</div>` : '';
     const col = (ps) => ps.map(t => `<p>${t}</p>`).join('');
     return `
         <div class="page page-after">
@@ -426,8 +416,7 @@ function afterPage(spread, isFirst) {
                 ${head}
                 ${col(spread.left)}
             </div>
-            <div class="after-col after-col-right${spread.art ? ' after-col-image' : ''}">
-                ${art}
+            <div class="after-col after-col-right">
                 ${col(spread.right)}
             </div>
         </div>`;
@@ -436,7 +425,6 @@ function afterPage(spread, isFirst) {
 const PAGES = [
     { kind: 'cover' },
     ...CHAPTERS.flatMap(chapter => chapter.beats.map((beat, i) => ({ kind: 'spread', chapter, beat, isFirst: i === 0 }))),
-    { kind: 'reflection', chapter: CHAPTERS[CHAPTERS.length - 1] },
     { kind: 'quiz' },
     ...AFTERWORD.spreads.map((spread, i) => ({ kind: 'after', spread, isFirst: i === 0 })),
     { kind: 'end' }
@@ -458,8 +446,6 @@ function renderPage(page) {
             return coverPage();
         case 'spread':
             return spreadPage(page.chapter, page.beat, page.isFirst);
-        case 'reflection':
-            return reflectionPage(page.chapter);
         case 'after':
             return afterPage(page.spread, page.isFirst);
         case 'quiz':

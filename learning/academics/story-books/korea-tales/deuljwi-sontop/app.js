@@ -270,14 +270,6 @@ function spreadPage(chapter, beat, isFirst) {
         </div>`;
 }
 
-function reflectionPage(chapter) {
-    return `
-        <div class="page page-reflection">
-            <h2>이야기를 다 읽고</h2>
-            <p class="reflection-moral">${chapter.moral}</p>
-            <p class="reflection-question">${chapter.question}</p>
-        </div>`;
-}
 
 const QUIZ = [
     { q: "덕구는 손톱을 어떻게 했나요?", choices: ["종이에 싸 두었다", "마당에 버렸다", "땅에 묻었다"], answer: 1 },
@@ -320,16 +312,17 @@ const AFTERWORD = {
     emoji: '🐭',
     spreads: [
         {
-            art: 'end.png',
             left: [
                 "진짜와 가짜가 나타나 서로 자기가 진짜라고 다투는 이야기를 진가쟁주 이야기라고 합니다. 우리나라에 여러 갈래가 전해 오는데, 이 손톱 이야기가 가장 널리 알려진 것입니다.",
                 "손톱을 아무 데나 버리지 말라는 말은 옛날에 실제로 지키던 금기였습니다. 손톱과 머리카락은 몸에서 떨어져 나와도 그 사람의 일부라고 여겼기 때문입니다.",
-                "다시 보면 가짜가 진짜보다 대답을 더 잘합니다. 집안 내력도 더 잘 외웁니다. 이야기가 묻고 있는 것은 그것입니다. 나를 나이게 하는 것은 무엇인가.",
+                "다시 보면 이 이야기가 묻고 있는 것은 하나뿐입니다. 나를 나이게 하는 것은 무엇인가.",
                 "그리고 그 답이 뜻밖입니다. 아는 것도 아니고 생김새도 아니었습니다. 사람이 아니라 짐승이 알아보았지요. 머리로 가리지 못한 것을 코가 가려낸 것입니다."
             ],
             right: [
                 "옹고집 이야기도 같은 갈래입니다. 그쪽은 짚으로 만든 가짜가 나오고 스님이 벌을 거둡니다. 뼈대가 같은 이야기가 옷을 갈아입고 여러 벌 전해 오는 것이지요.",
-                "가짜가 계속 그 집에서 잘 살았다면 무엇이 잘못된 것일까요? 답은 적어 두지 않겠습니다."
+                "가짜가 진짜보다 더 그럴듯하게 대답할 때가 있습니다. 그럴 때 진짜를 알아본 것은 말이 아니라 냄새였습니다. 사람의 눈이 속을 때에도 알아보는 다른 길이 남아 있습니다.",
+                "가짜가 계속 그 집에서 잘 살았다면 무엇이 잘못된 것일까요?",
+                "그럴듯한 말과 진짜를 어떻게 가려낼 수 있을까요?"
             ]
         }
     ]
@@ -337,8 +330,6 @@ const AFTERWORD = {
 
 function afterPage(spread, isFirst) {
     const head = isFirst ? `<h2>${AFTERWORD.title}</h2>` : '';
-    // 그림은 오른쪽 위 모서리에 꽉 붙인다. 글은 그 아래로 이어진다.
-    const art = spread.art ? `<div class="after-art">${artFrame(spread.art, AFTERWORD.emoji)}</div>` : '';
     const col = (ps) => ps.map(t => `<p>${t}</p>`).join('');
     return `
         <div class="page page-after">
@@ -346,8 +337,7 @@ function afterPage(spread, isFirst) {
                 ${head}
                 ${col(spread.left)}
             </div>
-            <div class="after-col after-col-right${spread.art ? ' after-col-image' : ''}">
-                ${art}
+            <div class="after-col after-col-right">
                 ${col(spread.right)}
             </div>
         </div>`;
@@ -356,7 +346,6 @@ function afterPage(spread, isFirst) {
 const PAGES = [
     { kind: 'cover' },
     ...CHAPTERS.flatMap(chapter => chapter.beats.map((beat, i) => ({ kind: 'spread', chapter, beat, isFirst: i === 0 }))),
-    { kind: 'reflection', chapter: CHAPTERS[CHAPTERS.length - 1] },
     { kind: 'quiz' },
     ...AFTERWORD.spreads.map((spread, i) => ({ kind: 'after', spread, isFirst: i === 0 })),
     { kind: 'end' }
@@ -378,8 +367,6 @@ function renderPage(page) {
             return coverPage();
         case 'spread':
             return spreadPage(page.chapter, page.beat, page.isFirst);
-        case 'reflection':
-            return reflectionPage(page.chapter);
         case 'after':
             return afterPage(page.spread, page.isFirst);
         case 'quiz':
