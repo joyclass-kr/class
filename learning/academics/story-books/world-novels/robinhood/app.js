@@ -461,6 +461,75 @@ const CHAPTER_SEGS = CHAPTERS.map(ch => {
     return segs;
 });
 
+// 읽고 나서 — 책마다 내용이 다르다. 장과 같은 방식으로 재서 나눈다.
+const AFTERWORD = {
+    title: '읽고 나서',
+    emoji: '🏹',
+    art: [],
+    paras: [
+        `이 책에는 지은이가 없습니다. 로빈 후드는 한 사람이 지어낸 인물이 아니라 몇백 년에 걸쳐 사람들이 노래로 전한 인물입니다.`,
+        `제일 오래된 기록은 육백오십 년쯤 전 영국의 시에 한 줄 나오는 것입니다. 어떤 사람이 로빈 후드 이야기라면 잘 안다고 말하는 대목입니다.`,
+        `그러니 그때 이미 그 이야기가 널리 알려져 있었다는 뜻입니다. 실제로 그런 사람이 있었는지는 지금도 알 수 없습니다.`,
+        `그 무렵 영국에는 로빈후드라는 이름이 흔한 이름이었습니다. 그리고 숲에 숨어 사는 무법자를 통틀어 그렇게 부르기도 했습니다.`,
+        `이 이야기들은 처음에 노래로 전해졌습니다. 그것을 발라드라고 합니다. 장터와 술집에서 사람들이 부르던 노래입니다.`,
+        `그러니 이 이야기는 글을 모르는 사람들이 만들고 전한 이야기입니다. 그것이 중요합니다.`,
+        `그리고 그 노래를 부른 사람들이 대개 가난한 사람들이었습니다. 그러니 그 노래의 주인공이 부자의 것을 빼앗아 가난한 사람에게 나누어 주는 것도 이상한 일이 아닙니다.`,
+        `지금 우리가 아는 형태로 묶인 것은 훨씬 뒤입니다. 백오십 년쯤 전에 미국의 하워드 파일이라는 사람이 여러 노래를 모아 한 권으로 엮었습니다.`,
+        `여기 실린 것은 그렇게 모인 이야기 가운데 널리 알려진 것들을 골라 옮긴 것입니다.`,
+        `이제 다시 볼 대목을 짚어 봅시다.`,
+        `첫째, 로빈이 왜 숲으로 들어갔는지 다시 보십시오. 그는 처음부터 도둑이 아니었습니다. 땅과 이름이 있는 집안 사람이었습니다.`,
+        `그런데 그 땅을 빼앗기고 법에서 밀려납니다. 법을 어겨서가 아니라 법이 그를 밀어낸 것입니다.`,
+        `그 시절 영국에는 숲에 관한 법이 아주 무거웠습니다. 왕의 숲에서 사슴을 잡으면 목숨을 잃을 수도 있었습니다. 그런데 그 숲 둘레에 사는 사람들은 굶고 있었습니다.`,
+        `둘째, 리틀 존을 만나는 대목을 다시 읽어 보십시오. 좁은 다리 위에서 마주쳐 서로 비키지 않겠다고 싸웁니다. 그리고 로빈이 집니다.`,
+        `물에 빠지고 나서 로빈은 웃습니다. 그리고 그 사람을 무리에 부릅니다. 자기를 이긴 사람을 곁에 두는 것입니다.`,
+        `이 이야기들에서 로빈이 사람을 얻는 방식이 늘 그렇습니다. 터크 수사도, 푸줏간 장수도, 다 겨루고 나서 한편이 됩니다.`,
+        `그러니 이 무리는 뽑아서 만든 무리가 아닙니다. 부딪히다 모인 무리입니다.`,
+        `셋째, 부자의 짐과 가난한 이의 짐을 다시 보십시오. 로빈은 숲을 지나는 사람을 세워 짐을 살핍니다.`,
+        `그리고 부자면 빼앗고 가난하면 오히려 줍니다. 그러니 그가 하는 것은 도둑질이면서 동시에 세금 걷기 같은 일입니다.`,
+        `그것이 통쾌한 까닭은 그 시절 실제 세금이 그 반대였기 때문입니다. 가난한 사람에게서 걷어 부자에게 갔습니다.`,
+        `넷째, 황금 화살 대목을 다시 읽어 보십시오. 성주가 활쏘기 대회를 엽니다. 로빈을 끌어내려는 덫이었습니다.`,
+        `로빈도 그것을 압니다. 그런데 나갑니다. 변장을 하고 나가서 이깁니다. 그리고 상을 받아 갑니다.`,
+        `그러니 이 이야기의 로빈은 잡히지 않는 것보다 이기는 것을 더 중요하게 여기는 사람입니다. 그 성격이 마지막까지 이어집니다.`,
+        `인물도 짚어 둘 만합니다.`,
+        `노팅엄 성주를 다시 보십시오. 이 이야기들에서 반대편에 선 사람입니다. 그런데 그 사람이 하는 일은 대부분 자기 직무입니다.`,
+        `도둑을 잡고 세금을 걷는 것이 그 사람의 일입니다. 다만 그 일을 하면서 자기 배를 채우는 것이 문제였습니다.`,
+        `그리고 이 이야기들은 그 사람을 늘 우스꽝스럽게 만듭니다. 속아 넘어가고, 놀림받고, 자기 숲에서 자기 사슴을 대접받습니다.`,
+        `힘 있는 사람을 우습게 만드는 것이 이런 이야기가 하는 일입니다. 실제로 이길 수 없는 상대를 이야기 안에서라도 이기는 것입니다.`,
+        `리틀 존이라는 이름도 눈여겨보십시오. 그 사람은 아주 큰 사람입니다. 키가 이 미터가 넘는다고 되어 있습니다.`,
+        `그런데 작은 존이라고 부릅니다. 이런 놀림이 이 이야기들에 가득합니다. 노래로 전해진 이야기다운 데입니다.`,
+        `그 시절 사정도 알아 두면 좋습니다. 이 이야기의 배경은 보통 팔백 년쯤 전 영국으로 잡습니다. 사자심왕 리처드가 십자군에 나가 있고 동생 존이 나라를 맡던 무렵입니다.`,
+        `다만 그것도 나중에 붙은 설정입니다. 오래된 노래에는 왕이 누구인지 나오지 않습니다.`,
+        `셔우드 숲도 실제로 있습니다. 노팅엄 근처에 지금도 남아 있고, 아주 오래된 참나무가 서 있습니다. 사람들이 그것을 로빈의 나무라고 부릅니다.`,
+        `그리고 그 시절 영국의 숲은 지금보다 훨씬 넓었습니다. 숲으로 들어가면 정말로 잡기 어려웠습니다. 그러니 무법자가 숲에 산다는 이야기도 그냥 나온 것이 아닙니다.`,
+        `활도 알아 두면 좋습니다. 그 시절 영국의 긴 활은 사람 키만 했습니다. 그것을 당기려면 여러 해를 연습해야 했습니다.`,
+        `그리고 그 활은 그 무렵 영국이 여러 싸움에서 이긴 까닭이기도 합니다. 그러니 활을 잘 쏘는 사람이 영웅이 되는 것도 영국 이야기다운 데입니다.`,
+        `이 이야기들이 붙들고 있는 것은 두 가지입니다.`,
+        `하나는 법과 옳은 것이 갈릴 때 어떻게 하느냐는 것입니다. 로빈은 법을 어깁니다. 그런데 이 이야기들은 그를 옳은 쪽에 놓습니다.`,
+        `그 까닭은 그 법이 옳지 않았기 때문입니다. 이야기가 그렇게 정해 놓았습니다. 그리고 사람들이 그 이야기를 몇백 년 불렀습니다.`,
+        `다른 하나는 힘없는 사람들이 무엇을 바랐느냐는 것입니다. 이 이야기는 가난한 사람들이 만든 이야기입니다.`,
+        `그러니 그 안에 그 사람들이 바라던 것이 다 들어 있습니다. 못된 관리가 혼나고, 굶는 사람이 먹고, 억울한 사람이 풀려납니다.`,
+        `다만 이 이야기를 읽을 때 알아 둘 것이 있습니다. 실제로 그런 사람이 있었다 해도 그렇게 멋있지는 않았을 것입니다.`,
+        `숲에 숨어 사는 무법자는 대개 굶주리고 병들었습니다. 그리고 지나가는 사람을 터는 무리도 많았습니다. 이야기가 그것을 골라 다듬은 것입니다.`,
+        `로빈 후드는 그 뒤로 영국에서 가장 사랑받는 인물 가운데 하나가 되었습니다. 그리고 영화와 만화로 끝없이 만들어졌습니다.`,
+        `그리고 지금도 부자에게서 걷어 가난한 쪽에 주는 정책을 두고 그 이름을 붙여 부르기도 합니다. 팔백 년 전 노래 속 인물의 이름이 아직 쓰이는 것입니다.`,
+        `언젠가 이 이야기들을 다시 읽게 되거든, 이번에는 로빈이 사람을 얻는 대목만 모아 읽어 보십시오. 그때마다 그가 먼저 지거나 먼저 손해를 봅니다.`,
+        `마지막으로 생각해 볼 것을 남겨 둡니다. 답은 적어 두지 않겠습니다.`,
+        `로빈이 부자의 것을 빼앗은 것은 옳은 일이었을까요? 그 재산이 어떻게 모인 것인지를 그가 다 알았을까요?`,
+        `노팅엄 성주가 자기 일을 제대로 한 것뿐이라면, 그 사람을 밉게 그리는 것은 공평할까요?`,
+        `그리고 이런 이야기가 몇백 년 불린 까닭은 무엇이었을까요. 사람들이 무엇을 바랐기에 그랬을까요. 이 물음은 어른이 되어 다시 읽어도 답하기가 쉽지 않습니다.`
+    ]
+};
+
+const AFTER_SEGS = (() => {
+    const segs = [];
+    AFTERWORD.paras.forEach((html, paraIdx) => {
+        splitSegments(html).forEach((piece, k) => {
+            segs.push({ paraIdx, html: piece, start: k === 0 });
+        });
+    });
+    return segs;
+})();
+
 // 조각 묶음을 문단 단위로 다시 묶어 화면에 그릴 모양으로 만든다.
 // 앞 쪽에서 이어진 문단은 첫 줄을 들여쓰지 않는다.
 function runHtml(segs, a, b) {
@@ -742,16 +811,100 @@ function quizPage(part) {
         </div>`;
 }
 
-function endPage() {
+/* 읽고 나서 — 장과 같은 방식으로 쪽을 나눈다. 그림은 오른쪽 위에 얹힌다. */
+const AFTER_FOOT = `<p class="after-home"><a class="home-btn" href="../../../../../">학습 허브로 돌아가기</a></p>`;
+
+function paginateAfterword() {
+    const segs = AFTER_SEGS;
+    const arts = AFTERWORD.art || [];
+    const { usable, headHeight, artHeight } = PROBE;
+    const headHtml = `<h2>${AFTERWORD.title}</h2>`;
+    const totalH = PROBE.measure(runHtml(segs, 0, segs.length));
+
+    const underArt = Math.max(60, usable - artHeight);
+
+    // 맨 끝에는 학습 허브로 가는 단추가 붙는다. 그 높이를 미리 빼 두지 않으면
+    // 마지막 쪽만 넘친다.
+    const footH = PROBE.measure(AFTER_FOOT);
+
+    const capsOf = slots => {
+        const caps = [];
+        slots.forEach(kind => { caps.push(usable); caps.push(kind === 'img' ? underArt : usable); });
+        caps[caps.length - 1] = Math.max(60, caps[caps.length - 1] - footH);
+        return caps;
+    };
+
+    const minSpreads = Math.max(arts.length, 1);
+    const maxSpreads = Math.max(minSpreads, Math.floor(segs.length / 2));
+    let spreadCount = minSpreads;
+    while (spreadCount < maxSpreads) {
+        const caps = capsOf(slotPlan(arts.length, spreadCount - arts.length));
+        if (caps.reduce((a, b) => a + b, 0) >= totalH + headHeight) break;
+        spreadCount++;
+    }
+
+    let slots = slotPlan(arts.length, Math.max(0, spreadCount - arts.length));
+    let caps = capsOf(slots);
+    let ranges = fillPages(segs, caps, headHtml);
+    for (let guard = 0; guard < 8; guard++) {
+        const over = ranges.some(([a, b], n) =>
+            PROBE.measure((n === 0 ? headHtml : '') + runHtml(segs, a, b)) > caps[n] + 1);
+        if (!over || spreadCount >= maxSpreads) break;
+        spreadCount++;
+        slots = slotPlan(arts.length, Math.max(0, spreadCount - arts.length));
+        caps = capsOf(slots);
+        ranges = fillPages(segs, caps, headHtml);
+    }
+
+    const spreads = [];
+    let pageIdx = 0;
+    let artIdx = 0;
+    slots.forEach((kind, s) => {
+        const left = ranges[pageIdx++];
+        const right = ranges[pageIdx++];
+        spreads.push({
+            kind: 'after', first: s === 0, last: s === slots.length - 1,
+            art: kind === 'img' ? arts[artIdx++] : null, left, right
+        });
+    });
+    return spreads;
+}
+
+function afterSpreadPage(spread) {
+    const segs = AFTER_SEGS;
+    const head = spread.first ? `<h2>${AFTERWORD.title}</h2>` : '';
+    // 학습 허브로 돌아가는 길은 맨 끝에 한 번만 둔다.
+    const foot = spread.last ? AFTER_FOOT : '';
+
+    if (spread.art) {
+        return `
+            <div class="page page-story page-after">
+                <div class="story-page-left">
+                    ${head}
+                    ${runHtml(segs, spread.left[0], spread.left[1])}
+                </div>
+                <div class="story-page-right story-page-right-image">
+                    <div class="story-art-top">${artFrame(spread.art, AFTERWORD.emoji)}</div>
+                    ${runHtml(segs, spread.right[0], spread.right[1])}
+                    ${foot}
+                </div>
+            </div>`;
+    }
+
     return `
-        <div class="page page-end">
-            ${artFrame('end.png', '🌳')}
-            <h2>로빈 훗의 모험를 다 읽었습니다</h2>
-            <a class="home-btn" href="../../../../../">학습 허브로 돌아가기</a>
+        <div class="page page-story page-after">
+            <div class="story-page-left">
+                ${head}
+                ${runHtml(segs, spread.left[0], spread.left[1])}
+            </div>
+            <div class="story-page-right story-page-right-text">
+                ${runHtml(segs, spread.right[0], spread.right[1])}
+                ${foot}
+            </div>
         </div>`;
 }
 
-const TWO_PAGE_KINDS = new Set(['chapter', 'toc', 'cover']);
+const TWO_PAGE_KINDS = new Set(['chapter', 'toc', 'cover', 'after']);
 
 let PAGES = [];
 let FOLIOS = [];
@@ -763,7 +916,7 @@ function buildPages() {
         ...TOC_GROUPS.map((_, i) => ({ kind: 'toc', part: i })),
         ...CHAPTERS.flatMap(paginateChapter),
         ...QUIZ_GROUPS.map((_, i) => ({ kind: 'quiz', part: i })),
-        { kind: 'end' }
+        ...paginateAfterword()
     ];
     PROBE.close();   // 쪽을 다 나눴으니 재는 데 쓰던 숨은 쪽은 치운다
 
@@ -784,7 +937,7 @@ function renderPage(page) {
         case 'toc': return tocPage(page.part);
         case 'chapter': return chapterSpreadPage(page);
         case 'quiz': return quizPage(page.part);
-        case 'end': return endPage();
+        case 'after': return afterSpreadPage(page);
         default: return '';
     }
 }
