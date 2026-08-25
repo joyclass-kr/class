@@ -44,6 +44,7 @@
 .tier-name { font-size: 10px; font-weight: 900; }
 .tier-count { font-size: 9.5px; font-weight: 900; }
 .eat-arrow { stroke: rgba(255, 209, 102, .6); stroke-width: 1.6; fill: none; }
+.eat-head { fill: rgba(255, 209, 102, .6); }
 
 .part-label { fill: #b6d3d9; font-size: 10.5px; font-weight: 800; }
 .small-label { fill: #8fa8b0; font-size: 9.5px; font-weight: 800; }

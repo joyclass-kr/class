@@ -187,8 +187,13 @@ function drawPyramid(g) {
             x: cx + wBot / 2 + 8, y: y + rowH / 2 + 1, class: 'tier-count',
             style: `fill:${here ? '#ffd166' : '#9cb6b4'}`,
         }, t.count === 1 ? `1${t.unit}` : `${t.count.toLocaleString('ko-KR')}${t.unit}쯤`));
+        /* An arrow up the left edge for "this level feeds the one above". It
+           needs a head — a bare curve just read as a stray bracket. */
         if (fromTop > 0) {
-            g.appendChild(el('path', { d: `M ${cx - wBot / 2 - 14} ${y + rowH - 6} q -8 -8 0 -16`, class: 'eat-arrow' }));
+            const ax = cx - wBot / 2 - 13;
+            const y1 = y + rowH - 5, y2 = y + 3;
+            g.appendChild(el('line', { x1: ax, y1, x2: ax, y2, class: 'eat-arrow' }));
+            g.appendChild(el('path', { d: `M ${ax} ${y2} l -3.5 6 l 7 0 z`, class: 'eat-head' }));
         }
     });
 
