@@ -52,6 +52,19 @@ for (const [lat, lon] of [[40.95,28.82],[41.10,29.03],[41.25,29.15]]) {
 }
 assert.equal(routeExists([39.85,25.75],[40.75,27.50], { west:25, east:28.5, south:39.5, north:41.2 }), true, 'Aegean to Marmara route is disconnected');
 assert.equal(routeExists([40.75,28.40],[41.45,29.35], { west:28, east:29.7, south:40.5, north:41.7 }), true, 'Marmara to Black Sea route is disconnected');
+assert.equal(
+  routeExists([69.65,-86.10],[69.75,-81.30], { west:-86.5, east:-80.8, south:69.2, north:70.3 }),
+  true,
+  'Gulf of Boothia to Foxe Basin route through Fury and Hecla Strait is disconnected'
+);
+for (const [lat, lon] of [[69.78,-85.00],[69.93,-83.85],[69.90,-82.55]]) {
+  const p = cell(lat, lon);
+  assert.equal(isSea(p.x, p.y), true, 'Fury and Hecla Strait blocked at ' + lat + ',' + lon);
+}
+const studentHtml = fs.readFileSync('public/index.html', 'utf8');
+assert.match(studentHtml, /moving\?16:50/, 'moving voyage view must repaint at up to 60fps');
+assert.doesNotMatch(studentHtml, /moving\?33:50/, 'legacy 30fps movement cap must be removed');
+
 const ankara = cell(39.93, 32.86);
 assert.notEqual(Terrain.terrainAtCell(world, ankara.x, ankara.y).type, 'sea', 'Ankara must remain land');
-console.log(JSON.stringify({ ok:true, corridors:['dardanelles','bosporus'] }));
+console.log(JSON.stringify({ ok:true, corridors:['dardanelles','bosporus','fury-hecla'], movingPaintMs:16 }));

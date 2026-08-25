@@ -85,6 +85,21 @@
         Object.freeze([41.18, 29.10]),
         Object.freeze([41.27, 29.16])
       ])
+    }),
+    Object.freeze({
+      // 배핀섬과 멜빌반도 사이의 실제 수로. 가장 좁은 곳은 약 2 km라
+      // 0.144도 육지 마스크에서는 섬과 해안이 한 덩어리로 합쳐진다.
+      id: 'fury-hecla',
+      widthDeg: 0.18,
+      path: Object.freeze([
+        Object.freeze([69.70, -85.55]),
+        Object.freeze([69.78, -85.00]),
+        Object.freeze([69.88, -84.45]),
+        Object.freeze([69.93, -83.85]),
+        Object.freeze([69.94, -83.20]),
+        Object.freeze([69.90, -82.55]),
+        Object.freeze([69.79, -81.90])
+      ])
     })
   ]);
 

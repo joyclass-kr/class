@@ -775,7 +775,7 @@ function updateHud(){
   const fatigueBand=fatigue>=80?80:fatigue>=60?60:0;if(fatigueBand>lastFatigueBand)showToast(fatigueBand===60?'피로도가 60을 넘었습니다. 이제 이동 속도가 조금씩 느려집니다.':'피로가 많이 쌓였습니다. 도시에서 쉬어 가세요.','warn');lastFatigueBand=fatigueBand;
   applyModeUI();
 }
-let lastPaint=0;function loop(t){const dt=Math.min(.04,(t-last)/1000);last=t;if(assetsReady&&joined&&self){if(mode!=='city')movePrediction(dt);const moving=!!(keys.up||keys.down||keys.left||keys.right||serverSelf?.moving);let paintEvery=choiceModalActive()?250:moving?33:50;if(mode==='city')paintEvery=200;if(t-lastPaint>=paintEvery){lastPaint=t;if(mode!=='city'){ctx.setTransform(dpr,0,0,dpr,0,0);drawMap(innerWidth,innerHeight);drawPlayers(innerWidth,innerHeight)}}}requestAnimationFrame(loop)}requestAnimationFrame(loop);setInterval(()=>{if(joined&&self)updateHud()},100);
+let lastPaint=0;function loop(t){const dt=Math.min(.04,(t-last)/1000);last=t;if(assetsReady&&joined&&self){if(mode!=='city')movePrediction(dt);const moving=!!(keys.up||keys.down||keys.left||keys.right||serverSelf?.moving);let paintEvery=choiceModalActive()?250:moving?16:50;if(mode==='city')paintEvery=200;if(t-lastPaint>=paintEvery){lastPaint=t;if(mode!=='city'){ctx.setTransform(dpr,0,0,dpr,0,0);drawMap(innerWidth,innerHeight);drawPlayers(innerWidth,innerHeight)}}}requestAnimationFrame(loop)}requestAnimationFrame(loop);setInterval(()=>{if(joined&&self)updateHud()},100);
 setInterval(()=>{if(joined&&performance.now()-lastSnapshotAt>3000){net.textContent='● 동기화 지연';net.className='bad'}},1000);
 </script>
 </body>
