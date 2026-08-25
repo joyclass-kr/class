@@ -143,7 +143,7 @@
         state.answered = false;
         state.showingResult = false;
         elements.roundCounter.textContent = state.round + " / 5";
-        elements.feedback.textContent = stage.type === "dictation" ? "리듬을 듣고 소리가 난 칸을 선택하세요." : "답을 골라 보세요.";
+        elements.feedback.textContent = "";
         elements.feedback.className = "feedback";
         elements.nextButton.hidden = true;
         elements.activityArea.innerHTML = "";
