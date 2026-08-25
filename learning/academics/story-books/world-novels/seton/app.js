@@ -292,6 +292,80 @@ const CHAPTER_SEGS = CHAPTERS.map(ch => {
     return segs;
 });
 
+// 읽고 나서 — 책마다 내용이 다르다. 장과 같은 방식으로 재서 나눈다.
+const AFTERWORD = {
+    title: '읽고 나서',
+    emoji: '🐾',
+    art: [],
+    paras: [
+        `이 책에 실린 것은 지어낸 이야기가 아닙니다. 지은이가 직접 보고 겪은 짐승들의 이야기입니다. 그래서 원래 제목이 『내가 아는 야생 동물』입니다.`,
+        `쓴 사람은 어니스트 톰슨 시튼입니다. 영국에서 태어나 여섯 살에 캐나다로 건너갔습니다. 그리고 평생을 북아메리카의 들과 숲에서 보냈습니다.`,
+        `그는 화가이기도 했습니다. 그래서 이 책의 원래 판에는 그가 직접 그린 그림이 아주 많이 들어 있습니다. 짐승의 발자국과 뼈와 움직임을 그린 그림입니다.`,
+        `그리고 그는 사냥꾼이기도 했습니다. 이 책의 첫 이야기인 로보를 잡은 사람이 바로 시튼 자신입니다.`,
+        `책은 천팔백구십팔 년에 나왔습니다. 그리고 아주 크게 팔렸습니다. 그때까지 짐승을 이렇게 그린 책이 없었기 때문입니다.`,
+        `그전까지 짐승 이야기는 두 가지였습니다. 하나는 사람처럼 말하는 우화이고, 다른 하나는 사냥해서 잡은 이야기였습니다.`,
+        `시튼은 그 둘을 다 하지 않았습니다. 짐승을 짐승으로 그리면서, 그 짐승에게 이름과 사연을 주었습니다. 그것이 그때는 새로운 일이었습니다.`,
+        `그래서 이 책이 나온 뒤 짐승 이야기를 쓰는 사람이 아주 많아졌습니다. 지금 우리가 읽는 동물 이야기의 뿌리가 대개 여기에 있습니다.`,
+        `이제 다시 볼 대목을 짚어 봅시다.`,
+        `첫째, 로보 이야기를 다시 읽어 보십시오. 이 책에서 제일 유명한 이야기이고, 시튼 자신의 이야기이기도 합니다.`,
+        `그는 목장 주인에게 부탁을 받고 늑대 무리의 우두머리를 잡으러 갔습니다. 그 늑대는 오 년 동안 아무도 못 잡던 늑대였습니다. 덫도 독도 통하지 않았습니다.`,
+        `그리고 시튼이 마침내 그 늑대를 잡습니다. 그런데 잡은 방법을 보십시오. 로보를 잡은 것이 아니라 그 짝인 블랑카를 먼저 잡았습니다.`,
+        `블랑카는 흰 늑대였습니다. 그 무리에서 로보 다음으로 조심스러운 늑대였습니다. 그런데 로보와 떨어진 사이에 잡혔습니다.`,
+        `블랑카를 잃고 나서 로보가 무너집니다. 그동안 조심하던 것을 다 잊고 짝을 찾아다니다 덫을 밟습니다.`,
+        `그리고 잡힌 로보가 어떻게 되었는지 다시 보십시오. 시튼은 그 늑대를 죽이지 않고 목장으로 데려옵니다. 그런데 로보는 아무것도 먹지 않고 아무 소리도 내지 않습니다.`,
+        `그러고는 이튿날 아침 그대로 죽어 있었습니다. 이 대목을 시튼은 아주 짧게 적었습니다.`,
+        `그리고 시튼은 그 늑대를 블랑카 옆에 눕혔다고 적어 두었습니다. 그 뒤로 그는 늑대를 잡는 일을 하지 않았습니다.`,
+        `그 일이 시튼을 바꿉니다. 그 뒤로 그는 짐승을 잡는 사람에서 짐승을 지키는 사람이 됩니다. 그러니 이 책의 첫 이야기는 지은이 자신이 달라지는 이야기이기도 합니다.`,
+        `둘째, 은점박이를 다시 보십시오. 늙은 까마귀 이야기입니다. 시튼은 그 까마귀를 여러 해 동안 지켜보았습니다.`,
+        `그 까마귀는 무리를 이끌었고, 신호를 여러 가지 썼고, 어린 까마귀들을 가르쳤습니다. 시튼은 그 소리를 하나하나 적어 두었습니다.`,
+        `그 시절에는 짐승이 그렇게 한다고 여기는 사람이 드물었습니다. 지금은 까마귀가 얼마나 영리한지가 여러 연구로 밝혀져 있습니다. 시튼이 백 년 전에 눈으로 본 것이 맞았던 셈입니다.`,
+        `까마귀가 사람 얼굴을 알아보고 몇 해 동안 기억한다는 것도 요즘 밝혀졌습니다. 도구를 만들어 쓰는 까마귀도 있습니다. 시튼은 그것을 실험이 아니라 관찰로 알아냈습니다.`,
+        `셋째, 빙고 이야기를 다시 읽어 보십시오. 시튼이 기르던 개 이야기입니다. 그 개는 집에 붙어 있지 않고 늘 밖으로 돌아다녔습니다.`,
+        `그런데 시튼이 덫에 걸려 밤을 새우게 되었을 때, 그 개가 나타납니다. 그러니 그 개는 붙어 있지 않았을 뿐 잊은 적이 없었던 것입니다.`,
+        `이 이야기는 이 책에서 유일하게 밝게 끝나는 축에 듭니다. 그래서 더 눈에 띕니다.`,
+        `넷째, 이 책의 이야기들이 어떻게 끝나는지 세어 보십시오. 대부분 잘 끝나지 않습니다.`,
+        `시튼은 그 까닭을 책 머리에 적어 두었습니다. 야생 동물의 삶은 늘 비극으로 끝난다고요. 늙어서 편안히 죽는 짐승은 거의 없기 때문입니다.`,
+        `그리고 그것을 감추지 않고 적는 것이 그 짐승들에게 예의라고 여겼습니다.`,
+        `이 대목은 어린이 책에서 드문 태도입니다. 대개는 마지막에 잘되게 만듭니다. 시튼은 그렇게 하지 않았습니다.`,
+        `인물이 아니라 짐승들을 다시 볼 만합니다.`,
+        `이 책의 짐승들에게는 다 이름이 있습니다. 로보, 블랑카, 은점박이, 랙, 빙고, 왑입니다. 이름을 붙이는 것은 사람이 하는 일입니다.`,
+        `그런데 시튼이 이름을 붙인 까닭은 애완동물로 삼으려는 것이 아니었습니다. 저마다 다르다는 것을 말하려던 것입니다. 늑대가 다 같은 늑대가 아니라는 뜻입니다.`,
+        `이름을 붙이면 셀 수 없게 됩니다. 늑대 몇 마리를 잡았다고 말할 수 없고, 로보를 잡았다고 말해야 합니다. 시튼이 노린 것이 그것이었을 것입니다.`,
+        `그 시절 사정도 알아 두면 좋습니다. 시튼이 이 이야기들을 모으던 무렵 북아메리카에서는 야생 동물이 아주 빠르게 사라지고 있었습니다.`,
+        `들소는 몇천만 마리에서 몇백 마리로 줄었습니다. 늑대도 목장을 지킨다는 이유로 정부가 상금을 걸어 잡았습니다. 로보를 잡으려던 것도 그런 일이었습니다.`,
+        `시튼은 그 한가운데에 있었습니다. 그리고 그 자리에서 마음을 바꾼 사람입니다. 이 책이 나온 뒤 그는 자연을 지키자는 글과 강연을 아주 많이 했습니다.`,
+        `그가 한 다른 일도 알아 둘 만합니다. 그는 미국 보이스카우트를 만드는 데 큰 몫을 했습니다. 아이들을 숲으로 데려가 지내게 하는 활동이었습니다.`,
+        `그리고 그는 아메리카 원주민들에게서 배운 것을 그 활동에 많이 넣었습니다. 숲에서 지내는 법, 자취를 읽는 법 같은 것입니다.`,
+        `다만 그 방식을 두고 나중에 미국 보이스카우트 안에서 다툼이 있었습니다. 시튼은 결국 그 조직에서 밀려났습니다. 그러고 나서 자기 방식으로 다른 모임을 만들었습니다.`,
+        `다만 이 책을 두고 그 시절에 논쟁이 있었습니다. 짐승이 그렇게 생각하고 느끼는 것처럼 적으면 안 된다는 것이었습니다.`,
+        `그 말도 일리가 있습니다. 짐승이 무슨 생각을 하는지는 사람이 알 수 없습니다. 시튼은 본 것에서 미루어 적은 데가 있습니다.`,
+        `그런데 그 반대쪽도 문제가 있습니다. 짐승은 아무것도 느끼지 못하는 기계 같은 것이라고 여기던 사람도 그 시절에 많았습니다. 그것도 사실이 아니었습니다.`,
+        `지금은 그 사이 어디쯤에서 이야기합니다. 짐승마다 무엇을 느끼는지가 조금씩 밝혀지고 있습니다. 그리고 시튼이 눈으로 본 것 가운데 맞은 것이 꽤 많습니다.`,
+        `이 책이 붙들고 있는 것은 두 가지입니다.`,
+        `하나는 사람이 짐승을 어떻게 보아야 하느냐는 것입니다. 이 책은 짐승을 사람처럼 그리지도 않고, 그렇다고 물건처럼 그리지도 않습니다.`,
+        `저마다 다른 삶이 있고, 그 삶에도 잃는 것과 지키는 것이 있다는 식으로 적습니다. 그러니 이 책은 짐승을 사람의 아래에 두지 않습니다.`,
+        `다른 하나는 사람이 마음을 바꿀 수 있느냐는 것입니다. 시튼은 늑대를 잡으러 갔다가 늑대를 지키는 사람이 되어 돌아왔습니다.`,
+        `그것도 무슨 큰 깨달음이 있어서가 아니었습니다. 잡아 놓은 늑대가 아무것도 먹지 않고 죽는 것을 본 것뿐이었습니다. 사람은 그렇게 바뀌기도 합니다.`,
+        `이 책이 나온 뒤 백 년 넘게 세계에서 읽혔습니다. 우리나라에도 일찍 들어와 여러 번 나왔습니다. 흔히 『시튼 동물기』라고 부릅니다.`,
+        `그리고 로보가 잡힌 미국 뉴멕시코의 그 골짜기에는 지금 로보를 기리는 표지가 있습니다. 사람 손에 죽은 늑대를 기리는 표지입니다.`,
+        `언젠가 이 책을 다시 읽게 되거든, 이번에는 시튼이 자기 이야기를 하는 대목만 세어 보십시오. 그 사람이 무엇을 했고 무엇을 뉘우쳤는지가 그 대목에 있습니다.`,
+        `마지막으로 생각해 볼 것을 남겨 둡니다. 답은 적어 두지 않겠습니다.`,
+        `시튼이 블랑카를 먼저 잡은 것을 우리는 어떻게 보아야 할까요? 그것은 아주 영리한 방법이었습니다. 그리고 그 방법 때문에 그는 오래 마음이 무거웠습니다.`,
+        `짐승에게 이름을 붙이는 것은 옳은 일일까요? 이름을 붙이면 그 짐승을 사람처럼 여기게 됩니다. 그것이 도움이 될까요, 잘못될까요?`,
+        `그리고 이 책의 이야기들이 다 슬프게 끝나는 것을 아이들이 읽어도 될까요. 시튼은 그렇게 적는 것이 예의라고 여겼습니다. 이 물음은 어른이 되어 다시 읽어도 답하기가 쉽지 않습니다.`
+    ]
+};
+
+const AFTER_SEGS = (() => {
+    const segs = [];
+    AFTERWORD.paras.forEach((html, paraIdx) => {
+        splitSegments(html).forEach((piece, k) => {
+            segs.push({ paraIdx, html: piece, start: k === 0 });
+        });
+    });
+    return segs;
+})();
+
 // 조각 묶음을 문단 단위로 다시 묶어 화면에 그릴 모양으로 만든다.
 // 앞 쪽에서 이어진 문단은 첫 줄을 들여쓰지 않는다.
 function runHtml(segs, a, b) {
@@ -573,16 +647,100 @@ function quizPage(part) {
         </div>`;
 }
 
-function endPage() {
+/* 읽고 나서 — 장과 같은 방식으로 쪽을 나눈다. 그림은 오른쪽 위에 얹힌다. */
+const AFTER_FOOT = `<p class="after-home"><a class="home-btn" href="../../../../../">학습 허브로 돌아가기</a></p>`;
+
+function paginateAfterword() {
+    const segs = AFTER_SEGS;
+    const arts = AFTERWORD.art || [];
+    const { usable, headHeight, artHeight } = PROBE;
+    const headHtml = `<h2>${AFTERWORD.title}</h2>`;
+    const totalH = PROBE.measure(runHtml(segs, 0, segs.length));
+
+    const underArt = Math.max(60, usable - artHeight);
+
+    // 맨 끝에는 학습 허브로 가는 단추가 붙는다. 그 높이를 미리 빼 두지 않으면
+    // 마지막 쪽만 넘친다.
+    const footH = PROBE.measure(AFTER_FOOT);
+
+    const capsOf = slots => {
+        const caps = [];
+        slots.forEach(kind => { caps.push(usable); caps.push(kind === 'img' ? underArt : usable); });
+        caps[caps.length - 1] = Math.max(60, caps[caps.length - 1] - footH);
+        return caps;
+    };
+
+    const minSpreads = Math.max(arts.length, 1);
+    const maxSpreads = Math.max(minSpreads, Math.floor(segs.length / 2));
+    let spreadCount = minSpreads;
+    while (spreadCount < maxSpreads) {
+        const caps = capsOf(slotPlan(arts.length, spreadCount - arts.length));
+        if (caps.reduce((a, b) => a + b, 0) >= totalH + headHeight) break;
+        spreadCount++;
+    }
+
+    let slots = slotPlan(arts.length, Math.max(0, spreadCount - arts.length));
+    let caps = capsOf(slots);
+    let ranges = fillPages(segs, caps, headHtml);
+    for (let guard = 0; guard < 8; guard++) {
+        const over = ranges.some(([a, b], n) =>
+            PROBE.measure((n === 0 ? headHtml : '') + runHtml(segs, a, b)) > caps[n] + 1);
+        if (!over || spreadCount >= maxSpreads) break;
+        spreadCount++;
+        slots = slotPlan(arts.length, Math.max(0, spreadCount - arts.length));
+        caps = capsOf(slots);
+        ranges = fillPages(segs, caps, headHtml);
+    }
+
+    const spreads = [];
+    let pageIdx = 0;
+    let artIdx = 0;
+    slots.forEach((kind, s) => {
+        const left = ranges[pageIdx++];
+        const right = ranges[pageIdx++];
+        spreads.push({
+            kind: 'after', first: s === 0, last: s === slots.length - 1,
+            art: kind === 'img' ? arts[artIdx++] : null, left, right
+        });
+    });
+    return spreads;
+}
+
+function afterSpreadPage(spread) {
+    const segs = AFTER_SEGS;
+    const head = spread.first ? `<h2>${AFTERWORD.title}</h2>` : '';
+    // 학습 허브로 돌아가는 길은 맨 끝에 한 번만 둔다.
+    const foot = spread.last ? AFTER_FOOT : '';
+
+    if (spread.art) {
+        return `
+            <div class="page page-story page-after">
+                <div class="story-page-left">
+                    ${head}
+                    ${runHtml(segs, spread.left[0], spread.left[1])}
+                </div>
+                <div class="story-page-right story-page-right-image">
+                    <div class="story-art-top">${artFrame(spread.art, AFTERWORD.emoji)}</div>
+                    ${runHtml(segs, spread.right[0], spread.right[1])}
+                    ${foot}
+                </div>
+            </div>`;
+    }
+
     return `
-        <div class="page page-end">
-            ${artFrame('end.png', '✏️')}
-            <h2>시튼 동물기를 다 읽었습니다</h2>
-            <a class="home-btn" href="../../../../../">학습 허브로 돌아가기</a>
+        <div class="page page-story page-after">
+            <div class="story-page-left">
+                ${head}
+                ${runHtml(segs, spread.left[0], spread.left[1])}
+            </div>
+            <div class="story-page-right story-page-right-text">
+                ${runHtml(segs, spread.right[0], spread.right[1])}
+                ${foot}
+            </div>
         </div>`;
 }
 
-const TWO_PAGE_KINDS = new Set(['chapter', 'toc', 'cover']);
+const TWO_PAGE_KINDS = new Set(['chapter', 'toc', 'cover', 'after']);
 
 let PAGES = [];
 let FOLIOS = [];
@@ -594,7 +752,7 @@ function buildPages() {
         ...TOC_GROUPS.map((_, i) => ({ kind: 'toc', part: i })),
         ...CHAPTERS.flatMap(paginateChapter),
         ...QUIZ_GROUPS.map((_, i) => ({ kind: 'quiz', part: i })),
-        { kind: 'end' }
+        ...paginateAfterword()
     ];
     PROBE.close();   // 쪽을 다 나눴으니 재는 데 쓰던 숨은 쪽은 치운다
 
@@ -615,7 +773,7 @@ function renderPage(page) {
         case 'toc': return tocPage(page.part);
         case 'chapter': return chapterSpreadPage(page);
         case 'quiz': return quizPage(page.part);
-        case 'end': return endPage();
+        case 'after': return afterSpreadPage(page);
         default: return '';
     }
 }
