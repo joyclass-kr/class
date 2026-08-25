@@ -153,3 +153,7 @@ button:focus-visible, a:focus-visible { outline: 3px solid #fff; outline-offset:
 
 .practice-topline > div { display: none !important; }
 .practice-topline { justify-content: flex-end; }
+
+.piano-heading { display: none !important; }
+.piano { pointer-events: auto; touch-action: none; }
+.piano-key { cursor: pointer; }
