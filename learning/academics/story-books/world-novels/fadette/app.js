@@ -536,6 +536,83 @@ const CHAPTER_SEGS = CHAPTERS.map(ch => {
     return segs;
 });
 
+// 읽고 나서 — 책마다 내용이 다르다. 장과 같은 방식으로 재서 나눈다.
+const AFTERWORD = {
+    title: '읽고 나서',
+    emoji: '🌾',
+    art: [],
+    paras: [
+        `이 책의 원래 제목은 『작은 파데트』입니다. 파데트라는 이름이 그대로 제목입니다. 그런데 그 이름은 그 아이의 본이름이 아닙니다. 본이름은 프랑수아즈이고, 사람들이 줄여 팡셰라고 부릅니다.`,
+        `파데트는 마을 사람들이 붙인 별명입니다. 요정이라는 말에서 온 말인데, 좋게 부르는 말이 아니었습니다. 그러니 이 책의 제목은 마을이 그 아이를 부르던 이름이고, 이 책이 하는 일은 그 이름을 벗기는 것입니다.`,
+        `별명이라는 것이 그렇습니다. 남이 붙여 주는 것이고, 붙고 나면 벗기 어렵습니다. 그리고 그 별명대로 살게 되기도 합니다. 다 읽고 나면 그 아이를 파데트라고 부르는 사람이 줄어 있습니다.`,
+        `쓴 사람은 프랑스의 조르주 상드입니다. 그런데 그것은 붓 이름이고, 본이름은 아망딘 오로르 뤼실 뒤팽입니다. 그 시절 프랑스에서 여자가 소설을 내기가 어려워서 남자 이름을 붙여 냈습니다.`,
+        `그리고 남자 옷을 입고 다니기도 했습니다. 그 시절 파리에서 여자가 바지를 입으려면 허가를 받아야 했습니다. 담배를 피우고 남자들과 어울려 토론을 했습니다. 그래서 늘 말이 많았습니다.`,
+        `상드는 파리에서 살다가 어릴 때 자란 시골로 돌아갔습니다. 그리고 그 고장 이야기를 여러 권 썼습니다. 그 고장 이름을 따 베리 이야기라고 부릅니다. 이 책도 그 가운데 하나입니다.`,
+        `상드는 어릴 때 할머니 손에서 그 고장 농부의 아이들과 함께 자랐습니다. 그러니 그 사람들의 말과 살림을 안에서 알고 있었습니다. 그리고 그 할머니에게서 큰 농장을 물려받았습니다.`,
+        `그러니 그 고장에서는 지주였습니다. 그런 자리에 있으면서 농부의 아이를 주인공으로 삼은 것입니다. 그 시절 소설은 대개 파리의 상류층 이야기였습니다. 시골 사람을 주인공으로 삼는 일이 드물었습니다.`,
+        `책은 천팔백사십구 년에 나왔습니다. 그 한 해 전에 프랑스에서 큰 소동이 있었고, 상드는 그것에 깊이 관여했다가 크게 실망했습니다. 그러고 나서 시골로 내려가 이 책을 썼습니다.`,
+        `그러니 이 조용한 시골 이야기는 아주 시끄러운 일을 겪은 뒤에 나온 책입니다. 세상을 바꾸려던 일이 뜻대로 되지 않자, 사람이 사람을 어떻게 대하는지를 아주 작은 자리에서 다시 들여다보기로 한 것 같습니다.`,
+        `이제 다시 볼 대목을 짚어 봅시다.`,
+        `첫째, 첫 장의 쌍둥이를 다시 보십시오. 랑드리와 실비네는 얼굴이 똑같은 쌍둥이입니다. 그리고 서로 떨어지지 못합니다. 그 시절 그 고장에는 쌍둥이를 떼어 놓아야 한다는 말이 있었습니다.`,
+        `붙여 두면 둘 다 제대로 자라지 못한다는 것입니다. 그래서 아버지가 하나를 다른 농장에 일하러 보냅니다. 그것이 이 이야기의 시작입니다.`,
+        `그 시절 시골에는 그런 믿음이 많았습니다. 근거가 있는 것도 있고 없는 것도 있었습니다. 그런데 마을이 그것을 믿으면 그대로 일이 벌어집니다. 그 떼어 놓기가 하나에게는 살길이 되고 하나에게는 병이 됩니다.`,
+        `둘째, 실비네를 다시 보십시오. 이 책에서 제일 어려운 인물입니다. 동생을 사랑하는데, 그 사랑이 동생을 붙잡습니다. 동생이 다른 사람을 좋아하면 앓아눕습니다.`,
+        `그리고 그 앓는 것으로 동생을 붙잡아 둡니다. 본인은 그것을 알지 못합니다. 상드가 이 인물을 아주 자세히 그려 놓았습니다. 그 시절 소설에서 그런 마음을 그렇게 적은 것은 드문 일이었습니다.`,
+        `이 책에서 실비네를 나무라는 사람은 아무도 없습니다. 다들 그 아이를 딱하게 여깁니다. 그런데 딱하게 여기는 것이 그 아이를 더 붙잡아 둡니다.`,
+        `앓으면 다들 걱정해 줍니다. 그러니 앓는 것이 그 아이가 얻는 유일한 것이 됩니다. 상드는 그것을 아주 정확하게 그려 놓았습니다.`,
+        `셋째, 파데트가 마을에서 어떤 아이였는지 세어 보십시오. 어머니가 집을 나갔고, 할머니와 어린 동생과 삽니다. 옷이 더럽고, 말버릇이 사납고, 밤에 들판을 돌아다닙니다.`,
+        `그러니 마을 사람들이 그 아이를 마녀 같다고 여깁니다. 그런데 그 아이가 밤에 들판을 다니는 까닭은 약초를 캐기 위해서였습니다. 할머니가 약을 짓는 사람이었고, 파데트가 그것을 도왔습니다.`,
+        `그리고 파데트는 그 약초를 아주 잘 알았습니다. 어느 풀이 무엇에 듣는지를 다 외우고 있었습니다. 마을에서 제일 많이 아는 아이가 제일 무시받는 아이였습니다.`,
+        `그리고 그 앎이 나중에 실비네를 낫게 하는 데 쓰입니다. 마을이 마녀라고 부르던 집의 아이가 마을 사람을 살립니다.`,
+        `넷째, 파데트가 랑드리를 도와주고 조건을 거는 대목을 다시 읽어 보십시오. 이 책에서 제일 재미있는 자리입니다. 그 아이는 무엇을 시킬지 말하지 않고 나중에 말하겠다고 합니다.`,
+        `그리고 한참 뒤에 그 약속을 꺼냅니다. 축제에서 자기와 춤을 추라는 것이었습니다. 그러니 그 아이가 바란 것은 사람들 앞에 함께 서는 것이었습니다.`,
+        `그동안 그 아이에게는 그런 자리가 한 번도 없었습니다. 축제에 나가도 아무도 청하지 않았습니다. 그 시절 시골 축제에서 춤을 청하는 것은 큰일이었습니다.`,
+        `누가 누구와 추었는지가 마을에 다 알려졌기 때문입니다. 그러니 파데트가 청한 것은 아주 대담한 일이었습니다. 그리고 그날 마을 사람들이 웃습니다.`,
+        `그 웃음을 파데트가 견딥니다. 그것이 이 책에서 제일 아픈 자리입니다. 랑드리도 그 자리에서 부끄러워합니다. 그리고 그 부끄러움을 스스로 알아챕니다.`,
+        `그 대목부터 이 책이 다른 이야기가 됩니다. 다섯째, 파데트가 달라지는 대목을 다시 보십시오. 그 아이는 옷을 깨끗이 하고 말을 조심하게 됩니다. 그러자 사람들이 예쁘다고 합니다.`,
+        `그런데 그 아이가 원래 못생겼던 것이 아닙니다. 사람들이 보지 않았을 뿐입니다. 이 책은 그것을 조용히 짚습니다.`,
+        `다만 여기에 생각해 볼 것이 있습니다. 파데트가 스스로 달라진 것인지, 아니면 마을에 받아들여지려고 자기를 바꾼 것인지 하는 것입니다. 이 책은 그 둘을 갈라 놓지 않습니다.`,
+        `그 애매함이 이 책을 오래 남게 합니다. 다만 이 책은 파데트가 자기 생각을 접었다고 적지는 않습니다. 옷과 말투는 달라졌는데 하는 말은 그대로입니다.`,
+        `파데트가 랑드리에게 하는 말을 다시 읽어 보십시오. 사람들이 뭐라고 하든 상관하지 말라는 말을 그 아이가 먼저 합니다. 그 말을 할 자격이 있는 사람은 그 마을에서 그 아이뿐이었습니다.`,
+        `인물도 다시 보아야 할 사람이 있습니다.`,
+        `바르보 영감을 그냥 완고한 아버지로 읽으면 놓치는 것이 있습니다. 그 사람은 마을에서 셈이 밝고 반듯한 사람입니다. 그리고 마지막에 파데트를 받아들입니다.`,
+        `그런데 그 아이에게 돈이 있다는 것을 알고 나서 마음이 바뀝니다. 이 책은 그것을 감추지 않습니다. 좋은 사람의 셈도 그대로 적어 두는 것입니다.`,
+        `파데트의 할머니도 짚어 둘 만합니다. 그 사람은 약을 짓는 사람인데, 마을 사람들이 필요할 때만 찾아옵니다. 그러고는 평소에 마녀라고 부릅니다.`,
+        `그 두 가지가 같은 사람에게 붙어 있습니다. 무서운 것을 필요로 하면서 동시에 미워하는 것입니다. 그 시절 시골에는 그런 사람이 마을마다 있었습니다.`,
+        `약을 짓고 아이를 받고 병을 봐 주었습니다. 그리고 무슨 일이 잘못되면 그 사람 탓을 했습니다. 그러니 마을에 꼭 있어야 하는데 마을 밖에 두어야 하는 사람이었습니다.`,
+        `그 시절 사정도 알아 두면 좋습니다. 이 이야기의 배경은 백팔십 년쯤 전 프랑스의 시골입니다. 상드가 자란 베리 지방입니다. 그 시절 시골 마을은 아주 작았습니다.`,
+        `백 명 남짓 사는 마을이 흔했습니다. 그러니 누가 무엇을 했는지가 다 알려졌습니다. 그리고 소문이 사람의 자리를 정했습니다.`,
+        `파데트 같은 아이가 그 자리에서 벗어나기가 얼마나 어려웠을지 짐작해 보십시오. 그 시절 소설에 시골 사람이 나와도 대개 우스운 사람이거나 순박한 사람으로만 나왔습니다.`,
+        `상드는 그렇게 그리지 않았습니다. 그 고장에서 쓰는 말도 그대로 적어 넣었습니다. 그러니 이 책은 그 시절 프랑스 시골의 기록이기도 합니다.`,
+        `들일을 어떻게 나누는지, 축제를 언제 여는지, 혼인을 어떻게 정하는지가 다 적혀 있습니다. 그래서 지금 학자들도 이 책을 자료로 읽습니다.`,
+        `이 책이 붙들고 있는 것은 두 가지입니다.`,
+        `하나는 소문이 사람을 어떻게 만드느냐는 것입니다. 파데트는 마을이 정해 놓은 자리에서 자랐습니다. 그리고 그 자리에 맞게 굴었습니다. 사납게 구는 것이 그 아이가 스스로를 지키는 방법이었습니다.`,
+        `그러니 마을이 그 아이를 그렇게 만들고 나서 그 아이를 나무란 셈입니다. 그 셈을 이 책은 소리 높여 말하지 않습니다. 그냥 보여 주기만 합니다.`,
+        `다른 하나는 사랑이 사람을 붙잡을 수 있느냐는 것입니다. 실비네가 그것입니다. 그 사람은 나쁜 마음으로 그러는 것이 아닙니다. 그런데 그 마음이 동생을 놓아 주지 못합니다.`,
+        `이 책은 그 마음을 나무라지 않으면서도, 그것이 무엇을 하는지는 정확히 적어 둡니다. 그리고 마지막에 실비네가 어떻게 하는지를 보십시오.`,
+        `실비네는 스스로 멀리 갑니다. 동생을 놓아 주려던 것입니다. 그것이 그 사람이 할 수 있는 마지막 일이었습니다. 이 책은 그 사람이 어떻게 되었는지를 끝까지 밝게 적지 않습니다.`,
+        `잘 지낸다고만 짧게 적고 넘어갑니다. 그 짧음이 오히려 오래 남습니다. 그 사람이 정말 잘 지냈는지는 아무도 모릅니다.`,
+        `상드는 그 시절 아주 유명한 사람이었습니다. 소설도 많이 냈고, 여러 예술가와 가까이 지냈습니다. 그리고 여자가 어떻게 살아야 하는지에 대해 그 시절 사람들과 다르게 생각했습니다.`,
+        `그래서 욕도 많이 먹었습니다. 이 책 같은 시골 이야기 세 권을 사람들은 전원 소설이라고 부릅니다. 그 가운데 이 책이 제일 널리 읽힙니다.`,
+        `프랑스에서는 이 책이 오래도록 학교에서 읽혔습니다. 그리고 지금도 읽힙니다. 시골말이 그대로 들어 있어 그 시절 말을 배우는 데도 쓰입니다.`,
+        `언젠가 이 책을 다시 읽게 되거든, 이번에는 마을 사람들이 파데트를 부르는 말을 세어 보십시오. 그 말이 언제 어떻게 달라지는지가 이 책의 속이야기입니다.`,
+        `마지막으로 생각해 볼 것을 남겨 둡니다. 답은 적어 두지 않겠습니다.`,
+        `파데트가 달라진 것을 우리는 어떻게 보아야 할까요? 스스로 나아진 것일까요, 아니면 받아들여지려고 자기를 접은 것일까요?`,
+        `실비네의 마음을 우리는 무엇이라고 불러야 할까요? 그것도 사랑이라면, 사랑이 늘 좋은 것이라고 할 수 있을까요?`,
+        `그리고 바르보 영감이 파데트를 받아들인 까닭 가운데 돈이 있었다는 것을 어떻게 세어야 할까요. 이 물음은 어른이 되어 다시 읽어도 답하기가 쉽지 않습니다.`
+    ]
+};
+
+const AFTER_SEGS = (() => {
+    const segs = [];
+    AFTERWORD.paras.forEach((html, paraIdx) => {
+        splitSegments(html).forEach((piece, k) => {
+            segs.push({ paraIdx, html: piece, start: k === 0 });
+        });
+    });
+    return segs;
+})();
+
 // 조각 묶음을 문단 단위로 다시 묶어 화면에 그릴 모양으로 만든다.
 // 앞 쪽에서 이어진 문단은 첫 줄을 들여쓰지 않는다.
 function runHtml(segs, a, b) {
@@ -817,16 +894,100 @@ function quizPage(part) {
         </div>`;
 }
 
-function endPage() {
+/* 읽고 나서 — 장과 같은 방식으로 쪽을 나눈다. 그림은 오른쪽 위에 얹힌다. */
+const AFTER_FOOT = `<p class="after-home"><a class="home-btn" href="../../../../../">학습 허브로 돌아가기</a></p>`;
+
+function paginateAfterword() {
+    const segs = AFTER_SEGS;
+    const arts = AFTERWORD.art || [];
+    const { usable, headHeight, artHeight } = PROBE;
+    const headHtml = `<h2>${AFTERWORD.title}</h2>`;
+    const totalH = PROBE.measure(runHtml(segs, 0, segs.length));
+
+    const underArt = Math.max(60, usable - artHeight);
+
+    // 맨 끝에는 학습 허브로 가는 단추가 붙는다. 그 높이를 미리 빼 두지 않으면
+    // 마지막 쪽만 넘친다.
+    const footH = PROBE.measure(AFTER_FOOT);
+
+    const capsOf = slots => {
+        const caps = [];
+        slots.forEach(kind => { caps.push(usable); caps.push(kind === 'img' ? underArt : usable); });
+        caps[caps.length - 1] = Math.max(60, caps[caps.length - 1] - footH);
+        return caps;
+    };
+
+    const minSpreads = Math.max(arts.length, 1);
+    const maxSpreads = Math.max(minSpreads, Math.floor(segs.length / 2));
+    let spreadCount = minSpreads;
+    while (spreadCount < maxSpreads) {
+        const caps = capsOf(slotPlan(arts.length, spreadCount - arts.length));
+        if (caps.reduce((a, b) => a + b, 0) >= totalH + headHeight) break;
+        spreadCount++;
+    }
+
+    let slots = slotPlan(arts.length, Math.max(0, spreadCount - arts.length));
+    let caps = capsOf(slots);
+    let ranges = fillPages(segs, caps, headHtml);
+    for (let guard = 0; guard < 8; guard++) {
+        const over = ranges.some(([a, b], n) =>
+            PROBE.measure((n === 0 ? headHtml : '') + runHtml(segs, a, b)) > caps[n] + 1);
+        if (!over || spreadCount >= maxSpreads) break;
+        spreadCount++;
+        slots = slotPlan(arts.length, Math.max(0, spreadCount - arts.length));
+        caps = capsOf(slots);
+        ranges = fillPages(segs, caps, headHtml);
+    }
+
+    const spreads = [];
+    let pageIdx = 0;
+    let artIdx = 0;
+    slots.forEach((kind, s) => {
+        const left = ranges[pageIdx++];
+        const right = ranges[pageIdx++];
+        spreads.push({
+            kind: 'after', first: s === 0, last: s === slots.length - 1,
+            art: kind === 'img' ? arts[artIdx++] : null, left, right
+        });
+    });
+    return spreads;
+}
+
+function afterSpreadPage(spread) {
+    const segs = AFTER_SEGS;
+    const head = spread.first ? `<h2>${AFTERWORD.title}</h2>` : '';
+    // 학습 허브로 돌아가는 길은 맨 끝에 한 번만 둔다.
+    const foot = spread.last ? AFTER_FOOT : '';
+
+    if (spread.art) {
+        return `
+            <div class="page page-story page-after">
+                <div class="story-page-left">
+                    ${head}
+                    ${runHtml(segs, spread.left[0], spread.left[1])}
+                </div>
+                <div class="story-page-right story-page-right-image">
+                    <div class="story-art-top">${artFrame(spread.art, AFTERWORD.emoji)}</div>
+                    ${runHtml(segs, spread.right[0], spread.right[1])}
+                    ${foot}
+                </div>
+            </div>`;
+    }
+
     return `
-        <div class="page page-end">
-            ${artFrame('end.png', '🌾')}
-            <h2>사랑의 요정를 다 읽었습니다</h2>
-            <a class="home-btn" href="../../../../../">학습 허브로 돌아가기</a>
+        <div class="page page-story page-after">
+            <div class="story-page-left">
+                ${head}
+                ${runHtml(segs, spread.left[0], spread.left[1])}
+            </div>
+            <div class="story-page-right story-page-right-text">
+                ${runHtml(segs, spread.right[0], spread.right[1])}
+                ${foot}
+            </div>
         </div>`;
 }
 
-const TWO_PAGE_KINDS = new Set(['chapter', 'toc', 'cover']);
+const TWO_PAGE_KINDS = new Set(['chapter', 'toc', 'cover', 'after']);
 
 let PAGES = [];
 let FOLIOS = [];
@@ -838,7 +999,7 @@ function buildPages() {
         ...TOC_GROUPS.map((_, i) => ({ kind: 'toc', part: i })),
         ...CHAPTERS.flatMap(paginateChapter),
         ...QUIZ_GROUPS.map((_, i) => ({ kind: 'quiz', part: i })),
-        { kind: 'end' }
+        ...paginateAfterword()
     ];
     PROBE.close();   // 쪽을 다 나눴으니 재는 데 쓰던 숨은 쪽은 치운다
 
@@ -859,7 +1020,7 @@ function renderPage(page) {
         case 'toc': return tocPage(page.part);
         case 'chapter': return chapterSpreadPage(page);
         case 'quiz': return quizPage(page.part);
-        case 'end': return endPage();
+        case 'after': return afterSpreadPage(page);
         default: return '';
     }
 }
