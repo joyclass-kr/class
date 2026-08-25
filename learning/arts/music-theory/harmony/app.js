@@ -199,7 +199,7 @@
         elements.questionTitle.textContent = state.stageId === 10 ? "흐름을 듣고 구별하세요" : "개념을 소리와 연결하세요";
         elements.roundCounter.textContent = state.round + " / 5";
         elements.questionPrompt.textContent = state.question.prompt;
-        elements.feedback.textContent = "답을 골라 보세요.";
+        elements.feedback.textContent = "";
         elements.feedback.className = "feedback";
         elements.nextButton.hidden = true;
         elements.answerChoices.innerHTML = "";

@@ -8,27 +8,18 @@
     <meta name="description" content="음과 음정부터 코드 진행까지 순서대로 배우는 화성학 과정">
     <link rel="preload" href="assets/piano/C3.ogg" as="fetch" type="audio/ogg" crossorigin>
     <link rel="preload" href="assets/piano/C4.ogg" as="fetch" type="audio/ogg" crossorigin>
-    <link rel="stylesheet" href="styles.css?v=20260825-course">
-    <script src="piano-engine.js?v=20260825-course" defer></script>
-    <script src="app.js?v=20260825-course" defer></script>
+    <link rel="stylesheet" href="styles.css?v=20260825-clean3">
+    <script src="piano-engine.js?v=20260825-clean3" defer></script>
+    <script src="app.js?v=20260825-clean3" defer></script>
 </head>
 <body>
     <header class="topbar">
         <a class="back-link" href="../../../../">← 메인</a>
-        <div class="brand" aria-label="화성학">
-            <span class="brand-mark" aria-hidden="true">♬</span>
-            <span><strong>화성학</strong><small>음에서 화음의 흐름까지</small></span>
-        </div>
         <button id="resetProgress" class="quiet-button" type="button">학습 기록 초기화</button>
     </header>
 
     <main class="course-shell">
-        <aside class="course-nav" aria-labelledby="courseTitle">
-            <div class="course-heading">
-                <p>HARMONY COURSE</p>
-                <h1 id="courseTitle">화성학 10단계</h1>
-                <span>원하는 단계부터 선택할 수 있어요.</span>
-            </div>
+        <aside class="course-nav" aria-label="화성학 단계">
             <nav id="stageList" class="stage-list" aria-label="화성학 단계"></nav>
         </aside>
 
@@ -61,7 +52,7 @@
                     <p id="questionPrompt" class="question-prompt"></p>
                     <button id="listenButton" class="listen-button" type="button"><span aria-hidden="true">♪</span> 소리 듣기</button>
                     <div id="answerChoices" class="answer-choices" role="group" aria-label="정답 선택"></div>
-                    <p id="feedback" class="feedback" aria-live="polite">답을 골라 보세요.</p>
+                    <p id="feedback" class="feedback" aria-live="polite"></p>
                     <button id="nextButton" class="next-button" type="button" hidden>다음 문제</button>
                 </article>
             </div>
