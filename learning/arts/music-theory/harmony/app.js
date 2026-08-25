@@ -148,7 +148,7 @@
     }
 
     function cacheElements() {
-        ["stageList","stageKicker","stageTitle","stageSummary","stageStatus","conceptTitle","conceptBody","lessonPoints","questionTitle","roundCounter","questionPrompt","listenButton","answerChoices","feedback","nextButton","piano","pianoReadout","resetProgress","toast"].forEach(function (id) { elements[id] = $(id); });
+        ["courseNav","courseCurrent","stageList","stageKicker","stageTitle","stageSummary","stageStatus","conceptTitle","conceptBody","lessonPoints","questionTitle","roundCounter","questionPrompt","listenButton","answerChoices","feedback","nextButton","piano","pianoReadout","resetProgress","toast"].forEach(function (id) { elements[id] = $(id); });
     }
     function currentStage() { return stages.find(function (stage) { return stage.id === state.stageId; }); }
 
@@ -169,6 +169,7 @@
     function renderStage() {
         const stage = currentStage();
         const complete = state.progress.completed.includes(stage.id);
+        elements.courseCurrent.textContent = stage.id + ". " + stage.title;
         elements.stageKicker.textContent = stage.id + "단계";
         elements.stageTitle.textContent = stage.title;
         elements.stageSummary.textContent = stage.summary;
@@ -188,6 +189,7 @@
         state.showingResult = false;
         renderStages();
         renderStage();
+        elements.courseNav.open = false;
         if (window.innerWidth <= 900) document.querySelector(".lesson").scrollIntoView({ behavior: "smooth", block: "start" });
     }
 

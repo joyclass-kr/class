@@ -6,8 +6,8 @@
     <meta name="theme-color" content="#261717">
     <title>리듬</title>
     <meta name="description" content="박과 음표부터 당김음과 리듬 받아쓰기까지 순서대로 배우는 리듬 과정">
-    <link rel="stylesheet" href="styles.css?v=20260825-clean3">
-    <script src="app.js?v=20260825-clean3" defer></script>
+    <link rel="stylesheet" href="styles.css?v=20260826-book1">
+    <script src="app.js?v=20260826-book1" defer></script>
 </head>
 <body>
     <header class="topbar">
@@ -16,9 +16,10 @@
     </header>
 
     <main class="course-shell">
-        <aside class="course-nav" aria-label="리듬 단계">
+        <details id="courseNav" class="course-nav">
+            <summary><span>목차</span><strong id="courseCurrent">1. 박과 빠르기</strong></summary>
             <nav id="stageList" class="stage-list" aria-label="리듬 단계"></nav>
-        </aside>
+        </details>
 
         <section class="lesson" aria-live="polite">
             <header class="lesson-heading">
