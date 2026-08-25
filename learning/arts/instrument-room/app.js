@@ -246,7 +246,7 @@
             state.compressor.connect(state.masterLowShelf).connect(state.masterPresence).connect(state.limiter).connect(state.masterGain).connect(context.destination);
         }
         if (state.audioContext.state === "suspended") state.audioContext.resume();
-        elements.audioButton.classList.add("ready");
+        elements.audioButton.classList.add("hidden");
         return state.audioContext;
     }
 
@@ -1163,10 +1163,12 @@
             elements.audioButton.textContent = "준비 중…";
             const tasks = [loadPianoSamples(), ensureStringEngine(), ensureDrumEngine()];
             Promise.all(tasks).then(function () {
-                elements.audioButton.innerHTML = '<span aria-hidden="true">●</span> 소리 준비됨';
-                elements.audioButton.classList.add("ready");
+                elements.audioButton.classList.add("hidden");
                 showToast("소리가 준비됐어요.");
-            }).catch(function () { elements.audioButton.textContent = "소리 다시 켜기"; });
+            }).catch(function () {
+                elements.audioButton.textContent = "소리 다시 켜기";
+                elements.audioButton.classList.remove("hidden");
+            });
         });
         document.querySelectorAll("[data-family]").forEach(function (button) {
             button.addEventListener("click", function () { selectFamily(button.dataset.family); });

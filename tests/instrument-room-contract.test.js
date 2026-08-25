@@ -15,6 +15,15 @@ test('uses dedicated rooms for the nine primary instrument groups', () => {
   }
 });
 
+test('keeps the instrument header compact and hides normal audio status', () => {
+  assert.doesNotMatch(html, /LOCAL PHYSICAL INSTRUMENTS|level-bars/);
+  assert.doesNotMatch(app, /소리 준비됨/);
+  assert.match(html, /id="audioButton"[^>]*>소리 켜기<\/button>/);
+  assert.match(css, /\.topbar \{ height: 50px;/);
+  assert.match(app, /audioButton\.classList\.add\("hidden"\)/);
+  assert.match(app, /audioButton\.classList\.remove\("hidden"\)/);
+});
+
 test('keyboard library covers AP, EP, Hybrid, and Organ', () => {
   for (const model of ['concert-grand', 'tine-ep', 'pop-grand-fm', 'tonewheel-organ']) {
     assert.match(app, new RegExp(`id: "${model}"`));
