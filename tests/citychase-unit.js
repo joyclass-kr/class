@@ -174,8 +174,11 @@ assert.match(css, /\.boardViewport[^}]*place-items: center[^}]*overflow: hidden/
 assert.match(css, /\.boardPanel \{ height: auto; aspect-ratio: 1000 \/ 640; \}/, "iPad 세로 화면에서도 보드 전체 비율을 유지해야 합니다.");
 assert.match(css, /@media\s*\(orientation:\s*portrait\),\s*\(max-width:\s*820px\)/);
 assert.match(html, /class="lobbyWorkspace"/, "대기 화면은 접속과 참가자 상태를 한눈에 보여줘야 합니다.");
-assert.match(css, /\.lobbyTop \{ display: grid; grid-template-columns: auto auto minmax\(260px, 1fr\)/, "대기 화면의 주요 행동은 첫 화면에 보여야 합니다.");
-assert.match(css, /\.lobbyWorkspace \{ display: grid; grid-template-columns: minmax\(280px, \.85fr\) minmax\(400px, 1\.15fr\)/, "Chromebook 가로 화면에서는 접속과 참가자 패널을 나란히 보여야 합니다.");
+assert.match(html, /id="lobbyScreen"[^>]*data-multiplayer-lobby/, "대기실은 사이트 공통 멀티플레이 UI 규칙을 사용해야 합니다.");
+assert.doesNotMatch(html, /각자의 기기로 참가/, "대기실 제목줄에 접속 방식을 중복 설명하면 안 됩니다.");
+assert.match(css, /\.lobbyTop \{ display: grid; grid-template-columns: minmax\(0, 1fr\) auto minmax\(230px, 320px\)/, "대기 화면의 주요 행동은 첫 화면에 보여야 합니다.");
+assert.match(css, /\.lobbyWorkspace \{ display: grid; grid-template-columns: minmax\(240px, \.72fr\) minmax\(360px, 1\.28fr\)/, "Chromebook 가로 화면에서는 접속과 참가자 패널을 간결하게 나란히 보여야 합니다.");
+assert.match(css, /\.mp-lobby-card \{ min-height: 0; margin: 0; \}/, "활성 접속 카드가 참가자 패널 높이만큼 불필요하게 늘어나면 안 됩니다.");
 assert.match(css, /@media \(max-width: 900px\)[\s\S]*\.lobbyWorkspace \{ grid-template-columns: 1fr; \}/, "iPad 세로 화면에서는 대기 패널을 한 열로 배치해야 합니다.");
 assert.match(client, /function avatarOf\(playerId\)/, "학생 아바타는 멀티플레이 대기실 정보에서 가져와야 합니다.");
 assert.match(css, /lobby-city\.jpg/, "제공한 도심 그림을 대기실 전용 배경으로 사용해야 합니다.");
@@ -183,7 +186,7 @@ assert.match(html, /경찰과 도둑/, "공개 제목은 한국어 이름인 경
 assert.match(html, /COPS AND ROBBERS/i, "공개 제목은 영어 이름을 함께 병기해야 합니다.");
 assert.doesNotMatch(html, /도둑잡기|잠복경찰|속임수 카드|검문 카드/, "공개 화면에 원작을 특정하는 명칭과 설명서식 용어가 남으면 안 됩니다.");
 assert.doesNotMatch(server, /도둑잡기|잠복경찰|속임수 카드|검문 카드/, "서버 안내 문구도 독자적인 용어를 사용해야 합니다.");
-assert.match(css, /\.lobbyShell::before[\s\S]*linear-gradient\(#eff8f058, #eff8f058\)[\s\S]*cover/s, "대기실 배경은 살짝 밝게 처리하고 화면 비율에 맞춰 채워야 합니다.");
+assert.match(css, /\.lobbyShell::before[\s\S]*linear-gradient\(#eff8f0a8, #eff8f0a8\)[\s\S]*cover/s, "대기실 배경은 패널보다 차분하게 처리하고 화면 비율에 맞춰 채워야 합니다.");
 assert.match(client, /pawnName[\s\S]*pawnFaceMarkup\(controllers\)[\s\S]*pawnNumber/, "말에는 학생 이름·아바타·말 번호가 함께 보여야 합니다.");
 assert.match(html, /id="policeSeatSlots"[\s\S]*id="thiefSeatSlots"/, "대기실에는 경찰팀·도둑팀 슬롯이 모두 있어야 합니다.");
 assert.match(client, /sendAction\("CHOOSE_SEAT"/, "학생은 빈 슬롯을 눌러 자기 팀 자리를 선택해야 합니다.");
