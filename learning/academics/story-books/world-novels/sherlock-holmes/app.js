@@ -314,6 +314,70 @@ const CHAPTER_SEGS = CHAPTERS.map(ch => {
     return segs;
 });
 
+// 읽고 나서 — 책마다 내용이 다르다. 장과 같은 방식으로 재서 나눈다.
+const AFTERWORD = {
+    title: '읽고 나서',
+    emoji: '🔎',
+    art: [],
+    paras: [
+        `이 책에 실린 것은 한 편의 긴 이야기가 아니라 여러 편의 짧은 이야기입니다. 셜록 홈스 이야기는 원래 그렇게 나왔습니다. 잡지에 한 달에 한 편씩 실린 것을 나중에 묶은 것입니다.`,
+        `쓴 사람은 영국의 아서 코넌 도일입니다. 본디 의사였습니다. 병원을 열었는데 환자가 오지 않아서, 빈 진료실에 앉아 이야기를 썼습니다. 그러다 홈스가 나왔습니다.`,
+        `홈스에게는 바탕이 된 실제 사람이 있습니다. 도일이 의학을 배울 때 가르치던 조지프 벨이라는 선생입니다. 그 사람은 환자가 방에 들어와 앉기만 해도 어디서 왔고 무슨 일을 하는지를 알아맞혔습니다.`,
+        `걸음걸이, 손의 굳은살, 옷에 묻은 흙빛을 보고 알아낸 것입니다. 도일은 그것을 그대로 가져와 탐정에게 붙였습니다. 그러니 홈스가 하는 일은 사실 의사가 병을 알아내는 방법입니다.`,
+        `홈스가 처음 나온 것은 천팔백팔십칠 년입니다. 그런데 그때는 별로 알려지지 않았습니다. 크게 알려진 것은 사 년 뒤부터 잡지에 짧은 이야기가 이어 실리면서입니다.`,
+        `그 잡지가 나오는 날이면 가판대 앞에 줄이 섰다고 합니다. 사람들이 다음 이야기를 기다린 것입니다.`,
+        `한 편이 끝나면 다음 한 편이 이어졌기 때문에, 중간부터 읽어도 상관이 없었습니다. 홈스 이야기가 지금까지 널리 읽히는 데는 그런 까닭도 있습니다.`,
+        `여기 실린 것은 그 가운데 널리 읽히는 몇 편을 골라 옮긴 것입니다. 홈스 이야기는 짧은 것이 쉰여섯 편, 긴 것이 네 편입니다. 다 읽으려면 아주 오래 걸립니다.`,
+        `이제 다시 볼 대목을 짚어 봅시다.`,
+        `첫째, 홈스가 처음 왓슨을 만나는 장면을 다시 떠올려 보십시오. 홈스는 인사를 하기도 전에 아프가니스탄에서 돌아왔느냐고 묻습니다. 얼굴이 볕에 그은 것, 손목만 흰 것, 걸음이 성치 않은 것, 몸을 곧게 세우는 버릇을 이어 붙인 것입니다.`,
+        `그것이 이 이야기들이 하는 일의 전부입니다. 아무도 눈여겨보지 않는 작은 것을 이어 붙이는 것입니다.`,
+        `그리고 홈스는 그것을 설명하고 나면 늘 이렇게 말합니다. 알고 보면 아주 간단하다고요. 왓슨은 그 말을 들을 때마다 김이 샌다고 적어 둡니다.`,
+        `둘째, 짖지 않은 개를 다시 보십시오. 이 대목은 추리 이야기에서 가장 유명한 자리 가운데 하나입니다. 홈스가 눈여겨본 것은 개가 무엇을 했느냐가 아니라 아무것도 하지 않았다는 것이었습니다.`,
+        `밤에 낯선 사람이 왔다면 개가 짖었을 것입니다. 짖지 않았으니 온 사람이 낯선 사람이 아니었던 것입니다. 없는 것을 증거로 삼는 법을 이 대목이 알려 줍니다.`,
+        `이 방법은 지금도 여러 자리에서 쓰입니다. 무슨 일이 일어났는지만 보지 말고, 일어났어야 하는데 일어나지 않은 것이 무엇인지도 세어 보라는 것입니다.`,
+        `셋째, 빨간 머리 연맹을 다시 읽어 보십시오. 아무 쓸모도 없는 일을 시키면서 돈을 주는 자리가 나옵니다. 이상한 일인데 당사자는 좋아합니다.`,
+        `홈스가 본 것은 그 일이 이상하다는 것이 아니라, 그 일이 그 사람을 가게에서 떼어 놓는다는 것이었습니다. 사람을 어디에 있게 하려고 그런 것이 아니라 어디에 없게 하려고 그런 것이었습니다.`,
+        `넷째, 홈스가 틀리는 대목도 세어 보십시오. 홈스는 늘 이기지 않습니다. 보헤미아 왕국 이야기에서는 아이린 애들러에게 한 수 집니다. 그리고 홈스는 그것을 부끄러워하지 않고 그 사람의 사진을 간직합니다.`,
+        `왓슨은 홈스가 그 사람을 부를 때 이름을 부르지 않고 그 여인이라고 부른다고 적어 두었습니다. 홈스가 누군가를 그렇게 부른 것은 그때 한 번뿐입니다.`,
+        `인물도 다시 보아야 할 사람이 있습니다.`,
+        `왓슨을 그저 옆에 있는 사람으로 읽으면 절반만 읽은 것이 됩니다. 이 이야기들은 다 왓슨이 적은 글입니다. 우리가 홈스를 아는 것은 왓슨의 눈으로 본 것입니다.`,
+        `그리고 왓슨은 홈스가 하는 말을 알아듣지 못하는 사람으로 나옵니다. 그래야 홈스가 설명을 하고, 그 설명을 읽는 사람이 함께 듣게 됩니다. 왓슨은 이야기를 굴러가게 하는 장치이기도 합니다.`,
+        `그런데 왓슨은 바보가 아닙니다. 군의관으로 전쟁에 나갔다 온 사람이고, 총을 잘 쏘고, 겁이 없습니다. 위험한 자리에는 늘 함께 갑니다.`,
+        `홈스도 다시 볼 만합니다. 홈스는 사건이 없으면 견디지 못하는 사람입니다. 며칠씩 소파에 누워 있고, 바이올린을 밤새 켜고, 벽에 총을 쏘아 글자를 새기기도 합니다. 도일은 그 사람을 아주 이상한 사람으로 그려 놓았습니다.`,
+        `홈스는 자기에게 쓸모없는 것은 아예 알려고 하지 않습니다. 지구가 해를 돈다는 것도 몰랐다가, 왓슨에게 듣고는 잊어버리겠다고 합니다. 머릿속은 좁은 다락이라 쓸 것만 넣어야 한다는 것입니다.`,
+        `그 시절 사정도 알아 두면 좋습니다. 이 이야기들의 배경은 백삼십 년쯤 전 런던입니다. 그때 런던에는 사람이 사백만 명 넘게 살았고, 세계에서 제일 큰 도시였습니다.`,
+        `그런데 그 도시에 지문을 보는 법도 없었고, 피가 사람 것인지 짐승 것인지 가리는 법도 없었습니다. 그런 것이 실제로 쓰이게 된 것은 이 이야기들이 나온 뒤입니다.`,
+        `그러니 홈스가 바닥의 흙과 담뱃재를 들여다보는 것은 그 시절에는 아주 새로운 일이었습니다. 실제 경찰이 이 소설을 읽고 그 방법을 배웠다는 이야기도 있습니다.`,
+        `도일은 실제 사건에도 나섰습니다. 억울하게 갇힌 사람 둘을 위해 나서서 증거를 다시 살피고 글을 썼고, 두 사람 다 풀려났습니다. 그 일이 영국에서 잘못된 판결을 다시 살피는 제도가 생기는 데 보탬이 되었습니다.`,
+        `안개와 가스등도 그 시절 런던 그대로입니다. 석탄을 때는 집이 몇십만 채라 겨울이면 도시가 누런 안개에 잠겼습니다. 낮에도 앞이 안 보일 때가 있었습니다.`,
+        `마차가 다니고 가스등을 켜던 도시입니다. 전화도 자동차도 아직 흔하지 않았습니다. 홈스가 급할 때 쓰는 것은 전보였습니다. 그것이 그 시절 제일 빠른 소식이었습니다.`,
+        `이 이야기들이 붙들고 있는 것은 두 가지입니다.`,
+        `하나는 보는 것과 눈여겨보는 것이 다르다는 것입니다. 홈스는 왓슨에게 몇 번이나 그 말을 합니다. 자네는 보았지만 눈여겨보지 않았다고요. 층계를 날마다 오르내리면서 층계가 몇 칸인지 모르는 것과 같습니다.`,
+        `다른 하나는 답이 늘 앞에 있다는 것입니다. 홈스가 알아낸 것은 다 이야기 안에 이미 나온 것들입니다. 숨겨 두었다가 마지막에 꺼내는 것이 아닙니다. 그래서 다시 읽으면 처음에 놓친 것이 보입니다.`,
+        `홈스가 쓰는 방법을 사람들은 흔히 추리라고 부릅니다. 그런데 정확히는 조금 다릅니다. 홈스는 여러 갈래 가운데 제일 그럴듯한 것을 고르는 것이지, 반드시 그것뿐이라고 밝히는 것이 아닙니다. 그래서 홈스도 이따금 틀립니다.`,
+        `도일은 나중에 홈스가 지겨워졌습니다. 다른 글을 쓰고 싶은데 사람들이 홈스만 찾았기 때문입니다. 그래서 폭포에서 홈스를 죽였습니다.`,
+        `그러자 난리가 났습니다. 검은 옷을 입고 다니는 사람이 생겼고, 잡지 구독을 끊는 사람이 이만 명이 넘었습니다. 도일은 십 년 뒤에 홈스를 되살려야 했습니다.`,
+        `되살리면서 도일은 홈스가 죽지 않고 몸을 숨기고 있었다고 적었습니다. 그동안 어디에 있었는지도 적어 두었습니다. 티베트와 페르시아를 돌아다녔다고 합니다.`,
+        `지금 베이커가 이백이십일 번지에는 홈스 박물관이 있습니다. 그 주소로 편지가 아직도 옵니다. 지어낸 사람인데도 그렇습니다.`,
+        `홈스에게 도움을 청하는 편지가 지금도 옵니다. 박물관에서 답장을 대신 써 준다고 합니다. 백삼십 년 전에 지어낸 사람인데 아직도 그렇습니다.`,
+        `언젠가 이 이야기들을 다시 읽게 되거든, 이번에는 홈스가 설명하기 전에 먼저 답을 맞혀 보십시오. 필요한 것은 다 앞에 적혀 있습니다.`,
+        `마지막으로 생각해 볼 것을 남겨 둡니다. 답은 적어 두지 않겠습니다.`,
+        `홈스는 몇 번인가 범인을 경찰에 넘기지 않고 그냥 보냅니다. 그럴 만한 사정이 있다고 여겼기 때문입니다. 사람 하나가 그것을 정해도 되는 것일까요?`,
+        `홈스가 남의 집에 몰래 들어가고 남을 속이는 대목도 여러 번 나옵니다. 옳은 일을 하려고 그른 방법을 쓰는 것을 어떻게 보아야 할까요?`,
+        `그리고 왓슨이 없었다면 홈스는 어떻게 되었을까요. 이 물음은 어른이 되어 다시 읽어도 답하기가 쉽지 않습니다.`
+    ]
+};
+
+const AFTER_SEGS = (() => {
+    const segs = [];
+    AFTERWORD.paras.forEach((html, paraIdx) => {
+        splitSegments(html).forEach((piece, k) => {
+            segs.push({ paraIdx, html: piece, start: k === 0 });
+        });
+    });
+    return segs;
+})();
+
 // 조각 묶음을 문단 단위로 다시 묶어 화면에 그릴 모양으로 만든다.
 // 앞 쪽에서 이어진 문단은 첫 줄을 들여쓰지 않는다.
 function runHtml(segs, a, b) {
@@ -595,16 +659,100 @@ function quizPage(part) {
         </div>`;
 }
 
-function endPage() {
+/* 읽고 나서 — 장과 같은 방식으로 쪽을 나눈다. 그림은 오른쪽 위에 얹힌다. */
+const AFTER_FOOT = `<p class="after-home"><a class="home-btn" href="../../../../../">학습 허브로 돌아가기</a></p>`;
+
+function paginateAfterword() {
+    const segs = AFTER_SEGS;
+    const arts = AFTERWORD.art || [];
+    const { usable, headHeight, artHeight } = PROBE;
+    const headHtml = `<h2>${AFTERWORD.title}</h2>`;
+    const totalH = PROBE.measure(runHtml(segs, 0, segs.length));
+
+    const underArt = Math.max(60, usable - artHeight);
+
+    // 맨 끝에는 학습 허브로 가는 단추가 붙는다. 그 높이를 미리 빼 두지 않으면
+    // 마지막 쪽만 넘친다.
+    const footH = PROBE.measure(AFTER_FOOT);
+
+    const capsOf = slots => {
+        const caps = [];
+        slots.forEach(kind => { caps.push(usable); caps.push(kind === 'img' ? underArt : usable); });
+        caps[caps.length - 1] = Math.max(60, caps[caps.length - 1] - footH);
+        return caps;
+    };
+
+    const minSpreads = Math.max(arts.length, 1);
+    const maxSpreads = Math.max(minSpreads, Math.floor(segs.length / 2));
+    let spreadCount = minSpreads;
+    while (spreadCount < maxSpreads) {
+        const caps = capsOf(slotPlan(arts.length, spreadCount - arts.length));
+        if (caps.reduce((a, b) => a + b, 0) >= totalH + headHeight) break;
+        spreadCount++;
+    }
+
+    let slots = slotPlan(arts.length, Math.max(0, spreadCount - arts.length));
+    let caps = capsOf(slots);
+    let ranges = fillPages(segs, caps, headHtml);
+    for (let guard = 0; guard < 8; guard++) {
+        const over = ranges.some(([a, b], n) =>
+            PROBE.measure((n === 0 ? headHtml : '') + runHtml(segs, a, b)) > caps[n] + 1);
+        if (!over || spreadCount >= maxSpreads) break;
+        spreadCount++;
+        slots = slotPlan(arts.length, Math.max(0, spreadCount - arts.length));
+        caps = capsOf(slots);
+        ranges = fillPages(segs, caps, headHtml);
+    }
+
+    const spreads = [];
+    let pageIdx = 0;
+    let artIdx = 0;
+    slots.forEach((kind, s) => {
+        const left = ranges[pageIdx++];
+        const right = ranges[pageIdx++];
+        spreads.push({
+            kind: 'after', first: s === 0, last: s === slots.length - 1,
+            art: kind === 'img' ? arts[artIdx++] : null, left, right
+        });
+    });
+    return spreads;
+}
+
+function afterSpreadPage(spread) {
+    const segs = AFTER_SEGS;
+    const head = spread.first ? `<h2>${AFTERWORD.title}</h2>` : '';
+    // 학습 허브로 돌아가는 길은 맨 끝에 한 번만 둔다.
+    const foot = spread.last ? AFTER_FOOT : '';
+
+    if (spread.art) {
+        return `
+            <div class="page page-story page-after">
+                <div class="story-page-left">
+                    ${head}
+                    ${runHtml(segs, spread.left[0], spread.left[1])}
+                </div>
+                <div class="story-page-right story-page-right-image">
+                    <div class="story-art-top">${artFrame(spread.art, AFTERWORD.emoji)}</div>
+                    ${runHtml(segs, spread.right[0], spread.right[1])}
+                    ${foot}
+                </div>
+            </div>`;
+    }
+
     return `
-        <div class="page page-end">
-            ${artFrame('end.png', '🔎')}
-            <h2>셜록 홈스를 다 읽었습니다</h2>
-            <a class="home-btn" href="../../../../../">학습 허브로 돌아가기</a>
+        <div class="page page-story page-after">
+            <div class="story-page-left">
+                ${head}
+                ${runHtml(segs, spread.left[0], spread.left[1])}
+            </div>
+            <div class="story-page-right story-page-right-text">
+                ${runHtml(segs, spread.right[0], spread.right[1])}
+                ${foot}
+            </div>
         </div>`;
 }
 
-const TWO_PAGE_KINDS = new Set(['chapter', 'toc', 'cover']);
+const TWO_PAGE_KINDS = new Set(['chapter', 'toc', 'cover', 'after']);
 
 let PAGES = [];
 let FOLIOS = [];
@@ -616,7 +764,7 @@ function buildPages() {
         ...TOC_GROUPS.map((_, i) => ({ kind: 'toc', part: i })),
         ...CHAPTERS.flatMap(paginateChapter),
         ...QUIZ_GROUPS.map((_, i) => ({ kind: 'quiz', part: i })),
-        { kind: 'end' }
+        ...paginateAfterword()
     ];
     PROBE.close();   // 쪽을 다 나눴으니 재는 데 쓰던 숨은 쪽은 치운다
 
@@ -637,7 +785,7 @@ function renderPage(page) {
         case 'toc': return tocPage(page.part);
         case 'chapter': return chapterSpreadPage(page);
         case 'quiz': return quizPage(page.part);
-        case 'end': return endPage();
+        case 'after': return afterSpreadPage(page);
         default: return '';
     }
 }

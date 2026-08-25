@@ -552,6 +552,70 @@ const CHAPTER_SEGS = CHAPTERS.map(ch => {
     return segs;
 });
 
+// 읽고 나서 — 책마다 내용이 다르다. 장과 같은 방식으로 재서 나눈다.
+const AFTERWORD = {
+    title: '읽고 나서',
+    emoji: '💎',
+    art: [],
+    paras: [
+        `이 책의 제목은 『몬테크리스토 백작』입니다. 사람 이름이 제목인데, 그 이름은 이 이야기의 주인공이 원래 가지고 있던 이름이 아닙니다. 열네 해 뒤에 스스로 지어 붙인 이름입니다.`,
+        `그러니 다 읽은 지금, 그 제목을 다시 보십시오. 에드몽 당테스라는 이름은 제목에 없습니다. 이 책은 사람 하나가 자기 이름을 버리는 이야기이기도 합니다.`,
+        `쓴 사람은 프랑스의 알렉상드르 뒤마입니다. 『삼총사』를 쓴 사람과 같은 사람입니다. 두 책을 거의 같은 무렵에 썼습니다.`,
+        `그 두 책이 나온 해가 같은 해입니다. 한 사람이 한 해에 그런 책을 두 권 내놓은 것입니다.`,
+        `뒤마의 할머니는 아프리카에서 끌려온 노예였고, 아버지는 그 아들로 태어나 나폴레옹 밑에서 장군까지 올라간 사람이었습니다. 그런데 나폴레옹에게 밉보여 밀려났고, 뒤마가 네 살 때 세상을 떠났습니다. 집안은 그 뒤로 가난했습니다.`,
+        `억울하게 밀려난 아버지를 보고 자란 사람이 이 책을 썼다는 것을 알아 두면 좋습니다.`,
+        `이 이야기에는 바탕이 된 실제 사건이 있습니다. 프랑수아 피코라는 구두장이가 있었는데, 친구들이 재미 삼아 그를 밀고해 감옥에 갇히게 했습니다. 일곱 해 뒤 풀려난 그는 큰 재산을 물려받고, 이름을 바꾸어 그 친구들을 하나씩 찾아갔습니다.`,
+        `뒤마는 파리 경찰 기록에서 그 이야기를 읽고 이 책을 썼습니다. 일곱 해를 열네 해로 늘리고, 구두장이를 젊은 항해사로 바꾸었습니다.`,
+        `책은 천팔백사십사 년부터 신문에 나누어 실렸습니다. 그때 신문 소설은 하루에 조금씩만 실었습니다. 그래서 매번 끊기는 자리를 궁금하게 만들어야 했습니다. 이 책에 반전이 그렇게 많은 까닭이 그것입니다.`,
+        `뒤마는 글을 아주 빨리 쓰는 사람이었습니다. 평생에 낸 책이 삼백 권이 넘습니다. 혼자 다 쓴 것은 아니고, 밑그림을 잡아 주는 사람을 여럿 두고 함께 썼습니다. 그 시절 신문 소설은 그렇게 만들어졌습니다.`,
+        `원작은 우리말로 다 옮기면 다섯 권이 넘습니다. 여기서는 당테스가 갇히고 나와 갚아 가는 줄기만 골라 실었습니다. 원작에는 파리의 여러 집안 이야기가 훨씬 자세히 들어 있습니다.`,
+        `이제 다시 볼 대목을 짚어 봅시다.`,
+        `첫째, 첫 장을 다시 읽어 보십시오. 스무 살 당테스는 선장이 될 참이었고, 이튿날 결혼할 참이었습니다. 이 책은 사람이 가진 것을 다 보여 준 다음에 그것을 하루 만에 빼앗습니다. 그 순서가 중요합니다.`,
+        `약혼 잔치 자리에서 끌려갑니다. 사람들이 다 보는 앞이었습니다. 그리고 그날 이후 열네 해 동안 그를 찾은 사람은 아무도 없었습니다.`,
+        `둘째, 그를 밀고한 사람이 셋이라는 것을 세어 보십시오. 자리를 탐낸 당글라르, 약혼자를 탐낸 페르낭, 그리고 그 편지를 덮은 검사 빌포르입니다. 셋의 이유가 다 다릅니다.`,
+        `당글라르는 셈이 빨라서, 페르낭은 마음이 급해서, 빌포르는 제 아버지 이름이 그 편지에 있었기 때문입니다. 셋 다 크게 나쁜 사람이 되려던 것이 아니었습니다. 그런데 사람 하나가 열네 해를 잃었습니다.`,
+        `그리고 이 셋 가운데 실제로 손을 댄 사람은 하나도 없습니다. 당글라르가 종이에 적고, 페르낭이 그것을 부치고, 빌포르가 덮었습니다. 사람 하나를 무너뜨리는 데 힘이 든 사람이 아무도 없었습니다.`,
+        `그것이 이 책이 제일 무섭게 적어 놓은 대목입니다. 큰 악당이 있어서 사람이 망하는 것이 아닙니다. 저마다 조금씩 눈감은 것이 모여서 그렇게 됩니다.`,
+        `셋째, 파리아 신부를 다시 보십시오. 그 사람이 없었다면 이 이야기는 없습니다. 그는 당테스에게 글과 셈과 여러 나라 말을 가르치고, 보물이 있는 곳을 알려 줍니다.`,
+        `그런데 그 사람이 가르친 것 가운데 제일 중요한 것은 따로 있습니다. 누가 왜 자기를 가두었는지를 당테스 스스로 알아내게 한 것입니다. 신부는 답을 알려 주지 않고 물음을 던집니다. 그 자리에서 당테스는 처음으로 셈을 합니다.`,
+        `파리아 신부는 갇힌 채로 책 한 권을 다 썼습니다. 종이가 없어 옷감에 썼고, 잉크가 없어 생선 기름과 그을음을 섞어 썼습니다. 그런 사람이 옆방에 있었다는 것이 당테스가 얻은 제일 큰 운이었습니다.`,
+        `두 사람이 만난 것도 우연이었습니다. 신부는 밖으로 나가려고 굴을 팠는데, 방향을 잘못 재서 당테스의 방으로 뚫린 것입니다. 이 이야기에서 제일 큰 갈림길이 그 잘못된 셈이었습니다.`,
+        `넷째, 마지막 장의 말을 다시 읽어 보십시오. 기다리고 바라라는 말입니다. 열네 해를 갇히고 다시 열 해를 갚는 데 쓴 사람이 남긴 말치고는 뜻밖입니다.`,
+        `기다리라는 말과 바라라는 말이 붙어 있는 것도 눈여겨볼 만합니다. 기다리기만 하면 견디는 것이고, 바라기만 하면 조급해집니다. 둘이 함께 있어야 한다는 뜻입니다.`,
+        `그 말이 나오기 전에 그는 자기가 너무 멀리 갔다는 것을 압니다. 빌포르의 집에서 죄 없는 아이가 죽습니다. 그때 백작은 처음으로 멈춥니다. 이 책은 갚는 이야기이면서, 갚는 것이 어디서 멈춰야 하는지를 묻는 이야기이기도 합니다.`,
+        `인물도 다시 보아야 할 사람이 있습니다.`,
+        `메르세데스를 배신한 사람으로 읽으면 절반만 읽은 것이 됩니다. 그 사람은 당테스가 죽은 줄 알았고, 열여덟 달을 기다렸습니다. 그리고 페르낭과 결혼합니다. 그 시절 여자 혼자 살아갈 길이 거의 없었습니다.`,
+        `그리고 메르세데스는 파리에서 백작을 한 번에 알아봅니다. 다른 사람은 아무도 못 알아보는데 그 사람만 알아봅니다. 그러고도 아무 말도 하지 않습니다.`,
+        `빌포르도 다시 볼 만합니다. 그는 이 셋 가운데 제일 똑똑하고 제일 반듯하게 살아온 사람입니다. 그런데 그가 편지를 태운 것은 자기 자리를 지키려던 것이었습니다. 잘 살아온 사람이 딱 한 번 그렇게 합니다.`,
+        `그리고 그 한 번을 그는 평생 잊고 지냅니다. 이 책에 나오는 셋 다 그렇습니다. 그 편지 일을 기억하고 산 사람은 갇힌 쪽뿐이었습니다.`,
+        `그 시절 사정도 알아 두면 좋습니다. 이 이야기가 시작되는 때는 나폴레옹이 엘바섬에 갇혀 있던 무렵입니다. 그가 돌아오느냐 마느냐로 프랑스가 두 쪽이 나 있었습니다.`,
+        `당테스가 나른 편지 한 장이 그렇게 무서운 것이 된 까닭이 그것입니다. 편을 잘못 든 것으로 몰리면 재판도 없이 갇혔습니다. 그 시절 프랑스에는 그런 사람이 아주 많았습니다.`,
+        `이프섬 감옥도 실제로 있는 곳입니다. 마르세유 앞바다의 바위섬에 지은 성인데, 지금은 사람들이 배를 타고 구경하러 갑니다. 그 안에 당테스가 갇혀 있었다는 방까지 만들어 놓았습니다. 지어낸 사람인데도 그렇습니다.`,
+        `당테스가 자루에 담겨 바다로 던져지는 대목도 그 시절 그 감옥에서 실제로 하던 방식이었습니다. 그 섬에는 무덤 자리가 없었기 때문입니다.`,
+        `이 책이 붙들고 있는 물음은 두 가지입니다.`,
+        `하나는 갚는 것이 어디까지 허락되느냐는 것입니다. 당테스는 자기를 무너뜨린 셋을 다 무너뜨립니다. 그런데 그 집안의 아이들까지 다칩니다. 갚는 일에는 겨냥한 데만 맞는 법이 없습니다.`,
+        `다른 하나는 사람이 신 노릇을 할 수 있느냐는 것입니다. 백작은 자기가 벌을 내리는 손이라고 여깁니다. 열네 해 동안 그 생각으로 버텼기 때문입니다. 그런데 아이가 죽고 나서 그 생각이 무너집니다.`,
+        `그러고 나서 그가 남긴 말이 기다리고 바라라는 말입니다. 갚는 일에 열 해를 쓴 사람이 마지막에 남긴 것이 기다리라는 말이었습니다.`,
+        `책이 나오자 프랑스에서 엄청나게 팔렸습니다. 신문이 이 소설을 실은 날에는 배부터 동이 났다고 합니다. 뒤마는 그 돈으로 성을 짓고 극장을 세웠다가 결국 다 잃었습니다.`,
+        `그가 지은 성의 이름이 몬테크리스토 성입니다. 자기가 만든 사람의 이름을 자기 집에 붙인 것입니다. 그 성은 지금도 파리 근처에 남아 있습니다.`,
+        `언젠가 이 책을 다시 읽게 되거든, 이번에는 파리아 신부가 하는 말만 이어 붙여 읽어 보십시오. 그 사람이 감옥에서 한 말들이 뒤에 백작이 하는 일의 밑그림입니다.`,
+        `마지막으로 생각해 볼 것을 남겨 둡니다. 답은 적어 두지 않겠습니다.`,
+        `당테스가 갚은 것은 옳은 일이었을까요? 셋은 벌을 받아야 할 사람들이었습니다. 그런데 그 벌을 내린 것은 법이 아니라 한 사람이었습니다.`,
+        `메르세데스가 페르낭과 결혼한 것을 어떻게 보아야 할까요? 기다리지 않은 것일까요, 아니면 살아남은 것일까요?`,
+        `그리고 백작이 아이의 죽음 앞에서 멈추지 않았다면 어떻게 되었을까요. 이 물음은 어른이 되어 다시 읽어도 답하기가 쉽지 않습니다.`
+    ]
+};
+
+const AFTER_SEGS = (() => {
+    const segs = [];
+    AFTERWORD.paras.forEach((html, paraIdx) => {
+        splitSegments(html).forEach((piece, k) => {
+            segs.push({ paraIdx, html: piece, start: k === 0 });
+        });
+    });
+    return segs;
+})();
+
 // 조각 묶음을 문단 단위로 다시 묶어 화면에 그릴 모양으로 만든다.
 // 앞 쪽에서 이어진 문단은 첫 줄을 들여쓰지 않는다.
 function runHtml(segs, a, b) {
@@ -833,16 +897,100 @@ function quizPage(part) {
         </div>`;
 }
 
-function endPage() {
+/* 읽고 나서 — 장과 같은 방식으로 쪽을 나눈다. 그림은 오른쪽 위에 얹힌다. */
+const AFTER_FOOT = `<p class="after-home"><a class="home-btn" href="../../../../../">학습 허브로 돌아가기</a></p>`;
+
+function paginateAfterword() {
+    const segs = AFTER_SEGS;
+    const arts = AFTERWORD.art || [];
+    const { usable, headHeight, artHeight } = PROBE;
+    const headHtml = `<h2>${AFTERWORD.title}</h2>`;
+    const totalH = PROBE.measure(runHtml(segs, 0, segs.length));
+
+    const underArt = Math.max(60, usable - artHeight);
+
+    // 맨 끝에는 학습 허브로 가는 단추가 붙는다. 그 높이를 미리 빼 두지 않으면
+    // 마지막 쪽만 넘친다.
+    const footH = PROBE.measure(AFTER_FOOT);
+
+    const capsOf = slots => {
+        const caps = [];
+        slots.forEach(kind => { caps.push(usable); caps.push(kind === 'img' ? underArt : usable); });
+        caps[caps.length - 1] = Math.max(60, caps[caps.length - 1] - footH);
+        return caps;
+    };
+
+    const minSpreads = Math.max(arts.length, 1);
+    const maxSpreads = Math.max(minSpreads, Math.floor(segs.length / 2));
+    let spreadCount = minSpreads;
+    while (spreadCount < maxSpreads) {
+        const caps = capsOf(slotPlan(arts.length, spreadCount - arts.length));
+        if (caps.reduce((a, b) => a + b, 0) >= totalH + headHeight) break;
+        spreadCount++;
+    }
+
+    let slots = slotPlan(arts.length, Math.max(0, spreadCount - arts.length));
+    let caps = capsOf(slots);
+    let ranges = fillPages(segs, caps, headHtml);
+    for (let guard = 0; guard < 8; guard++) {
+        const over = ranges.some(([a, b], n) =>
+            PROBE.measure((n === 0 ? headHtml : '') + runHtml(segs, a, b)) > caps[n] + 1);
+        if (!over || spreadCount >= maxSpreads) break;
+        spreadCount++;
+        slots = slotPlan(arts.length, Math.max(0, spreadCount - arts.length));
+        caps = capsOf(slots);
+        ranges = fillPages(segs, caps, headHtml);
+    }
+
+    const spreads = [];
+    let pageIdx = 0;
+    let artIdx = 0;
+    slots.forEach((kind, s) => {
+        const left = ranges[pageIdx++];
+        const right = ranges[pageIdx++];
+        spreads.push({
+            kind: 'after', first: s === 0, last: s === slots.length - 1,
+            art: kind === 'img' ? arts[artIdx++] : null, left, right
+        });
+    });
+    return spreads;
+}
+
+function afterSpreadPage(spread) {
+    const segs = AFTER_SEGS;
+    const head = spread.first ? `<h2>${AFTERWORD.title}</h2>` : '';
+    // 학습 허브로 돌아가는 길은 맨 끝에 한 번만 둔다.
+    const foot = spread.last ? AFTER_FOOT : '';
+
+    if (spread.art) {
+        return `
+            <div class="page page-story page-after">
+                <div class="story-page-left">
+                    ${head}
+                    ${runHtml(segs, spread.left[0], spread.left[1])}
+                </div>
+                <div class="story-page-right story-page-right-image">
+                    <div class="story-art-top">${artFrame(spread.art, AFTERWORD.emoji)}</div>
+                    ${runHtml(segs, spread.right[0], spread.right[1])}
+                    ${foot}
+                </div>
+            </div>`;
+    }
+
     return `
-        <div class="page page-end">
-            ${artFrame('end.png', '⛵')}
-            <h2>몽테크리스토 백작을 다 읽었습니다</h2>
-            <a class="home-btn" href="../../../../../">학습 허브로 돌아가기</a>
+        <div class="page page-story page-after">
+            <div class="story-page-left">
+                ${head}
+                ${runHtml(segs, spread.left[0], spread.left[1])}
+            </div>
+            <div class="story-page-right story-page-right-text">
+                ${runHtml(segs, spread.right[0], spread.right[1])}
+                ${foot}
+            </div>
         </div>`;
 }
 
-const TWO_PAGE_KINDS = new Set(['chapter', 'toc', 'cover']);
+const TWO_PAGE_KINDS = new Set(['chapter', 'toc', 'cover', 'after']);
 
 let PAGES = [];
 let FOLIOS = [];
@@ -854,7 +1002,7 @@ function buildPages() {
         ...TOC_GROUPS.map((_, i) => ({ kind: 'toc', part: i })),
         ...CHAPTERS.flatMap(paginateChapter),
         ...QUIZ_GROUPS.map((_, i) => ({ kind: 'quiz', part: i })),
-        { kind: 'end' }
+        ...paginateAfterword()
     ];
     PROBE.close();   // 쪽을 다 나눴으니 재는 데 쓰던 숨은 쪽은 치운다
 
@@ -875,7 +1023,7 @@ function renderPage(page) {
         case 'toc': return tocPage(page.part);
         case 'chapter': return chapterSpreadPage(page);
         case 'quiz': return quizPage(page.part);
-        case 'end': return endPage();
+        case 'after': return afterSpreadPage(page);
         default: return '';
     }
 }
