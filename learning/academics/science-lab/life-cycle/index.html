@@ -1,0 +1,164 @@
+<!doctype html>
+<html lang="ko">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="theme-color" content="#07131c">
+    <title>과학 실험실</title>
+    <meta name="description" content="배추흰나비와 사마귀, 개구리, 닭이 자라는 차례를 따라가 보고 무엇을 먹는지, 먹이 사슬에서 어디에 있는지 알아보는 초등 과학 모의실험">
+    <link rel="stylesheet" as="style" crossorigin href="https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.9/dist/web/static/pretendard.css">
+    <link rel="stylesheet" href="styles.css?v=1">
+    <link rel="stylesheet" href="life-visual.css?v=2">
+    <link rel="stylesheet" href="quiz.css?v=1">
+</head>
+<body>
+    <main>
+        <header class="page-header">
+            <div class="title-row">
+                <a href="../">← 과학 실험실</a>
+                <h1>동물의 한살이와 먹이 관계</h1>
+            </div>
+            <div class="grade-tags"><span>초등 3~4</span><span>생명과학</span></div>
+        </header>
+
+        <ol class="method-steps" aria-label="실험 방법">
+            <li>기를 동물을 고릅니다.</li>
+            <li>자라는 차례를 따라갑니다.</li>
+            <li>때마다 무엇을 먹는지 봅니다.</li>
+            <li>먹이 사슬에서 어디에 있는지 찾습니다.</li>
+        </ol>
+
+        <div class="experiment-layout">
+            <section class="panel control-panel" aria-labelledby="control-title">
+                <h2 id="control-title">실험 조건</h2>
+                <p class="water-standard">걸리는 날수는 따뜻한 봄철을 기준으로 삼았습니다</p>
+
+                <fieldset class="pick-field">
+                    <legend>어떤 동물을 볼까요</legend>
+                    <div class="pick-buttons cols4">
+                        <button type="button" data-animal="butterfly">배추흰나비<small>번데기가 있음</small></button>
+                        <button type="button" data-animal="mantis">사마귀<small>번데기가 없음</small></button>
+                        <button type="button" data-animal="frog">개구리<small>물에서 뭍으로</small></button>
+                        <button type="button" data-animal="chick">닭<small>알을 낳는 새</small></button>
+                    </div>
+                </fieldset>
+
+                <div class="range-heading">
+                    <label for="stageRange">자라는 차례</label>
+                    <output id="stageOutput" for="stageRange">알</output>
+                </div>
+                <input id="stageRange" type="range" min="0" max="3" step="1" value="0">
+                <div class="range-scale" aria-hidden="true"><span>처음</span><span>자라는 중</span><span>어른</span></div>
+
+                <fieldset class="prediction-field">
+                    <legend>이 동물은 어떻게 자랄까요?</legend>
+                    <div class="prediction-buttons three">
+                        <button type="button" data-prediction="p1">번데기를 거친다</button>
+                        <button type="button" data-prediction="p2">번데기 없이 모습이 크게 바뀐다</button>
+                        <button type="button" data-prediction="p3">처음부터 어른과 닮았다</button>
+                    </div>
+                </fieldset>
+
+                <button class="run-button" id="runBtn" type="button">키워 보기</button>
+                <button class="reset-button" id="resetBtn" type="button">처음으로</button>
+
+                <section class="result-box" aria-labelledby="result-title" aria-live="polite">
+                    <h3 id="result-title">관찰 결과</h3>
+                    <p id="resultEmpty">동물을 고르고 키워 보세요.</p>
+                    <div id="resultContent" hidden>
+                        <div class="result-numbers">
+                            <article><span>어른이 되기까지</span><strong id="valueA">-</strong></article>
+                            <article><span>지금 먹는 것</span><strong id="valueB">-</strong></article>
+                        </div>
+                        <p class="prediction-result" id="predictionResult"></p>
+                        <p class="explanation" id="elementaryExplanation"></p>
+                    </div>
+                </section>
+            </section>
+
+            <section class="panel life-stage" aria-label="관찰 화면">
+                <div class="stage-heading"><h2>관찰</h2><span id="stageBadge">-</span></div>
+
+                <div class="stage-views">
+                    <svg class="main-svg" viewBox="0 0 460 214" aria-hidden="true">
+                        <g id="mainGroup"></g>
+                    </svg>
+                    <svg class="graph-svg" viewBox="0 0 460 196" aria-hidden="true">
+                        <g id="graphGroup"></g>
+                    </svg>
+                </div>
+
+                <p class="stage-caption" id="stageCaption">같은 동물이라도 어릴 때와 어른일 때 먹는 것이 다를 수 있습니다. 사는 곳도 달라지기 때문입니다.</p>
+                <div class="data-note" id="dataNote"></div>
+            </section>
+        </div>
+
+        <section class="panel meaning-panel">
+            <h2>실험 결과의 의미</h2>
+            <div class="meaning-body">
+                <p><strong>번데기가 있는 것과 없는 것</strong> 배추흰나비는 알에서 애벌레가 나와 번데기를 거친 뒤 전혀 다른 모습의 어른벌레가 됩니다. 사마귀는 번데기 없이 허물만 벗으며 조금씩 커지고, 알에서 나올 때부터 어른과 닮았습니다.</p>
+                <p><strong>먹는 것이 달라집니다</strong> 배추흰나비 애벌레는 배춧잎을 갉아 먹지만 어른벌레는 꽃의 꿀을 빨아 먹습니다. 올챙이는 물속 이끼를 먹다가 개구리가 되면 곤충을 잡아먹습니다. 자라면서 사는 곳이 달라지면 먹는 것도 달라집니다.</p>
+                <p><strong>먹이 사슬은 위로 갈수록 좁아집니다</strong> 먹은 것이 모두 몸이 되지는 않습니다. 대부분은 움직이고 숨 쉬는 데 쓰여 사라지므로, 위 단계 한 마리를 먹여 살리려면 아래 단계가 열 배쯤 있어야 합니다.</p>
+            </div>
+        </section>
+
+        <details class="quiz-section" aria-labelledby="quiz-title">
+            <summary class="quiz-heading"><h2 id="quiz-title">확인 문제</h2><span>4문제</span></summary>
+            <div class="quiz-grid">
+                <article class="quiz-card" data-answer="b">
+                    <h3>배추흰나비가 자라는 차례로 맞는 것은?</h3>
+                    <div class="quiz-options">
+                        <label><input type="radio" name="q1" value="a"> 알 → 번데기 → 애벌레 → 어른벌레</label>
+                        <label><input type="radio" name="q1" value="b"> 알 → 애벌레 → 번데기 → 어른벌레</label>
+                        <label><input type="radio" name="q1" value="c"> 알 → 어른벌레 → 번데기</label>
+                        <label><input type="radio" name="q1" value="d"> 애벌레 → 알 → 어른벌레</label>
+                    </div>
+                    <button class="answer-button" type="button">정답 확인</button>
+                    <p class="answer-result" aria-live="polite"></p>
+                    <p class="answer-explanation" hidden>알에서 애벌레가 나와 배춧잎을 먹고 자란 뒤 번데기가 됩니다. 번데기 속에서 몸이 새로 만들어지고 어른벌레가 되어 나옵니다.</p>
+                </article>
+
+                <article class="quiz-card" data-answer="c">
+                    <h3>사마귀에게 없는 단계는?</h3>
+                    <div class="quiz-options">
+                        <label><input type="radio" name="q2" value="a"> 알</label>
+                        <label><input type="radio" name="q2" value="b"> 애벌레</label>
+                        <label><input type="radio" name="q2" value="c"> 번데기</label>
+                        <label><input type="radio" name="q2" value="d"> 어른벌레</label>
+                    </div>
+                    <button class="answer-button" type="button">정답 확인</button>
+                    <p class="answer-result" aria-live="polite"></p>
+                    <p class="answer-explanation" hidden>사마귀는 번데기를 거치지 않습니다. 알에서 나온 애벌레가 허물을 여러 번 벗으며 조금씩 커져 그대로 어른이 됩니다.</p>
+                </article>
+
+                <article class="quiz-card" data-answer="a">
+                    <h3>올챙이와 개구리가 먹는 것이 다른 까닭은?</h3>
+                    <div class="quiz-options">
+                        <label><input type="radio" name="q3" value="a"> 자라면서 사는 곳과 몸이 달라져서</label>
+                        <label><input type="radio" name="q3" value="b"> 올챙이가 더 배고파서</label>
+                        <label><input type="radio" name="q3" value="c"> 물속에는 먹이가 없어서</label>
+                        <label><input type="radio" name="q3" value="d"> 개구리가 이가 없어서</label>
+                    </div>
+                    <button class="answer-button" type="button">정답 확인</button>
+                    <p class="answer-result" aria-live="polite"></p>
+                    <p class="answer-explanation" hidden>올챙이는 물속에 살며 아가미로 숨 쉬고 이끼를 먹습니다. 개구리가 되면 뭍으로 올라와 폐로 숨 쉬고 곤충을 잡아먹습니다. 몸이 바뀌니 먹는 것도 바뀝니다.</p>
+                </article>
+
+                <article class="quiz-card" data-answer="d">
+                    <h3>먹이 사슬에서 위로 갈수록 수가 적어지는 까닭은?</h3>
+                    <div class="quiz-options">
+                        <label><input type="radio" name="q4" value="a"> 위쪽 동물이 알을 적게 낳아서</label>
+                        <label><input type="radio" name="q4" value="b"> 위쪽 동물이 더 커서</label>
+                        <label><input type="radio" name="q4" value="c"> 아래쪽 동물이 빨리 자라서</label>
+                        <label><input type="radio" name="q4" value="d"> 먹은 것의 대부분이 살아가는 데 쓰여 몸으로 남지 않아서</label>
+                    </div>
+                    <button class="answer-button" type="button">정답 확인</button>
+                    <p class="answer-result" aria-live="polite"></p>
+                    <p class="answer-explanation" hidden>먹은 것 가운데 몸으로 남는 것은 아주 조금이고 나머지는 움직이고 숨 쉬는 데 쓰입니다. 그래서 위 단계 한 마리를 먹여 살리려면 아래 단계가 훨씬 많아야 합니다.</p>
+                </article>
+            </div>
+        </details>
+    </main>
+    <script src="app.js?v=3"></script>
+</body>
+</html>
