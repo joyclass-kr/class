@@ -1,5 +1,7 @@
 document.addEventListener('DOMContentLoaded', () => {
     const mixButtons = [...document.querySelectorAll('[data-mix]')];
+    const graphGroup = document.getElementById('graphGroup');
+    const dataNote = document.getElementById('dataNote');
     const predictionButtons = [...document.querySelectorAll('[data-prediction]')];
     const fossilBtn = document.getElementById('fossilBtn');
     const pourBtn = document.getElementById('pourBtn');
@@ -128,6 +130,58 @@ document.addEventListener('DOMContentLoaded', () => {
         stageBadge.textContent = n ? `${n}개 층` : '빈 통';
         pourBtn.disabled = n >= MAX_LAYERS;
         pourBtn.textContent = n >= MAX_LAYERS ? '통이 가득 찼습니다' : '퇴적물 붓기';
+        renderOrder();
+        renderData();
+    }
+
+    /* ------------------------------------------- 쌓인 순서 = 시간 순서 */
+    /* 지층에서 읽어 내는 것은 결국 순서입니다. 통을 세로로 그린 그림 옆에,
+       같은 층을 '언제 쌓였나'로 다시 늘어놓아 아래가 오래된 것임을 글자로도
+       읽히게 합니다. */
+    function renderOrder() {
+        const X0 = 18, W = 424, TOP = 30, H = 24, GAP = 3;
+        const n = layers.length;
+        let out = `<text class="ord-title" x="${X0}" y="18">쌓인 순서 — 아래가 먼저입니다</text>`;
+        if (!n) {
+            out += `<text class="ord-empty" x="${X0}" y="${TOP + 22}">아직 부은 것이 없습니다. 퇴적물을 부으면 층이 하나씩 늘어납니다.</text>`;
+            graphGroup.innerHTML = out;
+            return;
+        }
+        // newest at the top of the list, matching how the tank looks
+        for (let i = n - 1; i >= 0; i -= 1) {
+            const row = n - 1 - i;
+            const y = TOP + row * (H + GAP);
+            const L = layers[i];
+            const newest = i === n - 1;
+            out += `<rect class="ord-row${newest ? ' newest' : ''}" x="${X0}" y="${y}" width="${W}" height="${H}" rx="7"/>`;
+            out += `<text class="ord-num" x="${X0 + 12}" y="${y + 16}">${i + 1}번 층</text>`;
+            // the grain bands inside this layer, biggest at the bottom
+            L.sub.forEach((g, k) => {
+                out += `<rect class="ord-swatch" x="${X0 + 66 + k * 16}" y="${y + 7}" width="14" height="10" rx="2" fill="${g.color}"/>`;
+            });
+            out += `<text class="ord-name" x="${X0 + 122}" y="${y + 16}">${MIXES[L.mix].label}${L.fossil ? ' · 화석 있음' : ''}</text>`;
+            out += `<text class="ord-when" x="${X0 + W - 12}" y="${y + 16}" text-anchor="end">${newest ? '가장 나중에 쌓임' : i === 0 ? '가장 먼저 쌓임' : `${i + 1}번째로 쌓임`}</text>`;
+        }
+        out += `<text class="ord-note" x="${X0}" y="${TOP + n * (H + GAP) + 15}">한 번 부을 때마다 큰 알갱이가 먼저 가라앉아, 한 층 안에서도 자갈이 아래·진흙이 위에 놓입니다.</text>`;
+        graphGroup.innerHTML = out;
+    }
+
+    function renderData() {
+        const n = layers.length;
+        if (!n) {
+            dataNote.innerHTML =
+                `<div class="data-row"><span class="data-name">쌓인 층</span><span class="data-val">아직 없음</span></div>` +
+                `<div class="data-row"><span class="data-name">알갱이 크기</span><span class="data-val">${GRAINS.map(g => `${g.name} ${g.mm} mm`).join(' · ')}</span></div>`;
+            return;
+        }
+        const withFossilCount = layers.filter(L => L.fossil).length;
+        dataNote.innerHTML =
+            `<div class="data-row"><span class="data-name">쌓인 층</span><span class="data-val">${n}개</span></div>` +
+            `<div class="data-row match"><span class="data-name">가장 오래된 층</span><span class="data-val">1번 — 맨 아래</span></div>` +
+            `<div class="data-row"><span class="data-name">가장 새로운 층</span><span class="data-val">${n}번 — 맨 위</span></div>` +
+            `<div class="data-row"><span class="data-name">맨 아래 층의 퇴적물</span><span class="data-val">${MIXES[layers[0].mix].label}</span></div>` +
+            `<div class="data-row"><span class="data-name">알갱이 크기</span><span class="data-val">${GRAINS.map(g => `${g.name} ${g.mm} mm`).join(' · ')}</span></div>` +
+            `<div class="data-row"><span class="data-name">화석이 든 층</span><span class="data-val">${withFossilCount ? layers.map((L, i) => L.fossil ? `${i + 1}번` : null).filter(Boolean).join(' · ') : '없음'}</span></div>`;
     }
 
     function pour() {

@@ -8,7 +8,7 @@
     <meta name="description" content="퇴적물을 쌓아 지층이 만들어지는 순서와 알갱이 크기에 따른 가라앉는 차이를 관찰하는 초등 과학 모의실험">
     <link rel="stylesheet" as="style" crossorigin href="https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.9/dist/web/static/pretendard.css">
     <link rel="stylesheet" href="styles.css?v=1">
-    <link rel="stylesheet" href="layer-visual.css?v=1">
+    <link rel="stylesheet" href="layer-visual.css?v=2">
     <link rel="stylesheet" href="quiz.css?v=1">
 </head>
 <body>
@@ -84,7 +84,12 @@
 
                 <p class="stage-caption" id="stageCaption">퇴적물을 부어 층이 쌓이는 순서를 살펴보세요.</p>
 
+                <svg class="graph-svg" viewBox="0 0 460 222" aria-hidden="true">
+                    <g id="graphGroup"></g>
+                </svg>
+
                 <div class="speed-note" id="speedNote"></div>
+                <div class="data-note" id="dataNote"></div>
             </section>
         </div>
 
@@ -154,6 +159,6 @@
             </div>
         </details>
     </main>
-    <script src="app.js?v=1"></script>
+    <script src="app.js?v=11"></script>
 </body>
 </html>
